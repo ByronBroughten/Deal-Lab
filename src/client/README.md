@@ -1,70 +1,45 @@
-# Getting Started with Create React App
+### Ultimate Property Analyzer Client
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+[Live Test Website](https://ultimate-property-analyzer.herokuapp.com/).
 
-## Available Scripts
+## Description:
 
-In the project directory, you can run:
+The client side of a fullstack application. Uses Typescript with React and Styled Components. This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-### `npm start`
+The main purpose of this application is to produce estimates for the return on investment (ROI) of rental properties. To that end, the user inputs information related to a property as well as to whatever financing and property management they might use to purchase and manage the property.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+In order for the many inputs and derrivative variables to solve for ROI and other outputs, the application uses a topological sort, which takes as input interdependent nodes and creates a valid sequence of processes based on the dependencies of each node, which works so long as there are no circular dependencies. A warning will be added to alert the user when they create a circular dependency.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+To minimize repetitious data entry, users can save and load properties, loans, and property management instances to reuse for subsequent analyses. Further, most input variables can receive equations as inputs, and those equations can utilize other variables to generate dynamic values and so further reduce data entry. As a simplified example, a user might fill out the home insurance cost field like this:
 
-### `npm test`
+&nbsp;Home insurance: property_sqft/2
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+That field will then update whenever the property's square feet field is updated. Users can thus define generalizable equations for fields so as to reduce the number of fields into which they must enter data for future analyses. Additionally, users may create and save custom variables to be plugged into equations. They might save the costs of various common repairs, for instance, to be reused for analyses when relevant.
 
-### `npm run build`
+Finally, the application is transparent in that the user can view and explore the tree of equations and variables that produced the ROI and other output variables.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Technology used
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+#### Front-End
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- React - Used to create components and the front end of the application
+- TSX - Used in with React to create the front end of the website
+- Styled Components - Used to style the website with CSS in JS
+- Axios - Used to make API calls to the server
+- Jest - Used for unit tests
 
-### `npm run eject`
+#### Back-End
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+See here: https://github.com/busterbyron/Property-Analyzer-Server-Side
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Built With:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- VS Code - https://code.visualstudio.com/
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Contact:
 
-## Learn More
+If you would like more information about the app, please don't hesitate to reach out.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Byron Broughten
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- [GitHub](https://github.com/ByronBroughten)
