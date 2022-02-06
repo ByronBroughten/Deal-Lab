@@ -1,0 +1,4 @@
+{
+  "endpoint": "ENDPOINT",
+  "jwtPrivateKey": "UPA_JWT_PRIVATE_KEY"
+}

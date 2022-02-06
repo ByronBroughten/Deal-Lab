@@ -1,0 +1,6 @@
+node_modules/
+oldCode/
+dist/
+.env
+coverage/
+logfile.log
