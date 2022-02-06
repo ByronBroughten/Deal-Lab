@@ -5,10 +5,11 @@
   "main": "index.ts",
   "scripts": {
     "start": "ts-node src/index.ts",
-    "dev": "nodemon -r dotenv/config --inspect src/index.ts",
+    "dev": "concurrently \"nodemon -r dotenv/config --inspect src/index.ts --ignore client/\" \"npm run client\"",
     "dev:debug": "nodemon --inspect src/index.ts",
-    "build": "tsc",
-    "test": "jest --watchAll --verbose --coverage"
+    "test": "jest --watchAll --verbose --coverage",
+    "client": "cd src/client && npm run start",
+    "build": "tsc && cd client && npm run build,"
   },
   "engines": {
     "node": "14.15.5",
@@ -39,6 +40,7 @@
     "babel-jest": "^27.3.1",
     "bcrypt": "^5.0.1",
     "compression": "^1.7.4",
+    "concurrently": "^7.0.0",
     "config": "^3.3.6",
     "cors": "^2.8.5",
     "debug": "^4.3.1",

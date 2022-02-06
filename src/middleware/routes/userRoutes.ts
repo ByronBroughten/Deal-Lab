@@ -7,7 +7,6 @@ import {
   prepNewUserData,
   UserModel,
 } from "./shared/makeDbUser";
-
 import { Full } from "../../sharedWithServer/utils/typescript";
 import { validate } from "./shared/crudValidators";
 import { DbSections } from "../../sharedWithServer/Analyzer/DbEntry";
