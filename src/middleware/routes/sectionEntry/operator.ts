@@ -1,5 +1,5 @@
-import { DbEntry } from "../../../sharedWithServer/Analyzer/DbEntry";
-import { DbStoreName } from "../../../sharedWithServer/Analyzer/SectionMetas/relSections/baseSectionTypes";
+import { DbEntry } from "../../../client/src/App/sharedWithServer/Analyzer/DbEntry";
+import { DbStoreName } from "../../../client/src/App/sharedWithServer/Analyzer/SectionMetas/relSections/baseSectionTypes";
 
 type RightSide<T extends any> = Partial<Record<DbStoreName, T>>;
 type QueryOperators = {

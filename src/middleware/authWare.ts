@@ -1,6 +1,5 @@
 import express from "express";
-
-import { authTokenKey } from "../sharedWithServer/User/crudTypes";
+import { authTokenKey } from "../client/src/App/sharedWithServer/User/crudTypes";
 import { decodeAndCheckUserToken } from "./routes/userRoutes/login";
 
 export default function authWare(

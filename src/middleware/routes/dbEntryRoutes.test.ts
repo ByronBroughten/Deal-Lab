@@ -3,7 +3,7 @@ import { makeDummyUserToken } from "./userRoutes/login";
 import request from "supertest";
 import { runApp } from "../../runApp";
 import { UserModel } from "./shared/makeDbUser";
-import { authTokenKey } from "../sharedWithServer/User/crudTypes";
+import { authTokenKey } from "../client/src/App/sharedWithServer/User/crudTypes";
 
 // for get and delete, return 404 if no entry with that dbId is found
 // return 200 if valid request

@@ -1,6 +1,6 @@
 import { Response } from "express";
 import { FilterQuery } from "mongoose";
-import { DbUser } from "../../../sharedWithServer/User/DbUser";
+import { DbUser } from "../../../client/src/App/sharedWithServer/User/DbUser";
 import { QueryOp } from "../sectionEntry/operator";
 import { UserModel } from "./makeDbUser";
 

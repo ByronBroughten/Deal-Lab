@@ -6,7 +6,7 @@ import { validate } from "./shared/crudValidators";
 import { tryFindByIdAndUpdate, tryFindOneAndUpdate } from "./shared/tryQueries";
 
 import { getDbEntry } from "./sectionEntry/query";
-import { DbEnt } from "../../sharedWithServer/Analyzer/DbEntry";
+import { DbEnt } from "../../client/src/App/sharedWithServer/Analyzer/DbEntry";
 
 const arrRouter = express.Router();
 export const dbEntryRoutePath = "/api/dbEntry";

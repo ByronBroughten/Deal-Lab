@@ -2,8 +2,11 @@ import { Schema } from "mongoose";
 import {
   reqMonDbId,
   reqMonString,
-} from "../../../sharedWithServer/utils/mongoose";
-import { DbEntry, DbSection } from "../../../sharedWithServer/Analyzer/DbEntry";
+} from "../../../client/src/App/sharedWithServer/utils/mongoose";
+import {
+  DbEntry,
+  DbSection,
+} from "../../../client/src/App/sharedWithServer/Analyzer/DbEntry";
 
 export function getMonDbSection() {
   const schemaFrame: Record<keyof DbSection, any> = {

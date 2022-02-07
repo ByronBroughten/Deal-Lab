@@ -7,8 +7,9 @@ import {
   authTokenKey,
   LoginFormData,
   RegisterReqPayload,
-} from "../../sharedWithServer/User/crudTypes";
+} from "../../client/src/App/sharedWithServer/User/crudTypes";
 import { runApp } from "../../runApp";
+import { SectionNam } from "../../client/src/App/sharedWithServer/Analyzer/SectionMetas/SectionName";
 
 const testPayload = {
   login(): LoginFormData {
@@ -18,20 +19,19 @@ const testPayload = {
     };
   },
   register(): RegisterReqPayload {
+    const sections: Partial<RegisterReqPayload["guestAccessSections"]> = {};
+    SectionNam.arr.feGuestAccessStore;
+    for (const sectionName of SectionNam.arr.feGuestAccessStore) {
+      sections[sectionName] = [];
+    }
+
     return {
       registerFormData: {
         ...this.login(),
         userName: "Testosis",
       },
-      sections: {
-        userVarbList: [],
-        userSingleList: [],
-        userOngoingList: [],
-        propertyDefault: [],
-        loanDefault: [],
-        mgmtDefault: [],
-        analysisDefault: [],
-      },
+      guestAccessSections:
+        sections as RegisterReqPayload["guestAccessSections"],
     };
   },
 };
@@ -61,7 +61,7 @@ describe(`${userRoutesPath}/register`, () => {
     await testStatus(400);
   });
   it("should return 400 if a user with that email already exists", async () => {
-    const userId = mongoose.Types.ObjectId();
+    const userId = new mongoose.Types.ObjectId();
     const user = new UserModel({
       _id: userId,
       ...makeDbUser(await prepNewUserData(testPayload.register())),

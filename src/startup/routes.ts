@@ -1,10 +1,10 @@
 import express from "express";
 import cors from "cors";
-import { authTokenKey } from "../sharedWithServer/User/crudTypes";
 import arrRouter, {
   dbEntryRoutePath,
 } from "../middleware/routes/dbEntryRoutes";
 import userRouter, { userRoutesPath } from "../middleware/routes/userRoutes";
+import { authTokenKey } from "../client/src/App/sharedWithServer/User/crudTypes";
 
 export default function routes(app: express.Application) {
   app.use(

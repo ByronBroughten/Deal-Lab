@@ -7,9 +7,9 @@ import {
   prepNewUserData,
   UserModel,
 } from "./shared/makeDbUser";
-import { Full } from "../../sharedWithServer/utils/typescript";
 import { validate } from "./shared/crudValidators";
-import { DbSections } from "../../sharedWithServer/Analyzer/DbEntry";
+import { DbSections } from "../../client/src/App/sharedWithServer/Analyzer/DbEntry";
+import { Full } from "../../client/src/App/sharedWithServer/utils/typescript";
 
 export const userRoutesPath = "/api/user";
 const userRouter = express.Router();

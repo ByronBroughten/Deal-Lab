@@ -11,14 +11,14 @@ import {
   zGuestAccessSections,
   zLoginFormData,
   zRegisterFormData,
-} from "../../../sharedWithServer/User/crudTypes";
-import { DbStoreName } from "../../../sharedWithServer/Analyzer/SectionMetas/relSections/baseSectionTypes";
+} from "../../../client/src/App/sharedWithServer/User/crudTypes";
+import { DbStoreName } from "../../../client/src/App/sharedWithServer/Analyzer/SectionMetas/relSections/baseSectionTypes";
 import {
   SectionNam,
   SectionName,
   SectionNameType,
-} from "../../../sharedWithServer/Analyzer/SectionMetas/SectionName";
-import { DbEntry } from "../../../sharedWithServer/Analyzer/DbEntry";
+} from "../../../client/src/App/sharedWithServer/Analyzer/SectionMetas/SectionName";
+import { DbEntry } from "../../../client/src/App/sharedWithServer/Analyzer/DbEntry";
 
 const send = {
   success(

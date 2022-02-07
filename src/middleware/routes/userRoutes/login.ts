@@ -3,14 +3,17 @@ import config from "config";
 import jwt from "jsonwebtoken";
 import { isObject } from "lodash";
 import mongoose from "mongoose";
-import { authTokenKey } from "../../../sharedWithServer/User/crudTypes";
+import { authTokenKey } from "../../../client/src/App/sharedWithServer/User/crudTypes";
 
-import { rowIndexToTableName } from "../../../sharedWithServer/Analyzer/SectionMetas/relSectionTypes";
-import { DbUser, LoginUser } from "../../../sharedWithServer/User/DbUser";
-import { relSections } from "../../../sharedWithServer/Analyzer/SectionMetas/relSections";
-import Arr from "../../../sharedWithServer/utils/Arr";
-import { SectionNam } from "../../../sharedWithServer/Analyzer/SectionMetas/SectionName";
-import { DbEnt } from "../../../sharedWithServer/Analyzer/DbEntry";
+import { rowIndexToTableName } from "../../../client/src/App/sharedWithServer/Analyzer/SectionMetas/relSectionTypes";
+import {
+  DbUser,
+  LoginUser,
+} from "../../../client/src/App/sharedWithServer/User/DbUser";
+import { relSections } from "../../../client/src/App/sharedWithServer/Analyzer/SectionMetas/relSections";
+import Arr from "../../../client/src/App/sharedWithServer/utils/Arr";
+import { SectionNam } from "../../../client/src/App/sharedWithServer/Analyzer/SectionMetas/SectionName";
+import { DbEnt } from "../../../client/src/App/sharedWithServer/Analyzer/DbEntry";
 
 export function clientify(dbUser: DbUser): LoginUser {
   const loginUser: Partial<LoginUser> = {};
@@ -63,7 +66,7 @@ export function decodeAndCheckUserToken(token: any): null | UserJwt {
 }
 
 export function makeDummyUserToken() {
-  const objectId = mongoose.Types.ObjectId();
+  const objectId = new mongoose.Types.ObjectId();
   const _id = objectId.toHexString();
   return generateAuthToken(_id);
 }
