@@ -1,0 +1,89 @@
+import React from "react";
+import { useAnalyzerContext } from "../../../modules/usePropertyAnalyzer";
+import XBtn from "../Xbtn";
+import NextBtn from "../NextBtn";
+import { useAdditiveItem } from "./useAdditiveItem";
+import LabeledEquation from "./AdditiveItem/LabeledEquation";
+import IfThen from "./AdditiveItem/IfThen";
+import LabeledSpanOverCost from "./AdditiveItem/LabeledSpanOverCost";
+import LoadedVarb from "./AdditiveItem/LoadedVarb";
+import styled from "styled-components";
+import theme from "../../../theme/Theme";
+import { SectionName } from "../../../sharedWithServer/Analyzer/SectionMetas/SectionName";
+import { Inf } from "../../../sharedWithServer/Analyzer/SectionMetas/Info";
+
+type Props = {
+  id: string;
+  sectionName: SectionName<"userListItem">;
+};
+
+export default function AdditiveItem({ id, sectionName }: Props) {
+  const feInfo = { sectionName, id, idType: "feId" } as const;
+  const { handleRemoveSection } = useAnalyzerContext();
+  const { valueSwitch, toggleValueSwitch, valueVarbName } = useAdditiveItem(
+    feInfo,
+    sectionName
+  );
+  return (
+    <Styled>
+      {valueSwitch === "loadedVarb" && (
+        <LoadedVarb feVarbInfo={Inf.feVarb(valueVarbName, feInfo)} />
+      )}
+      {valueSwitch === "labeledEquation" && <LabeledEquation {...{ feInfo }} />}
+      {valueSwitch === "labeledSpanOverCost" && (
+        <LabeledSpanOverCost {...{ valueVarbName, feInfo }} />
+      )}
+      {valueSwitch === "ifThen" && Inf.is.feName(feInfo, "userVarbItem") && (
+        <IfThen {...{ feInfo }} />
+      )}
+      <td className="AdditiveItem-buttonCell">
+        <NextBtn className="AdditiveItem-nextBtn" onClick={toggleValueSwitch} />
+      </td>
+      <td className="AdditiveItem-buttonCell AdditiveList-buttonCell">
+        <XBtn
+          className="AdditiveItem-xBtn"
+          onClick={() => handleRemoveSection(feInfo)}
+        />
+      </td>
+    </Styled>
+  );
+}
+
+const Styled = styled.tr`
+  .DraftTextField-root {
+    min-width: 40px;
+  }
+  .NumObjEditor-calcIconPositioner {
+    bottom: 1px;
+  }
+
+  .AdditiveItem-xBtn,
+  .AdditiveItem-nextBtn {
+    visibility: hidden;
+  }
+
+  :hover {
+    .AdditiveItem-xBtn,
+    .AdditiveItem-nextBtn {
+      visibility: visible;
+    }
+  }
+
+  td.AdditiveItem-nameCell {
+    .DraftTextField-root {
+      min-width: 50px;
+    }
+  }
+
+  .ellipsis {
+    display: flex;
+    align-items: flex-end;
+    position: relative;
+
+    line-height: 20px;
+
+    height: ${theme.unlabeledInputHeight};
+    font-size: 1.7rem;
+    margin-left: 0.125rem;
+  }
+`;

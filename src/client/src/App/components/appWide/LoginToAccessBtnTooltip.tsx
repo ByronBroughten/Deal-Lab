@@ -1,0 +1,18 @@
+import React from "react";
+import { auth } from "../../modules/services/authService";
+import BtnTooltip from "./BtnTooltip";
+
+type Props = { children: React.ReactElement; className?: string };
+export default function LoginToAccessBtnTooltip({
+  children,
+  className,
+}: Props) {
+  return (
+    <BtnTooltip
+      title={auth.isLoggedIn ? "" : "Login to access"}
+      className={`LoginToAccessBtnTooltip-root ${className ?? ""}`}
+    >
+      {children}
+    </BtnTooltip>
+  );
+}

@@ -1,0 +1,129 @@
+import React from "react";
+import { useAnalyzerContext } from "../../modules/usePropertyAnalyzer";
+import useHowMany from "./customHooks/useHowMany";
+import LoadIndexSectionBtn from "./IndexSectionList/LoadIndexSectionBtn";
+import styled from "styled-components";
+import ccs from "../../theme/cssChunks";
+import theme, {
+  ThemeSectionName,
+  themeSectionNameOrDefault,
+} from "../../theme/Theme";
+import {
+  ChildName,
+  IndexParentName,
+} from "../../sharedWithServer/Analyzer/SectionMetas/relSectionTypes";
+import { sectionMetas } from "../../sharedWithServer/Analyzer/SectionMetas";
+import { FeInfo, Inf } from "../../sharedWithServer/Analyzer/SectionMetas/Info";
+import {
+  SectionNam,
+  SectionName,
+} from "../../sharedWithServer/Analyzer/SectionMetas/SectionName";
+import TrashBtn from "../general/TrashBtn";
+import { useStores } from "../../modules/customHooks/useStore";
+
+function useDeleteIndexSection(
+  sectionName: SectionName<"hasIndexStore">
+): (dbId: string) => void {
+  const store = useStores();
+  if (SectionNam.is(sectionName, "hasRowIndexStore")) {
+    return async (dbId: string) =>
+      await store.deleteRowIndexEntry(sectionName, dbId);
+  } else {
+    return async (dbId: string) =>
+      await store.deleteIndexEntry(sectionName, dbId);
+  }
+}
+
+function useIndexedEntries<S extends SectionName<"hasIndexStore">>(
+  sectionName: S
+): { dbId: string; title: string }[] {
+  const { analyzer } = useAnalyzerContext();
+
+  const storeName = sectionMetas.get(sectionName).indexStoreName;
+  const feStoreParentName = sectionMetas.parentName(
+    storeName
+  ) as IndexParentName<S>;
+
+  const feIds = analyzer.childFeIds([feStoreParentName, storeName] as [
+    typeof feStoreParentName,
+    ChildName<typeof feStoreParentName>
+  ]);
+
+  const indexedEntries = feIds.map((id) => {
+    const section = analyzer.section(Inf.fe(storeName, id));
+    return {
+      title: section.value("title", "string"),
+      dbId: section.dbId,
+    };
+  });
+
+  return indexedEntries.sort((a, b) => {
+    return a.title.localeCompare(b.title);
+  });
+}
+
+type Props = {
+  feInfo: FeInfo<"hasIndexStore">;
+  className?: string;
+};
+export function LoadIndexSectionList({ feInfo, className }: Props) {
+  const { sectionName } = feInfo;
+  const entries = useIndexedEntries(sectionName);
+  const deleteIndexSection = useDeleteIndexSection(sectionName);
+  const { isAtLeastOne } = useHowMany(entries);
+
+  return (
+    <Styled
+      className={`LoadIndexSectionList-root ${className}`}
+      tabIndex={0}
+      sectionName={themeSectionNameOrDefault(sectionName)}
+    >
+      {isAtLeastOne &&
+        entries.map(({ dbId, title }) => (
+          <div key={dbId} className="LoadIndexSectionList-entry">
+            <LoadIndexSectionBtn {...{ feInfo, dbId, title }} />
+            <TrashBtn
+              className="LoadIndexSectionList-trashBtn"
+              onClick={() => deleteIndexSection(dbId)}
+            />
+          </div>
+        ))}
+      {!isAtLeastOne && (
+        <div className="LoadIndexSectionList-entry">
+          <div className="IndexSectionList-noneDiv">None</div>
+        </div>
+      )}
+    </Styled>
+  );
+}
+
+const Styled = styled.div<{ sectionName: ThemeSectionName }>`
+  display: block;
+  position: absolute;
+  z-index: 1;
+  background: ${theme.light};
+  border-radius: 0 0 ${theme.br1} ${theme.br1};
+  border: 1px solid ${theme["gray-500"]};
+  max-height: 200px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  ${ccs.dropdown.scrollbar};
+
+  .IndexSectionList-noneDiv {
+    padding: ${theme.s2};
+  }
+
+  .LoadIndexSectionList-trashBtn {
+    width: 20px;
+    height: auto;
+  }
+
+  .LoadIndexSectionList-entry:not(:first-child) {
+    border-top: 1px solid ${({ sectionName }) => theme[sectionName].light};
+  }
+
+  .LoadIndexSectionList-entry {
+    display: flex;
+    justify-content: space-between;
+  }
+`;

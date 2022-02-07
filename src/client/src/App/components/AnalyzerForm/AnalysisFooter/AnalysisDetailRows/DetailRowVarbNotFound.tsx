@@ -1,0 +1,30 @@
+import { useAnalyzerContext } from "../../../../modules/usePropertyAnalyzer";
+import { InEntity } from "../../../../sharedWithServer/Analyzer/SectionMetas/relSections/rel/relValue/numObj/entities";
+import { SpecificVarbInfo } from "../../../../sharedWithServer/Analyzer/SectionMetas/relSections/rel/relVarbInfoTypes";
+import { AnalysisDetailRow } from "./AnalysisDetailRow";
+
+type Props = {
+  level: number;
+  focalVarbInfo: SpecificVarbInfo;
+  inEntity: InEntity;
+};
+export function DetailRowVarbNotFound({
+  level,
+  focalVarbInfo,
+  inEntity,
+}: Props) {
+  const { analyzer } = useAnalyzerContext();
+  const { editorText } = analyzer.value(focalVarbInfo, "numObj");
+
+  const { length, offset } = inEntity;
+  const displayName = editorText.substring(offset, offset + length);
+  return (
+    <AnalysisDetailRow
+      {...{
+        level,
+        displayName,
+        displayVarb: "?",
+      }}
+    />
+  );
+}
