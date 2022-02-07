@@ -4,12 +4,15 @@
   "description": "",
   "main": "index.ts",
   "scripts": {
-    "start": "ts-node src/index.ts",
-    "dev": "concurrently \"nodemon -r dotenv/config --inspect src/index.ts --ignore client/\" \"npm run client\"",
-    "dev:debug": "nodemon --inspect src/index.ts",
-    "test": "jest --watchAll --verbose --coverage",
+    "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
+    "start:dev": "concurrently \"nodemon -r dotenv/config --inspect src/index.ts --ignore client/\" \"npm run client\"",
+    "start:dev:debug": "nodemon --inspect src/index.ts",
     "client": "cd src/client && npm run start",
-    "build": "tsc && cd client && npm run build,"
+    "start:prod": "ts-node src/index.ts",
+    "install": "cd client && npm install",
+    "build": "cd client && npm run build",
+    "heroku-postbuild": "npm run install && npm run build",
+    "test": "jest --watchAll --verbose --coverage"
   },
   "engines": {
     "node": "14.15.5",
@@ -47,6 +50,7 @@
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
     "helmet": "^4.6.0",
+    "if-env": "^1.0.4",
     "jest-util": "^27.3.1",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21",
