@@ -214,20 +214,18 @@ export const DbEnt = {
   },
   newTableRows(dbUser: DbUser, tableName: SectionName<"table">): DbEntry[] {
     const { rowSourceName } = relSections[tableName];
+
     const tableEntry = dbUser[tableName][0];
-    const dbColumns = tableEntry.dbSections.column;
-    if (dbColumns) {
-      const rowSourceArr = dbUser[rowSourceName];
-      if (rowSourceArr) {
-        return this.toRowIndexEntryArr(
-          [rowSourceName, rowSourceArr],
-          dbColumns
-        );
-      } else {
-        throw new Error(`No rowSourceArr for ${rowSourceName}`);
-      }
+    const dbColumns =
+      tableEntry.dbSections.column === undefined
+        ? []
+        : tableEntry.dbSections.column;
+
+    const rowSourceArr = dbUser[rowSourceName];
+    if (rowSourceArr) {
+      return this.toRowIndexEntryArr([rowSourceName, rowSourceArr], dbColumns);
     } else {
-      return [];
+      throw new Error(`No rowSourceArr for ${rowSourceName}`);
     }
   },
   makeTableEntry(

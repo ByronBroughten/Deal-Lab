@@ -8,6 +8,13 @@
       "processId": "${command:PickProcess}",
       "restart": true,
       "protocol": "inspector"
+    },
+    {
+      "type": "pwa-chrome",
+      "request": "launch",
+      "name": "Launch Chrome against localhost",
+      "url": "http://localhost:3000",
+      "webRoot": "${workspaceFolder}"
     }
   ]
 }

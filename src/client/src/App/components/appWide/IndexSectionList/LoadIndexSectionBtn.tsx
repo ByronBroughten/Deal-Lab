@@ -19,7 +19,7 @@ function useLoadIndexSection(feInfo: FeInfo<"hasIndexStore">, dbId: string) {
   const { sectionName } = feInfo;
   if (SectionNam.is(sectionName, "hasRowIndexStore"))
     return async () =>
-      await store.loadEntryFromDbIndex({ ...feInfo, sectionName }, dbId);
+      await store.loadSectionFromDbIndex({ ...feInfo, sectionName }, dbId);
   else
     return () =>
       handle("loadSectionFromFeIndex", { ...feInfo, sectionName }, dbId);

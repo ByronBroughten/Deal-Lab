@@ -121,7 +121,7 @@ export function useStores() {
     ): void {
       handle("loadSectionFromFeIndex", ...params);
     },
-    async loadEntryFromDbIndex(
+    async loadSectionFromDbIndex(
       feInfo: FeInfo<"hasIndexStore">,
       dbId: string
     ): Promise<void> {

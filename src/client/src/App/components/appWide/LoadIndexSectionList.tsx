@@ -100,7 +100,7 @@ export function LoadIndexSectionList({ feInfo, className }: Props) {
 const Styled = styled.div<{ sectionName: ThemeSectionName }>`
   display: block;
   position: absolute;
-  z-index: 1;
+  z-index: 2; // 2 beats editor title labels
   background: ${theme.light};
   border-radius: 0 0 ${theme.br1} ${theme.br1};
   border: 1px solid ${theme["gray-500"]};

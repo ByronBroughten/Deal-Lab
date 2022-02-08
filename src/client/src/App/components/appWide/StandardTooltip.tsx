@@ -14,7 +14,7 @@ export default function StandardToolTip({
       className={`StandardToolTip-root ${className ?? ""}`}
       style={{ margin: "1px" }}
       title={
-        typeof title === "string" ? (
+        title ? (
           <span style={{ fontSize: ".8rem" }} className="StandardToolTip-title">
             {title}
           </span>

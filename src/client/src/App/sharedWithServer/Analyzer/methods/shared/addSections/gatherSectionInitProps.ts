@@ -117,15 +117,16 @@ export function gatherSectionInitProps<S extends SectionName>(
     initFromDefault = true,
   }: GatherSectionInitPropsProps<S>
 ): InitOneSectionProps[] {
-  if (!initFromDefault && !dbEntry && saneInitialSections.isIn(sectionName)) {
-    dbEntry = saneInitialSections.get(sectionName);
-  }
-
-  if (initFromDefault && SectionNam.is(sectionName, "hasDefaultStore")) {
-    const storeName = analyzer.meta.get(sectionName).defaultStoreName;
-    dbEntry = analyzer.toDbEntry(storeName, {
-      newMainSectionName: sectionName,
-    });
+  if (!dbEntry) {
+    if (!initFromDefault && saneInitialSections.isIn(sectionName)) {
+      dbEntry = saneInitialSections.get(sectionName);
+    }
+    if (initFromDefault && SectionNam.is(sectionName, "hasDefaultStore")) {
+      const storeName = analyzer.meta.get(sectionName).defaultStoreName;
+      dbEntry = analyzer.toDbEntry(storeName, {
+        newMainSectionName: sectionName,
+      });
+    }
   }
 
   const feId = Analyzer.makeId();
