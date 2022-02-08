@@ -15,6 +15,7 @@ import { SectionName } from "../sharedWithServer/Analyzer/SectionMetas/SectionNa
 import { indexStoreToSectionName } from "../sharedWithServer/Analyzer/SectionMetas/relSectionTypes";
 import TrashBtn from "./general/TrashBtn";
 import ColumnHeader from "./SectionTable/ColumnHeader";
+import useToggleView from "../modules/customHooks/useToggleView";
 
 type Props = { tableName: SectionName<"table"> };
 
@@ -71,9 +72,6 @@ export default function SectionTable({ tableName }: Props) {
     store.deleteRowIndexEntry(mainSectionName, dbId);
   }
 
-  const [colMenuId, setColMenuId] = React.useState("");
-  const closeColMenu = () => setColMenuId("");
-
   return (
     <Styled className="SectionTable-root">
       {!auth.isLoggedIn && (
@@ -103,32 +101,17 @@ export default function SectionTable({ tableName }: Props) {
               <tr>
                 <ColumnHeader
                   {...{
-                    colMenuIsOpen: colMenuId === "title",
-                    toggleColMenu: () =>
-                      colMenuId === "title"
-                        ? closeColMenu()
-                        : setColMenuId("title"),
-                    closeColMenu,
                     displayName: "Title",
-
                     sortRowsAZ: () => sortRows("title"),
                     sortRowsZA: () => sortRows("title", { reverse: true }),
                   }}
                 />
 
                 {displayNameColumns.map((col) => {
-                  const openColMenu = () => setColMenuId(col.feId);
                   return (
                     <ColumnHeader
                       {...{
-                        colMenuIsOpen: colMenuId === col.feId,
-                        toggleColMenu: () =>
-                          colMenuId === col.feId
-                            ? closeColMenu()
-                            : openColMenu(),
-                        closeColMenu,
                         displayName: col.displayName,
-
                         sortRowsAZ: () => sortRows(col.feId),
                         sortRowsZA: () => sortRows(col.feId, { reverse: true }),
                         removeColumn: () => removeColumn(col.feId),

@@ -1,13 +1,11 @@
 import { IoMdArrowDropdown } from "react-icons/io";
 import useOnOutsideClickRef from "../../modules/customHooks/useOnOutsideClickRef";
+import useToggleView from "../../modules/customHooks/useToggleView";
 import SimpleMuiMenu, { SimpleMuiMenuItem } from "../appWide/SimpleMuiMenu";
 import PlainIconBtn from "../general/PlainIconBtn";
 
 type Props = {
   displayName: string;
-  colMenuIsOpen: boolean;
-  toggleColMenu: () => void;
-  closeColMenu: () => void;
 
   sortRowsAZ: () => void;
   sortRowsZA: () => void;
@@ -15,15 +13,20 @@ type Props = {
 };
 export default function ColumnHeader({
   displayName,
-  colMenuIsOpen,
-  toggleColMenu,
-  closeColMenu,
+  // colMenuIsOpen,
+  // toggleColMenu,
+  // closeColMenu,
 
   sortRowsAZ,
   sortRowsZA,
   removeColumn,
 }: Props) {
-  const colMenuRef = useOnOutsideClickRef(closeColMenu);
+  const { colMenuIsOpen, toggleColMenu, closeColMenu } = useToggleView({
+    initValue: false,
+    viewWhat: "colMenu",
+  });
+  const colMenuRef = useOnOutsideClickRef(closeColMenu, "th");
+
   const menuItems: SimpleMuiMenuItem[] = [
     {
       displayValue: "Sort A-Z",

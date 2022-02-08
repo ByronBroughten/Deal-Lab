@@ -6,11 +6,7 @@ export default styled.div.attrs(({ className = "", ...rest }) => ({
   ...rest,
 }))`
   padding: ${theme.s3};
-  .MainEntryTitleRow-root {
-  }
-  .ListGroup-root {
-    margin: ${theme.s2};
-  }
+
   .toggle-view-btn {
     color: ${theme["gray-700"]};
   }

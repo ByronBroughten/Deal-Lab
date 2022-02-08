@@ -15,12 +15,12 @@ export default function UnitItem({ id, unitNumber }: Props) {
 
   const targetRentVarb = analyzer.switchedOngoingVarb(feInfo, "targetRent");
   return (
-    <Styled className="unit-item" key={id}>
-      <div className="viewable">
-        <div className="title-row">
+    <Styled className="UnitItem-root" key={id}>
+      <div className="UnitItem-viewable">
+        <div className="UnitItem-titleRow title-row">
           <h6 className="title-text">Unit {unitNumber}</h6>
           <XBtn
-            className="Unit-xBtn"
+            className="UnitItem-xBtn"
             onClick={() => handleRemoveSection(feInfo)}
           />
         </div>
@@ -38,27 +38,28 @@ export default function UnitItem({ id, unitNumber }: Props) {
 }
 
 const Styled = styled.div`
-  min-width: 120px;
+  min-width: 130px;
   ${ccs.subSection.main("property")};
 
-  .Unit-xBtn {
+  .UnitItem-xBtn {
     visibility: hidden;
   }
 
   :hover {
-    .Unit-xBtn {
+    .UnitItem-xBtn {
       visibility: visible;
     }
   }
 
-  div.viewable {
+  .UnitItem-viewable {
     background-color: ${theme.property.light};
     padding: ${theme.s2};
     display: flex;
     flex-direction: column;
+    box-shadow: ${theme.boxShadow1};
   }
 
-  div.title-row {
+  .UnitItem-titleRow {
     align-items: center;
     h6.title-text {
       margin-right: ${theme.s2};

@@ -1,9 +1,10 @@
 import styled from "styled-components";
+import theme from "../../../../theme/Theme";
 
 export default function MainEntryBody({ children }: { children: any }) {
   return (
-    <StyledEntryBody className="main-entry-body">
-      <div className="main-entry-body-inner">{children}</div>
+    <StyledEntryBody className="MainEntryBody-root">
+      <div className="MainEntryBody-inner">{children}</div>
     </StyledEntryBody>
   );
 }
@@ -13,8 +14,13 @@ const StyledEntryBody = styled.div`
   flex: 0;
   flex-wrap: wrap;
 
-  .main-entry-body-inner {
+  .MainEntryBody-inner {
     display: flex;
     flex-wrap: wrap;
+  }
+  .MainEntryItem {
+  }
+  .ListGroup-root {
+    margin: ${theme.s2};
   }
 `;

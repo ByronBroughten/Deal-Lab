@@ -35,7 +35,7 @@ export default function NumObjEditor({
   let { editorState, varb, onChange } = useDraftInput(
     feVarbInfo,
     "numObj",
-    ({ varb, editorState }) =>
+    ({ varb }) =>
       createNumObjEditor({
         varb,
         compositeDecorator: varSpanDecorator,

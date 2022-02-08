@@ -111,7 +111,8 @@ miscUpfrontCostList = DbEnt.addLikeChildren(
 
 const dbIds = {
   property: "0Qm-bLBiulvp",
-  unit: "CfBK_LMk7-1X",
+  unit1: makeSectionId(),
+  unit2: makeSectionId(),
   repairList: makeSectionId(),
 } as const;
 
@@ -123,7 +124,7 @@ const init: DbEntry = {
         dbId: dbIds.property,
         dbVarbs: {
           title: "",
-          price: dbNumObj("100000"),
+          price: dbNumObj("200000"),
           sqft: dbNumObj("1000"),
           taxesMonthly: dbNumObj("250"),
           taxesYearly: dbNumObj("3000"),
@@ -153,13 +154,23 @@ const init: DbEntry = {
           upfrontRevenueList: [],
           ongoingCostList: [],
           ongoingRevenueList: [],
-          unit: [dbIds.unit],
+          unit: [dbIds.unit1, dbIds.unit2],
         },
       },
     ],
     unit: [
       {
-        dbId: dbIds.unit,
+        dbId: dbIds.unit1,
+        dbVarbs: {
+          one: dbNumObj("1"),
+          numBedrooms: dbNumObj("3"),
+          targetRentMonthly: dbNumObj("1500"),
+          targetRentYearly: dbNumObj("18000"),
+        },
+        childDbIds: {},
+      },
+      {
+        dbId: dbIds.unit2,
         dbVarbs: {
           one: dbNumObj("1"),
           numBedrooms: dbNumObj("3"),

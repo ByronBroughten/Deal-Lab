@@ -4,7 +4,7 @@ import theme from "../../../../../theme/Theme";
 import { useAnalyzerContext } from "../../../../../modules/usePropertyAnalyzer";
 import { useOpenWidth } from "../../../../appWide/SectionTitleRow";
 import ToggleViewBtn from "../../../../general/ToggleViewBtn";
-import Unit from "./UnitList/Unit";
+import Unit from "./UnitList/UnitItem";
 import ccs from "../../../../../theme/cssChunks";
 import array from "../../../../../sharedWithServer/utils/Arr";
 import { rem } from "polished";
@@ -31,8 +31,11 @@ export default function UnitList({ feInfo, className }: Props) {
   const addUnit = () => handleAddSection("unit", feInfo);
 
   return (
-    <Styled className={"UnitList-root " + className} {...{ isAtLeastOne }}>
-      <div className="viewable">
+    <Styled
+      className={`UnitList-root ${className ?? ""}`}
+      {...{ isAtLeastOne }}
+    >
+      <div className="UnitList-viewable viewable">
         <div className="title-row">
           <h6 className="title-text">Units</h6>
           {isAtLeastOne ? (
@@ -44,17 +47,17 @@ export default function UnitList({ feInfo, className }: Props) {
           )}
         </div>
         {viewIsOpen && (
-          <div className="unit-list">
+          <div className="UnitList-unitsArea">
             {isAtLeastOne && (
-              <div className="units">
+              <div className="UnitList-units">
                 {areMultiple && (
-                  <div className="total">{`Total rent: ${totalDisplay}`}</div>
+                  <div className="UnitList-total">{`Total rent: ${totalDisplay}`}</div>
                 )}
-                <div className="unit-rows">
+                <div className="UnitList-unitRows">
                   {unitIdRows.map((idRow, rowIndex) => {
                     const unitNumberOffset = rowIndex * numUnitsPerRow;
                     return (
-                      <div className="unit-row" key={rowIndex}>
+                      <div className="UnitList-unitRow" key={rowIndex}>
                         {rowIndex === 0 && (
                           <PlusBtn
                             className="UnitList-addUnitBtn"
@@ -63,7 +66,7 @@ export default function UnitList({ feInfo, className }: Props) {
                             Add Unit
                           </PlusBtn>
                         )}
-                        <div className="unit-row-inner">
+                        <div className="UnitList-unitRowInner">
                           {idRow.map((unitId, unitInnerIndex) => {
                             const unitIndex = unitNumberOffset + unitInnerIndex;
                             const unitNumber = unitIndex + 1;
@@ -91,36 +94,20 @@ export default function UnitList({ feInfo, className }: Props) {
 }
 
 const Styled = styled.div<{ isAtLeastOne: boolean }>`
-  max-width: 246.19px;
   ${ccs.subSection.main("property")};
-  .unit-list {
-    .units {
-      display: inline-block;
-      .unit-rows {
-        .unit-row {
-          display: inline-block;
+  .UnitList-viewable {
+    /* max-width: 240px; */
+  }
+  .UnitList-unitsArea {
+  }
 
-          :first-child {
-            .unit-row-inner {
-              /* border-top: 2px solid ${theme.property.border}; */
-            }
-          }
-
-          .unit-row-inner {
-            display: flex;
-            border-top: 1px solid ${theme.property.border};
-
-            .unit-item {
-              .viewable {
-                border: none;
-              }
-              :not(:first-child) {
-                border-left: 1px solid ${theme.property.border};
-              }
-            }
-          }
-        }
-      }
+  .UnitList-unitRowInner {
+    display: flex;
+    border-top: 1px solid ${theme.property.border};
+  }
+  .UnitItem-root {
+    :not(:first-child) {
+      border-left: 1px solid ${theme.property.dark};
     }
   }
 
