@@ -10,23 +10,16 @@ interface UseOnChangeProps {
   setEditorState: Dispatch<SetStateAction<EditorState>>;
 }
 export default function useOnChange({
-  feVarbInfo,
   editorState,
   setEditorState,
 }: UseOnChangeProps) {
-  const { handleUpdateFromEditor } = useAnalyzerContext();
-
   return function onChange(newEditorState: EditorState) {
     const editorIsChanged = isEditorChanged(editorState, newEditorState);
     const selection = editorState.getSelection();
     if (!selection.getHasFocus() && !editorIsChanged) {
       newEditorState = EditorState.moveFocusToEnd(newEditorState);
     }
-
     setEditorState(() => {
-      if (editorIsChanged) {
-        handleUpdateFromEditor({ feVarbInfo, editorState: newEditorState });
-      }
       return newEditorState;
     });
   };

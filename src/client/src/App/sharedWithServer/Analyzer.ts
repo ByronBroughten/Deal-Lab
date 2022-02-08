@@ -243,9 +243,7 @@ export default class Analyzer {
         }
       }
     }
-    // capEx items cause problems if this isn't here.
     return next.solveAllActiveVarbs();
-    // the sumNums aren't updating
   }
 
   get rawSections(): RawSections {

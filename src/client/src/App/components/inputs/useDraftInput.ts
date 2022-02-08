@@ -1,3 +1,4 @@
+import React from "react";
 import { EditorState } from "draft-js";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -26,7 +27,7 @@ export default function useDraftInput(
   valueType: StateValueAnyKey,
   createEditor: CreateEditor = ({}) => EditorState.createEmpty()
 ) {
-  const { analyzer } = useAnalyzerContext();
+  const { analyzer, handleUpdateFromEditor } = useAnalyzerContext();
   const varb = analyzer.varb(feVarbInfo);
 
   const [editorState, setEditorState] = useState<EditorState>(
@@ -38,6 +39,15 @@ export default function useDraftInput(
       setEditorState(createEditor({ varb }));
     }
   }, [varb.manualUpdateEditorToggle]);
+
+  const firstUpdate = React.useRef(true);
+  useEffect(() => {
+    if (firstUpdate.current) {
+      firstUpdate.current = false;
+      return;
+    }
+    handleUpdateFromEditor({ feVarbInfo, editorState });
+  }, [editorState]);
 
   const value = varb.value(valueType);
   const onChange = useOnChange({
