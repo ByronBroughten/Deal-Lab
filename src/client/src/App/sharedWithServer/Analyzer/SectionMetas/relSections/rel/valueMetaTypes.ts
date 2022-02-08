@@ -1,7 +1,7 @@
 import { z } from "zod";
-import { relValue } from "./relValue";
+import { valueMeta } from "./valueMeta";
 
-export type ValueSchemas = typeof relValue;
+export type ValueSchemas = typeof valueMeta;
 export type ValueTypes = {
   [Prop in keyof ValueSchemas]: ReturnType<ValueSchemas[Prop]["defaultInit"]>;
 };

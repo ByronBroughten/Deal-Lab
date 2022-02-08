@@ -2,25 +2,22 @@ import { cloneDeep, isEqual } from "lodash";
 import { DbValue } from "../DbEntry";
 import array from "../../utils/Arr";
 import { sectionMetas } from "../SectionMetas";
-import { relValue } from "../SectionMetas/relSections/rel/relValue";
+import { valueMeta } from "../SectionMetas/relSections/rel/valueMeta";
 import {
   NumObj,
   NumObjUnit,
-} from "../SectionMetas/relSections/rel/relValue/numObj";
+} from "../SectionMetas/relSections/rel/valueMeta/NumObj";
 import {
   InEntities,
   InEntity,
-} from "../SectionMetas/relSections/rel/relValue/numObj/entities";
+} from "../SectionMetas/relSections/rel/valueMeta/NumObj/entities";
 import {
   UpdateFnName,
   ValueTypes,
-} from "../SectionMetas/relSections/rel/relValueTypes";
+} from "../SectionMetas/relSections/rel/valueMetaTypes";
 import {
-  DbNameInfo,
   FeNameInfo,
   FeVarbInfo,
-  MultiSectionInfo,
-  MultiVarbInfo,
   RelVarbInfo,
 } from "../SectionMetas/relSections/rel/relVarbInfoTypes";
 import { DisplayName } from "../SectionMetas/relSections/rel/relVarbTypes";
@@ -53,7 +50,7 @@ export type StateVarbOptions = Partial<StateVarbCore>;
 
 export type ValueTypesPlusAny = ValueTypes & { any: StateValue };
 export const valueSchemasPlusAny = {
-  ...relValue,
+  ...valueMeta,
   any: { is: () => true },
 } as const;
 

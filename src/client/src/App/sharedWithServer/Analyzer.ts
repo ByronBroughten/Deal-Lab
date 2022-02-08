@@ -159,9 +159,10 @@ import {
 } from "./Analyzer/methods/solveVarbs/solveAndUpdateValue/updateUserVarb";
 import {
   getNumberVarbs,
-  getSolvableRange,
+  getSolvableNumber,
   getSolvableText,
-  updateNumObjCalc,
+  makeSolvableTextAndNumber,
+  solveNumObjCalc,
 } from "./Analyzer/methods/solveVarbs/solveAndUpdateValue/updateNumericObjCalc";
 import {
   addInEntity,
@@ -415,9 +416,10 @@ export default class Analyzer {
   getUserVarbValue = getUserVarbValue;
 
   getSolvableText = getSolvableText;
-  getSolvableRange = getSolvableRange;
+  getSolvableNumber = getSolvableNumber;
+  makeSolvableTextAndNumber = makeSolvableTextAndNumber;
   getNumberVarbs = getNumberVarbs;
-  updateNumObjCalc = updateNumObjCalc;
+  solveNumObjCalc = solveNumObjCalc;
   solveAndUpdateValue = solveAndUpdateValue;
 
   solveVarbs = solveVarbs;

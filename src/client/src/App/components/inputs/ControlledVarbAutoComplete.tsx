@@ -1,7 +1,7 @@
 import { isEqual } from "lodash";
 import { useAnalyzerContext } from "../../modules/usePropertyAnalyzer";
 import { VariableOption } from "../../sharedWithServer/Analyzer/methods/entitiesVariables";
-import { InEntityVarbInfo } from "../../sharedWithServer/Analyzer/SectionMetas/relSections/rel/relValue/numObj/entities";
+import { InEntityVarbInfo } from "../../sharedWithServer/Analyzer/SectionMetas/relSections/rel/valueMeta/NumObj/entities";
 import VarbAutoComplete from "./VarbAutoComplete";
 
 type Props = {

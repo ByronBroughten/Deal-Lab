@@ -2,7 +2,7 @@ import { makeSectionId } from "../../../../../../makeSectionId";
 import { Obj } from "../../../../../../utils/Obj";
 import { DbEnt, DbEntry } from "../../../../../DbEntry";
 import { Inf } from "../../../../../SectionMetas/Info";
-import { dbNumObj } from "../../../../../SectionMetas/relSections/rel/relValue/numObj";
+import { dbNumObj } from "../../../../../SectionMetas/relSections/rel/valueMeta/NumObj";
 
 type ListItemCoreValues = [name: string, cost: number];
 const periodicItemCoreValues: ListItemCoreValues[] = [

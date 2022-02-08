@@ -6,7 +6,7 @@ import theme from "../../../theme/Theme";
 import VarbAutoComplete from "../VarbAutoComplete";
 import Analyzer from "../../../sharedWithServer/Analyzer";
 import { VariableOption } from "../../../sharedWithServer/Analyzer/methods/entitiesVariables";
-import { EntityMapData } from "../../../sharedWithServer/Analyzer/SectionMetas/relSections/rel/relValue/numObj/entities";
+import { EntityMapData } from "../../../sharedWithServer/Analyzer/SectionMetas/relSections/rel/valueMeta/NumObj/entities";
 
 interface Props {
   editorState: EditorState;

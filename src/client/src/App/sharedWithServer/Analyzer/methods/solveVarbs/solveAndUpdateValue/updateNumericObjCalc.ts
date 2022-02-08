@@ -1,8 +1,10 @@
 import {
+  EntitiesAndEditorText,
   FailedVarbs,
   GetSolvableTextProps,
   NumObj,
-} from "../../../SectionMetas/relSections/rel/relValue/numObj";
+  NumObjNumber,
+} from "../../../SectionMetas/relSections/rel/valueMeta/NumObj";
 import { replaceRange } from "../../../../utils/Str";
 import Analyzer from "../../../../Analyzer";
 import {
@@ -12,33 +14,102 @@ import {
 import calculations, {
   CalcProp,
   isCalculationName,
-} from "../../../SectionMetas/relSections/rel/relValue/numObj/calculations";
-import { CalcNumObjFnName } from "../../../SectionMetas/relSections/rel/relValue/numObj/updateFnNames";
+} from "../../../SectionMetas/relSections/rel/valueMeta/NumObj/calculations";
+import {
+  isNumObjUpdateFnName,
+  NumObjUpdateFnName,
+} from "../../../SectionMetas/relSections/rel/valueMeta/NumObj/updateFnNames";
+import {
+  arithmeticOperatorsArr,
+  decimalToPercent,
+} from "./../../../../utils/math";
+import { round } from "lodash";
 
-export function updateNumObjCalc(
-  this: Analyzer,
-  feVarbInfo: FeVarbInfo,
-  updateFnName: CalcNumObjFnName
-): NumObj {
-  const { dbNumObj } = this.value(feVarbInfo, "numObj");
-  const { unit } = this.varb(feVarbInfo);
-  const nextNumObj = new NumObj({
-    updateFnName,
-    unit,
-    ...dbNumObj,
-    ...this.getSolvableText(feVarbInfo, dbNumObj),
-  });
-  const { number } = nextNumObj;
-  const editorText = typeof number === "number" ? `${number}` : "";
-  return nextNumObj.updateCore({
-    editorText,
-  });
+export const numObjUnits = {
+  percent: {
+    roundTo: 2,
+  },
+  decimal: {
+    roundTo: 4,
+  },
+  money: {
+    roundTo: 2,
+    roundWithZeros: true,
+  },
+} as const;
+export type NumObjUnit = keyof typeof numObjUnits;
+// get number(): CalcProp {
+//   const number = NumObj.solveText(this.solvableText, this.core.unit);
+//   if (isRationalNumber(number)) return this.doFinishingTouches(number);
+//   else return "?";
+// }
+
+function doFinishingTouches(
+  num: number,
+  updateFnName: NumObjUpdateFnName
+): number {
+  if (updateFnName === "divideToPercent") num = decimalToPercent(num);
+  return num;
+}
+function solveText(
+  text: string,
+  unit: NumObjUnit,
+  updateFnName: NumObjUpdateFnName
+): NumObjNumber {
+  // no errors should be thrown as a person is validly typing front to back
+  if (text[text.length - 1] === ".")
+    // if there's a dot at the end, they could be about to enter a number
+    text = text.substring(0, text.length - 1);
+
+  if (text[text.length - 1] === "-")
+    // if there's a minus at the end, they might be subtracting
+    // or making a negative number, which could follow another operator
+    text = text.substring(0, text.length - 1);
+  if (arithmeticOperatorsArr.includes(text[text.length - 1]))
+    // if there's an operator before those things, it's valid
+    text = text.substring(0, text.length - 1);
+
+  try {
+    let num = new Function("return " + text)();
+    if (typeof num === "number") {
+      num = doFinishingTouches(num, updateFnName);
+      return round(num, numObjUnits[unit].roundTo);
+    } else return "?";
+  } catch {
+    return "?";
+  }
 }
 
-export function getSolvableRange(
+export function makeSolvableTextAndNumber(
+  this: Analyzer,
+  feVarbInfo: FeVarbInfo,
+  entitiesAndText: EntitiesAndEditorText
+): { solvableText: string; number: NumObjNumber } {
+  const updateFnName = this.updateFnName(feVarbInfo);
+  if (isNumObjUpdateFnName(updateFnName)) {
+    const solvableText = this.getSolvableText(feVarbInfo, entitiesAndText);
+    const { unit } = this.varb(feVarbInfo);
+    const numObjNumber = solveText(solvableText, unit, updateFnName);
+    return { solvableText, number: numObjNumber };
+  } else {
+    throw new Error("For now, this is only for numObjs.");
+  }
+}
+
+export function solveNumObjCalc(
+  this: Analyzer,
+  feVarbInfo: FeVarbInfo
+): NumObj {
+  const numObj = this.value(feVarbInfo, "numObj");
+  return numObj.updateCache(
+    this.makeSolvableTextAndNumber(feVarbInfo, numObj.core)
+  );
+}
+
+export function getSolvableNumber(
   this: Analyzer,
   feVarbInfo: SpecificVarbInfo
-): CalcProp {
+): NumObjNumber {
   const varb = this.findVarb(feVarbInfo);
   if (!varb) return "?";
   return varb.value("numObj").number;
@@ -48,38 +119,25 @@ export function getSolvableText(
   this: Analyzer,
   feVarbInfo: FeVarbInfo,
   { editorText, entities = [] }: GetSolvableTextProps
-): { solvableText: string; failedVarbs: FailedVarbs } {
+): string {
   const updateFnName = this.updateFnName(feVarbInfo);
   if (isCalculationName(updateFnName)) {
-    const { numberVarbs, failedVarbs } = this.getNumberVarbs(feVarbInfo);
+    const { numberVarbs } = this.getNumberVarbs(feVarbInfo);
     const solvableText = calculations[updateFnName](numberVarbs as any);
-    return {
-      solvableText,
-      failedVarbs,
-    };
+    return solvableText;
   }
 
   let solvableText = editorText;
-  const failedVarbs: FailedVarbs = [];
-
   for (const entity of entities) {
-    // if the varbCan't be found then use a questionMark and add to failedVarbs, ya?
-    const range = this.getSolvableRange(entity);
-    if (range === "?")
-      failedVarbs.push({
-        errorMessage: "failedVarb",
-        ...entity,
-      });
-
+    const num = this.getSolvableNumber(entity);
     solvableText = replaceRange(
       solvableText,
       entity.offset,
       entity.offset + entity.length,
-      `${range}`
+      `${num}`
     );
   }
-
-  return { solvableText, failedVarbs };
+  return solvableText;
 }
 
 export type NumberProps = { [name: string]: CalcProp | CalcProp[] };

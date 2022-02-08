@@ -17,7 +17,7 @@ import {
   OutUpdatePack,
 } from "../SectionMetas/VarbMeta";
 import { SectionName } from "../SectionMetas/SectionName";
-import { UpdateFnName } from "../SectionMetas/relSections/rel/relValueTypes";
+import { UpdateFnName } from "../SectionMetas/relSections/rel/valueMetaTypes";
 import { UpdateFnProps } from "../SectionMetas/relSections/rel/relVarbTypes";
 import { SwitchVarbNames } from "../SectionMetas/relSections/rel/relVarbs/preSwitchVarbs";
 import { switchNames } from "../SectionMetas/relSections/baseSections/switchNames";

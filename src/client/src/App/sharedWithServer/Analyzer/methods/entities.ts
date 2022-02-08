@@ -3,7 +3,7 @@ import { OutEntity } from "../StateSection/StateVarb/entities";
 import {
   InEntity,
   InEntityVarbInfo,
-} from "../SectionMetas/relSections/rel/relValue/numObj/entities";
+} from "../SectionMetas/relSections/rel/valueMeta/NumObj/entities";
 
 export function addInEntity(
   this: Analyzer,

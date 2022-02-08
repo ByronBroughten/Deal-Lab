@@ -10,9 +10,9 @@ import {
   UpdateFnProps,
   UpdateSwitchProp,
 } from "./relSections/rel/relVarbTypes";
-import { relValue } from "./relSections/rel/relValue";
-import { NumObj, NumObjUnit } from "./relSections/rel/relValue/numObj";
-import { UpdateFnName } from "./relSections/rel/relValueTypes";
+import { valueMeta } from "./relSections/rel/valueMeta";
+import { NumObj, NumObjUnit } from "./relSections/rel/valueMeta/NumObj";
+import { UpdateFnName } from "./relSections/rel/valueMetaTypes";
 import { SectionName } from "./SectionName";
 
 export type InBaseUpdatePack = {
@@ -88,7 +88,7 @@ export type VarbMetaCore = PreVarb & VarbMetaProps;
 export class VarbMeta {
   constructor(readonly core: VarbMetaCore) {}
   isVarbValueType(value: any): boolean {
-    return relValue[this.type].is(value);
+    return valueMeta[this.type].is(value);
   }
   get raw() {
     return { ...this.core };

@@ -7,13 +7,13 @@ import {
 import { EntityMap, EntityRanges, RawEditorState } from "../../utils/Draf";
 import { isEditorUpdateFnName } from "../../sharedWithServer/Analyzer/StateSection/StateVarb/stateValue";
 import {
-  EditorTextAndEntities,
+  EntitiesAndEditorText,
   NumObj,
-} from "../../sharedWithServer/Analyzer/SectionMetas/relSections/rel/relValue/numObj";
+} from "../../sharedWithServer/Analyzer/SectionMetas/relSections/rel/valueMeta/NumObj";
 import Analyzer from "../../sharedWithServer/Analyzer";
 import array from "../../sharedWithServer/utils/Arr";
 import { FeVarbInfo } from "../../sharedWithServer/Analyzer/SectionMetas/relSections/rel/relVarbInfoTypes";
-import { InEntities } from "../../sharedWithServer/Analyzer/SectionMetas/relSections/rel/relValue/numObj/entities";
+import { InEntities } from "../../sharedWithServer/Analyzer/SectionMetas/relSections/rel/valueMeta/NumObj/entities";
 
 const updateEditorByBasicType = {
   string(editorState: EditorState): string {
@@ -70,23 +70,20 @@ function numObjFromEditor(
   editorState: EditorState
 ): NumObj {
   const textAndEntities = textAndEntitiesFromEditorState(editorState);
-
-  return new NumObj({
-    ...textAndEntities,
-    ...analyzer.getSolvableText(feVarbInfo, textAndEntities),
-    updateFnName: "calcVarbs",
-    unit: analyzer.varb(feVarbInfo).unit,
-  });
+  return new NumObj(
+    textAndEntities,
+    analyzer.makeSolvableTextAndNumber(feVarbInfo, textAndEntities)
+  );
 }
 function textAndEntitiesFromEditorState(
   editorState: EditorState
-): EditorTextAndEntities {
+): EntitiesAndEditorText {
   const rawEditorState = getRawEditorState(editorState);
   return textAndEntitiesFromRaw(rawEditorState);
 }
 function textAndEntitiesFromRaw(
   rawEditorState: RawEditorState
-): EditorTextAndEntities {
+): EntitiesAndEditorText {
   const { blocks, entityMap } = rawEditorState;
   const { text: editorText, entityRanges } = blocks[0];
   return {

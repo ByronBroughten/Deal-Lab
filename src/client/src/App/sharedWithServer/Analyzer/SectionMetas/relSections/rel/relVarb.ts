@@ -9,14 +9,14 @@ import {
 } from "./relVarbTypes";
 import { BaseName } from "../baseSectionTypes";
 import { InRelVarbInfo } from "./relVarbInfoTypes";
-import { relValue } from "./relValue";
-import { preVarbInfo } from "./relVarbInfo";
+import { valueMeta } from "./valueMeta";
+import { relVarbInfo } from "./relVarbInfo";
 import {
   CalculationName,
   LeftRightPropCalculations,
   SinglePropCalculations,
-} from "./relValue/numObj/calculations";
-import { preProps } from "./relMisc";
+} from "./valueMeta/NumObj/calculations";
+import { relProps } from "./relMisc";
 
 export type PreNumObjOptions = Partial<NumObjPreVarb & { initNumber: number }>;
 export type LeftRightVarbInfos = [InRelVarbInfo, InRelVarbInfo];
@@ -33,7 +33,7 @@ export const relVarb = {
     type: T,
     partial: Partial<PreVarbByType[T]> = {}
   ): PreVarbByType[T] {
-    const valueSchema = relValue[type];
+    const valueSchema = valueMeta[type];
     return {
       type,
       updateFnName: valueSchema.updateFnNames[0],
@@ -62,7 +62,7 @@ export const relVarb = {
             },
             switchValue: "loadedVarb",
             updateFnName: "loadedString",
-            updateFnProps: preProps.loadedVarb(sectionName),
+            updateFnProps: relProps.loadedVarb(sectionName),
           },
         ],
       }),
@@ -159,7 +159,7 @@ export const relVarb = {
     localVarbNames: string[],
     sectionName: BaseName<"hasVarb">
   ) {
-    const varbsToSum = preVarbInfo.localsByVarbName(
+    const varbsToSum = relVarbInfo.localsByVarbName(
       sectionName,
       localVarbNames
     );

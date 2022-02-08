@@ -1,4 +1,4 @@
-import { ValueTypes } from "../../SectionMetas/relSections/rel/relValueTypes";
+import { ValueTypes } from "../../SectionMetas/relSections/rel/valueMetaTypes";
 
 const editorUpdateNames = ["calcVarbs", "string", "stringArray"] as const;
 type EditorUpdateName = typeof editorUpdateNames[number];

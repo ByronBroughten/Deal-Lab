@@ -7,10 +7,10 @@ import {
   NumObjCore,
   numObjUnits,
   zDbNumObj,
-} from "./relValue/numObj";
-import { numObjUpdateFnNames } from "./relValue/numObj/updateFnNames";
+} from "./valueMeta/NumObj";
+import { numObjUpdateFnNames } from "./valueMeta/NumObj/updateFnNames";
 
-export const relValue = {
+export const valueMeta = {
   number: {
     is: (v: any): v is number => typeof v === "number",
     updateFnNames: ["number"],
@@ -47,16 +47,10 @@ export const relValue = {
   numObj: {
     is: (value: any) => value instanceof NumObj,
     updateFnNames: numObjUpdateFnNames,
-    defaultInit: (props: Partial<NumObjCore> = {}) =>
-      new NumObj({
-        editorText: "",
-        entities: [],
-        updateFnName: numObjUpdateFnNames[0],
-        solvableText: "",
-        failedVarbs: [],
-        unit: "money",
-        ...props,
-      }),
+    defaultInit: ({
+      editorText = "",
+      entities = [],
+    }: Partial<NumObjCore> = {}) => new NumObj({ editorText, entities }),
     zod: z
       .any()
       .refine(
@@ -69,10 +63,10 @@ export const relValue = {
   },
 } as const;
 
-type RelValue = typeof relValue;
+type ValueMeta = typeof valueMeta;
 
-type RelValueTest = Record<BaseValue, RelValue[keyof RelValue]>;
+type RelValueTest = Record<BaseValue, ValueMeta[keyof ValueMeta]>;
 function testValues<T extends RelValueTest>(test: T): T {
   return test;
 }
-const _ = testValues(relValue);
+const _ = testValues(valueMeta);

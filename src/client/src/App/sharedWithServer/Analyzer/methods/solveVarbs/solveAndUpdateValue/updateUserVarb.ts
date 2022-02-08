@@ -1,5 +1,5 @@
 import Analyzer from "../../../../Analyzer";
-import { NumObj } from "../../../SectionMetas/relSections/rel/relValue/numObj";
+import { NumObj } from "../../../SectionMetas/relSections/rel/valueMeta/NumObj";
 import { FeNameInfo } from "../../../SectionMetas/relSections/rel/relVarbInfoTypes";
 
 const valueOperators = ["===", "!==", ">", ">=", "<", "<="] as const;

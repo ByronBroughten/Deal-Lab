@@ -1,5 +1,5 @@
 import { switchNames } from "../baseSections/switchNames";
-import { preVarbInfo } from "./relVarbInfo";
+import { relVarbInfo } from "./relVarbInfo";
 import { UpdateFnProps, UpdateSwitchProp } from "./relVarbTypes";
 import {
   InRelVarbInfo,
@@ -7,16 +7,16 @@ import {
   LocalRelVarbInfo,
   SingleInRelVarbInfo,
 } from "./relVarbInfoTypes";
-import { relValue } from "./relValue";
+import { valueMeta } from "./valueMeta";
 import { BaseName } from "../baseSectionTypes";
-import { UpdateFnName } from "./relValueTypes";
-import { NumObj } from "./relValue/numObj";
+import { UpdateFnName } from "./valueMetaTypes";
+import { NumObj } from "./valueMeta/NumObj";
 
-export const preAdorn = {
+export const relAdorn = {
   moneyMonth: { startAdornment: "$", endAdornment: "/month" },
   moneyYear: { startAdornment: "$", endAdornment: "/year" },
 };
-export const preProps = {
+export const relProps = {
   named(
     relative: InVarbRelative,
     names: [
@@ -28,7 +28,7 @@ export const preProps = {
     return names.reduce((props, [kwargName, sectionName, varbName]) => {
       return {
         ...props,
-        [kwargName]: preVarbInfo.relative(sectionName, varbName, relative),
+        [kwargName]: relVarbInfo.relative(sectionName, varbName, relative),
       };
     }, {} as UpdateFnProps);
   },
@@ -37,7 +37,7 @@ export const preProps = {
     varbNames: T[]
   ): { [Prop in T]: LocalRelVarbInfo } {
     return varbNames.reduce((localProps, varbName) => {
-      localProps[varbName] = preVarbInfo.local(sectionName, varbName);
+      localProps[varbName] = relVarbInfo.local(sectionName, varbName);
       return localProps;
     }, {} as { [varbName: string]: LocalRelVarbInfo }) as {
       [Prop in T]: LocalRelVarbInfo;
@@ -62,7 +62,7 @@ export const preProps = {
   },
 };
 
-export const updateSwitchMold = {
+export const relUpdateSwitch = {
   base(
     switchInfo: LocalRelVarbInfo,
     switchValue: string,
@@ -82,12 +82,12 @@ export const updateSwitchMold = {
   ): UpdateSwitchProp {
     const varbNames = switchNames(baseVarbName, "ongoing");
     return {
-      switchInfo: preVarbInfo.local(sectionName, varbNames.switch),
+      switchInfo: relVarbInfo.local(sectionName, varbNames.switch),
       switchValue: "yearly",
       updateFnName: "yearlyToMonthly",
       updateFnProps: {
-        num: preVarbInfo.local(sectionName, varbNames.yearly),
-        switch: preVarbInfo.local(sectionName, varbNames.switch),
+        num: relVarbInfo.local(sectionName, varbNames.yearly),
+        switch: relVarbInfo.local(sectionName, varbNames.switch),
       },
     };
   },
@@ -97,11 +97,11 @@ export const updateSwitchMold = {
   ): UpdateSwitchProp {
     const varbNames = switchNames(baseVarbName, "ongoing");
     return {
-      switchInfo: preVarbInfo.local(sectionName, varbNames.switch),
+      switchInfo: relVarbInfo.local(sectionName, varbNames.switch),
       switchValue: "monthly",
       updateFnName: "monthlyToYearly",
       updateFnProps: {
-        num: preVarbInfo.local(sectionName, varbNames.monthly),
+        num: relVarbInfo.local(sectionName, varbNames.monthly),
       },
     };
   },
@@ -113,10 +113,10 @@ export const updateSwitchMold = {
     rightSide: SingleInRelVarbInfo
   ): UpdateSwitchProp {
     return {
-      switchInfo: preVarbInfo.local(sectionName, switchName),
+      switchInfo: relVarbInfo.local(sectionName, switchName),
       switchValue,
       updateFnName: "divideToPercent",
-      updateFnProps: preProps.leftRight(leftSide, rightSide),
+      updateFnProps: relProps.leftRight(leftSide, rightSide),
     };
   },
   percentToDecimalTimesBase<Base extends string>(
@@ -126,24 +126,20 @@ export const updateSwitchMold = {
   ): UpdateSwitchProp {
     const varbNames = switchNames(baseVarbName, "dollarsPercent");
     return {
-      switchInfo: preVarbInfo.local(sectionName, varbNames.switch),
+      switchInfo: relVarbInfo.local(sectionName, varbNames.switch),
       switchValue: "percent",
       updateFnName: "percentToDecimalTimesBase",
       updateFnProps: {
-        leftSide: preVarbInfo.local(sectionName, varbNames.percent),
+        leftSide: relVarbInfo.local(sectionName, varbNames.percent),
         rightSide,
       },
     };
   },
 };
 
-export const preValue = {
+export const relValue = {
   numObj(value?: number | string): NumObj {
-    if (value === undefined) value = "";
-    const strValue = `${value}`;
-    return relValue["numObj"].defaultInit({
-      editorText: strValue,
-      solvableText: strValue,
-    });
+    const strValue = `${value ?? ""}`;
+    return valueMeta["numObj"].defaultInit({ editorText: strValue });
   },
 };

@@ -5,7 +5,7 @@ import {
   InEntities,
   InEntity,
   InEntityVarbInfo,
-} from "../SectionMetas/relSections/rel/relValue/numObj/entities";
+} from "../SectionMetas/relSections/rel/valueMeta/NumObj/entities";
 import {
   DbVarbInfo,
   FeVarbInfo,

@@ -4,7 +4,7 @@ import StateVarb from "../StateVarb";
 import {
   InEntities,
   InEntity,
-} from "../../SectionMetas/relSections/rel/relValue/numObj/entities";
+} from "../../SectionMetas/relSections/rel/valueMeta/NumObj/entities";
 
 // all varbs that may have inEntities are in mutable sections.
 // so all outEntities (which point to the varbs with inEntities)

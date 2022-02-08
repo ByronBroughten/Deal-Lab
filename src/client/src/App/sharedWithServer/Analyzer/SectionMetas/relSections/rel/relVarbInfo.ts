@@ -18,7 +18,7 @@ type GenRelVarbInfo<
   id: T;
 };
 
-export const preVarbInfo = {
+export const relVarbInfo = {
   relative<S extends BaseName<"hasVarb">, V extends string, R extends Relative>(
     sectionName: S,
     varbName: V,

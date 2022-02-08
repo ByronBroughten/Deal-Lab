@@ -1,10 +1,11 @@
 import { percentToDecimal } from "../../../../../../utils/math";
 import { ObjectKeys } from "../../../../../../utils/Obj";
+import { NumObjNumber } from "../NumObj";
 
 export type Calculate = (props: any) => string;
 
 type LRSides = { leftSide: number; rightSide: number };
-export type CalcProp = number | "?";
+export type CalcProp = NumObjNumber;
 type NumProp = { num: CalcProp };
 const solvableTextByArgs = {
   single: {

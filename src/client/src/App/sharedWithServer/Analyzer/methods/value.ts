@@ -6,7 +6,7 @@ import {
 import Analyzer from "../../Analyzer";
 import { StateValueAnyKey, ValueTypesPlusAny } from "../StateSection/StateVarb";
 import { StateValue } from "../StateSection/StateVarb/stateValue";
-import { InEntityVarbInfo } from "../SectionMetas/relSections/rel/relValue/numObj/entities";
+import { InEntityVarbInfo } from "../SectionMetas/relSections/rel/valueMeta/NumObj/entities";
 import { Inf } from "../SectionMetas/Info";
 
 export function value<T extends StateValueAnyKey = "any">(

@@ -12,8 +12,8 @@ import {
   SwitchRecord,
 } from "../../baseSections/switchNames";
 import { omit } from "lodash";
-import { NumObjUpdateFnName } from "../relValue/numObj/updateFnNames";
-import { preVarbInfo } from "../relVarbInfo";
+import { NumObjUpdateFnName } from "../valueMeta/NumObj/updateFnNames";
+import { relVarbInfo } from "../relVarbInfo";
 
 type SwitchPreVarbs<
   Base extends string,
@@ -98,7 +98,7 @@ function getOngoingUpdatePacks<Base extends string>(
       updatePacks[spanly] = {
         updateFnName: defaultUpdateFnNames[spanly],
         updateFnProps: {
-          nums: [preVarbInfo.relative(packOrName, varbNames.yearly, "local")],
+          nums: [relVarbInfo.relative(packOrName, varbNames.yearly, "local")],
         },
       };
     else updatePacks[spanly] = packOrName;
@@ -122,7 +122,7 @@ export function monthsYearsInput<Base extends string>(
         nameExtension: "Months",
         updateFnName: "yearsToMonths",
         updateFnProps: {
-          num: preVarbInfo.relative(sectionName, varbNames.years, "local"),
+          num: relVarbInfo.relative(sectionName, varbNames.years, "local"),
         },
         switchValue: "months",
         options: {
@@ -135,7 +135,7 @@ export function monthsYearsInput<Base extends string>(
         nameExtension: "Years",
         updateFnName: "monthsToYears",
         updateFnProps: {
-          num: preVarbInfo.relative(sectionName, varbNames.months, "local"),
+          num: relVarbInfo.relative(sectionName, varbNames.months, "local"),
         },
         switchValue: "years",
         options: {
@@ -164,7 +164,7 @@ export function ongoingInput<Base extends string>(
         nameExtension: ongoingVarbSpanEndings.monthly,
         updateFnName: "yearlyToMonthly",
         updateFnProps: {
-          num: preVarbInfo.local(sectionName, varbNames.yearly),
+          num: relVarbInfo.local(sectionName, varbNames.yearly),
         },
         switchValue: "monthly",
         options: {
@@ -177,7 +177,7 @@ export function ongoingInput<Base extends string>(
         nameExtension: ongoingVarbSpanEndings.yearly,
         updateFnName: "monthlyToYearly",
         updateFnProps: {
-          num: preVarbInfo.relative(sectionName, varbNames.monthly, "local"),
+          num: relVarbInfo.relative(sectionName, varbNames.monthly, "local"),
         },
         switchValue: "yearly",
         options: {
@@ -208,15 +208,15 @@ export function ongoingPercentToPortion<Base extends string>(
     [varbNames.monthly]: relVarb.moneyMonth(displayName, {
       updateFnName: "percentToPortion",
       updateFnProps: {
-        base: preVarbInfo.static(baseSectionName, baseVarbNames.monthly),
-        percentOfBase: preVarbInfo.local(sectionName, percentName),
+        base: relVarbInfo.static(baseSectionName, baseVarbNames.monthly),
+        percentOfBase: relVarbInfo.local(sectionName, percentName),
       },
     }),
     [varbNames.yearly]: relVarb.moneyYear(displayName, {
       updateFnName: "percentToPortion",
       updateFnProps: {
-        base: preVarbInfo.static(baseSectionName, baseVarbNames.yearly),
-        percentOfBase: preVarbInfo.local(sectionName, percentName),
+        base: relVarbInfo.static(baseSectionName, baseVarbNames.yearly),
+        percentOfBase: relVarbInfo.local(sectionName, percentName),
       },
     }),
   };

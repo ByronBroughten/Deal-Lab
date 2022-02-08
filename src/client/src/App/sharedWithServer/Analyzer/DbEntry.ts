@@ -2,13 +2,13 @@ import { makeSectionId } from "../makeSectionId";
 import { z } from "zod";
 import { zNanoId, zString } from "../utils/zod";
 import { BasicValue } from "./StateSection/StateVarb/stateValue";
-import { DbNumObj } from "./SectionMetas/relSections/rel/relValue/numObj";
-import { relValue } from "./SectionMetas/relSections/rel/relValue";
+import { DbNumObj } from "./SectionMetas/relSections/rel/valueMeta/NumObj";
+import { valueMeta } from "./SectionMetas/relSections/rel/valueMeta";
 import { ParentName } from "./SectionMetas/relSectionTypes";
 import {
   InEntityInfo,
   InEntityVarbInfo,
-} from "./SectionMetas/relSections/rel/relValue/numObj/entities";
+} from "./SectionMetas/relSections/rel/valueMeta/NumObj/entities";
 import {
   DbNameInfo,
   StaticRelInfo,
@@ -254,7 +254,7 @@ export const DbEnt = {
 
 // because of how zod unions and records work, these zod schemas must be
 // based on the types—the types can't be based on the zod schemas
-const zDbValueArr = Object.values(relValue).map((schema) => schema.dbZod) as [
+const zDbValueArr = Object.values(valueMeta).map((schema) => schema.dbZod) as [
   z.ZodTypeAny,
   z.ZodTypeAny
 ];

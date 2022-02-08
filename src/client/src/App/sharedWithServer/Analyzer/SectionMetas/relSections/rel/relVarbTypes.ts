@@ -3,13 +3,13 @@ import {
   InRelVarbInfo,
   LocalRelVarbInfo,
 } from "./relVarbInfoTypes";
-import { NumObj } from "./relValue/numObj";
+import { NumObj } from "./valueMeta/NumObj";
 import {
   UpdateFnName,
   ValueSchemas,
   ValueTypeName,
   ValueTypes,
-} from "./relValueTypes";
+} from "./valueMetaTypes";
 
 export type UpdateFnProps = {
   [kwargName: string]: InRelVarbInfo | InRelVarbInfo[];
@@ -49,6 +49,6 @@ export type PreVarbByType = {
 export type PreVarb<T extends ValueTypeName = ValueTypeName> = PreVarbByType[T];
 export type NumObjPreVarb = PreVarbByType["numObj"];
 export type StringPreVarb = PreVarbByType["string"];
-export function isNumObjPreVarb(relVarb: PreVarb): relVarb is NumObjPreVarb {
+export function isNumObjRelVarb(relVarb: PreVarb): relVarb is NumObjPreVarb {
   return relVarb.initValue instanceof NumObj;
 }

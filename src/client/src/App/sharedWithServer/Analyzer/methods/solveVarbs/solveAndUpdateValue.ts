@@ -1,20 +1,16 @@
 import Analyzer from "../../../Analyzer";
 import { FeVarbInfo } from "../../SectionMetas/relSections/rel/relVarbInfoTypes";
 import { StateValue } from "../../StateSection/StateVarb/stateValue";
-import { NumObj } from "../../SectionMetas/relSections/rel/relValue/numObj";
-import { isCalcNumObjFnName } from "../../SectionMetas/relSections/rel/relValue/numObj/updateFnNames";
+import { NumObj } from "../../SectionMetas/relSections/rel/valueMeta/NumObj";
+import { isCalcNumObjFnName } from "../../SectionMetas/relSections/rel/valueMeta/NumObj/updateFnNames";
 import { Inf } from "../../SectionMetas/Info";
 
 const updateFns = {
   editorValue(analyzer: Analyzer, feVarbInfo: FeVarbInfo): NumObj {
     const value = analyzer.value(feVarbInfo, "numObj");
-    const { solvableText } = analyzer.feValue(
-      "editorValue",
-      feVarbInfo,
-      "numObj"
-    );
-    return value.updateCore({
-      solvableText,
+    const { cache } = analyzer.feValue("editorValue", feVarbInfo, "numObj");
+    return value.updateCache({
+      ...cache,
     });
   },
   loadedNumObj(analyzer: Analyzer, feVarbInfo: FeVarbInfo): NumObj {
@@ -23,12 +19,13 @@ const updateFns = {
     const loadedValue = analyzer.findValue(loadingVarbInfo, "numObj");
 
     if (!loadedValue)
-      return value.updateCore({
-        solvableText: "?",
+      return value.updateCache({
+        solvableText: "",
+        number: "?",
       });
     else
-      return value.updateCore({
-        solvableText: loadedValue.solvableText,
+      return value.updateCache({
+        ...loadedValue.cache,
       });
   },
   loadedString(analyzer: Analyzer, feVarbInfo: FeVarbInfo): string {
@@ -51,7 +48,7 @@ export function solveValue(
   // ah, so it gets simple divide, but then it accesses
   // the default updateProps
   if (isCalcNumObjFnName(updateFnName))
-    return this.updateNumObjCalc(feVarbInfo, updateFnName);
+    return this.solveNumObjCalc(feVarbInfo, updateFnName);
   else if (isInUpdateFns(updateFnName))
     return updateFns[updateFnName](this, feVarbInfo);
   else if (

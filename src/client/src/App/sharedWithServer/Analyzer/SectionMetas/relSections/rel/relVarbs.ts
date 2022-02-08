@@ -17,7 +17,7 @@ import {
 import { relVarb } from "./relVarb";
 import { switchNames } from "../baseSections/switchNames";
 import { simpleSwitch, switchInput } from "./relVarbs/preSwitchVarbs";
-import { preVarbInfo } from "./relVarbInfo";
+import { relVarbInfo } from "./relVarbInfo";
 import {
   monthsYearsInput,
   ongoingInput,
@@ -26,7 +26,7 @@ import {
   ongoingPercentToPortion,
   MonthlyYearlySwitchOptions,
 } from "./relVarbs/preOngoingVarbs";
-import { preProps } from "./relMisc";
+import { relProps } from "./relMisc";
 
 export type PreVarbsGeneral = {
   [key: string]: PreVarb;
@@ -38,7 +38,7 @@ export type PreVarbs<S extends BaseName> = Record<
 
 type StringPreVarbs<S extends BaseName> = Pick<PreVarbs<S>, StringVarbName<S>>;
 type NumObjPreVarbs<S extends BaseName> = Pick<PreVarbs<S>, NumObjVarbName<S>>;
-function isStringPreVarb<S extends BaseName>(
+function isStringRelVarb<S extends BaseName>(
   sectionName: S,
   varbName: VarbName<S>,
   value: any
@@ -48,7 +48,7 @@ function isStringPreVarb<S extends BaseName>(
     schema.varbSchemas[varbName as keyof typeof schema.varbSchemas];
   return varbType === "string";
 }
-function isNumObjPreVarb<S extends BaseName>(
+function isNumObjRelVarb<S extends BaseName>(
   sectionName: S,
   varbName: VarbName<S>,
   value: any
@@ -58,13 +58,13 @@ function isNumObjPreVarb<S extends BaseName>(
     schema.varbSchemas[varbName as keyof typeof schema.varbSchemas];
   return varbType === "numObj";
 }
-function filterStringPreVarbs<S extends BaseName>(
+function filterStringRelVarbs<S extends BaseName>(
   sectionName: S,
   preVarbs: PreVarbs<S>
 ): StringPreVarbs<S> {
   const partial: Partial<StringPreVarbs<S>> = {};
   for (const [varbName, relVarb] of ObjectEntries(preVarbs)) {
-    if (isStringPreVarb(sectionName, varbName, relVarb))
+    if (isStringRelVarb(sectionName, varbName, relVarb))
       partial[varbName as keyof StringPreVarbs<S>] = relVarb;
   }
   return partial as StringPreVarbs<S>;
@@ -75,7 +75,7 @@ function filterNumObjPreVarbs<S extends BaseName>(
 ): NumObjPreVarbs<S> {
   const partial: Partial<NumObjPreVarbs<S>> = {};
   for (const [varbName, relVarb] of ObjectEntries(preVarbs)) {
-    if (isNumObjPreVarb(sectionName, varbName, relVarb))
+    if (isNumObjRelVarb(sectionName, varbName, relVarb))
       partial[varbName as keyof NumObjPreVarbs<S>] = relVarb;
   }
   return partial as NumObjPreVarbs<S>;
@@ -127,7 +127,7 @@ export const preVarbs = {
       return value in preVarbs && !toSkip?.includes(value);
     }
     const ssPreVarbs: Partial<ToReturn> = {};
-    const stringPreVarbs = filterStringPreVarbs(sectionName, preVarbs);
+    const stringPreVarbs = filterStringRelVarbs(sectionName, preVarbs);
     for (const [varbName, relVarb] of ObjectEntries(stringPreVarbs)) {
       if (isInToReturn(varbName) && typeof varbName === "string") {
         ssPreVarbs[varbName] = relVarb;
@@ -178,16 +178,16 @@ export const preVarbs = {
   },
   singleTimeItem<S extends "singleTimeItem", R extends PreVarbs<S>>(): R {
     const sectionName = "singleTimeItem";
-    const valueSwitchProp = preVarbInfo.local(sectionName, "valueSwitch");
+    const valueSwitchProp = relVarbInfo.local(sectionName, "valueSwitch");
     const r: R = {
       name: relVarb.stringOrLoaded(sectionName),
       valueSwitch: relVarb.string({ initValue: "labeledEquation" }),
       ...preVarbs.entityInfo(),
       editorValue: relVarb.calcVarb("", { startAdornment: "$" }),
-      value: relVarb.numObj(preVarbInfo.local(sectionName, "name"), {
+      value: relVarb.numObj(relVarbInfo.local(sectionName, "name"), {
         updateFnName: "editorValue",
         updateFnProps: {
-          proxyValue: preVarbInfo.local(sectionName, "editorValue"),
+          proxyValue: relVarbInfo.local(sectionName, "editorValue"),
           valueSwitch: valueSwitchProp,
         },
         inUpdateSwitchProps: [
@@ -201,7 +201,7 @@ export const preVarbs = {
             switchValue: "loadedVarb",
             updateFnName: "loadedNumObj",
             updateFnProps: {
-              ...preProps.loadedVarb(sectionName),
+              ...relProps.loadedVarb(sectionName),
               valueSwitch: valueSwitchProp,
             },
           },
@@ -217,16 +217,16 @@ export const preVarbs = {
 
     const defaultValueUpdatePack = {
       updateFnName: "editorValue",
-      updateFnProps: preProps.locals("ongoingItem", [
+      updateFnProps: relProps.locals("ongoingItem", [
         "editorValue",
         "valueSwitch",
       ]),
     } as const;
-    const ongoingSwitchInfo = preVarbInfo.local(
+    const ongoingSwitchInfo = relVarbInfo.local(
       sectionName,
       ongoingValueNames.switch
     );
-    const valueSwitchProp = preVarbInfo.local(sectionName, "valueSwitch");
+    const valueSwitchProp = relVarbInfo.local(sectionName, "valueSwitch");
     const r: R = {
       name: relVarb.stringOrLoaded(sectionName),
       valueSwitch: relVarb.string({ initValue: "labeledEquation" }),
@@ -275,26 +275,26 @@ export const preVarbs = {
             switchValue: "yearly",
             updateFnName: "yearlyToMonthly",
             updateFnProps: {
-              num: preVarbInfo.local(sectionName, ongoingValueNames.yearly),
+              num: relVarbInfo.local(sectionName, ongoingValueNames.yearly),
             },
           },
           {
-            switchInfo: preVarbInfo.local(sectionName, "valueSwitch"),
+            switchInfo: relVarbInfo.local(sectionName, "valueSwitch"),
             switchValue: "loadedVarb",
             updateFnName: "loadedNumObj",
             updateFnProps: {
               valueSwitch: valueSwitchProp,
-              ...preProps.loadedVarb(sectionName),
+              ...relProps.loadedVarb(sectionName),
             },
           },
           {
-            switchInfo: preVarbInfo.local(sectionName, "valueSwitch"),
+            switchInfo: relVarbInfo.local(sectionName, "valueSwitch"),
             switchValue: "labeledSpanOverCost",
             updateFnName: "simpleDivide",
             updateFnProps: {
               valueSwitch: valueSwitchProp,
-              leftSide: preVarbInfo.local(sectionName, "costToReplace"),
-              rightSide: preVarbInfo.local(sectionName, "lifespanMonths"),
+              leftSide: relVarbInfo.local(sectionName, "costToReplace"),
+              rightSide: relVarbInfo.local(sectionName, "lifespanMonths"),
             },
           },
         ],
@@ -307,26 +307,26 @@ export const preVarbs = {
             switchValue: "monthly",
             updateFnName: "monthlyToYearly",
             updateFnProps: {
-              num: preVarbInfo.local(sectionName, ongoingValueNames.monthly),
+              num: relVarbInfo.local(sectionName, ongoingValueNames.monthly),
             },
           },
           {
-            switchInfo: preVarbInfo.local(sectionName, "valueSwitch"),
+            switchInfo: relVarbInfo.local(sectionName, "valueSwitch"),
             switchValue: "loadedVarb",
             updateFnName: "loadedNumObj",
             updateFnProps: {
               valueSwitch: valueSwitchProp,
-              ...preProps.loadedVarb(sectionName),
+              ...relProps.loadedVarb(sectionName),
             },
           },
           {
-            switchInfo: preVarbInfo.local(sectionName, "valueSwitch"),
+            switchInfo: relVarbInfo.local(sectionName, "valueSwitch"),
             switchValue: "labeledSpanOverCost",
             updateFnName: "simpleDivide",
             updateFnProps: {
               valueSwitch: valueSwitchProp,
-              leftSide: preVarbInfo.local(sectionName, "costToReplace"),
-              rightSide: preVarbInfo.local(sectionName, "lifespanYears"),
+              leftSide: relVarbInfo.local(sectionName, "costToReplace"),
+              rightSide: relVarbInfo.local(sectionName, "lifespanYears"),
             },
           },
         ],
@@ -339,8 +339,8 @@ export const preVarbs = {
   ): R {
     const r: R = {
       total: relVarb.sumNums(
-        preVarbInfo.local(sectionName, "title"),
-        [preVarbInfo.relative("singleTimeItem", "value", "children")],
+        relVarbInfo.local(sectionName, "title"),
+        [relVarbInfo.relative("singleTimeItem", "value", "children")],
         { startAdornment: "$" }
       ),
       title: relVarb.string(),
@@ -360,8 +360,8 @@ export const preVarbs = {
       }),
       ...preVarbs.ongoingSumNums(
         "total",
-        preVarbInfo.local(sectionName, "title"),
-        [preVarbInfo.relative("ongoingItem", "value", "children")],
+        relVarbInfo.local(sectionName, "title"),
+        [relVarbInfo.relative("ongoingItem", "value", "children")],
         { switchInit: "monthly", shared: { startAdornment: "$" } }
       ),
     } as R;
