@@ -10,7 +10,7 @@ import {
   displayNameOrNotFound,
 } from "./Analyzer/methods/displayName";
 import {
-  updateEntitiesOnInput,
+  updateConnectedEntities,
   userListTotalOptions,
   userOption,
   userVarbOption,
@@ -160,9 +160,10 @@ import {
 import {
   getNumberVarbs,
   getSolvableNumber,
-  getSolvableText,
-  makeSolvableTextAndNumber,
-  solveNumObjCalc,
+  solvableTextToNumber,
+  solvableTextFromCalculation,
+  solvableTextFromCalcVarbs,
+  solvableTextFromEditorTextAndEntities,
 } from "./Analyzer/methods/solveVarbs/solveAndUpdateValue/updateNumericObjCalc";
 import {
   addInEntity,
@@ -244,6 +245,7 @@ export default class Analyzer {
     }
     // capEx items cause problems if this isn't here.
     return next.solveAllActiveVarbs();
+    // the sumNums aren't updating
   }
 
   get rawSections(): RawSections {
@@ -415,12 +417,13 @@ export default class Analyzer {
   conditionalUserVarbValue = conditionalUserVarbValue;
   getUserVarbValue = getUserVarbValue;
 
-  getSolvableText = getSolvableText;
   getSolvableNumber = getSolvableNumber;
-  makeSolvableTextAndNumber = makeSolvableTextAndNumber;
+  solvableTextFromEditorTextAndEntities = solvableTextFromEditorTextAndEntities;
+  solvableTextToNumber = solvableTextToNumber;
   getNumberVarbs = getNumberVarbs;
-  solveNumObjCalc = solveNumObjCalc;
   solveAndUpdateValue = solveAndUpdateValue;
+  solvableTextFromCalculation = solvableTextFromCalculation;
+  solvableTextFromCalcVarbs = solvableTextFromCalcVarbs;
 
   solveVarbs = solveVarbs;
   solveAllActiveVarbs = solveAllActiveVarbs;
@@ -428,7 +431,7 @@ export default class Analyzer {
   solveValue = solveValue;
 
   variableLists = variableLists;
-  updateEntitiesOnInput = updateEntitiesOnInput;
+  updateConnectedEntities = updateConnectedEntities;
   userVariableLists = userVariableLists;
   userVariableInfos = userVariableInfos;
   userVarbOptions = userVarbOptions;

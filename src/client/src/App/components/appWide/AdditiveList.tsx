@@ -16,7 +16,6 @@ import {
 } from "../../sharedWithServer/Analyzer/SectionMetas/SectionName";
 import AdditiveListTable from "./AdditiveList/AdditiveListTable";
 import { ListMenu } from "./AdditiveList/ListMenu";
-import BtnTooltip from "./BtnTooltip";
 
 function useTotalVarb(
   feInfo: FeInfo,

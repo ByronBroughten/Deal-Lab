@@ -20,7 +20,9 @@ export function removeInEntity(
   this: Analyzer,
   feVarbInfo: OutEntity,
   { entityId, ...inEntityVarbInfo }: InEntityVarbInfo & { entityId: string }
-): Analyzer {
+): // the entityVarbInfo is required because the inEntity with that id might be gone
+// for some reason, in which case you still should remove the outEntity from it
+Analyzer {
   let next = this;
   const nextVarb = next.varb(feVarbInfo).removeInEntity(entityId);
   next = next.updateVarb(nextVarb);

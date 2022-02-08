@@ -9,6 +9,7 @@ import {
 import {
   DbVarbInfo,
   FeVarbInfo,
+  SpecificVarbInfo,
   StaticRelVarbInfo,
 } from "../SectionMetas/relSections/rel/relVarbInfoTypes";
 import { ongoingVarbSpanEndings } from "../SectionMetas/relSections/rel/relVarbs/preOngoingVarbs";
@@ -70,7 +71,7 @@ function entityInEntities(entities: InEntities, entity: InEntity): boolean {
   if (match) return true;
   else return false;
 }
-export function updateEntitiesOnInput(
+export function updateConnectedEntities(
   this: Analyzer,
   feVarbInfo: FeVarbInfo,
   nextEntities: InEntities

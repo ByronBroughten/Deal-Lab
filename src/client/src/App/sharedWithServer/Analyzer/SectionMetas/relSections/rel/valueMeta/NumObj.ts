@@ -98,6 +98,7 @@ export class NumObj {
       this.cache
     );
   }
+
   updateCache(partial: Partial<NumObjCache>): NumObj {
     return new NumObj(this.core, { ...this.cache, ...partial });
   }

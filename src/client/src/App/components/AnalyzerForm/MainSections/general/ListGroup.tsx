@@ -52,6 +52,7 @@ export default function ListGroup({
             return (
               <AdditiveList
                 {...{
+                  key: listId,
                   feInfo: Inf.fe(listSectionName, listId),
                   themeSectionName: themeSectionNameOrDefault(sectionName),
                   className: "ListGroup-list",

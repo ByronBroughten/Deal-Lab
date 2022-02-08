@@ -1,4 +1,5 @@
 import {
+  DbNumObj,
   EntitiesAndEditorText,
   FailedVarbs,
   GetSolvableTextProps,
@@ -13,6 +14,7 @@ import {
 } from "../../../SectionMetas/relSections/rel/relVarbInfoTypes";
 import calculations, {
   CalcProp,
+  CalculationName,
   isCalculationName,
 } from "../../../SectionMetas/relSections/rel/valueMeta/NumObj/calculations";
 import {
@@ -80,30 +82,18 @@ function solveText(
   }
 }
 
-export function makeSolvableTextAndNumber(
+export function solvableTextToNumber(
   this: Analyzer,
   feVarbInfo: FeVarbInfo,
-  entitiesAndText: EntitiesAndEditorText
-): { solvableText: string; number: NumObjNumber } {
+  solvableText: string
+): NumObjNumber {
   const updateFnName = this.updateFnName(feVarbInfo);
   if (isNumObjUpdateFnName(updateFnName)) {
-    const solvableText = this.getSolvableText(feVarbInfo, entitiesAndText);
     const { unit } = this.varb(feVarbInfo);
-    const numObjNumber = solveText(solvableText, unit, updateFnName);
-    return { solvableText, number: numObjNumber };
+    return solveText(solvableText, unit, updateFnName);
   } else {
     throw new Error("For now, this is only for numObjs.");
   }
-}
-
-export function solveNumObjCalc(
-  this: Analyzer,
-  feVarbInfo: FeVarbInfo
-): NumObj {
-  const numObj = this.value(feVarbInfo, "numObj");
-  return numObj.updateCache(
-    this.makeSolvableTextAndNumber(feVarbInfo, numObj.core)
-  );
 }
 
 export function getSolvableNumber(
@@ -115,18 +105,35 @@ export function getSolvableNumber(
   return varb.value("numObj").number;
 }
 
-export function getSolvableText(
+export function solvableTextFromCalculation(
   this: Analyzer,
-  feVarbInfo: FeVarbInfo,
-  { editorText, entities = [] }: GetSolvableTextProps
+  feVarbInfo: FeVarbInfo
+) {
+  const updateFnName = this.updateFnName(feVarbInfo);
+  if (!isCalculationName(updateFnName))
+    throw new Error(
+      `updateFnName is ${updateFnName}, but this is only for pure calculations`
+    );
+
+  const { numberVarbs } = this.getNumberVarbs(feVarbInfo);
+  const solvableText = calculations[updateFnName](numberVarbs as any);
+  return solvableText;
+}
+export function solvableTextFromCalcVarbs(
+  this: Analyzer,
+  feVarbInfo: FeVarbInfo
 ): string {
   const updateFnName = this.updateFnName(feVarbInfo);
-  if (isCalculationName(updateFnName)) {
-    const { numberVarbs } = this.getNumberVarbs(feVarbInfo);
-    const solvableText = calculations[updateFnName](numberVarbs as any);
-    return solvableText;
-  }
+  if (updateFnName !== "calcVarbs")
+    throw new Error("This is only for calcVarbs");
 
+  const { core } = this.value(feVarbInfo, "numObj");
+  return this.solvableTextFromEditorTextAndEntities(core);
+}
+export function solvableTextFromEditorTextAndEntities(
+  this: Analyzer,
+  { editorText, entities }: DbNumObj
+): string {
   let solvableText = editorText;
   for (const entity of entities) {
     const num = this.getSolvableNumber(entity);

@@ -8,6 +8,7 @@ import { StateValueAnyKey, ValueTypesPlusAny } from "../StateSection/StateVarb";
 import { StateValue } from "../StateSection/StateVarb/stateValue";
 import { InEntityVarbInfo } from "../SectionMetas/relSections/rel/valueMeta/NumObj/entities";
 import { Inf } from "../SectionMetas/Info";
+import { NumObj } from "../SectionMetas/relSections/rel/valueMeta/NumObj";
 
 export function value<T extends StateValueAnyKey = "any">(
   this: Analyzer,
@@ -53,29 +54,37 @@ export function outputValues(this: Analyzer, id: string) {
 
 export function updateValueDirectly(
   this: Analyzer,
-  feVarbInfo: SpecificVarbInfo,
-  value: StateValue
+  feVarbInfo: FeVarbInfo,
+  nextValue: StateValue
 ) {
   // not to be used for editor updates.
-  return this.updateValue(feVarbInfo, value, false);
+  return this.updateValue(feVarbInfo, nextValue, false);
 }
 
 export function updateValue(
   this: Analyzer,
-  feVarbInfo: SpecificVarbInfo,
-  value: StateValue,
+  feVarbInfo: FeVarbInfo,
+  nextValue: StateValue,
   wasUpdatedByEditor: boolean
 ): Analyzer {
-  const nextVarb = this.varb(feVarbInfo).updateValue(value, wasUpdatedByEditor);
+  let next = this;
+  if (typeof nextValue === "object" && "entities" in nextValue)
+    next = next.updateConnectedEntities(feVarbInfo, nextValue.entities);
+
+  const nextVarb = this.varb(feVarbInfo).updateValue(
+    nextValue,
+    wasUpdatedByEditor
+  );
   return this.updateVarb(nextVarb);
 }
+
 export function updateSectionValues(
   this: Analyzer,
-  info: SpecificSectionInfo,
+  info: FeVarbInfo,
   values: { [varbName: string]: StateValue }
 ): Analyzer {
   return Object.keys(values).reduce((next, varbName) => {
-    const varbInfo = Inf.multiVarb(varbName, info) as SpecificVarbInfo;
+    const varbInfo = Inf.feVarb(varbName, info);
     return next.updateValueDirectly(varbInfo, values[varbName]);
   }, this);
 }

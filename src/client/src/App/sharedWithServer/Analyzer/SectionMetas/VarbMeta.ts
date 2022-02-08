@@ -1,4 +1,5 @@
 import { cloneDeep, pick } from "lodash";
+import { NumObjUnit } from "../methods/solveVarbs/solveAndUpdateValue/updateNumericObjCalc";
 import { StateValue } from "../StateSection/StateVarb/stateValue";
 import {
   InRelVarbInfo,
@@ -11,7 +12,7 @@ import {
   UpdateSwitchProp,
 } from "./relSections/rel/relVarbTypes";
 import { valueMeta } from "./relSections/rel/valueMeta";
-import { NumObj, NumObjUnit } from "./relSections/rel/valueMeta/NumObj";
+import { NumObj } from "./relSections/rel/valueMeta/NumObj";
 import { UpdateFnName } from "./relSections/rel/valueMetaTypes";
 import { SectionName } from "./SectionName";
 

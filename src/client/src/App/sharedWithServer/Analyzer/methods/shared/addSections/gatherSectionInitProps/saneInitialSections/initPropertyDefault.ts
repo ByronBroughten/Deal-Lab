@@ -53,20 +53,29 @@ const capExItemCoreValues: CapExItemCoreValues[] = [
   ["Laundry", 1200, 12],
   ["Driveway", 5000, 30],
 ];
+// what do I get out of living with Louie?
+// I feel like he gets much more out of it than I do.
+// I mean, I get some rent.
+// It's not that much rent, though. I would be getting more if
+// I lived in this unit by myself and rented out the basement.
+// that wouldn't be legal, though.
+// I get to live with a person, which is beneficial for my socializing.
 const capExItemSections = [...capExItemCoreValues]
   .reverse()
   .map(([name, costToReplace, lifespanYears]) => ({
     name,
+    valueSwitch: "labeledSpanOverCost",
     costToReplace: dbNumObj(costToReplace),
+
     lifespanYears: dbNumObj(lifespanYears),
     lifespanSpanSwitch: "years",
-    valueSwitch: "labeledSpanOverCost",
+    valueOngoingSwitch: "yearly",
   }))
   .map((values) => DbEnt.initSection(makeSectionId(), values));
 
 let capExList = DbEnt.initEntry(
   "ongoingCostList",
-  { title: "CapEx" },
+  { title: "CapEx", totalOngoingSwitch: "yearly" },
   { dbId: makeSectionId() }
 );
 capExList = DbEnt.addLikeChildren(
@@ -185,8 +194,8 @@ for (const sectionName of Obj.keys(miscUpfrontCostList.dbSections)) {
 
 // @ts-ignore
 init.dbSections.propertyDefault[0].childDbIds.ongoingCostList.push(
-  capExList.dbId,
-  periodicPaymentList.dbId
+  periodicPaymentList.dbId,
+  capExList.dbId
 );
 // @ts-ignore
 init.dbSections.propertyDefault[0].childDbIds.upfrontCostList.push(

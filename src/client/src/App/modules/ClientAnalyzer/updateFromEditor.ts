@@ -45,9 +45,9 @@ function updateValueFromEditor(
   editorState: EditorState
 ): Analyzer {
   let next = analyzer;
-  const nextValue = valueFromEditor(analyzer, feVarbInfo, editorState);
+  const nextValue = valueFromEditor(next, feVarbInfo, editorState);
   if (nextValue instanceof NumObj)
-    next = analyzer.updateEntitiesOnInput(feVarbInfo, nextValue.entities);
+    next = next.updateConnectedEntities(feVarbInfo, nextValue.entities);
   return next.updateValue(feVarbInfo, nextValue, true);
 }
 
@@ -70,10 +70,10 @@ function numObjFromEditor(
   editorState: EditorState
 ): NumObj {
   const textAndEntities = textAndEntitiesFromEditorState(editorState);
-  return new NumObj(
-    textAndEntities,
-    analyzer.makeSolvableTextAndNumber(feVarbInfo, textAndEntities)
-  );
+  const solvableText =
+    analyzer.solvableTextFromEditorTextAndEntities(textAndEntities);
+  const number = analyzer.solvableTextToNumber(feVarbInfo, solvableText);
+  return new NumObj(textAndEntities, { solvableText, number });
 }
 function textAndEntitiesFromEditorState(
   editorState: EditorState

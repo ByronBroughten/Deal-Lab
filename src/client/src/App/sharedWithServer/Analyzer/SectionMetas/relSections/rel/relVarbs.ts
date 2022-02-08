@@ -31,13 +31,13 @@ import { relProps } from "./relMisc";
 export type PreVarbsGeneral = {
   [key: string]: PreVarb;
 };
-export type PreVarbs<S extends BaseName> = Record<
+export type RelVarbs<S extends BaseName> = Record<
   keyof BaseSections[S]["varbSchemas"],
   PreVarb
 >;
 
-type StringPreVarbs<S extends BaseName> = Pick<PreVarbs<S>, StringVarbName<S>>;
-type NumObjPreVarbs<S extends BaseName> = Pick<PreVarbs<S>, NumObjVarbName<S>>;
+type StringPreVarbs<S extends BaseName> = Pick<RelVarbs<S>, StringVarbName<S>>;
+type NumObjPreVarbs<S extends BaseName> = Pick<RelVarbs<S>, NumObjVarbName<S>>;
 function isStringRelVarb<S extends BaseName>(
   sectionName: S,
   varbName: VarbName<S>,
@@ -60,10 +60,10 @@ function isNumObjRelVarb<S extends BaseName>(
 }
 function filterStringRelVarbs<S extends BaseName>(
   sectionName: S,
-  preVarbs: PreVarbs<S>
+  relVarbs: RelVarbs<S>
 ): StringPreVarbs<S> {
   const partial: Partial<StringPreVarbs<S>> = {};
-  for (const [varbName, relVarb] of ObjectEntries(preVarbs)) {
+  for (const [varbName, relVarb] of ObjectEntries(relVarbs)) {
     if (isStringRelVarb(sectionName, varbName, relVarb))
       partial[varbName as keyof StringPreVarbs<S>] = relVarb;
   }
@@ -71,10 +71,10 @@ function filterStringRelVarbs<S extends BaseName>(
 }
 function filterNumObjPreVarbs<S extends BaseName>(
   sectionName: S,
-  preVarbs: PreVarbs<S>
+  relVarbs: RelVarbs<S>
 ): NumObjPreVarbs<S> {
   const partial: Partial<NumObjPreVarbs<S>> = {};
-  for (const [varbName, relVarb] of ObjectEntries(preVarbs)) {
+  for (const [varbName, relVarb] of ObjectEntries(relVarbs)) {
     if (isNumObjRelVarb(sectionName, varbName, relVarb))
       partial[varbName as keyof NumObjPreVarbs<S>] = relVarb;
   }
@@ -85,14 +85,14 @@ export type StringPreVarbsFromNames<VN extends readonly string[]> = Record<
   VN[number],
   PreVarbByType["string"]
 >;
-export const preVarbs = {
+export const relVarbs = {
   strings<VN extends readonly string[]>(
     varbNames: VN
   ): StringPreVarbsFromNames<VN> {
     return varbNames.reduce(
-      (preVarbs, varbName): Partial<StringPreVarbsFromNames<VN>> => {
+      (relVarbs, varbName): Partial<StringPreVarbsFromNames<VN>> => {
         return {
-          ...preVarbs,
+          ...relVarbs,
           [varbName]: relVarb.string(),
         };
       },
@@ -119,15 +119,15 @@ export const preVarbs = {
   },
   sectionStrings<
     S extends BaseName,
-    PV extends PreVarbs<S>,
+    PV extends RelVarbs<S>,
     ToSkip extends (keyof PV)[] = []
-  >(sectionName: S, preVarbs: PV, toSkip?: ToSkip) {
+  >(sectionName: S, relVarbs: PV, toSkip?: ToSkip) {
     type ToReturn = Omit<StringPreVarbs<S>, keyof ToSkip>;
     function isInToReturn(value: any): value is keyof ToReturn {
-      return value in preVarbs && !toSkip?.includes(value);
+      return value in relVarbs && !toSkip?.includes(value);
     }
     const ssPreVarbs: Partial<ToReturn> = {};
-    const stringPreVarbs = filterStringRelVarbs(sectionName, preVarbs);
+    const stringPreVarbs = filterStringRelVarbs(sectionName, relVarbs);
     for (const [varbName, relVarb] of ObjectEntries(stringPreVarbs)) {
       if (isInToReturn(varbName) && typeof varbName === "string") {
         ssPreVarbs[varbName] = relVarb;
@@ -137,16 +137,16 @@ export const preVarbs = {
   },
   sumSection<
     S extends BaseName<"hasVarb">,
-    PV extends PreVarbs<S>,
+    PV extends RelVarbs<S>,
     ToSkip extends readonly (keyof PV)[] = []
-  >(sectionName: S, preVarbs: PV, toSkip?: ToSkip) {
+  >(sectionName: S, relVarbs: PV, toSkip?: ToSkip) {
     type ToReturn = Omit<NumObjPreVarbs<S>, keyof ToSkip>;
     function isInToReturn(value: any): value is keyof ToReturn {
-      return value in preVarbs && !toSkip?.includes(value);
+      return value in relVarbs && !toSkip?.includes(value);
     }
 
     const ssPreVarbs: Partial<ToReturn> = {};
-    const numObjPreVarbs = filterNumObjPreVarbs(sectionName, preVarbs);
+    const numObjPreVarbs = filterNumObjPreVarbs(sectionName, relVarbs);
     for (const [varbName, pVarb] of ObjectEntries(numObjPreVarbs)) {
       if (isInToReturn(varbName) && typeof varbName === "string") {
         const { displayName, startAdornment, endAdornment } = pVarb;
@@ -176,13 +176,13 @@ export const preVarbs = {
       entityId: StringPreVarb;
     };
   },
-  singleTimeItem<S extends "singleTimeItem", R extends PreVarbs<S>>(): R {
+  singleTimeItem<S extends "singleTimeItem", R extends RelVarbs<S>>(): R {
     const sectionName = "singleTimeItem";
     const valueSwitchProp = relVarbInfo.local(sectionName, "valueSwitch");
     const r: R = {
       name: relVarb.stringOrLoaded(sectionName),
       valueSwitch: relVarb.string({ initValue: "labeledEquation" }),
-      ...preVarbs.entityInfo(),
+      ...relVarbs.entityInfo(),
       editorValue: relVarb.calcVarb("", { startAdornment: "$" }),
       value: relVarb.numObj(relVarbInfo.local(sectionName, "name"), {
         updateFnName: "editorValue",
@@ -211,7 +211,7 @@ export const preVarbs = {
     } as R;
     return r;
   },
-  ongoingItem<S extends "ongoingItem", R extends PreVarbs<S>>(): R {
+  ongoingItem<S extends "ongoingItem", R extends RelVarbs<S>>(): R {
     const sectionName = "ongoingItem";
     const ongoingValueNames = switchNames("value", "ongoing");
 
@@ -231,7 +231,7 @@ export const preVarbs = {
       name: relVarb.stringOrLoaded(sectionName),
       valueSwitch: relVarb.string({ initValue: "labeledEquation" }),
 
-      ...preVarbs.entityInfo(),
+      ...relVarbs.entityInfo(),
       costToReplace: relVarb.calcVarb("Replacement cost", {
         startAdornment: "$",
       }),
@@ -240,7 +240,7 @@ export const preVarbs = {
         startAdornment: "$",
         endAdornment: "/month",
       }),
-      // ...preVarbs.ongoingInput("editorValue", "Item Value", sectionName),
+      // ...relVarbs.ongoingInput("editorValue", "Item Value", sectionName),
 
       // Options
       // 1. Two editorValues
@@ -258,7 +258,7 @@ export const preVarbs = {
       // Before deciding, implement a regular switch of such nature
       // with taxes and home insurance
 
-      ...preVarbs.monthsYearsInput(
+      ...relVarbs.monthsYearsInput(
         "lifespan",
         "Average lifespan",
         sectionName,
@@ -334,7 +334,7 @@ export const preVarbs = {
     } as R;
     return r;
   },
-  singleTimeList<S extends BaseName<"singleTimeList">, R extends PreVarbs<S>>(
+  singleTimeList<S extends BaseName<"singleTimeList">, R extends RelVarbs<S>>(
     sectionName: S
   ): R {
     const r: R = {
@@ -350,7 +350,7 @@ export const preVarbs = {
     } as R;
     return r;
   },
-  ongoingList<S extends BaseName<"ongoingList">, R extends PreVarbs<S>>(
+  ongoingList<S extends BaseName<"ongoingList">, R extends RelVarbs<S>>(
     sectionName: S
   ) {
     const r: R = {
@@ -358,7 +358,7 @@ export const preVarbs = {
       defaultValueSwitch: relVarb.string({
         initValue: "labeledEquation",
       }),
-      ...preVarbs.ongoingSumNums(
+      ...relVarbs.ongoingSumNums(
         "total",
         relVarbInfo.local(sectionName, "title"),
         [relVarbInfo.relative("ongoingItem", "value", "children")],

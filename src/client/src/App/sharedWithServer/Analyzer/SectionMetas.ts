@@ -52,11 +52,11 @@ class VarbMetas {
     return Obj.keys(this.core) as string[];
   }
   static initFromPreVarbs(
-    preVarbs: PreVarbsGeneral,
+    relVarbs: PreVarbsGeneral,
     sectionName: SectionName
   ): VarbMetas {
     const core: VarbMetasCore = {};
-    for (const [varbName, relVarb] of Object.entries(preVarbs)) {
+    for (const [varbName, relVarb] of Object.entries(relVarbs)) {
       const varbMetaCore = VarbMeta.initCore(relVarb, sectionName, varbName);
       core[varbName] = new VarbMeta(varbMetaCore);
     }
@@ -66,7 +66,7 @@ class VarbMetas {
 
 export type SectionMeta<S extends SectionName> = Omit<
   RelSections[S],
-  "preVarbs"
+  "relVarbs"
 > & {
   sectionName: S;
   varbMetas: VarbMetas;
@@ -209,9 +209,9 @@ export class SectionMetas {
 
     const sectionMeta = {
       sectionName,
-      ...omit(relSection, ["preVarbs"]),
+      ...omit(relSection, ["relVarbs"]),
       varbMetas: VarbMetas.initFromPreVarbs(
-        relSections[sectionName].preVarbs,
+        relSections[sectionName].relVarbs,
         sectionName
       ),
       parents: sectionToParentArr[sectionName],

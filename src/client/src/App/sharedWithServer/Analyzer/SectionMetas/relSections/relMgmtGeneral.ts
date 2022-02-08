@@ -1,12 +1,12 @@
 import { rel } from "./rel";
 import { relSection } from "./rel/relSection";
-import { PreVarbs } from "./rel/relVarbs";
+import { RelVarbs } from "./rel/relVarbs";
 import { switchNames } from "./baseSections/switchNames";
 
 const rentCut = switchNames("rentCut", "dollarsPercent");
 const rentCutDollars = switchNames(rentCut.dollars, "ongoing");
 
-const mgmtPreVarbs: PreVarbs<"mgmt"> = {
+const mgmtPreVarbs: RelVarbs<"mgmt"> = {
   title: rel.varb.string(),
   [rentCut.switch]: rel.varb.string({ initValue: "percent" }),
   [rentCut.percent]: rel.varb.percentObj("Rent cut", {

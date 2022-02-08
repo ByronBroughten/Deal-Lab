@@ -2,7 +2,7 @@ import { extend, omit } from "lodash";
 import { ObjectKeys } from "../../../../utils/Obj";
 import { BaseName, BaseSections } from "../baseSectionTypes";
 import { relVarb } from "./relVarb";
-import { PreVarbs, preVarbs } from "./relVarbs";
+import { RelVarbs, relVarbs } from "./relVarbs";
 import { StateValue } from "../../../StateSection/StateVarb/stateValue";
 import { baseSections } from "../baseSections";
 import { DbEntry } from "../../../DbEntry";
@@ -28,13 +28,13 @@ type Options = Partial<RelSectionOptions>;
 export type RelSection<
   S extends BaseName,
   D extends string,
-  PVS extends PreVarbs<S>,
+  PVS extends RelVarbs<S>,
   O extends Options = {}
 > = Record<
   S,
   {
     displayName: D;
-    preVarbs: PVS;
+    relVarbs: PVS;
   } & GetDefaultOptions<O> &
     O &
     BaseSections[S]
@@ -44,12 +44,12 @@ export const relSection = {
   base<
     S extends BaseName,
     D extends string,
-    PVS extends PreVarbs<S>,
+    PVS extends RelVarbs<S>,
     O extends Options = {}
   >(
     sectionName: S,
     displayName: D,
-    preVarbs: PVS,
+    relVarbs: PVS,
     options?: O
   ): RelSection<S, D, PVS, O> {
     return {
@@ -57,7 +57,7 @@ export const relSection = {
       [sectionName]: extend(
         {
           displayName,
-          preVarbs,
+          relVarbs,
           ...omit(defaultOptions, ObjectKeys(options ?? {})),
           // this omit shouldn't be necessary but makes type checking work.
           ...options,
@@ -74,7 +74,7 @@ export const relSection = {
     return this.base(
       sectionName,
       displayName,
-      preVarbs.singleTimeList(sectionName),
+      relVarbs.singleTimeList(sectionName),
       {
         ...options,
         childSectionNames: ["singleTimeItem"] as const,
@@ -90,7 +90,7 @@ export const relSection = {
     return this.base(
       sectionName,
       displayName,
-      preVarbs.ongoingList(sectionName),
+      relVarbs.ongoingList(sectionName),
       extend(options, {
         childSectionNames: ["ongoingItem"] as const,
         indexStoreName: "userOngoingList",
@@ -104,7 +104,7 @@ export const relSection = {
     return this.base(
       sectionName,
       displayName,
-      { title: relVarb.string() } as PreVarbs<S>,
+      { title: relVarb.string() } as RelVarbs<S>,
       {
         childSectionNames: ["cell"] as const,
       }
@@ -121,7 +121,7 @@ export const relSection = {
       {
         searchFilter: relVarb.string(),
         rowIds: relVarb.type("stringArray"),
-      } as PreVarbs<S>,
+      } as RelVarbs<S>,
       {
         rowSourceName,
         parent: "main",

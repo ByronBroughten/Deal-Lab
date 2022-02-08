@@ -1,8 +1,8 @@
-import { PreVarbs } from "./rel/relVarbs";
+import { RelVarbs } from "./rel/relVarbs";
 import { rel } from "./rel";
 import { relSection } from "./rel/relSection";
 
-const analysisRelVarbs: PreVarbs<"analysis"> = {
+const analysisRelVarbs: RelVarbs<"analysis"> = {
   title: rel.varb.string(),
 } as const;
 

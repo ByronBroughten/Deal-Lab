@@ -3,10 +3,7 @@ import { DbValue } from "../DbEntry";
 import array from "../../utils/Arr";
 import { sectionMetas } from "../SectionMetas";
 import { valueMeta } from "../SectionMetas/relSections/rel/valueMeta";
-import {
-  NumObj,
-  NumObjUnit,
-} from "../SectionMetas/relSections/rel/valueMeta/NumObj";
+import { NumObj } from "../SectionMetas/relSections/rel/valueMeta/NumObj";
 import {
   InEntities,
   InEntity,
@@ -33,6 +30,7 @@ import {
   setInEntities,
 } from "./StateVarb/entities";
 import { StateValue } from "./StateVarb/stateValue";
+import { NumObjUnit } from "../methods/solveVarbs/solveAndUpdateValue/updateNumericObjCalc";
 
 export type InVarbInfo = InEntity | FeVarbInfo;
 export type StateVarbCore = {

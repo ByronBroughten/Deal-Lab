@@ -1,8 +1,8 @@
 import { rel } from "./rel";
 import { relSection } from "./rel/relSection";
-import { PreVarbs } from "./rel/relVarbs";
+import { RelVarbs } from "./rel/relVarbs";
 
-function propertyPreVarbs<R extends PreVarbs<"property">>(): R {
+function propertyPreVarbs<R extends RelVarbs<"property">>(): R {
   const r: R = {
     title: rel.varb.string(),
     price: rel.varb.moneyObj("Price"),
@@ -110,5 +110,5 @@ export const prePropertyGeneral = {
     }),
     numBedrooms: rel.varb.calcVarb("BRs"),
     ...rel.varbs.timeMoney("targetRent", "Rent", "unit"),
-  } as PreVarbs<"unit">),
+  } as RelVarbs<"unit">),
 } as const;

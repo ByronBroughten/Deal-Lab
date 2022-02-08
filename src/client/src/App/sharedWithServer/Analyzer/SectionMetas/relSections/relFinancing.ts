@@ -1,11 +1,11 @@
 import { rel } from "./rel";
 import { relSection } from "./rel/relSection";
-import { PreVarbs } from "./rel/relVarbs";
+import { RelVarbs } from "./rel/relVarbs";
 import { switchNames } from "./baseSections/switchNames";
 import { loanVarbsNotInFinancing } from "./baseSections";
 
 const loanAmountBase = switchNames("loanAmountBase", "dollarsPercent");
-function loanPreVarbs(): PreVarbs<"loan"> {
+function loanPreVarbs(): RelVarbs<"loan"> {
   return {
     title: rel.varb.string(),
     [loanAmountBase.switch]: rel.varb.string({ initValue: "percent" }),
@@ -107,10 +107,10 @@ function loanPreVarbs(): PreVarbs<"loan"> {
       },
       { shared: { startAdornment: "$" } }
     ),
-  } as PreVarbs<"loan">;
+  } as RelVarbs<"loan">;
 }
 
-const financingRelVarbs: PreVarbs<"financing"> = {
+const financingRelVarbs: RelVarbs<"financing"> = {
   downPaymentDollars: rel.varb.leftRightPropFn(
     "Down payment",
     "simpleSubtract",

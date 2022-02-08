@@ -10,12 +10,12 @@ import {
   RelSectionOptions,
 } from "./relSections/rel/relSection";
 import { BaseSections } from "./relSections/baseSectionTypes";
-import { PreVarbs } from "./relSections/rel/relVarbs";
+import { RelVarbs } from "./relSections/rel/relVarbs";
 import { LeftRightVarbInfos } from "./relSections/rel/relVarb";
 
 export function makeRelSections() {
   return {
-    ...relSection.base("main", "Main", {} as PreVarbs<"main">, {
+    ...relSection.base("main", "Main", {} as RelVarbs<"main">, {
       childSectionNames: [
         "user",
         "login",
@@ -182,7 +182,7 @@ export type RelSectionsTemplate = {
   [Prop in keyof BaseSections]: RelSection<
     Prop,
     string,
-    PreVarbs<Prop>,
+    RelVarbs<Prop>,
     RelSectionOptions
   >[Prop];
 };

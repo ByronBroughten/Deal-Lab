@@ -1,6 +1,6 @@
 import { DisplayName, StringPreVarb, UpdateFnProps } from "../relVarbTypes";
 import { InRelVarbInfo } from "../relVarbInfoTypes";
-import { preVarbs } from "../relVarbs";
+import { relVarbs } from "../relVarbs";
 import { PreNumObjOptions, relVarb } from "../relVarb";
 import { ObjectEntries, ObjectKeys } from "../../../../../utils/Obj";
 import { BaseName } from "../../baseSectionTypes";
@@ -113,7 +113,7 @@ export function monthsYearsInput<Base extends string>(
   { switchInit = "months", ...options }: MonthsYearsSwitchOptions = {}
 ): SwitchPreVarbs<Base, "monthsYears"> {
   const varbNames = switchNames(baseVarbName, "monthsYears");
-  return preVarbs.switchInput(
+  return relVarbs.switchInput(
     varbNames,
     displayName,
     sectionName,
@@ -155,7 +155,7 @@ export function ongoingInput<Base extends string>(
   { switchInit = "monthly", ...options }: MonthlyYearlySwitchOptions = {}
 ): SwitchPreVarbs<Base, "ongoing"> {
   const varbNames = switchNames(baseVarbName, "ongoing");
-  return preVarbs.switchInput(
+  return relVarbs.switchInput(
     varbNames,
     displayName,
     sectionName,
@@ -271,7 +271,7 @@ export function ongoingSumNums<Base extends string>(
       updateFnProps: props.yearly,
     },
   } as const;
-  return preVarbs.ongoingPureCalc(
+  return relVarbs.ongoingPureCalc(
     varbNameBase,
     displayName,
     updateFnPacks,
