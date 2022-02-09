@@ -20,7 +20,11 @@ export function runApp() {
   app.use(helmet());
   app.use(compression());
   app.use(express.urlencoded({ extended: true }));
-  app.use(express.static("public"));
+  if (process.env.NODE_ENV === "production") {
+    app.use(express.static("src/client/build"));
+  } else {
+    app.use(express.static("public"));
+  }
 
   const debug = Debug("app:startup");
   if (app.get("env") === "development") {
