@@ -14,7 +14,6 @@ import theme from "./App/theme/Theme";
 import SectionTable from "./App/components/SectionTable";
 
 export default function App() {
-  console.log("top of App");
   const analyzerContext = usePropertyAnalyzer({
     main: true,
   });

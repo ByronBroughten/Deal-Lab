@@ -5,9 +5,36 @@ const dev = {
   endpoint: "http://localhost:5000/api/",
 };
 
+const appUrl = "https://ultimate-property-analyzer.herokuapp.com";
+const serverUrl = extendUrl(appUrl, "api");
+
+const serverRoutes = {
+  main: {
+    path: "/api",
+  },
+  get user() {
+    return {
+      path: extendUrl(this.main.path, "user"),
+    };
+  },
+  get section() {
+    return {
+      path: extendUrl(this.main.path, "section"),
+      get arr() {
+        return {
+          path: extendUrl(serverRoutes.section.path, "arr"),
+        };
+      },
+    };
+  },
+  // get tableColumns(){
+  //   return extendUrl(this.sectionArr, "/tableColumns")
+  // },
+};
+
 const prod = {
   name: "Analyzer Client — Production",
-  endpoint: "https://u-prop-a-client.herokuapp.com/api/",
+  endpoint: serverUrl,
 };
 
 // index should have utils, constants,

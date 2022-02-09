@@ -20,5 +20,4 @@ export default function routes(app: express.Application) {
   app.use(express.json()); // parses body into a JSON object
   app.use(dbEntryRoutePath, arrRouter);
   app.use(userRoutesPath, userRouter);
-  // app.use("/", home);
 }
