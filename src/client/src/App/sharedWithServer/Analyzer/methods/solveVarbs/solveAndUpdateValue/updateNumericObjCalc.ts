@@ -26,6 +26,7 @@ import {
   decimalToPercent,
 } from "./../../../../utils/math";
 import { round } from "lodash";
+import { evaluate } from "mathjs";
 
 export const numObjUnits = {
   percent: {
@@ -58,7 +59,7 @@ function solveText(
   unit: NumObjUnit,
   updateFnName: NumObjUpdateFnName
 ): NumObjNumber {
-  // no errors should be thrown as a person is validly typing front to back
+  // the editor should handle when someone validly types left to right
   if (text[text.length - 1] === ".")
     // if there's a dot at the end, they could be about to enter a number
     text = text.substring(0, text.length - 1);
@@ -72,12 +73,12 @@ function solveText(
     text = text.substring(0, text.length - 1);
 
   try {
-    let num = new Function("return " + text)();
+    let num = evaluate(text);
     if (typeof num === "number") {
       num = doFinishingTouches(num, updateFnName);
       return round(num, numObjUnits[unit].roundTo);
     } else return "?";
-  } catch {
+  } catch (ex) {
     return "?";
   }
 }
