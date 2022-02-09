@@ -65,6 +65,7 @@ import { Theme } from "./App/theme/Theme";
 // https://ultimate-property-analyzer.herokuapp.com/
 
 const root = document.getElementById("root");
+console.log("entrypoint");
 ReactDOM.render(
   <React.StrictMode>
     <Normalize />
