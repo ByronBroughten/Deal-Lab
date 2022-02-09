@@ -3,7 +3,7 @@ import { extendUrl } from "./utils/url";
 const dev = {
   name: "Analyzer Client — Development",
   endpoint: "http://localhost:5000/api/",
-};
+} as const;
 
 const appUrl = "https://ultimate-property-analyzer.herokuapp.com";
 const serverUrl = extendUrl(appUrl, "api");
@@ -34,7 +34,7 @@ const serverRoutes = {
 
 const prod = {
   name: "Analyzer Client — Production",
-  endpoint: serverUrl,
+  endpoint: "https://ultimate-property-analyzer.herokuapp.com/api",
 };
 
 // index should have utils, constants,
