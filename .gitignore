@@ -1,6 +1,8 @@
 node_modules/
-oldCode/
+/oldCode
 dist/
 .env
 coverage/
 logfile.log
+/.vscode
+/.gitignore

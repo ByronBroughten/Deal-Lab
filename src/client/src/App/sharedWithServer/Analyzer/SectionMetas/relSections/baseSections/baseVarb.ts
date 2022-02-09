@@ -20,7 +20,7 @@ function valTypeProp<T extends BaseValueTypeName>(typeName: T): ValTypeProp<T> {
 type SharedGeneralBaseVarb = {
   selectable: boolean;
 };
-type GeneralBaseVarb = Spread<[ValTypeProp, SharedGeneralBaseVarb]>;
+export type GeneralBaseVarb = Spread<[ValTypeProp, SharedGeneralBaseVarb]>;
 
 function checkDefaultBase<D extends SharedGeneralBaseVarb>(def: D): D {
   return def;

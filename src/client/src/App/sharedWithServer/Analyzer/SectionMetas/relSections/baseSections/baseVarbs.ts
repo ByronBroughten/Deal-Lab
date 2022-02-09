@@ -1,5 +1,5 @@
 import { omit } from "lodash";
-import { BaseValueTypeName } from "./baseVarb";
+import { BaseValueTypeName, GeneralBaseVarb } from "./baseVarb";
 import {
   BaseOngoingVarb,
   BaseSwitchVarb,
@@ -7,6 +7,8 @@ import {
   SwitchEndingsBase,
   SwitchRecord,
 } from "./switchNames";
+
+type GeneralBaseVarbs = { [varbName: string]: GeneralBaseVarb };
 
 export type BaseVarbSchemas = { [varbName: string]: BaseValueTypeName };
 type TypeRecord<T extends readonly string[], V extends BaseValueTypeName> = {
