@@ -1,4 +1,5 @@
 import { omit } from "lodash";
+import { BaseValueType } from "./baseVarb";
 import {
   BaseOngoingVarb,
   BaseSwitchVarb,
@@ -7,22 +8,13 @@ import {
   SwitchRecord,
 } from "./switchNames";
 
-const baseValues = [
-  "number",
-  "boolean",
-  "string",
-  "stringArray",
-  "numObj",
-] as const;
-export type BaseValue = typeof baseValues[number];
-
-export type BaseVarbSchemas = { [varbName: string]: BaseValue };
-type TypeRecord<T extends readonly string[], V extends BaseValue> = {
+export type BaseVarbSchemas = { [varbName: string]: BaseValueType };
+type TypeRecord<T extends readonly string[], V extends BaseValueType> = {
   [Prop in T[number]]: V;
 };
 
 export const baseVarbs = {
-  type<T extends readonly string[], V extends BaseValue>(
+  type<T extends readonly string[], V extends BaseValueType>(
     keys: T,
     vt: V
   ): TypeRecord<T, V> {

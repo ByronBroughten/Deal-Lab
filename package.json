@@ -11,7 +11,7 @@
     "start:prod": "ts-node src/index.ts",
     "install": "cd src/client && npm install",
     "build": "cd src/client && npm run build",
-    "heroku-postbuild": "npm run install && npm run build",
+    "heroku-postbuild": "cd src/client && npm install --only=dev && npm install && npm run build",
     "test": "jest --watchAll --verbose --coverage"
   },
   "engines": {
