@@ -15,11 +15,15 @@ type SpreadTwo<L, R> = Id<
     SpreadProperties<L, R, OptionalPropertyNames<R> & keyof L>
 >;
 
-type Spread<A extends readonly [...any]> = A extends [infer L, ...infer R]
+export type Spread<A extends readonly [...any]> = A extends [
+  infer L,
+  ...infer R
+]
   ? SpreadTwo<L, Spread<R>>
   : unknown;
 
 type Test1 = Spread<[{ a: string }, { a?: number }]>;
+
 type Test21 = {
   a: 1;
   b: 2;
@@ -30,6 +34,12 @@ type Test22 = {
   c: 3;
 };
 type Test2 = Spread<[Test21, Test22]>;
+
+type Test23 = {
+  a: 3;
+  d: 4;
+};
+type Test3 = Spread<[Test2, Test23]>;
 
 export function merge<A extends object[]>(...a: [...A]) {
   return Object.assign({}, ...a) as Spread<A>;
