@@ -7,7 +7,7 @@ const dev = {
 
 const prod = {
   name: "Analyzer Client — Production",
-  endpoint: "https://ultimate-prop-analyzer-server.herokuapp.com/api/",
+  endpoint: "https://u-prop-a-client.herokuapp.com/api/",
 };
 
 // index should have utils, constants,
