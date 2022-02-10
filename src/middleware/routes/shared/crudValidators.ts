@@ -138,7 +138,7 @@ export const validate = {
       };
     },
   },
-  postEntry: {
+  postSection: {
     req(req: Request, res: Response): LoggedIn<Req<"PostEntry">> | undefined {
       const { user, dbStoreName, payload } = req.body;
       if (

@@ -4,16 +4,15 @@ import { queryOp } from "./sectionEntry/operator";
 import { UserModel } from "./shared/makeDbUser";
 import { validate } from "./shared/crudValidators";
 import { tryFindByIdAndUpdate, tryFindOneAndUpdate } from "./shared/tryQueries";
-
 import { getDbEntry } from "./sectionEntry/query";
 import { DbEnt } from "../../client/src/App/sharedWithServer/Analyzer/DbEntry";
+import { urls } from "../../client/src/App/Constants";
 
 const arrRouter = express.Router();
-export const dbEntryRoutePath = "/api/dbEntry";
 
 // test post first
 arrRouter.post("/", authWare, async (req, res) => {
-  const reqObj = validate.postEntry.req(req, res);
+  const reqObj = validate.postSection.req(req, res);
   if (!reqObj) return;
   const {
     payload,
@@ -31,9 +30,9 @@ arrRouter.post("/", authWare, async (req, res) => {
 
   const pusher = queryOp.push.entry({ ...payload }, dbStoreName);
   const result = await tryFindByIdAndUpdate(res, userId, pusher, "post");
-  if (result) validate.postEntry.res(res, payload.dbId);
+  if (result) validate.postSection.res(res, payload.dbId);
 });
-arrRouter.post("/all", authWare, async (req, res) => {
+arrRouter.post(urls.sectionArr.bit, authWare, async (req, res) => {
   const reqObj = validate.postEntryArr.req(req, res);
   if (!reqObj) return;
   const {
@@ -46,7 +45,7 @@ arrRouter.post("/all", authWare, async (req, res) => {
   const result = await tryFindByIdAndUpdate(res, userId, setter, "post");
   if (result) validate.postEntryArr.res(res, dbStoreName);
 });
-arrRouter.post("/all/columns", authWare, async (req, res) => {
+arrRouter.post(urls.tableColumns.route, authWare, async (req, res) => {
   const reqObj = validate.postTableColumns.req(req, res);
   if (!reqObj) return;
 
@@ -87,7 +86,7 @@ arrRouter.put("/", authWare, async (req, res) => {
   if (result) validate.putEntry.res(res, payload.dbId);
 });
 
-arrRouter.get("/:dbStoreName/:dbId", authWare, async (req, res) => {
+arrRouter.get(urls.section.get, authWare, async (req, res) => {
   const reqObj = validate.getEntry.req(req, res);
   if (!reqObj) return;
   const {
@@ -104,7 +103,7 @@ arrRouter.get("/:dbStoreName/:dbId", authWare, async (req, res) => {
   }
 });
 
-arrRouter.delete("/:dbStoreName/:dbId", authWare, async (req, res) => {
+arrRouter.delete(urls.section.delete, authWare, async (req, res) => {
   const reqObj = validate.deleteEntry.req(req, res);
   if (!reqObj) return;
   const {

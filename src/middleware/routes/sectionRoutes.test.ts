@@ -1,9 +1,10 @@
-import { dbEntryRoutePath } from "./dbEntryRoutes";
 import { makeDummyUserToken } from "./userRoutes/login";
 import request from "supertest";
 import { runApp } from "../../runApp";
 import { UserModel } from "./shared/makeDbUser";
-import { authTokenKey } from "../client/src/App/sharedWithServer/User/crudTypes";
+import { urls } from "../../client/src/App/Constants";
+import { authTokenKey } from "../../client/src/App/sharedWithServer/User/crudTypes";
+
 
 // for get and delete, return 404 if no entry with that dbId is found
 // return 200 if valid request
@@ -12,7 +13,8 @@ import { authTokenKey } from "../client/src/App/sharedWithServer/User/crudTypes"
 // for put, the entry should be edited
 // return user entries
 
-describe(`${dbEntryRoutePath}.post`, () => {
+
+describe(`${urls.section.route}.post`, () => {
   let payload: any;
   let server: any;
   let token: any;
@@ -25,7 +27,7 @@ describe(`${dbEntryRoutePath}.post`, () => {
 
   const exec = () =>
     request(server)
-      .post(`${dbEntryRoutePath}`)
+      .post(`${urls.section.route}`)
       .set(authTokenKey, token)
       .send({ payload });
   async function testStatus(statusNumber: number) {

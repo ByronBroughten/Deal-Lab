@@ -10,11 +10,12 @@ import {
 import { validate } from "./shared/crudValidators";
 import { DbSections } from "../../client/src/App/sharedWithServer/Analyzer/DbEntry";
 import { Full } from "../../client/src/App/sharedWithServer/utils/typescript";
+import { urls } from "../../client/src/App/Constants";
 
-export const userRoutesPath = "/api/user";
 const userRouter = express.Router();
 const userByEmailKey = "user.0.dbSections.user.0.dbVarbs.emailLower";
-userRouter.post("/register", async (req, res) => {
+
+userRouter.post(urls.register.bit, async (req, res) => {
   const reqObj = validate.register.req(req, res);
   if (!reqObj) return;
   const { payload } = reqObj.body;
@@ -34,7 +35,9 @@ userRouter.post("/register", async (req, res) => {
   return loginUser(res, { ...user, _id: userDoc._id });
 });
 
-userRouter.post("/login", async (req, res) => {
+
+
+userRouter.post(urls.login.bit, async (req, res) => {
   const reqObj = validate.login.req(req, res);
   if (!reqObj) return;
 

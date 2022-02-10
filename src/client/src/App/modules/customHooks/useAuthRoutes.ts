@@ -1,5 +1,5 @@
 import { AxiosResponse } from "axios";
-import { config } from "../../Constants";
+import { urls } from "../../Constants";
 import { SectionNam } from "../../sharedWithServer/Analyzer/SectionMetas/SectionName";
 import {
   authTokenKey,
@@ -37,16 +37,14 @@ export function useAuthRoutes() {
   }
 
   return {
-    async login(loginFormData: LoginFormData) {
-      const url = extendUrl(config.url.api.user, "login");
+    async login(loginFormData: LoginFormData) {      
       const reqObj: Req<"Login"> = {
         body: { payload: loginFormData },
       };
-      const res = await https.post("logging in", url, reqObj.body);
+      const res = await https.post("logging in", urls.login.path, reqObj.body);
       trySetLogin(res);
     },
     async register(registerFormData: RegisterFormData) {
-      const url = extendUrl(config.url.api.user, "register");
       const reqObj: Req<"Register"> = {
         body: {
           payload: {
@@ -57,7 +55,7 @@ export function useAuthRoutes() {
           },
         },
       };
-      const res = await https.post("registering", url, reqObj.body);
+      const res = await https.post("registering", urls.register.path, reqObj.body);
       trySetLogin(res);
     },
   };

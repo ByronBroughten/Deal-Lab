@@ -1,16 +1,10 @@
 import { AxiosResponse } from "axios";
-import { config } from "../../../Constants";
 import { is, Req, Res } from "../../../sharedWithServer/User/crudTypes";
 import https from "../../services/httpService";
 import { DbStoreName } from "../../../sharedWithServer/Analyzer/SectionMetas/relSections/baseSectionTypes";
 import { DbEntry } from "../../../sharedWithServer/Analyzer/DbEntry";
 import { SectionName } from "../../../sharedWithServer/Analyzer/SectionMetas/SectionName";
-
-const url = {
-  dbEntry: config.url.api.dbEntry,
-  dbEntryArr: config.url.api.sectionArr,
-  dbColArr: config.url.api.tableColumns,
-};
+import { urls } from "./../../../Constants";
 
 const validateRes = {
   dbId(res: AxiosResponse<unknown> | undefined): { data: string } | undefined {
@@ -41,7 +35,7 @@ const validateRes = {
 };
 
 export const crud = {
-  async postEntry(
+  async postSection(
     dbEntry: DbEntry,
     dbStoreName: DbStoreName
   ): Promise<Res<"PostEntry"> | undefined> {
@@ -51,7 +45,7 @@ export const crud = {
         payload: dbEntry,
       },
     };
-    const res = await https.post(`saving`, url.dbEntry, reqObj.body);
+    const res = await https.post(`saving`, urls.section.path, reqObj.body);
     return validateRes.dbId(res);
   },
   async postEntryArr(
@@ -64,7 +58,7 @@ export const crud = {
         dbStoreName,
       },
     };
-    const res = await https.post("saving", url.dbEntryArr, reqObj.body);
+    const res = await https.post("saving", urls.sectionArr.path, reqObj.body);
     return validateRes.dbId(res);
   },
   async postTableColumns(
@@ -77,7 +71,7 @@ export const crud = {
         dbStoreName,
       },
     };
-    const res = await https.post("saving", url.dbColArr, reqObj.body);
+    const res = await https.post("saving", urls.tableColumns.path, reqObj.body);
     return validateRes.dbEntryArr(res);
   },
   async putEntry(
@@ -90,7 +84,7 @@ export const crud = {
         dbStoreName,
       },
     };
-    const res = await https.put("updating", url.dbEntry, reqObj.body);
+    const res = await https.put("updating", urls.section.path, reqObj.body);
     return validateRes.dbId(res);
   },
   async getEntry(
@@ -103,7 +97,9 @@ export const crud = {
         dbId,
       },
     };
-    const res = await https.get(`loading from ${dbStoreName}`, url.dbEntry, [
+    // to get the params correctly, I can unjoin the names from the url string
+    // and then use that array to index params in the correct order.
+    const res = await https.get(`loading from ${dbStoreName}`, urls.section.path, [
       ...Object.values(reqObj.params),
     ]);
     return validateRes.dbEntry(res);
@@ -120,7 +116,7 @@ export const crud = {
     };
     const res = await https.delete(
       `deleting from ${dbStoreName}`,
-      url.dbEntry,
+      urls.section.path,
       [...Object.values(reqObj.params)]
     );
     return validateRes.dbId(res);

@@ -35,7 +35,7 @@ const dbStore = {
   async postIndexEntry(feInfo: FeInfo<"hasIndexStore">, next: Analyzer) {
     const { indexStoreName } = next.sectionMeta(feInfo.sectionName);
     const dbEntry = next.toDbIndexEntry(feInfo);
-    return await crud.postEntry(dbEntry, indexStoreName);
+    return await crud.postSection(dbEntry, indexStoreName);
   },
 } as const;
 

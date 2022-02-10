@@ -1,6 +1,5 @@
 import request from "supertest";
 import mongoose from "mongoose";
-import { userRoutesPath } from "./userRoutes";
 import { decodeAndCheckUserToken } from "./userRoutes/login";
 import { makeDbUser, prepNewUserData, UserModel } from "./shared/makeDbUser";
 import {
@@ -10,6 +9,7 @@ import {
 } from "../../client/src/App/sharedWithServer/User/crudTypes";
 import { runApp } from "../../runApp";
 import { SectionNam } from "../../client/src/App/sharedWithServer/Analyzer/SectionMetas/SectionName";
+import { urls } from "../../client/src/App/Constants";
 
 const testPayload = {
   login(): LoginFormData {
@@ -36,7 +36,7 @@ const testPayload = {
   },
 };
 
-describe(`${userRoutesPath}/register`, () => {
+describe(`${urls.user.route}/register`, () => {
   // prep
   let payload: any;
   let server: any;
@@ -46,7 +46,7 @@ describe(`${userRoutesPath}/register`, () => {
     server = runApp();
   });
   const exec = () =>
-    request(server).post(`${userRoutesPath}/register`).send({ payload });
+    request(server).post(`${urls.user.route}/register`).send({ payload });
   async function testStatus(statusNumber: number) {
     const res = await exec();
     expect(res.status).toBe(statusNumber);
@@ -74,7 +74,7 @@ describe(`${userRoutesPath}/register`, () => {
   });
 });
 
-describe(`${userRoutesPath}/login`, () => {
+describe(`${urls.user.route}/login`, () => {
   let payload: any;
   let server: any;
 
@@ -88,7 +88,7 @@ describe(`${userRoutesPath}/login`, () => {
   });
 
   const exec = () =>
-    request(server).post(`${userRoutesPath}/login`).send({ payload });
+    request(server).post(`${urls.user.route}/login`).send({ payload });
   async function testStatus(statusNumber: number) {
     const res = await exec();
     expect(res.status).toBe(statusNumber);
