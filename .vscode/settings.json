@@ -1,6 +1,0 @@
-{
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.formatOnSave": true,
-  "workbench.colorTheme": "Default Light+",
-  "typescript.tsdk": "node_modules\\typescript\\lib"
-}
