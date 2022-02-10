@@ -22,9 +22,6 @@ export function runApp() {
   app.use(express.urlencoded({ extended: true }));
   if (process.env.NODE_ENV === "production") {
     app.use(express.static("src/client/build"));
-    app.get("*", function (req, res) {
-      res.sendFile("index.html", { root: "src/client/build/" });
-    });
   } else {
     app.use(express.static("public"));
   }
@@ -37,6 +34,12 @@ export function runApp() {
 
   routes(app);
   app.use(error);
+  if (process.env.NODE_ENV === "production") {
+    app.get("*", function (req, res) {
+      res.sendFile("index.html", { root: "src/client/build/" });
+    });
+  }
+
   if (process.env.NODE_ENV === "test") return app;
 
   const port = process.env.PORT || config.get("port");
