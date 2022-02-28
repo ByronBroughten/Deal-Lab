@@ -6,13 +6,13 @@ import {
   OutRelVarbInfo,
 } from "./relSections/rel/relVarbInfoTypes";
 import {
-  PreVarb,
+  RelVarb,
   SwitchUpdateInfo,
   UpdateFnProps,
-  UpdateSwitchProp,
-} from "./relSections/rel/relVarbTypes";
-import { valueMeta } from "./relSections/rel/valueMeta";
-import { NumObj } from "./relSections/rel/valueMeta/NumObj";
+  FullSwitchUpdateInfo,
+} from "./relSections/rel/relVarb/UpdateInfoArr";
+import { baseValues } from "./relSections/baseSections/baseValues";
+import { NumObj } from "./relSections/baseSections/baseValues/NumObj";
 import { UpdateFnName } from "./relSections/rel/valueMetaTypes";
 import { SectionName } from "./SectionName";
 
@@ -58,7 +58,7 @@ function fnPropsToInVarbInfos(updateFnProps: UpdateFnProps): InRelVarbInfo[] {
   }
   return nextInfos;
 }
-function inSwitchPropsToInfos(inSwitchProps: UpdateSwitchProp[]) {
+function inSwitchPropsToInfos(inSwitchProps: FullSwitchUpdateInfo[]) {
   const inSwitchInfos: InSwitchUpdatePack[] = [];
   for (const prop of inSwitchProps) {
     inSwitchInfos.push({
@@ -85,11 +85,11 @@ export function cloneValue(value: StateValue): StateValue {
     : value;
 }
 
-export type VarbMetaCore = PreVarb & VarbMetaProps;
+export type VarbMetaCore = RelVarb & VarbMetaProps;
 export class VarbMeta {
   constructor(readonly core: VarbMetaCore) {}
   isVarbValueType(value: any): boolean {
-    return valueMeta[this.type].is(value);
+    return baseValues[this.type].is(value);
   }
   get raw() {
     return { ...this.core };
@@ -156,7 +156,7 @@ export class VarbMeta {
   }
   //
   static initCore(
-    relVarb: PreVarb,
+    relVarb: RelVarb,
     sectionName: SectionName,
     varbName: string
   ): VarbMetaCore {
@@ -165,7 +165,7 @@ export class VarbMeta {
       sectionName,
       varbName,
       inDefaultInfos: fnPropsToInVarbInfos(relVarb.updateFnProps),
-      InSwitchUpdatePacks: inSwitchPropsToInfos(relVarb.inUpdateSwitchProps),
+      InSwitchUpdatePacks: inSwitchPropsToInfos(relVarb.inUpdateProps),
       outUpdatePacks: [], // static after initialization
     };
   }

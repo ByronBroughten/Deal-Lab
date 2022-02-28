@@ -9,7 +9,7 @@ import {
   relSection,
   RelSectionOptions,
 } from "./relSections/rel/relSection";
-import { BaseSections } from "./relSections/baseSectionTypes";
+import { BaseSections } from "./relSections/baseNameArrs";
 import { RelVarbs } from "./relSections/rel/relVarbs";
 import { LeftRightVarbInfos } from "./relSections/rel/relVarb";
 
@@ -107,8 +107,14 @@ export function makeRelSections() {
         [rel.varbInfo.relative("propertyGeneral", "upfrontRevenue", "static")],
         { startAdornment: "$" }
       ),
+      // sectionName: SN, baseName: Base, props: PR, nums: NU
       ...rel.varbs.ongoingSumNums(
+        "totalInsAndOuts",
         "expenses",
+
+        // the way things are, I can't provide just one displayName
+        // and I can't provide ongoing baseNames
+
         "Ongoing expenses",
         rel.varbInfo.statics([
           ["propertyGeneral", "ongoingExpenses"],

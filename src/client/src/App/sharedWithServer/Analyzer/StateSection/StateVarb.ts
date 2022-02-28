@@ -2,12 +2,12 @@ import { cloneDeep, isEqual } from "lodash";
 import { DbValue } from "../DbEntry";
 import array from "../../utils/Arr";
 import { sectionMetas } from "../SectionMetas";
-import { valueMeta } from "../SectionMetas/relSections/rel/valueMeta";
-import { NumObj } from "../SectionMetas/relSections/rel/valueMeta/NumObj";
+import { baseValues } from "../SectionMetas/relSections/baseSections/baseValues";
+import { NumObj } from "../SectionMetas/relSections/baseSections/baseValues/NumObj";
 import {
   InEntities,
   InEntity,
-} from "../SectionMetas/relSections/rel/valueMeta/NumObj/entities";
+} from "../SectionMetas/relSections/baseSections/baseValues/NumObj/numObjInEntitites";
 import {
   UpdateFnName,
   ValueTypes,
@@ -17,7 +17,7 @@ import {
   FeVarbInfo,
   RelVarbInfo,
 } from "../SectionMetas/relSections/rel/relVarbInfoTypes";
-import { DisplayName } from "../SectionMetas/relSections/rel/relVarbTypes";
+import { DisplayName } from "../SectionMetas/relSections/rel/relVarb/UpdateInfoArr";
 import { SectionName } from "../SectionMetas/SectionName";
 import { cloneValue, VarbMeta } from "../SectionMetas/VarbMeta";
 import {
@@ -48,7 +48,7 @@ export type StateVarbOptions = Partial<StateVarbCore>;
 
 export type ValueTypesPlusAny = ValueTypes & { any: StateValue };
 export const valueSchemasPlusAny = {
-  ...valueMeta,
+  ...baseValues,
   any: { is: () => true },
 } as const;
 

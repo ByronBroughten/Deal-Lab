@@ -5,8 +5,8 @@ import { insertEntity } from "../../../modules/draftjs/insert";
 import theme from "../../../theme/Theme";
 import VarbAutoComplete from "../VarbAutoComplete";
 import Analyzer from "../../../sharedWithServer/Analyzer";
-import { VariableOption } from "../../../sharedWithServer/Analyzer/methods/entitiesVariables";
-import { EntityMapData } from "../../../sharedWithServer/Analyzer/SectionMetas/relSections/rel/valueMeta/NumObj/entities";
+import { VariableOption } from "../../../sharedWithServer/Analyzer/methods/variableOptions";
+import { EntityMapData } from "../../../sharedWithServer/Analyzer/SectionMetas/relSections/baseSections/baseValues/NumObj/numObjInEntitites";
 
 interface Props {
   editorState: EditorState;

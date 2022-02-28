@@ -2,13 +2,13 @@ import { makeSectionId } from "../makeSectionId";
 import { z } from "zod";
 import { zNanoId, zString } from "../utils/zod";
 import { BasicValue } from "./StateSection/StateVarb/stateValue";
-import { DbNumObj } from "./SectionMetas/relSections/rel/valueMeta/NumObj";
-import { valueMeta } from "./SectionMetas/relSections/rel/valueMeta";
+import { DbNumObj } from "./SectionMetas/relSections/baseSections/baseValues/NumObj";
+import { baseValues } from "./SectionMetas/relSections/baseSections/baseValues";
 import { ParentName } from "./SectionMetas/relSectionTypes";
 import {
   InEntityInfo,
   InEntityVarbInfo,
-} from "./SectionMetas/relSections/rel/valueMeta/NumObj/entities";
+} from "./SectionMetas/relSections/baseSections/baseValues/NumObj/numObjInEntitites";
 import {
   DbNameInfo,
   StaticRelInfo,
@@ -17,7 +17,7 @@ import { DbUser } from "../User/DbUser";
 import { relSections } from "./SectionMetas/relSections";
 import { AlwaysOneVarbFinder, SectionName } from "./SectionMetas/SectionName";
 import { DbInfo, Inf } from "./SectionMetas/Info";
-import { DbStoreName } from "./SectionMetas/relSections/baseSectionTypes";
+import { DbStoreName } from "./SectionMetas/relSections/baseNameArrs";
 
 export type DbValue = BasicValue | DbNumObj;
 export type DbVarbs = {
@@ -252,7 +252,7 @@ export const DbEnt = {
 
 // because of how zod unions and records work, these zod schemas must be
 // based on the types—the types can't be based on the zod schemas
-const zDbValueArr = Object.values(valueMeta).map((schema) => schema.dbZod) as [
+const zDbValueArr = Object.values(baseValues).map((schema) => schema.dbZod) as [
   z.ZodTypeAny,
   z.ZodTypeAny
 ];

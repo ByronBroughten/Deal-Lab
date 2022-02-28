@@ -1,12 +1,12 @@
+import { NumObj } from "./baseSections/baseValues/NumObj";
 import { rel } from "./rel";
 import { relSection } from "./rel/relSection";
-import { RelVarbs } from "./rel/relVarbs";
 
-function propertyPreVarbs<R extends RelVarbs<"property">>(): R {
-  const r: R = {
-    title: rel.varb.string(),
+function propertyRelVarbs<R extends RelVarbs<"property">>(): R {
+  const r: any = {
+    title: rel.varb.string("Title"),
     price: rel.varb.moneyObj("Price"),
-    sqft: rel.varb.calcVarb("Square feet"),
+    sqft: rel.varb.entityEditor("Square feet"),
     ...rel.varbs.timeMoney("taxes", "Taxes", "property", {
       switchInit: "yearly",
     }),
@@ -49,7 +49,7 @@ function propertyPreVarbs<R extends RelVarbs<"property">>(): R {
       rel.varbInfo.locals("property", ["targetRent", "miscOngoingRevenue"]),
       { switchInit: "monthly", shared: { startAdornment: "$" } }
     ),
-  } as R;
+  };
   return r;
 }
 
@@ -58,8 +58,8 @@ export const prePropertyGeneral = {
     "propertyGeneral",
     "Property",
     {
-      ...rel.varbs.sumSection("property", propertyPreVarbs()),
-      ...rel.varbs.sectionStrings("property", propertyPreVarbs(), ["title"]),
+      ...rel.varbs.sumSection("property", propertyRelVarbs()),
+      ...rel.varbs.sectionStrings("property", propertyRelVarbs(), ["title"]),
     },
     {
       parent: "main",
@@ -71,7 +71,7 @@ export const prePropertyGeneral = {
       ] as const,
     }
   ),
-  ...relSection.base("property", "Property", propertyPreVarbs(), {
+  ...relSection.base("property", "Property", propertyRelVarbs(), {
     defaultStoreName: "propertyDefault",
     indexStoreName: "propertyIndex",
     childSectionNames: [
@@ -85,7 +85,7 @@ export const prePropertyGeneral = {
   ...relSection.base(
     "propertyDefault",
     "Default Property",
-    propertyPreVarbs(),
+    propertyRelVarbs(),
     {
       parent: "propertyGeneral",
       childSectionNames: [
@@ -106,9 +106,9 @@ export const prePropertyGeneral = {
   ...relSection.base("unit", "Unit", {
     one: rel.varb.numObj("Unit", {
       updateFnName: "one",
-      initNumber: 1,
+      initValue: NumObj.init(1),
     }),
-    numBedrooms: rel.varb.calcVarb("BRs"),
+    numBedrooms: rel.varb.entityEditor("BRs"),
     ...rel.varbs.timeMoney("targetRent", "Rent", "unit"),
-  } as RelVarbs<"unit">),
+  }),
 } as const;

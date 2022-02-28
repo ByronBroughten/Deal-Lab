@@ -1,19 +1,35 @@
-import { omit } from "lodash";
 import { Obj } from "../../../../utils/Obj";
-import { baseVarbs, BaseVarbSchemas } from "./baseVarbs";
+import { Spread } from "../../../../utils/Obj/merge";
+import { baseVarbs, GeneralBaseVarbs } from "./baseVarbs";
 
-type BaseSectionTemplate = {
+export type GeneralBaseSection = {
+  varbSchemas: GeneralBaseVarbs;
   alwaysOne: boolean;
   makeOneOnStartup: boolean;
   loadOnLogin: boolean;
   feGuestAccess: boolean;
-  varbSchemas: BaseVarbSchemas;
   solvesForFinal: boolean;
   hasGlobalVarbs: boolean;
+  protected: boolean;
 };
 
-type Options = Partial<BaseSectionTemplate>;
+type FullOptions = Omit<GeneralBaseSection, "varbSchemas">;
+type Options = Partial<FullOptions>;
+const fallbackOptions = {
+  alwaysOne: false,
+  loadOnLogin: false,
+  makeOneOnStartup: false,
+  feGuestAccess: false,
+  solvesForFinal: false,
+  hasGlobalVarbs: false,
+  protected: false,
+};
+const fallbackTest = (_: FullOptions): void => undefined;
+fallbackTest(fallbackOptions);
+type FallbackOptions = typeof baseOptions.fallback;
+
 export const baseOptions = {
+  fallback: fallbackOptions,
   alwaysOneFromStart: {
     alwaysOne: true,
     makeOneOnStartup: true,
@@ -29,50 +45,49 @@ export const baseOptions = {
     loadOnLogin: true,
     feGuestAccess: true,
   },
-  fallback: {
-    alwaysOne: false,
-    loadOnLogin: false,
-    makeOneOnStartup: false,
-    feGuestAccess: false,
-    solvesForFinal: false,
-    hasGlobalVarbs: false,
-  },
 } as const;
 
-type FallbackSchema = typeof baseOptions.fallback;
-type ReturnSchema<V extends BaseVarbSchemas, O extends Options> = {
-  varbSchemas: V;
-} & Omit<FallbackSchema, keyof O> &
-  O;
-
+type BaseSection<
+  V extends GeneralBaseVarbs = GeneralBaseVarbs,
+  O extends Options = {}
+> = Spread<[Spread<[FallbackOptions, O]>, { varbSchemas: V }]>;
 export const baseSection = {
-  schema<V extends BaseVarbSchemas, O extends Options = {}>(
+  schema<V extends GeneralBaseVarbs = GeneralBaseVarbs, O extends Options = {}>(
     varbSchemas: V,
     options?: O
-  ): ReturnSchema<V, O> {
-    return {
-      varbSchemas,
-      ...omit(baseOptions.fallback, Obj.keys(options ?? {})),
-      ...options,
-    } as ReturnSchema<V, O>;
+  ): BaseSection<V, O> {
+    type FirstSpread = Spread<[FallbackOptions, O]>;
+    const firstSpread: FirstSpread = Obj.spread(
+      baseOptions.fallback,
+      options ?? ({} as O)
+    );
+    const final: Spread<[FirstSpread, { varbSchemas: V }]> = Obj.spread(
+      firstSpread,
+      { varbSchemas }
+    );
+    return final;
   },
   get singleTimeListSolves() {
-    return this.schema(baseVarbs.singleTimeList, { solvesForFinal: true });
+    return this.schema(baseVarbs.singleTimeList, {
+      solvesForFinal: true,
+    } as const);
   },
   get ongoingListSolves() {
-    return this.schema(baseVarbs.ongoingList, { solvesForFinal: true });
+    return this.schema(baseVarbs.ongoingList, {
+      solvesForFinal: true,
+    } as const);
   },
   get table() {
     return this.schema(baseVarbs.table, {
       ...baseOptions.alwaysOneFromStart,
       loadOnLogin: true,
       feGuestAccess: true,
-    });
+    } as const);
   },
   get rowIndex() {
-    return this.schema(baseVarbs.tableRow, { loadOnLogin: true });
+    return this.schema(baseVarbs.tableRow, { loadOnLogin: true } as const);
   },
   get propertyBase() {
     return this.schema(baseVarbs.property);
   },
-};
+} as const;

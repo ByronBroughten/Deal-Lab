@@ -5,7 +5,7 @@ import useHowMany from "./appWide/customHooks/useHowMany";
 import { useAnalyzerContext } from "../modules/usePropertyAnalyzer";
 import MaterialStringEditor from "./inputs/MaterialStringEditor";
 import VarbAutoComplete from "./inputs/VarbAutoComplete";
-import { VariableOption } from "../sharedWithServer/Analyzer/methods/entitiesVariables";
+import { VariableOption } from "../sharedWithServer/Analyzer/methods/variableOptions";
 import { auth } from "../modules/services/authService";
 import { useStores } from "../modules/customHooks/useStore";
 import { isEqual } from "lodash";

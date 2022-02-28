@@ -1,18 +1,14 @@
 import { isEqual } from "lodash";
-import { merge } from "./Obj/merge";
-import { Full, SubType } from "./typescript";
+import { merge, spread } from "./Obj/merge";
+import { Full, SubType } from "./types";
 
 type Entries<T> = { [K in keyof T]: [K, T[K]] }[keyof T];
-export function ObjectEntries<O extends object, T extends Full<O>>(
-  obj: O
-): Entries<T>[] {
+export function ObjectEntries<O extends object>(obj: O): Entries<O>[] {
   return Object.entries(obj) as any;
 }
 
 type Keys<T> = [keyof T];
-export function ObjectKeys<O extends object, T extends Full<O>>(
-  obj: O
-): Keys<T> {
+export function ObjectKeys<O extends object>(obj: O): Keys<O> {
   return Object.keys(obj) as any;
 }
 
@@ -51,13 +47,21 @@ export function extend<A extends object = {}, B extends object = {}>(
 export const Obj = {
   keys: ObjectKeys,
   entries: ObjectEntries,
+  update<O extends object, K extends keyof O, V extends O[K]>(
+    obj: O,
+    key: K,
+    val: V
+  ): O {
+    obj[key] = val;
+    return obj;
+  },
   filterKeysForEntryShape<O extends object, M extends any>(
     obj: O,
     model: M
   ): (keyof SubType<O, M>)[] {
-    return ObjectKeys(obj).filter((prop) => {
+    return this.keys(obj).filter((prop) => {
       return isEqual(obj[prop], model);
-    }) as (keyof SubType<O, M>)[];
+    }) as string[] as (keyof SubType<O, M>)[];
   },
   toNestedPropertyObj<
     O extends {
@@ -72,12 +76,13 @@ export const Obj = {
       return propObj;
     }, {} as { [Prop in keyof O]: O[Prop][P] });
   },
-  entryKeysWithProp<
-    O extends object,
-    P extends string,
-    R extends (keyof SubType<O, { [Prop in P]: any }>)[]
-  >(obj: O, propName: P): R {
-    return this.keys(obj).filter((key) => propName in obj[key]) as R;
+  entryKeysWithProp<O extends object, P extends string>(
+    obj: O,
+    propName: P
+  ): (keyof SubType<O, { [Prop in P]: any }>)[] {
+    return this.keys(obj).filter(
+      (key) => propName in obj[key]
+    ) as string[] as (keyof SubType<O, { [Prop in P]: any }>)[];
   },
   entryKeysWithPropValue<
     O extends { [key: string]: any },
@@ -89,4 +94,5 @@ export const Obj = {
     ) as (keyof SubType<O, { [Prop in P]: V }>)[];
   },
   merge: merge,
+  spread: spread,
 } as const;

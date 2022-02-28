@@ -9,11 +9,12 @@ import { isEditorUpdateFnName } from "../../sharedWithServer/Analyzer/StateSecti
 import {
   EntitiesAndEditorText,
   NumObj,
-} from "../../sharedWithServer/Analyzer/SectionMetas/relSections/rel/valueMeta/NumObj";
+} from "../../sharedWithServer/Analyzer/SectionMetas/relSections/baseSections/baseValues/NumObj";
 import Analyzer from "../../sharedWithServer/Analyzer";
 import array from "../../sharedWithServer/utils/Arr";
 import { FeVarbInfo } from "../../sharedWithServer/Analyzer/SectionMetas/relSections/rel/relVarbInfoTypes";
-import { InEntities } from "../../sharedWithServer/Analyzer/SectionMetas/relSections/rel/valueMeta/NumObj/entities";
+import { InEntities } from "../../sharedWithServer/Analyzer/SectionMetas/relSections/baseSections/baseValues/NumObj/numObjInEntitites";
+import { entitiesToNumberEntities } from "../../sharedWithServer/Analyzer/methods/solveVarbs/solveAndUpdateValue/entitiesToNumberEntities";
 
 const updateEditorByBasicType = {
   string(editorState: EditorState): string {
@@ -69,7 +70,12 @@ function numObjFromEditor(
   feVarbInfo: FeVarbInfo,
   editorState: EditorState
 ): NumObj {
-  const textAndEntities = textAndEntitiesFromEditorState(editorState);
+  // textAndNumberEntities
+  const { editorText, entities } = textAndEntitiesFromEditorState(editorState);
+  const numberEntities = entitiesToNumberEntities(analyzer, entities);
+
+  // entitiesToNumberEntities
+
   const solvableText =
     analyzer.solvableTextFromEditorTextAndEntities(textAndEntities);
   const number = analyzer.solvableTextToNumber(feVarbInfo, solvableText);

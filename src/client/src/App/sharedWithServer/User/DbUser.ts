@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { DbSectionSchemas } from "../Analyzer/SectionMetas/relSections/baseSectionTypes";
+import { DbSectionSchemas } from "../Analyzer/SectionMetas/relSections/baseNameArrs";
 import { SchemaVarbsToDbValues } from "../Analyzer/SectionMetas/relSections/rel/valueMetaTypes";
 import { SectionName, SectionNam } from "../Analyzer/SectionMetas/SectionName";
 import { GuestAccessSections } from "./crudTypes";

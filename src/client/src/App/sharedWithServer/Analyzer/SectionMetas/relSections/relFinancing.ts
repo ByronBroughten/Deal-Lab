@@ -1,17 +1,18 @@
 import { rel } from "./rel";
 import { relSection } from "./rel/relSection";
 import { RelVarbs } from "./rel/relVarbs";
-import { switchNames } from "./baseSections/switchNames";
+import { switchVarbNames } from "./baseSections/baseSwitchSchemas";
 import { loanVarbsNotInFinancing } from "./baseSections";
+import { NumObj } from "./baseSections/baseValues/NumObj";
 
-const loanAmountBase = switchNames("loanAmountBase", "dollarsPercent");
+const loanAmountBase = switchVarbNames("loanAmountBase", "dollarsPercent");
 function loanPreVarbs(): RelVarbs<"loan"> {
   return {
-    title: rel.varb.string(),
+    title: rel.varb.string("Title"),
     [loanAmountBase.switch]: rel.varb.string({ initValue: "percent" }),
     [loanAmountBase.percent]: rel.varb.calcVarb("Base loan amount", {
-      initNumber: 5,
-      inUpdateSwitchProps: [
+      initValue: NumObj.init(5),
+      inUpdateProps: [
         rel.updateSwitch.divideToPercent(
           "loan",
           loanAmountBase.switch,
@@ -22,7 +23,7 @@ function loanPreVarbs(): RelVarbs<"loan"> {
       ],
     }),
     [loanAmountBase.dollars]: rel.varb.calcVarb("Base loan amount", {
-      inUpdateSwitchProps: [
+      inUpdateProps: [
         rel.updateSwitch.percentToDecimalTimesBase(
           "loan",
           "loanAmountBase",
@@ -48,11 +49,11 @@ function loanPreVarbs(): RelVarbs<"loan"> {
     }),
     ...rel.varbs.timeMoney("mortgageIns", "Mortgage insurance", "loan", {
       switchInit: "yearly",
-      shared: { initNumber: 0 },
+      shared: { initValue: NumObj.init(0) },
     }),
 
     mortInsUpfront: rel.varb.moneyObj("Upfront mortgage insurance", {
-      initNumber: 0,
+      initValue: NumObj.init(0),
     }),
     closingCosts: rel.varb.sumMoney("Closing costs", [
       rel.varbInfo.children("closingCostList", "total"),
@@ -60,13 +61,127 @@ function loanPreVarbs(): RelVarbs<"loan"> {
     wrappedInLoan: rel.varb.sumMoney("Wrapped into loan", [
       rel.varbInfo.children("wrappedInLoanList", "total"),
     ]),
-    ...rel.varbs.ongoingPureCalc(
+    ...rel.varbs.ongoing(
+      "loan"
       "pi",
-      "Principal plus interest payments",
       {
         monthly: {
-          updateFnName: "piMonthly",
-          updateFnProps: {
+          displayName: "PI Monthly",
+          updateInfoArr: [
+            {
+              updateName: "piMonthly"
+              updateProps: {
+                loanAmountDollarsTotal: rel.varbInfo.relative(
+                  "loan",
+                  "loanAmountDollarsTotal",
+                  "local"
+                ),
+                loanTermMonths: rel.varbInfo.relative(
+                  "loan",
+                  "loanTermMonths",
+                  "local"
+                ),
+                interestRatePercentMonthly: rel.varbInfo.relative(
+                  "loan",
+                  "interestRatePercentMonthly",
+                  "local"
+                ),
+              },
+            }
+          ]
+        },
+        yearly: {
+          displayName: "PI Yearly",
+          updateInfoArr: [
+            {
+              updateName: "piYearly",
+              updateProps: {
+                loanAmountDollarsTotal: rel.varbInfo.relative(
+                  "loan",
+                  "loanAmountDollarsTotal",
+                  "local"
+                ),
+                loanTermYears: rel.varbInfo.relative(
+                  "loan",
+                  "loanTermYears",
+                  "local"
+                ),
+                interestRatePercentYearly: rel.varbInfo.relative(
+                  "loan",
+                  "interestRatePercentYearly",
+                  "local"
+                ),
+              }
+            }
+          ]
+        },
+        targets: {
+          startAdornment: "$"
+        }
+      }
+    )
+    
+
+    // ...rel.varbs.ongoingPureCalc(
+    //   "pi",
+    //   "Principal plus interest payments",
+    //   {
+    //     monthly: {
+    //       updateFnName: "piMonthly",
+    //       updateFnProps: {
+    //         loanAmountDollarsTotal: rel.varbInfo.relative(
+    //           "loan",
+    //           "loanAmountDollarsTotal",
+    //           "local"
+    //         ),
+    //         loanTermMonths: rel.varbInfo.relative(
+    //           "loan",
+    //           "loanTermMonths",
+    //           "local"
+    //         ),
+    //         interestRatePercentMonthly: rel.varbInfo.relative(
+    //           "loan",
+    //           "interestRatePercentMonthly",
+    //           "local"
+    //         ),
+    //       },
+    //     },
+    //     yearly: {
+    //       updateFnName: "piYearly",
+    //       updateFnProps: {
+    //         loanAmountDollarsTotal: rel.varbInfo.relative(
+    //           "loan",
+    //           "loanAmountDollarsTotal",
+    //           "local"
+    //         ),
+    //         loanTermYears: rel.varbInfo.relative(
+    //           "loan",
+    //           "loanTermYears",
+    //           "local"
+    //         ),
+    //         interestRatePercentYearly: rel.varbInfo.relative(
+    //           "loan",
+    //           "interestRatePercentYearly",
+    //           "local"
+    //         ),
+    //       },
+    //     },
+    //   },
+    //   { shared: { startAdornment: "$" } }
+    // ),
+  } as RelVarbs<"loan">;
+}
+
+const test = rel.varbs.ongoing(
+  "loan"
+  "pi",
+  {
+    monthly: {
+      displayName: "PI Monthly",
+      updateInfoArr: [
+        {
+          updateName: "piMonthly"
+          updateProps: {
             loanAmountDollarsTotal: rel.varbInfo.relative(
               "loan",
               "loanAmountDollarsTotal",
@@ -83,10 +198,15 @@ function loanPreVarbs(): RelVarbs<"loan"> {
               "local"
             ),
           },
-        },
-        yearly: {
-          updateFnName: "piYearly",
-          updateFnProps: {
+        }
+      ]
+    },
+    yearly: {
+      displayName: "PI Yearly",
+      updateInfoArr: [
+        {
+          updateName: "piYearly",
+          updateProps: {
             loanAmountDollarsTotal: rel.varbInfo.relative(
               "loan",
               "loanAmountDollarsTotal",
@@ -102,13 +222,17 @@ function loanPreVarbs(): RelVarbs<"loan"> {
               "interestRatePercentYearly",
               "local"
             ),
-          },
-        },
-      },
-      { shared: { startAdornment: "$" } }
-    ),
-  } as RelVarbs<"loan">;
-}
+          }
+        }
+      ]
+    },
+    targets: {
+      startAdornment: "$"
+    }
+  }
+);
+
+
 
 const financingRelVarbs: RelVarbs<"financing"> = {
   downPaymentDollars: rel.varb.leftRightPropFn(

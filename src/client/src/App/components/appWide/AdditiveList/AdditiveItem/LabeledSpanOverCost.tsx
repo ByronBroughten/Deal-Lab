@@ -1,5 +1,5 @@
 import { useAnalyzerContext } from "../../../../modules/usePropertyAnalyzer";
-import { switchNames } from "../../../../sharedWithServer/Analyzer/SectionMetas/relSections/baseSections/switchNames";
+import { switchVarbNames } from "../../../../sharedWithServer/Analyzer/SectionMetas/relSections/baseSections/baseSwitchSchemas";
 import {
   FeInfo,
   Inf,
@@ -16,7 +16,7 @@ export default function LabeledSpanOverCost({ valueVarbName, feInfo }: Props) {
   const valueVarb = analyzer.feVarb(valueVarbName, feInfo);
   const lifeSpanName = analyzer.switchedVarbName(
     feInfo,
-    switchNames("lifespan", "monthsYears")
+    switchVarbNames("lifespan", "monthsYears")
   );
   return (
     <>

@@ -1,7 +1,7 @@
 import Analyzer from "../../Analyzer";
 import { FeParentInfo } from "../SectionMetas/relSectionTypes";
 import { SectionName } from "../SectionMetas/SectionName";
-import { InitSectionAndChildrenProps } from "./shared/addSections";
+import { InitSectionAndChildrenProps } from "./protected/addSections";
 
 export function addSectionsAndSolve(
   this: Analyzer,

@@ -4,14 +4,14 @@ import {
   NeversToSomething,
   RemoveNotStrings,
   SubType,
-} from "../../utils/typescript";
+} from "../../utils/types";
 import { relSections } from "./relSections";
 import {
   alwaysOneSectionNames,
   BaseName,
   baseNames,
   isBaseName,
-} from "./relSections/baseSectionTypes";
+} from "./relSections/baseNameArrs";
 import {
   FeNameInfo,
   FeSectionInfoBase,
@@ -189,10 +189,7 @@ export type DefaultStoreName<
   S extends HasDefaultStoreName = HasDefaultStoreName
 > = RelSections[S]["indexStoreName"];
 export type ExtraStoreName = IndexStoreName | DefaultStoreName;
-export type ExtraStoreNameAlwaysOne = Extract<
-  ExtraStoreName,
-  BaseName<"alwaysOne">
->;
+
 export type ExtraStoreNameOneParent = Extract<
   ExtraStoreName,
   HasOneParentSectionName

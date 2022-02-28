@@ -2,12 +2,10 @@ import { omit, pick } from "lodash";
 import { Obj, ObjectEntries } from "../utils/Obj";
 import { relSections, RelSectionsTemplate } from "./SectionMetas/relSections";
 import {
-  InVarbRelative,
   OutRelVarbInfo,
-  OutVarbRelative,
   VarbNames,
 } from "./SectionMetas/relSections/rel/relVarbInfoTypes";
-import { PreVarbsGeneral } from "./SectionMetas/relSections/rel/relVarbs";
+import { GeneralRelVarbs } from "./SectionMetas/relSections/rel/relVarbs";
 import {
   RelSections,
   sectionToParentArr,
@@ -23,6 +21,7 @@ import {
   VarbMetaCore,
 } from "./SectionMetas/VarbMeta";
 import { SectionNam, SectionName } from "./SectionMetas/SectionName";
+import { Relative } from "./SectionMetas/relSections/baseInfo";
 
 type VarbMetasCore = { [key: string]: VarbMeta };
 type VarbMetasRaw = { [Prop in keyof VarbMetasCore]: VarbMetaCore };
@@ -52,7 +51,7 @@ class VarbMetas {
     return Obj.keys(this.core) as string[];
   }
   static initFromPreVarbs(
-    relVarbs: PreVarbsGeneral,
+    relVarbs: GeneralRelVarbs,
     sectionName: SectionName
   ): VarbMetas {
     const core: VarbMetasCore = {};
@@ -129,8 +128,8 @@ export class SectionMetas {
 
   private inToOutRelative(
     focalSectionName: SectionName,
-    inRelative: InVarbRelative
-  ): OutVarbRelative {
+    inRelative: Relative<"inVarb">
+  ): Relative<"outVarb"> {
     const focalFrame = relSections[focalSectionName];
     const childSpecifiers = ["children"] as const;
     if (inRelative === "local") return "local";

@@ -14,6 +14,10 @@ export type DbInfo<T extends FeSectionNameType = "all"> = DbNameInfo<
   SectionName<T>
 >;
 
+export type SectionFinder<S extends AllSectionName = AllSectionName> =
+  | SpecificSectionInfo<S>
+  | Extract<S, AlwaysOneSectionName>;
+
 type MakeVarbInfo<I extends MultiSectionInfo> = MultiVarbInfo<
   Exclude<I["sectionName"], "main">,
   { idType: I["idType"]; id: I["id"] }

@@ -1,11 +1,11 @@
 import { z } from "zod";
-import { valueMeta } from "./valueMeta";
+import { baseValues } from "../baseSections/baseValues";
 
-export type ValueSchemas = typeof valueMeta;
+export type ValueSchemas = typeof baseValues;
 export type ValueTypes = {
   [Prop in keyof ValueSchemas]: ReturnType<ValueSchemas[Prop]["defaultInit"]>;
 };
-export type ValueTypeName = keyof ValueTypes;
+export type ValueName = keyof ValueTypes;
 
 type DbValueTypes = {
   [Prop in keyof ValueSchemas]: z.infer<ValueSchemas[Prop]["dbZod"]>;
@@ -20,5 +20,24 @@ export type SchemaVarbsToDbValues<
   [Prop in keyof T]: DbValueTypes[T[Prop]];
 };
 
-export type UpdateFnName =
-  ValueSchemas[keyof ValueSchemas]["updateFnNames"][number];
+// to make a relVarb
+// get the valueName and displayName
+// get the initValue or use the one from valueSchema
+// get the rest or use the rest from default
+const defaultRelVarb = {
+  inUpdateProps: [
+    {
+      updateFnName: "directUpdate",
+      updateFnProps: {},
+    },
+  ],
+  startAdornment: "",
+  endAdornment: "",
+} as const;
+
+function isRelVarb<T extends BaseValueName>(
+  relVarb: RelVarb,
+  typeName: T
+): relVarb is RelVarb<T> {
+  return relVarb.valueName === typeName;
+}

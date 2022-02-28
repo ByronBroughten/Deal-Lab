@@ -106,7 +106,7 @@ const Arr = {
   ): Extract<A, B>[] {
     return a.filter((str) => b.includes(str as any)) as Extract<A, B>[];
   },
-  combineWithoutIdenticals<A extends any, B extends any>(
+  combineNoIdenticals<A extends any, B extends any>(
     a: A[],
     b: B[]
   ): (A | B)[] {

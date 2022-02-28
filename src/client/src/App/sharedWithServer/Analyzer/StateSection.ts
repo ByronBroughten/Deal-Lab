@@ -1,9 +1,9 @@
 import { cloneDeep } from "lodash";
 import Analyzer from "../Analyzer";
 import { DbSection, DbVarbs } from "./DbEntry";
-import { DbSectionInit } from "./methods/shared/addSections";
+import { DbSectionInit } from "./methods/protected/addSections";
 import { SectionMeta, sectionMetas } from "./SectionMetas";
-import { InEntities } from "./SectionMetas/relSections/rel/valueMeta/NumObj/entities";
+import { InEntities } from "./SectionMetas/relSections/baseSections/baseValues/NumObj/numObjInEntitites";
 import {
   DbNameInfo,
   FeNameInfo,

@@ -1,4 +1,4 @@
-import { capitalizeFirstLetter } from "../../sharedWithServer/utils/Str";
+import { Str } from "../../sharedWithServer/utils/Str";
 import useToggle from "./useToggle";
 
 type TFirst = {
@@ -22,7 +22,7 @@ function returnToggleView<T extends string>(
   props: ReturnType<typeof useToggle>,
   viewWhat: T
 ): Return<T & string> {
-  const capitalViewWhat = capitalizeFirstLetter(viewWhat);
+  const capitalViewWhat = Str.capitalizeFirstLetter(viewWhat);
   const { value, toggle, setOn, setOff } = props;
   return {
     [`${viewWhat}IsOpen`]: value,

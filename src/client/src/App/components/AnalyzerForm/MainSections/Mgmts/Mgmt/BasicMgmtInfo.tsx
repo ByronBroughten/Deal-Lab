@@ -4,7 +4,7 @@ import { useOpenWidth } from "../../../../appWide/SectionTitleRow";
 import ToggleViewBtn from "./../../../../general/ToggleViewBtn";
 import DollarPercentRadioSwap from "../../general/DollarPercentRadioSwap";
 import VacancyRate from "./BasicMgmtInfo/VacancyRate";
-import { switchNames } from "../../../../../sharedWithServer/Analyzer/SectionMetas/relSections/baseSections/switchNames";
+import { switchVarbNames } from "../../../../../sharedWithServer/Analyzer/SectionMetas/relSections/baseSections/baseSwitchSchemas";
 import { FeInfo } from "../../../../../sharedWithServer/Analyzer/SectionMetas/Info";
 
 type Props = { feInfo: FeInfo; className?: string };
@@ -12,8 +12,8 @@ export default function BasicMgmtInfo({ feInfo, className }: Props) {
   const { trackWidthToggleView, ...titleRowProps } = useOpenWidth();
   const { viewIsOpen } = titleRowProps;
 
-  const rentCut = switchNames("rentCut", "dollarsPercent");
-  const rentCutDollars = switchNames(rentCut.dollars, "ongoing");
+  const rentCut = switchVarbNames("rentCut", "dollarsPercent");
+  const rentCutDollars = switchVarbNames(rentCut.dollars, "ongoing");
   const rentCutNames = {
     switch: rentCut.switch,
     percent: rentCut.percent,

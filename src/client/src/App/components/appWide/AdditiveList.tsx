@@ -9,7 +9,7 @@ import theme, { ThemeSectionName } from "../../theme/Theme";
 import PlainIconBtn from "../general/PlainIconBtn";
 import BigStringEditor from "../inputs/BigStringEditor";
 import { useOpenWidth } from "./SectionTitleRow";
-import { listNameToStoreName } from "../../sharedWithServer/Analyzer/SectionMetas/relSections/baseSectionTypes";
+import { listNameToStoreName } from "../../sharedWithServer/Analyzer/SectionMetas/relSections/baseNameArrs";
 import {
   SectionNam,
   SectionName,

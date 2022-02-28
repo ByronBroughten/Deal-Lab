@@ -1,17 +1,20 @@
 import { rel } from "./rel";
 import { relSection } from "./rel/relSection";
 import { RelVarbs } from "./rel/relVarbs";
-import { switchNames } from "./baseSections/switchNames";
+import { switchVarbNames } from "./baseSections/baseSwitchSchemas";
+import { NumObj } from "./baseSections/baseValues/NumObj";
 
-const rentCut = switchNames("rentCut", "dollarsPercent");
-const rentCutDollars = switchNames(rentCut.dollars, "ongoing");
+const rentCut = switchVarbNames("rentCut", "dollarsPercent");
+const rentCutDollars = switchVarbNames(rentCut.dollars, "ongoing");
 
 const mgmtPreVarbs: RelVarbs<"mgmt"> = {
-  title: rel.varb.string(),
-  [rentCut.switch]: rel.varb.string({ initValue: "percent" }),
+  title: rel.varb.string("Title"),
+  [rentCut.switch]: rel.varb.string("Rent Cut Switch", {
+    initValue: "percent",
+  }),
   [rentCut.percent]: rel.varb.percentObj("Rent cut", {
-    initNumber: 5,
-    inUpdateSwitchProps: [
+    initValue: NumObj.init(5),
+    inUpdateProps: [
       rel.updateSwitch.divideToPercent(
         "mgmt",
         rentCut.switch,
@@ -22,12 +25,12 @@ const mgmtPreVarbs: RelVarbs<"mgmt"> = {
     ],
   }),
   // SectionMetas is the highest level.
-  [rentCutDollars.switch]: rel.varb.string({
+  [rentCutDollars.switch]: rel.varb.string("Rent Cut Dollars Switch", {
     initValue: "monthly",
   }),
   [rentCutDollars.monthly]: rel.varb.moneyMonth("Rent cut", {
-    initNumber: 0,
-    inUpdateSwitchProps: [
+    initValue: NumObj.init(0),
+    inUpdateProps: [
       rel.updateSwitch.percentToDecimalTimesBase(
         "mgmt",
         "rentCut",
@@ -37,7 +40,7 @@ const mgmtPreVarbs: RelVarbs<"mgmt"> = {
     ],
   }),
   [rentCutDollars.yearly]: rel.varb.moneyYear("Rent cut", {
-    inUpdateSwitchProps: [
+    inUpdateProps: [
       rel.updateSwitch.percentToDecimalTimesBase(
         "mgmt",
         "rentCut",
@@ -47,7 +50,7 @@ const mgmtPreVarbs: RelVarbs<"mgmt"> = {
     ],
   }),
   vacancyRatePercent: rel.varb.percentObj("Vacancy Rate", {
-    initNumber: 5,
+    initValue: NumObj.init(5),
   }),
   ...rel.varbs.ongoingPercentToPortion(
     "vacancyLossDollars",

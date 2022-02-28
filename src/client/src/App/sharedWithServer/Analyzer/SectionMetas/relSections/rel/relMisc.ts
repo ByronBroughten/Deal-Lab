@@ -1,29 +1,25 @@
-import { switchNames } from "../baseSections/switchNames";
+import { switchVarbNames } from "../baseSections/baseSwitchSchemas";
 import { relVarbInfo } from "./relVarbInfo";
-import { UpdateFnProps, UpdateSwitchProp } from "./relVarbTypes";
+import { FullSwitchUpdateInfo } from "./relVarb/UpdateInfoArr";
 import {
   InRelVarbInfo,
-  InVarbRelative,
   LocalRelVarbInfo,
   SingleInRelVarbInfo,
 } from "./relVarbInfoTypes";
-import { valueMeta } from "./valueMeta";
-import { BaseName } from "../baseSectionTypes";
-import { UpdateFnName } from "./valueMetaTypes";
-import { NumObj } from "./valueMeta/NumObj";
+import { baseValues } from "../baseSections/baseValues";
+import { BaseName } from "../baseNameArrs";
+import { NumObj } from "../baseSections/baseValues/NumObj";
+import { Relative } from "../baseInfo";
+import { VarbName } from "../baseVarbInfo";
 
 export const relAdorn = {
   moneyMonth: { startAdornment: "$", endAdornment: "/month" },
   moneyYear: { startAdornment: "$", endAdornment: "/year" },
 };
 export const relProps = {
-  named(
-    relative: InVarbRelative,
-    names: [
-      kwargName: string,
-      sectionName: BaseName<"hasVarb">,
-      varbName: string
-    ][]
+  named<SN extends BaseName<"hasVarb">, VN extends VarbName<SN>>(
+    relative: Relative<"inVarb">,
+    names: [kwargName: string, sectionName: SN, varbName: VN][]
   ): UpdateFnProps {
     return names.reduce((props, [kwargName, sectionName, varbName]) => {
       return {
@@ -68,7 +64,7 @@ export const relUpdateSwitch = {
     switchValue: string,
     updateFnName: UpdateFnName,
     updateFnProps: UpdateFnProps = {}
-  ): UpdateSwitchProp {
+  ): FullSwitchUpdateInfo {
     return {
       switchInfo,
       switchValue,
@@ -79,8 +75,8 @@ export const relUpdateSwitch = {
   yearlyToMonthly<Base extends string>(
     sectionName: BaseName<"hasVarb">,
     baseVarbName: Base
-  ): UpdateSwitchProp {
-    const varbNames = switchNames(baseVarbName, "ongoing");
+  ): FullSwitchUpdateInfo {
+    const varbNames = switchVarbNames(baseVarbName, "ongoing");
     return {
       switchInfo: relVarbInfo.local(sectionName, varbNames.switch),
       switchValue: "yearly",
@@ -94,8 +90,8 @@ export const relUpdateSwitch = {
   monthlyToYearly<Base extends string>(
     sectionName: BaseName<"hasVarb">,
     baseVarbName: Base
-  ): UpdateSwitchProp {
-    const varbNames = switchNames(baseVarbName, "ongoing");
+  ): FullSwitchUpdateInfo {
+    const varbNames = switchVarbNames(baseVarbName, "ongoing");
     return {
       switchInfo: relVarbInfo.local(sectionName, varbNames.switch),
       switchValue: "monthly",
@@ -111,7 +107,7 @@ export const relUpdateSwitch = {
     switchValue: string,
     leftSide: SingleInRelVarbInfo,
     rightSide: SingleInRelVarbInfo
-  ): UpdateSwitchProp {
+  ): FullSwitchUpdateInfo {
     return {
       switchInfo: relVarbInfo.local(sectionName, switchName),
       switchValue,
@@ -123,8 +119,8 @@ export const relUpdateSwitch = {
     sectionName: BaseName<"hasVarb">,
     baseVarbName: Base,
     rightSide: SingleInRelVarbInfo
-  ): UpdateSwitchProp {
-    const varbNames = switchNames(baseVarbName, "dollarsPercent");
+  ): FullSwitchUpdateInfo {
+    const varbNames = switchVarbNames(baseVarbName, "dollarsPercent");
     return {
       switchInfo: relVarbInfo.local(sectionName, varbNames.switch),
       switchValue: "percent",
@@ -140,6 +136,6 @@ export const relUpdateSwitch = {
 export const relValue = {
   numObj(value?: number | string): NumObj {
     const strValue = `${value ?? ""}`;
-    return valueMeta["numObj"].defaultInit({ editorText: strValue });
+    return baseValues["numObj"].defaultInit({ editorText: strValue });
   },
 };

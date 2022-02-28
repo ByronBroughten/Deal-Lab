@@ -1,6 +1,6 @@
 import { extend, omit } from "lodash";
 import { ObjectKeys } from "../../../../utils/Obj";
-import { BaseName, BaseSections } from "../baseSectionTypes";
+import { BaseName, BaseSections } from "../baseNameArrs";
 import { relVarb } from "./relVarb";
 import { RelVarbs, relVarbs } from "./relVarbs";
 import { StateValue } from "../../../StateSection/StateVarb/stateValue";

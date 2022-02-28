@@ -37,7 +37,7 @@ export function useAuthRoutes() {
   }
 
   return {
-    async login(loginFormData: LoginFormData) {      
+    async login(loginFormData: LoginFormData) {
       const reqObj: Req<"Login"> = {
         body: { payload: loginFormData },
       };
@@ -49,13 +49,17 @@ export function useAuthRoutes() {
         body: {
           payload: {
             registerFormData,
-            guestAccessSections: analyzer.sectionArrsToDbEntries(
+            guestAccessSections: analyzer.dbSectionArrs(
               SectionNam.arr.feGuestAccessStore
             ),
           },
         },
       };
-      const res = await https.post("registering", urls.register.path, reqObj.body);
+      const res = await https.post(
+        "registering",
+        urls.register.path,
+        reqObj.body
+      );
       trySetLogin(res);
     },
   };

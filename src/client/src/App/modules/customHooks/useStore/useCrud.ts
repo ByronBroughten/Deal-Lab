@@ -1,7 +1,7 @@
 import { AxiosResponse } from "axios";
 import { is, Req, Res } from "../../../sharedWithServer/User/crudTypes";
 import https from "../../services/httpService";
-import { DbStoreName } from "../../../sharedWithServer/Analyzer/SectionMetas/relSections/baseSectionTypes";
+import { DbStoreName } from "../../../sharedWithServer/Analyzer/SectionMetas/relSections/baseNameArrs";
 import { DbEntry } from "../../../sharedWithServer/Analyzer/DbEntry";
 import { SectionName } from "../../../sharedWithServer/Analyzer/SectionMetas/SectionName";
 import { urls } from "./../../../Constants";
@@ -99,9 +99,11 @@ export const crud = {
     };
     // to get the params correctly, I can unjoin the names from the url string
     // and then use that array to index params in the correct order.
-    const res = await https.get(`loading from ${dbStoreName}`, urls.section.path, [
-      ...Object.values(reqObj.params),
-    ]);
+    const res = await https.get(
+      `loading from ${dbStoreName}`,
+      urls.section.path,
+      [...Object.values(reqObj.params)]
+    );
     return validateRes.dbEntry(res);
   },
   async deleteEntry(

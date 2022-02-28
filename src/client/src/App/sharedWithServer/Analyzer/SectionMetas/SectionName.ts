@@ -1,4 +1,4 @@
-import { VarbName } from "./relSections/baseSectionTypes";
+import { NameVarbName } from "./relSections/baseNameArrs";
 import { relNames } from "./relSectionTypes";
 
 type SectionNameArrs = typeof relNames;
@@ -12,7 +12,7 @@ export type AlwaysOneVarbFinder<
   S extends SectionName<"alwaysOne"> = SectionName<"alwaysOne">
 > = {
   sectionName: S;
-  varbName: VarbName<S>;
+  varbName: NameVarbName<S>;
 };
 
 export const SectionNam = {

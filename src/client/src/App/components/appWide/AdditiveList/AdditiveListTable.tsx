@@ -4,7 +4,7 @@ import useOnOutsideClickRef from "../../../modules/customHooks/useOnOutsideClick
 import useToggleView from "../../../modules/customHooks/useToggleView";
 import { useAnalyzerContext } from "../../../modules/usePropertyAnalyzer";
 import { FeInfo } from "../../../sharedWithServer/Analyzer/SectionMetas/Info";
-import { listNameToStoreName } from "../../../sharedWithServer/Analyzer/SectionMetas/relSections/baseSectionTypes";
+import { listNameToStoreName } from "../../../sharedWithServer/Analyzer/SectionMetas/relSections/baseNameArrs";
 import { userListItemTypes } from "../../../sharedWithServer/Analyzer/SectionMetas/relSectionTypes";
 import ccs from "../../../theme/cssChunks";
 import theme, { ThemeSectionName } from "../../../theme/Theme";

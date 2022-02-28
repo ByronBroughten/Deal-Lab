@@ -1,25 +1,18 @@
+// anything that can be gotten by accessing a section, varb, or value
+// should be left to the section or varb.
+// those are fundamental concepts to this design.
+
 import { nanoid } from "nanoid";
 import {
-  childDbIds,
   initChildFeIds,
   resetSectionAndChildDbIds,
-} from "./Analyzer/methods/childIds";
+} from "./Analyzer/methods/protected/updateChildIds";
 import {
   displayName,
   displayNameInfo,
   displayNameOrNotFound,
-} from "./Analyzer/methods/displayName";
-import {
-  updateConnectedEntities,
-  userListTotalOptions,
-  userOption,
-  userVarbOption,
-  userVarbOptions,
-  userVariableInfos,
-  userVariableLists,
-  variableLists,
-  variableOptions,
-} from "./Analyzer/methods/entitiesVariables";
+} from "./Analyzer/methods/get/displayName";
+import { variableOptions } from "./Analyzer/methods/variableOptions";
 
 import {
   nestedFeInfos,
@@ -28,7 +21,7 @@ import {
   nestedNumObjInfos,
   relativesToFeVarbInfos,
   relativeToFeVarbInfo,
-} from "./Analyzer/methods/nestedInfos";
+} from "./Analyzer/methods/get/nestedInfos";
 import {
   childFeIds,
   allChildFeIds,
@@ -45,7 +38,7 @@ import {
   sectionsByFocal,
   childFeInfos,
   sectionIsIndexSaved,
-} from "./Analyzer/methods/section";
+} from "./Analyzer/methods/get/section";
 import {
   replaceInSectionArr,
   sectionArr,
@@ -55,19 +48,12 @@ import {
   wipeSectionArrAndSolve,
 } from "./Analyzer/methods/sectionArr";
 import {
-  eraseOneSection,
-  eraseSectionAndChildren,
-  eraseChildren,
   eraseSectionAndSolve,
   eraseSectionsAndSolve,
-  removeFromParentChildIds,
-  removeSectionEntities,
-  removeSection,
-  varbInfosToSolveAfterErase,
   deleteIndexAndSolve,
   deleteRowIndexAndSolve,
-} from "./Analyzer/methods/sectionErase";
-import { addSections } from "./Analyzer/methods/shared/addSections";
+} from "./Analyzer/methods/eraseSectionAndSolve";
+import { addSections } from "./Analyzer/methods/protected/addSections";
 import { SectionMeta, sectionMetas } from "./Analyzer/SectionMetas";
 import {
   directUpdateAndSolve,
@@ -92,15 +78,12 @@ import {
   sortTableRowIdsByColumn,
 } from "./Analyzer/methods/indexRows";
 import {
-  sectionArrsToDbEntries,
-  toDbEntryArr,
-  toDbAnalysisIndexEntry,
-  stateToDbEntries,
-  toDbEntry,
+  dbSectionArrs,
+  dbEntryArr,
+  dbEntry,
   stateToDbSection,
-  stateToDbSections,
-  toDbIndexEntry,
-} from "./Analyzer/methods/stateToFromDbSections";
+  dbIndexEntry,
+} from "./Analyzer/methods/get/dbSections";
 
 import {
   feValue,
@@ -112,7 +95,7 @@ import {
   updateValueDirectly,
   value,
   varbInfoValues,
-} from "./Analyzer/methods/value";
+} from "./Analyzer/methods/updateValue";
 import {
   displayVarb,
   feVarb,
@@ -135,8 +118,8 @@ import {
   updateVarb,
   switchedVarbName,
   switchedOngoingVarbName,
-} from "./Analyzer/methods/varb";
-import { updateSection } from "./Analyzer/methods/section";
+} from "./Analyzer/methods/get/varb";
+import { updateSection } from "./Analyzer/methods/get/section";
 import { nanoIdLength } from "./utils/validatorConstraints";
 import {
   findFeInfo,
@@ -151,8 +134,12 @@ import {
   findVarbByFocal,
   findVarbInfosByFocal,
   findVarbsByFocal,
-} from "./Analyzer/methods/find";
-import { feInfo, feToDbInfo, varbInfosByFocal } from "./Analyzer/methods/info";
+} from "./Analyzer/methods/get/find";
+import {
+  feInfo,
+  feToDbInfo,
+  varbInfosByFocal,
+} from "./Analyzer/methods/get/info";
 import {
   conditionalUserVarbValue,
   getUserVarbValue,
@@ -168,17 +155,13 @@ import {
 import {
   addInEntity,
   addOutEntity,
-  isUserVarbAndWasDeleted,
   removeInEntity,
   removeOutEntity,
-} from "./Analyzer/methods/entities";
+} from "./Analyzer/methods/protected/inOutEntities";
 import {
-  fullStoreEntries,
-  fullStoreTitlesAndDbIds,
   pushToIndexStore,
   updateIndexStoreEntry,
-  stateToUpdateSingleStoreArr,
-} from "./Analyzer/methods/stateToFullStore";
+} from "./Analyzer/methods/updateStore";
 import { ObjectKeys } from "./utils/Obj";
 import { SectionNam, SectionName } from "./Analyzer/SectionMetas/SectionName";
 import {
@@ -186,10 +169,7 @@ import {
   addSectionsAndSolve,
   InitSectionOptions,
 } from "./Analyzer/methods/addSectionAndSolve";
-import {
-  resetSection,
-  resetSectionAndSolve,
-} from "./Analyzer/methods/shared/resetSectionAndSolve";
+import { resetSection } from "./Analyzer/methods/protected/resetSection";
 import { copySection } from "./Analyzer/methods/copySection";
 import {
   loadSectionFromFeDefault,
@@ -200,6 +180,16 @@ import {
   loadSectionArrAndSolve,
   loadSectionArrsAndSolve,
 } from "./Analyzer/methods/loadSectionFromEntry";
+import { resetSectionAndSolve } from "./Analyzer/methods/resetSectionAndSolve";
+import {
+  eraseChildren,
+  eraseSectionAndChildren,
+} from "./Analyzer/methods/protected/eraseSectionAndChildren";
+import { updateConnectedEntities } from "./Analyzer/methods/updateConnectedEntities";
+import {
+  fullStoreEntries,
+  fullStoreTitlesAndDbIds,
+} from "./Analyzer/methods/get/fullStore";
 
 export type StateSections = { [S in SectionName]: StateSection<S>[] };
 type RawSections = { [S in SectionName]: StateSectionCore<S>[] };
@@ -330,25 +320,14 @@ export default class Analyzer {
   singleSection = singleSection;
   static sectionNotFound = sectionNotFound;
 
-  parent = parent;
-  childFeIds = childFeIds;
-  allChildFeIds = allChildFeIds;
-  children = children;
-  childFeInfos = childFeInfos;
-
-  eraseOneSection = eraseOneSection;
-  eraseSectionAndChildren = eraseSectionAndChildren;
   eraseSectionAndSolve = eraseSectionAndSolve;
   deleteIndexAndSolve = deleteIndexAndSolve;
   deleteRowIndexAndSolve = deleteRowIndexAndSolve;
   eraseSectionsAndSolve = eraseSectionsAndSolve;
-  eraseChildren = eraseChildren;
-  varbInfosToSolveAfterErase = varbInfosToSolveAfterErase;
-  removeSectionEntities = removeSectionEntities;
-  removeFromParentChildIds = removeFromParentChildIds;
-  removeSection = removeSection;
+  protected eraseChildren = eraseChildren;
+  protected eraseSectionAndChildren = eraseSectionAndChildren;
 
-  resetSectionAndChildDbIds = resetSectionAndChildDbIds;
+  protected resetSectionAndChildDbIds = resetSectionAndChildDbIds;
   childDbIds = childDbIds;
   initChildFeIds = initChildFeIds;
 
@@ -356,6 +335,12 @@ export default class Analyzer {
   varbInfosByFocal = varbInfosByFocal;
   feToDbInfo = feToDbInfo;
   feInfo = feInfo;
+
+  parent = parent;
+  childFeIds = childFeIds;
+  allChildFeIds = allChildFeIds;
+  children = children;
+  childFeInfos = childFeInfos;
 
   // find
   findSectionByDbId = findSectionByDbId;
@@ -408,7 +393,7 @@ export default class Analyzer {
 
   addInEntity = addInEntity;
   addOutEntity = addOutEntity;
-  isUserVarbAndWasDeleted = isUserVarbAndWasDeleted;
+
   removeOutEntity = removeOutEntity;
   removeInEntity = removeInEntity;
 
@@ -428,28 +413,19 @@ export default class Analyzer {
   directUpdateAndSolve = directUpdateAndSolve;
   solveValue = solveValue;
 
-  variableLists = variableLists;
   updateConnectedEntities = updateConnectedEntities;
-  userVariableLists = userVariableLists;
-  userVariableInfos = userVariableInfos;
-  userVarbOptions = userVarbOptions;
-  userVarbOption = userVarbOption;
-  variableOptions = variableOptions;
-  userOption = userOption;
-  userListTotalOptions = userListTotalOptions;
 
-  toDbEntry = toDbEntry;
-  toDbIndexEntry = toDbIndexEntry;
-  toDbAnalysisIndexEntry = toDbAnalysisIndexEntry;
-  toDbEntryArr = toDbEntryArr;
-  sectionArrsToDbEntries = sectionArrsToDbEntries;
+  variableOptions = variableOptions;
+
+  dbEntry = dbEntry;
+  dbIndexEntry = dbIndexEntry;
+  dbEntryArr = dbEntryArr;
+  dbSectionArrs = dbSectionArrs;
   stateToDbSection = stateToDbSection;
-  stateToDbSections = stateToDbSections;
-  stateToDbEntries = stateToDbEntries;
 
   pushToIndexStore = pushToIndexStore;
   updateIndexStoreEntry = updateIndexStoreEntry;
-  stateToUpdateSingleStoreArr = stateToUpdateSingleStoreArr;
+
   fullStoreEntries = fullStoreEntries;
   fullStoreTitlesAndDbIds = fullStoreTitlesAndDbIds;
 

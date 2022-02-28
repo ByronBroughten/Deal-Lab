@@ -33,8 +33,8 @@ export default function useLmAnalyzer({
 
   let nextLmAnalyzer = lmAnalyzer.eraseSectionsAndSolve(sectionsToDelete);
 
-  const mainUserLists = mainAnalyzer.toDbEntryArr(sectionName);
-  const nextUserLists = nextLmAnalyzer.toDbEntryArr(sectionName);
+  const mainUserLists = mainAnalyzer.dbEntryArr(sectionName);
+  const nextUserLists = nextLmAnalyzer.dbEntryArr(sectionName);
   const didChange = useDidChange(mainUserLists, nextUserLists);
 
   const handlers = {

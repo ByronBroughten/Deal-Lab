@@ -1,49 +1,7 @@
 import { z } from "zod";
-import { zNanoId, zString } from "../../../../utils/zod";
-import { BaseName } from "../baseSectionTypes";
+import { BaseName } from "../baseNameArrs";
 
-export const zSectionInfoBase = z.object({
-  sectionName: zString,
-});
-export const zVarbNames = zSectionInfoBase.extend({
-  varbName: zString,
-});
-
-const zFeSectionInfo = zSectionInfoBase.extend({
-  idType: z.literal("feId"),
-  id: zNanoId,
-});
-const zDbSectionInfo = zSectionInfoBase.extend({
-  idType: z.literal("dbId"),
-  id: zNanoId,
-});
-
-export type InVarbRelative = "children" | "local" | "static" | "all";
-export type OutVarbRelative = "parent" | "local" | "static" | "all";
-const zFocalRelative = z.union([
-  z.literal("static"),
-  z.literal("local"),
-  z.literal("parent"),
-]);
-const zFocalMultiRelative = z.union([z.literal("children"), z.literal("all")]);
-const zRelative = z.union([zFocalRelative, zFocalMultiRelative]);
-const zRelSectionInfo = zSectionInfoBase.extend({
-  id: zRelative,
-  idType: z.literal("relative"),
-});
-const zFocalRelSectionInfo = zRelSectionInfo.extend({
-  id: zFocalRelative,
-});
-const zImmutableRelSectionInfo = zRelSectionInfo.extend({
-  id: z.literal("static"), // parent might go here eventually
-});
-export const zImmutableRelVarbInfo = zImmutableRelSectionInfo.extend({
-  varbName: zString,
-});
-
-const zFeVarbInfo = zFeSectionInfo.merge(zVarbNames);
-export const zDbVarbInfo = zDbSectionInfo.merge(zVarbNames);
-export const zRelVarbInfo = zRelSectionInfo.merge(zVarbNames);
+// fix this after you fix relSections
 
 export type FeSectionInfoBase = z.infer<typeof zFeSectionInfo>;
 export type FeNameInfo<
@@ -169,5 +127,5 @@ export type RelFindByFocalVarbInfo<
 > = RelFindByFocalInfo<S, VarbParam>;
 
 export type SingleInRelVarbInfo = Omit<InRelVarbInfo, "children" | "all">;
-export type InRelVarbInfo = RelVarbInfo & { id: InVarbRelative };
-export type OutRelVarbInfo = RelVarbInfo & { id: OutVarbRelative };
+export type InRelVarbInfo = RelVarbInfo & { id: Relative<"inVarb"> };
+export type OutRelVarbInfo = RelVarbInfo & { id: Relative<"outVarb"> };
