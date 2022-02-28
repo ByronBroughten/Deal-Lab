@@ -1,65 +1,112 @@
-import { omit } from "lodash";
-import { BaseValueTypeName, GeneralBaseVarb } from "./baseVarb";
+import { Obj } from "../../../../utils/Obj";
+import { BaseValueName } from "./baseValues";
 import {
-  BaseOngoingVarb,
-  BaseSwitchVarb,
-  switchEndings,
-  SwitchEndingsBase,
-  SwitchRecord,
-} from "./switchNames";
+  baseVarb,
+  BaseVarb,
+  GeneralBaseVarb,
+  BaseVarbOptions,
+} from "./baseVarb";
+import {
+  SwitchName,
+  baseSwitchSchemas,
+  BaseTargetVarb,
+  BaseSwitchVarbs,
+  switchVarbName,
+  BaseSwitchTargetVarbs,
+} from "./baseSwitchSchemas";
 
-type GeneralBaseVarbs = { [varbName: string]: GeneralBaseVarb };
-
-export type BaseVarbSchemas = { [varbName: string]: BaseValueTypeName };
-type TypeRecord<T extends readonly string[], V extends BaseValueTypeName> = {
-  [Prop in T[number]]: V;
+export type GeneralBaseVarbs = { [varbName: string]: GeneralBaseVarb };
+type DefaultBaseVarbs<
+  VNS extends readonly string[],
+  T extends BaseValueName
+> = {
+  [BN in VNS[number]]: BaseVarb<BN, T>;
 };
 
 export const baseVarbs = {
-  type<T extends readonly string[], V extends BaseValueTypeName>(
-    keys: T,
-    vt: V
-  ): TypeRecord<T, V> {
-    return keys.reduce((schemas, key) => {
-      schemas[key as T[number]] = vt;
-      return schemas;
-    }, {} as Partial<TypeRecord<T, V>>) as TypeRecord<T, V>;
+  // Oh, I'll use the singular varbs, still
+
+  // ok, so in singular cases, the baseName is the same as the
+  // extensions.
+  type<
+    BN extends string,
+    VN extends BaseValueName,
+    O extends BaseVarbOptions = {}
+  >(baseName: BN, valueName: VN, options?: O) {
+    return {
+      [baseName]: baseVarb.type(baseName, valueName, options),
+    } as Record<BN, BaseVarb<BN, VN, O>>;
   },
-  string<T extends readonly string[]>(keys: T): TypeRecord<T, "string"> {
-    return this.type(keys, "string");
-  },
-  numObj<T extends readonly string[]>(keys: T): TypeRecord<T, "numObj"> {
-    return this.type(keys, "numObj");
-  },
-  switch<Base extends string, Endings extends SwitchEndingsBase>(
-    baseName: Base,
-    endings: Endings
+  numObj<BN extends string, O extends BaseVarbOptions = {}>(
+    baseName: BN,
+    options?: O
   ) {
-    type NumObjEndings = Omit<Endings, "switch">;
-    const numObjEndings = omit(endings, ["switch"]);
-    const numObjSchemas: Partial<SwitchRecord<Base, NumObjEndings, "numObj">> =
-      {};
-    for (const ending of Object.values(numObjEndings)) {
+    return this.type(baseName, "numObj", options);
+  },
+  string<BN extends string, O extends BaseVarbOptions = {}>(
+    baseName: BN,
+    options?: O
+  ) {
+    return this.type(baseName, "string", options);
+  },
+  title() {
+    return this.string("title" as "title");
+  },
+  defaults<V extends readonly string[], T extends BaseValueName>(
+    varbNames: V,
+    typeName: T
+  ) {
+    return varbNames.reduce((bVarbs, varbName) => {
+      bVarbs[varbName as V[number]] = baseVarb.default(varbName, typeName);
+      return bVarbs;
+    }, {} as DefaultBaseVarbs<V, T>);
+  },
+  defaultString<V extends readonly string[]>(
+    varbNames: V
+  ): DefaultBaseVarbs<V, "string"> {
+    return this.defaults(varbNames, "string");
+  },
+  defaultNumObj<V extends readonly string[]>(
+    varbNames: V
+  ): DefaultBaseVarbs<V, "numObj"> {
+    return this.defaults(varbNames, "numObj");
+  },
+  switch<BN extends string, SW extends SwitchName>(
+    baseName: BN,
+    switchName: SW
+  ) {
+    const numObjSchemas: Partial<BaseSwitchTargetVarbs<BN, SW>> = {};
+    for (const switchKey of Obj.keys(baseSwitchSchemas[switchName])) {
+      if (switchKey === "switch") continue;
+      const target: BaseTargetVarb<BN, SW> = baseVarb.numObj(baseName, {
+        switchName,
+      });
       numObjSchemas[
-        `${baseName}${ending}` as keyof SwitchRecord<
-          Base,
-          NumObjEndings,
-          "numObj"
-        >
-      ] = "numObj";
+        switchVarbName(
+          baseName,
+          switchName,
+          switchKey
+        ) as keyof typeof numObjSchemas
+      ] = target;
     }
     return {
-      [`${baseName}${endings.switch}`]: "string",
+      [switchVarbName(baseName, switchName, "switch")]: baseVarb.string(
+        baseName,
+        {
+          switchName,
+          selectable: false,
+        }
+      ),
       ...numObjSchemas,
-    } as BaseSwitchVarb<Base, Endings>;
+    } as BaseSwitchVarbs<BN, SW>;
   },
-  ongoing<Base extends string>(baseName: Base): BaseOngoingVarb<Base> {
-    return this.switch(baseName, switchEndings.ongoing);
+  ongoing<BN extends string>(baseName: BN) {
+    return this.switch(baseName, "ongoing");
   },
   get property() {
     return {
-      title: "string",
-      ...this.numObj([
+      ...this.title(),
+      ...this.defaultNumObj([
         "price",
         "sqft",
         "numUnits",
@@ -77,67 +124,105 @@ export const baseVarbs = {
   },
   get loan() {
     return {
-      title: "string",
-      ...this.numObj([
+      ...this.title(),
+      ...this.defaultNumObj([
         "loanAmountDollarsTotal",
         "mortInsUpfront",
         "closingCosts",
         "wrappedInLoan",
       ] as const),
       ...this.ongoing("interestRatePercent"),
-      ...this.switch("loanAmountBase", switchEndings.dollarsPercent),
-      ...this.switch("loanTerm", switchEndings.monthsYears),
+      ...this.switch("loanAmountBase", "dollarsPercent"),
+      ...this.switch("loanTerm", "monthsYears"),
       ...this.ongoing("pi"),
       ...this.ongoing("mortgageIns"),
     } as const;
   },
   get mgmt() {
     return {
-      title: "string",
-      ...this.numObj(["vacancyRatePercent", "upfrontExpenses"] as const),
+      ...this.title(),
+      ...this.defaultNumObj(["vacancyRatePercent", "upfrontExpenses"] as const),
       ...this.ongoing("ongoingExpenses"),
       ...this.ongoing("vacancyLossDollars"),
-      ...this.switch(
-        "rentCut",
-        omit(switchEndings.dollarsPercent, ["dollars"])
-      ),
+      ...this.switch("rentCut", "percent"),
       ...this.ongoing("rentCutDollars"),
     } as const;
   },
   get analysis() {
     return {
-      title: "string",
+      ...this.title(),
     } as const;
   },
-  table: {
-    searchFilter: "string",
-    rowIds: "stringArray",
+  get table() {
+    return {
+      ...this.string("searchFilter"),
+      ...this.type("rowIds", "stringArray"),
+    };
   },
-  tableRow: {
-    title: "string",
-    compareToggle: "boolean",
+  get tableRow() {
+    return {
+      ...this.title(),
+      ...this.type("compareToggle", "boolean"),
+    };
+  },
+  get tableRowInfo() {
+    return {
+      ...this.title(),
+      ...this.type("compareToggle", "boolean"),
+    };
   },
   get singleTimeList() {
     return {
-      total: "numObj",
-      title: "string",
-      defaultValueSwitch: "string",
+      ...this.numObj("total"),
+      ...this.title(),
+      ...this.string("defaultValueSwitch"),
     } as const;
   },
   get ongoingList() {
     return {
-      title: "string",
+      ...this.title(),
       ...this.ongoing("total"),
-      defaultValueSwitch: "string",
+      ...this.string("defaultValueSwitch"),
     } as const;
   },
   get varbInfo() {
-    return this.string(["id", "idType", "sectionName", "varbName"] as const);
+    return this.defaultString([
+      "id",
+      "idType",
+      "sectionName",
+      "varbName",
+    ] as const);
   },
   get entityInfo() {
     return {
       ...this.varbInfo,
-      entityId: "string",
+      ...this.string("entityId"),
     } as const;
   },
 } as const;
+
+function _baseVarbsTest(
+  _baseVarbs: Record<
+    string,
+    GeneralBaseVarbs | ((...args: any[]) => GeneralBaseVarbs)
+  >
+): void {
+  const title = baseVarbs.string("title");
+  const _title: "title" = title.title.baseName;
+  const _null: null = title.title.switchName;
+  //@ts-expect-error
+  const _fail: "ongoing" = title.title.switchName;
+
+  const test = baseVarbs.numObj("test", { switchName: "ongoing" });
+  const _baseName: "test" = test.test.baseName;
+  // @ts-expect-error
+  const _toFail: undefined = test.test;
+
+  const _loanAmountBase: "loanAmountBase" =
+    baseVarbs.loan.loanAmountBasePercent.baseName;
+  // @ts-expect-error
+  const _notLoanAmountBase: "not" =
+    baseVarbs.loan.loanAmountBasePercent.baseName;
+}
+
+_baseVarbsTest(baseVarbs);
