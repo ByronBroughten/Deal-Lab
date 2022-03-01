@@ -3,7 +3,19 @@ import { BaseInfoSets, InfoIdName, InfoIds } from "./baseInfo";
 import { BaseValueName } from "./baseSections/baseValues";
 import { BaseName, VarbName, VarbNameWide } from "./BaseName";
 import { SectionContext } from "./baseSections";
-import { BaseNameSelector } from "./baseNameArrs";
+import { BaseNameSelector, FeBaseSectionVarbs } from "./baseNameArrs";
+import { SwitchName } from "./baseSections/baseSwitch";
+import { SubType } from "../../../utils/types";
+
+// I want to use some of the logic of these for "VarbName"
+
+// I can make it use "vnOngoing", etc.
+// I'll do that for now.
+
+// Get all the varbSectionNames
+
+// I want VarbName to be able to give me OngoingVarbName
+// And other varbNames, right?
 
 type VarbSets = {
   [SC in SectionContext]: {
@@ -16,6 +28,8 @@ type VarbSets = {
     [Prop in VarbNameWide<"all", BaseValueName, SC> as `vn${Capitalize<
       string & Prop
     >}`]: { varbName: Prop };
+  } & {
+    // [SW in SwitchName as `vn${Capitalize<SW & string>}`]: any
   } & {
     general: UnionVarbInfo;
     context: { context: SC };
