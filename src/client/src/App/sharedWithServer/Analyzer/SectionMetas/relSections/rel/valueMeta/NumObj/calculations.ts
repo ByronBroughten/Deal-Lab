@@ -105,7 +105,8 @@ const calculations = {
         : interestRatePercentMonthly;
     const n = loanTermMonths;
 
-    const piMonthly = `${L} * ((${r} * (1 + ${r}) ** ${n}) / ((1 + ${r}) ** ${n} - 1))`;
+    // mathjs uses ^ to exponentiate instead of javascript's "**"
+    const piMonthly = `${L} * ((${r} * (1 + ${r}) ^ ${n}) / ((1 + ${r}) ^ ${n} - 1))`;
     return piMonthly;
   },
   piYearly({
