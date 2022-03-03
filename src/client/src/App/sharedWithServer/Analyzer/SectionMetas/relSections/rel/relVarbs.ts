@@ -8,7 +8,7 @@ import {
   relVarb,
   RelVarbOptions,
 } from "./relVarb";
-import { switchVarbNames } from "../baseSections/baseSwitchSchemas";
+import { switchVarbNames } from "../baseSections/baseSwitch";
 import { relVarbsSwitch } from "./relVarbs/relVarbsSwitch";
 import { relVarbInfo } from "./relVarbInfo";
 import {

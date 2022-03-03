@@ -23,7 +23,7 @@ import { SectionName } from "../../SectionMetas/SectionName";
 import { UpdateFnName } from "../../SectionMetas/relSections/rel/valueMetaTypes";
 import { UpdateFnProps } from "../../SectionMetas/relSections/rel/relVarb/UpdateInfoArr";
 import { SwitchVarbNames } from "../../SectionMetas/relSections/rel/relVarbs/relVarbsSwitch";
-import { switchVarbNames } from "../../SectionMetas/relSections/baseSections/baseSwitchSchemas";
+import { switchVarbNames } from "../../SectionMetas/relSections/baseSections/baseSwitch";
 
 export function varb(
   this: Analyzer,

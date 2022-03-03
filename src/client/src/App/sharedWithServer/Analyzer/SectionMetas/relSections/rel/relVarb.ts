@@ -25,6 +25,9 @@ export type GeneralRelVarb<
     updateInfoArr: UpdateInfoArr<T>;
 
     displayName: DisplayName;
+    endDisplayName: string;
+    startDisplayName: string;
+
     startAdornment: string;
     endAdornment: string;
   }
@@ -81,7 +84,6 @@ const relVarbOptions = {
 } as const;
 
 export type RelVarb<
-  //
   T extends BaseValueName,
   D extends DisplayName,
   O extends RelVarbOptions<T> = {}
@@ -95,9 +97,12 @@ export const relVarb = {
     return {
       valueName,
       displayName,
+      startDisplayName: "",
+      endDisplayName: "",
+
       initValue: baseValues[valueName].defaultInit(),
-      startAdornment: "",
-      endAdornment: "",
+      startAdornment: "", // value adornments: $100, 10%
+      endAdornment: "", // as opposed to displayName adornments: Taxes (monthly)
       updateInfoArr: [
         {
           updateName: relValues[valueName].defaultUpdateName,

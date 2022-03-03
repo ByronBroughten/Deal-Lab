@@ -1,5 +1,5 @@
 import { useAnalyzerContext } from "../../../../modules/usePropertyAnalyzer";
-import { switchVarbNames } from "../../../../sharedWithServer/Analyzer/SectionMetas/relSections/baseSections/baseSwitchSchemas";
+import { switchVarbNames } from "../../../../sharedWithServer/Analyzer/SectionMetas/relSections/baseSections/baseSwitch";
 import {
   FeInfo,
   Inf,

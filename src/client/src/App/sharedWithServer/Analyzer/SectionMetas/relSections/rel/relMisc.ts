@@ -1,4 +1,4 @@
-import { switchVarbNames } from "../baseSections/baseSwitchSchemas";
+import { switchVarbNames } from "../baseSections/baseSwitch";
 import { relVarbInfo } from "./relVarbInfo";
 import { FullSwitchUpdateInfo } from "./relVarb/UpdateInfoArr";
 import {

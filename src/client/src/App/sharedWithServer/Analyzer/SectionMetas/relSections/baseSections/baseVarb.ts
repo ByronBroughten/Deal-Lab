@@ -1,7 +1,7 @@
 import { Obj } from "../../../../utils/Obj";
 import { Merge } from "../../../../utils/Obj/merge";
 import { BaseValueName } from "./baseValues";
-import { SwitchName } from "./baseSwitchSchemas";
+import { SwitchName } from "./baseSwitch";
 
 export type GeneralBaseVarb<T extends BaseValueName = BaseValueName> = {
   valueName: T;

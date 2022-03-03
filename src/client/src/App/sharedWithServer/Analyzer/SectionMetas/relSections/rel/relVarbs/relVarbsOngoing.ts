@@ -9,7 +9,7 @@ import {
   baseSwitchSchemas,
   switchVarbNames,
   SwitchRecord,
-} from "../../baseSections/baseSwitchSchemas";
+} from "../../baseSections/baseSwitch";
 import { omit } from "lodash";
 import { NumObjUpdateFnName } from "../../baseSections/baseValues/NumObj/updateFnNames";
 import { relVarbInfo } from "../relVarbInfo";

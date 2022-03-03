@@ -4,7 +4,7 @@ import { useOpenWidth } from "../../../../appWide/SectionTitleRow";
 import ToggleViewBtn from "./../../../../general/ToggleViewBtn";
 import DollarPercentRadioSwap from "../../general/DollarPercentRadioSwap";
 import VacancyRate from "./BasicMgmtInfo/VacancyRate";
-import { switchVarbNames } from "../../../../../sharedWithServer/Analyzer/SectionMetas/relSections/baseSections/baseSwitchSchemas";
+import { switchVarbNames } from "../../../../../sharedWithServer/Analyzer/SectionMetas/relSections/baseSections/baseSwitch";
 import { FeInfo } from "../../../../../sharedWithServer/Analyzer/SectionMetas/Info";
 
 type Props = { feInfo: FeInfo; className?: string };

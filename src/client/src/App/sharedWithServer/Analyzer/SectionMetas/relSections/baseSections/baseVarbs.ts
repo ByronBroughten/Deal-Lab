@@ -8,12 +8,12 @@ import {
 } from "./baseVarb";
 import {
   SwitchName,
-  baseSwitchSchemas,
+  baseSwitch,
   BaseTargetVarb,
   BaseSwitchVarbs,
-  switchVarbName,
+  baseSwitchVarbName,
   BaseSwitchTargetVarbs,
-} from "./baseSwitchSchemas";
+} from "./baseSwitch";
 
 export type GeneralBaseVarbs = { [varbName: string]: GeneralBaseVarb };
 type DefaultBaseVarbs<
@@ -76,13 +76,13 @@ export const baseVarbs = {
     switchName: SW
   ) {
     const numObjSchemas: Partial<BaseSwitchTargetVarbs<BN, SW>> = {};
-    for (const switchKey of Obj.keys(baseSwitchSchemas[switchName])) {
+    for (const switchKey of Obj.keys(baseSwitch.schemas[switchName])) {
       if (switchKey === "switch") continue;
       const target: BaseTargetVarb<BN, SW> = baseVarb.numObj(baseName, {
         switchName,
       });
       numObjSchemas[
-        switchVarbName(
+        baseSwitchVarbName(
           baseName,
           switchName,
           switchKey
@@ -90,7 +90,7 @@ export const baseVarbs = {
       ] = target;
     }
     return {
-      [switchVarbName(baseName, switchName, "switch")]: baseVarb.string(
+      [baseSwitchVarbName(baseName, switchName, "switch")]: baseVarb.string(
         baseName,
         {
           switchName,

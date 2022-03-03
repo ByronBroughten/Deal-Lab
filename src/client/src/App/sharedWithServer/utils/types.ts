@@ -63,6 +63,10 @@ export type Specify<A extends object, B extends Partial<A>> = Merge<A, B>;
 
 export type UnionToCombo<U extends any> = Spread<[UnionToIntersection<U>]>;
 
+export type ToArrObj<O extends object> = {
+  [Prop in keyof O]: O[Prop][];
+};
+
 // Borrowed from SimplyTyped:
 // Borrowed from pelotom/hkts:
 export type GetLength<original extends readonly any[]> = original extends {

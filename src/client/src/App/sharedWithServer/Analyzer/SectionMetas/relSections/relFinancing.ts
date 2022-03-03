@@ -1,7 +1,7 @@
 import { rel } from "./rel";
 import { relSection } from "./rel/relSection";
 import { RelVarbs } from "./rel/relVarbs";
-import { switchVarbNames } from "./baseSections/baseSwitchSchemas";
+import { switchVarbNames } from "./baseSections/baseSwitch";
 import { loanVarbsNotInFinancing } from "./baseSections";
 import { NumObj } from "./baseSections/baseValues/NumObj";
 

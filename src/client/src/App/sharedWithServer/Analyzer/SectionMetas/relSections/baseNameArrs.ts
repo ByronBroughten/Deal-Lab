@@ -1,10 +1,15 @@
 import { Obj } from "../../../utils/Obj";
-import { NeversToNull, SubType } from "../../../utils/types";
-import { BaseSections, baseSections, SectionContext } from "./baseSections";
+import { NeversToNull, SubType, ToArrObj } from "../../../utils/types";
+import {
+  BaseSections,
+  baseSections,
+  SectionContext,
+  SimpleSectionName,
+} from "./baseSections";
 import { base } from "./baseSections/base";
 import Arr from "../../../utils/Arr";
-import { BaseName } from "./BaseName";
-import { SwitchName } from "./baseSections/baseSwitchSchemas";
+import { baseSwitch, SwitchName } from "./baseSections/baseSwitch";
+import { pipe } from "../../../utils/pipe";
 
 type HasVarbSectionName<
   NoVarbSectionName = keyof SubType<
@@ -17,33 +22,68 @@ const feBaseSectionVarbs = Obj.toNestedPropertyObj(
   baseSections.fe,
   "varbSchemas"
 );
-
-type FeBaseSectionVarbs = typeof feBaseSectionVarbs;
+export type FeBaseSectionVarbs = typeof feBaseSectionVarbs;
 type SectionSwitchName<
-  SN extends keyof FeBaseSectionVarbs,
+  SN extends SimpleSectionName,
   SVS = FeBaseSectionVarbs[SN]
 > = SVS[keyof SVS]["switchName" & keyof SVS[keyof SVS]];
 
 type SectionSwitchNames<SW extends SwitchName = SwitchName> = NeversToNull<{
-  [Prop in BaseName]: Extract<SectionSwitchName<Prop>, SW>;
+  [Prop in SimpleSectionName]: Extract<SectionSwitchName<Prop>, SW>;
 }>;
 
-type BaseNameSwitch<SW extends SwitchName = SwitchName> = keyof SubType<
+type SwitchBaseName<SW extends SwitchName = SwitchName> = keyof SubType<
   SectionSwitchNames<SW>,
   SW
 >;
 
-// BaseNameSwitch is wide
-type Test5 = BaseNameSwitch<"monthsYears">;
-type Test7 = BaseNameSwitch;
+type SwitchSectionNames = {
+  [SW in SwitchName]: SwitchBaseName<SW>;
+};
 
-// now that I have BaseNameSwitch, how do I convert
-// it into lists of sectionNames?
+type BaseNameSwitchArrs = ToArrObj<SectionSwitchNames>;
+function baseNameSwitchArrs(feBaseSectionVarbs: FeBaseSectionVarbs) {
+  return Obj.keys(feBaseSectionVarbs).reduce(
+    (sectionSwitchNameArrs, sectionName) => {
+      const switchNameSet: Set<SwitchName | null> = new Set();
 
-type BaseNameOngoing = keyof SubType<SectionSwitchNames, "ongoing">;
+      const sectionVarbs = feBaseSectionVarbs[sectionName];
 
-//@ts-expect-error
-type Test2 = Test["analysis"];
+      type Test = typeof sectionVarbs;
+      for (const varbName of Obj.keys(sectionVarbs)) {
+        // For type safety, I would need a general version of FeBaseSectionVarbs.
+        const varbs = sectionVarbs[varbName] as any;
+        switchNameSet.add(varbs.switchName);
+      }
+
+      sectionSwitchNameArrs[sectionName] = [...switchNameSet];
+    },
+    {} as any
+  ) as BaseNameSwitchArrs;
+}
+
+type SwitchSectionNameArrs = ToArrObj<SwitchSectionNames>;
+function switchSectionNameArrs(baseNameSwitchArrs: BaseNameSwitchArrs) {
+  return baseSwitch.nameArr.reduce((switchSectionNameArrs, switchName) => {
+    const sectionNames: any[] = [];
+
+    for (const sectionName of Obj.keys(baseNameSwitchArrs)) {
+      if ((baseNameSwitchArrs[sectionName] as any[]).includes(switchName)) {
+        sectionNames.push(sectionName as any);
+      }
+    }
+
+    switchSectionNameArrs[switchName] = sectionNames;
+  }, {} as any) as SwitchSectionNameArrs;
+}
+function switchSectionNameArrPipe(
+  feBaseSectionVarbs: FeBaseSectionVarbs
+): SwitchSectionNameArrs {
+  const fn = pipe<FeBaseSectionVarbs>()
+    .then(baseNameSwitchArrs)
+    .then(switchSectionNameArrs);
+  return fn(feBaseSectionVarbs);
+}
 
 const sharedBaseNames = {
   // for now, this assumes that dbSectionNames is a superset of feSectionNames
@@ -125,6 +165,9 @@ const sharedBaseNames = {
       "userVarbList",
     ] as const;
   },
+
+  // misc
+  ...switchSectionNameArrPipe(feBaseSectionVarbs),
 } as const;
 
 type GeneralBaseNameArrs = {

@@ -203,3 +203,5 @@ testBaseSections(baseSections.db);
 
 export type SectionContext = keyof BaseSections;
 export type BaseSections = typeof baseSections;
+export type SimpleSectionName<SC extends SectionContext = "fe"> =
+  keyof BaseSections[SC];

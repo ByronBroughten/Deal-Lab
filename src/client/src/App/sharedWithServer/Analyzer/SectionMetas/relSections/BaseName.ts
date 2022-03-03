@@ -29,6 +29,12 @@ export type VarbNameWide<
   }
 > = SectionValueVarbName[SN & keyof SectionValueVarbName];
 
+// given BaseName<SW> and SW, I want to get the baseNames of the varbs
+// that have switchName: SW
+// using the word baseName twice is confusing
+
+// ok, how does this work?
+
 type ValueVarbSchemas<T, VN extends BaseValueName> = T extends {
   [key: string]: any;
 }
@@ -42,7 +48,14 @@ export type VarbName<
   ContextSections = BaseSections[SC],
   MultiContextSections = ContextSections[SN & keyof ContextSections],
   VarbSchemas = MultiContextSections["varbSchemas" & keyof MultiContextSections]
+  // I want to get the varbNames of the varbSchemas
 > = keyof ValueVarbSchemas<VarbSchemas, T>;
+
+// ok.
+// I want to be able to type in
+
+type Test = VarbName<"percent">;
+type Test2 = VarbNameWide<"ongoing">;
 
 function _VarbNameTest(
   stringName: VarbName<"property" | "loan", "string">,
