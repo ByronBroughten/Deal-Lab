@@ -162,7 +162,9 @@ function initStaticVarbOptions(): VariableOption[] {
     const varbNames = ObjectKeys(sectionMeta.varbMetas) as string[];
     if (SectionNam.is(sectionName, "hasGlobalVarbs"))
       options = options.concat(
-        varbNames.map((varbName) => initStaticVarbOption(sectionName, varbName))
+        varbNames
+          .map((varbName) => initStaticVarbOption(sectionName, varbName))
+          .filter((val) => val.displayName !== "")
       );
     return options;
   }, [] as VariableOption[]);
