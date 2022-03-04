@@ -15,27 +15,29 @@ export const initLoanDefault: DbEntry = {
       {
         dbId: dbIds.loan,
         dbVarbs: {
-          title: "3.5% Down FHA",
+          title: "",
           loanAmountBaseUnitSwitch: "percent",
-          loanAmountBasePercent: dbNumObj("96.5"),
+          loanAmountBasePercent: dbNumObj(""),
           loanAmountBaseDollars: dbNumObj("0"),
           loanAmountDollarsTotal: dbNumObj("0"),
-          interestRatePercentMonthly: dbNumObj(".333"),
-          interestRatePercentYearly: dbNumObj("4"),
+          interestRatePercentMonthly: dbNumObj(""),
+          interestRatePercentYearly: dbNumObj(""),
           interestRatePercentOngoingSwitch: "yearly",
-          loanTermMonths: dbNumObj("360"),
-          loanTermYears: dbNumObj("30"),
+          loanTermMonths: dbNumObj(""),
+          loanTermYears: dbNumObj(""),
           loanTermSpanSwitch: "years",
           piMonthly: dbNumObj("0"),
           piYearly: dbNumObj("0"),
-          mortgageInsMonthly: dbNumObj("0"),
-          mortgageInsYearly: dbNumObj("0"),
+          mortgageInsMonthly: dbNumObj(""),
+          mortgageInsYearly: dbNumObj(""),
           mortgageInsOngoingSwitch: "yearly",
-          mortInsUpfront: dbNumObj("0"), // this would have a formula
+          mortInsUpfront: dbNumObj(""), // this would have a formula
         },
         childDbIds: {
           closingCostList: [dbIds.closingCostList],
-          wrappedInLoanList: [dbIds.wrappedInLoanList],
+          wrappedInLoanList: [
+            // dbIds.wrappedInLoanList
+          ],
         },
       },
     ],
@@ -43,44 +45,46 @@ export const initLoanDefault: DbEntry = {
       {
         dbId: dbIds.closingCostList,
         dbVarbs: {
-          total: dbNumObj("6000"),
-          title: "Closing Cost Items",
+          total: dbNumObj(""),
+          title: "Closing Costs",
           defaultValueSwitch: "labeledEquation",
         },
         childDbIds: {
-          singleTimeItem: [dbIds.closingCostItem],
+          singleTimeItem: [
+            // dbIds.closingCostItem
+          ],
         },
       },
     ],
     singleTimeItem: [
-      {
-        dbId: dbIds.closingCostItem,
-        dbVarbs: {
-          name: "All closing costs",
-          editorValue: dbNumObj("6000"),
-          value: dbNumObj("6000"),
-          valueSwitch: "labeledEquation",
-          sectionName: "",
-          varbName: "",
-          id: "",
-          idType: "",
-          entityId: "",
-        },
-        childDbIds: {},
-      },
+      // {
+      //   dbId: dbIds.closingCostItem,
+      //   dbVarbs: {
+      //     name: "All closing costs",
+      //     editorValue: dbNumObj("6000"),
+      //     value: dbNumObj("6000"),
+      //     valueSwitch: "labeledEquation",
+      //     sectionName: "",
+      //     varbName: "",
+      //     id: "",
+      //     idType: "",
+      //     entityId: "",
+      //   },
+      //   childDbIds: {},
+      // },
     ],
-    wrappedInLoanList: [
-      {
-        dbId: dbIds.wrappedInLoanList,
-        dbVarbs: {
-          total: dbNumObj("0"),
-          title: "Items wrapped in loan",
-          defaultValueSwitch: "labeledEquation",
-        },
-        childDbIds: {
-          singleTimeItem: [],
-        },
-      },
-    ],
+    // wrappedInLoanList: [
+    //   {
+    //     dbId: dbIds.wrappedInLoanList,
+    //     dbVarbs: {
+    //       total: dbNumObj("0"),
+    //       title: "Items wrapped in loan",
+    //       defaultValueSwitch: "labeledEquation",
+    //     },
+    //     childDbIds: {
+    //       singleTimeItem: [],
+    //     },
+    //   },
+    // ],
   },
 };

@@ -20,7 +20,7 @@ export default function Loan({ id }: { id: string }) {
               feInfo,
               listSectionName: "closingCostList",
             }}
-            titleText="Closing Costs"
+            titleText="Loan Fees"
             totalVarbName="closingCosts"
           />
           <ListGroup

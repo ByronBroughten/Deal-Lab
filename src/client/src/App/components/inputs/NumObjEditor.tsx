@@ -87,7 +87,7 @@ export default function NumObjEditor({
           <VarbCalculator {...{ onChange, editorState }} />
         )}
       </div>
-      {isCalcMode && dropped && <Calculator {...{ onChange, editorState }} />}
+      {/* {isCalcMode && dropped && <Calculator {...{ onChange, editorState }} />} */}
     </Styled>
   );
 }
@@ -95,7 +95,7 @@ export default function NumObjEditor({
 const Styled = styled.div`
   display: flex;
   align-items: center;
-  ..DraftTextField-root {
+  .DraftTextField-root {
     min-width: 20px;
   }
 

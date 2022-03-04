@@ -57,7 +57,7 @@ export default function VarbAutoComplete({
         renderInput={(params: any) => (
           <TextField
             {...params}
-            placeholder={placeholder ?? "Search variables"}
+            placeholder={placeholder ?? "Variables"}
             variant="filled"
             popoverProps={{ canAutoPosition: true }}
           />
@@ -85,7 +85,7 @@ export default function VarbAutoComplete({
   );
 }
 
-const minWidth = "180px";
+const minWidth = "110px";
 
 const Styled = styled.div`
   .MuiInputBase-root {

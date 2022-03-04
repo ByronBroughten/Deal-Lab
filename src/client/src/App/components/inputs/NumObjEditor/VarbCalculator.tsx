@@ -17,9 +17,6 @@ export default function VarbCalculator({ editorState, onChange }: Props) {
   function onSelect(value: VariableOption) {
     const { displayName, varbInfo } = value;
 
-    // Insert the entity map data.
-    // The entity offset and length of InEntity is generated
-    // automatically in entity ranges.
     const entity: EntityMapData = {
       ...varbInfo,
       entityId: Analyzer.makeId(),

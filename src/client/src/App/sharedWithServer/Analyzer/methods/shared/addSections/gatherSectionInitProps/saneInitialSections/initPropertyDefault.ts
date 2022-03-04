@@ -1,16 +1,16 @@
 import { makeSectionId } from "../../../../../../makeSectionId";
 import { Obj } from "../../../../../../utils/Obj";
-import { DbEnt, DbEntry } from "../../../../../DbEntry";
+import { DbEnt, DbEntry, DbSection } from "../../../../../DbEntry";
 import { Inf } from "../../../../../SectionMetas/Info";
 import { dbNumObj } from "../../../../../SectionMetas/relSections/rel/valueMeta/NumObj";
 
 type ListItemCoreValues = [name: string, cost: number];
 const periodicItemCoreValues: ListItemCoreValues[] = [
-  ["Misc repairs", 200],
-  ["Energy", 80],
-  ["Lawncare", 30],
-  ["Water", 120],
-  ["Garbage", 120],
+  // ["Misc repairs", 200],
+  // ["Energy", 80],
+  // ["Lawncare", 30],
+  // ["Water", 120],
+  // ["Garbage", 120],
 ];
 const periodicItemSections = [...periodicItemCoreValues]
   .reverse()
@@ -23,7 +23,9 @@ const periodicItemSections = [...periodicItemCoreValues]
   }))
   .map((values) => DbEnt.initSection(makeSectionId(), values));
 
-const miscUpfrontItemCoreValues: ListItemCoreValues[] = [["Inspection", 600]];
+const miscUpfrontItemCoreValues: ListItemCoreValues[] = [
+  // ["Inspection", 600]
+];
 const miscUpfrontSections = [...miscUpfrontItemCoreValues]
   .reverse()
   .map(([name, cost]) => ({
@@ -40,26 +42,19 @@ type CapExItemCoreValues = [
   lifespan: number
 ];
 const capExItemCoreValues: CapExItemCoreValues[] = [
-  ["Furnace", 4000, 20],
-  ["Water heater", 1200, 12],
-  ["Floors", 6000, 10],
-  ["Roof", 8000, 20],
-  ["Plumbing (PEX)", 6000, 50],
-  ["Trees/landscaping", 2000, 10],
-  ["Foundation", 10000, 50],
-  ["Siding", 6000, 40],
-  ["Windows", 6000, 50],
-  ["Cabinets/Counters", 5000, 30],
-  ["Laundry", 1200, 12],
-  ["Driveway", 5000, 30],
+  // ["Furnace", 4000, 20],
+  // ["Water heater", 1200, 12],
+  // ["Floors", 6000, 10],
+  // ["Roof", 8000, 20],
+  // ["Plumbing (PEX)", 6000, 50],
+  // ["Trees/landscaping", 2000, 10],
+  // ["Foundation", 10000, 50],
+  // ["Siding", 6000, 40],
+  // ["Windows", 6000, 50],
+  // ["Cabinets/Counters", 5000, 30],
+  // ["Laundry", 1200, 12],
+  // ["Driveway", 5000, 30],
 ];
-// what do I get out of living with Louie?
-// I feel like he gets much more out of it than I do.
-// I mean, I get some rent.
-// It's not that much rent, though. I would be getting more if
-// I lived in this unit by myself and rented out the basement.
-// that wouldn't be legal, though.
-// I get to live with a person, which is beneficial for my socializing.
 const capExItemSections = [...capExItemCoreValues]
   .reverse()
   .map(([name, costToReplace, lifespanYears]) => ({
@@ -87,7 +82,7 @@ capExList = DbEnt.addLikeChildren(
 
 let periodicPaymentList = DbEnt.initEntry(
   "ongoingCostList",
-  { title: "Periodic payments" },
+  { title: "Utilities" },
   { dbId: makeSectionId() }
 );
 periodicPaymentList = DbEnt.addLikeChildren(
@@ -124,23 +119,23 @@ const init: DbEntry = {
         dbId: dbIds.property,
         dbVarbs: {
           title: "",
-          price: dbNumObj("200000"),
-          sqft: dbNumObj("1000"),
-          taxesMonthly: dbNumObj("250"),
-          taxesYearly: dbNumObj("3000"),
+          price: dbNumObj(""),
+          sqft: dbNumObj(""),
+          taxesMonthly: dbNumObj(""),
+          taxesYearly: dbNumObj(""),
           taxesOngoingSwitch: "yearly",
-          homeInsMonthly: dbNumObj("100"),
-          homeInsYearly: dbNumObj("1200"),
+          homeInsMonthly: dbNumObj(""),
+          homeInsYearly: dbNumObj(""),
           homeInsOngoingSwitch: "yearly",
-          numUnits: dbNumObj("1"),
-          numBedrooms: dbNumObj("3"),
+          numUnits: dbNumObj(""),
+          numBedrooms: dbNumObj(""),
           upfrontExpenses: dbNumObj("0"),
-          upfrontRevenue: dbNumObj("1500"),
+          upfrontRevenue: dbNumObj("0"),
           ongoingExpensesMonthly: dbNumObj("0"),
           ongoingExpensesYearly: dbNumObj("0"),
           ongoingExpensesOngoingSwitch: "monthly",
-          targetRentMonthly: dbNumObj("1500"),
-          targetRentYearly: dbNumObj("18000"),
+          targetRentMonthly: dbNumObj("0"),
+          targetRentYearly: dbNumObj("0"),
           targetRentOngoingSwitch: "monthly",
           miscOngoingRevenueMonthly: dbNumObj("0"),
           miscOngoingRevenueYearly: dbNumObj("0"),
@@ -154,31 +149,31 @@ const init: DbEntry = {
           upfrontRevenueList: [],
           ongoingCostList: [],
           ongoingRevenueList: [],
-          unit: [dbIds.unit1, dbIds.unit2],
+          unit: [], // dbIds.unit1, dbIds.unit2
         },
       },
     ],
     unit: [
-      {
-        dbId: dbIds.unit1,
-        dbVarbs: {
-          one: dbNumObj("1"),
-          numBedrooms: dbNumObj("3"),
-          targetRentMonthly: dbNumObj("1500"),
-          targetRentYearly: dbNumObj("18000"),
-        },
-        childDbIds: {},
-      },
-      {
-        dbId: dbIds.unit2,
-        dbVarbs: {
-          one: dbNumObj("1"),
-          numBedrooms: dbNumObj("3"),
-          targetRentMonthly: dbNumObj("1500"),
-          targetRentYearly: dbNumObj("18000"),
-        },
-        childDbIds: {},
-      },
+      // {
+      //   dbId: dbIds.unit1,
+      //   dbVarbs: {
+      //     one: dbNumObj("1"),
+      //     numBedrooms: dbNumObj("3"),
+      //     targetRentMonthly: dbNumObj("1500"),
+      //     targetRentYearly: dbNumObj("18000"),
+      //   },
+      //   childDbIds: {},
+      // },
+      // {
+      //   dbId: dbIds.unit2,
+      //   dbVarbs: {
+      //     one: dbNumObj("1"),
+      //     numBedrooms: dbNumObj("3"),
+      //     targetRentMonthly: dbNumObj("1500"),
+      //     targetRentYearly: dbNumObj("18000"),
+      //   },
+      //   childDbIds: {},
+      // },
     ],
     upfrontCostList: [
       DbEnt.initSection(dbIds.repairList, { title: "Repairs" }),
@@ -195,22 +190,22 @@ for (const sectionName of Obj.keys(periodicPaymentList.dbSections)) {
     ...capExList.dbSections[sectionName]
   );
 }
-for (const sectionName of Obj.keys(miscUpfrontCostList.dbSections)) {
-  if (!init.dbSections[sectionName]) init.dbSections[sectionName] = [];
-  // @ts-ignore
-  init.dbSections[sectionName].push(
-    ...miscUpfrontCostList.dbSections[sectionName]
-  );
-}
-
 // @ts-ignore
 init.dbSections.propertyDefault[0].childDbIds.ongoingCostList.push(
   periodicPaymentList.dbId,
   capExList.dbId
 );
-// @ts-ignore
-init.dbSections.propertyDefault[0].childDbIds.upfrontCostList.push(
-  miscUpfrontCostList.dbId
-);
+
+// for (const sectionName of Obj.keys(miscUpfrontCostList.dbSections)) {
+//   if (!init.dbSections[sectionName]) init.dbSections[sectionName] = [];
+//   // @ts-ignore
+//   init.dbSections[sectionName].push(
+//     ...miscUpfrontCostList.dbSections[sectionName]
+//   );
+// }
+// // @ts-ignore
+// init.dbSections.propertyDefault[0].childDbIds.upfrontCostList.push(
+//   miscUpfrontCostList.dbId
+// );
 
 export const initPropertyDefault = init;

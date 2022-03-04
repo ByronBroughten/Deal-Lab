@@ -12,7 +12,7 @@ export const initMgmtDefault: DbEntry = {
       {
         dbId: dbIds.mgmt,
         dbVarbs: {
-          title: "Owner Managed",
+          title: "",
           rentCutUnitSwitch: "percent",
           rentCutPercent: dbNumObj("0"),
           rentCutDollarsOngoingSwitch: "monthly",

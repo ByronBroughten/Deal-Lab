@@ -6,7 +6,7 @@ import {
   NumObj,
   NumObjNumber,
 } from "../../../SectionMetas/relSections/rel/valueMeta/NumObj";
-import { replaceRange } from "../../../../utils/Str";
+import { isRationalNumber, replaceRange } from "../../../../utils/Str";
 import Analyzer from "../../../../Analyzer";
 import {
   FeVarbInfo,
@@ -41,11 +41,6 @@ export const numObjUnits = {
   },
 } as const;
 export type NumObjUnit = keyof typeof numObjUnits;
-// get number(): CalcProp {
-//   const number = NumObj.solveText(this.solvableText, this.core.unit);
-//   if (isRationalNumber(number)) return this.doFinishingTouches(number);
-//   else return "?";
-// }
 
 function doFinishingTouches(
   num: number,
@@ -74,7 +69,7 @@ function solveText(
 
   try {
     let num = evaluate(text);
-    if (typeof num === "number") {
+    if (isRationalNumber(num)) {
       num = doFinishingTouches(num, updateFnName);
       return round(num, numObjUnits[unit].roundTo);
     } else return "?";
