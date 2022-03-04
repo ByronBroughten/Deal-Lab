@@ -12,7 +12,7 @@ export default function Mgmt({ id }: { id: string }) {
     <MainSectionEntry>
       <MainEntryTitleRow {...{ feInfo, pluralName: "Mgmts" }} />
       <MainEntryBody>
-        <BasicMgmtInfo feInfo={feInfo} />
+        <BasicMgmtInfo feInfo={feInfo} className="ListGroup-root" />
         <ListGroup
           feInfo={feInfo}
           listSectionName="upfrontCostList"

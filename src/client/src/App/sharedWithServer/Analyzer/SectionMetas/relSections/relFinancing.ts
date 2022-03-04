@@ -20,6 +20,7 @@ function loanPreVarbs(): RelVarbs<"loan"> {
           rel.varbInfo.static("propertyGeneral", "price")
         ),
       ],
+      endAdornment: "%",
     }),
     [loanAmountBase.dollars]: rel.varb.calcVarb("Base loan amount", {
       inUpdateSwitchProps: [
@@ -29,6 +30,7 @@ function loanPreVarbs(): RelVarbs<"loan"> {
           rel.varbInfo.static("propertyGeneral", "price")
         ),
       ],
+      startAdornment: "$",
     }),
     loanAmountDollarsTotal: rel.varb.sumMoney("Loan amount", [
       rel.varbInfo.local("loan", "loanAmountBaseDollars"),
