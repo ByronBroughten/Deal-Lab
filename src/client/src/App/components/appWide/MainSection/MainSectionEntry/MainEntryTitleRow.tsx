@@ -59,13 +59,13 @@ export default function MainEntryTitleRow({
           }}
         />
         <div className="MainEntryTitleRow-leftSide-btnsRow">
-          <PlainIconBtn
+          {/* <PlainIconBtn
             onClick={toggleBtnMenu}
             className="MainEntryTitleRow-ellipsisBtn MainEntryTitleRow-flexUnit"
           >
             <IoEllipsisHorizontal size="25" />
-          </PlainIconBtn>
-          {btnMenuIsOpen && (
+          </PlainIconBtn> */}
+          {true && (
             <>
               <SectionBtn
                 className="MainEntryTitleRow-flexUnit"
@@ -146,7 +146,7 @@ export const MainEntryTitleRowStyled = styled.div<{ btnMenuIsOpen: boolean }>`
   .MainEntryTitleRow-title,
   .MainEntryTitleRow-leftSide-btnsRow {
     // these need this in order to flex properly
-    margin: ${theme.s2};
+    margin: 0 ${theme.s2};
   }
 
   .MainEntryTitleRow-title ..DraftTextField-root {
@@ -157,7 +157,7 @@ export const MainEntryTitleRowStyled = styled.div<{ btnMenuIsOpen: boolean }>`
     display: flex;
     .MainEntryTitleRow-flexUnit {
       :not(:first-child) {
-        margin-left: ${theme.s3};
+        margin-left: ${theme.s2};
       }
     }
   }

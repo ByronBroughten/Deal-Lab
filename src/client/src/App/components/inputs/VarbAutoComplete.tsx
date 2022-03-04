@@ -1,7 +1,7 @@
 import React from "react";
 import { useAnalyzerContext } from "../../modules/usePropertyAnalyzer";
 import { Autocomplete } from "@material-ui/lab";
-import { TextField } from "@material-ui/core";
+import { TextField, Popper } from "@material-ui/core";
 import useToggle from "../../modules/customHooks/useToggle";
 import theme from "../../theme/Theme";
 import ccs from "../../theme/cssChunks";
@@ -10,6 +10,54 @@ import {
   SectionOption,
   VariableOption,
 } from "../../sharedWithServer/Analyzer/methods/entitiesVariables";
+
+type PopParams = Parameters<typeof Popper>;
+type PopperProps = PopParams extends (infer T)[] ? T : never;
+
+function PopperCustom(props: PopperProps) {
+  return <StyledPopper {...props} style={{}} />;
+}
+
+const StyledPopper = styled(Popper)`
+  .MuiAutocomplete-paper {
+    margin: 0;
+    line-height: 1rem;
+    font-size: 0.9rem;
+  }
+
+  .MuiAutocomplete-listbox {
+    max-height: 30vh;
+    width: auto;
+    padding: 0;
+    ${ccs.dropdown.scrollbar};
+  }
+
+  ul {
+    li.MuiAutocomplete-option {
+      padding: ${theme.s2};
+      padding-left: calc(${theme.s4} + ${theme.s2});
+      width: 210px;
+      line-height: 1rem;
+      min-height: 30px;
+      :not(:first-child) {
+        border-top: 1px solid ${theme["gray-400"]};
+      }
+    }
+  }
+
+  li {
+    .MuiListSubheader-root {
+      top: 0;
+      padding: ${theme.s3};
+      padding-bottom: ${theme.s2};
+      line-height: 1rem;
+      font-weight: 600;
+      border-top: 1px solid ${theme["gray-400"]};
+      border-bottom: 2px solid ${theme["gray-500"]};
+      background-color: ${theme["gray-200"]};
+    }
+  }
+`;
 
 export type OnSelect =
   | ((value: VariableOption) => void)
@@ -41,6 +89,7 @@ export default function VarbAutoComplete({
   return (
     <Styled className={`VarbAutoComplete-root ${className}`}>
       <Autocomplete
+        PopperComponent={PopperCustom}
         key={`${keyBool}`}
         id="VarbAutoComplete-autoComplete"
         onInputChange={(_, newInputValue) => setInputValue(newInputValue)}
@@ -67,13 +116,14 @@ export default function VarbAutoComplete({
         clearOnBlur={clearOnBlur}
         openOnFocus
         disableClearable // gets rid of the x icon
+        // forcePopupIcon={false} // gets rid of the arrow
         noOptionsText="Not found"
         // interesting options
         // fullWidth
         // blurOnSelect
 
         // open //debug option
-        disablePortal
+        // disablePortal
         onChange={(_, value, reason) => {
           if (reason === "select-option" && value) {
             onSelect(value);
@@ -122,50 +172,6 @@ const Styled = styled.div`
           color: ${theme.dark};
           font-weight: 400;
           opacity: 0.42;
-        }
-      }
-    }
-  }
-
-  .MuiAutocomplete-popper {
-    width: auto !important;
-    .MuiAutocomplete-listbox {
-      max-height: 30vh;
-    }
-
-    .MuiAutocomplete-paper {
-      margin: 0;
-      line-height: 1rem;
-      font-size: 0.9rem;
-    }
-
-    .MuiAutocomplete-listbox {
-      padding: 0;
-      ${ccs.dropdown.scrollbar};
-
-      li {
-        .MuiListSubheader-root {
-          top: 0;
-          padding: ${theme.s3};
-          padding-bottom: ${theme.s2};
-          line-height: 1rem;
-          font-weight: 600;
-          border-top: 1px solid ${theme["gray-400"]};
-          border-bottom: 2px solid ${theme["gray-500"]};
-          background-color: ${theme["gray-200"]};
-        }
-
-        ul {
-          li.MuiAutocomplete-option {
-            padding: ${theme.s2};
-            padding-left: calc(${theme.s4} + ${theme.s2});
-            width: 200px;
-            line-height: 1rem;
-            min-height: 30px;
-            :not(:first-child) {
-              border-top: 1px solid ${theme["gray-400"]};
-            }
-          }
         }
       }
     }
