@@ -14,11 +14,11 @@ export const initMgmtDefault: DbEntry = {
         dbVarbs: {
           title: "",
           rentCutUnitSwitch: "percent",
-          rentCutPercent: dbNumObj("0"),
+          rentCutPercent: dbNumObj(""),
           rentCutDollarsOngoingSwitch: "monthly",
           rentCutDollarsMonthly: dbNumObj("0"),
           rentCutDollarsYearly: dbNumObj("0"),
-          vacancyRatePercent: dbNumObj("5"),
+          vacancyRatePercent: dbNumObj(""),
           vacancyLossDollarsOngoingSwitch: "monthly",
           vacancyLossDollarsMonthly: dbNumObj("0"),
           vacancyLossDollarsYearly: dbNumObj("0"),

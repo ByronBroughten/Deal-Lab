@@ -133,7 +133,7 @@ const init: DbEntry = {
           upfrontRevenue: dbNumObj("0"),
           ongoingExpensesMonthly: dbNumObj("0"),
           ongoingExpensesYearly: dbNumObj("0"),
-          ongoingExpensesOngoingSwitch: "monthly",
+          ongoingExpensesOngoingSwitch: "yearly",
           targetRentMonthly: dbNumObj("0"),
           targetRentYearly: dbNumObj("0"),
           targetRentOngoingSwitch: "monthly",
