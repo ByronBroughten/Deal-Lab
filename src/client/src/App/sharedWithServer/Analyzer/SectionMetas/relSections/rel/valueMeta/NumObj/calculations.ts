@@ -119,7 +119,7 @@ const calculations = {
     interestRatePercentYearly: CalcProp;
     loanTermYears: CalcProp;
   }) {
-    return `(${this.piMonthly({
+    return `12 * (${this.piMonthly({
       loanAmountDollarsTotal,
       interestRatePercentMonthly:
         typeof interestRatePercentYearly === "number"
@@ -127,7 +127,7 @@ const calculations = {
           : interestRatePercentYearly,
       loanTermMonths:
         typeof loanTermYears === "number" ? loanTermYears * 12 : loanTermYears,
-    })}) * 12`;
+    })})`;
   },
 } as const;
 

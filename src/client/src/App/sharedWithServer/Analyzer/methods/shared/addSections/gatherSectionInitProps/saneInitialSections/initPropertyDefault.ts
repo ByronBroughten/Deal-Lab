@@ -70,7 +70,11 @@ const capExItemSections = [...capExItemCoreValues]
 
 let capExList = DbEnt.initEntry(
   "ongoingCostList",
-  { title: "CapEx", totalOngoingSwitch: "yearly" },
+  {
+    title: "CapEx",
+    totalOngoingSwitch: "yearly",
+    defaultValueSwitch: "labeledSpanOverCost",
+  },
   { dbId: makeSectionId() }
 );
 capExList = DbEnt.addLikeChildren(
