@@ -265,7 +265,7 @@ export const relVarbs = {
         { switchInit: "years" }
       ),
       [ongoingValueNames.switch]: relVarb.string({
-        initValue: "monthly",
+        initValue: "yearly",
       }),
       [ongoingValueNames.monthly]: relVarb.moneyMonth("Monthly amount", {
         ...defaultValueUpdatePack,
