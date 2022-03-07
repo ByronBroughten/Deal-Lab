@@ -3,8 +3,10 @@ import {
   Editor,
   EditorState,
   Modifier,
+  RawDraftEntityRange,
   SelectionState,
 } from "draft-js";
+import { NumObj } from "../sharedWithServer/Analyzer/SectionMetas/relSections/rel/valueMeta/NumObj";
 import { EntityMapData } from "../sharedWithServer/Analyzer/SectionMetas/relSections/rel/valueMeta/NumObj/entities";
 import array from "../sharedWithServer/utils/Arr";
 
@@ -16,8 +18,7 @@ export type EntityMap = Record<
     type: "TOKEN";
   }
 >;
-export type EntityRange = { offset: number; length: number; key: number };
-export type EntityRanges = EntityRange[];
+export type EntityRanges = RawDraftEntityRange[];
 export interface DraftBlock {
   entityRanges: EntityRanges;
   text: string;
@@ -27,6 +28,7 @@ export interface DraftBlock {
   data: {};
   inlineStyleRanges: [];
 }
+
 export type DraftBlocks = DraftBlock[];
 export type RawEditorState = { blocks: DraftBlock[]; entityMap: EntityMap };
 

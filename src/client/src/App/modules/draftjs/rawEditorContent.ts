@@ -1,4 +1,6 @@
-import { convertToRaw, EditorState } from "draft-js";
+import { convertToRaw, EditorState, RawDraftContentState } from "draft-js";
+import { NumObj } from "../../sharedWithServer/Analyzer/SectionMetas/relSections/rel/valueMeta/NumObj";
+import { Obj } from "../../sharedWithServer/utils/Obj";
 import { RawEditorState } from "../../utils/Draf";
 
 export default function getNewRawContent() {
@@ -35,8 +37,26 @@ export const editorStateToText = (editorState: EditorState) => {
   return text;
 };
 
-export const textToRawContent = (text: string) => {
+export const textToRawContent = (text: string): RawDraftContentState => {
   const rawContent = getNewRawContent();
   applyTextToRawContent({ rawContent, text });
   return rawContent;
 };
+
+export function numObjToRawContent(numObj: NumObj): RawDraftContentState {
+  const { editorText, entities } = numObj;
+  const raw = textToRawContent(editorText);
+  for (const [idx, entity] of Object.entries(entities)) {
+    raw.entityMap[idx] = {
+      data: entity,
+      mutability: "IMMUTABLE",
+      type: "TOKEN",
+    };
+    raw.blocks[0].entityRanges.push({
+      key: parseInt(idx),
+      offset: entity.offset,
+      length: entity.length,
+    });
+  }
+  return raw;
+}

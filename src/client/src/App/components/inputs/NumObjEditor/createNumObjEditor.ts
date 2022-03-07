@@ -1,5 +1,6 @@
 import { convertFromRaw, EditorState } from "draft-js";
 import getNewRawContent, {
+  numObjToRawContent,
   textToRawContent,
 } from "../../../modules/draftjs/rawEditorContent";
 import {
@@ -60,15 +61,10 @@ function restoreRawEditorState({
   };
 }
 
-function textFromNumObj({ editorText, number }: NumObj): string {
-  if (editorText) return editorText;
-  else if (typeof number === "number") return `${number}`;
-  else return "";
-}
 function valueToRawContent(value: any) {
   if (value === undefined) return getNewRawContent();
   if (typeof value === "string") return textToRawContent(value);
-  if (value instanceof NumObj) return textToRawContent(textFromNumObj(value));
+  if (value instanceof NumObj) return numObjToRawContent(value);
   if ("entities" in value) return restoreRawEditorState(value);
   throw new Error(`This value didn't work for creating an editor: ${value}`);
 }

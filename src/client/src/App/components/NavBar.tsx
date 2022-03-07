@@ -15,7 +15,7 @@ export default function NavBar() {
       <Toolbar disableGutters={true}>
         <div className="NavBar-leftSide">
           <NavBtn className="NavBar-brandName" href="/analyzer">
-            Ultimate Property Analyzer TEST
+            Ultimate Property Analyzer
           </NavBtn>
         </div>
         <div className="NavBar-btns Logged Out">

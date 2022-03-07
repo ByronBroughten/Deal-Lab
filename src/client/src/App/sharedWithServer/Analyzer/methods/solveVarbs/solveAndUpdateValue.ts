@@ -39,13 +39,16 @@ export function solveValue(
       });
     },
     calcVarbs(): NumObj {
+      // this is where it's happening, ya?
       const solvableText = analyzer.solvableTextFromCalcVarbs(feVarbInfo);
       const number = analyzer.solvableTextToNumber(feVarbInfo, solvableText);
       const numObj = analyzer.value(feVarbInfo, "numObj");
-      return numObj.updateCache({
+      // what is happening to the entities?
+      const next = numObj.updateCache({
         solvableText,
         number,
       });
+      return next;
     },
     calculation(): NumObj {
       const solvableText = analyzer.solvableTextFromCalculation(feVarbInfo);

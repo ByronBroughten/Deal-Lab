@@ -5,7 +5,6 @@ import useDropped from "../../modules/customHooks/useDropped";
 import { FeVarbInfo } from "../../sharedWithServer/Analyzer/SectionMetas/relSections/rel/relVarbInfoTypes";
 import theme from "../../theme/Theme";
 import MaterialDraftEditor from "./MaterialDraftEditor";
-import Calculator from "./NumObjEditor/Calculator";
 import createNumObjEditor from "./NumObjEditor/createNumObjEditor";
 import useGetAdornments, {
   PropAdornments,
