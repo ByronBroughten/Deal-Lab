@@ -33,7 +33,7 @@ export const initOutputs = [
 
 const initEntry = DbEnt.initEntry(
   "analysisDefault",
-  { title: "Analysis" },
+  { title: "" },
   { dbId: "_8k6-iypEf84" }
 );
 
