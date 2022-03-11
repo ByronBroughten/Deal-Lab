@@ -3,30 +3,28 @@ import { BaseValueName } from "../../baseSections/baseValues";
 import { BaseVarbInfo } from "../../baseVarbInfo";
 import { UpdateName, UpdateProps } from "../relValuesTypes";
 
-type CoreUpdateInfo<
-  T extends BaseValueName,
-  U extends UpdateName<T, "wide">
-> = {
+type CoreStuff<T extends BaseValueName, U extends UpdateName<T, "wide">> = {
   updateName: U;
   updateProps: UpdateProps<T, U>;
 };
 
-export type SwitchUpdateInfo = {
+type SwitchStuff = {
   switchInfo: BaseVarbInfo<"relLocal">;
   switchValue: string;
 };
-export type FullSwitchUpdateInfo<
+export type RelUpdateInfo<
   T extends BaseValueName,
-  U extends UpdateName<T, "wide">
-> = Merge<SwitchUpdateInfo, CoreUpdateInfo<T, U>>;
-const testFullSwitchUpdateInfo = (
-  info: FullSwitchUpdateInfo<"numObj", "sumNums">
+  U extends UpdateName<T, "wide">,
+  C extends "core" | "full" = "full"
+> = C extends "full" ? Merge<CoreStuff<T, U>, SwitchStuff> : CoreStuff<T, U>;
+const _FullSwitchUpdateInfoTest = (
+  info: RelUpdateInfo<"numObj", "sumNums">
 ) => {
   const _: "sumNums" = info.updateName;
   const __: UpdateProps<"numObj", "sumNums"> = info.updateProps;
 };
 
 export type UpdateInfoArr<T extends BaseValueName> = readonly [
-  ...FullSwitchUpdateInfo<T, UpdateName<T, "wide">>[],
-  CoreUpdateInfo<T, UpdateName<T, "wide">>
+  ...RelUpdateInfo<T, UpdateName<T, "wide">>[],
+  CoreStuff<T, UpdateName<T, "wide">>
 ];

@@ -5,8 +5,6 @@ import {
   baseValues,
   BaseValueTypes,
 } from "../baseSections/baseValues";
-import { relVarbInfo } from "./relVarbInfo";
-import { UpdateByGatherName } from "./relValues/numObjUpdateInfos/calculationUpdates";
 import { relProps } from "./relMisc";
 import { BaseVarbInfo } from "../baseVarbInfo";
 import { RelValues, relValues } from "./relValues";
@@ -14,7 +12,6 @@ import { Merge } from "../../../../utils/Obj/merge";
 import { Obj } from "../../../../utils/Obj";
 import { NumObj } from "../baseSections/baseValues/NumObj";
 import { BaseName, VarbName } from "../BaseName";
-import { BaseNameSelector } from "../baseNameArrs";
 
 export type DisplayName = string | BaseVarbInfo<"relFocal">;
 export type GeneralRelVarb<
@@ -50,6 +47,8 @@ type DefaultRelVarb<T extends BaseValueName, D extends DisplayName> = {
   valueName: T;
   displayName: D;
   initValue: ReturnType<BaseValues[T]["defaultInit"]>;
+  startDisplayName: "";
+  endDisplayName: "";
   startAdornment: "";
   endAdornment: "";
   updateInfoArr: readonly [
@@ -97,10 +96,9 @@ export const relVarb = {
     return {
       valueName,
       displayName,
+      initValue: baseValues[valueName].defaultInit(),
       startDisplayName: "",
       endDisplayName: "",
-
-      initValue: baseValues[valueName].defaultInit(),
       startAdornment: "", // value adornments: $100, 10%
       endAdornment: "", // as opposed to displayName adornments: Taxes (monthly)
       updateInfoArr: [
@@ -213,6 +211,18 @@ export const relVarb = {
       ...options,
     } as const);
   },
+  // sumLocalMoney<
+  //   D extends DisplayName,
+  //   SN extends BaseName,
+  //   VNS extends VarbName<SN, "numObj">[],
+  //   O extends RelVarbOptions<"numObj"> = {}
+  // >(displayName: D, sectionName: SN, localVarbNames: VNS, options?: O) {
+  //   const varbsToSum = relVarbInfo.localsByVarbName(
+  //     sectionName,
+  //     localVarbNames as VNS & VarbName<SN & BaseNameSelector>[]
+  //   );
+  //   return this.sumMoney(displayName, varbsToSum, options);
+  // },
   sumChildVarb<
     D extends DisplayName,
     SN extends BaseName,
@@ -220,32 +230,55 @@ export const relVarb = {
     O extends RelVarbOptions<"numObj"> = {},
     Options = { sectionName: SN; varbName: V }
   >(displayName: D, sectionName: SN, varbName: V, options?: O) {
-    return this.sumNums(
-      displayName,
-      [
-        {
-          context: "fe",
-          sectionName,
-          varbName,
-          idType: "relId",
-          id: "children",
-        } as BaseVarbInfo<"relChildren", Options>,
-      ] as const,
-      options
-    );
-  },
-  sumLocalMoney<
-    D extends DisplayName,
-    SN extends BaseName,
-    VNS extends VarbName<SN, "numObj">[],
-    O extends RelVarbOptions<"numObj"> = {}
-  >(displayName: D, sectionName: SN, localVarbNames: VNS, options?: O) {
-    const varbsToSum = relVarbInfo.localsByVarbName(
+    const childInfo = {
+      context: "fe",
       sectionName,
-      localVarbNames as VNS & VarbName<SN & BaseNameSelector>[]
-    );
-    return this.sumMoney(displayName, varbsToSum, options);
+      varbName,
+      idType: "relId",
+      id: "children",
+    } as BaseVarbInfo<"fe" | "relChildren", Options>;
+    return this.sumNums(displayName, [childInfo] as const, options);
   },
+  // numUpdate<
+  //   D extends DisplayName,
+  //   UN extends UpdateByGatherName<"num">,
+  //   N extends BaseVarbInfo<"relInVarb">,
+  //   O extends RelVarbOptions<"numObj"> = {}
+  // >(displayName: D, updateName: UN, num: N, options?: O) {
+  //   return this.numObj(displayName, {
+  //     updateInfoArr: [
+  //       {
+  //         updateName,
+  //         updateProps: { num },
+  //       },
+  //     ],
+  //     ...options,
+  //   });
+  // },
+  // leftRightUpdate<
+  //   D extends DisplayName,
+  //   UN extends UpdateByGatherName<"leftRight">,
+  //   P extends [
+  //     left: BaseVarbInfo<"relInVarb">,
+  //     right: BaseVarbInfo<"relInVarb">
+  //   ]
+  // >(
+  //   displayName: D,
+  //   updateName: UN,
+  //   leftRight: P,
+  //   options?: RelVarbOptions<"numObj">
+  // ) {
+  //   return this.numObj(displayName, {
+  //     updateInfoArr: [
+  //       {
+  //         updateName,
+  //         updateProps: leftRight,
+  //       },
+  //     ] as const,
+  //     ...options,
+  //   });
+  // },
+
   percentToPortion<
     D extends DisplayName,
     U extends {
@@ -261,45 +294,6 @@ export const relVarb = {
           updateProps,
         },
       ],
-      ...options,
-    });
-  },
-  numUpdate<
-    D extends DisplayName,
-    UN extends UpdateByGatherName<"num">,
-    N extends BaseVarbInfo<"relInVarb">,
-    O extends RelVarbOptions<"numObj"> = {}
-  >(displayName: D, updateName: UN, num: N, options?: O) {
-    return this.numObj(displayName, {
-      updateInfoArr: [
-        {
-          updateName,
-          updateProps: { num },
-        },
-      ],
-      ...options,
-    });
-  },
-  leftRightUpdate<
-    D extends DisplayName,
-    UN extends UpdateByGatherName<"leftRight">,
-    P extends [
-      left: BaseVarbInfo<"relInVarb">,
-      right: BaseVarbInfo<"relInVarb">
-    ]
-  >(
-    displayName: D,
-    updateName: UN,
-    leftRight: P,
-    options?: RelVarbOptions<"numObj">
-  ) {
-    return this.numObj(displayName, {
-      updateInfoArr: [
-        {
-          updateName,
-          updateProps: leftRight,
-        },
-      ] as const,
       ...options,
     });
   },

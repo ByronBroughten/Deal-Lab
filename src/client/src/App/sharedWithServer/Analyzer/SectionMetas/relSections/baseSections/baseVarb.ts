@@ -46,7 +46,7 @@ export const baseVarb = {
     T extends BaseValueName,
     O extends BaseVarbOptions = {}
   >(baseName: BN, valueName: T, options?: O): BaseVarb<BN, T, O> {
-    return Obj.merge(this.default(baseName, valueName), options ?? ({} as O));
+    return Obj.merge(this.default(baseName, valueName), options ?? ({} as O)) as BaseVarb<BN, T, O>;
   },
 
   numObj<BN extends string, O extends BaseVarbOptions = {}>(

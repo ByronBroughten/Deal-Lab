@@ -1,6 +1,6 @@
 import { switchVarbNames } from "../baseSections/baseSwitch";
 import { relVarbInfo } from "./relVarbInfo";
-import { FullSwitchUpdateInfo } from "./relVarb/UpdateInfoArr";
+import { RelUpdateInfo } from "./relVarb/UpdateInfoArr";
 import {
   InRelVarbInfo,
   LocalRelVarbInfo,
@@ -64,7 +64,7 @@ export const relUpdateSwitch = {
     switchValue: string,
     updateFnName: UpdateFnName,
     updateFnProps: UpdateFnProps = {}
-  ): FullSwitchUpdateInfo {
+  ): RelUpdateInfo {
     return {
       switchInfo,
       switchValue,
@@ -75,7 +75,7 @@ export const relUpdateSwitch = {
   yearlyToMonthly<Base extends string>(
     sectionName: BaseName<"hasVarb">,
     baseVarbName: Base
-  ): FullSwitchUpdateInfo {
+  ): RelUpdateInfo {
     const varbNames = switchVarbNames(baseVarbName, "ongoing");
     return {
       switchInfo: relVarbInfo.local(sectionName, varbNames.switch),
@@ -90,7 +90,7 @@ export const relUpdateSwitch = {
   monthlyToYearly<Base extends string>(
     sectionName: BaseName<"hasVarb">,
     baseVarbName: Base
-  ): FullSwitchUpdateInfo {
+  ): RelUpdateInfo {
     const varbNames = switchVarbNames(baseVarbName, "ongoing");
     return {
       switchInfo: relVarbInfo.local(sectionName, varbNames.switch),
@@ -107,7 +107,7 @@ export const relUpdateSwitch = {
     switchValue: string,
     leftSide: SingleInRelVarbInfo,
     rightSide: SingleInRelVarbInfo
-  ): FullSwitchUpdateInfo {
+  ): RelUpdateInfo {
     return {
       switchInfo: relVarbInfo.local(sectionName, switchName),
       switchValue,
@@ -119,7 +119,7 @@ export const relUpdateSwitch = {
     sectionName: BaseName<"hasVarb">,
     baseVarbName: Base,
     rightSide: SingleInRelVarbInfo
-  ): FullSwitchUpdateInfo {
+  ): RelUpdateInfo {
     const varbNames = switchVarbNames(baseVarbName, "dollarsPercent");
     return {
       switchInfo: relVarbInfo.local(sectionName, varbNames.switch),

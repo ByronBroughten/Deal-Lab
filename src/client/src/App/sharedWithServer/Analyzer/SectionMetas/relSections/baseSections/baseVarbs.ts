@@ -1,4 +1,3 @@
-import { Obj } from "../../../../utils/Obj";
 import { BaseValueName } from "./baseValues";
 import {
   baseVarb,
@@ -11,7 +10,6 @@ import {
   baseSwitch,
   BaseTargetVarb,
   BaseSwitchVarbs,
-  baseSwitchVarbName,
   BaseSwitchTargetVarbs,
 } from "./baseSwitch";
 
@@ -23,6 +21,12 @@ type DefaultBaseVarbs<
   [BN in VNS[number]]: BaseVarb<BN, T>;
 };
 
+type SingleBaseVarb<
+  BN extends string,
+  VN extends BaseValueName,
+  O extends BaseVarbOptions = {}
+> = Record<BN, BaseVarb<BN, VN, O>>
+
 export const baseVarbs = {
   // Oh, I'll use the singular varbs, still
 
@@ -32,22 +36,22 @@ export const baseVarbs = {
     BN extends string,
     VN extends BaseValueName,
     O extends BaseVarbOptions = {}
-  >(baseName: BN, valueName: VN, options?: O) {
+  >(baseName: BN, valueName: VN, options?: O): SingleBaseVarb<BN, VN, O> {
     return {
       [baseName]: baseVarb.type(baseName, valueName, options),
-    } as Record<BN, BaseVarb<BN, VN, O>>;
+    } as SingleBaseVarb<BN, VN, O>;
   },
   numObj<BN extends string, O extends BaseVarbOptions = {}>(
     baseName: BN,
     options?: O
-  ) {
+  ): SingleBaseVarb<BN, "numObj", O> {
     return this.type(baseName, "numObj", options);
   },
   string<BN extends string, O extends BaseVarbOptions = {}>(
     baseName: BN,
     options?: O
-  ) {
-    return this.type(baseName, "string", options);
+  ): SingleBaseVarb<BN, "string", O> {
+    return this.type(baseName, "string", options as O) ;
   },
   title() {
     return this.string("title" as "title");
@@ -76,21 +80,20 @@ export const baseVarbs = {
     switchName: SW
   ) {
     const numObjSchemas: Partial<BaseSwitchTargetVarbs<BN, SW>> = {};
-    for (const switchKey of Obj.keys(baseSwitch.schemas[switchName])) {
-      if (switchKey === "switch") continue;
+    for (const switchKey of baseSwitch.targetKeyArr(switchName)) {
       const target: BaseTargetVarb<BN, SW> = baseVarb.numObj(baseName, {
         switchName,
       });
       numObjSchemas[
-        baseSwitchVarbName(
+        baseSwitch.varbName(
           baseName,
           switchName,
           switchKey
-        ) as keyof typeof numObjSchemas
+        )
       ] = target;
     }
     return {
-      [baseSwitchVarbName(baseName, switchName, "switch")]: baseVarb.string(
+      [baseSwitch.varbName(baseName, switchName, "switch")]: baseVarb.string(
         baseName,
         {
           switchName,
@@ -201,6 +204,7 @@ export const baseVarbs = {
   },
 } as const;
 
+
 function _baseVarbsTest(
   _baseVarbs: Record<
     string,
@@ -208,13 +212,18 @@ function _baseVarbsTest(
   >
 ): void {
   const title = baseVarbs.string("title");
+
   const _title: "title" = title.title.baseName;
   const _null: null = title.title.switchName;
+
+  title.title.switchName
+  
   //@ts-expect-error
   const _fail: "ongoing" = title.title.switchName;
 
-  const test = baseVarbs.numObj("test", { switchName: "ongoing" });
+  const test = baseVarbs.numObj("test", { switchName: "ongoing" } as const);
   const _baseName: "test" = test.test.baseName;
+  
   // @ts-expect-error
   const _toFail: undefined = test.test;
 

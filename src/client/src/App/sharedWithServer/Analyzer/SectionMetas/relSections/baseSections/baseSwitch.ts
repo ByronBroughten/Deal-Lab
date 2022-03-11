@@ -1,3 +1,4 @@
+import Arr from "../../../../utils/Arr";
 import { Obj } from "../../../../utils/Obj";
 import { BaseVarb } from "./baseVarb";
 
@@ -36,11 +37,11 @@ export type BaseSwitchSchemas = typeof baseSwitchSchemas;
 
 export type SwitchName = keyof BaseSwitchSchemas;
 export type SwitchKey<SW extends SwitchName> = keyof BaseSwitchSchemas[SW];
-function switchKeyArr<SW extends SwitchName>(switchName: SW): SwitchKey<SW>[] {
-  return Obj.keys(baseSwitchSchemas[switchName]);
-}
+export type SwitchTargetKey<SW extends SwitchName> = Exclude<
+  SwitchKey<SW>,
+  "switch"
+>;
 
-type SwitchTargetKey<SW extends SwitchName> = Exclude<SwitchKey<SW>, "switch">;
 type BaseSwitchVarbName<
   BN extends string,
   SW extends SwitchName,
@@ -109,5 +110,11 @@ export const baseSwitch = {
   schemas: baseSwitchSchemas,
   nameArr: Obj.keys(baseSwitchSchemas),
   varbName: baseSwitchVarbName,
-  keyArr: switchKeyArr,
+  keyArr<SW extends SwitchName>(switchName: SW): SwitchKey<SW>[] {
+    return Obj.keys(baseSwitchSchemas[switchName]);
+  },
+  targetKeyArr<SW extends SwitchName>(switchName: SW) {
+    const keyArr = this.keyArr(switchName);
+    return Arr.exclude(keyArr, ["switch"] as const) as SwitchTargetKey<SW>[];
+  },
 };

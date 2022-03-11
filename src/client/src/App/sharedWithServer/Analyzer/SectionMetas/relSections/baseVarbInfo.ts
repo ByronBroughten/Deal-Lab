@@ -3,19 +3,7 @@ import { BaseInfoSets, InfoIdName, InfoIds } from "./baseInfo";
 import { BaseValueName } from "./baseSections/baseValues";
 import { BaseName, VarbName, VarbNameWide } from "./BaseName";
 import { SectionContext } from "./baseSections";
-import { BaseNameSelector, FeBaseSectionVarbs } from "./baseNameArrs";
-import { SwitchName } from "./baseSections/baseSwitch";
-import { SubType } from "../../../utils/types";
-
-// I want to use some of the logic of these for "VarbName"
-
-// I can make it use "vnOngoing", etc.
-// I'll do that for now.
-
-// Get all the varbSectionNames
-
-// I want VarbName to be able to give me OngoingVarbName
-// And other varbNames, right?
+import { BaseNameSelector } from "./baseNameArrs";
 
 type VarbSets = {
   [SC in SectionContext]: {
@@ -153,13 +141,45 @@ function _BaseVarbInfoTest(
   }
 }
 
-export function baseVarbInfo<
+type BaseVarbInfoFn = <
   IN extends InfoIdName,
   SN extends BaseName<"all", SC>,
   VN extends VarbName<SN & BaseNameSelector, BaseValueName, SC>,
   ID extends InfoIds[IN],
   SC extends SectionContext = "fe"
->(idType: IN, sectionName: SN, varbName: VN, id: ID, context?: SC) {
+>(
+  idType: IN,
+  sectionName: SN,
+  varbName: VN,
+  id: ID,
+  context?: SC
+) => OneVarbInfo<
+  IN,
+  ID,
+  SC,
+  SN & BaseName<"all">,
+  BaseValueName,
+  VN &
+    VarbName<
+      (SN & BaseName<"all">) & (SN & BaseNameSelector),
+      BaseValueName,
+      SC
+    >
+>;
+
+export const baseVarbInfo: BaseVarbInfoFn = <
+  IN extends InfoIdName,
+  SN extends BaseName<"all", SC>,
+  VN extends VarbName<SN & BaseNameSelector, BaseValueName, SC>,
+  ID extends InfoIds[IN],
+  SC extends SectionContext = "fe"
+>(
+  idType: IN,
+  sectionName: SN,
+  varbName: VN,
+  id: ID,
+  context?: SC
+) => {
   return {
     idType,
     sectionName,
@@ -179,7 +199,7 @@ export function baseVarbInfo<
         SC
       >
   >;
-}
+};
 
 type _Test<SN extends BaseName, VN extends VarbName<SN>> = BaseVarbInfo<
   "all",

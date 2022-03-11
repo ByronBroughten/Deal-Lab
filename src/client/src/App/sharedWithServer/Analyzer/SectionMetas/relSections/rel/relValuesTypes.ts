@@ -1,4 +1,3 @@
-import { Obj } from "../../../../utils/Obj";
 import { MergeUnionObjNonNullable } from "../../../../utils/types/MergeUnionObj";
 import { BaseValueName } from "../baseSections/baseValues";
 import { BaseVarbInfo } from "../baseVarbInfo";
@@ -16,10 +15,16 @@ export type UpdateName<
   S extends "narrow" | "wide" = "narrow"
 > = S extends "narrow" ? UpdateNameNarrow<T> : UpdateNameWide<T>;
 
-function _(narrow: UpdateName, wide: UpdateName<BaseValueName, "wide">) {
-  const _: "direct" = narrow;
-  const __: typeof wide = "editorValue";
-  const ___: typeof wide = "sumNums";
+function _UpdateNameTest(
+  narrow: UpdateName,
+  wide: UpdateName<BaseValueName, "wide">
+) {
+  const _direct: "direct" = narrow;
+  //@ts-expect-error
+  const _fail: "sumNums = narrow";
+
+  const _editorValue: typeof wide = "editorValue";
+  const _sumNums: typeof wide = "sumNums";
 }
 
 // UpdateProps

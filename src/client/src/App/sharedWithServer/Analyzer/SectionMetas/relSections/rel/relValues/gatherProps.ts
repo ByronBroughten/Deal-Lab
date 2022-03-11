@@ -1,5 +1,4 @@
 import { Obj } from "../../../../../utils/Obj";
-import { Merge } from "../../../../../utils/Obj/merge";
 import { MergeUnionObjNonNullable } from "../../../../../utils/types/MergeUnionObj";
 import { baseValueNames } from "../../baseSections/baseValues";
 import { basicNumObjInherentProp } from "./numObjUpdates";
@@ -9,6 +8,7 @@ import {
   UpdatePropTypeName,
   UpdatePropValueName,
 } from "./updateProps";
+import { Merge } from "./../../../../../utils/Obj/merge";
 
 type GeneralGatherProps = {
   inherent: { [propName: string]: readonly UpdatePropTypeName[] };

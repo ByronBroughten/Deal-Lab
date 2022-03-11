@@ -13,8 +13,12 @@ function propertyRelVarbs<R extends RelVarbs<"property">>(): R {
     ...rel.varbs.timeMoney("homeIns", "Home insurance", "property", {
       switchInit: "yearly",
     }),
-    numUnits: rel.varb.sumChildVarb("Unit count", "unit", "one"),
-    numBedrooms: rel.varb.sumChildVarb("Bedroom count", "unit", "numBedrooms"),
+    numUnits: rel.varb.sumNums("Unit count", [
+      rel.varbInfo.children("unit", "one"),
+    ]),
+    numBedrooms: rel.varb.sumNums("Bedroom count", [
+      rel.varbInfo.children("unit", "numBedrooms"),
+    ]),
     // upfront
     upfrontExpenses: rel.varb.sumMoney("Upfront expenses", [
       rel.varbInfo.children("upfrontCostList", "total"),

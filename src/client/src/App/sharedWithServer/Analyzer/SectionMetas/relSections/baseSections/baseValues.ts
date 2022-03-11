@@ -67,4 +67,5 @@ export type BaseValues = typeof baseValues;
 export type BaseValueTypes = {
   [Prop in keyof BaseValues]: ReturnType<BaseValues[Prop]["defaultInit"]>;
 };
-export type BaseValue = BaseValueTypes[keyof BaseValueTypes];
+export type BaseValue<T extends keyof BaseValueTypes = keyof BaseValueTypes> =
+  BaseValueTypes[T];

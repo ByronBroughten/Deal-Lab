@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { zNanoId, zNumber, zString } from "../../../../../../utils/zod";
-import { BaseVarbInfo } from "../../../baseVarbInfo";
 import { BaseInfo } from "../../../baseInfo";
+import { BaseVarbInfo } from "../../../baseVarbInfo";
 
 const zInEntityBase = z.object({
   entityId: zString,

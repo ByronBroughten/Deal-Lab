@@ -17,6 +17,9 @@ type BaseRelVarbInfo<
   "relId",
   { sectionName: SN; varbName: VN; id: R } & BaseVIOptions<"relId">
 >;
+
+type Test = BaseName<"hasVarb">;
+
 export const relVarbInfo = {
   relative<
     SN extends BaseName<"hasVarb">,

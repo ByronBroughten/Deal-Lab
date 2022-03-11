@@ -1,12 +1,15 @@
-import { RelVarb, relVarb, RelVarbOptions, RelVarbProps, SwitchKey } from "../relVarb";
-
+import { RelVarb, relVarb, RelVarbOptions, RelVarbProps } from "../relVarb";
 import {
-  isSwitchVarbNames,
   SwitchName,
-  BaseSwitchSchemas,
-  SwitchTargetKeys,
+  SwitchTargetKey,
+  SwitchKey,
 } from "../../baseSections/baseSwitch";
-import { SwitchBase, SwitchVarbName, relSwitch, RelSwitchSchemas } from "./../relSwitch";
+import {
+  SwitchBase,
+  SwitchVarbName,
+  relSwitch,
+  RelSwitchDefaults,
+} from "./../relSwitch";
 import { Merge } from "../../../../../utils/Obj/merge";
 import { relUpdateInfo } from "./../relUpdateInfoArr";
 import { Obj } from "../../../../../utils/Obj";
@@ -15,18 +18,16 @@ import { BaseVarbInfo } from "../../baseVarbInfo";
 import { relVarbInfo } from "./../relVarbInfo";
 
 type TargetProps<SW extends SwitchName> = {
-  [Prop in SwitchTargetKeys<SW>]: RelVarbProps<"numObj">;
+  [Prop in SwitchTargetKey<SW>]: RelVarbProps<"numObj">;
 };
 
-type RelSwitchProps<SW extends SwitchName = SwitchName> =
-  TargetProps<SW> & {
-    switch: RelVarbProps<"string">;
-  } & {
-    targets?: RelVarbOptions<"numObj">;
-  };
+type RelSwitchProps<SW extends SwitchName = SwitchName> = TargetProps<SW> & {
+  switch: RelVarbProps<"string">;
+} & {
+  targets?: RelVarbOptions<"numObj">;
+};
 
-
-type NextRelSwitchTargets<
+type RelSwitchTargets<
   SW extends SwitchName,
   SN extends BaseName<SW>,
   SB extends SwitchBase<SW, SN>,
@@ -37,33 +38,36 @@ type NextRelSwitchTargets<
     "numObj",
     TP[SK]["displayName"],
     Merge<TO, TP[SK]>
-  >
+  >;
 };
-
 
 type RelSwitchVarbs<
   SW extends SwitchName,
   SN extends BaseName<SW>,
   SB extends SwitchBase<SW, SN>,
   SP extends RelSwitchProps<SW>
-> = NextRelSwitchTargets<SW, SN, SB, Omit<SP, "switch" | "targets">, SP["targets"]> & {
-  [SK in "switch" as SwitchVarbName<SW, SK, SN, SB>]: RelVarb<"string", O["switch"]["displayName"], O["switch"]>
+> = RelSwitchTargets<SW, SN, SB, SP[SwitchTargetKey<SW>], SP["targets"]> & {
+  [SK in "switch" as SwitchVarbName<SW, SK, SN, SB>]: RelVarb<
+    "string",
+    O["switch"]["displayName"],
+    O["switch"]
+  >;
 };
 
 type RelSwitchPropsAndDefaults<
   SW extends SwitchName,
   PR extends RelSwitchProps<SW>
 > = {
-  targets?: PR["targets"];  
+  targets?: PR["targets"];
 } & {
-  [SK in SwitchKey<SW>]: Merge<RelSwitchSchemas[SW][SK], PR[SK]>
+  [SK in SwitchKey<SW>]: Merge<RelSwitchDefaults[SW][SK], PR[SK]>;
 };
 
 export const relVarbsSwitch = {
   general<
     SW extends SwitchName,
     SN extends BaseName<SW>,
-    SB extends SwitchBase<SW, SN>,    
+    SB extends SwitchBase<SW, SN>,
     SP extends RelSwitchProps<SW>
   >(switchName: SW, sectionName: SN, baseName: SB, props: SP) {
     const names = switchVarbNames(baseName, switchName);
@@ -90,30 +94,69 @@ export const relVarbsSwitch = {
     SN extends BaseName<SW>,
     SB extends SwitchBase<SW, SN>,
     SP extends RelSwitchProps<SW>
-  >(switchName: SW, sectionName: SN, baseName: SB, props: SP): RelSwitchVarbs<SW, SN, SB, SP> {
-        
+  >(
+    switchName: SW,
+    sectionName: SN,
+    baseName: SB,
+    props: SP
+  ): RelSwitchVarbs<SW, SN, SB, SP> {
     return Obj.keys(relSwitch.keyArr(switchName)).reduce((pr, switchKey) => {
-      return Obj.update(pr, switchKey, Obj.merge(relSwitch.schemas[switchName][switchKey], pr[switchKey]))
+      return Obj.update(
+        pr,
+        switchKey,
+        Obj.merge(relSwitch.schemas[switchName][switchKey], pr[switchKey])
+      );
     }, {} as RelSwitchPropsAndDefaults<SW, SP>);
   },
+  // plusUpdatePropArr<
+  //   SW extends SwitchName,
+  //   SP extends RelSwitchProps<SW>
+  // >()
+  // {},
+  plusSumNumPropArr<
+    SW extends SwitchName,
+    SP extends RelSwitchProps<SW>
+  >(): void {
+    type TargetKey = SwitchTargetKey<SW>;
+    type Test = RelSwitchProps<"ongoing">;
+
+    type ToReturn = {
+      [Prop in TargetKey]: Merge<SP[Prop], {
+        updateFn: "sumNums",
+        updateProps: {
+          nums: [{
+            idType: "rel",
+            context: "fe",
+            // for each target, I need a sectionName, switchBaseName, and relative
+            
+          }] as const
+        }
+      }>;
+    }
+  },
+  const: 1 = 2;
   get<
     SW extends SwitchName,
     SN extends BaseName<SW>,
     SB extends SwitchBase<SW, SN>,
     SP extends RelSwitchProps<SW>
-  >(
-    switchName: SW, sectionName: SN, baseName: SB, props: SP
-  ) {
-    const nextProps = this.plusDefaultProps(switchName, sectionName, baseName, props);
+  >(switchName: SW, sectionName: SN, baseName: SB, props: SP) {
+    const nextProps = this.plusDefaultProps(
+      switchName,
+      sectionName,
+      baseName,
+      props
+    );
 
     // add one more layer that gives the props the correct updateArr props
-    return general(switchName, sectionName, baseName, nextProps);
-  }
+    return this.general(switchName, sectionName, baseName, nextProps);
+  },
 
   // there are two ways that I can go about the sumNums (and others)
   // 1. always just sum the varbs with the same ending. the switch is only visual
   // 2. sum one of the varbs (based on the ending) and calculate the rest based on that.
-  // In isolation, 1 seems simpler and better. But 2 matches what I already have to do with the editor.
+  // In isolation, 1 seems simpler and better.
+  // But 2 matches what I already have to do with the editor.
 
   ongoingEditor<
     SN extends BaseName,
@@ -129,13 +172,12 @@ export const relVarbsSwitch = {
 
     // I can include the name of the following updateInfo, as well as
     // the props it demands.
-    
+
     // now plus updateFnProps
     return this.plusDefaultProps("ongoing", sectionName, baseName, {
       ...props,
       monthly: {
         updateInfoArr: [
-          
           relUpdateInfo.ongoing.monthly(
             sectionName,
             names.yearly as VarbName<SN>,
@@ -195,7 +237,6 @@ export const relVarbsSwitch = {
     });
   },
 
-    
   // monthsYearsEditor<
   //   SN extends BaseName,
   //   Base extends string,

@@ -1,5 +1,6 @@
 import { z } from "zod";
-import { baseValues } from "../baseSections/baseValues";
+import { BaseValueName, baseValues } from "../baseSections/baseValues";
+import { RelVarb } from "./relVarb";
 
 export type ValueSchemas = typeof baseValues;
 export type ValueTypes = {

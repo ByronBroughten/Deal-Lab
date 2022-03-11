@@ -7,9 +7,9 @@ import {
 } from "./relSections/rel/relVarbInfoTypes";
 import {
   RelVarb,
-  SwitchUpdateInfo,
+  RelUpdateInfo,
   UpdateFnProps,
-  FullSwitchUpdateInfo,
+  RelUpdateInfo,
 } from "./relSections/rel/relVarb/UpdateInfoArr";
 import { baseValues } from "./relSections/baseSections/baseValues";
 import { NumObj } from "./relSections/baseSections/baseValues/NumObj";
@@ -22,7 +22,7 @@ export type InBaseUpdatePack = {
   inUpdateInfos: InRelVarbInfo[];
 };
 type InDefaultUpdatePack = InBaseUpdatePack & {
-  inverseSwitches: SwitchUpdateInfo[];
+  inverseSwitches: RelUpdateInfo[];
 };
 export function isDefaultInPack(
   pack: InUpdatePack
@@ -33,13 +33,13 @@ export function isSwitchInPack(pack: InUpdatePack): pack is InSwitchUpdatePack {
   return "switchInfo" in pack;
 }
 
-type InSwitchUpdatePack = InBaseUpdatePack & SwitchUpdateInfo;
+type InSwitchUpdatePack = InBaseUpdatePack & RelUpdateInfo;
 export type InUpdatePack = InBaseUpdatePack | InSwitchUpdatePack;
 
 type OutBaseUpdatePack = { relTargetVarbInfo: OutRelVarbInfo };
-type OutSwitchPack = OutBaseUpdatePack & SwitchUpdateInfo;
+type OutSwitchPack = OutBaseUpdatePack & RelUpdateInfo;
 type OutDefaultPack = OutBaseUpdatePack & {
-  inverseSwitches: SwitchUpdateInfo[];
+  inverseSwitches: RelUpdateInfo[];
 };
 export function isDefaultOutPack(pack: OutUpdatePack): pack is OutDefaultPack {
   return "inverseSwitches" in pack;
@@ -58,7 +58,7 @@ function fnPropsToInVarbInfos(updateFnProps: UpdateFnProps): InRelVarbInfo[] {
   }
   return nextInfos;
 }
-function inSwitchPropsToInfos(inSwitchProps: FullSwitchUpdateInfo[]) {
+function inSwitchPropsToInfos(inSwitchProps: RelUpdateInfo[]) {
   const inSwitchInfos: InSwitchUpdatePack[] = [];
   for (const prop of inSwitchProps) {
     inSwitchInfos.push({

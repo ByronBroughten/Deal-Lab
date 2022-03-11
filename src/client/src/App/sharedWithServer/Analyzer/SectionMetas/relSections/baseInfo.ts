@@ -54,7 +54,7 @@ export type BaseInfoSets = {
 type GeneralInfo = {
   [Prop in keyof InfoIds]: { idType: Prop; id: InfoIds[Prop] };
 } & { sectionName: BaseName };
-type BaseInfo<
+export type BaseInfo<
   K extends keyof BaseInfoSets[C] = "all",
   C extends SectionContext = "fe"
 > = GeneralInfo & UnionToIntersection<BaseInfoSets[C][K]>;

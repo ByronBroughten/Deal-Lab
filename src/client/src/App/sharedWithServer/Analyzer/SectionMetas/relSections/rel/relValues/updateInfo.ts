@@ -2,7 +2,7 @@ import { BaseValue } from "../../baseSections/baseValues";
 import { NumObj, NumObjNumber } from "../../baseSections/baseValues/NumObj";
 import { GatherName, GatherProps } from "./gatherProps";
 
-export type UpdateInfos<V extends BaseValue> = {
+export type GeneralUpdateInfos<V extends BaseValue> = {
   [updateName: string]: UpdateInfo<
     GatherName,
     (props: GatherProps<GatherName>) => V

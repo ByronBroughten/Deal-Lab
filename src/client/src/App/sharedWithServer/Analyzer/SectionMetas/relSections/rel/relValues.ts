@@ -1,11 +1,11 @@
 import { BaseValueName, BaseValueTypes } from "../baseSections/baseValues";
 import { numObjUpdateInfos } from "./relValues/numObjUpdates";
-import { updateInfo, UpdateInfos, UpdateInfo } from "./relValues/updateInfo";
+import { updateInfo, GeneralUpdateInfos } from "./relValues/updateInfo";
 import { UpdateName } from "./relValuesTypes";
 
 type GeneralRelValues = {
   [Prop in BaseValueName]: {
-    updateInfos: UpdateInfos<BaseValueTypes[Prop]>;
+    updateInfos: GeneralUpdateInfos<BaseValueTypes[Prop]>;
     defaultUpdateName: UpdateName<Prop>;
   };
 };

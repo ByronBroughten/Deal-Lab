@@ -76,7 +76,7 @@ const _testRelSwitchSchemas = <Test extends GeneralRelSwitchSchemas>(_: Test) =>
   undefined;
 _testRelSwitchSchemas(relSwitchSchemas);
 
-export type RelSwitchSchemas = typeof relSwitchSchemas;
+export type RelSwitchDefaults = typeof relSwitchSchemas;
 
 type SwitchSectionVarbSchemas<SW extends SwitchName> = Pick<
   FeBaseSectionVarbs,
@@ -148,6 +148,7 @@ export const relSwitch = {
   varbName: switchVarbName,
   varbNames: switchVarbNames,
   keyArr: baseSwitch.keyArr,
+  targetKeyArr: baseSwitch.targetKeyArr,
 };
 // alias for outside of the rel schema
 export const switchStuff = relSwitch;

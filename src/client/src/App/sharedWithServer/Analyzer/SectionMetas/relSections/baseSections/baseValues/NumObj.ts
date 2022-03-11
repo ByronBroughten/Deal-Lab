@@ -141,7 +141,7 @@ export class NumObj {
 
   static isFinishingTouch(
     value: any
-  ): value is keyof typeof this.finishingTouch {
+  ): value is keyof typeof NumObj.finishingTouch {
     return Obj.keys(this.finishingTouch).includes(value);
   }
 }

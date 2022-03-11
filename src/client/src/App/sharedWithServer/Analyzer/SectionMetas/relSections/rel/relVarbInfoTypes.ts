@@ -1,5 +1,6 @@
 import { z } from "zod";
-import { BaseName } from "../baseNameArrs";
+import { BaseName } from "../BaseName";
+import { BaseVarbInfo } from "../baseVarbInfo";
 
 // fix this after you fix relSections
 
@@ -127,5 +128,7 @@ export type RelFindByFocalVarbInfo<
 > = RelFindByFocalInfo<S, VarbParam>;
 
 export type SingleInRelVarbInfo = Omit<InRelVarbInfo, "children" | "all">;
+
 export type InRelVarbInfo = RelVarbInfo & { id: Relative<"inVarb"> };
+
 export type OutRelVarbInfo = RelVarbInfo & { id: Relative<"outVarb"> };
