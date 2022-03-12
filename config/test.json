@@ -1,5 +1,5 @@
 {
-  "name": "Property Analyzer Client —Test",
+  "name": "Property Analyzer Client — Test",
   "jwtPrivateKey": "1234",
   "endpoint": "mongodb://localhost/property-analyzer-test",
   "port": 5001

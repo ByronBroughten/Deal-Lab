@@ -40,23 +40,22 @@ function makeTestRegisterReq(): Req<"Register"> {
   };
 }
 
-const userPathBit = config.url.bit.user;
 describe(`/login`, () => {
-  let server: ReturnType<typeof runApp>;
-  let req: Req<"Login"> | any;
+  let server: ReturnType<typeof runApp> | any;
+  let reqObj: Req<"Login"> | any;
 
   beforeEach(async () => {
-    req = makeTestLoginReq();
+    reqObj = makeTestLoginReq();
     server = runApp();
-    const reqObj = makeTestRegisterReq();
-    const { payload } = reqObj.body;
+    const registerReqObj = makeTestRegisterReq();
+    const { payload } = registerReqObj.body;
     const newUserData = await prepNewUserData(payload);
 
     const userDoc = new UserModel(makeDbUser(newUserData));
     await userDoc.save();
   });
 
-  const exec = () => request(server).post(`${userPathBit}/login`).send(req);
+  const exec = () => request(server).post(`/api/user/login`).send(reqObj.body);
   async function testStatus(statusNumber: number) {
     const res = await exec();
     expect(res.status).toBe(statusNumber);
@@ -64,19 +63,19 @@ describe(`/login`, () => {
 
   afterEach(async () => {
     await UserModel.deleteMany();
-    // await server.close();
+    await server.close();
   });
 
   it("should return 400 if payload fails validation", async () => {
-    req.body.payload.email = null;
+    reqObj.body.payload.email = null;
     await testStatus(400);
   });
   it("should return 400 if an account with the email doesn't exist", async () => {
-    req.body.payload.email = "nonexistant@gmail.com";
+    reqObj.body.payload.email = "nonexistant@gmail.com";
     await testStatus(400);
   });
   it("should return 400 if an invalid password is used", async () => {
-    req.body.payload.password = "invalidP@ssword123";
+    reqObj.body.payload.password = "invalidP@ssword123";
     await testStatus(400);
   });
   it("should return 200 if the request is valid", async () => {

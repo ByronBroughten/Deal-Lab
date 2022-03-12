@@ -39,8 +39,7 @@ describe(`dbEntry/post`, () => {
     payload = null;
     await testStatus(500);
   });
-
-  // it("should return 200 if everything is ok", async () => {
-  //   await exec();
-  // });
+  it("should return 200 if everything is ok", async () => {
+    await exec();
+  });
 });
