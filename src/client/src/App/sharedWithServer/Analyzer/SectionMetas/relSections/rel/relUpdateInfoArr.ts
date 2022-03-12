@@ -7,7 +7,7 @@ export const relUpdateInfo = {
     updateName: "entityEditor",
     updateProps: {},
   } as const,
-  sumNums<NU extends BaseVarbInfo<"rel">[]>(nums: NU) {
+  sumNums<NU extends BaseVarbInfo<"relId">[]>(nums: NU) {
     return {
       updateName: "sumNums",
       updateProps: { nums },

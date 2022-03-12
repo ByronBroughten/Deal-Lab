@@ -1,3 +1,4 @@
+import { omit } from "lodash";
 import { Obj } from "../../../../utils/Obj";
 import { SubType } from "../../../../utils/types";
 import { BaseName } from "../BaseName";
@@ -7,19 +8,23 @@ import {
   SwitchKey,
   BaseSwitchSchemas,
   baseSwitch,
+  SwitchTargetKey,
 } from "../baseSections/baseSwitch";
 
+type GeneralRelSwitchKeySchema = {
+  startAdornment?: string;
+  endAdornment?: string;
+  startDisplayName?: string;
+  endDisplayName?: string;
+  initValue?: string;
+};
+
+type GeneralRelSwitchSchema<SK extends string = string> = Record<
+  SK,
+  GeneralRelSwitchKeySchema
+>;
 type GeneralRelSwitchSchemas = {
-  [SW in SwitchName]: Record<
-    SwitchKey<SW>,
-    {
-      startAdornment?: string;
-      endAdornment?: string;
-      startDisplayName?: string;
-      endDisplayName?: string;
-      initValue?: string;
-    }
-  >;
+  [SW in SwitchName]: GeneralRelSwitchSchema<SwitchKey<SW> & string>;
 };
 
 const defaultSwitch = {
@@ -83,7 +88,7 @@ type SwitchSectionVarbSchemas<SW extends SwitchName> = Pick<
   BaseName<SW>
 >;
 type SwitchVarbVarbSchemas<SW extends SwitchName> = {
-  [SN in keyof SwitchSectionVarbSchemas<SW>]: SubType<
+  [SN in BaseName<SW>]: SubType<
     SwitchSectionVarbSchemas<SW>[SN],
     { switchName: SW }
   >;
@@ -126,6 +131,14 @@ export type SwitchVarbNames<
 > = {
   [SK in SwitchKey<SW>]: SwitchVarbName<SW, SK, SN, SB>;
 };
+export type TargetVarbNames<
+  SW extends SwitchName,
+  SN extends BaseName<SW>,
+  SB extends SwitchBase<SW, SN>
+> = {
+  [SK in SwitchTargetKey<SW>]: SwitchVarbName<SW, SK, SN, SB>;
+};
+
 function switchVarbNames<
   SW extends SwitchName,
   SN extends BaseName<SW>,
@@ -144,11 +157,32 @@ function switchVarbNames<
 }
 
 export const relSwitch = {
-  schemas: relSwitchSchemas,
-  varbName: switchVarbName,
-  varbNames: switchVarbNames,
   keyArr: baseSwitch.keyArr,
   targetKeyArr: baseSwitch.targetKeyArr,
-};
+
+  defaults: relSwitchSchemas,
+  default<
+    SW extends SwitchName,
+    SK extends SwitchKey<SW>,
+    Defaults = RelSwitchDefaults[SW]
+  >(switchName: SW, switchKey: SK) {
+    const defaults: GeneralRelSwitchSchema = relSwitchSchemas[switchName];
+    return defaults[switchKey as SK & string] as Defaults[SK & keyof Defaults];
+  },
+  varbName: switchVarbName,
+  varbNames: switchVarbNames,
+  targetVarbNames<
+    SW extends SwitchName,
+    SN extends BaseName<SW>,
+    SB extends SwitchBase<SW, SN>
+  >(
+    switchName: SW,
+    sectionName: SN,
+    baseName: SB
+  ): TargetVarbNames<SW, SN, SB> {
+    const varbNames = this.varbNames(switchName, sectionName, baseName);
+    return omit(varbNames, ["switch"]);
+  },
+} as const;
 // alias for outside of the rel schema
 export const switchStuff = relSwitch;

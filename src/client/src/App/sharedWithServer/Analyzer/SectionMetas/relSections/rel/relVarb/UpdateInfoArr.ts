@@ -8,7 +8,7 @@ type CoreStuff<T extends BaseValueName, U extends UpdateName<T, "wide">> = {
   updateProps: UpdateProps<T, U>;
 };
 
-type SwitchStuff = {
+export type RelUpdateSwitchStuff = {
   switchInfo: BaseVarbInfo<"relLocal">;
   switchValue: string;
 };
@@ -16,7 +16,9 @@ export type RelUpdateInfo<
   T extends BaseValueName,
   U extends UpdateName<T, "wide">,
   C extends "core" | "full" = "full"
-> = C extends "full" ? Merge<CoreStuff<T, U>, SwitchStuff> : CoreStuff<T, U>;
+> = C extends "full"
+  ? Merge<CoreStuff<T, U>, RelUpdateSwitchStuff>
+  : CoreStuff<T, U>;
 const _FullSwitchUpdateInfoTest = (
   info: RelUpdateInfo<"numObj", "sumNums">
 ) => {

@@ -1,3 +1,4 @@
+import { omit } from "lodash";
 import Arr from "../../../../utils/Arr";
 import { Obj } from "../../../../utils/Obj";
 import { BaseVarb } from "./baseVarb";
@@ -63,6 +64,9 @@ function baseSwitchVarbName<
 type BaseSwitchVarbNames<BN extends string, SW extends SwitchName> = {
   [SK in SwitchKey<SW>]: BaseSwitchVarbName<BN, SW, SK>;
 };
+type BaseSwitchTargetVarbNames<BN extends string, SW extends SwitchName> = {
+  [SK in SwitchTargetKey<SW>]: BaseSwitchVarbName<BN, SW, SK>;
+};
 
 export function switchVarbNames<BN extends string, SW extends SwitchName>(
   baseName: BN,
@@ -110,6 +114,7 @@ export const baseSwitch = {
   schemas: baseSwitchSchemas,
   nameArr: Obj.keys(baseSwitchSchemas),
   varbName: baseSwitchVarbName,
+  varbNames: switchVarbNames,
   keyArr<SW extends SwitchName>(switchName: SW): SwitchKey<SW>[] {
     return Obj.keys(baseSwitchSchemas[switchName]);
   },
