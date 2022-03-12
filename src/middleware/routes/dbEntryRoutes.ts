@@ -7,9 +7,9 @@ import { tryFindByIdAndUpdate, tryFindOneAndUpdate } from "./shared/tryQueries";
 
 import { getDbEntry } from "./sectionEntry/query";
 import { DbEnt } from "../../client/src/App/sharedWithServer/Analyzer/DbEntry";
+import { config } from "../../client/src/App/Constants";
 
 const arrRouter = express.Router();
-export const dbEntryRoutePath = "/api/dbEntry";
 
 // test post first
 arrRouter.post("/", authWare, async (req, res) => {
@@ -33,7 +33,8 @@ arrRouter.post("/", authWare, async (req, res) => {
   const result = await tryFindByIdAndUpdate(res, userId, pusher, "post");
   if (result) validate.postEntry.res(res, payload.dbId);
 });
-arrRouter.post("/all", authWare, async (req, res) => {
+
+arrRouter.post(config.url.sectionArr.bit, authWare, async (req, res) => {
   const reqObj = validate.postEntryArr.req(req, res);
   if (!reqObj) return;
   const {
@@ -46,7 +47,7 @@ arrRouter.post("/all", authWare, async (req, res) => {
   const result = await tryFindByIdAndUpdate(res, userId, setter, "post");
   if (result) validate.postEntryArr.res(res, dbStoreName);
 });
-arrRouter.post("/all/columns", authWare, async (req, res) => {
+arrRouter.post(config.url.tableColumns.route, authWare, async (req, res) => {
   const reqObj = validate.postTableColumns.req(req, res);
   if (!reqObj) return;
 

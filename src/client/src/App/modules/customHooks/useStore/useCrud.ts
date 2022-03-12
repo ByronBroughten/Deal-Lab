@@ -7,9 +7,9 @@ import { DbEntry } from "../../../sharedWithServer/Analyzer/DbEntry";
 import { SectionName } from "../../../sharedWithServer/Analyzer/SectionMetas/SectionName";
 
 const url = {
-  dbEntry: config.url.api.dbEntry,
-  dbEntryArr: config.url.api.sectionArr,
-  dbColArr: config.url.api.tableColumns,
+  dbEntry: config.url.dbEntry.path,
+  dbEntryArr: config.url.sectionArr.path,
+  dbColArr: config.url.tableColumns.path,
 };
 
 const validateRes = {

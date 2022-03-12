@@ -4,6 +4,7 @@ import { makeDbUser, prepNewUserData, UserModel } from "./shared/makeDbUser";
 import { Req } from "../../client/src/App/sharedWithServer/User/crudTypes";
 import { runApp } from "../../runApp";
 import { SectionNam } from "../../client/src/App/sharedWithServer/Analyzer/SectionMetas/SectionName";
+import { config } from "../../client/src/App/Constants";
 
 function makeTestRegisterReq(): Req<"Register"> {
   const sections: any = {};
@@ -25,7 +26,7 @@ function makeTestRegisterReq(): Req<"Register"> {
   };
 }
 
-describe(`/register`, () => {
+describe(config.url.register.route, () => {
   // prep
   let server: ReturnType<typeof runApp> | any;
   let reqObj: Req<"Register"> | any; // any to allow for an invalid payload
@@ -35,8 +36,9 @@ describe(`/register`, () => {
     server = runApp();
   });
 
+  // register route: "/api/user/register"
   const exec = () =>
-    request(server).post("/api/user/register").send(reqObj.body);
+    request(server).post(config.url.register.route).send(reqObj.body);
   async function testStatus(statusNumber: number) {
     const res = await exec();
     expect(res.status).toBe(statusNumber);

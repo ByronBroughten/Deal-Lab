@@ -10,7 +10,6 @@ import {
   Res,
 } from "../../sharedWithServer/User/crudTypes";
 import { isLoginUser } from "../../sharedWithServer/User/DbUser";
-import { extendUrl } from "../../utils/url";
 import { auth } from "../services/authService";
 import https from "../services/httpService";
 import { useAnalyzerContext } from "../usePropertyAnalyzer";
@@ -38,15 +37,17 @@ export function useAuthRoutes() {
 
   return {
     async login(loginFormData: LoginFormData) {
-      const url = extendUrl(config.url.api.user, "login");
       const reqObj: Req<"Login"> = {
         body: { payload: loginFormData },
       };
-      const res = await https.post("logging in", url, reqObj.body);
+      const res = await https.post(
+        "logging in",
+        config.url.login.path,
+        reqObj.body
+      );
       trySetLogin(res);
     },
     async register(registerFormData: RegisterFormData) {
-      const url = extendUrl(config.url.api.user, "/register");
       const reqObj: Req<"Register"> = {
         body: {
           payload: {
@@ -57,7 +58,11 @@ export function useAuthRoutes() {
           },
         },
       };
-      const res = await https.post("registering", url, reqObj.body);
+      const res = await https.post(
+        "registering",
+        config.url.register.path,
+        reqObj.body
+      );
       trySetLogin(res);
     },
   };

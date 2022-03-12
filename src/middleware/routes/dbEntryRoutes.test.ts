@@ -1,9 +1,9 @@
-import { dbEntryRoutePath } from "./dbEntryRoutes";
 import { makeDummyUserToken } from "./userRoutes/shared/doLogin";
 import request from "supertest";
 import { runApp } from "../../runApp";
 import { UserModel } from "./shared/makeDbUser";
 import { authTokenKey } from "../../client/src/App/sharedWithServer/User/crudTypes";
+import { config } from "../../client/src/App/Constants";
 
 describe(`dbEntry/post`, () => {
   let payload: any;
@@ -18,7 +18,7 @@ describe(`dbEntry/post`, () => {
 
   const exec = () =>
     request(server)
-      .post(`${dbEntryRoutePath}`)
+      .post(config.url.dbEntry.route)
       .set(authTokenKey, token)
       .send({ payload });
   async function testStatus(statusNumber: number) {
