@@ -46,12 +46,16 @@ describe(`/register`, () => {
     await UserModel.deleteMany();
     // await server.close();
   });
+  it("should return 500 if the payload is not an object", async () => {
+    reqObj.body.payload = null;
+    await testStatus(500);
+  });
   it("should return 400 if the payload fails validation", async () => {
     reqObj.body.payload.registerFormData.email = null;
     await testStatus(400);
   });
-  it("should return 500 if the payload is not an object", async () => {
-    reqObj.body.payload = null;
+  it("should return 500 if guestAccessSections isn't right", async () => {
+    reqObj.body.payload.guestAccessSections = null;
     await testStatus(500);
   });
   it("should return 400 if a user with that email already exists", async () => {

@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import {
   Req,
+  zGuestAccessSections,
   zRegisterFormData,
 } from "../../../client/src/App/sharedWithServer/User/crudTypes";
 import { Obj } from "../../../client/src/App/sharedWithServer/utils/Obj";
@@ -18,10 +19,10 @@ function validateReq(req: Request, res: Response): Req<"Register"> | undefined {
     res.status(400).send("Payload failed validation");
     return;
   }
-  // if (!zGuestAccessSections.safeParse(guestAccessSections)) {
-  //   res.status(500).send("Invalid guest access sections.");
-  //   return;
-  // }
+  if (!zGuestAccessSections.safeParse(guestAccessSections)) {
+    res.status(500).send("Invalid guest access sections.");
+    return;
+  }
   return {
     body: {
       payload: {
