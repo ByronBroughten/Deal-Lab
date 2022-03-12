@@ -71,6 +71,11 @@ export class NumObj {
   get number(): NumObjNumber {
     return this.cache.number;
   }
+  get numberStrict(): number {
+    const num = this.cache.number;
+    if (typeof num === "number") return num;
+    throw new Error("If this getter is used, num must be a number.");
+  }
   get editorTextStatus() {
     if (["", "-"].includes(this.editorText as any)) return "empty";
     if (isStringRationalNumber(this.editorText)) return "number";

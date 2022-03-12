@@ -46,7 +46,7 @@ export function useAuthRoutes() {
       trySetLogin(res);
     },
     async register(registerFormData: RegisterFormData) {
-      const url = extendUrl(config.url.api.user, "register");
+      const url = extendUrl(config.url.api.user, "/register");
       const reqObj: Req<"Register"> = {
         body: {
           payload: {

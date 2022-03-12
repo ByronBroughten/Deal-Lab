@@ -32,7 +32,7 @@ const send = {
   },
 };
 
-const val = {
+export const val = {
   registerFormData(value: any, res: Response): value is RegisterFormData {
     if (zRegisterFormData.safeParse(value).success) return true;
     else {
@@ -54,6 +54,14 @@ const val = {
       return false;
     }
   },
+  payloadIsObjOr500(value: any, res: Response): value is any {
+    if (typeof value === "object") return true;
+    else {
+      res.status(500).send("Payload is not an object.");
+      return false;
+    }
+  },
+
   payloadIsObj(value: any, res: Response): value is any {
     if (typeof value === "object") return true;
     else {

@@ -1,85 +1,48 @@
-import { Response } from "express";
-import config from "config";
-import jwt from "jsonwebtoken";
-import { isObject } from "lodash";
-import mongoose from "mongoose";
-import { authTokenKey } from "../../../client/src/App/sharedWithServer/User/crudTypes";
-
-import { rowIndexToTableName } from "../../../client/src/App/sharedWithServer/Analyzer/SectionMetas/relSectionTypes";
+import bcrypt from "bcrypt";
+import { Request, Response } from "express";
+import { DbSections } from "../../../client/src/App/sharedWithServer/Analyzer/DbEntry";
 import {
-  DbUser,
-  LoginUser,
-} from "../../../client/src/App/sharedWithServer/User/DbUser";
-import { relSections } from "../../../client/src/App/sharedWithServer/Analyzer/SectionMetas/relSections";
-import Arr from "../../../client/src/App/sharedWithServer/utils/Arr";
-import { SectionNam } from "../../../client/src/App/sharedWithServer/Analyzer/SectionMetas/SectionName";
-import { DbEnt } from "../../../client/src/App/sharedWithServer/Analyzer/DbEntry";
+  Req,
+  zLoginFormData,
+} from "../../../client/src/App/sharedWithServer/User/crudTypes";
+import { Obj } from "../../../client/src/App/sharedWithServer/utils/Obj";
+import { Full } from "../../../client/src/App/sharedWithServer/utils/typescript";
+import { prepEmail, UserModel } from "../shared/makeDbUser";
+import { loginUser } from "./shared/doLogin";
 
-export function clientify(dbUser: DbUser): LoginUser {
-  const loginUser: Partial<LoginUser> = {};
-  for (const sectionName of SectionNam.arr.initOnLogin) {
-    if (SectionNam.is(sectionName, "table")) {
-      const tableEntry = dbUser[sectionName][0];
-      const tableSection = DbEnt.topSection(tableEntry, sectionName);
-      const rowIds = tableSection.dbVarbs.rowIds as string[];
+function validateReq(req: Request, res: Response): Req<"Login"> | undefined {
+  const { payload } = req.body;
+  if (!Obj.noGuardIs(payload)) {
+    res.status(500).send("Payload is not an object.");
+    return;
+  }
+  if (!zLoginFormData.safeParse(payload).success) {
+    res.status(400).send("Payload failed validation");
+    return;
+  }
+  return { body: { payload } };
+}
 
-      const { rowSourceName } = relSections[sectionName];
-      const sourceIds = dbUser[rowSourceName].map(({ dbId }) => dbId);
+const userByEmailKey = "user.$.dbSections.user.$.dbVarbs.emailLower";
+export async function login(req: Request, res: Response) {
+  const reqObj = validateReq(req, res);
+  if (!reqObj) return;
 
-      const nextRowIds = Arr.extract(rowIds, sourceIds);
-      for (const id of sourceIds) {
-        if (!nextRowIds.includes(id)) nextRowIds.push(id);
-      }
-
-      tableSection.dbVarbs.rowIds = nextRowIds;
-      loginUser[sectionName] = [tableEntry];
+  const { email, password } = reqObj.body.payload;
+  const { emailLower } = prepEmail(email);
+  const user = await UserModel.findOne(
+    { [userByEmailKey]: emailLower },
+    undefined,
+    {
+      lean: true,
     }
-    if (SectionNam.is(sectionName, "rowIndex")) {
-      const tableName = rowIndexToTableName[sectionName];
-      loginUser[sectionName] = DbEnt.newTableRows(dbUser, tableName);
-    } else loginUser[sectionName] = dbUser[sectionName];
-  }
-  return loginUser as LoginUser;
-}
-
-export type UserJwt = { _id: string };
-function tokenHasCorrectProps(value: any) {
-  return (
-    "_id" in value &&
-    "iat" in value &&
-    typeof value._id === "string" &&
-    typeof value.iat === "number"
   );
-}
-
-function isUserToken(value: any): value is UserJwt {
-  return (
-    isObject(value) &&
-    Object.keys(value).length === 2 &&
-    tokenHasCorrectProps(value)
-  );
-}
-export function decodeAndCheckUserToken(token: any): null | UserJwt {
-  const decoded = jwt.verify(token, config.get("jwtPrivateKey"));
-  if (isUserToken(decoded)) return decoded;
-  else return null;
-}
-
-export function makeDummyUserToken() {
-  const objectId = new mongoose.Types.ObjectId();
-  const _id = objectId.toHexString();
-  return generateAuthToken(_id);
-}
-export function generateAuthToken(_id: string) {
-  const userJwt: UserJwt = { _id };
-  return jwt.sign(userJwt, config.get("jwtPrivateKey"));
-}
-export function loginUser(res: Response, user: DbUser & { _id?: any }) {
-  if ("_id" in user && typeof user._id !== "undefined") {
-    const token = generateAuthToken(user._id);
-    const loggedInUser = clientify(user);
-    res.header(authTokenKey, token).status(200).send(loggedInUser);
-  } else {
-    throw new Error("A valid user id is required here.");
-  }
+  if (!user) return res.status(400).send("Invalid email address.");
+  const dbSections = user.userProtected[0].dbSections as Full<DbSections>;
+  const { encryptedPassword } = dbSections.userProtected[0].dbVarbs as {
+    encryptedPassword: string;
+  };
+  const isValidPw = await bcrypt.compare(password, encryptedPassword);
+  if (!isValidPw) return res.status(400).send("Invalid password.");
+  return loginUser(res, user);
 }

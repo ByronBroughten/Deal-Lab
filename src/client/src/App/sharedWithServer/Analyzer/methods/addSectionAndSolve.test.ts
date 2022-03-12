@@ -7,10 +7,14 @@ describe(`addSection`, () => {
   let propertyDbId: string;
   let unitId: string;
   let propertyEntry: DbEntry;
-  const priceNumber = 500000;
-  const squareFeetNumber = 10000;
-  const rentNumber = 5000;
-  const propertyProps = ["property", "propertyGeneral"] as const;
+  let totalInvestment: number;
+  let cashFlowMonthly: number;
+  let numStart: number;
+  let priceNumber = 500000;
+  let sqftNumber = 10000;
+  let targetRentNumber = 5000;
+  let simpleProps: ["property", "propertyGeneral"];
+  let entryProps: [...typeof simpleProps, { dbEntry: DbEntry }];
 
   beforeEach(async () => {
     next = Analyzer.initAnalyzer();
@@ -27,7 +31,7 @@ describe(`addSection`, () => {
             },
             dbVarbs: {
               price: dbNumObj(priceNumber),
-              squareFeet: dbNumObj(squareFeetNumber),
+              sqft: dbNumObj(sqftNumber),
             },
           },
         ],
@@ -36,47 +40,51 @@ describe(`addSection`, () => {
             dbId: unitId,
             childDbIds: {},
             dbVarbs: {
-              rent: dbNumObj(rentNumber),
+              targetRentMonthly: dbNumObj(targetRentNumber),
             },
           },
         ],
       },
     };
+    simpleProps = ["property", "propertyGeneral"];
+    entryProps = [...simpleProps, { dbEntry: propertyEntry }];
+    totalInvestment = next
+      .section("final")
+      .value("totalInvestment", "numObj").numberStrict;
+    cashFlowMonthly = next
+      .section("final")
+      .value("cashFlowMonthly", "numObj").numberStrict;
+    numStart = next.sectionArr("property").length;
   });
-
-  it("should not have a section", () => {
-    expect(next.sectionArr("property").length).toBe(0);
-  });
-  it("should have a section", () => {
-    next = next.addSectionAndSolve(...propertyProps);
-    expect(next.sectionArr("property").length).toBe(1);
+  it("should have one more section", () => {
+    next = next.addSectionAndSolve(...simpleProps);
+    expect(next.sectionArr("property").length).toBe(numStart + 1);
   });
   it("should have its dbEntry dbId", () => {
-    next = next.addSectionAndSolve(...propertyProps, {
-      dbEntry: propertyEntry,
-    });
+    next = next.addSectionAndSolve(...entryProps);
     const property = next.lastSection("property");
     expect(property.dbId === propertyDbId);
   });
   it("should have its dbEntry values", () => {
-    next = next.addSectionAndSolve(...propertyProps, {
-      dbEntry: propertyEntry,
-    });
+    next = next.addSectionAndSolve(...entryProps);
     const property = next.lastSection("property");
     expect(property.value("price", "numObj").number).toBe(priceNumber);
-    expect(property.value("squareFeet", "numObj").number).toBe(
-      squareFeetNumber
-    );
+    expect(property.value("sqft", "numObj").number).toBe(sqftNumber);
   });
-  it("should have its child", () => {
-    next = next.addSectionAndSolve(...propertyProps, {
-      dbEntry: propertyEntry,
-    });
+  it("should have one child", () => {
+    next = next.addSectionAndSolve(...entryProps);
     const property = next.lastSection("property");
     property.childFeIds("unit");
   });
-
   it("should solve", () => {
-    next.addSectionAndSolve(...propertyProps);
+    next = next.addSectionAndSolve(...entryProps);
+    const nextTotalInvestment = next
+      .section("final")
+      .value("totalInvestment", "numObj").number;
+    const nextCashFlowMonthly = next
+      .section("final")
+      .value("cashFlowMonthly", "numObj").number;
+    expect(nextTotalInvestment).toBe(totalInvestment + priceNumber);
+    expect(nextCashFlowMonthly).toBe(cashFlowMonthly + targetRentNumber);
   });
 });

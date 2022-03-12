@@ -49,6 +49,7 @@ export function extend<A extends object = {}, B extends object = {}>(
 }
 
 export const Obj = {
+  noGuardIs: (value: any) => typeof value === "object",
   keys: ObjectKeys,
   values: ObjectValues,
   entries: ObjectEntries,

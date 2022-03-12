@@ -1,18 +1,11 @@
 import { dbEntryRoutePath } from "./dbEntryRoutes";
-import { makeDummyUserToken } from "./userRoutes/login";
+import { makeDummyUserToken } from "./userRoutes/shared/doLogin";
 import request from "supertest";
 import { runApp } from "../../runApp";
 import { UserModel } from "./shared/makeDbUser";
-import { authTokenKey } from "../client/src/App/sharedWithServer/User/crudTypes";
+import { authTokenKey } from "../../client/src/App/sharedWithServer/User/crudTypes";
 
-// for get and delete, return 404 if no entry with that dbId is found
-// return 200 if valid request
-// for post, the entry should be added
-// for delete, the entry should be removed
-// for put, the entry should be edited
-// return user entries
-
-describe(`${dbEntryRoutePath}.post`, () => {
+describe(`dbEntry/post`, () => {
   let payload: any;
   let server: any;
   let token: any;
@@ -42,9 +35,9 @@ describe(`${dbEntryRoutePath}.post`, () => {
     token = null;
     await testStatus(401);
   });
-  it("should return 400 if payload fails validation", async () => {
+  it("should return 500 if payload is not an object", async () => {
     payload = null;
-    await testStatus(400);
+    await testStatus(500);
   });
 
   // it("should return 200 if everything is ok", async () => {
