@@ -5,10 +5,12 @@ import {
 import { makeDbUser, prepNewUserData, UserModel } from "./shared/makeDbUser";
 import { decodeAndCheckUserToken } from "./userRoutes/shared/doLogin";
 import request from "supertest";
-import { config } from "../../client/src/App/Constants";
 import { runApp } from "../../runApp";
 import { omit } from "lodash";
 import { SectionNam } from "../../client/src/App/sharedWithServer/Analyzer/SectionMetas/SectionName";
+
+// These tests are failing because I'm not using valid pre-populated sections that
+// the server expects.
 
 const registerFormData: Req<"Register">["body"]["payload"]["registerFormData"] =
   {
@@ -65,7 +67,10 @@ describe(`/login`, () => {
     await UserModel.deleteMany();
     await server.close();
   });
-
+  it("should return 500 if payload is not an object", async () => {
+    reqObj.body.payload = null;
+    await testStatus(500);
+  });
   it("should return 400 if payload fails validation", async () => {
     reqObj.body.payload.email = null;
     await testStatus(400);

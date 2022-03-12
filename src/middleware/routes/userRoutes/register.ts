@@ -33,7 +33,8 @@ function validateReq(req: Request, res: Response): Req<"Register"> | undefined {
   };
 }
 
-const userByEmailKey = "user.$.dbSections.user.$.dbVarbs.emailLower";
+// it has to have zeroes because there is only one user section per user
+const userByEmailKey = "user.0.dbSections.user.0.dbVarbs.emailLower";
 export async function register(req: Request, res: Response) {
   const reqObj = validateReq(req, res);
   if (!reqObj) return;

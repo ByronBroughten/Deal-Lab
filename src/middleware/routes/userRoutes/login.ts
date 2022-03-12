@@ -23,7 +23,7 @@ function validateReq(req: Request, res: Response): Req<"Login"> | undefined {
   return { body: { payload } };
 }
 
-const userByEmailKey = "user.$.dbSections.user.$.dbVarbs.emailLower";
+const userByEmailKey = "user.0.dbSections.user.0.dbVarbs.emailLower";
 export async function login(req: Request, res: Response) {
   const reqObj = validateReq(req, res);
   if (!reqObj) return;
