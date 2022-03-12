@@ -17,13 +17,13 @@ export function loadSectionArrAndSolve<S extends SectionName<"hasOneParent">>(
 
   next = next.wipeSectionArrAndSolve(sectionName);
 
-  const parentInfo = next.parent(sectionName).feInfo as FeParentInfo<S>;
+  const parentFinder = next.parent(sectionName).feInfo as FeParentInfo<S>;
   [next, allAffectedInfos] = dbEntryArr.reduce(
     ([next, allAffectedInfos], dbEntry) => {
       [next, affectedInfos] = next.addSections([
         {
           sectionName,
-          parentInfo,
+          parentFinder,
           dbEntry,
         },
       ]);

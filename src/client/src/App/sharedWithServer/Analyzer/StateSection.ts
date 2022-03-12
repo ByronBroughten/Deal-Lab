@@ -1,7 +1,7 @@
 import { cloneDeep } from "lodash";
 import Analyzer from "../Analyzer";
 import { DbSection, DbVarbs } from "./DbEntry";
-import { DbSectionInit } from "./methods/shared/addSections";
+import { DbSectionInit } from "./methods/protected/addSections";
 import { SectionMeta, sectionMetas } from "./SectionMetas";
 import { InEntities } from "./SectionMetas/relSections/rel/valueMeta/NumObj/entities";
 import {
@@ -204,11 +204,12 @@ export default class StateSection<S extends SectionName = SectionName> {
     return new StateSection({ ...this.core, ...nextBaseProps });
   }
 
-  static is<T extends FeSectionNameType>(
-    value: StateSection<SectionName>,
-    sectionType: T
-  ): value is StateSection<SectionName<T>> {
-    return SectionNam.is(value.sectionName, sectionType);
+  static is<ST extends FeSectionNameType = "all">(
+    value: any,
+    sectionType?: ST
+  ): value is StateSection<SectionName<ST>> {
+    if (!(value instanceof StateSection)) return false;
+    return SectionNam.is(value.sectionName, (sectionType ?? "all") as ST);
   }
   static init<S extends SectionName>({
     feId,

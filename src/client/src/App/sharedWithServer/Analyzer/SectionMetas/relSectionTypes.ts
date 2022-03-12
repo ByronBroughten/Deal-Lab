@@ -110,6 +110,7 @@ export type ParentName<S extends BaseName = BaseName> = SectionToParentOrNo[S];
 export type FeParentInfo<S extends BaseName = BaseName> = FeSectionInfoBase & {
   sectionName: ParentName<S>;
 };
+
 export type ParentFinder<S extends BaseName> =
   | FeParentInfo<S>
   | ParentName<Extract<S, HasOneParentSectionName>>;

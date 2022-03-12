@@ -45,6 +45,7 @@ import {
   sectionsByFocal,
   childFeInfos,
   sectionIsIndexSaved,
+  parentFinderToInfo,
 } from "./Analyzer/methods/section";
 import {
   replaceInSectionArr,
@@ -67,7 +68,7 @@ import {
   deleteIndexAndSolve,
   deleteRowIndexAndSolve,
 } from "./Analyzer/methods/sectionErase";
-import { addSections } from "./Analyzer/methods/shared/addSections";
+import { addSections } from "./Analyzer/methods/protected/addSections";
 import { SectionMeta, sectionMetas } from "./Analyzer/SectionMetas";
 import {
   directUpdateAndSolve,
@@ -189,7 +190,7 @@ import {
 import {
   resetSection,
   resetSectionAndSolve,
-} from "./Analyzer/methods/shared/resetSectionAndSolve";
+} from "./Analyzer/methods/protected/resetSectionAndSolve";
 import { copySection } from "./Analyzer/methods/copySection";
 import {
   loadSectionFromFeDefault,
@@ -331,6 +332,7 @@ export default class Analyzer {
   static sectionNotFound = sectionNotFound;
 
   parent = parent;
+  parentFinderToInfo = parentFinderToInfo;
   childFeIds = childFeIds;
   allChildFeIds = allChildFeIds;
   children = children;

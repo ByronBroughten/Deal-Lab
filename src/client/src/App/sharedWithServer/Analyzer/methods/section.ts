@@ -2,6 +2,8 @@ import Analyzer from "../../Analyzer";
 import {
   ChildIdArrs,
   ChildName,
+  FeParentInfo,
+  ParentFinder,
   ParentName,
 } from "../SectionMetas/relSectionTypes";
 import { sectionMetas } from "../SectionMetas";
@@ -15,6 +17,7 @@ import {
   SpecificSectionInfo,
 } from "../SectionMetas/relSections/rel/relVarbInfoTypes";
 import { SectionNam, SectionName } from "../SectionMetas/SectionName";
+import { Obj } from "../../utils/Obj";
 
 export function sectionNotFound({ sectionName, idType, id }: MultiSectionInfo) {
   return new Error(
@@ -68,13 +71,17 @@ export function firstSection<S extends SectionName>(
   }
   return section;
 }
-export function lastSection(this: Analyzer, sectionName: SectionName) {
-  const sectionArr = Object.values(this.sections[sectionName]);
+export function lastSection<SN extends SectionName>(
+  this: Analyzer,
+  sectionName: SN
+): StateSection<SN> {
+  const sectionArr = Obj.values(this.sections[sectionName]);
   const section = sectionArr[sectionArr.length - 1];
-  if (!section) {
-    throw new Error(`Section with name '${sectionName}' has no entries.`);
-  }
-  return section;
+
+  // if (!StateSection.is(section, "hasParent")) {
+  //   throw new Error(`Section with name '${sectionName}' has no entries.`);
+  // }
+  return section as any as StateSection<SN>;
 }
 // Do I update the infos and whatnot to require a sectionName?
 // I'm leaning towards yes.
@@ -152,6 +159,16 @@ export function parent(
     const { parentInfo } = this.section(finder);
     return this.section(parentInfo);
   }
+}
+
+export function parentFinderToInfo<SN extends SectionName>(
+  this: Analyzer,
+  _sectionName: SN,
+  parentFinder: ParentFinder<SN>
+): FeParentInfo<SN> {
+  if (typeof parentFinder !== "string") return parentFinder;
+  const { feInfo } = this.section(parentFinder);
+  return feInfo as FeParentInfo<SN>;
 }
 
 export function allChildFeIds<F extends SectionName<"alwaysOne">>(

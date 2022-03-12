@@ -1,7 +1,7 @@
 import Analyzer from "../../Analyzer";
-import { FeParentInfo } from "../SectionMetas/relSectionTypes";
+import { ParentFinder } from "../SectionMetas/relSectionTypes";
 import { SectionName } from "../SectionMetas/SectionName";
-import { InitSectionAndChildrenProps } from "./shared/addSections";
+import { InitSectionAndChildrenProps } from "./protected/addSections";
 
 export function addSectionsAndSolve(
   this: Analyzer,
@@ -13,13 +13,13 @@ export function addSectionsAndSolve(
 
 export type InitSectionOptions = Omit<
   InitSectionAndChildrenProps,
-  "sectionName" | "parentInfo"
+  "sectionName" | "parentFinder"
 >;
-export function addSectionAndSolve<S extends SectionName>(
+export function addSectionAndSolve<SN extends SectionName>(
   this: Analyzer,
-  sectionName: S,
-  parentInfo: FeParentInfo<S>,
+  sectionName: SN,
+  parentFinder: ParentFinder<SN>,
   options: InitSectionOptions = {}
 ): Analyzer {
-  return this.addSectionsAndSolve([{ sectionName, parentInfo, ...options }]);
+  return this.addSectionsAndSolve([{ sectionName, parentFinder, ...options }]);
 }

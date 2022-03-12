@@ -91,7 +91,7 @@ export function resetRowCells(
     const value = varb ? varb.value("numObj") : "Not Found";
     [next, affectedInfos] = next.addSections({
       sectionName: "cell",
-      parentInfo: next.section(rowInfo).feInfo,
+      parentFinder: next.section(rowInfo).feInfo,
       values: { ...varbInfo, value },
     });
     allAffectedInfos.push(...affectedInfos);
@@ -124,7 +124,7 @@ export function pushToRowIndexStore(
   const title = next.feValue("title", feInfo, "string");
   [next, affectedInfos] = next.addSections({
     sectionName: indexStoreName,
-    parentInfo: indexParentInfo,
+    parentFinder: indexParentInfo,
     dbEntry: {
       dbId: dbId,
       dbSections: {

@@ -29,7 +29,7 @@ export function resetSection<S extends SectionName<"hasParent">>(
   const { sectionName } = feInfo;
   [next, affectedInfos] = next.addSections({
     sectionName,
-    parentInfo: parent.feInfo,
+    parentFinder: parent.feInfo,
     ...options,
     idx,
   });

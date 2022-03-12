@@ -50,6 +50,7 @@ export function extend<A extends object = {}, B extends object = {}>(
 
 export const Obj = {
   keys: ObjectKeys,
+  values: ObjectValues,
   entries: ObjectEntries,
   filterKeysForEntryShape<O extends object, M extends any>(
     obj: O,
