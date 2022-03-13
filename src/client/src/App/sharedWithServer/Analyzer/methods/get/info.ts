@@ -1,5 +1,5 @@
-import Analyzer from "../../Analyzer";
-import { sectionNotFound } from "./section";
+import Analyzer from "../../../Analyzer";
+import { sectionNotFound } from "../section";
 import {
   DbNameInfo,
   DbVarbInfo,
@@ -7,8 +7,8 @@ import {
   FeVarbInfo,
   MultiVarbInfo,
   SpecificSectionInfo,
-} from "../SectionMetas/relSections/rel/relVarbInfoTypes";
-import { SectionName } from "../SectionMetas/SectionName";
+} from "../../SectionMetas/relSections/rel/relVarbInfoTypes";
+import { SectionName } from "../../SectionMetas/SectionName";
 
 export function feInfo<S extends SectionName<"alwaysOne">>(
   this: Analyzer,

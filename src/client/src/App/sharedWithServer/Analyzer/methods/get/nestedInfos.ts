@@ -2,11 +2,11 @@ import {
   FeVarbInfo,
   RelVarbInfo,
   FeNameInfo,
-} from "../SectionMetas/relSections/rel/relVarbInfoTypes";
-import Analyzer from "../../Analyzer";
-import array from "../../utils/Arr";
-import { ObjectEntries } from "../../utils/Obj";
-import { SectionFinder } from "../SectionMetas/relSections/baseSectionTypes";
+} from "../../SectionMetas/relSections/rel/relVarbInfoTypes";
+import Analyzer from "../../../Analyzer";
+import array from "../../../utils/Arr";
+import { ObjectEntries } from "../../../utils/Obj";
+import { SectionFinder } from "../../SectionMetas/relSections/baseSectionTypes";
 
 export function nestedFeInfos(
   this: Analyzer,

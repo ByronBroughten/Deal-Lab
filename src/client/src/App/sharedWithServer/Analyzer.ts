@@ -12,25 +12,20 @@ import {
   nestedNumObjInfos,
   relativesToFeVarbInfos,
   relativeToFeVarbInfo,
-} from "./Analyzer/methods/nestedInfos";
+} from "./Analyzer/methods/get/nestedInfos";
 import {
-  childFeIds,
-  allChildFeIds,
-  children,
   firstSection,
   hasSection,
   lastSection,
-  parent,
   section,
   sectionByFocal,
   sectionNotFound,
   sectionOutFeVarbInfos,
   singleSection,
   sectionsByFocal,
-  childFeInfos,
   sectionIsIndexSaved,
-  parentFinderToInfo,
 } from "./Analyzer/methods/section";
+
 import {
   replaceInSectionArr,
   sectionArr,
@@ -131,7 +126,11 @@ import {
   findVarbInfosByFocal,
   findVarbsByFocal,
 } from "./Analyzer/methods/get/find";
-import { feInfo, feToDbInfo, varbInfosByFocal } from "./Analyzer/methods/info";
+import {
+  feInfo,
+  feToDbInfo,
+  varbInfosByFocal,
+} from "./Analyzer/methods/get/info";
 import {
   conditionalUserVarbValue,
   getUserVarbValue,
@@ -172,7 +171,13 @@ import {
   loadSectionArrAndSolve,
   loadSectionArrsAndSolve,
 } from "./Analyzer/methods/loadSectionFromEntry";
-import { childDbIdArrs } from "./Analyzer/methods/get/childArrs";
+import {
+  childFeInfos,
+  childDbIdArrs,
+  childFeIds,
+  allChildFeIds,
+  children,
+} from "./Analyzer/methods/get/childArrs";
 import { resetSectionAndChildDbIds } from "./Analyzer/methods/protected/resetSectionAndChildDbIds";
 import {
   loadValueFromVarb,
@@ -180,6 +185,7 @@ import {
   updateValue,
   updateValueDirectly,
 } from "./Analyzer/methods/updateValue";
+import { parent, parentFinderToInfo } from "./Analyzer/methods/get/parent";
 
 export type StateSections = { [S in SectionName]: StateSection<S>[] };
 type RawSections = { [S in SectionName]: StateSectionCore<S>[] };
