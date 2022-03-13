@@ -7,6 +7,7 @@ import {
 import { ChildFeInfo } from "../../SectionMetas/relSectionTypes";
 import { SectionName } from "../../SectionMetas/SectionName";
 import { InitSectionOptions } from "../addSectionAndSolve";
+import { internal } from "../internal";
 
 type ResetSectionOptions = Omit<InitSectionOptions, "idx"> & {
   resetDbIds?: boolean;
@@ -27,7 +28,7 @@ export function resetSection<S extends SectionName<"hasParent">>(
   allAffectedInfos.push(...affectedInfos);
 
   const { sectionName } = feInfo;
-  [next, affectedInfos] = next.addSections({
+  [next, affectedInfos] = internal.addSections(next, {
     sectionName,
     parentFinder: parent.feInfo,
     ...options,

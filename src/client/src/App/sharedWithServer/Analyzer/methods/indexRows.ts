@@ -11,6 +11,7 @@ import { rowIndexToTableName } from "../SectionMetas/relSectionTypes";
 import { FeInfo, Inf } from "../SectionMetas/Info";
 import StateSection from "../StateSection";
 import { SectionName } from "../SectionMetas/SectionName";
+import { internal } from "./internal";
 
 function findRowCellByColumn(
   analyzer: Analyzer,
@@ -72,11 +73,11 @@ export function sortTableRowIdsByColumn(
   return this.updateValueDirectly(Inf.feVarb("rowIds", tableInfo), nextRowIds);
 }
 
-export function resetRowCells(
-  this: Analyzer,
+function resetRowCells(
+  analyzer: Analyzer,
   rowInfo: SpecificSectionInfo<SectionName<"rowIndex">>
 ): [Analyzer, FeVarbInfo[]] {
-  let next = this;
+  let next = analyzer;
   let affectedInfos: FeVarbInfo[] = [];
   const allAffectedInfos: FeVarbInfo[] = [];
 
@@ -89,7 +90,7 @@ export function resetRowCells(
     const varbInfo = column.varbInfoValues();
     const varb = next.findVarb(varbInfo);
     const value = varb ? varb.value("numObj") : "Not Found";
-    [next, affectedInfos] = next.addSections({
+    [next, affectedInfos] = internal.addSections(next, {
       sectionName: "cell",
       parentFinder: next.section(rowInfo).feInfo,
       values: { ...varbInfo, value },
@@ -122,7 +123,7 @@ export function pushToRowIndexStore(
   next = next.updateValueDirectly(rowIdsInfo, rowIds);
 
   const title = next.feValue("title", feInfo, "string");
-  [next, affectedInfos] = next.addSections({
+  [next, affectedInfos] = internal.addSections(next, {
     sectionName: indexStoreName,
     parentFinder: indexParentInfo,
     dbEntry: {
@@ -135,7 +136,7 @@ export function pushToRowIndexStore(
   allAffectedInfos.push(...affectedInfos);
 
   const { feInfo: rowInfo } = next.lastSection(indexStoreName);
-  [next, affectedInfos] = next.resetRowCells(rowInfo);
+  [next, affectedInfos] = resetRowCells(next, rowInfo);
   allAffectedInfos.push(...affectedInfos);
   return next.solveVarbs(allAffectedInfos);
 }
@@ -146,7 +147,7 @@ export function updateRowIndexStore(
 ) {
   const { dbId, indexStoreName } = this.section(feInfo);
 
-  const [next, affectedInfos] = this.resetRowCells({
+  const [next, affectedInfos] = resetRowCells(this, {
     sectionName: indexStoreName,
     id: dbId,
     idType: "dbId",

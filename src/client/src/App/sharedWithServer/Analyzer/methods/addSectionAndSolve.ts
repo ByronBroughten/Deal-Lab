@@ -1,13 +1,14 @@
 import Analyzer from "../../Analyzer";
 import { ParentFinder } from "../SectionMetas/relSectionTypes";
 import { SectionName } from "../SectionMetas/SectionName";
-import { InitSectionAndChildrenProps } from "./protected/addSections";
+import { internal } from "./internal";
+import { InitSectionAndChildrenProps } from "./internal/addSections";
 
 export function addSectionsAndSolve(
   this: Analyzer,
   propArr: InitSectionAndChildrenProps[]
 ): Analyzer {
-  const [next, varbInfosToSolveFor] = this.addSections(propArr);
+  const [next, varbInfosToSolveFor] = internal.addSections(this, propArr);
   return next.solveVarbs(varbInfosToSolveFor);
 }
 

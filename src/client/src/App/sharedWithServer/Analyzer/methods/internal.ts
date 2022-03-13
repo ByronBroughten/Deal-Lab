@@ -5,6 +5,7 @@ import {
   removeOutEntity,
 } from "./internal/inOutEntities";
 import { updateConnectedEntities } from "./internal/updateConnectedEntities";
+import { addSections } from "./internal/addSections";
 
 export const internal = {
   addInEntity,
@@ -12,4 +13,5 @@ export const internal = {
   removeOutEntity,
   removeInEntity,
   updateConnectedEntities,
+  addSections,
 } as const;

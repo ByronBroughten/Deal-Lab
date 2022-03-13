@@ -5,7 +5,6 @@ import {
   displayNameOrNotFound,
 } from "./Analyzer/methods/get/displayName";
 import { variableOptions } from "./Analyzer/methods/variableOptions";
-
 import {
   nestedFeInfos,
   nestedFeOutVarbInfos,
@@ -53,7 +52,7 @@ import {
   deleteIndexAndSolve,
   deleteRowIndexAndSolve,
 } from "./Analyzer/methods/sectionErase";
-import { addSections } from "./Analyzer/methods/protected/addSections";
+
 import { SectionMeta, sectionMetas } from "./Analyzer/SectionMetas";
 import {
   directUpdateAndSolve,
@@ -71,7 +70,6 @@ import {
 } from "./Analyzer/methods/solveVarbs/solveAndUpdateValue";
 import StateSection, { StateSectionCore } from "./Analyzer/StateSection";
 import {
-  resetRowCells,
   pushToRowIndexStore,
   updateRowIndexStore,
   sortTableRowIdsByColumn,
@@ -291,7 +289,6 @@ export default class Analyzer {
 
   addSectionsAndSolve = addSectionsAndSolve;
   addSectionAndSolve = addSectionAndSolve;
-  protected addSections = addSections;
 
   loadSectionArrAndSolve = loadSectionArrAndSolve;
   loadSectionArrsAndSolve = loadSectionArrsAndSolve;
@@ -427,7 +424,6 @@ export default class Analyzer {
   fullStoreTitlesAndDbIds = fullStoreTitlesAndDbIds;
 
   pushToRowIndexStore = pushToRowIndexStore;
-  resetRowCells = resetRowCells;
   updateRowIndexStore = updateRowIndexStore;
   sortTableRowIdsByColumn = sortTableRowIdsByColumn;
 

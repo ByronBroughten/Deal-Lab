@@ -53,13 +53,13 @@ function initSectionAndChildren<S extends SectionName>(
 }
 
 export function addSections(
-  this: Analyzer,
+  analyzer: Analyzer,
   propArr: InitSectionAndChildrenProps[] | InitSectionAndChildrenProps
 ): [Analyzer, FeVarbInfo[]] {
   if (!Array.isArray(propArr)) propArr = [propArr];
 
   // I have to get infos for all the sections that are added
-  let next = this;
+  let next = analyzer;
   const allNewFeInfos: FeInfo[] = [];
   let newFeInfos: FeInfo[] = [];
 

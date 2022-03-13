@@ -4,6 +4,7 @@ import { DbEntry } from "../DbEntry";
 import { FeVarbInfo } from "../SectionMetas/relSections/rel/relVarbInfoTypes";
 import { FeParentInfo } from "../SectionMetas/relSectionTypes";
 import { SectionName } from "../SectionMetas/SectionName";
+import { internal } from "./internal";
 
 export function loadSectionArrAndSolve<S extends SectionName<"hasOneParent">>(
   this: Analyzer,
@@ -20,7 +21,7 @@ export function loadSectionArrAndSolve<S extends SectionName<"hasOneParent">>(
   const parentFinder = next.parent(sectionName).feInfo as FeParentInfo<S>;
   [next, allAffectedInfos] = dbEntryArr.reduce(
     ([next, allAffectedInfos], dbEntry) => {
-      [next, affectedInfos] = next.addSections([
+      [next, affectedInfos] = internal.addSections(next, [
         {
           sectionName,
           parentFinder,

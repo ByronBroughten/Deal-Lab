@@ -1,5 +1,5 @@
 import { sectionMetas } from "../../SectionMetas";
-import { DbSectionInit } from "../../methods/protected/addSections";
+import { DbSectionInit } from "../../methods/internal/addSections";
 import StateSection from "../../StateSection";
 import StateVarb from "../StateVarb";
 import { StateValue } from "../StateVarb/stateValue";
