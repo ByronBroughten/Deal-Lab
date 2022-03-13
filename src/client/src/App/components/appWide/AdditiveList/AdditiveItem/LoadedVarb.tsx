@@ -1,5 +1,5 @@
 import { useAnalyzerContext } from "../../../../modules/usePropertyAnalyzer";
-import { VariableOption } from "../../../../sharedWithServer/Analyzer/methods/variableOptions";
+import { VariableOption } from "../../../../sharedWithServer/Analyzer/methods/get/variableOptions";
 import { FeVarbInfo } from "../../../../sharedWithServer/Analyzer/SectionMetas/relSections/rel/relVarbInfoTypes";
 import { ControlledVarbAutoComplete } from "../../../inputs/ControlledVarbAutoComplete";
 

@@ -11,27 +11,7 @@ export function updateValueDirectly(
   nextValue: StateValue
 ) {
   // not to be used for editor updates.
-  return this.updateValue(feVarbInfo, nextValue, false);
-}
-
-export function updateValue(
-  this: Analyzer,
-  feVarbInfo: FeVarbInfo,
-  nextValue: StateValue,
-  wasUpdatedByEditor: boolean
-): Analyzer {
-  let next = this;
-  if (typeof nextValue === "object" && "entities" in nextValue)
-    next = internal.updateConnectedEntities(
-      next,
-      feVarbInfo,
-      nextValue.entities
-    );
-
-  const nextVarb = next
-    .varb(feVarbInfo)
-    .updateValue(nextValue, wasUpdatedByEditor);
-  return next.updateVarb(nextVarb);
+  return internal.updateValue(this, feVarbInfo, nextValue, false);
 }
 
 export function updateSectionValues(

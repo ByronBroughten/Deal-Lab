@@ -4,7 +4,7 @@ import styled, { css } from "styled-components";
 import { useStores } from "../../../modules/customHooks/useStore";
 import useToggleView from "../../../modules/customHooks/useToggleView";
 import { useAnalyzerContext } from "../../../modules/usePropertyAnalyzer";
-import { SectionOption } from "../../../sharedWithServer/Analyzer/methods/variableOptions";
+import { SectionOption } from "../../../sharedWithServer/Analyzer/methods/get/variableOptions";
 import { FeInfo } from "../../../sharedWithServer/Analyzer/SectionMetas/Info";
 import theme, { ThemeSectionName } from "../../../theme/Theme";
 import { StandardProps } from "../../general/StandardProps";

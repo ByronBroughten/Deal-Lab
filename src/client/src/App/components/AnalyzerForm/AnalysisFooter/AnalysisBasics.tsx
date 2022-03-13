@@ -4,7 +4,7 @@ import theme from "../../../theme/Theme";
 import VarbAutoComplete from "../../inputs/VarbAutoComplete";
 import { useAnalyzerContext } from "../../../modules/usePropertyAnalyzer";
 import { LabeledVarbOutput } from "../../appWide/LabeledVarbOutput";
-import { VariableOption } from "../../../sharedWithServer/Analyzer/methods/variableOptions";
+import { VariableOption } from "../../../sharedWithServer/Analyzer/methods/get/variableOptions";
 
 const sectionName = "analysis";
 export default function AnalysisBasics({ id }: { id: string }) {

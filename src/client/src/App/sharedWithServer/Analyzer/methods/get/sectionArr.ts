@@ -2,7 +2,7 @@ import Analyzer from "../../../Analyzer";
 import { FeNameInfo } from "../../SectionMetas/relSections/rel/relVarbInfoTypes";
 import { SectionName } from "../../SectionMetas/SectionName";
 import StateSection from "../../StateSection";
-import { SectionOption } from "../variableOptions";
+import { SectionOption } from "./variableOptions";
 
 export function sectionArr<S extends SectionName>(
   this: Analyzer,

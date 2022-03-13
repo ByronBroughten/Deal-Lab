@@ -53,7 +53,7 @@ function updateValueFromEditor(
       feVarbInfo,
       nextValue.entities
     );
-  return next.updateValue(feVarbInfo, nextValue, true);
+  return internal.updateValue(next, feVarbInfo, nextValue, true);
 }
 
 function valueFromEditor(

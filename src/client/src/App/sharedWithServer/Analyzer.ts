@@ -1,99 +1,36 @@
 import { nanoid } from "nanoid";
 import {
-  displayName,
-  displayNameInfo,
-  displayNameOrNotFound,
-} from "./Analyzer/methods/get/displayName";
-import { variableOptions } from "./Analyzer/methods/variableOptions";
+  addSectionAndSolve,
+  addSectionsAndSolve,
+  InitSectionOptions,
+} from "./Analyzer/methods/addSectionAndSolve";
+import { copySection } from "./Analyzer/methods/copySection";
 import {
-  nestedFeInfos,
-  nestedFeOutVarbInfos,
-  nestedFeVarbInfos,
-  nestedNumObjInfos,
-  relativesToFeVarbInfos,
-  relativeToFeVarbInfo,
-} from "./Analyzer/methods/get/nestedInfos";
-import {
-  firstSection,
-  hasSection,
-  lastSection,
-  section,
-  sectionByFocal,
-  sectionNotFound,
-  sectionOutFeVarbInfos,
-  singleSection,
-  sectionsByFocal,
-  sectionIsIndexSaved,
-} from "./Analyzer/methods/get/section";
-
-import {
-  replaceInSectionArr,
-  setSectionArr,
-  wipeSectionArrAndSolve,
-} from "./Analyzer/methods/setSectionArr";
+  eraseIndexAndSolve,
+  eraseRowIndexAndSolve,
+} from "./Analyzer/methods/eraseIndexAndSolve";
 import {
   eraseSectionAndSolve,
   eraseSectionsAndSolve,
 } from "./Analyzer/methods/eraseSectionAndSolve";
-import { SectionMeta, sectionMetas } from "./Analyzer/SectionMetas";
 import {
-  directUpdateAndSolve,
-  solveAllActiveVarbs,
-  solveVarbs,
-} from "./Analyzer/methods/solveVarbs";
+  allChildFeIds,
+  childDbIdArrs,
+  childFeIds,
+  childFeInfos,
+  children,
+} from "./Analyzer/methods/get/childArrs";
 import {
-  gatherAndSortInfosToSolve,
-  getDagEdgesAndLoneVarbs,
-  getOutVarbMap,
-} from "./Analyzer/methods/solveVarbs/gatherAndSortInfosToSolve";
-import {
-  solveAndUpdateValue,
-  solveValue,
-} from "./Analyzer/methods/solveVarbs/solveAndUpdateValue";
-import StateSection, { StateSectionCore } from "./Analyzer/StateSection";
-import {
-  pushToRowIndexStore,
-  updateRowIndexStore,
-  sortTableRowIdsByColumn,
-} from "./Analyzer/methods/rowIndexStore";
-import {
-  dbEntryArrs,
-  dbEntryArr,
   dbEntry,
+  dbEntryArr,
+  dbEntryArrs,
   dbIndexEntry,
 } from "./Analyzer/methods/get/dbSections";
-
 import {
-  feValue,
-  findValue,
-  outputValues,
-  value,
-  varbInfoValues,
-} from "./Analyzer/methods/get/value";
-import {
-  displayVarb,
-  feVarb,
-  inUpdatePack,
-  inVarbInfos,
-  varbSwitchIsActive,
-  outVarbInfos,
-  replaceVarb,
-  relativeInVarbInfos,
-  staticVarb,
-  switchedOngoingDisplayVarb,
-  switchedOngoingVarb,
-  switchedVarb,
-  switchIsActive,
-  updateFnName,
-  updateFnProps,
-  varb,
-  varbByFocal,
-  varbsByFocal,
-  updateVarb,
-  switchedVarbName,
-  switchedOngoingVarbName,
-} from "./Analyzer/methods/get/varb";
-import { nanoIdLength } from "./utils/validatorConstraints";
+  displayName,
+  displayNameInfo,
+  displayNameOrNotFound,
+} from "./Analyzer/methods/get/displayName";
 import {
   findFeInfo,
   findFeInfoByFocal,
@@ -109,70 +46,131 @@ import {
   findVarbsByFocal,
 } from "./Analyzer/methods/get/find";
 import {
+  fullStoreEntries,
+  fullStoreTitlesAndDbIds,
+} from "./Analyzer/methods/get/fullStore";
+import {
   feInfo,
   feToDbInfo,
   varbInfosByFocal,
 } from "./Analyzer/methods/get/info";
 import {
-  conditionalUserVarbValue,
-  getUserVarbValue,
-} from "./Analyzer/methods/solveVarbs/solveAndUpdateValue/updateUserVarb";
-import {
-  getNumberVarbs,
-  getSolvableNumber,
-  solvableTextToNumber,
-  solvableTextFromCalculation,
-  solvableTextFromCalcVarbs,
-  solvableTextFromEditorTextAndEntities,
-} from "./Analyzer/methods/solveVarbs/solveAndUpdateValue/updateNumericObjCalc";
-import {
-  fullStoreEntries,
-  fullStoreTitlesAndDbIds,
-  pushToIndexStore,
-  updateIndexStoreEntry,
-  stateToUpdateSingleStoreArr,
-} from "./Analyzer/methods/stateToFullStore";
-import { ObjectKeys } from "./utils/Obj";
-import { SectionNam, SectionName } from "./Analyzer/SectionMetas/SectionName";
-import {
-  addSectionAndSolve,
-  addSectionsAndSolve,
-  InitSectionOptions,
-} from "./Analyzer/methods/addSectionAndSolve";
-import { resetSectionAndSolve } from "./Analyzer/methods/resetSectionAndSolve";
-import { copySection } from "./Analyzer/methods/copySection";
-import {
-  loadSectionFromFeDefault,
-  loadSectionFromFeIndex,
-  setAsDefaultSectionArr,
-} from "./Analyzer/methods/loadSectionFromStore";
-import {
-  loadSectionArrAndSolve,
-  loadSectionArrsAndSolve,
-} from "./Analyzer/methods/loadSectionFromEntry";
-import {
-  childFeInfos,
-  childDbIdArrs,
-  childFeIds,
-  allChildFeIds,
-  children,
-} from "./Analyzer/methods/get/childArrs";
-import {
-  loadValueFromVarb,
-  updateSectionValues,
-  updateValue,
-  updateValueDirectly,
-} from "./Analyzer/methods/updateValue";
+  nestedFeInfos,
+  nestedFeOutVarbInfos,
+  nestedFeVarbInfos,
+  nestedNumObjInfos,
+  relativesToFeVarbInfos,
+  relativeToFeVarbInfo,
+} from "./Analyzer/methods/get/nestedInfos";
 import { parent, parentFinderToInfo } from "./Analyzer/methods/get/parent";
+import {
+  firstSection,
+  hasSection,
+  lastSection,
+  section,
+  sectionByFocal,
+  sectionIsIndexSaved,
+  sectionNotFound,
+  sectionOutFeVarbInfos,
+  sectionsByFocal,
+  singleSection,
+} from "./Analyzer/methods/get/section";
 import {
   sectionArr,
   sectionArrAsOptions,
   sectionArrInfos,
 } from "./Analyzer/methods/get/sectionArr";
 import {
-  eraseIndexAndSolve,
-  eraseRowIndexAndSolve,
-} from "./Analyzer/methods/eraseIndexAndSolve";
+  feValue,
+  findValue,
+  outputValues,
+  value,
+  varbInfoValues,
+} from "./Analyzer/methods/get/value";
+import {
+  displayVarb,
+  feVarb,
+  inUpdatePack,
+  inVarbInfos,
+  outVarbInfos,
+  relativeInVarbInfos,
+  replaceVarb,
+  staticVarb,
+  switchedOngoingDisplayVarb,
+  switchedOngoingVarb,
+  switchedOngoingVarbName,
+  switchedVarb,
+  switchedVarbName,
+  switchIsActive,
+  updateFnName,
+  updateFnProps,
+  updateVarb,
+  varb,
+  varbByFocal,
+  varbsByFocal,
+  varbSwitchIsActive,
+} from "./Analyzer/methods/get/varb";
+import { variableOptions } from "./Analyzer/methods/get/variableOptions";
+import {
+  loadSectionArrAndSolve,
+  loadSectionArrsAndSolve,
+} from "./Analyzer/methods/loadSectionFromEntry";
+import {
+  loadSectionFromFeDefault,
+  loadSectionFromFeIndex,
+  setAsDefaultSectionArr,
+} from "./Analyzer/methods/loadSectionFromStore";
+import { resetSectionAndSolve } from "./Analyzer/methods/resetSectionAndSolve";
+import {
+  replaceInSectionArr,
+  setSectionArr,
+  wipeSectionArrAndSolve,
+} from "./Analyzer/methods/setSectionArr";
+import {
+  directUpdateAndSolve,
+  solveAllActiveVarbs,
+  solveVarbs,
+} from "./Analyzer/methods/solveVarbs";
+import {
+  gatherAndSortInfosToSolve,
+  getDagEdgesAndLoneVarbs,
+  getOutVarbMap,
+} from "./Analyzer/methods/solveVarbs/gatherAndSortInfosToSolve";
+import {
+  solveAndUpdateValue,
+  solveValue,
+} from "./Analyzer/methods/solveVarbs/solveAndUpdateValue";
+import {
+  getNumberVarbs,
+  getSolvableNumber,
+  solvableTextFromCalculation,
+  solvableTextFromCalcVarbs,
+  solvableTextFromEditorTextAndEntities,
+  solvableTextToNumber,
+} from "./Analyzer/methods/solveVarbs/solveAndUpdateValue/updateNumericObjCalc";
+import {
+  conditionalUserVarbValue,
+  getUserVarbValue,
+} from "./Analyzer/methods/solveVarbs/solveAndUpdateValue/updateUserVarb";
+import {
+  pushToRowIndexStore,
+  sortTableRowIdsByColumn,
+  updateRowIndexStore,
+} from "./Analyzer/methods/updateRowIndexStore";
+import {
+  pushToIndexStore,
+  updateIndexStoreEntry,
+} from "./Analyzer/methods/updateStore";
+import {
+  loadValueFromVarb,
+  updateSectionValues,
+  updateValueDirectly,
+} from "./Analyzer/methods/updateValueDirectly";
+import { SectionMeta, sectionMetas } from "./Analyzer/SectionMetas";
+import { SectionNam, SectionName } from "./Analyzer/SectionMetas/SectionName";
+import StateSection, { StateSectionCore } from "./Analyzer/StateSection";
+import { ObjectKeys } from "./utils/Obj";
+import { nanoIdLength } from "./utils/validatorConstraints";
 
 export type StateSections = { [S in SectionName]: StateSection<S>[] };
 type RawSections = { [S in SectionName]: StateSectionCore<S>[] };
@@ -261,8 +259,6 @@ export default class Analyzer {
     return core;
   }
 
-  // get
-
   displayName = displayName;
   displayNameOrNotFound = displayNameOrNotFound;
   displayNameInfo = displayNameInfo;
@@ -319,13 +315,10 @@ export default class Analyzer {
   eraseSectionsAndSolve = eraseSectionsAndSolve;
 
   childDbIdArrs = childDbIdArrs;
-
-  // info
   varbInfosByFocal = varbInfosByFocal;
   feToDbInfo = feToDbInfo;
   feInfo = feInfo;
 
-  // find
   findSectionByDbId = findSectionByDbId;
   findSectionByFeId = findSectionByFeId;
   findFeInfo = findFeInfo;
@@ -361,7 +354,6 @@ export default class Analyzer {
   switchedOngoingVarb = switchedOngoingVarb;
   switchedOngoingDisplayVarb = switchedOngoingDisplayVarb;
 
-  updateValue = updateValue;
   updateValueDirectly = updateValueDirectly;
   loadValueFromVarb = loadValueFromVarb;
   updateSectionValues = updateSectionValues;
@@ -398,7 +390,6 @@ export default class Analyzer {
 
   pushToIndexStore = pushToIndexStore;
   updateIndexStoreEntry = updateIndexStoreEntry;
-  stateToUpdateSingleStoreArr = stateToUpdateSingleStoreArr;
   fullStoreEntries = fullStoreEntries;
   fullStoreTitlesAndDbIds = fullStoreTitlesAndDbIds;
 
