@@ -5,7 +5,7 @@ import { FeInfo } from "../SectionMetas/Info";
 import { SectionName } from "../SectionMetas/SectionName";
 
 export function stateToDbSection(this: Analyzer, feInfo: FeInfo): DbSection {
-  const childDbIds = this.childDbIds(feInfo);
+  const childDbIds = this.childDbIdArrs(feInfo);
   return this.section(feInfo).toDbSection(childDbIds);
 }
 

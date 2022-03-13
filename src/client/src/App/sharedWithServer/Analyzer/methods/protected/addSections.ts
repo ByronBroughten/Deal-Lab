@@ -26,6 +26,11 @@ function addOutEntitiesForSectionInVarbs(
   return next;
 }
 
+// Two choices:
+// 1. Let more protected methods onto the class
+// 2. Let fewer protected methods onto the class and use
+// more imports.
+
 export type InitSectionAndChildrenProps<S extends SectionName = SectionName> =
   Omit<GatherSectionInitPropsProps<S>, "propArr">;
 function initSectionAndChildren<S extends SectionName>(

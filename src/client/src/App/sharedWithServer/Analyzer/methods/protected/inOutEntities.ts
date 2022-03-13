@@ -1,9 +1,9 @@
-import Analyzer from "../../Analyzer";
-import { OutEntity } from "../StateSection/StateVarb/entities";
+import Analyzer from "../../../Analyzer";
+import { OutEntity } from "../../StateSection/StateVarb/entities";
 import {
   InEntity,
   InEntityVarbInfo,
-} from "../SectionMetas/relSections/rel/valueMeta/NumObj/entities";
+} from "../../SectionMetas/relSections/rel/valueMeta/NumObj/entities";
 
 export function addInEntity(
   this: Analyzer,
@@ -29,21 +29,22 @@ Analyzer {
   next = next.removeOutEntity(inEntityVarbInfo, feVarbInfo);
   return next;
 }
+
+function isUserVarbAndWasDeleted(
+  analyzer: Analyzer,
+  varbInfo: InEntityVarbInfo
+): boolean {
+  const { sectionName } = varbInfo;
+  return sectionName === "userVarbItem" && !analyzer.hasSection(varbInfo);
+}
 export function addOutEntity(
   this: Analyzer,
   varbInfo: InEntityVarbInfo,
   outEntity: OutEntity
 ): Analyzer {
-  if (this.isUserVarbAndWasDeleted(varbInfo)) return this;
+  if (isUserVarbAndWasDeleted(this, varbInfo)) return this;
   const nextVarb = this.varb(varbInfo).addOutEntity(outEntity);
   return this.updateVarb(nextVarb);
-}
-export function isUserVarbAndWasDeleted(
-  this: Analyzer,
-  varbInfo: InEntityVarbInfo
-): boolean {
-  const { sectionName } = varbInfo;
-  return sectionName === "userVarbItem" && !this.hasSection(varbInfo);
 }
 export function removeOutEntity(
   this: Analyzer,

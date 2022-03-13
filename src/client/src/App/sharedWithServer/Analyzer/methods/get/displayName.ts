@@ -1,9 +1,9 @@
-import Analyzer from "../../Analyzer";
+import Analyzer from "../../../Analyzer";
 import {
   FeVarbInfo,
   RelFindByFocalVarbInfo,
   SpecificVarbInfo,
-} from "../SectionMetas/relSections/rel/relVarbInfoTypes";
+} from "../../SectionMetas/relSections/rel/relVarbInfoTypes";
 
 export function displayNameOrNotFound(
   this: Analyzer,

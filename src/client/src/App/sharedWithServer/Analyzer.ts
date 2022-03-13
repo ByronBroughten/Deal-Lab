@@ -1,14 +1,9 @@
 import { nanoid } from "nanoid";
 import {
-  childDbIds,
-  initChildFeIds,
-  resetSectionAndChildDbIds,
-} from "./Analyzer/methods/childIds";
-import {
   displayName,
   displayNameInfo,
   displayNameOrNotFound,
-} from "./Analyzer/methods/displayName";
+} from "./Analyzer/methods/get/displayName";
 import {
   updateConnectedEntities,
   userListTotalOptions,
@@ -106,14 +101,10 @@ import {
 import {
   feValue,
   findValue,
-  loadValueFromVarb,
   outputValues,
-  updateSectionValues,
-  updateValue,
-  updateValueDirectly,
   value,
   varbInfoValues,
-} from "./Analyzer/methods/value";
+} from "./Analyzer/methods/get/value";
 import {
   displayVarb,
   feVarb,
@@ -169,10 +160,9 @@ import {
 import {
   addInEntity,
   addOutEntity,
-  isUserVarbAndWasDeleted,
   removeInEntity,
   removeOutEntity,
-} from "./Analyzer/methods/entities";
+} from "./Analyzer/methods/protected/inOutEntities";
 import {
   fullStoreEntries,
   fullStoreTitlesAndDbIds,
@@ -201,6 +191,14 @@ import {
   loadSectionArrAndSolve,
   loadSectionArrsAndSolve,
 } from "./Analyzer/methods/loadSectionFromEntry";
+import { childDbIdArrs } from "./Analyzer/methods/get/childArrs";
+import { resetSectionAndChildDbIds } from "./Analyzer/methods/protected/resetSectionAndChildDbIds";
+import {
+  loadValueFromVarb,
+  updateSectionValues,
+  updateValue,
+  updateValueDirectly,
+} from "./Analyzer/methods/updateValue";
 
 export type StateSections = { [S in SectionName]: StateSection<S>[] };
 type RawSections = { [S in SectionName]: StateSectionCore<S>[] };
@@ -289,6 +287,12 @@ export default class Analyzer {
     return core;
   }
 
+  // get
+
+  displayName = displayName;
+  displayNameOrNotFound = displayNameOrNotFound;
+  displayNameInfo = displayNameInfo;
+
   nestedFeInfos = nestedFeInfos;
   nestedFeVarbInfos = nestedFeVarbInfos;
   nestedFeOutVarbInfos = nestedFeOutVarbInfos;
@@ -351,8 +355,7 @@ export default class Analyzer {
   removeSection = removeSection;
 
   resetSectionAndChildDbIds = resetSectionAndChildDbIds;
-  childDbIds = childDbIds;
-  initChildFeIds = initChildFeIds;
+  childDbIdArrs = childDbIdArrs;
 
   // info
   varbInfosByFocal = varbInfosByFocal;
@@ -394,23 +397,21 @@ export default class Analyzer {
   switchedVarb = switchedVarb;
   switchedOngoingVarb = switchedOngoingVarb;
   switchedOngoingDisplayVarb = switchedOngoingDisplayVarb;
-  displayName = displayName;
-  displayNameOrNotFound = displayNameOrNotFound;
-  displayNameInfo = displayNameInfo;
+
+  updateValue = updateValue;
+  updateValueDirectly = updateValueDirectly;
+  loadValueFromVarb = loadValueFromVarb;
+  updateSectionValues = updateSectionValues;
 
   value = value;
   feValue = feValue;
   findValue = findValue;
-  loadValueFromVarb = loadValueFromVarb;
-  updateValue = updateValue;
-  updateValueDirectly = updateValueDirectly;
-  updateSectionValues = updateSectionValues;
+
   varbInfoValues = varbInfoValues;
   outputValues = outputValues;
 
   addInEntity = addInEntity;
   addOutEntity = addOutEntity;
-  isUserVarbAndWasDeleted = isUserVarbAndWasDeleted;
   removeOutEntity = removeOutEntity;
   removeInEntity = removeInEntity;
 
