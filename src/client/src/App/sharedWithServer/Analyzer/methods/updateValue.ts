@@ -3,6 +3,7 @@ import { Inf } from "../SectionMetas/Info";
 import { FeVarbInfo } from "../SectionMetas/relSections/rel/relVarbInfoTypes";
 import { InEntityVarbInfo } from "../SectionMetas/relSections/rel/valueMeta/NumObj/entities";
 import { StateValue } from "../StateSection/StateVarb/stateValue";
+import { internal } from "./internal";
 
 export function updateValueDirectly(
   this: Analyzer,
@@ -21,13 +22,16 @@ export function updateValue(
 ): Analyzer {
   let next = this;
   if (typeof nextValue === "object" && "entities" in nextValue)
-    next = next.updateConnectedEntities(feVarbInfo, nextValue.entities);
+    next = internal.updateConnectedEntities(
+      next,
+      feVarbInfo,
+      nextValue.entities
+    );
 
-  const nextVarb = this.varb(feVarbInfo).updateValue(
-    nextValue,
-    wasUpdatedByEditor
-  );
-  return this.updateVarb(nextVarb);
+  const nextVarb = next
+    .varb(feVarbInfo)
+    .updateValue(nextValue, wasUpdatedByEditor);
+  return next.updateVarb(nextVarb);
 }
 
 export function updateSectionValues(
@@ -49,10 +53,10 @@ export function loadValueFromVarb(
   let next = this;
   const entityId = next.feValue("entityId", feVarbInfo, "string");
   const entityInfo = next.varbInfoValues(feVarbInfo);
-  next = next.removeInEntity(feVarbInfo, { entityId, ...entityInfo });
+  next = internal.removeInEntity(next, feVarbInfo, { entityId, ...entityInfo });
 
   const nextEntityId = Analyzer.makeId();
-  next = next.addInEntity(feVarbInfo, {
+  next = internal.addInEntity(next, feVarbInfo, {
     ...varbInfo,
     length: 0, // length and offset are arbitrary
     offset: 0, // just borrowing functionality from editor entities

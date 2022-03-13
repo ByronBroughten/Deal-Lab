@@ -1,5 +1,5 @@
 import Analyzer from "../../Analyzer";
-import { SectionOption } from "./entitiesVariables";
+import { SectionOption } from "./variableOptions";
 import { FeNameInfo } from "../SectionMetas/relSections/rel/relVarbInfoTypes";
 import { SectionName } from "../SectionMetas/SectionName";
 import StateSection from "../StateSection";

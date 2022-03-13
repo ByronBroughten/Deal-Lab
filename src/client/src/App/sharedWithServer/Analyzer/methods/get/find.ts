@@ -1,5 +1,5 @@
 import { pick } from "lodash";
-import Analyzer from "../../Analyzer";
+import Analyzer from "../../../Analyzer";
 import {
   DbNameInfo,
   FeNameInfo,
@@ -10,11 +10,11 @@ import {
   MultiFindByFocalInfo,
   SpecificSectionInfo,
   SpecificVarbInfo,
-} from "../SectionMetas/relSections/rel/relVarbInfoTypes";
-import { ChildName } from "../SectionMetas/relSectionTypes";
-import { SectionName } from "../SectionMetas/SectionName";
-import StateSection from "../StateSection";
-import StateVarb from "../StateSection/StateVarb";
+} from "../../SectionMetas/relSections/rel/relVarbInfoTypes";
+import { ChildName } from "../../SectionMetas/relSectionTypes";
+import { SectionName } from "../../SectionMetas/SectionName";
+import StateSection from "../../StateSection";
+import StateVarb from "../../StateSection/StateVarb";
 
 export function findSectionByFeId<S extends SectionName>(
   this: Analyzer,

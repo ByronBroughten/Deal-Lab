@@ -4,17 +4,7 @@ import {
   displayNameInfo,
   displayNameOrNotFound,
 } from "./Analyzer/methods/get/displayName";
-import {
-  updateConnectedEntities,
-  userListTotalOptions,
-  userOption,
-  userVarbOption,
-  userVarbOptions,
-  userVariableInfos,
-  userVariableLists,
-  variableLists,
-  variableOptions,
-} from "./Analyzer/methods/entitiesVariables";
+import { variableOptions } from "./Analyzer/methods/variableOptions";
 
 import {
   nestedFeInfos,
@@ -84,7 +74,6 @@ import {
   resetRowCells,
   pushToRowIndexStore,
   updateRowIndexStore,
-  findRowCellByColumn,
   sortTableRowIdsByColumn,
 } from "./Analyzer/methods/indexRows";
 import {
@@ -143,7 +132,7 @@ import {
   findVarbByFocal,
   findVarbInfosByFocal,
   findVarbsByFocal,
-} from "./Analyzer/methods/find";
+} from "./Analyzer/methods/get/find";
 import { feInfo, feToDbInfo, varbInfosByFocal } from "./Analyzer/methods/info";
 import {
   conditionalUserVarbValue,
@@ -157,12 +146,6 @@ import {
   solvableTextFromCalcVarbs,
   solvableTextFromEditorTextAndEntities,
 } from "./Analyzer/methods/solveVarbs/solveAndUpdateValue/updateNumericObjCalc";
-import {
-  addInEntity,
-  addOutEntity,
-  removeInEntity,
-  removeOutEntity,
-} from "./Analyzer/methods/protected/inOutEntities";
 import {
   fullStoreEntries,
   fullStoreTitlesAndDbIds,
@@ -410,11 +393,6 @@ export default class Analyzer {
   varbInfoValues = varbInfoValues;
   outputValues = outputValues;
 
-  addInEntity = addInEntity;
-  addOutEntity = addOutEntity;
-  removeOutEntity = removeOutEntity;
-  removeInEntity = removeInEntity;
-
   conditionalUserVarbValue = conditionalUserVarbValue;
   getUserVarbValue = getUserVarbValue;
 
@@ -431,15 +409,7 @@ export default class Analyzer {
   directUpdateAndSolve = directUpdateAndSolve;
   solveValue = solveValue;
 
-  variableLists = variableLists;
-  updateConnectedEntities = updateConnectedEntities;
-  userVariableLists = userVariableLists;
-  userVariableInfos = userVariableInfos;
-  userVarbOptions = userVarbOptions;
-  userVarbOption = userVarbOption;
   variableOptions = variableOptions;
-  userOption = userOption;
-  userListTotalOptions = userListTotalOptions;
 
   toDbEntry = toDbEntry;
   toDbIndexEntry = toDbIndexEntry;
@@ -459,7 +429,6 @@ export default class Analyzer {
   pushToRowIndexStore = pushToRowIndexStore;
   resetRowCells = resetRowCells;
   updateRowIndexStore = updateRowIndexStore;
-  findRowCellByColumn = findRowCellByColumn;
   sortTableRowIdsByColumn = sortTableRowIdsByColumn;
 
   getOutVarbMap = getOutVarbMap;

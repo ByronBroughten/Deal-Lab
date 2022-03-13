@@ -8,7 +8,6 @@ import reportWebVitals from "./reportWebVitals";
 import { Theme } from "./App/theme/Theme";
 
 const root = document.getElementById("root");
-console.log("entrypoint");
 ReactDOM.render(
   <React.StrictMode>
     <Normalize />

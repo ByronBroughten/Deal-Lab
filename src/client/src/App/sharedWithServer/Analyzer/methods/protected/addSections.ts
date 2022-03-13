@@ -8,6 +8,7 @@ import {
   GatherSectionInitPropsProps,
 } from "./addSections/gatherSectionInitProps";
 import { initOneSection } from "./addSections/initOneSection";
+import { internal } from "../internal";
 
 export type DbSectionInit = Omit<DbSection, "childDbIds">;
 function addOutEntitiesForSectionInVarbs(
@@ -20,7 +21,7 @@ function addOutEntitiesForSectionInVarbs(
   for (const [varbName, varb] of Object.entries(varbs)) {
     for (const inEntity of varb.inEntities) {
       const outEntity = { ...feInfo, varbName };
-      next = next.addOutEntity(inEntity, outEntity);
+      next = internal.addOutEntity(next, inEntity, outEntity);
     }
   }
   return next;

@@ -9,7 +9,7 @@ import styled from "styled-components";
 import {
   SectionOption,
   VariableOption,
-} from "../../sharedWithServer/Analyzer/methods/entitiesVariables";
+} from "../../sharedWithServer/Analyzer/methods/variableOptions";
 
 type PopParams = Parameters<typeof Popper>;
 type PopperProps = PopParams extends (infer T)[] ? T : never;

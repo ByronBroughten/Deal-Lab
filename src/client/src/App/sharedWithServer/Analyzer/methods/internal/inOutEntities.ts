@@ -6,27 +6,27 @@ import {
 } from "../../SectionMetas/relSections/rel/valueMeta/NumObj/entities";
 
 export function addInEntity(
-  this: Analyzer,
+  analyzer: Analyzer,
   feVarbInfo: OutEntity,
   inEntity: InEntity
 ): Analyzer {
-  let next = this;
-  const nextVarb = this.varb(feVarbInfo).addInEntity(inEntity);
+  let next = analyzer;
+  const nextVarb = next.varb(feVarbInfo).addInEntity(inEntity);
   next = next.updateVarb(nextVarb);
-  next = next.addOutEntity(inEntity, feVarbInfo);
+  next = addOutEntity(next, inEntity, feVarbInfo);
   return next;
 }
 export function removeInEntity(
-  this: Analyzer,
+  analyzer: Analyzer,
   feVarbInfo: OutEntity,
   { entityId, ...inEntityVarbInfo }: InEntityVarbInfo & { entityId: string }
 ): // the entityVarbInfo is required because the inEntity with that id might be gone
 // for some reason, in which case you still should remove the outEntity from it
 Analyzer {
-  let next = this;
+  let next = analyzer;
   const nextVarb = next.varb(feVarbInfo).removeInEntity(entityId);
   next = next.updateVarb(nextVarb);
-  next = next.removeOutEntity(inEntityVarbInfo, feVarbInfo);
+  next = removeOutEntity(next, inEntityVarbInfo, feVarbInfo);
   return next;
 }
 
@@ -38,21 +38,21 @@ function isUserVarbAndWasDeleted(
   return sectionName === "userVarbItem" && !analyzer.hasSection(varbInfo);
 }
 export function addOutEntity(
-  this: Analyzer,
+  analyzer: Analyzer,
   varbInfo: InEntityVarbInfo,
   outEntity: OutEntity
 ): Analyzer {
-  if (isUserVarbAndWasDeleted(this, varbInfo)) return this;
-  const nextVarb = this.varb(varbInfo).addOutEntity(outEntity);
-  return this.updateVarb(nextVarb);
+  if (isUserVarbAndWasDeleted(analyzer, varbInfo)) return analyzer;
+  const nextVarb = analyzer.varb(varbInfo).addOutEntity(outEntity);
+  return analyzer.updateVarb(nextVarb);
 }
 export function removeOutEntity(
-  this: Analyzer,
+  analyzer: Analyzer,
   varbInfo: InEntityVarbInfo,
   outEntity: OutEntity
 ): Analyzer {
-  const varb = this.findVarb(varbInfo);
-  if (!varb) return this;
+  const varb = analyzer.findVarb(varbInfo);
+  if (!varb) return analyzer;
   const nextVarb = varb.removeOutEntity(outEntity);
-  return this.updateVarb(nextVarb);
+  return analyzer.updateVarb(nextVarb);
 }

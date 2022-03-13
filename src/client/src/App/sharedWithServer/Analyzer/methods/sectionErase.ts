@@ -11,6 +11,7 @@ import {
 import { Inf, FeInfo } from "../SectionMetas/Info";
 import Arr from "../../utils/Arr";
 import { SectionName } from "../SectionMetas/SectionName";
+import { internal } from "./internal";
 
 export function removeFromParentChildIds(
   this: Analyzer,
@@ -31,10 +32,11 @@ export function removeSectionEntities(
   const { sectionName } = feInfo;
   if (sectionName === "main") return this;
   let next = this;
-  const { varbs } = this.section(feInfo);
+  const { varbs } = next.section(feInfo);
   for (const [varbName, varb] of Object.entries(varbs)) {
     for (const inEntity of [...varb.inEntities]) {
-      next = next.removeInEntity(
+      next = internal.removeInEntity(
+        next,
         { ...feInfo, sectionName, varbName },
         inEntity
       );

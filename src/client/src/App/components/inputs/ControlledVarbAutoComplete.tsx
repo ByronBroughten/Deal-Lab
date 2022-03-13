@@ -1,6 +1,6 @@
 import { isEqual } from "lodash";
 import { useAnalyzerContext } from "../../modules/usePropertyAnalyzer";
-import { VariableOption } from "../../sharedWithServer/Analyzer/methods/entitiesVariables";
+import { VariableOption } from "../../sharedWithServer/Analyzer/methods/variableOptions";
 import { InEntityVarbInfo } from "../../sharedWithServer/Analyzer/SectionMetas/relSections/rel/valueMeta/NumObj/entities";
 import VarbAutoComplete from "./VarbAutoComplete";
 

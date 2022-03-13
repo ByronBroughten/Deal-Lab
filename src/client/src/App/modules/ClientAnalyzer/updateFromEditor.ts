@@ -14,6 +14,7 @@ import Analyzer from "../../sharedWithServer/Analyzer";
 import array from "../../sharedWithServer/utils/Arr";
 import { FeVarbInfo } from "../../sharedWithServer/Analyzer/SectionMetas/relSections/rel/relVarbInfoTypes";
 import { InEntities } from "../../sharedWithServer/Analyzer/SectionMetas/relSections/rel/valueMeta/NumObj/entities";
+import { internal } from "../../sharedWithServer/Analyzer/methods/internal";
 
 const updateEditorByBasicType = {
   string(editorState: EditorState): string {
@@ -47,7 +48,11 @@ function updateValueFromEditor(
   let next = analyzer;
   const nextValue = valueFromEditor(next, feVarbInfo, editorState);
   if (nextValue instanceof NumObj)
-    next = next.updateConnectedEntities(feVarbInfo, nextValue.entities);
+    next = internal.updateConnectedEntities(
+      next,
+      feVarbInfo,
+      nextValue.entities
+    );
   return next.updateValue(feVarbInfo, nextValue, true);
 }
 

@@ -12,13 +12,13 @@ import { FeInfo, Inf } from "../SectionMetas/Info";
 import StateSection from "../StateSection";
 import { SectionName } from "../SectionMetas/SectionName";
 
-export function findRowCellByColumn(
-  this: Analyzer,
+function findRowCellByColumn(
+  analyzer: Analyzer,
   rowInfo: FeInfo<"rowIndex">,
   colInfo: FeNameInfo<"column">
 ): StateSection<"cell"> | undefined {
-  const cells = this.children(rowInfo, "cell");
-  const column = this.section(colInfo);
+  const cells = analyzer.children(rowInfo, "cell");
+  const column = analyzer.section(colInfo);
   const colInfoValues = column.varbInfoValues();
 
   return cells.find((cell) => {
@@ -33,8 +33,8 @@ function sortRowsByOtherColumn(
   colInfo: FeNameInfo<"column">
 ) {
   const nextRows = [...rows].sort((rowA, rowB) => {
-    const cellA = analyzer.findRowCellByColumn(rowA.feInfo, colInfo);
-    const cellB = analyzer.findRowCellByColumn(rowB.feInfo, colInfo);
+    const cellA = findRowCellByColumn(analyzer, rowA.feInfo, colInfo);
+    const cellB = findRowCellByColumn(analyzer, rowB.feInfo, colInfo);
 
     const valueA = cellA ? analyzer.displayVarb("value", cellA.feInfo) : "";
     const valueB = cellB ? analyzer.displayVarb("value", cellB.feInfo) : "";
