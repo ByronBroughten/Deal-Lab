@@ -81,7 +81,7 @@ function resetRowCells(
   let affectedInfos: FeVarbInfo[] = [];
   const allAffectedInfos: FeVarbInfo[] = [];
 
-  [next, affectedInfos] = next.eraseChildren(rowInfo, "cell");
+  [next, affectedInfos] = internal.eraseChildren(next, rowInfo, "cell");
   allAffectedInfos.push(...affectedInfos);
 
   const tableName = rowIndexToTableName[rowInfo.sectionName];

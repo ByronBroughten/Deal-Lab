@@ -29,12 +29,12 @@ const dbStore = {
   },
   async putIndexEntry(feInfo: FeInfo<"hasIndexStore">, next: Analyzer) {
     const { indexStoreName } = next.sectionMeta(feInfo.sectionName);
-    const dbEntry = next.toDbIndexEntry(feInfo);
+    const dbEntry = next.dbIndexEntry(feInfo);
     return await crud.putEntry(dbEntry, indexStoreName);
   },
   async postIndexEntry(feInfo: FeInfo<"hasIndexStore">, next: Analyzer) {
     const { indexStoreName } = next.sectionMeta(feInfo.sectionName);
-    const dbEntry = next.toDbIndexEntry(feInfo);
+    const dbEntry = next.dbIndexEntry(feInfo);
     return await crud.postEntry(dbEntry, indexStoreName);
   },
 } as const;
@@ -73,7 +73,7 @@ export function useStores() {
       next: Analyzer = analyzer
     ) {
       // In this case, you already have a full entry arr and are just posting to the server
-      const dbEntryArr = next.toDbEntryArr(sectionName);
+      const dbEntryArr = next.dbEntryArr(sectionName);
       await crud.postEntryArr(dbEntryArr, sectionName);
     },
     async postTableColumns(
@@ -81,7 +81,7 @@ export function useStores() {
       next: Analyzer = analyzer
     ) {
       const { rowSourceName } = analyzer.sectionMeta(tableName);
-      const tableEntryArr = next.toDbEntryArr(tableName);
+      const tableEntryArr = next.dbEntryArr(tableName);
       const res = await dbStore.postTableColumns(tableName, tableEntryArr);
       if (res) {
         next = next.loadSectionArrAndSolve(rowSourceName, res.data);
@@ -95,7 +95,7 @@ export function useStores() {
 
       if (auth.isLoggedIn) {
         const { defaultStoreName } = next.sectionMeta(sectionName);
-        const nextDbEntryArr = next.toDbEntryArr(defaultStoreName);
+        const nextDbEntryArr = next.dbEntryArr(defaultStoreName);
         await dbStore.postEntryArr(defaultStoreName, nextDbEntryArr);
       }
     },
@@ -142,18 +142,18 @@ export function useStores() {
       sectionName: SectionName<"hasFullIndexStore">,
       dbId: string
     ) {
-      handle("deleteIndexAndSolve", sectionName, dbId);
+      handle("eraseIndexAndSolve", sectionName, dbId);
       doOrBackToDefault("deleteIndexEntry", sectionName, dbId);
     },
     async deleteRowIndexEntry(
       sectionName: SectionName<"hasRowIndexStore">,
       dbId: string
     ) {
-      handle("deleteRowIndexAndSolve", sectionName, dbId);
+      handle("eraseRowIndexAndSolve", sectionName, dbId);
       doOrBackToDefault("deleteIndexEntry", sectionName, dbId);
     },
 
-    // in addition to deleteIndexAndSolve, I need deleteRowIndexAndSolve
+    // in addition to eraseIndexAndSolve, I need eraseRowIndexAndSolve
     // It's the same, except I need to remove the rowIndex from the table's dbIds
   };
 }

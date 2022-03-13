@@ -1,30 +1,30 @@
-import Analyzer from "../../../Analyzer";
-import { SectionFinder } from "../../SectionMetas/relSections/baseSectionTypes";
+import Analyzer from "../../Analyzer";
+import { SectionFinder } from "../SectionMetas/relSections/baseSectionTypes";
 import {
   FeNameInfo,
   FeVarbInfo,
-} from "../../SectionMetas/relSections/rel/relVarbInfoTypes";
-import { ChildFeInfo } from "../../SectionMetas/relSectionTypes";
-import { SectionName } from "../../SectionMetas/SectionName";
-import { InitSectionOptions } from "../addSectionAndSolve";
-import { internal } from "../internal";
+} from "../SectionMetas/relSections/rel/relVarbInfoTypes";
+import { ChildFeInfo } from "../SectionMetas/relSectionTypes";
+import { SectionName } from "../SectionMetas/SectionName";
+import { InitSectionOptions } from "./addSectionAndSolve";
+import { internal } from "./internal";
 
 type ResetSectionOptions = Omit<InitSectionOptions, "idx"> & {
   resetDbIds?: boolean;
 };
-export function resetSection<S extends SectionName<"hasParent">>(
-  this: Analyzer,
+function resetSection<S extends SectionName<"hasParent">>(
+  analyzer: Analyzer,
   info: SectionFinder<S>,
   { resetDbIds = false, ...options }: ResetSectionOptions = {}
 ): [Analyzer, FeVarbInfo[]] {
-  let next = this;
+  let next = analyzer;
   let affectedInfos: FeVarbInfo[] = [];
   let allAffectedInfos: FeVarbInfo[] = [];
   const feInfo = next.section(info).feInfo as FeNameInfo<S>;
   const parent = next.parent(feInfo);
   const idx = parent.childIdx(feInfo as ChildFeInfo<typeof parent.sectionName>);
 
-  [next, affectedInfos] = next.eraseSectionAndChildren(feInfo);
+  [next, affectedInfos] = internal.eraseSectionAndChildren(next, feInfo);
   allAffectedInfos.push(...affectedInfos);
 
   const { sectionName } = feInfo;
@@ -38,7 +38,7 @@ export function resetSection<S extends SectionName<"hasParent">>(
 
   if (resetDbIds) {
     const { feInfo: newFeInfo } = next.lastSection(sectionName);
-    next = next.resetSectionAndChildDbIds(newFeInfo);
+    next = internal.resetSectionAndChildDbIds(next, newFeInfo);
   }
   return [next, allAffectedInfos];
 }
@@ -48,6 +48,6 @@ export function resetSectionAndSolve(
   finder: SectionFinder<SectionName<"hasParent">>,
   options: ResetSectionOptions = {}
 ): Analyzer {
-  const [next, allAffectedInfos] = this.resetSection(finder, options);
+  const [next, allAffectedInfos] = resetSection(this, finder, options);
   return next.solveVarbs(allAffectedInfos);
 }

@@ -1,5 +1,5 @@
 import Analyzer from "../../../Analyzer";
-import { sectionNotFound } from "../section";
+import { sectionNotFound } from "./section";
 import {
   DbNameInfo,
   DbVarbInfo,

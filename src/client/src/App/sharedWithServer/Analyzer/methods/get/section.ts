@@ -1,23 +1,23 @@
-import Analyzer from "../../Analyzer";
+import Analyzer from "../../../Analyzer";
 import {
   ChildIdArrs,
   ChildName,
   FeParentInfo,
   ParentFinder,
   ParentName,
-} from "../SectionMetas/relSectionTypes";
-import { sectionMetas } from "../SectionMetas";
-import StateSection, { StateSectionCore } from "../StateSection";
-import { FeInfo, Inf } from "../SectionMetas/Info";
+} from "../../SectionMetas/relSectionTypes";
+import { sectionMetas } from "../../SectionMetas";
+import StateSection, { StateSectionCore } from "../../StateSection";
+import { FeInfo, Inf } from "../../SectionMetas/Info";
 import {
   FeNameInfo,
   FeVarbInfo,
   MultiSectionInfo,
   MultiFindByFocalInfo,
   SpecificSectionInfo,
-} from "../SectionMetas/relSections/rel/relVarbInfoTypes";
-import { SectionNam, SectionName } from "../SectionMetas/SectionName";
-import { Obj } from "../../utils/Obj";
+} from "../../SectionMetas/relSections/rel/relVarbInfoTypes";
+import { SectionNam, SectionName } from "../../SectionMetas/SectionName";
+import { Obj } from "../../../utils/Obj";
 
 export function sectionNotFound({ sectionName, idType, id }: MultiSectionInfo) {
   return new Error(
@@ -104,15 +104,6 @@ export function sectionsByFocal<I extends MultiSectionInfo>(
   else throw sectionNotFound(info);
 }
 
-export function updateSection<I extends FeNameInfo>(
-  this: Analyzer,
-  feInfo: I,
-  nextBaseProps: Partial<StateSectionCore<I["sectionName"]>>
-): Analyzer {
-  const section = this.section(feInfo);
-  const nextSection = section.update(nextBaseProps);
-  return this.replaceInSectionArr(nextSection);
-}
 export function hasSection(this: Analyzer, info: SpecificSectionInfo): boolean {
   return this.findSection(info) !== undefined;
 }

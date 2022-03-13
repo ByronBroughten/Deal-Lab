@@ -10,7 +10,7 @@ import { auth } from "../modules/services/authService";
 import { useStores } from "../modules/customHooks/useStore";
 import { isEqual } from "lodash";
 import { Inf } from "../sharedWithServer/Analyzer/SectionMetas/Info";
-import { SortByColumnOptions } from "../sharedWithServer/Analyzer/methods/indexRows";
+import { SortByColumnOptions } from "../sharedWithServer/Analyzer/methods/rowIndexStore";
 import { SectionName } from "../sharedWithServer/Analyzer/SectionMetas/SectionName";
 import { indexStoreToSectionName } from "../sharedWithServer/Analyzer/SectionMetas/relSectionTypes";
 import TrashBtn from "./general/TrashBtn";

@@ -8,7 +8,7 @@ export function loadSectionFromFeIndex(
 ): Analyzer {
   const { indexStoreName } = this.section(feInfo);
   const dbInfo = Inf.db(indexStoreName, dbId);
-  const dbEntry = this.toDbEntry(dbInfo, {
+  const dbEntry = this.dbEntry(dbInfo, {
     newMainSectionName: feInfo.sectionName,
   });
   return this.resetSectionAndSolve(feInfo, { dbEntry });
@@ -27,7 +27,7 @@ export function setAsDefaultSectionArr(
   const { sectionName } = feInfo;
   const { defaultStoreName } = this.sectionMeta(sectionName);
 
-  const dbEntry = this.toDbEntry(feInfo, {
+  const dbEntry = this.dbEntry(feInfo, {
     newMainSectionName: defaultStoreName,
   });
   const next = this.loadSectionArrAndSolve(defaultStoreName, [dbEntry], {

@@ -1,15 +1,16 @@
 import Analyzer from "../../../Analyzer";
 import { FeInfo } from "../../SectionMetas/Info";
+import { internal } from "../internal";
 
 export function resetSectionAndChildDbIds(
-  this: Analyzer,
+  analyzer: Analyzer,
   feInfo: FeInfo
 ): Analyzer {
-  const feInfos = this.nestedFeInfos(feInfo);
+  const feInfos = analyzer.nestedFeInfos(feInfo);
   const next = feInfos.reduce((next, info) => {
-    return next.updateSection(info, {
+    return internal.updateSection(next, info, {
       dbId: Analyzer.makeId(),
     });
-  }, this);
+  }, analyzer);
   return next;
 }

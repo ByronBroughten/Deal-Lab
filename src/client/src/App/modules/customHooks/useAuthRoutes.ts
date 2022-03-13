@@ -52,7 +52,7 @@ export function useAuthRoutes() {
         body: {
           payload: {
             registerFormData,
-            guestAccessSections: analyzer.sectionArrsToDbEntries(
+            guestAccessSections: analyzer.dbEntryArrs(
               SectionNam.arr.feGuestAccessStore
             ),
           },

@@ -12,7 +12,7 @@ export function pushToIndexStore(
   feInfo: FeInfo<"hasFullIndexStore">
 ): Analyzer {
   const feStoreName = this.section(feInfo).meta.indexStoreName;
-  const dbEntry = this.toDbEntry(feInfo, {
+  const dbEntry = this.dbEntry(feInfo, {
     newMainSectionName: feStoreName,
   });
   const parentInfo = this.parent(feStoreName).feInfo;
@@ -26,7 +26,7 @@ export function stateToUpdateSingleStoreArr(
   feInfo: FeInfo<"savable">,
   feStoreName: ExtraStoreNameAlwaysOne
 ): Analyzer {
-  const dbEntry = this.toDbEntry(feInfo, {
+  const dbEntry = this.dbEntry(feInfo, {
     newMainSectionName: feStoreName,
   });
   return this.loadSectionArrAndSolve(feStoreName, [dbEntry]);
@@ -36,7 +36,7 @@ export function updateIndexStoreEntry(
   feInfo: FeInfo<"hasFullIndexStore">
 ): Analyzer {
   const feStoreName = this.section(feInfo).indexStoreName;
-  const dbEntry = this.toDbEntry(feInfo, {
+  const dbEntry = this.dbEntry(feInfo, {
     newMainSectionName: feStoreName,
   });
   const storeInfo: DbNameInfo<typeof feStoreName> = {

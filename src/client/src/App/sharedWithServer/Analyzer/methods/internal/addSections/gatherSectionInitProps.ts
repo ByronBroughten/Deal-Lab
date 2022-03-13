@@ -140,7 +140,7 @@ export function gatherSectionInitProps<S extends SectionName>(
     }
     if (initFromDefault && SectionNam.is(sectionName, "hasDefaultStore")) {
       const storeName = analyzer.meta.get(sectionName).defaultStoreName;
-      dbEntry = analyzer.toDbEntry(storeName, {
+      dbEntry = analyzer.dbEntry(storeName, {
         newMainSectionName: sectionName,
       });
     }

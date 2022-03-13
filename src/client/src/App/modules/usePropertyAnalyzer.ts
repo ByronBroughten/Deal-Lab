@@ -39,8 +39,8 @@ export default function usePropertyAnalyzer({
     "loadSectionFromFeIndex",
     "loadSectionFromFeDefault",
 
-    "deleteIndexAndSolve",
-    "deleteRowIndexAndSolve",
+    "eraseIndexAndSolve",
+    "eraseRowIndexAndSolve",
     "updateRowIndexStore",
     "updateIndexStoreEntry",
     "pushToRowIndexStore",

@@ -26,7 +26,7 @@ function useFullIndexStoreMenu(feInfo: FeInfo<"hasFullIndexStore">) {
     handle("loadSectionFromFeIndex", feInfo, dbId);
   return {
     load,
-    loadOptions: analyzer.sectionOptions(sectionName),
+    loadOptions: analyzer.sectionArrAsOptions(sectionName),
     loadMenuIsOpen,
     toggleLoadMenu,
     isSaved: analyzer.sectionIsIndexSaved(feInfo),

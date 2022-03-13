@@ -10,7 +10,7 @@ export const relSectionsKey = "relSections";
 
 export function storeAnalyzerState(analyzer: Analyzer): void {
   const { feInfo } = analyzer.singleSection("main");
-  const dbMainEntry = analyzer.toDbEntry(feInfo);
+  const dbMainEntry = analyzer.dbEntry(feInfo);
   localStorage.setItem(stateKey, JSON.stringify(dbMainEntry));
 }
 export function getStoredAnalyzerState(): Analyzer | undefined {

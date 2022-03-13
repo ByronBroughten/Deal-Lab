@@ -6,6 +6,12 @@ import {
 } from "./internal/inOutEntities";
 import { updateConnectedEntities } from "./internal/updateConnectedEntities";
 import { addSections } from "./internal/addSections";
+import { updateSection } from "./internal/updateSection";
+import {
+  eraseChildren,
+  eraseSectionAndChildren,
+} from "./internal/eraseSectionAndChildren";
+import { resetSectionAndChildDbIds } from "./internal/resetSectionAndChildDbIds";
 
 export const internal = {
   addInEntity,
@@ -14,4 +20,8 @@ export const internal = {
   removeInEntity,
   updateConnectedEntities,
   addSections,
+  updateSection,
+  eraseChildren,
+  eraseSectionAndChildren,
+  resetSectionAndChildDbIds,
 } as const;
