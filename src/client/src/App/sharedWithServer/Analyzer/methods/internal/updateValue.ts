@@ -22,3 +22,12 @@ export function updateValue(
     .updateValue(nextValue, wasUpdatedByEditor);
   return next.updateVarb(nextVarb);
 }
+
+export function updateValueDirectly(
+  analyzer: Analyzer,
+  feVarbInfo: FeVarbInfo,
+  nextValue: StateValue
+) {
+  // not to be used for editor updates.
+  return internal.updateValue(analyzer, feVarbInfo, nextValue, false);
+}

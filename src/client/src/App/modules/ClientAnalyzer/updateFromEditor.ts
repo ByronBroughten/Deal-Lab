@@ -47,12 +47,6 @@ function updateValueFromEditor(
 ): Analyzer {
   let next = analyzer;
   const nextValue = valueFromEditor(next, feVarbInfo, editorState);
-  if (nextValue instanceof NumObj)
-    next = internal.updateConnectedEntities(
-      next,
-      feVarbInfo,
-      nextValue.entities
-    );
   return internal.updateValue(next, feVarbInfo, nextValue, true);
 }
 

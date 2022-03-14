@@ -13,6 +13,7 @@ import {
 } from "./internal/eraseSectionAndChildren";
 import { resetSectionAndChildDbIds } from "./internal/resetSectionAndChildDbIds";
 import { updateValue } from "./internal/updateValue";
+import { updateValueDirectly } from "./internal/updateValue";
 
 export const internal = {
   addInEntity,
@@ -26,4 +27,5 @@ export const internal = {
   eraseSectionAndChildren,
   resetSectionAndChildDbIds,
   updateValue,
+  updateValueDirectly,
 } as const;

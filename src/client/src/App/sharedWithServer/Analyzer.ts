@@ -126,20 +126,13 @@ import {
   setSectionArr,
   wipeSectionArrAndSolve,
 } from "./Analyzer/methods/setSectionArr";
-import {
-  directUpdateAndSolve,
-  solveAllActiveVarbs,
-  solveVarbs,
-} from "./Analyzer/methods/solveVarbs";
+import { solveAllActiveVarbs, solveVarbs } from "./Analyzer/methods/solveVarbs";
 import {
   gatherAndSortInfosToSolve,
   getDagEdgesAndLoneVarbs,
   getOutVarbMap,
 } from "./Analyzer/methods/solveVarbs/gatherAndSortInfosToSolve";
-import {
-  solveAndUpdateValue,
-  solveValue,
-} from "./Analyzer/methods/solveVarbs/solveAndUpdateValue";
+
 import {
   getNumberVarbs,
   getSolvableNumber,
@@ -162,10 +155,10 @@ import {
   updateIndexStoreEntry,
 } from "./Analyzer/methods/updateStore";
 import {
+  directUpdateAndSolve,
   loadValueFromVarb,
-  updateSectionValues,
-  updateValueDirectly,
-} from "./Analyzer/methods/updateValueDirectly";
+  updateSectionValuesAndSolve,
+} from "./Analyzer/methods/directUpdateAndSolve";
 import { SectionMeta, sectionMetas } from "./Analyzer/SectionMetas";
 import { SectionNam, SectionName } from "./Analyzer/SectionMetas/SectionName";
 import StateSection, { StateSectionCore } from "./Analyzer/StateSection";
@@ -354,9 +347,8 @@ export default class Analyzer {
   switchedOngoingVarb = switchedOngoingVarb;
   switchedOngoingDisplayVarb = switchedOngoingDisplayVarb;
 
-  updateValueDirectly = updateValueDirectly;
   loadValueFromVarb = loadValueFromVarb;
-  updateSectionValues = updateSectionValues;
+  updateSectionValuesAndSolve = updateSectionValuesAndSolve;
 
   value = value;
   feValue = feValue;
@@ -372,14 +364,12 @@ export default class Analyzer {
   solvableTextFromEditorTextAndEntities = solvableTextFromEditorTextAndEntities;
   solvableTextToNumber = solvableTextToNumber;
   getNumberVarbs = getNumberVarbs;
-  solveAndUpdateValue = solveAndUpdateValue;
   solvableTextFromCalculation = solvableTextFromCalculation;
   solvableTextFromCalcVarbs = solvableTextFromCalcVarbs;
 
   solveVarbs = solveVarbs;
   solveAllActiveVarbs = solveAllActiveVarbs;
   directUpdateAndSolve = directUpdateAndSolve;
-  solveValue = solveValue;
 
   variableOptions = variableOptions;
 

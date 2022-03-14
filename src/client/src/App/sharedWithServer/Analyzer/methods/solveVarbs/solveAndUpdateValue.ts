@@ -3,12 +3,12 @@ import { FeVarbInfo } from "../../SectionMetas/relSections/rel/relVarbInfoTypes"
 import { NumObj } from "../../SectionMetas/relSections/rel/valueMeta/NumObj";
 import { Inf } from "../../SectionMetas/Info";
 import { isCalculationName } from "../../SectionMetas/relSections/rel/valueMeta/NumObj/calculations";
+import { internal } from "../internal";
 
 export function solveValue(
-  this: Analyzer,
+  analyzer: Analyzer,
   feVarbInfo: FeVarbInfo
 ): NumObj | string | undefined {
-  const analyzer = this;
   const updateFns = {
     editorValue(): NumObj {
       const value = analyzer.value(feVarbInfo, "numObj");
@@ -58,10 +58,10 @@ export function solveValue(
         solvableText,
         number,
       });
-      return nextNumObj.updateCore({
-        editorText: `${nextNumObj.solvableText}`,
-        entities: [],
-      });
+      // I should get rid of entities, right?
+      // I can't just get rid of them, though, right?
+
+      return nextNumObj.updateCore({ editorText: `${number}`, entities: [] });
     },
     userVarb(): NumObj {
       if (Inf.is.feName(feVarbInfo, "userVarbItem"))
@@ -79,18 +79,18 @@ export function solveValue(
     return str in updateFns;
   }
 
-  const updateFnName = this.updateFnName(feVarbInfo);
+  const updateFnName = analyzer.updateFnName(feVarbInfo);
   if (isCalculationName(updateFnName)) return updateFns.calculation();
   if (isInUpdateFns(updateFnName)) return updateFns[updateFnName]();
   else return undefined;
 }
 
 export function solveAndUpdateValue(
-  this: Analyzer,
+  analyzer: Analyzer,
   feVarbInfo: FeVarbInfo
 ): Analyzer {
-  const newValue = this.solveValue(feVarbInfo);
+  const newValue = solveValue(analyzer, feVarbInfo);
   if (newValue !== undefined)
-    return this.updateValueDirectly(feVarbInfo, newValue);
-  else return this;
+    return internal.updateValueDirectly(analyzer, feVarbInfo, newValue);
+  else return analyzer;
 }

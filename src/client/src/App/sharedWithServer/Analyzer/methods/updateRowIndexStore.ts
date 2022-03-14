@@ -70,7 +70,7 @@ export function sortTableRowIdsByColumn(
 
   const nextRowIds = nextRows.map(({ dbId }) => dbId);
   const tableInfo = this.feInfo(tableName);
-  return this.updateValueDirectly(Inf.feVarb("rowIds", tableInfo), nextRowIds);
+  return this.directUpdateAndSolve(Inf.feVarb("rowIds", tableInfo), nextRowIds);
 }
 
 function resetRowCells(
@@ -120,7 +120,7 @@ export function pushToRowIndexStore(
   const { dbId } = next.section(feInfo);
   rowIds.push(dbId);
 
-  next = next.updateValueDirectly(rowIdsInfo, rowIds);
+  next = next.directUpdateAndSolve(rowIdsInfo, rowIds);
 
   const title = next.feValue("title", feInfo, "string");
   [next, affectedInfos] = internal.addSections(next, {

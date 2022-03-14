@@ -5,23 +5,24 @@ import { InEntityVarbInfo } from "../SectionMetas/relSections/rel/valueMeta/NumO
 import { StateValue } from "../StateSection/StateVarb/stateValue";
 import { internal } from "./internal";
 
-export function updateValueDirectly(
+export function directUpdateAndSolve(
   this: Analyzer,
   feVarbInfo: FeVarbInfo,
-  nextValue: StateValue
+  value: StateValue
 ) {
-  // not to be used for editor updates.
-  return internal.updateValue(this, feVarbInfo, nextValue, false);
+  let next = this;
+  next = internal.updateValueDirectly(next, feVarbInfo, value);
+  return next.solveVarbs([feVarbInfo]);
 }
 
-export function updateSectionValues(
+export function updateSectionValuesAndSolve(
   this: Analyzer,
   info: FeVarbInfo,
   values: { [varbName: string]: StateValue }
 ): Analyzer {
   return Object.keys(values).reduce((next, varbName) => {
     const varbInfo = Inf.feVarb(varbName, info);
-    return next.updateValueDirectly(varbInfo, values[varbName]);
+    return internal.updateValueDirectly(next, varbInfo, values[varbName]);
   }, this);
 }
 
@@ -42,7 +43,7 @@ export function loadValueFromVarb(
     offset: 0, // just borrowing functionality from editor entities
     entityId: nextEntityId,
   });
-  next = next.updateSectionValues(feVarbInfo, {
+  next = next.updateSectionValuesAndSolve(feVarbInfo, {
     ...varbInfo,
     entityId: nextEntityId,
   });

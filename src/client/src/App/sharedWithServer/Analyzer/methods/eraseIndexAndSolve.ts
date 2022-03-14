@@ -3,6 +3,7 @@ import Arr from "../../utils/Arr";
 import { Inf } from "../SectionMetas/Info";
 import { rowIndexToTableName } from "../SectionMetas/relSectionTypes";
 import { SectionName } from "../SectionMetas/SectionName";
+import { internal } from "./internal";
 
 export function eraseIndexAndSolve(
   this: Analyzer,
@@ -26,6 +27,6 @@ export function eraseRowIndexAndSolve(
 
   let rowIds = rowIdsVarb.value("stringArray");
   rowIds = Arr.rmFirstValueClone(rowIds, dbId);
-  next = next.updateValueDirectly(rowIdsVarb.feVarbInfo, rowIds);
+  next = next.directUpdateAndSolve(rowIdsVarb.feVarbInfo, rowIds);
   return next.eraseIndexAndSolve(sectionName, dbId);
 }
