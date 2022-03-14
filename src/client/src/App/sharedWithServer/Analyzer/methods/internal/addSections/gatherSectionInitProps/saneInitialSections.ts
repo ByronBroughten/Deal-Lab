@@ -1,6 +1,6 @@
 import { cloneDeep } from "lodash";
-import { makeSectionId } from "../../../../../makeSectionId";
 import { DbEnt } from "../../../../DbEntry";
+import { Id } from "../../../../SectionMetas/relSections/baseSections/id";
 
 import { initAnalysisDefault } from "./saneInitialSections/initAnalysisDefault";
 import { initAnalysisTable } from "./saneInitialSections/initAnalysisTable";
@@ -15,9 +15,9 @@ const core = {
   mgmtDefault: initMgmtDefault,
 
   analysisTable: initAnalysisTable,
-  propertyTable: DbEnt.makeTableEntry("propertyTable", makeSectionId()),
-  loanTable: DbEnt.makeTableEntry("loanTable", makeSectionId()),
-  mgmtTable: DbEnt.makeTableEntry("mgmtTable", makeSectionId()),
+  propertyTable: DbEnt.makeTableEntry("propertyTable", Id.make()),
+  loanTable: DbEnt.makeTableEntry("loanTable", Id.make()),
+  mgmtTable: DbEnt.makeTableEntry("mgmtTable", Id.make()),
 } as const;
 
 type Core = typeof core;

@@ -1,4 +1,3 @@
-import { makeSectionId } from "../makeSectionId";
 import { z } from "zod";
 import { zNanoId, zString } from "../utils/zod";
 import { BasicValue } from "./StateSection/StateVarb/stateValue";
@@ -18,6 +17,7 @@ import { relSections } from "./SectionMetas/relSections";
 import { AlwaysOneVarbFinder, SectionName } from "./SectionMetas/SectionName";
 import { DbInfo, Inf } from "./SectionMetas/Info";
 import { DbStoreName } from "./SectionMetas/relSections/baseSectionTypes";
+import { Id } from "./SectionMetas/relSections/baseSections/id";
 
 export type DbValue = BasicValue | DbNumObj;
 export type DbVarbs = {
@@ -55,7 +55,7 @@ export const DbEnt = {
     dbVarbs: DbVarbs,
     {
       childDbIds = {},
-      dbId = makeSectionId(),
+      dbId = Id.make(),
       dbSections = {},
     }: MakeDbEntryOptions = {}
   ): DbEntry {
@@ -68,7 +68,7 @@ export const DbEnt = {
     };
   },
   initSection(
-    dbId: string = makeSectionId(),
+    dbId: string = Id.make(),
     dbVarbs: DbVarbs = {},
     childDbIds: ChildDbIds = {}
   ): DbSection {
@@ -230,7 +230,7 @@ export const DbEnt = {
   },
   makeTableEntry(
     tableName: SectionName<"table">,
-    dbId: string = makeSectionId(),
+    dbId: string = Id.make(),
     initColumns: InitColumn[] = []
   ) {
     let initTable = DbEnt.initEntry(

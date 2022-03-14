@@ -164,7 +164,7 @@ import { SectionMeta, sectionMetas } from "./Analyzer/SectionMetas";
 import { SectionNam, SectionName } from "./Analyzer/SectionMetas/SectionName";
 import StateSection, { StateSectionCore } from "./Analyzer/StateSection";
 import { ObjectKeys } from "./utils/Obj";
-import { nanoIdLength } from "./utils/validatorConstraints";
+import { Id } from "./Analyzer/SectionMetas/relSections/baseSections/id";
 
 export type StateSections = { [S in SectionName]: StateSection<S>[] };
 type RawSections = { [S in SectionName]: StateSectionCore<S>[] };
@@ -243,7 +243,7 @@ export default class Analyzer {
     return new Analyzer(this.core);
   }
   static makeId() {
-    return nanoid(nanoIdLength);
+    return Id.make();
   }
   static blankStateSections(): StateSections {
     const core = ObjectKeys(sectionMetas.raw).reduce((core, sectionName) => {

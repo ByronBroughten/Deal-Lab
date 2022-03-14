@@ -1,7 +1,7 @@
-import { makeSectionId } from "../../../../../../makeSectionId";
 import { Obj } from "../../../../../../utils/Obj";
-import { DbEnt, DbEntry, DbSection } from "../../../../../DbEntry";
+import { DbEnt, DbEntry } from "../../../../../DbEntry";
 import { Inf } from "../../../../../SectionMetas/Info";
+import { Id } from "../../../../../SectionMetas/relSections/baseSections/id";
 import { dbNumObj } from "../../../../../SectionMetas/relSections/rel/valueMeta/NumObj";
 
 type ListItemCoreValues = [name: string, cost: number];
@@ -21,7 +21,7 @@ const periodicItemSections = [...periodicItemCoreValues]
     valueMonthly: dbNumObj(monthlyCost),
     valueOngoingSwitch: "monthly",
   }))
-  .map((values) => DbEnt.initSection(makeSectionId(), values));
+  .map((values) => DbEnt.initSection(Id.make(), values));
 
 const miscUpfrontItemCoreValues: ListItemCoreValues[] = [
   // ["Inspection", 600]
@@ -34,7 +34,7 @@ const miscUpfrontSections = [...miscUpfrontItemCoreValues]
     editorValue: dbNumObj(cost),
     value: dbNumObj(cost),
   }))
-  .map((values) => DbEnt.initSection(makeSectionId(), values));
+  .map((values) => DbEnt.initSection(Id.make(), values));
 
 type CapExItemCoreValues = [
   name: string,
@@ -66,7 +66,7 @@ const capExItemSections = [...capExItemCoreValues]
     lifespanSpanSwitch: "years",
     valueOngoingSwitch: "yearly",
   }))
-  .map((values) => DbEnt.initSection(makeSectionId(), values));
+  .map((values) => DbEnt.initSection(Id.make(), values));
 
 let capExList = DbEnt.initEntry(
   "ongoingCostList",
@@ -75,7 +75,7 @@ let capExList = DbEnt.initEntry(
     totalOngoingSwitch: "yearly",
     defaultValueSwitch: "labeledSpanOverCost",
   },
-  { dbId: makeSectionId() }
+  { dbId: Id.make() }
 );
 capExList = DbEnt.addLikeChildren(
   capExList,
@@ -87,7 +87,7 @@ capExList = DbEnt.addLikeChildren(
 let periodicPaymentList = DbEnt.initEntry(
   "ongoingCostList",
   { title: "Utilities" },
-  { dbId: makeSectionId() }
+  { dbId: Id.make() }
 );
 periodicPaymentList = DbEnt.addLikeChildren(
   periodicPaymentList,
@@ -99,7 +99,7 @@ periodicPaymentList = DbEnt.addLikeChildren(
 let miscUpfrontCostList = DbEnt.initEntry(
   "upfrontCostList",
   { title: "Misc" },
-  { dbId: makeSectionId() }
+  { dbId: Id.make() }
 );
 miscUpfrontCostList = DbEnt.addLikeChildren(
   miscUpfrontCostList,
@@ -110,9 +110,9 @@ miscUpfrontCostList = DbEnt.addLikeChildren(
 
 const dbIds = {
   property: "0Qm-bLBiulvp",
-  unit1: makeSectionId(),
-  unit2: makeSectionId(),
-  repairList: makeSectionId(),
+  unit1: Id.make(),
+  unit2: Id.make(),
+  repairList: Id.make(),
 } as const;
 
 const init: DbEntry = {
