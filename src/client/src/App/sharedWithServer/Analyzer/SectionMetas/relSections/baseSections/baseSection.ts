@@ -10,6 +10,7 @@ type BaseSectionTemplate = {
   varbSchemas: BaseVarbSchemas;
   solvesForFinal: boolean;
   hasGlobalVarbs: boolean;
+  userDefined: boolean;
 };
 
 type Options = Partial<BaseSectionTemplate>;
@@ -28,6 +29,7 @@ export const baseOptions = {
   userList: {
     loadOnLogin: true,
     feGuestAccess: true,
+    userDefined: true,
   },
   fallback: {
     alwaysOne: false,
@@ -36,6 +38,7 @@ export const baseOptions = {
     feGuestAccess: false,
     solvesForFinal: false,
     hasGlobalVarbs: false,
+    userDefined: false,
   },
 } as const;
 

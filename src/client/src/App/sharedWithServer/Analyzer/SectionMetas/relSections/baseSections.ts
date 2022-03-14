@@ -41,15 +41,18 @@ export const baseSections = {
     ...base.varbs.ongoing("value"),
     ...base.varbs.switch("lifespan", switchEndings.monthsYears),
   }),
-  userVarbItem: base.section.schema({
-    ...base.varbs.string([
-      "name",
-      "startAdornment",
-      "endAdornment",
-      "valueSwitch",
-    ] as const),
-    ...base.varbs.numObj(["editorValue", "value"] as const),
-  }),
+  userVarbItem: base.section.schema(
+    {
+      ...base.varbs.string([
+        "name",
+        "startAdornment",
+        "endAdornment",
+        "valueSwitch",
+      ] as const),
+      ...base.varbs.numObj(["editorValue", "value"] as const),
+    },
+    { userDefined: true }
+  ),
   // these solve.
   upfrontCostList: base.section.singleTimeListSolves,
   upfrontRevenueList: base.section.singleTimeListSolves,

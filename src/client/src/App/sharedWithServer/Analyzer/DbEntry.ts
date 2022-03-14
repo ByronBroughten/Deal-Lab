@@ -10,7 +10,7 @@ import {
 } from "./SectionMetas/relSections/rel/valueMeta/NumObj/entities";
 import {
   DbNameInfo,
-  StaticRelInfo,
+  RelInfoStatic,
 } from "./SectionMetas/relSections/rel/relVarbInfoTypes";
 import { DbUser } from "../User/DbUser";
 import { relSections } from "./SectionMetas/relSections";
@@ -99,7 +99,7 @@ export const DbEnt = {
       );
   },
 
-  sectionByStaticInfo(dbEntry: DbEntry, info: StaticRelInfo): DbSection {
+  sectionByStaticInfo(dbEntry: DbEntry, info: RelInfoStatic): DbSection {
     const { sectionName } = info;
     return this.sectionArr(dbEntry, sectionName)[0];
   },
@@ -123,7 +123,7 @@ export const DbEnt = {
   },
   section(
     dbEntry: DbEntry,
-    finder: SectionName<"alwaysOne"> | InEntityInfo
+    finder: SectionName<"alwaysOne"> | InEntityInfo | DbNameInfo
   ): DbSection {
     if (typeof finder === "string") return this.sectionArr(dbEntry, finder)[0];
     if (finder.idType === "relative")

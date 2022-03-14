@@ -1,15 +1,14 @@
 import { pick } from "lodash";
 import Analyzer from "../../../Analyzer";
+import { DbInfo, Inf } from "../../SectionMetas/Info";
 import {
-  DbNameInfo,
   FeNameInfo,
-  isSingleMultiInfo,
-  isStaticMultiInfo,
   MultiSectionInfo,
   MultiVarbInfo,
   MultiFindByFocalInfo,
   SpecificSectionInfo,
   SpecificVarbInfo,
+  SpecificSectionsInfo,
 } from "../../SectionMetas/relSections/rel/relVarbInfoTypes";
 import { ChildName } from "../../SectionMetas/relSectionTypes";
 import { SectionName } from "../../SectionMetas/SectionName";
@@ -49,10 +48,14 @@ export function findFeInfo<I extends SpecificSectionInfo>(
     case "feId":
       return info;
     case "dbId": {
-      const { sectionName, id } = info;
-      const sectionOrUn = this.findSectionByDbId(sectionName, id);
-      if (sectionOrUn) return sectionOrUn.feInfo;
-      else return undefined;
+      const { sectionName } = info;
+      const sections = this.findSections(info);
+      if (sections.length > 1)
+        throw new Error(
+          `No two of sections with sectionName ${sectionName} should have the same dbId`
+        );
+      else if (sections.length === 0) return undefined;
+      else return sections[0].feInfo;
     }
     case "relative": {
       return this.singleSection(info.sectionName).feInfo;
@@ -66,6 +69,19 @@ export function findSection<I extends SpecificSectionInfo>(
   const infoOrUn = this.findFeInfo(info);
   if (!infoOrUn) return infoOrUn;
   return this.findSectionByFeId(infoOrUn);
+}
+
+export function findSections<I extends SpecificSectionsInfo>(
+  this: Analyzer,
+  info: I
+): StateSection<I["sectionName"]>[] {
+  const { sectionName, id } = info;
+  const sections = this.sectionArr(sectionName);
+  if (info.idType === "relative") {
+    if (["all", "static"].includes(id)) return sections;
+    else throw new Error("This was designed for only all or static relInfos");
+  }
+  return sections.filter((section) => section[info.idType] === id);
 }
 
 export function findSectionByFocal<S extends SectionName>(
@@ -90,7 +106,7 @@ export function findFeInfoByFocal(
   focalInfo: SpecificSectionInfo,
   info: MultiFindByFocalInfo
 ): FeNameInfo | undefined {
-  if (isStaticMultiInfo(info)) return this.findFeInfo(info);
+  if (Inf.is.specific(info)) return this.findFeInfo(info);
   switch (info.id) {
     case "local":
       return this.findFeInfo(focalInfo);
@@ -121,11 +137,11 @@ export function findFeInfosByFocal<I extends MultiSectionInfo>(
     "idType",
   ]) as SpecificSectionInfo;
 
-  if (isStaticMultiInfo(info)) {
+  if (Inf.is.specific(info)) {
     const feInfo = this.findFeInfo(info);
     return feInfo ? [feInfo] : feInfo;
   }
-  if (isSingleMultiInfo(info)) {
+  if (Inf.is.singleMulti(info)) {
     const feInfo = this.findFeInfoByFocal(focalInfo, info);
     return feInfo ? [feInfo] : feInfo;
   }

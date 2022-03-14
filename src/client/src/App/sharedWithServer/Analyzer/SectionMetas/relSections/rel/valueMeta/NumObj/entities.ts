@@ -2,22 +2,20 @@ import { z } from "zod";
 import { reqMonNumber, reqMonString } from "../../../../../../utils/mongoose";
 import { zNumber, zString } from "../../../../../../utils/zod";
 import {
-  DbVarbInfo,
   FeVarbInfo,
-  StaticRelInfo,
+  RelInfoStatic,
   StaticRelVarbInfo,
   zDbVarbInfo,
   zImmutableRelVarbInfo,
+  DbUserDefVarbInfo,
 } from "../../relVarbInfoTypes";
-import { BaseName } from "../../../baseSectionTypes";
-import { DbInfo } from "../../../../Info";
 import { pick } from "lodash";
 import { OutEntity } from "../../../../../StateSection/StateVarb/entities";
 import { Id } from "../../../baseSections/id";
 
 export const zInEntityVarbInfo = z.union([zDbVarbInfo, zImmutableRelVarbInfo]);
-export type InEntityVarbInfo = DbVarbInfo | StaticRelVarbInfo;
-export type InEntityInfo = DbInfo | StaticRelInfo;
+export type InEntityVarbInfo = DbUserDefVarbInfo | StaticRelVarbInfo;
+export type InEntityInfo = DbUserDefVarbInfo | RelInfoStatic;
 
 const zInEntityBase = z.object({
   entityId: zString,
@@ -29,7 +27,7 @@ const zImmutableRelInEntity = zInEntityBase.merge(zImmutableRelVarbInfo);
 const zInEntity = z.union([zDbInEntity, zImmutableRelInEntity]);
 export const zInEntities = z.array(zInEntity);
 type InEntityBase = z.infer<typeof zInEntityBase>;
-type DbInEntity = InEntityBase & DbVarbInfo<BaseName<"hasVarb">>;
+type DbInEntity = InEntityBase & DbUserDefVarbInfo;
 type StaticRelInEntity = InEntityBase & StaticRelVarbInfo;
 export type InEntity = DbInEntity | StaticRelInEntity;
 export type InEntities = InEntity[];

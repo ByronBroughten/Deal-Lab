@@ -40,6 +40,7 @@ import {
   findSectionByDbId,
   findSectionByFeId,
   findSectionByFocal,
+  findSections,
   findSectionsByFocal,
   findVarb,
   findVarbByFocal,
@@ -321,6 +322,7 @@ export default class Analyzer {
   findSectionByFeId = findSectionByFeId;
   findFeInfo = findFeInfo;
   findSection = findSection;
+  findSections = findSections;
   findVarb = findVarb;
   findFeInfoByFocal = findFeInfoByFocal;
   findSectionByFocal = findSectionByFocal;

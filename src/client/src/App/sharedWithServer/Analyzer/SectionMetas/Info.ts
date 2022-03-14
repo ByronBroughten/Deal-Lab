@@ -1,9 +1,12 @@
+import { BaseName } from "./relSections/baseSectionTypes";
 import {
   DbNameInfo,
   FeNameInfo,
   FeVarbInfo,
+  MultiFindByFocalInfo,
   MultiSectionInfo,
   MultiVarbInfo,
+  SpecificSectionInfo,
 } from "./relSections/rel/relVarbInfoTypes";
 import { FeSectionNameType, SectionNam, SectionName } from "./SectionName";
 
@@ -21,6 +24,17 @@ type MakeVarbInfo<I extends MultiSectionInfo> = MultiVarbInfo<
 
 export const Inf = {
   is: {
+    singleMulti(info: MultiSectionInfo): info is MultiFindByFocalInfo {
+      const { id, idType } = info;
+      return (
+        ["feId", "dbId"].includes(idType as any) ||
+        ["parent", "local"].includes(id)
+      );
+    },
+    specific(info: MultiSectionInfo): info is SpecificSectionInfo {
+      const { id, idType } = info;
+      return ["feId"].includes(idType as any) || id === "static";
+    },
     db<T extends FeSectionNameType = "all">(
       value: any,
       type?: T
@@ -67,10 +81,14 @@ export const Inf = {
       throw new Error("varbInfo must be for sections that contain varbs");
     else return { ...info, sectionName, varbName } as MakeVarbInfo<I>;
   },
-  feVarb(varbName: string, feInfo: FeNameInfo): FeVarbInfo {
-    const { sectionName } = feInfo;
-    if (SectionNam.is(sectionName, "hasVarb"))
-      return { ...feInfo, sectionName, varbName };
+  feVarb<I extends FeInfo>(
+    varbName: string,
+    feInfo: I
+  ): FeVarbInfo<Extract<I["sectionName"], BaseName<"hasVarb">>> {
+    if (SectionNam.is(feInfo.sectionName, "hasVarb"))
+      return { ...feInfo, varbName } as any as FeVarbInfo<
+        Extract<I["sectionName"], BaseName<"hasVarb">>
+      >;
     else throw new Error("section must contain at least one varb");
   },
   feVarbMaker(feInfo: FeNameInfo): (varbName: string) => FeVarbInfo {

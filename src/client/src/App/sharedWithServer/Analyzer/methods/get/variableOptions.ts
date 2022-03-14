@@ -6,6 +6,7 @@ import { FeVarbInfo } from "../../SectionMetas/relSections/rel/relVarbInfoTypes"
 import { ongoingVarbSpanEndings } from "../../SectionMetas/relSections/rel/relVarbs/preOngoingVarbs";
 import { Inf } from "../../SectionMetas/Info";
 import { SectionNam, SectionName } from "../../SectionMetas/SectionName";
+import { BaseName } from "../../SectionMetas/relSections/baseSectionTypes";
 
 export type SectionOption = {
   dbId: string;
@@ -51,7 +52,7 @@ function initStaticVarbOptions(): VariableOption[] {
 
 function userOption(
   analyzer: Analyzer,
-  feVarbInfo: FeVarbInfo,
+  feVarbInfo: FeVarbInfo<BaseName<"userDefined">>,
   collectionName: string,
   displayName: string
 ): VariableOption {

@@ -68,22 +68,29 @@ export type RelSectionInfo<
   sectionName: S;
 } & E;
 
-type AbsoluteSectionInfo<S extends BaseName, E extends object = {}> =
-  | FeNameInfo<S, E>
-  | DbNameInfo<S, E>;
-
 export type MultiSectionInfo<
   S extends BaseName = BaseName,
   E extends object = {}
-> = AbsoluteSectionInfo<S, E> | RelSectionInfo<S, E>;
+> = FeNameInfo<S, E> | DbNameInfo<S, E> | RelSectionInfo<S, E>;
 
-// this doesn't work
+export type DbUserDefInfo<
+  S extends BaseName<"userDefined"> | BaseName<"rowIndex"> =
+    | BaseName<"userDefined">
+    | BaseName<"rowIndex">,
+  E extends object = {}
+> = DbNameInfo<S> & E;
 export type SpecificSectionInfo<
   S extends BaseName = BaseName,
   E extends object = {}
 > =
-  | AbsoluteSectionInfo<S, E>
-  | StaticRelInfo<Extract<S, BaseName<"alwaysOne">>, E>;
+  | FeNameInfo<S, E>
+  | DbUserDefInfo<Extract<S, BaseName<"userDefined"> | BaseName<"rowIndex">>, E>
+  | RelInfoStatic<Extract<S, BaseName<"alwaysOne">>, E>;
+
+export type SpecificSectionsInfo<
+  S extends BaseName = BaseName,
+  E extends object = {}
+> = SpecificSectionInfo<S, E> | DbNameInfo<S, E> | RelInfoAll<S, E>;
 
 export type SpecificVarbInfo<
   S extends BaseName<"hasVarb"> = BaseName<"hasVarb">
@@ -100,19 +107,6 @@ const feInfo = {
 } as SpecificVarbInfo;
 test(feInfo);
 
-export function isStaticMultiInfo(
-  info: MultiSectionInfo
-): info is SpecificSectionInfo {
-  const { id, idType } = info;
-  return ["feId", "dbId"].includes(idType as any) || id === "static";
-}
-export function isSingleMultiInfo(
-  info: MultiSectionInfo
-): info is MultiFindByFocalInfo {
-  const { id } = info;
-  return isStaticMultiInfo(info) || ["parent", "local"].includes(id);
-}
-
 export type MultiFindByFocalInfo<
   S extends BaseName = BaseName,
   E extends object = {}
@@ -124,6 +118,10 @@ export type FeVarbInfo<S extends BaseName<"hasVarb"> = BaseName<"hasVarb">> =
   FeNameInfo<S, VarbParam>;
 export type DbVarbInfo<S extends BaseName<"hasVarb"> = BaseName<"hasVarb">> =
   DbNameInfo<S, VarbParam>;
+export type DbUserDefVarbInfo<
+  S extends BaseName<"userDefined"> = BaseName<"userDefined">
+> = DbUserDefInfo<S, VarbParam>;
+
 export type RelVarbInfo<S extends BaseName<"hasVarb"> = BaseName<"hasVarb">> =
   RelSectionInfo<S, VarbParam>;
 export type MultiVarbInfo<
@@ -146,16 +144,22 @@ export type ImmutableRelVarbInfo = z.infer<typeof zImmutableRelVarbInfo>;
 export type LocalRelVarbInfo = RelVarbInfo & { id: "local" };
 
 //
-export type StaticRelInfo<
+export type RelInfoStatic<
   S extends BaseName<"alwaysOne"> = BaseName<"alwaysOne">,
   E extends object = {}
 > = RelSectionInfo<S, E> & {
   id: "static";
 } & E;
+export type RelInfoAll<
+  S extends BaseName,
+  E extends object = {}
+> = RelSectionInfo<S, E> & {
+  id: "all";
+} & E;
 
 export type StaticRelVarbInfo<
   S extends BaseName<"alwaysOneHasVarb"> = BaseName<"alwaysOneHasVarb">
-> = StaticRelInfo<S, VarbParam>;
+> = RelInfoStatic<S, VarbParam>;
 
 //
 type RelFindByFocalInfo<

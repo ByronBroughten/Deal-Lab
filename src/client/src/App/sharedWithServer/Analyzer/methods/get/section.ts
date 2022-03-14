@@ -15,6 +15,7 @@ import {
   MultiSectionInfo,
   MultiFindByFocalInfo,
   SpecificSectionInfo,
+  SpecificSectionsInfo,
 } from "../../SectionMetas/relSections/rel/relVarbInfoTypes";
 import { SectionNam, SectionName } from "../../SectionMetas/SectionName";
 import { Obj } from "../../../utils/Obj";
@@ -103,9 +104,11 @@ export function sectionsByFocal<I extends MultiSectionInfo>(
   if (sections) return sections;
   else throw sectionNotFound(info);
 }
-
-export function hasSection(this: Analyzer, info: SpecificSectionInfo): boolean {
-  return this.findSection(info) !== undefined;
+export function hasSection(
+  this: Analyzer,
+  info: SpecificSectionsInfo
+): boolean {
+  return this.findSections(info).length !== 0;
 }
 export function sectionIsIndexSaved(
   this: Analyzer,

@@ -51,6 +51,7 @@ export function addOutEntity(
   varbInfo: InEntityVarbInfo,
   outEntity: OutEntity
 ): Analyzer {
+  // I can guarantee that there are only one of certain dbIds
   if (isUserVarbAndWasDeleted(analyzer, varbInfo)) return analyzer;
   const nextVarb = analyzer.varb(varbInfo).addOutEntity(outEntity);
   return analyzer.updateVarb(nextVarb);

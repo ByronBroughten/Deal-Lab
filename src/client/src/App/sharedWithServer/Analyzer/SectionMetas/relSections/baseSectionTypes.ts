@@ -70,6 +70,11 @@ const hasGlobalVarbNames = Obj.entryKeysWithPropValue(
   "hasGlobalVarbs",
   true as true
 );
+const userDefinedSectionNames = Obj.entryKeysWithPropValue(
+  baseSections,
+  "userDefined",
+  true as true
+);
 
 //
 type NoVarbsSectionSchema = SubType<
@@ -154,6 +159,7 @@ export const baseNames = {
   additiveListType: additiveListSectionTypes,
   rowIndex: rowIndexSectionNames,
   hasGlobalVarbs: hasGlobalVarbNames,
+  userDefined: userDefinedSectionNames,
 } as const;
 
 type SchemaNameArrs = typeof baseNames;

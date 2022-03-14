@@ -15,7 +15,6 @@ import { SectionName } from "../sharedWithServer/Analyzer/SectionMetas/SectionNa
 import { indexStoreToSectionName } from "../sharedWithServer/Analyzer/SectionMetas/relSectionTypes";
 import TrashBtn from "./general/TrashBtn";
 import ColumnHeader from "./SectionTable/ColumnHeader";
-import useToggleView from "../modules/customHooks/useToggleView";
 
 type Props = { tableName: SectionName<"table"> };
 
