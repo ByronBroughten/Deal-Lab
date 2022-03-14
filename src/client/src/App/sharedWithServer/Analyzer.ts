@@ -165,6 +165,7 @@ import { SectionNam, SectionName } from "./Analyzer/SectionMetas/SectionName";
 import StateSection, { StateSectionCore } from "./Analyzer/StateSection";
 import { ObjectKeys } from "./utils/Obj";
 import { Id } from "./Analyzer/SectionMetas/relSections/baseSections/id";
+import { newInEntity } from "./Analyzer/methods/get/inEntity";
 
 export type StateSections = { [S in SectionName]: StateSection<S>[] };
 type RawSections = { [S in SectionName]: StateSectionCore<S>[] };
@@ -257,6 +258,8 @@ export default class Analyzer {
   displayNameVn = displayNameVn;
   displayNameOrNotFound = displayNameOrNotFound;
   displayNameInfo = displayNameInfo;
+
+  newInEntity = newInEntity;
 
   nestedFeInfos = nestedFeInfos;
   nestedFeVarbInfos = nestedFeVarbInfos;

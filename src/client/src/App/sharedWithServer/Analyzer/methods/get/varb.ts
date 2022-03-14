@@ -24,6 +24,7 @@ import { UpdateFnName } from "../../SectionMetas/relSections/rel/valueMetaTypes"
 import { UpdateFnProps } from "../../SectionMetas/relSections/rel/relVarbTypes";
 import { SwitchVarbNames } from "../../SectionMetas/relSections/rel/relVarbs/preSwitchVarbs";
 import { switchNames } from "../../SectionMetas/relSections/baseSections/switchNames";
+import { SectionFinder } from "../../SectionMetas/relSections/baseSectionTypes";
 
 export function varb(
   this: Analyzer,
@@ -41,7 +42,7 @@ export function staticVarb(
 export function feVarb(
   this: Analyzer,
   varbName: string,
-  feInfo: SpecificSectionInfo
+  feInfo: SectionFinder
 ) {
   return this.section(feInfo).varb(varbName);
 }

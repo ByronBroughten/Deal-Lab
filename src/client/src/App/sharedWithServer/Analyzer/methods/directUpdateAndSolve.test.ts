@@ -73,23 +73,8 @@ describe("Analyzer.updateValues", () => {
       nextValue
     );
 
-  function propertyGeneralEntity(varbName: string, offset: number) {
-    const entityName = analyzer.displayNameVn(varbName, "propertyGeneral");
-    return [
-      entityName,
-      Ent.inEntity(
-        {
-          id: "static",
-          idType: "relative",
-          sectionName: "propertyGeneral",
-          varbName: varbName,
-        },
-        {
-          offset,
-          length: entityName.length,
-        }
-      ),
-    ] as const;
+  function pgInEntity(varbName: string, offset: number) {
+    return analyzer.newInEntity("propertyGeneral", varbName, offset);
   }
 
   it("should update the value for basic types (string, number, ect)", () => {
@@ -120,11 +105,8 @@ describe("Analyzer.updateValues", () => {
     expect(homeInsMonthly.editorText).toBe(`${nextMonthly}`);
   });
   it("should add outEntities for new inEntities", () => {
-    const [entity1Name, entity1] = propertyGeneralEntity("sqft", 0);
-    const [entity2Name, entity2] = propertyGeneralEntity(
-      "price",
-      entity1Name.length + 1
-    );
+    const [entity1Name, entity1] = pgInEntity("sqft", 0);
+    const [entity2Name, entity2] = pgInEntity("price", entity1Name.length + 1);
 
     const editorText = `${entity1Name}+${entity2Name}`;
     let numObj = new NumObj({ editorText, entities: [entity1, entity2] });
@@ -144,8 +126,8 @@ describe("Analyzer.updateValues", () => {
   it("should remove outEntities when inEntitites are removed", () => {
     const varbName1 = "sqft";
     const varbName2 = "price";
-    const [entity1Name, entity1] = propertyGeneralEntity(varbName1, 0);
-    const [entity2Name, entity2] = propertyGeneralEntity(
+    const [entity1Name, entity1] = pgInEntity(varbName1, 0);
+    const [entity2Name, entity2] = pgInEntity(
       varbName2,
       entity1Name.length + 1
     );
@@ -172,7 +154,7 @@ describe("Analyzer.updateValues", () => {
   });
   it("should add outEntities for two subsequent updates", () => {
     const varbName1 = "sqft";
-    const [entity1Name, entity1] = propertyGeneralEntity(varbName1, 0);
+    const [entity1Name, entity1] = pgInEntity(varbName1, 0);
     let editorText = `${entity1Name}+`;
     let numObj = new NumObj({
       editorText,
@@ -182,7 +164,7 @@ describe("Analyzer.updateValues", () => {
     analyzer = exec("homeInsYearly", numObj);
 
     const varbName2 = "price";
-    const [entity2Name, entity2] = propertyGeneralEntity(
+    const [entity2Name, entity2] = pgInEntity(
       varbName2,
       entity1Name.length + 1
     );

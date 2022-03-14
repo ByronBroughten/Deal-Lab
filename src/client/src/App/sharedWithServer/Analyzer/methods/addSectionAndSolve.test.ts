@@ -144,31 +144,17 @@ describe("Analyzer.addSectionAndSolve", () => {
     });
   });
   describe("outEntityChanges", () => {
-    function propertyGeneralEntity(varbName: string, offset: number) {
-      const entityName = next.displayNameVn(varbName, "propertyGeneral");
-      return [
-        entityName,
-        Ent.inEntity(
-          {
-            id: "static",
-            idType: "relative",
-            sectionName: "propertyGeneral",
-            varbName: varbName,
-          },
-          {
-            offset,
-            length: entityName.length,
-          }
-        ),
-      ] as const;
+    function pgInEntity(varbName: string, offset: number) {
+      return next.newInEntity("propertyGeneral", varbName, offset);
     }
+
     const varbName1 = "price";
     const varbName2 = "sqft";
     beforeEach(async () => {});
 
     it("should add outEntities for inEntities", () => {
-      const [entityName1, entity1] = propertyGeneralEntity(varbName1, 0);
-      const [entityName2, entity2] = propertyGeneralEntity(
+      const [entityName1, entity1] = pgInEntity(varbName1, 0);
+      const [entityName2, entity2] = pgInEntity(
         varbName2,
         entityName1.length + 1
       );
