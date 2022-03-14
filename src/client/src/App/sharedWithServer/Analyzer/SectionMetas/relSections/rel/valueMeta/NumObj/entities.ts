@@ -33,6 +33,15 @@ export type InEntities = InEntity[];
 // there isn't a convenient way to make their sectionName enforce
 // SectionName<"alwaysOne">.
 
+export function entitiesHasEntity(
+  entities: InEntities,
+  entity: InEntity
+): boolean {
+  const match = entities.find((e) => e.entityId === entity.entityId);
+  if (match) return true;
+  else return false;
+}
+
 export type EntityMapData = InEntityVarbInfo & { entityId: string };
 export const mEntityFrame: { [key in keyof InEntity]: any } = {
   entityId: reqMonString,

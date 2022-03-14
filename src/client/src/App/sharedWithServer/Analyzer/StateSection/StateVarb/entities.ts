@@ -1,5 +1,5 @@
 import { FeVarbInfo } from "../../SectionMetas/relSections/rel/relVarbInfoTypes";
-import array from "../../../utils/Arr";
+import Arr from "../../../utils/Arr";
 import StateVarb from "../StateVarb";
 import {
   InEntities,
@@ -14,10 +14,7 @@ export function findInEntity(
   this: StateVarb,
   entityId: string
 ): InEntity | undefined {
-  return array.findIn(
-    this.inEntities,
-    (entity) => entity.entityId === entityId
-  );
+  return Arr.findIn(this.inEntities, (entity) => entity.entityId === entityId);
 }
 export function addInEntity(this: StateVarb, entity: InEntity): StateVarb {
   const value = this.value("numObj");
@@ -31,8 +28,17 @@ export function removeInEntity(this: StateVarb, entityId: string): StateVarb {
     value: value.removeEntity(entityId),
   });
 }
+
+function entityInEntities(entities: InEntities, entity: InEntity): boolean {
+  const match = entities.find((e) => e.entityId === entity.entityId);
+  if (match) return true;
+  else return false;
+}
+
 export function addOutEntity(this: StateVarb, entity: OutEntity): StateVarb {
-  if (!array.objIsIn(entity, this.outEntities)) {
+  // the order is important.
+
+  if (!Arr.objIsIn(entity, this.outEntities)) {
     return this.updateProps({
       outEntities: [...this.outEntities, entity],
     });
@@ -42,7 +48,7 @@ export function removeOutEntity(
   this: StateVarb,
   outEntity: OutEntity
 ): StateVarb {
-  const nextOutEntities = array.rmLikeObjClone(this.outEntities, outEntity);
+  const nextOutEntities = Arr.rmLikeObjClone(this.outEntities, outEntity);
   return this.updateProps({
     outEntities: nextOutEntities,
   });

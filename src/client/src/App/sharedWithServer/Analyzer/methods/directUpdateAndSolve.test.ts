@@ -71,11 +71,6 @@ describe("Analyzer.updateValues", () => {
   let propertyInfo: FeInfo;
   let propertyGeneralInfo: FeInfo;
 
-  let entity1: InEntity;
-  let entity1Name: string;
-  let entity2: InEntity;
-  let entity2Name: string;
-
   beforeEach(() => {
     analyzer = Analyzer.initAnalyzer();
     analyzer.addSectionAndSolve("property", "propertyGeneral", {
@@ -88,18 +83,32 @@ describe("Analyzer.updateValues", () => {
     });
     propertyInfo = analyzer.lastSection("property").feInfo;
     propertyGeneralInfo = analyzer.section("propertyGeneral").feInfo;
-
-    entity1Name = analyzer.displayName(Inf.feVarb("sqft", propertyGeneralInfo));
-    entity2Name = analyzer.displayName(
-      Inf.feVarb("price", propertyGeneralInfo)
-    );
   });
 
-  const exec = (varbName: string, nextValue: StateValue) =>
-    analyzer.directUpdateAndSolve(
-      Inf.feVarb(varbName, propertyInfo),
-      nextValue
+  const exec = (
+    varbName: string,
+    nextValue: StateValue,
+    next: Analyzer = analyzer
+  ) => next.directUpdateAndSolve(Inf.feVarb(varbName, propertyInfo), nextValue);
+
+  function propertyGeneralEntity(varbName: string, offset: number) {
+    const entityName = analyzer.displayName(
+      Inf.feVarb(varbName, propertyGeneralInfo)
     );
+    return [
+      entityName,
+      {
+        entityId: Analyzer.makeId(),
+        id: "static",
+        idType: "relative",
+        sectionName: "propertyGeneral",
+        varbName: varbName,
+        offset: offset,
+        length: entityName.length,
+      },
+    ] as const;
+  }
+
   it("should update the value for basic types (string, number, ect)", () => {
     let next = exec("title", "Next title");
     expect(next.feValue("title", propertyInfo)).toBe("Next title");
@@ -127,20 +136,60 @@ describe("Analyzer.updateValues", () => {
     expect(homeInsMonthly.number).toBe(nextMonthly);
     expect(homeInsMonthly.editorText).toBe(`${nextMonthly}`);
   });
-  it("should add out entities for new inEntities", () => {
-    const editorText = `${entity1Name}+${entity2Name}`;
-    entity1 = propertyGeneralEntity("sqft", entity1Name, 0);
-    entity2 = propertyGeneralEntity(
+  it("should add outEntities for new inEntities", () => {
+    const [entity1Name, entity1] = propertyGeneralEntity("sqft", 0);
+    const [entity2Name, entity2] = propertyGeneralEntity(
       "price",
-      entity2Name,
       entity1Name.length + 1
     );
+
+    const editorText = `${entity1Name}+${entity2Name}`;
     let numObj = new NumObj({ editorText, entities: [entity1, entity2] });
+
+    let next = exec("homeInsYearly", numObj);
+    next.feVarb("homeInsYearly", propertyInfo);
+
+    const homeInsYearlyInfo = Inf.feVarb("homeInsYearly", propertyInfo);
+    const propertyGeneral = next.section("propertyGeneral");
+
+    const outEntity1Info = propertyGeneral.varb("sqft").outEntities[0];
+    const outEntity2Info = propertyGeneral.varb("price").outEntities[0];
+
+    expect(outEntity1Info).toEqual(homeInsYearlyInfo);
+    expect(outEntity2Info).toEqual(homeInsYearlyInfo);
+  });
+  it("should add outEntities for two subsequent updates", () => {
+    const varbName1 = "sqft";
+    const [entity1Name, entity1] = propertyGeneralEntity(varbName1, 0);
+    let editorText = `${entity1Name}+`;
+    let numObj = new NumObj({
+      editorText,
+      entities: [entity1],
+    });
+
     let next = exec("homeInsYearly", numObj);
 
-    expect(next.feVarb("sqft", propertyGeneralInfo).outEntities.length).toBe(1);
-    expect(next.feVarb("price", propertyGeneralInfo).outEntities.length).toBe(
-      1
+    const varbName2 = "price";
+    const [entity2Name, entity2] = propertyGeneralEntity(
+      varbName2,
+      entity1Name.length + 1
     );
+
+    editorText = `${editorText}${entity2Name}`;
+    numObj = new NumObj({
+      editorText: editorText,
+      entities: [entity1, entity2],
+    });
+
+    next = exec("homeInsYearly", numObj, next);
+
+    const homeInsYearlyInfo = Inf.feVarb("homeInsYearly", propertyInfo);
+    const propertyGeneral = next.section("propertyGeneral");
+
+    const outEntity1Info = propertyGeneral.varb(varbName1).outEntities[0];
+    const outEntity2Info = propertyGeneral.varb(varbName2).outEntities[0];
+
+    expect(outEntity1Info).toEqual(homeInsYearlyInfo);
+    expect(outEntity2Info).toEqual(homeInsYearlyInfo);
   });
 });
