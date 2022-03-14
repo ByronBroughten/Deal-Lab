@@ -30,6 +30,7 @@ import {
   displayName,
   displayNameInfo,
   displayNameOrNotFound,
+  displayNameVn,
 } from "./Analyzer/methods/get/displayName";
 import {
   findFeInfo,
@@ -253,6 +254,7 @@ export default class Analyzer {
   }
 
   displayName = displayName;
+  displayNameVn = displayNameVn;
   displayNameOrNotFound = displayNameOrNotFound;
   displayNameInfo = displayNameInfo;
 

@@ -1,4 +1,3 @@
-import { isEqual } from "lodash";
 import { Obj } from "../../../utils/Obj";
 import { SubType } from "../../../utils/typescript";
 import { dbSectionSchemas, baseSections } from "./baseSections";

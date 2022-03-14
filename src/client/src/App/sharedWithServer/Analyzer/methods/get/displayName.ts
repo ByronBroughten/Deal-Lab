@@ -1,4 +1,6 @@
 import Analyzer from "../../../Analyzer";
+import { Inf } from "../../SectionMetas/Info";
+import { SectionFinder } from "../../SectionMetas/relSections/baseSectionTypes";
 import {
   FeVarbInfo,
   RelFindByFocalVarbInfo,
@@ -22,6 +24,15 @@ export function displayName(
   const displayNameVarb = this.varbByFocal(feVarbInfo, displayName);
   return displayNameVarb.value("string");
 }
+export function displayNameVn(
+  this: Analyzer,
+  varbName: string,
+  finder: SectionFinder
+): string {
+  const { feInfo } = this.section(finder);
+  return this.displayName(Inf.feVarb(varbName, feInfo));
+}
+
 export function displayNameInfo(
   this: Analyzer,
   feVarbInfo: FeVarbInfo

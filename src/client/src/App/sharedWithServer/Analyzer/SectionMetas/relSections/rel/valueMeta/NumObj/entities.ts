@@ -13,6 +13,8 @@ import { BaseName } from "../../../baseSectionTypes";
 import { DbInfo } from "../../../../Info";
 import { pick } from "lodash";
 import { OutEntity } from "../../../../../StateSection/StateVarb/entities";
+import { nanoid } from "nanoid";
+import { nanoIdLength } from "../../../../../../utils/validatorConstraints";
 
 export const zInEntityVarbInfo = z.union([zDbVarbInfo, zImmutableRelVarbInfo]);
 export type InEntityVarbInfo = DbVarbInfo | StaticRelVarbInfo;
@@ -36,8 +38,21 @@ export type InEntities = InEntity[];
 // there isn't a convenient way to make their sectionName enforce
 // SectionName<"alwaysOne">.
 
+// where should I put makeId?
+// it will need to be in base, if NumObj is in base
+
 export const Ent = {
-  outEntity(feVarbInfo: FeVarbInfo, inEntity: InEntity) {
+  inEntity(
+    varbInfo: InEntityVarbInfo,
+    entityInfo: { offset: number; length: number }
+  ): InEntity {
+    return {
+      entityId: nanoid(nanoIdLength),
+      ...varbInfo,
+      ...entityInfo,
+    } as const;
+  },
+  outEntity(feVarbInfo: FeVarbInfo, inEntity: InEntity): OutEntity {
     return {
       ...feVarbInfo,
       ...pick(inEntity, ["entityId"]),

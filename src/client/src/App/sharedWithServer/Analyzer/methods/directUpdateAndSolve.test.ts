@@ -1,4 +1,3 @@
-import { pick } from "lodash";
 import Analyzer from "../../Analyzer";
 import { DbEntry } from "../DbEntry";
 import { FeInfo, Inf } from "../SectionMetas/Info";
@@ -7,10 +6,7 @@ import {
   dbNumObj,
   NumObj,
 } from "../SectionMetas/relSections/rel/valueMeta/NumObj";
-import {
-  Ent,
-  InEntity,
-} from "../SectionMetas/relSections/rel/valueMeta/NumObj/entities";
+import { Ent } from "../SectionMetas/relSections/rel/valueMeta/NumObj/entities";
 import { StateValue } from "../StateSection/StateVarb/stateValue";
 
 function makePropertyEntry(values: {
@@ -54,26 +50,9 @@ function makePropertyEntry(values: {
   };
 }
 
-function propertyGeneralEntity(
-  varbName: string,
-  entityName: string,
-  offset: number
-) {
-  return {
-    entityId: Analyzer.makeId(),
-    id: "static",
-    idType: "relative",
-    sectionName: "propertyGeneral",
-    varbName: varbName,
-    offset: offset,
-    length: entityName.length,
-  } as const;
-}
-
 describe("Analyzer.updateValues", () => {
   let analyzer: Analyzer;
   let propertyInfo: FeInfo;
-  let propertyGeneralInfo: FeInfo;
 
   beforeEach(() => {
     analyzer = Analyzer.initAnalyzer();
@@ -86,30 +65,30 @@ describe("Analyzer.updateValues", () => {
       }),
     });
     propertyInfo = analyzer.lastSection("property").feInfo;
-    propertyGeneralInfo = analyzer.section("propertyGeneral").feInfo;
   });
 
-  const exec = (
-    varbName: string,
-    nextValue: StateValue,
-    next: Analyzer = analyzer
-  ) => next.directUpdateAndSolve(Inf.feVarb(varbName, propertyInfo), nextValue);
+  const exec = (varbName: string, nextValue: StateValue) =>
+    analyzer.directUpdateAndSolve(
+      Inf.feVarb(varbName, propertyInfo),
+      nextValue
+    );
 
   function propertyGeneralEntity(varbName: string, offset: number) {
-    const entityName = analyzer.displayName(
-      Inf.feVarb(varbName, propertyGeneralInfo)
-    );
+    const entityName = analyzer.displayNameVn(varbName, "propertyGeneral");
     return [
       entityName,
-      {
-        entityId: Analyzer.makeId(),
-        id: "static",
-        idType: "relative",
-        sectionName: "propertyGeneral",
-        varbName: varbName,
-        offset: offset,
-        length: entityName.length,
-      },
+      Ent.inEntity(
+        {
+          id: "static",
+          idType: "relative",
+          sectionName: "propertyGeneral",
+          varbName: varbName,
+        },
+        {
+          offset,
+          length: entityName.length,
+        }
+      ),
     ] as const;
   }
 
@@ -162,6 +141,35 @@ describe("Analyzer.updateValues", () => {
     expect(outEntity1).toEqual(Ent.outEntity(homeInsYearlyInfo, entity1));
     expect(outEntity2).toEqual(Ent.outEntity(homeInsYearlyInfo, entity2));
   });
+  it("should remove outEntities when inEntitites are removed", () => {
+    const varbName1 = "sqft";
+    const varbName2 = "price";
+    const [entity1Name, entity1] = propertyGeneralEntity(varbName1, 0);
+    const [entity2Name, entity2] = propertyGeneralEntity(
+      varbName2,
+      entity1Name.length + 1
+    );
+
+    let editorText = `${entity1Name}+${entity2Name}`;
+    let numObj = new NumObj({ editorText, entities: [entity1, entity2] });
+    analyzer = exec("homeInsYearly", numObj);
+
+    editorText = `${editorText}+`;
+    numObj = new NumObj({
+      editorText: editorText,
+      entities: [entity1],
+    });
+
+    analyzer = exec("homeInsYearly", numObj);
+    const homeInsYearlyInfo = Inf.feVarb("homeInsYearly", propertyInfo);
+    const propertyGeneral = analyzer.section("propertyGeneral");
+
+    const outEntity1 = propertyGeneral.varb(varbName1).outEntities[0];
+    expect(outEntity1).toEqual(Ent.outEntity(homeInsYearlyInfo, entity1));
+
+    const outEntities2 = propertyGeneral.varb(varbName2).outEntities;
+    expect(outEntities2.length).toBe(0);
+  });
   it("should add outEntities for two subsequent updates", () => {
     const varbName1 = "sqft";
     const [entity1Name, entity1] = propertyGeneralEntity(varbName1, 0);
@@ -171,7 +179,7 @@ describe("Analyzer.updateValues", () => {
       entities: [entity1],
     });
 
-    let next = exec("homeInsYearly", numObj);
+    analyzer = exec("homeInsYearly", numObj);
 
     const varbName2 = "price";
     const [entity2Name, entity2] = propertyGeneralEntity(
@@ -185,10 +193,10 @@ describe("Analyzer.updateValues", () => {
       entities: [entity1, entity2],
     });
 
-    next = exec("homeInsYearly", numObj, next);
+    analyzer = exec("homeInsYearly", numObj);
 
     const homeInsYearlyInfo = Inf.feVarb("homeInsYearly", propertyInfo);
-    const propertyGeneral = next.section("propertyGeneral");
+    const propertyGeneral = analyzer.section("propertyGeneral");
 
     const outEntity1 = propertyGeneral.varb(varbName1).outEntities[0];
     const outEntity2 = propertyGeneral.varb(varbName2).outEntities[0];
