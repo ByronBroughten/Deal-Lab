@@ -25,10 +25,11 @@ export function findSectionByFeId<S extends SectionName>(
 }
 export function findSectionByDbId<S extends SectionName>(
   this: Analyzer,
-  { sectionName, id }: DbNameInfo<S>
+  sectionName: S,
+  dbId: string
 ): StateSection<S> | undefined {
   const sectionArr = this.sectionArr(sectionName);
-  return sectionArr.find((section) => section.dbId === id);
+  return sectionArr.find((section) => section.dbId === dbId);
 }
 
 function sectionToVarbOrUn<S extends SectionName>(
@@ -48,7 +49,8 @@ export function findFeInfo<I extends SpecificSectionInfo>(
     case "feId":
       return info;
     case "dbId": {
-      const sectionOrUn = this.findSectionByDbId(info);
+      const { sectionName, id } = info;
+      const sectionOrUn = this.findSectionByDbId(sectionName, id);
       if (sectionOrUn) return sectionOrUn.feInfo;
       else return undefined;
     }
