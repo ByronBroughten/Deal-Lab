@@ -24,7 +24,7 @@ import {
   addInEntity,
   addOutEntity,
   findInEntity,
-  OutEntities,
+  OutEntity,
   removeInEntity,
   removeOutEntity,
   setInEntities,
@@ -36,7 +36,7 @@ export type InVarbInfo = InEntity | FeVarbInfo;
 export type StateVarbCore = {
   feId: string;
   value: StateValue;
-  outEntities: OutEntities;
+  outEntities: OutEntity[];
   manualUpdateEditorToggle: boolean | undefined; // filled with stateManager to ensure rerenders upon loading varbs
 };
 export type Adornments = {
@@ -109,7 +109,7 @@ export default class StateVarb {
     if (val instanceof NumObj) return cloneDeep(val.entities);
     else return [];
   }
-  get outEntities(): OutEntities {
+  get outEntities(): OutEntity[] {
     return cloneDeep(this.core.outEntities);
   }
 

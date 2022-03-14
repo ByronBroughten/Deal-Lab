@@ -10,7 +10,6 @@ import {
 // so all outEntities (which point to the varbs with inEntities)
 // are FeVarbInfos rather than static.
 export type OutEntity = FeVarbInfo;
-export type OutEntities = OutEntity[];
 export function findInEntity(
   this: StateVarb,
   entityId: string

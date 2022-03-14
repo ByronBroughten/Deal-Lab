@@ -27,7 +27,7 @@ import {
   removeChildFeId,
 } from "./StateSection/methods/childIds";
 import StateVarb from "./StateSection/StateVarb";
-import { OutEntities } from "./StateSection/StateVarb/entities";
+import { OutEntity } from "./StateSection/StateVarb/entities";
 import { value, values, varbInfoValues } from "./StateSection/methods/value";
 import {
   initVarbs,
@@ -182,10 +182,10 @@ export default class StateSection<S extends SectionName = SectionName> {
       return outUpdatePacks.concat(varb.outUpdatePacks);
     }, [] as OutUpdatePack[]);
   }
-  outEntities(): OutEntities {
+  outEntities(): OutEntity[] {
     return this.varbArr.reduce((outEntities, varb) => {
       return outEntities.concat(varb.outEntities);
-    }, [] as OutEntities);
+    }, [] as OutEntity[]);
   }
   toDbVarbs(): DbVarbs {
     return Object.entries(this.varbs).reduce((dbVarbs, [varbName, varb]) => {
