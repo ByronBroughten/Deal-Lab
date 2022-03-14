@@ -8,15 +8,18 @@ import { RegisterForm } from "./NavBar/RegisterForm";
 import NavBtn from "./NavBar/NavBtn";
 import NavUserMenu from "./NavBar/NavUserMenu";
 import { auth } from "../modules/services/authService";
+import { Link } from "react-router-dom";
 
 export default function NavBar() {
   return (
     <Styled>
       <Toolbar disableGutters={true}>
         <div className="NavBar-leftSide">
-          <NavBtn className="NavBar-brandName" href="/analyzer">
-            Ultimate Property Analyzer
-          </NavBtn>
+          <Link className="Analyzer-link" to="/analyzer">
+            <NavBtn className="NavBar-brandName">
+              Ultimate Property Analyzer
+            </NavBtn>
+          </Link>
         </div>
         <div className="NavBar-btns Logged Out">
           {!auth.isLoggedIn && (
@@ -45,10 +48,14 @@ const Styled = styled(AppBar)`
   div.MuiToolbar-root.MuiToolbar-regular {
     height: ${theme.navBar.height};
     min-height: ${theme.navBar.height};
-    /* padding-left: ${theme.s4}; */
     display: flex;
     justify-content: space-between;
     align-items: stretch;
+  }
+
+  .Analyzer-link {
+    display: flex;
+    text-decoration: none;
   }
 
   .NavBar-leftSide {

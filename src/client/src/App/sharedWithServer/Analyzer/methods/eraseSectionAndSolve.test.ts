@@ -2,10 +2,7 @@ import Analyzer from "../../Analyzer";
 import { DbEntry } from "../DbEntry";
 import { FeInfo } from "../SectionMetas/Info";
 import { DbNumObj } from "../SectionMetas/relSections/rel/valueMeta/NumObj";
-import {
-  Ent,
-  InEntity,
-} from "../SectionMetas/relSections/rel/valueMeta/NumObj/entities";
+import { InEntity } from "../SectionMetas/relSections/rel/valueMeta/NumObj/entities";
 
 type UnitProps = {
   dbId?: string;

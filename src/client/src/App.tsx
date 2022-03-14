@@ -13,10 +13,15 @@ import NavBar from "./App/components/NavBar";
 import theme from "./App/theme/Theme";
 import SectionTable from "./App/components/SectionTable";
 
+// 2 problems: it's not storing the state correctly
+// state is reseting when I change pages
 export default function App() {
   const analyzerContext = usePropertyAnalyzer({
     main: true,
   });
+
+  // analyses and analyzerMain must share state
+  // actually, they do share state
 
   return (
     <AnalyzerContext.Provider value={analyzerContext}>

@@ -1,5 +1,6 @@
 import { BiCaretDown, BiCaretRight } from "react-icons/bi";
 import { GoArrowRight } from "react-icons/go";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { auth } from "../../../modules/services/authService";
 import theme from "../../../theme/Theme";
@@ -35,14 +36,15 @@ export default function AnalysisTitleRow({
         />
 
         <LoginToAccessBtnTooltip>
-          <AnalysisBtn
-            href="/analyses"
-            className="AnalysisTitleRow-analysisBtn"
-            disabled={!auth.isLoggedIn}
-            text="Compare Analyses"
-            rightIcon={<GoArrowRight />}
-            title="Log in to click"
-          />
+          <Link className="Analyses-link" to="/analyses">
+            <AnalysisBtn
+              className="AnalysisTitleRow-analysisBtn"
+              disabled={!auth.isLoggedIn}
+              text="Compare Analyses"
+              rightIcon={<GoArrowRight />}
+              title="Log in to click"
+            />
+          </Link>
         </LoginToAccessBtnTooltip>
       </div>
     </Styled>
@@ -52,8 +54,11 @@ export default function AnalysisTitleRow({
 const Styled = styled.div`
   display: flex;
   flex-wrap: wrap;
-  /* align-items: flex-start; */
   align-items: center;
+
+  .Analyses-link {
+    text-decoration: none;
+  }
 
   .MuiTooltip-root {
     background-color: red;
