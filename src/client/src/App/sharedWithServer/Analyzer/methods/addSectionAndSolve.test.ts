@@ -50,7 +50,7 @@ function dbProperty({
   };
 }
 
-describe("Analyzer.addSection", () => {
+describe("Analyzer.addSectionAndSolve", () => {
   const simpleProps = ["property", "propertyGeneral"] as const;
   let numPropertiesInitial: number;
   let finalValues: {

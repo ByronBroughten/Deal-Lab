@@ -10,6 +10,12 @@ export const dbLimits = {
   string: {
     maxLength: 255,
   },
+  password: {
+    minLength: 8,
+    get maxLength() {
+      return dbLimits.string.maxLength;
+    },
+  },
   dbId: {
     length: Id.length,
   },

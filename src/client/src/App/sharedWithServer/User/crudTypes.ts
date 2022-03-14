@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { SectionName, SectionNam } from "../Analyzer/SectionMetas/SectionName";
-import { maxStringLength } from "../utils/validatorConstraints";
+import { dbLimits } from "../utils/dbLimts";
 import { message, zNanoId } from "../utils/zod";
 import { DbEntry, zDbEntry } from "../Analyzer/DbEntry";
 import { LoginUser, zDbEntryArr } from "./DbUser";
@@ -9,11 +9,11 @@ export const authTokenKey = "x-auth-token";
 
 // login
 export const zLoginFormData = z.object({
-  email: z.string().max(maxStringLength).email(message.email),
+  email: z.string().max(dbLimits.string.maxLength).email(message.email),
   password: z
     .string()
-    .min(5, message.min(5))
-    .max(maxStringLength, message.max(maxStringLength)),
+    .min(dbLimits.password.minLength, message.min(dbLimits.password.minLength))
+    .max(dbLimits.password.maxLength, message.max(dbLimits.password.maxLength)),
 });
 export type LoginFormData = z.infer<typeof zLoginFormData>;
 

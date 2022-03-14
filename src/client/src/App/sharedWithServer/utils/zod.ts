@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { dbLimits } from "./validatorConstraints";
+import { dbLimits } from "./dbLimts";
 
 export const message = {
   min: (num: number) => {

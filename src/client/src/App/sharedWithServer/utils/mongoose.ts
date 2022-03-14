@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { dbLimits } from "./validatorConstraints";
+import { dbLimits } from "./dbLimts";
 
 export function makeObjectId() {
   return new mongoose.Types.ObjectId();
