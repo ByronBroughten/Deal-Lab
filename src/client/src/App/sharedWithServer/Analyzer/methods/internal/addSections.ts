@@ -20,7 +20,7 @@ function addOutEntitiesForSectionInVarbs(
   const { varbs } = next.section(feInfo);
   for (const [varbName, varb] of Object.entries(varbs)) {
     for (const inEntity of varb.inEntities) {
-      const outEntity = { ...feInfo, varbName };
+      const outEntity = { ...feInfo, varbName, entityId: inEntity.entityId };
       next = internal.addOutEntity(next, inEntity, outEntity);
     }
   }

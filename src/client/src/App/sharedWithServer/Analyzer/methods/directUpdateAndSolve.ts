@@ -34,7 +34,7 @@ export function loadValueFromVarb(
   let next = this;
   const entityId = next.feValue("entityId", feVarbInfo, "string");
   const entityInfo = next.varbInfoValues(feVarbInfo);
-  next = internal.removeInEntity(next, feVarbInfo, { entityId, ...entityInfo });
+  next = internal.removeInEntity(next, feVarbInfo, { ...entityInfo, entityId });
 
   const nextEntityId = Analyzer.makeId();
   next = internal.addInEntity(next, feVarbInfo, {

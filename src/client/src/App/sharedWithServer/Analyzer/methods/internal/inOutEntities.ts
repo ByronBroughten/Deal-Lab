@@ -4,21 +4,28 @@ import {
   InEntity,
   InEntityVarbInfo,
 } from "../../SectionMetas/relSections/rel/valueMeta/NumObj/entities";
+import { FeVarbInfo } from "../../SectionMetas/relSections/rel/relVarbInfoTypes";
 
 export function addInEntity(
   analyzer: Analyzer,
-  feVarbInfo: OutEntity,
+  feVarbInfo: FeVarbInfo,
   inEntity: InEntity
 ): Analyzer {
   let next = analyzer;
   const nextVarb = next.varb(feVarbInfo).addInEntity(inEntity);
   next = next.updateVarb(nextVarb);
-  next = addOutEntity(next, inEntity, feVarbInfo);
+
+  const outEntity = {
+    ...feVarbInfo,
+    entityId: inEntity.entityId,
+  } as const;
+
+  next = addOutEntity(next, inEntity, outEntity);
   return next;
 }
 export function removeInEntity(
   analyzer: Analyzer,
-  feVarbInfo: OutEntity,
+  feVarbInfo: FeVarbInfo,
   { entityId, ...inEntityVarbInfo }: InEntityVarbInfo & { entityId: string }
 ): // the entityVarbInfo is required because the inEntity with that id might be gone
 // for some reason, in which case you still should remove the outEntity from it
@@ -26,7 +33,9 @@ Analyzer {
   let next = analyzer;
   const nextVarb = next.varb(feVarbInfo).removeInEntity(entityId);
   next = next.updateVarb(nextVarb);
-  next = removeOutEntity(next, inEntityVarbInfo, feVarbInfo);
+  next = removeOutEntity(next, inEntityVarbInfo, { ...feVarbInfo, entityId });
+  // so it has an inEntity. the inEntity's id should match that of the outEntity
+
   return next;
 }
 

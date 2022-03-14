@@ -1,3 +1,4 @@
+import { pick } from "lodash";
 import Analyzer from "../../Analyzer";
 import { DbEntry } from "../DbEntry";
 import { FeInfo, Inf } from "../SectionMetas/Info";
@@ -6,7 +7,10 @@ import {
   dbNumObj,
   NumObj,
 } from "../SectionMetas/relSections/rel/valueMeta/NumObj";
-import { InEntity } from "../SectionMetas/relSections/rel/valueMeta/NumObj/entities";
+import {
+  Ent,
+  InEntity,
+} from "../SectionMetas/relSections/rel/valueMeta/NumObj/entities";
 import { StateValue } from "../StateSection/StateVarb/stateValue";
 
 function makePropertyEntry(values: {
@@ -152,11 +156,11 @@ describe("Analyzer.updateValues", () => {
     const homeInsYearlyInfo = Inf.feVarb("homeInsYearly", propertyInfo);
     const propertyGeneral = next.section("propertyGeneral");
 
-    const outEntity1Info = propertyGeneral.varb("sqft").outEntities[0];
-    const outEntity2Info = propertyGeneral.varb("price").outEntities[0];
+    const outEntity1 = propertyGeneral.varb("sqft").outEntities[0];
+    const outEntity2 = propertyGeneral.varb("price").outEntities[0];
 
-    expect(outEntity1Info).toEqual(homeInsYearlyInfo);
-    expect(outEntity2Info).toEqual(homeInsYearlyInfo);
+    expect(outEntity1).toEqual(Ent.outEntity(homeInsYearlyInfo, entity1));
+    expect(outEntity2).toEqual(Ent.outEntity(homeInsYearlyInfo, entity2));
   });
   it("should add outEntities for two subsequent updates", () => {
     const varbName1 = "sqft";
@@ -186,10 +190,10 @@ describe("Analyzer.updateValues", () => {
     const homeInsYearlyInfo = Inf.feVarb("homeInsYearly", propertyInfo);
     const propertyGeneral = next.section("propertyGeneral");
 
-    const outEntity1Info = propertyGeneral.varb(varbName1).outEntities[0];
-    const outEntity2Info = propertyGeneral.varb(varbName2).outEntities[0];
+    const outEntity1 = propertyGeneral.varb(varbName1).outEntities[0];
+    const outEntity2 = propertyGeneral.varb(varbName2).outEntities[0];
 
-    expect(outEntity1Info).toEqual(homeInsYearlyInfo);
-    expect(outEntity2Info).toEqual(homeInsYearlyInfo);
+    expect(outEntity1).toEqual(Ent.outEntity(homeInsYearlyInfo, entity1));
+    expect(outEntity2).toEqual(Ent.outEntity(homeInsYearlyInfo, entity2));
   });
 });

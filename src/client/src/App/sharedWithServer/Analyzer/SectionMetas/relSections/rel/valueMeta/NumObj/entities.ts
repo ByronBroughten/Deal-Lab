@@ -3,6 +3,7 @@ import { reqMonNumber, reqMonString } from "../../../../../../utils/mongoose";
 import { zNumber, zString } from "../../../../../../utils/zod";
 import {
   DbVarbInfo,
+  FeVarbInfo,
   StaticRelInfo,
   StaticRelVarbInfo,
   zDbVarbInfo,
@@ -10,6 +11,8 @@ import {
 } from "../../relVarbInfoTypes";
 import { BaseName } from "../../../baseSectionTypes";
 import { DbInfo } from "../../../../Info";
+import { pick } from "lodash";
+import { OutEntity } from "../../../../../StateSection/StateVarb/entities";
 
 export const zInEntityVarbInfo = z.union([zDbVarbInfo, zImmutableRelVarbInfo]);
 export type InEntityVarbInfo = DbVarbInfo | StaticRelVarbInfo;
@@ -33,14 +36,22 @@ export type InEntities = InEntity[];
 // there isn't a convenient way to make their sectionName enforce
 // SectionName<"alwaysOne">.
 
-export function entitiesHasEntity(
-  entities: InEntities,
-  entity: InEntity
-): boolean {
-  const match = entities.find((e) => e.entityId === entity.entityId);
-  if (match) return true;
-  else return false;
-}
+export const Ent = {
+  outEntity(feVarbInfo: FeVarbInfo, inEntity: InEntity) {
+    return {
+      ...feVarbInfo,
+      ...pick(inEntity, ["entityId"]),
+    };
+  },
+  entitiesHas(
+    entities: (InEntity | OutEntity)[],
+    entity: InEntity | OutEntity
+  ): boolean {
+    const match = entities.find((e) => e.entityId === entity.entityId);
+    if (match) return true;
+    else return false;
+  },
+} as const;
 
 export type EntityMapData = InEntityVarbInfo & { entityId: string };
 export const mEntityFrame: { [key in keyof InEntity]: any } = {
