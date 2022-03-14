@@ -13,8 +13,7 @@ import { BaseName } from "../../../baseSectionTypes";
 import { DbInfo } from "../../../../Info";
 import { pick } from "lodash";
 import { OutEntity } from "../../../../../StateSection/StateVarb/entities";
-import { nanoid } from "nanoid";
-import { nanoIdLength } from "../../../../../../utils/validatorConstraints";
+import { Id } from "../../../baseSections/id";
 
 export const zInEntityVarbInfo = z.union([zDbVarbInfo, zImmutableRelVarbInfo]);
 export type InEntityVarbInfo = DbVarbInfo | StaticRelVarbInfo;
@@ -47,7 +46,7 @@ export const Ent = {
     entityInfo: { offset: number; length: number }
   ): InEntity {
     return {
-      entityId: nanoid(nanoIdLength),
+      entityId: Id.make(),
       ...varbInfo,
       ...entityInfo,
     } as const;

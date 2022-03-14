@@ -1,9 +1,5 @@
 import mongoose from "mongoose";
-import {
-  maxNumber,
-  maxStringLength,
-  nanoIdLength,
-} from "./validatorConstraints";
+import { dbLimits } from "./validatorConstraints";
 
 export function makeObjectId() {
   return new mongoose.Types.ObjectId();
@@ -16,8 +12,8 @@ export const monObjId = {
 
 export const monNumber = {
   type: Number,
-  max: maxNumber,
-  min: -maxNumber,
+  max: dbLimits.number.max,
+  min: dbLimits.number.min,
 };
 export const reqMonNumber = {
   ...monNumber,
@@ -25,7 +21,7 @@ export const reqMonNumber = {
 };
 export const monString = {
   type: String,
-  maxLength: maxStringLength,
+  maxLength: dbLimits.string.maxLength,
 };
 export const reqMonString = {
   ...monString,
@@ -33,7 +29,7 @@ export const reqMonString = {
 };
 export const reqMonDbId = {
   type: String,
-  maxLength: nanoIdLength,
-  minLength: nanoIdLength,
+  maxLength: dbLimits.dbId.length,
+  minLength: dbLimits.dbId.length,
   required: true,
 };
