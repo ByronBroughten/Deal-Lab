@@ -1,10 +1,10 @@
 import { AxiosResponse } from "axios";
 import { config } from "../../Constants";
-import { SectionNam } from "../../sharedWithServer/Analyzer/SectionMetas/SectionName";
 import {
   authTokenKey,
   isLoginHeaders,
   LoginFormData,
+  makeReq,
   RegisterFormData,
   Req,
   Res,
@@ -48,16 +48,10 @@ export function useAuthRoutes() {
       trySetLogin(res);
     },
     async register(registerFormData: RegisterFormData) {
-      const reqObj: Req<"Register"> = {
-        body: {
-          payload: {
-            registerFormData,
-            guestAccessSections: analyzer.dbEntryArrs(
-              SectionNam.arr.feGuestAccessStore
-            ),
-          },
-        },
-      };
+      const reqObj: Req<"Register"> = makeReq.register(
+        analyzer,
+        registerFormData
+      );
       const res = await https.post(
         "registering",
         config.url.register.path,

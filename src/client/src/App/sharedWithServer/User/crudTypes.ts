@@ -4,6 +4,7 @@ import { dbLimits } from "../utils/dbLimts";
 import { message, zNanoId } from "../utils/zod";
 import { DbEntry, zDbEntry } from "../Analyzer/DbEntry";
 import { LoginUser, zDbEntryArr } from "./DbUser";
+import Analyzer from "../Analyzer";
 
 export const authTokenKey = "x-auth-token";
 
@@ -118,6 +119,19 @@ type Crud = {
     };
   };
 };
+
+export const makeReq = {
+  register(analyzer: Analyzer, registerFormData: RegisterFormData) {
+    return {
+      body: {
+        payload: {
+          registerFormData,
+          guestAccessSections: analyzer.dbEntryArrs("feGuestAccessStore"),
+        },
+      },
+    };
+  },
+} as const;
 
 export type Req<K extends keyof Crud> = Crud[K]["Req"];
 export type Res<K extends keyof Crud> = Crud[K]["Res"];

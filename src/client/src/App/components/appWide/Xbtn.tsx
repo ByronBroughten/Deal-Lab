@@ -12,7 +12,6 @@ export default function XBtn({
   className,
   ...rest
 }: StandardBtnProps) {
-  const childrenIsDefeault = !children;
   return (
     <Styled
       {...{
@@ -20,14 +19,14 @@ export default function XBtn({
         variant: "contained",
         size: "small",
         children: children || <CgClose size={20} className="icon" />,
-        childrenIsDefeault,
+        $childrenIsDefault: !children,
         ...rest,
       }}
     />
   );
 }
 
-const Styled = styled(Button)<{ childrenIsDefeault: boolean }>`
+const Styled = styled(Button)<{ $childrenIsDefault: boolean }>`
   padding: 1px ${theme.s2} 0 ${theme.s2};
   color: ${theme["gray-800"]};
   background-color: ${theme.error.main};
@@ -42,8 +41,8 @@ const Styled = styled(Button)<{ childrenIsDefeault: boolean }>`
     visibility: hidden;
   }
 
-  ${({ childrenIsDefeault }) => {
-    if (childrenIsDefeault)
+  ${({ $childrenIsDefault }) => {
+    if ($childrenIsDefault)
       return css`
         ${ccs.xPlusBtnBody}
       `;

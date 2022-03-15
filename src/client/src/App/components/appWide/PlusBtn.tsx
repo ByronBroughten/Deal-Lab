@@ -15,7 +15,7 @@ export default function PlusBtn({
   isOpen = false,
   ...rest
 }: Props) {
-  const childrenIsDefeault = !children;
+  const childrenIsDefault = !children;
   return (
     <Styled
       {...{
@@ -23,8 +23,8 @@ export default function PlusBtn({
         variant: "contained",
         size: "small",
         children: children || <CgMathPlus size={20} className="icon" />,
-        smallSquare: smallSquare || childrenIsDefeault,
-        isOpen,
+        $smallSquare: smallSquare || childrenIsDefault,
+        $isOpen: isOpen,
         ...rest,
       }}
     />
@@ -36,7 +36,7 @@ const activeCss = css`
   font-weight: bold;
   background-color: ${theme.plus.dark};
 `;
-const Styled = styled(Button)<{ smallSquare: boolean; isOpen: boolean }>`
+const Styled = styled(Button)<{ $smallSquare: boolean; $isOpen: boolean }>`
   padding: 1px ${theme.s2} 0 ${theme.s2};
   color: ${theme["gray-800"]};
   background-color: ${theme.plus.main};
@@ -44,15 +44,15 @@ const Styled = styled(Button)<{ smallSquare: boolean; isOpen: boolean }>`
   :hover {
     ${activeCss}
   }
-  ${({ isOpen }) => isOpen && activeCss};
+  ${({ $isOpen }) => $isOpen && activeCss};
 
   white-space: nowrap;
   .MuiTouchRipple-root {
     visibility: hidden;
   }
 
-  ${({ smallSquare }) => {
-    if (smallSquare)
+  ${({ $smallSquare }) => {
+    if ($smallSquare)
       return css`
         ${ccs.xPlusBtnBody}
       `;

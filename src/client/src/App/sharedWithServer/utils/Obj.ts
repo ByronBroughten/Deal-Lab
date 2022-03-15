@@ -49,7 +49,8 @@ export function extend<A extends object = {}, B extends object = {}>(
 }
 
 export const Obj = {
-  noGuardIs: (value: any) => typeof value === "object",
+  noGuardIs: (value: any) =>
+    typeof value === "object" && value !== null && !Array.isArray(value),
   keys: ObjectKeys,
   values: ObjectValues,
   entries: ObjectEntries,

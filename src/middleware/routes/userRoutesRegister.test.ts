@@ -1,29 +1,21 @@
 import request from "supertest";
 import mongoose from "mongoose";
 import { makeDbUser, prepNewUserData, UserModel } from "./shared/makeDbUser";
-import { Req } from "../../client/src/App/sharedWithServer/User/crudTypes";
+import {
+  makeReq,
+  Req,
+} from "../../client/src/App/sharedWithServer/User/crudTypes";
 import { runApp } from "../../runApp";
-import { SectionNam } from "../../client/src/App/sharedWithServer/Analyzer/SectionMetas/SectionName";
 import { config } from "../../client/src/App/Constants";
+import Analyzer from "../../client/src/App/sharedWithServer/Analyzer";
 
 function makeTestRegisterReq(): Req<"Register"> {
-  const sections: any = {};
-  SectionNam.arr.feGuestAccessStore;
-  for (const sectionName of SectionNam.arr.feGuestAccessStore) {
-    sections[sectionName] = [];
-  }
-  return {
-    body: {
-      payload: {
-        registerFormData: {
-          email: "testosis@gmail.com",
-          password: "testpassword",
-          userName: "Testosis",
-        },
-        guestAccessSections: sections,
-      },
-    },
-  };
+  const analyzer = Analyzer.initAnalyzer();
+  return makeReq.register(analyzer, {
+    email: "testosis@gmail.com",
+    password: "testpassword",
+    userName: "Testosis",
+  });
 }
 
 describe(config.url.register.route, () => {
@@ -71,7 +63,7 @@ describe(config.url.register.route, () => {
     await user.save();
     await testStatus(400);
   });
-  // it("should return 200 if the request is valid", async () => {
-  //   await testStatus(200);
-  // });
+  it("should return 200 if the request is valid", async () => {
+    await testStatus(200);
+  });
 });

@@ -10,6 +10,10 @@ import {
   SectionOption,
   VariableOption,
 } from "../../sharedWithServer/Analyzer/methods/get/variableOptions";
+// ok. so I need the onClose ref to not go off with the popper.
+
+// I need the variables selector to close with click-outside
+// but not if the portal is being clicked
 
 type PopParams = Parameters<typeof Popper>;
 type PopperProps = PopParams extends (infer T)[] ? T : never;
@@ -101,24 +105,26 @@ export default function VarbAutoComplete({
             groupBy: (option: any) => option.collectionName,
           }),
         }}
-        // groupBy={(option) => option.collectionName}
         getOptionLabel={(option) => option.displayName}
+        // getOptionSelected={(option, value) =>
+        //   option.displayName === value.displayName
+        // }
         renderInput={(params: any) => (
           <TextField
             {...params}
             placeholder={placeholder ?? "Variables"}
             variant="filled"
-            popoverProps={{ canAutoPosition: true }}
           />
         )}
         size="small"
         clearOnEscape
         clearOnBlur={clearOnBlur}
         openOnFocus
+        // disableCloseOnSelect
         disableClearable // gets rid of the x icon
         // forcePopupIcon={false} // gets rid of the arrow
         noOptionsText="Not found"
-        // interesting options
+        // interesting options:
         // fullWidth
         // blurOnSelect
 

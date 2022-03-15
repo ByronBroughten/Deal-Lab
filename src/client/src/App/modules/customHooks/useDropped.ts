@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import useOnOutsideClickRef from "./useOnOutsideClickRef";
 
 export const useFakeDropped = () => {
@@ -10,8 +10,9 @@ export const useFakeDropped = () => {
 const useDropped = (fake = false) => {
   const [dropped, setDropped] = React.useState(false);
   const drop = React.useCallback(() => setDropped(true), []);
-  const unDropRef = useOnOutsideClickRef(() => setDropped(false));
-  return { dropped, drop, unDropRef };
+  const unDrop = () => setDropped(false);
+  const unDropRef = useOnOutsideClickRef(unDrop);
+  return { dropped, drop, unDrop, unDropRef };
 };
 
 export default useDropped;

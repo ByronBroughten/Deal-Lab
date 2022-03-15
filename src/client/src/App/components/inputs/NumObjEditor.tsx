@@ -12,6 +12,7 @@ import useGetAdornments, {
 import VarbCalculator from "./NumObjEditor/VarbCalculator";
 import { varSpanDecorator } from "./shared/VarSpan";
 import useDraftInput from "./useDraftInput";
+import { useOnOutsideClickEffect } from "../../modules/customHooks/useOnOutsideClickRef";
 
 const floatStuffRegEx = /^[0-9.-]*$/;
 const varbCalcRegEx = /[\d.*/+()-]/;
@@ -61,9 +62,25 @@ export default function NumObjEditor({
   });
 
   // I need to pass this ref to the same component to which I'm passing the onClick => focus()
-  const { dropped, drop, unDropRef } = useDropped();
+  const { dropped, drop, unDropRef, unDrop } = useDropped();
+
+  const numObjEditorRef = React.useRef<HTMLDivElement | null>(null);
+  const popperRef = React.useRef<HTMLDivElement | null>(null);
+  useOnOutsideClickEffect(unDrop, [numObjEditorRef, popperRef]);
+
+  // function onSelect(value: VariableOption) {
+  //   const { displayName, varbInfo } = value;
+  //   const entity: EntityMapData = {
+  //     ...varbInfo,
+  //     entityId: Analyzer.makeId(),
+  //   };
+
+  //   const newEditorState = insertEntity(editorState, displayName, entity);
+  //   onChange(newEditorState);
+  // }
+
   return (
-    <Styled ref={unDropRef}>
+    <Styled ref={numObjEditorRef}>
       <div className={"numeric-editor " + className}>
         <MaterialDraftEditor
           onClick={drop}

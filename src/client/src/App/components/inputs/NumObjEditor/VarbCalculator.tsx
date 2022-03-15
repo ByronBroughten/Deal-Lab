@@ -16,7 +16,6 @@ interface Props {
 export default function VarbCalculator({ editorState, onChange }: Props) {
   function onSelect(value: VariableOption) {
     const { displayName, varbInfo } = value;
-
     const entity: EntityMapData = {
       ...varbInfo,
       entityId: Analyzer.makeId(),

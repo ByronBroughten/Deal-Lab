@@ -13,27 +13,26 @@ export default function CurrentAnalysis({ className }: Props) {
   const { analyzer } = useAnalyzerContext();
   const { feId } = analyzer.firstSection("analysis");
 
-  const { value: showdetails, toggle: toggleDetails } = useToggle();
-  // showdetails must be all lowercase to be a "custom dom attribute".
+  const { value: showDetails, toggle: toggleDetails } = useToggle();
 
   return (
     <Styled
       {...{
-        $showdetails: showdetails,
+        $showDetails: showDetails,
         sectionName: "analysis",
         className: `CurrentAnalysis-root ${className}`,
       }}
     >
-      <div {...{ showdetails, className: "CurrentAnalysis-viewable" }}>
-        <AnalysisTitleRow {...{ id: feId, showdetails, toggleDetails }} />
-        {!showdetails && <AnalysisBasics id={feId} />}
-        {showdetails && <AnalysisDetails id={feId} />}
+      <div {...{ className: "CurrentAnalysis-viewable" }}>
+        <AnalysisTitleRow {...{ id: feId, showDetails, toggleDetails }} />
+        {!showDetails && <AnalysisBasics id={feId} />}
+        {showDetails && <AnalysisDetails id={feId} />}
       </div>
     </Styled>
   );
 }
 
-const Styled = styled(MainSectionEntry)<{ $showdetails: boolean }>`
+const Styled = styled(MainSectionEntry)<{ $showDetails: boolean }>`
   padding: 0;
   .CurrentAnalysis-viewable {
     display: flex;
@@ -52,8 +51,8 @@ const Styled = styled(MainSectionEntry)<{ $showdetails: boolean }>`
     }
   }
 
-  ${({ $showdetails }) =>
-    $showdetails &&
+  ${({ $showDetails }) =>
+    $showDetails &&
     css`
       overflow: auto;
     `}

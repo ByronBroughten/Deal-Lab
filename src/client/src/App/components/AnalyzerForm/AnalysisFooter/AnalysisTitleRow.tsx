@@ -11,13 +11,13 @@ import AnalysisBtn from "./AnalysisBtn";
 type Props = {
   id: string;
   toggleDetails: () => void;
-  showdetails: boolean;
+  showDetails: boolean;
 };
 const sectionName = "analysis";
 export default function AnalysisTitleRow({
   id,
   toggleDetails,
-  showdetails,
+  showDetails,
 }: Props) {
   const feInfo = { sectionName, id, idType: "feId" } as const;
   return (
@@ -31,8 +31,8 @@ export default function AnalysisTitleRow({
           onClick={toggleDetails}
           className="AnalysisTitleRow-analysisBtn"
           text="Details"
-          leftIcon={showdetails ? <BiCaretDown /> : <BiCaretRight />}
-          {...{ $isactive: showdetails }}
+          leftIcon={showDetails ? <BiCaretDown /> : <BiCaretRight />}
+          {...{ $isactive: showDetails }}
         />
 
         <LoginToAccessBtnTooltip>

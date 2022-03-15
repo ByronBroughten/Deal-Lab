@@ -2,7 +2,11 @@ import Analyzer from "../../../Analyzer";
 import { DbEntry, DbSection, DbSections } from "../../DbEntry";
 import { SectionFinder } from "../../SectionMetas/relSections/baseSectionTypes";
 import { FeInfo } from "../../SectionMetas/Info";
-import { SectionName } from "../../SectionMetas/SectionName";
+import {
+  SectionNam,
+  SectionName,
+  SectionNameType,
+} from "../../SectionMetas/SectionName";
 
 type StateToDbSectionsOptions = {
   newMainSectionName?: SectionName;
@@ -104,15 +108,18 @@ export function dbEntryArr(
   const feInfos = this.sectionArrInfos(sectionName);
   return feInfos.map((feInfo) => this.dbEntry(feInfo));
 }
-export function dbEntryArrs<T extends SectionName, S extends T[]>(
-  this: Analyzer,
-  sectionNames: S
-): { [Prop in T]: DbEntry[] } {
-  const partial: Partial<{ [Prop in T[number]]: DbEntry[] }> = {};
-  for (const sectionName of sectionNames) {
-    partial[sectionName] = this.dbEntryArr(sectionName);
+
+export function dbEntryArrs<
+  ST extends SectionNameType,
+  ToReturn = { [Prop in SectionName<ST & SectionNameType>]: DbEntry[] }
+>(this: Analyzer, sectionNameType: ST): ToReturn {
+  const partial = {} as ToReturn;
+  for (const sectionName of SectionNam.arr[sectionNameType]) {
+    partial[sectionName as keyof typeof partial] = this.dbEntryArr(
+      sectionName as any
+    ) as any;
   }
-  return partial as { [Prop in T]: DbEntry[] };
+  return partial as ToReturn;
 }
 
 export function dbIndexEntry(
