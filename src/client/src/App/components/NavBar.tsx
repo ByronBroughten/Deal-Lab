@@ -20,6 +20,13 @@ export default function NavBar() {
               Ultimate Property Analyzer
             </NavBtn>
           </Link>
+          <NavBtn
+            className="NavBar-brandName"
+            href="https://www.youtube.com/watch?v=sqlMZxsMOlU"
+            target="_blank"
+          >
+            Demo Video
+          </NavBtn>
         </div>
         <div className="NavBar-btns Logged Out">
           {!auth.isLoggedIn && (

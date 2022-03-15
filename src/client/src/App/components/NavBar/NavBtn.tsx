@@ -3,7 +3,10 @@ import theme from "../../theme/Theme";
 import PlainBtn from "../general/PlainBtn";
 import styled, { css } from "styled-components";
 
-export type NavBtnProps = ButtonProps & { $isactive?: boolean };
+export type NavBtnProps = ButtonProps & {
+  $isactive?: boolean;
+  target?: string;
+};
 export default function NavBtn({ className, ...rest }: NavBtnProps) {
   return (
     <Styled
