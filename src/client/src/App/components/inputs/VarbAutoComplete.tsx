@@ -10,17 +10,13 @@ import {
   SectionOption,
   VariableOption,
 } from "../../sharedWithServer/Analyzer/methods/get/variableOptions";
-// ok. so I need the onClose ref to not go off with the popper.
-
-// I need the variables selector to close with click-outside
-// but not if the portal is being clicked
 
 type PopParams = Parameters<typeof Popper>;
 type PopperProps = PopParams extends (infer T)[] ? T : never;
 
-function PopperCustom(props: PopperProps) {
-  return <StyledPopper {...props} style={{}} />;
-}
+const PopperCustom = (props: PopperProps) => (
+  <StyledPopper {...props} style={{}} /> // for some reason, style={{}} is necessary
+);
 
 const StyledPopper = styled(Popper)`
   .MuiAutocomplete-paper {
