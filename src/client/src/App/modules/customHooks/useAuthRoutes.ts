@@ -3,10 +3,6 @@ import { config } from "../../Constants";
 import {
   authTokenKey,
   isLoginHeaders,
-  LoginFormData,
-  makeReq,
-  RegisterFormData,
-  Req,
   Res,
 } from "../../sharedWithServer/User/crudTypes";
 import { isLoginUser } from "../../sharedWithServer/User/DbUser";
@@ -34,12 +30,9 @@ export function useAuthRoutes() {
     auth.setToken(headers[authTokenKey]);
     handle("loadSectionArrsAndSolve", data);
   }
-
   return {
-    async login(loginFormData: LoginFormData) {
-      const reqObj: Req<"Login"> = {
-        body: { payload: loginFormData },
-      };
+    async login() {
+      const reqObj = analyzer.req.login();
       const res = await https.post(
         "logging in",
         config.url.login.path,
@@ -48,15 +41,7 @@ export function useAuthRoutes() {
       trySetLogin(res);
     },
     async register() {
-      const registerFormData = analyzer.section("register").values({
-        userName: "string",
-        email: "string",
-        password: "string",
-      });
-      const reqObj: Req<"Register"> = makeReq.register(
-        analyzer,
-        registerFormData
-      );
+      const reqObj = analyzer.req.register();
       const res = await https.post(
         "registering",
         config.url.register.path,

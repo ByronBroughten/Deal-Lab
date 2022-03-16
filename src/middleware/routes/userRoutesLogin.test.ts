@@ -1,6 +1,5 @@
 import {
   authTokenKey,
-  makeReq,
   Req,
 } from "../../client/src/App/sharedWithServer/User/crudTypes";
 import { makeDbUser, prepNewUserData, UserModel } from "./shared/makeDbUser";
@@ -11,20 +10,21 @@ import { omit } from "lodash";
 import { config } from "../../client/src/App/Constants";
 import Analyzer from "../../client/src/App/sharedWithServer/Analyzer";
 
-const registerFormData = {
-  email: "testosis@gmail.com",
-  password: "testpassword",
-  userName: "Testosis",
-} as const;
-function makeTestRegisterReq(): Req<"Register"> {
-  const analyzer = Analyzer.initAnalyzer();
-  return makeReq.register(analyzer, registerFormData);
-}
-function makeTestLoginReq(): Req<"Login"> {
+function makeTestReqObjs() {
+  const registerFormData = {
+    email: "testosis@gmail.com",
+    password: "testpassword",
+    userName: "Testosis",
+  } as const;
+  let next = Analyzer.initAnalyzer();
+  next = next.updateSectionValuesAndSolve("register", registerFormData);
+  next = next.updateSectionValuesAndSolve(
+    "login",
+    omit(registerFormData, ["userName"])
+  );
   return {
-    body: {
-      payload: omit(registerFormData, ["userName"]),
-    },
+    register: next.req.register(),
+    login: next.req.login(),
   };
 }
 
@@ -33,14 +33,15 @@ describe(config.url.login.route, () => {
   let reqObj: Req<"Login">;
 
   beforeEach(async () => {
-    reqObj = makeTestLoginReq();
     server = runApp();
-    const registerReqObj = makeTestRegisterReq();
-    const { payload } = registerReqObj.body;
-    const newUserData = await prepNewUserData(payload);
 
+    const reqObjs = makeTestReqObjs();
+    const { payload } = reqObjs.register.body;
+    const newUserData = await prepNewUserData(payload);
     const userDoc = new UserModel(makeDbUser(newUserData));
     await userDoc.save();
+
+    reqObj = reqObjs.login;
   });
 
   const exec = () =>

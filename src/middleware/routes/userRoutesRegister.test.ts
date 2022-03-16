@@ -1,21 +1,19 @@
 import request from "supertest";
 import mongoose from "mongoose";
 import { makeDbUser, prepNewUserData, UserModel } from "./shared/makeDbUser";
-import {
-  makeReq,
-  Req,
-} from "../../client/src/App/sharedWithServer/User/crudTypes";
+import { Req } from "../../client/src/App/sharedWithServer/User/crudTypes";
 import { runApp } from "../../runApp";
 import { config } from "../../client/src/App/Constants";
 import Analyzer from "../../client/src/App/sharedWithServer/Analyzer";
 
 function makeTestRegisterReq(): Req<"Register"> {
-  const analyzer = Analyzer.initAnalyzer();
-  return makeReq.register(analyzer, {
+  let next = Analyzer.initAnalyzer();
+  next = next.updateSectionValuesAndSolve("register", {
     email: "testosis@gmail.com",
     password: "testpassword",
     userName: "Testosis",
   });
+  return next.req.register();
 }
 
 describe(config.url.register.route, () => {

@@ -13,8 +13,9 @@ export const zLoginFormData = z.object({
   email: z.string().max(dbLimits.string.maxLength).email(message.email),
   password: z
     .string()
-    .min(dbLimits.password.minLength, message.min(dbLimits.password.minLength))
     .max(dbLimits.password.maxLength, message.max(dbLimits.password.maxLength)),
+  // no minimum password length for logging in, so that people
+  // don't get locked out if we change the minimum
 });
 export type LoginFormData = z.infer<typeof zLoginFormData>;
 

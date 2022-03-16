@@ -164,10 +164,11 @@ import {
 import { SectionMeta, sectionMetas } from "./Analyzer/SectionMetas";
 import { SectionNam, SectionName } from "./Analyzer/SectionMetas/SectionName";
 import StateSection, { StateSectionCore } from "./Analyzer/StateSection";
-import { ObjectKeys } from "./utils/Obj";
+import { Obj, ObjectKeys } from "./utils/Obj";
 import { Id } from "./Analyzer/SectionMetas/relSections/baseSections/id";
 import { newInEntity } from "./Analyzer/methods/get/inEntity";
 import { makeReq } from "./User/crudTypes";
+import { AnalyzerReq, analyzerReq } from "./Analyzer/req";
 
 export type StateSections = { [S in SectionName]: StateSection<S>[] };
 type RawSections = { [S in SectionName]: StateSectionCore<S>[] };
@@ -237,11 +238,17 @@ export default class Analyzer {
     return sectionMetas;
   }
 
-  // get req () {
-  //   return {
-  //     register: () => makeReq.register(this)
-  //   }
-  // }
+  get req() {
+    type ThisAnalyzerReq = {
+      [Prop in keyof AnalyzerReq]: () => ReturnType<AnalyzerReq[Prop]>;
+    };
+    const thisAnalyzerReq = Obj.keys(analyzerReq).reduce((next, reqName) => {
+      next[reqName] = () =>
+        analyzerReq[reqName](this) as ReturnType<AnalyzerReq[typeof reqName]>;
+      return next;
+    }, {} as any) as ThisAnalyzerReq;
+    return thisAnalyzerReq;
+  }
 
   get sectionNames() {
     return ObjectKeys(this.sections);

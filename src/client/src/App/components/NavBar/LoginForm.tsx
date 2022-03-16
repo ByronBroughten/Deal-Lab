@@ -3,9 +3,10 @@ import { Button } from "@material-ui/core";
 import styled from "styled-components";
 import DropdownForm from "../general/DropdownForm";
 import theme from "../../theme/Theme";
-import { EmailAndPassword } from "./LoginForm/EmailAndPassword";
 import { useAuthRoutes } from "../../modules/customHooks/useAuthRoutes";
 import { useAnalyzerContext } from "../../modules/usePropertyAnalyzer";
+import { LoginFormData } from "../../sharedWithServer/User/crudTypes";
+import SmallFormTextField from "../general/SmallFormTextField";
 
 export function useLoginForm() {
   const { analyzer, handleChange } = useAnalyzerContext();
@@ -31,29 +32,22 @@ export function useLoginForm() {
 }
 
 export function LoginForm() {
-  // 3. produce an error message
-
-  const { handleChange, email, password } = useLoginForm();
+  const loginVarbNames: (keyof LoginFormData)[] = ["email", "password"];
+  const { analyzer, handleChange } = useAnalyzerContext();
+  const { varbs } = analyzer.section("login");
   const { login } = useAuthRoutes();
   return (
     <StyledLoginForm>
-      <EmailAndPassword
-        {...{
-          handleChange,
-          email,
-          password,
-        }}
-      />
-      <Button
-        className="submit-btn"
-        variant="contained"
-        onClick={() =>
-          login({
-            email: email.value,
-            password: password.value,
-          })
-        }
-      >
+      {loginVarbNames.map((varbName) => (
+        <SmallFormTextField
+          {...{
+            ...varbs[varbName].inputProps("string"),
+            ...(varbName === "password" && { type: "password" }),
+            onChange: handleChange,
+          }}
+        />
+      ))}
+      <Button className="submit-btn" variant="contained" onClick={login}>
         Login
       </Button>
     </StyledLoginForm>

@@ -1,5 +1,6 @@
 import Analyzer from "../../Analyzer";
 import { Inf } from "../SectionMetas/Info";
+import { SectionFinder } from "../SectionMetas/relSections/baseSectionTypes";
 import { FeVarbInfo } from "../SectionMetas/relSections/rel/relVarbInfoTypes";
 import { InEntityVarbInfo } from "../SectionMetas/relSections/rel/valueMeta/NumObj/entities";
 import { StateValue } from "../StateSection/StateVarb/stateValue";
@@ -17,11 +18,12 @@ export function directUpdateAndSolve(
 
 export function updateSectionValuesAndSolve(
   this: Analyzer,
-  info: FeVarbInfo,
+  finder: SectionFinder,
   values: { [varbName: string]: StateValue }
 ): Analyzer {
+  const { feInfo } = this.section(finder);
   return Object.keys(values).reduce((next, varbName) => {
-    const varbInfo = Inf.feVarb(varbName, info);
+    const varbInfo = Inf.feVarb(varbName, feInfo);
     return internal.updateValueDirectly(next, varbInfo, values[varbName]);
   }, this);
 }
