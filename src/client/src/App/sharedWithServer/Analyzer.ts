@@ -167,6 +167,7 @@ import StateSection, { StateSectionCore } from "./Analyzer/StateSection";
 import { ObjectKeys } from "./utils/Obj";
 import { Id } from "./Analyzer/SectionMetas/relSections/baseSections/id";
 import { newInEntity } from "./Analyzer/methods/get/inEntity";
+import { makeReq } from "./User/crudTypes";
 
 export type StateSections = { [S in SectionName]: StateSection<S>[] };
 type RawSections = { [S in SectionName]: StateSectionCore<S>[] };
@@ -235,6 +236,13 @@ export default class Analyzer {
     // depreciated
     return sectionMetas;
   }
+
+  // get req () {
+  //   return {
+  //     register: () => makeReq.register(this)
+  //   }
+  // }
+
   get sectionNames() {
     return ObjectKeys(this.sections);
   }
@@ -282,7 +290,6 @@ export default class Analyzer {
   loadSectionArrsAndSolve = loadSectionArrsAndSolve;
 
   resetSectionAndSolve = resetSectionAndSolve;
-
   sectionArr = sectionArr;
   sectionArrInfos = sectionArrInfos;
   setSectionArr = setSectionArr;

@@ -47,7 +47,12 @@ export function useAuthRoutes() {
       );
       trySetLogin(res);
     },
-    async register(registerFormData: RegisterFormData) {
+    async register() {
+      const registerFormData = analyzer.section("register").values({
+        userName: "string",
+        email: "string",
+        password: "string",
+      });
       const reqObj: Req<"Register"> = makeReq.register(
         analyzer,
         registerFormData

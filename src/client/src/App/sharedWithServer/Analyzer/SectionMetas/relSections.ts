@@ -54,18 +54,18 @@ export function makeRelSections() {
     ),
     ...relSection.base("ongoingItem", "List Item", rel.varbs.ongoingItem()),
     ...relSection.base("user", "User", {
-      email: rel.varb.string(),
+      email: rel.varb.string({ displayName: "Email" }),
       emailLower: rel.varb.string(),
-      userName: rel.varb.string(),
+      userName: rel.varb.string({ displayName: "Name" }),
     }),
     ...relSection.base("login", "Login Form", {
-      email: rel.varb.string(),
-      password: rel.varb.string(),
+      email: rel.varb.string({ displayName: "Email" }),
+      password: rel.varb.string({ displayName: "Password" }),
     }),
     ...relSection.base("register", "Register Form", {
-      email: rel.varb.string(),
-      userName: rel.varb.string(),
-      password: rel.varb.string(),
+      email: rel.varb.string({ displayName: "Email" }),
+      userName: rel.varb.string({ displayName: "Name" }),
+      password: rel.varb.string({ displayName: "Password" }),
     }),
 
     // these are shared between property and mgmt

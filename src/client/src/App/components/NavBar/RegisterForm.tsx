@@ -3,66 +3,33 @@ import styled from "styled-components";
 import theme from "../../theme/Theme";
 import { StyledDropdownForm } from "../general/DropdownForm";
 import SmallFormTextField from "../general/SmallFormTextField";
-import { EmailAndPassword } from "./LoginForm/EmailAndPassword";
 import { useAuthRoutes } from "../../modules/customHooks/useAuthRoutes";
 import { useAnalyzerContext } from "../../modules/usePropertyAnalyzer";
+import { RegisterFormData } from "../../sharedWithServer/User/crudTypes";
 
-function useRegisterForm() {
-  const { analyzer, handleChange } = useAnalyzerContext();
-  const loginForm = analyzer.section("register");
-  const emailVarb = loginForm.varb("email");
-  const passwordVarb = loginForm.varb("password");
-  const userNameVarb = loginForm.varb("userName");
-
-  return {
-    email: {
-      name: emailVarb.stringFeVarbInfo,
-      value: emailVarb.value("string"),
-    },
-    password: {
-      name: passwordVarb.stringFeVarbInfo,
-      value: passwordVarb.value("string"),
-    },
-    userName: {
-      name: userNameVarb.stringFeVarbInfo,
-      value: userNameVarb.value("string"),
-    },
-    handleChange,
-  };
-}
 export function RegisterForm() {
-  const { handleChange, email, userName, password } = useRegisterForm();
+  const { analyzer, handleChange } = useAnalyzerContext();
+  const { varbs } = analyzer.section("register");
   const { register } = useAuthRoutes();
-
+  // this ensures that the fields are in the corect order
+  const registerVarbNames: (keyof RegisterFormData)[] = [
+    "userName",
+    "email",
+    "password",
+  ];
   return (
     <StyledRegisterForm>
-      <SmallFormTextField
-        {...{
-          id: userName.name,
-          name: userName.name,
-          label: "Name",
-          value: userName.value,
-          onChange: handleChange,
-        }}
-      />
-      <EmailAndPassword
-        {...{
-          handleChange,
-          email: email,
-          password: password,
-        }}
-      />
-      <Button
-        className="submit-btn"
-        variant="contained"
-        onClick={() =>
-          register({
-            userName: userName.value,
-            email: email.value,
-            password: password.value,
-          })
-        }
-      >
+      {registerVarbNames.map((varbName) => (
+        <SmallFormTextField
+          {...{
+            ...varbs[varbName].inputProps("string"),
+            ...(varbName === "password" && { type: "password" }),
+            onChange: handleChange,
+          }}
+        />
+      ))}
+
+      <Button className="submit-btn" variant="contained" onClick={register}>
         Create Account
       </Button>
     </StyledRegisterForm>

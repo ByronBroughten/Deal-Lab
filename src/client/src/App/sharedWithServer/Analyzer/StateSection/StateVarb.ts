@@ -131,7 +131,17 @@ export default class StateVarb {
   get stringFeVarbInfo(): string {
     return StateVarb.varbInfoToString(this.feVarbInfo);
   }
-
+  get name(): string {
+    return this.stringFeVarbInfo;
+  }
+  inputProps(valueType?: StateValueAnyKey) {
+    return {
+      id: this.name,
+      name: this.name,
+      value: this.value(valueType),
+      label: this.displayName,
+    };
+  }
   get feVarbInfo(): FeVarbInfo {
     return {
       ...this.feInfo,

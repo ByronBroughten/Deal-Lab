@@ -13,6 +13,8 @@ export function useLoginForm() {
   const emailVarb = loginForm.varb("email");
   const passwordVarb = loginForm.varb("password");
 
+  const { varbs } = analyzer.section("login");
+
   return {
     email: {
       name: emailVarb.stringFeVarbInfo,
