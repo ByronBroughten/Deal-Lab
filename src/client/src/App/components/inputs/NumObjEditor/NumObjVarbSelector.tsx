@@ -13,7 +13,7 @@ interface Props {
   onChange: Function;
 }
 
-export default function VarbCalculator({ editorState, onChange }: Props) {
+export default function NumObjVarbSelector({ editorState, onChange }: Props) {
   function onSelect(value: VariableOption) {
     const { displayName, varbInfo } = value;
     const entity: EntityMapData = {
@@ -26,9 +26,9 @@ export default function VarbCalculator({ editorState, onChange }: Props) {
   }
 
   return (
-    <Styled className="VarbCalculator-root">
-      <div className="VarbCalculator-absolute">
-        <div className="VarbCalculator-selectorWrapper VarbCalculator-wrapper">
+    <Styled className="NumObjVarbSelector-root">
+      <div className="NumObjVarbSelector-absolute">
+        <div className="NumObjVarbSelector-selectorWrapper NumObjVarbSelector-wrapper">
           <VarbAutoComplete {...{ onSelect, clearOnBlur: true }} />
         </div>
       </div>
@@ -40,13 +40,13 @@ const Styled = styled.div`
   position: relative;
   bottom: 3px;
 
-  .VarbCalculator-absolute {
+  .NumObjVarbSelector-absolute {
     position: absolute;
     z-index: 4;
     display: flex;
   }
 
-  .VarbCalculator-wrapper {
+  .NumObjVarbSelector-wrapper {
     border: 2px solid;
     border-top: 1px solid;
     border-left: 1px solid;
@@ -54,7 +54,7 @@ const Styled = styled.div`
     border-color: ${theme.loan.dark};
     background-color: ${theme["gray-300"]};
   }
-  .VarbCalculator-selectorWrapper {
+  .NumObjVarbSelector-selectorWrapper {
     border-top-left-radius: 0;
     .HideBtn {
       margin-top: ${theme.s1};
@@ -62,7 +62,7 @@ const Styled = styled.div`
       border-top-left-radius: 0;
     }
   }
-  .VarbCalculator-calculatorWrapper {
+  .NumObjVarbSelector-calculatorWrapper {
     position: relative;
     padding-right: ${theme.s1};
     padding: ${theme.s1};

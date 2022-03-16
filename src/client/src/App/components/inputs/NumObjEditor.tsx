@@ -1,7 +1,6 @@
 import React from "react";
 import { pick } from "lodash";
 import styled from "styled-components";
-import useDropped from "../../modules/customHooks/useDropped";
 import { FeVarbInfo } from "../../sharedWithServer/Analyzer/SectionMetas/relSections/rel/relVarbInfoTypes";
 import theme from "../../theme/Theme";
 import MaterialDraftEditor from "./MaterialDraftEditor";
@@ -9,10 +8,11 @@ import createNumObjEditor from "./NumObjEditor/createNumObjEditor";
 import useGetAdornments, {
   PropAdornments,
 } from "./NumObjEditor/useGetAdornments";
-import VarbCalculator from "./NumObjEditor/VarbCalculator";
 import { varSpanDecorator } from "./shared/VarSpan";
 import useDraftInput from "./useDraftInput";
 import { useOnOutsideClickEffect } from "../../modules/customHooks/useOnOutsideClickRef";
+import useToggleView from "../../modules/customHooks/useToggleView";
+import NumObjVarbSelector from "./NumObjEditor/NumObjVarbSelector";
 
 const floatStuffRegEx = /^[0-9.-]*$/;
 const varbCalcRegEx = /[\d.*/+()-]/;
@@ -61,30 +61,19 @@ export default function NumObjEditor({
     displayValue: varb.displayValue,
   });
 
-  // I need to pass this ref to the same component to which I'm passing the onClick => focus()
-  const { dropped, drop, unDropRef, unDrop } = useDropped();
+  const { varbSelectorIsOpen, openVarbSelector, closeVarbSelector } =
+    useToggleView({ viewWhat: "varbSelector", initValue: false });
 
   const numObjEditorRef = React.useRef<HTMLDivElement | null>(null);
   const popperRef = React.useRef<HTMLDivElement | null>(null);
-  useOnOutsideClickEffect(unDrop, [numObjEditorRef, popperRef]);
-
-  // function onSelect(value: VariableOption) {
-  //   const { displayName, varbInfo } = value;
-  //   const entity: EntityMapData = {
-  //     ...varbInfo,
-  //     entityId: Analyzer.makeId(),
-  //   };
-
-  //   const newEditorState = insertEntity(editorState, displayName, entity);
-  //   onChange(newEditorState);
-  // }
+  useOnOutsideClickEffect(closeVarbSelector, [numObjEditorRef, popperRef]);
 
   return (
     <Styled ref={numObjEditorRef}>
       <div className={"numeric-editor " + className}>
         <MaterialDraftEditor
-          onClick={drop}
-          onFocus={drop}
+          onClick={openVarbSelector}
+          onFocus={openVarbSelector}
           label={label}
           className={"NumObjEditor-materialDraftEditor"}
           id={varb.fullName}
@@ -99,11 +88,10 @@ export default function NumObjEditor({
             endAdornment,
           }}
         />
-        {isCalcMode && dropped && (
-          <VarbCalculator {...{ onChange, editorState }} />
+        {varbSelectorIsOpen && (
+          <NumObjVarbSelector {...{ onChange, editorState }} />
         )}
       </div>
-      {/* {isCalcMode && dropped && <Calculator {...{ onChange, editorState }} />} */}
     </Styled>
   );
 }

@@ -3,7 +3,7 @@ import { insertChars } from "../../../modules/draftjs/insert";
 import { useAnalyzerContext } from "../../../modules/usePropertyAnalyzer";
 import { deleteCharsAndEntities, cleanup } from "../../../utils/Draf";
 import varbCalcInputParser from "./numericEditorParser";
-import CalculatorBtns from "./VarbCalculator/CalculatorBtns";
+import CalculatorBtns from "./Calculator/CalculatorBtns";
 import { Button } from "@material-ui/core";
 import { CgCalculator } from "react-icons/cg";
 import { getAttrsFn } from "../../../utils/styledComponents";
