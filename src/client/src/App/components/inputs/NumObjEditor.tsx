@@ -89,7 +89,7 @@ export default function NumObjEditor({
           }}
         />
         {varbSelectorIsOpen && (
-          <NumObjVarbSelector {...{ onChange, editorState }} />
+          <NumObjVarbSelector {...{ onChange, editorState }} ref={popperRef} />
         )}
       </div>
     </Styled>

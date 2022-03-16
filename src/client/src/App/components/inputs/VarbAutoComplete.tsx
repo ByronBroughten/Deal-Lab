@@ -14,8 +14,11 @@ import {
 type PopParams = Parameters<typeof Popper>;
 type PopperProps = PopParams extends (infer T)[] ? T : never;
 
-const PopperCustom = (props: PopperProps) => (
-  <StyledPopper {...props} style={{}} /> // for some reason, style={{}} is necessary
+export type PopperRef = React.Ref<HTMLDivElement>;
+const PopperCustom = React.forwardRef(
+  (props: PopperProps, ref: React.Ref<HTMLDivElement>) => (
+    <StyledPopper {...props} style={{}} ref={ref} /> // for some reason, style={{}} is necessary
+  )
 );
 
 const StyledPopper = styled(Popper)`
@@ -71,71 +74,80 @@ type Props = {
   value?: any;
   options?: VariableOption[] | SectionOption[];
 };
-export default function VarbAutoComplete({
-  onSelect,
-  className,
-  placeholder,
-  clearOnBlur = true,
-  value,
-  options,
-}: Props) {
-  const { analyzer } = useAnalyzerContext();
-  options = options ?? analyzer.variableOptions();
-  const [inputValue, setInputValue] = React.useState(
-    value ? value.displayName : ""
-  );
-  const { value: keyBool, toggle: clearSelect } = useToggle();
+const VarbAutoComplete = React.forwardRef(
+  (
+    {
+      onSelect,
+      className,
+      placeholder,
+      clearOnBlur = true,
+      value,
+      options,
+    }: Props,
+    ref: PopperRef
+  ) => {
+    const { analyzer } = useAnalyzerContext();
+    options = options ?? analyzer.variableOptions();
+    const [inputValue, setInputValue] = React.useState(
+      value ? value.displayName : ""
+    );
+    const { value: keyBool, toggle: clearSelect } = useToggle();
 
-  return (
-    <Styled className={`VarbAutoComplete-root ${className}`}>
-      <Autocomplete
-        PopperComponent={PopperCustom}
-        key={`${keyBool}`}
-        id="VarbAutoComplete-autoComplete"
-        onInputChange={(_, newInputValue) => setInputValue(newInputValue)}
-        {...{
-          value,
-          options,
-          inputValue,
-          ...("collectionName" in options[0] && {
-            groupBy: (option: any) => option.collectionName,
-          }),
-        }}
-        getOptionLabel={(option) => option.displayName}
-        // getOptionSelected={(option, value) =>
-        //   option.displayName === value.displayName
-        // }
-        renderInput={(params: any) => (
-          <TextField
-            {...params}
-            placeholder={placeholder ?? "Variables"}
-            variant="filled"
-          />
-        )}
-        size="small"
-        clearOnEscape
-        clearOnBlur={clearOnBlur}
-        openOnFocus
-        // disableCloseOnSelect
-        disableClearable // gets rid of the x icon
-        // forcePopupIcon={false} // gets rid of the arrow
-        noOptionsText="Not found"
-        // interesting options:
-        // fullWidth
-        // blurOnSelect
+    return (
+      <Styled className={`VarbAutoComplete-root ${className}`}>
+        <Autocomplete
+          PopperComponent={(props: PopperProps) => (
+            <PopperCustom {...props} ref={ref} />
+          )}
+          key={`${keyBool}`}
+          id="VarbAutoComplete-autoComplete"
+          onInputChange={(_, newInputValue) => setInputValue(newInputValue)}
+          {...{
+            value,
+            options,
+            inputValue,
+            ...("collectionName" in options[0] && {
+              groupBy: (option: any) => option.collectionName,
+            }),
+          }}
+          getOptionLabel={(option) => option.displayName}
+          // getOptionSelected={(option, value) =>
+          //   option.displayName === value.displayName
+          // }
+          renderInput={(params: any) => (
+            <TextField
+              {...params}
+              placeholder={placeholder ?? "Variables"}
+              variant="filled"
+            />
+          )}
+          size="small"
+          clearOnEscape
+          clearOnBlur={clearOnBlur}
+          openOnFocus
+          // disableCloseOnSelect
+          disableClearable // gets rid of the x icon
+          // forcePopupIcon={false} // gets rid of the arrow
+          noOptionsText="Not found"
+          // interesting options:
+          // fullWidth
+          // blurOnSelect
 
-        // open //debug option
-        // disablePortal
-        onChange={(_, value, reason) => {
-          if (reason === "select-option" && value) {
-            onSelect(value);
-            if (clearOnBlur) clearSelect();
-          }
-        }}
-      />
-    </Styled>
-  );
-}
+          // open //debug option
+          // disablePortal
+          onChange={(_, value, reason) => {
+            if (reason === "select-option" && value) {
+              onSelect(value);
+              if (clearOnBlur) clearSelect();
+            }
+          }}
+        />
+      </Styled>
+    );
+  }
+);
+
+export default VarbAutoComplete;
 
 const minWidth = "110px";
 

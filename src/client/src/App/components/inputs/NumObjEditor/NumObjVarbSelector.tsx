@@ -3,7 +3,7 @@ import { EditorState } from "draft-js";
 import styled from "styled-components";
 import { insertEntity } from "../../../modules/draftjs/insert";
 import theme from "../../../theme/Theme";
-import VarbAutoComplete from "../VarbAutoComplete";
+import VarbAutoComplete, { PopperRef } from "../VarbAutoComplete";
 import Analyzer from "../../../sharedWithServer/Analyzer";
 import { VariableOption } from "../../../sharedWithServer/Analyzer/methods/get/variableOptions";
 import { EntityMapData } from "../../../sharedWithServer/Analyzer/SectionMetas/relSections/rel/valueMeta/NumObj/entities";
@@ -13,28 +13,32 @@ interface Props {
   onChange: Function;
 }
 
-export default function NumObjVarbSelector({ editorState, onChange }: Props) {
-  function onSelect(value: VariableOption) {
-    const { displayName, varbInfo } = value;
-    const entity: EntityMapData = {
-      ...varbInfo,
-      entityId: Analyzer.makeId(),
-    };
+const NumObjVarbSelector = React.forwardRef(
+  ({ editorState, onChange }: Props, ref: PopperRef) => {
+    function onSelect(value: VariableOption) {
+      const { displayName, varbInfo } = value;
+      const entity: EntityMapData = {
+        ...varbInfo,
+        entityId: Analyzer.makeId(),
+      };
 
-    const newEditorState = insertEntity(editorState, displayName, entity);
-    onChange(newEditorState);
-  }
+      const newEditorState = insertEntity(editorState, displayName, entity);
+      onChange(newEditorState);
+    }
 
-  return (
-    <Styled className="NumObjVarbSelector-root">
-      <div className="NumObjVarbSelector-absolute">
-        <div className="NumObjVarbSelector-selectorWrapper NumObjVarbSelector-wrapper">
-          <VarbAutoComplete {...{ onSelect, clearOnBlur: true }} />
+    return (
+      <Styled className="NumObjVarbSelector-root">
+        <div className="NumObjVarbSelector-absolute">
+          <div className="NumObjVarbSelector-selectorWrapper NumObjVarbSelector-wrapper">
+            <VarbAutoComplete {...{ onSelect, clearOnBlur: true }} ref={ref} />
+          </div>
         </div>
-      </div>
-    </Styled>
-  );
-}
+      </Styled>
+    );
+  }
+);
+
+export default NumObjVarbSelector;
 
 const Styled = styled.div`
   position: relative;
