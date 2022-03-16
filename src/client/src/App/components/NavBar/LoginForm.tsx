@@ -8,29 +8,6 @@ import { useAnalyzerContext } from "../../modules/usePropertyAnalyzer";
 import { LoginFormData } from "../../sharedWithServer/User/crudTypes";
 import SmallFormTextField from "../general/SmallFormTextField";
 
-export function useLoginForm() {
-  const { analyzer, handleChange } = useAnalyzerContext();
-  const loginForm = analyzer.section("login");
-  const emailVarb = loginForm.varb("email");
-  const passwordVarb = loginForm.varb("password");
-
-  const { varbs } = analyzer.section("login");
-
-  return {
-    email: {
-      name: emailVarb.stringFeVarbInfo,
-      value: emailVarb.value("string"),
-      // error: boolean
-      // helperText: string
-    },
-    password: {
-      name: passwordVarb.stringFeVarbInfo,
-      value: passwordVarb.value("string"),
-    },
-    handleChange,
-  };
-}
-
 export function LoginForm() {
   const loginVarbNames: (keyof LoginFormData)[] = ["email", "password"];
   const { analyzer, handleChange } = useAnalyzerContext();

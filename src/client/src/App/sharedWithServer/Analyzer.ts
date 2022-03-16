@@ -167,7 +167,6 @@ import StateSection, { StateSectionCore } from "./Analyzer/StateSection";
 import { Obj, ObjectKeys } from "./utils/Obj";
 import { Id } from "./Analyzer/SectionMetas/relSections/baseSections/id";
 import { newInEntity } from "./Analyzer/methods/get/inEntity";
-import { makeReq } from "./User/crudTypes";
 import { AnalyzerReq, analyzerReq } from "./Analyzer/req";
 
 export type StateSections = { [S in SectionName]: StateSection<S>[] };
