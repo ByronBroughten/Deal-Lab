@@ -1,5 +1,6 @@
 import { Req } from "../User/crudTypes";
 import Analyzer from "./../Analyzer";
+import { FeInfo } from "./SectionMetas/Info";
 
 export type AnalyzerReq = typeof analyzerReq;
 export const analyzerReq = {
@@ -24,6 +25,19 @@ export const analyzerReq = {
           email: "string",
           password: "string",
         }),
+      },
+    };
+  },
+  postIndexEntry(
+    analyzer: Analyzer,
+    feInfo: FeInfo<"hasIndexStore">
+  ): Req<"PostEntry"> {
+    const { indexStoreName } = analyzer.sectionMeta(feInfo.sectionName);
+    const dbEntry = analyzer.dbIndexEntry(feInfo);
+    return {
+      body: {
+        dbStoreName: indexStoreName,
+        payload: dbEntry,
       },
     };
   },

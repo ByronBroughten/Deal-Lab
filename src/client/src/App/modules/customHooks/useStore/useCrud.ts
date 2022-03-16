@@ -42,15 +42,8 @@ const validateRes = {
 
 export const crud = {
   async postEntry(
-    dbEntry: DbEntry,
-    dbStoreName: DbStoreName
+    reqObj: Req<"PostEntry">
   ): Promise<Res<"PostEntry"> | undefined> {
-    const reqObj: Req<"PostEntry"> = {
-      body: {
-        dbStoreName,
-        payload: dbEntry,
-      },
-    };
     const res = await https.post(`saving`, url.dbEntry, reqObj.body);
     return validateRes.dbId(res);
   },

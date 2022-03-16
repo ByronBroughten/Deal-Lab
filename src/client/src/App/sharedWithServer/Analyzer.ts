@@ -168,6 +168,7 @@ import { Obj, ObjectKeys } from "./utils/Obj";
 import { Id } from "./Analyzer/SectionMetas/relSections/baseSections/id";
 import { newInEntity } from "./Analyzer/methods/get/inEntity";
 import { AnalyzerReq, analyzerReq } from "./Analyzer/req";
+import { DropFirst } from "./utils/typescript";
 
 export type StateSections = { [S in SectionName]: StateSection<S>[] };
 type RawSections = { [S in SectionName]: StateSectionCore<S>[] };
@@ -233,17 +234,24 @@ export default class Analyzer {
     return { sections: this.sections };
   }
   get meta() {
-    // depreciated
     return sectionMetas;
   }
-
   get req() {
+    type ThisAnalyzerReqParams<T extends keyof AnalyzerReq> = DropFirst<
+      Parameters<AnalyzerReq[T]>
+    >;
     type ThisAnalyzerReq = {
-      [Prop in keyof AnalyzerReq]: () => ReturnType<AnalyzerReq[Prop]>;
+      [Prop in keyof AnalyzerReq]: (
+        ...params: ThisAnalyzerReqParams<Prop>
+      ) => ReturnType<AnalyzerReq[Prop]>;
     };
+
     const thisAnalyzerReq = Obj.keys(analyzerReq).reduce((next, reqName) => {
-      next[reqName] = () =>
-        analyzerReq[reqName](this) as ReturnType<AnalyzerReq[typeof reqName]>;
+      const fn: (
+        analyzer: Analyzer,
+        ...params: any
+      ) => ReturnType<AnalyzerReq[typeof reqName]> = analyzerReq[reqName];
+      next[reqName] = (...params: any) => fn.apply({}, [this, ...params]);
       return next;
     }, {} as any) as ThisAnalyzerReq;
     return thisAnalyzerReq;

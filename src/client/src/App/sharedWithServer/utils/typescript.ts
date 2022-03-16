@@ -1,5 +1,9 @@
 export type ValueOf<T> = T[keyof T];
 
+export type DropFirst<T extends unknown[]> = T extends [any, ...infer U]
+  ? U
+  : never;
+
 type FilterFlags<Base, Condition> = {
   [Key in keyof Base]: Base[Key] extends Condition ? Key : never;
 };

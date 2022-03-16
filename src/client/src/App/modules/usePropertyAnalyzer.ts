@@ -61,7 +61,7 @@ export default function usePropertyAnalyzer({
     ...params: P
   ): void {
     setAnalyzer((prev) => {
-      const fn: (this: Analyzer, ...args: any) => Analyzer = prev[action];
+      const fn: (this: Analyzer, ...params: any) => Analyzer = prev[action];
       return fn.apply(prev, params);
     });
   }
