@@ -7,7 +7,7 @@ import {
 import { runApp } from "../../runApp";
 import { serverSideLogin } from "./userRoutes/shared/doLogin";
 import request from "supertest";
-import { serverSideUser } from "./shared/severSideUser";
+import { serverSideUser, UserModel } from "./shared/severSideUser";
 
 describe("post sectionArr", () => {
   const sectionName = "propertyDefault";
@@ -36,6 +36,10 @@ describe("post sectionArr", () => {
     expect(res.status).toBe(statusNumber);
   }
 
+  afterEach(async () => {
+    await UserModel.deleteMany();
+  });
+
   it("should return 200 if everything is ok", async () => {
     analyzer = analyzer.updateSectionValuesAndSolve("register", {
       email: "testosis@gmail.com",
@@ -47,6 +51,7 @@ describe("post sectionArr", () => {
     await userDoc.save();
     userId = userDoc._id.toHexString();
     token = serverSideLogin.makeUserAuthToken(userId);
-    await testStatus(200);
+    const res = await exec();
+    expect(res.status).toBe(200);
   });
 });

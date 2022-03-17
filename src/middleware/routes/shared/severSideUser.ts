@@ -28,6 +28,7 @@ export function prepEmail(email: string): {
 }
 
 export const serverSideUser = {
+  findByEmailKey: "user.0.dbSections.user.0.dbVarbs.emailLower",
   async prepData({
     registerFormData,
     guestAccessSections,

@@ -20,7 +20,7 @@ import {
 } from "../../../client/src/App/sharedWithServer/Analyzer/SectionMetas/SectionName";
 import { DbEntry } from "../../../client/src/App/sharedWithServer/Analyzer/DbEntry";
 
-const send = {
+export const serverSend = {
   success(
     res: Response,
     { data, headers }: { data: any; headers?: { [key: string]: string } }
@@ -32,7 +32,7 @@ const send = {
   },
 };
 
-export const val = {
+export const serverValidate = {
   registerFormData(value: any, res: Response): value is RegisterFormData {
     if (zRegisterFormData.safeParse(value).success) return true;
     else {
@@ -118,11 +118,11 @@ export const validate = {
     req(req: Request, res: Response): Req<"Register"> | undefined {
       const { payload } = req.body;
 
-      if (!val.payloadIsObj(payload, res)) return;
+      if (!serverValidate.payloadIsObj(payload, res)) return;
       const { registerFormData, guestAccessSections } = payload;
       if (
-        val.registerFormData(registerFormData, res) &&
-        val.guestAccessSections(guestAccessSections, res)
+        serverValidate.registerFormData(registerFormData, res) &&
+        serverValidate.guestAccessSections(guestAccessSections, res)
       ) {
         return {
           body: {
@@ -138,7 +138,7 @@ export const validate = {
   login: {
     req(req: Request, res: Response): Req<"Login"> | undefined {
       const { payload } = req.body;
-      if (!val.loginFormData(payload, res)) return;
+      if (!serverValidate.loginFormData(payload, res)) return;
       return {
         body: {
           payload,
@@ -150,9 +150,9 @@ export const validate = {
     req(req: Request, res: Response): LoggedIn<Req<"PostEntry">> | undefined {
       const { user, dbStoreName, payload } = req.body;
       if (
-        val.userIsLoggedIn(user, res) &&
-        val.dbStoreName(dbStoreName, res) &&
-        val.dbEntry(payload, res)
+        serverValidate.userIsLoggedIn(user, res) &&
+        serverValidate.dbStoreName(dbStoreName, res) &&
+        serverValidate.dbEntry(payload, res)
       ) {
         return {
           body: {
@@ -167,8 +167,8 @@ export const validate = {
       // the data for this doesn't really matter.
       if (is.dbId(data)) {
         const resObj: Res<"PostEntry"> = { data };
-        send.success(res, resObj);
-      } else send.resDataIsInvalid(res, "DbId");
+        serverSend.success(res, resObj);
+      } else serverSend.resDataIsInvalid(res, "DbId");
     },
   },
   postEntryArr: {
@@ -178,9 +178,9 @@ export const validate = {
     ): LoggedIn<Req<"PostSectionArr">> | undefined {
       const { user, dbStoreName, payload } = req.body;
       if (
-        val.userIsLoggedIn(user, res) &&
-        val.dbStoreName(dbStoreName, res) &&
-        val.dbEntryArr(payload, res)
+        serverValidate.userIsLoggedIn(user, res) &&
+        serverValidate.dbStoreName(dbStoreName, res) &&
+        serverValidate.dbEntryArr(payload, res)
       ) {
         return {
           body: {
@@ -194,8 +194,8 @@ export const validate = {
     res(res: Response, data: DbStoreName) {
       if (SectionNam.is(data, "dbStore")) {
         const resObj: Res<"PostSectionArr"> = { data };
-        send.success(res, resObj);
-      } else send.resDataIsInvalid(res, "DbStoreName");
+        serverSend.success(res, resObj);
+      } else serverSend.resDataIsInvalid(res, "DbStoreName");
     },
   },
   postTableColumns: {
@@ -205,9 +205,9 @@ export const validate = {
     ): LoggedIn<Req<"PostTableColumns">> | undefined {
       const { user, dbStoreName, payload } = req.body;
       if (
-        val.userIsLoggedIn(user, res) &&
-        val.sectionName(dbStoreName, res, "table") &&
-        val.dbEntryArr(payload, res)
+        serverValidate.userIsLoggedIn(user, res) &&
+        serverValidate.sectionName(dbStoreName, res, "table") &&
+        serverValidate.dbEntryArr(payload, res)
       ) {
         return {
           body: {
@@ -221,17 +221,17 @@ export const validate = {
     res(res: Response, data: DbEntry[]) {
       if (is.dbEntryArr(data)) {
         const resObj: Res<"PostTableColumns"> = { data };
-        send.success(res, resObj);
-      } else send.resDataIsInvalid(res, "DbEntryArr");
+        serverSend.success(res, resObj);
+      } else serverSend.resDataIsInvalid(res, "DbEntryArr");
     },
   },
   putEntry: {
     req(req: Request, res: Response): LoggedIn<Req<"PutEntry">> | undefined {
       const { user, dbStoreName, payload } = req.body;
       if (
-        val.userIsLoggedIn(user, res) &&
-        val.dbStoreName(dbStoreName, res) &&
-        val.dbEntry(payload, res)
+        serverValidate.userIsLoggedIn(user, res) &&
+        serverValidate.dbStoreName(dbStoreName, res) &&
+        serverValidate.dbEntry(payload, res)
       ) {
         return {
           body: {
@@ -245,8 +245,8 @@ export const validate = {
     res(res: Response, data: DbId) {
       if (is.dbId(data)) {
         const resObj: Res<"PutEntry"> = { data };
-        send.success(res, resObj);
-      } else send.resDataIsInvalid(res, "DbId");
+        serverSend.success(res, resObj);
+      } else serverSend.resDataIsInvalid(res, "DbId");
     },
   },
   getEntry: {
@@ -254,9 +254,9 @@ export const validate = {
       const { dbStoreName, dbId } = req.params;
       const { user } = req.body;
       if (
-        val.userIsLoggedIn(user, res) &&
-        val.dbStoreName(dbStoreName, res) &&
-        val.dbId(dbId, res)
+        serverValidate.userIsLoggedIn(user, res) &&
+        serverValidate.dbStoreName(dbStoreName, res) &&
+        serverValidate.dbId(dbId, res)
       ) {
         return {
           params: { dbStoreName, dbId },
@@ -269,8 +269,8 @@ export const validate = {
     res(res: Response, data: DbEntry) {
       if (is.dbEntry(data)) {
         const resObj: Res<"GetEntry"> = { data };
-        return send.success(res, resObj);
-      } else return send.resDataIsInvalid(res, "DbEntry");
+        return serverSend.success(res, resObj);
+      } else return serverSend.resDataIsInvalid(res, "DbEntry");
     },
   },
   deleteEntry: {
@@ -278,9 +278,9 @@ export const validate = {
       const { dbStoreName, dbId } = req.params;
       const { user } = req.body;
       if (
-        val.userIsLoggedIn(user, res) &&
-        val.dbStoreName(dbStoreName, res) &&
-        val.dbId(dbId, res)
+        serverValidate.userIsLoggedIn(user, res) &&
+        serverValidate.dbStoreName(dbStoreName, res) &&
+        serverValidate.dbId(dbId, res)
       ) {
         return {
           params: { dbStoreName, dbId },
@@ -293,8 +293,8 @@ export const validate = {
     res(res: Response, data: DbId) {
       if (is.dbId(data)) {
         const resObj: Res<"DeleteEntry"> = { data };
-        return send.success(res, resObj);
-      } else return send.resDataIsInvalid(res, "DbId");
+        return serverSend.success(res, resObj);
+      } else return serverSend.resDataIsInvalid(res, "DbId");
     },
   },
 };

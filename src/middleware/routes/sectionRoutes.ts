@@ -8,6 +8,7 @@ import { tryFindByIdAndUpdate, tryFindOneAndUpdate } from "./shared/tryQueries";
 import { getDbEntry } from "./sectionEntry/query";
 import { DbEnt } from "../../client/src/App/sharedWithServer/Analyzer/DbEntry";
 import { config } from "../../client/src/App/Constants";
+import { sectionArrRoutes } from "./sectionArrRoutes";
 
 const sectionRouter = express.Router();
 
@@ -34,19 +35,38 @@ sectionRouter.post("/", authWare, async (req, res) => {
   if (result) validate.postEntry.res(res, payload.dbId);
 });
 
-sectionRouter.post(config.url.sectionArr.bit, authWare, async (req, res) => {
-  const reqObj = validate.postEntryArr.req(req, res);
-  if (!reqObj) return;
-  const {
-    payload,
-    dbStoreName,
-    user: { _id: userId },
-  } = reqObj.body;
+const serverCrud = {
+  register: {
+    // route:
+    // post: {
+    // validateReq
+    // receive
+    // }
+  },
+  login: {
+    // route:
+    // post: {
+    //   validateReq
+    //   receive
+    // }
+  },
+  // section: {
+  //   post: ...
+  //   put: ...
+  //   get: ...
+  //   delete: ...
 
-  const setter = queryOp.set.entryArr(payload, dbStoreName);
-  const result = await tryFindByIdAndUpdate(res, userId, setter, "post");
-  if (result) validate.postEntryArr.res(res, dbStoreName);
-});
+  // },
+  sectionArr: {
+    post: {},
+  },
+};
+
+sectionRouter.post(
+  config.url.sectionArr.bit,
+  ...sectionArrRoutes.middleWare,
+  async (req, res) => sectionArrRoutes.post.receive(req, res)
+);
 sectionRouter.post(
   config.url.tableColumns.route,
   authWare,

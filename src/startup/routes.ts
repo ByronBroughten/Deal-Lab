@@ -1,9 +1,11 @@
 import express from "express";
 import cors from "cors";
-import sectionRouter from "../middleware/routes/dbEntryRoutes";
+import sectionRouter from "../middleware/routes/sectionRoutes";
 import userRouter from "../middleware/routes/userRoutes";
 import { authTokenKey } from "../client/src/App/sharedWithServer/User/crudTypes";
 import { config } from "../client/src/App/Constants";
+
+const routeStuff = {} as const;
 
 export default function routes(app: express.Application) {
   app.use(
