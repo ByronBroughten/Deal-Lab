@@ -15,6 +15,7 @@ import {
 } from "../sharedWithServer/Analyzer/SectionMetas/SectionName";
 import { LoginUser, zDbEntryArr } from "../sharedWithServer/User/DbUser";
 import { z } from "zod";
+import { urlPlusParams } from "../utils/url";
 
 const url = {
   section: config.url.section.path,
@@ -155,35 +156,22 @@ export const crud = {
     const res = await https.put("updating", url.section, reqObj.body);
     return validateRes.dbId(res);
   },
-  async getEntry(
-    dbStoreName: DbStoreName,
-    dbId: string
-  ): Promise<Res<"GetEntry"> | undefined> {
-    const reqObj: Req<"GetEntry"> = {
-      params: {
-        dbStoreName,
-        dbId,
-      },
-    };
-    const res = await https.get(`loading from ${dbStoreName}`, url.section, [
-      ...Object.values(reqObj.params),
-    ]);
+
+  async getSection({
+    params,
+  }: Req<"GetSection">): Promise<Res<"GetSection"> | undefined> {
+    const res = await https.get(
+      `loading from ${params.dbStoreName}`,
+      urlPlusParams(url.section, params, config.url.section.params.get)
+    );
     return validateRes.dbEntry(res);
   },
-  async deleteEntry(
-    dbId: string,
-    dbStoreName: DbStoreName
-  ): Promise<Res<"DeleteEntry"> | undefined> {
-    const reqObj: Req<"DeleteEntry"> = {
-      params: {
-        dbStoreName,
-        dbId,
-      },
-    };
+  async deleteEntry({
+    params,
+  }: Req<"DeleteSection">): Promise<Res<"DeleteSection"> | undefined> {
     const res = await https.delete(
-      `deleting from ${dbStoreName}`,
-      url.section,
-      [...Object.values(reqObj.params)]
+      `deleting from ${params.dbStoreName}`,
+      urlPlusParams(url.section, params, config.url.section.params.get)
     );
     return validateRes.dbId(res);
   },

@@ -12,8 +12,8 @@ const dbStore = {
     sectionName: SectionName<"hasIndexStore">,
     dbId: string
   ) {
-    const storeName = sectionMetas.get(sectionName).indexStoreName;
-    return await crud.deleteEntry(dbId, storeName);
+    const dbStoreName = sectionMetas.get(sectionName).indexStoreName;
+    return await crud.deleteEntry({ params: { dbStoreName, dbId } });
   },
   async putIndexEntry(feInfo: FeInfo<"hasIndexStore">, next: Analyzer) {
     const { indexStoreName } = next.sectionMeta(feInfo.sectionName);
@@ -114,7 +114,9 @@ export function useStores() {
       dbId: string
     ): Promise<void> {
       const { indexStoreName } = analyzer.section(feInfo);
-      const result = await crud.getEntry(indexStoreName, dbId);
+      const result = await crud.getSection(
+        analyzer.req.getSection(indexStoreName, dbId)
+      );
       if (result) {
         const dbEntry = DbEnt.changeMainName(
           result.data,

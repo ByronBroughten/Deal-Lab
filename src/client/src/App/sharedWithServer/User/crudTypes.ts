@@ -4,6 +4,7 @@ import { dbLimits } from "../utils/dbLimts";
 import { message, zNanoId } from "../utils/zod";
 import { DbEntry, zDbEntry } from "../Analyzer/DbEntry";
 import { LoginUser, zDbEntryArr } from "./DbUser";
+import { config } from "../../Constants";
 
 export const authTokenKey = "x-auth-token";
 
@@ -54,6 +55,12 @@ type LoginHeaders = { [authTokenKey]: string };
 export function isLoginHeaders(value: any): value is LoginHeaders {
   return typeof value === "object" && typeof value[authTokenKey] === "string";
 }
+
+type ArrToParams<
+  A extends readonly string[],
+  B extends { [Prop in A[number]]: string }
+> = B;
+
 type Crud = {
   Login: {
     Req: {
@@ -102,19 +109,30 @@ type Crud = {
     };
   };
   PutEntry: Crud["PostEntry"];
-  GetEntry: {
+  GetSection: {
     Req: {
-      params: {
-        dbStoreName: SectionName<"dbStore">;
-        dbId: string;
-      };
+      params: ArrToParams<
+        typeof config.url.section.params.get,
+        {
+          dbStoreName: SectionName<"dbStore">;
+          dbId: string;
+        }
+      >;
     };
     Res: {
       data: DbEntry;
     };
   };
-  DeleteEntry: {
-    Req: Crud["GetEntry"]["Req"];
+  DeleteSection: {
+    Req: {
+      params: ArrToParams<
+        typeof config.url.section.params.delete,
+        {
+          dbStoreName: SectionName<"dbStore">;
+          dbId: string;
+        }
+      >;
+    };
     Res: {
       data: string; // dbId
     };

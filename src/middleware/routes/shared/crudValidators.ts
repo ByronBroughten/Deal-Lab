@@ -250,7 +250,7 @@ export const validate = {
     },
   },
   getEntry: {
-    req(req: Request, res: Response): LoggedIn<Req<"GetEntry">> | undefined {
+    req(req: Request, res: Response): LoggedIn<Req<"GetSection">> | undefined {
       const { dbStoreName, dbId } = req.params;
       const { user } = req.body;
       if (
@@ -268,13 +268,16 @@ export const validate = {
     },
     res(res: Response, data: DbEntry) {
       if (is.dbEntry(data)) {
-        const resObj: Res<"GetEntry"> = { data };
+        const resObj: Res<"GetSection"> = { data };
         return serverSend.success(res, resObj);
       } else return serverSend.resDataIsInvalid(res, "DbEntry");
     },
   },
   deleteEntry: {
-    req(req: Request, res: Response): LoggedIn<Req<"DeleteEntry">> | undefined {
+    req(
+      req: Request,
+      res: Response
+    ): LoggedIn<Req<"DeleteSection">> | undefined {
       const { dbStoreName, dbId } = req.params;
       const { user } = req.body;
       if (
@@ -292,7 +295,7 @@ export const validate = {
     },
     res(res: Response, data: DbId) {
       if (is.dbId(data)) {
-        const resObj: Res<"DeleteEntry"> = { data };
+        const resObj: Res<"DeleteSection"> = { data };
         return serverSend.success(res, resObj);
       } else return serverSend.resDataIsInvalid(res, "DbId");
     },

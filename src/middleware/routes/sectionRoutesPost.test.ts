@@ -10,22 +10,18 @@ import { config } from "../../client/src/App/Constants";
 import Analyzer from "../../client/src/App/sharedWithServer/Analyzer";
 import { queryOp } from "./sectionEntry/operator";
 import { queryOptions } from "./shared/tryQueries";
-import mongoose from "mongoose";
 import { SectionName } from "../../client/src/App/sharedWithServer/Analyzer/SectionMetas/SectionName";
 
-describe(`dbEntry/post`, () => {
+describe(`dbSection/post`, () => {
   const sectionName = "property";
   let analyzer: Analyzer;
   let req: Req<"PostEntry">;
   let server: any;
   let token: string;
-  let indexStoreName: SectionName<"savable">;
   let userId: string;
 
   beforeEach(async () => {
     analyzer = Analyzer.initAnalyzer();
-
-    ({ indexStoreName } = analyzer.sectionMeta(sectionName));
 
     const { feInfo } = analyzer.lastSection(sectionName);
     req = analyzer.req.postIndexEntry(feInfo);
@@ -67,9 +63,8 @@ describe(`dbEntry/post`, () => {
     await userDoc.save();
     userId = userDoc._id.toHexString();
     token = serverSideLogin.makeUserAuthToken(userId);
-
-    const { payload } = req.body;
-    const pusher = queryOp.push.entry({ ...payload }, indexStoreName);
+    const { indexStoreName } = analyzer.sectionMeta(sectionName);
+    const pusher = queryOp.push.entry({ ...req.body.payload }, indexStoreName);
     await UserModel.findByIdAndUpdate(userId, pusher, queryOptions["post"]);
     await testStatus(500);
   });

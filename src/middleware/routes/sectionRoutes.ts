@@ -1,72 +1,73 @@
-import express from "express";
+import express, { Request, Response } from "express";
 import authWare from "../authWare";
 import { queryOp } from "./sectionEntry/operator";
 import { UserModel } from "./shared/severSideUser";
-import { validate } from "./shared/crudValidators";
+import { serverValidate, validate } from "./shared/crudValidators";
 import { tryFindByIdAndUpdate, tryFindOneAndUpdate } from "./shared/tryQueries";
-
 import { getDbEntry } from "./sectionEntry/query";
 import { DbEnt } from "../../client/src/App/sharedWithServer/Analyzer/DbEntry";
 import { config } from "../../client/src/App/Constants";
-import { sectionArrRoutes } from "./sectionArrRoutes";
+import {
+  LoggedIn,
+  Req,
+} from "../../client/src/App/sharedWithServer/User/crudTypes";
 
 const sectionRouter = express.Router();
+export const sectionRoutes = {
+  route: config.url.section.route,
+  middleWare: [authWare],
+  post: {
+    validateReq(
+      req: Request,
+      res: Response
+    ): LoggedIn<Req<"PostEntry">> | undefined {
+      const { user, dbStoreName, payload } = req.body;
+      if (
+        serverValidate.userIsLoggedIn(user, res) &&
+        serverValidate.dbStoreName(dbStoreName, res) &&
+        serverValidate.dbEntry(payload, res)
+      ) {
+        return {
+          body: {
+            user,
+            dbStoreName,
+            payload,
+          },
+        };
+      } else return;
+    },
+    async receive(req: Request, res: Response) {
+      const reqObj = this.validateReq(req, res);
+      if (!reqObj) return;
+      const {
+        payload,
+        dbStoreName,
+        user: { _id: userId },
+      } = reqObj.body;
 
-// test post first
-sectionRouter.post("/", authWare, async (req, res) => {
-  const reqObj = validate.postEntry.req(req, res);
-  if (!reqObj) return;
-  const {
-    payload,
-    dbStoreName,
-    user: { _id: userId },
-  } = reqObj.body;
+      const dbEntry = await getDbEntry(userId, dbStoreName, payload.dbId, res);
+      if (dbEntry)
+        return res
+          .status(500)
+          .send(
+            `An entry in ${dbStoreName} already has the payload's dbId, ${payload.dbId}`
+          );
 
-  const dbEntry = await getDbEntry(userId, dbStoreName, payload.dbId, res);
-  if (dbEntry)
-    return res
-      .status(500)
-      .send(
-        `An entry in ${dbStoreName} already has the payload's dbId, ${payload.dbId}`
-      );
-
-  const pusher = queryOp.push.entry({ ...payload }, dbStoreName);
-  const result = await tryFindByIdAndUpdate(res, userId, pusher, "post");
-  if (result) validate.postEntry.res(res, payload.dbId);
-});
-
-const serverCrud = {
-  register: {
-    // route:
-    // post: {
-    // validateReq
-    // receive
-    // }
+      const pusher = queryOp.push.entry({ ...payload }, dbStoreName);
+      const result = await tryFindByIdAndUpdate(res, userId, pusher, "post");
+      if (result) validate.postEntry.res(res, payload.dbId);
+    },
   },
-  login: {
-    // route:
-    // post: {
-    //   validateReq
-    //   receive
-    // }
-  },
-  // section: {
-  //   post: ...
-  //   put: ...
-  //   get: ...
-  //   delete: ...
-
-  // },
-  sectionArr: {
-    post: {},
+  get: {
+    validateReq() {},
+    async receive() {},
   },
 };
 
-sectionRouter.post(
-  config.url.sectionArr.bit,
-  ...sectionArrRoutes.middleWare,
-  async (req, res) => sectionArrRoutes.post.receive(req, res)
+sectionRouter.post("/", ...sectionRoutes.middleWare, (req, res) =>
+  sectionRoutes.post.receive(req, res)
 );
+
 sectionRouter.post(
   config.url.tableColumns.route,
   authWare,

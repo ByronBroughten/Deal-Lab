@@ -2,7 +2,6 @@ import axios, { AxiosResponse } from "axios"; // npm i axios
 import { toast } from "react-toastify";
 import logger from "./logService";
 import { auth } from "./authService";
-import { urlPlusParams } from "../../utils/url";
 import { authTokenKey } from "../../sharedWithServer/User/crudTypes";
 
 axios.interceptors.request.use(function (config) {
@@ -56,40 +55,27 @@ async function tryPost(
   }
 }
 
-async function tryPut(
-  blanking: string,
-  url: string,
-  body: any,
-  params: string[] = []
-): AsyncAxiosRes {
+async function tryPut(blanking: string, url: string, body: any): AsyncAxiosRes {
   try {
-    return await axios.put(urlPlusParams(url, params), body);
+    return await axios.put(url, body);
   } catch (err) {
     handleServerError(err, blanking);
     return undefined;
   }
 }
 
-async function tryGet(
-  blanking: string,
-  url: string,
-  params: string[] = []
-): AsyncAxiosRes {
+async function tryGet(blanking: string, url: string): AsyncAxiosRes {
   try {
-    return await axios.get(urlPlusParams(url, params));
+    return await axios.get(url);
   } catch (err) {
     handleServerError(err, blanking);
     return undefined;
   }
 }
 
-async function tryDelete(
-  blanking: string,
-  url: string,
-  params: string[] = []
-): AsyncAxiosRes {
+async function tryDelete(blanking: string, url: string): AsyncAxiosRes {
   try {
-    return await axios.delete(urlPlusParams(url, params));
+    return await axios.delete(url);
   } catch (err) {
     handleServerError(err, blanking);
     return undefined;

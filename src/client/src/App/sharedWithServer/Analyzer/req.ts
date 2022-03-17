@@ -43,6 +43,18 @@ export const analyzerReq = {
       },
     };
   },
+  getSection(
+    _: Analyzer,
+    dbStoreName: SectionName<"dbStore">,
+    dbId: string
+  ): Req<"GetSection"> {
+    return {
+      params: {
+        dbStoreName,
+        dbId,
+      },
+    };
+  },
   postSectionArr(
     analyzer: Analyzer,
     sectionName: SectionName<"savable">

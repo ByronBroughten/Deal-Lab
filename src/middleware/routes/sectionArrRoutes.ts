@@ -9,6 +9,7 @@ import authWare from "../authWare";
 import { queryOp } from "./sectionEntry/operator";
 import { serverSend, serverValidate } from "./shared/crudValidators";
 import { tryFindByIdAndUpdate } from "./shared/tryQueries";
+import express from "express";
 // where does the middleware go? The route level? I guess so, or maybe both.
 
 export const sectionArrRoutes = {
@@ -53,3 +54,9 @@ export const sectionArrRoutes = {
     },
   },
 } as const;
+
+const sectionArrRouter = express.Router();
+sectionArrRouter.post("/", ...sectionArrRoutes.middleWare, async (req, res) =>
+  sectionArrRoutes.post.receive(req, res)
+);
+export default sectionArrRouter;
