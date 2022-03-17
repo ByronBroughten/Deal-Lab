@@ -1,7 +1,4 @@
-import {
-  generateAuthToken,
-  makeDummyUserToken,
-} from "./userRoutes/shared/doLogin";
+import { serverSideLogin } from "./userRoutes/shared/doLogin";
 import request from "supertest";
 import { runApp } from "../../runApp";
 import { makeDbUser, prepNewUserData, UserModel } from "./shared/makeDbUser";
@@ -32,7 +29,7 @@ describe(`dbEntry/post`, () => {
 
     const { feInfo } = analyzer.lastSection(sectionName);
     req = analyzer.req.postIndexEntry(feInfo);
-    token = makeDummyUserToken();
+    token = serverSideLogin.dummyUserAuthToken();
     server = runApp();
   });
 
@@ -73,7 +70,7 @@ describe(`dbEntry/post`, () => {
     });
     await userDoc.save();
     userId = userDoc._id.toHexString();
-    token = generateAuthToken(userId);
+    token = serverSideLogin.makeUserAuthToken(userId);
 
     const { payload } = req.body;
     const pusher = queryOp.push.entry({ ...payload }, indexStoreName);

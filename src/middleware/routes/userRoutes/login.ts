@@ -8,7 +8,7 @@ import {
 import { Obj } from "../../../client/src/App/sharedWithServer/utils/Obj";
 import { Full } from "../../../client/src/App/sharedWithServer/utils/typescript";
 import { prepEmail, UserModel } from "../shared/makeDbUser";
-import { loginUser } from "./shared/doLogin";
+import { serverSideLogin } from "./shared/doLogin";
 
 function validateReq(req: Request, res: Response): Req<"Login"> | undefined {
   const { payload } = req.body;
@@ -44,5 +44,5 @@ export async function login(req: Request, res: Response) {
   };
   const isValidPw = await bcrypt.compare(password, encryptedPassword);
   if (!isValidPw) return res.status(400).send("Invalid password.");
-  return loginUser(res, user);
+  return serverSideLogin.do(res, user);
 }

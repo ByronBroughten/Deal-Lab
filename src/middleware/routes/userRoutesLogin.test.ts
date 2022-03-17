@@ -3,7 +3,7 @@ import {
   Req,
 } from "../../client/src/App/sharedWithServer/User/crudTypes";
 import { makeDbUser, prepNewUserData, UserModel } from "./shared/makeDbUser";
-import { decodeAndCheckUserToken } from "./userRoutes/shared/doLogin";
+import { serverSideLogin } from "./userRoutes/shared/doLogin";
 import request from "supertest";
 import { runApp } from "../../runApp";
 import { omit } from "lodash";
@@ -78,7 +78,7 @@ describe(config.url.login.route, () => {
     const token = res.headers[authTokenKey];
     expect(token).not.toBeUndefined();
 
-    const decoded = decodeAndCheckUserToken(token);
+    const decoded = serverSideLogin.checkUserAuthToken(token);
     expect(decoded).not.toBeNull();
   });
   it("should return a logged in user if the request is valid", async () => {});

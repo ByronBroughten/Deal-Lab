@@ -15,7 +15,24 @@ import Arr from "../../../../client/src/App/sharedWithServer/utils/Arr";
 import { SectionNam } from "../../../../client/src/App/sharedWithServer/Analyzer/SectionMetas/SectionName";
 import { DbEnt } from "../../../../client/src/App/sharedWithServer/Analyzer/DbEntry";
 
-export function clientify(dbUser: DbUser): LoginUser {
+export type UserJwt = { _id: string };
+function tokenHasCorrectProps(value: any) {
+  return (
+    "_id" in value &&
+    "iat" in value &&
+    typeof value._id === "string" &&
+    typeof value.iat === "number"
+  );
+}
+function isUserJwt(value: any): value is UserJwt {
+  return (
+    isObject(value) &&
+    Object.keys(value).length === 2 &&
+    tokenHasCorrectProps(value)
+  );
+}
+
+function clientify(dbUser: DbUser): LoginUser {
   const loginUser: Partial<LoginUser> = {};
   for (const sectionName of SectionNam.arr.initOnLogin) {
     if (SectionNam.is(sectionName, "table")) {
@@ -42,44 +59,27 @@ export function clientify(dbUser: DbUser): LoginUser {
   return loginUser as LoginUser;
 }
 
-export type UserJwt = { _id: string };
-function tokenHasCorrectProps(value: any) {
-  return (
-    "_id" in value &&
-    "iat" in value &&
-    typeof value._id === "string" &&
-    typeof value.iat === "number"
-  );
-}
-
-function isUserToken(value: any): value is UserJwt {
-  return (
-    isObject(value) &&
-    Object.keys(value).length === 2 &&
-    tokenHasCorrectProps(value)
-  );
-}
-export function decodeAndCheckUserToken(token: any): null | UserJwt {
-  const decoded = jwt.verify(token, config.get("jwtPrivateKey"));
-  if (isUserToken(decoded)) return decoded;
-  else return null;
-}
-
-export function makeDummyUserToken() {
-  const objectId = new mongoose.Types.ObjectId();
-  const _id = objectId.toHexString();
-  return generateAuthToken(_id);
-}
-export function generateAuthToken(_id: string) {
-  const userJwt: UserJwt = { _id };
-  return jwt.sign(userJwt, config.get("jwtPrivateKey"));
-}
-export function loginUser(res: Response, user: DbUser & { _id?: any }) {
-  if ("_id" in user && typeof user._id !== "undefined") {
-    const token = generateAuthToken(user._id);
-    const loggedInUser = clientify(user);
-    res.header(authTokenKey, token).status(200).send(loggedInUser);
-  } else {
-    throw new Error("A valid user id is required here.");
-  }
-}
+export const serverSideLogin = {
+  checkUserAuthToken(token: any): null | UserJwt {
+    const decoded = jwt.verify(token, config.get("jwtPrivateKey"));
+    if (isUserJwt(decoded)) return decoded;
+    else return null;
+  },
+  dummyUserAuthToken() {
+    const arbitraryId = new mongoose.Types.ObjectId();
+    return this.makeUserAuthToken(arbitraryId.toHexString());
+  },
+  makeUserAuthToken(userId: string) {
+    const userJwt: UserJwt = { _id: userId };
+    return jwt.sign(userJwt, config.get("jwtPrivateKey"));
+  },
+  do(res: Response, user: DbUser & { _id?: any }) {
+    if ("_id" in user && typeof user._id !== "undefined") {
+      const token = this.makeUserAuthToken(user._id);
+      const loggedInUser = clientify(user);
+      res.header(authTokenKey, token).status(200).send(loggedInUser);
+    } else {
+      throw new Error("A valid user id is required here.");
+    }
+  },
+};

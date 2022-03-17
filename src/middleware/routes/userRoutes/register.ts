@@ -6,7 +6,7 @@ import {
 } from "../../../client/src/App/sharedWithServer/User/crudTypes";
 import { Obj } from "../../../client/src/App/sharedWithServer/utils/Obj";
 import { makeDbUser, prepNewUserData, UserModel } from "../shared/makeDbUser";
-import { loginUser } from "./shared/doLogin";
+import { serverSideLogin } from "./shared/doLogin";
 
 function validateReq(req: Request, res: Response): Req<"Register"> | undefined {
   const { payload } = req.body;
@@ -53,5 +53,5 @@ export async function register(req: Request, res: Response) {
   const user = makeDbUser(newUserData);
   const userDoc = new UserModel(user);
   await userDoc.save();
-  return loginUser(res, { ...user, _id: userDoc._id });
+  return serverSideLogin.do(res, { ...user, _id: userDoc._id });
 }
