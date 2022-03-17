@@ -1,6 +1,8 @@
 import { Req } from "../User/crudTypes";
 import Analyzer from "./../Analyzer";
 import { FeInfo } from "./SectionMetas/Info";
+import { BaseName } from "./SectionMetas/relSections/baseSectionTypes";
+import { SectionName } from "./SectionMetas/SectionName";
 
 export type AnalyzerReq = typeof analyzerReq;
 export const analyzerReq = {
@@ -38,6 +40,18 @@ export const analyzerReq = {
       body: {
         dbStoreName: indexStoreName,
         payload: dbEntry,
+      },
+    };
+  },
+  postEntryArr(
+    analyzer: Analyzer,
+    sectionName: SectionName<"savable">
+  ): Req<"PostEntryArr"> {
+    const dbEntryArr = analyzer.dbEntryArr(sectionName);
+    return {
+      body: {
+        payload: dbEntryArr,
+        dbStoreName: sectionName,
       },
     };
   },

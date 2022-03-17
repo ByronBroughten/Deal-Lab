@@ -4,7 +4,7 @@ import { DbUser } from "../../../client/src/App/sharedWithServer/User/DbUser";
 import { QueryOp } from "../sectionEntry/operator";
 import { UserModel } from "./makeDbUser";
 
-const options = {
+export const queryOptions = {
   put: {
     new: true,
     lean: true,
@@ -22,7 +22,7 @@ const options = {
   },
 };
 
-type Action = keyof typeof options;
+type Action = keyof typeof queryOptions;
 
 export async function tryFindByIdAndUpdate(
   res: Response,
@@ -31,7 +31,11 @@ export async function tryFindByIdAndUpdate(
   action: Action
 ) {
   try {
-    return await UserModel.findByIdAndUpdate(id, operator, options[action]);
+    return await UserModel.findByIdAndUpdate(
+      id,
+      operator,
+      queryOptions[action]
+    );
   } catch (err) {
     if (err) res.status(500).send(err);
     return;
@@ -49,7 +53,7 @@ export async function tryFindOneAndUpdate(
     return await UserModel.findOneAndUpdate(
       filter,
       updateQuery,
-      options[action]
+      queryOptions[action]
     );
   } catch (err) {
     if (err) res.status(500).send(err);

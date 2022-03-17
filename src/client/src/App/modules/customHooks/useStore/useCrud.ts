@@ -48,15 +48,8 @@ export const crud = {
     return validateRes.dbId(res);
   },
   async postEntryArr(
-    dbEntryArr: DbEntry[],
-    dbStoreName: DbStoreName
+    reqObj: Req<"PostEntryArr">
   ): Promise<Res<"PostEntryArr"> | undefined> {
-    const reqObj: Req<"PostEntryArr"> = {
-      body: {
-        payload: dbEntryArr,
-        dbStoreName,
-      },
-    };
     const res = await https.post("saving", url.dbEntryArr, reqObj.body);
     return validateRes.dbId(res);
   },

@@ -8,12 +8,12 @@ import { useAnalyzerContext } from "../usePropertyAnalyzer";
 import { crud } from "./useStore/useCrud";
 
 const dbStore = {
-  async postEntryArr(
-    sectionName: SectionName<"savable">,
-    dbEntryArr: DbEntry[]
-  ) {
-    return await crud.postEntryArr(dbEntryArr, sectionName);
-  },
+  // async postEntryArr(
+  //   sectionName: SectionName<"savable">,
+  //   dbEntryArr: DbEntry[]
+  // ) {
+  //   return await crud.postEntryArr(dbEntryArr, sectionName);
+  // },
   async postTableColumns(
     sectionName: SectionName<"table">,
     dbEntryArr: DbEntry[]
@@ -71,8 +71,8 @@ export function useStores() {
       next: Analyzer = analyzer
     ) {
       // In this case, you already have a full entry arr and are just posting to the server
-      const dbEntryArr = next.dbEntryArr(sectionName);
-      await crud.postEntryArr(dbEntryArr, sectionName);
+      const reqObj = next.req.postEntryArr(sectionName);
+      await crud.postEntryArr(reqObj);
     },
     async postTableColumns(
       tableName: SectionName<"table">,
@@ -94,7 +94,9 @@ export function useStores() {
       if (auth.isLoggedIn) {
         const { defaultStoreName } = next.sectionMeta(sectionName);
         const nextDbEntryArr = next.dbEntryArr(defaultStoreName);
-        await dbStore.postEntryArr(defaultStoreName, nextDbEntryArr);
+
+        const reqObj = next.req.postEntryArr(defaultStoreName);
+        await crud.postEntryArr(reqObj);
       }
     },
 
