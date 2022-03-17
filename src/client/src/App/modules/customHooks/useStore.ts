@@ -1,6 +1,6 @@
 import Analyzer from "../../sharedWithServer/Analyzer";
 import { sectionMetas } from "../../sharedWithServer/Analyzer/SectionMetas";
-import { DbEnt, DbEntry } from "../../sharedWithServer/Analyzer/DbEntry";
+import { DbEnt } from "../../sharedWithServer/Analyzer/DbEntry";
 import { FeInfo } from "../../sharedWithServer/Analyzer/SectionMetas/Info";
 import { SectionName } from "../../sharedWithServer/Analyzer/SectionMetas/SectionName";
 import { auth } from "../services/authService";
@@ -8,18 +8,6 @@ import { useAnalyzerContext } from "../usePropertyAnalyzer";
 import { crud } from "./useStore/useCrud";
 
 const dbStore = {
-  // async postEntryArr(
-  //   sectionName: SectionName<"savable">,
-  //   dbEntryArr: DbEntry[]
-  // ) {
-  //   return await crud.postEntryArr(dbEntryArr, sectionName);
-  // },
-  async postTableColumns(
-    sectionName: SectionName<"table">,
-    dbEntryArr: DbEntry[]
-  ) {
-    return await crud.postTableColumns(dbEntryArr, sectionName);
-  },
   async deleteIndexEntry(
     sectionName: SectionName<"hasIndexStore">,
     dbId: string
@@ -38,7 +26,7 @@ const dbStore = {
 } as const;
 
 export function useStores() {
-  const { analyzer, setAnalyzerOrdered, handle } = useAnalyzerContext();
+  const { analyzer, setAnalyzerOrdered, handleSet } = useAnalyzerContext();
 
   function setAnalyzerToDefault() {
     setAnalyzerOrdered(analyzer);
@@ -59,11 +47,11 @@ export function useStores() {
   return {
     // post
     async postIndexEntry(feInfo: FeInfo<"hasFullIndexStore">) {
-      handle("pushToIndexStore", feInfo);
+      handleSet("pushToIndexStore", feInfo);
       doOrBackToDefault("postIndexEntry", feInfo, analyzer);
     },
     async postRowIndexEntry(feInfo: FeInfo<"hasRowIndexStore">) {
-      handle("pushToRowIndexStore", feInfo);
+      handleSet("pushToRowIndexStore", feInfo);
       doOrBackToDefault("postIndexEntry", feInfo, analyzer);
     },
     async postEntryArr(
@@ -80,7 +68,7 @@ export function useStores() {
     ) {
       const { rowSourceName } = analyzer.sectionMeta(tableName);
       const tableEntryArr = next.dbEntryArr(tableName);
-      const res = await dbStore.postTableColumns(tableName, tableEntryArr);
+      const res = await crud.postTableColumns(tableEntryArr, tableName);
       if (res) {
         next = next.loadSectionArrAndSolve(rowSourceName, res.data);
         setAnalyzerOrdered(next);
@@ -93,8 +81,6 @@ export function useStores() {
 
       if (auth.isLoggedIn) {
         const { defaultStoreName } = next.sectionMeta(sectionName);
-        const nextDbEntryArr = next.dbEntryArr(defaultStoreName);
-
         const reqObj = next.req.postEntryArr(defaultStoreName);
         await crud.postEntryArr(reqObj);
       }
@@ -102,24 +88,26 @@ export function useStores() {
 
     // put
     async putRowIndexEntry(feInfo: FeInfo<"hasRowIndexStore">) {
-      handle("updateRowIndexStore", feInfo);
+      handleSet("updateRowIndexStore", feInfo);
       doOrBackToDefault("putIndexEntry", feInfo, analyzer);
     },
     async putIndexEntry(feInfo: FeInfo<"hasFullIndexStore">) {
-      handle("updateIndexStoreEntry", feInfo);
+      handleSet("updateIndexStoreEntry", feInfo);
       doOrBackToDefault("putIndexEntry", feInfo, analyzer);
     },
+    // I don't really need useStore for fe store stuff, right?
+    // I could have, analyzer.sectionStore.get(), or something
 
     // load
     loadSectionFromFeDefault(
       params: Parameters<typeof analyzer.loadSectionFromFeDefault>
     ): void {
-      handle("loadSectionFromFeDefault", ...params);
+      handleSet("loadSectionFromFeDefault", ...params);
     },
     loadSectionFromFeIndex(
       params: Parameters<typeof analyzer.loadSectionFromFeIndex>
     ): void {
-      handle("loadSectionFromFeIndex", ...params);
+      handleSet("loadSectionFromFeIndex", ...params);
     },
     async loadSectionFromDbIndex(
       feInfo: FeInfo<"hasIndexStore">,
@@ -133,7 +121,7 @@ export function useStores() {
           indexStoreName,
           feInfo.sectionName
         );
-        handle("resetSectionAndSolve", feInfo, { dbEntry });
+        handleSet("resetSectionAndSolve", feInfo, { dbEntry });
       }
     },
 
@@ -142,14 +130,14 @@ export function useStores() {
       sectionName: SectionName<"hasFullIndexStore">,
       dbId: string
     ) {
-      handle("eraseIndexAndSolve", sectionName, dbId);
+      handleSet("eraseIndexAndSolve", sectionName, dbId);
       doOrBackToDefault("deleteIndexEntry", sectionName, dbId);
     },
     async deleteRowIndexEntry(
       sectionName: SectionName<"hasRowIndexStore">,
       dbId: string
     ) {
-      handle("eraseRowIndexAndSolve", sectionName, dbId);
+      handleSet("eraseRowIndexAndSolve", sectionName, dbId);
       doOrBackToDefault("deleteIndexEntry", sectionName, dbId);
     },
 

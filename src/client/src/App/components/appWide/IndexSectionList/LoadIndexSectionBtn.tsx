@@ -14,7 +14,7 @@ type Props = {
 };
 
 function useLoadIndexSection(feInfo: FeInfo<"hasIndexStore">, dbId: string) {
-  const { handle } = useAnalyzerContext();
+  const { handleSet } = useAnalyzerContext();
   const store = useStores();
   const { sectionName } = feInfo;
   if (SectionNam.is(sectionName, "hasRowIndexStore"))
@@ -22,7 +22,7 @@ function useLoadIndexSection(feInfo: FeInfo<"hasIndexStore">, dbId: string) {
       await store.loadSectionFromDbIndex({ ...feInfo, sectionName }, dbId);
   else
     return () =>
-      handle("loadSectionFromFeIndex", { ...feInfo, sectionName }, dbId);
+      handleSet("loadSectionFromFeIndex", { ...feInfo, sectionName }, dbId);
 }
 
 export default React.memo(function LoadIndexSectionBtn({

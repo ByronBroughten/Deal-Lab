@@ -32,7 +32,7 @@ export default function MainEntryTitleRow({
   droptop = false,
   hideLoad = false,
 }: Props) {
-  const { analyzer, handleRemoveSection, handle } = useAnalyzerContext();
+  const { analyzer, handleRemoveSection, handleSet } = useAnalyzerContext();
   const store = useStores();
 
   const { btnMenuIsOpen, toggleBtnMenu } = useToggleView({
@@ -69,7 +69,9 @@ export default function MainEntryTitleRow({
             <>
               <SectionBtn
                 className="MainEntryTitleRow-flexUnit"
-                onClick={async () => handle("loadSectionFromFeDefault", feInfo)}
+                onClick={async () =>
+                  handleSet("loadSectionFromFeDefault", feInfo)
+                }
               >
                 New
               </SectionBtn>
@@ -95,7 +97,7 @@ export default function MainEntryTitleRow({
                   </SectionBtn>
                   <SectionBtn
                     className="MainEntryTitleRow-flexUnit"
-                    onClick={() => handle("copySection", feInfo)}
+                    onClick={() => handleSet("copySection", feInfo)}
                   >
                     Copy
                   </SectionBtn>

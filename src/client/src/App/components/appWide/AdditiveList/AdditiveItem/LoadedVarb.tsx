@@ -4,9 +4,9 @@ import { FeVarbInfo } from "../../../../sharedWithServer/Analyzer/SectionMetas/r
 import { ControlledVarbAutoComplete } from "../../../inputs/ControlledVarbAutoComplete";
 
 export default function LoadedVarb({ feVarbInfo }: { feVarbInfo: FeVarbInfo }) {
-  const { handle, analyzer } = useAnalyzerContext();
+  const { handleSet, analyzer } = useAnalyzerContext();
   function onSelect({ varbInfo }: VariableOption) {
-    handle("loadValueFromVarb", feVarbInfo, varbInfo);
+    handleSet("loadValueFromVarb", feVarbInfo, varbInfo);
   }
   const varb = analyzer.varb(feVarbInfo);
   const selectedVarbInfo = analyzer.varbInfoValues(feVarbInfo);

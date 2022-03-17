@@ -56,7 +56,7 @@ export default function usePropertyAnalyzer({
   ] as const;
   type Action = typeof actions[number];
   type Params<A extends Action> = Parameters<typeof analyzer[A]>;
-  function handle<A extends Action, P extends Params<A>>(
+  function handleSet<A extends Action, P extends Params<A>>(
     action: A,
     ...params: P
   ): void {
@@ -113,7 +113,7 @@ export default function usePropertyAnalyzer({
     setAnalyzer,
     dropCalculator,
     toggleDropCalculator,
-    handle,
+    handleSet,
     ...specialHandlers,
   };
 }

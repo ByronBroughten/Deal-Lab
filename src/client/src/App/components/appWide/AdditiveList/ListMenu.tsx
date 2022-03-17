@@ -14,7 +14,7 @@ import XBtn from "../Xbtn";
 import ListMenuBtn from "./ListMenuBtn";
 
 function useFullIndexStoreMenu(feInfo: FeInfo<"hasFullIndexStore">) {
-  const { analyzer, handle, handleRemoveSection } = useAnalyzerContext();
+  const { analyzer, handleSet, handleRemoveSection } = useAnalyzerContext();
   const store = useStores();
   const { loadMenuIsOpen, toggleLoadMenu } = useToggleView({
     initValue: false,
@@ -23,7 +23,7 @@ function useFullIndexStoreMenu(feInfo: FeInfo<"hasFullIndexStore">) {
 
   const { sectionName } = feInfo;
   const load: OnSelect = ({ dbId }: SectionOption) =>
-    handle("loadSectionFromFeIndex", feInfo, dbId);
+    handleSet("loadSectionFromFeIndex", feInfo, dbId);
   return {
     load,
     loadOptions: analyzer.sectionArrAsOptions(sectionName),
@@ -31,7 +31,7 @@ function useFullIndexStoreMenu(feInfo: FeInfo<"hasFullIndexStore">) {
     toggleLoadMenu,
     isSaved: analyzer.sectionIsIndexSaved(feInfo),
     remove: () => handleRemoveSection(feInfo), // not sure why both remove and delete
-    copy: () => handle("copySection", feInfo),
+    copy: () => handleSet("copySection", feInfo),
     save: async () => await store.postIndexEntry(feInfo),
     update: async () => await store.putIndexEntry(feInfo),
     delete: async (dbId: string) =>

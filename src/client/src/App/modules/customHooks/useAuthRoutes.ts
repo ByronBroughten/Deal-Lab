@@ -4,11 +4,11 @@ import { useAnalyzerContext } from "../usePropertyAnalyzer";
 import { crud } from "./useStore/useCrud";
 
 export function useAuthRoutes() {
-  const { analyzer, handle } = useAnalyzerContext();
+  const { analyzer, handleSet } = useAnalyzerContext();
   function trySetLogin(resObj: Res<"Login">) {
     const { data, headers } = resObj;
     auth.setToken(headers[authTokenKey]);
-    handle("loadSectionArrsAndSolve", data);
+    handleSet("loadSectionArrsAndSolve", data);
   }
   return {
     async login() {
