@@ -1,7 +1,7 @@
 import { authTokenKey, Res } from "../../sharedWithServer/User/crudTypes";
 import { auth } from "../services/authService";
 import { useAnalyzerContext } from "../usePropertyAnalyzer";
-import { crud } from "./useStore/useCrud";
+import { crud } from "../crud";
 
 export function useAuthRoutes() {
   const { analyzer, handleSet } = useAnalyzerContext();
@@ -12,11 +12,11 @@ export function useAuthRoutes() {
   }
   return {
     async login() {
-      const resObj = await crud.login(analyzer.req.login());
+      const resObj = await crud.login.send(analyzer.req.login());
       if (resObj) trySetLogin(resObj);
     },
     async register() {
-      const resObj = await crud.register(analyzer.req.register());
+      const resObj = await crud.register.send(analyzer.req.register());
       if (resObj) trySetLogin(resObj);
     },
   };

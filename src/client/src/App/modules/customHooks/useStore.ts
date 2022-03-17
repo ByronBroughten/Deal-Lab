@@ -5,7 +5,7 @@ import { FeInfo } from "../../sharedWithServer/Analyzer/SectionMetas/Info";
 import { SectionName } from "../../sharedWithServer/Analyzer/SectionMetas/SectionName";
 import { auth } from "../services/authService";
 import { useAnalyzerContext } from "../usePropertyAnalyzer";
-import { crud } from "./useStore/useCrud";
+import { crud } from "../crud";
 
 const dbStore = {
   async deleteIndexEntry(
@@ -21,7 +21,7 @@ const dbStore = {
     return await crud.putEntry(dbEntry, indexStoreName);
   },
   async postIndexEntry(feInfo: FeInfo<"hasIndexStore">, next: Analyzer) {
-    return await crud.postEntry(next.req.postIndexEntry(feInfo));
+    return await crud.postSection.send(next.req.postIndexEntry(feInfo));
   },
 } as const;
 
@@ -59,8 +59,8 @@ export function useStores() {
       next: Analyzer = analyzer
     ) {
       // In this case, you already have a full entry arr and are just posting to the server
-      const reqObj = next.req.postEntryArr(sectionName);
-      await crud.postEntryArr(reqObj);
+      const reqObj = next.req.postSectionArr(sectionName);
+      await crud.postSectionArr.send(reqObj);
     },
     async postTableColumns(
       tableName: SectionName<"table">,
@@ -81,8 +81,8 @@ export function useStores() {
 
       if (auth.isLoggedIn) {
         const { defaultStoreName } = next.sectionMeta(sectionName);
-        const reqObj = next.req.postEntryArr(defaultStoreName);
-        await crud.postEntryArr(reqObj);
+        const reqObj = next.req.postSectionArr(defaultStoreName);
+        await crud.postSectionArr.send(reqObj);
       }
     },
 

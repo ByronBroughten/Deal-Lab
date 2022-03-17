@@ -5,7 +5,7 @@ import {
   zRegisterFormData,
 } from "../../../client/src/App/sharedWithServer/User/crudTypes";
 import { Obj } from "../../../client/src/App/sharedWithServer/utils/Obj";
-import { makeDbUser, prepNewUserData, UserModel } from "../shared/makeDbUser";
+import { serverSideUser, UserModel } from "../shared/severSideUser";
 import { serverSideLogin } from "./shared/doLogin";
 
 function validateReq(req: Request, res: Response): Req<"Register"> | undefined {
@@ -39,9 +39,7 @@ export async function register(req: Request, res: Response) {
   const reqObj = validateReq(req, res);
   if (!reqObj) return;
 
-  const { payload } = reqObj.body;
-  const newUserData = await prepNewUserData(payload);
-
+  const newUserData = await serverSideUser.prepData(reqObj.body.payload);
   const isUser = await UserModel.findOne(
     { [userByEmailKey]: newUserData.user.emailLower },
     undefined,
@@ -50,7 +48,7 @@ export async function register(req: Request, res: Response) {
   if (isUser)
     return res.status(400).send("An account with that email already exists.");
 
-  const user = makeDbUser(newUserData);
+  const user = serverSideUser.finalizeData(newUserData);
   const userDoc = new UserModel(user);
   await userDoc.save();
   return serverSideLogin.do(res, { ...user, _id: userDoc._id });

@@ -43,7 +43,7 @@ export const analyzerReq = {
       },
     };
   },
-  postEntryArr(
+  postSectionArr(
     analyzer: Analyzer,
     sectionName: SectionName<"savable">
   ): Req<"PostSectionArr"> {

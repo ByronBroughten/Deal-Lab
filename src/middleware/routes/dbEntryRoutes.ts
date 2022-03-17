@@ -1,7 +1,7 @@
 import express from "express";
 import authWare from "../authWare";
 import { queryOp } from "./sectionEntry/operator";
-import { UserModel } from "./shared/makeDbUser";
+import { UserModel } from "./shared/severSideUser";
 import { validate } from "./shared/crudValidators";
 import { tryFindByIdAndUpdate, tryFindOneAndUpdate } from "./shared/tryQueries";
 

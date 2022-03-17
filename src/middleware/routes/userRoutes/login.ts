@@ -7,7 +7,7 @@ import {
 } from "../../../client/src/App/sharedWithServer/User/crudTypes";
 import { Obj } from "../../../client/src/App/sharedWithServer/utils/Obj";
 import { Full } from "../../../client/src/App/sharedWithServer/utils/typescript";
-import { prepEmail, UserModel } from "../shared/makeDbUser";
+import { prepEmail, UserModel } from "../shared/severSideUser";
 import { serverSideLogin } from "./shared/doLogin";
 
 function validateReq(req: Request, res: Response): Req<"Login"> | undefined {

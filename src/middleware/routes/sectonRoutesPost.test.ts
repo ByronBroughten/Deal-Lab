@@ -1,7 +1,7 @@
 import { serverSideLogin } from "./userRoutes/shared/doLogin";
 import request from "supertest";
 import { runApp } from "../../runApp";
-import { makeDbUser, prepNewUserData, UserModel } from "./shared/makeDbUser";
+import { serverSideUser, UserModel } from "./shared/severSideUser";
 import {
   authTokenKey,
   Req,
@@ -63,11 +63,7 @@ describe(`dbEntry/post`, () => {
       userName: "Testosis",
     });
     const registerReq = analyzer.req.register();
-    const newUserData = await prepNewUserData(registerReq.body.payload);
-    const userDoc = new UserModel({
-      _id: new mongoose.Types.ObjectId(),
-      ...makeDbUser(newUserData),
-    });
+    const userDoc = await serverSideUser.full(registerReq.body.payload);
     await userDoc.save();
     userId = userDoc._id.toHexString();
     token = serverSideLogin.makeUserAuthToken(userId);
@@ -78,6 +74,16 @@ describe(`dbEntry/post`, () => {
     await testStatus(500);
   });
   it("should return 200 if everything is ok", async () => {
-    await exec();
+    analyzer = analyzer.updateSectionValuesAndSolve("register", {
+      email: "testosis@gmail.com",
+      password: "testpassword",
+      userName: "Testosis",
+    });
+    const registerReq = analyzer.req.register();
+    const userDoc = await serverSideUser.full(registerReq.body.payload);
+    await userDoc.save();
+    userId = userDoc._id.toHexString();
+    token = serverSideLogin.makeUserAuthToken(userId);
+    await testStatus(200);
   });
 });

@@ -1,19 +1,19 @@
 import { AxiosResponse } from "axios";
-import { config } from "../../../Constants";
+import { config } from "../Constants";
 import {
   is,
   isLoginHeaders,
   Req,
   Res,
-} from "../../../sharedWithServer/User/crudTypes";
-import https from "../../services/httpService";
-import { DbStoreName } from "../../../sharedWithServer/Analyzer/SectionMetas/relSections/baseSectionTypes";
-import { DbEntry } from "../../../sharedWithServer/Analyzer/DbEntry";
+} from "../sharedWithServer/User/crudTypes";
+import https from "./services/httpService";
+import { DbStoreName } from "../sharedWithServer/Analyzer/SectionMetas/relSections/baseSectionTypes";
+import { DbEntry } from "../sharedWithServer/Analyzer/DbEntry";
 import {
   SectionNam,
   SectionName,
-} from "../../../sharedWithServer/Analyzer/SectionMetas/SectionName";
-import { LoginUser, zDbEntryArr } from "../../../sharedWithServer/User/DbUser";
+} from "../sharedWithServer/Analyzer/SectionMetas/SectionName";
+import { LoginUser, zDbEntryArr } from "../sharedWithServer/User/DbUser";
 import { z } from "zod";
 
 const url = {
@@ -61,51 +61,73 @@ const validateRes = {
       };
     } else return undefined;
   },
-  login(res: AxiosResponse<unknown> | undefined): Res<"Login"> | undefined {
-    if (res && isLoginUser(res.data) && isLoginHeaders(res.headers)) {
+};
+
+const generalValidators = {
+  dbId(res: AxiosResponse<unknown> | undefined): { data: string } | undefined {
+    if (res && is.dbId(res.data))
       return {
         data: res.data,
-        headers: res.headers,
       };
-    } else return undefined;
-  },
-  register(
-    res: AxiosResponse<unknown> | undefined
-  ): Res<"Register"> | undefined {
-    return this.login(res);
+    else return undefined;
   },
 };
 
 export const crud = {
-  async register(
-    reqObj: Req<"Register">
-  ): Promise<Res<"Register"> | undefined> {
-    const res = await https.post(
-      "registering",
-      config.url.register.path,
-      reqObj.body
-    );
-    return validateRes.register(res);
+  login: {
+    validateRes(
+      res: AxiosResponse<unknown> | undefined
+    ): Res<"Login"> | undefined {
+      if (res && isLoginUser(res.data) && isLoginHeaders(res.headers)) {
+        return {
+          data: res.data,
+          headers: res.headers,
+        };
+      } else return undefined;
+    },
+    async send(reqObj: Req<"Login">): Promise<Res<"Login"> | undefined> {
+      const res = await https.post(
+        "logging in",
+        config.url.login.path,
+        reqObj.body
+      );
+      return this.validateRes(res);
+    },
   },
-  async login(reqObj: Req<"Login">): Promise<Res<"Login"> | undefined> {
-    const res = await https.post(
-      "logging in",
-      config.url.login.path,
-      reqObj.body
-    );
-    return validateRes.login(res);
+  register: {
+    get validateRes() {
+      return crud.login.validateRes;
+    },
+    async send(reqObj: Req<"Register">): Promise<Res<"Register"> | undefined> {
+      const res = await https.post(
+        "registering",
+        config.url.register.path,
+        reqObj.body
+      );
+      return this.validateRes(res);
+    },
   },
-  async postEntry(
-    reqObj: Req<"PostEntry">
-  ): Promise<Res<"PostEntry"> | undefined> {
-    const res = await https.post(`saving`, url.section, reqObj.body);
-    return validateRes.dbId(res);
+  postSection: {
+    get validateRes() {
+      return generalValidators.dbId;
+    },
+    async send(
+      reqObj: Req<"PostEntry">
+    ): Promise<Res<"PostEntry"> | undefined> {
+      const res = await https.post(`saving`, url.section, reqObj.body);
+      return this.validateRes(res);
+    },
   },
-  async postEntryArr(
-    reqObj: Req<"PostSectionArr">
-  ): Promise<Res<"PostSectionArr"> | undefined> {
-    const res = await https.post("saving", url.sectionArr, reqObj.body);
-    return validateRes.dbId(res);
+  postSectionArr: {
+    get validateRes() {
+      return generalValidators.dbId;
+    },
+    async send(
+      reqObj: Req<"PostSectionArr">
+    ): Promise<Res<"PostSectionArr"> | undefined> {
+      const res = await https.post("saving", url.sectionArr, reqObj.body);
+      return this.validateRes(res);
+    },
   },
   async postTableColumns(
     dbEntryArr: DbEntry[],

@@ -2,7 +2,7 @@ import {
   authTokenKey,
   Req,
 } from "../../client/src/App/sharedWithServer/User/crudTypes";
-import { makeDbUser, prepNewUserData, UserModel } from "./shared/makeDbUser";
+import { serverSideUser, UserModel } from "./shared/severSideUser";
 import { serverSideLogin } from "./userRoutes/shared/doLogin";
 import request from "supertest";
 import { runApp } from "../../runApp";
@@ -36,12 +36,9 @@ describe(config.url.login.route, () => {
     server = runApp();
 
     const reqObjs = makeTestReqObjs();
-    const { payload } = reqObjs.register.body;
-    const newUserData = await prepNewUserData(payload);
-    const userDoc = new UserModel(makeDbUser(newUserData));
-    await userDoc.save();
-
     reqObj = reqObjs.login;
+    const userDoc = await serverSideUser.full(reqObjs.register.body.payload);
+    await userDoc.save();
   });
 
   const exec = () =>

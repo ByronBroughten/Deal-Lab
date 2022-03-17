@@ -1,6 +1,6 @@
 import request from "supertest";
 import mongoose from "mongoose";
-import { makeDbUser, prepNewUserData, UserModel } from "./shared/makeDbUser";
+import { serverSideUser, UserModel } from "./shared/severSideUser";
 import { Req } from "../../client/src/App/sharedWithServer/User/crudTypes";
 import { runApp } from "../../runApp";
 import { config } from "../../client/src/App/Constants";
@@ -52,13 +52,8 @@ describe(config.url.register.route, () => {
   });
   it("should return 400 if a user with that email already exists", async () => {
     const reqObj2 = makeTestRegisterReq();
-    const { payload } = reqObj2.body;
-    const newUserData = await prepNewUserData(payload);
-    const user = new UserModel({
-      _id: new mongoose.Types.ObjectId(),
-      ...makeDbUser(newUserData),
-    });
-    await user.save();
+    const userDoc = await serverSideUser.full(reqObj2.body.payload);
+    await userDoc.save();
     await testStatus(400);
   });
   it("should return 200 if the request is valid", async () => {

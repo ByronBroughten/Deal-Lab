@@ -1,6 +1,5 @@
 import { config } from "../../client/src/App/Constants";
 import Analyzer from "../../client/src/App/sharedWithServer/Analyzer";
-import { SectionName } from "../../client/src/App/sharedWithServer/Analyzer/SectionMetas/SectionName";
 import {
   authTokenKey,
   Req,
@@ -8,6 +7,7 @@ import {
 import { runApp } from "../../runApp";
 import { serverSideLogin } from "./userRoutes/shared/doLogin";
 import request from "supertest";
+import { serverSideUser } from "./shared/severSideUser";
 
 describe("post sectionArr", () => {
   const sectionName = "propertyDefault";
@@ -20,7 +20,7 @@ describe("post sectionArr", () => {
 
   beforeEach(async () => {
     analyzer = Analyzer.initAnalyzer();
-    req = analyzer.req.postEntryArr(sectionName);
+    req = analyzer.req.postSectionArr(sectionName);
     token = serverSideLogin.dummyUserAuthToken();
     server = runApp();
   });
@@ -37,6 +37,16 @@ describe("post sectionArr", () => {
   }
 
   it("should return 200 if everything is ok", async () => {
-    await exec();
+    analyzer = analyzer.updateSectionValuesAndSolve("register", {
+      email: "testosis@gmail.com",
+      password: "testpassword",
+      userName: "Testosis",
+    });
+    const registerReq = analyzer.req.register();
+    const userDoc = await serverSideUser.full(registerReq.body.payload);
+    await userDoc.save();
+    userId = userDoc._id.toHexString();
+    token = serverSideLogin.makeUserAuthToken(userId);
+    await testStatus(200);
   });
 });

@@ -26,38 +26,50 @@ export function prepEmail(email: string): {
     emailLower: trimmedEmail.toLowerCase(),
   };
 }
-export async function prepNewUserData({
-  registerFormData,
-  guestAccessSections,
-}: RegisterReqPayload): Promise<NewUserData> {
-  const { userName, email, password } = registerFormData;
-  return {
-    user: {
-      userName,
-      ...prepEmail(email),
-    },
-    userProtected: {
-      encryptedPassword: await encryptPassword(password),
-    },
+
+export const serverSideUser = {
+  async prepData({
+    registerFormData,
     guestAccessSections,
-  };
-}
+  }: RegisterReqPayload): Promise<NewUserData> {
+    const { userName, email, password } = registerFormData;
+    return {
+      user: {
+        userName,
+        ...prepEmail(email),
+      },
+      userProtected: {
+        encryptedPassword: await encryptPassword(password),
+      },
+      guestAccessSections,
+    };
+  },
+  finalizeData(newUserData: NewUserData): DbUser {
+    const partial: Partial<DbUser> = {
+      ...newUserData.guestAccessSections,
+      user: [DbEnt.initEntry("user", newUserData.user)],
+      userProtected: [
+        DbEnt.initEntry("userProtected", newUserData.userProtected),
+      ],
+    };
 
-export function makeDbUser(newUserData: NewUserData): DbUser {
-  const partial: Partial<DbUser> = {
-    ...newUserData.guestAccessSections,
-    user: [DbEnt.initEntry("user", newUserData.user)],
-    userProtected: [
-      DbEnt.initEntry("userProtected", newUserData.userProtected),
-    ],
-  };
+    for (const storeName of SectionNam.arr.dbStore) {
+      if (!(storeName in partial)) partial[storeName] = [];
+    }
 
-  for (const storeName of SectionNam.arr.dbStore) {
-    if (!(storeName in partial)) partial[storeName] = [];
-  }
-
-  return partial as DbUser;
-}
+    return partial as DbUser;
+  },
+  make(newUserData: NewUserData) {
+    return new UserModel({
+      _id: new mongoose.Types.ObjectId(),
+      ...this.finalizeData(newUserData),
+    });
+  },
+  async full(payload: RegisterReqPayload) {
+    const newUserData = await this.prepData(payload);
+    return this.make(newUserData);
+  },
+};
 
 function makeMongooseUserSchema(): Schema<Record<DbStoreName, any>> {
   const partial: Partial<Record<DbStoreName, any>> = {};
