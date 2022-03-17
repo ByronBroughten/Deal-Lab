@@ -16,6 +16,7 @@ export const zLoginFormData = z.object({
   // no minimum password length for logging in, so that people
   // don't get locked out if we change the minimum
 });
+// eventually replace this interface with one derived from baseSections
 export type LoginFormData = z.infer<typeof zLoginFormData>;
 
 // register
@@ -80,7 +81,7 @@ type Crud = {
       data: string; // dbId
     };
   };
-  PostEntryArr: {
+  PostSectionArr: {
     Req: {
       body: {
         payload: DbEntry[];

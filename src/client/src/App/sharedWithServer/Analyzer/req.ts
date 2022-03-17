@@ -46,7 +46,7 @@ export const analyzerReq = {
   postEntryArr(
     analyzer: Analyzer,
     sectionName: SectionName<"savable">
-  ): Req<"PostEntryArr"> {
+  ): Req<"PostSectionArr"> {
     const dbEntryArr = analyzer.dbEntryArr(sectionName);
     return {
       body: {

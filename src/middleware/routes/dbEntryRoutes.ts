@@ -9,10 +9,10 @@ import { getDbEntry } from "./sectionEntry/query";
 import { DbEnt } from "../../client/src/App/sharedWithServer/Analyzer/DbEntry";
 import { config } from "../../client/src/App/Constants";
 
-const arrRouter = express.Router();
+const sectionRouter = express.Router();
 
 // test post first
-arrRouter.post("/", authWare, async (req, res) => {
+sectionRouter.post("/", authWare, async (req, res) => {
   const reqObj = validate.postEntry.req(req, res);
   if (!reqObj) return;
   const {
@@ -34,7 +34,7 @@ arrRouter.post("/", authWare, async (req, res) => {
   if (result) validate.postEntry.res(res, payload.dbId);
 });
 
-arrRouter.post(config.url.sectionArr.bit, authWare, async (req, res) => {
+sectionRouter.post(config.url.sectionArr.bit, authWare, async (req, res) => {
   const reqObj = validate.postEntryArr.req(req, res);
   if (!reqObj) return;
   const {
@@ -47,25 +47,29 @@ arrRouter.post(config.url.sectionArr.bit, authWare, async (req, res) => {
   const result = await tryFindByIdAndUpdate(res, userId, setter, "post");
   if (result) validate.postEntryArr.res(res, dbStoreName);
 });
-arrRouter.post(config.url.tableColumns.route, authWare, async (req, res) => {
-  const reqObj = validate.postTableColumns.req(req, res);
-  if (!reqObj) return;
+sectionRouter.post(
+  config.url.tableColumns.route,
+  authWare,
+  async (req, res) => {
+    const reqObj = validate.postTableColumns.req(req, res);
+    if (!reqObj) return;
 
-  const {
-    payload,
-    dbStoreName,
-    user: { _id: userId },
-  } = reqObj.body;
+    const {
+      payload,
+      dbStoreName,
+      user: { _id: userId },
+    } = reqObj.body;
 
-  const setter = queryOp.set.entryArr(payload, dbStoreName);
-  const result = await tryFindByIdAndUpdate(res, userId, setter, "post");
+    const setter = queryOp.set.entryArr(payload, dbStoreName);
+    const result = await tryFindByIdAndUpdate(res, userId, setter, "post");
 
-  if (result) {
-    const tableRows = DbEnt.newTableRows(result, dbStoreName);
-    validate.postTableColumns.res(res, tableRows);
+    if (result) {
+      const tableRows = DbEnt.newTableRows(result, dbStoreName);
+      validate.postTableColumns.res(res, tableRows);
+    }
   }
-});
-arrRouter.put("/", authWare, async (req, res) => {
+);
+sectionRouter.put("/", authWare, async (req, res) => {
   const reqObj = validate.putEntry.req(req, res);
   if (!reqObj) return;
   const {
@@ -88,7 +92,7 @@ arrRouter.put("/", authWare, async (req, res) => {
   if (result) validate.putEntry.res(res, payload.dbId);
 });
 
-arrRouter.get("/:dbStoreName/:dbId", authWare, async (req, res) => {
+sectionRouter.get("/:dbStoreName/:dbId", authWare, async (req, res) => {
   const reqObj = validate.getEntry.req(req, res);
   if (!reqObj) return;
   const {
@@ -105,7 +109,7 @@ arrRouter.get("/:dbStoreName/:dbId", authWare, async (req, res) => {
   }
 });
 
-arrRouter.delete("/:dbStoreName/:dbId", authWare, async (req, res) => {
+sectionRouter.delete("/:dbStoreName/:dbId", authWare, async (req, res) => {
   const reqObj = validate.deleteEntry.req(req, res);
   if (!reqObj) return;
   const {
@@ -125,4 +129,4 @@ arrRouter.delete("/:dbStoreName/:dbId", authWare, async (req, res) => {
   if (result) return validate.deleteEntry.res(res, dbId);
 });
 
-export default arrRouter;
+export default sectionRouter;

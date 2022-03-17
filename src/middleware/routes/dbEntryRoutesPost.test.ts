@@ -35,7 +35,7 @@ describe(`dbEntry/post`, () => {
 
   const exec = () =>
     request(server)
-      .post(config.url.dbEntry.route)
+      .post(config.url.section.route)
       .set(authTokenKey, token)
       .send(req.body);
   async function testStatus(statusNumber: number) {

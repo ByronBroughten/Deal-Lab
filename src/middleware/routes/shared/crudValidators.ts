@@ -175,7 +175,7 @@ export const validate = {
     req(
       req: Request,
       res: Response
-    ): LoggedIn<Req<"PostEntryArr">> | undefined {
+    ): LoggedIn<Req<"PostSectionArr">> | undefined {
       const { user, dbStoreName, payload } = req.body;
       if (
         val.userIsLoggedIn(user, res) &&
@@ -193,7 +193,7 @@ export const validate = {
     },
     res(res: Response, data: DbStoreName) {
       if (SectionNam.is(data, "dbStore")) {
-        const resObj: Res<"PostEntryArr"> = { data };
+        const resObj: Res<"PostSectionArr"> = { data };
         send.success(res, resObj);
       } else send.resDataIsInvalid(res, "DbStoreName");
     },

@@ -17,8 +17,8 @@ import { LoginUser, zDbEntryArr } from "../../../sharedWithServer/User/DbUser";
 import { z } from "zod";
 
 const url = {
-  dbEntry: config.url.dbEntry.path,
-  dbEntryArr: config.url.sectionArr.path,
+  section: config.url.section.path,
+  sectionArr: config.url.sectionArr.path,
   dbColArr: config.url.tableColumns.path,
 };
 
@@ -98,13 +98,13 @@ export const crud = {
   async postEntry(
     reqObj: Req<"PostEntry">
   ): Promise<Res<"PostEntry"> | undefined> {
-    const res = await https.post(`saving`, url.dbEntry, reqObj.body);
+    const res = await https.post(`saving`, url.section, reqObj.body);
     return validateRes.dbId(res);
   },
   async postEntryArr(
-    reqObj: Req<"PostEntryArr">
-  ): Promise<Res<"PostEntryArr"> | undefined> {
-    const res = await https.post("saving", url.dbEntryArr, reqObj.body);
+    reqObj: Req<"PostSectionArr">
+  ): Promise<Res<"PostSectionArr"> | undefined> {
+    const res = await https.post("saving", url.sectionArr, reqObj.body);
     return validateRes.dbId(res);
   },
   async postTableColumns(
@@ -130,7 +130,7 @@ export const crud = {
         dbStoreName,
       },
     };
-    const res = await https.put("updating", url.dbEntry, reqObj.body);
+    const res = await https.put("updating", url.section, reqObj.body);
     return validateRes.dbId(res);
   },
   async getEntry(
@@ -143,7 +143,7 @@ export const crud = {
         dbId,
       },
     };
-    const res = await https.get(`loading from ${dbStoreName}`, url.dbEntry, [
+    const res = await https.get(`loading from ${dbStoreName}`, url.section, [
       ...Object.values(reqObj.params),
     ]);
     return validateRes.dbEntry(res);
@@ -160,7 +160,7 @@ export const crud = {
     };
     const res = await https.delete(
       `deleting from ${dbStoreName}`,
-      url.dbEntry,
+      url.section,
       [...Object.values(reqObj.params)]
     );
     return validateRes.dbId(res);

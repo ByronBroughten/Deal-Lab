@@ -37,17 +37,6 @@ export function configUrls(endpoint: string) {
         return urlJoin(urls.user.path, this.bit);
       },
     },
-    // to be replaced by section
-    dbEntry: {
-      bit: "/dbEntry",
-      get route() {
-        return urlJoin(urls.api.bit, this.bit);
-      },
-      get path() {
-        return urlJoin(urls.api.path, this.bit);
-      },
-    },
-
     // section
     section: {
       bit: "/section",
@@ -62,6 +51,9 @@ export function configUrls(endpoint: string) {
     },
     sectionArr: {
       bit: "/all",
+      get route() {
+        return urlJoin(urls.section.route, this.bit);
+      },
       get path() {
         return urlJoin(urls.section.path, this.bit);
       },
