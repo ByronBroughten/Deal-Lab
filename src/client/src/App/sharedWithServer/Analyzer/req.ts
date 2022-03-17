@@ -55,6 +55,18 @@ export const analyzerReq = {
       },
     };
   },
+  deleteSection(
+    _: Analyzer,
+    dbStoreName: SectionName<"dbStore">,
+    dbId: string
+  ): Req<"DeleteSection"> {
+    return {
+      params: {
+        dbStoreName,
+        dbId,
+      },
+    };
+  },
   postSectionArr(
     analyzer: Analyzer,
     sectionName: SectionName<"savable">

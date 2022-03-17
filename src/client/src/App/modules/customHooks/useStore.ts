@@ -13,7 +13,7 @@ const dbStore = {
     dbId: string
   ) {
     const dbStoreName = sectionMetas.get(sectionName).indexStoreName;
-    return await crud.deleteEntry({ params: { dbStoreName, dbId } });
+    return await crud.deleteSection({ params: { dbStoreName, dbId } });
   },
   async putIndexEntry(feInfo: FeInfo<"hasIndexStore">, next: Analyzer) {
     const { indexStoreName } = next.sectionMeta(feInfo.sectionName);

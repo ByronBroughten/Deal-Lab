@@ -166,7 +166,7 @@ export const crud = {
     );
     return validateRes.dbEntry(res);
   },
-  async deleteEntry({
+  async deleteSection({
     params,
   }: Req<"DeleteSection">): Promise<Res<"DeleteSection"> | undefined> {
     const res = await https.delete(
