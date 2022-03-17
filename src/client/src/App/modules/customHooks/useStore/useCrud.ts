@@ -1,16 +1,39 @@
 import { AxiosResponse } from "axios";
 import { config } from "../../../Constants";
-import { is, Req, Res } from "../../../sharedWithServer/User/crudTypes";
+import {
+  is,
+  isLoginHeaders,
+  Req,
+  Res,
+} from "../../../sharedWithServer/User/crudTypes";
 import https from "../../services/httpService";
 import { DbStoreName } from "../../../sharedWithServer/Analyzer/SectionMetas/relSections/baseSectionTypes";
 import { DbEntry } from "../../../sharedWithServer/Analyzer/DbEntry";
-import { SectionName } from "../../../sharedWithServer/Analyzer/SectionMetas/SectionName";
+import {
+  SectionNam,
+  SectionName,
+} from "../../../sharedWithServer/Analyzer/SectionMetas/SectionName";
+import { LoginUser, zDbEntryArr } from "../../../sharedWithServer/User/DbUser";
+import { z } from "zod";
 
 const url = {
   dbEntry: config.url.dbEntry.path,
   dbEntryArr: config.url.sectionArr.path,
   dbColArr: config.url.tableColumns.path,
 };
+
+export function isLoginUser(value: any): value is LoginUser {
+  const zLoginUserSchema = z.object(
+    SectionNam.arr.initOnLogin.reduce((partial, sectionName) => {
+      partial[sectionName] = zDbEntryArr;
+      return partial;
+    }, {} as Partial<Record<keyof LoginUser, any>>) as Record<
+      keyof LoginUser,
+      any
+    >
+  );
+  return zLoginUserSchema.safeParse(value).success;
+}
 
 const validateRes = {
   dbId(res: AxiosResponse<unknown> | undefined): { data: string } | undefined {
@@ -38,9 +61,40 @@ const validateRes = {
       };
     } else return undefined;
   },
+  login(res: AxiosResponse<unknown> | undefined): Res<"Login"> | undefined {
+    if (res && isLoginUser(res.data) && isLoginHeaders(res.headers)) {
+      return {
+        data: res.data,
+        headers: res.headers,
+      };
+    } else return undefined;
+  },
+  register(
+    res: AxiosResponse<unknown> | undefined
+  ): Res<"Register"> | undefined {
+    return this.login(res);
+  },
 };
 
 export const crud = {
+  async register(
+    reqObj: Req<"Register">
+  ): Promise<Res<"Register"> | undefined> {
+    const res = await https.post(
+      "registering",
+      config.url.register.path,
+      reqObj.body
+    );
+    return validateRes.register(res);
+  },
+  async login(reqObj: Req<"Login">): Promise<Res<"Login"> | undefined> {
+    const res = await https.post(
+      "logging in",
+      config.url.login.path,
+      reqObj.body
+    );
+    return validateRes.login(res);
+  },
   async postEntry(
     reqObj: Req<"PostEntry">
   ): Promise<Res<"PostEntry"> | undefined> {

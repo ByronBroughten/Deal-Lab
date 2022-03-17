@@ -101,14 +101,14 @@ export default function MainEntryTitleRow({
                   </SectionBtn>
                 </>
               )}
-              <LoginToAccessBtnTooltip className="MainEntryTitleRow-flexUnit">
+              {/* <LoginToAccessBtnTooltip className="MainEntryTitleRow-flexUnit">
                 <SectionBtn
                   onClick={async () => await store.postDefault(feInfo)}
                   disabled={isGuest}
                 >
                   Set as default
                 </SectionBtn>
-              </LoginToAccessBtnTooltip>
+              </LoginToAccessBtnTooltip> */}
               <IndexSectionList
                 {...{
                   className: "MainEntryTitleRow-flexUnit",
