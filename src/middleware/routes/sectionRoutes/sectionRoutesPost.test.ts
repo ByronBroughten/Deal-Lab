@@ -1,16 +1,16 @@
-import { serverSideLogin } from "./userRoutes/shared/doLogin";
+import { serverSideLogin } from "../userRoutes/shared/doLogin";
 import request from "supertest";
-import { runApp } from "../../runApp";
-import { serverSideUser, UserModel } from "./shared/severSideUser";
+import { runApp } from "../../../runApp";
+import { serverSideUser, UserModel } from "../shared/severSideUser";
 import {
   authTokenKey,
   Req,
-} from "../../client/src/App/sharedWithServer/User/crudTypes";
-import { config } from "../../client/src/App/Constants";
-import Analyzer from "../../client/src/App/sharedWithServer/Analyzer";
-import { queryOp } from "./sectionEntry/operator";
-import { queryOptions } from "./shared/tryQueries";
-import { SectionName } from "../../client/src/App/sharedWithServer/Analyzer/SectionMetas/SectionName";
+} from "../../../client/src/App/sharedWithServer/User/crudTypes";
+import { config } from "../../../client/src/App/Constants";
+import Analyzer from "../../../client/src/App/sharedWithServer/Analyzer";
+import { queryOp } from "../utils/operator";
+import { queryOptions } from "../shared/tryQueries";
+import { SectionName } from "../../../client/src/App/sharedWithServer/Analyzer/SectionMetas/SectionName";
 
 describe(`dbSection/post`, () => {
   const sectionName = "property";

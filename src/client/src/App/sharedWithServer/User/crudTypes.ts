@@ -51,9 +51,12 @@ type LoggedInReq = {
 };
 export type LoggedIn<T extends any> = T & LoggedInReq;
 
-type LoginHeaders = { [authTokenKey]: string };
+type LoginHeaders = { [config.tokenKey.apiUserAuth]: string };
 export function isLoginHeaders(value: any): value is LoginHeaders {
-  return typeof value === "object" && typeof value[authTokenKey] === "string";
+  return (
+    typeof value === "object" &&
+    typeof value[config.tokenKey.apiUserAuth] === "string"
+  );
 }
 
 type ArrToParams<
@@ -108,7 +111,7 @@ type Crud = {
       data: DbEntry[]; // indexRowArr
     };
   };
-  PutEntry: Crud["PostEntry"];
+  PutSection: Crud["PostEntry"];
   GetSection: {
     Req: {
       params: ArrToParams<

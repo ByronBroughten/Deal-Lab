@@ -142,8 +142,8 @@ export const crud = {
         return generalValidators.dbId;
       },
       async send(
-        reqObj: Req<"PutEntry">
-      ): Promise<Res<"PutEntry"> | undefined> {
+        reqObj: Req<"PutSection">
+      ): Promise<Res<"PutSection"> | undefined> {
         const res = await https.put("updating", url.section, reqObj.body);
         return this.validateRes(res);
       },

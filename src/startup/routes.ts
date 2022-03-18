@@ -10,8 +10,6 @@ import sectionArrRouter, {
   sectionArrRoutes,
 } from "../middleware/routes/sectionArrRoutes";
 
-const routeStuff = {} as const;
-
 export default function routes(app: express.Application) {
   app.use(
     cors({

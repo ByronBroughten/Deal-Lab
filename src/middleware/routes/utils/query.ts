@@ -3,7 +3,7 @@ import { DbEntry } from "../../../client/src/App/sharedWithServer/Analyzer/DbEnt
 import { DbStoreName } from "../../../client/src/App/sharedWithServer/Analyzer/SectionMetas/relSections/baseSectionTypes";
 import { UserModel } from "../shared/severSideUser";
 
-export async function getDbEntry(
+export async function sectionGet(
   userId: string,
   dbStoreName: DbStoreName,
   dbId: string,

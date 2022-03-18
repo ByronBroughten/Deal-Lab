@@ -1,7 +1,7 @@
 import { Response } from "express";
 import { FilterQuery } from "mongoose";
 import { DbUser } from "../../../client/src/App/sharedWithServer/User/DbUser";
-import { QueryOp } from "../sectionEntry/operator";
+import { QueryOp } from "../utils/operator";
 import { UserModel } from "./severSideUser";
 
 export const queryOptions = {

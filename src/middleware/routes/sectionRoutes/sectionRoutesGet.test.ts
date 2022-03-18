@@ -1,15 +1,15 @@
-import Analyzer from "../../client/src/App/sharedWithServer/Analyzer";
+import Analyzer from "../../../client/src/App/sharedWithServer/Analyzer";
 import {
   authTokenKey,
   Req,
-} from "../../client/src/App/sharedWithServer/User/crudTypes";
-import { runApp } from "../../runApp";
-import { sectionRoutes } from "./sectionRoutes";
-import { serverSideUser, UserModel } from "./shared/severSideUser";
-import { serverSideLogin } from "./userRoutes/shared/doLogin";
+} from "../../../client/src/App/sharedWithServer/User/crudTypes";
+import { runApp } from "../../../runApp";
+import { sectionRoutes } from "../sectionRoutes";
+import { serverSideUser, UserModel } from "../shared/severSideUser";
+import { serverSideLogin } from "../userRoutes/shared/doLogin";
 import request from "supertest";
-import { urlPlusParams } from "../../client/src/App/utils/url";
-import { config } from "../../client/src/App/Constants";
+import { urlPlusParams } from "../../../client/src/App/utils/url";
+import { config } from "../../../client/src/App/Constants";
 
 describe("section get", () => {
   const sectionName = "propertyDefault";
@@ -22,7 +22,7 @@ describe("section get", () => {
     const route = urlPlusParams(
       sectionRoutes.route,
       req.params,
-      config.url.section.params.get
+      config.crud.routes.section.get.params
     );
     return request(server).get(route).set(authTokenKey, token).send();
   };
@@ -52,7 +52,14 @@ describe("section get", () => {
   afterEach(async () => {
     await UserModel.deleteMany();
   });
-
+  it("should return 500 if the dbId isn't a valid dbId", () => {
+    req.params.dbId = Analyzer.makeId().substring(1);
+    testStatus(500);
+  });
+  it("should return 404 if no section in the queried sectionArr has the dbId", () => {
+    req.params.dbId = Analyzer.makeId();
+    testStatus(404);
+  });
   it("should return 200 if the request is valid", () => {
     testStatus(200);
   });

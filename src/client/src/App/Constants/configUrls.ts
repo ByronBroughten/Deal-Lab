@@ -35,7 +35,7 @@ export function makeCrudConfig(endpoint: string) {
           params: ["dbStoreName", "dbId"] as const,
         },
         delete: {
-          params: ["dbStoreName", "dbId"],
+          params: ["dbStoreName", "dbId"] as const,
         },
       },
       sectionArr: bitRouteAndPath(apiServiceInfo, "/sectionArr"),

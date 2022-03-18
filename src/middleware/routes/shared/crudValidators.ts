@@ -27,6 +27,9 @@ export const serverSend = {
   ) {
     res.header(headers).status(200).send(data);
   },
+  falsyQuery(res: Response, queryName: string = "query") {
+    res.status(404).send(`${queryName} returned falsy`);
+  },
   resDataIsInvalid(res: Response, whatInvalid: string) {
     res.status(500).send(`Valid ${whatInvalid} not provided for response data`);
   },
@@ -114,90 +117,6 @@ export const serverValidate = {
 } as const;
 
 export const validate = {
-  register: {
-    req(req: Request, res: Response): Req<"Register"> | undefined {
-      const { payload } = req.body;
-
-      if (!serverValidate.payloadIsObj(payload, res)) return;
-      const { registerFormData, guestAccessSections } = payload;
-      if (
-        serverValidate.registerFormData(registerFormData, res) &&
-        serverValidate.guestAccessSections(guestAccessSections, res)
-      ) {
-        return {
-          body: {
-            payload: {
-              registerFormData,
-              guestAccessSections,
-            },
-          },
-        };
-      } else return;
-    },
-  },
-  login: {
-    req(req: Request, res: Response): Req<"Login"> | undefined {
-      const { payload } = req.body;
-      if (!serverValidate.loginFormData(payload, res)) return;
-      return {
-        body: {
-          payload,
-        },
-      };
-    },
-  },
-  postEntry: {
-    req(req: Request, res: Response): LoggedIn<Req<"PostEntry">> | undefined {
-      const { user, dbStoreName, payload } = req.body;
-      if (
-        serverValidate.userIsLoggedIn(user, res) &&
-        serverValidate.dbStoreName(dbStoreName, res) &&
-        serverValidate.dbEntry(payload, res)
-      ) {
-        return {
-          body: {
-            user,
-            dbStoreName,
-            payload,
-          },
-        };
-      } else return;
-    },
-    res(res: Response, data: DbId) {
-      // the data for this doesn't really matter.
-      if (is.dbId(data)) {
-        const resObj: Res<"PostEntry"> = { data };
-        serverSend.success(res, resObj);
-      } else serverSend.resDataIsInvalid(res, "DbId");
-    },
-  },
-  postEntryArr: {
-    req(
-      req: Request,
-      res: Response
-    ): LoggedIn<Req<"PostSectionArr">> | undefined {
-      const { user, dbStoreName, payload } = req.body;
-      if (
-        serverValidate.userIsLoggedIn(user, res) &&
-        serverValidate.dbStoreName(dbStoreName, res) &&
-        serverValidate.dbEntryArr(payload, res)
-      ) {
-        return {
-          body: {
-            user,
-            dbStoreName,
-            payload,
-          },
-        };
-      } else return;
-    },
-    res(res: Response, data: DbStoreName) {
-      if (SectionNam.is(data, "dbStore")) {
-        const resObj: Res<"PostSectionArr"> = { data };
-        serverSend.success(res, resObj);
-      } else serverSend.resDataIsInvalid(res, "DbStoreName");
-    },
-  },
   postTableColumns: {
     req(
       req: Request,
@@ -223,81 +142,6 @@ export const validate = {
         const resObj: Res<"PostTableColumns"> = { data };
         serverSend.success(res, resObj);
       } else serverSend.resDataIsInvalid(res, "DbEntryArr");
-    },
-  },
-  putEntry: {
-    req(req: Request, res: Response): LoggedIn<Req<"PutEntry">> | undefined {
-      const { user, dbStoreName, payload } = req.body;
-      if (
-        serverValidate.userIsLoggedIn(user, res) &&
-        serverValidate.dbStoreName(dbStoreName, res) &&
-        serverValidate.dbEntry(payload, res)
-      ) {
-        return {
-          body: {
-            user,
-            dbStoreName,
-            payload,
-          },
-        };
-      } else return;
-    },
-    res(res: Response, data: DbId) {
-      if (is.dbId(data)) {
-        const resObj: Res<"PutEntry"> = { data };
-        serverSend.success(res, resObj);
-      } else serverSend.resDataIsInvalid(res, "DbId");
-    },
-  },
-  getEntry: {
-    req(req: Request, res: Response): LoggedIn<Req<"GetSection">> | undefined {
-      const { dbStoreName, dbId } = req.params;
-      const { user } = req.body;
-      if (
-        serverValidate.userIsLoggedIn(user, res) &&
-        serverValidate.dbStoreName(dbStoreName, res) &&
-        serverValidate.dbId(dbId, res)
-      ) {
-        return {
-          params: { dbStoreName, dbId },
-          body: {
-            user: user,
-          },
-        };
-      } else return;
-    },
-    res(res: Response, data: DbEntry) {
-      if (is.dbEntry(data)) {
-        const resObj: Res<"GetSection"> = { data };
-        return serverSend.success(res, resObj);
-      } else return serverSend.resDataIsInvalid(res, "DbEntry");
-    },
-  },
-  deleteEntry: {
-    req(
-      req: Request,
-      res: Response
-    ): LoggedIn<Req<"DeleteSection">> | undefined {
-      const { dbStoreName, dbId } = req.params;
-      const { user } = req.body;
-      if (
-        serverValidate.userIsLoggedIn(user, res) &&
-        serverValidate.dbStoreName(dbStoreName, res) &&
-        serverValidate.dbId(dbId, res)
-      ) {
-        return {
-          params: { dbStoreName, dbId },
-          body: {
-            user: user,
-          },
-        };
-      } else return;
-    },
-    res(res: Response, data: DbId) {
-      if (is.dbId(data)) {
-        const resObj: Res<"DeleteSection"> = { data };
-        return serverSend.success(res, resObj);
-      } else return serverSend.resDataIsInvalid(res, "DbId");
     },
   },
 };

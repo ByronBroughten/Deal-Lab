@@ -6,7 +6,7 @@ import {
   Res,
 } from "../../client/src/App/sharedWithServer/User/crudTypes";
 import authWare from "../authWare";
-import { queryOp } from "./sectionEntry/operator";
+import { queryOp } from "./utils/operator";
 import { serverSend, serverValidate } from "./shared/crudValidators";
 import { tryFindByIdAndUpdate } from "./shared/tryQueries";
 import express from "express";
@@ -50,7 +50,7 @@ export const sectionArrRoutes = {
       if (result) {
         const resObj: Res<"PostSectionArr"> = { data: dbStoreName };
         serverSend.success(res, resObj);
-      } else res.status(404).send("tryFindByIdAndUpdate failed");
+      } else serverSend.falsyQuery(res, "findByIdAndUpdate");
     },
   },
 } as const;

@@ -21,4 +21,4 @@ export const config = {
     analyzerState: "analyzer-state",
     analyzerConfigHash: "analyzer-config-hash",
   },
-};
+} as const;
