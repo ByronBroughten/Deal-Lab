@@ -6,6 +6,7 @@ import AnalysisBasics from "./AnalysisBasics";
 import styled, { css } from "styled-components";
 import theme from "../../../theme/Theme";
 import MainSectionEntry from "../../appWide/MainSection/MainSectionEntry";
+import MainSectionTitle from "../../appWide/MainSection/MainSectionTitle";
 
 type Props = { className?: string };
 
@@ -16,19 +17,22 @@ export default function CurrentAnalysis({ className }: Props) {
   const { value: showDetails, toggle: toggleDetails } = useToggle();
 
   return (
-    <Styled
-      {...{
-        $showDetails: showDetails,
-        sectionName: "analysis",
-        className: `CurrentAnalysis-root ${className}`,
-      }}
-    >
-      <div {...{ className: "CurrentAnalysis-viewable" }}>
-        <AnalysisTitleRow {...{ id: feId, showDetails, toggleDetails }} />
-        {!showDetails && <AnalysisBasics id={feId} />}
-        {showDetails && <AnalysisDetails id={feId} />}
-      </div>
-    </Styled>
+    <>
+      <MainSectionTitle title="Deal" sectionName="analysis" />
+      <Styled
+        {...{
+          $showDetails: showDetails,
+          sectionName: "analysis",
+          className: `CurrentAnalysis-root ${className}`,
+        }}
+      >
+        <div {...{ className: "CurrentAnalysis-viewable" }}>
+          <AnalysisTitleRow {...{ id: feId, showDetails, toggleDetails }} />
+          {!showDetails && <AnalysisBasics id={feId} />}
+          {showDetails && <AnalysisDetails id={feId} />}
+        </div>
+      </Styled>
+    </>
   );
 }
 

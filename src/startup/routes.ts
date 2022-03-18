@@ -16,6 +16,7 @@ export default function routes(app: express.Application) {
       origin: [
         "http://localhost:3000",
         "https://ultimate-property-analyzer.herokuapp.com",
+        "https://dealanalyzer.app",
       ],
       credentials: true,
       exposedHeaders: [authTokenKey],

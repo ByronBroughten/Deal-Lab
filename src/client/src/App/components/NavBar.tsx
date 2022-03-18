@@ -16,16 +16,14 @@ export default function NavBar() {
       <Toolbar disableGutters={true}>
         <div className="NavBar-leftSide">
           <Link className="Analyzer-link" to="/analyzer">
-            <NavBtn className="NavBar-brandName">
-              Ultimate Property Analyzer
-            </NavBtn>
+            <NavBtn className="NavBar-brandName">Ultimate Deal Analyzer</NavBtn>
           </Link>
           <NavBtn
             className="NavBar-brandName"
             href="https://www.youtube.com/watch?v=sqlMZxsMOlU"
             target="_blank"
           >
-            Demo Video
+            Demo
           </NavBtn>
         </div>
         <div className="NavBar-btns Logged Out">

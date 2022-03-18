@@ -29,7 +29,6 @@ export default function App() {
       <NavBar />
       <Styled className="App-root">
         <Routes>
-          <Route path="/analyzer" element={<AnalyzerMain />} />
           <Route
             path="/analyses"
             element={<SectionTable tableName="analysisTable" />}
@@ -37,7 +36,8 @@ export default function App() {
           {/* <Route path="/variables" element={<UserVarbsManager/>} /> */}
           {/* <Route path="/lists" element={<UserListsManager/>} /> */}
           <Route path="/not-found" element={<NotFound />} />
-          <Route path="/" element={<Navigate replace to="/analyzer" />} />
+          <Route path="/" element={<AnalyzerMain />} />
+          {/* <Route path="/" element={<Navigate replace to="/analyzer" />} /> */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Styled>

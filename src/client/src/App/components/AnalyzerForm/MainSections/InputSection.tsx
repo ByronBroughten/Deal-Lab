@@ -1,7 +1,7 @@
 import React from "react";
 import { useAnalyzerContext } from "../../../modules/usePropertyAnalyzer";
 import MainSection from "../../appWide/MainSection";
-import Property from "./Properties/Property";
+import Property from "./PropertyGeneral/Property";
 import MainSectionTitle from "../../appWide/MainSection/MainSectionTitle";
 import Mgmt from "./Mgmts/Mgmt";
 

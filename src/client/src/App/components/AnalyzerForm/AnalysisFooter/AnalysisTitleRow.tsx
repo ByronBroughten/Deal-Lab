@@ -22,7 +22,7 @@ export default function AnalysisTitleRow({
   const feInfo = { sectionName, id, idType: "feId" } as const;
   return (
     <Styled className="AnalysisTitleRow-root">
-      <h5>Analysis</h5>
+      <h4>Deal</h4>
       <MainEntryTitleRow
         {...{ feInfo, pluralName: "analyses", droptop: true, hideLoad: true }}
       />
@@ -55,6 +55,11 @@ const Styled = styled.div`
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+
+  h4 {
+    line-height: 1rem;
+    margin: 0;
+  }
 
   .Analyses-link {
     text-decoration: none;

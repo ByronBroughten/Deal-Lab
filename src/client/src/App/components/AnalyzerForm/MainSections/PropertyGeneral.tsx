@@ -2,9 +2,9 @@ import React from "react";
 import { useAnalyzerContext } from "../../../modules/usePropertyAnalyzer";
 import MainSection from "../../appWide/MainSection";
 import MainSectionTitle from "../../appWide/MainSection/MainSectionTitle";
-import Property from "./Properties/Property";
+import Property from "./PropertyGeneral/Property";
 
-export default function Properties() {
+export default function PropertyGeneral() {
   const { analyzer } = useAnalyzerContext();
   const propertyIds = analyzer.childFeIds(["propertyGeneral", "property"]);
   return (
