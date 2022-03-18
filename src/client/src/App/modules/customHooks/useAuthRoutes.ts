@@ -12,11 +12,11 @@ export function useAuthRoutes() {
   }
   return {
     async login() {
-      const resObj = await crud.login.send(analyzer.req.login());
+      const resObj = await crud.login.post.send(analyzer.req.login());
       if (resObj) trySetLogin(resObj);
     },
     async register() {
-      const resObj = await crud.register.send(analyzer.req.register());
+      const resObj = await crud.register.post.send(analyzer.req.register());
       if (resObj) trySetLogin(resObj);
     },
   };

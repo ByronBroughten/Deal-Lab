@@ -1,5 +1,7 @@
 import { authTokenKey } from "../../sharedWithServer/User/crudTypes";
 
+// this stuff must be separate from Analyzer because
+// Analyzer can be on the serverSide while this can't
 export const auth = {
   setToken(token: string): void {
     localStorage.setItem(authTokenKey, token);

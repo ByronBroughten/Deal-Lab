@@ -13,15 +13,13 @@ const dbStore = {
     dbId: string
   ) {
     const dbStoreName = sectionMetas.get(sectionName).indexStoreName;
-    return await crud.deleteSection({ params: { dbStoreName, dbId } });
+    return await crud.section.delete.send({ params: { dbStoreName, dbId } });
   },
   async putIndexEntry(feInfo: FeInfo<"hasIndexStore">, next: Analyzer) {
-    const { indexStoreName } = next.sectionMeta(feInfo.sectionName);
-    const dbEntry = next.dbIndexEntry(feInfo);
-    return await crud.putEntry(dbEntry, indexStoreName);
+    return await crud.section.put.send(next.req.putSection(feInfo));
   },
   async postIndexEntry(feInfo: FeInfo<"hasIndexStore">, next: Analyzer) {
-    return await crud.postSection.send(next.req.postIndexEntry(feInfo));
+    return await crud.section.post.send(next.req.postIndexEntry(feInfo));
   },
 } as const;
 
@@ -60,7 +58,7 @@ export function useStores() {
     ) {
       // In this case, you already have a full entry arr and are just posting to the server
       const reqObj = next.req.postSectionArr(sectionName);
-      await crud.postSectionArr.send(reqObj);
+      await crud.sectionArr.post.send(reqObj);
     },
     async postTableColumns(
       tableName: SectionName<"table">,
@@ -82,7 +80,7 @@ export function useStores() {
       if (auth.isLoggedIn) {
         const { defaultStoreName } = next.sectionMeta(sectionName);
         const reqObj = next.req.postSectionArr(defaultStoreName);
-        await crud.postSectionArr.send(reqObj);
+        await crud.sectionArr.post.send(reqObj);
       }
     },
 
@@ -114,7 +112,7 @@ export function useStores() {
       dbId: string
     ): Promise<void> {
       const { indexStoreName } = analyzer.section(feInfo);
-      const result = await crud.getSection(
+      const result = await crud.section.get.send(
         analyzer.req.getSection(indexStoreName, dbId)
       );
       if (result) {

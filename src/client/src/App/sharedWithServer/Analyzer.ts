@@ -169,6 +169,8 @@ import { Id } from "./Analyzer/SectionMetas/relSections/baseSections/id";
 import { newInEntity } from "./Analyzer/methods/get/inEntity";
 import { AnalyzerReq, analyzerReq } from "./Analyzer/req";
 import { DropFirst } from "./utils/typescript";
+import { Res } from "./User/crudTypes";
+import { auth } from "../modules/services/authService";
 
 export type StateSections = { [S in SectionName]: StateSection<S>[] };
 type RawSections = { [S in SectionName]: StateSectionCore<S>[] };

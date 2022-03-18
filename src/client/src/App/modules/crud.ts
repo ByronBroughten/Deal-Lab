@@ -7,7 +7,6 @@ import {
   Res,
 } from "../sharedWithServer/User/crudTypes";
 import https from "./services/httpService";
-import { DbStoreName } from "../sharedWithServer/Analyzer/SectionMetas/relSections/baseSectionTypes";
 import { DbEntry } from "../sharedWithServer/Analyzer/DbEntry";
 import {
   SectionNam,
@@ -72,62 +71,128 @@ const generalValidators = {
       };
     else return undefined;
   },
+  dbEntry(
+    res: AxiosResponse<unknown> | undefined
+  ): { data: DbEntry } | undefined {
+    if (res && is.dbEntry(res.data))
+      return {
+        data: res.data,
+      };
+    else return undefined;
+  },
 };
 
+// I like the way serverCrud is organized for the serverside
+// do I want to organize clientCrud like that, too?
 export const crud = {
   login: {
-    validateRes(
-      res: AxiosResponse<unknown> | undefined
-    ): Res<"Login"> | undefined {
-      if (res && isLoginUser(res.data) && isLoginHeaders(res.headers)) {
-        return {
-          data: res.data,
-          headers: res.headers,
-        };
-      } else return undefined;
-    },
-    async send(reqObj: Req<"Login">): Promise<Res<"Login"> | undefined> {
-      const res = await https.post(
-        "logging in",
-        config.url.login.path,
-        reqObj.body
-      );
-      return this.validateRes(res);
+    post: {
+      validateRes(
+        res: AxiosResponse<unknown> | undefined
+      ): Res<"Login"> | undefined {
+        if (res && isLoginUser(res.data) && isLoginHeaders(res.headers)) {
+          return {
+            data: res.data,
+            headers: res.headers,
+          };
+        } else return undefined;
+      },
+      async send(reqObj: Req<"Login">): Promise<Res<"Login"> | undefined> {
+        const res = await https.post(
+          "logging in",
+          config.url.login.path,
+          reqObj.body
+        );
+        return this.validateRes(res);
+      },
     },
   },
   register: {
-    get validateRes() {
-      return crud.login.validateRes;
-    },
-    async send(reqObj: Req<"Register">): Promise<Res<"Register"> | undefined> {
-      const res = await https.post(
-        "registering",
-        config.url.register.path,
-        reqObj.body
-      );
-      return this.validateRes(res);
-    },
-  },
-  postSection: {
-    get validateRes() {
-      return generalValidators.dbId;
-    },
-    async send(
-      reqObj: Req<"PostEntry">
-    ): Promise<Res<"PostEntry"> | undefined> {
-      const res = await https.post(`saving`, url.section, reqObj.body);
-      return this.validateRes(res);
+    post: {
+      get validateRes() {
+        return crud.login.post.validateRes;
+      },
+      async send(
+        reqObj: Req<"Register">
+      ): Promise<Res<"Register"> | undefined> {
+        const res = await https.post(
+          "registering",
+          config.url.register.path,
+          reqObj.body
+        );
+        return this.validateRes(res);
+      },
     },
   },
-  postSectionArr: {
-    get validateRes() {
-      return generalValidators.dbId;
+  section: {
+    path: config.url.section.path,
+    post: {
+      get validateRes() {
+        return generalValidators.dbId;
+      },
+      async send(
+        reqObj: Req<"PostEntry">
+      ): Promise<Res<"PostEntry"> | undefined> {
+        const res = await https.post(`saving`, crud.section.path, reqObj.body);
+        return this.validateRes(res);
+      },
     },
-    async send(
-      reqObj: Req<"PostSectionArr">
-    ): Promise<Res<"PostSectionArr"> | undefined> {
-      const res = await https.post("saving", url.sectionArr, reqObj.body);
-      return this.validateRes(res);
+    put: {
+      get validateRes() {
+        return generalValidators.dbId;
+      },
+      async send(
+        reqObj: Req<"PutEntry">
+      ): Promise<Res<"PutEntry"> | undefined> {
+        const res = await https.put("updating", url.section, reqObj.body);
+        return this.validateRes(res);
+      },
+    },
+    get: {
+      get validateRes() {
+        return generalValidators.dbEntry;
+      },
+      async send({
+        params,
+      }: Req<"GetSection">): Promise<Res<"GetSection"> | undefined> {
+        const res = await https.get(
+          `loading from ${params.dbStoreName}`,
+          urlPlusParams(url.section, params, config.url.section.params.get)
+        );
+        return this.validateRes(res);
+      },
+    },
+    delete: {
+      get validateRes() {
+        return generalValidators.dbId;
+      },
+      async send({
+        params,
+      }: Req<"DeleteSection">): Promise<Res<"DeleteSection"> | undefined> {
+        const res = await https.delete(
+          `deleting from ${params.dbStoreName}`,
+          urlPlusParams(url.section, params, config.url.section.params.get)
+        );
+        return this.validateRes(res);
+      },
+    },
+  },
+  sectionArr: {
+    path: config.url.sectionArr.path,
+    post: {
+      get validateRes() {
+        return generalValidators.dbId;
+      },
+      async send(
+        reqObj: Req<"PostSectionArr">
+      ): Promise<Res<"PostSectionArr"> | undefined> {
+        const res = await https.post(
+          "saving",
+          crud.sectionArr.path,
+          reqObj.body
+        );
+        return this.validateRes(res);
+      },
     },
   },
   async postTableColumns(
@@ -142,37 +207,5 @@ export const crud = {
     };
     const res = await https.post("saving", url.dbColArr, reqObj.body);
     return validateRes.dbEntryArr(res);
-  },
-  async putEntry(
-    dbEntry: DbEntry,
-    dbStoreName: DbStoreName
-  ): Promise<Res<"PutEntry"> | undefined> {
-    const reqObj: Req<"PutEntry"> = {
-      body: {
-        payload: dbEntry,
-        dbStoreName,
-      },
-    };
-    const res = await https.put("updating", url.section, reqObj.body);
-    return validateRes.dbId(res);
-  },
-
-  async getSection({
-    params,
-  }: Req<"GetSection">): Promise<Res<"GetSection"> | undefined> {
-    const res = await https.get(
-      `loading from ${params.dbStoreName}`,
-      urlPlusParams(url.section, params, config.url.section.params.get)
-    );
-    return validateRes.dbEntry(res);
-  },
-  async deleteSection({
-    params,
-  }: Req<"DeleteSection">): Promise<Res<"DeleteSection"> | undefined> {
-    const res = await https.delete(
-      `deleting from ${params.dbStoreName}`,
-      urlPlusParams(url.section, params, config.url.section.params.get)
-    );
-    return validateRes.dbId(res);
   },
 } as const;
