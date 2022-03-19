@@ -1,6 +1,6 @@
-import { useAnalyzerContext } from "../../../../modules/usePropertyAnalyzer";
-import { SpecificVarbInfo } from "../../../../sharedWithServer/Analyzer/SectionMetas/relSections/rel/relVarbInfoTypes";
-import { AnalysisDetailRow } from "./AnalysisDetailRow";
+import { useAnalyzerContext } from "../../../../../../modules/usePropertyAnalyzer";
+import { SpecificVarbInfo } from "../../../../../../sharedWithServer/Analyzer/SectionMetas/relSections/rel/relVarbInfoTypes";
+import { DealDetailRow } from "./DealDetailRow";
 
 type Props = { varbInfo: SpecificVarbInfo; level: number };
 export function DetailRowVarbFound({ varbInfo, level }: Props) {
@@ -10,7 +10,7 @@ export function DetailRowVarbFound({ varbInfo, level }: Props) {
   const inVarbInfos = analyzer.inVarbInfos(varbInfo);
 
   return (
-    <AnalysisDetailRow
+    <DealDetailRow
       {...{
         displayName: analyzer.displayName(varbInfo),
         displayVarb: varb.displayVarb(),

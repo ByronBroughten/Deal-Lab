@@ -15,7 +15,7 @@ export default function NavBar() {
     <Styled>
       <Toolbar disableGutters={true}>
         <div className="NavBar-leftSide">
-          <Link className="Analyzer-link" to="/analyzer">
+          <Link className="NavBar-analyzerLink" to="/analyzer">
             <NavBtn className="NavBar-brandName">Ultimate Deal Analyzer</NavBtn>
           </Link>
           <NavBtn
@@ -62,14 +62,24 @@ const Styled = styled(AppBar)`
     font-size: 1.1rem;
   }
 
-  .Analyzer-link {
+  .NavBar-analyzerLink {
+    display: inherit;
+    align-items: inherit;
+    height: inherit;
+
     text-decoration: none;
+  }
+  .NavBar-demoBtn {
+    height: 100%;
   }
 
   .NavBar-leftSide {
     display: flex;
+    align-items: center;
+    height: 100%;
   }
   .NavBar-brandName {
+    height: 100%;
     font-size: 1.2rem;
     font-weight: 700;
     color: ${theme["gray-800"]};

@@ -1,7 +1,8 @@
 import styled from "styled-components";
-import { useAnalyzerContext } from "./../../../modules/usePropertyAnalyzer";
-import { AnalysisDetailRow } from "./AnalysisDetailRows/AnalysisDetailRow";
-import { DetailRowVarbFound } from "./AnalysisDetailRows/DetailRowVarbFound";
+import { useAnalyzerContext } from "../../../../../modules/usePropertyAnalyzer";
+import theme from "../../../../../theme/Theme";
+import { DealDetailRow } from "./DealDetails/DealDetailRow";
+import { DetailRowVarbFound } from "./DealDetails/DetailRowVarbFound";
 
 const sectionName = "analysis";
 export default function AnalysisDetails({ id }: { id: string }) {
@@ -25,7 +26,7 @@ export default function AnalysisDetails({ id }: { id: string }) {
           return <DetailRowVarbFound {...{ varbInfo, level }} />;
         else
           return (
-            <AnalysisDetailRow
+            <DealDetailRow
               {...{
                 level,
                 displayName: "Not found",
@@ -45,6 +46,7 @@ const Styled = styled.div`
   align-items: flex-start;
   height: auto;
   width: 100%;
+  padding: ${theme.s1};
   .AnalysisDetails-row {
     width: 100%;
   }

@@ -1,7 +1,7 @@
-import { useAnalyzerContext } from "../../../../modules/usePropertyAnalyzer";
-import { InEntity } from "../../../../sharedWithServer/Analyzer/SectionMetas/relSections/rel/valueMeta/NumObj/entities";
-import { SpecificVarbInfo } from "../../../../sharedWithServer/Analyzer/SectionMetas/relSections/rel/relVarbInfoTypes";
-import { AnalysisDetailRow } from "./AnalysisDetailRow";
+import { useAnalyzerContext } from "../../../../../../modules/usePropertyAnalyzer";
+import { InEntity } from "../../../../../../sharedWithServer/Analyzer/SectionMetas/relSections/rel/valueMeta/NumObj/entities";
+import { SpecificVarbInfo } from "../../../../../../sharedWithServer/Analyzer/SectionMetas/relSections/rel/relVarbInfoTypes";
+import { DealDetailRow } from "./DealDetailRow";
 
 type Props = {
   level: number;
@@ -19,7 +19,7 @@ export function DetailRowVarbNotFound({
   const { length, offset } = inEntity;
   const displayName = editorText.substring(offset, offset + length);
   return (
-    <AnalysisDetailRow
+    <DealDetailRow
       {...{
         level,
         displayName,

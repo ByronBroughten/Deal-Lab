@@ -1,21 +1,15 @@
-import useToggle from "../../../modules/customHooks/useToggle";
 import { useAnalyzerContext } from "../../../modules/usePropertyAnalyzer";
-import AnalysisDetails from "./AnalysisDetails";
-import AnalysisTitleRow from "./AnalysisTitleRow";
-import AnalysisBasics from "./AnalysisBasics";
 import styled, { css } from "styled-components";
 import theme from "../../../theme/Theme";
-import MainSectionEntry from "../../appWide/MainSection/MainSectionEntry";
 import MainSectionTitle from "../../appWide/MainSection/MainSectionTitle";
-import SectionBtn from "../../appWide/SectionBtn";
 import MainSectionTitleBtn from "../../appWide/MainSection/MainSectionTitle/MainSectionTitleBtn";
-import MainEntryTitleRow from "../../appWide/MainSection/MainSectionEntry/MainEntryTitleRow";
-import Deal from "./Deal";
+import Deal from "./DealGeneral/Deal";
 import MainSection from "../../appWide/MainSection";
 import useToggleView from "../../../modules/customHooks/useToggleView";
-import { GoArrowRight } from "react-icons/go";
 import { Link } from "react-router-dom";
 import { auth } from "../../../modules/services/authService";
+import { MdCompareArrows } from "react-icons/md";
+import { CgDetailsMore, CgDetailsLess } from "react-icons/cg";
 
 type Props = { className?: string };
 
@@ -41,7 +35,17 @@ export default function CurrentAnalysis({ className }: Props) {
             className="MainSectionTitle-child"
             onClick={toggleDetails}
           >
-            {detailsIsOpen ? "Hide Details" : "Show Details"}
+            {detailsIsOpen ? (
+              <>
+                {"Hide Details"}
+                <CgDetailsLess className="MainSectionTitle-detailsIcon" />
+              </>
+            ) : (
+              <>
+                {"Show Details"}
+                <CgDetailsMore className="MainSectionTitle-detailsIcon" />
+              </>
+            )}
           </MainSectionTitleBtn>
           {/* // disable the link */}
           <Link className="MainSectionTitle-dealsLink" to="/deals">
@@ -51,7 +55,7 @@ export default function CurrentAnalysis({ className }: Props) {
               // disabled={!auth.isLoggedIn}
             >
               {"Compare Deals"}
-              <GoArrowRight className="MainSectionTitle-goArrow" />
+              <MdCompareArrows className="MainSectionTitle-compareIcon" />
             </MainSectionTitleBtn>
           </Link>
         </div>
@@ -84,8 +88,15 @@ const Styled = styled(MainSection)<{ $showDetails: boolean }>`
   // properly disable compare deals for when you're logged out
   // make Deal stick to the bottom again
 
-  .MainSectionTitle-goArrow {
-    font-size: 1.2rem;
+  .MainSectionTitle-compareIcon {
+    font-size: 1.9rem;
+    color: ${theme["gray-800"]};
+    margin-left: ${theme.s3};
+  }
+  .MainSectionTitle-detailsIcon {
+    font-size: 1.4rem;
+    color: ${theme["gray-800"]};
+    margin-left: ${theme.s3};
   }
 
   .MainSection-entry {

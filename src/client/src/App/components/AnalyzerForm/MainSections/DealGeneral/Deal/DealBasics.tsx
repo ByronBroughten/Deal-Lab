@@ -1,10 +1,10 @@
 import styled from "styled-components";
-import theme from "../../../theme/Theme";
-import { useAnalyzerContext } from "../../../modules/usePropertyAnalyzer";
-import { VariableOption } from "../../../sharedWithServer/Analyzer/methods/get/variableOptions";
-import { LabeledVarbOutputNext } from "../../appWide/LabeledVarbOutputNext";
-import LabeledOutputRowNext from "../../appWide/LabeledOutputRowNext";
-import SectionBtn from "../../appWide/SectionBtn";
+import theme from "../../../../../theme/Theme";
+import { useAnalyzerContext } from "../../../../../modules/usePropertyAnalyzer";
+import { VariableOption } from "../../../../../sharedWithServer/Analyzer/methods/get/variableOptions";
+import { LabeledVarbOutputNext } from "../../../../appWide/LabeledVarbOutputNext";
+import LabeledOutputRowNext from "../../../../appWide/LabeledOutputRowNext";
+import SectionBtn from "../../../../appWide/SectionBtn";
 import { BiPlus } from "react-icons/bi";
 import { BsPlus } from "react-icons/bs";
 

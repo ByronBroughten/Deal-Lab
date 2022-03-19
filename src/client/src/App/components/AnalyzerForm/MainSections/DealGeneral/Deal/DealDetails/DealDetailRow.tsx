@@ -1,14 +1,14 @@
 import { BiCaretDown, BiCaretRight } from "react-icons/bi";
 import { BsDot } from "react-icons/bs";
 import styled from "styled-components";
-import useToggle from "../../../../modules/customHooks/useToggle";
-import { SpecificVarbInfo } from "../../../../sharedWithServer/Analyzer/SectionMetas/relSections/rel/relVarbInfoTypes";
-import { InVarbInfo } from "../../../../sharedWithServer/Analyzer/StateSection/StateVarb";
-import theme from "../../../../theme/Theme";
-import useHowMany from "../../../appWide/customHooks/useHowMany";
-import { AnalysisDetailRows } from "../AnalysisDetailRows";
+import useToggle from "../../../../../../modules/customHooks/useToggle";
+import { SpecificVarbInfo } from "../../../../../../sharedWithServer/Analyzer/SectionMetas/relSections/rel/relVarbInfoTypes";
+import { InVarbInfo } from "../../../../../../sharedWithServer/Analyzer/StateSection/StateVarb";
+import theme from "../../../../../../theme/Theme";
+import useHowMany from "../../../../../appWide/customHooks/useHowMany";
+import { AnalysisDetailRows } from "./DealDetailRows";
 
-export function AnalysisDetailRow({
+export function DealDetailRow({
   level,
   displayName,
   displayVarb,

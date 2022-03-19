@@ -1,13 +1,11 @@
-import useToggleView from "../../../modules/customHooks/useToggleView";
-import { Inf } from "../../../sharedWithServer/Analyzer/SectionMetas/Info";
-import MainSectionEntry from "../../appWide/MainSection/MainSectionEntry";
-import MainEntryBody from "../../appWide/MainSection/MainSectionEntry/MainEntryBody";
-import MainEntryTitleRow from "../../appWide/MainSection/MainSectionEntry/MainEntryTitleRow";
-import AnalysisBasics from "./AnalysisBasics";
-import AnalysisDetails from "./AnalysisDetails";
+import { Inf } from "../../../../sharedWithServer/Analyzer/SectionMetas/Info";
+import MainSectionEntry from "../../../appWide/MainSection/MainSectionEntry";
+import MainEntryBody from "../../../appWide/MainSection/MainSectionEntry/MainEntryBody";
+import MainEntryTitleRow from "../../../appWide/MainSection/MainSectionEntry/MainEntryTitleRow";
+import AnalysisBasics from "./Deal/DealBasics";
+import AnalysisDetails from "./Deal/DealDetails";
 import styled from "styled-components";
-import theme from "../../../theme/Theme";
-import ccs from "./../../../theme/cssChunks";
+import theme from "../../../../theme/Theme";
 
 export default function Deal({
   feId,

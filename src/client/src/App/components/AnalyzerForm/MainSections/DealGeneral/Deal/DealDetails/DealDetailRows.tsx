@@ -1,9 +1,9 @@
 import styled from "styled-components";
-import { useAnalyzerContext } from "../../../modules/usePropertyAnalyzer";
-import { SpecificVarbInfo } from "../../../sharedWithServer/Analyzer/SectionMetas/relSections/rel/relVarbInfoTypes";
-import { InVarbInfo } from "../../../sharedWithServer/Analyzer/StateSection/StateVarb";
-import { DetailRowVarbFound } from "./AnalysisDetailRows/DetailRowVarbFound";
-import { DetailRowVarbNotFound } from "./AnalysisDetailRows/DetailRowVarbNotFound";
+import { useAnalyzerContext } from "../../../../../../modules/usePropertyAnalyzer";
+import { SpecificVarbInfo } from "../../../../../../sharedWithServer/Analyzer/SectionMetas/relSections/rel/relVarbInfoTypes";
+import { InVarbInfo } from "../../../../../../sharedWithServer/Analyzer/StateSection/StateVarb";
+import { DetailRowVarbFound } from "./DetailRowVarbFound";
+import { DetailRowVarbNotFound } from "./DetailRowVarbNotFound";
 
 export function AnalysisDetailRows({
   focalVarbInfo,

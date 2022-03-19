@@ -3,7 +3,7 @@ import styled from "styled-components";
 import theme from "../../theme/Theme";
 import InputSection from "./MainSections/InputSection";
 import Financing from "./MainSections/Financing";
-import DealGeneral from "./AnalysisFooter/DealGeneral";
+import DealGeneral from "./MainSections/DealGeneral";
 import TotalInsAndOuts from "./MainSections/TotalInsAndOuts";
 
 export default function MainSections(props: any) {
