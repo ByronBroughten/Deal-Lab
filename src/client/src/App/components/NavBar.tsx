@@ -63,7 +63,6 @@ const Styled = styled(AppBar)`
   }
 
   .Analyzer-link {
-    display: flex;
     text-decoration: none;
   }
 
