@@ -19,7 +19,7 @@ export default function NavBar() {
             <NavBtn className="NavBar-brandName">Ultimate Deal Analyzer</NavBtn>
           </Link>
           <NavBtn
-            className="NavBar-brandName"
+            className="NavBar-demoBtn NavBtn"
             href="https://www.youtube.com/watch?v=sqlMZxsMOlU"
             target="_blank"
           >
@@ -58,6 +58,10 @@ const Styled = styled(AppBar)`
     align-items: stretch;
   }
 
+  .NavBtn {
+    font-size: 1.1rem;
+  }
+
   .Analyzer-link {
     display: flex;
     text-decoration: none;
@@ -67,7 +71,12 @@ const Styled = styled(AppBar)`
     display: flex;
   }
   .NavBar-brandName {
-    font-size: 1.1em;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: ${theme["gray-800"]};
+    :hover {
+      color: ${theme.light};
+    }
   }
 
   .NavBar-rightSide {

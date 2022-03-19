@@ -36,12 +36,13 @@ const toggleViewBtnSize = "17px";
 export const MainSectionTitleStyled = styled.div<{
   sectionName: ThemeSectionName;
 }>`
+  position: relative;
+  z-index: 1;
   display: flex;
   justify-content: space-between;
-  color: ${theme["gray-800"]};
+  color: ${theme.dark};
   background-color: ${({ sectionName }) => theme[sectionName].main};
   height: 32px;
-  // ${theme.navBar.height};
   align-items: center;
   box-shadow: ${theme.boxShadow1};
 
