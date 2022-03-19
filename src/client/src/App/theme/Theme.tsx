@@ -160,6 +160,7 @@ const theme = {
   transparentGrayBorder: color["gray-500"] + "e0",
 
   // spacing sizes
+  s0: "0.0625rem",
   s1: "0.125rem",
   s2: "0.25rem",
   s3: "0.5rem",

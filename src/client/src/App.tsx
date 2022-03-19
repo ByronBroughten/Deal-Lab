@@ -28,7 +28,7 @@ export default function App() {
       <Styled className="App-root">
         <Routes>
           <Route
-            path="/analyses"
+            path="/deals"
             element={<SectionTable tableName="analysisTable" />}
           />
           {/* <Route path="/variables" element={<UserVarbsManager/>} /> */}

@@ -34,7 +34,7 @@ export default function AnalysisTitleRow({
           {...{ $isactive: showDetails }}
         />
         <LoginToAccessBtnTooltip>
-          <Link className="Analyses-link" to="/analyses">
+          <Link className="Analyses-link" to="/deals">
             <AnalysisBtn
               className="AnalysisTitleRow-analysisBtn"
               disabled={!auth.isLoggedIn}

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import theme from "../../../theme/Theme";
 
-export default styled.div.attrs(({ className = "", ...rest }) => ({
+const MainSectionEntry = styled.div.attrs(({ className = "", ...rest }) => ({
   className: "MainSection-entry " + className,
   ...rest,
 }))`
@@ -11,3 +11,5 @@ export default styled.div.attrs(({ className = "", ...rest }) => ({
     color: ${theme["gray-700"]};
   }
 `;
+
+export default MainSectionEntry;

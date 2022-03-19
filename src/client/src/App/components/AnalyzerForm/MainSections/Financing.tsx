@@ -40,7 +40,7 @@ export default function Financing(props: Props) {
 
 const Styled = styled(MainSection)`
   .Financing-mainSectionTitleBtn {
-    width: 30%;
+    width: 50%;
   }
   div.MainSection-entry.Loan-root {
     border-top: 2px solid ${theme.loan.dark};

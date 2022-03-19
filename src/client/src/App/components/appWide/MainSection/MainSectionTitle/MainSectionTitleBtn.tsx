@@ -15,7 +15,7 @@ export default function MainSectionTitleBtn({
   );
 }
 const Styled = styled(SectionBtn)`
-  height: 95%;
+  height: 90%;
   background-color: ${({ theme }) => theme.section.light};
   :hover {
     background-color: ${({ theme }) => theme.section.border};

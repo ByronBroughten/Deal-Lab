@@ -20,13 +20,13 @@ export default function AnalysisBasics({ id }: { id: string }) {
   return (
     <Styled className="BasicAnalysis-root">
       <LabeledOutputRow>
-        <VarbAutoComplete
+        {/* <VarbAutoComplete
           {...{
             onSelect,
             className: "MainEntryTitleRow-addSelector",
             placeholder: "+ Metric",
           }}
-        />
+        /> */}
         {outputIds.map((outputId) => (
           <LabeledVarbOutput key={outputId} id={outputId} />
         ))}

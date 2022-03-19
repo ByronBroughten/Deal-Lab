@@ -38,7 +38,6 @@ export const MainSectionTitleStyled = styled.div<{
 }>`
   display: flex;
   justify-content: space-between;
-  padding: 0 ${theme.s4};
   color: ${theme["gray-800"]};
   background-color: ${({ sectionName }) => theme[sectionName].main};
   height: 32px;
@@ -50,15 +49,8 @@ export const MainSectionTitleStyled = styled.div<{
     visibility: hidden;
   }
 
-  .toggle-view-btn {
-    margin-right: ${theme.s3};
-    .icon {
-      height: ${toggleViewBtnSize};
-      width: ${toggleViewBtnSize};
-    }
-  }
-
   .MainSectionTitle-titleText {
+    padding: 0 ${theme.s4};
     line-height: 1rem;
     margin: 0;
     font-size: 1.2rem;
