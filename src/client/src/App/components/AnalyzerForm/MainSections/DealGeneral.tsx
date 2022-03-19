@@ -10,6 +10,8 @@ import { Link } from "react-router-dom";
 import { auth } from "../../../modules/services/authService";
 import { MdCompareArrows } from "react-icons/md";
 import { CgDetailsMore, CgDetailsLess } from "react-icons/cg";
+import LoginToAccessBtnTooltip from "../../appWide/LoginToAccessBtnTooltip";
+import StandardToolTip from "../../appWide/StandardTooltip";
 
 type Props = { className?: string };
 
@@ -61,14 +63,21 @@ export default function CurrentAnalysis({ className }: Props) {
             </Link>
           )}
           {!auth.isLoggedIn && (
-            <MainSectionTitleBtn
-              themeName="analysis"
-              className="MainSectionTitle-child MainSectionTitle-compareDealsBtn"
-              disabled={true}
+            <StandardToolTip
+              className="MainSectionTitle-dealsLink"
+              title="Login to click"
             >
-              {"Compare Deals"}
-              <MdCompareArrows className="MainSectionTitle-compareIcon" />
-            </MainSectionTitleBtn>
+              <div className="MainSectionTitle-disabledBtnWrapper">
+                <MainSectionTitleBtn
+                  themeName="analysis"
+                  className="MainSectionTitle-child MainSectionTitle-compareDealsBtn"
+                  disabled={true}
+                >
+                  {"Compare Deals"}
+                  <MdCompareArrows className="MainSectionTitle-compareIcon" />
+                </MainSectionTitleBtn>
+              </div>
+            </StandardToolTip>
           )}
         </div>
       </MainSectionTitle>
@@ -87,10 +96,13 @@ const Styled = styled(MainSection)<{ $showDetails: boolean }>`
 
   .MainSectionTitle-dealsLink {
     text-decoration: none;
-    height: inherit;
     width: 100%;
     display: flex;
     align-items: center;
+  }
+
+  .MainSectionTitle-disabledBtnWrapper {
+    height: inherit;
   }
 
   .MainSectionTitle-child {
