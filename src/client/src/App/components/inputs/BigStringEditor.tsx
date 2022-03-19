@@ -30,7 +30,7 @@ export default function BigStringEditor({
       {...{
         sectionName,
         label,
-        className: "string-editor " + className,
+        className: "BigStringEditor-root string-editor " + className,
         id: varb.stringFeVarbInfo,
         editorProps: {
           editorState,
@@ -41,4 +41,9 @@ export default function BigStringEditor({
   );
 }
 
-const Styled = styled(MaterialDraftEditor)``;
+const Styled = styled(MaterialDraftEditor)`
+  .DraftEditor-root {
+    min-width: 50px;
+    font-size: 1.1rem;
+  }
+`;

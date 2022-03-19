@@ -72,7 +72,8 @@ export default function AdditiveList({
           <BigStringEditor
             {...{
               feVarbInfo: titleVarb.feVarbInfo,
-              label: "Name",
+              // label: "Name",
+              placeholder: "Name",
               className: "AdditiveList-title",
               sectionName: themeSectionName,
             }}

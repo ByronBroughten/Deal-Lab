@@ -8,6 +8,7 @@ type Props = {
   title: string;
   sectionName: SectionName<"hasOneParent">;
 };
+
 export default function AddSectionEntryBtn({ title, sectionName }: Props) {
   const { analyzer, handleAddSection } = useAnalyzerContext();
   return (
@@ -24,9 +25,11 @@ export default function AddSectionEntryBtn({ title, sectionName }: Props) {
 
 const Styled = styled(SectionBtn)`
   position: relative;
-  width: 50%;
+  width: 30%;
+  height: 95%;
+  font-weight: 700;
   background-color: ${({ theme }) => theme.section.light};
-  color: ${theme.dark};
+  color: ${theme["gray-800"]};
   :hover {
     background-color: ${({ theme }) => theme.section.border};
     color: ${theme.light};

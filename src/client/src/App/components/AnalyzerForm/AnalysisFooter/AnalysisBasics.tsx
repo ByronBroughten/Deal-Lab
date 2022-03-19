@@ -24,7 +24,7 @@ export default function AnalysisBasics({ id }: { id: string }) {
           {...{
             onSelect,
             className: "MainEntryTitleRow-addSelector",
-            placeholder: "Add Analysis Value",
+            placeholder: "+ Metric",
           }}
         />
         {outputIds.map((outputId) => (

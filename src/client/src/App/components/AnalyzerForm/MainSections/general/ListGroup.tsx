@@ -10,6 +10,7 @@ import ccs from "../../../../theme/cssChunks";
 import theme, { themeSectionNameOrDefault } from "../../../../theme/Theme";
 import AdditiveList from "../../../appWide/AdditiveList";
 import PlusBtn from "../../../appWide/PlusBtn";
+import { MdOutlinePlaylistAdd } from "react-icons/md";
 
 type Props<S extends ListSectionName = ListSectionName> = {
   className?: string;
@@ -44,7 +45,7 @@ export default function ListGroup({
             className="ListGroup-addListBtn"
             onClick={addUpfrontCostList}
           >
-            Add List
+            <MdOutlinePlaylistAdd className="ListGroup-addListBtnIcon" />
           </PlusBtn>
         </div>
         <div className="ListGroup-lists">
@@ -84,6 +85,11 @@ export const listGroupCss = css`
   }
   .ListGroup-addListBtn {
     margin-left: ${theme.s2};
+    .ListGroup-addListBtnIcon {
+      font-size: 22px;
+      padding: 0;
+      margin: 0;
+    }
   }
 
   .ListGroup-lists {

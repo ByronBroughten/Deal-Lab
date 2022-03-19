@@ -9,7 +9,7 @@ export default function LoginToAccessBtnTooltip({
 }: Props) {
   return (
     <BtnTooltip
-      title={auth.isLoggedIn ? "" : "Login to access"}
+      title={auth.isLoggedIn ? "" : "Login first"}
       className={`LoginToAccessBtnTooltip-root ${className ?? ""}`}
     >
       {children}

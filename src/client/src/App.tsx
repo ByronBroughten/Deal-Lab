@@ -1,10 +1,8 @@
 import React from "react";
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import GlobalStyle from "./App/theme/globalStyles";
 import AnalyzerMain from "./App/components/AnalyzerMain";
 import NotFound from "./App/components/general/NotFound";
-import UserVarbsManager from "./App/components/UserVarbsManager";
-import UserListsManager from "./App/components/UserListsManager";
 import usePropertyAnalyzer, {
   AnalyzerContext,
 } from "./App/modules/usePropertyAnalyzer";
@@ -46,7 +44,7 @@ export default function App() {
 }
 
 const Styled = styled.div`
-  padding-top: calc(${theme.navBar.height} + ${theme.s4});
+  padding-top: calc(${theme.navBar.height} + ${theme.s3});
   background-color: ${theme.plus.light};
   display: flex;
   flex-direction: column;

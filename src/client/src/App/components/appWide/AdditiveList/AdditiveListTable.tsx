@@ -12,6 +12,7 @@ import BtnTooltip from "../BtnTooltip";
 import useHowMany from "../customHooks/useHowMany";
 import PlusBtn from "../PlusBtn";
 import SimpleMuiMenu from "../SimpleMuiMenu";
+import AddItemBtn from "./AdditiveListTable/AddItemBtn";
 import AdditiveItem from "./AdditiveItem";
 import useAddListItem from "./AdditiveListTable/useAddListItem";
 import { valueSwitches } from "./useAdditiveItem";
@@ -58,7 +59,7 @@ export default function AdditiveListTable({ feInfo, themeSectionName }: Props) {
 
   return (
     <Styled className="AdditiveListTable-root" sectionName={themeSectionName}>
-      {areNone && <PlusBtn onClick={addItem}>Add item +</PlusBtn>}
+      {areNone && <AddItemBtn onClick={addItem} className="noTable" />}
       {isAtLeastOne && (
         <table className="AdditiveListTable-table">
           <thead>
@@ -67,7 +68,7 @@ export default function AdditiveListTable({ feInfo, themeSectionName }: Props) {
               <th className="AdditiveListTable-contentHeader">
                 {contentTitle}
               </th>
-              <th
+              {/* <th
                 className="AdditiveListTable-buttonHeader"
                 ref={selectDefaultHeaderRef}
               >
@@ -90,9 +91,9 @@ export default function AdditiveListTable({ feInfo, themeSectionName }: Props) {
                     }}
                   />
                 )}
-              </th>
-              <th className="AdditiveListTable-buttonHeader">
-                <PlusBtn onClick={addItem} />
+              </th> */}
+              <th colSpan={2} className="AdditiveListTable-buttonHeader">
+                <AddItemBtn className="yesTable" onClick={addItem} />
               </th>
             </tr>
           </thead>
@@ -118,6 +119,15 @@ export default function AdditiveListTable({ feInfo, themeSectionName }: Props) {
 const Styled = styled.div<{
   sectionName: ThemeSectionName;
 }>`
+  .AdditiveListTable-addItemBtn {
+    font-weight: 900;
+    height: ${theme.unlabeledInputHeight};
+    width: 50px;
+  }
+  .AdditiveListTable-addItemBtn.noTable {
+    width: 100%;
+  }
+
   .AdditiveListTable-table {
     ${({ sectionName }) => ccs.listTable.main(sectionName)}
   }

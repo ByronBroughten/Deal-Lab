@@ -3,9 +3,10 @@ import { useAnalyzerContext } from "../../../modules/usePropertyAnalyzer";
 import Loan from "./Financing/Loan";
 import MainSection from "../../appWide/MainSection";
 import FinancingInfo from "./Financing/FinancingInfo";
-import MainSectionTitleAddEntry from "../../appWide/MainSection/MainSectionTitleAddEntry";
 import styled from "styled-components";
 import theme from "../../../theme/Theme";
+import MainSectionTitle from "../../appWide/MainSection/MainSectionTitle";
+import AddSectionEntryBtn from "../../appWide/MainSection/AddSectionEntryBtn";
 
 type Props = { className?: string };
 export default function Financing(props: Props) {
@@ -13,14 +14,14 @@ export default function Financing(props: Props) {
   const loanIds = analyzer.childFeIds(["financing", "loan"]);
   return (
     <Styled {...{ ...props, sectionName: "loan" }}>
-      <MainSectionTitleAddEntry
+      <MainSectionTitle
         {...{
           title: "Financing",
           sectionName: "loan",
-          parentName: "financing",
-          btnTitle: "Add Loan",
         }}
-      />
+      >
+        <AddSectionEntryBtn {...{ sectionName: "loan", title: "+ Loan" }} />
+      </MainSectionTitle>
       <FinancingInfo />
       <div className="MainSection-entries">
         {loanIds.map((id) => (

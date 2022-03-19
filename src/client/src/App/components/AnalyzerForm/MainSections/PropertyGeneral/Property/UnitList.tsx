@@ -11,6 +11,7 @@ import { rem } from "polished";
 import useHowMany from "../../../../appWide/customHooks/useHowMany";
 import PlusBtn from "../../../../appWide/PlusBtn";
 import { FeParentInfo } from "../../../../../sharedWithServer/Analyzer/SectionMetas/relSectionTypes";
+import { VscDiffAdded } from "react-icons/vsc";
 
 type Props = { feInfo: FeParentInfo<"unit">; className?: string };
 export default function UnitList({ feInfo, className }: Props) {
@@ -38,11 +39,16 @@ export default function UnitList({ feInfo, className }: Props) {
       <div className="UnitList-viewable viewable">
         <div className="title-row">
           <h6 className="title-text">Units</h6>
-          {isAtLeastOne ? (
+          {/* {isAtLeastOne ? (
             <ToggleViewBtn {...{ viewIsOpen, onClick: trackWidthToggleView }} />
           ) : (
             <PlusBtn className="UnitList-addUnitBtn" onClick={addUnit}>
-              Add Unit
+              <VscDiffAdded className="UnitList-addUnitBtnIcon" />
+            </PlusBtn>
+          )} */}
+          {isAtLeastOne || (
+            <PlusBtn className="UnitList-addUnitBtn" onClick={addUnit}>
+              <VscDiffAdded className="UnitList-addUnitBtnIcon" />
             </PlusBtn>
           )}
         </div>
@@ -63,7 +69,7 @@ export default function UnitList({ feInfo, className }: Props) {
                             className="UnitList-addUnitBtn"
                             onClick={addUnit}
                           >
-                            Add Unit
+                            <VscDiffAdded className="UnitList-addUnitBtnIcon" />
                           </PlusBtn>
                         )}
                         <div className="UnitList-unitRowInner">
@@ -99,6 +105,10 @@ const Styled = styled.div<{ isAtLeastOne: boolean }>`
     /* max-width: 240px; */
   }
   .UnitList-unitsArea {
+  }
+
+  .UnitList-addUnitBtnIcon {
+    font-size: 23px;
   }
 
   .UnitList-unitRowInner {

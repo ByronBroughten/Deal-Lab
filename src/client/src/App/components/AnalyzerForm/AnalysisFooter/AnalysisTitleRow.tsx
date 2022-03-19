@@ -22,7 +22,6 @@ export default function AnalysisTitleRow({
   const feInfo = { sectionName, id, idType: "feId" } as const;
   return (
     <Styled className="AnalysisTitleRow-root">
-      <h4>Deal</h4>
       <MainEntryTitleRow
         {...{ feInfo, pluralName: "analyses", droptop: true, hideLoad: true }}
       />
@@ -34,13 +33,12 @@ export default function AnalysisTitleRow({
           leftIcon={showDetails ? <BiCaretDown /> : <BiCaretRight />}
           {...{ $isactive: showDetails }}
         />
-
         <LoginToAccessBtnTooltip>
           <Link className="Analyses-link" to="/analyses">
             <AnalysisBtn
               className="AnalysisTitleRow-analysisBtn"
               disabled={!auth.isLoggedIn}
-              text="Compare Analyses"
+              text="Compare Deals"
               rightIcon={<GoArrowRight />}
               title="Log in to click"
             />

@@ -17,42 +17,52 @@ export default function CurrentAnalysis({ className }: Props) {
   const { value: showDetails, toggle: toggleDetails } = useToggle();
 
   return (
-    <>
+    <Styled
+      {...{
+        $showDetails: showDetails,
+        sectionName: "analysis",
+        className: `CurrentAnalysis-root ${className}`,
+      }}
+    >
       <MainSectionTitle title="Deal" sectionName="analysis" />
-      <Styled
-        {...{
-          $showDetails: showDetails,
-          sectionName: "analysis",
-          className: `CurrentAnalysis-root ${className}`,
-        }}
-      >
-        <div {...{ className: "CurrentAnalysis-viewable" }}>
-          <AnalysisTitleRow {...{ id: feId, showDetails, toggleDetails }} />
-          {!showDetails && <AnalysisBasics id={feId} />}
-          {showDetails && <AnalysisDetails id={feId} />}
-        </div>
-      </Styled>
-    </>
+      <div {...{ className: "CurrentAnalysis-viewable" }}>
+        <AnalysisTitleRow {...{ id: feId, showDetails, toggleDetails }} />
+        {!showDetails && <AnalysisBasics id={feId} />}
+        {showDetails && <AnalysisDetails id={feId} />}
+      </div>
+    </Styled>
   );
 }
 
 const Styled = styled(MainSectionEntry)<{ $showDetails: boolean }>`
+  position: relative;
+  z-index: 1
+
+  .AnalysisBasics-root {
+    position: relative;
+    z-index: 0;
+  }
+
   padding: 0;
+
   .CurrentAnalysis-viewable {
+    background: ${theme.plus.light};
+    padding: ${theme.s2};
+  }
+  /* .CurrentAnalysis-viewable {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
 
-    padding: ${theme.s2};
-    padding-left: ${theme.s3};
-    background: ${theme.plus.light};
-    border-top: 2px solid ${theme.plus.border};
+    
+    
+    
     border-radius: ${theme.br1};
-    box-shadow: ${theme.boxShadow4};
-
-    .btn-save-section-obj {
-      margin-left: ${theme.s3};
-    }
+    /* border-top: 2px solid ${theme.plus.border}; */
+    /* box-shadow: ${theme.boxShadow4}; */
+  } */
+  .MainSectionTitle-root {
+    box-shadow: ${theme.boxShadow1};
   }
 
   ${({ $showDetails }) =>

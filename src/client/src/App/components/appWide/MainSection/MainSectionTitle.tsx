@@ -5,30 +5,29 @@ import theme, {
   ThemeSectionName,
   themeSectionNameOrDefault,
 } from "../../../theme/Theme";
-import ToggleViewBtn from "../../general/ToggleViewBtn";
+import { StandardProps } from "../../general/StandardProps";
 
-type Props = {
-  className?: string;
+type Props = StandardProps & {
   title: string;
   sectionName: SectionName;
-  viewProps?: { onClick: Function; viewIsOpen: boolean };
 };
 
 export default function MainSectionTitle({
   title,
-  viewProps,
   sectionName,
   className,
+  children,
 }: Props) {
   return (
     <MainSectionTitleStyled
       {...{
-        className: "main-section-title " + className,
+        className: "MainSectionTitle-root main-section-title " + className,
         sectionName: themeSectionNameOrDefault(sectionName),
       }}
     >
-      <h4>{title}</h4>
-      {viewProps && <ToggleViewBtn {...viewProps} />}
+      <h4 className="MainSectionTitle-titleText">{title}</h4>
+      {children}
+      <h4 className="MainSectionTitle-titleText MainSectionTitle-invisible"></h4>
     </MainSectionTitleStyled>
   );
 }
@@ -39,12 +38,17 @@ export const MainSectionTitleStyled = styled.div<{
 }>`
   display: flex;
   justify-content: space-between;
-  padding-left: ${theme.s4};
+  padding: 0 ${theme.s4};
   color: ${theme["gray-800"]};
-  background: ${({ sectionName }) => theme[sectionName].main};
-  height: ${theme.navBar.height};
+  background-color: ${({ sectionName }) => theme[sectionName].main};
+  height: 32px;
+  // ${theme.navBar.height};
   align-items: center;
   box-shadow: ${theme.boxShadow1};
+
+  .MainSectionTitleAddEntry-invisible {
+    visibility: hidden;
+  }
 
   .toggle-view-btn {
     margin-right: ${theme.s3};
@@ -54,8 +58,9 @@ export const MainSectionTitleStyled = styled.div<{
     }
   }
 
-  h4 {
+  .MainSectionTitle-titleText {
     line-height: 1rem;
     margin: 0;
+    font-size: 1.2rem;
   }
 `;

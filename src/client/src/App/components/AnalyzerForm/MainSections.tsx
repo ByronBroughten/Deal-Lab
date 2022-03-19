@@ -14,7 +14,7 @@ export default function MainSections(props: any) {
           <InputSection {...{ title: "Property", sectionName: "property" }} />
           <Financing />
           <InputSection {...{ title: "Management", sectionName: "mgmt" }} />
-          <TotalInsAndOuts />
+          {/* <TotalInsAndOuts /> */}
           <CurrentAnalysis />
         </div>
       </Styled>
