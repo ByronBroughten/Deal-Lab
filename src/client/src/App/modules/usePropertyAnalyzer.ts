@@ -36,6 +36,8 @@ export default function usePropertyAnalyzer({
   }, [main, analyzer]);
 
   const actions = [
+    "addSectionAndSolve",
+
     "loadSectionFromFeIndex",
     "loadSectionFromFeDefault",
 

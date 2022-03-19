@@ -6,12 +6,13 @@ import FinancingInfo from "./Financing/FinancingInfo";
 import styled from "styled-components";
 import theme from "../../../theme/Theme";
 import MainSectionTitle from "../../appWide/MainSection/MainSectionTitle";
-import AddSectionEntryBtn from "../../appWide/MainSection/AddSectionEntryBtn";
+import MainSectionTitleBtn from "../../appWide/MainSection/MainSectionTitle/MainSectionTitleBtn";
 
 type Props = { className?: string };
 export default function Financing(props: Props) {
-  const { analyzer } = useAnalyzerContext();
+  const { analyzer, handleSet } = useAnalyzerContext();
   const loanIds = analyzer.childFeIds(["financing", "loan"]);
+  const addLoan = () => handleSet("addSectionAndSolve", "loan", "financing");
   return (
     <Styled {...{ ...props, sectionName: "loan" }}>
       <MainSectionTitle
@@ -20,7 +21,12 @@ export default function Financing(props: Props) {
           sectionName: "loan",
         }}
       >
-        <AddSectionEntryBtn {...{ sectionName: "loan", title: "+ Loan" }} />
+        <MainSectionTitleBtn
+          className="Financing-mainSectionTitleBtn"
+          onClick={addLoan}
+        >
+          + Loan
+        </MainSectionTitleBtn>
       </MainSectionTitle>
       <FinancingInfo />
       <div className="MainSection-entries">
@@ -33,6 +39,9 @@ export default function Financing(props: Props) {
 }
 
 const Styled = styled(MainSection)`
+  .Financing-mainSectionTitleBtn {
+    width: 30%;
+  }
   div.MainSection-entry.Loan-root {
     border-top: 2px solid ${theme.loan.dark};
   }

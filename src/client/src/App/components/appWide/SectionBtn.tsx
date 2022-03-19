@@ -3,7 +3,7 @@ import { Button } from "@material-ui/core";
 import theme from "../../theme/Theme";
 import ccs from "../../theme/cssChunks";
 
-export default styled(Button).attrs(({ className, ...rest }) => ({
+const SectionBtn = styled(Button).attrs(({ className, ...rest }) => ({
   variant: "contained",
   disableRipple: true,
   className: "section-btn " + className,
@@ -17,4 +17,8 @@ export default styled(Button).attrs(({ className, ...rest }) => ({
     background-color: ${theme["gray-600"]};
     color: ${theme["gray-300"]};
   }
+  font-weight: 700;
+  color: ${theme["gray-800"]};
 `;
+
+export default SectionBtn;

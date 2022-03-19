@@ -7,6 +7,8 @@ import styled, { css } from "styled-components";
 import theme from "../../../theme/Theme";
 import MainSectionEntry from "../../appWide/MainSection/MainSectionEntry";
 import MainSectionTitle from "../../appWide/MainSection/MainSectionTitle";
+import SectionBtn from "../../appWide/SectionBtn";
+import MainSectionTitleBtn from "../../appWide/MainSection/MainSectionTitle/MainSectionTitleBtn";
 
 type Props = { className?: string };
 
@@ -24,7 +26,9 @@ export default function CurrentAnalysis({ className }: Props) {
         className: `CurrentAnalysis-root ${className}`,
       }}
     >
-      <MainSectionTitle title="Deal" sectionName="analysis" />
+      <MainSectionTitle title="Deal" sectionName="analysis">
+        {/* <MainSectionTitleBtn>Show Details</MainSectionTitleBtn> */}
+      </MainSectionTitle>
       <div {...{ className: "CurrentAnalysis-viewable" }}>
         <AnalysisTitleRow {...{ id: feId, showDetails, toggleDetails }} />
         {!showDetails && <AnalysisBasics id={feId} />}

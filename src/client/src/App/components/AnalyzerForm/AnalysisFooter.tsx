@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import CurrentAnalysis from "./AnalysisFooter/CurrentAnalysis";
+import CurrentAnalysis from "./AnalysisFooter/CurrentDeal";
 
 type Props = { className?: string };
 export default function CurrentAnalyses({ className }: Props) {

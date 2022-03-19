@@ -3,7 +3,7 @@ import styled from "styled-components";
 import theme from "../../theme/Theme";
 import InputSection from "./MainSections/InputSection";
 import Financing from "./MainSections/Financing";
-import CurrentAnalysis from "./AnalysisFooter/CurrentAnalysis";
+import CurrentDeal from "./AnalysisFooter/CurrentDeal";
 import TotalInsAndOuts from "./MainSections/TotalInsAndOuts";
 
 export default function MainSections(props: any) {
@@ -15,7 +15,7 @@ export default function MainSections(props: any) {
           <Financing />
           <InputSection {...{ title: "Management", sectionName: "mgmt" }} />
           {/* <TotalInsAndOuts /> */}
-          <CurrentAnalysis />
+          <CurrentDeal />
         </div>
       </Styled>
     </>
@@ -37,7 +37,7 @@ const Styled = styled.div.attrs(({ className, ...rest }) => ({
     flex: 1;
   }
 
-  .CurrentAnalysis-root {
+  .CurrentDeal-root {
     position: sticky;
     bottom: 0;
     z-index: 3;
