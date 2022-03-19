@@ -68,7 +68,7 @@ const Styled = styled.div<{ level: number }>`
   font-size: 1em;
 
   :hover {
-    background: ${theme.plus.main};
+    background: ${theme.analysis.light};
   }
   cursor: pointer;
 
