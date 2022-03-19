@@ -6,7 +6,6 @@ import { LabeledVarbOutputNext } from "../../../../appWide/LabeledVarbOutputNext
 import LabeledOutputRowNext from "../../../../appWide/LabeledOutputRowNext";
 import SectionBtn from "../../../../appWide/SectionBtn";
 import { BiPlus } from "react-icons/bi";
-import { BsPlus } from "react-icons/bs";
 
 const sectionName = "analysis";
 export default function AnalysisBasics({ id }: { id: string }) {
@@ -21,13 +20,6 @@ export default function AnalysisBasics({ id }: { id: string }) {
   return (
     <Styled className="BasicAnalysis-root">
       <LabeledOutputRowNext>
-        {/* <VarbAutoComplete
-          {...{
-            onSelect,
-            className: "MainEntryTitleRow-addSelector",
-            placeholder: "+ Metric",
-          }}
-        /> */}
         {outputIds.map((outputId) => (
           <LabeledVarbOutputNext key={outputId} id={outputId} />
         ))}
@@ -37,6 +29,13 @@ export default function AnalysisBasics({ id }: { id: string }) {
         >
           <BiPlus />
         </SectionBtn> */}
+        {/* <VarbAutoComplete
+          {...{
+            onSelect,
+            className: "MainEntryTitleRow-addSelector",
+            placeholder: "+ Metric",
+          }}
+        /> */}
       </LabeledOutputRowNext>
     </Styled>
   );

@@ -20,34 +20,30 @@ export default function AnalysisDetails({ id }: { id: string }) {
   // why is that?
 
   return (
-    <Styled className="AnalysisDetails-root">
-      {varbInfos.map((varbInfo) => {
-        if (analyzer.hasSection(varbInfo))
-          return <DetailRowVarbFound {...{ varbInfo, level }} />;
-        else
-          return (
-            <DealDetailRow
-              {...{
-                level,
-                displayName: "Not found",
-                displayVarb: "?",
-              }}
-            />
-          );
-      })}
+    <Styled className="DealDetails-root">
+      <div className="DealDetails-allRows">
+        {varbInfos.map((varbInfo) => {
+          if (analyzer.hasSection(varbInfo))
+            return <DetailRowVarbFound {...{ varbInfo, level }} />;
+          else
+            return (
+              <DealDetailRow
+                {...{
+                  level,
+                  displayName: "Not found",
+                  displayVarb: "?",
+                }}
+              />
+            );
+        })}
+      </div>
     </Styled>
   );
 }
 
 const Styled = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  height: auto;
-  width: 100%;
-  padding: ${theme.s1};
-  .AnalysisDetails-row {
-    width: 100%;
+  padding: ${theme.s2};
+  .DealDetails-allRows {
+    box-shadow: ${theme.boxShadow1};
   }
 `;

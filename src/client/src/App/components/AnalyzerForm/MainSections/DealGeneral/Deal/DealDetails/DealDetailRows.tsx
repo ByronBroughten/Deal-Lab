@@ -2,10 +2,11 @@ import styled from "styled-components";
 import { useAnalyzerContext } from "../../../../../../modules/usePropertyAnalyzer";
 import { SpecificVarbInfo } from "../../../../../../sharedWithServer/Analyzer/SectionMetas/relSections/rel/relVarbInfoTypes";
 import { InVarbInfo } from "../../../../../../sharedWithServer/Analyzer/StateSection/StateVarb";
+import theme from "../../../../../../theme/Theme";
 import { DetailRowVarbFound } from "./DetailRowVarbFound";
 import { DetailRowVarbNotFound } from "./DetailRowVarbNotFound";
 
-export function AnalysisDetailRows({
+export function DealDetailRows({
   focalVarbInfo,
   inVarbInfos,
   level,
@@ -17,7 +18,7 @@ export function AnalysisDetailRows({
   const { analyzer } = useAnalyzerContext();
   level = level + 1;
   return (
-    <Styled>
+    <Styled className="DealDetailRows-root">
       {inVarbInfos.map((inInfo) => {
         if ("offset" in inInfo && !analyzer.hasSection(inInfo)) {
           return (
@@ -47,14 +48,4 @@ export function AnalysisDetailRows({
   );
 }
 
-const Styled = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  height: auto;
-  width: 100%;
-  .AnalysisDetails-row {
-    width: 100%;
-  }
-`;
+const Styled = styled.div``;

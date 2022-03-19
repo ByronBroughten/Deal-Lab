@@ -66,7 +66,6 @@ const Styled = styled(AppBar)`
     display: inherit;
     align-items: inherit;
     height: inherit;
-
     text-decoration: none;
   }
   .NavBar-demoBtn {

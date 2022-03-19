@@ -6,7 +6,7 @@ import { SpecificVarbInfo } from "../../../../../../sharedWithServer/Analyzer/Se
 import { InVarbInfo } from "../../../../../../sharedWithServer/Analyzer/StateSection/StateVarb";
 import theme from "../../../../../../theme/Theme";
 import useHowMany from "../../../../../appWide/customHooks/useHowMany";
-import { AnalysisDetailRows } from "./DealDetailRows";
+import { DealDetailRows } from "./DealDetailRows";
 
 export function DealDetailRow({
   level,
@@ -30,9 +30,9 @@ export function DealDetailRow({
     <>
       <Styled
         {...{ level, onClick: toggleDropped }}
-        className="AnalysisDetails-row"
+        className="DealDetailRow-root"
       >
-        <span className="BasicAnalysis-item">
+        <span className="DealDetailRow-text">
           {isAtLeastOne && (
             <>
               {!dropped && <BiCaretRight />}
@@ -48,7 +48,7 @@ export function DealDetailRow({
         </span>
       </Styled>
       {isAtLeastOne && dropped && varbInfo && (
-        <AnalysisDetailRows
+        <DealDetailRows
           {...{
             focalVarbInfo: varbInfo,
             inVarbInfos,
@@ -61,18 +61,24 @@ export function DealDetailRow({
 }
 
 const Styled = styled.div<{ level: number }>`
-  padding-left: ${({ level }) => `${1 * level}rem`};
+  .DealDetailRow-text {
+    margin-left: ${({ level }) => `${1 * level}rem`};
+    margin-right: ${theme.s2};
+  }
+  /* padding-left: ${({ level }) => `${1 * level}rem`}; */
   padding-top: ${theme.s2};
   padding-bottom: ${theme.s2};
-
   font-size: 1em;
+  width: 100%;
+
+  background: ${theme.analysis.light};
 
   :hover {
-    background: ${theme.analysis.light};
+    background: ${theme.analysis.main};
   }
   cursor: pointer;
 
-  .BasicAnalysis-item {
+  .DealDetailRow-text {
     display: flex;
   }
 
