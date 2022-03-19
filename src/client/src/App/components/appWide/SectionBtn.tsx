@@ -21,6 +21,9 @@ export default function SectionBtn({ themeName, ...props }: Props) {
 
 const sectionTheme = (themeName: ThemeSectionName) => css`
   background-color: ${theme[themeName].light};
+  :disabled {
+    background-color: ${theme[themeName].light};
+  }
   :hover {
     background-color: ${theme[themeName].border};
     color: ${theme.light};

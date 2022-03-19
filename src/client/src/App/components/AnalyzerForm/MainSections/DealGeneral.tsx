@@ -48,16 +48,28 @@ export default function CurrentAnalysis({ className }: Props) {
             )}
           </MainSectionTitleBtn>
           {/* // disable the link */}
-          <Link className="MainSectionTitle-dealsLink" to="/deals">
+          {auth.isLoggedIn && (
+            <Link className="MainSectionTitle-dealsLink" to="/deals">
+              <MainSectionTitleBtn
+                themeName="analysis"
+                className="MainSectionTitle-child"
+                // disabled={!auth.isLoggedIn}
+              >
+                {"Compare Deals"}
+                <MdCompareArrows className="MainSectionTitle-compareIcon" />
+              </MainSectionTitleBtn>
+            </Link>
+          )}
+          {!auth.isLoggedIn && (
             <MainSectionTitleBtn
               themeName="analysis"
-              className="MainSectionTitle-child"
-              // disabled={!auth.isLoggedIn}
+              className="MainSectionTitle-child MainSectionTitle-compareDealsBtn"
+              disabled={true}
             >
               {"Compare Deals"}
               <MdCompareArrows className="MainSectionTitle-compareIcon" />
             </MainSectionTitleBtn>
-          </Link>
+          )}
         </div>
       </MainSectionTitle>
       <Deal {...{ feId, detailsIsOpen }} />
@@ -90,12 +102,12 @@ const Styled = styled(MainSection)<{ $showDetails: boolean }>`
 
   .MainSectionTitle-compareIcon {
     font-size: 1.9rem;
-    color: ${theme["gray-800"]};
+    color: inherit;
     margin-left: ${theme.s3};
   }
   .MainSectionTitle-detailsIcon {
     font-size: 1.4rem;
-    color: ${theme["gray-800"]};
+    color: inherit;
     margin-left: ${theme.s3};
   }
 
