@@ -38,7 +38,7 @@ export default function UnitList({ feInfo, className }: Props) {
     >
       <div className="UnitList-viewable viewable">
         <div className="title-row">
-          <h6 className="title-text">Units</h6>
+          {/* <h6 className="title-text">Units</h6> */}
           {/* {isAtLeastOne ? (
             <ToggleViewBtn {...{ viewIsOpen, onClick: trackWidthToggleView }} />
           ) : (
@@ -48,7 +48,8 @@ export default function UnitList({ feInfo, className }: Props) {
           )} */}
           {isAtLeastOne || (
             <PlusBtn className="UnitList-addUnitBtn" onClick={addUnit}>
-              <VscDiffAdded className="UnitList-addUnitBtnIcon" />
+              + Unit
+              {/* <VscDiffAdded className="UnitList-addUnitBtnIcon" /> */}
             </PlusBtn>
           )}
         </div>
@@ -56,9 +57,10 @@ export default function UnitList({ feInfo, className }: Props) {
           <div className="UnitList-unitsArea">
             {isAtLeastOne && (
               <div className="UnitList-units">
-                {areMultiple && (
+                <div className="UnitList-total">{`Total rent: ${totalDisplay}`}</div>
+                {/* {areMultiple && (
                   <div className="UnitList-total">{`Total rent: ${totalDisplay}`}</div>
-                )}
+                )} */}
                 <div className="UnitList-unitRows">
                   {unitIdRows.map((idRow, rowIndex) => {
                     const unitNumberOffset = rowIndex * numUnitsPerRow;
@@ -69,7 +71,8 @@ export default function UnitList({ feInfo, className }: Props) {
                             className="UnitList-addUnitBtn"
                             onClick={addUnit}
                           >
-                            <VscDiffAdded className="UnitList-addUnitBtnIcon" />
+                            + Unit
+                            {/* <VscDiffAdded className="UnitList-addUnitBtnIcon" /> */}
                           </PlusBtn>
                         )}
                         <div className="UnitList-unitRowInner">
@@ -104,7 +107,21 @@ const Styled = styled.div<{ isAtLeastOne: boolean }>`
   .UnitList-viewable {
     /* max-width: 240px; */
   }
-  .UnitList-unitsArea {
+  .UnitList-unitRows {
+    margin-top: ${theme.s1};
+  }
+
+  .UnitList-total {
+    font-weight: 700;
+    font-size: 0.96rem;
+    color: ${theme["gray-700"]};
+  }
+
+  .UnitList-addUnitBtn {
+    font-weight: 700;
+    font-size: 0.9rem;
+    line-height: 1.2rem;
+    height: 23px;
   }
 
   .UnitList-addUnitBtnIcon {

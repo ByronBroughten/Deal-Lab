@@ -36,17 +36,8 @@ export default function CurrentAnalysis({ className }: Props) {
     >
       <MainSectionTitle title="Deal" sectionName="analysis">
         <div className="MainSectionTitle-children">
-          <MainSectionTitleBtn className="MainSectionTitle-child">
-            + Output
-          </MainSectionTitleBtn>
-          {/* <VarbAutoComplete
-          {...{
-            onSelect,
-            className: "MainEntryTitleRow-addSelector",
-            placeholder: "+ Metric",
-          }}
-        /> */}
           <MainSectionTitleBtn
+            themeName="analysis"
             className="MainSectionTitle-child"
             onClick={toggleDetails}
           >
@@ -55,6 +46,7 @@ export default function CurrentAnalysis({ className }: Props) {
           {/* // disable the link */}
           <Link className="MainSectionTitle-dealsLink" to="/deals">
             <MainSectionTitleBtn
+              themeName="analysis"
               className="MainSectionTitle-child"
               // disabled={!auth.isLoggedIn}
             >
@@ -74,18 +66,23 @@ const Styled = styled(MainSection)<{ $showDetails: boolean }>`
     display: flex;
     height: 100%;
     align-items: center;
+    width: 50%;
   }
 
   .MainSectionTitle-dealsLink {
     text-decoration: none;
-    height: 100%;
+    height: inherit;
+    width: 100%;
     display: flex;
     align-items: center;
   }
 
   .MainSectionTitle-child {
-    margin: 0 ${theme.s0};
+    margin: 0 ${theme.s1};
+    width: 100%;
   }
+  // properly disable compare deals for when you're logged out
+  // make Deal stick to the bottom again
 
   .MainSectionTitle-goArrow {
     font-size: 1.2rem;

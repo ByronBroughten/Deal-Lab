@@ -16,13 +16,13 @@ export default function Mgmt({ id }: { id: string }) {
         <ListGroup
           feInfo={feInfo}
           listSectionName="upfrontCostList"
-          titleText="Upfront Costs"
+          titleText="Upfront Costs:"
           totalVarbName="upfrontExpenses"
         />
         <ListGroup
           feInfo={feInfo}
           listSectionName="ongoingCostList"
-          titleText="Ongoing Costs"
+          titleText="Ongoing Costs:"
           totalVarbName="ongoingExpenses"
         />
       </MainEntryBody>

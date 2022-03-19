@@ -5,6 +5,9 @@ import MainEntryBody from "../../appWide/MainSection/MainSectionEntry/MainEntryB
 import MainEntryTitleRow from "../../appWide/MainSection/MainSectionEntry/MainEntryTitleRow";
 import AnalysisBasics from "./AnalysisBasics";
 import AnalysisDetails from "./AnalysisDetails";
+import styled from "styled-components";
+import theme from "../../../theme/Theme";
+import ccs from "./../../../theme/cssChunks";
 
 export default function Deal({
   feId,
@@ -16,15 +19,20 @@ export default function Deal({
   const feInfo = Inf.fe("analysis", feId);
   return (
     <MainSectionEntry>
+      <MainEntryTitleRow {...{ feInfo, pluralName: "deals", droptop: true }} />
       <MainEntryBody>
-        <MainEntryTitleRow
-          {...{ feInfo, pluralName: "deals", droptop: true }}
-        />
-        <div className="ListGroup-root">
-          {!detailsIsOpen && <AnalysisBasics id={feId} />}
-          {detailsIsOpen && <AnalysisDetails id={feId} />}
-        </div>
+        <Styled className="ListGroup-root">
+          <div className="Deal-viewable viewable">
+            {!detailsIsOpen && <AnalysisBasics id={feId} />}
+            {detailsIsOpen && <AnalysisDetails id={feId} />}
+          </div>
+        </Styled>
       </MainEntryBody>
     </MainSectionEntry>
   );
 }
+const Styled = styled.div`
+  background: ${theme.analysis.main};
+  border: solid 1px ${theme.analysis.border};
+  border-radius: ${theme.s1};
+`;

@@ -35,7 +35,7 @@ export function useListManager(sectionName: SectionName<"userList">) {
 const titles: Record<SectionName<"userList">, string> = {
   userVarbList: "Variables",
   userSingleList: "One time costs",
-  userOngoingList: "Ongoing costs",
+  userOngoingList: "Ongoing costs: ",
 };
 
 type Props = { sectionName: SectionName<"userList"> };

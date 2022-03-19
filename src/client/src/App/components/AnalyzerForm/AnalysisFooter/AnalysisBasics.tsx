@@ -1,11 +1,12 @@
 import styled from "styled-components";
-import LabeledOutputRow from "../../appWide/LabeledOutputRow";
 import theme from "../../../theme/Theme";
-import VarbAutoComplete from "../../inputs/VarbAutoComplete";
 import { useAnalyzerContext } from "../../../modules/usePropertyAnalyzer";
-import { LabeledVarbOutput } from "../../appWide/LabeledVarbOutput";
 import { VariableOption } from "../../../sharedWithServer/Analyzer/methods/get/variableOptions";
-import MainSectionTitle from "../../appWide/MainSection/MainSectionTitle";
+import { LabeledVarbOutputNext } from "../../appWide/LabeledVarbOutputNext";
+import LabeledOutputRowNext from "../../appWide/LabeledOutputRowNext";
+import SectionBtn from "../../appWide/SectionBtn";
+import { BiPlus } from "react-icons/bi";
+import { BsPlus } from "react-icons/bs";
 
 const sectionName = "analysis";
 export default function AnalysisBasics({ id }: { id: string }) {
@@ -19,7 +20,7 @@ export default function AnalysisBasics({ id }: { id: string }) {
 
   return (
     <Styled className="BasicAnalysis-root">
-      <LabeledOutputRow>
+      <LabeledOutputRowNext>
         {/* <VarbAutoComplete
           {...{
             onSelect,
@@ -28,38 +29,38 @@ export default function AnalysisBasics({ id }: { id: string }) {
           }}
         /> */}
         {outputIds.map((outputId) => (
-          <LabeledVarbOutput key={outputId} id={outputId} />
+          <LabeledVarbOutputNext key={outputId} id={outputId} />
         ))}
-      </LabeledOutputRow>
+        {/* <SectionBtn
+          themeName="analysis"
+          className="BasicAnalysis-addOutput LabeledVarb-root"
+        >
+          <BiPlus />
+        </SectionBtn> */}
+      </LabeledOutputRowNext>
     </Styled>
   );
 }
 
+// .VarbAutoComplete-root {
+//   position: relative;
+//   top: 2px;
+//   .MuiInputBase-root {
+//     height: ${theme.bigButtonHeight};
+//     border-radius: ${theme.br1};
+//     margin-left: ${theme.s2};
+//     min-width: 110px;
+//   }
+// }
+
 const Styled = styled.div`
-  display: flex;
-  align-items: flex-start;
+  .BasicAnalysis-addOutput {
+    font-size: 2rem;
+    height: 100%;
+    width: 2rem;
 
-  .LabeledOutputRow-root {
-    position: relative;
-    margin-left: ${theme.s2};
-  }
-  .LabeledVarb-root {
-    position: relative;
-    bottom: 4px;
-  }
-
-  .LabeledVarb-label {
-    color: ${theme["gray-800"]};
-  }
-
-  .VarbAutoComplete-root {
-    position: relative;
-    top: 2px;
-    .MuiInputBase-root {
-      height: ${theme.bigButtonHeight};
-      border-radius: ${theme.br1};
-      margin-left: ${theme.s2};
-      min-width: 110px;
-    }
+    box-shadow: ${theme.boxShadow1};
+    border-radius: ${theme.br0};
+    padding: ${theme.s2};
   }
 `;

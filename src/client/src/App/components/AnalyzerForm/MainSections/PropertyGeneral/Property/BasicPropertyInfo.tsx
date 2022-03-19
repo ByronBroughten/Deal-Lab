@@ -16,7 +16,7 @@ export default function BasicPropertyInfo({ feInfo, className }: Props) {
         sectionName: "property",
       }}
     >
-      <div className="viewable">
+      <div className="BasicPropertyInfo-viewable viewable">
         <h6 className="title-text">Basic Info</h6>
         <div className="BasicSectionInfo-subSections">
           <div className="BasicSectionInfo-subSection">

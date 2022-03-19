@@ -22,6 +22,7 @@ export default function Financing(props: Props) {
         }}
       >
         <MainSectionTitleBtn
+          themeName="loan"
           className="Financing-mainSectionTitleBtn"
           onClick={addLoan}
         >

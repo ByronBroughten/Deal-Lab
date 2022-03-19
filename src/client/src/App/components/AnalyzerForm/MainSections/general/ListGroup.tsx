@@ -80,6 +80,10 @@ export const listGroupCss = css`
     line-height: 0.95rem;
   }
   .ListGroup-totalText {
+    /* ${ccs.subSection.titleText}; */
+    font-weight: 700;
+    font-size: 1.05rem;
+    line-height: 0.95rem;
     padding-left: ${theme.s1};
     padding-top: ${theme.s1};
   }
