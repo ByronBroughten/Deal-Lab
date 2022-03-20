@@ -25,7 +25,7 @@ export default function NavUserMenu() {
   const preceding = auth.isLoggedIn ? "Your " : "Guest ";
 
   return (
-    <Styled ref={closeIfClickOutsideRef} onClick={toggleView}>
+    <Styled ref={closeIfClickOutsideRef}>
       {auth.isLoggedIn && (
         // this is guarded by auth just temporarily
         <NavBtn

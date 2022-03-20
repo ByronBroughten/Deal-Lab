@@ -10,6 +10,9 @@ import NavUserMenu from "./NavBar/NavUserMenu";
 import { auth } from "../modules/services/authService";
 import { Link } from "react-router-dom";
 import { StyledDropdownForm } from "./general/DropdownForm";
+import { rem } from "polished";
+import { AiOutlineYoutube } from "react-icons/ai";
+import { MdUpgrade } from "react-icons/md";
 
 export default function NavBar({ className }: { className?: string }) {
   return (
@@ -24,7 +27,8 @@ export default function NavBar({ className }: { className?: string }) {
             href="https://www.youtube.com/watch?v=sqlMZxsMOlU"
             target="_blank"
           >
-            Demo
+            <span className="NavBar-demoBtnText">Demo</span>
+            <AiOutlineYoutube className="NavBar-demoBtnIcon" />
           </NavBtn>
         </div>
         <div className="NavBar-rightSide">
@@ -40,8 +44,13 @@ export default function NavBar({ className }: { className?: string }) {
           )}
           {auth.isLoggedIn && (
             <NavDropDown
-              className="NavBar-upgradeToProBtn"
-              btnText="Upgrade to Pro"
+              className="NavBar-getProBtn"
+              btnText={
+                <>
+                  <span className="NavBar-getProBtnText">Get Pro</span>
+                  <MdUpgrade className="NavBar-getProBtnIcon" />
+                </>
+              }
             >
               <StyledDropdownForm className="DropdownForm-comingSoon">
                 Coming Soon!
@@ -76,7 +85,8 @@ const Styled = styled(AppBar)`
   }
 
   .NavBtn {
-    font-size: 1.1rem;
+    font-size: ${rem("17px")};
+    font-weight: 500;
   }
 
   .NavBar-analyzerLink {
@@ -87,6 +97,14 @@ const Styled = styled(AppBar)`
   }
   .NavBar-demoBtn {
     height: 100%;
+  }
+  .NavBar-demoBtnIcon {
+    margin-left: ${rem("2px")};
+    font-size: ${rem("25px")};
+  }
+
+  .NavBar-getProBtnIcon {
+    font-size: ${rem("25px")};
   }
 
   .NavBar-leftSide {
@@ -107,7 +125,7 @@ const Styled = styled(AppBar)`
   .NavBar-rightSide {
     display: flex;
   }
-  .NavBar-upgradeToProBtn {
+  .NavBar-getProBtn {
     height: 100%;
   }
 `;
