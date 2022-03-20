@@ -82,6 +82,9 @@ export default function CurrentAnalysis({ className }: Props) {
         </div>
       </MainSectionTitle>
       <Deal {...{ feId, detailsIsOpen }} />
+      <div className="DealGeneral-appInfo">
+        Ultimate Property Analyzer | support@dealanalyzer.app
+      </div>
     </Styled>
   );
 }
@@ -124,10 +127,20 @@ const Styled = styled(MainSection)<{ $showDetails: boolean }>`
   }
 
   .MainSection-entry {
+    padding-bottom: 0;
     ${({ $showDetails }) =>
       $showDetails &&
       css`
         overflow: auto;
       `}
+  }
+
+  .DealGeneral-appInfo {
+    display: flex;
+    justify-content: center;
+    background: ${theme.analysis.main};
+    color: ${theme.analysis.light};
+    font-size: 0.9rem;
+    line-height: 0.9rem;
   }
 `;
