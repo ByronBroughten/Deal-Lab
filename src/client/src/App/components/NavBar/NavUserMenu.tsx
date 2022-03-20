@@ -16,7 +16,7 @@ function BtnDiv({ children, className }: StandardProps) {
 
 export default function NavUserMenu() {
   const { logout, analyzer } = useAnalyzerContext();
-  const { viewIsOpen, toggleView, closeView } = useToggleView({
+  const { viewIsOpen, toggleView, openView, closeView } = useToggleView({
     initValue: false,
   });
   const closeIfClickOutsideRef = useOnOutsideClickRef(closeView);
@@ -25,7 +25,7 @@ export default function NavUserMenu() {
   const preceding = auth.isLoggedIn ? "Your " : "Guest ";
 
   return (
-    <Styled ref={closeIfClickOutsideRef}>
+    <Styled ref={closeIfClickOutsideRef} onClick={toggleView}>
       {auth.isLoggedIn && (
         // this is guarded by auth just temporarily
         <NavBtn
@@ -33,10 +33,10 @@ export default function NavUserMenu() {
           onClick={toggleView}
           $isactive={viewIsOpen}
         >
-          <span>
+          <div className="NavUserMenu-nameDiv">
             <span>{userName}</span>
             <AiOutlineMenu className="NavBar-menuIcon" />
-          </span>
+          </div>
         </NavBtn>
       )}
       {viewIsOpen && (
@@ -73,6 +73,11 @@ const Styled = styled.div`
     margin-left: ${theme.s4};
     height: 24px;
     width: 24px;
+  }
+
+  .NavUserMenu-nameDiv {
+    display: flex;
+    align-items: center;
   }
 
   .NavUserMenu-navBtn {

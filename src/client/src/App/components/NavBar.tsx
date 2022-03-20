@@ -9,6 +9,7 @@ import NavBtn from "./NavBar/NavBtn";
 import NavUserMenu from "./NavBar/NavUserMenu";
 import { auth } from "../modules/services/authService";
 import { Link } from "react-router-dom";
+import { StyledDropdownForm } from "./general/DropdownForm";
 
 export default function NavBar({ className }: { className?: string }) {
   return (
@@ -26,7 +27,7 @@ export default function NavBar({ className }: { className?: string }) {
             Demo
           </NavBtn>
         </div>
-        <div className="NavBar-btns Logged Out">
+        <div className="NavBar-rightSide">
           {!auth.isLoggedIn && (
             <>
               <NavDropDown btnText="Create Account">
@@ -37,6 +38,16 @@ export default function NavBar({ className }: { className?: string }) {
               </NavDropDown>
             </>
           )}
+          {auth.isLoggedIn && (
+            <NavDropDown
+              className="NavBar-upgradeToProBtn"
+              btnText="Upgrade to Pro"
+            >
+              <StyledDropdownForm className="DropdownForm-comingSoon">
+                Coming Soon!
+              </StyledDropdownForm>
+            </NavDropDown>
+          )}
           <NavUserMenu />
         </div>
       </Toolbar>
@@ -45,6 +56,10 @@ export default function NavBar({ className }: { className?: string }) {
 }
 
 const Styled = styled(AppBar)`
+  .DropdownForm-comingSoon {
+    display: flex;
+    justify-content: center;
+  }
   .MuiToolbar-root {
     position: static;
   }
@@ -92,8 +107,7 @@ const Styled = styled(AppBar)`
   .NavBar-rightSide {
     display: flex;
   }
-
-  .NavBar-btns {
-    display: flex;
+  .NavBar-upgradeToProBtn {
+    height: 100%;
   }
 `;

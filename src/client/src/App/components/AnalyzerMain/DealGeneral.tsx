@@ -64,7 +64,7 @@ export default function CurrentAnalysis({ className }: Props) {
           )}
           {!auth.isLoggedIn && (
             <StandardToolTip
-              className="MainSectionTitle-dealsLink"
+              className="MainSectionTitle-toolTip"
               title="Login to click"
             >
               <div className="MainSectionTitle-disabledBtnWrapper">
@@ -98,7 +98,14 @@ const Styled = styled(MainSection)<{ $showDetails: boolean }>`
   }
 
   .MainSectionTitle-dealsLink {
+    display: flex;
+    align-items: center;
     text-decoration: none;
+    height: 100%;
+    width: 100%;
+  }
+
+  .MainSectionTitle-toolTip {
     width: 100%;
     display: flex;
     align-items: center;

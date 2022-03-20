@@ -21,8 +21,8 @@ export default function NavDropDown({ btnText, children, className }: Props) {
       ref={closeIfClickOutsideRef}
     >
       <NavBtn
-        className="NavDropDown-navBtn"
         onClick={toggleView}
+        className="NavDropDown-navBtn"
         $isactive={viewIsOpen}
       >
         {btnText}
