@@ -134,7 +134,7 @@ const Styled = styled(MainSection)<{ $showDetails: boolean }>`
   }
 
   .MainSection-entry {
-    padding-bottom: 0;
+    padding-bottom: ${theme.s1};
     ${({ $showDetails }) =>
       $showDetails &&
       css`
@@ -145,9 +145,11 @@ const Styled = styled(MainSection)<{ $showDetails: boolean }>`
   .DealGeneral-appInfo {
     display: flex;
     justify-content: center;
-    background: ${theme.analysis.main};
+    background: ${theme.analysis.dark};
     color: ${theme.analysis.light};
-    font-size: 0.9rem;
-    line-height: 0.9rem;
+    font-size: 12px;
+    padding: ${theme.s0} 0;
+    /* font-size: 0.9rem; */
+    /* line-height: 0.9rem; */
   }
 `;
