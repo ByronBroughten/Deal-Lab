@@ -1,12 +1,16 @@
 import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
-  body {
+  
+  html, body {
+    height: 100%
     margin: 0;
     padding: 0;
+  }
+
+  body {
     font-family: "Roboto", "Helvetica", "Arial", sans-serif;
     line-height: 1;
-
   }
 
   label {

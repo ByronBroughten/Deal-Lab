@@ -7,7 +7,7 @@ export function makeClassName(
 
 export function processProps(
   baseClassName: string,
-  props: { className?: string }
+  props: { className?: string } & any
 ) {
   return {
     ...props,

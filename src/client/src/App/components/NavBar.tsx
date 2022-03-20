@@ -10,9 +10,9 @@ import NavUserMenu from "./NavBar/NavUserMenu";
 import { auth } from "../modules/services/authService";
 import { Link } from "react-router-dom";
 
-export default function NavBar() {
+export default function NavBar({ className }: { className?: string }) {
   return (
-    <Styled>
+    <Styled className={`NavBar-root ${className ?? ""}`}>
       <Toolbar disableGutters={true}>
         <div className="NavBar-leftSide">
           <Link className="NavBar-analyzerLink" to="/analyzer">
@@ -45,8 +45,10 @@ export default function NavBar() {
 }
 
 const Styled = styled(AppBar)`
+  .MuiToolbar-root {
+    position: static;
+  }
   padding: 0;
-
   background-color: ${theme.analysis.main};
   color: ${theme.dark};
   height: ${theme.navBar.height};

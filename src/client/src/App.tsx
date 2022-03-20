@@ -1,7 +1,6 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import GlobalStyle from "./App/theme/globalStyles";
-import AnalyzerMain from "./App/components/AnalyzerMain";
 import NotFound from "./App/components/general/NotFound";
 import usePropertyAnalyzer, {
   AnalyzerContext,
@@ -10,22 +9,19 @@ import styled from "styled-components";
 import NavBar from "./App/components/NavBar";
 import theme from "./App/theme/Theme";
 import SectionTable from "./App/components/SectionTable";
+import { ToastContainer } from "react-toastify";
+import AnalyzerMain from "./App/components/AnalyzerMain";
 
-// 2 problems: it's not storing the state correctly
-// state is reseting when I change pages
 export default function App() {
   const analyzerContext = usePropertyAnalyzer({
     main: true,
   });
-
-  // analyses and analyzerMain must share state
-  // actually, they do share state
-
   return (
     <AnalyzerContext.Provider value={analyzerContext}>
       <GlobalStyle />
-      <NavBar />
       <Styled className="App-root">
+        <NavBar className="NavBar-visible" />
+        <div className="NavSpaceDiv-root"></div>
         <Routes>
           <Route
             path="/deals"
@@ -39,14 +35,26 @@ export default function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Styled>
+      <ToastContainer />
     </AnalyzerContext.Provider>
   );
 }
 
 const Styled = styled.div`
-  padding-top: calc(${theme.navBar.height} + ${theme.s3});
-  background-color: ${theme.plus.light};
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  min-height: 100vh;
+  background-color: ${theme.plus.light};
+
+  .NavBar-visible {
+    position: sticky;
+  }
+  .NavSpaceDiv-root {
+    height: ${theme.s3};
+  }
+  .Footer-root {
+    position: sticky;
+    bottom: 0;
+    z-index: 3;
+  }
 `;

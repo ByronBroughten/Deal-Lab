@@ -17,7 +17,7 @@ export default function MainSection({
     <ThemeProvider theme={{ section: theme[sectionName] }}>
       <Styled
         {...{
-          className: `MainSection-root ${sectionName} ${className}`,
+          className: `MainSection-root ${sectionName} ${className ?? ""}`,
           sectionName,
           ...rest,
         }}

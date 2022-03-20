@@ -1,26 +1,43 @@
 import React from "react";
-import { ToastContainer } from "react-toastify";
 import styled from "styled-components";
-import "react-toastify/dist/ReactToastify.css";
 import theme from "../theme/Theme";
-import MainSections from "./AnalyzerForm/MainSections";
+import InputSection from "./AnalyzerMain/InputSection";
+import Financing from "./AnalyzerMain/Financing";
+import DealGeneral from "./AnalyzerMain/DealGeneral";
 
-const AnalyzerMain = () => {
+export default function AnalyzerMain({ className, ...rest }: any) {
   return (
-    <main>
-      <AnalyzerBackground>
-        <MainSections />
-      </AnalyzerBackground>
-      <ToastContainer />
-    </main>
+    <>
+      <Styled {...{ className: `MainSections-root ${className}`, ...rest }}>
+        <div className="MainSections-viewable">
+          <InputSection {...{ title: "Property", sectionName: "property" }} />
+          <Financing />
+          <InputSection
+            {...{
+              title: "Management",
+              sectionName: "mgmt",
+              className: "MgmtGeneral-root",
+            }}
+          />
+        </div>
+      </Styled>
+      <DealGeneral className="Footer-root" />
+    </>
   );
-};
+}
 
-const AnalyzerBackground = styled.div`
-  display: grid;
-  position: relative;
-  z-index: 0;
-  background-color: ${theme.plus.light};
+const Styled = styled.div`
+  background: ${theme.plus.light};
+  display: flex;
+  flex: 1;
+
+  .MainSections-viewable {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+  .MgmtGeneral-root {
+    display: flex;
+    flex: 1;
+  }
 `;
-
-export default AnalyzerMain;
