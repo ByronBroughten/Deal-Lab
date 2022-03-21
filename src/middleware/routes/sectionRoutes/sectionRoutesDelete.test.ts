@@ -61,15 +61,16 @@ describe("section delete", () => {
 
   afterEach(async () => {
     await UserModel.deleteMany();
+    // server.close();
   });
   it("should return 500 if the dbId isn't a dbId", () => {
     req.params.dbId = "notValid";
     testStatus(500);
   });
-  // it("should return 404 if no section in the queried sectionArr has the dbId", () => {
-  //   req.params.dbId = Analyzer.makeId();
-  //   testStatus(404);
-  // });
+  it("should return 404 if no section in the queried sectionArr has the dbId", () => {
+    req.params.dbId = Analyzer.makeId();
+    testStatus(404);
+  });
   it("should return 200 if everything is ok", () => {
     testStatus(200);
   });

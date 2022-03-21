@@ -13,8 +13,18 @@ export default function Property({ id }: { id: string }) {
     <MainSectionEntry>
       <MainEntryTitleRow {...{ feInfo, pluralName: "Properties" }} />
       <MainEntryBody>
-        <BasicPropertyInfo feInfo={feInfo} className="ListGroup-root" />
-        <UnitList feInfo={feInfo} className="ListGroup-root" />
+        <div className="ListGroup-root">
+          <div className="ListGroup-viewable">
+            <div className="ListGroup-titleRow">
+              <h6 className="ListGroup-titleText">Basic Info</h6>
+              {/* <div className="ListGroup-titleTotal">{displayTotal}</div> */}
+            </div>
+            <div className="ListGroup-lists">
+              <BasicPropertyInfo feInfo={feInfo} className="ListGroup-root" />
+              {/* <UnitList feInfo={feInfo} className="ListGroup-root" /> */}
+            </div>
+          </div>
+        </div>
         <ListGroup
           feInfo={feInfo}
           listSectionName="upfrontCostList"

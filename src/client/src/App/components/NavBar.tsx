@@ -13,6 +13,7 @@ import { StyledDropdownForm } from "./general/DropdownForm";
 import { rem } from "polished";
 import { AiOutlineYoutube } from "react-icons/ai";
 import { MdUpgrade } from "react-icons/md";
+import { BsArrowUpCircle } from "react-icons/bs";
 
 export default function NavBar({ className }: { className?: string }) {
   return (
@@ -47,8 +48,8 @@ export default function NavBar({ className }: { className?: string }) {
               className="NavBar-getProBtn"
               btnText={
                 <>
-                  <span className="NavBar-getProBtnText">Get Pro</span>
-                  <MdUpgrade className="NavBar-getProBtnIcon" />
+                  <span className="NavBar-getProBtnText">Pro</span>
+                  <BsArrowUpCircle className="NavBar-getProBtnIcon" />
                 </>
               }
             >
@@ -104,7 +105,8 @@ const Styled = styled(AppBar)`
   }
 
   .NavBar-getProBtnIcon {
-    font-size: ${rem("25px")};
+    margin-left: ${rem("4px")};
+    font-size: ${rem("21px")};
   }
 
   .NavBar-leftSide {
@@ -114,9 +116,9 @@ const Styled = styled(AppBar)`
   }
   .NavBar-brandName {
     height: 100%;
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     font-weight: 700;
-    color: ${theme["gray-800"]};
+    color: ${theme.dark};
     :hover {
       color: ${theme.light};
     }

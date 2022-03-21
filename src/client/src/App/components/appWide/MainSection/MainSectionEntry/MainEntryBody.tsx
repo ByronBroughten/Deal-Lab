@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import theme from "../../../../theme/Theme";
+import { listGroupCss } from "../../../AnalyzerMain/general/ListGroup";
 
 export default function MainEntryBody({ children }: { children: any }) {
   return (
@@ -13,6 +14,8 @@ const StyledEntryBody = styled.div`
   display: flex;
   flex: 0;
   flex-wrap: wrap;
+
+  ${listGroupCss};
 
   .MainEntryBody-inner {
     display: flex;

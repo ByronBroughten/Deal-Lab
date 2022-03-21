@@ -14,7 +14,17 @@ export default function Loan({ id }: { id: string }) {
       <div className="MainSectionEntry-viewable">
         <MainEntryTitleRow feInfo={feInfo} pluralName="Financing" xBtn={true} />
         <MainEntryBody>
-          <BasicLoanInfo feInfo={feInfo} className="ListGroup-root" />
+          <div className="ListGroup-root">
+            <div className="ListGroup-viewable">
+              <div className="ListGroup-titleRow">
+                <h6 className="ListGroup-titleText">Basic Info</h6>
+              </div>
+              <div className="ListGroup-lists">
+                <BasicLoanInfo feInfo={feInfo} className="ListGroup-root" />
+              </div>
+            </div>
+          </div>
+
           <ListGroup
             {...{
               feInfo,

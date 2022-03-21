@@ -68,30 +68,6 @@ export default function AdditiveListTable({ feInfo, themeSectionName }: Props) {
               <th className="AdditiveListTable-contentHeader">
                 {contentTitle}
               </th>
-              {/* <th
-                className="AdditiveListTable-buttonHeader"
-                ref={selectDefaultHeaderRef}
-              >
-                <BtnTooltip title="Set default row type">
-                  <PlusBtn
-                    onClick={toggleSelectDefault}
-                    smallSquare={true}
-                    isOpen={selectDefaultIsOpen}
-                  >
-                    <IoMdSettings size={20} />
-                  </PlusBtn>
-                </BtnTooltip>
-                {selectDefaultIsOpen && (
-                  <SimpleMuiMenu
-                    {...{
-                      closeMenu: closeSelectDefault,
-                      items: setDefaultMenuItems,
-                      selectedValue: defaultValueSwitch,
-                      className: "AdditiveList-setDefaultMenu",
-                    }}
-                  />
-                )}
-              </th> */}
               <th colSpan={2} className="AdditiveListTable-buttonHeader">
                 <AddItemBtn className="yesTable" onClick={addItem} />
               </th>
@@ -126,6 +102,7 @@ const Styled = styled.div<{
   }
   .AdditiveListTable-addItemBtn.noTable {
     width: 100%;
+    margin-top: ${theme.s2};
   }
 
   .AdditiveListTable-table {

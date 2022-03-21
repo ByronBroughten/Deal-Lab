@@ -44,7 +44,7 @@ const Styled = styled.div`
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background-color: ${theme.plus.light};
+  background-color: ${theme.light};
 
   .NavBar-visible {
     position: sticky;

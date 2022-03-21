@@ -22,7 +22,7 @@ export default function UnitList({ feInfo, className }: Props) {
   );
 
   const unitIds = analyzer.section(feInfo).childFeIds("unit");
-  const { isAtLeastOne, areMultiple: areMultiple } = useHowMany(unitIds);
+  const { isAtLeastOne, areMultiple, areNone } = useHowMany(unitIds);
   const numUnitsPerRow = 2;
   const unitIdRows = array.upOneDimension(unitIds, numUnitsPerRow);
 
@@ -36,17 +36,9 @@ export default function UnitList({ feInfo, className }: Props) {
       className={`UnitList-root ${className ?? ""}`}
       {...{ isAtLeastOne }}
     >
-      <div className="UnitList-viewable viewable">
+      <div className="UnitList-viewable">
         <div className="title-row">
-          {/* <h6 className="title-text">Units</h6> */}
-          {/* {isAtLeastOne ? (
-            <ToggleViewBtn {...{ viewIsOpen, onClick: trackWidthToggleView }} />
-          ) : (
-            <PlusBtn className="UnitList-addUnitBtn" onClick={addUnit}>
-              <VscDiffAdded className="UnitList-addUnitBtnIcon" />
-            </PlusBtn>
-          )} */}
-          {isAtLeastOne || (
+          {areNone && (
             <PlusBtn className="UnitList-addUnitBtn" onClick={addUnit}>
               + Unit
               {/* <VscDiffAdded className="UnitList-addUnitBtnIcon" /> */}
@@ -58,9 +50,6 @@ export default function UnitList({ feInfo, className }: Props) {
             {isAtLeastOne && (
               <div className="UnitList-units">
                 <div className="UnitList-total">{`Total rent: ${totalDisplay}`}</div>
-                {/* {areMultiple && (
-                  <div className="UnitList-total">{`Total rent: ${totalDisplay}`}</div>
-                )} */}
                 <div className="UnitList-unitRows">
                   {unitIdRows.map((idRow, rowIndex) => {
                     const unitNumberOffset = rowIndex * numUnitsPerRow;
@@ -102,16 +91,21 @@ export default function UnitList({ feInfo, className }: Props) {
   );
 }
 
+/* ${ccs.subSection.main("property")}; */
 const Styled = styled.div<{ isAtLeastOne: boolean }>`
-  ${ccs.subSection.main("property")};
   .UnitList-viewable {
     /* max-width: 240px; */
   }
   .UnitList-unitRows {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    flex: 0 1;
     margin-top: ${theme.s1};
   }
 
   .UnitList-total {
+    margin-top: ${theme.s2};
     font-weight: 700;
     font-size: 0.96rem;
     color: ${theme["gray-700"]};
@@ -121,7 +115,7 @@ const Styled = styled.div<{ isAtLeastOne: boolean }>`
     font-weight: 700;
     font-size: 0.9rem;
     line-height: 1.2rem;
-    height: 23px;
+    height: 26px;
   }
 
   .UnitList-addUnitBtnIcon {
@@ -163,7 +157,7 @@ const Styled = styled.div<{ isAtLeastOne: boolean }>`
               padding-top: ${rem("5px")};
             }
             .PlusBtn {
-              margin-left: ${theme.s2};
+              margin-top: ${theme.s1};
             }
           }
         `}

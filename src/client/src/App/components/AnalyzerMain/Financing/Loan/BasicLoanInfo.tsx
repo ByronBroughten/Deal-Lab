@@ -21,7 +21,6 @@ export default function BasicLoanInfo({ feInfo, className }: Props) {
       {...{ className: `BasicLoanInfo-root ${className}`, sectionName: "loan" }}
     >
       <div className="viewable">
-        <h6 className="title-text">Basic Info</h6>
         <div className="BasicSectionInfo-subSections">
           <div className="BasicSectionInfo-subSection">
             <div className="BasicSectionInfo-subSection-viewable">

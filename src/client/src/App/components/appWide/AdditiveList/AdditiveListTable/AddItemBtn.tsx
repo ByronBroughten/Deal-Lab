@@ -7,7 +7,7 @@ export default function AddItemBtn({ className, ...props }: StandardBtnProps) {
       className={`AdditiveListTable-addItemBtn ${className ?? ""}`}
       {...props}
     >
-      +$
+      +
     </PlusBtn>
   );
 }

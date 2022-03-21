@@ -7,7 +7,7 @@ type Props = {
   className?: string;
   sectionName: ThemeSectionName;
 };
-export default function SavableSectionInfo({
+export default function BasicSectionInfo({
   className,
   sectionName,
   ...rest
@@ -15,7 +15,7 @@ export default function SavableSectionInfo({
   return (
     <Styled
       {...{
-        className: `SavableSectionInfo-root ${className}`,
+        className: `BasicSectionInfo-root ${className}`,
         sectionName,
         ...rest,
       }}
@@ -30,6 +30,11 @@ const Styled = styled.div<{ sectionName: ThemeSectionName }>`
       background-color: ${theme[sectionName].light};
     }
   `}
+
+  .BasicSectionInfo-viewable {
+    display: flex;
+    flex-direction: row;
+  }
 
   .StandardLabel-root {
     font-size: 0.95em;

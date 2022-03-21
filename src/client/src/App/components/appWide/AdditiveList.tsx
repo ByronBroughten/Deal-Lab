@@ -16,6 +16,8 @@ import {
 } from "../../sharedWithServer/Analyzer/SectionMetas/SectionName";
 import AdditiveListTable from "./AdditiveList/AdditiveListTable";
 import { ListMenu } from "./AdditiveList/ListMenu";
+import { userListItemTypes } from "../../sharedWithServer/Analyzer/SectionMetas/relSectionTypes";
+import useHowMany from "./customHooks/useHowMany";
 
 function useTotalVarb(
   feInfo: FeInfo,
@@ -62,6 +64,10 @@ export default function AdditiveList({
   const { trackWidthToggleView, ...titleRowProps } = useOpenWidth();
   const { viewIsOpen } = titleRowProps;
 
+  const itemType = userListItemTypes[listType];
+  const itemIds = analyzer.section(feInfo).childFeIds(itemType);
+  const { isAtLeastOne } = useHowMany(itemIds);
+
   return (
     <Styled
       className={"AdditiveList-root " + className}
@@ -87,7 +93,7 @@ export default function AdditiveList({
           </PlainIconBtn>
         </div>
         <div className="AdditiveList-subTitleRow">
-          {SectionNam.is(listType, "additiveListType") && (
+          {SectionNam.is(listType, "additiveListType") && isAtLeastOne && (
             <AdditiveListTotal {...{ feInfo, listType }} />
           )}
         </div>

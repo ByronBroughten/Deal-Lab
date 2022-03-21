@@ -7,8 +7,10 @@ const dev = {
 
 const prod = {
   name: "Analyzer Client — Production",
-  endpoint: "https://ultimate-property-analyzer.herokuapp.com",
+  endpoint: "https://www.dealanalyzer.app",
 };
+
+// https://ultimate-property-analyzer.herokuapp.com
 
 const constants = process.env.NODE_ENV === "development" ? dev : prod;
 

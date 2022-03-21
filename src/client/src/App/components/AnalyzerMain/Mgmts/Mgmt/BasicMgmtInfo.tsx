@@ -25,11 +25,6 @@ export default function BasicMgmtInfo({ feInfo, className }: Props) {
       {...{ sectionName: "mgmt", className: `BasicMgmtInfo-root ${className}` }}
     >
       <div className="viewable">
-        <div className="title-row">
-          <h6 className="title-text">Basics</h6>
-          <ToggleViewBtn {...{ viewIsOpen, onClick: trackWidthToggleView }} />
-        </div>
-
         {viewIsOpen && (
           <div className="BasicSectionInfo-subSections">
             <div className="BasicSectionInfo-subSection">

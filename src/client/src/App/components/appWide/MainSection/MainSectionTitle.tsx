@@ -40,7 +40,7 @@ export const MainSectionTitleStyled = styled.div<{
   z-index: 1;
   display: flex;
   justify-content: space-between;
-  color: ${theme.dark};
+  color: ${theme["gray-800"]};
   background-color: ${({ sectionName }) => theme[sectionName].main};
   height: 32px;
   align-items: center;
