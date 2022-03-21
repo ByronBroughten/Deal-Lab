@@ -36,7 +36,7 @@ describe(config.url.register.route, () => {
 
   afterEach(async () => {
     await UserModel.deleteMany();
-    // await server.close();
+    server.close();
   });
   it("should return 500 if the payload is not an object", async () => {
     reqObj.body.payload = null;

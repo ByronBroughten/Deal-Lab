@@ -45,6 +45,7 @@ describe("post sectionArr", () => {
 
   afterEach(async () => {
     await UserModel.deleteMany();
+    server.close();
   });
 
   it("should return 200 if everything is ok", async () => {

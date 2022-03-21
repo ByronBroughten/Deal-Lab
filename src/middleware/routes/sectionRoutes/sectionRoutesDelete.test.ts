@@ -12,7 +12,7 @@ describe("section delete", () => {
   const sectionName = "property";
   let analyzer: Analyzer;
   let req: Req<"DeleteSection">;
-  let server: any;
+  let server: ReturnType<typeof runApp>;
   let token: string;
 
   const exec = () => {
@@ -61,7 +61,7 @@ describe("section delete", () => {
 
   afterEach(async () => {
     await UserModel.deleteMany();
-    // server.close();
+    server.close();
   });
   it("should return 500 if the dbId isn't a dbId", () => {
     req.params.dbId = "notValid";

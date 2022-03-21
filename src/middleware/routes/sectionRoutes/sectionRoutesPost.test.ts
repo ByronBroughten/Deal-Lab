@@ -41,7 +41,7 @@ describe(`dbSection/post`, () => {
 
   afterEach(async () => {
     await UserModel.deleteMany();
-    // await server.close();
+    server.close();
   });
 
   it("should return 401 if client is not logged in", async () => {

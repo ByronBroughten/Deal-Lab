@@ -51,6 +51,7 @@ describe("section get", () => {
 
   afterEach(async () => {
     await UserModel.deleteMany();
+    server.close();
   });
   it("should return 500 if the dbId isn't a valid dbId", () => {
     req.params.dbId = Analyzer.makeId().substring(1);

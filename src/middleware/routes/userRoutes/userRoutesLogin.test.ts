@@ -50,6 +50,7 @@ describe(config.url.login.route, () => {
 
   afterEach(async () => {
     await UserModel.deleteMany();
+    server.close();
   });
   it("should return 500 if payload is not an object", async () => {
     reqObj.body.payload = null as any;
