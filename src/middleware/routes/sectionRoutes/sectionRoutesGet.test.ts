@@ -30,6 +30,7 @@ describe("section get", () => {
   async function testStatus(statusNumber: number) {
     const res = await exec();
     expect(res.status).toBe(statusNumber);
+    return res;
   }
 
   beforeEach(async () => {
@@ -53,15 +54,16 @@ describe("section get", () => {
     await UserModel.deleteMany();
     server.close();
   });
-  it("should return 500 if the dbId isn't a valid dbId", () => {
+  it("should return 500 if the dbId isn't a valid dbId", async () => {
     req.params.dbId = Analyzer.makeId().substring(1);
-    testStatus(500);
+    await testStatus(500);
   });
-  it("should return 404 if no section in the queried sectionArr has the dbId", () => {
+  it("should return 404 if no section in the queried sectionArr has the dbId", async () => {
     req.params.dbId = Analyzer.makeId();
-    testStatus(404);
+    await testStatus(404);
   });
-  it("should return 200 if the request is valid", () => {
-    testStatus(200);
+  it("should return 200 if the request is valid", async () => {
+    const res = await testStatus(200);
+    expect(res.body.dbId).toBe(req.params.dbId);
   });
 });

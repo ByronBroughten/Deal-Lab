@@ -40,8 +40,6 @@ export function runApp() {
     });
   }
 
-  // if (process.env.NODE_ENV === "test") return app;
-
   const port = process.env.PORT || config.get("port");
   const server = app.listen(port, () =>
     logger.info(`Listening on port ${port}...`)
