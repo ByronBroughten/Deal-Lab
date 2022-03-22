@@ -24,6 +24,53 @@ export const queryOptions = {
 
 type Action = keyof typeof queryOptions;
 
+export const mongo = {
+  tryUpdateOne: async (
+    res: Response,
+    docId: string,
+    operator: QueryOp,
+    action: Action
+  ) => {
+    try {
+      return await UserModel.updateOne(
+        { _id: docId },
+        operator,
+        queryOptions[action]
+      );
+    } catch (err) {
+      res.status(500).send(err);
+      return null;
+    }
+  },
+  async try<F extends () => any>(
+    res: Response,
+    fn: F
+  ): Promise<ReturnType<F> | null> {
+    try {
+      return await fn();
+    } catch (err) {
+      res.status(500).send(err);
+      return null;
+    }
+  },
+  query: {
+    async updateOne(
+      res: Response,
+      docId: string,
+      operator: QueryOp,
+      action: Action
+    ) {
+      return await mongo.try(res, async () => {
+        return await UserModel.updateOne(
+          { _id: docId },
+          operator,
+          queryOptions[action]
+        );
+      });
+    },
+  },
+};
+
 export async function tryFindByIdAndUpdate(
   res: Response,
   id: string,

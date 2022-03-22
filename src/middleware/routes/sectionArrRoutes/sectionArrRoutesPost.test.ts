@@ -32,8 +32,8 @@ describe("post sectionArr", () => {
     token = serverSideLogin.makeUserAuthToken(userId);
   });
 
-  const exec = () =>
-    request(server)
+  const exec = async () =>
+    await request(server)
       .post(config.url.sectionArr.route)
       .set(authTokenKey, token)
       .send(req.body);

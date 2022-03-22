@@ -29,8 +29,8 @@ describe(`dbSection/post`, () => {
     server = runApp();
   });
 
-  const exec = () =>
-    request(server)
+  const exec = async () =>
+    await request(server)
       .post(config.url.section.route)
       .set(authTokenKey, token)
       .send(req.body);

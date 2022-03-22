@@ -27,8 +27,8 @@ describe(config.url.register.route, () => {
   });
 
   // register route: "/api/user/register"
-  const exec = () =>
-    request(server).post(config.url.register.route).send(reqObj.body);
+  const exec = async () =>
+    await request(server).post(config.url.register.route).send(reqObj.body);
   async function testStatus(statusNumber: number) {
     const res = await exec();
     expect(res.status).toBe(statusNumber);

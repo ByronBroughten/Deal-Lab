@@ -7,6 +7,8 @@ import request from "supertest";
 import { runApp } from "../../../runApp";
 import { serverSideLogin } from "../userRoutes/shared/doLogin";
 import { serverSideUser, UserModel } from "../shared/severSideUser";
+import { SectionName } from "../../../client/src/App/sharedWithServer/Analyzer/SectionMetas/SectionName";
+import { DbStoreName } from "../../../client/src/App/sharedWithServer/Analyzer/SectionMetas/relSections/baseSectionTypes";
 
 describe("section delete", () => {
   const sectionName = "property";
@@ -14,22 +16,27 @@ describe("section delete", () => {
   let req: Req<"DeleteSection">;
   let server: ReturnType<typeof runApp>;
   let token: string;
+  let userId: string;
+  let indexStoreName: DbStoreName;
+  let initialLength: number;
 
-  const exec = () => {
+  const exec = async () => {
     const route = urlPlusParams(
       sectionRoutes.route,
       req.params,
-      config.crud.routes.section.delete.params
+      config.crud.routes.section.delete.paramArr
     );
-    return request(server)
+    const res = await request(server)
       .delete(route)
       .set(config.tokenKey.apiUserAuth, token)
-      .send();
+      .send(req);
+    return res;
   };
 
   async function testStatus(statusNumber: number) {
     const res = await exec();
     expect(res.status).toBe(statusNumber);
+    return res;
   }
 
   beforeEach(async () => {
@@ -46,15 +53,19 @@ describe("section delete", () => {
     const userDoc = await serverSideUser.full(registerReq.body.payload);
 
     // save a propertyIndex section
-    const { feInfo, indexStoreName } = analyzer.lastSection(sectionName);
+    const { feInfo, indexStoreName: idxName } =
+      analyzer.lastSection(sectionName);
+    indexStoreName = idxName;
+
     const dbEntry = analyzer.dbEntry(feInfo, {
       newMainSectionName: indexStoreName,
     });
     userDoc[indexStoreName].push(dbEntry);
+    initialLength = userDoc[indexStoreName].length;
     await userDoc.save();
 
     // ready the token and req
-    const userId = userDoc._id.toHexString();
+    userId = userDoc._id.toHexString();
     token = serverSideLogin.makeUserAuthToken(userId);
     req = analyzer.req.deleteSection(indexStoreName, dbEntry.dbId);
   });
@@ -62,15 +73,17 @@ describe("section delete", () => {
   afterEach(async () => {
     await UserModel.deleteMany();
   });
-  it("should return 500 if the dbId isn't a dbId", () => {
+  it("should return 500 if the dbId isn't a dbId", async () => {
     req.params.dbId = "notValid";
-    testStatus(500);
+    await testStatus(500);
   });
-  it("should return 404 if no section in the queried sectionArr has the dbId", () => {
+  it("should delete an entry if everything is ok", async () => {
+    await testStatus(200);
+    const userDoc = await UserModel.findById(userId);
+    expect(userDoc && userDoc[indexStoreName].length).toBe(initialLength - 1);
+  });
+  it("should return 404 if no section in the queried sectionArr has the dbId", async () => {
     req.params.dbId = Analyzer.makeId();
-    testStatus(404);
-  });
-  it("should return 200 if everything is ok", () => {
-    testStatus(200);
+    await testStatus(404);
   });
 });

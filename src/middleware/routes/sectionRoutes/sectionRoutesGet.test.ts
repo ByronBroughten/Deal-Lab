@@ -18,13 +18,13 @@ describe("section get", () => {
   let server: any;
   let token: string;
 
-  const exec = () => {
+  const exec = async () => {
     const route = urlPlusParams(
       sectionRoutes.route,
       req.params,
-      config.crud.routes.section.get.params
+      config.crud.routes.section.get.paramArr
     );
-    return request(server).get(route).set(authTokenKey, token).send();
+    return await request(server).get(route).set(authTokenKey, token).send();
   };
 
   async function testStatus(statusNumber: number) {

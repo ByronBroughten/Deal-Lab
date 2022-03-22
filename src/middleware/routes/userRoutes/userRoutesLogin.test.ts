@@ -41,8 +41,8 @@ describe(config.url.login.route, () => {
     await userDoc.save();
   });
 
-  const exec = () =>
-    request(server).post(config.url.login.route).send(reqObj.body);
+  const exec = async () =>
+    await request(server).post(config.url.login.route).send(reqObj.body);
   async function testStatus(statusNumber: number) {
     const res = await exec();
     expect(res.status).toBe(statusNumber);

@@ -3,7 +3,11 @@ import authWare from "../authWare";
 import { queryOp } from "./utils/operator";
 import { UserModel } from "./shared/severSideUser";
 import { serverSend, serverValidate, validate } from "./shared/crudValidators";
-import { tryFindByIdAndUpdate, tryFindOneAndUpdate } from "./shared/tryQueries";
+import {
+  mongo,
+  tryFindByIdAndUpdate,
+  tryFindOneAndUpdate,
+} from "./shared/tryQueries";
 import { sectionGet } from "./utils/query";
 import { DbEnt } from "../../client/src/App/sharedWithServer/Analyzer/DbEntry";
 import { config } from "../../client/src/App/Constants";
@@ -174,16 +178,25 @@ export const sectionRoutes = {
         },
       } = reqObj;
 
+      if (!userId) return res.status(400).send("You are not logged in.");
+
       const user = await UserModel.findById(userId, undefined, {
         lean: true,
         useFindAndModify: false,
         new: true,
       });
-      if (!user) return res.status(400).send("You are not logged in.");
+      if (!user)
+        return res.status(500).send("Your account could not be found.");
       const puller = queryOp.pull.entry(dbId, dbStoreName);
-      const result = await tryFindByIdAndUpdate(res, userId, puller, "delete");
+
+      // const result = await tryFindByIdAndUpdate(res, userId, puller, "delete");
+
+      const result = await mongo.query.updateOne(res, userId, puller, "delete");
 
       if (result) {
+        if (result.nModified == 0)
+          return res.status(404).send("No entry could be deleted.");
+
         const resObj: Res<"DeleteSection"> = { data: dbId };
         serverSend.success(res, resObj);
       } else serverSend.falsyQuery(res, "findByIdAndUpdate");
