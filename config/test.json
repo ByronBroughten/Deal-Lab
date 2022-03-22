@@ -2,5 +2,5 @@
   "name": "Property Analyzer Client — Test",
   "jwtPrivateKey": "1234",
   "endpoint": "mongodb://localhost/property-analyzer-test",
-  "port": 5001
+  "port": 0
 }
