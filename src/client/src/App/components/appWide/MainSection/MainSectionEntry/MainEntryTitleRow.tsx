@@ -167,6 +167,5 @@ export const MainEntryTitleRowStyled = styled.div<{ btnMenuIsOpen: boolean }>`
   .XBtn {
     height: ${theme.bigButtonHeight};
     width: ${theme.bigButtonHeight};
-    margin: ${theme.s2};
   }
 `;
