@@ -11,6 +11,7 @@ export interface Props {
   className?: string;
   label?: any;
   sectionName?: ThemeSectionName;
+  placeholder?: string;
 }
 
 export default function BigStringEditor({
@@ -18,6 +19,7 @@ export default function BigStringEditor({
   className = "",
   sectionName,
   label,
+  placeholder,
 }: Props) {
   const { editorState, onChange, varb } = useDraftInput(
     feVarbInfo,
@@ -35,6 +37,7 @@ export default function BigStringEditor({
         editorProps: {
           editorState,
           handleOnChange: onChange,
+          placeholder,
         },
       }}
     />
