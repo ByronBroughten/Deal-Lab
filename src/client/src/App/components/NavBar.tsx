@@ -12,8 +12,7 @@ import { Link } from "react-router-dom";
 import { StyledDropdownForm } from "./general/DropdownForm";
 import { rem } from "polished";
 import { AiOutlineYoutube } from "react-icons/ai";
-import { MdUpgrade } from "react-icons/md";
-import { BsArrowUpCircle } from "react-icons/bs";
+import { BsArrowUpCircle, BsFillHouseDoorFill } from "react-icons/bs";
 
 export default function NavBar({ className }: { className?: string }) {
   return (
@@ -21,16 +20,19 @@ export default function NavBar({ className }: { className?: string }) {
       <Toolbar disableGutters={true}>
         <div className="NavBar-leftSide">
           <Link className="NavBar-analyzerLink" to="/analyzer">
-            <NavBtn className="NavBar-brandName">Ultimate Deal Analyzer</NavBtn>
+            <NavBtn className="NavBar-brandBtn">
+              <BsFillHouseDoorFill className="NavBar-brandIcon" />
+              <span className="NavBar-brandName">Ultimate Deal Analyzer</span>
+            </NavBtn>
           </Link>
-          <NavBtn
+          {/* <NavBtn
             className="NavBar-demoBtn NavBtn"
-            href="https://www.youtube.com/watch?v=sqlMZxsMOlU"
+            href="https://www.youtube.com/watch?v=Fw_HMWWRRUk"
             target="_blank"
           >
             <span className="NavBar-demoBtnText">Demo</span>
             <AiOutlineYoutube className="NavBar-demoBtnIcon" />
-          </NavBtn>
+          </NavBtn> */}
         </div>
         <div className="NavBar-rightSide">
           {!auth.isLoggedIn && (
@@ -85,6 +87,14 @@ const Styled = styled(AppBar)`
     align-items: stretch;
   }
 
+  .NavBar-brandIcon {
+    font-size: 25px;
+  }
+
+  .NavBar-brandName {
+    margin-left: 8px;
+  }
+
   .NavBtn {
     font-size: ${rem("17px")};
     font-weight: 500;
@@ -114,7 +124,7 @@ const Styled = styled(AppBar)`
     align-items: center;
     height: 100%;
   }
-  .NavBar-brandName {
+  .NavBar-brandBtn {
     height: 100%;
     font-size: 1.4rem;
     font-weight: 700;

@@ -24,6 +24,7 @@ const Styled = styled(PlainBtn)<{ $isactive?: boolean }>`
   padding: 0 ${theme.s4};
   display: flex;
   flex-direction: column;
+
   flex: 1;
   white-space: nowrap;
   background-color: ${theme.analysis.main};

@@ -83,7 +83,7 @@ export default function CurrentAnalysis({ className }: Props) {
       </MainSectionTitle>
       <Deal {...{ feId, detailsIsOpen }} />
       <div className="DealGeneral-appInfo">
-        Ultimate Property Analyzer | support@dealanalyzer.app
+        Ultimate Property Analyzer LLC | support@dealanalyzer.app
       </div>
     </Styled>
   );
