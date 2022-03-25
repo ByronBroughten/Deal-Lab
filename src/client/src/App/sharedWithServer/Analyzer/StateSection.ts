@@ -3,7 +3,7 @@ import Analyzer from "../Analyzer";
 import { DbSection, DbVarbs } from "./DbEntry";
 import { DbSectionInit } from "./methods/internal/addSections";
 import { SectionMeta, sectionMetas } from "./SectionMetas";
-import { InEntities } from "./SectionMetas/relSections/rel/valueMeta/NumObj/entities";
+import { InEntities } from "./SectionMetas/relSections/baseSections/baseValues/NumObj/entities";
 import {
   DbNameInfo,
   FeNameInfo,

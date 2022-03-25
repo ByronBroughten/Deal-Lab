@@ -1,6 +1,6 @@
 import Analyzer from "../../../Analyzer";
 import { SectionFinder } from "../../SectionMetas/relSections/baseSectionTypes";
-import { Ent } from "../../SectionMetas/relSections/rel/valueMeta/NumObj/entities";
+import { Ent } from "../../SectionMetas/relSections/baseSections/baseValues/NumObj/entities";
 
 export function newInEntity(
   this: Analyzer,

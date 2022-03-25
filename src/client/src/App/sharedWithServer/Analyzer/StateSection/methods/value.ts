@@ -1,7 +1,7 @@
 import { ObjectEntries } from "../../../utils/Obj";
 import StateSection from "../../StateSection";
 import { StateValueAnyKey, ValueTypesPlusAny } from "../StateVarb";
-import { InEntityVarbInfo } from "../../SectionMetas/relSections/rel/valueMeta/NumObj/entities";
+import { InEntityVarbInfo } from "../../SectionMetas/relSections/baseSections/baseValues/NumObj/entities";
 import { SectionName } from "../../SectionMetas/SectionName";
 
 export function value<T extends StateValueAnyKey, S extends SectionName>(

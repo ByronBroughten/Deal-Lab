@@ -10,7 +10,7 @@ import { BaseName } from "../../baseSectionTypes";
 import {
   CalculationName,
   LeftRightPropCalculations,
-} from "../valueMeta/NumObj/calculations";
+} from "../../baseSections/baseValues/NumObj/calculations";
 
 type SwitchProps<T extends BaseName> = [
   sectionName: T,

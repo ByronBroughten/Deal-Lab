@@ -6,7 +6,7 @@ import styled, { css } from "styled-components";
 import { getEntityStrategy } from "../../../modules/draftjs/getEntityStrategies";
 import BasicDraftSpan from "./BasicDraftSpan";
 import { useAnalyzerContext } from "../../../modules/usePropertyAnalyzer";
-import { EntityMapData } from "../../../sharedWithServer/Analyzer/SectionMetas/relSections/rel/valueMeta/NumObj/entities";
+import { EntityMapData } from "../../../sharedWithServer/Analyzer/SectionMetas/relSections/baseSections/baseValues/NumObj/entities";
 
 export const varSpanDecorator = new CompositeDecorator([
   {

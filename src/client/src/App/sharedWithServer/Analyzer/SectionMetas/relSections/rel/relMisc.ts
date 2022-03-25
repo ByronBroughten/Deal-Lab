@@ -7,10 +7,10 @@ import {
   LocalRelVarbInfo,
   SingleInRelVarbInfo,
 } from "./relVarbInfoTypes";
-import { valueMeta } from "./valueMeta";
+import { valueMeta } from "../baseSections/baseValues";
 import { BaseName } from "../baseSectionTypes";
 import { UpdateFnName } from "./valueMetaTypes";
-import { NumObj } from "./valueMeta/NumObj";
+import { NumObj } from "../baseSections/baseValues/NumObj";
 
 export const relAdorn = {
   moneyMonth: { startAdornment: "$", endAdornment: "/month" },

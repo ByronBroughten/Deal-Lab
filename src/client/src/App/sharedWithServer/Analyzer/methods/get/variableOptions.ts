@@ -1,7 +1,7 @@
 import Analyzer from "../../../Analyzer";
 import { ObjectKeys } from "../../../utils/Obj";
 import { sectionMetas } from "../../SectionMetas";
-import { InEntityVarbInfo } from "../../SectionMetas/relSections/rel/valueMeta/NumObj/entities";
+import { InEntityVarbInfo } from "../../SectionMetas/relSections/baseSections/baseValues/NumObj/entities";
 import { FeVarbInfo } from "../../SectionMetas/relSections/rel/relVarbInfoTypes";
 import { ongoingVarbSpanEndings } from "../../SectionMetas/relSections/rel/relVarbs/preOngoingVarbs";
 import { Inf } from "../../SectionMetas/Info";

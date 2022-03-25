@@ -26,6 +26,16 @@ type SectionToChildrenOrNever = {
 
 export type ChildName<S extends BaseName = BaseName> =
   SectionToChildrenOrNever[S];
+
+export type DescendantName<S extends BaseName> = ChildName<S> extends never
+  ? never
+  : ChildName<S> | DescendantName<ChildName<S>>;
+type _DescendantNameTest = DescendantName<"propertyGeneral">;
+const _descendantNameTest1: _DescendantNameTest = "unit";
+const _descendantNameTest2: _DescendantNameTest = "ongoingItem";
+// @ts-expect-error
+const _descendantNameTest3: _DescendantNameTest = "loan";
+
 export type ChildIdArrs<S extends BaseName = BaseName> = Record<
   ChildName<S>,
   string[]

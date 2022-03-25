@@ -1,13 +1,13 @@
 import { z } from "zod";
 import { zNanoId, zString } from "../utils/zod";
 import { BasicValue } from "./StateSection/StateVarb/stateValue";
-import { DbNumObj } from "./SectionMetas/relSections/rel/valueMeta/NumObj";
-import { valueMeta } from "./SectionMetas/relSections/rel/valueMeta";
+import { DbNumObj } from "./SectionMetas/relSections/baseSections/baseValues/NumObj";
+import { valueMeta } from "./SectionMetas/relSections/baseSections/baseValues";
 import { ParentName } from "./SectionMetas/relSectionTypes";
 import {
   InEntityInfo,
   InEntityVarbInfo,
-} from "./SectionMetas/relSections/rel/valueMeta/NumObj/entities";
+} from "./SectionMetas/relSections/baseSections/baseValues/NumObj/entities";
 import {
   DbNameInfo,
   RelInfoStatic,

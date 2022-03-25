@@ -3,7 +3,7 @@ import {
   InRelVarbInfo,
   LocalRelVarbInfo,
 } from "./relVarbInfoTypes";
-import { NumObj } from "./valueMeta/NumObj";
+import { NumObj } from "../baseSections/baseValues/NumObj";
 import {
   UpdateFnName,
   ValueSchemas,

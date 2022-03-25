@@ -2,12 +2,12 @@ import { cloneDeep, isEqual } from "lodash";
 import { DbValue } from "../DbEntry";
 import array from "../../utils/Arr";
 import { sectionMetas } from "../SectionMetas";
-import { valueMeta } from "../SectionMetas/relSections/rel/valueMeta";
-import { NumObj } from "../SectionMetas/relSections/rel/valueMeta/NumObj";
+import { valueMeta } from "../SectionMetas/relSections/baseSections/baseValues";
+import { NumObj } from "../SectionMetas/relSections/baseSections/baseValues/NumObj";
 import {
   InEntities,
   InEntity,
-} from "../SectionMetas/relSections/rel/valueMeta/NumObj/entities";
+} from "../SectionMetas/relSections/baseSections/baseValues/NumObj/entities";
 import {
   UpdateFnName,
   ValueTypes,

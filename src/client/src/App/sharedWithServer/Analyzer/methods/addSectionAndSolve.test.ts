@@ -3,8 +3,8 @@ import { DbEntry } from "../DbEntry";
 import {
   DbNumObj,
   dbNumObj,
-} from "../SectionMetas/relSections/rel/valueMeta/NumObj";
-import { Ent } from "../SectionMetas/relSections/rel/valueMeta/NumObj/entities";
+} from "../SectionMetas/relSections/baseSections/baseValues/NumObj";
+import { Ent } from "../SectionMetas/relSections/baseSections/baseValues/NumObj/entities";
 
 function dbProperty({
   propertyDbId = Analyzer.makeId(),

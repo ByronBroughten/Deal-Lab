@@ -1,7 +1,7 @@
 import Analyzer from "../../Analyzer";
 import { DbEntry } from "../DbEntry";
 import { FeInfo } from "../SectionMetas/Info";
-import { dbNumObj } from "../SectionMetas/relSections/rel/valueMeta/NumObj";
+import { dbNumObj } from "../SectionMetas/relSections/baseSections/baseValues/NumObj";
 
 function makePropertyEntry(
   propertyId: string,

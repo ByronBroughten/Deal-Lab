@@ -8,10 +8,10 @@ import {
   zDbVarbInfo,
   zImmutableRelVarbInfo,
   DbUserDefVarbInfo,
-} from "../../relVarbInfoTypes";
+} from "../../../rel/relVarbInfoTypes";
 import { pick } from "lodash";
 import { OutEntity } from "../../../../../StateSection/StateVarb/entities";
-import { Id } from "../../../baseSections/id";
+import { Id } from "../../id";
 
 export const zInEntityVarbInfo = z.union([zDbVarbInfo, zImmutableRelVarbInfo]);
 export type InEntityVarbInfo = DbUserDefVarbInfo | StaticRelVarbInfo;

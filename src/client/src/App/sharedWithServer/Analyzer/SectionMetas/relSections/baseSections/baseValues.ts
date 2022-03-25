@@ -1,9 +1,9 @@
 import { z } from "zod";
 import { reqMonNumber, reqMonString } from "../../../../utils/mongoose";
 import { numObjUnits } from "../../../methods/solveVarbs/solveAndUpdateValue/updateNumericObjCalc";
-import { BaseValueTypeName } from "../baseSections/baseVarb";
-import { mDbNumObj, NumObj, NumObjCore, zDbNumObj } from "./valueMeta/NumObj";
-import { numObjUpdateFnNames } from "./valueMeta/NumObj/updateFnNames";
+import { BaseValueTypeName } from "./baseVarb";
+import { mDbNumObj, NumObj, NumObjCore, zDbNumObj } from "./baseValues/NumObj";
+import { numObjUpdateFnNames } from "./baseValues/NumObj/updateFnNames";
 
 export const valueMeta = {
   number: {

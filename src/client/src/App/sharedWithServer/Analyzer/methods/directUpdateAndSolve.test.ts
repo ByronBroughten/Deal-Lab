@@ -5,8 +5,8 @@ import { switchNames } from "../SectionMetas/relSections/baseSections/switchName
 import {
   dbNumObj,
   NumObj,
-} from "../SectionMetas/relSections/rel/valueMeta/NumObj";
-import { Ent } from "../SectionMetas/relSections/rel/valueMeta/NumObj/entities";
+} from "../SectionMetas/relSections/baseSections/baseValues/NumObj";
+import { Ent } from "../SectionMetas/relSections/baseSections/baseValues/NumObj/entities";
 import { StateValue } from "../StateSection/StateVarb/stateValue";
 
 function makePropertyEntry(values: {

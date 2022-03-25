@@ -3,7 +3,7 @@ import { FeVarbInfo } from "../../SectionMetas/relSections/rel/relVarbInfoTypes"
 import {
   Ent,
   InEntity,
-} from "../../SectionMetas/relSections/rel/valueMeta/NumObj/entities";
+} from "../../SectionMetas/relSections/baseSections/baseValues/NumObj/entities";
 import { internal } from "../internal";
 
 export function updateConnectedEntities(

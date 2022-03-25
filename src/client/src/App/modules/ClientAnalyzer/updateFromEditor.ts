@@ -9,11 +9,11 @@ import { isEditorUpdateFnName } from "../../sharedWithServer/Analyzer/StateSecti
 import {
   EntitiesAndEditorText,
   NumObj,
-} from "../../sharedWithServer/Analyzer/SectionMetas/relSections/rel/valueMeta/NumObj";
+} from "../../sharedWithServer/Analyzer/SectionMetas/relSections/baseSections/baseValues/NumObj";
 import Analyzer from "../../sharedWithServer/Analyzer";
 import array from "../../sharedWithServer/utils/Arr";
 import { FeVarbInfo } from "../../sharedWithServer/Analyzer/SectionMetas/relSections/rel/relVarbInfoTypes";
-import { InEntities } from "../../sharedWithServer/Analyzer/SectionMetas/relSections/rel/valueMeta/NumObj/entities";
+import { InEntities } from "../../sharedWithServer/Analyzer/SectionMetas/relSections/baseSections/baseValues/NumObj/entities";
 import { internal } from "../../sharedWithServer/Analyzer/methods/internal";
 
 const updateEditorByBasicType = {

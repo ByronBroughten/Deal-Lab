@@ -11,8 +11,8 @@ import {
   UpdateFnProps,
   UpdateSwitchProp,
 } from "./relSections/rel/relVarbTypes";
-import { valueMeta } from "./relSections/rel/valueMeta";
-import { NumObj } from "./relSections/rel/valueMeta/NumObj";
+import { valueMeta } from "./relSections/baseSections/baseValues";
+import { NumObj } from "./relSections/baseSections/baseValues/NumObj";
 import { UpdateFnName } from "./relSections/rel/valueMetaTypes";
 import { SectionName } from "./SectionName";
 

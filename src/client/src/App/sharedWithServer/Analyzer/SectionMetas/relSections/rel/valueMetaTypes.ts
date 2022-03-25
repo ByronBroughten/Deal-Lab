@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { valueMeta } from "./valueMeta";
+import { valueMeta } from "../baseSections/baseValues";
 
 export type ValueSchemas = typeof valueMeta;
 export type ValueTypes = {

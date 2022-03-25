@@ -12,7 +12,7 @@ import {
   SwitchRecord,
 } from "../../baseSections/switchNames";
 import { omit } from "lodash";
-import { NumObjUpdateFnName } from "../valueMeta/NumObj/updateFnNames";
+import { NumObjUpdateFnName } from "../../baseSections/baseValues/NumObj/updateFnNames";
 import { relVarbInfo } from "../relVarbInfo";
 
 type SwitchPreVarbs<

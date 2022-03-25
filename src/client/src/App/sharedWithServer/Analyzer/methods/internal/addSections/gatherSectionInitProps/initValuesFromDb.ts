@@ -4,11 +4,11 @@ import {
   DbNumObj,
   isDbNumObj,
   NumObj,
-} from "../../../../SectionMetas/relSections/rel/valueMeta/NumObj";
+} from "../../../../SectionMetas/relSections/baseSections/baseValues/NumObj";
 import {
   isNumObjUpdateFnName,
   NumObjUpdateFnName,
-} from "../../../../SectionMetas/relSections/rel/valueMeta/NumObj/updateFnNames";
+} from "../../../../SectionMetas/relSections/baseSections/baseValues/NumObj/updateFnNames";
 import { UpdateFnName } from "../../../../SectionMetas/relSections/rel/valueMetaTypes";
 import { SectionName } from "../../../../SectionMetas/SectionName";
 import { VarbValues } from "../../../../StateSection/methods/varbs";

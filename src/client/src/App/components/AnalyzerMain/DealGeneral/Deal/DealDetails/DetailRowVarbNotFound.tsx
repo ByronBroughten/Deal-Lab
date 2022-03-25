@@ -1,5 +1,5 @@
 import { useAnalyzerContext } from "../../../../../modules/usePropertyAnalyzer";
-import { InEntity } from "../../../../../sharedWithServer/Analyzer/SectionMetas/relSections/rel/valueMeta/NumObj/entities";
+import { InEntity } from "../../../../../sharedWithServer/Analyzer/SectionMetas/relSections/baseSections/baseValues/NumObj/entities";
 import { SpecificVarbInfo } from "../../../../../sharedWithServer/Analyzer/SectionMetas/relSections/rel/relVarbInfoTypes";
 import { DealDetailRow } from "./DealDetailRow";
 

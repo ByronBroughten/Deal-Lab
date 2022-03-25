@@ -1,6 +1,9 @@
 import { omit } from "lodash";
 import { switchEndings } from "./baseSections/switchNames";
 import { base } from "./baseSections/base";
+// For what I'm trying to do, I must split base
+// sections, then I must split relSections
+// then I must split secitonMetas.
 
 export const loanVarbsNotInFinancing = [
   "interestRatePercentMonthly",

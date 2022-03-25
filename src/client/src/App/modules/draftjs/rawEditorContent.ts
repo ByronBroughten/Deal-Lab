@@ -1,5 +1,5 @@
 import { convertToRaw, EditorState, RawDraftContentState } from "draft-js";
-import { NumObj } from "../../sharedWithServer/Analyzer/SectionMetas/relSections/rel/valueMeta/NumObj";
+import { NumObj } from "../../sharedWithServer/Analyzer/SectionMetas/relSections/baseSections/baseValues/NumObj";
 import { Obj } from "../../sharedWithServer/utils/Obj";
 import { RawEditorState } from "../../utils/Draf";
 

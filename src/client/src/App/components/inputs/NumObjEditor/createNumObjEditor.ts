@@ -11,11 +11,11 @@ import {
 } from "../../../utils/Draf";
 import { omit, pick } from "lodash";
 import StateVarb from "../../../sharedWithServer/Analyzer/StateSection/StateVarb";
-import { NumObj } from "../../../sharedWithServer/Analyzer/SectionMetas/relSections/rel/valueMeta/NumObj";
+import { NumObj } from "../../../sharedWithServer/Analyzer/SectionMetas/relSections/baseSections/baseValues/NumObj";
 import {
   EntityMapData,
   InEntities,
-} from "../../../sharedWithServer/Analyzer/SectionMetas/relSections/rel/valueMeta/NumObj/entities";
+} from "../../../sharedWithServer/Analyzer/SectionMetas/relSections/baseSections/baseValues/NumObj/entities";
 
 export interface CreateEditorProps {
   varb: StateVarb;

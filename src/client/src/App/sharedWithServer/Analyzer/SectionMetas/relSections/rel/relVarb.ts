@@ -9,13 +9,13 @@ import {
 } from "./relVarbTypes";
 import { BaseName } from "../baseSectionTypes";
 import { InRelVarbInfo } from "./relVarbInfoTypes";
-import { valueMeta } from "./valueMeta";
+import { valueMeta } from "../baseSections/baseValues";
 import { relVarbInfo } from "./relVarbInfo";
 import {
   CalculationName,
   LeftRightPropCalculations,
   SinglePropCalculations,
-} from "./valueMeta/NumObj/calculations";
+} from "../baseSections/baseValues/NumObj/calculations";
 import { relProps } from "./relMisc";
 
 export type PreNumObjOptions = Partial<NumObjPreVarb & { initNumber: number }>;

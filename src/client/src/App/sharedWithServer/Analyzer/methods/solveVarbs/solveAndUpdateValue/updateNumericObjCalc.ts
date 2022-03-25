@@ -5,7 +5,7 @@ import {
   GetSolvableTextProps,
   NumObj,
   NumObjNumber,
-} from "../../../SectionMetas/relSections/rel/valueMeta/NumObj";
+} from "../../../SectionMetas/relSections/baseSections/baseValues/NumObj";
 import { isRationalNumber, replaceRange } from "../../../../utils/Str";
 import Analyzer from "../../../../Analyzer";
 import {
@@ -16,11 +16,11 @@ import calculations, {
   CalcProp,
   CalculationName,
   isCalculationName,
-} from "../../../SectionMetas/relSections/rel/valueMeta/NumObj/calculations";
+} from "../../../SectionMetas/relSections/baseSections/baseValues/NumObj/calculations";
 import {
   isNumObjUpdateFnName,
   NumObjUpdateFnName,
-} from "../../../SectionMetas/relSections/rel/valueMeta/NumObj/updateFnNames";
+} from "../../../SectionMetas/relSections/baseSections/baseValues/NumObj/updateFnNames";
 import {
   arithmeticOperatorsArr,
   decimalToPercent,

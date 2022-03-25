@@ -14,7 +14,7 @@ import {
 } from "./NumObj/entities";
 import { NumObjUpdateFnName } from "./NumObj/updateFnNames";
 import array from "../../../../../utils/Arr";
-import { DbVarbInfo, RelVarbInfo } from "../relVarbInfoTypes";
+import { DbVarbInfo, RelVarbInfo } from "../../rel/relVarbInfoTypes";
 
 export const zDbNumObj = z.object({
   editorText: z.string(),
