@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { reqMonNumber, reqMonString } from "../../../../utils/mongoose";
 import { numObjUnits } from "../../../methods/solveVarbs/solveAndUpdateValue/updateNumericObjCalc";
-import { BaseValueTypeName } from "./baseVarb";
+import { ValueName } from "./baseVarb";
 import { mDbNumObj, NumObj, NumObjCore, zDbNumObj } from "./baseValues/NumObj";
 import { numObjUpdateFnNames } from "./baseValues/NumObj/updateFnNames";
 
@@ -60,7 +60,7 @@ export const valueMeta = {
 
 type ValueMeta = typeof valueMeta;
 
-type RelValueTest = Record<BaseValueTypeName, ValueMeta[keyof ValueMeta]>;
+type RelValueTest = Record<ValueName, ValueMeta[keyof ValueMeta]>;
 function testValues<T extends RelValueTest>(test: T): T {
   return test;
 }

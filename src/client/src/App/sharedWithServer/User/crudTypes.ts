@@ -27,7 +27,7 @@ export const zRegisterFormData = zLoginFormData.extend({
 export type RegisterFormData = z.infer<typeof zRegisterFormData>;
 function makeZGuestAccessSections() {
   const sections: Partial<Record<SectionName<"feGuestAccessStore">, any>> = {};
-  for (const sectionName of SectionNam.arr.feGuestAccessStore) {
+  for (const sectionName of SectionName.arrs.feGuestAccessStore) {
     sections[sectionName] = zDbEntryArr;
   }
   return z.object(sections as Record<SectionName<"feGuestAccessStore">, any>);

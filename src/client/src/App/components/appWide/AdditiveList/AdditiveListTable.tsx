@@ -5,17 +5,15 @@ import useToggleView from "../../../modules/customHooks/useToggleView";
 import { useAnalyzerContext } from "../../../modules/usePropertyAnalyzer";
 import { FeInfo } from "../../../sharedWithServer/Analyzer/SectionMetas/Info";
 import { listNameToStoreName } from "../../../sharedWithServer/Analyzer/SectionMetas/relSections/baseSectionTypes";
-import { userListItemTypes } from "../../../sharedWithServer/Analyzer/SectionMetas/relSectionTypes";
+
 import ccs from "../../../theme/cssChunks";
 import theme, { ThemeSectionName } from "../../../theme/Theme";
-import BtnTooltip from "../BtnTooltip";
 import useHowMany from "../customHooks/useHowMany";
-import PlusBtn from "../PlusBtn";
-import SimpleMuiMenu from "../SimpleMuiMenu";
 import AddItemBtn from "./AdditiveListTable/AddItemBtn";
 import AdditiveItem from "./AdditiveItem";
 import useAddListItem from "./AdditiveListTable/useAddListItem";
 import { valueSwitches } from "./useAdditiveItem";
+import { userListItemTypes } from "../../../sharedWithServer/Analyzer/SectionMetas/relSectionTypes/UserListTypes";
 
 const switchValueToDisplay = {
   labeledEquation: "Equation",

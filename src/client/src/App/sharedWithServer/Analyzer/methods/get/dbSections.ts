@@ -114,7 +114,7 @@ export function dbEntryArrs<
   ToReturn = { [Prop in SectionName<ST & SectionNameType>]: DbEntry[] }
 >(this: Analyzer, sectionNameType: ST): ToReturn {
   const partial = {} as ToReturn;
-  for (const sectionName of SectionNam.arr[sectionNameType]) {
+  for (const sectionName of SectionName.arrs[sectionNameType]) {
     partial[sectionName as keyof typeof partial] = this.dbEntryArr(
       sectionName as any
     ) as any;

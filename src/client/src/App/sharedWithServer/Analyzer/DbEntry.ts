@@ -213,7 +213,7 @@ export const DbEnt = {
     return indexRows;
   },
   newTableRows(dbUser: DbUser, tableName: SectionName<"table">): DbEntry[] {
-    const { rowSourceName } = relSections[tableName];
+    const { rowSourceName } = relSections.db[tableName];
 
     const tableEntry = dbUser[tableName][0];
     const dbColumns =

@@ -1,8 +1,9 @@
+import { SectionContext } from "./baseSections";
 import { rel } from "./rel";
 import { relSection } from "./rel/relSection";
 import { RelVarbs } from "./rel/relVarbs";
 
-function propertyPreVarbs<R extends RelVarbs<"property">>(): R {
+function propertyPreVarbs<R extends RelVarbs<SectionContext, "property">>(): R {
   const r: R = {
     title: rel.varb.string(),
     price: rel.varb.moneyObj("Price"),
@@ -55,6 +56,7 @@ function propertyPreVarbs<R extends RelVarbs<"property">>(): R {
 
 export const prePropertyGeneral = {
   ...relSection.base(
+    "both",
     "propertyGeneral",
     "Property",
     {
@@ -71,7 +73,7 @@ export const prePropertyGeneral = {
       ] as const,
     }
   ),
-  ...relSection.base("property", "Property", propertyPreVarbs(), {
+  ...relSection.base("both", "property", "Property", propertyPreVarbs(), {
     defaultStoreName: "propertyDefault",
     indexStoreName: "propertyIndex",
     childSectionNames: [
@@ -83,6 +85,7 @@ export const prePropertyGeneral = {
     ] as const,
   }),
   ...relSection.base(
+    "both",
     "propertyDefault",
     "Default Property",
     propertyPreVarbs(),
@@ -103,12 +106,12 @@ export const prePropertyGeneral = {
     "Property Table",
     "propertyIndex"
   ),
-  ...relSection.base("unit", "Unit", {
+  ...relSection.base("both", "unit", "Unit", {
     one: rel.varb.numObj("Unit", {
       updateFnName: "one",
       initNumber: 1,
     }),
     numBedrooms: rel.varb.calcVarb("BRs"),
     ...rel.varbs.timeMoney("targetRent", "Rent", "unit"),
-  } as RelVarbs<"unit">),
+  } as RelVarbs<SectionContext, "unit">),
 } as const;

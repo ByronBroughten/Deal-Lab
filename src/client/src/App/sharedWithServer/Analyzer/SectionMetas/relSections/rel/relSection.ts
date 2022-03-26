@@ -1,21 +1,31 @@
 import { extend, omit } from "lodash";
 import { ObjectKeys } from "../../../../utils/Obj";
-import { BaseName, BaseSections } from "../baseSectionTypes";
+import { BaseName } from "../baseSectionTypes";
 import { relVarb } from "./relVarb";
 import { RelVarbs, relVarbs } from "./relVarbs";
 import { StateValue } from "../../../StateSection/StateVarb/stateValue";
-import { baseSections } from "../baseSections";
+import {
+  BaseSections,
+  baseSections,
+  ExtractSectionContext,
+  SectionContext,
+  extractSectionContext,
+  SectionContextOrBoth,
+  SimpleSectionName,
+} from "../baseSections";
 import { DbEntry } from "../../../DbEntry";
 
-export type RelSectionOptions = {
+export type GeneralRelSection = {
   childSectionNames: readonly BaseName[];
   initEntry?: DbEntry;
   initBunch?: { [key: string]: StateValue }[];
   parent?: BaseName;
   rowSourceName?: BaseName;
-  indexStoreName?: BaseName<"dbStore">;
-  defaultStoreName?: BaseName<"dbStore">;
+  indexStoreName?: BaseName<"dbStore", "db">;
+  defaultStoreName?: BaseName<"dbStore", "db">;
 };
+
+export type RelSectionOptions = GeneralRelSection;
 interface DefaultOptions extends Pick<RelSectionOptions, "childSectionNames"> {
   readonly childSectionNames: [];
 }
@@ -25,33 +35,39 @@ const defaultOptions: DefaultOptions = {
   childSectionNames: [],
 };
 type Options = Partial<RelSectionOptions>;
+//
+
 export type RelSection<
-  S extends BaseName,
+  SC extends SectionContext,
+  SN extends SimpleSectionName<SC>,
   D extends string,
-  PVS extends RelVarbs<S>,
+  PVS extends RelVarbs<SC, SN>,
   O extends Options = {}
 > = Record<
-  S,
+  SN,
   {
     displayName: D;
     relVarbs: PVS;
   } & GetDefaultOptions<O> &
     O &
-    BaseSections[S]
+    BaseSections[SC][SN]
 >;
 
 export const relSection = {
   base<
-    S extends BaseName,
+    SCB extends SectionContextOrBoth,
+    SN extends SimpleSectionName<ExtractSectionContext<SCB>>,
     D extends string,
-    PVS extends RelVarbs<S>,
+    PVS extends RelVarbs<ExtractSectionContext<SCB>, SN>,
     O extends Options = {}
   >(
-    sectionName: S,
+    sectionContextOrBoth: SCB,
+    sectionName: SN,
     displayName: D,
     relVarbs: PVS,
     options?: O
-  ): RelSection<S, D, PVS, O> {
+  ): RelSection<ExtractSectionContext<SCB>, SN, D, PVS, O> {
+    const sectionContext = extractSectionContext(sectionContextOrBoth);
     return {
       // to get this working without any, I'd have to add a typeguard.
       [sectionName]: extend(
@@ -62,9 +78,9 @@ export const relSection = {
           // this omit shouldn't be necessary but makes type checking work.
           ...options,
         },
-        baseSections[sectionName]
+        baseSections[sectionContext][sectionName]
       ),
-    } as any as RelSection<S, D, PVS, O>;
+    } as any as RelSection<ExtractSectionContext<SCB>, SN, D, PVS, O>;
   },
   singleTimeList<
     S extends BaseName<"singleTimeList">,
@@ -72,6 +88,7 @@ export const relSection = {
     O extends Options = {}
   >(sectionName: S, displayName: D, options?: O) {
     return this.base(
+      "fe" as SectionContext,
       sectionName,
       displayName,
       relVarbs.singleTimeList(sectionName),
@@ -88,6 +105,7 @@ export const relSection = {
     O extends Options = {}
   >(sectionName: S, displayName: D, options?: O) {
     return this.base(
+      "fe" as SectionContext,
       sectionName,
       displayName,
       relVarbs.ongoingList(sectionName),
@@ -102,9 +120,13 @@ export const relSection = {
     displayName: D
   ) {
     return this.base(
+      "fe",
       sectionName,
       displayName,
-      { title: relVarb.string() } as RelVarbs<S>,
+      {
+        title: relVarb.string(),
+        compareToggle: relVarb.type("boolean"),
+      } as RelVarbs<"fe", S>,
       {
         childSectionNames: ["cell"] as const,
       }
@@ -116,12 +138,13 @@ export const relSection = {
     R extends BaseName
   >(sectionName: S, displayName: D, rowSourceName: R) {
     return this.base(
+      "fe" as SectionContext,
       sectionName,
       displayName,
       {
         searchFilter: relVarb.string(),
         rowIds: relVarb.type("stringArray"),
-      } as RelVarbs<S>,
+      } as RelVarbs<SectionContext, S>,
       {
         rowSourceName,
         parent: "main",

@@ -1,6 +1,6 @@
 import {
   DisplayName,
-  NumObjPreVarb,
+  NumObjRelVarb,
   StringPreVarb,
   UpdateFnProps,
 } from "../relVarbTypes";
@@ -34,15 +34,15 @@ type SwitchOptionProps = {
   options?: PreNumObjOptions;
 };
 export type SwitchInputs = {
-  [inputName: string]: NumObjPreVarb | StringPreVarb;
+  [inputName: string]: NumObjRelVarb | StringPreVarb;
 };
 
 type DualSwitch<
   One extends string,
   Two extends string,
   Switch extends string
-> = Record<One, NumObjPreVarb> &
-  Record<Two, NumObjPreVarb> &
+> = Record<One, NumObjRelVarb> &
+  Record<Two, NumObjRelVarb> &
   Record<Switch, StringPreVarb>;
 
 export function simpleSwitch<
@@ -118,7 +118,7 @@ export function switchInput(
   switchInitValue: string,
   shared?: PreNumObjOptions
 ): SwitchInputs {
-  const numObjPreVarbs: { [varbName: string]: NumObjPreVarb } = {};
+  const numObjPreVarbs: { [varbName: string]: NumObjRelVarb } = {};
 
   for (const option of switchOptions) {
     const { switchValue } = option;

@@ -2,10 +2,10 @@ import { rel } from "./rel";
 import { relSection } from "./rel/relSection";
 import { RelVarbs } from "./rel/relVarbs";
 import { switchNames } from "./baseSections/switchNames";
-import { loanVarbsNotInFinancing } from "./baseSections";
+import { loanVarbsNotInFinancing, SectionContext } from "./baseSections";
 
 const loanAmountBase = switchNames("loanAmountBase", "dollarsPercent");
-function loanPreVarbs(): RelVarbs<"loan"> {
+function loanPreVarbs(): RelVarbs<SectionContext, "loan"> {
   return {
     title: rel.varb.string(),
     [loanAmountBase.switch]: rel.varb.string({ initValue: "percent" }),
@@ -109,10 +109,10 @@ function loanPreVarbs(): RelVarbs<"loan"> {
       },
       { shared: { startAdornment: "$" } }
     ),
-  } as RelVarbs<"loan">;
+  } as RelVarbs<SectionContext, "loan">;
 }
 
-const financingRelVarbs: RelVarbs<"financing"> = {
+const financingRelVarbs: RelVarbs<SectionContext, "financing"> = {
   downPaymentDollars: rel.varb.leftRightPropFn(
     "Down payment",
     "simpleSubtract",
@@ -147,22 +147,34 @@ const financingRelVarbs: RelVarbs<"financing"> = {
 };
 
 export const relFinancing = {
-  ...relSection.base("financing", "Financing", financingRelVarbs, {
-    childSectionNames: [
-      "loan",
-      "loanIndex",
-      "loanTable",
-      "loanDefault",
-    ] as const,
-  }),
-  ...relSection.base("loan", "Loan", loanPreVarbs(), {
+  ...relSection.base(
+    "fe" as SectionContext,
+    "financing",
+    "Financing",
+    financingRelVarbs,
+    {
+      childSectionNames: [
+        "loan",
+        "loanIndex",
+        "loanTable",
+        "loanDefault",
+      ] as const,
+    }
+  ),
+  ...relSection.base("fe" as SectionContext, "loan", "Loan", loanPreVarbs(), {
     childSectionNames: ["closingCostList", "wrappedInLoanList"] as const,
     indexStoreName: "loanIndex",
     defaultStoreName: "loanDefault",
   }),
-  ...relSection.base("loanDefault", "Default Loan", loanPreVarbs(), {
-    childSectionNames: ["closingCostList", "wrappedInLoanList"] as const,
-  }),
+  ...relSection.base(
+    "fe" as SectionContext,
+    "loanDefault",
+    "Default Loan",
+    loanPreVarbs(),
+    {
+      childSectionNames: ["closingCostList", "wrappedInLoanList"] as const,
+    }
+  ),
   ...rel.section.rowIndex("loanIndex", "Loan Index"),
   ...rel.section.managerTable("loanTable", "Saved Loans", "loanIndex"),
   ...rel.section.singleTimeList("closingCostList", "Closing Costs"),

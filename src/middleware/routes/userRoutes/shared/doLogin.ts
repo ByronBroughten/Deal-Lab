@@ -34,7 +34,7 @@ function isUserJwt(value: any): value is UserJwt {
 
 function clientify(dbUser: DbUser): LoginUser {
   const loginUser: Partial<LoginUser> = {};
-  for (const sectionName of SectionNam.arr.initOnLogin) {
+  for (const sectionName of SectionName.arrs.initOnLogin) {
     if (SectionNam.is(sectionName, "table")) {
       const tableEntry = dbUser[sectionName][0];
       const tableSection = DbEnt.topSection(tableEntry, sectionName);

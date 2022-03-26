@@ -9,6 +9,7 @@ export const preUserLists = {
     parent: "main",
   }),
   ...relSection.base(
+    "both",
     "userVarbList",
     "List of Variables",
     {
@@ -20,6 +21,7 @@ export const preUserLists = {
     }
   ),
   ...relSection.base(
+    "both",
     "userVarbItem",
     "User Variable",
     {
@@ -60,6 +62,7 @@ export const preUserLists = {
   ),
 
   ...relSection.base(
+    "both",
     "conditionalRow",
     "Conditional Row",
     {

@@ -16,13 +16,10 @@ import {
 } from "../../sharedWithServer/Analyzer/SectionMetas/SectionName";
 import AdditiveListTable from "./AdditiveList/AdditiveListTable";
 import { ListMenu } from "./AdditiveList/ListMenu";
-import { userListItemTypes } from "../../sharedWithServer/Analyzer/SectionMetas/relSectionTypes";
 import useHowMany from "./customHooks/useHowMany";
+import { userListItemTypes } from "../../sharedWithServer/Analyzer/SectionMetas/relSectionTypes/UserListTypes";
 
-function useTotalVarb(
-  feInfo: FeInfo,
-  listType: SectionName<"additiveListType">
-) {
+function useTotalVarb(feInfo: FeInfo, listType: SectionName<"additiveList">) {
   const { analyzer } = useAnalyzerContext();
   const totalVarbNameBase = "total";
   if (listType === "userSingleList")
@@ -31,7 +28,7 @@ function useTotalVarb(
 }
 type AdditiveListTotalProps = {
   feInfo: FeInfo;
-  listType: SectionName<"additiveListType">;
+  listType: SectionName<"additiveList">;
 };
 function AdditiveListTotal({ feInfo, listType }: AdditiveListTotalProps) {
   const totalVarb = useTotalVarb(feInfo, listType);
@@ -92,7 +89,7 @@ export default function AdditiveList({
           </PlainIconBtn>
         </div>
         <div className="AdditiveList-subTitleRow">
-          {SectionNam.is(listType, "additiveListType") && isAtLeastOne && (
+          {SectionNam.is(listType, "additiveList") && isAtLeastOne && (
             <AdditiveListTotal {...{ feInfo, listType }} />
           )}
         </div>

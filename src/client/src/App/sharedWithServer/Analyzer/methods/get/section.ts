@@ -1,13 +1,5 @@
 import Analyzer from "../../../Analyzer";
-import {
-  ChildIdArrs,
-  ChildName,
-  FeParentInfo,
-  ParentFinder,
-  ParentName,
-} from "../../SectionMetas/relSectionTypes";
-import { sectionMetas } from "../../SectionMetas";
-import StateSection, { StateSectionCore } from "../../StateSection";
+import StateSection from "../../StateSection";
 import { FeInfo, Inf } from "../../SectionMetas/Info";
 import {
   FeNameInfo,
@@ -17,7 +9,7 @@ import {
   SpecificSectionInfo,
   SpecificSectionsInfo,
 } from "../../SectionMetas/relSections/rel/relVarbInfoTypes";
-import { SectionNam, SectionName } from "../../SectionMetas/SectionName";
+import { SectionName } from "../../SectionMetas/SectionName";
 import { Obj } from "../../../utils/Obj";
 
 export function sectionNotFound({ sectionName, idType, id }: MultiSectionInfo) {

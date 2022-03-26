@@ -1,19 +1,14 @@
 import styled, { css } from "styled-components";
 import { useAnalyzerContext } from "../../../modules/usePropertyAnalyzer";
 import { Inf } from "../../../sharedWithServer/Analyzer/SectionMetas/Info";
-import {
-  FeParentInfo,
-  ListSectionName,
-  userListItemTypes,
-} from "../../../sharedWithServer/Analyzer/SectionMetas/relSectionTypes";
+import { ListSectionName } from "../../../sharedWithServer/Analyzer/SectionMetas/relSectionTypes";
 import { SectionNam } from "../../../sharedWithServer/Analyzer/SectionMetas/SectionName";
 import ccs from "../../../theme/cssChunks";
 import theme, { themeSectionNameOrDefault } from "../../../theme/Theme";
 import AdditiveList from "../../appWide/AdditiveList";
 import PlusBtn from "../../appWide/PlusBtn";
 import { MdOutlinePlaylistAdd } from "react-icons/md";
-import { listNameToStoreName } from "../../../sharedWithServer/Analyzer/SectionMetas/relSections/baseSectionTypes";
-import useHowMany from "../../appWide/customHooks/useHowMany";
+import { FeParentInfo } from "../../../sharedWithServer/Analyzer/SectionMetas/relSectionTypes/ParentTypes";
 
 type Props<S extends ListSectionName = ListSectionName> = {
   className?: string;

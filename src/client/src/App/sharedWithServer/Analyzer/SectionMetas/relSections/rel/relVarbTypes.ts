@@ -47,8 +47,8 @@ export type PreVarbByType = {
     ValueSpecificProps[Prop] & { type: Prop };
 };
 export type PreVarb<T extends ValueTypeName = ValueTypeName> = PreVarbByType[T];
-export type NumObjPreVarb = PreVarbByType["numObj"];
+export type NumObjRelVarb = PreVarbByType["numObj"];
 export type StringPreVarb = PreVarbByType["string"];
-export function isNumObjRelVarb(relVarb: PreVarb): relVarb is NumObjPreVarb {
+export function isNumObjRelVarb(relVarb: PreVarb): relVarb is NumObjRelVarb {
   return relVarb.initValue instanceof NumObj;
 }

@@ -1,5 +1,5 @@
 import { isEqual } from "lodash";
-import { merge } from "./Obj/merge";
+import { merge, spread } from "./Obj/merge";
 import { Full, SubType } from "./typescript";
 
 type Entries<T> = { [K in keyof T]: [K, T[K]] }[keyof T];
@@ -91,5 +91,6 @@ export const Obj = {
       (key) => propName in obj[key] && obj[key][propName] === value
     ) as (keyof SubType<O, { [Prop in P]: V }>)[];
   },
+  spread: spread,
   merge: merge,
 } as const;

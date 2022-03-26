@@ -13,8 +13,8 @@ export type LoginUser = Omit<
 
 export const zDbEntryArr = z.array(zDbEntry);
 
-type UserVarbs = DbSectionSchemas["user"]["varbs"];
-type ProtectedUserVarbs = DbSectionSchemas["userProtected"]["varbs"];
+type UserVarbs = DbSectionSchemas["user"]["varbSchemas"];
+type ProtectedUserVarbs = DbSectionSchemas["userProtected"]["varbSchemas"];
 export type NewUserData = {
   user: SchemaVarbsToDbValues<UserVarbs>;
   userProtected: SchemaVarbsToDbValues<ProtectedUserVarbs>;

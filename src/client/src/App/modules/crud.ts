@@ -24,7 +24,7 @@ const url = {
 
 export function isLoginUser(value: any): value is LoginUser {
   const zLoginUserSchema = z.object(
-    SectionNam.arr.initOnLogin.reduce((partial, sectionName) => {
+    SectionName.arrs.initOnLogin.reduce((partial, sectionName) => {
       partial[sectionName] = zDbEntryArr;
       return partial;
     }, {} as Partial<Record<keyof LoginUser, any>>) as Record<

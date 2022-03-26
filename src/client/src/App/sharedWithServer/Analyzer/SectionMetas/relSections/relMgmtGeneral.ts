@@ -2,11 +2,12 @@ import { rel } from "./rel";
 import { relSection } from "./rel/relSection";
 import { RelVarbs } from "./rel/relVarbs";
 import { switchNames } from "./baseSections/switchNames";
+import { SectionContext } from "./baseSections";
 
 const rentCut = switchNames("rentCut", "dollarsPercent");
 const rentCutDollars = switchNames(rentCut.dollars, "ongoing");
 
-const mgmtPreVarbs: RelVarbs<"mgmt"> = {
+const mgmtPreVarbs: RelVarbs<SectionContext, "mgmt"> = {
   title: rel.varb.string(),
   [rentCut.switch]: rel.varb.string({ initValue: "percent" }),
   [rentCut.percent]: rel.varb.percentObj("Rent cut", {
@@ -75,6 +76,7 @@ const mgmtPreVarbs: RelVarbs<"mgmt"> = {
 
 export const preMgmtGeneral = {
   ...relSection.base(
+    "fe" as SectionContext,
     "mgmtGeneral",
     "Management",
     {
@@ -94,6 +96,7 @@ export const preMgmtGeneral = {
     }
   ),
   ...relSection.base(
+    "fe" as SectionContext,
     "mgmt",
     "Management",
     { ...mgmtPreVarbs },
@@ -107,6 +110,7 @@ export const preMgmtGeneral = {
   ),
   ...relSection.rowIndex("mgmtIndex", "Management Index"),
   ...relSection.base(
+    "fe" as SectionContext,
     "mgmtDefault",
     "Default Management",
     { ...mgmtPreVarbs },

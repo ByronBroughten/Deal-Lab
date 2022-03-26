@@ -1,81 +1,60 @@
 import { Obj } from "../../../../utils/Obj";
-import { Spread } from "../../../../utils/Obj/merge";
+import { Merge } from "../../../../utils/Obj/merge";
+import { SwitchName } from "./baseSwitchNames";
 
-const baseValueTypeNames = [
+const valueNames = [
   "number",
   "boolean",
   "string",
   "stringArray",
   "numObj",
 ] as const;
-
-export type BaseValueTypeName = typeof baseValueTypeNames[number];
-type ValTypeProp<T extends BaseValueTypeName = BaseValueTypeName> = {
-  valueTypeName: T;
-};
-function valTypeProp<T extends BaseValueTypeName>(typeName: T): ValTypeProp<T> {
-  return { valueTypeName: typeName };
-}
-
-type SharedGeneralBaseVarb = {
-  selectable: boolean;
-};
-export type GeneralBaseVarb = Spread<[ValTypeProp, SharedGeneralBaseVarb]>;
-
-function checkDefaultBase<D extends SharedGeneralBaseVarb>(def: D): D {
-  return def;
-}
-const defaultBaseVarb: {
-  selectable: true;
-} = {
-  selectable: true,
-};
-checkDefaultBase(defaultBaseVarb);
-type Default = typeof defaultBaseVarb;
+export type ValueName = typeof valueNames[number];
 
 export const baseVarb = {
-  schema<B extends Partial<GeneralBaseVarb> = {}>(
-    generalBaseVarb?: B
-  ): Spread<[Default, B]> {
-    return Obj.merge(defaultBaseVarb, generalBaseVarb ?? ({} as B));
+  default<BN extends string, T extends ValueName>(
+    baseName: BN,
+    valueName: T
+  ): DefaultBaseVarb<BN, T> {
+    return {
+      baseName,
+      valueName,
+      selectable: true,
+      switchName: null,
+    };
   },
-  type<
-    T extends BaseValueTypeName,
-    B extends Partial<SharedGeneralBaseVarb> = {}
-  >(
-    typeName: T,
-    sharedBaseVarb?: B
-  ): Spread<[Default, Spread<[B, ValTypeProp<T>]>]> {
-    type FirstSpread = Spread<[B, ValTypeProp<T>]>;
-    const test2 = Obj.merge(
-      sharedBaseVarb ?? ({} as B),
-      valTypeProp(typeName)
-    ) as FirstSpread;
-    return this.schema(test2) as Spread<[Default, FirstSpread]>;
+  make<BN extends string, T extends ValueName, O extends BaseVarbOptions = {}>(
+    baseName: BN,
+    valueName: T,
+    options?: O
+  ): BaseVarb<BN, T> {
+    return Obj.merge(this.default(baseName, valueName), options ?? {});
   },
-  numObj<B extends Partial<SharedGeneralBaseVarb> = {}>(
-    sharedBaseVarb?: B
-  ): Spread<[Default, Spread<[B, ValTypeProp<"numObj">]>]> {
-    return this.type("numObj", sharedBaseVarb);
-  },
-  string<B extends Partial<SharedGeneralBaseVarb> = {}>(
-    sharedBaseVarb?: B
-  ): Spread<[Default, Spread<[B, ValTypeProp<"string">]>]> {
-    return this.type("string", sharedBaseVarb);
-  },
-  boolean<B extends Partial<SharedGeneralBaseVarb> = {}>(
-    sharedBaseVarb?: B
-  ): Spread<[Default, Spread<[B, ValTypeProp<"boolean">]>]> {
-    return this.type("boolean", sharedBaseVarb);
-  },
-  stringArray<B extends Partial<SharedGeneralBaseVarb> = {}>(
-    sharedBaseVarb?: B
-  ): Spread<[Default, Spread<[B, ValTypeProp<"stringArray">]>]> {
-    return this.type("stringArray", sharedBaseVarb);
-  },
-  number<B extends Partial<SharedGeneralBaseVarb> = {}>(
-    sharedBaseVarb?: B
-  ): Spread<[Default, Spread<[B, ValTypeProp<"number">]>]> {
-    return this.type("number", sharedBaseVarb);
-  },
+};
+
+export type BaseVarb<
+  BN extends string,
+  T extends ValueName,
+  O extends BaseVarbOptions = {}
+> = Merge<DefaultBaseVarb<BN, T>, O>;
+
+export type BaseVarbOptions = Partial<Omit<GeneralBaseVarb, "valueName">>;
+
+type DefaultBaseVarb<BN extends string, T extends ValueName> = {
+  baseName: BN; // baseName, useful for varbs with name appensions
+  valueName: T;
+
+  selectable: true;
+  switchName: null;
+};
+
+export type GeneralBaseVarb<
+  BN extends string = string,
+  T extends ValueName = ValueName
+> = {
+  baseName: BN;
+  valueName: T;
+
+  switchName: SwitchName | null;
+  selectable: boolean;
 };

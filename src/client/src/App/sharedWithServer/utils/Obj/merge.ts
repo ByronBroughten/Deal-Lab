@@ -8,7 +8,7 @@ type SpreadProperties<L, R, K extends keyof L & keyof R> = {
 
 type Id<T> = T extends infer U ? { [K in keyof U]: U[K] } : never;
 
-type SpreadTwo<L, R> = Id<
+export type Merge<L, R> = Id<
   Pick<L, Exclude<keyof L, keyof R>> &
     Pick<R, Exclude<keyof R, OptionalPropertyNames<R>>> &
     Pick<R, Exclude<OptionalPropertyNames<R>, keyof L>> &
@@ -19,7 +19,7 @@ export type Spread<A extends readonly [...any]> = A extends [
   infer L,
   ...infer R
 ]
-  ? SpreadTwo<L, Spread<R>>
+  ? Merge<L, Spread<R>>
   : unknown;
 
 type Test1 = Spread<[{ a: string }, { a?: number }]>;
@@ -41,6 +41,9 @@ type Test23 = {
 };
 type Test3 = Spread<[Test2, Test23]>;
 
-export function merge<A extends object[]>(...a: [...A]) {
+export function spread<A extends object[]>(...a: [...A]) {
   return Object.assign({}, ...a) as Spread<A>;
+}
+export function merge<A extends object, B extends object>(a: A, b: B) {
+  return { ...a, ...b } as any as Merge<A, B>;
 }

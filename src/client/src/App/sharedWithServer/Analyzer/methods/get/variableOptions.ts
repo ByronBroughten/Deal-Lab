@@ -99,16 +99,13 @@ function userVarbOptions(analyzer: Analyzer): VariableOption[] {
 }
 
 function userListTotalOptions(analyzer: Analyzer): VariableOption[] {
-  const sectionToCollectionName: Record<
-    SectionName<"additiveListType">,
-    string
-  > = {
+  const sectionToCollectionName: Record<SectionName<"additiveList">, string> = {
     userOngoingList: "Ongoing cost totals",
     userSingleList: "One time cost totals",
   };
 
   const options: VariableOption[] = [];
-  for (const sectionName of SectionNam.arr.additiveListType) {
+  for (const sectionName of SectionName.arrs.additiveList) {
     const collectionName = sectionToCollectionName[sectionName];
     const feIds = analyzer.singleSection("main").childFeIds(sectionName);
     for (const id of feIds) {

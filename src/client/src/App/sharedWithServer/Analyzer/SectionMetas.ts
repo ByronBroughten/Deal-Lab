@@ -1,6 +1,10 @@
 import { omit, pick } from "lodash";
 import { Obj, ObjectEntries } from "../utils/Obj";
-import { relSections, RelSectionsTemplate } from "./SectionMetas/relSections";
+import {
+  relSections,
+  GeneralRelSections,
+  RelSections,
+} from "./SectionMetas/relSections";
 import {
   InVarbRelative,
   OutRelVarbInfo,
@@ -9,8 +13,7 @@ import {
 } from "./SectionMetas/relSections/rel/relVarbInfoTypes";
 import { PreVarbsGeneral } from "./SectionMetas/relSections/rel/relVarbs";
 import {
-  RelSections,
-  sectionToParentArr,
+  sectionToParentArrs,
   SectionToParentsOrNeverArr,
   ParentName,
 } from "./SectionMetas/relSectionTypes";
@@ -204,7 +207,7 @@ export class SectionMetas {
   private static initSectionMeta<S extends SectionName>(
     sectionName: S
   ): SectionMeta<S> {
-    const relSection: RelSectionsTemplate[keyof RelSectionsTemplate] =
+    const relSection: GeneralRelSections[keyof GeneralRelSections] =
       relSections[sectionName];
 
     const sectionMeta = {
@@ -214,7 +217,7 @@ export class SectionMetas {
         relSections[sectionName].relVarbs,
         sectionName
       ),
-      parents: sectionToParentArr[sectionName],
+      parents: sectionToParentArrs[sectionName],
     } as SectionMeta<S>;
 
     return sectionMeta;

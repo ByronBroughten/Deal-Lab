@@ -1,6 +1,6 @@
 import { isEqual } from "lodash";
 
-const Arr = {
+export const Arr = {
   rmFirstValueMutate(arr: any[], value: any): void {
     const index = arr.indexOf(value);
     arr.splice(index, 1);
