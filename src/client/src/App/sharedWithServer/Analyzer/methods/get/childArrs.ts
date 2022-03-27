@@ -5,10 +5,7 @@ import {
   ChildIdArrs,
   ChildName,
 } from "../../SectionMetas/relNameArrs/ChildTypes";
-import {
-  FeNameInfo,
-  SpecificSectionInfo,
-} from "../../SectionMetas/relSections/rel/relVarbInfoTypes";
+import { FeNameInfo } from "../../SectionMetas/relSections/rel/relVarbInfoTypes";
 import { SectionName } from "../../SectionMetas/SectionName";
 import StateSection from "../../StateSection";
 
@@ -29,46 +26,6 @@ export function childDbIdArrs<S extends SectionName>(
   }, {} as ChildIdArrs<S>);
 }
 
-export function allChildFeIds<F extends SectionName<"alwaysOne">>(
-  finder: F
-): ChildIdArrs<F>;
-export function allChildFeIds<F extends FeNameInfo>(
-  finder: F
-): ChildIdArrs<F["sectionName"]>;
-export function allChildFeIds<F extends FeNameInfo | SectionName<"alwaysOne">>(
-  this: Analyzer,
-  finder: F
-): any {
-  const section = this.section(finder);
-  return section.allChildFeIds();
-}
-
-export function childFeIds<
-  I extends SpecificSectionInfo,
-  S extends SectionName<"alwaysOne">
->(
-  this: Analyzer,
-  [finder, childName]: [I, ChildName<I["sectionName"]>] | [S, ChildName<S>]
-) {
-  const section = this.section(finder);
-  return section.childFeIds(childName);
-}
-export function childFeInfos<
-  I extends SpecificSectionInfo,
-  S extends SectionName<"alwaysOne">
->(
-  this: Analyzer,
-  params: [I, ChildName<I["sectionName"]>] | [S, ChildName<S>]
-): FeInfo[] {
-  const [_, childName] = params;
-  const childFeIds = this.childFeIds(params);
-
-  return childFeIds.map((id) => ({
-    sectionName: childName,
-    id,
-    idType: "feId",
-  })) as FeInfo[];
-}
 export function children<S extends SectionName<"hasChild">>(
   this: Analyzer,
   focalInfo: FeNameInfo<S> | SectionName<"alwaysOne">,

@@ -13,7 +13,9 @@ type Props = {
 const parents = { property: "propertyGeneral", mgmt: "mgmtGeneral" } as const;
 export default function InputSection({ title, sectionName, className }: Props) {
   const { analyzer } = useAnalyzerContext();
-  const sectionIds = analyzer.childFeIds([parents[sectionName], sectionName]);
+
+  const section = analyzer.section(parents[sectionName]);
+  const sectionIds = section.childFeIds(sectionName);
 
   return (
     <MainSection {...{ sectionName, className }}>

@@ -12,7 +12,8 @@ export default function AnalysisBasics({ id }: { id: string }) {
   const feInfo = { sectionName, id, idType: "feId" } as const;
   const { analyzer, handleAddSection } = useAnalyzerContext();
 
-  const outputIds = analyzer.childFeIds([feInfo, "output"]);
+  const section = analyzer.section(feInfo);
+  const outputIds = section.childFeIds("output");
   function onSelect({ varbInfo }: VariableOption) {
     handleAddSection("output", feInfo, { values: varbInfo });
   }

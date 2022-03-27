@@ -12,13 +12,7 @@ import {
   eraseSectionAndSolve,
   eraseSectionsAndSolve,
 } from "./Analyzer/methods/eraseSectionAndSolve";
-import {
-  allChildFeIds,
-  childDbIdArrs,
-  childFeIds,
-  childFeInfos,
-  children,
-} from "./Analyzer/methods/get/childArrs";
+import { childDbIdArrs, children } from "./Analyzer/methods/get/childArrs";
 import {
   dbEntry,
   dbEntryArr,
@@ -325,10 +319,8 @@ export default class Analyzer {
 
   parent = parent;
   parentFinderToInfo = parentFinderToInfo;
-  childFeIds = childFeIds;
-  allChildFeIds = allChildFeIds;
+
   children = children;
-  childFeInfos = childFeInfos;
 
   eraseSectionAndSolve = eraseSectionAndSolve;
   eraseIndexAndSolve = eraseIndexAndSolve;

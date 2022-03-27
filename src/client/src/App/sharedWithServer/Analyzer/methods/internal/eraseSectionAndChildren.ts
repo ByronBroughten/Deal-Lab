@@ -100,7 +100,8 @@ export function eraseChildren<
   let next = analyzer;
   let infosAffectedByErase: FeVarbInfo[] = [];
   const allAffectedInfos: FeVarbInfo[] = [];
-  const childIds = next.childFeIds([feInfo, childName]);
+  const section = next.section(feInfo);
+  const childIds = section.childFeIds(childName);
   for (const id of childIds) {
     [next, infosAffectedByErase] = eraseSectionAndChildren(
       next,

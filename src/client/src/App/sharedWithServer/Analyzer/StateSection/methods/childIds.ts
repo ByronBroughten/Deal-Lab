@@ -8,6 +8,7 @@ import {
   ChildIdArrs,
   ChildName,
 } from "../../SectionMetas/relNameArrs/ChildTypes";
+import { FeInfo } from "../../SectionMetas/Info";
 
 export function childFeIds<S extends SectionName>(
   this: StateSection<S>,
@@ -21,10 +22,23 @@ export function childFeIds<S extends SectionName>(
       `${childName} is not in section of sectionName ${this.sectionName}`
     );
 }
+
 export function allChildFeIds<S extends SectionName>(
   this: StateSection<S>
 ): ChildIdArrs<S> {
   return cloneDeep(this.core.childFeIdArrs);
+}
+
+export function childFeInfos<S extends SectionName>(
+  this: StateSection<S>,
+  childName: ChildName<S>
+): FeInfo[] {
+  const childFeIds = this.childFeIds(childName);
+  return childFeIds.map((id) => ({
+    sectionName: childName,
+    id,
+    idType: "feId",
+  })) as FeInfo[];
 }
 
 export function childIdx<S extends SectionName>(

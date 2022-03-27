@@ -10,7 +10,8 @@ export default function AnalysisDetails({ id }: { id: string }) {
   const { analyzer } = useAnalyzerContext();
   const level = 0;
 
-  const outputIds = analyzer.childFeIds([feInfo, "output"]);
+  const section = analyzer.section(feInfo);
+  const outputIds = section.childFeIds("output");
   const varbInfos = outputIds.map((outputId) =>
     analyzer.outputValues(outputId)
   );

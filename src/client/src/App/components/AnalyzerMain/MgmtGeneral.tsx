@@ -8,7 +8,10 @@ import styled from "styled-components";
 type Props = { className?: string };
 export default function Mgmts(props: Props) {
   const { analyzer } = useAnalyzerContext();
-  const mgmtIds = analyzer.childFeIds(["mgmtGeneral", "mgmt"]);
+
+  const section = analyzer.section("mgmtGeneral");
+  const mgmtIds = section.childFeIds("mgmt");
+
   return (
     <Styled sectionName="mgmt" {...props}>
       <MainSectionTitle title="Management" sectionName="mgmt" />

@@ -15,6 +15,7 @@ import {
   addChildFeId,
   allChildFeIds,
   childFeIds,
+  childFeInfos,
   childIdx,
   initChildFeIds,
   removeChildFeId,
@@ -235,6 +236,8 @@ export default class StateSection<
 
   childFeIds = childFeIds;
   allChildFeIds = allChildFeIds;
+  childFeInfos = childFeInfos;
+
   static initChildFeIds = initChildFeIds;
   addChildFeId = addChildFeId;
   removeChildFeId = removeChildFeId;

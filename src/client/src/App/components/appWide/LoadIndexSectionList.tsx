@@ -42,10 +42,10 @@ function useIndexedEntries<S extends SectionName<"hasIndexStore">>(
     storeName
   ) as IndexParentName<S>;
 
-  const feIds = analyzer.childFeIds([feStoreParentName, storeName] as [
-    typeof feStoreParentName,
-    ChildName<typeof feStoreParentName>
-  ]);
+  const section = analyzer.section(feStoreParentName);
+  const feIds = section.childFeIds(
+    storeName as ChildName<typeof feStoreParentName>
+  );
 
   const indexedEntries = feIds.map((id) => {
     const section = analyzer.section(Inf.fe(storeName, id));

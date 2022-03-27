@@ -86,7 +86,9 @@ function userVarbOption(
   return userOption(analyzer, feVarbInfo, collectionName, displayName);
 }
 function userVarbOptions(analyzer: Analyzer): VariableOption[] {
-  const varbListFeIds = analyzer.childFeIds(["main", "userVarbList"]);
+  const section = analyzer.section("main");
+  const varbListFeIds = section.childFeIds("userVarbList");
+
   const varbOptions = varbListFeIds.reduce((options, id) => {
     const listSection = analyzer.section({
       sectionName: "userVarbList",

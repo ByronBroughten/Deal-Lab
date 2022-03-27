@@ -6,7 +6,8 @@ import Property from "./PropertyGeneral/Property";
 
 export default function PropertyGeneral() {
   const { analyzer } = useAnalyzerContext();
-  const propertyIds = analyzer.childFeIds(["propertyGeneral", "property"]);
+  const section = analyzer.section("propertyGeneral");
+  const propertyIds = section.childFeIds("property");
   return (
     <MainSection sectionName="property">
       <MainSectionTitle title="Property" sectionName="property" />

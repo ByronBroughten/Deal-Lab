@@ -11,7 +11,8 @@ import MainSectionTitleBtn from "../appWide/MainSection/MainSectionTitle/MainSec
 type Props = { className?: string };
 export default function Financing(props: Props) {
   const { analyzer, handleSet } = useAnalyzerContext();
-  const loanIds = analyzer.childFeIds(["financing", "loan"]);
+  const section = analyzer.section("financing");
+  const loanIds = section.childFeIds("loan");
   const addLoan = () => handleSet("addSectionAndSolve", "loan", "financing");
   return (
     <Styled {...{ ...props, sectionName: "loan" }}>

@@ -28,7 +28,9 @@ export default function ListGroup({
   const { analyzer, handleAddSection } = useAnalyzerContext();
   const addUpfrontCostList = () => handleAddSection(listSectionName, feInfo);
 
-  const listIds = analyzer.childFeIds([feInfo, listSectionName]);
+  const section = analyzer.section(feInfo);
+  const listIds = section.childFeIds(listSectionName);
+
   const displayTotal = SectionNam.is(listSectionName, "singleTimeList")
     ? analyzer.displayVarb(totalVarbName, feInfo)
     : analyzer.switchedOngoingDisplayVarb(totalVarbName, feInfo);
