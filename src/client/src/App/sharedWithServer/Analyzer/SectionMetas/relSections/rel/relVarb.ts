@@ -1,8 +1,8 @@
 import {
-  CommonPreVarb,
+  CommonRelVarb,
   DisplayName,
   NumObjRelVarb,
-  PreVarbByType,
+  RelVarbByType,
   StringPreVarb,
   UpdateFnProps,
   UpdateSwitches,
@@ -21,18 +21,20 @@ import { relProps } from "./relMisc";
 export type PreNumObjOptions = Partial<NumObjRelVarb & { initNumber: number }>;
 export type LeftRightVarbInfos = [InRelVarbInfo, InRelVarbInfo];
 export const relVarb = {
-  common(commonProps: Partial<CommonPreVarb> = {}): CommonPreVarb {
+  common(commonProps: Partial<CommonRelVarb> = {}): CommonRelVarb {
     return {
       displayName: "",
       updateFnProps: {},
       inUpdateSwitchProps: [],
+      startAdornment: "",
+      endAdornment: "",
       ...commonProps,
     };
   },
-  type<T extends keyof PreVarbByType>(
+  type<T extends keyof RelVarbByType>(
     type: T,
-    partial: Partial<PreVarbByType[T]> = {}
-  ): PreVarbByType[T] {
+    partial: Partial<RelVarbByType[T]> = {}
+  ): RelVarbByType[T] {
     const valueSchema = valueMeta[type];
     return {
       type,
@@ -41,7 +43,7 @@ export const relVarb = {
       ...this.common(partial),
       ...(type === "numObj" && { unit: "money" }),
       ...partial,
-    } as PreVarbByType[T];
+    } as RelVarbByType[T];
   },
   string(partial: Partial<StringPreVarb> = {}) {
     return this.type("string", partial);
@@ -115,7 +117,7 @@ export const relVarb = {
   percentObj(
     displayName: DisplayName,
     partial: Partial<PreNumObjOptions> = {}
-  ): PreVarbByType["numObj"] {
+  ): RelVarbByType["numObj"] {
     return this.numObj(displayName, {
       ...partial,
       unit: "percent",

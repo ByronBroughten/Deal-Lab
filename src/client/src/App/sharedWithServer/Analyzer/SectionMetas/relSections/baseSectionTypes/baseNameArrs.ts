@@ -228,6 +228,7 @@ export const baseNameArrs = {
       "protected",
       true as true
     ),
+    dbStore: depreciatingDbStoreNames,
   },
   db: {
     ...snArrs("db"),

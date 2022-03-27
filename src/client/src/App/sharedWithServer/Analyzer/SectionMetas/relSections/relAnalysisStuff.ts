@@ -9,12 +9,11 @@ const analysisRelVarbs: RelVarbs<SectionContext, "analysis"> = {
 
 export const relAnalysisStuff = {
   ...relSection.base(
-    "fe" as SectionContext,
+    "both",
     "analysis",
     "Analysis",
     { ...analysisRelVarbs },
     {
-      parent: "main",
       makeOneOnStartup: true,
       childSectionNames: ["output"] as const,
       indexStoreName: "analysisIndex",
@@ -23,25 +22,16 @@ export const relAnalysisStuff = {
   ),
   ...relSection.rowIndex("analysisIndex", "Analysis Index"),
   ...relSection.base(
-    "fe" as SectionContext,
+    "both",
     "analysisDefault",
     "Analysis",
     { ...analysisRelVarbs },
     {
-      parent: "main",
       makeOneOnStartup: true,
       childSectionNames: ["output"] as const,
     }
   ),
-  ...relSection.base(
-    "fe" as SectionContext,
-    "output",
-    "Output",
-    rel.varbs.varbInfo(),
-    {
-      parent: "analysis",
-    }
-  ),
+  ...relSection.base("both", "output", "Output", rel.varbs.varbInfo()),
   ...rel.section.managerTable(
     "analysisTable",
     "Analysis Table",

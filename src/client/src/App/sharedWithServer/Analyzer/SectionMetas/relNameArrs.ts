@@ -1,22 +1,22 @@
-import { Obj, ObjectKeys, ObjectValues } from "../../utils/Obj";
+import { Obj, ObjectKeys } from "../../utils/Obj";
 import { SubType } from "../../utils/typescript";
 import { RelSections, relSections } from "./relSections";
 import { BaseName, isBaseName } from "./relSections/baseSectionTypes";
 import Arr from "../../utils/Arr";
 import { baseNameArrs } from "./relSections/baseSectionTypes/baseNameArrs";
-import { SectionContext } from "./relSections/baseSections";
+import { SectionContext, SimpleSectionName } from "./relSections/baseSections";
 import { GeneralRelSection } from "./relSections/rel/relSection";
 import {
   HasOneParentSectionName,
   HasParentSectionName,
   IsSingleParentName,
   makeSectionToParentArrs,
-} from "./relSectionTypes/ParentTypes";
-import { HasChildSectionName } from "./relSectionTypes/ChildTypes";
+} from "./relNameArrs/ParentTypes";
+import { HasChildSectionName } from "./relNameArrs/ChildTypes";
 import {
   UserItemSectionName,
   userListItemTypes,
-} from "./relSectionTypes/UserListTypes";
+} from "./relNameArrs/UserListTypes";
 
 // this is here so that there isn't spaghetti code between relSectionTypes
 // and StoreTypes
@@ -26,21 +26,24 @@ export type HasRowIndexStoreName = keyof SubType<
 >;
 
 export type ListSectionName = BaseName<"allList">;
-function makerelNameArrs<SC extends SectionContext>(sectionContext: SC) {
-  const sectionToParentArrs = makeSectionToParentArrs(sectionContext);
+function makeRelNameArrs<SC extends SectionContext>(sectionContext: SC) {
+  const sectionToParentArrs = makeSectionToParentArrs()[sectionContext];
   const savableSectionNames = Arr.extract(
     baseNameArrs.db.dbStore,
     baseNameArrs.fe.all
   );
+
   return {
     savable: savableSectionNames,
-    hasIndexStore: Obj.entryKeysWithProp(
+    hasIndexStore: Obj.entryKeysWithPropOfType(
       relSections[sectionContext],
-      "indexStoreName"
+      "indexStoreName",
+      "string"
     ),
-    hasDefaultStore: Obj.entryKeysWithProp(
+    hasDefaultStore: Obj.entryKeysWithPropOfType(
       relSections[sectionContext],
-      "defaultStoreName"
+      "defaultStoreName",
+      "string"
     ),
     savableAlwaysOne: Arr.extract(
       savableSectionNames,
@@ -64,7 +67,7 @@ function makerelNameArrs<SC extends SectionContext>(sectionContext: SC) {
       );
     }) as HasChildSectionName<SC>[],
     hasParent: ObjectKeys(sectionToParentArrs).filter((sectionName) => {
-      return sectionToParentArrs[sectionName].length > 0;
+      return (sectionToParentArrs[sectionName] as any as string[]).length > 0;
     }) as HasParentSectionName<SC>[],
     get hasOneParent() {
       return this.hasParent.filter((sectionName) => {
@@ -77,15 +80,24 @@ function makerelNameArrs<SC extends SectionContext>(sectionContext: SC) {
       }) as HasOneParentSectionName<SC>[];
     },
     get savableOneParent() {
-      return Arr.extract(savableSectionNames, this.hasOneParent);
+      return Arr.extract(
+        savableSectionNames,
+        this.hasOneParent as any
+      ) as any as Extract<
+        typeof savableSectionNames[number],
+        HasOneParentSectionName<SC>[number]
+      >;
     },
     get isSingleParent() {
-      return this.hasOneParent.reduce((names, name) => {
-        const singleParentNameArr = sectionToParentArrs[name];
-        if (!names.includes(singleParentNameArr[0] as any))
-          names.push(...(singleParentNameArr as any));
-        return names;
-      }, [] as IsSingleParentName<SC>[]);
+      return (this.hasOneParent as SimpleSectionName[]).reduce(
+        (names, name) => {
+          const singleParentNameArr = sectionToParentArrs[name];
+          if (!names.includes(singleParentNameArr[0] as any))
+            names.push(...singleParentNameArr);
+          return names;
+        },
+        [] as any[]
+      ) as any as IsSingleParentName<SC>[];
     },
     userListItem: Obj.values(userListItemTypes) as UserItemSectionName[],
   } as const;
@@ -93,12 +105,10 @@ function makerelNameArrs<SC extends SectionContext>(sectionContext: SC) {
 
 export const relNameArrs = {
   fe: {
-    ...baseNameArrs.fe,
-    ...makerelNameArrs("fe"),
+    ...makeRelNameArrs("fe"),
   },
   db: {
-    ...baseNameArrs.db,
-    ...makerelNameArrs("db"),
+    ...makeRelNameArrs("db"),
   },
 } as const;
 export type RelNameArrs = typeof relNameArrs;

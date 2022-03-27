@@ -1,5 +1,7 @@
 import { z } from "zod";
+import { MergeUnionObjNonNullable } from "../../../../utils/types/mergeUnionObj";
 import { zNanoId, zString } from "../../../../utils/zod";
+import { SectionContext, SimpleSectionName } from "../baseSections";
 import { BaseName } from "../baseSectionTypes";
 
 export const zSectionInfoBase = z.object({
@@ -134,9 +136,24 @@ export type MultiFindByFocalVarbInfo<
 
 export type Relative = z.infer<typeof zRelative>;
 export type SingleRelative = z.infer<typeof zFocalRelative>;
-export type VarbNames<S extends BaseName> = z.infer<typeof zVarbNames> & {
+
+type VarbNameObj = {
+  [SC in SectionContext]: {
+    [SN in SimpleSectionName]: {
+      varbName: string;
+      sectionName: SN;
+      sectionContext: SC;
+    };
+  };
+};
+export type NextVarbNames = VarbNameObj[SectionContext][SimpleSectionName];
+export type VarbNames<
+  SN extends SimpleSectionName<SC>,
+  SC extends SectionContext = "fe"
+> = z.infer<typeof zVarbNames> & {
   varbName: string;
-  sectionName: S;
+  sectionName: SN;
+  sectionContext: SC;
 };
 
 // relative infos

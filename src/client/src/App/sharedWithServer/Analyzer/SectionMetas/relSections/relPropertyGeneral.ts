@@ -64,7 +64,6 @@ export const prePropertyGeneral = {
       ...rel.varbs.sectionStrings("property", propertyPreVarbs(), ["title"]),
     },
     {
-      parent: "main",
       childSectionNames: [
         "property",
         "propertyIndex",
@@ -90,7 +89,6 @@ export const prePropertyGeneral = {
     "Default Property",
     propertyPreVarbs(),
     {
-      parent: "propertyGeneral",
       childSectionNames: [
         "upfrontCostList",
         "upfrontRevenueList",

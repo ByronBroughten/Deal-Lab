@@ -6,7 +6,7 @@ import {
   OutRelVarbInfo,
 } from "./relSections/rel/relVarbInfoTypes";
 import {
-  PreVarb,
+  RelVarb,
   SwitchUpdateInfo,
   UpdateFnProps,
   UpdateSwitchProp,
@@ -14,7 +14,7 @@ import {
 import { valueMeta } from "./relSections/baseSections/baseValues";
 import { NumObj } from "./relSections/baseSections/baseValues/NumObj";
 import { UpdateFnName } from "./relSections/rel/valueMetaTypes";
-import { SectionName } from "./SectionName";
+import { AnySectionName } from "./relSections/baseSections";
 
 export type InBaseUpdatePack = {
   updateFnName: UpdateFnName;
@@ -71,7 +71,7 @@ function inSwitchPropsToInfos(inSwitchProps: UpdateSwitchProp[]) {
 
 export interface VarbMetaProps {
   varbName: string;
-  sectionName: SectionName;
+  sectionName: AnySectionName;
   inDefaultInfos: InRelVarbInfo[];
   InSwitchUpdatePacks: InSwitchUpdatePack[];
   outUpdatePacks: OutUpdatePack[];
@@ -85,7 +85,7 @@ export function cloneValue(value: StateValue): StateValue {
     : value;
 }
 
-export type VarbMetaCore = PreVarb & VarbMetaProps;
+export type VarbMetaCore = RelVarb & VarbMetaProps;
 export class VarbMeta {
   constructor(readonly core: VarbMetaCore) {}
   isVarbValueType(value: any): boolean {
@@ -156,8 +156,8 @@ export class VarbMeta {
   }
   //
   static initCore(
-    relVarb: PreVarb,
-    sectionName: SectionName,
+    relVarb: RelVarb,
+    sectionName: AnySectionName,
     varbName: string
   ): VarbMetaCore {
     return {

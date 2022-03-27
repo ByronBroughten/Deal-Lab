@@ -2,7 +2,7 @@ import { omit } from "lodash";
 import { Obj } from "../../../../utils/Obj";
 import { baseVarbs, BaseVarbSchemas } from "./baseVarbs";
 
-type BaseSectionTemplate = {
+export type GeneralBaseSection = {
   alwaysOne: boolean;
   makeOneOnStartup: boolean;
   loadOnLogin: boolean;
@@ -13,7 +13,7 @@ type BaseSectionTemplate = {
   userDefined: boolean;
 };
 
-type Options = Partial<BaseSectionTemplate>;
+type Options = Partial<GeneralBaseSection>;
 export const baseOptions = {
   alwaysOneFromStart: {
     alwaysOne: true,

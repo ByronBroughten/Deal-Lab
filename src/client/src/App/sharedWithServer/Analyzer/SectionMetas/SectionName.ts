@@ -1,15 +1,39 @@
-import { SectionContext } from "./relSections/baseSections";
+import { SectionContext, sectionContexts } from "./relSections/baseSections";
 import { SectionVarbName } from "./relSections/baseSectionTypes";
-import { relNameArrs, RelNameArrs } from "./relSectionTypes";
+import { relNameArrs, RelNameArrs } from "./relNameArrs";
+import {
+  baseNameArrs,
+  BaseNameArrs,
+} from "./relSections/baseSectionTypes/baseNameArrs";
+
+type NameArrs = {
+  [SC in SectionContext]: BaseNameArrs[SC] & RelNameArrs[SC];
+};
+function makeNameArrs(): NameArrs {
+  const partial: Record<SectionContext, any> = {
+    fe: {},
+    db: {},
+  };
+
+  for (const sectionContext of sectionContexts) {
+    const nameArr: NameArrs[typeof sectionContext] = {
+      ...baseNameArrs[sectionContext],
+      ...relNameArrs[sectionContext],
+    };
+    partial[sectionContext] = nameArr;
+  }
+  return partial as NameArrs;
+}
 
 export type SectionNameType<SC extends SectionContext = SectionContext> =
-  keyof RelNameArrs[SC];
+  keyof NameArrs[SC];
+
 export type FeSectionNameType = Exclude<SectionNameType<"fe">, "dbStore">;
 
 export type SectionName<
   T extends SectionNameType<SC> = "all",
   SC extends SectionContext = "fe"
-> = RelNameArrs[SC][T][number & keyof RelNameArrs[SC][T]];
+> = NameArrs[SC][T][number & keyof NameArrs[SC][T]];
 
 export type AlwaysOneVarbFinder<
   S extends SectionName<"alwaysOne"> = SectionName<"alwaysOne">
@@ -19,7 +43,7 @@ export type AlwaysOneVarbFinder<
 };
 
 export const SectionNam = {
-  arrs: relNameArrs,
+  arrs: makeNameArrs(),
   is<T extends SectionNameType<SC> = "all", SC extends SectionContext = "fe">(
     value: any,
     type?: T,

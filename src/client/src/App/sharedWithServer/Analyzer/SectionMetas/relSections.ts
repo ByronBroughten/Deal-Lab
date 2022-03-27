@@ -4,19 +4,18 @@ import { relFinancing } from "./relSections/relFinancing";
 import { rel } from "./relSections/rel";
 import { preUserLists } from "./relSections/relUserLists";
 import { relAnalysisStuff } from "./relSections/relAnalysisStuff";
-import {
-  RelSection,
-  relSection,
-  RelSectionOptions,
-} from "./relSections/rel/relSection";
+import { GeneralRelSection, relSection } from "./relSections/rel/relSection";
 import { RelVarbs } from "./relSections/rel/relVarbs";
 import { LeftRightVarbInfos } from "./relSections/rel/relVarb";
 import {
   baseSections,
   SectionContext,
   SimpleSectionName,
-  UniqueDbBaseSectionName,
 } from "./relSections/baseSections";
+import {
+  MergeUnionObj,
+  MergeUnionObjNonNullable,
+} from "../../utils/types/mergeUnionObj";
 
 export function makeRelSections() {
   return {
@@ -31,6 +30,7 @@ export function makeRelSections() {
             "user",
             "login",
             "register",
+            "userProtected",
 
             "userVarbList",
             "userSingleList",
@@ -202,46 +202,44 @@ export function makeRelSections() {
         ),
         roiOngoingSwitch: rel.varb.string({ initValue: "yearly" }),
       }),
+      ...rel.section.base("fe", "userProtected", "User Protected", {
+        _placeholder: rel.varb.string(),
+      }),
     },
     get db() {
       return {
         ...this.fe,
-        propertyIndex: {
-          ...this.fe.property,
-          ...baseSections.db.propertyIndex,
-        } as const,
-        loanIndex: {
-          ...this.fe.loan,
-          ...baseSections.db.loanIndex,
-        } as const,
-        mgmtIndex: {
-          ...this.fe.mgmt,
-          ...baseSections.db.mgmtIndex,
-        } as const,
-        analysisIndex: {
-          ...this.fe.analysis,
-          ...baseSections.db.analysisIndex,
-        } as const,
+        propertyIndex: this.fe.property,
+        loanIndex: this.fe.loan,
+        mgmtIndex: this.fe.mgmt,
+        analysisIndex: this.fe.analysis,
         ...rel.section.base("db", "userProtected", "User Protected", {
           encryptedPassword: rel.varb.string(),
         }),
-      };
+      } as const;
     },
   } as const;
 }
-
 export type RelSections = ReturnType<typeof makeRelSections>;
-export type GeneralRelSections = {
+
+type PreGeneralRelSections = {
   [SC in SectionContext]: {
-    [SN in SimpleSectionName<SC>]: RelSection<
-      SC,
-      SN,
-      string,
-      RelVarbs<SC, SN>,
-      RelSectionOptions
-    >[SN];
+    [SN in SimpleSectionName<SC>]: GeneralRelSection;
   };
 };
+
+export type RelSectionName<SC extends SectionContext = SectionContext> =
+  keyof RelSections[SC];
+
+export type GeneralRelSections = {
+  [SC in SectionContext]: MergeUnionObj<PreGeneralRelSections[SectionContext]>;
+};
+export type FullGeneralRelSections = {
+  [SC in SectionContext]: MergeUnionObjNonNullable<
+    PreGeneralRelSections[SectionContext]
+  >;
+};
+
 export const relSections = makeRelSections();
 const _testRelSections = <RS extends GeneralRelSections>(_: RS): void =>
   undefined;

@@ -6,7 +6,11 @@ import {
   SubType,
 } from "../../../utils/typescript";
 import { relSections } from "../relSections";
-import { SectionContext, SimpleSectionName } from "../relSections/baseSections";
+import {
+  SectionContext,
+  sectionContexts,
+  SimpleSectionName,
+} from "../relSections/baseSections";
 import { BaseName } from "../relSections/baseSectionTypes";
 import { GeneralRelSection } from "../relSections/rel/relSection";
 import { FeSectionInfoBase } from "../relSections/rel/relVarbInfoTypes";
@@ -36,7 +40,7 @@ type SectionToParentsOrNever<SC extends SectionContext> = {
 };
 
 // this is for consistency in sectionMeta
-export type SectionToParentsOrNeverArr<SC extends SectionContext> = {
+export type SectionToParentArrs<SC extends SectionContext> = {
   [SN in keyof SectionToParentsOrNever<SC>]: SectionToParentsOrNever<SC>[SN][];
 };
 
@@ -48,28 +52,35 @@ type SectionToParentOrNos<SC extends SectionContext> = NeversToSomething<
   "no parent"
 >;
 
-export function makeSectionToParentArrs<SC extends SectionContext>(
-  sectionContext: SC
-) {
-  type AllParents = Record<SimpleSectionName<SC>, SimpleSectionName<SC>[]>;
-  const sectionToParentArrs = Obj.keys(relSections[sectionContext]).reduce(
-    (parents, key) => {
-      parents[key as keyof typeof parents] = [];
-      return parents;
-    },
-    {} as Partial<AllParents>
-  ) as AllParents;
+type ContextSectionToParentArrs = {
+  [SC in SectionContext]: SectionToParentArrs<SC>;
+};
+export function makeSectionToParentArrs(): ContextSectionToParentArrs {
+  const partial: { [SC in SectionContext]: any } = {
+    fe: {},
+    db: {},
+  };
+  for (const sectionContext of sectionContexts) {
+    type AllParents = Record<SimpleSectionName, SimpleSectionName[]>;
+    const sectionToParentArrs = Obj.keys(relSections[sectionContext]).reduce(
+      (parents, key) => {
+        parents[key as keyof typeof parents] = [];
+        return parents;
+      },
+      {} as AllParents
+    ) as AllParents;
 
-  for (const sectionName of Obj.keys(relSections[sectionContext])) {
-    for (const childName of (
-      relSections[sectionContext][sectionName] as any as GeneralRelSection
-    ).childSectionNames) {
-      sectionToParentArrs[childName as keyof typeof sectionToParentArrs].push(
-        sectionName as any
-      );
+    for (const sectionName of Obj.keys(relSections[sectionContext])) {
+      for (const childName of relSections[sectionContext][sectionName]
+        .childSectionNames) {
+        sectionToParentArrs[childName as keyof typeof sectionToParentArrs].push(
+          sectionName
+        );
+      }
     }
+    partial[sectionContext] = sectionToParentArrs;
   }
-  return sectionToParentArrs as SectionToParentsOrNeverArr<SC>;
+  return partial as ContextSectionToParentArrs;
 }
 
 export type HasParentSectionName<SC extends SectionContext> =
@@ -118,6 +129,22 @@ type SectionToAlwaysOneParent<SC extends SectionContext> = SubType<
 >;
 export type HasOneParentSectionName<SC extends SectionContext> =
   keyof SectionToAlwaysOneParent<SC>;
+
+export function makeParentSectionNames<SC extends SectionContext>(
+  sectionContext: SC
+) {
+  const sectionToParentArrs = makeSectionToParentArrs()[sectionContext];
+  sectionToParentArrs.property;
+
+  const hasParentSectionNames = Obj.keys(sectionToParentArrs).filter(
+    (sectionName) =>
+      sectionToParentArrs[sectionName as SimpleSectionName].length > 0
+  ) as HasParentSectionName<SC>[];
+
+  return {
+    hasParent: hasParentSectionNames,
+  };
+}
 
 export type IsSingleParentName<SC extends SectionContext> =
   SectionToAlwaysOneParent<SC>[HasOneParentSectionName<SC>];

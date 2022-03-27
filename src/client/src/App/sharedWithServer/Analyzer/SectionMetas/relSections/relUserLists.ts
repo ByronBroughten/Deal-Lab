@@ -75,13 +75,13 @@ export const preUserLists = {
       rightValue: rel.varb.type("numObj"),
       // then
       then: rel.varb.type("numObj"),
-    },
-    {
-      initBunch: [
-        { type: "if", level: 0 },
-        { type: "then", level: 0 },
-        { type: "or else", level: 0 },
-      ],
     }
+    // {
+    //   initBunch: [
+    //     { type: "if", level: 0 },
+    //     { type: "then", level: 0 },
+    //     { type: "or else", level: 0 },
+    //   ],
+    // }
   ),
 } as const;

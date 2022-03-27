@@ -1,6 +1,7 @@
 import { omit } from "lodash";
 import { switchEndings } from "./baseSections/switchNames";
 import { base } from "./baseSections/base";
+import { GeneralBaseSection } from "./baseSections/baseSection";
 // For what I'm trying to do, I must split base
 // sections, then I must split relSections
 // then I must split secitonMetas.
@@ -13,9 +14,13 @@ export const loanVarbsNotInFinancing = [
   "title",
 ] as const;
 
+export type AnySectionName = keyof BaseSections[SectionContext];
 export type SimpleSectionName<SC extends SectionContext = SectionContext> =
-  keyof BaseSections[SC];
+  keyof BaseSections[SectionContext];
+
 export type SectionContext = keyof BaseSections;
+export const sectionContexts: SectionContext[] = ["fe", "db"];
+
 export type SectionContextOrBoth = SectionContext | "both";
 export type ExtractSectionContext<SCB extends SectionContextOrBoth> =
   SCB extends "both" ? SectionContext : Exclude<SCB, "both">;
@@ -211,6 +216,9 @@ export const baseSections = {
       },
       { ...base.options.alwaysOneFromStart, hasGlobalVarbs: true }
     ),
+    userProtected: base.section.schema({
+      _placeholder: "string",
+    }),
   },
   get db() {
     return {
@@ -219,3 +227,12 @@ export const baseSections = {
     } as const;
   },
 } as const;
+
+type FeSectionName = keyof BaseSections["fe"];
+export type GeneralBaseSections = {
+  [SC in SectionContext]: Record<FeSectionName, GeneralBaseSection>;
+};
+
+const _testBaseSections = <T extends GeneralBaseSections>(_: T): void =>
+  undefined;
+_testBaseSections(baseSections);

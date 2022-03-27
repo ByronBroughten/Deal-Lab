@@ -24,12 +24,12 @@ export type UpdateSwitchProp = SwitchUpdateInfo & {
 };
 export type UpdateSwitches = UpdateSwitchProp[];
 export type DisplayName = string | RelFindByFocalVarbInfo;
-export type CommonPreVarb = {
+export type CommonRelVarb = {
   updateFnProps: UpdateFnProps;
   inUpdateSwitchProps: UpdateSwitches;
   displayName: DisplayName;
-  startAdornment?: string;
-  endAdornment?: string;
+  startAdornment: string;
+  endAdornment: string;
 };
 type UniqueTypeProps = {
   numObj: {
@@ -42,13 +42,13 @@ type ValueSpecificProps = {
     initValue: ValueTypes[Prop];
   };
 } & UniqueTypeProps;
-export type PreVarbByType = {
-  [Prop in ValueTypeName]: CommonPreVarb &
+export type RelVarbByType = {
+  [Prop in ValueTypeName]: CommonRelVarb &
     ValueSpecificProps[Prop] & { type: Prop };
 };
-export type PreVarb<T extends ValueTypeName = ValueTypeName> = PreVarbByType[T];
-export type NumObjRelVarb = PreVarbByType["numObj"];
-export type StringPreVarb = PreVarbByType["string"];
-export function isNumObjRelVarb(relVarb: PreVarb): relVarb is NumObjRelVarb {
+export type RelVarb<T extends ValueTypeName = ValueTypeName> = RelVarbByType[T];
+export type NumObjRelVarb = RelVarbByType["numObj"];
+export type StringPreVarb = RelVarbByType["string"];
+export function isNumObjRelVarb(relVarb: RelVarb): relVarb is NumObjRelVarb {
   return relVarb.initValue instanceof NumObj;
 }

@@ -1,8 +1,8 @@
 import { ObjectEntries } from "../../../../utils/Obj";
 import {
   DisplayName,
-  PreVarb,
-  PreVarbByType,
+  RelVarb,
+  RelVarbByType,
   StringPreVarb,
 } from "./relVarbTypes";
 import {
@@ -30,13 +30,11 @@ import {
 import { relProps } from "./relMisc";
 import { ValueName } from "../baseSections/baseVarb";
 
-export type PreVarbsGeneral = {
-  [key: string]: PreVarb;
-};
+export type GeneralRelVarbs = Record<string, RelVarb>;
 export type RelVarbs<
   SC extends SectionContext,
   SN extends SimpleSectionName<SC>
-> = Record<SectionVarbName<SC, SN>, PreVarb>;
+> = Record<SectionVarbName<SC, SN>, RelVarb>;
 
 type RelVarbsByType<
   SC extends SectionContext,
@@ -54,7 +52,7 @@ function isRelVarbOfType<
   varbName: SectionVarbName<SC, SN>,
   valueName: VLN,
   _value: any
-): _value is PreVarbByType[VLN] {
+): _value is RelVarbByType[VLN] {
   const schema = baseSections[sectionContext][sectionName];
   const varbType =
     schema.varbSchemas[varbName as keyof typeof schema.varbSchemas];
@@ -83,7 +81,7 @@ function filterRelVarbsByType<
 
 export type StringPreVarbsFromNames<VN extends readonly string[]> = Record<
   VN[number],
-  PreVarbByType["string"]
+  RelVarbByType["string"]
 >;
 export const relVarbs = {
   strings<VN extends readonly string[]>(

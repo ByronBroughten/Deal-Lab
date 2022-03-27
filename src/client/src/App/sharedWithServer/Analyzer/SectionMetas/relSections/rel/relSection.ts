@@ -1,9 +1,7 @@
-import { extend, omit } from "lodash";
-import { ObjectKeys } from "../../../../utils/Obj";
+import { extend } from "lodash";
 import { BaseName } from "../baseSectionTypes";
 import { relVarb } from "./relVarb";
-import { RelVarbs, relVarbs } from "./relVarbs";
-import { StateValue } from "../../../StateSection/StateVarb/stateValue";
+import { GeneralRelVarbs, RelVarbs, relVarbs } from "./relVarbs";
 import {
   BaseSections,
   baseSections,
@@ -12,83 +10,122 @@ import {
   extractSectionContext,
   SectionContextOrBoth,
   SimpleSectionName,
+  AnySectionName,
 } from "../baseSections";
-import { DbEntry } from "../../../DbEntry";
+import { Merge } from "./../../../../utils/Obj/merge";
+import { Obj } from "./../../../../utils/Obj";
 
 export type GeneralRelSection = {
-  childSectionNames: readonly BaseName[];
-  initEntry?: DbEntry;
-  initBunch?: { [key: string]: StateValue }[];
-  parent?: BaseName;
-  rowSourceName?: BaseName;
-  indexStoreName?: BaseName<"dbStore", "db">;
-  defaultStoreName?: BaseName<"dbStore", "db">;
-};
+  relVarbs: GeneralRelVarbs;
+  childSectionNames: readonly AnySectionName[];
 
-export type RelSectionOptions = GeneralRelSection;
-interface DefaultOptions extends Pick<RelSectionOptions, "childSectionNames"> {
-  readonly childSectionNames: [];
-}
-type GetDefaultOptions<O extends Options> = Omit<DefaultOptions, keyof O>;
-
-const defaultOptions: DefaultOptions = {
-  childSectionNames: [],
+  displayName: string;
+  rowSourceName: BaseName<"rowIndex", "fe"> | null;
+  indexStoreName: BaseName<"dbStore", "db"> | null;
+  defaultStoreName: BaseName<"dbStore", "db"> | null;
 };
-type Options = Partial<RelSectionOptions>;
-//
+type FullOptions<
+  SC extends SectionContext,
+  SN extends SimpleSectionName<SC>
+> = Merge<
+  GeneralRelSection,
+  {
+    relVarbs: RelVarbs<SC, SN>;
+    childSectionNames: readonly SimpleSectionName<SC>[];
+  }
+>;
+
+type Options<
+  SC extends SectionContext,
+  SN extends SimpleSectionName<SC>
+> = Partial<FullOptions<SC, SN>>;
 
 export type RelSection<
   SC extends SectionContext,
   SN extends SimpleSectionName<SC>,
   D extends string,
-  PVS extends RelVarbs<SC, SN>,
-  O extends Options = {}
-> = Record<
-  SN,
-  {
-    displayName: D;
-    relVarbs: PVS;
-  } & GetDefaultOptions<O> &
-    O &
-    BaseSections[SC][SN]
->;
+  RVS extends RelVarbs<SC, SN>,
+  O extends Options<SC, SN> = {}
+> = Merge<DefaultRelSection<D, SC, SN, RVS>, O>;
+
+type DefaultRelSection<
+  D extends string,
+  SC extends SectionContext,
+  SN extends SimpleSectionName<SC>,
+  RVS extends RelVarbs<SC, SN>
+> = {
+  sectionContext: SC;
+  sectionName: SN;
+  displayName: D;
+  relVarbs: RVS;
+  childSectionNames: [];
+  rowSourceName: null;
+  indexStoreName: null;
+  defaultStoreName: null;
+};
+
+export type RelSectionProp<
+  SC extends SectionContext,
+  SN extends SimpleSectionName<SC>,
+  D extends string,
+  RVS extends RelVarbs<SC, SN>,
+  O extends Options<SC, SN> = {}
+> = Record<SN, RelSection<SC, SN, D, RVS, O>>;
 
 export const relSection = {
+  default<
+    D extends string,
+    SC extends SectionContext,
+    SN extends SimpleSectionName<SC>,
+    RVS extends RelVarbs<SC, SN>
+  >(
+    displayName: D,
+    sectionContext: SC,
+    sectionName: SN,
+    relVarbs: RVS
+  ): DefaultRelSection<D, SC, SN, RVS> {
+    return {
+      sectionContext,
+      sectionName,
+      displayName,
+      relVarbs,
+      childSectionNames: [],
+      rowSourceName: null,
+      indexStoreName: null,
+      defaultStoreName: null,
+    };
+  },
   base<
     SCB extends SectionContextOrBoth,
     SN extends SimpleSectionName<ExtractSectionContext<SCB>>,
     D extends string,
     PVS extends RelVarbs<ExtractSectionContext<SCB>, SN>,
-    O extends Options = {}
+    O extends Options<ExtractSectionContext<SCB>, SN> = {}
   >(
     sectionContextOrBoth: SCB,
     sectionName: SN,
     displayName: D,
     relVarbs: PVS,
     options?: O
-  ): RelSection<ExtractSectionContext<SCB>, SN, D, PVS, O> {
+  ): RelSectionProp<ExtractSectionContext<SCB>, SN, D, PVS, O> {
     const sectionContext = extractSectionContext(sectionContextOrBoth);
+    const baseSection = baseSections[sectionContext][
+      sectionName
+    ] as BaseSections[ExtractSectionContext<SCB>][SN];
     return {
-      // to get this working without any, I'd have to add a typeguard.
-      [sectionName]: extend(
-        {
-          displayName,
-          relVarbs,
-          ...omit(defaultOptions, ObjectKeys(options ?? {})),
-          // this omit shouldn't be necessary but makes type checking work.
-          ...options,
-        },
-        baseSections[sectionContext][sectionName]
+      [sectionName]: Obj.merge(
+        this.default(displayName, sectionContext, sectionName, relVarbs),
+        options ?? ({} as O)
       ),
-    } as any as RelSection<ExtractSectionContext<SCB>, SN, D, PVS, O>;
+    } as RelSectionProp<ExtractSectionContext<SCB>, SN, D, PVS, O>;
   },
   singleTimeList<
-    S extends BaseName<"singleTimeList">,
+    SN extends BaseName<"singleTimeList">,
     D extends string,
-    O extends Options = {}
-  >(sectionName: S, displayName: D, options?: O) {
+    O extends Options<SectionContext, SN> = {}
+  >(sectionName: SN, displayName: D, options?: O) {
     return this.base(
-      "fe" as SectionContext,
+      "both",
       sectionName,
       displayName,
       relVarbs.singleTimeList(sectionName),
@@ -100,12 +137,12 @@ export const relSection = {
     );
   },
   ongoingList<
-    S extends BaseName<"ongoingList">,
+    SN extends BaseName<"ongoingList">,
     D extends string,
-    O extends Options = {}
-  >(sectionName: S, displayName: D, options?: O) {
+    O extends Options<SectionContext, SN> = {}
+  >(sectionName: SN, displayName: D, options?: O) {
     return this.base(
-      "fe" as SectionContext,
+      "both",
       sectionName,
       displayName,
       relVarbs.ongoingList(sectionName),
@@ -135,7 +172,7 @@ export const relSection = {
   managerTable<
     S extends BaseName<"table">,
     D extends string,
-    R extends BaseName
+    R extends BaseName<"rowIndex", "fe">
   >(sectionName: S, displayName: D, rowSourceName: R) {
     return this.base(
       "fe" as SectionContext,
