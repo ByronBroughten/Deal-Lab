@@ -5,7 +5,7 @@ import { isObject } from "lodash";
 import mongoose from "mongoose";
 import { authTokenKey } from "../../../../client/src/App/sharedWithServer/User/crudTypes";
 
-import { rowIndexToTableName } from "../../../../client/src/App/sharedWithServer/Analyzer/SectionMetas/relSectionTypes";
+import { rowIndexToTableName } from "../../../../client/src/App/sharedWithServer/Analyzer/SectionMetas/relNameArrs";
 import {
   DbUser,
   LoginUser,

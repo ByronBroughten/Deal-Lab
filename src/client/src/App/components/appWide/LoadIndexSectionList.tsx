@@ -11,7 +11,7 @@ import theme, {
 import {
   ChildName,
   IndexParentName,
-} from "../../sharedWithServer/Analyzer/SectionMetas/relSectionTypes";
+} from "../../sharedWithServer/Analyzer/SectionMetas/relNameArrs";
 import { sectionMetas } from "../../sharedWithServer/Analyzer/SectionMetas";
 import { FeInfo, Inf } from "../../sharedWithServer/Analyzer/SectionMetas/Info";
 import {

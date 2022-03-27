@@ -15,7 +15,7 @@ import {
   FeParentInfo,
   IndexStoreName,
   ParentName,
-} from "./SectionMetas/relSectionTypes";
+} from "./SectionMetas/relNameArrs";
 import { Inf } from "./SectionMetas/Info";
 import { OutUpdatePack } from "./SectionMetas/VarbMeta";
 import {

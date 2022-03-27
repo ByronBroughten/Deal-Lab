@@ -17,7 +17,7 @@ import {
 import AdditiveListTable from "./AdditiveList/AdditiveListTable";
 import { ListMenu } from "./AdditiveList/ListMenu";
 import useHowMany from "./customHooks/useHowMany";
-import { userListItemTypes } from "../../sharedWithServer/Analyzer/SectionMetas/relSectionTypes/UserListTypes";
+import { userListItemTypes } from "../../sharedWithServer/Analyzer/SectionMetas/relNameArrs/UserListTypes";
 
 function useTotalVarb(feInfo: FeInfo, listType: SectionName<"additiveList">) {
   const { analyzer } = useAnalyzerContext();

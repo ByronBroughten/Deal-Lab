@@ -5,7 +5,7 @@ import {
   FeParentInfo,
   ParentFinder,
   ParentName,
-} from "../../SectionMetas/relSectionTypes";
+} from "../../SectionMetas/relNameArrs";
 import { SectionNam, SectionName } from "../../SectionMetas/SectionName";
 import StateSection from "../../StateSection";
 

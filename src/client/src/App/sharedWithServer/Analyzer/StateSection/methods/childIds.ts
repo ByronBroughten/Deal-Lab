@@ -4,7 +4,7 @@ import {
   ChildFeInfo,
   ChildIdArrs,
   ChildName,
-} from "../../SectionMetas/relSectionTypes";
+} from "../../SectionMetas/relNameArrs";
 import { sectionMetas } from "../../SectionMetas";
 import StateSection from "../../StateSection";
 import { SectionName } from "../../SectionMetas/SectionName";

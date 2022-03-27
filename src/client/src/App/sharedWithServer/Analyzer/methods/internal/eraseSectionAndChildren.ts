@@ -5,7 +5,7 @@ import {
   FeVarbInfo,
   SpecificSectionInfo,
 } from "../../SectionMetas/relSections/rel/relVarbInfoTypes";
-import { ChildName } from "../../SectionMetas/relSectionTypes";
+import { ChildName } from "../../SectionMetas/relNameArrs";
 import { internal } from "../internal";
 
 function varbInfosToSolveAfterErase(

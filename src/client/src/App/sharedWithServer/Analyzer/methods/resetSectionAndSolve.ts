@@ -4,7 +4,7 @@ import {
   FeNameInfo,
   FeVarbInfo,
 } from "../SectionMetas/relSections/rel/relVarbInfoTypes";
-import { ChildFeInfo } from "../SectionMetas/relSectionTypes";
+import { ChildFeInfo } from "../SectionMetas/relNameArrs";
 import { SectionName } from "../SectionMetas/SectionName";
 import { InitSectionOptions } from "./addSectionAndSolve";
 import { internal } from "./internal";

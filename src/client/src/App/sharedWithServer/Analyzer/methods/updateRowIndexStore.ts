@@ -7,7 +7,7 @@ import {
   FeVarbInfo,
   SpecificSectionInfo,
 } from "../SectionMetas/relSections/rel/relVarbInfoTypes";
-import { rowIndexToTableName } from "../SectionMetas/relSectionTypes";
+import { rowIndexToTableName } from "../SectionMetas/relNameArrs";
 import { FeInfo, Inf } from "../SectionMetas/Info";
 import StateSection from "../StateSection";
 import { SectionName } from "../SectionMetas/SectionName";

@@ -12,7 +12,7 @@ import { isEqual } from "lodash";
 import { Inf } from "../sharedWithServer/Analyzer/SectionMetas/Info";
 import { SortByColumnOptions } from "../sharedWithServer/Analyzer/methods/updateRowIndexStore";
 import { SectionName } from "../sharedWithServer/Analyzer/SectionMetas/SectionName";
-import { indexStoreToSectionName } from "../sharedWithServer/Analyzer/SectionMetas/relSectionTypes";
+import { indexStoreToSectionName } from "../sharedWithServer/Analyzer/SectionMetas/relNameArrs";
 import TrashBtn from "./general/TrashBtn";
 import ColumnHeader from "./SectionTable/ColumnHeader";
 

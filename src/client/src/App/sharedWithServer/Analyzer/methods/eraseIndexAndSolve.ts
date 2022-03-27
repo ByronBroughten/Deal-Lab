@@ -1,7 +1,7 @@
 import Analyzer from "../../Analyzer";
 import Arr from "../../utils/Arr";
 import { Inf } from "../SectionMetas/Info";
-import { rowIndexToTableName } from "../SectionMetas/relSectionTypes";
+import { rowIndexToTableName } from "../SectionMetas/relNameArrs";
 import { SectionName } from "../SectionMetas/SectionName";
 import { internal } from "./internal";
 

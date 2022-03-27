@@ -5,7 +5,7 @@ import {
   FeNameInfo,
   SpecificSectionInfo,
 } from "../../SectionMetas/relSections/rel/relVarbInfoTypes";
-import { ChildIdArrs, ChildName } from "../../SectionMetas/relSectionTypes";
+import { ChildIdArrs, ChildName } from "../../SectionMetas/relNameArrs";
 import { SectionName } from "../../SectionMetas/SectionName";
 import StateSection from "../../StateSection";
 

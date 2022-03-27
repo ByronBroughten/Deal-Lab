@@ -10,7 +10,7 @@ import array from "../../../../sharedWithServer/utils/Arr";
 import { rem } from "polished";
 import useHowMany from "../../../appWide/customHooks/useHowMany";
 import PlusBtn from "../../../appWide/PlusBtn";
-import { FeParentInfo } from "../../../../sharedWithServer/Analyzer/SectionMetas/relSectionTypes";
+import { FeParentInfo } from "../../../../sharedWithServer/Analyzer/SectionMetas/relNameArrs";
 import { VscDiffAdded } from "react-icons/vsc";
 
 type Props = { feInfo: FeParentInfo<"unit">; className?: string };

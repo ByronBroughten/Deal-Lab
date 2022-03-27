@@ -13,7 +13,7 @@ import AddItemBtn from "./AdditiveListTable/AddItemBtn";
 import AdditiveItem from "./AdditiveItem";
 import useAddListItem from "./AdditiveListTable/useAddListItem";
 import { valueSwitches } from "./useAdditiveItem";
-import { userListItemTypes } from "../../../sharedWithServer/Analyzer/SectionMetas/relSectionTypes/UserListTypes";
+import { userListItemTypes } from "../../../sharedWithServer/Analyzer/SectionMetas/relNameArrs/UserListTypes";
 
 const switchValueToDisplay = {
   labeledEquation: "Equation",
