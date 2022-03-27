@@ -1,43 +1,57 @@
 import { RemoveNotStrings } from "../../../utils/typescript";
 import { RelSections } from "../relSections";
-import { SectionContext, SimpleSectionName } from "../relSections/baseSections";
+import { ContextName, SimpleSectionName } from "../relSections/baseSections";
 import { FeNameInfo } from "../relSections/rel/relVarbInfoTypes";
+import { SectionContextProps } from "../SectionName";
 
 type ChildNameArr<
-  SC extends SectionContext,
+  SC extends ContextName,
   SN extends SimpleSectionName<SC>
 > = RelSections[SC][SN]["childSectionNames" & keyof RelSections[SC][SN]];
 
-type SectionToChildrenOrNever<SC extends SectionContext> = {
+type SectionToChildrenOrNever<SC extends ContextName> = {
   [SN in SimpleSectionName<SC>]: ChildNameArr<SC, SN>[number &
     keyof ChildNameArr<SC, SN>];
 };
 
 export type ChildName<
-  S extends SimpleSectionName<SC>,
-  SC extends SectionContext = "fe"
-> = SectionToChildrenOrNever<SC>[S];
+  SN extends SimpleSectionName,
+  SC extends ContextName = "fe"
+> = SectionToChildrenOrNever<SC>[SN];
 
 export type DescendantName<
-  S extends SimpleSectionName<SC>,
-  SC extends SectionContext
+  S extends SimpleSectionName,
+  SC extends ContextName
 > = ChildName<S, SC> extends never
   ? never
   :
       | ChildName<S, SC>
       | DescendantName<ChildName<S, SC> & SimpleSectionName<SC>, SC>;
-type _DescendantNameTest = DescendantName<"propertyGeneral", "fe">;
-const _descendantNameTest1: _DescendantNameTest = "unit";
-const _descendantNameTest2: _DescendantNameTest = "ongoingItem";
-// @ts-expect-error
-const _descendantNameTest3: _DescendantNameTest = "loan";
+
+export type SectionAndDescendantName<SCP extends SectionContextProps> =
+  | SCP["sectionName"]
+  | DescendantName<SCP["sectionName"], SCP["contextName"]>;
+
+function _testDescendantName() {
+  type FeTest = DescendantName<"propertyGeneral", "fe">;
+  type DbTest = DescendantName<"propertyGeneral", "db">;
+
+  const _test1: FeTest = "unit";
+  const _test2: FeTest = "cell";
+  // @ts-expect-error
+  const _test3: FeTest = "loan";
+
+  const _test4: DbTest = "unit";
+  // @ts-expect-error
+  const _teset5: DbTest = "cell";
+}
 
 export type ChildIdArrs<
   SN extends SimpleSectionName<SC>,
-  SC extends SectionContext = "fe"
+  SC extends ContextName = "fe"
 > = Record<ChildName<SN, SC> & string, string[]>;
 
-type SectionToChildren<SC extends SectionContext> = RemoveNotStrings<
+type SectionToChildren<SC extends ContextName> = RemoveNotStrings<
   SectionToChildrenOrNever<SC>
 >;
 
@@ -48,11 +62,11 @@ export type ChildFeInfo<SN extends SimpleSectionName<"fe">> = FeNameInfo & {
   id: string;
 };
 
-export type HasChildSectionName<SC extends SectionContext> =
+export type HasChildSectionName<SC extends ContextName> =
   keyof SectionToChildren<SC>;
 
 export type ChildOrNull<
-  SC extends SectionContext,
+  SC extends ContextName,
   SN extends SimpleSectionName<SC>,
   CN extends SimpleSectionName<SC>
 > = Extract<
@@ -63,14 +77,14 @@ export type ChildOrNull<
   : CN;
 
 // commented out on 3/25/22, for no apparent use
-// type SectionToChildIdArrs<SC extends SectionContext> = {
+// type SectionToChildIdArrs<SC extends ContextName> = {
 //   [SN in keyof SectionToChildrenOrNever<SC>]: Record<
 //     SectionToChildrenOrNever<SC>[SN] & string,
 //     string[]
 //   >;
 // };
-// type SectionToChildIdArrType<SC extends SectionContext> = {
+// type SectionToChildIdArrType<SC extends ContextName> = {
 //   [SN in keyof SectionToChildIdArrs<SC>]: SectionToChildIdArrs<SC>[SN][keyof SectionToChildIdArrs<SC>[SN]];
 // };
-// export type ChildIdArrType<SN extends SimpleSectionName<SC>, SC extends SectionContext> =
+// export type ChildIdArrType<SN extends SimpleSectionName<SC>, SC extends ContextName> =
 //   SectionToChildIdArrType<SC>[SN];

@@ -2,7 +2,7 @@ import {
   BaseSections,
   baseSections,
   sectionContext,
-  SectionContext,
+  ContextName,
   SimpleSectionName,
 } from "../baseSections";
 import Arr from "../../../../utils/Arr";
@@ -110,7 +110,7 @@ export const depreciatingDbStoreNames = [
 ] as const;
 
 function makeSingleSectionNameArrs<
-  SC extends SectionContext,
+  SC extends ContextName,
   SnArrs = {
     [Prop in keyof BaseSections[SC]]: readonly Prop[];
   }
@@ -123,7 +123,7 @@ function makeSingleSectionNameArrs<
   }, {} as SnArrs);
 }
 
-function makeBaseNameArrsForContext<SC extends SectionContext>(
+function makeBaseNameArrsForContext<SC extends ContextName>(
   sectionContext: SC
 ) {
   const baseSectionsOfContext = baseSections[sectionContext];
@@ -232,13 +232,13 @@ function makeBaseNameArrsForContext<SC extends SectionContext>(
     },
   };
 }
-class BaseNameArrsForContext<SC extends SectionContext> {
+class BaseNameArrsForContext<SC extends ContextName> {
   call(sectionContext: SC) {
     return makeBaseNameArrsForContext<SC>(sectionContext);
   }
 }
 type NextBaseNameArrs = {
-  [SC in SectionContext]: ReturnType<BaseNameArrsForContext<SC>["call"]>;
+  [SC in ContextName]: ReturnType<BaseNameArrsForContext<SC>["call"]>;
 };
 
 function makeBaseNameArrs(): NextBaseNameArrs {
@@ -262,7 +262,7 @@ const testBaseNameArrs = (_: GeneralBaseNameArrs) => undefined;
 testBaseNameArrs(baseNameArrs);
 
 export type BaseNameArrs = typeof baseNameArrs;
-export type BaseNameSelector<SC extends SectionContext = "fe"> =
+export type BaseNameSelector<SC extends ContextName = "fe"> =
   keyof BaseNameArrs[SC];
 
 // export const baseNames = {

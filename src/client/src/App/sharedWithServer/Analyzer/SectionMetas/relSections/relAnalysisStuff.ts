@@ -1,9 +1,9 @@
 import { RelVarbs } from "./rel/relVarbs";
 import { rel } from "./rel";
 import { relSection } from "./rel/relSection";
-import { SectionContext } from "./baseSections";
+import { ContextName } from "./baseSections";
 
-const analysisRelVarbs: RelVarbs<SectionContext, "analysis"> = {
+const analysisRelVarbs: RelVarbs<ContextName, "analysis"> = {
   title: rel.varb.string(),
 } as const;
 

@@ -14,15 +14,15 @@ export const loanVarbsNotInFinancing = [
   "title",
 ] as const;
 
-export type AnySectionName = keyof BaseSections[SectionContext];
-export type SimpleSectionName<SC extends SectionContext = SectionContext> =
-  keyof BaseSections[SectionContext];
+export type AnySectionName = keyof BaseSections[ContextName];
+export type SimpleSectionName<SC extends ContextName = ContextName> =
+  keyof BaseSections[ContextName];
 
-export type SectionContext = keyof BaseSections;
-const sectionContextNames: SectionContext[] = ["fe", "db"];
+export type ContextName = keyof BaseSections;
+const sectionContextNames: ContextName[] = ["fe", "db"];
 export const sectionContext = {
   names: sectionContextNames,
-  makeBlankContextObj(): Record<SectionContext, any> {
+  makeBlankContextObj(): Record<ContextName, any> {
     return {
       fe: {},
       db: {},
@@ -30,9 +30,9 @@ export const sectionContext = {
   },
 };
 
-export type SectionContextOrBoth = SectionContext | "both";
+export type SectionContextOrBoth = ContextName | "both";
 export type ExtractSectionContext<SCB extends SectionContextOrBoth> =
-  SCB extends "both" ? SectionContext : Exclude<SCB, "both">;
+  SCB extends "both" ? ContextName : Exclude<SCB, "both">;
 export function extractSectionContext<SCB extends SectionContextOrBoth>(
   sectionContextOrBoth: SCB
 ): ExtractSectionContext<SCB> {
@@ -239,7 +239,7 @@ export const baseSections = {
 
 type FeSectionName = keyof BaseSections["fe"];
 export type GeneralBaseSections = {
-  [SC in SectionContext]: Record<FeSectionName, GeneralBaseSection>;
+  [SC in ContextName]: Record<FeSectionName, GeneralBaseSection>;
 };
 
 const _testBaseSections = <T extends GeneralBaseSections>(_: T): void =>

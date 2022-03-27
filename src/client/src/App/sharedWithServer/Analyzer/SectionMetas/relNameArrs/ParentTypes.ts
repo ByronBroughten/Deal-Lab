@@ -7,7 +7,7 @@ import {
 } from "../../../utils/typescript";
 import { relSections } from "../relSections";
 import {
-  SectionContext,
+  ContextName,
   sectionContext,
   SimpleSectionName,
 } from "../relSections/baseSections";
@@ -17,14 +17,14 @@ import { FeSectionInfoBase } from "../relSections/rel/relVarbInfoTypes";
 import { ChildOrNull } from "./ChildTypes";
 
 type ParentToChildOrNullMap<
-  SC extends SectionContext,
+  SC extends ContextName,
   CN extends SimpleSectionName<SC>
 > = {
   [SN in SimpleSectionName<SC>]: ChildOrNull<SC, SN, CN>;
 };
 
 type ParentNameOrNever<
-  SC extends SectionContext,
+  SC extends ContextName,
   SN extends SimpleSectionName<SC>
 > = keyof SubType<ParentToChildOrNullMap<SC, SN>, SN>;
 function _testParentNameOrNever() {
@@ -35,25 +35,25 @@ function _testParentNameOrNever() {
   const _case3: CellParent = "propertyGeneral";
 }
 
-type SectionToParentsOrNever<SC extends SectionContext> = {
+type SectionToParentsOrNever<SC extends ContextName> = {
   [SN in SimpleSectionName<SC>]: ParentNameOrNever<SC, SN>;
 };
 
 // this is for consistency in sectionMeta
-export type SectionToParentArrs<SC extends SectionContext> = {
+export type SectionToParentArrs<SC extends ContextName> = {
   [SN in keyof SectionToParentsOrNever<SC>]: SectionToParentsOrNever<SC>[SN][];
 };
 
-type SectionToParents<SC extends SectionContext> = RemoveNotStrings<
+type SectionToParents<SC extends ContextName> = RemoveNotStrings<
   SectionToParentsOrNever<SC>
 >;
-type SectionToParentOrNos<SC extends SectionContext> = NeversToSomething<
+type SectionToParentOrNos<SC extends ContextName> = NeversToSomething<
   SectionToParentsOrNever<SC>,
   "no parent"
 >;
 
 type ContextSectionToParentArrs = {
-  [SC in SectionContext]: SectionToParentArrs<SC>;
+  [SC in ContextName]: SectionToParentArrs<SC>;
 };
 export function makeSectionToParentArrs(): ContextSectionToParentArrs {
   const partial = sectionContext.makeBlankContextObj();
@@ -80,12 +80,12 @@ export function makeSectionToParentArrs(): ContextSectionToParentArrs {
   return partial as ContextSectionToParentArrs;
 }
 
-export type HasParentSectionName<SC extends SectionContext> =
+export type HasParentSectionName<SC extends ContextName> =
   keyof SectionToParents<SC>;
 
 export type ParentName<
   SN extends SimpleSectionName<SC>,
-  SC extends SectionContext = "fe"
+  SC extends ContextName = "fe"
 > = SectionToParentOrNos<SC>[SN];
 
 function _testParentName() {
@@ -100,18 +100,18 @@ function _testParentName() {
 
 export type FeParentInfo<
   SN extends SimpleSectionName<SC>,
-  SC extends SectionContext = "fe"
+  SC extends ContextName = "fe"
 > = FeSectionInfoBase & {
   sectionName: ParentName<SN, SC>;
 };
 export type ParentFinder<
   SN extends SimpleSectionName<SC>,
-  SC extends SectionContext = "fe"
+  SC extends ContextName = "fe"
 > =
   | FeParentInfo<SN, SC>
   | ParentName<Extract<SN, HasOneParentSectionName<SC>>, SC>;
 
-type SectionToOneParentOrNull<SC extends SectionContext> = {
+type SectionToOneParentOrNull<SC extends ContextName> = {
   [SN in keyof SectionToParents<SC>]: IsUnion<
     SectionToParentsOrNever<SC>[SN]
   > extends true
@@ -120,14 +120,14 @@ type SectionToOneParentOrNull<SC extends SectionContext> = {
     ? null
     : SectionToParentsOrNever<SC>[SN];
 };
-type SectionToAlwaysOneParent<SC extends SectionContext> = SubType<
+type SectionToAlwaysOneParent<SC extends ContextName> = SubType<
   SectionToOneParentOrNull<SC>,
   string
 >;
-export type HasOneParentSectionName<SC extends SectionContext> =
+export type HasOneParentSectionName<SC extends ContextName> =
   keyof SectionToAlwaysOneParent<SC>;
 
-export function makeParentSectionNames<SC extends SectionContext>(
+export function makeParentSectionNames<SC extends ContextName>(
   sectionContext: SC
 ) {
   const sectionToParentArrs = makeSectionToParentArrs()[sectionContext];
@@ -141,5 +141,5 @@ export function makeParentSectionNames<SC extends SectionContext>(
   };
 }
 
-export type IsSingleParentName<SC extends SectionContext> =
+export type IsSingleParentName<SC extends ContextName> =
   SectionToAlwaysOneParent<SC>[HasOneParentSectionName<SC>];

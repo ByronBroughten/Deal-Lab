@@ -7,7 +7,7 @@ import { relAnalysisStuff } from "./relSections/relAnalysisStuff";
 import { GeneralRelSection, relSection } from "./relSections/rel/relSection";
 import { RelVarbs } from "./relSections/rel/relVarbs";
 import { LeftRightVarbInfos } from "./relSections/rel/relVarb";
-import { SectionContext, SimpleSectionName } from "./relSections/baseSections";
+import { ContextName, SimpleSectionName } from "./relSections/baseSections";
 import {
   MergeUnionObj,
   MergeUnionObjNonNullable,
@@ -20,7 +20,7 @@ export function makeRelSections() {
         "both",
         "main",
         "Main",
-        {} as RelVarbs<SectionContext, "main">,
+        {} as RelVarbs<ContextName, "main">,
         {
           childSectionNames: [
             "user",
@@ -219,20 +219,20 @@ export function makeRelSections() {
 export type RelSections = ReturnType<typeof makeRelSections>;
 
 type PreGeneralRelSections = {
-  [SC in SectionContext]: {
+  [SC in ContextName]: {
     [SN in SimpleSectionName<SC>]: GeneralRelSection;
   };
 };
 
-export type RelSectionName<SC extends SectionContext = SectionContext> =
+export type RelSectionName<SC extends ContextName = ContextName> =
   keyof RelSections[SC];
 
 export type GeneralRelSections = {
-  [SC in SectionContext]: MergeUnionObj<PreGeneralRelSections[SectionContext]>;
+  [SC in ContextName]: MergeUnionObj<PreGeneralRelSections[ContextName]>;
 };
 export type FullGeneralRelSections = {
-  [SC in SectionContext]: MergeUnionObjNonNullable<
-    PreGeneralRelSections[SectionContext]
+  [SC in ContextName]: MergeUnionObjNonNullable<
+    PreGeneralRelSections[ContextName]
   >;
 };
 

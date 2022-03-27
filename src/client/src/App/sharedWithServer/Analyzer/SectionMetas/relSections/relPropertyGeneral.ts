@@ -1,9 +1,9 @@
-import { SectionContext } from "./baseSections";
+import { ContextName } from "./baseSections";
 import { rel } from "./rel";
 import { relSection } from "./rel/relSection";
 import { RelVarbs } from "./rel/relVarbs";
 
-function propertyPreVarbs<R extends RelVarbs<SectionContext, "property">>(): R {
+function propertyPreVarbs<R extends RelVarbs<ContextName, "property">>(): R {
   const r: R = {
     title: rel.varb.string(),
     price: rel.varb.moneyObj("Price"),
@@ -111,5 +111,5 @@ export const prePropertyGeneral = {
     }),
     numBedrooms: rel.varb.calcVarb("BRs"),
     ...rel.varbs.timeMoney("targetRent", "Rent", "unit"),
-  } as RelVarbs<SectionContext, "unit">),
+  } as RelVarbs<ContextName, "unit">),
 } as const;

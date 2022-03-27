@@ -21,7 +21,7 @@ import {
   baseSections,
   BaseSections,
   sectionContext,
-  SectionContext,
+  ContextName,
   SimpleSectionName,
 } from "./SectionMetas/relSections/baseSections";
 import {
@@ -33,7 +33,7 @@ import { VarbMetas, VarbMetasRaw } from "./SectionMetas/VarbMetas";
 
 export type SectionMeta<
   SN extends SimpleSectionName<SC>,
-  SC extends SectionContext = "fe"
+  SC extends ContextName = "fe"
 > = RelSections[SC][SN & keyof RelSections[SC]] &
   BaseSections[SC][SN] & {
     varbMetas: VarbMetas;
@@ -41,12 +41,12 @@ export type SectionMeta<
   };
 
 type SectionMetasCore = {
-  [SC in SectionContext]: {
+  [SC in ContextName]: {
     [SN in SimpleSectionName<SC>]: SectionMeta<SN, SC>;
   };
 };
 type SectionMetasRaw = {
-  [SC in SectionContext]: {
+  [SC in ContextName]: {
     [SN in SimpleSectionName<SC>]: Omit<
       SectionMetasCore[SC][SN & keyof SectionMetasCore[SC]],
       "varbMetas"
@@ -75,7 +75,7 @@ export class SectionMetas {
     }
     return rawSectionMetas as SectionMetasRaw;
   }
-  get<SN extends SimpleSectionName<SC>, SC extends SectionContext = "fe">(
+  get<SN extends SimpleSectionName<SC>, SC extends ContextName = "fe">(
     sectionName: SN,
     sectionContext?: SC
   ): SectionMeta<SN, SC> {
@@ -83,7 +83,7 @@ export class SectionMetas {
     const sectionCore = contextCore[sectionName as keyof typeof contextCore];
     return sectionCore as any;
   }
-  varbNames<SN extends SimpleSectionName<SC>, SC extends SectionContext = "fe">(
+  varbNames<SN extends SimpleSectionName<SC>, SC extends ContextName = "fe">(
     sectionName: SN,
     sectionContext: SC
   ): string[] {
@@ -91,12 +91,12 @@ export class SectionMetas {
   }
   parentName<
     SN extends SectionName<"hasOneParent", SC>,
-    SC extends SectionContext = "fe"
+    SC extends ContextName = "fe"
   >(sectionName: SN, sectionContext?: SC): ParentName<SN, SC> {
     const meta = sectionMetas.get(sectionName, sectionContext ?? "fe");
     return meta.parents[0] as ParentName<SN, SC>;
   }
-  varbMeta<VNS extends SimpleVarbNames, CN extends SectionContext = "fe">(
+  varbMeta<VNS extends SimpleVarbNames, CN extends ContextName = "fe">(
     varbNames: VNS,
     contextName?: CN
   ): VarbMeta {
@@ -109,14 +109,14 @@ export class SectionMetas {
       throw new Error(`No varbMeta at ${sectionName}.${varbName}`);
     } else return varbMeta;
   }
-  varbMetas<SN extends SimpleSectionName<SC>, SC extends SectionContext = "fe">(
+  varbMetas<SN extends SimpleSectionName<SC>, SC extends ContextName = "fe">(
     sectionName: SN,
     sectionContext?: SC
   ): VarbMetas {
     return this.get(sectionName, sectionContext ?? ("fe" as SC)).varbMetas;
   }
   private inToOutRelative<
-    SC extends SectionContext,
+    SC extends ContextName,
     SN extends SimpleSectionName<SC>
   >(
     focalSectionName: SN,
@@ -207,7 +207,7 @@ export class SectionMetas {
     }
   }
   private static initSectionMeta<
-    SC extends SectionContext,
+    SC extends ContextName,
     SN extends SimpleSectionName<SC>,
     PA extends SectionToParentArrs<SC>[SN]
   >(
@@ -225,7 +225,7 @@ export class SectionMetas {
     };
   }
   private static initCore(): SectionMetasCore {
-    const partial: { [SC in SectionContext]: any } = {
+    const partial: { [SC in ContextName]: any } = {
       fe: {},
       db: {},
     };

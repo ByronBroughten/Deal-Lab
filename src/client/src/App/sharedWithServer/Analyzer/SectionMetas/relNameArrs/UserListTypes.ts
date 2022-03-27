@@ -1,12 +1,9 @@
 import { RelSections } from "../relSections";
-import { SectionContext } from "../relSections/baseSections";
+import { ContextName } from "../relSections/baseSections";
 import { BaseName } from "../relSections/baseSectionTypes";
 
 type PreUserLists = {
-  [Prop in BaseName<
-    "userList",
-    SectionContext
-  >]: RelSections[SectionContext][Prop];
+  [Prop in BaseName<"userList", ContextName>]: RelSections[ContextName][Prop];
 };
 type UserListItemTypes = {
   [Prop in BaseName<"userList">]: PreUserLists[Prop]["childSectionNames"][number];

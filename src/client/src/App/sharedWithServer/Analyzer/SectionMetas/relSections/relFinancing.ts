@@ -2,10 +2,10 @@ import { rel } from "./rel";
 import { relSection } from "./rel/relSection";
 import { RelVarbs } from "./rel/relVarbs";
 import { switchNames } from "./baseSections/switchNames";
-import { loanVarbsNotInFinancing, SectionContext } from "./baseSections";
+import { loanVarbsNotInFinancing, ContextName } from "./baseSections";
 
 const loanAmountBase = switchNames("loanAmountBase", "dollarsPercent");
-function loanPreVarbs(): RelVarbs<SectionContext, "loan"> {
+function loanPreVarbs(): RelVarbs<ContextName, "loan"> {
   return {
     title: rel.varb.string(),
     [loanAmountBase.switch]: rel.varb.string({ initValue: "percent" }),
@@ -109,10 +109,10 @@ function loanPreVarbs(): RelVarbs<SectionContext, "loan"> {
       },
       { shared: { startAdornment: "$" } }
     ),
-  } as RelVarbs<SectionContext, "loan">;
+  } as RelVarbs<ContextName, "loan">;
 }
 
-const financingRelVarbs: RelVarbs<SectionContext, "financing"> = {
+const financingRelVarbs: RelVarbs<ContextName, "financing"> = {
   downPaymentDollars: rel.varb.leftRightPropFn(
     "Down payment",
     "simpleSubtract",
@@ -148,7 +148,7 @@ const financingRelVarbs: RelVarbs<SectionContext, "financing"> = {
 
 export const relFinancing = {
   ...relSection.base(
-    "fe" as SectionContext,
+    "fe" as ContextName,
     "financing",
     "Financing",
     financingRelVarbs,
@@ -161,13 +161,13 @@ export const relFinancing = {
       ] as const,
     }
   ),
-  ...relSection.base("fe" as SectionContext, "loan", "Loan", loanPreVarbs(), {
+  ...relSection.base("fe" as ContextName, "loan", "Loan", loanPreVarbs(), {
     childSectionNames: ["closingCostList", "wrappedInLoanList"] as const,
     indexStoreName: "loanIndex",
     defaultStoreName: "loanDefault",
   }),
   ...relSection.base(
-    "fe" as SectionContext,
+    "fe" as ContextName,
     "loanDefault",
     "Default Loan",
     loanPreVarbs(),

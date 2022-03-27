@@ -13,11 +13,23 @@ import {
 } from "./SectionMetas/relSections/rel/relVarbInfoTypes";
 import { DbUser } from "../User/DbUser";
 import { relSections } from "./SectionMetas/relSections";
-import { AlwaysOneVarbFinder, SectionName } from "./SectionMetas/SectionName";
+import {
+  AlwaysOneVarbFinder,
+  SectionContextProps,
+  SectionName,
+} from "./SectionMetas/SectionName";
 import { DbInfo, Inf } from "./SectionMetas/Info";
 import { DbStoreName } from "./SectionMetas/relSections/baseSectionTypes";
 import { Id } from "./SectionMetas/relSections/baseSections/id";
 import { ParentName } from "./SectionMetas/relNameArrs/ParentTypes";
+import {
+  ContextName,
+  SimpleSectionName,
+} from "./SectionMetas/relSections/baseSections";
+import {
+  ChildName,
+  SectionAndDescendantName,
+} from "./SectionMetas/relNameArrs/ChildTypes";
 
 export type DbValue = BasicValue | DbNumObj;
 export type DbVarbs = {
@@ -34,12 +46,44 @@ export type DbSection = {
   childDbIds: ChildDbIds;
 };
 
+// next DbEntry...
+// this time,
+
 type FullDbSections = Record<SectionName | SectionName<"dbStore">, DbSection[]>;
 export type DbSections = Partial<FullDbSections>;
 export type DbEntry = {
   dbId: string;
   dbSections: DbSections;
 };
+
+type RawChildDbIds<SCP extends SectionContextProps> = {
+  [CHN in ChildName<SCP["sectionName"], SCP["contextName"]>]: string[];
+};
+type RawSection<SCP extends SectionContextProps> = {
+  dbId: string;
+  dbVarbs: DbVarbs;
+  childDbIds: RawChildDbIds<SCP>;
+};
+type RawSectionArrs<SCP extends SectionContextProps> = {
+  [SDN in SectionAndDescendantName<SCP>]: RawSection<SCP>[];
+};
+type RawSectionPack<SCP extends SectionContextProps> = {
+  sectionName: SCP["sectionName"];
+  dbId: string;
+  dbSections: {
+    [SDN in SectionAndDescendantName<SCP>]: RawSectionArrs<SCP>;
+  };
+};
+
+function _testDbEntry(
+  feRaw: RawSectionPack<{ sectionName: "propertyIndex"; contextName: "fe" }>,
+  dbRaw: RawSectionPack<{ sectionName: "propertyIndex"; contextName: "db" }>
+) {
+  feRaw.dbSections.cell;
+  // @ts-expect-error
+  feRaw.dbSections.unit;
+  dbRaw.dbSections.unit;
+}
 
 type EntryPack<S extends SectionName<"dbStore"> = SectionName<"dbStore">> = [
   S,

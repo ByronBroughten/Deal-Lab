@@ -2,7 +2,7 @@ import { SubType } from "../../../utils/typescript";
 import {
   BaseSections,
   baseSections,
-  SectionContext,
+  ContextName,
   SimpleSectionName,
 } from "./baseSections";
 import { SpecificSectionInfo } from "./rel/relVarbInfoTypes";
@@ -16,7 +16,7 @@ import { ValueName } from "./baseSections/baseVarb";
 
 export type BaseName<
   ST extends BaseNameSelector<SC> = "all",
-  SC extends SectionContext = "fe",
+  SC extends ContextName = "fe",
   NameArrs = BaseNameArrs[SC][ST]
 > = NameArrs[number & keyof NameArrs];
 
@@ -26,18 +26,18 @@ export type SectionFinder<
 > = SpecificSectionInfo<S> | Extract<S, BaseName<"alwaysOne", "fe">>;
 
 type BaseSectionVarbs<
-  SC extends SectionContext,
+  SC extends ContextName,
   SN extends SimpleSectionName<SC>,
   BaseSection = BaseSections[SC][SN]
 > = BaseSection["varbSchemas" & keyof BaseSection];
 
 export type SectionVarbName<
-  SC extends SectionContext,
+  SC extends ContextName,
   SN extends SimpleSectionName<SC>
 > = keyof BaseSectionVarbs<SC, SN>;
 
 export type SectionVarbNameByType<
-  SC extends SectionContext,
+  SC extends ContextName,
   SN extends SimpleSectionName<SC>,
   VLN extends ValueName
 > = keyof SubType<BaseSectionVarbs<SC, SN>, VLN>;

@@ -4,7 +4,7 @@ import { RelSections, relSections } from "./relSections";
 import { BaseName, isBaseName } from "./relSections/baseSectionTypes";
 import Arr from "../../utils/Arr";
 import { baseNameArrs } from "./relSections/baseSectionTypes/baseNameArrs";
-import { SectionContext, SimpleSectionName } from "./relSections/baseSections";
+import { ContextName, SimpleSectionName } from "./relSections/baseSections";
 import { GeneralRelSection } from "./relSections/rel/relSection";
 import {
   HasOneParentSectionName,
@@ -20,13 +20,13 @@ import {
 
 // this is here so that there isn't spaghetti code between relSectionTypes
 // and StoreTypes
-export type HasRowIndexStoreName<SC extends SectionContext> = keyof SubType<
+export type HasRowIndexStoreName<SC extends ContextName> = keyof SubType<
   RelSections[SC],
   { indexStoreName: BaseName<"rowIndex"> }
 >;
 
 export type ListSectionName = BaseName<"allList">;
-function makeRelNameArrs<SC extends SectionContext>(sectionContext: SC) {
+function makeRelNameArrs<SC extends ContextName>(sectionContext: SC) {
   const sectionToParentArrs = makeSectionToParentArrs()[sectionContext];
   const savableSectionNames = Arr.extract(
     baseNameArrs.db.dbStore,

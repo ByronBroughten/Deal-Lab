@@ -5,11 +5,7 @@ import {
   RelVarbByType,
   StringPreVarb,
 } from "./relVarbTypes";
-import {
-  baseSections,
-  SectionContext,
-  SimpleSectionName,
-} from "../baseSections";
+import { baseSections, ContextName, SimpleSectionName } from "../baseSections";
 import {
   BaseName,
   SectionVarbName,
@@ -32,18 +28,18 @@ import { ValueName } from "../baseSections/baseVarb";
 
 export type GeneralRelVarbs = Record<string, RelVarb>;
 export type RelVarbs<
-  SC extends SectionContext,
+  SC extends ContextName,
   SN extends SimpleSectionName<SC>
 > = Record<SectionVarbName<SC, SN>, RelVarb>;
 
 type RelVarbsByType<
-  SC extends SectionContext,
+  SC extends ContextName,
   SN extends SimpleSectionName<SC>,
   VLN extends ValueName
 > = Pick<RelVarbs<SC, SN>, SectionVarbNameByType<SC, SN, VLN>>;
 
 function isRelVarbOfType<
-  SC extends SectionContext,
+  SC extends ContextName,
   SN extends BaseName<"hasVarb", SC>,
   VLN extends ValueName
 >(
@@ -60,7 +56,7 @@ function isRelVarbOfType<
 }
 
 function filterRelVarbsByType<
-  SC extends SectionContext,
+  SC extends ContextName,
   SN extends BaseName<"hasVarb", SC>,
   VLN extends ValueName
 >(
@@ -184,7 +180,7 @@ export const relVarbs = {
       entityId: StringPreVarb;
     };
   },
-  singleTimeItem<R extends RelVarbs<SectionContext, "singleTimeItem">>(): R {
+  singleTimeItem<R extends RelVarbs<ContextName, "singleTimeItem">>(): R {
     const sectionName = "singleTimeItem";
     const valueSwitchProp = relVarbInfo.local(sectionName, "valueSwitch");
     const r: R = {
@@ -219,7 +215,7 @@ export const relVarbs = {
     } as R;
     return r;
   },
-  ongoingItem<R extends RelVarbs<SectionContext, "ongoingItem">>(): R {
+  ongoingItem<R extends RelVarbs<ContextName, "ongoingItem">>(): R {
     const sectionName = "ongoingItem";
     const ongoingValueNames = switchNames("value", "ongoing");
 
@@ -326,7 +322,7 @@ export const relVarbs = {
   },
   singleTimeList<
     S extends BaseName<"singleTimeList">,
-    R extends RelVarbs<SectionContext, S>
+    R extends RelVarbs<ContextName, S>
   >(sectionName: S): R {
     const r: R = {
       total: relVarb.sumNums(
@@ -343,7 +339,7 @@ export const relVarbs = {
   },
   ongoingList<
     S extends BaseName<"ongoingList">,
-    R extends RelVarbs<SectionContext, S>
+    R extends RelVarbs<ContextName, S>
   >(sectionName: S) {
     const r: R = {
       title: relVarb.string(),
