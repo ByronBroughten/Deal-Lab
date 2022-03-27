@@ -20,6 +20,7 @@ import { SectionNam, SectionName } from "./SectionMetas/SectionName";
 import {
   baseSections,
   BaseSections,
+  sectionContext,
   SectionContext,
   SimpleSectionName,
 } from "./SectionMetas/relSections/baseSections";
@@ -63,12 +64,12 @@ export class SectionMetas {
   }
 
   get raw() {
-    const rawSectionMetas: any = {};
-    for (const sectionContext of Obj.keys(this.core)) {
-      for (const sectionName of Obj.keys(this.core[sectionContext])) {
-        rawSectionMetas[sectionContext][sectionName] = {
-          ...omit(this.core[sectionContext][sectionName], ["varbMetas"]),
-          varbMetas: this.core[sectionContext][sectionName].varbMetas.raw,
+    const rawSectionMetas = sectionContext.makeBlankContextObj();
+    for (const contextName of Obj.keys(this.core)) {
+      for (const sectionName of Obj.keys(this.core[contextName])) {
+        rawSectionMetas[contextName][sectionName] = {
+          ...omit(this.core[contextName][sectionName], ["varbMetas"]),
+          varbMetas: this.core[contextName][sectionName].varbMetas.raw,
         };
       }
     }

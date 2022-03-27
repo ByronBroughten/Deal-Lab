@@ -56,7 +56,7 @@ type ContextSectionToParentArrs = {
   [SC in SectionContext]: SectionToParentArrs<SC>;
 };
 export function makeSectionToParentArrs(): ContextSectionToParentArrs {
-  const partial = sectionContext.makeBlankObj();
+  const partial = sectionContext.makeBlankContextObj();
   for (const contextName of sectionContext.names) {
     type AllParents = Record<SimpleSectionName, SimpleSectionName[]>;
     const sectionToParentArrs = Obj.keys(relSections[contextName]).reduce(

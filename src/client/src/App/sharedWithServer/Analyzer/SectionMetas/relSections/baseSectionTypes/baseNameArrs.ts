@@ -242,7 +242,7 @@ type NextBaseNameArrs = {
 };
 
 function makeBaseNameArrs(): NextBaseNameArrs {
-  const partial = sectionContext.makeBlankObj();
+  const partial = sectionContext.makeBlankContextObj();
   for (const contextName of sectionContext.names) {
     const nameArrs: NextBaseNameArrs[typeof contextName] =
       makeBaseNameArrsForContext(contextName);

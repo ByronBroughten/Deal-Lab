@@ -4,16 +4,15 @@ import jwt from "jsonwebtoken";
 import { isObject } from "lodash";
 import mongoose from "mongoose";
 import { authTokenKey } from "../../../../client/src/App/sharedWithServer/User/crudTypes";
-
-import { rowIndexToTableName } from "../../../../client/src/App/sharedWithServer/Analyzer/SectionMetas/relNameArrs";
 import {
   DbUser,
   LoginUser,
 } from "../../../../client/src/App/sharedWithServer/User/DbUser";
-import { relSections } from "../../../../client/src/App/sharedWithServer/Analyzer/SectionMetas/relSections";
 import Arr from "../../../../client/src/App/sharedWithServer/utils/Arr";
 import { SectionNam } from "../../../../client/src/App/sharedWithServer/Analyzer/SectionMetas/SectionName";
 import { DbEnt } from "../../../../client/src/App/sharedWithServer/Analyzer/DbEntry";
+import { rowIndexToTableName } from "../../../../client/src/App/sharedWithServer/Analyzer/SectionMetas/relNameArrs/StoreTypes";
+import { sectionMetas } from "../../../../client/src/App/sharedWithServer/Analyzer/SectionMetas";
 
 export type UserJwt = { _id: string };
 function tokenHasCorrectProps(value: any) {
@@ -40,7 +39,7 @@ function clientify(dbUser: DbUser): LoginUser {
       const tableSection = DbEnt.topSection(tableEntry, sectionName);
       const rowIds = tableSection.dbVarbs.rowIds as string[];
 
-      const { rowSourceName } = relSections[sectionName];
+      const { rowSourceName } = sectionMetas.get(sectionName);
       const sourceIds = dbUser[rowSourceName].map(({ dbId }) => dbId);
 
       const nextRowIds = Arr.extract(rowIds, sourceIds);

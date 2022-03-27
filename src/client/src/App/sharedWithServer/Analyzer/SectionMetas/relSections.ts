@@ -7,11 +7,7 @@ import { relAnalysisStuff } from "./relSections/relAnalysisStuff";
 import { GeneralRelSection, relSection } from "./relSections/rel/relSection";
 import { RelVarbs } from "./relSections/rel/relVarbs";
 import { LeftRightVarbInfos } from "./relSections/rel/relVarb";
-import {
-  baseSections,
-  SectionContext,
-  SimpleSectionName,
-} from "./relSections/baseSections";
+import { SectionContext, SimpleSectionName } from "./relSections/baseSections";
 import {
   MergeUnionObj,
   MergeUnionObjNonNullable,

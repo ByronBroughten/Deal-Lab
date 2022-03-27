@@ -2,12 +2,8 @@ import { rel } from "./rel";
 import { relSection } from "./rel/relSection";
 
 export const preUserLists = {
-  ...rel.section.singleTimeList("userSingleList", "User List", {
-    parent: "main",
-  }),
-  ...rel.section.ongoingList("userOngoingList", "User Ongoing List", {
-    parent: "main",
-  }),
+  ...rel.section.singleTimeList("userSingleList", "User List"),
+  ...rel.section.ongoingList("userOngoingList", "User Ongoing List"),
   ...relSection.base(
     "both",
     "userVarbList",

@@ -1,10 +1,10 @@
 import Analyzer from "../../Analyzer";
+import { ChildFeInfo } from "../SectionMetas/relNameArrs/ChildTypes";
 import { SectionFinder } from "../SectionMetas/relSections/baseSectionTypes";
 import {
   FeNameInfo,
   FeVarbInfo,
 } from "../SectionMetas/relSections/rel/relVarbInfoTypes";
-import { ChildFeInfo } from "../SectionMetas/relNameArrs";
 import { SectionName } from "../SectionMetas/SectionName";
 import { InitSectionOptions } from "./addSectionAndSolve";
 import { internal } from "./internal";

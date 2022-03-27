@@ -1,24 +1,31 @@
-import { makeRelSections } from "../../sharedWithServer/Analyzer/SectionMetas/relSections";
+import {
+  makeRelSections,
+  RelSections,
+} from "../../sharedWithServer/Analyzer/SectionMetas/relSections";
 import hash from "object-hash";
 
 describe(`relSectionsDidChange`, () => {
-  let relSections: any;
-  let relSectionsHash: any;
+  let relSections: RelSections;
+  let relSectionsHash: string;
+  let relSections2: RelSections;
+  let relSections2Hash: string;
 
-  beforeEach(async () => {
+  beforeEach(() => {
     relSections = makeRelSections();
     relSectionsHash = hash(relSections);
+
+    relSections2 = makeRelSections();
+    relSections2Hash = hash(relSections2);
   });
 
   it("should produce a hash that is equal", () => {
-    const relSections2 = makeRelSections();
-    const relSections2Hash = hash(relSections2);
     expect(relSectionsHash).toBe(relSections2Hash);
   });
   it("should produce a hash that is not equal", () => {
-    const relSections2 = makeRelSections() as any;
-    relSections2.user.childSectionNames.push("sectionName");
-    const relSections2Hash = hash(relSections2);
+    (relSections2.fe.user.childSectionNames as string[]).push(
+      "fakeSectionName"
+    );
+    relSections2Hash = hash(relSections2);
     expect(relSectionsHash).not.toBe(relSections2Hash);
   });
 });

@@ -22,7 +22,7 @@ export type SectionContext = keyof BaseSections;
 const sectionContextNames: SectionContext[] = ["fe", "db"];
 export const sectionContext = {
   names: sectionContextNames,
-  makeBlankObj(): Record<SectionContext, any> {
+  makeBlankContextObj(): Record<SectionContext, any> {
     return {
       fe: {},
       db: {},

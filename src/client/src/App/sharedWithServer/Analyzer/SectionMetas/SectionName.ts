@@ -14,7 +14,7 @@ type NameArrs = {
   [SC in SectionContext]: BaseNameArrs[SC] & RelNameArrs[SC];
 };
 function makeNameArrs(): NameArrs {
-  const partial = sectionContext.makeBlankObj();
+  const partial = sectionContext.makeBlankContextObj();
   for (const contextName of sectionContext.names) {
     const nameArr = {
       ...baseNameArrs[contextName],
