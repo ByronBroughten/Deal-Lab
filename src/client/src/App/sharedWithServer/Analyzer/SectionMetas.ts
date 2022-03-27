@@ -6,6 +6,7 @@ import {
   NextVarbNames,
   OutRelVarbInfo,
   OutVarbRelative,
+  SimpleVarbNames,
   VarbNames,
 } from "./SectionMetas/relSections/rel/relVarbInfoTypes";
 import {
@@ -94,10 +95,15 @@ export class SectionMetas {
     const meta = sectionMetas.get(sectionName, sectionContext ?? "fe");
     return meta.parents[0] as ParentName<SN, SC>;
   }
-  varbMeta<VNS extends NextVarbNames>(varbNames: VNS): VarbMeta {
-    const { sectionName, varbName, sectionContext } = varbNames;
+  varbMeta<VNS extends SimpleVarbNames, CN extends SectionContext = "fe">(
+    varbNames: VNS,
+    contextName?: CN
+  ): VarbMeta {
+    const { sectionName, varbName } = varbNames;
     const varbMeta =
-      this.core[sectionContext][sectionName].varbMetas.get(varbName);
+      this.core[(contextName ?? "fe") as CN][sectionName].varbMetas.get(
+        varbName
+      );
     if (!varbMeta) {
       throw new Error(`No varbMeta at ${sectionName}.${varbName}`);
     } else return varbMeta;
@@ -164,11 +170,13 @@ export class SectionMetas {
         inUpdatePack
       );
 
-      const inVarbMeta = this.varbMeta({
-        sectionName,
-        varbName,
-        sectionContext,
-      } as NextVarbNames);
+      const inVarbMeta = this.varbMeta(
+        {
+          sectionName,
+          varbName,
+        },
+        sectionContext
+      );
       const { varbMetas } = this.core[sectionContext][sectionName];
 
       this.core[sectionContext][sectionName].varbMetas = varbMetas.update(

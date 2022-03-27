@@ -3,15 +3,14 @@ import styled, { css } from "styled-components";
 import theme from "../../../../theme/Theme";
 import { useAnalyzerContext } from "../../../../modules/usePropertyAnalyzer";
 import { useOpenWidth } from "../../../appWide/SectionTitleRow";
-import ToggleViewBtn from "../../../general/ToggleViewBtn";
 import Unit from "./UnitList/UnitItem";
 import ccs from "../../../../theme/cssChunks";
 import array from "../../../../sharedWithServer/utils/Arr";
 import { rem } from "polished";
 import useHowMany from "../../../appWide/customHooks/useHowMany";
 import PlusBtn from "../../../appWide/PlusBtn";
-import { FeParentInfo } from "../../../../sharedWithServer/Analyzer/SectionMetas/relNameArrs";
 import { VscDiffAdded } from "react-icons/vsc";
+import { FeParentInfo } from "../../../../sharedWithServer/Analyzer/SectionMetas/relNameArrs/ParentTypes";
 
 type Props = { feInfo: FeParentInfo<"unit">; className?: string };
 export default function UnitList({ feInfo, className }: Props) {

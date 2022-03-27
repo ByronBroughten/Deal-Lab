@@ -1,4 +1,3 @@
-import { nanoid } from "nanoid";
 import {
   addSectionAndSolve,
   addSectionsAndSolve,
@@ -272,7 +271,7 @@ export default class Analyzer {
     return Id.make();
   }
   static blankStateSections(): StateSections {
-    const core = ObjectKeys(sectionMetas.raw).reduce((core, sectionName) => {
+    const core = ObjectKeys(sectionMetas.raw.fe).reduce((core, sectionName) => {
       core[sectionName] = [];
       return core;
     }, {} as StateSections);

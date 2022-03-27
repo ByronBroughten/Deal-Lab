@@ -12,9 +12,9 @@ import { isEqual } from "lodash";
 import { Inf } from "../sharedWithServer/Analyzer/SectionMetas/Info";
 import { SortByColumnOptions } from "../sharedWithServer/Analyzer/methods/updateRowIndexStore";
 import { SectionName } from "../sharedWithServer/Analyzer/SectionMetas/SectionName";
-import { indexStoreToSectionName } from "../sharedWithServer/Analyzer/SectionMetas/relNameArrs";
 import TrashBtn from "./general/TrashBtn";
 import ColumnHeader from "./SectionTable/ColumnHeader";
+import { indexStoreToSectionName } from "../sharedWithServer/Analyzer/SectionMetas/relNameArrs/StoreTypes";
 
 type Props = { tableName: SectionName<"table"> };
 

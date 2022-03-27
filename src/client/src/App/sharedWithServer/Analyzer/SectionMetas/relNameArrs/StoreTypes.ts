@@ -26,17 +26,16 @@ export type ExtraStoreNameOneParent = Extract<
   HasOneParentSectionName<"fe">
 >;
 
-type TablePreSections = SubType<RelSections, { rowSourceName: string }>;
+type TablePreSections = SubType<RelSections["fe"], { rowSourceName: string }>;
 type SourceToTableName = {
   [Prop in keyof TablePreSections as TablePreSections[Prop]["rowSourceName"]]: Prop;
 };
 
 type SectionToRowIndexStoreName = {
-  [Prop in HasRowIndexStoreName]: IndexStoreName<Prop>;
+  [Prop in HasRowIndexStoreName<"fe">]: IndexStoreName<Prop>;
 };
-
 type RowIndexStoreToSectionName = {
-  [Prop in IndexStoreName<HasRowIndexStoreName>]: keyof SubType<
+  [Prop in IndexStoreName<HasRowIndexStoreName<"fe">>]: keyof SubType<
     SectionToRowIndexStoreName,
     Prop
   >;

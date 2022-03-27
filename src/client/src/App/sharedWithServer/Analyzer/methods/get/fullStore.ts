@@ -1,6 +1,6 @@
 import Analyzer from "../../../Analyzer";
 import { Inf } from "../../SectionMetas/Info";
-import { ExtraStoreNameOneParent } from "../../SectionMetas/relNameArrs";
+import { ExtraStoreNameOneParent } from "../../SectionMetas/relNameArrs/StoreTypes";
 import StateSection from "../../StateSection";
 
 export function fullStoreEntries(

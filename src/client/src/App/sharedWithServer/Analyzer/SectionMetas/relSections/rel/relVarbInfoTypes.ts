@@ -147,6 +147,11 @@ type VarbNameObj = {
   };
 };
 export type NextVarbNames = VarbNameObj[SectionContext][SimpleSectionName];
+export type SimpleVarbNames = {
+  varbName: string;
+  sectionName: SimpleSectionName;
+};
+
 export type VarbNames<
   SN extends SimpleSectionName<SC>,
   SC extends SectionContext = "fe"

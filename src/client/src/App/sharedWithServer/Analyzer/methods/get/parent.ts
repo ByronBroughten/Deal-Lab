@@ -1,11 +1,11 @@
 import Analyzer from "../../../Analyzer";
 import { sectionMetas } from "../../SectionMetas";
-import { SpecificSectionInfo } from "../../SectionMetas/relSections/rel/relVarbInfoTypes";
 import {
   FeParentInfo,
   ParentFinder,
   ParentName,
-} from "../../SectionMetas/relNameArrs";
+} from "../../SectionMetas/relNameArrs/ParentTypes";
+import { SpecificSectionInfo } from "../../SectionMetas/relSections/rel/relVarbInfoTypes";
 import { SectionNam, SectionName } from "../../SectionMetas/SectionName";
 import StateSection from "../../StateSection";
 

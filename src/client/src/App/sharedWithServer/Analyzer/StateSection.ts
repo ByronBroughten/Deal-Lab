@@ -9,13 +9,6 @@ import {
   FeNameInfo,
   FeVarbInfo,
 } from "./SectionMetas/relSections/rel/relVarbInfoTypes";
-import {
-  ChildIdArrs,
-  DefaultStoreName,
-  FeParentInfo,
-  IndexStoreName,
-  ParentName,
-} from "./SectionMetas/relNameArrs";
 import { Inf } from "./SectionMetas/Info";
 import { OutUpdatePack } from "./SectionMetas/VarbMeta";
 import {
@@ -42,6 +35,16 @@ import {
   SectionNam,
   SectionName,
 } from "./SectionMetas/SectionName";
+import { ChildIdArrs } from "./SectionMetas/relNameArrs/ChildTypes";
+import {
+  DefaultStoreName,
+  IndexStoreName,
+} from "./SectionMetas/relNameArrs/StoreTypes";
+import {
+  FeParentInfo,
+  ParentName,
+} from "./SectionMetas/relNameArrs/ParentTypes";
+import { SimpleSectionName } from "./SectionMetas/relSections/baseSections";
 
 export type SectionSeed = Omit<VarbSeeds, "dbVarbs"> & {
   dbSectionInit?: DbSectionInit;
@@ -69,10 +72,12 @@ export type InitStateSectionProps<S extends SectionName> = Pick<
 };
 
 export type StringDisplayNames = { [varbName: string]: string };
-export type StateSectionCore<S extends SectionName> = StorableCore &
+export type StateSectionCore<S extends SimpleSectionName> = StorableCore &
   ClientCore<S>;
 
-export default class StateSection<S extends SectionName = SectionName> {
+export default class StateSection<
+  S extends SimpleSectionName = SimpleSectionName
+> {
   constructor(readonly core: StateSectionCore<S>) {}
   get parentArr() {
     return [...this.meta.parents];
@@ -134,7 +139,7 @@ export default class StateSection<S extends SectionName = SectionName> {
   get indexStoreName(): IndexStoreName<
     Extract<S, SectionName<"hasIndexStore">>
   > {
-    const next = this as any as StateSection<SectionName>;
+    const next = this as any;
     if (StateSection.is(next, "hasIndexStore")) {
       return next.meta.indexStoreName;
     } else throw new Error("This section has no indexStoreName.");

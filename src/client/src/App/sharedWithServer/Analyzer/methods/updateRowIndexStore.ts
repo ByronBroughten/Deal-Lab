@@ -7,11 +7,11 @@ import {
   FeVarbInfo,
   SpecificSectionInfo,
 } from "../SectionMetas/relSections/rel/relVarbInfoTypes";
-import { rowIndexToTableName } from "../SectionMetas/relNameArrs";
 import { FeInfo, Inf } from "../SectionMetas/Info";
 import StateSection from "../StateSection";
 import { SectionName } from "../SectionMetas/SectionName";
 import { internal } from "./internal";
+import { rowIndexToTableName } from "../SectionMetas/relNameArrs/StoreTypes";
 
 function findRowCellByColumn(
   analyzer: Analyzer,

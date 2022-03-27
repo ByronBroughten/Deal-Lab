@@ -54,7 +54,7 @@ export const serverSideUser = {
       ],
     };
 
-    for (const storeName of SectionName.arrs.dbStore) {
+    for (const storeName of SectionNam.arrs.fe.dbStore) {
       if (!(storeName in partial)) partial[storeName] = [];
     }
 
@@ -74,7 +74,7 @@ export const serverSideUser = {
 
 function makeMongooseUserSchema(): Schema<Record<DbStoreName, any>> {
   const partial: Partial<Record<DbStoreName, any>> = {};
-  for (const sectionName of SectionName.arrs.dbStore) {
+  for (const sectionName of SectionNam.arrs.fe.dbStore) {
     partial[sectionName] = [getMonDbEntry()];
   }
   const frame = partial as Record<DbStoreName, any>;

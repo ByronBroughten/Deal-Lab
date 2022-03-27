@@ -2,10 +2,13 @@ import Analyzer from "../../../Analyzer";
 import { Obj } from "../../../utils/Obj";
 import { FeInfo } from "../../SectionMetas/Info";
 import {
+  ChildIdArrs,
+  ChildName,
+} from "../../SectionMetas/relNameArrs/ChildTypes";
+import {
   FeNameInfo,
   SpecificSectionInfo,
 } from "../../SectionMetas/relSections/rel/relVarbInfoTypes";
-import { ChildIdArrs, ChildName } from "../../SectionMetas/relNameArrs";
 import { SectionName } from "../../SectionMetas/SectionName";
 import StateSection from "../../StateSection";
 

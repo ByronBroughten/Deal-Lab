@@ -1,8 +1,8 @@
 import Analyzer from "../../Analyzer";
 import { Obj } from "../../utils/Obj";
 import { DbEntry } from "../DbEntry";
+import { FeParentInfo } from "../SectionMetas/relNameArrs/ParentTypes";
 import { FeVarbInfo } from "../SectionMetas/relSections/rel/relVarbInfoTypes";
-import { FeParentInfo } from "../SectionMetas/relNameArrs";
 import { SectionName } from "../SectionMetas/SectionName";
 import { internal } from "./internal";
 

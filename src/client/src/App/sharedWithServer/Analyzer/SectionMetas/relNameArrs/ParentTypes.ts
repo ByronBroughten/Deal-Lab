@@ -131,8 +131,6 @@ export function makeParentSectionNames<SC extends SectionContext>(
   sectionContext: SC
 ) {
   const sectionToParentArrs = makeSectionToParentArrs()[sectionContext];
-  sectionToParentArrs.property;
-
   const hasParentSectionNames = Obj.keys(sectionToParentArrs).filter(
     (sectionName) =>
       sectionToParentArrs[sectionName as SimpleSectionName].length > 0

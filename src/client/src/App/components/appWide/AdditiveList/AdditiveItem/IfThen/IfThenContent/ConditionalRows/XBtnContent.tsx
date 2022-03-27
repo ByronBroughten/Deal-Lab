@@ -3,7 +3,7 @@ import styled from "styled-components/macro";
 import XBtnRow from "./XBtnContent/XBtnRow";
 import theme from "../../../../../../../theme/Theme";
 import { conditionalRowSectionName } from "../ConditionalRows";
-import { FeParentInfo } from "../../../../../../../sharedWithServer/Analyzer/SectionMetas/relNameArrs";
+import { FeParentInfo } from "../../../../../../../sharedWithServer/Analyzer/SectionMetas/relNameArrs/ParentTypes";
 
 export default function XBtnContent({
   conditionalRowIds,

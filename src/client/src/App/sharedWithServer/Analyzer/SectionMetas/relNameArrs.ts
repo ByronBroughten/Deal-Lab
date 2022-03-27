@@ -20,8 +20,8 @@ import {
 
 // this is here so that there isn't spaghetti code between relSectionTypes
 // and StoreTypes
-export type HasRowIndexStoreName = keyof SubType<
-  RelSections,
+export type HasRowIndexStoreName<SC extends SectionContext> = keyof SubType<
+  RelSections[SC],
   { indexStoreName: BaseName<"rowIndex"> }
 >;
 
@@ -53,9 +53,9 @@ function makeRelNameArrs<SC extends SectionContext>(sectionContext: SC) {
       return this.hasIndexStore.filter((sectionName) => {
         const { indexStoreName } = relSections[sectionContext][
           sectionName
-        ] as any;
+        ] as any as GeneralRelSection;
         return isBaseName(indexStoreName, "rowIndex");
-      }) as HasRowIndexStoreName[];
+      }) as string[] as HasRowIndexStoreName<SC>[];
     },
     get hasFullIndexStore() {
       return Arr.exclude(this.hasIndexStore, this.hasRowIndexStore);
@@ -83,10 +83,10 @@ function makeRelNameArrs<SC extends SectionContext>(sectionContext: SC) {
       return Arr.extract(
         savableSectionNames,
         this.hasOneParent as any
-      ) as any as Extract<
+      ) as Extract<
         typeof savableSectionNames[number],
         HasOneParentSectionName<SC>[number]
-      >;
+      >[];
     },
     get isSingleParent() {
       return (this.hasOneParent as SimpleSectionName[]).reduce(
@@ -96,8 +96,8 @@ function makeRelNameArrs<SC extends SectionContext>(sectionContext: SC) {
             names.push(...singleParentNameArr);
           return names;
         },
-        [] as any[]
-      ) as any as IsSingleParentName<SC>[];
+        [] as string[]
+      ) as string[] as IsSingleParentName<SC>[];
     },
     userListItem: Obj.values(userListItemTypes) as UserItemSectionName[],
   } as const;

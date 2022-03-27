@@ -4,7 +4,7 @@ import ControlContent from "./ConditionalRows/ControlContent";
 import LogicContent from "./ConditionalRows/LogicContent";
 import XBtnContent from "./ConditionalRows/XBtnContent";
 import theme from "../../../../../../theme/Theme";
-import { FeParentInfo } from "../../../../../../sharedWithServer/Analyzer/SectionMetas/relNameArrs";
+import { FeParentInfo } from "../../../../../../sharedWithServer/Analyzer/SectionMetas/relNameArrs/ParentTypes";
 
 export const conditionalRowSectionName = "conditionalRow";
 type Props = {

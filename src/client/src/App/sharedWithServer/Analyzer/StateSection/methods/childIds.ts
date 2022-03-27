@@ -1,13 +1,13 @@
 import array from "../../../utils/Arr";
 import { cloneDeep } from "lodash";
+import { sectionMetas } from "../../SectionMetas";
+import StateSection from "../../StateSection";
+import { SectionName } from "../../SectionMetas/SectionName";
 import {
   ChildFeInfo,
   ChildIdArrs,
   ChildName,
-} from "../../SectionMetas/relNameArrs";
-import { sectionMetas } from "../../SectionMetas";
-import StateSection from "../../StateSection";
-import { SectionName } from "../../SectionMetas/SectionName";
+} from "../../SectionMetas/relNameArrs/ChildTypes";
 
 export function childFeIds<S extends SectionName>(
   this: StateSection<S>,

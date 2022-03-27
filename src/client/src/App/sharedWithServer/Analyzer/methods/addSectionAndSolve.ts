@@ -1,5 +1,5 @@
 import Analyzer from "../../Analyzer";
-import { ParentFinder } from "../SectionMetas/relNameArrs";
+import { ParentFinder } from "../SectionMetas/relNameArrs/ParentTypes";
 import { SectionName } from "../SectionMetas/SectionName";
 import { internal } from "./internal";
 import { InitSectionAndChildrenProps } from "./internal/addSections";

@@ -1,4 +1,8 @@
-import { SectionContext, sectionContext } from "./relSections/baseSections";
+import {
+  SectionContext,
+  sectionContext,
+  SimpleSectionName,
+} from "./relSections/baseSections";
 import { SectionVarbName } from "./relSections/baseSectionTypes";
 import { relNameArrs, RelNameArrs } from "./relNameArrs";
 import {
@@ -50,3 +54,12 @@ export const SectionNam = {
     return names.includes(value);
   },
 };
+
+type GeneralNameArrs = {
+  [SC in SectionContext]: Record<
+    SectionNameType<SC>,
+    readonly SimpleSectionName[]
+  >;
+};
+const _testNameArrs = <T extends GeneralNameArrs>(_: T) => undefined;
+_testNameArrs(SectionNam.arrs);

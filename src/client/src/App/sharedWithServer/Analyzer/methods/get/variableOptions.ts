@@ -26,7 +26,6 @@ function initStaticVarbOption(
   const varbMeta = sectionMetas.varbMeta({
     sectionName,
     varbName,
-    sectionContext: "fe",
   });
   const sectionMeta = sectionMetas.get(sectionName);
 

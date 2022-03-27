@@ -1,6 +1,7 @@
 import { pick } from "lodash";
 import Analyzer from "../../../Analyzer";
-import { DbInfo, Inf } from "../../SectionMetas/Info";
+import { Inf } from "../../SectionMetas/Info";
+import { ChildName } from "../../SectionMetas/relNameArrs/ChildTypes";
 import {
   FeNameInfo,
   MultiSectionInfo,
@@ -10,7 +11,6 @@ import {
   SpecificVarbInfo,
   SpecificSectionsInfo,
 } from "../../SectionMetas/relSections/rel/relVarbInfoTypes";
-import { ChildName } from "../../SectionMetas/relNameArrs";
 import { SectionName } from "../../SectionMetas/SectionName";
 import StateSection from "../../StateSection";
 import StateVarb from "../../StateSection/StateVarb";

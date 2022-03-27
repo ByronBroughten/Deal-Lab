@@ -16,6 +16,7 @@ import {
   FeNameInfo,
   FeVarbInfo,
   RelVarbInfo,
+  NextVarbNames,
 } from "../SectionMetas/relSections/rel/relVarbInfoTypes";
 import { DisplayName } from "../SectionMetas/relSections/rel/relVarbTypes";
 import { SectionName } from "../SectionMetas/SectionName";
@@ -221,7 +222,10 @@ export default class StateVarb {
     { id, sectionName, varbName }: FeVarbInfo,
     options: StateVarbOptions = {}
   ): StateVarb {
-    const meta = sectionMetas.varbMeta({ sectionName, varbName });
+    const meta = sectionMetas.varbMeta({
+      sectionName,
+      varbName,
+    });
     return new StateVarb(
       {
         outEntities: [],

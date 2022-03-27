@@ -8,10 +8,6 @@ import theme, {
   ThemeSectionName,
   themeSectionNameOrDefault,
 } from "../../theme/Theme";
-import {
-  ChildName,
-  IndexParentName,
-} from "../../sharedWithServer/Analyzer/SectionMetas/relNameArrs";
 import { sectionMetas } from "../../sharedWithServer/Analyzer/SectionMetas";
 import { FeInfo, Inf } from "../../sharedWithServer/Analyzer/SectionMetas/Info";
 import {
@@ -20,6 +16,8 @@ import {
 } from "../../sharedWithServer/Analyzer/SectionMetas/SectionName";
 import TrashBtn from "../general/TrashBtn";
 import { useStores } from "../../modules/customHooks/useStore";
+import { ChildName } from "../../sharedWithServer/Analyzer/SectionMetas/relNameArrs/ChildTypes";
+import { IndexParentName } from "../../sharedWithServer/Analyzer/SectionMetas/relNameArrs/StoreTypes";
 
 function useDeleteIndexSection(
   sectionName: SectionName<"hasIndexStore">
