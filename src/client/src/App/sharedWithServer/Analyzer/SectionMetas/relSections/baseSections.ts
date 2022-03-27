@@ -19,7 +19,16 @@ export type SimpleSectionName<SC extends SectionContext = SectionContext> =
   keyof BaseSections[SectionContext];
 
 export type SectionContext = keyof BaseSections;
-export const sectionContexts: SectionContext[] = ["fe", "db"];
+const sectionContextNames: SectionContext[] = ["fe", "db"];
+export const sectionContext = {
+  names: sectionContextNames,
+  makeBlankObj(): Record<SectionContext, any> {
+    return {
+      fe: {},
+      db: {},
+    };
+  },
+};
 
 export type SectionContextOrBoth = SectionContext | "both";
 export type ExtractSectionContext<SCB extends SectionContextOrBoth> =

@@ -29,35 +29,6 @@ import {
 } from "./SectionMetas/relNameArrs/ParentTypes";
 import { VarbMetas, VarbMetasRaw } from "./SectionMetas/VarbMetas";
 
-// type TopTierKeys = "a" | "b";
-// type SecondTierKeys = {
-//   a: "aa" | "bb";
-//   b: "bb" | "cc";
-// };
-// type ObjectToQuery = {
-//   [T in TopTierKeys]: {
-//     [S in SecondTierKeys[T]]: {
-//       data1: T;
-//       data2: S;
-//     };
-//   };
-// };
-// type UsesKeys<T extends TopTierKeys, S extends SecondTierKeys[T]> = {
-//   value: ObjectToQuery[T][S & keyof ObjectToQuery[T]];
-// };
-// looping in typescript
-// using discriminated unions in place of individual arguments
-
-// type SectionNamePlusContext =
-//   | {
-//       sectionContext: Extract<SectionContext, "fe">;
-//       sectionName: SimpleSectionName<"fe">;
-//     }
-//   | {
-//       sectionContext: Extract<SectionContext, "db">;
-//       sectionName: SimpleSectionName<"db">;
-//     };
-
 export type SectionMeta<
   SN extends SimpleSectionName<SC>,
   SC extends SectionContext = "fe"

@@ -8,7 +8,7 @@ import {
 import { relSections } from "../relSections";
 import {
   SectionContext,
-  sectionContexts,
+  sectionContext,
   SimpleSectionName,
 } from "../relSections/baseSections";
 import { BaseName } from "../relSections/baseSectionTypes";
@@ -56,13 +56,10 @@ type ContextSectionToParentArrs = {
   [SC in SectionContext]: SectionToParentArrs<SC>;
 };
 export function makeSectionToParentArrs(): ContextSectionToParentArrs {
-  const partial: { [SC in SectionContext]: any } = {
-    fe: {},
-    db: {},
-  };
-  for (const sectionContext of sectionContexts) {
+  const partial = sectionContext.makeBlankObj();
+  for (const contextName of sectionContext.names) {
     type AllParents = Record<SimpleSectionName, SimpleSectionName[]>;
-    const sectionToParentArrs = Obj.keys(relSections[sectionContext]).reduce(
+    const sectionToParentArrs = Obj.keys(relSections[contextName]).reduce(
       (parents, key) => {
         parents[key as keyof typeof parents] = [];
         return parents;
@@ -70,15 +67,15 @@ export function makeSectionToParentArrs(): ContextSectionToParentArrs {
       {} as AllParents
     ) as AllParents;
 
-    for (const sectionName of Obj.keys(relSections[sectionContext])) {
-      for (const childName of relSections[sectionContext][sectionName]
+    for (const sectionName of Obj.keys(relSections[contextName])) {
+      for (const childName of relSections[contextName][sectionName]
         .childSectionNames) {
         sectionToParentArrs[childName as keyof typeof sectionToParentArrs].push(
           sectionName
         );
       }
     }
-    partial[sectionContext] = sectionToParentArrs;
+    partial[contextName] = sectionToParentArrs;
   }
   return partial as ContextSectionToParentArrs;
 }

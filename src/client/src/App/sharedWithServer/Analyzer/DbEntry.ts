@@ -17,6 +17,7 @@ import { AlwaysOneVarbFinder, SectionName } from "./SectionMetas/SectionName";
 import { DbInfo, Inf } from "./SectionMetas/Info";
 import { DbStoreName } from "./SectionMetas/relSections/baseSectionTypes";
 import { Id } from "./SectionMetas/relSections/baseSections/id";
+import { ParentName } from "./SectionMetas/relNameArrs/ParentTypes";
 
 export type DbValue = BasicValue | DbNumObj;
 export type DbVarbs = {

@@ -1,4 +1,4 @@
-import { SectionContext, sectionContexts } from "./relSections/baseSections";
+import { SectionContext, sectionContext } from "./relSections/baseSections";
 import { SectionVarbName } from "./relSections/baseSectionTypes";
 import { relNameArrs, RelNameArrs } from "./relNameArrs";
 import {
@@ -10,17 +10,13 @@ type NameArrs = {
   [SC in SectionContext]: BaseNameArrs[SC] & RelNameArrs[SC];
 };
 function makeNameArrs(): NameArrs {
-  const partial: Record<SectionContext, any> = {
-    fe: {},
-    db: {},
-  };
-
-  for (const sectionContext of sectionContexts) {
-    const nameArr: NameArrs[typeof sectionContext] = {
-      ...baseNameArrs[sectionContext],
-      ...relNameArrs[sectionContext],
-    };
-    partial[sectionContext] = nameArr;
+  const partial = sectionContext.makeBlankObj();
+  for (const contextName of sectionContext.names) {
+    const nameArr = {
+      ...baseNameArrs[contextName],
+      ...relNameArrs[contextName],
+    } as NameArrs[typeof contextName];
+    partial[contextName] = nameArr;
   }
   return partial as NameArrs;
 }

@@ -1,6 +1,7 @@
 import {
   BaseSections,
   baseSections,
+  sectionContext,
   SectionContext,
   SimpleSectionName,
 } from "../baseSections";
@@ -10,6 +11,7 @@ import { Obj } from "../../../../utils/Obj";
 import { NeversToNull, SubType } from "../../../../utils/typescript";
 import { ToArrObj } from "../../../../utils/types/objectTypes";
 import { base } from "../baseSections/base";
+import { GeneralBaseSection } from "../baseSections/baseSection";
 
 type HasVarbSectionName<
   NoVarbSectionName = keyof SubType<
@@ -63,7 +65,7 @@ function makeBaseNameSwitchArrs(feBaseSectionVarbs: FeBaseSectionVarbs) {
 }
 
 type SwitchSectionNameArrs = ToArrObj<SwitchSectionNames>;
-function makeSwitchSectionNameArrs(baseNameSwitchArrs: BaseNameSwitchArrs) {
+function finalizeSwitchSectionNameArrs(baseNameSwitchArrs: BaseNameSwitchArrs) {
   return switchName.nameArr.reduce((switchSectionNameArrs, switchName) => {
     const sectionNames: any[] = [];
 
@@ -76,12 +78,11 @@ function makeSwitchSectionNameArrs(baseNameSwitchArrs: BaseNameSwitchArrs) {
     switchSectionNameArrs[switchName] = sectionNames;
   }, {} as any) as SwitchSectionNameArrs;
 }
-function switchSectionNameArrPipe(
+function makeSwitchSectionNameArrs(
   feBaseSectionVarbs: FeBaseSectionVarbs
 ): SwitchSectionNameArrs {
   const baseNameSwitchArrs = makeBaseNameSwitchArrs(feBaseSectionVarbs);
-  const switchSectionNameArrs = makeSwitchSectionNameArrs(baseNameSwitchArrs);
-  return switchSectionNameArrs;
+  return finalizeSwitchSectionNameArrs(baseNameSwitchArrs);
 }
 
 export const depreciatingDbStoreNames = [
@@ -108,108 +109,12 @@ export const depreciatingDbStoreNames = [
   "userOngoingList",
 ] as const;
 
-const sharedBaseNames = {
-  // for now, this assumes that dbSectionNames is a superset of feSectionNames
-  shared: Obj.keys(baseSections.fe),
-
-  // boolean, assumes that these aren't changed between fe and db
-  initOnLogin: Obj.entryKeysWithPropValue(
-    baseSections.fe,
-    "loadOnLogin",
-    true as true
-  ),
-  feGuestAccessStore: Obj.entryKeysWithPropValue(
-    baseSections.fe,
-    "feGuestAccess",
-    true as true
-  ),
-  alwaysOne: Obj.entryKeysWithPropValue(
-    baseSections.fe,
-    "alwaysOne",
-    true as true
-  ),
-  userDefined: Obj.entryKeysWithPropValue(
-    baseSections,
-    "userDefined",
-    true as true
-  ),
-  get feSaved() {
-    return this.userList;
-  },
-
-  get notAlwaysOne() {
-    return Arr.exclude(this.shared, this.alwaysOne);
-  },
-
-  // sectionShape
-  // filtering by shape may often be better to do by children and varbNames
-  // rather than just varbName, so probably best at the relSection level
-  rowIndex: Obj.filterKeysForEntryShape(baseSections.fe, base.section.rowIndex),
-  table: Obj.filterKeysForEntryShape(baseSections.fe, base.section.table),
-
-  // varbShape
-  // In some cases it might be safer to go by whether they have the same children
-  // in which cases they would be derived from relSections
-  singleTimeList: Obj.filterKeysForEntryShape(
-    feBaseSectionVarbs,
-    feBaseSectionVarbs.userSingleList
-  ),
-  ongoingList: Obj.filterKeysForEntryShape(
-    feBaseSectionVarbs,
-    feBaseSectionVarbs.userOngoingList
-  ),
-  hasVarb: Obj.keys(baseSections.fe).filter((sectionName) => {
-    const varbNames = Object.keys(baseSections.fe[sectionName].varbSchemas);
-    return varbNames.length > 0;
-  }) as HasVarbSectionName[],
-  hasGlobalVarbs: Obj.entryKeysWithPropValue(
-    baseSections.fe,
-    "hasGlobalVarbs",
-    true as true
-  ),
-
-  // extracted
-  get userList() {
-    return Arr.extract(this.shared, [
-      "userSingleList",
-      "userOngoingList",
-      "userVarbList",
-    ] as const);
-  },
-  get additiveList() {
-    return Arr.extract(this.userList, [
-      "userSingleList",
-      "userOngoingList",
-    ] as const);
-  },
-  get alwaysOneHasVarb() {
-    return Arr.extract(this.hasVarb, this.alwaysOne);
-  },
-
-  // combo
-  get allList() {
-    return [
-      ...this.singleTimeList,
-      ...this.ongoingList,
-      "userVarbList",
-    ] as const;
-  },
-
-  // misc
-  ...switchSectionNameArrPipe(feBaseSectionVarbs),
-} as const;
-
-type GeneralBaseNameArrs = {
-  fe: Record<string, readonly (keyof BaseSections["fe"])[]>;
-  db: Record<string, readonly (keyof BaseSections["db"])[]>;
-};
-
-function snArrs<
-  C extends SectionContext,
+function makeSingleSectionNameArrs<
+  SC extends SectionContext,
   SnArrs = {
-    [Prop in keyof BaseSections[C]]: readonly Prop[];
+    [Prop in keyof BaseSections[SC]]: readonly Prop[];
   }
->(context: C): SnArrs {
+>(context: SC): SnArrs {
   return Obj.keys(baseSections[context]).reduce((snArrs, sectionName) => {
     snArrs[sectionName as keyof SnArrs] = [
       sectionName,
@@ -218,41 +123,147 @@ function snArrs<
   }, {} as SnArrs);
 }
 
-export const baseNameArrs = {
-  fe: {
-    ...snArrs("fe"),
-    ...sharedBaseNames,
-    all: Obj.keys(baseSections.fe),
+function makeBaseNameArrsForContext<SC extends SectionContext>(
+  sectionContext: SC
+) {
+  const baseSectionsOfContext = baseSections[sectionContext];
+
+  return {
+    ...makeSingleSectionNameArrs(sectionContext),
+    dbStore: depreciatingDbStoreNames,
+
+    all: Obj.keys(baseSectionsOfContext) as SimpleSectionName<SC>[],
+
+    // booleans
+    initOnLogin: Obj.entryKeysWithPropValue(
+      baseSectionsOfContext,
+      "loadOnLogin",
+      true as true
+    ),
+    feGuestAccessStore: Obj.entryKeysWithPropValue(
+      baseSectionsOfContext,
+      "feGuestAccess",
+      true as true
+    ),
+    alwaysOne: Obj.entryKeysWithPropValue(
+      baseSectionsOfContext,
+      "alwaysOne",
+      true as true
+    ),
+    userDefined: Obj.entryKeysWithPropValue(
+      baseSectionsOfContext,
+      "userDefined",
+      true as true
+    ),
     protected: Obj.entryKeysWithPropValue(
       baseSections.fe,
       "protected",
       true as true
     ),
-    dbStore: depreciatingDbStoreNames,
-  },
-  db: {
-    ...snArrs("db"),
-    ...sharedBaseNames,
-    all: Obj.keys(baseSections.db),
-    protected: Obj.entryKeysWithPropValue(
-      baseSections.db,
-      "protected",
+
+    // sectionShape
+    // filtering by shape may often be better to do by children and varbNames
+    // rather than just varbName, so probably best at a higher level
+    rowIndex: Obj.filterKeysForEntryShape(
+      baseSectionsOfContext,
+      base.section.rowIndex
+    ),
+    table: Obj.filterKeysForEntryShape(
+      baseSectionsOfContext,
+      base.section.table
+    ),
+
+    // varbShape
+    // In some cases it might be safer to go by whether they have the same children
+    // in which cases they would be derived at a higher level
+    singleTimeList: Obj.filterKeysForEntryShape(
+      feBaseSectionVarbs,
+      feBaseSectionVarbs.userSingleList
+    ),
+    ongoingList: Obj.filterKeysForEntryShape(
+      feBaseSectionVarbs,
+      feBaseSectionVarbs.userOngoingList
+    ),
+    hasVarb: Obj.keys(baseSectionsOfContext).filter((sectionName) => {
+      const varbNames = Object.keys(
+        (baseSectionsOfContext[sectionName] as any as GeneralBaseSection)
+          .varbSchemas
+      );
+      return varbNames.length > 0;
+    }) as HasVarbSectionName[],
+    hasGlobalVarbs: Obj.entryKeysWithPropValue(
+      baseSectionsOfContext,
+      "hasGlobalVarbs",
       true as true
     ),
-    dbStore: depreciatingDbStoreNames,
-  },
-} as const;
+
+    // extracted
+    get userList() {
+      return Arr.extract(this.all, [
+        "userSingleList",
+        "userOngoingList",
+        "userVarbList",
+      ] as const);
+    },
+    get additiveList() {
+      return Arr.extract(this.userList, [
+        "userSingleList",
+        "userOngoingList",
+      ] as const);
+    },
+    get notAlwaysOne() {
+      return Arr.exclude(this.all, this.alwaysOne);
+    },
+    get alwaysOneHasVarb() {
+      return Arr.extract(this.hasVarb, this.alwaysOne);
+    },
+    // combo
+    get allList() {
+      return [
+        ...this.singleTimeList,
+        ...this.ongoingList,
+        "userVarbList",
+      ] as const;
+    },
+
+    // alias
+    get feSaved() {
+      return this.userList;
+    },
+  };
+}
+class BaseNameArrsForContext<SC extends SectionContext> {
+  call(sectionContext: SC) {
+    return makeBaseNameArrsForContext<SC>(sectionContext);
+  }
+}
+type NextBaseNameArrs = {
+  [SC in SectionContext]: ReturnType<BaseNameArrsForContext<SC>["call"]>;
+};
+
+function makeBaseNameArrs(): NextBaseNameArrs {
+  const partial = sectionContext.makeBlankObj();
+  for (const contextName of sectionContext.names) {
+    const nameArrs: NextBaseNameArrs[typeof contextName] =
+      makeBaseNameArrsForContext(contextName);
+    partial[contextName] = nameArrs;
+  }
+  return partial;
+}
+
+type GeneralBaseNameArrs = {
+  fe: Record<string, readonly (keyof BaseSections["fe"])[]>;
+  db: Record<string, readonly (keyof BaseSections["db"])[]>;
+};
+
+export const baseNameArrs = makeBaseNameArrs();
+
 const testBaseNameArrs = (_: GeneralBaseNameArrs) => undefined;
 testBaseNameArrs(baseNameArrs);
 
 export type BaseNameArrs = typeof baseNameArrs;
 export type BaseNameSelector<SC extends SectionContext = "fe"> =
   keyof BaseNameArrs[SC];
-
-const sharedAndNoParentNames = [
-  ...sharedBaseNames.shared,
-  "no parent",
-] as const;
 
 // export const baseNames = {
 //   all: allSectionNames,

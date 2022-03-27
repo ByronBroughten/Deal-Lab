@@ -23,8 +23,13 @@ function initStaticVarbOption(
   sectionName: SectionName<"hasGlobalVarbs">,
   varbName: string
 ): VariableOption {
-  const varbMeta = sectionMetas.varbMeta({ sectionName, varbName });
+  const varbMeta = sectionMetas.varbMeta({
+    sectionName,
+    varbName,
+    sectionContext: "fe",
+  });
   const sectionMeta = sectionMetas.get(sectionName);
+
   return {
     varbInfo: {
       sectionName,
@@ -37,7 +42,7 @@ function initStaticVarbOption(
   };
 }
 function initStaticVarbOptions(): VariableOption[] {
-  const sectionMetaEntries = Object.entries(sectionMetas.raw);
+  const sectionMetaEntries = Object.entries(sectionMetas.raw.fe);
   return sectionMetaEntries.reduce((options, [sectionName, sectionMeta]) => {
     const varbNames = ObjectKeys(sectionMeta.varbMetas) as string[];
     if (SectionNam.is(sectionName, "hasGlobalVarbs"))
@@ -105,7 +110,8 @@ function userListTotalOptions(analyzer: Analyzer): VariableOption[] {
   };
 
   const options: VariableOption[] = [];
-  for (const sectionName of SectionName.arrs.additiveList) {
+
+  for (const sectionName of SectionNam.arrs.fe.additiveList) {
     const collectionName = sectionToCollectionName[sectionName];
     const feIds = analyzer.singleSection("main").childFeIds(sectionName);
     for (const id of feIds) {
