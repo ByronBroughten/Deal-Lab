@@ -1,5 +1,5 @@
 import Analyzer from "../../../Analyzer";
-import { DbEntry, DbSection, DbSections } from "../../DbEntry";
+import { DbEntry, DbSection, DbSections, RawSectionHead } from "../../DbEntry";
 import { SectionFinder } from "../../SectionMetas/relSections/baseSectionTypes";
 import { FeInfo } from "../../SectionMetas/Info";
 import {
@@ -135,3 +135,21 @@ export function dbIndexEntry(
     });
   }
 }
+
+// export function makeRawSectionHead<SF extends SectionFinder>(
+//   this: Analyzer,
+//   finder: SF
+// ): RawSectionHead<{
+//     sectionName: SF extends SectionFinder<infer SN> ? SN : SectionName
+//     contextName: "fe"
+// }> {
+//   const section = this.section(finder);
+//   const { dbId, sectionName } = section;
+
+//   const rawSectionHead: RawSectionHead = {
+//     contextName: "fe",
+//     sectionName,
+//     dbId,
+//     childDbIds: section.child
+//   }
+// }

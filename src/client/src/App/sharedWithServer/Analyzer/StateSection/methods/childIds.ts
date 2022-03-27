@@ -26,6 +26,7 @@ export function allChildFeIds<S extends SectionName>(
 ): ChildIdArrs<S> {
   return cloneDeep(this.core.childFeIdArrs);
 }
+
 export function childIdx<S extends SectionName>(
   this: StateSection<S>,
   { sectionName, id }: ChildFeInfo<S>

@@ -47,6 +47,8 @@ const zFeVarbInfo = zFeSectionInfo.merge(zVarbNames);
 export const zDbVarbInfo = zDbSectionInfo.merge(zVarbNames);
 export const zRelVarbInfo = zRelSectionInfo.merge(zVarbNames);
 
+export type AbsoluteIdType = "feId" | "dbId";
+
 export type FeSectionInfoBase = z.infer<typeof zFeSectionInfo>;
 export type FeNameInfo<
   S extends BaseName | "no parent" = BaseName,

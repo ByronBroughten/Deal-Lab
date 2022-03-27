@@ -28,6 +28,7 @@ import {
 } from "./SectionMetas/relSections/baseSections";
 import {
   ChildName,
+  DescendantName,
   SectionAndDescendantName,
 } from "./SectionMetas/relNameArrs/ChildTypes";
 
@@ -67,22 +68,21 @@ type RawSection<SCP extends SectionContextProps> = {
 type RawSectionArrs<SCP extends SectionContextProps> = {
   [SDN in SectionAndDescendantName<SCP>]: RawSection<SCP>[];
 };
-type RawSectionPack<SCP extends SectionContextProps> = {
-  sectionName: SCP["sectionName"];
-  dbId: string;
-  dbSections: {
-    [SDN in SectionAndDescendantName<SCP>]: RawSectionArrs<SCP>;
+export type RawSectionHead<SCP extends SectionContextProps> = SCP &
+  RawSection<SCP> & {
+    childSections: {
+      [SDN in DescendantName<SCP>]: RawSectionArrs<SCP>;
+    };
   };
-};
 
 function _testDbEntry(
-  feRaw: RawSectionPack<{ sectionName: "propertyIndex"; contextName: "fe" }>,
-  dbRaw: RawSectionPack<{ sectionName: "propertyIndex"; contextName: "db" }>
+  feRaw: RawSectionHead<{ sectionName: "propertyIndex"; contextName: "fe" }>,
+  dbRaw: RawSectionHead<{ sectionName: "propertyIndex"; contextName: "db" }>
 ) {
-  feRaw.dbSections.cell;
+  const _test1 = feRaw.childSections.cell;
   // @ts-expect-error
-  feRaw.dbSections.unit;
-  dbRaw.dbSections.unit;
+  const _test2 = feRaw.childSections.unit;
+  const _test3 = dbRaw.childSections.unit;
 }
 
 type EntryPack<S extends SectionName<"dbStore"> = SectionName<"dbStore">> = [

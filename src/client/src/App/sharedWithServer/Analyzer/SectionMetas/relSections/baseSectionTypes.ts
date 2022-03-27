@@ -21,9 +21,9 @@ export type BaseName<
 > = NameArrs[number & keyof NameArrs];
 
 //
-export type SectionFinder<
-  S extends SimpleSectionName = SimpleSectionName<"fe">
-> = SpecificSectionInfo<S> | Extract<S, BaseName<"alwaysOne", "fe">>;
+export type SectionFinder<S extends SimpleSectionName = SimpleSectionName> =
+  | SpecificSectionInfo<S>
+  | Extract<S, BaseName<"alwaysOne", "fe">>;
 
 type BaseSectionVarbs<
   SC extends ContextName,
