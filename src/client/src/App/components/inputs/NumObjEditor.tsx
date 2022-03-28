@@ -24,6 +24,10 @@ type Props = PropAdornments & {
   labeled?: boolean;
   bypassNumeric?: boolean;
 };
+// I will need to allow a flag to be passed to the
+// numObjEditor. One that specifies that adornments
+// should be on all the time.
+// or something like that.
 
 export default function NumObjEditor({
   feVarbInfo,

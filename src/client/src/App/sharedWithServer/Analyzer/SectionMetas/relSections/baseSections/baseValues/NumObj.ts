@@ -54,11 +54,15 @@ export type FailedVarb = { errorMessage: string } & UpdateVarbInfo;
 export type FailedVarbs = FailedVarb[];
 export type NumObjNumber = number | "?";
 
+const undividable = ["?", 0];
 export class NumObj {
   constructor(
     readonly core: NumObjCore,
     readonly cache: NumObjCache = { solvableText: "", number: "?" }
   ) {}
+  get isDividable() {
+    return !undividable.includes(this.number);
+  }
   get editorText(): string {
     return this.core.editorText;
   }

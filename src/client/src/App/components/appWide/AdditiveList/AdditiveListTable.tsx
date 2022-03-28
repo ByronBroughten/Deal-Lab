@@ -1,4 +1,3 @@
-import { IoMdSettings } from "react-icons/io";
 import styled from "styled-components";
 import useOnOutsideClickRef from "../../../modules/customHooks/useOnOutsideClickRef";
 import useToggleView from "../../../modules/customHooks/useToggleView";
@@ -14,6 +13,7 @@ import AdditiveItem from "./AdditiveItem";
 import useAddListItem from "./AdditiveListTable/useAddListItem";
 import { valueSwitches } from "./useAdditiveItem";
 import { userListItemTypes } from "../../../sharedWithServer/Analyzer/SectionMetas/relNameArrs/UserListTypes";
+import BtnTooltip from "../BtnTooltip";
 
 const switchValueToDisplay = {
   labeledEquation: "Equation",
@@ -57,7 +57,14 @@ export default function AdditiveListTable({ feInfo, themeSectionName }: Props) {
 
   return (
     <Styled className="AdditiveListTable-root" sectionName={themeSectionName}>
-      {areNone && <AddItemBtn onClick={addItem} className="noTable" />}
+      {areNone && (
+        <BtnTooltip
+          title="Add list item"
+          className="AdditiveListTable-addItemBtn noTable"
+        >
+          <AddItemBtn onClick={addItem} className="noTable" />
+        </BtnTooltip>
+      )}
       {isAtLeastOne && (
         <table className="AdditiveListTable-table">
           <thead>
@@ -100,7 +107,7 @@ const Styled = styled.div<{
   }
   .AdditiveListTable-addItemBtn.noTable {
     width: 100%;
-    margin-top: ${theme.s2};
+    margin-top: ${theme.s1};
   }
 
   .AdditiveListTable-table {

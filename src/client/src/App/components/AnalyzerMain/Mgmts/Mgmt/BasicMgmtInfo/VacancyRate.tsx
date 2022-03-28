@@ -11,10 +11,7 @@ import {
 type Props = { feInfo: FeInfo };
 export default function VacancyRate({ feInfo }: Props) {
   const { analyzer } = useAnalyzerContext();
-  const displayDollars = analyzer.displayVarb(
-    "vacancyLossDollarsMonthly",
-    feInfo
-  );
+  const dollarsVarb = analyzer.feVarb("vacancyLossDollarsMonthly", feInfo);
   return (
     <DualInputsRadioSwap>
       <FormControl component="fieldset" className="labeled-input-group-part">
@@ -25,10 +22,13 @@ export default function VacancyRate({ feInfo }: Props) {
             feVarbInfo={Inf.feVarb("vacancyRatePercent", feInfo)}
             labeled={false}
           />
-          <div className="dependent">
-            <span className="equals">=</span>
-            {displayDollars}
-          </div>
+          {dollarsVarb.value("numObj").number !== "?" && (
+            <div className="dependent">
+              <span className="equals">(</span>
+              {dollarsVarb.displayVarb()}
+              <span className="equals">)</span>
+            </div>
+          )}
         </div>
       </FormControl>
     </DualInputsRadioSwap>

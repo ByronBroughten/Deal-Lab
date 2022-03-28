@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import theme from "../../../theme/Theme";
 
-const MainSectionEntry = styled.div.attrs(({ className = "", ...rest }) => ({
+const MainSection = styled.div.attrs(({ className = "", ...rest }) => ({
   className: "MainSection-entry " + className,
   ...rest,
 }))`
@@ -12,4 +12,4 @@ const MainSectionEntry = styled.div.attrs(({ className = "", ...rest }) => ({
   }
 `;
 
-export default MainSectionEntry;
+export default MainSection;

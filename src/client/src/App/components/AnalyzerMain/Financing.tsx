@@ -5,8 +5,8 @@ import MainSection from "../appWide/MainSection";
 import FinancingInfo from "./Financing/FinancingInfo";
 import styled from "styled-components";
 import theme from "../../theme/Theme";
-import MainSectionTitle from "../appWide/MainSection/MainSectionTitle";
-import MainSectionTitleBtn from "../appWide/MainSection/MainSectionTitle/MainSectionTitleBtn";
+import GeneralSectionTitle from "../appWide/MainSection/GeneralSectionTitle";
+import MainSectionTitleBtn from "../appWide/MainSection/GeneralSectionTitle/MainSectionTitleBtn";
 
 type Props = { className?: string };
 export default function Financing(props: Props) {
@@ -16,7 +16,7 @@ export default function Financing(props: Props) {
   const addLoan = () => handleSet("addSectionAndSolve", "loan", "financing");
   return (
     <Styled {...{ ...props, sectionName: "loan" }}>
-      <MainSectionTitle
+      <GeneralSectionTitle
         {...{
           title: "Financing",
           sectionName: "loan",
@@ -29,7 +29,7 @@ export default function Financing(props: Props) {
         >
           + Loan
         </MainSectionTitleBtn>
-      </MainSectionTitle>
+      </GeneralSectionTitle>
       <FinancingInfo />
       <div className="MainSection-entries">
         {loanIds.map((id) => (

@@ -145,10 +145,9 @@ const Styled = styled.div<{
     display: flex;
     justify-content: space-between;
   }
-
   .AdditiveList-ellipsisBtn {
     color: ${({ listMenuIsOpen }) =>
-      listMenuIsOpen ? theme.plus.dark : theme.dark};
+      listMenuIsOpen ? theme.light : theme.dark};
   }
   tr {
     border-bottom: 1px solid ${({ sectionName }) => theme[sectionName].border};

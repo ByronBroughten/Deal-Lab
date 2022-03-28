@@ -12,7 +12,7 @@ type Props = StandardProps & {
   sectionName: SectionName;
 };
 
-export default function MainSectionTitle({
+export default function GeneralSectionTitle({
   title,
   sectionName,
   className,
@@ -21,13 +21,13 @@ export default function MainSectionTitle({
   return (
     <MainSectionTitleStyled
       {...{
-        className: "MainSectionTitle-root main-section-title " + className,
+        className: "GeneralSectionTitle-root main-section-title " + className,
         sectionName: themeSectionNameOrDefault(sectionName),
       }}
     >
-      <h4 className="MainSectionTitle-titleText">{title}</h4>
+      <h4 className="GeneralSectionTitle-titleText">{title}</h4>
       {children}
-      <h4 className="MainSectionTitle-titleText MainSectionTitle-invisible"></h4>
+      <h4 className="GeneralSectionTitle-titleText GeneralSectionTitle-invisible"></h4>
     </MainSectionTitleStyled>
   );
 }
@@ -50,7 +50,7 @@ export const MainSectionTitleStyled = styled.div<{
     visibility: hidden;
   }
 
-  .MainSectionTitle-titleText {
+  .GeneralSectionTitle-titleText {
     padding: 0 ${theme.s4};
     line-height: 1rem;
     margin: 0;

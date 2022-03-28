@@ -1,8 +1,8 @@
 import React from "react";
-import MainSectionEntry from "../../appWide/MainSection/MainSectionEntry";
-import MainEntryBody from "../../appWide/MainSection/MainSectionEntry/MainEntryBody";
+import MainSection from "../../appWide/MainSection/MainSection";
+import MainSectionBody from "../../appWide/MainSection/MainSection/MainSectionBody";
 import BasicLoanInfo from "./Loan/BasicLoanInfo";
-import MainEntryTitleRow from "../../appWide/MainSection/MainSectionEntry/MainEntryTitleRow";
+import MainSectionTitleRow from "../../appWide/MainSection/MainSection/MainSectionTitleRow";
 import ListGroup from "../general/ListGroup";
 
 const sectionName = "loan";
@@ -10,10 +10,10 @@ export default function Loan({ id }: { id: string }) {
   const feInfo = { sectionName, id, idType: "feId" } as const;
 
   return (
-    <MainSectionEntry className="Loan-root">
-      <div className="MainSectionEntry-viewable">
-        <MainEntryTitleRow feInfo={feInfo} pluralName="Financing" xBtn={true} />
-        <MainEntryBody>
+    <MainSection className="Loan-root">
+      <div className="MainSection-viewable">
+        <MainSectionTitleRow feInfo={feInfo} pluralName="loans" xBtn={true} />
+        <MainSectionBody>
           <div className="ListGroup-root">
             <div className="ListGroup-viewable">
               <div className="ListGroup-titleRow">
@@ -39,8 +39,8 @@ export default function Loan({ id }: { id: string }) {
             titleText="Wrapped in loan"
             totalVarbName="wrappedInLoan"
           />
-        </MainEntryBody>
+        </MainSectionBody>
       </div>
-    </MainSectionEntry>
+    </MainSection>
   );
 }

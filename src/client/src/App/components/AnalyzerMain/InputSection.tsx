@@ -2,7 +2,7 @@ import React from "react";
 import { useAnalyzerContext } from "../../modules/usePropertyAnalyzer";
 import MainSection from "../appWide/MainSection";
 import Property from "./PropertyGeneral/Property";
-import MainSectionTitle from "../appWide/MainSection/MainSectionTitle";
+import GeneralSectionTitle from "../appWide/MainSection/GeneralSectionTitle";
 import Mgmt from "./Mgmts/Mgmt";
 
 type Props = {
@@ -19,7 +19,7 @@ export default function InputSection({ title, sectionName, className }: Props) {
 
   return (
     <MainSection {...{ sectionName, className }}>
-      <MainSectionTitle {...{ title, sectionName }} />
+      <GeneralSectionTitle {...{ title, sectionName }} />
       <div className="MainSection-entries">
         {sectionIds.map((id) => {
           return sectionName === "property" ? (

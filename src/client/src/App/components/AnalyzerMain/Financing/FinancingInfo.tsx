@@ -10,6 +10,13 @@ import { Inf } from "../../../sharedWithServer/Analyzer/SectionMetas/Info";
 export default function FinancingInfo() {
   const { analyzer } = useAnalyzerContext();
   const financing = analyzer.singleSection("financing");
+
+  const downPaymentDollars = financing.value(
+    "downPaymentDollars",
+    "numObj"
+  ).number;
+  const downPaymentIsPercentable = ![0, "?"].includes(downPaymentDollars);
+
   const loanIds = financing.childFeIds("loan");
   const { isAtLeastOne, areMultiple } = useHowMany(loanIds);
   const varbInfo = Inf.feVarbMaker(financing.feInfo);
@@ -18,7 +25,11 @@ export default function FinancingInfo() {
       <LabeledOutputRow>
         <LabeledVarbSimple
           feVarbInfo={varbInfo("downPaymentDollars")}
-          parenthInfo={varbInfo("downPaymentPercent")}
+          parenthInfo={
+            downPaymentIsPercentable
+              ? varbInfo("downPaymentPercent")
+              : undefined
+          }
         />
         {isAtLeastOne && (
           <LabeledVarbSimple feVarbInfo={varbInfo("pitiMonthly")} />

@@ -67,10 +67,13 @@ export default function DollarPercentRadioSwap({
               labeled={false}
               endAdornment={percentAdornment}
             />
-            <div className="dependent">
-              <span className="equals">=</span>
-              {`${dollarsVarb.displayVarb()}`}
-            </div>
+            {percentVarb.value("numObj").isDividable && (
+              <div className="dependent">
+                <span className="equals">(</span>
+                {`${dollarsVarb.displayVarb()}`}
+                <span className="equals">)</span>
+              </div>
+            )}
           </div>
         )}
         {radio === "$" && (
@@ -80,10 +83,12 @@ export default function DollarPercentRadioSwap({
               feVarbInfo={dollarsVarb.feVarbInfo}
               labeled={false}
             />
-            <div className="dependent">
-              <span className="equals">=</span>
-              {`${percentVarb.displayVarb()}`}
-            </div>
+            {dollarsVarb.value("numObj").isDividable && (
+              <div className="dependent">
+                <span className="equals">=</span>
+                {`${percentVarb.displayVarb()}`}
+              </div>
+            )}
           </div>
         )}
       </FormControl>

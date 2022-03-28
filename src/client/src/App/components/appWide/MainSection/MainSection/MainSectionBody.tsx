@@ -2,10 +2,10 @@ import styled from "styled-components";
 import theme from "../../../../theme/Theme";
 import { listGroupCss } from "../../../AnalyzerMain/general/ListGroup";
 
-export default function MainEntryBody({ children }: { children: any }) {
+export default function MainSectionBody({ children }: { children: any }) {
   return (
-    <StyledEntryBody className="MainEntryBody-root">
-      <div className="MainEntryBody-inner">{children}</div>
+    <StyledEntryBody className="MainSectionBody-root">
+      <div className="MainSectionBody-inner">{children}</div>
     </StyledEntryBody>
   );
 }
@@ -17,7 +17,7 @@ const StyledEntryBody = styled.div`
 
   ${listGroupCss};
 
-  .MainEntryBody-inner {
+  .MainSectionBody-inner {
     display: flex;
     flex-wrap: wrap;
   }

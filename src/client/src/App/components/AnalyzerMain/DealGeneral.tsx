@@ -1,8 +1,8 @@
 import { useAnalyzerContext } from "../../modules/usePropertyAnalyzer";
 import styled, { css } from "styled-components";
 import theme from "../../theme/Theme";
-import MainSectionTitle from "../appWide/MainSection/MainSectionTitle";
-import MainSectionTitleBtn from "../appWide/MainSection/MainSectionTitle/MainSectionTitleBtn";
+import GeneralSectionTitle from "../appWide/MainSection/GeneralSectionTitle";
+import MainSectionTitleBtn from "../appWide/MainSection/GeneralSectionTitle/MainSectionTitleBtn";
 import Deal from "./DealGeneral/Deal";
 import MainSection from "../appWide/MainSection";
 import useToggleView from "../../modules/customHooks/useToggleView";
@@ -30,57 +30,57 @@ export default function DealGeneral({ className }: Props) {
         className: `DealGeneral-root ${className}`,
       }}
     >
-      <MainSectionTitle title="Deal" sectionName="analysis">
-        <div className="MainSectionTitle-children">
+      <GeneralSectionTitle title="Deal" sectionName="analysis">
+        <div className="GeneralSectionTitle-children">
           <MainSectionTitleBtn
             themeName="analysis"
-            className="MainSectionTitle-child"
+            className="GeneralSectionTitle-child"
             onClick={toggleDetails}
           >
             {detailsIsOpen ? (
               <>
                 {"Hide Details"}
-                <CgDetailsLess className="MainSectionTitle-detailsIcon" />
+                <CgDetailsLess className="GeneralSectionTitle-detailsIcon" />
               </>
             ) : (
               <>
                 {"Show Details"}
-                <CgDetailsMore className="MainSectionTitle-detailsIcon" />
+                <CgDetailsMore className="GeneralSectionTitle-detailsIcon" />
               </>
             )}
           </MainSectionTitleBtn>
           {/* // disable the link */}
           {auth.isLoggedIn && (
-            <Link className="MainSectionTitle-dealsLink" to="/deals">
+            <Link className="GeneralSectionTitle-dealsLink" to="/deals">
               <MainSectionTitleBtn
                 themeName="analysis"
-                className="MainSectionTitle-child"
+                className="GeneralSectionTitle-child"
                 // disabled={!auth.isLoggedIn}
               >
                 {"Compare Deals"}
-                <MdCompareArrows className="MainSectionTitle-compareIcon" />
+                <MdCompareArrows className="GeneralSectionTitle-compareIcon" />
               </MainSectionTitleBtn>
             </Link>
           )}
           {!auth.isLoggedIn && (
             <StandardToolTip
-              className="MainSectionTitle-toolTip"
-              title="Login to click"
+              className="GeneralSectionTitle-toolTip"
+              title="Login to compare saved deals"
             >
-              <div className="MainSectionTitle-disabledBtnWrapper">
+              <div className="GeneralSectionTitle-disabledBtnWrapper">
                 <MainSectionTitleBtn
                   themeName="analysis"
-                  className="MainSectionTitle-child MainSectionTitle-compareDealsBtn"
+                  className="GeneralSectionTitle-child GeneralSectionTitle-compareDealsBtn"
                   disabled={true}
                 >
                   {"Compare Deals"}
-                  <MdCompareArrows className="MainSectionTitle-compareIcon" />
+                  <MdCompareArrows className="GeneralSectionTitle-compareIcon" />
                 </MainSectionTitleBtn>
               </div>
             </StandardToolTip>
           )}
         </div>
-      </MainSectionTitle>
+      </GeneralSectionTitle>
       <Deal {...{ feId, detailsIsOpen }} />
       <div className="DealGeneral-appInfo">
         Ultimate Property Analyzer LLC | support@dealanalyzer.app
@@ -90,14 +90,14 @@ export default function DealGeneral({ className }: Props) {
 }
 
 const Styled = styled(MainSection)<{ $showDetails: boolean }>`
-  .MainSectionTitle-children {
+  .GeneralSectionTitle-children {
     display: flex;
     height: 100%;
     align-items: center;
     width: 50%;
   }
 
-  .MainSectionTitle-dealsLink {
+  .GeneralSectionTitle-dealsLink {
     display: flex;
     align-items: center;
     text-decoration: none;
@@ -105,29 +105,29 @@ const Styled = styled(MainSection)<{ $showDetails: boolean }>`
     width: 100%;
   }
 
-  .MainSectionTitle-toolTip {
+  .GeneralSectionTitle-toolTip {
     width: 100%;
     display: flex;
     align-items: center;
   }
 
-  .MainSectionTitle-disabledBtnWrapper {
+  .GeneralSectionTitle-disabledBtnWrapper {
     height: inherit;
   }
 
-  .MainSectionTitle-child {
+  .GeneralSectionTitle-child {
     margin: 0 ${theme.s1};
     width: 100%;
   }
   // properly disable compare deals for when you're logged out
   // make Deal stick to the bottom again
 
-  .MainSectionTitle-compareIcon {
+  .GeneralSectionTitle-compareIcon {
     font-size: 1.9rem;
     color: inherit;
     margin-left: ${theme.s3};
   }
-  .MainSectionTitle-detailsIcon {
+  .GeneralSectionTitle-detailsIcon {
     font-size: 1.4rem;
     color: inherit;
     margin-left: ${theme.s3};

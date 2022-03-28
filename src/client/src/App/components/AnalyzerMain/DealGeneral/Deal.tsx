@@ -1,7 +1,7 @@
 import { Inf } from "../../../sharedWithServer/Analyzer/SectionMetas/Info";
-import MainSectionEntry from "../../appWide/MainSection/MainSectionEntry";
-import MainEntryBody from "../../appWide/MainSection/MainSectionEntry/MainEntryBody";
-import MainEntryTitleRow from "../../appWide/MainSection/MainSectionEntry/MainEntryTitleRow";
+import MainSection from "../../appWide/MainSection/MainSection";
+import MainSectionBody from "../../appWide/MainSection/MainSection/MainSectionBody";
+import MainSectionTitleRow from "../../appWide/MainSection/MainSection/MainSectionTitleRow";
 import AnalysisBasics from "./Deal/DealBasics";
 import AnalysisDetails from "./Deal/DealDetails";
 import styled from "styled-components";
@@ -16,17 +16,19 @@ export default function Deal({
 }) {
   const feInfo = Inf.fe("analysis", feId);
   return (
-    <MainSectionEntry>
-      <MainEntryTitleRow {...{ feInfo, pluralName: "deals", droptop: true }} />
-      <MainEntryBody>
+    <MainSection>
+      <MainSectionTitleRow
+        {...{ feInfo, pluralName: "deals", droptop: true }}
+      />
+      <MainSectionBody>
         <Styled className="ListGroup-root">
           <div className="Deal-viewable viewable">
             {!detailsIsOpen && <AnalysisBasics id={feId} />}
             {detailsIsOpen && <AnalysisDetails id={feId} />}
           </div>
         </Styled>
-      </MainEntryBody>
-    </MainSectionEntry>
+      </MainSectionBody>
+    </MainSection>
   );
 }
 const Styled = styled.div`

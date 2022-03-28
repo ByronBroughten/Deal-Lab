@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import theme from "../theme/Theme";
 import AdditiveList from "./appWide/AdditiveList";
-import MainSectionTitle from "./appWide/MainSection/MainSectionTitle";
+import GeneralSectionTitle from "./appWide/MainSection/GeneralSectionTitle";
 import ListManagerTitleRow from "./ListManager/ListManagerTitleRow";
 import {
   AnalyzerContext,
@@ -53,7 +53,7 @@ export default function ListManager({ sectionName }: Props) {
   return (
     <AnalyzerContext.Provider value={vmContext}>
       <Styled sectionName={sectionName}>
-        <MainSectionTitle
+        <GeneralSectionTitle
           title={titles[sectionName]}
           sectionName={sectionName}
         />

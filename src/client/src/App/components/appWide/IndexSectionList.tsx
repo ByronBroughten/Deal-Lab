@@ -8,6 +8,8 @@ import useToggle from "../../modules/customHooks/useToggle";
 import { LoadIndexSectionList } from "./LoadIndexSectionList";
 import { FeInfo } from "../../sharedWithServer/Analyzer/SectionMetas/Info";
 import LoginToAccessBtnTooltip from "./LoginToAccessBtnTooltip";
+import { MdOutlineViewList } from "react-icons/md";
+import { LoggedInOrOutIconBtn } from "./LoggedInOrNotBtn";
 
 type Props = {
   feInfo: FeInfo<"hasIndexStore">;
@@ -19,9 +21,9 @@ type Props = {
 
 export default function IndexSectionList({
   feInfo,
-  disabled = true,
   droptop = false,
   className,
+  pluralName,
 }: Props) {
   const { value: dropped, toggle: toggleDropped } = useToggle();
   const { sectionName } = feInfo;
@@ -35,15 +37,32 @@ export default function IndexSectionList({
         droptop,
       }}
     >
-      <LoginToAccessBtnTooltip>
-        <SectionBtn
-          className="IndexSectionList-loadBtn"
-          onClick={toggleDropped}
-          disabled={disabled}
-        >
-          Load
-        </SectionBtn>
-      </LoginToAccessBtnTooltip>
+      <LoggedInOrOutIconBtn
+        {...{
+          shared: {
+            btnProps: {
+              children: <MdOutlineViewList />,
+              className: "IndexSectionList-loadBtn",
+            },
+          },
+          loggedIn: {
+            btnProps: {
+              onClick: toggleDropped,
+            },
+            tooltipProps: {
+              title: `Saved ${pluralName}`,
+            },
+          },
+          loggedOut: {
+            btnProps: {
+              disabled: true,
+            },
+            tooltipProps: {
+              title: `Login to access saved ${pluralName}`,
+            },
+          },
+        }}
+      />
       {dropped && <LoadIndexSectionList feInfo={feInfo} />}
     </Styled>
   );
@@ -57,7 +76,7 @@ const Styled = styled.div<{
   position: relative;
   display: inline-block;
 
-  .IndexSectionList-loadBtn {
+  /* .IndexSectionList-loadBtn {
     :hover {
       color: ${theme.light};
       background-color: ${theme["gray-600"]};
@@ -65,13 +84,13 @@ const Styled = styled.div<{
     }
 
     ${({ active, sectionName }) =>
-      active &&
-      css`
-        color: ${theme.light};
-        background-color: ${theme["gray-600"]};
-        border: 3px solid ${theme[sectionName].dark};
-      `}
-  }
+    active &&
+    css`
+      color: ${theme.light};
+      background-color: ${theme["gray-600"]};
+      border: 3px solid ${theme[sectionName].dark};
+    `}
+  } */
 
   .LoadIndexSectionList-root {
     ${({ droptop }) =>

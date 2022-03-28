@@ -1,7 +1,7 @@
 import React from "react";
-import MainSectionEntry from "../../appWide/MainSection/MainSectionEntry";
-import MainEntryBody from "../../appWide/MainSection/MainSectionEntry/MainEntryBody";
-import MainEntryTitleRow from "../../appWide/MainSection/MainSectionEntry/MainEntryTitleRow";
+import MainSection from "../../appWide/MainSection/MainSection";
+import MainSectionBody from "../../appWide/MainSection/MainSection/MainSectionBody";
+import MainSectionTitleRow from "../../appWide/MainSection/MainSection/MainSectionTitleRow";
 import ListGroup from "../general/ListGroup";
 import BasicMgmtInfo from "./Mgmt/BasicMgmtInfo";
 
@@ -9,9 +9,9 @@ const sectionName = "mgmt";
 export default function Mgmt({ id }: { id: string }) {
   const feInfo = { sectionName, id, idType: "feId" } as const;
   return (
-    <MainSectionEntry>
-      <MainEntryTitleRow {...{ feInfo, pluralName: "Mgmts" }} />
-      <MainEntryBody>
+    <MainSection>
+      <MainSectionTitleRow {...{ feInfo, pluralName: "managements" }} />
+      <MainSectionBody>
         <div className="ListGroup-root">
           <div className="ListGroup-viewable">
             <div className="ListGroup-titleRow">
@@ -25,16 +25,16 @@ export default function Mgmt({ id }: { id: string }) {
         <ListGroup
           feInfo={feInfo}
           listSectionName="upfrontCostList"
-          titleText="Upfront Costs:"
+          titleText="Upfront Costs"
           totalVarbName="upfrontExpenses"
         />
         <ListGroup
           feInfo={feInfo}
           listSectionName="ongoingCostList"
-          titleText="Ongoing Costs:"
+          titleText="Ongoing Costs"
           totalVarbName="ongoingExpenses"
         />
-      </MainEntryBody>
-    </MainSectionEntry>
+      </MainSectionBody>
+    </MainSection>
   );
 }

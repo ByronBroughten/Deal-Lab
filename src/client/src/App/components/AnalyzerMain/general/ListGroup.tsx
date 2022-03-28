@@ -9,6 +9,7 @@ import AdditiveList from "../../appWide/AdditiveList";
 import PlusBtn from "../../appWide/PlusBtn";
 import { MdOutlinePlaylistAdd } from "react-icons/md";
 import { FeParentInfo } from "../../../sharedWithServer/Analyzer/SectionMetas/relNameArrs/ParentTypes";
+import BtnTooltip from "../../appWide/BtnTooltip";
 
 type Props<S extends ListSectionName = ListSectionName> = {
   className?: string;
@@ -30,6 +31,8 @@ export default function ListGroup({
 
   const section = analyzer.section(feInfo);
   const listIds = section.childFeIds(listSectionName);
+  // those would look best with a regular labeled input
+  // with the =$75/month
 
   const displayTotal = SectionNam.is(listSectionName, "singleTimeList")
     ? analyzer.displayVarb(totalVarbName, feInfo)
@@ -41,12 +44,14 @@ export default function ListGroup({
         <div className="ListGroup-titleRow">
           <h6 className="ListGroup-titleText">{titleText}</h6>
           <div className="ListGroup-titleTotal">{displayTotal}</div>
-          <PlusBtn
-            className="ListGroup-addListBtn"
-            onClick={addUpfrontCostList}
-          >
-            <MdOutlinePlaylistAdd className="ListGroup-addListBtnIcon" />
-          </PlusBtn>
+          <BtnTooltip title="Add list" className="ListGroup-addBtnTooltip">
+            <PlusBtn
+              className="ListGroup-addListBtn"
+              onClick={addUpfrontCostList}
+            >
+              <MdOutlinePlaylistAdd className="ListGroup-addListBtnIcon" />
+            </PlusBtn>
+          </BtnTooltip>
         </div>
         <div className="ListGroup-lists">
           {listIds.map((listId) => {
@@ -72,6 +77,7 @@ export const listGroupCss = css`
     display: flex;
     justify-content: flex-start;
     align-items: flex-end;
+    padding: ${theme.s2} ${theme.s2} 0 ${theme.s2};
   }
   .ListGroup-titleText {
     ${ccs.subSection.titleText};
@@ -87,13 +93,18 @@ export const listGroupCss = css`
     padding-left: ${theme.s1};
     padding-top: ${theme.s1};
   }
-  .ListGroup-addListBtn {
+
+  .ListGroup-addBtnTooltip {
+    border: none;
+    padding: 0;
+    margin: 0;
     margin-left: ${theme.s2};
-    .ListGroup-addListBtnIcon {
-      font-size: 22px;
-      padding: 0;
-      margin: 0;
-    }
+  }
+
+  .ListGroup-addListBtnIcon {
+    font-size: 22px;
+    padding: 0;
+    margin: 0;
   }
 
   .ListGroup-lists {

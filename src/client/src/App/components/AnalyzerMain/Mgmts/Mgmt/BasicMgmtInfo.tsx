@@ -1,5 +1,5 @@
 import React from "react";
-import BasicSectionInfo from "../../../appWide/MainSection/MainSectionEntry/MainEntryBody/BasicSectionInfo";
+import BasicSectionInfo from "../../../appWide/MainSection/MainSection/MainSectionBody/BasicSectionInfo";
 import { useOpenWidth } from "../../../appWide/SectionTitleRow";
 import ToggleViewBtn from "../../../general/ToggleViewBtn";
 import DollarPercentRadioSwap from "../../general/DollarPercentRadioSwap";

@@ -33,7 +33,7 @@ export default function AnalysisBasics({ id }: { id: string }) {
         {/* <VarbAutoComplete
           {...{
             onSelect,
-            className: "MainEntryTitleRow-addSelector",
+            className: "MainSectionTitleRow-addSelector",
             placeholder: "+ Metric",
           }}
         /> */}
