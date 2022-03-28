@@ -1,8 +1,16 @@
 import Analyzer from "../../../Analyzer";
-import { DbEntry, DbSection, DbSections, RawSectionHead } from "../../DbEntry";
+import {
+  DbEntry,
+  DbSection,
+  DbSections,
+  RawChildSections,
+  RawSection,
+  RawSectionHead,
+} from "../../DbEntry";
 import { SectionFinder } from "../../SectionMetas/relSections/baseSectionTypes";
 import { FeInfo } from "../../SectionMetas/Info";
 import {
+  SectionContextProps,
   SectionNam,
   SectionName,
   SectionNameType,
@@ -136,20 +144,31 @@ export function dbIndexEntry(
   }
 }
 
-// export function makeRawSectionHead<SF extends SectionFinder>(
+// export function makeRawSection<SN extends SectionName>(): RawSection<SectionContextProps<SN, "fe">> {
+
+// }
+// export function makeRawChildSections<S extends SectionName>(
 //   this: Analyzer,
-//   finder: SF
-// ): RawSectionHead<{
-//     sectionName: SF extends SectionFinder<infer SN> ? SN : SectionName
-//     contextName: "fe"
-// }> {
+//   finder: SectionFinder<S>
+// ): RawChildSections<SectionContextProps<S, "fe">> {
+//   //
+
+//   this.childSections()
+// }
+// export function makeRawSectionHead<S extends SectionName>(
+//   this: Analyzer,
+//   finder: SectionFinder<S>
+// ): RawSectionHead<SectionContextProps<S, "fe">> {
 //   const section = this.section(finder);
 //   const { dbId, sectionName } = section;
 
-//   const rawSectionHead: RawSectionHead = {
+//   return {
 //     contextName: "fe",
-//     sectionName,
+//     sectionName: sectionName as S,
 //     dbId,
-//     childDbIds: section.child
+//     childDbIds: this.childDbIdArrs(finder),
+//     childSections: {
+
+//     }
 //   }
 // }

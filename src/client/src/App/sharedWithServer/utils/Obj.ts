@@ -70,7 +70,7 @@ export const Obj = {
     typeof value === "object" && value !== null && !Array.isArray(value),
   keys: ObjectKeys,
   values: ObjectValues,
-  entries: ObjectEntries,
+  entries: NextObjEntries,
   filterKeysForEntryShape<O extends object, M extends any>(
     obj: O,
     model: M

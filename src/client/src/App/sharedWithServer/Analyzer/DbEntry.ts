@@ -60,18 +60,18 @@ export type DbEntry = {
 type RawChildDbIds<SCP extends SectionContextProps> = {
   [CHN in ChildName<SCP["sectionName"], SCP["contextName"]>]: string[];
 };
-type RawSection<SCP extends SectionContextProps> = {
+export type RawSection<SCP extends SectionContextProps> = {
   dbId: string;
   dbVarbs: DbVarbs;
   childDbIds: RawChildDbIds<SCP>;
 };
-type RawSectionArrs<SCP extends SectionContextProps> = {
+export type RawChildSections<SCP extends SectionContextProps> = {
   [SDN in SectionAndDescendantName<SCP>]: RawSection<SCP>[];
 };
 export type RawSectionHead<SCP extends SectionContextProps> = SCP &
   RawSection<SCP> & {
     childSections: {
-      [SDN in DescendantName<SCP>]: RawSectionArrs<SCP>;
+      [SDN in DescendantName<SCP>]: RawChildSections<SCP>;
     };
   };
 

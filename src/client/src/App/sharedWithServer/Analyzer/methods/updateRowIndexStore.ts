@@ -18,7 +18,7 @@ function findRowCellByColumn(
   rowInfo: FeInfo<"rowIndex">,
   colInfo: FeNameInfo<"column">
 ): StateSection<"cell"> | undefined {
-  const cells = analyzer.children(rowInfo, "cell");
+  const cells = analyzer.childSections(rowInfo, "cell");
   const column = analyzer.section(colInfo);
   const colInfoValues = column.varbInfoValues();
 
@@ -85,7 +85,7 @@ function resetRowCells(
   allAffectedInfos.push(...affectedInfos);
 
   const tableName = rowIndexToTableName[rowInfo.sectionName];
-  const columns = next.children(tableName, "column");
+  const columns = next.childSections(tableName, "column");
   for (const column of columns) {
     const varbInfo = column.varbInfoValues();
     const varb = next.findVarb(varbInfo);

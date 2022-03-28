@@ -35,9 +35,12 @@ export type SectionName<
   SC extends ContextName = "fe"
 > = NameArrs[SC][T][number & keyof NameArrs[SC][T]];
 
-export type SectionContextProps<T extends SectionNameType = "all"> = {
-  sectionName: SectionName<T>;
-  contextName: ContextName;
+export type SectionContextProps<
+  SN extends SectionName = SectionName,
+  CN extends ContextName = ContextName
+> = {
+  sectionName: SN;
+  contextName: CN;
 };
 
 export type AlwaysOneVarbFinder<

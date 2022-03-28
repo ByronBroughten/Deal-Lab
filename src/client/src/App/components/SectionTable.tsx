@@ -38,7 +38,7 @@ export default function SectionTable({ tableName }: Props) {
     return row.value("title", "string").includes(filter);
   });
 
-  const columns = analyzer.children(tableName, "column");
+  const columns = analyzer.childSections(tableName, "column");
   const displayNameColumns = columns.map((column) => ({
     displayName: analyzer.displayNameOrNotFound(column.varbInfoValues()),
     feId: column.feId,
@@ -123,7 +123,7 @@ export default function SectionTable({ tableName }: Props) {
             </thead>
             <tbody>
               {filteredRows.map((row) => {
-                const cells = analyzer.children(row.feInfo, "cell");
+                const cells = analyzer.childSections(row.feInfo, "cell");
                 return (
                   <tr className="SectionTable-tableRow">
                     <td className="SectionTable-tableCell">

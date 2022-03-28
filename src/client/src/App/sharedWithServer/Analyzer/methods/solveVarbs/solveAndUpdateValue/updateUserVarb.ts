@@ -38,7 +38,7 @@ export function conditionalUserVarbValue(
   this: Analyzer,
   feInfo: FeNameInfo<"userVarbItem">
 ): NumObj {
-  const rows = this.children(feInfo, "conditionalRow");
+  const rows = this.childSections(feInfo, "conditionalRow");
   const levelsThatPass: LevelsThatPass = {};
 
   for (const row of rows) {
