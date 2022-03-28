@@ -264,24 +264,3 @@ testBaseNameArrs(baseNameArrs);
 export type BaseNameArrs = typeof baseNameArrs;
 export type BaseNameSelector<SC extends ContextName = "fe"> =
   keyof BaseNameArrs[SC];
-
-// export const baseNames = {
-//   all: allSectionNames,
-//   table: tableSectionNames,
-//   feGuestAccessStore: feGuestAccessStoreNames,
-//   dbStore: dbStoreNames,
-//   alwaysOne: alwaysOneSectionNames,
-//   notAlwaysOne: notAlwaysOneSectionNames,
-//   initOnLogin: initOnLoginSectionNames,
-//   hasVarb: hasVarbSectionNames,
-//   alwaysOneHasVarb: alwaysOneHasVarbNames,
-//   userList: userListSectionNames,
-//   feSaved: userListSectionNames,
-//   singleTimeList: singleTimeListNames,
-//   ongoingList: ongoingListNames,
-//   allList: allListSectionNames,
-//   additiveListType: additiveListSectionTypes,
-//   rowIndex: rowIndexSectionNames,
-//   hasGlobalVarbs: hasGlobalVarbNames,
-//   userDefined: userDefinedSectionNames,
-// } as const;

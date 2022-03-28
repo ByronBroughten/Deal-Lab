@@ -3,18 +3,19 @@ import {
   DbEntry,
   DbSection,
   DbSections,
-  RawChildSections,
+  RawDescendantSections,
   RawSection,
   RawSectionHead,
 } from "../../DbEntry";
 import { SectionFinder } from "../../SectionMetas/relSections/baseSectionTypes";
-import { FeInfo } from "../../SectionMetas/Info";
+import { FeInfo, Inf } from "../../SectionMetas/Info";
 import {
   SectionContextProps,
   SectionNam,
   SectionName,
   SectionNameType,
 } from "../../SectionMetas/SectionName";
+import { Obj } from "../../../utils/Obj";
 
 type StateToDbSectionsOptions = {
   newMainSectionName?: SectionName;
@@ -23,9 +24,15 @@ type StateToDbSectionsOptions = {
 };
 type toDbEntryOptions = StateToDbSectionsOptions;
 
+// depreciated
 function getDbSection(analyzer: Analyzer, feInfo: FeInfo): DbSection {
-  const childDbIds = analyzer.childDbIdArrs(feInfo);
-  return analyzer.section(feInfo).toDbSection(childDbIds);
+  const childDbIds = analyzer.allChildDbIds(feInfo);
+  const { dbVarbs, dbId } = analyzer.section(feInfo);
+  return {
+    dbId,
+    dbVarbs,
+    childDbIds,
+  };
 }
 function dbSectionAndChildren(
   analyzer: Analyzer,
@@ -144,31 +151,55 @@ export function dbIndexEntry(
   }
 }
 
-// export function makeRawSection<SN extends SectionName>(): RawSection<SectionContextProps<SN, "fe">> {
+export function makeRawSection<SN extends SectionName>(
+  this: Analyzer,
+  finder: SectionFinder<SN>
+): RawSection<SectionContextProps<SN, "fe">> {
+  const { dbId, dbVarbs } = this.section(finder);
+  return {
+    dbId,
+    dbVarbs,
+    childDbIds: this.allChildDbIds(finder),
+  };
+}
 
-// }
-// export function makeRawChildSections<S extends SectionName>(
-//   this: Analyzer,
-//   finder: SectionFinder<S>
-// ): RawChildSections<SectionContextProps<S, "fe">> {
-//   //
+function feIdsToRawSections<S extends SectionName>(
+  analyzer: Analyzer,
+  sectionName: S,
+  feIdArr: string[]
+): RawSection<SectionContextProps<S, "fe">>[] {
+  return feIdArr.map((id) => {
+    const feInfo = Inf.fe(sectionName, id);
+    return analyzer.makeRawSection(feInfo);
+  });
+}
+export function makeRawDescendantSections<S extends SectionName>(
+  this: Analyzer,
+  finder: SectionFinder<S>
+): RawDescendantSections<SectionContextProps<S, "fe">> {
+  const descendantFeIds = this.descendantFeIds(finder);
+  return Obj.entries(descendantFeIds).reduce(
+    (rawDescendantSections, [name, feIdArr]) => {
+      rawDescendantSections[name] = feIdsToRawSections(
+        this,
+        name,
+        feIdArr
+      ) as typeof rawDescendantSections[typeof name];
+      return rawDescendantSections;
+    },
+    {} as RawDescendantSections<SectionContextProps<S, "fe">>
+  );
+}
 
-//   this.childSections()
-// }
-// export function makeRawSectionHead<S extends SectionName>(
-//   this: Analyzer,
-//   finder: SectionFinder<S>
-// ): RawSectionHead<SectionContextProps<S, "fe">> {
-//   const section = this.section(finder);
-//   const { dbId, sectionName } = section;
-
-//   return {
-//     contextName: "fe",
-//     sectionName: sectionName as S,
-//     dbId,
-//     childDbIds: this.childDbIdArrs(finder),
-//     childSections: {
-
-//     }
-//   }
-// }
+export function makeRawSectionHead<S extends SectionName>(
+  this: Analyzer,
+  finder: SectionFinder<S>
+): RawSectionHead<SectionContextProps<S, "fe">> {
+  const { sectionName } = this.section(finder);
+  return {
+    contextName: "fe",
+    sectionName: sectionName as S,
+    ...this.makeRawSection(finder),
+    descendants: this.makeRawDescendantSections(finder),
+  };
+}

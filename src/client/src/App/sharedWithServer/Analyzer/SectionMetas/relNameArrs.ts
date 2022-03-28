@@ -69,6 +69,12 @@ function makeRelNameArrs<SC extends ContextName>(sectionContext: SC) {
     hasParent: ObjectKeys(sectionToParentArrs).filter((sectionName) => {
       return (sectionToParentArrs[sectionName] as any as string[]).length > 0;
     }) as HasParentSectionName<SC>[],
+    get alwaysOneHasParent() {
+      return Arr.extract(
+        this.hasParent,
+        baseNameArrs[sectionContext].alwaysOne
+      );
+    },
     get hasOneParent() {
       return this.hasParent.filter((sectionName) => {
         return (

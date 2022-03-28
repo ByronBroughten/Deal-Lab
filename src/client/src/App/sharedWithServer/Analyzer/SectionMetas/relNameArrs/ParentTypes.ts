@@ -11,7 +11,7 @@ import {
   sectionContext,
   SimpleSectionName,
 } from "../relSections/baseSections";
-import { BaseName } from "../relSections/baseSectionTypes";
+import { BaseName, SectionFinder } from "../relSections/baseSectionTypes";
 import { GeneralRelSection } from "../relSections/rel/relSection";
 import { FeSectionInfoBase } from "../relSections/rel/relVarbInfoTypes";
 import { ChildOrNull } from "./ChildTypes";
@@ -104,12 +104,23 @@ export type FeParentInfo<
 > = FeSectionInfoBase & {
   sectionName: ParentName<SN, SC>;
 };
+
+type HasOneParentFinder<
+  SN extends SimpleSectionName,
+  CN extends ContextName
+> = Extract<SN, HasOneParentSectionName<CN>>;
+
 export type ParentFinder<
   SN extends SimpleSectionName<SC>,
   SC extends ContextName = "fe"
 > =
   | FeParentInfo<SN, SC>
   | ParentName<Extract<SN, HasOneParentSectionName<SC>>, SC>;
+
+export type SectionParentFinder<
+  SN extends SimpleSectionName,
+  CN extends ContextName = "fe"
+> = SectionFinder<SN> | HasOneParentFinder<SN, CN>;
 
 type SectionToOneParentOrNull<SC extends ContextName> = {
   [SN in keyof SectionToParents<SC>]: IsUnion<

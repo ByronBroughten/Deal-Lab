@@ -12,12 +12,18 @@ import {
   eraseSectionAndSolve,
   eraseSectionsAndSolve,
 } from "./Analyzer/methods/eraseSectionAndSolve";
-import { childDbIdArrs, childSections } from "./Analyzer/methods/get/childArrs";
+import {
+  allChildDbIds,
+  childSections,
+  descendantFeIds,
+} from "./Analyzer/methods/get/childArrs";
 import {
   dbEntry,
   dbEntryArr,
   dbEntryArrs,
   dbIndexEntry,
+  makeRawDescendantSections,
+  makeRawSection,
 } from "./Analyzer/methods/get/dbSections";
 import {
   displayName,
@@ -44,11 +50,7 @@ import {
   fullStoreEntries,
   fullStoreTitlesAndDbIds,
 } from "./Analyzer/methods/get/fullStore";
-import {
-  feInfo,
-  feToDbInfo,
-  varbInfosByFocal,
-} from "./Analyzer/methods/get/info";
+import { varbInfosByFocal } from "./Analyzer/methods/get/info";
 import {
   nestedFeInfos,
   nestedFeOutVarbInfos,
@@ -59,6 +61,7 @@ import {
 } from "./Analyzer/methods/get/nestedInfos";
 import { parent, parentFinderToInfo } from "./Analyzer/methods/get/parent";
 import {
+  feSection,
   firstSection,
   hasSection,
   lastSection,
@@ -307,6 +310,7 @@ export default class Analyzer {
   sectionArrAsOptions = sectionArrAsOptions;
 
   section = section;
+  feSection = feSection;
   hasSection = hasSection;
   sectionIsIndexSaved = sectionIsIndexSaved;
   sectionByFocal = sectionByFocal;
@@ -321,16 +325,15 @@ export default class Analyzer {
   parentFinderToInfo = parentFinderToInfo;
 
   childSections = childSections;
+  descendantFeIds = descendantFeIds;
 
   eraseSectionAndSolve = eraseSectionAndSolve;
   eraseIndexAndSolve = eraseIndexAndSolve;
   eraseRowIndexAndSolve = eraseRowIndexAndSolve;
   eraseSectionsAndSolve = eraseSectionsAndSolve;
 
-  childDbIdArrs = childDbIdArrs;
+  allChildDbIds = allChildDbIds;
   varbInfosByFocal = varbInfosByFocal;
-  feToDbInfo = feToDbInfo;
-  feInfo = feInfo;
 
   findSectionByDbId = findSectionByDbId;
   findSectionByFeId = findSectionByFeId;
@@ -398,6 +401,9 @@ export default class Analyzer {
   dbIndexEntry = dbIndexEntry;
   dbEntryArr = dbEntryArr;
   dbEntryArrs = dbEntryArrs;
+
+  makeRawSection = makeRawSection;
+  makeRawDescendantSections = makeRawDescendantSections;
 
   pushToIndexStore = pushToIndexStore;
   updateIndexStoreEntry = updateIndexStoreEntry;

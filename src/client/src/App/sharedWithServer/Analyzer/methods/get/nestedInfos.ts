@@ -7,10 +7,12 @@ import Analyzer from "../../../Analyzer";
 import array from "../../../utils/Arr";
 import { ObjectEntries } from "../../../utils/Obj";
 import { SectionFinder } from "../../SectionMetas/relSections/baseSectionTypes";
+import { SectionName } from "../../SectionMetas/SectionName";
+import { InEntityInfo } from "../../SectionMetas/relSections/baseSections/baseValues/NumObj/entities";
 
-export function nestedFeInfos(
+export function nestedFeInfos<S extends SectionName>(
   this: Analyzer,
-  info: SectionFinder,
+  info: SectionFinder<S>,
   {
     feInfos = [],
     includeInEntitySections = false,
@@ -40,7 +42,7 @@ export function nestedFeInfos(
       if (!array.objIsIn(entityInfo, feInfos))
         this.nestedFeInfos(entityInfo, options);
 
-      const { feInfo: parentInfo } = this.parent(entityInfo);
+      const { feInfo: parentInfo } = this.parent(entity);
       if (!array.objIsIn(parentInfo, feInfos)) feInfos.push(parentInfo);
     }
   }

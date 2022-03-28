@@ -93,7 +93,7 @@ export class SectionMetas {
     SN extends SectionName<"hasOneParent", SC>,
     SC extends ContextName = "fe"
   >(sectionName: SN, sectionContext?: SC): ParentName<SN, SC> {
-    const meta = sectionMetas.get(sectionName, sectionContext ?? "fe");
+    const meta = this.get(sectionName, (sectionContext ?? "fe") as SC);
     return meta.parents[0] as ParentName<SN, SC>;
   }
   varbMeta<VNS extends SimpleVarbNames, CN extends ContextName = "fe">(

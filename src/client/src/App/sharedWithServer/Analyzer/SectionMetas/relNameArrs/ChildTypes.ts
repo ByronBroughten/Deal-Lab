@@ -1,4 +1,5 @@
 import { RemoveNotStrings } from "../../../utils/typescript";
+import StateSection from "../../StateSection";
 import { RelSections } from "../relSections";
 import { ContextName, SimpleSectionName } from "../relSections/baseSections";
 import { FeNameInfo } from "../relSections/rel/relVarbInfoTypes";
@@ -31,6 +32,13 @@ export type DescendantName<SCP extends SectionContextProps> = ChildName<
             SimpleSectionName;
           contextName: SCP["contextName"];
         }>;
+
+export type DescendantIds<SCP extends SectionContextProps> = {
+  [SN in DescendantName<SCP>]: string[];
+};
+export type DescendantSections<SCP extends SectionContextProps> = {
+  [SN in DescendantName<SCP>]: StateSection<SN>[];
+};
 
 export type SectionAndDescendantName<SCP extends SectionContextProps> =
   | SCP["sectionName"]

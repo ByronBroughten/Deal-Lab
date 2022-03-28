@@ -9,6 +9,7 @@ import {
   baseNameArrs,
   BaseNameArrs,
 } from "./relSections/baseSectionTypes/baseNameArrs";
+import { SpecificSectionInfo } from "./relSections/rel/relVarbInfoTypes";
 
 type NameArrs = {
   [SC in ContextName]: BaseNameArrs[SC] & RelNameArrs[SC];
@@ -34,6 +35,10 @@ export type SectionName<
   T extends SectionNameType<SC> = "all",
   SC extends ContextName = "fe"
 > = NameArrs[SC][T][number & keyof NameArrs[SC][T]];
+
+export type NextSectionFinder<S extends SectionName = SectionName> =
+  | SpecificSectionInfo<S>
+  | Extract<S, SectionName<"alwaysOne">>;
 
 export type SectionContextProps<
   SN extends SectionName = SectionName,

@@ -8,7 +8,8 @@ import {
   ChildIdArrs,
   ChildName,
 } from "../../SectionMetas/relNameArrs/ChildTypes";
-import { FeInfo } from "../../SectionMetas/Info";
+import { FeInfo, Inf } from "../../SectionMetas/Info";
+import { Obj } from "../../../utils/Obj";
 
 export function childFeIds<S extends SectionName>(
   this: StateSection<S>,
@@ -27,6 +28,16 @@ export function allChildFeIds<S extends SectionName>(
   this: StateSection<S>
 ): ChildIdArrs<S> {
   return cloneDeep(this.core.childFeIdArrs);
+}
+
+export function allChildFeInfos<S extends SectionName>(
+  this: StateSection<S>
+): FeInfo[] {
+  const childFeIds = this.allChildFeIds();
+  return Obj.entries(childFeIds).reduce((feInfos, [childName, feIds]) => {
+    const newFeInfos = feIds.map((id) => Inf.fe(childName, id));
+    return feInfos.concat(newFeInfos);
+  }, [] as FeInfo[]);
 }
 
 export function childFeInfos<S extends SectionName>(

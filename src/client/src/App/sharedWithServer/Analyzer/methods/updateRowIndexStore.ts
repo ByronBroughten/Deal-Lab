@@ -69,7 +69,7 @@ export function sortTableRowIdsByColumn(
   if (reverse) nextRows.reverse();
 
   const nextRowIds = nextRows.map(({ dbId }) => dbId);
-  const tableInfo = this.feInfo(tableName);
+  const tableInfo = this.section(tableName).feInfo;
   return this.directUpdateAndSolve(Inf.feVarb("rowIds", tableInfo), nextRowIds);
 }
 

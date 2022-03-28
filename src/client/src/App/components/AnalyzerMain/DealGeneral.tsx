@@ -15,7 +15,7 @@ import StandardToolTip from "../appWide/StandardTooltip";
 
 type Props = { className?: string };
 
-export default function CurrentAnalysis({ className }: Props) {
+export default function DealGeneral({ className }: Props) {
   const { analyzer } = useAnalyzerContext();
   const { feId } = analyzer.firstSection("analysis");
   const { detailsIsOpen, toggleDetails } = useToggleView({

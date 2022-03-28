@@ -9,8 +9,9 @@ import {
   SpecificSectionInfo,
   SpecificSectionsInfo,
 } from "../../SectionMetas/relSections/rel/relVarbInfoTypes";
-import { SectionName } from "../../SectionMetas/SectionName";
+import { NextSectionFinder, SectionName } from "../../SectionMetas/SectionName";
 import { Obj } from "../../../utils/Obj";
+import { SectionFinder } from "../../SectionMetas/relSections/baseSectionTypes";
 
 export function sectionNotFound({ sectionName, idType, id }: MultiSectionInfo) {
   return new Error(
@@ -33,17 +34,26 @@ export function section<
   this: Analyzer, // you have to specify the union overload.
   finder: S | I
 ): StateSection<S | I["sectionName"]>;
-export function section(
+export function section<S extends SectionName>(
   this: Analyzer,
-  finder: SectionName<"alwaysOne"> | SpecificSectionInfo
-) {
-  if (typeof finder === "string") return this.singleSection(finder);
+  finder: NextSectionFinder<S>
+): StateSection<S> {
+  if (typeof finder === "string")
+    return this.singleSection(finder) as any as StateSection<S>;
   const section = this.findSection(finder);
   if (section) return section;
-  else {
-    throw new Error(`Section not found using: ${JSON.stringify(finder)}`);
-  }
+  else throw new Error(`Section not found using: ${JSON.stringify(finder)}`);
 }
+
+export function feSection<S extends SectionName>(
+  this: Analyzer,
+  sectionName: S,
+  feId: string
+): StateSection<S> {
+  const feInfo = Inf.fe(sectionName, feId);
+  return this.section(feInfo);
+}
+
 export function singleSection<S extends SectionName<"alwaysOne">>(
   this: Analyzer,
   sectionName: S

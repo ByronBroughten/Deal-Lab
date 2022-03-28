@@ -14,6 +14,7 @@ import { OutUpdatePack } from "./SectionMetas/VarbMeta";
 import {
   addChildFeId,
   allChildFeIds,
+  allChildFeInfos,
   childFeIds,
   childFeInfos,
   childIdx,
@@ -116,6 +117,12 @@ export default class StateSection<
   get varbs(): StateVarbs {
     return { ...this.core.varbs };
   }
+  get dbVarbs(): DbVarbs {
+    return Object.entries(this.varbs).reduce((dbVarbs, [varbName, varb]) => {
+      dbVarbs[varbName] = varb.toDbValue();
+      return dbVarbs;
+    }, {} as DbVarbs);
+  }
   get varbArr(): StateVarb[] {
     return Object.values(this.varbs);
   }
@@ -193,19 +200,7 @@ export default class StateSection<
       return outEntities.concat(varb.outEntities);
     }, [] as OutEntity[]);
   }
-  toDbVarbs(): DbVarbs {
-    return Object.entries(this.varbs).reduce((dbVarbs, [varbName, varb]) => {
-      dbVarbs[varbName] = varb.toDbValue();
-      return dbVarbs;
-    }, {} as DbVarbs);
-  }
-  toDbSection(childDbIds: ChildIdArrs<S>, dbId?: string): DbSection {
-    return {
-      dbId: dbId ?? this.dbId,
-      dbVarbs: this.toDbVarbs(),
-      childDbIds,
-    };
-  }
+
   update(nextBaseProps: Partial<StateSectionCore<S>>): StateSection<S> {
     return new StateSection({ ...this.core, ...nextBaseProps });
   }
@@ -236,6 +231,7 @@ export default class StateSection<
 
   childFeIds = childFeIds;
   allChildFeIds = allChildFeIds;
+  allChildFeInfos = allChildFeInfos;
   childFeInfos = childFeInfos;
 
   static initChildFeIds = initChildFeIds;
