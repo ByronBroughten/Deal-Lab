@@ -190,7 +190,7 @@ export default class Analyzer {
   get varbFullNamesToSolveFor() {
     return this.core.varbFullNamesToSolveFor;
   }
-  addVarbsToSolveFor(...varbInfos: FeVarbInfo[]) {
+  addVarbsToSolveFor(...varbInfos: FeVarbInfo[]): Analyzer {
     const fullNames = varbInfos.map((info) =>
       StateVarb.feVarbInfoToFullName(info)
     );
@@ -201,6 +201,12 @@ export default class Analyzer {
       ]),
     });
   }
+  getVarbInfosToSolveFor(): FeVarbInfo[] {
+    return [...this.varbFullNamesToSolveFor].map((fullName) =>
+      StateVarb.fullNameToFeVarbInfo(fullName)
+    );
+  }
+
   updateAnalyzer(nextCore: Partial<AnalyzerCore>) {
     return new Analyzer({ ...this.core, ...nextCore });
   }

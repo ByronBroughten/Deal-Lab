@@ -7,7 +7,10 @@ import {
   gatherSectionInitProps,
   GatherSectionInitPropsProps,
 } from "./addSections/gatherSectionInitProps";
-import { initOneSection } from "./addSections/initOneSection";
+import {
+  initOneSection,
+  InitOneSectionProps,
+} from "./addSections/initOneSection";
 import { internal } from "../internal";
 
 export type DbSectionInit = Omit<DbSection, "childDbIds">;
@@ -32,46 +35,52 @@ function addOutEntitiesForSectionInVarbs(
 // 2. Let fewer protected methods onto the class and use
 // more imports.
 
+function initOutEntities(next: Analyzer, newFeInfos: FeInfo[]) {
+  for (const feInfo of newFeInfos) {
+    next = addOutEntitiesForSectionInVarbs(next, feInfo);
+  }
+  return next;
+}
+
+function feInfosFromInitPropsArr(
+  initPropsArr: InitOneSectionProps[]
+): FeInfo[] {
+  return initPropsArr.map((initProps) => {
+    const { feId, sectionName } = initProps;
+    return Inf.fe(sectionName, feId);
+  });
+}
+
 export type InitSectionAndChildrenProps<S extends SectionName = SectionName> =
   Omit<GatherSectionInitPropsProps<S>, "propArr">;
 function initSectionAndChildren<S extends SectionName>(
   analyzer: Analyzer,
   props: InitSectionAndChildrenProps<S>
-): readonly [Analyzer, FeInfo[]] {
+): Analyzer {
   let next = analyzer;
-  const initPropsArr = gatherSectionInitProps(next, props);
 
+  const initPropsArr = gatherSectionInitProps(next, props);
+  const newFeInfos: FeInfo[] = [];
   for (const initProps of initPropsArr) {
     next = initOneSection(next, initProps);
+    const { feId, sectionName } = initProps;
+    newFeInfos.push(Inf.fe(sectionName, feId));
   }
 
-  const newFeInfos = initPropsArr.map((initProps) => {
-    const { feId, sectionName } = initProps;
-    return Inf.fe(sectionName, feId);
-  });
-  return [next, newFeInfos];
+  next = initOutEntities(next, newFeInfos);
+
+  const varbInfosToSolveFor: FeVarbInfo[] = next.nestedFeVarbInfos(newFeInfos);
+  return next.addVarbsToSolveFor(...varbInfosToSolveFor);
 }
 
 export function addSections(
   analyzer: Analyzer,
   propArr: InitSectionAndChildrenProps[] | InitSectionAndChildrenProps
-): [Analyzer, FeVarbInfo[]] {
+): Analyzer {
   if (!Array.isArray(propArr)) propArr = [propArr];
-
-  // I have to get infos for all the sections that are added
   let next = analyzer;
-  const allNewFeInfos: FeInfo[] = [];
-  let newFeInfos: FeInfo[] = [];
-
   for (const props of propArr) {
-    [next, newFeInfos] = initSectionAndChildren(next, props);
-    allNewFeInfos.push(...newFeInfos);
+    next = initSectionAndChildren(next, props);
   }
-
-  for (const feInfo of allNewFeInfos) {
-    next = addOutEntitiesForSectionInVarbs(next, feInfo);
-  }
-
-  const varbInfosToSolveFor = next.nestedFeVarbInfos(allNewFeInfos);
-  return [next, varbInfosToSolveFor];
+  return next;
 }

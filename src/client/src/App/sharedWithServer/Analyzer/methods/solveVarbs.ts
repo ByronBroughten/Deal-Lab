@@ -5,15 +5,20 @@ import { solveAndUpdateValue } from "./solveVarbs/solveAndUpdateValue";
 
 export function solveVarbs(
   this: Analyzer,
-  varbInfosToSolve: FeVarbInfo[]
+  varbInfosToSolve: FeVarbInfo[] = []
 ): Analyzer {
   let next = this;
+  varbInfosToSolve.push(...next.getVarbInfosToSolveFor());
   varbInfosToSolve = array.rmDuplicateObjsClone(varbInfosToSolve);
+
   const orderedInfos = next.gatherAndSortInfosToSolve(varbInfosToSolve);
   for (const info of orderedInfos) {
     next = solveAndUpdateValue(next, info);
   }
-  return next;
+
+  return next.updateAnalyzer({
+    varbFullNamesToSolveFor: new Set(),
+  });
 }
 
 export function solveAllActiveVarbs(this: Analyzer) {

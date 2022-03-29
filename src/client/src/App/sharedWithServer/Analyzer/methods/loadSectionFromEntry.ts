@@ -21,7 +21,7 @@ export function loadSectionArrAndSolve<S extends SectionName<"hasOneParent">>(
   const parentFinder = next.parent(sectionName).feInfo as FeParentInfo<S>;
   [next, allAffectedInfos] = dbEntryArr.reduce(
     ([next, allAffectedInfos], dbEntry) => {
-      [next, affectedInfos] = internal.addSections(next, [
+      next = internal.addSections(next, [
         {
           sectionName,
           parentFinder,

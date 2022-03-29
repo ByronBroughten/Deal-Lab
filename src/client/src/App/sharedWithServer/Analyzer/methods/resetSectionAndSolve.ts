@@ -28,7 +28,7 @@ function resetSection<S extends SectionName<"hasParent">>(
   allAffectedInfos.push(...affectedInfos);
 
   const { sectionName } = feInfo;
-  [next, affectedInfos] = internal.addSections(next, {
+  next = internal.addSections(next, {
     sectionName,
     parentFinder: parent.feInfo,
     ...options,

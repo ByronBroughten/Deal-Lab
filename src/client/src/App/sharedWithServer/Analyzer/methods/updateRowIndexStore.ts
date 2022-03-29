@@ -90,7 +90,7 @@ function resetRowCells(
     const varbInfo = column.varbInfoValues();
     const varb = next.findVarb(varbInfo);
     const value = varb ? varb.value("numObj") : "Not Found";
-    [next, affectedInfos] = internal.addSections(next, {
+    next = internal.addSections(next, {
       sectionName: "cell",
       parentFinder: next.section(rowInfo).feInfo,
       values: { ...varbInfo, value },
@@ -123,7 +123,7 @@ export function pushToRowIndexStore(
   next = next.directUpdateAndSolve(rowIdsInfo, rowIds);
 
   const title = next.feValue("title", feInfo, "string");
-  [next, affectedInfos] = internal.addSections(next, {
+  next = internal.addSections(next, {
     sectionName: indexStoreName,
     parentFinder: indexParentInfo,
     dbEntry: {
@@ -154,8 +154,12 @@ export function updateRowIndexStore(
     idType: "dbId",
   } as const;
 
-  // let next = this.directUpdateAndSolve(Inf.dbVarb("title", rowInfo), section.value("title", "string"));
-  const [next, affectedInfos] = resetRowCells(this, rowInfo);
-
+  let [next, affectedInfos] = resetRowCells(this, rowInfo);
+  next = internal.updateValueDirectly(
+    next,
+    Inf.feVarb("title", this.section(rowInfo).feInfo),
+    section.value("title", "string")
+  );
   return next.solveVarbs(affectedInfos);
+  // let next = this.directUpdateAndSolve(Inf.dbVarb("title", rowInfo), section.value("title", "string"));
 }

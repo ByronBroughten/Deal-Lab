@@ -65,7 +65,14 @@ export type UniqueDbBaseSectionName = keyof typeof dbUniqueBaseSections;
 export type BaseSections = typeof baseSections;
 export const baseSections = {
   fe: {
-    main: base.section.schema({} as const, { alwaysOne: true }),
+    main: base.section.schema(
+      {
+        // _placeholder: "string"
+      } as const,
+      {
+        alwaysOne: true,
+      }
+    ),
 
     column: base.section.schema(base.varbs.varbInfo),
     cell: base.section.schema({ ...base.varbs.varbInfo, value: "numObj" }),

@@ -8,8 +8,8 @@ export function addSectionsAndSolve(
   this: Analyzer,
   propArr: InitSectionAndChildrenProps[]
 ): Analyzer {
-  const [next, varbInfosToSolveFor] = internal.addSections(this, propArr);
-  return next.solveVarbs(varbInfosToSolveFor);
+  const next = internal.addSections(this, propArr);
+  return next.solveVarbs();
 }
 
 export type InitSectionOptions = Omit<

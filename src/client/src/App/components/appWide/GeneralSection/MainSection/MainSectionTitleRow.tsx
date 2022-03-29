@@ -125,7 +125,7 @@ export default function MainSectionTitleRow({
                     </IconBtn>
                   </BtnTooltip>
                   <BtnTooltip
-                    title="Save updates"
+                    title="Copy"
                     className="MainSectionTitleRow-flexUnit"
                   >
                     <IconBtn onClick={() => handleSet("copySection", feInfo)}>

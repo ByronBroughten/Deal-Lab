@@ -20,7 +20,9 @@ export function makeRelSections() {
         "both",
         "main",
         "Main",
-        {} as RelVarbs<ContextName, "main">,
+        {
+          // _placeholder: rel.varb.string()
+        } as RelVarbs<ContextName, "main">,
         {
           childSectionNames: [
             "user",
