@@ -4,7 +4,6 @@ import { useAnalyzerContext } from "../../../modules/usePropertyAnalyzer";
 import { FeInfo } from "../../../sharedWithServer/Analyzer/SectionMetas/Info";
 import DualInputsRadioSwap from "../../general/DualInputsRadioSwap";
 import Radio from "../../general/Radio";
-import StandardLabel from "../../general/StandardLabel";
 import NumObjEditor from "../../inputs/NumObjEditor";
 
 type Props = {
@@ -35,6 +34,9 @@ export default function DollarPercentRadioSwap({
     | "dollars";
   const radio = radios[switchValue];
 
+  const dollarsValue = dollarsVarb.value("numObj");
+  const percentValue = percentVarb.value("numObj");
+
   return (
     <Styled className="dual-varbs-radio-swap">
       <FormControl component="fieldset" className="radio-part">
@@ -58,37 +60,32 @@ export default function DollarPercentRadioSwap({
         </RadioGroup>
       </FormControl>
       <FormControl component="fieldset" className="labeled-input-group-part">
-        <StandardLabel>{title}</StandardLabel>
         {radio === "%" && (
           <div className="swappable-editors">
             <NumObjEditor
               className="percent-down"
+              label={title}
               feVarbInfo={percentVarb.feVarbInfo}
-              labeled={false}
-              endAdornment={percentAdornment}
+              endAdornment={`${percentAdornment} ${
+                dollarsValue.number === "?"
+                  ? ""
+                  : ` (${dollarsVarb.displayVarb()})`
+              }`}
             />
-            {percentVarb.value("numObj").isDividable && (
-              <div className="dependent">
-                <span className="equals">(</span>
-                {`${dollarsVarb.displayVarb()}`}
-                <span className="equals">)</span>
-              </div>
-            )}
           </div>
         )}
         {radio === "$" && (
           <div className="swappable-editors">
             <NumObjEditor
               className="dollars-down"
+              label={title}
               feVarbInfo={dollarsVarb.feVarbInfo}
-              labeled={false}
+              endAdornment={`${
+                percentValue.number === "?"
+                  ? ""
+                  : ` (${percentVarb.displayVarb()})`
+              }`}
             />
-            {dollarsVarb.value("numObj").isDividable && (
-              <div className="dependent">
-                <span className="equals">=</span>
-                {`${percentVarb.displayVarb()}`}
-              </div>
-            )}
           </div>
         )}
       </FormControl>
