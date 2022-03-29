@@ -54,7 +54,7 @@ function removeSection(analyzer: Analyzer, feInfo: FeInfo): Analyzer {
     analyzer.sectionArr(sectionName),
     (section) => section.feId === id
   );
-  return analyzer.setSectionArr(sectionName, nextSectionArr);
+  return analyzer.updateSectionArr(sectionName, nextSectionArr);
 }
 
 function eraseOneSection(

@@ -121,9 +121,9 @@ import {
 import { resetSectionAndSolve } from "./Analyzer/methods/resetSectionAndSolve";
 import {
   replaceInSectionArr,
-  setSectionArr,
+  updateSectionArr,
   wipeSectionArrAndSolve,
-} from "./Analyzer/methods/setSectionArr";
+} from "./Analyzer/methods/updateSectionArr";
 import { solveAllActiveVarbs, solveVarbs } from "./Analyzer/methods/solveVarbs";
 import {
   gatherAndSortInfosToSolve,
@@ -173,35 +173,40 @@ type RawSections = { [S in SectionName]: StateSectionCore<S>[] };
 type VarbFullnamesToSolveFor = Set<string>;
 export type AnalyzerCore = {
   sections: StateSections;
-  // varbFullNamesToSolveFor: VarbFullnamesToSolveFor;
+  varbFullNamesToSolveFor: VarbFullnamesToSolveFor;
 };
 
 export default class Analyzer {
-  readonly sections: StateSections;
-  // protected varbFullNamesToSolveFor: VarbFullnamesToSolveFor;
-  constructor({
-    sections = Analyzer.blankStateSections(),
-  }: // varbFullNamesToSolveFor = new Set(),
-  Partial<AnalyzerCore> = {}) {
-    this.sections = sections;
-    // this.varbFullNamesToSolveFor = varbFullNamesToSolveFor;
+  constructor(readonly core: AnalyzerCore) {}
+  protected static makeInitialCore(): AnalyzerCore {
+    return {
+      sections: Analyzer.blankStateSections(),
+      varbFullNamesToSolveFor: new Set(),
+    };
   }
-
+  get sections() {
+    return this.core.sections;
+  }
+  get varbFullNamesToSolveFor() {
+    return this.core.varbFullNamesToSolveFor;
+  }
   addVarbsToSolveFor(...varbInfos: FeVarbInfo[]) {
     const fullNames = varbInfos.map((info) =>
       StateVarb.feVarbInfoToFullName(info)
     );
-
     return this.updateAnalyzer({
-      // varbFullNamesToSolveFor: new Set([...fullNames, ...this.varbFullNamesToSolveFor])
+      varbFullNamesToSolveFor: new Set([
+        ...this.varbFullNamesToSolveFor,
+        ...fullNames,
+      ]),
     });
   }
   updateAnalyzer(nextCore: Partial<AnalyzerCore>) {
-    return new Analyzer({ ...this });
+    return new Analyzer({ ...this.core, ...nextCore });
   }
 
   static initAnalyzer(options: InitSectionOptions = {}): Analyzer {
-    let next = new Analyzer();
+    let next = new Analyzer(Analyzer.makeInitialCore());
 
     next = next.addSectionAndSolve(
       "main",
@@ -248,9 +253,6 @@ export default class Analyzer {
 
   stringifySections() {
     return JSON.stringify(this.rawSections);
-  }
-  get core() {
-    return { sections: this.sections };
   }
   get meta() {
     return sectionMetas;
@@ -325,7 +327,7 @@ export default class Analyzer {
   resetSectionAndSolve = resetSectionAndSolve;
   sectionArr = sectionArr;
   sectionArrInfos = sectionArrInfos;
-  setSectionArr = setSectionArr;
+  updateSectionArr = updateSectionArr;
   replaceInSectionArr = replaceInSectionArr;
   wipeSectionArrAndSolve = wipeSectionArrAndSolve;
   sectionArrAsOptions = sectionArrAsOptions;

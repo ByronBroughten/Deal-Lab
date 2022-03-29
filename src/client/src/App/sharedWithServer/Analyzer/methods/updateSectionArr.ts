@@ -2,12 +2,12 @@ import Analyzer from "../../Analyzer";
 import { SectionName } from "../SectionMetas/SectionName";
 import StateSection from "../StateSection";
 
-export function setSectionArr(
+export function updateSectionArr(
   this: Analyzer,
   sectionName: SectionName,
   nextSectionArr: StateSection[]
 ): Analyzer {
-  return new Analyzer({
+  return this.updateAnalyzer({
     sections: {
       ...this.sections,
       [sectionName]: nextSectionArr,
@@ -30,7 +30,7 @@ export function replaceInSectionArr(
 
   const nextSectionArr = [...this.sectionArr(sectionName)];
   nextSectionArr[idx] = nextSection;
-  return this.setSectionArr(sectionName, nextSectionArr);
+  return this.updateSectionArr(sectionName, nextSectionArr);
 }
 
 export function wipeSectionArrAndSolve(

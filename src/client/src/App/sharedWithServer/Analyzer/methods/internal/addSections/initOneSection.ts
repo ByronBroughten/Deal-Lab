@@ -19,12 +19,11 @@ function pushSection<S extends SectionName>(
   section: StateSection<S>
 ): Analyzer {
   const { sectionName } = section.meta;
-  return new Analyzer({
-    sections: {
-      ...analyzer.sections,
-      [sectionName]: [...analyzer.sections[sectionName], section],
-    },
-  });
+  const nextSectionArr = [
+    ...analyzer.sections[sectionName],
+    section,
+  ] as StateSection[];
+  return analyzer.updateSectionArr(sectionName, nextSectionArr);
 }
 
 export type InitOneSectionProps<S extends SectionName = SectionName> =
