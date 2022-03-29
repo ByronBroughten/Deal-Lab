@@ -3,14 +3,11 @@ import theme, {
   ThemeSectionName,
   themeSectionNameOrDefault,
 } from "../../theme/Theme";
-import SectionBtn from "./SectionBtn";
 import useToggle from "../../modules/customHooks/useToggle";
 import { LoadIndexSectionList } from "./LoadIndexSectionList";
 import { FeInfo } from "../../sharedWithServer/Analyzer/SectionMetas/Info";
 import LoginToAccessBtnTooltip from "./LoginToAccessBtnTooltip";
-import { MdOutlineViewList } from "react-icons/md";
 import { LoggedInOrOutIconBtn } from "./LoggedInOrNotBtn";
-import { rem } from "polished";
 import { FaList } from "react-icons/fa";
 
 type Props = {

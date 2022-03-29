@@ -2,6 +2,7 @@ import { ButtonProps } from "@material-ui/core/Button";
 import theme from "../../theme/Theme";
 import PlainBtn from "../general/PlainBtn";
 import styled, { css } from "styled-components";
+import { rem } from "polished";
 
 export type NavBtnProps = ButtonProps & {
   $isactive?: boolean;
@@ -20,7 +21,7 @@ export default function NavBtn({ className, ...rest }: NavBtnProps) {
   );
 }
 const Styled = styled(PlainBtn)<{ $isactive?: boolean }>`
-  font-size: 1em;
+  font-size: ${rem("16px")};
   padding: 0 ${theme.s4};
   display: flex;
   flex-direction: column;
@@ -28,6 +29,7 @@ const Styled = styled(PlainBtn)<{ $isactive?: boolean }>`
   flex: 1;
   white-space: nowrap;
   background-color: ${theme.analysis.main};
+  font-weight: 700;
 
   :hover {
     box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.5);

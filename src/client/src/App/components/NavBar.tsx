@@ -95,11 +95,6 @@ const Styled = styled(AppBar)`
     margin-left: 8px;
   }
 
-  .NavBtn {
-    font-size: ${rem("17px")};
-    font-weight: 500;
-  }
-
   .NavBar-analyzerLink {
     display: inherit;
     align-items: inherit;
@@ -116,7 +111,7 @@ const Styled = styled(AppBar)`
 
   .NavBar-getProBtnIcon {
     margin-left: ${rem("4px")};
-    font-size: ${rem("21px")};
+    font-size: ${rem("23px")};
   }
 
   .NavBar-leftSide {
