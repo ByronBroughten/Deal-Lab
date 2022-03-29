@@ -34,7 +34,7 @@ export function solveValue(
         (entity) => entity.length === 0
       );
       return nextNumObj.updateCore({
-        editorText: `${nextCache.number}`,
+        editorText: `${nextCache.number === "?" ? "" : nextCache.number}`,
         entities: nextEntities,
       });
     },
@@ -61,7 +61,10 @@ export function solveValue(
       // I should get rid of entities, right?
       // I can't just get rid of them, though, right?
 
-      return nextNumObj.updateCore({ editorText: `${number}`, entities: [] });
+      return nextNumObj.updateCore({
+        editorText: `${number === "?" ? "" : number}`,
+        entities: [],
+      });
     },
     userVarb(): NumObj {
       if (Inf.is.feName(feVarbInfo, "userVarbItem"))
