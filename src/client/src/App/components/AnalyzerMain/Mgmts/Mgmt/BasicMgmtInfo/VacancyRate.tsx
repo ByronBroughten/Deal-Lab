@@ -17,7 +17,7 @@ export default function VacancyRate({ feInfo }: Props) {
       label="Vacancy Rate"
       feVarbInfo={Inf.feVarb("vacancyRatePercent", feInfo)}
       endAdornment={`${endAdornment} ${
-        dollarsValue.number === "?" ? "" : dollarsVarb.displayVarb()
+        dollarsValue.number === "?" ? "" : `(${dollarsVarb.displayVarb()})`
       }`}
     />
   );

@@ -5,8 +5,8 @@ import { HandleOnChange } from "../../utils/Draf";
 import MaterialDraftField from "./MaterialDraftField";
 import React from "react";
 import ccs from "../../theme/cssChunks";
-import { pick } from "lodash";
-import { ThemeSectionName } from "../../theme/Theme";
+import { omit, pick } from "lodash";
+import theme, { ThemeSectionName } from "../../theme/Theme";
 
 type ShellProps = {
   endAdornment?: any;
@@ -16,6 +16,7 @@ interface TweakedEditorProps extends Omit<EditorProps, "onChange"> {
   editorState: EditorState;
   handleOnChange: HandleOnChange;
 }
+
 interface Props extends Omit<FilledTextFieldProps, "InputProps" | "variant"> {
   sectionName?: ThemeSectionName;
   editorProps: TweakedEditorProps;
@@ -36,10 +37,12 @@ export default function MaterialDraftEditor({
   shellProps = {},
   label,
   sectionName,
+
   ...rest
 }: Props) {
   const editorRef = React.useRef<Editor | null>(null);
   const { editorState } = editorProps;
+
   const hasFocus = editorState.getSelection().getHasFocus();
   const hasText = editorState.getCurrentContent().hasText();
 
@@ -59,7 +62,7 @@ export default function MaterialDraftEditor({
             className: `DraftTextField-root ${label ? "labeled" : ""}`,
             id,
             name: id,
-            label,
+            label: label ?? "",
             variant: "filled",
             ...rest,
           }}
@@ -92,4 +95,9 @@ export default function MaterialDraftEditor({
 const Styled = styled.div<{ label?: any; sectionName?: ThemeSectionName }>`
   ${({ label, sectionName }) =>
     ccs.materialDraftEditor.main({ label, sectionName })};
+  .public-DraftEditorPlaceholder-root {
+    position: absolute;
+    white-space: nowrap;
+    color: ${theme.placeholderGray};
+  }
 `;

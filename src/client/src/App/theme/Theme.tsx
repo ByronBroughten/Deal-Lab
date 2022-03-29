@@ -158,6 +158,7 @@ const theme = {
   dark: color["gray-900"],
   transparentGray: color["gray-300"] + "e0",
   transparentGrayBorder: color["gray-500"] + "e0",
+  placeholderGray: color["gray-600"] + "e0",
 
   // spacing sizes
   s0: "0.0625rem",

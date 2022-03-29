@@ -35,6 +35,10 @@ export default function BasicLoanInfo({ feInfo, className }: Props) {
                   className: "BasicLoanInfo-radioSwap",
                 }}
               />
+            </div>
+          </div>
+          <div className="BasicSectionInfo-subSection">
+            <div className="BasicSectionInfo-subSection-viewable">
               <div className="BasicSectionInfo-dualEditors BasicSectionInfo-editorBlock">
                 <NumObjEditor
                   feVarbInfo={feVarbInfo("interestRatePercentYearly")}
@@ -45,6 +49,7 @@ export default function BasicLoanInfo({ feInfo, className }: Props) {
                   className="BasicSectionInfo-numObjEditor secondEditor"
                 />
               </div>
+
               <div className="BasicSectionInfo-editorBlock">
                 <StandardLabel>Mortgage Insurance</StandardLabel>
                 <div className="BasicSectionInfo-dualEditors">

@@ -12,6 +12,7 @@ import { OnSelect } from "../../inputs/VarbAutoComplete";
 import { LoadIndexSectionList } from "../LoadIndexSectionList";
 import XBtn from "../Xbtn";
 import ListMenuBtn from "./ListMenuBtn";
+import { MdDelete } from "react-icons/md";
 
 function useFullIndexStoreMenu(feInfo: FeInfo<"hasFullIndexStore">) {
   const { analyzer, handleSet, handleRemoveSection } = useAnalyzerContext();
@@ -62,7 +63,7 @@ export function ListMenu({
     >
       <div className="ListMenu-viewable">
         <XBtn className="ListMenu-listMenuBtn" onClick={menu.remove}>
-          Remove
+          <MdDelete size={24} />
         </XBtn>
         <ListMenuBtn className="ListMenu-listMenuBtn" onClick={toggleListView}>
           {viewIsOpen && <FiMinimize2 size={15} />}
@@ -109,7 +110,7 @@ const Styled = styled.div<{ themeSectionName: ThemeSectionName }>`
   .ListMenu-listMenuBtn {
     font-size: 0.9rem;
     display: flex; // centers button content
-    width: 60px;
+    width: 35px;
     height: 32px;
     border-radius: 0;
   }

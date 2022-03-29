@@ -153,6 +153,12 @@ const Styled = styled.div<{
     border-bottom: 1px solid ${({ sectionName }) => theme[sectionName].border};
   }
 
+  .AdditiveList-title {
+    .MuiInputBase-root {
+      min-width: 5rem;
+    }
+  }
+
   .AdditiveList-total {
     margin-top: ${theme.s2};
   }
