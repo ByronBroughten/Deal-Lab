@@ -7,6 +7,8 @@ import BasicSectionInfo from "../../../appWide/MainSection/MainSection/MainSecti
 import StandardLabel from "../../../general/StandardLabel";
 import NumObjEditor from "../../../inputs/NumObjEditor";
 import DollarPercentRadioSwap from "../../general/DollarPercentRadioSwap";
+import styled from "styled-components";
+import theme from "../../../../theme/Theme";
 
 type Props = { feInfo: FeInfo; className?: string };
 export default function BasicLoanInfo({ feInfo, className }: Props) {
@@ -17,7 +19,7 @@ export default function BasicLoanInfo({ feInfo, className }: Props) {
     switch: "loanAmountBaseUnitSwitch",
   };
   return (
-    <BasicSectionInfo
+    <Styled
       {...{ className: `BasicLoanInfo-root ${className}`, sectionName: "loan" }}
     >
       <div className="viewable">
@@ -35,31 +37,50 @@ export default function BasicLoanInfo({ feInfo, className }: Props) {
             </div>
           </div>
           <div className="BasicSectionInfo-subSection">
-            <div className="BasicSectionInfo-subSection-viewable">
-              <NumObjEditor
-                feVarbInfo={feVarbInfo("interestRatePercentYearly")}
-              />
-              <NumObjEditor
-                feVarbInfo={feVarbInfo("loanTermYears")}
-                label="Loan term"
-              />
+            <div className="BasicSectionInfo-subSection-viewable sideBySide">
+              <div className="BasicSectionInfo-dualEditors">
+                <NumObjEditor
+                  feVarbInfo={feVarbInfo("interestRatePercentYearly")}
+                />
+                <NumObjEditor
+                  feVarbInfo={feVarbInfo("loanTermYears")}
+                  label="Loan term"
+                  className="BasicSectionInfo-numObjEditor secondEditor"
+                />
+              </div>
             </div>
           </div>
           <div className="BasicSectionInfo-subSection">
-            <div className="BasicSectionInfo-subSection-viewable">
+            <div className="BasicSectionInfo-subSection-viewable sideBySide">
               <StandardLabel>Mortgage Insurance</StandardLabel>
-              <NumObjEditor
-                feVarbInfo={feVarbInfo("mortInsUpfront")}
-                label="Upfront"
-              />
-              <NumObjEditor
-                feVarbInfo={feVarbInfo("mortgageInsYearly")}
-                label="Ongoing"
-              />
+              <div className="BasicSectionInfo-dualEditors">
+                <NumObjEditor
+                  feVarbInfo={feVarbInfo("mortInsUpfront")}
+                  label="Upfront"
+                />
+                <NumObjEditor
+                  feVarbInfo={feVarbInfo("mortgageInsYearly")}
+                  label="Ongoing"
+                  className="BasicSectionInfo-numObjEditor secondEditor"
+                />
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </BasicSectionInfo>
+    </Styled>
   );
 }
+
+const Styled = styled(BasicSectionInfo)`
+  .BasicSectionInfo-dualEditors {
+    display: flex;
+    .DraftTextField-root {
+      min-width: 95px;
+    }
+  }
+
+  .BasicSectionInfo-numObjEditor.secondEditor {
+    margin-left: ${theme.s2};
+  }
+`;

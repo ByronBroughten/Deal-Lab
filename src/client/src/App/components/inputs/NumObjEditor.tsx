@@ -31,7 +31,7 @@ type Props = PropAdornments & {
 
 export default function NumObjEditor({
   feVarbInfo,
-  className = "",
+  className,
   labeled = true,
   bypassNumeric = false,
   ...props
@@ -73,8 +73,11 @@ export default function NumObjEditor({
   useOnOutsideClickEffect(closeVarbSelector, [numObjEditorRef, popperRef]);
 
   return (
-    <Styled ref={numObjEditorRef}>
-      <div className={"numeric-editor " + className}>
+    <Styled
+      ref={numObjEditorRef}
+      className={`NumObjEditor-root ${className ?? ""}`}
+    >
+      <div className="NumObjEditor-inner">
         <MaterialDraftEditor
           onClick={openVarbSelector}
           onFocus={openVarbSelector}

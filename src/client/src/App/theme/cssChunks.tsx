@@ -283,7 +283,7 @@ const ccs = {
             padding-left: ${theme.s2};
             padding-right: ${theme.s2};
             padding-top: 1rem;
-            min-width: 75px;
+            /* min-width: 75px; */
           }
 
           .MuiFormLabel-root {

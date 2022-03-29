@@ -67,7 +67,7 @@ const Styled = styled.div`
     }
   }
 
-  .numeric-editor {
+  .NumObjEditor-inner {
     margin-top: ${theme.s2};
     .editor-background {
       background-color: ${theme.property.light};

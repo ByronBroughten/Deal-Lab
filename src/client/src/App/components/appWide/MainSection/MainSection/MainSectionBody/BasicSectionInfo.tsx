@@ -67,7 +67,7 @@ const Styled = styled.div<{ sectionName: ThemeSectionName }>`
     }
   }
 
-  .numeric-editor {
+  .NumObjEditor-inner {
     :not(:first-child) {
       margin-top: ${theme.s1};
     }
