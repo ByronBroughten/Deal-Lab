@@ -41,4 +41,7 @@ const Styled = styled(BasicSectionInfo)`
   .UnitList-root {
     margin-left: ${theme.s3};
   }
+  .MuiFormControl-root.labeled {
+    min-width: 127px;
+  }
 `;

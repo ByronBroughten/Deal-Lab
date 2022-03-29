@@ -72,9 +72,6 @@ const Styled = styled.div<{ sectionName: ThemeSectionName }>`
       margin-top: ${theme.s1};
     }
   }
-  .MuiFormControl-root.labeled {
-    min-width: 127px;
-  }
   .editor-background {
     border: 1px solid ${theme["gray-500"]};
   }

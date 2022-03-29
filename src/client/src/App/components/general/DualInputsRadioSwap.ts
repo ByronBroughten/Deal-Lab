@@ -3,18 +3,32 @@ import styled from "styled-components";
 import theme from "../../theme/Theme";
 import ccs from "../../theme/cssChunks";
 
-export default styled.div.attrs(({ className, ...rest }) => ({
+const DualInputsRadioSwap = styled.div.attrs(({ className, ...rest }) => ({
   className: "dual-inputs-radio-swap " + className,
   ...rest,
 }))`
   display: flex;
-  flex: 0;
-  align-items: flex-start;
+  align-items: flex-end;
 
+  // Radio Stuff
+  /* .PrivateSwitchBase-root-1 {
+    padding: 0;
+  }
+  .PrivateSwitchBase-input-4 {
+    height: 4px;
+    width: 4px;
+    padding: 0;
+  }
+  .PrivateRadioButtonIcon-root-5 {
+    height: 4px;
+    width: 4px;
+    padding: 0;
+  } */
+
+  .MuiInputBase-root {
+    display: flex;
+  }
   .MuiFormGroup-root {
-    border-radius: ${theme.br1};
-    padding: ${theme.s1};
-    ${ccs.coloring.section.lightNeutral};
   }
 
   .MuiSvgIcon-root {
@@ -50,11 +64,6 @@ export default styled.div.attrs(({ className, ...rest }) => ({
   fieldset.labeled-input-group-part {
     margin-left: ${theme.s1};
   }
-  .swappable-editors {
-    margin-top: ${theme.s2};
-    display: flex;
-    align-items: flex-end;
-  }
   .dependent {
     margin-bottom: ${theme.s1};
     margin-left: ${theme.s1};
@@ -63,3 +72,5 @@ export default styled.div.attrs(({ className, ...rest }) => ({
     margin-right: ${theme.s1};
   }
 `;
+
+export default DualInputsRadioSwap;

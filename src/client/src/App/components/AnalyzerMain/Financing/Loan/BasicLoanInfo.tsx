@@ -32,6 +32,7 @@ export default function BasicLoanInfo({ feInfo, className }: Props) {
                   feInfo,
                   title: "Base loan amount",
                   percentAdornment: "% LTV",
+                  className: "BasicLoanInfo-radioSwap",
                 }}
               />
               <div className="BasicSectionInfo-dualEditors BasicSectionInfo-editorBlock">
@@ -75,6 +76,12 @@ const Styled = styled(BasicSectionInfo)`
   }
   .BasicSectionInfo-editorBlock {
     margin-top: ${theme.s2};
+  }
+
+  .BasicLoanInfo-radioSwap {
+    .MuiInputBase-root {
+      width: 158px;
+    }
   }
 
   .BasicSectionInfo-numObjEditor.secondEditor {

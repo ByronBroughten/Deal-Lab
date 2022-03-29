@@ -6,6 +6,7 @@ import DollarPercentRadioSwap from "../../general/DollarPercentRadioSwap";
 import VacancyRate from "./BasicMgmtInfo/VacancyRate";
 import { switchNames } from "../../../../sharedWithServer/Analyzer/SectionMetas/relSections/baseSections/switchNames";
 import { FeInfo } from "../../../../sharedWithServer/Analyzer/SectionMetas/Info";
+import styled from "styled-components";
 
 type Props = { feInfo: FeInfo; className?: string };
 export default function BasicMgmtInfo({ feInfo, className }: Props) {
@@ -21,7 +22,7 @@ export default function BasicMgmtInfo({ feInfo, className }: Props) {
   };
 
   return (
-    <BasicSectionInfo
+    <Styled
       {...{ sectionName: "mgmt", className: `BasicMgmtInfo-root ${className}` }}
     >
       <div className="viewable">
@@ -30,7 +31,12 @@ export default function BasicMgmtInfo({ feInfo, className }: Props) {
             <div className="BasicSectionInfo-subSection">
               <div className="BasicSectionInfo-subSection-viewable">
                 <DollarPercentRadioSwap
-                  {...{ names: rentCutNames, feInfo, title: "Cut of rent" }}
+                  {...{
+                    names: rentCutNames,
+                    feInfo,
+                    title: "Cut of rent",
+                    className: "BasicMgmtInfo-radioSwap",
+                  }}
                 />
               </div>
             </div>
@@ -42,6 +48,19 @@ export default function BasicMgmtInfo({ feInfo, className }: Props) {
           </div>
         )}
       </div>
-    </BasicSectionInfo>
+    </Styled>
   );
 }
+
+const Styled = styled(BasicSectionInfo)`
+  .BasicMgmtInfo-radioSwap {
+    .MuiInputBase-root {
+      min-width: 85px;
+    }
+  }
+  .VacancyRate-root {
+    .MuiInputBase-root {
+      min-width: 123px;
+    }
+  }
+`;

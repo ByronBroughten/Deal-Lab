@@ -49,6 +49,7 @@ const mgmtPreVarbs: RelVarbs<ContextName, "mgmt"> = {
   }),
   vacancyRatePercent: rel.varb.percentObj("Vacancy Rate", {
     initNumber: 5,
+    endAdornment: "%",
   }),
   ...rel.varbs.ongoingPercentToPortion(
     "vacancyLossDollars",

@@ -12,6 +12,7 @@ type Props = {
   title: string;
   percentAdornment?: string;
   dollarEnding?: string;
+  className?: string;
 };
 
 const radios = {
@@ -23,6 +24,7 @@ export default function DollarPercentRadioSwap({
   names,
   title,
   percentAdornment = "%",
+  className,
 }: Props) {
   const { analyzer, handleChange } = useAnalyzerContext();
   const varbs = analyzer.section(feInfo).varbs;
@@ -38,7 +40,7 @@ export default function DollarPercentRadioSwap({
   const percentValue = percentVarb.value("numObj");
 
   return (
-    <Styled className="dual-varbs-radio-swap">
+    <Styled className={`DualPercentRadioSwap-root ${className ?? ""}`}>
       <FormControl component="fieldset" className="radio-part">
         <RadioGroup>
           <FormControlLabel
@@ -93,8 +95,4 @@ export default function DollarPercentRadioSwap({
   );
 }
 
-const Styled = styled(DualInputsRadioSwap)`
-  .swappable-editors {
-    margin-top: 7px;
-  }
-`;
+const Styled = styled(DualInputsRadioSwap)``;
