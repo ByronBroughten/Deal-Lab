@@ -1,12 +1,12 @@
 import React from "react";
 import { useAnalyzerContext } from "../../modules/usePropertyAnalyzer";
 import Loan from "./Financing/Loan";
-import MainSection from "../appWide/MainSection";
+import MainSection from "../appWide/GeneralSection";
 import FinancingInfo from "./Financing/FinancingInfo";
 import styled from "styled-components";
 import theme from "../../theme/Theme";
-import GeneralSectionTitle from "../appWide/MainSection/GeneralSectionTitle";
-import MainSectionTitleBtn from "../appWide/MainSection/GeneralSectionTitle/MainSectionTitleBtn";
+import GeneralSectionTitle from "../appWide/GeneralSection/GeneralSectionTitle";
+import MainSectionTitleBtn from "../appWide/GeneralSection/GeneralSectionTitle/MainSectionTitleBtn";
 
 type Props = { className?: string };
 export default function Financing(props: Props) {

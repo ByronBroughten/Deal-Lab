@@ -165,18 +165,39 @@ import { Id } from "./Analyzer/SectionMetas/relSections/baseSections/id";
 import { newInEntity } from "./Analyzer/methods/get/inEntity";
 import { AnalyzerReq, analyzerReq } from "./Analyzer/req";
 import { DropFirst } from "./utils/typescript";
-import { Res } from "./User/crudTypes";
-import { auth } from "../modules/services/authService";
+import { FeVarbInfo } from "./Analyzer/SectionMetas/relSections/rel/relVarbInfoTypes";
+import StateVarb from "./Analyzer/StateSection/StateVarb";
 
 export type StateSections = { [S in SectionName]: StateSection<S>[] };
 type RawSections = { [S in SectionName]: StateSectionCore<S>[] };
-export type AnalyzerCore = { sections: StateSections };
+type VarbFullnamesToSolveFor = Set<string>;
+export type AnalyzerCore = {
+  sections: StateSections;
+  // varbFullNamesToSolveFor: VarbFullnamesToSolveFor;
+};
+
 export default class Analyzer {
   readonly sections: StateSections;
+  // protected varbFullNamesToSolveFor: VarbFullnamesToSolveFor;
   constructor({
     sections = Analyzer.blankStateSections(),
-  }: Partial<AnalyzerCore> = {}) {
+  }: // varbFullNamesToSolveFor = new Set(),
+  Partial<AnalyzerCore> = {}) {
     this.sections = sections;
+    // this.varbFullNamesToSolveFor = varbFullNamesToSolveFor;
+  }
+
+  addVarbsToSolveFor(...varbInfos: FeVarbInfo[]) {
+    const fullNames = varbInfos.map((info) =>
+      StateVarb.feVarbInfoToFullName(info)
+    );
+
+    return this.updateAnalyzer({
+      // varbFullNamesToSolveFor: new Set([...fullNames, ...this.varbFullNamesToSolveFor])
+    });
+  }
+  updateAnalyzer(nextCore: Partial<AnalyzerCore>) {
+    return new Analyzer({ ...this });
   }
 
   static initAnalyzer(options: InitSectionOptions = {}): Analyzer {

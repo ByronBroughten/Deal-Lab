@@ -2,13 +2,13 @@ import React from "react";
 import styled from "styled-components";
 import theme from "../theme/Theme";
 import AdditiveList from "./appWide/AdditiveList";
-import GeneralSectionTitle from "./appWide/MainSection/GeneralSectionTitle";
+import GeneralSectionTitle from "./appWide/GeneralSection/GeneralSectionTitle";
 import ListManagerTitleRow from "./ListManager/ListManagerTitleRow";
 import {
   AnalyzerContext,
   useAnalyzerContext,
 } from "../modules/usePropertyAnalyzer";
-import MainSection from "./appWide/MainSection";
+import MainSection from "./appWide/GeneralSection";
 import useLmAnalyzer from "./ListManager/useLmAnalyzer";
 import { SectionName } from "../sharedWithServer/Analyzer/SectionMetas/SectionName";
 

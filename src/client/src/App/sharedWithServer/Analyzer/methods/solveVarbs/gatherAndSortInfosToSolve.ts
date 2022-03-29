@@ -13,7 +13,7 @@ export function getOutVarbMap(
   parentStringInfo?: string
 ): OutVarbMap {
   for (const info of feInfosToSolve) {
-    const stringInfo = StateVarb.varbInfoToString(info);
+    const stringInfo = StateVarb.feVarbInfoToFullName(info);
     if (visitedInfos.includes(stringInfo)) continue;
     if (!(stringInfo in outVarbMap)) outVarbMap[stringInfo] = [];
     if (parentStringInfo && !outVarbMap[parentStringInfo].includes(stringInfo))
@@ -53,5 +53,7 @@ export function gatherAndSortInfosToSolve(
   const { edges, loneVarbs } = this.getDagEdgesAndLoneVarbs(varbInfosToSolve);
   let solveOrder = tsort(edges);
   solveOrder = solveOrder.concat(loneVarbs);
-  return solveOrder.map((stringInfo) => StateVarb.stringToVarbInfo(stringInfo));
+  return solveOrder.map((stringInfo) =>
+    StateVarb.fullNameToFeVarbInfo(stringInfo)
+  );
 }

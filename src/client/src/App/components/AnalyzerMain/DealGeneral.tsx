@@ -1,10 +1,10 @@
 import { useAnalyzerContext } from "../../modules/usePropertyAnalyzer";
 import styled, { css } from "styled-components";
 import theme from "../../theme/Theme";
-import GeneralSectionTitle from "../appWide/MainSection/GeneralSectionTitle";
-import MainSectionTitleBtn from "../appWide/MainSection/GeneralSectionTitle/MainSectionTitleBtn";
+import GeneralSectionTitle from "../appWide/GeneralSection/GeneralSectionTitle";
+import MainSectionTitleBtn from "../appWide/GeneralSection/GeneralSectionTitle/MainSectionTitleBtn";
 import Deal from "./DealGeneral/Deal";
-import MainSection from "../appWide/MainSection";
+import MainSection from "../appWide/GeneralSection";
 import useToggleView from "../../modules/customHooks/useToggleView";
 import { Link } from "react-router-dom";
 import { auth } from "../../modules/services/authService";

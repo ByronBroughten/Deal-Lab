@@ -145,12 +145,17 @@ export function updateRowIndexStore(
   this: Analyzer,
   feInfo: FeInfo<"hasRowIndexStore">
 ) {
-  const { dbId, indexStoreName } = this.section(feInfo);
+  const section = this.section(feInfo);
 
-  const [next, affectedInfos] = resetRowCells(this, {
+  const { dbId, indexStoreName } = section;
+  const rowInfo = {
     sectionName: indexStoreName,
     id: dbId,
     idType: "dbId",
-  });
+  } as const;
+
+  // let next = this.directUpdateAndSolve(Inf.dbVarb("title", rowInfo), section.value("title", "string"));
+  const [next, affectedInfos] = resetRowCells(this, rowInfo);
+
   return next.solveVarbs(affectedInfos);
 }

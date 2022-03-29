@@ -1,6 +1,6 @@
 import React from "react";
 import NumObjEditor from "../../../inputs/NumObjEditor";
-import BasicSectionInfo from "../../../appWide/MainSection/MainSection/MainSectionBody/BasicSectionInfo";
+import BasicSectionInfo from "../../../appWide/GeneralSection/MainSection/MainSectionBody/BasicSectionInfo";
 import {
   FeInfo,
   Inf,

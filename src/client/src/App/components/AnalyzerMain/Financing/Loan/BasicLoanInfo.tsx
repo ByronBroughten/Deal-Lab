@@ -3,7 +3,7 @@ import {
   FeInfo,
   Inf,
 } from "../../../../sharedWithServer/Analyzer/SectionMetas/Info";
-import BasicSectionInfo from "../../../appWide/MainSection/MainSection/MainSectionBody/BasicSectionInfo";
+import BasicSectionInfo from "../../../appWide/GeneralSection/MainSection/MainSectionBody/BasicSectionInfo";
 import StandardLabel from "../../../general/StandardLabel";
 import NumObjEditor from "../../../inputs/NumObjEditor";
 import DollarPercentRadioSwap from "../../general/DollarPercentRadioSwap";

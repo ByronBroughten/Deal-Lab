@@ -1,7 +1,7 @@
 import React from "react";
 import { useAnalyzerContext } from "../../modules/usePropertyAnalyzer";
-import MainSection from "../appWide/MainSection";
-import GeneralSectionTitle from "../appWide/MainSection/GeneralSectionTitle";
+import MainSection from "../appWide/GeneralSection";
+import GeneralSectionTitle from "../appWide/GeneralSection/GeneralSectionTitle";
 import Property from "./PropertyGeneral/Property";
 
 export default function PropertyGeneral() {

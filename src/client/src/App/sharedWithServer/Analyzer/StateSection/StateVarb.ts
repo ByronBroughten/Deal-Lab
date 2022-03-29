@@ -32,6 +32,7 @@ import {
 } from "./StateVarb/entities";
 import { StateValue } from "./StateVarb/stateValue";
 import { NumObjUnit } from "../methods/solveVarbs/solveAndUpdateValue/updateNumericObjCalc";
+import { Inf } from "./../SectionMetas/Info";
 
 export type InVarbInfo = InEntity | FeVarbInfo;
 export type StateVarbCore = {
@@ -70,7 +71,7 @@ export default class StateVarb {
     return wasUpdatedByEditor ? current : !current;
   }
   get fullName(): string {
-    return StateVarb.varbInfoToString(this.feVarbInfo);
+    return StateVarb.feVarbInfoToFullName(this.feVarbInfo);
   }
   get varbName() {
     return this.meta.varbName;
@@ -130,7 +131,7 @@ export default class StateVarb {
     };
   }
   get stringFeVarbInfo(): string {
-    return StateVarb.varbInfoToString(this.feVarbInfo);
+    return StateVarb.feVarbInfoToFullName(this.feVarbInfo);
   }
   get name(): string {
     return this.stringFeVarbInfo;
@@ -238,17 +239,19 @@ export default class StateVarb {
     );
   }
 
-  static varbInfoToString(info: FeVarbInfo): string {
+  static feVarbInfoToFullName(info: FeVarbInfo): string {
     const { sectionName, varbName, id } = info;
     return [sectionName, varbName, id].join(".");
   }
-  static stringToVarbInfo(info: string): FeVarbInfo {
-    const [sectionName, varbName, id] = info.split(".") as [
+  static fullNameToFeVarbInfo(fullName: string): FeVarbInfo {
+    const [sectionName, varbName, id] = fullName.split(".") as [
       SectionName,
       string,
       string
     ];
-    return { sectionName, varbName, id, idType: "feId" } as FeVarbInfo;
+    const info = { sectionName, varbName, id, idType: "feId" };
+    if (Inf.is.feVarb(info)) return info;
+    else throw new Error(`Was passed an invalid fullName: ${fullName}`);
   }
 
   // entities

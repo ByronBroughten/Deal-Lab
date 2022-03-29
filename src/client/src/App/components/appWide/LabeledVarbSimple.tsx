@@ -8,6 +8,6 @@ type Props = {
   displayLabel?: string;
 };
 export function LabeledVarbSimple({ feVarbInfo, ...rest }: Props) {
-  const id = StateVarb.varbInfoToString(feVarbInfo);
+  const id = StateVarb.feVarbInfoToFullName(feVarbInfo);
   return <LabeledVarb {...{ id, feVarbInfo, ...rest }} />;
 }

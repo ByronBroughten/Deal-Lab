@@ -1,8 +1,8 @@
 import React from "react";
-import MainSection from "../appWide/MainSection";
+import MainSection from "../appWide/GeneralSection";
 import Mgmt from "./Mgmts/Mgmt";
 import { useAnalyzerContext } from "../../modules/usePropertyAnalyzer";
-import GeneralSectionTitle from "../appWide/MainSection/GeneralSectionTitle";
+import GeneralSectionTitle from "../appWide/GeneralSection/GeneralSectionTitle";
 import styled from "styled-components";
 
 type Props = { className?: string };

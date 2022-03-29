@@ -1,7 +1,7 @@
 import React from "react";
-import MainSection from "../../appWide/MainSection/MainSection";
-import MainSectionBody from "../../appWide/MainSection/MainSection/MainSectionBody";
-import MainSectionTitleRow from "../../appWide/MainSection/MainSection/MainSectionTitleRow";
+import MainSection from "../../appWide/GeneralSection/MainSection";
+import MainSectionBody from "../../appWide/GeneralSection/MainSection/MainSectionBody";
+import MainSectionTitleRow from "../../appWide/GeneralSection/MainSection/MainSectionTitleRow";
 import ListGroup from "../general/ListGroup";
 import BasicMgmtInfo from "./Mgmt/BasicMgmtInfo";
 

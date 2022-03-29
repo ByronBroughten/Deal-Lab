@@ -1,7 +1,7 @@
 import { Inf } from "../../../sharedWithServer/Analyzer/SectionMetas/Info";
-import MainSection from "../../appWide/MainSection/MainSection";
-import MainSectionBody from "../../appWide/MainSection/MainSection/MainSectionBody";
-import MainSectionTitleRow from "../../appWide/MainSection/MainSection/MainSectionTitleRow";
+import MainSection from "../../appWide/GeneralSection/MainSection";
+import MainSectionBody from "../../appWide/GeneralSection/MainSection/MainSectionBody";
+import MainSectionTitleRow from "../../appWide/GeneralSection/MainSection/MainSectionTitleRow";
 import AnalysisBasics from "./Deal/DealBasics";
 import AnalysisDetails from "./Deal/DealDetails";
 import styled from "styled-components";

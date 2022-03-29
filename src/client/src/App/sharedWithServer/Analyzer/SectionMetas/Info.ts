@@ -55,6 +55,9 @@ export const Inf = {
         SectionNam.is(value.sectionName, type)
       );
     },
+    feVarb(value: any): value is FeVarbInfo {
+      return typeof value.varbName === "string" && this.fe(value, "hasVarb");
+    },
     feName<S extends SectionName>(
       feInfo: FeNameInfo,
       sectionName: S
