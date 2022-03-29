@@ -10,6 +10,8 @@ import { FeInfo } from "../../sharedWithServer/Analyzer/SectionMetas/Info";
 import LoginToAccessBtnTooltip from "./LoginToAccessBtnTooltip";
 import { MdOutlineViewList } from "react-icons/md";
 import { LoggedInOrOutIconBtn } from "./LoggedInOrNotBtn";
+import { rem } from "polished";
+import { FaList } from "react-icons/fa";
 
 type Props = {
   feInfo: FeInfo<"hasIndexStore">;
@@ -41,7 +43,7 @@ export default function IndexSectionList({
         {...{
           shared: {
             btnProps: {
-              children: <MdOutlineViewList />,
+              children: <FaList className="IndexSectionList-listIcon" />,
               className: "IndexSectionList-loadBtn",
             },
           },
@@ -75,6 +77,9 @@ const Styled = styled.div<{
 }>`
   position: relative;
   display: inline-block;
+
+  .IndexSectionList-listIcon {
+  }
 
   /* .IndexSectionList-loadBtn {
     :hover {
