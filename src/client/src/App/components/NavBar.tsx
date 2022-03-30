@@ -19,7 +19,7 @@ export default function NavBar({ className }: { className?: string }) {
     <Styled className={`NavBar-root ${className ?? ""}`}>
       <Toolbar disableGutters={true}>
         <div className="NavBar-leftSide">
-          <Link className="NavBar-analyzerLink" to="/analyzer">
+          <Link className="NavBar-analyzerLink" to="/">
             <NavBtn className="NavBar-brandBtn">
               <BsFillHouseDoorFill className="NavBar-brandIcon" />
               <span className="NavBar-brandName">Ultimate Deal Analyzer</span>

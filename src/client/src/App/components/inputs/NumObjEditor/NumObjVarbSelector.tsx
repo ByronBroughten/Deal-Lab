@@ -44,6 +44,12 @@ const Styled = styled.div`
   position: relative;
   bottom: 3px;
 
+  .VarbAutoComplete-root {
+    .MuiInputBase-root {
+      margin-top: ${theme.s1};
+    }
+  }
+
   .NumObjVarbSelector-absolute {
     position: absolute;
     z-index: 4;

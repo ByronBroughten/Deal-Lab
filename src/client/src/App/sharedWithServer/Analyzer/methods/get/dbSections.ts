@@ -195,6 +195,9 @@ export function makeRawSectionHead<S extends SectionName>(
   this: Analyzer,
   finder: SectionFinder<S>
 ): RawSectionHead<SectionContextProps<S, "fe">> {
+  // you should be able to include a sectionName of a section
+  // with the same children as the finder section
+
   const { sectionName } = this.section(finder);
   return {
     contextName: "fe",

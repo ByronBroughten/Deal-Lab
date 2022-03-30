@@ -16,9 +16,9 @@ import TrashBtn from "./general/TrashBtn";
 import ColumnHeader from "./SectionTable/ColumnHeader";
 import { indexStoreToSectionName } from "../sharedWithServer/Analyzer/SectionMetas/relNameArrs/StoreTypes";
 
-type Props = { tableName: SectionName<"table"> };
+type Props = { tableName: SectionName<"table">; title?: string };
 
-export default function SectionTable({ tableName }: Props) {
+export default function SectionTable({ tableName, title }: Props) {
   const { analyzer, setAnalyzerOrdered } = useAnalyzerContext();
   const store = useStores();
 
@@ -83,17 +83,22 @@ export default function SectionTable({ tableName }: Props) {
       )}
       {auth.isLoggedIn && isAtLeastOne && (
         <div className="SectionTable-viewable">
-          <div className="SectionTable-controlRow">
-            <MaterialStringEditor
-              label="Filter by title"
-              className="SectionTable-filterEditor SectionTable-controlRowItem"
-              feVarbInfo={filterInfo}
-            />
-            <VarbAutoComplete
-              onSelect={addColumn}
-              placeholder="Add column"
-              className="SectionTable-addColumnSelector SectionTable-controlRowItem"
-            />
+          <div className="SectionTable-titleRow">
+            <h5 className="SectionTable-title SectionTable-controlRowItem">
+              {"Deals"}
+            </h5>
+            <div className="SectionTable-controlRow">
+              <MaterialStringEditor
+                label="Filter by title"
+                className="SectionTable-filterEditor SectionTable-controlRowItem"
+                feVarbInfo={filterInfo}
+              />
+              <VarbAutoComplete
+                onSelect={addColumn}
+                placeholder="Add column"
+                className="SectionTable-addColumnSelector SectionTable-controlRowItem"
+              />
+            </div>
           </div>
           <table className="SectionTable-table">
             <thead>
@@ -166,14 +171,30 @@ const Styled = styled.div`
   overflow: auto;
   align-items: center;
 
+  .SectionTable-addColumnSelector {
+    .MuiInputBase-root {
+      min-width: 130px;
+    }
+  }
+
+  .SectionTable-title {
+    font-size: 2rem;
+    color: ${theme["gray-700"]};
+  }
+  .SectionTable-titleRow {
+    display: flex;
+    align-items: center;
+  }
+  .SectionTable-controlRow {
+    display: flex;
+    align-items: flex-start;
+  }
+
   .SectionTable-trashBtn {
     width: 1.1rem;
     height: 1.1rem;
   }
 
-  .SectionTable-controlRow {
-    display: flex;
-  }
   .SectionTable-filterEditor {
     .DraftTextField-root {
       min-width: 100px;
@@ -219,6 +240,7 @@ const Styled = styled.div`
   }
 
   table {
+    border-collapse: collapse;
   }
 
   thead {
@@ -239,7 +261,7 @@ const Styled = styled.div`
         }
       }
       :not(:first-child) {
-        border-top: 1px solid ${theme.analysis.main};
+        border-top: 1px solid ${theme.analysis.light};
       }
     }
   }

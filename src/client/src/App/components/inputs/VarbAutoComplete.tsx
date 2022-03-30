@@ -94,7 +94,7 @@ const VarbAutoComplete = React.forwardRef(
     const { value: keyBool, toggle: clearSelect } = useToggle();
 
     return (
-      <Styled className={`VarbAutoComplete-root ${className}`}>
+      <Styled className={`VarbAutoComplete-root ${className ?? ""}`}>
         <Autocomplete
           PopperComponent={(props: PopperProps) => (
             <PopperCustom {...props} ref={ref} />
@@ -155,7 +155,6 @@ const Styled = styled.div`
   .MuiInputBase-root {
     padding: 0;
     border-radius: 0;
-    margin-top: ${theme.s1};
     background-color: ${theme["gray-400"]};
     border: 1px solid ${theme["gray-500"]};
 

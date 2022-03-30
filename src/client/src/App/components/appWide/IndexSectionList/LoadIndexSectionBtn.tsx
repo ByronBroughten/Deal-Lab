@@ -25,8 +25,6 @@ function useLoadIndexSection(feInfo: FeInfo<"hasIndexStore">, dbId: string) {
       handleSet("loadSectionFromFeIndex", { ...feInfo, sectionName }, dbId);
 }
 
-// Fix load section visual (add tooltip, maybe); fix list menu visual;
-// make load section menu close on outside click
 export default React.memo(function LoadIndexSectionBtn({
   feInfo,
   dbId,

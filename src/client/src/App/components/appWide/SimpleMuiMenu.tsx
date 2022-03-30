@@ -45,10 +45,13 @@ const Styled = styled.div`
 
   .MuiMenuItem-root {
     font-size: 0.85rem;
-    padding: ${theme.s2};
   }
 
   .MuiMenuItem-root.selected {
     background-color: ${theme["gray-300"]};
+    :hover {
+      background-color: ${theme["gray-600"]};
+      color: ${theme.light};
+    }
   }
 `;
