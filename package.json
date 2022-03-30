@@ -9,9 +9,9 @@
     "start:dev:debug": "nodemon --inspect src/index.ts",
     "client": "cd src/client && npm run start",
     "start:prod": "ts-node src/index.ts",
-    "install": "cd src/client && npm install",
+    "heroku-postbuild": "cd src/client && npm install && npm run build",
     "build": "cd src/client && npm run build",
-    "heroku-postbuild": "cd src/client && npm install --only=dev && npm install && npm run build",
+    "install": "cd src/client && npm install",
     "test": "jest --watchAll --verbose --coverage"
   },
   "engines": {
