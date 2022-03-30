@@ -24,6 +24,7 @@ export default function FinancingInfo() {
     <Styled className="FinancingInfo-root">
       <LabeledOutputRow>
         <LabeledVarbSimple
+          themeSectionName="loan"
           feVarbInfo={varbInfo("downPaymentDollars")}
           parenthInfo={
             downPaymentIsPercentable
@@ -32,10 +33,16 @@ export default function FinancingInfo() {
           }
         />
         {isAtLeastOne && (
-          <LabeledVarbSimple feVarbInfo={varbInfo("pitiMonthly")} />
+          <LabeledVarbSimple
+            themeSectionName="loan"
+            feVarbInfo={varbInfo("pitiMonthly")}
+          />
         )}
         {areMultiple && (
-          <LabeledVarbSimple feVarbInfo={varbInfo("loanAmountDollarsTotal")} />
+          <LabeledVarbSimple
+            themeSectionName="loan"
+            feVarbInfo={varbInfo("loanAmountDollarsTotal")}
+          />
         )}
       </LabeledOutputRow>
     </Styled>

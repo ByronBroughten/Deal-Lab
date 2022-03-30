@@ -49,9 +49,14 @@ export default function BasicLoanInfo({ feInfo, className }: Props) {
                   className="BasicSectionInfo-numObjEditor secondEditor"
                 />
               </div>
-
-              <div className="BasicSectionInfo-editorBlock">
-                <StandardLabel>Mortgage Insurance</StandardLabel>
+            </div>
+          </div>
+          <div className="BasicSectionInfo-subSection">
+            <div className="BasicSectionInfo-subSection-viewable titledBlock">
+              <div className="BasicSectionInfo-editorBlock titledBlock">
+                <StandardLabel className="BasicSectionInfo-editorBlockTitle">
+                  Mortgage Insurance
+                </StandardLabel>
                 <div className="BasicSectionInfo-dualEditors">
                   <NumObjEditor
                     feVarbInfo={feVarbInfo("mortInsUpfront")}
@@ -78,9 +83,6 @@ const Styled = styled(BasicSectionInfo)`
     .DraftTextField-root {
       min-width: 95px;
     }
-  }
-  .BasicSectionInfo-editorBlock {
-    margin-top: ${theme.s2};
   }
 
   .BasicLoanInfo-radioSwap {

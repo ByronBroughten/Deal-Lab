@@ -224,8 +224,8 @@ export function switchedOngoingVarbName(
 }
 export function switchedOngoingVarb(
   this: Analyzer,
-  feInfo: FeNameInfo,
-  varbNameBase: string
+  varbNameBase: string,
+  feInfo: FeNameInfo
 ): StateVarb {
   const varbNames = switchNames(varbNameBase, "ongoing");
   return this.switchedVarb(feInfo, varbNames);
@@ -235,5 +235,5 @@ export function switchedOngoingDisplayVarb(
   varbNameBase: string,
   feInfo: FeNameInfo
 ) {
-  return this.switchedOngoingVarb(feInfo, varbNameBase).displayVarb();
+  return this.switchedOngoingVarb(varbNameBase, feInfo).displayVarb();
 }

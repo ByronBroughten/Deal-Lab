@@ -15,10 +15,9 @@ export default function Property({ id }: { id: string }) {
       <MainSectionBody>
         <div className="ListGroup-root">
           <div className="ListGroup-viewable">
-            <div className="ListGroup-titleRow">
+            {/* <div className="ListGroup-titleRow">
               <h6 className="ListGroup-titleText">Basic Info</h6>
-              {/* <div className="ListGroup-titleTotal">{displayTotal}</div> */}
-            </div>
+            </div> */}
             <div className="ListGroup-lists">
               <BasicPropertyInfo feInfo={feInfo} className="ListGroup-root" />
               {/* <UnitList feInfo={feInfo} className="ListGroup-root" /> */}

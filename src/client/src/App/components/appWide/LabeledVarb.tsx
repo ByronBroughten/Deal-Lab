@@ -1,8 +1,8 @@
 import { AiOutlineCloseCircle } from "react-icons/ai";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { useAnalyzerContext } from "../../modules/usePropertyAnalyzer";
 import { FeVarbInfo } from "../../sharedWithServer/Analyzer/SectionMetas/relSections/rel/relVarbInfoTypes";
-import theme from "../../theme/Theme";
+import theme, { ThemeSectionName } from "../../theme/Theme";
 import PlainBtn from "../general/PlainBtn";
 
 type UseLabeledOutputProps = {
@@ -44,12 +44,14 @@ type Props = UseLabeledOutputProps & {
   id: string;
   onXBtnClick?: () => void;
   className?: string;
+  themeSectionName?: ThemeSectionName;
 };
 export default function LabeledVarb({
   id,
   feVarbInfo,
   className,
   onXBtnClick,
+  themeSectionName = "default",
   ...rest
 }: Props) {
   const { displayLabel, displayVarb } = useLabeledOutput({
@@ -57,7 +59,10 @@ export default function LabeledVarb({
     ...rest,
   });
   return (
-    <Styled className={`LabeledVarb-root ${className}`}>
+    <Styled
+      className={`LabeledVarb-root ${className}`}
+      {...{ $themeSectionName: themeSectionName }}
+    >
       <div className="LabeledVarb-labelPositioner">
         <label htmlFor={id} className="LabeledVarb-label">
           {displayLabel}
@@ -73,7 +78,7 @@ export default function LabeledVarb({
   );
 }
 
-const Styled = styled.div`
+const Styled = styled.div<{ $themeSectionName: ThemeSectionName }>`
   position: relative;
   display: flex;
   flex-direction: column;
@@ -98,6 +103,10 @@ const Styled = styled.div`
     bottom: 0px;
     background: ${theme.plus.light};
 
+    ${({ $themeSectionName }) => css`
+      background: ${theme[$themeSectionName].light};
+    `}
+
     padding: 0 2px;
 
     font-size: 0.95rem;
@@ -116,7 +125,9 @@ const Styled = styled.div`
     /* padding-right: 2px; */
     border-radius: 1rem;
 
-    background: ${theme.plus.light};
+    ${({ $themeSectionName }) => css`
+      background: ${theme[$themeSectionName].light};
+    `}
     :hover {
       background-color: ${theme["gray-700"]};
       color: white;
@@ -128,7 +139,10 @@ const Styled = styled.div`
     z-index: 1;
     text-align: center;
 
-    border: 2px solid ${theme.plus.dark};
+    ${({ $themeSectionName }) => css`
+      border: 2px solid ${theme[$themeSectionName].dark};
+    `}
+
     border-radius: ${theme.brMaterialEditor};
 
     padding: ${theme.s2};

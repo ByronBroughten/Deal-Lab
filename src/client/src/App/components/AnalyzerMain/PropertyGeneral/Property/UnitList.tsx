@@ -11,6 +11,7 @@ import useHowMany from "../../../appWide/customHooks/useHowMany";
 import PlusBtn from "../../../appWide/PlusBtn";
 import { VscDiffAdded } from "react-icons/vsc";
 import { FeParentInfo } from "../../../../sharedWithServer/Analyzer/SectionMetas/relNameArrs/ParentTypes";
+import { LabeledVarbSimple } from "./../../../appWide/LabeledVarbSimple";
 
 type Props = { feInfo: FeParentInfo<"unit">; className?: string };
 export default function UnitList({ feInfo, className }: Props) {
@@ -19,6 +20,8 @@ export default function UnitList({ feInfo, className }: Props) {
     "targetRent",
     feInfo
   );
+
+  const totalVarb = analyzer.switchedOngoingVarb("targetRent", feInfo);
 
   const unitIds = analyzer.section(feInfo).childFeIds("unit");
   const { isAtLeastOne, areMultiple, areNone } = useHowMany(unitIds);
@@ -48,20 +51,27 @@ export default function UnitList({ feInfo, className }: Props) {
           <div className="UnitList-unitsArea">
             {isAtLeastOne && (
               <div className="UnitList-units">
-                <div className="UnitList-total">{`Total rent: ${totalDisplay}`}</div>
                 <div className="UnitList-unitRows">
                   {unitIdRows.map((idRow, rowIndex) => {
                     const unitNumberOffset = rowIndex * numUnitsPerRow;
                     return (
                       <div className="UnitList-unitRow" key={rowIndex}>
                         {rowIndex === 0 && (
-                          <PlusBtn
-                            className="UnitList-addUnitBtn"
-                            onClick={addUnit}
-                          >
-                            + Unit
-                            {/* <VscDiffAdded className="UnitList-addUnitBtnIcon" /> */}
-                          </PlusBtn>
+                          <>
+                            <PlusBtn
+                              className="UnitList-addUnitBtn"
+                              onClick={addUnit}
+                            >
+                              + Unit
+                              {/* <VscDiffAdded className="UnitList-addUnitBtnIcon" /> */}
+                            </PlusBtn>
+                            {areMultiple && (
+                              <div className="UnitList-total">
+                                <span className="UnitList-totalText">{`Total Rent`}</span>
+                                <span className="UnitList-totalNumber">{`(${totalDisplay})`}</span>
+                              </div>
+                            )}
+                          </>
                         )}
                         <div className="UnitList-unitRowInner">
                           {idRow.map((unitId, unitInnerIndex) => {
@@ -104,10 +114,18 @@ const Styled = styled.div<{ isAtLeastOne: boolean }>`
   }
 
   .UnitList-total {
-    margin-top: ${theme.s2};
+    display: flex;
+    padding: ${theme.s2};
+    background-color: ${theme.property.light};
+    box-shadow: ${theme.boxShadow1};
+  }
+  .UnitList-totalText {
+    font-size: ${rem("15px")};
     font-weight: 700;
-    font-size: 0.96rem;
     color: ${theme["gray-700"]};
+  }
+  .UnitList-totalNumber {
+    margin-left: ${theme.s2};
   }
 
   .UnitList-addUnitBtn {
@@ -115,6 +133,7 @@ const Styled = styled.div<{ isAtLeastOne: boolean }>`
     font-size: 0.9rem;
     line-height: 1.2rem;
     height: 26px;
+    box-shadow: ${theme.boxShadow1};
   }
 
   .UnitList-addUnitBtnIcon {
@@ -123,11 +142,18 @@ const Styled = styled.div<{ isAtLeastOne: boolean }>`
 
   .UnitList-unitRowInner {
     display: flex;
-    border-top: 1px solid ${theme.property.border};
+    /* border-top: 1px solid ${theme.property.border}; */
   }
   .UnitItem-root {
+    margin-top: ${theme.s1};
     :not(:first-child) {
-      border-left: 1px solid ${theme.property.dark};
+      margin-left: ${theme.s1};
+      /* border-left: 1px solid ${theme.property.dark}; */
+    }
+  }
+
+  .UnitList-unitRow {
+    :not(:first-child) {
     }
   }
 

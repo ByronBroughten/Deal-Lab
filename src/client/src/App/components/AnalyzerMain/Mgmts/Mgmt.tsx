@@ -14,9 +14,9 @@ export default function Mgmt({ id }: { id: string }) {
       <MainSectionBody>
         <div className="ListGroup-root">
           <div className="ListGroup-viewable">
-            <div className="ListGroup-titleRow">
+            {/* <div className="ListGroup-titleRow">
               <h6 className="ListGroup-titleText">Basic Info</h6>
-            </div>
+            </div> */}
             <div className="ListGroup-lists">
               <BasicMgmtInfo feInfo={feInfo} className="ListGroup-root" />
             </div>

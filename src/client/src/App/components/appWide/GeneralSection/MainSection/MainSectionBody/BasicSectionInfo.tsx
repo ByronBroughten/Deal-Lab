@@ -41,11 +41,15 @@ const Styled = styled.div<{ sectionName: ThemeSectionName }>`
   }
 
   .BasicSectionInfo-subSection {
-    margin-top: ${theme.s1};
+    margin-top: 1px;
     .BasicSectionInfo-subSection-viewable {
       box-shadow: ${theme.boxShadow1};
       padding: 0.3em;
     }
+  }
+
+  .BasicSectionInfo-subSection-viewable.titledBlock {
+    padding-top: ${theme.s1};
   }
 
   .BasicSectionInfo-subSections {

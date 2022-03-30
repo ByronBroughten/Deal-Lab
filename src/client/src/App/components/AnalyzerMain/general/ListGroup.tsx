@@ -10,6 +10,9 @@ import PlusBtn from "../../appWide/PlusBtn";
 import { MdOutlinePlaylistAdd } from "react-icons/md";
 import { FeParentInfo } from "../../../sharedWithServer/Analyzer/SectionMetas/relNameArrs/ParentTypes";
 import BtnTooltip from "../../appWide/BtnTooltip";
+import { listNameToStoreName } from "../../../sharedWithServer/Analyzer/SectionMetas/relSections/baseSectionTypes";
+import { userListItemTypes } from "../../../sharedWithServer/Analyzer/SectionMetas/relNameArrs/UserListTypes";
+import useHowMany from "../../appWide/customHooks/useHowMany";
 
 type Props<S extends ListSectionName = ListSectionName> = {
   className?: string;
@@ -31,6 +34,22 @@ export default function ListGroup({
 
   const section = analyzer.section(feInfo);
   const listIds = section.childFeIds(listSectionName);
+
+  const listInfos = listIds.map((listId) => {
+    return Inf.fe(listSectionName, listId);
+  });
+
+  const listType = listNameToStoreName(listSectionName);
+  const itemType = userListItemTypes[listType];
+
+  const numListsWithItems = listInfos.reduce<number>((num, info) => {
+    const childIds = analyzer.section(info).childFeIds(itemType);
+    if (childIds.length > 0) num++;
+    return num;
+  }, 0);
+
+  const { areMultiple: areMultipleLists } = useHowMany(listIds);
+
   // those would look best with a regular labeled input
   // with the =$75/month
 
@@ -42,16 +61,22 @@ export default function ListGroup({
     <Styled className={`ListGroup-root ` + className ?? ""}>
       <div className="ListGroup-viewable">
         <div className="ListGroup-titleRow">
-          <h6 className="ListGroup-titleText">{titleText}</h6>
-          <div className="ListGroup-titleTotal">{displayTotal}</div>
-          <BtnTooltip title="Add list" className="ListGroup-addBtnTooltip">
-            <PlusBtn
-              className="ListGroup-addListBtn"
-              onClick={addUpfrontCostList}
-            >
-              <MdOutlinePlaylistAdd className="ListGroup-addListBtnIcon" />
-            </PlusBtn>
-          </BtnTooltip>
+          <div className="ListGroup-titleRowLeft">
+            <h6 className="ListGroup-titleText">{titleText}</h6>
+            {areMultipleLists && numListsWithItems > 1 && (
+              <div className="ListGroup-titleTotal">({displayTotal})</div>
+            )}
+          </div>
+          <div className="listGroup-titleRowRight">
+            <BtnTooltip title="Add list" className="ListGroup-addBtnTooltip">
+              <PlusBtn
+                className="ListGroup-addListBtn"
+                onClick={addUpfrontCostList}
+              >
+                <MdOutlinePlaylistAdd className="ListGroup-addListBtnIcon" />
+              </PlusBtn>
+            </BtnTooltip>
+          </div>
         </div>
         <div className="ListGroup-lists">
           {listIds.map((listId) => {
@@ -75,10 +100,15 @@ export default function ListGroup({
 export const listGroupCss = css`
   .ListGroup-titleRow {
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: flex-end;
     padding: ${theme.s2} ${theme.s2} 0 ${theme.s2};
   }
+  .ListGroup-titleRowLeft {
+    display: flex;
+    align-items: center;
+  }
+
   .ListGroup-titleText {
     ${ccs.subSection.titleText};
     padding-left: ${theme.s1};

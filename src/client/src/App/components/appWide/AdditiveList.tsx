@@ -24,7 +24,7 @@ function useTotalVarb(feInfo: FeInfo, listType: SectionName<"additiveList">) {
   const totalVarbNameBase = "total";
   if (listType === "userSingleList")
     return analyzer.feVarb(totalVarbNameBase, feInfo);
-  else return analyzer.switchedOngoingVarb(feInfo, totalVarbNameBase);
+  else return analyzer.switchedOngoingVarb(totalVarbNameBase, feInfo);
 }
 type AdditiveListTotalProps = {
   feInfo: FeInfo;
@@ -33,7 +33,7 @@ type AdditiveListTotalProps = {
 function AdditiveListTotal({ feInfo, listType }: AdditiveListTotalProps) {
   const totalVarb = useTotalVarb(feInfo, listType);
   return (
-    <div className="AdditiveList-total">{`Total: ${totalVarb.displayVarb()}`}</div>
+    <div className="AdditiveList-total">{`(${totalVarb.displayVarb()})`}</div>
   );
 }
 
@@ -72,14 +72,19 @@ export default function AdditiveList({
     >
       <div className="AdditiveList-viewable viewable">
         <div className="AdditiveList-titleRow">
-          <BigStringEditor
-            {...{
-              feVarbInfo: titleVarb.feVarbInfo,
-              placeholder: "List Title",
-              className: "AdditiveList-title",
-              sectionName: themeSectionName,
-            }}
-          />
+          <div className="AdditiveList-titleRowLeft">
+            <BigStringEditor
+              {...{
+                feVarbInfo: titleVarb.feVarbInfo,
+                placeholder: "List Title",
+                className: "AdditiveList-title",
+                sectionName: themeSectionName,
+              }}
+            />
+            {SectionNam.is(listType, "additiveList") && isAtLeastOne && (
+              <AdditiveListTotal {...{ feInfo, listType }} />
+            )}
+          </div>
 
           <PlainIconBtn
             onClick={toggleListMenu}
@@ -87,11 +92,6 @@ export default function AdditiveList({
           >
             <IoEllipsisVertical size="22" />
           </PlainIconBtn>
-        </div>
-        <div className="AdditiveList-subTitleRow">
-          {SectionNam.is(listType, "additiveList") && isAtLeastOne && (
-            <AdditiveListTotal {...{ feInfo, listType }} />
-          )}
         </div>
         {viewIsOpen && <AdditiveListTable {...{ feInfo, themeSectionName }} />}
       </div>
@@ -145,6 +145,13 @@ const Styled = styled.div<{
     display: flex;
     justify-content: space-between;
   }
+  .AdditiveList-titleRowLeft {
+    display: flex;
+  }
+  .AdditiveList-total {
+    margin-left: ${theme.s2};
+  }
+
   .AdditiveList-ellipsisBtn {
     color: ${({ listMenuIsOpen }) =>
       listMenuIsOpen ? theme.light : theme.dark};
@@ -162,11 +169,8 @@ const Styled = styled.div<{
   .AdditiveList-total {
     margin-top: ${theme.s2};
   }
-  .AdditiveList-subTitleRow {
-    display: flex;
-    align-items: center;
-    .PlusBtn {
-      margin-left: ${theme.s2};
-    }
+
+  .AdditiveListTable-root {
+    margin-top: ${theme.s2};
   }
 `;

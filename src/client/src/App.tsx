@@ -12,7 +12,7 @@ import SectionTable from "./App/components/SectionTable";
 import { ToastContainer } from "react-toastify";
 import AnalyzerMain from "./App/components/AnalyzerMain";
 
-export default function App() {
+const App: React.FC = () => {
   const analyzerContext = usePropertyAnalyzer({
     main: true,
   });
@@ -38,7 +38,8 @@ export default function App() {
       <ToastContainer />
     </AnalyzerContext.Provider>
   );
-}
+};
+export default App;
 
 const Styled = styled.div`
   display: flex;

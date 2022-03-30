@@ -13,7 +13,7 @@ export default function UnitItem({ id, unitNumber }: Props) {
   const feInfo = { sectionName, id, idType: "feId" } as const;
   const { analyzer, handleRemoveSection } = useAnalyzerContext();
 
-  const targetRentVarb = analyzer.switchedOngoingVarb(feInfo, "targetRent");
+  const targetRentVarb = analyzer.switchedOngoingVarb("targetRent", feInfo);
   return (
     <Styled className="UnitItem-root" key={id}>
       <div className="UnitItem-viewable">
