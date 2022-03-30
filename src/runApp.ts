@@ -20,6 +20,7 @@ export function runApp() {
   app.use(helmet());
   app.use(compression());
   app.use(express.urlencoded({ extended: true }));
+  logger.info(`Running in a ${process.env.NODE_ENV} environment.`);
   if (process.env.NODE_ENV === "production") {
     app.use(express.static("src/client/build"));
   } else {
