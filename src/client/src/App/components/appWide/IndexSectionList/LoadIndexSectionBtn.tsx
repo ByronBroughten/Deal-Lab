@@ -40,6 +40,9 @@ export default React.memo(function LoadIndexSectionBtn({
 });
 
 const Styled = styled(PlainBtn)`
+  display: flex;
+  flex: 1;
+  justify-content: flex-start;
   white-space: nowrap;
   :hover {
     background-color: ${theme["gray-400"]};
