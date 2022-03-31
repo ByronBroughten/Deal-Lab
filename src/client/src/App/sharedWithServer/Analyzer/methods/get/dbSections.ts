@@ -16,6 +16,7 @@ import {
   SectionNameType,
 } from "../../SectionMetas/SectionName";
 import { Obj } from "../../../utils/Obj";
+import { FeToDbNameWithSameChildren } from "../../SectionMetas/relNameArrs/ChildTypes";
 
 type StateToDbSectionsOptions = {
   newMainSectionName?: SectionName;
@@ -191,18 +192,44 @@ export function makeRawDescendantSections<S extends SectionName>(
   );
 }
 
-export function makeRawSectionHead<S extends SectionName>(
+type RawSectionHeadName<
+  SN extends SectionName,
+  HN extends SectionName | undefined
+> = HN extends undefined ? SN : Extract<HN, SectionName>;
+export function makeRawDbSectionHead<
+  SN extends SectionName,
+  HN extends FeToDbNameWithSameChildren<SN> | undefined = undefined
+>(
   this: Analyzer,
-  finder: SectionFinder<S>
-): RawSectionHead<SectionContextProps<S, "fe">> {
+  finder: SectionFinder<SN>,
+  headName?: HN
+): RawSectionHead<RawSectionHeadName<SN, HN>, "db"> {
   // you should be able to include a sectionName of a section
   // with the same children as the finder section
+  // I must sort
+
+  // Right now this doesn't produce db.
+  // i can add a flag or I can change a specifier
+  // for the database, contextName will always be db.
+
+  // Do I want to still be able to produce fe heads?
+  // yeah, I suppose so.
+  // Let's start with db, though
+
+  // the db HN section must have the same children as
+  // the fe SN section
 
   const { sectionName } = this.section(finder);
   return {
-    contextName: "fe",
-    sectionName: sectionName as S,
+    contextName: "db",
+    sectionName: (headName ?? sectionName) as RawSectionHeadName<SN, HN>,
     ...this.makeRawSection(finder),
     descendants: this.makeRawDescendantSections(finder),
-  };
+  } as any as RawSectionHead<RawSectionHeadName<SN, HN>, "db">;
+}
+
+function _test(this: Analyzer) {
+  const { feInfo } = this.firstSection("property");
+  const test = this.makeRawDbSectionHead(feInfo, "propertyIndex");
+  test.sectionName;
 }

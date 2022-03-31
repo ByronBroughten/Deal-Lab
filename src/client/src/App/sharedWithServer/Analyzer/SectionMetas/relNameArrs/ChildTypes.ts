@@ -1,4 +1,8 @@
-import { RemoveNotStrings } from "../../../utils/typescript";
+import {
+  RemoveNotStrings,
+  StrictSubType,
+  SubType,
+} from "../../../utils/typescript";
 import StateSection from "../../StateSection";
 import { RelSections } from "../relSections";
 import { ContextName, SimpleSectionName } from "../relSections/baseSections";
@@ -6,17 +10,38 @@ import { FeNameInfo } from "../relSections/rel/relVarbInfoTypes";
 import { SectionContextProps } from "../SectionName";
 
 type ChildNameArr<
-  SC extends ContextName,
-  SN extends SimpleSectionName<SC>
-> = RelSections[SC][SN]["childSectionNames" & keyof RelSections[SC][SN]];
+  CN extends ContextName,
+  SN extends SimpleSectionName<CN>
+> = RelSections[CN][SN]["childSectionNames" & keyof RelSections[CN][SN]];
 
-type SectionToChildrenOrNever<SC extends ContextName> = {
-  [SN in SimpleSectionName<SC>]: ChildNameArr<SC, SN>[number &
-    keyof ChildNameArr<SC, SN>];
+type SectionToChildrenOrNever<CN extends ContextName> = {
+  [SN in SimpleSectionName]: ChildNameArr<CN, SN>[number &
+    keyof ChildNameArr<CN, SN>];
+};
+
+type FeChildNameToDbSectionName<
+  CHN extends ChildName<SimpleSectionName, "fe">
+> = keyof StrictSubType<SectionToChildArr<"db">, [CHN]>;
+
+type SectionToChildren<SC extends ContextName> = RemoveNotStrings<
+  SectionToChildrenOrNever<SC>
+>;
+type SectionToChildArr<SC extends ContextName> = {
+  [SN in keyof SectionToChildren<SC>]: [SectionToChildren<SC>[SN]];
+};
+
+export type FeToDbNameWithSameChildren<SN extends SimpleSectionName> =
+  FeChildNameToDbSectionName<ChildName<SN>>;
+const _testFeToDbNameWithSameChildren = (): void => {
+  type TestName = FeToDbNameWithSameChildren<"property">;
+  const _testName2: TestName = "property";
+  const _testName1: TestName = "propertyIndex";
+  // @ts-expect-error
+  const _testName3: TestName = "mgmt";
 };
 
 export type ChildName<
-  SN extends SimpleSectionName,
+  SN extends SimpleSectionName = SimpleSectionName,
   SC extends ContextName = "fe"
 > = SectionToChildrenOrNever<SC>[SN];
 
@@ -67,12 +92,6 @@ export type ChildIdArrs<
   SN extends SimpleSectionName<SC>,
   SC extends ContextName = "fe"
 > = Record<ChildName<SN, SC> & string, string[]>;
-
-type SectionToChildren<SC extends ContextName> = RemoveNotStrings<
-  SectionToChildrenOrNever<SC>
->;
-
-type Test = SectionToChildrenOrNever<"fe">;
 
 export type ChildFeInfo<SN extends SimpleSectionName<"fe">> = FeNameInfo & {
   sectionName: ChildName<SN>;

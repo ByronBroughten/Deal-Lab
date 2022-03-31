@@ -13,6 +13,22 @@ export type SubType<Base, Condition> = Pick<
   AllowedNames<Base, Condition>
 >;
 
+type StrictFilterFlags<Base, Condition> = {
+  [Key in keyof Base]: Base[Key] extends Condition
+    ? Condition extends Base[Key]
+      ? Key
+      : never
+    : never;
+};
+type StrictAllowedNames<Base, Condition> = StrictFilterFlags<
+  Base,
+  Condition
+>[keyof Base];
+export type StrictSubType<Base, Condition> = Pick<
+  Base,
+  StrictAllowedNames<Base, Condition>
+>;
+
 export type Extends<T, U extends T> = U;
 
 export type Full<O extends object> = {

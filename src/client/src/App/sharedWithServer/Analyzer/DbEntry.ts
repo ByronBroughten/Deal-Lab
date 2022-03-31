@@ -68,14 +68,17 @@ export type RawSection<SCP extends SectionContextProps> = {
 export type RawDescendantSections<SCP extends SectionContextProps> = {
   [SDN in DescendantName<SCP>]: RawSection<SCP>[];
 };
-export type RawSectionHead<SCP extends SectionContextProps> = SCP &
-  RawSection<SCP> & {
-    descendants: RawDescendantSections<SCP>;
+export type RawSectionHead<
+  SN extends SectionName,
+  CN extends ContextName
+> = SectionContextProps<SN, CN> &
+  RawSection<SectionContextProps<SN, CN>> & {
+    descendants: RawDescendantSections<SectionContextProps<SN, CN>>;
   };
 
 function _testDbEntry(
-  feRaw: RawSectionHead<{ sectionName: "propertyIndex"; contextName: "fe" }>,
-  dbRaw: RawSectionHead<{ sectionName: "propertyIndex"; contextName: "db" }>
+  feRaw: RawSectionHead<"propertyIndex", "fe">,
+  dbRaw: RawSectionHead<"propertyIndex", "db">
 ) {
   const _test1 = feRaw.descendants.cell;
   // @ts-expect-error
