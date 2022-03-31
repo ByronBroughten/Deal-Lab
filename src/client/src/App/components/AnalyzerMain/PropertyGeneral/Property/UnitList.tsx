@@ -145,9 +145,9 @@ const Styled = styled.div<{ isAtLeastOne: boolean }>`
     /* border-top: 1px solid ${theme.property.border}; */
   }
   .UnitItem-root {
-    margin-top: ${theme.s1};
+    margin-top: 1px;
     :not(:first-child) {
-      margin-left: ${theme.s1};
+      margin-left: 1px;
       /* border-left: 1px solid ${theme.property.dark}; */
     }
   }
