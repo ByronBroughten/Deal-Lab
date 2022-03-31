@@ -9,6 +9,8 @@ import { config } from "../client/src/App/Constants";
 import sectionArrRouter, {
   sectionArrRoutes,
 } from "../middleware/routes/sectionArrRoutes";
+import expressGraphQL from "express-graphql";
+import { gqlSchema } from "../graphlq";
 
 export default function routes(app: express.Application) {
   app.use(
@@ -23,6 +25,13 @@ export default function routes(app: express.Application) {
     })
   );
   app.use(express.json()); // parses body into a JSON object
+  app.use(
+    "/graphql",
+    expressGraphQL.graphqlHTTP({
+      schema: gqlSchema,
+      graphiql: true,
+    })
+  );
   app.use(sectionArrRoutes.route, sectionArrRouter);
   app.use(sectionRoutes.route, sectionRouter);
   app.use(config.url.user.route, userRouter);

@@ -206,3 +206,9 @@ export function makeRawSectionHead<SN extends SectionName>(
     descendants: this.makeRawDescendantSections(finder),
   } as RawSectionHead<SN, "fe">;
 }
+
+// export function loadRawSectionHead<SN extends SectionName>(
+//   rawSectionHead: RawSectionHead<SN, "fe">
+// ): Analyzer {
+
+// }

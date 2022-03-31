@@ -126,6 +126,11 @@ export const crud = {
       },
     },
   },
+  // Pretty much I just have to get the new crud operations to work
+  // And I have to get them to work with the stores
+  // Then users can save data in the new way.
+  // I'll have to allow sections to be created from
+  // these objects as well.
   nextSection: {
     path: config.url.nextSection.path,
     post: {

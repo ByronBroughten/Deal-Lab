@@ -25,6 +25,7 @@ import { ParentName } from "./SectionMetas/relNameArrs/ParentTypes";
 import { ContextName } from "./SectionMetas/relSections/baseSections";
 import {
   ChildName,
+  DbToFeNameWithSameChildren,
   DescendantName,
   FeToDbNameWithSameChildren,
 } from "./SectionMetas/relNameArrs/ChildTypes";
@@ -93,6 +94,24 @@ export const rawSectionService = {
       >,
       contextName: "db",
       sectionName: dbSectionName,
+    };
+  },
+  dbToFeSectionHead<
+    SN extends SectionName,
+    FSN extends DbToFeNameWithSameChildren<SN>
+  >(
+    rawSectionHead: RawSectionHead<SN, "db">,
+    feSectionName: FSN
+  ): RawSectionHead<FSN, "fe"> {
+    return {
+      ...rawSectionHead,
+      childDbIds: rawSectionHead.childDbIds as any as RawChildDbIds<FSN, "fe">,
+      descendants: rawSectionHead.descendants as any as RawDescendantSections<
+        FSN,
+        "fe"
+      >,
+      contextName: "fe",
+      sectionName: feSectionName,
     };
   },
 };

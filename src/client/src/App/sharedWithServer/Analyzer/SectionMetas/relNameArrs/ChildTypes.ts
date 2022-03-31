@@ -31,7 +31,14 @@ type SectionToChildArr<SC extends ContextName> = {
 };
 
 export type FeToDbNameWithSameChildren<SN extends SimpleSectionName> =
-  FeChildNameToDbSectionName<ChildName<SN>>;
+  FeChildNameToDbSectionName<ChildName<SN, "fe">>;
+
+type DbChildNameToFeSectionName<
+  CHN extends ChildName<SimpleSectionName, "db">
+> = keyof StrictSubType<SectionToChildArr<"fe">, [CHN]>;
+export type DbToFeNameWithSameChildren<SN extends SimpleSectionName> =
+  DbChildNameToFeSectionName<ChildName<SN, "db">>;
+
 const _testFeToDbNameWithSameChildren = (): void => {
   type TestName = FeToDbNameWithSameChildren<"property">;
   const _testName2: TestName = "property";
