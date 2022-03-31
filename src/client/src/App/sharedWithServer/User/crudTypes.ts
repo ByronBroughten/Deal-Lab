@@ -2,7 +2,7 @@ import { z } from "zod";
 import { SectionName, SectionNam } from "../Analyzer/SectionMetas/SectionName";
 import { dbLimits } from "../utils/dbLimts";
 import { message, zNanoId } from "../utils/zod";
-import { DbEntry, zDbEntry } from "../Analyzer/DbEntry";
+import { DbEntry, RawSectionHead, zDbEntry } from "../Analyzer/DbEntry";
 import { LoginUser, zDbEntryArr } from "./DbUser";
 import { config } from "../../Constants";
 
@@ -141,6 +141,29 @@ type Crud = {
     };
   };
 };
+type NextCrud = {
+  nextSection: {
+    post: {
+      req: {
+        body: {
+          payload: RawSectionHead<SectionName, "db">;
+        };
+      };
+      res: {
+        data: string; // dbId
+      };
+    };
+  };
+};
+export type NextReq<
+  R extends keyof NextCrud,
+  O extends keyof NextCrud[R]
+> = NextCrud[R][O]["req" & keyof NextCrud[R][O]];
+
+export type NextRes<
+  R extends keyof NextCrud,
+  O extends keyof NextCrud[R]
+> = NextCrud[R][O]["res" & keyof NextCrud[R][O]];
 
 export type Req<K extends keyof Crud> = Crud[K]["Req"];
 export type Res<K extends keyof Crud> = Crud[K]["Res"];

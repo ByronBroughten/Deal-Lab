@@ -45,38 +45,31 @@ export type ChildName<
   SC extends ContextName = "fe"
 > = SectionToChildrenOrNever<SC>[SN];
 
-export type DescendantName<SCP extends SectionContextProps> = ChildName<
-  SCP["sectionName"],
-  SCP["contextName"]
-> extends never
+export type DescendantName<
+  SN extends SimpleSectionName,
+  CN extends ContextName
+> = ChildName<SN, CN> extends never
   ? never
-  :
-      | ChildName<SCP["sectionName"], SCP["contextName"]>
-      | DescendantName<{
-          sectionName: ChildName<SCP["sectionName"], SCP["contextName"]> &
-            SimpleSectionName;
-          contextName: SCP["contextName"];
-        }>;
+  : ChildName<SN, CN> | DescendantName<ChildName<SN, CN>, CN>;
 
-export type DescendantIds<SCP extends SectionContextProps> = {
-  [SN in DescendantName<SCP>]: string[];
+export type DescendantIds<
+  SN extends SimpleSectionName,
+  CN extends ContextName
+> = {
+  [S in DescendantName<SN, CN>]: string[];
 };
-export type DescendantSections<SCP extends SectionContextProps> = {
-  [SN in DescendantName<SCP>]: StateSection<SN>[];
+export type DescendantSections<
+  SN extends SimpleSectionName,
+  CN extends ContextName
+> = {
+  [S in DescendantName<SN, CN>]: StateSection<S>[];
 };
-
-export type SectionAndDescendantName<SCP extends SectionContextProps> =
-  | SCP["sectionName"]
-  | DescendantName<SCP>;
 
 function _testDescendantName() {
-  type Props<CN extends ContextName> = {
-    sectionName: "propertyGeneral";
-    contextName: CN;
-  };
+  type SN = "propertyGeneral";
 
-  type FeTest = DescendantName<Props<"fe">>;
-  type DbTest = DescendantName<Props<"db">>;
+  type FeTest = DescendantName<SN, "fe">;
+  type DbTest = DescendantName<SN, "db">;
 
   const _test1: FeTest = "unit";
   const _test2: FeTest = "cell";

@@ -47,10 +47,10 @@ export function childSections<
 }
 
 // everything is based on descendantSections
-export function descendantFeIds<S extends SectionName>(
+export function descendantFeIds<SN extends SectionName>(
   this: Analyzer,
-  finder: SectionFinder<S>
-): DescendantIds<SectionContextProps<S, "fe">> {
+  finder: SectionFinder<SN>
+): DescendantIds<SN, "fe"> {
   const descendantIds: { [key: string]: string[] } = {};
 
   const queue = this.section(finder).allChildFeInfos();

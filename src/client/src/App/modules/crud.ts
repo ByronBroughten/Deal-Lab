@@ -4,6 +4,8 @@ import {
   is,
   isLoginHeaders,
   Req,
+  NextReq,
+  NextRes,
   Res,
 } from "../sharedWithServer/User/crudTypes";
 import https from "./services/httpService";
@@ -118,6 +120,24 @@ export const crud = {
         const res = await https.post(
           "registering",
           config.url.register.path,
+          reqObj.body
+        );
+        return this.validateRes(res);
+      },
+    },
+  },
+  nextSection: {
+    path: config.url.nextSection.path,
+    post: {
+      get validateRes() {
+        return generalValidators.dbId;
+      },
+      async send(
+        reqObj: NextReq<"nextSection", "post">
+      ): Promise<NextRes<"nextSection", "post"> | undefined> {
+        const res = await https.post(
+          "saving",
+          crud.nextSection.path,
           reqObj.body
         );
         return this.validateRes(res);

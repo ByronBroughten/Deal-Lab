@@ -3,6 +3,7 @@ import {
   DbEntry,
   DbSection,
   DbSections,
+  RawChildDbIds,
   RawDescendantSections,
   RawSection,
   RawSectionHead,
@@ -17,6 +18,7 @@ import {
 } from "../../SectionMetas/SectionName";
 import { Obj } from "../../../utils/Obj";
 import { FeToDbNameWithSameChildren } from "../../SectionMetas/relNameArrs/ChildTypes";
+import { omit } from "lodash";
 
 type StateToDbSectionsOptions = {
   newMainSectionName?: SectionName;
@@ -155,7 +157,7 @@ export function dbIndexEntry(
 export function makeRawSection<SN extends SectionName>(
   this: Analyzer,
   finder: SectionFinder<SN>
-): RawSection<SectionContextProps<SN, "fe">> {
+): RawSection<SN, "fe"> {
   const { dbId, dbVarbs } = this.section(finder);
   return {
     dbId,
@@ -168,16 +170,16 @@ function feIdsToRawSections<S extends SectionName>(
   analyzer: Analyzer,
   sectionName: S,
   feIdArr: string[]
-): RawSection<SectionContextProps<S, "fe">>[] {
+): RawSection<S, "fe">[] {
   return feIdArr.map((id) => {
     const feInfo = Inf.fe(sectionName, id);
     return analyzer.makeRawSection(feInfo);
   });
 }
-export function makeRawDescendantSections<S extends SectionName>(
+export function makeRawDescendantSections<SN extends SectionName>(
   this: Analyzer,
-  finder: SectionFinder<S>
-): RawDescendantSections<SectionContextProps<S, "fe">> {
+  finder: SectionFinder<SN>
+): RawDescendantSections<SN, "fe"> {
   const descendantFeIds = this.descendantFeIds(finder);
   return Obj.entries(descendantFeIds).reduce(
     (rawDescendantSections, [name, feIdArr]) => {
@@ -188,48 +190,19 @@ export function makeRawDescendantSections<S extends SectionName>(
       ) as typeof rawDescendantSections[typeof name];
       return rawDescendantSections;
     },
-    {} as RawDescendantSections<SectionContextProps<S, "fe">>
+    {} as RawDescendantSections<SN, "fe">
   );
 }
 
-type RawSectionHeadName<
-  SN extends SectionName,
-  HN extends SectionName | undefined
-> = HN extends undefined ? SN : Extract<HN, SectionName>;
-export function makeRawDbSectionHead<
-  SN extends SectionName,
-  HN extends FeToDbNameWithSameChildren<SN> | undefined = undefined
->(
+export function makeRawSectionHead<SN extends SectionName>(
   this: Analyzer,
-  finder: SectionFinder<SN>,
-  headName?: HN
-): RawSectionHead<RawSectionHeadName<SN, HN>, "db"> {
-  // you should be able to include a sectionName of a section
-  // with the same children as the finder section
-  // I must sort
-
-  // Right now this doesn't produce db.
-  // i can add a flag or I can change a specifier
-  // for the database, contextName will always be db.
-
-  // Do I want to still be able to produce fe heads?
-  // yeah, I suppose so.
-  // Let's start with db, though
-
-  // the db HN section must have the same children as
-  // the fe SN section
-
+  finder: SectionFinder<SN>
+): RawSectionHead<SN, "fe"> {
   const { sectionName } = this.section(finder);
   return {
-    contextName: "db",
-    sectionName: (headName ?? sectionName) as RawSectionHeadName<SN, HN>,
+    contextName: "fe",
+    sectionName: sectionName as SN,
     ...this.makeRawSection(finder),
     descendants: this.makeRawDescendantSections(finder),
-  } as any as RawSectionHead<RawSectionHeadName<SN, HN>, "db">;
-}
-
-function _test(this: Analyzer) {
-  const { feInfo } = this.firstSection("property");
-  const test = this.makeRawDbSectionHead(feInfo, "propertyIndex");
-  test.sectionName;
+  } as RawSectionHead<SN, "fe">;
 }

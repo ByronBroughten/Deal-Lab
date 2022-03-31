@@ -81,7 +81,15 @@ export function configUrls(endpoint: string) {
         return urlJoin(urls.user.path, this.bit);
       },
     },
-    // section
+    nextSection: {
+      bit: "/nextSection",
+      get route() {
+        return urlJoin(urls.api.bit, this.bit);
+      },
+      get path() {
+        return urlJoin(urls.api.path, this.bit);
+      },
+    },
     section: {
       bit: "/section",
       get route() {

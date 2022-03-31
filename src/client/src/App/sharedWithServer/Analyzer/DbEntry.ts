@@ -22,14 +22,11 @@ import { DbInfo, Inf } from "./SectionMetas/Info";
 import { DbStoreName } from "./SectionMetas/relSections/baseSectionTypes";
 import { Id } from "./SectionMetas/relSections/baseSections/id";
 import { ParentName } from "./SectionMetas/relNameArrs/ParentTypes";
-import {
-  ContextName,
-  SimpleSectionName,
-} from "./SectionMetas/relSections/baseSections";
+import { ContextName } from "./SectionMetas/relSections/baseSections";
 import {
   ChildName,
   DescendantName,
-  SectionAndDescendantName,
+  FeToDbNameWithSameChildren,
 } from "./SectionMetas/relNameArrs/ChildTypes";
 
 export type DbValue = BasicValue | DbNumObj;
@@ -57,24 +54,48 @@ export type DbEntry = {
   dbSections: DbSections;
 };
 
-type RawChildDbIds<SCP extends SectionContextProps> = {
-  [CHN in ChildName<SCP["sectionName"], SCP["contextName"]>]: string[];
+export type RawChildDbIds<SN extends SectionName, CN extends ContextName> = {
+  [CHN in ChildName<SN, CN>]: string[];
 };
-export type RawSection<SCP extends SectionContextProps> = {
+export type RawSection<SN extends SectionName, CN extends ContextName> = {
   dbId: string;
   dbVarbs: DbVarbs;
-  childDbIds: RawChildDbIds<SCP>;
+  childDbIds: RawChildDbIds<SN, CN>;
 };
-export type RawDescendantSections<SCP extends SectionContextProps> = {
-  [SDN in DescendantName<SCP>]: RawSection<SCP>[];
+export type RawDescendantSections<
+  SN extends SectionName,
+  CN extends ContextName
+> = {
+  [SDN in DescendantName<SN, CN>]: RawSection<SN, CN>[];
 };
 export type RawSectionHead<
   SN extends SectionName,
   CN extends ContextName
 > = SectionContextProps<SN, CN> &
-  RawSection<SectionContextProps<SN, CN>> & {
-    descendants: RawDescendantSections<SectionContextProps<SN, CN>>;
+  RawSection<SN, CN> & {
+    descendants: RawDescendantSections<SN, CN>;
   };
+
+export const rawSectionService = {
+  feToDbSectionHead<
+    SN extends SectionName,
+    DSN extends FeToDbNameWithSameChildren<SN>
+  >(
+    rawSectionHead: RawSectionHead<SN, "fe">,
+    dbSectionName: DSN
+  ): RawSectionHead<DSN, "db"> {
+    return {
+      ...rawSectionHead,
+      childDbIds: rawSectionHead.childDbIds as any as RawChildDbIds<DSN, "db">,
+      descendants: rawSectionHead.descendants as any as RawDescendantSections<
+        DSN,
+        "db"
+      >,
+      contextName: "db",
+      sectionName: dbSectionName,
+    };
+  },
+};
 
 function _testDbEntry(
   feRaw: RawSectionHead<"propertyIndex", "fe">,
