@@ -1,13 +1,9 @@
-import {
-  RemoveNotStrings,
-  StrictSubType,
-  SubType,
-} from "../../../utils/typescript";
+import { MergeUnionObjNonNullable } from "../../../utils/types/mergeUnionObj";
+import { RemoveNotStrings, StrictSubType } from "../../../utils/typescript";
 import StateSection from "../../StateSection";
 import { RelSections } from "../relSections";
 import { ContextName, SimpleSectionName } from "../relSections/baseSections";
 import { FeNameInfo } from "../relSections/rel/relVarbInfoTypes";
-import { SectionContextProps } from "../SectionName";
 
 type ChildNameArr<
   CN extends ContextName,
@@ -19,10 +15,6 @@ type SectionToChildrenOrNever<CN extends ContextName> = {
     keyof ChildNameArr<CN, SN>];
 };
 
-type FeChildNameToDbSectionName<
-  CHN extends ChildName<SimpleSectionName, "fe">
-> = keyof StrictSubType<SectionToChildArr<"db">, [CHN]>;
-
 type SectionToChildren<SC extends ContextName> = RemoveNotStrings<
   SectionToChildrenOrNever<SC>
 >;
@@ -30,14 +22,25 @@ type SectionToChildArr<SC extends ContextName> = {
   [SN in keyof SectionToChildren<SC>]: [SectionToChildren<SC>[SN]];
 };
 
-export type FeToDbNameWithSameChildren<SN extends SimpleSectionName> =
-  FeChildNameToDbSectionName<ChildName<SN, "fe">>;
+export type NameToNameWithSameChildren<
+  SN extends SimpleSectionName,
+  FromCN extends ContextName,
+  ToCN extends ContextName
+> = ChildToSectionWithChildName<FromCN, ToCN, ChildName<SN>>;
 
-type DbChildNameToFeSectionName<
-  CHN extends ChildName<SimpleSectionName, "db">
-> = keyof StrictSubType<SectionToChildArr<"fe">, [CHN]>;
+export type FeToDbNameWithSameChildren<SN extends SimpleSectionName> =
+  NameToNameWithSameChildren<SN, "fe", "db">;
+
 export type DbToFeNameWithSameChildren<SN extends SimpleSectionName> =
-  DbChildNameToFeSectionName<ChildName<SN, "db">>;
+  NameToNameWithSameChildren<SN, "db", "fe">;
+
+type ChildToSectionWithChildName<
+  FromCN extends ContextName,
+  ToCN extends ContextName,
+  CHN extends ChildName<SimpleSectionName, FromCN>
+> = keyof StrictSubType<SectionToChildArr<ToCN>, [CHN]>;
+
+type Test = NameToNameWithSameChildren<"propertyIndex", "db", "fe">;
 
 const _testFeToDbNameWithSameChildren = (): void => {
   type TestName = FeToDbNameWithSameChildren<"property">;
@@ -58,6 +61,11 @@ export type DescendantName<
 > = ChildName<SN, CN> extends never
   ? never
   : ChildName<SN, CN> | DescendantName<ChildName<SN, CN>, CN>;
+
+export type SelfOrDescendantName<
+  SN extends SimpleSectionName,
+  CN extends ContextName
+> = SN | DescendantName<SN, CN>;
 
 export type DescendantIds<
   SN extends SimpleSectionName,
@@ -88,10 +96,32 @@ function _testDescendantName() {
   const _teset5: DbTest = "cell";
 }
 
+export type GeneralChildIdArrs = {
+  [key: string]: string[];
+};
+export type OneChildIdArrs<
+  SN extends SimpleSectionName,
+  CN extends ContextName
+> = GeneralChildIdArrs & {
+  [CHN in ChildName<SN, CN>]: string[];
+};
+type AllChildIdArrs<CN extends ContextName> = {
+  [SN in SimpleSectionName]: OneChildIdArrs<SN, CN>;
+};
+export type NextChildIdArrs<
+  CN extends ContextName,
+  SN extends SimpleSectionName = SimpleSectionName
+> = AllChildIdArrs<CN>[SN];
+
+export type NextChildIdArrsWide<CN extends ContextName> =
+  MergeUnionObjNonNullable<NextChildIdArrs<CN>>;
+
 export type ChildIdArrs<
-  SN extends SimpleSectionName<SC>,
-  SC extends ContextName = "fe"
-> = Record<ChildName<SN, SC> & string, string[]>;
+  SN extends SimpleSectionName<CN>,
+  CN extends ContextName = "fe"
+> = {
+  [CHN in ChildName<SN, CN>]: string[];
+};
 
 export type ChildFeInfo<SN extends SimpleSectionName<"fe">> = FeNameInfo & {
   sectionName: ChildName<SN>;

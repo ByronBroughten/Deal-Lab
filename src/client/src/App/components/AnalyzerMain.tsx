@@ -1,15 +1,16 @@
 import React from "react";
+import { View } from "react-native";
 import styled from "styled-components";
 import theme from "../theme/Theme";
-import InputSection from "./AnalyzerMain/InputSection";
-import Financing from "./AnalyzerMain/Financing";
 import DealGeneral from "./AnalyzerMain/DealGeneral";
+import Financing from "./AnalyzerMain/Financing";
+import InputSection from "./AnalyzerMain/InputSection";
 
 export default function AnalyzerMain({ className, ...rest }: any) {
   return (
     <>
       <Styled {...{ className: `MainSections-root ${className}`, ...rest }}>
-        <div className="MainSections-viewable">
+        <View style={{ flex: 1 }}>
           <InputSection {...{ title: "Property", sectionName: "property" }} />
           <Financing />
           <InputSection
@@ -19,7 +20,7 @@ export default function AnalyzerMain({ className, ...rest }: any) {
               className: "MgmtGeneral-root",
             }}
           />
-        </div>
+        </View>
       </Styled>
       <DealGeneral className="Footer-root" />
     </>
@@ -31,11 +32,6 @@ const Styled = styled.div`
   display: flex;
   flex: 1;
 
-  .MainSections-viewable {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-  }
   .MgmtGeneral-root {
     display: flex;
     flex: 1;

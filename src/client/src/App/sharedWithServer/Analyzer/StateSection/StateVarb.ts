@@ -1,6 +1,6 @@
 import { cloneDeep, isEqual } from "lodash";
-import { DbValue } from "../DbEntry";
 import array from "../../utils/Arr";
+import { NumObjUnit } from "../methods/solveVarbs/solveAndUpdateValue/updateNumericObjCalc";
 import { sectionMetas } from "../SectionMetas";
 import { valueMeta } from "../SectionMetas/relSections/baseSections/baseValues";
 import { NumObj } from "../SectionMetas/relSections/baseSections/baseValues/NumObj";
@@ -9,18 +9,19 @@ import {
   InEntity,
 } from "../SectionMetas/relSections/baseSections/baseValues/NumObj/entities";
 import {
-  UpdateFnName,
-  ValueTypes,
-} from "../SectionMetas/relSections/rel/valueMetaTypes";
-import {
   FeNameInfo,
   FeVarbInfo,
   RelVarbInfo,
-  NextVarbNames,
 } from "../SectionMetas/relSections/rel/relVarbInfoTypes";
 import { DisplayName } from "../SectionMetas/relSections/rel/relVarbTypes";
+import {
+  UpdateFnName,
+  ValueTypes,
+} from "../SectionMetas/relSections/rel/valueMetaTypes";
 import { SectionName } from "../SectionMetas/SectionName";
 import { cloneValue, VarbMeta } from "../SectionMetas/VarbMeta";
+import { DbValue } from "../DbEntry";
+import { Inf } from "./../SectionMetas/Info";
 import {
   addInEntity,
   addOutEntity,
@@ -31,8 +32,6 @@ import {
   setInEntities,
 } from "./StateVarb/entities";
 import { StateValue } from "./StateVarb/stateValue";
-import { NumObjUnit } from "../methods/solveVarbs/solveAndUpdateValue/updateNumericObjCalc";
-import { Inf } from "./../SectionMetas/Info";
 
 export type InVarbInfo = InEntity | FeVarbInfo;
 export type StateVarbCore = {

@@ -1,5 +1,5 @@
-import { DbEntry } from "../../../../../DbEntry";
 import { dbNumObj } from "../../../../../SectionMetas/relSections/baseSections/baseValues/NumObj";
+import { DbEntry } from "../../../../../DbEntry";
 
 const dbIds = {
   loan: "N0AANDr0HJQO",

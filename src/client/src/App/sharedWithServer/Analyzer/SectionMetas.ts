@@ -1,14 +1,26 @@
 import { omit, pick } from "lodash";
 import { NextObjEntries, Obj } from "../utils/Obj";
+import {
+  makeSectionToParentArrs,
+  ParentName,
+  SectionToParentArrs,
+} from "./SectionMetas/relNameArrs/ParentTypes";
 import { relSections, RelSections } from "./SectionMetas/relSections";
 import {
+  baseSections,
+  BaseSections,
+  ContextName,
+  sectionContext,
+  SimpleSectionName,
+} from "./SectionMetas/relSections/baseSections";
+import {
   InVarbRelative,
-  NextVarbNames,
   OutRelVarbInfo,
   OutVarbRelative,
   SimpleVarbNames,
   VarbNames,
 } from "./SectionMetas/relSections/rel/relVarbInfoTypes";
+import { SectionNam, SectionName } from "./SectionMetas/SectionName";
 import {
   InUpdatePack,
   isDefaultInPack,
@@ -16,19 +28,6 @@ import {
   OutUpdatePack,
   VarbMeta,
 } from "./SectionMetas/VarbMeta";
-import { SectionNam, SectionName } from "./SectionMetas/SectionName";
-import {
-  baseSections,
-  BaseSections,
-  sectionContext,
-  ContextName,
-  SimpleSectionName,
-} from "./SectionMetas/relSections/baseSections";
-import {
-  makeSectionToParentArrs,
-  ParentName,
-  SectionToParentArrs,
-} from "./SectionMetas/relNameArrs/ParentTypes";
 import { VarbMetas, VarbMetasRaw } from "./SectionMetas/VarbMetas";
 
 export type SectionMeta<
@@ -55,6 +54,9 @@ type SectionMetasRaw = {
     };
   };
 };
+
+// The queries will all return fe sections, right?
+type Test = SectionMetasRaw["fe"]["property"]["varbMetas"][string]["type"];
 
 export class SectionMetas {
   private core: SectionMetasCore;

@@ -1,10 +1,10 @@
 import { z } from "zod";
-import { SectionName, SectionNam } from "../Analyzer/SectionMetas/SectionName";
+import { config } from "../../Constants";
+import { SectionNam, SectionName } from "../Analyzer/SectionMetas/SectionName";
+import { DbEntry, zDbEntry } from "../Analyzer/DbEntry";
 import { dbLimits } from "../utils/dbLimts";
 import { message, zNanoId } from "../utils/zod";
-import { DbEntry, RawSectionHead, zDbEntry } from "../Analyzer/DbEntry";
 import { LoginUser, zDbEntryArr } from "./DbUser";
-import { config } from "../../Constants";
 
 export const authTokenKey = "x-auth-token";
 
@@ -146,7 +146,7 @@ type NextCrud = {
     post: {
       req: {
         body: {
-          payload: RawSectionHead<SectionName, "db">;
+          payload: any;
         };
       };
       res: {

@@ -1,130 +1,44 @@
 import { z } from "zod";
+import { DbUser } from "../User/DbUser";
 import { zNanoId, zString } from "../utils/zod";
-import { BasicValue } from "./StateSection/StateVarb/stateValue";
-import { DbNumObj } from "./SectionMetas/relSections/baseSections/baseValues/NumObj";
+import { DbInfo, Inf } from "./SectionMetas/Info";
+
+import { ParentName } from "./SectionMetas/relNameArrs/ParentTypes";
+import { relSections } from "./SectionMetas/relSections";
+
 import { valueMeta } from "./SectionMetas/relSections/baseSections/baseValues";
+import { DbNumObj } from "./SectionMetas/relSections/baseSections/baseValues/NumObj";
 import {
   InEntityInfo,
   InEntityVarbInfo,
 } from "./SectionMetas/relSections/baseSections/baseValues/NumObj/entities";
+import { Id } from "./SectionMetas/relSections/baseSections/id";
+import { DbStoreName } from "./SectionMetas/relSections/baseSectionTypes";
 import {
   DbNameInfo,
   RelInfoStatic,
 } from "./SectionMetas/relSections/rel/relVarbInfoTypes";
-import { DbUser } from "../User/DbUser";
-import { relSections } from "./SectionMetas/relSections";
-import {
-  AlwaysOneVarbFinder,
-  SectionContextProps,
-  SectionName,
-} from "./SectionMetas/SectionName";
-import { DbInfo, Inf } from "./SectionMetas/Info";
-import { DbStoreName } from "./SectionMetas/relSections/baseSectionTypes";
-import { Id } from "./SectionMetas/relSections/baseSections/id";
-import { ParentName } from "./SectionMetas/relNameArrs/ParentTypes";
-import { ContextName } from "./SectionMetas/relSections/baseSections";
-import {
-  ChildName,
-  DbToFeNameWithSameChildren,
-  DescendantName,
-  FeToDbNameWithSameChildren,
-} from "./SectionMetas/relNameArrs/ChildTypes";
+import { AlwaysOneVarbFinder, SectionName } from "./SectionMetas/SectionName";
+import { BasicValue } from "./StateSection/StateVarb/stateValue";
 
 export type DbValue = BasicValue | DbNumObj;
 export type DbVarbs = {
   [varbName: string]: DbValue;
 };
-
 export type ChildDbIds = {
   [sectionName: string]: string[];
 };
-
 export type DbSection = {
   dbId: string;
   dbVarbs: DbVarbs;
   childDbIds: ChildDbIds;
 };
-
-// next DbEntry...
-// this time,
-
 type FullDbSections = Record<SectionName | SectionName<"dbStore">, DbSection[]>;
 export type DbSections = Partial<FullDbSections>;
 export type DbEntry = {
   dbId: string;
   dbSections: DbSections;
 };
-
-export type RawChildDbIds<SN extends SectionName, CN extends ContextName> = {
-  [CHN in ChildName<SN, CN>]: string[];
-};
-export type RawSection<SN extends SectionName, CN extends ContextName> = {
-  dbId: string;
-  dbVarbs: DbVarbs;
-  childDbIds: RawChildDbIds<SN, CN>;
-};
-export type RawDescendantSections<
-  SN extends SectionName,
-  CN extends ContextName
-> = {
-  [SDN in DescendantName<SN, CN>]: RawSection<SN, CN>[];
-};
-export type RawSectionHead<
-  SN extends SectionName,
-  CN extends ContextName
-> = SectionContextProps<SN, CN> &
-  RawSection<SN, CN> & {
-    descendants: RawDescendantSections<SN, CN>;
-  };
-
-export const rawSectionService = {
-  feToDbSectionHead<
-    SN extends SectionName,
-    DSN extends FeToDbNameWithSameChildren<SN>
-  >(
-    rawSectionHead: RawSectionHead<SN, "fe">,
-    dbSectionName: DSN
-  ): RawSectionHead<DSN, "db"> {
-    return {
-      ...rawSectionHead,
-      childDbIds: rawSectionHead.childDbIds as any as RawChildDbIds<DSN, "db">,
-      descendants: rawSectionHead.descendants as any as RawDescendantSections<
-        DSN,
-        "db"
-      >,
-      contextName: "db",
-      sectionName: dbSectionName,
-    };
-  },
-  dbToFeSectionHead<
-    SN extends SectionName,
-    FSN extends DbToFeNameWithSameChildren<SN>
-  >(
-    rawSectionHead: RawSectionHead<SN, "db">,
-    feSectionName: FSN
-  ): RawSectionHead<FSN, "fe"> {
-    return {
-      ...rawSectionHead,
-      childDbIds: rawSectionHead.childDbIds as any as RawChildDbIds<FSN, "fe">,
-      descendants: rawSectionHead.descendants as any as RawDescendantSections<
-        FSN,
-        "fe"
-      >,
-      contextName: "fe",
-      sectionName: feSectionName,
-    };
-  },
-};
-
-function _testDbEntry(
-  feRaw: RawSectionHead<"propertyIndex", "fe">,
-  dbRaw: RawSectionHead<"propertyIndex", "db">
-) {
-  const _test1 = feRaw.descendants.cell;
-  // @ts-expect-error
-  const _test2 = feRaw.descendants.unit;
-  const _test3 = dbRaw.descendants.unit;
-}
 
 type EntryPack<S extends SectionName<"dbStore"> = SectionName<"dbStore">> = [
   S,

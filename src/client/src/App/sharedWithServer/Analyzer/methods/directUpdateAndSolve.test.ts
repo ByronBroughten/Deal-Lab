@@ -1,12 +1,12 @@
 import Analyzer from "../../Analyzer";
-import { DbEntry } from "../DbEntry";
 import { FeInfo, Inf } from "../SectionMetas/Info";
-import { switchNames } from "../SectionMetas/relSections/baseSections/switchNames";
 import {
   dbNumObj,
   NumObj,
 } from "../SectionMetas/relSections/baseSections/baseValues/NumObj";
 import { Ent } from "../SectionMetas/relSections/baseSections/baseValues/NumObj/entities";
+import { switchNames } from "../SectionMetas/relSections/baseSections/switchNames";
+import { DbEntry } from "../DbEntry";
 import { StateValue } from "../StateSection/StateVarb/stateValue";
 
 function makePropertyEntry(values: {

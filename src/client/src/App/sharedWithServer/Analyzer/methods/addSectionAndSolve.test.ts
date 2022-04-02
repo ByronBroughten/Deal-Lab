@@ -1,10 +1,10 @@
 import Analyzer from "../../Analyzer";
-import { DbEntry } from "../DbEntry";
 import {
   DbNumObj,
   dbNumObj,
 } from "../SectionMetas/relSections/baseSections/baseValues/NumObj";
 import { Ent } from "../SectionMetas/relSections/baseSections/baseValues/NumObj/entities";
+import { DbEntry } from "../DbEntry";
 
 function dbProperty({
   propertyDbId = Analyzer.makeId(),

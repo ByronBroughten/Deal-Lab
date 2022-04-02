@@ -1,24 +1,14 @@
 import Analyzer from "../../../Analyzer";
-import {
-  DbEntry,
-  DbSection,
-  DbSections,
-  RawChildDbIds,
-  RawDescendantSections,
-  RawSection,
-  RawSectionHead,
-} from "../../DbEntry";
-import { SectionFinder } from "../../SectionMetas/relSections/baseSectionTypes";
+import { Obj } from "../../../utils/Obj";
 import { FeInfo, Inf } from "../../SectionMetas/Info";
+import { NameToNameWithSameChildren } from "../../SectionMetas/relNameArrs/ChildTypes";
+import { SectionFinder } from "../../SectionMetas/relSections/baseSectionTypes";
 import {
-  SectionContextProps,
   SectionNam,
   SectionName,
   SectionNameType,
 } from "../../SectionMetas/SectionName";
-import { Obj } from "../../../utils/Obj";
-import { FeToDbNameWithSameChildren } from "../../SectionMetas/relNameArrs/ChildTypes";
-import { omit } from "lodash";
+import { DbEntry, DbSection, DbSections } from "../../DbEntry";
 
 type StateToDbSectionsOptions = {
   newMainSectionName?: SectionName;
@@ -154,61 +144,60 @@ export function dbIndexEntry(
   }
 }
 
-export function makeRawSection<SN extends SectionName>(
-  this: Analyzer,
-  finder: SectionFinder<SN>
-): RawSection<SN, "fe"> {
-  const { dbId, dbVarbs } = this.section(finder);
-  return {
-    dbId,
-    dbVarbs,
-    childDbIds: this.allChildDbIds(finder),
-  };
-}
+// export function makeRawSection<SN extends SectionName>(
+//   this: Analyzer,
+//   finder: SectionFinder<SN>
+// ): OneRawSection<SN, "fe"> {
+//   const { dbId, dbVarbs } = this.section(finder);
+//   return {
+//     dbId,
+//     dbVarbs,
+//     childDbIds: this.allChildDbIds(finder),
+//   };
+// }
 
-function feIdsToRawSections<S extends SectionName>(
-  analyzer: Analyzer,
-  sectionName: S,
-  feIdArr: string[]
-): RawSection<S, "fe">[] {
-  return feIdArr.map((id) => {
-    const feInfo = Inf.fe(sectionName, id);
-    return analyzer.makeRawSection(feInfo);
-  });
-}
-export function makeRawDescendantSections<SN extends SectionName>(
-  this: Analyzer,
-  finder: SectionFinder<SN>
-): RawDescendantSections<SN, "fe"> {
-  const descendantFeIds = this.descendantFeIds(finder);
-  return Obj.entries(descendantFeIds).reduce(
-    (rawDescendantSections, [name, feIdArr]) => {
-      rawDescendantSections[name] = feIdsToRawSections(
-        this,
-        name,
-        feIdArr
-      ) as typeof rawDescendantSections[typeof name];
-      return rawDescendantSections;
-    },
-    {} as RawDescendantSections<SN, "fe">
-  );
-}
+// function feIdsToRawSections<S extends SectionName>(
+//   analyzer: Analyzer,
+//   sectionName: S,
+//   feIdArr: string[]
+// ): OneRawSection<S, "fe">[] {
+//   return feIdArr.map((id) => {
+//     const feInfo = Inf.fe(sectionName, id);
+//     return analyzer.makeRawSection(feInfo);
+//   });
+// }
+// export function makeRawDescendantSections<SN extends SectionName>(
+//   this: Analyzer,
+//   finder: SectionFinder<SN>
+// ): RawDescendantSections<SN, "fe"> {
+//   const descendantFeIds = this.descendantFeIds(finder);
+//   return Obj.entries(descendantFeIds).reduce(
+//     (rawDescendantSections, [name, feIdArr]) => {
+//       rawDescendantSections[name] = feIdsToRawSections(
+//         this,
+//         name,
+//         feIdArr
+//       ) as typeof rawDescendantSections[typeof name];
+//       return rawDescendantSections;
+//     },
+//     {} as RawDescendantSections<SN, "fe">
+//   );
+// }
 
-export function makeRawSectionHead<SN extends SectionName>(
-  this: Analyzer,
-  finder: SectionFinder<SN>
-): RawSectionHead<SN, "fe"> {
-  const { sectionName } = this.section(finder);
-  return {
-    contextName: "fe",
-    sectionName: sectionName as SN,
-    ...this.makeRawSection(finder),
-    descendants: this.makeRawDescendantSections(finder),
-  } as RawSectionHead<SN, "fe">;
-}
+// export function makeRawSectionHead<SN extends SectionName>(
+//   this: Analyzer,
+//   finder: SectionFinder<SN>
+// ): RawSectionPack<SN, "fe"> {
+//   return {
+//     ...this.makeRawSection(finder),
+//     descendants: this.makeRawDescendantSections(finder),
+//   };
+// }
 
-// export function loadRawSectionHead<SN extends SectionName>(
-//   rawSectionHead: RawSectionHead<SN, "fe">
-// ): Analyzer {
-
+// export function loadRawSectionPack<
+//   SN extends SectionName,
+//   SN2 extends NameToNameWithSameChildren<SN, "fe", "fe">
+// >(sectionName: SN, rawSectionPack: RawSectionPack<SN2, "fe">): Analyzer {
+//   const sectionPack = SectionPack.init("fe", sectionName, rawSectionPack);
+//   const sectionPackNodes = sectionPack.parentFirstFeNodes();
 // }

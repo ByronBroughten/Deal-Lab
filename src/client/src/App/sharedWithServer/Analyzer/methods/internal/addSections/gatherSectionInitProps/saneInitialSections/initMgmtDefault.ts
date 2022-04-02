@@ -1,5 +1,5 @@
-import { DbEntry } from "../../../../../DbEntry";
 import { dbNumObj } from "../../../../../SectionMetas/relSections/baseSections/baseValues/NumObj";
+import { DbEntry } from "../../../../../DbEntry";
 
 const dbIds = {
   mgmt: "fL2L7IN8agiG",

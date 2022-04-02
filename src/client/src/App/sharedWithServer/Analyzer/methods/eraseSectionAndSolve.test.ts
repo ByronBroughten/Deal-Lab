@@ -1,8 +1,8 @@
 import Analyzer from "../../Analyzer";
-import { DbEntry } from "../DbEntry";
 import { FeInfo } from "../SectionMetas/Info";
 import { DbNumObj } from "../SectionMetas/relSections/baseSections/baseValues/NumObj";
 import { InEntity } from "../SectionMetas/relSections/baseSections/baseValues/NumObj/entities";
+import { DbEntry } from "../DbEntry";
 
 type UnitProps = {
   dbId?: string;

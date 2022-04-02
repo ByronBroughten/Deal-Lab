@@ -1,11 +1,11 @@
 import Analyzer from "../../sharedWithServer/Analyzer";
 import { sectionMetas } from "../../sharedWithServer/Analyzer/SectionMetas";
-import { DbEnt } from "../../sharedWithServer/Analyzer/DbEntry";
 import { FeInfo } from "../../sharedWithServer/Analyzer/SectionMetas/Info";
 import { SectionName } from "../../sharedWithServer/Analyzer/SectionMetas/SectionName";
+import { DbEnt } from "../../sharedWithServer/Analyzer/DbEntry";
+import { crud } from "../crud";
 import { auth } from "../services/authService";
 import { useAnalyzerContext } from "../usePropertyAnalyzer";
-import { crud } from "../crud";
 
 const dbStore = {
   async deleteIndexEntry(

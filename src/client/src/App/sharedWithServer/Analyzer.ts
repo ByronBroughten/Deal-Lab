@@ -22,9 +22,6 @@ import {
   dbEntryArr,
   dbEntryArrs,
   dbIndexEntry,
-  makeRawSectionHead,
-  makeRawDescendantSections,
-  makeRawSection,
 } from "./Analyzer/methods/get/dbSections";
 import {
   displayName,
@@ -431,10 +428,6 @@ export default class Analyzer {
   dbIndexEntry = dbIndexEntry;
   dbEntryArr = dbEntryArr;
   dbEntryArrs = dbEntryArrs;
-  makeRawSectionHead = makeRawSectionHead;
-
-  makeRawSection = makeRawSection;
-  makeRawDescendantSections = makeRawDescendantSections;
 
   pushToIndexStore = pushToIndexStore;
   updateIndexStoreEntry = updateIndexStoreEntry;

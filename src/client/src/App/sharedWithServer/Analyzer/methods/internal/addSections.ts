@@ -1,8 +1,11 @@
 import Analyzer from "../../../Analyzer";
-import { DbSection } from "../../DbEntry";
-import { FeVarbInfo } from "../../SectionMetas/relSections/rel/relVarbInfoTypes";
 import { FeInfo, Inf } from "../../SectionMetas/Info";
+import { ChildIdArrs } from "../../SectionMetas/relNameArrs/ChildTypes";
+import { ParentFinder } from "../../SectionMetas/relNameArrs/ParentTypes";
+import { FeVarbInfo } from "../../SectionMetas/relSections/rel/relVarbInfoTypes";
 import { SectionName } from "../../SectionMetas/SectionName";
+import { DbSection, DbVarbs } from "../../DbEntry";
+import { internal } from "../internal";
 import {
   gatherSectionInitProps,
   GatherSectionInitPropsProps,
@@ -11,7 +14,6 @@ import {
   initOneSection,
   InitOneSectionProps,
 } from "./addSections/initOneSection";
-import { internal } from "../internal";
 
 export type DbSectionInit = Omit<DbSection, "childDbIds">;
 function addOutEntitiesForSectionInVarbs(
@@ -84,3 +86,17 @@ export function addSections(
   }
   return next;
 }
+
+export type AddSectionProps<SN extends SectionName> = {
+  sectionName: SN;
+  parentFinder: ParentFinder<SN, "fe">;
+  feId?: string;
+  childFeIds?: ChildIdArrs<SN, "fe">;
+
+  dbId?: string;
+  dbVarbs?: DbVarbs;
+
+  idx?: number;
+};
+
+export function nextAddSections(analyzer: Analyzer) {}

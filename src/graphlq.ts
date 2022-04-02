@@ -1,14 +1,24 @@
 import {
-  GraphQLSchema,
-  GraphQLObjectType,
-  GraphQLList,
-  GraphQLString,
-  GraphQLNonNull,
   GraphQLInputObjectType,
+  GraphQLList,
+  GraphQLObjectType,
+  GraphQLSchema,
+  GraphQLString,
 } from "graphql";
 
 const SectionCrateGQL = new GraphQLObjectType({
   name: "SectionCrate",
+  description: "A single sectionCrate of specified sectionName and dbId",
+  // there
+  fields: () => ({
+    dbId: { type: GraphQLString },
+    // Add other properties of SectionCrate that you would like to be able to
+    // individually query.
+  }),
+});
+
+const InSectionCrateGQL = new GraphQLInputObjectType({
+  name: "InSectionCrate",
   description: "A single sectionCrate of specified sectionName and dbId",
   // there
   fields: () => ({
@@ -50,6 +60,7 @@ const RootMutationGQL = new GraphQLObjectType({
       description: "Add a section",
       args: {
         dbId: { type: GraphQLString },
+        crate: { type: InSectionCrateGQL },
       },
       resolve: (parent, { sectionCrate }) => {
         // add sectionCrate to mongoDb database

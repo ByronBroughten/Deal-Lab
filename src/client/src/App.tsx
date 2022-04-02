@@ -1,19 +1,18 @@
+import { StylesProvider } from "@material-ui/core";
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import GlobalStyle from "./App/theme/globalStyles";
+import { ToastContainer } from "react-toastify";
+import styled from "styled-components";
+import { Normalize } from "styled-normalize";
+import AnalyzerMain from "./App/components/AnalyzerMain";
 import NotFound from "./App/components/general/NotFound";
+import NavBar from "./App/components/NavBar";
+import SectionTable from "./App/components/SectionTable";
 import usePropertyAnalyzer, {
   AnalyzerContext,
 } from "./App/modules/usePropertyAnalyzer";
-import styled from "styled-components";
-import NavBar from "./App/components/NavBar";
-import theme from "./App/theme/Theme";
-import SectionTable from "./App/components/SectionTable";
-import { ToastContainer } from "react-toastify";
-import AnalyzerMain from "./App/components/AnalyzerMain";
-import { Normalize } from "styled-normalize";
-import { StylesProvider } from "@material-ui/core";
-import { Theme } from "./App/theme/Theme";
+import GlobalStyle from "./App/theme/globalStyles";
+import theme, { Theme } from "./App/theme/Theme";
 
 const App: React.FC = () => {
   const analyzerContext = usePropertyAnalyzer({
