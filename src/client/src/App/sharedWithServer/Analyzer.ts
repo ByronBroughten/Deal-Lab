@@ -156,7 +156,7 @@ import {
   loadValueFromVarb,
   updateSectionValuesAndSolve,
 } from "./Analyzer/methods/directUpdateAndSolve";
-import { SectionMeta, sectionMetas } from "./Analyzer/SectionMetas";
+import { sectionMetas } from "./Analyzer/SectionMetas";
 import { SectionNam, SectionName } from "./Analyzer/SectionMetas/SectionName";
 import StateSection, { StateSectionCore } from "./Analyzer/StateSection";
 import { Obj, ObjectKeys } from "./utils/Obj";
@@ -171,6 +171,7 @@ import {
   makeRawSectionPack,
   makeRawSections,
 } from "./Analyzer/methods/get/sectionPack";
+import { NextSectionMeta } from "./Analyzer/SectionMetas/SectionMeta";
 
 export type StateSections = { [S in SectionName]: StateSection<S>[] };
 type RawCore = { [S in SectionName]: StateSectionCore<S>[] };
@@ -291,7 +292,9 @@ export default class Analyzer {
   get sectionNames() {
     return ObjectKeys(this.sections);
   }
-  sectionMeta<S extends SectionName>(sectionName: S): SectionMeta<S> {
+  sectionMeta<SN extends SectionName>(
+    sectionName: SN
+  ): NextSectionMeta<"fe", SN> {
     return sectionMetas.get(sectionName);
   }
   copy(): Analyzer {

@@ -63,7 +63,7 @@ describe(`dbSection/post`, () => {
     await userDoc.save();
     userId = userDoc._id.toHexString();
     token = serverSideLogin.makeUserAuthToken(userId);
-    const { indexStoreName } = analyzer.sectionMeta(sectionName);
+    const { indexStoreName } = analyzer.meta.section(sectionName).core;
     const pusher = queryOp.push.entry({ ...req.body.payload }, indexStoreName);
     await UserModel.findByIdAndUpdate(userId, pusher, queryOptions["post"]);
     await testStatus(500);

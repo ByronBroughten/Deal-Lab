@@ -1,8 +1,8 @@
 import { cloneDeep } from "lodash";
 import Analyzer from "../Analyzer";
-import { DbSection, DbVarbs } from "./DbEntry";
+import { DbVarbs } from "./DbEntry";
 import { DbSectionInit } from "./methods/internal/addSections";
-import { SectionMeta, sectionMetas } from "./SectionMetas";
+import { sectionMetas } from "./SectionMetas";
 import { InEntities } from "./SectionMetas/relSections/baseSections/baseValues/NumObj/entities";
 import {
   DbNameInfo,
@@ -53,6 +53,7 @@ import {
 } from "./SectionMetas/relNameArrs/ParentTypes";
 import { SimpleSectionName } from "./SectionMetas/relSections/baseSections";
 import { Id } from "./SectionMetas/relSections/baseSections/id";
+import { NextSectionMeta } from "./SectionMetas/SectionMeta";
 
 export type SectionSeed = Omit<VarbSeeds, "dbVarbs"> & {
   dbSectionInit?: DbSectionInit;
@@ -97,28 +98,26 @@ export default class StateSection<
   S extends SimpleSectionName = SimpleSectionName
 > {
   constructor(readonly core: StateSectionCore<S>) {}
-  get parentArr() {
-    return [...this.meta.parents];
-  }
   get coreClone() {
     return cloneDeep(this.core);
   }
-  get meta(): SectionMeta<S> {
-    return cloneDeep(sectionMetas.get(this.core.sectionName));
+  get meta(): NextSectionMeta<"fe", S> {
+    return sectionMetas.get(this.core.sectionName, "fe");
+  }
+  get feInfo(): FeNameInfo<S> {
+    const sectionName = this.meta.get("sectionName") as SectionName as S;
+    const feInfo: FeNameInfo<S> = {
+      sectionName,
+      id: this.feId,
+      idType: "feId",
+    };
+    return feInfo;
   }
   get dbId(): string {
     return this.core.dbId;
   }
   get feId(): string {
     return this.core.feId;
-  }
-  get feInfo(): FeNameInfo<S> {
-    const feInfo: FeNameInfo<S> = {
-      sectionName: this.meta.sectionName as S,
-      id: this.feId,
-      idType: "feId",
-    };
-    return feInfo;
   }
   get dbInfo(): DbNameInfo<S> {
     return {
@@ -165,16 +164,16 @@ export default class StateSection<
   > {
     const next = this as any;
     if (StateSection.is(next, "hasIndexStore")) {
-      return next.meta.indexStoreName;
+      return next.meta.get("indexStoreName");
     } else throw new Error("This section has no indexStoreName.");
   }
   get defaultStoreName(): DefaultStoreName<
     Extract<S, SectionName<"hasDefaultStore">>
   > {
     const next = this as any as StateSection<SectionName>;
-    if (StateSection.is(next, "hasDefaultStore")) {
-      return next.meta.indexStoreName;
-    } else throw new Error("This section has no indexStoreName.");
+    const defaultStoreName = next.meta.get("defaultStoreName");
+    if (defaultStoreName) return defaultStoreName as DefaultStoreName;
+    else throw new Error("This section has no defaultStoreName.");
   }
 
   get parentName(): ParentName<S> {
@@ -190,7 +189,7 @@ export default class StateSection<
     return sectionName as ParentName<SectionName<"hasParent">>;
   }
   get childNames(): readonly string[] {
-    return this.meta.childSectionNames;
+    return this.meta.get("childSectionNames");
   }
   get feVarbInfos(): FeVarbInfo[] {
     const { feInfo } = this;

@@ -57,7 +57,7 @@ export function singleSection<S extends SectionName<"alwaysOne">>(
   this: Analyzer,
   sectionName: S
 ): StateSection<S> {
-  if (this.meta.get(sectionName).alwaysOne)
+  if (this.meta.section(sectionName).get("alwaysOne"))
     return this.firstSection(sectionName);
   else throw new Error(`"${sectionName}" is not a static section.`);
 }

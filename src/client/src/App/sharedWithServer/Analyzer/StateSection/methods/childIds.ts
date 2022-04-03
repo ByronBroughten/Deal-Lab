@@ -125,8 +125,8 @@ export function removeChildFeId<S extends SectionName>(
 
 export function initChildFeIds<S extends SectionName>(sectionName: S) {
   const childIds: Partial<ChildIdArrs<S>> = {};
-  const meta = sectionMetas.get(sectionName);
-  const childNames = meta.childSectionNames;
+  const meta = sectionMetas.section(sectionName);
+  const childNames = meta.get("childSectionNames");
   for (const childName of childNames) {
     childIds[childName as keyof ChildIdArrs<S>] = [];
   }

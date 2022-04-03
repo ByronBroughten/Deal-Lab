@@ -9,6 +9,7 @@ export const valueMeta = {
   number: {
     is: (v: any): v is number => typeof v === "number",
     updateFnNames: ["number"],
+    dbInitValue: 0,
     defaultInit: () => 0,
     zod: z.number(),
     dbZod: z.number(),
@@ -17,6 +18,7 @@ export const valueMeta = {
   boolean: {
     is: (v: any): v is boolean => typeof v === "boolean",
     updateFnNames: ["boolean"],
+    dbInitValue: true,
     defaultInit: () => true,
     zod: z.boolean(),
     dbZod: z.boolean(),
@@ -25,6 +27,7 @@ export const valueMeta = {
   string: {
     is: (v: any): v is string => typeof v === "string",
     updateFnNames: ["string", "loadedString"],
+    dbInitValue: "",
     defaultInit: () => "",
     zod: z.string(),
     dbZod: z.string(),
@@ -34,6 +37,7 @@ export const valueMeta = {
     is: (v: any): v is string[] =>
       Array.isArray(v) && v.every((i: any) => typeof i === "string"),
     updateFnNames: ["stringArray"],
+    dbInitValue: [] as string[],
     defaultInit: () => [] as string[],
     zod: z.array(z.string()),
     dbZod: z.array(z.string()),
@@ -42,6 +46,10 @@ export const valueMeta = {
   numObj: {
     is: (value: any) => value instanceof NumObj,
     updateFnNames: numObjUpdateFnNames,
+    dbInitValue: {
+      editorText: "",
+      entities: [],
+    },
     defaultInit: ({
       editorText = "",
       entities = [],

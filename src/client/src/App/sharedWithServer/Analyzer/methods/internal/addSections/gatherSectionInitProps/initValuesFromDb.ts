@@ -34,12 +34,12 @@ export function initValuesFromDb(
   sectionName: SectionName,
   dbVarbs: DbVarbs
 ): VarbValues {
-  const varbsMeta = sectionMetas.get(sectionName).varbMetas;
+  const { varbMetas } = sectionMetas.section(sectionName).core;
   const dbVarbEntries = Object.entries(dbVarbs);
 
   return dbVarbEntries.reduce((values, [varbName, dbValue]) => {
-    if (varbName in varbsMeta.getCore()) {
-      const varbMeta = varbsMeta.get(varbName);
+    if (varbName in varbMetas.getCore()) {
+      const varbMeta = varbMetas.get(varbName);
       const updateFnName = varbMeta.defaultUpdateFnName;
       values[varbName] = stateFromDbValue(dbValue, updateFnName);
     }

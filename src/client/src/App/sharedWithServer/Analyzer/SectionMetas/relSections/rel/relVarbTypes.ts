@@ -41,7 +41,7 @@ type ValueSpecificProps = {
   [Prop in ValueTypeName]: {
     updateFnName: ValueSchemas[Prop]["updateFnNames"][number];
     initValue: ValueTypes[Prop];
-    // dbInitValue: DbValueTypes[Prop];
+    dbInitValue: DbValueTypes[Prop];
   };
 } & UniqueTypeProps;
 export type RelVarbByType = {

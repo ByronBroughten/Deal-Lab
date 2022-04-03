@@ -59,7 +59,7 @@ export function sortTableRowIdsByColumn(
   colIdOrTitle: string | "title",
   { reverse = false }: SortByColumnOptions = {}
 ) {
-  const { rowSourceName } = this.sectionMeta(tableName);
+  const { rowSourceName } = this.meta.section(tableName).core;
   const rows = this.sectionArr(rowSourceName);
 
   const nextRows =
@@ -107,7 +107,7 @@ export function pushToRowIndexStore(
   let affectedInfos: FeVarbInfo[] = [];
   const allAffectedInfos: FeVarbInfo[] = [];
 
-  const { indexStoreName } = next.sectionMeta(feInfo.sectionName);
+  const { indexStoreName } = next.meta.section(feInfo.sectionName).core;
   const { feInfo: indexParentInfo } = next.parent(indexStoreName);
 
   // I must also update tableName.dbId

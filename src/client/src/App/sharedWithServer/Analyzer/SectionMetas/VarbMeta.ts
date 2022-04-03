@@ -91,6 +91,9 @@ export class VarbMeta {
   isVarbValueType(value: any): boolean {
     return valueMeta[this.type].is(value);
   }
+  get<PN extends keyof VarbMetaCore>(propName: PN) {
+    return this.core[propName];
+  }
   get raw() {
     return { ...this.core };
   }

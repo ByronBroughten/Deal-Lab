@@ -2,7 +2,6 @@ import Analyzer from "../../../../Analyzer";
 import { FeInfo, Inf } from "../../../SectionMetas/Info";
 import { SectionName } from "../../../SectionMetas/SectionName";
 import StateSection, { InitStateSectionProps } from "../../../StateSection";
-import { AddSectionProps } from "./addSectionsTypes";
 
 function insertInParentChildIds(
   next: Analyzer,
@@ -32,7 +31,7 @@ function pushSection<S extends SectionName>(
   analyzer: Analyzer,
   section: StateSection<S>
 ): Analyzer {
-  const { sectionName } = section.meta;
+  const sectionName = section.meta.get("sectionName");
   const nextSectionArr = [
     ...analyzer.sections[sectionName],
     section,

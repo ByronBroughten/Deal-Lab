@@ -37,7 +37,7 @@ function useIndexedEntries<S extends SectionName<"hasIndexStore">>(
 ): { dbId: string; title: string }[] {
   const { analyzer } = useAnalyzerContext();
 
-  const storeName = sectionMetas.get(sectionName).indexStoreName;
+  const storeName = sectionMetas.get(sectionName).get("indexStoreName");
   const feStoreParentName = sectionMetas.parentName(
     storeName
   ) as IndexParentName<S>;

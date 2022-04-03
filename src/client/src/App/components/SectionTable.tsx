@@ -25,7 +25,7 @@ export default function SectionTable({ tableName, title }: Props) {
   const table = analyzer.section(tableName);
   const sortedRowIds = table.value("rowIds", "stringArray");
 
-  const { rowSourceName } = analyzer.sectionMeta(tableName);
+  const rowSourceName = analyzer.sectionMeta(tableName).get("rowSourceName");
   const rows = sortedRowIds.map((dbId) =>
     analyzer.section(Inf.db(rowSourceName, dbId))
   );

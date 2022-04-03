@@ -39,7 +39,7 @@ function clientify(dbUser: DbUser): LoginUser {
       const tableSection = DbEnt.topSection(tableEntry, sectionName);
       const rowIds = tableSection.dbVarbs.rowIds as string[];
 
-      const { rowSourceName } = sectionMetas.get(sectionName);
+      const { rowSourceName } = sectionMetas.section(sectionName).core;
       const sourceIds = dbUser[rowSourceName].map(({ dbId }) => dbId);
 
       const nextRowIds = Arr.extract(rowIds, sourceIds);

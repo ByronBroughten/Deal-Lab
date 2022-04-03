@@ -55,9 +55,9 @@ function gatherInitPropsFromDbEntry<SN extends SectionName>(
     },
   });
 
-  const sectionMeta = analyzer.meta.get(sectionName);
+  const sectionMeta = analyzer.meta.section(sectionName);
   const { childDbIds } = dbSection;
-  for (const childName of sectionMeta.childSectionNames) {
+  for (const childName of sectionMeta.get("childSectionNames")) {
     if (childName in childDbIds) {
       for (const dbId of childDbIds[childName]) {
         const dbEntry: DbEntry = { dbId, dbSections };
@@ -93,9 +93,9 @@ function gatherInitPropsByDefault<S extends SectionName>(
     ),
     options: { values },
   });
-  for (const childName of sectionMeta.childSectionNames) {
-    const childMeta = sectionMetas.get(childName);
-    if (!childMeta.makeOneOnStartup) continue;
+  for (const childName of sectionMeta.get("childSectionNames")) {
+    const childMeta = sectionMetas.section(childName);
+    if (!childMeta.get("makeOneOnStartup")) continue;
 
     if ("initBunch" in childMeta) {
       // for (const values of childMeta.initBunch) {
@@ -139,7 +139,9 @@ export function gatherSectionInitProps<S extends SectionName>(
       dbEntry = saneInitialSections.get(sectionName);
     }
     if (initFromDefault && SectionNam.is(sectionName, "hasDefaultStore")) {
-      const storeName = analyzer.meta.get(sectionName).defaultStoreName;
+      const storeName = analyzer.meta
+        .section(sectionName)
+        .get("defaultStoreName");
       dbEntry = analyzer.dbEntry(storeName, {
         newMainSectionName: sectionName,
       });

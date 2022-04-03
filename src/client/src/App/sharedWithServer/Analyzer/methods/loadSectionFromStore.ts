@@ -25,7 +25,7 @@ export function setAsDefaultSectionArr(
   feInfo: FeInfo<"hasDefaultStore">
 ): Analyzer {
   const { sectionName } = feInfo;
-  const { defaultStoreName } = this.sectionMeta(sectionName);
+  const { defaultStoreName } = this.meta.section(sectionName).core;
 
   const dbEntry = this.dbEntry(feInfo, {
     newMainSectionName: defaultStoreName,

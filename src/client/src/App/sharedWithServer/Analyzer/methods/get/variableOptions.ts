@@ -27,7 +27,7 @@ function initStaticVarbOption(
     sectionName,
     varbName,
   });
-  const sectionMeta = sectionMetas.get(sectionName);
+  const sectionMeta = sectionMetas.section(sectionName);
 
   return {
     varbInfo: {
@@ -36,7 +36,7 @@ function initStaticVarbOption(
       id: "static",
       idType: "relative",
     },
-    collectionName: sectionMeta.displayName,
+    collectionName: sectionMeta.get("displayName"),
     displayName: varbMeta.displayName as string,
   };
 }

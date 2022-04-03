@@ -9,6 +9,9 @@ export function ObjectEntries<O extends object, T extends Full<O>>(
 ): Entries<T>[] {
   return Object.entries(obj) as any;
 }
+export function forSureEntries<O extends object>(obj: O): Entries<O> {
+  return Object.entries(obj) as any;
+}
 
 type NextEntries<O extends object> = { [K in keyof O]: [K, O[K]] }[keyof O][];
 export function NextObjEntries<O extends object>(obj: O): NextEntries<Full<O>> {
@@ -71,6 +74,7 @@ export const Obj = {
   keys: ObjectKeys,
   values: ObjectValues,
   entries: NextObjEntries,
+  forSureEntries,
   filterKeysForEntryShape<O extends object, M extends any>(
     obj: O,
     model: M
