@@ -50,11 +50,6 @@ export function replaceVarb<S extends SectionName>(
   });
 }
 
-// export function nextInitVarbs(feInfo: FeInfo, dbvarbs: DbVarbs): StateVarbs {
-//   const nextVarbs: StateVarbs = {};
-
-// }
-
 export function initVarbs(feInfo: FeInfo, values: VarbValues = {}): StateVarbs {
   const nextVarbs: StateVarbs = {};
   const { sectionName } = feInfo;
