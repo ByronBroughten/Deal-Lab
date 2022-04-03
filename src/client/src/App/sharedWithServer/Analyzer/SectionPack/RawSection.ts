@@ -1,11 +1,12 @@
 import { MergeUnionObjNonNullable } from "../../utils/types/mergeUnionObj";
-import { DbValue } from "../DbEntry";
+
 import {
   GeneralChildIdArrs,
   OneChildIdArrs,
   SelfOrDescendantName,
 } from "../SectionMetas/relNameArrs/ChildTypes";
 import { ContextName } from "../SectionMetas/relSections/baseSections";
+import { DbValue } from "../SectionMetas/relSections/rel/valueMetaTypes";
 import { SectionName } from "../SectionMetas/SectionName";
 
 export type DbVarbs = {
@@ -15,6 +16,9 @@ export type GeneralRawSection = {
   dbId: string;
   dbVarbs: DbVarbs;
   childDbIds: GeneralChildIdArrs;
+};
+export type GeneralRawSections = {
+  [key: string]: GeneralRawSection[];
 };
 export type OneRawSection<
   SN extends SectionName,

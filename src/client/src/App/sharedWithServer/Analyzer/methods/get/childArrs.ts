@@ -5,6 +5,7 @@ import {
   ChildIdArrs,
   ChildName,
   DescendantIds,
+  SelfOrDescendantIds,
 } from "../../SectionMetas/relNameArrs/ChildTypes";
 import { SectionFinder } from "../../SectionMetas/relSections/baseSectionTypes";
 import { FeNameInfo } from "../../SectionMetas/relSections/rel/relVarbInfoTypes";
@@ -71,4 +72,15 @@ export function descendantFeIds<SN extends SectionName>(
   }
 
   return descendantIds as any;
+}
+export function selfAndDescendantFeIds<SN extends SectionName>(
+  this: Analyzer,
+  finder: SectionFinder<SN>
+): SelfOrDescendantIds<SN, "fe"> {
+  const { feId, sectionName } = this.section(finder);
+  const descendantIds = this.descendantFeIds(finder);
+  return {
+    [sectionName]: [feId] as string[],
+    ...descendantIds,
+  } as SelfOrDescendantIds<SN, "fe">;
 }

@@ -19,6 +19,8 @@ import {
   childFeInfos,
   childIdx,
   initChildFeIds,
+  insertChildFeId,
+  pushChildFeId,
   removeChildFeId,
 } from "./StateSection/methods/childIds";
 import StateVarb from "./StateSection/StateVarb";
@@ -37,7 +39,10 @@ import {
   SectionNam,
   SectionName,
 } from "./SectionMetas/SectionName";
-import { ChildIdArrs } from "./SectionMetas/relNameArrs/ChildTypes";
+import {
+  ChildIdArrs,
+  OneChildIdArrs,
+} from "./SectionMetas/relNameArrs/ChildTypes";
 import {
   DefaultStoreName,
   IndexStoreName,
@@ -47,6 +52,7 @@ import {
   ParentName,
 } from "./SectionMetas/relNameArrs/ParentTypes";
 import { SimpleSectionName } from "./SectionMetas/relSections/baseSections";
+import { Id } from "./SectionMetas/relSections/baseSections/id";
 
 export type SectionSeed = Omit<VarbSeeds, "dbVarbs"> & {
   dbSectionInit?: DbSectionInit;
@@ -64,6 +70,16 @@ type ClientCore<S extends SectionName> = {
 
   // childFeIdArrs are initialized as empty; ids added as children are added
   childFeIdArrs: ChildIdArrs<S>;
+};
+
+export type NextStateSectionInitProps<SN extends SectionName> = {
+  sectionName: SN;
+  parentInfo: FeParentInfo<SN>;
+  feId?: string; // is this needed? No, not really.
+
+  childFeIds?: OneChildIdArrs<SN, "fe">; // empty
+  dbId?: string; // create new
+  dbVarbs?: DbVarbs; // empty
 };
 
 export type InitStateSectionProps<S extends SectionName> = Pick<
@@ -212,6 +228,24 @@ export default class StateSection<
     if (!(value instanceof StateSection)) return false;
     return SectionNam.is(value.sectionName, (sectionType ?? "all") as ST);
   }
+  static defaultInitProps<SN extends SectionName>(sectionName: SectionName) {
+    //
+    return {
+      feId: Id.make(),
+      dbId: Id.make(),
+      childFeIdArrs: this.initChildFeIds(sectionName),
+    };
+  }
+  static nextInit<SN extends SectionName>(
+    props: NextStateSectionInitProps<SN>
+  ) {
+    // sectionName: SN;
+    // feId?: string;
+    // childFeIds?: OneChildIdArrs<SN, "fe">;
+    // dbId?: string;
+    // dbVarbs?: DbVarbs;
+    // idx?: number;
+  }
   static init<S extends SectionName>({
     feId,
     sectionName,
@@ -234,6 +268,8 @@ export default class StateSection<
   allChildFeInfos = allChildFeInfos;
   childFeInfos = childFeInfos;
 
+  insertChildFeId = insertChildFeId;
+  pushChildFeId = pushChildFeId;
   static initChildFeIds = initChildFeIds;
   addChildFeId = addChildFeId;
   removeChildFeId = removeChildFeId;

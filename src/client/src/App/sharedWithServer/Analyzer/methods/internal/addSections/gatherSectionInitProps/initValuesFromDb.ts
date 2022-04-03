@@ -5,20 +5,17 @@ import {
   NumObj,
 } from "../../../../SectionMetas/relSections/baseSections/baseValues/NumObj";
 import { isNumObjUpdateFnName } from "../../../../SectionMetas/relSections/baseSections/baseValues/NumObj/updateFnNames";
-import { UpdateFnName } from "../../../../SectionMetas/relSections/rel/valueMetaTypes";
+import {
+  DbValue,
+  UpdateFnName,
+} from "../../../../SectionMetas/relSections/rel/valueMetaTypes";
 import { SectionName } from "../../../../SectionMetas/SectionName";
-import { DbValue, DbVarbs } from "../../../../DbEntry";
+import { DbVarbs } from "../../../../DbEntry";
 import { VarbValues } from "../../../../StateSection/methods/varbs";
 import { StateValue } from "../../../../StateSection/StateVarb/stateValue";
 
 function stateFromDbNumObj(dbValue: DbNumObj): NumObj {
-  return new NumObj({
-    ...dbValue,
-    // at the very least, editorText equivalent to a rational number
-    // must load into solvableText, or else nothing can solve
-    // That might not be the case anymore, though, now that solvableText and number
-    // are created at update time.
-  });
+  return new NumObj(dbValue);
 }
 
 function stateFromDbValue(
@@ -30,7 +27,7 @@ function stateFromDbValue(
     else {
       throw new Error("updateFnName should match dbValue type");
     }
-  } else return dbValue;
+  } else return dbValue as StateValue;
 }
 
 export function initValuesFromDb(

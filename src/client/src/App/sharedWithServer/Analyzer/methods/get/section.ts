@@ -11,7 +11,6 @@ import {
 } from "../../SectionMetas/relSections/rel/relVarbInfoTypes";
 import { NextSectionFinder, SectionName } from "../../SectionMetas/SectionName";
 import { Obj } from "../../../utils/Obj";
-import { SectionFinder } from "../../SectionMetas/relSections/baseSectionTypes";
 
 export function sectionNotFound({ sectionName, idType, id }: MultiSectionInfo) {
   return new Error(

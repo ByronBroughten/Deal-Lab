@@ -5,6 +5,7 @@ import {
 } from "./relVarbInfoTypes";
 import { NumObj } from "../baseSections/baseValues/NumObj";
 import {
+  DbValueTypes,
   UpdateFnName,
   ValueSchemas,
   ValueTypeName,
@@ -40,6 +41,7 @@ type ValueSpecificProps = {
   [Prop in ValueTypeName]: {
     updateFnName: ValueSchemas[Prop]["updateFnNames"][number];
     initValue: ValueTypes[Prop];
+    // dbInitValue: DbValueTypes[Prop];
   };
 } & UniqueTypeProps;
 export type RelVarbByType = {

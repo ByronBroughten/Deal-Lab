@@ -5,7 +5,7 @@ import {
   NameToNameWithSameChildren,
   SelfOrDescendantChildIdArr,
 } from "./SectionMetas/relNameArrs/ChildTypes";
-import { ParentFinder } from "./SectionMetas/relNameArrs/ParentTypes";
+import { FeParentInfo } from "./SectionMetas/relNameArrs/ParentTypes";
 import { Id } from "./SectionMetas/relSections/baseSections/id";
 import { SectionName } from "./SectionMetas/SectionName";
 import { RawSectionPack } from "./SectionPack";
@@ -21,9 +21,10 @@ import {
   SectionNodeMaker,
 } from "./SectionPackFe/FeSectionNode";
 
-type OrderedSectionNodeProps<SN extends SectionName> = {
-  parentFinder: ParentFinder<SN>;
+export type OrderedSectionNodeProps<SN extends SectionName> = {
+  parentInfo: FeParentInfo<SN>;
   feId?: string;
+  idx?: number;
 };
 
 type FeSectionPackCore<SN extends SectionName> = RawSectionPack<SN, "fe">;
@@ -110,12 +111,12 @@ export class FeSectionPack<SN extends SectionName> {
       childFeIds: feNode.childFeIds,
     } as FeSelfOrDescendantParentStub<SN>;
   }
-  makeHeadNodeMaker({ parentFinder, feId }: OrderedSectionNodeProps<SN>) {
+  makeHeadNodeMaker({ feId, ...rest }: OrderedSectionNodeProps<SN>) {
     return {
       feId: feId ?? Id.make(),
       dbId: this.dbId,
       sectionName: this.sectionName,
-      parentFinder,
+      ...rest,
     } as SectionNodeMaker<SN>;
   }
   makeNodeMakers({
@@ -131,7 +132,7 @@ export class FeSectionPack<SN extends SectionName> {
           dbId,
           feId: feIds[idx],
           sectionName,
-          parentFinder: feInfo,
+          parentInfo: feInfo,
         } as any as SectionNodeMaker<SN>);
       }
     }

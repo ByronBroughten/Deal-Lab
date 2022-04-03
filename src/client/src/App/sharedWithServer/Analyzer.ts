@@ -16,6 +16,7 @@ import {
   allChildDbIds,
   childSections,
   descendantFeIds,
+  selfAndDescendantFeIds,
 } from "./Analyzer/methods/get/childArrs";
 import {
   dbEntry,
@@ -165,9 +166,14 @@ import { AnalyzerReq, analyzerReq } from "./Analyzer/req";
 import { DropFirst } from "./utils/typescript";
 import { FeVarbInfo } from "./Analyzer/SectionMetas/relSections/rel/relVarbInfoTypes";
 import StateVarb from "./Analyzer/StateSection/StateVarb";
+import {
+  makeRawSection,
+  makeRawSectionPack,
+  makeRawSections,
+} from "./Analyzer/methods/get/sectionPack";
 
 export type StateSections = { [S in SectionName]: StateSection<S>[] };
-type RawSections = { [S in SectionName]: StateSectionCore<S>[] };
+type RawCore = { [S in SectionName]: StateSectionCore<S>[] };
 type VarbFullnamesToSolveFor = Set<string>;
 export type AnalyzerCore = {
   sections: StateSections;
@@ -243,7 +249,7 @@ export default class Analyzer {
     return next.solveAllActiveVarbs();
   }
 
-  get rawSections(): RawSections {
+  get rawSections(): RawCore {
     const sectionNames = ObjectKeys(this.sections);
     return sectionNames.reduce((rawCore, sectionName) => {
       const sectionArr = this.sections[sectionName];
@@ -252,7 +258,7 @@ export default class Analyzer {
       ) as StateSectionCore<typeof sectionName>[];
       rawCore[sectionName] = rawSectionArr as any;
       return rawCore;
-    }, {} as RawSections);
+    }, {} as RawCore);
   }
 
   stringifySections() {
@@ -428,6 +434,11 @@ export default class Analyzer {
   dbIndexEntry = dbIndexEntry;
   dbEntryArr = dbEntryArr;
   dbEntryArrs = dbEntryArrs;
+
+  makeRawSectionPack = makeRawSectionPack;
+  makeRawSection = makeRawSection;
+  makeRawSections = makeRawSections;
+  selfAndDescendantFeIds = selfAndDescendantFeIds;
 
   pushToIndexStore = pushToIndexStore;
   updateIndexStoreEntry = updateIndexStoreEntry;

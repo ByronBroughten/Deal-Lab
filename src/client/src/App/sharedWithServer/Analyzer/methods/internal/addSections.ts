@@ -1,6 +1,9 @@
 import Analyzer from "../../../Analyzer";
 import { FeInfo, Inf } from "../../SectionMetas/Info";
-import { ChildIdArrs } from "../../SectionMetas/relNameArrs/ChildTypes";
+import {
+  ChildIdArrs,
+  OneChildIdArrs,
+} from "../../SectionMetas/relNameArrs/ChildTypes";
 import { ParentFinder } from "../../SectionMetas/relNameArrs/ParentTypes";
 import { FeVarbInfo } from "../../SectionMetas/relSections/rel/relVarbInfoTypes";
 import { SectionName } from "../../SectionMetas/SectionName";
@@ -14,6 +17,7 @@ import {
   initOneSection,
   InitOneSectionProps,
 } from "./addSections/initOneSection";
+import { AddSectionProps } from "./addSections/addSectionsTypes";
 
 export type DbSectionInit = Omit<DbSection, "childDbIds">;
 function addOutEntitiesForSectionInVarbs(
@@ -87,16 +91,22 @@ export function addSections(
   return next;
 }
 
-export type AddSectionProps<SN extends SectionName> = {
-  sectionName: SN;
-  parentFinder: ParentFinder<SN, "fe">;
-  feId?: string;
-  childFeIds?: ChildIdArrs<SN, "fe">;
+// Ok, I don't need the analyzer to contain defaults
+// anymore, because I want to move away from that being
+// something that can be set.
 
-  dbId?: string;
-  dbVarbs?: DbVarbs;
+// I do want the possibility of sections being set using the hard-coded sane
+// defaults.
 
-  idx?: number;
-};
+// At initialization, I will create an array of sectionProps
+// and some of them will be derived from the default sections
 
-export function nextAddSections(analyzer: Analyzer) {}
+export function nextAddSections(
+  next: Analyzer,
+  parentFirstPropsList: AddSectionProps[] | AddSectionProps
+) {
+  if (!Array.isArray(parentFirstPropsList))
+    parentFirstPropsList = [parentFirstPropsList];
+  for (const props of parentFirstPropsList) {
+  }
+}

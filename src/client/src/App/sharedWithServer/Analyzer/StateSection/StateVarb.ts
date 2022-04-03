@@ -15,12 +15,13 @@ import {
 } from "../SectionMetas/relSections/rel/relVarbInfoTypes";
 import { DisplayName } from "../SectionMetas/relSections/rel/relVarbTypes";
 import {
+  DbValue,
   UpdateFnName,
   ValueTypes,
 } from "../SectionMetas/relSections/rel/valueMetaTypes";
 import { SectionName } from "../SectionMetas/SectionName";
 import { cloneValue, VarbMeta } from "../SectionMetas/VarbMeta";
-import { DbValue } from "../DbEntry";
+
 import { Inf } from "./../SectionMetas/Info";
 import {
   addInEntity,

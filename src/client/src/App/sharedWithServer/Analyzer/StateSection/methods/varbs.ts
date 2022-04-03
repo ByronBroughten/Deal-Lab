@@ -6,6 +6,7 @@ import { StateValue } from "../StateVarb/stateValue";
 import { MultiVarbInfo } from "../../SectionMetas/relSections/rel/relVarbInfoTypes";
 import { FeInfo, Inf } from "../../SectionMetas/Info";
 import { SectionName } from "../../SectionMetas/SectionName";
+import { DbVarbs } from "../../SectionPack/RawSection";
 
 export type StateVarbs = { [varbName: string]: StateVarb };
 export type VarbValues = { [varbName: string]: StateValue };
@@ -48,6 +49,11 @@ export function replaceVarb<S extends SectionName>(
     },
   });
 }
+
+// export function nextInitVarbs(feInfo: FeInfo, dbvarbs: DbVarbs): StateVarbs {
+//   const nextVarbs: StateVarbs = {};
+
+// }
 
 export function initVarbs(feInfo: FeInfo, values: VarbValues = {}): StateVarbs {
   const nextVarbs: StateVarbs = {};

@@ -61,6 +61,36 @@ export function childIdx<S extends SectionName>(
     throw new Error(`Section at ${sectionName}.${id} not in its parent.`);
   return idx;
 }
+function updateChildFeIdArr<SN extends SectionName>(
+  next: StateSection<SN>,
+  sectionName: SectionName,
+  nextIds: string[]
+): StateSection<SN> {
+  return next.update({
+    childFeIdArrs: {
+      ...next.core.childFeIdArrs,
+      [sectionName]: nextIds,
+    },
+  });
+}
+
+export function insertChildFeId<SN extends SectionName>(
+  this: StateSection<SN>,
+  { sectionName, id }: ChildFeInfo<SN>,
+  idx: number
+): StateSection<SN> {
+  let nextIds = [...this.childFeIds(sectionName)];
+  nextIds.splice(idx, 0, id);
+  return updateChildFeIdArr(this, sectionName, nextIds);
+}
+export function pushChildFeId<SN extends SectionName>(
+  this: StateSection<SN>,
+  { sectionName, id }: ChildFeInfo<SN>
+): StateSection<SN> {
+  let nextIds = [...this.childFeIds(sectionName), id];
+  return updateChildFeIdArr(this, sectionName, nextIds);
+}
+
 export function addChildFeId<S extends SectionName>(
   this: StateSection<S>,
   { sectionName, id }: ChildFeInfo<S>,
