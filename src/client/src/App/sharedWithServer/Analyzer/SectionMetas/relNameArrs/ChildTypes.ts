@@ -1,5 +1,5 @@
 import { MergeUnionObjNonNullable } from "../../../utils/types/mergeUnionObj";
-import { RemoveNotStrings, StrictSubType } from "../../../utils/typescript";
+import { RemoveNotStrings, StrictSubType } from "../../../utils/types";
 import StateSection from "../../StateSection";
 import { RelSections } from "../relSections";
 import { ContextName, SimpleSectionName } from "../relSections/baseSections";

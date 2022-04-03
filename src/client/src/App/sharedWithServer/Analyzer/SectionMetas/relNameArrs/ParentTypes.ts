@@ -4,7 +4,7 @@ import {
   NeversToSomething,
   RemoveNotStrings,
   SubType,
-} from "../../../utils/typescript";
+} from "../../../utils/types";
 import { relSections } from "../relSections";
 import {
   ContextName,

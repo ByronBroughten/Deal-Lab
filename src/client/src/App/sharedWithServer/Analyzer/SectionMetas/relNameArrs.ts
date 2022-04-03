@@ -1,5 +1,5 @@
 import { Obj, ObjectKeys } from "../../utils/Obj";
-import { SubType } from "../../utils/typescript";
+import { SubType } from "../../utils/types";
 import { RelSections, relSections } from "./relSections";
 import { BaseName, isBaseName } from "./relSections/baseSectionTypes";
 import Arr from "../../utils/Arr";

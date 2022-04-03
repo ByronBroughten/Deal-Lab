@@ -16,17 +16,6 @@ function pushToParentChildIds(next: Analyzer, feInfo: FeInfo<"hasParent">) {
   return next.replaceInSectionArr(nextParent);
 }
 
-function addToParentChildIds(
-  analyzer: Analyzer,
-  feInfo: FeInfo,
-  idx?: number
-): Analyzer {
-  if (!Inf.is.fe(feInfo, "hasParent")) return analyzer;
-
-  const parentSection = analyzer.parent(feInfo);
-  const nextParent = parentSection.addChildFeId(feInfo, idx);
-  return analyzer.replaceInSectionArr(nextParent);
-}
 function pushSection<S extends SectionName>(
   analyzer: Analyzer,
   section: StateSection<S>

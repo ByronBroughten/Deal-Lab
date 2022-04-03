@@ -163,7 +163,7 @@ import { Obj, ObjectKeys } from "./utils/Obj";
 import { Id } from "./Analyzer/SectionMetas/relSections/baseSections/id";
 import { newInEntity } from "./Analyzer/methods/get/inEntity";
 import { AnalyzerReq, analyzerReq } from "./Analyzer/req";
-import { DropFirst } from "./utils/typescript";
+import { DropFirst } from "./utils/types";
 import { FeVarbInfo } from "./Analyzer/SectionMetas/relSections/rel/relVarbInfoTypes";
 import StateVarb from "./Analyzer/StateSection/StateVarb";
 import {

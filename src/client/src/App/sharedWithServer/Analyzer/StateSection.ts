@@ -12,7 +12,6 @@ import {
 import { Inf } from "./SectionMetas/Info";
 import { OutUpdatePack } from "./SectionMetas/VarbMeta";
 import {
-  addChildFeId,
   allChildFeIds,
   allChildFeInfos,
   childFeIds,
@@ -78,9 +77,9 @@ export type NextStateSectionInitProps<SN extends SectionName> = {
   parentInfo: FeParentInfo<SN>;
   feId?: string; // is this needed? No, not really.
 
-  childFeIds?: OneChildIdArrs<SN, "fe">; // empty
+  childFeIds?: Partial<OneChildIdArrs<SN, "fe">>; // empty
   dbId?: string; // create new
-  dbVarbs?: DbVarbs; // empty
+  dbVarbs?: Partial<DbVarbs>; // empty
 };
 
 export type InitStateSectionProps<S extends SectionName> = Pick<
@@ -227,12 +226,29 @@ export default class StateSection<
     if (!(value instanceof StateSection)) return false;
     return SectionNam.is(value.sectionName, (sectionType ?? "all") as ST);
   }
-  static defaultInitProps<SN extends SectionName>(sectionName: SectionName) {
+  static defaultInitVarbs() {}
+  static defaultInitProps<SN extends SectionName>({
+    sectionName,
+    childFeIds = {},
+    dbVarbs = {},
+  }: NextStateSectionInitProps<SN>) {
+    // sectionName: SN;
+    // parentInfo: FeParentInfo<SN>;
+    // feId?: string; // is this needed? No, not really.
+
+    // childFeIds?: OneChildIdArrs<SN, "fe">; // empty
+    // dbId?: string; // create new
+    // dbVarbs?: DbVarbs; // empty
+
     //
     return {
       feId: Id.make(),
       dbId: Id.make(),
-      childFeIdArrs: this.initChildFeIds(sectionName),
+      childFeIdArrs: this.initChildFeIds(sectionName, childFeIds),
+      dbVarbs: {
+        ...sectionMetas.get(sectionName).defaultDbVarbs(),
+        ...dbVarbs,
+      },
     };
   }
   static nextInit<SN extends SectionName>(
@@ -270,7 +286,6 @@ export default class StateSection<
   insertChildFeId = insertChildFeId;
   pushChildFeId = pushChildFeId;
   static initChildFeIds = initChildFeIds;
-  addChildFeId = addChildFeId;
   removeChildFeId = removeChildFeId;
   childIdx = childIdx;
 

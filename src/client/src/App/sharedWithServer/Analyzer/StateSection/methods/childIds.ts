@@ -90,23 +90,6 @@ export function pushChildFeId<SN extends SectionName>(
   let nextIds = [...this.childFeIds(sectionName), id];
   return updateChildFeIdArr(this, sectionName, nextIds);
 }
-
-export function addChildFeId<S extends SectionName>(
-  this: StateSection<S>,
-  { sectionName, id }: ChildFeInfo<S>,
-  idx?: number
-) {
-  let nextIds = [...this.childFeIds(sectionName)];
-  if (idx) nextIds.splice(idx, 0, id);
-  else nextIds.push(id);
-
-  return this.update({
-    childFeIdArrs: {
-      ...this.core.childFeIdArrs,
-      [sectionName]: nextIds,
-    },
-  });
-}
 export function removeChildFeId<S extends SectionName>(
   this: StateSection<S>,
   { sectionName, id }: ChildFeInfo<S>
@@ -123,12 +106,18 @@ export function removeChildFeId<S extends SectionName>(
   });
 }
 
-export function initChildFeIds<S extends SectionName>(sectionName: S) {
-  const childIds: Partial<ChildIdArrs<S>> = {};
-  const meta = sectionMetas.section(sectionName);
-  const childNames = meta.get("childSectionNames");
-  for (const childName of childNames) {
-    childIds[childName as keyof ChildIdArrs<S>] = [];
-  }
-  return childIds as ChildIdArrs<S>;
+export function initChildFeIds<S extends SectionName>(
+  sectionName: S,
+  proposed: Partial<ChildIdArrs<S>> = {}
+) {
+  const childNames = sectionMetas
+    .section(sectionName)
+    .get("childSectionNames") as ChildName<SectionName>[];
+  return childNames.reduce((childIdArrs, childName) => {
+    childIdArrs[childName] =
+      childName in proposed
+        ? (proposed as ChildIdArrs<SectionName>)[childName]
+        : [];
+    return childIdArrs;
+  }, {} as ChildIdArrs<SectionName>) as ChildIdArrs<S>;
 }

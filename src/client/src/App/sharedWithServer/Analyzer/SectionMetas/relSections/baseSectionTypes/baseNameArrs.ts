@@ -8,7 +8,7 @@ import {
 import Arr from "../../../../utils/Arr";
 import { switchName, SwitchName } from "../baseSections/baseSwitchNames";
 import { Obj } from "../../../../utils/Obj";
-import { NeversToNull, SubType } from "../../../../utils/typescript";
+import { NeversToNull, SubType } from "../../../../utils/types";
 import { ToArrObj } from "../../../../utils/types/objectTypes";
 import { base } from "../baseSections/base";
 import { GeneralBaseSection } from "../baseSections/baseSection";
@@ -232,23 +232,12 @@ function makeBaseNameArrsForContext<SC extends ContextName>(
     },
   };
 }
-class BaseNameArrsForContext<SC extends ContextName> {
-  call(sectionContext: SC) {
-    return makeBaseNameArrsForContext<SC>(sectionContext);
-  }
-}
-type NextBaseNameArrs = {
-  [SC in ContextName]: ReturnType<BaseNameArrsForContext<SC>["call"]>;
-};
 
-function makeBaseNameArrs(): NextBaseNameArrs {
-  const partial = sectionContext.makeBlankContextObj();
-  for (const contextName of sectionContext.names) {
-    const nameArrs: NextBaseNameArrs[typeof contextName] =
-      makeBaseNameArrsForContext(contextName);
-    partial[contextName] = nameArrs;
-  }
-  return partial;
+function makeBaseNameArrs() {
+  return sectionContext.typeCheckContextObj({
+    fe: makeBaseNameArrsForContext("fe"),
+    db: makeBaseNameArrsForContext("db"),
+  });
 }
 
 type GeneralBaseNameArrs = {

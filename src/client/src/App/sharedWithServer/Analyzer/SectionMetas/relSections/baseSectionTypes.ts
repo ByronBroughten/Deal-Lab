@@ -1,4 +1,4 @@
-import { SubType } from "../../../utils/typescript";
+import { SubType } from "../../../utils/types";
 import {
   BaseSections,
   baseSections,

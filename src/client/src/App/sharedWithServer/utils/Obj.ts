@@ -1,7 +1,6 @@
 import { isEqual } from "lodash";
-import { boolean } from "mathjs";
 import { merge, spread } from "./Obj/merge";
-import { Full, SubType } from "./typescript";
+import { Full, SubType } from "./types";
 
 type Entries<T> = { [K in keyof T]: [K, T[K]] }[keyof T];
 export function ObjectEntries<O extends object, T extends Full<O>>(
