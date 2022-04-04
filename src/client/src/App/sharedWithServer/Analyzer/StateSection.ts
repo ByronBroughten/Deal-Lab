@@ -1,4 +1,5 @@
 import { cloneDeep } from "lodash";
+import { StrictPartial, StrictPick } from "../utils/types";
 import { DbVarbs } from "./DbEntry";
 import { sectionMetas } from "./SectionMetas";
 import { Inf } from "./SectionMetas/Info";
@@ -42,23 +43,22 @@ import StateVarb from "./StateSection/StateVarb";
 import { OutEntity } from "./StateSection/StateVarb/entities";
 
 export type NextStateSectionCore<SN extends SectionName> = {
+  sectionName: SN;
+  parentInfo: FeParentInfo<SN>;
+
   feId: string;
-  parentInfo: FeParentInfo<SN>;
-  sectionName: SN;
   dbId: string;
-  varbs: StateVarbs;
   childFeIds: OneChildIdArrs<SN, "fe">;
+  varbs: StateVarbs;
 };
-
-export type NextStateSectionInitProps<SN extends SectionName> = {
-  sectionName: SN;
-  parentInfo: FeParentInfo<SN>;
-  feId?: string;
-
-  childFeIds?: Partial<OneChildIdArrs<SN, "fe">>; // empty
-  dbId?: string; // create new
-  dbVarbs?: Partial<DbVarbs>; // empty
-};
+export type NextStateSectionInitProps<SN extends SectionName> = StrictPick<
+  NextStateSectionCore<SN>,
+  "sectionName" | "parentInfo"
+> &
+  StrictPartial<NextStateSectionCore<SN>, "feId" | "dbId"> & {
+    dbVarbs?: Partial<DbVarbs>;
+    childFeIds: Partial<OneChildIdArrs<SN, "fe">>;
+  };
 
 export type StringDisplayNames = { [varbName: string]: string };
 
