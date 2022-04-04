@@ -1,6 +1,21 @@
 import { AddSectionProps } from "./addSections/addSectionsTypes";
 
-export function addSection(props: AddSectionProps) {
+// sectionName: SN;
+// parentFinder: ParentFinder<SN>;
+// feId?: string;
+// childFeIds?: OneChildIdArrs<SN, "fe">;
+// dbId?: string;
+// dbVarbs?: DbVarbs;
+// idx?: number;
+
+export function addSectionDefault(props: AddSectionProps) {
+  const addSectionsProps: AddSectionProps[] = [];
+  addSectionsProps.push(props);
+
+  // For now I will check for makeOneOnStartup in the children
+  // And I will default to using the defaultSections
+  // when they are available.
+
   // I created a sectionPack
   // it's pretty much empty
   // The section being added shouldn't be empty, though.
