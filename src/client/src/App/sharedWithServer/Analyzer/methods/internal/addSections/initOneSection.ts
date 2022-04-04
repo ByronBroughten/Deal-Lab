@@ -1,7 +1,8 @@
 import Analyzer from "../../../../Analyzer";
 import { FeInfo, Inf } from "../../../SectionMetas/Info";
 import { SectionName } from "../../../SectionMetas/SectionName";
-import StateSection, { InitStateSectionProps } from "../../../StateSection";
+import StateSection from "../../../StateSection";
+import { AddSectionProps } from "./addSectionsTypes";
 
 function insertInParentChildIds(
   next: Analyzer,
@@ -28,28 +29,17 @@ function pushSection<S extends SectionName>(
   return analyzer.updateSectionArr(sectionName, nextSectionArr);
 }
 
-export type InitOneSectionProps<S extends SectionName = SectionName> =
-  InitStateSectionProps<S> & {
-    idx?: number;
-  };
-export function initOneSection<S extends SectionName>(
+export function initOneSection(
   next: Analyzer,
-  { idx, ...props }: InitOneSectionProps<S>
+  { idx, ...props }: AddSectionProps
 ): Analyzer {
-  next = pushSection(next, StateSection.init(props));
-  const { feInfo } = next.lastSection(props.sectionName);
+  const newSection = StateSection.init(props);
+  next = pushSection(next, newSection);
 
-  if (Inf.is.fe(feInfo, "hasParent")) {
+  if (Inf.is.fe(newSection.feInfo, "hasParent")) {
     if (typeof idx === "number")
-      next = insertInParentChildIds(next, feInfo, idx);
-    else next = pushToParentChildIds(next, feInfo);
+      next = insertInParentChildIds(next, newSection.feInfo, idx);
+    else next = pushToParentChildIds(next, newSection.feInfo);
   }
   return next;
 }
-
-// export function nextInitOneSection<S extends SectionName>(
-//   next: Analyzer,
-//   { idx, ...props }: AddSectionProps
-// ): Analyzer {
-//   const newSection = StateSection.
-// }
