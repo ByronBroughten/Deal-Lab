@@ -19,20 +19,20 @@ export function findInEntity(
 }
 export function addInEntity(this: StateVarb, entity: InEntity): StateVarb {
   const value = this.value("numObj");
-  return this.updateProps({
+  return this.update({
     value: value.addEntity(entity),
   });
 }
 export function removeInEntity(this: StateVarb, entityId: string): StateVarb {
   const value = this.value("numObj");
-  return this.updateProps({
+  return this.update({
     value: value.removeEntity(entityId),
   });
 }
 
 export function addOutEntity(this: StateVarb, entity: OutEntity): StateVarb {
   if (!Ent.entitiesHas(this.outEntities, entity)) {
-    return this.updateProps({
+    return this.update({
       // the order is important.
       outEntities: [...this.outEntities, entity],
     });
@@ -43,13 +43,13 @@ export function removeOutEntity(
   outEntity: OutEntity
 ): StateVarb {
   const nextOutEntities = Arr.rmLikeObjClone(this.outEntities, outEntity);
-  return this.updateProps({
+  return this.update({
     outEntities: nextOutEntities,
   });
 }
 export function setInEntities(this: StateVarb, entities: InEntities) {
   const value = this.value("numObj");
-  return this.updateProps({
+  return this.update({
     value: value.updateCore({ entities }),
   });
 }

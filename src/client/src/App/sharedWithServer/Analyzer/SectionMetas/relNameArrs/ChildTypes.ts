@@ -1,5 +1,5 @@
-import { MergeUnionObjNonNullable } from "../../../utils/types/mergeUnionObj";
 import { RemoveNotStrings, StrictSubType } from "../../../utils/types";
+import { MergeUnionObjNonNullable } from "../../../utils/types/mergeUnionObj";
 import StateSection from "../../StateSection";
 import { RelSections } from "../relSections";
 import { ContextName, SimpleSectionName } from "../relSections/baseSections";
@@ -8,7 +8,7 @@ import { FeNameInfo } from "../relSections/rel/relVarbInfoTypes";
 type ChildNameArr<
   CN extends ContextName,
   SN extends SimpleSectionName<CN>
-> = RelSections[CN][SN]["childSectionNames" & keyof RelSections[CN][SN]];
+> = RelSections[CN][SN]["childNames" & keyof RelSections[CN][SN]];
 
 type SectionToChildrenOrNever<CN extends ContextName> = {
   [SN in SimpleSectionName]: ChildNameArr<CN, SN>[number &

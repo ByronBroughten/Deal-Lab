@@ -1,6 +1,10 @@
 import { isEqual } from "lodash";
 
 export const Arr = {
+  unionOrArrToArr<T>(value: T | T[]): T[] {
+    if (Array.isArray(value)) return value;
+    else return [value];
+  },
   rmFirstValueMutate(arr: any[], value: any): void {
     const index = arr.indexOf(value);
     arr.splice(index, 1);

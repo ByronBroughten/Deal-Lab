@@ -1,7 +1,7 @@
-import { RelVarbs } from "./rel/relVarbs";
+import { ContextName } from "./baseSections";
 import { rel } from "./rel";
 import { relSection } from "./rel/relSection";
-import { ContextName } from "./baseSections";
+import { RelVarbs } from "./rel/relVarbs";
 
 const analysisRelVarbs: RelVarbs<ContextName, "analysis"> = {
   title: rel.varb.string(),
@@ -15,7 +15,7 @@ export const relAnalysisStuff = {
     { ...analysisRelVarbs },
     {
       makeOneOnStartup: true,
-      childSectionNames: ["output"] as const,
+      childNames: ["output"] as const,
       indexStoreName: "analysisIndex",
       defaultStoreName: "analysisDefault",
     }
@@ -28,7 +28,7 @@ export const relAnalysisStuff = {
     { ...analysisRelVarbs },
     {
       makeOneOnStartup: true,
-      childSectionNames: ["output"] as const,
+      childNames: ["output"] as const,
     }
   ),
   ...relSection.base("both", "output", "Output", rel.varbs.varbInfo()),

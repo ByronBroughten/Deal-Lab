@@ -1,5 +1,6 @@
 import { extend, omit } from "lodash";
 import { Obj } from "../utils/Obj";
+import { RawSectionPack } from "./RawSectionPack";
 import { Inf } from "./SectionMetas/Info";
 import {
   NameToNameWithSameChildren,
@@ -8,7 +9,6 @@ import {
 import { FeParentInfo } from "./SectionMetas/relNameArrs/ParentTypes";
 import { Id } from "./SectionMetas/relSections/baseSections/id";
 import { SectionName } from "./SectionMetas/SectionName";
-import { RawSectionPack } from "./SectionPack";
 import {
   GeneralRawSection,
   RawSection,
@@ -141,16 +141,19 @@ export class FeSectionPack<SN extends SectionName> {
 
   makeOrderedSectionNodes(props: OrderedSectionNodeProps<SN>) {
     const orderedSectionNodes: FeSelfOrDescendantNode<SN>[] = [];
-    const nodeMakers: SectionNodeMaker<SN>[] = [];
-    nodeMakers.push(this.makeHeadNodeMaker(props));
+    const queue: SectionNodeMaker<SN>[] = [];
+    queue.push(this.makeHeadNodeMaker(props));
 
-    while (nodeMakers.length > 0) {
-      for (const nodeMaker of nodeMakers) {
+    while (queue.length > 0) {
+      const queueLength = queue.length;
+      for (let i = 0; i < queueLength; i++) {
+        const nodeMaker = queue.shift() as SectionNodeMaker<SN>;
+
         const feNode = this.makeFeNode(nodeMaker);
         orderedSectionNodes.push(feNode);
 
         const parentStub = this.makeParentStub(feNode);
-        nodeMakers.push(...this.makeNodeMakers(parentStub));
+        queue.push(...this.makeNodeMakers(parentStub));
       }
     }
     return orderedSectionNodes;

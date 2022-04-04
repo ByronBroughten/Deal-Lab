@@ -1,23 +1,23 @@
 import { extend } from "lodash";
-import { BaseName } from "../baseSectionTypes";
-import { relVarb } from "./relVarb";
-import { GeneralRelVarbs, RelVarbs, relVarbs } from "./relVarbs";
 import {
+  AnySectionName,
   BaseSections,
   baseSections,
-  ExtractSectionContext,
   ContextName,
+  ExtractSectionContext,
   extractSectionContext,
   SectionContextOrBoth,
   SimpleSectionName,
-  AnySectionName,
 } from "../baseSections";
-import { Merge } from "./../../../../utils/Obj/merge";
+import { BaseName } from "../baseSectionTypes";
 import { Obj } from "./../../../../utils/Obj";
+import { Merge } from "./../../../../utils/Obj/merge";
+import { relVarb } from "./relVarb";
+import { GeneralRelVarbs, RelVarbs, relVarbs } from "./relVarbs";
 
 export type GeneralRelSection = {
   relVarbs: GeneralRelVarbs;
-  childSectionNames: readonly AnySectionName[];
+  childNames: readonly AnySectionName[];
 
   displayName: string;
   rowSourceName: BaseName<"rowIndex", "fe"> | null;
@@ -31,7 +31,7 @@ type FullOptions<
   GeneralRelSection,
   {
     relVarbs: RelVarbs<SC, SN>;
-    childSectionNames: readonly SimpleSectionName<SC>[];
+    childNames: readonly SimpleSectionName<SC>[];
   }
 >;
 
@@ -58,7 +58,7 @@ type DefaultRelSection<
   sectionName: SN;
   displayName: D;
   relVarbs: RVS;
-  childSectionNames: [];
+  childNames: [];
   rowSourceName: null;
   indexStoreName: null;
   defaultStoreName: null;
@@ -89,7 +89,7 @@ export const relSection = {
       sectionName,
       displayName,
       relVarbs,
-      childSectionNames: [],
+      childNames: [],
       rowSourceName: null,
       indexStoreName: null,
       defaultStoreName: null,
@@ -131,7 +131,7 @@ export const relSection = {
       relVarbs.singleTimeList(sectionName),
       {
         ...options,
-        childSectionNames: ["singleTimeItem"] as const,
+        childNames: ["singleTimeItem"] as const,
         indexStoreName: "userSingleList",
       } as const
     );
@@ -147,7 +147,7 @@ export const relSection = {
       displayName,
       relVarbs.ongoingList(sectionName),
       extend(options, {
-        childSectionNames: ["ongoingItem"] as const,
+        childNames: ["ongoingItem"] as const,
         indexStoreName: "userOngoingList",
       } as const)
     );
@@ -165,7 +165,7 @@ export const relSection = {
         compareToggle: relVarb.type("boolean"),
       } as RelVarbs<"fe", S>,
       {
-        childSectionNames: ["cell"] as const,
+        childNames: ["cell"] as const,
       }
     );
   },
@@ -185,7 +185,7 @@ export const relSection = {
       {
         rowSourceName,
         parent: "main",
-        childSectionNames: ["column"] as const,
+        childNames: ["column"] as const,
       }
     );
   },

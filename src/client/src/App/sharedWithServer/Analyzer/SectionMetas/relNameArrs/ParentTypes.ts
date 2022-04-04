@@ -12,7 +12,6 @@ import {
   SimpleSectionName,
 } from "../relSections/baseSections";
 import { BaseName, SectionFinder } from "../relSections/baseSectionTypes";
-import { GeneralRelSection } from "../relSections/rel/relSection";
 import { FeSectionInfoBase } from "../relSections/rel/relVarbInfoTypes";
 import { ChildOrNull } from "./ChildTypes";
 
@@ -69,7 +68,7 @@ export function makeSectionToParentArrs(): ContextSectionToParentArrs {
 
     for (const sectionName of Obj.keys(relSections[contextName])) {
       for (const childName of relSections[contextName][sectionName]
-        .childSectionNames) {
+        .childNames) {
         sectionToParentArrs[childName as keyof typeof sectionToParentArrs].push(
           sectionName
         );

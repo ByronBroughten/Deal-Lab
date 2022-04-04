@@ -1,32 +1,61 @@
+import { RawSectionPack } from "./RawSectionPack";
+import { sectionMetas } from "./SectionMetas";
+import { OneChildIdArrs } from "./SectionMetas/relNameArrs/ChildTypes";
 import { ContextName } from "./SectionMetas/relSections/baseSections";
-import { SectionContextProps, SectionName } from "./SectionMetas/SectionName";
-import { GeneralRawSections, RawSections } from "./SectionPack/RawSection";
+import { Id } from "./SectionMetas/relSections/baseSections/id";
+import { SectionName } from "./SectionMetas/SectionName";
+import { DbVarbs, RawSections } from "./SectionPack/RawSection";
 
-export type GeneralSectionPack = {
-  sectionName: SectionName;
-  contextName: ContextName;
-  dbId: string;
-  rawSections: GeneralRawSections;
-};
-
-export type RawSectionPack<SN extends SectionName, CN extends ContextName> = {
-  sectionName: SN;
-  dbId: string;
-  contextName: CN;
-  rawSections: RawSections<SN, CN>;
-};
-
-export type DbSectionPack<
+export type OneHeadSectionNode<
   SN extends SectionName,
   CN extends ContextName
-> = Omit<RawSectionPack<SN, CN>, keyof SectionContextProps<SN, CN>>;
+> = {
+  sectionName: SN;
+  contextName: CN;
+  dbId?: string;
+  childDbIds?: Partial<OneChildIdArrs<SN, CN>>;
+  dbVarbs?: Partial<DbVarbs>;
+};
 
-function _testRawSectionPack(
-  feRaw: RawSectionPack<"propertyIndex", "fe">,
-  dbRaw: RawSectionPack<"propertyIndex", "db">
-) {
-  const _test1 = feRaw.rawSections.cell;
-  // @ts-expect-error
-  const _test2 = feRaw.rawSections.unit;
-  const _test3 = dbRaw.rawSections.unit;
+export class SectionPack<SN extends SectionName, CN extends ContextName> {
+  constructor(readonly core: RawSectionPack<SN, CN>) {}
+  static init<SN extends SectionName, CN extends ContextName>({
+    sectionName,
+    contextName,
+    childDbIds,
+    dbVarbs,
+    dbId = Id.make(),
+  }: OneHeadSectionNode<SN, CN>): RawSectionPack<SN, CN> {
+    const sectionMeta = sectionMetas.section(sectionName, contextName);
+    return {
+      sectionName,
+      contextName,
+      dbId,
+      rawSections: {
+        ...SectionPack.emptyRawSections(sectionName, contextName),
+        [sectionName]: {
+          dbId,
+          childDbIds: {
+            ...sectionMeta.emptyChildIds(),
+            ...childDbIds,
+          },
+          dbVarbs: {
+            ...sectionMeta.defaultDbVarbs(),
+            ...dbVarbs,
+          },
+        },
+      },
+    };
+  }
+  static emptyRawSections<SN extends SectionName, CN extends ContextName>(
+    sectionName: SN,
+    contextName: CN
+  ): RawSections<SN, CN> {
+    return sectionMetas
+      .selfAndDescendantNames(sectionName, contextName)
+      .reduce((rawSections, name) => {
+        rawSections[name] = [];
+        return rawSections;
+      }, {} as RawSections<SN, CN>);
+  }
 }

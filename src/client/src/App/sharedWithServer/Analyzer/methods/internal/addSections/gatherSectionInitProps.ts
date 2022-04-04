@@ -1,5 +1,6 @@
 import Analyzer from "../../../../Analyzer";
 import Arr from "../../../../utils/Arr";
+import { DbEntry, DbSection } from "../../../DbEntry";
 import { sectionMetas } from "../../../SectionMetas";
 import { Inf } from "../../../SectionMetas/Info";
 import {
@@ -7,7 +8,6 @@ import {
   ParentFinder,
 } from "../../../SectionMetas/relNameArrs/ParentTypes";
 import { SectionNam, SectionName } from "../../../SectionMetas/SectionName";
-import { DbEntry, DbSection } from "../../../DbEntry";
 import { VarbValues } from "../../../StateSection/methods/varbs";
 import { initValuesFromDb } from "./gatherSectionInitProps/initValuesFromDb";
 import { saneInitialSections } from "./gatherSectionInitProps/saneInitialSections";
@@ -57,7 +57,7 @@ function gatherInitPropsFromDbEntry<SN extends SectionName>(
 
   const sectionMeta = analyzer.meta.section(sectionName);
   const { childDbIds } = dbSection;
-  for (const childName of sectionMeta.get("childSectionNames")) {
+  for (const childName of sectionMeta.get("childNames")) {
     if (childName in childDbIds) {
       for (const dbId of childDbIds[childName]) {
         const dbEntry: DbEntry = { dbId, dbSections };
@@ -93,7 +93,7 @@ function gatherInitPropsByDefault<S extends SectionName>(
     ),
     options: { values },
   });
-  for (const childName of sectionMeta.get("childSectionNames")) {
+  for (const childName of sectionMeta.get("childNames")) {
     const childMeta = sectionMetas.section(childName);
     if (!childMeta.get("makeOneOnStartup")) continue;
 

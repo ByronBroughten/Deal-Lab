@@ -2,12 +2,23 @@ import { z } from "zod";
 import { reqMonNumber, reqMonString } from "../../../../utils/mongoose";
 import { numObjUnits } from "../../../methods/solveVarbs/solveAndUpdateValue/updateNumericObjCalc";
 import { ValueName } from "./baseVarb";
-import { mDbNumObj, NumObj, NumObjCore, zDbNumObj } from "./baseValues/NumObj";
+import {
+  DbNumObj,
+  isDbNumObj,
+  mDbNumObj,
+  NumObj,
+  NumObjCore,
+  zDbNumObj,
+} from "./baseValues/NumObj";
 import { numObjUpdateFnNames } from "./baseValues/NumObj/updateFnNames";
 
 export const valueMeta = {
   number: {
     is: (v: any): v is number => typeof v === "number",
+    get isRaw() {
+      return this.is;
+    },
+    rawToState: (v: number) => v,
     updateFnNames: ["number"],
     dbInitValue: 0,
     defaultInit: () => 0,
@@ -17,6 +28,10 @@ export const valueMeta = {
   },
   boolean: {
     is: (v: any): v is boolean => typeof v === "boolean",
+    get isRaw() {
+      return this.is;
+    },
+    rawToState: (v: boolean) => v,
     updateFnNames: ["boolean"],
     dbInitValue: true,
     defaultInit: () => true,
@@ -26,6 +41,10 @@ export const valueMeta = {
   },
   string: {
     is: (v: any): v is string => typeof v === "string",
+    rawToState: (v: string) => v,
+    get isRaw() {
+      return this.is;
+    },
     updateFnNames: ["string", "loadedString"],
     dbInitValue: "",
     defaultInit: () => "",
@@ -36,6 +55,10 @@ export const valueMeta = {
   stringArray: {
     is: (v: any): v is string[] =>
       Array.isArray(v) && v.every((i: any) => typeof i === "string"),
+    get isRaw() {
+      return this.is;
+    },
+    rawToState: (v: string[]) => v,
     updateFnNames: ["stringArray"],
     dbInitValue: [] as string[],
     defaultInit: () => [] as string[],
@@ -44,7 +67,11 @@ export const valueMeta = {
     mon: [reqMonString],
   },
   numObj: {
-    is: (value: any) => value instanceof NumObj,
+    is: (v: any) => v instanceof NumObj,
+    get isRaw() {
+      return isDbNumObj;
+    },
+    rawToState: (v: DbNumObj) => new NumObj(v),
     updateFnNames: numObjUpdateFnNames,
     dbInitValue: {
       editorText: "",

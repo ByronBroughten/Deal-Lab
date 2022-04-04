@@ -1,22 +1,12 @@
-import { sectionMetas } from "../../SectionMetas";
-import { DbSectionInit } from "../../methods/internal/addSections";
+import { Inf } from "../../SectionMetas/Info";
+import { MultiVarbInfo } from "../../SectionMetas/relSections/rel/relVarbInfoTypes";
+import { SectionName } from "../../SectionMetas/SectionName";
 import StateSection from "../../StateSection";
 import StateVarb from "../StateVarb";
 import { StateValue } from "../StateVarb/stateValue";
-import { MultiVarbInfo } from "../../SectionMetas/relSections/rel/relVarbInfoTypes";
-import { FeInfo, Inf } from "../../SectionMetas/Info";
-import { SectionName } from "../../SectionMetas/SectionName";
-import { DbVarbs } from "../../SectionPack/RawSection";
 
 export type StateVarbs = { [varbName: string]: StateVarb };
 export type VarbValues = { [varbName: string]: StateValue };
-
-export type VarbSeeds = {
-  dbVarbs?: DbSectionInit["dbVarbs"];
-  values?: VarbValues;
-  varbs?: StateVarbs;
-};
-
 export function varbNotFound({
   varbName,
   sectionName,
@@ -48,21 +38,4 @@ export function replaceVarb<S extends SectionName>(
       [varbName]: nextVarb,
     },
   });
-}
-
-export function initVarbs(feInfo: FeInfo, values: VarbValues = {}): StateVarbs {
-  const nextVarbs: StateVarbs = {};
-  const { sectionName } = feInfo;
-  const varbMetas = sectionMetas.varbMetas(sectionName);
-  for (const [varbName, varbMeta] of Object.entries(varbMetas.getCore())) {
-    const proposedValue = values[varbName];
-    const isValidProposal =
-      varbName in values && varbMeta.isVarbValueType(proposedValue);
-    const value = isValidProposal ? proposedValue : varbMeta.initValue;
-    nextVarbs[varbName] = StateVarb.init(Inf.feVarb(varbName, feInfo), {
-      value,
-    });
-  }
-
-  return nextVarbs;
 }

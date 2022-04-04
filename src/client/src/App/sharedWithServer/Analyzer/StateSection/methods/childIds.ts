@@ -15,9 +15,9 @@ export function childFeIds<S extends SectionName>(
   this: StateSection<S>,
   childName: ChildName<S>
 ): string[] {
-  const { childFeIdArrs } = this.core;
-  if (childName in childFeIdArrs) {
-    return childFeIdArrs[childName];
+  const { childFeIds } = this.core;
+  if (childName in childFeIds) {
+    return childFeIds[childName];
   } else
     throw new Error(
       `${childName} is not in section of sectionName ${this.sectionName}`
@@ -27,7 +27,7 @@ export function childFeIds<S extends SectionName>(
 export function allChildFeIds<S extends SectionName>(
   this: StateSection<S>
 ): ChildIdArrs<S> {
-  return cloneDeep(this.core.childFeIdArrs);
+  return cloneDeep(this.core.childFeIds);
 }
 
 export function allChildFeInfos<S extends SectionName>(
@@ -67,8 +67,8 @@ function updateChildFeIdArr<SN extends SectionName>(
   nextIds: string[]
 ): StateSection<SN> {
   return next.update({
-    childFeIdArrs: {
-      ...next.core.childFeIdArrs,
+    childFeIds: {
+      ...next.core.childFeIds,
       [sectionName]: nextIds,
     },
   });
@@ -99,25 +99,9 @@ export function removeChildFeId<S extends SectionName>(
     (childId) => childId === id
   );
   return this.update({
-    childFeIdArrs: {
-      ...this.core.childFeIdArrs,
+    childFeIds: {
+      ...this.core.childFeIds,
       [sectionName]: nextIds,
     },
   });
-}
-
-export function initChildFeIds<S extends SectionName>(
-  sectionName: S,
-  proposed: Partial<ChildIdArrs<S>> = {}
-) {
-  const childNames = sectionMetas
-    .section(sectionName)
-    .get("childSectionNames") as ChildName<SectionName>[];
-  return childNames.reduce((childIdArrs, childName) => {
-    childIdArrs[childName] =
-      childName in proposed
-        ? (proposed as ChildIdArrs<SectionName>)[childName]
-        : [];
-    return childIdArrs;
-  }, {} as ChildIdArrs<SectionName>) as ChildIdArrs<S>;
 }

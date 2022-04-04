@@ -20,8 +20,7 @@ import {
   ValueTypes,
 } from "../SectionMetas/relSections/rel/valueMetaTypes";
 import { SectionName } from "../SectionMetas/SectionName";
-import { cloneValue, VarbMeta } from "../SectionMetas/VarbMeta";
-
+import { cloneValue } from "../SectionMetas/VarbMeta";
 import { Inf } from "./../SectionMetas/Info";
 import {
   addInEntity,
@@ -32,10 +31,20 @@ import {
   removeOutEntity,
   setInEntities,
 } from "./StateVarb/entities";
+import { initStateVarb } from "./StateVarb/init";
 import { StateValue } from "./StateVarb/stateValue";
 
+export type NextStateVarbCore = {
+  varbName: string;
+  sectionName: SectionName;
+  feId: string;
+  value: StateValue;
+  outEntities: OutEntity[];
+  manualUpdateEditorToggle: boolean | undefined; // filled with stateManager to ensure rerenders upon loading varbs
+};
+
 export type InVarbInfo = InEntity | FeVarbInfo;
-export type StateVarbCore = {
+type StateVarbCore = {
   feId: string;
   value: StateValue;
   outEntities: OutEntity[];
@@ -56,15 +65,22 @@ export const valueSchemasPlusAny = {
 
 export type StateValueAnyKey = keyof ValueTypesPlusAny;
 export default class StateVarb {
-  constructor(protected core: StateVarbCore, readonly meta: VarbMeta) {}
-  updateProps(props: Partial<StateVarbCore>) {
-    return new StateVarb(
-      {
-        ...this.core,
-        ...props,
-      },
-      this.meta
-    );
+  constructor(protected core: NextStateVarbCore) {}
+  get meta() {
+    return sectionMetas.varb({ ...this.core }, "fe");
+  }
+  update(props: Partial<StateVarbCore>) {
+    return new StateVarb({
+      ...this.core,
+      ...props,
+    });
+  }
+  updateValue(newValue: StateValue, wasUpdatedByEditor: boolean) {
+    return this.update({
+      value: newValue,
+      manualUpdateEditorToggle:
+        this.nextManualUpdateEditorToggle(wasUpdatedByEditor),
+    });
   }
   nextManualUpdateEditorToggle(wasUpdatedByEditor: boolean) {
     const current = this.manualUpdateEditorToggle;
@@ -202,43 +218,13 @@ export default class StateVarb {
     return { errorMessage: this.getErrorMessage() };
   }
 
-  // value
-  updateValue(newValue: StateValue, wasUpdatedByEditor: boolean) {
-    return new StateVarb(
-      {
-        ...this.core,
-        value: newValue,
-        manualUpdateEditorToggle:
-          this.nextManualUpdateEditorToggle(wasUpdatedByEditor),
-      },
-      this.meta
-    );
-  }
   toDbValue(): DbValue {
     const value = this.value("any");
     if (value instanceof NumObj) return value.dbNumObj;
     else return value;
   }
-  static init(
-    { id, sectionName, varbName }: FeVarbInfo,
-    options: StateVarbOptions = {}
-  ): StateVarb {
-    const meta = sectionMetas.varbMeta({
-      sectionName,
-      varbName,
-    });
-    return new StateVarb(
-      {
-        outEntities: [],
-        manualUpdateEditorToggle: undefined,
-        value: meta.initValue,
-        ...options,
-        feId: id,
-      },
-      meta
-    );
-  }
 
+  static init = initStateVarb;
   static feVarbInfoToFullName(info: FeVarbInfo): string {
     const { sectionName, varbName, id } = info;
     return [sectionName, varbName, id].join(".");

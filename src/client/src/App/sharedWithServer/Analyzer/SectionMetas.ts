@@ -1,5 +1,9 @@
-import { omit, pick } from "lodash";
+import { pick } from "lodash";
 import { NextObjEntries, Obj } from "../utils/Obj";
+import {
+  DescendantName,
+  SelfOrDescendantName,
+} from "./SectionMetas/relNameArrs/ChildTypes";
 import {
   makeSectionToParentArrs,
   ParentName,
@@ -20,7 +24,7 @@ import {
   SimpleVarbNames,
   VarbNames,
 } from "./SectionMetas/relSections/rel/relVarbInfoTypes";
-import { NextSectionMeta } from "./SectionMetas/SectionMeta";
+import { NextSectionMeta, SectionMetaCore } from "./SectionMetas/SectionMeta";
 import { SectionNam, SectionName } from "./SectionMetas/SectionName";
 import {
   InUpdatePack,
@@ -72,7 +76,7 @@ export class SectionMetas {
       for (const sectionName of Obj.keys(this.core[contextName])) {
         rawSectionMetas[contextName][sectionName] = {
           ...this.core[contextName][sectionName],
-          varbMetas: this.varbMetas(sectionName, contextName).raw,
+          varbMetas: this.varbs(sectionName, contextName).raw,
         };
       }
     }
@@ -86,6 +90,9 @@ export class SectionMetas {
     const sectionCore = contextCore[sectionName as keyof typeof contextCore];
     return sectionCore as any;
   }
+  context<CN extends ContextName>(contextName: CN): SectionMetasCore[CN] {
+    return this.core[contextName];
+  }
   section<SN extends SimpleSectionName<CN>, CN extends ContextName = "fe">(
     sectionName: SN,
     contextName?: CN
@@ -94,10 +101,7 @@ export class SectionMetas {
     const sectionMeta = contextCore[sectionName];
     return sectionMeta as NextSectionMeta<ContextName, SectionName> as any;
   }
-  context<CN extends ContextName>(contextName: CN): SectionMetasCore[CN] {
-    return this.core[contextName];
-  }
-  varbMetas<SN extends SimpleSectionName<SC>, SC extends ContextName = "fe">(
+  varbs<SN extends SimpleSectionName<SC>, SC extends ContextName = "fe">(
     sectionName: SN,
     sectionContext?: SC
   ): VarbMetas {
@@ -105,23 +109,28 @@ export class SectionMetas {
       "varbMetas"
     );
   }
-  varbMeta<VNS extends SimpleVarbNames, CN extends ContextName = "fe">(
+  varb<VNS extends SimpleVarbNames, CN extends ContextName = "fe">(
     varbNames: VNS,
     contextName?: CN
   ): VarbMeta {
     const { sectionName, varbName } = varbNames;
-    const varbMetas = this.varbMetas(sectionName, (contextName ?? "fe") as CN);
+    const varbMetas = this.varbs(sectionName, (contextName ?? "fe") as CN);
     const varbMeta = varbMetas.get(varbName);
     if (!varbMeta) {
       throw new Error(`No varbMeta at ${sectionName}.${varbName}`);
     } else return varbMeta;
   }
-
+  value<VNS extends SimpleVarbNames, CN extends ContextName = "fe">(
+    varbNames: VNS,
+    contextName?: CN
+  ) {
+    return this.varb(varbNames, contextName).value;
+  }
   varbNames<SN extends SimpleSectionName<CN>, CN extends ContextName = "fe">(
     sectionName: SN,
     sectionContext: CN
   ): string[] {
-    return this.varbMetas(sectionName, sectionContext).varbNames;
+    return this.varbs(sectionName, sectionContext).varbNames;
   }
   parentName<
     SN extends SectionName<"hasOneParent", CN>,
@@ -133,7 +142,25 @@ export class SectionMetas {
     );
     return sectionMeta.get("parents")[0] as ParentName<SN, CN>;
   }
+  selfAndDescendantNames<SN extends SectionName, CN extends ContextName>(
+    sectionName: SN,
+    contextName: CN
+  ): SelfOrDescendantName<SN, CN>[] {
+    const selfAndDescendantNames: SelfOrDescendantName<SN, CN>[] = [];
+    const queue: SelfOrDescendantName<SN, CN>[] = [sectionName];
+    while (queue.length > 0) {
+      const queueLength = queue.length;
+      for (let i = 0; i < queueLength; i++) {
+        const descendantName = queue.shift() as DescendantName<SN, CN>;
+        selfAndDescendantNames.push(descendantName);
 
+        const { childNames } = this.section(descendantName, contextName)
+          .core as SectionMetaCore<"fe", SN>;
+        queue.push(...(childNames as DescendantName<SN, CN>[]));
+      }
+    }
+    return selfAndDescendantNames;
+  }
   private inToOutRelative<
     CN extends ContextName,
     SN extends SimpleSectionName<CN>
@@ -190,13 +217,9 @@ export class SectionMetas {
         inUpdatePack
       );
 
-      const inVarbMeta = this.varbMeta(
-        { sectionName, varbName },
-        sectionContext
-      );
-
-      const sectionMeta = this.get(sectionName, sectionContext);
-      const varbMetas = this.varbMetas(sectionName, sectionContext);
+      const inVarbMeta = this.varb({ sectionName, varbName }, sectionContext);
+      const varbMetas = this.varbs(sectionName, sectionContext);
+      const sectionMeta = this.section(sectionName, sectionContext);
       this.core[sectionContext][sectionName] =
         sectionMeta.depreciatingUpdateVarbMetas(
           varbMetas.update(varbName, {

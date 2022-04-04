@@ -1,8 +1,8 @@
+import { ContextName } from "./baseSections";
+import { switchNames } from "./baseSections/switchNames";
 import { rel } from "./rel";
 import { relSection } from "./rel/relSection";
 import { RelVarbs } from "./rel/relVarbs";
-import { switchNames } from "./baseSections/switchNames";
-import { ContextName } from "./baseSections";
 
 const rentCut = switchNames("rentCut", "dollarsPercent");
 const rentCutDollars = switchNames(rentCut.dollars, "ongoing");
@@ -85,12 +85,7 @@ export const preMgmtGeneral = {
       ...rel.varbs.sectionStrings("mgmt", { ...mgmtPreVarbs }, ["title"]),
     },
     {
-      childSectionNames: [
-        "mgmt",
-        "mgmtIndex",
-        "mgmtDefault",
-        "mgmtTable",
-      ] as const,
+      childNames: ["mgmt", "mgmtIndex", "mgmtDefault", "mgmtTable"] as const,
       alwaysOne: true,
       initOnStartup: true,
       parent: "main",
@@ -103,7 +98,7 @@ export const preMgmtGeneral = {
     { ...mgmtPreVarbs },
     {
       parent: "mgmtGeneral",
-      childSectionNames: ["upfrontCostList", "ongoingCostList"] as const,
+      childNames: ["upfrontCostList", "ongoingCostList"] as const,
       makeOneOnStartup: true,
       indexStoreName: "mgmtIndex",
       defaultStoreName: "mgmtDefault",
@@ -117,7 +112,7 @@ export const preMgmtGeneral = {
     { ...mgmtPreVarbs },
     {
       parent: "mgmtGeneral",
-      childSectionNames: ["upfrontCostList", "ongoingCostList"] as const,
+      childNames: ["upfrontCostList", "ongoingCostList"] as const,
       makeOneOnStartup: true,
     }
   ),

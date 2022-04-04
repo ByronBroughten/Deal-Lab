@@ -1,10 +1,10 @@
-import Analyzer from "./../../../Analyzer";
-import { SectionName } from "../../SectionMetas/SectionName";
-import { SectionFinder } from "../../SectionMetas/relSections/baseSectionTypes";
-import { OneRawSection, RawSections } from "../../SectionPack/RawSection";
-import { Inf } from "../../SectionMetas/Info";
 import { Obj } from "../../../utils/Obj";
-import { GeneralSectionPack, RawSectionPack } from "../../SectionPack";
+import { GeneralSectionPack, RawSectionPack } from "../../RawSectionPack";
+import { Inf } from "../../SectionMetas/Info";
+import { SectionFinder } from "../../SectionMetas/relSections/baseSectionTypes";
+import { SectionName } from "../../SectionMetas/SectionName";
+import { OneRawSection, RawSections } from "../../SectionPack/RawSection";
+import Analyzer from "./../../../Analyzer";
 
 export function makeRawSection<SN extends SectionName>(
   this: Analyzer,

@@ -89,7 +89,10 @@ export type VarbMetaCore = RelVarb & VarbMetaProps;
 export class VarbMeta {
   constructor(readonly core: VarbMetaCore) {}
   isVarbValueType(value: any): boolean {
-    return valueMeta[this.type].is(value);
+    return this.value.is(value);
+  }
+  get value() {
+    return valueMeta[this.type];
   }
   get<PN extends keyof VarbMetaCore>(propName: PN) {
     return this.core[propName];

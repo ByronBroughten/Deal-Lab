@@ -23,7 +23,7 @@ function initStaticVarbOption(
   sectionName: SectionName<"hasGlobalVarbs">,
   varbName: string
 ): VariableOption {
-  const varbMeta = sectionMetas.varbMeta({
+  const varbMeta = sectionMetas.varb({
     sectionName,
     varbName,
   });

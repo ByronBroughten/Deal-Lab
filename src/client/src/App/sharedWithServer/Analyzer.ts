@@ -2,8 +2,14 @@ import {
   addSectionAndSolve,
   addSectionsAndSolve,
   InitSectionOptions,
+  nextAddSectionsAndSolve,
 } from "./Analyzer/methods/addSectionAndSolve";
 import { copySection } from "./Analyzer/methods/copySection";
+import {
+  directUpdateAndSolve,
+  loadValueFromVarb,
+  updateSectionValuesAndSolve,
+} from "./Analyzer/methods/directUpdateAndSolve";
 import {
   eraseIndexAndSolve,
   eraseRowIndexAndSolve,
@@ -49,6 +55,7 @@ import {
   fullStoreEntries,
   fullStoreTitlesAndDbIds,
 } from "./Analyzer/methods/get/fullStore";
+import { newInEntity } from "./Analyzer/methods/get/inEntity";
 import { varbInfosByFocal } from "./Analyzer/methods/get/info";
 import {
   nestedFeInfos,
@@ -77,6 +84,11 @@ import {
   sectionArrAsOptions,
   sectionArrInfos,
 } from "./Analyzer/methods/get/sectionArr";
+import {
+  makeRawSection,
+  makeRawSectionPack,
+  makeRawSections,
+} from "./Analyzer/methods/get/sectionPack";
 import {
   feValue,
   findValue,
@@ -118,18 +130,12 @@ import {
   setAsDefaultSectionArr,
 } from "./Analyzer/methods/loadSectionFromStore";
 import { resetSectionAndSolve } from "./Analyzer/methods/resetSectionAndSolve";
-import {
-  replaceInSectionArr,
-  updateSectionArr,
-  wipeSectionArrAndSolve,
-} from "./Analyzer/methods/updateSectionArr";
 import { solveAllActiveVarbs, solveVarbs } from "./Analyzer/methods/solveVarbs";
 import {
   gatherAndSortInfosToSolve,
   getDagEdgesAndLoneVarbs,
   getOutVarbMap,
 } from "./Analyzer/methods/solveVarbs/gatherAndSortInfosToSolve";
-
 import {
   getNumberVarbs,
   getSolvableNumber,
@@ -148,30 +154,24 @@ import {
   updateRowIndexStore,
 } from "./Analyzer/methods/updateRowIndexStore";
 import {
+  replaceInSectionArr,
+  updateSectionArr,
+  wipeSectionArrAndSolve,
+} from "./Analyzer/methods/updateSectionArr";
+import {
   pushToIndexStore,
   updateIndexStoreEntry,
 } from "./Analyzer/methods/updateStore";
-import {
-  directUpdateAndSolve,
-  loadValueFromVarb,
-  updateSectionValuesAndSolve,
-} from "./Analyzer/methods/directUpdateAndSolve";
+import { AnalyzerReq, analyzerReq } from "./Analyzer/req";
 import { sectionMetas } from "./Analyzer/SectionMetas";
+import { Id } from "./Analyzer/SectionMetas/relSections/baseSections/id";
+import { FeVarbInfo } from "./Analyzer/SectionMetas/relSections/rel/relVarbInfoTypes";
+import { NextSectionMeta } from "./Analyzer/SectionMetas/SectionMeta";
 import { SectionNam, SectionName } from "./Analyzer/SectionMetas/SectionName";
 import StateSection, { StateSectionCore } from "./Analyzer/StateSection";
-import { Obj, ObjectKeys } from "./utils/Obj";
-import { Id } from "./Analyzer/SectionMetas/relSections/baseSections/id";
-import { newInEntity } from "./Analyzer/methods/get/inEntity";
-import { AnalyzerReq, analyzerReq } from "./Analyzer/req";
-import { DropFirst } from "./utils/types";
-import { FeVarbInfo } from "./Analyzer/SectionMetas/relSections/rel/relVarbInfoTypes";
 import StateVarb from "./Analyzer/StateSection/StateVarb";
-import {
-  makeRawSection,
-  makeRawSectionPack,
-  makeRawSections,
-} from "./Analyzer/methods/get/sectionPack";
-import { NextSectionMeta } from "./Analyzer/SectionMetas/SectionMeta";
+import { Obj, ObjectKeys } from "./utils/Obj";
+import { DropFirst } from "./utils/types";
 
 export type StateSections = { [S in SectionName]: StateSection<S>[] };
 type RawCore = { [S in SectionName]: StateSectionCore<S>[] };
@@ -181,6 +181,10 @@ export type AnalyzerCore = {
   varbFullNamesToSolveFor: VarbFullnamesToSolveFor;
 };
 
+// when you make this have multiple classes, you'll have to change
+// how you use Inf.is.fe(feInfo, "hasParent"); Different
+// instantiations of Analyzer will have different heads
+// then again, main could always be the head.
 export default class Analyzer {
   constructor(readonly core: AnalyzerCore) {}
   protected static makeInitialCore(): AnalyzerCore {
@@ -331,6 +335,7 @@ export default class Analyzer {
 
   copySection = copySection;
 
+  nextAddSectionsAndSolve = nextAddSectionsAndSolve;
   addSectionsAndSolve = addSectionsAndSolve;
   addSectionAndSolve = addSectionAndSolve;
 
