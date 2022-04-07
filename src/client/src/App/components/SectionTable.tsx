@@ -1,20 +1,20 @@
+import { isEqual } from "lodash";
 import React from "react";
 import styled from "styled-components";
+import { useStores } from "../modules/customHooks/useStore";
+import { auth } from "../modules/services/authService";
+import { useAnalyzerContext } from "../modules/usePropertyAnalyzer";
+import { VariableOption } from "../sharedWithServer/Analyzer/methods/get/variableOptions";
+import { SortByColumnOptions } from "../sharedWithServer/Analyzer/methods/updateRowIndexStore";
+import { Inf } from "../sharedWithServer/Analyzer/SectionMetas/Info";
+import { indexStoreToSectionName } from "../sharedWithServer/Analyzer/SectionMetas/relNameArrs/StoreTypes";
+import { SectionName } from "../sharedWithServer/Analyzer/SectionMetas/SectionName";
 import theme from "../theme/Theme";
 import useHowMany from "./appWide/customHooks/useHowMany";
-import { useAnalyzerContext } from "../modules/usePropertyAnalyzer";
+import TrashBtn from "./general/TrashBtn";
 import MaterialStringEditor from "./inputs/MaterialStringEditor";
 import VarbAutoComplete from "./inputs/VarbAutoComplete";
-import { VariableOption } from "../sharedWithServer/Analyzer/methods/get/variableOptions";
-import { auth } from "../modules/services/authService";
-import { useStores } from "../modules/customHooks/useStore";
-import { isEqual } from "lodash";
-import { Inf } from "../sharedWithServer/Analyzer/SectionMetas/Info";
-import { SortByColumnOptions } from "../sharedWithServer/Analyzer/methods/updateRowIndexStore";
-import { SectionName } from "../sharedWithServer/Analyzer/SectionMetas/SectionName";
-import TrashBtn from "./general/TrashBtn";
 import ColumnHeader from "./SectionTable/ColumnHeader";
-import { indexStoreToSectionName } from "../sharedWithServer/Analyzer/SectionMetas/relNameArrs/StoreTypes";
 
 type Props = { tableName: SectionName<"table">; title?: string };
 
@@ -25,7 +25,7 @@ export default function SectionTable({ tableName, title }: Props) {
   const table = analyzer.section(tableName);
   const sortedRowIds = table.value("rowIds", "stringArray");
 
-  const { rowSourceName } = analyzer.sectionMeta(tableName);
+  const { rowSourceName } = analyzer.sectionMeta(tableName).core;
   const rows = sortedRowIds.map((dbId) =>
     analyzer.section(Inf.db(rowSourceName, dbId))
   );
