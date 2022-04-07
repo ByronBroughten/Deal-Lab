@@ -87,6 +87,7 @@ export const preMgmtGeneral = {
     {
       childNames: ["mgmt", "mgmtIndex", "mgmtDefault", "mgmtTable"] as const,
       alwaysOne: true,
+      initOnStartup: true,
       parent: "main",
     }
   ),

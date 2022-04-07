@@ -7,7 +7,7 @@ import { FeNameInfo } from "../SectionMetas/relSections/rel/relVarbInfoTypes";
 import { SectionName } from "../SectionMetas/SectionName";
 
 type OneFeNodeParentStub<SN extends SectionName> = {
-  parentFinder: FeNameInfo<SN>;
+  feInfo: FeNameInfo<SN>;
   childFeIds: OneChildIdArrs<SN, "fe">;
   childDbIds: OneChildIdArrs<SN, "fe">;
 };
@@ -18,7 +18,7 @@ export type FeNodeParentStub<SN extends SectionName> =
   FeNodeParentStubs<SN>[SelfOrDescendantName<SN, "fe">];
 
 export type FeSelfOrDescendantParentStub<SN extends SectionName> = {
-  parentFinder: FeNameInfo<SelfOrDescendantName<SN, "fe">>;
+  feInfo: FeNameInfo<SelfOrDescendantName<SN, "fe">>;
   childFeIds: SelfOrDescendantChildIdArr<SN, "fe">;
   childDbIds: SelfOrDescendantChildIdArr<SN, "fe">;
 };
