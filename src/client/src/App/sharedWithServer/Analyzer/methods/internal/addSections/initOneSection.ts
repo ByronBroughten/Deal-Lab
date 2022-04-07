@@ -4,6 +4,8 @@ import { SectionName } from "../../../SectionMetas/SectionName";
 import StateSection from "../../../StateSection";
 import { AddSectionProps } from "./addSectionsTypes";
 
+// alright. Here's the way to go, I think. Even though it might hurt.
+
 export function initOneSection(
   next: Analyzer,
   { idx, ...props }: AddSectionProps

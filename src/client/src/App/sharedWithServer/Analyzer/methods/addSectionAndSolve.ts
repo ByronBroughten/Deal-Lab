@@ -2,8 +2,8 @@ import Analyzer from "../../Analyzer";
 import { ParentFinder } from "../SectionMetas/relNameArrs/ParentTypes";
 import { SectionName } from "../SectionMetas/SectionName";
 import { internal } from "./internal";
-import { InitSectionAndChildrenProps } from "./internal/addSections";
 import { AddSectionProps } from "./internal/addSections/addSectionsTypes";
+import { InitSectionAndChildrenProps } from "./internal/nextAddSections";
 
 export function nextAddSectionsAndSolve(
   this: Analyzer,

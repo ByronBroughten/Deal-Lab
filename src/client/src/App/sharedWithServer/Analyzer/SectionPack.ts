@@ -19,6 +19,18 @@ export type OneHeadSectionNode<
 
 export class SectionPack<SN extends SectionName, CN extends ContextName> {
   constructor(readonly core: RawSectionPack<SN, CN>) {}
+  addSection() {
+    // takes a child section's OneHeadSectionNode
+    // minus childDbIds
+    // but it will need to be added to its parent
+    // so also provide the parentInfo
+  }
+  addSectionPack() {
+    // takes a descendant sectionPack
+    // and merges it with this
+  }
+  // this is much easier.
+  // and I think this is pretty much all I have to do.
   static init<SN extends SectionName, CN extends ContextName>({
     sectionName,
     contextName,
