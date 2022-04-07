@@ -2,7 +2,8 @@ export type ValueOf<T> = T[keyof T];
 
 export type StrictOmit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type StrictPick<T, K extends keyof T> = Pick<T, K>;
-export type StrictPartial<T, K extends keyof T> = Partial<Pick<T, K>>;
+export type StrictPartial<T, K extends keyof T> = Omit<T, K> &
+  Partial<Pick<T, K>>;
 
 export type DropFirst<T extends unknown[]> = T extends [any, ...infer U]
   ? U

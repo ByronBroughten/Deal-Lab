@@ -1,3 +1,4 @@
+import { addSections, nextAddSections } from "./internal/addSections";
 import {
   eraseChildren,
   eraseSectionAndChildren,
@@ -8,7 +9,6 @@ import {
   removeInEntity,
   removeOutEntity,
 } from "./internal/inOutEntities";
-import { addSections, nextAddSections } from "./internal/nextAddSections";
 import { resetSectionAndChildDbIds } from "./internal/resetSectionAndChildDbIds";
 import { updateConnectedEntities } from "./internal/updateConnectedEntities";
 import { updateSection } from "./internal/updateSection";

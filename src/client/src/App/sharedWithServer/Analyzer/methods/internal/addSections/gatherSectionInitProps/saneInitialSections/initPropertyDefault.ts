@@ -1,23 +1,8 @@
 import { Obj } from "../../../../../../utils/Obj";
-import { DbEnt, DbEntry } from "../../../../../DbEntry";
 import { Inf } from "../../../../../SectionMetas/Info";
 import { dbNumObj } from "../../../../../SectionMetas/relSections/baseSections/baseValues/NumObj";
 import { Id } from "../../../../../SectionMetas/relSections/baseSections/id";
-
-// instead it will be
-// let baseSections = BaseSections.init(SectionPack.initEmpty("property"))
-// let { feInfo } = baseSections.lastSection("property")
-// baseSections = sectionsInner.addDefaultSection("unit", feInfo, {
-// dbVarbs: {
-// }
-// })
-// There will be no addDefaultSection
-// Ah, this is such a pain
-// I think I will just bite the bullet
-// I can just create addDefaultSection without the saneDefaults
-// and then create another function just like it but that has
-// the sane defaults.
-// So basically, The first class can be just like Analyzer, but without
+import { DbEnt, DbEntry } from "../../../../../DbEntry";
 
 type ListItemCoreValues = [name: string, cost: number];
 const periodicItemCoreValues: ListItemCoreValues[] = [

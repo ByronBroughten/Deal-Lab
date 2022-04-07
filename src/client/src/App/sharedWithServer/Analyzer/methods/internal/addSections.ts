@@ -10,14 +10,14 @@ import {
 } from "./addSections/gatherSectionInitProps";
 import { initOneSection } from "./addSections/initOneSection";
 
-// function feInfosFromInitPropsArr(
-//   initPropsArr: InitOneSectionProps[]
-// ): FeInfo[] {
-//   return initPropsArr.map((initProps) => {
-//     const { feId, sectionName } = initProps;
-//     return Inf.fe(sectionName, feId);
-//   });
-// }
+function feInfosFromInitPropsArr(
+  initPropsArr: InitOneSectionProps[]
+): FeInfo[] {
+  return initPropsArr.map((initProps) => {
+    const { feId, sectionName } = initProps;
+    return Inf.fe(sectionName, feId);
+  });
+}
 
 export type InitSectionAndChildrenProps<S extends SectionName = SectionName> =
   Omit<GatherSectionInitPropsProps<S>, "propArr">;
