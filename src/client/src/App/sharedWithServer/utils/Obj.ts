@@ -1,12 +1,14 @@
 import { isEqual } from "lodash";
-import { boolean } from "mathjs";
 import { merge, spread } from "./Obj/merge";
-import { Full, SubType } from "./typescript";
+import { Full, SubType } from "./types";
 
 type Entries<T> = { [K in keyof T]: [K, T[K]] }[keyof T];
 export function ObjectEntries<O extends object, T extends Full<O>>(
   obj: O
 ): Entries<T>[] {
+  return Object.entries(obj) as any;
+}
+export function forSureEntries<O extends object>(obj: O): Entries<O> {
   return Object.entries(obj) as any;
 }
 
@@ -71,6 +73,7 @@ export const Obj = {
   keys: ObjectKeys,
   values: ObjectValues,
   entries: NextObjEntries,
+  forSureEntries,
   filterKeysForEntryShape<O extends object, M extends any>(
     obj: O,
     model: M

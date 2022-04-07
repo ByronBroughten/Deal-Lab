@@ -15,9 +15,9 @@ export function childFeIds<S extends SectionName>(
   this: StateSection<S>,
   childName: ChildName<S>
 ): string[] {
-  const { childFeIdArrs } = this.core;
-  if (childName in childFeIdArrs) {
-    return childFeIdArrs[childName];
+  const { childFeIds } = this.core;
+  if (childName in childFeIds) {
+    return childFeIds[childName];
   } else
     throw new Error(
       `${childName} is not in section of sectionName ${this.sectionName}`
@@ -27,7 +27,7 @@ export function childFeIds<S extends SectionName>(
 export function allChildFeIds<S extends SectionName>(
   this: StateSection<S>
 ): ChildIdArrs<S> {
-  return cloneDeep(this.core.childFeIdArrs);
+  return cloneDeep(this.core.childFeIds);
 }
 
 export function allChildFeInfos<S extends SectionName>(
@@ -61,21 +61,34 @@ export function childIdx<S extends SectionName>(
     throw new Error(`Section at ${sectionName}.${id} not in its parent.`);
   return idx;
 }
-export function addChildFeId<S extends SectionName>(
-  this: StateSection<S>,
-  { sectionName, id }: ChildFeInfo<S>,
-  idx?: number
-) {
-  let nextIds = [...this.childFeIds(sectionName)];
-  if (idx) nextIds.splice(idx, 0, id);
-  else nextIds.push(id);
-
-  return this.update({
-    childFeIdArrs: {
-      ...this.core.childFeIdArrs,
+function updateChildFeIdArr<SN extends SectionName>(
+  next: StateSection<SN>,
+  sectionName: SectionName,
+  nextIds: string[]
+): StateSection<SN> {
+  return next.update({
+    childFeIds: {
+      ...next.core.childFeIds,
       [sectionName]: nextIds,
     },
   });
+}
+
+export function insertChildFeId<SN extends SectionName>(
+  this: StateSection<SN>,
+  { sectionName, id }: ChildFeInfo<SN>,
+  idx: number
+): StateSection<SN> {
+  let nextIds = [...this.childFeIds(sectionName)];
+  nextIds.splice(idx, 0, id);
+  return updateChildFeIdArr(this, sectionName, nextIds);
+}
+export function pushChildFeId<SN extends SectionName>(
+  this: StateSection<SN>,
+  { sectionName, id }: ChildFeInfo<SN>
+): StateSection<SN> {
+  let nextIds = [...this.childFeIds(sectionName), id];
+  return updateChildFeIdArr(this, sectionName, nextIds);
 }
 export function removeChildFeId<S extends SectionName>(
   this: StateSection<S>,
@@ -86,19 +99,9 @@ export function removeChildFeId<S extends SectionName>(
     (childId) => childId === id
   );
   return this.update({
-    childFeIdArrs: {
-      ...this.core.childFeIdArrs,
+    childFeIds: {
+      ...this.core.childFeIds,
       [sectionName]: nextIds,
     },
   });
-}
-
-export function initChildFeIds<S extends SectionName>(sectionName: S) {
-  const childIds: Partial<ChildIdArrs<S>> = {};
-  const meta = sectionMetas.get(sectionName);
-  const childNames = meta.childSectionNames;
-  for (const childName of childNames) {
-    childIds[childName as keyof ChildIdArrs<S>] = [];
-  }
-  return childIds as ChildIdArrs<S>;
 }

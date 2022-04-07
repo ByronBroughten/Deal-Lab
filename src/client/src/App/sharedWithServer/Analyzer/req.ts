@@ -47,7 +47,7 @@ export const analyzerReq = {
     analyzer: Analyzer,
     feInfo: FeInfo<"hasIndexStore">
   ): Req<"PostEntry"> {
-    const { indexStoreName } = analyzer.sectionMeta(feInfo.sectionName);
+    const { indexStoreName } = analyzer.sectionMeta(feInfo.sectionName).core;
     const dbEntry = analyzer.dbIndexEntry(feInfo);
     return {
       body: {

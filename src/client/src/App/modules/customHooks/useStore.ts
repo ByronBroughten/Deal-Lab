@@ -12,7 +12,7 @@ const dbStore = {
     sectionName: SectionName<"hasIndexStore">,
     dbId: string
   ) {
-    const dbStoreName = sectionMetas.get(sectionName).indexStoreName;
+    const dbStoreName = sectionMetas.section(sectionName).get("indexStoreName");
     return await crud.section.delete.send({ params: { dbStoreName, dbId } });
   },
   async putIndexEntry(feInfo: FeInfo<"hasIndexStore">, next: Analyzer) {
@@ -64,7 +64,7 @@ export function useStores() {
       tableName: SectionName<"table">,
       next: Analyzer = analyzer
     ) {
-      const { rowSourceName } = analyzer.sectionMeta(tableName);
+      const { rowSourceName } = analyzer.sectionMeta(tableName).core;
       const tableEntryArr = next.dbEntryArr(tableName);
       const res = await crud.postTableColumns(tableEntryArr, tableName);
       if (res) {
@@ -78,7 +78,7 @@ export function useStores() {
       setAnalyzerOrdered(next);
 
       if (auth.isLoggedIn) {
-        const { defaultStoreName } = next.sectionMeta(sectionName);
+        const { defaultStoreName } = next.sectionMeta(sectionName).core;
         const reqObj = next.req.postSectionArr(defaultStoreName);
         await crud.sectionArr.post.send(reqObj);
       }

@@ -5,6 +5,11 @@ import {
 } from "./Analyzer/methods/addSectionAndSolve";
 import { copySection } from "./Analyzer/methods/copySection";
 import {
+  directUpdateAndSolve,
+  loadValueFromVarb,
+  updateSectionValuesAndSolve,
+} from "./Analyzer/methods/directUpdateAndSolve";
+import {
   eraseIndexAndSolve,
   eraseRowIndexAndSolve,
 } from "./Analyzer/methods/eraseIndexAndSolve";
@@ -16,6 +21,7 @@ import {
   allChildDbIds,
   childSections,
   descendantFeIds,
+  selfAndDescendantFeIds,
 } from "./Analyzer/methods/get/childArrs";
 import {
   dbEntry,
@@ -48,6 +54,7 @@ import {
   fullStoreEntries,
   fullStoreTitlesAndDbIds,
 } from "./Analyzer/methods/get/fullStore";
+import { newInEntity } from "./Analyzer/methods/get/inEntity";
 import { varbInfosByFocal } from "./Analyzer/methods/get/info";
 import {
   nestedFeInfos,
@@ -76,6 +83,11 @@ import {
   sectionArrAsOptions,
   sectionArrInfos,
 } from "./Analyzer/methods/get/sectionArr";
+import {
+  makeRawSection,
+  makeRawSectionPack,
+  makeRawSections,
+} from "./Analyzer/methods/get/sectionPack";
 import {
   feValue,
   findValue,
@@ -117,18 +129,12 @@ import {
   setAsDefaultSectionArr,
 } from "./Analyzer/methods/loadSectionFromStore";
 import { resetSectionAndSolve } from "./Analyzer/methods/resetSectionAndSolve";
-import {
-  replaceInSectionArr,
-  updateSectionArr,
-  wipeSectionArrAndSolve,
-} from "./Analyzer/methods/updateSectionArr";
 import { solveAllActiveVarbs, solveVarbs } from "./Analyzer/methods/solveVarbs";
 import {
   gatherAndSortInfosToSolve,
   getDagEdgesAndLoneVarbs,
   getOutVarbMap,
 } from "./Analyzer/methods/solveVarbs/gatherAndSortInfosToSolve";
-
 import {
   getNumberVarbs,
   getSolvableNumber,
@@ -147,27 +153,27 @@ import {
   updateRowIndexStore,
 } from "./Analyzer/methods/updateRowIndexStore";
 import {
+  replaceInSectionArr,
+  updateSectionArr,
+  wipeSectionArrAndSolve,
+} from "./Analyzer/methods/updateSectionArr";
+import {
   pushToIndexStore,
   updateIndexStoreEntry,
 } from "./Analyzer/methods/updateStore";
-import {
-  directUpdateAndSolve,
-  loadValueFromVarb,
-  updateSectionValuesAndSolve,
-} from "./Analyzer/methods/directUpdateAndSolve";
-import { SectionMeta, sectionMetas } from "./Analyzer/SectionMetas";
+import { AnalyzerReq, analyzerReq } from "./Analyzer/req";
+import { sectionMetas } from "./Analyzer/SectionMetas";
+import { Id } from "./Analyzer/SectionMetas/relSections/baseSections/id";
+import { FeVarbInfo } from "./Analyzer/SectionMetas/relSections/rel/relVarbInfoTypes";
+import { NextSectionMeta } from "./Analyzer/SectionMetas/SectionMeta";
 import { SectionNam, SectionName } from "./Analyzer/SectionMetas/SectionName";
 import StateSection, { StateSectionCore } from "./Analyzer/StateSection";
-import { Obj, ObjectKeys } from "./utils/Obj";
-import { Id } from "./Analyzer/SectionMetas/relSections/baseSections/id";
-import { newInEntity } from "./Analyzer/methods/get/inEntity";
-import { AnalyzerReq, analyzerReq } from "./Analyzer/req";
-import { DropFirst } from "./utils/typescript";
-import { FeVarbInfo } from "./Analyzer/SectionMetas/relSections/rel/relVarbInfoTypes";
 import StateVarb from "./Analyzer/StateSection/StateVarb";
+import { Obj, ObjectKeys } from "./utils/Obj";
+import { DropFirst } from "./utils/types";
 
 export type StateSections = { [S in SectionName]: StateSection<S>[] };
-type RawSections = { [S in SectionName]: StateSectionCore<S>[] };
+type RawCore = { [S in SectionName]: StateSectionCore<S>[] };
 type VarbFullnamesToSolveFor = Set<string>;
 export type AnalyzerCore = {
   sections: StateSections;
@@ -252,7 +258,7 @@ export default class Analyzer {
       ) as StateSectionCore<typeof sectionName>[];
       rawCore[sectionName] = rawSectionArr as any;
       return rawCore;
-    }, {} as RawSections);
+    }, {} as RawCore);
   }
 
   stringifySections() {
@@ -285,7 +291,9 @@ export default class Analyzer {
   get sectionNames() {
     return ObjectKeys(this.sections);
   }
-  sectionMeta<S extends SectionName>(sectionName: S): SectionMeta<S> {
+  sectionMeta<SN extends SectionName>(
+    sectionName: SN
+  ): NextSectionMeta<"fe", SN> {
     return sectionMetas.get(sectionName);
   }
   copy(): Analyzer {
@@ -428,6 +436,11 @@ export default class Analyzer {
   dbIndexEntry = dbIndexEntry;
   dbEntryArr = dbEntryArr;
   dbEntryArrs = dbEntryArrs;
+
+  makeRawSectionPack = makeRawSectionPack;
+  makeRawSection = makeRawSection;
+  makeRawSections = makeRawSections;
+  selfAndDescendantFeIds = selfAndDescendantFeIds;
 
   pushToIndexStore = pushToIndexStore;
   updateIndexStoreEntry = updateIndexStoreEntry;

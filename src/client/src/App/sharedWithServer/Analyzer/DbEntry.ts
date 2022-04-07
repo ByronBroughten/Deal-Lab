@@ -18,10 +18,10 @@ import {
   DbNameInfo,
   RelInfoStatic,
 } from "./SectionMetas/relSections/rel/relVarbInfoTypes";
+import { DbValue } from "./SectionMetas/relSections/rel/valueMetaTypes";
 import { AlwaysOneVarbFinder, SectionName } from "./SectionMetas/SectionName";
 import { BasicValue } from "./StateSection/StateVarb/stateValue";
 
-export type DbValue = BasicValue | DbNumObj;
 export type DbVarbs = {
   [varbName: string]: DbValue;
 };

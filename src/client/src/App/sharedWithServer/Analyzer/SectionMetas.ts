@@ -1,5 +1,9 @@
-import { omit, pick } from "lodash";
+import { pick } from "lodash";
 import { NextObjEntries, Obj } from "../utils/Obj";
+import {
+  DescendantName,
+  SelfOrDescendantName,
+} from "./SectionMetas/relNameArrs/ChildTypes";
 import {
   makeSectionToParentArrs,
   ParentName,
@@ -20,6 +24,7 @@ import {
   SimpleVarbNames,
   VarbNames,
 } from "./SectionMetas/relSections/rel/relVarbInfoTypes";
+import { NextSectionMeta, SectionMetaCore } from "./SectionMetas/SectionMeta";
 import { SectionNam, SectionName } from "./SectionMetas/SectionName";
 import {
   InUpdatePack,
@@ -31,17 +36,17 @@ import {
 import { VarbMetas, VarbMetasRaw } from "./SectionMetas/VarbMetas";
 
 export type SectionMeta<
-  SN extends SimpleSectionName<SC>,
-  SC extends ContextName = "fe"
-> = RelSections[SC][SN & keyof RelSections[SC]] &
-  BaseSections[SC][SN] & {
+  SN extends SimpleSectionName<CN>,
+  CN extends ContextName = "fe"
+> = RelSections[CN][SN & keyof RelSections[CN]] &
+  BaseSections[CN][SN] & {
     varbMetas: VarbMetas;
-    parents: SectionToParentArrs<SC>[SN];
+    parents: SectionToParentArrs<CN>[SN];
   };
 
 type SectionMetasCore = {
-  [SC in ContextName]: {
-    [SN in SimpleSectionName<SC>]: SectionMeta<SN, SC>;
+  [CN in ContextName]: {
+    [SN in SimpleSectionName<CN>]: NextSectionMeta<CN, SN>;
   };
 };
 type SectionMetasRaw = {
@@ -70,70 +75,109 @@ export class SectionMetas {
     for (const contextName of Obj.keys(this.core)) {
       for (const sectionName of Obj.keys(this.core[contextName])) {
         rawSectionMetas[contextName][sectionName] = {
-          ...omit(this.core[contextName][sectionName], ["varbMetas"]),
-          varbMetas: this.core[contextName][sectionName].varbMetas.raw,
+          ...this.core[contextName][sectionName],
+          varbMetas: this.varbs(sectionName, contextName).raw,
         };
       }
     }
     return rawSectionMetas as SectionMetasRaw;
   }
-  get<SN extends SimpleSectionName<SC>, SC extends ContextName = "fe">(
+  get<SN extends SimpleSectionName<CN>, CN extends ContextName = "fe">(
     sectionName: SN,
-    sectionContext?: SC
-  ): SectionMeta<SN, SC> {
-    const contextCore = this.core[(sectionContext ?? "fe") as SC];
+    sectionContext?: CN
+  ): NextSectionMeta<CN, SN> {
+    const contextCore = this.core[(sectionContext ?? "fe") as CN];
     const sectionCore = contextCore[sectionName as keyof typeof contextCore];
     return sectionCore as any;
   }
-  varbNames<SN extends SimpleSectionName<SC>, SC extends ContextName = "fe">(
+  context<CN extends ContextName>(contextName: CN): SectionMetasCore[CN] {
+    return this.core[contextName];
+  }
+  section<SN extends SimpleSectionName<CN>, CN extends ContextName = "fe">(
     sectionName: SN,
-    sectionContext: SC
-  ): string[] {
-    return this.varbMetas(sectionName, sectionContext).varbNames;
+    contextName?: CN
+  ): NextSectionMeta<CN, SN> {
+    const contextCore = this.context((contextName ?? "fe") as CN);
+    const sectionMeta = contextCore[sectionName];
+    return sectionMeta as NextSectionMeta<ContextName, SectionName> as any;
   }
-  parentName<
-    SN extends SectionName<"hasOneParent", SC>,
-    SC extends ContextName = "fe"
-  >(sectionName: SN, sectionContext?: SC): ParentName<SN, SC> {
-    const meta = this.get(sectionName, (sectionContext ?? "fe") as SC);
-    return meta.parents[0] as ParentName<SN, SC>;
+  varbs<SN extends SimpleSectionName<SC>, SC extends ContextName = "fe">(
+    sectionName: SN,
+    sectionContext?: SC
+  ): VarbMetas {
+    return this.get(sectionName, sectionContext ?? ("fe" as SC)).get(
+      "varbMetas"
+    );
   }
-  varbMeta<VNS extends SimpleVarbNames, CN extends ContextName = "fe">(
+  varb<VNS extends SimpleVarbNames, CN extends ContextName = "fe">(
     varbNames: VNS,
     contextName?: CN
   ): VarbMeta {
     const { sectionName, varbName } = varbNames;
-    const varbMeta =
-      this.core[(contextName ?? "fe") as CN][sectionName].varbMetas.get(
-        varbName
-      );
+    const varbMetas = this.varbs(sectionName, (contextName ?? "fe") as CN);
+    const varbMeta = varbMetas.get(varbName);
     if (!varbMeta) {
       throw new Error(`No varbMeta at ${sectionName}.${varbName}`);
     } else return varbMeta;
   }
-  varbMetas<SN extends SimpleSectionName<SC>, SC extends ContextName = "fe">(
+  value<VNS extends SimpleVarbNames, CN extends ContextName = "fe">(
+    varbNames: VNS,
+    contextName?: CN
+  ) {
+    return this.varb(varbNames, contextName).value;
+  }
+  varbNames<SN extends SimpleSectionName<CN>, CN extends ContextName = "fe">(
     sectionName: SN,
-    sectionContext?: SC
-  ): VarbMetas {
-    return this.get(sectionName, sectionContext ?? ("fe" as SC)).varbMetas;
+    sectionContext: CN
+  ): string[] {
+    return this.varbs(sectionName, sectionContext).varbNames;
+  }
+  parentName<
+    SN extends SectionName<"hasOneParent", CN>,
+    CN extends ContextName = "fe"
+  >(sectionName: SN, sectionContext?: CN): ParentName<SN, CN> {
+    const sectionMeta = this.section(
+      sectionName,
+      (sectionContext ?? "fe") as CN
+    );
+    return sectionMeta.get("parents")[0] as ParentName<SN, CN>;
+  }
+  selfAndDescendantNames<SN extends SectionName, CN extends ContextName>(
+    sectionName: SN,
+    contextName: CN
+  ): SelfOrDescendantName<SN, CN>[] {
+    const selfAndDescendantNames: SelfOrDescendantName<SN, CN>[] = [];
+    const queue: SelfOrDescendantName<SN, CN>[] = [sectionName];
+    while (queue.length > 0) {
+      const queueLength = queue.length;
+      for (let i = 0; i < queueLength; i++) {
+        const descendantName = queue.shift() as DescendantName<SN, CN>;
+        selfAndDescendantNames.push(descendantName);
+
+        const { childNames } = this.section(descendantName, contextName)
+          .core as SectionMetaCore<"fe", SN>;
+        queue.push(...(childNames as DescendantName<SN, CN>[]));
+      }
+    }
+    return selfAndDescendantNames;
   }
   private inToOutRelative<
-    SC extends ContextName,
-    SN extends SimpleSectionName<SC>
+    CN extends ContextName,
+    SN extends SimpleSectionName<CN>
   >(
     focalSectionName: SN,
     inRelative: InVarbRelative,
-    sectionContext: SC
+    contextName: CN
   ): OutVarbRelative {
-    const focalFrame = this.core[sectionContext][focalSectionName];
+    const focalSectionMeta = this.get(focalSectionName, contextName);
     const childSpecifiers = ["children"] as const;
     if (inRelative === "local") return "local";
     else if (childSpecifiers.includes(inRelative as any)) return "parent";
     else if (inRelative === "static") {
-      if (focalFrame.alwaysOne) return "static";
+      if (focalSectionMeta.get("alwaysOne")) return "static";
       else return "all";
     } else if (inRelative === "all") {
-      if (focalFrame.alwaysOne) return "static";
+      if (focalSectionMeta.get("alwaysOne")) return "static";
       // only static variables should have inRelatives of "all"
     }
     throw new Error(`Relative '${inRelative}' is not valid.`);
@@ -173,22 +217,16 @@ export class SectionMetas {
         inUpdatePack
       );
 
-      const inVarbMeta = this.varbMeta(
-        {
-          sectionName,
-          varbName,
-        },
-        sectionContext
-      );
-      const { varbMetas } = this.core[sectionContext][sectionName];
-
-      this.core[sectionContext][sectionName].varbMetas = varbMetas.update(
-        varbName,
-        {
-          ...inVarbMeta.core,
-          outUpdatePacks: inVarbMeta.outUpdatePacks.concat([outUpdatePack]),
-        }
-      );
+      const inVarbMeta = this.varb({ sectionName, varbName }, sectionContext);
+      const varbMetas = this.varbs(sectionName, sectionContext);
+      const sectionMeta = this.section(sectionName, sectionContext);
+      this.core[sectionContext][sectionName] =
+        sectionMeta.depreciatingUpdateVarbMetas(
+          varbMetas.update(varbName, {
+            ...inVarbMeta.core,
+            outUpdatePacks: inVarbMeta.outUpdatePacks.concat([outUpdatePack]),
+          })
+        ) as any;
     }
   }
   initOutUpdatePacks() {
@@ -196,7 +234,9 @@ export class SectionMetas {
       for (const [sectionName, sectionMeta] of NextObjEntries(dbFeSections)) {
         if (!SectionNam.is(sectionName, "hasVarb")) continue;
         for (const [varbName, varbMeta] of NextObjEntries(
-          sectionMeta.varbMetas.getCore()
+          (sectionMeta as NextSectionMeta<ContextName, SectionName>)
+            .get("varbMetas")
+            .getCore()
         )) {
           for (const inUpdatePack of varbMeta.inUpdatePacks) {
             this.inUpdatePackToOuts(
@@ -209,22 +249,22 @@ export class SectionMetas {
     }
   }
   private static initSectionMeta<
-    SC extends ContextName,
-    SN extends SimpleSectionName<SC>,
-    PA extends SectionToParentArrs<SC>[SN]
+    CN extends ContextName,
+    SN extends SimpleSectionName<CN>,
+    PA extends SectionToParentArrs<CN>[SN]
   >(
-    sectionContext: SC,
+    sectionContext: CN,
     sectionName: SN,
     parentNameArr: PA
-  ): SectionMeta<SN, SC> {
+  ): NextSectionMeta<CN, SN> {
     const relSection = relSections[sectionContext][sectionName];
     const baseSection = baseSections[sectionContext][sectionName];
-    return {
+    return new NextSectionMeta({
       ...relSection,
       ...baseSection,
       varbMetas: VarbMetas.initFromRelVarbs(relSection.relVarbs, sectionName),
       parents: parentNameArr,
-    };
+    });
   }
   private static initCore(): SectionMetasCore {
     const partial: { [SC in ContextName]: any } = {

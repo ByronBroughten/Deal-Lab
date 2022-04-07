@@ -6,7 +6,7 @@ import {
   zLoginFormData,
 } from "../../../client/src/App/sharedWithServer/User/crudTypes";
 import { Obj } from "../../../client/src/App/sharedWithServer/utils/Obj";
-import { Full } from "../../../client/src/App/sharedWithServer/utils/typescript";
+import { Full } from "../../../client/src/App/sharedWithServer/utils/types";
 import { prepEmail, UserModel } from "../shared/severSideUser";
 import { serverSideLogin } from "./shared/doLogin";
 
