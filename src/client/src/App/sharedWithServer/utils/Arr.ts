@@ -68,20 +68,10 @@ export const Arr = {
   rmLikeObjClone<T>(arr: T[], obj: T): T[] {
     return this.findAndRmClone(arr, (o) => isEqual(o, obj));
   },
-  findAndRmClone<T>(arr: T[], findValue: (value: T) => boolean): T[] {
+  findAndRmClone<T>(arr: T[], fn: (value: T) => boolean): T[] {
     const nextArr = [...arr];
-    const idx = nextArr.findIndex(findValue);
+    const idx = nextArr.findIndex(fn);
     if (idx !== -1) nextArr.splice(idx, 1);
-    return nextArr;
-  },
-  findAndRaplace<T>(
-    arr: T[],
-    findValue: (value: T) => boolean,
-    replacement: T
-  ): T[] {
-    const nextArr = [...arr];
-    const idx = nextArr.findIndex(findValue);
-    if (idx !== -1) nextArr[idx] = replacement;
     return nextArr;
   },
   removeLastClone<T>(arr: T[]): T[] {
@@ -89,7 +79,6 @@ export const Arr = {
     nextArr.pop();
     return nextArr;
   },
-
   findIn<T>(arr: T[], fn: (value: T) => boolean): T | undefined {
     const idx = arr.findIndex(fn);
     if (idx === -1) return undefined;

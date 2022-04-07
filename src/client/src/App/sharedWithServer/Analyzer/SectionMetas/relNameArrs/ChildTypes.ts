@@ -40,6 +40,8 @@ type ChildToSectionWithChildName<
   CHN extends ChildName<SimpleSectionName, FromCN>
 > = keyof StrictSubType<SectionToChildArr<ToCN>, [CHN]>;
 
+type Test = NameToNameWithSameChildren<"propertyIndex", "db", "fe">;
+
 const _testFeToDbNameWithSameChildren = (): void => {
   type TestName = FeToDbNameWithSameChildren<"property">;
   const _testName2: TestName = "property";
@@ -127,17 +129,6 @@ export type ChildIdArrs<
 > = {
   [CHN in ChildName<SN, CN>]: string[];
 };
-
-type SelfOrDescendantChildIdArrs<
-  SN extends SimpleSectionName,
-  CN extends ContextName
-> = {
-  [S in SelfOrDescendantName<SN, CN>]: OneChildIdArrs<SN, CN>;
-};
-export type SelfOrDescendantChildIdArr<
-  SN extends SimpleSectionName,
-  CN extends ContextName
-> = SelfOrDescendantChildIdArrs<SN, CN>[SelfOrDescendantName<SN, CN>];
 
 export type ChildFeInfo<SN extends SimpleSectionName<"fe">> = FeNameInfo & {
   sectionName: ChildName<SN>;
