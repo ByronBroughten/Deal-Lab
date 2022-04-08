@@ -75,8 +75,8 @@ export type DescendantIds<
 };
 
 export type SelfOrDescendantIds<
-  SN extends SimpleSectionName,
-  CN extends ContextName
+  SN extends SimpleSectionName = SimpleSectionName,
+  CN extends ContextName = ContextName
 > = {
   [S in SelfOrDescendantName<SN, CN>]: string[];
 };

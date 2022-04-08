@@ -1,6 +1,6 @@
 import { ContextName } from "./SectionMetas/relSections/baseSections";
 import { SectionContextProps, SectionName } from "./SectionMetas/SectionName";
-import { GeneralRawSections, RawSections } from "./SectionPack/RawSection";
+import { GeneralRawSections, RawSections } from "./SectionPacks/RawSection";
 
 export type GeneralSectionPack = {
   sectionName: SectionName;
