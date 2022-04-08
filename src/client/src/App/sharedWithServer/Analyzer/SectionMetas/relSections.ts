@@ -1,17 +1,17 @@
-import { preMgmtGeneral } from "./relSections/relMgmtGeneral";
-import { prePropertyGeneral } from "./relSections/relPropertyGeneral";
-import { relFinancing } from "./relSections/relFinancing";
-import { rel } from "./relSections/rel";
-import { preUserLists } from "./relSections/relUserLists";
-import { relAnalysisStuff } from "./relSections/relAnalysisStuff";
-import { GeneralRelSection, relSection } from "./relSections/rel/relSection";
-import { RelVarbs } from "./relSections/rel/relVarbs";
-import { LeftRightVarbInfos } from "./relSections/rel/relVarb";
-import { ContextName, SimpleSectionName } from "./relSections/baseSections";
 import {
   MergeUnionObj,
   MergeUnionObjNonNullable,
 } from "../../utils/types/mergeUnionObj";
+import { ContextName, SimpleSectionName } from "./relSections/baseSections";
+import { rel } from "./relSections/rel";
+import { GeneralRelSection, relSection } from "./relSections/rel/relSection";
+import { LeftRightVarbInfos } from "./relSections/rel/relVarb";
+import { RelVarbs } from "./relSections/rel/relVarbs";
+import { relAnalysisStuff } from "./relSections/relAnalysisStuff";
+import { relFinancing } from "./relSections/relFinancing";
+import { preMgmtGeneral } from "./relSections/relMgmtGeneral";
+import { prePropertyGeneral } from "./relSections/relPropertyGeneral";
+import { preUserLists } from "./relSections/relUserLists";
 
 export function makeRelSections() {
   return {
@@ -24,7 +24,7 @@ export function makeRelSections() {
           // _placeholder: rel.varb.string()
         } as RelVarbs<ContextName, "main">,
         {
-          childSectionNames: [
+          childNames: [
             "user",
             "login",
             "register",

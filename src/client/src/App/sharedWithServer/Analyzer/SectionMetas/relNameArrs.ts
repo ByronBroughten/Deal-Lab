@@ -1,22 +1,22 @@
-import { Obj, ObjectKeys } from "../../utils/Obj";
-import { SubType } from "../../utils/typescript";
-import { RelSections, relSections } from "./relSections";
-import { BaseName, isBaseName } from "./relSections/baseSectionTypes";
 import Arr from "../../utils/Arr";
-import { baseNameArrs } from "./relSections/baseSectionTypes/baseNameArrs";
-import { ContextName, SimpleSectionName } from "./relSections/baseSections";
-import { GeneralRelSection } from "./relSections/rel/relSection";
+import { Obj, ObjectKeys } from "../../utils/Obj";
+import { SubType } from "../../utils/types";
+import { HasChildSectionName } from "./relNameArrs/ChildTypes";
 import {
   HasOneParentSectionName,
   HasParentSectionName,
   IsSingleParentName,
   makeSectionToParentArrs,
 } from "./relNameArrs/ParentTypes";
-import { HasChildSectionName } from "./relNameArrs/ChildTypes";
 import {
   UserItemSectionName,
   userListItemTypes,
 } from "./relNameArrs/UserListTypes";
+import { RelSections, relSections } from "./relSections";
+import { ContextName, SimpleSectionName } from "./relSections/baseSections";
+import { BaseName, isBaseName } from "./relSections/baseSectionTypes";
+import { baseNameArrs } from "./relSections/baseSectionTypes/baseNameArrs";
+import { GeneralRelSection } from "./relSections/rel/relSection";
 
 // this is here so that there isn't spaghetti code between relSectionTypes
 // and StoreTypes
@@ -63,7 +63,7 @@ function makeRelNameArrs<SC extends ContextName>(sectionContext: SC) {
     hasChild: ObjectKeys(relSections[sectionContext]).filter((sectionName) => {
       return (
         (relSections[sectionContext][sectionName] as any as GeneralRelSection)
-          .childSectionNames.length > 0
+          .childNames.length > 0
       );
     }) as HasChildSectionName<SC>[],
     hasParent: ObjectKeys(sectionToParentArrs).filter((sectionName) => {

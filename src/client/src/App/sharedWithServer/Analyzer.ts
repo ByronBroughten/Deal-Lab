@@ -2,6 +2,7 @@ import {
   addSectionAndSolve,
   addSectionsAndSolve,
   InitSectionOptions,
+  nextAddSectionsAndSolve,
 } from "./Analyzer/methods/addSectionAndSolve";
 import { copySection } from "./Analyzer/methods/copySection";
 import {
@@ -180,6 +181,10 @@ export type AnalyzerCore = {
   varbFullNamesToSolveFor: VarbFullnamesToSolveFor;
 };
 
+// when you make this have multiple classes, you'll have to change
+// how you use Inf.is.fe(feInfo, "hasParent"); Different
+// instantiations of Analyzer will have different heads
+// then again, main could always be the head.
 export default class Analyzer {
   constructor(readonly core: AnalyzerCore) {}
   protected static makeInitialCore(): AnalyzerCore {
@@ -249,7 +254,7 @@ export default class Analyzer {
     return next.solveAllActiveVarbs();
   }
 
-  get rawSections(): RawSections {
+  get rawSections(): RawCore {
     const sectionNames = ObjectKeys(this.sections);
     return sectionNames.reduce((rawCore, sectionName) => {
       const sectionArr = this.sections[sectionName];
@@ -330,6 +335,7 @@ export default class Analyzer {
 
   copySection = copySection;
 
+  nextAddSectionsAndSolve = nextAddSectionsAndSolve;
   addSectionsAndSolve = addSectionsAndSolve;
   addSectionAndSolve = addSectionAndSolve;
 

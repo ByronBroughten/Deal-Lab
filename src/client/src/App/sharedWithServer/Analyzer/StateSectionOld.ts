@@ -1,8 +1,12 @@
-import { cloneDeep } from "lodash";
+import { cloneDeep, pick } from "lodash";
+import Analyzer from "../Analyzer";
 import { DbVarbs } from "./DbEntry";
 import { sectionMetas } from "./SectionMetas";
-import { Inf } from "./SectionMetas/Info";
-import { OneChildIdArrs } from "./SectionMetas/relNameArrs/ChildTypes";
+import { FeInfo, Inf } from "./SectionMetas/Info";
+import {
+  ChildIdArrs,
+  OneChildIdArrs,
+} from "./SectionMetas/relNameArrs/ChildTypes";
 import {
   FeParentInfo,
   ParentName,
@@ -25,7 +29,6 @@ import {
   SectionName,
 } from "./SectionMetas/SectionName";
 import { OutUpdatePack } from "./SectionMetas/VarbMeta";
-import { initStateSection } from "./StateSection/init";
 import {
   addChildFeId,
   allChildFeIds,
@@ -33,65 +36,100 @@ import {
   childFeIds,
   childFeInfos,
   childIdx,
-  insertChildFeId,
-  pushChildFeId,
   removeChildFeId,
 } from "./StateSection/methods/childIds";
 import { value, values, varbInfoValues } from "./StateSection/methods/value";
-import { replaceVarb, StateVarbs, varb } from "./StateSection/methods/varbs";
+import {
+  replaceVarb,
+  StateVarbs,
+  varb,
+  VarbValues,
+} from "./StateSection/methods/varbs";
 import StateVarb from "./StateSection/StateVarb";
 import { OutEntity } from "./StateSection/StateVarb/entities";
 
-export type NextStateSectionCore<SN extends SectionName> = {
-  feId: string;
-  parentInfo: FeParentInfo<SN>;
-  sectionName: SN;
+export function initVarbs(feInfo: FeInfo, values: VarbValues = {}): StateVarbs {
+  const nextVarbs: StateVarbs = {};
+  const { sectionName, id } = feInfo;
+  const varbMetas = sectionMetas.varbs(sectionName);
+  for (const [varbName, varbMeta] of Object.entries(varbMetas.getCore())) {
+    const proposedValue = values[varbName];
+    const isValidProposal =
+      varbName in values && varbMeta.isVarbValueType(proposedValue);
+    const value = isValidProposal ? proposedValue : varbMeta.initValue;
+    nextVarbs[varbName] = StateVarb.init({
+      varbName,
+      sectionName,
+      feId: id,
+      dbVarb: value,
+    });
+  }
+  return nextVarbs;
+}
+
+function initChildFeIds<SN extends SectionName>(
+  sectionName: SN,
+  proposed: Partial<ChildIdArrs<SN>> = {}
+): OneChildIdArrs<SN, "fe"> {
+  const sectionMeta = sectionMetas.section(sectionName, "fe");
+  return {
+    ...sectionMeta.emptyChildIds(),
+    ...pick(proposed, [
+      sectionMeta.get("childNames") as any as keyof ChildIdArrs<SN>,
+    ]),
+  };
+}
+
+export type StorableCore = {
   dbId: string;
-  varbs: StateVarbs;
-  childFeIds: OneChildIdArrs<SN, "fe">;
+  varbs: StateVarbs; // StateVarbs should be variably permissive
 };
 
-export type NextStateSectionInitProps<SN extends SectionName> = {
-  sectionName: SN;
-  parentInfo: FeParentInfo<SN>;
-  feId?: string;
+type ClientCore<S extends SectionName> = {
+  feId: string;
+  parentInfo: FeParentInfo<S>;
+  sectionName: S;
 
-  childFeIds?: Partial<OneChildIdArrs<SN, "fe">>; // empty
-  dbId?: string; // create new
-  dbVarbs?: Partial<DbVarbs>; // empty
+  // childFeIdArrs are initialized as empty; ids added as children are added
+  childFeIdArrs: ChildIdArrs<S>;
 };
 
-export type StateSectionCore<SN extends SimpleSectionName> =
-  NextStateSectionCore<SN>;
-export default class StateSection<
+export type InitStateSectionProps<S extends SectionName> = Pick<
+  ClientCore<S>,
+  "feId" | "parentInfo" | "sectionName"
+> & {
+  options?: { dbId?: string; values?: VarbValues };
+};
+
+export type StateSectionCore<S extends SimpleSectionName> = StorableCore &
+  ClientCore<S>;
+
+export default class StateSectionOld<
   S extends SimpleSectionName = SimpleSectionName
 > {
   constructor(readonly core: StateSectionCore<S>) {}
+  get parentArr() {
+    return [...this.meta.get("parents")];
+  }
   get coreClone() {
     return cloneDeep(this.core);
   }
   get meta(): NextSectionMeta<"fe", S> {
-    return sectionMetas.section(this.core.sectionName, "fe");
-  }
-
-  update(nextBaseProps: Partial<StateSectionCore<S>>): StateSection<S> {
-    return new StateSection({ ...this.core, ...nextBaseProps });
-  }
-
-  get feInfo(): FeNameInfo<S> {
-    const sectionName = this.meta.get("sectionName") as SectionName as S;
-    const feInfo: FeNameInfo<S> = {
-      sectionName,
-      id: this.feId,
-      idType: "feId",
-    };
-    return feInfo;
+    return cloneDeep(sectionMetas.get(this.core.sectionName));
   }
   get dbId(): string {
     return this.core.dbId;
   }
   get feId(): string {
     return this.core.feId;
+  }
+  get feInfo(): FeNameInfo<S> {
+    const feInfo: FeNameInfo<S> = {
+      sectionName: this.meta.core.sectionName as S,
+      id: this.feId,
+      idType: "feId",
+    };
+    return feInfo;
   }
   get dbInfo(): DbNameInfo<S> {
     return {
@@ -137,17 +175,17 @@ export default class StateSection<
     Extract<S, SectionName<"hasIndexStore">>
   > {
     const next = this as any;
-    if (StateSection.is(next, "hasIndexStore")) {
-      return next.meta.get("indexStoreName");
+    if (StateSectionOld.is(next, "hasIndexStore")) {
+      return next.meta.core.indexStoreName;
     } else throw new Error("This section has no indexStoreName.");
   }
   get defaultStoreName(): DefaultStoreName<
     Extract<S, SectionName<"hasDefaultStore">>
   > {
-    const next = this as any as StateSection<SectionName>;
-    const defaultStoreName = next.meta.get("defaultStoreName");
-    if (defaultStoreName) return defaultStoreName as DefaultStoreName;
-    else throw new Error("This section has no defaultStoreName.");
+    const next = this as any as StateSectionOld<SectionName>;
+    if (StateSectionOld.is(next, "hasDefaultStore")) {
+      return next.meta.core.indexStoreName;
+    } else throw new Error("This section has no indexStoreName.");
   }
 
   get parentName(): ParentName<S> {
@@ -190,29 +228,48 @@ export default class StateSection<
     }, [] as OutEntity[]);
   }
 
+  update(nextBaseProps: Partial<StateSectionCore<S>>): StateSectionOld<S> {
+    return new StateSectionOld({ ...this.core, ...nextBaseProps });
+  }
+
   static is<ST extends FeSectionNameType = "all">(
     value: any,
     sectionType?: ST
-  ): value is StateSection<SectionName<ST>> {
-    if (!(value instanceof StateSection)) return false;
+  ): value is StateSectionOld<SectionName<ST>> {
+    if (!(value instanceof StateSectionOld)) return false;
     return SectionNam.is(value.sectionName, (sectionType ?? "all") as ST);
   }
-
-  static init = initStateSection;
+  static init<S extends SectionName>({
+    feId,
+    sectionName,
+    parentInfo,
+    options: { dbId = Analyzer.makeId(), values } = {},
+  }: InitStateSectionProps<S>): StateSectionOld<S> {
+    const stateSectionCore: StateSectionCore<S> = {
+      feId,
+      dbId,
+      sectionName,
+      parentInfo,
+      childFeIdArrs: this.initChildFeIds(sectionName),
+      varbs: StateSectionOld.initVarbs(Inf.fe(sectionName, feId), values),
+    };
+    return new StateSectionOld(stateSectionCore);
+  }
 
   childFeIds = childFeIds;
   allChildFeIds = allChildFeIds;
   allChildFeInfos = allChildFeInfos;
   childFeInfos = childFeInfos;
 
-  insertChildFeId = insertChildFeId;
-  pushChildFeId = pushChildFeId;
+  static initChildFeIds = initChildFeIds;
   addChildFeId = addChildFeId;
   removeChildFeId = removeChildFeId;
   childIdx = childIdx;
 
   varb = varb;
   replaceVarb = replaceVarb;
+  static initVarbs = initVarbs;
+
   value = value;
   values = values;
   varbInfoValues = varbInfoValues;
