@@ -1,8 +1,21 @@
 import Analyzer from "../../../../Analyzer";
 import { FeInfo, Inf } from "../../../SectionMetas/Info";
-import { SectionNam, SectionName } from "../../../SectionMetas/SectionName";
-import StateSection, { NextStateSectionInitProps } from "../../../StateSection";
+import { SectionName } from "../../../SectionMetas/SectionName";
+import StateSection from "../../../StateSection";
+import { InitStateSectionProps } from "../../../StateSectionOld";
 
+function insertInParentChildIds(
+  next: Analyzer,
+  feInfo: FeInfo<"hasParent">,
+  idx: number
+) {
+  const nextParent = next.parent(feInfo).insertChildFeId(feInfo, idx);
+  return next.replaceInSectionArr(nextParent);
+}
+function pushToParentChildIds(next: Analyzer, feInfo: FeInfo<"hasParent">) {
+  const nextParent = next.parent(feInfo).pushChildFeId(feInfo);
+  return next.replaceInSectionArr(nextParent);
+}
 function addToParentChildIds(
   analyzer: Analyzer,
   feInfo: FeInfo,
@@ -12,31 +25,33 @@ function addToParentChildIds(
   const parentSection = analyzer.parent(feInfo);
   const nextParent = parentSection.addChildFeId(feInfo, idx);
   return analyzer.replaceInSectionArr(nextParent);
-}
+} // will this still use StateSectionOld? I think so.
 function pushSection<S extends SectionName>(
   analyzer: Analyzer,
   section: StateSection<S>
 ): Analyzer {
-  const { sectionName } = section.meta.core;
+  const { sectionName } = section;
   const nextSectionArr = [
-    ...analyzer.sections[sectionName],
+    ...analyzer.sectionArr(sectionName),
     section,
-  ] as StateSection[];
-  return analyzer.updateSectionArr(sectionName, nextSectionArr);
+  ] as any as StateSection[];
+  return analyzer.updateSectionArr(sectionName as SectionName, nextSectionArr);
 }
+
 export type InitOneSectionProps<S extends SectionName = SectionName> =
-  NextStateSectionInitProps<S> & {
+  InitStateSectionProps<S> & {
     idx?: number;
   };
 export function initOneSection<S extends SectionName>(
-  analyzer: Analyzer,
+  next: Analyzer,
   { idx, ...props }: InitOneSectionProps<S>
 ): Analyzer {
-  let next = analyzer;
   next = pushSection(next, StateSection.init(props));
-  const { sectionName } = props;
-  const { feInfo } = next.lastSection(sectionName);
-  if (SectionNam.is(sectionName, "hasParent"))
-    next = addToParentChildIds(next, feInfo, idx);
+  const { feInfo } = next.lastSection(props.sectionName);
+  if (Inf.is.fe(feInfo, "hasParent")) {
+    if (typeof idx === "number")
+      next = insertInParentChildIds(next, feInfo, idx);
+    else next = pushToParentChildIds(next, feInfo);
+  }
   return next;
 }
