@@ -1,11 +1,11 @@
-import React from "react";
 import { Button } from "@material-ui/core";
+import React from "react";
 import styled from "styled-components";
-import DropdownForm from "../general/DropdownForm";
-import theme from "../../theme/Theme";
 import { useAuthRoutes } from "../../modules/customHooks/useAuthRoutes";
 import { useAnalyzerContext } from "../../modules/usePropertyAnalyzer";
 import { LoginFormData } from "../../sharedWithServer/User/crudTypes";
+import theme from "../../theme/Theme";
+import DropdownForm from "../general/DropdownForm";
 import SmallFormTextField from "../general/SmallFormTextField";
 
 export function LoginForm() {
@@ -18,6 +18,7 @@ export function LoginForm() {
       {loginVarbNames.map((varbName) => (
         <SmallFormTextField
           {...{
+            key: varbName,
             ...varbs[varbName].inputProps("string"),
             ...(varbName === "password" && { type: "password" }),
             onChange: handleChange,

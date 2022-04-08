@@ -1,7 +1,6 @@
 import { z } from "zod";
 import { reqMonNumber, reqMonString } from "../../../../utils/mongoose";
 import { numObjUnits } from "../../../methods/solveVarbs/solveAndUpdateValue/updateNumericObjCalc";
-import { ValueName } from "./baseVarb";
 import {
   DbNumObj,
   isDbNumObj,
@@ -11,6 +10,7 @@ import {
   zDbNumObj,
 } from "./baseValues/NumObj";
 import { numObjUpdateFnNames } from "./baseValues/NumObj/updateFnNames";
+import { ValueName } from "./baseVarb";
 
 export const valueMeta = {
   number: {
@@ -19,6 +19,7 @@ export const valueMeta = {
       return this.is;
     },
     rawToState: (v: number) => v,
+    stateToRaw: (v: number) => v,
     updateFnNames: ["number"],
     dbInitValue: 0,
     defaultInit: () => 0,
@@ -32,6 +33,7 @@ export const valueMeta = {
       return this.is;
     },
     rawToState: (v: boolean) => v,
+    stateToRaw: (v: boolean) => v,
     updateFnNames: ["boolean"],
     dbInitValue: true,
     defaultInit: () => true,
@@ -42,6 +44,7 @@ export const valueMeta = {
   string: {
     is: (v: any): v is string => typeof v === "string",
     rawToState: (v: string) => v,
+    stateToRaw: (v: string) => v,
     get isRaw() {
       return this.is;
     },
@@ -59,6 +62,7 @@ export const valueMeta = {
       return this.is;
     },
     rawToState: (v: string[]) => v,
+    stateToRaw: (v: string[]) => v,
     updateFnNames: ["stringArray"],
     dbInitValue: [] as string[],
     defaultInit: () => [] as string[],
@@ -72,6 +76,7 @@ export const valueMeta = {
       return isDbNumObj;
     },
     rawToState: (v: DbNumObj) => new NumObj(v),
+    stateToRaw: (v: NumObj) => v.dbNumObj,
     updateFnNames: numObjUpdateFnNames,
     dbInitValue: {
       editorText: "",

@@ -42,7 +42,7 @@ export function initVarbs(feInfo: FeInfo, values: VarbValues = {}): StateVarbs {
       varbName,
       sectionName,
       feId: id,
-      dbVarb: value,
+      dbVarb: (varbMeta.value.stateToRaw as (v: any) => any)(value),
     });
   }
   return nextVarbs;

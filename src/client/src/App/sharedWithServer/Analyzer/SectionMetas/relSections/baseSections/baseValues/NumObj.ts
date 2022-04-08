@@ -61,7 +61,11 @@ export class NumObj {
   constructor(
     readonly core: NumObjCore,
     readonly cache: NumObjCache = { solvableText: "", number: "?" }
-  ) {}
+  ) {
+    if ("core" in core) {
+      throw new Error("That is not a valid numObj core.");
+    }
+  }
   get isDividable() {
     return !undividable.includes(this.number);
   }

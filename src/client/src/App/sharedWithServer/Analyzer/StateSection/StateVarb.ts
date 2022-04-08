@@ -221,8 +221,10 @@ export default class StateVarb {
 
   toDbValue(): DbValue {
     const value = this.value("any");
-    if (value instanceof NumObj) return value.dbNumObj;
-    else return value;
+    if (value instanceof NumObj) {
+      const dbValue = value.dbNumObj;
+      return dbValue;
+    } else return value;
   }
 
   static init = initStateVarb;

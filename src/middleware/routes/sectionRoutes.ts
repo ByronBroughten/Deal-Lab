@@ -1,21 +1,21 @@
 import express, { Request, Response } from "express";
-import authWare from "../authWare";
-import { queryOp } from "./utils/operator";
-import { UserModel } from "./shared/severSideUser";
-import { serverSend, serverValidate, validate } from "./shared/crudValidators";
-import {
-  mongo,
-  tryFindByIdAndUpdate,
-  tryFindOneAndUpdate,
-} from "./shared/tryQueries";
-import { sectionGet } from "./utils/query";
-import { DbEnt } from "../../client/src/App/sharedWithServer/Analyzer/DbEntry";
 import { config } from "../../client/src/App/Constants";
+import { DbEnt } from "../../client/src/App/sharedWithServer/Analyzer/DbEntry";
 import {
   LoggedIn,
   Req,
   Res,
 } from "../../client/src/App/sharedWithServer/User/crudTypes";
+import authWare from "../authWare";
+import { serverSend, serverValidate, validate } from "./shared/crudValidators";
+import { UserModel } from "./shared/severSideUser";
+import {
+  mongo,
+  tryFindByIdAndUpdate,
+  tryFindOneAndUpdate,
+} from "./shared/tryQueries";
+import { queryOp } from "./utils/operator";
+import { sectionGet } from "./utils/query";
 
 const sectionRouter = express.Router();
 export const sectionRoutes = {
