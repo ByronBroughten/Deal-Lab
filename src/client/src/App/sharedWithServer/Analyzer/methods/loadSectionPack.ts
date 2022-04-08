@@ -10,12 +10,12 @@ export function loadRawSectionPack<
   Props extends OrderedSectionNodeProps<SN>
 >(
   this: Analyzer,
-  rawSectionPack: RawSectionPack<SN, "fe">,
+  rawSectionPack: RawSectionPack<"fe", SN>,
   props: Props
 ): Analyzer {
   const feSectionPack = new FeSectionPack(rawSectionPack);
   const sectionNodes = feSectionPack.makeOrderedSectionNodes(
     props
   ) as FeSelfOrDescendantNode<SN>[];
-  return this.nextAddSectionsAndSolve(sectionNodes as AddSectionProps[]);
+  return this.addSectionsAndSolveNext(sectionNodes as AddSectionProps[]);
 }

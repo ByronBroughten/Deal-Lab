@@ -1,6 +1,6 @@
+import { GeneralRawSections, RawSections } from "./RawSectionPack/RawSection";
 import { ContextName } from "./SectionMetas/relSections/baseSections";
 import { SectionContextProps, SectionName } from "./SectionMetas/SectionName";
-import { GeneralRawSections, RawSections } from "./SectionPacks/RawSection";
 
 export type GeneralSectionPack = {
   sectionName: SectionName;
@@ -9,7 +9,7 @@ export type GeneralSectionPack = {
   rawSections: GeneralRawSections;
 };
 
-export type RawSectionPack<SN extends SectionName, CN extends ContextName> = {
+export type RawSectionPack<CN extends ContextName, SN extends SectionName> = {
   sectionName: SN;
   dbId: string;
   contextName: CN;
@@ -19,11 +19,11 @@ export type RawSectionPack<SN extends SectionName, CN extends ContextName> = {
 export type DbSectionPack<
   SN extends SectionName,
   CN extends ContextName
-> = Omit<RawSectionPack<SN, CN>, keyof SectionContextProps<SN, CN>>;
+> = Omit<RawSectionPack<CN, SN>, keyof SectionContextProps<SN, CN>>;
 
 function _testRawSectionPack(
-  feRaw: RawSectionPack<"propertyIndex", "fe">,
-  dbRaw: RawSectionPack<"propertyIndex", "db">
+  feRaw: RawSectionPack<"fe", "propertyIndex">,
+  dbRaw: RawSectionPack<"db", "propertyIndex">
 ) {
   const _test1 = feRaw.rawSections.cell;
   // @ts-expect-error

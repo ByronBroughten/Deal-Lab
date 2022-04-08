@@ -3,15 +3,6 @@ import { ParentFinder } from "../SectionMetas/relNameArrs/ParentTypes";
 import { SectionName } from "../SectionMetas/SectionName";
 import { internal } from "./internal";
 import { InitSectionAndChildrenProps } from "./internal/addSections";
-import { AddSectionProps } from "./internal/addSections/addSectionsTypes";
-
-export function nextAddSectionsAndSolve(
-  this: Analyzer,
-  propsArr: AddSectionProps[]
-): Analyzer {
-  const next = internal.addSectionsNext(this, propsArr);
-  return next.solveVarbs();
-}
 
 export function addSectionsAndSolve(
   this: Analyzer,

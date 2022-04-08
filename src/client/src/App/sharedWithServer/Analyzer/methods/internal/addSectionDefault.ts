@@ -1,30 +1,77 @@
+import Analyzer from "../../../Analyzer";
+import { Obj } from "../../../utils/Obj";
+import { Inf } from "../../SectionMetas/Info";
+import { SelfOrDescendantName } from "../../SectionMetas/relNameArrs/ChildTypes";
+import { ParentFinder } from "../../SectionMetas/relNameArrs/ParentTypes";
+import { Id } from "../../SectionMetas/relSections/baseSections/id";
+import { SectionName } from "../../SectionMetas/SectionName";
 import { AddSectionProps } from "./addSections/addSectionsTypes";
-
+// dbVarbs?: DbVarbs;
+// idx?: number;
+// childFeIds?: OneChildIdArrs<SN, "fe">;
 // sectionName: SN;
 // parentFinder: ParentFinder<SN>;
 // feId?: string;
-// childFeIds?: OneChildIdArrs<SN, "fe">;
 // dbId?: string;
-// dbVarbs?: DbVarbs;
-// idx?: number;
+type InputDefaultSectionProps<SN extends SectionName> = {
+  sectionName: SN;
+  parentFinder: ParentFinder<SN>;
+  feId?: string;
+  dbId?: string;
+};
+type OneDefaultSectionProps<SN extends SectionName> = {
+  sectionName: SN;
+  parentFinder: ParentFinder<SN>;
+  feId: string;
+  dbId?: string;
+};
+type SelfAndDescendantDefaultSectionProps<SN extends SectionName> = {
+  [S in SelfOrDescendantName<SN, "fe">]: OneDefaultSectionProps<S>;
+};
+type DefaultSectionProps<SN extends SectionName> =
+  SelfAndDescendantDefaultSectionProps<SN>[SelfOrDescendantName<SN, "fe">];
 
-export function addSectionDefault(props: AddSectionProps) {
-  const addSectionsProps: AddSectionProps[] = [];
-  addSectionsProps.push(props);
+// This just needs to be able to load from sane defaults
+// But do I need this right now? I don't think I do.
+// I almost might as well finish it, though.
 
-  // For now I will check for makeOneOnStartup in the children
-  // And I will default to using the defaultSections
-  // when they are available.
-
-  // I created a sectionPack
-  // it's pretty much empty
-  // The section being added shouldn't be empty, though.
-  // some children should be initialized whenever
-  // their parent is.
-  // ok, so addSection checks whether there is a default sectionPack
-  // if there is, it uses that.
-  // if not, it just makes a blank one
-  // hows that sound?
-  // I should at least initialize the children that are "alwaysOne"
-  // right?
+export function addSectionDefault<SN extends SectionName>(
+  next: Analyzer,
+  inputProps: InputDefaultSectionProps<SN>
+): Analyzer {
+  const headProps: OneDefaultSectionProps<SN> = {
+    feId: Id.make(),
+    ...inputProps,
+  };
+  const addSectionPropsArr: AddSectionProps[] = [];
+  const queue: DefaultSectionProps<SN>[] = [];
+  queue.push(headProps as DefaultSectionProps<SN>);
+  while (queue.length > 0) {
+    const queueLength = queue.length;
+    for (let i = 0; i < queueLength; i++) {
+      const sectionProp = queue.shift() as DefaultSectionProps<SN>;
+      const { sectionName, feId } = sectionProp;
+      const childFeIds = next.meta.section(sectionName).emptyChildIds();
+      for (const childName of Obj.keys(childFeIds)) {
+        // check if childName is in saneDefaults
+        // if it is, then load that up.
+        if (
+          next.meta.section(childName as SectionName).get("makeOneOnStartup")
+        ) {
+          const childId = Id.make();
+          childFeIds[childName].push(childId);
+          queue.push({
+            feId: childId,
+            sectionName: childName,
+            parentFinder: Inf.fe(sectionName, feId),
+          } as DefaultSectionProps<SN>);
+        }
+      }
+      addSectionPropsArr.push({
+        ...sectionProp,
+        childFeIds,
+      } as AddSectionProps);
+    }
+  }
+  return next.addSectionsAndSolve(addSectionPropsArr);
 }

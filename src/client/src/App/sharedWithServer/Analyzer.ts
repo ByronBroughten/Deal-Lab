@@ -2,8 +2,8 @@ import {
   addSectionAndSolve,
   addSectionsAndSolve,
   InitSectionOptions,
-  nextAddSectionsAndSolve,
 } from "./Analyzer/methods/addSectionAndSolve";
+import { addSectionsAndSolveNext } from "./Analyzer/methods/addSectionsAndSolveNext";
 import { copySection } from "./Analyzer/methods/copySection";
 import {
   directUpdateAndSolve,
@@ -335,7 +335,7 @@ export default class Analyzer {
 
   copySection = copySection;
 
-  nextAddSectionsAndSolve = nextAddSectionsAndSolve;
+  addSectionsAndSolveNext = addSectionsAndSolveNext;
   addSectionsAndSolve = addSectionsAndSolve;
   addSectionAndSolve = addSectionAndSolve;
 
