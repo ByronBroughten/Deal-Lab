@@ -46,5 +46,6 @@ function dbToFeValue(
 ) {
   const dbValue = getValidDbValue(varbNames, proposedDbValue);
   const valueMeta = sectionMetas.value(varbNames, "fe");
-  return (valueMeta.rawToState as (_: DbValue) => StateValue)(dbValue);
+  const value = (valueMeta.rawToState as (_: DbValue) => StateValue)(dbValue);
+  return value;
 }

@@ -250,8 +250,8 @@ export default class StateSectionOld<
       dbId,
       sectionName,
       parentInfo,
-      childFeIdArrs: this.initChildFeIds(sectionName),
-      varbs: StateSectionOld.initVarbs(Inf.fe(sectionName, feId), values),
+      childFeIdArrs: initChildFeIds(sectionName),
+      varbs: initVarbs(Inf.fe(sectionName, feId), values),
     };
     return new StateSectionOld(stateSectionCore);
   }
@@ -261,14 +261,12 @@ export default class StateSectionOld<
   allChildFeInfos = allChildFeInfos;
   childFeInfos = childFeInfos;
 
-  static initChildFeIds = initChildFeIds;
   addChildFeId = addChildFeId;
   removeChildFeId = removeChildFeId;
   childIdx = childIdx;
 
   varb = varb;
   replaceVarb = replaceVarb;
-  static initVarbs = initVarbs;
 
   value = value;
   values = values;

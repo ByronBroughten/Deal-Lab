@@ -13,6 +13,10 @@ import { preMgmtGeneral } from "./relSections/relMgmtGeneral";
 import { prePropertyGeneral } from "./relSections/relPropertyGeneral";
 import { preUserLists } from "./relSections/relUserLists";
 
+// the default values are going by the dbInitValues rather than
+// the full fledged values.
+// I like the idea of using the dbInitValues instead
+
 export function makeRelSections() {
   return {
     fe: {

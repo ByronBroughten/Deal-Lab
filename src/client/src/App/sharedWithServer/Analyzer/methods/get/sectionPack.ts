@@ -3,7 +3,7 @@ import { GeneralSectionPack, RawSectionPack } from "../../RawSectionPack";
 import { Inf } from "../../SectionMetas/Info";
 import { SectionFinder } from "../../SectionMetas/relSections/baseSectionTypes";
 import { SectionName } from "../../SectionMetas/SectionName";
-import { OneRawSection, RawSections } from "../../SectionPack/RawSection";
+import { OneRawSection, RawSections } from "../../SectionPacks/RawSection";
 import Analyzer from "./../../../Analyzer";
 
 export function makeRawSection<SN extends SectionName>(

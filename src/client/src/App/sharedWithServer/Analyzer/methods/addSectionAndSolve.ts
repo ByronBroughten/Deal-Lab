@@ -9,7 +9,7 @@ export function nextAddSectionsAndSolve(
   this: Analyzer,
   propsArr: AddSectionProps[]
 ): Analyzer {
-  const next = internal.nextAddSections(this, propsArr);
+  const next = internal.addSectionsNext(this, propsArr);
   return next.solveVarbs();
 }
 

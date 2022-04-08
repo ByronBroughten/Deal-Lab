@@ -1,12 +1,10 @@
 import Analyzer from "../../../Analyzer";
-import { sectionMetas } from "../../SectionMetas";
 import {
   FeParentInfo,
   ParentFinder,
   ParentName,
   SectionParentFinder,
 } from "../../SectionMetas/relNameArrs/ParentTypes";
-import { SectionFinder } from "../../SectionMetas/relSections/baseSectionTypes";
 import { SpecificSectionInfo } from "../../SectionMetas/relSections/rel/relVarbInfoTypes";
 import { SectionNam, SectionName } from "../../SectionMetas/SectionName";
 import StateSection from "../../StateSection";
@@ -35,10 +33,10 @@ export function parent<S extends SectionName<"hasParent">>(
   }
 }
 
-export function parentFinderToInfo<SN extends SectionName>(
+export function parentFinderToInfo<SN extends SectionName = SectionName>(
   this: Analyzer,
-  _sectionName: SN,
-  parentFinder: ParentFinder<SN>
+  parentFinder: ParentFinder<SN>,
+  _sectionName?: SN
 ): FeParentInfo<SN> {
   if (typeof parentFinder !== "string") return parentFinder;
   const { feInfo } = this.section(parentFinder);

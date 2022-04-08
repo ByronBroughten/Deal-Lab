@@ -3,7 +3,6 @@ import { FeInfo, Inf } from "../../SectionMetas/Info";
 import { FeVarbInfo } from "../../SectionMetas/relSections/rel/relVarbInfoTypes";
 import { SectionName } from "../../SectionMetas/SectionName";
 import { internal } from "../internal";
-import { AddSectionProps } from "./addSections/addSectionsTypes";
 import {
   gatherSectionInitProps,
   GatherSectionInitPropsProps,
@@ -12,37 +11,6 @@ import {
   initOneSection,
   InitOneSectionProps,
 } from "./addSections/initOneSection";
-
-function feInfosFromInitPropsArr(
-  initPropsArr: InitOneSectionProps[]
-): FeInfo[] {
-  return initPropsArr.map((initProps) => {
-    const { feId, sectionName } = initProps;
-    return Inf.fe(sectionName, feId);
-  });
-}
-
-export type InitSectionAndChildrenProps<S extends SectionName = SectionName> =
-  Omit<GatherSectionInitPropsProps<S>, "propArr">;
-function initSectionAndChildren<S extends SectionName>(
-  analyzer: Analyzer,
-  props: InitSectionAndChildrenProps<S>
-): Analyzer {
-  let next = analyzer;
-
-  const initPropsArr = gatherSectionInitProps(next, props);
-  const newFeInfos: FeInfo[] = [];
-  for (const initProps of initPropsArr) {
-    next = initOneSection(next, initProps);
-    const { feId, sectionName } = initProps;
-    newFeInfos.push(Inf.fe(sectionName, feId));
-  }
-
-  next = initOutEntities(next, newFeInfos);
-
-  const varbInfosToSolveFor: FeVarbInfo[] = next.nestedFeVarbInfos(newFeInfos);
-  return next.addVarbsToSolveFor(...varbInfosToSolveFor);
-}
 
 export function addSections(
   analyzer: Analyzer,
@@ -56,21 +24,22 @@ export function addSections(
   return next;
 }
 
-export function nextAddSections(
+export type InitSectionAndChildrenProps<S extends SectionName = SectionName> =
+  Omit<GatherSectionInitPropsProps<S>, "propArr">;
+function initSectionAndChildren<S extends SectionName>(
   next: Analyzer,
-  parentFirstPropsList: AddSectionProps[]
-) {
+  props: InitSectionAndChildrenProps<S>
+): Analyzer {
+  const initPropsArr = gatherSectionInitProps(next, props);
   const newFeInfos: FeInfo[] = [];
-  for (const props of parentFirstPropsList) {
-    next = initOneSection(next, props);
-    const newFeInfo = next.lastSection(props.sectionName).feInfo;
-    newFeInfos.push(newFeInfo);
+  for (const initProps of initPropsArr) {
+    next = initOneSection(next, initProps);
+    const { feId, sectionName } = initProps;
+    newFeInfos.push(Inf.fe(sectionName, feId));
   }
-  return finalizeNewSections(next, newFeInfos);
-}
 
-function finalizeNewSections(next: Analyzer, newFeInfos: FeInfo[]) {
   next = initOutEntities(next, newFeInfos);
+
   const varbInfosToSolveFor: FeVarbInfo[] = next.nestedFeVarbInfos(newFeInfos);
   return next.addVarbsToSolveFor(...varbInfosToSolveFor);
 }
@@ -96,4 +65,13 @@ function addOutEntitiesForSectionInVarbs(
     }
   }
   return next;
+}
+
+function feInfosFromInitPropsArr(
+  initPropsArr: InitOneSectionProps[]
+): FeInfo[] {
+  return initPropsArr.map((initProps) => {
+    const { feId, sectionName } = initProps;
+    return Inf.fe(sectionName, feId);
+  });
 }

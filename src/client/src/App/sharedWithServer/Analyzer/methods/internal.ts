@@ -1,4 +1,5 @@
-import { addSections, nextAddSections } from "./internal/addSections";
+import { addSections } from "./internal/addSections";
+import { addSectionsNext } from "./internal/addSectionsNext";
 import {
   eraseChildren,
   eraseSectionAndChildren,
@@ -27,5 +28,5 @@ export const internal = {
   resetSectionAndChildDbIds,
   updateValue,
   updateValueDirectly,
-  nextAddSections,
+  addSectionsNext,
 } as const;

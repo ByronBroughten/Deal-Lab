@@ -1,11 +1,11 @@
 import { DbVarbs } from "../../../DbEntry";
 import { OneChildIdArrs } from "../../../SectionMetas/relNameArrs/ChildTypes";
-import { FeParentInfo } from "../../../SectionMetas/relNameArrs/ParentTypes";
+import { ParentFinder } from "../../../SectionMetas/relNameArrs/ParentTypes";
 import { SectionName } from "../../../SectionMetas/SectionName";
 
 export type OneAddSectionProps<SN extends SectionName> = {
   sectionName: SN;
-  parentInfo: FeParentInfo<SN>;
+  parentFinder: ParentFinder<SN>;
   feId?: string;
   childFeIds?: OneChildIdArrs<SN, "fe">;
   dbId?: string;

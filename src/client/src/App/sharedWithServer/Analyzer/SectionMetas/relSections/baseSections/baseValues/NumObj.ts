@@ -1,11 +1,10 @@
 import { cloneDeep } from "lodash";
 import { Schema } from "mongoose";
 import { z } from "zod";
+import array from "../../../../../utils/Arr";
 import { reqMonString } from "../../../../../utils/mongoose";
-import {
-  isRationalNumber,
-  isStringRationalNumber,
-} from "../../../../../utils/Str";
+import { isStringRationalNumber } from "../../../../../utils/Str";
+import { DbVarbInfo, RelVarbInfo } from "../../rel/relVarbInfoTypes";
 import {
   InEntities,
   InEntity,
@@ -13,8 +12,6 @@ import {
   zInEntities,
 } from "./NumObj/entities";
 import { NumObjUpdateFnName } from "./NumObj/updateFnNames";
-import array from "../../../../../utils/Arr";
-import { DbVarbInfo, RelVarbInfo } from "../../rel/relVarbInfoTypes";
 
 export const zDbNumObj = z.object({
   editorText: z.string(),
@@ -23,8 +20,13 @@ export const zDbNumObj = z.object({
 export type DbNumObj = z.infer<typeof zDbNumObj> & { entities: InEntities };
 
 export function isDbNumObj(value: any): value is DbNumObj {
-  // quick and imprecise is fine for this
-  return typeof value.editorText === "string" && Array.isArray(value.entities);
+  // speed is important for this
+  return (
+    typeof value === "object" &&
+    "editorText" in value &&
+    typeof value.editorText === "string" &&
+    Array.isArray(value.entities)
+  );
 }
 export function dbNumObj(
   editorText: string | number,

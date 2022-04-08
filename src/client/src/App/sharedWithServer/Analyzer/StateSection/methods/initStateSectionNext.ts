@@ -1,21 +1,21 @@
 import { pick } from "lodash";
-import { Obj } from "../../utils/Obj";
-import { DbVarbs } from "../DbEntry";
-import { sectionMetas } from "../SectionMetas";
+import { Obj } from "../../../utils/Obj";
+import { DbVarbs } from "../../DbEntry";
+import { sectionMetas } from "../../SectionMetas";
 import {
   ChildIdArrs,
   OneChildIdArrs,
-} from "../SectionMetas/relNameArrs/ChildTypes";
-import { Id } from "../SectionMetas/relSections/baseSections/id";
-import { SectionName } from "../SectionMetas/SectionName";
+} from "../../SectionMetas/relNameArrs/ChildTypes";
+import { Id } from "../../SectionMetas/relSections/baseSections/id";
+import { SectionName } from "../../SectionMetas/SectionName";
 import StateSection, {
   NextStateSectionCore,
   NextStateSectionInitProps,
-} from "../StateSection";
-import { StateVarbs } from "./methods/varbs";
-import StateVarb from "./StateVarb";
+} from "../../StateSection";
+import StateVarb from "../StateVarb";
+import { StateVarbs } from "./varbs";
 
-export function initStateSection<SN extends SectionName>(
+export function initStateSectionNext<SN extends SectionName>(
   props: NextStateSectionInitProps<SN>
 ) {
   const core = initCore(props);

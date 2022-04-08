@@ -44,8 +44,8 @@ function gatherInitPropsFromDbEntry<SN extends SectionName>(
   propArr.push({
     ...{
       parentInfo: analyzer.parentFinderToInfo(
-        baseSectionProps.sectionName,
-        parentFinder
+        parentFinder,
+        baseSectionProps.sectionName
       ),
       ...rest,
     },
@@ -88,8 +88,8 @@ function gatherInitPropsByDefault<S extends SectionName>(
   propArr.push({
     ...rest,
     parentInfo: analyzer.parentFinderToInfo(
-      baseSectionProps.sectionName,
-      parentFinder
+      parentFinder,
+      baseSectionProps.sectionName
     ),
     options: { values },
   });

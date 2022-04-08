@@ -86,6 +86,7 @@ export default class StateVarb {
     const current = this.manualUpdateEditorToggle;
     return wasUpdatedByEditor ? current : !current;
   }
+
   get fullName(): string {
     return StateVarb.feVarbInfoToFullName(this.feVarbInfo);
   }

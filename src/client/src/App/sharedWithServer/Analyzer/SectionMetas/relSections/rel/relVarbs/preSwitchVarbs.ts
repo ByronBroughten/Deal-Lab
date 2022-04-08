@@ -1,16 +1,16 @@
 import {
+  CalculationName,
+  LeftRightPropCalculations,
+} from "../../baseSections/baseValues/NumObj/calculations";
+import { BaseName } from "../../baseSectionTypes";
+import { PreNumObjOptions, relVarb } from "../relVarb";
+import { InRelVarbInfo } from "../relVarbInfoTypes";
+import {
   DisplayName,
   NumObjRelVarb,
   StringPreVarb,
   UpdateFnProps,
 } from "../relVarbTypes";
-import { InRelVarbInfo } from "../relVarbInfoTypes";
-import { PreNumObjOptions, relVarb } from "../relVarb";
-import { BaseName } from "../../baseSectionTypes";
-import {
-  CalculationName,
-  LeftRightPropCalculations,
-} from "../../baseSections/baseValues/NumObj/calculations";
 
 type SwitchProps<T extends BaseName> = [
   sectionName: T,
@@ -147,6 +147,7 @@ export function switchInput(
     ...numObjPreVarbs,
     [varbNames.switch]: relVarb.type("string", {
       initValue: switchInitValue,
+      dbInitValue: switchInitValue,
     }),
   };
 }

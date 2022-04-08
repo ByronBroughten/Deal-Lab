@@ -1,8 +1,9 @@
 import Analyzer from "../../Analyzer";
+import { FeSectionPack, OrderedSectionNodeProps } from "../FeSectionPack";
+import { FeSelfOrDescendantNode } from "../FeSectionPacks/FeSectionNode";
 import { RawSectionPack } from "../RawSectionPack";
 import { SectionName } from "../SectionMetas/SectionName";
-import { FeSectionPack, OrderedSectionNodeProps } from "../SectionPackFe";
-import { FeSectionNode } from "../SectionPackFe/FeSectionNode";
+import { AddSectionProps } from "./internal/addSections/addSectionsTypes";
 
 export function loadRawSectionPack<
   SN extends SectionName,
@@ -15,6 +16,6 @@ export function loadRawSectionPack<
   const feSectionPack = new FeSectionPack(rawSectionPack);
   const sectionNodes = feSectionPack.makeOrderedSectionNodes(
     props
-  ) as FeSectionNode[];
-  return this.nextAddSectionsAndSolve(sectionNodes);
+  ) as FeSelfOrDescendantNode<SN>[];
+  return this.nextAddSectionsAndSolve(sectionNodes as AddSectionProps[]);
 }

@@ -25,7 +25,6 @@ import {
   SectionName,
 } from "./SectionMetas/SectionName";
 import { OutUpdatePack } from "./SectionMetas/VarbMeta";
-import { initStateSection } from "./StateSection/init";
 import {
   addChildFeId,
   allChildFeIds,
@@ -37,6 +36,8 @@ import {
   pushChildFeId,
   removeChildFeId,
 } from "./StateSection/methods/childIds";
+import { initStateSection } from "./StateSection/methods/initStateSection";
+import { initStateSectionNext } from "./StateSection/methods/initStateSectionNext";
 import { value, values, varbInfoValues } from "./StateSection/methods/value";
 import { replaceVarb, StateVarbs, varb } from "./StateSection/methods/varbs";
 import StateVarb from "./StateSection/StateVarb";
@@ -60,6 +61,8 @@ export type NextStateSectionInitProps<SN extends SectionName> = {
   dbId?: string; // create new
   dbVarbs?: Partial<DbVarbs>; // empty
 };
+
+// childFeIdArrs, feId, dbId, parentInfo, sectionName, varbs
 
 export type StateSectionCore<SN extends SimpleSectionName> =
   NextStateSectionCore<SN>;
@@ -199,6 +202,7 @@ export default class StateSection<
   }
 
   static init = initStateSection;
+  static initNext = initStateSectionNext;
 
   childFeIds = childFeIds;
   allChildFeIds = allChildFeIds;
