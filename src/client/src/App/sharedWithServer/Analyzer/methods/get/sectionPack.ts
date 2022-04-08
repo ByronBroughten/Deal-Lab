@@ -9,7 +9,7 @@ import Analyzer from "./../../../Analyzer";
 export function makeRawSection<SN extends SectionName>(
   this: Analyzer,
   finder: SectionFinder<SN>
-): OneRawSection<SN, "fe"> {
+): OneRawSection<"fe", SN> {
   const { dbId, dbVarbs } = this.section(finder);
   return {
     dbId,
@@ -17,11 +17,11 @@ export function makeRawSection<SN extends SectionName>(
     childDbIds: this.allChildDbIds(finder),
   };
 }
-function feIdsToRawSections<S extends SectionName>(
+function feIdsToRawSections<SN extends SectionName>(
   analyzer: Analyzer,
-  sectionName: S,
+  sectionName: SN,
   feIdArr: string[]
-): OneRawSection<S, "fe">[] {
+): OneRawSection<"fe", SN>[] {
   return feIdArr.map((id) => {
     const feInfo = Inf.fe(sectionName, id);
     return analyzer.makeRawSection(feInfo);

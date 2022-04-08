@@ -1,7 +1,7 @@
-import { authTokenKey, Res } from "../../sharedWithServer/User/crudTypes";
+import { authTokenKey, Res } from "../../sharedWithServer/Crud";
+import { crud } from "../crud";
 import { auth } from "../services/authService";
 import { useAnalyzerContext } from "../usePropertyAnalyzer";
-import { crud } from "../crud";
 
 export function useAuthRoutes() {
   const { analyzer, handleSet } = useAnalyzerContext();

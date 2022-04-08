@@ -1,173 +1,90 @@
 import Analyzer from "../../Analyzer";
-import { DbEntry } from "../DbEntry";
-import {
-  DbNumObj,
-  dbNumObj,
-} from "../SectionMetas/relSections/baseSections/baseValues/NumObj";
-import { Ent } from "../SectionMetas/relSections/baseSections/baseValues/NumObj/entities";
-
-function dbProperty({
-  propertyDbId = Analyzer.makeId(),
-  unitDbId = Analyzer.makeId(),
-  propertyValues = {},
-  unitValues = {},
-}: {
-  propertyDbId?: string;
-  unitDbId?: string;
-  propertyValues?: {
-    price?: DbNumObj;
-    sqft?: DbNumObj;
-    homeInsYearly?: DbNumObj;
-  };
-  unitValues?: {
-    targetRentMonthly?: DbNumObj;
-  };
-} = {}): DbEntry {
-  return {
-    dbId: propertyDbId,
-    dbSections: {
-      property: [
-        {
-          dbId: propertyDbId,
-          childDbIds: {
-            unit: [unitDbId],
-          },
-          dbVarbs: {
-            ...propertyValues,
-          },
-        },
-      ],
-      unit: [
-        {
-          dbId: unitDbId,
-          childDbIds: {},
-          dbVarbs: {
-            ...unitValues,
-          },
-        },
-      ],
-    },
-  };
-}
+import { RawSectionPack } from "../RawSectionPack";
+import { NumObj } from "../SectionMetas/relSections/baseSections/baseValues/NumObj";
+import { FeNameInfo } from "../SectionMetas/relSections/rel/relVarbInfoTypes";
+import StateSection from "../StateSection";
 
 describe("Analyzer.addSectionAndSolve", () => {
-  const simpleProps = ["property", "propertyGeneral"] as const;
   let next: Analyzer;
-  let numPropertiesInitial: number;
-  let propertyDbId: string;
-  let unitDbId: string;
+  let initSection: StateSection;
+  let rawSectionPack: RawSectionPack<"fe">;
+  let nextSection: StateSection;
 
-  beforeEach(async () => {
-    propertyDbId = Analyzer.makeId();
-    unitDbId = Analyzer.makeId();
+  beforeEach(() => {
     next = Analyzer.initAnalyzer();
-
-    numPropertiesInitial = next.sectionArr("property").length;
+    initSection = next.lastSection("property") as StateSection;
   });
+
+  function exec() {
+    rawSectionPack = next.makeRawSectionPack(initSection.feInfo);
+    next = next.loadRawSectionPack(rawSectionPack, {
+      parentFinder: next.section("propertyGeneral").feInfo,
+    });
+    nextSection = next.lastSection("property") as StateSection;
+  }
 
   describe("section changes", () => {
+    let initSectionArr: StateSection[];
+    beforeEach(() => {
+      initSectionArr = next.sectionArr("property") as StateSection[];
+      initSection = next.lastSection("property") as StateSection;
+    });
     it("should make one more section", () => {
-      next = next.addSectionAndSolve(...simpleProps);
-      expect(next.sectionArr("property").length).toBe(numPropertiesInitial + 1);
+      exec();
+      expect(next.sectionArr("property").length).toBe(
+        initSectionArr.length + 1
+      );
     });
-    it("should make one child section", () => {
-      next = next.addSectionAndSolve(...simpleProps);
-      const property = next.lastSection("property");
-      property.childFeIds("unit");
-    });
-    it("should make a section with the provided dbId", () => {
-      next = next.addSectionAndSolve(...simpleProps);
-      const property = next.lastSection("property");
-      expect(property.dbId === propertyDbId);
+    it("should make a section with the same dbId", () => {
+      exec();
+      expect(initSection.dbId === nextSection.dbId);
     });
   });
-
-  describe("value changes", () => {
-    const propertyValues = {
-      price: dbNumObj(500000),
-      sqft: dbNumObj(10000),
-    } as const;
-    const unitValues = {
-      targetRentMonthly: dbNumObj(5000),
-    } as const;
-
-    let entryProps: [...typeof simpleProps, { dbEntry: DbEntry }];
-
-    beforeEach(async () => {
-      entryProps = [
-        ...simpleProps,
-        {
-          dbEntry: dbProperty({
-            propertyDbId,
-            unitDbId,
-            propertyValues,
-            unitValues,
-          }),
-        },
-      ];
+  describe("children changes", () => {
+    let initChildArr: StateSection[];
+    beforeEach(() => {
+      next = next.addSectionAndSolve(
+        "unit",
+        initSection.feInfo as FeNameInfo<"property">
+      );
+      initSection = next.lastSection("property") as StateSection;
+      initChildArr = next.sectionArr("unit") as StateSection[];
     });
-    it("should have its dbEntry values", () => {
-      next = next.addSectionAndSolve(...entryProps);
-      const property = next.lastSection("property");
-      expect(property.value("price", "numObj").editorText).toBe(
-        propertyValues.price.editorText
-      );
-      expect(property.value("sqft", "numObj").editorText).toBe(
-        propertyValues.sqft.editorText
-      );
-    });
-    it("should solve all values", () => {
-      next = next.addSectionAndSolve(...entryProps);
-      const nextTotalInvestment = next
-        .section("final")
-        .value("totalInvestment", "numObj").number;
-      const nextCashFlowMonthly = next
-        .section("final")
-        .value("cashFlowMonthly", "numObj").number;
-      expect(nextTotalInvestment).toBe(
-        finalValues.totalInvestment + parseInt(propertyValues.price.editorText)
-      );
-      expect(nextCashFlowMonthly).toBe(
-        finalValues.cashFlowMonthly +
-          parseInt(unitValues.targetRentMonthly.editorText)
+    it("should add children equal to the number in the section from where the rawSectionPack came", () => {
+      exec();
+      expect(next.sectionArr("unit").length).toBe(
+        initChildArr.length + initSection.childFeIds("unit").length
       );
     });
   });
-  describe("outEntityChanges", () => {
-    function pgInEntity(varbName: string, offset: number) {
-      return next.newInEntity("propertyGeneral", varbName, offset);
-    }
+  describe("valueChanges", () => {
+    const priceNumber = 500000;
+    const updateValues = {
+      title: "Test Title",
+      price: new NumObj({ editorText: `${priceNumber}`, entities: [] }),
+    };
+    let initInvestment: NumObj;
 
-    const varbName1 = "price";
-    const varbName2 = "sqft";
-    beforeEach(async () => {});
-
-    it("should add outEntities for inEntities", () => {
-      const [entityName1, entity1] = pgInEntity(varbName1, 0);
-      const [entityName2, entity2] = pgInEntity(
-        varbName2,
-        entityName1.length + 1
+    beforeEach(() => {
+      next = next.updateSectionValuesAndSolve(initSection.feInfo, updateValues);
+      initSection = next.lastSection("property") as StateSection;
+      initInvestment = next.section("final").value("totalInvestment", "numObj");
+    });
+    it("should add a section with the same values as the one from where the rawSectinPack came", () => {
+      exec();
+      expect(nextSection.value("title")).toBe(updateValues.title);
+      expect(nextSection.value("price", "numObj").editorText).toBe(
+        updateValues.price.editorText
       );
-
-      next = next.addSectionAndSolve("property", "propertyGeneral", {
-        dbEntry: dbProperty({
-          propertyValues: {
-            homeInsYearly: {
-              editorText: `${entityName1}+${entityName2}`,
-              entities: [entity1, entity2],
-            },
-          },
-        }),
-      });
-
-      const homeInsYearlyInfo = next
-        .lastSection("property")
-        .varb("homeInsYearly").feVarbInfo;
-      const propertyGeneral = next.section("propertyGeneral");
-      const outEntity1 = propertyGeneral.varb(varbName1).outEntities[0];
-      const outEntity2 = propertyGeneral.varb(varbName2).outEntities[0];
-      expect(outEntity1).toEqual(Ent.outEntity(homeInsYearlyInfo, entity1));
-      expect(outEntity2).toEqual(Ent.outEntity(homeInsYearlyInfo, entity2));
+    });
+    it("should solve", () => {
+      exec();
+      const finalInvestment = next
+        .section("final")
+        .value("totalInvestment", "numObj");
+      expect(finalInvestment.number).toBe(
+        (initInvestment.number as number) + priceNumber
+      );
     });
   });
 });

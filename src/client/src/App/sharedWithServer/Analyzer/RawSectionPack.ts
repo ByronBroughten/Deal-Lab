@@ -9,17 +9,20 @@ export type GeneralSectionPack = {
   rawSections: GeneralRawSections;
 };
 
-export type RawSectionPack<CN extends ContextName, SN extends SectionName> = {
+export type RawSectionPack<
+  CN extends ContextName,
+  SN extends SectionName = SectionName
+> = {
   sectionName: SN;
   dbId: string;
   contextName: CN;
   rawSections: RawSections<SN, CN>;
 };
 
-export type DbSectionPack<
-  SN extends SectionName,
-  CN extends ContextName
-> = Omit<RawSectionPack<CN, SN>, keyof SectionContextProps<SN, CN>>;
+export type SectionPackDb<SN extends SectionName> = Omit<
+  RawSectionPack<"db", SN>,
+  keyof SectionContextProps<SN, "db">
+>;
 
 function _testRawSectionPack(
   feRaw: RawSectionPack<"fe", "propertyIndex">,

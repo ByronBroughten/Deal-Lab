@@ -28,3 +28,10 @@ export function zValidate(value: any, zSchema: z.ZodTypeAny): boolean {
     return false;
   }
 }
+
+export const zodSchema = {
+  nanoId: zNanoId,
+  string: zString,
+  number: zNumber,
+  array: (zValue: z.ZodTypeAny) => z.array(zValue).max(9999),
+};

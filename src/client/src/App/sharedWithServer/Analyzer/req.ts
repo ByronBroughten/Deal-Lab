@@ -1,4 +1,4 @@
-import { Req } from "../User/crudTypes";
+import { Req } from "../Crud";
 import Analyzer from "./../Analyzer";
 import { FeInfo } from "./SectionMetas/Info";
 import { SectionFinder } from "./SectionMetas/relSections/baseSectionTypes";

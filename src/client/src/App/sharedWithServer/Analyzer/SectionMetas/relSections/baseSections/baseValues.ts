@@ -105,3 +105,9 @@ function testValues<T extends RelValueTest>(test: T): T {
   return test;
 }
 const _ = testValues(valueMeta);
+
+const zDbValueArr = Object.values(valueMeta).map((schema) => schema.dbZod) as [
+  z.ZodTypeAny,
+  z.ZodTypeAny
+];
+export const zDbValue = z.union(zDbValueArr);

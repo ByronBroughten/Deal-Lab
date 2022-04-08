@@ -1,8 +1,8 @@
 import axios, { AxiosResponse } from "axios"; // npm i axios
 import { toast } from "react-toastify";
-import logger from "./logService";
+import { authTokenKey } from "../../sharedWithServer/Crud";
 import { auth } from "./authService";
-import { authTokenKey } from "../../sharedWithServer/User/crudTypes";
+import logger from "./logService";
 
 axios.interceptors.request.use(function (config) {
   if (config.headers && config.headers.common) {

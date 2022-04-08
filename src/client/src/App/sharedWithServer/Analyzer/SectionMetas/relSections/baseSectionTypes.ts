@@ -5,14 +5,14 @@ import {
   ContextName,
   SimpleSectionName,
 } from "./baseSections";
-import { SpecificSectionInfo } from "./rel/relVarbInfoTypes";
+import { ValueName } from "./baseSections/baseVarb";
 import {
   baseNameArrs,
   BaseNameArrs,
   BaseNameSelector,
   depreciatingDbStoreNames,
 } from "./baseSectionTypes/baseNameArrs";
-import { ValueName } from "./baseSections/baseVarb";
+import { SpecificSectionInfo } from "./rel/relVarbInfoTypes";
 
 export type BaseName<
   ST extends BaseNameSelector<SC> = "all",
@@ -44,7 +44,7 @@ export type SectionVarbNameByType<
 > = keyof SubType<BaseSectionVarbs<SC, SN>, VLN>;
 
 //
-export type DbSectionSchemas = typeof baseSections.db;
+export type BaseSectionsDb = typeof baseSections.db;
 export type DbStoreName = typeof depreciatingDbStoreNames[number];
 export const dbStoreNames = depreciatingDbStoreNames;
 

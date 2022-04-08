@@ -1,10 +1,10 @@
 import { z } from "zod";
-import { config } from "../../Constants";
-import { SectionNam, SectionName } from "../Analyzer/SectionMetas/SectionName";
-import { DbEntry, zDbEntry } from "../Analyzer/DbEntry";
-import { dbLimits } from "../utils/dbLimts";
-import { message, zNanoId } from "../utils/zod";
+import { config } from "../Constants";
+import { DbEntry, zDbEntry } from "./Analyzer/DbEntry";
+import { SectionNam, SectionName } from "./Analyzer/SectionMetas/SectionName";
 import { LoginUser, zDbEntryArr } from "./DbUser";
+import { dbLimits } from "./utils/dbLimts";
+import { message, zNanoId } from "./utils/zod";
 
 export const authTokenKey = "x-auth-token";
 

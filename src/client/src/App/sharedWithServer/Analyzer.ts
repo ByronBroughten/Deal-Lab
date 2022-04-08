@@ -129,6 +129,7 @@ import {
   loadSectionFromFeIndex,
   setAsDefaultSectionArr,
 } from "./Analyzer/methods/loadSectionFromStore";
+import { loadRawSectionPack } from "./Analyzer/methods/loadSectionPack";
 import { resetSectionAndSolve } from "./Analyzer/methods/resetSectionAndSolve";
 import { solveAllActiveVarbs, solveVarbs } from "./Analyzer/methods/solveVarbs";
 import {
@@ -341,6 +342,8 @@ export default class Analyzer {
 
   loadSectionArrAndSolve = loadSectionArrAndSolve;
   loadSectionArrsAndSolve = loadSectionArrsAndSolve;
+
+  loadRawSectionPack = loadRawSectionPack;
 
   resetSectionAndSolve = resetSectionAndSolve;
   sectionArr = sectionArr;

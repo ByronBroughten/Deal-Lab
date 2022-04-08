@@ -9,7 +9,9 @@ export function sectionArr<S extends SectionName>(
   sectionName: S,
   feIds?: string[]
 ): StateSection<S>[] {
-  let sectionArr = this.sections[sectionName] as StateSection<SectionName>[];
+  let sectionArr = [
+    ...this.sections[sectionName],
+  ] as StateSection<SectionName>[];
   if (feIds)
     sectionArr = sectionArr.filter((section) => feIds.includes(section.feId));
   return sectionArr as any as StateSection<S>[];

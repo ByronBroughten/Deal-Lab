@@ -1,4 +1,4 @@
-import { authTokenKey } from "../../sharedWithServer/User/crudTypes";
+import { authTokenKey } from "../../sharedWithServer/Crud";
 
 // this stuff must be separate from Analyzer because
 // Analyzer can be on the serverSide while this can't
