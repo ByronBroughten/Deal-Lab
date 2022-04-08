@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
-import { crudRegister } from "./userRoutes/register";
+import { config } from "../client/src/App/Constants";
 import { login } from "./userRoutes/login";
-import { config } from "../../client/src/App/Constants";
+import { crudRegister } from "./userRoutes/register";
 
 const userRouter = express.Router();
 userRouter[crudRegister.operation](

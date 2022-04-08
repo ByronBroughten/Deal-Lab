@@ -1,18 +1,18 @@
-import { Response } from "express";
 import config from "config";
+import { Response } from "express";
 import jwt from "jsonwebtoken";
 import { isObject } from "lodash";
 import mongoose from "mongoose";
-import { authTokenKey } from "../../../../client/src/App/sharedWithServer/User/crudTypes";
+import { authTokenKey } from "../../../../client/src/App/sharedWithServer/Crud";
 import {
   DbUser,
   LoginUser,
 } from "../../../../client/src/App/sharedWithServer/User/DbUser";
-import Arr from "../../../../client/src/App/sharedWithServer/utils/Arr";
-import { SectionNam } from "../../../../client/src/App/sharedWithServer/Analyzer/SectionMetas/SectionName";
-import { DbEnt } from "../../../../client/src/App/sharedWithServer/Analyzer/DbEntry";
-import { rowIndexToTableName } from "../../../../client/src/App/sharedWithServer/Analyzer/SectionMetas/relNameArrs/StoreTypes";
-import { sectionMetas } from "../../../../client/src/App/sharedWithServer/Analyzer/SectionMetas";
+import { DbEnt } from "../../../client/src/App/sharedWithServer/Analyzer/DbEntry";
+import { sectionMetas } from "../../../client/src/App/sharedWithServer/Analyzer/SectionMetas";
+import { rowIndexToTableName } from "../../../client/src/App/sharedWithServer/Analyzer/SectionMetas/relNameArrs/StoreTypes";
+import { SectionNam } from "../../../client/src/App/sharedWithServer/Analyzer/SectionMetas/SectionName";
+import Arr from "../../../client/src/App/sharedWithServer/utils/Arr";
 
 export type UserJwt = { _id: string };
 function tokenHasCorrectProps(value: any) {

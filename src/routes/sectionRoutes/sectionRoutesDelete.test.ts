@@ -1,16 +1,13 @@
-import { config } from "../../../client/src/App/Constants";
-import Analyzer from "../../../client/src/App/sharedWithServer/Analyzer";
-import {
-  Req,
-  Res,
-} from "../../../client/src/App/sharedWithServer/User/crudTypes";
-import { urlPlusParams } from "../../../client/src/App/utils/url";
-import { sectionRoutes } from "../sectionRoutes";
 import request from "supertest";
-import { runApp } from "../../../runApp";
-import { serverSideLogin } from "../userRoutes/shared/doLogin";
+import { config } from "../../client/src/App/Constants";
+import Analyzer from "../../client/src/App/sharedWithServer/Analyzer";
+import { DbStoreName } from "../../client/src/App/sharedWithServer/Analyzer/SectionMetas/relSections/baseSectionTypes";
+import { Req, Res } from "../../client/src/App/sharedWithServer/Crud";
+import { urlPlusParams } from "../../client/src/App/utils/url";
+import { runApp } from "../../runApp";
+import { sectionRoutes } from "../sectionRoutes";
 import { serverSideUser, UserModel } from "../shared/severSideUser";
-import { DbStoreName } from "../../../client/src/App/sharedWithServer/Analyzer/SectionMetas/relSections/baseSectionTypes";
+import { serverSideLogin } from "../userRoutes/shared/doLogin";
 
 describe("section delete", () => {
   const sectionName = "property";

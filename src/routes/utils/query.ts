@@ -1,6 +1,6 @@
 import { Response } from "express";
-import { DbEntry } from "../../../client/src/App/sharedWithServer/Analyzer/DbEntry";
-import { DbStoreName } from "../../../client/src/App/sharedWithServer/Analyzer/SectionMetas/relSections/baseSectionTypes";
+import { DbEntry } from "../../client/src/App/sharedWithServer/Analyzer/DbEntry";
+import { DbStoreName } from "../../client/src/App/sharedWithServer/Analyzer/SectionMetas/relSections/baseSectionTypes";
 import { UserModel } from "../shared/severSideUser";
 
 export async function sectionGet(

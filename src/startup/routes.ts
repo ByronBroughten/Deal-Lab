@@ -1,16 +1,12 @@
-import express from "express";
 import cors from "cors";
-import sectionRouter, {
-  sectionRoutes,
-} from "../middleware/routes/sectionRoutes";
-import userRouter from "../middleware/routes/userRoutes";
-import { authTokenKey } from "../client/src/App/sharedWithServer/User/crudTypes";
-import { config } from "../client/src/App/Constants";
-import sectionArrRouter, {
-  sectionArrRoutes,
-} from "../middleware/routes/sectionArrRoutes";
+import express from "express";
 import { graphqlHTTP } from "express-graphql";
+import { config } from "../client/src/App/Constants";
+import { authTokenKey } from "../client/src/App/sharedWithServer/Crud";
 import { gqlSchema } from "../graphlq";
+import sectionArrRouter, { sectionArrRoutes } from "../routes/sectionArrRoutes";
+import sectionRouter, { sectionRoutes } from "../routes/sectionRoutes";
+import userRouter from "../routes/userRoutes";
 
 export default function routes(app: express.Application) {
   app.use(

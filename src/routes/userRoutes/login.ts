@@ -1,12 +1,12 @@
 import bcrypt from "bcrypt";
 import { Request, Response } from "express";
-import { DbSections } from "../../../client/src/App/sharedWithServer/Analyzer/DbEntry";
 import {
   Req,
   zLoginFormData,
-} from "../../../client/src/App/sharedWithServer/User/crudTypes";
-import { Obj } from "../../../client/src/App/sharedWithServer/utils/Obj";
-import { Full } from "../../../client/src/App/sharedWithServer/utils/types";
+} from "../../../client/src/App/sharedWithServer/Crud";
+import { DbSections } from "../../client/src/App/sharedWithServer/Analyzer/DbEntry";
+import { Obj } from "../../client/src/App/sharedWithServer/utils/Obj";
+import { Full } from "../../client/src/App/sharedWithServer/utils/types";
 import { prepEmail, UserModel } from "../shared/severSideUser";
 import { serverSideLogin } from "./shared/doLogin";
 

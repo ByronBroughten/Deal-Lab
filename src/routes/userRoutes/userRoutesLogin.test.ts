@@ -1,14 +1,11 @@
-import {
-  authTokenKey,
-  Req,
-} from "../../../client/src/App/sharedWithServer/User/crudTypes";
+import { omit } from "lodash";
+import request from "supertest";
+import { config } from "../../client/src/App/Constants";
+import Analyzer from "../../client/src/App/sharedWithServer/Analyzer";
+import { authTokenKey, Req } from "../../client/src/App/sharedWithServer/Crud";
+import { runApp } from "../../runApp";
 import { serverSideUser, UserModel } from "../shared/severSideUser";
 import { serverSideLogin } from "./shared/doLogin";
-import request from "supertest";
-import { runApp } from "../../../runApp";
-import { omit } from "lodash";
-import { config } from "../../../client/src/App/Constants";
-import Analyzer from "../../../client/src/App/sharedWithServer/Analyzer";
 
 function makeTestReqObjs() {
   const registerFormData = {

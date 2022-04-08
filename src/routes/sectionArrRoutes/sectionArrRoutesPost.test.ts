@@ -1,13 +1,13 @@
-import { config } from "../../../client/src/App/Constants";
-import Analyzer from "../../../client/src/App/sharedWithServer/Analyzer";
+import request from "supertest";
 import {
   authTokenKey,
   Req,
-} from "../../../client/src/App/sharedWithServer/User/crudTypes";
-import { runApp } from "../../../runApp";
-import { serverSideLogin } from "../userRoutes/shared/doLogin";
-import request from "supertest";
+} from "../../../client/src/App/sharedWithServer/Crud";
+import { config } from "../../client/src/App/Constants";
+import Analyzer from "../../client/src/App/sharedWithServer/Analyzer";
+import { runApp } from "../../runApp";
 import { serverSideUser, UserModel } from "../shared/severSideUser";
+import { serverSideLogin } from "../userRoutes/shared/doLogin";
 
 describe("post sectionArr", () => {
   const sectionName = "propertyDefault";

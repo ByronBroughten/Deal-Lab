@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import {
-  DbId,
   GuestAccessSections,
   is,
   LoggedIn,
@@ -11,14 +10,14 @@ import {
   zGuestAccessSections,
   zLoginFormData,
   zRegisterFormData,
-} from "../../../client/src/App/sharedWithServer/User/crudTypes";
-import { DbStoreName } from "../../../client/src/App/sharedWithServer/Analyzer/SectionMetas/relSections/baseSectionTypes";
+} from "../../../client/src/App/sharedWithServer/Crud";
+import { DbEntry } from "../../client/src/App/sharedWithServer/Analyzer/DbEntry";
+import { DbStoreName } from "../../client/src/App/sharedWithServer/Analyzer/SectionMetas/relSections/baseSectionTypes";
 import {
   SectionNam,
   SectionName,
   SectionNameType,
-} from "../../../client/src/App/sharedWithServer/Analyzer/SectionMetas/SectionName";
-import { DbEntry } from "../../../client/src/App/sharedWithServer/Analyzer/DbEntry";
+} from "../../client/src/App/sharedWithServer/Analyzer/SectionMetas/SectionName";
 
 export const serverSend = {
   success(

@@ -1,15 +1,10 @@
-import { Request, Response } from "express";
-import { config } from "../../client/src/App/Constants";
-import {
-  LoggedIn,
-  Req,
-  Res,
-} from "../../client/src/App/sharedWithServer/User/crudTypes";
-import authWare from "../authWare";
-import { queryOp } from "./utils/operator";
+import express, { Request, Response } from "express";
+import { LoggedIn, Req, Res } from "../../client/src/App/sharedWithServer/Crud";
+import { config } from "../client/src/App/Constants";
+import authWare from "../middleware/authWare";
 import { serverSend, serverValidate } from "./shared/crudValidators";
 import { tryFindByIdAndUpdate } from "./shared/tryQueries";
-import express from "express";
+import { queryOp } from "./utils/operator";
 // where does the middleware go? The route level? I guess so, or maybe both.
 
 export const sectionArrRoutes = {

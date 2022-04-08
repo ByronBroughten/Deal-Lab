@@ -1,11 +1,8 @@
 import request from "supertest";
-import { config } from "../../../client/src/App/Constants";
-import Analyzer from "../../../client/src/App/sharedWithServer/Analyzer";
-import {
-  authTokenKey,
-  Req,
-} from "../../../client/src/App/sharedWithServer/User/crudTypes";
-import { runApp } from "../../../runApp";
+import { config } from "../../client/src/App/Constants";
+import Analyzer from "../../client/src/App/sharedWithServer/Analyzer";
+import { authTokenKey, Req } from "../../client/src/App/sharedWithServer/Crud";
+import { runApp } from "../../runApp";
 import { serverSideUser, UserModel } from "../shared/severSideUser";
 import { serverSideLogin } from "../userRoutes/shared/doLogin";
 

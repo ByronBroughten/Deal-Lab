@@ -1,11 +1,11 @@
 import { Request, Response } from "express";
-import { config } from "../../../client/src/App/Constants";
 import {
   Req,
   zGuestAccessSections,
   zRegisterFormData,
-} from "../../../client/src/App/sharedWithServer/User/crudTypes";
-import { Obj } from "../../../client/src/App/sharedWithServer/utils/Obj";
+} from "../../../client/src/App/sharedWithServer/Crud";
+import { config } from "../../client/src/App/Constants";
+import { Obj } from "../../client/src/App/sharedWithServer/utils/Obj";
 import { serverSideUser, UserModel } from "../shared/severSideUser";
 import { serverSideLogin } from "./shared/doLogin";
 

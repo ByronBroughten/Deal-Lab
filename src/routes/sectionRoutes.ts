@@ -1,12 +1,8 @@
 import express, { Request, Response } from "express";
-import { config } from "../../client/src/App/Constants";
-import { DbEnt } from "../../client/src/App/sharedWithServer/Analyzer/DbEntry";
-import {
-  LoggedIn,
-  Req,
-  Res,
-} from "../../client/src/App/sharedWithServer/User/crudTypes";
-import authWare from "../authWare";
+import { LoggedIn, Req, Res } from "../../client/src/App/sharedWithServer/Crud";
+import { config } from "../client/src/App/Constants";
+import { DbEnt } from "../client/src/App/sharedWithServer/Analyzer/DbEntry";
+import authWare from "../middleware/authWare";
 import { serverSend, serverValidate, validate } from "./shared/crudValidators";
 import { UserModel } from "./shared/severSideUser";
 import {

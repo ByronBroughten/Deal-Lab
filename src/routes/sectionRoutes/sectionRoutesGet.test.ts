@@ -1,15 +1,12 @@
-import Analyzer from "../../../client/src/App/sharedWithServer/Analyzer";
-import {
-  authTokenKey,
-  Req,
-} from "../../../client/src/App/sharedWithServer/User/crudTypes";
-import { runApp } from "../../../runApp";
+import request from "supertest";
+import { config } from "../../client/src/App/Constants";
+import Analyzer from "../../client/src/App/sharedWithServer/Analyzer";
+import { authTokenKey, Req } from "../../client/src/App/sharedWithServer/Crud";
+import { urlPlusParams } from "../../client/src/App/utils/url";
+import { runApp } from "../../runApp";
 import { sectionRoutes } from "../sectionRoutes";
 import { serverSideUser, UserModel } from "../shared/severSideUser";
 import { serverSideLogin } from "../userRoutes/shared/doLogin";
-import request from "supertest";
-import { urlPlusParams } from "../../../client/src/App/utils/url";
-import { config } from "../../../client/src/App/Constants";
 
 describe("section get", () => {
   const sectionName = "propertyDefault";

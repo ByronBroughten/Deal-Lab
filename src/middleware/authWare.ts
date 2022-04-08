@@ -1,6 +1,6 @@
 import express from "express";
-import { authTokenKey } from "../client/src/App/sharedWithServer/User/crudTypes";
-import { serverSideLogin } from "./routes/userRoutes/shared/doLogin";
+import { authTokenKey } from "../client/src/App/sharedWithServer/Crud";
+import { serverSideLogin } from "../routes/userRoutes/shared/doLogin";
 
 export default function authWare(
   req: express.Request,
