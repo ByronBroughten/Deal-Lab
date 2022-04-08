@@ -11,7 +11,6 @@ import {
 } from "../../SectionMetas/relSections/rel/relVarbInfoTypes";
 import { NextSectionFinder, SectionName } from "../../SectionMetas/SectionName";
 import { Obj } from "../../../utils/Obj";
-import { SectionFinder } from "../../SectionMetas/relSections/baseSectionTypes";
 
 export function sectionNotFound({ sectionName, idType, id }: MultiSectionInfo) {
   return new Error(
@@ -58,7 +57,7 @@ export function singleSection<S extends SectionName<"alwaysOne">>(
   this: Analyzer,
   sectionName: S
 ): StateSection<S> {
-  if (this.meta.get(sectionName).alwaysOne)
+  if (this.meta.section(sectionName).get("alwaysOne"))
     return this.firstSection(sectionName);
   else throw new Error(`"${sectionName}" is not a static section.`);
 }

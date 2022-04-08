@@ -9,7 +9,7 @@ export function eraseIndexAndSolve(
   sectionName: SectionName<"hasIndexStore">,
   dbId: string
 ): Analyzer {
-  const { indexStoreName } = this.sectionMeta(sectionName);
+  const { indexStoreName } = this.meta.section(sectionName).core;
   const indexInfo = Inf.db(indexStoreName, dbId);
   return this.eraseSectionAndSolve(indexInfo);
 }
@@ -20,7 +20,7 @@ export function eraseRowIndexAndSolve(
 ): Analyzer {
   let next = this;
 
-  const { indexStoreName } = this.sectionMeta(sectionName);
+  const { indexStoreName } = this.meta.section(sectionName).core;
   const tableName = rowIndexToTableName[indexStoreName];
   const rowIdsVarb = this.section(tableName).varb("rowIds");
 

@@ -83,7 +83,7 @@ export function nestedNumObjInfos(
 ): FeVarbInfo[] {
   const nestedFeVarbInfos = this.nestedFeVarbInfos(feInfo);
   return nestedFeVarbInfos.filter(({ sectionName, varbName }) => {
-    return this.meta.varbMeta({ sectionName, varbName }).type === "numObj";
+    return this.meta.varb({ sectionName, varbName }).type === "numObj";
   });
 }
 

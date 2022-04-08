@@ -1,15 +1,14 @@
-import array from "../../../utils/Arr";
 import { cloneDeep } from "lodash";
-import { sectionMetas } from "../../SectionMetas";
-import StateSection from "../../StateSection";
-import { SectionName } from "../../SectionMetas/SectionName";
+import array from "../../../utils/Arr";
+import { Obj } from "../../../utils/Obj";
+import { FeInfo, Inf } from "../../SectionMetas/Info";
 import {
   ChildFeInfo,
   ChildIdArrs,
   ChildName,
 } from "../../SectionMetas/relNameArrs/ChildTypes";
-import { FeInfo, Inf } from "../../SectionMetas/Info";
-import { Obj } from "../../../utils/Obj";
+import { SectionName } from "../../SectionMetas/SectionName";
+import StateSection from "../../StateSection";
 
 export function childFeIds<S extends SectionName>(
   this: StateSection<S>,
@@ -90,6 +89,15 @@ export function pushChildFeId<SN extends SectionName>(
   let nextIds = [...this.childFeIds(sectionName), id];
   return updateChildFeIdArr(this, sectionName, nextIds);
 }
+export function addChildFeId<SN extends SectionName>(
+  this: StateSection<SN>,
+  childInfo: ChildFeInfo<SN>,
+  idx?: number | undefined
+): StateSection<SN> {
+  if (idx === undefined) return this.pushChildFeId(childInfo);
+  else return this.insertChildFeId(childInfo, idx);
+}
+
 export function removeChildFeId<S extends SectionName>(
   this: StateSection<S>,
   { sectionName, id }: ChildFeInfo<S>

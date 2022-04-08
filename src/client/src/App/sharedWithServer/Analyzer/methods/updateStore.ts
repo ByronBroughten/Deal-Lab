@@ -6,7 +6,7 @@ export function pushToIndexStore(
   this: Analyzer,
   feInfo: FeInfo<"hasFullIndexStore">
 ): Analyzer {
-  const feStoreName = this.section(feInfo).meta.indexStoreName;
+  const feStoreName = this.section(feInfo).meta.get("indexStoreName");
   const dbEntry = this.dbEntry(feInfo, {
     newMainSectionName: feStoreName,
   });
@@ -19,7 +19,7 @@ export function updateIndexStoreEntry(
   this: Analyzer,
   feInfo: FeInfo<"hasFullIndexStore">
 ): Analyzer {
-  const feStoreName = this.section(feInfo).indexStoreName;
+  const feStoreName = this.section(feInfo).meta.get("indexStoreName");
   const dbEntry = this.dbEntry(feInfo, {
     newMainSectionName: feStoreName,
   });

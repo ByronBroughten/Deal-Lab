@@ -1,16 +1,31 @@
 import { cloneDeep } from "lodash";
-import Analyzer from "../Analyzer";
-import { DbSection, DbVarbs } from "./DbEntry";
-import { DbSectionInit } from "./methods/internal/addSections";
-import { SectionMeta, sectionMetas } from "./SectionMetas";
+import { DbVarbs } from "./DbEntry";
+import { sectionMetas } from "./SectionMetas";
+import { Inf } from "./SectionMetas/Info";
+import { OneChildIdArrs } from "./SectionMetas/relNameArrs/ChildTypes";
+import {
+  FeParentInfo,
+  ParentName,
+} from "./SectionMetas/relNameArrs/ParentTypes";
+import {
+  DefaultStoreName,
+  IndexStoreName,
+} from "./SectionMetas/relNameArrs/StoreTypes";
+import { SimpleSectionName } from "./SectionMetas/relSections/baseSections";
 import { InEntities } from "./SectionMetas/relSections/baseSections/baseValues/NumObj/entities";
 import {
   DbNameInfo,
   FeNameInfo,
   FeVarbInfo,
 } from "./SectionMetas/relSections/rel/relVarbInfoTypes";
-import { Inf } from "./SectionMetas/Info";
+import { NextSectionMeta } from "./SectionMetas/SectionMeta";
+import {
+  FeSectionNameType,
+  SectionNam,
+  SectionName,
+} from "./SectionMetas/SectionName";
 import { OutUpdatePack } from "./SectionMetas/VarbMeta";
+import { initStateSection } from "./StateSection/init";
 import {
   addChildFeId,
   allChildFeIds,
@@ -18,91 +33,67 @@ import {
   childFeIds,
   childFeInfos,
   childIdx,
-  initChildFeIds,
+  insertChildFeId,
+  pushChildFeId,
   removeChildFeId,
 } from "./StateSection/methods/childIds";
+import { value, values, varbInfoValues } from "./StateSection/methods/value";
+import { replaceVarb, StateVarbs, varb } from "./StateSection/methods/varbs";
 import StateVarb from "./StateSection/StateVarb";
 import { OutEntity } from "./StateSection/StateVarb/entities";
-import { value, values, varbInfoValues } from "./StateSection/methods/value";
-import {
-  initVarbs,
-  replaceVarb,
-  StateVarbs,
-  varb,
-  VarbSeeds,
-  VarbValues,
-} from "./StateSection/methods/varbs";
-import {
-  FeSectionNameType,
-  SectionNam,
-  SectionName,
-} from "./SectionMetas/SectionName";
-import { ChildIdArrs } from "./SectionMetas/relNameArrs/ChildTypes";
-import {
-  DefaultStoreName,
-  IndexStoreName,
-} from "./SectionMetas/relNameArrs/StoreTypes";
-import {
-  FeParentInfo,
-  ParentName,
-} from "./SectionMetas/relNameArrs/ParentTypes";
-import { SimpleSectionName } from "./SectionMetas/relSections/baseSections";
 
-export type SectionSeed = Omit<VarbSeeds, "dbVarbs"> & {
-  dbSectionInit?: DbSectionInit;
-};
-
-export type StorableCore = {
-  dbId: string;
-  varbs: StateVarbs; // StateVarbs should be variably permissive
-};
-
-type ClientCore<S extends SectionName> = {
+export type NextStateSectionCore<SN extends SectionName> = {
   feId: string;
-  parentInfo: FeParentInfo<S>;
-  sectionName: S;
-
-  // childFeIdArrs are initialized as empty; ids added as children are added
-  childFeIdArrs: ChildIdArrs<S>;
+  parentInfo: FeParentInfo<SN>;
+  sectionName: SN;
+  dbId: string;
+  varbs: StateVarbs;
+  childFeIds: OneChildIdArrs<SN, "fe">;
 };
 
-export type InitStateSectionProps<S extends SectionName> = Pick<
-  ClientCore<S>,
-  "feId" | "parentInfo" | "sectionName"
-> & {
-  options?: { dbId?: string; values?: VarbValues };
+export type NextStateSectionInitProps<SN extends SectionName> = {
+  sectionName: SN;
+  parentInfo: FeParentInfo<SN>;
+  feId?: string;
+
+  childFeIds?: Partial<OneChildIdArrs<SN, "fe">>; // empty
+  dbId?: string; // create new
+  dbVarbs?: Partial<DbVarbs>; // empty
 };
 
 export type StringDisplayNames = { [varbName: string]: string };
-export type StateSectionCore<S extends SimpleSectionName> = StorableCore &
-  ClientCore<S>;
 
+export type StateSectionCore<SN extends SimpleSectionName> =
+  NextStateSectionCore<SN>;
 export default class StateSection<
   S extends SimpleSectionName = SimpleSectionName
 > {
   constructor(readonly core: StateSectionCore<S>) {}
-  get parentArr() {
-    return [...this.meta.parents];
-  }
   get coreClone() {
     return cloneDeep(this.core);
   }
-  get meta(): SectionMeta<S> {
-    return cloneDeep(sectionMetas.get(this.core.sectionName));
+  get meta(): NextSectionMeta<"fe", S> {
+    return sectionMetas.section(this.core.sectionName, "fe");
+  }
+
+  update(nextBaseProps: Partial<StateSectionCore<S>>): StateSection<S> {
+    return new StateSection({ ...this.core, ...nextBaseProps });
+  }
+
+  get feInfo(): FeNameInfo<S> {
+    const sectionName = this.meta.get("sectionName") as SectionName as S;
+    const feInfo: FeNameInfo<S> = {
+      sectionName,
+      id: this.feId,
+      idType: "feId",
+    };
+    return feInfo;
   }
   get dbId(): string {
     return this.core.dbId;
   }
   get feId(): string {
     return this.core.feId;
-  }
-  get feInfo(): FeNameInfo<S> {
-    const feInfo: FeNameInfo<S> = {
-      sectionName: this.meta.sectionName as S,
-      id: this.feId,
-      idType: "feId",
-    };
-    return feInfo;
   }
   get dbInfo(): DbNameInfo<S> {
     return {
@@ -149,16 +140,16 @@ export default class StateSection<
   > {
     const next = this as any;
     if (StateSection.is(next, "hasIndexStore")) {
-      return next.meta.indexStoreName;
+      return next.meta.get("indexStoreName");
     } else throw new Error("This section has no indexStoreName.");
   }
   get defaultStoreName(): DefaultStoreName<
     Extract<S, SectionName<"hasDefaultStore">>
   > {
     const next = this as any as StateSection<SectionName>;
-    if (StateSection.is(next, "hasDefaultStore")) {
-      return next.meta.indexStoreName;
-    } else throw new Error("This section has no indexStoreName.");
+    const defaultStoreName = next.meta.get("defaultStoreName");
+    if (defaultStoreName) return defaultStoreName as DefaultStoreName;
+    else throw new Error("This section has no defaultStoreName.");
   }
 
   get parentName(): ParentName<S> {
@@ -174,7 +165,7 @@ export default class StateSection<
     return sectionName as ParentName<SectionName<"hasParent">>;
   }
   get childNames(): readonly string[] {
-    return this.meta.childSectionNames;
+    return this.meta.get("childNames");
   }
   get feVarbInfos(): FeVarbInfo[] {
     const { feInfo } = this;
@@ -201,10 +192,6 @@ export default class StateSection<
     }, [] as OutEntity[]);
   }
 
-  update(nextBaseProps: Partial<StateSectionCore<S>>): StateSection<S> {
-    return new StateSection({ ...this.core, ...nextBaseProps });
-  }
-
   static is<ST extends FeSectionNameType = "all">(
     value: any,
     sectionType?: ST
@@ -212,37 +199,22 @@ export default class StateSection<
     if (!(value instanceof StateSection)) return false;
     return SectionNam.is(value.sectionName, (sectionType ?? "all") as ST);
   }
-  static init<S extends SectionName>({
-    feId,
-    sectionName,
-    parentInfo,
-    options: { dbId = Analyzer.makeId(), values } = {},
-  }: InitStateSectionProps<S>): StateSection<S> {
-    const stateSectionCore: StateSectionCore<S> = {
-      feId,
-      dbId,
-      sectionName,
-      parentInfo,
-      childFeIdArrs: this.initChildFeIds(sectionName),
-      varbs: StateSection.initVarbs(Inf.fe(sectionName, feId), values),
-    };
-    return new StateSection(stateSectionCore);
-  }
+
+  static init = initStateSection;
 
   childFeIds = childFeIds;
   allChildFeIds = allChildFeIds;
   allChildFeInfos = allChildFeInfos;
   childFeInfos = childFeInfos;
 
-  static initChildFeIds = initChildFeIds;
+  insertChildFeId = insertChildFeId;
+  pushChildFeId = pushChildFeId;
   addChildFeId = addChildFeId;
   removeChildFeId = removeChildFeId;
   childIdx = childIdx;
 
   varb = varb;
   replaceVarb = replaceVarb;
-  static initVarbs = initVarbs;
-
   value = value;
   values = values;
   varbInfoValues = varbInfoValues;
