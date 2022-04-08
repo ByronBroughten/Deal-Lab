@@ -1,4 +1,4 @@
-import { SubType } from "../../../utils/typescript";
+import { SubType } from "../../../utils/types";
 import { RelSections } from "../relSections";
 import { BaseName } from "../relSections/baseSectionTypes";
 import { HasRowIndexStoreName, relNameArrs } from "../relNameArrs";

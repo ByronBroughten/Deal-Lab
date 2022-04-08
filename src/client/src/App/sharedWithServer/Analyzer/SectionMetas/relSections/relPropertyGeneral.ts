@@ -64,7 +64,7 @@ export const prePropertyGeneral = {
       ...rel.varbs.sectionStrings("property", propertyPreVarbs(), ["title"]),
     },
     {
-      childSectionNames: [
+      childNames: [
         "property",
         "propertyIndex",
         "propertyDefault",
@@ -75,7 +75,7 @@ export const prePropertyGeneral = {
   ...relSection.base("both", "property", "Property", propertyPreVarbs(), {
     defaultStoreName: "propertyDefault",
     indexStoreName: "propertyIndex",
-    childSectionNames: [
+    childNames: [
       "upfrontCostList",
       "upfrontRevenueList",
       "ongoingCostList",
@@ -89,7 +89,7 @@ export const prePropertyGeneral = {
     "Default Property",
     propertyPreVarbs(),
     {
-      childSectionNames: [
+      childNames: [
         "upfrontCostList",
         "upfrontRevenueList",
         "ongoingCostList",

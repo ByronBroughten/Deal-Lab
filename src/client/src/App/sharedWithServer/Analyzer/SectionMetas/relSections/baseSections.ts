@@ -22,6 +22,7 @@ export type ContextName = keyof BaseSections;
 const sectionContextNames: ContextName[] = ["fe", "db"];
 export const sectionContext = {
   names: sectionContextNames,
+  typeCheckContextObj: <T extends Record<ContextName, any>>(obj: T): T => obj,
   makeBlankContextObj(): Record<ContextName, any> {
     return {
       fe: {},

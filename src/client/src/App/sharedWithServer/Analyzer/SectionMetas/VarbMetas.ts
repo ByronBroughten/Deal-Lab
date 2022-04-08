@@ -7,7 +7,7 @@ type VarbMetasCore = { [key: string]: VarbMeta };
 export type VarbMetasRaw = { [Prop in keyof VarbMetasCore]: VarbMetaCore };
 
 export class VarbMetas {
-  constructor(private core: VarbMetasCore) {}
+  constructor(readonly core: VarbMetasCore) {}
   get raw(): VarbMetasRaw {
     return Obj.keys(this.core).reduce((raw, varbName) => {
       raw[varbName] = this.core[varbName].core;

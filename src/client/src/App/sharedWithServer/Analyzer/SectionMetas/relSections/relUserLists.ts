@@ -13,7 +13,7 @@ export const preUserLists = {
       defaultValueSwitch: rel.varb.string({ initValue: "labeledEquation" }),
     },
     {
-      childSectionNames: ["userVarbItem"] as const,
+      childNames: ["userVarbItem"] as const,
     }
   ),
   ...relSection.base(
@@ -53,7 +53,7 @@ export const preUserLists = {
       }),
     },
     {
-      childSectionNames: ["conditionalRow"] as const,
+      childNames: ["conditionalRow"] as const,
     }
   ),
 

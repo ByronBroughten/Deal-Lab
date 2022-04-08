@@ -1,5 +1,5 @@
+import { RemoveNotStrings, StrictSubType } from "../../../utils/types";
 import { MergeUnionObjNonNullable } from "../../../utils/types/mergeUnionObj";
-import { RemoveNotStrings, StrictSubType } from "../../../utils/typescript";
 import StateSection from "../../StateSection";
 import { RelSections } from "../relSections";
 import { ContextName, SimpleSectionName } from "../relSections/baseSections";
@@ -8,7 +8,7 @@ import { FeNameInfo } from "../relSections/rel/relVarbInfoTypes";
 type ChildNameArr<
   CN extends ContextName,
   SN extends SimpleSectionName<CN>
-> = RelSections[CN][SN]["childSectionNames" & keyof RelSections[CN][SN]];
+> = RelSections[CN][SN]["childNames" & keyof RelSections[CN][SN]];
 
 type SectionToChildrenOrNever<CN extends ContextName> = {
   [SN in SimpleSectionName]: ChildNameArr<CN, SN>[number &
@@ -40,6 +40,8 @@ type ChildToSectionWithChildName<
   CHN extends ChildName<SimpleSectionName, FromCN>
 > = keyof StrictSubType<SectionToChildArr<ToCN>, [CHN]>;
 
+type Test = NameToNameWithSameChildren<"propertyIndex", "db", "fe">;
+
 const _testFeToDbNameWithSameChildren = (): void => {
   type TestName = FeToDbNameWithSameChildren<"property">;
   const _testName2: TestName = "property";
@@ -70,6 +72,13 @@ export type DescendantIds<
   CN extends ContextName
 > = {
   [S in DescendantName<SN, CN>]: string[];
+};
+
+export type SelfOrDescendantIds<
+  SN extends SimpleSectionName,
+  CN extends ContextName
+> = {
+  [S in SelfOrDescendantName<SN, CN>]: string[];
 };
 export type DescendantSections<
   SN extends SimpleSectionName,
@@ -120,17 +129,6 @@ export type ChildIdArrs<
 > = {
   [CHN in ChildName<SN, CN>]: string[];
 };
-
-type SelfOrDescendantChildIdArrs<
-  SN extends SimpleSectionName,
-  CN extends ContextName
-> = {
-  [S in SelfOrDescendantName<SN, CN>]: OneChildIdArrs<SN, CN>;
-};
-export type SelfOrDescendantChildIdArr<
-  SN extends SimpleSectionName,
-  CN extends ContextName
-> = SelfOrDescendantChildIdArrs<SN, CN>[SelfOrDescendantName<SN, CN>];
 
 export type ChildFeInfo<SN extends SimpleSectionName<"fe">> = FeNameInfo & {
   sectionName: ChildName<SN>;

@@ -1,8 +1,8 @@
+import { ContextName, loanVarbsNotInFinancing } from "./baseSections";
+import { switchNames } from "./baseSections/switchNames";
 import { rel } from "./rel";
 import { relSection } from "./rel/relSection";
 import { RelVarbs } from "./rel/relVarbs";
-import { switchNames } from "./baseSections/switchNames";
-import { loanVarbsNotInFinancing, ContextName } from "./baseSections";
 
 const loanAmountBase = switchNames("loanAmountBase", "dollarsPercent");
 function loanPreVarbs(): RelVarbs<ContextName, "loan"> {
@@ -153,16 +153,11 @@ export const relFinancing = {
     "Financing",
     financingRelVarbs,
     {
-      childSectionNames: [
-        "loan",
-        "loanIndex",
-        "loanTable",
-        "loanDefault",
-      ] as const,
+      childNames: ["loan", "loanIndex", "loanTable", "loanDefault"] as const,
     }
   ),
   ...relSection.base("fe" as ContextName, "loan", "Loan", loanPreVarbs(), {
-    childSectionNames: ["closingCostList", "wrappedInLoanList"] as const,
+    childNames: ["closingCostList", "wrappedInLoanList"] as const,
     indexStoreName: "loanIndex",
     defaultStoreName: "loanDefault",
   }),
@@ -172,7 +167,7 @@ export const relFinancing = {
     "Default Loan",
     loanPreVarbs(),
     {
-      childSectionNames: ["closingCostList", "wrappedInLoanList"] as const,
+      childNames: ["closingCostList", "wrappedInLoanList"] as const,
     }
   ),
   ...rel.section.rowIndex("loanIndex", "Loan Index"),

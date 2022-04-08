@@ -6,7 +6,7 @@ type PreUserLists = {
   [Prop in BaseName<"userList", ContextName>]: RelSections[ContextName][Prop];
 };
 type UserListItemTypes = {
-  [Prop in BaseName<"userList">]: PreUserLists[Prop]["childSectionNames"][number];
+  [Prop in BaseName<"userList">]: PreUserLists[Prop]["childNames"][number];
 };
 export type UserItemSectionName = UserListItemTypes[BaseName<"userList">];
 export const userListItemTypes: UserListItemTypes = {

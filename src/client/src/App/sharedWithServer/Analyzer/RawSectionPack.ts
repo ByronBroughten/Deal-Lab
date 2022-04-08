@@ -1,15 +1,21 @@
 import { ContextName } from "./SectionMetas/relSections/baseSections";
 import { SectionContextProps, SectionName } from "./SectionMetas/SectionName";
-import { RawSections } from "./SectionPack/RawSection";
-import { RawSectionFinder } from "./SectionPack/RawSectionFinder";
+import { GeneralRawSections, RawSections } from "./SectionPack/RawSection";
 
-export type RawSectionPack<
-  SN extends SectionName,
-  CN extends ContextName
-> = RawSectionFinder<SN, CN> &
-  SectionContextProps<SN, CN> & {
-    rawSections: RawSections<SN, CN>;
-  };
+export type GeneralSectionPack = {
+  sectionName: SectionName;
+  contextName: ContextName;
+  dbId: string;
+  rawSections: GeneralRawSections;
+};
+
+export type RawSectionPack<SN extends SectionName, CN extends ContextName> = {
+  sectionName: SN;
+  dbId: string;
+  contextName: CN;
+  rawSections: RawSections<SN, CN>;
+};
+
 export type DbSectionPack<
   SN extends SectionName,
   CN extends ContextName

@@ -7,9 +7,10 @@ export type ValueTypes = {
 };
 export type ValueTypeName = keyof ValueTypes;
 
-type DbValueTypes = {
-  [Prop in keyof ValueSchemas]: z.infer<ValueSchemas[Prop]["dbZod"]>;
+export type DbValueTypes = {
+  [Prop in ValueTypeName]: z.infer<ValueSchemas[Prop]["dbZod"]>;
 };
+export type DbValue = DbValueTypes[ValueTypeName];
 
 export type SchemaVarbsToValues<T extends Record<string, keyof ValueTypes>> = {
   [Prop in keyof T]: ValueTypes[T[Prop]];
