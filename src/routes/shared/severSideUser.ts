@@ -1,13 +1,15 @@
 import bcrypt from "bcrypt";
 import mongoose, { Schema } from "mongoose";
-import { DbEnt } from "../../client/src/App/sharedWithServer/Analyzer/DbEntry";
+import {
+  DbEnt,
+  DbUser,
+} from "../../client/src/App/sharedWithServer/Analyzer/DbEntry";
 import { DbStoreName } from "../../client/src/App/sharedWithServer/Analyzer/SectionMetas/relSections/baseSectionTypes";
 import { SectionNam } from "../../client/src/App/sharedWithServer/Analyzer/SectionMetas/SectionName";
-import { RegisterReqPayload } from "../../client/src/App/sharedWithServer/Crud";
 import {
-  DbUser,
   NewUserData,
-} from "../../client/src/App/sharedWithServer/DbUser";
+  RegisterReqPayload,
+} from "../../client/src/App/sharedWithServer/Crud/Register";
 import { getMonDbEntry } from "./mongooseValidators";
 
 async function encryptPassword(unencrypted: string): Promise<string> {

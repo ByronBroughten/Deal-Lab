@@ -1,20 +1,10 @@
 import { AxiosResponse } from "axios";
-import { z } from "zod";
 import { config } from "../Constants";
 import { DbEntry } from "../sharedWithServer/Analyzer/DbEntry";
-import {
-  SectionNam,
-  SectionName,
-} from "../sharedWithServer/Analyzer/SectionMetas/SectionName";
-import {
-  is,
-  isLoginHeaders,
-  NextReq,
-  NextRes,
-  Req,
-  Res,
-} from "../sharedWithServer/Crud";
-import { LoginUser, zDbEntryArr } from "../sharedWithServer/DbUser";
+import { SectionName } from "../sharedWithServer/Analyzer/SectionMetas/SectionName";
+import { is, Req, Res } from "../sharedWithServer/Crud";
+import { isLoginHeaders, isLoginUser } from "../sharedWithServer/Crud/Login";
+import { NextReq, NextRes } from "../sharedWithServer/CrudNext";
 import { urlPlusParams } from "../utils/url";
 import https from "./services/httpService";
 
@@ -23,19 +13,6 @@ const url = {
   sectionArr: config.url.sectionArr.path,
   dbColArr: config.url.tableColumns.path,
 };
-
-export function isLoginUser(value: any): value is LoginUser {
-  const zLoginUserSchema = z.object(
-    SectionNam.arrs.fe.initOnLogin.reduce((partial, sectionName) => {
-      partial[sectionName] = zDbEntryArr;
-      return partial;
-    }, {} as Partial<Record<keyof LoginUser, any>>) as Record<
-      keyof LoginUser,
-      any
-    >
-  );
-  return zLoginUserSchema.safeParse(value).success;
-}
 
 const validateRes = {
   dbId(res: AxiosResponse<unknown> | undefined): { data: string } | undefined {

@@ -32,15 +32,15 @@ export type RawSections<SN extends SectionName, CN extends ContextName> = {
   [DSN in SelfOrDescendantName<SN, CN>]: OneRawSection<CN, DSN>[];
 };
 export type RawSection<
-  SN extends SectionName,
-  CN extends ContextName
+  CN extends ContextName = ContextName,
+  SN extends SectionName = SectionName
 > = RawSections<SN, CN>[SelfOrDescendantName<SN, CN>][number];
 
-const zDbSectionFrame: Record<keyof OneRawSection<"db">, any> = {
+const zRawSectionFrame: Record<keyof OneRawSection<"db">, any> = {
   dbId: zodSchema.nanoId,
   dbVarbs: z.record(zDbValue),
   childDbIds: z.record(z.array(zodSchema.string)),
 };
 
-const zDbSection = z.object(zDbSectionFrame);
-export const zDbSections = z.record(z.array(zDbSection));
+const zRawSection = z.object(zRawSectionFrame);
+export const zRawSections = z.record(z.array(zRawSection));

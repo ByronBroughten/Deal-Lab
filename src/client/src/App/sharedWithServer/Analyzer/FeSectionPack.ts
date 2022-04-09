@@ -48,7 +48,7 @@ export class FeSectionPack<SN extends SectionName> {
   rawSection({
     sectionName,
     dbId,
-  }: RawSectionFinder<SN, "fe">): RawSection<SN, "fe"> {
+  }: RawSectionFinder<SN, "fe">): RawSection<"fe", SN> {
     const rawSections = this.rawSections[
       sectionName
     ] as any as GeneralRawSection[];
@@ -58,7 +58,7 @@ export class FeSectionPack<SN extends SectionName> {
     if (rawSection) return rawSection as any;
     else throw new Error(`No rawSection found at ${sectionName}.${dbId}`);
   }
-  get headSection(): RawSection<SN, "fe"> {
+  get headSection(): RawSection<"fe", SN> {
     return this.rawSection(this.headSectionFinder);
   }
   changeType<NextSN extends NameToNameWithSameChildren<SN, "fe", "fe">>(

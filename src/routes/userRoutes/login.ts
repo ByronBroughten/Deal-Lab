@@ -1,10 +1,8 @@
 import bcrypt from "bcrypt";
 import { Request, Response } from "express";
-import {
-  Req,
-  zLoginFormData,
-} from "../../../client/src/App/sharedWithServer/Crud";
 import { DbSections } from "../../client/src/App/sharedWithServer/Analyzer/DbEntry";
+import { Req } from "../../client/src/App/sharedWithServer/Crud";
+import { isLoginFormData } from "../../client/src/App/sharedWithServer/Crud/Login";
 import { Obj } from "../../client/src/App/sharedWithServer/utils/Obj";
 import { Full } from "../../client/src/App/sharedWithServer/utils/types";
 import { prepEmail, UserModel } from "../shared/severSideUser";
@@ -16,7 +14,7 @@ function validateReq(req: Request, res: Response): Req<"Login"> | undefined {
     res.status(500).send("Payload is not an object.");
     return;
   }
-  if (!zLoginFormData.safeParse(payload).success) {
+  if (!isLoginFormData) {
     res.status(400).send("Payload failed validation");
     return;
   }

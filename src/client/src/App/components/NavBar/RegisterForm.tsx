@@ -2,7 +2,7 @@ import { Button } from "@material-ui/core";
 import styled from "styled-components";
 import { useAuthRoutes } from "../../modules/customHooks/useAuthRoutes";
 import { useAnalyzerContext } from "../../modules/usePropertyAnalyzer";
-import { RegisterFormData } from "../../sharedWithServer/Crud";
+import { RegisterFormData } from "../../sharedWithServer/Crud/Register";
 import theme from "../../theme/Theme";
 import { StyledDropdownForm } from "../general/DropdownForm";
 import SmallFormTextField from "../general/SmallFormTextField";

@@ -1,6 +1,8 @@
+import { z } from "zod";
+import { zodSchema } from "../utils/zod";
 import { GeneralRawSections, RawSections } from "./RawSectionPack/RawSection";
 import { ContextName } from "./SectionMetas/relSections/baseSections";
-import { SectionContextProps, SectionName } from "./SectionMetas/SectionName";
+import { SectionName } from "./SectionMetas/SectionName";
 
 export type GeneralSectionPack = {
   sectionName: SectionName;
@@ -19,10 +21,13 @@ export type RawSectionPack<
   rawSections: RawSections<SN, CN>;
 };
 
-export type SectionPackDb<SN extends SectionName> = Omit<
-  RawSectionPack<"db", SN>,
-  keyof SectionContextProps<SN, "db">
->;
+const zRawSectionPackFrame: Record<keyof RawSectionPack<"fe">, any> = {
+  sectionName: zodSchema.string,
+  dbId: zodSchema.nanoId,
+  contextName: zodSchema.string,
+  rawSections: zodSchema,
+};
+export const zRawSectionPack = z.object(zRawSectionPackFrame);
 
 function _testRawSectionPack(
   feRaw: RawSectionPack<"fe", "propertyIndex">,

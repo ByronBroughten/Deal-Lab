@@ -33,3 +33,11 @@ export const reqMonDbId = {
   minLength: dbLimits.dbId.length,
   required: true,
 };
+
+export const monSchemas = {
+  number: monNumber,
+  reqNumber: reqMonNumber,
+  string: monString,
+  reqString: reqMonString,
+  reqDbId: reqMonDbId,
+};

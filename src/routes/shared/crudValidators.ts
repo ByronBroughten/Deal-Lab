@@ -1,16 +1,4 @@
 import { Request, Response } from "express";
-import {
-  GuestAccessSections,
-  is,
-  LoggedIn,
-  LoggedInUser,
-  RegisterFormData,
-  Req,
-  Res,
-  zGuestAccessSections,
-  zLoginFormData,
-  zRegisterFormData,
-} from "../../../client/src/App/sharedWithServer/Crud";
 import { DbEntry } from "../../client/src/App/sharedWithServer/Analyzer/DbEntry";
 import { DbStoreName } from "../../client/src/App/sharedWithServer/Analyzer/SectionMetas/relSections/baseSectionTypes";
 import {
@@ -18,6 +6,18 @@ import {
   SectionName,
   SectionNameType,
 } from "../../client/src/App/sharedWithServer/Analyzer/SectionMetas/SectionName";
+import { is, Req, Res } from "../../client/src/App/sharedWithServer/Crud";
+import {
+  isLoginFormData,
+  LoggedIn,
+  LoggedInUser,
+} from "../../client/src/App/sharedWithServer/Crud/Login";
+import {
+  areGuestAccessSections,
+  GuestAccessSections,
+  isRegisterFormData,
+  RegisterFormData,
+} from "../../client/src/App/sharedWithServer/Crud/Register";
 
 export const serverSend = {
   success(
@@ -36,21 +36,21 @@ export const serverSend = {
 
 export const serverValidate = {
   registerFormData(value: any, res: Response): value is RegisterFormData {
-    if (zRegisterFormData.safeParse(value).success) return true;
+    if (isRegisterFormData(value)) return true;
     else {
       res.status(400).send("Invalid register form data.");
       return false;
     }
   },
   guestAccessSections(value: any, res: Response): value is GuestAccessSections {
-    if (zGuestAccessSections.safeParse(value)) return true;
+    if (areGuestAccessSections(value)) return true;
     else {
       res.status(500).send("Invalid guest access sections.");
       return false;
     }
   },
   loginFormData(value: any, res: Response): value is RegisterFormData {
-    if (zLoginFormData.safeParse(value).success) return true;
+    if (isLoginFormData(value)) return true;
     else {
       res.status(400).send("Invalid login form data.");
       return false;

@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { DbUser } from "../DbUser";
 import { zNanoId, zString } from "../utils/zod";
 import { DbInfo, Inf } from "./SectionMetas/Info";
 import { ParentName } from "./SectionMetas/relNameArrs/ParentTypes";
@@ -35,6 +34,8 @@ export type DbEntry = {
   dbId: string;
   dbSections: DbSections;
 };
+
+export type DbUser = Record<SectionName<"dbStore">, DbEntry[]>;
 
 type EntryPack<S extends SectionName<"dbStore"> = SectionName<"dbStore">> = [
   S,
@@ -253,17 +254,18 @@ const zDbValueArr = Object.values(valueMeta).map((schema) => schema.dbZod) as [
 ];
 
 const zDbValue = z.union(zDbValueArr);
-const zDbSectionFrame: Record<keyof DbSection, any> = {
+const zRawSectionFrame: Record<keyof DbSection, any> = {
   dbId: zNanoId,
   dbVarbs: z.record(zDbValue),
   childDbIds: z.record(z.array(zString)),
 };
-const zDbSection = z.object(zDbSectionFrame);
+const zDbSection = z.object(zRawSectionFrame);
 const zDbEntryFrame: Record<keyof DbEntry, any> = {
   dbId: z.string(),
   dbSections: z.record(z.array(zDbSection)),
 };
 export const zDbEntry = z.object(zDbEntryFrame);
+export const zDbEntryArr = z.array(zDbEntry);
 
 type MakeDbEntryOptions = {
   dbId?: string;

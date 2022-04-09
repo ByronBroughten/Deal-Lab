@@ -9,6 +9,15 @@ import { Obj } from "../../client/src/App/sharedWithServer/utils/Obj";
 import { serverSideUser, UserModel } from "../shared/severSideUser";
 import { serverSideLogin } from "./shared/doLogin";
 
+// make the old register into the new register.
+// also before you start saving stuff, are you going to change the values
+// so that they're all entity-like?
+// Most of the values already have entities, anyways.
+// It would add a bit more overhead, but I think it would be ok.
+
+// All values would be the same: editorText and entities
+// VarbMeta would say how to treat each
+
 export const crudRegister = {
   route: config.url.register.route,
   operation: "post",

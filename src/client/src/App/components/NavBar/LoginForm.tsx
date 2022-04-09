@@ -3,7 +3,7 @@ import React from "react";
 import styled from "styled-components";
 import { useAuthRoutes } from "../../modules/customHooks/useAuthRoutes";
 import { useAnalyzerContext } from "../../modules/usePropertyAnalyzer";
-import { LoginFormData } from "../../sharedWithServer/Crud";
+import { LoginFormData } from "../../sharedWithServer/Crud/Login";
 import theme from "../../theme/Theme";
 import DropdownForm from "../general/DropdownForm";
 import SmallFormTextField from "../general/SmallFormTextField";

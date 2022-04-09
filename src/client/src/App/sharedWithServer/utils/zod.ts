@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { dbLimits } from "./dbLimts";
 
-export const message = {
+export const validationMessage = {
   min: (num: number) => {
     return `${num} characters minimum`;
   },
