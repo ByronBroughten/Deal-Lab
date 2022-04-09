@@ -5,7 +5,7 @@ import { authTokenKey, Req } from "../../client/src/App/sharedWithServer/Crud";
 import { urlPlusParams } from "../../client/src/App/utils/url";
 import { runApp } from "../../runApp";
 import { sectionRoutes } from "../sectionRoutes";
-import { serverSideUser, UserModel } from "../shared/severSideUser";
+import { serverSideUser, UserModel } from "../shared/userServerSide";
 import { serverSideLogin } from "../userRoutes/shared/doLogin";
 
 describe("section get", () => {

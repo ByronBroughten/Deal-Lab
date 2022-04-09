@@ -5,7 +5,7 @@ import { Req } from "../../client/src/App/sharedWithServer/Crud";
 import { isLoginFormData } from "../../client/src/App/sharedWithServer/Crud/Login";
 import { Obj } from "../../client/src/App/sharedWithServer/utils/Obj";
 import { Full } from "../../client/src/App/sharedWithServer/utils/types";
-import { prepEmail, UserModel } from "../shared/severSideUser";
+import { prepEmail, UserModel } from "../shared/userServerSide";
 import { serverSideLogin } from "./shared/doLogin";
 
 function validateReq(req: Request, res: Response): Req<"Login"> | undefined {

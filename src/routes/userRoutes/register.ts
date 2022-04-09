@@ -6,7 +6,7 @@ import {
   isRegisterFormData,
 } from "../../client/src/App/sharedWithServer/Crud/Register";
 import { Obj } from "../../client/src/App/sharedWithServer/utils/Obj";
-import { serverSideUser, UserModel } from "../shared/severSideUser";
+import { serverSideUser, UserModel } from "../shared/userServerSide";
 import { serverSideLogin } from "./shared/doLogin";
 
 export const crudRegister = {

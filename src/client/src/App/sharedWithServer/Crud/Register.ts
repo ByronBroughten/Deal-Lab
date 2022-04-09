@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { DbEntry, zDbEntryArr } from "../Analyzer/DbEntry";
+import { RawSectionPack, zRawSectionPack } from "../Analyzer/RawSectionPack";
 import { BaseSectionsDb } from "../Analyzer/SectionMetas/relSections/baseSectionTypes";
 import { SchemaVarbsToDbValues } from "../Analyzer/SectionMetas/relSections/rel/valueMetaTypes";
 import { SectionNam, SectionName } from "../Analyzer/SectionMetas/SectionName";
@@ -10,15 +11,40 @@ import { validationMessage, zodSchema } from "../utils/zod";
 export type RegisterCrudSchema = {
   post: {
     req: {
-      body: { payload: RegisterReqPayload };
+      body: { payload: RegisterReqPayloadNext };
     };
     res: NextReq<"nextLogin", "post">;
   };
 };
+export type RegisterReqPayloadNext = {
+  registerFormData: RegisterFormData;
+  guestAccessSections: GuestAccessSectionsNext;
+};
+
+export type GuestAccessSectionsNext = {
+  [SN in SectionName<"feGuestAccessStore">]: RawSectionPack<"db", SN>[];
+};
+export function areGuestAccessSectionsNext(
+  value: any
+): value is GuestAccessSectionsNext {
+  const zGuestAccessSections = makeZGuestAccessSectionsNext();
+  return zGuestAccessSections.safeParse(value).success;
+}
+function makeZGuestAccessSectionsNext() {
+  const feGuestAccessStoreNames = SectionNam.arrs.db.feGuestAccessStore;
+  const schemaFrame = feGuestAccessStoreNames.reduce(
+    (feGuestAccessSections, sectionName) => {
+      feGuestAccessSections[sectionName] = zRawSectionPack;
+      return feGuestAccessSections;
+    },
+    {} as Record<SectionName<"feGuestAccessStore">, any>
+  );
+  return z.object(schemaFrame);
+}
 
 export type RegisterReqPayload = {
   registerFormData: RegisterFormData;
-  guestAccessSections: Record<SectionName<"feGuestAccessStore">, DbEntry[]>;
+  guestAccessSections: GuestAccessSections;
 };
 
 export type NewUserData = {
@@ -26,6 +52,10 @@ export type NewUserData = {
   userProtected: SchemaVarbsToDbValues<ProtectedUserVarbs>;
   guestAccessSections: GuestAccessSections;
 };
+export type GuestAccessSections = Record<
+  SectionName<"feGuestAccessStore">,
+  DbEntry[]
+>;
 type UserVarbs = BaseSectionsDb["user"]["varbSchemas"];
 type ProtectedUserVarbs = BaseSectionsDb["userProtected"]["varbSchemas"];
 
@@ -43,11 +73,6 @@ function makeZGuestAccessSections() {
   }
   return z.object(sections as Record<SectionName<"feGuestAccessStore">, any>);
 }
-
-export type GuestAccessSections = Record<
-  SectionName<"feGuestAccessStore">,
-  DbEntry[]
->;
 
 export function isRegisterFormData(value: any): value is RegisterFormData {
   return zRegisterFormData.safeParse(value).success;

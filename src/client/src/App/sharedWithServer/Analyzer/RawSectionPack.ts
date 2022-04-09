@@ -1,6 +1,10 @@
 import { z } from "zod";
 import { zodSchema } from "../utils/zod";
-import { GeneralRawSections, RawSections } from "./RawSectionPack/RawSection";
+import {
+  GeneralRawSections,
+  RawSections,
+  zRawSections,
+} from "./RawSectionPack/RawSection";
 import { ContextName } from "./SectionMetas/relSections/baseSections";
 import { SectionName } from "./SectionMetas/SectionName";
 
@@ -25,7 +29,7 @@ const zRawSectionPackFrame: Record<keyof RawSectionPack<"fe">, any> = {
   sectionName: zodSchema.string,
   dbId: zodSchema.nanoId,
   contextName: zodSchema.string,
-  rawSections: zodSchema,
+  rawSections: zRawSections,
 };
 export const zRawSectionPack = z.object(zRawSectionPackFrame);
 

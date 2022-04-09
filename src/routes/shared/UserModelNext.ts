@@ -1,13 +1,14 @@
 import mongoose, { Schema } from "mongoose";
-import { RawSection } from "../client/src/App/sharedWithServer/Analyzer/RawSectionPack/RawSection";
+import { RawSection } from "../../client/src/App/sharedWithServer/Analyzer/RawSectionPack/RawSection";
 import {
   SectionNam,
   SectionName,
-} from "../client/src/App/sharedWithServer/Analyzer/SectionMetas/SectionName";
-import { monSchemas } from "../client/src/App/sharedWithServer/utils/mongoose";
-import { DbUserNext, SectionPackDb } from "./DbUserNext";
+} from "../../client/src/App/sharedWithServer/Analyzer/SectionMetas/SectionName";
+import { monSchemas } from "../../client/src/App/sharedWithServer/utils/mongoose";
+import { UserDbRaw } from "./UserDbNext";
+import { SectionPackDbRaw } from "./UserDbNext/SectionPackDb";
 
-export const UserModel = mongoose.model<DbUserNext>(
+export const UserModelNext = mongoose.model<UserDbRaw>(
   "user",
   makeMongooseUserSchema()
 );
@@ -22,7 +23,7 @@ function makeMongooseUserSchema(): Schema<Record<SectionName<"dbStore">, any>> {
 }
 
 export function makeMongooseSectionPack() {
-  const schemaFrame: Record<keyof SectionPackDb, any> = {
+  const schemaFrame: Record<keyof SectionPackDbRaw, any> = {
     dbId: monSchemas.reqDbId,
     rawSections: {
       type: Map,

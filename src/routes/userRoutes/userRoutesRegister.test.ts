@@ -3,7 +3,7 @@ import { config } from "../../client/src/App/Constants";
 import Analyzer from "../../client/src/App/sharedWithServer/Analyzer";
 import { Req } from "../../client/src/App/sharedWithServer/Crud";
 import { runApp } from "../../runApp";
-import { serverSideUser, UserModel } from "../shared/severSideUser";
+import { serverSideUser, UserModel } from "../shared/userServerSide";
 
 function makeTestRegisterReq(): Req<"Register"> {
   let next = Analyzer.initAnalyzer();

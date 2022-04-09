@@ -1,17 +1,17 @@
-import {
-  BaseSections,
-  baseSections,
-  sectionContext,
-  ContextName,
-  SimpleSectionName,
-} from "../baseSections";
 import Arr from "../../../../utils/Arr";
-import { switchName, SwitchName } from "../baseSections/baseSwitchNames";
 import { Obj } from "../../../../utils/Obj";
 import { NeversToNull, SubType } from "../../../../utils/types";
 import { ToArrObj } from "../../../../utils/types/objectTypes";
+import {
+  BaseSections,
+  baseSections,
+  ContextName,
+  sectionContext,
+  SimpleSectionName,
+} from "../baseSections";
 import { base } from "../baseSections/base";
 import { GeneralBaseSection } from "../baseSections/baseSection";
+import { switchName, SwitchName } from "../baseSections/baseSwitchNames";
 
 type HasVarbSectionName<
   NoVarbSectionName = keyof SubType<
@@ -224,6 +224,12 @@ function makeBaseNameArrsForContext<SC extends ContextName>(
         ...this.ongoingList,
         "userVarbList",
       ] as const;
+    },
+    get oddDbStore() {
+      return [...this.rowIndex, ...this.table] as const;
+    },
+    get normalDbStore() {
+      return Arr.exclude(this.dbStore, this.oddDbStore);
     },
 
     // alias

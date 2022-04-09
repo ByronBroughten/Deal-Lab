@@ -1,66 +1,75 @@
 import { Request, Response } from "express";
 import { config } from "../../client/src/App/Constants";
-import { Req } from "../../client/src/App/sharedWithServer/Crud";
 import {
-  areGuestAccessSections,
+  areGuestAccessSectionsNext,
   isRegisterFormData,
 } from "../../client/src/App/sharedWithServer/Crud/Register";
+import { NextReq } from "../../client/src/App/sharedWithServer/CrudNext";
 import { Obj } from "../../client/src/App/sharedWithServer/utils/Obj";
-import { serverSideUser, UserModel } from "../shared/severSideUser";
-import { serverSideLogin } from "./shared/doLogin";
-
-// make the old register into the new register.
-// also before you start saving stuff, are you going to change the values
-// so that they're all entity-like?
-// Most of the values already have entities, anyways.
-// It would add a bit more overhead, but I think it would be ok.
-
-// All values would be the same: editorText and entities
-// VarbMeta would say how to treat each
+import { UserDbRaw } from "../shared/UserDbNext";
+import { UserModelNext } from "../shared/UserModelNext";
+import { userServerSideNext } from "../shared/userServerSideNext";
+import { loginRoute } from "./loginNext";
 
 export const crudRegister = {
   route: config.url.register.route,
   operation: "post",
-  validateReq(req: Request, res: Response): Req<"Register"> | undefined {
-    const { payload } = req.body;
-    if (!Obj.noGuardIs(payload)) {
-      res.status(500).send("Payload is not an object.");
-      return;
-    }
-    const { registerFormData, guestAccessSections } = payload;
-    if (!isRegisterFormData(registerFormData)) {
-      res.status(400).send("Payload failed validation");
-      return;
-    }
-    if (!areGuestAccessSections(guestAccessSections)) {
-      res.status(500).send("Invalid guest access sections.");
-      return;
-    }
-    return {
-      body: {
-        payload: {
-          registerFormData,
-          guestAccessSections,
-        },
-      },
-    };
-  },
   async fn(req: Request, res: Response) {
-    const reqObj = this.validateReq(req, res);
+    const reqObj = validateReq(req, res);
     if (!reqObj) return;
+    const { payload } = reqObj.body;
 
-    const newUserData = await serverSideUser.prepData(reqObj.body.payload);
-    const isUser = await UserModel.findOne(
-      { [serverSideUser.findByEmailKey]: newUserData.user.emailLower },
-      undefined,
-      { lean: true }
-    );
-    if (isUser)
+    const newUserData = await userServerSideNext.makeUserData(payload);
+    const foundUser = await findUserByEmailLower(newUserData.user.emailLower);
+    if (foundUser)
       return res.status(400).send("An account with that email already exists.");
 
-    const user = serverSideUser.finalizeData(newUserData);
-    const userDoc = new UserModel(user);
-    await userDoc.save();
-    return serverSideLogin.do(res, { ...user, _id: userDoc._id });
+    const { dbUser, mongoUser } = userServerSideNext.makeDbAndMongoUser({
+      newUserData,
+      guestAccessSections: payload.guestAccessSections,
+    });
+
+    await mongoUser.save();
+    return loginRoute.doLogin(res, { ...dbUser, _id: mongoUser._id });
   },
 } as const;
+
+function validateReq(
+  req: Request,
+  res: Response
+): NextReq<"nextRegister", "post"> | undefined {
+  const { payload } = req.body;
+  if (!Obj.noGuardIs(payload)) {
+    res.status(500).send("Payload is not an object.");
+    return;
+  }
+  const { registerFormData, guestAccessSections } = payload;
+  if (!isRegisterFormData(registerFormData)) {
+    res.status(400).send("Payload failed validation");
+    return;
+  }
+  if (!areGuestAccessSectionsNext(guestAccessSections)) {
+    res.status(500).send("Invalid guest access sections.");
+    return;
+  }
+  return {
+    body: {
+      payload: {
+        registerFormData,
+        guestAccessSections,
+      },
+    },
+  };
+}
+
+async function findUserByEmailLower(
+  emailLower: string
+): Promise<UserDbRaw | undefined> {
+  const foundUser = await UserModelNext.findOne(
+    userServerSideNext.emailLowerFilter(emailLower),
+    undefined,
+    { lean: true }
+  );
+  if (foundUser) return foundUser;
+  else return undefined;
+}

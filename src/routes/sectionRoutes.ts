@@ -5,12 +5,12 @@ import { Req, Res } from "../client/src/App/sharedWithServer/Crud";
 import { LoggedIn } from "../client/src/App/sharedWithServer/Crud/Login";
 import authWare from "../middleware/authWare";
 import { serverSend, serverValidate, validate } from "./shared/crudValidators";
-import { UserModel } from "./shared/severSideUser";
 import {
   mongo,
   tryFindByIdAndUpdate,
   tryFindOneAndUpdate,
 } from "./shared/tryQueries";
+import { UserModel } from "./shared/userServerSide";
 import { queryOp } from "./utils/operator";
 import { sectionGet } from "./utils/query";
 

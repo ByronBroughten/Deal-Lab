@@ -3,7 +3,7 @@ import { config } from "../../client/src/App/Constants";
 import Analyzer from "../../client/src/App/sharedWithServer/Analyzer";
 import { authTokenKey, Req } from "../../client/src/App/sharedWithServer/Crud";
 import { runApp } from "../../runApp";
-import { serverSideUser, UserModel } from "../shared/severSideUser";
+import { serverSideUser, UserModel } from "../shared/userServerSide";
 import { serverSideLogin } from "../userRoutes/shared/doLogin";
 
 describe(`dbSection/post`, () => {
