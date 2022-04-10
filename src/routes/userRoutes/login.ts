@@ -14,7 +14,7 @@ function validateReq(req: Request, res: Response): Req<"Login"> | undefined {
     res.status(500).send("Payload is not an object.");
     return;
   }
-  if (!isLoginFormData) {
+  if (!isLoginFormData(payload)) {
     res.status(400).send("Payload failed validation");
     return;
   }

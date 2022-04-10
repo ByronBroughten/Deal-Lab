@@ -1,4 +1,5 @@
 import { Req } from "../Crud";
+import { NextReq } from "../CrudNext";
 import Analyzer from "./../Analyzer";
 import { FeInfo } from "./SectionMetas/Info";
 import { SectionFinder } from "./SectionMetas/relSections/baseSectionTypes";
@@ -6,6 +7,21 @@ import { SectionName } from "./SectionMetas/SectionName";
 
 export type AnalyzerReq = typeof analyzerReq;
 export const analyzerReq = {
+  nextRegister(analyzer: Analyzer): NextReq<"nextRegister", "post"> {
+    return {
+      body: {
+        payload: {
+          registerFormData: analyzer.section("register").values({
+            userName: "string",
+            email: "string",
+            password: "string",
+          }),
+          // make the correct guestAccessSections
+          guestAccessSections: analyzer.dbEntryArrs("feGuestAccessStore"),
+        },
+      },
+    };
+  },
   register(analyzer: Analyzer): Req<"Register"> {
     return {
       body: {

@@ -11,10 +11,10 @@ import { UserModelNext } from "../shared/UserModelNext";
 import { userServerSideNext } from "../shared/userServerSideNext";
 import { loginRoute } from "./loginNext";
 
-export const crudRegister = {
-  route: config.url.register.route,
+export const crudRegisterNext = {
+  routeBit: config.url.nextRegister.bit,
   operation: "post",
-  async fn(req: Request, res: Response) {
+  async receive(req: Request, res: Response) {
     const reqObj = validateReq(req, res);
     if (!reqObj) return;
     const { payload } = reqObj.body;

@@ -49,10 +49,21 @@ export function configUrls(endpoint: string) {
     app: endpoint,
     api: {
       bit: "/api",
+      route: "/api",
       get path() {
         return urlJoin(urls.app, this.bit);
       },
     },
+    nextRegister: {
+      bit: "/nextRegister",
+      get route() {
+        return urlJoin(urls.api.route, this.bit);
+      },
+      get path() {
+        return urlJoin(urls.api.path, this.bit);
+      },
+    },
+
     // user
     user: {
       bit: "/user",

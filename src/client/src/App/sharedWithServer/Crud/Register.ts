@@ -4,7 +4,7 @@ import { RawSectionPack, zRawSectionPack } from "../Analyzer/RawSectionPack";
 import { BaseSectionsDb } from "../Analyzer/SectionMetas/relSections/baseSectionTypes";
 import { SchemaVarbsToDbValues } from "../Analyzer/SectionMetas/relSections/rel/valueMetaTypes";
 import { SectionNam, SectionName } from "../Analyzer/SectionMetas/SectionName";
-import { NextReq } from "../CrudNext";
+import { NextRes } from "../CrudNext";
 import { dbLimits } from "../utils/dbLimts";
 import { validationMessage, zodSchema } from "../utils/zod";
 
@@ -13,7 +13,7 @@ export type RegisterCrudSchema = {
     req: {
       body: { payload: RegisterReqPayloadNext };
     };
-    res: NextReq<"nextLogin", "post">;
+    res: NextRes<"nextLogin", "post">;
   };
 };
 export type RegisterReqPayloadNext = {

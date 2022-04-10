@@ -76,11 +76,9 @@ function eraseOneSection(
 }
 
 export function eraseSectionAndChildren(
-  analyzer: Analyzer,
+  next: Analyzer,
   feInfo: FeInfo
-): readonly [Analyzer, FeVarbInfo[]] {
-  let next = analyzer;
-
+): Analyzer {
   const feInfosToErase = next.nestedFeInfos(feInfo).reverse(); // erase children first
   const infosAffectedByErase = varbInfosToSolveAfterErase(next, feInfosToErase);
 
@@ -90,24 +88,17 @@ export function eraseSectionAndChildren(
     else next = eraseOneSection(next, feInfo, false);
   }
 
-  return [next, infosAffectedByErase];
+  return next.addVarbsToSolveFor(...infosAffectedByErase);
 }
 
 export function eraseChildren<
   I extends SpecificSectionInfo,
   C extends ChildName<I["sectionName"]>
->(analyzer: Analyzer, feInfo: I, childName: C): [Analyzer, FeVarbInfo[]] {
-  let next = analyzer;
-  let infosAffectedByErase: FeVarbInfo[] = [];
-  const allAffectedInfos: FeVarbInfo[] = [];
+>(next: Analyzer, feInfo: I, childName: C): Analyzer {
   const section = next.section(feInfo);
   const childIds = section.childFeIds(childName);
   for (const id of childIds) {
-    [next, infosAffectedByErase] = eraseSectionAndChildren(
-      next,
-      Inf.fe(childName, id)
-    );
-    allAffectedInfos.push(...infosAffectedByErase);
+    next = eraseSectionAndChildren(next, Inf.fe(childName, id));
   }
-  return [next, Arr.rmDuplicateObjsClone(allAffectedInfos)];
+  return next;
 }

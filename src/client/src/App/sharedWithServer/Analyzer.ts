@@ -130,6 +130,7 @@ import {
   setAsDefaultSectionArr,
 } from "./Analyzer/methods/loadSectionFromStore";
 import { loadRawSectionPack } from "./Analyzer/methods/loadSectionPack";
+import { loadUserAndSolve } from "./Analyzer/methods/loadUserAndSolve";
 import { resetSectionAndSolve } from "./Analyzer/methods/resetSectionAndSolve";
 import { solveAllActiveVarbs, solveVarbs } from "./Analyzer/methods/solveVarbs";
 import {
@@ -152,8 +153,8 @@ import {
 import {
   pushToRowIndexStore,
   sortTableRowIdsByColumn,
-  updateRowIndexStore,
-} from "./Analyzer/methods/updateRowIndexStore";
+  updateRowIndexStoreAndSolve,
+} from "./Analyzer/methods/updateRowIndexStoreAndSolve";
 import {
   replaceInSectionArr,
   updateSectionArr,
@@ -345,6 +346,8 @@ export default class Analyzer {
 
   loadRawSectionPack = loadRawSectionPack;
 
+  loadUserAndSolve = loadUserAndSolve;
+
   resetSectionAndSolve = resetSectionAndSolve;
   sectionArr = sectionArr;
   sectionArrInfos = sectionArrInfos;
@@ -457,7 +460,7 @@ export default class Analyzer {
   fullStoreTitlesAndDbIds = fullStoreTitlesAndDbIds;
 
   pushToRowIndexStore = pushToRowIndexStore;
-  updateRowIndexStore = updateRowIndexStore;
+  updateRowIndexStoreAndSolve = updateRowIndexStoreAndSolve;
   sortTableRowIdsByColumn = sortTableRowIdsByColumn;
 
   getOutVarbMap = getOutVarbMap;

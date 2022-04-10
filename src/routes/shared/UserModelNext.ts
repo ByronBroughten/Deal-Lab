@@ -9,7 +9,7 @@ import { UserDbRaw } from "./UserDbNext";
 import { SectionPackDbRaw } from "./UserDbNext/SectionPackDb";
 
 export const UserModelNext = mongoose.model<UserDbRaw>(
-  "user",
+  "userNext",
   makeMongooseUserSchema()
 );
 

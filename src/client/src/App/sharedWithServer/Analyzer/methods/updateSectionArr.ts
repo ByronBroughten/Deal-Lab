@@ -1,6 +1,7 @@
 import Analyzer from "../../Analyzer";
 import { SectionName } from "../SectionMetas/SectionName";
 import StateSection from "../StateSection";
+import { internal } from "./internal";
 
 export function updateSectionArr(
   this: Analyzer,
@@ -31,6 +32,14 @@ export function replaceInSectionArr(
   const nextSectionArr = [...this.sectionArr(sectionName)];
   nextSectionArr[idx] = nextSection;
   return this.updateSectionArr(sectionName, nextSectionArr);
+}
+
+export function wipeSectionArr(
+  next: Analyzer,
+  sectionName: SectionName
+): Analyzer {
+  const infos = next.sectionArr(sectionName).map(({ feInfo }) => feInfo);
+  return internal.eraseSections(next, infos);
 }
 
 export function wipeSectionArrAndSolve(

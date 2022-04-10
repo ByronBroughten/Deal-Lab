@@ -3,7 +3,11 @@ import { config } from "../Constants";
 import { DbEntry } from "../sharedWithServer/Analyzer/DbEntry";
 import { SectionName } from "../sharedWithServer/Analyzer/SectionMetas/SectionName";
 import { is, Req, Res } from "../sharedWithServer/Crud";
-import { isLoginHeaders, isLoginUser } from "../sharedWithServer/Crud/Login";
+import {
+  isLoginHeaders,
+  isLoginUser,
+  isLoginUserNext,
+} from "../sharedWithServer/Crud/Login";
 import { NextReq, NextRes } from "../sharedWithServer/CrudNext";
 import { urlPlusParams } from "../utils/url";
 import https from "./services/httpService";
@@ -86,6 +90,31 @@ export const crud = {
       },
     },
   },
+  registerNext: {
+    post: {
+      async send(
+        reqObj: NextReq<"nextRegister", "post">
+      ): Promise<NextRes<"nextRegister", "post"> | undefined> {
+        const res = await https.post(
+          "registering",
+          config.url.nextRegister.path,
+          reqObj.body
+        );
+        return this.validateRes(res);
+      },
+      validateRes(
+        res: AxiosResponse<unknown> | undefined
+      ): NextRes<"nextRegister", "post"> | undefined {
+        if (res && isLoginUserNext(res.data) && isLoginHeaders(res.headers)) {
+          return {
+            data: res.data,
+            headers: res.headers,
+          };
+        } else return undefined;
+      },
+    },
+  },
+
   register: {
     post: {
       get validateRes() {

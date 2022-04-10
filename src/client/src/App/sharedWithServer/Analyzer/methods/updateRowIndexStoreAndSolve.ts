@@ -1,17 +1,15 @@
 import { isEqual } from "lodash";
 import Analyzer from "../../Analyzer";
-import array from "../../utils/Arr";
 import { Str } from "../../utils/Str";
+import { FeInfo, Inf } from "../SectionMetas/Info";
+import { rowIndexToTableName } from "../SectionMetas/relNameArrs/StoreTypes";
 import {
   FeNameInfo,
-  FeVarbInfo,
   SpecificSectionInfo,
 } from "../SectionMetas/relSections/rel/relVarbInfoTypes";
-import { FeInfo, Inf } from "../SectionMetas/Info";
-import StateSection from "../StateSection";
 import { SectionName } from "../SectionMetas/SectionName";
+import StateSection from "../StateSection";
 import { internal } from "./internal";
-import { rowIndexToTableName } from "../SectionMetas/relNameArrs/StoreTypes";
 
 function findRowCellByColumn(
   analyzer: Analyzer,
@@ -74,15 +72,10 @@ export function sortTableRowIdsByColumn(
 }
 
 function resetRowCells(
-  analyzer: Analyzer,
+  next: Analyzer,
   rowInfo: SpecificSectionInfo<SectionName<"rowIndex">>
-): [Analyzer, FeVarbInfo[]] {
-  let next = analyzer;
-  let affectedInfos: FeVarbInfo[] = [];
-  const allAffectedInfos: FeVarbInfo[] = [];
-
-  [next, affectedInfos] = internal.eraseChildren(next, rowInfo, "cell");
-  allAffectedInfos.push(...affectedInfos);
+): Analyzer {
+  next = internal.eraseChildren(next, rowInfo, "cell");
 
   const tableName = rowIndexToTableName[rowInfo.sectionName];
   const columns = next.childSections(tableName, "column");
@@ -95,17 +88,14 @@ function resetRowCells(
       parentFinder: next.section(rowInfo).feInfo,
       values: { ...varbInfo, value },
     });
-    allAffectedInfos.push(...affectedInfos);
   }
-  return [next, array.rmDuplicateObjsClone(allAffectedInfos)];
+  return next;
 }
 export function pushToRowIndexStore(
   this: Analyzer,
   feInfo: FeInfo<"hasRowIndexStore">
 ): Analyzer {
   let next = this;
-  let affectedInfos: FeVarbInfo[] = [];
-  const allAffectedInfos: FeVarbInfo[] = [];
 
   const { indexStoreName } = next.meta.section(feInfo.sectionName).core;
   const { feInfo: indexParentInfo } = next.parent(indexStoreName);
@@ -133,15 +123,13 @@ export function pushToRowIndexStore(
       },
     },
   });
-  allAffectedInfos.push(...affectedInfos);
 
   const { feInfo: rowInfo } = next.lastSection(indexStoreName);
-  [next, affectedInfos] = resetRowCells(next, rowInfo);
-  allAffectedInfos.push(...affectedInfos);
-  return next.solveVarbs(allAffectedInfos);
+  next = resetRowCells(next, rowInfo);
+  return next.solveVarbs();
 }
 
-export function updateRowIndexStore(
+export function updateRowIndexStoreAndSolve(
   this: Analyzer,
   feInfo: FeInfo<"hasRowIndexStore">
 ) {
@@ -154,12 +142,12 @@ export function updateRowIndexStore(
     idType: "dbId",
   } as const;
 
-  let [next, affectedInfos] = resetRowCells(this, rowInfo);
+  let next = resetRowCells(this, rowInfo);
   next = internal.updateValueDirectly(
     next,
     Inf.feVarb("title", this.section(rowInfo).feInfo),
     section.value("title", "string")
   );
-  return next.solveVarbs(affectedInfos);
+  return next.solveVarbs();
   // let next = this.directUpdateAndSolve(Inf.dbVarb("title", rowInfo), section.value("title", "string"));
 }

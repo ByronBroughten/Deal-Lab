@@ -99,6 +99,13 @@ export const userServerSideNext = {
       mongoUser,
     };
   },
+  async entireMakeUserProcess(payload: RegisterReqPayloadNext) {
+    const newUserData = await this.makeUserData(payload);
+    return this.makeMongoUser({
+      newUserData,
+      guestAccessSections: payload.guestAccessSections,
+    });
+  },
 };
 
 type MakeUserProps = {

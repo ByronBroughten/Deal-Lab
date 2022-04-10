@@ -1,8 +1,8 @@
 import Analyzer from "../../sharedWithServer/Analyzer";
+import { DbEnt } from "../../sharedWithServer/Analyzer/DbEntry";
 import { sectionMetas } from "../../sharedWithServer/Analyzer/SectionMetas";
 import { FeInfo } from "../../sharedWithServer/Analyzer/SectionMetas/Info";
 import { SectionName } from "../../sharedWithServer/Analyzer/SectionMetas/SectionName";
-import { DbEnt } from "../../sharedWithServer/Analyzer/DbEntry";
 import { crud } from "../crud";
 import { auth } from "../services/authService";
 import { useAnalyzerContext } from "../usePropertyAnalyzer";
@@ -86,7 +86,7 @@ export function useStores() {
 
     // put
     async putRowIndexEntry(feInfo: FeInfo<"hasRowIndexStore">) {
-      handleSet("updateRowIndexStore", feInfo);
+      handleSet("updateRowIndexStoreAndSolve", feInfo);
       doOrBackToDefault("putIndexEntry", feInfo, analyzer);
     },
     async putIndexEntry(feInfo: FeInfo<"hasFullIndexStore">) {

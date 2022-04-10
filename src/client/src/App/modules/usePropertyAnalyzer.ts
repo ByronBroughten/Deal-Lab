@@ -40,10 +40,11 @@ export default function usePropertyAnalyzer({
 
     "loadSectionFromFeIndex",
     "loadSectionFromFeDefault",
+    "loadUserAndSolve",
 
     "eraseIndexAndSolve",
     "eraseRowIndexAndSolve",
-    "updateRowIndexStore",
+    "updateRowIndexStoreAndSolve",
     "updateIndexStoreEntry",
     "pushToRowIndexStore",
     "pushToIndexStore",
