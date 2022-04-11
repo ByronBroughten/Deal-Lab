@@ -1,93 +1,68 @@
-// import config from "config";
-// import { Response } from "express";
-// import jwt from "jsonwebtoken";
-// import { isObject } from "lodash";
-// import mongoose from "mongoose";
-// import { authTokenKey } from "../../client/src/App/sharedWithServer/Crud";
-// import { NextReq } from "../../client/src/App/sharedWithServer/CrudNext";
-// import { UserDbNext, UserDbRaw } from "../shared/UserDbNext";
+import { Request, Response } from "express";
+import { config } from "../../client/src/App/Constants";
+import { isLoginFormData } from "../../client/src/App/sharedWithServer/Crud/Login";
+import { NextReq } from "../../client/src/App/sharedWithServer/CrudNext";
+import { Obj } from "../../client/src/App/sharedWithServer/utils/Obj";
+import { UserDbNext } from "../shared/UserDbNext";
+import { UserModelNext } from "../shared/UserModelNext";
+import { userServerSideNext } from "../shared/userServerSideNext";
+import { loginUtils } from "./loginNext/loginUtils";
 
-// function validateReq(req: Request, res: Response): NextReq<"Login"> | undefined {
-//   const { payload } = req.body;
-//   if (!Obj.noGuardIs(payload)) {
-//     res.status(500).send("Payload is not an object.");
-//     return;
-//   }
-//   if (!isLoginFormData(payload)) {
-//     res.status(400).send("Payload failed validation");
-//     return;
-//   }
-//   return { body: { payload } };
-// }
+const crudLoginNext = {
+  routeBit: config.crud.routes.nextLogin,
+};
 
-// const userByEmailKey = "user.0.dbSections.user.0.dbVarbs.emailLower";
-// export async function login(req: Request, res: Response) {
-//   const reqObj = validateReq(req, res);
-//   if (!reqObj) return;
+export async function login(req: Request, res: Response) {
+  const reqObj = validateReq(req, res);
+  if (!reqObj) return;
 
-//   const { email, password } = reqObj.body.payload;
-//   const { emailLower } = prepEmail(email);
-//   const user = await UserModel.findOne(
-//     { [userByEmailKey]: emailLower },
-//     undefined,
-//     {
-//       lean: true,
-//     }
-//   );
-//   if (!user) return res.status(400).send("Invalid email address.");
-//   const dbSections = user.userProtected[0].dbSections as Full<DbSections>;
-//   const { encryptedPassword } = dbSections.userProtected[0].dbVarbs as {
-//     encryptedPassword: string;
-//   };
-//   const isValidPw = await bcrypt.compare(password, encryptedPassword);
-//   if (!isValidPw) return res.status(400).send("Invalid password.");
-//   return serverSideLogin.do(res, user);
-// }
+  const { email, password } = reqObj.body.payload;
 
+  const { emailLower } = userServerSideNext.prepEmail(email);
+  const user = await loginUtils.tryFindOneUserByEmail(emailLower);
+  if (!user) return res.status(400).send("Invalid email address.");
 
-// export const loginUtils = {
-//   checkUserAuthToken(token: any): null | UserJwt {
-//     const decoded = jwt.verify(token, config.get("jwtPrivateKey"));
-//     if (isUserJwt(decoded)) return decoded;
-//     else return null;
-//   },
-//   dummyUserAuthToken() {
-//     const arbitraryId = new mongoose.Types.ObjectId();
-//     return this.makeUserAuthToken(arbitraryId.toHexString());
-//   },
-//   makeUserAuthToken(userId: string) {
-//     const userJwt: UserJwt = { _id: userId };
-//     try {
-//       return jwt.sign(userJwt, config.get("jwtPrivateKey"));
-//     } catch (err) {
-//       throw new Error("JWT failed to be made.");
-//     }
-//   },
-//   doLogin(res: Response, user: UserDbRaw & { _id?: any }) {
-//     if ("_id" in user && typeof user._id !== "undefined") {
-//       const userDb = UserDbNext.init(user);
-//       const loggedInUser = userDb.makeRawFeLoginUser();
-//       const token = this.makeUserAuthToken(user._id);
-//       res.header(authTokenKey, token).status(200).send(loggedInUser);
-//     } else {
-//       throw new Error("A valid user id is required here.");
-//     }
-//   },
-// };
+  const serverUser = UserDbNext.init(user.toJSON());
+  const userProtectedSection =
+    serverUser.firstSectionPackHeadSection("userProtected");
+  const { encryptedPassword } = userProtectedSection.dbVarbs as {
+    encryptedPassword: string;
+  };
 
-// export type UserJwt = { _id: string };
-// function tokenHasCorrectProps(value: any) {
-//   return (
-//     "_id" in value &&
-//     "iat" in value &&
-//     typeof value._id === "string" &&
-//     typeof value.iat === "number"
-//   );
-// }
-// function isUserJwt(value: any): value is UserJwt {
-//   return (
-//     isObject(value) &&
-//     Object.keys(value).length === 2 &&
-//     tokenHasCorrectProps(value)
-//   );
-// }
+  const isValidPw = loginUtils.checkPasswordAndResIfInvalid({
+    password,
+    encryptedPassword,
+    res,
+  });
+
+  if (!isValidPw) return;
+  return loginUtils.doLogin(res, user);
+}
+
+function validateReq(
+  req: Request,
+  res: Response
+): NextReq<"nextLogin", "post"> | undefined {
+  const { payload } = req.body;
+  if (!Obj.noGuardIs(payload)) {
+    res.status(500).send("Payload is not an object.");
+    return;
+  }
+  if (!isLoginFormData(payload)) {
+    res.status(400).send("Payload failed validation");
+    return;
+  }
+  return { body: { payload } };
+}
+
+async function tryFindOneUserByEmail(emailLower: string) {
+  try {
+    return await UserModelNext.findOne(
+      userServerSideNext.emailLowerFilter(emailLower),
+      undefined,
+      { lean: true }
+    );
+  } catch (err) {
+    return undefined;
+  }
+}

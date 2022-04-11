@@ -16,7 +16,7 @@ function makeTestRegisterReq(): NextReq<"nextRegister", "post"> {
   return next.req.nextRegister();
 }
 
-describe(config.url.nextRegister.route, () => {
+describe(config.crud.routes.nextRegister.route, () => {
   // prep
   let server: ReturnType<typeof runApp> | any;
   let reqObj: NextReq<"nextRegister", "post">;
@@ -28,7 +28,9 @@ describe(config.url.nextRegister.route, () => {
 
   // register route: "/api/user/register"
   const exec = async () =>
-    await request(server).post(config.url.nextRegister.route).send(reqObj.body);
+    await request(server)
+      .post(config.crud.routes.nextRegister.route)
+      .send(reqObj.body);
   async function testStatus(statusNumber: number) {
     const res = await exec();
     expect(res.status).toBe(statusNumber);

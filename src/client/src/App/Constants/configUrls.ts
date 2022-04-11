@@ -16,21 +16,24 @@ function bitRouteAndPath(
 }
 
 export function makeCrudConfig(endpoint: string) {
-  const apiServiceInfo = {
+  const apiRoutes = {
     bit: "/api",
+    route: "/api",
     get path() {
       return urlJoin(endpoint, this.bit);
     },
   } as const;
-
   return {
-    ...apiServiceInfo,
     userAuthTokenKey: "x-auth-token",
     routes: {
-      register: bitRouteAndPath(apiServiceInfo, "/register"),
-      login: bitRouteAndPath(apiServiceInfo, "/login"),
+      register: bitRouteAndPath(apiRoutes, "/register"),
+      nextRegister: bitRouteAndPath(apiRoutes, "/nextRegister"),
+
+      login: bitRouteAndPath(apiRoutes, "/login"),
+      nextLogin: bitRouteAndPath(apiRoutes, "/nextLogin"),
+
       section: {
-        ...bitRouteAndPath(apiServiceInfo, "/section"),
+        ...bitRouteAndPath(apiRoutes, "/section"),
         get: {
           paramArr: ["dbStoreName", "dbId"] as const,
         },
@@ -38,8 +41,8 @@ export function makeCrudConfig(endpoint: string) {
           paramArr: ["dbStoreName", "dbId"] as const,
         },
       },
-      sectionArr: bitRouteAndPath(apiServiceInfo, "/sectionArr"),
-      tableColumns: bitRouteAndPath(apiServiceInfo, "/columns"),
+      sectionArr: bitRouteAndPath(apiRoutes, "/sectionArr"),
+      tableColumns: bitRouteAndPath(apiRoutes, "/columns"),
     },
   };
 }

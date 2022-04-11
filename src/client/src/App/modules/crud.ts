@@ -6,7 +6,7 @@ import { is, Req, Res } from "../sharedWithServer/Crud";
 import {
   isLoginHeaders,
   isLoginUser,
-  isLoginUserNext,
+  isLoginUserNext
 } from "../sharedWithServer/Crud/Login";
 import { NextReq, NextRes } from "../sharedWithServer/CrudNext";
 import { urlPlusParams } from "../utils/url";
@@ -97,7 +97,7 @@ export const crud = {
       ): Promise<NextRes<"nextRegister", "post"> | undefined> {
         const res = await https.post(
           "registering",
-          config.url.nextRegister.path,
+          config.crud.routes.nextRegister.path,
           reqObj.body
         );
         return this.validateRes(res);

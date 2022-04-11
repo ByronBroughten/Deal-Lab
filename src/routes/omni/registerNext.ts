@@ -2,17 +2,17 @@ import { Request, Response } from "express";
 import { config } from "../../client/src/App/Constants";
 import {
   areGuestAccessSectionsNext,
-  isRegisterFormData
+  isRegisterFormData,
 } from "../../client/src/App/sharedWithServer/Crud/Register";
 import { NextReq } from "../../client/src/App/sharedWithServer/CrudNext";
 import { Obj } from "../../client/src/App/sharedWithServer/utils/Obj";
 import { UserDbRaw } from "../shared/UserDbNext";
 import { UserModelNext } from "../shared/UserModelNext";
 import { userServerSideNext } from "../shared/userServerSideNext";
-import { loginUtils } from "./loginNext";
+import { loginUtils } from "./loginNext/loginUtils";
 
 export const crudRegisterNext = {
-  routeBit: config.url.nextRegister.bit,
+  routeBit: config.crud.routes.nextRegister.bit,
   operation: "post",
   async receive(req: Request, res: Response) {
     const reqObj = validateReq(req, res);
