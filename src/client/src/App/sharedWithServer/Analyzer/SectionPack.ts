@@ -1,10 +1,14 @@
-import { RawSectionPack } from "./RawSectionPack";
-import { DbVarbs, RawSections } from "./RawSectionPack/RawSection";
+import { omit } from "lodash";
 import { sectionMetas } from "./SectionMetas";
-import { OneChildIdArrs } from "./SectionMetas/relNameArrs/ChildTypes";
+import {
+  NameToNameWithSameChildren,
+  OneChildIdArrs,
+} from "./SectionMetas/relNameArrs/ChildTypes";
 import { ContextName } from "./SectionMetas/relSections/baseSections";
 import { Id } from "./SectionMetas/relSections/baseSections/id";
 import { SectionName } from "./SectionMetas/SectionName";
+import { SectionPackDbRaw, SectionPackRaw } from "./SectionPackRaw";
+import { DbVarbs, RawSections } from "./SectionPackRaw/RawSection";
 
 export type OneHeadSectionNode<
   SN extends SectionName,
@@ -17,28 +21,32 @@ export type OneHeadSectionNode<
   dbVarbs?: Partial<DbVarbs>;
 };
 export class SectionPack<SN extends SectionName, CN extends ContextName> {
-  constructor(readonly core: RawSectionPack<CN, SN>) {}
-  addSection() {
-    // Try using Analyzer for this instead.
-    // takes a child section's OneHeadSectionNode
-    // minus childDbIds
-    // but it will need to be added to its parent
-    // so also provide the parentInfo
+  constructor(readonly core: SectionPackRaw<CN, SN>) {}
+  get sectionName(): SN {
+    return this.core.sectionName;
   }
-  addSectionPack() {
-    // Try using Analyzer for this instead.
-    // takes a descendant sectionPack
-    // and merges it with this
+  feToDbRaw<NextSN extends NameToNameWithSameChildren<SN, "fe", "db">>(
+    nextSectionName: NextSN
+  ): SectionPackDbRaw<NextSN> {
+    const { sectionName } = this;
+    return {
+      dbId: this.core.dbId,
+      rawSections: {
+        ...omit(this.core.rawSections, [sectionName]),
+        [nextSectionName]: this.core.rawSections[sectionName],
+      },
+    } as Record<
+      keyof SectionPackDbRaw<NextSN>,
+      any
+    > as SectionPackDbRaw<NextSN>;
   }
-  // this is much easier.
-  // and I think this is pretty much all I have to do.
   static init<SN extends SectionName, CN extends ContextName>({
     sectionName,
     contextName,
     childDbIds,
     dbVarbs,
     dbId = Id.make(),
-  }: OneHeadSectionNode<SN, CN>): RawSectionPack<CN, SN> {
+  }: OneHeadSectionNode<SN, CN>): SectionPackRaw<CN, SN> {
     const sectionMeta = sectionMetas.section(sectionName, contextName);
     return {
       sectionName,

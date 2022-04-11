@@ -1,8 +1,8 @@
 import { z } from "zod";
 import { config } from "../../Constants";
 import { DbEntry, zDbEntryArr } from "../Analyzer/DbEntry";
-import { RawSectionPack, zRawSectionPack } from "../Analyzer/RawSectionPack";
 import { SectionNam, SectionName } from "../Analyzer/SectionMetas/SectionName";
+import { SectionPackRaw, zRawSectionPack } from "../Analyzer/SectionPackRaw";
 import { zodSchema } from "../utils/zod";
 import { zRegisterFormData } from "./Register";
 
@@ -38,7 +38,7 @@ export function isLoginUser(value: any): value is LoginUser {
 
 export type LoginUserNext = Omit<
   {
-    [SN in SectionName<"initOnLogin">]: RawSectionPack<"fe", SN>[];
+    [SN in SectionName<"initOnLogin">]: SectionPackRaw<"fe", SN>[];
   },
   "row"
 >;

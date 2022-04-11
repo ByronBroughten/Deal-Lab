@@ -1,8 +1,8 @@
 import Analyzer from "../../Analyzer";
 import { LoginUserNext } from "../../Crud/Login";
 import { Obj } from "../../utils/Obj";
-import { RawSectionPack } from "../RawSectionPack";
 import { SectionName } from "../SectionMetas/SectionName";
+import { SectionPackRaw } from "../SectionPackRaw";
 import { internal } from "./internal";
 
 export function loadUserAndSolve(
@@ -14,7 +14,7 @@ export function loadUserAndSolve(
     next = internal.loadRawSectionPackArr(
       next,
       sectionName,
-      sectionPackArr as RawSectionPack<"fe", SectionName<"hasOneParent">>[]
+      sectionPackArr as SectionPackRaw<"fe", SectionName<"hasOneParent">>[]
     );
   }
   return next.solveVarbs();

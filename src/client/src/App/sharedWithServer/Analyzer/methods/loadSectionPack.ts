@@ -1,8 +1,8 @@
 import Analyzer from "../../Analyzer";
 import { FeSectionPack, OrderedSectionNodeProps } from "../FeSectionPack";
 import { FeSelfOrDescendantNode } from "../FeSectionPacks/FeSectionNode";
-import { RawSectionPack } from "../RawSectionPack";
 import { SectionName } from "../SectionMetas/SectionName";
+import { SectionPackRaw } from "../SectionPackRaw";
 import { AddSectionProps } from "./internal/addSections/addSectionsTypes";
 
 export function loadRawSectionPack<
@@ -10,7 +10,7 @@ export function loadRawSectionPack<
   Props extends OrderedSectionNodeProps<SN>
 >(
   this: Analyzer,
-  rawSectionPack: RawSectionPack<"fe", SN>,
+  rawSectionPack: SectionPackRaw<"fe", SN>,
   props: Props
 ): Analyzer {
   const feSectionPack = new FeSectionPack(rawSectionPack);

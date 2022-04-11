@@ -2,14 +2,14 @@ import { Request, Response } from "express";
 import { config } from "../../client/src/App/Constants";
 import {
   areGuestAccessSectionsNext,
-  isRegisterFormData,
+  isRegisterFormData
 } from "../../client/src/App/sharedWithServer/Crud/Register";
 import { NextReq } from "../../client/src/App/sharedWithServer/CrudNext";
 import { Obj } from "../../client/src/App/sharedWithServer/utils/Obj";
 import { UserDbRaw } from "../shared/UserDbNext";
 import { UserModelNext } from "../shared/UserModelNext";
 import { userServerSideNext } from "../shared/userServerSideNext";
-import { loginRoute } from "./loginNext";
+import { loginUtils } from "./loginNext";
 
 export const crudRegisterNext = {
   routeBit: config.url.nextRegister.bit,
@@ -29,8 +29,13 @@ export const crudRegisterNext = {
       guestAccessSections: payload.guestAccessSections,
     });
 
-    await mongoUser.save();
-    return loginRoute.doLogin(res, { ...dbUser, _id: mongoUser._id });
+    try {
+      await mongoUser.save();
+    } catch (err) {
+      return res.status(500).send("Unknown error; registration failed.");
+    }
+
+    return loginUtils.doLogin(res, { ...dbUser, _id: mongoUser._id });
   },
 } as const;
 
@@ -65,11 +70,14 @@ function validateReq(
 async function findUserByEmailLower(
   emailLower: string
 ): Promise<UserDbRaw | undefined> {
-  const foundUser = await UserModelNext.findOne(
-    userServerSideNext.emailLowerFilter(emailLower),
-    undefined,
-    { lean: true }
-  );
-  if (foundUser) return foundUser;
-  else return undefined;
+  try {
+    const foundUser = await UserModelNext.findOne(
+      userServerSideNext.emailLowerFilter(emailLower),
+      undefined,
+      { lean: true }
+    );
+    if (foundUser) return foundUser;
+  } catch (err) {
+    return undefined;
+  }
 }

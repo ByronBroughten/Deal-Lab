@@ -1,21 +1,24 @@
-import { pick } from "lodash";
-import { RawSectionPack } from "../../client/src/App/sharedWithServer/Analyzer/RawSectionPack";
-import { DbVarbs } from "../../client/src/App/sharedWithServer/Analyzer/RawSectionPack/RawSection";
 import { sectionMetas } from "../../client/src/App/sharedWithServer/Analyzer/SectionMetas";
 import {
   SectionNam,
   SectionName,
 } from "../../client/src/App/sharedWithServer/Analyzer/SectionMetas/SectionName";
 import { SectionPack } from "../../client/src/App/sharedWithServer/Analyzer/SectionPack";
+import {
+  SectionPackDbRaw,
+  SectionPackRaw,
+} from "../../client/src/App/sharedWithServer/Analyzer/SectionPackRaw";
+import { DbVarbs } from "../../client/src/App/sharedWithServer/Analyzer/SectionPackRaw/RawSection";
 import { LoginUserNext } from "../../client/src/App/sharedWithServer/Crud/Login";
 import Arr from "../../client/src/App/sharedWithServer/utils/Arr";
-import { SectionPackDb, SectionPackDbRaw } from "./UserDbNext/SectionPackDb";
+import { Obj } from "../../client/src/App/sharedWithServer/utils/Obj";
+import { SectionPackDb } from "./UserDbNext/SectionPackDb";
 
 export class UserDbNext {
   constructor(readonly core: UserDbCore) {}
   makeRawFeLoginUser(): LoginUserNext {
     return SectionNam.arrs.fe.initOnLogin.reduce((loginUser, sectionName) => {
-      (loginUser[sectionName] as RawSectionPack<"fe", typeof sectionName>[]) =
+      (loginUser[sectionName] as SectionPackRaw<"fe", typeof sectionName>[]) =
         this.makeRawFeSectionPackArr(sectionName);
       return loginUser;
     }, {} as LoginUserNext);
@@ -37,21 +40,21 @@ export class UserDbNext {
   }
   makeRawFeSectionPackArr<SN extends SectionName<"dbStore">>(
     storeName: SN
-  ): RawSectionPack<"fe", SN>[] {
+  ): SectionPackRaw<"fe", SN>[] {
     if (SectionNam.is(storeName, "table")) {
-      return this.makeTableSectionPackFeArr(storeName) as RawSectionPack<
+      return this.makeTableSectionPackFeArr(storeName) as SectionPackRaw<
         "fe",
         SN
       >[];
     } else {
       return this.sectionPackArr(storeName).map(
-        (dbPack) => dbPack.toFeSectionPack() as RawSectionPack<"fe", SN>
+        (dbPack) => dbPack.toFeSectionPack() as SectionPackRaw<"fe", SN>
       );
     }
   }
   makeTableSectionPackFeArr<SN extends SectionName<"table">>(
     sectionName: SN
-  ): RawSectionPack<"fe", SN>[] {
+  ): SectionPackRaw<"fe", SN>[] {
     const tableSectionPack = this.firstSectionPack(sectionName);
     const tableSection = tableSectionPack.firstSection(sectionName);
 
@@ -103,7 +106,7 @@ export function initDbSectionPack<SN extends SectionName>(
     sectionName,
     dbVarbs: fullDbVarbs,
   });
-  return pick(sectionPack, ["dbId", "rawSections"]);
+  return Obj.strictPick(sectionPack, ["dbId", "rawSections"]);
 }
 
 // makeNewTableRows(sectionName: SectionName<"rowIndex">) {
@@ -114,7 +117,7 @@ export function initDbSectionPack<SN extends SectionName>(
 //   const tableColumnSections = tableSectionPack.rawSectionArr("column");
 //   const rowSourceArr = this.sectionPackArr(rowSourceName);
 
-//   const indexRows: RawSectionPack<"fe", SectionName<"rowIndex">>[] = [];
+//   const indexRows: SectionPackRaw<"fe", SectionName<"rowIndex">>[] = [];
 //   for (const sourceSectionPack of rowSourceArr) {
 //     indexRows.push(
 //       this.toRowIndexEntry(rowSourceName, sourceSectionPack, tableColumnSections)
@@ -125,7 +128,7 @@ export function initDbSectionPack<SN extends SectionName>(
 //   indexName: SN,
 //   sourceSectionPack: SectionPackDb<SN>,
 //   tableColumns: OneRawSection<"db", "column">[]
-// ): RawSectionPack<"fe", SN> {
+// ): SectionPackRaw<"fe", SN> {
 //   // for now, there is very little type safety for dbEntry
 
 //   const sourceSection = sourceSectionPack.headSection()

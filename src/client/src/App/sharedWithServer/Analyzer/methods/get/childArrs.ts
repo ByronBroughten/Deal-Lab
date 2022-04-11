@@ -1,6 +1,5 @@
 import Analyzer from "../../../Analyzer";
 import { Obj } from "../../../utils/Obj";
-import { FeInfo, Inf } from "../../SectionMetas/Info";
 import {
   ChildIdArrs,
   ChildName,
@@ -8,11 +7,7 @@ import {
   SelfOrDescendantIds,
 } from "../../SectionMetas/relNameArrs/ChildTypes";
 import { SectionFinder } from "../../SectionMetas/relSections/baseSectionTypes";
-import { FeNameInfo } from "../../SectionMetas/relSections/rel/relVarbInfoTypes";
-import {
-  SectionContextProps,
-  SectionName,
-} from "../../SectionMetas/SectionName";
+import { SectionName } from "../../SectionMetas/SectionName";
 import StateSection from "../../StateSection";
 
 export function allChildDbIds<S extends SectionName>(
@@ -47,8 +42,7 @@ export function childSections<
   );
 }
 
-// everything is based on descendantSections
-export function descendantFeIds<SN extends SectionName>(
+export function descendantFeIdsPast<SN extends SectionName>(
   this: Analyzer,
   finder: SectionFinder<SN>
 ): DescendantIds<SN, "fe"> {
@@ -70,9 +64,39 @@ export function descendantFeIds<SN extends SectionName>(
       queue.push(...this.section(feInfo).allChildFeInfos());
     }
   }
-
   return descendantIds as any;
 }
+
+export function descendantFeIds<SN extends SectionName>(
+  this: Analyzer,
+  headSectionFinder: SectionFinder<SN>
+): DescendantIds<SN, "fe"> {
+  const descendantIds: { [key: string]: string[] } = {};
+
+  const queue: SectionFinder[] = [headSectionFinder];
+  while (queue.length > 0) {
+    const queueLength = queue.length;
+    for (let i = 0; i < queueLength; i++) {
+      const sectionFinder = queue.shift();
+      if (!sectionFinder)
+        throw new Error("There should always be an feInfo here.");
+
+      const section = this.section(sectionFinder);
+      for (const childName of section.childNames) {
+        if (!(childName in descendantIds)) descendantIds[childName] = [];
+
+        section.childFeIds(childName).forEach((feId) => {
+          if (!descendantIds[childName].includes(feId)) {
+            descendantIds[childName].push(feId);
+          }
+        });
+        queue.push(...section.childFeInfos(childName));
+      }
+    }
+  }
+  return descendantIds as any;
+}
+
 export function selfAndDescendantFeIds<SN extends SectionName>(
   this: Analyzer,
   finder: SectionFinder<SN>

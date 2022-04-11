@@ -1,6 +1,6 @@
-import { isEqual } from "lodash";
+import { isEqual, pick } from "lodash";
 import { merge, spread } from "./Obj/merge";
-import { Full, SubType } from "./types";
+import { Full, StrictPick, SubType } from "./types";
 
 type Entries<T> = { [K in keyof T]: [K, T[K]] }[keyof T];
 export function ObjectEntries<O extends object, T extends Full<O>>(
@@ -68,6 +68,12 @@ type Types = {
 };
 
 export const Obj = {
+  strictPick<O extends object, KS extends keyof O>(
+    obj: O,
+    keys: KS[]
+  ): StrictPick<O, KS> {
+    return pick(obj, keys);
+  },
   noGuardIs: (value: any) =>
     typeof value === "object" && value !== null && !Array.isArray(value),
   keys: ObjectKeys,

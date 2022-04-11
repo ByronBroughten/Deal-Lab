@@ -165,7 +165,7 @@ export default class StateSection<
       throw new Error("This section doesn't have a parent.");
     return sectionName as ParentName<SectionName<"hasParent">>;
   }
-  get childNames(): readonly string[] {
+  get childNames() {
     return this.meta.get("childNames");
   }
   get feVarbInfos(): FeVarbInfo[] {

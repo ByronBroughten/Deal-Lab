@@ -90,6 +90,11 @@ import {
   makeRawSections,
 } from "./Analyzer/methods/get/sectionPack";
 import {
+  guestAccessDbSectionPacks,
+  sectionPackArr,
+  sectionPackArrs,
+} from "./Analyzer/methods/get/sectionPackArrs";
+import {
   feValue,
   findValue,
   outputValues,
@@ -448,6 +453,10 @@ export default class Analyzer {
   dbIndexEntry = dbIndexEntry;
   dbEntryArr = dbEntryArr;
   dbEntryArrs = dbEntryArrs;
+
+  sectionPackArr = sectionPackArr;
+  sectionPackArrs = sectionPackArrs;
+  guestAccessDbSectionPacks = guestAccessDbSectionPacks;
 
   makeRawSectionPack = makeRawSectionPack;
   makeRawSection = makeRawSection;

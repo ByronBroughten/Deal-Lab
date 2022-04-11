@@ -1,12 +1,12 @@
 import mongoose, { Schema } from "mongoose";
-import { RawSection } from "../../client/src/App/sharedWithServer/Analyzer/RawSectionPack/RawSection";
 import {
   SectionNam,
   SectionName,
 } from "../../client/src/App/sharedWithServer/Analyzer/SectionMetas/SectionName";
+import { SectionPackDbRaw } from "../../client/src/App/sharedWithServer/Analyzer/SectionPackRaw";
+import { RawSection } from "../../client/src/App/sharedWithServer/Analyzer/SectionPackRaw/RawSection";
 import { monSchemas } from "../../client/src/App/sharedWithServer/utils/mongoose";
 import { UserDbRaw } from "./UserDbNext";
-import { SectionPackDbRaw } from "./UserDbNext/SectionPackDb";
 
 export const UserModelNext = mongoose.model<UserDbRaw>(
   "userNext",

@@ -1,12 +1,12 @@
 import { z } from "zod";
 import { DbEntry, zDbEntryArr } from "../Analyzer/DbEntry";
-import { RawSectionPack, zRawSectionPack } from "../Analyzer/RawSectionPack";
 import { BaseSectionsDb } from "../Analyzer/SectionMetas/relSections/baseSectionTypes";
 import { SchemaVarbsToDbValues } from "../Analyzer/SectionMetas/relSections/rel/valueMetaTypes";
 import { SectionNam, SectionName } from "../Analyzer/SectionMetas/SectionName";
+import { SectionPackRaw, zSectionPackDbArr } from "../Analyzer/SectionPackRaw";
 import { NextRes } from "../CrudNext";
 import { dbLimits } from "../utils/dbLimts";
-import { validationMessage, zodSchema } from "../utils/zod";
+import { validationMessage, zodSchema, zValidate } from "../utils/zod";
 
 export type RegisterCrudSchema = {
   post: {
@@ -22,19 +22,19 @@ export type RegisterReqPayloadNext = {
 };
 
 export type GuestAccessSectionsNext = {
-  [SN in SectionName<"feGuestAccessStore">]: RawSectionPack<"db", SN>[];
+  [SN in SectionName<"feGuestAccessStore">]: SectionPackRaw<"db", SN>[];
 };
 export function areGuestAccessSectionsNext(
   value: any
 ): value is GuestAccessSectionsNext {
   const zGuestAccessSections = makeZGuestAccessSectionsNext();
-  return zGuestAccessSections.safeParse(value).success;
+  return zValidate(value, zGuestAccessSections);
 }
 function makeZGuestAccessSectionsNext() {
   const feGuestAccessStoreNames = SectionNam.arrs.db.feGuestAccessStore;
   const schemaFrame = feGuestAccessStoreNames.reduce(
     (feGuestAccessSections, sectionName) => {
-      feGuestAccessSections[sectionName] = zRawSectionPack;
+      feGuestAccessSections[sectionName] = zSectionPackDbArr;
       return feGuestAccessSections;
     },
     {} as Record<SectionName<"feGuestAccessStore">, any>

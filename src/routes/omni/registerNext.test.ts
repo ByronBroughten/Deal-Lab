@@ -3,8 +3,8 @@ import { config } from "../../client/src/App/Constants";
 import Analyzer from "../../client/src/App/sharedWithServer/Analyzer";
 import { NextReq } from "../../client/src/App/sharedWithServer/CrudNext";
 import { runApp } from "../../runApp";
+import { UserModelNext } from "../shared/UserModelNext";
 import { userServerSideNext } from "../shared/userServerSideNext";
-import { UserModelNext } from "./../shared/UserModelNext";
 
 function makeTestRegisterReq(): NextReq<"nextRegister", "post"> {
   let next = Analyzer.initAnalyzer();

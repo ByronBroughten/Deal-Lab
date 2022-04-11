@@ -1,9 +1,4 @@
 import { z } from "zod";
-import { RawSectionPack } from "../../../client/src/App/sharedWithServer/Analyzer/RawSectionPack";
-import {
-  RawSection,
-  zRawSections,
-} from "../../../client/src/App/sharedWithServer/Analyzer/RawSectionPack/RawSection";
 import { SelfOrDescendantName } from "../../../client/src/App/sharedWithServer/Analyzer/SectionMetas/relNameArrs/ChildTypes";
 import { InEntityVarbInfo } from "../../../client/src/App/sharedWithServer/Analyzer/SectionMetas/relSections/baseSections/baseValues/NumObj/entities";
 import {
@@ -11,7 +6,14 @@ import {
   SectionName,
   SectionNameType,
 } from "../../../client/src/App/sharedWithServer/Analyzer/SectionMetas/SectionName";
-import { StrictPick } from "../../../client/src/App/sharedWithServer/utils/types";
+import {
+  SectionPackDbRaw,
+  SectionPackRaw,
+} from "../../../client/src/App/sharedWithServer/Analyzer/SectionPackRaw";
+import {
+  RawSection,
+  zRawSections,
+} from "../../../client/src/App/sharedWithServer/Analyzer/SectionPackRaw/RawSection";
 import { zodSchema } from "../../../client/src/App/sharedWithServer/utils/zod";
 
 export class SectionPackDb<SN extends SectionName> {
@@ -47,24 +49,20 @@ export class SectionPackDb<SN extends SectionName> {
     if (SectionNam.is(this.sectionName, sectionType)) return true;
     else return false;
   }
-  toFeSectionPack(): RawSectionPack<"fe", SN> {
-    if (this.isSectionType("normalDbStore"))
+  toFeSectionPack(): SectionPackRaw<"fe", SN> {
+    if (this.isSectionType("normalDbStore") || this.isSectionType("table")) {
       // the as intermediary is there due to excessive stack depth
       return { ...this.core, contextName: "fe" } as Record<
-        keyof RawSectionPack<"fe", SN>,
+        keyof SectionPackRaw<"fe", SN>,
         any
-      > as RawSectionPack<"fe", SN>;
-    else
+      > as SectionPackRaw<"fe", SN>;
+    } else {
       throw new Error(
         `SectionPackDb.toFeSectionPack doesn't work with SectionPackDb of sectionName ${this.sectionName}`
       );
+    }
   }
 }
-
-export type SectionPackDbRaw<SN extends SectionName = SectionName> = StrictPick<
-  RawSectionPack<"db", SN>,
-  "dbId" | "rawSections"
->;
 
 const zDbSectionPackFrame: Record<keyof SectionPackDbRaw, any> = {
   dbId: zodSchema.nanoId,

@@ -16,8 +16,7 @@ export const analyzerReq = {
             email: "string",
             password: "string",
           }),
-          // make the correct guestAccessSections
-          guestAccessSections: analyzer.dbEntryArrs("feGuestAccessStore"),
+          guestAccessSections: analyzer.guestAccessDbSectionPacks(),
         },
       },
     };

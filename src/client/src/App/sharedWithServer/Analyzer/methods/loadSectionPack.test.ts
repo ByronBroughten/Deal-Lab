@@ -1,13 +1,13 @@
 import Analyzer from "../../Analyzer";
-import { RawSectionPack } from "../RawSectionPack";
 import { NumObj } from "../SectionMetas/relSections/baseSections/baseValues/NumObj";
 import { FeNameInfo } from "../SectionMetas/relSections/rel/relVarbInfoTypes";
+import { SectionPackRaw } from "../SectionPackRaw";
 import StateSection from "../StateSection";
 
 describe("Analyzer.addSectionAndSolve", () => {
   let next: Analyzer;
   let initSection: StateSection;
-  let rawSectionPack: RawSectionPack<"fe">;
+  let rawSectionPack: SectionPackRaw<"fe">;
   let nextSection: StateSection;
 
   beforeEach(() => {

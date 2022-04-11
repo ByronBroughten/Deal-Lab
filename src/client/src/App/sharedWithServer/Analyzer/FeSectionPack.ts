@@ -6,13 +6,6 @@ import {
   OneSectionNodeMaker,
   SectionNodeMaker,
 } from "./FeSectionPacks/FeSectionNode";
-import { RawSectionPack } from "./RawSectionPack";
-import {
-  GeneralRawSection,
-  RawSection,
-  RawSections,
-} from "./RawSectionPack/RawSection";
-import { RawSectionFinder } from "./RawSectionPack/RawSectionFinder";
 import { Inf } from "./SectionMetas/Info";
 import {
   NameToNameWithSameChildren,
@@ -21,13 +14,20 @@ import {
 import { FeParentInfo } from "./SectionMetas/relNameArrs/ParentTypes";
 import { Id } from "./SectionMetas/relSections/baseSections/id";
 import { SectionName } from "./SectionMetas/SectionName";
+import { SectionPackRaw } from "./SectionPackRaw";
+import {
+  GeneralRawSection,
+  RawSection,
+  RawSections,
+} from "./SectionPackRaw/RawSection";
+import { RawSectionFinder } from "./SectionPackRaw/RawSectionFinder";
 export type OrderedSectionNodeProps<SN extends SectionName> = {
   parentFinder: FeParentInfo<SN>;
   feId?: string;
   idx?: number;
 };
 
-type FeSectionPackCore<SN extends SectionName> = RawSectionPack<"fe", SN>;
+type FeSectionPackCore<SN extends SectionName> = SectionPackRaw<"fe", SN>;
 export class FeSectionPack<SN extends SectionName> {
   constructor(readonly core: FeSectionPackCore<SN>) {}
   get sectionName(): SN {

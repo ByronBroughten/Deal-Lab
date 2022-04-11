@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import { crudRegisterNext } from "./userRoutes/registerNext";
+import { crudRegisterNext } from "./omni/registerNext";
 
 const omniRouter = express.Router();
 omniRouter[crudRegisterNext.operation](
