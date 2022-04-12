@@ -21,6 +21,16 @@ export const analyzerReq = {
       },
     };
   },
+  nextLogin(analyzer: Analyzer): NextReq<"nextLogin", "post"> {
+    return {
+      body: {
+        payload: analyzer.section("login").values({
+          email: "string",
+          password: "string",
+        }),
+      },
+    };
+  },
   register(analyzer: Analyzer): Req<"Register"> {
     return {
       body: {

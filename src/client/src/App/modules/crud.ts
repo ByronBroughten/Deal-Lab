@@ -6,7 +6,7 @@ import { is, Req, Res } from "../sharedWithServer/Crud";
 import {
   isLoginHeaders,
   isLoginUser,
-  isLoginUserNext
+  isLoginUserNext,
 } from "../sharedWithServer/Crud/Login";
 import { NextReq, NextRes } from "../sharedWithServer/CrudNext";
 import { urlPlusParams } from "../utils/url";
@@ -87,6 +87,30 @@ export const crud = {
           reqObj.body
         );
         return this.validateRes(res);
+      },
+    },
+  },
+  nextLogin: {
+    post: {
+      async send(
+        reqObj: NextReq<"nextLogin", "post">
+      ): Promise<NextRes<"nextLogin", "post"> | undefined> {
+        const res = await https.post(
+          "logging in",
+          config.url.login.path,
+          reqObj.body
+        );
+        return this.validateRes(res);
+      },
+      validateRes(
+        res: AxiosResponse<unknown> | undefined
+      ): NextRes<"nextLogin", "post"> | undefined {
+        if (res && isLoginUserNext(res.data) && isLoginHeaders(res.headers)) {
+          return {
+            data: res.data,
+            headers: res.headers,
+          };
+        } else return undefined;
       },
     },
   },

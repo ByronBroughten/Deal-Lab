@@ -4,40 +4,39 @@ import { isLoginFormData } from "../../client/src/App/sharedWithServer/Crud/Logi
 import { NextReq } from "../../client/src/App/sharedWithServer/CrudNext";
 import { Obj } from "../../client/src/App/sharedWithServer/utils/Obj";
 import { UserDbNext } from "../shared/UserDbNext";
-import { UserModelNext } from "../shared/UserModelNext";
 import { userServerSideNext } from "../shared/userServerSideNext";
 import { loginUtils } from "./loginNext/loginUtils";
 
-const crudLoginNext = {
-  routeBit: config.crud.routes.nextLogin,
-};
+export const crudLoginNext = {
+  routeBit: config.crud.routes.nextLogin.bit,
+  operation: "post",
+  async receive(req: Request, res: Response) {
+    const reqObj = validateReq(req, res);
+    if (!reqObj) return;
 
-export async function login(req: Request, res: Response) {
-  const reqObj = validateReq(req, res);
-  if (!reqObj) return;
+    const { email, password } = reqObj.body.payload;
 
-  const { email, password } = reqObj.body.payload;
+    const { emailLower } = userServerSideNext.prepEmail(email);
+    const user = await loginUtils.tryFindOneUserByEmail(emailLower);
+    if (!user) return res.status(400).send("Invalid email address.");
 
-  const { emailLower } = userServerSideNext.prepEmail(email);
-  const user = await loginUtils.tryFindOneUserByEmail(emailLower);
-  if (!user) return res.status(400).send("Invalid email address.");
+    const serverUser = UserDbNext.init(user.toJSON());
+    const userProtectedSection =
+      serverUser.firstSectionPackHeadSection("userProtected");
+    const { encryptedPassword } = userProtectedSection.dbVarbs as {
+      encryptedPassword: string;
+    };
 
-  const serverUser = UserDbNext.init(user.toJSON());
-  const userProtectedSection =
-    serverUser.firstSectionPackHeadSection("userProtected");
-  const { encryptedPassword } = userProtectedSection.dbVarbs as {
-    encryptedPassword: string;
-  };
+    const isValidPw = loginUtils.checkPasswordAndResIfInvalid({
+      password,
+      encryptedPassword,
+      res,
+    });
 
-  const isValidPw = loginUtils.checkPasswordAndResIfInvalid({
-    password,
-    encryptedPassword,
-    res,
-  });
-
-  if (!isValidPw) return;
-  return loginUtils.doLogin(res, user);
-}
+    if (!isValidPw) return;
+    return loginUtils.doLogin(res, user);
+  },
+} as const;
 
 function validateReq(
   req: Request,
@@ -53,16 +52,4 @@ function validateReq(
     return;
   }
   return { body: { payload } };
-}
-
-async function tryFindOneUserByEmail(emailLower: string) {
-  try {
-    return await UserModelNext.findOne(
-      userServerSideNext.emailLowerFilter(emailLower),
-      undefined,
-      { lean: true }
-    );
-  } catch (err) {
-    return undefined;
-  }
 }
