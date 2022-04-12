@@ -6,7 +6,7 @@ import { crudRegister } from "./userRoutes/register";
 const userRouter = express.Router();
 
 userRouter[crudRegister.operation](
-  config.crud.routes.register.bit,
+  config.url.register.bit,
   (req: Request, res: Response) => crudRegister.fn(req, res)
 );
 userRouter.post(config.url.login.bit, login);

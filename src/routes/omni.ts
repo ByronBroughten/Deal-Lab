@@ -1,14 +1,17 @@
 import express from "express";
-import { crudLoginNext } from "./omni/loginNext";
-import { crudRegisterNext } from "./omni/registerNext";
+import { config } from "./../client/src/App/Constants";
+import { nextLoginHandlers } from "./omni/nextLogin";
+import { nextRegisterHandlers } from "./omni/nextRegister";
+
+const endpoints = {
+  nextRegister: nextRegisterHandlers,
+  nextLogin: nextLoginHandlers,
+} as const;
 
 const omniRouter = express.Router();
-omniRouter[crudRegisterNext.operation](crudRegisterNext.routeBit, (req, res) =>
-  crudRegisterNext.receive(req, res)
-);
-omniRouter[crudLoginNext.operation](crudLoginNext.routeBit, (req, res) =>
-  crudLoginNext.receive(req, res)
-);
-// Next try postSection
+
+omniRouter.post(config.apiEndpoints.nextRegister.bit, ...nextRegisterHandlers);
+omniRouter.post(config.apiEndpoints.nextLogin.bit, ...nextLoginHandlers);
+// post then get then automate the omni router
 
 export default omniRouter;

@@ -114,14 +114,14 @@ export const crud = {
       },
     },
   },
-  registerNext: {
+  nextRegister: {
     post: {
       async send(
         reqObj: NextReq<"nextRegister", "post">
       ): Promise<NextRes<"nextRegister", "post"> | undefined> {
         const res = await https.post(
           "registering",
-          config.crud.routes.nextRegister.path,
+          config.apiEndpoints.nextRegister.path,
           reqObj.body
         );
         return this.validateRes(res);

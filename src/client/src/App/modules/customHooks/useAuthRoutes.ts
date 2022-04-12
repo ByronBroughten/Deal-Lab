@@ -12,7 +12,7 @@ export function useAuthRoutes() {
     handleSet("loadSectionArrsAndSolve", data);
   }
 
-  function trySetLoginNext(resObj: NextRes<"nextRegister", "post">) {
+  function trySetNextLogin(resObj: NextRes<"nextRegister", "post">) {
     const { data, headers } = resObj;
     auth.setToken(headers[authTokenKey]);
     handleSet("loadUserAndSolve", data);
@@ -29,13 +29,13 @@ export function useAuthRoutes() {
     },
     async nextLogin() {
       const resObj = await crud.nextLogin.post.send(analyzer.req.nextLogin());
-      if (resObj) trySetLoginNext(resObj);
+      if (resObj) trySetNextLogin(resObj);
     },
     async nextRegister() {
-      const resObj = await crud.registerNext.post.send(
+      const resObj = await crud.nextRegister.post.send(
         analyzer.req.nextRegister()
       );
-      if (resObj) trySetLoginNext(resObj);
+      if (resObj) trySetNextLogin(resObj);
     },
   };
 }

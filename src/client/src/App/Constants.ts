@@ -1,4 +1,8 @@
-import { configUrls, makeCrudConfig } from "./Constants/configUrls";
+import {
+  configUrls,
+  makeConfigApiEndpoints,
+  makeCrudConfig,
+} from "./Constants/configUrls";
 
 const dev = {
   name: "Analyzer Client — Development",
@@ -18,6 +22,7 @@ export const config = {
   name: constants.name,
   url: configUrls(constants.endpoint),
   crud: makeCrudConfig(constants.endpoint),
+  apiEndpoints: makeConfigApiEndpoints(constants.endpoint),
   tokenKey: {
     apiUserAuth: "x-auth-token",
     analyzerState: "analyzer-state",

@@ -1,9 +1,11 @@
 import urlJoin from "url-join";
 
+type BitRouteAndPath = { bit: string; route: string; path: string };
+
 function bitRouteAndPath(
   serviceInfo: { bit: string; path: string },
   bit: string
-) {
+): BitRouteAndPath {
   return {
     bit,
     get route() {
@@ -44,7 +46,24 @@ export function makeCrudConfig(endpoint: string) {
       sectionArr: bitRouteAndPath(apiRoutes, "/sectionArr"),
       tableColumns: bitRouteAndPath(apiRoutes, "/columns"),
     },
-  };
+  } as const;
+}
+
+export function makeConfigApiEndpoints(endpoint: string) {
+  const baseUrls = {
+    bit: "/api",
+    route: "/api",
+    get path() {
+      return urlJoin(endpoint, this.bit);
+    },
+  } as const;
+
+  const apiQueries = ["nextRegister", "nextLogin", "addSection"] as const;
+
+  return apiQueries.reduce((endpoints, queryName) => {
+    endpoints[queryName] = bitRouteAndPath(baseUrls, `/${queryName}`);
+    return endpoints;
+  }, {} as { [QN in typeof apiQueries[number]]: BitRouteAndPath });
 }
 
 export function configUrls(endpoint: string) {
