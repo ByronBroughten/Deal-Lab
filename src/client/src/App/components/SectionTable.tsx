@@ -1,9 +1,9 @@
 import { isEqual } from "lodash";
 import React from "react";
 import styled from "styled-components";
-import { useStores } from "../modules/customHooks/useStore";
 import { auth } from "../modules/services/authService";
 import { useAnalyzerContext } from "../modules/usePropertyAnalyzer";
+import { useSectionQueryActions } from "../modules/useQueryActions/useSectionQueryActions";
 import { VariableOption } from "../sharedWithServer/Analyzer/methods/get/variableOptions";
 import { SortByColumnOptions } from "../sharedWithServer/Analyzer/methods/updateRowIndexStoreAndSolve";
 import { Inf } from "../sharedWithServer/Analyzer/SectionMetas/Info";
@@ -20,7 +20,7 @@ type Props = { tableName: SectionName<"table">; title?: string };
 
 export default function SectionTable({ tableName, title }: Props) {
   const { analyzer, setAnalyzerOrdered } = useAnalyzerContext();
-  const store = useStores();
+  const store = useSectionQueryActions();
 
   const table = analyzer.section(tableName);
   const sortedRowIds = table.value("rowIds", "stringArray");

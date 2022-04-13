@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { Id } from "../Analyzer/SectionMetas/relSections/baseSections/id";
 import { dbLimits } from "./dbLimts";
 
 export const validationMessage = {
@@ -11,10 +12,7 @@ export const validationMessage = {
   email: "Valid email required",
 };
 
-export const zNanoId = z
-  .string()
-  .max(dbLimits.dbId.length)
-  .min(dbLimits.dbId.length);
+export const zNanoId = Id.zodSchema;
 export const zString = z.string().max(dbLimits.string.maxLength);
 export const zNumber = z
   .number()

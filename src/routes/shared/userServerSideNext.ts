@@ -10,7 +10,7 @@ import {
 import {
   GuestAccessSectionsNext,
   RegisterReqPayloadNext,
-} from "../../client/src/App/sharedWithServer/Crud/Register";
+} from "../../client/src/App/sharedWithServer/apiQueriesShared/Register";
 import { initDbSectionPack, UserDbRaw } from "./UserDbNext";
 import { UserModelNext } from "./UserModelNext";
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { unstable_batchedUpdates } from "react-dom";
-import { useStores } from "../../modules/customHooks/useStore";
 import usePropertyAnalyzer from "../../modules/usePropertyAnalyzer";
+import { useSectionQueryActions } from "../../modules/useQueryActions/useSectionQueryActions";
 import Analyzer from "../../sharedWithServer/Analyzer";
 import { FeInfo } from "../../sharedWithServer/Analyzer/SectionMetas/Info";
 import { SectionName } from "../../sharedWithServer/Analyzer/SectionMetas/SectionName";
@@ -23,7 +23,7 @@ export default function useLmAnalyzer({
     prePopulatedState: mainAnalyzer,
   });
 
-  const store = useStores();
+  const store = useSectionQueryActions();
 
   const { analyzer: lmAnalyzer, setAnalyzer: setLmAnalyzer } = lmContext;
   const [sectionsToDelete, setSectionsToDelete] = React.useState(

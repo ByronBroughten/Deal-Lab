@@ -1,25 +1,24 @@
 import React from "react";
+import { AiOutlineSave } from "react-icons/ai";
+import { BiReset } from "react-icons/bi";
+import { IoCopyOutline } from "react-icons/io5";
+import { MdSystemUpdateAlt } from "react-icons/md";
 import styled from "styled-components";
-import theme from "../../../../theme/Theme";
-import { useAnalyzerContext } from "../../../../modules/usePropertyAnalyzer";
-import BigStringEditor from "../../../inputs/BigStringEditor";
-import SectionBtn from "../../SectionBtn";
-import XBtn from "../../Xbtn";
-import IndexSectionList from "../../IndexSectionList";
 import useToggleView from "../../../../modules/customHooks/useToggleView";
 import { auth } from "../../../../modules/services/authService";
-import { useStores } from "../../../../modules/customHooks/useStore";
+import { useAnalyzerContext } from "../../../../modules/usePropertyAnalyzer";
+import { useSectionQueryActions } from "../../../../modules/useQueryActions/useSectionQueryActions";
 import {
   FeInfo,
   Inf,
 } from "../../../../sharedWithServer/Analyzer/SectionMetas/Info";
-import { IconBtn } from "../../IconBtn";
-import { BiPlusCircle, BiReset } from "react-icons/bi";
+import theme from "../../../../theme/Theme";
+import BigStringEditor from "../../../inputs/BigStringEditor";
 import BtnTooltip from "../../BtnTooltip";
-import { AiOutlineSave } from "react-icons/ai";
+import { IconBtn } from "../../IconBtn";
+import IndexSectionList from "../../IndexSectionList";
 import { LoggedInOrOutIconBtn } from "../../LoggedInOrNotBtn";
-import { MdSystemUpdateAlt } from "react-icons/md";
-import { IoCopyOutline } from "react-icons/io5";
+import XBtn from "../../Xbtn";
 
 type Props = {
   feInfo: FeInfo<"hasRowIndexStore">;
@@ -35,7 +34,7 @@ export default function MainSectionTitleRow({
   droptop = false,
 }: Props) {
   const { analyzer, handleRemoveSection, handleSet } = useAnalyzerContext();
-  const store = useStores();
+  const store = useSectionQueryActions();
 
   const { btnMenuIsOpen, toggleBtnMenu } = useToggleView({
     initValue: false,

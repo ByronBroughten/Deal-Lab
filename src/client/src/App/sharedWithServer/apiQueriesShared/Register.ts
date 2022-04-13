@@ -4,17 +4,15 @@ import { BaseSectionsDb } from "../Analyzer/SectionMetas/relSections/baseSection
 import { SchemaVarbsToDbValues } from "../Analyzer/SectionMetas/relSections/rel/valueMetaTypes";
 import { SectionNam, SectionName } from "../Analyzer/SectionMetas/SectionName";
 import { SectionPackRaw, zSectionPackDbArr } from "../Analyzer/SectionPackRaw";
-import { NextRes } from "../CrudNext";
+import { NextRes } from "../apiQueriesShared";
 import { dbLimits } from "../utils/dbLimts";
 import { validationMessage, zodSchema, zValidate } from "../utils/zod";
 
 export type RegisterCrudSchema = {
-  post: {
-    req: {
-      body: { payload: RegisterReqPayloadNext };
-    };
-    res: NextRes<"nextLogin", "post">;
+  req: {
+    body: { payload: RegisterReqPayloadNext };
   };
+  res: NextRes<"nextLogin">;
 };
 export type RegisterReqPayloadNext = {
   registerFormData: RegisterFormData;

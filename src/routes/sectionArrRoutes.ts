@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
 import { config } from "../client/src/App/Constants";
+import { LoggedIn } from "../client/src/App/sharedWithServer/apiQueriesShared/Login";
 import { Req, Res } from "../client/src/App/sharedWithServer/Crud";
-import { LoggedIn } from "../client/src/App/sharedWithServer/Crud/Login";
 import authWare from "../middleware/authWare";
 import { serverSend, serverValidate } from "./shared/crudValidators";
 import { tryFindByIdAndUpdate } from "./shared/tryQueries";

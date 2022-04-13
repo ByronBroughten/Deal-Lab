@@ -27,7 +27,7 @@ function errorIsExpected(error: any) {
   );
 }
 
-function handleUnexpectedError(error: any, blanking: string) {
+export function handleUnexpectedError(error: any, blanking: string) {
   logger.log(error);
   toast.error(`An unexpected error occurred while ${blanking}.`);
 }
@@ -52,6 +52,7 @@ async function tryPost(
   } catch (err) {
     handleServerError(err, `${blanking}`);
     return undefined;
+    // throw new HandledError("Server error.")
   }
 }
 

@@ -20,9 +20,11 @@ const constants = process.env.NODE_ENV === "development" ? dev : prod;
 
 export const config = {
   name: constants.name,
+  apiEndpointBase: constants.endpoint,
   url: configUrls(constants.endpoint),
   crud: makeCrudConfig(constants.endpoint),
   apiEndpoints: makeConfigApiEndpoints(constants.endpoint),
+  apiQueryNames: ["nextRegister", "nextLogin", "addSection"],
   tokenKey: {
     apiUserAuth: "x-auth-token",
     analyzerState: "analyzer-state",

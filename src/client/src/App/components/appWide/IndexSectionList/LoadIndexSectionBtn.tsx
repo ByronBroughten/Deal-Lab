@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "styled-components";
-import PlainBtn from "../../general/PlainBtn";
-import theme from "../../../theme/Theme";
-import { useStores } from "../../../modules/customHooks/useStore";
 import { useAnalyzerContext } from "../../../modules/usePropertyAnalyzer";
+import { useSectionQueryActions } from "../../../modules/useQueryActions/useSectionQueryActions";
 import { FeInfo } from "../../../sharedWithServer/Analyzer/SectionMetas/Info";
 import { SectionNam } from "../../../sharedWithServer/Analyzer/SectionMetas/SectionName";
+import theme from "../../../theme/Theme";
+import PlainBtn from "../../general/PlainBtn";
 
 type Props = {
   feInfo: FeInfo<"hasIndexStore">;
@@ -15,7 +15,7 @@ type Props = {
 
 function useLoadIndexSection(feInfo: FeInfo<"hasIndexStore">, dbId: string) {
   const { handleSet } = useAnalyzerContext();
-  const store = useStores();
+  const store = useSectionQueryActions();
   const { sectionName } = feInfo;
   if (SectionNam.is(sectionName, "hasRowIndexStore"))
     return async () =>

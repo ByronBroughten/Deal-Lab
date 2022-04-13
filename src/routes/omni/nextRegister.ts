@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
+import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesShared";
 import {
   areGuestAccessSectionsNext,
-  isRegisterFormData
-} from "../../client/src/App/sharedWithServer/Crud/Register";
-import { NextReq } from "../../client/src/App/sharedWithServer/CrudNext";
+  isRegisterFormData,
+} from "../../client/src/App/sharedWithServer/apiQueriesShared/Register";
 import { Obj } from "../../client/src/App/sharedWithServer/utils/Obj";
 import { userServerSideNext } from "../shared/userServerSideNext";
 import { loginUtils } from "./nextLogin/loginUtils";
@@ -16,7 +16,9 @@ async function registerServerSide(req: Request, res: Response) {
   const { payload } = reqObj.body;
 
   const newUserData = await userServerSideNext.makeUserData(payload);
-  const foundUser = await loginUtils.tryFindOneUserByEmail(newUserData.user.emailLower);
+  const foundUser = await loginUtils.tryFindOneUserByEmail(
+    newUserData.user.emailLower
+  );
   if (foundUser)
     return res.status(400).send("An account with that email already exists.");
 
@@ -37,7 +39,7 @@ async function registerServerSide(req: Request, res: Response) {
 function validateReq(
   req: Request,
   res: Response
-): NextReq<"nextRegister", "post"> | undefined {
+): NextReq<"nextRegister"> | undefined {
   const { payload } = req.body;
   if (!Obj.noGuardIs(payload)) {
     res.status(500).send("Payload is not an object.");

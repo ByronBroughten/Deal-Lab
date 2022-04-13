@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { isLoginFormData } from "../../client/src/App/sharedWithServer/Crud/Login";
-import { NextReq } from "../../client/src/App/sharedWithServer/CrudNext";
+import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesShared";
+import { isLoginFormData } from "../../client/src/App/sharedWithServer/apiQueriesShared/Login";
 import { Obj } from "../../client/src/App/sharedWithServer/utils/Obj";
 import { UserDbNext } from "../shared/UserDbNext";
 import { userServerSideNext } from "../shared/userServerSideNext";
@@ -38,7 +38,7 @@ async function loginServerSide(req: Request, res: Response) {
 function validateReq(
   req: Request,
   res: Response
-): NextReq<"nextLogin", "post"> | undefined {
+): NextReq<"nextLogin"> | undefined {
   const { payload } = req.body;
   if (!Obj.noGuardIs(payload)) {
     res.status(500).send("Payload is not an object.");

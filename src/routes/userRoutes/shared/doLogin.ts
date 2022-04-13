@@ -10,8 +10,8 @@ import {
 import { sectionMetas } from "../../../client/src/App/sharedWithServer/Analyzer/SectionMetas";
 import { rowIndexToTableName } from "../../../client/src/App/sharedWithServer/Analyzer/SectionMetas/relNameArrs/StoreTypes";
 import { SectionNam } from "../../../client/src/App/sharedWithServer/Analyzer/SectionMetas/SectionName";
+import { LoginUser } from "../../../client/src/App/sharedWithServer/apiQueriesShared/Login";
 import { authTokenKey } from "../../../client/src/App/sharedWithServer/Crud";
-import { LoginUser } from "../../../client/src/App/sharedWithServer/Crud/Login";
 import Arr from "../../../client/src/App/sharedWithServer/utils/Arr";
 
 export type UserJwt = { _id: string };

@@ -1,5 +1,5 @@
 import Analyzer from "../../Analyzer";
-import { LoginUserNext } from "../../Crud/Login";
+import { LoginUserNext } from "../../apiQueriesShared/Login";
 import { Obj } from "../../utils/Obj";
 import { SectionName } from "../SectionMetas/SectionName";
 import { SectionPackRaw } from "../SectionPackRaw";

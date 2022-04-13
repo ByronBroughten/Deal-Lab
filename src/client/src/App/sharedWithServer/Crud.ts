@@ -1,8 +1,12 @@
 import { config } from "../Constants";
 import { DbEntry, zDbEntry, zDbEntryArr } from "./Analyzer/DbEntry";
 import { SectionName } from "./Analyzer/SectionMetas/SectionName";
-import { LoginFormData, LoginHeaders, LoginUser } from "./Crud/Login";
-import { RegisterReqPayload } from "./Crud/Register";
+import {
+  LoginFormData,
+  LoginHeaders,
+  LoginUser,
+} from "./apiQueriesShared/Login";
+import { RegisterReqPayload } from "./apiQueriesShared/Register";
 import { zNanoId } from "./utils/zod";
 
 export const authTokenKey = "x-auth-token";

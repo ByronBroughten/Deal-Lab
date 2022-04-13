@@ -1,13 +1,13 @@
+import Analyzer from "../Analyzer";
+import { NextReq } from "../apiQueriesShared";
 import { Req } from "../Crud";
-import { NextReq } from "../CrudNext";
-import Analyzer from "./../Analyzer";
 import { FeInfo } from "./SectionMetas/Info";
 import { SectionFinder } from "./SectionMetas/relSections/baseSectionTypes";
 import { SectionName } from "./SectionMetas/SectionName";
 
 export type AnalyzerReq = typeof analyzerReq;
 export const analyzerReq = {
-  nextRegister(analyzer: Analyzer): NextReq<"nextRegister", "post"> {
+  nextRegister(analyzer: Analyzer): NextReq<"nextRegister"> {
     return {
       body: {
         payload: {
@@ -21,7 +21,7 @@ export const analyzerReq = {
       },
     };
   },
-  nextLogin(analyzer: Analyzer): NextReq<"nextLogin", "post"> {
+  nextLogin(analyzer: Analyzer): NextReq<"nextLogin"> {
     return {
       body: {
         payload: analyzer.section("login").values({

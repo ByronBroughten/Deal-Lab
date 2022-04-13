@@ -2,13 +2,13 @@ import { AxiosResponse } from "axios";
 import { config } from "../Constants";
 import { DbEntry } from "../sharedWithServer/Analyzer/DbEntry";
 import { SectionName } from "../sharedWithServer/Analyzer/SectionMetas/SectionName";
-import { is, Req, Res } from "../sharedWithServer/Crud";
+import { NextReq, NextRes } from "../sharedWithServer/apiQueriesShared";
 import {
   isLoginHeaders,
   isLoginUser,
   isLoginUserNext,
-} from "../sharedWithServer/Crud/Login";
-import { NextReq, NextRes } from "../sharedWithServer/CrudNext";
+} from "../sharedWithServer/apiQueriesShared/Login";
+import { is, Req, Res } from "../sharedWithServer/Crud";
 import { urlPlusParams } from "../utils/url";
 import https from "./services/httpService";
 
@@ -93,8 +93,8 @@ export const crud = {
   nextLogin: {
     post: {
       async send(
-        reqObj: NextReq<"nextLogin", "post">
-      ): Promise<NextRes<"nextLogin", "post"> | undefined> {
+        reqObj: NextReq<"nextLogin">
+      ): Promise<NextRes<"nextLogin"> | undefined> {
         const res = await https.post(
           "logging in",
           config.url.login.path,
@@ -104,7 +104,7 @@ export const crud = {
       },
       validateRes(
         res: AxiosResponse<unknown> | undefined
-      ): NextRes<"nextLogin", "post"> | undefined {
+      ): NextRes<"nextLogin"> | undefined {
         if (res && isLoginUserNext(res.data) && isLoginHeaders(res.headers)) {
           return {
             data: res.data,
@@ -117,8 +117,8 @@ export const crud = {
   nextRegister: {
     post: {
       async send(
-        reqObj: NextReq<"nextRegister", "post">
-      ): Promise<NextRes<"nextRegister", "post"> | undefined> {
+        reqObj: NextReq<"nextRegister">
+      ): Promise<NextRes<"nextRegister"> | undefined> {
         const res = await https.post(
           "registering",
           config.apiEndpoints.nextRegister.path,
@@ -128,7 +128,7 @@ export const crud = {
       },
       validateRes(
         res: AxiosResponse<unknown> | undefined
-      ): NextRes<"nextRegister", "post"> | undefined {
+      ): NextRes<"nextRegister"> | undefined {
         if (res && isLoginUserNext(res.data) && isLoginHeaders(res.headers)) {
           return {
             data: res.data,
@@ -150,29 +150,6 @@ export const crud = {
         const res = await https.post(
           "registering",
           config.url.register.path,
-          reqObj.body
-        );
-        return this.validateRes(res);
-      },
-    },
-  },
-  // Pretty much I just have to get the new crud operations to work
-  // And I have to get them to work with the stores
-  // Then users can save data in the new way.
-  // I'll have to allow sections to be created from
-  // these objects as well.
-  nextSection: {
-    path: config.url.nextSection.path,
-    post: {
-      get validateRes() {
-        return generalValidators.dbId;
-      },
-      async send(
-        reqObj: NextReq<"nextSection", "post">
-      ): Promise<NextRes<"nextSection", "post"> | undefined> {
-        const res = await https.post(
-          "saving",
-          crud.nextSection.path,
           reqObj.body
         );
         return this.validateRes(res);

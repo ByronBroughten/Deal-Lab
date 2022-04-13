@@ -1,28 +1,28 @@
 import React from "react";
-import { useAnalyzerContext } from "../../modules/usePropertyAnalyzer";
-import useHowMany from "./customHooks/useHowMany";
-import LoadIndexSectionBtn from "./IndexSectionList/LoadIndexSectionBtn";
 import styled from "styled-components";
+import { useAnalyzerContext } from "../../modules/usePropertyAnalyzer";
+import { useSectionQueryActions } from "../../modules/useQueryActions/useSectionQueryActions";
+import { sectionMetas } from "../../sharedWithServer/Analyzer/SectionMetas";
+import { FeInfo, Inf } from "../../sharedWithServer/Analyzer/SectionMetas/Info";
+import { ChildName } from "../../sharedWithServer/Analyzer/SectionMetas/relNameArrs/ChildTypes";
+import { IndexParentName } from "../../sharedWithServer/Analyzer/SectionMetas/relNameArrs/StoreTypes";
+import {
+  SectionNam,
+  SectionName,
+} from "../../sharedWithServer/Analyzer/SectionMetas/SectionName";
 import ccs from "../../theme/cssChunks";
 import theme, {
   ThemeSectionName,
   themeSectionNameOrDefault,
 } from "../../theme/Theme";
-import { sectionMetas } from "../../sharedWithServer/Analyzer/SectionMetas";
-import { FeInfo, Inf } from "../../sharedWithServer/Analyzer/SectionMetas/Info";
-import {
-  SectionNam,
-  SectionName,
-} from "../../sharedWithServer/Analyzer/SectionMetas/SectionName";
 import TrashBtn from "../general/TrashBtn";
-import { useStores } from "../../modules/customHooks/useStore";
-import { ChildName } from "../../sharedWithServer/Analyzer/SectionMetas/relNameArrs/ChildTypes";
-import { IndexParentName } from "../../sharedWithServer/Analyzer/SectionMetas/relNameArrs/StoreTypes";
+import useHowMany from "./customHooks/useHowMany";
+import LoadIndexSectionBtn from "./IndexSectionList/LoadIndexSectionBtn";
 
 function useDeleteIndexSection(
   sectionName: SectionName<"hasIndexStore">
 ): (dbId: string) => void {
-  const store = useStores();
+  const store = useSectionQueryActions();
   if (SectionNam.is(sectionName, "hasRowIndexStore")) {
     return async (dbId: string) =>
       await store.deleteRowIndexEntry(sectionName, dbId);

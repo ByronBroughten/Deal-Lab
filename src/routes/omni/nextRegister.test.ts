@@ -1,12 +1,12 @@
 import request from "supertest";
 import { config } from "../../client/src/App/Constants";
 import Analyzer from "../../client/src/App/sharedWithServer/Analyzer";
-import { NextReq } from "../../client/src/App/sharedWithServer/CrudNext";
+import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesShared";
 import { runApp } from "../../runApp";
 import { UserModelNext } from "../shared/UserModelNext";
 import { userServerSideNext } from "../shared/userServerSideNext";
 
-function makeTestRegisterReq(): NextReq<"nextRegister", "post"> {
+function makeTestRegisterReq(): NextReq<"nextRegister"> {
   let next = Analyzer.initAnalyzer();
   next = next.updateSectionValuesAndSolve("register", {
     email: "testosis@gmail.com",
@@ -19,7 +19,7 @@ function makeTestRegisterReq(): NextReq<"nextRegister", "post"> {
 describe(config.apiEndpoints.nextRegister.route, () => {
   // prep
   let server: ReturnType<typeof runApp> | any;
-  let reqObj: NextReq<"nextRegister", "post">;
+  let reqObj: NextReq<"nextRegister">;
 
   beforeEach(async () => {
     reqObj = makeTestRegisterReq();

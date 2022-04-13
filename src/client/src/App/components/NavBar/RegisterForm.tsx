@@ -1,8 +1,8 @@
 import { Button } from "@material-ui/core";
 import styled from "styled-components";
-import { useAuthRoutes } from "../../modules/customHooks/useAuthRoutes";
 import { useAnalyzerContext } from "../../modules/usePropertyAnalyzer";
-import { RegisterFormData } from "../../sharedWithServer/Crud/Register";
+import { useAuthQueryActions } from "../../modules/useQueryActions/useAuthQueryActions";
+import { RegisterFormData } from "../../sharedWithServer/apiQueriesShared/Register";
 import theme from "../../theme/Theme";
 import { StyledDropdownForm } from "../general/DropdownForm";
 import SmallFormTextField from "../general/SmallFormTextField";
@@ -10,7 +10,7 @@ import SmallFormTextField from "../general/SmallFormTextField";
 export function RegisterForm() {
   const { analyzer, handleChange } = useAnalyzerContext();
   const { varbs } = analyzer.section("register");
-  const { register } = useAuthRoutes();
+  const { register } = useAuthQueryActions();
   // this ensures that the fields are in the corect order
   const registerVarbNames: (keyof RegisterFormData)[] = [
     "userName",

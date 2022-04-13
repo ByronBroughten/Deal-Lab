@@ -1,8 +1,8 @@
 import bcrypt from "bcrypt";
 import { Request, Response } from "express";
 import { DbSections } from "../../client/src/App/sharedWithServer/Analyzer/DbEntry";
+import { isLoginFormData } from "../../client/src/App/sharedWithServer/apiQueriesShared/Login";
 import { Req } from "../../client/src/App/sharedWithServer/Crud";
-import { isLoginFormData } from "../../client/src/App/sharedWithServer/Crud/Login";
 import { Obj } from "../../client/src/App/sharedWithServer/utils/Obj";
 import { Full } from "../../client/src/App/sharedWithServer/utils/types";
 import { prepEmail, UserModel } from "../shared/userServerSide";

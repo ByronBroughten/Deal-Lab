@@ -23,7 +23,7 @@ const dbStore = {
   },
 } as const;
 
-export function useStores() {
+export function useSectionQueryActions() {
   const { analyzer, setAnalyzerOrdered, handleSet } = useAnalyzerContext();
 
   function setAnalyzerToDefault() {

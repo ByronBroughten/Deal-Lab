@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
 import { config } from "../../client/src/App/Constants";
-import { Req } from "../../client/src/App/sharedWithServer/Crud";
 import {
   areGuestAccessSections,
   isRegisterFormData,
-} from "../../client/src/App/sharedWithServer/Crud/Register";
+} from "../../client/src/App/sharedWithServer/apiQueriesShared/Register";
+import { Req } from "../../client/src/App/sharedWithServer/Crud";
 import { Obj } from "../../client/src/App/sharedWithServer/utils/Obj";
 import { serverSideUser, UserModel } from "../shared/userServerSide";
 import { serverSideLogin } from "./shared/doLogin";

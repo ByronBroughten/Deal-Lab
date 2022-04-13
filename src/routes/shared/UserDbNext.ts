@@ -1,15 +1,15 @@
 import { sectionMetas } from "../../client/src/App/sharedWithServer/Analyzer/SectionMetas";
 import {
   SectionNam,
-  SectionName
+  SectionName,
 } from "../../client/src/App/sharedWithServer/Analyzer/SectionMetas/SectionName";
 import { SectionPack } from "../../client/src/App/sharedWithServer/Analyzer/SectionPack";
 import {
   SectionPackDbRaw,
-  SectionPackRaw
+  SectionPackRaw,
 } from "../../client/src/App/sharedWithServer/Analyzer/SectionPackRaw";
 import { DbVarbs } from "../../client/src/App/sharedWithServer/Analyzer/SectionPackRaw/RawSection";
-import { LoginUserNext } from "../../client/src/App/sharedWithServer/Crud/Login";
+import { LoginUserNext } from "../../client/src/App/sharedWithServer/apiQueriesShared/Login";
 import Arr from "../../client/src/App/sharedWithServer/utils/Arr";
 import { Obj } from "../../client/src/App/sharedWithServer/utils/Obj";
 import { SectionPackDb } from "./UserDbNext/SectionPackDb";
@@ -31,11 +31,14 @@ export class UserDbNext {
       any
     > as SectionPackDb<SN>[];
   }
-  firstSectionPackHeadSection<SN extends SectionName<"dbStore">>(sectionName: SN) {
+  firstSectionPackHeadSection<SN extends SectionName<"dbStore">>(
+    sectionName: SN
+  ) {
     const firstPack = this.firstSectionPack(sectionName);
-    const firstRawSection = firstPack.rawSectionArr(sectionName)[0]
+    const firstRawSection = firstPack.rawSectionArr(sectionName)[0];
     if (firstRawSection) return firstRawSection;
-    else throw new Error(`There is no sectionPack in this.core[${sectionName}]`);
+    else
+      throw new Error(`There is no sectionPack in this.core[${sectionName}]`);
   }
   firstSectionPack<SN extends SectionName<"dbStore">>(
     storeName: SN

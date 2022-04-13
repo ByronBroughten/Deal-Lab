@@ -7,14 +7,12 @@ import { zodSchema } from "../utils/zod";
 import { zRegisterFormData } from "./Register";
 
 export type LoginCrudSchema = {
-  post: {
-    req: {
-      body: { payload: LoginFormData };
-    };
-    res: {
-      data: LoginUserNext;
-      headers: LoginHeaders;
-    };
+  req: {
+    body: { payload: LoginFormData };
+  };
+  res: {
+    data: LoginUserNext;
+    headers: LoginHeaders;
   };
 };
 

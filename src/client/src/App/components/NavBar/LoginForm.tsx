@@ -1,9 +1,9 @@
 import { Button } from "@material-ui/core";
 import React from "react";
 import styled from "styled-components";
-import { useAuthRoutes } from "../../modules/customHooks/useAuthRoutes";
 import { useAnalyzerContext } from "../../modules/usePropertyAnalyzer";
-import { LoginFormData } from "../../sharedWithServer/Crud/Login";
+import { useAuthQueryActions } from "../../modules/useQueryActions/useAuthQueryActions";
+import { LoginFormData } from "../../sharedWithServer/apiQueriesShared/Login";
 import theme from "../../theme/Theme";
 import DropdownForm from "../general/DropdownForm";
 import SmallFormTextField from "../general/SmallFormTextField";
@@ -12,7 +12,7 @@ export function LoginForm() {
   const loginVarbNames: (keyof LoginFormData)[] = ["email", "password"];
   const { analyzer, handleChange } = useAnalyzerContext();
   const { varbs } = analyzer.section("login");
-  const { login } = useAuthRoutes();
+  const { login } = useAuthQueryActions();
   return (
     <StyledLoginForm>
       {loginVarbNames.map((varbName) => (
