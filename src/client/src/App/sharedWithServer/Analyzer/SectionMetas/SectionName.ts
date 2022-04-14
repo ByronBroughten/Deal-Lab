@@ -1,10 +1,10 @@
+import { relNameArrs, RelNameArrs } from "./relNameArrs";
 import {
   ContextName,
   sectionContext,
   SimpleSectionName,
 } from "./relSections/baseSections";
 import { SectionVarbName } from "./relSections/baseSectionTypes";
-import { relNameArrs, RelNameArrs } from "./relNameArrs";
 import {
   baseNameArrs,
   BaseNameArrs,
@@ -29,7 +29,7 @@ function makeNameArrs(): NameArrs {
 export type SectionNameType<SC extends ContextName = ContextName> =
   keyof NameArrs[SC];
 
-export type FeSectionNameType = Exclude<SectionNameType<"fe">, "dbStore">;
+export type FeSectionNameType = SectionNameType<"fe">;
 
 export type SectionName<
   T extends SectionNameType<SC> = "all",

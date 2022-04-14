@@ -84,5 +84,4 @@ describe(apiEndpoints.nextLogin.pathRoute, () => {
     const decoded = loginUtils.checkUserAuthToken(token);
     expect(decoded).not.toBeNull();
   });
-  it("should return a logged in user if the request is valid", async () => {});
 });

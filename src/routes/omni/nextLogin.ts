@@ -9,7 +9,7 @@ import { ResHandledError } from "../../middleware/error";
 import { UserDbNext, UserDbRaw } from "../shared/UserDbNext";
 import { userServerSideNext } from "../shared/userServerSideNext";
 import { loginUtils } from "./nextLogin/loginUtils";
-import { getUserByLowercaseEmail } from "./shared/getUserByEmail";
+import { validateUserByLowercaseEmail } from "./shared/getUserByEmail";
 
 export const nextLoginWare = [loginServerSide] as const;
 
@@ -19,11 +19,10 @@ async function loginServerSide(req: Request, res: Response) {
   const { email, password } = reqObj.body.payload;
   const { emailLower } = userServerSideNext.prepEmail(email);
 
-  const user = await getUserByLowercaseEmail(emailLower, res);
-  const pojoUser = user.toJSON();
+  const user = await validateUserByLowercaseEmail(emailLower, res);
 
-  validateUserPassword({ user: pojoUser, attemptedPassword: password, res });
-  return loginUtils.doLogin(res, pojoUser);
+  await validateUserPassword({ user: user, attemptedPassword: password, res });
+  return loginUtils.doLogin(res, user);
 }
 
 function validateLoginReq(req: Request, res: Response): NextReq<"nextLogin"> {
