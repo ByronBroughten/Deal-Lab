@@ -1,7 +1,8 @@
 import urljoin from "url-join";
 import { config } from "../Constants";
+import { SectionName } from "./Analyzer/SectionMetas/SectionName";
 import { LoginQueryObjects } from "./apiQueriesShared/login";
-import { RegisterCrudSchema } from "./apiQueriesShared/register";
+import { RegisterQueryObjects } from "./apiQueriesShared/register";
 import {
   DbIdRes,
   DbSectionInfoReq,
@@ -43,7 +44,7 @@ function bitRouteAndPath(
 }
 
 export type ApiHttpObjects = {
-  nextRegister: RegisterCrudSchema;
+  nextRegister: RegisterQueryObjects;
   nextLogin: LoginQueryObjects;
   addSection: {
     req: SectionPackReq;
@@ -85,3 +86,10 @@ type ApiHttpObjectsGeneral = {
 };
 type ApiHttpObjectsCheck<T extends ApiHttpObjectsGeneral> = T;
 type _ApiHttpObjectsTest = ApiHttpObjectsCheck<ApiHttpObjects>;
+
+export type StoredSectionPackInfo<
+  SN extends SectionName<"dbStore"> = SectionName<"dbStore">
+> = {
+  dbStoreName: SN;
+  dbId: string;
+};

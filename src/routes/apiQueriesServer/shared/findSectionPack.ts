@@ -1,15 +1,11 @@
 import { Response } from "express";
 import { SectionName } from "../../../client/src/App/sharedWithServer/Analyzer/SectionMetas/SectionName";
+import { StoredSectionPackInfo } from "../../../client/src/App/sharedWithServer/apiQueriesShared";
 import { getUserById } from "./getUserById";
-
-type SectionPackInfo<SN extends SectionName<"dbStore">> = {
-  dbStoreName: SN;
-  dbId: string;
-};
 
 export type FindSectionPackProps<SN extends SectionName<"dbStore">> = {
   userId: string;
-  spInfo: SectionPackInfo<SN>;
+  spInfo: StoredSectionPackInfo<SN>;
   res: Response;
 };
 

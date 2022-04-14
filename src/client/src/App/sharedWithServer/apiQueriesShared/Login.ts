@@ -6,7 +6,7 @@ import { SectionPackRaw, zRawSectionPack } from "../Analyzer/SectionPackRaw";
 import { zodSchema } from "../utils/zod";
 import { zRegisterFormData } from "./register";
 
-export type LoginCrudSchema = {
+export type LoginQueryObjects = {
   req: {
     body: { payload: LoginFormData };
   };

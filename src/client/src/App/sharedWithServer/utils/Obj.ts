@@ -68,6 +68,10 @@ type Types = {
 };
 
 export const Obj = {
+  isAnyIfIsObj(value: any): value is any {
+    if (value && typeof value === "object") return true;
+    else return false;
+  },
   strictPick<O extends object, KS extends keyof O>(
     obj: O,
     keys: KS[]

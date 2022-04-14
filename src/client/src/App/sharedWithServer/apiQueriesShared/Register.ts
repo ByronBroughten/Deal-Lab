@@ -8,7 +8,7 @@ import { NextRes } from "../apiQueriesShared";
 import { dbLimits } from "../utils/dbLimts";
 import { validationMessage, zodSchema, zValidate } from "../utils/zod";
 
-export type RegisterCrudSchema = {
+export type RegisterQueryObjects = {
   req: {
     body: { payload: RegisterReqPayloadNext };
   };

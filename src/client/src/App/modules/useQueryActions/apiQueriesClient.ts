@@ -14,14 +14,11 @@ import { Obj } from "../../sharedWithServer/utils/Obj";
 import { StrictOmit } from "../../sharedWithServer/utils/types";
 import { HandledError } from "../../utils/error";
 import https, { handleUnexpectedError } from "../services/httpService";
-
-// server:
-// reqValidator
-
-// both:
-// pathBit
-// pathRoute
-// pathFull
+import {
+  makeResValidationQueryError,
+  validateDbIdRes,
+  validateServerSectionPackRes,
+} from "./apiQueriesClient/validateRes";
 
 type ApiQueries = {
   [QN in ApiQueryName]: ApiQuery<QN>;
@@ -58,11 +55,26 @@ function makeApiQueries(): ApiQueries {
     addSection: {
       doingWhat: "adding a section",
       get validateRes() {
-        return dbIdResValidator;
+        return validateDbIdRes;
+      },
+    },
+    updateSection: {
+      doingWhat: "updating a section",
+      get validateRes() {
+        return validateDbIdRes;
       },
     },
     getSection: {
       doingWhat: "getting a section",
+      get validateRes() {
+        return validateServerSectionPackRes;
+      },
+    },
+    deleteSection: {
+      doingWhat: "deleting a section",
+      get validateRes() {
+        return validateDbIdRes;
+      },
     },
   } as const;
 
