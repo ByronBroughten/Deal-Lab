@@ -10,7 +10,7 @@ import {
 import { sectionMetas } from "../../../client/src/App/sharedWithServer/Analyzer/SectionMetas";
 import { rowIndexToTableName } from "../../../client/src/App/sharedWithServer/Analyzer/SectionMetas/relNameArrs/StoreTypes";
 import { SectionNam } from "../../../client/src/App/sharedWithServer/Analyzer/SectionMetas/SectionName";
-import { LoginUser } from "../../../client/src/App/sharedWithServer/apiQueriesShared/Login";
+import { LoginUser } from "../../../client/src/App/sharedWithServer/apiQueriesShared/login";
 import { authTokenKey } from "../../../client/src/App/sharedWithServer/Crud";
 import Arr from "../../../client/src/App/sharedWithServer/utils/Arr";
 

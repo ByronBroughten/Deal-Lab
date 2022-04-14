@@ -9,7 +9,7 @@ import {
   SectionPackRaw,
 } from "../../client/src/App/sharedWithServer/Analyzer/SectionPackRaw";
 import { DbVarbs } from "../../client/src/App/sharedWithServer/Analyzer/SectionPackRaw/RawSection";
-import { LoginUserNext } from "../../client/src/App/sharedWithServer/apiQueriesShared/Login";
+import { LoginUserNext } from "../../client/src/App/sharedWithServer/apiQueriesShared/login";
 import Arr from "../../client/src/App/sharedWithServer/utils/Arr";
 import { Obj } from "../../client/src/App/sharedWithServer/utils/Obj";
 import { SectionPackDb } from "./UserDbNext/SectionPackDb";

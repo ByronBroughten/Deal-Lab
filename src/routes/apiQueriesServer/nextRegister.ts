@@ -3,7 +3,7 @@ import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesShared"
 import {
   areGuestAccessSectionsNext,
   isRegisterFormData,
-} from "../../client/src/App/sharedWithServer/apiQueriesShared/Register";
+} from "../../client/src/App/sharedWithServer/apiQueriesShared/register";
 import { Obj } from "../../client/src/App/sharedWithServer/utils/Obj";
 import { userServerSideNext } from "../shared/userServerSideNext";
 import { loginUtils } from "./nextLogin/loginUtils";

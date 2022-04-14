@@ -6,7 +6,7 @@ import { SectionNam } from "../../client/src/App/sharedWithServer/Analyzer/Secti
 import {
   GuestAccessSectionsNext,
   RegisterReqPayloadNext,
-} from "../../client/src/App/sharedWithServer/apiQueriesShared/Register";
+} from "../../client/src/App/sharedWithServer/apiQueriesShared/register";
 import { initDbSectionPack, UserDbRaw } from "./UserDbNext";
 import { modelPath, UserModelNext } from "./UserModelNext";
 

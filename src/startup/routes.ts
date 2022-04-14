@@ -4,7 +4,7 @@ import { graphqlHTTP } from "express-graphql";
 import { config } from "../client/src/App/Constants";
 import { authTokenKey } from "../client/src/App/sharedWithServer/Crud";
 import { gqlSchema } from "../graphlq";
-import omniRouter from "../routes/omni";
+import omniRouter from "../routes/apiQueriesServer";
 import sectionArrRouter, { sectionArrRoutes } from "../routes/sectionArrRoutes";
 import sectionRouter, { sectionRoutes } from "../routes/sectionRoutes";
 import userRouter from "../routes/userRoutes";

@@ -7,7 +7,7 @@ import {
   isLoginHeaders,
   isLoginUser,
   isLoginUserNext,
-} from "../sharedWithServer/apiQueriesShared/Login";
+} from "../sharedWithServer/apiQueriesShared/login";
 import { is, Req, Res } from "../sharedWithServer/Crud";
 import { urlPlusParams } from "../utils/url";
 import https from "./services/httpService";

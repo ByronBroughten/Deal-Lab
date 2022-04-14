@@ -9,7 +9,7 @@ import { SectionNam } from "../../client/src/App/sharedWithServer/Analyzer/Secti
 import {
   NewUserData,
   RegisterReqPayload,
-} from "../../client/src/App/sharedWithServer/apiQueriesShared/Register";
+} from "../../client/src/App/sharedWithServer/apiQueriesShared/register";
 import { getMonDbEntry } from "./mongooseValidators";
 
 async function encryptPassword(unencrypted: string): Promise<string> {

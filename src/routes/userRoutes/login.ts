@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 import { Request, Response } from "express";
 import { DbSections } from "../../client/src/App/sharedWithServer/Analyzer/DbEntry";
-import { isLoginFormData } from "../../client/src/App/sharedWithServer/apiQueriesShared/Login";
+import { isLoginFormData } from "../../client/src/App/sharedWithServer/apiQueriesShared/login";
 import { Req } from "../../client/src/App/sharedWithServer/Crud";
 import { Obj } from "../../client/src/App/sharedWithServer/utils/Obj";
 import { Full } from "../../client/src/App/sharedWithServer/utils/types";

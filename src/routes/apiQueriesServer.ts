@@ -1,8 +1,8 @@
 import express from "express";
 import { apiEndpoints } from "../client/src/App/sharedWithServer/apiQueriesShared";
-import { addSectionWare } from "./omni/addSection";
-import { nextLoginWare } from "./omni/nextLogin";
-import { nextRegisterWare } from "./omni/nextRegister";
+import { addSectionWare } from "./apiQueriesServer/addSection";
+import { nextLoginWare } from "./apiQueriesServer/nextLogin";
+import { nextRegisterWare } from "./apiQueriesServer/nextRegister";
 
 const endpointWare = {
   nextRegister: nextRegisterWare,

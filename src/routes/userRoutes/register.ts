@@ -3,7 +3,7 @@ import { config } from "../../client/src/App/Constants";
 import {
   areGuestAccessSections,
   isRegisterFormData,
-} from "../../client/src/App/sharedWithServer/apiQueriesShared/Register";
+} from "../../client/src/App/sharedWithServer/apiQueriesShared/register";
 import { Req } from "../../client/src/App/sharedWithServer/Crud";
 import { Obj } from "../../client/src/App/sharedWithServer/utils/Obj";
 import { serverSideUser, UserModel } from "../shared/userServerSide";

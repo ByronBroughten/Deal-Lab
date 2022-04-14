@@ -2,7 +2,7 @@ import express, { Request, Response } from "express";
 import { config } from "../client/src/App/Constants";
 import { Req, Res } from "../client/src/App/sharedWithServer/Crud";
 import authWare from "../middleware/authWare";
-import { LoggedIn } from "./omni/shared/validateLoggedInUser";
+import { LoggedIn } from "./apiQueriesServer/shared/validateLoggedInUser";
 import { serverSend, serverValidate } from "./shared/crudValidators";
 import { tryFindByIdAndUpdate } from "./shared/tryQueries";
 import { queryOp } from "./utils/operator";

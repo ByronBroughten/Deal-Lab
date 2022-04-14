@@ -3,7 +3,7 @@ import React from "react";
 import styled from "styled-components";
 import { useAnalyzerContext } from "../../modules/usePropertyAnalyzer";
 import { useAuthQueryActions } from "../../modules/useQueryActions/useAuthQueryActions";
-import { LoginFormData } from "../../sharedWithServer/apiQueriesShared/Login";
+import { LoginFormData } from "../../sharedWithServer/apiQueriesShared/login";
 import theme from "../../theme/Theme";
 import DropdownForm from "../general/DropdownForm";
 import SmallFormTextField from "../general/SmallFormTextField";

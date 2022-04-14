@@ -1,7 +1,6 @@
 import { AxiosResponse } from "axios";
-import { config } from "../../Constants";
-import { Id } from "../../sharedWithServer/Analyzer/SectionMetas/relSections/baseSections/id";
 import {
+  apiEndpoints,
   ApiQueryName,
   NextReq,
   NextRes,
@@ -10,7 +9,7 @@ import {
 import {
   isLoginHeaders,
   isLoginUserNext,
-} from "../../sharedWithServer/apiQueriesShared/Login";
+} from "../../sharedWithServer/apiQueriesShared/login";
 import { Obj } from "../../sharedWithServer/utils/Obj";
 import { StrictOmit } from "../../sharedWithServer/utils/types";
 import { HandledError } from "../../utils/error";
@@ -62,6 +61,9 @@ function makeApiQueries(): ApiQueries {
         return dbIdResValidator;
       },
     },
+    getSection: {
+      doingWhat: "getting a section",
+    },
   } as const;
 
   return Obj.entries(apiQueryProps).reduce(
@@ -93,7 +95,7 @@ function makeApiQuery<QN extends ApiQueryName>({
     return await tryApiQuery(async () => {
       const res = await https.post(
         doingWhat,
-        config.apiEndpoints[queryName].path,
+        apiEndpoints[queryName].pathFull,
         reqObj.body
       );
       if (!res) throw makeResValidationQueryError();
@@ -113,16 +115,4 @@ async function tryApiQuery<Q extends () => any>(
     if (err instanceof QueryError) handleUnexpectedError(err, doingWhat);
     else throw err;
   }
-}
-
-function dbIdResValidator(res: AxiosResponse<unknown>): { data: string } {
-  if (Id.is(res.data))
-    return {
-      data: res.data,
-    };
-  else throw makeResValidationQueryError();
-}
-
-function makeResValidationQueryError() {
-  return new QueryError("Response failed validation.");
 }

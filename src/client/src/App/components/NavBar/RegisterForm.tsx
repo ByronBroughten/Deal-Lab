@@ -2,7 +2,7 @@ import { Button } from "@material-ui/core";
 import styled from "styled-components";
 import { useAnalyzerContext } from "../../modules/usePropertyAnalyzer";
 import { useAuthQueryActions } from "../../modules/useQueryActions/useAuthQueryActions";
-import { RegisterFormData } from "../../sharedWithServer/apiQueriesShared/Register";
+import { RegisterFormData } from "../../sharedWithServer/apiQueriesShared/register";
 import theme from "../../theme/Theme";
 import { StyledDropdownForm } from "../general/DropdownForm";
 import SmallFormTextField from "../general/SmallFormTextField";

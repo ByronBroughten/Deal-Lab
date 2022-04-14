@@ -1,9 +1,13 @@
 import urljoin from "url-join";
 import { config } from "../Constants";
-import { SectionName } from "./Analyzer/SectionMetas/SectionName";
-import { SectionPackRaw } from "./Analyzer/SectionPackRaw";
-import { LoginCrudSchema } from "./apiQueriesShared/Login";
-import { RegisterCrudSchema } from "./apiQueriesShared/Register";
+import { LoginQueryObjects } from "./apiQueriesShared/login";
+import { RegisterCrudSchema } from "./apiQueriesShared/register";
+import {
+  DbIdRes,
+  DbSectionInfoReq,
+  SectionPackReq,
+  SectionPackRes,
+} from "./apiQueriesShared/shared";
 
 export const apiEndpoints = makeEndpointPaths("api");
 
@@ -40,16 +44,22 @@ function bitRouteAndPath(
 
 export type ApiHttpObjects = {
   nextRegister: RegisterCrudSchema;
-  nextLogin: LoginCrudSchema;
+  nextLogin: LoginQueryObjects;
   addSection: {
-    req: {
-      body: {
-        payload: SectionPackRaw<"db", SectionName<"dbStore">>;
-      };
-    };
-    res: {
-      data: string; // dbId
-    };
+    req: SectionPackReq;
+    res: DbIdRes;
+  };
+  updateSection: {
+    req: SectionPackReq;
+    res: DbIdRes;
+  };
+  getSection: {
+    req: DbSectionInfoReq;
+    res: SectionPackRes;
+  };
+  deleteSection: {
+    req: DbSectionInfoReq;
+    res: DbIdRes;
   };
 };
 

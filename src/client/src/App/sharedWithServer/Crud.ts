@@ -5,8 +5,8 @@ import {
   LoginFormData,
   LoginHeaders,
   LoginUser,
-} from "./apiQueriesShared/Login";
-import { RegisterReqPayload } from "./apiQueriesShared/Register";
+} from "./apiQueriesShared/login";
+import { RegisterReqPayload } from "./apiQueriesShared/register";
 import { zNanoId } from "./utils/zod";
 
 export const authTokenKey = "x-auth-token";

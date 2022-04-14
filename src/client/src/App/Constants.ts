@@ -24,7 +24,14 @@ export const config = {
   url: configUrls(constants.endpoint),
   crud: makeCrudConfig(constants.endpoint),
   apiEndpoints: makeConfigApiEndpoints(constants.endpoint),
-  apiQueryNames: ["nextRegister", "nextLogin", "addSection"],
+  apiQueryNames: [
+    "nextRegister",
+    "nextLogin",
+    "addSection",
+    "updateSection",
+    "getSection",
+    "deleteSection",
+  ],
   tokenKey: {
     apiUserAuth: "x-auth-token",
     analyzerState: "analyzer-state",

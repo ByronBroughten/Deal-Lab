@@ -3,7 +3,7 @@ import { config } from "../client/src/App/Constants";
 import { DbEnt } from "../client/src/App/sharedWithServer/Analyzer/DbEntry";
 import { Req, Res } from "../client/src/App/sharedWithServer/Crud";
 import authWare from "../middleware/authWare";
-import { LoggedIn } from "./omni/shared/validateLoggedInUser";
+import { LoggedIn } from "./apiQueriesServer/shared/validateLoggedInUser";
 import { serverSend, serverValidate, validate } from "./shared/crudValidators";
 import {
   mongo,
