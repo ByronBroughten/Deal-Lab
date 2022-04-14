@@ -8,7 +8,7 @@ import { Obj } from "../../client/src/App/sharedWithServer/utils/Obj";
 import { userServerSideNext } from "../shared/userServerSideNext";
 import { loginUtils } from "./nextLogin/loginUtils";
 
-export const nextRegisterHandlers = [registerServerSide] as const;
+export const nextRegisterWare = [registerServerSide] as const;
 
 async function registerServerSide(req: Request, res: Response) {
   const reqObj = validateReq(req, res);

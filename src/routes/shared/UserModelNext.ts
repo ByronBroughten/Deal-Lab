@@ -1,4 +1,5 @@
 import mongoose, { Schema } from "mongoose";
+import { SelfOrDescendantName } from "../../client/src/App/sharedWithServer/Analyzer/SectionMetas/relNameArrs/ChildTypes";
 import {
   SectionNam,
   SectionName,
@@ -47,3 +48,25 @@ export function makeMongooseSection() {
   };
   return new Schema(schemaFrame);
 }
+
+export const modelPath = {
+  firstSectionPack(packName: SectionName<"dbStore">) {
+    return `${packName}.0`;
+  },
+  firstSectionPackSection<PN extends SectionName<"dbStore">>(
+    packName: PN,
+    sectionName: SelfOrDescendantName<PN, "db">
+  ) {
+    return `${this.firstSectionPack(packName)}.rawSections.${sectionName}.0`;
+  },
+  firstSectionPackSectionVarb<PN extends SectionName<"dbStore">>(
+    packName: PN,
+    sectionName: SelfOrDescendantName<PN, "db">,
+    varbName: string
+  ) {
+    return `${this.firstSectionPackSection(
+      packName,
+      sectionName
+    )}.dbVarbs.${varbName}`;
+  },
+};

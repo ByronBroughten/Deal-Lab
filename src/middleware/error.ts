@@ -1,5 +1,11 @@
-import { Request, Response, NextFunction } from "express";
+import { NextFunction, Request, Response } from "express";
 import winston from "winston";
+
+export class ResHandledError extends Error {
+  constructor(message: string) {
+    super(message);
+  }
+}
 
 export default function error(
   err: Error,
@@ -8,6 +14,8 @@ export default function error(
   next: NextFunction
 ) {
   winston.error(err.message, err);
-  res.status(500).send("Something went wrong.");
+  if (!(Error instanceof ResHandledError)) {
+    res.status(500).send("Something went wrong.");
+  }
   next();
 }

@@ -6,8 +6,16 @@ import {
 } from "./SectionMetas/relNameArrs/ChildTypes";
 import { ContextName } from "./SectionMetas/relSections/baseSections";
 import { Id } from "./SectionMetas/relSections/baseSections/id";
-import { SectionName } from "./SectionMetas/SectionName";
-import { SectionPackDbRaw, SectionPackRaw } from "./SectionPackRaw";
+import {
+  SectionNam,
+  SectionName,
+  SectionNameType,
+} from "./SectionMetas/SectionName";
+import {
+  SectionPackDbRaw,
+  SectionPackRaw,
+  zRawSectionPack,
+} from "./SectionPackRaw";
 import { DbVarbs, RawSections } from "./SectionPackRaw/RawSection";
 
 export type OneHeadSectionNode<
@@ -79,4 +87,27 @@ export class SectionPack<SN extends SectionName, CN extends ContextName> {
         return rawSections;
       }, {} as RawSections<SN, CN>);
   }
+  static isRaw<
+    ST extends SectionNameType = "all",
+    CN extends ContextName = "fe"
+  >(
+    value: any,
+    { contextName, sectionType }: IsRawProps<ST, CN> = {}
+  ): value is SectionPackRaw<CN, SectionName<ST>> {
+    if (
+      (zRawSectionPack.safeParse(value).success &&
+        value.contextName === contextName) ??
+      ("fe" && SectionNam.is(value.sectionName, sectionType ?? "all"))
+    ) {
+      return true;
+    } else return false;
+  }
 }
+
+type IsRawProps<
+  ST extends SectionNameType = "all",
+  CN extends ContextName = ContextName
+> = {
+  sectionType?: ST;
+  contextName?: CN;
+};

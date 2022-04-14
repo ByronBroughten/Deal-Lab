@@ -1,7 +1,9 @@
 import request from "supertest";
-import { config } from "../../client/src/App/Constants";
 import Analyzer from "../../client/src/App/sharedWithServer/Analyzer";
-import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesShared";
+import {
+  apiEndpoints,
+  NextReq,
+} from "../../client/src/App/sharedWithServer/apiQueriesShared";
 import { runApp } from "../../runApp";
 import { UserModelNext } from "../shared/UserModelNext";
 import { userServerSideNext } from "../shared/userServerSideNext";
@@ -16,7 +18,7 @@ function makeTestRegisterReq(): NextReq<"nextRegister"> {
   return next.req.nextRegister();
 }
 
-describe(config.apiEndpoints.nextRegister.route, () => {
+describe(apiEndpoints.nextRegister.pathRoute, () => {
   // prep
   let server: ReturnType<typeof runApp> | any;
   let reqObj: NextReq<"nextRegister">;
@@ -29,7 +31,7 @@ describe(config.apiEndpoints.nextRegister.route, () => {
   // register route: "/api/user/register"
   const exec = async () =>
     await request(server)
-      .post(config.apiEndpoints.nextRegister.route)
+      .post(apiEndpoints.nextRegister.pathRoute)
       .send(reqObj.body);
   async function testStatus(statusNumber: number) {
     const res = await exec();

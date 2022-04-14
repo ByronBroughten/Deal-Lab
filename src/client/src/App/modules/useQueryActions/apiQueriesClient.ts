@@ -33,6 +33,37 @@ type ApiQuery<QN extends ApiQueryName> = (
 
 export const apiQueries = makeApiQueries();
 function makeApiQueries(): ApiQueries {
+  const apiQueryProps: AllApiQueryProps = {
+    nextRegister: {
+      doingWhat: "registering",
+      validateRes(res: AxiosResponse<unknown>): NextRes<"nextRegister"> {
+        if (res && isLoginUserNext(res.data) && isLoginHeaders(res.headers)) {
+          return {
+            data: res.data,
+            headers: res.headers,
+          };
+        } else throw makeResValidationQueryError();
+      },
+    },
+    nextLogin: {
+      doingWhat: "logging in",
+      validateRes(res: AxiosResponse<unknown>): NextRes<"nextLogin"> {
+        if (res && isLoginUserNext(res.data) && isLoginHeaders(res.headers)) {
+          return {
+            data: res.data,
+            headers: res.headers,
+          };
+        } else throw makeResValidationQueryError();
+      },
+    },
+    addSection: {
+      doingWhat: "adding a section",
+      get validateRes() {
+        return dbIdResValidator;
+      },
+    },
+  } as const;
+
   return Obj.entries(apiQueryProps).reduce(
     (apiQueries, [queryName, queryProps]) => {
       (apiQueries[queryName] as ApiQuery<ApiQueryName>) = makeApiQuery({
@@ -44,37 +75,6 @@ function makeApiQueries(): ApiQueries {
     {} as ApiQueries
   );
 }
-
-const apiQueryProps: AllApiQueryProps = {
-  nextRegister: {
-    doingWhat: "registering",
-    validateRes(res: AxiosResponse<unknown>): NextRes<"nextRegister"> {
-      if (res && isLoginUserNext(res.data) && isLoginHeaders(res.headers)) {
-        return {
-          data: res.data,
-          headers: res.headers,
-        };
-      } else throw makeResValidationQueryError();
-    },
-  },
-  nextLogin: {
-    doingWhat: "logging in",
-    validateRes(res: AxiosResponse<unknown>): NextRes<"nextLogin"> {
-      if (res && isLoginUserNext(res.data) && isLoginHeaders(res.headers)) {
-        return {
-          data: res.data,
-          headers: res.headers,
-        };
-      } else throw makeResValidationQueryError();
-    },
-  },
-  addSection: {
-    doingWhat: "adding a section",
-    get validateRes() {
-      return dbIdResValidator;
-    },
-  },
-} as const;
 
 type AllApiQueryProps = {
   [QN in ApiQueryName]: StrictOmit<MakeApiQueryProps<QN>, "queryName">;

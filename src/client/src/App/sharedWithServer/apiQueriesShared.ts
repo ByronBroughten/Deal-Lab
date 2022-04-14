@@ -1,5 +1,7 @@
 import urljoin from "url-join";
 import { config } from "../Constants";
+import { SectionName } from "./Analyzer/SectionMetas/SectionName";
+import { SectionPackRaw } from "./Analyzer/SectionPackRaw";
 import { LoginCrudSchema } from "./apiQueriesShared/Login";
 import { RegisterCrudSchema } from "./apiQueriesShared/Register";
 
@@ -42,7 +44,7 @@ export type ApiHttpObjects = {
   addSection: {
     req: {
       body: {
-        payload: any;
+        payload: SectionPackRaw<"db", SectionName<"dbStore">>;
       };
     };
     res: {
@@ -50,6 +52,7 @@ export type ApiHttpObjects = {
     };
   };
 };
+
 export type ApiQueryName = keyof ApiHttpObjects;
 export type NextReq<R extends keyof ApiHttpObjects> = ApiHttpObjects[R]["req"];
 export type NextRes<R extends keyof ApiHttpObjects> = ApiHttpObjects[R]["res"];

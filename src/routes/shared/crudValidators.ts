@@ -6,11 +6,7 @@ import {
   SectionName,
   SectionNameType,
 } from "../../client/src/App/sharedWithServer/Analyzer/SectionMetas/SectionName";
-import {
-  isLoginFormData,
-  LoggedIn,
-  LoggedInUser,
-} from "../../client/src/App/sharedWithServer/apiQueriesShared/Login";
+import { isLoginFormData } from "../../client/src/App/sharedWithServer/apiQueriesShared/Login";
 import {
   areGuestAccessSections,
   GuestAccessSections,
@@ -18,6 +14,7 @@ import {
   RegisterFormData,
 } from "../../client/src/App/sharedWithServer/apiQueriesShared/Register";
 import { is, Req, Res } from "../../client/src/App/sharedWithServer/Crud";
+import { LoggedIn, LoggedInUser } from "../omni/shared/validateLoggedInUser";
 
 export const serverSend = {
   success(

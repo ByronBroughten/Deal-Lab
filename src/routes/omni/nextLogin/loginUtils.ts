@@ -1,4 +1,3 @@
-import bcrypt from "bcrypt";
 import config from "config";
 import { Response } from "express";
 import jwt from "jsonwebtoken";
@@ -9,11 +8,6 @@ import { UserDbNext, UserDbRaw } from "../../shared/UserDbNext";
 import { UserModelNext } from "../../shared/UserModelNext";
 import { userServerSideNext } from "../../shared/userServerSideNext";
 
-type CheckPasswordProps = {
-  password: string;
-  encryptedPassword: string;
-  res: Response;
-};
 export const loginUtils = {
   async tryFindOneUserByEmail(emailLower: string) {
     try {
@@ -25,14 +19,6 @@ export const loginUtils = {
     } catch (err) {
       return undefined;
     }
-  },
-  async checkPasswordAndResIfInvalid({
-    password,
-    encryptedPassword,
-    res,
-  }: CheckPasswordProps) {
-    const isValidPw = await bcrypt.compare(password, encryptedPassword);
-    if (!isValidPw) return res.status(400).send("Invalid password.");
   },
   checkUserAuthToken(token: any): null | UserJwt {
     const decoded = jwt.verify(token, config.get("jwtPrivateKey"));

@@ -1,6 +1,7 @@
 import { Response } from "express";
 import { FilterQuery } from "mongoose";
 import { DbUser } from "../../client/src/App/sharedWithServer/Analyzer/DbEntry";
+import { ResHandledError } from "../../middleware/error";
 import { QueryOp } from "../utils/operator";
 import { UserModel } from "./userServerSide";
 
@@ -85,7 +86,7 @@ export async function tryFindByIdAndUpdate(
     );
   } catch (err) {
     if (err) res.status(500).send(err);
-    return;
+    throw new ResHandledError("Handled in tryFindByIdAndUpdate");
   }
 }
 

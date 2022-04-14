@@ -1,11 +1,12 @@
 import express, { Request, Response } from "express";
 import { config } from "../client/src/App/Constants";
-import { LoggedIn } from "../client/src/App/sharedWithServer/apiQueriesShared/Login";
 import { Req, Res } from "../client/src/App/sharedWithServer/Crud";
 import authWare from "../middleware/authWare";
+import { LoggedIn } from "./omni/shared/validateLoggedInUser";
 import { serverSend, serverValidate } from "./shared/crudValidators";
 import { tryFindByIdAndUpdate } from "./shared/tryQueries";
 import { queryOp } from "./utils/operator";
+
 // where does the middleware go? The route level? I guess so, or maybe both.
 
 export const sectionArrRoutes = {

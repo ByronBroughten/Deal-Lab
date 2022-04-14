@@ -1,40 +1,14 @@
 import bcrypt from "bcrypt";
 import mongoose from "mongoose";
-import { SelfOrDescendantName } from "../../client/src/App/sharedWithServer/Analyzer/SectionMetas/relNameArrs/ChildTypes";
 import { BaseSectionsDb } from "../../client/src/App/sharedWithServer/Analyzer/SectionMetas/relSections/baseSectionTypes";
 import { SchemaVarbsToDbValues } from "../../client/src/App/sharedWithServer/Analyzer/SectionMetas/relSections/rel/valueMetaTypes";
-import {
-  SectionNam,
-  SectionName,
-} from "../../client/src/App/sharedWithServer/Analyzer/SectionMetas/SectionName";
+import { SectionNam } from "../../client/src/App/sharedWithServer/Analyzer/SectionMetas/SectionName";
 import {
   GuestAccessSectionsNext,
   RegisterReqPayloadNext,
 } from "../../client/src/App/sharedWithServer/apiQueriesShared/Register";
 import { initDbSectionPack, UserDbRaw } from "./UserDbNext";
-import { UserModelNext } from "./UserModelNext";
-
-const modelPath = {
-  firstSectionPack(packName: SectionName<"dbStore">) {
-    return `${packName}.0`;
-  },
-  firstSectionPackSection<PN extends SectionName<"dbStore">>(
-    packName: PN,
-    sectionName: SelfOrDescendantName<PN, "db">
-  ) {
-    return `${this.firstSectionPack(packName)}.rawSections.${sectionName}.0`;
-  },
-  firstSectionPackSectionVarb<PN extends SectionName<"dbStore">>(
-    packName: PN,
-    sectionName: SelfOrDescendantName<PN, "db">,
-    varbName: string
-  ) {
-    return `${this.firstSectionPackSection(
-      packName,
-      sectionName
-    )}.dbVarbs.${varbName}`;
-  },
-};
+import { modelPath, UserModelNext } from "./UserModelNext";
 
 export const userServerSideNext = {
   userEmailLowerPath: modelPath.firstSectionPackSectionVarb(

@@ -1,17 +1,20 @@
 import express from "express";
-import { config } from "./../client/src/App/Constants";
-import { nextLoginHandlers } from "./omni/nextLogin";
-import { nextRegisterHandlers } from "./omni/nextRegister";
+import { apiEndpoints } from "../client/src/App/sharedWithServer/apiQueriesShared";
+import { addSectionWare } from "./omni/addSection";
+import { nextLoginWare } from "./omni/nextLogin";
+import { nextRegisterWare } from "./omni/nextRegister";
 
-const endpoints = {
-  nextRegister: nextRegisterHandlers,
-  nextLogin: nextLoginHandlers,
+const endpointWare = {
+  nextRegister: nextRegisterWare,
+  nextLogin: nextLoginWare,
+  addSection: addSectionWare,
 } as const;
 
 const omniRouter = express.Router();
 
-omniRouter.post(config.apiEndpoints.nextRegister.bit, ...nextRegisterHandlers);
-omniRouter.post(config.apiEndpoints.nextLogin.bit, ...nextLoginHandlers);
-// post then get then automate the omni router
+omniRouter.post(apiEndpoints.nextRegister.pathBit, ...nextRegisterWare);
+omniRouter.post(apiEndpoints.nextLogin.pathBit, ...nextLoginWare);
+omniRouter.post(apiEndpoints.addSection.pathBit, ...addSectionWare);
+// implement addSection, then get automate construction of the omni router
 
 export default omniRouter;

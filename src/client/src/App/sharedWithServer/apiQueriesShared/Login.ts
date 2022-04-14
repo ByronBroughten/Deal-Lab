@@ -68,15 +68,6 @@ export function isLoginFormData(value: any): value is LoginFormData {
   return zLoginFormData.safeParse(value).success;
 }
 
-// Logged in
-export type LoggedInUser = { _id: string };
-type LoggedInReq = {
-  body: {
-    user: LoggedInUser;
-  };
-};
-export type LoggedIn<T extends any> = T & LoggedInReq;
-
 export type LoginHeaders = { [config.tokenKey.apiUserAuth]: string };
 export function isLoginHeaders(value: any): value is LoginHeaders {
   return (

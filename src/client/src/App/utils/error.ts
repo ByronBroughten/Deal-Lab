@@ -17,7 +17,18 @@ function isErrorWithMessage(error: unknown): error is ErrorWithMessage {
   );
 }
 
-function toErrorWithMessage(maybeError: unknown): ErrorWithMessage {
+export function toError(something: unknown): Error {
+  if (something instanceof Error) return something;
+  try {
+    return new Error(JSON.stringify(something));
+  } catch {
+    // fallback in case there's an error stringifying the maybeError
+    // like with circular references for example.
+    return new Error(String(something));
+  }
+}
+
+export function toErrorWithMessage(maybeError: unknown): ErrorWithMessage {
   if (isErrorWithMessage(maybeError)) return maybeError;
 
   try {
