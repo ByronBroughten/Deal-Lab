@@ -4,9 +4,9 @@ import { DbEntry, zDbEntryArr } from "../Analyzer/DbEntry";
 import { SectionNam, SectionName } from "../Analyzer/SectionMetas/SectionName";
 import { SectionPackRaw, zRawSectionPack } from "../Analyzer/SectionPackRaw";
 import { zodSchema } from "../utils/zod";
-import { zRegisterFormData } from "./Register";
+import { zRegisterFormData } from "./registrator";
 
-export type LoginCrudSchema = {
+export type LoginQueryObjects = {
   req: {
     body: { payload: LoginFormData };
   };
