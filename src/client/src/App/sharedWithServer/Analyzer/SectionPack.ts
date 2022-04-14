@@ -1,6 +1,8 @@
 import { omit } from "lodash";
+import { Obj } from "../utils/Obj";
 import { sectionMetas } from "./SectionMetas";
 import {
+  FeToDbNameWithSameChildren,
   NameToNameWithSameChildren,
   OneChildIdArrs,
 } from "./SectionMetas/relNameArrs/ChildTypes";
@@ -33,20 +35,30 @@ export class SectionPack<SN extends SectionName, CN extends ContextName> {
   get sectionName(): SN {
     return this.core.sectionName;
   }
-  feToDbRaw<NextSN extends NameToNameWithSameChildren<SN, "fe", "db">>(
+  feToServerRaw<NextSN extends FeToDbNameWithSameChildren<SN>>(
     nextSectionName: NextSN
-  ): SectionPackDbRaw<NextSN> {
+  ): SectionPackRaw<"db", NextSN> {
     const { sectionName } = this;
     return {
+      contextName: "db",
+      sectionName: nextSectionName,
       dbId: this.core.dbId,
       rawSections: {
         ...omit(this.core.rawSections, [sectionName]),
         [nextSectionName]: this.core.rawSections[sectionName],
       },
-    } as Record<
-      keyof SectionPackDbRaw<NextSN>,
-      any
-    > as SectionPackDbRaw<NextSN>;
+    } as Record<keyof SectionPackRaw<"db", NextSN>, any> as SectionPackRaw<
+      "db",
+      NextSN
+    >;
+  }
+  feToDbRaw<NextSN extends NameToNameWithSameChildren<SN, "fe", "db">>(
+    nextSectionName: NextSN
+  ): SectionPackDbRaw<NextSN> {
+    return Obj.strictPick(this.feToServerRaw(nextSectionName), [
+      "dbId",
+      "rawSections",
+    ]);
   }
   static init<SN extends SectionName, CN extends ContextName>({
     sectionName,

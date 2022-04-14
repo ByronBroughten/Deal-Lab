@@ -4,7 +4,6 @@ import {
   apiEndpoints,
   NextReq,
 } from "../../client/src/App/sharedWithServer/apiQueriesShared";
-import { isLoginUserNext } from "../../client/src/App/sharedWithServer/apiQueriesShared/Login";
 import { runApp } from "../../runApp";
 import { UserModelNext } from "../shared/UserModelNext";
 import { userServerSideNext } from "../shared/userServerSideNext";
@@ -65,9 +64,5 @@ describe(apiEndpoints.nextRegister.pathRoute, () => {
   });
   it("should return 200 if the request is valid", async () => {
     await testStatus(200);
-  });
-  it("should return a logged in user if the request is valid", async () => {
-    const res = await exec();
-    expect(isLoginUserNext(res.body.data)).toBe(true);
   });
 });

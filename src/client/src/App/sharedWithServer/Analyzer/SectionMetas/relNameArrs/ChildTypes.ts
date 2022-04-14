@@ -3,6 +3,7 @@ import { MergeUnionObjNonNullable } from "../../../utils/types/mergeUnionObj";
 import StateSection from "../../StateSection";
 import { RelSections } from "../relSections";
 import { ContextName, SimpleSectionName } from "../relSections/baseSections";
+import { DbStoreName } from "../relSections/baseSectionTypes";
 import { FeNameInfo } from "../relSections/rel/relVarbInfoTypes";
 
 type ChildNameArr<
@@ -30,6 +31,9 @@ export type NameToNameWithSameChildren<
 
 export type FeToDbNameWithSameChildren<SN extends SimpleSectionName> =
   NameToNameWithSameChildren<SN, "fe", "db">;
+
+export type FeToDbStoreNameWithSameChildren<SN extends SimpleSectionName> =
+  Extract<FeToDbNameWithSameChildren<SN>, DbStoreName>;
 
 export type DbToFeNameWithSameChildren<SN extends SimpleSectionName> =
   NameToNameWithSameChildren<SN, "db", "fe">;

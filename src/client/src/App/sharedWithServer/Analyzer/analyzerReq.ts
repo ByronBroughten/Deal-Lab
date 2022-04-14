@@ -1,9 +1,31 @@
 import Analyzer from "../Analyzer";
+import { FeToDbStoreNameWithSameChildren } from "../Analyzer/SectionMetas/relNameArrs/ChildTypes";
 import { NextReq } from "../apiQueriesShared";
 import { Req } from "../Crud";
 import { FeInfo } from "./SectionMetas/Info";
 import { SectionFinder } from "./SectionMetas/relSections/baseSectionTypes";
+import { FeNameInfo } from "./SectionMetas/relSections/rel/relVarbInfoTypes";
 import { SectionName } from "./SectionMetas/SectionName";
+import { SectionPack } from "./SectionPack";
+import { SectionPackRaw } from "./SectionPackRaw";
+
+function getAddSectionReq<SN extends SectionName>(
+  analyzer: Analyzer,
+  feInfo: FeNameInfo<SN>,
+  sectionName: FeToDbStoreNameWithSameChildren<SN>
+): NextReq<"addSection"> {
+  const rawSectionPack = analyzer.makeRawSectionPack(
+    feInfo
+  ) as any as SectionPackRaw<"fe", SN>;
+  const sectionPack = new SectionPack(rawSectionPack);
+  return {
+    body: {
+      payload: sectionPack.feToServerRaw(
+        sectionName
+      ) as any as NextReq<"addSection">["body"]["payload"],
+    },
+  };
+}
 
 export type AnalyzerReq = typeof analyzerReq;
 export const analyzerReq = {
@@ -28,6 +50,32 @@ export const analyzerReq = {
           email: "string",
           password: "string",
         }),
+      },
+    };
+  },
+  addIndexStoreSection(
+    analyzer: Analyzer,
+    feInfo: FeInfo<"hasIndexStore">
+  ): NextReq<"addSection"> {
+    const { indexStoreName } = analyzer.sectionMeta(feInfo.sectionName).core;
+    return getAddSectionReq(
+      analyzer,
+      feInfo,
+      indexStoreName as FeToDbStoreNameWithSameChildren<
+        typeof feInfo.sectionName
+      >
+    );
+  },
+  postIndexEntry(
+    analyzer: Analyzer,
+    feInfo: FeInfo<"hasIndexStore">
+  ): Req<"PostEntry"> {
+    const { indexStoreName } = analyzer.sectionMeta(feInfo.sectionName).core;
+    const dbEntry = analyzer.dbIndexEntry(feInfo);
+    return {
+      body: {
+        dbStoreName: indexStoreName,
+        payload: dbEntry,
       },
     };
   },
@@ -65,19 +113,6 @@ export const analyzerReq = {
       body: {
         payload: dbEntry,
         dbStoreName: indexStoreName,
-      },
-    };
-  },
-  postIndexEntry(
-    analyzer: Analyzer,
-    feInfo: FeInfo<"hasIndexStore">
-  ): Req<"PostEntry"> {
-    const { indexStoreName } = analyzer.sectionMeta(feInfo.sectionName).core;
-    const dbEntry = analyzer.dbIndexEntry(feInfo);
-    return {
-      body: {
-        dbStoreName: indexStoreName,
-        payload: dbEntry,
       },
     };
   },
