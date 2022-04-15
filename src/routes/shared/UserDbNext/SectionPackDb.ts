@@ -9,11 +9,13 @@ import {
 import {
   SectionPackDbRaw,
   SectionPackRaw,
+  ServerSectionPack,
 } from "../../../client/src/App/sharedWithServer/Analyzer/SectionPackRaw";
 import {
   RawSection,
   zRawSections,
 } from "../../../client/src/App/sharedWithServer/Analyzer/SectionPackRaw/RawSection";
+import { Obj } from "../../../client/src/App/sharedWithServer/utils/Obj";
 import { zodSchema } from "../../../client/src/App/sharedWithServer/utils/zod";
 
 export class SectionPackDb<SN extends SectionName> {
@@ -62,7 +64,23 @@ export class SectionPackDb<SN extends SectionName> {
       );
     }
   }
+  static serverToDbRaw(
+    sectionPack: ServerSectionPack
+  ): SectionPackDbRaw<SectionName<"dbStore">> {
+    return Obj.strictPick(sectionPack, ["dbId", "rawSections"]);
+  }
+  static rawDbToServer({
+    sectionPackDb,
+    dbStoreName,
+  }: RawDbToServerProps): ServerSectionPack {
+    return { ...sectionPackDb, contextName: "db", sectionName: dbStoreName };
+  }
 }
+
+type RawDbToServerProps = {
+  sectionPackDb: SectionPackDbRaw;
+  dbStoreName: SectionName<"dbStore">;
+};
 
 const zDbSectionPackFrame: Record<keyof SectionPackDbRaw, any> = {
   dbId: zodSchema.nanoId,

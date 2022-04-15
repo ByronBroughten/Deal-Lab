@@ -27,6 +27,10 @@ export type SectionPackRaw<
   rawSections: RawSections<SN, CN>;
 };
 
+export type ServerSectionPack<
+  SN extends SectionName<"dbStore"> = SectionName<"dbStore">
+> = SectionPackRaw<"db", SN>;
+
 const zRawSectionPackFrame: Record<keyof SectionPackRaw<"fe">, any> = {
   sectionName: zodSchema.string,
   dbId: zodSchema.nanoId,

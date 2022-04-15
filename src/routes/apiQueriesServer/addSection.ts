@@ -1,28 +1,23 @@
 import { Request, Response } from "express";
 import { SectionName } from "../../client/src/App/sharedWithServer/Analyzer/SectionMetas/SectionName";
-import { SectionPack } from "../../client/src/App/sharedWithServer/Analyzer/SectionPack";
-import {
-  SectionPackDbRaw,
-  SectionPackRaw,
-} from "../../client/src/App/sharedWithServer/Analyzer/SectionPackRaw";
+import { SectionPackRaw } from "../../client/src/App/sharedWithServer/Analyzer/SectionPackRaw";
 import {
   NextReq,
   NextRes,
 } from "../../client/src/App/sharedWithServer/apiQueriesShared";
-import { Obj } from "../../client/src/App/sharedWithServer/utils/Obj";
 import authWare from "../../middleware/authWare";
 import { ResHandledError } from "../../middleware/error";
 import { serverSend } from "../shared/crudValidators";
+import { SectionPackDb } from "../shared/UserDbNext/SectionPackDb";
 import {
   findSectionPack,
   FindSectionPackProps,
 } from "./shared/findSectionPack";
 import { findUserByIdAndUpdate } from "./shared/findUserByIdAndUpdate";
-import { LoggedIn, validateLoggedInUser } from "./shared/validateLoggedInUser";
+import { LoggedIn } from "./shared/validateLoggedInUser";
+import { validateSectionPackReq } from "./shared/validateSectionPackReq";
 
-type ServerSectionPack = SectionPackRaw<"db", SectionName<"dbStore">>;
 export const addSectionWare = [authWare, addSectionServerSide] as const;
-
 async function addSectionServerSide(req: Request, res: Response) {
   const {
     payload,
@@ -41,7 +36,7 @@ async function addSectionServerSide(req: Request, res: Response) {
     queryParameters: makePushParameters(payload),
   });
 
-  const resObj: NextRes<"addSection"> = { data: payload.dbId };
+  const resObj: NextRes<"addSection"> = { data: { dbId: payload.dbId } };
   serverSend.success(res, resObj);
 }
 
@@ -49,25 +44,7 @@ function validateAddSectionReq(
   req: Request,
   res: Response
 ): LoggedIn<NextReq<"addSection">> {
-  const { user, payload } = req.body;
-  return {
-    body: {
-      user: validateLoggedInUser(user, res),
-      payload: validateServerSectionPack(payload, res),
-    },
-  };
-}
-
-function validateServerSectionPack(
-  value: any,
-  res: Response
-): ServerSectionPack {
-  if (SectionPack.isRaw(value, { contextName: "db", sectionType: "dbStore" }))
-    return value;
-  else {
-    res.status(500).send("The payload is not a valid server section pack.");
-    throw new ResHandledError("Handled in validateRawSectionPack");
-  }
+  return validateSectionPackReq(req, res);
 }
 
 async function checkThatSectionPackIsNotThere<
@@ -86,11 +63,10 @@ async function checkThatSectionPackIsNotThere<
 }
 
 function makePushParameters(
-  sectionPack: SectionPackRaw<"db", SectionName<"dbStore">>
+  serverSectionPack: SectionPackRaw<"db", SectionName<"dbStore">>
 ) {
-  const { sectionName } = sectionPack;
-  const dbSectionPack: SectionPackDbRaw<SectionName<"dbStore">> =
-    Obj.strictPick(sectionPack, ["dbId", "rawSections"]);
+  const { sectionName } = serverSectionPack;
+  const dbSectionPack = SectionPackDb.serverToDbRaw(serverSectionPack);
   return {
     operation: { $push: { [sectionName]: dbSectionPack } },
     options: {
