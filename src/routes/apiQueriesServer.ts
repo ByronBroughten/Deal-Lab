@@ -1,20 +1,28 @@
 import express from "express";
-import { apiEndpoints } from "../client/src/App/sharedWithServer/apiQueriesShared";
+import {
+  apiEndpoints,
+  ApiQueryName,
+} from "../client/src/App/sharedWithServer/apiQueriesShared";
 import { addSectionWare } from "./apiQueriesServer/addSection";
+import { getSectionWare } from "./apiQueriesServer/getSection";
 import { nextLoginWare } from "./apiQueriesServer/nextLogin";
 import { nextRegisterWare } from "./apiQueriesServer/nextRegister";
+import { updateSectionWare } from "./apiQueriesServer/updateSection";
 
-const endpointWare = {
+const endpointWare: Record<ApiQueryName, any> = {
   nextRegister: nextRegisterWare,
   nextLogin: nextLoginWare,
   addSection: addSectionWare,
+  updateSection: updateSectionWare,
+  getSection: getSectionWare,
+  // deleteSection
 } as const;
 
-const omniRouter = express.Router();
+const apiQueriesServer = express.Router();
 
-omniRouter.post(apiEndpoints.nextRegister.pathBit, ...nextRegisterWare);
-omniRouter.post(apiEndpoints.nextLogin.pathBit, ...nextLoginWare);
-omniRouter.post(apiEndpoints.addSection.pathBit, ...addSectionWare);
+apiQueriesServer.post(apiEndpoints.nextRegister.pathBit, ...nextRegisterWare);
+apiQueriesServer.post(apiEndpoints.nextLogin.pathBit, ...nextLoginWare);
+apiQueriesServer.post(apiEndpoints.addSection.pathBit, ...addSectionWare);
 // implement addSection, then get automate construction of the omni router
 
-export default omniRouter;
+export default apiQueriesServer;

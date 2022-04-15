@@ -12,7 +12,7 @@ import {
 } from "./shared/tryQueries";
 import { UserModel } from "./shared/userServerSide";
 import { queryOp } from "./utils/operator";
-import { sectionGet } from "./utils/query";
+import { sectionGet } from "./utils/sectionGet";
 
 const sectionRouter = express.Router();
 export const sectionRoutes = {
