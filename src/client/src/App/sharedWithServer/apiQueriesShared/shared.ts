@@ -6,11 +6,14 @@ export type SectionPackReq = {
     payload: SectionPackRaw<"db", SectionName<"dbStore">>;
   };
 };
-export type DbSectionInfoReq = {
-  body: {
-    dbStoreName: SectionName<"dbStore">;
-    dbId: string;
-  };
+
+export type DbSectionPackInfo = {
+  dbStoreName: SectionName<"dbStore">;
+  dbId: string;
+};
+
+export type DbSectionPackInfoReq = {
+  body: DbSectionPackInfo;
 };
 
 export type SectionPackRes = {

@@ -37,7 +37,7 @@ async function addSectionServerSide(req: Request, res: Response) {
   });
 
   const resObj: NextRes<"addSection"> = { data: { dbId: payload.dbId } };
-  serverSend.success(res, resObj);
+  serverSend.success({ res, resObj });
 }
 
 function validateAddSectionReq(

@@ -59,7 +59,7 @@ export const sectionRoutes = {
       const result = await tryFindByIdAndUpdate(res, userId, pusher, "post");
       if (result) {
         const resObj: Res<"PostEntry"> = { data: payload.dbId };
-        serverSend.success(res, resObj);
+        serverSend.success({ res, resObj });
       } else serverSend.falsyQuery(res, "findByIdAndUpdate");
     },
   },
@@ -96,7 +96,7 @@ export const sectionRoutes = {
       let dbEntry = await sectionGet(userId, dbStoreName, dbId, res);
       if (dbEntry) {
         const resObj: Res<"GetSection"> = { data: dbEntry };
-        return serverSend.success(res, resObj);
+        return serverSend.success({ res, resObj });
       } else return res.status(404).send("That entry was not found.");
     },
   },
@@ -141,7 +141,7 @@ export const sectionRoutes = {
       const result = await tryFindOneAndUpdate(res, filter, setter, "put");
       if (result) {
         const resObj: Res<"PutSection"> = { data: payload.dbId };
-        serverSend.success(res, resObj);
+        serverSend.success({ res, resObj });
       } else serverSend.falsyQuery(res, "findOneAndUpdate");
     },
   },
@@ -195,7 +195,7 @@ export const sectionRoutes = {
           return res.status(404).send("No entry could be deleted.");
 
         const resObj: Res<"DeleteSection"> = { data: dbId };
-        serverSend.success(res, resObj);
+        serverSend.success({ res, resObj });
       } else serverSend.falsyQuery(res, "findByIdAndUpdate");
     },
   },

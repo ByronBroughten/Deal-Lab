@@ -5,7 +5,7 @@ import { LoginQueryObjects } from "./apiQueriesShared/login";
 import { RegisterQueryObjects } from "./apiQueriesShared/register";
 import {
   DbIdRes,
-  DbSectionInfoReq,
+  DbSectionPackInfoReq,
   SectionPackReq,
   SectionPackRes,
 } from "./apiQueriesShared/shared";
@@ -55,11 +55,11 @@ export type ApiHttpObjects = {
     res: DbIdRes;
   };
   getSection: {
-    req: DbSectionInfoReq;
+    req: DbSectionPackInfoReq;
     res: SectionPackRes;
   };
   deleteSection: {
-    req: DbSectionInfoReq;
+    req: DbSectionPackInfoReq;
     res: DbIdRes;
   };
 };

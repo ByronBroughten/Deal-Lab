@@ -3,7 +3,9 @@ import {
   apiEndpoints,
   ApiQueryName,
 } from "../client/src/App/sharedWithServer/apiQueriesShared";
+import { Obj } from "../client/src/App/sharedWithServer/utils/Obj";
 import { addSectionWare } from "./apiQueriesServer/addSection";
+import { deleteSectionWare } from "./apiQueriesServer/deleteSection";
 import { getSectionWare } from "./apiQueriesServer/getSection";
 import { nextLoginWare } from "./apiQueriesServer/nextLogin";
 import { nextRegisterWare } from "./apiQueriesServer/nextRegister";
@@ -15,14 +17,13 @@ const endpointWare: Record<ApiQueryName, any> = {
   addSection: addSectionWare,
   updateSection: updateSectionWare,
   getSection: getSectionWare,
-  // deleteSection
+  deleteSection: deleteSectionWare,
 } as const;
 
 const apiQueriesServer = express.Router();
 
-apiQueriesServer.post(apiEndpoints.nextRegister.pathBit, ...nextRegisterWare);
-apiQueriesServer.post(apiEndpoints.nextLogin.pathBit, ...nextLoginWare);
-apiQueriesServer.post(apiEndpoints.addSection.pathBit, ...addSectionWare);
-// implement addSection, then get automate construction of the omni router
+for (const [queryName, ware] of Obj.entries(endpointWare)) {
+  apiQueriesServer.post(apiEndpoints[queryName].pathBit, ...ware);
+}
 
 export default apiQueriesServer;

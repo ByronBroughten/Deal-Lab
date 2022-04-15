@@ -4,14 +4,14 @@ import {
   SectionNam,
   SectionName,
 } from "../../../client/src/App/sharedWithServer/Analyzer/SectionMetas/SectionName";
-import { DbSectionInfoReq } from "../../../client/src/App/sharedWithServer/apiQueriesShared/shared";
+import { DbSectionPackInfoReq } from "../../../client/src/App/sharedWithServer/apiQueriesShared/shared";
 import { ResHandledError } from "../../../middleware/error";
 import { LoggedIn, validateLoggedInUser } from "./validateLoggedInUser";
 
 export function validateDbSectionInfoReq(
   req: Request,
   res: Response
-): LoggedIn<DbSectionInfoReq> {
+): LoggedIn<DbSectionPackInfoReq> {
   const { user, dbId, dbStoreName } = req.body;
   return {
     body: {

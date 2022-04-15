@@ -46,7 +46,7 @@ export const sectionArrRoutes = {
 
       if (result) {
         const resObj: Res<"PostSectionArr"> = { data: dbStoreName };
-        serverSend.success(res, resObj);
+        serverSend.success({ res, resObj });
       } else serverSend.falsyQuery(res, "findByIdAndUpdate");
     },
   },

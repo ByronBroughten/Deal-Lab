@@ -29,7 +29,7 @@ async function getSectionServerSide(req: Request, res: Response) {
   const rawServerSectionPack = await getSectionPack({ userId, spInfo, res });
 
   const resObj: NextRes<"getSection"> = { data: { rawServerSectionPack } };
-  serverSend.success(res, resObj);
+  serverSend.success({ res, resObj });
 }
 
 export async function getSectionPack(

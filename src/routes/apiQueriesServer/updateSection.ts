@@ -26,7 +26,7 @@ async function updateSectionSeverSide(req: Request, res: Response) {
   });
 
   const resObj: NextRes<"updateSection"> = { data: { dbId: payload.dbId } };
-  serverSend.success(res, resObj);
+  serverSend.success({ res, resObj });
 }
 
 function validateUpdateSectionReq(

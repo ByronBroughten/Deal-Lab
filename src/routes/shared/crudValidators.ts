@@ -19,11 +19,12 @@ import {
   LoggedInUser,
 } from "../apiQueriesServer/shared/validateLoggedInUser";
 
+type SuccessProps = {
+  res: Response;
+  resObj: { data: any; headers?: { [key: string]: string } };
+};
 export const serverSend = {
-  success(
-    res: Response,
-    { data, headers }: { data: any; headers?: { [key: string]: string } }
-  ) {
+  success({ res, resObj: { data, headers } }: SuccessProps) {
     res.header(headers).status(200).send(data);
   },
   falsyQuery(res: Response, queryName: string = "query") {
@@ -139,7 +140,7 @@ export const validate = {
     res(res: Response, data: DbEntry[]) {
       if (is.dbEntryArr(data)) {
         const resObj: Res<"PostTableColumns"> = { data };
-        serverSend.success(res, resObj);
+        serverSend.success({ res, resObj });
       } else serverSend.resDataIsInvalid(res, "DbEntryArr");
     },
   },
