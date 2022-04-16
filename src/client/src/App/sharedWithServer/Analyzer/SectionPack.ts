@@ -1,9 +1,7 @@
 import { omit } from "lodash";
-import { Obj } from "../utils/Obj";
 import { sectionMetas } from "./SectionMetas";
 import {
   FeToDbNameWithSameChildren,
-  NameToNameWithSameChildren,
   OneChildIdArrs,
 } from "./SectionMetas/relNameArrs/ChildTypes";
 import { ContextName } from "./SectionMetas/relSections/baseSections";
@@ -13,11 +11,7 @@ import {
   SectionName,
   SectionNameType,
 } from "./SectionMetas/SectionName";
-import {
-  SectionPackDbRaw,
-  SectionPackRaw,
-  zRawSectionPack,
-} from "./SectionPackRaw";
+import { SectionPackRaw, zRawSectionPack } from "./SectionPackRaw";
 import { DbVarbs, RawSections } from "./SectionPackRaw/RawSection";
 
 export type OneHeadSectionNode<
@@ -51,14 +45,6 @@ export class SectionPack<SN extends SectionName, CN extends ContextName> {
       "db",
       NextSN
     >;
-  }
-  feToDbRaw<NextSN extends NameToNameWithSameChildren<SN, "fe", "db">>(
-    nextSectionName: NextSN
-  ): SectionPackDbRaw<NextSN> {
-    return Obj.strictPick(this.feToServerRaw(nextSectionName), [
-      "dbId",
-      "rawSections",
-    ]);
   }
   static init<SN extends SectionName, CN extends ContextName>({
     sectionName,
@@ -113,6 +99,12 @@ export class SectionPack<SN extends SectionName, CN extends ContextName> {
     ) {
       return true;
     } else return false;
+  }
+  static isServer(value: any) {
+    return SectionPack.isRaw(value, {
+      contextName: "db",
+      sectionType: "dbStore",
+    });
   }
 }
 

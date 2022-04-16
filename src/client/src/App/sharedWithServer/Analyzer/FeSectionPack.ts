@@ -8,13 +8,14 @@ import {
 } from "./FeSectionPacks/FeSectionNode";
 import { Inf } from "./SectionMetas/Info";
 import {
+  FeToDbNameWithSameChildren,
   NameToNameWithSameChildren,
   SelfOrDescendantIds,
 } from "./SectionMetas/relNameArrs/ChildTypes";
 import { FeParentInfo } from "./SectionMetas/relNameArrs/ParentTypes";
 import { Id } from "./SectionMetas/relSections/baseSections/id";
 import { SectionName } from "./SectionMetas/SectionName";
-import { SectionPackRaw } from "./SectionPackRaw";
+import { SectionPackRaw, ServerSectionPack } from "./SectionPackRaw";
 import {
   GeneralRawSection,
   RawSection,
@@ -74,6 +75,35 @@ export class FeSectionPack<SN extends SectionName> {
       },
     } as any as FeSectionPackCore<NextSN>;
     return new FeSectionPack(nextCore);
+  }
+  feToServerRaw<NextSN extends FeToDbNameWithSameChildren<SN>>(
+    nextSectionName: NextSN
+  ): SectionPackRaw<"db", NextSN> {
+    const { sectionName } = this;
+    return {
+      contextName: "db",
+      sectionName: nextSectionName,
+      dbId: this.core.dbId,
+      rawSections: {
+        ...omit(this.core.rawSections, [sectionName]),
+        [nextSectionName]: this.core.rawSections[sectionName],
+      },
+    } as Record<keyof SectionPackRaw<"db", NextSN>, any> as SectionPackRaw<
+      "db",
+      NextSN
+    >;
+  }
+  static rawFeToServer<
+    SN extends SectionName,
+    NextSN extends FeToDbNameWithSameChildren<SN>
+  >(
+    feSectionPackRaw: SectionPackRaw<"fe", SN>,
+    nextSectionName: NextSN
+  ): ServerSectionPack {
+    const sectionPack = new FeSectionPack(feSectionPackRaw);
+    return sectionPack.feToServerRaw(
+      nextSectionName
+    ) as any as ServerSectionPack;
   }
   dbToFeIds(
     childDbIds: SelfOrDescendantIds<SN, "fe">

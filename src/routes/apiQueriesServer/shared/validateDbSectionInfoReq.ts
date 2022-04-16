@@ -30,7 +30,7 @@ function validateDbId(value: any, res: Response): string {
   }
 }
 
-function validateDbStoreName(
+export function validateDbStoreName(
   value: any,
   res: Response
 ): SectionName<"dbStore"> {

@@ -8,7 +8,8 @@ import {
 } from "../../client/src/App/sharedWithServer/apiQueriesShared";
 import { runApp } from "../../runApp";
 import { UserModel } from "../shared/userServerSide";
-import { initTestUser } from "./test/initTestUser";
+import { loginUtils } from "./nextLogin/loginUtils";
+import { createTestUserModelNext } from "./test/createTestUserModelNext";
 
 type TestReqs = {
   addSection: NextReq<"addSection">;
@@ -32,16 +33,23 @@ function makeReqs(): TestReqs {
   };
 }
 
-describe(apiEndpoints.getSection.pathRoute, () => {
+const testedApiRoute = apiEndpoints.getSection.pathRoute;
+describe(testedApiRoute, () => {
   let reqs: TestReqs;
   let server: Server;
+  let userId: string;
   let token: string;
 
   beforeEach(async () => {
     reqs = makeReqs();
     server = runApp();
-    token = await initTestUser();
-    // token = loginUtils.dummyUserAuthToken();
+    userId = await createTestUserModelNext(testedApiRoute);
+    token = loginUtils.makeUserAuthToken(userId);
+  });
+
+  afterEach(async () => {
+    await UserModel.deleteOne({ _id: userId });
+    server.close();
   });
 
   const exec = async () => {
@@ -49,8 +57,9 @@ describe(apiEndpoints.getSection.pathRoute, () => {
       .post(apiEndpoints.addSection.pathRoute)
       .set(config.tokenKey.apiUserAuth, token)
       .send(reqs.addSection.body);
+
     return await request(server)
-      .post(apiEndpoints.getSection.pathRoute)
+      .post(testedApiRoute)
       .set(config.tokenKey.apiUserAuth, token)
       .send(reqs.getSection.body);
   };
@@ -61,10 +70,6 @@ describe(apiEndpoints.getSection.pathRoute, () => {
     return res;
   }
 
-  afterEach(async () => {
-    await UserModel.deleteMany();
-    server.close();
-  });
   it("should return 200 if the request is valid", async () => {
     await testStatus(200);
     // See if JSON.parse(res.text) has a dbId that matches.

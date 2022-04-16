@@ -17,6 +17,7 @@ import https, { handleUnexpectedError } from "../services/httpService";
 import {
   makeResValidationQueryError,
   validateDbIdRes,
+  validateDbStoreNameRes,
   validateServerSectionPackRes,
 } from "./apiQueriesClient/validateRes";
 
@@ -74,6 +75,12 @@ function makeApiQueries(): ApiQueries {
       doingWhat: "deleting a section",
       get validateRes() {
         return validateDbIdRes;
+      },
+    },
+    replaceSectionArr: {
+      doingWhat: "replacing sections",
+      get validateRes() {
+        return validateDbStoreNameRes;
       },
     },
   } as const;

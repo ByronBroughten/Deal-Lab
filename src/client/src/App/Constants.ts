@@ -31,6 +31,7 @@ export const config = {
     "updateSection",
     "getSection",
     "deleteSection",
+    "replaceSectionArr",
   ],
   tokenKey: {
     apiUserAuth: "x-auth-token",

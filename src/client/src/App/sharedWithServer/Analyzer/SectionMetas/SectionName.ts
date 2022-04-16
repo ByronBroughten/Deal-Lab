@@ -36,6 +36,8 @@ export type SectionName<
   SC extends ContextName = "fe"
 > = NameArrs[SC][T][number & keyof NameArrs[SC][T]];
 
+export type DbStoreName = SectionName<"dbStore">;
+
 export type NextSectionFinder<S extends SectionName = SectionName> =
   | SpecificSectionInfo<S>
   | Extract<S, SectionName<"alwaysOne">>;

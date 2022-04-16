@@ -1,9 +1,32 @@
 import { Request, Response } from "express";
+import { DbStoreName } from "../../../client/src/App/sharedWithServer/Analyzer/SectionMetas/SectionName";
 import { SectionPack } from "../../../client/src/App/sharedWithServer/Analyzer/SectionPack";
 import { ServerSectionPack } from "../../../client/src/App/sharedWithServer/Analyzer/SectionPackRaw";
-import { SectionPackReq } from "../../../client/src/App/sharedWithServer/apiQueriesShared/shared";
-import { ResHandledError } from "../../../middleware/error";
+import {
+  SectionPackArrReq,
+  SectionPackReq,
+} from "../../../client/src/App/sharedWithServer/apiQueriesShared/shared";
+import { resHandledError } from "../../../middleware/error";
+import { validateDbStoreName } from "./validateDbSectionInfoReq";
 import { LoggedIn, validateLoggedInUser } from "./validateLoggedInUser";
+
+export function validateSectionPackArrReq(
+  req: Request,
+  res: Response
+): LoggedIn<SectionPackArrReq> {
+  const { sectionPackArr, user, dbStoreName } = req.body;
+  return {
+    body: {
+      user: validateLoggedInUser(user, res),
+      dbStoreName: validateDbStoreName(dbStoreName, res),
+      sectionPackArr: validateServerSectionPackArr({
+        value: sectionPackArr,
+        dbStoreName,
+        res,
+      }),
+    },
+  };
+}
 
 export function validateSectionPackReq(
   req: Request,
@@ -18,15 +41,39 @@ export function validateSectionPackReq(
   };
 }
 
+type ValidateServerSectionPackArrProps = {
+  value: any;
+  res: Response;
+  dbStoreName: DbStoreName;
+};
+function validateServerSectionPackArr({
+  value,
+  res,
+  dbStoreName,
+}: ValidateServerSectionPackArrProps): ServerSectionPack[] {
+  if (
+    Array.isArray(value) &&
+    value.every((v) => SectionPack.isServer(v) && v.sectionName === dbStoreName)
+  ) {
+    return value as ServerSectionPack[];
+  } else
+    throw resHandledError(
+      res,
+      500,
+      "Payload is not a valid server section array."
+    );
+}
+
 function validateServerSectionPack(
   value: any,
   res: Response
 ): ServerSectionPack {
-  if (SectionPack.isRaw(value, { contextName: "db", sectionType: "dbStore" }))
-    return value;
+  if (SectionPack.isServer(value)) return value;
   else {
-    const message = "The payload is not a valid server section pack.";
-    res.status(500).send(message);
-    throw new ResHandledError(message);
+    throw resHandledError(
+      res,
+      500,
+      "Payload is not a valid server section pack."
+    );
   }
 }

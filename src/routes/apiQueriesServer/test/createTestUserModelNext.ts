@@ -1,20 +1,23 @@
 import Analyzer from "../../../client/src/App/sharedWithServer/Analyzer";
 import { RegisterReqPayloadNext } from "../../../client/src/App/sharedWithServer/apiQueriesShared/register";
 import { userServerSideNext } from "../../shared/userServerSideNext";
-import { loginUtils } from "../nextLogin/loginUtils";
 
-export async function initTestUser(): Promise<string> {
+export async function createTestUserModelNext(
+  testSuiteName: string
+): Promise<string> {
   const userDoc = await userServerSideNext.entireMakeUserProcess(
-    makeRegisterPayload()
+    makeTestRegisterPayload(testSuiteName)
   );
   await userDoc.save();
-  return loginUtils.makeUserAuthToken(userDoc._id.toHexString());
+  return userDoc._id.toHexString();
 }
 
-function makeRegisterPayload(): RegisterReqPayloadNext {
+function makeTestRegisterPayload(
+  testSuiteName: string
+): RegisterReqPayloadNext {
   let next = Analyzer.initAnalyzer();
   next = next.updateSectionValuesAndSolve("register", {
-    email: "testosis@gmail.com",
+    email: `${testSuiteName}Test@gmail.com`,
     password: "testPassword",
     userName: "Testosis",
   });

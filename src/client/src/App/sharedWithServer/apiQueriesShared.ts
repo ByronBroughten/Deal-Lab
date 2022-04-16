@@ -6,6 +6,8 @@ import { RegisterQueryObjects } from "./apiQueriesShared/register";
 import {
   DbIdRes,
   DbSectionPackInfoReq,
+  DbStoreNameRes,
+  SectionPackArrReq,
   SectionPackReq,
   SectionPackRes,
 } from "./apiQueriesShared/shared";
@@ -61,6 +63,10 @@ export type ApiHttpObjects = {
   deleteSection: {
     req: DbSectionPackInfoReq;
     res: DbIdRes;
+  };
+  replaceSectionArr: {
+    req: SectionPackArrReq;
+    res: DbStoreNameRes;
   };
 };
 

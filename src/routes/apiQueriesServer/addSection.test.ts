@@ -6,12 +6,11 @@ import {
   apiEndpoints,
   NextReq,
 } from "../../client/src/App/sharedWithServer/apiQueriesShared";
-import { RegisterReqPayloadNext } from "../../client/src/App/sharedWithServer/apiQueriesShared/register";
 import { runApp } from "../../runApp";
 import { UserModelNext } from "../shared/UserModelNext";
-import { userServerSideNext } from "../shared/userServerSideNext";
 import { serverSideLogin } from "../userRoutes/shared/doLogin";
 import { loginUtils } from "./nextLogin/loginUtils";
+import { createTestUserModelNext } from "./test/createTestUserModelNext";
 
 const sectionName = "property";
 function makeAddSectionReq(): NextReq<"addSection"> {
@@ -20,17 +19,8 @@ function makeAddSectionReq(): NextReq<"addSection"> {
   return analyzer.req.addIndexStoreSection(feInfo);
 }
 
-function makeRegisterPayload(): RegisterReqPayloadNext {
-  let next = Analyzer.initAnalyzer();
-  next = next.updateSectionValuesAndSolve("register", {
-    email: "testosis@gmail.com",
-    password: "testpassword",
-    userName: "Testosis",
-  });
-  return next.req.nextRegister().body.payload;
-}
-
-describe(apiEndpoints.addSection.pathRoute, () => {
+const apiRoute = apiEndpoints.addSection.pathRoute;
+describe(apiRoute, () => {
   let req: NextReq<"addSection">;
   let server: Server;
   let token: string;
@@ -41,9 +31,14 @@ describe(apiEndpoints.addSection.pathRoute, () => {
     token = loginUtils.dummyUserAuthToken();
   });
 
+  afterEach(async () => {
+    await UserModelNext.deleteMany();
+    server.close();
+  });
+
   const exec = async () =>
     await request(server)
-      .post(apiEndpoints.addSection.pathRoute)
+      .post(apiRoute)
       .set(config.tokenKey.apiUserAuth, token)
       .send(req.body);
 
@@ -51,11 +46,6 @@ describe(apiEndpoints.addSection.pathRoute, () => {
     const res = await exec();
     expect(res.status).toBe(statusNumber);
   }
-
-  afterEach(async () => {
-    await UserModelNext.deleteMany();
-    server.close();
-  });
 
   it("should return 401 if client is not logged in", async () => {
     token = null as any;
@@ -66,19 +56,13 @@ describe(apiEndpoints.addSection.pathRoute, () => {
     await testStatus(500);
   });
   it("should return 200 if everything is ok", async () => {
-    const userDoc = await userServerSideNext.entireMakeUserProcess(
-      makeRegisterPayload()
-    );
-    await userDoc.save();
-    token = serverSideLogin.makeUserAuthToken(userDoc._id.toHexString());
+    const userId = await createTestUserModelNext(apiRoute);
+    token = serverSideLogin.makeUserAuthToken(userId);
     await testStatus(200);
   });
   it("should return 500 if there is already an entry in the db with the payload's dbId", async () => {
-    const userDoc = await userServerSideNext.entireMakeUserProcess(
-      makeRegisterPayload()
-    );
-    await userDoc.save();
-    token = serverSideLogin.makeUserAuthToken(userDoc._id.toHexString());
+    const userId = await createTestUserModelNext(apiRoute);
+    token = serverSideLogin.makeUserAuthToken(userId);
     await exec();
     await testStatus(500);
   });

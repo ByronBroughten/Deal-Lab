@@ -8,7 +8,8 @@ import {
 } from "../../client/src/App/sharedWithServer/apiQueriesShared";
 import { runApp } from "../../runApp";
 import { UserModel } from "../shared/userServerSide";
-import { initTestUser } from "./test/initTestUser";
+import { loginUtils } from "./nextLogin/loginUtils";
+import { createTestUserModelNext } from "./test/createTestUserModelNext";
 
 type TestReqs = {
   addSection: NextReq<"addSection">;
@@ -32,15 +33,23 @@ function makeReqs(): TestReqs {
   };
 }
 
-describe(apiEndpoints.deleteSection.pathRoute, () => {
+const testedApiRoute = apiEndpoints.deleteSection.pathRoute;
+describe(testedApiRoute, () => {
   let reqs: TestReqs;
   let server: Server;
+  let userId: string;
   let token: string;
 
   beforeEach(async () => {
-    reqs = makeReqs();
     server = runApp();
-    token = await initTestUser();
+    userId = await createTestUserModelNext(testedApiRoute);
+    token = loginUtils.makeUserAuthToken(userId);
+    reqs = makeReqs();
+  });
+
+  afterEach(async () => {
+    await UserModel.deleteOne({ _id: userId });
+    server.close();
   });
 
   const exec = async () => {
@@ -48,8 +57,9 @@ describe(apiEndpoints.deleteSection.pathRoute, () => {
       .post(apiEndpoints.addSection.pathRoute)
       .set(config.tokenKey.apiUserAuth, token)
       .send(reqs.addSection.body);
+
     return await request(server)
-      .post(apiEndpoints.deleteSection.pathRoute)
+      .post(testedApiRoute)
       .set(config.tokenKey.apiUserAuth, token)
       .send(reqs.deleteSection.body);
   };
@@ -59,11 +69,6 @@ describe(apiEndpoints.deleteSection.pathRoute, () => {
     expect(res.status).toBe(statusNumber);
     return res;
   }
-
-  afterEach(async () => {
-    await UserModel.deleteMany();
-    server.close();
-  });
 
   it("should produce status 200 if everything is ok", async () => {
     await testStatus(200);

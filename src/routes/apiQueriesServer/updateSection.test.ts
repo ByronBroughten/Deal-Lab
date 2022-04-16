@@ -8,24 +8,12 @@ import {
   apiEndpoints,
   NextReq,
 } from "../../client/src/App/sharedWithServer/apiQueriesShared";
-import { RegisterReqPayloadNext } from "../../client/src/App/sharedWithServer/apiQueriesShared/register";
 import { runApp } from "../../runApp";
 import { UserModelNext } from "../shared/UserModelNext";
-import { userServerSideNext } from "../shared/userServerSideNext";
-import { serverSideLogin } from "../userRoutes/shared/doLogin";
 import { loginUtils } from "./nextLogin/loginUtils";
+import { createTestUserModelNext } from "./test/createTestUserModelNext";
 
 const sectionName = "property";
-function makeRegisterPayload(): RegisterReqPayloadNext {
-  let next = Analyzer.initAnalyzer();
-  next = next.updateSectionValuesAndSolve("register", {
-    email: "testosis@gmail.com",
-    password: "testPassword",
-    userName: "Testosis",
-  });
-  return next.req.nextRegister().body.payload;
-}
-
 const originalValues = {
   title: "Original title",
   price: NumObj.init(100000),
@@ -52,15 +40,23 @@ function makeReqs(): TestReqs {
   };
 }
 
-describe(apiEndpoints.addSection.pathRoute, () => {
+const testedApiRoute = apiEndpoints.addSection.pathRoute;
+describe(testedApiRoute, () => {
   let reqs: TestReqs;
   let server: Server;
+  let userId: string;
   let token: string;
 
   beforeEach(async () => {
     reqs = makeReqs();
     server = runApp();
-    token = loginUtils.dummyUserAuthToken();
+    userId = await createTestUserModelNext(testedApiRoute);
+    token = loginUtils.makeUserAuthToken(userId);
+  });
+
+  afterEach(async () => {
+    await UserModelNext.deleteOne({ _id: userId });
+    server.close();
   });
 
   const exec = async () => {
@@ -80,11 +76,6 @@ describe(apiEndpoints.addSection.pathRoute, () => {
     expect(res.status).toBe(statusNumber);
   }
 
-  afterEach(async () => {
-    await UserModelNext.deleteMany();
-    server.close();
-  });
-
   it("should return 401 if client is not logged in", async () => {
     token = null as any;
     await testStatus(401);
@@ -94,13 +85,6 @@ describe(apiEndpoints.addSection.pathRoute, () => {
     await testStatus(500);
   });
   describe("entering data", () => {
-    beforeEach(async () => {
-      const userDoc = await userServerSideNext.entireMakeUserProcess(
-        makeRegisterPayload()
-      );
-      await userDoc.save();
-      token = serverSideLogin.makeUserAuthToken(userDoc._id.toHexString());
-    });
     it("should return 200 if everything is ok", async () => {
       await testStatus(200);
     });
