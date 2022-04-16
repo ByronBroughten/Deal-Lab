@@ -6,7 +6,7 @@ import {
 import { DbSectionPackInfo } from "../../client/src/App/sharedWithServer/apiQueriesShared/shared";
 import authWare from "../../middleware/authWare";
 import { serverSend } from "../shared/crudValidators";
-import { findUserByIdAndUpdate } from "./shared/findUserByIdAndUpdate";
+import { findUserByIdAndUpdate } from "./shared/findAndUpdate";
 import { validateDbSectionInfoReq } from "./shared/validateDbSectionInfoReq";
 import { LoggedIn } from "./shared/validateLoggedInUser";
 

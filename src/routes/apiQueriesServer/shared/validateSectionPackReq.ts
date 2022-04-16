@@ -25,7 +25,8 @@ function validateServerSectionPack(
   if (SectionPack.isRaw(value, { contextName: "db", sectionType: "dbStore" }))
     return value;
   else {
-    res.status(500).send("The payload is not a valid server section pack.");
-    throw new ResHandledError("Handled in validateRawSectionPack");
+    const message = "The payload is not a valid server section pack.";
+    res.status(500).send(message);
+    throw new ResHandledError(message);
   }
 }

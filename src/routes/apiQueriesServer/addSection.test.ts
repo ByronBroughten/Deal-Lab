@@ -1,3 +1,4 @@
+import { Server } from "http";
 import request from "supertest";
 import { config } from "../../client/src/App/Constants";
 import Analyzer from "../../client/src/App/sharedWithServer/Analyzer";
@@ -13,7 +14,7 @@ import { serverSideLogin } from "../userRoutes/shared/doLogin";
 import { loginUtils } from "./nextLogin/loginUtils";
 
 const sectionName = "property";
-function makeAddSectionReq() {
+function makeAddSectionReq(): NextReq<"addSection"> {
   const analyzer = Analyzer.initAnalyzer();
   const { feInfo } = analyzer.lastSection(sectionName);
   return analyzer.req.addIndexStoreSection(feInfo);
@@ -30,9 +31,8 @@ function makeRegisterPayload(): RegisterReqPayloadNext {
 }
 
 describe(apiEndpoints.addSection.pathRoute, () => {
-  const sectionName = "property";
   let req: NextReq<"addSection">;
-  let server: any;
+  let server: Server;
   let token: string;
 
   beforeEach(async () => {
@@ -81,8 +81,5 @@ describe(apiEndpoints.addSection.pathRoute, () => {
     token = serverSideLogin.makeUserAuthToken(userDoc._id.toHexString());
     await exec();
     await testStatus(500);
-    // const { indexStoreName } = analyzer.meta.section(sectionName).core;
-    // const pusher = queryOp.push.entry({ ...req.body.payload }, indexStoreName);
-    // await UserModel.findByIdAndUpdate(userId, pusher, queryOptions["post"]);
   });
 });

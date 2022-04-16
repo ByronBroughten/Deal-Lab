@@ -1,0 +1,64 @@
+import { Response } from "express";
+import { FilterQuery, QueryOptions } from "mongoose";
+import { getErrorMessage } from "../../../client/src/App/utils/error";
+import { ResHandledError } from "../../../middleware/error";
+import { UserDbRaw } from "../../shared/UserDbNext";
+import { UserModelNext } from "../../shared/UserModelNext";
+
+type QueryParameters = { operation: any; options: QueryOptions };
+
+type FindUserByIdAndUpdateProps = {
+  res: Response;
+  userId: string;
+  queryParameters: QueryParameters;
+};
+export async function findUserByIdAndUpdate({
+  res,
+  userId,
+  queryParameters: { operation, options },
+}: FindUserByIdAndUpdateProps) {
+  try {
+    return await UserModelNext.findByIdAndUpdate(userId, operation, options);
+  } catch (err) {
+    if (err) res.status(500).send(err);
+    throw new ResHandledError(getErrorMessage(err));
+  }
+}
+
+type FindOneAndUpdateProps = {
+  res: Response;
+  filter: FilterQuery<UserDbRaw>;
+  queryParameters: QueryParameters;
+  doWhat?: string;
+};
+export async function findOneAndUpdate({
+  res,
+  filter,
+  queryParameters: { operation, options },
+}: FindOneAndUpdateProps) {
+  try {
+    return await UserModelNext.findOneAndUpdate(filter, operation, options);
+  } catch (err) {
+    if (err) res.status(500).send(err);
+    throw new ResHandledError(getErrorMessage(err));
+  }
+}
+
+export async function updateOneUser({
+  res,
+  filter,
+  queryParameters: { operation, options },
+  doWhat = "query the database",
+}: FindOneAndUpdateProps) {
+  const result = await UserModelNext.findOneAndUpdate(
+    filter,
+    operation,
+    options
+  );
+  if (!result) {
+    res.status(404).send(`Failed to ${doWhat}.`);
+    throw new ResHandledError(
+      "UserModelNext.updateOne failed to update a user."
+    );
+  }
+}

@@ -9,11 +9,11 @@ import authWare from "../../middleware/authWare";
 import { ResHandledError } from "../../middleware/error";
 import { serverSend } from "../shared/crudValidators";
 import { SectionPackDb } from "../shared/UserDbNext/SectionPackDb";
+import { findUserByIdAndUpdate } from "./shared/findAndUpdate";
 import {
   findSectionPack,
   FindSectionPackProps,
 } from "./shared/findSectionPack";
-import { findUserByIdAndUpdate } from "./shared/findUserByIdAndUpdate";
 import { LoggedIn } from "./shared/validateLoggedInUser";
 import { validateSectionPackReq } from "./shared/validateSectionPackReq";
 

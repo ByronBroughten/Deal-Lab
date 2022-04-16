@@ -1,3 +1,4 @@
+import { Server } from "http";
 import request from "supertest";
 import Analyzer from "../../client/src/App/sharedWithServer/Analyzer";
 import {
@@ -20,7 +21,7 @@ function makeTestRegisterReq(): NextReq<"nextRegister"> {
 
 describe(apiEndpoints.nextRegister.pathRoute, () => {
   // prep
-  let server: ReturnType<typeof runApp> | any;
+  let server: Server;
   let reqObj: NextReq<"nextRegister">;
 
   beforeEach(async () => {

@@ -1,14 +1,14 @@
 require("express-async-errors");
-import express from "express";
-import morgan from "morgan";
-import Debug from "debug";
-import routes from "./startup/routes";
-import startDb from "./startup/db";
-import checkConfig from "./startup/config";
-import config from "config";
-import error from "./middleware/error";
-import helmet from "helmet";
 import compression from "compression";
+import config from "config";
+import Debug from "debug";
+import express from "express";
+import helmet from "helmet";
+import morgan from "morgan";
+import error from "./middleware/error";
+import checkConfig from "./startup/config";
+import startDb from "./startup/db";
+import routes from "./startup/routes";
 import setupLogger, { logger } from "./startup/setupLogger";
 
 export function runApp() {

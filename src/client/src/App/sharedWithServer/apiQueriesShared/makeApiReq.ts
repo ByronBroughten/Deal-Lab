@@ -1,21 +1,18 @@
-import { FeInfo } from "../../sharedWithServer/Analyzer/SectionMetas/Info";
-import { FeToDbStoreNameWithSameChildren } from "../../sharedWithServer/Analyzer/SectionMetas/relNameArrs/ChildTypes";
-import { FeNameInfo } from "../../sharedWithServer/Analyzer/SectionMetas/relSections/rel/relVarbInfoTypes";
-import { SectionName } from "../../sharedWithServer/Analyzer/SectionMetas/SectionName";
-import { SectionPack } from "../../sharedWithServer/Analyzer/SectionPack";
-import { SectionPackRaw } from "../../sharedWithServer/Analyzer/SectionPackRaw";
-import {
-  NextReq,
-  StoredSectionPackInfo,
-} from "../../sharedWithServer/apiQueriesShared";
-import Analyzer from "./../../sharedWithServer/Analyzer";
+import Analyzer from "../Analyzer";
+import { FeInfo } from "../Analyzer/SectionMetas/Info";
+import { FeToDbStoreNameWithSameChildren } from "../Analyzer/SectionMetas/relNameArrs/ChildTypes";
+import { FeNameInfo } from "../Analyzer/SectionMetas/relSections/rel/relVarbInfoTypes";
+import { SectionName } from "../Analyzer/SectionMetas/SectionName";
+import { SectionPack } from "../Analyzer/SectionPack";
+import { SectionPackRaw } from "../Analyzer/SectionPackRaw";
+import { NextReq, StoredSectionPackInfo } from "../apiQueriesShared";
 
 function addIndexStoreSectionReq(
   analyzer: Analyzer,
   feInfo: FeInfo<"hasIndexStore">
 ): NextReq<"addSection"> {
   const { indexStoreName } = analyzer.sectionMeta(feInfo.sectionName).core;
-  return apiReqs.addSection(
+  return makeApiReq.addSection(
     analyzer,
     feInfo,
     indexStoreName as FeToDbStoreNameWithSameChildren<typeof feInfo.sectionName>
@@ -24,8 +21,8 @@ function addIndexStoreSectionReq(
 
 const updateIndexStoreSection = addIndexStoreSectionReq;
 
-export type AnalyzerReq = typeof apiReqs;
-export const apiReqs = {
+export type AnalyzerReq = typeof makeApiReq;
+export const makeApiReq = {
   nextRegister(analyzer: Analyzer): NextReq<"nextRegister"> {
     return {
       body: {

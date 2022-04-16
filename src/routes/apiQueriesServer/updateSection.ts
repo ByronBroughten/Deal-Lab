@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { SectionName } from "../../client/src/App/sharedWithServer/Analyzer/SectionMetas/SectionName";
 import { ServerSectionPack } from "../../client/src/App/sharedWithServer/Analyzer/SectionPackRaw";
 import {
   NextReq,
@@ -7,7 +8,7 @@ import {
 import authWare from "../../middleware/authWare";
 import { serverSend } from "../shared/crudValidators";
 import { SectionPackDb } from "../shared/UserDbNext/SectionPackDb";
-import { findUserByIdAndUpdate } from "./shared/findUserByIdAndUpdate";
+import { updateOneUser } from "./shared/findAndUpdate";
 import { LoggedIn } from "./shared/validateLoggedInUser";
 import { validateSectionPackReq } from "./shared/validateSectionPackReq";
 
@@ -19,9 +20,9 @@ async function updateSectionSeverSide(req: Request, res: Response) {
     user: { _id: userId },
   } = validateUpdateSectionReq(req, res).body;
 
-  await findUserByIdAndUpdate({
+  await updateOneUser({
     res,
-    userId,
+    filter: makeUpdateSectionFilter({ userId, ...payload }),
     queryParameters: makeSetParameters(payload),
   });
 
@@ -34,6 +35,19 @@ function validateUpdateSectionReq(
   res: Response
 ): LoggedIn<NextReq<"updateSection">> {
   return validateSectionPackReq(req, res);
+}
+
+type MakeUpdateSectionFilterProps = {
+  userId: string;
+  sectionName: SectionName<"dbStore">;
+  dbId: string;
+};
+function makeUpdateSectionFilter({
+  userId,
+  sectionName,
+  dbId,
+}: MakeUpdateSectionFilterProps) {
+  return { _id: userId, [`${sectionName}.dbId`]: dbId };
 }
 
 function makeSetParameters(serverSectionPack: ServerSectionPack) {
