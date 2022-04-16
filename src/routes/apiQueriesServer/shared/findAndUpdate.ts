@@ -1,7 +1,6 @@
 import { Response } from "express";
 import { FilterQuery, QueryOptions } from "mongoose";
-import { getErrorMessage } from "../../../client/src/App/utils/error";
-import { ResHandledError } from "../../../middleware/error";
+import { resHandledError, ResHandledError } from "../../../middleware/error";
 import { UserDbRaw } from "../../shared/UserDbNext";
 import { UserModelNext } from "../../shared/UserModelNext";
 
@@ -11,18 +10,14 @@ type FindUserByIdAndUpdateProps = {
   res: Response;
   userId: string;
   queryParameters: QueryParameters;
+  doWhat?: string;
 };
 export async function findUserByIdAndUpdate({
   res,
   userId,
-  queryParameters: { operation, options },
+  ...rest
 }: FindUserByIdAndUpdateProps) {
-  try {
-    return await UserModelNext.findByIdAndUpdate(userId, operation, options);
-  } catch (err) {
-    if (err) res.status(500).send(err);
-    throw new ResHandledError(getErrorMessage(err));
-  }
+  return await findOneAndUpdate({ res, filter: { _id: userId }, ...rest });
 }
 
 type FindOneAndUpdateProps = {
@@ -35,12 +30,15 @@ export async function findOneAndUpdate({
   res,
   filter,
   queryParameters: { operation, options },
+  doWhat = "query the database",
 }: FindOneAndUpdateProps) {
-  try {
-    return await UserModelNext.findOneAndUpdate(filter, operation, options);
-  } catch (err) {
-    if (err) res.status(500).send(err);
-    throw new ResHandledError(getErrorMessage(err));
+  const result = await UserModelNext.findOneAndUpdate(
+    filter,
+    operation,
+    options
+  );
+  if (!result) {
+    throw resHandledError(res, 404, `Failed to ${doWhat}.`);
   }
 }
 

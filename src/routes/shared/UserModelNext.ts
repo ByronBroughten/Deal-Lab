@@ -14,6 +14,10 @@ export const UserModelNext = mongoose.model<UserDbRaw>(
   makeMongooseUserSchema()
 );
 
+export function createUserModel(modelName: string) {
+  return mongoose.model<UserDbRaw>(modelName, makeMongooseUserSchema());
+}
+
 function makeMongooseUserSchema(): Schema<Record<SectionName<"dbStore">, any>> {
   const partial: Partial<Record<SectionName<"dbStore">, any>> = {};
   for (const sectionName of SectionNam.arrs.fe.dbStore) {

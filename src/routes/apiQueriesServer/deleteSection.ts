@@ -37,7 +37,7 @@ function makePullParameters({ dbStoreName, dbId }: DbSectionPackInfo) {
   return {
     operation: { $pull: { [dbStoreName]: { dbId } } },
     options: {
-      new: true,
+      // new: true,
       lean: true,
       useFindAndModify: false,
     },

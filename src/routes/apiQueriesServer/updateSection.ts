@@ -8,7 +8,7 @@ import {
 import authWare from "../../middleware/authWare";
 import { serverSend } from "../shared/crudValidators";
 import { SectionPackDb } from "../shared/UserDbNext/SectionPackDb";
-import { updateOneUser } from "./shared/findAndUpdate";
+import { findOneAndUpdate } from "./shared/findAndUpdate";
 import { LoggedIn } from "./shared/validateLoggedInUser";
 import { validateSectionPackReq } from "./shared/validateSectionPackReq";
 
@@ -20,7 +20,7 @@ async function updateSectionSeverSide(req: Request, res: Response) {
     user: { _id: userId },
   } = validateUpdateSectionReq(req, res).body;
 
-  await updateOneUser({
+  await findOneAndUpdate({
     res,
     filter: makeUpdateSectionFilter({ userId, ...payload }),
     queryParameters: makeSetParameters(payload),
@@ -59,7 +59,7 @@ function makeSetParameters(serverSectionPack: ServerSectionPack) {
       new: true,
       lean: true,
       useFindAndModify: false,
-      runValidators: true,
+      // runValidators: true,
       strict: false,
     },
   };

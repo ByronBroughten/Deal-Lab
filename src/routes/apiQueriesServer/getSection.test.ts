@@ -6,11 +6,9 @@ import {
   apiEndpoints,
   NextReq,
 } from "../../client/src/App/sharedWithServer/apiQueriesShared";
-import { RegisterReqPayloadNext } from "../../client/src/App/sharedWithServer/apiQueriesShared/register";
 import { runApp } from "../../runApp";
 import { UserModel } from "../shared/userServerSide";
-import { userServerSideNext } from "../shared/userServerSideNext";
-import { serverSideLogin } from "../userRoutes/shared/doLogin";
+import { initTestUser } from "./test/initTestUser";
 
 type TestReqs = {
   addSection: NextReq<"addSection">;
@@ -34,26 +32,7 @@ function makeReqs(): TestReqs {
   };
 }
 
-function makeRegisterPayload(): RegisterReqPayloadNext {
-  let next = Analyzer.initAnalyzer();
-  next = next.updateSectionValuesAndSolve("register", {
-    email: "testosis@gmail.com",
-    password: "testPassword",
-    userName: "Testosis",
-  });
-  return next.req.nextRegister().body.payload;
-}
-
-async function initUser(): Promise<string> {
-  const userDoc = await userServerSideNext.entireMakeUserProcess(
-    makeRegisterPayload()
-  );
-  await userDoc.save();
-  return serverSideLogin.makeUserAuthToken(userDoc._id.toHexString());
-}
-
 describe(apiEndpoints.getSection.pathRoute, () => {
-  const sectionName = "propertyDefault";
   let reqs: TestReqs;
   let server: Server;
   let token: string;
@@ -61,7 +40,7 @@ describe(apiEndpoints.getSection.pathRoute, () => {
   beforeEach(async () => {
     reqs = makeReqs();
     server = runApp();
-    token = await initUser();
+    token = await initTestUser();
     // token = loginUtils.dummyUserAuthToken();
   });
 
@@ -86,6 +65,10 @@ describe(apiEndpoints.getSection.pathRoute, () => {
     await UserModel.deleteMany();
     server.close();
   });
+  it("should return 200 if the request is valid", async () => {
+    await testStatus(200);
+    // See if JSON.parse(res.text) has a dbId that matches.
+  });
   it("should return 500 if the dbId isn't a valid dbId", async () => {
     reqs.getSection.body.dbId = Analyzer.makeId().substring(1);
     await testStatus(500);
@@ -93,9 +76,5 @@ describe(apiEndpoints.getSection.pathRoute, () => {
   it("should return 404 if no section in the queried sectionArr has the dbId", async () => {
     reqs.getSection.body.dbId = Analyzer.makeId();
     await testStatus(404);
-  });
-  it("should return 200 if the request is valid", async () => {
-    const res = await testStatus(200);
-    // See if JSON.parse(res.text) has a dbId that matches.
   });
 });
