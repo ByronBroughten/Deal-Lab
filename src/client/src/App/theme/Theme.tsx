@@ -1,8 +1,8 @@
+import { darken, lighten } from "polished";
 import React from "react";
 import { ThemeProvider } from "styled-components";
-import { darken, lighten } from "polished";
-import { ObjectKeys } from "../sharedWithServer/utils/Obj";
 import { FeInfo } from "../sharedWithServer/Analyzer/SectionMetas/Info";
+import { ObjectKeys } from "../sharedWithServer/utils/Obj";
 
 const color = {
   // blue: "#0d6efd",
@@ -29,13 +29,31 @@ const color = {
   black: "#000",
 };
 
-const muiModDefault = {
-  primary: "#2d40ad",
-  secondary: "#d4001c",
-  success: "#4caf50",
-  warning: "#e47900",
-  danger: "#f44336",
+const testThemes = {
+  current: {
+    primary: "#2d40ad",
+    secondary: "#dd001d",
+    success: "#4caf50",
+    warning: "#e47900",
+    danger: "#f44336",
+  },
+  lighter: {
+    primary: "#3f51b5",
+    secondary: "#b11414",
+    success: "#4caf50",
+    warning: "#ff9800",
+    danger: "#f44336",
+  },
+  muiDefault: {
+    primary: "#3f51b5",
+    secondary: "#f50057",
+    success: "#4caf50",
+    warning: "#ff9800",
+    danger: "#f44336",
+  },
 };
+
+const muiModDefault = testThemes.current;
 
 // const muiDefault = {
 //   primary: "#3f51b5",

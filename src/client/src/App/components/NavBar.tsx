@@ -1,18 +1,18 @@
-import React from "react";
-import styled from "styled-components";
 import { AppBar, Toolbar } from "@material-ui/core";
-import theme from "../theme/Theme";
-import { LoginForm } from "./NavBar/LoginForm";
-import NavDropDown from "./NavBar/NavDropDown";
-import { RegisterForm } from "./NavBar/RegisterForm";
-import NavBtn from "./NavBar/NavBtn";
-import NavUserMenu from "./NavBar/NavUserMenu";
-import { auth } from "../modules/services/authService";
-import { Link } from "react-router-dom";
-import { StyledDropdownForm } from "./general/DropdownForm";
 import { rem } from "polished";
-import { AiOutlineYoutube } from "react-icons/ai";
+import React from "react";
 import { BsArrowUpCircle, BsFillHouseDoorFill } from "react-icons/bs";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
+import { auth } from "../modules/services/authService";
+import theme from "../theme/Theme";
+import { StyledDropdownForm } from "./general/DropdownForm";
+import { LoginForm } from "./NavBar/LoginForm";
+import NavBtn from "./NavBar/NavBtn";
+import NavDropDown from "./NavBar/NavDropDown";
+import NavUserMenu from "./NavBar/NavUserMenu";
+import { ProUpgradeForm } from "./NavBar/ProUpgradeForm";
+import { RegisterForm } from "./NavBar/RegisterForm";
 
 export default function NavBar({ className }: { className?: string }) {
   return (
@@ -56,7 +56,7 @@ export default function NavBar({ className }: { className?: string }) {
               }
             >
               <StyledDropdownForm className="DropdownForm-comingSoon">
-                Coming Soon!
+                <ProUpgradeForm />
               </StyledDropdownForm>
             </NavDropDown>
           )}
@@ -107,6 +107,12 @@ const Styled = styled(AppBar)`
   .NavBar-demoBtnIcon {
     margin-left: ${rem("2px")};
     font-size: ${rem("25px")};
+  }
+
+  .NavBar-getProBtn {
+    .NavDropDown-navBtn {
+      background: ${theme.mgmt.main};
+    }
   }
 
   .NavBar-getProBtnIcon {
