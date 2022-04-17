@@ -4,11 +4,14 @@ import {
   areGuestAccessSectionsNext,
   isRegisterFormData,
 } from "../../client/src/App/sharedWithServer/apiQueriesShared/register";
+import { makeMongooseObjectId } from "../../client/src/App/sharedWithServer/utils/mongoose";
 import { Obj } from "../../client/src/App/sharedWithServer/utils/Obj";
+import { resHandledError } from "../../middleware/error";
 import { userServerSideNext } from "../shared/userServerSideNext";
 import { loginUtils } from "./nextLogin/loginUtils";
 
 export const nextRegisterWare = [registerServerSide] as const;
+export const testRegisterId = makeMongooseObjectId();
 
 async function registerServerSide(req: Request, res: Response) {
   const reqObj = validateReq(req, res);
@@ -16,24 +19,28 @@ async function registerServerSide(req: Request, res: Response) {
   const { payload } = reqObj.body;
 
   const newUserData = await userServerSideNext.makeUserData(payload);
-  const foundUser = await loginUtils.tryFindOneUserByEmail(
-    newUserData.user.emailLower
-  );
-  if (foundUser)
-    return res.status(400).send("An account with that email already exists.");
+  await checkThatUserDoesntExist(newUserData.user.emailLower, res);
 
+  const _id =
+    process.env.NODE_ENV === "test" ? testRegisterId : makeMongooseObjectId();
   const { dbUser, mongoUser } = userServerSideNext.makeDbAndMongoUser({
     newUserData,
     guestAccessSections: payload.guestAccessSections,
+    _id,
   });
 
-  try {
-    await mongoUser.save();
-  } catch (err) {
-    return res.status(500).send("Unknown error; registration failed.");
-  }
+  await mongoUser.save();
+  return loginUtils.doLogin(res, { ...dbUser, _id });
+}
 
-  return loginUtils.doLogin(res, { ...dbUser, _id: mongoUser._id });
+async function checkThatUserDoesntExist(lowercaseEmail: string, res: Response) {
+  const foundUser = await loginUtils.tryFindOneUserByEmail(lowercaseEmail);
+  if (foundUser)
+    throw resHandledError(
+      res,
+      400,
+      "An account with that email already exists."
+    );
 }
 
 function validateReq(

@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import { dbLimits } from "./dbLimts";
 
-export function makeObjectId() {
+export function makeMongooseObjectId() {
   return new mongoose.Types.ObjectId();
 }
 

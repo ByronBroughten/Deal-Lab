@@ -12,7 +12,7 @@ import { userServerSideNext } from "../shared/userServerSideNext";
 import { loginUtils } from "./nextLogin/loginUtils";
 
 const testLoginFormData = {
-  email: "testosis@gmail.com",
+  email: `${apiEndpoints.nextLogin.pathRoute}Test@gmail.com`,
   password: "testpassword",
 } as const;
 
@@ -36,6 +36,7 @@ function makeTestRegisterReqPayload(): RegisterReqPayloadNext {
 describe(apiEndpoints.nextLogin.pathRoute, () => {
   let server: ReturnType<typeof runApp>;
   let reqObj: NextReq<"nextLogin">;
+  let userId: string;
 
   beforeEach(async () => {
     server = runApp();
@@ -44,7 +45,12 @@ describe(apiEndpoints.nextLogin.pathRoute, () => {
     const userDoc = await userServerSideNext.entireMakeUserProcess(
       makeTestRegisterReqPayload()
     );
-    await userDoc.save();
+    userId = userDoc._id.toHexString();
+  });
+
+  afterEach(async () => {
+    await UserModelNext.deleteOne({ _id: userId });
+    server.close();
   });
 
   const exec = async () =>
@@ -57,10 +63,6 @@ describe(apiEndpoints.nextLogin.pathRoute, () => {
     expect(res.status).toBe(statusNumber);
   }
 
-  afterEach(async () => {
-    await UserModelNext.deleteMany();
-    server.close();
-  });
   it("should return 400 if payload fails validation", async () => {
     reqObj.body.payload.email = null as any;
     await testStatus(400);

@@ -7,6 +7,7 @@ import {
   GuestAccessSectionsNext,
   RegisterReqPayloadNext,
 } from "../../client/src/App/sharedWithServer/apiQueriesShared/register";
+import { makeMongooseObjectId } from "./../../client/src/App/sharedWithServer/utils/mongoose";
 import { initDbSectionPack, UserDbRaw } from "./UserDbNext";
 import { modelPath, UserModelNext } from "./UserModelNext";
 
@@ -41,7 +42,7 @@ export const userServerSideNext = {
       },
     };
   },
-  makeDbUser({ newUserData, guestAccessSections }: MakeUserProps): UserDbRaw {
+  makeDbUser({ newUserData, guestAccessSections }: MakeDbUserProps): UserDbRaw {
     const partial: Partial<UserDbRaw> = {
       ...guestAccessSections,
       user: [initDbSectionPack("user", newUserData.user)],
@@ -56,16 +57,16 @@ export const userServerSideNext = {
 
     return partial as UserDbRaw;
   },
-  makeMongoUser(makeUserProps: MakeUserProps) {
+  makeMongoUser({ _id, ...makeUserProps }: MakeMongoUserProps) {
     return new UserModelNext({
-      _id: new mongoose.Types.ObjectId(),
+      _id: _id ?? makeMongooseObjectId(),
       ...this.makeDbUser(makeUserProps),
     });
   },
-  makeDbAndMongoUser(makeUserProps: MakeUserProps) {
+  makeDbAndMongoUser({ _id, ...makeUserProps }: MakeMongoUserProps) {
     const dbUser = this.makeDbUser(makeUserProps);
     const mongoUser = new UserModelNext({
-      _id: new mongoose.Types.ObjectId(),
+      _id: _id ?? makeMongooseObjectId(),
       ...dbUser,
     });
     return {
@@ -73,18 +74,30 @@ export const userServerSideNext = {
       mongoUser,
     };
   },
-  async entireMakeUserProcess(payload: RegisterReqPayloadNext) {
+  async entireMakeUserProcess({
+    _id,
+    ...payload
+  }: RegisterReqPayloadNext & { _id?: mongoose.Types.ObjectId }): Promise<
+    UserDbRaw & mongoose.Document<any, any, UserDbRaw>
+  > {
     const newUserData = await this.makeUserData(payload);
-    return this.makeMongoUser({
+    const userDoc = this.makeMongoUser({
       newUserData,
       guestAccessSections: payload.guestAccessSections,
+      _id,
     });
+    await userDoc.save();
+    return userDoc;
   },
 };
 
-type MakeUserProps = {
+type MakeDbUserProps = {
   newUserData: NewUserDataNext;
   guestAccessSections: GuestAccessSectionsNext;
+};
+
+type MakeMongoUserProps = MakeDbUserProps & {
+  _id?: mongoose.Types.ObjectId;
 };
 
 type PreppedEmails = {

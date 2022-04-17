@@ -8,7 +8,6 @@ export async function createTestUserModelNext(
   const userDoc = await userServerSideNext.entireMakeUserProcess(
     makeTestRegisterPayload(testSuiteName)
   );
-  await userDoc.save();
   return userDoc._id.toHexString();
 }
 

@@ -1,17 +1,22 @@
 import { Response } from "express";
-import { ResHandledError } from "../../../middleware/error";
+import { resHandledError } from "../../../middleware/error";
 import { UserModelNext } from "../../shared/UserModelNext";
+
+const options = {
+  new: true,
+  lean: true,
+  useFindAndModify: false,
+};
 
 type FindUserByIdProps = { userId: string; res: Response };
 export async function getUserById({ userId, res }: FindUserByIdProps) {
-  const user = await UserModelNext.findById(userId, undefined, {
-    new: true,
-    lean: true,
-    useFindAndModify: false,
-  });
+  const user = await UserModelNext.findById(userId, undefined, options);
   if (user) return user;
-  else {
-    res.status(404).send("You are not logged in.");
-    throw new ResHandledError("Handled by getUserById");
-  }
+  else throw resHandledError(res, 404, "You are not logged in.");
+}
+
+export async function getUserByIdNoRes(userId: string) {
+  const user = await UserModelNext.findById(userId, undefined, options);
+  if (user) return user;
+  else throw new Error("No user found.");
 }
