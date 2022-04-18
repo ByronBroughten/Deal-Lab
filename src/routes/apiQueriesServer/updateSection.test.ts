@@ -4,10 +4,8 @@ import { config } from "../../client/src/App/Constants";
 import Analyzer from "../../client/src/App/sharedWithServer/Analyzer";
 import { NumObj } from "../../client/src/App/sharedWithServer/Analyzer/SectionMetas/relSections/baseSections/baseValues/NumObj";
 import { Id } from "../../client/src/App/sharedWithServer/Analyzer/SectionMetas/relSections/baseSections/id";
-import {
-  apiEndpoints,
-  NextReq,
-} from "../../client/src/App/sharedWithServer/apiQueriesSharedTypes";
+import { apiQueriesShared } from "../../client/src/App/sharedWithServer/apiQueriesShared";
+import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesSharedTypes";
 import { runApp } from "../../runApp";
 import { UserModelNext } from "../shared/UserModelNext";
 import { loginUtils } from "./nextLogin/loginUtils";
@@ -41,8 +39,8 @@ function makeReqs(): TestReqs {
   };
 }
 
-const testedApiRoute = apiEndpoints.addSection.pathRoute;
-describe(testedApiRoute, () => {
+const testedRoute = apiQueriesShared.updateSection.pathRoute;
+describe(testedRoute, () => {
   let reqs: TestReqs;
   let server: Server;
   let userId: string;
@@ -51,7 +49,7 @@ describe(testedApiRoute, () => {
   beforeEach(async () => {
     reqs = makeReqs();
     server = runApp();
-    userId = await createTestUserModelNext(testedApiRoute);
+    userId = await createTestUserModelNext(testedRoute);
     token = loginUtils.makeUserAuthToken(userId);
   });
 
@@ -62,12 +60,12 @@ describe(testedApiRoute, () => {
 
   const exec = async () => {
     await request(server)
-      .post(apiEndpoints.addSection.pathRoute)
+      .post(apiQueriesShared.addSection.pathRoute)
       .set(config.tokenKey.apiUserAuth, token)
       .send(reqs.addSection.body);
 
     return await request(server)
-      .post(apiEndpoints.updateSection.pathRoute)
+      .post(testedRoute)
       .set(config.tokenKey.apiUserAuth, token)
       .send(reqs.updateSection.body);
   };

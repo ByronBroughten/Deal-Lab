@@ -1,18 +1,17 @@
 import request from "supertest";
 import { config } from "../../client/src/App/Constants";
 import Analyzer from "../../client/src/App/sharedWithServer/Analyzer";
+import { apiQueriesShared } from "../../client/src/App/sharedWithServer/apiQueriesShared";
 import { RegisterReqPayloadNext } from "../../client/src/App/sharedWithServer/apiQueriesShared/register";
-import {
-  apiEndpoints,
-  NextReq,
-} from "../../client/src/App/sharedWithServer/apiQueriesSharedTypes";
+import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesSharedTypes";
 import { runApp } from "../../runApp";
 import { UserModelNext } from "../shared/UserModelNext";
 import { userServerSideNext } from "../shared/userServerSideNext";
 import { loginUtils } from "./nextLogin/loginUtils";
 
+const testedRoute = apiQueriesShared.nextLogin.pathRoute;
 const testLoginFormData = {
-  email: `${apiEndpoints.nextLogin.pathRoute}Test@gmail.com`,
+  email: `${testedRoute}Test@gmail.com`,
   password: "testpassword",
 } as const;
 
@@ -33,7 +32,7 @@ function makeTestRegisterReqPayload(): RegisterReqPayloadNext {
   return next.req.nextRegister().body.payload;
 }
 
-describe(apiEndpoints.nextLogin.pathRoute, () => {
+describe(testedRoute, () => {
   let server: ReturnType<typeof runApp>;
   let reqObj: NextReq<"nextLogin">;
   let userId: string;
@@ -41,7 +40,6 @@ describe(apiEndpoints.nextLogin.pathRoute, () => {
   beforeEach(async () => {
     server = runApp();
     reqObj = makeTestLoginReq();
-
     const userDoc = await userServerSideNext.entireMakeUserProcess(
       makeTestRegisterReqPayload()
     );
@@ -54,9 +52,7 @@ describe(apiEndpoints.nextLogin.pathRoute, () => {
   });
 
   const exec = async () =>
-    await request(server)
-      .post(apiEndpoints.nextLogin.pathRoute)
-      .send(reqObj.body);
+    await request(server).post(testedRoute).send(reqObj.body);
 
   async function testStatus(statusNumber: number) {
     const res = await exec();

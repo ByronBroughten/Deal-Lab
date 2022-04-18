@@ -115,3 +115,10 @@ type IsRawProps<
   sectionType?: ST;
   contextName?: CN;
 };
+
+export type StoredSectionPackInfo<
+  SN extends SectionName<"dbStore"> = SectionName<"dbStore">
+> = {
+  dbStoreName: SN;
+  dbId: string;
+};

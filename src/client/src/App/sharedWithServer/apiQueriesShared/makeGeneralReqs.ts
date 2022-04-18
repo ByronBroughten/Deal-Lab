@@ -3,8 +3,8 @@ import { FeSectionPack } from "../Analyzer/FeSectionPack";
 import { FeToDbStoreNameWithSameChildren } from "../Analyzer/SectionMetas/relNameArrs/ChildTypes";
 import { FeNameInfo } from "../Analyzer/SectionMetas/relSections/rel/relVarbInfoTypes";
 import { DbStoreName, SectionName } from "../Analyzer/SectionMetas/SectionName";
+import { StoredSectionPackInfo } from "../Analyzer/SectionPack";
 import { SectionPackRaw, ServerSectionPack } from "../Analyzer/SectionPackRaw";
-import { StoredSectionPackInfo } from "../apiQueriesSharedTypes";
 
 export const makeReq = <B extends QueryObj>(body: B): MakeReq<B> => ({ body });
 type MakeReq<B extends QueryObj> = {

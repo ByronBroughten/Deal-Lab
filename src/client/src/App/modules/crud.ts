@@ -2,6 +2,7 @@ import { AxiosResponse } from "axios";
 import { config } from "../Constants";
 import { DbEntry } from "../sharedWithServer/Analyzer/DbEntry";
 import { SectionName } from "../sharedWithServer/Analyzer/SectionMetas/SectionName";
+import { apiQueriesShared } from "../sharedWithServer/apiQueriesShared";
 import {
   isLoginHeaders,
   isLoginUser,
@@ -121,7 +122,7 @@ export const crud = {
       ): Promise<NextRes<"nextRegister"> | undefined> {
         const res = await https.post(
           "registering",
-          config.apiEndpoints.nextRegister.path,
+          apiQueriesShared.nextRegister.pathFull,
           reqObj.body
         );
         return this.validateRes(res);

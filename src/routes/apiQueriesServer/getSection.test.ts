@@ -2,10 +2,8 @@ import { Server } from "http";
 import request from "supertest";
 import { config } from "../../client/src/App/Constants";
 import Analyzer from "../../client/src/App/sharedWithServer/Analyzer";
-import {
-  apiEndpoints,
-  NextReq,
-} from "../../client/src/App/sharedWithServer/apiQueriesSharedTypes";
+import { apiQueriesShared } from "../../client/src/App/sharedWithServer/apiQueriesShared";
+import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesSharedTypes";
 import { runApp } from "../../runApp";
 import { UserModel } from "../shared/userServerSide";
 import { loginUtils } from "./nextLogin/loginUtils";
@@ -33,7 +31,7 @@ function makeReqs(): TestReqs {
   };
 }
 
-const testedApiRoute = apiEndpoints.getSection.pathRoute;
+const testedApiRoute = apiQueriesShared.getSection.pathRoute;
 describe(testedApiRoute, () => {
   let reqs: TestReqs;
   let server: Server;
@@ -54,7 +52,7 @@ describe(testedApiRoute, () => {
 
   const exec = async () => {
     await request(server)
-      .post(apiEndpoints.addSection.pathRoute)
+      .post(apiQueriesShared.addSection.pathRoute)
       .set(config.tokenKey.apiUserAuth, token)
       .send(reqs.addSection.body);
 

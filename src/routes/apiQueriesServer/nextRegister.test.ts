@@ -1,27 +1,25 @@
 import { Server } from "http";
 import request from "supertest";
 import Analyzer from "../../client/src/App/sharedWithServer/Analyzer";
-import {
-  apiEndpoints,
-  NextReq,
-} from "../../client/src/App/sharedWithServer/apiQueriesSharedTypes";
+import { apiQueriesShared } from "../../client/src/App/sharedWithServer/apiQueriesShared";
+import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesSharedTypes";
 import { runApp } from "../../runApp";
 import { UserModelNext } from "../shared/UserModelNext";
 import { userServerSideNext } from "../shared/userServerSideNext";
 import { testRegisterId } from "./nextRegister";
 
-const apiTestRoute = apiEndpoints.nextRegister.pathRoute;
+const testedRoute = apiQueriesShared.nextRegister.pathRoute;
 function makeTestRegisterReq(): NextReq<"nextRegister"> {
   let next = Analyzer.initAnalyzer();
   next = next.updateSectionValuesAndSolve("register", {
-    email: `${apiTestRoute}Test@gmail.com`,
+    email: `${testedRoute}Test@gmail.com`,
     password: "testpassword",
     userName: "Testosis",
   });
   return next.req.nextRegister();
 }
 
-describe(apiTestRoute, () => {
+describe(testedRoute, () => {
   // prep
   let server: Server;
   let reqObj: NextReq<"nextRegister">;
@@ -37,9 +35,7 @@ describe(apiTestRoute, () => {
   });
 
   const exec = async () =>
-    await request(server)
-      .post(apiEndpoints.nextRegister.pathRoute)
-      .send(reqObj.body);
+    await request(server).post(testedRoute).send(reqObj.body);
 
   async function testStatus(statusNumber: number) {
     const res = await exec();

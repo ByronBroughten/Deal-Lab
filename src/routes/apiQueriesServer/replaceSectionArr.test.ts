@@ -2,11 +2,8 @@ import request from "supertest";
 import { config } from "../../client/src/App/Constants";
 import Analyzer from "../../client/src/App/sharedWithServer/Analyzer";
 import { NumObj } from "../../client/src/App/sharedWithServer/Analyzer/SectionMetas/relSections/baseSections/baseValues/NumObj";
-import { makeApiReq } from "../../client/src/App/sharedWithServer/apiQueriesShared";
-import {
-  apiEndpoints,
-  NextReq,
-} from "../../client/src/App/sharedWithServer/apiQueriesSharedTypes";
+import { apiQueriesShared } from "../../client/src/App/sharedWithServer/apiQueriesShared";
+import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesSharedTypes";
 import { runApp } from "../../runApp";
 import { UserModelNext } from "../shared/UserModelNext";
 import { loginUtils } from "./nextLogin/loginUtils";
@@ -26,14 +23,14 @@ function makeReq(): NextReq<"replaceSectionArr"> {
   next = next.addSectionAndSolve(sectionName, "financing", {
     values: loanValues,
   });
-  return makeApiReq.replaceSectionArr({
+  return apiQueriesShared.replaceSectionArr.makeReq({
     analyzer: next,
     sectionName: sectionName,
     dbStoreName: sectionName,
   });
 }
 
-const testedApiRoute = apiEndpoints.replaceSectionArr.pathRoute;
+const testedApiRoute = apiQueriesShared.replaceSectionArr.pathRoute;
 describe(testedApiRoute, () => {
   let req: NextReq<"replaceSectionArr">;
   let server: any;

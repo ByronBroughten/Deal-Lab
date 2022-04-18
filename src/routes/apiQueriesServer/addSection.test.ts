@@ -2,10 +2,8 @@ import { Server } from "http";
 import request from "supertest";
 import { config } from "../../client/src/App/Constants";
 import Analyzer from "../../client/src/App/sharedWithServer/Analyzer";
-import {
-  apiEndpoints,
-  NextReq,
-} from "../../client/src/App/sharedWithServer/apiQueriesSharedTypes";
+import { apiQueriesShared } from "../../client/src/App/sharedWithServer/apiQueriesShared";
+import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesSharedTypes";
 import Arr from "../../client/src/App/sharedWithServer/utils/Arr";
 import { runApp } from "../../runApp";
 import { UserModelNext } from "../shared/UserModelNext";
@@ -20,7 +18,7 @@ function makeAddSectionReq(): NextReq<"addSection"> {
   return analyzer.req.addIndexStoreSection(feInfo);
 }
 
-const apiRoute = apiEndpoints.addSection.pathRoute;
+const apiRoute = apiQueriesShared.addSection.pathRoute;
 describe(apiRoute, () => {
   let req: NextReq<"addSection">;
   let server: Server;

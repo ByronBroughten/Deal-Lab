@@ -1,8 +1,4 @@
-import {
-  configUrls,
-  makeConfigApiEndpoints,
-  makeCrudConfig,
-} from "./Constants/configUrls";
+import { configUrls, makeCrudConfig } from "./Constants/configUrls";
 
 const dev = {
   name: "Analyzer Client — Development",
@@ -23,7 +19,6 @@ export const config = {
   apiEndpointBase: constants.endpoint,
   url: configUrls(constants.endpoint),
   crud: makeCrudConfig(constants.endpoint),
-  apiEndpoints: makeConfigApiEndpoints(constants.endpoint),
   costInCents: {
     upgradeUserToPro: 1000,
   },

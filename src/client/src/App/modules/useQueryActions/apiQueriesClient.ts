@@ -1,11 +1,11 @@
 import { AxiosResponse } from "axios";
+import { apiQueriesShared } from "../../sharedWithServer/apiQueriesShared";
 import {
   isLoginHeaders,
   isLoginUserNext,
 } from "../../sharedWithServer/apiQueriesShared/login";
 import { makeRes } from "../../sharedWithServer/apiQueriesShared/makeGeneralReqs";
 import {
-  apiEndpoints,
   ApiQueryName,
   NextReq,
   NextRes,
@@ -131,7 +131,7 @@ function makeApiQuery<QN extends ApiQueryName>({
     return await tryApiQuery(async () => {
       const res = await https.post(
         doingWhat,
-        apiEndpoints[queryName].pathFull,
+        apiQueriesShared[queryName].pathFull,
         reqObj.body
       );
       if (!res) throw makeResValidationQueryError();

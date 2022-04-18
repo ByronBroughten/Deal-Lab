@@ -1,8 +1,6 @@
 import express from "express";
-import {
-  apiEndpoints,
-  ApiQueryName,
-} from "../client/src/App/sharedWithServer/apiQueriesSharedTypes";
+import { apiQueriesShared } from "../client/src/App/sharedWithServer/apiQueriesShared";
+import { ApiQueryName } from "../client/src/App/sharedWithServer/apiQueriesSharedTypes";
 import { Obj } from "../client/src/App/sharedWithServer/utils/Obj";
 import { addSectionWare } from "./apiQueriesServer/addSection";
 import { deleteSectionWare } from "./apiQueriesServer/deleteSection";
@@ -27,7 +25,7 @@ const endpointWare: Record<ApiQueryName, any> = {
 const apiQueriesServer = express.Router();
 
 for (const [queryName, ware] of Obj.entries(endpointWare)) {
-  apiQueriesServer.post(apiEndpoints[queryName].pathBit, ...ware);
+  apiQueriesServer.post(apiQueriesShared[queryName].pathBit, ...ware);
 }
 
 export default apiQueriesServer;
