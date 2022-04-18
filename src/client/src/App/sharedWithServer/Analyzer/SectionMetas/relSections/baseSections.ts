@@ -1,7 +1,7 @@
 import { omit } from "lodash";
-import { switchEndings } from "./baseSections/switchNames";
 import { base } from "./baseSections/base";
 import { GeneralBaseSection } from "./baseSections/baseSection";
+import { switchEndings } from "./baseSections/switchNames";
 // For what I'm trying to do, I must split base
 // sections, then I must split relSections
 // then I must split secitonMetas.
@@ -133,14 +133,6 @@ export const baseSections = {
       { title: "string" },
       base.options.userList
     ),
-
-    user: base.section.schema(
-      base.varbs.string(["email", "userName", "emailLower"] as const),
-      {
-        ...base.options.alwaysOneFromStart,
-        loadOnLogin: true,
-      }
-    ),
     login: base.section.schema(
       base.varbs.string(["email", "password"] as const),
       base.options.alwaysOneFromStart
@@ -233,9 +225,48 @@ export const baseSections = {
       },
       { ...base.options.alwaysOneFromStart, hasGlobalVarbs: true }
     ),
+
+    // alright, see here.
+    // user and userProtected
+    // What are their purposes?
+
+    // I don't intend these sections to be editable
+    // parts of the analyzer.
+    // userName and email can be edited.
+    // but there is a fairly special process for that.
+    // emailLower cannot be directly edited.
+    // when email is edited, emailLower MUST be edited.
+
+    // I do want to expose some user stuff on the client side
+    // I want to be able to display user information
+
+    // That's what this is about—being able to display information.
+    // variable information
+    // user is good for that
+    // I want to be able to display the user's access level.
+    // I don't want the user to be able to change their access level.
+    // But right now they can, with the addSectionArr api
+
+    // I want the database to have sections that can't be accessed
+    // by the typical section methods
+    // user is one of those sections
+
+    // I want dbUser to have different
+    // variables than feUser
+    // How about this:
+    // One user section
+    // the db context
+
     userProtected: base.section.schema({
       _placeholder: "string",
     }),
+    user: base.section.schema(
+      base.varbs.string(["email", "userName", "emailLower"] as const),
+      {
+        ...base.options.alwaysOneFromStart,
+        loadOnLogin: true,
+      }
+    ),
   },
   get db() {
     return {
@@ -244,6 +275,34 @@ export const baseSections = {
     } as const;
   },
 } as const;
+
+// There will be a special method by which to update
+// user information. The typical way won't work.
+
+// do I keep email, or do I always use emailLower?
+// what if I
+
+// protected: true
+const nextUser = {
+  feVarbs: ["email", "userName", "apiAccessStatus"],
+  db: [
+    "email",
+    "userName",
+    "encryptedPassword",
+    "emailAsSubmitted",
+    "apiAccessStatus",
+  ],
+};
+// apiAccessStatus will also be in the webtoken, along with _id
+
+// make dbStoreName and protectedDbStoreName
+// or something like that
+// or dbStoreNameExposed
+// dbStoreNameProtected
+
+// make it so that so long as the db version of a section
+// is a superset of the fe version, it can be converted in
+// the same way
 
 type FeSectionName = keyof BaseSections["fe"];
 export type GeneralBaseSections = {

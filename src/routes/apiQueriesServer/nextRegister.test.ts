@@ -4,7 +4,7 @@ import Analyzer from "../../client/src/App/sharedWithServer/Analyzer";
 import {
   apiEndpoints,
   NextReq,
-} from "../../client/src/App/sharedWithServer/apiQueriesShared";
+} from "../../client/src/App/sharedWithServer/apiQueriesSharedTypes";
 import { runApp } from "../../runApp";
 import { UserModelNext } from "../shared/UserModelNext";
 import { userServerSideNext } from "../shared/userServerSideNext";

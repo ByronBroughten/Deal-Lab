@@ -2,13 +2,13 @@ import { AxiosResponse } from "axios";
 import { Id } from "../../../sharedWithServer/Analyzer/SectionMetas/relSections/baseSections/id";
 import { SectionNam } from "../../../sharedWithServer/Analyzer/SectionMetas/SectionName";
 import { SectionPack } from "../../../sharedWithServer/Analyzer/SectionPack";
-import { QueryError } from "../../../sharedWithServer/apiQueriesShared";
 import {
   DbIdRes,
   DbStoreNameRes,
   makeRes,
   SectionPackRes,
-} from "../../../sharedWithServer/apiQueriesShared/shared";
+} from "../../../sharedWithServer/apiQueriesShared/makeGeneralReqs";
+import { QueryError } from "../../../sharedWithServer/apiQueriesSharedTypes";
 import { Obj } from "../../../sharedWithServer/utils/Obj";
 
 export function validateDbIdRes(res: AxiosResponse<unknown>): DbIdRes {

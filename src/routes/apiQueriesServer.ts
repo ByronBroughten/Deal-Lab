@@ -2,7 +2,7 @@ import express from "express";
 import {
   apiEndpoints,
   ApiQueryName,
-} from "../client/src/App/sharedWithServer/apiQueriesShared";
+} from "../client/src/App/sharedWithServer/apiQueriesSharedTypes";
 import { Obj } from "../client/src/App/sharedWithServer/utils/Obj";
 import { addSectionWare } from "./apiQueriesServer/addSection";
 import { deleteSectionWare } from "./apiQueriesServer/deleteSection";
@@ -11,6 +11,7 @@ import { nextLoginWare } from "./apiQueriesServer/nextLogin";
 import { nextRegisterWare } from "./apiQueriesServer/nextRegister";
 import { replaceSectionArrWare } from "./apiQueriesServer/replaceSectionArr";
 import { updateSectionWare } from "./apiQueriesServer/updateSection";
+import { upgradeUserToProWare } from "./apiQueriesServer/upgradeUserToPro";
 
 const endpointWare: Record<ApiQueryName, any> = {
   nextRegister: nextRegisterWare,
@@ -20,6 +21,7 @@ const endpointWare: Record<ApiQueryName, any> = {
   getSection: getSectionWare,
   deleteSection: deleteSectionWare,
   replaceSectionArr: replaceSectionArrWare,
+  upgradeUserToPro: upgradeUserToProWare,
 } as const;
 
 const apiQueriesServer = express.Router();

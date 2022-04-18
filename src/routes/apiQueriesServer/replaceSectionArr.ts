@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import { DbStoreName } from "../../client/src/App/sharedWithServer/Analyzer/SectionMetas/SectionName";
 import { ServerSectionPack } from "../../client/src/App/sharedWithServer/Analyzer/SectionPackRaw";
-import { NextRes } from "../../client/src/App/sharedWithServer/apiQueriesShared";
-import { makeRes } from "../../client/src/App/sharedWithServer/apiQueriesShared/shared";
+import { makeRes } from "../../client/src/App/sharedWithServer/apiQueriesShared/makeGeneralReqs";
+import { NextRes } from "../../client/src/App/sharedWithServer/apiQueriesSharedTypes";
 import authWare from "../../middleware/authWare";
 import { serverSend } from "../shared/crudValidators";
 import { SectionPackDb } from "../shared/UserDbNext/SectionPackDb";

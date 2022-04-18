@@ -24,6 +24,9 @@ export const config = {
   url: configUrls(constants.endpoint),
   crud: makeCrudConfig(constants.endpoint),
   apiEndpoints: makeConfigApiEndpoints(constants.endpoint),
+  costInCents: {
+    upgradeUserToPro: 1000,
+  },
   apiQueryNames: [
     "nextRegister",
     "nextLogin",
@@ -32,6 +35,7 @@ export const config = {
     "getSection",
     "deleteSection",
     "replaceSectionArr",
+    "upgradeUserToPro",
   ],
   tokenKey: {
     apiUserAuth: "x-auth-token",

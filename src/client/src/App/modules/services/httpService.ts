@@ -10,10 +10,6 @@ axios.interceptors.request.use(function (config) {
       ...config.headers,
       [authTokenKey]: auth.getToken() ?? false,
     };
-    // config.headers.common = {
-    //   ...config.headers.common,
-    //   [authTokenKey]: auth.getToken(),
-    // };
   }
 
   return config;

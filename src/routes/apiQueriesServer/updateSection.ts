@@ -4,7 +4,7 @@ import { ServerSectionPack } from "../../client/src/App/sharedWithServer/Analyze
 import {
   NextReq,
   NextRes,
-} from "../../client/src/App/sharedWithServer/apiQueriesShared";
+} from "../../client/src/App/sharedWithServer/apiQueriesSharedTypes";
 import authWare from "../../middleware/authWare";
 import { serverSend } from "../shared/crudValidators";
 import { SectionPackDb } from "../shared/UserDbNext/SectionPackDb";

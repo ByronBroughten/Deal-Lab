@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { auth } from "../modules/services/authService";
 import theme from "../theme/Theme";
-import { StyledDropdownForm } from "./general/DropdownForm";
 import { LoginForm } from "./NavBar/LoginForm";
 import NavBtn from "./NavBar/NavBtn";
 import NavDropDown from "./NavBar/NavDropDown";
@@ -55,9 +54,9 @@ export default function NavBar({ className }: { className?: string }) {
                 </>
               }
             >
-              <StyledDropdownForm className="DropdownForm-comingSoon">
-                <ProUpgradeForm />
-              </StyledDropdownForm>
+              {/* <StyledDropdownForm className="DropdownForm-comingSoon"> */}
+              <ProUpgradeForm />
+              {/* </StyledDropdownForm> */}
             </NavDropDown>
           )}
           <NavUserMenu />

@@ -1,4 +1,4 @@
-import { AnalyzerReq, analyzerReq } from "./Analyzer/analyzerReq";
+import { analyzerReq, MakeApiReq } from "./Analyzer/analyzerReq";
 import {
   addSectionAndSolve,
   addSectionsAndSolve,
@@ -280,20 +280,20 @@ export default class Analyzer {
     return sectionMetas;
   }
   get req() {
-    type ThisAnalyzerReqParams<T extends keyof AnalyzerReq> = DropFirst<
-      Parameters<AnalyzerReq[T]>
+    type ThisAnalyzerReqParams<T extends keyof MakeApiReq> = DropFirst<
+      Parameters<MakeApiReq[T]>
     >;
     type ThisAnalyzerReq = {
-      [Prop in keyof AnalyzerReq]: (
+      [Prop in keyof MakeApiReq]: (
         ...params: ThisAnalyzerReqParams<Prop>
-      ) => ReturnType<AnalyzerReq[Prop]>;
+      ) => ReturnType<MakeApiReq[Prop]>;
     };
 
     const thisAnalyzerReq = Obj.keys(analyzerReq).reduce((next, reqName) => {
       const fn: (
         analyzer: Analyzer,
         ...params: any
-      ) => ReturnType<AnalyzerReq[typeof reqName]> = analyzerReq[reqName];
+      ) => ReturnType<MakeApiReq[typeof reqName]> = analyzerReq[reqName];
       next[reqName] = (...params: any) => fn.apply({}, [this, ...params]);
       return next;
     }, {} as any) as ThisAnalyzerReq;

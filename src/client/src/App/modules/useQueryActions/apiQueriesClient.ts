@@ -1,15 +1,16 @@
 import { AxiosResponse } from "axios";
 import {
+  isLoginHeaders,
+  isLoginUserNext,
+} from "../../sharedWithServer/apiQueriesShared/login";
+import { makeRes } from "../../sharedWithServer/apiQueriesShared/makeGeneralReqs";
+import {
   apiEndpoints,
   ApiQueryName,
   NextReq,
   NextRes,
   QueryError,
-} from "../../sharedWithServer/apiQueriesShared";
-import {
-  isLoginHeaders,
-  isLoginUserNext,
-} from "../../sharedWithServer/apiQueriesShared/login";
+} from "../../sharedWithServer/apiQueriesSharedTypes";
 import { Obj } from "../../sharedWithServer/utils/Obj";
 import { StrictOmit } from "../../sharedWithServer/utils/types";
 import { HandledError } from "../../utils/error";
@@ -30,9 +31,14 @@ type ApiQuery<QN extends ApiQueryName> = (
 
 export const apiQueries = makeApiQueries();
 function makeApiQueries(): ApiQueries {
+  // it would be nice to put the getReq thing here, right?
+  // I like using the getReq thing on the
   const apiQueryProps: AllApiQueryProps = {
     nextRegister: {
       doingWhat: "registering",
+      // The only other thing I need is
+      // the createReq function
+      // And I already have that
       validateRes(res: AxiosResponse<unknown>): NextRes<"nextRegister"> {
         if (res && isLoginUserNext(res.data) && isLoginHeaders(res.headers)) {
           return {
@@ -81,6 +87,17 @@ function makeApiQueries(): ApiQueries {
       doingWhat: "replacing sections",
       get validateRes() {
         return validateDbStoreNameRes;
+      },
+    },
+    upgradeUserToPro: {
+      doingWhat: "upgrading to pro",
+      validateRes(res: AxiosResponse<unknown>): NextRes<"upgradeUserToPro"> {
+        const { data } = res;
+        if (Obj.isAnyIfIsObj(data)) {
+          const { success } = data;
+          if (success === true) return makeRes({ success });
+        }
+        throw makeResValidationQueryError();
       },
     },
   } as const;

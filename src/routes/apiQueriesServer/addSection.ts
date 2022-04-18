@@ -4,7 +4,7 @@ import { SectionPackRaw } from "../../client/src/App/sharedWithServer/Analyzer/S
 import {
   NextReq,
   NextRes,
-} from "../../client/src/App/sharedWithServer/apiQueriesShared";
+} from "../../client/src/App/sharedWithServer/apiQueriesSharedTypes";
 import authWare from "../../middleware/authWare";
 import { ResHandledError } from "../../middleware/error";
 import { serverSend } from "../shared/crudValidators";

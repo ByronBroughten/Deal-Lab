@@ -1,6 +1,13 @@
 import { Response } from "express";
+import {
+  ApiQueryName,
+  NextReq,
+} from "../../../client/src/App/sharedWithServer/apiQueriesSharedTypes";
 import { ResHandledError } from "../../../middleware/error";
 
+export type UserAuthedReq<QN extends ApiQueryName> = LoggedIn<
+  NextReq<"upgradeUserToPro">
+>;
 export type LoggedIn<T extends any> = T & LoggedInReq;
 export type LoggedInUser = { _id: string };
 type LoggedInReq = {

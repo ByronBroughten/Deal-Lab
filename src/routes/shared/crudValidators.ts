@@ -13,11 +13,24 @@ import {
   isRegisterFormData,
   RegisterFormData,
 } from "../../client/src/App/sharedWithServer/apiQueriesShared/register";
+import {
+  ApiQueryName,
+  NextRes,
+} from "../../client/src/App/sharedWithServer/apiQueriesSharedTypes";
 import { is, Req, Res } from "../../client/src/App/sharedWithServer/Crud";
 import {
   LoggedIn,
   LoggedInUser,
 } from "../apiQueriesServer/shared/validateLoggedInUser";
+
+export function sendSuccess<QN extends ApiQueryName>(
+  res: Response,
+  _queryName: QN,
+  resObj: NextRes<QN>
+) {
+  const { headers } = resObj as any;
+  res.header(headers).status(200).send(resObj.data);
+}
 
 type SuccessProps = {
   res: Response;
@@ -27,6 +40,7 @@ export const serverSend = {
   success({ res, resObj: { data, headers } }: SuccessProps) {
     res.header(headers).status(200).send(data);
   },
+  nextSuccess<QN extends ApiQueryName>(queryName: QN) {},
   falsyQuery(res: Response, queryName: string = "query") {
     res.status(404).send(`${queryName} returned falsy`);
   },

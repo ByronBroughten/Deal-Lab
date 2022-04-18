@@ -2,11 +2,11 @@ import request from "supertest";
 import { config } from "../../client/src/App/Constants";
 import Analyzer from "../../client/src/App/sharedWithServer/Analyzer";
 import { NumObj } from "../../client/src/App/sharedWithServer/Analyzer/SectionMetas/relSections/baseSections/baseValues/NumObj";
+import { makeApiReq } from "../../client/src/App/sharedWithServer/apiQueriesShared";
 import {
   apiEndpoints,
   NextReq,
-} from "../../client/src/App/sharedWithServer/apiQueriesShared";
-import { makeApiReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/makeApiReq";
+} from "../../client/src/App/sharedWithServer/apiQueriesSharedTypes";
 import { runApp } from "../../runApp";
 import { UserModelNext } from "../shared/UserModelNext";
 import { loginUtils } from "./nextLogin/loginUtils";

@@ -4,7 +4,7 @@ import {
   SectionNam,
   SectionName,
 } from "../../../client/src/App/sharedWithServer/Analyzer/SectionMetas/SectionName";
-import { DbSectionPackInfoReq } from "../../../client/src/App/sharedWithServer/apiQueriesShared/shared";
+import { DbSectionPackInfoReq } from "../../../client/src/App/sharedWithServer/apiQueriesShared/makeGeneralReqs";
 import { ResHandledError } from "../../../middleware/error";
 import { LoggedIn, validateLoggedInUser } from "./validateLoggedInUser";
 

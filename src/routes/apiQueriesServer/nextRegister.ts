@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
-import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesShared";
 import {
   areGuestAccessSectionsNext,
   isRegisterFormData,
 } from "../../client/src/App/sharedWithServer/apiQueriesShared/register";
+import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesSharedTypes";
 import { makeMongooseObjectId } from "../../client/src/App/sharedWithServer/utils/mongoose";
 import { Obj } from "../../client/src/App/sharedWithServer/utils/Obj";
 import { resHandledError } from "../../middleware/error";

@@ -5,7 +5,7 @@ import { ServerSectionPack } from "../../../client/src/App/sharedWithServer/Anal
 import {
   SectionPackArrReq,
   SectionPackReq,
-} from "../../../client/src/App/sharedWithServer/apiQueriesShared/shared";
+} from "../../../client/src/App/sharedWithServer/apiQueriesShared/makeGeneralReqs";
 import { resHandledError } from "../../../middleware/error";
 import { validateDbStoreName } from "./validateDbSectionInfoReq";
 import { LoggedIn, validateLoggedInUser } from "./validateLoggedInUser";

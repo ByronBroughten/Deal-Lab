@@ -2,12 +2,12 @@ import { AxiosResponse } from "axios";
 import { config } from "../Constants";
 import { DbEntry } from "../sharedWithServer/Analyzer/DbEntry";
 import { SectionName } from "../sharedWithServer/Analyzer/SectionMetas/SectionName";
-import { NextReq, NextRes } from "../sharedWithServer/apiQueriesShared";
 import {
   isLoginHeaders,
   isLoginUser,
   isLoginUserNext,
 } from "../sharedWithServer/apiQueriesShared/login";
+import { NextReq, NextRes } from "../sharedWithServer/apiQueriesSharedTypes";
 import { is, Req, Res } from "../sharedWithServer/Crud";
 import { urlPlusParams } from "../utils/url";
 import https from "./services/httpService";

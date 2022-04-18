@@ -1,5 +1,5 @@
 import { config } from "../../Constants";
-import { NextReq, NextRes } from "../../sharedWithServer/apiQueriesShared";
+import { NextReq, NextRes } from "../../sharedWithServer/apiQueriesSharedTypes";
 import { authTokenKey, Res } from "../../sharedWithServer/Crud";
 import { crud } from "../crud";
 import { auth } from "../services/authService";

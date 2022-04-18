@@ -37,9 +37,8 @@ export async function findOneAndUpdate({
     operation,
     options
   );
-  if (!result) {
-    throw resHandledError(res, 404, `Failed to ${doWhat}.`);
-  }
+  if (result) return result;
+  else throw resHandledError(res, 404, `Failed to ${doWhat}.`);
 }
 
 export async function updateOneUser({

@@ -1,101 +1,67 @@
-import urljoin from "url-join";
-import { config } from "../Constants";
-import { SectionName } from "./Analyzer/SectionMetas/SectionName";
-import { LoginQueryObjects } from "./apiQueriesShared/login";
-import { RegisterQueryObjects } from "./apiQueriesShared/register";
+import Analyzer from "./Analyzer";
 import {
-  DbIdRes,
-  DbSectionPackInfoReq,
-  DbStoreNameRes,
-  SectionPackArrReq,
-  SectionPackReq,
-  SectionPackRes,
-} from "./apiQueriesShared/shared";
+  makeDbIdSectionPackReq,
+  makeRawSectionPackArrReq,
+  makeRawSectionPackReq,
+} from "./apiQueriesShared/makeGeneralReqs";
+import { ApiQueryName, NextReq } from "./apiQueriesSharedTypes";
 
-export const apiEndpoints = makeEndpointPaths("api");
+// delete apiQueriesShared, and then deal with the
+// consequences
 
-export function makeEndpointPaths(baseEndpointBit: string) {
-  const basePaths = {
-    pathBit: `/${baseEndpointBit}`,
-    get pathRoute() {
-      return this.pathBit;
-    },
-    get pathFull() {
-      return urljoin(config.apiEndpointBase, this.pathBit);
-    },
-  } as const;
-  return config.apiQueryNames.reduce((endpoints, queryName) => {
-    endpoints[queryName] = bitRouteAndPath(basePaths, `/${queryName}`);
-    return endpoints;
-  }, {} as { [QN in typeof config.apiQueryNames[number]]: BitRouteAndPath });
-}
-type BitRouteAndPath = { pathBit: string; pathRoute: string; pathFull: string };
-function bitRouteAndPath(
-  basePaths: BitRouteAndPath,
-  pathBit: string
-): BitRouteAndPath {
-  return {
-    pathBit,
-    get pathRoute() {
-      return urljoin(basePaths.pathRoute, this.pathBit);
-    },
-    get pathFull() {
-      return urljoin(basePaths.pathFull, this.pathRoute);
-    },
-  };
-}
-
-export type ApiHttpObjects = {
-  nextRegister: RegisterQueryObjects;
-  nextLogin: LoginQueryObjects;
-  addSection: {
-    req: SectionPackReq;
-    res: DbIdRes;
-  };
-  updateSection: {
-    req: SectionPackReq;
-    res: DbIdRes;
-  };
-  getSection: {
-    req: DbSectionPackInfoReq;
-    res: SectionPackRes;
-  };
-  deleteSection: {
-    req: DbSectionPackInfoReq;
-    res: DbIdRes;
-  };
-  replaceSectionArr: {
-    req: SectionPackArrReq;
-    res: DbStoreNameRes;
-  };
-};
-
-export type ApiQueryName = keyof ApiHttpObjects;
-export type NextReq<R extends keyof ApiHttpObjects> = ApiHttpObjects[R]["req"];
-export type NextRes<R extends keyof ApiHttpObjects> = ApiHttpObjects[R]["res"];
-
-export class QueryError extends Error {
-  constructor(message: string) {
-    super(message);
-  }
-}
-
-type ApiHttpObjectsGeneral = {
-  [QN in typeof config.apiQueryNames[number]]: {
-    req: {
-      body: any;
+export type MakeApiReq = typeof makeApiReq;
+export const makeApiReq = {
+  // hmm... what happened to the endpoints?
+  upgradeUserToPro(paymentMethodId: string): NextReq<"upgradeUserToPro"> {
+    return {
+      body: {
+        paymentMethodId,
+      },
     };
-    res: {
-      data: any;
+  },
+  nextRegister(analyzer: Analyzer): NextReq<"nextRegister"> {
+    return {
+      body: {
+        payload: {
+          registerFormData: analyzer.section("register").values({
+            userName: "string",
+            email: "string",
+            password: "string",
+          }),
+          guestAccessSections: analyzer.guestAccessDbSectionPacks(),
+        },
+      },
     };
-  };
-};
-type ApiHttpObjectsCheck<T extends ApiHttpObjectsGeneral> = T;
-type _ApiHttpObjectsTest = ApiHttpObjectsCheck<ApiHttpObjects>;
+  },
+  nextLogin(analyzer: Analyzer): NextReq<"nextLogin"> {
+    return {
+      body: {
+        payload: analyzer.section("login").values({
+          email: "string",
+          password: "string",
+        }),
+      },
+    };
+  },
+  get addSection() {
+    return makeRawSectionPackReq;
+  },
+  get updateSection() {
+    return makeRawSectionPackReq;
+  },
+  get getSection() {
+    return makeDbIdSectionPackReq;
+  },
+  get deleteSection() {
+    return makeDbIdSectionPackReq;
+  },
+  get replaceSectionArr() {
+    return makeRawSectionPackArrReq;
+  },
+} as const;
 
-export type StoredSectionPackInfo<
-  SN extends SectionName<"dbStore"> = SectionName<"dbStore">
-> = {
-  dbStoreName: SN;
-  dbId: string;
+type AnalyzerReqGeneral = {
+  [QN in ApiQueryName]: (props: any) => NextReq<QN>;
 };
+type TestAnalyzerReq<T extends AnalyzerReqGeneral> = T;
+type _TestAnalyzerReq = TestAnalyzerReq<MakeApiReq>;

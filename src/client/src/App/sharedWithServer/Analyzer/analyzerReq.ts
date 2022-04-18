@@ -1,6 +1,6 @@
 import Analyzer from "../Analyzer";
 import { FeToDbStoreNameWithSameChildren } from "../Analyzer/SectionMetas/relNameArrs/ChildTypes";
-import { NextReq } from "../apiQueriesShared";
+import { NextReq } from "../apiQueriesSharedTypes";
 import { Req } from "../Crud";
 import { FeInfo } from "./SectionMetas/Info";
 import { SectionFinder } from "./SectionMetas/relSections/baseSectionTypes";
@@ -27,7 +27,7 @@ function getAddSectionReq<SN extends SectionName>(
   };
 }
 
-export type AnalyzerReq = typeof analyzerReq;
+export type MakeApiReq = typeof analyzerReq;
 export const analyzerReq = {
   nextRegister(analyzer: Analyzer): NextReq<"nextRegister"> {
     return {
