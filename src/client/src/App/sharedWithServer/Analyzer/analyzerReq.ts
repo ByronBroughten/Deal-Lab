@@ -29,30 +29,6 @@ function getAddSectionReq<SN extends SectionName>(
 
 export type MakeApiReq = typeof analyzerReq;
 export const analyzerReq = {
-  nextRegister(analyzer: Analyzer): NextReq<"nextRegister"> {
-    return {
-      body: {
-        payload: {
-          registerFormData: analyzer.section("register").values({
-            userName: "string",
-            email: "string",
-            password: "string",
-          }),
-          guestAccessSections: analyzer.guestAccessDbSectionPacks(),
-        },
-      },
-    };
-  },
-  nextLogin(analyzer: Analyzer): NextReq<"nextLogin"> {
-    return {
-      body: {
-        payload: analyzer.section("login").values({
-          email: "string",
-          password: "string",
-        }),
-      },
-    };
-  },
   addIndexStoreSection(
     analyzer: Analyzer,
     feInfo: FeInfo<"hasIndexStore">

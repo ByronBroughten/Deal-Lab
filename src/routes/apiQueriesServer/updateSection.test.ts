@@ -91,7 +91,7 @@ describe(testedRoute, () => {
     await testStatus(404);
   });
   it("should return 401 if client is not logged in", async () => {
-    token = null as any;
+    token = "" as any;
     await testStatus(401);
   });
   it("should return 500 if payload is not an object", async () => {

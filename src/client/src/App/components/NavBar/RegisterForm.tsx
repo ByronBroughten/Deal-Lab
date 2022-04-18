@@ -10,7 +10,7 @@ import SmallFormTextField from "../general/SmallFormTextField";
 export function RegisterForm() {
   const { analyzer, handleChange } = useAnalyzerContext();
   const { varbs } = analyzer.section("register");
-  const { register } = useAuthQueryActions();
+  const { nextRegister } = useAuthQueryActions();
   // this ensures that the fields are in the corect order
   const registerVarbNames: (keyof RegisterFormData)[] = [
     "userName",
@@ -29,7 +29,7 @@ export function RegisterForm() {
         />
       ))}
 
-      <Button className="submit-btn" variant="contained" onClick={register}>
+      <Button className="submit-btn" variant="contained" onClick={nextRegister}>
         Create Account
       </Button>
     </StyledRegisterForm>

@@ -5,6 +5,7 @@ import {
   makeDbIdSectionPackReq,
   makeRawSectionPackArrReq,
   makeRawSectionPackReq,
+  makeReq,
 } from "./apiQueriesShared/makeGeneralReqs";
 import { ApiQueryName, NextReq } from "./apiQueriesSharedTypes";
 
@@ -52,24 +53,21 @@ function makeReqMakers() {
     }),
     nextRegister: (analyzer: Analyzer): NextReq<"nextRegister"> => ({
       body: {
-        payload: {
-          registerFormData: analyzer.section("register").values({
-            userName: "string",
-            email: "string",
-            password: "string",
-          }),
-          guestAccessSections: analyzer.guestAccessDbSectionPacks(),
-        },
-      },
-    }),
-    nextLogin: (analyzer: Analyzer): NextReq<"nextLogin"> => ({
-      body: {
-        payload: analyzer.section("login").values({
+        registerFormData: analyzer.section("register").values({
+          userName: "string",
           email: "string",
           password: "string",
         }),
+        guestAccessSections: analyzer.guestAccessDbSectionPacks(),
       },
     }),
+    nextLogin: (analyzer: Analyzer): NextReq<"nextLogin"> =>
+      makeReq(
+        analyzer.section("login").values({
+          email: "string",
+          password: "string",
+        })
+      ),
     get addSection() {
       return makeRawSectionPackReq;
     },

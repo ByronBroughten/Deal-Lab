@@ -5,8 +5,8 @@ import { apiQueriesShared } from "../../client/src/App/sharedWithServer/apiQueri
 import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesSharedTypes";
 import { runApp } from "../../runApp";
 import { UserModelNext } from "../shared/UserModelNext";
-import { userServerSideNext } from "../shared/userServerSideNext";
 import { testRegisterId } from "./nextRegister";
+import { userServerSide } from "./userServerSide";
 
 const testedRoute = apiQueriesShared.nextRegister.pathRoute;
 function makeTestRegisterReq(): NextReq<"nextRegister"> {
@@ -16,7 +16,7 @@ function makeTestRegisterReq(): NextReq<"nextRegister"> {
     password: "testpassword",
     userName: "Testosis",
   });
-  return next.req.nextRegister();
+  return apiQueriesShared.nextRegister.makeReq(next);
 }
 
 describe(testedRoute, () => {
@@ -49,22 +49,18 @@ describe(testedRoute, () => {
   });
   it("should return 400 if a user with that email already exists", async () => {
     const reqObj2 = makeTestRegisterReq();
-    await userServerSideNext.entireMakeUserProcess({
-      ...reqObj2.body.payload,
+    await userServerSide.entireMakeUserProcess({
+      ...reqObj2.body,
       _id: testRegisterId,
     });
     await testStatus(400);
   });
-  it("should return 500 if the payload is not an object", async () => {
-    (reqObj.body.payload as any) = null;
-    await testStatus(500);
-  });
-  it("should return 400 if the payload fails validation", async () => {
-    (reqObj.body.payload.registerFormData.email as any) = null;
+  it("should return 400 if the register form data fails validation", async () => {
+    (reqObj.body.registerFormData.email as any) = null;
     await testStatus(400);
   });
   it("should return 500 if guestAccessSections isn't right", async () => {
-    (reqObj.body.payload.guestAccessSections as any) = null;
+    (reqObj.body.guestAccessSections as any) = null;
     await testStatus(500);
   });
 });

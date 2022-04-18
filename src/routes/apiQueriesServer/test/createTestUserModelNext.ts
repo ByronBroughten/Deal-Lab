@@ -1,24 +1,23 @@
 import Analyzer from "../../../client/src/App/sharedWithServer/Analyzer";
-import { RegisterReqPayloadNext } from "../../../client/src/App/sharedWithServer/apiQueriesShared/register";
-import { userServerSideNext } from "../../shared/userServerSideNext";
+import { apiQueriesShared } from "../../../client/src/App/sharedWithServer/apiQueriesShared";
+import { RegisterReqBody } from "../../../client/src/App/sharedWithServer/apiQueriesShared/register";
+import { userServerSide } from "../userServerSide";
 
 export async function createTestUserModelNext(
   testSuiteName: string
 ): Promise<string> {
-  const userDoc = await userServerSideNext.entireMakeUserProcess(
+  const userDoc = await userServerSide.entireMakeUserProcess(
     makeTestRegisterPayload(testSuiteName)
   );
   return userDoc._id.toHexString();
 }
 
-function makeTestRegisterPayload(
-  testSuiteName: string
-): RegisterReqPayloadNext {
+function makeTestRegisterPayload(testSuiteName: string): RegisterReqBody {
   let next = Analyzer.initAnalyzer();
   next = next.updateSectionValuesAndSolve("register", {
     email: `${testSuiteName}Test@gmail.com`,
     password: "testPassword",
     userName: "Testosis",
   });
-  return next.req.nextRegister().body.payload;
+  return apiQueriesShared.nextRegister.makeReq(next).body;
 }

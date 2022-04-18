@@ -64,7 +64,7 @@ describe(testedApiRoute, () => {
     await testStatus(200);
   });
   it("should return 401 if client is not logged in", async () => {
-    token = null as any;
+    token = "" as any;
     await testStatus(401);
   });
 });

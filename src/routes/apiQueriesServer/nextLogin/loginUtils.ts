@@ -4,15 +4,16 @@ import jwt from "jsonwebtoken";
 import { isObject } from "lodash";
 import mongoose from "mongoose";
 import { authTokenKey } from "../../../client/src/App/sharedWithServer/Crud";
+import { resHandledError } from "../../../middleware/error";
 import { UserDbNext, UserDbRaw } from "../../shared/UserDbNext";
 import { UserModelNext } from "../../shared/UserModelNext";
-import { userServerSideNext } from "../../shared/userServerSideNext";
+import { userServerSide } from "../userServerSide";
 
 export const loginUtils = {
   async tryFindOneUserByEmail(emailLower: string) {
     try {
       return await UserModelNext.findOne(
-        userServerSideNext.emailLowerFilter(emailLower),
+        userServerSide.findByEmailFilter(emailLower),
         undefined,
         { lean: true }
       );
@@ -20,10 +21,16 @@ export const loginUtils = {
       return undefined;
     }
   },
-  checkUserAuthToken(token: any): null | UserJwt {
+  decodeUserAuthToken(token: any): UserJwt | null {
     const decoded = jwt.verify(token, config.get("jwtPrivateKey"));
     if (isUserJwt(decoded)) return decoded;
     else return null;
+  },
+  checkUserAuthToken(token: any, res: Response): UserJwt {
+    const decoded = this.decodeUserAuthToken(token);
+    if (decoded) return decoded;
+    else
+      throw resHandledError(res, 401, "Access denied. Invalid token provided.");
   },
   dummyUserAuthToken() {
     const arbitraryId = new mongoose.Types.ObjectId();

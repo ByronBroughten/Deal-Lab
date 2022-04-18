@@ -1,33 +1,32 @@
 import bcrypt from "bcrypt";
 import { Request, Response } from "express";
+import { LeanDocument } from "mongoose";
 import {
   isLoginFormData,
   LoginFormData,
 } from "../../client/src/App/sharedWithServer/apiQueriesShared/login";
 import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesSharedTypes";
-import { ResHandledError } from "../../middleware/error";
+import { resHandledError, ResHandledError } from "../../middleware/error";
 import { UserDbNext, UserDbRaw } from "../shared/UserDbNext";
-import { userServerSideNext } from "../shared/userServerSideNext";
 import { loginUtils } from "./nextLogin/loginUtils";
-import { validateUserByLowercaseEmail } from "./shared/getUserByEmail";
+import { userServerSide } from "./userServerSide";
 
 export const nextLoginWare = [loginServerSide] as const;
 
 async function loginServerSide(req: Request, res: Response) {
   const reqObj = validateLoginReq(req, res);
 
-  const { email, password } = reqObj.body.payload;
-  const { emailLower } = userServerSideNext.prepEmail(email);
+  const { email: rawEmail, password } = reqObj.body;
+  const { email } = userServerSide.prepEmail(rawEmail);
 
-  const user = await validateUserByLowercaseEmail(emailLower, res);
+  const user = await validateEmail(email, res);
 
   await validateUserPassword({ user: user, attemptedPassword: password, res });
   return loginUtils.doLogin(res, user);
 }
 
 function validateLoginReq(req: Request, res: Response): NextReq<"nextLogin"> {
-  const { payload } = req.body;
-  return { body: { payload: validateLoginFormData(payload, res) } };
+  return { body: validateLoginFormData(req.body, res) };
 }
 
 function validateLoginFormData(value: any, res: Response): LoginFormData {
@@ -36,6 +35,12 @@ function validateLoginFormData(value: any, res: Response): LoginFormData {
     res.status(400).send("Payload failed loginFormData validation");
     throw new ResHandledError("Handled in validateLoginFormData");
   }
+}
+
+export async function validateEmail(email: string, res: Response) {
+  const user = await loginUtils.tryFindOneUserByEmail(email);
+  if (user) return user as LeanDocument<typeof user>;
+  else throw resHandledError(res, 400, "Invalid email address.");
 }
 
 type ValidateUserPasswordProps = {
@@ -56,10 +61,9 @@ async function validateUserPassword({
 }
 
 function getUserEncryptedPassword(user: UserDbRaw): string {
-  const serverUser = UserDbNext.init(user);
-  const userProtectedSection =
-    serverUser.firstSectionPackHeadSection("userProtected");
-  return userProtectedSection.dbVarbs.encryptedPassword as string;
+  const dbUser = UserDbNext.init(user);
+  const userSection = dbUser.firstSectionPackHeadSection("user");
+  return userSection.dbVarbs.encryptedPassword as string;
 }
 
 async function validatePassword({

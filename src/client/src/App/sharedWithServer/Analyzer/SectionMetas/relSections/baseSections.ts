@@ -43,10 +43,10 @@ export function extractSectionContext<SCB extends SectionContextOrBoth>(
 }
 
 const dbUniqueBaseSections = {
-  userProtected: base.section.schema(
-    base.varbs.string(["encryptedPassword"])
-    // { protected: true }
-  ),
+  user: base.section.schema({
+    ...base.varbs.feUser,
+    ...base.varbs.string(["encryptedPassword", "emailAsSubmitted"] as const),
+  }),
   propertyIndex: base.section.schema({
     ...base.varbs.property,
   }),
@@ -225,48 +225,10 @@ export const baseSections = {
       },
       { ...base.options.alwaysOneFromStart, hasGlobalVarbs: true }
     ),
-
-    // alright, see here.
-    // user and userProtected
-    // What are their purposes?
-
-    // I don't intend these sections to be editable
-    // parts of the analyzer.
-    // userName and email can be edited.
-    // but there is a fairly special process for that.
-    // emailLower cannot be directly edited.
-    // when email is edited, emailLower MUST be edited.
-
-    // I do want to expose some user stuff on the client side
-    // I want to be able to display user information
-
-    // That's what this is about—being able to display information.
-    // variable information
-    // user is good for that
-    // I want to be able to display the user's access level.
-    // I don't want the user to be able to change their access level.
-    // But right now they can, with the addSectionArr api
-
-    // I want the database to have sections that can't be accessed
-    // by the typical section methods
-    // user is one of those sections
-
-    // I want dbUser to have different
-    // variables than feUser
-    // How about this:
-    // One user section
-    // the db context
-
-    userProtected: base.section.schema({
-      _placeholder: "string",
+    user: base.section.schema(base.varbs.feUser, {
+      ...base.options.alwaysOneFromStart,
+      loadOnLogin: true,
     }),
-    user: base.section.schema(
-      base.varbs.string(["email", "userName", "emailLower"] as const),
-      {
-        ...base.options.alwaysOneFromStart,
-        loadOnLogin: true,
-      }
-    ),
   },
   get db() {
     return {
@@ -276,23 +238,40 @@ export const baseSections = {
   },
 } as const;
 
-// There will be a special method by which to update
-// user information. The typical way won't work.
+// check every instance of emailLower
 
-// do I keep email, or do I always use emailLower?
-// what if I
+// make user initialize with apiAccessStatus: basicStorage
+// remove protectedUser
+// change how the user is initialized
+
+// double-check that creating the login-user only
+// gives email, userName, and apiAccessStatus
+
+// make a group of sectionNames that the section
+// functions can access
+
+// make a group of sectionNames that the sectionArr function
+// can access
+
+// make sure LoginUser isn't based on dbStore
+
+// the userSectionName is the only one of concern for upgradeUserToPro
+
+// make the loginWebToken give apiAccessStatus
+
+// make a middleWare that checks for apiAccessStatus if you try to write
+// anything.
+// add functionality to addSection that limits saving entries if apiAccessStatus
+// isn't upgraded.
+
+type ApiAccessStatus = "readonly" | "basicStorage" | "fullStorage";
+// type ApiAccessStatus1 = "guest" | "basicUser" | "proUser";
+
+// the frontend cares about the first ones
+// the backend cares about the second ones
 
 // protected: true
-const nextUser = {
-  feVarbs: ["email", "userName", "apiAccessStatus"],
-  db: [
-    "email",
-    "userName",
-    "encryptedPassword",
-    "emailAsSubmitted",
-    "apiAccessStatus",
-  ],
-};
+
 // change user layout first
 // apiAccessStatus will also be in the webtoken, along with _id
 

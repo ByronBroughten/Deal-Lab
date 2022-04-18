@@ -10,11 +10,11 @@ import { validationMessage, zodSchema, zValidate } from "../utils/zod";
 
 export type RegisterQueryObjects = {
   req: {
-    body: { payload: RegisterReqPayloadNext };
+    body: RegisterReqBody;
   };
   res: NextRes<"nextLogin">;
 };
-export type RegisterReqPayloadNext = {
+export type RegisterReqBody = {
   registerFormData: RegisterFormData;
   guestAccessSections: GuestAccessSectionsNext;
 };
@@ -46,16 +46,14 @@ export type RegisterReqPayload = {
 };
 
 export type NewUserData = {
-  user: SchemaVarbsToDbValues<UserVarbs>;
-  userProtected: SchemaVarbsToDbValues<ProtectedUserVarbs>;
+  user: SchemaVarbsToDbValues<DbUserVarbs>;
   guestAccessSections: GuestAccessSections;
 };
+type DbUserVarbs = BaseSectionsDb["user"]["varbSchemas"];
 export type GuestAccessSections = Record<
   SectionName<"feGuestAccessStore">,
   DbEntry[]
 >;
-type UserVarbs = BaseSectionsDb["user"]["varbSchemas"];
-type ProtectedUserVarbs = BaseSectionsDb["userProtected"]["varbSchemas"];
 
 export function areGuestAccessSections(
   value: any

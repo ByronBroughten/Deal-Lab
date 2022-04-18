@@ -87,7 +87,6 @@ function makeSwitchSectionNameArrs(
 
 export const depreciatingDbStoreNames = [
   "user",
-  "userProtected",
   "propertyIndex",
   "property",
   "propertyDefault",

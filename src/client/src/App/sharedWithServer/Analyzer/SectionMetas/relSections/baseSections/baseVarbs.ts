@@ -1,5 +1,5 @@
 import { omit } from "lodash";
-import { ValueName, GeneralBaseVarb } from "./baseVarb";
+import { GeneralBaseVarb, ValueName } from "./baseVarb";
 import {
   BaseOngoingVarb,
   BaseSwitchVarb,
@@ -116,6 +116,9 @@ export const baseVarbs = {
   tableRow: {
     title: "string",
     compareToggle: "boolean",
+  },
+  get feUser() {
+    return this.string(["email", "userName", "apiAccessStatus"] as const);
   },
   get singleTimeList() {
     return {

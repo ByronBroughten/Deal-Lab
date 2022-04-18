@@ -12,7 +12,7 @@ export function LoginForm() {
   const loginVarbNames: (keyof LoginFormData)[] = ["email", "password"];
   const { analyzer, handleChange } = useAnalyzerContext();
   const { varbs } = analyzer.section("login");
-  const { login } = useAuthQueryActions();
+  const { nextLogin } = useAuthQueryActions();
   return (
     <StyledLoginForm>
       {loginVarbNames.map((varbName) => (
@@ -25,7 +25,7 @@ export function LoginForm() {
           }}
         />
       ))}
-      <Button className="submit-btn" variant="contained" onClick={login}>
+      <Button className="submit-btn" variant="contained" onClick={nextLogin}>
         Login
       </Button>
     </StyledLoginForm>

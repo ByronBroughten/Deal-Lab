@@ -8,7 +8,7 @@ import { zRegisterFormData } from "./register";
 
 export type LoginQueryObjects = {
   req: {
-    body: { payload: LoginFormData };
+    body: LoginFormData;
   };
   res: {
     data: LoginUserNext;

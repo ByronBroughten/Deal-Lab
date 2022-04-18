@@ -5,7 +5,7 @@ import {
 import { ContextName, SimpleSectionName } from "./relSections/baseSections";
 import { rel } from "./relSections/rel";
 import { GeneralRelSection, relSection } from "./relSections/rel/relSection";
-import { LeftRightVarbInfos } from "./relSections/rel/relVarb";
+import { LeftRightVarbInfos, relVarb } from "./relSections/rel/relVarb";
 import { RelVarbs } from "./relSections/rel/relVarbs";
 import { relAnalysisStuff } from "./relSections/relAnalysisStuff";
 import { relFinancing } from "./relSections/relFinancing";
@@ -32,7 +32,6 @@ export function makeRelSections() {
             "user",
             "login",
             "register",
-            "userProtected",
 
             "userVarbList",
             "userSingleList",
@@ -75,8 +74,11 @@ export function makeRelSections() {
       ),
       ...relSection.base("both", "user", "User", {
         email: rel.varb.string({ displayName: "Email" }),
-        emailLower: rel.varb.string(),
         userName: rel.varb.string({ displayName: "Name" }),
+        apiAccessStatus: relVarb.string({
+          displayName: "Api Access Status",
+          dbInitValue: "basicStorage",
+        }),
       }),
       ...relSection.base("both", "login", "Login Form", {
         email: rel.varb.string({ displayName: "Email" }),
@@ -204,9 +206,6 @@ export function makeRelSections() {
         ),
         roiOngoingSwitch: rel.varb.string({ initValue: "yearly" }),
       }),
-      ...rel.section.base("fe", "userProtected", "User Protected", {
-        _placeholder: rel.varb.string(),
-      }),
     },
     get db() {
       return {
@@ -215,8 +214,10 @@ export function makeRelSections() {
         loanIndex: this.fe.loan,
         mgmtIndex: this.fe.mgmt,
         analysisIndex: this.fe.analysis,
-        ...rel.section.base("db", "userProtected", "User Protected", {
+        ...rel.section.base("db", "user", "User", {
+          ...this.fe.user.relVarbs,
           encryptedPassword: rel.varb.string(),
+          emailAsSubmitted: rel.varb.string(),
         }),
       } as const;
     },

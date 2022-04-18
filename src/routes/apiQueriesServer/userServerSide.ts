@@ -5,50 +5,44 @@ import { SchemaVarbsToDbValues } from "../../client/src/App/sharedWithServer/Ana
 import { SectionNam } from "../../client/src/App/sharedWithServer/Analyzer/SectionMetas/SectionName";
 import {
   GuestAccessSectionsNext,
-  RegisterReqPayloadNext,
+  RegisterFormData,
+  RegisterReqBody,
 } from "../../client/src/App/sharedWithServer/apiQueriesShared/register";
-import { makeMongooseObjectId } from "./../../client/src/App/sharedWithServer/utils/mongoose";
-import { initDbSectionPack, UserDbRaw } from "./UserDbNext";
-import { modelPath, UserModelNext } from "./UserModelNext";
+import { makeMongooseObjectId } from "../../client/src/App/sharedWithServer/utils/mongoose";
+import { StrictPick } from "../../client/src/App/sharedWithServer/utils/types";
+import { initDbSectionPack, UserDbRaw } from "../shared/UserDbNext";
+import { modelPath, UserModelNext } from "../shared/UserModelNext";
 
-export const userServerSideNext = {
+export const userServerSide = {
   userEmailLowerPath: modelPath.firstSectionPackSectionVarb(
     "user",
     "user",
-    "emailLower"
+    "email"
   ),
-  emailLowerFilter(emailLower: string) {
+  findByEmailFilter(emailLower: string) {
     return { [this.userEmailLowerPath]: emailLower };
   },
   prepEmail(rawEmail: string): PreppedEmails {
     return {
-      email: rawEmail.trim(),
-      get emailLower() {
-        return this.email.toLowerCase();
+      emailAsSubmitted: rawEmail.trim(),
+      get email() {
+        return this.emailAsSubmitted.toLowerCase();
       },
-    };
+    } as const;
   },
-  async makeUserData({
-    registerFormData,
-  }: RegisterReqPayloadNext): Promise<NewUserDataNext> {
+  async makeNewUser(registerFormData: RegisterFormData): Promise<NewDbUser> {
     const { userName, email, password } = registerFormData;
     return {
-      user: {
-        userName,
-        ...this.prepEmail(email),
-      },
-      userProtected: {
-        encryptedPassword: await encryptPassword(password),
-      },
+      userName,
+      apiAccessStatus: "basicStorage",
+      encryptedPassword: await encryptPassword(password),
+      ...this.prepEmail(email),
     };
   },
-  makeDbUser({ newUserData, guestAccessSections }: MakeDbUserProps): UserDbRaw {
+  makeDbUser({ newUser, guestAccessSections }: MakeDbUserProps): UserDbRaw {
     const partial: Partial<UserDbRaw> = {
       ...guestAccessSections,
-      user: [initDbSectionPack("user", newUserData.user)],
-      userProtected: [
-        initDbSectionPack("userProtected", newUserData.userProtected),
-      ],
+      user: [initDbSectionPack("user", newUser)],
     };
 
     for (const storeName of SectionNam.arrs.fe.dbStore) {
@@ -76,14 +70,15 @@ export const userServerSideNext = {
   },
   async entireMakeUserProcess({
     _id,
-    ...payload
-  }: RegisterReqPayloadNext & { _id?: mongoose.Types.ObjectId }): Promise<
+    registerFormData,
+    guestAccessSections,
+  }: RegisterReqBody & { _id?: mongoose.Types.ObjectId }): Promise<
     UserDbRaw & mongoose.Document<any, any, UserDbRaw>
   > {
-    const newUserData = await this.makeUserData(payload);
+    const newUser = await this.makeNewUser(registerFormData);
     const userDoc = this.makeMongoUser({
-      newUserData,
-      guestAccessSections: payload.guestAccessSections,
+      newUser,
+      guestAccessSections,
       _id,
     });
     await userDoc.save();
@@ -91,26 +86,18 @@ export const userServerSideNext = {
   },
 };
 
+type PreppedEmails = StrictPick<NewDbUser, "emailAsSubmitted" | "email">;
+type NewDbUser = SchemaVarbsToDbValues<UserVarbs>;
+
 type MakeDbUserProps = {
-  newUserData: NewUserDataNext;
+  newUser: NewDbUser;
   guestAccessSections: GuestAccessSectionsNext;
 };
+type UserVarbs = BaseSectionsDb["user"]["varbSchemas"];
 
 type MakeMongoUserProps = MakeDbUserProps & {
   _id?: mongoose.Types.ObjectId;
 };
-
-type PreppedEmails = {
-  email: string;
-  emailLower: string;
-};
-
-export type NewUserDataNext = {
-  user: SchemaVarbsToDbValues<UserVarbs>;
-  userProtected: SchemaVarbsToDbValues<ProtectedUserVarbs>;
-};
-type UserVarbs = BaseSectionsDb["user"]["varbSchemas"];
-type ProtectedUserVarbs = BaseSectionsDb["userProtected"]["varbSchemas"];
 
 async function encryptPassword(unencrypted: string): Promise<string> {
   const salt = await bcrypt.genSalt(10);

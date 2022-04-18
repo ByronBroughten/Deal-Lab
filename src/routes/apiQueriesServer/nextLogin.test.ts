@@ -2,12 +2,12 @@ import request from "supertest";
 import { config } from "../../client/src/App/Constants";
 import Analyzer from "../../client/src/App/sharedWithServer/Analyzer";
 import { apiQueriesShared } from "../../client/src/App/sharedWithServer/apiQueriesShared";
-import { RegisterReqPayloadNext } from "../../client/src/App/sharedWithServer/apiQueriesShared/register";
+import { RegisterReqBody } from "../../client/src/App/sharedWithServer/apiQueriesShared/register";
 import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesSharedTypes";
 import { runApp } from "../../runApp";
 import { UserModelNext } from "../shared/UserModelNext";
-import { userServerSideNext } from "../shared/userServerSideNext";
 import { loginUtils } from "./nextLogin/loginUtils";
+import { userServerSide } from "./userServerSide";
 
 const testedRoute = apiQueriesShared.nextLogin.pathRoute;
 const testLoginFormData = {
@@ -23,13 +23,13 @@ const testRegisterFormData = {
 function makeTestLoginReq() {
   let next = Analyzer.initAnalyzer();
   next = next.updateSectionValuesAndSolve("login", testLoginFormData);
-  return next.req.nextLogin();
+  return apiQueriesShared.nextLogin.makeReq(next);
 }
 
-function makeTestRegisterReqPayload(): RegisterReqPayloadNext {
+function makeTestRegisterReqBody(): RegisterReqBody {
   let next = Analyzer.initAnalyzer();
   next = next.updateSectionValuesAndSolve("register", testRegisterFormData);
-  return next.req.nextRegister().body.payload;
+  return apiQueriesShared.nextRegister.makeReq(next).body;
 }
 
 describe(testedRoute, () => {
@@ -40,8 +40,8 @@ describe(testedRoute, () => {
   beforeEach(async () => {
     server = runApp();
     reqObj = makeTestLoginReq();
-    const userDoc = await userServerSideNext.entireMakeUserProcess(
-      makeTestRegisterReqPayload()
+    const userDoc = await userServerSide.entireMakeUserProcess(
+      makeTestRegisterReqBody()
     );
     userId = userDoc._id.toHexString();
   });
@@ -60,15 +60,15 @@ describe(testedRoute, () => {
   }
 
   it("should return 400 if payload fails validation", async () => {
-    reqObj.body.payload.email = null as any;
+    reqObj.body.email = null as any;
     await testStatus(400);
   });
   it("should return 400 if an account with the email doesn't exist", async () => {
-    reqObj.body.payload.email = "nonexistant@gmail.com";
+    reqObj.body.email = "nonexistant@gmail.com";
     await testStatus(400);
   });
   it("should return 400 if an invalid password is used", async () => {
-    reqObj.body.payload.password = "invalidP@ssword123";
+    reqObj.body.password = "invalidP@ssword123";
     await testStatus(400);
   });
   it("should return 200 if the request is valid", async () => {
@@ -79,7 +79,7 @@ describe(testedRoute, () => {
     const token = res.headers[config.tokenKey.apiUserAuth];
     expect(token).not.toBeUndefined();
 
-    const decoded = loginUtils.checkUserAuthToken(token);
+    const decoded = loginUtils.decodeUserAuthToken(token);
     expect(decoded).not.toBeNull();
   });
 });

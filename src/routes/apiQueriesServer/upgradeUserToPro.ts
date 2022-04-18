@@ -70,29 +70,6 @@ async function makePayment({ paymentMethodId, res }: MakePaymentProps) {
   });
 }
 
-// do I put a "pro" boolean on user?
-// No. Well, maybe.
-// What would be the most flexible?
-// And do I put this on userProtected?
-// It probably doesn't really matter if I don't
-// plan to make the payment scheme any more complicated
-// than pro or not pro
-// I can use a boolean
-// I can use a string that says "basic" or "pro"
-
-// 1.
-// apiAccessStatus: "guest" | "freeUser" | "proUser"
-
-// 2.
-// isGuest: true
-// isPro: true
-
-// guest will never be a freeUser, by definition
-// proUser will never be freeUser, right?
-// I'll just do it this way.
-
-// userProtected will have the apiAccessStatus, right?
-
 function validateUpgradeUserToProReq(
   req: Request,
   res: Response
