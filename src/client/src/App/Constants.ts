@@ -10,13 +10,13 @@ const prod = {
   endpoint: "https://www.dealanalyzer.app",
 };
 
-// https://ultimate-property-analyzer.herokuapp.com
-
 const constants = process.env.NODE_ENV === "development" ? dev : prod;
+const apiPathBit = "/api";
 
 export const config = {
   name: constants.name,
-  apiEndpointBase: constants.endpoint,
+  apiPathBit: apiPathBit,
+  apiPathFull: `${constants.endpoint}${apiPathBit}`,
   url: configUrls(constants.endpoint),
   crud: makeCrudConfig(constants.endpoint),
   costInCents: {

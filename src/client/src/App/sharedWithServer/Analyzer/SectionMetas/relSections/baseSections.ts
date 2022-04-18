@@ -293,6 +293,7 @@ const nextUser = {
     "apiAccessStatus",
   ],
 };
+// change user layout first
 // apiAccessStatus will also be in the webtoken, along with _id
 
 // make dbStoreName and protectedDbStoreName

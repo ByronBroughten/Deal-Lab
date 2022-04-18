@@ -9,19 +9,7 @@ import {
 import { ApiQueryName, NextReq } from "./apiQueriesSharedTypes";
 
 const makeApiReqs = makeReqMakers();
-const apiPaths = makeEndpointPaths();
-export const apiQueriesShared = makeApiQueriesShared();
-
-function makeApiQueriesShared() {
-  return config.apiQueryNames.reduce((partial, queryName) => {
-    (partial[queryName] as any) = new ApiQueryShared(queryName);
-    return partial;
-  }, {} as ApiQueriesShared);
-}
-
-type ApiQueriesShared = {
-  [QN in ApiQueryName]: ApiQueryShared<QN>;
-};
+const apiPaths = makeApiPaths();
 
 class ApiQueryShared<QN extends ApiQueryName> {
   constructor(readonly queryName: QN) {}
@@ -41,6 +29,19 @@ class ApiQueryShared<QN extends ApiQueryName> {
     return apiPaths[this.queryName];
   }
 }
+
+export const apiQueriesShared = makeApiQueriesShared();
+
+function makeApiQueriesShared() {
+  return config.apiQueryNames.reduce((partial, queryName) => {
+    (partial[queryName] as any) = new ApiQueryShared(queryName);
+    return partial;
+  }, {} as ApiQueriesShared);
+}
+
+type ApiQueriesShared = {
+  [QN in ApiQueryName]: ApiQueryShared<QN>;
+};
 
 function makeReqMakers() {
   return {
@@ -94,34 +95,21 @@ type MakeApiReqsGeneral = {
 type TestMakeApiReqs<T extends MakeApiReqsGeneral> = T;
 type _TestMakeApiReqs = TestMakeApiReqs<MakeApiReqs>;
 
-function makeEndpointPaths() {
-  const baseEndpointBit = config.apiEndpointBase;
-  const basePaths: BitRouteAndPath = {
-    bit: `/${baseEndpointBit}`,
-    get route() {
-      return this.bit;
-    },
-    get full() {
-      return urljoin(baseEndpointBit, this.bit);
-    },
-  } as const;
+function makeApiPaths() {
   return config.apiQueryNames.reduce((endpoints, queryName) => {
-    endpoints[queryName] = bitRouteAndPath(basePaths, `/${queryName}`);
+    endpoints[queryName] = bitRouteAndPath(`/${queryName}`);
     return endpoints;
   }, {} as { [QN in typeof config.apiQueryNames[number]]: BitRouteAndPath });
 }
 type BitRouteAndPath = { bit: string; route: string; full: string };
-function bitRouteAndPath(
-  basePaths: BitRouteAndPath,
-  pathBit: string
-): BitRouteAndPath {
+function bitRouteAndPath(pathBit: string): BitRouteAndPath {
   return {
     bit: pathBit,
     get route() {
-      return urljoin(basePaths.route, this.bit);
+      return urljoin(config.apiPathBit, this.bit);
     },
     get full() {
-      return urljoin(basePaths.full, this.route);
+      return urljoin(config.apiPathFull, this.route);
     },
   };
 }

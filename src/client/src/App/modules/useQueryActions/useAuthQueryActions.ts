@@ -1,5 +1,6 @@
 import { config } from "../../Constants";
-import { NextReq, NextRes } from "../../sharedWithServer/apiQueriesSharedTypes";
+import { apiQueriesShared } from "../../sharedWithServer/apiQueriesShared";
+import { NextRes } from "../../sharedWithServer/apiQueriesSharedTypes";
 import { authTokenKey, Res } from "../../sharedWithServer/Crud";
 import { crud } from "../crud";
 import { auth } from "../services/authService";
@@ -15,22 +16,9 @@ function useSetLogin() {
   };
 }
 
-function useMakeAuthReq() {
-  const { analyzer } = useAnalyzerContext();
-  return {
-    nextRegister(): NextReq<"nextRegister"> {
-      return analyzer.req.nextRegister();
-    },
-    nextLogin(): NextReq<"nextLogin"> {
-      return analyzer.req.nextLogin();
-    },
-  };
-}
-
 export function useAuthQueryActions() {
   const { analyzer, handleSet } = useAnalyzerContext();
   const setLogin = useSetLogin();
-  const makeAuthReq = useMakeAuthReq();
 
   function trySetLogin(resObj: Res<"Login">) {
     const { data, headers } = resObj;
@@ -47,11 +35,13 @@ export function useAuthQueryActions() {
       if (resObj) trySetLogin(resObj);
     },
     async nextLogin() {
-      const resObj = await apiQueries.nextLogin(makeAuthReq.nextLogin());
+      const reqObj = apiQueriesShared.nextLogin.makeReq(analyzer);
+      const resObj = await apiQueries.nextLogin(reqObj);
       if (resObj) setLogin(resObj);
     },
     async nextRegister() {
-      const resObj = await apiQueries.nextRegister(makeAuthReq.nextRegister());
+      const reqObj = apiQueriesShared.nextRegister.makeReq(analyzer);
+      const resObj = await apiQueries.nextRegister(reqObj);
       if (resObj) setLogin(resObj);
     },
   };
