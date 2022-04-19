@@ -1,8 +1,9 @@
 import Analyzer from "../Analyzer";
 import { FeSectionPack } from "../Analyzer/FeSectionPack";
 import { FeToDbStoreNameWithSameChildren } from "../Analyzer/SectionMetas/relNameArrs/ChildTypes";
+import { DbStoreName } from "../Analyzer/SectionMetas/relSections/baseSectionTypes/dbStoreNames";
 import { FeNameInfo } from "../Analyzer/SectionMetas/relSections/rel/relVarbInfoTypes";
-import { DbStoreName, SectionName } from "../Analyzer/SectionMetas/SectionName";
+import { SectionName } from "../Analyzer/SectionMetas/SectionName";
 import { StoredSectionPackInfo } from "../Analyzer/SectionPack";
 import { SectionPackRaw, ServerSectionPack } from "../Analyzer/SectionPackRaw";
 
@@ -21,7 +22,7 @@ type QueryObj = { [key: string]: any };
 type MakeRawSectionPackArrReqProps<SN extends SectionName> = {
   analyzer: Analyzer;
   sectionName: SN;
-  dbStoreName: FeToDbStoreNameWithSameChildren<SN>;
+  dbStoreName: FeToDbStoreNameWithSameChildren<SN, "arr">;
 };
 export function makeRawSectionPackArrReq<SN extends SectionName>({
   analyzer,
@@ -69,7 +70,7 @@ export type DbSectionPackInfo = {
 export type SectionPackReq = MakeReq<{ payload: ServerSectionPack }>;
 export type SectionPackArrReq = MakeReq<{
   sectionPackArr: ServerSectionPack[];
-  dbStoreName: DbStoreName;
+  dbStoreName: DbStoreName<"arr">;
 }>;
 
 export type DbSectionPackInfoReq = MakeReq<DbSectionPackInfo>;

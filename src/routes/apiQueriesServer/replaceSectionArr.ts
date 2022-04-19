@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { DbStoreName } from "../../client/src/App/sharedWithServer/Analyzer/SectionMetas/SectionName";
+import { DbStoreName } from "../../client/src/App/sharedWithServer/Analyzer/SectionMetas/relSections/baseSectionTypes/dbStoreNames";
 import { ServerSectionPack } from "../../client/src/App/sharedWithServer/Analyzer/SectionPackRaw";
 import { makeRes } from "../../client/src/App/sharedWithServer/apiQueriesShared/makeGeneralReqs";
 import { NextRes } from "../../client/src/App/sharedWithServer/apiQueriesSharedTypes";
@@ -30,7 +30,7 @@ async function replaceSectionArrServerSide(req: Request, res: Response) {
 }
 
 type MakeSetSectionArrParametersProps = {
-  dbStoreName: DbStoreName;
+  dbStoreName: DbStoreName<"arr">;
   sectionPackArr: ServerSectionPack[];
 };
 function makeSetSectionArrParameters({

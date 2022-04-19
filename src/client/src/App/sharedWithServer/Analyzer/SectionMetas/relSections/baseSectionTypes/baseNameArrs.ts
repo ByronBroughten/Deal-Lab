@@ -12,6 +12,7 @@ import {
 import { base } from "../baseSections/base";
 import { GeneralBaseSection } from "../baseSections/baseSection";
 import { switchName, SwitchName } from "../baseSections/baseSwitchNames";
+import { dbStoreNameS } from "./dbStoreNames";
 
 type HasVarbSectionName<
   NoVarbSectionName = keyof SubType<
@@ -85,29 +86,6 @@ function makeSwitchSectionNameArrs(
   return finalizeSwitchSectionNameArrs(baseNameSwitchArrs);
 }
 
-export const depreciatingDbStoreNames = [
-  "user",
-  "propertyIndex",
-  "property",
-  "propertyDefault",
-  "propertyTable",
-  "loan",
-  "loanIndex",
-  "loanDefault",
-  "loanTable",
-  "mgmt",
-  "mgmtIndex",
-  "mgmtDefault",
-  "mgmtTable",
-  "analysis",
-  "analysisIndex",
-  "analysisDefault",
-  "analysisTable",
-  "userVarbList",
-  "userSingleList",
-  "userOngoingList",
-] as const;
-
 function makeSingleSectionNameArrs<
   SC extends ContextName,
   SnArrs = {
@@ -129,8 +107,9 @@ function makeBaseNameArrsForContext<SC extends ContextName>(
 
   return {
     ...makeSingleSectionNameArrs(sectionContext),
-    dbStore: depreciatingDbStoreNames,
-
+    dbStore: dbStoreNameS.arrs.all,
+    dbStoreArr: dbStoreNameS.arrs.arr,
+    dbStoreIndex: dbStoreNameS.arrs.index,
     all: Obj.keys(baseSectionsOfContext) as SimpleSectionName<SC>[],
 
     // booleans

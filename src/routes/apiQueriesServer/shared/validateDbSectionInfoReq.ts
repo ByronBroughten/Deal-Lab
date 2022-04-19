@@ -1,9 +1,10 @@
 import { Request, Response } from "express";
 import { Id } from "../../../client/src/App/sharedWithServer/Analyzer/SectionMetas/relSections/baseSections/id";
 import {
-  SectionNam,
-  SectionName,
-} from "../../../client/src/App/sharedWithServer/Analyzer/SectionMetas/SectionName";
+  DbStoreName,
+  dbStoreNameS,
+  DbStoreType,
+} from "../../../client/src/App/sharedWithServer/Analyzer/SectionMetas/relSections/baseSectionTypes/dbStoreNames";
 import { DbSectionPackInfoReq } from "../../../client/src/App/sharedWithServer/apiQueriesShared/makeGeneralReqs";
 import { ResHandledError } from "../../../middleware/error";
 import { LoggedIn, validateLoggedInUser } from "./validateLoggedInUser";
@@ -30,11 +31,12 @@ function validateDbId(value: any, res: Response): string {
   }
 }
 
-export function validateDbStoreName(
+export function validateDbStoreName<DT extends DbStoreType = "all">(
   value: any,
-  res: Response
-): SectionName<"dbStore"> {
-  if (SectionNam.is(value, "dbStore")) return value;
+  res: Response,
+  type?: DT
+): DbStoreName<DT> {
+  if (dbStoreNameS.is(value, type)) return value;
   else {
     res.status(500).send("The received dbId is not valid.");
     throw new ResHandledError("Handled in validateRawSectionPack");

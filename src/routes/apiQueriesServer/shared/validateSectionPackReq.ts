@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { DbStoreName } from "../../../client/src/App/sharedWithServer/Analyzer/SectionMetas/SectionName";
+import { DbStoreName } from "../../../client/src/App/sharedWithServer/Analyzer/SectionMetas/relSections/baseSectionTypes/dbStoreNames";
 import { SectionPack } from "../../../client/src/App/sharedWithServer/Analyzer/SectionPack";
 import { ServerSectionPack } from "../../../client/src/App/sharedWithServer/Analyzer/SectionPackRaw";
 import {
@@ -18,7 +18,7 @@ export function validateSectionPackArrReq(
   return {
     body: {
       user: validateLoggedInUser(user, res),
-      dbStoreName: validateDbStoreName(dbStoreName, res),
+      dbStoreName: validateDbStoreName(dbStoreName, res, "arr"),
       sectionPackArr: validateServerSectionPackArr({
         value: sectionPackArr,
         dbStoreName,

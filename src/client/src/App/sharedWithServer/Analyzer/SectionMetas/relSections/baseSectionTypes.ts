@@ -10,7 +10,6 @@ import {
   baseNameArrs,
   BaseNameArrs,
   BaseNameSelector,
-  depreciatingDbStoreNames,
 } from "./baseSectionTypes/baseNameArrs";
 import { SpecificSectionInfo } from "./rel/relVarbInfoTypes";
 
@@ -45,8 +44,6 @@ export type SectionVarbNameByType<
 
 //
 export type BaseSectionsDb = typeof baseSections.db;
-export type DbStoreName = typeof depreciatingDbStoreNames[number];
-export const dbStoreNames = depreciatingDbStoreNames;
 
 export function listNameToStoreName(sectionName: BaseName<"allList">) {
   if (isBaseName(sectionName, "singleTimeList")) return "userSingleList";

@@ -238,24 +238,28 @@ export const baseSections = {
   },
 } as const;
 
-// check every instance of emailLower
-
-// make user initialize with apiAccessStatus: basicStorage
-// remove protectedUser
-// change how the user is initialized
-
 // double-check that creating the login-user only
 // gives email, userName, and apiAccessStatus
+
+// as things stand, this is not doing what I want it to.
+// I'd have to filter out the children, and then filter out
+// the varbs.
+// I can do that for every single item
+// Right now the clientSide would probably handle it just fine
+// The issue is that right now I'm sending the encrypted password to the client.
+// How about I cut the user stuff from the sections I send back and send
+// what the client needs in an auth token?
+// either way, I think the answer is to further specify the dbStoreNames
 
 // make a group of sectionNames that the section
 // functions can access
 
 // make a group of sectionNames that the sectionArr function
-// can access
+// can access(?)
 
 // make sure LoginUser isn't based on dbStore
 
-// the userSectionName is the only one of concern for upgradeUserToPro
+// the user sectionName is the only one of concern for upgradeUserToProj
 
 // make the loginWebToken give apiAccessStatus
 

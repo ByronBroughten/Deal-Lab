@@ -9,7 +9,7 @@ import {
   InEntityVarbInfo,
 } from "./SectionMetas/relSections/baseSections/baseValues/NumObj/entities";
 import { Id } from "./SectionMetas/relSections/baseSections/id";
-import { DbStoreName } from "./SectionMetas/relSections/baseSectionTypes";
+import { DbStoreName } from "./SectionMetas/relSections/baseSectionTypes/dbStoreNames";
 import {
   DbNameInfo,
   RelInfoStatic,

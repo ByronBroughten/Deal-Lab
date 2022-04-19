@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { DbEntry } from "../../client/src/App/sharedWithServer/Analyzer/DbEntry";
-import { DbStoreName } from "../../client/src/App/sharedWithServer/Analyzer/SectionMetas/relSections/baseSectionTypes";
+import { DbStoreName } from "../../client/src/App/sharedWithServer/Analyzer/SectionMetas/relSections/baseSectionTypes/dbStoreNames";
 import {
   SectionNam,
   SectionName,
