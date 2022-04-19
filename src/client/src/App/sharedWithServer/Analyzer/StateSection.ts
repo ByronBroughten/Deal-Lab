@@ -21,8 +21,8 @@ import {
 import { NextSectionMeta } from "./SectionMetas/SectionMeta";
 import {
   FeSectionNameType,
-  SectionNam,
   SectionName,
+  sectionNameS,
 } from "./SectionMetas/SectionName";
 import { OutUpdatePack } from "./SectionMetas/VarbMeta";
 import {
@@ -130,7 +130,7 @@ export default class StateSection<
   get parentInfoSafe(): FeParentInfo<SectionName<"hasParent">> {
     const { parentInfo } = this.core;
     if (
-      !SectionNam.is(this.sectionName, "hasParent") ||
+      !sectionNameS.is(this.sectionName, "hasParent") ||
       parentInfo.sectionName === "no parent"
     )
       throw new Error("This section doesn't have a parent.");
@@ -159,7 +159,7 @@ export default class StateSection<
   get parentNameSafe(): ParentName<SectionName<"hasParent">> {
     const { sectionName } = this.core.parentInfo;
     if (
-      !SectionNam.is(this.sectionName, "hasParent") ||
+      !sectionNameS.is(this.sectionName, "hasParent") ||
       sectionName === "no parent"
     )
       throw new Error("This section doesn't have a parent.");
@@ -198,7 +198,7 @@ export default class StateSection<
     sectionType?: ST
   ): value is StateSection<SectionName<ST>> {
     if (!(value instanceof StateSection)) return false;
-    return SectionNam.is(value.sectionName, (sectionType ?? "all") as ST);
+    return sectionNameS.is(value.sectionName, (sectionType ?? "all") as ST);
   }
 
   static init = initStateSection;

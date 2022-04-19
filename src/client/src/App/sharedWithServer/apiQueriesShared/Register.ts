@@ -2,7 +2,10 @@ import { z } from "zod";
 import { DbEntry, zDbEntryArr } from "../Analyzer/DbEntry";
 import { BaseSectionsDb } from "../Analyzer/SectionMetas/relSections/baseSectionTypes";
 import { SchemaVarbsToDbValues } from "../Analyzer/SectionMetas/relSections/rel/valueMetaTypes";
-import { SectionNam, SectionName } from "../Analyzer/SectionMetas/SectionName";
+import {
+  SectionName,
+  sectionNameS,
+} from "../Analyzer/SectionMetas/SectionName";
 import { SectionPackRaw, zSectionPackDbArr } from "../Analyzer/SectionPackRaw";
 import { NextRes } from "../apiQueriesSharedTypes";
 import { dbLimits } from "../utils/dbLimts";
@@ -29,7 +32,7 @@ export function areGuestAccessSectionsNext(
   return zValidate(value, zGuestAccessSections);
 }
 function makeZGuestAccessSectionsNext() {
-  const feGuestAccessStoreNames = SectionNam.arrs.db.feGuestAccessStore;
+  const feGuestAccessStoreNames = sectionNameS.arrs.db.feGuestAccessStore;
   const schemaFrame = feGuestAccessStoreNames.reduce(
     (feGuestAccessSections, sectionName) => {
       feGuestAccessSections[sectionName] = zSectionPackDbArr;
@@ -64,7 +67,7 @@ export function areGuestAccessSections(
 
 function makeZGuestAccessSections() {
   const sections: Partial<Record<SectionName<"feGuestAccessStore">, any>> = {};
-  for (const sectionName of SectionNam.arrs.fe.feGuestAccessStore) {
+  for (const sectionName of sectionNameS.arrs.fe.feGuestAccessStore) {
     sections[sectionName] = zDbEntryArr;
   }
   return z.object(sections as Record<SectionName<"feGuestAccessStore">, any>);

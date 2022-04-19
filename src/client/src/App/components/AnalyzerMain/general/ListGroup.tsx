@@ -1,18 +1,18 @@
+import { MdOutlinePlaylistAdd } from "react-icons/md";
 import styled, { css } from "styled-components";
 import { useAnalyzerContext } from "../../../modules/usePropertyAnalyzer";
 import { Inf } from "../../../sharedWithServer/Analyzer/SectionMetas/Info";
 import { ListSectionName } from "../../../sharedWithServer/Analyzer/SectionMetas/relNameArrs";
-import { SectionNam } from "../../../sharedWithServer/Analyzer/SectionMetas/SectionName";
+import { FeParentInfo } from "../../../sharedWithServer/Analyzer/SectionMetas/relNameArrs/ParentTypes";
+import { userListItemTypes } from "../../../sharedWithServer/Analyzer/SectionMetas/relNameArrs/UserListTypes";
+import { listNameToStoreName } from "../../../sharedWithServer/Analyzer/SectionMetas/relSections/baseSectionTypes";
+import { sectionNameS } from "../../../sharedWithServer/Analyzer/SectionMetas/SectionName";
 import ccs from "../../../theme/cssChunks";
 import theme, { themeSectionNameOrDefault } from "../../../theme/Theme";
 import AdditiveList from "../../appWide/AdditiveList";
-import PlusBtn from "../../appWide/PlusBtn";
-import { MdOutlinePlaylistAdd } from "react-icons/md";
-import { FeParentInfo } from "../../../sharedWithServer/Analyzer/SectionMetas/relNameArrs/ParentTypes";
 import BtnTooltip from "../../appWide/BtnTooltip";
-import { listNameToStoreName } from "../../../sharedWithServer/Analyzer/SectionMetas/relSections/baseSectionTypes";
-import { userListItemTypes } from "../../../sharedWithServer/Analyzer/SectionMetas/relNameArrs/UserListTypes";
 import useHowMany from "../../appWide/customHooks/useHowMany";
+import PlusBtn from "../../appWide/PlusBtn";
 
 type Props<S extends ListSectionName = ListSectionName> = {
   className?: string;
@@ -53,7 +53,7 @@ export default function ListGroup({
   // those would look best with a regular labeled input
   // with the =$75/month
 
-  const displayTotal = SectionNam.is(listSectionName, "singleTimeList")
+  const displayTotal = sectionNameS.is(listSectionName, "singleTimeList")
     ? analyzer.displayVarb(totalVarbName, feInfo)
     : analyzer.switchedOngoingDisplayVarb(totalVarbName, feInfo);
 

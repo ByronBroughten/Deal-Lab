@@ -2,7 +2,7 @@ import bcrypt from "bcrypt";
 import mongoose from "mongoose";
 import { BaseSectionsDb } from "../../client/src/App/sharedWithServer/Analyzer/SectionMetas/relSections/baseSectionTypes";
 import { SchemaVarbsToDbValues } from "../../client/src/App/sharedWithServer/Analyzer/SectionMetas/relSections/rel/valueMetaTypes";
-import { SectionNam } from "../../client/src/App/sharedWithServer/Analyzer/SectionMetas/SectionName";
+import { sectionNameS } from "../../client/src/App/sharedWithServer/Analyzer/SectionMetas/SectionName";
 import {
   GuestAccessSectionsNext,
   RegisterFormData,
@@ -45,7 +45,7 @@ export const userServerSide = {
       user: [initDbSectionPack("user", newUser)],
     };
 
-    for (const storeName of SectionNam.arrs.fe.dbStore) {
+    for (const storeName of sectionNameS.arrs.fe.dbStore) {
       if (!(storeName in partial)) partial[storeName] = [];
     }
 

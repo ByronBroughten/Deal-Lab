@@ -1,8 +1,8 @@
 import mongoose, { Schema } from "mongoose";
 import { SelfOrDescendantName } from "../../client/src/App/sharedWithServer/Analyzer/SectionMetas/relNameArrs/ChildTypes";
 import {
-  SectionNam,
   SectionName,
+  sectionNameS,
 } from "../../client/src/App/sharedWithServer/Analyzer/SectionMetas/SectionName";
 import { SectionPackDbRaw } from "../../client/src/App/sharedWithServer/Analyzer/SectionPackRaw";
 import { RawSection } from "../../client/src/App/sharedWithServer/Analyzer/SectionPackRaw/RawSection";
@@ -20,7 +20,7 @@ export function createUserModel(modelName: string) {
 
 function makeMongooseUserSchema(): Schema<Record<SectionName<"dbStore">, any>> {
   const partial: Partial<Record<SectionName<"dbStore">, any>> = {};
-  for (const sectionName of SectionNam.arrs.fe.dbStore) {
+  for (const sectionName of sectionNameS.arrs.fe.dbStore) {
     partial[sectionName] = [makeMongooseSectionPack()];
   }
   const frame = partial as Record<SectionName<"dbStore">, any>;

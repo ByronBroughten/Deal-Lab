@@ -1,12 +1,12 @@
 import Analyzer from "../../../Analyzer";
 import { ObjectKeys } from "../../../utils/Obj";
 import { sectionMetas } from "../../SectionMetas";
+import { Inf } from "../../SectionMetas/Info";
 import { InEntityVarbInfo } from "../../SectionMetas/relSections/baseSections/baseValues/NumObj/entities";
+import { BaseName } from "../../SectionMetas/relSections/baseSectionTypes";
 import { FeVarbInfo } from "../../SectionMetas/relSections/rel/relVarbInfoTypes";
 import { ongoingVarbSpanEndings } from "../../SectionMetas/relSections/rel/relVarbs/preOngoingVarbs";
-import { Inf } from "../../SectionMetas/Info";
-import { SectionNam, SectionName } from "../../SectionMetas/SectionName";
-import { BaseName } from "../../SectionMetas/relSections/baseSectionTypes";
+import { SectionName, sectionNameS } from "../../SectionMetas/SectionName";
 
 export type SectionOption = {
   dbId: string;
@@ -44,7 +44,7 @@ function initStaticVarbOptions(): VariableOption[] {
   const sectionMetaEntries = Object.entries(sectionMetas.raw.fe);
   return sectionMetaEntries.reduce((options, [sectionName, sectionMeta]) => {
     const varbNames = ObjectKeys(sectionMeta.varbMetas) as string[];
-    if (SectionNam.is(sectionName, "hasGlobalVarbs"))
+    if (sectionNameS.is(sectionName, "hasGlobalVarbs"))
       options = options.concat(
         varbNames
           .map((varbName) => initStaticVarbOption(sectionName, varbName))
@@ -112,7 +112,7 @@ function userListTotalOptions(analyzer: Analyzer): VariableOption[] {
 
   const options: VariableOption[] = [];
 
-  for (const sectionName of SectionNam.arrs.fe.additiveList) {
+  for (const sectionName of sectionNameS.arrs.fe.additiveList) {
     const collectionName = sectionToCollectionName[sectionName];
     const feIds = analyzer.singleSection("main").childFeIds(sectionName);
     for (const id of feIds) {

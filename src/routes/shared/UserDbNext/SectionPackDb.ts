@@ -2,8 +2,8 @@ import { z } from "zod";
 import { SelfOrDescendantName } from "../../../client/src/App/sharedWithServer/Analyzer/SectionMetas/relNameArrs/ChildTypes";
 import { InEntityVarbInfo } from "../../../client/src/App/sharedWithServer/Analyzer/SectionMetas/relSections/baseSections/baseValues/NumObj/entities";
 import {
-  SectionNam,
   SectionName,
+  sectionNameS,
   SectionNameType,
 } from "../../../client/src/App/sharedWithServer/Analyzer/SectionMetas/SectionName";
 import {
@@ -48,7 +48,7 @@ export class SectionPackDb<SN extends SectionName> {
   isSectionType<ST extends SectionNameType<"db">>(
     sectionType: ST
   ): this is SectionPackDb<SectionName<ST>> {
-    if (SectionNam.is(this.sectionName, sectionType)) return true;
+    if (sectionNameS.is(this.sectionName, sectionType)) return true;
     else return false;
   }
   toFeSectionPack(): SectionPackRaw<"fe", SN> {

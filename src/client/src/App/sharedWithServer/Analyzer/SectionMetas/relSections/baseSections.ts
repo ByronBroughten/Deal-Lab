@@ -241,52 +241,27 @@ export const baseSections = {
 // double-check that creating the login-user only
 // gives email, userName, and apiAccessStatus
 
-// as things stand, this is not doing what I want it to.
-// I'd have to filter out the children, and then filter out
-// the varbs.
-// I can do that for every single item
-// Right now the clientSide would probably handle it just fine
-// The issue is that right now I'm sending the encrypted password to the client.
-// How about I cut the user stuff from the sections I send back and send
-// what the client needs in an auth token?
-// either way, I think the answer is to further specify the dbStoreNames
+// when creating the loginUser, handle user separately
 
-// make a group of sectionNames that the section
-// functions can access
-
-// make a group of sectionNames that the sectionArr function
-// can access(?)
+// I can handle each of the three dbStoreName types separately.
+// I'm already handling the first two.
+// I just need to do something special for the user.
 
 // make sure LoginUser isn't based on dbStore
 
-// the user sectionName is the only one of concern for upgradeUserToProj
+// make the loginWebToken have apiAccessStatus
 
-// make the loginWebToken give apiAccessStatus
+// make a middleware that checks whether the user has fullStorage, or whether they have
+// limitedStorage with less than three entries in a given section
+// Apply this to addSection
+// Apply this to updateSection and addSectionArr, too.
+// Limit addSection on the frontEnd for addSectionArr sections
+// "Upgrade to pro to save more than 2 of a given type of entry."
 
-// make a middleWare that checks for apiAccessStatus if you try to write
-// anything.
-// add functionality to addSection that limits saving entries if apiAccessStatus
-// isn't upgraded.
+// I'll need to limit the number of sectionArrs they can add and save as well, whether
+// for variables or lists.
 
 type ApiAccessStatus = "readonly" | "basicStorage" | "fullStorage";
-// type ApiAccessStatus1 = "guest" | "basicUser" | "proUser";
-
-// the frontend cares about the first ones
-// the backend cares about the second ones
-
-// protected: true
-
-// change user layout first
-// apiAccessStatus will also be in the webtoken, along with _id
-
-// make dbStoreName and protectedDbStoreName
-// or something like that
-// or dbStoreNameExposed
-// dbStoreNameProtected
-
-// make it so that so long as the db version of a section
-// is a superset of the fe version, it can be converted in
-// the same way
 
 type FeSectionName = keyof BaseSections["fe"];
 export type GeneralBaseSections = {

@@ -7,7 +7,7 @@ import {
   FeParentInfo,
   ParentFinder,
 } from "../../../SectionMetas/relNameArrs/ParentTypes";
-import { SectionNam, SectionName } from "../../../SectionMetas/SectionName";
+import { SectionName, sectionNameS } from "../../../SectionMetas/SectionName";
 import { VarbValues } from "../../../StateSection/methods/varbs";
 import { initValuesFromDb } from "./gatherSectionInitProps/initValuesFromDb";
 import { saneInitialSections } from "./gatherSectionInitProps/saneInitialSections";
@@ -138,7 +138,7 @@ export function gatherSectionInitProps<S extends SectionName>(
     if (!initFromDefault && saneInitialSections.isIn(sectionName)) {
       dbEntry = saneInitialSections.get(sectionName);
     }
-    if (initFromDefault && SectionNam.is(sectionName, "hasDefaultStore")) {
+    if (initFromDefault && sectionNameS.is(sectionName, "hasDefaultStore")) {
       const storeName = analyzer.meta
         .section(sectionName)
         .get("defaultStoreName");

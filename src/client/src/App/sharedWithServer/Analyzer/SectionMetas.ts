@@ -25,7 +25,7 @@ import {
   VarbNames,
 } from "./SectionMetas/relSections/rel/relVarbInfoTypes";
 import { NextSectionMeta, SectionMetaCore } from "./SectionMetas/SectionMeta";
-import { SectionNam, SectionName } from "./SectionMetas/SectionName";
+import { SectionName, sectionNameS } from "./SectionMetas/SectionName";
 import {
   InUpdatePack,
   isDefaultInPack,
@@ -232,7 +232,7 @@ export class SectionMetas {
   initOutUpdatePacks() {
     for (const [sectionContext, dbFeSections] of NextObjEntries(this.core)) {
       for (const [sectionName, sectionMeta] of NextObjEntries(dbFeSections)) {
-        if (!SectionNam.is(sectionName, "hasVarb")) continue;
+        if (!sectionNameS.is(sectionName, "hasVarb")) continue;
         for (const [varbName, varbMeta] of NextObjEntries(
           (sectionMeta as NextSectionMeta<ContextName, SectionName>)
             .get("varbMetas")

@@ -1,14 +1,12 @@
 import Analyzer from "../../../Analyzer";
-import { Obj } from "../../../utils/Obj";
-import { FeInfo, Inf } from "../../SectionMetas/Info";
-import { NameToNameWithSameChildren } from "../../SectionMetas/relNameArrs/ChildTypes";
+import { DbEntry, DbSection, DbSections } from "../../DbEntry";
+import { FeInfo } from "../../SectionMetas/Info";
 import { SectionFinder } from "../../SectionMetas/relSections/baseSectionTypes";
 import {
-  SectionNam,
   SectionName,
+  sectionNameS,
   SectionNameType,
 } from "../../SectionMetas/SectionName";
-import { DbEntry, DbSection, DbSections } from "../../DbEntry";
 
 type StateToDbSectionsOptions = {
   newMainSectionName?: SectionName;
@@ -122,7 +120,7 @@ export function dbEntryArrs<
   ToReturn = { [Prop in SectionName<ST & SectionNameType>]: DbEntry[] }
 >(this: Analyzer, sectionNameType: ST): ToReturn {
   const partial = {} as ToReturn;
-  for (const sectionName of SectionNam.arrs.fe[sectionNameType]) {
+  for (const sectionName of sectionNameS.arrs.fe[sectionNameType]) {
     partial[sectionName as keyof typeof partial] = this.dbEntryArr(
       sectionName as any
     ) as any;

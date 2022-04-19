@@ -2,8 +2,8 @@ import Analyzer from "../../../Analyzer";
 import { Obj } from "../../../utils/Obj";
 import { FeSectionPack } from "../../FeSectionPack";
 import {
-  SectionNam,
   SectionName,
+  sectionNameS,
   SectionNameType,
 } from "../../SectionMetas/SectionName";
 import { SectionPackRaw } from "../../SectionPackRaw";
@@ -23,7 +23,7 @@ export function makeRawSectionPackArrs<ST extends SectionNameType>(
   this: Analyzer,
   sectionNameType: ST
 ): FeSectionPackArrs<ST> {
-  return (SectionNam.arrs.fe[sectionNameType] as string[]).reduce(
+  return (sectionNameS.arrs.fe[sectionNameType] as string[]).reduce(
     (sectionPackArrs, sectionName) => {
       sectionPackArrs[sectionName as keyof typeof sectionPackArrs] =
         this.makeRawSectionPackArr(sectionName as SectionName<ST>) as any;

@@ -1,7 +1,7 @@
 import { sectionMetas } from "../../client/src/App/sharedWithServer/Analyzer/SectionMetas";
 import {
-  SectionNam,
   SectionName,
+  sectionNameS,
 } from "../../client/src/App/sharedWithServer/Analyzer/SectionMetas/SectionName";
 import { SectionPack } from "../../client/src/App/sharedWithServer/Analyzer/SectionPack";
 import {
@@ -17,12 +17,13 @@ import { SectionPackDb } from "./UserDbNext/SectionPackDb";
 export class UserDbNext {
   constructor(readonly core: UserDbCore) {}
   makeRawFeLoginUser(): LoginUserNext {
-    return SectionNam.arrs.fe.initOnLogin.reduce((loginUser, sectionName) => {
+    return sectionNameS.arrs.fe.initOnLogin.reduce((loginUser, sectionName) => {
       (loginUser[sectionName] as SectionPackRaw<"fe", typeof sectionName>[]) =
         this.makeRawFeSectionPackArr(sectionName);
       return loginUser;
     }, {} as LoginUserNext);
   }
+
   sectionPackArr<SN extends SectionName<"dbStore">>(
     storeName: SN
   ): SectionPackDb<SN>[] {
@@ -50,7 +51,11 @@ export class UserDbNext {
   makeRawFeSectionPackArr<SN extends SectionName<"dbStore">>(
     storeName: SN
   ): SectionPackRaw<"fe", SN>[] {
-    if (SectionNam.is(storeName, "table")) {
+    // why is making the table any different?
+    // making the index entries should be all that's different.
+    // I can redo the table on the client side.
+
+    if (sectionNameS.is(storeName, "table")) {
       return this.makeTableSectionPackFeArr(storeName) as SectionPackRaw<
         "fe",
         SN
@@ -81,18 +86,22 @@ export class UserDbNext {
     return [tableSectionPack.toFeSectionPack()];
   }
   static init(userDbRaw: UserDbRaw): UserDbNext {
-    const core = SectionNam.arrs.db.dbStore.reduce((userDbCore, storeName) => {
-      if (storeName in userDbRaw) {
-        (userDbCore[storeName] as SectionPackDb<typeof storeName>[]) = (
-          userDbRaw[storeName] as SectionPackDbRaw<SectionName>[]
-        ).map(
-          (rawPack) => new SectionPackDb({ ...rawPack, sectionName: storeName })
-        );
-      } else {
-        userDbCore[storeName] = [];
-      }
-      return userDbCore;
-    }, {} as UserDbCore);
+    const core = sectionNameS.arrs.db.dbStore.reduce(
+      (userDbCore, storeName) => {
+        if (storeName in userDbRaw) {
+          (userDbCore[storeName] as SectionPackDb<typeof storeName>[]) = (
+            userDbRaw[storeName] as SectionPackDbRaw<SectionName>[]
+          ).map(
+            (rawPack) =>
+              new SectionPackDb({ ...rawPack, sectionName: storeName })
+          );
+        } else {
+          userDbCore[storeName] = [];
+        }
+        return userDbCore;
+      },
+      {} as UserDbCore
+    );
 
     return new UserDbNext(core);
   }

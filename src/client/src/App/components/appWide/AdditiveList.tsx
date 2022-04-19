@@ -4,20 +4,20 @@ import styled, { css } from "styled-components";
 import useToggleView from "../../modules/customHooks/useToggleView";
 import { useAnalyzerContext } from "../../modules/usePropertyAnalyzer";
 import { FeInfo, Inf } from "../../sharedWithServer/Analyzer/SectionMetas/Info";
+import { userListItemTypes } from "../../sharedWithServer/Analyzer/SectionMetas/relNameArrs/UserListTypes";
+import { listNameToStoreName } from "../../sharedWithServer/Analyzer/SectionMetas/relSections/baseSectionTypes";
+import {
+  SectionName,
+  sectionNameS,
+} from "../../sharedWithServer/Analyzer/SectionMetas/SectionName";
 import ccs from "../../theme/cssChunks";
 import theme, { ThemeSectionName } from "../../theme/Theme";
 import PlainIconBtn from "../general/PlainIconBtn";
 import BigStringEditor from "../inputs/BigStringEditor";
-import { useOpenWidth } from "./SectionTitleRow";
-import { listNameToStoreName } from "../../sharedWithServer/Analyzer/SectionMetas/relSections/baseSectionTypes";
-import {
-  SectionNam,
-  SectionName,
-} from "../../sharedWithServer/Analyzer/SectionMetas/SectionName";
 import AdditiveListTable from "./AdditiveList/AdditiveListTable";
 import { ListMenu } from "./AdditiveList/ListMenu";
 import useHowMany from "./customHooks/useHowMany";
-import { userListItemTypes } from "../../sharedWithServer/Analyzer/SectionMetas/relNameArrs/UserListTypes";
+import { useOpenWidth } from "./SectionTitleRow";
 
 function useTotalVarb(feInfo: FeInfo, listType: SectionName<"additiveList">) {
   const { analyzer } = useAnalyzerContext();
@@ -81,7 +81,7 @@ export default function AdditiveList({
                 sectionName: themeSectionName,
               }}
             />
-            {SectionNam.is(listType, "additiveList") && isAtLeastOne && (
+            {sectionNameS.is(listType, "additiveList") && isAtLeastOne && (
               <AdditiveListTotal {...{ feInfo, listType }} />
             )}
           </div>

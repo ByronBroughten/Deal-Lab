@@ -6,7 +6,7 @@ import {
   SectionParentFinder,
 } from "../../SectionMetas/relNameArrs/ParentTypes";
 import { SpecificSectionInfo } from "../../SectionMetas/relSections/rel/relVarbInfoTypes";
-import { SectionNam, SectionName } from "../../SectionMetas/SectionName";
+import { SectionName, sectionNameS } from "../../SectionMetas/SectionName";
 import StateSection from "../../StateSection";
 
 // export function parent<S extends SectionName<"alwaysOneHasParent">>(finder: S): StateSection<ParentName<S>>;
@@ -24,7 +24,7 @@ export function parent<S extends SectionName<"hasParent">>(
   this: Analyzer,
   finder: SectionParentFinder<S>
 ): StateSection<ParentName<S>> {
-  if (SectionNam.is(finder, "hasOneParent")) {
+  if (sectionNameS.is(finder, "hasOneParent")) {
     const parentName = this.meta.parentName(finder);
     return this.section(parentName as any) as StateSection<ParentName<S>>;
   } else {

@@ -1,6 +1,6 @@
 import { AxiosResponse } from "axios";
 import { Id } from "../../../sharedWithServer/Analyzer/SectionMetas/relSections/baseSections/id";
-import { SectionNam } from "../../../sharedWithServer/Analyzer/SectionMetas/SectionName";
+import { sectionNameS } from "../../../sharedWithServer/Analyzer/SectionMetas/SectionName";
 import { SectionPack } from "../../../sharedWithServer/Analyzer/SectionPack";
 import {
   DbIdRes,
@@ -25,7 +25,8 @@ export function validateDbStoreNameRes(
   const { data } = res;
   if (Obj.isAnyIfIsObj(data)) {
     const { dbStoreName } = data;
-    if (SectionNam.is(dbStoreName, "dbStore")) return makeRes({ dbStoreName });
+    if (sectionNameS.is(dbStoreName, "dbStore"))
+      return makeRes({ dbStoreName });
   }
   throw makeResValidationQueryError();
 }

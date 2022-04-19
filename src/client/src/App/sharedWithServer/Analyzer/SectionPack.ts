@@ -7,8 +7,8 @@ import {
 import { ContextName } from "./SectionMetas/relSections/baseSections";
 import { Id } from "./SectionMetas/relSections/baseSections/id";
 import {
-  SectionNam,
   SectionName,
+  sectionNameS,
   SectionNameType,
 } from "./SectionMetas/SectionName";
 import { SectionPackRaw, zRawSectionPack } from "./SectionPackRaw";
@@ -95,7 +95,7 @@ export class SectionPack<SN extends SectionName, CN extends ContextName> {
     if (
       (zRawSectionPack.safeParse(value).success &&
         value.contextName === contextName) ??
-      ("fe" && SectionNam.is(value.sectionName, sectionType ?? "all"))
+      ("fe" && sectionNameS.is(value.sectionName, sectionType ?? "all"))
     ) {
       return true;
     } else return false;

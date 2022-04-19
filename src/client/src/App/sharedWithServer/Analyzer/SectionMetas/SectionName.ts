@@ -55,7 +55,7 @@ export type AlwaysOneVarbFinder<
   varbName: SectionVarbName<"fe", S>;
 };
 
-export const SectionNam = {
+export const sectionNameS = {
   arrs: makeNameArrs(),
   is<T extends SectionNameType<SC> = "all", SC extends ContextName = "fe">(
     value: any,
@@ -75,4 +75,4 @@ type GeneralNameArrs = {
   >;
 };
 const _testNameArrs = <T extends GeneralNameArrs>(_: T) => undefined;
-_testNameArrs(SectionNam.arrs);
+_testNameArrs(sectionNameS.arrs);

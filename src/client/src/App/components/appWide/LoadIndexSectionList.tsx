@@ -7,8 +7,8 @@ import { FeInfo, Inf } from "../../sharedWithServer/Analyzer/SectionMetas/Info";
 import { ChildName } from "../../sharedWithServer/Analyzer/SectionMetas/relNameArrs/ChildTypes";
 import { IndexParentName } from "../../sharedWithServer/Analyzer/SectionMetas/relNameArrs/StoreTypes";
 import {
-  SectionNam,
   SectionName,
+  sectionNameS,
 } from "../../sharedWithServer/Analyzer/SectionMetas/SectionName";
 import ccs from "../../theme/cssChunks";
 import theme, {
@@ -23,7 +23,7 @@ function useDeleteIndexSection(
   sectionName: SectionName<"hasIndexStore">
 ): (dbId: string) => void {
   const store = useSectionQueryActions();
-  if (SectionNam.is(sectionName, "hasRowIndexStore")) {
+  if (sectionNameS.is(sectionName, "hasRowIndexStore")) {
     return async (dbId: string) =>
       await store.deleteRowIndexEntry(sectionName, dbId);
   } else {

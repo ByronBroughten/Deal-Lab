@@ -1,7 +1,10 @@
 import { z } from "zod";
 import { config } from "../../Constants";
 import { DbEntry, zDbEntryArr } from "../Analyzer/DbEntry";
-import { SectionNam, SectionName } from "../Analyzer/SectionMetas/SectionName";
+import {
+  SectionName,
+  sectionNameS,
+} from "../Analyzer/SectionMetas/SectionName";
 import { SectionPackRaw, zRawSectionPack } from "../Analyzer/SectionPackRaw";
 import { zodSchema } from "../utils/zod";
 import { zRegisterFormData } from "./register";
@@ -23,7 +26,7 @@ export type LoginUser = Omit<
 
 export function isLoginUser(value: any): value is LoginUser {
   const zLoginUserSchema = z.object(
-    SectionNam.arrs.fe.initOnLogin.reduce((partial, sectionName) => {
+    sectionNameS.arrs.fe.initOnLogin.reduce((partial, sectionName) => {
       partial[sectionName] = zDbEntryArr;
       return partial;
     }, {} as Partial<Record<keyof LoginUser, any>>) as Record<
@@ -47,7 +50,7 @@ export function isLoginUserNext(value: any): value is LoginUserNext {
 
 function makeZLoginUserSchema() {
   return z.object(
-    SectionNam.arrs.fe.initOnLogin.reduce((partial, sectionName) => {
+    sectionNameS.arrs.fe.initOnLogin.reduce((partial, sectionName) => {
       partial[sectionName] = zodSchema.array(zRawSectionPack);
       return partial;
     }, {} as Partial<Record<keyof LoginUserNext, any>>) as Record<

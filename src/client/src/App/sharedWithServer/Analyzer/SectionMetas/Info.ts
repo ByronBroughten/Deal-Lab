@@ -8,7 +8,7 @@ import {
   MultiVarbInfo,
   SpecificSectionInfo,
 } from "./relSections/rel/relVarbInfoTypes";
-import { FeSectionNameType, SectionNam, SectionName } from "./SectionName";
+import { FeSectionNameType, SectionName, sectionNameS } from "./SectionName";
 
 export type FeInfo<T extends FeSectionNameType = "all"> = FeNameInfo<
   SectionName<T>
@@ -42,7 +42,7 @@ export const Inf = {
       return (
         value.idType === "dbId" &&
         typeof value.id === "string" &&
-        SectionNam.is(value.sectionName, type)
+        sectionNameS.is(value.sectionName, type)
       );
     },
     fe<T extends FeSectionNameType = "all">(
@@ -52,7 +52,7 @@ export const Inf = {
       return (
         value.idType === "feId" &&
         typeof value.id === "string" &&
-        SectionNam.is(value.sectionName, type)
+        sectionNameS.is(value.sectionName, type)
       );
     },
     feVarb(value: any): value is FeVarbInfo {
@@ -88,7 +88,7 @@ export const Inf = {
     varbName: string,
     feInfo: I
   ): FeVarbInfo<Extract<I["sectionName"], BaseName<"hasVarb">>> {
-    if (SectionNam.is(feInfo.sectionName, "hasVarb"))
+    if (sectionNameS.is(feInfo.sectionName, "hasVarb"))
       return { ...feInfo, varbName } as any as FeVarbInfo<
         Extract<I["sectionName"], BaseName<"hasVarb">>
       >;
@@ -96,7 +96,7 @@ export const Inf = {
   },
   feVarbMaker(feInfo: FeNameInfo): (varbName: string) => FeVarbInfo {
     const { sectionName } = feInfo;
-    if (SectionNam.is(sectionName, "hasVarb"))
+    if (sectionNameS.is(sectionName, "hasVarb"))
       return (varbName) => ({ ...feInfo, sectionName, varbName });
     else throw new Error("section must contain at least one varb");
   },

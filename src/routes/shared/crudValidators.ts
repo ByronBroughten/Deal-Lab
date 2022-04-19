@@ -2,8 +2,8 @@ import { Request, Response } from "express";
 import { DbEntry } from "../../client/src/App/sharedWithServer/Analyzer/DbEntry";
 import { DbStoreName } from "../../client/src/App/sharedWithServer/Analyzer/SectionMetas/relSections/baseSectionTypes/dbStoreNames";
 import {
-  SectionNam,
   SectionName,
+  sectionNameS,
   SectionNameType,
 } from "../../client/src/App/sharedWithServer/Analyzer/SectionMetas/SectionName";
 import { isLoginFormData } from "../../client/src/App/sharedWithServer/apiQueriesShared/login";
@@ -98,7 +98,7 @@ export const serverValidate = {
     res: Response,
     sectionNameType: T
   ): value is SectionName<T> {
-    if (SectionNam.is(value, sectionNameType)) return true;
+    if (sectionNameS.is(value, sectionNameType)) return true;
     else {
       res.status(500).send("Invalid database store name.");
       return false;

@@ -1,6 +1,6 @@
 import Analyzer from "../../../../Analyzer";
 import { FeInfo, Inf } from "../../../SectionMetas/Info";
-import { SectionNam, SectionName } from "../../../SectionMetas/SectionName";
+import { SectionName, sectionNameS } from "../../../SectionMetas/SectionName";
 import StateSection from "../../../StateSection";
 import { AddSectionProps } from "../addSections/addSectionsTypes";
 
@@ -17,7 +17,7 @@ export function initOneSectionNext(
   );
   const { sectionName } = props;
   const { feInfo } = next.lastSection(sectionName);
-  if (SectionNam.is(sectionName, "hasParent"))
+  if (sectionNameS.is(sectionName, "hasParent"))
     next = addToParentChildIds(next, feInfo, idx);
   return next;
 }

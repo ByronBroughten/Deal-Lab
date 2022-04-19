@@ -174,7 +174,7 @@ import { sectionMetas } from "./Analyzer/SectionMetas";
 import { Id } from "./Analyzer/SectionMetas/relSections/baseSections/id";
 import { FeVarbInfo } from "./Analyzer/SectionMetas/relSections/rel/relVarbInfoTypes";
 import { NextSectionMeta } from "./Analyzer/SectionMetas/SectionMeta";
-import { SectionNam, SectionName } from "./Analyzer/SectionMetas/SectionName";
+import { SectionName, sectionNameS } from "./Analyzer/SectionMetas/SectionName";
 import StateSection, { StateSectionCore } from "./Analyzer/StateSection";
 import StateVarb from "./Analyzer/StateSection/StateVarb";
 import { Obj, ObjectKeys } from "./utils/Obj";
@@ -245,7 +245,7 @@ export default class Analyzer {
     );
 
     for (const sectionName of next.sectionNames) {
-      if (SectionNam.is(sectionName, "hasDefaultStore")) {
+      if (sectionNameS.is(sectionName, "hasDefaultStore")) {
         const sectionArrInfos = next.sectionArrInfos(sectionName);
         if (sectionArrInfos.length > 0) {
           for (const feInfo of sectionArrInfos) {
