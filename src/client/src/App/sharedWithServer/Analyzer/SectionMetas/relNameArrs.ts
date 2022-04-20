@@ -40,6 +40,14 @@ function makeRelNameArrs<SC extends ContextName>(sectionContext: SC) {
       "indexStoreName",
       "string"
     ),
+
+    // In the analysis default section, I can include the other default sections.
+    // It won't be easy, though, until I decouple the analyzer stuff.
+
+    // What should I do in the meantime?
+    // Right now, without the default stuff, it works ok.
+    // But in analyzer it won't initialize with the outputs.
+
     hasDefaultStore: Obj.entryKeysWithPropOfType(
       relSections[sectionContext],
       "defaultStoreName",

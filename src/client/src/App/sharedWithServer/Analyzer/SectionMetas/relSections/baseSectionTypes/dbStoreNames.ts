@@ -11,7 +11,7 @@ const dbStoreNames = {
     "mgmtDefault",
     "mgmtTable",
     "analysis",
-    "analysisDefault",
+    "outputListDefault",
     "analysisTable",
     "userVarbList",
     "userSingleList",

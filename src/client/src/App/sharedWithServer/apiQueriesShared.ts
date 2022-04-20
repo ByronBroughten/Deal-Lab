@@ -107,7 +107,7 @@ function bitRouteAndPath(pathBit: string): BitRouteAndPath {
       return urljoin(config.apiPathBit, this.bit);
     },
     get full() {
-      return urljoin(config.apiPathFull, this.route);
+      return urljoin(config.apiPathFull, this.bit);
     },
   };
 }

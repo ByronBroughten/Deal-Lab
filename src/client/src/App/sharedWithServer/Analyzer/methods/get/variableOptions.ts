@@ -86,7 +86,7 @@ function userVarbOption(
   return userOption(analyzer, feVarbInfo, collectionName, displayName);
 }
 function userVarbOptions(analyzer: Analyzer): VariableOption[] {
-  const section = analyzer.section("main");
+  const section = analyzer.section("analysis");
   const varbListFeIds = section.childFeIds("userVarbList");
 
   const varbOptions = varbListFeIds.reduce((options, id) => {
@@ -114,7 +114,7 @@ function userListTotalOptions(analyzer: Analyzer): VariableOption[] {
 
   for (const sectionName of sectionNameS.arrs.fe.additiveList) {
     const collectionName = sectionToCollectionName[sectionName];
-    const feIds = analyzer.singleSection("main").childFeIds(sectionName);
+    const feIds = analyzer.singleSection("analysis").childFeIds(sectionName);
     for (const id of feIds) {
       const feInfo = {
         sectionName,

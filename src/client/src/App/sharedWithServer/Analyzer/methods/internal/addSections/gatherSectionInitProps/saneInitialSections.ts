@@ -1,14 +1,14 @@
 import { cloneDeep } from "lodash";
-import { Id } from "../../../../SectionMetas/relSections/baseSections/id";
 import { DbEnt } from "../../../../DbEntry";
-import { initAnalysisDefault } from "./saneInitialSections/initAnalysisDefault";
+import { Id } from "../../../../SectionMetas/relSections/baseSections/id";
 import { initAnalysisTable } from "./saneInitialSections/initAnalysisTable";
 import { initLoanDefault } from "./saneInitialSections/initLoanDefault";
 import { initMgmtDefault } from "./saneInitialSections/initMgmtDefault";
+import { initOutputListDefault } from "./saneInitialSections/initOutputListDefault";
 import { initPropertyDefault } from "./saneInitialSections/initPropertyDefault";
 
 const core = {
-  analysisDefault: initAnalysisDefault,
+  outputListDefault: initOutputListDefault,
   propertyDefault: initPropertyDefault,
   loanDefault: initLoanDefault,
   mgmtDefault: initMgmtDefault,

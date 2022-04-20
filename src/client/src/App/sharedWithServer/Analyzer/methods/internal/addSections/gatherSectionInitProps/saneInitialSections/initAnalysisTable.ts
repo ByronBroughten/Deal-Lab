@@ -1,5 +1,5 @@
 import { DbEnt } from "../../../../../DbEntry";
-import { initOutputs } from "./initAnalysisDefault";
+import { initOutputs } from "./initOutputListDefault";
 
 const columnIds = ["NYCfQJkWIZKI", "J8Sqg91929O5", "p9xNvEd7UpuS"] as const;
 

@@ -1,11 +1,11 @@
+import styled from "styled-components";
 import { Inf } from "../../../sharedWithServer/Analyzer/SectionMetas/Info";
+import theme from "../../../theme/Theme";
 import MainSection from "../../appWide/GeneralSection/MainSection";
 import MainSectionBody from "../../appWide/GeneralSection/MainSection/MainSectionBody";
 import MainSectionTitleRow from "../../appWide/GeneralSection/MainSection/MainSectionTitleRow";
-import AnalysisBasics from "./Deal/DealBasics";
-import AnalysisDetails from "./Deal/DealDetails";
-import styled from "styled-components";
-import theme from "../../../theme/Theme";
+import DealBasics from "./Deal/DealBasics";
+import DealDetails from "./Deal/DealDetails";
 
 export default function Deal({
   feId,
@@ -23,8 +23,8 @@ export default function Deal({
       <MainSectionBody>
         <Styled className="ListGroup-root">
           <div className="Deal-viewable viewable">
-            {!detailsIsOpen && <AnalysisBasics id={feId} />}
-            {detailsIsOpen && <AnalysisDetails id={feId} />}
+            {!detailsIsOpen && <DealBasics id={feId} />}
+            {detailsIsOpen && <DealDetails id={feId} />}
           </div>
         </Styled>
       </MainSectionBody>

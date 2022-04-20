@@ -80,7 +80,7 @@ function dbAnalysisIndexEntry(analyzer: Analyzer): DbEntry {
       "propertyDefault",
       "loanDefault",
       "mgmtDefault",
-      "analysisDefault",
+      "outputListDefault",
     ],
     includeInEntitySections: true,
   });

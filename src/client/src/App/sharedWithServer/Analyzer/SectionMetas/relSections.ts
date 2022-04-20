@@ -13,10 +13,6 @@ import { preMgmtGeneral } from "./relSections/relMgmtGeneral";
 import { prePropertyGeneral } from "./relSections/relPropertyGeneral";
 import { preUserLists } from "./relSections/relUserLists";
 
-// the default values are going by the dbInitValues rather than
-// the full fledged values.
-// I like the idea of using the dbInitValues instead
-
 export function makeRelSections() {
   return {
     fe: {
@@ -33,6 +29,39 @@ export function makeRelSections() {
             "login",
             "register",
 
+            "analysis",
+            "analysisIndex",
+            "analysisTable",
+            "outputListDefault",
+          ] as const,
+        }
+      ),
+      ...relSection.base(
+        "both",
+        "outputList",
+        "Output List",
+        { title: rel.varb.string() },
+        {
+          childNames: ["output"] as const,
+          defaultStoreName: "outputListDefault",
+        }
+      ),
+      ...relSection.base(
+        "both",
+        "outputListDefault",
+        "Output List",
+        { title: rel.varb.string() },
+        { childNames: ["output"] as const }
+      ),
+      ...relSection.base(
+        "both",
+        "analysis",
+        "Analysis",
+        { title: rel.varb.string() },
+        {
+          // user shouldn't be in analysis
+          makeOneOnStartup: true,
+          childNames: [
             "userVarbList",
             "userSingleList",
             "userOngoingList",
@@ -41,12 +70,9 @@ export function makeRelSections() {
             "mgmtGeneral",
             "totalInsAndOuts",
             "final",
-
-            "analysis",
-            "analysisIndex",
-            "analysisTable",
-            "analysisDefault",
+            "outputList",
           ] as const,
+          indexStoreName: "analysisIndex",
         }
       ),
 

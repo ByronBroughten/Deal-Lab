@@ -258,7 +258,8 @@ export default class Analyzer {
         }
       }
     }
-    return next.solveAllActiveVarbs();
+    next = next.solveAllActiveVarbs();
+    return next;
   }
 
   get rawSections(): RawCore {

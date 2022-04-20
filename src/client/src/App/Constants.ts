@@ -2,7 +2,7 @@ import { configUrls, makeCrudConfig } from "./Constants/configUrls";
 
 const dev = {
   name: "Analyzer Client — Development",
-  endpoint: "http://localhost:5000/",
+  endpoint: "http://localhost:5000",
 };
 
 const prod = {

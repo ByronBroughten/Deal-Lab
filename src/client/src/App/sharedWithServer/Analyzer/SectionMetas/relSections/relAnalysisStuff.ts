@@ -1,36 +1,9 @@
-import { ContextName } from "./baseSections";
 import { rel } from "./rel";
 import { relSection } from "./rel/relSection";
-import { RelVarbs } from "./rel/relVarbs";
 
-const analysisRelVarbs: RelVarbs<ContextName, "analysis"> = {
-  title: rel.varb.string(),
-} as const;
-
+// table will just have rows.
 export const relAnalysisStuff = {
-  ...relSection.base(
-    "both",
-    "analysis",
-    "Analysis",
-    { ...analysisRelVarbs },
-    {
-      makeOneOnStartup: true,
-      childNames: ["output"] as const,
-      indexStoreName: "analysisIndex",
-      defaultStoreName: "analysisDefault",
-    }
-  ),
   ...relSection.rowIndex("analysisIndex", "Analysis Index"),
-  ...relSection.base(
-    "both",
-    "analysisDefault",
-    "Analysis",
-    { ...analysisRelVarbs },
-    {
-      makeOneOnStartup: true,
-      childNames: ["output"] as const,
-    }
-  ),
   ...relSection.base("both", "output", "Output", rel.varbs.varbInfo()),
   ...rel.section.managerTable(
     "analysisTable",

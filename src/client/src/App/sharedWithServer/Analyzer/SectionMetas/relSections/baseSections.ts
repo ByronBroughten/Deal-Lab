@@ -152,9 +152,10 @@ export const baseSections = {
     }),
     propertyIndex: base.section.rowIndex,
     propertyTable: base.section.table,
-    propertyDefault: base.section.schema(base.varbs.property, {
-      ...base.options.defaultSection,
-    }),
+    propertyDefault: base.section.schema(
+      base.varbs.property,
+      base.options.defaultSection
+    ),
     propertyGeneral: base.section.schema(omit(base.varbs.property, ["title"]), {
       ...base.options.alwaysOneFromStart,
       hasGlobalVarbs: true,
@@ -193,18 +194,21 @@ export const baseSections = {
       ...base.options.alwaysOneFromStart,
       hasGlobalVarbs: true,
     }),
-
     analysis: base.section.schema(
       { title: "string" },
       base.options.alwaysOneFromStart
     ),
+    outputList: base.section.schema(
+      { title: "string" },
+      base.options.alwaysOneFromStart
+    ),
+    outputListDefault: base.section.schema(
+      { title: "string" },
+      base.options.defaultSection
+    ),
     output: base.section.schema(base.varbs.varbInfo, {}),
     analysisIndex: base.section.rowIndex,
     analysisTable: base.section.table,
-    analysisDefault: base.section.schema(base.varbs.analysis, {
-      ...base.options.defaultSection,
-    }),
-
     totalInsAndOuts: base.section.schema(
       {
         ...base.varbs.numObj([

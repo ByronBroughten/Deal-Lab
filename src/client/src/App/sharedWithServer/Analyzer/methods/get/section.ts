@@ -1,16 +1,16 @@
 import Analyzer from "../../../Analyzer";
-import StateSection from "../../StateSection";
+import { Obj } from "../../../utils/Obj";
 import { FeInfo, Inf } from "../../SectionMetas/Info";
 import {
   FeNameInfo,
   FeVarbInfo,
-  MultiSectionInfo,
   MultiFindByFocalInfo,
+  MultiSectionInfo,
   SpecificSectionInfo,
   SpecificSectionsInfo,
 } from "../../SectionMetas/relSections/rel/relVarbInfoTypes";
 import { NextSectionFinder, SectionName } from "../../SectionMetas/SectionName";
-import { Obj } from "../../../utils/Obj";
+import StateSection from "../../StateSection";
 
 export function sectionNotFound({ sectionName, idType, id }: MultiSectionInfo) {
   return new Error(
@@ -79,10 +79,6 @@ export function lastSection<SN extends SectionName>(
 ): StateSection<SN> {
   const sectionArr = Obj.values(this.sections[sectionName]);
   const section = sectionArr[sectionArr.length - 1];
-
-  // if (!StateSection.is(section, "hasParent")) {
-  //   throw new Error(`Section with name '${sectionName}' has no entries.`);
-  // }
   return section as any as StateSection<SN>;
 }
 // Do I update the infos and whatnot to require a sectionName?

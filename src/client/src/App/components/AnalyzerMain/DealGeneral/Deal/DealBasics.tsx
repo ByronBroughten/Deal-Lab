@@ -1,21 +1,18 @@
 import styled from "styled-components";
-import theme from "../../../../theme/Theme";
 import { useAnalyzerContext } from "../../../../modules/usePropertyAnalyzer";
 import { VariableOption } from "../../../../sharedWithServer/Analyzer/methods/get/variableOptions";
-import { LabeledVarbOutputNext } from "../../../appWide/LabeledVarbOutputNext";
+import theme from "../../../../theme/Theme";
 import LabeledOutputRowNext from "../../../appWide/LabeledOutputRowNext";
-import SectionBtn from "../../../appWide/SectionBtn";
-import { BiPlus } from "react-icons/bi";
+import { LabeledVarbOutputNext } from "../../../appWide/LabeledVarbOutputNext";
 
-const sectionName = "analysis";
-export default function AnalysisBasics({ id }: { id: string }) {
-  const feInfo = { sectionName, id, idType: "feId" } as const;
+const sectionName = "outputList";
+export default function DealBasics({ id }: { id: string }) {
   const { analyzer, handleAddSection } = useAnalyzerContext();
 
-  const section = analyzer.section(feInfo);
+  const section = analyzer.section("outputList");
   const outputIds = section.childFeIds("output");
   function onSelect({ varbInfo }: VariableOption) {
-    handleAddSection("output", feInfo, { values: varbInfo });
+    handleAddSection("output", section.feInfo, { values: varbInfo });
   }
 
   return (

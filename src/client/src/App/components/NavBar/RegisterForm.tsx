@@ -21,6 +21,7 @@ export function RegisterForm() {
     <StyledRegisterForm>
       {registerVarbNames.map((varbName) => (
         <SmallFormTextField
+          key={varbName}
           {...{
             ...varbs[varbName].inputProps("string"),
             ...(varbName === "password" && { type: "password" }),

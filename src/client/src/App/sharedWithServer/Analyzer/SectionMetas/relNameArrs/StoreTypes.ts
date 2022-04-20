@@ -1,7 +1,7 @@
 import { SubType } from "../../../utils/types";
+import { HasRowIndexStoreName, relNameArrs } from "../relNameArrs";
 import { RelSections } from "../relSections";
 import { BaseName } from "../relSections/baseSectionTypes";
-import { HasRowIndexStoreName, relNameArrs } from "../relNameArrs";
 import { HasOneParentSectionName, ParentName } from "./ParentTypes";
 
 export type IndexStoreName<S extends HasIndexStoreName = HasIndexStoreName> =
@@ -15,7 +15,7 @@ type HasDefaultStoreName = typeof relNameArrs.fe.hasDefaultStore[number];
 
 export type DefaultStoreName<
   S extends HasDefaultStoreName = HasDefaultStoreName
-> = RelSections["fe"][S]["indexStoreName"];
+> = RelSections["fe"][S]["defaultStoreName"];
 export type ExtraStoreName = IndexStoreName | DefaultStoreName;
 export type ExtraStoreNameAlwaysOne = Extract<
   ExtraStoreName,

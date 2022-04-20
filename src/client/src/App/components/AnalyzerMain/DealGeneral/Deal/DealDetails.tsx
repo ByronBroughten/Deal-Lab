@@ -4,31 +4,31 @@ import theme from "../../../../theme/Theme";
 import { DealDetailRow } from "./DealDetails/DealDetailRow";
 import { DetailRowVarbFound } from "./DealDetails/DetailRowVarbFound";
 
-const sectionName = "analysis";
-export default function AnalysisDetails({ id }: { id: string }) {
-  const feInfo = { sectionName, id, idType: "feId" } as const;
+export default function DealDetails({ id }: { id: string }) {
   const { analyzer } = useAnalyzerContext();
   const level = 0;
 
-  const section = analyzer.section(feInfo);
+  const section = analyzer.section("outputList");
   const outputIds = section.childFeIds("output");
   const varbInfos = outputIds.map((outputId) =>
     analyzer.outputValues(outputId)
   );
-
-  // at some point, there is a loop.
-  // for instance, when I get to a list item, it starts referencing itself.
-  // why is that?
 
   return (
     <Styled className="DealDetails-root">
       <div className="DealDetails-allRows">
         {varbInfos.map((varbInfo) => {
           if (analyzer.hasSection(varbInfo))
-            return <DetailRowVarbFound {...{ varbInfo, level }} />;
+            return (
+              <DetailRowVarbFound
+                key={varbInfo.varbName}
+                {...{ varbInfo, level }}
+              />
+            );
           else
             return (
               <DealDetailRow
+                key={varbInfo.varbName}
                 {...{
                   level,
                   displayName: "Not found",
