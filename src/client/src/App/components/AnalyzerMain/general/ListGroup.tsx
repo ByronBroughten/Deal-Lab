@@ -10,7 +10,6 @@ import { sectionNameS } from "../../../sharedWithServer/Analyzer/SectionMetas/Se
 import ccs from "../../../theme/cssChunks";
 import theme, { themeSectionNameOrDefault } from "../../../theme/Theme";
 import AdditiveList from "../../appWide/AdditiveList";
-import BtnTooltip from "../../appWide/BtnTooltip";
 import useHowMany from "../../appWide/customHooks/useHowMany";
 import PlusBtn from "../../appWide/PlusBtn";
 
@@ -68,14 +67,14 @@ export default function ListGroup({
             )}
           </div>
           <div className="listGroup-titleRowRight">
-            <BtnTooltip title="Add list" className="ListGroup-addBtnTooltip">
+            {/* <BtnTooltip title="Add list" className="ListGroup-addBtnTooltip">
               <PlusBtn
                 className="ListGroup-addListBtn"
                 onClick={addUpfrontCostList}
               >
                 <MdOutlinePlaylistAdd className="ListGroup-addListBtnIcon" />
               </PlusBtn>
-            </BtnTooltip>
+            </BtnTooltip> */}
           </div>
         </div>
         <div className="ListGroup-lists">
@@ -91,6 +90,12 @@ export default function ListGroup({
               />
             );
           })}
+          <PlusBtn
+            className="ListGroup-addListBtn ListGroup-list"
+            onClick={addUpfrontCostList}
+          >
+            <MdOutlinePlaylistAdd className="ListGroup-addListBtnIcon" />
+          </PlusBtn>
         </div>
       </div>
     </Styled>
@@ -130,9 +135,11 @@ export const listGroupCss = css`
     margin: 0;
     margin-left: ${theme.s2};
   }
-
+  .ListGroup-addListBtn {
+    width: 42px;
+  }
   .ListGroup-addListBtnIcon {
-    font-size: 22px;
+    font-size: 35px;
     padding: 0;
     margin: 0;
   }

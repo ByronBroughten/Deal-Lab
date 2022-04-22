@@ -1,9 +1,11 @@
+import { View } from "react-native";
 import styled from "styled-components";
 import { Inf } from "../../../sharedWithServer/Analyzer/SectionMetas/Info";
 import theme from "../../../theme/Theme";
 import MainSection from "../../appWide/GeneralSection/MainSection";
 import MainSectionBody from "../../appWide/GeneralSection/MainSection/MainSectionBody";
-import MainSectionTitleRow from "../../appWide/GeneralSection/MainSection/MainSectionTitleRow";
+import MainSectionTitleRowTitle from "../../appWide/GeneralSection/MainSection/MainSectionTitleRowTitle.tsx/MainSectionTitleRowTitle";
+import MainSectionTitleSaveBtn from "../../appWide/GeneralSection/MainSection/MainSectionTitleRowTitle.tsx/MainSectionTitleSaveBtn";
 import DealBasics from "./Deal/DealBasics";
 import DealDetails from "./Deal/DealDetails";
 
@@ -17,9 +19,13 @@ export default function Deal({
   const feInfo = Inf.fe("analysis", feId);
   return (
     <MainSection>
-      <MainSectionTitleRow
+      <View style={{ flexDirection: "row" }}>
+        <MainSectionTitleRowTitle feInfo={feInfo} />
+        <MainSectionTitleSaveBtn feInfo={feInfo} />
+      </View>
+      {/* <MainSectionTitleRow
         {...{ feInfo, pluralName: "deals", droptop: true }}
-      />
+      /> */}
       <MainSectionBody>
         <Styled className="ListGroup-root">
           <div className="Deal-viewable viewable">

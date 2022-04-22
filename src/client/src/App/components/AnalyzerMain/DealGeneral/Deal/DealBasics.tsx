@@ -21,19 +21,6 @@ export default function DealBasics({ id }: { id: string }) {
         {outputIds.map((outputId) => (
           <LabeledVarbOutputNext key={outputId} id={outputId} />
         ))}
-        {/* <SectionBtn
-          themeName="analysis"
-          className="BasicAnalysis-addOutput LabeledVarb-root"
-        >
-          <BiPlus />
-        </SectionBtn> */}
-        {/* <VarbAutoComplete
-          {...{
-            onSelect,
-            className: "MainSectionTitleRow-addSelector",
-            placeholder: "+ Metric",
-          }}
-        /> */}
       </LabeledOutputRowNext>
     </Styled>
   );

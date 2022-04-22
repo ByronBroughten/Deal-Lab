@@ -1,5 +1,4 @@
 import React from "react";
-import { AiOutlineSave } from "react-icons/ai";
 import { BiReset } from "react-icons/bi";
 import { IoCopyOutline } from "react-icons/io5";
 import { MdSystemUpdateAlt } from "react-icons/md";
@@ -13,12 +12,12 @@ import {
   Inf,
 } from "../../../../sharedWithServer/Analyzer/SectionMetas/Info";
 import theme from "../../../../theme/Theme";
-import BigStringEditor from "../../../inputs/BigStringEditor";
 import BtnTooltip from "../../BtnTooltip";
 import { IconBtn } from "../../IconBtn";
 import IndexSectionList from "../../IndexSectionList";
-import { LoggedInOrOutIconBtn } from "../../LoggedInOrNotBtn";
 import XBtn from "../../Xbtn";
+import MainSectionTitleRowTitle from "./MainSectionTitleRowTitle.tsx/MainSectionTitleRowTitle";
+import MainSectionTitleSaveBtn from "./MainSectionTitleRowTitle.tsx/MainSectionTitleSaveBtn";
 
 type Props = {
   feInfo: FeInfo<"hasRowIndexStore">;
@@ -44,7 +43,6 @@ export default function MainSectionTitleRow({
   const { dbId, indexStoreName } = analyzer.section(feInfo);
   const isSaved = analyzer.hasSection(Inf.db(indexStoreName, dbId));
   const isGuest = !auth.isLoggedIn;
-  //
 
   return (
     <MainEntryTitleRowStyled
@@ -52,27 +50,15 @@ export default function MainSectionTitleRow({
       btnMenuIsOpen={btnMenuIsOpen}
     >
       <div className="MainSectionTitleRow-leftSide">
-        <BigStringEditor
-          {...{
-            feVarbInfo: Inf.feVarb("title", feInfo),
-            label: "Title",
-            className: "MainSectionTitleRow-title",
-          }}
-        />
+        <MainSectionTitleRowTitle feInfo={feInfo} />
         <div className="MainSectionTitleRow-leftSide-btnsRow">
-          {/* <PlainIconBtn
-            onClick={toggleBtnMenu}
-            className="MainSectionTitleRow-ellipsisBtn MainSectionTitleRow-flexUnit"
-          >
-            <IoEllipsisHorizontal size="25" />
-          </PlainIconBtn> */}
           {
             <>
               <BtnTooltip title="New">
                 <IconBtn
                   className="MainSectionTitleRow-flexUnit"
                   onClick={async () =>
-                    handleSet("loadSectionFromFeDefault", feInfo)
+                    handleSet("loadSectionFromFeDefault", feInfo as any)
                   }
                 >
                   <BiReset />
@@ -80,37 +66,7 @@ export default function MainSectionTitleRow({
               </BtnTooltip>
 
               {/* reset (circular arrows), new (+), save (floppy), load (up arrow or something) */}
-              {!isSaved && (
-                <LoggedInOrOutIconBtn
-                  {...{
-                    shared: {
-                      btnProps: {
-                        children: <AiOutlineSave />,
-                      },
-                      tooltipProps: {
-                        className: "MainSectionTitleRow-flexUnit",
-                      },
-                    },
-                    loggedIn: {
-                      btnProps: {
-                        onClick: async () =>
-                          await store.postRowIndexEntry(feInfo),
-                      },
-                      tooltipProps: {
-                        title: "Save",
-                      },
-                    },
-                    loggedOut: {
-                      btnProps: {
-                        disabled: true,
-                      },
-                      tooltipProps: {
-                        title: "Login to save",
-                      },
-                    },
-                  }}
-                />
-              )}
+              {!isSaved && <MainSectionTitleSaveBtn feInfo={feInfo} />}
               {isSaved && (
                 <>
                   <BtnTooltip

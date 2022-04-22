@@ -12,7 +12,6 @@ export default function AnalyzerMain({ className, ...rest }: any) {
       <Styled {...{ className: `MainSections-root ${className}`, ...rest }}>
         <View style={{ flex: 1 }}>
           <InputSection {...{ title: "Property", sectionName: "property" }} />
-          <Financing />
           <InputSection
             {...{
               title: "Management",
@@ -20,6 +19,7 @@ export default function AnalyzerMain({ className, ...rest }: any) {
               className: "MgmtGeneral-root",
             }}
           />
+          <Financing />
         </View>
       </Styled>
       <DealGeneral className="Footer-root" />
@@ -32,7 +32,7 @@ const Styled = styled.div`
   display: flex;
   flex: 1;
 
-  .MgmtGeneral-root {
+  .Financing-root {
     display: flex;
     flex: 1;
   }

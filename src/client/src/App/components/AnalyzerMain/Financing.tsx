@@ -1,12 +1,12 @@
 import React from "react";
-import { useAnalyzerContext } from "../../modules/usePropertyAnalyzer";
-import Loan from "./Financing/Loan";
-import MainSection from "../appWide/GeneralSection";
-import FinancingInfo from "./Financing/FinancingInfo";
 import styled from "styled-components";
+import { useAnalyzerContext } from "../../modules/usePropertyAnalyzer";
 import theme from "../../theme/Theme";
+import MainSection from "../appWide/GeneralSection";
 import GeneralSectionTitle from "../appWide/GeneralSection/GeneralSectionTitle";
 import MainSectionTitleBtn from "../appWide/GeneralSection/GeneralSectionTitle/MainSectionTitleBtn";
+import FinancingInfo from "./Financing/FinancingInfo";
+import Loan from "./Financing/Loan";
 
 type Props = { className?: string };
 export default function Financing(props: Props) {
@@ -15,7 +15,7 @@ export default function Financing(props: Props) {
   const loanIds = section.childFeIds("loan");
   const addLoan = () => handleSet("addSectionAndSolve", "loan", "financing");
   return (
-    <Styled {...{ ...props, sectionName: "loan" }}>
+    <Styled {...{ ...props, sectionName: "loan", className: "Financing-root" }}>
       <GeneralSectionTitle
         {...{
           title: "Financing",

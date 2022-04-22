@@ -110,7 +110,7 @@ const Styled = styled(AppBar)`
 
   .NavBar-getProBtn {
     .NavDropDown-navBtn {
-      background: ${theme.mgmt.main};
+      background: ${theme.property.main};
     }
   }
 
