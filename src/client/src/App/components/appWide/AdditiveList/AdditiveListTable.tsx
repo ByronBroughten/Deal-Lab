@@ -3,17 +3,15 @@ import useOnOutsideClickRef from "../../../modules/customHooks/useOnOutsideClick
 import useToggleView from "../../../modules/customHooks/useToggleView";
 import { useAnalyzerContext } from "../../../modules/usePropertyAnalyzer";
 import { FeInfo } from "../../../sharedWithServer/Analyzer/SectionMetas/Info";
+import { userListItemTypes } from "../../../sharedWithServer/Analyzer/SectionMetas/relNameArrs/UserListTypes";
 import { listNameToStoreName } from "../../../sharedWithServer/Analyzer/SectionMetas/relSections/baseSectionTypes";
-
 import ccs from "../../../theme/cssChunks";
 import theme, { ThemeSectionName } from "../../../theme/Theme";
 import useHowMany from "../customHooks/useHowMany";
-import AddItemBtn from "./AdditiveListTable/AddItemBtn";
 import AdditiveItem from "./AdditiveItem";
+import AddItemBtn from "./AdditiveListTable/AddItemBtn";
 import useAddListItem from "./AdditiveListTable/useAddListItem";
 import { valueSwitches } from "./useAdditiveItem";
-import { userListItemTypes } from "../../../sharedWithServer/Analyzer/SectionMetas/relNameArrs/UserListTypes";
-import BtnTooltip from "../BtnTooltip";
 
 const switchValueToDisplay = {
   labeledEquation: "Equation",
@@ -58,12 +56,12 @@ export default function AdditiveListTable({ feInfo, themeSectionName }: Props) {
   return (
     <Styled className="AdditiveListTable-root" sectionName={themeSectionName}>
       {areNone && (
-        <BtnTooltip
-          title="Add list item"
-          className="AdditiveListTable-addItemBtn noTable"
-        >
-          <AddItemBtn onClick={addItem} className="noTable" />
-        </BtnTooltip>
+        // <BtnTooltip
+        //   title="Add list item"
+        //   className="AdditiveListTable-addItemBtn noTable"
+        // >
+        <AddItemBtn onClick={addItem} className="noTable" />
+        // </BtnTooltip>
       )}
       {isAtLeastOne && (
         <table className="AdditiveListTable-table">

@@ -41,7 +41,9 @@ export function section<S extends SectionName>(
     return this.singleSection(finder) as any as StateSection<S>;
   const section = this.findSection(finder);
   if (section) return section;
-  else throw new Error(`Section not found using: ${JSON.stringify(finder)}`);
+  else {
+    throw new Error(`Section not found using: ${JSON.stringify(finder)}`);
+  }
 }
 
 export function feSection<S extends SectionName>(

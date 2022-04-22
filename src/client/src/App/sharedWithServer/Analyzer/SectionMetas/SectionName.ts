@@ -66,7 +66,7 @@ export const sectionNameS = {
       this.arrs[sectionContext ?? ("fe" as SC)][type ?? ("all" as T)];
     return names.includes(value);
   },
-};
+} as const;
 
 type GeneralNameArrs = {
   [SC in ContextName]: Record<

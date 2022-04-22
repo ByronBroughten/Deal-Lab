@@ -25,11 +25,15 @@ function errorIsExpected(error: any) {
 
 export function handleUnexpectedError(error: any, blanking: string) {
   logger.log(error);
+  // const toast = useToast();
+  // toast.show(`An unexpected error occurred while ${blanking}.`, { type: "danger" })
   toast.error(`An unexpected error occurred while ${blanking}.`);
 }
 
 function handleServerError(error: any, blanking: string) {
   if (errorIsExpected(error)) {
+    // const toast = useToast();
+    // toast.show(error.response.data, { type: "danger" })
     toast.error(error.response.data);
   } else {
     handleUnexpectedError(error, blanking);

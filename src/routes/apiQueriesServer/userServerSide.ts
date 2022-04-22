@@ -87,7 +87,7 @@ export const userServerSide = {
 };
 
 type PreppedEmails = StrictPick<NewDbUser, "emailAsSubmitted" | "email">;
-type NewDbUser = SchemaVarbsToDbValues<UserVarbs>;
+export type NewDbUser = SchemaVarbsToDbValues<UserVarbs>;
 
 type MakeDbUserProps = {
   newUser: NewDbUser;

@@ -1,6 +1,5 @@
 import { z } from "zod";
 import { config } from "../../Constants";
-import { DbEntry, zDbEntryArr } from "../Analyzer/DbEntry";
 import {
   SectionName,
   sectionNameS,
@@ -19,24 +18,6 @@ export type LoginQueryObjects = {
   };
 };
 
-export type LoginUser = Omit<
-  Record<SectionName<"initOnLogin">, DbEntry[]>,
-  "row"
->;
-
-export function isLoginUser(value: any): value is LoginUser {
-  const zLoginUserSchema = z.object(
-    sectionNameS.arrs.fe.initOnLogin.reduce((partial, sectionName) => {
-      partial[sectionName] = zDbEntryArr;
-      return partial;
-    }, {} as Partial<Record<keyof LoginUser, any>>) as Record<
-      keyof LoginUser,
-      any
-    >
-  );
-  return zLoginUserSchema.safeParse(value).success;
-}
-
 export type LoginUserNext = Omit<
   {
     [SN in SectionName<"initOnLogin">]: SectionPackRaw<"fe", SN>[];
@@ -44,8 +25,13 @@ export type LoginUserNext = Omit<
   "row"
 >;
 export function isLoginUserNext(value: any): value is LoginUserNext {
+  // Wait, why am I doing that?
+  // I guess to access the user varbs.
+  // I would like to just get this working, though.
+  // I know that it's rather dangerous not to.
   const zLoginUserSchema = makeZLoginUserSchema();
-  return zLoginUserSchema.safeParse(value).success;
+  zLoginUserSchema.parse(value);
+  return true;
 }
 
 function makeZLoginUserSchema() {

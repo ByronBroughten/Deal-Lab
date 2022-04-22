@@ -1,5 +1,5 @@
-import winston from "winston";
 import config from "config";
+import winston from "winston";
 import "winston-mongodb";
 
 const consoleFormat = winston.format.combine(

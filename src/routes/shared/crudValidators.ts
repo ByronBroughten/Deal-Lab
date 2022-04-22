@@ -8,8 +8,6 @@ import {
 } from "../../client/src/App/sharedWithServer/Analyzer/SectionMetas/SectionName";
 import { isLoginFormData } from "../../client/src/App/sharedWithServer/apiQueriesShared/login";
 import {
-  areGuestAccessSections,
-  GuestAccessSections,
   isRegisterFormData,
   RegisterFormData,
 } from "../../client/src/App/sharedWithServer/apiQueriesShared/register";
@@ -54,13 +52,6 @@ export const serverValidate = {
     if (isRegisterFormData(value)) return true;
     else {
       res.status(400).send("Invalid register form data.");
-      return false;
-    }
-  },
-  guestAccessSections(value: any, res: Response): value is GuestAccessSections {
-    if (areGuestAccessSections(value)) return true;
-    else {
-      res.status(500).send("Invalid guest access sections.");
       return false;
     }
   },

@@ -5,7 +5,6 @@ import { SectionName } from "../sharedWithServer/Analyzer/SectionMetas/SectionNa
 import { apiQueriesShared } from "../sharedWithServer/apiQueriesShared";
 import {
   isLoginHeaders,
-  isLoginUser,
   isLoginUserNext,
 } from "../sharedWithServer/apiQueriesShared/login";
 import { NextReq, NextRes } from "../sharedWithServer/apiQueriesSharedTypes";
@@ -69,28 +68,6 @@ const generalValidators = {
 // I like the way serverCrud is organized for the serverside
 // do I want to organize clientCrud like that, too?
 export const crud = {
-  login: {
-    post: {
-      validateRes(
-        res: AxiosResponse<unknown> | undefined
-      ): Res<"Login"> | undefined {
-        if (res && isLoginUser(res.data) && isLoginHeaders(res.headers)) {
-          return {
-            data: res.data,
-            headers: res.headers,
-          };
-        } else return undefined;
-      },
-      async send(reqObj: Req<"Login">): Promise<Res<"Login"> | undefined> {
-        const res = await https.post(
-          "logging in",
-          config.url.login.path,
-          reqObj.body
-        );
-        return this.validateRes(res);
-      },
-    },
-  },
   nextLogin: {
     post: {
       async send(
@@ -136,24 +113,6 @@ export const crud = {
             headers: res.headers,
           };
         } else return undefined;
-      },
-    },
-  },
-
-  register: {
-    post: {
-      get validateRes() {
-        return crud.login.post.validateRes;
-      },
-      async send(
-        reqObj: Req<"Register">
-      ): Promise<Res<"Register"> | undefined> {
-        const res = await https.post(
-          "registering",
-          config.url.register.path,
-          reqObj.body
-        );
-        return this.validateRes(res);
       },
     },
   },

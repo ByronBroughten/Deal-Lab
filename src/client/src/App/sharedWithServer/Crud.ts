@@ -1,32 +1,11 @@
 import { config } from "../Constants";
 import { DbEntry, zDbEntry, zDbEntryArr } from "./Analyzer/DbEntry";
 import { SectionName } from "./Analyzer/SectionMetas/SectionName";
-import {
-  LoginFormData,
-  LoginHeaders,
-  LoginUser,
-} from "./apiQueriesShared/login";
-import { RegisterReqPayload } from "./apiQueriesShared/register";
 import { zNanoId } from "./utils/zod";
 
 export const authTokenKey = "x-auth-token";
 
 type Crud = {
-  Login: {
-    Req: {
-      body: { payload: LoginFormData };
-    };
-    Res: {
-      data: LoginUser;
-      headers: LoginHeaders;
-    };
-  };
-  Register: {
-    Req: {
-      body: { payload: RegisterReqPayload };
-    };
-    Res: Crud["Login"]["Res"];
-  };
   PostEntry: {
     Req: {
       body: {

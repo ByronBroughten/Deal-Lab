@@ -31,5 +31,5 @@ export function loadRawSectionPackArr<S extends SectionName<"hasOneParent">>(
     next,
     sectionPackArr as Record<keyof SectionPackRaw<"fe", S>, any>[]
   );
-  return internal.addSections(next, addSectionArrProps);
+  return internal.addSectionsNext(next, addSectionArrProps);
 }
