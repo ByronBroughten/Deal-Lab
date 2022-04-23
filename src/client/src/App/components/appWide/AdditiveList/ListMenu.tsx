@@ -13,7 +13,7 @@ import { OnSelect } from "../../inputs/VarbAutoComplete";
 import XBtn from "../Xbtn";
 import ListMenuBtn from "./ListMenuBtn";
 
-function useFullIndexStoreMenu(feInfo: FeInfo<"hasFullIndexStore">) {
+function useFullIndexStoreMenu(feInfo: FeInfo<"hasAnyIndexStore">) {
   const { analyzer, handleSet, handleRemoveSection } = useAnalyzerContext();
   const store = useSectionQueryActions();
   const { loadMenuIsOpen, toggleLoadMenu } = useToggleView({
@@ -32,15 +32,15 @@ function useFullIndexStoreMenu(feInfo: FeInfo<"hasFullIndexStore">) {
     isSaved: analyzer.sectionIsIndexSaved(feInfo),
     remove: () => handleRemoveSection(feInfo), // not sure why both remove and delete
     copy: () => handleSet("copySection", feInfo),
-    save: async () => await store.postIndexEntry(feInfo),
-    update: async () => await store.putIndexEntry(feInfo),
+    save: async () => await store.saveNewFullIndexSection(feInfo),
+    update: async () => await store.updateFullIndexSection(feInfo),
     delete: async (dbId: string) =>
       await store.deleteIndexEntry(sectionName, dbId),
   };
 }
 
 type Props = StandardProps & {
-  feInfo: FeInfo<"hasFullIndexStore">;
+  feInfo: FeInfo<"hasAnyIndexStore">;
   themeSectionName: ThemeSectionName;
   toggleListView: () => void;
   viewIsOpen: boolean;

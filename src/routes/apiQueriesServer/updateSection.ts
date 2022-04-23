@@ -16,17 +16,17 @@ export const updateSectionWare = [authWare, updateSectionSeverSide] as const;
 
 async function updateSectionSeverSide(req: Request, res: Response) {
   const {
-    payload,
+    sectionPack,
     user: { _id: userId },
   } = validateUpdateSectionReq(req, res).body;
 
   await findOneAndUpdate({
     res,
-    filter: makeUpdateSectionFilter({ userId, ...payload }),
-    queryParameters: makeSetParameters(payload),
+    filter: makeUpdateSectionFilter({ userId, ...sectionPack }),
+    queryParameters: makeSetParameters(sectionPack),
   });
 
-  const resObj: NextRes<"updateSection"> = { data: { dbId: payload.dbId } };
+  const resObj: NextRes<"updateSection"> = { data: { dbId: sectionPack.dbId } };
   serverSend.success({ res, resObj });
 }
 

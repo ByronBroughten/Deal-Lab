@@ -1,10 +1,9 @@
 import React from "react";
-import UnitList from "./Property/UnitList";
-import BasicPropertyInfo from "./Property/BasicPropertyInfo";
-import MainSectionBody from "../../appWide/GeneralSection/MainSection/MainSectionBody";
 import MainSection from "../../appWide/GeneralSection/MainSection";
+import MainSectionBody from "../../appWide/GeneralSection/MainSection/MainSectionBody";
 import MainSectionTitleRow from "../../appWide/GeneralSection/MainSection/MainSectionTitleRow";
 import ListGroup from "../general/ListGroup";
+import BasicPropertyInfo from "./Property/BasicPropertyInfo";
 
 const sectionName = "property";
 export default function Property({ id }: { id: string }) {
@@ -26,15 +25,15 @@ export default function Property({ id }: { id: string }) {
         </div>
         <ListGroup
           feInfo={feInfo}
-          listSectionName="upfrontCostList"
-          titleText="Upfront Costs"
-          totalVarbName="upfrontExpenses"
-        />
-        <ListGroup
-          feInfo={feInfo}
           listSectionName="ongoingCostList"
           titleText="Ongoing Costs"
           totalVarbName="ongoingExpenses"
+        />
+        <ListGroup
+          feInfo={feInfo}
+          listSectionName="upfrontCostList"
+          titleText="Upfront Costs"
+          totalVarbName="upfrontExpenses"
         />
       </MainSectionBody>
     </MainSection>

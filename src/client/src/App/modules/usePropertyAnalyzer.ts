@@ -44,10 +44,10 @@ export default function usePropertyAnalyzer({
 
     "eraseIndexAndSolve",
     "eraseRowIndexAndSolve",
-    "updateRowIndexStoreAndSolve",
-    "updateIndexStoreEntry",
-    "pushToRowIndexStore",
-    "pushToIndexStore",
+    "updateRowIndexStoreSection",
+    "updateFullIndexStoreSection",
+    "saveNewSectionToRowIndexStore",
+    "saveNewSectionToFullIndexStore",
 
     "sortTableRowIdsByColumn",
 

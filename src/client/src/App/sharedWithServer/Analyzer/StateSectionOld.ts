@@ -184,8 +184,8 @@ export default class StateSectionOld<
   > {
     const next = this as any as StateSectionOld<SectionName>;
     if (StateSectionOld.is(next, "hasDefaultStore")) {
-      return next.meta.core.indexStoreName;
-    } else throw new Error("This section has no indexStoreName.");
+      return next.meta.core.defaultStoreName;
+    } else throw new Error("This section has no defaultStoreName.");
   }
 
   get parentName(): ParentName<S> {

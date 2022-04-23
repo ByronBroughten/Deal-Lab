@@ -74,7 +74,9 @@ export default function MainSectionTitleRow({
                     className="MainSectionTitleRow-flexUnit"
                   >
                     <IconBtn
-                      onClick={async () => await store.putRowIndexEntry(feInfo)}
+                      onClick={async () =>
+                        await store.updateRowIndexSection(feInfo)
+                      }
                     >
                       <MdSystemUpdateAlt />
                     </IconBtn>

@@ -1,11 +1,11 @@
-import { useAnalyzerContext } from "../../../modules/usePropertyAnalyzer";
-import GlobalInfoSection from "../general/StaticInfoSection";
 import styled from "styled-components";
+import { useAnalyzerContext } from "../../../modules/usePropertyAnalyzer";
+import { Inf } from "../../../sharedWithServer/Analyzer/SectionMetas/Info";
 import theme from "../../../theme/Theme";
 import useHowMany from "../../appWide/customHooks/useHowMany";
 import LabeledOutputRow from "../../appWide/LabeledOutputRow";
 import { LabeledVarbSimple } from "../../appWide/LabeledVarbSimple";
-import { Inf } from "../../../sharedWithServer/Analyzer/SectionMetas/Info";
+import GlobalInfoSection from "../general/StaticInfoSection";
 
 export default function FinancingInfo() {
   const { analyzer } = useAnalyzerContext();
@@ -23,20 +23,22 @@ export default function FinancingInfo() {
   return (
     <Styled className="FinancingInfo-root">
       <LabeledOutputRow>
-        <LabeledVarbSimple
-          themeSectionName="loan"
-          feVarbInfo={varbInfo("downPaymentDollars")}
-          parenthInfo={
-            downPaymentIsPercentable
-              ? varbInfo("downPaymentPercent")
-              : undefined
-          }
-        />
         {isAtLeastOne && (
-          <LabeledVarbSimple
-            themeSectionName="loan"
-            feVarbInfo={varbInfo("pitiMonthly")}
-          />
+          <>
+            <LabeledVarbSimple
+              themeSectionName="loan"
+              feVarbInfo={varbInfo("downPaymentDollars")}
+              parenthInfo={
+                downPaymentIsPercentable
+                  ? varbInfo("downPaymentPercent")
+                  : undefined
+              }
+            />
+            <LabeledVarbSimple
+              themeSectionName="loan"
+              feVarbInfo={varbInfo("pitiMonthly")}
+            />
+          </>
         )}
         {areMultiple && (
           <LabeledVarbSimple

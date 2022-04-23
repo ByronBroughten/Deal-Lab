@@ -32,11 +32,11 @@ export function validateSectionPackReq(
   req: Request,
   res: Response
 ): LoggedIn<SectionPackReq> {
-  const { user, payload } = req.body;
+  const { user, sectionPack } = req.body;
   return {
     body: {
       user: validateLoggedInUser(user, res),
-      payload: validateServerSectionPack(payload, res),
+      sectionPack: validateServerSectionPack(sectionPack, res),
     },
   };
 }

@@ -24,15 +24,15 @@ export default function Mgmt({ id }: { id: string }) {
         </div>
         <ListGroup
           feInfo={feInfo}
-          listSectionName="upfrontCostList"
-          titleText="Upfront Costs"
-          totalVarbName="upfrontExpenses"
-        />
-        <ListGroup
-          feInfo={feInfo}
           listSectionName="ongoingCostList"
           titleText="Ongoing Costs"
           totalVarbName="ongoingExpenses"
+        />
+        <ListGroup
+          feInfo={feInfo}
+          listSectionName="upfrontCostList"
+          titleText="Upfront Costs"
+          totalVarbName="upfrontExpenses"
         />
       </MainSectionBody>
     </MainSection>

@@ -10,7 +10,7 @@ export default function MainSectionTitleSaveBtn({ feInfo }: Props) {
 
   const props = {
     className: "MainSectionTitleRow-flexUnit",
-    onClick: async () => await store.postRowIndexEntry(feInfo),
+    onClick: async () => await store.saveNewRowIndexSection(feInfo),
     ...(auth.isLoggedIn
       ? { title: "Save" }
       : { title: "Login to save", disabled: true }),

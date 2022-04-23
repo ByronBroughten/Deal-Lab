@@ -1,4 +1,5 @@
 import { sectionMetas } from "../../client/src/App/sharedWithServer/Analyzer/SectionMetas";
+import { rowIndexToTableName } from "../../client/src/App/sharedWithServer/Analyzer/SectionMetas/relNameArrs/StoreTypes";
 import {
   SectionName,
   sectionNameS,
@@ -60,11 +61,17 @@ export class UserDbNext {
         "fe",
         SN
       >[];
+    } else if (sectionNameS.is(storeName, "rowIndex")) {
+      throw new Error("This needs to be implemented");
     } else {
       return this.sectionPackArr(storeName).map(
         (dbPack) => dbPack.toFeSectionPack() as SectionPackRaw<"fe", SN>
       );
     }
+  }
+  makeRowIndexPackFeArr(storeName: SectionName<"rowIndex">) {
+    const tableName = rowIndexToTableName[storeName];
+    const columns = this.firstSectionPack(tableName).rawSectionArr("column");
   }
   makeTableSectionPackFeArr<SN extends SectionName<"table">>(
     sectionName: SN

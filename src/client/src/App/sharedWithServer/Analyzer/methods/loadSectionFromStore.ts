@@ -3,7 +3,7 @@ import { FeInfo, Inf } from "../SectionMetas/Info";
 
 export function loadSectionFromFeIndex(
   this: Analyzer,
-  feInfo: FeInfo<"hasFullIndexStore">,
+  feInfo: FeInfo<"hasAnyIndexStore">,
   dbId: string
 ): Analyzer {
   const { indexStoreName } = this.section(feInfo);

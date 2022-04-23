@@ -54,17 +54,19 @@ describe(apiRoute, () => {
     const postDoc = await getUserByIdNoRes(userId);
 
     expect(postDoc.propertyIndex.length).toBe(preDoc.propertyIndex.length + 1);
-    expect(Arr.lastVal(postDoc.propertyIndex).dbId).toBe(req.body.payload.dbId);
+    expect(Arr.lastVal(postDoc.propertyIndex).dbId).toBe(
+      req.body.sectionPack.dbId
+    );
   });
   it("should return 401 if client is not logged in", async () => {
     token = "" as any;
     await testStatus(401);
   });
-  it("should return 500 if payload is not an object", async () => {
-    req.body.payload = null as any;
+  it("should return 500 if sectionPack is not an object", async () => {
+    req.body.sectionPack = null as any;
     await testStatus(500);
   });
-  it("should return 500 if there is already an entry in the db with the payload's dbId", async () => {
+  it("should return 500 if there is already an entry in the db with the sectionPack's dbId", async () => {
     await exec();
     await testStatus(500);
   });

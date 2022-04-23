@@ -53,7 +53,7 @@ export function makeRawSectionPackReq<SN extends SectionName>({
     feInfo
   ) as any as SectionPackRaw<"fe", SN>;
   return makeReq({
-    payload: FeSectionPack.rawFeToServer(rawSectionPack, dbStoreName),
+    sectionPack: FeSectionPack.rawFeToServer(rawSectionPack, dbStoreName),
   });
 }
 export function makeDbIdSectionPackReq({
@@ -67,7 +67,7 @@ export type DbSectionPackInfo = {
   dbStoreName: DbStoreName;
   dbId: string;
 };
-export type SectionPackReq = MakeReq<{ payload: ServerSectionPack }>;
+export type SectionPackReq = MakeReq<{ sectionPack: ServerSectionPack }>;
 export type SectionPackArrReq = MakeReq<{
   sectionPackArr: ServerSectionPack[];
   dbStoreName: DbStoreName<"arr">;

@@ -2,12 +2,6 @@ import { AxiosResponse } from "axios";
 import { config } from "../Constants";
 import { DbEntry } from "../sharedWithServer/Analyzer/DbEntry";
 import { SectionName } from "../sharedWithServer/Analyzer/SectionMetas/SectionName";
-import { apiQueriesShared } from "../sharedWithServer/apiQueriesShared";
-import {
-  isLoginHeaders,
-  isLoginUserNext,
-} from "../sharedWithServer/apiQueriesShared/login";
-import { NextReq, NextRes } from "../sharedWithServer/apiQueriesSharedTypes";
 import { is, Req, Res } from "../sharedWithServer/Crud";
 import { urlPlusParams } from "../utils/url";
 import https from "./services/httpService";
@@ -68,54 +62,6 @@ const generalValidators = {
 // I like the way serverCrud is organized for the serverside
 // do I want to organize clientCrud like that, too?
 export const crud = {
-  nextLogin: {
-    post: {
-      async send(
-        reqObj: NextReq<"nextLogin">
-      ): Promise<NextRes<"nextLogin"> | undefined> {
-        const res = await https.post(
-          "logging in",
-          config.url.login.path,
-          reqObj.body
-        );
-        return this.validateRes(res);
-      },
-      validateRes(
-        res: AxiosResponse<unknown> | undefined
-      ): NextRes<"nextLogin"> | undefined {
-        if (res && isLoginUserNext(res.data) && isLoginHeaders(res.headers)) {
-          return {
-            data: res.data,
-            headers: res.headers,
-          };
-        } else return undefined;
-      },
-    },
-  },
-  nextRegister: {
-    post: {
-      async send(
-        reqObj: NextReq<"nextRegister">
-      ): Promise<NextRes<"nextRegister"> | undefined> {
-        const res = await https.post(
-          "registering",
-          apiQueriesShared.nextRegister.pathFull,
-          reqObj.body
-        );
-        return this.validateRes(res);
-      },
-      validateRes(
-        res: AxiosResponse<unknown> | undefined
-      ): NextRes<"nextRegister"> | undefined {
-        if (res && isLoginUserNext(res.data) && isLoginHeaders(res.headers)) {
-          return {
-            data: res.data,
-            headers: res.headers,
-          };
-        } else return undefined;
-      },
-    },
-  },
   section: {
     path: config.url.section.path,
     post: {

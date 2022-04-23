@@ -137,7 +137,17 @@ import {
 } from "./Analyzer/methods/loadSectionFromStore";
 import { loadRawSectionPack } from "./Analyzer/methods/loadSectionPack";
 import { loadUserAndSolve } from "./Analyzer/methods/loadUserAndSolve";
+import { replaceSectionAndSolve } from "./Analyzer/methods/replaceSectionAndSolve";
 import { resetSectionAndSolve } from "./Analyzer/methods/resetSectionAndSolve";
+import {
+  saveNewSectionToFullIndexStore,
+  updateFullIndexStoreSection,
+} from "./Analyzer/methods/saveAndUpdateFullIndexStore";
+import {
+  saveNewSectionToRowIndexStore,
+  sortTableRowIdsByColumn,
+  updateRowIndexStoreSection,
+} from "./Analyzer/methods/saveAndUpdateRowIndexStore";
 import { solveAllActiveVarbs, solveVarbs } from "./Analyzer/methods/solveVarbs";
 import {
   gatherAndSortInfosToSolve,
@@ -157,22 +167,17 @@ import {
   getUserVarbValue,
 } from "./Analyzer/methods/solveVarbs/solveAndUpdateValue/updateUserVarb";
 import {
-  pushToRowIndexStore,
-  sortTableRowIdsByColumn,
-  updateRowIndexStoreAndSolve,
-} from "./Analyzer/methods/updateRowIndexStoreAndSolve";
-import {
   replaceInSectionArr,
   updateSectionArr,
   wipeSectionArrAndSolve,
 } from "./Analyzer/methods/updateSectionArr";
-import {
-  pushToIndexStore,
-  updateIndexStoreEntry,
-} from "./Analyzer/methods/updateStore";
 import { sectionMetas } from "./Analyzer/SectionMetas";
 import { Id } from "./Analyzer/SectionMetas/relSections/baseSections/id";
-import { FeVarbInfo } from "./Analyzer/SectionMetas/relSections/rel/relVarbInfoTypes";
+import { SectionFinder } from "./Analyzer/SectionMetas/relSections/baseSectionTypes";
+import {
+  FeNameInfo,
+  FeVarbInfo,
+} from "./Analyzer/SectionMetas/relSections/rel/relVarbInfoTypes";
 import { NextSectionMeta } from "./Analyzer/SectionMetas/SectionMeta";
 import { SectionName, sectionNameS } from "./Analyzer/SectionMetas/SectionName";
 import StateSection, { StateSectionCore } from "./Analyzer/StateSection";
@@ -202,6 +207,9 @@ export default class Analyzer {
   }
   get sections() {
     return this.core.sections;
+  }
+  sectionInfo<SN extends SectionName>(finder: SectionFinder<SN>) {
+    return this.section(finder).feInfo as FeNameInfo<SN>;
   }
   get varbFullNamesToSolveFor() {
     return this.core.varbFullNamesToSolveFor;
@@ -354,6 +362,7 @@ export default class Analyzer {
 
   loadUserAndSolve = loadUserAndSolve;
 
+  replaceSectionAndSolve = replaceSectionAndSolve;
   resetSectionAndSolve = resetSectionAndSolve;
   sectionArr = sectionArr;
   sectionArrInfos = sectionArrInfos;
@@ -465,13 +474,13 @@ export default class Analyzer {
   makeRawSections = makeRawSections;
   selfAndDescendantFeIds = selfAndDescendantFeIds;
 
-  pushToIndexStore = pushToIndexStore;
-  updateIndexStoreEntry = updateIndexStoreEntry;
+  saveNewSectionToFullIndexStore = saveNewSectionToFullIndexStore;
+  updateFullIndexStoreSection = updateFullIndexStoreSection;
   fullStoreEntries = fullStoreEntries;
   fullStoreTitlesAndDbIds = fullStoreTitlesAndDbIds;
 
-  pushToRowIndexStore = pushToRowIndexStore;
-  updateRowIndexStoreAndSolve = updateRowIndexStoreAndSolve;
+  saveNewSectionToRowIndexStore = saveNewSectionToRowIndexStore;
+  updateRowIndexStoreSection = updateRowIndexStoreSection;
   sortTableRowIdsByColumn = sortTableRowIdsByColumn;
 
   getOutVarbMap = getOutVarbMap;

@@ -1,4 +1,4 @@
-import { RemoveNotStrings, StrictSubType } from "../../../utils/types";
+import { RemoveNotStrings, StrictSubType, SubType } from "../../../utils/types";
 import { MergeUnionObjNonNullable } from "../../../utils/types/mergeUnionObj";
 import StateSection from "../../StateSection";
 import { RelSections } from "../relSections";
@@ -26,14 +26,20 @@ type SectionToChildArr<SC extends ContextName> = {
   [SN in keyof SectionToChildren<SC>]: [SectionToChildren<SC>[SN]];
 };
 
-export type NameToNameWithSameChildren<
+export type SectionNameWithSameChildren<
   SN extends SimpleSectionName,
   FromCN extends ContextName,
   ToCN extends ContextName
 > = ChildToSectionWithChildName<FromCN, ToCN, ChildName<SN>>;
 
+export type SectionNameWithSameChildrenWide<
+  SN extends SimpleSectionName,
+  FromCN extends ContextName,
+  ToCN extends ContextName
+> = ChildToSectionWithChildWide<FromCN, ToCN, ChildName<SN>>;
+
 export type FeToDbNameWithSameChildren<SN extends SimpleSectionName> =
-  NameToNameWithSameChildren<SN, "fe", "db">;
+  SectionNameWithSameChildren<SN, "fe", "db">;
 
 export type FeToDbStoreNameWithSameChildren<
   SN extends SimpleSectionName,
@@ -41,7 +47,7 @@ export type FeToDbStoreNameWithSameChildren<
 > = Extract<FeToDbNameWithSameChildren<SN>, DbStoreName<DT>>;
 
 export type DbToFeNameWithSameChildren<SN extends SimpleSectionName> =
-  NameToNameWithSameChildren<SN, "db", "fe">;
+  SectionNameWithSameChildren<SN, "db", "fe">;
 
 type ChildToSectionWithChildName<
   FromCN extends ContextName,
@@ -49,7 +55,11 @@ type ChildToSectionWithChildName<
   CHN extends ChildName<SimpleSectionName, FromCN>
 > = keyof StrictSubType<SectionToChildArr<ToCN>, [CHN]>;
 
-type Test = NameToNameWithSameChildren<"propertyIndex", "db", "fe">;
+type ChildToSectionWithChildWide<
+  FromCN extends ContextName,
+  ToCN extends ContextName,
+  CHN extends ChildName<SimpleSectionName, FromCN>
+> = keyof SubType<SectionToChildArr<ToCN>, [CHN]>;
 
 const _testFeToDbNameWithSameChildren = (): void => {
   type TestName = FeToDbNameWithSameChildren<"property">;

@@ -31,11 +31,11 @@ const color = {
 
 const testThemes = {
   current: {
-    primary: "#aa1d1d",
+    primary: "#962d1a",
     secondary: "#b94b0c",
+    warning: "#e66d0a",
     success: "#4caf50",
-    warning: "#e67f0a",
-    danger: "#f44336",
+    danger: "#f52617",
   },
   lighter: {
     primary: "#3f51b5",

@@ -78,24 +78,24 @@ describe(testedRoute, () => {
     await testStatus(200);
     const postDoc = await getUserByIdNoRes(userId);
     const updatedDoc = postDoc.propertyIndex.find(
-      ({ dbId }) => dbId === reqs.updateSection.body.payload.dbId
+      ({ dbId }) => dbId === reqs.updateSection.body.sectionPack.dbId
     );
     const updatedSection = updatedDoc?.rawSections.propertyIndex.find(
-      ({ dbId }) => dbId === reqs.updateSection.body.payload.dbId
+      ({ dbId }) => dbId === reqs.updateSection.body.sectionPack.dbId
     );
     expect(updatedSection?.dbVarbs.title).toBe(updatedValues.title);
     expect(updatedSection?.dbVarbs.price).toEqual(updatedValues.price.dbNumObj);
   });
-  it("should return 404 if there is not an entry in the db with the payload's dbId", async () => {
-    reqs.updateSection.body.payload.dbId = Id.make();
+  it("should return 404 if there is not an entry in the db with the sectionPack's dbId", async () => {
+    reqs.updateSection.body.sectionPack.dbId = Id.make();
     await testStatus(404);
   });
   it("should return 401 if client is not logged in", async () => {
     token = "" as any;
     await testStatus(401);
   });
-  it("should return 500 if payload is not an object", async () => {
-    reqs.updateSection.body.payload = null as any;
+  it("should return 500 if sectionPack is not an object", async () => {
+    reqs.updateSection.body.sectionPack = null as any;
     await testStatus(500);
   });
 });

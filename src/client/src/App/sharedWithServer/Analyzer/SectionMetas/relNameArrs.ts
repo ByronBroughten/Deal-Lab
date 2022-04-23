@@ -65,7 +65,7 @@ function makeRelNameArrs<SC extends ContextName>(sectionContext: SC) {
         return isBaseName(indexStoreName, "rowIndex");
       }) as string[] as HasRowIndexStoreName<SC>[];
     },
-    get hasFullIndexStore() {
+    get hasAnyIndexStore() {
       return Arr.exclude(this.hasIndexStore, this.hasRowIndexStore);
     },
     hasChild: ObjectKeys(relSections[sectionContext]).filter((sectionName) => {

@@ -15,7 +15,7 @@ function useSetLogin() {
 }
 
 export function useAuthQueryActions() {
-  const { analyzer, handleSet } = useAnalyzerContext();
+  const { analyzer } = useAnalyzerContext();
   const setLogin = useSetLogin();
   return {
     async nextLogin() {

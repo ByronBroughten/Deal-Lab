@@ -1,16 +1,16 @@
 import React from "react";
 import styled from "styled-components";
-import theme from "../theme/Theme";
-import AdditiveList from "./appWide/AdditiveList";
-import GeneralSectionTitle from "./appWide/GeneralSection/GeneralSectionTitle";
-import ListManagerTitleRow from "./ListManager/ListManagerTitleRow";
 import {
   AnalyzerContext,
   useAnalyzerContext,
 } from "../modules/usePropertyAnalyzer";
-import MainSection from "./appWide/GeneralSection";
-import useLmAnalyzer from "./ListManager/useLmAnalyzer";
 import { SectionName } from "../sharedWithServer/Analyzer/SectionMetas/SectionName";
+import theme from "../theme/Theme";
+import AdditiveList from "./appWide/AdditiveList";
+import MainSection from "./appWide/GeneralSection";
+import GeneralSectionTitle from "./appWide/GeneralSection/GeneralSectionTitle";
+import ListManagerTitleRow from "./ListManager/ListManagerTitleRow";
+import useLmAnalyzer from "./ListManager/useLmAnalyzer";
 
 export function useListManager(sectionName: SectionName<"userList">) {
   const { analyzer: mainAnalyzer, setAnalyzer: setMainAnalyzer } =
@@ -23,7 +23,7 @@ export function useListManager(sectionName: SectionName<"userList">) {
   });
 
   const userListIds = lmContext.analyzer
-    .singleSection("main")
+    .singleSection("analysis")
     .childFeIds(sectionName);
 
   return {

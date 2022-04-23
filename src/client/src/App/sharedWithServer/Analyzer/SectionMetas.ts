@@ -1,7 +1,8 @@
-import { pick } from "lodash";
+import { isEqual, pick } from "lodash";
 import { NextObjEntries, Obj } from "../utils/Obj";
 import {
   DescendantName,
+  SectionNameWithSameChildren,
   SelfOrDescendantName,
 } from "./SectionMetas/relNameArrs/ChildTypes";
 import {
@@ -60,14 +61,27 @@ type SectionMetasRaw = {
   };
 };
 
-// The queries will all return fe sections, right?
-type Test = SectionMetasRaw["fe"]["property"]["varbMetas"][string]["type"];
-
 export class SectionMetas {
   private core: SectionMetasCore;
   constructor() {
     this.core = SectionMetas.initCore();
     this.initOutUpdatePacks();
+  }
+  isDbSectionNameWithSameChildren<SN extends SimpleSectionName>(
+    sectionName: SN,
+    testSectionName: SimpleSectionName
+  ): testSectionName is SectionNameWithSameChildren<SN, "fe", "db"> {
+    const sectionParentNames = this.section(sectionName).get("parents");
+    const otherParentNames = this.section(testSectionName, "db").get("parents");
+    return isEqual(sectionParentNames, otherParentNames);
+  }
+  isFeSectionNameWithSameChildren<SN extends SimpleSectionName>(
+    sectionName: SN,
+    testSectionName: SimpleSectionName
+  ): testSectionName is SectionNameWithSameChildren<SN, "fe", "fe"> {
+    const sectionParentNames = this.section(sectionName).get("parents");
+    const otherParentNames = this.section(testSectionName).get("parents");
+    return isEqual(sectionParentNames, otherParentNames);
   }
 
   get raw() {

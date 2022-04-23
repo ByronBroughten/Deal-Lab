@@ -95,7 +95,7 @@ export default function AdditiveList({
         </div>
         {viewIsOpen && <AdditiveListTable {...{ feInfo, themeSectionName }} />}
       </div>
-      {Inf.is.fe(feInfo, "hasFullIndexStore") && listMenuIsOpen && (
+      {Inf.is.fe(feInfo, "hasAnyIndexStore") && listMenuIsOpen && (
         <ListMenu
           className="AdditiveList-listMenu"
           {...{

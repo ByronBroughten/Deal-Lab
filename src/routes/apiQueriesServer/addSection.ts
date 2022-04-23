@@ -20,11 +20,11 @@ import { validateSectionPackReq } from "./shared/validateSectionPackReq";
 export const addSectionWare = [authWare, addSectionServerSide] as const;
 async function addSectionServerSide(req: Request, res: Response) {
   const {
-    payload,
+    sectionPack,
     user: { _id: userId },
   } = validateAddSectionReq(req, res).body;
 
-  const { sectionName: dbStoreName, dbId } = payload;
+  const { sectionName: dbStoreName, dbId } = sectionPack;
   await checkThatSectionPackIsNotThere({
     userId,
     spInfo: { dbStoreName, dbId },
@@ -33,10 +33,10 @@ async function addSectionServerSide(req: Request, res: Response) {
   await findUserByIdAndUpdate({
     res,
     userId,
-    queryParameters: makePushParameters(payload),
+    queryParameters: makePushParameters(sectionPack),
   });
 
-  const resObj: NextRes<"addSection"> = { data: { dbId: payload.dbId } };
+  const resObj: NextRes<"addSection"> = { data: { dbId: sectionPack.dbId } };
   serverSend.success({ res, resObj });
 }
 

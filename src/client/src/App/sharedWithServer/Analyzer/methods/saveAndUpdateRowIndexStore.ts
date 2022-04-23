@@ -11,6 +11,65 @@ import { SectionName } from "../SectionMetas/SectionName";
 import StateSection from "../StateSection";
 import { internal } from "./internal";
 
+export function saveNewSectionToRowIndexStore(
+  this: Analyzer,
+  feInfo: FeInfo<"hasRowIndexStore">
+): Analyzer {
+  let next = internal.resetSectionAndChildDbIds(this, feInfo);
+
+  const { indexStoreName } = next.meta.section(feInfo.sectionName).core;
+  const tableName = rowIndexToTableName[indexStoreName];
+  const { feInfo: tableInfo } = next.section(tableName);
+
+  const { feVarbInfo: rowIdsInfo } = next.feVarb("rowIds", tableInfo);
+  const rowIds = next.value(rowIdsInfo, "stringArray");
+
+  const { dbId } = next.section(feInfo);
+  rowIds.push(dbId);
+
+  next = next.directUpdateAndSolve(rowIdsInfo, rowIds);
+
+  const { feInfo: indexParentInfo } = next.parent(indexStoreName);
+
+  const title = next.feValue("title", feInfo, "string");
+  next = internal.addSections(next, {
+    sectionName: indexStoreName,
+    parentFinder: indexParentInfo,
+    dbEntry: {
+      dbId: dbId,
+      dbSections: {
+        [indexStoreName]: [{ dbId, dbVarbs: { title }, childDbIds: {} }],
+      },
+    },
+  });
+
+  const { feInfo: rowInfo } = next.lastSection(indexStoreName);
+  next = resetRowCells(next, rowInfo);
+  return next.solveVarbs();
+}
+
+export function updateRowIndexStoreSection(
+  this: Analyzer,
+  feInfo: FeInfo<"hasRowIndexStore">
+) {
+  const section = this.section(feInfo);
+
+  const { dbId, indexStoreName } = section;
+  const rowInfo = {
+    sectionName: indexStoreName,
+    id: dbId,
+    idType: "dbId",
+  } as const;
+
+  let next = resetRowCells(this, rowInfo);
+  next = internal.updateValueDirectly(
+    next,
+    Inf.feVarb("title", this.section(rowInfo).feInfo),
+    section.value("title", "string")
+  );
+  return next.solveVarbs();
+}
+
 function findRowCellByColumn(
   analyzer: Analyzer,
   rowInfo: FeInfo<"rowIndex">,
@@ -90,64 +149,4 @@ function resetRowCells(
     });
   }
   return next;
-}
-export function pushToRowIndexStore(
-  this: Analyzer,
-  feInfo: FeInfo<"hasRowIndexStore">
-): Analyzer {
-  let next = this;
-
-  const { indexStoreName } = next.meta.section(feInfo.sectionName).core;
-  const { feInfo: indexParentInfo } = next.parent(indexStoreName);
-
-  // I must also update tableName.dbId
-  const tableName = rowIndexToTableName[indexStoreName];
-  const { feInfo: tableInfo } = next.section(tableName);
-
-  const { feVarbInfo: rowIdsInfo } = next.feVarb("rowIds", tableInfo);
-  const rowIds = next.value(rowIdsInfo, "stringArray");
-
-  const { dbId } = next.section(feInfo);
-  rowIds.push(dbId);
-
-  next = next.directUpdateAndSolve(rowIdsInfo, rowIds);
-
-  const title = next.feValue("title", feInfo, "string");
-  next = internal.addSections(next, {
-    sectionName: indexStoreName,
-    parentFinder: indexParentInfo,
-    dbEntry: {
-      dbId: dbId,
-      dbSections: {
-        [indexStoreName]: [{ dbId, dbVarbs: { title }, childDbIds: {} }],
-      },
-    },
-  });
-
-  const { feInfo: rowInfo } = next.lastSection(indexStoreName);
-  next = resetRowCells(next, rowInfo);
-  return next.solveVarbs();
-}
-
-export function updateRowIndexStoreAndSolve(
-  this: Analyzer,
-  feInfo: FeInfo<"hasRowIndexStore">
-) {
-  const section = this.section(feInfo);
-
-  const { dbId, indexStoreName } = section;
-  const rowInfo = {
-    sectionName: indexStoreName,
-    id: dbId,
-    idType: "dbId",
-  } as const;
-
-  let next = resetRowCells(this, rowInfo);
-  next = internal.updateValueDirectly(
-    next,
-    Inf.feVarb("title", this.section(rowInfo).feInfo),
-    section.value("title", "string")
-  );
-  return next.solveVarbs();
-  // let next = this.directUpdateAndSolve(Inf.dbVarb("title", rowInfo), section.value("title", "string"));
 }

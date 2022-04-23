@@ -18,6 +18,11 @@ export type AnySectionName = keyof BaseSections[ContextName];
 export type SimpleSectionName<SC extends ContextName = ContextName> =
   keyof BaseSections[ContextName];
 
+export type SectionContextNames = {
+  sectionName: SimpleSectionName;
+  contextName: ContextName;
+};
+
 export type ContextName = keyof BaseSections;
 const sectionContextNames: ContextName[] = ["fe", "db"];
 export const sectionContext = {

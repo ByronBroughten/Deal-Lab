@@ -1,56 +1,54 @@
 import Analyzer from "../../sharedWithServer/Analyzer";
 import { DbEnt } from "../../sharedWithServer/Analyzer/DbEntry";
-import { sectionMetas } from "../../sharedWithServer/Analyzer/SectionMetas";
 import { FeInfo } from "../../sharedWithServer/Analyzer/SectionMetas/Info";
 import { SectionName } from "../../sharedWithServer/Analyzer/SectionMetas/SectionName";
 import { crud } from "../crud";
 import { auth } from "../services/authService";
 import { useAnalyzerContext } from "../usePropertyAnalyzer";
-
-const dbStore = {
-  async deleteIndexEntry(
-    sectionName: SectionName<"hasIndexStore">,
-    dbId: string
-  ) {
-    const dbStoreName = sectionMetas.section(sectionName).get("indexStoreName");
-    return await crud.section.delete.send({ params: { dbStoreName, dbId } });
-  },
-  async putIndexEntry(feInfo: FeInfo<"hasIndexStore">, next: Analyzer) {
-    return await crud.section.put.send(next.req.putSection(feInfo));
-  },
-  async postIndexEntry(feInfo: FeInfo<"hasIndexStore">, next: Analyzer) {
-    return await crud.section.post.send(next.req.postIndexEntry(feInfo));
-  },
-} as const;
+import { sectionQueries } from "./useSectionQueryActions/sectionQueries";
 
 export function useSectionQueryActions() {
-  const { analyzer, setAnalyzerOrdered, handleSet } = useAnalyzerContext();
+  const { analyzer, setAnalyzerOrdered, handleSet, setAnalyzer } =
+    useAnalyzerContext();
 
   function setAnalyzerToDefault() {
     setAnalyzerOrdered(analyzer);
   }
 
-  async function doOrBackToDefault<
-    Action extends keyof typeof dbStore,
-    Args extends Parameters<typeof dbStore[Action]>
+  async function queryAndRevertSetIfFail<
+    Action extends keyof typeof sectionQueries,
+    Args extends Parameters<typeof sectionQueries[Action]>
   >(action: Action, ...args: Args) {
     const fn: (
-      this: typeof dbStore,
+      this: typeof sectionQueries,
       ...args: any
-    ) => Promise<{ data: any } | undefined> = dbStore[action];
-    const didSucceed = await fn.apply(dbStore, args);
+    ) => Promise<{ data: any } | undefined> = sectionQueries[action];
+    const didSucceed = await fn.apply(sectionQueries, args);
     if (!didSucceed) setAnalyzerToDefault();
   }
 
   return {
-    // post
-    async postIndexEntry(feInfo: FeInfo<"hasFullIndexStore">) {
-      handleSet("pushToIndexStore", feInfo);
-      doOrBackToDefault("postIndexEntry", feInfo, analyzer);
+    async saveNewFullIndexSection(feInfo: FeInfo<"hasAnyIndexStore">) {
+      // handleSet won't work here because in next, the section to post has
+      // altered dbIds
+      const next = analyzer.saveNewSectionToFullIndexStore(feInfo);
+      setAnalyzer(() => next);
+      queryAndRevertSetIfFail("saveNewIndexSection", feInfo, next);
     },
-    async postRowIndexEntry(feInfo: FeInfo<"hasRowIndexStore">) {
-      handleSet("pushToRowIndexStore", feInfo);
-      doOrBackToDefault("postIndexEntry", feInfo, analyzer);
+    async updateFullIndexSection(feInfo: FeInfo<"hasAnyIndexStore">) {
+      const next = analyzer.updateFullIndexStoreSection(feInfo);
+      setAnalyzer(() => next);
+      queryAndRevertSetIfFail("updateIndexSection", feInfo, next);
+    },
+    async saveNewRowIndexSection(feInfo: FeInfo<"hasRowIndexStore">) {
+      const next = analyzer.saveNewSectionToRowIndexStore(feInfo);
+      setAnalyzer(() => next);
+      queryAndRevertSetIfFail("saveNewIndexSection", feInfo, next);
+    },
+    async updateRowIndexSection(feInfo: FeInfo<"hasRowIndexStore">) {
+      const next = analyzer.updateRowIndexStoreSection(feInfo);
+      setAnalyzer(() => next);
+      queryAndRevertSetIfFail("updateIndexSection", feInfo, analyzer);
     },
     async postEntryArr(
       sectionName: SectionName<"savable">,
@@ -84,18 +82,6 @@ export function useSectionQueryActions() {
       }
     },
 
-    // put
-    async putRowIndexEntry(feInfo: FeInfo<"hasRowIndexStore">) {
-      handleSet("updateRowIndexStoreAndSolve", feInfo);
-      doOrBackToDefault("putIndexEntry", feInfo, analyzer);
-    },
-    async putIndexEntry(feInfo: FeInfo<"hasFullIndexStore">) {
-      handleSet("updateIndexStoreEntry", feInfo);
-      doOrBackToDefault("putIndexEntry", feInfo, analyzer);
-    },
-    // I don't really need useStore for fe store stuff, right?
-    // I could have, analyzer.sectionStore.get(), or something
-
     // load
     loadSectionFromFeDefault(
       params: Parameters<typeof analyzer.loadSectionFromFeDefault>
@@ -127,21 +113,22 @@ export function useSectionQueryActions() {
 
     // delete
     async deleteIndexEntry(
-      sectionName: SectionName<"hasFullIndexStore">,
+      sectionName: SectionName<"hasAnyIndexStore">,
       dbId: string
     ) {
       handleSet("eraseIndexAndSolve", sectionName, dbId);
-      doOrBackToDefault("deleteIndexEntry", sectionName, dbId);
+      queryAndRevertSetIfFail("deleteIndexEntry", sectionName, dbId);
     },
     async deleteRowIndexEntry(
       sectionName: SectionName<"hasRowIndexStore">,
       dbId: string
     ) {
       handleSet("eraseRowIndexAndSolve", sectionName, dbId);
-      doOrBackToDefault("deleteIndexEntry", sectionName, dbId);
+      queryAndRevertSetIfFail("deleteIndexEntry", sectionName, dbId);
     },
 
     // in addition to eraseIndexAndSolve, I need eraseRowIndexAndSolve
     // It's the same, except I need to remove the rowIndex from the table's dbIds
   };
 }
+// There will only be indexEntry

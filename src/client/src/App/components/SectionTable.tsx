@@ -5,7 +5,7 @@ import { auth } from "../modules/services/authService";
 import { useAnalyzerContext } from "../modules/usePropertyAnalyzer";
 import { useSectionQueryActions } from "../modules/useQueryActions/useSectionQueryActions";
 import { VariableOption } from "../sharedWithServer/Analyzer/methods/get/variableOptions";
-import { SortByColumnOptions } from "../sharedWithServer/Analyzer/methods/updateRowIndexStoreAndSolve";
+import { SortByColumnOptions } from "../sharedWithServer/Analyzer/methods/saveAndUpdateRowIndexStore";
 import { Inf } from "../sharedWithServer/Analyzer/SectionMetas/Info";
 import { indexStoreToSectionName } from "../sharedWithServer/Analyzer/SectionMetas/relNameArrs/StoreTypes";
 import { SectionName } from "../sharedWithServer/Analyzer/SectionMetas/SectionName";
