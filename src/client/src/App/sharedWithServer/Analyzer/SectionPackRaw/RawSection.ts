@@ -1,14 +1,14 @@
 import { z } from "zod";
-import { zodSchema } from "../../utils/zod";
+import { ContextName } from "../../SectionMetas/baseSections";
+import { zDbValue } from "../../SectionMetas/baseSections/baseValues";
+import { DbValue } from "../../SectionMetas/relSections/rel/valueMetaTypes";
 import {
   GeneralChildIdArrs,
   OneChildIdArrs,
   SelfOrDescendantName,
-} from "../SectionMetas/relNameArrs/ChildTypes";
-import { ContextName } from "../SectionMetas/relSections/baseSections";
-import { zDbValue } from "../SectionMetas/relSections/baseSections/baseValues";
-import { DbValue } from "../SectionMetas/relSections/rel/valueMetaTypes";
-import { SectionName } from "../SectionMetas/SectionName";
+} from "../../SectionMetas/relSectionTypes/ChildTypes";
+import { SectionName } from "../../SectionMetas/SectionName";
+import { zodSchema } from "../../utils/zod";
 export type DbVarbs = {
   [varbName: string]: DbValue;
 };

@@ -1,14 +1,11 @@
 import Analyzer from "../../../Analyzer";
-import { sectionNotFound } from "./section";
 import {
-  DbNameInfo,
-  DbVarbInfo,
-  FeNameInfo,
   FeVarbInfo,
   MultiVarbInfo,
   SpecificSectionInfo,
-} from "../../SectionMetas/relSections/rel/relVarbInfoTypes";
-import { SectionName } from "../../SectionMetas/SectionName";
+} from "../../../SectionMetas/relSections/rel/relVarbInfoTypes";
+import { SectionName } from "../../../SectionMetas/SectionName";
+import { sectionNotFound } from "./section";
 
 export function varbInfosByFocal<S extends SectionName>(
   this: Analyzer,

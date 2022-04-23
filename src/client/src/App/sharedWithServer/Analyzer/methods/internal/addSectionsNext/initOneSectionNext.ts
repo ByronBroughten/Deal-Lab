@@ -1,6 +1,9 @@
 import Analyzer from "../../../../Analyzer";
-import { FeInfo, Inf } from "../../../SectionMetas/Info";
-import { SectionName, sectionNameS } from "../../../SectionMetas/SectionName";
+import { FeInfo, Inf } from "../../../../SectionMetas/Info";
+import {
+  SectionName,
+  sectionNameS,
+} from "../../../../SectionMetas/SectionName";
 import StateSection from "../../../StateSection";
 import { AddSectionProps } from "../addSections/addSectionsTypes";
 

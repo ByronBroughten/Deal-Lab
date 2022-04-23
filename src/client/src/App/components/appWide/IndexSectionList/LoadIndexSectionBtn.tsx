@@ -2,8 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import { useAnalyzerContext } from "../../../modules/usePropertyAnalyzer";
 import { useSectionQueryActions } from "../../../modules/useQueryActions/useSectionQueryActions";
-import { FeInfo } from "../../../sharedWithServer/Analyzer/SectionMetas/Info";
-import { sectionNameS } from "../../../sharedWithServer/Analyzer/SectionMetas/SectionName";
+import { FeInfo } from "../../../sharedWithServer/SectionMetas/Info";
+import { sectionNameS } from "../../../sharedWithServer/SectionMetas/SectionName";
 import theme from "../../../theme/Theme";
 import PlainBtn from "../../general/PlainBtn";
 

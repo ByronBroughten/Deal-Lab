@@ -1,13 +1,13 @@
 import bcrypt from "bcrypt";
 import mongoose from "mongoose";
-import { BaseSectionsDb } from "../../client/src/App/sharedWithServer/Analyzer/SectionMetas/relSections/baseSectionTypes";
-import { SchemaVarbsToDbValues } from "../../client/src/App/sharedWithServer/Analyzer/SectionMetas/relSections/rel/valueMetaTypes";
-import { sectionNameS } from "../../client/src/App/sharedWithServer/Analyzer/SectionMetas/SectionName";
 import {
   GuestAccessSectionsNext,
   RegisterFormData,
   RegisterReqBody,
 } from "../../client/src/App/sharedWithServer/apiQueriesShared/register";
+import { BaseSectionsDb } from "../../client/src/App/sharedWithServer/SectionMetas/baseSectionTypes";
+import { SchemaVarbsToDbValues } from "../../client/src/App/sharedWithServer/SectionMetas/relSections/rel/valueMetaTypes";
+import { sectionNameS } from "../../client/src/App/sharedWithServer/SectionMetas/SectionName";
 import { makeMongooseObjectId } from "../../client/src/App/sharedWithServer/utils/mongoose";
 import { StrictPick } from "../../client/src/App/sharedWithServer/utils/types";
 import { initDbSectionPack, UserDbRaw } from "../shared/UserDbNext";

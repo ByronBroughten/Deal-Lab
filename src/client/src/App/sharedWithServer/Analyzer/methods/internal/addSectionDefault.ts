@@ -1,10 +1,10 @@
 import Analyzer from "../../../Analyzer";
+import { Id } from "../../../SectionMetas/baseSections/id";
+import { Inf } from "../../../SectionMetas/Info";
+import { SelfOrDescendantName } from "../../../SectionMetas/relSectionTypes/ChildTypes";
+import { ParentFinder } from "../../../SectionMetas/relSectionTypes/ParentTypes";
+import { SectionName } from "../../../SectionMetas/SectionName";
 import { Obj } from "../../../utils/Obj";
-import { Inf } from "../../SectionMetas/Info";
-import { SelfOrDescendantName } from "../../SectionMetas/relNameArrs/ChildTypes";
-import { ParentFinder } from "../../SectionMetas/relNameArrs/ParentTypes";
-import { Id } from "../../SectionMetas/relSections/baseSections/id";
-import { SectionName } from "../../SectionMetas/SectionName";
 import { AddSectionProps } from "./addSections/addSectionsTypes";
 // dbVarbs?: DbVarbs;
 // idx?: number;

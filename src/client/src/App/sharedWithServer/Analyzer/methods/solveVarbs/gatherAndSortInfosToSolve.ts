@@ -1,8 +1,8 @@
-import tsort from "./tsort/tsort";
 import Analyzer from "../../../Analyzer";
-import { FeVarbInfo } from "../../SectionMetas/relSections/rel/relVarbInfoTypes";
+import { FeVarbInfo } from "../../../SectionMetas/relSections/rel/relVarbInfoTypes";
 import array from "../../../utils/Arr";
 import StateVarb from "../../StateSection/StateVarb";
+import tsort from "./tsort/tsort";
 
 type OutVarbMap = Record<string, string[]>;
 export function getOutVarbMap(

@@ -1,9 +1,6 @@
-import NumObjEditor from "../../../../inputs/NumObjEditor";
 import { useAnalyzerContext } from "../../../../../modules/usePropertyAnalyzer";
-import {
-  FeInfo,
-  Inf,
-} from "../../../../../sharedWithServer/Analyzer/SectionMetas/Info";
+import { FeInfo, Inf } from "../../../../../sharedWithServer/SectionMetas/Info";
+import NumObjEditor from "../../../../inputs/NumObjEditor";
 
 type Props = { feInfo: FeInfo };
 export default function VacancyRate({ feInfo }: Props) {

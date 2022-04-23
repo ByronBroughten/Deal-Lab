@@ -18,7 +18,12 @@ function makeReqs(): TestReqs {
   const sectionName = "property";
   let next = Analyzer.initAnalyzer();
   const { feInfo } = next.lastSection(sectionName);
-  const addSectionReq = next.req.addIndexStoreSection(feInfo);
+
+  const addSectionReq = apiQueriesShared.addSection.makeReq({
+    analyzer: next,
+    feInfo,
+    dbStoreName: "propertyIndex",
+  });
   const { sectionName: dbStoreName, dbId } = addSectionReq.body.sectionPack;
   return {
     addSection: addSectionReq,

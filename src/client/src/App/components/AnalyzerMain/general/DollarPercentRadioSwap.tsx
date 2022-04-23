@@ -1,7 +1,7 @@
 import { FormControl, FormControlLabel, RadioGroup } from "@material-ui/core";
 import styled from "styled-components";
 import { useAnalyzerContext } from "../../../modules/usePropertyAnalyzer";
-import { FeInfo } from "../../../sharedWithServer/Analyzer/SectionMetas/Info";
+import { FeInfo } from "../../../sharedWithServer/SectionMetas/Info";
 import DualInputsRadioSwap from "../../general/DualInputsRadioSwap";
 import Radio from "../../general/Radio";
 import NumObjEditor from "../../inputs/NumObjEditor";

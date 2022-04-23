@@ -1,16 +1,16 @@
 import { omit } from "lodash";
-import { sectionMetas } from "./SectionMetas";
+import { sectionMetas } from "../SectionMetas";
+import { ContextName } from "../SectionMetas/baseSections";
+import { Id } from "../SectionMetas/baseSections/id";
 import {
   FeToDbNameWithSameChildren,
   OneChildIdArrs,
-} from "./SectionMetas/relNameArrs/ChildTypes";
-import { ContextName } from "./SectionMetas/relSections/baseSections";
-import { Id } from "./SectionMetas/relSections/baseSections/id";
+} from "../SectionMetas/relSectionTypes/ChildTypes";
 import {
   SectionName,
   sectionNameS,
   SectionNameType,
-} from "./SectionMetas/SectionName";
+} from "../SectionMetas/SectionName";
 import { SectionPackRaw, zRawSectionPack } from "./SectionPackRaw";
 import { DbVarbs, RawSections } from "./SectionPackRaw/RawSection";
 

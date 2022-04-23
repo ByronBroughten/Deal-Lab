@@ -1,11 +1,5 @@
 import { Request, Response } from "express";
 import { DbEntry } from "../../client/src/App/sharedWithServer/Analyzer/DbEntry";
-import { DbStoreName } from "../../client/src/App/sharedWithServer/Analyzer/SectionMetas/relSections/baseSectionTypes/dbStoreNames";
-import {
-  SectionName,
-  sectionNameS,
-  SectionNameType,
-} from "../../client/src/App/sharedWithServer/Analyzer/SectionMetas/SectionName";
 import { isLoginFormData } from "../../client/src/App/sharedWithServer/apiQueriesShared/login";
 import {
   isRegisterFormData,
@@ -16,6 +10,12 @@ import {
   NextRes,
 } from "../../client/src/App/sharedWithServer/apiQueriesSharedTypes";
 import { is, Req, Res } from "../../client/src/App/sharedWithServer/Crud";
+import { DbStoreName } from "../../client/src/App/sharedWithServer/SectionMetas/baseSectionTypes/dbStoreNames";
+import {
+  SectionName,
+  sectionNameS,
+  SectionNameType,
+} from "../../client/src/App/sharedWithServer/SectionMetas/SectionName";
 import {
   LoggedIn,
   LoggedInUser,

@@ -7,10 +7,7 @@ import useToggleView from "../../../../modules/customHooks/useToggleView";
 import { auth } from "../../../../modules/services/authService";
 import { useAnalyzerContext } from "../../../../modules/usePropertyAnalyzer";
 import { useSectionQueryActions } from "../../../../modules/useQueryActions/useSectionQueryActions";
-import {
-  FeInfo,
-  Inf,
-} from "../../../../sharedWithServer/Analyzer/SectionMetas/Info";
+import { FeInfo, Inf } from "../../../../sharedWithServer/SectionMetas/Info";
 import theme from "../../../../theme/Theme";
 import BtnTooltip from "../../BtnTooltip";
 import { IconBtn } from "../../IconBtn";

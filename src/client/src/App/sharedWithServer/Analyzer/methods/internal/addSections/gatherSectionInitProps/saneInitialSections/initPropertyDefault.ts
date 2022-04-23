@@ -1,8 +1,8 @@
+import { dbNumObj } from "../../../../../../SectionMetas/baseSections/baseValues/NumObj";
+import { Id } from "../../../../../../SectionMetas/baseSections/id";
+import { Inf } from "../../../../../../SectionMetas/Info";
 import { Obj } from "../../../../../../utils/Obj";
 import { DbEnt, DbEntry } from "../../../../../DbEntry";
-import { Inf } from "../../../../../SectionMetas/Info";
-import { dbNumObj } from "../../../../../SectionMetas/relSections/baseSections/baseValues/NumObj";
-import { Id } from "../../../../../SectionMetas/relSections/baseSections/id";
 
 type ListItemCoreValues = [name: string, cost: number];
 const periodicItemCoreValues: ListItemCoreValues[] = [

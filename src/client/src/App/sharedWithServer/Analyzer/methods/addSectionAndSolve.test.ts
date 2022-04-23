@@ -1,9 +1,9 @@
 import Analyzer from "../../Analyzer";
+import { Ent } from "../../SectionMetas/baseSections/baseValues/entities";
 import {
   DbNumObj,
   dbNumObj,
-} from "../SectionMetas/relSections/baseSections/baseValues/NumObj";
-import { Ent } from "../SectionMetas/relSections/baseSections/baseValues/NumObj/entities";
+} from "../../SectionMetas/baseSections/baseValues/NumObj";
 import { DbEntry } from "../DbEntry";
 
 function dbProperty({

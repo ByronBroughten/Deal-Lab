@@ -1,9 +1,9 @@
 import { EditorState } from "draft-js";
 import React from "react";
 import Analyzer from "../sharedWithServer/Analyzer";
-import { FeVarbInfo } from "../sharedWithServer/Analyzer/SectionMetas/relSections/rel/relVarbInfoTypes";
 import StateVarb from "../sharedWithServer/Analyzer/StateSection/StateVarb";
 import { DirectUpdateFnValue } from "../sharedWithServer/Analyzer/StateSection/StateVarb/stateValue";
+import { FeVarbInfo } from "../sharedWithServer/SectionMetas/relSections/rel/relVarbInfoTypes";
 import { NoProviderErr } from "../utils/react";
 import {
   getStoredAnalyzerState,

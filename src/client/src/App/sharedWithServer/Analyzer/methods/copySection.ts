@@ -2,7 +2,7 @@ import Analyzer from "../../Analyzer";
 import {
   FeNameInfo,
   FeVarbInfo,
-} from "../SectionMetas/relSections/rel/relVarbInfoTypes";
+} from "../../SectionMetas/relSections/rel/relVarbInfoTypes";
 import { internal } from "./internal";
 
 export function copySection(

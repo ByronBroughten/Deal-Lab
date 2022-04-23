@@ -1,8 +1,7 @@
 import styled from "styled-components";
 import { useAnalyzerContext } from "../../../../../modules/usePropertyAnalyzer";
-import { SpecificVarbInfo } from "../../../../../sharedWithServer/Analyzer/SectionMetas/relSections/rel/relVarbInfoTypes";
 import { InVarbInfo } from "../../../../../sharedWithServer/Analyzer/StateSection/StateVarb";
-import theme from "../../../../../theme/Theme";
+import { SpecificVarbInfo } from "../../../../../sharedWithServer/SectionMetas/relSections/rel/relVarbInfoTypes";
 import { DetailRowVarbFound } from "./DetailRowVarbFound";
 import { DetailRowVarbNotFound } from "./DetailRowVarbNotFound";
 

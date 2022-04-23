@@ -1,5 +1,5 @@
-import { FeVarbInfo } from "../../sharedWithServer/Analyzer/SectionMetas/relSections/rel/relVarbInfoTypes";
 import StateVarb from "../../sharedWithServer/Analyzer/StateSection/StateVarb";
+import { FeVarbInfo } from "../../sharedWithServer/SectionMetas/relSections/rel/relVarbInfoTypes";
 import { ThemeSectionName } from "../../theme/Theme";
 import LabeledVarb from "./LabeledVarb";
 

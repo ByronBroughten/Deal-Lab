@@ -1,9 +1,9 @@
 import { useAnalyzerContext } from "../../modules/usePropertyAnalyzer";
+import { Inf } from "../../sharedWithServer/SectionMetas/Info";
 import LabeledOutputRow from "../appWide/LabeledOutputRow";
-import GlobalInfoSection from "./general/StaticInfoSection";
 import { LabeledVarbSimple } from "../appWide/LabeledVarbSimple";
 import ListGroupShell from "./general/ListGroupShell";
-import { Inf } from "../../sharedWithServer/Analyzer/SectionMetas/Info";
+import GlobalInfoSection from "./general/StaticInfoSection";
 
 export default function TotalInsAndOuts() {
   const { analyzer } = useAnalyzerContext();

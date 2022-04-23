@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { SectionName } from "../../../sharedWithServer/Analyzer/SectionMetas/SectionName";
+import { SectionName } from "../../../sharedWithServer/SectionMetas/SectionName";
 import theme, {
   ThemeSectionName,
   themeSectionNameOrDefault,

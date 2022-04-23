@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components/macro";
-import XBtnRow from "./XBtnContent/XBtnRow";
+import { FeParentInfo } from "../../../../../../../sharedWithServer/SectionMetas/relSectionTypes/ParentTypes";
 import theme from "../../../../../../../theme/Theme";
 import { conditionalRowSectionName } from "../ConditionalRows";
-import { FeParentInfo } from "../../../../../../../sharedWithServer/Analyzer/SectionMetas/relNameArrs/ParentTypes";
+import XBtnRow from "./XBtnContent/XBtnRow";
 
 export default function XBtnContent({
   conditionalRowIds,

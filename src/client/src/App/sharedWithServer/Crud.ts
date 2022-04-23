@@ -1,6 +1,6 @@
 import { config } from "../Constants";
 import { DbEntry, zDbEntry, zDbEntryArr } from "./Analyzer/DbEntry";
-import { SectionName } from "./Analyzer/SectionMetas/SectionName";
+import { SectionName } from "./SectionMetas/SectionName";
 import { zNanoId } from "./utils/zod";
 
 export const authTokenKey = "x-auth-token";

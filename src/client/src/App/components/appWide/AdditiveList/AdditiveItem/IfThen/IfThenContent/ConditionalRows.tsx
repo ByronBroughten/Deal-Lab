@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
+import { FeParentInfo } from "../../../../../../sharedWithServer/SectionMetas/relSectionTypes/ParentTypes";
+import theme from "../../../../../../theme/Theme";
 import ControlContent from "./ConditionalRows/ControlContent";
 import LogicContent from "./ConditionalRows/LogicContent";
 import XBtnContent from "./ConditionalRows/XBtnContent";
-import theme from "../../../../../../theme/Theme";
-import { FeParentInfo } from "../../../../../../sharedWithServer/Analyzer/SectionMetas/relNameArrs/ParentTypes";
 
 export const conditionalRowSectionName = "conditionalRow";
 type Props = {

@@ -1,15 +1,14 @@
+import { FaList } from "react-icons/fa";
 import styled, { css } from "styled-components";
+import useOnOutsideClickRef from "../../modules/customHooks/useOnOutsideClickRef";
+import useToggle from "../../modules/customHooks/useToggle";
+import { FeInfo } from "../../sharedWithServer/SectionMetas/Info";
 import theme, {
   ThemeSectionName,
   themeSectionNameOrDefault,
 } from "../../theme/Theme";
-import useToggle from "../../modules/customHooks/useToggle";
 import { LoadIndexSectionList } from "./LoadIndexSectionList";
-import { FeInfo } from "../../sharedWithServer/Analyzer/SectionMetas/Info";
-import LoginToAccessBtnTooltip from "./LoginToAccessBtnTooltip";
 import { LoggedInOrOutIconBtn } from "./LoggedInOrNotBtn";
-import { FaList } from "react-icons/fa";
-import useOnOutsideClickRef from "../../modules/customHooks/useOnOutsideClickRef";
 
 type Props = {
   feInfo: FeInfo<"hasIndexStore">;

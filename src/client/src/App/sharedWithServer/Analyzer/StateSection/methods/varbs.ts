@@ -1,6 +1,6 @@
-import { Inf } from "../../SectionMetas/Info";
-import { MultiVarbInfo } from "../../SectionMetas/relSections/rel/relVarbInfoTypes";
-import { SectionName } from "../../SectionMetas/SectionName";
+import { Inf } from "../../../SectionMetas/Info";
+import { MultiVarbInfo } from "../../../SectionMetas/relSections/rel/relVarbInfoTypes";
+import { SectionName } from "../../../SectionMetas/SectionName";
 import StateSection from "../../StateSection";
 import StateVarb from "../StateVarb";
 import { StateValue } from "../StateVarb/stateValue";

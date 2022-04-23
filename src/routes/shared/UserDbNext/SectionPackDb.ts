@@ -1,11 +1,4 @@
 import { z } from "zod";
-import { SelfOrDescendantName } from "../../../client/src/App/sharedWithServer/Analyzer/SectionMetas/relNameArrs/ChildTypes";
-import { InEntityVarbInfo } from "../../../client/src/App/sharedWithServer/Analyzer/SectionMetas/relSections/baseSections/baseValues/NumObj/entities";
-import {
-  SectionName,
-  sectionNameS,
-  SectionNameType,
-} from "../../../client/src/App/sharedWithServer/Analyzer/SectionMetas/SectionName";
 import {
   SectionPackDbRaw,
   SectionPackRaw,
@@ -15,6 +8,13 @@ import {
   RawSection,
   zRawSections,
 } from "../../../client/src/App/sharedWithServer/Analyzer/SectionPackRaw/RawSection";
+import { InEntityVarbInfo } from "../../../client/src/App/sharedWithServer/SectionMetas/baseSections/baseValues/entities";
+import { SelfOrDescendantName } from "../../../client/src/App/sharedWithServer/SectionMetas/relSectionTypes/ChildTypes";
+import {
+  SectionName,
+  sectionNameS,
+  SectionNameType,
+} from "../../../client/src/App/sharedWithServer/SectionMetas/SectionName";
 import { Obj } from "../../../client/src/App/sharedWithServer/utils/Obj";
 import { zodSchema } from "../../../client/src/App/sharedWithServer/utils/zod";
 

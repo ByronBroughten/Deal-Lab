@@ -171,17 +171,17 @@ import {
   updateSectionArr,
   wipeSectionArrAndSolve,
 } from "./Analyzer/methods/updateSectionArr";
-import { sectionMetas } from "./Analyzer/SectionMetas";
-import { Id } from "./Analyzer/SectionMetas/relSections/baseSections/id";
-import { SectionFinder } from "./Analyzer/SectionMetas/relSections/baseSectionTypes";
+import StateSection, { StateSectionCore } from "./Analyzer/StateSection";
+import StateVarb from "./Analyzer/StateSection/StateVarb";
+import { sectionMetas } from "./SectionMetas";
+import { Id } from "./SectionMetas/baseSections/id";
+import { SectionFinder } from "./SectionMetas/baseSectionTypes";
 import {
   FeNameInfo,
   FeVarbInfo,
-} from "./Analyzer/SectionMetas/relSections/rel/relVarbInfoTypes";
-import { NextSectionMeta } from "./Analyzer/SectionMetas/SectionMeta";
-import { SectionName, sectionNameS } from "./Analyzer/SectionMetas/SectionName";
-import StateSection, { StateSectionCore } from "./Analyzer/StateSection";
-import StateVarb from "./Analyzer/StateSection/StateVarb";
+} from "./SectionMetas/relSections/rel/relVarbInfoTypes";
+import { NextSectionMeta } from "./SectionMetas/SectionMeta";
+import { SectionName, sectionNameS } from "./SectionMetas/SectionName";
 import { Obj, ObjectKeys } from "./utils/Obj";
 import { DropFirst } from "./utils/types";
 

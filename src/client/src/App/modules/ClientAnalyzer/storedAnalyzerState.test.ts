@@ -2,7 +2,7 @@ import hash from "object-hash";
 import {
   makeRelSections,
   RelSections,
-} from "../../sharedWithServer/Analyzer/SectionMetas/relSections";
+} from "../../sharedWithServer/SectionMetas/relSections";
 
 describe(`relSectionsDidChange`, () => {
   let relSections: RelSections;

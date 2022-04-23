@@ -1,11 +1,11 @@
 import Analyzer from "../../../Analyzer";
-import Arr from "../../../utils/Arr";
-import { FeInfo, Inf } from "../../SectionMetas/Info";
-import { ChildName } from "../../SectionMetas/relNameArrs/ChildTypes";
+import { FeInfo, Inf } from "../../../SectionMetas/Info";
 import {
   FeVarbInfo,
   SpecificSectionInfo,
-} from "../../SectionMetas/relSections/rel/relVarbInfoTypes";
+} from "../../../SectionMetas/relSections/rel/relVarbInfoTypes";
+import { ChildName } from "../../../SectionMetas/relSectionTypes/ChildTypes";
+import Arr from "../../../utils/Arr";
 import { internal } from "../internal";
 
 function varbInfosToSolveAfterErase(

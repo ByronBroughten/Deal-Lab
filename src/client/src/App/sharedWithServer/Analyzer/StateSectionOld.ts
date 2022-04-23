@@ -1,34 +1,34 @@
 import { cloneDeep, pick } from "lodash";
 import Analyzer from "../Analyzer";
-import { DbVarbs } from "./DbEntry";
-import { sectionMetas } from "./SectionMetas";
-import { FeInfo, Inf } from "./SectionMetas/Info";
-import {
-  ChildIdArrs,
-  OneChildIdArrs,
-} from "./SectionMetas/relNameArrs/ChildTypes";
-import {
-  FeParentInfo,
-  ParentName,
-} from "./SectionMetas/relNameArrs/ParentTypes";
-import {
-  DefaultStoreName,
-  IndexStoreName,
-} from "./SectionMetas/relNameArrs/StoreTypes";
-import { SimpleSectionName } from "./SectionMetas/relSections/baseSections";
-import { InEntities } from "./SectionMetas/relSections/baseSections/baseValues/NumObj/entities";
+import { sectionMetas } from "../SectionMetas";
+import { SimpleSectionName } from "../SectionMetas/baseSections";
+import { InEntities } from "../SectionMetas/baseSections/baseValues/entities";
+import { FeInfo, Inf } from "../SectionMetas/Info";
 import {
   DbNameInfo,
   FeNameInfo,
   FeVarbInfo,
-} from "./SectionMetas/relSections/rel/relVarbInfoTypes";
-import { NextSectionMeta } from "./SectionMetas/SectionMeta";
+} from "../SectionMetas/relSections/rel/relVarbInfoTypes";
+import {
+  ChildIdArrs,
+  OneChildIdArrs,
+} from "../SectionMetas/relSectionTypes/ChildTypes";
+import {
+  FeParentInfo,
+  ParentName,
+} from "../SectionMetas/relSectionTypes/ParentTypes";
+import {
+  DefaultStoreName,
+  IndexStoreName,
+} from "../SectionMetas/relSectionTypes/StoreTypes";
+import { NextSectionMeta } from "../SectionMetas/SectionMeta";
 import {
   FeSectionNameType,
   SectionName,
   sectionNameS,
-} from "./SectionMetas/SectionName";
-import { OutUpdatePack } from "./SectionMetas/VarbMeta";
+} from "../SectionMetas/SectionName";
+import { OutUpdatePack } from "../SectionMetas/VarbMeta";
+import { DbVarbs } from "./DbEntry";
 import {
   addChildFeId,
   allChildFeIds,

@@ -1,11 +1,11 @@
 import Analyzer from "../../../Analyzer";
-import { Obj } from "../../../utils/Obj";
-import { FeSectionPack } from "../../FeSectionPack";
 import {
   SectionName,
   sectionNameS,
   SectionNameType,
-} from "../../SectionMetas/SectionName";
+} from "../../../SectionMetas/SectionName";
+import { Obj } from "../../../utils/Obj";
+import { FeSectionPack } from "../../FeSectionPack";
 import { SectionPackRaw } from "../../SectionPackRaw";
 
 export function makeRawSectionPackArr<SN extends SectionName>(

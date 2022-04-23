@@ -1,7 +1,7 @@
 import { AiOutlineSave } from "react-icons/ai";
 import { auth } from "../../../../../modules/services/authService";
 import { useSectionQueryActions } from "../../../../../modules/useQueryActions/useSectionQueryActions";
-import { FeInfo } from "../../../../../sharedWithServer/Analyzer/SectionMetas/Info";
+import { FeInfo } from "../../../../../sharedWithServer/SectionMetas/Info";
 import TooltipIconBtn from "../../../TooltipIconBtn";
 
 type Props = { feInfo: FeInfo<"hasRowIndexStore"> };

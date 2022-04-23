@@ -1,6 +1,6 @@
 import Analyzer from "../../../Analyzer";
-import { FeNameInfo } from "../../SectionMetas/relSections/rel/relVarbInfoTypes";
-import { SectionName } from "../../SectionMetas/SectionName";
+import { FeNameInfo } from "../../../SectionMetas/relSections/rel/relVarbInfoTypes";
+import { SectionName } from "../../../SectionMetas/SectionName";
 import StateSection from "../../StateSection";
 import { SectionOption } from "./variableOptions";
 

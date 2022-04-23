@@ -1,22 +1,22 @@
 import { pick } from "lodash";
-import { Obj } from "../../../utils/Obj";
-import { DbVarbs } from "../../DbEntry";
-import { sectionMetas } from "../../SectionMetas";
+import { sectionMetas } from "../../../SectionMetas";
+import { Id } from "../../../SectionMetas/baseSections/id";
 import {
   ChildIdArrs,
   OneChildIdArrs,
-} from "../../SectionMetas/relNameArrs/ChildTypes";
-import { Id } from "../../SectionMetas/relSections/baseSections/id";
-import { SectionName } from "../../SectionMetas/SectionName";
+} from "../../../SectionMetas/relSectionTypes/ChildTypes";
+import { SectionName } from "../../../SectionMetas/SectionName";
+import { Obj } from "../../../utils/Obj";
+import { DbVarbs } from "../../DbEntry";
 import StateSection, {
-  NextStateSectionCore,
-  NextStateSectionInitProps,
+  StateSectionCore,
+  StateSectionInitProps,
 } from "../../StateSection";
 import StateVarb from "../StateVarb";
 import { StateVarbs } from "./varbs";
 
 export function initStateSectionNext<SN extends SectionName>(
-  props: NextStateSectionInitProps<SN>
+  props: StateSectionInitProps<SN>
 ) {
   const core = initCore(props);
   return new StateSection(core);
@@ -28,7 +28,7 @@ function initCore<SN extends SectionName>({
   childFeIds = {},
   dbVarbs = {},
   ...rest
-}: NextStateSectionInitProps<SN>): NextStateSectionCore<SN> {
+}: StateSectionInitProps<SN>): StateSectionCore<SN> {
   return {
     sectionName,
     feId,

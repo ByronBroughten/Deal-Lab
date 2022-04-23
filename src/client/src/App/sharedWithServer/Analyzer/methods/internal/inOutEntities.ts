@@ -1,10 +1,10 @@
 import Analyzer from "../../../Analyzer";
-import { OutEntity } from "../../StateSection/StateVarb/entities";
 import {
   InEntity,
   InEntityVarbInfo,
-} from "../../SectionMetas/relSections/baseSections/baseValues/NumObj/entities";
-import { FeVarbInfo } from "../../SectionMetas/relSections/rel/relVarbInfoTypes";
+} from "../../../SectionMetas/baseSections/baseValues/entities";
+import { FeVarbInfo } from "../../../SectionMetas/relSections/rel/relVarbInfoTypes";
+import { OutEntity } from "../../StateSection/StateVarb/entities";
 
 export function addInEntity(
   analyzer: Analyzer,

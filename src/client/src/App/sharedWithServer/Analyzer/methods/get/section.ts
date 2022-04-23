@@ -1,6 +1,5 @@
 import Analyzer from "../../../Analyzer";
-import { Obj } from "../../../utils/Obj";
-import { FeInfo, Inf } from "../../SectionMetas/Info";
+import { FeInfo, Inf } from "../../../SectionMetas/Info";
 import {
   FeNameInfo,
   FeVarbInfo,
@@ -8,8 +7,12 @@ import {
   MultiSectionInfo,
   SpecificSectionInfo,
   SpecificSectionsInfo,
-} from "../../SectionMetas/relSections/rel/relVarbInfoTypes";
-import { NextSectionFinder, SectionName } from "../../SectionMetas/SectionName";
+} from "../../../SectionMetas/relSections/rel/relVarbInfoTypes";
+import {
+  NextSectionFinder,
+  SectionName,
+} from "../../../SectionMetas/SectionName";
+import { Obj } from "../../../utils/Obj";
 import StateSection from "../../StateSection";
 
 export function sectionNotFound({ sectionName, idType, id }: MultiSectionInfo) {

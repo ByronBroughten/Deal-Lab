@@ -1,13 +1,13 @@
 import Analyzer from "../../../Analyzer";
-import { Obj } from "../../../utils/Obj";
+import { SectionFinder } from "../../../SectionMetas/baseSectionTypes";
 import {
   ChildIdArrs,
   ChildName,
   DescendantIds,
   SelfOrDescendantIds,
-} from "../../SectionMetas/relNameArrs/ChildTypes";
-import { SectionFinder } from "../../SectionMetas/relSections/baseSectionTypes";
-import { SectionName } from "../../SectionMetas/SectionName";
+} from "../../../SectionMetas/relSectionTypes/ChildTypes";
+import { SectionName } from "../../../SectionMetas/SectionName";
+import { Obj } from "../../../utils/Obj";
 import StateSection from "../../StateSection";
 
 export function allChildDbIds<S extends SectionName>(

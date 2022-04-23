@@ -1,15 +1,15 @@
-import { sectionMetas } from "../../../../SectionMetas";
+import { sectionMetas } from "../../../../../SectionMetas";
 import {
   DbNumObj,
   isDbNumObj,
   NumObj,
-} from "../../../../SectionMetas/relSections/baseSections/baseValues/NumObj";
-import { isNumObjUpdateFnName } from "../../../../SectionMetas/relSections/baseSections/baseValues/NumObj/updateFnNames";
+} from "../../../../../SectionMetas/baseSections/baseValues/NumObj";
+import { isNumObjUpdateFnName } from "../../../../../SectionMetas/baseSections/baseValues/updateFnNames";
 import {
   DbValue,
   UpdateFnName,
-} from "../../../../SectionMetas/relSections/rel/valueMetaTypes";
-import { SectionName } from "../../../../SectionMetas/SectionName";
+} from "../../../../../SectionMetas/relSections/rel/valueMetaTypes";
+import { SectionName } from "../../../../../SectionMetas/SectionName";
 import { DbVarbs } from "../../../../DbEntry";
 import { VarbValues } from "../../../../StateSection/methods/varbs";
 import { StateValue } from "../../../../StateSection/StateVarb/stateValue";

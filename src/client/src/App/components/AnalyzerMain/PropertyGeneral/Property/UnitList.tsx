@@ -2,7 +2,7 @@ import { rem } from "polished";
 import React from "react";
 import styled, { css } from "styled-components";
 import { useAnalyzerContext } from "../../../../modules/usePropertyAnalyzer";
-import { FeParentInfo } from "../../../../sharedWithServer/Analyzer/SectionMetas/relNameArrs/ParentTypes";
+import { FeParentInfo } from "../../../../sharedWithServer/SectionMetas/relSectionTypes/ParentTypes";
 import array from "../../../../sharedWithServer/utils/Arr";
 import ccs from "../../../../theme/cssChunks";
 import theme from "../../../../theme/Theme";

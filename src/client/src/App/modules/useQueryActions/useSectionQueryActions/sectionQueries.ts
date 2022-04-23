@@ -1,14 +1,14 @@
 import Analyzer from "../../../sharedWithServer/Analyzer";
 import { FeSectionPack } from "../../../sharedWithServer/Analyzer/FeSectionPack";
-import { sectionMetas } from "../../../sharedWithServer/Analyzer/SectionMetas";
-import { FeInfo } from "../../../sharedWithServer/Analyzer/SectionMetas/Info";
-import { SectionName } from "../../../sharedWithServer/Analyzer/SectionMetas/SectionName";
 import {
   SectionPackRaw,
   ServerSectionPack,
 } from "../../../sharedWithServer/Analyzer/SectionPackRaw";
 import { makeReq } from "../../../sharedWithServer/apiQueriesShared/makeGeneralReqs";
 import { NextReq } from "../../../sharedWithServer/apiQueriesSharedTypes";
+import { sectionMetas } from "../../../sharedWithServer/SectionMetas";
+import { FeInfo } from "../../../sharedWithServer/SectionMetas/Info";
+import { SectionName } from "../../../sharedWithServer/SectionMetas/SectionName";
 import { crud } from "../../crud";
 import { apiQueries } from "../apiQueriesClient";
 

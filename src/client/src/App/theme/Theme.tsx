@@ -1,7 +1,7 @@
 import { darken, lighten } from "polished";
 import React from "react";
 import { ThemeProvider } from "styled-components";
-import { FeInfo } from "../sharedWithServer/Analyzer/SectionMetas/Info";
+import { FeInfo } from "../sharedWithServer/SectionMetas/Info";
 import { ObjectKeys } from "../sharedWithServer/utils/Obj";
 
 const color = {

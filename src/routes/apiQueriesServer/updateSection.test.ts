@@ -2,10 +2,10 @@ import { Server } from "http";
 import request from "supertest";
 import { config } from "../../client/src/App/Constants";
 import Analyzer from "../../client/src/App/sharedWithServer/Analyzer";
-import { NumObj } from "../../client/src/App/sharedWithServer/Analyzer/SectionMetas/relSections/baseSections/baseValues/NumObj";
-import { Id } from "../../client/src/App/sharedWithServer/Analyzer/SectionMetas/relSections/baseSections/id";
 import { apiQueriesShared } from "../../client/src/App/sharedWithServer/apiQueriesShared";
 import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesSharedTypes";
+import { NumObj } from "../../client/src/App/sharedWithServer/SectionMetas/baseSections/baseValues/NumObj";
+import { Id } from "../../client/src/App/sharedWithServer/SectionMetas/baseSections/id";
 import { runApp } from "../../runApp";
 import { UserModelNext } from "../shared/UserModelNext";
 import { loginUtils } from "./nextLogin/loginUtils";
@@ -31,11 +31,19 @@ function makeReqs(): TestReqs {
   let next = Analyzer.initAnalyzer();
   const { feInfo } = next.lastSection(sectionName);
   next = next.updateSectionValuesAndSolve(feInfo, originalValues);
-  const addSectionReq = next.req.addIndexStoreSection(feInfo);
+  const addSectionReq = apiQueriesShared.addSection.makeReq({
+    analyzer: next,
+    feInfo,
+    dbStoreName: "propertyIndex",
+  });
   next = next.updateSectionValuesAndSolve(feInfo, updatedValues);
   return {
     addSection: addSectionReq,
-    updateSection: next.req.addIndexStoreSection(feInfo),
+    updateSection: apiQueriesShared.updateSection.makeReq({
+      analyzer: next,
+      feInfo,
+      dbStoreName: "propertyIndex",
+    }),
   };
 }
 

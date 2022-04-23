@@ -1,13 +1,10 @@
 import React from "react";
-import NumObjEditor from "../../../inputs/NumObjEditor";
-import BasicSectionInfo from "../../../appWide/GeneralSection/MainSection/MainSectionBody/BasicSectionInfo";
-import {
-  FeInfo,
-  Inf,
-} from "../../../../sharedWithServer/Analyzer/SectionMetas/Info";
-import UnitList from "./UnitList";
 import styled from "styled-components";
+import { FeInfo, Inf } from "../../../../sharedWithServer/SectionMetas/Info";
 import theme from "../../../../theme/Theme";
+import BasicSectionInfo from "../../../appWide/GeneralSection/MainSection/MainSectionBody/BasicSectionInfo";
+import NumObjEditor from "../../../inputs/NumObjEditor";
+import UnitList from "./UnitList";
 
 type Props = { feInfo: FeInfo; className?: string };
 export default function BasicPropertyInfo({ feInfo, className }: Props) {

@@ -6,7 +6,7 @@ import useToggleView from "../../../modules/customHooks/useToggleView";
 import { useAnalyzerContext } from "../../../modules/usePropertyAnalyzer";
 import { useSectionQueryActions } from "../../../modules/useQueryActions/useSectionQueryActions";
 import { SectionOption } from "../../../sharedWithServer/Analyzer/methods/get/variableOptions";
-import { FeInfo } from "../../../sharedWithServer/Analyzer/SectionMetas/Info";
+import { FeInfo } from "../../../sharedWithServer/SectionMetas/Info";
 import theme, { ThemeSectionName } from "../../../theme/Theme";
 import { StandardProps } from "../../general/StandardProps";
 import { OnSelect } from "../../inputs/VarbAutoComplete";

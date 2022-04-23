@@ -1,12 +1,12 @@
 import Analyzer from "../../../Analyzer";
+import { sectionMetas } from "../../../SectionMetas";
+import { InEntityVarbInfo } from "../../../SectionMetas/baseSections/baseValues/entities";
+import { BaseName } from "../../../SectionMetas/baseSectionTypes";
+import { Inf } from "../../../SectionMetas/Info";
+import { FeVarbInfo } from "../../../SectionMetas/relSections/rel/relVarbInfoTypes";
+import { ongoingVarbSpanEndings } from "../../../SectionMetas/relSections/rel/relVarbs/preOngoingVarbs";
+import { SectionName, sectionNameS } from "../../../SectionMetas/SectionName";
 import { ObjectKeys } from "../../../utils/Obj";
-import { sectionMetas } from "../../SectionMetas";
-import { Inf } from "../../SectionMetas/Info";
-import { InEntityVarbInfo } from "../../SectionMetas/relSections/baseSections/baseValues/NumObj/entities";
-import { BaseName } from "../../SectionMetas/relSections/baseSectionTypes";
-import { FeVarbInfo } from "../../SectionMetas/relSections/rel/relVarbInfoTypes";
-import { ongoingVarbSpanEndings } from "../../SectionMetas/relSections/rel/relVarbs/preOngoingVarbs";
-import { SectionName, sectionNameS } from "../../SectionMetas/SectionName";
 
 export type SectionOption = {
   dbId: string;

@@ -3,8 +3,8 @@ import { unstable_batchedUpdates } from "react-dom";
 import usePropertyAnalyzer from "../../modules/usePropertyAnalyzer";
 import { useSectionQueryActions } from "../../modules/useQueryActions/useSectionQueryActions";
 import Analyzer from "../../sharedWithServer/Analyzer";
-import { FeInfo } from "../../sharedWithServer/Analyzer/SectionMetas/Info";
-import { SectionName } from "../../sharedWithServer/Analyzer/SectionMetas/SectionName";
+import { FeInfo } from "../../sharedWithServer/SectionMetas/Info";
+import { SectionName } from "../../sharedWithServer/SectionMetas/SectionName";
 import array from "../../sharedWithServer/utils/Arr";
 import useDidChange from "../appWide/customHooks/useDidChange";
 

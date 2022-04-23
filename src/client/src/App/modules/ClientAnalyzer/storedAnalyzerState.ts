@@ -1,8 +1,8 @@
 import hash from "object-hash";
 import { config } from "../../Constants";
 import Analyzer from "../../sharedWithServer/Analyzer";
-import { relSections } from "../../sharedWithServer/Analyzer/SectionMetas/relSections";
 import { DbEntry } from "../../sharedWithServer/Analyzer/DbEntry";
+import { relSections } from "../../sharedWithServer/SectionMetas/relSections";
 import { getStoredObj } from "../../utils/localStorage";
 
 const { tokenKey } = config;

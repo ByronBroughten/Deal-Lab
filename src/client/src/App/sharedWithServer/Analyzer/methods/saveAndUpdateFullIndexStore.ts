@@ -1,6 +1,6 @@
 import Analyzer from "../../Analyzer";
+import { FeInfo, Inf } from "../../SectionMetas/Info";
 import { FeSectionPack } from "../FeSectionPack";
-import { FeInfo, Inf } from "../SectionMetas/Info";
 import { internal } from "./internal";
 
 export function saveNewSectionToFullIndexStore(

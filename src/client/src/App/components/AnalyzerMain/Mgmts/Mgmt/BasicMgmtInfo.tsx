@@ -1,12 +1,11 @@
 import React from "react";
+import styled from "styled-components";
+import { switchNames } from "../../../../sharedWithServer/SectionMetas/baseSections/switchNames";
+import { FeInfo } from "../../../../sharedWithServer/SectionMetas/Info";
 import BasicSectionInfo from "../../../appWide/GeneralSection/MainSection/MainSectionBody/BasicSectionInfo";
 import { useOpenWidth } from "../../../appWide/SectionTitleRow";
-import ToggleViewBtn from "../../../general/ToggleViewBtn";
 import DollarPercentRadioSwap from "../../general/DollarPercentRadioSwap";
 import VacancyRate from "./BasicMgmtInfo/VacancyRate";
-import { switchNames } from "../../../../sharedWithServer/Analyzer/SectionMetas/relSections/baseSections/switchNames";
-import { FeInfo } from "../../../../sharedWithServer/Analyzer/SectionMetas/Info";
-import styled from "styled-components";
 
 type Props = { feInfo: FeInfo; className?: string };
 export default function BasicMgmtInfo({ feInfo, className }: Props) {

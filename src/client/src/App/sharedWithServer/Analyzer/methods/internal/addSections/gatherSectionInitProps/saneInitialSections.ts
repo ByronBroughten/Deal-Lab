@@ -1,6 +1,6 @@
 import { cloneDeep } from "lodash";
+import { Id } from "../../../../../SectionMetas/baseSections/id";
 import { DbEnt } from "../../../../DbEntry";
-import { Id } from "../../../../SectionMetas/relSections/baseSections/id";
 import { initAnalysisTable } from "./saneInitialSections/initAnalysisTable";
 import { initLoanDefault } from "./saneInitialSections/initLoanDefault";
 import { initMgmtDefault } from "./saneInitialSections/initMgmtDefault";

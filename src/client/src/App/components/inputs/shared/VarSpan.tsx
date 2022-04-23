@@ -1,12 +1,12 @@
-import React from "react";
-import theme from "../../../theme/Theme";
 import { CompositeDecorator } from "draft-js";
 import { lighten } from "polished";
+import React from "react";
 import styled, { css } from "styled-components";
 import { getEntityStrategy } from "../../../modules/draftjs/getEntityStrategies";
-import BasicDraftSpan from "./BasicDraftSpan";
 import { useAnalyzerContext } from "../../../modules/usePropertyAnalyzer";
-import { EntityMapData } from "../../../sharedWithServer/Analyzer/SectionMetas/relSections/baseSections/baseValues/NumObj/entities";
+import { EntityMapData } from "../../../sharedWithServer/SectionMetas/baseSections/baseValues/entities";
+import theme from "../../../theme/Theme";
+import BasicDraftSpan from "./BasicDraftSpan";
 
 export const varSpanDecorator = new CompositeDecorator([
   {

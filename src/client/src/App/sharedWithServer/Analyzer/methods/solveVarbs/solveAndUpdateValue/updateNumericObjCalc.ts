@@ -1,32 +1,29 @@
-import {
-  DbNumObj,
-  EntitiesAndEditorText,
-  FailedVarbs,
-  GetSolvableTextProps,
-  NumObj,
-  NumObjNumber,
-} from "../../../SectionMetas/relSections/baseSections/baseValues/NumObj";
-import { isRationalNumber, replaceRange } from "../../../../utils/Str";
+import { round } from "lodash";
+import { evaluate } from "mathjs";
 import Analyzer from "../../../../Analyzer";
-import {
-  FeVarbInfo,
-  SpecificVarbInfo,
-} from "../../../SectionMetas/relSections/rel/relVarbInfoTypes";
 import calculations, {
   CalcProp,
-  CalculationName,
   isCalculationName,
-} from "../../../SectionMetas/relSections/baseSections/baseValues/NumObj/calculations";
+} from "../../../../SectionMetas/baseSections/baseValues/calculations";
+import {
+  DbNumObj,
+  FailedVarbs,
+  NumObj,
+  NumObjNumber,
+} from "../../../../SectionMetas/baseSections/baseValues/NumObj";
 import {
   isNumObjUpdateFnName,
   NumObjUpdateFnName,
-} from "../../../SectionMetas/relSections/baseSections/baseValues/NumObj/updateFnNames";
+} from "../../../../SectionMetas/baseSections/baseValues/updateFnNames";
+import {
+  FeVarbInfo,
+  SpecificVarbInfo,
+} from "../../../../SectionMetas/relSections/rel/relVarbInfoTypes";
+import { isRationalNumber, replaceRange } from "../../../../utils/Str";
 import {
   arithmeticOperatorsArr,
   decimalToPercent,
 } from "./../../../../utils/math";
-import { round } from "lodash";
-import { evaluate } from "mathjs";
 
 export const numObjUnits = {
   percent: {

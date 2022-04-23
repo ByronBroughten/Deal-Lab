@@ -1,6 +1,6 @@
 import { useAnalyzerContext } from "../../../../modules/usePropertyAnalyzer";
 import { VariableOption } from "../../../../sharedWithServer/Analyzer/methods/get/variableOptions";
-import { FeVarbInfo } from "../../../../sharedWithServer/Analyzer/SectionMetas/relSections/rel/relVarbInfoTypes";
+import { FeVarbInfo } from "../../../../sharedWithServer/SectionMetas/relSections/rel/relVarbInfoTypes";
 import { ControlledVarbAutoComplete } from "../../../inputs/ControlledVarbAutoComplete";
 
 export default function LoadedVarb({ feVarbInfo }: { feVarbInfo: FeVarbInfo }) {

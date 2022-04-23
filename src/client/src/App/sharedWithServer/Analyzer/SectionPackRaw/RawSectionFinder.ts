@@ -1,6 +1,6 @@
-import { SelfOrDescendantName } from "../SectionMetas/relNameArrs/ChildTypes";
-import { ContextName } from "../SectionMetas/relSections/baseSections";
-import { SectionName } from "../SectionMetas/SectionName";
+import { ContextName } from "../../SectionMetas/baseSections";
+import { SelfOrDescendantName } from "../../SectionMetas/relSectionTypes/ChildTypes";
+import { SectionName } from "../../SectionMetas/SectionName";
 export type OneRawSectionFinder<SN extends SectionName> = {
   sectionName: SN;
   dbId: string;

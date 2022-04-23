@@ -1,12 +1,12 @@
 import React from "react";
+import styled from "styled-components";
+import { useAnalyzerContext } from "../../../../../../../modules/usePropertyAnalyzer";
+import { listOperators } from "../../../../../../../sharedWithServer/Analyzer/methods/solveVarbs/solveAndUpdateValue/updateUserVarb";
+import { Inf } from "../../../../../../../sharedWithServer/SectionMetas/Info";
 import LogicOperators from "../../../../../../appWide/LogicOperators";
 import ListMaker from "../../../../../../inputs/ListEditor";
 import NumObjEditor from "../../../../../../inputs/NumObjEditor";
-import styled from "styled-components";
 import MaterialSelect from "./../../../../../../inputs/MaterialSelect";
-import { listOperators } from "../../../../../../../sharedWithServer/Analyzer/methods/solveVarbs/solveAndUpdateValue/updateUserVarb";
-import { useAnalyzerContext } from "../../../../../../../modules/usePropertyAnalyzer";
-import { Inf } from "../../../../../../../sharedWithServer/Analyzer/SectionMetas/Info";
 
 const sectionName = "conditionalRow";
 export default function IfLogic({ rowId }: { rowId: string }) {

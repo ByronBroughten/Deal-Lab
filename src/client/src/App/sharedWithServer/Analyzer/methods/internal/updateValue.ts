@@ -1,5 +1,5 @@
 import Analyzer from "../../../Analyzer";
-import { FeVarbInfo } from "../../SectionMetas/relSections/rel/relVarbInfoTypes";
+import { FeVarbInfo } from "../../../SectionMetas/relSections/rel/relVarbInfoTypes";
 import { StateValue } from "../../StateSection/StateVarb/stateValue";
 import { internal } from "../internal";
 

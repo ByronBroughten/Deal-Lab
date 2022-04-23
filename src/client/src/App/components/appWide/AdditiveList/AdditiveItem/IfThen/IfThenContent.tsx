@@ -1,7 +1,7 @@
 import { rem } from "polished";
 import styled from "styled-components";
 import { useAnalyzerContext } from "../../../../../modules/usePropertyAnalyzer";
-import { FeNameInfo } from "../../../../../sharedWithServer/Analyzer/SectionMetas/relSections/rel/relVarbInfoTypes";
+import { FeNameInfo } from "../../../../../sharedWithServer/SectionMetas/relSections/rel/relVarbInfoTypes";
 import theme from "../../../../../theme/Theme";
 import ConditionalRows from "./IfThenContent/ConditionalRows";
 import LogicRow from "./IfThenContent/LogicRow";

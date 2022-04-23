@@ -1,13 +1,10 @@
+import styled from "styled-components";
 import { useAnalyzerContext } from "../../../../modules/usePropertyAnalyzer";
-import { switchNames } from "../../../../sharedWithServer/Analyzer/SectionMetas/relSections/baseSections/switchNames";
-import {
-  FeInfo,
-  Inf,
-} from "../../../../sharedWithServer/Analyzer/SectionMetas/Info";
+import { switchNames } from "../../../../sharedWithServer/SectionMetas/baseSections/switchNames";
+import { FeInfo, Inf } from "../../../../sharedWithServer/SectionMetas/Info";
+import theme from "../../../../theme/Theme";
 import MaterialStringEditor from "../../../inputs/MaterialStringEditor";
 import NumObjEditor from "../../../inputs/NumObjEditor";
-import styled from "styled-components";
-import theme from "../../../../theme/Theme";
 
 type Props = { feInfo: FeInfo; valueVarbName: string };
 

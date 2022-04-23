@@ -1,11 +1,11 @@
 import Analyzer from "../../Analyzer";
-import { FeInfo, Inf } from "../SectionMetas/Info";
+import { Ent } from "../../SectionMetas/baseSections/baseValues/entities";
 import {
   dbNumObj,
   NumObj,
-} from "../SectionMetas/relSections/baseSections/baseValues/NumObj";
-import { Ent } from "../SectionMetas/relSections/baseSections/baseValues/NumObj/entities";
-import { switchNames } from "../SectionMetas/relSections/baseSections/switchNames";
+} from "../../SectionMetas/baseSections/baseValues/NumObj";
+import { switchNames } from "../../SectionMetas/baseSections/switchNames";
+import { FeInfo, Inf } from "../../SectionMetas/Info";
 import { DbEntry } from "../DbEntry";
 import { StateValue } from "../StateSection/StateVarb/stateValue";
 

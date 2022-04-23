@@ -2,14 +2,14 @@ import React from "react";
 import styled from "styled-components";
 import { useAnalyzerContext } from "../../modules/usePropertyAnalyzer";
 import { useSectionQueryActions } from "../../modules/useQueryActions/useSectionQueryActions";
-import { sectionMetas } from "../../sharedWithServer/Analyzer/SectionMetas";
-import { FeInfo, Inf } from "../../sharedWithServer/Analyzer/SectionMetas/Info";
-import { ChildName } from "../../sharedWithServer/Analyzer/SectionMetas/relNameArrs/ChildTypes";
-import { IndexParentName } from "../../sharedWithServer/Analyzer/SectionMetas/relNameArrs/StoreTypes";
+import { sectionMetas } from "../../sharedWithServer/SectionMetas";
+import { FeInfo, Inf } from "../../sharedWithServer/SectionMetas/Info";
+import { ChildName } from "../../sharedWithServer/SectionMetas/relSectionTypes/ChildTypes";
+import { IndexParentName } from "../../sharedWithServer/SectionMetas/relSectionTypes/StoreTypes";
 import {
   SectionName,
   sectionNameS,
-} from "../../sharedWithServer/Analyzer/SectionMetas/SectionName";
+} from "../../sharedWithServer/SectionMetas/SectionName";
 import ccs from "../../theme/cssChunks";
 import theme, {
   ThemeSectionName,

@@ -1,12 +1,12 @@
-import React from "react";
 import { EditorState } from "draft-js";
+import React from "react";
 import styled from "styled-components";
 import { insertEntity } from "../../../modules/draftjs/insert";
-import theme from "../../../theme/Theme";
-import VarbAutoComplete, { PopperRef } from "../VarbAutoComplete";
 import Analyzer from "../../../sharedWithServer/Analyzer";
 import { VariableOption } from "../../../sharedWithServer/Analyzer/methods/get/variableOptions";
-import { EntityMapData } from "../../../sharedWithServer/Analyzer/SectionMetas/relSections/baseSections/baseValues/NumObj/entities";
+import { EntityMapData } from "../../../sharedWithServer/SectionMetas/baseSections/baseValues/entities";
+import theme from "../../../theme/Theme";
+import VarbAutoComplete, { PopperRef } from "../VarbAutoComplete";
 
 interface Props {
   editorState: EditorState;

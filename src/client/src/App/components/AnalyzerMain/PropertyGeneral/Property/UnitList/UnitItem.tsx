@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useAnalyzerContext } from "../../../../../modules/usePropertyAnalyzer";
-import { Inf } from "../../../../../sharedWithServer/Analyzer/SectionMetas/Info";
+import { Inf } from "../../../../../sharedWithServer/SectionMetas/Info";
 import ccs from "../../../../../theme/cssChunks";
 import theme from "../../../../../theme/Theme";
 import XBtn from "../../../../appWide/Xbtn";

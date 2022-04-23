@@ -1,4 +1,4 @@
-import { dbNumObj } from "../../../../../SectionMetas/relSections/baseSections/baseValues/NumObj";
+import { dbNumObj } from "../../../../../../SectionMetas/baseSections/baseValues/NumObj";
 import { DbEntry } from "../../../../../DbEntry";
 
 const dbIds = {

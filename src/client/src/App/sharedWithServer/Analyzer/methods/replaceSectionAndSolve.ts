@@ -1,7 +1,7 @@
 import Analyzer from "../../Analyzer";
-import { ChildFeInfo } from "../SectionMetas/relNameArrs/ChildTypes";
-import { SectionFinder } from "../SectionMetas/relSections/baseSectionTypes";
-import { SectionName } from "../SectionMetas/SectionName";
+import { SectionFinder } from "../../SectionMetas/baseSectionTypes";
+import { ChildFeInfo } from "../../SectionMetas/relSectionTypes/ChildTypes";
+import { SectionName } from "../../SectionMetas/SectionName";
 import { SectionPackRaw } from "../SectionPackRaw";
 import { internal } from "./internal";
 

@@ -15,7 +15,11 @@ const sectionName = "property";
 function makeAddSectionReq(): NextReq<"addSection"> {
   const analyzer = Analyzer.initAnalyzer();
   const { feInfo } = analyzer.lastSection(sectionName);
-  return analyzer.req.addIndexStoreSection(feInfo);
+  return apiQueriesShared.addSection.makeReq({
+    analyzer,
+    feInfo,
+    dbStoreName: "propertyIndex",
+  });
 }
 
 const apiRoute = apiQueriesShared.addSection.pathRoute;

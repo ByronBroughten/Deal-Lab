@@ -1,6 +1,6 @@
 import React from "react";
 import { useAnalyzerContext } from "../../../../../../../../modules/usePropertyAnalyzer";
-import { FeParentInfo } from "../../../../../../../../sharedWithServer/Analyzer/SectionMetas/relNameArrs/ParentTypes";
+import { FeParentInfo } from "../../../../../../../../sharedWithServer/SectionMetas/relSectionTypes/ParentTypes";
 import PlusBtn from "../../../../../../PlusBtn";
 import XBtn from "../../../../../../Xbtn";
 import { conditionalRowSectionName } from "../../ConditionalRows";

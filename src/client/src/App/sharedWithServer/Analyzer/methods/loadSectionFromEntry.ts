@@ -1,8 +1,8 @@
 import Analyzer from "../../Analyzer";
+import { FeParentInfo } from "../../SectionMetas/relSectionTypes/ParentTypes";
+import { SectionName } from "../../SectionMetas/SectionName";
 import { Obj } from "../../utils/Obj";
 import { DbEntry } from "../DbEntry";
-import { FeParentInfo } from "../SectionMetas/relNameArrs/ParentTypes";
-import { SectionName } from "../SectionMetas/SectionName";
 import { internal } from "./internal";
 
 export function loadSectionArrAndSolve<S extends SectionName<"hasOneParent">>(

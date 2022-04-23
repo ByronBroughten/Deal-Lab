@@ -1,7 +1,7 @@
 import Analyzer from "../../Analyzer";
+import { SectionName } from "../../SectionMetas/SectionName";
 import { FeSectionPack, OrderedSectionNodeProps } from "../FeSectionPack";
 import { FeSelfOrDescendantNode } from "../FeSectionPacks/FeSectionNode";
-import { SectionName } from "../SectionMetas/SectionName";
 import { SectionPackRaw } from "../SectionPackRaw";
 import { AddSectionProps } from "./internal/addSections/addSectionsTypes";
 

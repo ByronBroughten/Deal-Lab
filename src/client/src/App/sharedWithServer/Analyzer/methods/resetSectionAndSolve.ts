@@ -1,8 +1,8 @@
 import Analyzer from "../../Analyzer";
-import { ChildFeInfo } from "../SectionMetas/relNameArrs/ChildTypes";
-import { SectionFinder } from "../SectionMetas/relSections/baseSectionTypes";
-import { FeNameInfo } from "../SectionMetas/relSections/rel/relVarbInfoTypes";
-import { SectionName } from "../SectionMetas/SectionName";
+import { SectionFinder } from "../../SectionMetas/baseSectionTypes";
+import { FeNameInfo } from "../../SectionMetas/relSections/rel/relVarbInfoTypes";
+import { ChildFeInfo } from "../../SectionMetas/relSectionTypes/ChildTypes";
+import { SectionName } from "../../SectionMetas/SectionName";
 import { InitSectionOptions } from "./addSectionAndSolve";
 import { internal } from "./internal";
 

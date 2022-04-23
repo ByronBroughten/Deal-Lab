@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useAnalyzerContext } from "../../../modules/usePropertyAnalyzer";
-import { Inf } from "../../../sharedWithServer/Analyzer/SectionMetas/Info";
+import { Inf } from "../../../sharedWithServer/SectionMetas/Info";
 import theme from "../../../theme/Theme";
 import useHowMany from "../../appWide/customHooks/useHowMany";
 import LabeledOutputRow from "../../appWide/LabeledOutputRow";

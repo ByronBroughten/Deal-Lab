@@ -1,6 +1,6 @@
 import useToggleView from "../../../../modules/customHooks/useToggleView";
-import { Inf } from "../../../../sharedWithServer/Analyzer/SectionMetas/Info";
-import { FeNameInfo } from "../../../../sharedWithServer/Analyzer/SectionMetas/relSections/rel/relVarbInfoTypes";
+import { Inf } from "../../../../sharedWithServer/SectionMetas/Info";
+import { FeNameInfo } from "../../../../sharedWithServer/SectionMetas/relSections/rel/relVarbInfoTypes";
 import MaterialStringEditor from "../../../inputs/MaterialStringEditor";
 import IfThenContent from "./IfThen/IfThenContent";
 

@@ -1,11 +1,11 @@
-import { FeVarbInfo } from "../../SectionMetas/relSections/rel/relVarbInfoTypes";
-import Arr from "../../../utils/Arr";
-import StateVarb from "../StateVarb";
 import {
   Ent,
   InEntities,
   InEntity,
-} from "../../SectionMetas/relSections/baseSections/baseValues/NumObj/entities";
+} from "../../../SectionMetas/baseSections/baseValues/entities";
+import { FeVarbInfo } from "../../../SectionMetas/relSections/rel/relVarbInfoTypes";
+import Arr from "../../../utils/Arr";
+import StateVarb from "../StateVarb";
 
 // all varbs that may have inEntities are in mutable sections.
 // so all outEntities (which point to the varbs with inEntities)

@@ -1,8 +1,8 @@
 import Analyzer from "../../Analyzer";
+import { Inf } from "../../SectionMetas/Info";
+import { rowIndexToTableName } from "../../SectionMetas/relSectionTypes/StoreTypes";
+import { SectionName } from "../../SectionMetas/SectionName";
 import Arr from "../../utils/Arr";
-import { Inf } from "../SectionMetas/Info";
-import { rowIndexToTableName } from "../SectionMetas/relNameArrs/StoreTypes";
-import { SectionName } from "../SectionMetas/SectionName";
 
 export function eraseIndexAndSolve(
   this: Analyzer,

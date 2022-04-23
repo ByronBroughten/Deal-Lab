@@ -1,9 +1,6 @@
 import { useAnalyzerContext } from "../../../modules/usePropertyAnalyzer";
-import {
-  FeInfo,
-  Inf,
-} from "../../../sharedWithServer/Analyzer/SectionMetas/Info";
-import { SectionName } from "../../../sharedWithServer/Analyzer/SectionMetas/SectionName";
+import { FeInfo, Inf } from "../../../sharedWithServer/SectionMetas/Info";
+import { SectionName } from "../../../sharedWithServer/SectionMetas/SectionName";
 
 const valueSwitchValues = [
   "loadedVarb",

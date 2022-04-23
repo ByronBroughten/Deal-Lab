@@ -1,4 +1,14 @@
 import { extend, omit } from "lodash";
+import { sectionMetas } from "../SectionMetas";
+import { Id } from "../SectionMetas/baseSections/id";
+import { Inf } from "../SectionMetas/Info";
+import {
+  FeToDbNameWithSameChildren,
+  SectionNameWithSameChildrenWide,
+  SelfOrDescendantIds,
+} from "../SectionMetas/relSectionTypes/ChildTypes";
+import { FeParentInfo } from "../SectionMetas/relSectionTypes/ParentTypes";
+import { SectionName } from "../SectionMetas/SectionName";
 import { Obj } from "../utils/Obj";
 import { FeSelfOrDescendantParentStub } from "./FeSectionPacks/FeParentStub";
 import {
@@ -6,16 +16,6 @@ import {
   OneSectionNodeMaker,
   SectionNodeMaker,
 } from "./FeSectionPacks/FeSectionNode";
-import { sectionMetas } from "./SectionMetas";
-import { Inf } from "./SectionMetas/Info";
-import {
-  FeToDbNameWithSameChildren,
-  SectionNameWithSameChildrenWide,
-  SelfOrDescendantIds,
-} from "./SectionMetas/relNameArrs/ChildTypes";
-import { FeParentInfo } from "./SectionMetas/relNameArrs/ParentTypes";
-import { Id } from "./SectionMetas/relSections/baseSections/id";
-import { SectionName } from "./SectionMetas/SectionName";
 import { SectionPackRaw, ServerSectionPack } from "./SectionPackRaw";
 import {
   GeneralRawSection,

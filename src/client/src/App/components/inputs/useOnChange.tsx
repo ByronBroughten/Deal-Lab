@@ -1,8 +1,7 @@
 import { EditorState } from "draft-js";
-import { isEditorChanged } from "../../utils/Draf";
-import { useAnalyzerContext } from "../../modules/usePropertyAnalyzer";
 import { Dispatch, SetStateAction } from "react";
-import { FeVarbInfo } from "../../sharedWithServer/Analyzer/SectionMetas/relSections/rel/relVarbInfoTypes";
+import { FeVarbInfo } from "../../sharedWithServer/SectionMetas/relSections/rel/relVarbInfoTypes";
+import { isEditorChanged } from "../../utils/Draf";
 
 interface UseOnChangeProps {
   feVarbInfo: FeVarbInfo;

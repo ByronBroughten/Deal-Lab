@@ -1,8 +1,8 @@
 import Analyzer from "../../../Analyzer";
-import { FeVarbInfo } from "../../SectionMetas/relSections/rel/relVarbInfoTypes";
-import { NumObj } from "../../SectionMetas/relSections/baseSections/baseValues/NumObj";
-import { Inf } from "../../SectionMetas/Info";
-import { isCalculationName } from "../../SectionMetas/relSections/baseSections/baseValues/NumObj/calculations";
+import { isCalculationName } from "../../../SectionMetas/baseSections/baseValues/calculations";
+import { NumObj } from "../../../SectionMetas/baseSections/baseValues/NumObj";
+import { Inf } from "../../../SectionMetas/Info";
+import { FeVarbInfo } from "../../../SectionMetas/relSections/rel/relVarbInfoTypes";
 import { internal } from "../internal";
 
 export function solveValue(

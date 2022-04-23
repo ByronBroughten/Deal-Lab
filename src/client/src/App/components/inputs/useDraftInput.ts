@@ -1,14 +1,12 @@
-import React from "react";
 import { EditorState } from "draft-js";
-import { useState } from "react";
-import { useEffect } from "react";
-import { DraftBlock } from "../../utils/Draf";
-import useOnChange from "./useOnChange";
+import React, { useEffect, useState } from "react";
 import { useAnalyzerContext } from "../../modules/usePropertyAnalyzer";
 import StateVarb, {
   StateValueAnyKey,
 } from "../../sharedWithServer/Analyzer/StateSection/StateVarb";
-import { FeVarbInfo } from "../../sharedWithServer/Analyzer/SectionMetas/relSections/rel/relVarbInfoTypes";
+import { FeVarbInfo } from "../../sharedWithServer/SectionMetas/relSections/rel/relVarbInfoTypes";
+import { DraftBlock } from "../../utils/Draf";
+import useOnChange from "./useOnChange";
 
 export const getEditorSolveParams = (rawEditorState: any) => {
   const { blocks, entityMap }: { blocks: DraftBlock[]; entityMap: any } =

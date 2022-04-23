@@ -1,11 +1,11 @@
 import mongoose, { Schema } from "mongoose";
-import { SelfOrDescendantName } from "../../client/src/App/sharedWithServer/Analyzer/SectionMetas/relNameArrs/ChildTypes";
+import { SectionPackDbRaw } from "../../client/src/App/sharedWithServer/Analyzer/SectionPackRaw";
+import { RawSection } from "../../client/src/App/sharedWithServer/Analyzer/SectionPackRaw/RawSection";
+import { SelfOrDescendantName } from "../../client/src/App/sharedWithServer/SectionMetas/relSectionTypes/ChildTypes";
 import {
   SectionName,
   sectionNameS,
-} from "../../client/src/App/sharedWithServer/Analyzer/SectionMetas/SectionName";
-import { SectionPackDbRaw } from "../../client/src/App/sharedWithServer/Analyzer/SectionPackRaw";
-import { RawSection } from "../../client/src/App/sharedWithServer/Analyzer/SectionPackRaw/RawSection";
+} from "../../client/src/App/sharedWithServer/SectionMetas/SectionName";
 import { monSchemas } from "../../client/src/App/sharedWithServer/utils/mongoose";
 import { UserDbRaw } from "./UserDbNext";
 

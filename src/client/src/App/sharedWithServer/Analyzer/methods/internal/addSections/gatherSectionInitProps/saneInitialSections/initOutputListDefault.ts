@@ -1,5 +1,5 @@
+import { Inf } from "../../../../../../SectionMetas/Info";
 import { DbEnt } from "../../../../../DbEntry";
-import { Inf } from "../../../../../SectionMetas/Info";
 
 export const initOutputs = [
   {

@@ -1,14 +1,11 @@
 import React from "react";
-import {
-  FeInfo,
-  Inf,
-} from "../../../../sharedWithServer/Analyzer/SectionMetas/Info";
+import styled from "styled-components";
+import { FeInfo, Inf } from "../../../../sharedWithServer/SectionMetas/Info";
+import theme from "../../../../theme/Theme";
 import BasicSectionInfo from "../../../appWide/GeneralSection/MainSection/MainSectionBody/BasicSectionInfo";
 import StandardLabel from "../../../general/StandardLabel";
 import NumObjEditor from "../../../inputs/NumObjEditor";
 import DollarPercentRadioSwap from "../../general/DollarPercentRadioSwap";
-import styled from "styled-components";
-import theme from "../../../../theme/Theme";
 
 type Props = { feInfo: FeInfo; className?: string };
 export default function BasicLoanInfo({ feInfo, className }: Props) {

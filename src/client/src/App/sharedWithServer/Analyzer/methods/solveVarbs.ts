@@ -1,6 +1,6 @@
 import Analyzer from "../../Analyzer";
+import { FeVarbInfo } from "../../SectionMetas/relSections/rel/relVarbInfoTypes";
 import array from "../../utils/Arr";
-import { FeVarbInfo } from "../SectionMetas/relSections/rel/relVarbInfoTypes";
 import { solveAndUpdateValue } from "./solveVarbs/solveAndUpdateValue";
 
 export function solveVarbs(

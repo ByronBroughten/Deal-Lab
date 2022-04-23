@@ -1,6 +1,6 @@
 import Analyzer from "../../Analyzer";
-import { FeInfo } from "../SectionMetas/Info";
-import { SpecificSectionInfo } from "../SectionMetas/relSections/rel/relVarbInfoTypes";
+import { FeInfo } from "../../SectionMetas/Info";
+import { SpecificSectionInfo } from "../../SectionMetas/relSections/rel/relVarbInfoTypes";
 import { internal } from "./internal";
 
 export function eraseSectionAndSolve(

@@ -1,30 +1,30 @@
-import {
-  FeVarbInfo,
-  FeNameInfo,
-  LocalRelVarbInfo,
-  RelVarbInfo,
-  MultiVarbInfo,
-  SpecificVarbInfo,
-  SpecificSectionInfo,
-  MultiFindByFocalVarbInfo,
-  InRelVarbInfo,
-} from "../../SectionMetas/relSections/rel/relVarbInfoTypes";
 import Analyzer from "../../../Analyzer";
-import StateVarb, {
-  Adornments,
-  InVarbInfo,
-} from "../../StateSection/StateVarb";
+import { switchNames } from "../../../SectionMetas/baseSections/switchNames";
+import { SectionFinder } from "../../../SectionMetas/baseSectionTypes";
+import {
+  FeNameInfo,
+  FeVarbInfo,
+  InRelVarbInfo,
+  LocalRelVarbInfo,
+  MultiFindByFocalVarbInfo,
+  MultiVarbInfo,
+  RelVarbInfo,
+  SpecificSectionInfo,
+  SpecificVarbInfo,
+} from "../../../SectionMetas/relSections/rel/relVarbInfoTypes";
+import { SwitchVarbNames } from "../../../SectionMetas/relSections/rel/relVarbs/preSwitchVarbs";
+import { UpdateFnProps } from "../../../SectionMetas/relSections/rel/relVarbTypes";
+import { UpdateFnName } from "../../../SectionMetas/relSections/rel/valueMetaTypes";
+import { SectionName } from "../../../SectionMetas/SectionName";
 import {
   isDefaultOutPack,
   isSwitchOutPack,
   OutUpdatePack,
-} from "../../SectionMetas/VarbMeta";
-import { SectionName } from "../../SectionMetas/SectionName";
-import { UpdateFnName } from "../../SectionMetas/relSections/rel/valueMetaTypes";
-import { UpdateFnProps } from "../../SectionMetas/relSections/rel/relVarbTypes";
-import { SwitchVarbNames } from "../../SectionMetas/relSections/rel/relVarbs/preSwitchVarbs";
-import { switchNames } from "../../SectionMetas/relSections/baseSections/switchNames";
-import { SectionFinder } from "../../SectionMetas/relSections/baseSectionTypes";
+} from "../../../SectionMetas/VarbMeta";
+import StateVarb, {
+  Adornments,
+  InVarbInfo,
+} from "../../StateSection/StateVarb";
 
 export function varb(
   this: Analyzer,

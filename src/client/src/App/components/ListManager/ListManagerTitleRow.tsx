@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import SectionBtn from "../appWide/SectionBtn";
-import theme from "../../theme/Theme";
 import { useAnalyzerContext } from "../../modules/usePropertyAnalyzer";
-import { SectionName } from "../../sharedWithServer/Analyzer/SectionMetas/SectionName";
+import { SectionName } from "../../sharedWithServer/SectionMetas/SectionName";
+import theme from "../../theme/Theme";
+import SectionBtn from "../appWide/SectionBtn";
 
 type Props = {
   sectionName: SectionName<"userList">;

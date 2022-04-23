@@ -1,9 +1,9 @@
 import {
   OneChildIdArrs,
   SelfOrDescendantName,
-} from "../SectionMetas/relNameArrs/ChildTypes";
-import { ParentFinder } from "../SectionMetas/relNameArrs/ParentTypes";
-import { SectionName } from "../SectionMetas/SectionName";
+} from "../../SectionMetas/relSectionTypes/ChildTypes";
+import { ParentFinder } from "../../SectionMetas/relSectionTypes/ParentTypes";
+import { SectionName } from "../../SectionMetas/SectionName";
 import { DbVarbs } from "../SectionPackRaw/RawSection";
 import { OneRawSectionFinder } from "../SectionPackRaw/RawSectionFinder";
 export type OneFeSectionNode<SN extends SectionName> = {
@@ -33,7 +33,7 @@ export type SectionNodeMaker<SN extends SectionName> =
 // import {
 //   OneChildIdArrs,
 //   SelfOrDescendantName,
-// } from "../SectionMetas/relNameArrs/ChildTypes";
+// } from "../SectionMetas/relSectionTypes/ChildTypes";
 // import { ParentFinder } from "../SectionMetas/relNameArrs/ParentTypes";
 // import { DbVarbs } from "../SectionPack";
 // import { OneRawSectionFinder } from "../SectionPacks/RawSectionFinder";

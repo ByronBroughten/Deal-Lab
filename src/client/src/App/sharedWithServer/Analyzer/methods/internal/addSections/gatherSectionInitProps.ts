@@ -1,13 +1,16 @@
 import Analyzer from "../../../../Analyzer";
-import Arr from "../../../../utils/Arr";
-import { DbEntry, DbSection } from "../../../DbEntry";
-import { sectionMetas } from "../../../SectionMetas";
-import { Inf } from "../../../SectionMetas/Info";
+import { sectionMetas } from "../../../../SectionMetas";
+import { Inf } from "../../../../SectionMetas/Info";
 import {
   FeParentInfo,
   ParentFinder,
-} from "../../../SectionMetas/relNameArrs/ParentTypes";
-import { SectionName, sectionNameS } from "../../../SectionMetas/SectionName";
+} from "../../../../SectionMetas/relSectionTypes/ParentTypes";
+import {
+  SectionName,
+  sectionNameS,
+} from "../../../../SectionMetas/SectionName";
+import Arr from "../../../../utils/Arr";
+import { DbEntry, DbSection } from "../../../DbEntry";
 import { VarbValues } from "../../../StateSection/methods/varbs";
 import { initValuesFromDb } from "./gatherSectionInitProps/initValuesFromDb";
 import { saneInitialSections } from "./gatherSectionInitProps/saneInitialSections";

@@ -1,20 +1,20 @@
 import { EditorState } from "draft-js";
 import { pick } from "lodash";
+import Analyzer from "../../sharedWithServer/Analyzer";
+import { internal } from "../../sharedWithServer/Analyzer/methods/internal";
+import { isEditorUpdateFnName } from "../../sharedWithServer/Analyzer/StateSection/StateVarb/stateValue";
+import { InEntities } from "../../sharedWithServer/SectionMetas/baseSections/baseValues/entities";
+import {
+  EntitiesAndEditorText,
+  NumObj,
+} from "../../sharedWithServer/SectionMetas/baseSections/baseValues/NumObj";
+import { FeVarbInfo } from "../../sharedWithServer/SectionMetas/relSections/rel/relVarbInfoTypes";
+import array from "../../sharedWithServer/utils/Arr";
+import { EntityMap, EntityRanges, RawEditorState } from "../../utils/Draf";
 import {
   editorStateToText,
   getRawEditorState,
 } from "../draftjs/rawEditorContent";
-import { EntityMap, EntityRanges, RawEditorState } from "../../utils/Draf";
-import { isEditorUpdateFnName } from "../../sharedWithServer/Analyzer/StateSection/StateVarb/stateValue";
-import {
-  EntitiesAndEditorText,
-  NumObj,
-} from "../../sharedWithServer/Analyzer/SectionMetas/relSections/baseSections/baseValues/NumObj";
-import Analyzer from "../../sharedWithServer/Analyzer";
-import array from "../../sharedWithServer/utils/Arr";
-import { FeVarbInfo } from "../../sharedWithServer/Analyzer/SectionMetas/relSections/rel/relVarbInfoTypes";
-import { InEntities } from "../../sharedWithServer/Analyzer/SectionMetas/relSections/baseSections/baseValues/NumObj/entities";
-import { internal } from "../../sharedWithServer/Analyzer/methods/internal";
 
 const updateEditorByBasicType = {
   string(editorState: EditorState): string {

@@ -1,5 +1,5 @@
 import Analyzer from "../../../Analyzer";
-import { FeInfo } from "../../SectionMetas/Info";
+import { FeInfo } from "../../../SectionMetas/Info";
 import { internal } from "../internal";
 
 export function resetSectionAndChildDbIds(

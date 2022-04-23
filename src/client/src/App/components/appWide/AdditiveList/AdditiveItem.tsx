@@ -1,16 +1,16 @@
 import React from "react";
+import styled from "styled-components";
 import { useAnalyzerContext } from "../../../modules/usePropertyAnalyzer";
-import XBtn from "../Xbtn";
+import { Inf } from "../../../sharedWithServer/SectionMetas/Info";
+import { SectionName } from "../../../sharedWithServer/SectionMetas/SectionName";
+import theme from "../../../theme/Theme";
 import NextBtn from "../NextBtn";
-import { useAdditiveItem } from "./useAdditiveItem";
-import LabeledEquation from "./AdditiveItem/LabeledEquation";
+import XBtn from "../Xbtn";
 import IfThen from "./AdditiveItem/IfThen";
+import LabeledEquation from "./AdditiveItem/LabeledEquation";
 import LabeledSpanOverCost from "./AdditiveItem/LabeledSpanOverCost";
 import LoadedVarb from "./AdditiveItem/LoadedVarb";
-import styled from "styled-components";
-import theme from "../../../theme/Theme";
-import { SectionName } from "../../../sharedWithServer/Analyzer/SectionMetas/SectionName";
-import { Inf } from "../../../sharedWithServer/Analyzer/SectionMetas/Info";
+import { useAdditiveItem } from "./useAdditiveItem";
 
 type Props = {
   id: string;

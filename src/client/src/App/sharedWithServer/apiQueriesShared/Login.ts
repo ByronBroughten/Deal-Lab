@@ -1,10 +1,7 @@
 import { z } from "zod";
 import { config } from "../../Constants";
-import {
-  SectionName,
-  sectionNameS,
-} from "../Analyzer/SectionMetas/SectionName";
 import { SectionPackRaw, zRawSectionPack } from "../Analyzer/SectionPackRaw";
+import { SectionName, sectionNameS } from "../SectionMetas/SectionName";
 import { zodSchema } from "../utils/zod";
 import { zRegisterFormData } from "./register";
 

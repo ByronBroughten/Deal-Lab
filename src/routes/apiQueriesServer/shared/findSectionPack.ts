@@ -1,7 +1,7 @@
 import { Response } from "express";
-import { SectionName } from "../../../client/src/App/sharedWithServer/Analyzer/SectionMetas/SectionName";
 import { StoredSectionPackInfo } from "../../../client/src/App/sharedWithServer/Analyzer/SectionPack";
 import { SectionPackDbRaw } from "../../../client/src/App/sharedWithServer/Analyzer/SectionPackRaw";
+import { SectionName } from "../../../client/src/App/sharedWithServer/SectionMetas/SectionName";
 import { getUserById } from "./getUserById";
 
 export type FindSectionPackProps<

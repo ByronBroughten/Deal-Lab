@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
-import { SectionName } from "../../client/src/App/sharedWithServer/Analyzer/SectionMetas/SectionName";
 import { SectionPackRaw } from "../../client/src/App/sharedWithServer/Analyzer/SectionPackRaw";
 import {
   NextReq,
   NextRes,
 } from "../../client/src/App/sharedWithServer/apiQueriesSharedTypes";
+import { SectionName } from "../../client/src/App/sharedWithServer/SectionMetas/SectionName";
 import authWare from "../../middleware/authWare";
 import { ResHandledError } from "../../middleware/error";
 import { serverSend } from "../shared/crudValidators";

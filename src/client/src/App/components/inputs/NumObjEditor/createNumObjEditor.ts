@@ -1,21 +1,21 @@
 import { convertFromRaw, EditorState } from "draft-js";
+import { omit, pick } from "lodash";
 import getNewRawContent, {
   numObjToRawContent,
   textToRawContent,
 } from "../../../modules/draftjs/rawEditorContent";
+import StateVarb from "../../../sharedWithServer/Analyzer/StateSection/StateVarb";
+import {
+  EntityMapData,
+  InEntities,
+} from "../../../sharedWithServer/SectionMetas/baseSections/baseValues/entities";
+import { NumObj } from "../../../sharedWithServer/SectionMetas/baseSections/baseValues/NumObj";
 import {
   DraftBlock,
   EntityMap,
   EntityRanges,
   RawEditorState,
 } from "../../../utils/Draf";
-import { omit, pick } from "lodash";
-import StateVarb from "../../../sharedWithServer/Analyzer/StateSection/StateVarb";
-import { NumObj } from "../../../sharedWithServer/Analyzer/SectionMetas/relSections/baseSections/baseValues/NumObj";
-import {
-  EntityMapData,
-  InEntities,
-} from "../../../sharedWithServer/Analyzer/SectionMetas/relSections/baseSections/baseValues/NumObj/entities";
 
 export interface CreateEditorProps {
   varb: StateVarb;

@@ -1,6 +1,4 @@
 import { AxiosResponse } from "axios";
-import { Id } from "../../../sharedWithServer/Analyzer/SectionMetas/relSections/baseSections/id";
-import { sectionNameS } from "../../../sharedWithServer/Analyzer/SectionMetas/SectionName";
 import { SectionPack } from "../../../sharedWithServer/Analyzer/SectionPack";
 import {
   DbIdRes,
@@ -9,6 +7,8 @@ import {
   SectionPackRes,
 } from "../../../sharedWithServer/apiQueriesShared/makeGeneralReqs";
 import { QueryError } from "../../../sharedWithServer/apiQueriesSharedTypes";
+import { Id } from "../../../sharedWithServer/SectionMetas/baseSections/id";
+import { sectionNameS } from "../../../sharedWithServer/SectionMetas/SectionName";
 import { Obj } from "../../../sharedWithServer/utils/Obj";
 
 export function validateDbIdRes(res: AxiosResponse<unknown>): DbIdRes {

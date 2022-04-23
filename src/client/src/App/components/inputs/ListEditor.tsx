@@ -6,19 +6,19 @@ import {
 } from "draft-js";
 import { darken, lighten } from "polished";
 import React from "react";
+import { css } from "styled-components";
 import styled from "styled-components/macro";
 import useOnOutsideClickRef from "../../modules/customHooks/useOnOutsideClickRef";
 import { getEntityStrategy } from "../../modules/draftjs/getEntityStrategies";
 import { insertEntity } from "../../modules/draftjs/insert";
-import { FeVarbInfo } from "../../sharedWithServer/Analyzer/SectionMetas/relSections/rel/relVarbInfoTypes";
 import StateVarb from "../../sharedWithServer/Analyzer/StateSection/StateVarb";
+import { FeVarbInfo } from "../../sharedWithServer/SectionMetas/relSections/rel/relVarbInfoTypes";
 import ErrorMessage from "../appWide/ErrorMessage";
 import ItemOrCommaSpan, {
   CommaSpan,
   ItemSpan,
 } from "./ListEditor/ItemOrCommaSpan";
 import useDraftInput from "./useDraftInput";
-import { css } from "styled-components";
 
 export const inputHeight = css`
   height: calc(1.5em + 0.5rem + 2px);

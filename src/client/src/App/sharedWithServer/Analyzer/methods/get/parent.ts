@@ -1,12 +1,12 @@
 import Analyzer from "../../../Analyzer";
+import { SpecificSectionInfo } from "../../../SectionMetas/relSections/rel/relVarbInfoTypes";
 import {
   FeParentInfo,
   ParentFinder,
   ParentName,
   SectionParentFinder,
-} from "../../SectionMetas/relNameArrs/ParentTypes";
-import { SpecificSectionInfo } from "../../SectionMetas/relSections/rel/relVarbInfoTypes";
-import { SectionName, sectionNameS } from "../../SectionMetas/SectionName";
+} from "../../../SectionMetas/relSectionTypes/ParentTypes";
+import { SectionName, sectionNameS } from "../../../SectionMetas/SectionName";
 import StateSection from "../../StateSection";
 
 // export function parent<S extends SectionName<"alwaysOneHasParent">>(finder: S): StateSection<ParentName<S>>;

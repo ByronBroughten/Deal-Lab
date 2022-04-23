@@ -1,5 +1,5 @@
 import Analyzer from "../../Analyzer";
-import { FeInfo, Inf } from "../SectionMetas/Info";
+import { FeInfo, Inf } from "../../SectionMetas/Info";
 
 export function loadSectionFromFeIndex(
   this: Analyzer,

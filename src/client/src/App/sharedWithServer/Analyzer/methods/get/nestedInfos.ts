@@ -1,14 +1,13 @@
+import Analyzer from "../../../Analyzer";
+import { SectionFinder } from "../../../SectionMetas/baseSectionTypes";
 import {
+  FeNameInfo,
   FeVarbInfo,
   RelVarbInfo,
-  FeNameInfo,
-} from "../../SectionMetas/relSections/rel/relVarbInfoTypes";
-import Analyzer from "../../../Analyzer";
+} from "../../../SectionMetas/relSections/rel/relVarbInfoTypes";
+import { SectionName } from "../../../SectionMetas/SectionName";
 import array from "../../../utils/Arr";
 import { ObjectEntries } from "../../../utils/Obj";
-import { SectionFinder } from "../../SectionMetas/relSections/baseSectionTypes";
-import { SectionName } from "../../SectionMetas/SectionName";
-import { InEntityInfo } from "../../SectionMetas/relSections/baseSections/baseValues/NumObj/entities";
 
 export function nestedFeInfos<S extends SectionName>(
   this: Analyzer,

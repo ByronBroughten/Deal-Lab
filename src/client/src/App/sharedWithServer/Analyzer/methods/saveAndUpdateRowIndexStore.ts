@@ -1,13 +1,13 @@
 import { isEqual } from "lodash";
 import Analyzer from "../../Analyzer";
-import { Str } from "../../utils/Str";
-import { FeInfo, Inf } from "../SectionMetas/Info";
-import { rowIndexToTableName } from "../SectionMetas/relNameArrs/StoreTypes";
+import { FeInfo, Inf } from "../../SectionMetas/Info";
 import {
   FeNameInfo,
   SpecificSectionInfo,
-} from "../SectionMetas/relSections/rel/relVarbInfoTypes";
-import { SectionName } from "../SectionMetas/SectionName";
+} from "../../SectionMetas/relSections/rel/relVarbInfoTypes";
+import { rowIndexToTableName } from "../../SectionMetas/relSectionTypes/StoreTypes";
+import { SectionName } from "../../SectionMetas/SectionName";
+import { Str } from "../../utils/Str";
 import StateSection from "../StateSection";
 import { internal } from "./internal";
 

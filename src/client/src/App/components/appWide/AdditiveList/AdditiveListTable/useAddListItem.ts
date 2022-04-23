@@ -1,7 +1,7 @@
 import { useAnalyzerContext } from "../../../../modules/usePropertyAnalyzer";
-import { ChildName } from "../../../../sharedWithServer/Analyzer/SectionMetas/relNameArrs/ChildTypes";
-import { FeNameInfo } from "../../../../sharedWithServer/Analyzer/SectionMetas/relSections/rel/relVarbInfoTypes";
-import { SectionName } from "../../../../sharedWithServer/Analyzer/SectionMetas/SectionName";
+import { FeNameInfo } from "../../../../sharedWithServer/SectionMetas/relSections/rel/relVarbInfoTypes";
+import { ChildName } from "../../../../sharedWithServer/SectionMetas/relSectionTypes/ChildTypes";
+import { SectionName } from "../../../../sharedWithServer/SectionMetas/SectionName";
 
 export default function useAddListItem<S extends SectionName<"allList">>(
   feInfo: FeNameInfo<S>,

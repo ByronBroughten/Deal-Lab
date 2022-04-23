@@ -1,11 +1,11 @@
 import Analyzer from "../../../Analyzer";
-import { Inf } from "../../SectionMetas/Info";
-import { SectionFinder } from "../../SectionMetas/relSections/baseSectionTypes";
+import { SectionFinder } from "../../../SectionMetas/baseSectionTypes";
+import { Inf } from "../../../SectionMetas/Info";
 import {
   FeVarbInfo,
   RelFindByFocalVarbInfo,
   SpecificVarbInfo,
-} from "../../SectionMetas/relSections/rel/relVarbInfoTypes";
+} from "../../../SectionMetas/relSections/rel/relVarbInfoTypes";
 
 export function displayNameOrNotFound(
   this: Analyzer,

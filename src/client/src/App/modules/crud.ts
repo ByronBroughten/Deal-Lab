@@ -1,8 +1,8 @@
 import { AxiosResponse } from "axios";
 import { config } from "../Constants";
 import { DbEntry } from "../sharedWithServer/Analyzer/DbEntry";
-import { SectionName } from "../sharedWithServer/Analyzer/SectionMetas/SectionName";
 import { is, Req, Res } from "../sharedWithServer/Crud";
+import { SectionName } from "../sharedWithServer/SectionMetas/SectionName";
 import { urlPlusParams } from "../utils/url";
 import https from "./services/httpService";
 

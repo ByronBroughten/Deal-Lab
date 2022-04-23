@@ -1,7 +1,7 @@
+import { OneChildIdArrs } from "../../../../SectionMetas/relSectionTypes/ChildTypes";
+import { ParentFinder } from "../../../../SectionMetas/relSectionTypes/ParentTypes";
+import { SectionName } from "../../../../SectionMetas/SectionName";
 import { DbVarbs } from "../../../DbEntry";
-import { OneChildIdArrs } from "../../../SectionMetas/relNameArrs/ChildTypes";
-import { ParentFinder } from "../../../SectionMetas/relNameArrs/ParentTypes";
-import { SectionName } from "../../../SectionMetas/SectionName";
 
 export type OneAddSectionProps<SN extends SectionName> = {
   sectionName: SN;

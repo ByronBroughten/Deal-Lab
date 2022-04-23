@@ -1,11 +1,11 @@
 import { Request, Response } from "express";
-import { DbStoreName } from "../../../client/src/App/sharedWithServer/Analyzer/SectionMetas/relSections/baseSectionTypes/dbStoreNames";
 import { SectionPack } from "../../../client/src/App/sharedWithServer/Analyzer/SectionPack";
 import { ServerSectionPack } from "../../../client/src/App/sharedWithServer/Analyzer/SectionPackRaw";
 import {
   SectionPackArrReq,
   SectionPackReq,
 } from "../../../client/src/App/sharedWithServer/apiQueriesShared/makeGeneralReqs";
+import { DbStoreName } from "../../../client/src/App/sharedWithServer/SectionMetas/baseSectionTypes/dbStoreNames";
 import { resHandledError } from "../../../middleware/error";
 import { validateDbStoreName } from "./validateDbSectionInfoReq";
 import { LoggedIn, validateLoggedInUser } from "./validateLoggedInUser";

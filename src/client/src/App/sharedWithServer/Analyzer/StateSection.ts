@@ -1,30 +1,30 @@
 import { cloneDeep } from "lodash";
-import { DbVarbs } from "./DbEntry";
-import { sectionMetas } from "./SectionMetas";
-import { Inf } from "./SectionMetas/Info";
-import { OneChildIdArrs } from "./SectionMetas/relNameArrs/ChildTypes";
-import {
-  FeParentInfo,
-  ParentName,
-} from "./SectionMetas/relNameArrs/ParentTypes";
-import {
-  DefaultStoreName,
-  IndexStoreName,
-} from "./SectionMetas/relNameArrs/StoreTypes";
-import { SimpleSectionName } from "./SectionMetas/relSections/baseSections";
-import { InEntities } from "./SectionMetas/relSections/baseSections/baseValues/NumObj/entities";
+import { sectionMetas } from "../SectionMetas";
+import { SimpleSectionName } from "../SectionMetas/baseSections";
+import { InEntities } from "../SectionMetas/baseSections/baseValues/entities";
+import { Inf } from "../SectionMetas/Info";
 import {
   DbNameInfo,
   FeNameInfo,
   FeVarbInfo,
-} from "./SectionMetas/relSections/rel/relVarbInfoTypes";
-import { NextSectionMeta } from "./SectionMetas/SectionMeta";
+} from "../SectionMetas/relSections/rel/relVarbInfoTypes";
+import { OneChildIdArrs } from "../SectionMetas/relSectionTypes/ChildTypes";
+import {
+  FeParentInfo,
+  ParentName,
+} from "../SectionMetas/relSectionTypes/ParentTypes";
+import {
+  DefaultStoreName,
+  IndexStoreName,
+} from "../SectionMetas/relSectionTypes/StoreTypes";
+import { NextSectionMeta } from "../SectionMetas/SectionMeta";
 import {
   FeSectionNameType,
   SectionName,
   sectionNameS,
-} from "./SectionMetas/SectionName";
-import { OutUpdatePack } from "./SectionMetas/VarbMeta";
+} from "../SectionMetas/SectionName";
+import { OutUpdatePack } from "../SectionMetas/VarbMeta";
+import { DbVarbs } from "./DbEntry";
 import {
   addChildFeId,
   allChildFeIds,
@@ -43,7 +43,7 @@ import { replaceVarb, StateVarbs, varb } from "./StateSection/methods/varbs";
 import StateVarb from "./StateSection/StateVarb";
 import { OutEntity } from "./StateSection/StateVarb/entities";
 
-export type NextStateSectionCore<SN extends SectionName> = {
+export type StateSectionCore<SN extends SectionName> = {
   feId: string;
   parentInfo: FeParentInfo<SN>;
   sectionName: SN;
@@ -52,7 +52,7 @@ export type NextStateSectionCore<SN extends SectionName> = {
   childFeIds: OneChildIdArrs<SN, "fe">;
 };
 
-export type NextStateSectionInitProps<SN extends SectionName> = {
+export type StateSectionInitProps<SN extends SectionName> = {
   sectionName: SN;
   parentInfo: FeParentInfo<SN>;
   feId?: string;
@@ -62,10 +62,6 @@ export type NextStateSectionInitProps<SN extends SectionName> = {
   dbVarbs?: Partial<DbVarbs>; // empty
 };
 
-// childFeIdArrs, feId, dbId, parentInfo, sectionName, varbs
-
-export type StateSectionCore<SN extends SimpleSectionName> =
-  NextStateSectionCore<SN>;
 export default class StateSection<
   S extends SimpleSectionName = SimpleSectionName
 > {

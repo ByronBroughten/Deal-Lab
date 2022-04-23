@@ -1,11 +1,11 @@
 import Analyzer from "../Analyzer";
 import { FeSectionPack } from "../Analyzer/FeSectionPack";
-import { FeToDbStoreNameWithSameChildren } from "../Analyzer/SectionMetas/relNameArrs/ChildTypes";
-import { DbStoreName } from "../Analyzer/SectionMetas/relSections/baseSectionTypes/dbStoreNames";
-import { FeNameInfo } from "../Analyzer/SectionMetas/relSections/rel/relVarbInfoTypes";
-import { SectionName } from "../Analyzer/SectionMetas/SectionName";
 import { StoredSectionPackInfo } from "../Analyzer/SectionPack";
 import { SectionPackRaw, ServerSectionPack } from "../Analyzer/SectionPackRaw";
+import { DbStoreName } from "../SectionMetas/baseSectionTypes/dbStoreNames";
+import { FeNameInfo } from "../SectionMetas/relSections/rel/relVarbInfoTypes";
+import { FeToDbStoreNameWithSameChildren } from "../SectionMetas/relSectionTypes/ChildTypes";
+import { SectionName } from "../SectionMetas/SectionName";
 
 export const makeReq = <B extends QueryObj>(body: B): MakeReq<B> => ({ body });
 type MakeReq<B extends QueryObj> = {

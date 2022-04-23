@@ -1,12 +1,12 @@
 import Analyzer from "../../../Analyzer";
-import { DbEntry, DbSection, DbSections } from "../../DbEntry";
-import { FeInfo } from "../../SectionMetas/Info";
-import { SectionFinder } from "../../SectionMetas/relSections/baseSectionTypes";
+import { SectionFinder } from "../../../SectionMetas/baseSectionTypes";
+import { FeInfo } from "../../../SectionMetas/Info";
 import {
   SectionName,
   sectionNameS,
   SectionNameType,
-} from "../../SectionMetas/SectionName";
+} from "../../../SectionMetas/SectionName";
+import { DbEntry, DbSection, DbSections } from "../../DbEntry";
 
 type StateToDbSectionsOptions = {
   newMainSectionName?: SectionName;

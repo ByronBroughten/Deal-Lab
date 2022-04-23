@@ -1,6 +1,6 @@
 import Analyzer from "../Analyzer";
 import { Req } from "../Crud";
-import { SectionName } from "./SectionMetas/SectionName";
+import { SectionName } from "../SectionMetas/SectionName";
 
 export type MakeApiReq = typeof analyzerReq;
 export const analyzerReq = {

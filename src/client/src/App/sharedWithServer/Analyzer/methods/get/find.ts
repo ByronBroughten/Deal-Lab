@@ -1,17 +1,17 @@
 import { pick } from "lodash";
 import Analyzer from "../../../Analyzer";
-import { Inf } from "../../SectionMetas/Info";
-import { ChildName } from "../../SectionMetas/relNameArrs/ChildTypes";
+import { Inf } from "../../../SectionMetas/Info";
 import {
   FeNameInfo,
+  MultiFindByFocalInfo,
   MultiSectionInfo,
   MultiVarbInfo,
-  MultiFindByFocalInfo,
   SpecificSectionInfo,
-  SpecificVarbInfo,
   SpecificSectionsInfo,
-} from "../../SectionMetas/relSections/rel/relVarbInfoTypes";
-import { SectionName } from "../../SectionMetas/SectionName";
+  SpecificVarbInfo,
+} from "../../../SectionMetas/relSections/rel/relVarbInfoTypes";
+import { ChildName } from "../../../SectionMetas/relSectionTypes/ChildTypes";
+import { SectionName } from "../../../SectionMetas/SectionName";
 import StateSection from "../../StateSection";
 import StateVarb from "../../StateSection/StateVarb";
 

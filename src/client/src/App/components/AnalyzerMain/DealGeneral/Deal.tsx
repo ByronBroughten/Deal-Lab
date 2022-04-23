@@ -1,6 +1,6 @@
 import { View } from "react-native";
 import styled from "styled-components";
-import { Inf } from "../../../sharedWithServer/Analyzer/SectionMetas/Info";
+import { Inf } from "../../../sharedWithServer/SectionMetas/Info";
 import theme from "../../../theme/Theme";
 import MainSection from "../../appWide/GeneralSection/MainSection";
 import MainSectionBody from "../../appWide/GeneralSection/MainSection/MainSectionBody";

@@ -1,27 +1,27 @@
 import { cloneDeep, isEqual } from "lodash";
-import array from "../../utils/Arr";
-import { NumObjUnit } from "../methods/solveVarbs/solveAndUpdateValue/updateNumericObjCalc";
-import { sectionMetas } from "../SectionMetas";
-import { valueMeta } from "../SectionMetas/relSections/baseSections/baseValues";
-import { NumObj } from "../SectionMetas/relSections/baseSections/baseValues/NumObj";
+import { sectionMetas } from "../../SectionMetas";
+import { valueMeta } from "../../SectionMetas/baseSections/baseValues";
 import {
   InEntities,
   InEntity,
-} from "../SectionMetas/relSections/baseSections/baseValues/NumObj/entities";
+} from "../../SectionMetas/baseSections/baseValues/entities";
+import { NumObj } from "../../SectionMetas/baseSections/baseValues/NumObj";
+import { Inf } from "../../SectionMetas/Info";
 import {
   FeNameInfo,
   FeVarbInfo,
   RelVarbInfo,
-} from "../SectionMetas/relSections/rel/relVarbInfoTypes";
-import { DisplayName } from "../SectionMetas/relSections/rel/relVarbTypes";
+} from "../../SectionMetas/relSections/rel/relVarbInfoTypes";
+import { DisplayName } from "../../SectionMetas/relSections/rel/relVarbTypes";
 import {
   DbValue,
   UpdateFnName,
   ValueTypes,
-} from "../SectionMetas/relSections/rel/valueMetaTypes";
-import { SectionName } from "../SectionMetas/SectionName";
-import { cloneValue } from "../SectionMetas/VarbMeta";
-import { Inf } from "./../SectionMetas/Info";
+} from "../../SectionMetas/relSections/rel/valueMetaTypes";
+import { SectionName } from "../../SectionMetas/SectionName";
+import { cloneValue } from "../../SectionMetas/VarbMeta";
+import array from "../../utils/Arr";
+import { NumObjUnit } from "../methods/solveVarbs/solveAndUpdateValue/updateNumericObjCalc";
 import {
   addInEntity,
   addOutEntity,

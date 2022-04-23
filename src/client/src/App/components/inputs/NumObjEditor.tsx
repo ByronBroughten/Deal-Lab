@@ -1,18 +1,18 @@
-import React from "react";
 import { pick } from "lodash";
+import React from "react";
 import styled from "styled-components";
-import { FeVarbInfo } from "../../sharedWithServer/Analyzer/SectionMetas/relSections/rel/relVarbInfoTypes";
+import { useOnOutsideClickEffect } from "../../modules/customHooks/useOnOutsideClickRef";
+import useToggleView from "../../modules/customHooks/useToggleView";
+import { FeVarbInfo } from "../../sharedWithServer/SectionMetas/relSections/rel/relVarbInfoTypes";
 import theme from "../../theme/Theme";
 import MaterialDraftEditor from "./MaterialDraftEditor";
 import createNumObjEditor from "./NumObjEditor/createNumObjEditor";
+import NumObjVarbSelector from "./NumObjEditor/NumObjVarbSelector";
 import useGetAdornments, {
   PropAdornments,
 } from "./NumObjEditor/useGetAdornments";
 import { varSpanDecorator } from "./shared/VarSpan";
 import useDraftInput from "./useDraftInput";
-import { useOnOutsideClickEffect } from "../../modules/customHooks/useOnOutsideClickRef";
-import useToggleView from "../../modules/customHooks/useToggleView";
-import NumObjVarbSelector from "./NumObjEditor/NumObjVarbSelector";
 
 const floatStuffRegEx = /^[0-9.-]*$/;
 const varbCalcRegEx = /[\d.*/+()-]/;

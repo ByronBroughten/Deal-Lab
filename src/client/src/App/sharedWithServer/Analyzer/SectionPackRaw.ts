@@ -1,9 +1,9 @@
 import { z } from "zod";
+import { ContextName } from "../SectionMetas/baseSections";
+import { SectionName } from "../SectionMetas/SectionName";
 import { Obj } from "../utils/Obj";
 import { StrictPick } from "../utils/types";
 import { zodSchema } from "../utils/zod";
-import { ContextName } from "./SectionMetas/relSections/baseSections";
-import { SectionName } from "./SectionMetas/SectionName";
 import {
   GeneralRawSections,
   RawSections,
