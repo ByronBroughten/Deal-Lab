@@ -1,9 +1,9 @@
 import { z } from "zod";
 import { SectionPackRaw, zSectionPackDbArr } from "../Analyzer/SectionPackRaw";
-import { NextRes } from "../apiQueriesSharedTypes";
 import { SectionName, sectionNameS } from "../SectionMetas/SectionName";
 import { dbLimits } from "../utils/dbLimts";
 import { validationMessage, zodSchema } from "../utils/zod";
+import { NextRes } from "./apiQueriesSharedTypes";
 
 export type RegisterQueryObjects = {
   req: {

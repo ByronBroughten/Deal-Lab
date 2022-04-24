@@ -1,14 +1,14 @@
 import { cloneDeep } from "lodash";
-import array from "../../../utils/Arr";
-import { Obj } from "../../../utils/Obj";
-import { FeInfo, Inf } from "../../SectionMetas/Info";
+import { FeInfo, Inf } from "../../../SectionMetas/Info";
 import {
   ChildFeInfo,
   ChildIdArrs,
   ChildName,
-} from "../../SectionMetas/relSectionTypes/ChildTypes";
-import { SectionName } from "../../SectionMetas/SectionName";
-import StateSection from "../../StateSection";
+} from "../../../SectionMetas/relSectionTypes/ChildTypes";
+import { SectionName } from "../../../SectionMetas/SectionName";
+import array, { Arr } from "../../../utils/Arr";
+import { Obj } from "../../../utils/Obj";
+import StateSection from "../../FeSection";
 
 export function childFeIds<S extends SectionName>(
   this: StateSection<S>,
@@ -78,8 +78,7 @@ export function insertChildFeId<SN extends SectionName>(
   { sectionName, id }: ChildFeInfo<SN>,
   idx: number
 ): StateSection<SN> {
-  let nextIds = [...this.childFeIds(sectionName)];
-  nextIds.splice(idx, 0, id);
+  const nextIds = Arr.insert(this.childFeIds(sectionName), id, idx);
   return updateChildFeIdArr(this, sectionName, nextIds);
 }
 export function pushChildFeId<SN extends SectionName>(

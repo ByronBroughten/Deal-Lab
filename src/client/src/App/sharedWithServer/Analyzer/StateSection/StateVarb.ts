@@ -21,7 +21,6 @@ import {
 import { SectionName } from "../../SectionMetas/SectionName";
 import { cloneValue } from "../../SectionMetas/VarbMeta";
 import array from "../../utils/Arr";
-import { NumObjUnit } from "../methods/solveVarbs/solveAndUpdateValue/updateNumericObjCalc";
 import {
   addInEntity,
   addOutEntity,
@@ -98,11 +97,6 @@ export default class StateVarb {
   }
   get sectionName() {
     return this.meta.sectionName;
-  }
-  get unit(): NumObjUnit {
-    const metaCore = this.meta.core;
-    if ("unit" in metaCore) return metaCore.unit;
-    else throw new Error("This varb has no unit.");
   }
   get manualUpdateEditorToggle() {
     return this.core.manualUpdateEditorToggle;

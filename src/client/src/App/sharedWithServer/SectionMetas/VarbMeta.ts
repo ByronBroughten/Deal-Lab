@@ -146,10 +146,11 @@ export class VarbMeta {
   get inUpdatePacks(): InUpdatePack[] {
     return [...this.inSwitchUpdatePacks, this.inDefaultUpdatePack];
   }
-  get unit(): NumObjUnit | undefined {
-    return "unit" in this.core ? this.core.unit : undefined;
+  get unit(): NumObjUnit {
+    if ("unit" in this.core) return this.core.unit;
+    else
+      throw new Error(`Varb with name ${this.core.varbName} has no NumObjUnit`);
   }
-
   get inDefaultUpdatePack(): InDefaultUpdatePack {
     return {
       updateFnProps: this.core.updateFnProps,

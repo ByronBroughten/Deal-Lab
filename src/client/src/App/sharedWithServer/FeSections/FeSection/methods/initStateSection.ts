@@ -1,15 +1,15 @@
 import { pick } from "lodash";
 import Analyzer from "../../../Analyzer";
-import { sectionMetas } from "../../SectionMetas";
-import { FeInfo, Inf } from "../../SectionMetas/Info";
+import { sectionMetas } from "../../../SectionMetas";
+import { FeInfo, Inf } from "../../../SectionMetas/Info";
 import {
   ChildIdArrs,
   OneChildIdArrs,
-} from "../../SectionMetas/relSectionTypes/ChildTypes";
-import { SectionName } from "../../SectionMetas/SectionName";
-import StateSection, { StateSectionCore } from "../../StateSection";
-import { InitStateSectionProps } from "../../StateSectionOld";
-import StateVarb from "../StateVarb";
+} from "../../../SectionMetas/relSectionTypes/ChildTypes";
+import { SectionName } from "../../../SectionMetas/SectionName";
+import Section, { FeSectionCore } from "../../FeSection";
+import { InitStateSectionProps } from "../../FeSectionOld";
+import StateVarb from "../FeVarb";
 import { StateVarbs, VarbValues } from "./varbs";
 
 export function initStateSection<S extends SectionName>({
@@ -17,8 +17,8 @@ export function initStateSection<S extends SectionName>({
   sectionName,
   parentInfo,
   options: { dbId = Analyzer.makeId(), values } = {},
-}: InitStateSectionProps<S>): StateSection<S> {
-  const stateSectionCore: StateSectionCore<S> = {
+}: InitStateSectionProps<S>): Section<S> {
+  const stateSectionCore: FeSectionCore<S> = {
     feId,
     dbId,
     sectionName,
@@ -26,7 +26,7 @@ export function initStateSection<S extends SectionName>({
     childFeIds: initChildFeIds(sectionName),
     varbs: initVarbs(Inf.fe(sectionName, feId), values),
   };
-  return new StateSection(stateSectionCore);
+  return new Section(stateSectionCore);
 }
 
 export function initVarbs(feInfo: FeInfo, values: VarbValues = {}): StateVarbs {

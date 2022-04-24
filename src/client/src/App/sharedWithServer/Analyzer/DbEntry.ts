@@ -177,7 +177,7 @@ export const DbEnt = {
 
     // const columns = this.sectionArr(tableEntry, "column");
     const cellArr = columns.reduce((cells, col) => {
-      const info = col.dbVarbs as InEntityVarbInfo;
+      const info = col.dbVarbs as any as InEntityVarbInfo;
       const value = this.value(fullEntry, info);
       cells.push(this.initSection(undefined, { ...info, value }));
       return cells;

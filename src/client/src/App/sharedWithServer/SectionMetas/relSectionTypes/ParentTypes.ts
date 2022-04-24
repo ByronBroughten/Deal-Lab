@@ -12,7 +12,7 @@ import {
 } from "../baseSections";
 import { BaseName, SectionFinder } from "../baseSectionTypes";
 import { relSections } from "../relSections";
-import { FeSectionInfoBase } from "../relSections/rel/relVarbInfoTypes";
+import { FeNameInfo } from "../relSections/rel/relVarbInfoTypes";
 import { ChildOrNull } from "./ChildTypes";
 
 type ParentToChildOrNullMap<
@@ -100,9 +100,7 @@ function _testParentName() {
 export type FeParentInfo<
   SN extends SimpleSectionName<SC>,
   SC extends ContextName = "fe"
-> = FeSectionInfoBase & {
-  sectionName: ParentName<SN, SC>;
-};
+> = FeNameInfo<ParentName<SN, SC>>;
 
 type HasOneParentFinder<
   SN extends SimpleSectionName,

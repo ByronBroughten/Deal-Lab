@@ -12,7 +12,9 @@ export default function DealBasics({ id }: { id: string }) {
   const section = analyzer.section("outputList");
   const outputIds = section.childFeIds("output");
   function onSelect({ varbInfo }: VariableOption) {
-    handleAddSection("output", section.feInfo, { values: varbInfo });
+    handleAddSection("output", section.feInfo, {
+      values: { ...varbInfo },
+    });
   }
 
   return (

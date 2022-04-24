@@ -6,7 +6,7 @@ import {
 import {
   NextReq,
   NextRes,
-} from "../../client/src/App/sharedWithServer/apiQueriesSharedTypes";
+} from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import authWare from "../../middleware/authWare";
 import { ResHandledError } from "../../middleware/error";
 import { serverSend } from "../shared/crudValidators";

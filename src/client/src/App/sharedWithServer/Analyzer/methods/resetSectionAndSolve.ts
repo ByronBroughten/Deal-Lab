@@ -16,7 +16,9 @@ function resetSection<S extends SectionName<"hasParent">>(
 ): Analyzer {
   const feInfo = next.section(info).feInfo as FeNameInfo<S>;
   const parent = next.parent(feInfo);
-  const idx = parent.childIdx(feInfo as ChildFeInfo<typeof parent.sectionName>);
+  const idx = parent.childIdx(
+    feInfo as any as ChildFeInfo<typeof parent.sectionName>
+  );
 
   next = internal.eraseSectionAndChildren(next, feInfo);
 

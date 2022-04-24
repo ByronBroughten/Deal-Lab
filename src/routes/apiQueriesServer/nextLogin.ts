@@ -1,11 +1,11 @@
 import bcrypt from "bcrypt";
 import { Request, Response } from "express";
 import { LeanDocument } from "mongoose";
+import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import {
   isLoginFormData,
   LoginFormData,
 } from "../../client/src/App/sharedWithServer/apiQueriesShared/login";
-import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesSharedTypes";
 import { resHandledError, ResHandledError } from "../../middleware/error";
 import { UserDbNext, UserDbRaw } from "../shared/UserDbNext";
 import { loginUtils } from "./nextLogin/loginUtils";

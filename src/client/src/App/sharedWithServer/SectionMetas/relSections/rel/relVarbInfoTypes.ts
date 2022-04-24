@@ -1,142 +1,90 @@
 import { z } from "zod";
 import { zNanoId, zString } from "../../../utils/zod";
 import { ContextName, SimpleSectionName } from "../../baseSections";
+import {
+  DbIdInfo,
+  FeIdInfo,
+  RandomStringIdInfo,
+  RelativeIds,
+} from "../../baseSections/id";
 import { BaseName } from "../../baseSectionTypes";
+import { RelIdInfo } from "./../../baseSections/id";
 
-export const zSectionInfoBase = z.object({
-  sectionName: zString,
-});
-export const zVarbNames = zSectionInfoBase.extend({
-  varbName: zString,
-});
+export interface FeNameInfo<
+  SN extends SimpleSectionName | "no parent" = SimpleSectionName
+> extends FeIdInfo {
+  sectionName: SN;
+}
+export interface DbNameInfo<
+  SN extends SimpleSectionName | "no parent" = SimpleSectionName
+> extends DbIdInfo {
+  sectionName: SN;
+}
 
-const zFeSectionInfo = zSectionInfoBase.extend({
-  idType: z.literal("feId"),
-  id: zNanoId,
-});
-const zDbSectionInfo = zSectionInfoBase.extend({
-  idType: z.literal("dbId"),
-  id: zNanoId,
-});
+interface RandomStringIdNameInfo<
+  SN extends SimpleSectionName | "no parent" = SimpleSectionName
+> extends RandomStringIdInfo {
+  sectionName: SN;
+}
 
-export type InVarbRelative = "children" | "local" | "static" | "all";
-export type OutVarbRelative = "parent" | "local" | "static" | "all";
-const zFocalRelative = z.union([
-  z.literal("static"),
-  z.literal("local"),
-  z.literal("parent"),
-]);
-const zFocalMultiRelative = z.union([z.literal("children"), z.literal("all")]);
-const zRelative = z.union([zFocalRelative, zFocalMultiRelative]);
-const zRelSectionInfo = zSectionInfoBase.extend({
-  id: zRelative,
-  idType: z.literal("relative"),
-});
-const zFocalRelSectionInfo = zRelSectionInfo.extend({
-  id: zFocalRelative,
-});
-const zImmutableRelSectionInfo = zRelSectionInfo.extend({
-  id: z.literal("static"), // parent might go here eventually
-});
-export const zImmutableRelVarbInfo = zImmutableRelSectionInfo.extend({
-  varbName: zString,
-});
+export interface RelSectionInfo<
+  SN extends SimpleSectionName = SimpleSectionName
+> extends RelIdInfo {
+  sectionName: SN;
+}
 
-const zFeVarbInfo = zFeSectionInfo.merge(zVarbNames);
-export const zDbVarbInfo = zDbSectionInfo.merge(zVarbNames);
-export const zRelVarbInfo = zRelSectionInfo.merge(zVarbNames);
-
-export type AbsoluteIdType = "feId" | "dbId";
-
-export type FeSectionInfoBase = z.infer<typeof zFeSectionInfo>;
-export type FeNameInfo<
-  S extends BaseName | "no parent" = BaseName,
-  E extends object = {}
-> = FeSectionInfoBase & {
-  sectionName: S;
-} & E;
-
-// type BaseNameFeInfo<
-
-export type DbNameInfo<
-  S extends BaseName = BaseName,
-  E extends object = {}
-> = z.infer<typeof zDbSectionInfo> & {
-  sectionName: S;
-} & E;
-export type RelSectionInfo<
-  S extends BaseName = BaseName,
-  E extends object = {}
-> = z.infer<typeof zRelSectionInfo> & {
-  sectionName: S;
-} & E;
-
-export type MultiSectionInfo<
-  S extends BaseName = BaseName,
-  E extends object = {}
-> = FeNameInfo<S, E> | DbNameInfo<S, E> | RelSectionInfo<S, E>;
+export type MultiSectionInfo<SN extends SimpleSectionName = SimpleSectionName> =
+  RandomStringIdNameInfo | RelSectionInfo<SN>;
 
 export type DbUserDefInfo<
   S extends BaseName<"userDefined"> | BaseName<"rowIndex"> =
     | BaseName<"userDefined">
-    | BaseName<"rowIndex">,
-  E extends object = {}
-> = DbNameInfo<S> & E;
+    | BaseName<"rowIndex">
+> = DbNameInfo<S>;
+
 export type SpecificSectionInfo<
-  S extends BaseName = BaseName,
-  E extends object = {}
+  S extends SimpleSectionName = SimpleSectionName
 > =
-  | FeNameInfo<S, E>
-  | DbUserDefInfo<Extract<S, BaseName<"userDefined"> | BaseName<"rowIndex">>, E>
-  | RelInfoStatic<Extract<S, BaseName<"alwaysOne">>, E>;
+  | FeNameInfo<S>
+  | DbUserDefInfo<Extract<S, BaseName<"userDefined"> | BaseName<"rowIndex">>>
+  | RelInfoStatic<Extract<S, BaseName<"alwaysOne">>>;
 
 export type SpecificSectionsInfo<
-  S extends BaseName = BaseName,
-  E extends object = {}
-> = SpecificSectionInfo<S, E> | DbNameInfo<S, E> | RelInfoAll<S, E>;
-
-export type SpecificVarbInfo<
-  S extends BaseName<"hasVarb"> = BaseName<"hasVarb">
-> = SpecificSectionInfo<S, { varbName: string }>;
-
-function test(info: SpecificSectionInfo) {
-  return;
-}
-const feInfo = {
-  sectionName: "property",
-  id: "string",
-  idType: "feId",
-  varbName: "price",
-} as SpecificVarbInfo;
-test(feInfo);
+  S extends SimpleSectionName = SimpleSectionName
+> = SpecificSectionInfo<S> | DbNameInfo<S> | RelInfoAll<S>;
 
 export type MultiFindByFocalInfo<
-  S extends BaseName = BaseName,
-  E extends object = {}
-> = FeNameInfo<S, E> | DbNameInfo<S, E> | RelFindByFocalInfo<S, E>;
+  S extends SimpleSectionName = SimpleSectionName
+> = RandomStringIdNameInfo<S> | RelFindByFocalInfo<S>;
 
 // varbInfo
 export type VarbParam = { varbName: string };
-export type FeVarbInfo<S extends BaseName<"hasVarb"> = BaseName<"hasVarb">> =
-  FeNameInfo<S, VarbParam>;
-export type DbVarbInfo<S extends BaseName<"hasVarb"> = BaseName<"hasVarb">> =
-  DbNameInfo<S, VarbParam>;
+
+export type SpecificVarbInfo<
+  S extends BaseName<"hasVarb"> = BaseName<"hasVarb">
+> = SpecificSectionInfo<S> & { varbName: string };
+
+export interface FeVarbInfo<
+  SN extends BaseName<"hasVarb"> = BaseName<"hasVarb">
+> extends FeNameInfo<SN>,
+    VarbParam {}
+export interface DbVarbInfo<S extends BaseName<"hasVarb"> = BaseName<"hasVarb">>
+  extends DbNameInfo<S>,
+    VarbParam {}
+export interface RelVarbInfo<
+  S extends BaseName<"hasVarb"> = BaseName<"hasVarb">
+> extends RelSectionInfo<S>,
+    VarbParam {}
+
 export type DbUserDefVarbInfo<
   S extends BaseName<"userDefined"> = BaseName<"userDefined">
-> = DbUserDefInfo<S, VarbParam>;
+> = DbUserDefInfo<S> & VarbParam;
 
-export type RelVarbInfo<S extends BaseName<"hasVarb"> = BaseName<"hasVarb">> =
-  RelSectionInfo<S, VarbParam>;
-export type MultiVarbInfo<
-  S extends BaseName<"hasVarb"> = BaseName<"hasVarb">,
-  E extends object = {}
-> = MultiSectionInfo<S, VarbParam & E>;
+export type MultiVarbInfo<S extends BaseName<"hasVarb"> = BaseName<"hasVarb">> =
+  MultiSectionInfo<S> & VarbParam;
 export type MultiFindByFocalVarbInfo<
   S extends BaseName<"hasVarb"> = BaseName<"hasVarb">
-> = MultiFindByFocalInfo<S, VarbParam>;
-
-export type Relative = z.infer<typeof zRelative>;
-export type SingleRelative = z.infer<typeof zFocalRelative>;
+> = MultiFindByFocalInfo<S> & VarbParam;
 
 type VarbNameObj = {
   [SC in ContextName]: {
@@ -153,48 +101,68 @@ export type SimpleVarbNames = {
   sectionName: SimpleSectionName;
 };
 
-export type VarbNames<
+export interface VarbNames<
   SN extends SimpleSectionName<SC>,
   SC extends ContextName = "fe"
-> = z.infer<typeof zVarbNames> & {
+> {
   varbName: string;
   sectionName: SN;
   sectionContext: SC;
-};
+}
 
 // relative infos
-export type ImmutableRelVarbInfo = z.infer<typeof zImmutableRelVarbInfo>;
-export type LocalRelVarbInfo = RelVarbInfo & { id: "local" };
+export interface LocalRelVarbInfo extends RelVarbInfo {
+  id: "local";
+}
 
-//
-export type RelInfoStatic<
-  S extends BaseName<"alwaysOne"> = BaseName<"alwaysOne">,
-  E extends object = {}
-> = RelSectionInfo<S, E> & {
+export interface RelInfoStatic<
+  S extends BaseName<"alwaysOne"> = BaseName<"alwaysOne">
+> extends RelSectionInfo<S> {
   id: "static";
-} & E;
-export type RelInfoAll<
-  S extends BaseName,
-  E extends object = {}
-> = RelSectionInfo<S, E> & {
+}
+
+export interface RelInfoAll<S extends BaseName> extends RelSectionInfo<S> {
   id: "all";
-} & E;
+}
 
-export type StaticRelVarbInfo<
+export interface StaticRelVarbInfo<
   S extends BaseName<"alwaysOneHasVarb"> = BaseName<"alwaysOneHasVarb">
-> = RelInfoStatic<S, VarbParam>;
+> extends RelInfoStatic<S>,
+    VarbParam {}
 
-//
-type RelFindByFocalInfo<
-  S extends BaseName = BaseName,
-  E extends object = {}
-> = z.infer<typeof zFocalRelSectionInfo> & {
-  sectionName: S;
-} & E;
-export type RelFindByFocalVarbInfo<
+interface RelFindByFocalInfo<S extends SimpleSectionName = SimpleSectionName>
+  extends RelSectionInfo<S> {
+  id: RelativeIds["focal"];
+}
+
+export interface RelFindByFocalVarbInfo<
   S extends BaseName<"hasVarb"> = BaseName<"hasVarb">
-> = RelFindByFocalInfo<S, VarbParam>;
+> extends RelFindByFocalInfo<S>,
+    VarbParam {}
 
-export type SingleInRelVarbInfo = Omit<InRelVarbInfo, "children" | "all">;
-export type InRelVarbInfo = RelVarbInfo & { id: InVarbRelative };
-export type OutRelVarbInfo = RelVarbInfo & { id: OutVarbRelative };
+export interface OutRelVarbInfo extends RelVarbInfo {
+  id: RelativeIds["outVarb"];
+}
+export interface InRelVarbInfo extends RelVarbInfo {
+  id: RelativeIds["inVarb"];
+}
+export interface SingleInRelVarbInfo extends InRelVarbInfo {
+  id: RelativeIds["singleInVarb"];
+}
+
+const zSectionNameProp = z.object({ sectionName: zString });
+const zDbSectionInfo = zSectionNameProp.extend({
+  id: zNanoId,
+  idType: z.literal("dbId" as DbIdInfo["idType"]),
+});
+const zImmutableRelSectionInfo = zSectionNameProp.extend({
+  id: z.literal("static" as RelativeIds["static"]),
+  idType: z.literal("relative"),
+});
+export const zImmutableRelVarbInfo = zImmutableRelSectionInfo.extend({
+  varbName: zString,
+});
+export const zDbVarbInfo = zDbSectionInfo.extend({
+  sectionName: zString,
+  varbName: zString,
+});

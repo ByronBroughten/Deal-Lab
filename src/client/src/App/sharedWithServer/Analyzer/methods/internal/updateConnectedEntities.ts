@@ -1,6 +1,6 @@
 import Analyzer from "../../../Analyzer";
 import {
-  Ent,
+  entityS,
   InEntity,
 } from "../../../SectionMetas/baseSections/baseValues/entities";
 import { FeVarbInfo } from "../../../SectionMetas/relSections/rel/relVarbInfoTypes";
@@ -18,10 +18,10 @@ export function updateConnectedEntities(
 
   const currentEntities = analyzer.varb(feVarbInfo).inEntities;
   const missingEntities = currentEntities.filter(
-    (entity) => !Ent.entitiesHas(nextEntities, entity)
+    (entity) => !entityS.entitiesHas(nextEntities, entity)
   );
   const newEntities = nextEntities.filter(
-    (entity) => !Ent.entitiesHas(currentEntities, entity)
+    (entity) => !entityS.entitiesHas(currentEntities, entity)
   );
 
   let next = analyzer;

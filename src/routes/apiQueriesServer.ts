@@ -1,6 +1,6 @@
 import express from "express";
 import { apiQueriesShared } from "../client/src/App/sharedWithServer/apiQueriesShared";
-import { ApiQueryName } from "../client/src/App/sharedWithServer/apiQueriesSharedTypes";
+import { ApiQueryName } from "../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import { Obj } from "../client/src/App/sharedWithServer/utils/Obj";
 import { addSectionWare } from "./apiQueriesServer/addSection";
 import { deleteSectionWare } from "./apiQueriesServer/deleteSection";

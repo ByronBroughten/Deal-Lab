@@ -13,9 +13,10 @@ import {
 } from "../../relSections/rel/relVarbInfoTypes";
 import { Id } from "../id";
 
-export const zInEntityVarbInfo = z.union([zDbVarbInfo, zImmutableRelVarbInfo]);
 export type InEntityVarbInfo = DbUserDefVarbInfo | StaticRelVarbInfo;
 export type InEntityInfo = DbUserDefVarbInfo | RelInfoStatic;
+
+type Test<T extends { [key: string]: string }> = T;
 
 const zInEntityBase = z.object({
   entityId: zString,
@@ -38,7 +39,7 @@ export type InEntities = InEntity[];
 // where should I put makeId?
 // it will need to be in base, if NumObj is in base
 
-export const Ent = {
+export const entityS = {
   inEntity(
     varbInfo: InEntityVarbInfo,
     entityInfo: { offset: number; length: number }

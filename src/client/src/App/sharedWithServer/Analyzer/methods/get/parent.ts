@@ -11,15 +11,20 @@ import StateSection from "../../StateSection";
 
 // export function parent<S extends SectionName<"alwaysOneHasParent">>(finder: S): StateSection<ParentName<S>>;
 export function parent<S extends SectionName<"hasOneParent">>(
+  this: Analyzer,
   finder: S
 ): StateSection<ParentName<S>>;
 export function parent<I extends SpecificSectionInfo<SectionName<"hasParent">>>(
+  this: Analyzer,
   finder: I
 ): StateSection<ParentName<I["sectionName"]>>;
 export function parent<
   S extends SectionName<"hasOneParent">,
   I extends SpecificSectionInfo<SectionName<"hasParent">>
->(finder: S | I): StateSection<S | ParentName<I["sectionName"]>>;
+>(
+  this: Analyzer,
+  finder: S | I
+): StateSection<S | ParentName<I["sectionName"]>>;
 export function parent<S extends SectionName<"hasParent">>(
   this: Analyzer,
   finder: SectionParentFinder<S>

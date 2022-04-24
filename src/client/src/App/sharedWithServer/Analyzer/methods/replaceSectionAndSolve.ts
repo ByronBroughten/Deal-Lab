@@ -1,5 +1,6 @@
 import Analyzer from "../../Analyzer";
 import { SectionFinder } from "../../SectionMetas/baseSectionTypes";
+import { FeNameInfo } from "../../SectionMetas/relSections/rel/relVarbInfoTypes";
 import { ChildFeInfo } from "../../SectionMetas/relSectionTypes/ChildTypes";
 import { SectionName } from "../../SectionMetas/SectionName";
 import { SectionPackRaw } from "../SectionPackRaw";
@@ -20,7 +21,9 @@ function replaceSection<SN extends SectionName<"hasParent">>(
 ): Analyzer {
   const feInfo = next.sectionInfo(finder);
   const parent = next.parent(feInfo);
-  const idx = parent.childIdx(feInfo as ChildFeInfo<typeof parent.sectionName>);
+  const idx = parent.childIdx(
+    feInfo as FeNameInfo as ChildFeInfo<typeof parent.sectionName>
+  );
 
   next = internal.eraseSectionAndChildren(next, feInfo);
   return next.loadRawSectionPack(replacementSectionPack, {

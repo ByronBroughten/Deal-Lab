@@ -1,27 +1,26 @@
 import { cloneDeep, isEqual } from "lodash";
-import array from "../../utils/Arr";
-import { NumObjUnit } from "../methods/solveVarbs/solveAndUpdateValue/updateNumericObjCalc";
-import { sectionMetas } from "../SectionMetas";
-import { valueMeta } from "../SectionMetas/baseSections/baseValues";
-import { NumObj } from "../SectionMetas/baseSections/baseValues/NumObj";
+import { sectionMetas } from "../../SectionMetas";
+import { valueMeta } from "../../SectionMetas/baseSections/baseValues";
 import {
   InEntities,
   InEntity,
-} from "../SectionMetas/baseSections/baseValues/NumObj/entities";
+} from "../../SectionMetas/baseSections/baseValues/entities";
+import { NumObj } from "../../SectionMetas/baseSections/baseValues/NumObj";
+import { Inf } from "../../SectionMetas/Info";
 import {
   FeNameInfo,
   FeVarbInfo,
   RelVarbInfo,
-} from "../SectionMetas/relSections/rel/relVarbInfoTypes";
-import { DisplayName } from "../SectionMetas/relSections/rel/relVarbTypes";
+} from "../../SectionMetas/relSections/rel/relVarbInfoTypes";
+import { DisplayName } from "../../SectionMetas/relSections/rel/relVarbTypes";
 import {
   DbValue,
   UpdateFnName,
   ValueTypes,
-} from "../SectionMetas/relSections/rel/valueMetaTypes";
-import { SectionName } from "../SectionMetas/SectionName";
-import { cloneValue } from "../SectionMetas/VarbMeta";
-import { Inf } from "./../SectionMetas/Info";
+} from "../../SectionMetas/relSections/rel/valueMetaTypes";
+import { SectionName } from "../../SectionMetas/SectionName";
+import { cloneValue } from "../../SectionMetas/VarbMeta";
+import array from "../../utils/Arr";
 import {
   addInEntity,
   addOutEntity,
@@ -30,9 +29,9 @@ import {
   removeInEntity,
   removeOutEntity,
   setInEntities,
-} from "./StateVarb/entities";
-import { initStateVarb } from "./StateVarb/init";
-import { StateValue } from "./StateVarb/stateValue";
+} from "./FeVarb/entities";
+import { StateValue } from "./FeVarb/feValue";
+import { initStateVarb } from "./FeVarb/init";
 
 export type NextStateVarbCore = {
   varbName: string;
@@ -64,13 +63,13 @@ export const valueSchemasPlusAny = {
 } as const;
 
 export type StateValueAnyKey = keyof ValueTypesPlusAny;
-export default class StateVarb {
+export default class FeVarb {
   constructor(protected core: NextStateVarbCore) {}
   get meta() {
     return sectionMetas.varb({ ...this.core }, "fe");
   }
   update(props: Partial<StateVarbCore>) {
-    return new StateVarb({
+    return new FeVarb({
       ...this.core,
       ...props,
     });
@@ -88,7 +87,7 @@ export default class StateVarb {
   }
 
   get fullName(): string {
-    return StateVarb.feVarbInfoToFullName(this.feVarbInfo);
+    return FeVarb.feVarbInfoToFullName(this.feVarbInfo);
   }
   get varbName() {
     return this.meta.varbName;
@@ -98,11 +97,6 @@ export default class StateVarb {
   }
   get sectionName() {
     return this.meta.sectionName;
-  }
-  get unit(): NumObjUnit {
-    const metaCore = this.meta.core;
-    if ("unit" in metaCore) return metaCore.unit;
-    else throw new Error("This varb has no unit.");
   }
   get manualUpdateEditorToggle() {
     return this.core.manualUpdateEditorToggle;
@@ -148,7 +142,7 @@ export default class StateVarb {
     };
   }
   get stringFeVarbInfo(): string {
-    return StateVarb.feVarbInfoToFullName(this.feVarbInfo);
+    return FeVarb.feVarbInfoToFullName(this.feVarbInfo);
   }
   get name(): string {
     return this.stringFeVarbInfo;

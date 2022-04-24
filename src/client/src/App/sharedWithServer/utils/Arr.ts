@@ -1,6 +1,11 @@
 import { isEqual } from "lodash";
 
 export const Arr = {
+  insert<V extends any>(arr: readonly V[], value: V, idx: number): V[] {
+    const nextArr = [...arr];
+    nextArr.splice(idx, 0, value);
+    return nextArr;
+  },
   unionOrArrToArr<T>(value: T | T[]): T[] {
     if (Array.isArray(value)) return value;
     else return [value];
@@ -35,8 +40,10 @@ export const Arr = {
     return arr.reduce(
       (arrOfArrs, item) => {
         const lastRow = this.lastVal(arrOfArrs);
-        if (lastRow.length === innerArrsLength) arrOfArrs.push([item]);
-        else lastRow.push(item);
+        if (lastRow) {
+          if (lastRow.length === innerArrsLength) arrOfArrs.push([item]);
+          else lastRow.push(item);
+        }
         return arrOfArrs;
       },
       [[]] as T[][]
@@ -53,10 +60,10 @@ export const Arr = {
     }
     return indices;
   },
-  lastIdx(arr: any[]) {
+  lastIdx(arr: readonly any[]): number {
     return arr.length - 1;
   },
-  lastVal(arr: any[]) {
+  lastVal<V extends any>(arr: readonly V[]): V | undefined {
     return arr[this.lastIdx(arr)];
   },
   includes<T, U extends T>(arr: readonly U[], elem: T): elem is U {

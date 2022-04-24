@@ -1,5 +1,5 @@
 import Analyzer from "../../../Analyzer";
-import { Ent } from "../../../SectionMetas/baseSections/baseValues/entities";
+import { entityS } from "../../../SectionMetas/baseSections/baseValues/entities";
 import { SectionFinder } from "../../../SectionMetas/baseSectionTypes";
 
 export function newInEntity(
@@ -11,7 +11,7 @@ export function newInEntity(
   const entityName = this.displayNameVn(varbName, finder);
   return [
     entityName,
-    Ent.inEntity(
+    entityS.inEntity(
       {
         id: "static",
         idType: "relative",

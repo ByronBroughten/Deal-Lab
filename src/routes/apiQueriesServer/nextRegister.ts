@@ -1,11 +1,11 @@
 import { Request, Response } from "express";
+import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import { makeReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/makeGeneralReqs";
 import {
   areGuestAccessSectionsNext,
   GuestAccessSectionsNext,
   isRegisterFormData,
 } from "../../client/src/App/sharedWithServer/apiQueriesShared/register";
-import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesSharedTypes";
 import { makeMongooseObjectId } from "../../client/src/App/sharedWithServer/utils/mongoose";
 import { resHandledError } from "../../middleware/error";
 import { loginUtils } from "./nextLogin/loginUtils";

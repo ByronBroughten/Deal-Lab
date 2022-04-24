@@ -185,8 +185,8 @@ import { SectionName, sectionNameS } from "./SectionMetas/SectionName";
 import { Obj, ObjectKeys } from "./utils/Obj";
 import { DropFirst } from "./utils/types";
 
-export type StateSections = { [S in SectionName]: StateSection<S>[] };
-type RawCore = { [S in SectionName]: StateSectionCore<S>[] };
+type StateSections = { [SN in SectionName]: StateSection<SN>[] };
+type RawCore = { [SN in SectionName]: StateSectionCore<SN>[] };
 type VarbFullnamesToSolveFor = Set<string>;
 export type AnalyzerCore = {
   sections: StateSections;

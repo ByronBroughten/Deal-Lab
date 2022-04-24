@@ -3,6 +3,7 @@ import Analyzer from "../../../Analyzer";
 import { Inf } from "../../../SectionMetas/Info";
 import {
   FeNameInfo,
+  FeVarbInfo,
   MultiFindByFocalInfo,
   MultiSectionInfo,
   MultiVarbInfo,
@@ -169,10 +170,10 @@ export function findVarbInfosByFocal(
   this: Analyzer,
   focalInfo: SpecificSectionInfo,
   { varbName, ...relInfo }: MultiVarbInfo
-) {
+): FeVarbInfo[] | undefined {
   const feInfosOrUn = this.findFeInfosByFocal(focalInfo, relInfo);
   if (!feInfosOrUn) return undefined;
-  return feInfosOrUn.map((feInfo) => ({ ...feInfo, varbName }));
+  return feInfosOrUn.map((feInfo) => ({ ...feInfo, varbName } as FeVarbInfo));
 }
 export function findSectionsByFocal<I extends MultiSectionInfo>(
   this: Analyzer,

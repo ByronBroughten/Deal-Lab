@@ -1,5 +1,5 @@
 import {
-  Ent,
+  entityS,
   InEntities,
   InEntity,
 } from "../../../SectionMetas/baseSections/baseValues/entities";
@@ -31,7 +31,7 @@ export function removeInEntity(this: StateVarb, entityId: string): StateVarb {
 }
 
 export function addOutEntity(this: StateVarb, entity: OutEntity): StateVarb {
-  if (!Ent.entitiesHas(this.outEntities, entity)) {
+  if (!entityS.entitiesHas(this.outEntities, entity)) {
     return this.update({
       // the order is important.
       outEntities: [...this.outEntities, entity],

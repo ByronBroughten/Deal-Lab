@@ -1,5 +1,5 @@
 import Analyzer from "../../Analyzer";
-import { Ent } from "../../SectionMetas/baseSections/baseValues/entities";
+import { entityS } from "../../SectionMetas/baseSections/baseValues/entities";
 import {
   DbNumObj,
   dbNumObj,
@@ -176,8 +176,8 @@ describe("Analyzer.addSectionAndSolve", () => {
       const propertyGeneral = next.section("propertyGeneral");
       const outEntity1 = propertyGeneral.varb(varbName1).outEntities[0];
       const outEntity2 = propertyGeneral.varb(varbName2).outEntities[0];
-      expect(outEntity1).toEqual(Ent.outEntity(homeInsYearlyInfo, entity1));
-      expect(outEntity2).toEqual(Ent.outEntity(homeInsYearlyInfo, entity2));
+      expect(outEntity1).toEqual(entityS.outEntity(homeInsYearlyInfo, entity1));
+      expect(outEntity2).toEqual(entityS.outEntity(homeInsYearlyInfo, entity2));
     });
   });
 });

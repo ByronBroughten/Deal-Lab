@@ -6,11 +6,10 @@ import {
   sectionContext,
   SimpleSectionName,
 } from "./SectionMetas/baseSections";
+import { RelativeIds } from "./SectionMetas/baseSections/id";
 import { relSections, RelSections } from "./SectionMetas/relSections";
 import {
-  InVarbRelative,
   OutRelVarbInfo,
-  OutVarbRelative,
   SimpleVarbNames,
   VarbNames,
 } from "./SectionMetas/relSections/rel/relVarbInfoTypes";
@@ -35,15 +34,36 @@ import {
 } from "./SectionMetas/VarbMeta";
 import { VarbMetas, VarbMetasRaw } from "./SectionMetas/VarbMetas";
 import { NextObjEntries, Obj } from "./utils/Obj";
+import { MergeUnionObj } from "./utils/types/mergeUnionObj";
+
+type BaseSection<
+  SN extends SimpleSectionName<CN>,
+  CN extends ContextName = "fe"
+> = MergeUnionObj<BaseSections[CN][SN]>;
+
+type RelSection<
+  SN extends SimpleSectionName<CN>,
+  CN extends ContextName = "fe"
+> = MergeUnionObj<RelSections[CN][SN]>;
 
 export type SectionMeta<
   SN extends SimpleSectionName<CN>,
   CN extends ContextName = "fe"
-> = RelSections[CN][SN & keyof RelSections[CN]] &
-  BaseSections[CN][SN] & {
+> = RelSection<SN, CN> &
+  BaseSection<SN, CN> & {
     varbMetas: VarbMetas;
     parents: SectionToParentArrs<CN>[SN];
   };
+// an intermediary type like mergeUnionObj may make things worse
+
+// export type SectionMeta<
+//   SN extends SimpleSectionName<CN>,
+//   CN extends ContextName = "fe"
+// > = RelSections[CN][SN & keyof RelSections[CN]] &
+//   BaseSections[CN][SN] & {
+//     varbMetas: VarbMetas;
+//     parents: SectionToParentArrs<CN>[SN];
+//   };
 
 type SectionMetasCore = {
   [CN in ContextName]: {
@@ -180,9 +200,9 @@ export class SectionMetas {
     SN extends SimpleSectionName<CN>
   >(
     focalSectionName: SN,
-    inRelative: InVarbRelative,
+    inRelative: RelativeIds["inVarb"],
     contextName: CN
-  ): OutVarbRelative {
+  ): RelativeIds["outVarb"] {
     const focalSectionMeta = this.get(focalSectionName, contextName);
     const childSpecifiers = ["children"] as const;
     if (inRelative === "local") return "local";

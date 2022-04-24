@@ -4,8 +4,8 @@ import {
   SectionPackRaw,
   ServerSectionPack,
 } from "../../../sharedWithServer/Analyzer/SectionPackRaw";
+import { NextReq } from "../../../sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import { makeReq } from "../../../sharedWithServer/apiQueriesShared/makeGeneralReqs";
-import { NextReq } from "../../../sharedWithServer/apiQueriesSharedTypes";
 import { sectionMetas } from "../../../sharedWithServer/SectionMetas";
 import { FeInfo } from "../../../sharedWithServer/SectionMetas/Info";
 import { SectionName } from "../../../sharedWithServer/SectionMetas/SectionName";

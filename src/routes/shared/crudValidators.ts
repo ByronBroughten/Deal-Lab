@@ -1,14 +1,14 @@
 import { Request, Response } from "express";
 import { DbEntry } from "../../client/src/App/sharedWithServer/Analyzer/DbEntry";
+import {
+  ApiQueryName,
+  NextRes,
+} from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import { isLoginFormData } from "../../client/src/App/sharedWithServer/apiQueriesShared/login";
 import {
   isRegisterFormData,
   RegisterFormData,
 } from "../../client/src/App/sharedWithServer/apiQueriesShared/register";
-import {
-  ApiQueryName,
-  NextRes,
-} from "../../client/src/App/sharedWithServer/apiQueriesSharedTypes";
 import { is, Req, Res } from "../../client/src/App/sharedWithServer/Crud";
 import { DbStoreName } from "../../client/src/App/sharedWithServer/SectionMetas/baseSectionTypes/dbStoreNames";
 import {

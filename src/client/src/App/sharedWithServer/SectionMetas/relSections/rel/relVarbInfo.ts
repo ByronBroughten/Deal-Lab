@@ -1,8 +1,8 @@
+import { Relative } from "../../baseSections/id";
 import { BaseName } from "../../baseSectionTypes";
 import {
   InRelVarbInfo,
   LocalRelVarbInfo,
-  Relative,
   RelVarbInfo,
   StaticRelVarbInfo,
 } from "./relVarbInfoTypes";
@@ -29,7 +29,7 @@ export const relVarbInfo = {
       varbName,
       id: relative,
       idType: "relative",
-    };
+    } as GenRelVarbInfo<S, V, R>;
   },
   relatives(namesAndSpecifiers: SectionVarbSpecifier[]) {
     return namesAndSpecifiers.map((namesAndSpec) =>
@@ -75,11 +75,14 @@ export const relVarbInfo = {
     sectionName: BaseName<"hasVarb">,
     varbNames: string[]
   ): LocalRelVarbInfo[] {
-    return varbNames.map((varbName) => ({
-      sectionName,
-      varbName,
-      id: "local",
-      idType: "relative",
-    }));
+    return varbNames.map(
+      (varbName) =>
+        ({
+          sectionName,
+          varbName,
+          id: "local",
+          idType: "relative",
+        } as LocalRelVarbInfo)
+    );
   },
 };

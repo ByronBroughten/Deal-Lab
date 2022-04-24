@@ -1,11 +1,11 @@
-import Arr from "../../../utils/Arr";
 import {
-  Ent,
+  entityS,
   InEntities,
   InEntity,
-} from "../../SectionMetas/baseSections/baseValues/NumObj/entities";
-import { FeVarbInfo } from "../../SectionMetas/relSections/rel/relVarbInfoTypes";
-import StateVarb from "../StateVarb";
+} from "../../../SectionMetas/baseSections/baseValues/entities";
+import { FeVarbInfo } from "../../../SectionMetas/relSections/rel/relVarbInfoTypes";
+import Arr from "../../../utils/Arr";
+import StateVarb from "../FeVarb";
 
 // all varbs that may have inEntities are in mutable sections.
 // so all outEntities (which point to the varbs with inEntities)
@@ -31,7 +31,7 @@ export function removeInEntity(this: StateVarb, entityId: string): StateVarb {
 }
 
 export function addOutEntity(this: StateVarb, entity: OutEntity): StateVarb {
-  if (!Ent.entitiesHas(this.outEntities, entity)) {
+  if (!entityS.entitiesHas(this.outEntities, entity)) {
     return this.update({
       // the order is important.
       outEntities: [...this.outEntities, entity],

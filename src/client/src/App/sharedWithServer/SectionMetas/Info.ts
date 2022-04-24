@@ -18,9 +18,8 @@ export type DbInfo<T extends FeSectionNameType = "all"> = DbNameInfo<
 >;
 
 type MakeVarbInfo<I extends MultiSectionInfo> = MultiVarbInfo<
-  Exclude<I["sectionName"], "main">,
-  { idType: I["idType"]; id: I["id"] }
->;
+  Exclude<I["sectionName"], "main">
+> & { idType: I["idType"]; id: I["id"] };
 
 export const Inf = {
   is: {

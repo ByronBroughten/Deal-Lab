@@ -1,6 +1,6 @@
 import { config } from "../../Constants";
 import { apiQueriesShared } from "../../sharedWithServer/apiQueriesShared";
-import { NextRes } from "../../sharedWithServer/apiQueriesSharedTypes";
+import { NextRes } from "../../sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import { auth } from "../services/authService";
 import { useAnalyzerContext } from "../usePropertyAnalyzer";
 import { apiQueries } from "./apiQueriesClient";

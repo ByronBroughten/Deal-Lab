@@ -1,16 +1,16 @@
 import { AxiosResponse } from "axios";
 import { apiQueriesShared } from "../../sharedWithServer/apiQueriesShared";
 import {
-  isLoginHeaders,
-  isLoginUserNext,
-} from "../../sharedWithServer/apiQueriesShared/login";
-import { makeRes } from "../../sharedWithServer/apiQueriesShared/makeGeneralReqs";
-import {
   ApiQueryName,
   NextReq,
   NextRes,
   QueryError,
-} from "../../sharedWithServer/apiQueriesSharedTypes";
+} from "../../sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
+import {
+  isLoginHeaders,
+  isLoginUserNext,
+} from "../../sharedWithServer/apiQueriesShared/login";
+import { makeRes } from "../../sharedWithServer/apiQueriesShared/makeGeneralReqs";
 import { Obj } from "../../sharedWithServer/utils/Obj";
 import { StrictOmit } from "../../sharedWithServer/utils/types";
 import { HandledError } from "../../utils/error";

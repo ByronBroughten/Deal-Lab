@@ -1,9 +1,9 @@
-import { Inf } from "../../SectionMetas/Info";
-import { MultiVarbInfo } from "../../SectionMetas/relSections/rel/relVarbInfoTypes";
-import { SectionName } from "../../SectionMetas/SectionName";
-import StateSection from "../../StateSection";
-import StateVarb from "../StateVarb";
-import { StateValue } from "../StateVarb/stateValue";
+import { Inf } from "../../../SectionMetas/Info";
+import { MultiVarbInfo } from "../../../SectionMetas/relSections/rel/relVarbInfoTypes";
+import { SectionName } from "../../../SectionMetas/SectionName";
+import StateSection from "../../FeSection";
+import StateVarb from "../FeVarb";
+import { StateValue } from "../FeVarb/feValue";
 
 export type StateVarbs = { [varbName: string]: StateVarb };
 export type VarbValues = { [varbName: string]: StateValue };

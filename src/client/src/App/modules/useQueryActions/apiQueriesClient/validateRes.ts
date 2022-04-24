@@ -1,12 +1,12 @@
 import { AxiosResponse } from "axios";
 import { SectionPack } from "../../../sharedWithServer/Analyzer/SectionPack";
+import { QueryError } from "../../../sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import {
   DbIdRes,
   DbStoreNameRes,
   makeRes,
   SectionPackRes,
 } from "../../../sharedWithServer/apiQueriesShared/makeGeneralReqs";
-import { QueryError } from "../../../sharedWithServer/apiQueriesSharedTypes";
 import { Id } from "../../../sharedWithServer/SectionMetas/baseSections/id";
 import { sectionNameS } from "../../../sharedWithServer/SectionMetas/SectionName";
 import { Obj } from "../../../sharedWithServer/utils/Obj";

@@ -2,7 +2,7 @@ import { Response } from "express";
 import {
   ApiQueryName,
   NextReq,
-} from "../../../client/src/App/sharedWithServer/apiQueriesSharedTypes";
+} from "../../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import { ResHandledError } from "../../../middleware/error";
 
 export type UserAuthedReq<QN extends ApiQueryName> = LoggedIn<

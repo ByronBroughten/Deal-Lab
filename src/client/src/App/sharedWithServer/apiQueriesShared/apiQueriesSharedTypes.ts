@@ -1,5 +1,5 @@
-import { config } from "../Constants";
-import { LoginQueryObjects } from "./apiQueriesShared/login";
+import { config } from "../../Constants";
+import { LoginQueryObjects } from "./login";
 import {
   DbIdRes,
   DbSectionPackInfoReq,
@@ -7,8 +7,8 @@ import {
   SectionPackArrReq,
   SectionPackReq,
   SectionPackRes,
-} from "./apiQueriesShared/makeGeneralReqs";
-import { RegisterQueryObjects } from "./apiQueriesShared/register";
+} from "./makeGeneralReqs";
+import { RegisterQueryObjects } from "./register";
 
 export type ApiQueryName = keyof ApiHttpObjects;
 export type NextReq<R extends keyof ApiHttpObjects> = ApiHttpObjects[R]["req"];

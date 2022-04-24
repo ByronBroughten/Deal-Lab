@@ -1,11 +1,11 @@
 import { valueMeta } from "../../baseSections/baseValues";
 import { NumObj } from "../../baseSections/baseValues/NumObj";
+import { RelativeIds } from "../../baseSections/id";
 import { switchNames } from "../../baseSections/switchNames";
 import { BaseName } from "../../baseSectionTypes";
 import { relVarbInfo } from "./relVarbInfo";
 import {
   InRelVarbInfo,
-  InVarbRelative,
   LocalRelVarbInfo,
   SingleInRelVarbInfo,
 } from "./relVarbInfoTypes";
@@ -18,7 +18,7 @@ export const relAdorn = {
 };
 export const relProps = {
   named(
-    relative: InVarbRelative,
+    relative: RelativeIds["inVarb"],
     names: [
       kwargName: string,
       sectionName: BaseName<"hasVarb">,

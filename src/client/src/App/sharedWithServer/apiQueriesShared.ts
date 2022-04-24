@@ -2,12 +2,15 @@ import urljoin from "url-join";
 import { config } from "../Constants";
 import Analyzer from "./Analyzer";
 import {
+  ApiQueryName,
+  NextReq,
+} from "./apiQueriesShared/apiQueriesSharedTypes";
+import {
   makeDbIdSectionPackReq,
   makeRawSectionPackArrReq,
   makeRawSectionPackReq,
   makeReq,
 } from "./apiQueriesShared/makeGeneralReqs";
-import { ApiQueryName, NextReq } from "./apiQueriesSharedTypes";
 
 const makeApiReqs = makeReqMakers();
 const apiPaths = makeApiPaths();

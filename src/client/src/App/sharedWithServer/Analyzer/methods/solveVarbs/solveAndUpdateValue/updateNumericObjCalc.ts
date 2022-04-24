@@ -82,7 +82,7 @@ export function solvableTextToNumber(
 ): NumObjNumber {
   const updateFnName = this.updateFnName(feVarbInfo);
   if (isNumObjUpdateFnName(updateFnName)) {
-    const { unit } = this.varb(feVarbInfo);
+    const { unit } = this.varb(feVarbInfo).meta;
     return solveText(solvableText, unit, updateFnName);
   } else {
     throw new Error("For now, this is only for numObjs.");

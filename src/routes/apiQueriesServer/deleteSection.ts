@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
-import { DbSectionPackInfo } from "../../client/src/App/sharedWithServer/apiQueriesShared/makeGeneralReqs";
 import {
   NextReq,
   NextRes,
-} from "../../client/src/App/sharedWithServer/apiQueriesSharedTypes";
+} from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
+import { DbSectionPackInfo } from "../../client/src/App/sharedWithServer/apiQueriesShared/makeGeneralReqs";
 import authWare from "../../middleware/authWare";
 import { serverSend } from "../shared/crudValidators";
 import { findUserByIdAndUpdate } from "./shared/findAndUpdate";

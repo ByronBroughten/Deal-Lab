@@ -12,6 +12,8 @@ import {
   InitOneSectionProps,
 } from "./addSections/initOneSection";
 
+// here they init outEntities right in the thick of it.
+
 export function addSections(
   analyzer: Analyzer,
   propArr: InitSectionAndChildrenProps[] | InitSectionAndChildrenProps

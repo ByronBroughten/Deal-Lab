@@ -1,6 +1,5 @@
 import StateSection from "../../Analyzer/StateSection";
 import { RemoveNotStrings, StrictSubType, SubType } from "../../utils/types";
-import { MergeUnionObjNonNullable } from "../../utils/types/mergeUnionObj";
 import { ContextName, SimpleSectionName } from "../baseSections";
 import { DbStoreName, DbStoreType } from "../baseSectionTypes/dbStoreNames";
 import { RelSections } from "../relSections";
@@ -73,14 +72,14 @@ export type ChildName<
 
 export type DescendantName<
   SN extends SimpleSectionName,
-  CN extends ContextName
+  CN extends ContextName = "fe"
 > = ChildName<SN, CN> extends never
   ? never
   : ChildName<SN, CN> | DescendantName<ChildName<SN, CN>, CN>;
 
 export type SelfOrDescendantName<
   SN extends SimpleSectionName,
-  CN extends ContextName
+  CN extends ContextName = "fe"
 > = SN | DescendantName<SN, CN>;
 
 export type DescendantIds<
@@ -125,19 +124,9 @@ export type GeneralChildIdArrs = {
 export type OneChildIdArrs<
   SN extends SimpleSectionName,
   CN extends ContextName
-> = GeneralChildIdArrs & {
+> = {
   [CHN in ChildName<SN, CN>]: string[];
 };
-type AllChildIdArrs<CN extends ContextName> = {
-  [SN in SimpleSectionName]: OneChildIdArrs<SN, CN>;
-};
-export type NextChildIdArrs<
-  CN extends ContextName,
-  SN extends SimpleSectionName = SimpleSectionName
-> = AllChildIdArrs<CN>[SN];
-
-export type NextChildIdArrsWide<CN extends ContextName> =
-  MergeUnionObjNonNullable<NextChildIdArrs<CN>>;
 
 export type ChildIdArrs<
   SN extends SimpleSectionName<CN>,
@@ -146,10 +135,10 @@ export type ChildIdArrs<
   [CHN in ChildName<SN, CN>]: string[];
 };
 
-export type ChildFeInfo<SN extends SimpleSectionName<"fe">> = FeNameInfo & {
+export interface ChildFeInfo<SN extends SimpleSectionName<"fe">>
+  extends FeNameInfo {
   sectionName: ChildName<SN>;
-  id: string;
-};
+}
 
 export type HasChildSectionName<SC extends ContextName> =
   keyof SectionToChildren<SC>;
@@ -164,16 +153,3 @@ export type ChildOrNull<
 > extends never
   ? null
   : CN;
-
-// commented out on 3/25/22, for no apparent use
-// type SectionToChildIdArrs<SC extends ContextName> = {
-//   [SN in keyof SectionToChildrenOrNever<SC>]: Record<
-//     SectionToChildrenOrNever<SC>[SN] & string,
-//     string[]
-//   >;
-// };
-// type SectionToChildIdArrType<SC extends ContextName> = {
-//   [SN in keyof SectionToChildIdArrs<SC>]: SectionToChildIdArrs<SC>[SN][keyof SectionToChildIdArrs<SC>[SN]];
-// };
-// export type ChildIdArrType<SN extends SimpleSectionName<SC>, SC extends ContextName> =
-//   SectionToChildIdArrType<SC>[SN];
