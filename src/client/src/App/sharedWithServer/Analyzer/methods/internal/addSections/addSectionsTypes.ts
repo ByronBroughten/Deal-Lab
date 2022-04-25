@@ -1,9 +1,13 @@
-import { OneChildIdArrs } from "../../../../SectionMetas/relSectionTypes/ChildTypes";
+import { SimpleSectionName } from "../../../../SectionMetas/baseSections";
+import {
+  OneChildIdArrs,
+  SelfOrDescendantName,
+} from "../../../../SectionMetas/relSectionTypes/ChildTypes";
 import { ParentFinder } from "../../../../SectionMetas/relSectionTypes/ParentTypes";
 import { SectionName } from "../../../../SectionMetas/SectionName";
 import { DbVarbs } from "../../../DbEntry";
 
-export type OneAddSectionProps<SN extends SectionName> = {
+export type OneAddSectionProps<SN extends SimpleSectionName> = {
   sectionName: SN;
   parentFinder: ParentFinder<SN>;
   feId?: string;
@@ -15,4 +19,5 @@ export type OneAddSectionProps<SN extends SectionName> = {
 type AllAddSectionProps = {
   [SN in SectionName]: OneAddSectionProps<SN>;
 };
-export type AddSectionProps = AllAddSectionProps[SectionName];
+export type AddSectionProps<SN extends SimpleSectionName = SimpleSectionName> =
+  AllAddSectionProps[SelfOrDescendantName<SN>];

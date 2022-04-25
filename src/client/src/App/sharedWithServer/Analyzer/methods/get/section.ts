@@ -1,4 +1,5 @@
 import Analyzer from "../../../Analyzer";
+import { SectionFinder } from "../../../SectionMetas/baseSectionTypes";
 import { FeInfo, Inf } from "../../../SectionMetas/Info";
 import {
   FeNameInfo,
@@ -8,10 +9,7 @@ import {
   SpecificSectionInfo,
   SpecificSectionsInfo,
 } from "../../../SectionMetas/relSections/rel/relVarbInfoTypes";
-import {
-  NextSectionFinder,
-  SectionName,
-} from "../../../SectionMetas/SectionName";
+import { SectionName } from "../../../SectionMetas/SectionName";
 import { Obj } from "../../../utils/Obj";
 import StateSection from "../../StateSection";
 
@@ -38,7 +36,7 @@ export function section<
 ): StateSection<S | I["sectionName"]>;
 export function section<S extends SectionName>(
   this: Analyzer,
-  finder: NextSectionFinder<S>
+  finder: SectionFinder<S>
 ): StateSection<S> {
   if (typeof finder === "string")
     return this.singleSection(finder) as any as StateSection<S>;

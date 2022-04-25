@@ -58,7 +58,7 @@ describe(apiRoute, () => {
     const postDoc = await getUserByIdNoRes(userId);
 
     expect(postDoc.propertyIndex.length).toBe(preDoc.propertyIndex.length + 1);
-    expect(Arr.lastVal(postDoc.propertyIndex).dbId).toBe(
+    expect(Arr.lastVal(postDoc.propertyIndex)?.dbId).toBe(
       req.body.sectionPack.dbId
     );
   });

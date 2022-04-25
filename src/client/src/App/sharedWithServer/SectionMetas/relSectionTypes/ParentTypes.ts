@@ -13,6 +13,7 @@ import {
 import { BaseName, SectionFinder } from "../baseSectionTypes";
 import { relSections } from "../relSections";
 import { FeNameInfo } from "../relSections/rel/relVarbInfoTypes";
+import { SectionName } from "../SectionName";
 import { ChildOrNull } from "./ChildTypes";
 
 type ParentToChildOrNullMap<
@@ -102,22 +103,20 @@ export type FeParentInfo<
   SC extends ContextName = "fe"
 > = FeNameInfo<ParentName<SN, SC>>;
 
-type HasOneParentFinder<
-  SN extends SimpleSectionName,
-  CN extends ContextName
-> = Extract<SN, HasOneParentSectionName<CN>>;
-
 export type ParentFinder<
   SN extends SimpleSectionName<SC>,
   SC extends ContextName = "fe"
-> =
-  | FeParentInfo<SN, SC>
-  | ParentName<Extract<SN, HasOneParentSectionName<SC>>, SC>;
+> = FeParentInfo<SN, SC> | Extract<ParentName<SN>, SectionName<"alwaysOne">>;
 
 export type SectionParentFinder<
   SN extends SimpleSectionName,
   CN extends ContextName = "fe"
 > = SectionFinder<SN> | HasOneParentFinder<SN, CN>;
+
+type HasOneParentFinder<
+  SN extends SimpleSectionName,
+  CN extends ContextName
+> = Extract<SN, HasOneParentSectionName<CN>>;
 
 type SectionToOneParentOrNull<SC extends ContextName> = {
   [SN in keyof SectionToParents<SC>]: IsUnion<

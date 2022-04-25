@@ -1,9 +1,14 @@
 import { isEqual } from "lodash";
 
 export const Arr = {
-  insert<V extends any>(arr: readonly V[], value: V, idx: number): V[] {
+  insert<V>(arr: readonly V[], value: V, idx: number): V[] {
     const nextArr = [...arr];
     nextArr.splice(idx, 0, value);
+    return nextArr;
+  },
+  replaceAtIdxClone<V>(arr: readonly V[], value: V, idx: number): V[] {
+    const nextArr = [...arr];
+    nextArr[idx] = value;
     return nextArr;
   },
   unionOrArrToArr<T>(value: T | T[]): T[] {

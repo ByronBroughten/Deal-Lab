@@ -1,19 +1,47 @@
 import { applyMixins } from "../utils/classObjects";
+import { AddsSections } from "./FeSections/AddsSections";
+import FeSection from "./FeSections/FeSection";
+import { FeSectionList } from "./FeSections/FeSectionList";
 import {
-  FeSectionsCore,
+  FeSectionLists,
   UpdatesCoreAbstract,
 } from "./FeSections/UpdatesCoreAbstract";
 import { SimpleSectionName } from "./SectionMetas/baseSections";
+import { SelfOrDescendantName } from "./SectionMetas/relSectionTypes/ChildTypes";
 
-interface FeSections<SN extends SimpleSectionName> {}
+interface FeSections<SN extends SimpleSectionName>
+  extends UpdatesCoreAbstract<SN, FeSections<SN>>,
+    AddsSections<SN, FeSections<SN>> {}
 class FeSections<SN extends SimpleSectionName> extends UpdatesCoreAbstract<
   SN,
   FeSections<SN>
 > {
-  update(partial: Partial<FeSectionsCore<SN>>): FeSections<SN> {
-    return new FeSections({ ...this.core, ...partial } as FeSectionsCore<SN>);
+  updateList<LN extends SelfOrDescendantName<SN>>(
+    listName: LN,
+    nextList: FeSectionList<LN>
+  ): FeSections<SN> {
+    return this.updateLists({
+      [listName]: nextList,
+    } as Partial<FeSectionLists<SN>>);
+  }
+  updateLists(partial: Partial<FeSectionLists<SN>>): FeSections<SN> {
+    return new FeSections({
+      ...this.core,
+      sectionLists: { ...this.core.sectionLists, ...partial },
+    });
+  }
+  replaceInList(
+    nextSection: FeSection<SelfOrDescendantName<SN>>
+  ): FeSections<SN> {
+    const { sectionName } = nextSection;
+    return this.updateList(
+      sectionName,
+      this.list(sectionName).replace(nextSection)
+    );
   }
 }
+
+applyMixins(FeSections, [AddsSections]);
 
 // interface BigClass<T extends CoreType> extends MakePropFoo<BigClass<T>> {}
 // applyMixins(BigClass, [MakePropFoo]);

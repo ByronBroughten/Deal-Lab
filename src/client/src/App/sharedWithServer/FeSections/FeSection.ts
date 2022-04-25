@@ -3,6 +3,7 @@ import { DbVarbs } from "../Analyzer/SectionPackRaw/RawSection";
 import { sectionMetas } from "../SectionMetas";
 import { SimpleSectionName } from "../SectionMetas/baseSections";
 import { InEntities } from "../SectionMetas/baseSections/baseValues/entities";
+import { FeIdInfo } from "../SectionMetas/baseSections/id";
 import { Inf } from "../SectionMetas/Info";
 import {
   DbNameInfo,
@@ -77,14 +78,18 @@ export default class FeSection<
     return new FeSection({ ...this.core, ...nextBaseProps });
   }
 
-  get feInfo(): FeNameInfo<S> {
-    const sectionName = this.meta.get("sectionName") as SectionName as S;
-    const feInfo: FeNameInfo<S> = {
-      sectionName,
+  get feIdInfo(): FeIdInfo {
+    return {
       id: this.feId,
       idType: "feId",
     };
-    return feInfo;
+  }
+  get feInfo(): FeNameInfo<S> {
+    const sectionName = this.meta.get("sectionName") as SectionName as S;
+    return {
+      sectionName,
+      ...this.feIdInfo,
+    };
   }
   get dbId(): string {
     return this.core.dbId;

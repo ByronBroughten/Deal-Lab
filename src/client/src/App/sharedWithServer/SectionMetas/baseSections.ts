@@ -16,7 +16,7 @@ export const loanVarbsNotInFinancing = [
 
 export type AnySectionName = keyof BaseSections[ContextName];
 export type SimpleSectionName<SC extends ContextName = ContextName> =
-  keyof BaseSections[ContextName];
+  keyof BaseSections["fe"];
 
 export type SectionContextNames = {
   sectionName: SimpleSectionName;

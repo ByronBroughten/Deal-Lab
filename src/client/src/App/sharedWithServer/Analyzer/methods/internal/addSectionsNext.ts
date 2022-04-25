@@ -10,11 +10,12 @@ export function addSectionsNext(
   parentFirstPropsList: AddSectionProps[]
 ) {
   const newFeInfos: FeInfo[] = [];
-  for (const props of parentFirstPropsList as AddSectionProps[]) {
+  for (const props of parentFirstPropsList) {
     next = initOneSectionNext(next, props);
     const newFeInfo = next.lastSection(props.sectionName).feInfo;
     newFeInfos.push(newFeInfo);
   }
+
   return finalizeNewSections(next, newFeInfos);
 }
 

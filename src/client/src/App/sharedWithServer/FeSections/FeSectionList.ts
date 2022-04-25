@@ -41,6 +41,10 @@ export class FeSectionList<SN extends SimpleSectionName> {
   insert(section: FeSection<SN>, idx: number): FeSectionList<SN> {
     return this.updateList(Arr.insert(this.list, section, idx));
   }
+  replace(section: FeSection<SN>): FeSectionList<SN> {
+    const idx = this.feIdToValidIdx(section.feId);
+    return this.updateList(Arr.replaceAtIdxClone(this.list, section, idx));
+  }
   wipe(): FeSectionList<SN> {
     return this.updateList([]);
   }
@@ -74,6 +78,11 @@ export class FeSectionList<SN extends SimpleSectionName> {
         return this.first;
       }
     }
+  }
+  feIdToValidIdx(feId: string): number {
+    const idx = this.list.findIndex((section) => section.feId === feId);
+    if (idx < 0) throw new Error("Index not found.");
+    else return idx;
   }
   has(idInfo: SpecificIdInfo): boolean {
     try {
