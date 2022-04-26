@@ -1,24 +1,56 @@
 import { DbVarbs } from "../Analyzer/DbEntry";
 import { Obj } from "../utils/Obj";
-import { BaseSections, ContextName, SimpleSectionName } from "./baseSections";
-import { RelSections } from "./relSections";
+import {
+  baseSections,
+  BaseSections,
+  ContextName,
+  SimpleSectionName,
+} from "./baseSections";
+import { RelName } from "./relNameArrs";
+import { SourceTables, sourceTables } from "./relNameArrs/tableSourceArrs";
+import { relSections, RelSections } from "./relSections";
 import { ChildIdArrs, ChildName } from "./relSectionTypes/ChildTypes";
-import { SectionToParentArrs } from "./relSectionTypes/ParentTypes";
+import {
+  sectionParentNames,
+  SectionToParentArrs,
+} from "./relSectionTypes/ParentTypes";
+import { sectionNameS } from "./SectionName";
 import { VarbMetas } from "./VarbMetas";
+
+type SectionMetaExtra<CN extends ContextName, SN extends SimpleSectionName> = {
+  varbMetas: VarbMetas;
+  parentNames: SectionToParentArrs<CN>[SN];
+  tableSourceName: SourceTableParams[SN];
+};
+
+type SourceTableParams = {
+  [SN in SimpleSectionName]: SN extends RelName<"tableSource">
+    ? SourceTables[SN]
+    : null;
+};
+function getSourceTableParam<SN extends SimpleSectionName>(
+  sectionName: SN
+): SourceTableParams[SN] {
+  if (sectionNameS.is(sectionName, "tableSource")) {
+    return sourceTables[sectionName] as SourceTableParams[SN];
+  } else return null as SourceTableParams[SN];
+}
+
+function getParentNamesParam<
+  CN extends ContextName,
+  SN extends SimpleSectionName
+>(contextName: CN, sectionName: SN): SectionToParentArrs<CN>[SN] {
+  return sectionParentNames[contextName][sectionName] as any;
+}
 
 export type SectionMetaCore<
   CN extends ContextName,
   SN extends SimpleSectionName
 > = RelSections[CN][SN & keyof RelSections[CN]] &
-  BaseSections[CN][SN] & {
-    varbMetas: VarbMetas;
-    parents: SectionToParentArrs<CN>[SN];
-  };
+  BaseSections[CN][SN] &
+  SectionMetaExtra<CN, SN>;
 
-export class NextSectionMeta<
-  CN extends ContextName,
-  SN extends SimpleSectionName
-> {
+export class SectionMeta<CN extends ContextName, SN extends SimpleSectionName> {
   constructor(readonly core: SectionMetaCore<CN, SN>) {}
   get<PN extends keyof SectionMetaCore<CN, SN>>(
     propName: PN
@@ -38,7 +70,6 @@ export class NextSectionMeta<
     );
   }
   defaultDbVarbs(): DbVarbs {
-    type Test = SectionMetaCore<CN, SN>["alwaysOne"];
     const defaultDbVarbs: DbVarbs = {};
     const varbMetasCore = this.get("varbMetas").getCore();
     for (const [varbName, varbMeta] of Obj.entries(varbMetasCore)) {
@@ -49,6 +80,20 @@ export class NextSectionMeta<
   depreciatingUpdateVarbMetas(nextVarbMetas: VarbMetas) {
     const nextCore = { ...this.core };
     nextCore.varbMetas = nextVarbMetas;
-    return new NextSectionMeta(nextCore);
+    return new SectionMeta(nextCore);
+  }
+  static init<CN extends ContextName, SN extends SimpleSectionName>(
+    contextName: CN,
+    sectionName: SN
+  ): SectionMeta<CN, SN> {
+    const relSection = relSections[contextName][sectionName];
+    const baseSection = baseSections[contextName][sectionName];
+    return new SectionMeta({
+      ...relSection,
+      ...baseSection,
+      varbMetas: VarbMetas.initFromRelVarbs(relSection.relVarbs, sectionName),
+      parentNames: getParentNamesParam(contextName, sectionName),
+      tableSourceName: getSourceTableParam(sectionName),
+    });
   }
 }

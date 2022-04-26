@@ -20,7 +20,8 @@ export type GeneralRelSection = {
   childNames: readonly AnySectionName[];
 
   displayName: string;
-  rowSourceName: BaseName<"rowIndex", "fe"> | null;
+  rowSourceName: BaseName | null;
+  tableSourceNameNext: BaseName | null;
   indexStoreName: BaseName<"dbStore", "db"> | null;
   defaultStoreName: BaseName<"dbStore", "db"> | null;
 };
@@ -35,7 +36,7 @@ type FullOptions<
   }
 >;
 
-type Options<
+export type RelSectionOptions<
   SC extends ContextName,
   SN extends SimpleSectionName<SC>
 > = Partial<FullOptions<SC, SN>>;
@@ -45,7 +46,7 @@ export type RelSection<
   SN extends SimpleSectionName<SC>,
   D extends string,
   RVS extends RelVarbs<SC, SN>,
-  O extends Options<SC, SN> = {}
+  O extends RelSectionOptions<SC, SN> = {}
 > = Merge<DefaultRelSection<D, SC, SN, RVS>, O>;
 
 type DefaultRelSection<
@@ -60,6 +61,7 @@ type DefaultRelSection<
   relVarbs: RVS;
   childNames: [];
   rowSourceName: null;
+  tableSourceNameNext: null;
   indexStoreName: null;
   defaultStoreName: null;
 };
@@ -69,7 +71,7 @@ export type RelSectionProp<
   SN extends SimpleSectionName<SC>,
   D extends string,
   RVS extends RelVarbs<SC, SN>,
-  O extends Options<SC, SN> = {}
+  O extends RelSectionOptions<SC, SN> = {}
 > = Record<SN, RelSection<SC, SN, D, RVS, O>>;
 
 export const relSection = {
@@ -90,6 +92,7 @@ export const relSection = {
       displayName,
       relVarbs,
       childNames: [],
+      tableSourceNameNext: null,
       rowSourceName: null,
       indexStoreName: null,
       defaultStoreName: null,
@@ -100,7 +103,7 @@ export const relSection = {
     SN extends SimpleSectionName<ExtractSectionContext<SCB>>,
     D extends string,
     PVS extends RelVarbs<ExtractSectionContext<SCB>, SN>,
-    O extends Options<ExtractSectionContext<SCB>, SN> = {}
+    O extends RelSectionOptions<ExtractSectionContext<SCB>, SN> = {}
   >(
     sectionContextOrBoth: SCB,
     sectionName: SN,
@@ -122,7 +125,7 @@ export const relSection = {
   singleTimeList<
     SN extends BaseName<"singleTimeList">,
     D extends string,
-    O extends Options<ContextName, SN> = {}
+    O extends RelSectionOptions<ContextName, SN> = {}
   >(sectionName: SN, displayName: D, options?: O) {
     return this.base(
       "both",
@@ -139,7 +142,7 @@ export const relSection = {
   ongoingList<
     SN extends BaseName<"ongoingList">,
     D extends string,
-    O extends Options<ContextName, SN> = {}
+    O extends RelSectionOptions<ContextName, SN> = {}
   >(sectionName: SN, displayName: D, options?: O) {
     return this.base(
       "both",
@@ -152,7 +155,7 @@ export const relSection = {
       } as const)
     );
   },
-  rowIndex<S extends BaseName<"rowIndex">, D extends string>(
+  rowIndex<S extends BaseName<"rowIndex"> | "tableRow", D extends string>(
     sectionName: S,
     displayName: D
   ) {
@@ -169,10 +172,10 @@ export const relSection = {
       }
     );
   },
-  managerTable<
+  sectionTable<
     S extends BaseName<"table">,
     D extends string,
-    R extends BaseName<"rowIndex", "fe">
+    R extends BaseName
   >(sectionName: S, displayName: D, rowSourceName: R) {
     return this.base(
       "fe" as ContextName,
@@ -186,6 +189,23 @@ export const relSection = {
         rowSourceName,
         parent: "main",
         childNames: ["column"] as const,
+      }
+    );
+  },
+  sectionTableNext<
+    S extends BaseName<"tableNext">,
+    D extends string,
+    R extends BaseName
+  >(sectionName: S, displayName: D, tableSourceNameNext: R) {
+    return this.base(
+      "fe" as ContextName,
+      sectionName,
+      displayName,
+      { searchFilter: relVarb.string() } as RelVarbs<ContextName, S>,
+      {
+        tableSourceNameNext,
+        parent: "main",
+        childNames: ["column", "tableRow"] as const,
       }
     );
   },

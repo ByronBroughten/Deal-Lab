@@ -80,9 +80,19 @@ export const baseSections = {
       }
     ),
 
+    propertyIndexNext: base.section.schema(base.varbs.property),
+    loanIndexNext: base.section.schema(base.varbs.loan),
+    mgmtIndexNext: base.section.schema(base.varbs.mgmt),
+    analysisIndexNext: base.section.schema(base.varbs.analysis),
+
+    propertyTableNext: base.section.tableNext,
+    loanTableNext: base.section.tableNext,
+    mgmtTableNext: base.section.tableNext,
+    analysisTableNext: base.section.tableNext,
+
+    tableRow: base.section.schema(base.varbs.tableRow),
     column: base.section.schema(base.varbs.varbInfo),
     cell: base.section.schema({ ...base.varbs.varbInfo, value: "numObj" }),
-    // for cell, value may not have to be numObj...
 
     conditionalRow: base.section.schema({
       level: "number",
@@ -134,10 +144,8 @@ export const baseSections = {
       base.varbs.ongoingList,
       base.options.userList
     ),
-    userVarbList: base.section.schema(
-      { title: "string" },
-      base.options.userList
-    ),
+    userVarbList: base.section.varbList(base.options.userList),
+    dealVarbList: base.section.varbList(),
     login: base.section.schema(
       base.varbs.string(["email", "password"] as const),
       base.options.alwaysOneFromStart

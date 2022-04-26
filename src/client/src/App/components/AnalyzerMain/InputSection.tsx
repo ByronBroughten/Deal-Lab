@@ -1,20 +1,23 @@
 import React from "react";
 import { useAnalyzerContext } from "../../modules/usePropertyAnalyzer";
 import MainSection from "../appWide/GeneralSection";
-import Property from "./PropertyGeneral/Property";
 import GeneralSectionTitle from "../appWide/GeneralSection/GeneralSectionTitle";
 import Mgmt from "./Mgmts/Mgmt";
+import Property from "./PropertyGeneral/Property";
 
 type Props = {
   title: string;
   sectionName: "property" | "mgmt";
   className?: string;
 };
-const parents = { property: "propertyGeneral", mgmt: "mgmtGeneral" } as const;
+const parentNames = {
+  property: "propertyGeneral",
+  mgmt: "mgmtGeneral",
+} as const;
 export default function InputSection({ title, sectionName, className }: Props) {
   const { analyzer } = useAnalyzerContext();
 
-  const section = analyzer.section(parents[sectionName]);
+  const section = analyzer.parent(sectionName);
   const sectionIds = section.childFeIds(sectionName);
 
   return (

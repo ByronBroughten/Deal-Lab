@@ -52,17 +52,17 @@ type SectionToParentOrNos<SC extends ContextName> = NeversToSomething<
   "no parent"
 >;
 
-type ContextSectionToParentArrs = {
+export type SectionToParentNameArrs = {
   [SC in ContextName]: SectionToParentArrs<SC>;
 };
-export function makeSectionToParentArrs(): ContextSectionToParentArrs {
+export function makeSectionToParentArrs(): SectionToParentNameArrs {
   const partial = sectionContext.makeBlankContextObj();
   for (const contextName of sectionContext.names) {
     type AllParents = Record<SimpleSectionName, SimpleSectionName[]>;
     const sectionToParentArrs = Obj.keys(relSections[contextName]).reduce(
-      (parents, key) => {
-        parents[key as keyof typeof parents] = [];
-        return parents;
+      (parentNames, key) => {
+        parentNames[key as keyof typeof parentNames] = [];
+        return parentNames;
       },
       {} as AllParents
     ) as AllParents;
@@ -77,8 +77,9 @@ export function makeSectionToParentArrs(): ContextSectionToParentArrs {
     }
     partial[contextName] = sectionToParentArrs;
   }
-  return partial as ContextSectionToParentArrs;
+  return partial as SectionToParentNameArrs;
 }
+export const sectionParentNames = makeSectionToParentArrs();
 
 export type HasParentSectionName<SC extends ContextName> =
   keyof SectionToParents<SC>;

@@ -1,9 +1,10 @@
+import { StrictOmit } from "../../utils/types";
 import { ContextName } from "../baseSections";
 import { rel } from "./rel";
-import { relSection } from "./rel/relSection";
+import { relSection, RelSectionOptions } from "./rel/relSection";
 import { RelVarbs } from "./rel/relVarbs";
 
-function propertyPreVarbs<R extends RelVarbs<ContextName, "property">>(): R {
+function propertyRelVarbs<R extends RelVarbs<ContextName, "property">>(): R {
   const r: R = {
     title: rel.varb.string(),
     price: rel.varb.moneyObj("Price"),
@@ -54,14 +55,39 @@ function propertyPreVarbs<R extends RelVarbs<ContextName, "property">>(): R {
   return r;
 }
 
+function propertySection<
+  SN extends "property" | "propertyIndexNext",
+  O extends StrictOmit<
+    RelSectionOptions<"fe", "property">,
+    "childNames" | "relVarbs"
+  > = {}
+>(sectionName: SN, options?: O) {
+  return relSection.base(
+    "fe" as ContextName,
+    sectionName,
+    "Property",
+    propertyRelVarbs() as RelVarbs<"fe", SN>,
+    {
+      ...((options ?? {}) as O),
+      childNames: [
+        "upfrontCostList",
+        "upfrontRevenueList",
+        "ongoingCostList",
+        "ongoingRevenueList",
+        "unit",
+      ] as const,
+    }
+  );
+}
+
 export const prePropertyGeneral = {
   ...relSection.base(
     "both",
     "propertyGeneral",
     "Property",
     {
-      ...rel.varbs.sumSection("property", propertyPreVarbs()),
-      ...rel.varbs.sectionStrings("property", propertyPreVarbs(), ["title"]),
+      ...rel.varbs.sumSection("property", propertyRelVarbs()),
+      ...rel.varbs.sectionStrings("property", propertyRelVarbs(), ["title"]),
     },
     {
       childNames: [
@@ -72,22 +98,16 @@ export const prePropertyGeneral = {
       ] as const,
     }
   ),
-  ...relSection.base("both", "property", "Property", propertyPreVarbs(), {
+  ...propertySection("property", {
     defaultStoreName: "propertyDefault",
     indexStoreName: "propertyIndex",
-    childNames: [
-      "upfrontCostList",
-      "upfrontRevenueList",
-      "ongoingCostList",
-      "ongoingRevenueList",
-      "unit",
-    ] as const,
-  }),
+  } as const),
+  ...propertySection("propertyIndexNext"),
   ...relSection.base(
     "both",
     "propertyDefault",
     "Default Property",
-    propertyPreVarbs(),
+    propertyRelVarbs(),
     {
       childNames: [
         "upfrontCostList",
@@ -99,7 +119,7 @@ export const prePropertyGeneral = {
     }
   ),
   ...rel.section.rowIndex("propertyIndex", "Property Index"),
-  ...rel.section.managerTable(
+  ...rel.section.sectionTable(
     "propertyTable",
     "Property Table",
     "propertyIndex"

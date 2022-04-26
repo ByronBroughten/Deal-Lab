@@ -21,7 +21,7 @@ import {
   DefaultStoreName,
   IndexStoreName,
 } from "../SectionMetas/relSectionTypes/StoreTypes";
-import { NextSectionMeta } from "../SectionMetas/SectionMeta";
+import { SectionMeta } from "../SectionMetas/SectionMeta";
 import {
   FeSectionNameType,
   SectionName,
@@ -109,12 +109,12 @@ export default class StateSectionOld<
 > {
   constructor(readonly core: StateSectionCore<S>) {}
   get parentArr() {
-    return [...this.meta.get("parents")];
+    return [...this.meta.get("parentNames")];
   }
   get coreClone() {
     return cloneDeep(this.core);
   }
-  get meta(): NextSectionMeta<"fe", S> {
+  get meta(): SectionMeta<"fe", S> {
     return cloneDeep(sectionMetas.get(this.core.sectionName));
   }
   get dbId(): string {

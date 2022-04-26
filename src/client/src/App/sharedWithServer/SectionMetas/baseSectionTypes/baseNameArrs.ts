@@ -150,6 +150,10 @@ function makeBaseNameArrsForContext<SC extends ContextName>(
       baseSectionsOfContext,
       base.section.table
     ),
+    tableNext: Obj.filterKeysForEntryShape(
+      baseSectionsOfContext,
+      base.section.tableNext
+    ),
 
     // varbShape
     // In some cases it might be safer to go by whether they have the same children

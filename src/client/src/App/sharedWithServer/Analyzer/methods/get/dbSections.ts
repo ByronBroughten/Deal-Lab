@@ -76,6 +76,7 @@ function dbAnalysisIndexEntry(analyzer: Analyzer): DbEntry {
       "propertyTable",
       "loanTable",
       "mgmtTable",
+
       "user",
       "propertyDefault",
       "loanDefault",

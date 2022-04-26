@@ -11,9 +11,10 @@ export type GeneralBaseSection = {
   solvesForFinal: boolean;
   hasGlobalVarbs: boolean;
   userDefined: boolean;
+  placeholder: boolean;
 };
 
-type Options = Partial<GeneralBaseSection>;
+type BaseSectionOptions = Partial<GeneralBaseSection>;
 export const baseOptions = {
   alwaysOneFromStart: {
     alwaysOne: true,
@@ -39,17 +40,18 @@ export const baseOptions = {
     solvesForFinal: false,
     hasGlobalVarbs: false,
     userDefined: false,
+    placeholder: false,
   },
 } as const;
 
 type FallbackSchema = typeof baseOptions.fallback;
-type ReturnSchema<V extends BaseVarbSchemas, O extends Options> = {
+type ReturnSchema<V extends BaseVarbSchemas, O extends BaseSectionOptions> = {
   varbSchemas: V;
 } & Omit<FallbackSchema, keyof O> &
   O;
 
 export const baseSection = {
-  schema<V extends BaseVarbSchemas, O extends Options = {}>(
+  schema<V extends BaseVarbSchemas, O extends BaseSectionOptions = {}>(
     varbSchemas: V,
     options?: O
   ): ReturnSchema<V, O> {
@@ -71,6 +73,26 @@ export const baseSection = {
       loadOnLogin: true,
       feGuestAccess: true,
     });
+  },
+  varbList<O extends BaseSectionOptions = {}>(options?: O) {
+    return this.schema(
+      {
+        title: "string",
+        defaultValueSwitch: "string",
+      },
+      (options ?? {}) as O
+    );
+  },
+  get tableNext() {
+    return this.schema(
+      { searchFilter: "string" },
+      {
+        ...baseOptions.alwaysOneFromStart,
+        loadOnLogin: true,
+        feGuestAccess: true,
+        placeholder: true,
+      }
+    );
   },
   get rowIndex() {
     return this.schema(baseVarbs.tableRow, { loadOnLogin: true });

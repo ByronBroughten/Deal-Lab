@@ -17,7 +17,7 @@ import {
   DefaultStoreName,
   IndexStoreName,
 } from "../SectionMetas/relSectionTypes/StoreTypes";
-import { NextSectionMeta } from "../SectionMetas/SectionMeta";
+import { SectionMeta } from "../SectionMetas/SectionMeta";
 import {
   FeSectionNameType,
   SectionName,
@@ -69,7 +69,7 @@ export default class StateSection<
   get coreClone() {
     return cloneDeep(this.core);
   }
-  get meta(): NextSectionMeta<"fe", S> {
+  get meta(): SectionMeta<"fe", S> {
     return sectionMetas.section(this.core.sectionName, "fe");
   }
 

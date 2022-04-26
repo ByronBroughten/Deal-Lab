@@ -10,26 +10,12 @@ AppRegistry.runApplication("App", {
 
 reportWebVitals();
 
-// What should I do about all the current functionality that depends on
-// the way things were? Do I just delete it all right now?
-// It's not going to survive the change in sections.
-// I could have maybe left the sections how they were
-
-// Two options:
-// 1.
-// Revert the changes you made and add new sections for the indexes: propertyIndexNext, etc.
-// Add row
-// Add a new type of table with column and row.
-// Add a new type of propertyIndex, ect.
-// Carry on like that.
-//
-// 2.
-// Destroy all the code for the old indexes
-// I think 1. is going to be the only option.
-
 // Revamp tables
-// 3. Make a rowSource sectionName category at the rel level
 // 3.1 move all the tableName stuff to sectionMetas
+// the tables have their rowSource
+// the rowSources need their tables
+// implement that in sectionMeta
+
 // 3.2 make sectionMetas assign tableName to
 // each of the rowSources (null to the rest)
 // Use a type to enforce this in sectionMetas

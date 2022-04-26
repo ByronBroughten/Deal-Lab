@@ -1,18 +1,26 @@
 const dbStoreNames = {
   index: ["propertyIndex", "loanIndex", "mgmtIndex", "analysisIndex"] as const,
   arr: [
-    "property",
     "propertyDefault",
-    "propertyTable",
-    "loan",
     "loanDefault",
-    "loanTable",
-    "mgmt",
     "mgmtDefault",
+
+    "propertyTable",
+    "loanTable",
     "mgmtTable",
-    "analysis",
-    "outputListDefault",
     "analysisTable",
+
+    "property",
+    "loan",
+    "mgmt",
+    "analysis",
+
+    "analysisTableNext",
+    "propertyTableNext",
+    "loanTableNext",
+    "mgmtTableNext",
+
+    "outputListDefault",
     "userVarbList",
     "userSingleList",
     "userOngoingList",

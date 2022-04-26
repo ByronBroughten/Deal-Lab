@@ -171,7 +171,6 @@ export const DbEnt = {
     [indexName, fullEntry]: EntryPack<SectionName<"rowIndex">>,
     columns: DbSection[]
   ): DbEntry {
-    // for now, there is very little type safety for dbEntry
     const { dbId } = fullEntry;
     const fullSection = this.topSection(fullEntry, indexName);
 

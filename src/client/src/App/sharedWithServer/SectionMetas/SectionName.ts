@@ -43,7 +43,7 @@ export const sectionNameS = {
     sectionContext?: SC
   ): value is SectionName<T, SC> {
     const names: any =
-      this.arrs[sectionContext ?? ("fe" as SC)][type ?? ("all" as T)];
+      this.arrs[(sectionContext ?? "fe") as SC][(type ?? "all") as T];
     return names.includes(value);
   },
 } as const;

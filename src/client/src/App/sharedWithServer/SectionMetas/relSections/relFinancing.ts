@@ -1,11 +1,12 @@
+import { StrictOmit } from "../../utils/types";
 import { ContextName, loanVarbsNotInFinancing } from "../baseSections";
 import { switchNames } from "../baseSections/switchNames";
 import { rel } from "./rel";
-import { relSection } from "./rel/relSection";
+import { relSection, RelSectionOptions } from "./rel/relSection";
 import { RelVarbs } from "./rel/relVarbs";
 
 const loanAmountBase = switchNames("loanAmountBase", "dollarsPercent");
-function loanPreVarbs(): RelVarbs<ContextName, "loan"> {
+function loanRelVarbs(): RelVarbs<ContextName, "loan"> {
   return {
     title: rel.varb.string(),
     [loanAmountBase.switch]: rel.varb.string({ initValue: "percent" }),
@@ -112,6 +113,25 @@ function loanPreVarbs(): RelVarbs<ContextName, "loan"> {
   } as RelVarbs<ContextName, "loan">;
 }
 
+function loanSection<
+  SN extends "loan" | "loanIndexNext",
+  O extends StrictOmit<
+    RelSectionOptions<"fe", "loan">,
+    "childNames" | "relVarbs"
+  > = {}
+>(sectionName: SN, options?: O) {
+  return relSection.base(
+    "fe" as ContextName,
+    sectionName,
+    "Loan",
+    loanRelVarbs() as RelVarbs<"fe", SN>,
+    {
+      ...((options ?? {}) as O),
+      childNames: ["closingCostList", "wrappedInLoanList"] as const,
+    }
+  );
+}
+
 const financingRelVarbs: RelVarbs<ContextName, "financing"> = {
   downPaymentDollars: rel.varb.leftRightPropFn(
     "Down payment",
@@ -142,8 +162,8 @@ const financingRelVarbs: RelVarbs<ContextName, "financing"> = {
     ]),
     { shared: { startAdornment: "$" }, switchInit: "monthly" }
   ),
-  ...rel.varbs.sumSection("loan", loanPreVarbs(), loanVarbsNotInFinancing),
-  ...rel.varbs.sectionStrings("loan", loanPreVarbs(), ["title"]),
+  ...rel.varbs.sumSection("loan", loanRelVarbs(), loanVarbsNotInFinancing),
+  ...rel.varbs.sectionStrings("loan", loanRelVarbs(), ["title"]),
 };
 
 export const relFinancing = {
@@ -156,22 +176,20 @@ export const relFinancing = {
       childNames: ["loan", "loanIndex", "loanTable", "loanDefault"] as const,
     }
   ),
-  ...relSection.base("fe" as ContextName, "loan", "Loan", loanPreVarbs(), {
-    childNames: ["closingCostList", "wrappedInLoanList"] as const,
+  ...loanSection("loan", {
     indexStoreName: "loanIndex",
     defaultStoreName: "loanDefault",
-  }),
+  } as const),
+  ...loanSection("loanIndexNext"),
   ...relSection.base(
     "fe" as ContextName,
     "loanDefault",
     "Default Loan",
-    loanPreVarbs(),
-    {
-      childNames: ["closingCostList", "wrappedInLoanList"] as const,
-    }
+    loanRelVarbs(),
+    { childNames: ["closingCostList", "wrappedInLoanList"] as const }
   ),
   ...rel.section.rowIndex("loanIndex", "Loan Index"),
-  ...rel.section.managerTable("loanTable", "Saved Loans", "loanIndex"),
+  ...rel.section.sectionTable("loanTable", "Saved Loans", "loanIndex"),
   ...rel.section.singleTimeList("closingCostList", "Closing Costs"),
   ...rel.section.singleTimeList("wrappedInLoanList", "Items Wrapped in Loan"),
 };

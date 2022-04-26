@@ -1,7 +1,8 @@
+import { StrictOmit } from "../../utils/types";
 import { ContextName } from "../baseSections";
 import { switchNames } from "../baseSections/switchNames";
 import { rel } from "./rel";
-import { relSection } from "./rel/relSection";
+import { relSection, RelSectionOptions } from "./rel/relSection";
 import { RelVarbs } from "./rel/relVarbs";
 
 const rentCut = switchNames("rentCut", "dollarsPercent");
@@ -75,6 +76,25 @@ const mgmtPreVarbs: RelVarbs<ContextName, "mgmt"> = {
   ),
 } as const;
 
+function mgmtSection<
+  SN extends "mgmt" | "mgmtIndexNext",
+  O extends StrictOmit<
+    RelSectionOptions<"fe", "mgmt">,
+    "childNames" | "relVarbs"
+  > = {}
+>(sectionName: SN, options?: O) {
+  return relSection.base(
+    "fe" as ContextName,
+    sectionName,
+    "Management",
+    mgmtPreVarbs as RelVarbs<"fe" | "db", SN>,
+    {
+      ...((options ?? {}) as O),
+      childNames: ["upfrontCostList", "ongoingCostList"] as const,
+    }
+  );
+}
+
 export const preMgmtGeneral = {
   ...relSection.base(
     "fe" as ContextName,
@@ -84,37 +104,20 @@ export const preMgmtGeneral = {
       ...rel.varbs.sumSection("mgmt", { ...mgmtPreVarbs }),
       ...rel.varbs.sectionStrings("mgmt", { ...mgmtPreVarbs }, ["title"]),
     },
-    {
-      childNames: ["mgmt", "mgmtIndex", "mgmtDefault", "mgmtTable"] as const,
-      alwaysOne: true,
-      initOnStartup: true,
-      parent: "main",
-    }
+    { childNames: ["mgmt", "mgmtIndex", "mgmtDefault", "mgmtTable"] as const }
   ),
-  ...relSection.base(
-    "fe" as ContextName,
-    "mgmt",
-    "Management",
-    { ...mgmtPreVarbs },
-    {
-      parent: "mgmtGeneral",
-      childNames: ["upfrontCostList", "ongoingCostList"] as const,
-      makeOneOnStartup: true,
-      indexStoreName: "mgmtIndex",
-      defaultStoreName: "mgmtDefault",
-    }
-  ),
+  ...mgmtSection("mgmt", {
+    indexStoreName: "mgmtIndex",
+    defaultStoreName: "mgmtDefault",
+  } as const),
+  ...mgmtSection("mgmtIndexNext"),
   ...relSection.rowIndex("mgmtIndex", "Management Index"),
   ...relSection.base(
     "fe" as ContextName,
     "mgmtDefault",
     "Default Management",
     { ...mgmtPreVarbs },
-    {
-      parent: "mgmtGeneral",
-      childNames: ["upfrontCostList", "ongoingCostList"] as const,
-      makeOneOnStartup: true,
-    }
+    { childNames: ["upfrontCostList", "ongoingCostList"] as const }
   ),
-  ...rel.section.managerTable("mgmtTable", "Management Table", "mgmtIndex"),
+  ...rel.section.sectionTable("mgmtTable", "Management Table", "mgmtIndex"),
 };

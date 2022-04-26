@@ -1,21 +1,37 @@
+import { StrictOmit } from "../../utils/types";
+import { ContextName } from "../baseSections";
 import { rel } from "./rel";
-import { relSection } from "./rel/relSection";
+import { relSection, RelSectionOptions } from "./rel/relSection";
+import { RelVarbs } from "./rel/relVarbs";
+
+function userVarbList<
+  SN extends "userVarbList" | "dealVarbList",
+  O extends StrictOmit<
+    RelSectionOptions<"fe", "userVarbList">,
+    "childNames" | "relVarbs"
+  > = {}
+>(sectionName: SN, options?: O) {
+  return relSection.base(
+    "fe" as ContextName,
+    sectionName,
+    "User Variable List",
+    {
+      title: rel.varb.string(),
+      defaultValueSwitch: rel.varb.string({ initValue: "labeledEquation" }),
+    } as RelVarbs<"fe", SN>,
+    {
+      ...((options ?? {}) as O),
+      childNames: ["userVarbItem"] as const,
+    }
+  );
+}
 
 export const preUserLists = {
   ...rel.section.singleTimeList("userSingleList", "User List"),
   ...rel.section.ongoingList("userOngoingList", "User Ongoing List"),
-  ...relSection.base(
-    "both",
-    "userVarbList",
-    "List of Variables",
-    {
-      title: rel.varb.string(),
-      defaultValueSwitch: rel.varb.string({ initValue: "labeledEquation" }),
-    },
-    {
-      childNames: ["userVarbItem"] as const,
-    }
-  ),
+
+  ...userVarbList("userVarbList"),
+  ...userVarbList("dealVarbList"),
   ...relSection.base(
     "both",
     "userVarbItem",

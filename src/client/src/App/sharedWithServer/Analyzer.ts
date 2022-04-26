@@ -180,7 +180,7 @@ import {
   FeNameInfo,
   FeVarbInfo,
 } from "./SectionMetas/relSections/rel/relVarbInfoTypes";
-import { NextSectionMeta } from "./SectionMetas/SectionMeta";
+import { SectionMeta } from "./SectionMetas/SectionMeta";
 import { SectionName, sectionNameS } from "./SectionMetas/SectionName";
 import { Obj, ObjectKeys } from "./utils/Obj";
 import { DropFirst } from "./utils/types";
@@ -312,9 +312,7 @@ export default class Analyzer {
   get sectionNames() {
     return ObjectKeys(this.sections);
   }
-  sectionMeta<SN extends SectionName>(
-    sectionName: SN
-  ): NextSectionMeta<"fe", SN> {
+  sectionMeta<SN extends SectionName>(sectionName: SN): SectionMeta<"fe", SN> {
     return sectionMetas.get(sectionName);
   }
   copy(): Analyzer {

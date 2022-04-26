@@ -1,5 +1,6 @@
 import Analyzer from "../../Analyzer";
 import { LoginUserNext } from "../../apiQueriesShared/login";
+import { ParentName } from "../../SectionMetas/relSectionTypes/ParentTypes";
 import { SectionName } from "../../SectionMetas/SectionName";
 import { Obj } from "../../utils/Obj";
 import { SectionPackRaw } from "../SectionPackRaw";
@@ -19,3 +20,6 @@ export function loadUserAndSolve(
   }
   return next.solveVarbs();
 }
+
+type Test = SectionName<"hasOneParent">;
+type Test2 = ParentName<"userSingleList">;

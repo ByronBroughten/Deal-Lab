@@ -16,6 +16,27 @@ import { preUserLists } from "./relSections/relUserLists";
 export function makeRelSections() {
   return {
     fe: {
+      ...rel.section.sectionTableNext(
+        "propertyTableNext",
+        "Property Table",
+        "propertyIndexNext"
+      ),
+      ...rel.section.sectionTableNext(
+        "loanTableNext",
+        "Loan Table",
+        "loanIndexNext"
+      ),
+      ...rel.section.sectionTableNext(
+        "mgmtTableNext",
+        "Management Table",
+        "mgmtIndexNext"
+      ),
+      ...rel.section.sectionTableNext(
+        "analysisTableNext",
+        "Analysis Table",
+        "analysisIndexNext"
+      ),
+
       ...relSection.base(
         "both",
         "main",
@@ -28,6 +49,20 @@ export function makeRelSections() {
             "user",
             "login",
             "register",
+
+            "propertyIndexNext",
+            "loanIndexNext",
+            "mgmtIndexNext",
+            "analysisIndexNext",
+
+            "propertyTableNext",
+            "loanTableNext",
+            "mgmtTableNext",
+            "analysisTableNext",
+
+            "userVarbList",
+            "userSingleList",
+            "userOngoingList",
 
             "analysis",
             "analysisIndex",
@@ -53,30 +88,9 @@ export function makeRelSections() {
         { title: rel.varb.string() },
         { childNames: ["output"] as const }
       ),
-      ...relSection.base(
-        "both",
-        "analysis",
-        "Analysis",
-        { title: rel.varb.string() },
-        {
-          // user shouldn't be in analysis
-          makeOneOnStartup: true,
-          childNames: [
-            "userVarbList",
-            "userSingleList",
-            "userOngoingList",
-            "propertyGeneral",
-            "financing",
-            "mgmtGeneral",
-            "totalInsAndOuts",
-            "final",
-            "outputList",
-          ] as const,
-          indexStoreName: "analysisIndex",
-        }
-      ),
 
       // these are for tables
+      ...relSection.rowIndex("tableRow", "Row"),
       ...relSection.base("both", "column", "Column", {
         ...rel.varbs.varbInfo(),
       }),

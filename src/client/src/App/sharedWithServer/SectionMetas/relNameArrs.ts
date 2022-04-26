@@ -4,6 +4,7 @@ import { SubType } from "../utils/types";
 import { ContextName, SimpleSectionName } from "./baseSections";
 import { BaseName, isBaseName } from "./baseSectionTypes";
 import { baseNameArrs } from "./baseSectionTypes/baseNameArrs";
+import { tableSourceNames } from "./relNameArrs/tableSourceArrs";
 import { RelSections, relSections } from "./relSections";
 import { GeneralRelSection } from "./relSections/rel/relSection";
 import { HasChildSectionName } from "./relSectionTypes/ChildTypes";
@@ -40,6 +41,7 @@ function makeRelNameArrs<SC extends ContextName>(sectionContext: SC) {
       "indexStoreName",
       "string"
     ),
+    tableSource: tableSourceNames,
 
     // In the analysis default section, I can include the other default sections.
     // It won't be easy, though, until I decouple the analyzer stuff.
@@ -126,3 +128,11 @@ export const relNameArrs = {
   },
 } as const;
 export type RelNameArrs = typeof relNameArrs;
+
+type RelNameSelector<SC extends ContextName = "fe"> = keyof RelNameArrs[SC];
+
+export type RelName<
+  ST extends RelNameSelector<SC>,
+  SC extends ContextName = "fe",
+  NameArrs = RelNameArrs[SC][ST]
+> = NameArrs[number & keyof NameArrs];
