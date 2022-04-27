@@ -79,6 +79,7 @@ import {
   sectionOutFeVarbInfos,
   sectionsByFocal,
   singleSection,
+  updateSection,
 } from "./Analyzer/methods/get/section";
 import {
   sectionArr,
@@ -166,8 +167,8 @@ import {
   conditionalUserVarbValue,
   getUserVarbValue,
 } from "./Analyzer/methods/solveVarbs/solveAndUpdateValue/updateUserVarb";
+import { sortTableRowIdsByColumnNext } from "./Analyzer/methods/tableNext";
 import {
-  replaceInSectionArr,
   updateSectionArr,
   wipeSectionArrAndSolve,
 } from "./Analyzer/methods/updateSectionArr";
@@ -231,7 +232,7 @@ export default class Analyzer {
     );
   }
 
-  updateAnalyzer(nextCore: Partial<AnalyzerCore>) {
+  updateAnalyzer(nextCore: Partial<AnalyzerCore>): Analyzer {
     return new Analyzer({ ...this.core, ...nextCore });
   }
 
@@ -365,11 +366,12 @@ export default class Analyzer {
   sectionArr = sectionArr;
   sectionArrInfos = sectionArrInfos;
   updateSectionArr = updateSectionArr;
-  replaceInSectionArr = replaceInSectionArr;
+
   wipeSectionArrAndSolve = wipeSectionArrAndSolve;
   sectionArrAsOptions = sectionArrAsOptions;
 
   section = section;
+  updateSection = updateSection;
   feSection = feSection;
   hasSection = hasSection;
   sectionIsIndexSaved = sectionIsIndexSaved;
@@ -479,7 +481,9 @@ export default class Analyzer {
 
   saveNewSectionToRowIndexStore = saveNewSectionToRowIndexStore;
   updateRowIndexStoreSection = updateRowIndexStoreSection;
+
   sortTableRowIdsByColumn = sortTableRowIdsByColumn;
+  sortTableRowIdsByColumnNext = sortTableRowIdsByColumnNext;
 
   getOutVarbMap = getOutVarbMap;
   getDagEdgesAndLoneVarbs = getDagEdgesAndLoneVarbs;

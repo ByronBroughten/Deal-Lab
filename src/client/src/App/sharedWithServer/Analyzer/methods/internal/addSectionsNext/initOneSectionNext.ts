@@ -45,5 +45,5 @@ function addToParentChildIds(
   if (!Inf.is.fe(feInfo, "hasParent")) return analyzer;
   const parentSection = analyzer.parent(feInfo);
   const nextParent = parentSection.addChildFeId(feInfo, idx);
-  return analyzer.replaceInSectionArr(nextParent);
+  return analyzer.updateSection(nextParent);
 }

@@ -5,6 +5,8 @@ import { SectionName } from "../../sharedWithServer/SectionMetas/SectionName";
 import { crud } from "../crud";
 import { auth } from "../services/authService";
 import { useAnalyzerContext } from "../usePropertyAnalyzer";
+import { apiQueriesShared } from "./../../sharedWithServer/apiQueriesShared";
+import { apiQueries } from "./apiQueriesClient";
 import { sectionQueries } from "./useSectionQueryActions/sectionQueries";
 
 export function useSectionQueryActions() {
@@ -49,6 +51,17 @@ export function useSectionQueryActions() {
       const next = analyzer.updateRowIndexStoreSection(feInfo);
       setAnalyzer(() => next);
       queryAndRevertSetIfFail("updateIndexSection", feInfo, analyzer);
+    },
+    async replaceSectionArr(
+      sectionName: SectionName<"tableNext">,
+      next: Analyzer = analyzer
+    ) {
+      const reqObj = apiQueriesShared.replaceSectionArr.makeReq({
+        analyzer: next,
+        sectionName,
+        dbStoreName: sectionName,
+      });
+      await apiQueries.replaceSectionArr(reqObj);
     },
     async postEntryArr(
       sectionName: SectionName<"savable">,

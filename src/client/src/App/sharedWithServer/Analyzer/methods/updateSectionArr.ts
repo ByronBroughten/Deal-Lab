@@ -16,24 +16,6 @@ export function updateSectionArr(
   });
 }
 
-export function replaceInSectionArr(
-  this: Analyzer,
-  nextSection: StateSection
-): Analyzer {
-  const { feInfo } = nextSection;
-  const { sectionName, id } = feInfo;
-
-  const idx = this.sections[sectionName].findIndex(
-    (nextSection) => nextSection.feId === id
-  );
-
-  if (idx === -1) throw Analyzer.sectionNotFound(feInfo);
-
-  const nextSectionArr = [...this.sectionArr(sectionName)];
-  nextSectionArr[idx] = nextSection;
-  return this.updateSectionArr(sectionName, nextSectionArr);
-}
-
 export function wipeSectionArr(
   next: Analyzer,
   sectionName: SectionName

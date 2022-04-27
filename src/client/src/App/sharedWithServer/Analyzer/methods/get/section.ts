@@ -10,6 +10,7 @@ import {
   SpecificSectionsInfo,
 } from "../../../SectionMetas/relSections/rel/relVarbInfoTypes";
 import { SectionName } from "../../../SectionMetas/SectionName";
+import Arr from "../../../utils/Arr";
 import { Obj } from "../../../utils/Obj";
 import StateSection from "../../StateSection";
 
@@ -45,6 +46,18 @@ export function section<S extends SectionName>(
   else {
     throw new Error(`Section not found using: ${JSON.stringify(finder)}`);
   }
+}
+
+export function updateSection(
+  this: Analyzer,
+  nextSection: StateSection
+): Analyzer {
+  const { sectionName } = nextSection;
+  const sectionArr = this.sectionArr(sectionName);
+  const idx = sectionArr.findIndex(({ feId }) => feId === nextSection.feId);
+  if (idx === -1) throw Analyzer.sectionNotFound(nextSection.feInfo);
+  const nextSectionArr = Arr.replaceAtIdxClone(sectionArr, nextSection, idx);
+  return this.updateSectionArr(sectionName, nextSectionArr);
 }
 
 export function feSection<S extends SectionName>(

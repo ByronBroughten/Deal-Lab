@@ -9,5 +9,5 @@ export function updateSection<I extends FeNameInfo>(
 ): Analyzer {
   const section = analyzer.section(feInfo);
   const nextSection = section.update(nextBaseProps);
-  return analyzer.replaceInSectionArr(nextSection);
+  return analyzer.updateSection(nextSection);
 }

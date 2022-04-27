@@ -29,7 +29,7 @@ function removeFromParentChildIds(
 
   const parentSection = analyzer.parent(info);
   const nextParent = parentSection.removeChildFeId(info);
-  return analyzer.replaceInSectionArr(nextParent);
+  return analyzer.updateSection(nextParent);
 }
 function removeSectionEntities(analyzer: Analyzer, feInfo: FeInfo): Analyzer {
   let next = analyzer;

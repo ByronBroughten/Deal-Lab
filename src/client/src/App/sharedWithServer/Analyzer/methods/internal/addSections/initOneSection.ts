@@ -10,11 +10,11 @@ function insertInParentChildIds(
   idx: number
 ) {
   const nextParent = next.parent(feInfo).insertChildFeId(feInfo, idx);
-  return next.replaceInSectionArr(nextParent);
+  return next.updateSection(nextParent);
 }
 function pushToParentChildIds(next: Analyzer, feInfo: FeInfo<"hasParent">) {
   const nextParent = next.parent(feInfo).pushChildFeId(feInfo);
-  return next.replaceInSectionArr(nextParent);
+  return next.updateSection(nextParent);
 }
 function addToParentChildIds(
   analyzer: Analyzer,
@@ -24,7 +24,7 @@ function addToParentChildIds(
   if (!Inf.is.fe(feInfo, "hasParent")) return analyzer;
   const parentSection = analyzer.parent(feInfo);
   const nextParent = parentSection.addChildFeId(feInfo, idx);
-  return analyzer.replaceInSectionArr(nextParent);
+  return analyzer.updateSection(nextParent);
 } // will this still use StateSectionOld? I think so.
 function pushSection<S extends SectionName>(
   analyzer: Analyzer,

@@ -3,11 +3,7 @@ import React from "react";
 import styled from "styled-components";
 import { auth } from "../modules/services/authService";
 import { useAnalyzerContext } from "../modules/usePropertyAnalyzer";
-import { useSectionQueryActions } from "../modules/useQueryActions/useSectionQueryActions";
-import { VariableOption } from "../sharedWithServer/Analyzer/methods/get/variableOptions";
-import { SortByColumnOptions } from "../sharedWithServer/Analyzer/methods/saveAndUpdateRowIndexStore";
-import { Inf } from "../sharedWithServer/SectionMetas/Info";
-import { indexStoreToSectionName } from "../sharedWithServer/SectionMetas/relSectionTypes/StoreTypes";
+import { useTableActions } from "../modules/useQueryActions/tableQueryActions";
 import { SectionName } from "../sharedWithServer/SectionMetas/SectionName";
 import theme from "../theme/Theme";
 import useHowMany from "./appWide/customHooks/useHowMany";
@@ -16,26 +12,18 @@ import MaterialStringEditor from "./inputs/MaterialStringEditor";
 import VarbAutoComplete from "./inputs/VarbAutoComplete";
 import ColumnHeader from "./SectionTable/ColumnHeader";
 
-type Props = { tableName: SectionName<"table">; title?: string };
-
-export default function SectionTable({ tableName }: Props) {
-  const { analyzer, setAnalyzerOrdered } = useAnalyzerContext();
-  const store = useSectionQueryActions();
+function useTableParts(tableName: SectionName<"tableNext">) {
+  const { analyzer } = useAnalyzerContext();
 
   const table = analyzer.section(tableName);
-  const sortedRowIds = table.value("rowIds", "stringArray");
-
-  const { rowSourceName } = analyzer.sectionMeta(tableName).core;
-  const rows = sortedRowIds.map((dbId) =>
-    analyzer.section(Inf.db(rowSourceName, dbId))
-  );
-
+  const rows = analyzer.childSections(tableName, "tableRow");
   const { isAtLeastOne, areNone } = useHowMany(rows);
 
-  const { feVarbInfo: filterInfo } = table.varb("searchFilter");
-  const filter = table.value("searchFilter", "string");
+  const searchFilter = table.varb("searchFilter");
+
+  const filterValue = searchFilter.value("string");
   const filteredRows = rows.filter((row) => {
-    return row.value("title", "string").includes(filter);
+    return row.value("title", "string").includes(filterValue);
   });
 
   const columns = analyzer.childSections(tableName, "column");
@@ -44,32 +32,30 @@ export default function SectionTable({ tableName }: Props) {
     feId: column.feId,
   }));
 
-  async function sortRows(
-    colId: string | "title",
-    options: SortByColumnOptions = {}
-  ) {
-    const next = analyzer.sortTableRowIdsByColumn(tableName, colId, options);
-    setAnalyzerOrdered(next);
-    await store.postEntryArr(tableName, next);
-  }
+  return {
+    isAtLeastOne,
+    areNone,
+    searchFilter,
+    filteredRows,
+    columns,
+    displayNameColumns,
+  };
+}
 
-  async function addColumn({ varbInfo }: VariableOption) {
-    const { feInfo: tableInfo } = analyzer.section(tableName);
-    const next = analyzer.addSectionAndSolve("column", tableInfo, {
-      values: { ...varbInfo },
-    });
-    await store.postTableColumns(tableName, next);
-  }
-  async function removeColumn(feId: string) {
-    const columnInfo = Inf.fe("column", feId);
-    const next = analyzer.eraseSectionAndSolve(columnInfo);
-    await store.postTableColumns(tableName, next);
-  }
+type Props = { tableName: SectionName<"tableNext"> };
+export default function SectionTable({ tableName }: Props) {
+  const { analyzer } = useAnalyzerContext();
+  const {
+    searchFilter,
+    filteredRows,
+    isAtLeastOne,
+    areNone,
+    columns,
+    displayNameColumns,
+  } = useTableParts(tableName);
 
-  async function removeRow(dbId: string) {
-    const mainSectionName = indexStoreToSectionName[rowSourceName];
-    store.deleteRowIndexEntry(mainSectionName, dbId);
-  }
+  const { sortRows, removeRow, addColumn, removeColumn } =
+    useTableActions(tableName);
 
   return (
     <Styled className="SectionTable-root">
@@ -91,7 +77,7 @@ export default function SectionTable({ tableName }: Props) {
               <MaterialStringEditor
                 label="Filter by title"
                 className="SectionTable-filterEditor SectionTable-controlRowItem"
-                feVarbInfo={filterInfo}
+                feVarbInfo={searchFilter.feVarbInfo}
               />
               <VarbAutoComplete
                 onSelect={addColumn}

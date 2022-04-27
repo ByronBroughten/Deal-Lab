@@ -10,29 +10,22 @@ AppRegistry.runApplication("App", {
 
 reportWebVitals();
 
-// Revamp tables
-// 3.1 move all the tableName stuff to sectionMetas
-// the tables have their rowSource
-// the rowSources need their tables
-// implement that in sectionMeta
-
-// 3.2 make sectionMetas assign tableName to
-// each of the rowSources (null to the rest)
-// Use a type to enforce this in sectionMetas
-// For this, you will need to create a type that shows null
-// for every section except for the rowSources
-// 3.3 make a "rowIndexSection" category that takes the index
-// sections and extracts the ones that are rowSources (I guess)
 // 4. Fix the functions involved in the Table component
 // Make them deal just with the table rows rather than index entries
-// 5. Make make the row index entries lookup use the tables instead
+
+// addRowIndexSection
+// create the new tableRow on the frontEnd
+// add indexSection update sourceTable
+// deleteRowIndexSection
+// delete indexSection update sourceTable
+// updateRowIndexSection
+// update indexSection update sourceTable
+
+// 5. Make make the row index entries lookup that use the tables instead
 // of indexSections
 // 5.5 Make the rowIndexSections in baseSections and relSections be copies of
 // what they save.
-// 6. Make it so that every time a rowIndexSection is saved,
-// it creates a row on the frontEnd and also saves a table
-// For this, you will need to create a new route that basically combines.
-// a sectionArr and section query
+
 // 7. Test everything out, I guess!
 
 // Fix user
@@ -54,6 +47,8 @@ reportWebVitals();
 // And then require replacing a section with a sectionPack
 // You probably don't want to be able to add multiples of the top section
 // No, I don't think you do.
+
+// Redo the tableColumns route
 
 // Revamp defaults
 // 1. Make the FeSections be able to initialize an empty

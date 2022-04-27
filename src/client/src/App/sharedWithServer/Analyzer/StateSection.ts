@@ -35,6 +35,7 @@ import {
   insertChildFeId,
   pushChildFeId,
   removeChildFeId,
+  updateChildFeIdArr,
 } from "./StateSection/methods/childIds";
 import { initStateSection } from "./StateSection/methods/initStateSection";
 import { initStateSectionNext } from "./StateSection/methods/initStateSectionNext";
@@ -205,6 +206,7 @@ export default class StateSection<
   allChildFeInfos = allChildFeInfos;
   childFeInfos = childFeInfos;
 
+  updateChildFeIdArr = updateChildFeIdArr;
   insertChildFeId = insertChildFeId;
   pushChildFeId = pushChildFeId;
   addChildFeId = addChildFeId;

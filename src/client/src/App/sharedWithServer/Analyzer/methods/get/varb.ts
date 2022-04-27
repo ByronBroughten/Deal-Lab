@@ -47,7 +47,7 @@ export function feVarb(
   return this.section(feInfo).varb(varbName);
 }
 export function updateVarb(this: Analyzer, nextVarb: StateVarb): Analyzer {
-  return this.replaceInSectionArr(
+  return this.updateSection(
     this.section(nextVarb.feInfo).replaceVarb(nextVarb)
   );
 }
@@ -195,7 +195,7 @@ export function outVarbInfos(
 export function replaceVarb(this: Analyzer, nextVarb: StateVarb): Analyzer {
   const { feInfo } = nextVarb;
   const nextSection = this.section(feInfo).replaceVarb(nextVarb);
-  return this.replaceInSectionArr(nextSection);
+  return this.updateSection(nextSection);
 }
 
 export function switchedVarbName(
