@@ -12,7 +12,7 @@ import {
 import { base } from "../baseSections/base";
 import { GeneralBaseSection } from "../baseSections/baseSection";
 import { switchName, SwitchName } from "../baseSections/baseSwitchNames";
-import { dbStoreNameS } from "./dbStoreNames";
+import { dbStoreNameS, dbStoreNamesNext } from "./dbStoreNames";
 
 type HasVarbSectionName<
   NoVarbSectionName = keyof SubType<
@@ -107,8 +107,11 @@ function makeBaseNameArrsForContext<SC extends ContextName>(
 
   return {
     ...makeSingleSectionNameArrs(sectionContext),
+    dbStoreNext: dbStoreNamesNext,
     dbStore: dbStoreNameS.arrs.all,
+    dbStoreSection: dbStoreNameS.arrs.section,
     dbStoreArr: dbStoreNameS.arrs.arr,
+    dbStoreArrNext: dbStoreNameS.arrs.arrNext,
     dbStoreIndex: dbStoreNameS.arrs.index,
     all: Obj.keys(baseSectionsOfContext) as SimpleSectionName<SC>[],
 
@@ -165,6 +168,10 @@ function makeBaseNameArrsForContext<SC extends ContextName>(
     ongoingList: Obj.filterKeysForEntryShape(
       feBaseSectionVarbs,
       feBaseSectionVarbs.userOngoingList
+    ),
+    outputList: Obj.filterKeysForEntryShape(
+      feBaseSectionVarbs,
+      feBaseSectionVarbs.userOutputList
     ),
     hasVarb: Obj.keys(baseSectionsOfContext).filter((sectionName) => {
       const varbNames = Object.keys(

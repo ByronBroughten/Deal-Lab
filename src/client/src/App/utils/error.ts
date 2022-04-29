@@ -4,6 +4,10 @@ export class HandledError extends Error {
   }
 }
 
+export function errorToHandledError(error: unknown): HandledError {
+  return new HandledError(getErrorMessage(error));
+}
+
 type ErrorWithMessage = {
   message: string;
 };

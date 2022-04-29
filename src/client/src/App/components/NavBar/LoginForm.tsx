@@ -1,8 +1,8 @@
 import { Button } from "@material-ui/core";
 import React from "react";
 import styled from "styled-components";
+import { useQueryActorContext } from "../../modules/StateQuerierGeneral";
 import { useAnalyzerContext } from "../../modules/usePropertyAnalyzer";
-import { useAuthQueryActions } from "../../modules/useQueryActions/useAuthQueryActions";
 import { LoginFormData } from "../../sharedWithServer/apiQueriesShared/login";
 import theme from "../../theme/Theme";
 import DropdownForm from "../general/DropdownForm";
@@ -12,7 +12,8 @@ export function LoginForm() {
   const loginVarbNames: (keyof LoginFormData)[] = ["email", "password"];
   const { analyzer, handleChange } = useAnalyzerContext();
   const { varbs } = analyzer.section("login");
-  const { nextLogin } = useAuthQueryActions();
+  const queryActor = useQueryActorContext();
+
   return (
     <StyledLoginForm>
       {loginVarbNames.map((varbName) => (
@@ -25,7 +26,11 @@ export function LoginForm() {
           }}
         />
       ))}
-      <Button className="submit-btn" variant="contained" onClick={nextLogin}>
+      <Button
+        className="submit-btn"
+        variant="contained"
+        onClick={() => queryActor.login()}
+      >
         Login
       </Button>
     </StyledLoginForm>

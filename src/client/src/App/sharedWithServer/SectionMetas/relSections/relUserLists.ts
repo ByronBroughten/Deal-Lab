@@ -27,10 +27,15 @@ function userVarbList<
 }
 
 export const preUserLists = {
-  ...rel.section.singleTimeList("userSingleList", "User List"),
-  ...rel.section.ongoingList("userOngoingList", "User Ongoing List"),
-
-  ...userVarbList("userVarbList"),
+  ...rel.section.singleTimeList("userSingleList", "User List", {
+    arrStoreName: "userSingleList",
+  }),
+  ...rel.section.ongoingList("userOngoingList", "User Ongoing List", {
+    arrStoreName: "userOngoingList",
+  }),
+  ...userVarbList("userVarbList", {
+    arrStoreName: "userVarbList",
+  }),
   ...userVarbList("dealVarbList"),
   ...relSection.base(
     "both",

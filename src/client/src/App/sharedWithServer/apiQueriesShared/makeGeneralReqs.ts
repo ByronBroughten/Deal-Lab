@@ -39,6 +39,7 @@ export function makeRawSectionPackArrReq<SN extends SectionName>({
     }),
   });
 }
+
 type MakeRawSectionPackReqProps<SN extends SectionName> = {
   analyzer: Analyzer;
   feInfo: FeNameInfo<SN>;
@@ -64,13 +65,22 @@ export function makeDbIdSectionPackReq({
 }
 
 export type DbSectionPackInfo = {
-  dbStoreName: DbStoreName;
+  dbStoreName: DbStoreName | SectionName<"dbStoreSection">;
   dbId: string;
 };
+export type DbSectionPackInfoNext = {
+  dbStoreName: SectionName<"dbStoreSection">;
+  dbId: string;
+};
+
 export type SectionPackReq = MakeReq<{ sectionPack: ServerSectionPack }>;
 export type SectionPackArrReq = MakeReq<{
   sectionPackArr: ServerSectionPack[];
   dbStoreName: DbStoreName<"arr">;
+}>;
+export type TableSourcePackReq = MakeReq<{
+  sourceSectionPack: ServerSectionPack;
+  rowSectionPack: ServerSectionPack;
 }>;
 
 export type DbSectionPackInfoReq = MakeReq<DbSectionPackInfo>;

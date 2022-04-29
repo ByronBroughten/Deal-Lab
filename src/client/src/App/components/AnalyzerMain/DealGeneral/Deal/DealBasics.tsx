@@ -5,11 +5,10 @@ import theme from "../../../../theme/Theme";
 import LabeledOutputRowNext from "../../../appWide/LabeledOutputRowNext";
 import { LabeledVarbOutputNext } from "../../../appWide/LabeledVarbOutputNext";
 
-const sectionName = "outputList";
 export default function DealBasics({ id }: { id: string }) {
   const { analyzer, handleAddSection } = useAnalyzerContext();
 
-  const section = analyzer.section("outputList");
+  const section = analyzer.section("dealOutputList");
   const outputIds = section.childFeIds("output");
   function onSelect({ varbInfo }: VariableOption) {
     handleAddSection("output", section.feInfo, {

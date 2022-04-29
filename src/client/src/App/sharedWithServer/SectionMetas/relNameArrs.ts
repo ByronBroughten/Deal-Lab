@@ -4,6 +4,7 @@ import { SubType } from "../utils/types";
 import { ContextName, SimpleSectionName } from "./baseSections";
 import { BaseName, isBaseName } from "./baseSectionTypes";
 import { baseNameArrs } from "./baseSectionTypes/baseNameArrs";
+import { hasStoreNameArrs, storeNameArrs } from "./relNameArrs/storeArrs";
 import { tableSourceNames } from "./relNameArrs/tableSourceArrs";
 import { RelSections, relSections } from "./relSections";
 import { GeneralRelSection } from "./relSections/rel/relSection";
@@ -26,6 +27,10 @@ export type HasRowIndexStoreName<SC extends ContextName> = keyof SubType<
   { indexStoreName: BaseName<"rowIndex"> }
 >;
 
+// fullIndexName: BaseName<"dbStoreNext"> | null;
+// rowIndexName: BaseName<"dbStoreNext"> | null;
+// arrStoreName: BaseName<"dbStoreNext"> | null;
+
 export type ListSectionName = BaseName<"allList">;
 function makeRelNameArrs<SC extends ContextName>(sectionContext: SC) {
   const sectionToParentArrs = makeSectionToParentArrs()[sectionContext];
@@ -42,13 +47,8 @@ function makeRelNameArrs<SC extends ContextName>(sectionContext: SC) {
       "string"
     ),
     tableSource: tableSourceNames,
-
-    // In the analysis default section, I can include the other default sections.
-    // It won't be easy, though, until I decouple the analyzer stuff.
-
-    // What should I do in the meantime?
-    // Right now, without the default stuff, it works ok.
-    // But in analyzer it won't initialize with the outputs.
+    ...hasStoreNameArrs,
+    ...storeNameArrs,
 
     hasDefaultStore: Obj.entryKeysWithPropOfType(
       relSections[sectionContext],

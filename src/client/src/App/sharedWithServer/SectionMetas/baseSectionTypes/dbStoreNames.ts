@@ -1,3 +1,30 @@
+import { SimpleSectionName } from "../baseSections";
+
+export const dbStoreNamesNext = [
+  "propertyIndexNext",
+  "loanIndexNext",
+  "mgmtIndexNext",
+  "analysisIndexNext",
+
+  "property",
+  "loan",
+  "mgmt",
+  "analysis",
+
+  "analysisTableNext",
+  "propertyTableNext",
+  "loanTableNext",
+  "mgmtTableNext",
+
+  "userOutputList",
+  "userVarbList",
+  "userSingleList",
+  "userOngoingList",
+] as const;
+
+type TestDbStoreNames<DS extends readonly SimpleSectionName[]> = DS;
+type _Test = TestDbStoreNames<typeof dbStoreNamesNext>;
+
 const dbStoreNames = {
   index: ["propertyIndex", "loanIndex", "mgmtIndex", "analysisIndex"] as const,
   arr: [
@@ -21,6 +48,33 @@ const dbStoreNames = {
     "mgmtTableNext",
 
     "outputListDefault",
+    "userOutputList",
+    "userVarbList",
+    "userSingleList",
+    "userOngoingList",
+  ] as const,
+  section: [
+    "propertyIndexNext",
+    "loanIndexNext",
+    "mgmtIndexNext",
+    "analysisIndexNext",
+  ] as const,
+  arrNext: [
+    "property",
+    "loan",
+    "mgmt",
+    "analysis",
+
+    "propertyTable",
+    "loanTable",
+    "mgmtTable",
+    "analysisTable",
+
+    "analysisTableNext",
+    "propertyTableNext",
+    "loanTableNext",
+    "mgmtTableNext",
+
     "userVarbList",
     "userSingleList",
     "userOngoingList",

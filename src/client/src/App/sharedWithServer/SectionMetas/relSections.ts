@@ -71,16 +71,14 @@ export function makeRelSections() {
           ] as const,
         }
       ),
-      ...relSection.base(
-        "both",
-        "outputList",
-        "Output List",
-        { title: rel.varb.string() },
-        {
-          childNames: ["output"] as const,
-          defaultStoreName: "outputListDefault",
-        }
-      ),
+      ...relSection.outputList("dealOutputList", {
+        defaultStoreName: "outputListDefault",
+        fullIndexName: "userOutputList",
+      }),
+      ...relSection.outputList("outputListDefault"),
+      ...relSection.outputList("userOutputList", {
+        arrStoreName: "userOutputList",
+      }),
       ...relSection.base(
         "both",
         "outputListDefault",
@@ -131,10 +129,23 @@ export function makeRelSections() {
       }),
 
       // these are shared between property and mgmt
-      ...rel.section.singleTimeList("upfrontCostList", "Upfront Costs"),
-      ...rel.section.singleTimeList("upfrontRevenueList", "Upfront Revenue"),
-      ...rel.section.ongoingList("ongoingCostList", "Ongoing Costs"),
-      ...rel.section.ongoingList("ongoingRevenueList", "Ongoing Revenue"),
+      ...rel.section.singleTimeList("upfrontCostList", "Upfront Costs", {
+        indexStoreName: "userSingleList",
+        fullIndexName: "userSingleList",
+      }),
+      ...rel.section.singleTimeList("upfrontRevenueList", "Upfront Revenue", {
+        indexStoreName: "userSingleList",
+        fullIndexName: "userSingleList",
+      }),
+
+      ...rel.section.ongoingList("ongoingCostList", "Ongoing Costs", {
+        indexStoreName: "userOngoingList",
+        fullIndexName: "userOngoingList",
+      }),
+      ...rel.section.ongoingList("ongoingRevenueList", "Ongoing Revenue", {
+        indexStoreName: "userOngoingList",
+        fullIndexName: "userOngoingList",
+      }),
 
       // savable sections and their children
       ...preUserLists,

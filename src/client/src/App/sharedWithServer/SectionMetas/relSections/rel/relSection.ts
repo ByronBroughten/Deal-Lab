@@ -1,4 +1,3 @@
-import { extend } from "lodash";
 import { Obj } from "../../../utils/Obj";
 import { Merge } from "../../../utils/Obj/merge";
 import {
@@ -23,6 +22,12 @@ export type GeneralRelSection = {
   rowSourceName: BaseName | null;
   tableSourceNameNext: BaseName | null;
   indexStoreName: BaseName<"dbStore", "db"> | null;
+  indexStoreNameNext: BaseName<"dbStoreSection"> | null;
+
+  fullIndexName: BaseName<"dbStoreNext"> | null;
+  rowIndexName: BaseName<"dbStoreNext"> | null;
+  arrStoreName: BaseName<"dbStoreNext"> | null;
+
   defaultStoreName: BaseName<"dbStore", "db"> | null;
 };
 type FullOptions<
@@ -63,7 +68,12 @@ type DefaultRelSection<
   rowSourceName: null;
   tableSourceNameNext: null;
   indexStoreName: null;
+  indexStoreNameNext: null;
   defaultStoreName: null;
+
+  fullIndexName: null;
+  rowIndexName: null;
+  arrStoreName: null;
 };
 
 export type RelSectionProp<
@@ -95,7 +105,12 @@ export const relSection = {
       tableSourceNameNext: null,
       rowSourceName: null,
       indexStoreName: null,
+      indexStoreNameNext: null,
       defaultStoreName: null,
+
+      fullIndexName: null,
+      rowIndexName: null,
+      arrStoreName: null,
     };
   },
   base<
@@ -122,6 +137,9 @@ export const relSection = {
       ),
     } as RelSectionProp<ExtractSectionContext<SCB>, SN, D, PVS, O>;
   },
+  // ok, it's going to have a kind of
+  // arr store option
+
   singleTimeList<
     SN extends BaseName<"singleTimeList">,
     D extends string,
@@ -133,10 +151,9 @@ export const relSection = {
       displayName,
       relVarbs.singleTimeList(sectionName),
       {
-        ...options,
+        ...((options ?? {}) as O),
         childNames: ["singleTimeItem"] as const,
-        indexStoreName: "userSingleList",
-      } as const
+      }
     );
   },
   ongoingList<
@@ -149,10 +166,25 @@ export const relSection = {
       sectionName,
       displayName,
       relVarbs.ongoingList(sectionName),
-      extend(options, {
+      {
+        ...((options ?? {}) as O),
         childNames: ["ongoingItem"] as const,
-        indexStoreName: "userOngoingList",
-      } as const)
+      }
+    );
+  },
+  outputList<
+    SN extends BaseName<"outputList">,
+    O extends RelSectionOptions<ContextName, SN> = {}
+  >(sectionName: SN, options?: O) {
+    return relSection.base(
+      "both",
+      sectionName,
+      "Output List",
+      { title: relVarb.string() } as RelVarbs<"fe", SN>,
+      {
+        childNames: ["output"] as const,
+        ...((options ?? {}) as O),
+      }
     );
   },
   rowIndex<S extends BaseName<"rowIndex"> | "tableRow", D extends string>(
@@ -205,6 +237,7 @@ export const relSection = {
       {
         tableSourceNameNext,
         parent: "main",
+        arrStoreName: sectionName,
         childNames: ["column", "tableRow"] as const,
       }
     );

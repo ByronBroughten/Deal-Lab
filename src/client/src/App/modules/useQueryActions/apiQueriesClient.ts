@@ -4,7 +4,6 @@ import {
   ApiQueryName,
   NextReq,
   NextRes,
-  QueryError,
 } from "../../sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import {
   isLoginHeaders,
@@ -13,8 +12,7 @@ import {
 import { makeRes } from "../../sharedWithServer/apiQueriesShared/makeGeneralReqs";
 import { Obj } from "../../sharedWithServer/utils/Obj";
 import { StrictOmit } from "../../sharedWithServer/utils/types";
-import { HandledError } from "../../utils/error";
-import https, { handleUnexpectedError } from "../services/httpService";
+import https from "../services/httpService";
 import {
   makeResValidationQueryError,
   validateDbIdRes,
@@ -22,17 +20,22 @@ import {
   validateServerSectionPackRes,
 } from "./apiQueriesClient/validateRes";
 
-type ApiQueries = {
+export type ApiQueries = {
   [QN in ApiQueryName]: ApiQuery<QN>;
 };
 type ApiQuery<QN extends ApiQueryName> = (
   reqObj: NextReq<QN>
-) => Promise<NextRes<QN> | undefined>;
+) => Promise<NextRes<QN>>;
 
 export const apiQueries = makeApiQueries();
+
+async function _testApiQueries() {
+  const _test: NextRes<"getSection"> = await apiQueries.getSection({
+    body: { dbStoreName: "property", dbId: "string" },
+  });
+}
+
 function makeApiQueries(): ApiQueries {
-  // it would be nice to put the getReq thing here, right?
-  // I like using the getReq thing on the
   const apiQueryProps: AllApiQueryProps = {
     nextRegister: {
       doingWhat: "registering",
@@ -128,27 +131,12 @@ function makeApiQuery<QN extends ApiQueryName>({
   validateRes,
 }: MakeApiQueryProps<QN>): ApiQuery<QN> {
   return async function apiQuery(reqObj) {
-    return await tryApiQuery(async () => {
-      const res = await https.post(
-        doingWhat,
-        apiQueriesShared[queryName].pathFull,
-        reqObj.body
-      );
-      if (!res) throw makeResValidationQueryError();
-      return validateRes(res);
-    }, doingWhat);
+    const res = await https.post(
+      doingWhat,
+      apiQueriesShared[queryName].pathFull,
+      reqObj.body
+    );
+    if (!res) throw makeResValidationQueryError();
+    return validateRes(res);
   };
-}
-
-async function tryApiQuery<Q extends () => any>(
-  query: Q,
-  doingWhat: string
-): Promise<ReturnType<Q> | undefined> {
-  try {
-    return query();
-  } catch (err) {
-    if (err instanceof HandledError) return;
-    if (err instanceof QueryError) handleUnexpectedError(err, doingWhat);
-    else throw err;
-  }
 }

@@ -10,23 +10,17 @@ AppRegistry.runApplication("App", {
 
 reportWebVitals();
 
-// 4. Fix the functions involved in the Table component
-// Make them deal just with the table rows rather than index entries
+// -fix the functions involved in the Table component
 
-// addRowIndexSection
-// create the new tableRow on the frontEnd
-// add indexSection update sourceTable
-// deleteRowIndexSection
-// delete indexSection update sourceTable
-// updateRowIndexSection
-// update indexSection update sourceTable
+// - fix the functions used for the tables.
+// - the delete function will be somewhat shared with RowIndexQuerier
 
-// 5. Make make the row index entries lookup that use the tables instead
-// of indexSections
-// 5.5 Make the rowIndexSections in baseSections and relSections be copies of
-// what they save.
+// - use the new table sources for the main section list entries
+// - use the new delete function with that
 
-// 7. Test everything out, I guess!
+// - create a class that creates two sectionAdders: one based on a table, and one
+// based on an tableSource
+// - It makes a row for the table
 
 // Fix user
 // 1. Remove the db-only variables from user.

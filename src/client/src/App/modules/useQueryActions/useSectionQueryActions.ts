@@ -5,8 +5,6 @@ import { SectionName } from "../../sharedWithServer/SectionMetas/SectionName";
 import { crud } from "../crud";
 import { auth } from "../services/authService";
 import { useAnalyzerContext } from "../usePropertyAnalyzer";
-import { apiQueriesShared } from "./../../sharedWithServer/apiQueriesShared";
-import { apiQueries } from "./apiQueriesClient";
 import { sectionQueries } from "./useSectionQueryActions/sectionQueries";
 
 export function useSectionQueryActions() {
@@ -30,17 +28,12 @@ export function useSectionQueryActions() {
   }
 
   return {
-    async saveNewFullIndexSection(feInfo: FeInfo<"hasAnyIndexStore">) {
-      // handleSet won't work here because in next, the section to post has
-      // altered dbIds
-      const next = analyzer.saveNewSectionToFullIndexStore(feInfo);
-      setAnalyzer(() => next);
-      queryAndRevertSetIfFail("saveNewIndexSection", feInfo, next);
-    },
-    async updateFullIndexSection(feInfo: FeInfo<"hasAnyIndexStore">) {
-      const next = analyzer.updateFullIndexStoreSection(feInfo);
-      setAnalyzer(() => next);
-      queryAndRevertSetIfFail("updateIndexSection", feInfo, next);
+    async deleteRowIndexEntry(
+      sectionName: SectionName<"hasRowIndexStore">,
+      dbId: string
+    ) {
+      handleSet("eraseRowIndexAndSolve", sectionName, dbId);
+      queryAndRevertSetIfFail("deleteIndexEntry", sectionName, dbId);
     },
     async saveNewRowIndexSection(feInfo: FeInfo<"hasRowIndexStore">) {
       const next = analyzer.saveNewSectionToRowIndexStore(feInfo);
@@ -51,25 +44,6 @@ export function useSectionQueryActions() {
       const next = analyzer.updateRowIndexStoreSection(feInfo);
       setAnalyzer(() => next);
       queryAndRevertSetIfFail("updateIndexSection", feInfo, analyzer);
-    },
-    async replaceSectionArr(
-      sectionName: SectionName<"tableNext">,
-      next: Analyzer = analyzer
-    ) {
-      const reqObj = apiQueriesShared.replaceSectionArr.makeReq({
-        analyzer: next,
-        sectionName,
-        dbStoreName: sectionName,
-      });
-      await apiQueries.replaceSectionArr(reqObj);
-    },
-    async postEntryArr(
-      sectionName: SectionName<"savable">,
-      next: Analyzer = analyzer
-    ) {
-      // In this case, you already have a full entry arr and are just posting to the server
-      const reqObj = next.req.postSectionArr(sectionName);
-      await crud.sectionArr.post.send(reqObj);
     },
     async postTableColumns(
       tableName: SectionName<"table">,
@@ -82,6 +56,44 @@ export function useSectionQueryActions() {
         next = next.loadSectionArrAndSolve(rowSourceName, res.data);
         setAnalyzerOrdered(next);
       }
+    },
+    // ideally, adding a new table column won't be so hard
+    // and then I can use that to build the table up
+    // and then I can simplify all the other queries to pretty
+    // much just use typical section add and delete stuff.
+    // Yeah, I like this.
+    // Ok, I'm going to run with that target
+    // Make the sectionQueryActor, and imbed that inside
+    // the table control.
+
+    async saveNewFullIndexSection(feInfo: FeInfo<"hasAnyIndexStore">) {
+      // handleSet won't work here because in next, the section to post has
+      // altered dbIds
+      const next = analyzer.saveNewSectionToFullIndexStore(feInfo);
+      setAnalyzer(() => next);
+      queryAndRevertSetIfFail("saveNewIndexSection", feInfo, next);
+    },
+    async updateFullIndexSection(feInfo: FeInfo<"hasAnyIndexStore">) {
+      const next = analyzer.updateFullIndexStoreSection(feInfo);
+      setAnalyzer(() => next);
+      queryAndRevertSetIfFail("updateIndexSection", feInfo, next);
+    },
+    // delete
+    async deleteIndexEntry(
+      sectionName: SectionName<"hasAnyIndexStore">,
+      dbId: string
+    ) {
+      handleSet("eraseIndexAndSolve", sectionName, dbId);
+      queryAndRevertSetIfFail("deleteIndexEntry", sectionName, dbId);
+    },
+
+    async postEntryArr(
+      sectionName: SectionName<"savable">,
+      next: Analyzer = analyzer
+    ) {
+      // In this case, you already have a full entry arr and are just posting to the server
+      const reqObj = next.req.postSectionArr(sectionName);
+      await crud.sectionArr.post.send(reqObj);
     },
     async postDefault(feInfo: FeInfo<"hasDefaultStore">) {
       const { sectionName } = feInfo;
@@ -123,25 +135,6 @@ export function useSectionQueryActions() {
         handleSet("resetSectionAndSolve", feInfo, { dbEntry });
       }
     },
-
-    // delete
-    async deleteIndexEntry(
-      sectionName: SectionName<"hasAnyIndexStore">,
-      dbId: string
-    ) {
-      handleSet("eraseIndexAndSolve", sectionName, dbId);
-      queryAndRevertSetIfFail("deleteIndexEntry", sectionName, dbId);
-    },
-    async deleteRowIndexEntry(
-      sectionName: SectionName<"hasRowIndexStore">,
-      dbId: string
-    ) {
-      handleSet("eraseRowIndexAndSolve", sectionName, dbId);
-      queryAndRevertSetIfFail("deleteIndexEntry", sectionName, dbId);
-    },
-
-    // in addition to eraseIndexAndSolve, I need eraseRowIndexAndSolve
-    // It's the same, except I need to remove the rowIndex from the table's dbIds
   };
 }
 // There will only be indexEntry

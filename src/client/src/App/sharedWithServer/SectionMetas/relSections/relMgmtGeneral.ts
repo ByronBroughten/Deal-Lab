@@ -108,7 +108,9 @@ export const preMgmtGeneral = {
   ),
   ...mgmtSection("mgmt", {
     indexStoreName: "mgmtIndex",
+    indexStoreNameNext: "mgmtIndexNext",
     defaultStoreName: "mgmtDefault",
+    rowIndexName: "mgmtIndexNext",
   } as const),
   ...mgmtSection("mgmtIndexNext"),
   ...relSection.rowIndex("mgmtIndex", "Management Index"),

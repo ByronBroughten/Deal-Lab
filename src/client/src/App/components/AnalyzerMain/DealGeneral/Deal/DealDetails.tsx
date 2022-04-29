@@ -8,7 +8,7 @@ export default function DealDetails({ id }: { id: string }) {
   const { analyzer } = useAnalyzerContext();
   const level = 0;
 
-  const section = analyzer.section("outputList");
+  const section = analyzer.section("dealOutputList");
   const outputIds = section.childFeIds("output");
   const varbInfos = outputIds.map((outputId) =>
     analyzer.outputValues(outputId)

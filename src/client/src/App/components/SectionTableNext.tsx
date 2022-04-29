@@ -2,8 +2,9 @@ import { isEqual } from "lodash";
 import React from "react";
 import styled from "styled-components";
 import { auth } from "../modules/services/authService";
+import { useTableQueryActor } from "../modules/TableStateQuerier";
 import { useAnalyzerContext } from "../modules/usePropertyAnalyzer";
-import { useTableActions } from "../modules/useQueryActions/tableQueryActions";
+import { VariableOption } from "../sharedWithServer/Analyzer/methods/get/variableOptions";
 import { SectionName } from "../sharedWithServer/SectionMetas/SectionName";
 import theme from "../theme/Theme";
 import useHowMany from "./appWide/customHooks/useHowMany";
@@ -54,8 +55,7 @@ export default function SectionTable({ tableName }: Props) {
     displayNameColumns,
   } = useTableParts(tableName);
 
-  const { sortRows, removeRow, addColumn, removeColumn } =
-    useTableActions(tableName);
+  const controlTable = useTableQueryActor(tableName);
 
   return (
     <Styled className="SectionTable-root">
@@ -80,7 +80,9 @@ export default function SectionTable({ tableName }: Props) {
                 feVarbInfo={searchFilter.feVarbInfo}
               />
               <VarbAutoComplete
-                onSelect={addColumn}
+                onSelect={(option: VariableOption) =>
+                  controlTable.addColumn(option)
+                }
                 placeholder="Add column"
                 className="SectionTable-addColumnSelector SectionTable-controlRowItem"
               />
@@ -92,8 +94,9 @@ export default function SectionTable({ tableName }: Props) {
                 <ColumnHeader
                   {...{
                     displayName: "Title",
-                    sortRowsAZ: () => sortRows("title"),
-                    sortRowsZA: () => sortRows("title", { reverse: true }),
+                    sortRowsAZ: () => controlTable.sortRows("title"),
+                    sortRowsZA: () =>
+                      controlTable.sortRows("title", { reverse: true }),
                   }}
                 />
 
@@ -102,9 +105,10 @@ export default function SectionTable({ tableName }: Props) {
                     <ColumnHeader
                       {...{
                         displayName: col.displayName,
-                        sortRowsAZ: () => sortRows(col.feId),
-                        sortRowsZA: () => sortRows(col.feId, { reverse: true }),
-                        removeColumn: () => removeColumn(col.feId),
+                        sortRowsAZ: () => controlTable.sortRows(col.feId),
+                        sortRowsZA: () =>
+                          controlTable.sortRows(col.feId, { reverse: true }),
+                        removeColumn: () => controlTable.removeColumn(col.feId),
                       }}
                     />
                   );
@@ -137,7 +141,9 @@ export default function SectionTable({ tableName }: Props) {
                     <td className="SectionTable-tableCell">
                       <TrashBtn
                         className="SectionTable-trashBtn"
-                        onClick={() => removeRow(row.dbId)}
+                        onClick={() =>
+                          controlTable.deleteSourceSection(row.dbId)
+                        }
                       />
                     </td>
                   </tr>

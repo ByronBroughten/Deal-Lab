@@ -178,7 +178,9 @@ export const relFinancing = {
   ),
   ...loanSection("loan", {
     indexStoreName: "loanIndex",
+    indexStoreNameNext: "loanIndexNext",
     defaultStoreName: "loanDefault",
+    rowIndexName: "loanIndexNext",
   } as const),
   ...loanSection("loanIndexNext"),
   ...relSection.base(
@@ -190,6 +192,12 @@ export const relFinancing = {
   ),
   ...rel.section.rowIndex("loanIndex", "Loan Index"),
   ...rel.section.sectionTable("loanTable", "Saved Loans", "loanIndex"),
-  ...rel.section.singleTimeList("closingCostList", "Closing Costs"),
-  ...rel.section.singleTimeList("wrappedInLoanList", "Items Wrapped in Loan"),
+  ...rel.section.singleTimeList("closingCostList", "Closing Costs", {
+    indexStoreName: "userSingleList",
+    fullIndexName: "userSingleList",
+  }),
+  ...rel.section.singleTimeList("wrappedInLoanList", "Items Wrapped in Loan", {
+    indexStoreName: "userSingleList",
+    fullIndexName: "userSingleList",
+  }),
 };

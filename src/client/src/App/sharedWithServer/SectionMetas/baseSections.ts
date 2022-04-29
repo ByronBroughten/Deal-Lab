@@ -211,10 +211,11 @@ export const baseSections = {
       { title: "string" },
       base.options.alwaysOneFromStart
     ),
-    outputList: base.section.schema(
+    dealOutputList: base.section.schema(
       { title: "string" },
       base.options.alwaysOneFromStart
     ),
+    userOutputList: base.section.schema({ title: "string" }),
     outputListDefault: base.section.schema(
       { title: "string" },
       base.options.defaultSection

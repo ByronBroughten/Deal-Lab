@@ -18,7 +18,7 @@ import ColumnHeader from "./SectionTable/ColumnHeader";
 
 type Props = { tableName: SectionName<"table">; title?: string };
 
-export default function SectionTable({ tableName }: Props) {
+export default function SectionTable({ tableName, title }: Props) {
   const { analyzer, setAnalyzerOrdered } = useAnalyzerContext();
   const store = useSectionQueryActions();
 

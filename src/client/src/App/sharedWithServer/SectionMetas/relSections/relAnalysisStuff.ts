@@ -23,7 +23,7 @@ function analysisSection<
         "mgmtGeneral",
         "totalInsAndOuts",
         "final",
-        "outputList",
+        "dealOutputList",
         "dealVarbList",
       ] as const,
     }
@@ -32,7 +32,11 @@ function analysisSection<
 
 // table will just have rows.
 export const relAnalysisStuff = {
-  ...analysisSection("analysis", { indexStoreName: "analysisIndex" } as const),
+  ...analysisSection("analysis", {
+    indexStoreName: "analysisIndex",
+    indexStoreNameNext: "analysisIndexNext",
+    rowIndexName: "analysisIndexNext",
+  } as const),
   ...analysisSection("analysisIndexNext"),
 
   ...relSection.rowIndex("analysisIndex", "Analysis Index"),

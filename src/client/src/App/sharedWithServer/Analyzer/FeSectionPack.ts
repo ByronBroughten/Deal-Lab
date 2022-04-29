@@ -110,16 +110,13 @@ export class FeSectionPack<SN extends SectionName> {
       );
   }
 
-  static rawFeToServer<
-    SN extends SectionName,
-    NextSN extends FeToDbNameWithSameChildren<SN>
-  >(
+  static rawFeToServer<SN extends SectionName, NextSN extends SectionName>(
     feSectionPackRaw: SectionPackRaw<"fe", SN>,
     nextSectionName: NextSN
   ): ServerSectionPack {
     const sectionPack = new FeSectionPack(feSectionPackRaw);
     return sectionPack.feToServerRaw(
-      nextSectionName
+      nextSectionName as any as FeToDbNameWithSameChildren<SN>
     ) as any as ServerSectionPack;
   }
   dbToFeIds(

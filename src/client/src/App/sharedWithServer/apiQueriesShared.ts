@@ -1,6 +1,8 @@
 import urljoin from "url-join";
 import { config } from "../Constants";
 import Analyzer from "./Analyzer";
+import { FeSectionPack } from "./Analyzer/FeSectionPack";
+import { StoredSectionPackInfo } from "./Analyzer/SectionPack";
 import {
   ApiQueryName,
   NextReq,
@@ -10,7 +12,10 @@ import {
   makeRawSectionPackArrReq,
   makeRawSectionPackReq,
   makeReq,
+  SectionPackReq,
 } from "./apiQueriesShared/makeGeneralReqs";
+import { SectionFinder } from "./SectionMetas/baseSectionTypes";
+import { SectionName } from "./SectionMetas/SectionName";
 
 const makeApiReqs = makeReqMakers();
 const apiPaths = makeApiPaths();
@@ -46,6 +51,49 @@ function makeApiQueriesShared() {
 type ApiQueriesShared = {
   [QN in ApiQueryName]: ApiQueryShared<QN>;
 };
+
+export class ReqMaker {
+  constructor(private sections: Analyzer = Analyzer.initAnalyzer()) {}
+  sectionPackArr<SN extends SectionName<"dbStoreArrNext">>(sectionName: SN) {
+    const rawSectionPackArr = this.sections.makeRawSectionPackArr(sectionName);
+    return makeReq({
+      dbStoreName: sectionName,
+      sectionPackArr: rawSectionPackArr.map((rawPack) =>
+        FeSectionPack.rawFeToServer(rawPack, sectionName as any)
+      ),
+    });
+  }
+  nextRegister(): NextReq<"nextRegister"> {
+    return makeReq({
+      registerFormData: this.sections.section("register").values({
+        userName: "string",
+        email: "string",
+        password: "string",
+      }),
+      guestAccessSections: this.sections.guestAccessDbSectionPacks(),
+    });
+  }
+  nextLogin(): NextReq<"nextLogin"> {
+    return makeReq(
+      this.sections.section("login").values({
+        email: "string",
+        password: "string",
+      })
+    );
+  }
+  sectionPack(
+    finder: SectionFinder<SectionName<"dbStoreSection">>
+  ): SectionPackReq {
+    const sectionPack = this.sections.makeRawSectionPack(finder);
+    const { sectionName } = sectionPack;
+    return makeReq({
+      sectionPack: FeSectionPack.rawFeToServer(sectionPack, sectionName),
+    });
+  }
+  sectionPackInfo(spInfo: StoredSectionPackInfo) {
+    return makeReq(spInfo);
+  }
+}
 
 function makeReqMakers() {
   return {

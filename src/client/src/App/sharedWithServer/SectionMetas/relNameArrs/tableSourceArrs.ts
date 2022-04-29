@@ -1,24 +1,18 @@
 import { Obj } from "../../utils/Obj";
 import { BaseName } from "../baseSectionTypes";
 import { baseNameArrs } from "../baseSectionTypes/baseNameArrs";
-import { relSections, RelSections } from "../relSections";
+import { getRelParams, RelParams } from "./getRelParams";
 
-type TableSources = {
-  [SN in BaseName<"tableNext">]: RelSections["fe"][SN]["tableSourceNameNext"];
-};
-function getTableSources(): TableSources {
-  return baseNameArrs.fe.tableNext.reduce((tableSources, tableName) => {
-    (tableSources[tableName] as TableSources[typeof tableName]) =
-      relSections.fe[tableName]["tableSourceNameNext"];
-    return tableSources;
-  }, {} as TableSources);
-}
-
+type TableSources = RelParams<BaseName<"tableNext">, "tableSourceNameNext">;
 export type SourceTables = {
   [SN in keyof TableSources as TableSources[SN]]: SN;
 };
 function getSourceTables(): SourceTables {
-  const tableSources = getTableSources();
+  const tableSources = getRelParams(
+    baseNameArrs.fe.tableNext,
+    "tableSourceNameNext"
+  );
+
   return Obj.keys(tableSources).reduce((sourceTables, tableName) => {
     const sourceName = tableSources[tableName];
     (sourceTables[sourceName] as SourceTables[typeof sourceName]) = tableName;
