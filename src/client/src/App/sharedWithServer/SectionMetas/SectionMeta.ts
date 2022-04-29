@@ -50,6 +50,8 @@ export type SectionMetaCore<
   BaseSections[CN][SN] &
   SectionMetaExtra<CN, SN>;
 
+type Test = SectionMeta<"fe", "property" | "loan">["core"]["childNames"];
+
 export class SectionMeta<CN extends ContextName, SN extends SimpleSectionName> {
   constructor(readonly core: SectionMetaCore<CN, SN>) {}
   get<PN extends keyof SectionMetaCore<CN, SN>>(
