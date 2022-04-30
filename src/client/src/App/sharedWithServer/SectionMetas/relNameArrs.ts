@@ -27,12 +27,11 @@ export type HasRowIndexStoreName<SC extends ContextName> = keyof SubType<
   { indexStoreName: BaseName<"rowIndex"> }
 >;
 
-// fullIndexName: BaseName<"dbStoreNext"> | null;
-// rowIndexName: BaseName<"dbStoreNext"> | null;
-// arrStoreName: BaseName<"dbStoreNext"> | null;
-
 export type ListSectionName = BaseName<"allList">;
-function makeRelNameArrs<SC extends ContextName>(sectionContext: SC) {
+function makeRelNameArrs<
+  SC extends ContextName,
+  AS extends { [key: string]: readonly any[] }
+>(sectionContext: SC, arrs: AS) {
   const sectionToParentArrs = makeSectionToParentArrs()[sectionContext];
   const savableSectionNames = Arr.extract(
     baseNameArrs.db.dbStore,
@@ -40,21 +39,20 @@ function makeRelNameArrs<SC extends ContextName>(sectionContext: SC) {
   );
 
   return {
+    ...arrs,
     savable: savableSectionNames,
-    hasIndexStore: Obj.entryKeysWithPropOfType(
-      relSections[sectionContext],
-      "indexStoreName",
-      "string"
-    ),
     tableSource: tableSourceNames,
-    ...hasStoreNameArrs,
-    ...storeNameArrs,
-
     hasDefaultStore: Obj.entryKeysWithPropOfType(
       relSections[sectionContext],
       "defaultStoreName",
       "string"
     ),
+    hasIndexStore: Obj.entryKeysWithPropOfType(
+      relSections[sectionContext],
+      "indexStoreName",
+      "string"
+    ),
+
     savableAlwaysOne: Arr.extract(
       savableSectionNames,
       baseNameArrs[sectionContext].alwaysOne
@@ -121,10 +119,10 @@ function makeRelNameArrs<SC extends ContextName>(sectionContext: SC) {
 
 export const relNameArrs = {
   fe: {
-    ...makeRelNameArrs("fe"),
+    ...makeRelNameArrs("fe", { ...hasStoreNameArrs, ...storeNameArrs }),
   },
   db: {
-    ...makeRelNameArrs("db"),
+    ...makeRelNameArrs("db", { ...hasStoreNameArrs, ...storeNameArrs }),
   },
 } as const;
 export type RelNameArrs = typeof relNameArrs;

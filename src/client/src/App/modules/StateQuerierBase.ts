@@ -33,11 +33,14 @@ export class StateQuerierBase {
   protected get apiQuery() {
     return apiQueries;
   }
-  protected async tryAndRevertIfFail(fn: () => void) {
+  protected async tryAndRevertIfFail<FN extends () => any>(
+    fn: FN
+  ): Promise<ReturnType<FN>> {
     try {
-      fn();
+      return fn();
     } catch (err) {
       this.setOriginalSectionsAsState();
+      throw err;
     }
   }
 }

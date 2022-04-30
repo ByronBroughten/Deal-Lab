@@ -4,7 +4,7 @@ import styled, { css } from "styled-components";
 import useToggleView from "../../modules/customHooks/useToggleView";
 import { useAnalyzerContext } from "../../modules/usePropertyAnalyzer";
 import { listNameToStoreName } from "../../sharedWithServer/SectionMetas/baseSectionTypes";
-import { FeInfo, Inf } from "../../sharedWithServer/SectionMetas/Info";
+import { FeInfo, InfoS } from "../../sharedWithServer/SectionMetas/Info";
 import { userListItemTypes } from "../../sharedWithServer/SectionMetas/relSectionTypes/UserListTypes";
 import {
   SectionName,
@@ -95,7 +95,7 @@ export default function AdditiveList({
         </div>
         {viewIsOpen && <AdditiveListTable {...{ feInfo, themeSectionName }} />}
       </div>
-      {Inf.is.fe(feInfo, "hasAnyIndexStore") && listMenuIsOpen && (
+      {InfoS.is.fe(feInfo, "hasAnyIndexStore") && listMenuIsOpen && (
         <ListMenu
           className="AdditiveList-listMenu"
           {...{

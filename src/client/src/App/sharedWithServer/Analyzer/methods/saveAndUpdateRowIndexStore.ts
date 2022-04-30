@@ -1,6 +1,6 @@
 import { isEqual } from "lodash";
 import Analyzer from "../../Analyzer";
-import { FeInfo, Inf } from "../../SectionMetas/Info";
+import { FeInfo, InfoS } from "../../SectionMetas/Info";
 import {
   FeNameInfo,
   SpecificSectionInfo,
@@ -15,7 +15,7 @@ export function saveNewSectionToRowIndexStore(
   this: Analyzer,
   feInfo: FeInfo<"hasRowIndexStore">
 ): Analyzer {
-  let next = internal.resetSectionAndChildDbIds(this, feInfo);
+  let next = this.resetSectionAndChildDbIds(feInfo);
 
   const { indexStoreName } = next.meta.section(feInfo.sectionName).core;
   const tableName = rowIndexToTableName[indexStoreName];
@@ -64,7 +64,7 @@ export function updateRowIndexStoreSection(
   let next = resetRowCells(this, rowInfo);
   next = internal.updateValueDirectly(
     next,
-    Inf.feVarb("title", this.section(rowInfo).feInfo),
+    InfoS.feVarb("title", this.section(rowInfo).feInfo),
     section.value("title", "string")
   );
   return next.solveVarbs();
@@ -122,19 +122,22 @@ export function sortTableRowIdsByColumn(
   const nextRows =
     colIdOrTitle === "title"
       ? sortRowsByTitle(rows)
-      : sortRowsByOtherColumn(this, rows, Inf.fe("column", colIdOrTitle));
+      : sortRowsByOtherColumn(this, rows, InfoS.fe("column", colIdOrTitle));
   if (reverse) nextRows.reverse();
 
   const nextRowIds = nextRows.map(({ dbId }) => dbId);
   const tableInfo = this.section(tableName).feInfo;
-  return this.directUpdateAndSolve(Inf.feVarb("rowIds", tableInfo), nextRowIds);
+  return this.directUpdateAndSolve(
+    InfoS.feVarb("rowIds", tableInfo),
+    nextRowIds
+  );
 }
 
 function resetRowCells(
   next: Analyzer,
   rowInfo: SpecificSectionInfo<SectionName<"rowIndex">>
 ): Analyzer {
-  next = internal.eraseChildren(next, rowInfo, "cell");
+  next = next.eraseChildren(rowInfo, "cell");
 
   const tableName = rowIndexToTableName[rowInfo.sectionName];
   const columns = next.childSections(tableName, "column");

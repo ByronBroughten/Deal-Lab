@@ -1,5 +1,5 @@
 import Analyzer from "../../../Analyzer";
-import { Inf } from "../../../SectionMetas/Info";
+import { InfoS } from "../../../SectionMetas/Info";
 import { ExtraStoreNameOneParent } from "../../../SectionMetas/relSectionTypes/StoreTypes";
 import StateSection from "../../StateSection";
 
@@ -10,7 +10,7 @@ export function fullStoreEntries(
   // Get the parent so that the order is preserved.
   const parent = this.parent(feStoreName);
   return parent.childFeIds(feStoreName).map((id) => {
-    return this.section(Inf.fe(feStoreName, id));
+    return this.section(InfoS.fe(feStoreName, id));
   }) as StateSection[];
 }
 export function fullStoreTitlesAndDbIds(

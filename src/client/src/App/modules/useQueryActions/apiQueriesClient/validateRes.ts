@@ -8,7 +8,7 @@ import {
   SectionPackRes,
 } from "../../../sharedWithServer/apiQueriesShared/makeGeneralReqs";
 import { Id } from "../../../sharedWithServer/SectionMetas/baseSections/id";
-import { sectionNameS } from "../../../sharedWithServer/SectionMetas/SectionName";
+import { dbStoreNameS } from "../../../sharedWithServer/SectionMetas/relNameArrs/storeArrs";
 import { Obj } from "../../../sharedWithServer/utils/Obj";
 
 export function validateDbIdRes(res: AxiosResponse<unknown>): DbIdRes {
@@ -25,8 +25,7 @@ export function validateDbStoreNameRes(
   const { data } = res;
   if (Obj.isAnyIfIsObj(data)) {
     const { dbStoreName } = data;
-    if (sectionNameS.is(dbStoreName, "dbStore"))
-      return makeRes({ dbStoreName });
+    if (dbStoreNameS.is(dbStoreName)) return makeRes({ dbStoreName });
   }
   throw makeResValidationQueryError();
 }
@@ -39,10 +38,11 @@ export function validateServerSectionPackRes(
     if (
       SectionPack.isRaw(rawServerSectionPack, {
         contextName: "db",
-        sectionType: "dbStore",
+        sectionType: "dbStoreNext",
       })
-    )
+    ) {
       return makeRes({ rawServerSectionPack });
+    }
   }
   throw makeResValidationQueryError();
 }

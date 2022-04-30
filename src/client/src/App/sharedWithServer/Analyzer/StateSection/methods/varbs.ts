@@ -1,4 +1,4 @@
-import { Inf } from "../../../SectionMetas/Info";
+import { InfoS } from "../../../SectionMetas/Info";
 import { MultiVarbInfo } from "../../../SectionMetas/relSections/rel/relVarbInfoTypes";
 import { SectionName } from "../../../SectionMetas/SectionName";
 import StateSection from "../../StateSection";
@@ -23,7 +23,7 @@ export function varb<S extends SectionName>(
   varbName: string
 ): StateVarb {
   const varb = this.core.varbs[varbName];
-  if (!varb) throw varbNotFound(Inf.feVarb(varbName, this.feInfo));
+  if (!varb) throw varbNotFound(InfoS.feVarb(varbName, this.feInfo));
   return varb;
 }
 

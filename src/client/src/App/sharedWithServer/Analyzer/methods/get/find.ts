@@ -1,6 +1,6 @@
 import { pick } from "lodash";
 import Analyzer from "../../../Analyzer";
-import { Inf } from "../../../SectionMetas/Info";
+import { InfoS } from "../../../SectionMetas/Info";
 import {
   FeNameInfo,
   FeVarbInfo,
@@ -107,7 +107,7 @@ export function findFeInfoByFocal(
   focalInfo: SpecificSectionInfo,
   info: MultiFindByFocalInfo
 ): FeNameInfo | undefined {
-  if (Inf.is.specific(info)) return this.findFeInfo(info);
+  if (InfoS.is.specific(info)) return this.findFeInfo(info);
   switch (info.id) {
     case "local":
       return this.findFeInfo(focalInfo);
@@ -138,11 +138,11 @@ export function findFeInfosByFocal<I extends MultiSectionInfo>(
     "idType",
   ]) as SpecificSectionInfo;
 
-  if (Inf.is.specific(info)) {
+  if (InfoS.is.specific(info)) {
     const feInfo = this.findFeInfo(info);
     return feInfo ? [feInfo] : feInfo;
   }
-  if (Inf.is.singleMulti(info)) {
+  if (InfoS.is.singleMulti(info)) {
     const feInfo = this.findFeInfoByFocal(focalInfo, info);
     return feInfo ? [feInfo] : feInfo;
   }

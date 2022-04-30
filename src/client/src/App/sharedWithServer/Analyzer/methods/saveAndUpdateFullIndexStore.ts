@@ -1,13 +1,12 @@
 import Analyzer from "../../Analyzer";
-import { FeInfo, Inf } from "../../SectionMetas/Info";
+import { FeInfo, InfoS } from "../../SectionMetas/Info";
 import { FeSectionPack } from "../FeSectionPack";
-import { internal } from "./internal";
 
 export function saveNewSectionToFullIndexStore(
   this: Analyzer,
   feInfo: FeInfo<"hasAnyIndexStore">
 ): Analyzer {
-  let next = internal.resetSectionAndChildDbIds(this, feInfo);
+  let next = this.resetSectionAndChildDbIds(feInfo);
   const rawFeSectionPack = next.makeRawSectionPack(feInfo);
 
   const sourceSectionPack = new FeSectionPack(rawFeSectionPack);
@@ -29,6 +28,6 @@ export function updateFullIndexStoreSection(
   const indexStoreName = this.section(feInfo).meta.get("indexStoreName");
   const indexSectionPack = sourceSectionPack.changeType(indexStoreName);
 
-  const storeDbInfo = Inf.db(indexStoreName, indexSectionPack.dbId);
+  const storeDbInfo = InfoS.db(indexStoreName, indexSectionPack.dbId);
   return this.replaceSectionAndSolve(storeDbInfo, indexSectionPack.core);
 }

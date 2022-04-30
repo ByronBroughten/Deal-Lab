@@ -32,7 +32,7 @@ function resetSection<S extends SectionName<"hasParent">>(
 
   if (resetDbIds) {
     const { feInfo: newFeInfo } = next.lastSection(sectionName);
-    next = internal.resetSectionAndChildDbIds(next, newFeInfo);
+    next = next.resetSectionAndChildDbIds(newFeInfo);
   }
   return next;
 }

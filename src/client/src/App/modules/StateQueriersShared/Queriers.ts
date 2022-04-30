@@ -1,4 +1,5 @@
 import { ServerSectionPack } from "../../sharedWithServer/Analyzer/SectionPackRaw";
+import { DbStoreNameNext } from "../../sharedWithServer/SectionMetas/relNameArrs/storeArrs";
 import { SectionName } from "../../sharedWithServer/SectionMetas/SectionName";
 import { ApiQueries, apiQueries } from "../useQueryActions/apiQueriesClient";
 
@@ -44,17 +45,17 @@ export class SectionQuerier extends BaseQuerierNext {
 }
 
 export class SectionArrQuerier extends BaseQuerierNext {
-  constructor(readonly sectionName: SectionName<"dbStoreArrNext">) {
+  constructor(readonly sectionName: DbStoreNameNext<"arrStore">) {
     super();
   }
 
   async replace(
     sectionPackArr: ServerSectionPack[]
-  ): Promise<SectionName<"dbStoreArrNext">> {
+  ): Promise<DbStoreNameNext<"arrStore">> {
     const res = await this.apiQuery.replaceSectionArr(
       this.makeReq({ dbStoreName: this.sectionName, sectionPackArr })
     );
-    return res.data.dbStoreName as SectionName<"dbStoreArrNext">;
+    return res.data.dbStoreName as DbStoreNameNext<"arrStore">;
   }
 }
 

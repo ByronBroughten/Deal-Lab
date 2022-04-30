@@ -1,5 +1,5 @@
 import Analyzer from "../../../Analyzer";
-import { FeInfo, Inf } from "../../../SectionMetas/Info";
+import { FeInfo, InfoS } from "../../../SectionMetas/Info";
 import { FeVarbInfo } from "../../../SectionMetas/relSections/rel/relVarbInfoTypes";
 import { internal } from "../internal";
 import { AddSectionProps } from "./addSections/addSectionsTypes";
@@ -36,7 +36,7 @@ function addOutEntitiesForSectionInVarbs(
   analyzer: Analyzer,
   feInfo: FeInfo
 ): Analyzer {
-  if (!Inf.is.fe(feInfo, "hasVarb")) return analyzer;
+  if (!InfoS.is.fe(feInfo, "hasVarb")) return analyzer;
   let next = analyzer;
   const { varbs } = next.section(feInfo);
   for (const [varbName, varb] of Object.entries(varbs)) {

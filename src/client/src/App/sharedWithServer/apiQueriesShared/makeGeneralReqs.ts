@@ -1,8 +1,11 @@
 import Analyzer from "../Analyzer";
 import { FeSectionPack } from "../Analyzer/FeSectionPack";
-import { StoredSectionPackInfo } from "../Analyzer/SectionPack";
-import { SectionPackRaw, ServerSectionPack } from "../Analyzer/SectionPackRaw";
-import { DbStoreName } from "../SectionMetas/baseSectionTypes/dbStoreNames";
+import {
+  SectionPackRaw,
+  ServerSectionPack,
+  StoredSectionPackInfo,
+} from "../Analyzer/SectionPackRaw";
+import { DbStoreNameNext } from "../SectionMetas/relNameArrs/storeArrs";
 import { FeNameInfo } from "../SectionMetas/relSections/rel/relVarbInfoTypes";
 import { FeToDbStoreNameWithSameChildren } from "../SectionMetas/relSectionTypes/ChildTypes";
 import { SectionName } from "../SectionMetas/SectionName";
@@ -22,7 +25,7 @@ type QueryObj = { [key: string]: any };
 type MakeRawSectionPackArrReqProps<SN extends SectionName> = {
   analyzer: Analyzer;
   sectionName: SN;
-  dbStoreName: FeToDbStoreNameWithSameChildren<SN, "arr">;
+  dbStoreName: FeToDbStoreNameWithSameChildren<SN, "arrStore">;
 };
 export function makeRawSectionPackArrReq<SN extends SectionName>({
   analyzer,
@@ -65,18 +68,18 @@ export function makeDbIdSectionPackReq({
 }
 
 export type DbSectionPackInfo = {
-  dbStoreName: DbStoreName | SectionName<"dbStoreSection">;
+  dbStoreName: DbStoreNameNext;
   dbId: string;
 };
 export type DbSectionPackInfoNext = {
-  dbStoreName: SectionName<"dbStoreSection">;
+  dbStoreName: DbStoreNameNext<"indexStore">;
   dbId: string;
 };
 
 export type SectionPackReq = MakeReq<{ sectionPack: ServerSectionPack }>;
 export type SectionPackArrReq = MakeReq<{
   sectionPackArr: ServerSectionPack[];
-  dbStoreName: DbStoreName<"arr">;
+  dbStoreName: DbStoreNameNext<"arrStore">;
 }>;
 export type TableSourcePackReq = MakeReq<{
   sourceSectionPack: ServerSectionPack;
@@ -88,4 +91,4 @@ export type SectionPackRes = MakeRes<{
   rawServerSectionPack: ServerSectionPack;
 }>;
 export type DbIdRes = MakeRes<{ dbId: string }>;
-export type DbStoreNameRes = MakeRes<{ dbStoreName: DbStoreName }>;
+export type DbStoreNameRes = MakeRes<{ dbStoreName: DbStoreNameNext }>;

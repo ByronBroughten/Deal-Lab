@@ -1,7 +1,7 @@
 import Analyzer from "../../Analyzer";
 import { InEntityVarbInfo } from "../../SectionMetas/baseSections/baseValues/entities";
 import { SectionFinder } from "../../SectionMetas/baseSectionTypes";
-import { Inf } from "../../SectionMetas/Info";
+import { InfoS } from "../../SectionMetas/Info";
 import { FeVarbInfo } from "../../SectionMetas/relSections/rel/relVarbInfoTypes";
 import { StateValue } from "../StateSection/StateVarb/stateValue";
 import { internal } from "./internal";
@@ -23,7 +23,7 @@ export function updateSectionValuesAndSolve(
 ): Analyzer {
   const { feInfo } = this.section(finder);
   return Object.keys(values).reduce((next, varbName) => {
-    const varbInfo = Inf.feVarb(varbName, feInfo);
+    const varbInfo = InfoS.feVarb(varbName, feInfo);
     return internal.updateValueDirectly(next, varbInfo, values[varbName]);
   }, this);
 }

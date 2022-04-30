@@ -1,6 +1,6 @@
 import Analyzer from "../../../Analyzer";
 import { Id } from "../../../SectionMetas/baseSections/id";
-import { Inf } from "../../../SectionMetas/Info";
+import { InfoS } from "../../../SectionMetas/Info";
 import { SelfOrDescendantName } from "../../../SectionMetas/relSectionTypes/ChildTypes";
 import { ParentFinder } from "../../../SectionMetas/relSectionTypes/ParentTypes";
 import { SectionName } from "../../../SectionMetas/SectionName";
@@ -63,7 +63,7 @@ export function addSectionDefault<SN extends SectionName>(
           queue.push({
             feId: childId,
             sectionName: childName,
-            parentFinder: Inf.fe(sectionName, feId),
+            parentFinder: InfoS.fe(sectionName, feId),
           } as DefaultSectionProps<SN>);
         }
       }

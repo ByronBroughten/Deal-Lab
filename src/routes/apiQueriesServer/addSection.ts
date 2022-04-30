@@ -1,13 +1,10 @@
 import { Request, Response } from "express";
-import { SectionPackRaw } from "../../client/src/App/sharedWithServer/Analyzer/SectionPackRaw";
-import {
-  NextReq,
-  NextRes,
-} from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
+import { ServerSectionPack } from "../../client/src/App/sharedWithServer/Analyzer/SectionPackRaw";
+import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import { SectionName } from "../../client/src/App/sharedWithServer/SectionMetas/SectionName";
 import authWare from "../../middleware/authWare";
 import { ResHandledError } from "../../middleware/error";
-import { serverSend } from "../shared/crudValidators";
+import { sendSuccess } from "../shared/crudValidators";
 import { SectionPackDb } from "../shared/UserDbNext/SectionPackDb";
 import { findUserByIdAndUpdate } from "./shared/findAndUpdate";
 import {
@@ -35,9 +32,7 @@ async function addSectionServerSide(req: Request, res: Response) {
     userId,
     queryParameters: makePushParameters(sectionPack),
   });
-
-  const resObj: NextRes<"addSection"> = { data: { dbId: sectionPack.dbId } };
-  serverSend.success({ res, resObj });
+  sendSuccess(res, "addSection", { data: { dbId: sectionPack.dbId } });
 }
 
 function validateAddSectionReq(
@@ -48,7 +43,7 @@ function validateAddSectionReq(
 }
 
 async function checkThatSectionPackIsNotThere<
-  SN extends SectionName<"dbStore">
+  SN extends SectionName<"dbStoreNext">
 >({ userId, spInfo, res }: FindSectionPackProps<SN>) {
   const sectionPack = await findSectionPack({ userId, spInfo, res });
   if (sectionPack) {
@@ -62,9 +57,7 @@ async function checkThatSectionPackIsNotThere<
   }
 }
 
-function makePushParameters(
-  serverSectionPack: SectionPackRaw<"db", SectionName<"dbStore">>
-) {
+function makePushParameters(serverSectionPack: ServerSectionPack) {
   const { sectionName } = serverSectionPack;
   const dbSectionPack = SectionPackDb.serverToDbRaw(serverSectionPack);
   return {

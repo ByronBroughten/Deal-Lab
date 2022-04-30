@@ -1,5 +1,5 @@
 import Analyzer from "../../../../Analyzer";
-import { FeInfo, Inf } from "../../../../SectionMetas/Info";
+import { FeInfo, InfoS } from "../../../../SectionMetas/Info";
 import {
   SectionName,
   sectionNameS,
@@ -42,7 +42,7 @@ function addToParentChildIds(
   feInfo: FeInfo,
   idx?: number
 ): Analyzer {
-  if (!Inf.is.fe(feInfo, "hasParent")) return analyzer;
+  if (!InfoS.is.fe(feInfo, "hasParent")) return analyzer;
   const parentSection = analyzer.parent(feInfo);
   const nextParent = parentSection.addChildFeId(feInfo, idx);
   return analyzer.updateSection(nextParent);

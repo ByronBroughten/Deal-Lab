@@ -1,7 +1,7 @@
 import Analyzer from "../../../Analyzer";
 import { isCalculationName } from "../../../SectionMetas/baseSections/baseValues/calculations";
 import { NumObj } from "../../../SectionMetas/baseSections/baseValues/NumObj";
-import { Inf } from "../../../SectionMetas/Info";
+import { InfoS } from "../../../SectionMetas/Info";
 import { FeVarbInfo } from "../../../SectionMetas/relSections/rel/relVarbInfoTypes";
 import { internal } from "../internal";
 
@@ -67,7 +67,7 @@ export function solveValue(
       });
     },
     userVarb(): NumObj {
-      if (Inf.is.feName(feVarbInfo, "userVarbItem"))
+      if (InfoS.is.feName(feVarbInfo, "userVarbItem"))
         return analyzer.getUserVarbValue(feVarbInfo);
       else throw new Error("section must contain at least one varb");
     },

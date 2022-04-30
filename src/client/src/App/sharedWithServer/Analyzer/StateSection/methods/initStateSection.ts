@@ -1,7 +1,7 @@
 import { pick } from "lodash";
 import Analyzer from "../../../Analyzer";
 import { sectionMetas } from "../../../SectionMetas";
-import { FeInfo, Inf } from "../../../SectionMetas/Info";
+import { FeInfo, InfoS } from "../../../SectionMetas/Info";
 import {
   ChildIdArrs,
   OneChildIdArrs,
@@ -24,7 +24,7 @@ export function initStateSection<S extends SectionName>({
     sectionName,
     parentInfo,
     childFeIds: initChildFeIds(sectionName),
-    varbs: initVarbs(Inf.fe(sectionName, feId), values),
+    varbs: initVarbs(InfoS.fe(sectionName, feId), values),
   };
   return new StateSection(stateSectionCore);
 }

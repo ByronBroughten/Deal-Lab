@@ -3,7 +3,7 @@ import Analyzer from "../Analyzer";
 import { sectionMetas } from "../SectionMetas";
 import { SimpleSectionName } from "../SectionMetas/baseSections";
 import { InEntities } from "../SectionMetas/baseSections/baseValues/entities";
-import { FeInfo, Inf } from "../SectionMetas/Info";
+import { FeInfo, InfoS } from "../SectionMetas/Info";
 import {
   DbNameInfo,
   FeNameInfo,
@@ -205,7 +205,7 @@ export default class StateSectionOld<
   }
   get feVarbInfos(): FeVarbInfo[] {
     const { feInfo } = this;
-    if (!Inf.is.fe(feInfo, "hasVarb")) return [];
+    if (!InfoS.is.fe(feInfo, "hasVarb")) return [];
     return Object.keys(this.varbs).map((varbName) => ({
       ...feInfo,
       varbName,
@@ -251,7 +251,7 @@ export default class StateSectionOld<
       sectionName,
       parentInfo,
       childFeIdArrs: initChildFeIds(sectionName),
-      varbs: initVarbs(Inf.fe(sectionName, feId), values),
+      varbs: initVarbs(InfoS.fe(sectionName, feId), values),
     };
     return new StateSectionOld(stateSectionCore);
   }

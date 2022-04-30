@@ -1,4 +1,4 @@
-import { Inf } from "../../../../../../SectionMetas/Info";
+import { InfoS } from "../../../../../../SectionMetas/Info";
 import { DbEnt } from "../../../../../DbEntry";
 
 export const initOutputs = [
@@ -70,5 +70,5 @@ export const initOutputListDefault = DbEnt.addLikeChildren(
   initEntry,
   initOutputs.map((output) => DbEnt.initSection(output.dbId, output.values)),
   "output",
-  Inf.db("outputListDefault", initEntry.dbId)
+  InfoS.db("outputListDefault", initEntry.dbId)
 );

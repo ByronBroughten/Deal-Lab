@@ -1,5 +1,5 @@
 import Analyzer from "../../../Analyzer";
-import { FeInfo, Inf } from "../../../SectionMetas/Info";
+import { FeInfo, InfoS } from "../../../SectionMetas/Info";
 import {
   FeVarbInfo,
   SpecificSectionInfo,
@@ -94,11 +94,12 @@ export function eraseSectionAndChildren(
 export function eraseChildren<
   I extends SpecificSectionInfo,
   C extends ChildName<I["sectionName"]>
->(next: Analyzer, feInfo: I, childName: C): Analyzer {
+>(this: Analyzer, feInfo: I, childName: C): Analyzer {
+  let next = this;
   const section = next.section(feInfo);
   const childIds = section.childFeIds(childName);
   for (const id of childIds) {
-    next = eraseSectionAndChildren(next, Inf.fe(childName, id));
+    next = eraseSectionAndChildren(next, InfoS.fe(childName, id));
   }
   return next;
 }

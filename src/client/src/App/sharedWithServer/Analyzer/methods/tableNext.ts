@@ -1,6 +1,6 @@
 import { isEqual } from "lodash";
 import Analyzer from "../../Analyzer";
-import { FeInfo, Inf } from "../../SectionMetas/Info";
+import { FeInfo, InfoS } from "../../SectionMetas/Info";
 import { FeNameInfo } from "../../SectionMetas/relSections/rel/relVarbInfoTypes";
 import { SectionName } from "../../SectionMetas/SectionName";
 import { Str } from "../../utils/Str";
@@ -31,7 +31,7 @@ function getSortedRows(
     return sortRowsByColumnValue(
       analyzer,
       rows,
-      Inf.fe("column", colIdOrTitle)
+      InfoS.fe("column", colIdOrTitle)
     );
 }
 

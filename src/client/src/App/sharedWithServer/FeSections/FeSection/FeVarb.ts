@@ -6,7 +6,7 @@ import {
   InEntity,
 } from "../../SectionMetas/baseSections/baseValues/entities";
 import { NumObj } from "../../SectionMetas/baseSections/baseValues/NumObj";
-import { Inf } from "../../SectionMetas/Info";
+import { InfoS } from "../../SectionMetas/Info";
 import {
   FeNameInfo,
   FeVarbInfo,
@@ -233,7 +233,7 @@ export default class FeVarb {
       string
     ];
     const info = { sectionName, varbName, id, idType: "feId" };
-    if (Inf.is.feVarb(info)) return info;
+    if (InfoS.is.feVarb(info)) return info;
     else throw new Error(`Was passed an invalid fullName: ${fullName}`);
   }
 

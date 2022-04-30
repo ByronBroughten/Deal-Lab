@@ -27,8 +27,15 @@ export type SectionPackRaw<
   rawSections: RawSections<SN, CN>;
 };
 
+export type StoredSectionPackInfo<
+  SN extends SectionName<"dbStoreNext"> = SectionName<"dbStoreNext">
+> = {
+  dbStoreName: SN;
+  dbId: string;
+};
+
 export type ServerSectionPack<
-  SN extends SectionName<"dbStore"> = SectionName<"dbStore">
+  SN extends SectionName<"dbStoreNext"> = SectionName<"dbStoreNext">
 > = SectionPackRaw<"db", SN>;
 
 const zRawSectionPackFrame: Record<keyof SectionPackRaw<"fe">, any> = {

@@ -5,7 +5,7 @@ import {
   NumObj,
 } from "../../SectionMetas/baseSections/baseValues/NumObj";
 import { switchNames } from "../../SectionMetas/baseSections/switchNames";
-import { FeInfo, Inf } from "../../SectionMetas/Info";
+import { FeInfo, InfoS } from "../../SectionMetas/Info";
 import { DbEntry } from "../DbEntry";
 import { StateValue } from "../StateSection/StateVarb/stateValue";
 
@@ -69,7 +69,7 @@ describe("Analyzer.updateValues", () => {
 
   const exec = (varbName: string, nextValue: StateValue) =>
     analyzer.directUpdateAndSolve(
-      Inf.feVarb(varbName, propertyInfo),
+      InfoS.feVarb(varbName, propertyInfo),
       nextValue
     );
 
@@ -114,7 +114,7 @@ describe("Analyzer.updateValues", () => {
     let next = exec("homeInsYearly", numObj);
     next.feVarb("homeInsYearly", propertyInfo);
 
-    const homeInsYearlyInfo = Inf.feVarb("homeInsYearly", propertyInfo);
+    const homeInsYearlyInfo = InfoS.feVarb("homeInsYearly", propertyInfo);
     const propertyGeneral = next.section("propertyGeneral");
 
     const outEntity1 = propertyGeneral.varb("sqft").outEntities[0];
@@ -143,7 +143,7 @@ describe("Analyzer.updateValues", () => {
     });
 
     analyzer = exec("homeInsYearly", numObj);
-    const homeInsYearlyInfo = Inf.feVarb("homeInsYearly", propertyInfo);
+    const homeInsYearlyInfo = InfoS.feVarb("homeInsYearly", propertyInfo);
     const propertyGeneral = analyzer.section("propertyGeneral");
 
     const outEntity1 = propertyGeneral.varb(varbName1).outEntities[0];
@@ -177,7 +177,7 @@ describe("Analyzer.updateValues", () => {
 
     analyzer = exec("homeInsYearly", numObj);
 
-    const homeInsYearlyInfo = Inf.feVarb("homeInsYearly", propertyInfo);
+    const homeInsYearlyInfo = InfoS.feVarb("homeInsYearly", propertyInfo);
     const propertyGeneral = analyzer.section("propertyGeneral");
 
     const outEntity1 = propertyGeneral.varb(varbName1).outEntities[0];

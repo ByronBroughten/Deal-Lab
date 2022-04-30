@@ -12,7 +12,12 @@ import {
 import { base } from "../baseSections/base";
 import { GeneralBaseSection } from "../baseSections/baseSection";
 import { switchName, SwitchName } from "../baseSections/baseSwitchNames";
-import { dbStoreNameS, dbStoreNamesNext } from "./dbStoreNames";
+import {
+  dbStoreNamesDepreciated,
+  dbStoreNamesNext,
+  feGuestAccessNames,
+  loadOnLoginNames,
+} from "./dbStoreNames";
 
 type HasVarbSectionName<
   NoVarbSectionName = keyof SubType<
@@ -108,24 +113,12 @@ function makeBaseNameArrsForContext<SC extends ContextName>(
   return {
     ...makeSingleSectionNameArrs(sectionContext),
     dbStoreNext: dbStoreNamesNext,
-    dbStore: dbStoreNameS.arrs.all,
-    dbStoreSection: dbStoreNameS.arrs.section,
-    dbStoreArr: dbStoreNameS.arrs.arr,
-    dbStoreArrNext: dbStoreNameS.arrs.arrNext,
-    dbStoreIndex: dbStoreNameS.arrs.index,
+    dbStore: dbStoreNamesDepreciated,
     all: Obj.keys(baseSectionsOfContext) as SimpleSectionName<SC>[],
 
     // booleans
-    initOnLogin: Obj.entryKeysWithPropValue(
-      baseSectionsOfContext,
-      "loadOnLogin",
-      true as true
-    ),
-    feGuestAccessStore: Obj.entryKeysWithPropValue(
-      baseSectionsOfContext,
-      "feGuestAccess",
-      true as true
-    ),
+    loadOnLogin: loadOnLoginNames,
+    feGuestAccess: feGuestAccessNames,
     alwaysOne: Obj.entryKeysWithPropValue(
       baseSectionsOfContext,
       "alwaysOne",

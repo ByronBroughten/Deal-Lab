@@ -20,7 +20,7 @@ import { VarbMetas } from "./VarbMetas";
 type SectionMetaExtra<CN extends ContextName, SN extends SimpleSectionName> = {
   varbMetas: VarbMetas;
   parentNames: SectionToParentArrs<CN>[SN];
-  tableSourceName: SourceTableParams[SN];
+  indexTableName: SourceTableParams[SN];
 };
 
 type SourceTableParams = {
@@ -95,7 +95,7 @@ export class SectionMeta<CN extends ContextName, SN extends SimpleSectionName> {
       ...baseSection,
       varbMetas: VarbMetas.initFromRelVarbs(relSection.relVarbs, sectionName),
       parentNames: getParentNamesParam(contextName, sectionName),
-      tableSourceName: getSourceTableParam(sectionName),
+      indexTableName: getSourceTableParam(sectionName),
     });
   }
 }

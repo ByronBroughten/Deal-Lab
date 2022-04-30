@@ -6,8 +6,8 @@ import {
   RegisterReqBody,
 } from "../../client/src/App/sharedWithServer/apiQueriesShared/register";
 import { BaseSectionsDb } from "../../client/src/App/sharedWithServer/SectionMetas/baseSectionTypes";
+import { dbStoreNameS } from "../../client/src/App/sharedWithServer/SectionMetas/relNameArrs/storeArrs";
 import { SchemaVarbsToDbValues } from "../../client/src/App/sharedWithServer/SectionMetas/relSections/rel/valueMetaTypes";
-import { sectionNameS } from "../../client/src/App/sharedWithServer/SectionMetas/SectionName";
 import { makeMongooseObjectId } from "../../client/src/App/sharedWithServer/utils/mongoose";
 import { StrictPick } from "../../client/src/App/sharedWithServer/utils/types";
 import { initDbSectionPack, UserDbRaw } from "../shared/UserDbNext";
@@ -45,7 +45,7 @@ export const userServerSide = {
       user: [initDbSectionPack("user", newUser)],
     };
 
-    for (const storeName of sectionNameS.arrs.fe.dbStore) {
+    for (const storeName of dbStoreNameS.arrs.all) {
       if (!(storeName in partial)) partial[storeName] = [];
     }
 

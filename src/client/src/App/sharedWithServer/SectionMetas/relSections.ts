@@ -63,6 +63,7 @@ export function makeRelSections() {
             "userVarbList",
             "userSingleList",
             "userOngoingList",
+            "userOutputList",
 
             "analysis",
             "analysisIndex",

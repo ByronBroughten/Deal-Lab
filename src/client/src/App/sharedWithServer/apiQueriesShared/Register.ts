@@ -17,7 +17,7 @@ export type RegisterReqBody = {
 };
 
 export type GuestAccessSectionsNext = {
-  [SN in SectionName<"feGuestAccessStore">]: SectionPackRaw<"db", SN>[];
+  [SN in SectionName<"feGuestAccess">]: SectionPackRaw<"db", SN>[];
 };
 export function areGuestAccessSectionsNext(
   value: any
@@ -27,13 +27,13 @@ export function areGuestAccessSectionsNext(
   return true;
 }
 function makeZGuestAccessSectionsNext() {
-  const feGuestAccessStoreNames = sectionNameS.arrs.db.feGuestAccessStore;
+  const feGuestAccessStoreNames = sectionNameS.arrs.db.feGuestAccess;
   const schemaFrame = feGuestAccessStoreNames.reduce(
     (feGuestAccessSections, sectionName) => {
       feGuestAccessSections[sectionName] = zSectionPackDbArr;
       return feGuestAccessSections;
     },
-    {} as Record<SectionName<"feGuestAccessStore">, any>
+    {} as Record<SectionName<"feGuestAccess">, any>
   );
   return z.object(schemaFrame);
 }

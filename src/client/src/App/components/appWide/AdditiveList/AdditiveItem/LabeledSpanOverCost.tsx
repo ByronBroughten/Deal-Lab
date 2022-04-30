@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useAnalyzerContext } from "../../../../modules/usePropertyAnalyzer";
 import { switchNames } from "../../../../sharedWithServer/SectionMetas/baseSections/switchNames";
-import { FeInfo, Inf } from "../../../../sharedWithServer/SectionMetas/Info";
+import { FeInfo, InfoS } from "../../../../sharedWithServer/SectionMetas/Info";
 import theme from "../../../../theme/Theme";
 import MaterialStringEditor from "../../../inputs/MaterialStringEditor";
 import NumObjEditor from "../../../inputs/NumObjEditor";
@@ -18,17 +18,17 @@ export default function LabeledSpanOverCost({ valueVarbName, feInfo }: Props) {
   return (
     <>
       <td className="AdditiveItem-nameCell">
-        <MaterialStringEditor feVarbInfo={Inf.feVarb("name", feInfo)} />
+        <MaterialStringEditor feVarbInfo={InfoS.feVarb("name", feInfo)} />
       </td>
       <Styled className="AdditiveItem-contentCell">
         <div className="AdditiveItem-contentCellDiv">
           <NumObjEditor
-            feVarbInfo={Inf.feVarb("costToReplace", feInfo)}
+            feVarbInfo={InfoS.feVarb("costToReplace", feInfo)}
             labeled={false}
           />
           <span className="LabeledSpanOverCost-over">/</span>
           <NumObjEditor
-            feVarbInfo={Inf.feVarb(lifeSpanName, feInfo)}
+            feVarbInfo={InfoS.feVarb(lifeSpanName, feInfo)}
             className="lifespan"
             labeled={false}
           />

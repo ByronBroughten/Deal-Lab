@@ -4,7 +4,7 @@ import {
   SectionPackRaw,
   ServerSectionPack,
 } from "../../sharedWithServer/Analyzer/SectionPackRaw";
-import { Inf } from "../../sharedWithServer/SectionMetas/Info";
+import { FeInfo, InfoS } from "../../sharedWithServer/SectionMetas/Info";
 import { SectionName } from "../../sharedWithServer/SectionMetas/SectionName";
 import { SectionQuerier } from "./Queriers";
 
@@ -23,8 +23,11 @@ export class IndexSectionQuerier {
     this.sectionName = sectionName;
     this.indexName = indexName;
   }
+  private feInfo(feId: string): FeInfo<"hasIndexStoreNext"> {
+    return InfoS.fe(this.sectionName, feId);
+  }
   indexSectionPack(feId: string): ServerSectionPack {
-    const feInfo = Inf.fe(this.sectionName, feId);
+    const feInfo = this.feInfo(feId);
     const feSectionPack = this.sections.makeRawSectionPack(
       feInfo
     ) as SectionPackRaw<"fe", typeof feInfo.sectionName>;
@@ -42,7 +45,7 @@ export class IndexSectionQuerier {
       rawSections: {
         ...indexSectionPack.rawSections,
         [this.sectionName]: indexSectionPack.rawSections[
-          this.indexName as SectionName<"dbStore">
+          this.indexName as SectionName<"dbStoreNext">
         ] as any,
       } as any,
     };

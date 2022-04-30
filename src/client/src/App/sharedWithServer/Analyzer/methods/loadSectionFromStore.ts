@@ -1,5 +1,5 @@
 import Analyzer from "../../Analyzer";
-import { FeInfo, Inf } from "../../SectionMetas/Info";
+import { FeInfo, InfoS } from "../../SectionMetas/Info";
 
 export function loadSectionFromFeIndex(
   this: Analyzer,
@@ -7,7 +7,7 @@ export function loadSectionFromFeIndex(
   dbId: string
 ): Analyzer {
   const { indexStoreName } = this.section(feInfo);
-  const dbInfo = Inf.db(indexStoreName, dbId);
+  const dbInfo = InfoS.db(indexStoreName, dbId);
   const dbEntry = this.dbEntry(dbInfo, {
     newMainSectionName: feInfo.sectionName,
   });

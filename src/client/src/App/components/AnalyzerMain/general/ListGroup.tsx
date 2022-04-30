@@ -2,7 +2,7 @@ import { MdOutlinePlaylistAdd } from "react-icons/md";
 import styled, { css } from "styled-components";
 import { useAnalyzerContext } from "../../../modules/usePropertyAnalyzer";
 import { listNameToStoreName } from "../../../sharedWithServer/SectionMetas/baseSectionTypes";
-import { Inf } from "../../../sharedWithServer/SectionMetas/Info";
+import { InfoS } from "../../../sharedWithServer/SectionMetas/Info";
 import { ListSectionName } from "../../../sharedWithServer/SectionMetas/relNameArrs";
 import { FeParentInfo } from "../../../sharedWithServer/SectionMetas/relSectionTypes/ParentTypes";
 import { userListItemTypes } from "../../../sharedWithServer/SectionMetas/relSectionTypes/UserListTypes";
@@ -35,7 +35,7 @@ export default function ListGroup({
   const listIds = section.childFeIds(listSectionName);
 
   const listInfos = listIds.map((listId) => {
-    return Inf.fe(listSectionName, listId);
+    return InfoS.fe(listSectionName, listId);
   });
 
   const listType = listNameToStoreName(listSectionName);
@@ -83,7 +83,7 @@ export default function ListGroup({
               <AdditiveList
                 {...{
                   key: listId,
-                  feInfo: Inf.fe(listSectionName, listId),
+                  feInfo: InfoS.fe(listSectionName, listId),
                   themeSectionName: themeSectionNameOrDefault(sectionName),
                   className: "ListGroup-list",
                 }}

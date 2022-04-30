@@ -1,6 +1,6 @@
 import { View } from "react-native";
 import styled from "styled-components";
-import { Inf } from "../../../sharedWithServer/SectionMetas/Info";
+import { InfoS } from "../../../sharedWithServer/SectionMetas/Info";
 import theme from "../../../theme/Theme";
 import MainSection from "../../appWide/GeneralSection/MainSection";
 import MainSectionBody from "../../appWide/GeneralSection/MainSection/MainSectionBody";
@@ -16,7 +16,7 @@ export default function Deal({
   feId: string;
   detailsIsOpen: boolean;
 }) {
-  const feInfo = Inf.fe("analysis", feId);
+  const feInfo = InfoS.fe("analysis", feId);
   return (
     <MainSection>
       <View style={{ flexDirection: "row" }}>

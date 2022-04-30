@@ -1,10 +1,7 @@
 import { eraseSections } from "./eraseSectionAndSolve";
 import { addSections } from "./internal/addSections";
 import { addSectionsNext } from "./internal/addSectionsNext";
-import {
-  eraseChildren,
-  eraseSectionAndChildren,
-} from "./internal/eraseSectionAndChildren";
+import { eraseSectionAndChildren } from "./internal/eraseSectionAndChildren";
 import {
   addInEntity,
   addOutEntity,
@@ -12,7 +9,6 @@ import {
   removeOutEntity,
 } from "./internal/inOutEntities";
 import { loadRawSectionPackArr } from "./internal/loadRawSectionPackArr";
-import { resetSectionAndChildDbIds } from "./internal/resetSectionAndChildDbIds";
 import { updateConnectedEntities } from "./internal/updateConnectedEntities";
 import { updateSection } from "./internal/updateSection";
 import { updateValue, updateValueDirectly } from "./internal/updateValue";
@@ -29,9 +25,7 @@ export const internal = {
   updateConnectedEntities,
   addSections,
   updateSection,
-  eraseChildren,
   eraseSectionAndChildren,
-  resetSectionAndChildDbIds,
   updateValue,
   updateValueDirectly,
   addSectionsNext,

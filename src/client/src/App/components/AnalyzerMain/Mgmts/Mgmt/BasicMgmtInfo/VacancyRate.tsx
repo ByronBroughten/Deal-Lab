@@ -1,5 +1,8 @@
 import { useAnalyzerContext } from "../../../../../modules/usePropertyAnalyzer";
-import { FeInfo, Inf } from "../../../../../sharedWithServer/SectionMetas/Info";
+import {
+  FeInfo,
+  InfoS,
+} from "../../../../../sharedWithServer/SectionMetas/Info";
 import NumObjEditor from "../../../../inputs/NumObjEditor";
 
 type Props = { feInfo: FeInfo };
@@ -12,7 +15,7 @@ export default function VacancyRate({ feInfo }: Props) {
     <NumObjEditor
       className="VacancyRate-root"
       label="Vacancy Rate"
-      feVarbInfo={Inf.feVarb("vacancyRatePercent", feInfo)}
+      feVarbInfo={InfoS.feVarb("vacancyRatePercent", feInfo)}
       endAdornment={`${endAdornment} ${
         dollarsValue.number === "?" ? "" : `(${dollarsVarb.displayVarb()})`
       }`}

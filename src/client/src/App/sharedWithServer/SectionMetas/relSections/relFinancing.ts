@@ -178,7 +178,6 @@ export const relFinancing = {
   ),
   ...loanSection("loan", {
     indexStoreName: "loanIndex",
-    indexStoreNameNext: "loanIndexNext",
     defaultStoreName: "loanDefault",
     rowIndexName: "loanIndexNext",
   } as const),

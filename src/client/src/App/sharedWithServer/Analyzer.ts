@@ -127,6 +127,8 @@ import {
   varbSwitchIsActive,
 } from "./Analyzer/methods/get/varb";
 import { variableOptions } from "./Analyzer/methods/get/variableOptions";
+import { eraseChildren } from "./Analyzer/methods/internal/eraseSectionAndChildren";
+import { resetSectionAndChildDbIds } from "./Analyzer/methods/internal/resetSectionAndChildDbIds";
 import {
   loadSectionArrAndSolve,
   loadSectionArrsAndSolve,
@@ -195,7 +197,7 @@ export type AnalyzerCore = {
 };
 
 // when you make this have multiple classes, you'll have to change
-// how you use Inf.is.fe(feInfo, "hasParent"); Different
+// how you use InfoS.is.fe(feInfo, "hasParent"); Different
 // instantiations of Analyzer will have different heads
 // then again, main could always be the head.
 export default class Analyzer {
@@ -363,6 +365,8 @@ export default class Analyzer {
 
   replaceSectionAndSolve = replaceSectionAndSolve;
   resetSectionAndSolve = resetSectionAndSolve;
+  resetSectionAndChildDbIds = resetSectionAndChildDbIds;
+
   sectionArr = sectionArr;
   sectionArrInfos = sectionArrInfos;
   updateSectionArr = updateSectionArr;
@@ -393,6 +397,7 @@ export default class Analyzer {
   eraseIndexAndSolve = eraseIndexAndSolve;
   eraseRowIndexAndSolve = eraseRowIndexAndSolve;
   eraseSectionsAndSolve = eraseSectionsAndSolve;
+  eraseChildren = eraseChildren;
 
   allChildDbIds = allChildDbIds;
   varbInfosByFocal = varbInfosByFocal;

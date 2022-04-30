@@ -5,7 +5,7 @@ import {
   SectionPackArrReq,
   SectionPackReq,
 } from "../../../client/src/App/sharedWithServer/apiQueriesShared/makeGeneralReqs";
-import { DbStoreName } from "../../../client/src/App/sharedWithServer/SectionMetas/baseSectionTypes/dbStoreNames";
+import { DbStoreNameNext } from "../../../client/src/App/sharedWithServer/SectionMetas/relNameArrs/storeArrs";
 import { resHandledError } from "../../../middleware/error";
 import { validateDbStoreName } from "./validateDbSectionInfoReq";
 import { LoggedIn, validateLoggedInUser } from "./validateLoggedInUser";
@@ -18,7 +18,7 @@ export function validateSectionPackArrReq(
   return {
     body: {
       user: validateLoggedInUser(user, res),
-      dbStoreName: validateDbStoreName(dbStoreName, res, "arr"),
+      dbStoreName: validateDbStoreName(dbStoreName, res, "arrStore"),
       sectionPackArr: validateServerSectionPackArr({
         value: sectionPackArr,
         dbStoreName,
@@ -44,7 +44,7 @@ export function validateSectionPackReq(
 type ValidateServerSectionPackArrProps = {
   value: any;
   res: Response;
-  dbStoreName: DbStoreName;
+  dbStoreName: DbStoreNameNext;
 };
 function validateServerSectionPackArr({
   value,

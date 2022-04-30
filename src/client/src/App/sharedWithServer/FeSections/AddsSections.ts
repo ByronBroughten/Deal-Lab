@@ -1,6 +1,6 @@
 import { AddSectionProps } from "../Analyzer/methods/internal/addSections/addSectionsTypes";
 import { SimpleSectionName } from "../SectionMetas/baseSections";
-import { FeInfo, Inf } from "../SectionMetas/Info";
+import { FeInfo, InfoS } from "../SectionMetas/Info";
 import FeSection from "./FeSection";
 import { UpdatesCoreAbstract } from "./UpdatesCoreAbstract";
 
@@ -23,7 +23,7 @@ function initOneSection<AU extends UpdatesCoreAbstract<SimpleSectionName, any>>(
 ): AU {
   next = pushSectionToList(next, props);
   const { feInfo, sectionName } = next.list(props.sectionName).last;
-  if (Inf.is.fe(feInfo, "hasParent") && sectionName !== next.sectionName) {
+  if (InfoS.is.fe(feInfo, "hasParent") && sectionName !== next.sectionName) {
     next = addToParentChildIds(next, feInfo, idx);
   }
   return next;
@@ -75,7 +75,7 @@ function addToParentChildIds<
 //   analyzer: Analyzer,
 //   feInfo: FeInfo
 // ): Analyzer {
-//   if (!Inf.is.fe(feInfo, "hasVarb")) return analyzer;
+//   if (!InfoS.is.fe(feInfo, "hasVarb")) return analyzer;
 //   let next = analyzer;
 //   const { varbs } = next.section(feInfo);
 //   for (const [varbName, varb] of Object.entries(varbs)) {

@@ -1,12 +1,9 @@
 import { Request, Response } from "express";
 import { ServerSectionPack } from "../../client/src/App/sharedWithServer/Analyzer/SectionPackRaw";
-import {
-  NextReq,
-  NextRes,
-} from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
-import { SectionName } from "../../client/src/App/sharedWithServer/SectionMetas/SectionName";
+import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
+import { DbStoreNameNext } from "../../client/src/App/sharedWithServer/SectionMetas/relNameArrs/storeArrs";
 import authWare from "../../middleware/authWare";
-import { serverSend } from "../shared/crudValidators";
+import { sendSuccess } from "../shared/crudValidators";
 import { SectionPackDb } from "../shared/UserDbNext/SectionPackDb";
 import { findOneAndUpdate } from "./shared/findAndUpdate";
 import { LoggedIn } from "./shared/validateLoggedInUser";
@@ -25,9 +22,7 @@ async function updateSectionSeverSide(req: Request, res: Response) {
     filter: makeUpdateSectionFilter({ userId, ...sectionPack }),
     queryParameters: makeSetParameters(sectionPack),
   });
-
-  const resObj: NextRes<"updateSection"> = { data: { dbId: sectionPack.dbId } };
-  serverSend.success({ res, resObj });
+  sendSuccess(res, "updateSection", { data: { dbId: sectionPack.dbId } });
 }
 
 function validateUpdateSectionReq(
@@ -39,7 +34,7 @@ function validateUpdateSectionReq(
 
 type MakeUpdateSectionFilterProps = {
   userId: string;
-  sectionName: SectionName<"dbStore">;
+  sectionName: DbStoreNameNext;
   dbId: string;
 };
 function makeUpdateSectionFilter({

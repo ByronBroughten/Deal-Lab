@@ -2,7 +2,7 @@ import Analyzer from "../../../Analyzer";
 import { sectionMetas } from "../../../SectionMetas";
 import { InEntityVarbInfo } from "../../../SectionMetas/baseSections/baseValues/entities";
 import { BaseName } from "../../../SectionMetas/baseSectionTypes";
-import { Inf } from "../../../SectionMetas/Info";
+import { InfoS } from "../../../SectionMetas/Info";
 import { FeVarbInfo } from "../../../SectionMetas/relSections/rel/relVarbInfoTypes";
 import { ongoingVarbSpanEndings } from "../../../SectionMetas/relSections/rel/relVarbs/preOngoingVarbs";
 import { SectionName, sectionNameS } from "../../../SectionMetas/SectionName";
@@ -136,7 +136,7 @@ function userListTotalOptions(analyzer: Analyzer): VariableOption[] {
         options.push(
           userOption(
             analyzer,
-            Inf.feVarb(varbNameBase, feInfo),
+            InfoS.feVarb(varbNameBase, feInfo),
             collectionName,
             title
           )

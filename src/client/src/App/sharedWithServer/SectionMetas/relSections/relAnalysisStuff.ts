@@ -34,7 +34,6 @@ function analysisSection<
 export const relAnalysisStuff = {
   ...analysisSection("analysis", {
     indexStoreName: "analysisIndex",
-    indexStoreNameNext: "analysisIndexNext",
     rowIndexName: "analysisIndexNext",
   } as const),
   ...analysisSection("analysisIndexNext"),

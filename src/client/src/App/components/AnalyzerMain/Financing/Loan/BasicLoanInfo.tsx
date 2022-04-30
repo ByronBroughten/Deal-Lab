@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { FeInfo, Inf } from "../../../../sharedWithServer/SectionMetas/Info";
+import { FeInfo, InfoS } from "../../../../sharedWithServer/SectionMetas/Info";
 import theme from "../../../../theme/Theme";
 import BasicSectionInfo from "../../../appWide/GeneralSection/MainSection/MainSectionBody/BasicSectionInfo";
 import StandardLabel from "../../../general/StandardLabel";
@@ -9,7 +9,7 @@ import DollarPercentRadioSwap from "../../general/DollarPercentRadioSwap";
 
 type Props = { feInfo: FeInfo; className?: string };
 export default function BasicLoanInfo({ feInfo, className }: Props) {
-  const feVarbInfo = Inf.feVarbMaker(feInfo);
+  const feVarbInfo = InfoS.feVarbMaker(feInfo);
   const names = {
     percent: "loanAmountBasePercent",
     dollars: "loanAmountBaseDollars",

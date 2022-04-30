@@ -1,7 +1,7 @@
 import { extend, omit } from "lodash";
 import { sectionMetas } from "../SectionMetas";
 import { Id } from "../SectionMetas/baseSections/id";
-import { Inf } from "../SectionMetas/Info";
+import { InfoS } from "../SectionMetas/Info";
 import {
   FeToDbNameWithSameChildren,
   SectionNameWithSameChildrenWide,
@@ -146,7 +146,7 @@ export class FeSectionPack<SN extends SectionName> {
       feNode as any as RawSectionFinder<SN, "fe">
     );
     return {
-      parentFinder: Inf.fe(feNode.sectionName, feNode.feId),
+      parentFinder: InfoS.fe(feNode.sectionName, feNode.feId),
       childDbIds,
       childFeIds: feNode.childFeIds,
     } as FeSelfOrDescendantParentStub<SN>;

@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useAnalyzerContext } from "../../../modules/usePropertyAnalyzer";
-import { Inf } from "../../../sharedWithServer/SectionMetas/Info";
+import { InfoS } from "../../../sharedWithServer/SectionMetas/Info";
 import { SectionName } from "../../../sharedWithServer/SectionMetas/SectionName";
 import theme from "../../../theme/Theme";
 import NextBtn from "../NextBtn";
@@ -27,13 +27,13 @@ export default function AdditiveItem({ id, sectionName }: Props) {
   return (
     <Styled>
       {valueSwitch === "loadedVarb" && (
-        <LoadedVarb feVarbInfo={Inf.feVarb(valueVarbName, feInfo)} />
+        <LoadedVarb feVarbInfo={InfoS.feVarb(valueVarbName, feInfo)} />
       )}
       {valueSwitch === "labeledEquation" && <LabeledEquation {...{ feInfo }} />}
       {valueSwitch === "labeledSpanOverCost" && (
         <LabeledSpanOverCost {...{ valueVarbName, feInfo }} />
       )}
-      {valueSwitch === "ifThen" && Inf.is.feName(feInfo, "userVarbItem") && (
+      {valueSwitch === "ifThen" && InfoS.is.feName(feInfo, "userVarbItem") && (
         <IfThen {...{ feInfo }} />
       )}
       <td className="AdditiveItem-buttonCell">

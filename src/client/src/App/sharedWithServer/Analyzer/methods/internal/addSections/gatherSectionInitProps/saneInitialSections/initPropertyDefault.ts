@@ -1,6 +1,6 @@
 import { dbNumObj } from "../../../../../../SectionMetas/baseSections/baseValues/NumObj";
 import { Id } from "../../../../../../SectionMetas/baseSections/id";
-import { Inf } from "../../../../../../SectionMetas/Info";
+import { InfoS } from "../../../../../../SectionMetas/Info";
 import { Obj } from "../../../../../../utils/Obj";
 import { DbEnt, DbEntry } from "../../../../../DbEntry";
 
@@ -81,7 +81,7 @@ capExList = DbEnt.addLikeChildren(
   capExList,
   capExItemSections,
   "ongoingItem",
-  Inf.db("ongoingCostList", capExList.dbId)
+  InfoS.db("ongoingCostList", capExList.dbId)
 );
 
 let periodicPaymentList = DbEnt.initEntry(
@@ -93,7 +93,7 @@ periodicPaymentList = DbEnt.addLikeChildren(
   periodicPaymentList,
   periodicItemSections,
   "ongoingItem",
-  Inf.db("ongoingCostList", periodicPaymentList.dbId)
+  InfoS.db("ongoingCostList", periodicPaymentList.dbId)
 );
 
 let miscUpfrontCostList = DbEnt.initEntry(
@@ -105,7 +105,7 @@ miscUpfrontCostList = DbEnt.addLikeChildren(
   miscUpfrontCostList,
   miscUpfrontSections,
   "singleTimeItem",
-  Inf.db("upfrontCostList", miscUpfrontCostList.dbId)
+  InfoS.db("upfrontCostList", miscUpfrontCostList.dbId)
 );
 
 const dbIds = {

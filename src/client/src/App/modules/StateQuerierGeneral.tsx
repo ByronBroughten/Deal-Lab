@@ -1,7 +1,7 @@
 import React from "react";
 import { config } from "../Constants";
 import { NextRes } from "../sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
-import { SectionName } from "../sharedWithServer/SectionMetas/SectionName";
+import { DbStoreNameNext } from "../sharedWithServer/SectionMetas/relNameArrs/storeArrs";
 import { applyMixins } from "../utils/classObjects";
 import { makeContextUseContext } from "../utils/react";
 import { auth } from "./services/authService";
@@ -34,7 +34,7 @@ class AuthQueryActor extends StateQuerierBase {
   }
 }
 class SectionArrQueryActor extends StateQuerierBase {
-  async replaceSectionArrNoRevert(sectionName: SectionName<"dbStoreArrNext">) {
+  async replaceSectionArrNoRevert(sectionName: DbStoreNameNext<"arrStore">) {
     const reqObj = this.reqMaker.sectionPackArr(sectionName);
     await apiQueries.replaceSectionArr(reqObj);
   }

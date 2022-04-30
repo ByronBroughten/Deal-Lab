@@ -125,7 +125,11 @@ export const Obj = {
     O extends { [key: string]: any },
     P extends string,
     T extends keyof Types
-  >(obj: O, propName: P, valueType: T) {
+  >(
+    obj: O,
+    propName: P,
+    valueType: T
+  ): (keyof SubType<O, { [Prop in P]: Types[T] }>)[] {
     return this.keys(obj).filter(
       (key) => typeof obj[key][propName] === valueType
     ) as (keyof SubType<O, { [Prop in P]: Types[T] }>)[];

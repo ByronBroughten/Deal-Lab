@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useAnalyzerContext } from "../../../modules/usePropertyAnalyzer";
-import { Inf } from "../../../sharedWithServer/SectionMetas/Info";
+import { InfoS } from "../../../sharedWithServer/SectionMetas/Info";
 import theme from "../../../theme/Theme";
 import useHowMany from "../../appWide/customHooks/useHowMany";
 import LabeledOutputRow from "../../appWide/LabeledOutputRow";
@@ -19,7 +19,7 @@ export default function FinancingInfo() {
 
   const loanIds = financing.childFeIds("loan");
   const { isAtLeastOne, areMultiple } = useHowMany(loanIds);
-  const varbInfo = Inf.feVarbMaker(financing.feInfo);
+  const varbInfo = InfoS.feVarbMaker(financing.feInfo);
   return (
     <Styled className="FinancingInfo-root">
       <LabeledOutputRow>

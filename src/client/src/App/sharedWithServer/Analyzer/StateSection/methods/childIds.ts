@@ -1,5 +1,5 @@
 import { cloneDeep } from "lodash";
-import { FeInfo, Inf } from "../../../SectionMetas/Info";
+import { FeInfo, InfoS } from "../../../SectionMetas/Info";
 import {
   ChildFeInfo,
   ChildIdArrs,
@@ -34,7 +34,7 @@ export function allChildFeInfos<S extends SectionName>(
 ): FeInfo[] {
   const childFeIds = this.allChildFeIds();
   return Obj.entries(childFeIds).reduce((feInfos, [childName, feIds]) => {
-    const newFeInfos = feIds.map((id) => Inf.fe(childName, id));
+    const newFeInfos = feIds.map((id) => InfoS.fe(childName, id));
     return feInfos.concat(newFeInfos);
   }, [] as FeInfo[]);
 }

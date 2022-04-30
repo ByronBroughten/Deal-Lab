@@ -3,7 +3,6 @@ import {
   FeNameInfo,
   FeVarbInfo,
 } from "../../SectionMetas/relSections/rel/relVarbInfoTypes";
-import { internal } from "./internal";
 
 export function copySection(
   this: Analyzer,
@@ -14,5 +13,5 @@ export function copySection(
   const varbInfo = { ...feInfo, varbName: titleVarbName } as FeVarbInfo;
   const nextTitle = next.value(varbInfo, "string") + " copy";
   next = next.directUpdateAndSolve(varbInfo, nextTitle);
-  return internal.resetSectionAndChildDbIds(next, feInfo);
+  return next.resetSectionAndChildDbIds(feInfo);
 }

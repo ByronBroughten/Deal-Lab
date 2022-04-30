@@ -39,8 +39,8 @@ type DbSectionPackArrs<ST extends SectionNameType> = {
 // For this to work, all guestAccessStore sections much be identical accross client and server.
 export function guestAccessDbSectionPacks(
   this: Analyzer
-): DbSectionPackArrs<"feGuestAccessStore"> {
-  const feSectionPackArrs = this.makeRawSectionPackArrs("feGuestAccessStore");
+): DbSectionPackArrs<"feGuestAccess"> {
+  const feSectionPackArrs = this.makeRawSectionPackArrs("feGuestAccess");
   const dbSectionPackArrs = Obj.entries(feSectionPackArrs).reduce(
     (dbSectionPackArrs, [sectionName, feRawPacks]) => {
       const dbRawPacks = feRawPacks.map((feRawPack) => {
@@ -56,7 +56,7 @@ export function guestAccessDbSectionPacks(
         dbRawPacks as typeof dbSectionPackArrs[typeof sectionName];
       return dbSectionPackArrs;
     },
-    {} as DbSectionPackArrs<"feGuestAccessStore">
+    {} as DbSectionPackArrs<"feGuestAccess">
   );
   return dbSectionPackArrs;
 }

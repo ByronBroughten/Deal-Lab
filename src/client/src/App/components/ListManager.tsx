@@ -23,7 +23,7 @@ export function useListManager(sectionName: SectionName<"userList">) {
   });
 
   const userListIds = lmContext.analyzer
-    .singleSection("analysis")
+    .singleSection("main")
     .childFeIds(sectionName);
 
   return {

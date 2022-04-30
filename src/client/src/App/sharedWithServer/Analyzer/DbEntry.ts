@@ -6,7 +6,7 @@ import {
 } from "../SectionMetas/baseSections/baseValues/entities";
 import { Id } from "../SectionMetas/baseSections/id";
 import { DbStoreName } from "../SectionMetas/baseSectionTypes/dbStoreNames";
-import { DbInfo, Inf } from "../SectionMetas/Info";
+import { DbInfo, InfoS } from "../SectionMetas/Info";
 import { relSections } from "../SectionMetas/relSections";
 import {
   DbNameInfo,
@@ -191,7 +191,7 @@ export const DbEnt = {
       rowEntry,
       cellArr,
       "cell",
-      Inf.db(indexName, dbId)
+      InfoS.db(indexName, dbId)
     );
     return rowEntry;
   },
@@ -240,7 +240,7 @@ export const DbEnt = {
         DbEnt.initSection(column.dbId, column.values)
       ),
       "column",
-      Inf.db(tableName, dbId)
+      InfoS.db(tableName, dbId)
     );
   },
 };

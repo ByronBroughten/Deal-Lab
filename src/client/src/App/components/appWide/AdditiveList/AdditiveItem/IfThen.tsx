@@ -1,5 +1,5 @@
 import useToggleView from "../../../../modules/customHooks/useToggleView";
-import { Inf } from "../../../../sharedWithServer/SectionMetas/Info";
+import { InfoS } from "../../../../sharedWithServer/SectionMetas/Info";
 import { FeNameInfo } from "../../../../sharedWithServer/SectionMetas/relSections/rel/relVarbInfoTypes";
 import MaterialStringEditor from "../../../inputs/MaterialStringEditor";
 import IfThenContent from "./IfThen/IfThenContent";
@@ -11,7 +11,7 @@ export default function IfThen({ feInfo }: Props) {
   return (
     <>
       <td className="AdditiveItem-nameCell">
-        <MaterialStringEditor feVarbInfo={Inf.feVarb("name", feInfo)} />
+        <MaterialStringEditor feVarbInfo={InfoS.feVarb("name", feInfo)} />
       </td>
       <td className="AdditiveItem-contentCell">
         <div className="AdditiveItem-contentCellDiv">

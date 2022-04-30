@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useAnalyzerContext } from "../../../../../../../modules/usePropertyAnalyzer";
 import { listOperators } from "../../../../../../../sharedWithServer/Analyzer/methods/solveVarbs/solveAndUpdateValue/updateUserVarb";
-import { Inf } from "../../../../../../../sharedWithServer/SectionMetas/Info";
+import { InfoS } from "../../../../../../../sharedWithServer/SectionMetas/Info";
 import LogicOperators from "../../../../../../appWide/LogicOperators";
 import ListMaker from "../../../../../../inputs/ListEditor";
 import NumObjEditor from "../../../../../../inputs/NumObjEditor";
@@ -31,7 +31,7 @@ export default function IfLogic({ rowId }: { rowId: string }) {
   return (
     <Styled>
       <NumObjEditor
-        feVarbInfo={Inf.feVarb("left", feInfo)}
+        feVarbInfo={InfoS.feVarb("left", feInfo)}
         className="logic-left"
         bypassNumeric={true}
       />
@@ -48,13 +48,13 @@ export default function IfLogic({ rowId }: { rowId: string }) {
       {logicType === "listLogic" && (
         <ListMaker
           className="logic-right"
-          feVarbInfo={Inf.feVarb("rightList", feInfo)}
+          feVarbInfo={InfoS.feVarb("rightList", feInfo)}
         />
       )}
       {logicType === "valueLogic" && (
         <NumObjEditor
           className="logic-right"
-          feVarbInfo={Inf.feVarb("rightValue", feInfo)}
+          feVarbInfo={InfoS.feVarb("rightValue", feInfo)}
           labeled={false}
         />
       )}

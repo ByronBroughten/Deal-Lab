@@ -17,7 +17,7 @@ export type LoginQueryObjects = {
 
 export type LoginUserNext = Omit<
   {
-    [SN in SectionName<"initOnLogin">]: SectionPackRaw<"fe", SN>[];
+    [SN in SectionName<"loadOnLogin">]: SectionPackRaw<"fe", SN>[];
   },
   "row"
 >;
@@ -33,7 +33,7 @@ export function isLoginUserNext(value: any): value is LoginUserNext {
 
 function makeZLoginUserSchema() {
   return z.object(
-    sectionNameS.arrs.fe.initOnLogin.reduce((partial, sectionName) => {
+    sectionNameS.arrs.fe.loadOnLogin.reduce((partial, sectionName) => {
       partial[sectionName] = zodSchema.array(zRawSectionPack);
       return partial;
     }, {} as Partial<Record<keyof LoginUserNext, any>>) as Record<

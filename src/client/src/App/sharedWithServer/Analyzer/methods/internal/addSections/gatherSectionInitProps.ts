@@ -1,6 +1,6 @@
 import Analyzer from "../../../../Analyzer";
 import { sectionMetas } from "../../../../SectionMetas";
-import { Inf } from "../../../../SectionMetas/Info";
+import { InfoS } from "../../../../SectionMetas/Info";
 import {
   FeParentInfo,
   ParentFinder,
@@ -30,7 +30,7 @@ function gatherInitPropsFromDbEntry<SN extends SectionName>(
   initFromDefault: boolean | undefined
 ) {
   const { sectionName, feId } = baseSectionProps;
-  const feInfo = Inf.fe(sectionName, feId);
+  const feInfo = InfoS.fe(sectionName, feId);
   const { dbId, dbSections } = dbEntry;
   const dbSectionArr = dbSections[sectionName];
 
@@ -84,7 +84,7 @@ function gatherInitPropsByDefault<S extends SectionName>(
   initFromDefault: boolean | undefined
 ) {
   const { sectionName, feId } = baseSectionProps;
-  const feInfo = Inf.fe(sectionName, feId);
+  const feInfo = InfoS.fe(sectionName, feId);
   const sectionMeta = analyzer.meta.get(sectionName);
 
   const { parentFinder, ...rest } = baseSectionProps;

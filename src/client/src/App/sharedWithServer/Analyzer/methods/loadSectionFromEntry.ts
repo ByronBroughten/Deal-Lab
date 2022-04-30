@@ -25,7 +25,7 @@ export function loadSectionArrAndSolve<S extends SectionName<"hasOneParent">>(
     ]);
     if (resetDbIds) {
       const { feInfo } = next.lastSection(sectionName);
-      next = internal.resetSectionAndChildDbIds(next, feInfo);
+      next = next.resetSectionAndChildDbIds(feInfo);
     }
     return next;
   }, next as Analyzer);

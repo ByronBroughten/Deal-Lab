@@ -2,7 +2,7 @@ import { cloneDeep } from "lodash";
 import { sectionMetas } from "../SectionMetas";
 import { SimpleSectionName } from "../SectionMetas/baseSections";
 import { InEntities } from "../SectionMetas/baseSections/baseValues/entities";
-import { Inf } from "../SectionMetas/Info";
+import { InfoS } from "../SectionMetas/Info";
 import {
   DbNameInfo,
   FeNameInfo,
@@ -167,7 +167,7 @@ export default class StateSection<
   }
   get feVarbInfos(): FeVarbInfo[] {
     const { feInfo } = this;
-    if (!Inf.is.fe(feInfo, "hasVarb")) return [];
+    if (!InfoS.is.fe(feInfo, "hasVarb")) return [];
     return Object.keys(this.varbs).map((varbName) => ({
       ...feInfo,
       varbName,

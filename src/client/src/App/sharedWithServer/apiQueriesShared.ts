@@ -2,7 +2,7 @@ import urljoin from "url-join";
 import { config } from "../Constants";
 import Analyzer from "./Analyzer";
 import { FeSectionPack } from "./Analyzer/FeSectionPack";
-import { StoredSectionPackInfo } from "./Analyzer/SectionPack";
+import { StoredSectionPackInfo } from "./Analyzer/SectionPackRaw";
 import {
   ApiQueryName,
   NextReq,
@@ -15,7 +15,7 @@ import {
   SectionPackReq,
 } from "./apiQueriesShared/makeGeneralReqs";
 import { SectionFinder } from "./SectionMetas/baseSectionTypes";
-import { SectionName } from "./SectionMetas/SectionName";
+import { DbStoreNameNext } from "./SectionMetas/relNameArrs/storeArrs";
 
 const makeApiReqs = makeReqMakers();
 const apiPaths = makeApiPaths();
@@ -54,7 +54,7 @@ type ApiQueriesShared = {
 
 export class ReqMaker {
   constructor(private sections: Analyzer = Analyzer.initAnalyzer()) {}
-  sectionPackArr<SN extends SectionName<"dbStoreArrNext">>(sectionName: SN) {
+  sectionPackArr<DN extends DbStoreNameNext<"arrStore">>(sectionName: DN) {
     const rawSectionPackArr = this.sections.makeRawSectionPackArr(sectionName);
     return makeReq({
       dbStoreName: sectionName,
@@ -82,7 +82,7 @@ export class ReqMaker {
     );
   }
   sectionPack(
-    finder: SectionFinder<SectionName<"dbStoreSection">>
+    finder: SectionFinder<DbStoreNameNext<"indexStore">>
   ): SectionPackReq {
     const sectionPack = this.sections.makeRawSectionPack(finder);
     const { sectionName } = sectionPack;

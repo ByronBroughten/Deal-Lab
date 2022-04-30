@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useAnalyzerContext } from "../../../../../../modules/usePropertyAnalyzer";
-import { Inf } from "../../../../../../sharedWithServer/SectionMetas/Info";
+import { InfoS } from "../../../../../../sharedWithServer/SectionMetas/Info";
 import theme from "../../../../../../theme/Theme";
 import MaterialSelect from "../../../../../inputs/MaterialSelect";
 import NumObjEditor from "../../../../../inputs/NumObjEditor";
@@ -45,7 +45,7 @@ export default function LogicRow({ id, idx = "" }: Props) {
       {["if", "or if"].includes(type) && <IfLogic rowId={id} />}
       {["then", "or else"].includes(type) && (
         <NumObjEditor
-          feVarbInfo={Inf.feVarb("then", feInfo)}
+          feVarbInfo={InfoS.feVarb("then", feInfo)}
           className={"then-content"}
           labeled={false}
         />

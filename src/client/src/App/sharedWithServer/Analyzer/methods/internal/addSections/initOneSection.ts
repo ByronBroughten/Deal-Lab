@@ -1,5 +1,5 @@
 import Analyzer from "../../../../Analyzer";
-import { FeInfo, Inf } from "../../../../SectionMetas/Info";
+import { FeInfo, InfoS } from "../../../../SectionMetas/Info";
 import { SectionName } from "../../../../SectionMetas/SectionName";
 import StateSection from "../../../StateSection";
 import { InitStateSectionProps } from "../../../StateSectionOld";
@@ -21,7 +21,7 @@ function addToParentChildIds(
   feInfo: FeInfo,
   idx?: number
 ): Analyzer {
-  if (!Inf.is.fe(feInfo, "hasParent")) return analyzer;
+  if (!InfoS.is.fe(feInfo, "hasParent")) return analyzer;
   const parentSection = analyzer.parent(feInfo);
   const nextParent = parentSection.addChildFeId(feInfo, idx);
   return analyzer.updateSection(nextParent);
@@ -48,7 +48,7 @@ export function initOneSection<S extends SectionName>(
 ): Analyzer {
   next = pushSection(next, StateSection.init(props));
   const { feInfo } = next.lastSection(props.sectionName);
-  if (Inf.is.fe(feInfo, "hasParent")) {
+  if (InfoS.is.fe(feInfo, "hasParent")) {
     if (typeof idx === "number")
       next = insertInParentChildIds(next, feInfo, idx);
     else next = pushToParentChildIds(next, feInfo);

@@ -21,7 +21,7 @@ type MakeVarbInfo<I extends MultiSectionInfo> = MultiVarbInfo<
   Exclude<I["sectionName"], "main">
 > & { idType: I["idType"]; id: I["id"] };
 
-export const Inf = {
+export const InfoS = {
   is: {
     singleMulti(info: MultiSectionInfo): info is MultiFindByFocalInfo {
       const { id, idType } = info;

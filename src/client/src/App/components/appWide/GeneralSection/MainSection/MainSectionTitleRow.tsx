@@ -7,7 +7,7 @@ import useToggleView from "../../../../modules/customHooks/useToggleView";
 import { auth } from "../../../../modules/services/authService";
 import { useAnalyzerContext } from "../../../../modules/usePropertyAnalyzer";
 import { useSectionQueryActions } from "../../../../modules/useQueryActions/useSectionQueryActions";
-import { FeInfo, Inf } from "../../../../sharedWithServer/SectionMetas/Info";
+import { FeInfo, InfoS } from "../../../../sharedWithServer/SectionMetas/Info";
 import theme from "../../../../theme/Theme";
 import BtnTooltip from "../../BtnTooltip";
 import { IconBtn } from "../../IconBtn";
@@ -38,7 +38,7 @@ export default function MainSectionTitleRow({
   });
 
   const { dbId, indexStoreName } = analyzer.section(feInfo);
-  const isSaved = analyzer.hasSection(Inf.db(indexStoreName, dbId));
+  const isSaved = analyzer.hasSection(InfoS.db(indexStoreName, dbId));
   const isGuest = !auth.isLoggedIn;
 
   return (

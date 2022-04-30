@@ -1,4 +1,4 @@
-import { FeInfo, Inf } from "../../../../sharedWithServer/SectionMetas/Info";
+import { FeInfo, InfoS } from "../../../../sharedWithServer/SectionMetas/Info";
 import MaterialStringEditor from "../../../inputs/MaterialStringEditor";
 import NumObjEditor from "../../../inputs/NumObjEditor";
 
@@ -7,12 +7,12 @@ export default function LabeledEquation({ feInfo }: Props) {
   return (
     <>
       <td className="AdditiveItem-nameCell">
-        <MaterialStringEditor feVarbInfo={Inf.feVarb("name", feInfo)} />
+        <MaterialStringEditor feVarbInfo={InfoS.feVarb("name", feInfo)} />
       </td>
       <td className="AdditiveItem-contentCell">
         <div className="AdditiveItem-contentCellDiv">
           <NumObjEditor
-            feVarbInfo={Inf.feVarb("editorValue", feInfo)}
+            feVarbInfo={InfoS.feVarb("editorValue", feInfo)}
             className="cost"
             labeled={false}
           />

@@ -11,6 +11,7 @@ import {
   SimpleSectionName,
 } from "../../baseSections";
 import { BaseName } from "../../baseSectionTypes";
+import { SimpleDbStoreName } from "../../baseSectionTypes/dbStoreNames";
 import { relVarb } from "./relVarb";
 import { GeneralRelVarbs, RelVarbs, relVarbs } from "./relVarbs";
 
@@ -22,11 +23,10 @@ export type GeneralRelSection = {
   rowSourceName: BaseName | null;
   tableSourceNameNext: BaseName | null;
   indexStoreName: BaseName<"dbStore", "db"> | null;
-  indexStoreNameNext: BaseName<"dbStoreSection"> | null;
 
-  fullIndexName: BaseName<"dbStoreNext"> | null;
-  rowIndexName: BaseName<"dbStoreNext"> | null;
-  arrStoreName: BaseName<"dbStoreNext"> | null;
+  fullIndexName: SimpleDbStoreName | null;
+  rowIndexName: SimpleDbStoreName | null;
+  arrStoreName: SimpleDbStoreName | null;
 
   defaultStoreName: BaseName<"dbStore", "db"> | null;
 };
@@ -68,7 +68,7 @@ type DefaultRelSection<
   rowSourceName: null;
   tableSourceNameNext: null;
   indexStoreName: null;
-  indexStoreNameNext: null;
+
   defaultStoreName: null;
 
   fullIndexName: null;
@@ -105,7 +105,7 @@ export const relSection = {
       tableSourceNameNext: null,
       rowSourceName: null,
       indexStoreName: null,
-      indexStoreNameNext: null,
+
       defaultStoreName: null,
 
       fullIndexName: null,

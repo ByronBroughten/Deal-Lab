@@ -1,5 +1,5 @@
 import { useAnalyzerContext } from "../../../modules/usePropertyAnalyzer";
-import { FeInfo, Inf } from "../../../sharedWithServer/SectionMetas/Info";
+import { FeInfo, InfoS } from "../../../sharedWithServer/SectionMetas/Info";
 import { SectionName } from "../../../sharedWithServer/SectionMetas/SectionName";
 
 const valueSwitchValues = [
@@ -52,7 +52,7 @@ export function useAdditiveItem(
     itemType
   );
 
-  const valueSwitchInfo = Inf.feVarb("valueSwitch", feInfo);
+  const valueSwitchInfo = InfoS.feVarb("valueSwitch", feInfo);
   const valueSwitch = analyzer.value(
     valueSwitchInfo,
     "string"

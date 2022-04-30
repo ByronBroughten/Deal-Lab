@@ -1,11 +1,8 @@
 import { Request, Response } from "express";
-import {
-  NextReq,
-  NextRes,
-} from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
+import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import { DbSectionPackInfo } from "../../client/src/App/sharedWithServer/apiQueriesShared/makeGeneralReqs";
 import authWare from "../../middleware/authWare";
-import { serverSend } from "../shared/crudValidators";
+import { sendSuccess } from "../shared/crudValidators";
 import { findUserByIdAndUpdate } from "./shared/findAndUpdate";
 import { validateDbSectionInfoReq } from "./shared/validateDbSectionInfoReq";
 import { LoggedIn } from "./shared/validateLoggedInUser";
@@ -22,8 +19,8 @@ async function deleteSectionServerSide(req: Request, res: Response) {
     userId,
     queryParameters: makePullParameters(spInfo),
   });
-  const resObj: NextRes<"deleteSection"> = { data: { dbId: spInfo.dbId } };
-  serverSend.success({ res, resObj });
+
+  sendSuccess(res, "deleteSection", { data: { dbId: spInfo.dbId } });
 }
 
 function validateDeleteSectionReq(

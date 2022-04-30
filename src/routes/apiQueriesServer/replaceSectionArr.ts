@@ -1,10 +1,8 @@
 import { Request, Response } from "express";
 import { ServerSectionPack } from "../../client/src/App/sharedWithServer/Analyzer/SectionPackRaw";
-import { NextRes } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
-import { makeRes } from "../../client/src/App/sharedWithServer/apiQueriesShared/makeGeneralReqs";
-import { DbStoreName } from "../../client/src/App/sharedWithServer/SectionMetas/baseSectionTypes/dbStoreNames";
+import { DbStoreNameNext } from "../../client/src/App/sharedWithServer/SectionMetas/relNameArrs/storeArrs";
 import authWare from "../../middleware/authWare";
-import { serverSend } from "../shared/crudValidators";
+import { sendSuccess } from "../shared/crudValidators";
 import { SectionPackDb } from "../shared/UserDbNext/SectionPackDb";
 import { findUserByIdAndUpdate } from "./shared/findAndUpdate";
 import { validateSectionPackArrReq } from "./shared/validateSectionPackReq";
@@ -23,14 +21,15 @@ async function replaceSectionArrServerSide(req: Request, res: Response) {
     queryParameters: makeSetSectionArrParameters(rest),
   });
 
-  const resObj: NextRes<"replaceSectionArr"> = makeRes({
-    dbStoreName: rest.dbStoreName,
+  sendSuccess(res, "replaceSectionArr", {
+    data: {
+      dbStoreName: rest.dbStoreName,
+    },
   });
-  serverSend.success({ res, resObj });
 }
 
 type MakeSetSectionArrParametersProps = {
-  dbStoreName: DbStoreName<"arr">;
+  dbStoreName: DbStoreNameNext<"arrStore">;
   sectionPackArr: ServerSectionPack[];
 };
 function makeSetSectionArrParameters({

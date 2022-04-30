@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useAnalyzerContext } from "../../../../../modules/usePropertyAnalyzer";
-import { Inf } from "../../../../../sharedWithServer/SectionMetas/Info";
+import { InfoS } from "../../../../../sharedWithServer/SectionMetas/Info";
 import ccs from "../../../../../theme/cssChunks";
 import theme from "../../../../../theme/Theme";
 import XBtn from "../../../../appWide/Xbtn";
@@ -26,7 +26,7 @@ export default function UnitItem({ id, unitNumber }: Props) {
         </div>
         <NumObjEditor
           className="brs"
-          feVarbInfo={Inf.feVarb("numBedrooms", feInfo)}
+          feVarbInfo={InfoS.feVarb("numBedrooms", feInfo)}
         />
         <NumObjEditor
           className="target-rent"

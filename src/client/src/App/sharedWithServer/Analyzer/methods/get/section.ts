@@ -1,6 +1,6 @@
 import Analyzer from "../../../Analyzer";
 import { SectionFinder } from "../../../SectionMetas/baseSectionTypes";
-import { FeInfo, Inf } from "../../../SectionMetas/Info";
+import { FeInfo, InfoS } from "../../../SectionMetas/Info";
 import {
   FeNameInfo,
   FeVarbInfo,
@@ -65,7 +65,7 @@ export function feSection<S extends SectionName>(
   sectionName: S,
   feId: string
 ): StateSection<S> {
-  const feInfo = Inf.fe(sectionName, feId);
+  const feInfo = InfoS.fe(sectionName, feId);
   return this.section(feInfo);
 }
 
@@ -128,7 +128,7 @@ export function sectionIsIndexSaved(
   feInfo: FeInfo<"hasIndexStore">
 ): boolean {
   const { dbId, indexStoreName } = this.section(feInfo);
-  return this.hasSection(Inf.db(indexStoreName, dbId));
+  return this.hasSection(InfoS.db(indexStoreName, dbId));
 }
 export function sectionOutFeVarbInfos(
   this: Analyzer,
@@ -137,7 +137,7 @@ export function sectionOutFeVarbInfos(
   let outVarbInfos: FeVarbInfo[] = [];
   for (const varbName in this.section(feInfo).varbs) {
     outVarbInfos = outVarbInfos.concat(
-      this.outVarbInfos(Inf.feVarb(varbName, feInfo))
+      this.outVarbInfos(InfoS.feVarb(varbName, feInfo))
     );
   }
   return outVarbInfos;

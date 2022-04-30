@@ -1,5 +1,5 @@
 import { SectionFinder } from "../../../SectionMetas/baseSectionTypes";
-import { Inf } from "../../../SectionMetas/Info";
+import { InfoS } from "../../../SectionMetas/Info";
 import { SectionName } from "../../../SectionMetas/SectionName";
 import { Obj } from "../../../utils/Obj";
 import { GeneralSectionPack, SectionPackRaw } from "../../SectionPackRaw";
@@ -23,7 +23,7 @@ function feIdsToRawSections<SN extends SectionName>(
   feIdArr: string[]
 ): OneRawSection<"fe", SN>[] {
   return feIdArr.map((id) => {
-    const feInfo = Inf.fe(sectionName, id);
+    const feInfo = InfoS.fe(sectionName, id);
     return analyzer.makeRawSection(feInfo);
   });
 }

@@ -103,7 +103,7 @@ export class SectionPack<SN extends SectionName, CN extends ContextName> {
   static isServer(value: any) {
     return SectionPack.isRaw(value, {
       contextName: "db",
-      sectionType: "dbStore",
+      sectionType: "dbStoreNext",
     });
   }
 }
@@ -114,11 +114,4 @@ type IsRawProps<
 > = {
   sectionType?: ST;
   contextName?: CN;
-};
-
-export type StoredSectionPackInfo<
-  SN extends SectionName<"dbStore"> = SectionName<"dbStore">
-> = {
-  dbStoreName: SN;
-  dbId: string;
 };

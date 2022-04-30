@@ -1,5 +1,5 @@
 import Analyzer from "../../../Analyzer";
-import { FeInfo, Inf } from "../../../SectionMetas/Info";
+import { FeInfo, InfoS } from "../../../SectionMetas/Info";
 import { FeVarbInfo } from "../../../SectionMetas/relSections/rel/relVarbInfoTypes";
 import { SectionName } from "../../../SectionMetas/SectionName";
 import { internal } from "../internal";
@@ -37,7 +37,7 @@ function initSectionAndChildren<S extends SectionName>(
   for (const initProps of initPropsArr) {
     next = initOneSection(next, initProps);
     const { feId, sectionName } = initProps;
-    newFeInfos.push(Inf.fe(sectionName, feId));
+    newFeInfos.push(InfoS.fe(sectionName, feId));
   }
 
   next = initOutEntities(next, newFeInfos);
@@ -57,7 +57,7 @@ function addOutEntitiesForSectionInVarbs(
   analyzer: Analyzer,
   feInfo: FeInfo
 ): Analyzer {
-  if (!Inf.is.fe(feInfo, "hasVarb")) return analyzer;
+  if (!InfoS.is.fe(feInfo, "hasVarb")) return analyzer;
   let next = analyzer;
   const { varbs } = next.section(feInfo);
   for (const [varbName, varb] of Object.entries(varbs)) {
@@ -74,6 +74,6 @@ function feInfosFromInitPropsArr(
 ): FeInfo[] {
   return initPropsArr.map((initProps) => {
     const { feId, sectionName } = initProps;
-    return Inf.fe(sectionName, feId);
+    return InfoS.fe(sectionName, feId);
   });
 }

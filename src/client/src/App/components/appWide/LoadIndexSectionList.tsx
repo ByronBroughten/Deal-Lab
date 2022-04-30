@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useAnalyzerContext } from "../../modules/usePropertyAnalyzer";
 import { useSectionQueryActions } from "../../modules/useQueryActions/useSectionQueryActions";
 import { sectionMetas } from "../../sharedWithServer/SectionMetas";
-import { FeInfo, Inf } from "../../sharedWithServer/SectionMetas/Info";
+import { FeInfo, InfoS } from "../../sharedWithServer/SectionMetas/Info";
 import { ChildName } from "../../sharedWithServer/SectionMetas/relSectionTypes/ChildTypes";
 import { IndexParentName } from "../../sharedWithServer/SectionMetas/relSectionTypes/StoreTypes";
 import {
@@ -48,7 +48,7 @@ function useIndexedEntries<S extends SectionName<"hasIndexStore">>(
   );
 
   const indexedEntries = feIds.map((id) => {
-    const section = analyzer.section(Inf.fe(storeName, id));
+    const section = analyzer.section(InfoS.fe(storeName, id));
     return {
       title: section.value("title", "string"),
       dbId: section.dbId,

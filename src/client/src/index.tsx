@@ -10,6 +10,12 @@ AppRegistry.runApplication("App", {
 
 reportWebVitals();
 
+// I ought to update each of the
+
+// Options
+// 1. Re-implement the section queries
+// 2. Implement the new table stuff on the front-end (aside from adding a column)
+
 // -fix the functions involved in the Table component
 
 // - fix the functions used for the tables.

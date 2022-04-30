@@ -90,7 +90,7 @@ export const baseSections = {
     mgmtTableNext: base.section.tableNext,
     analysisTableNext: base.section.tableNext,
 
-    tableRow: base.section.schema(base.varbs.tableRow),
+    tableRow: base.section.schema(base.varbs.tableRow, { userDefined: true }),
     column: base.section.schema(base.varbs.varbInfo),
     cell: base.section.schema({ ...base.varbs.varbInfo, value: "numObj" }),
 
@@ -215,7 +215,10 @@ export const baseSections = {
       { title: "string" },
       base.options.alwaysOneFromStart
     ),
-    userOutputList: base.section.schema({ title: "string" }),
+    userOutputList: base.section.schema(
+      { title: "string" },
+      { userDefined: true }
+    ),
     outputListDefault: base.section.schema(
       { title: "string" },
       base.options.defaultSection
@@ -245,7 +248,6 @@ export const baseSections = {
     ),
     user: base.section.schema(base.varbs.feUser, {
       ...base.options.alwaysOneFromStart,
-      loadOnLogin: true,
     }),
   },
   get db() {

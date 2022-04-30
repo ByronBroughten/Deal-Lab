@@ -1,5 +1,5 @@
 import { VariableOption } from "../sharedWithServer/Analyzer/methods/get/variableOptions";
-import { Inf } from "../sharedWithServer/SectionMetas/Info";
+import { InfoS } from "../sharedWithServer/SectionMetas/Info";
 import { SectionName } from "../sharedWithServer/SectionMetas/SectionName";
 import { StateQuerierBase, StateQuerierBaseProps } from "./StateQuerierBase";
 import { useAnalyzerContext } from "./usePropertyAnalyzer";
@@ -53,7 +53,7 @@ class TableQueryActor extends StateQuerierBase {
     // this.trySendTableRevertIfFail();
   }
   async removeColumn(columnFeId: string) {
-    const columnInfo = Inf.fe("column", columnFeId);
+    const columnInfo = InfoS.fe("column", columnFeId);
     this.nextSections = this.sections.eraseSectionAndSolve(columnInfo);
     this.setNextSectionsAsState();
     this.sendTable();

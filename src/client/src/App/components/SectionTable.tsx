@@ -6,7 +6,7 @@ import { useAnalyzerContext } from "../modules/usePropertyAnalyzer";
 import { useSectionQueryActions } from "../modules/useQueryActions/useSectionQueryActions";
 import { VariableOption } from "../sharedWithServer/Analyzer/methods/get/variableOptions";
 import { SortByColumnOptions } from "../sharedWithServer/Analyzer/methods/saveAndUpdateRowIndexStore";
-import { Inf } from "../sharedWithServer/SectionMetas/Info";
+import { InfoS } from "../sharedWithServer/SectionMetas/Info";
 import { indexStoreToSectionName } from "../sharedWithServer/SectionMetas/relSectionTypes/StoreTypes";
 import { SectionName } from "../sharedWithServer/SectionMetas/SectionName";
 import theme from "../theme/Theme";
@@ -27,7 +27,7 @@ export default function SectionTable({ tableName, title }: Props) {
 
   const { rowSourceName } = analyzer.sectionMeta(tableName).core;
   const rows = sortedRowIds.map((dbId) =>
-    analyzer.section(Inf.db(rowSourceName, dbId))
+    analyzer.section(InfoS.db(rowSourceName, dbId))
   );
 
   const { isAtLeastOne, areNone } = useHowMany(rows);
@@ -61,7 +61,7 @@ export default function SectionTable({ tableName, title }: Props) {
     await store.postTableColumns(tableName, next);
   }
   async function removeColumn(feId: string) {
-    const columnInfo = Inf.fe("column", feId);
+    const columnInfo = InfoS.fe("column", feId);
     const next = analyzer.eraseSectionAndSolve(columnInfo);
     await store.postTableColumns(tableName, next);
   }

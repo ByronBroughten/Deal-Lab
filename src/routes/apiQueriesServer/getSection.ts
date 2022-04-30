@@ -3,13 +3,10 @@ import {
   SectionPackDbRaw,
   ServerSectionPack,
 } from "../../client/src/App/sharedWithServer/Analyzer/SectionPackRaw";
-import {
-  NextReq,
-  NextRes,
-} from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
+import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import authWare from "../../middleware/authWare";
 import { ResHandledError } from "../../middleware/error";
-import { serverSend } from "../shared/crudValidators";
+import { sendSuccess } from "../shared/crudValidators";
 import { SectionPackDb } from "../shared/UserDbNext/SectionPackDb";
 import {
   findSectionPack,
@@ -27,9 +24,7 @@ async function getSectionServerSide(req: Request, res: Response) {
   } = validateGetSectionReq(req, res).body;
 
   const rawServerSectionPack = await getSectionPack({ userId, spInfo, res });
-
-  const resObj: NextRes<"getSection"> = { data: { rawServerSectionPack } };
-  serverSend.success({ res, resObj });
+  sendSuccess(res, "getSection", { data: { rawServerSectionPack } });
 }
 
 export async function getSectionPack(

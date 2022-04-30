@@ -5,8 +5,6 @@ import { baseVarbs, BaseVarbSchemas } from "./baseVarbs";
 export type GeneralBaseSection = {
   alwaysOne: boolean;
   makeOneOnStartup: boolean;
-  loadOnLogin: boolean;
-  feGuestAccess: boolean;
   varbSchemas: BaseVarbSchemas;
   solvesForFinal: boolean;
   hasGlobalVarbs: boolean;
@@ -23,20 +21,14 @@ export const baseOptions = {
   get defaultSection() {
     return {
       ...this.alwaysOneFromStart,
-      feGuestAccess: true,
-      loadOnLogin: true,
     };
   },
   userList: {
-    loadOnLogin: true,
-    feGuestAccess: true,
     userDefined: true,
   },
   fallback: {
     alwaysOne: false,
-    loadOnLogin: false,
     makeOneOnStartup: false,
-    feGuestAccess: false,
     solvesForFinal: false,
     hasGlobalVarbs: false,
     userDefined: false,
@@ -70,8 +62,6 @@ export const baseSection = {
   get table() {
     return this.schema(baseVarbs.table, {
       ...baseOptions.alwaysOneFromStart,
-      loadOnLogin: true,
-      feGuestAccess: true,
     });
   },
   varbList<O extends BaseSectionOptions = {}>(options?: O) {
@@ -88,14 +78,12 @@ export const baseSection = {
       { searchFilter: "string" },
       {
         ...baseOptions.alwaysOneFromStart,
-        loadOnLogin: true,
-        feGuestAccess: true,
         placeholder: true,
       }
     );
   },
   get rowIndex() {
-    return this.schema(baseVarbs.tableRow, { loadOnLogin: true });
+    return this.schema(baseVarbs.tableRow);
   },
   get propertyBase() {
     return this.schema(baseVarbs.property);

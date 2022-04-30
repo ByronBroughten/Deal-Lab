@@ -1,5 +1,5 @@
 import Analyzer from "../../Analyzer";
-import { Inf } from "../../SectionMetas/Info";
+import { InfoS } from "../../SectionMetas/Info";
 import { rowIndexToTableName } from "../../SectionMetas/relSectionTypes/StoreTypes";
 import { SectionName } from "../../SectionMetas/SectionName";
 import Arr from "../../utils/Arr";
@@ -10,7 +10,7 @@ export function eraseIndexAndSolve(
   dbId: string
 ): Analyzer {
   const { indexStoreName } = this.meta.section(sectionName).core;
-  const indexInfo = Inf.db(indexStoreName, dbId);
+  const indexInfo = InfoS.db(indexStoreName, dbId);
   return this.eraseSectionAndSolve(indexInfo);
 }
 export function eraseRowIndexAndSolve(

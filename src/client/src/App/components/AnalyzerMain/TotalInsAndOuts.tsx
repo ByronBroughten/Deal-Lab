@@ -1,5 +1,5 @@
 import { useAnalyzerContext } from "../../modules/usePropertyAnalyzer";
-import { Inf } from "../../sharedWithServer/SectionMetas/Info";
+import { InfoS } from "../../sharedWithServer/SectionMetas/Info";
 import LabeledOutputRow from "../appWide/LabeledOutputRow";
 import { LabeledVarbSimple } from "../appWide/LabeledVarbSimple";
 import ListGroupShell from "./general/ListGroupShell";
@@ -8,7 +8,7 @@ import GlobalInfoSection from "./general/StaticInfoSection";
 export default function TotalInsAndOuts() {
   const { analyzer } = useAnalyzerContext();
   const { feInfo } = analyzer.singleSection("totalInsAndOuts");
-  const varbInfo = Inf.feVarbMaker(feInfo);
+  const varbInfo = InfoS.feVarbMaker(feInfo);
   return (
     <GlobalInfoSection>
       <LabeledOutputRow>
