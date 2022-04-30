@@ -54,19 +54,19 @@ export class SectionMetas {
     sectionName: SN,
     testSectionName: SimpleSectionName
   ): testSectionName is SectionNameWithSameChildren<SN, "fe", "db"> {
-    const sectionParentNames = this.section(sectionName).get("parentNames");
-    const otherParentNames = this.section(testSectionName, "db").get(
-      "parentNames"
+    const sectionChildNames = this.section(sectionName).get("childNames");
+    const otherChildNames = this.section(testSectionName, "db").get(
+      "childNames"
     );
-    return isEqual(sectionParentNames, otherParentNames);
+    return isEqual(sectionChildNames, otherChildNames);
   }
   isFeSectionNameWithSameChildren<SN extends SimpleSectionName>(
     sectionName: SN,
     testSectionName: SimpleSectionName
   ): testSectionName is SectionNameWithSameChildren<SN, "fe", "fe"> {
-    const sectionParentNames = this.section(sectionName).get("parentNames");
-    const otherParentNames = this.section(testSectionName).get("parentNames");
-    return isEqual(sectionParentNames, otherParentNames);
+    const sectionChildNames = this.section(sectionName).get("childNames");
+    const otherChildNames = this.section(testSectionName).get("childNames");
+    return isEqual(sectionChildNames, otherChildNames);
   }
 
   get raw() {

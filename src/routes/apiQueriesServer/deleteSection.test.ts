@@ -22,7 +22,7 @@ function makeReqs(): TestReqs {
   const addSectionReq = apiQueriesShared.addSection.makeReq({
     analyzer: next,
     feInfo,
-    dbStoreName: "propertyIndex",
+    dbStoreName: "propertyIndexNext",
   });
   const { sectionName: dbStoreName, dbId } = addSectionReq.body.sectionPack;
   return {

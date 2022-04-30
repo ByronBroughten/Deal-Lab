@@ -110,6 +110,7 @@ export const preMgmtGeneral = {
     indexStoreName: "mgmtIndex",
     defaultStoreName: "mgmtDefault",
     rowIndexName: "mgmtIndexNext",
+    arrStoreName: "mgmt",
   } as const),
   ...mgmtSection("mgmtIndexNext"),
   ...relSection.rowIndex("mgmtIndex", "Management Index"),

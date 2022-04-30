@@ -18,7 +18,7 @@ function makeAddSectionReq(): NextReq<"addSection"> {
   return apiQueriesShared.addSection.makeReq({
     analyzer,
     feInfo,
-    dbStoreName: "propertyIndex",
+    dbStoreName: "propertyIndexNext",
   });
 }
 
@@ -57,8 +57,10 @@ describe(apiRoute, () => {
     await testStatus(200);
     const postDoc = await getUserByIdNoRes(userId);
 
-    expect(postDoc.propertyIndex.length).toBe(preDoc.propertyIndex.length + 1);
-    expect(Arr.lastVal(postDoc.propertyIndex)?.dbId).toBe(
+    expect(postDoc.propertyIndexNext.length).toBe(
+      preDoc.propertyIndexNext.length + 1
+    );
+    expect(Arr.lastVal(postDoc.propertyIndexNext)?.dbId).toBe(
       req.body.sectionPack.dbId
     );
   });

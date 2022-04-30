@@ -30,11 +30,11 @@ function analysisSection<
   );
 }
 
-// table will just have rows.
 export const relAnalysisStuff = {
   ...analysisSection("analysis", {
     indexStoreName: "analysisIndex",
     rowIndexName: "analysisIndexNext",
+    arrStoreName: "analysis",
   } as const),
   ...analysisSection("analysisIndexNext"),
 

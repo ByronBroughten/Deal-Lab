@@ -180,6 +180,7 @@ export const relFinancing = {
     indexStoreName: "loanIndex",
     defaultStoreName: "loanDefault",
     rowIndexName: "loanIndexNext",
+    arrStoreName: "loan",
   } as const),
   ...loanSection("loanIndexNext"),
   ...relSection.base(

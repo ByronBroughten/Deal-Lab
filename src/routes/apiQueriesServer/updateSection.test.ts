@@ -34,7 +34,7 @@ function makeReqs(): TestReqs {
   const addSectionReq = apiQueriesShared.addSection.makeReq({
     analyzer: next,
     feInfo,
-    dbStoreName: "propertyIndex",
+    dbStoreName: "propertyIndexNext",
   });
   next = next.updateSectionValuesAndSolve(feInfo, updatedValues);
   return {
@@ -42,7 +42,7 @@ function makeReqs(): TestReqs {
     updateSection: apiQueriesShared.updateSection.makeReq({
       analyzer: next,
       feInfo,
-      dbStoreName: "propertyIndex",
+      dbStoreName: "propertyIndexNext",
     }),
   };
 }
@@ -85,10 +85,10 @@ describe(testedRoute, () => {
   it("should return 200 and update a section if happy path", async () => {
     await testStatus(200);
     const postDoc = await getUserByIdNoRes(userId);
-    const updatedDoc = postDoc.propertyIndex.find(
+    const updatedDoc = postDoc.propertyIndexNext.find(
       ({ dbId }) => dbId === reqs.updateSection.body.sectionPack.dbId
     );
-    const updatedSection = updatedDoc?.rawSections.propertyIndex.find(
+    const updatedSection = updatedDoc?.rawSections.propertyIndexNext.find(
       ({ dbId }) => dbId === reqs.updateSection.body.sectionPack.dbId
     );
     expect(updatedSection?.dbVarbs.title).toBe(updatedValues.title);
