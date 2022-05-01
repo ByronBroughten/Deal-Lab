@@ -1,4 +1,4 @@
-import { ObjectEntries } from "../../../utils/Obj";
+import { Obj } from "../../../utils/Obj";
 import {
   baseSections,
   ContextName,
@@ -70,7 +70,7 @@ function filterRelVarbsByType<
   relVarbs: RelVarbs<SC, SN>
 ): RelVarbsByType<SC, SN, VLN> {
   const partial: Partial<RelVarbsByType<SC, SN, VLN>> = {};
-  for (const [varbName, relVarb] of ObjectEntries(relVarbs)) {
+  for (const [varbName, relVarb] of Obj.entriesFull(relVarbs)) {
     if (
       isRelVarbOfType(sectionContext, sectionName, varbName, valueName, relVarb)
     )
@@ -131,7 +131,7 @@ export const relVarbs = {
       "string",
       relVarbs
     );
-    for (const [varbName, relVarb] of ObjectEntries(stringPreVarbs)) {
+    for (const [varbName, relVarb] of Obj.entriesFull(stringPreVarbs)) {
       if (isInToReturn(varbName) && typeof varbName === "string") {
         ssPreVarbs[varbName] = relVarb;
       }
@@ -155,7 +155,7 @@ export const relVarbs = {
       "numObj",
       relVarbs
     );
-    for (const [varbName, pVarb] of ObjectEntries(numObjPreVarbs)) {
+    for (const [varbName, pVarb] of Obj.entriesFull(numObjPreVarbs)) {
       if (isInToReturn(varbName) && typeof varbName === "string") {
         const { displayName, startAdornment, endAdornment } = pVarb;
         ssPreVarbs[varbName] = relVarb.sumNums(

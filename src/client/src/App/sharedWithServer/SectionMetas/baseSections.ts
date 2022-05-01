@@ -80,17 +80,21 @@ export const baseSections = {
       }
     ),
 
-    propertyIndexNext: base.section.schema(base.varbs.property),
-    loanIndexNext: base.section.schema(base.varbs.loan),
-    mgmtIndexNext: base.section.schema(base.varbs.mgmt),
-    analysisIndexNext: base.section.schema(base.varbs.analysis),
+    propertyIndexNext: base.section.schema(base.varbs.property, {
+      uniqueDbId: true,
+    }),
+    loanIndexNext: base.section.schema(base.varbs.loan, { uniqueDbId: true }),
+    mgmtIndexNext: base.section.schema(base.varbs.mgmt, { uniqueDbId: true }),
+    analysisIndexNext: base.section.schema(base.varbs.analysis, {
+      uniqueDbId: true,
+    }),
 
     propertyTableNext: base.section.tableNext,
     loanTableNext: base.section.tableNext,
     mgmtTableNext: base.section.tableNext,
     analysisTableNext: base.section.tableNext,
 
-    tableRow: base.section.schema(base.varbs.tableRow, { userDefined: true }),
+    tableRow: base.section.schema(base.varbs.tableRow, { uniqueDbId: true }),
     column: base.section.schema(base.varbs.varbInfo),
     cell: base.section.schema({ ...base.varbs.varbInfo, value: "numObj" }),
 
@@ -128,7 +132,7 @@ export const baseSections = {
         ] as const),
         ...base.varbs.numObj(["editorValue", "value"] as const),
       },
-      { userDefined: true }
+      { uniqueDbId: true }
     ),
     // these solve.
     upfrontCostList: base.section.singleTimeListSolves,
@@ -217,7 +221,7 @@ export const baseSections = {
     ),
     userOutputList: base.section.schema(
       { title: "string" },
-      { userDefined: true }
+      { uniqueDbId: true }
     ),
     outputListDefault: base.section.schema(
       { title: "string" },

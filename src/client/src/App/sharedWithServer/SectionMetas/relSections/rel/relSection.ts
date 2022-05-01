@@ -21,7 +21,7 @@ export type GeneralRelSection = {
 
   displayName: string;
   rowSourceName: BaseName | null;
-  tableSourceNameNext: BaseName | null;
+  tableIndexName: BaseName | null;
   indexStoreName: BaseName<"dbStore", "db"> | null;
 
   fullIndexName: SimpleDbStoreName | null;
@@ -66,7 +66,7 @@ type DefaultRelSection<
   relVarbs: RVS;
   childNames: [];
   rowSourceName: null;
-  tableSourceNameNext: null;
+  tableIndexName: null;
   indexStoreName: null;
 
   defaultStoreName: null;
@@ -102,7 +102,7 @@ export const relSection = {
       displayName,
       relVarbs,
       childNames: [],
-      tableSourceNameNext: null,
+      tableIndexName: null,
       rowSourceName: null,
       indexStoreName: null,
 
@@ -228,14 +228,14 @@ export const relSection = {
     S extends BaseName<"tableNext">,
     D extends string,
     R extends BaseName
-  >(sectionName: S, displayName: D, tableSourceNameNext: R) {
+  >(sectionName: S, displayName: D, tableIndexName: R) {
     return this.base(
       "fe" as ContextName,
       sectionName,
       displayName,
       { searchFilter: relVarb.string() } as RelVarbs<ContextName, S>,
       {
-        tableSourceNameNext,
+        tableIndexName,
         parent: "main",
         arrStoreName: sectionName,
         childNames: ["column", "tableRow"] as const,

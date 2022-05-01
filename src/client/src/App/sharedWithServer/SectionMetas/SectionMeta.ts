@@ -7,7 +7,10 @@ import {
   SimpleSectionName,
 } from "./baseSections";
 import { RelName } from "./relNameArrs";
-import { SourceTables, sourceTables } from "./relNameArrs/tableSourceArrs";
+import {
+  IndexTableNames,
+  indexToTableNames,
+} from "./relNameArrs/tableSourceArrs";
 import { relSections, RelSections } from "./relSections";
 import { ChildIdArrs, ChildName } from "./relSectionTypes/ChildTypes";
 import {
@@ -20,21 +23,39 @@ import { VarbMetas } from "./VarbMetas";
 type SectionMetaExtra<CN extends ContextName, SN extends SimpleSectionName> = {
   varbMetas: VarbMetas;
   parentNames: SectionToParentArrs<CN>[SN];
-  indexTableName: SourceTableParams[SN];
+  indexTableName: IndexToTableNameParam[SN];
+  // indexSourceName: IndexToSourceNamesParam[SN];
 };
 
-type SourceTableParams = {
-  [SN in SimpleSectionName]: SN extends RelName<"tableSource">
-    ? SourceTables[SN]
+type IndexToTableNameParam = {
+  [SN in SimpleSectionName]: SN extends RelName<"rowIndexNext">
+    ? IndexTableNames[SN]
     : null;
 };
-function getSourceTableParam<SN extends SimpleSectionName>(
+
+// type IndexToSourceNamesParam = {
+//   [SN in SimpleSectionName]: SN extends RelName<"indexStore">
+//     ? IndexToSourceNames[SN]
+//     : [];
+// };
+
+function getRowIndexTableNameParam<SN extends SimpleSectionName>(
   sectionName: SN
-): SourceTableParams[SN] {
-  if (sectionNameS.is(sectionName, "tableSource")) {
-    return sourceTables[sectionName] as SourceTableParams[SN];
-  } else return null as SourceTableParams[SN];
+): IndexToTableNameParam[SN] {
+  if (sectionNameS.is(sectionName, "rowIndexNext")) {
+    return indexToTableNames[sectionName] as IndexToTableNameParam[SN];
+  } else return null as IndexToTableNameParam[SN];
 }
+
+// function getIndexSourceNamesParam<SN extends SimpleSectionName>(
+//   sectionName: SN
+// ): IndexToSourceNamesParam[SN] {
+//   if (sectionNameS.is(sectionName, "hasIndexStoreNext")) {
+//     return indexToSourceNames[
+//       sectionName as keyof typeof indexToSourceNames
+//     ] as IndexToSourceNamesParam[SN];
+//   } else return [] as IndexToSourceNamesParam[SN];
+// }
 
 function getParentNamesParam<
   CN extends ContextName,
@@ -49,8 +70,6 @@ export type SectionMetaCore<
 > = RelSections[CN][SN & keyof RelSections[CN]] &
   BaseSections[CN][SN] &
   SectionMetaExtra<CN, SN>;
-
-type Test = SectionMeta<"fe", "property" | "loan">["core"]["childNames"];
 
 export class SectionMeta<CN extends ContextName, SN extends SimpleSectionName> {
   constructor(readonly core: SectionMetaCore<CN, SN>) {}
@@ -95,7 +114,8 @@ export class SectionMeta<CN extends ContextName, SN extends SimpleSectionName> {
       ...baseSection,
       varbMetas: VarbMetas.initFromRelVarbs(relSection.relVarbs, sectionName),
       parentNames: getParentNamesParam(contextName, sectionName),
-      indexTableName: getSourceTableParam(sectionName),
+      indexTableName: getRowIndexTableNameParam(sectionName),
+      // indexSourceName: getIndexSourceNamesParam(sectionName),
     });
   }
 }

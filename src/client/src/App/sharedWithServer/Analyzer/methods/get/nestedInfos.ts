@@ -7,7 +7,7 @@ import {
 } from "../../../SectionMetas/relSections/rel/relVarbInfoTypes";
 import { SectionName } from "../../../SectionMetas/SectionName";
 import array from "../../../utils/Arr";
-import { ObjectEntries } from "../../../utils/Obj";
+import { Obj } from "../../../utils/Obj";
 
 export function nestedFeInfos<S extends SectionName>(
   this: Analyzer,
@@ -27,7 +27,7 @@ export function nestedFeInfos<S extends SectionName>(
   const { feInfo } = section;
   feInfos.push(feInfo);
 
-  const childEntries = ObjectEntries(section.allChildFeIds());
+  const childEntries = Obj.entriesFull(section.allChildFeIds());
   for (const [sectionName, feIdArr] of childEntries) {
     if (skipSectionNames.includes(sectionName)) continue;
     for (const id of feIdArr) {

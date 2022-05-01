@@ -7,8 +7,8 @@ import styled from "styled-components";
 import { Normalize } from "styled-normalize";
 import AnalyzerMain from "./App/components/AnalyzerMain";
 import NotFound from "./App/components/general/NotFound";
+import IndexTable from "./App/components/IndexTable";
 import NavBar from "./App/components/NavBar";
-import SectionTable from "./App/components/SectionTable";
 import usePropertyAnalyzer, {
   AnalyzerContext,
 } from "./App/modules/usePropertyAnalyzer";
@@ -33,7 +33,14 @@ const App: React.FC = () => {
                 <Routes>
                   <Route
                     path="/deals"
-                    element={<SectionTable tableName="analysisTable" />}
+                    element={
+                      <IndexTable
+                        {...{
+                          tableName: "analysisTableNext",
+                          indexSourceFinder: "analysis",
+                        }}
+                      />
+                    }
                   />
                   {/* <Route path="/variables" element={<UserVarbsManager/>} /> */}
                   {/* <Route path="/lists" element={<UserListsManager/>} /> */}

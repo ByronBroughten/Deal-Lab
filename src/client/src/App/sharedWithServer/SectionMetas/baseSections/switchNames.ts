@@ -1,4 +1,4 @@
-import { ObjectKeys } from "../../utils/Obj";
+import { Obj } from "../../utils/Obj";
 
 type NamePlusEndings<
   Base extends string,
@@ -12,7 +12,7 @@ export function baseNamePlusEndings<
   Endings extends Record<string, string>,
   ToReturn extends NamePlusEndings<Base, Endings>
 >(baseName: Base, endings: Endings): ToReturn {
-  return ObjectKeys(endings).reduce((names, prop) => {
+  return Obj.keys(endings).reduce((names, prop) => {
     names[prop] = `${baseName}${endings[prop]}` as ToReturn[typeof prop];
     return names;
   }, {} as Partial<ToReturn>) as ToReturn;

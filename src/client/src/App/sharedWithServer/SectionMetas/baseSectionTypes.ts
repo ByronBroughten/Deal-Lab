@@ -19,7 +19,10 @@ export type BaseName<
   NameArrs = BaseNameArrs[SC][ST]
 > = NameArrs[number & keyof NameArrs];
 
-type AlwaysOneFinder<S extends BaseName> = Extract<S, BaseName<"alwaysOne">>;
+export type AlwaysOneFinder<S extends BaseName> = Extract<
+  S,
+  BaseName<"alwaysOne">
+>;
 //
 export type SectionFinder<S extends SimpleSectionName = SimpleSectionName> =
   | SpecificSectionInfo<S>

@@ -1,5 +1,5 @@
 import { ContextName, sectionContext, SimpleSectionName } from "./baseSections";
-import { SectionVarbName } from "./baseSectionTypes";
+import { SectionFinder, SectionVarbName } from "./baseSectionTypes";
 import { baseNameArrs, BaseNameArrs } from "./baseSectionTypes/baseNameArrs";
 import { relNameArrs, RelNameArrs } from "./relNameArrs";
 
@@ -27,6 +27,9 @@ export type SectionName<
   T extends SectionNameType<SC> = "all",
   SC extends ContextName = "fe"
 > = NameArrs[SC][T][number & keyof NameArrs[SC][T]];
+
+export type SectionFinderNext<T extends SectionNameType<"fe"> = "all"> =
+  SectionFinder<SectionName<T>>;
 
 export type AlwaysOneVarbFinder<
   S extends SectionName<"alwaysOne"> = SectionName<"alwaysOne">

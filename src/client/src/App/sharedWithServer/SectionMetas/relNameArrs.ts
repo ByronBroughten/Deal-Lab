@@ -1,11 +1,11 @@
 import Arr from "../utils/Arr";
-import { Obj, ObjectKeys } from "../utils/Obj";
+import { Obj } from "../utils/Obj";
 import { SubType } from "../utils/types";
 import { ContextName, SimpleSectionName } from "./baseSections";
 import { BaseName, isBaseName } from "./baseSectionTypes";
 import { baseNameArrs } from "./baseSectionTypes/baseNameArrs";
 import { hasStoreNameArrs, storeNameArrs } from "./relNameArrs/storeArrs";
-import { tableSourceNames } from "./relNameArrs/tableSourceArrs";
+import { tableIndexNames } from "./relNameArrs/tableSourceArrs";
 import { RelSections, relSections } from "./relSections";
 import { GeneralRelSection } from "./relSections/rel/relSection";
 import { HasChildSectionName } from "./relSectionTypes/ChildTypes";
@@ -41,7 +41,7 @@ function makeRelNameArrs<
   return {
     ...arrs,
     savable: savableSectionNames,
-    tableSource: tableSourceNames,
+    tableSource: tableIndexNames,
     hasDefaultStore: Obj.entryKeysWithPropOfType(
       relSections[sectionContext],
       "defaultStoreName",
@@ -68,13 +68,13 @@ function makeRelNameArrs<
     get hasAnyIndexStore() {
       return Arr.exclude(this.hasIndexStore, this.hasRowIndexStore);
     },
-    hasChild: ObjectKeys(relSections[sectionContext]).filter((sectionName) => {
+    hasChild: Obj.keys(relSections[sectionContext]).filter((sectionName) => {
       return (
         (relSections[sectionContext][sectionName] as any as GeneralRelSection)
           .childNames.length > 0
       );
     }) as HasChildSectionName<SC>[],
-    hasParent: ObjectKeys(sectionToParentArrs).filter((sectionName) => {
+    hasParent: Obj.keys(sectionToParentArrs).filter((sectionName) => {
       return (sectionToParentArrs[sectionName] as any as string[]).length > 0;
     }) as HasParentSectionName<SC>[],
     get alwaysOneHasParent() {

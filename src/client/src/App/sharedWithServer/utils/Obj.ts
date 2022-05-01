@@ -1,36 +1,13 @@
 import { isEqual, pick } from "lodash";
+import { entryKeysWithPropOfType } from "./Obj/entryKeysWithProp";
 import { merge, spread } from "./Obj/merge";
-import { Full, StrictPick, SubType } from "./types";
-
-type Entries<T> = { [K in keyof T]: [K, T[K]] }[keyof T];
-export function ObjectEntries<O extends object, T extends Full<O>>(
-  obj: O
-): Entries<T>[] {
-  return Object.entries(obj) as any;
-}
-export function forSureEntries<O extends object>(obj: O): Entries<O> {
-  return Object.entries(obj) as any;
-}
-
-type NextEntries<O extends object> = { [K in keyof O]: [K, O[K]] }[keyof O][];
-export function NextObjEntries<O extends object>(obj: O): NextEntries<Full<O>> {
-  return Object.entries(obj) as any;
-}
-type Keys<T> = [keyof T];
-export function ObjectKeys<O extends object>(obj: O): Keys<O> {
-  return Object.keys(obj) as any;
-}
-export function NextObjKeys<O extends object>(obj: O): Keys<Full<O>> {
-  return Object.keys(obj) as any;
-}
-
-type Values<T> = [T[keyof T]];
-export function ObjectValues<T extends object>(t: T): Values<Full<T>> {
-  return Object.values(t) as any;
-}
-export function NextObjValues<T extends object>(t: T): Values<T> {
-  return Object.values(t) as any;
-}
+import {
+  forSureEntries,
+  NextObjEntries,
+  ObjectKeys,
+  ObjectValues,
+} from "./Obj/typedObject";
+import { StrictPick, SubType } from "./types";
 
 export const isObjNotArr = (value: any): value is { [key: string]: any } => {
   return !!(value && !Array.isArray(value) && typeof value === "object");
@@ -59,14 +36,6 @@ export function extend<A extends object = {}, B extends object = {}>(
   return { ...a, ...b } as A & B;
 }
 
-type Types = {
-  string: string;
-  boolean: boolean;
-  number: number;
-  undefined: undefined;
-  null: null;
-};
-
 export const Obj = {
   isAnyIfIsObj(value: any): value is any {
     if (value && typeof value === "object") return true;
@@ -83,6 +52,7 @@ export const Obj = {
   keys: ObjectKeys,
   values: ObjectValues,
   entries: NextObjEntries,
+  entriesFull: NextObjEntries,
   forSureEntries,
   filterKeysForEntryShape<O extends object, M extends any>(
     obj: O,
@@ -121,19 +91,7 @@ export const Obj = {
       (key) => propName in obj[key] && obj[key][propName] === value
     ) as (keyof SubType<O, { [Prop in P]: V }>)[];
   },
-  entryKeysWithPropOfType<
-    O extends { [key: string]: any },
-    P extends string,
-    T extends keyof Types
-  >(
-    obj: O,
-    propName: P,
-    valueType: T
-  ): (keyof SubType<O, { [Prop in P]: Types[T] }>)[] {
-    return this.keys(obj).filter(
-      (key) => typeof obj[key][propName] === valueType
-    ) as (keyof SubType<O, { [Prop in P]: Types[T] }>)[];
-  },
+  entryKeysWithPropOfType,
   spread: spread,
   merge: merge,
 } as const;

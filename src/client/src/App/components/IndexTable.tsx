@@ -1,17 +1,18 @@
-import { isEqual } from "lodash";
 import React from "react";
 import styled from "styled-components";
 import { auth } from "../modules/services/authService";
-import { useTableQueryActor } from "../modules/TableStateQuerier";
+import {
+  IndexTableActionsProps,
+  useIndexTableActions,
+} from "../modules/TableStateQuerier";
 import { useAnalyzerContext } from "../modules/usePropertyAnalyzer";
-import { VariableOption } from "../sharedWithServer/Analyzer/methods/get/variableOptions";
 import { SectionName } from "../sharedWithServer/SectionMetas/SectionName";
 import theme from "../theme/Theme";
 import useHowMany from "./appWide/customHooks/useHowMany";
-import TrashBtn from "./general/TrashBtn";
+import ColumnHeader from "./IndexTable/ColumnHeader";
+import IndexRow from "./IndexTable/IndexRow";
 import MaterialStringEditor from "./inputs/MaterialStringEditor";
 import VarbAutoComplete from "./inputs/VarbAutoComplete";
-import ColumnHeader from "./SectionTable/ColumnHeader";
 
 function useTableParts(tableName: SectionName<"tableNext">) {
   const { analyzer } = useAnalyzerContext();
@@ -38,65 +39,60 @@ function useTableParts(tableName: SectionName<"tableNext">) {
     areNone,
     searchFilter,
     filteredRows,
-    columns,
     displayNameColumns,
   };
 }
 
-type Props = { tableName: SectionName<"tableNext"> };
-export default function SectionTable({ tableName }: Props) {
-  const { analyzer } = useAnalyzerContext();
+export default function IndexTable(props: IndexTableActionsProps) {
+  const { tableName, indexSourceFinder } = props;
   const {
     searchFilter,
     filteredRows,
     isAtLeastOne,
     areNone,
-    columns,
     displayNameColumns,
   } = useTableParts(tableName);
 
-  const controlTable = useTableQueryActor(tableName);
+  const { addColumn, removeColumn, sortRowsAZ, sortRowsZA } =
+    useIndexTableActions(props);
 
   return (
-    <Styled className="SectionTable-root">
+    <Styled className="IndexTable-root">
       {!auth.isLoggedIn && (
-        <div className="SectionTable-notLoggedIn">
+        <div className="IndexTable-notLoggedIn">
           To view saved analyses, create an account or login.
         </div>
       )}
       {auth.isLoggedIn && areNone && (
-        <div className="SectionTable-areNone">You have no saved analyses.</div>
+        <div className="IndexTable-areNone">You have no saved analyses.</div>
       )}
       {auth.isLoggedIn && isAtLeastOne && (
-        <div className="SectionTable-viewable">
-          <div className="SectionTable-titleRow">
-            <h5 className="SectionTable-title SectionTable-controlRowItem">
+        <div className="IndexTable-viewable">
+          <div className="IndexTable-titleRow">
+            <h5 className="IndexTable-title IndexTable-controlRowItem">
               {"Deals"}
             </h5>
-            <div className="SectionTable-controlRow">
+            <div className="IndexTable-controlRow">
               <MaterialStringEditor
                 label="Filter by title"
-                className="SectionTable-filterEditor SectionTable-controlRowItem"
+                className="IndexTable-filterEditor IndexTable-controlRowItem"
                 feVarbInfo={searchFilter.feVarbInfo}
               />
               <VarbAutoComplete
-                onSelect={(option: VariableOption) =>
-                  controlTable.addColumn(option)
-                }
+                onSelect={addColumn}
                 placeholder="Add column"
-                className="SectionTable-addColumnSelector SectionTable-controlRowItem"
+                className="IndexTable-addColumnSelector IndexTable-controlRowItem"
               />
             </div>
           </div>
-          <table className="SectionTable-table">
+          <table className="IndexTable-table">
             <thead>
               <tr>
                 <ColumnHeader
                   {...{
                     displayName: "Title",
-                    sortRowsAZ: () => controlTable.sortRows("title"),
-                    sortRowsZA: () =>
-                      controlTable.sortRows("title", { reverse: true }),
+                    sortRowsAZ: () => sortRowsAZ("title"),
+                    sortRowsZA: () => sortRowsZA("title"),
                   }}
                 />
 
@@ -105,10 +101,9 @@ export default function SectionTable({ tableName }: Props) {
                     <ColumnHeader
                       {...{
                         displayName: col.displayName,
-                        sortRowsAZ: () => controlTable.sortRows(col.feId),
-                        sortRowsZA: () =>
-                          controlTable.sortRows(col.feId, { reverse: true }),
-                        removeColumn: () => controlTable.removeColumn(col.feId),
+                        sortRowsAZ: () => sortRowsAZ(col.feId),
+                        sortRowsZA: () => sortRowsZA(col.feId),
+                        removeColumn: () => removeColumn(col.feId),
                       }}
                     />
                   );
@@ -118,35 +113,8 @@ export default function SectionTable({ tableName }: Props) {
             </thead>
             <tbody>
               {filteredRows.map((row) => {
-                const cells = analyzer.childSections(row.feInfo, "cell");
                 return (
-                  <tr className="SectionTable-tableRow">
-                    <td className="SectionTable-tableCell">
-                      {row.value("title", "string")}
-                    </td>
-                    {columns.map((column) => {
-                      const colInfo = column.varbInfoValues();
-                      const cell = cells.find((c) => {
-                        const cellInfo = c.varbInfoValues();
-                        if (isEqual(colInfo, cellInfo)) return true;
-                      });
-                      // This works but misses the adornments.
-                      const value = cell
-                        ? analyzer.displayVarb("value", cell.feInfo)
-                        : "?";
-                      return (
-                        <td className="SectionTable-tableCell">{value}</td>
-                      );
-                    })}
-                    <td className="SectionTable-tableCell">
-                      <TrashBtn
-                        className="SectionTable-trashBtn"
-                        onClick={() =>
-                          controlTable.deleteSourceSection(row.dbId)
-                        }
-                      />
-                    </td>
-                  </tr>
+                  <IndexRow {...{ rowDbId: row.dbId, indexSourceFinder }} />
                 );
               })}
             </tbody>
@@ -163,47 +131,47 @@ const Styled = styled.div`
   overflow: auto;
   align-items: center;
 
-  .SectionTable-addColumnSelector {
+  .IndexTable-addColumnSelector {
     .MuiInputBase-root {
       min-width: 130px;
     }
   }
 
-  .SectionTable-title {
+  .IndexTable-title {
     font-size: 2rem;
     color: ${theme["gray-700"]};
   }
-  .SectionTable-titleRow {
+  .IndexTable-titleRow {
     display: flex;
     align-items: center;
   }
-  .SectionTable-controlRow {
+  .IndexTable-controlRow {
     display: flex;
     align-items: flex-start;
   }
 
-  .SectionTable-trashBtn {
+  .IndexTable-trashBtn {
     width: 1.1rem;
     height: 1.1rem;
   }
 
-  .SectionTable-filterEditor {
+  .IndexTable-filterEditor {
     .DraftTextField-root {
       min-width: 100px;
     }
   }
-  .SectionTable-controlRowItem {
+  .IndexTable-controlRowItem {
     margin: ${theme.s2};
   }
 
-  .SectionTable-tableCell {
+  .IndexTable-tableCell {
     vertical-align: middle;
   }
-  .SectionTable-trashBtn {
+  .IndexTable-trashBtn {
     visibility: hidden;
   }
 
-  .SectionTable-viewable {
+  .IndexTable-viewable {
     border-radius: ${theme.br1};
     border: 2px solid ${theme.analysis.border};
     padding: ${theme.s2} 0 0 0;
@@ -211,10 +179,10 @@ const Styled = styled.div`
     background: ${theme.analysis.light};
   }
 
-  .SectionTable-thContent {
+  .IndexTable-thContent {
     display: flex;
   }
-  .SectionTable-columnArrow {
+  .IndexTable-columnArrow {
     margin-left: ${theme.s1};
   }
 
@@ -248,7 +216,7 @@ const Styled = styled.div`
     tr {
       :hover {
         background: ${theme.analysis.main};
-        .SectionTable-trashBtn {
+        .IndexTable-trashBtn {
           visibility: visible;
         }
       }
@@ -268,8 +236,8 @@ const Styled = styled.div`
     vertical-align: top;
   }
 
-  .SectionTable-notLoggedIn,
-  .SectionTable-areNone {
+  .IndexTable-notLoggedIn,
+  .IndexTable-areNone {
     display: flex;
     justify-content: center;
   }

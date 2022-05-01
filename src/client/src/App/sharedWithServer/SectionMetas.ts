@@ -26,7 +26,7 @@ import {
   VarbMeta,
 } from "./SectionMetas/VarbMeta";
 import { VarbMetas, VarbMetasRaw } from "./SectionMetas/VarbMetas";
-import { NextObjEntries, Obj } from "./utils/Obj";
+import { Obj } from "./utils/Obj";
 
 type SectionMetasCore = {
   [CN in ContextName]: {
@@ -80,6 +80,9 @@ export class SectionMetas {
       }
     }
     return rawSectionMetas as SectionMetasRaw;
+  }
+  get sectionNames(): SimpleSectionName[] {
+    return Obj.keys(this.core.fe);
   }
   get<SN extends SimpleSectionName<CN>, CN extends ContextName = "fe">(
     sectionName: SN,
@@ -230,10 +233,10 @@ export class SectionMetas {
     }
   }
   initOutUpdatePacks() {
-    for (const [sectionContext, dbFeSections] of NextObjEntries(this.core)) {
-      for (const [sectionName, sectionMeta] of NextObjEntries(dbFeSections)) {
+    for (const [sectionContext, dbFeSections] of Obj.entriesFull(this.core)) {
+      for (const [sectionName, sectionMeta] of Obj.entriesFull(dbFeSections)) {
         if (!sectionNameS.is(sectionName, "hasVarb")) continue;
-        for (const [varbName, varbMeta] of NextObjEntries(
+        for (const [varbName, varbMeta] of Obj.entriesFull(
           (sectionMeta as SectionMeta<ContextName, SectionName>)
             .get("varbMetas")
             .getCore()

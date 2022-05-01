@@ -124,9 +124,9 @@ function makeBaseNameArrsForContext<SC extends ContextName>(
       "alwaysOne",
       true as true
     ),
-    userDefined: Obj.entryKeysWithPropValue(
+    uniqueDbId: Obj.entryKeysWithPropValue(
       baseSectionsOfContext,
-      "userDefined",
+      "uniqueDbId",
       true as true
     ),
     protected: Obj.entryKeysWithPropValue(

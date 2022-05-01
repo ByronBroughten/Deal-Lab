@@ -8,7 +8,7 @@ export type GeneralBaseSection = {
   varbSchemas: BaseVarbSchemas;
   solvesForFinal: boolean;
   hasGlobalVarbs: boolean;
-  userDefined: boolean;
+  uniqueDbId: boolean;
   placeholder: boolean;
 };
 
@@ -24,14 +24,14 @@ export const baseOptions = {
     };
   },
   userList: {
-    userDefined: true,
+    uniqueDbId: true,
   },
   fallback: {
     alwaysOne: false,
     makeOneOnStartup: false,
     solvesForFinal: false,
     hasGlobalVarbs: false,
-    userDefined: false,
+    uniqueDbId: false,
     placeholder: false,
   },
 } as const;

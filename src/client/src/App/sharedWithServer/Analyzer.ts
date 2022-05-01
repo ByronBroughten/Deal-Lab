@@ -185,7 +185,7 @@ import {
 } from "./SectionMetas/relSections/rel/relVarbInfoTypes";
 import { SectionMeta } from "./SectionMetas/SectionMeta";
 import { SectionName, sectionNameS } from "./SectionMetas/SectionName";
-import { Obj, ObjectKeys } from "./utils/Obj";
+import { Obj } from "./utils/Obj";
 import { DropFirst } from "./utils/types";
 
 type StateSections = { [SN in SectionName]: StateSection<SN>[] };
@@ -255,7 +255,7 @@ export default class Analyzer {
       }
     );
 
-    for (const sectionName of next.sectionNames) {
+    for (const sectionName of next.meta.sectionNames) {
       if (sectionNameS.is(sectionName, "hasDefaultStore")) {
         const sectionArrInfos = next.sectionArrInfos(sectionName);
         if (sectionArrInfos.length > 0) {
@@ -274,7 +274,7 @@ export default class Analyzer {
   }
 
   get rawSections(): RawCore {
-    const sectionNames = ObjectKeys(this.sections);
+    const sectionNames = Obj.keys(this.sections);
     return sectionNames.reduce((rawCore, sectionName) => {
       const sectionArr = this.sections[sectionName];
       const rawSectionArr = sectionArr.map(
@@ -313,7 +313,7 @@ export default class Analyzer {
   }
 
   get sectionNames() {
-    return ObjectKeys(this.sections);
+    return Obj.keys(this.sections);
   }
   sectionMeta<SN extends SectionName>(sectionName: SN): SectionMeta<"fe", SN> {
     return sectionMetas.get(sectionName);
@@ -325,7 +325,7 @@ export default class Analyzer {
     return Id.make();
   }
   static blankStateSections(): StateSections {
-    const core = ObjectKeys(sectionMetas.raw.fe).reduce((core, sectionName) => {
+    const core = Obj.keys(sectionMetas.raw.fe).reduce((core, sectionName) => {
       core[sectionName] = [];
       return core;
     }, {} as StateSections);

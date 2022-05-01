@@ -1,43 +1,64 @@
 import { VariableOption } from "../sharedWithServer/Analyzer/methods/get/variableOptions";
 import { InfoS } from "../sharedWithServer/SectionMetas/Info";
-import { SectionName } from "../sharedWithServer/SectionMetas/SectionName";
+import { DbStoreNameNext } from "../sharedWithServer/SectionMetas/relNameArrs/storeArrs";
+import {
+  SectionFinderNext,
+  SectionName,
+} from "../sharedWithServer/SectionMetas/SectionName";
 import { StateQuerierBase, StateQuerierBaseProps } from "./StateQuerierBase";
+import { SectionArrQuerier } from "./StateQueriersShared/Queriers";
 import { useAnalyzerContext } from "./usePropertyAnalyzer";
 
-type TableNameProp = { tableName: SectionName<"tableNext"> };
-interface TableQueryActorProps extends TableNameProp, StateQuerierBaseProps {}
-class TableQueryActor extends StateQuerierBase {
+export type IndexTableActionsProps = {
+  tableName: SectionName<"tableNext">;
+  indexSourceFinder: SectionFinderNext<"hasRowIndex">;
+};
+interface TableStateQuerierProps
+  extends IndexTableActionsProps,
+    StateQuerierBaseProps {}
+export class TableStateQuerier extends StateQuerierBase {
   readonly tableName: SectionName<"tableNext">;
-  constructor({ tableName, ...rest }: TableQueryActorProps) {
+  readonly indexSourceFinder: SectionFinderNext<"hasRowIndex">;
+  constructor({
+    tableName,
+    indexSourceFinder,
+    ...rest
+  }: TableStateQuerierProps) {
     super(rest);
     this.tableName = tableName;
+    this.indexSourceFinder = indexSourceFinder;
   }
 
-  private async sendTable() {
-    await this.apiQuery.replaceSectionArr(
-      this.reqMaker.sectionPackArr(this.tableName)
+  private get tableQuerier() {
+    return new SectionArrQuerier(this.tableName);
+  }
+  get indexName(): SectionName<"rowIndexNext"> {
+    return this.sections.sectionMeta(this.tableName).get("tableIndexName");
+  }
+  private async sendTable(): Promise<DbStoreNameNext<"arrStore">> {
+    return this.tableQuerier.replace(
+      this.nextSections.makeRawSectionPackArr(
+        this.tableName as DbStoreNameNext<"arrStore">
+      )
     );
   }
-  private async trySendTableRevertIfFail() {
-    this.tryAndRevertIfFail(async () => await this.sendTable());
-  }
 
-  async deleteSourceSection(dbId: string) {
-    const { tableSourceNameNext } = this.sections.meta.section(
-      this.tableName
-    ).core;
-    // await query.deleteRowIndexEntry(tableSourceNameNext, dbId);
-
-    // delete the source section
-    // send the whole table
-  }
-  async sortRows(colId: string | "title", options: { reverse?: boolean } = {}) {
+  async sortRows(
+    colFeId: string | "title",
+    options: { reverse?: boolean } = {}
+  ) {
     // send the whole table
     this.nextSections = this.sections.sortTableRowIdsByColumnNext(
       this.tableName,
-      colId,
+      colFeId,
       options
     );
+    this.setNextSectionsAsState();
+    this.sendTable();
+  }
+  async removeColumn(columnFeId: string) {
+    const columnInfo = InfoS.fe("column", columnFeId);
+    this.nextSections = this.sections.eraseSectionAndSolve(columnInfo);
     this.setNextSectionsAsState();
     this.sendTable();
   }
@@ -52,19 +73,22 @@ class TableQueryActor extends StateQuerierBase {
     // this.setNextSectionsAsState()
     // this.trySendTableRevertIfFail();
   }
-  async removeColumn(columnFeId: string) {
-    const columnInfo = InfoS.fe("column", columnFeId);
-    this.nextSections = this.sections.eraseSectionAndSolve(columnInfo);
-    this.setNextSectionsAsState();
-    this.sendTable();
-  }
 }
 
-export function useTableQueryActor(tableName: SectionName<"tableNext">) {
+export function useIndexTableActions(props: IndexTableActionsProps) {
   const { analyzer, setAnalyzerOrdered } = useAnalyzerContext();
-  return new TableQueryActor({
-    tableName,
+  const tableQuerier = new TableStateQuerier({
     sections: analyzer,
     setSectionsOrdered: setAnalyzerOrdered,
+    ...props,
   });
+
+  return {
+    addColumn: (option: VariableOption) => tableQuerier.addColumn(option),
+    removeColumn: (colFeId: string) => tableQuerier.removeColumn(colFeId),
+
+    sortRowsAZ: (titleOrColId: string) => tableQuerier.sortRows(titleOrColId),
+    sortRowsZA: (titleOrColId: string) =>
+      tableQuerier.sortRows(titleOrColId, { reverse: true }),
+  };
 }

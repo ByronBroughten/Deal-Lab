@@ -9,21 +9,6 @@ AppRegistry.runApplication("App", {
 });
 
 reportWebVitals();
-
-// I ought to update each of the
-
-// Options
-// 1. Re-implement the section queries
-// 2. Implement the new table stuff on the front-end (aside from adding a column)
-
-// -fix the functions involved in the Table component
-
-// - fix the functions used for the tables.
-// - the delete function will be somewhat shared with RowIndexQuerier
-
-// - use the new table sources for the main section list entries
-// - use the new delete function with that
-
 // - create a class that creates two sectionAdders: one based on a table, and one
 // based on an tableSource
 // - It makes a row for the table
@@ -61,3 +46,36 @@ reportWebVitals();
 // Get rid of defaultSections and defaultStore.
 // Get rid of different kinds of SectionPack
 // Get rid of dbEntry
+
+// private resetRowCells(rowFeId: string) {
+// const feRowInfo = InfoS.fe("tableRow", rowFeId);
+// let next = this.nextSections.eraseChildren(feRowInfo, "cell");
+//   const columns = next.childSections(this.indexTableName, "column");
+//   for (const column of columns) {
+//     const varbInfo = column.varbInfoValues();
+//     // Ok. Normally, I'll just use what the varbInfo says.
+//     // But when the prop
+
+//     const varbFinder =
+//       varbInfo.sectionName === this.indexName
+//         ? { ...varbInfo, sectionName: this.sectionName }
+//         : varbInfo;
+//     // I also need the source section's feId
+//     // and this is only for this
+
+//     const varb = next.findVarb(varbInfo);
+//     const value = varb ? varb.value("numObj") : "Not Found";
+
+//     next = next.addSectionsAndSolveNext([
+//       {
+//         sectionName: "cell",
+//         parentFinder: feRowInfo,
+//         dbVarbs: {
+//           ...varbInfo,
+//           value,
+//         },
+//       },
+//     ]);
+//   }
+//   this.nextSections = next;
+// }

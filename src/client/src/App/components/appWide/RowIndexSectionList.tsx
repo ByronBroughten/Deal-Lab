@@ -7,18 +7,18 @@ import theme, {
   ThemeSectionName,
   themeSectionNameOrDefault,
 } from "../../theme/Theme";
-import { LoadIndexSectionList } from "./LoadIndexSectionList";
 import { LoggedInOrOutIconBtn } from "./LoggedInOrNotBtn";
+import { RowIndexRows } from "./RowIndexRows";
 
 type Props = {
-  feInfo: FeInfo<"hasIndexStore">;
+  feInfo: FeInfo<"hasRowIndex">;
   pluralName: string;
   disabled: boolean;
   className?: string;
   droptop?: boolean;
 };
 
-export default function IndexSectionList({
+export default function RowIndexSectionList({
   feInfo,
   droptop = false,
   className,
@@ -33,7 +33,7 @@ export default function IndexSectionList({
     <Styled
       {...{
         sectionName: themeSectionNameOrDefault(sectionName),
-        className: `IndexSectionList-root ${className}`,
+        className: `RowIndexSectionList-root ${className}`,
         $active: dropped,
         $droptop: droptop,
         ref: listRef,
@@ -43,8 +43,8 @@ export default function IndexSectionList({
         {...{
           shared: {
             btnProps: {
-              children: <FaList className="IndexSectionList-listIcon" />,
-              className: "IndexSectionList-loadBtn",
+              children: <FaList className="RowIndexSectionList-listIcon" />,
+              className: "RowIndexSectionList-loadBtn",
             },
           },
           loggedIn: {
@@ -65,7 +65,7 @@ export default function IndexSectionList({
           },
         }}
       />
-      {dropped && <LoadIndexSectionList feInfo={feInfo} />}
+      {dropped && <RowIndexRows feInfo={feInfo} />}
     </Styled>
   );
 }
@@ -78,10 +78,10 @@ const Styled = styled.div<{
   position: relative;
   display: inline-block;
 
-  .IndexSectionList-listIcon {
+  .RowIndexSectionList-listIcon {
   }
 
-  .IndexSectionList-loadBtn {
+  .RowIndexSectionList-loadBtn {
     /* :hover {
       color: ${theme.light};
       background-color: ${theme["gray-600"]};
@@ -97,7 +97,7 @@ const Styled = styled.div<{
       `}
   }
 
-  .LoadIndexSectionList-root {
+  .RowIndexRows-root {
     ${({ $droptop }) =>
       $droptop &&
       css`

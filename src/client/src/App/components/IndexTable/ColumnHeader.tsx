@@ -46,11 +46,11 @@ export default function ColumnHeader({
 
   return (
     <th>
-      <div className="SectionTable-thContent">
+      <div className="IndexTable-thContent">
         {displayName}
         <div ref={colMenuRef}>
           <PlainIconBtn onClick={toggleColMenu}>
-            <IoMdArrowDropdown className="SectionTable-columnArrow" />
+            <IoMdArrowDropdown className="IndexTable-columnArrow" />
           </PlainIconBtn>
           {colMenuIsOpen && (
             <SimpleMuiMenu

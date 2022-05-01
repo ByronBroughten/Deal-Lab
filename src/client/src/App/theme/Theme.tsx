@@ -2,7 +2,7 @@ import { darken, lighten } from "polished";
 import React from "react";
 import { ThemeProvider } from "styled-components";
 import { FeInfo } from "../sharedWithServer/SectionMetas/Info";
-import { ObjectKeys } from "../sharedWithServer/utils/Obj";
+import { Obj } from "../sharedWithServer/utils/Obj";
 
 const color = {
   // blue: "#0d6efd",
@@ -88,7 +88,7 @@ export type ThemeFeInfo = FeInfo & {
   sectionName: ThemeSectionName;
 };
 function isThemeSectionName(str: string): str is ThemeSectionName {
-  return ObjectKeys(themeSections).includes(str as any);
+  return Obj.keys(themeSections).includes(str as any);
 }
 export function themeSectionNameOrDefault(
   sectionName: string

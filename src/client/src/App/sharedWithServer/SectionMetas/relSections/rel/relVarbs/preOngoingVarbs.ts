@@ -1,5 +1,5 @@
 import { omit } from "lodash";
-import { ObjectEntries, ObjectKeys } from "../../../../utils/Obj";
+import { Obj } from "../../../../utils/Obj";
 import { NumObjUpdateFnName } from "../../../baseSections/baseValues/updateFnNames";
 import {
   SwitchEndingKey,
@@ -23,7 +23,7 @@ type SwitchPreVarbs<
   SwitchRecord<Base, Omit<SwitchEndings[Key], "switch">, StringPreVarb>;
 
 export const ongoingVarbSpanEndings = omit(switchEndings.ongoing, ["switch"]);
-const ongoingSpans = ObjectKeys(ongoingVarbSpanEndings);
+const ongoingSpans = Obj.keys(ongoingVarbSpanEndings);
 export type OngoingSpan = typeof ongoingSpans[number];
 
 export type MonthlyYearlySwitchOptions = {
@@ -93,7 +93,7 @@ function getOngoingUpdatePacks<Base extends string>(
     yearly: "monthlyToYearly",
   } as const;
   const varbNames = switchNames(baseVarbName, "ongoing");
-  for (const [spanly, packOrName] of ObjectEntries(updatePacksOrSectionNames)) {
+  for (const [spanly, packOrName] of Obj.entries(updatePacksOrSectionNames)) {
     if (typeof packOrName === "string")
       updatePacks[spanly] = {
         updateFnName: defaultUpdateFnNames[spanly],

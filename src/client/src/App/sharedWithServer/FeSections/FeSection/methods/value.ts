@@ -1,6 +1,6 @@
 import { InEntityVarbInfo } from "../../../SectionMetas/baseSections/baseValues/entities";
 import { SectionName } from "../../../SectionMetas/SectionName";
-import { ObjectEntries } from "../../../utils/Obj";
+import { Obj } from "../../../utils/Obj";
 import StateSection from "../../FeSection";
 import { StateValueAnyKey, ValueTypesPlusAny } from "../FeVarb";
 
@@ -25,7 +25,7 @@ export function values<
   T extends ValuesProps,
   M extends { [Prop in keyof T]: ValueTypesPlusAny[T[Prop]] }
 >(this: StateSection<S>, varbTypes: T): M {
-  const partial = ObjectEntries(varbTypes).reduce(
+  const partial = Obj.entriesFull(varbTypes).reduce(
     (partial, [varbName, varbType]) => {
       partial[varbName] = this.value(varbName as any, varbType) as any;
       return partial;

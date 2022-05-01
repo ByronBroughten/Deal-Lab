@@ -3,22 +3,24 @@ import { BaseName } from "../baseSectionTypes";
 import { baseNameArrs } from "../baseSectionTypes/baseNameArrs";
 import { getRelParams, RelParams } from "./getRelParams";
 
-type TableSources = RelParams<BaseName<"tableNext">, "tableSourceNameNext">;
-export type SourceTables = {
-  [SN in keyof TableSources as TableSources[SN]]: SN;
+type TableIndexNames = RelParams<BaseName<"tableNext">, "tableIndexName">;
+export type IndexTableNames = {
+  [SN in keyof TableIndexNames as TableIndexNames[SN]]: SN;
 };
-function getSourceTables(): SourceTables {
-  const tableSources = getRelParams(
+
+function getIndexToTableNames(): IndexTableNames {
+  const tableIndexNames = getRelParams(
     baseNameArrs.fe.tableNext,
-    "tableSourceNameNext"
+    "tableIndexName"
   );
 
-  return Obj.keys(tableSources).reduce((sourceTables, tableName) => {
-    const sourceName = tableSources[tableName];
-    (sourceTables[sourceName] as SourceTables[typeof sourceName]) = tableName;
-    return sourceTables;
-  }, {} as SourceTables);
+  return Obj.keys(tableIndexNames).reduce((indexToTableNames, tableName) => {
+    const sourceName = tableIndexNames[tableName];
+    (indexToTableNames[sourceName] as IndexTableNames[typeof sourceName]) =
+      tableName;
+    return indexToTableNames;
+  }, {} as IndexTableNames);
 }
 
-export const sourceTables = getSourceTables();
-export const tableSourceNames = Obj.keys(sourceTables);
+export const indexToTableNames = getIndexToTableNames();
+export const tableIndexNames = Obj.keys(indexToTableNames);

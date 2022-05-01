@@ -1,4 +1,8 @@
-import { ServerSectionPack } from "../../sharedWithServer/Analyzer/SectionPackRaw";
+import { FeSectionPack } from "../../sharedWithServer/Analyzer/FeSectionPack";
+import {
+  SectionPackRaw,
+  ServerSectionPack,
+} from "../../sharedWithServer/Analyzer/SectionPackRaw";
 import { DbStoreNameNext } from "../../sharedWithServer/SectionMetas/relNameArrs/storeArrs";
 import { SectionName } from "../../sharedWithServer/SectionMetas/SectionName";
 import { ApiQueries, apiQueries } from "../useQueryActions/apiQueriesClient";
@@ -50,10 +54,17 @@ export class SectionArrQuerier extends BaseQuerierNext {
   }
 
   async replace(
-    sectionPackArr: ServerSectionPack[]
+    feSectionPackArr: SectionPackRaw<"fe", DbStoreNameNext<"arrStore">>[]
   ): Promise<DbStoreNameNext<"arrStore">> {
+    const serverSectionPackArr = feSectionPackArr.map((rawPack) =>
+      FeSectionPack.rawFeToServer(rawPack, this.sectionName as any)
+    );
+
     const res = await this.apiQuery.replaceSectionArr(
-      this.makeReq({ dbStoreName: this.sectionName, sectionPackArr })
+      this.makeReq({
+        dbStoreName: this.sectionName,
+        sectionPackArr: serverSectionPackArr,
+      })
     );
     return res.data.dbStoreName as DbStoreNameNext<"arrStore">;
   }

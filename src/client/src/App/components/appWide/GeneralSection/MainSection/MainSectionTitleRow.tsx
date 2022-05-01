@@ -1,23 +1,22 @@
 import React from "react";
 import { BiReset } from "react-icons/bi";
-import { IoCopyOutline } from "react-icons/io5";
 import { MdSystemUpdateAlt } from "react-icons/md";
 import styled from "styled-components";
 import useToggleView from "../../../../modules/customHooks/useToggleView";
 import { auth } from "../../../../modules/services/authService";
+import { useMainSectionIndexActions } from "../../../../modules/useMainSectionIndexActions";
 import { useAnalyzerContext } from "../../../../modules/usePropertyAnalyzer";
-import { useSectionQueryActions } from "../../../../modules/useQueryActions/useSectionQueryActions";
 import { FeInfo, InfoS } from "../../../../sharedWithServer/SectionMetas/Info";
 import theme from "../../../../theme/Theme";
 import BtnTooltip from "../../BtnTooltip";
 import { IconBtn } from "../../IconBtn";
-import IndexSectionList from "../../IndexSectionList";
+import RowIndexSectionList from "../../RowIndexSectionList";
 import XBtn from "../../Xbtn";
 import MainSectionTitleRowTitle from "./MainSectionTitleRowTitle.tsx/MainSectionTitleRowTitle";
 import MainSectionTitleSaveBtn from "./MainSectionTitleRowTitle.tsx/MainSectionTitleSaveBtn";
 
 type Props = {
-  feInfo: FeInfo<"hasRowIndexStore">;
+  feInfo: FeInfo<"hasRowIndex">;
   pluralName: string;
   xBtn?: boolean;
   droptop?: boolean;
@@ -30,7 +29,7 @@ export default function MainSectionTitleRow({
   droptop = false,
 }: Props) {
   const { analyzer, handleRemoveSection, handleSet } = useAnalyzerContext();
-  const store = useSectionQueryActions();
+  const { update } = useMainSectionIndexActions(feInfo);
 
   const { btnMenuIsOpen, toggleBtnMenu } = useToggleView({
     initValue: false,
@@ -61,34 +60,18 @@ export default function MainSectionTitleRow({
                   <BiReset />
                 </IconBtn>
               </BtnTooltip>
-
-              {/* reset (circular arrows), new (+), save (floppy), load (up arrow or something) */}
-              {!isSaved && <MainSectionTitleSaveBtn feInfo={feInfo} />}
+              <MainSectionTitleSaveBtn feInfo={feInfo} />
               {isSaved && (
-                <>
-                  <BtnTooltip
-                    title="Save updates"
-                    className="MainSectionTitleRow-flexUnit"
-                  >
-                    <IconBtn
-                      onClick={async () =>
-                        await store.updateRowIndexSection(feInfo)
-                      }
-                    >
-                      <MdSystemUpdateAlt />
-                    </IconBtn>
-                  </BtnTooltip>
-                  <BtnTooltip
-                    title="Copy"
-                    className="MainSectionTitleRow-flexUnit"
-                  >
-                    <IconBtn onClick={() => handleSet("copySection", feInfo)}>
-                      <IoCopyOutline />
-                    </IconBtn>
-                  </BtnTooltip>
-                </>
+                <BtnTooltip
+                  title="Save updates"
+                  className="MainSectionTitleRow-flexUnit"
+                >
+                  <IconBtn onClick={update}>
+                    <MdSystemUpdateAlt />
+                  </IconBtn>
+                </BtnTooltip>
               )}
-              <IndexSectionList
+              <RowIndexSectionList
                 {...{
                   className: "MainSectionTitleRow-flexUnit",
                   feInfo,

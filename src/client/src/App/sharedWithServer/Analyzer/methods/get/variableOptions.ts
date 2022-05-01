@@ -6,7 +6,7 @@ import { InfoS } from "../../../SectionMetas/Info";
 import { FeVarbInfo } from "../../../SectionMetas/relSections/rel/relVarbInfoTypes";
 import { ongoingVarbSpanEndings } from "../../../SectionMetas/relSections/rel/relVarbs/preOngoingVarbs";
 import { SectionName, sectionNameS } from "../../../SectionMetas/SectionName";
-import { ObjectKeys } from "../../../utils/Obj";
+import { Obj } from "../../../utils/Obj";
 
 export type SectionOption = {
   dbId: string;
@@ -43,7 +43,7 @@ function initStaticVarbOption(
 function initStaticVarbOptions(): VariableOption[] {
   const sectionMetaEntries = Object.entries(sectionMetas.raw.fe);
   return sectionMetaEntries.reduce((options, [sectionName, sectionMeta]) => {
-    const varbNames = ObjectKeys(sectionMeta.varbMetas) as string[];
+    const varbNames = Obj.keys(sectionMeta.varbMetas) as string[];
     if (sectionNameS.is(sectionName, "hasGlobalVarbs"))
       options = options.concat(
         varbNames
@@ -56,7 +56,7 @@ function initStaticVarbOptions(): VariableOption[] {
 
 function userOption(
   analyzer: Analyzer,
-  feVarbInfo: FeVarbInfo<BaseName<"userDefined">>,
+  feVarbInfo: FeVarbInfo<BaseName<"uniqueDbId">>,
   collectionName: string,
   displayName: string
 ): VariableOption {

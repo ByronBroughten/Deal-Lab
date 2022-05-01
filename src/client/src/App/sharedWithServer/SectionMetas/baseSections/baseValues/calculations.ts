@@ -1,5 +1,5 @@
 import { percentToDecimal } from "../../../utils/math";
-import { ObjectKeys } from "../../../utils/Obj";
+import { Obj } from "./../../../utils/Obj";
 import { NumObjNumber } from "./NumObj";
 
 export type Calculate = (props: any) => string;
@@ -131,7 +131,7 @@ const calculations = {
   },
 } as const;
 
-export const calculationNames = ObjectKeys(calculations);
+export const calculationNames = Obj.keys(calculations);
 export type CalculationName = keyof typeof calculations;
 export function isCalculationName(value: any): value is CalculationName {
   return Object.keys(calculations).includes(value);

@@ -87,7 +87,7 @@ export function ListMenu({
         >
           Load
         </ListMenuBtn>
-        {menu.loadMenuIsOpen && <LoadIndexSectionList feInfo={feInfo} />} */}
+        {menu.loadMenuIsOpen && <RowIndexRows feInfo={feInfo} />} */}
       </div>
     </Styled>
   );

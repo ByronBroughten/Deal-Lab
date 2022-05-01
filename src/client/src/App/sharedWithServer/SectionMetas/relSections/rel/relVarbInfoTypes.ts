@@ -37,8 +37,8 @@ export type MultiSectionInfo<SN extends SimpleSectionName = SimpleSectionName> =
   RandomStringIdNameInfo | RelSectionInfo<SN>;
 
 export type DbUserDefInfo<
-  S extends BaseName<"userDefined"> | BaseName<"rowIndex"> =
-    | BaseName<"userDefined">
+  S extends BaseName<"uniqueDbId"> | BaseName<"rowIndex"> =
+    | BaseName<"uniqueDbId">
     | BaseName<"rowIndex">
 > = DbNameInfo<S>;
 
@@ -46,7 +46,7 @@ export type SpecificSectionInfo<
   S extends SimpleSectionName = SimpleSectionName
 > =
   | FeNameInfo<S>
-  | DbUserDefInfo<Extract<S, BaseName<"userDefined"> | BaseName<"rowIndex">>>
+  | DbUserDefInfo<Extract<S, BaseName<"uniqueDbId"> | BaseName<"rowIndex">>>
   | RelInfoStatic<Extract<S, BaseName<"alwaysOne">>>;
 
 export type SpecificSectionsInfo<
@@ -77,7 +77,7 @@ export interface RelVarbInfo<
     VarbParam {}
 
 export type DbUserDefVarbInfo<
-  S extends BaseName<"userDefined"> = BaseName<"userDefined">
+  S extends BaseName<"uniqueDbId"> = BaseName<"uniqueDbId">
 > = DbUserDefInfo<S> & VarbParam;
 
 export type MultiVarbInfo<S extends BaseName<"hasVarb"> = BaseName<"hasVarb">> =

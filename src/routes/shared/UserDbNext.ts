@@ -81,9 +81,9 @@ export class UserDbNext {
     const tableSection = tableSectionPack.firstSection(tableName);
 
     const rowIds = tableSection.dbVarbs.rowIds as string[];
-    const { tableSourceNameNext } = sectionMetas.section(tableName).core;
+    const { tableIndexName } = sectionMetas.section(tableName).core;
 
-    const sourceIds = this.sectionPackArr(tableSourceNameNext).map(
+    const sourceIds = this.sectionPackArr(tableIndexName).map(
       ({ dbId }) => dbId
     );
     const sourceIdsInCurrentRowIds = Arr.extract(rowIds, sourceIds);
