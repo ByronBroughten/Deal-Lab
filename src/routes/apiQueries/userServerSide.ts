@@ -6,10 +6,9 @@ import {
   RegisterReqBody,
 } from "../../client/src/App/sharedWithServer/apiQueriesShared/register";
 import { BaseSectionsDb } from "../../client/src/App/sharedWithServer/SectionMetas/baseSectionTypes";
-import { savableNameS } from "../../client/src/App/sharedWithServer/SectionMetas/relNameArrs/storeArrs";
 import { SchemaVarbsToDbValues } from "../../client/src/App/sharedWithServer/SectionMetas/relSections/rel/valueMetaTypes";
 import { makeMongooseObjectId } from "../../client/src/App/sharedWithServer/utils/mongoose";
-import { StrictPick } from "../../client/src/App/sharedWithServer/utils/types";
+import { serverSectionS } from "../ServerSectionName";
 import { initDbSectionPack, UserDbRaw } from "../ServerUser";
 import { modelPath, UserModel } from "../UserModel";
 
@@ -30,22 +29,34 @@ export const userServerSide = {
       },
     } as const;
   },
-  async makeNewUser(registerFormData: RegisterFormData): Promise<NewDbUser> {
-    const { userName, email, password } = registerFormData;
+  async makeUserSections(
+    registerFormData: RegisterFormData
+  ): Promise<UserSections> {
+    const { userName, email: rawEmail, password } = registerFormData;
+    const { email, emailAsSubmitted } = this.prepEmail(rawEmail);
     return {
-      userName,
-      apiAccessStatus: "basicStorage",
-      encryptedPassword: await encryptPassword(password),
-      ...this.prepEmail(email),
+      user: {
+        userName,
+        email,
+        apiAccessStatus: "basicStorage",
+      },
+      serverOnlyUser: {
+        emailAsSubmitted,
+        encryptedPassword: await encryptPassword(password),
+      },
     };
   },
-  makeDbUser({ newUser, guestAccessSections }: MakeDbUserProps): UserDbRaw {
+  makeDbUser({
+    user,
+    serverOnlyUser,
+    guestAccessSections,
+  }: MakeDbUserProps): UserDbRaw {
     const partial: Partial<UserDbRaw> = {
       ...guestAccessSections,
-      user: [initDbSectionPack("user", newUser)],
+      user: [initDbSectionPack("user", user)],
+      serverOnlyUser: [initDbSectionPack("serverOnlyUser", serverOnlyUser)],
     };
-
-    for (const storeName of savableNameS.arrs.all) {
+    for (const storeName of serverSectionS.arrs.all) {
       if (!(storeName in partial)) partial[storeName] = [];
     }
 
@@ -75,9 +86,9 @@ export const userServerSide = {
   }: RegisterReqBody & { _id?: mongoose.Types.ObjectId }): Promise<
     UserDbRaw & mongoose.Document<any, UserDbRaw>
   > {
-    const newUser = await this.makeNewUser(registerFormData);
+    const userSections = await this.makeUserSections(registerFormData);
     const userDoc = this.makeMongoUser({
-      newUser,
+      ...userSections,
       guestAccessSections,
       _id,
     });
@@ -86,17 +97,27 @@ export const userServerSide = {
   },
 };
 
-type PreppedEmails = StrictPick<NewDbUser, "emailAsSubmitted" | "email">;
-export type NewDbUser = SchemaVarbsToDbValues<UserVarbs>;
-
-type MakeDbUserProps = {
-  newUser: NewDbUser;
-  guestAccessSections: GuestAccessSectionsNext;
-};
-type UserVarbs = BaseSectionsDb["user"]["varbSchemas"];
-
-type MakeMongoUserProps = MakeDbUserProps & {
+interface MakeMongoUserProps extends MakeDbUserProps {
   _id?: mongoose.Types.ObjectId;
+}
+
+export interface MakeDbUserProps extends UserSections {
+  guestAccessSections: GuestAccessSectionsNext;
+}
+interface UserSections {
+  user: SharedUser;
+  serverOnlyUser: ServerUser;
+}
+
+type SharedUser = SchemaVarbsToDbValues<SharedUserVarbs>;
+type ServerUser = SchemaVarbsToDbValues<ServerOnlyUserVarbs>;
+
+type SharedUserVarbs = BaseSectionsDb["user"]["varbSchemas"];
+type ServerOnlyUserVarbs = BaseSectionsDb["serverOnlyUser"]["varbSchemas"];
+
+type PreppedEmails = {
+  emailAsSubmitted: string;
+  email: string;
 };
 
 async function encryptPassword(unencrypted: string): Promise<string> {

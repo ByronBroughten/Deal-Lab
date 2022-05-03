@@ -30,18 +30,15 @@ type TestDbStoreNames<DS extends readonly SimpleSectionName[]> = DS;
 type _Test1 = TestDbStoreNames<typeof dbStoreNamesNext>;
 
 type DbStoreNameCheck<DS extends SimpleDbStoreName> = DS;
-export const feGuestAccessNames = [
-  "property",
-  "loan",
-  "mgmt",
-  "analysis",
-
-  "userOutputList",
-  "userVarbList",
-  "userSingleList",
-  "userOngoingList",
-] as const;
-type _FeGuestAccessTest = DbStoreNameCheck<typeof feGuestAccessNames[number]>;
+export const feGuestAccessNames = Arr.exclude(dbStoreNamesNext, [
+  // for now, this determines which sections the dbUser starts having populated.
+  "user",
+  "propertyIndexNext",
+  "propertyIndexNext",
+  "loanIndexNext",
+  "mgmtIndexNext",
+  "analysisIndexNext",
+] as const);
 
 export const loadOnLoginNames = Arr.exclude(dbStoreNamesNext, [
   "propertyIndexNext",

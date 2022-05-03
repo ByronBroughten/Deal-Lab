@@ -62,8 +62,12 @@ async function validateUserPassword({
 
 function getUserEncryptedPassword(user: UserDbRaw): string {
   const dbUser = ServerUser.init(user);
-  const userSection = dbUser.firstSectionPackHeadSection("user");
-  return userSection.dbVarbs.encryptedPassword as string;
+  const userSection = dbUser.firstSectionPackHeadSection("serverOnlyUser");
+  const { encryptedPassword } = userSection.dbVarbs;
+  if (encryptedPassword === undefined) {
+    throw new Error("There is no encrypted password");
+  }
+  return encryptedPassword as string;
 }
 
 async function validatePassword({

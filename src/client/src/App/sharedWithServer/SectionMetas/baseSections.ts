@@ -44,13 +44,6 @@ export function extractSectionContext<SCB extends SectionContextOrBoth>(
   else return sectionContextOrBoth as ExtractSectionContext<SCB>;
 }
 
-const dbUniqueBaseSections = {
-  user: base.section.schema({
-    ...base.varbs.feUser,
-    ...base.varbs.string(["encryptedPassword", "emailAsSubmitted"] as const),
-  }),
-} as const;
-
 export type BaseSections = typeof baseSections;
 export const baseSections = {
   fe: {
@@ -228,45 +221,24 @@ export const baseSections = {
     user: base.section.schema(base.varbs.feUser, {
       ...base.options.alwaysOneFromStart,
     }),
+    serverOnlyUser: base.section.schema({
+      ...base.varbs.string(["encryptedPassword", "emailAsSubmitted"] as const),
+    }),
   },
   get db() {
     return {
       ...this.fe,
-      ...dbUniqueBaseSections,
     } as const;
   },
 } as const;
 
-// double-check that creating the login-user only
-// gives email, userName, and apiAccessStatus
-
-// when creating the loginUser, handle user separately
-
-// I can handle each of the three dbStoreName types separately.
-// I'm already handling the first two.
-// I just need to do something special for the user.
-
-// make sure LoginUser isn't based on dbStore
-
-// make the loginWebToken have apiAccessStatus
-
-// make a middleware that checks whether the user has fullStorage, or whether they have
-// limitedStorage with less than three entries in a given section
-// Apply this to addSection
-// Apply this to updateSection and addSectionArr, too.
-// Limit addSection on the frontEnd for addSectionArr sections
-// "Upgrade to pro to save more than 2 of a given type of entry."
-
-// I'll need to limit the number of sectionArrs they can add and save as well, whether
-// for variables or lists.
-
-type ApiAccessStatus = "readonly" | "basicStorage" | "fullStorage";
+export type ApiAccessStatus = "readonly" | "basicStorage" | "fullStorage";
 
 type FeSectionName = keyof BaseSections["fe"];
-export type GeneralBaseSections = {
+export type BaseSectionsGeneral = {
   [SC in ContextName]: Record<FeSectionName, GeneralBaseSection>;
 };
 
-const _testBaseSections = <T extends GeneralBaseSections>(_: T): void =>
+const _testBaseSections = <T extends BaseSectionsGeneral>(_: T): void =>
   undefined;
 _testBaseSections(baseSections);

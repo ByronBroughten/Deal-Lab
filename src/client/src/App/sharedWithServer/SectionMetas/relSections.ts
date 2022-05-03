@@ -2,7 +2,11 @@ import {
   MergeUnionObj,
   MergeUnionObjNonNullable,
 } from "../utils/types/mergeUnionObj";
-import { ContextName, SimpleSectionName } from "./baseSections";
+import {
+  ApiAccessStatus,
+  ContextName,
+  SimpleSectionName,
+} from "./baseSections";
 import { rel } from "./relSections/rel";
 import { GeneralRelSection, relSection } from "./relSections/rel/relSection";
 import { LeftRightVarbInfos, relVarb } from "./relSections/rel/relVarb";
@@ -47,6 +51,7 @@ export function makeRelSections() {
         {
           childNames: [
             "user",
+            "serverOnlyUser",
             "login",
             "register",
 
@@ -114,8 +119,12 @@ export function makeRelSections() {
         userName: rel.varb.string({ displayName: "Name" }),
         apiAccessStatus: relVarb.string({
           displayName: "Api Access Status",
-          dbInitValue: "basicStorage",
+          dbInitValue: "basicStorage" as ApiAccessStatus,
         }),
+      }),
+      ...relSection.base("both", "serverOnlyUser", "User", {
+        encryptedPassword: rel.varb.string(),
+        emailAsSubmitted: rel.varb.string(),
       }),
       ...relSection.base("both", "login", "Login Form", {
         email: rel.varb.string({ displayName: "Email" }),
@@ -256,11 +265,6 @@ export function makeRelSections() {
     get db() {
       return {
         ...this.fe,
-        ...rel.section.base("db", "user", "User", {
-          ...this.fe.user.relVarbs,
-          encryptedPassword: rel.varb.string(),
-          emailAsSubmitted: rel.varb.string(),
-        }),
       } as const;
     },
   } as const;

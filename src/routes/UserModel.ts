@@ -1,10 +1,9 @@
 import mongoose, { Schema } from "mongoose";
 import { SectionPackDbRaw } from "../client/src/App/sharedWithServer/Analyzer/SectionPackRaw";
 import { RawSection } from "../client/src/App/sharedWithServer/Analyzer/SectionPackRaw/RawSection";
-import { SavableSectionName } from "../client/src/App/sharedWithServer/SectionMetas/relNameArrs/storeArrs";
 import { SelfOrDescendantName } from "../client/src/App/sharedWithServer/SectionMetas/relSectionTypes/ChildTypes";
-import { sectionNameS } from "../client/src/App/sharedWithServer/SectionMetas/SectionName";
 import { monSchemas } from "../client/src/App/sharedWithServer/utils/mongoose";
+import { ServerSectionName, serverSectionS } from "./ServerSectionName";
 import { UserDbRaw } from "./ServerUser";
 
 export const UserModel = mongoose.model<UserDbRaw>(
@@ -16,12 +15,12 @@ export function createUserModel(modelName: string) {
   return mongoose.model<UserDbRaw>(modelName, makeMongooseUserSchema());
 }
 
-function makeMongooseUserSchema(): Schema<Record<SavableSectionName, any>> {
-  const partial: Partial<Record<SavableSectionName, any>> = {};
-  for (const sectionName of sectionNameS.arrs.dbStoreNext) {
+function makeMongooseUserSchema(): Schema<Record<ServerSectionName, any>> {
+  const partial: Partial<Record<ServerSectionName, any>> = {};
+  for (const sectionName of serverSectionS.arrs.all) {
     partial[sectionName] = [makeMongooseSectionPack()];
   }
-  const frame = partial as Record<SavableSectionName, any>;
+  const frame = partial as Record<ServerSectionName, any>;
   return new Schema(frame);
 }
 
@@ -52,16 +51,16 @@ export function makeMongooseSection() {
 }
 
 export const modelPath = {
-  firstSectionPack(packName: SavableSectionName) {
+  firstSectionPack(packName: ServerSectionName) {
     return `${packName}.0`;
   },
-  firstSectionPackSection<PN extends SavableSectionName>(
+  firstSectionPackSection<PN extends ServerSectionName>(
     packName: PN,
     sectionName: SelfOrDescendantName<PN, "db">
   ) {
     return `${this.firstSectionPack(packName)}.rawSections.${sectionName}.0`;
   },
-  firstSectionPackSectionVarb<PN extends SavableSectionName>(
+  firstSectionPackSectionVarb<PN extends ServerSectionName>(
     packName: PN,
     sectionName: SelfOrDescendantName<PN, "db">,
     varbName: string

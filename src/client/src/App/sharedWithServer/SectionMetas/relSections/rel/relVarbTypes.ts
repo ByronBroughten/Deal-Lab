@@ -1,4 +1,3 @@
-import { NumObj } from "../../baseSections/baseValues/NumObj";
 import {
   InRelVarbInfo,
   LocalRelVarbInfo,
@@ -51,6 +50,3 @@ export type RelVarbByType = {
 export type RelVarb<T extends ValueTypeName = ValueTypeName> = RelVarbByType[T];
 export type NumObjRelVarb = RelVarbByType["numObj"];
 export type StringPreVarb = RelVarbByType["string"];
-export function isNumObjRelVarb(relVarb: RelVarb): relVarb is NumObjRelVarb {
-  return relVarb.initValue instanceof NumObj;
-}

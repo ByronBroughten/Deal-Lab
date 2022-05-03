@@ -5,18 +5,14 @@ import {
 } from "../client/src/App/sharedWithServer/Analyzer/SectionPackRaw";
 import { DbVarbs } from "../client/src/App/sharedWithServer/Analyzer/SectionPackRaw/RawSection";
 import { LoginUserNext } from "../client/src/App/sharedWithServer/apiQueriesShared/login";
-import { sectionMetas } from "../client/src/App/sharedWithServer/SectionMetas";
-import {
-  savableNameS,
-  SavableSectionName,
-} from "../client/src/App/sharedWithServer/SectionMetas/relNameArrs/storeArrs";
+import { SavableSectionName } from "../client/src/App/sharedWithServer/SectionMetas/relNameArrs/storeArrs";
 import {
   SectionName,
   sectionNameS,
 } from "../client/src/App/sharedWithServer/SectionMetas/SectionName";
-import Arr from "../client/src/App/sharedWithServer/utils/Arr";
 import { Obj } from "../client/src/App/sharedWithServer/utils/Obj";
 import { SectionPackDb } from "./SectionPackDb";
+import { ServerSectionName, serverSectionS } from "./ServerSectionName";
 
 export class ServerUser {
   constructor(readonly core: UserDbCore) {}
@@ -28,32 +24,39 @@ export class ServerUser {
     }, {} as LoginUserNext);
   }
 
-  sectionPackArr<SN extends SavableSectionName>(
-    storeName: SN
+  sectionPackArr<SN extends ServerSectionName>(
+    sectionName: SN
   ): SectionPackDb<SN>[] {
-    return this.core[storeName] as Record<
+    return this.core[sectionName] as Record<
       keyof UserDbCore[SN],
       any
     > as SectionPackDb<SN>[];
   }
-  firstSectionPackHeadSection<SN extends SavableSectionName>(sectionName: SN) {
+  firstSectionPackHeadSection<SN extends ServerSectionName>(sectionName: SN) {
     const firstPack = this.firstSectionPack(sectionName);
+    // there is a sectionPack, it seems, but no arr
     const firstRawSection = firstPack.rawSectionArr(sectionName)[0];
     if (firstRawSection) return firstRawSection;
-    else
-      throw new Error(`There is no sectionPack in this.core[${sectionName}]`);
+    else {
+      throw new Error(
+        `There is no sectionPack section in this.core[${sectionName}].rawSections`
+      );
+    }
   }
-  firstSectionPack<SN extends SavableSectionName>(
-    storeName: SN
+  firstSectionPack<SN extends ServerSectionName>(
+    sectionName: SN
   ): SectionPackDb<SN> {
-    const firstPack = this.sectionPackArr(storeName)[0];
+    // ok, so the sectionPackArr isn't being populated
+    const firstPack = this.sectionPackArr(sectionName)[0];
     if (firstPack) return firstPack;
-    else throw new Error(`There is no sectionPack in this.core[${storeName}]`);
+    else {
+      throw new Error(`There is no sectionPack in this.core[${sectionName}]`);
+    }
   }
   makeRawFeSectionPackArr<SN extends SavableSectionName>(
     storeName: SN
   ): SectionPackRaw<SN>[] {
-    // table is different just because it needs to update its rows
+    // I'm not creating all the tables at the outset, I guess.
     if (sectionNameS.is(storeName, "tableNext")) {
       return this.makeTableSectionPackFeArr(storeName) as SectionPackRaw<SN>[];
     } else {
@@ -66,23 +69,10 @@ export class ServerUser {
     tableName: SN
   ): SectionPackRaw<SN>[] {
     const tableSectionPack = this.firstSectionPack(tableName);
-    const tableSection = tableSectionPack.firstSection(tableName);
-
-    const rowIds = tableSection.dbVarbs.rowIds as string[];
-    const { tableIndexName } = sectionMetas.section(tableName).core;
-
-    const sourceIds = this.sectionPackArr(tableIndexName).map(
-      ({ dbId }) => dbId
-    );
-    const sourceIdsInCurrentRowIds = Arr.extract(rowIds, sourceIds);
-    const restOfSourceIds = Arr.exclude(sourceIds, sourceIdsInCurrentRowIds);
-    const nextRowIds = [...sourceIdsInCurrentRowIds, ...restOfSourceIds];
-
-    tableSection.dbVarbs.rowIds = nextRowIds;
     return [tableSectionPack.toFeSectionPack()];
   }
   static init(userDbRaw: UserDbRaw): ServerUser {
-    const core = savableNameS.arrs.all.reduce((userDbCore, storeName) => {
+    const core = serverSectionS.arrs.all.reduce((userDbCore, storeName) => {
       if (storeName in userDbRaw) {
         (userDbCore[storeName] as SectionPackDb<typeof storeName>[]) = (
           userDbRaw[storeName] as SectionPackDbRaw<SectionName>[]
@@ -100,11 +90,11 @@ export class ServerUser {
 }
 
 type UserDbCore = {
-  [SN in SavableSectionName]: SectionPackDb<SN>[];
+  [SN in ServerSectionName]: SectionPackDb<SN>[];
 };
 
 export type UserDbRaw = {
-  [SN in SavableSectionName]: SectionPackDbRaw<SN>[];
+  [SN in ServerSectionName]: SectionPackDbRaw<SN>[];
 };
 
 export function initDbSectionPack<SN extends SectionName>(
