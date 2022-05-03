@@ -32,17 +32,9 @@ function analysisSection<
 
 export const relAnalysisStuff = {
   ...analysisSection("analysis", {
-    indexStoreName: "analysisIndex",
     rowIndexName: "analysisIndexNext",
     arrStoreName: "analysis",
   } as const),
   ...analysisSection("analysisIndexNext"),
-
-  ...relSection.rowIndex("analysisIndex", "Analysis Index"),
   ...relSection.base("both", "output", "Output", rel.varbs.varbInfo()),
-  ...rel.section.sectionTable(
-    "analysisTable",
-    "Analysis Table",
-    "analysisIndex"
-  ),
 } as const;

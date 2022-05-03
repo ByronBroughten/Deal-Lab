@@ -29,8 +29,7 @@ type ParentNameOrNever<
 > = keyof SubType<ParentToChildOrNullMap<SC, SN>, SN>;
 function _testParentNameOrNever() {
   type CellParent = ParentNameOrNever<"fe", "cell">;
-  const _case1: CellParent = "propertyIndex";
-  const _case2: CellParent = "loanIndex";
+  const _case1: CellParent = "tableRow";
   //@ts-expect-error
   const _case3: CellParent = "propertyGeneral";
 }

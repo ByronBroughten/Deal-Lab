@@ -8,14 +8,6 @@ import { auth } from "./services/authService";
 import { StateQuerierBase, StateQuerierBaseProps } from "./StateQuerierBase";
 import { useAnalyzerContext } from "./usePropertyAnalyzer";
 import { apiQueries } from "./useQueryActions/apiQueriesClient";
-import { useSectionQueryActions } from "./useQueryActions/useSectionQueryActions";
-
-export function useQueryActions() {
-  const sectionQueryActions = useSectionQueryActions();
-  return {
-    ...sectionQueryActions,
-  };
-}
 
 class AuthQueryActor extends StateQuerierBase {
   protected setLogin({ data, headers }: NextRes<"nextLogin">) {

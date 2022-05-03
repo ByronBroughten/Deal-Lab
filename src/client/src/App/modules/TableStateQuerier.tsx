@@ -75,6 +75,19 @@ export class TableStateQuerier extends StateQuerierBase {
   }
 }
 
+// async postTableColumns(
+//   tableName: SectionName<"table">,
+//   next: Analyzer = analyzer
+// ) {
+//   const { rowSourceName } = analyzer.sectionMeta(tableName).core;
+//   const tableEntryArr = next.dbEntryArr(tableName);
+//   const res = await crud.postTableColumns(tableEntryArr, tableName);
+//   if (res) {
+//     next = next.loadSectionArrAndSolve(rowSourceName, res.data);
+//     setAnalyzerOrdered(next);
+//   }
+// }
+
 export function useIndexTableActions(props: IndexTableActionsProps) {
   const { analyzer, setAnalyzerOrdered } = useAnalyzerContext();
   const tableQuerier = new TableStateQuerier({

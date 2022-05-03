@@ -1,6 +1,6 @@
 import Analyzer from "../../../Analyzer";
 import { SectionFinder } from "../../../SectionMetas/baseSectionTypes";
-import { FeInfo, InfoS } from "../../../SectionMetas/Info";
+import { InfoS } from "../../../SectionMetas/Info";
 import {
   FeNameInfo,
   FeVarbInfo,
@@ -123,13 +123,7 @@ export function hasSection(
 ): boolean {
   return this.findSections(info).length !== 0;
 }
-export function sectionIsIndexSaved(
-  this: Analyzer,
-  feInfo: FeInfo<"hasIndexStore">
-): boolean {
-  const { dbId, indexStoreName } = this.section(feInfo);
-  return this.hasSection(InfoS.db(indexStoreName, dbId));
-}
+
 export function sectionOutFeVarbInfos(
   this: Analyzer,
   feInfo: FeNameInfo

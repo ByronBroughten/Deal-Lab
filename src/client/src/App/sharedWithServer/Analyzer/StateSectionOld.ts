@@ -13,14 +13,11 @@ import {
   ChildIdArrs,
   OneChildIdArrs,
 } from "../SectionMetas/relSectionTypes/ChildTypes";
+import { DefaultStoreName } from "../SectionMetas/relSectionTypes/DefaultStoreTypes";
 import {
   FeParentInfo,
   ParentName,
 } from "../SectionMetas/relSectionTypes/ParentTypes";
-import {
-  DefaultStoreName,
-  IndexStoreName,
-} from "../SectionMetas/relSectionTypes/StoreTypes";
 import { SectionMeta } from "../SectionMetas/SectionMeta";
 import {
   FeSectionNameType,
@@ -170,14 +167,6 @@ export default class StateSectionOld<
     )
       throw new Error("This section doesn't have a parent.");
     return parentInfo as FeParentInfo<SectionName<"hasParent">>;
-  }
-  get indexStoreName(): IndexStoreName<
-    Extract<S, SectionName<"hasIndexStore">>
-  > {
-    const next = this as any;
-    if (StateSectionOld.is(next, "hasIndexStore")) {
-      return next.meta.core.indexStoreName;
-    } else throw new Error("This section has no indexStoreName.");
   }
   get defaultStoreName(): DefaultStoreName<
     Extract<S, SectionName<"hasDefaultStore">>

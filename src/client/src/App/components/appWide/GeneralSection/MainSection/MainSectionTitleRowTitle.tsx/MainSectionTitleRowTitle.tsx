@@ -4,7 +4,7 @@ import {
 } from "../../../../../sharedWithServer/SectionMetas/Info";
 import BigStringEditor from "../../../../inputs/BigStringEditor";
 
-type Props = { feInfo: FeInfo<"hasRowIndexStore"> };
+type Props = { feInfo: FeInfo<"hasRowIndex"> };
 export default function MainSectionTitleRowTitle({ feInfo }: Props) {
   return (
     <BigStringEditor

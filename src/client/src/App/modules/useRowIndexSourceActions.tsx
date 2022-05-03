@@ -7,7 +7,7 @@ import { StateQuerierBase, StateQuerierBaseProps } from "./StateQuerierBase";
 import { IndexSectionQuerier } from "./StateQueriersShared/IndexQuerier";
 import { useAnalyzerContext } from "./usePropertyAnalyzer";
 
-export function useMainSectionIndexActions(feInfo: FeInfo<"hasRowIndex">) {
+export function useRowIndexSourceActions(feInfo: FeInfo<"hasRowIndex">) {
   const { analyzer, setAnalyzerOrdered } = useAnalyzerContext();
 
   const { sectionName, id: feId } = feInfo;
@@ -20,6 +20,9 @@ export function useMainSectionIndexActions(feInfo: FeInfo<"hasRowIndex">) {
   return {
     saveNew: () => mainSectionIndexQuerier.add(),
     update: () => mainSectionIndexQuerier.update(),
+    get isIndexSaved() {
+      return mainSectionIndexQuerier.isIndexSaved;
+    },
   };
 }
 
@@ -45,9 +48,11 @@ export class MainSectionIndexStateQuerier extends StateQuerierBase {
   private get sectionFeInfo(): FeInfo<"hasRowIndex"> {
     return InfoS.fe(this.sectionName, this.feId);
   }
+  private get sectionDbId() {
+    return this.sections.section(this.sectionFeInfo).dbId;
+  }
   private get rowDbInfo(): DbInfo<"tableRow"> {
-    const { dbId } = this.sections.section(this.sectionFeInfo);
-    return InfoS.db("tableRow", dbId);
+    return InfoS.db("tableRow", this.sectionDbId);
   }
 
   private get indexQuerier() {
@@ -64,6 +69,11 @@ export class MainSectionIndexStateQuerier extends StateQuerierBase {
     return sectionMetas.section(this.indexName).get("indexTableName");
   }
 
+  get isIndexSaved() {
+    return this.nextSections.hasSection(
+      InfoS.db(this.indexName, this.sectionDbId)
+    );
+  }
   async add(): Promise<string> {
     this.addToFeRowIndexStore();
     return this.tryAndRevertIfFail(async () =>

@@ -173,11 +173,10 @@ export const relFinancing = {
     "Financing",
     financingRelVarbs,
     {
-      childNames: ["loan", "loanIndex", "loanTable", "loanDefault"] as const,
+      childNames: ["loan", "loanDefault"] as const,
     }
   ),
   ...loanSection("loan", {
-    indexStoreName: "loanIndex",
     defaultStoreName: "loanDefault",
     rowIndexName: "loanIndexNext",
     arrStoreName: "loan",
@@ -190,8 +189,6 @@ export const relFinancing = {
     loanRelVarbs(),
     { childNames: ["closingCostList", "wrappedInLoanList"] as const }
   ),
-  ...rel.section.rowIndex("loanIndex", "Loan Index"),
-  ...rel.section.sectionTable("loanTable", "Saved Loans", "loanIndex"),
   ...rel.section.singleTimeList("closingCostList", "Closing Costs", {
     indexStoreName: "userSingleList",
     fullIndexName: "userSingleList",

@@ -92,16 +92,3 @@ export class FullIndexQuerier extends StateQuerierBase {
     this.setNextSectionsAsState();
   }
 }
-
-// I have everything I need for the table.
-
-// async saveNewRowIndexSection(feInfo: FeInfo<"hasRowIndexStore">) {
-//   const next = analyzer.saveNewSectionToRowIndexStore(feInfo);
-//   setAnalyzer(() => next);
-//   queryAndRevertSetIfFail("saveNewIndexSection", feInfo, next);
-// },
-// async updateRowIndexSection(feInfo: FeInfo<"hasRowIndexStore">) {
-//   const next = analyzer.updateRowIndexStoreSection(feInfo);
-//   setAnalyzer(() => next);
-//   queryAndRevertSetIfFail("updateIndexSection", feInfo, analyzer);
-// },

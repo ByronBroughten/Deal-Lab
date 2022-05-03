@@ -4,43 +4,39 @@ import { MdDelete } from "react-icons/md";
 import styled, { css } from "styled-components";
 import useToggleView from "../../../modules/customHooks/useToggleView";
 import { useAnalyzerContext } from "../../../modules/usePropertyAnalyzer";
-import { useSectionQueryActions } from "../../../modules/useQueryActions/useSectionQueryActions";
-import { SectionOption } from "../../../sharedWithServer/Analyzer/methods/get/variableOptions";
 import { FeInfo } from "../../../sharedWithServer/SectionMetas/Info";
 import theme, { ThemeSectionName } from "../../../theme/Theme";
 import { StandardProps } from "../../general/StandardProps";
-import { OnSelect } from "../../inputs/VarbAutoComplete";
 import XBtn from "../Xbtn";
 import ListMenuBtn from "./ListMenuBtn";
 
-function useFullIndexStoreMenu(feInfo: FeInfo<"hasAnyIndexStore">) {
+function useFullIndexStoreMenu(feInfo: FeInfo<"hasFullIndex">) {
   const { analyzer, handleSet, handleRemoveSection } = useAnalyzerContext();
-  const store = useSectionQueryActions();
   const { loadMenuIsOpen, toggleLoadMenu } = useToggleView({
     initValue: false,
     viewWhat: "loadMenu",
   });
 
   const { sectionName } = feInfo;
-  const load: OnSelect = ({ dbId }: SectionOption) =>
-    handleSet("loadSectionFromFeIndex", feInfo, dbId);
+  // const load: OnSelect = ({ dbId }: SectionOption) =>
+  //   handleSet("loadSectionFromFeIndex", feInfo, dbId);
   return {
-    load,
+    // load,
     loadOptions: analyzer.sectionArrAsOptions(sectionName),
     loadMenuIsOpen,
     toggleLoadMenu,
-    isSaved: analyzer.sectionIsIndexSaved(feInfo),
+    // isSaved: analyzer.sectionIsIndexSaved(feInfo),
     remove: () => handleRemoveSection(feInfo), // not sure why both remove and delete
-    copy: () => handleSet("copySection", feInfo),
-    save: async () => await store.saveNewFullIndexSection(feInfo),
-    update: async () => await store.updateFullIndexSection(feInfo),
-    delete: async (dbId: string) =>
-      await store.deleteIndexEntry(sectionName, dbId),
+    // copy: () => handleSet("copySection", feInfo),
+    // save: async () => await store.saveNewFullIndexSection(feInfo),
+    // update: async () => await store.updateFullIndexSection(feInfo),
+    // delete: async (dbId: string) =>
+    //   await store.deleteIndexEntry(sectionName, dbId),
   };
 }
 
 type Props = StandardProps & {
-  feInfo: FeInfo<"hasAnyIndexStore">;
+  feInfo: FeInfo<"hasFullIndex">;
   themeSectionName: ThemeSectionName;
   toggleListView: () => void;
   viewIsOpen: boolean;

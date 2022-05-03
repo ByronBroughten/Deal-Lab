@@ -104,16 +104,14 @@ export const preMgmtGeneral = {
       ...rel.varbs.sumSection("mgmt", { ...mgmtPreVarbs }),
       ...rel.varbs.sectionStrings("mgmt", { ...mgmtPreVarbs }, ["title"]),
     },
-    { childNames: ["mgmt", "mgmtIndex", "mgmtDefault", "mgmtTable"] as const }
+    { childNames: ["mgmt", "mgmtDefault"] as const }
   ),
   ...mgmtSection("mgmt", {
-    indexStoreName: "mgmtIndex",
     defaultStoreName: "mgmtDefault",
     rowIndexName: "mgmtIndexNext",
     arrStoreName: "mgmt",
   } as const),
   ...mgmtSection("mgmtIndexNext"),
-  ...relSection.rowIndex("mgmtIndex", "Management Index"),
   ...relSection.base(
     "fe" as ContextName,
     "mgmtDefault",
@@ -121,5 +119,4 @@ export const preMgmtGeneral = {
     { ...mgmtPreVarbs },
     { childNames: ["upfrontCostList", "ongoingCostList"] as const }
   ),
-  ...rel.section.sectionTable("mgmtTable", "Management Table", "mgmtIndex"),
 };

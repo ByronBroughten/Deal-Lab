@@ -37,22 +37,9 @@ export default function usePropertyAnalyzer({
 
   const actions = [
     "addSectionAndSolve",
-
-    "loadSectionFromFeIndex",
     "loadSectionFromFeDefault",
     "loadUserAndSolve",
-
-    "eraseIndexAndSolve",
-    "eraseRowIndexAndSolve",
-    "updateRowIndexStoreSection",
-    "updateFullIndexStoreSection",
-    "saveNewSectionToRowIndexStore",
-    "saveNewSectionToFullIndexStore",
-
-    "sortTableRowIdsByColumn",
-
     "resetSectionAndSolve",
-    "loadSectionArrsAndSolve",
     "copySection",
     "loadSectionArrAndSolve",
     "loadValueFromVarb",

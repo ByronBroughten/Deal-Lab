@@ -52,21 +52,7 @@ const dbUniqueBaseSections = {
     ...base.varbs.feUser,
     ...base.varbs.string(["encryptedPassword", "emailAsSubmitted"] as const),
   }),
-  propertyIndex: base.section.schema({
-    ...base.varbs.property,
-  }),
-  loanIndex: base.section.schema({
-    ...base.varbs.loan,
-  }),
-  mgmtIndex: base.section.schema({
-    ...base.varbs.mgmt,
-  }),
-  analysisIndex: base.section.schema({
-    ...base.varbs.analysis,
-  }),
 } as const;
-
-export type UniqueDbBaseSectionName = keyof typeof dbUniqueBaseSections;
 
 export type BaseSections = typeof baseSections;
 export const baseSections = {
@@ -167,8 +153,6 @@ export const baseSections = {
       numBedrooms: "numObj",
       ...base.varbs.ongoing("targetRent"),
     }),
-    propertyIndex: base.section.rowIndex,
-    propertyTable: base.section.table,
     propertyDefault: base.section.schema(
       base.varbs.property,
       base.options.defaultSection
@@ -181,8 +165,6 @@ export const baseSections = {
     loan: base.section.schema(base.varbs.loan, {}),
     closingCostList: base.section.singleTimeListSolves,
     wrappedInLoanList: base.section.singleTimeListSolves,
-    loanIndex: base.section.rowIndex,
-    loanTable: base.section.table,
     loanDefault: base.section.schema(base.varbs.loan, {
       ...base.options.defaultSection,
     }),
@@ -202,8 +184,6 @@ export const baseSections = {
     ),
 
     mgmt: base.section.schema(base.varbs.mgmt, { makeOneOnStartup: true }),
-    mgmtIndex: base.section.rowIndex,
-    mgmtTable: base.section.table,
     mgmtDefault: base.section.schema(base.varbs.mgmt, {
       ...base.options.defaultSection,
     }),
@@ -228,8 +208,6 @@ export const baseSections = {
       base.options.defaultSection
     ),
     output: base.section.schema(base.varbs.varbInfo, {}),
-    analysisIndex: base.section.rowIndex,
-    analysisTable: base.section.table,
     totalInsAndOuts: base.section.schema(
       {
         ...base.varbs.numObj([

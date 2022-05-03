@@ -1,7 +1,6 @@
 import Analyzer from "../../Analyzer";
 import { FeParentInfo } from "../../SectionMetas/relSectionTypes/ParentTypes";
 import { SectionName } from "../../SectionMetas/SectionName";
-import { Obj } from "../../utils/Obj";
 import { DbEntry } from "../DbEntry";
 import { internal } from "./internal";
 
@@ -30,19 +29,4 @@ export function loadSectionArrAndSolve<S extends SectionName<"hasOneParent">>(
     return next;
   }, next as Analyzer);
   return next.solveVarbs();
-}
-
-type SectionArrs = Record<SectionName<"hasOneParent">, DbEntry[]>;
-export function loadSectionArrsAndSolve(
-  this: Analyzer,
-  sectionArrs: Partial<SectionArrs>
-): Analyzer {
-  // This could be implemented so as solves fewer times.
-  let next = this;
-  for (const [sectionName, dbSectionArr] of Obj.entries(
-    sectionArrs as SectionArrs
-  )) {
-    next = next.loadSectionArrAndSolve(sectionName, dbSectionArr);
-  }
-  return next;
 }

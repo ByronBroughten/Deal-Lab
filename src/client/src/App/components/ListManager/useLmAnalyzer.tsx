@@ -1,7 +1,7 @@
 import React from "react";
 import { unstable_batchedUpdates } from "react-dom";
+import { useSectionArrQueries } from "../../modules/SectionArrStateQuerier";
 import usePropertyAnalyzer from "../../modules/usePropertyAnalyzer";
-import { useSectionQueryActions } from "../../modules/useQueryActions/useSectionQueryActions";
 import Analyzer from "../../sharedWithServer/Analyzer";
 import { FeInfo } from "../../sharedWithServer/SectionMetas/Info";
 import { SectionName } from "../../sharedWithServer/SectionMetas/SectionName";
@@ -23,7 +23,7 @@ export default function useLmAnalyzer({
     prePopulatedState: mainAnalyzer,
   });
 
-  const store = useSectionQueryActions();
+  const { replaceSavedSectionArr } = useSectionArrQueries(sectionName);
 
   const { analyzer: lmAnalyzer, setAnalyzer: setLmAnalyzer } = lmContext;
   const [sectionsToDelete, setSectionsToDelete] = React.useState(
@@ -50,8 +50,7 @@ export default function useLmAnalyzer({
         setMainAnalyzer(nextLmAnalyzer);
         setSectionsToDelete([]);
       });
-      // this should work if used where analyzer === nextLmAnalyzer
-      await store.postEntryArr(sectionName);
+      replaceSavedSectionArr();
     },
     discardChanges() {
       unstable_batchedUpdates(() => {

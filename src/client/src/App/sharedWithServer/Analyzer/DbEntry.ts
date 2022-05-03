@@ -7,7 +7,6 @@ import {
 import { Id } from "../SectionMetas/baseSections/id";
 import { DbStoreName } from "../SectionMetas/baseSectionTypes/dbStoreNames";
 import { DbInfo, InfoS } from "../SectionMetas/Info";
-import { relSections } from "../SectionMetas/relSections";
 import {
   DbNameInfo,
   RelInfoStatic,
@@ -206,22 +205,6 @@ export const DbEnt = {
       );
     }
     return indexRows;
-  },
-  newTableRows(dbUser: DbUser, tableName: SectionName<"table">): DbEntry[] {
-    const { rowSourceName } = relSections.db[tableName];
-
-    const tableEntry = dbUser[tableName][0];
-    const dbColumns =
-      tableEntry.dbSections.column === undefined
-        ? []
-        : tableEntry.dbSections.column;
-
-    const rowSourceArr = dbUser[rowSourceName];
-    if (rowSourceArr) {
-      return this.toRowIndexEntryArr([rowSourceName, rowSourceArr], dbColumns);
-    } else {
-      throw new Error(`No rowSourceArr for ${rowSourceName}`);
-    }
   },
   makeTableEntry(
     tableName: SectionName<"table">,

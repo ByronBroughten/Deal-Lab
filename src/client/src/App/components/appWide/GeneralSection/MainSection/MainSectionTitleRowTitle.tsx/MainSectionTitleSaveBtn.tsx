@@ -1,12 +1,12 @@
 import { AiOutlineSave } from "react-icons/ai";
 import { auth } from "../../../../../modules/services/authService";
-import { useMainSectionIndexActions } from "../../../../../modules/useMainSectionIndexActions";
+import { useRowIndexSourceActions } from "../../../../../modules/useRowIndexSourceActions";
 import { FeInfo } from "../../../../../sharedWithServer/SectionMetas/Info";
 import TooltipIconBtn from "../../../TooltipIconBtn";
 
-type Props = { feInfo: FeInfo<"hasRowIndexStore"> };
+type Props = { feInfo: FeInfo<"hasRowIndex"> };
 export default function MainSectionTitleSaveBtn({ feInfo }: Props) {
-  const { saveNew } = useMainSectionIndexActions(feInfo);
+  const { saveNew } = useRowIndexSourceActions(feInfo);
   const props = {
     className: "MainSectionTitleRow-flexUnit",
     onClick: saveNew,

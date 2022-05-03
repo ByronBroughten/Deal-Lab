@@ -44,3 +44,15 @@ export class StateQuerierBase {
     }
   }
 }
+
+// async function queryAndRevertSetIfFail<
+//     Action extends keyof typeof sectionQueries,
+//     Args extends Parameters<typeof sectionQueries[Action]>
+//   >(action: Action, ...args: Args) {
+//     const fn: (
+//       this: typeof sectionQueries,
+//       ...args: any
+//     ) => Promise<{ data: any } | undefined> = sectionQueries[action];
+//     const didSucceed = await fn.apply(sectionQueries, args);
+//     if (!didSucceed) setAnalyzerToDefault();
+//   }

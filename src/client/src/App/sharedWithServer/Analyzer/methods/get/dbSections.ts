@@ -57,46 +57,6 @@ function dbSectionAndChildren(
   }, {} as DbSections);
 }
 
-function dbAnalysisIndexEntry(analyzer: Analyzer): DbEntry {
-  // this assumes that there's only one analysis in state at a time.
-  const analysisEntry = analyzer.dbEntry("analysis");
-  const aSections = analysisEntry.dbSections?.analysis;
-  const aVarbs = aSections ? aSections[0].dbVarbs : undefined;
-  if (!aVarbs) throw new Error("analysisEntry should have dbVarbs");
-
-  const indexEntry = analyzer.dbEntry("main", {
-    newMainSectionName: "analysisIndex",
-    skipSectionNames: [
-      "userVarbList", // I'll get userVarbList from "includeInEntitySections"
-      "analysisIndex",
-      "propertyIndex",
-      "loanIndex",
-      "mgmtIndex",
-      "analysisTable",
-      "propertyTable",
-      "loanTable",
-      "mgmtTable",
-
-      "user",
-      "propertyDefault",
-      "loanDefault",
-      "mgmtDefault",
-      "outputListDefault",
-    ],
-    includeInEntitySections: true,
-  });
-  const { dbId } = analysisEntry;
-
-  const indexSections = indexEntry.dbSections?.analysisIndex;
-  indexEntry.dbId = dbId;
-  // without changing the dbIds, all of the entries will have main's
-  if (indexSections) {
-    indexSections[0].dbVarbs = aVarbs;
-    indexSections[0].dbId = dbId;
-  } else throw new Error("indexEntry should have indexSections");
-  return indexEntry;
-}
-
 export function dbEntry(
   this: Analyzer,
   finder: SectionFinder,
@@ -127,18 +87,4 @@ export function dbEntryArrs<
     ) as any;
   }
   return partial as ToReturn;
-}
-
-export function dbIndexEntry(
-  this: Analyzer,
-  finder: SectionFinder<SectionName<"hasIndexStore">>
-) {
-  const { feInfo, indexStoreName } = this.section(finder);
-  if (feInfo.sectionName === "analysis") {
-    return dbAnalysisIndexEntry(this);
-  } else {
-    return this.dbEntry(feInfo, {
-      newMainSectionName: indexStoreName,
-    });
-  }
 }

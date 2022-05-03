@@ -24,9 +24,9 @@ export function sectionArrInfos<S extends SectionName = SectionName>(
 }
 export function sectionArrAsOptions(
   this: Analyzer,
-  sectionName: SectionName<"hasIndexStore">
+  sectionName: SectionName<"hasFullIndex">
 ): SectionOption[] {
-  const storeName = this.sectionMeta(sectionName).get("indexStoreName");
+  const storeName = this.sectionMeta(sectionName).get("fullIndexName");
   return this.sectionArr(storeName).map((section) => ({
     displayName: section.value("title", "string"),
     dbId: section.dbId,

@@ -1,7 +1,4 @@
 import { cloneDeep } from "lodash";
-import { Id } from "../../../../../SectionMetas/baseSections/id";
-import { DbEnt } from "../../../../DbEntry";
-import { initAnalysisTable } from "./saneInitialSections/initAnalysisTable";
 import { initLoanDefault } from "./saneInitialSections/initLoanDefault";
 import { initMgmtDefault } from "./saneInitialSections/initMgmtDefault";
 import { initOutputListDefault } from "./saneInitialSections/initOutputListDefault";
@@ -12,12 +9,10 @@ const core = {
   propertyDefault: initPropertyDefault,
   loanDefault: initLoanDefault,
   mgmtDefault: initMgmtDefault,
-
-  analysisTable: initAnalysisTable,
-  propertyTable: DbEnt.makeTableEntry("propertyTable", Id.make()),
-  loanTable: DbEnt.makeTableEntry("loanTable", Id.make()),
-  mgmtTable: DbEnt.makeTableEntry("mgmtTable", Id.make()),
 } as const;
+
+// right now, this is how
+// the columns are being initialize.
 
 type Core = typeof core;
 

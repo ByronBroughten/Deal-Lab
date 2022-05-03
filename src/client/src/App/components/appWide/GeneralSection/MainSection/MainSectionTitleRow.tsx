@@ -4,9 +4,9 @@ import { MdSystemUpdateAlt } from "react-icons/md";
 import styled from "styled-components";
 import useToggleView from "../../../../modules/customHooks/useToggleView";
 import { auth } from "../../../../modules/services/authService";
-import { useMainSectionIndexActions } from "../../../../modules/useMainSectionIndexActions";
 import { useAnalyzerContext } from "../../../../modules/usePropertyAnalyzer";
-import { FeInfo, InfoS } from "../../../../sharedWithServer/SectionMetas/Info";
+import { useRowIndexSourceActions } from "../../../../modules/useRowIndexSourceActions";
+import { FeInfo } from "../../../../sharedWithServer/SectionMetas/Info";
 import theme from "../../../../theme/Theme";
 import BtnTooltip from "../../BtnTooltip";
 import { IconBtn } from "../../IconBtn";
@@ -28,16 +28,14 @@ export default function MainSectionTitleRow({
   xBtn = false,
   droptop = false,
 }: Props) {
-  const { analyzer, handleRemoveSection, handleSet } = useAnalyzerContext();
-  const { update } = useMainSectionIndexActions(feInfo);
+  const { handleRemoveSection, handleSet } = useAnalyzerContext();
+  const { update, isIndexSaved } = useRowIndexSourceActions(feInfo);
 
   const { btnMenuIsOpen, toggleBtnMenu } = useToggleView({
     initValue: false,
     viewWhat: "btnMenu",
   });
 
-  const { dbId, indexStoreName } = analyzer.section(feInfo);
-  const isSaved = analyzer.hasSection(InfoS.db(indexStoreName, dbId));
   const isGuest = !auth.isLoggedIn;
 
   return (
@@ -61,7 +59,7 @@ export default function MainSectionTitleRow({
                 </IconBtn>
               </BtnTooltip>
               <MainSectionTitleSaveBtn feInfo={feInfo} />
-              {isSaved && (
+              {isIndexSaved && (
                 <BtnTooltip
                   title="Save updates"
                   className="MainSectionTitleRow-flexUnit"

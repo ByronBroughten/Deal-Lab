@@ -90,17 +90,11 @@ export const prePropertyGeneral = {
       ...rel.varbs.sectionStrings("property", propertyRelVarbs(), ["title"]),
     },
     {
-      childNames: [
-        "property",
-        "propertyIndex",
-        "propertyDefault",
-        "propertyTable",
-      ] as const,
+      childNames: ["property", "propertyDefault"] as const,
     }
   ),
   ...propertySection("property", {
     defaultStoreName: "propertyDefault",
-    indexStoreName: "propertyIndex",
     rowIndexName: "propertyIndexNext",
     arrStoreName: "property",
   } as const),
@@ -119,12 +113,6 @@ export const prePropertyGeneral = {
         "unit",
       ] as const,
     }
-  ),
-  ...rel.section.rowIndex("propertyIndex", "Property Index"),
-  ...rel.section.sectionTable(
-    "propertyTable",
-    "Property Table",
-    "propertyIndex"
   ),
   ...relSection.base("both", "unit", "Unit", {
     one: rel.varb.numObj("Unit", {

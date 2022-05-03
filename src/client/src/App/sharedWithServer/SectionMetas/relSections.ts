@@ -66,8 +66,6 @@ export function makeRelSections() {
             "userOutputList",
 
             "analysis",
-            "analysisIndex",
-            "analysisTable",
             "outputListDefault",
           ] as const,
         }
@@ -262,10 +260,6 @@ export function makeRelSections() {
     get db() {
       return {
         ...this.fe,
-        propertyIndex: this.fe.property,
-        loanIndex: this.fe.loan,
-        mgmtIndex: this.fe.mgmt,
-        analysisIndex: this.fe.analysis,
         ...rel.section.base("db", "user", "User", {
           ...this.fe.user.relVarbs,
           encryptedPassword: rel.varb.string(),

@@ -60,8 +60,8 @@ const zSectionPackDb = z.object(zSectionPackDbRawFrame);
 export const zSectionPackDbArr = z.array(zSectionPackDb);
 
 function _testRawSectionPack(
-  feRaw: SectionPackRaw<"fe", "propertyIndex">,
-  dbRaw: SectionPackRaw<"db", "propertyIndex">
+  feRaw: SectionPackRaw<"fe", "tableRow">,
+  dbRaw: SectionPackRaw<"db", "propertyIndexNext">
 ) {
   const _test1 = feRaw.rawSections.cell;
   // @ts-expect-error

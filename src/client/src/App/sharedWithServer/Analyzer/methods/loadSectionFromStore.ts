@@ -1,18 +1,6 @@
 import Analyzer from "../../Analyzer";
-import { FeInfo, InfoS } from "../../SectionMetas/Info";
+import { FeInfo } from "../../SectionMetas/Info";
 
-export function loadSectionFromFeIndex(
-  this: Analyzer,
-  feInfo: FeInfo<"hasAnyIndexStore">,
-  dbId: string
-): Analyzer {
-  const { indexStoreName } = this.section(feInfo);
-  const dbInfo = InfoS.db(indexStoreName, dbId);
-  const dbEntry = this.dbEntry(dbInfo, {
-    newMainSectionName: feInfo.sectionName,
-  });
-  return this.resetSectionAndSolve(feInfo, { dbEntry });
-}
 export function loadSectionFromFeDefault(
   this: Analyzer,
   feInfo: FeInfo<"hasDefaultStore">

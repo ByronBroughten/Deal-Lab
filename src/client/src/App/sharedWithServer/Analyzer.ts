@@ -12,10 +12,6 @@ import {
   updateSectionValuesAndSolve,
 } from "./Analyzer/methods/directUpdateAndSolve";
 import {
-  eraseIndexAndSolve,
-  eraseRowIndexAndSolve,
-} from "./Analyzer/methods/eraseIndexAndSolve";
-import {
   eraseSectionAndSolve,
   eraseSectionsAndSolve,
 } from "./Analyzer/methods/eraseSectionAndSolve";
@@ -29,7 +25,6 @@ import {
   dbEntry,
   dbEntryArr,
   dbEntryArrs,
-  dbIndexEntry,
 } from "./Analyzer/methods/get/dbSections";
 import {
   displayName,
@@ -52,10 +47,6 @@ import {
   findVarbInfosByFocal,
   findVarbsByFocal,
 } from "./Analyzer/methods/get/find";
-import {
-  fullStoreEntries,
-  fullStoreTitlesAndDbIds,
-} from "./Analyzer/methods/get/fullStore";
 import { newInEntity } from "./Analyzer/methods/get/inEntity";
 import { varbInfosByFocal } from "./Analyzer/methods/get/info";
 import {
@@ -74,7 +65,6 @@ import {
   lastSection,
   section,
   sectionByFocal,
-  sectionIsIndexSaved,
   sectionNotFound,
   sectionOutFeVarbInfos,
   sectionsByFocal,
@@ -129,28 +119,15 @@ import {
 import { variableOptions } from "./Analyzer/methods/get/variableOptions";
 import { eraseChildren } from "./Analyzer/methods/internal/eraseSectionAndChildren";
 import { resetSectionAndChildDbIds } from "./Analyzer/methods/internal/resetSectionAndChildDbIds";
-import {
-  loadSectionArrAndSolve,
-  loadSectionArrsAndSolve,
-} from "./Analyzer/methods/loadSectionFromEntry";
+import { loadSectionArrAndSolve } from "./Analyzer/methods/loadSectionFromEntry";
 import {
   loadSectionFromFeDefault,
-  loadSectionFromFeIndex,
   setAsDefaultSectionArr,
 } from "./Analyzer/methods/loadSectionFromStore";
 import { loadRawSectionPack } from "./Analyzer/methods/loadSectionPack";
 import { loadUserAndSolve } from "./Analyzer/methods/loadUserAndSolve";
 import { replaceSectionAndSolve } from "./Analyzer/methods/replaceSectionAndSolve";
 import { resetSectionAndSolve } from "./Analyzer/methods/resetSectionAndSolve";
-import {
-  saveNewSectionToFullIndexStore,
-  updateFullIndexStoreSection,
-} from "./Analyzer/methods/saveAndUpdateFullIndexStore";
-import {
-  saveNewSectionToRowIndexStore,
-  sortTableRowIdsByColumn,
-  updateRowIndexStoreSection,
-} from "./Analyzer/methods/saveAndUpdateRowIndexStore";
 import { solveAllActiveVarbs, solveVarbs } from "./Analyzer/methods/solveVarbs";
 import {
   gatherAndSortInfosToSolve,
@@ -346,7 +323,6 @@ export default class Analyzer {
   relativeToFeVarbInfo = relativeToFeVarbInfo;
   relativesToFeVarbInfos = relativesToFeVarbInfos;
 
-  loadSectionFromFeIndex = loadSectionFromFeIndex;
   loadSectionFromFeDefault = loadSectionFromFeDefault;
   setAsDefaultSectionArr = setAsDefaultSectionArr;
 
@@ -357,7 +333,6 @@ export default class Analyzer {
   addSectionAndSolve = addSectionAndSolve;
 
   loadSectionArrAndSolve = loadSectionArrAndSolve;
-  loadSectionArrsAndSolve = loadSectionArrsAndSolve;
 
   loadRawSectionPack = loadRawSectionPack;
 
@@ -378,7 +353,7 @@ export default class Analyzer {
   updateSection = updateSection;
   feSection = feSection;
   hasSection = hasSection;
-  sectionIsIndexSaved = sectionIsIndexSaved;
+
   sectionByFocal = sectionByFocal;
   sectionsByFocal = sectionsByFocal;
   sectionOutFeVarbInfos = sectionOutFeVarbInfos;
@@ -394,8 +369,6 @@ export default class Analyzer {
   descendantFeIds = descendantFeIds;
 
   eraseSectionAndSolve = eraseSectionAndSolve;
-  eraseIndexAndSolve = eraseIndexAndSolve;
-  eraseRowIndexAndSolve = eraseRowIndexAndSolve;
   eraseSectionsAndSolve = eraseSectionsAndSolve;
   eraseChildren = eraseChildren;
 
@@ -465,7 +438,6 @@ export default class Analyzer {
   variableOptions = variableOptions;
 
   dbEntry = dbEntry;
-  dbIndexEntry = dbIndexEntry;
   dbEntryArr = dbEntryArr;
   dbEntryArrs = dbEntryArrs;
 
@@ -479,15 +451,6 @@ export default class Analyzer {
   makeRawSections = makeRawSections;
   selfAndDescendantFeIds = selfAndDescendantFeIds;
 
-  saveNewSectionToFullIndexStore = saveNewSectionToFullIndexStore;
-  updateFullIndexStoreSection = updateFullIndexStoreSection;
-  fullStoreEntries = fullStoreEntries;
-  fullStoreTitlesAndDbIds = fullStoreTitlesAndDbIds;
-
-  saveNewSectionToRowIndexStore = saveNewSectionToRowIndexStore;
-  updateRowIndexStoreSection = updateRowIndexStoreSection;
-
-  sortTableRowIdsByColumn = sortTableRowIdsByColumn;
   sortTableRowIdsByColumnNext = sortTableRowIdsByColumnNext;
 
   getOutVarbMap = getOutVarbMap;
