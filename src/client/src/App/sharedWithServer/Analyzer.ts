@@ -1,4 +1,3 @@
-import { analyzerReq, MakeApiReq } from "./Analyzer/analyzerReq";
 import {
   addSectionAndSolve,
   addSectionsAndSolve,
@@ -163,7 +162,6 @@ import {
 import { SectionMeta } from "./SectionMetas/SectionMeta";
 import { SectionName, sectionNameS } from "./SectionMetas/SectionName";
 import { Obj } from "./utils/Obj";
-import { DropFirst } from "./utils/types";
 
 type StateSections = { [SN in SectionName]: StateSection<SN>[] };
 type RawCore = { [SN in SectionName]: StateSectionCore<SN>[] };
@@ -173,10 +171,6 @@ export type AnalyzerCore = {
   varbFullNamesToSolveFor: VarbFullnamesToSolveFor;
 };
 
-// when you make this have multiple classes, you'll have to change
-// how you use InfoS.is.fe(feInfo, "hasParent"); Different
-// instantiations of Analyzer will have different heads
-// then again, main could always be the head.
 export default class Analyzer {
   constructor(readonly core: AnalyzerCore) {}
   protected static makeInitialCore(): AnalyzerCore {
@@ -268,27 +262,6 @@ export default class Analyzer {
   get meta() {
     return sectionMetas;
   }
-  get req() {
-    type ThisAnalyzerReqParams<T extends keyof MakeApiReq> = DropFirst<
-      Parameters<MakeApiReq[T]>
-    >;
-    type ThisAnalyzerReq = {
-      [Prop in keyof MakeApiReq]: (
-        ...params: ThisAnalyzerReqParams<Prop>
-      ) => ReturnType<MakeApiReq[Prop]>;
-    };
-
-    const thisAnalyzerReq = Obj.keys(analyzerReq).reduce((next, reqName) => {
-      const fn: (
-        analyzer: Analyzer,
-        ...params: any
-      ) => ReturnType<MakeApiReq[typeof reqName]> = analyzerReq[reqName];
-      next[reqName] = (...params: any) => fn.apply({}, [this, ...params]);
-      return next;
-    }, {} as any) as ThisAnalyzerReq;
-    return thisAnalyzerReq;
-  }
-
   get sectionNames() {
     return Obj.keys(this.sections);
   }

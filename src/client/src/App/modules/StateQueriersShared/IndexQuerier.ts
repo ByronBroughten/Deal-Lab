@@ -9,13 +9,13 @@ import { SectionName } from "../../sharedWithServer/SectionMetas/SectionName";
 import { SectionQuerier } from "./Queriers";
 
 interface IndexSectionQuerierProps {
-  sectionName: SectionName<"hasIndexStoreNext">;
+  sectionName: SectionName<"hasIndexStore">;
   indexName: SectionName<"indexStore">;
   sections: Analyzer;
 }
 
 export class IndexSectionQuerier {
-  sectionName: SectionName<"hasIndexStoreNext">;
+  sectionName: SectionName<"hasIndexStore">;
   indexName: SectionName<"indexStore">;
   sections: Analyzer;
   constructor({ sectionName, indexName, sections }: IndexSectionQuerierProps) {
@@ -23,7 +23,7 @@ export class IndexSectionQuerier {
     this.sectionName = sectionName;
     this.indexName = indexName;
   }
-  private feInfo(feId: string): FeInfo<"hasIndexStoreNext"> {
+  private feInfo(feId: string): FeInfo<"hasIndexStore"> {
     return InfoS.fe(this.sectionName, feId);
   }
   indexSectionPack(feId: string): ServerSectionPack {
@@ -37,7 +37,7 @@ export class IndexSectionQuerier {
   }
   private indexToSourceSectionPack(
     indexSectionPack: ServerSectionPack
-  ): SectionPackRaw<"fe", SectionName<"hasIndexStoreNext">> {
+  ): SectionPackRaw<"fe", SectionName<"hasIndexStore">> {
     return {
       contextName: "fe",
       sectionName: this.sectionName,
@@ -62,7 +62,7 @@ export class IndexSectionQuerier {
   }
   async get(
     dbId: string
-  ): Promise<SectionPackRaw<"fe", SectionName<"hasIndexStoreNext">>> {
+  ): Promise<SectionPackRaw<"fe", SectionName<"hasIndexStore">>> {
     const serverSectionPack = await this.sectionQuery.get(dbId);
     return this.indexToSourceSectionPack(serverSectionPack);
   }

@@ -38,7 +38,8 @@ export class IndexRowStateQuerier extends StateQuerierBase {
   }: IndexRowStateQuerierProps) {
     super(rest);
     this.rowDbId = rowDbId;
-    this.indexSourceFeInfo = this.sections.section(indexSourceFinder).feInfo;
+    this.indexSourceFeInfo = this.sections.section(indexSourceFinder)
+      .feInfo as FeInfo<"hasRowIndex">;
   }
   private get indexSourceName(): SectionName<"hasRowIndex"> {
     return this.indexSourceFeInfo.sectionName;

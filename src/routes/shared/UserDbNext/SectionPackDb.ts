@@ -53,17 +53,10 @@ export class SectionPackDb<SN extends SectionName> {
     else return false;
   }
   toFeSectionPack(): SectionPackRaw<"fe", SN> {
-    if (this.isSectionType("normalDbStore") || this.isSectionType("table")) {
-      // the as intermediary is there due to excessive stack depth
-      return { ...this.core, contextName: "fe" } as Record<
-        keyof SectionPackRaw<"fe", SN>,
-        any
-      > as SectionPackRaw<"fe", SN>;
-    } else {
-      throw new Error(
-        `SectionPackDb.toFeSectionPack doesn't work with SectionPackDb of sectionName ${this.sectionName}`
-      );
-    }
+    return { ...this.core, contextName: "fe" } as Record<
+      keyof SectionPackRaw<"fe", SN>,
+      any
+    > as SectionPackRaw<"fe", SN>;
   }
   static serverToDbRaw(
     sectionPack: ServerSectionPack

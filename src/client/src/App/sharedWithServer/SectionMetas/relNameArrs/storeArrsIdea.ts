@@ -82,7 +82,7 @@ function makeHasStoreNameArrs() {
       "arrStoreName",
       "string"
     ),
-    get hasIndexStoreNext() {
+    get hasIndexStore() {
       return [...this.hasRowIndex, ...this.hasFullIndex] as const;
     },
   } as const;

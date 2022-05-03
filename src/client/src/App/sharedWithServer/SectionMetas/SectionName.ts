@@ -1,7 +1,8 @@
 import { ContextName, sectionContext, SimpleSectionName } from "./baseSections";
-import { SectionFinder, SectionVarbName } from "./baseSectionTypes";
+import { AlwaysOneFinder, SectionVarbName } from "./baseSectionTypes";
 import { baseNameArrs, BaseNameArrs } from "./baseSectionTypes/baseNameArrs";
 import { relNameArrs, RelNameArrs } from "./relNameArrs";
+import { SpecificSectionInfo } from "./relSections/rel/relVarbInfoTypes";
 
 type NameArrs = {
   [SC in ContextName]: BaseNameArrs[SC] & RelNameArrs[SC];
@@ -29,7 +30,8 @@ export type SectionName<
 > = NameArrs[SC][T][number & keyof NameArrs[SC][T]];
 
 export type SectionFinderNext<T extends SectionNameType<"fe"> = "all"> =
-  SectionFinder<SectionName<T>>;
+  | SpecificSectionInfo<SectionName<T>>
+  | AlwaysOneFinder<SectionName<T>>;
 
 export type AlwaysOneVarbFinder<
   S extends SectionName<"alwaysOne"> = SectionName<"alwaysOne">

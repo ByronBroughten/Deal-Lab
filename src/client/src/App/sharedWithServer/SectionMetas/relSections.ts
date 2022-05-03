@@ -129,20 +129,16 @@ export function makeRelSections() {
 
       // these are shared between property and mgmt
       ...rel.section.singleTimeList("upfrontCostList", "Upfront Costs", {
-        indexStoreName: "userSingleList",
         fullIndexName: "userSingleList",
       }),
       ...rel.section.singleTimeList("upfrontRevenueList", "Upfront Revenue", {
-        indexStoreName: "userSingleList",
         fullIndexName: "userSingleList",
       }),
 
       ...rel.section.ongoingList("ongoingCostList", "Ongoing Costs", {
-        indexStoreName: "userOngoingList",
         fullIndexName: "userOngoingList",
       }),
       ...rel.section.ongoingList("ongoingRevenueList", "Ongoing Revenue", {
-        indexStoreName: "userOngoingList",
         fullIndexName: "userOngoingList",
       }),
 

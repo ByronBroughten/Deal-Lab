@@ -20,9 +20,7 @@ export type GeneralRelSection = {
   childNames: readonly AnySectionName[];
 
   displayName: string;
-  rowSourceName: BaseName | null;
   tableIndexName: BaseName | null;
-  indexStoreName: BaseName<"dbStore", "db"> | null;
 
   fullIndexName: SimpleDbStoreName | null;
   rowIndexName: SimpleDbStoreName | null;
@@ -65,9 +63,8 @@ type DefaultRelSection<
   displayName: D;
   relVarbs: RVS;
   childNames: [];
-  rowSourceName: null;
+
   tableIndexName: null;
-  indexStoreName: null;
 
   defaultStoreName: null;
 
@@ -102,15 +99,22 @@ export const relSection = {
       displayName,
       relVarbs,
       childNames: [],
-      tableIndexName: null,
-      rowSourceName: null,
-      indexStoreName: null,
 
       defaultStoreName: null,
+      // something probably wouldn't have
+      // both an indexName and a fullIndexName
+      // why have both a fullIndex and a rowIndex?
+      // Doesn't make sense.
+      // A table should be able to function with either if need be.
+      // What would be best is, index: { type: "full" | "row", sectionName: "propertyIndex" }
+      // and then I would just define the arrStores separately in one of the
+      // dbStore contexts
+      // they will always just be themselves, right?
 
       fullIndexName: null,
       rowIndexName: null,
       arrStoreName: null,
+      tableIndexName: null,
     };
   },
   base<

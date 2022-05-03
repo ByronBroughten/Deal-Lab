@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from "axios"; // npm i axios
 import { toast } from "react-toastify";
-import { authTokenKey } from "../../sharedWithServer/Crud";
+import { constants } from "../../Constants";
 import { auth } from "./authService";
 import logger from "./logService";
 
@@ -8,7 +8,7 @@ axios.interceptors.request.use(function (config) {
   if (config.headers && config.headers.common) {
     config.headers = {
       ...config.headers,
-      [authTokenKey]: auth.getToken() ?? false,
+      [constants.tokenKey.apiUserAuth]: auth.getToken() ?? false,
     };
   }
 

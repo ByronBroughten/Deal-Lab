@@ -104,18 +104,10 @@ export type DescendantSections<
 
 function _testDescendantName() {
   type SN = "propertyGeneral";
-
   type FeTest = DescendantName<SN, "fe">;
-  type DbTest = DescendantName<SN, "db">;
-
   const _test1: FeTest = "unit";
-  const _test2: FeTest = "cell";
   // @ts-expect-error
   const _test3: FeTest = "loan";
-
-  const _test4: DbTest = "unit";
-  // @ts-expect-error
-  const _teset5: DbTest = "cell";
 }
 
 export type GeneralChildIdArrs = {

@@ -1,12 +1,11 @@
 import Arr from "../utils/Arr";
 import { Obj } from "../utils/Obj";
-import { SubType } from "../utils/types";
 import { ContextName, SimpleSectionName } from "./baseSections";
-import { BaseName, isBaseName } from "./baseSectionTypes";
+import { BaseName } from "./baseSectionTypes";
 import { baseNameArrs } from "./baseSectionTypes/baseNameArrs";
 import { hasStoreNameArrs, storeNameArrs } from "./relNameArrs/storeArrs";
 import { tableIndexNames } from "./relNameArrs/tableSourceArrs";
-import { RelSections, relSections } from "./relSections";
+import { relSections } from "./relSections";
 import { GeneralRelSection } from "./relSections/rel/relSection";
 import { HasChildSectionName } from "./relSectionTypes/ChildTypes";
 import {
@@ -19,13 +18,6 @@ import {
   UserItemSectionName,
   userListItemTypes,
 } from "./relSectionTypes/UserListTypes";
-
-// this is here so that there isn't spaghetti code between relSectionTypes
-// and StoreTypes
-export type HasRowIndexStoreName<SC extends ContextName> = keyof SubType<
-  RelSections[SC],
-  { indexStoreName: BaseName<"rowIndex"> }
->;
 
 export type ListSectionName = BaseName<"allList">;
 function makeRelNameArrs<
@@ -47,27 +39,10 @@ function makeRelNameArrs<
       "defaultStoreName",
       "string"
     ),
-    hasIndexStore: Obj.entryKeysWithPropOfType(
-      relSections[sectionContext],
-      "indexStoreName",
-      "string"
-    ),
-
     savableAlwaysOne: Arr.extract(
       savableSectionNames,
       baseNameArrs[sectionContext].alwaysOne
     ),
-    get hasRowIndexStore() {
-      return this.hasIndexStore.filter((sectionName) => {
-        const { indexStoreName } = relSections[sectionContext][
-          sectionName
-        ] as any as GeneralRelSection;
-        return isBaseName(indexStoreName, "rowIndex");
-      }) as string[] as HasRowIndexStoreName<SC>[];
-    },
-    get hasAnyIndexStore() {
-      return Arr.exclude(this.hasIndexStore, this.hasRowIndexStore);
-    },
     hasChild: Obj.keys(relSections[sectionContext]).filter((sectionName) => {
       return (
         (relSections[sectionContext][sectionName] as any as GeneralRelSection)

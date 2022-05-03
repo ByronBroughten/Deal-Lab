@@ -3,7 +3,7 @@ import { Response } from "express";
 import jwt from "jsonwebtoken";
 import { isObject } from "lodash";
 import mongoose from "mongoose";
-import { authTokenKey } from "../../../client/src/App/sharedWithServer/Crud";
+import { constants } from "../../../client/src/App/Constants";
 import { resHandledError } from "../../../middleware/error";
 import { UserDbNext, UserDbRaw } from "../../shared/UserDbNext";
 import { UserModelNext } from "../../shared/UserModelNext";
@@ -49,7 +49,10 @@ export const loginUtils = {
       const userDb = UserDbNext.init(user);
       const loggedInUser = userDb.makeRawFeLoginUser();
       const token = this.makeUserAuthToken(user._id);
-      res.header(authTokenKey, token).status(200).send(loggedInUser);
+      res
+        .header(constants.tokenKey.apiUserAuth, token)
+        .status(200)
+        .send(loggedInUser);
     } else {
       throw new Error("A valid user id is required here.");
     }

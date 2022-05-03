@@ -190,11 +190,9 @@ export const relFinancing = {
     { childNames: ["closingCostList", "wrappedInLoanList"] as const }
   ),
   ...rel.section.singleTimeList("closingCostList", "Closing Costs", {
-    indexStoreName: "userSingleList",
     fullIndexName: "userSingleList",
   }),
   ...rel.section.singleTimeList("wrappedInLoanList", "Items Wrapped in Loan", {
-    indexStoreName: "userSingleList",
     fullIndexName: "userSingleList",
   }),
 };

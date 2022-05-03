@@ -6,7 +6,7 @@ import {
 } from "../SectionMetas/baseSections/baseValues/entities";
 import { Id } from "../SectionMetas/baseSections/id";
 import { DbStoreName } from "../SectionMetas/baseSectionTypes/dbStoreNames";
-import { DbInfo, InfoS } from "../SectionMetas/Info";
+import { DbInfo } from "../SectionMetas/Info";
 import {
   DbNameInfo,
   RelInfoStatic,
@@ -35,13 +35,6 @@ export type DbEntry = {
 };
 
 export type DbUser = Record<SectionName<"dbStore">, DbEntry[]>;
-
-type EntryPack<S extends SectionName<"dbStore"> = SectionName<"dbStore">> = [
-  S,
-  DbEntry
-];
-
-type InitColumn = { dbId: string; values: { [key: string]: string } };
 
 // this would be better as a class object.
 export const DbEnt = {
@@ -165,66 +158,6 @@ export const DbEnt = {
     if (!(childName in dbSections)) dbSections[childName] = [];
     dbSections[childName]?.push(...childSections);
     return dbEntry;
-  },
-  toRowIndexEntry(
-    [indexName, fullEntry]: EntryPack<SectionName<"rowIndex">>,
-    columns: DbSection[]
-  ): DbEntry {
-    const { dbId } = fullEntry;
-    const fullSection = this.topSection(fullEntry, indexName);
-
-    // const columns = this.sectionArr(tableEntry, "column");
-    const cellArr = columns.reduce((cells, col) => {
-      const info = col.dbVarbs as any as InEntityVarbInfo;
-      const value = this.value(fullEntry, info);
-      cells.push(this.initSection(undefined, { ...info, value }));
-      return cells;
-    }, [] as DbSection[]);
-
-    let rowEntry = this.initEntry(
-      indexName,
-      { title: fullSection.dbVarbs.title },
-      { dbId }
-    );
-    rowEntry = this.addLikeChildren(
-      rowEntry,
-      cellArr,
-      "cell",
-      InfoS.db(indexName, dbId)
-    );
-    return rowEntry;
-  },
-  toRowIndexEntryArr(
-    [rowSourceName, sourceEntryArr]: [SectionName<"rowIndex">, DbEntry[]],
-    columns: DbSection[]
-  ): DbEntry[] {
-    const indexRows: DbEntry[] = [];
-    for (const sourceEntry of sourceEntryArr) {
-      indexRows.push(
-        this.toRowIndexEntry([rowSourceName, sourceEntry], columns)
-      );
-    }
-    return indexRows;
-  },
-  makeTableEntry(
-    tableName: SectionName<"table">,
-    dbId: string = Id.make(),
-    initColumns: InitColumn[] = []
-  ) {
-    let initTable = DbEnt.initEntry(
-      tableName,
-      { searchFilter: "", rowIds: [] },
-      { dbId }
-    );
-
-    return DbEnt.addLikeChildren(
-      initTable,
-      initColumns.map((column) =>
-        DbEnt.initSection(column.dbId, column.values)
-      ),
-      "column",
-      InfoS.db(tableName, dbId)
-    );
   },
 };
 

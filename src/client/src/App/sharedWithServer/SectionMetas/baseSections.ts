@@ -231,6 +231,16 @@ export const baseSections = {
     user: base.section.schema(base.varbs.feUser, {
       ...base.options.alwaysOneFromStart,
     }),
+    // alright, let's do user.
+    // I have two options:
+    // 1. make user and userProtected, and make userProtected
+    // be one of those that always has 0 entries on the front-end
+
+    // that is probably the simplest way to go.
+    // The more secure way to go would be to just have "user"
+    // and then manually add userProtected to dbUser and the mongoDb thing
+
+    // I might as well try the second way, because i don't know how it will go.
   },
   get db() {
     return {

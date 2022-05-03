@@ -1,8 +1,7 @@
 import cors from "cors";
 import express from "express";
 import { graphqlHTTP } from "express-graphql";
-import { config } from "../client/src/App/Constants";
-import { authTokenKey } from "../client/src/App/sharedWithServer/Crud";
+import { constants } from "../client/src/App/Constants";
 import { gqlSchema } from "../graphlq";
 import apiQueriesServer from "../routes/apiQueriesServer";
 
@@ -15,7 +14,7 @@ export default function routes(app: express.Application) {
         "https://dealanalyzer.app",
       ],
       credentials: true,
-      exposedHeaders: [authTokenKey],
+      exposedHeaders: [constants.tokenKey.apiUserAuth],
     })
   );
   app.use(express.json()); // parses body into a JSON object
@@ -27,5 +26,5 @@ export default function routes(app: express.Application) {
     })
   );
 
-  app.use(config.apiPathBit, apiQueriesServer);
+  app.use(constants.apiPathBit, apiQueriesServer);
 }

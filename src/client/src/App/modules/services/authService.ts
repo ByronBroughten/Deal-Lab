@@ -1,17 +1,15 @@
-import { authTokenKey } from "../../sharedWithServer/Crud";
+import { constants } from "../../Constants";
 
-// this stuff must be separate from Analyzer because
-// Analyzer can be on the serverSide while this can't
 export const auth = {
   setToken(token: string): void {
-    localStorage.setItem(authTokenKey, token);
+    localStorage.setItem(constants.tokenKey.apiUserAuth, token);
   },
   getToken(): string | null {
-    const token = localStorage.getItem(authTokenKey);
+    const token = localStorage.getItem(constants.tokenKey.apiUserAuth);
     return token;
   },
   removeToken(): void {
-    localStorage.removeItem(authTokenKey);
+    localStorage.removeItem(constants.tokenKey.apiUserAuth);
   },
   get isLoggedIn(): boolean {
     const token = this.getToken();

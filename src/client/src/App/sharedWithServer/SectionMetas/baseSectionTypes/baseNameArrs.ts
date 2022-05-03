@@ -207,17 +207,6 @@ function makeBaseNameArrsForContext<SC extends ContextName>(
         "userVarbList",
       ] as const;
     },
-    get oddDbStore() {
-      return [...this.rowIndex, ...this.table] as const;
-    },
-    get normalDbStore() {
-      return Arr.exclude(this.dbStore, this.oddDbStore);
-    },
-
-    // alias
-    get feSaved() {
-      return this.userList;
-    },
   };
 }
 

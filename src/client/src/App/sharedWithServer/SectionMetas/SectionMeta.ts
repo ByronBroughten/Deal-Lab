@@ -50,7 +50,7 @@ function getRowIndexTableNameParam<SN extends SimpleSectionName>(
 // function getIndexSourceNamesParam<SN extends SimpleSectionName>(
 //   sectionName: SN
 // ): IndexToSourceNamesParam[SN] {
-//   if (sectionNameS.is(sectionName, "hasIndexStoreNext")) {
+//   if (sectionNameS.is(sectionName, "hasIndexStore")) {
 //     return indexToSourceNames[
 //       sectionName as keyof typeof indexToSourceNames
 //     ] as IndexToSourceNamesParam[SN];

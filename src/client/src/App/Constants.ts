@@ -1,5 +1,3 @@
-import { configUrls, makeCrudConfig } from "./Constants/configUrls";
-
 const dev = {
   name: "Analyzer Client — Development",
   endpoint: "http://localhost:5000",
@@ -10,15 +8,13 @@ const prod = {
   endpoint: "https://www.dealanalyzer.app",
 };
 
-const constants = process.env.NODE_ENV === "development" ? dev : prod;
+const baseEnvStuff = process.env.NODE_ENV === "development" ? dev : prod;
 const apiPathBit = "/api";
 
 export const config = {
-  name: constants.name,
+  name: baseEnvStuff.name,
   apiPathBit: apiPathBit,
-  apiPathFull: `${constants.endpoint}${apiPathBit}`,
-  url: configUrls(constants.endpoint),
-  crud: makeCrudConfig(constants.endpoint),
+  apiPathFull: `${baseEnvStuff.endpoint}${apiPathBit}`,
   costInCents: {
     upgradeUserToPro: 1000,
   },
@@ -38,3 +34,5 @@ export const config = {
     analyzerConfigHash: "analyzer-config-hash",
   },
 } as const;
+
+export const constants = config;
