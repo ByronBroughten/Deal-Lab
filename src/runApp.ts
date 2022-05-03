@@ -7,9 +7,9 @@ import helmet from "helmet";
 import morgan from "morgan";
 import error from "./middleware/error";
 import checkConfig from "./startup/config";
-import startDb from "./startup/db";
 import routes from "./startup/routes";
 import setupLogger, { logger } from "./startup/setupLogger";
+import startDb from "./startup/startDb";
 
 export function runApp() {
   checkConfig();

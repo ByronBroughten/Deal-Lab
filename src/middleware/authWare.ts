@@ -1,6 +1,6 @@
 import express from "express";
 import { config } from "../client/src/App/Constants";
-import { loginUtils } from "../routes/apiQueriesServer/nextLogin/loginUtils";
+import { loginUtils } from "../routes/apiQueries/nextLogin/loginUtils";
 
 export default function authWare(
   req: express.Request,
