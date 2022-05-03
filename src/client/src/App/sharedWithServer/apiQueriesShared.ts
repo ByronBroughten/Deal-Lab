@@ -15,7 +15,7 @@ import {
   SectionPackReq,
 } from "./apiQueriesShared/makeGeneralReqs";
 import { SectionFinder } from "./SectionMetas/baseSectionTypes";
-import { DbStoreNameNext } from "./SectionMetas/relNameArrs/storeArrs";
+import { SavableSectionName } from "./SectionMetas/relNameArrs/storeArrs";
 
 const makeApiReqs = makeReqMakers();
 const apiPaths = makeApiPaths();
@@ -54,7 +54,7 @@ type ApiQueriesShared = {
 
 export class ReqMaker {
   constructor(private sections: Analyzer = Analyzer.initAnalyzer()) {}
-  sectionPackArr<DN extends DbStoreNameNext<"arrStore">>(sectionName: DN) {
+  sectionPackArr<DN extends SavableSectionName<"arrStore">>(sectionName: DN) {
     const rawSectionPackArr = this.sections.makeRawSectionPackArr(sectionName);
     return makeReq({
       dbStoreName: sectionName,
@@ -82,7 +82,7 @@ export class ReqMaker {
     );
   }
   sectionPack(
-    finder: SectionFinder<DbStoreNameNext<"indexStore">>
+    finder: SectionFinder<SavableSectionName<"indexStore">>
   ): SectionPackReq {
     const sectionPack = this.sections.makeRawSectionPack(finder);
     const { sectionName } = sectionPack;

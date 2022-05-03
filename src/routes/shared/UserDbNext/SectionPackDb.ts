@@ -9,7 +9,7 @@ import {
   zRawSections,
 } from "../../../client/src/App/sharedWithServer/Analyzer/SectionPackRaw/RawSection";
 import { InEntityVarbInfo } from "../../../client/src/App/sharedWithServer/SectionMetas/baseSections/baseValues/entities";
-import { DbStoreNameNext } from "../../../client/src/App/sharedWithServer/SectionMetas/relNameArrs/storeArrs";
+import { SavableSectionName } from "../../../client/src/App/sharedWithServer/SectionMetas/relNameArrs/storeArrs";
 import { SelfOrDescendantName } from "../../../client/src/App/sharedWithServer/SectionMetas/relSectionTypes/ChildTypes";
 import {
   SectionName,
@@ -60,7 +60,7 @@ export class SectionPackDb<SN extends SectionName> {
   }
   static serverToDbRaw(
     sectionPack: ServerSectionPack
-  ): SectionPackDbRaw<DbStoreNameNext> {
+  ): SectionPackDbRaw<SavableSectionName> {
     return Obj.strictPick(sectionPack, ["dbId", "rawSections"]);
   }
   static rawDbToServer({
@@ -73,7 +73,7 @@ export class SectionPackDb<SN extends SectionName> {
 
 type RawDbToServerProps = {
   sectionPackDb: SectionPackDbRaw;
-  dbStoreName: DbStoreNameNext;
+  dbStoreName: SavableSectionName;
 };
 
 const zDbSectionPackFrame: Record<keyof SectionPackDbRaw, any> = {

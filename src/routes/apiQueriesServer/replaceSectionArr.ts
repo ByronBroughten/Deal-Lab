@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { ServerSectionPack } from "../../client/src/App/sharedWithServer/Analyzer/SectionPackRaw";
-import { DbStoreNameNext } from "../../client/src/App/sharedWithServer/SectionMetas/relNameArrs/storeArrs";
+import { SavableSectionName } from "../../client/src/App/sharedWithServer/SectionMetas/relNameArrs/storeArrs";
 import authWare from "../../middleware/authWare";
 import { sendSuccess } from "../shared/crudValidators";
 import { SectionPackDb } from "../shared/UserDbNext/SectionPackDb";
@@ -29,7 +29,7 @@ async function replaceSectionArrServerSide(req: Request, res: Response) {
 }
 
 type MakeSetSectionArrParametersProps = {
-  dbStoreName: DbStoreNameNext<"arrStore">;
+  dbStoreName: SavableSectionName<"arrStore">;
   sectionPackArr: ServerSectionPack[];
 };
 function makeSetSectionArrParameters({

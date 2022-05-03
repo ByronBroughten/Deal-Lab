@@ -7,7 +7,7 @@ import {
   LoginFormData,
 } from "../../client/src/App/sharedWithServer/apiQueriesShared/login";
 import { resHandledError, ResHandledError } from "../../middleware/error";
-import { UserDbNext, UserDbRaw } from "../shared/UserDbNext";
+import { UserDbNext, UserDbRaw } from "../shared/UserDb";
 import { loginUtils } from "./nextLogin/loginUtils";
 import { userServerSide } from "./userServerSide";
 

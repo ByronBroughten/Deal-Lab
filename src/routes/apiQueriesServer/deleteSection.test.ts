@@ -5,7 +5,7 @@ import Analyzer from "../../client/src/App/sharedWithServer/Analyzer";
 import { apiQueriesShared } from "../../client/src/App/sharedWithServer/apiQueriesShared";
 import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import { runApp } from "../../runApp";
-import { UserModelNext } from "../shared/UserModelNext";
+import { UserModel } from "../shared/UserModel";
 import { loginUtils } from "./nextLogin/loginUtils";
 import { createTestUserModelNext } from "./test/createTestUserModelNext";
 
@@ -51,7 +51,7 @@ describe(testedApiRoute, () => {
   });
 
   afterEach(async () => {
-    await UserModelNext.deleteOne({ _id: userId });
+    await UserModel.deleteOne({ _id: userId });
     server.close();
   });
 

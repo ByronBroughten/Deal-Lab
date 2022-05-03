@@ -5,7 +5,7 @@ import {
   ServerSectionPack,
   StoredSectionPackInfo,
 } from "../Analyzer/SectionPackRaw";
-import { DbStoreNameNext } from "../SectionMetas/relNameArrs/storeArrs";
+import { SavableSectionName } from "../SectionMetas/relNameArrs/storeArrs";
 import { FeNameInfo } from "../SectionMetas/relSections/rel/relVarbInfoTypes";
 import { FeToDbStoreNameWithSameChildren } from "../SectionMetas/relSectionTypes/ChildTypes";
 import { SectionName } from "../SectionMetas/SectionName";
@@ -68,18 +68,18 @@ export function makeDbIdSectionPackReq({
 }
 
 export type DbSectionPackInfo = {
-  dbStoreName: DbStoreNameNext;
+  dbStoreName: SavableSectionName;
   dbId: string;
 };
 export type DbSectionPackInfoNext = {
-  dbStoreName: DbStoreNameNext<"indexStore">;
+  dbStoreName: SavableSectionName<"indexStore">;
   dbId: string;
 };
 
 export type SectionPackReq = MakeReq<{ sectionPack: ServerSectionPack }>;
 export type SectionPackArrReq = MakeReq<{
   sectionPackArr: ServerSectionPack[];
-  dbStoreName: DbStoreNameNext<"arrStore">;
+  dbStoreName: SavableSectionName<"arrStore">;
 }>;
 export type TableSourcePackReq = MakeReq<{
   sourceSectionPack: ServerSectionPack;
@@ -91,4 +91,4 @@ export type SectionPackRes = MakeRes<{
   rawServerSectionPack: ServerSectionPack;
 }>;
 export type DbIdRes = MakeRes<{ dbId: string }>;
-export type DbStoreNameRes = MakeRes<{ dbStoreName: DbStoreNameNext }>;
+export type DbStoreNameRes = MakeRes<{ dbStoreName: SavableSectionName }>;

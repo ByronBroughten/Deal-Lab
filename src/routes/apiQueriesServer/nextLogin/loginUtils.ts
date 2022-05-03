@@ -5,14 +5,14 @@ import { isObject } from "lodash";
 import mongoose from "mongoose";
 import { constants } from "../../../client/src/App/Constants";
 import { resHandledError } from "../../../middleware/error";
-import { UserDbNext, UserDbRaw } from "../../shared/UserDbNext";
-import { UserModelNext } from "../../shared/UserModelNext";
+import { UserDbNext, UserDbRaw } from "../../shared/UserDb";
+import { UserModel } from "../../shared/UserModel";
 import { userServerSide } from "../userServerSide";
 
 export const loginUtils = {
   async tryFindOneUserByEmail(emailLower: string) {
     try {
-      return await UserModelNext.findOne(
+      return await UserModel.findOne(
         userServerSide.findByEmailFilter(emailLower),
         undefined,
         { lean: true }

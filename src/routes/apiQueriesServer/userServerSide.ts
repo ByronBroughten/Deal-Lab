@@ -10,8 +10,8 @@ import { dbStoreNameS } from "../../client/src/App/sharedWithServer/SectionMetas
 import { SchemaVarbsToDbValues } from "../../client/src/App/sharedWithServer/SectionMetas/relSections/rel/valueMetaTypes";
 import { makeMongooseObjectId } from "../../client/src/App/sharedWithServer/utils/mongoose";
 import { StrictPick } from "../../client/src/App/sharedWithServer/utils/types";
-import { initDbSectionPack, UserDbRaw } from "../shared/UserDbNext";
-import { modelPath, UserModelNext } from "../shared/UserModelNext";
+import { initDbSectionPack, UserDbRaw } from "../shared/UserDb";
+import { modelPath, UserModel } from "../shared/UserModel";
 
 export const userServerSide = {
   userEmailLowerPath: modelPath.firstSectionPackSectionVarb(
@@ -52,14 +52,14 @@ export const userServerSide = {
     return partial as UserDbRaw;
   },
   makeMongoUser({ _id, ...makeUserProps }: MakeMongoUserProps) {
-    return new UserModelNext({
+    return new UserModel({
       _id: _id ?? makeMongooseObjectId(),
       ...this.makeDbUser(makeUserProps),
     });
   },
   makeDbAndMongoUser({ _id, ...makeUserProps }: MakeMongoUserProps) {
     const dbUser = this.makeDbUser(makeUserProps);
-    const mongoUser = new UserModelNext({
+    const mongoUser = new UserModel({
       _id: _id ?? makeMongooseObjectId(),
       ...dbUser,
     });

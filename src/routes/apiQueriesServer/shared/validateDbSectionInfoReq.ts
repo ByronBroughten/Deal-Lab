@@ -2,9 +2,9 @@ import { Request, Response } from "express";
 import { DbSectionPackInfoReq } from "../../../client/src/App/sharedWithServer/apiQueriesShared/makeGeneralReqs";
 import { Id } from "../../../client/src/App/sharedWithServer/SectionMetas/baseSections/id";
 import {
-  DbStoreNameNext,
   dbStoreNameS,
-  DbStoreTypeNext,
+  SavableSectionName,
+  SavableSectionType,
 } from "../../../client/src/App/sharedWithServer/SectionMetas/relNameArrs/storeArrs";
 import { ResHandledError } from "../../../middleware/error";
 import { LoggedIn, validateLoggedInUser } from "./validateLoggedInUser";
@@ -31,11 +31,11 @@ function validateDbId(value: any, res: Response): string {
   }
 }
 
-export function validateDbStoreName<DT extends DbStoreTypeNext = "all">(
+export function validateDbStoreName<DT extends SavableSectionType = "all">(
   value: any,
   res: Response,
   type?: DT
-): DbStoreNameNext<DT> {
+): SavableSectionName<DT> {
   if (dbStoreNameS.is(value, type)) return value;
   else {
     res.status(500).send("The received dbId is not valid.");

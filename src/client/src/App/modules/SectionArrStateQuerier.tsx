@@ -1,10 +1,12 @@
-import { DbStoreNameNext } from "../sharedWithServer/SectionMetas/relNameArrs/storeArrs";
+import { SavableSectionName } from "../sharedWithServer/SectionMetas/relNameArrs/storeArrs";
 import { SectionName } from "../sharedWithServer/SectionMetas/SectionName";
 import { StateQuerierBase, StateQuerierBaseProps } from "./StateQuerierBase";
 import { useStateQuerierBaseProps } from "./StateQuerierBase/useBaseQuerierProps";
 import { SectionArrQuerier } from "./StateQueriersShared/Queriers";
 
-export function useSectionArrQueries(sectionName: DbStoreNameNext<"arrStore">) {
+export function useSectionArrQueries(
+  sectionName: SavableSectionName<"arrStore">
+) {
   const baseProps = useStateQuerierBaseProps();
   const stateQuerier = new SectionArrStateQuerier({
     ...baseProps,

@@ -3,7 +3,7 @@ import {
   SectionPackRaw,
   ServerSectionPack,
 } from "../../sharedWithServer/Analyzer/SectionPackRaw";
-import { DbStoreNameNext } from "../../sharedWithServer/SectionMetas/relNameArrs/storeArrs";
+import { SavableSectionName } from "../../sharedWithServer/SectionMetas/relNameArrs/storeArrs";
 import { SectionName } from "../../sharedWithServer/SectionMetas/SectionName";
 import { ApiQueries, apiQueries } from "../useQueryActions/apiQueriesClient";
 
@@ -49,13 +49,13 @@ export class SectionQuerier extends BaseQuerierNext {
 }
 
 export class SectionArrQuerier extends BaseQuerierNext {
-  constructor(readonly sectionName: DbStoreNameNext<"arrStore">) {
+  constructor(readonly sectionName: SavableSectionName<"arrStore">) {
     super();
   }
 
   async replace(
-    feSectionPackArr: SectionPackRaw<"fe", DbStoreNameNext<"arrStore">>[]
-  ): Promise<DbStoreNameNext<"arrStore">> {
+    feSectionPackArr: SectionPackRaw<"fe", SavableSectionName<"arrStore">>[]
+  ): Promise<SavableSectionName<"arrStore">> {
     const serverSectionPackArr = feSectionPackArr.map((rawPack) =>
       FeSectionPack.rawFeToServer(rawPack, this.sectionName as any)
     );
@@ -66,7 +66,7 @@ export class SectionArrQuerier extends BaseQuerierNext {
         sectionPackArr: serverSectionPackArr,
       })
     );
-    return res.data.dbStoreName as DbStoreNameNext<"arrStore">;
+    return res.data.dbStoreName as SavableSectionName<"arrStore">;
   }
 }
 

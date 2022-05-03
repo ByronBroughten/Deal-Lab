@@ -1,6 +1,6 @@
 import { VariableOption } from "../sharedWithServer/Analyzer/methods/get/variableOptions";
 import { InfoS } from "../sharedWithServer/SectionMetas/Info";
-import { DbStoreNameNext } from "../sharedWithServer/SectionMetas/relNameArrs/storeArrs";
+import { SavableSectionName } from "../sharedWithServer/SectionMetas/relNameArrs/storeArrs";
 import {
   SectionFinderNext,
   SectionName,
@@ -35,10 +35,10 @@ export class TableStateQuerier extends StateQuerierBase {
   get indexName(): SectionName<"rowIndexNext"> {
     return this.sections.sectionMeta(this.tableName).get("tableIndexName");
   }
-  private async sendTable(): Promise<DbStoreNameNext<"arrStore">> {
+  private async sendTable(): Promise<SavableSectionName<"arrStore">> {
     return this.tableQuerier.replace(
       this.nextSections.makeRawSectionPackArr(
-        this.tableName as DbStoreNameNext<"arrStore">
+        this.tableName as SavableSectionName<"arrStore">
       )
     );
   }

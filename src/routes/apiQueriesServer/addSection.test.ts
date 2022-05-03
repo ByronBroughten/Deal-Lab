@@ -6,7 +6,7 @@ import { apiQueriesShared } from "../../client/src/App/sharedWithServer/apiQueri
 import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import Arr from "../../client/src/App/sharedWithServer/utils/Arr";
 import { runApp } from "../../runApp";
-import { UserModelNext } from "../shared/UserModelNext";
+import { UserModel } from "../shared/UserModel";
 import { loginUtils } from "./nextLogin/loginUtils";
 import { getUserByIdNoRes } from "./shared/getUserById";
 import { createTestUserModelNext } from "./test/createTestUserModelNext";
@@ -37,7 +37,7 @@ describe(apiRoute, () => {
   });
 
   afterEach(async () => {
-    await UserModelNext.deleteOne({ _id: userId });
+    await UserModel.deleteOne({ _id: userId });
     server.close();
   });
 

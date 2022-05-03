@@ -43,8 +43,8 @@ interface StoreNameArrsPlusAll extends StoreNameArrs {
   all: readonly SimpleDbStoreName[];
 }
 
-export type DbStoreTypeNext = keyof StoreNameArrsPlusAll;
-export type DbStoreNameNext<SN extends DbStoreTypeNext = "all"> =
+export type SavableSectionType = keyof StoreNameArrsPlusAll;
+export type SavableSectionName<SN extends SavableSectionType = "all"> =
   StoreNameArrsPlusAll[SN][number];
 
 const storeNameArrsPlusAll: StoreNameArrsPlusAll = {
@@ -54,10 +54,10 @@ const storeNameArrsPlusAll: StoreNameArrsPlusAll = {
 
 export const dbStoreNameS = {
   arrs: storeNameArrsPlusAll,
-  is<T extends DbStoreTypeNext = "all">(
+  is<T extends SavableSectionType = "all">(
     value: any,
     type?: T
-  ): value is DbStoreNameNext<T> {
+  ): value is SavableSectionName<T> {
     return (this.arrs[(type ?? "all") as T] as any).includes(value);
   },
 } as const;

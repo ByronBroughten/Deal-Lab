@@ -3,18 +3,19 @@ import {
   SectionPackDbRaw,
   StoredSectionPackInfo,
 } from "../../../client/src/App/sharedWithServer/Analyzer/SectionPackRaw";
-import { DbStoreNameNext } from "../../../client/src/App/sharedWithServer/SectionMetas/relNameArrs/storeArrs";
+import { SavableSectionName } from "../../../client/src/App/sharedWithServer/SectionMetas/relNameArrs/storeArrs";
 import { getUserById } from "./getUserById";
 
-export type FindSectionPackProps<DN extends DbStoreNameNext = DbStoreNameNext> =
-  {
-    userId: string;
-    spInfo: StoredSectionPackInfo<DN>;
-    res: Response;
-  };
+export type FindSectionPackProps<
+  DN extends SavableSectionName = SavableSectionName
+> = {
+  userId: string;
+  spInfo: StoredSectionPackInfo<DN>;
+  res: Response;
+};
 
 export async function findSectionPack<
-  DN extends DbStoreNameNext = DbStoreNameNext
+  DN extends SavableSectionName = SavableSectionName
 >({
   userId,
   spInfo,

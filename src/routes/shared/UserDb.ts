@@ -7,8 +7,8 @@ import { DbVarbs } from "../../client/src/App/sharedWithServer/Analyzer/SectionP
 import { LoginUserNext } from "../../client/src/App/sharedWithServer/apiQueriesShared/login";
 import { sectionMetas } from "../../client/src/App/sharedWithServer/SectionMetas";
 import {
-  DbStoreNameNext,
   dbStoreNameS,
+  SavableSectionName,
 } from "../../client/src/App/sharedWithServer/SectionMetas/relNameArrs/storeArrs";
 import {
   SectionName,
@@ -17,6 +17,9 @@ import {
 import Arr from "../../client/src/App/sharedWithServer/utils/Arr";
 import { Obj } from "../../client/src/App/sharedWithServer/utils/Obj";
 import { SectionPackDb } from "./UserDbNext/SectionPackDb";
+
+type ServerOnlySectionName = "userProtected";
+export type ServerSectionName = SavableSectionName | ServerOnlySectionName;
 
 export class UserDbNext {
   constructor(readonly core: UserDbCore) {}
@@ -28,7 +31,7 @@ export class UserDbNext {
     }, {} as LoginUserNext);
   }
 
-  sectionPackArr<SN extends DbStoreNameNext>(
+  sectionPackArr<SN extends SavableSectionName>(
     storeName: SN
   ): SectionPackDb<SN>[] {
     return this.core[storeName] as Record<
@@ -36,43 +39,34 @@ export class UserDbNext {
       any
     > as SectionPackDb<SN>[];
   }
-  firstSectionPackHeadSection<SN extends DbStoreNameNext>(sectionName: SN) {
+  firstSectionPackHeadSection<SN extends SavableSectionName>(sectionName: SN) {
     const firstPack = this.firstSectionPack(sectionName);
     const firstRawSection = firstPack.rawSectionArr(sectionName)[0];
     if (firstRawSection) return firstRawSection;
     else
       throw new Error(`There is no sectionPack in this.core[${sectionName}]`);
   }
-  firstSectionPack<SN extends DbStoreNameNext>(
+  firstSectionPack<SN extends SavableSectionName>(
     storeName: SN
   ): SectionPackDb<SN> {
     const firstPack = this.sectionPackArr(storeName)[0];
     if (firstPack) return firstPack;
     else throw new Error(`There is no sectionPack in this.core[${storeName}]`);
   }
-  makeRawFeSectionPackArr<SN extends DbStoreNameNext>(
+  makeRawFeSectionPackArr<SN extends SavableSectionName>(
     storeName: SN
   ): SectionPackRaw<"fe", SN>[] {
-    // why is making the table any different?
-    // making the index entries should be all that's different.
-    // I can redo the table on the client side.
-
+    // table is different just because it needs to update its rows
     if (sectionNameS.is(storeName, "tableNext")) {
       return this.makeTableSectionPackFeArr(storeName) as SectionPackRaw<
         "fe",
         SN
       >[];
-    } else if (sectionNameS.is(storeName, "rowIndex")) {
-      throw new Error("This needs to be implemented");
     } else {
       return this.sectionPackArr(storeName).map(
         (dbPack) => dbPack.toFeSectionPack() as SectionPackRaw<"fe", SN>
       );
     }
-  }
-  makeRowIndexPackFeArr(storeName: SectionName<"rowIndexNext">) {
-    const tableName = sectionMetas.section(storeName).get("indexTableName");
-    const columns = this.firstSectionPack(tableName).rawSectionArr("column");
   }
   makeTableSectionPackFeArr<SN extends SectionName<"tableNext">>(
     tableName: SN
@@ -112,11 +106,11 @@ export class UserDbNext {
 }
 
 type UserDbCore = {
-  [SN in DbStoreNameNext]: SectionPackDb<SN>[];
+  [SN in SavableSectionName]: SectionPackDb<SN>[];
 };
 
 export type UserDbRaw = {
-  [SN in DbStoreNameNext]: SectionPackDbRaw<SN>[];
+  [SN in SavableSectionName]: SectionPackDbRaw<SN>[];
 };
 
 export function initDbSectionPack<SN extends SectionName>(

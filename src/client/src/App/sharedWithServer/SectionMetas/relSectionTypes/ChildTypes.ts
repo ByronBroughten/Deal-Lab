@@ -1,7 +1,10 @@
 import StateSection from "../../Analyzer/StateSection";
 import { RemoveNotStrings, StrictSubType, SubType } from "../../utils/types";
 import { ContextName, SimpleSectionName } from "../baseSections";
-import { DbStoreNameNext, DbStoreTypeNext } from "../relNameArrs/storeArrs";
+import {
+  SavableSectionName,
+  SavableSectionType,
+} from "../relNameArrs/storeArrs";
 import { RelSections } from "../relSections";
 import { FeNameInfo } from "../relSections/rel/relVarbInfoTypes";
 
@@ -39,8 +42,8 @@ export type FeToDbNameWithSameChildren<SN extends SimpleSectionName> =
 
 export type FeToDbStoreNameWithSameChildren<
   SN extends SimpleSectionName,
-  DT extends DbStoreTypeNext = "all"
-> = Extract<FeToDbNameWithSameChildren<SN>, DbStoreNameNext<DT>>;
+  DT extends SavableSectionType = "all"
+> = Extract<FeToDbNameWithSameChildren<SN>, SavableSectionName<DT>>;
 
 export type DbToFeNameWithSameChildren<SN extends SimpleSectionName> =
   SectionNameWithSameChildren<SN, "db", "fe">;

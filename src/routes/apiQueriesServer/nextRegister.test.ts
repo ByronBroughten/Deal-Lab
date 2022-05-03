@@ -4,7 +4,7 @@ import Analyzer from "../../client/src/App/sharedWithServer/Analyzer";
 import { apiQueriesShared } from "../../client/src/App/sharedWithServer/apiQueriesShared";
 import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import { runApp } from "../../runApp";
-import { UserModelNext } from "../shared/UserModelNext";
+import { UserModel } from "../shared/UserModel";
 import { testRegisterId } from "./nextRegister";
 import { userServerSide } from "./userServerSide";
 
@@ -30,7 +30,7 @@ describe(testedRoute, () => {
   });
 
   afterEach(async () => {
-    await UserModelNext.deleteOne({ _id: testRegisterId });
+    await UserModel.deleteOne({ _id: testRegisterId });
     server.close();
   });
 
@@ -44,7 +44,7 @@ describe(testedRoute, () => {
   }
   it("should return status 200 and create a user if happy path", async () => {
     await testStatus(200);
-    const userDoc = await UserModelNext.findById(testRegisterId);
+    const userDoc = await UserModel.findById(testRegisterId);
     expect(userDoc).toBeTruthy();
   });
   it("should return 400 if a user with that email already exists", async () => {
