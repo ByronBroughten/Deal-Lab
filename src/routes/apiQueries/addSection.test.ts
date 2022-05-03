@@ -6,7 +6,7 @@ import { apiQueriesShared } from "../../client/src/App/sharedWithServer/apiQueri
 import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import Arr from "../../client/src/App/sharedWithServer/utils/Arr";
 import { runApp } from "../../runApp";
-import { UserModel } from "../shared/UserModel";
+import { UserModel } from "../UserModel";
 import { loginUtils } from "./nextLogin/loginUtils";
 import { getUserByIdNoRes } from "./shared/getUserById";
 import { createTestUserModelNext } from "./test/createTestUserModelNext";

@@ -3,21 +3,24 @@ import {
   SectionPackDbRaw,
   SectionPackRaw,
   ServerSectionPack,
-} from "../../../client/src/App/sharedWithServer/Analyzer/SectionPackRaw";
+} from "../client/src/App/sharedWithServer/Analyzer/SectionPackRaw";
 import {
   RawSection,
   zRawSections,
-} from "../../../client/src/App/sharedWithServer/Analyzer/SectionPackRaw/RawSection";
-import { InEntityVarbInfo } from "../../../client/src/App/sharedWithServer/SectionMetas/baseSections/baseValues/entities";
-import { SavableSectionName } from "../../../client/src/App/sharedWithServer/SectionMetas/relNameArrs/storeArrs";
-import { SelfOrDescendantName } from "../../../client/src/App/sharedWithServer/SectionMetas/relSectionTypes/ChildTypes";
+} from "../client/src/App/sharedWithServer/Analyzer/SectionPackRaw/RawSection";
+import { InEntityVarbInfo } from "../client/src/App/sharedWithServer/SectionMetas/baseSections/baseValues/entities";
+import { SavableSectionName } from "../client/src/App/sharedWithServer/SectionMetas/relNameArrs/storeArrs";
+import { SelfOrDescendantName } from "../client/src/App/sharedWithServer/SectionMetas/relSectionTypes/ChildTypes";
 import {
   SectionName,
   sectionNameS,
   SectionNameType,
-} from "../../../client/src/App/sharedWithServer/SectionMetas/SectionName";
-import { Obj } from "../../../client/src/App/sharedWithServer/utils/Obj";
-import { zodSchema } from "../../../client/src/App/sharedWithServer/utils/zod";
+} from "../client/src/App/sharedWithServer/SectionMetas/SectionName";
+import { Obj } from "../client/src/App/sharedWithServer/utils/Obj";
+import { zodSchema } from "../client/src/App/sharedWithServer/utils/zod";
+
+// ServerSectionPack will be trivially different from
+// SectionPack.
 
 export class SectionPackDb<SN extends SectionName> {
   constructor(readonly core: SectionPackDbRaw<SN> & { sectionName: SN }) {}

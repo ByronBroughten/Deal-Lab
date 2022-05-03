@@ -1,4 +1,9 @@
+import { IsType } from "./types";
+
 export const Str = {
+  makeStringTypeGuard<T extends string>(arr: readonly T[]): IsType<T> {
+    return (value: any): value is T => arr.includes(value);
+  },
   compareAlphanumerically(a: string, b: string) {
     return a.localeCompare(b, undefined, { numeric: true });
   },

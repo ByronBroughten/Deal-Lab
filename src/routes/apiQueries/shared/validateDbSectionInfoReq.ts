@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { DbSectionPackInfoReq } from "../../../client/src/App/sharedWithServer/apiQueriesShared/makeGeneralReqs";
 import { Id } from "../../../client/src/App/sharedWithServer/SectionMetas/baseSections/id";
 import {
-  dbStoreNameS,
+  savableNameS,
   SavableSectionName,
   SavableSectionType,
 } from "../../../client/src/App/sharedWithServer/SectionMetas/relNameArrs/storeArrs";
@@ -36,7 +36,7 @@ export function validateDbStoreName<DT extends SavableSectionType = "all">(
   res: Response,
   type?: DT
 ): SavableSectionName<DT> {
-  if (dbStoreNameS.is(value, type)) return value;
+  if (savableNameS.is(value, type)) return value;
   else {
     res.status(500).send("The received dbId is not valid.");
     throw new ResHandledError("Handled in validateRawSectionPack");

@@ -4,7 +4,7 @@ import Analyzer from "../../client/src/App/sharedWithServer/Analyzer";
 import { apiQueriesShared } from "../../client/src/App/sharedWithServer/apiQueriesShared";
 import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import { runApp } from "../../runApp";
-import { UserModel } from "../shared/UserModel";
+import { UserModel } from "../UserModel";
 import { testRegisterId } from "./nextRegister";
 import { userServerSide } from "./userServerSide";
 

@@ -8,7 +8,7 @@ import {
   SectionPackRes,
 } from "../../../sharedWithServer/apiQueriesShared/makeGeneralReqs";
 import { Id } from "../../../sharedWithServer/SectionMetas/baseSections/id";
-import { dbStoreNameS } from "../../../sharedWithServer/SectionMetas/relNameArrs/storeArrs";
+import { savableNameS } from "../../../sharedWithServer/SectionMetas/relNameArrs/storeArrs";
 import { Obj } from "../../../sharedWithServer/utils/Obj";
 
 export function validateDbIdRes(res: AxiosResponse<unknown>): DbIdRes {
@@ -25,7 +25,7 @@ export function validateDbStoreNameRes(
   const { data } = res;
   if (Obj.isAnyIfIsObj(data)) {
     const { dbStoreName } = data;
-    if (dbStoreNameS.is(dbStoreName)) return makeRes({ dbStoreName });
+    if (savableNameS.is(dbStoreName)) return makeRes({ dbStoreName });
   }
   throw makeResValidationQueryError();
 }

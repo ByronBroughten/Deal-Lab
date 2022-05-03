@@ -52,7 +52,7 @@ const storeNameArrsPlusAll: StoreNameArrsPlusAll = {
   all: dbStoreNamesNext,
 };
 
-export const dbStoreNameS = {
+export const savableNameS = {
   arrs: storeNameArrsPlusAll,
   is<T extends SavableSectionType = "all">(
     value: any,

@@ -6,12 +6,12 @@ import {
   RegisterReqBody,
 } from "../../client/src/App/sharedWithServer/apiQueriesShared/register";
 import { BaseSectionsDb } from "../../client/src/App/sharedWithServer/SectionMetas/baseSectionTypes";
-import { dbStoreNameS } from "../../client/src/App/sharedWithServer/SectionMetas/relNameArrs/storeArrs";
+import { savableNameS } from "../../client/src/App/sharedWithServer/SectionMetas/relNameArrs/storeArrs";
 import { SchemaVarbsToDbValues } from "../../client/src/App/sharedWithServer/SectionMetas/relSections/rel/valueMetaTypes";
 import { makeMongooseObjectId } from "../../client/src/App/sharedWithServer/utils/mongoose";
 import { StrictPick } from "../../client/src/App/sharedWithServer/utils/types";
-import { initDbSectionPack, UserDbRaw } from "../shared/UserDb";
-import { modelPath, UserModel } from "../shared/UserModel";
+import { initDbSectionPack, UserDbRaw } from "../ServerUser";
+import { modelPath, UserModel } from "../UserModel";
 
 export const userServerSide = {
   userEmailLowerPath: modelPath.firstSectionPackSectionVarb(
@@ -45,7 +45,7 @@ export const userServerSide = {
       user: [initDbSectionPack("user", newUser)],
     };
 
-    for (const storeName of dbStoreNameS.arrs.all) {
+    for (const storeName of savableNameS.arrs.all) {
       if (!(storeName in partial)) partial[storeName] = [];
     }
 

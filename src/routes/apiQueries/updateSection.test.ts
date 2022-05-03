@@ -7,7 +7,7 @@ import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/
 import { NumObj } from "../../client/src/App/sharedWithServer/SectionMetas/baseSections/baseValues/NumObj";
 import { Id } from "../../client/src/App/sharedWithServer/SectionMetas/baseSections/id";
 import { runApp } from "../../runApp";
-import { UserModel } from "../shared/UserModel";
+import { UserModel } from "../UserModel";
 import { loginUtils } from "./nextLogin/loginUtils";
 import { getUserByIdNoRes } from "./shared/getUserById";
 import { createTestUserModelNext } from "./test/createTestUserModelNext";

@@ -1,6 +1,6 @@
 import { Response } from "express";
 import { resHandledError } from "../../../middleware/error";
-import { UserModel } from "../../shared/UserModel";
+import { UserModel } from "../../UserModel";
 
 const options = {
   new: true,

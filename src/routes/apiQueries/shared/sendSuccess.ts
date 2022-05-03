@@ -2,7 +2,7 @@ import { Response } from "express";
 import {
   ApiQueryName,
   NextRes,
-} from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
+} from "../../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 
 export function sendSuccess<QN extends ApiQueryName>(
   res: Response,

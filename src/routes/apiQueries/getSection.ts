@@ -6,12 +6,12 @@ import {
 import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import authWare from "../../middleware/authWare";
 import { ResHandledError } from "../../middleware/error";
-import { sendSuccess } from "../shared/crudValidators";
-import { SectionPackDb } from "../shared/UserDbNext/SectionPackDb";
+import { SectionPackDb } from "../SectionPackDb";
 import {
   findSectionPack,
   FindSectionPackProps,
 } from "./shared/findSectionPack";
+import { sendSuccess } from "./shared/sendSuccess";
 import { validateDbSectionInfoReq } from "./shared/validateDbSectionInfoReq";
 import { LoggedIn } from "./shared/validateLoggedInUser";
 

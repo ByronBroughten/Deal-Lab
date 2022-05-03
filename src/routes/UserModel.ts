@@ -1,11 +1,11 @@
 import mongoose, { Schema } from "mongoose";
-import { SectionPackDbRaw } from "../../client/src/App/sharedWithServer/Analyzer/SectionPackRaw";
-import { RawSection } from "../../client/src/App/sharedWithServer/Analyzer/SectionPackRaw/RawSection";
-import { SavableSectionName } from "../../client/src/App/sharedWithServer/SectionMetas/relNameArrs/storeArrs";
-import { SelfOrDescendantName } from "../../client/src/App/sharedWithServer/SectionMetas/relSectionTypes/ChildTypes";
-import { sectionNameS } from "../../client/src/App/sharedWithServer/SectionMetas/SectionName";
-import { monSchemas } from "../../client/src/App/sharedWithServer/utils/mongoose";
-import { UserDbRaw } from "./UserDb";
+import { SectionPackDbRaw } from "../client/src/App/sharedWithServer/Analyzer/SectionPackRaw";
+import { RawSection } from "../client/src/App/sharedWithServer/Analyzer/SectionPackRaw/RawSection";
+import { SavableSectionName } from "../client/src/App/sharedWithServer/SectionMetas/relNameArrs/storeArrs";
+import { SelfOrDescendantName } from "../client/src/App/sharedWithServer/SectionMetas/relSectionTypes/ChildTypes";
+import { sectionNameS } from "../client/src/App/sharedWithServer/SectionMetas/SectionName";
+import { monSchemas } from "../client/src/App/sharedWithServer/utils/mongoose";
+import { UserDbRaw } from "./ServerUser";
 
 export const UserModel = mongoose.model<UserDbRaw>(
   "userNext",

@@ -3,6 +3,8 @@ export type StrictPick<T, K extends keyof T> = Pick<T, K>;
 export type StrictPartial<T, K extends keyof T> = Partial<Pick<T, K>>;
 export type StrictExtract<T, K extends T> = Extract<T, K>;
 
+export type IsType<T> = (value: any) => value is T;
+
 export type ValueOf<T> = T[keyof T];
 
 export type DropFirst<T extends unknown[]> = T extends [any, ...infer U]

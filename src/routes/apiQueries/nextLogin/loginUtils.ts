@@ -5,8 +5,8 @@ import { isObject } from "lodash";
 import mongoose from "mongoose";
 import { constants } from "../../../client/src/App/Constants";
 import { resHandledError } from "../../../middleware/error";
-import { UserDbNext, UserDbRaw } from "../../shared/UserDb";
-import { UserModel } from "../../shared/UserModel";
+import { ServerUser, UserDbRaw } from "../../ServerUser";
+import { UserModel } from "../../UserModel";
 import { userServerSide } from "../userServerSide";
 
 export const loginUtils = {
@@ -46,7 +46,7 @@ export const loginUtils = {
   },
   doLogin(res: Response, user: UserDbRaw & { _id?: any }) {
     if ("_id" in user && typeof user._id !== "undefined") {
-      const userDb = UserDbNext.init(user);
+      const userDb = ServerUser.init(user);
       const loggedInUser = userDb.makeRawFeLoginUser();
       const token = this.makeUserAuthToken(user._id);
       res

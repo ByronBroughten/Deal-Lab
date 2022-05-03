@@ -3,9 +3,9 @@ import { ServerSectionPack } from "../../client/src/App/sharedWithServer/Analyze
 import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import { SavableSectionName } from "../../client/src/App/sharedWithServer/SectionMetas/relNameArrs/storeArrs";
 import authWare from "../../middleware/authWare";
-import { sendSuccess } from "../shared/crudValidators";
-import { SectionPackDb } from "../shared/UserDbNext/SectionPackDb";
+import { SectionPackDb } from "../SectionPackDb";
 import { findOneAndUpdate } from "./shared/findAndUpdate";
+import { sendSuccess } from "./shared/sendSuccess";
 import { LoggedIn } from "./shared/validateLoggedInUser";
 import { validateSectionPackReq } from "./shared/validateSectionPackReq";
 

@@ -7,7 +7,7 @@ import {
   LoginFormData,
 } from "../../client/src/App/sharedWithServer/apiQueriesShared/login";
 import { resHandledError, ResHandledError } from "../../middleware/error";
-import { UserDbNext, UserDbRaw } from "../shared/UserDb";
+import { ServerUser, UserDbRaw } from "../ServerUser";
 import { loginUtils } from "./nextLogin/loginUtils";
 import { userServerSide } from "./userServerSide";
 
@@ -61,7 +61,7 @@ async function validateUserPassword({
 }
 
 function getUserEncryptedPassword(user: UserDbRaw): string {
-  const dbUser = UserDbNext.init(user);
+  const dbUser = ServerUser.init(user);
   const userSection = dbUser.firstSectionPackHeadSection("user");
   return userSection.dbVarbs.encryptedPassword as string;
 }

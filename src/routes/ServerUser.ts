@@ -1,27 +1,33 @@
-import { SectionPack } from "../../client/src/App/sharedWithServer/Analyzer/SectionPack";
+import { SectionPack } from "../client/src/App/sharedWithServer/Analyzer/SectionPack";
 import {
   SectionPackDbRaw,
   SectionPackRaw,
-} from "../../client/src/App/sharedWithServer/Analyzer/SectionPackRaw";
-import { DbVarbs } from "../../client/src/App/sharedWithServer/Analyzer/SectionPackRaw/RawSection";
-import { LoginUserNext } from "../../client/src/App/sharedWithServer/apiQueriesShared/login";
-import { sectionMetas } from "../../client/src/App/sharedWithServer/SectionMetas";
+} from "../client/src/App/sharedWithServer/Analyzer/SectionPackRaw";
+import { DbVarbs } from "../client/src/App/sharedWithServer/Analyzer/SectionPackRaw/RawSection";
+import { LoginUserNext } from "../client/src/App/sharedWithServer/apiQueriesShared/login";
+import { sectionMetas } from "../client/src/App/sharedWithServer/SectionMetas";
 import {
-  dbStoreNameS,
+  savableNameS,
   SavableSectionName,
-} from "../../client/src/App/sharedWithServer/SectionMetas/relNameArrs/storeArrs";
+} from "../client/src/App/sharedWithServer/SectionMetas/relNameArrs/storeArrs";
 import {
   SectionName,
   sectionNameS,
-} from "../../client/src/App/sharedWithServer/SectionMetas/SectionName";
-import Arr from "../../client/src/App/sharedWithServer/utils/Arr";
-import { Obj } from "../../client/src/App/sharedWithServer/utils/Obj";
-import { SectionPackDb } from "./UserDbNext/SectionPackDb";
+} from "../client/src/App/sharedWithServer/SectionMetas/SectionName";
+import Arr from "../client/src/App/sharedWithServer/utils/Arr";
+import { Obj } from "../client/src/App/sharedWithServer/utils/Obj";
+import { SectionPackDb } from "./SectionPackDb";
 
-type ServerOnlySectionName = "userProtected";
+const serverOnlySectionNames = ["userProtected"] as const;
+const serverSectionNames = [
+  ...savableNameS.arrs.all,
+  ...serverOnlySectionNames,
+] as const;
+
+type ServerOnlySectionName = typeof serverOnlySectionNames[number];
 export type ServerSectionName = SavableSectionName | ServerOnlySectionName;
 
-export class UserDbNext {
+export class ServerUser {
   constructor(readonly core: UserDbCore) {}
   makeRawFeLoginUser(): LoginUserNext {
     return sectionNameS.arrs.fe.loadOnLogin.reduce((loginUser, sectionName) => {
@@ -87,8 +93,8 @@ export class UserDbNext {
     tableSection.dbVarbs.rowIds = nextRowIds;
     return [tableSectionPack.toFeSectionPack()];
   }
-  static init(userDbRaw: UserDbRaw): UserDbNext {
-    const core = dbStoreNameS.arrs.all.reduce((userDbCore, storeName) => {
+  static init(userDbRaw: UserDbRaw): ServerUser {
+    const core = savableNameS.arrs.all.reduce((userDbCore, storeName) => {
       if (storeName in userDbRaw) {
         (userDbCore[storeName] as SectionPackDb<typeof storeName>[]) = (
           userDbRaw[storeName] as SectionPackDbRaw<SectionName>[]
@@ -101,7 +107,7 @@ export class UserDbNext {
       return userDbCore;
     }, {} as UserDbCore);
 
-    return new UserDbNext(core);
+    return new ServerUser(core);
   }
 }
 

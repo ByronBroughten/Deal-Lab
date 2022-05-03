@@ -3,7 +3,7 @@ import express from "express";
 import { graphqlHTTP } from "express-graphql";
 import { constants } from "../client/src/App/Constants";
 import { gqlSchema } from "../graphlq";
-import apiQueriesServer from "../routes/apiQueriesServer";
+import apiQueriesServer from "../routes/apiQueries";
 
 export default function routes(app: express.Application) {
   app.use(

@@ -2,9 +2,9 @@ import { Request, Response } from "express";
 import { ServerSectionPack } from "../../client/src/App/sharedWithServer/Analyzer/SectionPackRaw";
 import { SavableSectionName } from "../../client/src/App/sharedWithServer/SectionMetas/relNameArrs/storeArrs";
 import authWare from "../../middleware/authWare";
-import { sendSuccess } from "../shared/crudValidators";
-import { SectionPackDb } from "../shared/UserDbNext/SectionPackDb";
+import { SectionPackDb } from "../SectionPackDb";
 import { findUserByIdAndUpdate } from "./shared/findAndUpdate";
+import { sendSuccess } from "./shared/sendSuccess";
 import { validateSectionPackArrReq } from "./shared/validateSectionPackReq";
 
 export const replaceSectionArrWare = [authWare, replaceSectionArrServerSide];

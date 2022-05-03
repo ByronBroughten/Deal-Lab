@@ -4,13 +4,13 @@ import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/
 import { SectionName } from "../../client/src/App/sharedWithServer/SectionMetas/SectionName";
 import authWare from "../../middleware/authWare";
 import { ResHandledError } from "../../middleware/error";
-import { sendSuccess } from "../shared/crudValidators";
-import { SectionPackDb } from "../shared/UserDbNext/SectionPackDb";
+import { SectionPackDb } from "../SectionPackDb";
 import { findUserByIdAndUpdate } from "./shared/findAndUpdate";
 import {
   findSectionPack,
   FindSectionPackProps,
 } from "./shared/findSectionPack";
+import { sendSuccess } from "./shared/sendSuccess";
 import { LoggedIn } from "./shared/validateLoggedInUser";
 import { validateSectionPackReq } from "./shared/validateSectionPackReq";
 

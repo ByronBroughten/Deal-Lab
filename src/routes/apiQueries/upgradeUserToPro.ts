@@ -3,8 +3,8 @@ import Stripe from "stripe";
 import { config } from "../../client/src/App/Constants";
 import authWare from "../../middleware/authWare";
 import { resHandledError } from "../../middleware/error";
-import { sendSuccess } from "../shared/crudValidators";
 import { findUserByIdAndUpdate } from "./shared/findAndUpdate";
+import { sendSuccess } from "./shared/sendSuccess";
 import {
   UserAuthedReq,
   validateLoggedInUser,
