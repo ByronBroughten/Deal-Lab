@@ -10,19 +10,6 @@ AppRegistry.runApplication("App", {
 
 reportWebVitals();
 
-// Fix user
-// - Make a ServerSectionPack whose only difference is that it has serverOnlyUser
-// - Make ServerSectionPack only appear on the serverSide
-// - Make DbSectionPack based on that
-// - Add the serverOnlyUser to the server side of things
-// - Change the createUser functions to do it the right way
-// - Change the current user to not have the protected stuff
-// - Clean up messes
-
-// Make the login and register tests pass.
-// 1. For login, make it save an indexEntry before
-// logging in, to test that thoroughly
-
 // Complete the sectionAdder
 // 1. Make it add a section whereby it uses all default
 // values and adds only children that are "alwaysOne"
