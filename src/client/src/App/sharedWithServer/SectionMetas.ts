@@ -259,7 +259,7 @@ export class SectionMetas {
     };
     for (const contextName of ["fe", "db"] as const) {
       partial[contextName] = {};
-      for (const sectionName of sectionNameS.arrs[contextName].all) {
+      for (const sectionName of sectionNameS.arrs.all) {
         partial[contextName][sectionName] = SectionMeta.init(
           contextName,
           sectionName

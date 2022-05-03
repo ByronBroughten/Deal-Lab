@@ -10,7 +10,7 @@ import {
 } from "../../sharedWithServer/SectionMetas/baseSections/baseValues/NumObj";
 import { FeVarbInfo } from "../../sharedWithServer/SectionMetas/relSections/rel/relVarbInfoTypes";
 import array from "../../sharedWithServer/utils/Arr";
-import { EntityMap, EntityRanges, RawEditorState } from "../../utils/Draf";
+import { EntityMap, EntityRanges, RawEditorState } from "../../utils/DraftS";
 import {
   editorStateToText,
   getRawEditorState,

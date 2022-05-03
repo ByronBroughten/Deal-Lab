@@ -33,7 +33,7 @@ export function isLoginUserNext(value: any): value is LoginUserNext {
 
 function makeZLoginUserSchema() {
   return z.object(
-    sectionNameS.arrs.fe.loadOnLogin.reduce((partial, sectionName) => {
+    sectionNameS.arrs.loadOnLogin.reduce((partial, sectionName) => {
       partial[sectionName] = zodSchema.array(zRawSectionPack);
       return partial;
     }, {} as Partial<Record<keyof LoginUserNext, any>>) as Record<

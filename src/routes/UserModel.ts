@@ -18,7 +18,7 @@ export function createUserModel(modelName: string) {
 
 function makeMongooseUserSchema(): Schema<Record<SavableSectionName, any>> {
   const partial: Partial<Record<SavableSectionName, any>> = {};
-  for (const sectionName of sectionNameS.arrs.fe.dbStoreNext) {
+  for (const sectionName of sectionNameS.arrs.dbStoreNext) {
     partial[sectionName] = [makeMongooseSectionPack()];
   }
   const frame = partial as Record<SavableSectionName, any>;

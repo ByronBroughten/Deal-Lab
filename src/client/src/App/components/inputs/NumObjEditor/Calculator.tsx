@@ -1,15 +1,15 @@
+import { Button } from "@material-ui/core";
 import { EditorState } from "draft-js";
+import { CgCalculator } from "react-icons/cg";
+import styled from "styled-components";
 import { insertChars } from "../../../modules/draftjs/insert";
 import { useAnalyzerContext } from "../../../modules/usePropertyAnalyzer";
-import { deleteCharsAndEntities, cleanup } from "../../../utils/Draf";
-import varbCalcInputParser from "./numericEditorParser";
-import CalculatorBtns from "./Calculator/CalculatorBtns";
-import { Button } from "@material-ui/core";
-import { CgCalculator } from "react-icons/cg";
-import { getAttrsFn } from "../../../utils/styledComponents";
-import styled from "styled-components";
-import theme from "../../../theme/Theme";
 import ccs from "../../../theme/cssChunks";
+import theme from "../../../theme/Theme";
+import { cleanup, deleteCharsAndEntities } from "../../../utils/DraftS";
+import { getAttrsFn } from "../../../utils/styledComponents";
+import CalculatorBtns from "./Calculator/CalculatorBtns";
+import varbCalcInputParser from "./numericEditorParser";
 
 function insertChar(editorState: EditorState, char: string): EditorState {
   if (varbCalcInputParser({ char, editorState }))

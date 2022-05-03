@@ -4,7 +4,7 @@ import { FeInfo } from "../../../SectionMetas/Info";
 import {
   SectionName,
   sectionNameS,
-  SectionNameType,
+  SectionNameType
 } from "../../../SectionMetas/SectionName";
 import { DbEntry, DbSection, DbSections } from "../../DbEntry";
 
@@ -81,7 +81,7 @@ export function dbEntryArrs<
   ToReturn = { [Prop in SectionName<ST & SectionNameType>]: DbEntry[] }
 >(this: Analyzer, sectionNameType: ST): ToReturn {
   const partial = {} as ToReturn;
-  for (const sectionName of sectionNameS.arrs.fe[sectionNameType]) {
+  for (const sectionName of sectionNameS.arrs[sectionNameType]) {
     partial[sectionName as keyof typeof partial] = this.dbEntryArr(
       sectionName as any
     ) as any;

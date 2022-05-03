@@ -112,7 +112,7 @@ function userListTotalOptions(analyzer: Analyzer): VariableOption[] {
 
   const options: VariableOption[] = [];
 
-  for (const sectionName of sectionNameS.arrs.fe.additiveList) {
+  for (const sectionName of sectionNameS.arrs.additiveList) {
     const collectionName = sectionToCollectionName[sectionName];
     const feIds = analyzer.singleSection("main").childFeIds(sectionName);
     for (const id of feIds) {

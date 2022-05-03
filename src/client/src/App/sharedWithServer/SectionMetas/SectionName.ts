@@ -1,3 +1,4 @@
+import { StringTypeChecker } from "../../utils/StringTypeChecker";
 import { ContextName, sectionContext, SimpleSectionName } from "./baseSections";
 import { AlwaysOneFinder, SectionVarbName } from "./baseSectionTypes";
 import { baseNameArrs, BaseNameArrs } from "./baseSectionTypes/baseNameArrs";
@@ -40,24 +41,11 @@ export type AlwaysOneVarbFinder<
   varbName: SectionVarbName<"fe", S>;
 };
 
-export const sectionNameS = {
-  arrs: makeNameArrs(),
-  is<T extends SectionNameType<SC> = "all", SC extends ContextName = "fe">(
-    value: any,
-    type?: T,
-    sectionContext?: SC
-  ): value is SectionName<T, SC> {
-    const names: any =
-      this.arrs[(sectionContext ?? "fe") as SC][(type ?? "all") as T];
-    return names.includes(value);
-  },
-} as const;
+export const sectionNameS = new StringTypeChecker(makeNameArrs().fe);
 
-type GeneralNameArrs = {
-  [SC in ContextName]: Record<
-    SectionNameType<"fe">,
-    readonly SimpleSectionName[]
-  >;
-};
+type GeneralNameArrs = Record<
+  SectionNameType<"fe">,
+  readonly SimpleSectionName[]
+>;
 const _testNameArrs = <T extends GeneralNameArrs>(_: T) => undefined;
 _testNameArrs(sectionNameS.arrs);

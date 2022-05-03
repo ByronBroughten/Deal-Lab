@@ -5,7 +5,7 @@ import StateVarb, {
   StateValueAnyKey,
 } from "../../sharedWithServer/Analyzer/StateSection/StateVarb";
 import { FeVarbInfo } from "../../sharedWithServer/SectionMetas/relSections/rel/relVarbInfoTypes";
-import { DraftBlock } from "../../utils/Draf";
+import { DraftBlock } from "../../utils/DraftS";
 import useOnChange from "./useOnChange";
 
 export const getEditorSolveParams = (rawEditorState: any) => {

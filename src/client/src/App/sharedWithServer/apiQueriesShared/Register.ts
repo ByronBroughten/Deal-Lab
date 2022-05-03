@@ -27,7 +27,7 @@ export function areGuestAccessSectionsNext(
   return true;
 }
 function makeZGuestAccessSectionsNext() {
-  const feGuestAccessStoreNames = sectionNameS.arrs.db.feGuestAccess;
+  const feGuestAccessStoreNames = sectionNameS.arrs.feGuestAccess;
   const schemaFrame = feGuestAccessStoreNames.reduce(
     (feGuestAccessSections, sectionName) => {
       feGuestAccessSections[sectionName] = zSectionPackDbArr;

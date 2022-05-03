@@ -18,19 +18,10 @@ import Arr from "../client/src/App/sharedWithServer/utils/Arr";
 import { Obj } from "../client/src/App/sharedWithServer/utils/Obj";
 import { SectionPackDb } from "./SectionPackDb";
 
-const serverOnlySectionNames = ["userProtected"] as const;
-const serverSectionNames = [
-  ...savableNameS.arrs.all,
-  ...serverOnlySectionNames,
-] as const;
-
-type ServerOnlySectionName = typeof serverOnlySectionNames[number];
-export type ServerSectionName = SavableSectionName | ServerOnlySectionName;
-
 export class ServerUser {
   constructor(readonly core: UserDbCore) {}
   makeRawFeLoginUser(): LoginUserNext {
-    return sectionNameS.arrs.fe.loadOnLogin.reduce((loginUser, sectionName) => {
+    return sectionNameS.arrs.loadOnLogin.reduce((loginUser, sectionName) => {
       (loginUser[sectionName] as SectionPackRaw<"fe", typeof sectionName>[]) =
         this.makeRawFeSectionPackArr(sectionName);
       return loginUser;

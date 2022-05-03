@@ -9,15 +9,16 @@ AppRegistry.runApplication("App", {
 });
 
 reportWebVitals();
-// - create a class that creates two sectionAdders: one based on a table, and one
-// based on an tableSource
-// - It makes a row for the table
 
 // Fix user
-// 1. Remove the db-only variables from user.
-// 2. Tack on a custom section to DbUser and MongooseUser
-// called "serverOnlyUser", with encrypted password, etc
-// This won't every be queried directly by the client
+// - Change the SectionPack stuff so that there is no sectionContext/contextName
+// - Make a ServerSectionPack whose only difference is that it has serverOnlyUser
+// - Make ServerSectionPack only appear on the serverSide
+// - Make DbSectionPack based on that
+// - Add the serverOnlyUser to the server side of things
+// - Change the createUser functions to do it the right way
+// - Change the current user to not have the protected stuff
+// - Clean up messes
 
 // Make the login and register tests pass.
 // 1. For login, make it save an indexEntry before
@@ -32,6 +33,8 @@ reportWebVitals();
 // And then require replacing a section with a sectionPack
 // You probably don't want to be able to add multiples of the top section
 // No, I don't think you do.
+
+// replace Analyzer's core with sectionAdder
 
 // Redo the tableColumns route
 

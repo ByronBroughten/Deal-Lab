@@ -23,7 +23,7 @@ export function makeRawSectionPackArrs<ST extends SectionNameType>(
   this: Analyzer,
   sectionNameType: ST
 ): FeSectionPackArrs<ST> {
-  return (sectionNameS.arrs.fe[sectionNameType] as string[]).reduce(
+  return (sectionNameS.arrs[sectionNameType] as string[]).reduce(
     (sectionPackArrs, sectionName) => {
       sectionPackArrs[sectionName as keyof typeof sectionPackArrs] =
         this.makeRawSectionPackArr(sectionName as SectionName<ST>) as any;

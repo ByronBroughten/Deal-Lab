@@ -15,7 +15,7 @@ import {
   EntityMap,
   EntityRanges,
   RawEditorState,
-} from "../../../utils/Draf";
+} from "../../../utils/DraftS";
 
 export interface CreateEditorProps {
   varb: StateVarb;

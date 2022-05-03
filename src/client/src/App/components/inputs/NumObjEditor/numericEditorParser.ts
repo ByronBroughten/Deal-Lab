@@ -1,5 +1,5 @@
 import { EditorState } from "draft-js";
-import { getBlockAndOffset } from "../../../utils/Draf";
+import { getBlockAndOffset } from "../../../utils/DraftS";
 
 const varbCalcRegEx = /[\d.*/+-]/;
 const parsers = {
