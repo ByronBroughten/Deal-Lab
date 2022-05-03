@@ -137,9 +137,6 @@ export const relSection = {
       ),
     } as RelSectionProp<ExtractSectionContext<SCB>, SN, D, PVS, O>;
   },
-  // ok, it's going to have a kind of
-  // arr store option
-
   singleTimeList<
     SN extends BaseName<"singleTimeList">,
     D extends string,
@@ -201,26 +198,6 @@ export const relSection = {
       } as RelVarbs<"fe", S>,
       {
         childNames: ["cell"] as const,
-      }
-    );
-  },
-  sectionTable<
-    S extends BaseName<"table">,
-    D extends string,
-    R extends BaseName
-  >(sectionName: S, displayName: D, rowSourceName: R) {
-    return this.base(
-      "fe" as ContextName,
-      sectionName,
-      displayName,
-      {
-        searchFilter: relVarb.string(),
-        rowIds: relVarb.type("stringArray"),
-      } as RelVarbs<ContextName, S>,
-      {
-        rowSourceName,
-        parent: "main",
-        childNames: ["column"] as const,
       }
     );
   },
