@@ -54,7 +54,7 @@ export class SectionArrQuerier extends BaseQuerierNext {
   }
 
   async replace(
-    feSectionPackArr: SectionPackRaw<"fe", SavableSectionName<"arrStore">>[]
+    feSectionPackArr: SectionPackRaw<SavableSectionName<"arrStore">>[]
   ): Promise<SavableSectionName<"arrStore">> {
     const serverSectionPackArr = feSectionPackArr.map((rawPack) =>
       FeSectionPack.rawFeToServer(rawPack, this.sectionName as any)

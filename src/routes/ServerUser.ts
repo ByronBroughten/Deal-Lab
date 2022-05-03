@@ -22,7 +22,7 @@ export class ServerUser {
   constructor(readonly core: UserDbCore) {}
   makeRawFeLoginUser(): LoginUserNext {
     return sectionNameS.arrs.loadOnLogin.reduce((loginUser, sectionName) => {
-      (loginUser[sectionName] as SectionPackRaw<"fe", typeof sectionName>[]) =
+      (loginUser[sectionName] as SectionPackRaw<typeof sectionName>[]) =
         this.makeRawFeSectionPackArr(sectionName);
       return loginUser;
     }, {} as LoginUserNext);
@@ -52,22 +52,19 @@ export class ServerUser {
   }
   makeRawFeSectionPackArr<SN extends SavableSectionName>(
     storeName: SN
-  ): SectionPackRaw<"fe", SN>[] {
+  ): SectionPackRaw<SN>[] {
     // table is different just because it needs to update its rows
     if (sectionNameS.is(storeName, "tableNext")) {
-      return this.makeTableSectionPackFeArr(storeName) as SectionPackRaw<
-        "fe",
-        SN
-      >[];
+      return this.makeTableSectionPackFeArr(storeName) as SectionPackRaw<SN>[];
     } else {
       return this.sectionPackArr(storeName).map(
-        (dbPack) => dbPack.toFeSectionPack() as SectionPackRaw<"fe", SN>
+        (dbPack) => dbPack.toFeSectionPack() as SectionPackRaw<SN>
       );
     }
   }
   makeTableSectionPackFeArr<SN extends SectionName<"tableNext">>(
     tableName: SN
-  ): SectionPackRaw<"fe", SN>[] {
+  ): SectionPackRaw<SN>[] {
     const tableSectionPack = this.firstSectionPack(tableName);
     const tableSection = tableSectionPack.firstSection(tableName);
 
@@ -115,7 +112,6 @@ export function initDbSectionPack<SN extends SectionName>(
   fullDbVarbs?: DbVarbs
 ): SectionPackDbRaw<SN> {
   const sectionPack = SectionPack.init({
-    contextName: "db",
     sectionName,
     dbVarbs: fullDbVarbs,
   });
@@ -130,7 +126,7 @@ export function initDbSectionPack<SN extends SectionName>(
 //   const tableColumnSections = tableSectionPack.rawSectionArr("column");
 //   const rowSourceArr = this.sectionPackArr(rowSourceName);
 
-//   const indexRows: SectionPackRaw<"fe", SectionName<"rowIndex">>[] = [];
+//   const indexRows: SectionPackRaw< SectionName<"rowIndex">>[] = [];
 //   for (const sourceSectionPack of rowSourceArr) {
 //     indexRows.push(
 //       this.toRowIndexEntry(rowSourceName, sourceSectionPack, tableColumnSections)
@@ -141,7 +137,7 @@ export function initDbSectionPack<SN extends SectionName>(
 //   indexName: SN,
 //   sourceSectionPack: SectionPackDb<SN>,
 //   tableColumns: OneRawSection<"db", "column">[]
-// ): SectionPackRaw<"fe", SN> {
+// ): SectionPackRaw< SN> {
 //   // for now, there is very little type safety for dbEntry
 
 //   const sourceSection = sourceSectionPack.headSection()

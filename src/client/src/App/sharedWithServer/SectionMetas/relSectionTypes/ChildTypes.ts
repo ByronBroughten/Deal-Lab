@@ -87,14 +87,14 @@ export type SelfOrDescendantName<
 
 export type DescendantIds<
   SN extends SimpleSectionName,
-  CN extends ContextName
+  CN extends ContextName = "fe"
 > = {
   [S in DescendantName<SN, CN>]: string[];
 };
 
 export type SelfOrDescendantIds<
   SN extends SimpleSectionName = SimpleSectionName,
-  CN extends ContextName = ContextName
+  CN extends ContextName = "fe"
 > = {
   [S in SelfOrDescendantName<SN, CN>]: string[];
 };
@@ -118,7 +118,7 @@ export type GeneralChildIdArrs = {
 };
 export type OneChildIdArrs<
   SN extends SimpleSectionName,
-  CN extends ContextName
+  CN extends ContextName = "fe"
 > = {
   [CHN in ChildName<SN, CN>]: string[];
 };

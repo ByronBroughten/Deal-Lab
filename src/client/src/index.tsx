@@ -11,7 +11,6 @@ AppRegistry.runApplication("App", {
 reportWebVitals();
 
 // Fix user
-// - Change the SectionPack stuff so that there is no sectionContext/contextName
 // - Make a ServerSectionPack whose only difference is that it has serverOnlyUser
 // - Make ServerSectionPack only appear on the serverSide
 // - Make DbSectionPack based on that

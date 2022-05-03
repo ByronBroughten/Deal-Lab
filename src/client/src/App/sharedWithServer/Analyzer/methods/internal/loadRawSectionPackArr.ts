@@ -7,7 +7,7 @@ import { AddSectionProps } from "./addSections/addSectionsTypes";
 
 function getSectionArrAddSectionProps(
   next: Analyzer,
-  sectionPackArr: SectionPackRaw<"fe", SectionName<"hasOneParent">>[]
+  sectionPackArr: SectionPackRaw<SectionName<"hasOneParent">>[]
   // this can take parentFinder
 ) {
   return sectionPackArr.reduce((addSectionPropsArr, rawSectionPack) => {
@@ -25,13 +25,13 @@ function getSectionArrAddSectionProps(
 export function loadRawSectionPackArr<S extends SectionName<"hasOneParent">>(
   next: Analyzer,
   sectionName: S,
-  sectionPackArr: SectionPackRaw<"fe", S>[]
+  sectionPackArr: SectionPackRaw<S>[]
 ): Analyzer {
   next = internal.wipeSectionArr(next, sectionName);
 
   const addSectionArrProps = getSectionArrAddSectionProps(
     next,
-    sectionPackArr as Record<keyof SectionPackRaw<"fe", S>, any>[]
+    sectionPackArr as Record<keyof SectionPackRaw<S>, any>[]
   );
   return internal.addSectionsNext(next, addSectionArrProps);
 }

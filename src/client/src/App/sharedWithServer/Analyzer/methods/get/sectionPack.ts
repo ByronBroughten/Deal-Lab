@@ -9,7 +9,7 @@ import Analyzer from "./../../../Analyzer";
 export function makeRawSection<SN extends SectionName>(
   this: Analyzer,
   finder: SectionFinder<SN>
-): OneRawSection<"fe", SN> {
+): OneRawSection<SN> {
   const { dbId, dbVarbs } = this.section(finder);
   return {
     dbId,
@@ -21,7 +21,7 @@ function feIdsToRawSections<SN extends SectionName>(
   analyzer: Analyzer,
   sectionName: SN,
   feIdArr: string[]
-): OneRawSection<"fe", SN>[] {
+): OneRawSection<SN>[] {
   return feIdArr.map((id) => {
     const feInfo = InfoS.fe(sectionName, id);
     return analyzer.makeRawSection(feInfo);
@@ -30,7 +30,7 @@ function feIdsToRawSections<SN extends SectionName>(
 export function makeRawSections<SN extends SectionName>(
   this: Analyzer,
   finder: SectionFinder<SN>
-): RawSections<SN, "fe"> {
+): RawSections<SN> {
   const nestedFeIds = this.selfAndDescendantFeIds(finder);
   return Obj.entries(nestedFeIds as { [key: string]: string[] }).reduce(
     (rawSections, [name, feIdArr]) => {
@@ -38,18 +38,18 @@ export function makeRawSections<SN extends SectionName>(
       return rawSections;
     },
     {} as { [key: string]: any }
-  ) as RawSections<SN, "fe">;
+  ) as RawSections<SN>;
 }
 
 export function makeRawSectionPack<SN extends SectionName>(
   this: Analyzer,
   finder: SectionFinder<SN>
-): SectionPackRaw<"fe", SN> {
+): SectionPackRaw<SN> {
   const { sectionName, dbId } = this.section(finder);
   return {
     sectionName: sectionName as SN,
     dbId,
     contextName: "fe",
-    rawSections: this.makeRawSections(finder) as RawSections<SN, "fe">,
-  } as GeneralSectionPack as any as SectionPackRaw<"fe", SN>;
+    rawSections: this.makeRawSections(finder) as RawSections<SN>,
+  } as GeneralSectionPack as any as SectionPackRaw<SN>;
 }

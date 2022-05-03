@@ -144,9 +144,9 @@ export class SectionMetas {
     );
     return sectionMeta.get("parentNames")[0] as ParentName<SN, CN>;
   }
-  selfAndDescendantNames<SN extends SectionName, CN extends ContextName>(
+  selfAndDescendantNames<SN extends SectionName, CN extends ContextName = "fe">(
     sectionName: SN,
-    contextName: CN
+    contextName?: CN
   ): SelfOrDescendantName<SN, CN>[] {
     const selfAndDescendantNames: SelfOrDescendantName<SN, CN>[] = [];
     const queue: SelfOrDescendantName<SN, CN>[] = [sectionName];
@@ -156,8 +156,10 @@ export class SectionMetas {
         const descendantName = queue.shift() as DescendantName<SN, CN>;
         selfAndDescendantNames.push(descendantName);
 
-        const { childNames } = this.section(descendantName, contextName)
-          .core as SectionMetaCore<"fe", SN>;
+        const { childNames } = this.section(
+          descendantName,
+          (contextName ?? "fe") as CN
+        ).core as SectionMetaCore<"fe", SN>;
         queue.push(...(childNames as DescendantName<SN, CN>[]));
       }
     }

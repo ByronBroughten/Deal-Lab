@@ -10,5 +10,5 @@ type RawSectionFinders<SN extends SectionName, CN extends ContextName> = {
 };
 export type RawSectionFinder<
   SN extends SectionName,
-  CN extends ContextName
+  CN extends ContextName = "fe"
 > = RawSectionFinders<SN, CN>[SelfOrDescendantName<SN, CN>];

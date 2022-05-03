@@ -11,13 +11,13 @@ import { SectionPackRaw } from "../../SectionPackRaw";
 export function makeRawSectionPackArr<SN extends SectionName>(
   this: Analyzer,
   sectionName: SN
-): SectionPackRaw<"fe", SN>[] {
+): SectionPackRaw<SN>[] {
   const feInfos = this.sectionArrInfos(sectionName);
   return feInfos.map((feInfo) => this.makeRawSectionPack(feInfo));
 }
 
 type FeSectionPackArrs<ST extends SectionNameType> = {
-  [SN in SectionName<ST & SectionNameType>]: SectionPackRaw<"fe", SN>[];
+  [SN in SectionName<ST & SectionNameType>]: SectionPackRaw<SN>[];
 };
 export function makeRawSectionPackArrs<ST extends SectionNameType>(
   this: Analyzer,
@@ -34,7 +34,7 @@ export function makeRawSectionPackArrs<ST extends SectionNameType>(
 }
 
 type DbSectionPackArrs<ST extends SectionNameType> = {
-  [SN in SectionName<ST & SectionNameType>]: SectionPackRaw<"db", SN>[];
+  [SN in SectionName<ST & SectionNameType>]: SectionPackRaw<SN>[];
 };
 // For this to work, all guestAccessStore sections much be identical accross client and server.
 export function guestAccessDbSectionPacks(
@@ -50,7 +50,7 @@ export function guestAccessDbSectionPacks(
             sectionName: any
           ) => any
         )(feRawPack, sectionName);
-        return dbRawPack as SectionPackRaw<"db", typeof sectionName>;
+        return dbRawPack as SectionPackRaw<typeof sectionName>;
       });
       (dbSectionPackArrs[sectionName] as any) =
         dbRawPacks as typeof dbSectionPackArrs[typeof sectionName];

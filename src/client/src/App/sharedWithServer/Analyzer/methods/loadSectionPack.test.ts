@@ -7,7 +7,7 @@ import StateSection from "../StateSection";
 describe("Analyzer.addSectionAndSolve", () => {
   let next: Analyzer;
   let initSection: StateSection;
-  let rawSectionPack: SectionPackRaw<"fe">;
+  let rawSectionPack: SectionPackRaw;
   let nextSection: StateSection;
 
   beforeEach(() => {

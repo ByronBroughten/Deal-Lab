@@ -14,52 +14,42 @@ import {
 import { SectionPackRaw, zRawSectionPack } from "./SectionPackRaw";
 import { DbVarbs, RawSections } from "./SectionPackRaw/RawSection";
 
-export type OneHeadSectionNode<
-  SN extends SectionName,
-  CN extends ContextName
-> = {
+export type OneHeadSectionNode<SN extends SectionName> = {
   sectionName: SN;
-  contextName: CN;
   dbId?: string;
-  childDbIds?: Partial<OneChildIdArrs<SN, CN>>;
+  childDbIds?: Partial<OneChildIdArrs<SN>>;
   dbVarbs?: Partial<DbVarbs>;
 };
-export class SectionPack<SN extends SectionName, CN extends ContextName> {
-  constructor(readonly core: SectionPackRaw<CN, SN>) {}
+export class SectionPack<SN extends SectionName> {
+  constructor(readonly core: SectionPackRaw<SN>) {}
   get sectionName(): SN {
     return this.core.sectionName;
   }
   feToServerRaw<NextSN extends FeToDbNameWithSameChildren<SN>>(
     nextSectionName: NextSN
-  ): SectionPackRaw<"db", NextSN> {
+  ): SectionPackRaw<NextSN> {
     const { sectionName } = this;
     return {
-      contextName: "db",
       sectionName: nextSectionName,
       dbId: this.core.dbId,
       rawSections: {
         ...omit(this.core.rawSections, [sectionName]),
         [nextSectionName]: this.core.rawSections[sectionName],
       },
-    } as Record<keyof SectionPackRaw<"db", NextSN>, any> as SectionPackRaw<
-      "db",
-      NextSN
-    >;
+    } as Record<keyof SectionPackRaw<NextSN>, any> as SectionPackRaw<NextSN>;
   }
-  static init<SN extends SectionName, CN extends ContextName>({
+  static init<SN extends SectionName>({
     sectionName,
-    contextName,
     childDbIds,
     dbVarbs,
     dbId = Id.make(),
-  }: OneHeadSectionNode<SN, CN>): SectionPackRaw<CN, SN> {
-    const sectionMeta = sectionMetas.section(sectionName, contextName);
+  }: OneHeadSectionNode<SN>): SectionPackRaw<SN> {
+    const sectionMeta = sectionMetas.section(sectionName);
     return {
       sectionName,
-      contextName,
       dbId,
       rawSections: {
-        ...SectionPack.emptyRawSections(sectionName, contextName),
+        ...SectionPack.emptyRawSections(sectionName),
         [sectionName]: {
           dbId,
           childDbIds: {
@@ -74,16 +64,15 @@ export class SectionPack<SN extends SectionName, CN extends ContextName> {
       },
     };
   }
-  static emptyRawSections<SN extends SectionName, CN extends ContextName>(
-    sectionName: SN,
-    contextName: CN
-  ): RawSections<SN, CN> {
+  static emptyRawSections<SN extends SectionName>(
+    sectionName: SN
+  ): RawSections<SN> {
     return sectionMetas
-      .selfAndDescendantNames(sectionName, contextName)
+      .selfAndDescendantNames(sectionName)
       .reduce((rawSections, name) => {
         rawSections[name] = [];
         return rawSections;
-      }, {} as RawSections<SN, CN>);
+      }, {} as RawSections<SN>);
   }
   static isRaw<
     ST extends SectionNameType = "all",
@@ -91,7 +80,7 @@ export class SectionPack<SN extends SectionName, CN extends ContextName> {
   >(
     value: any,
     { contextName, sectionType }: IsRawProps<ST, CN> = {}
-  ): value is SectionPackRaw<CN, SectionName<ST>> {
+  ): value is SectionPackRaw<SectionName<ST>> {
     if (
       (zRawSectionPack.safeParse(value).success &&
         value.contextName === contextName) ??

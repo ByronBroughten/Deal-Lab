@@ -15,7 +15,7 @@ export function loadUserAndSolve(
     next = internal.loadRawSectionPackArr(
       next,
       sectionName,
-      sectionPackArr as SectionPackRaw<"fe", SectionName<"hasOneParent">>[]
+      sectionPackArr as SectionPackRaw<SectionName<"hasOneParent">>[]
     );
   }
   return next.solveVarbs();

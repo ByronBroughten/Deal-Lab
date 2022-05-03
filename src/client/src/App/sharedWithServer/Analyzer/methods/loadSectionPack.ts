@@ -8,11 +8,7 @@ import { AddSectionProps } from "./internal/addSections/addSectionsTypes";
 export function loadRawSectionPack<
   SN extends SectionName,
   Props extends OrderedSectionNodeProps<SN>
->(
-  this: Analyzer,
-  rawSectionPack: SectionPackRaw<"fe", SN>,
-  props: Props
-): Analyzer {
+>(this: Analyzer, rawSectionPack: SectionPackRaw<SN>, props: Props): Analyzer {
   const feSectionPack = new FeSectionPack(rawSectionPack);
   const sectionNodes = feSectionPack.makeOrderedSectionNodes(
     props

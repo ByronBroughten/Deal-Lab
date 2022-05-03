@@ -9,7 +9,7 @@ import { internal } from "./internal";
 export function replaceSectionAndSolve<SN extends SectionName<"hasParent">>(
   this: Analyzer,
   finder: SectionFinder<SN>,
-  replacementSectionPack: SectionPackRaw<"fe", SN>
+  replacementSectionPack: SectionPackRaw<SN>
 ): Analyzer {
   const next = replaceSection(this, finder, replacementSectionPack);
   return next.solveVarbs();
@@ -17,7 +17,7 @@ export function replaceSectionAndSolve<SN extends SectionName<"hasParent">>(
 function replaceSection<SN extends SectionName<"hasParent">>(
   next: Analyzer,
   finder: SectionFinder<SN>,
-  replacementSectionPack: SectionPackRaw<"fe", SN>
+  replacementSectionPack: SectionPackRaw<SN>
 ): Analyzer {
   const feInfo = next.sectionInfo(finder);
   const parent = next.parent(feInfo);

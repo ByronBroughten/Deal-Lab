@@ -17,7 +17,7 @@ export type RegisterReqBody = {
 };
 
 export type GuestAccessSectionsNext = {
-  [SN in SectionName<"feGuestAccess">]: SectionPackRaw<"db", SN>[];
+  [SN in SectionName<"feGuestAccess">]: SectionPackRaw<SN>[];
 };
 export function areGuestAccessSectionsNext(
   value: any

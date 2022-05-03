@@ -17,7 +17,7 @@ export type LoginQueryObjects = {
 
 export type LoginUserNext = Omit<
   {
-    [SN in SectionName<"loadOnLogin">]: SectionPackRaw<"fe", SN>[];
+    [SN in SectionName<"loadOnLogin">]: SectionPackRaw<SN>[];
   },
   "row"
 >;

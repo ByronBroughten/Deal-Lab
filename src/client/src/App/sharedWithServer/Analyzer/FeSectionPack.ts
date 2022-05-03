@@ -29,7 +29,7 @@ export type OrderedSectionNodeProps<SN extends SectionName> = {
   idx?: number;
 };
 
-type FeSectionPackCore<SN extends SectionName> = SectionPackRaw<"fe", SN>;
+type FeSectionPackCore<SN extends SectionName> = SectionPackRaw<SN>;
 export class FeSectionPack<SN extends SectionName> {
   constructor(readonly core: FeSectionPackCore<SN>) {}
   get sectionName(): SN {
@@ -38,7 +38,7 @@ export class FeSectionPack<SN extends SectionName> {
   get dbId(): string {
     return this.core.dbId;
   }
-  get rawSections(): RawSections<SN, "fe"> {
+  get rawSections(): RawSections<SN> {
     return this.core.rawSections;
   }
   get headSectionFinder() {
@@ -50,7 +50,7 @@ export class FeSectionPack<SN extends SectionName> {
   rawSection({
     sectionName,
     dbId,
-  }: RawSectionFinder<SN, "fe">): RawSection<"fe", SN> {
+  }: RawSectionFinder<SN, "fe">): RawSection<SN> {
     const rawSections = this.rawSections[
       sectionName
     ] as any as GeneralRawSection[];
@@ -60,7 +60,7 @@ export class FeSectionPack<SN extends SectionName> {
     if (rawSection) return rawSection as any;
     else throw new Error(`No rawSection found at ${sectionName}.${dbId}`);
   }
-  get headSection(): RawSection<"fe", SN> {
+  get headSection(): RawSection<SN> {
     return this.rawSection(this.headSectionFinder);
   }
   changeType<NextSN extends SectionNameWithSameChildrenWide<SN, "fe", "fe">>(
@@ -86,7 +86,7 @@ export class FeSectionPack<SN extends SectionName> {
   }
   feToServerRaw<NextSN extends SectionNameWithSameChildrenWide<SN, "fe", "db">>(
     nextSectionName: NextSN
-  ): SectionPackRaw<"db", NextSN> {
+  ): SectionPackRaw<NextSN> {
     const { sectionName } = this;
 
     if (
@@ -100,10 +100,7 @@ export class FeSectionPack<SN extends SectionName> {
           ...omit(this.core.rawSections, [sectionName]),
           [nextSectionName]: this.core.rawSections[sectionName],
         },
-      } as Record<keyof SectionPackRaw<"db", NextSN>, any> as SectionPackRaw<
-        "db",
-        NextSN
-      >;
+      } as Record<keyof SectionPackRaw<NextSN>, any> as SectionPackRaw<NextSN>;
     } else
       throw new Error(
         `Fe sections with the name ${sectionName} do not have the same children as db sections with the name ${nextSectionName}`
@@ -111,7 +108,7 @@ export class FeSectionPack<SN extends SectionName> {
   }
 
   static rawFeToServer<SN extends SectionName, NextSN extends SectionName>(
-    feSectionPackRaw: SectionPackRaw<"fe", SN>,
+    feSectionPackRaw: SectionPackRaw<SN>,
     nextSectionName: NextSN
   ): ServerSectionPack {
     const sectionPack = new FeSectionPack(feSectionPackRaw);
@@ -119,31 +116,29 @@ export class FeSectionPack<SN extends SectionName> {
       nextSectionName as any as FeToDbNameWithSameChildren<SN>
     ) as any as ServerSectionPack;
   }
-  dbToFeIds(
-    childDbIds: SelfOrDescendantIds<SN, "fe">
-  ): SelfOrDescendantIds<SN, "fe"> {
+  dbToFeIds(childDbIds: SelfOrDescendantIds<SN>): SelfOrDescendantIds<SN> {
     return Obj.entries(childDbIds as SelfOrDescendantIds).reduce(
       (childFeIds, [childName, dbIdArr]) => {
         (childFeIds[childName] as string[]) = dbIdArr.map(() => Id.make());
         return childFeIds;
       },
       {} as SelfOrDescendantIds
-    ) as SelfOrDescendantIds<SN, "fe">;
+    ) as SelfOrDescendantIds<SN>;
   }
   makeFeNode(nodeMaker: SectionNodeMaker<SN>): FeSelfOrDescendantNode<SN> {
     const { dbVarbs, childDbIds } = this.rawSection(
-      nodeMaker as RawSectionFinder<SN, "fe">
+      nodeMaker as RawSectionFinder<SN>
     );
     return extend(nodeMaker, {
       dbVarbs,
-      childFeIds: this.dbToFeIds(childDbIds as SelfOrDescendantIds<SN, "fe">),
+      childFeIds: this.dbToFeIds(childDbIds as SelfOrDescendantIds<SN>),
     }) as any;
   }
   makeParentStub(
     feNode: FeSelfOrDescendantNode<SN>
   ): FeSelfOrDescendantParentStub<SN> {
     const { childDbIds } = this.rawSection(
-      feNode as any as RawSectionFinder<SN, "fe">
+      feNode as any as RawSectionFinder<SN>
     );
     return {
       parentFinder: InfoS.fe(feNode.sectionName, feNode.feId),

@@ -34,7 +34,7 @@ export function makeRawSectionPackArrReq<SN extends SectionName>({
 }: MakeRawSectionPackArrReqProps<SN>): SectionPackArrReq {
   const rawSectionPackArr = analyzer.makeRawSectionPackArr(
     sectionName
-  ) as SectionPackRaw<"fe", SN>[];
+  ) as SectionPackRaw<SN>[];
   return makeReq({
     dbStoreName,
     sectionPackArr: rawSectionPackArr.map((rawPack) => {
@@ -55,7 +55,7 @@ export function makeRawSectionPackReq<SN extends SectionName>({
 }: MakeRawSectionPackReqProps<SN>): SectionPackReq {
   const rawSectionPack = analyzer.makeRawSectionPack(
     feInfo
-  ) as any as SectionPackRaw<"fe", SN>;
+  ) as any as SectionPackRaw<SN>;
   return makeReq({
     sectionPack: FeSectionPack.rawFeToServer(rawSectionPack, dbStoreName),
   });

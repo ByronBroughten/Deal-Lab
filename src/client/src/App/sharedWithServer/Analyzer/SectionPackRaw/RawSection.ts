@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { ContextName } from "../../SectionMetas/baseSections";
 import { zDbValue } from "../../SectionMetas/baseSections/baseValues";
 import { DbValue } from "../../SectionMetas/relSections/rel/valueMetaTypes";
 import {
@@ -20,23 +19,19 @@ export type GeneralRawSection = {
 export type GeneralRawSections = {
   [key: string]: GeneralRawSection[];
 };
-export type OneRawSection<
-  CN extends ContextName,
-  SN extends SectionName = SectionName
-> = GeneralRawSection & {
-  dbId: string;
-  dbVarbs: DbVarbs;
-  childDbIds: OneChildIdArrs<SN, CN>;
+export type OneRawSection<SN extends SectionName = SectionName> =
+  GeneralRawSection & {
+    dbId: string;
+    dbVarbs: DbVarbs;
+    childDbIds: OneChildIdArrs<SN>;
+  };
+export type RawSections<SN extends SectionName> = {
+  [DSN in SelfOrDescendantName<SN>]: OneRawSection<DSN>[];
 };
-export type RawSections<SN extends SectionName, CN extends ContextName> = {
-  [DSN in SelfOrDescendantName<SN, CN>]: OneRawSection<CN, DSN>[];
-};
-export type RawSection<
-  CN extends ContextName = ContextName,
-  SN extends SectionName = SectionName
-> = RawSections<SN, CN>[SelfOrDescendantName<SN, CN>][number];
+export type RawSection<SN extends SectionName = SectionName> =
+  RawSections<SN>[SelfOrDescendantName<SN>][number];
 
-const zRawSectionFrame: Record<keyof OneRawSection<"db">, any> = {
+const zRawSectionFrame: Record<keyof OneRawSection, any> = {
   dbId: zodSchema.nanoId,
   dbVarbs: z.record(zDbValue),
   childDbIds: z.record(z.array(zodSchema.string)),

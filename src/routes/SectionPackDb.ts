@@ -6,9 +6,9 @@ import {
 } from "../client/src/App/sharedWithServer/Analyzer/SectionPackRaw";
 import {
   RawSection,
+  RawSections,
   zRawSections,
 } from "../client/src/App/sharedWithServer/Analyzer/SectionPackRaw/RawSection";
-import { InEntityVarbInfo } from "../client/src/App/sharedWithServer/SectionMetas/baseSections/baseValues/entities";
 import { SavableSectionName } from "../client/src/App/sharedWithServer/SectionMetas/relNameArrs/storeArrs";
 import { SelfOrDescendantName } from "../client/src/App/sharedWithServer/SectionMetas/relSectionTypes/ChildTypes";
 import {
@@ -19,9 +19,6 @@ import {
 import { Obj } from "../client/src/App/sharedWithServer/utils/Obj";
 import { zodSchema } from "../client/src/App/sharedWithServer/utils/zod";
 
-// ServerSectionPack will be trivially different from
-// SectionPack.
-
 export class SectionPackDb<SN extends SectionName> {
   constructor(readonly core: SectionPackDbRaw<SN> & { sectionName: SN }) {}
   get sectionName() {
@@ -30,18 +27,19 @@ export class SectionPackDb<SN extends SectionName> {
   get dbId() {
     return this.core.dbId;
   }
-  value(info: InEntityVarbInfo) {}
   rawSectionArr<SDN extends SelfOrDescendantName<SN, "db">>(
     sectionName: SDN
-  ): RawSection<"db", SDN>[] {
-    return this.core.rawSections[sectionName] as RawSection<"db", SDN>[];
+  ): RawSection<SDN>[] {
+    return this.core.rawSections[
+      sectionName as keyof RawSections<SN>
+    ] as any as RawSection<SDN>[];
   }
-  headSection(): RawSection<"db", SN> {
+  headSection(): RawSection<SN> {
     return this.firstSection(this.sectionName);
   }
   firstSection<SDN extends SelfOrDescendantName<SN, "db">>(
     sectionName: SDN
-  ): RawSection<"db", SDN> {
+  ): RawSection<SDN> {
     const rawSection = this.rawSectionArr(sectionName)[0];
     if (rawSection) return rawSection;
     else
@@ -55,11 +53,11 @@ export class SectionPackDb<SN extends SectionName> {
     if (sectionNameS.is(this.sectionName, sectionType)) return true;
     else return false;
   }
-  toFeSectionPack(): SectionPackRaw<"fe", SN> {
+  toFeSectionPack(): SectionPackRaw<SN> {
     return { ...this.core, contextName: "fe" } as Record<
-      keyof SectionPackRaw<"fe", SN>,
+      keyof SectionPackRaw<SN>,
       any
-    > as SectionPackRaw<"fe", SN>;
+    > as SectionPackRaw<SN>;
   }
   static serverToDbRaw(
     sectionPack: ServerSectionPack
@@ -70,7 +68,7 @@ export class SectionPackDb<SN extends SectionName> {
     sectionPackDb,
     dbStoreName,
   }: RawDbToServerProps): ServerSectionPack {
-    return { ...sectionPackDb, contextName: "db", sectionName: dbStoreName };
+    return { ...sectionPackDb, sectionName: dbStoreName };
   }
 }
 

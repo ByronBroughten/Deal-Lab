@@ -30,16 +30,15 @@ export class IndexSectionQuerier {
     const feInfo = this.feInfo(feId);
     const feSectionPack = this.sections.makeRawSectionPack(
       feInfo
-    ) as SectionPackRaw<"fe", typeof feInfo.sectionName>;
+    ) as SectionPackRaw<typeof feInfo.sectionName>;
     return (
       FeSectionPack.rawFeToServer as (...props: any[]) => ServerSectionPack
     )(feSectionPack, this.indexName);
   }
   private indexToSourceSectionPack(
     indexSectionPack: ServerSectionPack
-  ): SectionPackRaw<"fe", SectionName<"hasIndexStore">> {
+  ): SectionPackRaw<SectionName<"hasIndexStore">> {
     return {
-      contextName: "fe",
       sectionName: this.sectionName,
       dbId: indexSectionPack.dbId,
       rawSections: {
@@ -62,7 +61,7 @@ export class IndexSectionQuerier {
   }
   async get(
     dbId: string
-  ): Promise<SectionPackRaw<"fe", SectionName<"hasIndexStore">>> {
+  ): Promise<SectionPackRaw<SectionName<"hasIndexStore">>> {
     const serverSectionPack = await this.sectionQuery.get(dbId);
     return this.indexToSourceSectionPack(serverSectionPack);
   }
