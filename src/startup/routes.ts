@@ -1,8 +1,6 @@
 import cors from "cors";
 import express from "express";
-import { graphqlHTTP } from "express-graphql";
 import { constants } from "../client/src/App/Constants";
-import { gqlSchema } from "../graphlq";
 import apiQueriesServer from "../routes/apiQueries";
 
 export default function routes(app: express.Application) {
@@ -18,13 +16,5 @@ export default function routes(app: express.Application) {
     })
   );
   app.use(express.json()); // parses body into a JSON object
-  app.use(
-    "/graphql",
-    graphqlHTTP({
-      schema: gqlSchema,
-      graphiql: true,
-    })
-  );
-
   app.use(constants.apiPathBit, apiQueriesServer);
 }
