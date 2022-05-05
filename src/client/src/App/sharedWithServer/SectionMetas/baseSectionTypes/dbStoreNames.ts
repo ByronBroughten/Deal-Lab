@@ -3,10 +3,6 @@ import { SimpleSectionName } from "../baseSections";
 
 export const dbStoreNamesNext = [
   "user",
-
-  "property",
-  "loan",
-  "mgmt",
   "analysis",
 
   "propertyIndexNext",

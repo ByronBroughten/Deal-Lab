@@ -3,7 +3,7 @@ import { RemoveNotStrings, StrictSubType, SubType } from "../../utils/types";
 import { ContextName, SimpleSectionName } from "../baseSections";
 import {
   SavableSectionName,
-  SavableSectionType,
+  SavableSectionType
 } from "../relNameArrs/storeArrs";
 import { RelSections } from "../relSections";
 import { FeNameInfo } from "../relSections/rel/relVarbInfoTypes";
@@ -92,11 +92,10 @@ export type DescendantIds<
   [S in DescendantName<SN, CN>]: string[];
 };
 
-export type SelfOrDescendantIds<
+export type SelfAndDescendantIds<
   SN extends SimpleSectionName = SimpleSectionName,
-  CN extends ContextName = "fe"
 > = {
-  [S in SelfOrDescendantName<SN, CN>]: string[];
+  [S in SelfOrDescendantName<SN, "fe">]: string[];
 };
 export type DescendantSections<
   SN extends SimpleSectionName,

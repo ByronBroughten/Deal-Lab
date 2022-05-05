@@ -10,18 +10,15 @@ export type LoginQueryObjects = {
     body: LoginFormData;
   };
   res: {
-    data: LoginUserNext;
+    data: LoginUser;
     headers: LoginHeaders;
   };
 };
 
-export type LoginUserNext = Omit<
-  {
-    [SN in SectionName<"loadOnLogin">]: SectionPackRaw<SN>[];
-  },
-  "row"
->;
-export function isLoginUserNext(value: any): value is LoginUserNext {
+export type LoginUser = {
+  [SN in SectionName<"loadOnLogin">]: SectionPackRaw<SN>[];
+};
+export function isLoginUserNext(value: any): value is LoginUser {
   // Wait, why am I doing that?
   // I guess to access the user varbs.
   // I would like to just get this working, though.
@@ -36,8 +33,8 @@ function makeZLoginUserSchema() {
     sectionNameS.arrs.loadOnLogin.reduce((partial, sectionName) => {
       partial[sectionName] = zodSchema.array(zRawSectionPack);
       return partial;
-    }, {} as Partial<Record<keyof LoginUserNext, any>>) as Record<
-      keyof LoginUserNext,
+    }, {} as Partial<Record<keyof LoginUser, any>>) as Record<
+      keyof LoginUser,
       any
     >
   );

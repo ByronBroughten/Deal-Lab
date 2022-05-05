@@ -1,5 +1,6 @@
 import { SimpleSectionName } from "../SectionMetas/baseSections";
 import { SpecificIdInfo } from "../SectionMetas/baseSections/id";
+import { FeNameInfo } from "../SectionMetas/relSections/rel/relVarbInfoTypes";
 import Arr from "../utils/Arr";
 import FeSection, { FeSectionCore } from "./FeSection";
 
@@ -9,7 +10,7 @@ class SectionNotFoundError extends Error {
   }
 }
 
-export class FeSectionList<SN extends SimpleSectionName> {
+export class FeSectionList<SN extends SimpleSectionName = SimpleSectionName> {
   constructor(
     readonly core: { sectionName: SN; list: readonly FeSection<SN>[] }
   ) {}
@@ -34,6 +35,12 @@ export class FeSectionList<SN extends SimpleSectionName> {
         "Tried to get last section of sectionList, but there are none."
       );
     return last;
+  }
+  get feIds(): string[] {
+    return this.list.map(({ feId }) => feId);
+  }
+  get feInfos(): FeNameInfo<SN>[] {
+    return this.list.map(({ feInfo }) => feInfo);
   }
   push(section: FeSection<SN>): FeSectionList<SN> {
     return this.updateList([...this.list, section]);

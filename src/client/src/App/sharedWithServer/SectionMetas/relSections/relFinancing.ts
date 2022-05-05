@@ -179,7 +179,6 @@ export const relFinancing = {
   ...loanSection("loan", {
     defaultStoreName: "loanDefault",
     rowIndexName: "loanIndexNext",
-    arrStoreName: "loan",
   } as const),
   ...loanSection("loanIndexNext"),
   ...relSection.base(

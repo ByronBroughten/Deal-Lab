@@ -1,5 +1,3 @@
-import { applyMixins } from "../utils/classObjects";
-import { AddsSections } from "./FeSections/AddsSections";
 import FeSection from "./FeSections/FeSection";
 import { FeSectionList } from "./FeSections/FeSectionList";
 import {
@@ -9,9 +7,34 @@ import {
 import { SimpleSectionName } from "./SectionMetas/baseSections";
 import { SelfOrDescendantName } from "./SectionMetas/relSectionTypes/ChildTypes";
 
+// I should make an FeSections core that all of these return.
+// It only needs the update functions.
+// Hmmmm...
+// There could be a readonly version that each of these accept as arguments.
+
+// What about the sectionReplacer?
+// Yeah, so then each of these update their own core
+// Hmmm....
+
+// Each of these spits out the same core
+// The core has a "readonly" property that produces a readonly
+// version of itself.
+
+// So first I'll make the readonly version
+// then I'll make the updater version
+// Is that really necessary, though?
+
+// I'll make a core with getters and the basic update utilities
+// It can't mutate itself, afterall.
+
+// And then on top of that I'll create the other classes, and they'll
+// all just pass around the core.
+
+// replaceInList... I guess that belongs there, right?
+// Ok, so FeSections is the core.
+
 interface FeSections<SN extends SimpleSectionName>
-  extends UpdatesCoreAbstract<SN, FeSections<SN>>,
-    AddsSections<SN, FeSections<SN>> {}
+  extends UpdatesCoreAbstract<SN, FeSections<SN>> {}
 class FeSections<SN extends SimpleSectionName> extends UpdatesCoreAbstract<
   SN,
   FeSections<SN>
@@ -41,10 +64,7 @@ class FeSections<SN extends SimpleSectionName> extends UpdatesCoreAbstract<
   }
 }
 
-applyMixins(FeSections, [AddsSections]);
-
-// interface BigClass<T extends CoreType> extends MakePropFoo<BigClass<T>> {}
-// applyMixins(BigClass, [MakePropFoo]);
+// applyMixins(FeSections, []);
 
 type CoreType = "tOne" | "tTwo" | "tThree";
 
@@ -83,47 +103,3 @@ class Updater<T extends CoreType> extends AbstractUpdateCore<Updater<T>, T> {
     });
   }
 }
-
-class MakePropFoo<A extends AbstractUpdateCore<any, CoreType>> {
-  makePropFoo(this: A): A {
-    return this.update({ prop1: "foo" });
-  }
-}
-
-class BigClass<T extends CoreType> extends AbstractUpdateCore<BigClass<T>, T> {
-  constructor(readonly core: Core<T>) {
-    super(core);
-  }
-  iAmDerived() {
-    console.log("I am derived.");
-  }
-  update(coreMutable: CoreUpdateProps<T>) {
-    return new BigClass({
-      ...this.core,
-      mutable: {
-        ...this.core.mutable,
-        ...coreMutable,
-      },
-    });
-  }
-}
-
-interface BigClass<T extends CoreType> extends MakePropFoo<BigClass<T>> {}
-applyMixins(BigClass, [MakePropFoo]);
-
-const initCore = {
-  coreType: "tOne",
-  mutable: {
-    prop1: "lo",
-    prop2: "la",
-  },
-} as const;
-const updater = new Updater(initCore);
-const nextUpdater = updater.update({ prop1: "I am updated" });
-console.log(nextUpdater.core.mutable.prop1);
-
-const big = new BigClass(initCore);
-console.log(big.core.mutable.prop1);
-
-const updated = big.makePropFoo();
-updated.iAmDerived();

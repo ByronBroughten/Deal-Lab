@@ -30,7 +30,6 @@ import StateVarb from "./FeSection/FeVarb";
 import { OutEntity } from "./FeSection/FeVarb/entities";
 import {
   addChildFeId,
-  allChildFeIds,
   allChildFeInfos,
   childFeIds,
   childFeInfos,
@@ -245,7 +244,9 @@ export default class SectionOld<
   }
 
   childFeIds = childFeIds;
-  allChildFeIds = allChildFeIds;
+  allChildFeIds(): ChildIdArrs<S> {
+    return cloneDeep(this.core.childFeIdArrs);
+  }
   allChildFeInfos = allChildFeInfos;
   childFeInfos = childFeInfos;
 

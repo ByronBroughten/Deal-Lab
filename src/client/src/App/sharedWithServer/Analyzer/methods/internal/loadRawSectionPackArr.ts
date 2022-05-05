@@ -14,7 +14,7 @@ function getSectionArrAddSectionProps(
     const { sectionName } = rawSectionPack;
     const feSectionPack = new FeSectionPack(rawSectionPack);
 
-    const addSectionProps = feSectionPack.makeOrderedSectionNodes({
+    const addSectionProps = feSectionPack.makeOrderedPreSections({
       parentFinder: next.parent(sectionName).feInfo,
     });
 

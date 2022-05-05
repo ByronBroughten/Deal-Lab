@@ -10,7 +10,10 @@ import {
   FeNameInfo,
   FeVarbInfo,
 } from "../SectionMetas/relSections/rel/relVarbInfoTypes";
-import { OneChildIdArrs } from "../SectionMetas/relSectionTypes/ChildTypes";
+import {
+  ChildIdArrs,
+  OneChildIdArrs,
+} from "../SectionMetas/relSectionTypes/ChildTypes";
 import { DefaultStoreName } from "../SectionMetas/relSectionTypes/DefaultStoreTypes";
 import {
   FeParentInfo,
@@ -27,7 +30,6 @@ import FeVarb from "./FeSection/FeVarb";
 import { OutEntity } from "./FeSection/FeVarb/entities";
 import {
   addChildFeId,
-  allChildFeIds,
   allChildFeInfos,
   childFeIds,
   childFeInfos,
@@ -178,8 +180,10 @@ export default class FeSection<
   static init = initStateSection;
   static initNext = initStateSectionNext;
 
+  get allChildFeIds(): ChildIdArrs<S> {
+    return cloneDeep(this.core.childFeIds);
+  }
   childFeIds = childFeIds;
-  allChildFeIds = allChildFeIds;
   allChildFeInfos = allChildFeInfos;
   childFeInfos = childFeInfos;
 

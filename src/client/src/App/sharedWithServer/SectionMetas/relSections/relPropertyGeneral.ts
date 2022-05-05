@@ -96,7 +96,6 @@ export const prePropertyGeneral = {
   ...propertySection("property", {
     defaultStoreName: "propertyDefault",
     rowIndexName: "propertyIndexNext",
-    arrStoreName: "property",
   } as const),
   ...propertySection("propertyIndexNext"),
   ...relSection.base(

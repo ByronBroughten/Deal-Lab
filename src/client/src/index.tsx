@@ -9,18 +9,27 @@ AppRegistry.runApplication("App", {
 });
 
 reportWebVitals();
-
-// Complete the sectionAdder
+// Complete AddsSectionsNext
 // 1. Make it add a section whereby it uses all default
 // values and adds only children that are "alwaysOne"
-// 2. Add the sectionPack loader functionality
-// 3. Make it able initEmpty or initSectionPack
-// For this, there are a couple options. You may have it init empty
-// And then require replacing a section with a sectionPack
-// You probably don't want to be able to add multiples of the top section
-// No, I don't think you do.
+// 2. Add the sectionPack maker functionality
 
-// replace Analyzer's core with sectionAdder
+// Integrate the new core and handlers
+// Option 1.
+// Edit analyzer
+// I would have to make FeSections be the state
+// And I would have to make Analyzer take FeSections
+// as an argument that can produce its core.
+// Except that whenever there is a set state, analyzer must produce
+// its core.
+
+// Option 2.
+// Make a state adjacent to Analyzer
+// Add new state handlers
+
+// Ok. In order to use this to create the defaults.
+// I need to be able to initialize its core.
+// and it needs to produce a sectionPack
 
 // Redo the tableColumns route
 

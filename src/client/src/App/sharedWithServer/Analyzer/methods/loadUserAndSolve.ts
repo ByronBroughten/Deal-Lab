@@ -1,6 +1,5 @@
 import Analyzer from "../../Analyzer";
-import { LoginUserNext } from "../../apiQueriesShared/login";
-import { ParentName } from "../../SectionMetas/relSectionTypes/ParentTypes";
+import { LoginUser } from "../../apiQueriesShared/login";
 import { SectionName } from "../../SectionMetas/SectionName";
 import { Obj } from "../../utils/Obj";
 import { SectionPackRaw } from "../SectionPackRaw";
@@ -8,9 +7,10 @@ import { internal } from "./internal";
 
 export function loadUserAndSolve(
   this: Analyzer,
-  loginUser: LoginUserNext
+  loginUser: LoginUser
 ): Analyzer {
   let next = this;
+
   for (const [sectionName, sectionPackArr] of Obj.entries(loginUser)) {
     next = internal.loadRawSectionPackArr(
       next,
@@ -20,6 +20,3 @@ export function loadUserAndSolve(
   }
   return next.solveVarbs();
 }
-
-type Test = SectionName<"hasOneParent">;
-type Test2 = ParentName<"userSingleList">;

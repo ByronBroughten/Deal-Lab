@@ -4,7 +4,7 @@ import {
   SectionPackRaw,
 } from "../client/src/App/sharedWithServer/Analyzer/SectionPackRaw";
 import { DbVarbs } from "../client/src/App/sharedWithServer/Analyzer/SectionPackRaw/RawSection";
-import { LoginUserNext } from "../client/src/App/sharedWithServer/apiQueriesShared/login";
+import { LoginUser } from "../client/src/App/sharedWithServer/apiQueriesShared/login";
 import { SavableSectionName } from "../client/src/App/sharedWithServer/SectionMetas/relNameArrs/storeArrs";
 import {
   SectionName,
@@ -16,12 +16,12 @@ import { ServerSectionName, serverSectionS } from "./ServerSectionName";
 
 export class ServerUser {
   constructor(readonly core: UserDbCore) {}
-  makeRawFeLoginUser(): LoginUserNext {
+  makeRawFeLoginUser(): LoginUser {
     return sectionNameS.arrs.loadOnLogin.reduce((loginUser, sectionName) => {
       (loginUser[sectionName] as SectionPackRaw<typeof sectionName>[]) =
         this.makeRawFeSectionPackArr(sectionName);
       return loginUser;
-    }, {} as LoginUserNext);
+    }, {} as LoginUser);
   }
 
   sectionPackArr<SN extends ServerSectionName>(

@@ -1,88 +1,185 @@
+import { applyMixins } from "../../utils/classObjects";
+import {
+  FeSectionPack,
+  SectionPackSupplements,
+} from "../Analyzer/FeSectionPack";
 import { AddSectionProps } from "../Analyzer/methods/internal/addSections/addSectionsTypes";
+import { SectionPackRaw } from "../Analyzer/SectionPackRaw";
+import {
+  OneRawSection,
+  RawSections,
+} from "../Analyzer/SectionPackRaw/RawSection";
 import { SimpleSectionName } from "../SectionMetas/baseSections";
+import { SectionFinder } from "../SectionMetas/baseSectionTypes";
 import { FeInfo, InfoS } from "../SectionMetas/Info";
+import { ChildName } from "../SectionMetas/relSectionTypes/ChildTypes";
+import {
+  SectionName,
+  sectionNameS,
+  SectionNameType,
+} from "../SectionMetas/SectionName";
+import { Obj } from "../utils/Obj";
 import FeSection from "./FeSection";
-import { UpdatesCoreAbstract } from "./UpdatesCoreAbstract";
+import { FeSections } from "./FeSections";
 
-export class AddsSections<
-  SN extends SimpleSectionName,
-  AU extends UpdatesCoreAbstract<SN, any>
-> {
-  addSections(this: AU, parentFirstPropsList: AddSectionProps[]): AU {
-    let next = this;
-    for (const props of parentFirstPropsList as AddSectionProps[]) {
-      next = initOneSection(next as any, props);
+class HasFeSectionsCore {
+  constructor(protected core: FeSections) {}
+}
+
+type FeSectionPackArrs<ST extends SectionNameType> = {
+  [SN in SectionName<ST & SectionNameType>]: SectionPackRaw<SN>[];
+};
+export class MakesSectionPacks extends HasFeSectionsCore {
+  makeSectionPackArrs<ST extends SectionNameType>(
+    snType: ST
+  ): FeSectionPackArrs<ST> {
+    const sectionNames = sectionNameS.arrs[snType] as string[];
+    return sectionNames.reduce((spArrs, sectionName) => {
+      spArrs[sectionName] = this.makeSectionPackArr(
+        sectionName as SectionName<ST>
+      );
+      return spArrs;
+    }, {} as { [key: string]: any[] }) as any;
+  }
+  makeSectionPackArr<SN extends SimpleSectionName>(
+    sectionName: SN
+  ): SectionPackRaw<SN>[] {
+    const { feInfos } = this.core.list(sectionName);
+    return feInfos.map((feInfo) => this.makeSectionPack(feInfo));
+  }
+  makeSectionPack<SN extends SimpleSectionName>(
+    finder: SectionFinder<SN>
+  ): SectionPackRaw<SN> {
+    const { sectionName, dbId } = this.core.section(finder);
+    return {
+      sectionName: sectionName as SN,
+      dbId,
+      rawSections: this.makeRawSections(finder) as RawSections<SN>,
+    } as SectionPackRaw<SN>;
+  }
+  protected makeRawSections<SN extends SimpleSectionName>(
+    finder: SectionFinder<SN>
+  ): RawSections<SN> {
+    const nestedFeIds = this.core.selfAndDescendantFeIds(finder);
+    return Obj.entries(nestedFeIds as { [key: string]: string[] }).reduce(
+      (rawSections, [name, feIdArr]) => {
+        rawSections[name] = this.feIdsToRawSections(name as SN, feIdArr);
+        return rawSections;
+      },
+      {} as { [key: string]: any }
+    ) as RawSections<SN>;
+  }
+  protected feIdsToRawSections<SN extends SimpleSectionName>(
+    sectionName: SN,
+    feIdArr: string[]
+  ): OneRawSection<SN>[] {
+    return feIdArr.map((id) => {
+      const feInfo = InfoS.fe(sectionName, id);
+      return this.makeRawSection(feInfo);
+    });
+  }
+  protected makeRawSection<SN extends SimpleSectionName>(
+    finder: SectionFinder<SN>
+  ): OneRawSection<SN> {
+    const { dbId, dbVarbs } = this.core.section(finder);
+    return {
+      dbId,
+      dbVarbs,
+      childDbIds: this.core.allChildDbIds(finder),
+    };
+  }
+}
+
+// Add loadSectionPack stuff and make addsSection see index.
+export class AddsSectionsNext extends HasFeSectionsCore {
+  addSections(parentFirstPropsArr: AddSectionProps[]) {
+    for (const props of parentFirstPropsArr as AddSectionProps[]) {
+      this.addSection(props);
     }
-    return next;
+  }
+  addSection({ idx, ...props }: AddSectionProps) {
+    this.pushSectionToList(props);
+    const { feInfo } = this.core.list(props.sectionName).last;
+    if (InfoS.is.fe(feInfo, "hasParent")) {
+      this.addToParentChildIds(feInfo, idx);
+    }
+  }
+  private pushSectionToList(props: AddSectionProps) {
+    const { sectionName, parentFinder } = props;
+    this.core = this.core.updateList(
+      this.core.list(sectionName).push(
+        FeSection.initNext({
+          parentInfo: this.core.parentFinderToInfo(parentFinder as any),
+          ...props,
+        })
+      )
+    );
+  }
+  private addToParentChildIds(feInfo: FeInfo<"hasParent">, idx?: number) {
+    const parentSection = this.core.parent(feInfo);
+    const nextParent = parentSection.addChildFeId(feInfo, idx);
+    this.core = this.core.replaceInList(nextParent);
   }
 }
 
-function initOneSection<AU extends UpdatesCoreAbstract<SimpleSectionName, any>>(
-  next: AU,
-  { idx, ...props }: AddSectionProps
-): AU {
-  next = pushSectionToList(next, props);
-  const { feInfo, sectionName } = next.list(props.sectionName).last;
-  if (InfoS.is.fe(feInfo, "hasParent") && sectionName !== next.sectionName) {
-    next = addToParentChildIds(next, feInfo, idx);
+class RemovesSections extends HasFeSectionsCore {
+  wipeSectionList<SN extends SectionName>(sectionName: SN) {
+    this.core = this.core.updateList(this.core.list(sectionName).wipe() as any);
   }
-  return next;
 }
 
-function pushSectionToList<
-  AU extends UpdatesCoreAbstract<SimpleSectionName, any>
->(next: AU, props: AddSectionProps): AU {
-  const { sectionName, parentFinder } = props;
-  return next.updateList(
-    sectionName,
-    next.list(sectionName).push(
-      FeSection.initNext({
-        parentInfo: next.parentFinderToInfo(parentFinder as any),
-        ...props,
-      })
-    )
-  );
+export interface LoadsSectionPacks extends AddsSectionsNext, RemovesSections {}
+export class LoadsSectionPacks extends HasFeSectionsCore {
+  // loadUserAndSolve(loginUser: LoginUser) {
+  //   let next = this;
+
+  //   for (const [sectionName, sectionPackArr] of Obj.entries(loginUser)) {
+  //     next = internal.loadRawSectionPackArr(
+  //       next,
+  //       sectionName,
+  //       sectionPackArr as SectionPackRaw<SectionName<"hasOneParent">>[]
+  //     );
+  //   }
+  //   return next.solveVarbs();
+  // },
+  loadRawSectionPackArr<SN extends ChildName<"main">>(
+    sectionName: SN,
+    sectionPackArr: SectionPackRaw<SN>[]
+  ) {
+    this.wipeSectionList(sectionName);
+    // const addSectionArrProps = getSectionArrAddSectionProps(
+    //   next,
+    //   sectionPackArr as Record<keyof SectionPackRaw<S>, any>[]
+    // );
+    // return internal.addSectionsNext(next, addSectionArrProps);
+  }
+  loadSectionPack<
+    SN extends SimpleSectionName,
+    Props extends SectionPackSupplements<SN>
+  >(sectionPack: SectionPackRaw<SN>, props: Props): void {
+    const feSectionPack = new FeSectionPack(sectionPack);
+    const sectionNodes = feSectionPack.makeOrderedPreSections(props);
+    return this.addSections(sectionNodes as AddSectionProps[]);
+  }
 }
 
-function addToParentChildIds<
-  AU extends UpdatesCoreAbstract<SimpleSectionName, any>
->(next: AU, feInfo: FeInfo<"hasParent">, idx?: number): AU {
-  const parentSection = next.parent(feInfo);
-  const nextParent = parentSection.addChildFeId(feInfo, idx);
-  return next.replaceInList(nextParent);
-}
+applyMixins(LoadsSectionPacks, [AddsSectionsNext, RemovesSections]);
 
-//   const { feInfo } = next.lastSection(sectionName);
-//   if (sectionNameS.is(sectionName, "hasParent"))
-//     next = addToParentChildIds(next, feInfo, idx);
-//   return next;
+// function getSectionArrAddSectionProps(
+//   next: Analyzer,
+//   sectionPackArr: SectionPackRaw<SectionName<"hasOneParent">>[]
+//   // this can take parentFinder
+// ) {
+//   return sectionPackArr.reduce((addSectionPropsArr, rawSectionPack) => {
+//     const { sectionName } = rawSectionPack;
+//     const feSectionPack = new FeSectionPack(rawSectionPack);
+
+//     const addSectionProps = feSectionPack.makeOrderedPreSections({
+//       parentFinder: next.parent(sectionName).feInfo,
+//     });
+
+//     return addSectionPropsArr.concat(addSectionProps);
+//   }, [] as AddSectionProps[]);
 // }
 
-// function finalizeNewSections(next: Analyzer, newFeInfos: FeInfo[]) {
-//   next = initOutEntities(next, newFeInfos);
-//   const varbInfosToSolveFor: FeVarbInfo[] = next.nestedFeVarbInfos(newFeInfos);
-//   return next.addVarbsToSolveFor(...varbInfosToSolveFor);
-// }
-
-// function initOutEntities(next: Analyzer, newFeInfos: FeInfo[]) {
-//   for (const feInfo of newFeInfos) {
-//     next = addOutEntitiesForSectionInVarbs(next, feInfo);
-//   }
-//   return next;
-// }
-
-// function addOutEntitiesForSectionInVarbs(
-//   analyzer: Analyzer,
-//   feInfo: FeInfo
-// ): Analyzer {
-//   if (!InfoS.is.fe(feInfo, "hasVarb")) return analyzer;
-//   let next = analyzer;
-//   const { varbs } = next.section(feInfo);
-//   for (const [varbName, varb] of Object.entries(varbs)) {
-//     for (const inEntity of varb.inEntities) {
-//       const outEntity = { ...feInfo, varbName, entityId: inEntity.entityId };
-//       next = internal.addOutEntity(next, inEntity, outEntity);
-//     }
-//   }
-//   return next;
-// }
+// export function loadRawSectionPackArr<S extends SectionName<"hasOneParent">>(

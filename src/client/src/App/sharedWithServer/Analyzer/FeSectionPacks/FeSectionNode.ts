@@ -8,7 +8,7 @@ import { DbVarbs } from "../SectionPackRaw/RawSection";
 import { OneRawSectionFinder } from "../SectionPackRaw/RawSectionFinder";
 export type OneFeSectionNode<SN extends SectionName> = {
   sectionName: SN;
-  parentFinder: ParentFinder<SN, "fe">;
+  parentFinder: ParentFinder<SN>;
   childFeIds: OneChildIdArrs<SN, "fe">;
   feId: string;
   dbId: string;
@@ -22,7 +22,7 @@ export type FeSelfOrDescendantNode<SN extends SectionName> =
 export type OneSectionNodeMaker<SN extends SectionName> =
   OneRawSectionFinder<SN> & {
     feId: string;
-    parentFinder: ParentFinder<SN, "fe">;
+    parentFinder: ParentFinder<SN>;
   };
 type SectionNodeMakers<SN extends SectionName> = {
   [S in SelfOrDescendantName<SN, "fe">]: OneSectionNodeMaker<S>;
@@ -40,7 +40,7 @@ export type SectionNodeMaker<SN extends SectionName> =
 
 // export type OneFeSectionNode<SN extends SectionName> = {
 //   sectionName: SN;
-//   parentFinder: ParentFinder<SN, "fe">;
+//   parentFinder: ParentFinder<SN>;
 //   childFeIds: OneChildIdArrs<SN, "fe">;
 //   feId: string;
 //   dbId: string;
@@ -54,7 +54,7 @@ export type SectionNodeMaker<SN extends SectionName> =
 // //
 // type OneSectionNodeMaker<SN extends SectionName> = OneRawSectionFinder<SN> & {
 //   feId: string;
-//   parentFinder: ParentFinder<SN, "fe">;
+//   parentFinder: ParentFinder<SN>;
 // };
 // type SectionNodeMakers<SN extends SectionName> = {
 //   [S in SelfOrDescendantName<SN, "fe">]: OneSectionNodeMaker<S>;

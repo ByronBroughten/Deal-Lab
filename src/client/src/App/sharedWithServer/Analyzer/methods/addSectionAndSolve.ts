@@ -18,6 +18,7 @@ export type InitSectionOptions = Omit<
 >;
 export function addSectionAndSolve<SN extends SectionName>(
   this: Analyzer,
+
   sectionName: SN,
   parentFinder: ParentFinder<SN>,
   options: InitSectionOptions = {}

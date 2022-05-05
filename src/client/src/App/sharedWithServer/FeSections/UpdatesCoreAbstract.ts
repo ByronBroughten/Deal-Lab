@@ -10,7 +10,7 @@ import {
   FeParentInfo,
   ParentFinder,
   ParentName,
-  SectionParentFinder,
+  SectionFinderForParent,
 } from "../SectionMetas/relSectionTypes/ParentTypes";
 import { SectionName, SectionNameType } from "../SectionMetas/SectionName";
 import { FeNameInfo } from "./../SectionMetas/relSections/rel/relVarbInfoTypes";
@@ -61,7 +61,7 @@ export class FeSectionsBase<SN extends SimpleSectionName = SimpleSectionName> {
   }
 
   parent<SD extends DescendantName<SN>, PD = ParentName<SD>>(
-    finder: SectionParentFinder<SD>
+    finder: SectionFinderForParent<SD>
   ): FeSection<PD & SimpleSectionName> {
     if (sectionNameS.is(finder, "hasOneParent")) {
       const parentName = this.meta.parentName(finder);
@@ -101,7 +101,7 @@ export class FeSectionsBase<SN extends SimpleSectionName = SimpleSectionName> {
     );
 
     const _parentTest1 = this.parent(
-      "property" as SectionParentFinder<DescendantName<SN>>
+      "property" as SectionFinderForParent<DescendantName<SN>>
     );
     const _parentTest2 = (
       this as any as FeSectionsBase<"propertyGeneral">
@@ -166,7 +166,7 @@ export type RawCore<SN extends SimpleSectionName> = {
 // ): StateSection<S | ParentName<I["sectionName"]>>;
 // export function parent<S extends SectionName<"hasParent">>(
 //   this: Analyzer,
-//   finder: SectionParentFinder<S>
+//   finder: SectionFinderForParent<S>
 // ): StateSection<ParentName<S>> {
 //   if (sectionNameS.is(finder, "hasOneParent")) {
 //     const parentName = this.meta.parentName(finder);

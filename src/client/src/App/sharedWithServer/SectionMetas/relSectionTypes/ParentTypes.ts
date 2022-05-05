@@ -103,15 +103,13 @@ export type FeParentInfo<
   SC extends ContextName = "fe"
 > = FeNameInfo<ParentName<SN, SC>>;
 
-export type ParentFinder<
-  SN extends SimpleSectionName<SC>,
-  SC extends ContextName = "fe"
-> = FeParentInfo<SN, SC> | Extract<ParentName<SN>, SectionName<"alwaysOne">>;
+export type ParentFinder<SN extends SimpleSectionName> =
+  | FeParentInfo<SN, "fe">
+  | Extract<ParentName<SN>, SectionName<"alwaysOne">>;
 
-export type SectionParentFinder<
-  SN extends SimpleSectionName,
-  CN extends ContextName = "fe"
-> = SectionFinder<SN> | HasOneParentFinder<SN, CN>;
+export type SectionFinderForParent<SN extends SimpleSectionName> =
+  | SectionFinder<SN>
+  | HasOneParentFinder<SN, "fe">;
 
 type HasOneParentFinder<
   SN extends SimpleSectionName,
