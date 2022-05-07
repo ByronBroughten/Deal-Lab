@@ -6,18 +6,26 @@ import {
   ChildIdArrs,
   OneChildIdArrs,
 } from "../../../SectionMetas/relSectionTypes/ChildTypes";
+import { FeParentInfo } from "../../../SectionMetas/relSectionTypes/ParentTypes";
 import { SectionName } from "../../../SectionMetas/SectionName";
 import Section, { FeSectionCore } from "../../FeSection";
-import { InitStateSectionProps } from "../../FeSectionOld";
 import StateVarb from "../FeVarb";
 import { StateVarbs, VarbValues } from "./varbs";
+
+export type OldInitStateSectionProps<S extends SectionName> = {
+  feId: string;
+  parentInfo: FeParentInfo<S>;
+  sectionName: S;
+} & {
+  options?: { dbId?: string; values?: VarbValues };
+};
 
 export function initStateSection<S extends SectionName>({
   feId,
   sectionName,
   parentInfo,
   options: { dbId = Analyzer.makeId(), values } = {},
-}: InitStateSectionProps<S>): Section<S> {
+}: OldInitStateSectionProps<S>): Section<S> {
   const stateSectionCore: FeSectionCore<S> = {
     feId,
     dbId,

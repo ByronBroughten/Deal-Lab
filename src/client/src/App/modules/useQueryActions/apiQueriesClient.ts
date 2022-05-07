@@ -31,7 +31,7 @@ export const apiQueries = makeApiQueries();
 
 async function _testApiQueries() {
   const _test: NextRes<"getSection"> = await apiQueries.getSection({
-    body: { dbStoreName: "property", dbId: "string" },
+    body: { dbStoreName: "analysis", dbId: "string" },
   });
 }
 

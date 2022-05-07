@@ -11,9 +11,9 @@ export const dbStoreNamesNext = [
   "analysisIndexNext",
 
   "analysisTableNext",
-  "propertyTableNext",
-  "loanTableNext",
-  "mgmtTableNext",
+  "propertyTable",
+  "loanTable",
+  "mgmtTable",
 
   "userOutputList",
   "userVarbList",
@@ -56,9 +56,9 @@ export const dbStoreNamesDepreciated = [
   "analysis",
 
   "analysisTableNext",
-  "propertyTableNext",
-  "loanTableNext",
-  "mgmtTableNext",
+  "propertyTable",
+  "loanTable",
+  "mgmtTable",
 
   "outputListDefault",
   "userOutputList",

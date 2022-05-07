@@ -16,10 +16,10 @@ import { SectionName, SectionNameType } from "../SectionMetas/SectionName";
 import { FeNameInfo } from "./../SectionMetas/relSections/rel/relVarbInfoTypes";
 import { sectionNameS } from "./../SectionMetas/SectionName";
 import FeSection from "./FeSection";
-import { FeSectionList, FeSectionListRaw } from "./FeSectionList";
+import { FeSectionListRaw, SectionList } from "./SectionList";
 
 export type FeSectionLists<SN extends SimpleSectionName> = {
-  [S in SelfOrDescendantName<SN>]: FeSectionList<S>;
+  [S in SelfOrDescendantName<SN>]: SectionList<S>;
 };
 
 export type FeSectionsCore<SN extends SimpleSectionName> = {
@@ -43,9 +43,7 @@ export class FeSectionsBase<SN extends SimpleSectionName = SimpleSectionName> {
     return sectionMetas;
   }
 
-  list<SD extends SelfOrDescendantName<SN>>(
-    sectionName: SD
-  ): FeSectionList<SD> {
+  list<SD extends SelfOrDescendantName<SN>>(sectionName: SD): SectionList<SD> {
     return this.core.sectionLists[sectionName];
   }
 
@@ -116,10 +114,10 @@ export abstract class UpdatesCoreAbstract<
 > extends FeSectionsBase<SN> {
   abstract updateList<LN extends SelfOrDescendantName<SN>>(
     listName: LN,
-    nextList: FeSectionList<SelfOrDescendantName<SN>>
+    nextList: SectionList<SelfOrDescendantName<SN>>
   ): ReturnClass;
   abstract updateLists(partial: Partial<FeSectionLists<SN>>): ReturnClass;
-  abstract replaceInList(
+  abstract updateSection(
     nextSection: FeSection<SelfOrDescendantName<SN>>
   ): ReturnClass;
 }

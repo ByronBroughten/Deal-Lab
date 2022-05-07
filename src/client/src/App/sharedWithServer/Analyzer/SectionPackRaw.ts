@@ -15,6 +15,11 @@ export type GeneralSectionPack = {
   rawSections: GeneralRawSections;
 };
 
+export type SectionArrPack<SN extends SectionName> = {
+  sectionName: SN;
+  sectionPacks: SectionPackRaw<SN>[];
+};
+
 export type SectionPackRaw<SN extends SectionName = SectionName> = {
   sectionName: SN;
   dbId: string;

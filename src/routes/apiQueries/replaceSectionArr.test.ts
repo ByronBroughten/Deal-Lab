@@ -3,26 +3,15 @@ import { config } from "../../client/src/App/Constants";
 import Analyzer from "../../client/src/App/sharedWithServer/Analyzer";
 import { apiQueriesShared } from "../../client/src/App/sharedWithServer/apiQueriesShared";
 import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
-import { NumObj } from "../../client/src/App/sharedWithServer/SectionMetas/baseSections/baseValues/NumObj";
 import { runApp } from "../../runApp";
 import { UserModel } from "../UserModel";
 import { loginUtils } from "./nextLogin/loginUtils";
 import { createTestUserModelNext } from "./test/createTestUserModelNext";
 
-const sectionName = "loan";
-const loanValues = {
-  title: "Test Loan",
-  loanAmountDollarsTotal: NumObj.init(153265),
-} as const;
-
+const sectionName = "loanTable";
 function makeReq(): NextReq<"replaceSectionArr"> {
   let next = Analyzer.initAnalyzer();
-  next = next.addSectionAndSolve(sectionName, "financing", {
-    values: loanValues,
-  });
-  next = next.addSectionAndSolve(sectionName, "financing", {
-    values: loanValues,
-  });
+  next = next.addSectionAndSolve(sectionName, "main", {});
   return apiQueriesShared.replaceSectionArr.makeReq({
     analyzer: next,
     sectionName: sectionName,

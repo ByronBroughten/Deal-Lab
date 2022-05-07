@@ -65,9 +65,9 @@ export const baseSections = {
       uniqueDbId: true,
     }),
 
-    propertyTableNext: base.section.tableNext,
-    loanTableNext: base.section.tableNext,
-    mgmtTableNext: base.section.tableNext,
+    propertyTable: base.section.tableNext,
+    loanTable: base.section.tableNext,
+    mgmtTable: base.section.tableNext,
     analysisTableNext: base.section.tableNext,
 
     tableRow: base.section.schema(base.varbs.tableRow, { uniqueDbId: true }),

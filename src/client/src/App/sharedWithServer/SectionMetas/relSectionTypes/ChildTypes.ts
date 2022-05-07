@@ -93,7 +93,7 @@ export type DescendantIds<
 };
 
 export type SelfAndDescendantIds<
-  SN extends SimpleSectionName = SimpleSectionName,
+  SN extends SimpleSectionName = SimpleSectionName
 > = {
   [S in SelfOrDescendantName<SN, "fe">]: string[];
 };
@@ -115,6 +115,18 @@ function _testDescendantName() {
 export type GeneralChildIdArrs = {
   [key: string]: string[];
 };
+
+// when multiple sections have the
+
+type AllChildIdArrs = {
+  [SN in SimpleSectionName]: OneChildIdArrs<SN>;
+};
+
+export type ChildIdArrsNext<SN extends SimpleSectionName> = AllChildIdArrs[SN];
+
+// I want to eliminate the childNames that aren't contained in
+// all sectionNames
+
 export type OneChildIdArrs<
   SN extends SimpleSectionName,
   CN extends ContextName = "fe"

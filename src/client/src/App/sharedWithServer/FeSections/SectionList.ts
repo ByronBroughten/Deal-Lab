@@ -10,7 +10,7 @@ class SectionNotFoundError extends Error {
   }
 }
 
-export class FeSectionList<SN extends SimpleSectionName = SimpleSectionName> {
+export class SectionList<SN extends SimpleSectionName = SimpleSectionName> {
   constructor(
     readonly core: { sectionName: SN; list: readonly FeSection<SN>[] }
   ) {}
@@ -42,18 +42,19 @@ export class FeSectionList<SN extends SimpleSectionName = SimpleSectionName> {
   get feInfos(): FeNameInfo<SN>[] {
     return this.list.map(({ feInfo }) => feInfo);
   }
-  push(section: FeSection<SN>): FeSectionList<SN> {
+  push(section: FeSection<SN>): SectionList<SN> {
     return this.updateList([...this.list, section]);
   }
-  insert(section: FeSection<SN>, idx: number): FeSectionList<SN> {
+  insert(section: FeSection<SN>, idx: number): SectionList<SN> {
     return this.updateList(Arr.insert(this.list, section, idx));
   }
-  replace(section: FeSection<SN>): FeSectionList<SN> {
+  replace(section: FeSection<SN>): SectionList<SN> {
     const idx = this.feIdToValidIdx(section.feId);
     return this.updateList(Arr.replaceAtIdxClone(this.list, section, idx));
   }
-  wipe(): FeSectionList<SN> {
-    return this.updateList([]);
+  removeByFeId(feId: string): SectionList<SN> {
+    const idx = this.list.findIndex((section) => section.feId === feId);
+    return this.updateList(Arr.removeAtIndex(this.list, idx));
   }
   getByFeId(id: string): FeSection<SN> {
     const section = this.list.find((section) => section.feId === id);
@@ -101,8 +102,8 @@ export class FeSectionList<SN extends SimpleSectionName = SimpleSectionName> {
     }
   }
 
-  private updateList(list: FeSection<SN>[]): FeSectionList<SN> {
-    return new FeSectionList({ ...this.core, list });
+  private updateList(list: FeSection<SN>[]): SectionList<SN> {
+    return new SectionList({ ...this.core, list });
   }
 }
 

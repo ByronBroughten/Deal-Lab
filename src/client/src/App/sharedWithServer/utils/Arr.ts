@@ -122,6 +122,19 @@ export const Arr = {
   ): Extract<A, B>[] {
     return a.filter((str) => b.includes(str as any)) as Extract<A, B>[];
   },
+  removeAtIndex<T>(arr: readonly T[], idx: number): T[] {
+    this.validateIdx(arr, idx);
+    const nextArr = [...arr];
+    nextArr.splice(idx);
+    return nextArr;
+  },
+  validateIdx(arr: readonly any[], idx: number) {
+    const highestIdx = arr.length - 1;
+    if (highestIdx > idx)
+      throw new Error(
+        `The passed array does not have a value at passed idx ${idx}`
+      );
+  },
   combineWithoutIdenticals<A extends any, B extends any>(
     a: A[],
     b: B[]

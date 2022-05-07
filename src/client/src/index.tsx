@@ -9,10 +9,10 @@ AppRegistry.runApplication("App", {
 });
 
 reportWebVitals();
-// Complete AddsSectionsNext
-// 1. Make it add a section whereby it uses all default
-// values and adds only children that are "alwaysOne"
-// 2. Add the sectionPack maker functionality
+
+// to Integrate the new Sections, you will need a solver.
+
+// Try building a default sectionPack with AddsSections and makesSections
 
 // Integrate the new core and handlers
 // Option 1.

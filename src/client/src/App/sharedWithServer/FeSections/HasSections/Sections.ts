@@ -1,39 +1,86 @@
-import { sectionMetas } from "../SectionMetas";
-import { SimpleSectionName } from "../SectionMetas/baseSections";
-import { SectionFinder } from "../SectionMetas/baseSectionTypes";
-import { InfoS } from "../SectionMetas/Info";
+import { sectionMetas } from "../../SectionMetas";
+import { SimpleSectionName } from "../../SectionMetas/baseSections";
+import { SectionFinder } from "../../SectionMetas/baseSectionTypes";
+import { InfoS } from "../../SectionMetas/Info";
 import {
   FeNameInfo,
   SpecificSectionInfo,
-} from "../SectionMetas/relSections/rel/relVarbInfoTypes";
+} from "../../SectionMetas/relSections/rel/relVarbInfoTypes";
 import {
   ChildIdArrs,
   ChildName,
   DescendantIds,
   DescendantName,
   SelfAndDescendantIds,
-} from "../SectionMetas/relSectionTypes/ChildTypes";
+} from "../../SectionMetas/relSectionTypes/ChildTypes";
 import {
   FeParentInfo,
   ParentFinder,
   ParentName,
   SectionFinderForParent,
-} from "../SectionMetas/relSectionTypes/ParentTypes";
-import { SectionName, sectionNameS } from "../SectionMetas/SectionName";
-import { Obj } from "../utils/Obj";
-import FeSection from "./FeSection";
-import { FeSectionList } from "./FeSectionList";
+} from "../../SectionMetas/relSectionTypes/ParentTypes";
+import { SectionName, sectionNameS } from "../../SectionMetas/SectionName";
+import { Obj } from "../../utils/Obj";
+import FeSection, { FeSectionCore, SectionGetters } from "../FeSection";
+import { SectionList } from "../SectionList";
 
-export type FeSectionsCore = {
-  [SN in SimpleSectionName]: FeSectionList<SN>;
+type HasSectionsCore = {
+  sections: FeSections;
+};
+
+interface FullSectionCore<SN extends SectionName>
+  extends HasSectionsCore,
+    FeSectionCore<SN> {}
+
+export class FullSection<SN extends SectionName> extends SectionGetters<SN> {
+  constructor(readonly core: FullSectionCore<SN>) {
+    super(core);
+  }
+  get sections() {
+    return this.core.sections;
+  }
+  set sections(sections: FeSections) {
+    this.core.sections = sections;
+  }
+  protected get selfSection(): FeSection<SN> {
+    return this.sections.one(this.feInfo);
+  }
+}
+
+export class HasSharableSections {
+  constructor(
+    readonly core: HasSectionsCore = { sections: FeSections.init() }
+  ) {}
+  get sections() {
+    return this.core.sections;
+  }
+  set sections(sections: FeSections) {
+    this.core.sections = sections;
+  }
+}
+
+type Core = {
+  [SN in SimpleSectionName]: SectionList<SN>;
 };
 
 export class FeSections {
-  constructor(readonly core: FeSectionsCore) {}
+  constructor(readonly core: Core) {}
+  static initCore(): Core {
+    return sectionNameS.arrs.all.reduce((core, sectionName) => {
+      core[sectionName] = new SectionList({
+        sectionName,
+        list: [],
+      }) as any;
+      return core;
+    }, {} as Core);
+  }
+  static init() {
+    return new FeSections(FeSections.initCore());
+  }
   get meta() {
     return sectionMetas;
   }
-  list<SN extends SimpleSectionName>(sectionName: SN): FeSectionList<SN> {
+  list<SN extends SimpleSectionName>(sectionName: SN): SectionList<SN> {
     return this.core[sectionName] as any;
   }
   get mainFeInfo() {
@@ -48,6 +95,9 @@ export class FeSections {
       const { sectionName, ...idInfo } = finder as SpecificSectionInfo<SN>;
       return this.list(sectionName as SN).getSpecific(idInfo) as FeSection<SN>;
     }
+  }
+  get one() {
+    return this.section;
   }
   selfAndDescendantFeIds<SN extends SectionName>(
     finder: SectionFinder<SN>
@@ -109,7 +159,8 @@ export class FeSections {
   allChildDbIds<S extends SectionName>(
     finder: SectionFinder<S>
   ): ChildIdArrs<S> {
-    const { allChildFeIds } = this.section(finder);
+    const allChildFeIds = this.section(finder)
+      .allChildFeIds as any as ChildIdArrs<S>;
     return Obj.entries(allChildFeIds).reduce(
       (childDbIds, [sectionName, idArr]) => {
         const dbIds = idArr.map(
@@ -149,16 +200,16 @@ export class FeSections {
 
     throw new Error(`invalid parentFinder: ${JSON.stringify(parentFinder)}`);
   }
-  replaceInList(nextSection: FeSection<SimpleSectionName>): FeSections {
+  updateSection(nextSection: FeSection<SimpleSectionName>): FeSections {
     const { sectionName } = nextSection;
     return this.updateList(this.list(sectionName).replace(nextSection));
   }
-  updateList(nextList: FeSectionList): FeSections {
+  updateList(nextList: SectionList): FeSections {
     return this.updateLists({
       [nextList.sectionName]: nextList,
     });
   }
-  updateLists(partial: Partial<FeSectionsCore>): FeSections {
+  updateLists(partial: Partial<Core>): FeSections {
     return new FeSections({
       ...this.core,
       ...partial,

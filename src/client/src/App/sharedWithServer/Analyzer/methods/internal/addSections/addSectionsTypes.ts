@@ -1,9 +1,12 @@
 import { SimpleSectionName } from "../../../../SectionMetas/baseSections";
 import {
+  ChildIdArrsNext,
   OneChildIdArrs,
-  SelfOrDescendantName,
 } from "../../../../SectionMetas/relSectionTypes/ChildTypes";
-import { ParentFinder } from "../../../../SectionMetas/relSectionTypes/ParentTypes";
+import {
+  FeParentInfo,
+  ParentFinder,
+} from "../../../../SectionMetas/relSectionTypes/ParentTypes";
 import { SectionName } from "../../../../SectionMetas/SectionName";
 import { DbVarbs } from "../../../DbEntry";
 
@@ -20,4 +23,19 @@ type AllAddSectionProps = {
   [SN in SectionName]: OneAddSectionProps<SN>;
 };
 export type AddSectionProps<SN extends SimpleSectionName = SimpleSectionName> =
-  AllAddSectionProps[SelfOrDescendantName<SN>];
+  AllAddSectionProps[SN];
+
+export type AddSectionPropsNext<
+  SN extends SimpleSectionName = SimpleSectionName
+> = {
+  sectionName: SN;
+  parentInfo: FeParentInfo<SN>;
+  feId?: string;
+  childFeIds?: ChildIdArrsNext<SN>;
+  dbId?: string;
+  dbVarbs?: DbVarbs;
+  idx?: number;
+};
+
+// I want it to say parentInfo
+// not parentFinder
