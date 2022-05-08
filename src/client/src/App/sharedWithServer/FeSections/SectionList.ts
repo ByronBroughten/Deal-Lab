@@ -1,8 +1,11 @@
+import { sectionMetas } from "../SectionMetas";
 import { SimpleSectionName } from "../SectionMetas/baseSections";
 import { SpecificIdInfo } from "../SectionMetas/baseSections/id";
 import { FeNameInfo } from "../SectionMetas/relSections/rel/relVarbInfoTypes";
+import { SectionMeta } from "../SectionMetas/SectionMeta";
 import Arr from "../utils/Arr";
-import FeSection, { FeSectionCore } from "./FeSection";
+import FeSection from "./FeSection";
+import { FeSectionCore } from "./FeSectionCore";
 
 class SectionNotFoundError extends Error {
   constructor(message: string) {
@@ -14,8 +17,17 @@ export class SectionList<SN extends SimpleSectionName = SimpleSectionName> {
   constructor(
     readonly core: { sectionName: SN; list: readonly FeSection<SN>[] }
   ) {}
-  get list() {
+  get meta(): SectionMeta<"fe", SN> {
+    return sectionMetas.section(this.sectionName);
+  }
+  protected get list() {
     return this.core.list;
+  }
+  get hasAtLeastOne(): boolean {
+    return this.list.length > 0 ? true : false;
+  }
+  get isEmpty(): boolean {
+    return this.list.length === 0;
   }
   get sectionName() {
     return this.core.sectionName;

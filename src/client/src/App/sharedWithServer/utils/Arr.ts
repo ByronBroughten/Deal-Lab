@@ -68,8 +68,11 @@ export const Arr = {
   lastIdx(arr: readonly any[]): number {
     return arr.length - 1;
   },
-  lastVal<V extends any>(arr: readonly V[]): V | undefined {
-    return arr[this.lastIdx(arr)];
+  lastVal<V extends any>(arr: readonly V[]): V {
+    const idx = this.lastIdx(arr);
+    if (idx < 0)
+      throw new Error("This array has no last value—it has no value.");
+    else return arr[idx];
   },
   includes<T, U extends T>(arr: readonly U[], elem: T): elem is U {
     return arr.includes(elem as any);

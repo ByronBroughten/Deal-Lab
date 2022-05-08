@@ -36,6 +36,3 @@ export type AddSectionPropsNext<
   dbVarbs?: DbVarbs;
   idx?: number;
 };
-
-// I want it to say parentInfo
-// not parentFinder

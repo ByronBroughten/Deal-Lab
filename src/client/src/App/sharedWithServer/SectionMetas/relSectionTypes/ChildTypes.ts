@@ -1,12 +1,14 @@
 import StateSection from "../../Analyzer/StateSection";
 import { RemoveNotStrings, StrictSubType, SubType } from "../../utils/types";
 import { ContextName, SimpleSectionName } from "../baseSections";
+import { FeSectionInfo } from "../Info";
 import {
   SavableSectionName,
-  SavableSectionType
+  SavableSectionType,
 } from "../relNameArrs/storeArrs";
 import { RelSections } from "../relSections";
 import { FeNameInfo } from "../relSections/rel/relVarbInfoTypes";
+import { SectionNameType } from "../SectionName";
 
 type ChildNameArr<
   CN extends ContextName,
@@ -141,9 +143,28 @@ export type ChildIdArrs<
   [CHN in ChildName<SN, CN>]: string[];
 };
 
-export interface ChildFeInfo<SN extends SimpleSectionName<"fe">>
-  extends FeNameInfo {
+export interface ChildFeInfo<SN extends SimpleSectionName> extends FeNameInfo {
   sectionName: ChildName<SN>;
+}
+
+export type FeChildInfo<SN extends SimpleSectionName> = {
+  sectionName: ChildName<SN>;
+  feId: string;
+};
+
+export interface NewChildInfo<
+  SN extends SimpleSectionName = SimpleSectionName,
+  CN extends ChildName<SN> = ChildName<SN>
+> extends NewSectionInfo<CN> {}
+
+export interface NewDescendantInfo<
+  SN extends SimpleSectionName = SimpleSectionName,
+  DN extends DescendantName<SN> = DescendantName<SN>
+> extends NewSectionInfo<DN> {}
+
+export interface NewSectionInfo<SN extends SectionNameType>
+  extends FeSectionInfo<SN> {
+  idx?: number | undefined;
 }
 
 export type HasChildSectionName<SC extends ContextName> =

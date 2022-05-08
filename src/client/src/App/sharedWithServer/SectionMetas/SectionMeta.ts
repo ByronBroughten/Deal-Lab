@@ -78,6 +78,12 @@ export class SectionMeta<CN extends ContextName, SN extends SimpleSectionName> {
   ): SectionMetaCore<CN, SN>[PN] {
     return this.core[propName];
   }
+  get childNames() {
+    return this.core.childNames;
+  }
+  isChildName(value: any): value is ChildName<SN> {
+    return (this.childNames as string[]).includes(value);
+  }
   get props() {
     return this.core;
   }

@@ -11,12 +11,16 @@ import { ChildName } from "../../SectionMetas/relSectionTypes/ChildTypes";
 import { FeParentInfo } from "../../SectionMetas/relSectionTypes/ParentTypes";
 import { SectionName } from "../../SectionMetas/SectionName";
 import { Obj } from "../../utils/Obj";
-import { SectionAdder } from "./SectionAdder";
+import { DescendantAdder } from "./DescendantAdder";
 import { SectionRemover } from "./SectionRemover";
 import { HasSharableSections } from "./Sections";
 
-export interface SectionPackLoader extends SectionAdder, SectionRemover {}
-export class SectionPackLoader extends HasSharableSections {
+export interface SectionPackLoader<SN extends SectionName>
+  extends DescendantAdder<SN>,
+    SectionRemover {}
+export class SectionPackLoader<
+  SN extends SectionName
+> extends HasSharableSections {
   loadLoginUser(loginUser: LoginUser) {
     for (const [sectionName, sectionPacks] of Obj.entries(loginUser)) {
       this.loadSectionPackChildren(this.sections.mainFeInfo, {

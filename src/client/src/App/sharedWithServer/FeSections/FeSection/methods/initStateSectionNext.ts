@@ -6,11 +6,21 @@ import {
   ChildIdArrs,
   OneChildIdArrs,
 } from "../../../SectionMetas/relSectionTypes/ChildTypes";
+import { FeParentInfo } from "../../../SectionMetas/relSectionTypes/ParentTypes";
 import { SectionName } from "../../../SectionMetas/SectionName";
 import { Obj } from "../../../utils/Obj";
-import FeSection, { FeSectionCore, SectionInitProps } from "../../FeSection";
+import FeSection, { FeSectionCore } from "../../FeSection";
 import StateVarb from "../FeVarb";
 import { StateVarbs } from "./varbs";
+
+export type SectionInitProps<SN extends SectionName> = {
+  sectionName: SN;
+  parentInfo: FeParentInfo<SN>;
+  feId?: string;
+  childFeIds?: Partial<OneChildIdArrs<SN, "fe">>; // empty
+  dbId?: string; // create new
+  dbVarbs?: Partial<DbVarbs>; // empty
+};
 
 export function initStateSectionNext<SN extends SectionName>(
   props: SectionInitProps<SN>

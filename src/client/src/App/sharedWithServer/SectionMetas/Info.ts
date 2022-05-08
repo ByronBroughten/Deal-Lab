@@ -10,6 +10,11 @@ import {
 } from "./relSections/rel/relVarbInfoTypes";
 import { FeSectionNameType, SectionName, sectionNameS } from "./SectionName";
 
+export type FeSectionInfo<T extends FeSectionNameType = "all"> = {
+  sectionName: SectionName<T>;
+  feId: string;
+};
+
 export type FeInfo<T extends FeSectionNameType = "all"> = FeNameInfo<
   SectionName<T>
 >;

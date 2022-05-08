@@ -21,36 +21,15 @@ import {
 } from "../../SectionMetas/relSectionTypes/ParentTypes";
 import { SectionName, sectionNameS } from "../../SectionMetas/SectionName";
 import { Obj } from "../../utils/Obj";
-import FeSection, { FeSectionCore, SectionGetters } from "../FeSection";
+import FeSection from "../FeSection";
 import { SectionList } from "../SectionList";
 
-type HasSectionsCore = {
+export type HasSections = {
   sections: FeSections;
 };
 
-interface FullSectionCore<SN extends SectionName>
-  extends HasSectionsCore,
-    FeSectionCore<SN> {}
-
-export class FullSection<SN extends SectionName> extends SectionGetters<SN> {
-  constructor(readonly core: FullSectionCore<SN>) {
-    super(core);
-  }
-  get sections() {
-    return this.core.sections;
-  }
-  set sections(sections: FeSections) {
-    this.core.sections = sections;
-  }
-  protected get selfSection(): FeSection<SN> {
-    return this.sections.one(this.feInfo);
-  }
-}
-
 export class HasSharableSections {
-  constructor(
-    readonly core: HasSectionsCore = { sections: FeSections.init() }
-  ) {}
+  constructor(readonly core: HasSections = { sections: FeSections.init() }) {}
   get sections() {
     return this.core.sections;
   }

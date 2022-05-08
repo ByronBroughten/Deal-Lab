@@ -1,3 +1,4 @@
+import { applyMixins } from "../../../utils/classObjects";
 import { SectionPackRaw } from "../../Analyzer/SectionPackRaw";
 import {
   OneRawSection,
@@ -10,12 +11,19 @@ import {
   SectionNameType,
 } from "../../SectionMetas/SectionName";
 import { Obj } from "../../utils/Obj";
-import { HasSharableSections } from "./Sections";
+import { HasFullSectionProps, SectionGetter } from "./FullSection";
 
 type FeSectionPackArrs<ST extends SectionNameType> = {
   [SN in SectionName<ST & SectionNameType>]: SectionPackRaw<SN>[];
 };
-export class SectionPackMaker extends HasSharableSections {
+
+export class SectionPackMaker<
+  SN extends SectionName
+> extends HasFullSectionProps<SN> {
+  get sectionPack(): SectionPackRaw<SN> {
+    return this.makeSectionPack(this.feInfo);
+  }
+
   makeSectionPackArrs<ST extends SectionNameType>(
     snType: ST
   ): FeSectionPackArrs<ST> {
@@ -75,3 +83,7 @@ export class SectionPackMaker extends HasSharableSections {
     };
   }
 }
+
+export interface SectionPackMaker<SN extends SectionName>
+  extends SectionGetter<SN> {}
+applyMixins(SectionPackMaker, [SectionGetter]);

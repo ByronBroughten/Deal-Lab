@@ -1,88 +1,43 @@
 import { cloneDeep } from "lodash";
+import { applyMixins } from "../../utils/classObjects";
 import { DbVarbs } from "../Analyzer/SectionPackRaw/RawSection";
-import { sectionMetas } from "../SectionMetas";
-import { SimpleSectionName } from "../SectionMetas/baseSections";
 import { InEntities } from "../SectionMetas/baseSections/baseValues/entities";
-import { FeIdInfo } from "../SectionMetas/baseSections/id";
 import { InfoS } from "../SectionMetas/Info";
 import {
   DbNameInfo,
-  FeNameInfo,
-  FeVarbInfo
+  FeVarbInfo,
 } from "../SectionMetas/relSections/rel/relVarbInfoTypes";
-import {
-  ChildFeInfo,
-  ChildIdArrs,
-  ChildName,
-  OneChildIdArrs
-} from "../SectionMetas/relSectionTypes/ChildTypes";
 import { DefaultStoreName } from "../SectionMetas/relSectionTypes/DefaultStoreTypes";
 import {
   FeParentInfo,
-  ParentName
+  ParentName,
 } from "../SectionMetas/relSectionTypes/ParentTypes";
-import { SectionMeta } from "../SectionMetas/SectionMeta";
 import {
   FeSectionNameType,
   SectionName,
-  sectionNameS
+  sectionNameS,
 } from "../SectionMetas/SectionName";
 import { OutUpdatePack } from "../SectionMetas/VarbMeta";
 import FeVarb from "./FeSection/FeVarb";
 import { OutEntity } from "./FeSection/FeVarb/entities";
-import {
-  allChildFeInfos,
-  childFeIds,
-  childFeInfos,
-  childIdx,
-  insertChildFeId,
-  pushChildFeId,
-  removeChildFeId
-} from "./FeSection/methods/childIds";
+import { ChildIdGetter } from "./FeSection/methods/ChildIdGetter";
+import { ChildIdUpdater } from "./FeSection/methods/ChildIdUpdater";
 import { initStateSection } from "./FeSection/methods/initStateSection";
 import { initStateSectionNext } from "./FeSection/methods/initStateSectionNext";
 import { value, values, varbInfoValues } from "./FeSection/methods/value";
-import { replaceVarb, StateVarbs, varb } from "./FeSection/methods/varbs";
+import { replaceVarb, varb } from "./FeSection/methods/varbs";
+import { FeSectionBasicUpdater, FeSectionCore, FeVarbs } from "./FeSectionCore";
+import { SectionInfoClass, SectionInfoGetters } from "./SectionInfoClass";
 
-export type FeSectionCore<SN extends SectionName> = {
-  feId: string;
-  parentInfo: FeParentInfo<SN>;
-  sectionName: SN;
-  dbId: string;
-  varbs: StateVarbs;
-  childFeIds: OneChildIdArrs<SN, "fe">;
-};
+class HasFeSectionProps<SN extends SectionName> extends SectionInfoClass<SN> {
+  constructor(readonly core: FeSectionCore<SN>) {
+    super(core);
+  }
+}
 
-export type SectionInitProps<SN extends SectionName> = {
-  readonly sectionName: SN;
-  readonly parentInfo: FeParentInfo<SN>;
-  readonly feId?: string;
-
-  readonly childFeIds?: Partial<OneChildIdArrs<SN, "fe">>; // empty
-  readonly dbId?: string; // create new
-  readonly dbVarbs?: Partial<DbVarbs>; // empty
-};
-
-export class SectionGetters<SN extends SimpleSectionName = SimpleSectionName> {
-  constructor(readonly core: FeSectionCore<SN>) {}
-  get sectionName(): SN {
-    return this.core.sectionName;
-  }
-  get feId(): string {
-    return this.core.feId;
-  }
-  get feIdInfo(): FeIdInfo {
-    return {
-      id: this.feId,
-      idType: "feId",
-    };
-  }
-  get feInfo(): FeNameInfo<SN> {
-    return {
-      sectionName: this.sectionName,
-      ...this.feIdInfo,
-    };
-  }
+export default class FeSection<
+  SN extends SectionName = SectionName
+> extends HasFeSectionProps<SN> {
   get dbId(): string {
     return this.core.dbId;
   }
@@ -93,30 +48,13 @@ export class SectionGetters<SN extends SimpleSectionName = SimpleSectionName> {
       idType: "dbId",
     };
   }
-  get meta(): SectionMeta<"fe", SN> {
-    return sectionMetas.section(this.core.sectionName, "fe");
-  }
-}
-
-export type NewChildInfo<SN extends SimpleSectionName=SimpleSectionName> = {
-  sectionName: ChildName<SN>;
-  feId: string;
-  idx?: number | undefined;
-};
-
-export default class FeSection<
-  SN extends SimpleSectionName = SimpleSectionName
-> extends SectionGetters<SN> {
   get coreClone() {
     return cloneDeep(this.core);
-  }
-  update(nextBaseProps: Partial<FeSectionCore<SN>>): FeSection<SN> {
-    return new FeSection({ ...this.core, ...nextBaseProps });
   }
   get parentFeId(): string {
     return this.core.parentInfo.id;
   }
-  get varbs(): StateVarbs {
+  get varbs(): FeVarbs {
     return { ...this.core.varbs };
   }
   get dbVarbs(): DbVarbs {
@@ -187,35 +125,6 @@ export default class FeSection<
   static init = initStateSection;
   static initNext = initStateSectionNext;
 
-  get allChildFeIds(): ChildIdArrs<SN> {
-    return cloneDeep(this.core.childFeIds);
-  }
-  childFeIds = childFeIds;
-  allChildFeInfos = allChildFeInfos;
-  childFeInfos = childFeInfos;
-
-  insertChildFeId = insertChildFeId;
-  pushChildFeId = pushChildFeId;
-
-  addChildFeId(
-    childInfo: ChildFeInfo<SN>,
-    idx?: number | undefined
-  ): FeSection<SN> {
-    if (idx === undefined) return this.pushChildFeId(childInfo);
-    else return this.insertChildFeId(childInfo, idx);
-  }
-  addChildFeIdNext(
-    childInfo: NewChildInfo<SN>,
-    idx?: number | undefined
-  ): FeSection<SN> {
-    const feInfo = InfoS.fe(childInfo.sectionName, childInfo.feId);
-    if (idx === undefined) return this.pushChildFeId(feInfo);
-    else return this.insertChildFeId(feInfo, idx);
-  }
-
-  removeChildFeId = removeChildFeId;
-  childIdx = childIdx;
-
   varb = varb;
   replaceVarb = replaceVarb;
   value = value;
@@ -239,3 +148,16 @@ export default class FeSection<
     }, [] as OutEntity[]);
   }
 }
+
+export default interface FeSection<SN extends SectionName = SectionName>
+  extends SectionInfoGetters<SN>,
+    ChildIdGetter<SN>,
+    FeSectionBasicUpdater<SN>,
+    ChildIdUpdater<SN> {}
+
+applyMixins(FeSection, [
+  SectionInfoGetters,
+  ChildIdGetter,
+  FeSectionBasicUpdater,
+  ChildIdUpdater,
+]);
