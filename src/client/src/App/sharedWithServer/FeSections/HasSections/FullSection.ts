@@ -7,7 +7,9 @@ import FeSection from "../FeSection";
 import { SectionInfoClass, SectionInfoGetters } from "../SectionInfoClass";
 import { SectionList } from "../SectionList";
 import { DescendantAdder } from "./DescendantAdder";
+import { SectionPackLoader } from "./SectionPackLoader";
 import { SectionPackMaker } from "./SectionPackMaker";
+import { SectionRemover } from "./SectionRemover";
 import { FeSections, HasSections } from "./Sections";
 
 interface Props<SN extends SectionName>
@@ -94,7 +96,9 @@ export interface FullSection<SN extends SectionName>
   extends SectionInfoGetters<SN>,
     SectionPackMaker<SN>,
     SectionsUpdater<SN>,
-    DescendantAdder<SN> {}
+    DescendantAdder<SN>,
+    SectionRemover<SN>,
+    SectionPackLoader<SN> {}
 
 applyMixins(FullSection, [
   SectionInfoGetters,
