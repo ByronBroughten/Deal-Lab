@@ -9,7 +9,8 @@ export class SectionInfoClass<SN extends SectionName> {
   readonly sectionName: SN;
   readonly feId: string;
   constructor({ sectionName, feId }: FeSectionInfo<SN>) {
-    (this.sectionName = sectionName as SN), (this.feId = feId);
+    this.sectionName = sectionName as SN;
+    this.feId = feId;
   }
 }
 export class SectionInfoGetters<
