@@ -27,7 +27,7 @@ property.addChild("ongoingCostList", {
 property.addChild("upfrontCostList", {
   dbVarbs: { title: "Repairs" },
 });
-export const initProperty = property.sectionPack;
+export const defaultProperty = property.sectionPack;
 // I ought to test SectionPackBuilder
 // Then on to creating a version of FullSection
 // that can solve when it adds a section.

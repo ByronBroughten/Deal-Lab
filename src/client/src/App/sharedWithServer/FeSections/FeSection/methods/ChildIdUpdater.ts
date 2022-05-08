@@ -12,6 +12,25 @@ import { ChildIdGetter } from "./ChildIdGetter";
 export class ChildIdUpdater<
   SN extends SectionName
 > extends HasFeSectionCore<SN> {
+  addChildFeId({ idx, ...childInfo }: NewChildInfo<SN>): FeSection<SN> {
+    if (typeof idx === "number")
+      return this.insertChildFeId({ ...childInfo, idx });
+    else return this.pushChildFeId(childInfo);
+  }
+
+  removeChildFeId({ sectionName, feId }: NewChildInfo<SN>) {
+    const nextIds = Arr.findAndRmClone(
+      this.childFeIds(sectionName),
+      (childId) => childId === feId
+    );
+    return this.update({
+      childFeIds: {
+        ...this.core.childFeIds,
+        [sectionName]: nextIds,
+      },
+    });
+  }
+
   private updateChildFeIdArr(
     sectionName: ChildName<SN>,
     nextIds: string[]
@@ -37,23 +56,6 @@ export class ChildIdUpdater<
   }: NewChildInfo<SN>): FeSection<SN> {
     let nextIds = [...this.childFeIds(sectionName), feId];
     return this.updateChildFeIdArr(sectionName, nextIds);
-  }
-  addChildFeId({ idx, ...childInfo }: NewChildInfo<SN>): FeSection<SN> {
-    if (typeof idx === "number")
-      return this.insertChildFeId({ ...childInfo, idx });
-    else return this.pushChildFeId(childInfo);
-  }
-  removeChildFeId({ sectionName, feId }: NewChildInfo<SN>) {
-    const nextIds = Arr.findAndRmClone(
-      this.childFeIds(sectionName),
-      (childId) => childId === feId
-    );
-    return this.update({
-      childFeIds: {
-        ...this.core.childFeIds,
-        [sectionName]: nextIds,
-      },
-    });
   }
 }
 

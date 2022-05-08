@@ -4,7 +4,7 @@ import { ContextName, SimpleSectionName } from "../baseSections";
 import { FeSectionInfo } from "../Info";
 import {
   SavableSectionName,
-  SavableSectionType,
+  SavableSectionType
 } from "../relNameArrs/storeArrs";
 import { RelSections } from "../relSections";
 import { FeNameInfo } from "../relSections/rel/relVarbInfoTypes";
@@ -155,7 +155,9 @@ export type FeChildInfo<SN extends SimpleSectionName> = {
 export interface NewChildInfo<
   SN extends SimpleSectionName = SimpleSectionName,
   CN extends ChildName<SN> = ChildName<SN>
-> extends NewSectionInfo<CN> {}
+> extends NewSectionInfo<CN> {
+  sectionName: CN;
+}
 
 export interface NewDescendantInfo<
   SN extends SimpleSectionName = SimpleSectionName,
