@@ -1,7 +1,7 @@
 import { sectionMetas } from "../../SectionMetas";
 import { SimpleSectionName } from "../../SectionMetas/baseSections";
 import { SectionFinder } from "../../SectionMetas/baseSectionTypes";
-import { InfoS } from "../../SectionMetas/Info";
+import { FeSectionInfo, InfoS } from "../../SectionMetas/Info";
 import {
   FeNameInfo,
   SpecificSectionInfo,
@@ -21,7 +21,6 @@ import {
 } from "../../SectionMetas/relSectionTypes/ParentTypes";
 import { SectionName, sectionNameS } from "../../SectionMetas/SectionName";
 import { Obj } from "../../utils/Obj";
-import FeSection from "../FeSection";
 import { SectionList } from "../SectionList";
 
 export type HasSections = {
@@ -78,6 +77,15 @@ export class FeSections {
   get one() {
     return this.section;
   }
+  oneNext<SN extends SectionName>({
+    sectionName,
+    feId,
+  }: FeSectionInfo<SN>): FeSection<SN> {
+    return this.list(sectionName).getByFeId(feId) as any;
+  }
+  hasOne({ sectionName, feId }: FeSectionInfo): boolean {
+    return this.list(sectionName).has(InfoS.fe(sectionName, feId));
+  }
   selfAndDescendantFeIds<SN extends SectionName>(
     finder: SectionFinder<SN>
   ): SelfAndDescendantIds<SN> {
@@ -121,7 +129,7 @@ export class FeSections {
           throw new Error("There should always be an feInfo here.");
 
         const section = this.section(sectionFinder);
-        for (const childName of section.childNames) {
+        for (const childName of section.meta.childNames) {
           if (!(childName in descendantIds)) descendantIds[childName] = [];
 
           section.childFeIds(childName).forEach((feId) => {
