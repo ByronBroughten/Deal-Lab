@@ -3,7 +3,7 @@ import { SectionName } from "../../../SectionMetas/SectionName";
 import { FeSectionPack } from "../../FeSectionPack";
 import { SectionPackRaw } from "../../SectionPackRaw";
 import { internal } from "../internal";
-import { AddSectionProps } from "./addSections/addSectionsTypes";
+import { AddSectionPropsNext } from "./addSections/addSectionsTypes";
 
 function getSectionArrAddSectionProps(
   next: Analyzer,
@@ -15,11 +15,11 @@ function getSectionArrAddSectionProps(
     const feSectionPack = new FeSectionPack(rawSectionPack);
 
     const addSectionProps = feSectionPack.makeOrderedPreSections({
-      parentFinder: next.parent(sectionName).feInfo,
+      parentInfo: next.parent(sectionName).feInfo,
     });
 
     return addSectionPropsArr.concat(addSectionProps);
-  }, [] as AddSectionProps[]);
+  }, [] as AddSectionPropsNext[]);
 }
 
 export function loadRawSectionPackArr<S extends SectionName<"hasOneParent">>(

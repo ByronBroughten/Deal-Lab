@@ -21,21 +21,8 @@ import {
 } from "../../SectionMetas/relSectionTypes/ParentTypes";
 import { SectionName, sectionNameS } from "../../SectionMetas/SectionName";
 import { Obj } from "../../utils/Obj";
+import { FeSectionI } from "../FeSection";
 import { SectionList } from "../SectionList";
-
-export type HasSections = {
-  sections: FeSections;
-};
-
-export class HasSharableSections {
-  constructor(readonly core: HasSections = { sections: FeSections.init() }) {}
-  get sections() {
-    return this.core.sections;
-  }
-  set sections(sections: FeSections) {
-    this.core.sections = sections;
-  }
-}
 
 type Core = {
   [SN in SimpleSectionName]: SectionList<SN>;
@@ -66,12 +53,12 @@ export class FeSections {
   }
   section<SN extends SimpleSectionName>(
     finder: Extract<SN, SectionName<"alwaysOne">> | SpecificSectionInfo<SN>
-  ): FeSection<SN> {
+  ): FeSectionI<SN> {
     if (sectionNameS.is(finder, "alwaysOne")) {
       return this.list(finder as SN).first;
     } else {
       const { sectionName, ...idInfo } = finder as SpecificSectionInfo<SN>;
-      return this.list(sectionName as SN).getSpecific(idInfo) as FeSection<SN>;
+      return this.list(sectionName as SN).getSpecific(idInfo) as FeSectionI<SN>;
     }
   }
   get one() {
@@ -80,7 +67,7 @@ export class FeSections {
   oneNext<SN extends SectionName>({
     sectionName,
     feId,
-  }: FeSectionInfo<SN>): FeSection<SN> {
+  }: FeSectionInfo<SN>): FeSectionI<SN> {
     return this.list(sectionName).getByFeId(feId) as any;
   }
   hasOne({ sectionName, feId }: FeSectionInfo): boolean {
@@ -162,10 +149,10 @@ export class FeSections {
 
   parent<SN extends SectionName<"hasParent">>(
     finder: SectionFinderForParent<SN>
-  ): FeSection<ParentName<SN>> {
+  ): FeSectionI<ParentName<SN>> {
     if (sectionNameS.is(finder, "hasOneParent")) {
       const parentName = this.meta.parentName(finder);
-      return this.section(parentName as any) as FeSection<ParentName<SN>>;
+      return this.section(parentName as any) as FeSectionI<ParentName<SN>>;
     } else {
       const { parentInfo } = this.section(finder as SectionFinder<SN>);
       return this.section(parentInfo as FeNameInfo<ParentName<SN>>);
@@ -187,7 +174,7 @@ export class FeSections {
 
     throw new Error(`invalid parentFinder: ${JSON.stringify(parentFinder)}`);
   }
-  updateSection(nextSection: FeSection<SimpleSectionName>): FeSections {
+  updateSection(nextSection: FeSectionI<SimpleSectionName>): FeSections {
     const { sectionName } = nextSection;
     return this.updateList(this.list(sectionName).replace(nextSection));
   }

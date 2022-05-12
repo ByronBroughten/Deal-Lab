@@ -18,7 +18,7 @@ describe("Analyzer.addSectionAndSolve", () => {
   function exec() {
     rawSectionPack = next.makeRawSectionPack(initSection.feInfo);
     next = next.loadRawSectionPack(rawSectionPack, {
-      parentFinder: next.section("propertyGeneral").feInfo,
+      parentInfo: next.section("propertyGeneral").feInfo,
     });
     nextSection = next.lastSection("property") as StateSection;
   }

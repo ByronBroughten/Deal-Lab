@@ -1,11 +1,11 @@
-import { SectionPackBuilder } from "../../../../../../FeSections/HasSections/SectionPackBuilder";
+import { SectionPackBuilderNext } from "../../../../../../FeSections/HasSections/SectionPackBuilder";
 import { dbNumObj } from "../../../../../../SectionMetas/baseSections/baseValues/NumObj";
 import { Id } from "../../../../../../SectionMetas/baseSections/id";
 import { InfoS } from "../../../../../../SectionMetas/Info";
 import { Obj } from "../../../../../../utils/Obj";
 import { DbEnt, DbEntry } from "../../../../../DbEntry";
 
-const main = new SectionPackBuilder();
+const main = new SectionPackBuilderNext();
 const property = main.addAndGetDescendant(
   ["analysis", "propertyGeneral", "property"] as const,
   {

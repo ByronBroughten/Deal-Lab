@@ -35,12 +35,7 @@ export function validateServerSectionPackRes(
   const { data } = res;
   if (Obj.isAnyIfIsObj(data)) {
     const { rawServerSectionPack } = data;
-    if (
-      SectionPack.isRaw(rawServerSectionPack, {
-        contextName: "db",
-        sectionType: "dbStoreNext",
-      })
-    ) {
+    if (SectionPack.isRaw(rawServerSectionPack, "dbStoreNext")) {
       return makeRes({ rawServerSectionPack });
     }
   }

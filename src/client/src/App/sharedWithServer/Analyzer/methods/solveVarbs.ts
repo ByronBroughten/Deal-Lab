@@ -1,6 +1,6 @@
 import Analyzer from "../../Analyzer";
 import { FeVarbInfo } from "../../SectionMetas/relSections/rel/relVarbInfoTypes";
-import array from "../../utils/Arr";
+import { Arr } from "../../utils/Arr";
 import { solveAndUpdateValue } from "./solveVarbs/solveAndUpdateValue";
 
 export function solveVarbs(
@@ -9,7 +9,7 @@ export function solveVarbs(
 ): Analyzer {
   let next = this;
   varbInfosToSolve.push(...next.getVarbInfosToSolveFor());
-  varbInfosToSolve = array.rmDuplicateObjsClone(varbInfosToSolve);
+  varbInfosToSolve = Arr.rmDuplicateObjsClone(varbInfosToSolve);
 
   const orderedInfos = next.gatherAndSortInfosToSolve(varbInfosToSolve);
   for (const info of orderedInfos) {

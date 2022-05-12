@@ -1,4 +1,4 @@
-import Arr from "../utils/Arr";
+import { Arr } from "../utils/Arr";
 import { Obj } from "../utils/Obj";
 import { ContextName, SimpleSectionName } from "./baseSections";
 import { BaseName } from "./baseSectionTypes";

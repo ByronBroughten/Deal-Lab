@@ -1,5 +1,16 @@
 import { isEqual } from "lodash";
 
+function lastIdx(arr: readonly any[]): number {
+  return arr.length - 1;
+}
+
+function lastOrThrow<V extends any>(arr: readonly V[]): V {
+  const idx = lastIdx(arr);
+  if (idx < 0) {
+    throw new Error("This array has no last value—it has no value.");
+  } else return arr[idx];
+}
+
 export const Arr = {
   insert<V>(arr: readonly V[], value: V, idx: number): V[] {
     const nextArr = [...arr];
@@ -44,8 +55,8 @@ export const Arr = {
   upOneDimension<T extends any>(arr: T[], innerArrsLength: number): T[][] {
     return arr.reduce(
       (arrOfArrs, item) => {
-        const lastRow = this.lastVal(arrOfArrs);
-        if (lastRow) {
+        if (arrOfArrs.length > 0) {
+          const lastRow = this.lastOrThrow(arrOfArrs);
           if (lastRow.length === innerArrsLength) arrOfArrs.push([item]);
           else lastRow.push(item);
         }
@@ -68,12 +79,7 @@ export const Arr = {
   lastIdx(arr: readonly any[]): number {
     return arr.length - 1;
   },
-  lastVal<V extends any>(arr: readonly V[]): V {
-    const idx = this.lastIdx(arr);
-    if (idx < 0)
-      throw new Error("This array has no last value—it has no value.");
-    else return arr[idx];
-  },
+  lastOrThrow,
   includes<T, U extends T>(arr: readonly U[], elem: T): elem is U {
     return arr.includes(elem as any);
   },
@@ -144,6 +150,4 @@ export const Arr = {
   ): (A | B)[] {
     return [...new Set([...a, ...b])];
   },
-};
-
-export default Arr;
+} as const;

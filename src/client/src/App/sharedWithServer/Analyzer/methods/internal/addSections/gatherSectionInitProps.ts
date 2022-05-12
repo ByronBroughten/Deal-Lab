@@ -9,7 +9,7 @@ import {
   SectionName,
   sectionNameS,
 } from "../../../../SectionMetas/SectionName";
-import Arr from "../../../../utils/Arr";
+import { Arr } from "../../../../utils/Arr";
 import { DbEntry, DbSection } from "../../../DbEntry";
 import { VarbValues } from "../../../StateSection/methods/varbs";
 import { initValuesFromDb } from "./gatherSectionInitProps/initValuesFromDb";

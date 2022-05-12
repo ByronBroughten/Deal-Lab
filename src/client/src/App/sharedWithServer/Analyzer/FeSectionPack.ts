@@ -24,7 +24,7 @@ import {
 } from "./SectionPackRaw/RawSection";
 import { RawSectionFinder } from "./SectionPackRaw/RawSectionFinder";
 export type SectionPackSupplements<SN extends SectionName> = {
-  parentFinder: FeParentInfo<SN>;
+  parentInfo: FeParentInfo<SN>;
   feId?: string;
   idx?: number;
 };
@@ -141,7 +141,7 @@ export class FeSectionPack<SN extends SectionName> {
       feNode as any as RawSectionFinder<SN>
     );
     return {
-      parentFinder: InfoS.fe(feNode.sectionName, feNode.feId),
+      parentInfo: InfoS.fe(feNode.sectionName, feNode.feId),
       childDbIds,
       childFeIds: feNode.childFeIds,
     } as FeSelfOrDescendantParentStub<SN>;
@@ -155,7 +155,7 @@ export class FeSectionPack<SN extends SectionName> {
     } as SectionNodeMaker<SN>;
   }
   makeNodeMakers({
-    parentFinder,
+    parentInfo,
     childDbIds,
     childFeIds,
   }: FeSelfOrDescendantParentStub<SN>): SectionNodeMaker<SN>[] {
@@ -167,7 +167,7 @@ export class FeSectionPack<SN extends SectionName> {
           dbId,
           feId: feIds[idx],
           sectionName,
-          parentFinder: parentFinder,
+          parentInfo,
         } as OneSectionNodeMaker<SectionName> as SectionNodeMaker<SN>);
       }
     }

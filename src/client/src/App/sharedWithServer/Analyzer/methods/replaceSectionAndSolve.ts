@@ -28,6 +28,6 @@ function replaceSection<SN extends SectionName<"hasParent">>(
   next = internal.eraseSectionAndChildren(next, feInfo);
   return next.loadRawSectionPack(replacementSectionPack, {
     idx,
-    parentFinder: parent.feInfo,
+    parentInfo: parent.feInfo,
   });
 }

@@ -1,6 +1,6 @@
 import Analyzer from "../../../Analyzer";
 import { FeVarbInfo } from "../../../SectionMetas/relSections/rel/relVarbInfoTypes";
-import array from "../../../utils/Arr";
+import { Arr } from "../../../utils/Arr";
 import StateVarb from "../../StateSection/StateVarb";
 import tsort from "./tsort/tsort";
 
@@ -39,7 +39,7 @@ export function getDagEdgesAndLoneVarbs(
   for (const [stringInfo, outStrings] of Object.entries(outVarbMap)) {
     for (const outString of outStrings) {
       if (loneVarbs.includes(outString))
-        array.rmFirstValueMutate(loneVarbs, outString);
+        Arr.rmFirstValueMutate(loneVarbs, outString);
       edges.push([stringInfo, outString]);
     }
   }

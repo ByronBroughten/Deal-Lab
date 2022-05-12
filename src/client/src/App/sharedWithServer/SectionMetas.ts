@@ -130,9 +130,9 @@ export class SectionMetas {
   }
   varbNames<SN extends SimpleSectionName<CN>, CN extends ContextName = "fe">(
     sectionName: SN,
-    sectionContext: CN
+    sectionContext?: CN
   ): string[] {
-    return this.varbs(sectionName, sectionContext).varbNames;
+    return this.varbs(sectionName, sectionContext ?? ("fe" as CN)).varbNames;
   }
   parentName<
     SN extends SectionName<"hasOneParent", CN>,

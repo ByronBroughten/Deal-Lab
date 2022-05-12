@@ -1,6 +1,5 @@
 import { omit } from "lodash";
 import { sectionMetas } from "../SectionMetas";
-import { ContextName } from "../SectionMetas/baseSections";
 import { Id } from "../SectionMetas/baseSections/id";
 import {
   FeToDbNameWithSameChildren,
@@ -74,33 +73,18 @@ export class SectionPack<SN extends SectionName> {
         return rawSections;
       }, {} as RawSections<SN>);
   }
-  static isRaw<
-    ST extends SectionNameType = "all",
-    CN extends ContextName = "fe"
-  >(
+  static isRaw<ST extends SectionNameType = "all">(
     value: any,
-    { contextName, sectionType }: IsRawProps<ST, CN> = {}
+    sectionType?: ST
   ): value is SectionPackRaw<SectionName<ST>> {
     if (
-      (zRawSectionPack.safeParse(value).success &&
-        value.contextName === contextName) ??
-      ("fe" && sectionNameS.is(value.sectionName, sectionType ?? "all"))
+      zRawSectionPack.safeParse(value).success &&
+      sectionNameS.is(value.sectionName, sectionType ?? "all")
     ) {
       return true;
     } else return false;
   }
   static isServer(value: any) {
-    return SectionPack.isRaw(value, {
-      contextName: "db",
-      sectionType: "dbStoreNext",
-    });
+    return SectionPack.isRaw(value, "dbStoreNext");
   }
 }
-
-type IsRawProps<
-  ST extends SectionNameType = "all",
-  CN extends ContextName = ContextName
-> = {
-  sectionType?: ST;
-  contextName?: CN;
-};

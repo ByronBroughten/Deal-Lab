@@ -3,9 +3,9 @@ import { SimpleSectionName } from "../SectionMetas/baseSections";
 import { SpecificIdInfo } from "../SectionMetas/baseSections/id";
 import { FeNameInfo } from "../SectionMetas/relSections/rel/relVarbInfoTypes";
 import { SectionMeta } from "../SectionMetas/SectionMeta";
-import Arr from "../utils/Arr";
-import FeSection from "./FeSection";
-import { FeSectionCore } from "./FeSectionCore";
+import { Arr } from "../utils/Arr";
+import { FeSectionI } from "./FeSection";
+import { FeSectionCore } from "./FeSection/FeSectionCore";
 
 class SectionNotFoundError extends Error {
   constructor(message: string) {
@@ -15,7 +15,7 @@ class SectionNotFoundError extends Error {
 
 export class SectionList<SN extends SimpleSectionName = SimpleSectionName> {
   constructor(
-    readonly core: { sectionName: SN; list: readonly FeSection<SN>[] }
+    readonly core: { sectionName: SN; list: readonly FeSectionI<SN>[] }
   ) {}
   get meta(): SectionMeta<"fe", SN> {
     return sectionMetas.section(this.sectionName);
@@ -32,7 +32,7 @@ export class SectionList<SN extends SimpleSectionName = SimpleSectionName> {
   get sectionName() {
     return this.core.sectionName;
   }
-  get first(): FeSection<SN> {
+  get first(): FeSectionI<SN> {
     const first = this.list[0];
     if (!first)
       throw new SectionNotFoundError(
@@ -40,13 +40,8 @@ export class SectionList<SN extends SimpleSectionName = SimpleSectionName> {
       );
     return first;
   }
-  get last(): FeSection<SN> {
-    const last = Arr.lastVal(this.list);
-    if (!last)
-      throw new SectionNotFoundError(
-        "Tried to get last section of sectionList, but there are none."
-      );
-    return last;
+  get last(): FeSectionI<SN> {
+    return Arr.lastOrThrow(this.list);
   }
   get feIds(): string[] {
     return this.list.map(({ feId }) => feId);
@@ -54,13 +49,13 @@ export class SectionList<SN extends SimpleSectionName = SimpleSectionName> {
   get feInfos(): FeNameInfo<SN>[] {
     return this.list.map(({ feInfo }) => feInfo);
   }
-  push(section: FeSection<SN>): SectionList<SN> {
+  push(section: FeSectionI<SN>): SectionList<SN> {
     return this.updateList([...this.list, section]);
   }
-  insert(section: FeSection<SN>, idx: number): SectionList<SN> {
+  insert(section: FeSectionI<SN>, idx: number): SectionList<SN> {
     return this.updateList(Arr.insert(this.list, section, idx));
   }
-  replace(section: FeSection<SN>): SectionList<SN> {
+  replace(section: FeSectionI<SN>): SectionList<SN> {
     const idx = this.feIdToValidIdx(section.feId);
     return this.updateList(Arr.replaceAtIdxClone(this.list, section, idx));
   }
@@ -68,15 +63,17 @@ export class SectionList<SN extends SimpleSectionName = SimpleSectionName> {
     const idx = this.list.findIndex((section) => section.feId === feId);
     return this.updateList(Arr.removeAtIndex(this.list, idx));
   }
-  getByFeId(id: string): FeSection<SN> {
+  getByFeId(id: string): FeSectionI<SN> {
     const section = this.list.find((section) => section.feId === id);
-    if (!section)
+    if (!section) {
       throw new SectionNotFoundError(
         `No section with sectionName ${this.sectionName} and feId ${id}`
       );
+    }
+
     return section;
   }
-  getByDbId(id: string): FeSection<SN> {
+  getByDbId(id: string): FeSectionI<SN> {
     const section = this.list.find((section) => section.dbId === id);
     if (!section)
       throw new SectionNotFoundError(
@@ -84,7 +81,7 @@ export class SectionList<SN extends SimpleSectionName = SimpleSectionName> {
       );
     return section;
   }
-  getSpecific({ id, idType }: SpecificIdInfo): FeSection<SN> {
+  getSpecific({ id, idType }: SpecificIdInfo): FeSectionI<SN> {
     switch (idType) {
       case "feId":
         return this.getByFeId(id);
@@ -114,7 +111,7 @@ export class SectionList<SN extends SimpleSectionName = SimpleSectionName> {
     }
   }
 
-  private updateList(list: FeSection<SN>[]): SectionList<SN> {
+  private updateList(list: FeSectionI<SN>[]): SectionList<SN> {
     return new SectionList({ ...this.core, list });
   }
 }

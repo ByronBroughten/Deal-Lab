@@ -2,6 +2,7 @@ import { applyMixins } from "../../../utils/classObjects";
 import { FeSectionInfo } from "../../SectionMetas/Info";
 import { ChildName } from "../../SectionMetas/relSectionTypes/ChildTypes";
 import { SectionName } from "../../SectionMetas/SectionName";
+import { FeSectionI } from "../FeSection";
 import { DescendantAdder } from "./DescendantAdder";
 import { SectionAccessor } from "./SectionAccessor";
 import { SectionPackLoader } from "./SectionPackLoader";
@@ -9,14 +10,14 @@ import { SectionPackMaker } from "./SectionPackMaker";
 import { SelfAndChildRemover } from "./SelfAndChildRemover";
 
 export class FullSection<SN extends SectionName> extends SectionAccessor<SN> {
-  protected get selfSection(): FeSection<SN> {
+  protected get selfSection(): FeSectionI<SN> {
     return this.sections.one(this.feInfo);
   }
   protected fullSection<IN extends SectionName>(
     info: FeSectionInfo<IN>
   ): FullSection<IN> {
     return new FullSection({
-      sections: this.sections,
+      shared: this.core,
       ...info,
     });
   }

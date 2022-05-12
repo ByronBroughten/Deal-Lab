@@ -5,7 +5,7 @@ import usePropertyAnalyzer from "../../modules/usePropertyAnalyzer";
 import Analyzer from "../../sharedWithServer/Analyzer";
 import { FeInfo } from "../../sharedWithServer/SectionMetas/Info";
 import { SectionName } from "../../sharedWithServer/SectionMetas/SectionName";
-import array from "../../sharedWithServer/utils/Arr";
+import { Arr } from "../../sharedWithServer/utils/Arr";
 import useDidChange from "../appWide/customHooks/useDidChange";
 
 type SectionsToDelete = FeInfo[];
@@ -42,7 +42,7 @@ export default function useLmAnalyzer({
       setSectionsToDelete([...sectionsToDelete, feInfo]);
     },
     undoEraseSection() {
-      setSectionsToDelete(array.removeLastClone(sectionsToDelete));
+      setSectionsToDelete(Arr.removeLastClone(sectionsToDelete));
     },
     async saveUserLists() {
       unstable_batchedUpdates(() => {

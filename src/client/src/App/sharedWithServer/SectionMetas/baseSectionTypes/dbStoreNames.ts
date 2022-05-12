@@ -1,4 +1,4 @@
-import Arr from "../../utils/Arr";
+import { Arr } from "../../utils/Arr";
 import { SimpleSectionName } from "../baseSections";
 
 export const dbStoreNamesNext = [

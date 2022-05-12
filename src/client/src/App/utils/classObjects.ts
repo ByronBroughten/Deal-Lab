@@ -1,6 +1,10 @@
 interface PropInfos {
   [propName: string]: any;
 }
+
+export type Constructor = new (...args: any[]) => {};
+export type GConstructor<T = {}> = new (...args: any[]) => T;
+
 export const setProtectedProps = (target: object, propInfos: PropInfos) => {
   const definePropertiesProps: PropertyDescriptorMap = {};
   for (const [name, value] of Object.entries(propInfos)) {

@@ -2,12 +2,14 @@ import { FeInfo, InfoS } from "../../SectionMetas/Info";
 import {
   ChildFeInfo,
   ChildName,
-  FeChildInfo
+  FeChildInfo,
 } from "../../SectionMetas/relSectionTypes/ChildTypes";
 import { SectionName } from "../../SectionMetas/SectionName";
-import { SectionGetter } from "./FullSection";
+import { SectionAccessor } from "./SectionAccessor";
 
-export class SectionRemover<SN extends SectionName> extends SectionGetter<SN> {
+export class SelfAndChildRemover<
+  SN extends SectionName
+> extends SectionAccessor<SN> {
   removeSelf() {
     this.removeSection(this.feInfo);
   }
@@ -45,12 +47,10 @@ export class SectionRemover<SN extends SectionName> extends SectionGetter<SN> {
     childInfo: ChildFeInfo<S>
   ): void {
     this.sections = this.sections.updateSection(
-      this.sections
-        .one(feInfo)
-        .removeChildFeId({
-          feId: childInfo.id,
-          sectionName: childInfo.sectionName,
-        })
+      this.sections.one(feInfo).removeChildFeId({
+        feId: childInfo.id,
+        sectionName: childInfo.sectionName,
+      })
     );
   }
 }

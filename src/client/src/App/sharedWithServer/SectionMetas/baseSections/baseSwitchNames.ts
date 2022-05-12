@@ -1,4 +1,4 @@
-import Arr from "../../utils/Arr";
+import { Arr } from "../../utils/Arr";
 import { Obj } from "../../utils/Obj";
 
 type GeneralBaseSwitchSchemas = {

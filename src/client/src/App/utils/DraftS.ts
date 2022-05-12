@@ -7,7 +7,7 @@ import {
   SelectionState,
 } from "draft-js";
 import { EntityMapData } from "../sharedWithServer/SectionMetas/baseSections/baseValues/entities";
-import array from "../sharedWithServer/utils/Arr";
+import { Arr } from "../sharedWithServer/utils/Arr";
 
 export type EntityMap = Record<
   string,
@@ -79,7 +79,7 @@ function getSelectionToBackspace(editorState: EditorState): SelectionState {
 
   const { entityRanges } = getRawBlock(editorState);
   for (const { offset, length } of entityRanges) {
-    const points = array.numsInOffsetLength(offset, length);
+    const points = Arr.numsInOffsetLength(offset, length);
     if (points.includes(start as any)) start = offset;
     if (points.includes(end as any)) end = offset + length;
   }

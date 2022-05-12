@@ -1,10 +1,10 @@
 import {
   entityS,
   InEntities,
-  InEntity,
+  InEntity
 } from "../../../SectionMetas/baseSections/baseValues/entities";
 import { FeVarbInfo } from "../../../SectionMetas/relSections/rel/relVarbInfoTypes";
-import Arr from "../../../utils/Arr";
+import { Arr } from "../../../utils/Arr";
 import StateVarb from "../FeVarb";
 
 // all varbs that may have inEntities are in mutable sections.

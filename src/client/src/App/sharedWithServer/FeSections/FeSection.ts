@@ -1,163 +1,119 @@
-import { cloneDeep } from "lodash";
-import { applyMixins } from "../../utils/classObjects";
-import { DbVarbs } from "../Analyzer/SectionPackRaw/RawSection";
-import { InEntities } from "../SectionMetas/baseSections/baseValues/entities";
-import { InfoS } from "../SectionMetas/Info";
+import { GConstructor } from "../../utils/classObjects";
 import {
-  DbNameInfo,
-  FeVarbInfo,
-} from "../SectionMetas/relSections/rel/relVarbInfoTypes";
-import { DefaultStoreName } from "../SectionMetas/relSectionTypes/DefaultStoreTypes";
-import {
-  FeParentInfo,
-  ParentName,
-} from "../SectionMetas/relSectionTypes/ParentTypes";
+  ChildName,
+  NewChildInfo,
+} from "../SectionMetas/relSectionTypes/ChildTypes";
 import {
   FeSectionNameType,
   SectionName,
   sectionNameS,
 } from "../SectionMetas/SectionName";
-import { OutUpdatePack } from "../SectionMetas/VarbMeta";
-import FeVarb from "./FeSection/FeVarb";
-import { OutEntity } from "./FeSection/FeVarb/entities";
-import { ChildIdGetter } from "./FeSection/methods/ChildIdGetter";
-import { ChildIdUpdater } from "./FeSection/methods/ChildIdUpdater";
-import { initStateSection } from "./FeSection/methods/initStateSection";
-import { initStateSectionNext } from "./FeSection/methods/initStateSectionNext";
-import { value, values, varbInfoValues } from "./FeSection/methods/value";
-import { replaceVarb, varb } from "./FeSection/methods/varbs";
-import { FeSectionBasicUpdater, FeSectionCore, FeVarbs } from "./FeSectionCore";
-import { SectionInfoClass, SectionInfoGetters } from "./SectionInfoClass";
+import { Arr } from "../utils/Arr";
+import {
+  ChildIdGetterNext,
+  IChildIdGetterNext,
+} from "./FeSection/ChildIdGetter";
+import {
+  FeSectionCore,
+  initFeSectionCore,
+  InitFeSectionCoreProps,
+} from "./FeSection/FeSectionCore";
+import {
+  ApplySectionGetters,
+  FeSectionGettersI,
+} from "./FeSection/FeSectionGetters";
+import { HasFeSectionProps } from "./FeSection/HasFeSectionProps";
+import { ApplySectionInfoGetters } from "./HasSectionInfoProps";
 
-class HasFeSectionProps<SN extends SectionName> extends SectionInfoClass<SN> {
-  constructor(readonly core: FeSectionCore<SN>) {
-    super(core);
-  }
+export interface FeSectionI<SN extends SectionName> extends TopMixins<SN> {
+  addChildFeId({ idx, ...childInfo }: NewChildInfo<SN>): FeSectionI<SN>;
+  removeChildFeId({ sectionName, feId }: NewChildInfo<SN>): FeSectionI<SN>;
+}
+function FeSectionMaker<
+  SN extends SectionName,
+  TBase extends TopMixinsConstructor<SN>
+>(Base: TBase): FullClass<SN> {
+  return class FeSection extends Base implements FeSectionI<SN> {
+    addChildFeId({ idx, ...childInfo }: NewChildInfo<SN>): FeSection {
+      if (typeof idx === "number")
+        return this.insertChildFeId({ ...childInfo, idx });
+      else return this.pushChildFeId(childInfo);
+    }
+    removeChildFeId({ sectionName, feId }: NewChildInfo<SN>): FeSection {
+      const nextIds = Arr.findAndRmClone(
+        this.childFeIds(sectionName),
+        (childId) => childId === feId
+      );
+      return this.update({
+        childFeIds: {
+          ...this.core.childFeIds,
+          [sectionName]: nextIds,
+        },
+      });
+    }
+
+    private insertChildFeId({
+      sectionName,
+      feId,
+      idx,
+    }: NewChildInfo<SN> & { idx: number }): FeSection {
+      const nextIds = Arr.insert(this.childFeIds(sectionName), feId, idx);
+      return this.updateChildFeIdArr(sectionName, nextIds);
+    }
+    private pushChildFeId({ sectionName, feId }: NewChildInfo<SN>): FeSection {
+      let nextIds = [...this.childFeIds(sectionName), feId];
+      return this.updateChildFeIdArr(sectionName, nextIds);
+    }
+    private updateChildFeIdArr(
+      sectionName: ChildName<SN>,
+      nextIds: string[]
+    ): FeSection {
+      return this.update({
+        childFeIds: {
+          ...this.core.childFeIds,
+          [sectionName]: nextIds,
+        },
+      });
+    }
+    private update(nextBaseProps: Partial<FeSectionCore<SN>>): FeSection {
+      return new FeSection({ ...this.core, ...nextBaseProps });
+    }
+    static is<ST extends FeSectionNameType = "all">(
+      value: any,
+      sectionType?: ST
+    ): value is FeSectionI<SectionName<ST>> {
+      if (!(value instanceof FeSection)) return false;
+      return sectionNameS.is(value.sectionName, (sectionType ?? "all") as ST);
+    }
+    static initNext<S extends SectionName>(
+      props: InitFeSectionCoreProps<S>
+    ): FeSectionI<S> {
+      const core = initFeSectionCore(props);
+      return new FeSection(core) as any as FeSectionI<S>;
+    }
+  };
 }
 
-export default class FeSection<
-  SN extends SectionName = SectionName
-> extends HasFeSectionProps<SN> {
-  get dbId(): string {
-    return this.core.dbId;
-  }
-  get dbInfo(): DbNameInfo<SN> {
-    return {
-      sectionName: this.sectionName,
-      id: this.dbId,
-      idType: "dbId",
-    };
-  }
-  get coreClone() {
-    return cloneDeep(this.core);
-  }
-  get parentFeId(): string {
-    return this.core.parentInfo.id;
-  }
-  get varbs(): FeVarbs {
-    return { ...this.core.varbs };
-  }
-  get dbVarbs(): DbVarbs {
-    return Object.entries(this.varbs).reduce((dbVarbs, [varbName, varb]) => {
-      dbVarbs[varbName] = varb.toDbValue();
-      return dbVarbs;
-    }, {} as DbVarbs);
-  }
-  get varbArr(): FeVarb[] {
-    return Object.values(this.varbs);
-  }
-  get parentOrNoInfo(): FeParentInfo<SN> {
-    return this.core.parentInfo;
-  }
-  get parentInfo(): FeParentInfo<SN> {
-    return this.core.parentInfo;
-  }
-  get parentInfoSafe(): FeParentInfo<SectionName<"hasParent">> {
-    const { parentInfo } = this.core;
-    if (
-      !sectionNameS.is(this.sectionName, "hasParent") ||
-      parentInfo.sectionName === "no parent"
-    )
-      throw new Error("This section doesn't have a parent.");
-    return parentInfo as FeParentInfo<SectionName<"hasParent">>;
-  }
-  get defaultStoreName(): DefaultStoreName<
-    Extract<SN, SectionName<"hasDefaultStore">>
-  > {
-    const next = this as any as FeSection<SectionName>;
-    const defaultStoreName = next.meta.get("defaultStoreName");
-    if (defaultStoreName) return defaultStoreName as DefaultStoreName;
-    else throw new Error("This section has no defaultStoreName.");
-  }
+interface TopMixins<SN extends SectionName>
+  extends IChildIdGetterNext<SN>,
+    FeSectionGettersI<SN> {}
 
-  get parentName(): ParentName<SN> {
-    return this.core.parentInfo.sectionName;
-  }
-  get parentNameSafe(): ParentName<SectionName<"hasParent">> {
-    const { sectionName } = this.core.parentInfo;
-    if (
-      !sectionNameS.is(this.sectionName, "hasParent") ||
-      sectionName === "no parent"
-    )
-      throw new Error("This section doesn't have a parent.");
-    return sectionName as ParentName<SectionName<"hasParent">>;
-  }
-  get childNames() {
-    return this.meta.get("childNames");
-  }
-  get feVarbInfos(): FeVarbInfo[] {
-    const { feInfo } = this;
-    if (!InfoS.is.fe(feInfo, "hasVarb")) return [];
-    return Object.keys(this.varbs).map((varbName) => ({
-      ...feInfo,
-      varbName,
-    }));
-  }
-
-  static is<ST extends FeSectionNameType = "all">(
+interface IFeSectionStatics {
+  is<ST extends FeSectionNameType = "all">(
     value: any,
     sectionType?: ST
-  ): value is FeSection<SectionName<ST>> {
-    if (!(value instanceof FeSection)) return false;
-    return sectionNameS.is(value.sectionName, (sectionType ?? "all") as ST);
-  }
-
-  static init = initStateSection;
-  static initNext = initStateSectionNext;
-
-  varb = varb;
-  replaceVarb = replaceVarb;
-  value = value;
-  values = values;
-  varbInfoValues = varbInfoValues;
-
-  get entities(): InEntities {
-    return this.varbArr.reduce((inEntities, varb) => {
-      inEntities = inEntities.concat(varb.inEntities);
-      return inEntities;
-    }, [] as InEntities);
-  }
-  outVarbPacks(): OutUpdatePack[] {
-    return this.varbArr.reduce((outUpdatePacks, varb) => {
-      return outUpdatePacks.concat(varb.outUpdatePacks);
-    }, [] as OutUpdatePack[]);
-  }
-  outEntities(): OutEntity[] {
-    return this.varbArr.reduce((outEntities, varb) => {
-      return outEntities.concat(varb.outEntities);
-    }, [] as OutEntity[]);
-  }
+  ): value is FeSectionI<SectionName<ST>>;
+  initNext<SN extends SectionName>(
+    props: InitFeSectionCoreProps<SN>
+  ): FeSectionI<SN>;
 }
 
-export default interface FeSection<SN extends SectionName = SectionName>
-  extends SectionInfoGetters<SN>,
-    ChildIdGetter<SN>,
-    FeSectionBasicUpdater<SN>,
-    ChildIdUpdater<SN> {}
+type TopMixinsConstructor<SN extends SectionName> = GConstructor<TopMixins<SN>>;
+interface FullClass<SN extends SectionName>
+  extends GConstructor<FeSectionI<SN>>,
+    IFeSectionStatics {}
 
-applyMixins(FeSection, [
-  SectionInfoGetters,
-  ChildIdGetter,
-  FeSectionBasicUpdater,
-  ChildIdUpdater,
-]);
+const HasSectionInfoGetters = ApplySectionInfoGetters(HasFeSectionProps);
+const HasSectionGetters = ApplySectionGetters(HasSectionInfoGetters);
+const HasChildIdGetters = ChildIdGetterNext(HasSectionGetters);
+export const FeSection = FeSectionMaker(HasChildIdGetters);

@@ -6,7 +6,7 @@ import {
   ChildName,
 } from "../../../SectionMetas/relSectionTypes/ChildTypes";
 import { SectionName } from "../../../SectionMetas/SectionName";
-import array from "../../../utils/Arr";
+import { Arr } from "../../../utils/Arr";
 import { Obj } from "../../../utils/Obj";
 import StateSection from "../../StateSection";
 
@@ -102,7 +102,7 @@ export function removeChildFeId<S extends SectionName>(
   this: StateSection<S>,
   { sectionName, id }: ChildFeInfo<S>
 ) {
-  const nextIds = array.findAndRmClone(
+  const nextIds = Arr.findAndRmClone(
     this.childFeIds(sectionName),
     (childId) => childId === id
   );

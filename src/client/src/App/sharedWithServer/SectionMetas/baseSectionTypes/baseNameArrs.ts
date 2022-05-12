@@ -1,4 +1,4 @@
-import Arr from "../../utils/Arr";
+import { Arr } from "../../utils/Arr";
 import { Obj } from "../../utils/Obj";
 import { NeversToNull, SubType } from "../../utils/types";
 import { ToArrObj } from "../../utils/types/objectTypes";

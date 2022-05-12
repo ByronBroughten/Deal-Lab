@@ -6,7 +6,7 @@ import {
   RelVarbInfo,
 } from "../../../SectionMetas/relSections/rel/relVarbInfoTypes";
 import { SectionName } from "../../../SectionMetas/SectionName";
-import array from "../../../utils/Arr";
+import { Arr } from "../../../utils/Arr";
 import { Obj } from "../../../utils/Obj";
 
 export function nestedFeInfos<S extends SectionName>(
@@ -38,11 +38,11 @@ export function nestedFeInfos<S extends SectionName>(
   if (includeInEntitySections) {
     for (const entity of section.entities) {
       const { feInfo: entityInfo } = this.section(entity);
-      if (!array.objIsIn(entityInfo, feInfos))
+      if (!Arr.objIsIn(entityInfo, feInfos))
         this.nestedFeInfos(entityInfo, options);
 
       const { feInfo: parentInfo } = this.parent(entity);
-      if (!array.objIsIn(parentInfo, feInfos)) feInfos.push(parentInfo);
+      if (!Arr.objIsIn(parentInfo, feInfos)) feInfos.push(parentInfo);
     }
   }
   return feInfos;
@@ -74,7 +74,7 @@ export function nestedFeOutVarbInfos(
     },
     [] as FeVarbInfo[]
   );
-  return array.rmDuplicateObjsClone(nestedOutVarbInfos);
+  return Arr.rmDuplicateObjsClone(nestedOutVarbInfos);
 }
 export function nestedNumObjInfos(
   this: Analyzer,

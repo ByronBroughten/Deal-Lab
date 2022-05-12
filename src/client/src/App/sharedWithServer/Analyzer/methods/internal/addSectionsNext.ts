@@ -2,12 +2,12 @@ import Analyzer from "../../../Analyzer";
 import { FeInfo, InfoS } from "../../../SectionMetas/Info";
 import { FeVarbInfo } from "../../../SectionMetas/relSections/rel/relVarbInfoTypes";
 import { internal } from "../internal";
-import { AddSectionProps } from "./addSections/addSectionsTypes";
+import { AddSectionPropsNext } from "./addSections/addSectionsTypes";
 import { initOneSectionNext } from "./addSectionsNext/initOneSectionNext";
 
 export function addSectionsNext(
   next: Analyzer,
-  parentFirstPropsList: AddSectionProps[]
+  parentFirstPropsList: AddSectionPropsNext[]
 ) {
   const newFeInfos: FeInfo[] = [];
   for (const props of parentFirstPropsList) {

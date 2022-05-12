@@ -101,7 +101,7 @@ export class MainSectionIndexStateQuerier extends StateQuerierBase {
       next = next.addSectionsAndSolveNext([
         {
           sectionName: "cell",
-          parentFinder: next.section(this.rowDbInfo).feInfo,
+          parentInfo: next.section(this.rowDbInfo).feInfo,
           dbVarbs: {
             ...varbInfo,
             value,

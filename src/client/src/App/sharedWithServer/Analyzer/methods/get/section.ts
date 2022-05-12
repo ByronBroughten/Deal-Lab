@@ -7,10 +7,10 @@ import {
   MultiFindByFocalInfo,
   MultiSectionInfo,
   SpecificSectionInfo,
-  SpecificSectionsInfo,
+  SpecificSectionsInfo
 } from "../../../SectionMetas/relSections/rel/relVarbInfoTypes";
 import { SectionName } from "../../../SectionMetas/SectionName";
-import Arr from "../../../utils/Arr";
+import { Arr } from "../../../utils/Arr";
 import { Obj } from "../../../utils/Obj";
 import StateSection from "../../StateSection";
 

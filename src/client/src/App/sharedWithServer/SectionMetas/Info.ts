@@ -22,6 +22,14 @@ export type DbInfo<T extends FeSectionNameType = "all"> = DbNameInfo<
   SectionName<T>
 >;
 
+export const noParentFeInfo = {
+  sectionName: "no parent",
+  id: "no parent",
+  idType: "feId",
+} as const;
+
+export type NoParentFeInfo = typeof noParentFeInfo;
+
 type MakeVarbInfo<I extends MultiSectionInfo> = MultiVarbInfo<
   Exclude<I["sectionName"], "main">
 > & { idType: I["idType"]; id: I["id"] };

@@ -6,14 +6,14 @@ import { isEditorUpdateFnName } from "../../sharedWithServer/Analyzer/StateSecti
 import { InEntities } from "../../sharedWithServer/SectionMetas/baseSections/baseValues/entities";
 import {
   EntitiesAndEditorText,
-  NumObj,
+  NumObj
 } from "../../sharedWithServer/SectionMetas/baseSections/baseValues/NumObj";
 import { FeVarbInfo } from "../../sharedWithServer/SectionMetas/relSections/rel/relVarbInfoTypes";
-import array from "../../sharedWithServer/utils/Arr";
+import { Arr } from "../../sharedWithServer/utils/Arr";
 import { EntityMap, EntityRanges, RawEditorState } from "../../utils/DraftS";
 import {
   editorStateToText,
-  getRawEditorState,
+  getRawEditorState
 } from "../draftjs/rawEditorContent";
 
 const updateEditorByBasicType = {
@@ -23,7 +23,7 @@ const updateEditorByBasicType = {
   stringArray(editorState: EditorState): string[] {
     const text = editorStateToText(editorState);
     const arr = text.split(",");
-    if (array.lastVal(arr) === "") arr.pop();
+    if (arr.length > 0 && Arr.lastOrThrow(arr) === "") arr.pop();
     return arr;
   },
 };

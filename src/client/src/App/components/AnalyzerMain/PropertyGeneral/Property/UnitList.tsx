@@ -3,7 +3,7 @@ import React from "react";
 import styled, { css } from "styled-components";
 import { useAnalyzerContext } from "../../../../modules/usePropertyAnalyzer";
 import { FeParentInfo } from "../../../../sharedWithServer/SectionMetas/relSectionTypes/ParentTypes";
-import array from "../../../../sharedWithServer/utils/Arr";
+import { Arr } from "../../../../sharedWithServer/utils/Arr";
 import ccs from "../../../../theme/cssChunks";
 import theme from "../../../../theme/Theme";
 import useHowMany from "../../../appWide/customHooks/useHowMany";
@@ -24,7 +24,7 @@ export default function UnitList({ feInfo, className }: Props) {
   const unitIds = analyzer.section(feInfo).childFeIds("unit");
   const { isAtLeastOne, areMultiple, areNone } = useHowMany(unitIds);
   const numUnitsPerRow = 2;
-  const unitIdRows = array.upOneDimension(unitIds, numUnitsPerRow);
+  const unitIdRows = Arr.upOneDimension(unitIds, numUnitsPerRow);
 
   const { trackWidthToggleView, ...titleRowProps } = useOpenWidth();
   const { viewIsOpen } = titleRowProps;

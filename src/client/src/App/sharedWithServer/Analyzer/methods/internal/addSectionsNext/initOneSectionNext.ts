@@ -5,19 +5,13 @@ import {
   sectionNameS,
 } from "../../../../SectionMetas/SectionName";
 import StateSection from "../../../StateSection";
-import { AddSectionProps } from "../addSections/addSectionsTypes";
+import { AddSectionPropsNext } from "../addSections/addSectionsTypes";
 
 export function initOneSectionNext(
   next: Analyzer,
-  { idx, parentFinder, ...props }: AddSectionProps
+  { idx, ...props }: AddSectionPropsNext
 ): Analyzer {
-  next = pushSection(
-    next,
-    StateSection.initNext({
-      parentInfo: next.parentFinderToInfo(parentFinder),
-      ...props,
-    })
-  );
+  next = pushSection(next, StateSection.initNext(props));
   const { sectionName } = props;
   const { feInfo } = next.lastSection(sectionName);
   if (sectionNameS.is(sectionName, "hasParent"))

@@ -1,7 +1,7 @@
 import { cloneDeep } from "lodash";
 import { Schema } from "mongoose";
 import { z } from "zod";
-import array from "../../../utils/Arr";
+import { Arr } from "../../../utils/Arr";
 import { reqMonString } from "../../../utils/mongoose";
 import { isStringRationalNumber } from "../../../utils/Str";
 import {
@@ -100,7 +100,7 @@ export class NumObj {
     return this.core;
   }
   removeEntity(entityId: string): NumObj {
-    const entities = array.findAndRmClone(this.entities, (entity) => {
+    const entities = Arr.findAndRmClone(this.entities, (entity) => {
       return entity.entityId === entityId;
     });
     return this.updateCore({ entities });

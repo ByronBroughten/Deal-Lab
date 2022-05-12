@@ -82,7 +82,7 @@ export function descendantFeIds<SN extends SectionName>(
         throw new Error("There should always be an feInfo here.");
 
       const section = this.section(sectionFinder);
-      for (const childName of section.childNames) {
+      for (const childName of section.meta.childNames) {
         if (!(childName in descendantIds)) descendantIds[childName] = [];
 
         section.childFeIds(childName).forEach((feId) => {

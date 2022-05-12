@@ -155,6 +155,7 @@ import StateVarb from "./Analyzer/StateSection/StateVarb";
 import { sectionMetas } from "./SectionMetas";
 import { Id } from "./SectionMetas/baseSections/id";
 import { SectionFinder } from "./SectionMetas/baseSectionTypes";
+import { noParentFeInfo } from "./SectionMetas/Info";
 import {
   FeNameInfo,
   FeVarbInfo,
@@ -212,19 +213,11 @@ export default class Analyzer {
   static initAnalyzer(options: InitSectionOptions = {}): Analyzer {
     let next = new Analyzer(Analyzer.makeInitialCore());
 
-    next = next.addSectionAndSolve(
-      "main",
-      {
-        sectionName: "no parent",
-        id: "no parent",
-        idType: "feId",
-      },
-      {
-        ...options,
-        initFromDefault: false,
-        // default section stores are created, to be used momentarily
-      }
-    );
+    next = next.addSectionAndSolve("main", noParentFeInfo, {
+      ...options,
+      initFromDefault: false,
+      // default section stores are created, to be used momentarily
+    });
 
     for (const sectionName of next.meta.sectionNames) {
       if (sectionNameS.is(sectionName, "hasDefaultStore")) {

@@ -47,7 +47,7 @@ export class FullIndexQuerier extends StateQuerierBase {
     const indexSectionPack = sourceSectionPack.changeType(this.indexName);
     const indexParentInfo = next.parent(this.indexName).feInfo;
     this.nextSections = next.loadRawSectionPack(indexSectionPack.core, {
-      parentFinder: indexParentInfo,
+      parentInfo: indexParentInfo,
     });
     this.setNextSectionsAsState();
   }

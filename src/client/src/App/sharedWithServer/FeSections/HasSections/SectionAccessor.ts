@@ -1,7 +1,8 @@
 import { applyMixins } from "../../../utils/classObjects";
 import { ChildName } from "../../SectionMetas/relSectionTypes/ChildTypes";
 import { SectionName } from "../../SectionMetas/SectionName";
-import { SectionInfoGetters } from "../SectionInfoClass";
+import { FeSectionI } from "../FeSection";
+import { SectionInfoGetters } from "../HasSectionInfoProps";
 import { SectionList } from "../SectionList";
 import { HasFullSectionProps } from "./HasFullSectionProps";
 import { FeSections } from "./Sections";
@@ -15,7 +16,7 @@ export class SectionAccessor<
   protected set sections(sections: FeSections) {
     this.core.sections = sections;
   }
-  protected get selfSection(): FeSection<SN> {
+  protected get selfSection(): FeSectionI<SN> {
     return this.sections.one(this.feInfo);
   }
   protected childList<CN extends ChildName<SN>>(
@@ -26,7 +27,7 @@ export class SectionAccessor<
   protected sectionList<S extends SectionName>(sectionName: S): SectionList<S> {
     return this.sections.list(sectionName);
   }
-  protected updateSelfSection(nextSelf: FeSection<SN>): void {
+  protected updateSelfSection(nextSelf: FeSectionI<SN>): void {
     this.core.sections = this.core.sections.updateSection(nextSelf as any);
   }
 }

@@ -20,7 +20,7 @@ import {
 } from "../../SectionMetas/relSections/rel/valueMetaTypes";
 import { SectionName } from "../../SectionMetas/SectionName";
 import { cloneValue } from "../../SectionMetas/VarbMeta";
-import array from "../../utils/Arr";
+import { Arr } from "../../utils/Arr";
 import {
   addInEntity,
   addOutEntity,
@@ -177,7 +177,7 @@ export default class StateVarb {
   }
   updateFnName(switchInfo: null | FeVarbInfo): UpdateFnName {
     if (switchInfo === null) return this.meta.defaultUpdateFnName;
-    const pack = array.findIn(this.meta.inSwitchUpdatePacks, (pack) => {
+    const pack = Arr.findIn(this.meta.inSwitchUpdatePacks, (pack) => {
       return isEqual(pack.switchInfo, switchInfo);
     });
     if (pack) return pack.updateFnName;
@@ -188,7 +188,7 @@ export default class StateVarb {
   }
   inVarbInfos(switchInfo: FeVarbInfo | null): RelVarbInfo[] {
     if (switchInfo === null) return this.meta.defaultInUpdateFnInfos;
-    const pack = array.findIn(this.meta.inSwitchUpdatePacks, (pack) => {
+    const pack = Arr.findIn(this.meta.inSwitchUpdatePacks, (pack) => {
       return isEqual(pack.switchInfo, switchInfo);
     });
     if (pack) return pack.inUpdateInfos;
