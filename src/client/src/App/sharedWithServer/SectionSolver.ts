@@ -1,7 +1,7 @@
 export function MakeSectionSolver() {
   return class SectionSolver {
     // *Takes FeSections as an argument
-    // *
+    // *Creates a
   };
 }
 
