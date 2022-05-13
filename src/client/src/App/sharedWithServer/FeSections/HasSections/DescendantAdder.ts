@@ -41,7 +41,7 @@ export interface DescendantAdderI<SN extends SectionName>
   ): void;
   addChild<CN extends ChildName<SN>>(
     childName: CN,
-    props: AddChildOptions<SN>
+    props?: AddChildOptions<SN>
   ): void;
   addOneSection<S extends SectionName>(props: AddSectionPropsNext<S>): void;
   addSections(parentFirstPropsArr: AddSectionPropsNext[]): void;
@@ -93,14 +93,15 @@ export function ApplyDescendantAdder<
     }
     addChild<CN extends ChildName<SN>>(
       childName: CN,
-      props: AddChildOptions<SN>
+      options?: AddChildOptions<SN>
     ): void {
       this.addOneSection({
+        ...options,
         sectionName: childName,
-        ...props,
         parentInfo: this.feInfo as any,
       } as AddSectionPropsNext<DescendantName<SN>>);
     }
+
     addOneSection<S extends SectionName>(props: AddSectionPropsNext<S>): void {
       this.newSectionToList(props);
       if (sectionNameS.is(props.sectionName, "hasParent")) {
@@ -152,7 +153,7 @@ export function ApplyDescendantAdder<
 const HasInfoGetters = ApplySectionInfoGetters(HasFullSectionProps);
 export const DescendantAdderNext = ApplyDescendantAdder(HasInfoGetters);
 
-export class DescendantAdder<
+export class DescendantAdderDepreciated<
   SN extends SectionName
 > extends SectionAccessor<SN> {
   addDescendant<DN extends DescendantName<SN>>(

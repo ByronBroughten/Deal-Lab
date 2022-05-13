@@ -1,7 +1,7 @@
 import { applyMixins } from "../../../utils/classObjects";
 import {
   FeSectionPack,
-  SectionPackSupplements
+  SectionPackSupplements,
 } from "../../Analyzer/FeSectionPack";
 import { AddSectionPropsNext } from "../../Analyzer/methods/internal/addSections/addSectionsTypes";
 import { SectionArrPack, SectionPackRaw } from "../../Analyzer/SectionPackRaw";
@@ -10,7 +10,7 @@ import { ChildName } from "../../SectionMetas/relSectionTypes/ChildTypes";
 import { FeParentInfo } from "../../SectionMetas/relSectionTypes/ParentTypes";
 import { SectionName } from "../../SectionMetas/SectionName";
 import { Obj } from "../../utils/Obj";
-import { DescendantAdder } from "./DescendantAdder";
+import { DescendantAdderDepreciated } from "./DescendantAdder";
 import { SelfAndChildRemover } from "./SelfAndChildRemover";
 
 type ChildSectionPackArrs<SN extends SectionName> = {
@@ -19,7 +19,7 @@ type ChildSectionPackArrs<SN extends SectionName> = {
 
 export class SectionPackLoader<
   SN extends SectionName
-> extends DescendantAdder<SN> {
+> extends DescendantAdderDepreciated<SN> {
   // This should work for loading LoginUser
   loadChildSectionPackArrs(childPackArrs: ChildSectionPackArrs<SN>) {
     for (const [sectionName, sectionPacks] of Obj.entries(childPackArrs)) {
