@@ -14,7 +14,7 @@ export interface FullSectionsContructorProps<SN extends SectionName>
 export class HasFullSectionProps<
   SN extends SectionName = "main"
 > extends HasSectionInfoProps<SN> {
-  readonly core: { sections: FeSections };
+  readonly shared: { sections: FeSections };
   constructor(
     {
       shared,
@@ -28,7 +28,7 @@ export class HasFullSectionProps<
     }
 
     super(sectionInfo);
-    this.core = shared;
+    this.shared = shared;
   }
   static defaultProps(): FullSectionsContructorProps<"main"> {
     const sectionInfo = {

@@ -1,45 +1,38 @@
-import { applyMixins } from "../../../utils/classObjects";
 import { FeSectionInfo } from "../../SectionMetas/Info";
 import { ChildName } from "../../SectionMetas/relSectionTypes/ChildTypes";
 import { SectionName } from "../../SectionMetas/SectionName";
-import { FeSectionI } from "../FeSection";
-import { DescendantAdder } from "./DescendantAdder";
+import { DescendantAdderI } from "./DescendantAdder";
 import { SectionAccessor } from "./SectionAccessor";
-import { SectionPackLoader } from "./SectionPackLoader";
-import { SectionPackMaker } from "./SectionPackMaker";
-import { SelfAndChildRemover } from "./SelfAndChildRemover";
+import { SectionPackMakerI } from "./SectionPackMaker";
 
-export class FullSection<SN extends SectionName> extends SectionAccessor<SN> {
-  protected get selfSection(): FeSectionI<SN> {
-    return this.sections.one(this.feInfo);
-  }
-  protected fullSection<IN extends SectionName>(
-    info: FeSectionInfo<IN>
-  ): FullSection<IN> {
-    return new FullSection({
-      shared: this.core,
-      ...info,
-    });
-  }
-  lastChild<CN extends ChildName<SN>>(childName: CN): FullSection<CN> {
-    return this.child(this.childList(childName).last.info);
-  }
+interface FullSectionMixins<SN extends SectionName>
+  extends DescendantAdderI<SN>,
+    SectionPackMakerI<SN> {}
+
+interface FullSectionI<SN extends SectionName> {
+  lastChild<CN extends ChildName<SN>>(childName: CN): FullSectionI<CN>;
   child<CN extends ChildName<SN>>(
     childInfo: FeSectionInfo<CN>
-  ): FullSection<CN> {
-    return this.fullSection(childInfo);
-  }
+  ): FullSectionI<CN>;
 }
 
-export interface FullSection<SN extends SectionName>
-  extends SectionPackMaker<SN>,
-    DescendantAdder<SN>,
-    SelfAndChildRemover<SN>,
-    SectionPackLoader<SN> {}
-
-applyMixins(FullSection, [
-  SectionPackMaker,
-  DescendantAdder,
-  SelfAndChildRemover,
-  SectionPackLoader,
-]);
+function MakeFullSection() {
+  return class FullSection<SN extends SectionName> extends SectionAccessor<SN> {
+    lastChild<CN extends ChildName<SN>>(childName: CN): FullSection<CN> {
+      return this.child(this.childList(childName).last.info);
+    }
+    child<CN extends ChildName<SN>>(
+      childInfo: FeSectionInfo<CN>
+    ): FullSection<CN> {
+      return this.fullSection(childInfo);
+    }
+    private fullSection<IN extends SectionName>(
+      info: FeSectionInfo<IN>
+    ): FullSection<IN> {
+      return new FullSection({
+        shared: this.shared,
+        ...info,
+      });
+    }
+  };
+}

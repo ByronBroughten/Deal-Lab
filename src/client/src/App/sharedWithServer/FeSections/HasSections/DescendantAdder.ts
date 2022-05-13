@@ -10,7 +10,10 @@ import {
 import { SectionName, sectionNameS } from "../../SectionMetas/SectionName";
 import { StrictOmit } from "../../utils/types";
 import { FeSection } from "../FeSection";
-import { SectionInfoGettersI } from "../HasSectionInfoProps";
+import {
+  ApplySectionInfoGetters,
+  SectionInfoGettersI,
+} from "../HasSectionInfoProps";
 import { HasFullSectionProps } from "./HasFullSectionProps";
 import { SectionAccessor } from "./SectionAccessor";
 import { FeSections } from "./Sections";
@@ -112,10 +115,10 @@ export function ApplyDescendantAdder<
       }
     }
     private get sections(): FeSections {
-      return this.core.sections;
+      return this.shared.sections;
     }
     private setSections(sections: FeSections) {
-      this.core.sections = sections;
+      this.shared.sections = sections;
     }
     private isValidChildNameOrThrow<SN extends SectionName>(
       sectionName: SN,
@@ -146,6 +149,8 @@ export function ApplyDescendantAdder<
     }
   };
 }
+const HasInfoGetters = ApplySectionInfoGetters(HasFullSectionProps);
+export const DescendantAdderNext = ApplyDescendantAdder(HasInfoGetters);
 
 export class DescendantAdder<
   SN extends SectionName

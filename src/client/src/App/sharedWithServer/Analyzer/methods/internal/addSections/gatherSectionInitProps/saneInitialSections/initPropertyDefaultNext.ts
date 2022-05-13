@@ -1,4 +1,3 @@
-// const main = new SectionPackBuilder();
 // const property = main.addAndGetDescendant(
 //   ["analysis", "propertyGeneral", "property"] as const,
 //   {

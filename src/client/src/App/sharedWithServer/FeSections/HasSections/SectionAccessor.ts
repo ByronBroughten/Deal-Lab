@@ -11,10 +11,10 @@ export class SectionAccessor<
   SN extends SectionName
 > extends HasFullSectionProps<SN> {
   protected get sections(): FeSections {
-    return this.core.sections;
+    return this.shared.sections;
   }
   protected set sections(sections: FeSections) {
-    this.core.sections = sections;
+    this.shared.sections = sections;
   }
   protected get selfSection(): FeSectionI<SN> {
     return this.sections.one(this.feInfo);
@@ -28,7 +28,7 @@ export class SectionAccessor<
     return this.sections.list(sectionName);
   }
   protected updateSelfSection(nextSelf: FeSectionI<SN>): void {
-    this.core.sections = this.core.sections.updateSection(nextSelf as any);
+    this.shared.sections = this.shared.sections.updateSection(nextSelf as any);
   }
 }
 export interface SectionAccessor<SN extends SectionName>
