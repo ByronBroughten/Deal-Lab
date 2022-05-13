@@ -18,21 +18,6 @@ import { HasFullSectionProps } from "./HasFullSectionProps";
 import { SectionAccessor } from "./SectionAccessor";
 import { FeSections } from "./Sections";
 
-export type DescendantList<
-  SN extends SectionName,
-  DN extends DescendantName<SN> = DescendantName<SN>
-> = readonly [...DescendantName<SN>[], DN];
-
-export type AddChildOptions<
-  SN extends SectionName,
-  CN extends ChildName<SN> = ChildName<SN>
-> = StrictOmit<AddSectionPropsNext<CN>, "sectionName" | "parentInfo">;
-
-export type AddDescendantOptions<
-  SN extends SectionName,
-  DN extends DescendantName<SN> = DescendantName<SN>
-> = StrictOmit<AddSectionPropsNext<DN>, "parentInfo" | "sectionName">;
-
 export interface DescendantAdderI<SN extends SectionName>
   extends DescendantAdderMixins<SN> {
   addDescendant<DN extends DescendantName<SN>>(
@@ -152,6 +137,23 @@ export function ApplyDescendantAdder<
 }
 const HasInfoGetters = ApplySectionInfoGetters(HasFullSectionProps);
 export const DescendantAdderNext = ApplyDescendantAdder(HasInfoGetters);
+
+export type DescendantList<
+  SN extends SectionName,
+  DN extends DescendantName<SN> = DescendantName<SN>
+> = readonly [...DescendantName<SN>[], DN];
+
+type OmitProps = "sectionName" | "parentInfo" | "childFeIds";
+
+export type AddChildOptions<
+  SN extends SectionName,
+  CN extends ChildName<SN> = ChildName<SN>
+> = StrictOmit<AddSectionPropsNext<CN>, OmitProps>;
+
+export type AddDescendantOptions<
+  SN extends SectionName,
+  DN extends DescendantName<SN> = DescendantName<SN>
+> = StrictOmit<AddSectionPropsNext<DN>, OmitProps>;
 
 export class DescendantAdderDepreciated<
   SN extends SectionName

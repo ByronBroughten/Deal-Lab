@@ -1,4 +1,4 @@
-import { AddChildOptions } from "./FeSections/HasSections/DescendantAdder";
+import { defaultSectionPacks } from "./Analyzer/methods/internal/addSections/gatherSectionInitProps/defaultSectionPacks";
 import { FullSection } from "./FeSections/HasSections/FullSection";
 import { FeSections } from "./FeSections/HasSections/Sections";
 import { FeSectionInfo } from "./SectionMetas/Info";
@@ -18,9 +18,24 @@ export class SectionSolver<SN extends SectionName> {
     this.varbFullNamesToSolveFor = new Set();
   }
 
-  addChildAndSolve(childName: ChildName<SN>, options?: AddChildOptions<SN>) {
-    // am I adding any children with this?
-    // I will if I add from a default section, which I should.
-    this.builder.addChild(childName, options);
+  private nestedVarbInfos() {}
+
+  addChildAndSolve(childName: ChildName<SN>) {
+    if (defaultSectionPacks.has(childName)) {
+      const sectionPack = defaultSectionPacks.get(childName);
+      // implement loading
+    } else {
+      this.builder.addChild(childName);
+    }
+
+    const addedChild = this.builder.lastChild(childName);
+    // give FullSection "nestedVarbInfos", copy from Analyzer
+    // Get the nested varb infos for the added section
+
+    // here convert them into fullNamesToSolveFor
+    // this.varbFullNamesToSolveFor.add()
+
+    // copy this.solve() from Analyzer
   }
+  loadSectionPackAndSolve() {}
 }

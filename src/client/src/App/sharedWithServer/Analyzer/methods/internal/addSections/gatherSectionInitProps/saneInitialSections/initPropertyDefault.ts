@@ -1,29 +1,8 @@
-import { SectionPackBuilderNext } from "../../../../../../FeSections/HasSections/SectionPackBuilder";
 import { dbNumObj } from "../../../../../../SectionMetas/baseSections/baseValues/NumObj";
 import { Id } from "../../../../../../SectionMetas/baseSections/id";
 import { InfoS } from "../../../../../../SectionMetas/Info";
 import { Obj } from "../../../../../../utils/Obj";
 import { DbEnt, DbEntry } from "../../../../../DbEntry";
-
-const main = new SectionPackBuilderNext();
-const property = main.addAndGetDescendant(
-  ["analysis", "propertyGeneral", "property"] as const,
-  {
-    dbVarbs: {
-      taxesOngoingSwitch: "yearly",
-      homeInsOngoingSwitch: "yearly",
-      ongoingExpensesOngoingSwitch: "yearly",
-      targetRentOngoingSwitch: "monthly",
-      miscOngoingRevenueOngoingSwitch: "monthly",
-      ongoingRevenueOngoingSwitch: "monthly",
-    },
-  }
-);
-
-// const property = main.addDescendantAndGet(["propertyGeneral", "property"], { dbValues: { ... } })
-// property.addChild("upfrontCostList", { dbValues: { ... } });
-// property.addChild("upfrontCostList", { dbValues: { ... } });
-// property.addChild("ongoingCostList", { dbValues: { ... } });
 
 type ListItemCoreValues = [name: string, cost: number];
 const periodicItemCoreValues: ListItemCoreValues[] = [
