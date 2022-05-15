@@ -6,7 +6,7 @@ import {
   useIndexTableActions,
 } from "../modules/TableStateQuerier";
 import { useAnalyzerContext } from "../modules/usePropertyAnalyzer";
-import { SectionName } from "../sharedWithServer/SectionMetas/SectionName";
+import { SectionName } from "../sharedWithServer/SectionsMeta/SectionName";
 import theme from "../theme/Theme";
 import useHowMany from "./appWide/customHooks/useHowMany";
 import ColumnHeader from "./IndexTable/ColumnHeader";

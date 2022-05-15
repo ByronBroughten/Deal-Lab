@@ -7,8 +7,8 @@ import {
   makeRes,
   SectionPackRes,
 } from "../../../sharedWithServer/apiQueriesShared/makeGeneralReqs";
-import { Id } from "../../../sharedWithServer/SectionMetas/baseSections/id";
-import { savableNameS } from "../../../sharedWithServer/SectionMetas/relNameArrs/storeArrs";
+import { Id } from "../../../sharedWithServer/SectionsMeta/baseSections/id";
+import { savableNameS } from "../../../sharedWithServer/SectionsMeta/relNameArrs/storeArrs";
 import { Obj } from "../../../sharedWithServer/utils/Obj";
 
 export function validateDbIdRes(res: AxiosResponse<unknown>): DbIdRes {

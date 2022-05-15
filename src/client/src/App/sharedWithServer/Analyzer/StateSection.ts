@@ -1,26 +1,26 @@
 import { cloneDeep } from "lodash";
 import { sectionMetas } from "../SectionMetas";
-import { SimpleSectionName } from "../SectionMetas/baseSections";
-import { InEntities } from "../SectionMetas/baseSections/baseValues/entities";
-import { InfoS } from "../SectionMetas/Info";
+import { SimpleSectionName } from "../SectionsMeta/baseSections";
+import { InEntities } from "../SectionsMeta/baseSections/baseValues/entities";
+import { InfoS } from "../SectionsMeta/Info";
 import {
   DbNameInfo,
   FeNameInfo,
   FeVarbInfo,
-} from "../SectionMetas/relSections/rel/relVarbInfoTypes";
-import { OneChildIdArrs } from "../SectionMetas/relSectionTypes/ChildTypes";
-import { DefaultStoreName } from "../SectionMetas/relSectionTypes/DefaultStoreTypes";
+} from "../SectionsMeta/relSections/rel/relVarbInfoTypes";
+import { OneChildIdArrs } from "../SectionsMeta/relSectionTypes/ChildTypes";
+import { DefaultStoreName } from "../SectionsMeta/relSectionTypes/DefaultStoreTypes";
 import {
-  FeParentInfo,
+  ParentFeInfo,
   ParentName,
-} from "../SectionMetas/relSectionTypes/ParentTypes";
-import { SectionMeta } from "../SectionMetas/SectionMeta";
+} from "../SectionsMeta/relSectionTypes/ParentTypes";
+import { SectionMeta } from "../SectionsMeta/SectionMeta";
 import {
   FeSectionNameType,
   SectionName,
   sectionNameS,
-} from "../SectionMetas/SectionName";
-import { OutUpdatePack } from "../SectionMetas/VarbMeta";
+} from "../SectionsMeta/SectionName";
+import { OutUpdatePack } from "../SectionsMeta/VarbMeta";
 import { DbVarbs } from "./DbEntry";
 import {
   addChildFeId,
@@ -43,7 +43,7 @@ import { OutEntity } from "./StateSection/StateVarb/entities";
 
 export type StateSectionCore<SN extends SectionName> = {
   feId: string;
-  parentInfo: FeParentInfo<SN>;
+  parentInfo: ParentFeInfo<SN>;
   sectionName: SN;
   dbId: string;
   varbs: StateVarbs;
@@ -52,7 +52,7 @@ export type StateSectionCore<SN extends SectionName> = {
 
 export type StateSectionInitProps<SN extends SectionName> = {
   sectionName: SN;
-  parentInfo: FeParentInfo<SN>;
+  parentInfo: ParentFeInfo<SN>;
   feId?: string;
 
   childFeIds?: Partial<OneChildIdArrs<SN, "fe">>; // empty
@@ -115,20 +115,20 @@ export default class StateSection<
   get sectionName(): S {
     return this.core.sectionName;
   }
-  get parentOrNoInfo(): FeParentInfo<S> {
+  get parentOrNoInfo(): ParentFeInfo<S> {
     return this.core.parentInfo;
   }
-  get parentInfo(): FeParentInfo<S> {
+  get parentInfo(): ParentFeInfo<S> {
     return this.core.parentInfo;
   }
-  get parentInfoSafe(): FeParentInfo<SectionName<"hasParent">> {
+  get parentInfoSafe(): ParentFeInfo<SectionName<"hasParent">> {
     const { parentInfo } = this.core;
     if (
       !sectionNameS.is(this.sectionName, "hasParent") ||
       parentInfo.sectionName === "no parent"
     )
       throw new Error("This section doesn't have a parent.");
-    return parentInfo as FeParentInfo<SectionName<"hasParent">>;
+    return parentInfo as ParentFeInfo<SectionName<"hasParent">>;
   }
 
   get defaultStoreName(): DefaultStoreName<

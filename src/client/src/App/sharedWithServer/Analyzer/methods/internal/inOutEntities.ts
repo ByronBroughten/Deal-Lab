@@ -2,8 +2,8 @@ import Analyzer from "../../../Analyzer";
 import {
   InEntity,
   InEntityVarbInfo,
-} from "../../../SectionMetas/baseSections/baseValues/entities";
-import { FeVarbInfo } from "../../../SectionMetas/relSections/rel/relVarbInfoTypes";
+} from "../../../SectionsMeta/baseSections/baseValues/entities";
+import { FeVarbInfo } from "../../../SectionsMeta/relSections/rel/relVarbInfoTypes";
 import { OutEntity } from "../../StateSection/StateVarb/entities";
 
 export function addInEntity(

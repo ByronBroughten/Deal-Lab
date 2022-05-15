@@ -3,7 +3,7 @@ import {
   useRowIndexActions,
   UseRowIndexActionsProps,
 } from "../../modules/useRowIndexActions";
-import { InfoS } from "../../sharedWithServer/SectionMetas/Info";
+import { InfoS } from "../../sharedWithServer/SectionsMeta/Info";
 import TrashBtn from "../general/TrashBtn";
 
 export default function IndexRow(props: UseRowIndexActionsProps) {

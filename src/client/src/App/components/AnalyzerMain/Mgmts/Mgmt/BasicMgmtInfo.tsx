@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { switchNames } from "../../../../sharedWithServer/SectionMetas/baseSections/switchNames";
-import { FeInfo } from "../../../../sharedWithServer/SectionMetas/Info";
+import { switchNames } from "../../../../sharedWithServer/SectionsMeta/baseSections/switchNames";
+import { FeInfo } from "../../../../sharedWithServer/SectionsMeta/Info";
 import BasicSectionInfo from "../../../appWide/GeneralSection/MainSection/MainSectionBody/BasicSectionInfo";
 import { useOpenWidth } from "../../../appWide/SectionTitleRow";
 import DollarPercentRadioSwap from "../../general/DollarPercentRadioSwap";

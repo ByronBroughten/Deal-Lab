@@ -2,7 +2,7 @@ import hash from "object-hash";
 import { config } from "../../Constants";
 import Analyzer from "../../sharedWithServer/Analyzer";
 import { DbEntry } from "../../sharedWithServer/Analyzer/DbEntry";
-import { relSections } from "../../sharedWithServer/SectionMetas/relSections";
+import { relSections } from "../../sharedWithServer/SectionsMeta/relSections";
 import { getStoredObj } from "../../utils/localStorage";
 
 const { tokenKey } = config;

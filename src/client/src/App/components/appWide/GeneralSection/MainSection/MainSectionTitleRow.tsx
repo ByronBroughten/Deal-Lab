@@ -6,7 +6,7 @@ import useToggleView from "../../../../modules/customHooks/useToggleView";
 import { auth } from "../../../../modules/services/authService";
 import { useAnalyzerContext } from "../../../../modules/usePropertyAnalyzer";
 import { useRowIndexSourceActions } from "../../../../modules/useRowIndexSourceActions";
-import { FeInfo } from "../../../../sharedWithServer/SectionMetas/Info";
+import { FeInfo } from "../../../../sharedWithServer/SectionsMeta/Info";
 import theme from "../../../../theme/Theme";
 import BtnTooltip from "../../BtnTooltip";
 import { IconBtn } from "../../IconBtn";

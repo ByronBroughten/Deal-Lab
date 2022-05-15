@@ -1,15 +1,15 @@
 import Analyzer from "../../../Analyzer";
-import { SectionFinder } from "../../../SectionMetas/baseSectionTypes";
-import { InfoS } from "../../../SectionMetas/Info";
+import { SectionFinder } from "../../../SectionsMeta/baseSectionTypes";
+import { InfoS } from "../../../SectionsMeta/Info";
 import {
   FeNameInfo,
   FeVarbInfo,
   MultiFindByFocalInfo,
   MultiSectionInfo,
   SpecificSectionInfo,
-  SpecificSectionsInfo
-} from "../../../SectionMetas/relSections/rel/relVarbInfoTypes";
-import { SectionName } from "../../../SectionMetas/SectionName";
+  SpecificSectionsInfo,
+} from "../../../SectionsMeta/relSections/rel/relVarbInfoTypes";
+import { SectionName } from "../../../SectionsMeta/SectionName";
 import { Arr } from "../../../utils/Arr";
 import { Obj } from "../../../utils/Obj";
 import StateSection from "../../StateSection";

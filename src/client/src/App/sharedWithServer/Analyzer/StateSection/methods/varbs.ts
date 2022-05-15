@@ -1,6 +1,6 @@
-import { InfoS } from "../../../SectionMetas/Info";
-import { MultiVarbInfo } from "../../../SectionMetas/relSections/rel/relVarbInfoTypes";
-import { SectionName } from "../../../SectionMetas/SectionName";
+import { InfoS } from "../../../SectionsMeta/Info";
+import { MultiVarbInfo } from "../../../SectionsMeta/relSections/rel/relVarbInfoTypes";
+import { SectionName } from "../../../SectionsMeta/SectionName";
 import StateSection from "../../StateSection";
 import StateVarb from "../StateVarb";
 import { StateValue } from "../StateVarb/stateValue";

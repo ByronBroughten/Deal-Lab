@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { SectionName } from "../SectionMetas/SectionName";
+import { SectionName } from "../SectionsMeta/SectionName";
 import { Obj } from "../utils/Obj";
 import { StrictOmit } from "../utils/types";
 import { zodSchema } from "../utils/zod";

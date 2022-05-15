@@ -1,15 +1,15 @@
 import { omit } from "lodash";
 import { sectionMetas } from "../SectionMetas";
-import { Id } from "../SectionMetas/baseSections/id";
+import { Id } from "../SectionsMeta/baseSections/id";
 import {
   FeToDbNameWithSameChildren,
   OneChildIdArrs,
-} from "../SectionMetas/relSectionTypes/ChildTypes";
+} from "../SectionsMeta/relSectionTypes/ChildTypes";
 import {
   SectionName,
   sectionNameS,
   SectionNameType,
-} from "../SectionMetas/SectionName";
+} from "../SectionsMeta/SectionName";
 import { SectionPackRaw, zRawSectionPack } from "./SectionPackRaw";
 import { DbVarbs, RawSections } from "./SectionPackRaw/RawSection";
 

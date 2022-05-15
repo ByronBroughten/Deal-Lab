@@ -1,7 +1,7 @@
 import {
   FeInfo,
   InfoS,
-} from "../../../../../sharedWithServer/SectionMetas/Info";
+} from "../../../../../sharedWithServer/SectionsMeta/Info";
 import BigStringEditor from "../../../../inputs/BigStringEditor";
 
 type Props = { feInfo: FeInfo<"hasRowIndex"> };

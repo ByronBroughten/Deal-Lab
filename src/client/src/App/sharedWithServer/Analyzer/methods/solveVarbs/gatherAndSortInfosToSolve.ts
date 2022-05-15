@@ -1,5 +1,5 @@
 import Analyzer from "../../../Analyzer";
-import { FeVarbInfo } from "../../../SectionMetas/relSections/rel/relVarbInfoTypes";
+import { FeVarbInfo } from "../../../SectionsMeta/relSections/rel/relVarbInfoTypes";
 import { Arr } from "../../../utils/Arr";
 import StateVarb from "../../StateSection/StateVarb";
 import tsort from "./tsort/tsort";

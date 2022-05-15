@@ -14,8 +14,8 @@ import {
   makeReq,
   SectionPackReq,
 } from "./apiQueriesShared/makeGeneralReqs";
-import { SectionFinder } from "./SectionMetas/baseSectionTypes";
-import { SavableSectionName } from "./SectionMetas/relNameArrs/storeArrs";
+import { SectionFinder } from "./SectionsMeta/baseSectionTypes";
+import { SavableSectionName } from "./SectionsMeta/relNameArrs/storeArrs";
 
 const makeApiReqs = makeReqMakers();
 const apiPaths = makeApiPaths();

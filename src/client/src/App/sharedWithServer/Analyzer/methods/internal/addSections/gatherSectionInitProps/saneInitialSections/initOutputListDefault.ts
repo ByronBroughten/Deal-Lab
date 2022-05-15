@@ -1,4 +1,4 @@
-import { InfoS } from "../../../../../../SectionMetas/Info";
+import { InfoS } from "../../../../../../SectionsMeta/Info";
 import { DbEnt } from "../../../../../DbEntry";
 
 export const initOutputs = [

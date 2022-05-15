@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useAnalyzerContext } from "../../../../../../../modules/usePropertyAnalyzer";
 import { listOperators } from "../../../../../../../sharedWithServer/Analyzer/methods/solveVarbs/solveAndUpdateValue/updateUserVarb";
-import { InfoS } from "../../../../../../../sharedWithServer/SectionMetas/Info";
+import { InfoS } from "../../../../../../../sharedWithServer/SectionsMeta/Info";
 import LogicOperators from "../../../../../../appWide/LogicOperators";
 import ListMaker from "../../../../../../inputs/ListEditor";
 import NumObjEditor from "../../../../../../inputs/NumObjEditor";

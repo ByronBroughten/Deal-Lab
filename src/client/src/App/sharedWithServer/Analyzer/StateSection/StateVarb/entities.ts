@@ -1,9 +1,9 @@
 import {
   entityS,
   InEntities,
-  InEntity
-} from "../../../SectionMetas/baseSections/baseValues/entities";
-import { FeVarbInfo } from "../../../SectionMetas/relSections/rel/relVarbInfoTypes";
+  InEntity,
+} from "../../../SectionsMeta/baseSections/baseValues/entities";
+import { FeVarbInfo } from "../../../SectionsMeta/relSections/rel/relVarbInfoTypes";
 import { Arr } from "../../../utils/Arr";
 import StateVarb from "../StateVarb";
 

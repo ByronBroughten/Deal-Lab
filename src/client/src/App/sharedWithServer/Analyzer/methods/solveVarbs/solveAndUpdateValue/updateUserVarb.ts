@@ -1,6 +1,6 @@
 import Analyzer from "../../../../Analyzer";
-import { NumObj } from "../../../../SectionMetas/baseSections/baseValues/NumObj";
-import { FeNameInfo } from "../../../../SectionMetas/relSections/rel/relVarbInfoTypes";
+import { NumObj } from "../../../../SectionsMeta/baseSections/baseValues/NumObj";
+import { FeNameInfo } from "../../../../SectionsMeta/relSections/rel/relVarbInfoTypes";
 
 const valueOperators = ["===", "!==", ">", ">=", "<", "<="] as const;
 type ValueOperator = typeof valueOperators[number];

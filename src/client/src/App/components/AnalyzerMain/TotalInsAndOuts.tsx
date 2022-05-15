@@ -1,5 +1,5 @@
 import { useAnalyzerContext } from "../../modules/usePropertyAnalyzer";
-import { InfoS } from "../../sharedWithServer/SectionMetas/Info";
+import { InfoS } from "../../sharedWithServer/SectionsMeta/Info";
 import LabeledOutputRow from "../appWide/LabeledOutputRow";
 import { LabeledVarbSimple } from "../appWide/LabeledVarbSimple";
 import ListGroupShell from "./general/ListGroupShell";

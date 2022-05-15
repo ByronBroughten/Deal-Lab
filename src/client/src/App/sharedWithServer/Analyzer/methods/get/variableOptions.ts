@@ -1,11 +1,11 @@
 import Analyzer from "../../../Analyzer";
 import { sectionMetas } from "../../../SectionMetas";
-import { InEntityVarbInfo } from "../../../SectionMetas/baseSections/baseValues/entities";
-import { BaseName } from "../../../SectionMetas/baseSectionTypes";
-import { InfoS } from "../../../SectionMetas/Info";
-import { FeVarbInfo } from "../../../SectionMetas/relSections/rel/relVarbInfoTypes";
-import { ongoingVarbSpanEndings } from "../../../SectionMetas/relSections/rel/relVarbs/preOngoingVarbs";
-import { SectionName, sectionNameS } from "../../../SectionMetas/SectionName";
+import { InEntityVarbInfo } from "../../../SectionsMeta/baseSections/baseValues/entities";
+import { BaseName } from "../../../SectionsMeta/baseSectionTypes";
+import { InfoS } from "../../../SectionsMeta/Info";
+import { FeVarbInfo } from "../../../SectionsMeta/relSections/rel/relVarbInfoTypes";
+import { ongoingVarbSpanEndings } from "../../../SectionsMeta/relSections/rel/relVarbs/preOngoingVarbs";
+import { SectionName, sectionNameS } from "../../../SectionsMeta/SectionName";
 import { Obj } from "../../../utils/Obj";
 
 export type SectionOption = {

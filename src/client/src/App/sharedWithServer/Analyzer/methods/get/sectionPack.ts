@@ -1,6 +1,6 @@
-import { SectionFinder } from "../../../SectionMetas/baseSectionTypes";
-import { InfoS } from "../../../SectionMetas/Info";
-import { SectionName } from "../../../SectionMetas/SectionName";
+import { SectionFinder } from "../../../SectionsMeta/baseSectionTypes";
+import { InfoS } from "../../../SectionsMeta/Info";
+import { SectionName } from "../../../SectionsMeta/SectionName";
 import { Obj } from "../../../utils/Obj";
 import { GeneralSectionPack, SectionPackRaw } from "../../SectionPackRaw";
 import { OneRawSection, RawSections } from "../../SectionPackRaw/RawSection";

@@ -1,13 +1,13 @@
-import { SimpleSectionName } from "../../../../SectionMetas/baseSections";
+import { SimpleSectionName } from "../../../../SectionsMeta/baseSections";
 import {
   ChildIdArrsNext,
   OneChildIdArrs,
-} from "../../../../SectionMetas/relSectionTypes/ChildTypes";
+} from "../../../../SectionsMeta/relSectionTypes/ChildTypes";
 import {
-  FeParentInfo,
+  ParentFeInfo,
   ParentFinder,
-} from "../../../../SectionMetas/relSectionTypes/ParentTypes";
-import { SectionName } from "../../../../SectionMetas/SectionName";
+} from "../../../../SectionsMeta/relSectionTypes/ParentTypes";
+import { SectionName } from "../../../../SectionsMeta/SectionName";
 import { DbVarbs } from "../../../DbEntry";
 
 export type OneAddSectionProps<SN extends SimpleSectionName> = {
@@ -29,7 +29,7 @@ export type AddSectionPropsNext<
   SN extends SimpleSectionName = SimpleSectionName
 > = {
   sectionName: SN;
-  parentInfo: FeParentInfo<SN>;
+  parentInfo: ParentFeInfo<SN>;
   feId?: string;
   childFeIds?: ChildIdArrsNext<SN>;
   dbId?: string;

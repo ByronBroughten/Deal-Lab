@@ -1,5 +1,5 @@
-import { SavableSectionName } from "../sharedWithServer/SectionMetas/relNameArrs/storeArrs";
-import { SectionName } from "../sharedWithServer/SectionMetas/SectionName";
+import { SavableSectionName } from "../sharedWithServer/SectionsMeta/relNameArrs/storeArrs";
+import { SectionName } from "../sharedWithServer/SectionsMeta/SectionName";
 import { StateQuerierBase, StateQuerierBaseProps } from "./StateQuerierBase";
 import { useStateQuerierBaseProps } from "./StateQuerierBase/useBaseQuerierProps";
 import { SectionArrQuerier } from "./StateQueriersShared/Queriers";

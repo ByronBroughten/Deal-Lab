@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { FeInfo, InfoS } from "../../../../sharedWithServer/SectionMetas/Info";
+import { FeInfo, InfoS } from "../../../../sharedWithServer/SectionsMeta/Info";
 import theme from "../../../../theme/Theme";
 import BasicSectionInfo from "../../../appWide/GeneralSection/MainSection/MainSectionBody/BasicSectionInfo";
 import StandardLabel from "../../../general/StandardLabel";

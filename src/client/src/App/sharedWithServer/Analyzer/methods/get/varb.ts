@@ -1,6 +1,6 @@
 import Analyzer from "../../../Analyzer";
-import { switchNames } from "../../../SectionMetas/baseSections/switchNames";
-import { SectionFinder } from "../../../SectionMetas/baseSectionTypes";
+import { switchNames } from "../../../SectionsMeta/baseSections/switchNames";
+import { SectionFinder } from "../../../SectionsMeta/baseSectionTypes";
 import {
   FeNameInfo,
   FeVarbInfo,
@@ -11,16 +11,16 @@ import {
   RelVarbInfo,
   SpecificSectionInfo,
   SpecificVarbInfo,
-} from "../../../SectionMetas/relSections/rel/relVarbInfoTypes";
-import { SwitchVarbNames } from "../../../SectionMetas/relSections/rel/relVarbs/preSwitchVarbs";
-import { UpdateFnProps } from "../../../SectionMetas/relSections/rel/relVarbTypes";
-import { UpdateFnName } from "../../../SectionMetas/relSections/rel/valueMetaTypes";
-import { SectionName } from "../../../SectionMetas/SectionName";
+} from "../../../SectionsMeta/relSections/rel/relVarbInfoTypes";
+import { SwitchVarbNames } from "../../../SectionsMeta/relSections/rel/relVarbs/preSwitchVarbs";
+import { UpdateFnProps } from "../../../SectionsMeta/relSections/rel/relVarbTypes";
+import { UpdateFnName } from "../../../SectionsMeta/relSections/rel/valueMetaTypes";
+import { SectionName } from "../../../SectionsMeta/SectionName";
 import {
   isDefaultOutPack,
   isSwitchOutPack,
   OutUpdatePack,
-} from "../../../SectionMetas/VarbMeta";
+} from "../../../SectionsMeta/VarbMeta";
 import StateVarb, {
   Adornments,
   InVarbInfo,

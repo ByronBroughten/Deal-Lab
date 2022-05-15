@@ -3,7 +3,7 @@ import React from "react";
 import styled from "styled-components";
 import { useOnOutsideClickEffect } from "../../modules/customHooks/useOnOutsideClickRef";
 import useToggleView from "../../modules/customHooks/useToggleView";
-import { FeVarbInfo } from "../../sharedWithServer/SectionMetas/relSections/rel/relVarbInfoTypes";
+import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/relSections/rel/relVarbInfoTypes";
 import theme from "../../theme/Theme";
 import MaterialDraftEditor from "./MaterialDraftEditor";
 import createNumObjEditor from "./NumObjEditor/createNumObjEditor";

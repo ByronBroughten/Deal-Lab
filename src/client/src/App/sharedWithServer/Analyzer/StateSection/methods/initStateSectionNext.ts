@@ -1,11 +1,11 @@
 import { pick } from "lodash";
 import { sectionMetas } from "../../../SectionMetas";
-import { Id } from "../../../SectionMetas/baseSections/id";
+import { Id } from "../../../SectionsMeta/baseSections/id";
 import {
   ChildIdArrs,
   OneChildIdArrs,
-} from "../../../SectionMetas/relSectionTypes/ChildTypes";
-import { SectionName } from "../../../SectionMetas/SectionName";
+} from "../../../SectionsMeta/relSectionTypes/ChildTypes";
+import { SectionName } from "../../../SectionsMeta/SectionName";
 import { Obj } from "../../../utils/Obj";
 import { DbVarbs } from "../../DbEntry";
 import StateSection, {

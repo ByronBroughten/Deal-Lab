@@ -1,5 +1,5 @@
 import { useAnalyzerContext } from "../../../../../modules/usePropertyAnalyzer";
-import { SpecificVarbInfo } from "../../../../../sharedWithServer/SectionMetas/relSections/rel/relVarbInfoTypes";
+import { SpecificVarbInfo } from "../../../../../sharedWithServer/SectionsMeta/relSections/rel/relVarbInfoTypes";
 import { DealDetailRow } from "./DealDetailRow";
 
 type Props = { varbInfo: SpecificVarbInfo; level: number };

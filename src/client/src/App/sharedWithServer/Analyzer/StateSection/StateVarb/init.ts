@@ -1,7 +1,7 @@
 import { sectionMetas } from "../../../SectionMetas";
-import { VarbNames } from "../../../SectionMetas/relSections/rel/relVarbInfoTypes";
-import { DbValue } from "../../../SectionMetas/relSections/rel/valueMetaTypes";
-import { SectionName } from "../../../SectionMetas/SectionName";
+import { VarbNames } from "../../../SectionsMeta/relSections/rel/relVarbInfoTypes";
+import { DbValue } from "../../../SectionsMeta/relSections/rel/valueMetaTypes";
+import { SectionName } from "../../../SectionsMeta/SectionName";
 import StateVarb, { NextStateVarbCore } from "../StateVarb";
 import { OutEntity } from "./entities";
 import { StateValue } from "./stateValue";

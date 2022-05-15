@@ -1,6 +1,6 @@
 import Analyzer from "../../Analyzer";
 import { LoginUser } from "../../apiQueriesShared/login";
-import { SectionName } from "../../SectionMetas/SectionName";
+import { SectionName } from "../../SectionsMeta/SectionName";
 import { Obj } from "../../utils/Obj";
 import { SectionPackRaw } from "../SectionPackRaw";
 import { internal } from "./internal";

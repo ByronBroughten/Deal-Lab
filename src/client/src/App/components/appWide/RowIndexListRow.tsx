@@ -4,7 +4,7 @@ import {
   useRowIndexActions,
   UseRowIndexActionsProps,
 } from "../../modules/useRowIndexActions";
-import { InfoS } from "../../sharedWithServer/SectionMetas/Info";
+import { InfoS } from "../../sharedWithServer/SectionsMeta/Info";
 import TrashBtn from "../general/TrashBtn";
 import LoadIndexSectionBtn from "./IndexSectionList/LoadIndexSectionBtn";
 

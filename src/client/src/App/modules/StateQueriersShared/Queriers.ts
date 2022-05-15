@@ -3,8 +3,8 @@ import {
   SectionPackRaw,
   ServerSectionPack,
 } from "../../sharedWithServer/Analyzer/SectionPackRaw";
-import { SavableSectionName } from "../../sharedWithServer/SectionMetas/relNameArrs/storeArrs";
-import { SectionName } from "../../sharedWithServer/SectionMetas/SectionName";
+import { SavableSectionName } from "../../sharedWithServer/SectionsMeta/relNameArrs/storeArrs";
+import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
 import { ApiQueries, apiQueries } from "../useQueryActions/apiQueriesClient";
 
 class BaseQuerierNext {

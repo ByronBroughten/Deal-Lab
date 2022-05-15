@@ -4,21 +4,21 @@ import Analyzer from "../../../../Analyzer";
 import calculations, {
   CalcProp,
   isCalculationName,
-} from "../../../../SectionMetas/baseSections/baseValues/calculations";
+} from "../../../../SectionsMeta/baseSections/baseValues/calculations";
 import {
   DbNumObj,
   FailedVarbs,
   NumObj,
   NumObjNumber,
-} from "../../../../SectionMetas/baseSections/baseValues/NumObj";
+} from "../../../../SectionsMeta/baseSections/baseValues/NumObj";
 import {
   isNumObjUpdateFnName,
   NumObjUpdateFnName,
-} from "../../../../SectionMetas/baseSections/baseValues/updateFnNames";
+} from "../../../../SectionsMeta/baseSections/baseValues/updateFnNames";
 import {
   FeVarbInfo,
   SpecificVarbInfo,
-} from "../../../../SectionMetas/relSections/rel/relVarbInfoTypes";
+} from "../../../../SectionsMeta/relSections/rel/relVarbInfoTypes";
 import { isRationalNumber, replaceRange } from "../../../../utils/Str";
 import {
   arithmeticOperatorsArr,

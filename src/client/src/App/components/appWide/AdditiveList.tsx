@@ -3,13 +3,13 @@ import { IoEllipsisVertical } from "react-icons/io5";
 import styled, { css } from "styled-components";
 import useToggleView from "../../modules/customHooks/useToggleView";
 import { useAnalyzerContext } from "../../modules/usePropertyAnalyzer";
-import { listNameToStoreName } from "../../sharedWithServer/SectionMetas/baseSectionTypes";
-import { FeInfo, InfoS } from "../../sharedWithServer/SectionMetas/Info";
-import { userListItemTypes } from "../../sharedWithServer/SectionMetas/relSectionTypes/UserListTypes";
+import { listNameToStoreName } from "../../sharedWithServer/SectionsMeta/baseSectionTypes";
+import { FeInfo, InfoS } from "../../sharedWithServer/SectionsMeta/Info";
+import { userListItemTypes } from "../../sharedWithServer/SectionsMeta/relSectionTypes/UserListTypes";
 import {
   SectionName,
   sectionNameS,
-} from "../../sharedWithServer/SectionMetas/SectionName";
+} from "../../sharedWithServer/SectionsMeta/SectionName";
 import ccs from "../../theme/cssChunks";
 import theme, { ThemeSectionName } from "../../theme/Theme";
 import PlainIconBtn from "../general/PlainIconBtn";

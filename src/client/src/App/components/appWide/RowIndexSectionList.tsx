@@ -2,7 +2,7 @@ import { FaList } from "react-icons/fa";
 import styled, { css } from "styled-components";
 import useOnOutsideClickRef from "../../modules/customHooks/useOnOutsideClickRef";
 import useToggle from "../../modules/customHooks/useToggle";
-import { FeInfo } from "../../sharedWithServer/SectionMetas/Info";
+import { FeInfo } from "../../sharedWithServer/SectionsMeta/Info";
 import theme, {
   ThemeSectionName,
   themeSectionNameOrDefault,

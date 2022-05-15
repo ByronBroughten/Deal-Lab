@@ -5,10 +5,10 @@ import {
   ServerSectionPack,
   StoredSectionPackInfo,
 } from "../Analyzer/SectionPackRaw";
-import { SavableSectionName } from "../SectionMetas/relNameArrs/storeArrs";
-import { FeNameInfo } from "../SectionMetas/relSections/rel/relVarbInfoTypes";
-import { FeToDbStoreNameWithSameChildren } from "../SectionMetas/relSectionTypes/ChildTypes";
-import { SectionName } from "../SectionMetas/SectionName";
+import { SavableSectionName } from "../SectionsMeta/relNameArrs/storeArrs";
+import { FeNameInfo } from "../SectionsMeta/relSections/rel/relVarbInfoTypes";
+import { FeToDbStoreNameWithSameChildren } from "../SectionsMeta/relSectionTypes/ChildTypes";
+import { SectionName } from "../SectionsMeta/SectionName";
 
 export const makeReq = <B extends QueryObj>(body: B): MakeReq<B> => ({ body });
 type MakeReq<B extends QueryObj> = {

@@ -1,8 +1,8 @@
-import { FeInfo, InfoS } from "../sharedWithServer/SectionMetas/Info";
+import { FeInfo, InfoS } from "../sharedWithServer/SectionsMeta/Info";
 import {
   SectionFinderNext,
   SectionName,
-} from "../sharedWithServer/SectionMetas/SectionName";
+} from "../sharedWithServer/SectionsMeta/SectionName";
 import { StateQuerierBase, StateQuerierBaseProps } from "./StateQuerierBase";
 import { IndexSectionQuerier } from "./StateQueriersShared/IndexQuerier";
 import { useAnalyzerContext } from "./usePropertyAnalyzer";

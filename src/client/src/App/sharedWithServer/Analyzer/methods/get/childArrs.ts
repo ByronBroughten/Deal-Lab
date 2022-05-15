@@ -1,12 +1,12 @@
 import Analyzer from "../../../Analyzer";
-import { SectionFinder } from "../../../SectionMetas/baseSectionTypes";
+import { SectionFinder } from "../../../SectionsMeta/baseSectionTypes";
 import {
   ChildIdArrs,
   ChildName,
   DescendantIds,
   SelfAndDescendantIds,
-} from "../../../SectionMetas/relSectionTypes/ChildTypes";
-import { SectionName } from "../../../SectionMetas/SectionName";
+} from "../../../SectionsMeta/relSectionTypes/ChildTypes";
+import { SectionName } from "../../../SectionsMeta/SectionName";
 import { Obj } from "../../../utils/Obj";
 import StateSection from "../../StateSection";
 

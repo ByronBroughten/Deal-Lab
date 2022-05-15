@@ -1,10 +1,10 @@
 import Analyzer from "../../../Analyzer";
-import { FeInfo, InfoS } from "../../../SectionMetas/Info";
+import { FeInfo, InfoS } from "../../../SectionsMeta/Info";
 import {
   FeVarbInfo,
   SpecificSectionInfo,
-} from "../../../SectionMetas/relSections/rel/relVarbInfoTypes";
-import { ChildName } from "../../../SectionMetas/relSectionTypes/ChildTypes";
+} from "../../../SectionsMeta/relSections/rel/relVarbInfoTypes";
+import { ChildName } from "../../../SectionsMeta/relSectionTypes/ChildTypes";
 import { Arr } from "../../../utils/Arr";
 import { internal } from "../internal";
 

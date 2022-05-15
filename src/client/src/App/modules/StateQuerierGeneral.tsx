@@ -1,7 +1,7 @@
 import React from "react";
 import { config } from "../Constants";
 import { NextRes } from "../sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
-import { SavableSectionName } from "../sharedWithServer/SectionMetas/relNameArrs/storeArrs";
+import { SavableSectionName } from "../sharedWithServer/SectionsMeta/relNameArrs/storeArrs";
 import { applyMixins } from "../utils/classObjects";
 import { makeContextUseContext } from "../utils/react";
 import { auth } from "./services/authService";

@@ -1,4 +1,4 @@
-import { FeInfo, InfoS } from "../../../../sharedWithServer/SectionMetas/Info";
+import { FeInfo, InfoS } from "../../../../sharedWithServer/SectionsMeta/Info";
 import MaterialStringEditor from "../../../inputs/MaterialStringEditor";
 import NumObjEditor from "../../../inputs/NumObjEditor";
 

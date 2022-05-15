@@ -1,8 +1,8 @@
 import { isEqual } from "lodash";
 import Analyzer from "../../Analyzer";
-import { FeInfo, InfoS } from "../../SectionMetas/Info";
-import { FeNameInfo } from "../../SectionMetas/relSections/rel/relVarbInfoTypes";
-import { SectionName } from "../../SectionMetas/SectionName";
+import { FeInfo, InfoS } from "../../SectionsMeta/Info";
+import { FeNameInfo } from "../../SectionsMeta/relSections/rel/relVarbInfoTypes";
+import { SectionName } from "../../SectionsMeta/SectionName";
 import { Str } from "../../utils/Str";
 import StateSection from "../StateSection";
 

@@ -1,7 +1,7 @@
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import styled, { css } from "styled-components";
 import { useAnalyzerContext } from "../../modules/usePropertyAnalyzer";
-import { FeVarbInfo } from "../../sharedWithServer/SectionMetas/relSections/rel/relVarbInfoTypes";
+import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/relSections/rel/relVarbInfoTypes";
 import theme, { ThemeSectionName } from "../../theme/Theme";
 import PlainBtn from "../general/PlainBtn";
 

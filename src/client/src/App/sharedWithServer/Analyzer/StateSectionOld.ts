@@ -1,30 +1,30 @@
 import { cloneDeep, pick } from "lodash";
 import Analyzer from "../Analyzer";
 import { sectionMetas } from "../SectionMetas";
-import { SimpleSectionName } from "../SectionMetas/baseSections";
-import { InEntities } from "../SectionMetas/baseSections/baseValues/entities";
-import { FeInfo, InfoS } from "../SectionMetas/Info";
+import { SimpleSectionName } from "../SectionsMeta/baseSections";
+import { InEntities } from "../SectionsMeta/baseSections/baseValues/entities";
+import { FeInfo, InfoS } from "../SectionsMeta/Info";
 import {
   DbNameInfo,
   FeNameInfo,
-  FeVarbInfo,
-} from "../SectionMetas/relSections/rel/relVarbInfoTypes";
+  FeVarbInfo
+} from "../SectionsMeta/relSections/rel/relVarbInfoTypes";
 import {
   ChildIdArrs,
-  OneChildIdArrs,
-} from "../SectionMetas/relSectionTypes/ChildTypes";
-import { DefaultStoreName } from "../SectionMetas/relSectionTypes/DefaultStoreTypes";
+  OneChildIdArrs
+} from "../SectionsMeta/relSectionTypes/ChildTypes";
+import { DefaultStoreName } from "../SectionsMeta/relSectionTypes/DefaultStoreTypes";
 import {
-  FeParentInfo,
-  ParentName,
-} from "../SectionMetas/relSectionTypes/ParentTypes";
-import { SectionMeta } from "../SectionMetas/SectionMeta";
+  ParentFeInfo,
+  ParentName
+} from "../SectionsMeta/relSectionTypes/ParentTypes";
+import { SectionMeta } from "../SectionsMeta/SectionMeta";
 import {
   FeSectionNameType,
   SectionName,
-  sectionNameS,
-} from "../SectionMetas/SectionName";
-import { OutUpdatePack } from "../SectionMetas/VarbMeta";
+  sectionNameS
+} from "../SectionsMeta/SectionName";
+import { OutUpdatePack } from "../SectionsMeta/VarbMeta";
 import { DbVarbs } from "./DbEntry";
 import {
   addChildFeId,
@@ -33,14 +33,14 @@ import {
   childFeIds,
   childFeInfos,
   childIdx,
-  removeChildFeId,
+  removeChildFeId
 } from "./StateSection/methods/childIds";
 import { value, values, varbInfoValues } from "./StateSection/methods/value";
 import {
   replaceVarb,
   StateVarbs,
   varb,
-  VarbValues,
+  VarbValues
 } from "./StateSection/methods/varbs";
 import StateVarb from "./StateSection/StateVarb";
 import { OutEntity } from "./StateSection/StateVarb/entities";
@@ -84,7 +84,7 @@ export type StorableCore = {
 
 type ClientCore<S extends SectionName> = {
   feId: string;
-  parentInfo: FeParentInfo<S>;
+  parentInfo: ParentFeInfo<S>;
   sectionName: S;
 
   // childFeIdArrs are initialized as empty; ids added as children are added
@@ -153,20 +153,20 @@ export default class StateSectionOld<
   get sectionName(): S {
     return this.core.sectionName;
   }
-  get parentOrNoInfo(): FeParentInfo<S> {
+  get parentOrNoInfo(): ParentFeInfo<S> {
     return this.core.parentInfo;
   }
-  get parentInfo(): FeParentInfo<S> {
+  get parentInfo(): ParentFeInfo<S> {
     return this.core.parentInfo;
   }
-  get parentInfoSafe(): FeParentInfo<SectionName<"hasParent">> {
+  get parentInfoSafe(): ParentFeInfo<SectionName<"hasParent">> {
     const { parentInfo } = this.core;
     if (
       !sectionNameS.is(this.sectionName, "hasParent") ||
       parentInfo.sectionName === "no parent"
     )
       throw new Error("This section doesn't have a parent.");
-    return parentInfo as FeParentInfo<SectionName<"hasParent">>;
+    return parentInfo as ParentFeInfo<SectionName<"hasParent">>;
   }
   get defaultStoreName(): DefaultStoreName<
     Extract<S, SectionName<"hasDefaultStore">>

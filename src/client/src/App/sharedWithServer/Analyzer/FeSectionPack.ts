@@ -1,14 +1,14 @@
 import { extend, omit } from "lodash";
 import { sectionMetas } from "../SectionMetas";
-import { Id } from "../SectionMetas/baseSections/id";
-import { InfoS } from "../SectionMetas/Info";
+import { Id } from "../SectionsMeta/baseSections/id";
+import { InfoS } from "../SectionsMeta/Info";
 import {
   FeToDbNameWithSameChildren,
   SectionNameWithSameChildrenWide,
   SelfAndDescendantIds,
-} from "../SectionMetas/relSectionTypes/ChildTypes";
-import { FeParentInfo } from "../SectionMetas/relSectionTypes/ParentTypes";
-import { SectionName } from "../SectionMetas/SectionName";
+} from "../SectionsMeta/relSectionTypes/ChildTypes";
+import { ParentFeInfo } from "../SectionsMeta/relSectionTypes/ParentTypes";
+import { SectionName } from "../SectionsMeta/SectionName";
 import { Obj } from "../utils/Obj";
 import { FeSelfOrDescendantParentStub } from "./FeSectionPacks/FeParentStub";
 import {
@@ -24,7 +24,7 @@ import {
 } from "./SectionPackRaw/RawSection";
 import { RawSectionFinder } from "./SectionPackRaw/RawSectionFinder";
 export type SectionPackSupplements<SN extends SectionName> = {
-  parentInfo: FeParentInfo<SN>;
+  parentInfo: ParentFeInfo<SN>;
   feId?: string;
   idx?: number;
 };

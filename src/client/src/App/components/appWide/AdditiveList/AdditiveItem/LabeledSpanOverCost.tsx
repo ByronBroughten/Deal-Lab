@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useAnalyzerContext } from "../../../../modules/usePropertyAnalyzer";
-import { switchNames } from "../../../../sharedWithServer/SectionMetas/baseSections/switchNames";
-import { FeInfo, InfoS } from "../../../../sharedWithServer/SectionMetas/Info";
+import { switchNames } from "../../../../sharedWithServer/SectionsMeta/baseSections/switchNames";
+import { FeInfo, InfoS } from "../../../../sharedWithServer/SectionsMeta/Info";
 import theme from "../../../../theme/Theme";
 import MaterialStringEditor from "../../../inputs/MaterialStringEditor";
 import NumObjEditor from "../../../inputs/NumObjEditor";

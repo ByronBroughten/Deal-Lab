@@ -8,8 +8,8 @@ import StateVarb from "../../../sharedWithServer/Analyzer/StateSection/StateVarb
 import {
   EntityMapData,
   InEntities,
-} from "../../../sharedWithServer/SectionMetas/baseSections/baseValues/entities";
-import { NumObj } from "../../../sharedWithServer/SectionMetas/baseSections/baseValues/NumObj";
+} from "../../../sharedWithServer/SectionsMeta/baseSections/baseValues/entities";
+import { NumObj } from "../../../sharedWithServer/SectionsMeta/baseSections/baseValues/NumObj";
 import {
   DraftBlock,
   EntityMap,

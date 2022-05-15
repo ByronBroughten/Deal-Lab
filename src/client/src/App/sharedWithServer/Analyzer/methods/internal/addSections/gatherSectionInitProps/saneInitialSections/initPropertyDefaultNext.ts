@@ -1,6 +1,6 @@
-import { SectionPackBuilderNext } from "../../../../../../FeSections/HasSections/SectionPackBuilder";
+import { SectionPackBuilder } from "../../../../../../FeSections/HasSections/SectionPackBuilder";
 
-const main = new SectionPackBuilderNext();
+const main = new SectionPackBuilder();
 const property = main.addAndGetDescendant(
   ["analysis", "propertyGeneral", "property"] as const,
   {

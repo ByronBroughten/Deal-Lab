@@ -1,7 +1,7 @@
 import { AiOutlineSave } from "react-icons/ai";
 import { auth } from "../../../../../modules/services/authService";
 import { useRowIndexSourceActions } from "../../../../../modules/useRowIndexSourceActions";
-import { FeInfo } from "../../../../../sharedWithServer/SectionMetas/Info";
+import { FeInfo } from "../../../../../sharedWithServer/SectionsMeta/Info";
 import TooltipIconBtn from "../../../TooltipIconBtn";
 
 type Props = { feInfo: FeInfo<"hasRowIndex"> };

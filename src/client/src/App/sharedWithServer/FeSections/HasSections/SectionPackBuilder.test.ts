@@ -1,8 +1,8 @@
 import { pick } from "lodash";
 import { SectionPack } from "../../Analyzer/SectionPack";
-import { dbNumObj } from "../../SectionMetas/baseSections/baseValues/NumObj";
+import { dbNumObj } from "../../SectionsMeta/baseSections/baseValues/NumObj";
 import { Obj } from "../../utils/Obj";
-import { SectionPackBuilderNext } from "./SectionPackBuilder";
+import { SectionPackBuilder } from "./SectionPackBuilder";
 
 describe("SectionPackBuilder", () => {
   const dbVarbs = {
@@ -20,7 +20,7 @@ describe("SectionPackBuilder", () => {
   } as const;
 
   it("should make a sectionPack with the added values and children", () => {
-    const main = new SectionPackBuilderNext();
+    const main = new SectionPackBuilder();
 
     const property = main.addAndGetDescendant(
       ["analysis", "propertyGeneral", "property"] as const,

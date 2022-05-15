@@ -1,5 +1,5 @@
 import Analyzer from "../../../Analyzer";
-import { FeNameInfo } from "../../../SectionMetas/relSections/rel/relVarbInfoTypes";
+import { FeNameInfo } from "../../../SectionsMeta/relSections/rel/relVarbInfoTypes";
 import { StateSectionCore } from "../../StateSection";
 
 export function updateSection<I extends FeNameInfo>(

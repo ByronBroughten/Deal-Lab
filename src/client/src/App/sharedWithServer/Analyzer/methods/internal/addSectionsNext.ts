@@ -1,6 +1,6 @@
 import Analyzer from "../../../Analyzer";
-import { FeInfo, InfoS } from "../../../SectionMetas/Info";
-import { FeVarbInfo } from "../../../SectionMetas/relSections/rel/relVarbInfoTypes";
+import { FeInfo, InfoS } from "../../../SectionsMeta/Info";
+import { FeVarbInfo } from "../../../SectionsMeta/relSections/rel/relVarbInfoTypes";
 import { internal } from "../internal";
 import { AddSectionPropsNext } from "./addSections/addSectionsTypes";
 import { initOneSectionNext } from "./addSectionsNext/initOneSectionNext";

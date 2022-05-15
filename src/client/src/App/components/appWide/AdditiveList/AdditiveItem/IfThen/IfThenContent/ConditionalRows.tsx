@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { FeParentInfo } from "../../../../../../sharedWithServer/SectionMetas/relSectionTypes/ParentTypes";
+import { ParentFeInfo } from "../../../../../../sharedWithServer/SectionsMeta/relSectionTypes/ParentTypes";
 import theme from "../../../../../../theme/Theme";
 import ControlContent from "./ConditionalRows/ControlContent";
 import LogicContent from "./ConditionalRows/LogicContent";
@@ -9,7 +9,7 @@ import XBtnContent from "./ConditionalRows/XBtnContent";
 export const conditionalRowSectionName = "conditionalRow";
 type Props = {
   conditionalRowIds: string[];
-  parentInfo: FeParentInfo<typeof conditionalRowSectionName>;
+  parentInfo: ParentFeInfo<typeof conditionalRowSectionName>;
 };
 export default function ConditionalRows({
   conditionalRowIds,

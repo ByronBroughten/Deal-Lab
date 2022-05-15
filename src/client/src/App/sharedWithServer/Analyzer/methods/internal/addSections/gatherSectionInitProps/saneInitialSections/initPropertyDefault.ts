@@ -1,6 +1,6 @@
-import { dbNumObj } from "../../../../../../SectionMetas/baseSections/baseValues/NumObj";
-import { Id } from "../../../../../../SectionMetas/baseSections/id";
-import { InfoS } from "../../../../../../SectionMetas/Info";
+import { dbNumObj } from "../../../../../../SectionsMeta/baseSections/baseValues/NumObj";
+import { Id } from "../../../../../../SectionsMeta/baseSections/id";
+import { InfoS } from "../../../../../../SectionsMeta/Info";
 import { Obj } from "../../../../../../utils/Obj";
 import { DbEnt, DbEntry } from "../../../../../DbEntry";
 

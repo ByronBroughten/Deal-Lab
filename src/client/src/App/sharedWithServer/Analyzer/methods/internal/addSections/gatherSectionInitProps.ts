@@ -1,14 +1,14 @@
 import Analyzer from "../../../../Analyzer";
 import { sectionMetas } from "../../../../SectionMetas";
-import { InfoS } from "../../../../SectionMetas/Info";
+import { InfoS } from "../../../../SectionsMeta/Info";
 import {
-  FeParentInfo,
+  ParentFeInfo,
   ParentFinder,
-} from "../../../../SectionMetas/relSectionTypes/ParentTypes";
+} from "../../../../SectionsMeta/relSectionTypes/ParentTypes";
 import {
   SectionName,
   sectionNameS,
-} from "../../../../SectionMetas/SectionName";
+} from "../../../../SectionsMeta/SectionName";
 import { Arr } from "../../../../utils/Arr";
 import { DbEntry, DbSection } from "../../../DbEntry";
 import { VarbValues } from "../../../StateSection/methods/varbs";
@@ -66,7 +66,7 @@ function gatherInitPropsFromDbEntry<SN extends SectionName>(
         const dbEntry: DbEntry = { dbId, dbSections };
         gatherSectionInitProps(analyzer, {
           sectionName: childName,
-          parentFinder: feInfo as FeParentInfo<typeof childName>,
+          parentFinder: feInfo as ParentFeInfo<typeof childName>,
           propArr,
           dbEntry,
           initFromDefault,
@@ -107,7 +107,7 @@ function gatherInitPropsByDefault<S extends SectionName>(
     } else {
       gatherSectionInitProps(analyzer, {
         sectionName: childName,
-        parentFinder: feInfo as FeParentInfo<typeof childName>,
+        parentFinder: feInfo as ParentFeInfo<typeof childName>,
         propArr,
         initFromDefault,
       });

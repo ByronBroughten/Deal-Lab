@@ -1,11 +1,11 @@
 import { cloneDeep } from "lodash";
-import { FeInfo, InfoS } from "../../../SectionMetas/Info";
+import { FeInfo, InfoS } from "../../../SectionsMeta/Info";
 import {
   ChildFeInfo,
   ChildIdArrs,
   ChildName,
-} from "../../../SectionMetas/relSectionTypes/ChildTypes";
-import { SectionName } from "../../../SectionMetas/SectionName";
+} from "../../../SectionsMeta/relSectionTypes/ChildTypes";
+import { SectionName } from "../../../SectionsMeta/SectionName";
 import { Arr } from "../../../utils/Arr";
 import { Obj } from "../../../utils/Obj";
 import StateSection from "../../StateSection";

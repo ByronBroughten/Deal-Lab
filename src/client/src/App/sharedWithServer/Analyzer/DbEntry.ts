@@ -1,19 +1,19 @@
 import { z } from "zod";
-import { valueMeta } from "../SectionMetas/baseSections/baseValues";
+import { valueMeta } from "../SectionsMeta/baseSections/baseValues";
 import {
   InEntityInfo,
   InEntityVarbInfo,
-} from "../SectionMetas/baseSections/baseValues/entities";
-import { Id } from "../SectionMetas/baseSections/id";
-import { DbStoreName } from "../SectionMetas/baseSectionTypes/dbStoreNames";
-import { DbInfo } from "../SectionMetas/Info";
+} from "../SectionsMeta/baseSections/baseValues/entities";
+import { Id } from "../SectionsMeta/baseSections/id";
+import { DbStoreName } from "../SectionsMeta/baseSectionTypes/dbStoreNames";
+import { DbInfo } from "../SectionsMeta/Info";
 import {
   DbNameInfo,
   RelInfoStatic,
-} from "../SectionMetas/relSections/rel/relVarbInfoTypes";
-import { DbValue } from "../SectionMetas/relSections/rel/valueMetaTypes";
-import { ParentName } from "../SectionMetas/relSectionTypes/ParentTypes";
-import { AlwaysOneVarbFinder, SectionName } from "../SectionMetas/SectionName";
+} from "../SectionsMeta/relSections/rel/relVarbInfoTypes";
+import { DbValue } from "../SectionsMeta/relSections/rel/valueMetaTypes";
+import { ParentName } from "../SectionsMeta/relSectionTypes/ParentTypes";
+import { AlwaysOneVarbFinder, SectionName } from "../SectionsMeta/SectionName";
 import { zNanoId, zString } from "../utils/zod";
 
 export type DbVarbs = {

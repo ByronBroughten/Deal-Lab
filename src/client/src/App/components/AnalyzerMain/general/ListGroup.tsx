@@ -1,12 +1,12 @@
 import { MdOutlinePlaylistAdd } from "react-icons/md";
 import styled, { css } from "styled-components";
 import { useAnalyzerContext } from "../../../modules/usePropertyAnalyzer";
-import { listNameToStoreName } from "../../../sharedWithServer/SectionMetas/baseSectionTypes";
-import { InfoS } from "../../../sharedWithServer/SectionMetas/Info";
-import { ListSectionName } from "../../../sharedWithServer/SectionMetas/relNameArrs";
-import { FeParentInfo } from "../../../sharedWithServer/SectionMetas/relSectionTypes/ParentTypes";
-import { userListItemTypes } from "../../../sharedWithServer/SectionMetas/relSectionTypes/UserListTypes";
-import { sectionNameS } from "../../../sharedWithServer/SectionMetas/SectionName";
+import { listNameToStoreName } from "../../../sharedWithServer/SectionsMeta/baseSectionTypes";
+import { InfoS } from "../../../sharedWithServer/SectionsMeta/Info";
+import { ListSectionName } from "../../../sharedWithServer/SectionsMeta/relNameArrs";
+import { ParentFeInfo } from "../../../sharedWithServer/SectionsMeta/relSectionTypes/ParentTypes";
+import { userListItemTypes } from "../../../sharedWithServer/SectionsMeta/relSectionTypes/UserListTypes";
+import { sectionNameS } from "../../../sharedWithServer/SectionsMeta/SectionName";
 import ccs from "../../../theme/cssChunks";
 import theme, { themeSectionNameOrDefault } from "../../../theme/Theme";
 import AdditiveList from "../../appWide/AdditiveList";
@@ -15,7 +15,7 @@ import PlusBtn from "../../appWide/PlusBtn";
 
 type Props<S extends ListSectionName = ListSectionName> = {
   className?: string;
-  feInfo: FeParentInfo<S>;
+  feInfo: ParentFeInfo<S>;
   listSectionName: S;
   totalVarbName: string;
   titleText: string;

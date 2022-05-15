@@ -4,7 +4,7 @@ import React from "react";
 import styled, { css } from "styled-components";
 import { getEntityStrategy } from "../../../modules/draftjs/getEntityStrategies";
 import { useAnalyzerContext } from "../../../modules/usePropertyAnalyzer";
-import { EntityMapData } from "../../../sharedWithServer/SectionMetas/baseSections/baseValues/entities";
+import { EntityMapData } from "../../../sharedWithServer/SectionsMeta/baseSections/baseValues/entities";
 import theme from "../../../theme/Theme";
 import BasicDraftSpan from "./BasicDraftSpan";
 

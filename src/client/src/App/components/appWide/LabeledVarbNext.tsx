@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useAnalyzerContext } from "../../modules/usePropertyAnalyzer";
-import { FeVarbInfo } from "../../sharedWithServer/SectionMetas/relSections/rel/relVarbInfoTypes";
+import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/relSections/rel/relVarbInfoTypes";
 import theme from "../../theme/Theme";
 
 type UseLabeledOutputProps = {

@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components/macro";
-import { FeParentInfo } from "../../../../../../../sharedWithServer/SectionMetas/relSectionTypes/ParentTypes";
+import { ParentFeInfo } from "../../../../../../../sharedWithServer/SectionsMeta/relSectionTypes/ParentTypes";
 import theme from "../../../../../../../theme/Theme";
 import { conditionalRowSectionName } from "../ConditionalRows";
 import XBtnRow from "./XBtnContent/XBtnRow";
@@ -13,7 +13,7 @@ export default function XBtnContent({
 }: {
   [key: string]: any;
   conditionalRowIds: string[];
-  parentInfo: FeParentInfo<typeof conditionalRowSectionName>;
+  parentInfo: ParentFeInfo<typeof conditionalRowSectionName>;
   className: string;
 }) {
   return (

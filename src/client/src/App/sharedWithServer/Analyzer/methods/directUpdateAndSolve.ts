@@ -1,8 +1,8 @@
 import Analyzer from "../../Analyzer";
-import { InEntityVarbInfo } from "../../SectionMetas/baseSections/baseValues/entities";
-import { SectionFinder } from "../../SectionMetas/baseSectionTypes";
-import { InfoS } from "../../SectionMetas/Info";
-import { FeVarbInfo } from "../../SectionMetas/relSections/rel/relVarbInfoTypes";
+import { InEntityVarbInfo } from "../../SectionsMeta/baseSections/baseValues/entities";
+import { SectionFinder } from "../../SectionsMeta/baseSectionTypes";
+import { InfoS } from "../../SectionsMeta/Info";
+import { FeVarbInfo } from "../../SectionsMeta/relSections/rel/relVarbInfoTypes";
 import { StateValue } from "../StateSection/StateVarb/stateValue";
 import { internal } from "./internal";
 

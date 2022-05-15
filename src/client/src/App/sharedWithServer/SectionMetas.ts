@@ -3,29 +3,29 @@ import {
   ContextName,
   sectionContext,
   SimpleSectionName,
-} from "./SectionMetas/baseSections";
-import { RelativeIds } from "./SectionMetas/baseSections/id";
+} from "./SectionsMeta/baseSections";
+import { RelativeIds } from "./SectionsMeta/baseSections/id";
 import {
   OutRelVarbInfo,
   SimpleVarbNames,
   VarbNames,
-} from "./SectionMetas/relSections/rel/relVarbInfoTypes";
+} from "./SectionsMeta/relSections/rel/relVarbInfoTypes";
 import {
   DescendantName,
   SectionNameWithSameChildren,
   SelfOrDescendantName,
-} from "./SectionMetas/relSectionTypes/ChildTypes";
-import { ParentName } from "./SectionMetas/relSectionTypes/ParentTypes";
-import { SectionMeta, SectionMetaCore } from "./SectionMetas/SectionMeta";
-import { SectionName, sectionNameS } from "./SectionMetas/SectionName";
+} from "./SectionsMeta/relSectionTypes/ChildTypes";
+import { ParentName } from "./SectionsMeta/relSectionTypes/ParentTypes";
+import { SectionMeta, SectionMetaCore } from "./SectionsMeta/SectionMeta";
+import { SectionName, sectionNameS } from "./SectionsMeta/SectionName";
 import {
   InUpdatePack,
   isDefaultInPack,
   isSwitchInPack,
   OutUpdatePack,
   VarbMeta,
-} from "./SectionMetas/VarbMeta";
-import { VarbMetas, VarbMetasRaw } from "./SectionMetas/VarbMetas";
+} from "./SectionsMeta/VarbMeta";
+import { VarbMetas, VarbMetasRaw } from "./SectionsMeta/VarbMetas";
 import { Obj } from "./utils/Obj";
 
 type SectionMetasCore = {

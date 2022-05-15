@@ -1,14 +1,14 @@
 import {
   OneChildIdArrs,
   SelfOrDescendantName,
-} from "../../SectionMetas/relSectionTypes/ChildTypes";
-import { FeParentInfo } from "../../SectionMetas/relSectionTypes/ParentTypes";
-import { SectionName } from "../../SectionMetas/SectionName";
+} from "../../SectionsMeta/relSectionTypes/ChildTypes";
+import { ParentFeInfo } from "../../SectionsMeta/relSectionTypes/ParentTypes";
+import { SectionName } from "../../SectionsMeta/SectionName";
 import { DbVarbs } from "../SectionPackRaw/RawSection";
 import { OneRawSectionFinder } from "../SectionPackRaw/RawSectionFinder";
 export type OneFeSectionNode<SN extends SectionName> = {
   sectionName: SN;
-  parentInfo: FeParentInfo<SN>;
+  parentInfo: ParentFeInfo<SN>;
   childFeIds: OneChildIdArrs<SN, "fe">;
   feId: string;
   dbId: string;
@@ -23,7 +23,7 @@ export type FeSelfOrDescendantNode<SN extends SectionName> =
 export type OneSectionNodeMaker<SN extends SectionName> =
   OneRawSectionFinder<SN> & {
     feId: string;
-    parentInfo: FeParentInfo<SN>;
+    parentInfo: ParentFeInfo<SN>;
   };
 type SectionNodeMakers<SN extends SectionName> = {
   [S in SelfOrDescendantName<SN, "fe">]: OneSectionNodeMaker<S>;

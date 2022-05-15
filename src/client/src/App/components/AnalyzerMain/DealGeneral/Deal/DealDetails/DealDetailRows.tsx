@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useAnalyzerContext } from "../../../../../modules/usePropertyAnalyzer";
 import { InVarbInfo } from "../../../../../sharedWithServer/Analyzer/StateSection/StateVarb";
-import { SpecificVarbInfo } from "../../../../../sharedWithServer/SectionMetas/relSections/rel/relVarbInfoTypes";
+import { SpecificVarbInfo } from "../../../../../sharedWithServer/SectionsMeta/relSections/rel/relVarbInfoTypes";
 import { DetailRowVarbFound } from "./DetailRowVarbFound";
 import { DetailRowVarbNotFound } from "./DetailRowVarbNotFound";
 

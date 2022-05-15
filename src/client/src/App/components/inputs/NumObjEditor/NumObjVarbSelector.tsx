@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { insertEntity } from "../../../modules/draftjs/insert";
 import Analyzer from "../../../sharedWithServer/Analyzer";
 import { VariableOption } from "../../../sharedWithServer/Analyzer/methods/get/variableOptions";
-import { EntityMapData } from "../../../sharedWithServer/SectionMetas/baseSections/baseValues/entities";
+import { EntityMapData } from "../../../sharedWithServer/SectionsMeta/baseSections/baseValues/entities";
 import theme from "../../../theme/Theme";
 import VarbAutoComplete, { PopperRef } from "../VarbAutoComplete";
 

@@ -4,7 +4,7 @@ import { useAnalyzerContext } from "../../modules/usePropertyAnalyzer";
 import StateVarb, {
   StateValueAnyKey,
 } from "../../sharedWithServer/Analyzer/StateSection/StateVarb";
-import { FeVarbInfo } from "../../sharedWithServer/SectionMetas/relSections/rel/relVarbInfoTypes";
+import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/relSections/rel/relVarbInfoTypes";
 import { DraftBlock } from "../../utils/DraftS";
 import useOnChange from "./useOnChange";
 

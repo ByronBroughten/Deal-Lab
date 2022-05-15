@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { useAnalyzerContext } from "../../../modules/usePropertyAnalyzer";
-import { InfoS } from "../../../sharedWithServer/SectionMetas/Info";
-import { SectionName } from "../../../sharedWithServer/SectionMetas/SectionName";
+import { InfoS } from "../../../sharedWithServer/SectionsMeta/Info";
+import { SectionName } from "../../../sharedWithServer/SectionsMeta/SectionName";
 import theme from "../../../theme/Theme";
 import NextBtn from "../NextBtn";
 import XBtn from "../Xbtn";

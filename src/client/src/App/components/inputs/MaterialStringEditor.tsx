@@ -1,7 +1,7 @@
 import { ContentState, EditorState } from "draft-js";
 import React from "react";
 import StateVarb from "../../sharedWithServer/Analyzer/StateSection/StateVarb";
-import { FeVarbInfo } from "../../sharedWithServer/SectionMetas/relSections/rel/relVarbInfoTypes";
+import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/relSections/rel/relVarbInfoTypes";
 import MaterialDraftEditor from "./MaterialDraftEditor";
 import useDraftInput from "./useDraftInput";
 

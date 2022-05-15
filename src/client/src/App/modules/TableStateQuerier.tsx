@@ -1,10 +1,10 @@
 import { VariableOption } from "../sharedWithServer/Analyzer/methods/get/variableOptions";
-import { InfoS } from "../sharedWithServer/SectionMetas/Info";
-import { SavableSectionName } from "../sharedWithServer/SectionMetas/relNameArrs/storeArrs";
+import { InfoS } from "../sharedWithServer/SectionsMeta/Info";
+import { SavableSectionName } from "../sharedWithServer/SectionsMeta/relNameArrs/storeArrs";
 import {
   SectionFinderNext,
   SectionName,
-} from "../sharedWithServer/SectionMetas/SectionName";
+} from "../sharedWithServer/SectionsMeta/SectionName";
 import { StateQuerierBase, StateQuerierBaseProps } from "./StateQuerierBase";
 import { SectionArrQuerier } from "./StateQueriersShared/Queriers";
 import { useAnalyzerContext } from "./usePropertyAnalyzer";

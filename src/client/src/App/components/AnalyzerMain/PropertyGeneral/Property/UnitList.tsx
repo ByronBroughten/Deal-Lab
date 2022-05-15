@@ -2,7 +2,7 @@ import { rem } from "polished";
 import React from "react";
 import styled, { css } from "styled-components";
 import { useAnalyzerContext } from "../../../../modules/usePropertyAnalyzer";
-import { FeParentInfo } from "../../../../sharedWithServer/SectionMetas/relSectionTypes/ParentTypes";
+import { ParentFeInfo } from "../../../../sharedWithServer/SectionsMeta/relSectionTypes/ParentTypes";
 import { Arr } from "../../../../sharedWithServer/utils/Arr";
 import ccs from "../../../../theme/cssChunks";
 import theme from "../../../../theme/Theme";
@@ -11,7 +11,7 @@ import PlusBtn from "../../../appWide/PlusBtn";
 import { useOpenWidth } from "../../../appWide/SectionTitleRow";
 import Unit from "./UnitList/UnitItem";
 
-type Props = { feInfo: FeParentInfo<"unit">; className?: string };
+type Props = { feInfo: ParentFeInfo<"unit">; className?: string };
 export default function UnitList({ feInfo, className }: Props) {
   const { analyzer, handleAddSection } = useAnalyzerContext();
   const totalDisplay = analyzer.switchedOngoingDisplayVarb(

@@ -1,6 +1,6 @@
 import React from "react";
 import { useAnalyzerContext } from "../../../../../../../../modules/usePropertyAnalyzer";
-import { FeParentInfo } from "../../../../../../../../sharedWithServer/SectionMetas/relSectionTypes/ParentTypes";
+import { ParentFeInfo } from "../../../../../../../../sharedWithServer/SectionsMeta/relSectionTypes/ParentTypes";
 import PlusBtn from "../../../../../../PlusBtn";
 import XBtn from "../../../../../../Xbtn";
 import { conditionalRowSectionName } from "../../ConditionalRows";
@@ -12,7 +12,7 @@ export default function XBtnRow({
 }: {
   id: string;
   idx: number;
-  parentInfo: FeParentInfo<typeof conditionalRowSectionName>;
+  parentInfo: ParentFeInfo<typeof conditionalRowSectionName>;
 }) {
   const feInfo = {
     sectionName: conditionalRowSectionName,

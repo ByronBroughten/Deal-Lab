@@ -4,7 +4,7 @@ import {
   AnalyzerContext,
   useAnalyzerContext,
 } from "../modules/usePropertyAnalyzer";
-import { SectionName } from "../sharedWithServer/SectionMetas/SectionName";
+import { SectionName } from "../sharedWithServer/SectionsMeta/SectionName";
 import theme from "../theme/Theme";
 import AdditiveList from "./appWide/AdditiveList";
 import MainSection from "./appWide/GeneralSection";

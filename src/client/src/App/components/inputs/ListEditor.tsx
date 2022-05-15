@@ -12,7 +12,7 @@ import useOnOutsideClickRef from "../../modules/customHooks/useOnOutsideClickRef
 import { getEntityStrategy } from "../../modules/draftjs/getEntityStrategies";
 import { insertEntity } from "../../modules/draftjs/insert";
 import StateVarb from "../../sharedWithServer/Analyzer/StateSection/StateVarb";
-import { FeVarbInfo } from "../../sharedWithServer/SectionMetas/relSections/rel/relVarbInfoTypes";
+import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/relSections/rel/relVarbInfoTypes";
 import ErrorMessage from "../appWide/ErrorMessage";
 import ItemOrCommaSpan, {
   CommaSpan,

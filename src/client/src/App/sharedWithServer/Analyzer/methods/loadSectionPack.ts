@@ -1,5 +1,5 @@
 import Analyzer from "../../Analyzer";
-import { SectionName } from "../../SectionMetas/SectionName";
+import { SectionName } from "../../SectionsMeta/SectionName";
 import { FeSectionPack, SectionPackSupplements } from "../FeSectionPack";
 import { FeSelfOrDescendantNode } from "../FeSectionPacks/FeSectionNode";
 import { SectionPackRaw } from "../SectionPackRaw";

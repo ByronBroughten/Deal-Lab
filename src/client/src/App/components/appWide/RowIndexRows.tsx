@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { useAnalyzerContext } from "../../modules/usePropertyAnalyzer";
-import { FeInfo, InfoS } from "../../sharedWithServer/SectionMetas/Info";
-import { SectionName } from "../../sharedWithServer/SectionMetas/SectionName";
+import { FeInfo, InfoS } from "../../sharedWithServer/SectionsMeta/Info";
+import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
 import ccs from "../../theme/cssChunks";
 import theme, {
   ThemeSectionName,

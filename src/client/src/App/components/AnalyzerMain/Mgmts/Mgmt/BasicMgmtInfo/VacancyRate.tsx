@@ -2,7 +2,7 @@ import { useAnalyzerContext } from "../../../../../modules/usePropertyAnalyzer";
 import {
   FeInfo,
   InfoS,
-} from "../../../../../sharedWithServer/SectionMetas/Info";
+} from "../../../../../sharedWithServer/SectionsMeta/Info";
 import NumObjEditor from "../../../../inputs/NumObjEditor";
 
 type Props = { feInfo: FeInfo };

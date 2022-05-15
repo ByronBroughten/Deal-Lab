@@ -4,19 +4,17 @@ import {
   OneRawSection,
   RawSections,
 } from "../../Analyzer/SectionPackRaw/RawSection";
-import { FeInfo, InfoS } from "../../SectionMetas/Info";
+import {
+  FullSectionBase,
+  FullSectionBaseI,
+} from "../../SectionFocal/FocalSectionBase";
+import { FeInfo, InfoS } from "../../SectionsMeta/Info";
 import {
   SectionName,
   sectionNameS,
   SectionNameType,
-} from "../../SectionMetas/SectionName";
+} from "../../SectionsMeta/SectionName";
 import { Obj } from "../../utils/Obj";
-import {
-  ApplySectionInfoGetters,
-  SectionInfoGettersI,
-} from "../HasSectionInfoProps";
-import { HasFullSectionProps } from "./HasFullSectionProps";
-import { FeSections } from "./Sections";
 
 type FeSectionPackArrs<ST extends SectionNameType> = FeSectionPackArrsBySN<
   SectionName<ST>
@@ -25,12 +23,8 @@ type FeSectionPackArrsBySN<SN extends SectionName> = {
   [S in SN]: SectionPackRaw<S>[];
 };
 
-interface SectionPackMakerMixins<SN extends SectionName>
-  extends HasFullSectionProps<SN>,
-    SectionInfoGettersI<SN> {}
-
 export interface SectionPackMakerI<SN extends SectionName>
-  extends SectionPackMakerMixins<SN> {
+  extends FullSectionBaseI<SN> {
   get selfSectionPack(): SectionPackRaw<SN>;
 
   makeSectionPackArrs<ST extends SectionNameType>(
@@ -46,7 +40,7 @@ export interface SectionPackMakerI<SN extends SectionName>
 
 export function ApplySectionPackMakers<
   SN extends SectionName,
-  TBase extends GConstructor<SectionPackMakerMixins<SN>>
+  TBase extends GConstructor<FullSectionBaseI<SN>>
 >(Base: TBase): GConstructor<SectionPackMakerI<SN>> & TBase {
   return class SectionPackMakerNext
     extends Base
@@ -54,9 +48,6 @@ export function ApplySectionPackMakers<
   {
     get selfSectionPack(): SectionPackRaw<SN> {
       return this.makeSectionPack(this.feInfo);
-    }
-    private get sections(): FeSections {
-      return this.shared.sections;
     }
     makeSectionPackArrs<ST extends SectionNameType>(
       snType: ST
@@ -119,5 +110,4 @@ export function ApplySectionPackMakers<
   };
 }
 
-const HasInfoGetters = ApplySectionInfoGetters(HasFullSectionProps);
-export const SectionPackMakerNext = ApplySectionPackMakers(HasInfoGetters);
+export const SectionPackMakerNext = ApplySectionPackMakers(FullSectionBase);

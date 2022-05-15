@@ -1,6 +1,6 @@
 import Analyzer from "../../Analyzer";
-import { dbNumObj } from "../../SectionMetas/baseSections/baseValues/NumObj";
-import { FeInfo } from "../../SectionMetas/Info";
+import { dbNumObj } from "../../SectionsMeta/baseSections/baseValues/NumObj";
+import { FeInfo } from "../../SectionsMeta/Info";
 import { DbEntry } from "../DbEntry";
 
 function makePropertyEntry(

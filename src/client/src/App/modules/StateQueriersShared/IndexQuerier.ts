@@ -4,8 +4,8 @@ import {
   SectionPackRaw,
   ServerSectionPack,
 } from "../../sharedWithServer/Analyzer/SectionPackRaw";
-import { FeInfo, InfoS } from "../../sharedWithServer/SectionMetas/Info";
-import { SectionName } from "../../sharedWithServer/SectionMetas/SectionName";
+import { FeInfo, InfoS } from "../../sharedWithServer/SectionsMeta/Info";
+import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
 import { SectionQuerier } from "./Queriers";
 
 interface IndexSectionQuerierProps {

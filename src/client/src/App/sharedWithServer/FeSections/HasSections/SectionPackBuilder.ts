@@ -1,10 +1,11 @@
 import { GConstructor } from "../../../utils/classObjects";
-import { FeSectionInfo } from "../../SectionMetas/Info";
+import { FullSectionConstructorProps } from "../../SectionFocal/HasFocalSectionProps";
+import { FeInfoByType } from "../../SectionsMeta/Info";
 import {
   ChildName,
   DescendantName,
-} from "../../SectionMetas/relSectionTypes/ChildTypes";
-import { SectionName } from "../../SectionMetas/SectionName";
+} from "../../SectionsMeta/relSectionTypes/ChildTypes";
+import { SectionName } from "../../SectionsMeta/SectionName";
 import { Arr } from "../../utils/Arr";
 import {
   AddChildOptions,
@@ -13,9 +14,7 @@ import {
   DescendantAdderNext,
   DescendantList,
 } from "./DescendantAdder";
-import { FullSectionsContructorProps } from "./HasFullSectionProps";
 import { ApplySectionPackMakers, SectionPackMakerI } from "./SectionPackMaker";
-import { FeSections } from "./Sections";
 
 interface SectionPackBuilderI<SN extends SectionName>
   extends SectionPackBuilderMixins<SN> {
@@ -34,13 +33,10 @@ function MakeSectionPackBuilder<
   SN extends SectionName,
   TBase extends GConstructor<SectionPackBuilderMixins<SN>>
 >(Base: TBase): GConstructor<SectionPackBuilderI<SN>> & TBase {
-  return class SectionPackBuilderNext
+  return class SectionPackBuilder
     extends Base
     implements SectionPackBuilderI<SN>
   {
-    private get sections(): FeSections {
-      return this.shared.sections;
-    }
     addAndGetDescendant<DN extends DescendantName<SN>>(
       descendantList: DescendantList<SN, DN>,
       options: AddDescendantOptions<SN, DN>
@@ -63,13 +59,13 @@ function MakeSectionPackBuilder<
       return this.newBuilder(info);
     }
     private newBuilder<S extends SectionName>(
-      info: FeSectionInfo<S>
+      info: FeInfoByType<S>
     ): SectionPackBuilderI<S> {
       // if I want the sections to transfer, I must pass the core, not the sections
-      return new SectionPackBuilderNext({
+      return new SectionPackBuilder({
         shared: this.shared,
         ...info,
-      } as FullSectionsContructorProps<S>) as any as SectionPackBuilderI<S>;
+      } as FullSectionConstructorProps<S>) as any as SectionPackBuilderI<S>;
     }
   };
 }
@@ -79,5 +75,4 @@ interface SectionPackBuilderMixins<SN extends SectionName>
     SectionPackMakerI<SN> {}
 
 const HasSectionPackMaker = ApplySectionPackMakers(DescendantAdderNext);
-export const SectionPackBuilderNext =
-  MakeSectionPackBuilder(HasSectionPackMaker);
+export const SectionPackBuilder = MakeSectionPackBuilder(HasSectionPackMaker);

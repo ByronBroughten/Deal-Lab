@@ -3,7 +3,7 @@ import {
   SectionName,
   sectionNameS,
   SectionNameType,
-} from "../../../SectionMetas/SectionName";
+} from "../../../SectionsMeta/SectionName";
 import { Obj } from "../../../utils/Obj";
 import { FeSectionPack } from "../../FeSectionPack";
 import { SectionPackRaw } from "../../SectionPackRaw";

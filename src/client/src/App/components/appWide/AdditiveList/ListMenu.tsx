@@ -4,7 +4,7 @@ import { MdDelete } from "react-icons/md";
 import styled, { css } from "styled-components";
 import useToggleView from "../../../modules/customHooks/useToggleView";
 import { useAnalyzerContext } from "../../../modules/usePropertyAnalyzer";
-import { FeInfo } from "../../../sharedWithServer/SectionMetas/Info";
+import { FeInfo } from "../../../sharedWithServer/SectionsMeta/Info";
 import theme, { ThemeSectionName } from "../../../theme/Theme";
 import { StandardProps } from "../../general/StandardProps";
 import XBtn from "../Xbtn";

@@ -1,9 +1,9 @@
-import { FeNameInfo } from "../../SectionMetas/relSections/rel/relVarbInfoTypes";
+import { FeNameInfo } from "../../SectionsMeta/relSections/rel/relVarbInfoTypes";
 import {
   SelfAndDescendantIds,
-  SelfOrDescendantName
-} from "../../SectionMetas/relSectionTypes/ChildTypes";
-import { SectionName } from "../../SectionMetas/SectionName";
+  SelfOrDescendantName,
+} from "../../SectionsMeta/relSectionTypes/ChildTypes";
+import { SectionName } from "../../SectionsMeta/SectionName";
 
 export type FeSelfOrDescendantParentStub<SN extends SectionName> = {
   parentInfo: FeNameInfo<SelfOrDescendantName<SN, "fe">>;

@@ -153,15 +153,15 @@ import {
 import StateSection, { StateSectionCore } from "./Analyzer/StateSection";
 import StateVarb from "./Analyzer/StateSection/StateVarb";
 import { sectionMetas } from "./SectionMetas";
-import { Id } from "./SectionMetas/baseSections/id";
-import { SectionFinder } from "./SectionMetas/baseSectionTypes";
-import { noParentFeInfo } from "./SectionMetas/Info";
+import { Id } from "./SectionsMeta/baseSections/id";
+import { SectionFinder } from "./SectionsMeta/baseSectionTypes";
+import { noParentFeInfo } from "./SectionsMeta/Info";
 import {
   FeNameInfo,
   FeVarbInfo,
-} from "./SectionMetas/relSections/rel/relVarbInfoTypes";
-import { SectionMeta } from "./SectionMetas/SectionMeta";
-import { SectionName, sectionNameS } from "./SectionMetas/SectionName";
+} from "./SectionsMeta/relSections/rel/relVarbInfoTypes";
+import { SectionMeta } from "./SectionsMeta/SectionMeta";
+import { SectionName, sectionNameS } from "./SectionsMeta/SectionName";
 import { Obj } from "./utils/Obj";
 
 type StateSections = { [SN in SectionName]: StateSection<SN>[] };

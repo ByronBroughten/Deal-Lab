@@ -2,8 +2,8 @@ import Analyzer from "../../../Analyzer";
 import {
   entityS,
   InEntity,
-} from "../../../SectionMetas/baseSections/baseValues/entities";
-import { FeVarbInfo } from "../../../SectionMetas/relSections/rel/relVarbInfoTypes";
+} from "../../../SectionsMeta/baseSections/baseValues/entities";
+import { FeVarbInfo } from "../../../SectionsMeta/relSections/rel/relVarbInfoTypes";
 import { internal } from "../internal";
 
 export function updateConnectedEntities(

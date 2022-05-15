@@ -1,25 +1,23 @@
 import { GConstructor } from "../../../utils/classObjects";
 import { AddSectionPropsNext } from "../../Analyzer/methods/internal/addSections/addSectionsTypes";
-import { FeSectionInfo, InfoS } from "../../SectionMetas/Info";
+import {
+  FullSectionBase,
+  FullSectionBaseI,
+} from "../../SectionFocal/FocalSectionBase";
+import { FeInfoByType, InfoS } from "../../SectionsMeta/Info";
 import {
   ChildName,
   DescendantName,
   NewSectionInfo,
   SelfOrDescendantName,
-} from "../../SectionMetas/relSectionTypes/ChildTypes";
-import { SectionName, sectionNameS } from "../../SectionMetas/SectionName";
+} from "../../SectionsMeta/relSectionTypes/ChildTypes";
+import { SectionName, sectionNameS } from "../../SectionsMeta/SectionName";
+import { FeSection } from "../../SectionsState/FeSection";
+import { FeSections } from "../../SectionsState/SectionsState";
 import { StrictOmit } from "../../utils/types";
-import { FeSection } from "../FeSection";
-import {
-  ApplySectionInfoGetters,
-  SectionInfoGettersI,
-} from "../HasSectionInfoProps";
-import { HasFullSectionProps } from "./HasFullSectionProps";
-import { SectionAccessor } from "./SectionAccessor";
-import { FeSections } from "./Sections";
 
 export interface DescendantAdderI<SN extends SectionName>
-  extends DescendantAdderMixins<SN> {
+  extends FullSectionBaseI<SN> {
   addDescendant<DN extends DescendantName<SN>>(
     descendantPath: DescendantList<SN, DN>,
     props: AddDescendantOptions<SN, DN>
@@ -32,13 +30,9 @@ export interface DescendantAdderI<SN extends SectionName>
   addSections(parentFirstPropsArr: AddSectionPropsNext[]): void;
 }
 
-interface DescendantAdderMixins<SN extends SectionName>
-  extends HasFullSectionProps<SN>,
-    SectionInfoGettersI<SN> {}
-
 export function ApplyDescendantAdder<
   SN extends SectionName,
-  TBase extends GConstructor<DescendantAdderMixins<SN>>
+  TBase extends GConstructor<FullSectionBaseI<SN>>
 >(Base: TBase): GConstructor<DescendantAdderI<SN>> & TBase {
   return class DescendantAdderNext
     extends Base
@@ -48,7 +42,7 @@ export function ApplyDescendantAdder<
       descendantPath: DescendantList<SN, DN>,
       props: AddDescendantOptions<SN, DN> = {}
     ): void {
-      let { sectionName, feId } = this.info as FeSectionInfo<
+      let { sectionName, feId } = this.info as FeInfoByType<
         SelfOrDescendantName<SN>
       >;
 
@@ -100,9 +94,6 @@ export function ApplyDescendantAdder<
         this.addOneSection(props);
       }
     }
-    private get sections(): FeSections {
-      return this.shared.sections;
-    }
     private setSections(sections: FeSections) {
       this.shared.sections = sections;
     }
@@ -135,8 +126,8 @@ export function ApplyDescendantAdder<
     }
   };
 }
-const HasInfoGetters = ApplySectionInfoGetters(HasFullSectionProps);
-export const DescendantAdderNext = ApplyDescendantAdder(HasInfoGetters);
+
+export const DescendantAdderNext = ApplyDescendantAdder(FullSectionBase);
 
 export type DescendantList<
   SN extends SectionName,
@@ -154,87 +145,3 @@ export type AddDescendantOptions<
   SN extends SectionName,
   DN extends DescendantName<SN> = DescendantName<SN>
 > = StrictOmit<AddSectionPropsNext<DN>, OmitProps>;
-
-export class DescendantAdderDepreciated<
-  SN extends SectionName
-> extends SectionAccessor<SN> {
-  addDescendant<DN extends DescendantName<SN>>(
-    descendantPath: DescendantList<SN, DN>,
-    props: AddDescendantOptions<SN, DN> = {}
-  ) {
-    let { sectionName, feId } = this.info as FeSectionInfo<
-      SelfOrDescendantName<SN>
-    >;
-
-    for (let i = 0; i < descendantPath.length; i++) {
-      const childName = descendantPath[i];
-      if (this.isValidChildNameOrThrow(sectionName as SectionName, childName)) {
-        const commonProps = {
-          parentInfo: InfoS.fe(sectionName as SectionName, feId) as any,
-          sectionName: childName,
-        };
-        if (i === descendantPath.length - 1) {
-          this.addOneSection({
-            ...props,
-            ...commonProps,
-          });
-        } else if (this.sectionList(childName).isEmpty) {
-          this.addOneSection(commonProps);
-        }
-      }
-      ({ sectionName, feId } = {
-        sectionName: childName as any,
-        feId: this.sectionList(childName).last.feId,
-      });
-    }
-  }
-  addChild<CN extends ChildName<SN>>(
-    childName: CN,
-    props: AddChildOptions<SN>
-  ) {
-    this.addOneSection({
-      sectionName: childName,
-      ...props,
-      parentInfo: this.feInfo as any,
-    } as AddSectionPropsNext<DescendantName<SN>>);
-  }
-  protected addOneSection<S extends SectionName>(
-    props: AddSectionPropsNext<S>
-  ) {
-    this.newSectionToList(props);
-    if (sectionNameS.is(props.sectionName, "hasParent")) {
-      this.addChildFeIdToParent(
-        props as AddSectionPropsNext<SectionName<"hasParent">>
-      );
-    }
-  }
-  protected addSections(parentFirstPropsArr: AddSectionPropsNext[]) {
-    for (const props of parentFirstPropsArr as AddSectionPropsNext[]) {
-      this.addOneSection(props);
-    }
-  }
-  private isValidChildNameOrThrow<SN extends SectionName>(
-    sectionName: SN,
-    childName: SectionName
-  ): childName is ChildName<SN> {
-    const meta = this.sectionMeta(sectionName);
-    if (!meta.isChildName(childName)) {
-      throw new Error(`${childName} is not a child of ${sectionName}`);
-    } else return true;
-  }
-  private newSectionToList(props: AddSectionPropsNext) {
-    const { sectionName } = props;
-    this.sections = this.sections.updateList(
-      this.sectionList(sectionName).push(FeSection.initNext(props))
-    );
-  }
-  private addChildFeIdToParent(
-    props: StrictOmit<NewSectionInfo<"hasParent">, "feId">
-  ) {
-    const { parentInfo, feId } = this.sections.list(props.sectionName).last;
-    const parent = this.sections
-      .one(parentInfo)
-      .addChildFeId({ ...props, feId });
-    this.sections = this.sections.updateSection(parent as any);
-  }
-}

@@ -3,17 +3,17 @@ import { pick } from "lodash";
 import Analyzer from "../../sharedWithServer/Analyzer";
 import { internal } from "../../sharedWithServer/Analyzer/methods/internal";
 import { isEditorUpdateFnName } from "../../sharedWithServer/Analyzer/StateSection/StateVarb/stateValue";
-import { InEntities } from "../../sharedWithServer/SectionMetas/baseSections/baseValues/entities";
+import { InEntities } from "../../sharedWithServer/SectionsMeta/baseSections/baseValues/entities";
 import {
   EntitiesAndEditorText,
-  NumObj
-} from "../../sharedWithServer/SectionMetas/baseSections/baseValues/NumObj";
-import { FeVarbInfo } from "../../sharedWithServer/SectionMetas/relSections/rel/relVarbInfoTypes";
+  NumObj,
+} from "../../sharedWithServer/SectionsMeta/baseSections/baseValues/NumObj";
+import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/relSections/rel/relVarbInfoTypes";
 import { Arr } from "../../sharedWithServer/utils/Arr";
 import { EntityMap, EntityRanges, RawEditorState } from "../../utils/DraftS";
 import {
   editorStateToText,
-  getRawEditorState
+  getRawEditorState,
 } from "../draftjs/rawEditorContent";
 
 const updateEditorByBasicType = {

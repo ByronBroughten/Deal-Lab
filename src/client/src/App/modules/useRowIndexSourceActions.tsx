@@ -1,8 +1,8 @@
 import { sectionMetas } from "../sharedWithServer/SectionMetas";
-import { InEntityVarbInfo } from "../sharedWithServer/SectionMetas/baseSections/baseValues/entities";
-import { DbInfo, FeInfo, InfoS } from "../sharedWithServer/SectionMetas/Info";
-import { FeVarbInfo } from "../sharedWithServer/SectionMetas/relSections/rel/relVarbInfoTypes";
-import { SectionName } from "../sharedWithServer/SectionMetas/SectionName";
+import { InEntityVarbInfo } from "../sharedWithServer/SectionsMeta/baseSections/baseValues/entities";
+import { DbInfo, FeInfo, InfoS } from "../sharedWithServer/SectionsMeta/Info";
+import { FeVarbInfo } from "../sharedWithServer/SectionsMeta/relSections/rel/relVarbInfoTypes";
+import { SectionName } from "../sharedWithServer/SectionsMeta/SectionName";
 import { StateQuerierBase, StateQuerierBaseProps } from "./StateQuerierBase";
 import { IndexSectionQuerier } from "./StateQueriersShared/IndexQuerier";
 import { useAnalyzerContext } from "./usePropertyAnalyzer";

@@ -1,7 +1,7 @@
 import Analyzer from "../../Analyzer";
-import { InEntity } from "../../SectionMetas/baseSections/baseValues/entities";
-import { DbNumObj } from "../../SectionMetas/baseSections/baseValues/NumObj";
-import { FeInfo } from "../../SectionMetas/Info";
+import { InEntity } from "../../SectionsMeta/baseSections/baseValues/entities";
+import { DbNumObj } from "../../SectionsMeta/baseSections/baseValues/NumObj";
+import { FeInfo } from "../../SectionsMeta/Info";
 import { DbEntry } from "../DbEntry";
 
 type UnitProps = {

@@ -1,11 +1,11 @@
 import Analyzer from "../../../Analyzer";
-import { SectionFinder } from "../../../SectionMetas/baseSectionTypes";
+import { SectionFinder } from "../../../SectionsMeta/baseSectionTypes";
 import {
   FeNameInfo,
   FeVarbInfo,
   RelVarbInfo,
-} from "../../../SectionMetas/relSections/rel/relVarbInfoTypes";
-import { SectionName } from "../../../SectionMetas/SectionName";
+} from "../../../SectionsMeta/relSections/rel/relVarbInfoTypes";
+import { SectionName } from "../../../SectionsMeta/SectionName";
 import { Arr } from "../../../utils/Arr";
 import { Obj } from "../../../utils/Obj";
 

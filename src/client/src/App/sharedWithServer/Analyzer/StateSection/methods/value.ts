@@ -1,5 +1,5 @@
-import { InEntityVarbInfo } from "../../../SectionMetas/baseSections/baseValues/entities";
-import { SectionName } from "../../../SectionMetas/SectionName";
+import { InEntityVarbInfo } from "../../../SectionsMeta/baseSections/baseValues/entities";
+import { SectionName } from "../../../SectionsMeta/SectionName";
 import { Obj } from "../../../utils/Obj";
 import StateSection from "../../StateSection";
 import { StateValueAnyKey, ValueTypesPlusAny } from "../StateVarb";

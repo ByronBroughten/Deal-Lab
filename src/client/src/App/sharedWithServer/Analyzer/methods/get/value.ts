@@ -2,7 +2,7 @@ import Analyzer from "../../../Analyzer";
 import {
   SpecificSectionInfo,
   SpecificVarbInfo,
-} from "../../../SectionMetas/relSections/rel/relVarbInfoTypes";
+} from "../../../SectionsMeta/relSections/rel/relVarbInfoTypes";
 import {
   StateValueAnyKey,
   ValueTypesPlusAny,

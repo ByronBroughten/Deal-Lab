@@ -1,12 +1,12 @@
 import { pick } from "lodash";
 import Analyzer from "../../../Analyzer";
 import { sectionMetas } from "../../../SectionMetas";
-import { FeInfo, InfoS } from "../../../SectionMetas/Info";
+import { FeInfo, InfoS } from "../../../SectionsMeta/Info";
 import {
   ChildIdArrs,
   OneChildIdArrs,
-} from "../../../SectionMetas/relSectionTypes/ChildTypes";
-import { SectionName } from "../../../SectionMetas/SectionName";
+} from "../../../SectionsMeta/relSectionTypes/ChildTypes";
+import { SectionName } from "../../../SectionsMeta/SectionName";
 import StateSection, { StateSectionCore } from "../../StateSection";
 import { InitStateSectionProps } from "../../StateSectionOld";
 import StateVarb from "../StateVarb";

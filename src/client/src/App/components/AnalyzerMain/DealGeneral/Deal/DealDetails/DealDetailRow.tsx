@@ -3,7 +3,7 @@ import { BsDot } from "react-icons/bs";
 import styled from "styled-components";
 import useToggle from "../../../../../modules/customHooks/useToggle";
 import { InVarbInfo } from "../../../../../sharedWithServer/Analyzer/StateSection/StateVarb";
-import { SpecificVarbInfo } from "../../../../../sharedWithServer/SectionMetas/relSections/rel/relVarbInfoTypes";
+import { SpecificVarbInfo } from "../../../../../sharedWithServer/SectionsMeta/relSections/rel/relVarbInfoTypes";
 import theme from "../../../../../theme/Theme";
 import useHowMany from "../../../../appWide/customHooks/useHowMany";
 import { DealDetailRows } from "./DealDetailRows";

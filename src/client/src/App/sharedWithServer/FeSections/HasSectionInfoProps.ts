@@ -1,16 +1,16 @@
 import { GConstructor } from "../../utils/classObjects";
 import { sectionMetas } from "../SectionMetas";
-import { FeIdInfo } from "../SectionMetas/baseSections/id";
-import { FeSectionInfo } from "../SectionMetas/Info";
-import { FeNameInfo } from "../SectionMetas/relSections/rel/relVarbInfoTypes";
-import { SectionMeta } from "../SectionMetas/SectionMeta";
-import { SectionName } from "../SectionMetas/SectionName";
+import { FeIdInfo } from "../SectionsMeta/baseSections/id";
+import { FeInfoByType } from "../SectionsMeta/Info";
+import { FeNameInfo } from "../SectionsMeta/relSections/rel/relVarbInfoTypes";
+import { SectionMeta } from "../SectionsMeta/SectionMeta";
+import { SectionName } from "../SectionsMeta/SectionName";
 
 export interface SectionInfoGettersI<SN extends SectionName>
   extends HasSectionInfoProps<SN> {
   get feIdInfo(): FeIdInfo;
   get feInfo(): FeNameInfo<SN>;
-  get info(): FeSectionInfo<SN>;
+  get info(): FeInfoByType<SN>;
   get meta(): SectionMeta<"fe", SN>;
   sectionMeta<S extends SectionName>(sectionName: S): SectionMeta<"fe", S>;
 }
@@ -35,7 +35,7 @@ export function ApplySectionInfoGetters<
         ...this.feIdInfo,
       };
     }
-    get info(): FeSectionInfo<SN> {
+    get info(): FeInfoByType<SN> {
       return {
         feId: this.feId,
         sectionName: this.sectionName,
@@ -53,7 +53,7 @@ export function ApplySectionInfoGetters<
 export class HasSectionInfoProps<SN extends SectionName> {
   readonly sectionName: SN;
   readonly feId: string;
-  constructor({ sectionName, feId }: FeSectionInfo<SN>) {
+  constructor({ sectionName, feId }: FeInfoByType<SN>) {
     this.sectionName = sectionName as SN;
     this.feId = feId;
   }
@@ -73,7 +73,7 @@ export class SectionInfoGetters<
       ...this.feIdInfo,
     };
   }
-  get info(): FeSectionInfo<SN> {
+  get info(): FeInfoByType<SN> {
     return {
       feId: this.feId,
       sectionName: this.sectionName,
