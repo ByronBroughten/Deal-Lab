@@ -1,28 +1,28 @@
 import { cloneDeep, pick } from "lodash";
 import Analyzer from "../Analyzer";
-import { sectionMetas } from "../SectionMetas";
+import { sectionMetas } from "../SectionsMeta";
 import { SimpleSectionName } from "../SectionsMeta/baseSections";
 import { InEntities } from "../SectionsMeta/baseSections/baseValues/entities";
 import { FeInfo, InfoS } from "../SectionsMeta/Info";
 import {
   DbNameInfo,
   FeNameInfo,
-  FeVarbInfo
+  FeVarbInfo,
 } from "../SectionsMeta/relSections/rel/relVarbInfoTypes";
 import {
   ChildIdArrs,
-  OneChildIdArrs
+  OneChildIdArrs,
 } from "../SectionsMeta/relSectionTypes/ChildTypes";
 import { DefaultStoreName } from "../SectionsMeta/relSectionTypes/DefaultStoreTypes";
 import {
   ParentFeInfo,
-  ParentName
+  ParentName,
 } from "../SectionsMeta/relSectionTypes/ParentTypes";
 import { SectionMeta } from "../SectionsMeta/SectionMeta";
 import {
   FeSectionNameType,
   SectionName,
-  sectionNameS
+  sectionNameS,
 } from "../SectionsMeta/SectionName";
 import { OutUpdatePack } from "../SectionsMeta/VarbMeta";
 import { DbVarbs } from "./DbEntry";
@@ -33,14 +33,14 @@ import {
   childFeIds,
   childFeInfos,
   childIdx,
-  removeChildFeId
+  removeChildFeId,
 } from "./StateSection/methods/childIds";
 import { value, values, varbInfoValues } from "./StateSection/methods/value";
 import {
   replaceVarb,
   StateVarbs,
   varb,
-  VarbValues
+  VarbValues,
 } from "./StateSection/methods/varbs";
 import StateVarb from "./StateSection/StateVarb";
 import { OutEntity } from "./StateSection/StateVarb/entities";
@@ -70,7 +70,7 @@ function initChildFeIds<SN extends SectionName>(
 ): OneChildIdArrs<SN, "fe"> {
   const sectionMeta = sectionMetas.section(sectionName, "fe");
   return {
-    ...sectionMeta.emptyChildIds(),
+    ...sectionMeta.emptyChildIdsWide(),
     ...pick(proposed, [
       sectionMeta.get("childNames") as any as keyof ChildIdArrs<SN>,
     ]),

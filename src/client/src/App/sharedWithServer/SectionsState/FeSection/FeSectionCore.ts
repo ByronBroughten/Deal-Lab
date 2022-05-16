@@ -1,12 +1,9 @@
 import { pick } from "lodash";
 import { DbVarbs } from "../../Analyzer/SectionPackRaw/RawSection";
-import { sectionMetas } from "../../SectionMetas";
+import { sectionMetas } from "../../SectionsMeta";
 import { Id } from "../../SectionsMeta/baseSections/id";
-import {
-  ChildIdArrs,
-  OneChildIdArrs,
-} from "../../SectionsMeta/relSectionTypes/ChildTypes";
-import { ParentFeInfo } from "../../SectionsMeta/relSectionTypes/ParentTypes";
+import { FeParentInfo } from "../../SectionsMeta/Info";
+import { ChildIdArrsNarrow } from "../../SectionsMeta/relSectionTypes/ChildTypes";
 import { SectionName } from "../../SectionsMeta/SectionName";
 import { FeVarbsI, initFeVarbs } from "./FeVarbs";
 
@@ -15,22 +12,22 @@ export class HasFeSectionCore<SN extends SectionName> {
 }
 
 export type FeSectionCore<SN extends SectionName> = {
-  feId: string;
-  parentInfo: ParentFeInfo<SN>;
   sectionName: SN;
+  parentInfo: FeParentInfo<SN>;
+  childFeIds: ChildIdArrsNarrow<SN>;
+  feId: string;
   dbId: string;
   varbs: FeVarbsI<SN>;
-  childFeIds: OneChildIdArrs<SN, "fe">;
 };
 
-export type InitFeSectionCoreProps<SN extends SectionName> = {
+export interface InitFeSectionCoreProps<SN extends SectionName> {
   sectionName: SN;
-  parentInfo: ParentFeInfo<SN>;
+  parentInfo: FeParentInfo<SN>;
+  childFeIds?: Partial<ChildIdArrsNarrow<SN>>;
   feId?: string;
-  childFeIds?: Partial<OneChildIdArrs<SN, "fe">>; // empty
-  dbId?: string; // create new
-  dbVarbs?: Partial<DbVarbs>; // empty
-};
+  dbId?: string;
+  dbVarbs?: Partial<DbVarbs>;
+}
 // there are no varbs
 export function initFeSectionCore<SN extends SectionName>({
   sectionName,
@@ -55,13 +52,11 @@ export function initFeSectionCore<SN extends SectionName>({
 
 function initChildFeIds<SN extends SectionName>(
   sectionName: SN,
-  proposed: Partial<ChildIdArrs<SN>> = {}
-): OneChildIdArrs<SN, "fe"> {
+  proposed: Partial<ChildIdArrsNarrow<SN>> = {}
+): ChildIdArrsNarrow<SN> {
   const sectionMeta = sectionMetas.section(sectionName, "fe");
   return {
-    ...sectionMeta.emptyChildIds(),
-    ...pick(proposed, [
-      sectionMeta.get("childNames") as any as keyof ChildIdArrs<SN>,
-    ]),
-  };
+    ...sectionMeta.emptyChildIdsNarrow(),
+    ...pick(proposed, [sectionMeta.childNames as any]),
+  } as ChildIdArrsNarrow<SN>;
 }

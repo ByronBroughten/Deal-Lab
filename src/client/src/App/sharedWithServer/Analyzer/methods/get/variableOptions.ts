@@ -1,5 +1,5 @@
 import Analyzer from "../../../Analyzer";
-import { sectionMetas } from "../../../SectionMetas";
+import { sectionMetas } from "../../../SectionsMeta";
 import { InEntityVarbInfo } from "../../../SectionsMeta/baseSections/baseValues/entities";
 import { BaseName } from "../../../SectionsMeta/baseSectionTypes";
 import { InfoS } from "../../../SectionsMeta/Info";

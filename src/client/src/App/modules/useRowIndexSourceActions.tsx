@@ -1,4 +1,4 @@
-import { sectionMetas } from "../sharedWithServer/SectionMetas";
+import { sectionMetas } from "../sharedWithServer/SectionsMeta";
 import { InEntityVarbInfo } from "../sharedWithServer/SectionsMeta/baseSections/baseValues/entities";
 import { DbInfo, FeInfo, InfoS } from "../sharedWithServer/SectionsMeta/Info";
 import { FeVarbInfo } from "../sharedWithServer/SectionsMeta/relSections/rel/relVarbInfoTypes";

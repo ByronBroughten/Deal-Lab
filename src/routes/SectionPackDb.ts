@@ -9,13 +9,13 @@ import {
   RawSections,
   zRawSections,
 } from "../client/src/App/sharedWithServer/Analyzer/SectionPackRaw/RawSection";
-import { SavableSectionName } from "../client/src/App/sharedWithServer/SectionMetas/relNameArrs/storeArrs";
-import { SelfOrDescendantName } from "../client/src/App/sharedWithServer/SectionMetas/relSectionTypes/ChildTypes";
+import { SavableSectionName } from "../client/src/App/sharedWithServer/SectionsMeta/relNameArrs/storeArrs";
+import { SelfOrDescendantName } from "../client/src/App/sharedWithServer/SectionsMeta/relSectionTypes/ChildTypes";
 import {
   SectionName,
   sectionNameS,
   SectionNameType,
-} from "../client/src/App/sharedWithServer/SectionMetas/SectionName";
+} from "../client/src/App/sharedWithServer/SectionsMeta/SectionName";
 import { Obj } from "../client/src/App/sharedWithServer/utils/Obj";
 import { zodSchema } from "../client/src/App/sharedWithServer/utils/zod";
 

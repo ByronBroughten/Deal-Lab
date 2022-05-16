@@ -1,5 +1,5 @@
 import Analyzer from "../../../../Analyzer";
-import { sectionMetas } from "../../../../SectionMetas";
+import { sectionMetas } from "../../../../SectionsMeta";
 import { InfoS } from "../../../../SectionsMeta/Info";
 import {
   ParentFeInfo,

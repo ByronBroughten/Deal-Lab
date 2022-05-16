@@ -226,9 +226,7 @@ export const baseSections = {
     }),
   },
   get db() {
-    return {
-      ...this.fe,
-    } as const;
+    return this.fe;
   },
 } as const;
 

@@ -5,8 +5,8 @@ import {
   RegisterFormData,
   RegisterReqBody,
 } from "../../client/src/App/sharedWithServer/apiQueriesShared/register";
-import { BaseSectionsDb } from "../../client/src/App/sharedWithServer/SectionMetas/baseSectionTypes";
-import { SchemaVarbsToDbValues } from "../../client/src/App/sharedWithServer/SectionMetas/relSections/rel/valueMetaTypes";
+import { BaseSectionsDb } from "../../client/src/App/sharedWithServer/SectionsMeta/baseSectionTypes";
+import { SchemaVarbsToDbValues } from "../../client/src/App/sharedWithServer/SectionsMeta/relSections/rel/valueMetaTypes";
 import { makeMongooseObjectId } from "../../client/src/App/sharedWithServer/utils/mongoose";
 import { serverSectionS } from "../ServerSectionName";
 import { initDbSectionPack, UserDbRaw } from "../ServerUser";

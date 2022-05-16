@@ -1,4 +1,4 @@
-import { sectionMetas } from "../../../SectionMetas";
+import { sectionMetas } from "../../../SectionsMeta";
 import { VarbNames } from "../../../SectionsMeta/relSections/rel/relVarbInfoTypes";
 import { DbValue } from "../../../SectionsMeta/relSections/rel/valueMetaTypes";
 import { SectionName } from "../../../SectionsMeta/SectionName";

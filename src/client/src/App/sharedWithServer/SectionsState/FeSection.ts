@@ -1,5 +1,4 @@
 import { GConstructor } from "../../utils/classObjects";
-import { ApplySectionInfoGetters } from "../FeSections/HasSectionInfoProps";
 import {
   ChildName,
   NewChildInfo,
@@ -25,8 +24,10 @@ import {
 } from "./FeSection/FeSectionGetters";
 import FeVarb from "./FeSection/FeVarb";
 import { HasFeSectionProps } from "./FeSection/HasFeSectionProps";
+import { ApplySectionInfoGetters } from "./HasSectionInfoProps";
 
-export interface FeSectionI<SN extends SectionName> extends TopMixins<SN> {
+export interface FeSectionI<SN extends SectionName>
+  extends FeSectionMixins<SN> {
   addChildFeId({ idx, ...childInfo }: NewChildInfo<SN>): FeSectionI<SN>;
   removeChildFeId({ sectionName, feId }: NewChildInfo<SN>): FeSectionI<SN>;
   updateVarb(nextVarb: FeVarb): FeSectionI<SN>;
@@ -34,7 +35,7 @@ export interface FeSectionI<SN extends SectionName> extends TopMixins<SN> {
 }
 function FeSectionMaker<
   SN extends SectionName,
-  TBase extends GConstructor<TopMixins<SN>>
+  TBase extends GConstructor<FeSectionMixins<SN>>
 >(Base: TBase): FullClass<SN> {
   return class FeSection extends Base implements FeSectionI<SN> {
     addChildFeId({ idx, ...childInfo }: NewChildInfo<SN>): FeSection {
@@ -102,7 +103,7 @@ function FeSectionMaker<
   };
 }
 
-interface TopMixins<SN extends SectionName>
+interface FeSectionMixins<SN extends SectionName>
   extends IChildIdGetterNext<SN>,
     FeSectionGettersI<SN> {}
 

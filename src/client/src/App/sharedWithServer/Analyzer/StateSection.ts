@@ -1,5 +1,5 @@
 import { cloneDeep } from "lodash";
-import { sectionMetas } from "../SectionMetas";
+import { sectionMetas } from "../SectionsMeta";
 import { SimpleSectionName } from "../SectionsMeta/baseSections";
 import { InEntities } from "../SectionsMeta/baseSections/baseValues/entities";
 import { InfoS } from "../SectionsMeta/Info";

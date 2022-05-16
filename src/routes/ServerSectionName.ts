@@ -1,8 +1,8 @@
-import { SimpleSectionName } from "../client/src/App/sharedWithServer/SectionMetas/baseSections";
+import { SimpleSectionName } from "../client/src/App/sharedWithServer/SectionsMeta/baseSections";
 import {
   savableNameS,
   SavableSectionName,
-} from "../client/src/App/sharedWithServer/SectionMetas/relNameArrs/storeArrs";
+} from "../client/src/App/sharedWithServer/SectionsMeta/relNameArrs/storeArrs";
 import { StrictExtract } from "../client/src/App/sharedWithServer/utils/types";
 import { StringTypeChecker } from "../client/src/App/utils/StringTypeChecker";
 

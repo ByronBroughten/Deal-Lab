@@ -1,10 +1,6 @@
 import { GConstructor } from "../../../utils/classObjects";
 import { DbVarbs } from "../../Analyzer/SectionPackRaw/RawSection";
 import {
-  ApplySectionInfoGetters,
-  SectionInfoGettersI,
-} from "../../FeSections/HasSectionInfoProps";
-import {
   InEntities,
   InEntityVarbInfo,
 } from "../../SectionsMeta/baseSections/baseValues/entities";
@@ -16,6 +12,10 @@ import {
 import { SectionName } from "../../SectionsMeta/SectionName";
 import { OutUpdatePack } from "../../SectionsMeta/VarbMeta";
 import { Obj } from "../../utils/Obj";
+import {
+  ApplySectionInfoGetters,
+  SectionInfoGettersI,
+} from "../HasSectionInfoProps";
 import FeVarb, { StateValueAnyKey, ValueTypesPlusAny } from "./FeVarb";
 import { OutEntity } from "./FeVarb/entities";
 import {

@@ -1,6 +1,6 @@
 import { pick } from "lodash";
 import { DbVarbs } from "../../../Analyzer/SectionPackRaw/RawSection";
-import { sectionMetas } from "../../../SectionMetas";
+import { sectionMetas } from "../../../SectionsMeta";
 import { FeInfoByType } from "../../../SectionsMeta/Info";
 import { SectionName } from "../../../SectionsMeta/SectionName";
 import FeVarb from "../FeVarb";

@@ -1,22 +1,20 @@
+import { SectionName } from "../../../../../SectionsMeta/SectionName";
 import { SectionPackRaw } from "../../../../SectionPackRaw";
-import { defaultProperty } from "./saneInitialSections/initPropertyDefaultNext";
+import { makeDefaultPropertyPack } from "./saneInitialSections/initPropertyDefaultNext";
 
-type DefaultSectionName = "property";
-type Defaults = {
-  [SN in DefaultSectionName]: SectionPackRaw<SN>;
+type FunctionsMakeDefault<SN extends SectionName> = {
+  [S in SN]: () => SectionPackRaw<S>;
 };
-
-class DefaultSectionPacks {
-  private defaults: Defaults = {
-    property: defaultProperty,
-  };
-  constructor() {}
-  has(sectionName: any): sectionName is DefaultSectionName {
-    return sectionName in this.defaults;
+class DefaultSectionPackMaker<SN extends SectionName> {
+  constructor(private makeDefaults: FunctionsMakeDefault<SN>) {}
+  has(sectionName: any): sectionName is SN {
+    return sectionName in this.makeDefaults;
   }
-  get<DN extends DefaultSectionName>(sectionName: DN): SectionPackRaw<DN> {
-    return this.defaults[sectionName] as any as SectionPackRaw<DN>;
+  make(sectionName: SN): SectionPackRaw<SN> {
+    return this.makeDefaults[sectionName]() as any as SectionPackRaw<SN>;
   }
 }
 
-export const defaultSectionPacks = new DefaultSectionPacks();
+export const defaultMaker = new DefaultSectionPackMaker({
+  property: makeDefaultPropertyPack,
+});

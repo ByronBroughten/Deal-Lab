@@ -12,7 +12,11 @@ import {
   indexToTableNames,
 } from "./relNameArrs/tableSourceArrs";
 import { relSections, RelSections } from "./relSections";
-import { ChildIdArrs, ChildName } from "./relSectionTypes/ChildTypes";
+import {
+  ChildIdArrsNarrow,
+  ChildIdArrsWide,
+  ChildName,
+} from "./relSectionTypes/ChildTypes";
 import {
   sectionParentNames,
   SectionToParentArrs,
@@ -78,8 +82,8 @@ export class SectionMeta<CN extends ContextName, SN extends SimpleSectionName> {
   ): SectionMetaCore<CN, SN>[PN] {
     return this.core[propName];
   }
-  get childNames() {
-    return this.core.childNames;
+  get childNames(): ChildName<SN>[] {
+    return this.core.childNames as ChildName<SN>[];
   }
   get varbNames(): string[] {
     return this.core.varbMetas.varbNames;
@@ -90,14 +94,14 @@ export class SectionMeta<CN extends ContextName, SN extends SimpleSectionName> {
   get props() {
     return this.core;
   }
-  emptyChildIds(): ChildIdArrs<SN, CN> {
-    return (this.get("childNames") as ChildName<SN, CN>[]).reduce(
-      (childIds, childName) => {
-        childIds[childName] = [];
-        return childIds;
-      },
-      {} as ChildIdArrs<SN, CN>
-    );
+  emptyChildIdsWide(): ChildIdArrsWide<SN> {
+    return this.childNames.reduce((childIds, childName) => {
+      childIds[childName] = [];
+      return childIds;
+    }, {} as ChildIdArrsWide<SN>);
+  }
+  emptyChildIdsNarrow(): ChildIdArrsNarrow<SN> {
+    return this.emptyChildIdsWide() as any as ChildIdArrsNarrow<SN>;
   }
   defaultDbVarbs(): DbVarbs {
     const defaultDbVarbs: DbVarbs = {};

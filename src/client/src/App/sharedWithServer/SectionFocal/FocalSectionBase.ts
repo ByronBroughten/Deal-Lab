@@ -1,78 +1,49 @@
-import { GConstructor } from "../../utils/classObjects";
-import {
-  ApplySectionInfoGetters,
-  SectionInfoGettersI,
-} from "../FeSections/HasSectionInfoProps";
-import { SharedSections } from "../Sections/HasSharedSections";
-import { ValueTypeName } from "../SectionsMeta/relSections/rel/valueMetaTypes";
-import { ChildName } from "../SectionsMeta/relSectionTypes/ChildTypes";
+import { GetterSections } from "../Sections/GetterSections";
+import { HasSharedSections } from "../Sections/HasSharedSections";
+import { UpdaterSections } from "../Sections/UpdaterSections";
+import { Id } from "../SectionsMeta/baseSections/id";
+import { noParentInfoNext } from "../SectionsMeta/Info";
 import { SectionName } from "../SectionsMeta/SectionName";
-import { FeSectionI } from "../SectionsState/FeSection";
-import FeVarb, { ValueTypesPlusAny } from "../SectionsState/FeSection/FeVarb";
-import { FeVarbsI } from "../SectionsState/FeSection/FeVarbs";
+import { FeSection } from "../SectionsState/FeSection";
 import { SectionList } from "../SectionsState/SectionList";
 import { FeSections } from "../SectionsState/SectionsState";
-import { HasFocalSectionProps } from "./HasFocalSectionProps";
-import { SelfGetters } from "./SelfGetters";
+import { SelfGetters, SelfGettersProps } from "./SelfGetters";
 
-// does it need hasFullSectionProps?
-export class FocalSectionBase<SN extends SectionName> {
-  readonly shared: SharedSections;
+export class FocalSectionBase<
+  SN extends SectionName = "main"
+> extends HasSharedSections {
   readonly self: SelfGetters<SN>;
-  constructor(props: HasFocalSectionProps<SN>) {
-    this.shared = props.shared;
+  constructor(
+    props: SelfGettersProps<SN> = FocalSectionBase.defaultProps() as any as SelfGettersProps<SN>
+  ) {
+    const { shared, ...sectionInfo } = props;
+    const getters = new GetterSections(shared);
+    if (!getters.hasSection(sectionInfo)) {
+      throw new Error(
+        "This focal section was not given sections containing its head section."
+      );
+    }
+    super(shared);
     this.self = new SelfGetters(props);
   }
+  static defaultProps(): SelfGettersProps<"main"> {
+    const updaterSections = new UpdaterSections({
+      sections: FeSections.init(),
+    });
+
+    const mainSection = FeSection.initNext({
+      sectionName: "main",
+      feId: Id.make(),
+      parentInfo: noParentInfoNext,
+    });
+
+    updaterSections.updateList(
+      updaterSections.list("main").push(mainSection) as SectionList
+    );
+
+    return {
+      ...mainSection.info,
+      shared: updaterSections.shared,
+    };
+  }
 }
-
-export interface FullSectionBaseI<SN extends SectionName>
-  extends FullSectionBaseMixins<SN> {
-  childList<CN extends ChildName<SN>>(childName: CN): SectionList<CN>;
-  get sections(): FeSections;
-  get section(): FeSectionI<SN>;
-  get varbs(): FeVarbsI<SN>;
-  varb(varbName: string): FeVarb;
-  value<VT extends ValueTypeName | "any">(
-    varbName: string,
-    valueType: VT
-  ): ValueTypesPlusAny[VT];
-}
-
-function MakeFullSectionBase<
-  SN extends SectionName,
-  TBase extends GConstructor<FullSectionBaseMixins<SN>>
->(Base: TBase): GConstructor<FullSectionBaseI<SN>> & TBase {
-  return class FullSectionGetters extends Base implements FullSectionBaseI<SN> {
-    get sections(): FeSections {
-      return this.shared.sections;
-    }
-    setSections(sections: FeSections) {
-      this.shared.sections = sections;
-    }
-    childList<CN extends ChildName<SN>>(childName: CN): SectionList<CN> {
-      return this.sections.list(childName);
-    }
-    get section(): FeSectionI<SN> {
-      return this.sections.one(this.feInfo);
-    }
-    get varbs(): FeVarbsI<SN> {
-      return this.section.varbs;
-    }
-    varb(varbName: string): FeVarb {
-      return this.varbs.one(varbName);
-    }
-    value<VT extends ValueTypeName | "any">(
-      varbName: string,
-      valueType: VT
-    ): ValueTypesPlusAny[VT] {
-      return this.varb(varbName).value(valueType);
-    }
-  };
-}
-
-interface FullSectionBaseMixins<SN extends SectionName>
-  extends HasFocalSectionProps<SN>,
-    SectionInfoGettersI<SN> {}
-
-const HasSectionInfoGetters = ApplySectionInfoGetters(HasFocalSectionProps);
-export const FullSectionBase = MakeFullSectionBase(HasSectionInfoGetters);

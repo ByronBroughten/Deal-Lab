@@ -1,5 +1,6 @@
 import StateSection from "../../Analyzer/StateSection";
 import { RemoveNotStrings, StrictSubType, SubType } from "../../utils/types";
+import { MergeUnionObj } from "../../utils/types/mergeUnionObj";
 import { ContextName, SimpleSectionName } from "../baseSections";
 import { FeInfoByType } from "../Info";
 import {
@@ -126,8 +127,12 @@ type AllChildIdArrs = {
 
 export type ChildIdArrsNext<SN extends SimpleSectionName> = AllChildIdArrs[SN];
 
-// I want to eliminate the childNames that aren't contained in
-// all sectionNames
+export type ChildIdArrsNarrow<SN extends SimpleSectionName> = MergeUnionObj<
+  AllChildIdArrs[SN]
+>;
+export type ChildIdArrsWide<SN extends SimpleSectionName> = {
+  [CHN in ChildName<SN>]: string[];
+};
 
 export type OneChildIdArrs<
   SN extends SimpleSectionName,

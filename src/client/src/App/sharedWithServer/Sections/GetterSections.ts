@@ -1,5 +1,8 @@
+import { SelfGetters } from "../SectionFocal/SelfGetters";
+import { sectionMetas } from "../SectionsMeta";
 import { SimpleSectionName } from "../SectionsMeta/baseSections";
 import { FeSectionInfo, VarbInfo } from "../SectionsMeta/Info";
+import { SectionName } from "../SectionsMeta/SectionName";
 import { FeSectionI } from "../SectionsState/FeSection";
 import FeVarb from "../SectionsState/FeSection/FeVarb";
 import { FeVarbsI } from "../SectionsState/FeSection/FeVarbs";
@@ -8,8 +11,11 @@ import { FeSections } from "../SectionsState/SectionsState";
 import { HasSharedSections } from "./HasSharedSections";
 
 export class GetterSections extends HasSharedSections {
-  get sections(): FeSections {
+  protected get sections(): FeSections {
     return this.shared.sections;
+  }
+  get meta() {
+    return sectionMetas;
   }
   list<SN extends SimpleSectionName>(sectionName: SN): SectionList<SN> {
     const list = this.sections.core[sectionName] as SectionList;
@@ -35,5 +41,13 @@ export class GetterSections extends HasSharedSections {
   }
   hasSection({ sectionName, feId }: FeSectionInfo): boolean {
     return this.list(sectionName).hasByFeId(feId);
+  }
+  makeFocalGetter<SN extends SectionName>(
+    info: FeSectionInfo<SN>
+  ): SelfGetters<SN> {
+    return new SelfGetters({
+      shared: this.shared,
+      ...info,
+    });
   }
 }

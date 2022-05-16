@@ -10,10 +10,10 @@ AppRegistry.runApplication("App", {
 
 reportWebVitals();
 
-// Make a sectionSolver, or descendant solver, that first just adds a section and solves.
-// Should descendantAdder be its own thing? I guess so. But it will borrow from a common solver
-// props class.
-// You might end up building one solver class, but not yet.
+// 2. Make NewOrDefaultChildAdder
+// ...For this you may need to create default sections on the fly
+// 3. Make SectionBuilder (a FocalSection)
+// 4. Work on EntitiesSections and SectionSolver
 
 // to Integrate the new Sections, you will need a solver.
 

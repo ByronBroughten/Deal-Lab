@@ -1,6 +1,7 @@
-import { sectionMetas } from "../SectionMetas";
+import { sectionMetas } from "../SectionsMeta";
 import { SimpleSectionName } from "../SectionsMeta/baseSections";
 import { SpecificIdInfo } from "../SectionsMeta/baseSections/id";
+import { FeSectionInfo } from "../SectionsMeta/Info";
 import { FeNameInfo } from "../SectionsMeta/relSections/rel/relVarbInfoTypes";
 import { SectionMeta } from "../SectionsMeta/SectionMeta";
 import { Arr } from "../utils/Arr";
@@ -48,6 +49,9 @@ export class SectionList<SN extends SimpleSectionName = SimpleSectionName> {
   }
   get feInfos(): FeNameInfo<SN>[] {
     return this.list.map(({ feInfo }) => feInfo);
+  }
+  get feInfosNext(): FeSectionInfo<SN>[] {
+    return this.list.map((section) => section.info);
   }
   push(section: FeSectionI<SN>): SectionList<SN> {
     return this.updateList([...this.list, section]);

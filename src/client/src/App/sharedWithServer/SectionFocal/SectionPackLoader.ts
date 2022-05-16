@@ -1,17 +1,18 @@
-import { GConstructor } from "../../../utils/classObjects";
+import { GConstructor } from "../../utils/classObjects";
 import {
-  FeSectionPack,
-  SectionPackSupplements,
-} from "../../Analyzer/FeSectionPack";
-import { AddSectionPropsNext } from "../../Analyzer/methods/internal/addSections/addSectionsTypes";
-import { SectionArrPack, SectionPackRaw } from "../../Analyzer/SectionPackRaw";
-import { ChildName } from "../../SectionsMeta/relSectionTypes/ChildTypes";
-import { ParentFeInfo } from "../../SectionsMeta/relSectionTypes/ParentTypes";
-import { SectionName } from "../../SectionsMeta/SectionName";
-import { Obj } from "../../utils/Obj";
-import { DescendantAdderI, DescendantAdderNext } from "./DescendantAdder";
+  FeSectionPackNext,
+  SectionPackContext,
+} from "../Analyzer/FeSectionPackNext";
+import { AddSectionPropsNext } from "../Analyzer/methods/internal/addSections/addSectionsTypes";
+import { SectionArrPack, SectionPackRaw } from "../Analyzer/SectionPackRaw";
+import { FeParentInfo } from "../SectionsMeta/Info";
+import { ChildName } from "../SectionsMeta/relSectionTypes/ChildTypes";
+import { SectionName } from "../SectionsMeta/SectionName";
+import { Obj } from "../utils/Obj";
+import { DescendantAdder, DescendantAdderI } from "./DescendantAdder";
+import { FocalSectionBase } from "./FocalSectionBase";
 import {
-  ApplySelfAndChildRemover,
+  SelfAndChildRemover,
   SelfAndChildRemoverI,
 } from "./SelfAndChildRemover";
 
@@ -20,27 +21,31 @@ type ChildSectionPackArrs<SN extends SectionName> = {
 };
 
 export interface SectionPackLoaderI<SN extends SectionName>
-  extends SectionPackLoaderMixins<SN> {
+  extends FocalSectionBase<SN> {
   loadChildSectionPackArrs(childPackArrs: ChildSectionPackArrs<SN>): void;
-  loadChildSectionPackArr(childArrPack: SectionArrPack<ChildName<SN>>): void;
+  loadChildSectionPackArr<CN extends ChildName<SN>>(
+    childArrPack: SectionArrPack<CN>
+  ): void;
   loadChildSectionPack<CN extends ChildName<SN>>(
     sectionPack: SectionPackRaw<CN>,
     options?: { feId?: string; idx?: number }
   ): void;
 }
 
-interface SectionPackLoaderMixins<SN extends SectionName>
-  extends DescendantAdderI<SN>,
-    SelfAndChildRemoverI<SN> {}
-
 export function ApplySectionPackLoader<
   SN extends SectionName,
-  TBase extends GConstructor<SectionPackLoaderMixins<SN>>
+  TBase extends GConstructor<FocalSectionBase<SN>>
 >(Base: TBase): GConstructor<SectionPackLoaderI<SN>> & TBase {
   return class SectionPackLoaderNext
     extends Base
     implements SectionPackLoaderI<SN>
   {
+    private adder = new DescendantAdder(
+      this.self.constructorProps
+    ) as DescendantAdderI<SN>;
+    private remover = new SelfAndChildRemover(
+      this.self.constructorProps
+    ) as SelfAndChildRemoverI<SN>;
     loadChildSectionPackArrs(childPackArrs: ChildSectionPackArrs<SN>): void {
       for (const [sectionName, sectionPacks] of Obj.entries(childPackArrs)) {
         this.loadChildSectionPackArr({
@@ -52,12 +57,12 @@ export function ApplySectionPackLoader<
     loadChildSectionPackArr<CN extends ChildName<SN>>(
       childArrPack: SectionArrPack<CN>
     ): void {
-      this.wipeChildren(childArrPack.sectionName);
+      this.remover.wipeChildren(childArrPack.sectionName);
       const addSectionsProps = this.sectionArrPackToAddSectionProps(
         childArrPack.sectionPacks,
-        this.feInfo as any as ParentFeInfo<CN>
+        this.self.feInfo as any as FeParentInfo<CN>
       );
-      this.addSections(addSectionsProps);
+      this.adder.addSections(addSectionsProps);
     }
     loadChildSectionPack<CN extends ChildName<SN>>(
       sectionPack: SectionPackRaw<CN>,
@@ -65,7 +70,7 @@ export function ApplySectionPackLoader<
     ): void {
       this.loadSectionPack(sectionPack, {
         ...options,
-        parentInfo: this.feInfo as any as ParentFeInfo<CN>,
+        parentInfo: this.self.feInfo as any as FeParentInfo<CN>,
       });
     }
     // protected loadSectionPackChildren<
@@ -79,24 +84,25 @@ export function ApplySectionPackLoader<
     //   );
     //   this.addSections(addSectionsProps);
     // }
-    private loadSectionPack<
-      S extends SectionName,
-      Props extends SectionPackSupplements<S>
-    >(sectionPack: SectionPackRaw<S>, props: Props): void {
-      const sectionNodes = FeSectionPack.makeOrderedPreSections(
+    private loadSectionPack<S extends SectionName>(
+      sectionPack: SectionPackRaw<S>,
+      sectionPackContext: SectionPackContext<S>
+    ): void {
+      const sectionNodes = FeSectionPackNext.makeOrderedPreSections({
         sectionPack,
-        props
-      );
-      return this.addSections(sectionNodes as AddSectionPropsNext[]);
+        sectionPackContext,
+      });
+      return this.adder.addSections(sectionNodes as AddSectionPropsNext[]);
     }
     private sectionArrPackToAddSectionProps<SN extends SectionName>(
       sectionPackArr: SectionPackRaw<SN>[],
-      parentInfo: ParentFeInfo<SN>
+      parentInfo: FeParentInfo<SN>
     ) {
       const addSectionsProps: AddSectionPropsNext[] = [];
       for (const sectionPack of sectionPackArr) {
-        const sectionNodes = FeSectionPack.makeOrderedPreSections(sectionPack, {
-          parentInfo,
+        const sectionNodes = FeSectionPackNext.makeOrderedPreSections({
+          sectionPack,
+          sectionPackContext: { parentInfo },
         });
         addSectionsProps.push(...(sectionNodes as AddSectionPropsNext[]));
       }
@@ -105,5 +111,4 @@ export function ApplySectionPackLoader<
   };
 }
 
-const HasSelfAndChildRemover = ApplySelfAndChildRemover(DescendantAdderNext);
-export const SectionPackLoader = ApplySectionPackLoader(HasSelfAndChildRemover);
+export const SectionPackLoader = ApplySectionPackLoader(FocalSectionBase);

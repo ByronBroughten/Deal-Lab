@@ -1,4 +1,4 @@
-import { sectionMetas } from "../../../../../SectionMetas";
+import { sectionMetas } from "../../../../../SectionsMeta";
 import {
   DbNumObj,
   isDbNumObj,

@@ -5,11 +5,11 @@ import {
   sectionNameS,
 } from "../../../../SectionsMeta/SectionName";
 import StateSection from "../../../StateSection";
-import { AddSectionPropsNext } from "../addSections/addSectionsTypes";
+import { AddSectionProps } from "../addSections/addSectionsTypes";
 
 export function initOneSectionNext(
   next: Analyzer,
-  { idx, ...props }: AddSectionPropsNext
+  { idx, ...props }: AddSectionProps
 ): Analyzer {
   next = pushSection(next, StateSection.initNext(props));
   const { sectionName } = props;

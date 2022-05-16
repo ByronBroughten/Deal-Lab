@@ -1,5 +1,5 @@
 import { FeSectionPack } from "../sharedWithServer/Analyzer/FeSectionPack";
-import { sectionMetas } from "../sharedWithServer/SectionMetas";
+import { sectionMetas } from "../sharedWithServer/SectionsMeta";
 import { DbInfo, FeInfo, InfoS } from "../sharedWithServer/SectionsMeta/Info";
 import { SectionName } from "../sharedWithServer/SectionsMeta/SectionName";
 import { StateQuerierBase, StateQuerierBaseProps } from "./StateQuerierBase";

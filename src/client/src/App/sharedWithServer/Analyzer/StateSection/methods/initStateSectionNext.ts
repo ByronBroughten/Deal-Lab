@@ -1,5 +1,5 @@
 import { pick } from "lodash";
-import { sectionMetas } from "../../../SectionMetas";
+import { sectionMetas } from "../../../SectionsMeta";
 import { Id } from "../../../SectionsMeta/baseSections/id";
 import {
   ChildIdArrs,
@@ -45,7 +45,7 @@ function initChildFeIds<SN extends SectionName>(
 ): OneChildIdArrs<SN, "fe"> {
   const sectionMeta = sectionMetas.section(sectionName, "fe");
   return {
-    ...sectionMeta.emptyChildIds(),
+    ...sectionMeta.emptyChildIdsWide(),
     ...pick(proposed, [
       sectionMeta.get("childNames") as any as keyof ChildIdArrs<SN>,
     ]),

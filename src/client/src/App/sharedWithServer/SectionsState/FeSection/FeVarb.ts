@@ -1,5 +1,5 @@
 import { cloneDeep, isEqual } from "lodash";
-import { sectionMetas } from "../../SectionMetas";
+import { sectionMetas } from "../../SectionsMeta";
 import { valueMeta } from "../../SectionsMeta/baseSections/baseValues";
 import {
   InEntities,

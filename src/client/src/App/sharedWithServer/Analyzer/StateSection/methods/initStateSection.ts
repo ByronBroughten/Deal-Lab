@@ -1,6 +1,6 @@
 import { pick } from "lodash";
 import Analyzer from "../../../Analyzer";
-import { sectionMetas } from "../../../SectionMetas";
+import { sectionMetas } from "../../../SectionsMeta";
 import { FeInfo, InfoS } from "../../../SectionsMeta/Info";
 import {
   ChildIdArrs,
@@ -54,7 +54,7 @@ function initChildFeIds<SN extends SectionName>(
 ): OneChildIdArrs<SN, "fe"> {
   const sectionMeta = sectionMetas.section(sectionName, "fe");
   return {
-    ...sectionMeta.emptyChildIds(),
+    ...sectionMeta.emptyChildIdsWide(),
     ...pick(proposed, [
       sectionMeta.get("childNames") as any as keyof ChildIdArrs<SN, "fe">,
     ]),

@@ -1,31 +1,34 @@
-import { SectionPackBuilder } from "../../../../../../FeSections/HasSections/SectionPackBuilder";
+import { SectionPackBuilder } from "../../../../../../SectionFocal/SectionPackBuilder";
+import { SectionPackRaw } from "../../../../../SectionPackRaw";
 
-const main = new SectionPackBuilder();
-const property = main.addAndGetDescendant(
-  ["analysis", "propertyGeneral", "property"] as const,
-  {
+export function makeDefaultPropertyPack(): SectionPackRaw<"property"> {
+  const main = new SectionPackBuilder();
+  const property = main.addAndGetDescendant(
+    ["analysis", "propertyGeneral", "property"] as const,
+    {
+      dbVarbs: {
+        taxesOngoingSwitch: "yearly",
+        homeInsOngoingSwitch: "yearly",
+        ongoingExpensesOngoingSwitch: "yearly",
+        targetRentOngoingSwitch: "monthly",
+        miscOngoingRevenueOngoingSwitch: "monthly",
+        ongoingRevenueOngoingSwitch: "monthly",
+      },
+    }
+  );
+  property.addChild("ongoingCostList", {
+    dbVarbs: { title: "Utilities" },
+  });
+  property.addChild("ongoingCostList", {
     dbVarbs: {
-      taxesOngoingSwitch: "yearly",
-      homeInsOngoingSwitch: "yearly",
-      ongoingExpensesOngoingSwitch: "yearly",
-      targetRentOngoingSwitch: "monthly",
-      miscOngoingRevenueOngoingSwitch: "monthly",
-      ongoingRevenueOngoingSwitch: "monthly",
+      title: "CapEx",
+      totalOngoingSwitch: "yearly",
+      defaultValueSwitch: "labeledSpanOverCost",
     },
-  }
-);
-property.addChild("ongoingCostList", {
-  dbVarbs: { title: "Utilities" },
-});
-property.addChild("ongoingCostList", {
-  dbVarbs: {
-    title: "CapEx",
-    totalOngoingSwitch: "yearly",
-    defaultValueSwitch: "labeledSpanOverCost",
-  },
-});
-property.addChild("upfrontCostList", {
-  dbVarbs: { title: "Repairs" },
-});
+  });
+  property.addChild("upfrontCostList", {
+    dbVarbs: { title: "Repairs" },
+  });
 
-export const defaultProperty = property.selfSectionPack;
+  return property.makeSectionPack();
+}

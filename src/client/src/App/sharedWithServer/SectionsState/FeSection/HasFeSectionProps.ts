@@ -1,5 +1,5 @@
-import { HasSectionInfoProps } from "../../FeSections/HasSectionInfoProps";
 import { SectionName } from "../../SectionsMeta/SectionName";
+import { HasSectionInfoProps } from "../HasSectionInfoProps";
 import { FeSectionCore } from "./FeSectionCore";
 
 export class HasFeSectionProps<

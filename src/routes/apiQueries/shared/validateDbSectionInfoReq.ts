@@ -1,11 +1,11 @@
 import { Request, Response } from "express";
 import { DbSectionPackInfoReq } from "../../../client/src/App/sharedWithServer/apiQueriesShared/makeGeneralReqs";
-import { Id } from "../../../client/src/App/sharedWithServer/SectionMetas/baseSections/id";
+import { Id } from "../../../client/src/App/sharedWithServer/SectionsMeta/baseSections/id";
 import {
   savableNameS,
   SavableSectionName,
   SavableSectionType,
-} from "../../../client/src/App/sharedWithServer/SectionMetas/relNameArrs/storeArrs";
+} from "../../../client/src/App/sharedWithServer/SectionsMeta/relNameArrs/storeArrs";
 import { ResHandledError } from "../../../middleware/error";
 import { LoggedIn, validateLoggedInUser } from "./validateLoggedInUser";
 

@@ -152,7 +152,7 @@ import {
 } from "./Analyzer/methods/updateSectionArr";
 import StateSection, { StateSectionCore } from "./Analyzer/StateSection";
 import StateVarb from "./Analyzer/StateSection/StateVarb";
-import { sectionMetas } from "./SectionMetas";
+import { sectionMetas } from "./SectionsMeta";
 import { Id } from "./SectionsMeta/baseSections/id";
 import { SectionFinder } from "./SectionsMeta/baseSectionTypes";
 import { noParentFeInfo } from "./SectionsMeta/Info";

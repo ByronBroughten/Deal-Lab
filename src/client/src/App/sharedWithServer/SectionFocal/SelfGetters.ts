@@ -1,4 +1,8 @@
 import { GetterSections } from "../Sections/GetterSections";
+import {
+  HasSharedSections,
+  SharedSections,
+} from "../Sections/HasSharedSections";
 import { FeSectionInfo } from "../SectionsMeta/Info";
 import { ValueTypeName } from "../SectionsMeta/relSections/rel/valueMetaTypes";
 import {
@@ -15,21 +19,33 @@ import FeVarb, { ValueTypesPlusAny } from "../SectionsState/FeSection/FeVarb";
 import { FeVarbsI } from "../SectionsState/FeSection/FeVarbs";
 import { SectionList } from "../SectionsState/SectionList";
 import { Obj } from "../utils/Obj";
-import {
-  FullSectionConstructorProps,
-  HasFocalSectionProps,
-} from "./HasFocalSectionProps";
 
-export class SelfGetters<
-  SN extends SectionName
-> extends HasFocalSectionProps<SN> {
+export interface SelfGettersProps<SN extends SectionName>
+  extends FeSectionInfo<SN> {
+  shared: SharedSections;
+}
+
+export class SelfGetters<SN extends SectionName> extends HasSharedSections {
   private sections: GetterSections;
-  constructor(props: FullSectionConstructorProps<SN>) {
-    super(props);
-    this.sections = new GetterSections(props.shared);
+  readonly sectionName: SN;
+  readonly feId: string;
+  constructor({ shared, sectionName, feId }: SelfGettersProps<SN>) {
+    super(shared);
+    this.sections = new GetterSections(shared);
+    this.sectionName = sectionName;
+    this.feId = feId;
+  }
+  get constructorProps(): SelfGettersProps<SN> {
+    return {
+      shared: this.shared,
+      ...this.feInfo,
+    };
   }
   get meta() {
     return this.section.meta;
+  }
+  get dbId(): string {
+    return this.section.dbId;
   }
   get feInfo(): FeSectionInfo<SN> {
     return {

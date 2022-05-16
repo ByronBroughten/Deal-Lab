@@ -1,5 +1,5 @@
 import { omit } from "lodash";
-import { sectionMetas } from "../SectionMetas";
+import { sectionMetas } from "../SectionsMeta";
 import { Id } from "../SectionsMeta/baseSections/id";
 import {
   FeToDbNameWithSameChildren,
@@ -52,7 +52,7 @@ export class SectionPack<SN extends SectionName> {
         [sectionName]: {
           dbId,
           childDbIds: {
-            ...sectionMeta.emptyChildIds(),
+            ...sectionMeta.emptyChildIdsWide(),
             ...childDbIds,
           },
           dbVarbs: {

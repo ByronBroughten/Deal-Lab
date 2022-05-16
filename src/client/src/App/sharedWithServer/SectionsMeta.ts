@@ -44,10 +44,10 @@ type SectionMetasRaw = {
   };
 };
 
-export class SectionMetas {
+export class SectionsMeta {
   private core: SectionMetasCore;
   constructor() {
-    this.core = SectionMetas.initCore();
+    this.core = SectionsMeta.initCore();
     this.initOutUpdatePacks();
   }
   isDbSectionNameWithSameChildren<SN extends SimpleSectionName>(
@@ -142,7 +142,7 @@ export class SectionMetas {
       sectionName,
       (sectionContext ?? "fe") as CN
     );
-    return sectionMeta.get("parentNames")[0] as ParentName<SN, CN>;
+    return sectionMeta.get("parentNames")[0] as any as ParentName<SN, "fe">;
   }
   selfAndDescendantNames<SN extends SectionName, CN extends ContextName = "fe">(
     sectionName: SN,
@@ -272,4 +272,4 @@ export class SectionMetas {
   }
 }
 
-export const sectionMetas = new SectionMetas();
+export const sectionMetas = new SectionsMeta();

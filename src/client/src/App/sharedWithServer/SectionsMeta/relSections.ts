@@ -263,9 +263,7 @@ export function makeRelSections() {
       }),
     },
     get db() {
-      return {
-        ...this.fe,
-      } as const;
+      return this.fe;
     },
   } as const;
 }

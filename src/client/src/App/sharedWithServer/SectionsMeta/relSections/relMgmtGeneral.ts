@@ -23,7 +23,7 @@ const mgmtPreVarbs: RelVarbs<ContextName, "mgmt"> = {
       ),
     ],
   }),
-  // SectionMetas is the highest level.
+  // SectionsMeta is the highest level.
   [rentCutDollars.switch]: rel.varb.string({
     initValue: "monthly",
   }),

@@ -3,7 +3,7 @@ import { SectionName } from "../../SectionsMeta/SectionName";
 import { FeSectionPack, SectionPackSupplements } from "../FeSectionPack";
 import { FeSelfOrDescendantNode } from "../FeSectionPacks/FeSectionNode";
 import { SectionPackRaw } from "../SectionPackRaw";
-import { AddSectionPropsNext } from "./internal/addSections/addSectionsTypes";
+import { AddSectionProps } from "./internal/addSections/addSectionsTypes";
 
 export function loadRawSectionPack<
   SN extends SectionName,
@@ -13,5 +13,5 @@ export function loadRawSectionPack<
   const addSectionProps = feSectionPack.makeOrderedPreSections(
     props
   ) as FeSelfOrDescendantNode<SN>[];
-  return this.addSectionsAndSolveNext(addSectionProps as AddSectionPropsNext[]);
+  return this.addSectionsAndSolveNext(addSectionProps as AddSectionProps[]);
 }

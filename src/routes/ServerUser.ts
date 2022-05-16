@@ -5,11 +5,11 @@ import {
 } from "../client/src/App/sharedWithServer/Analyzer/SectionPackRaw";
 import { DbVarbs } from "../client/src/App/sharedWithServer/Analyzer/SectionPackRaw/RawSection";
 import { LoginUser } from "../client/src/App/sharedWithServer/apiQueriesShared/login";
-import { SavableSectionName } from "../client/src/App/sharedWithServer/SectionMetas/relNameArrs/storeArrs";
+import { SavableSectionName } from "../client/src/App/sharedWithServer/SectionsMeta/relNameArrs/storeArrs";
 import {
   SectionName,
   sectionNameS,
-} from "../client/src/App/sharedWithServer/SectionMetas/SectionName";
+} from "../client/src/App/sharedWithServer/SectionsMeta/SectionName";
 import { Obj } from "../client/src/App/sharedWithServer/utils/Obj";
 import { SectionPackDb } from "./SectionPackDb";
 import { ServerSectionName, serverSectionS } from "./ServerSectionName";

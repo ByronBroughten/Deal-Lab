@@ -1,10 +1,10 @@
 import Analyzer from "../../Analyzer";
 import { internal } from "./internal";
-import { AddSectionPropsNext } from "./internal/addSections/addSectionsTypes";
+import { AddSectionProps } from "./internal/addSections/addSectionsTypes";
 
 export function addSectionsAndSolveNext(
   this: Analyzer,
-  propsArr: AddSectionPropsNext[]
+  propsArr: AddSectionProps[]
 ): Analyzer {
   const next = internal.addSectionsNext(this, propsArr);
   return next.solveVarbs();

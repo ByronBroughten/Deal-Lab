@@ -1,5 +1,5 @@
 import { extend, omit } from "lodash";
-import { sectionMetas } from "../SectionMetas";
+import { sectionMetas } from "../SectionsMeta";
 import { Id } from "../SectionsMeta/baseSections/id";
 import { InfoS } from "../SectionsMeta/Info";
 import {
@@ -190,12 +190,5 @@ export class FeSectionPack<SN extends SectionName> {
       }
     }
     return orderedPreSections;
-  }
-  static makeOrderedPreSections<SN extends SectionName>(
-    sectionPackRaw: SectionPackRaw<SN>,
-    props: SectionPackSupplements<SN>
-  ): FeSelfOrDescendantNode<SN>[] {
-    const sectionPack = new FeSectionPack(sectionPackRaw);
-    return sectionPack.makeOrderedPreSections(props);
   }
 }

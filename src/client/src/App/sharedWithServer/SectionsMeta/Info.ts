@@ -9,7 +9,11 @@ import {
   MultiVarbInfo,
   SpecificSectionInfo,
 } from "./relSections/rel/relVarbInfoTypes";
-import { ChildName } from "./relSectionTypes/ChildTypes";
+import {
+  ChildName,
+  DescendantName,
+  SelfOrDescendantName,
+} from "./relSectionTypes/ChildTypes";
 import { ParentName } from "./relSectionTypes/ParentTypes";
 import { FeSectionNameType, SectionName, sectionNameS } from "./SectionName";
 
@@ -23,6 +27,16 @@ export interface FeSectionInfo<SN extends SectionName = SectionName> {
 }
 export interface FeChildInfo<SN extends SectionName = SectionName<"hasChild">> {
   sectionName: ChildName<SN>;
+  feId: string;
+}
+export interface FeDescendantInfo<
+  SN extends SectionName = SectionName<"hasChild">
+> {
+  sectionName: DescendantName<SN>;
+  feId: string;
+}
+export interface FeSelfOrDescendantInfo<SN extends SectionName> {
+  sectionName: SelfOrDescendantName<SN>;
   feId: string;
 }
 export interface FeParentInfo<SN extends SectionName> {
@@ -47,10 +61,17 @@ export type DbInfo<T extends FeSectionNameType = "all"> = DbNameInfo<
   SectionName<T>
 >;
 
+const noParentWarning = "no parent";
+
 export const noParentFeInfo = {
-  sectionName: "no parent",
-  id: "no parent",
+  sectionName: noParentWarning,
+  id: noParentWarning,
   idType: "feId",
+} as const;
+
+export const noParentInfoNext = {
+  sectionName: noParentWarning,
+  feId: noParentWarning,
 } as const;
 
 export type NoParentFeInfo = typeof noParentFeInfo;

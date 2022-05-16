@@ -1,7 +1,7 @@
 import { pick } from "lodash";
-import { SectionPack } from "../../Analyzer/SectionPack";
-import { dbNumObj } from "../../SectionsMeta/baseSections/baseValues/NumObj";
-import { Obj } from "../../utils/Obj";
+import { SectionPack } from "../Analyzer/SectionPack";
+import { dbNumObj } from "../SectionsMeta/baseSections/baseValues/NumObj";
+import { Obj } from "../utils/Obj";
 import { SectionPackBuilder } from "./SectionPackBuilder";
 
 describe("SectionPackBuilder", () => {
@@ -21,7 +21,6 @@ describe("SectionPackBuilder", () => {
 
   it("should make a sectionPack with the added values and children", () => {
     const main = new SectionPackBuilder();
-
     const property = main.addAndGetDescendant(
       ["analysis", "propertyGeneral", "property"] as const,
       { dbVarbs: dbVarbs.property }
@@ -29,11 +28,11 @@ describe("SectionPackBuilder", () => {
     property.addChild("upfrontCostList", { dbVarbs: dbVarbs.upfrontCostList });
     property.addChild("ongoingCostList", { dbVarbs: dbVarbs.ongoingCostList });
 
-    const { selfSectionPack } = property;
+    const sectionPack = property.makeSectionPack();
 
-    expect(SectionPack.isRaw(selfSectionPack)).toBe(true);
+    expect(SectionPack.isRaw(sectionPack)).toBe(true);
 
-    const { rawSections } = selfSectionPack;
+    const { rawSections } = sectionPack;
 
     for (const sectionName of Obj.keys(dbVarbs)) {
       const sectionPackVarbs = rawSections[sectionName][0].dbVarbs;

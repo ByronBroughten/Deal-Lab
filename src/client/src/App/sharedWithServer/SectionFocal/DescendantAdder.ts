@@ -1,23 +1,23 @@
-import { GConstructor } from "../../../utils/classObjects";
-import { AddSectionPropsNext } from "../../Analyzer/methods/internal/addSections/addSectionsTypes";
+import { GConstructor } from "../../utils/classObjects";
+import { AddSectionPropsNext } from "../Analyzer/methods/internal/addSections/addSectionsTypes";
+import { UpdaterSections } from "../Sections/UpdaterSections";
 import {
-  FullSectionBase,
-  FullSectionBaseI,
-} from "../../SectionFocal/FocalSectionBase";
-import { FeInfoByType, InfoS } from "../../SectionsMeta/Info";
+  FeParentInfo,
+  FeSectionInfo,
+  FeSelfOrDescendantInfo,
+} from "../SectionsMeta/Info";
 import {
   ChildName,
   DescendantName,
   NewSectionInfo,
-  SelfOrDescendantName,
-} from "../../SectionsMeta/relSectionTypes/ChildTypes";
-import { SectionName, sectionNameS } from "../../SectionsMeta/SectionName";
-import { FeSection } from "../../SectionsState/FeSection";
-import { FeSections } from "../../SectionsState/SectionsState";
-import { StrictOmit } from "../../utils/types";
+} from "../SectionsMeta/relSectionTypes/ChildTypes";
+import { SectionName, sectionNameS } from "../SectionsMeta/SectionName";
+import { FeSection } from "../SectionsState/FeSection";
+import { StrictOmit } from "../utils/types";
+import { FocalSectionBase } from "./FocalSectionBase";
 
 export interface DescendantAdderI<SN extends SectionName>
-  extends FullSectionBaseI<SN> {
+  extends FocalSectionBase<SN> {
   addDescendant<DN extends DescendantName<SN>>(
     descendantPath: DescendantList<SN, DN>,
     props: AddDescendantOptions<SN, DN>
@@ -30,21 +30,18 @@ export interface DescendantAdderI<SN extends SectionName>
   addSections(parentFirstPropsArr: AddSectionPropsNext[]): void;
 }
 
-export function ApplyDescendantAdder<
+export function ApplyDescendantAdderNext<
   SN extends SectionName,
-  TBase extends GConstructor<FullSectionBaseI<SN>>
+  TBase extends GConstructor<FocalSectionBase<SN>>
 >(Base: TBase): GConstructor<DescendantAdderI<SN>> & TBase {
-  return class DescendantAdderNext
-    extends Base
-    implements DescendantAdderI<SN>
-  {
+  return class DescendantAdder extends Base {
+    private sections = new UpdaterSections(this.shared);
     addDescendant<DN extends DescendantName<SN>>(
       descendantPath: DescendantList<SN, DN>,
       props: AddDescendantOptions<SN, DN> = {}
     ): void {
-      let { sectionName, feId } = this.info as FeInfoByType<
-        SelfOrDescendantName<SN>
-      >;
+      let { sectionName, feId } = this.self
+        .feInfo as FeSelfOrDescendantInfo<SN>;
 
       for (let i = 0; i < descendantPath.length; i++) {
         const childName = descendantPath[i];
@@ -52,7 +49,7 @@ export function ApplyDescendantAdder<
           this.isValidChildNameOrThrow(sectionName as SectionName, childName)
         ) {
           const commonProps = {
-            parentInfo: InfoS.fe(sectionName as SectionName, feId) as any,
+            parentInfo: { sectionName, feId } as FeParentInfo<typeof childName>,
             sectionName: childName,
           };
           if (i === descendantPath.length - 1) {
@@ -77,7 +74,8 @@ export function ApplyDescendantAdder<
       this.addOneSection({
         ...options,
         sectionName: childName,
-        parentInfo: this.feInfo as any,
+        parentInfo: this.self.feInfo as FeSectionInfo as FeParentInfo<CN>,
+        // to preven bugs like this, I ought to convert parentInfo to what it should
       } as AddSectionPropsNext<DescendantName<SN>>);
     }
 
@@ -94,14 +92,11 @@ export function ApplyDescendantAdder<
         this.addOneSection(props);
       }
     }
-    private setSections(sections: FeSections) {
-      this.shared.sections = sections;
-    }
     private isValidChildNameOrThrow<SN extends SectionName>(
       sectionName: SN,
       childName: SectionName
     ): childName is ChildName<SN> {
-      const meta = this.sectionMeta(sectionName);
+      const { meta } = this.sections.list(sectionName);
       if (!meta.isChildName(childName)) {
         throw new Error(`${childName} is not a child of ${sectionName}`);
       } else return true;
@@ -109,25 +104,21 @@ export function ApplyDescendantAdder<
     private newSectionToList(props: AddSectionPropsNext) {
       const { sectionName } = props;
       const sectionList = this.sections.list(sectionName);
-      const nextSections = this.sections.updateList(
-        sectionList.push(FeSection.initNext(props))
-      );
-      this.setSections(nextSections);
+      this.sections.updateList(sectionList.push(FeSection.initNext(props)));
     }
     private addChildFeIdToParent(
       props: StrictOmit<NewSectionInfo<"hasParent">, "feId">
     ) {
-      const { parentInfo, feId } = this.sections.list(props.sectionName).last;
+      const { feParentInfo, feId } = this.sections.list(props.sectionName).last;
       const parent = this.sections
-        .one(parentInfo)
+        .one(feParentInfo)
         .addChildFeId({ ...props, feId });
-      const nextSections = this.sections.updateSection(parent as any);
-      this.setSections(nextSections);
+      this.sections.updateSection(parent as any);
     }
   };
 }
 
-export const DescendantAdderNext = ApplyDescendantAdder(FullSectionBase);
+export const DescendantAdder = ApplyDescendantAdderNext(FocalSectionBase);
 
 export type DescendantList<
   SN extends SectionName,
