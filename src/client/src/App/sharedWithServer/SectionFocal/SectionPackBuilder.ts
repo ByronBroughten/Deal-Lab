@@ -18,7 +18,7 @@ import {
   ApplySectionPackMakersNext,
   SectionPackMakerINext,
 } from "./SectionPackMaker";
-import { SelfGettersProps } from "./SelfGetters";
+import { SectionSelfGettersProps } from "./SectionSelfGetters";
 
 interface SectionPackBuilderNextMixins<SN extends SectionName>
   extends DescendantAdderI<SN>,
@@ -72,7 +72,7 @@ function MakeSectionPackBuilderNext<
       return new SectionPackBuilderNext({
         shared: this.shared,
         ...info,
-      } as SelfGettersProps<S>) as any as SectionPackBuilderINext<S>;
+      } as SectionSelfGettersProps<S>) as any as SectionPackBuilderINext<S>;
     }
   };
 }

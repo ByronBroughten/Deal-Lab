@@ -1,5 +1,14 @@
 import { IsType } from "./types";
 
+export function replaceRange(
+  str: string,
+  start: number,
+  end: number,
+  replacement: string
+) {
+  return str.substring(0, start) + replacement + str.substring(end);
+}
+
 export const Str = {
   makeStringTypeGuard<T extends string>(arr: readonly T[]): IsType<T> {
     return (value: any): value is T => arr.includes(value);
@@ -8,16 +17,9 @@ export const Str = {
   compareAlphanumerically(a: string, b: string) {
     return a.localeCompare(b, undefined, { numeric: true });
   },
+  replaceRange,
+  isRationalNumber,
 } as const;
-
-export const replaceRange = (
-  str: string,
-  start: number,
-  end: number,
-  replacement: string
-) => {
-  return str.substring(0, start) + replacement + str.substring(end);
-};
 
 const numberRegEx = /^\-?[0-9]+(e[0-9]+)?(\.[0-9]+)?$/;
 export function isStringRationalNumber(str: string) {

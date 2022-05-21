@@ -10,7 +10,7 @@ import { ChildName } from "../SectionsMeta/relSectionTypes/ChildTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { Obj } from "../utils/Obj";
 import { FocalSectionBase } from "./FocalSectionBase";
-import { SelfGettersProps } from "./SelfGetters";
+import { SectionSelfGettersProps } from "./SectionSelfGetters";
 
 export interface SectionPackMakerINext<SN extends SectionName>
   extends FocalSectionBase<SN> {
@@ -63,14 +63,13 @@ export function ApplySectionPackMakersNext<
       return childPackMaker.makeSectionPack();
     }
     private rawDescendantSections(): RawSections<SN> {
-      const nestedFeIds = this.self.selfAndDescendantFeIds();
-      return Obj.entries(nestedFeIds as { [key: string]: string[] }).reduce(
-        (rawSections, [name, feIdArr]) => {
-          rawSections[name] = this.feIdsToRawSections(name as SN, feIdArr);
-          return rawSections;
-        },
-        {} as { [key: string]: any }
-      ) as RawSections<SN>;
+      const { selfAndDescendantFeIds } = this.self;
+      return Obj.entries(
+        selfAndDescendantFeIds as { [key: string]: string[] }
+      ).reduce((rawSections, [name, feIdArr]) => {
+        rawSections[name] = this.feIdsToRawSections(name as SN, feIdArr);
+        return rawSections;
+      }, {} as { [key: string]: any }) as RawSections<SN>;
     }
     private feIdsToRawSections<S extends SectionName>(
       sectionName: S,
@@ -92,7 +91,7 @@ export function ApplySectionPackMakersNext<
       };
     }
     static init<S extends SectionName>(
-      props: SelfGettersProps<S>
+      props: SectionSelfGettersProps<S>
     ): SectionPackMakerINext<S> {
       return new SectionPackMakerNext(props) as any;
     }

@@ -1,11 +1,15 @@
 import { round } from "lodash";
 
+export const MathUtils = {
+  decimalToPercent,
+} as const;
+
 export const arithmeticOperatorsArr = ["*", "/", "+", "-"];
 
-export const decimalToPercent = (decimal: number) => {
+export function decimalToPercent(decimal: number) {
   const percent = decimal * 100;
   return percent;
-};
+}
 
 export const percentToDecimal = (percent: number) => {
   return percent / 100;

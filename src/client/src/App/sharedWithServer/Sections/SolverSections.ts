@@ -1,33 +1,26 @@
 import tsort from "../Analyzer/methods/solveVarbs/tsort/tsort";
-import { InfoS } from "../SectionsMeta/Info";
+import { VarbSolver } from "../SectionFocal/VarbFocal/VarbSolver";
 import {
   FeNameInfo,
   FeVarbInfo,
   LocalRelVarbInfo,
-  MultiFindByFocalInfo,
-  MultiFindByFocalVarbInfo,
-  MultiSectionInfo,
-  MultiVarbInfo,
   RelVarbInfo,
-  SpecificSectionInfo,
   SpecificVarbInfo,
 } from "../SectionsMeta/relSections/rel/relVarbInfoTypes";
-import { SectionName } from "../SectionsMeta/SectionName";
 import {
   isDefaultOutPack,
   isSwitchOutPack,
   OutUpdatePack,
 } from "../SectionsMeta/VarbMeta";
-import { FeSectionI } from "../SectionsState/FeSection";
 import FeVarb from "../SectionsState/FeSection/FeVarb";
 import { Arr } from "../utils/Arr";
 import { SharedSections } from "./HasSharedSections";
 import { UpdaterSections } from "./UpdaterSections";
 
-interface SolverSharedProps extends SharedSections {
+export interface SolverSharedProps extends SharedSections {
   varbFullNamesToSolveFor?: Set<string>;
 }
-interface SolverShared extends SolverSharedProps {
+export interface SolverShared extends SolverSharedProps {
   varbFullNamesToSolveFor: Set<string>;
 }
 
@@ -46,21 +39,26 @@ export class SolverSections extends UpdaterSections {
     };
   }
 
-  private resetVarbFullNamesToSolveFor() {
-    this.shared.varbFullNamesToSolveFor = new Set();
-  }
-
   get varbFullNamesToSolveFor(): Set<string> {
     return this.shared.varbFullNamesToSolveFor;
   }
 
   solve() {
     const orderedInfos = this.gatherAndSortInfosToSolve();
-    for (const { varbName, ...info } of orderedInfos) {
-      // here, make a focalVarb and have it solve itself
-      this.solveAndUpdateValue(info);
+    for (const { id, varbName, sectionName } of orderedInfos) {
+      const varbSolver = new VarbSolver({
+        shared: this.shared,
+        feId: id,
+        sectionName,
+        varbName,
+      });
+      varbSolver.solveAndUpdateValue();
     }
     this.resetVarbFullNamesToSolveFor();
+  }
+
+  private resetVarbFullNamesToSolveFor() {
+    this.shared.varbFullNamesToSolveFor = new Set();
   }
 
   private gatherAndSortInfosToSolve(): FeVarbInfo[] {
@@ -165,83 +163,5 @@ export class SolverSections extends UpdaterSections {
     return (
       switchValue === this.varbByFocal(focalInfo, relSwitchInfo).value("string")
     );
-  }
-  varbByFocal(
-    focalInfo: SpecificSectionInfo,
-    { varbName, ...feInfo }: MultiFindByFocalVarbInfo
-  ): FeVarb {
-    const section = this.sectionByFocal(focalInfo, feInfo);
-    return section.varb(varbName);
-  }
-  varbsByFocal(
-    focalInfo: SpecificSectionInfo,
-    { varbName, ...feInfo }: MultiVarbInfo
-  ): FeVarb[] {
-    const sections = this.sectionsByFocal(focalInfo, feInfo);
-    return sections.map((section) => section.varb(varbName));
-  }
-  sectionsByFocal<SN extends SectionName>(
-    focalInfo: SpecificSectionInfo,
-    info: MultiSectionInfo<SN>
-  ): FeSectionI<SN>[] {
-    if (InfoS.is.specific(info)) {
-      const section = this.sectionByMixed(info);
-      return [section];
-    } else if (InfoS.is.singleMulti(info)) {
-      const section = this.sectionByFocal(focalInfo, info);
-      return [section];
-    } else {
-      return this.sectionsByPluralFocal(focalInfo, info as any);
-    }
-  }
-  sectionsByPluralFocal<SN extends SectionName>(
-    focalInfo: SpecificSectionInfo,
-    info: MultiFindByFocalInfo<SN>
-  ): FeSectionI<SN>[] {
-    switch (info.id) {
-      case "all": {
-        return this.list(info.sectionName).core.list as FeSectionI<SN>[];
-      }
-      case "children": {
-        const section = this.sectionByMixed(focalInfo);
-        const { sectionName } = info;
-        if (section.meta.isChildName(sectionName)) {
-          const childFeIds = section.childFeIds(sectionName);
-          return childFeIds.map((feId) =>
-            this.section({ sectionName, feId })
-          ) as FeSectionI<SN>[];
-        } else
-          throw new Error(
-            "Child info does not match any of focal section's childNames."
-          );
-      }
-      default:
-        throw new Error("Exhausted MultiSectionInfo options.");
-    }
-  }
-  sectionByFocal<SN extends SectionName>(
-    focalInfo: SpecificSectionInfo,
-    info: MultiFindByFocalInfo<SN>
-  ): FeSectionI<SN> {
-    if (InfoS.is.specific(info)) return this.sectionByMixed(info);
-    const focalSection = this.sectionByMixed(focalInfo);
-    switch (info.id) {
-      case "local": {
-        if (focalSection.sectionName === info.sectionName) {
-          return focalSection as any as FeSectionI<SN>;
-        } else
-          throw new Error("Local section did not match the focal section.");
-      }
-      case "parent": {
-        const { parentInfoSafe } = focalSection;
-        if (parentInfoSafe.sectionName !== info.sectionName)
-          throw new Error(
-            "Parent section does not match the focal section's parent."
-          );
-        return this.section(parentInfoSafe) as any as FeSectionI<SN>;
-      }
-      default:
-        throw new Error("Exhausted MultiFindByFocalInfo options.");
-    }
   }
 }

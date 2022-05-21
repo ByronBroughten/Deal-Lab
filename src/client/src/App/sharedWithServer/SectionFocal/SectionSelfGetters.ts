@@ -17,25 +17,34 @@ import { SectionName } from "../SectionsMeta/SectionName";
 import { FeSectionI } from "../SectionsState/FeSection";
 import FeVarb, { ValueTypesPlusAny } from "../SectionsState/FeSection/FeVarb";
 import { FeVarbsI } from "../SectionsState/FeSection/FeVarbs";
-import { SectionList } from "../SectionsState/SectionList";
 import { Obj } from "../utils/Obj";
+import { FeVarbInfo } from "./../SectionsMeta/relSections/rel/relVarbInfoTypes";
 
-export interface SelfGettersProps<SN extends SectionName>
+export interface SectionSelfGettersProps<SN extends SectionName>
   extends FeSectionInfo<SN> {
   shared: SharedSections;
 }
 
-export class SelfGetters<SN extends SectionName> extends HasSharedSections {
+// Ok. So. What if I make FeSection extends SectionSelfGetters?
+// I would have to change its init function
+// It would need to receive the shared state in addition to everything else
+// that is the only new thing it would need to get, though.
+
+// what would I do with its updating capabilities?
+
+export class SectionSelfGetters<
+  SN extends SectionName
+> extends HasSharedSections {
   private sections: GetterSections;
   readonly sectionName: SN;
   readonly feId: string;
-  constructor({ shared, sectionName, feId }: SelfGettersProps<SN>) {
+  constructor({ shared, sectionName, feId }: SectionSelfGettersProps<SN>) {
     super(shared);
     this.sections = new GetterSections(shared);
     this.sectionName = sectionName;
     this.feId = feId;
   }
-  get constructorProps(): SelfGettersProps<SN> {
+  get constructorProps(): SectionSelfGettersProps<SN> {
     return {
       shared: this.shared,
       ...this.feInfo,
@@ -53,9 +62,13 @@ export class SelfGetters<SN extends SectionName> extends HasSharedSections {
       sectionName: this.sectionName,
     };
   }
-  childList<CN extends ChildName<SN>>(childName: CN): SectionList<CN> {
-    return this.sections.list(childName);
+  childSections<CN extends ChildName<SN>>(childName: CN): FeSectionI<CN>[] {
+    const ids = this.section.childFeIds(childName);
+    return ids.map((feId) =>
+      this.sections.section({ sectionName: childName, feId })
+    );
   }
+
   get section(): FeSectionI<SN> {
     return this.sections.one(this.feInfo);
   }
@@ -72,7 +85,7 @@ export class SelfGetters<SN extends SectionName> extends HasSharedSections {
     return this.varb(varbName).value(valueType);
   }
 
-  selfAndDescendantFeIds(): SelfAndDescendantIds<SN> {
+  get selfAndDescendantFeIds(): SelfAndDescendantIds<SN> {
     const { feId, sectionName } = this.section;
     const descendantIds = this.descendantFeIds();
     return {
@@ -80,7 +93,26 @@ export class SelfGetters<SN extends SectionName> extends HasSharedSections {
       ...descendantIds,
     } as SelfAndDescendantIds<SN>;
   }
-
+  get selfAndDescendantSectionInfos() {
+    const feIds = this.selfAndDescendantFeIds;
+    return Obj.keys(feIds).reduce((feSectionInfos, sectionName) => {
+      const sectionInfos = feIds[sectionName].map(
+        (feId) =>
+          ({
+            sectionName,
+            feId,
+          } as FeSectionInfo)
+      );
+      return feSectionInfos.concat(...sectionInfos);
+    }, [] as FeSectionInfo[]);
+  }
+  get selfAndDescendantVarbInfos() {
+    const sectionInfos = this.selfAndDescendantSectionInfos;
+    return sectionInfos.reduce((feVarbInfos, sectionInfo) => {
+      const section = this.sections.section(sectionInfo);
+      return feVarbInfos.concat(...section.varbs.infos);
+    }, [] as FeVarbInfo[]);
+  }
   descendantFeIds(): DescendantIds<SN> {
     const descendantIds: { [key: string]: string[] } = {};
 

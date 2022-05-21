@@ -6,13 +6,13 @@ import { DescendantAdder, DescendantAdderI } from "./DescendantAdder";
 import { FocalSectionBase } from "./FocalSectionBase";
 import { SectionPackLoader, SectionPackLoaderI } from "./SectionPackLoader";
 
-export class DefaultOrNewDescendantAdder<
+export class DefaultOrNewChildAdder<
   SN extends SectionName
 > extends FocalSectionBase<SN> {
-  adder = new DescendantAdder(
+  private adder = new DescendantAdder(
     this.self.constructorProps
   ) as DescendantAdderI<SN>;
-  loader = new SectionPackLoader(
+  private loader = new SectionPackLoader(
     this.self.constructorProps
   ) as SectionPackLoaderI<SN>;
   addChild<CN extends ChildName<SN>>(childName: CN) {

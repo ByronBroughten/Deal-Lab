@@ -31,9 +31,10 @@ export interface FeVarbsI<SN extends SectionName> extends TopMixins<SN> {
     varbName: string,
     valueType?: T
   ): ValueTypesPlusAny[T];
+  values<T extends ValuesRequest>(varbTypes: T): RequestedValues<T>;
+  get varbInfoValues(): InEntityVarbInfo;
   replaceOne(nextVarb: FeVarb): FeVarbsI<SN>;
   update(partial: FeVarbsCore<SN>): FeVarbsI<SN>;
-  get varbInfoValues(): InEntityVarbInfo;
   get db(): DbVarbs;
   get arr(): FeVarb[];
   get entities(): InEntities;

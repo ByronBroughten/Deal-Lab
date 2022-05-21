@@ -1,18 +1,38 @@
 import assert from "assert";
-import { NumObj } from "../../SectionsMeta/baseSections/baseValues/NumObj";
+import { NumberProps } from "../../Analyzer/methods/solveVarbs/solveAndUpdateValue/updateNumericObjCalc";
+import { SolverSections } from "../../Sections/SolverSections";
+import calculations, {
+  isCalculationName,
+} from "../../SectionsMeta/baseSections/baseValues/calculations";
+import {
+  DbNumObj,
+  FailedVarbs,
+  NumObj,
+  NumObjCache,
+  NumObjNumber,
+} from "../../SectionsMeta/baseSections/baseValues/NumObj";
+import { isNumObjUpdateFnName } from "../../SectionsMeta/baseSections/baseValues/updateFnNames";
+import { SpecificVarbInfo } from "../../SectionsMeta/relSections/rel/relVarbInfoTypes";
+import { SectionName } from "../../SectionsMeta/SectionName";
+import { Str } from "../../utils/Str";
+import { SectionSelfGettersProps } from "../SectionSelfGetters";
+import { FocalVarbBase } from "./FocalVarbBase";
+import { solveText } from "./ValueSolver/solveText";
+import { UserVarbValueSolver } from "./ValueSolver/UserVarbValueSolver";
 
-class ValueSolver {
-  updateFns = {
+export class ValueSolver<
+  SN extends SectionName<"hasVarb">
+> extends FocalVarbBase<SN> {
+  sections = new SolverSections(this.shared);
+  private updateFns = {
     editorValue: (): NumObj => {
-      assert(this.varbName === "editorValue");
-      const value = this.value("numObj");
-      const { cache } = this.localValue("editorValue", "numObj");
-      return value.updateCache({
-        ...cache,
-      });
+      assert(this.selfVarb.varbName === "editorValue");
+      const value = this.selfVarb.value("numObj");
+      const { cache } = this.selfVarb.localValue("editorValue", "numObj");
+      return value.updateCache(cache);
     },
     loadedNumObj: (): NumObj => {
-      const numObj = this.value("numObj");
+      const numObj = this.selfVarb.value("numObj");
       const loadingVarbInfo = this.self.varbs.varbInfoValues;
 
       let nextCache: NumObjCache;
@@ -36,44 +56,134 @@ class ValueSolver {
         entities: nextEntities,
       });
     },
-    calcVarbs(): NumObj {
-      // this is where it's happening, ya?
-      const solvableText = analyzer.solvableTextFromCalcVarbs(feVarbInfo);
-      const number = analyzer.solvableTextToNumber(feVarbInfo, solvableText);
-      const numObj = analyzer.value(feVarbInfo, "numObj");
-      // what is happening to the entities?
+    calcVarbs: (): NumObj => {
+      const solvableText = this.solvableTextFromCalcVarbs();
+      const number = this.solvableTextToNumber(solvableText);
+      const numObj = this.selfVarb.value("numObj");
       const next = numObj.updateCache({
         solvableText,
         number,
       });
       return next;
     },
-    calculation(): NumObj {
-      const solvableText = analyzer.solvableTextFromCalculation(feVarbInfo);
-      const number = analyzer.solvableTextToNumber(feVarbInfo, solvableText);
-      const numObj = analyzer.value(feVarbInfo, "numObj");
+    calculation: (): NumObj => {
+      const solvableText = this.solvableTextFromCalculation();
+      const number = this.solvableTextToNumber(solvableText);
+      const numObj = this.selfVarb.value("numObj");
       const nextNumObj = numObj.updateCache({
         solvableText,
         number,
       });
-      // I should get rid of entities, right?
-      // I can't just get rid of them, though, right?
-
       return nextNumObj.updateCore({
         editorText: `${number === "?" ? "" : number}`,
         entities: [],
       });
     },
-    userVarb(): NumObj {
-      if (InfoS.is.feName(feVarbInfo, "userVarbItem"))
-        return analyzer.getUserVarbValue(feVarbInfo);
-      else throw new Error("section must contain at least one varb");
+    userVarb: (): NumObj => {
+      if (this.self.sectionName === "userVarbItem") {
+        const userVarbSolver = new UserVarbValueSolver(
+          this.constructorProps as SectionSelfGettersProps<"userVarbItem">
+        );
+
+        return userVarbSolver.getUserVarbValue();
+      } else throw new Error("section must contain at least one varb");
     },
-    loadedString(): string {
-      const varbInfo = analyzer.varbInfoValues(feVarbInfo);
-      const varb = analyzer.findVarb(varbInfo);
-      if (!varb) return "Variable not found.";
-      else return analyzer.displayName(feVarbInfo);
+    loadedString: (): string => {
+      const { varbInfoValues } = this.self.varbs;
+      if (this.sections.hasSectionMixed(varbInfoValues)) {
+        return this.sections.displayNameByMixed(varbInfoValues);
+      } else return "Variable not found.";
     },
   };
+
+  solveValue(): NumObj | string {
+    const { updateFnName } = this.selfVarb;
+    if (isCalculationName(updateFnName)) return this.updateFns.calculation();
+    if (this.isInUpdateFns(updateFnName)) return this.updateFns[updateFnName]();
+    else throw new Error(`updateFnName ${updateFnName} not found.`);
+  }
+  private isInUpdateFns(str: string): str is keyof typeof this.updateFns {
+    return str in this.updateFns;
+  }
+  private solvableTextFromCalcVarbs(): string {
+    if (this.selfVarb.updateFnName !== "calcVarbs")
+      throw new Error("This is only for calcVarbs");
+
+    const { core } = this.selfVarb.value("numObj");
+    return this.solvableTextFromEditorTextAndEntities(core);
+  }
+  private solvableTextFromEditorTextAndEntities({
+    editorText,
+    entities,
+  }: DbNumObj): string {
+    let solvableText = editorText;
+    for (const entity of entities) {
+      const num = this.getSolvableNumber(entity);
+      solvableText = Str.replaceRange(
+        solvableText,
+        entity.offset,
+        entity.offset + entity.length,
+        `${num}`
+      );
+    }
+    return solvableText;
+  }
+  private getSolvableNumber(feVarbInfo: SpecificVarbInfo): NumObjNumber {
+    const varb = this.sections.varbByMixed(feVarbInfo);
+    if (!varb) return "?";
+    return varb.value("numObj").number;
+  }
+  private solvableTextToNumber(solvableText: string): NumObjNumber {
+    const { updateFnName } = this.selfVarb;
+    if (isNumObjUpdateFnName(updateFnName)) {
+      const { unit } = this.selfVarb.varb.meta;
+      return solveText(solvableText, unit, updateFnName);
+    } else {
+      throw new Error("For now, this is only for numObjs.");
+    }
+  }
+  private solvableTextFromCalculation() {
+    const { updateFnName } = this.selfVarb;
+    if (!isCalculationName(updateFnName))
+      throw new Error(
+        `updateFnName is ${updateFnName}, but this is only for pure calculations`
+      );
+
+    const { numberVarbs } = this.getNumberVarbs();
+    const solvableText = calculations[updateFnName](numberVarbs as any);
+    return solvableText;
+  }
+  private getNumberVarbs(): {
+    numberVarbs: NumberProps;
+    failedVarbs: FailedVarbs;
+  } {
+    const numberVarbs: NumberProps = {};
+    const failedVarbs: FailedVarbs = [];
+
+    const { updateFnProps } = this.selfVarb;
+
+    for (let [propName, propOrArr] of Object.entries(updateFnProps)) {
+      if (Array.isArray(propOrArr)) numberVarbs[propName] = [];
+      else propOrArr = [propOrArr];
+      for (const relInfo of propOrArr) {
+        const inVarbs = this.selfVarb.varbsByFocal(relInfo);
+        for (const inVarb of inVarbs) {
+          const value = inVarb.value();
+          if (!(value instanceof NumObj)) continue;
+          let { number: num } = inVarb.value("numObj");
+          if (num === "?") {
+            failedVarbs.push({
+              errorMessage: "failed varb",
+              ...relInfo,
+            });
+          }
+          const numArr = numberVarbs[propName];
+          if (Array.isArray(numArr)) numArr.push(num);
+          else numberVarbs[propName] = num;
+        }
+      }
+    }
+
+    return { numberVarbs, failedVarbs };
+  }
 }

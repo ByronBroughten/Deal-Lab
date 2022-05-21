@@ -7,14 +7,17 @@ import { SectionName } from "../SectionsMeta/SectionName";
 import { FeSection } from "../SectionsState/FeSection";
 import { SectionList } from "../SectionsState/SectionList";
 import { FeSections } from "../SectionsState/SectionsState";
-import { SelfGetters, SelfGettersProps } from "./SelfGetters";
+import {
+  SectionSelfGetters,
+  SectionSelfGettersProps,
+} from "./SectionSelfGetters";
 
 export class FocalSectionBase<
   SN extends SectionName = "main"
 > extends HasSharedSections {
-  readonly self: SelfGetters<SN>;
+  readonly self: SectionSelfGetters<SN>;
   constructor(
-    props: SelfGettersProps<SN> = FocalSectionBase.defaultProps() as any as SelfGettersProps<SN>
+    props: SectionSelfGettersProps<SN> = FocalSectionBase.defaultProps() as any as SectionSelfGettersProps<SN>
   ) {
     const { shared, ...sectionInfo } = props;
     const getters = new GetterSections(shared);
@@ -24,9 +27,9 @@ export class FocalSectionBase<
       );
     }
     super(shared);
-    this.self = new SelfGetters(props);
+    this.self = new SectionSelfGetters(props);
   }
-  static defaultProps(): SelfGettersProps<"main"> {
+  static defaultProps(): SectionSelfGettersProps<"main"> {
     const updaterSections = new UpdaterSections({
       sections: FeSections.init(),
     });
