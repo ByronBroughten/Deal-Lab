@@ -5,6 +5,7 @@ import { DbNameInfo } from "../../SectionsMeta/relSections/rel/relVarbInfoTypes"
 import { SectionName, sectionNameS } from "../../SectionsMeta/SectionName";
 import { SectionInfoGettersI } from "../HasSectionInfoProps";
 import { FeSectionCore } from "./FeSectionCore";
+import FeVarb from "./FeVarb";
 import { FeVarbsI } from "./FeVarbs";
 import { HasFeSectionProps } from "./HasFeSectionProps";
 
@@ -18,6 +19,7 @@ export interface FeSectionGettersI<SN extends SectionName>
   get feParentInfo(): FeParentInfo<SN>;
   get parentInfoSafe(): FeParentInfo<SectionName<"hasParent">>;
   get varbs(): FeVarbsI<SN>;
+  varb(varbName: string): FeVarb;
 }
 
 interface FeSectionGettersMixins<SN extends SectionName>
@@ -63,8 +65,12 @@ export function ApplySectionGetters<
         throw new Error("This section doesn't have a parent.");
       return parentInfo as FeParentInfo<SectionName<"hasParent">>;
     }
+
     get varbs(): FeVarbsI<SN> {
       return this.core.varbs;
+    }
+    varb(varbName: string): FeVarb {
+      return this.varbs.one(varbName);
     }
   };
 }

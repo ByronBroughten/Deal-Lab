@@ -1,5 +1,6 @@
 import { cloneDeep } from "lodash";
 import { GConstructor } from "../../../utils/classObjects";
+import { sectionMetas } from "../../SectionsMeta";
 import { FeInfo, FeSectionInfo, InfoS } from "../../SectionsMeta/Info";
 import {
   ChildFeInfo,
@@ -33,6 +34,10 @@ export function ChildIdGetterNext<
     extends Base
     implements IChildIdGetterNext<SN>
   {
+    isChildName(value: any): value is ChildName<SN> {
+      const meta = sectionMetas.section(this.sectionName);
+      meta.isChildName();
+    }
     get allChildFeIds(): ChildIdArrsWide<SN> {
       return cloneDeep(this.core.childFeIds) as any as ChildIdArrsWide<SN>;
     }
