@@ -44,8 +44,8 @@ export interface FeParentInfo<SN extends SectionName> {
   feId: string;
 }
 
-export interface VarbInfo<T extends FeSectionNameType = "hasVarb">
-  extends FeInfoByType<T> {
+export interface VarbInfo<SN extends SectionName = SectionName<"hasVarb">>
+  extends FeSectionInfo<SN> {
   varbName: string;
 }
 
@@ -125,6 +125,25 @@ export const InfoS = {
   },
   fe<S extends SectionName>(sectionName: S, id: string): FeNameInfo<S> {
     return { sectionName, id, idType: "feId" };
+  },
+  feToMixed<SN extends SectionName>({
+    sectionName,
+    feId,
+  }: FeSectionInfo<SN>): FeNameInfo<SN> {
+    return {
+      sectionName,
+      id: feId,
+      idType: "feId",
+    };
+  },
+  feToMixedVarb<SN extends SectionName>({
+    varbName,
+    ...rest
+  }: VarbInfo<SN>): FeVarbInfo<SN> {
+    return {
+      varbName,
+      ...this.feToMixed(rest),
+    };
   },
   db<S extends SectionName>(sectionName: S, dbId: string): DbNameInfo<S> {
     return {

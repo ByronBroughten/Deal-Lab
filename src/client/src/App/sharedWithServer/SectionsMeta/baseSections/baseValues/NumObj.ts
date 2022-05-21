@@ -38,7 +38,7 @@ export function dbNumObj(
 
 export type EntitiesAndEditorText = DbNumObj;
 export type NumObjCore = EntitiesAndEditorText;
-type NumObjCache = {
+export type NumObjCache = {
   solvableText: string;
   number: NumObjNumber;
 };

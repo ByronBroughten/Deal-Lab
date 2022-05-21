@@ -26,7 +26,7 @@ import FeVarb from "./FeSection/FeVarb";
 import { HasFeSectionProps } from "./FeSection/HasFeSectionProps";
 import { ApplySectionInfoGetters } from "./HasSectionInfoProps";
 
-export interface FeSectionI<SN extends SectionName>
+export interface FeSectionI<SN extends SectionName = SectionName>
   extends FeSectionMixins<SN> {
   addChildFeId({ idx, ...childInfo }: NewChildInfo<SN>): FeSectionI<SN>;
   removeChildFeId({ sectionName, feId }: NewChildInfo<SN>): FeSectionI<SN>;

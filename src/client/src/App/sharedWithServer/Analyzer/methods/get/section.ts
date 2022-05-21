@@ -123,7 +123,6 @@ export function hasSection(
 ): boolean {
   return this.findSections(info).length !== 0;
 }
-
 export function sectionOutFeVarbInfos(
   this: Analyzer,
   feInfo: FeNameInfo

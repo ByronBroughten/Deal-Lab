@@ -2,6 +2,10 @@ import { SelfGetters } from "../SectionFocal/SelfGetters";
 import { sectionMetas } from "../SectionsMeta";
 import { SimpleSectionName } from "../SectionsMeta/baseSections";
 import { FeSectionInfo, VarbInfo } from "../SectionsMeta/Info";
+import {
+  SpecificSectionInfo,
+  SpecificVarbInfo,
+} from "../SectionsMeta/relSections/rel/relVarbInfoTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { FeSectionI } from "../SectionsState/FeSection";
 import FeVarb from "../SectionsState/FeSection/FeVarb";
@@ -28,7 +32,13 @@ export class GetterSections extends HasSharedSections {
     sectionName,
     feId,
   }: FeSectionInfo<SN>): FeSectionI<SN> {
-    return this.list(sectionName as SN).getByFeId(feId);
+    return this.list(sectionName).getByFeId(feId);
+  }
+  sectionByMixed<SN extends SimpleSectionName>({
+    sectionName,
+    ...idInfo
+  }: SpecificSectionInfo<SN>): FeSectionI<SN> {
+    return this.list(sectionName).getSpecific(idInfo);
   }
   get one() {
     return this.section;
@@ -39,8 +49,14 @@ export class GetterSections extends HasSharedSections {
   varb({ varbName, ...info }: VarbInfo): FeVarb {
     return this.varbs(info).one(varbName);
   }
+  varbByMixed({ varbName, ...info }: SpecificVarbInfo): FeVarb {
+    return this.sectionByMixed(info).varbs.one(varbName);
+  }
   hasSection({ sectionName, feId }: FeSectionInfo): boolean {
     return this.list(sectionName).hasByFeId(feId);
+  }
+  hasSectionMixed({ sectionName, ...idInfo }: SpecificSectionInfo) {
+    return this.list(sectionName).has(idInfo);
   }
   makeFocalGetter<SN extends SectionName>(
     info: FeSectionInfo<SN>

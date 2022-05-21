@@ -34,7 +34,7 @@ export interface RelSectionInfo<
 }
 
 export type MultiSectionInfo<SN extends SimpleSectionName = SimpleSectionName> =
-  RandomStringIdNameInfo | RelSectionInfo<SN>;
+  RandomStringIdNameInfo<SN> | RelSectionInfo<SN>;
 
 export type DbUserDefInfo<
   S extends BaseName<"uniqueDbId"> | BaseName<"rowIndex"> =
