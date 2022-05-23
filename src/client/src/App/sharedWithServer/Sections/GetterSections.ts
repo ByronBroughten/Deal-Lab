@@ -32,6 +32,9 @@ export class GetterSections extends HasSharedSections {
   get mainFeInfo() {
     return this.list("main").first.feInfo;
   }
+  get mainInfo() {
+    return this.list("main").first.info;
+  }
   section<SN extends SimpleSectionName>({
     sectionName,
     feId,

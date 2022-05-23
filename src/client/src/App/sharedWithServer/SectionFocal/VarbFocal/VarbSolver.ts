@@ -1,4 +1,4 @@
-import { SolverSections } from "../../Sections/SolverSections";
+import { UpdaterSections } from "../../Sections/UpdaterSections";
 import {
   entityS,
   InEntity,
@@ -20,7 +20,7 @@ type AddOutEntityProps = {
 export class VarbSolver<
   SN extends SectionName<"hasVarb">
 > extends FocalVarbBase<SN> {
-  private sections = new SolverSections(this.shared);
+  private sections = new UpdaterSections(this.shared);
   private valueSolver = new ValueSolver(this.constructorProps);
   solveAndUpdateValue() {
     const newValue = this.valueSolver.solveValue();

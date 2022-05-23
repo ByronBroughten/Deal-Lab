@@ -1,9 +1,5 @@
-import { GetterSections } from "../Sections/GetterSections";
-import {
-  HasSharedSections,
-  SharedSections,
-} from "../Sections/HasSharedSections";
-import { FeSectionInfo } from "../SectionsMeta/Info";
+import { SharedSections } from "../Sections/HasSharedSections";
+import { FeParentInfo, FeSectionInfo } from "../SectionsMeta/Info";
 import { ValueTypeName } from "../SectionsMeta/relSections/rel/valueMetaTypes";
 import {
   ChildIdArrs,
@@ -17,6 +13,8 @@ import { SectionName } from "../SectionsMeta/SectionName";
 import { FeSectionI } from "../SectionsState/FeSection";
 import FeVarb, { ValueTypesPlusAny } from "../SectionsState/FeSection/FeVarb";
 import { FeVarbsI } from "../SectionsState/FeSection/FeVarbs";
+import { HasSectionInfoProps } from "../SectionsState/HasSectionInfoProps";
+import { FeSections } from "../SectionsState/SectionsState";
 import { Obj } from "../utils/Obj";
 import { FeVarbInfo } from "./../SectionsMeta/relSections/rel/relVarbInfoTypes";
 
@@ -25,25 +23,18 @@ export interface SectionSelfGettersProps<SN extends SectionName>
   shared: SharedSections;
 }
 
-// Ok. So. What if I make FeSection extends SectionSelfGetters?
-// I would have to change its init function
-// It would need to receive the shared state in addition to everything else
-// that is the only new thing it would need to get, though.
-
-// what would I do with its updating capabilities?
-
 export class SectionSelfGetters<
   SN extends SectionName
-> extends HasSharedSections {
-  private sections: GetterSections;
-  readonly sectionName: SN;
-  readonly feId: string;
-  constructor({ shared, sectionName, feId }: SectionSelfGettersProps<SN>) {
-    super(shared);
-    this.sections = new GetterSections(shared);
-    this.sectionName = sectionName;
-    this.feId = feId;
+> extends HasSectionInfoProps<SN> {
+  readonly shared: SharedSections;
+  constructor({ shared, ...info }: SectionSelfGettersProps<SN>) {
+    super(info);
+    this.shared = shared;
   }
+  private get sections(): FeSections {
+    return this.shared.sections;
+  }
+
   get constructorProps(): SectionSelfGettersProps<SN> {
     return {
       shared: this.shared,
@@ -62,13 +53,15 @@ export class SectionSelfGetters<
       sectionName: this.sectionName,
     };
   }
+  get idx() {
+    return this.sections.list(this.sectionName).idx(this.feId);
+  }
   childSections<CN extends ChildName<SN>>(childName: CN): FeSectionI<CN>[] {
     const ids = this.section.childFeIds(childName);
     return ids.map((feId) =>
       this.sections.section({ sectionName: childName, feId })
     );
   }
-
   get section(): FeSectionI<SN> {
     return this.sections.one(this.feInfo);
   }
@@ -168,12 +161,15 @@ export class SectionSelfGetters<
       {} as ChildIdArrs<SN>
     );
   }
+  get parentInfo(): FeParentInfo<SN> {
+    return this.section.feParentInfo;
+  }
   parent(): FeSectionI<ParentNameSafe<SN>> {
-    const { feParentInfo } = this.section;
-    if (feParentInfo.sectionName === "no parent")
+    const { parentInfo } = this;
+    if (parentInfo.sectionName === "no parent")
       throw new Error(
         `Section with sectionName ${this.sectionName} has no parent.`
       );
-    return this.sections.one(feParentInfo as FeSectionInfo<ParentNameSafe<SN>>);
+    return this.sections.one(parentInfo as FeSectionInfo<ParentNameSafe<SN>>);
   }
 }

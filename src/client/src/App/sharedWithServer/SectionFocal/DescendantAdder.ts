@@ -20,11 +20,11 @@ export interface DescendantAdderI<SN extends SectionName>
   extends FocalSectionBase<SN> {
   addDescendant<DN extends DescendantName<SN>>(
     descendantPath: DescendantList<SN, DN>,
-    props: AddDescendantOptions<SN, DN>
+    options?: AddDescendantOptions<SN, DN>
   ): void;
   addChild<CN extends ChildName<SN>>(
     childName: CN,
-    props?: AddChildOptions<SN>
+    options?: AddChildOptions<SN>
   ): void;
   addOneSection<S extends SectionName>(props: AddSectionPropsNext<S>): void;
   addSections(parentFirstPropsArr: AddSectionPropsNext[]): void;
@@ -38,7 +38,7 @@ export function ApplyDescendantAdderNext<
     private sections = new UpdaterSections(this.shared);
     addDescendant<DN extends DescendantName<SN>>(
       descendantPath: DescendantList<SN, DN>,
-      props: AddDescendantOptions<SN, DN> = {}
+      options: AddDescendantOptions<SN, DN> = {}
     ): void {
       let { sectionName, feId } = this.self
         .feInfo as FeSelfOrDescendantInfo<SN>;
@@ -54,7 +54,7 @@ export function ApplyDescendantAdderNext<
           };
           if (i === descendantPath.length - 1) {
             this.addOneSection({
-              ...props,
+              ...options,
               ...commonProps,
             });
           } else if (this.sections.list(childName).isEmpty) {

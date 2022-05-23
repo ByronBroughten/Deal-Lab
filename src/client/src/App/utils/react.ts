@@ -1,5 +1,10 @@
 import React from "react";
 
+export const react = {
+  makeContext,
+  makeContextUseContext,
+} as const;
+
 export const NoProviderErr = (useContextName: string) => {
   return new Error(`${useContextName} must be used within a matching provider`);
 };
@@ -31,7 +36,8 @@ function contextToUseContext<T>(
 ): () => T {
   return () => {
     const context = React.useContext(Context);
-    if (context === undefined) throw NoProviderErr("useQueryActorContext");
+    if (context === undefined)
+      throw new Error(`There is no ${Context.displayName} provider.`);
     return context;
   };
 }

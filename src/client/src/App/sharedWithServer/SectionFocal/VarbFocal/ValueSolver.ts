@@ -1,6 +1,6 @@
 import assert from "assert";
 import { NumberProps } from "../../Analyzer/methods/solveVarbs/solveAndUpdateValue/updateNumericObjCalc";
-import { SolverSections } from "../../Sections/SolverSections";
+import { GetterSections } from "../../Sections/GetterSections";
 import calculations, {
   isCalculationName,
 } from "../../SectionsMeta/baseSections/baseValues/calculations";
@@ -23,8 +23,11 @@ import { UserVarbValueSolver } from "./ValueSolver/UserVarbValueSolver";
 export class ValueSolver<
   SN extends SectionName<"hasVarb">
 > extends FocalVarbBase<SN> {
-  sections = new SolverSections(this.shared);
+  private sections = new GetterSections(this.shared);
   private updateFns = {
+    string: (): string => {
+      return this.selfVarb.value("string");
+    },
     editorValue: (): NumObj => {
       assert(this.selfVarb.varbName === "editorValue");
       const value = this.selfVarb.value("numObj");

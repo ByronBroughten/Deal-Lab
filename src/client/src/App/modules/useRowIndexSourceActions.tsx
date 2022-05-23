@@ -1,16 +1,22 @@
 import { sectionMetas } from "../sharedWithServer/SectionsMeta";
 import { InEntityVarbInfo } from "../sharedWithServer/SectionsMeta/baseSections/baseValues/entities";
-import { DbInfo, FeInfo, InfoS } from "../sharedWithServer/SectionsMeta/Info";
+import {
+  DbInfo,
+  FeInfo,
+  FeInfoByType,
+  InfoS,
+} from "../sharedWithServer/SectionsMeta/Info";
 import { FeVarbInfo } from "../sharedWithServer/SectionsMeta/relSections/rel/relVarbInfoTypes";
 import { SectionName } from "../sharedWithServer/SectionsMeta/SectionName";
 import { StateQuerierBase, StateQuerierBaseProps } from "./StateQuerierBase";
 import { IndexSectionQuerier } from "./StateQueriersShared/IndexQuerier";
 import { useAnalyzerContext } from "./usePropertyAnalyzer";
 
-export function useRowIndexSourceActions(feInfo: FeInfo<"hasRowIndex">) {
+export function useRowIndexSourceActions({
+  sectionName,
+  feId,
+}: FeInfoByType<"hasRowIndex">) {
   const { analyzer, setAnalyzerOrdered } = useAnalyzerContext();
-
-  const { sectionName, id: feId } = feInfo;
   const mainSectionIndexQuerier = new MainSectionIndexStateQuerier({
     sections: analyzer,
     setSectionsOrdered: setAnalyzerOrdered,

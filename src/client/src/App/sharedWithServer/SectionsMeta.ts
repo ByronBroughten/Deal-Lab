@@ -213,6 +213,9 @@ export class SectionsMeta {
 
     for (const info of inUpdateInfos) {
       const { sectionName, varbName, id } = info;
+
+      // the issue may be that there is no such thing as a permanet
+      // outUpdatePack when a section can have two parents.
       const outUpdatePack = this.makeOutUpdatePack(
         {
           ...targetNames,

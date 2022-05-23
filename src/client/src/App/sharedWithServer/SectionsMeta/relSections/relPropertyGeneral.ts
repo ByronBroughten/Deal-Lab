@@ -4,15 +4,18 @@ import { rel } from "./rel";
 import { relSection, RelSectionOptions } from "./rel/relSection";
 import { RelVarbs } from "./rel/relVarbs";
 
-function propertyRelVarbs<R extends RelVarbs<ContextName, "property">>(): R {
-  const r: R = {
+function propertyRelVarbs<
+  SN extends "property" | "propertyIndexNext",
+  R extends RelVarbs<ContextName, SN>
+>(sectionName: SN): R {
+  return {
     title: rel.varb.string(),
     price: rel.varb.moneyObj("Price"),
     sqft: rel.varb.calcVarb("Square feet"),
-    ...rel.varbs.timeMoney("taxes", "Taxes", "property", {
+    ...rel.varbs.timeMoney("taxes", "Taxes", sectionName, {
       switchInit: "yearly",
     }),
-    ...rel.varbs.timeMoney("homeIns", "Home insurance", "property", {
+    ...rel.varbs.timeMoney("homeIns", "Home insurance", sectionName, {
       switchInit: "yearly",
     }),
     numUnits: rel.varb.sumChildVarb("Unit count", "unit", "one"),
@@ -48,11 +51,10 @@ function propertyRelVarbs<R extends RelVarbs<ContextName, "property">>(): R {
     ...rel.varbs.ongoingSumNums(
       "ongoingRevenue",
       "Ongoing property revenue",
-      rel.varbInfo.locals("property", ["targetRent", "miscOngoingRevenue"]),
+      rel.varbInfo.locals(sectionName, ["targetRent", "miscOngoingRevenue"]),
       { switchInit: "monthly", shared: { startAdornment: "$" } }
     ),
   } as R;
-  return r;
 }
 
 function propertySection<
@@ -66,7 +68,7 @@ function propertySection<
     "fe" as ContextName,
     sectionName,
     "Property",
-    propertyRelVarbs() as RelVarbs<"fe", SN>,
+    propertyRelVarbs(sectionName),
     {
       ...((options ?? {}) as O),
       childNames: [
@@ -86,8 +88,10 @@ export const prePropertyGeneral = {
     "propertyGeneral",
     "Property",
     {
-      ...rel.varbs.sumSection("property", propertyRelVarbs()),
-      ...rel.varbs.sectionStrings("property", propertyRelVarbs(), ["title"]),
+      ...rel.varbs.sumSection("property", propertyRelVarbs("property")),
+      ...rel.varbs.sectionStrings("property", propertyRelVarbs("property"), [
+        "title",
+      ]),
     },
     {
       childNames: ["property", "propertyDefault"] as const,
@@ -102,7 +106,7 @@ export const prePropertyGeneral = {
     "both",
     "propertyDefault",
     "Default Property",
-    propertyRelVarbs(),
+    propertyRelVarbs("property"),
     {
       childNames: [
         "upfrontCostList",

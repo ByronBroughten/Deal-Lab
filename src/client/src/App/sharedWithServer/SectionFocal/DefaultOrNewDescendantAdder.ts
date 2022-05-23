@@ -1,4 +1,4 @@
-import { defaultMaker } from "../Analyzer/methods/internal/addSections/gatherSectionInitProps/defaultSectionPacks";
+import { defaultMaker } from "../Analyzer/methods/internal/addSections/gatherSectionInitProps/defaultMaker";
 import { SectionPackRaw } from "../Analyzer/SectionPackRaw";
 import { ChildName } from "../SectionsMeta/relSectionTypes/ChildTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
@@ -14,10 +14,10 @@ export class DefaultOrNewChildAdder<
   ) as DescendantAdderI<SN>;
   private loader = new SectionPackLoader(
     this.self.constructorProps
-  ) as SectionPackLoaderI<SN>;
-  addChild<CN extends ChildName<SN>>(childName: CN) {
+  ) as any as SectionPackLoaderI<SN>;
+  addChild<CN extends ChildName<SN>>(childName: CN): void {
     if (defaultMaker.has(childName)) {
-      const sectionPack = defaultMaker.make(childName) as SectionPackRaw;
+      const sectionPack = defaultMaker.make(childName);
       this.loader.loadChildSectionPack(
         sectionPack as any as SectionPackRaw<CN>
       );

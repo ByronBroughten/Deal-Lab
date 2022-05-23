@@ -12,6 +12,7 @@ import NavBar from "./App/components/NavBar";
 import usePropertyAnalyzer, {
   AnalyzerContext,
 } from "./App/modules/usePropertyAnalyzer";
+import { SectionsContext, useSections } from "./App/modules/useSections";
 import GlobalStyle from "./App/theme/globalStyles";
 import theme, { Theme } from "./App/theme/Theme";
 
@@ -19,6 +20,8 @@ const App: React.FC = () => {
   const analyzerContext = usePropertyAnalyzer({
     main: true,
   });
+
+  const sectionsContext = useSections();
   return (
     <React.StrictMode>
       <Normalize />
@@ -26,31 +29,33 @@ const App: React.FC = () => {
         <Theme>
           <BrowserRouter>
             <AnalyzerContext.Provider value={analyzerContext}>
-              <GlobalStyle />
-              <Styled className="App-root">
-                <NavBar className="NavBar-visible" />
-                <div className="NavSpaceDiv-root"></div>
-                <Routes>
-                  <Route
-                    path="/deals"
-                    element={
-                      <IndexTable
-                        {...{
-                          tableName: "analysisTableNext",
-                          indexSourceFinder: "analysis",
-                        }}
-                      />
-                    }
-                  />
-                  {/* <Route path="/variables" element={<UserVarbsManager/>} /> */}
-                  {/* <Route path="/lists" element={<UserListsManager/>} /> */}
-                  <Route path="/not-found" element={<NotFound />} />
-                  <Route path="/" element={<AnalyzerMain />} />
-                  {/* <Route path="/" element={<Navigate replace to="/analyzer" />} /> */}
-                  <Route path="*" element={<NotFound />} />
-                </Routes>
-              </Styled>
-              <ToastContainer />
+              <SectionsContext.Provider value={sectionsContext}>
+                <GlobalStyle />
+                <Styled className="App-root">
+                  <NavBar className="NavBar-visible" />
+                  <div className="NavSpaceDiv-root"></div>
+                  <Routes>
+                    <Route
+                      path="/deals"
+                      element={
+                        <IndexTable
+                          {...{
+                            tableName: "analysisTableNext",
+                            indexSourceFinder: "analysis",
+                          }}
+                        />
+                      }
+                    />
+                    {/* <Route path="/variables" element={<UserVarbsManager/>} /> */}
+                    {/* <Route path="/lists" element={<UserListsManager/>} /> */}
+                    <Route path="/not-found" element={<NotFound />} />
+                    <Route path="/" element={<AnalyzerMain />} />
+                    {/* <Route path="/" element={<Navigate replace to="/analyzer" />} /> */}
+                    <Route path="*" element={<NotFound />} />
+                  </Routes>
+                </Styled>
+                <ToastContainer />
+              </SectionsContext.Provider>
             </AnalyzerContext.Provider>
           </BrowserRouter>
         </Theme>

@@ -1,4 +1,4 @@
-import { GConstructor } from "../../utils/classObjects";
+import { SectionPackRaw } from "../Analyzer/SectionPackRaw";
 import { UpdaterSections } from "../Sections/UpdaterSections";
 import { FeSectionInfo } from "../SectionsMeta/Info";
 import {
@@ -14,69 +14,63 @@ import {
   DescendantAdderI,
   DescendantList,
 } from "./DescendantAdder";
-import {
-  ApplySectionPackMakersNext,
-  SectionPackMakerINext,
-} from "./SectionPackMaker";
-import { SectionSelfGettersProps } from "./SectionSelfGetters";
+import { FocalSectionBase } from "./FocalSectionBase";
+import { SectionPackLoader, SectionPackLoaderI } from "./SectionPackLoader";
+import { SectionPackMaker, SectionPackMakerI } from "./SectionPackMaker";
 
-interface SectionPackBuilderNextMixins<SN extends SectionName>
-  extends DescendantAdderI<SN>,
-    SectionPackMakerINext<SN> {}
+export class SectionPackBuilder<
+  SN extends SectionName = "main"
+> extends FocalSectionBase<SN> {
+  private adder = new DescendantAdder(
+    this.self.constructorProps
+  ) as DescendantAdderI<SN>;
+  private loader = new SectionPackLoader(
+    this.self.constructorProps
+  ) as any as SectionPackLoaderI<SN>;
+  private maker = new SectionPackMaker(
+    this.self.constructorProps
+  ) as any as SectionPackMakerI<SN>;
+  private sections = new UpdaterSections(this.shared);
 
-interface SectionPackBuilderINext<SN extends SectionName>
-  extends SectionPackBuilderNextMixins<SN> {
+  makeSectionPack(): SectionPackRaw<SN> {
+    return this.maker.makeSectionPack();
+  }
   addAndGetDescendant<DN extends DescendantName<SN>>(
     descendantList: DescendantList<SN, DN>,
-    options: AddDescendantOptions<SN, DN>
-  ): SectionPackBuilderINext<DN>;
+    options?: AddDescendantOptions<SN, DN>
+  ): SectionPackBuilder<DN> {
+    this.adder.addDescendant(descendantList, options);
+    const descendantName = Arr.lastOrThrow(descendantList) as DN;
+    return this.newSectionBuilder(descendantName);
+  }
   addAndGetChild<CN extends ChildName<SN>>(
     childName: CN,
-    options: AddChildOptions<SN, CN>
-  ): SectionPackBuilderINext<CN>;
+    options?: AddChildOptions<SN, CN>
+  ): SectionPackBuilder<CN> {
+    this.addChild(childName, options);
+    return this.newSectionBuilder(childName);
+  }
+  addChild<CN extends ChildName<SN>>(
+    childName: CN,
+    options?: AddChildOptions<SN, CN>
+  ) {
+    this.adder.addChild(childName, options);
+  }
+  loadChild<CN extends ChildName<SN>>(childPack: SectionPackRaw<CN>) {
+    this.loader.loadChildSectionPack(childPack);
+  }
+  private newSectionBuilder<S extends SectionName>(
+    sectionName: S
+  ): SectionPackBuilder<S> {
+    const { info } = this.sections.list(sectionName).last;
+    return this.sectionBuilder(info);
+  }
+  private sectionBuilder<S extends SectionName>(
+    info: FeSectionInfo<S>
+  ): SectionPackBuilder<S> {
+    return new SectionPackBuilder({
+      shared: this.shared,
+      ...info,
+    });
+  }
 }
-
-function MakeSectionPackBuilderNext<
-  SN extends SectionName,
-  TBase extends GConstructor<SectionPackBuilderNextMixins<SN>>
->(Base: TBase): GConstructor<SectionPackBuilderINext<SN>> & TBase {
-  return class SectionPackBuilderNext
-    extends Base
-    implements SectionPackBuilderINext<SN>
-  {
-    private sections = new UpdaterSections(this.shared);
-    addAndGetDescendant<DN extends DescendantName<SN>>(
-      descendantList: DescendantList<SN, DN>,
-      options: AddDescendantOptions<SN, DN>
-    ): SectionPackBuilderINext<DN> {
-      this.addDescendant(descendantList, options);
-      const descendantName = Arr.lastOrThrow(descendantList) as DN;
-      return this.newSectionBuilder(descendantName);
-    }
-    addAndGetChild<CN extends ChildName<SN>>(
-      childName: CN,
-      options: AddChildOptions<SN, CN>
-    ): SectionPackBuilderINext<CN> {
-      this.addChild(childName, options);
-      return this.newSectionBuilder(childName);
-    }
-    private newSectionBuilder<S extends SectionName>(
-      sectionName: S
-    ): SectionPackBuilderINext<S> {
-      const { info } = this.sections.list(sectionName).last;
-      return this.sectionBuilder(info);
-    }
-    private sectionBuilder<S extends SectionName>(
-      info: FeSectionInfo<S>
-    ): SectionPackBuilderINext<S> {
-      return new SectionPackBuilderNext({
-        shared: this.shared,
-        ...info,
-      } as SectionSelfGettersProps<S>) as any as SectionPackBuilderINext<S>;
-    }
-  };
-}
-
-const HasSectionPackMakers = ApplySectionPackMakersNext(DescendantAdder);
-export const SectionPackBuilder =
-  MakeSectionPackBuilderNext(HasSectionPackMakers);

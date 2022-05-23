@@ -28,6 +28,7 @@ interface RandomStringIdNameInfo<
 }
 
 export interface RelSectionInfo<
+  // the sectionName in "parent" rel info should not matter or not be there.
   SN extends SimpleSectionName = SimpleSectionName
 > extends RelIdInfo {
   sectionName: SN;

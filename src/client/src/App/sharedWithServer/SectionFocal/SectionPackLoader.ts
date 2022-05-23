@@ -30,6 +30,7 @@ export interface SectionPackLoaderI<SN extends SectionName>
     sectionPack: SectionPackRaw<CN>,
     options?: { feId?: string; idx?: number }
   ): void;
+  loadSelfSectionPack(sectionPack: SectionPackRaw<SN>): void;
 }
 
 export function ApplySectionPackLoader<
@@ -71,6 +72,15 @@ export function ApplySectionPackLoader<
       this.loadSectionPack(sectionPack, {
         ...options,
         parentInfo: this.self.feInfo as any as FeParentInfo<CN>,
+      });
+    }
+    loadSelfSectionPack(sectionPack: SectionPackRaw<SN>): void {
+      const { feId, idx, parentInfo } = this.self;
+      this.remover.removeSelf();
+      this.loadSectionPack(sectionPack, {
+        feId,
+        idx,
+        parentInfo,
       });
     }
     // protected loadSectionPackChildren<

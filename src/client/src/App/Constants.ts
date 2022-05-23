@@ -29,6 +29,8 @@ export const config = {
     "upgradeUserToPro",
   ],
   tokenKey: {
+    sectionsState: "sections-state",
+    sectionsConfigHash: "sections-config-hash",
     apiUserAuth: "x-auth-token",
     analyzerState: "analyzer-state",
     analyzerConfigHash: "analyzer-config-hash",

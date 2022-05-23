@@ -35,10 +35,11 @@ export class SectionList<SN extends SimpleSectionName = SimpleSectionName> {
   }
   get first(): FeSectionI<SN> {
     const first = this.list[0];
-    if (!first)
+    if (!first) {
       throw new SectionNotFoundError(
         "Tried to get first section of sectionList, but there are none."
       );
+    }
     return first;
   }
   get last(): FeSectionI<SN> {
@@ -53,10 +54,24 @@ export class SectionList<SN extends SimpleSectionName = SimpleSectionName> {
   get feInfosNext(): FeSectionInfo<SN>[] {
     return this.list.map((section) => section.info);
   }
+  get length(): number {
+    return this.list.length;
+  }
   push(section: FeSectionI<SN>): SectionList<SN> {
     return this.updateList([...this.list, section]);
   }
-  insert(section: FeSectionI<SN>, idx: number): SectionList<SN> {
+  idx(feId: string): number {
+    const idx = this.list.findIndex((section) => section.feId === feId);
+    if (idx < 0) throw this.sectionNotFoundError(feId);
+    return idx;
+  }
+  insert({
+    section,
+    idx,
+  }: {
+    section: FeSectionI<SN>;
+    idx: number;
+  }): SectionList<SN> {
     return this.updateList(Arr.insert(this.list, section, idx));
   }
   replace(section: FeSectionI<SN>): SectionList<SN> {
@@ -69,21 +84,18 @@ export class SectionList<SN extends SimpleSectionName = SimpleSectionName> {
   }
   getByFeId(id: string): FeSectionI<SN> {
     const section = this.list.find((section) => section.feId === id);
-    if (!section) {
-      throw new SectionNotFoundError(
-        `No section with sectionName ${this.sectionName} and feId ${id}`
-      );
-    }
-
+    if (!section) throw this.sectionNotFoundError(id);
     return section;
   }
   getByDbId(id: string): FeSectionI<SN> {
     const section = this.list.find((section) => section.dbId === id);
-    if (!section)
-      throw new SectionNotFoundError(
-        `No section with sectionName ${this.sectionName} and feId ${id}`
-      );
+    if (!section) throw this.sectionNotFoundError(id);
     return section;
+  }
+  sectionNotFoundError(id: string): SectionNotFoundError {
+    return new SectionNotFoundError(
+      `No section with sectionName ${this.sectionName} and id ${id}`
+    );
   }
   getSpecific({ id, idType }: SpecificIdInfo): FeSectionI<SN> {
     switch (idType) {

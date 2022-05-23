@@ -12,7 +12,7 @@ import { Obj } from "../utils/Obj";
 import { FocalSectionBase } from "./FocalSectionBase";
 import { SectionSelfGettersProps } from "./SectionSelfGetters";
 
-export interface SectionPackMakerINext<SN extends SectionName>
+export interface SectionPackMakerI<SN extends SectionName>
   extends FocalSectionBase<SN> {
   makeSectionPack(): SectionPackRaw<SN>;
   makeChildSectionPackArrs<CN extends ChildName<SN>>(
@@ -26,10 +26,10 @@ export interface SectionPackMakerINext<SN extends SectionName>
   ): SectionPackRaw<CN>;
 }
 
-export function ApplySectionPackMakersNext<
+export function ApplySectionPackMakers<
   SN extends SectionName,
   TBase extends GConstructor<FocalSectionBase<SN>>
->(Base: TBase): GConstructor<SectionPackMakerINext<SN>> & TBase {
+>(Base: TBase): GConstructor<SectionPackMakerI<SN>> & TBase {
   return class SectionPackMakerNext extends Base {
     private sections = new GetterSections(this.shared);
     makeSectionPack(): SectionPackRaw<SN> {
@@ -59,7 +59,7 @@ export function ApplySectionPackMakersNext<
       const childPackMaker = SectionPackMakerNext.init({
         shared: this.shared,
         ...feInfo,
-      }) as SectionPackMakerINext<CN>;
+      }) as SectionPackMakerI<CN>;
       return childPackMaker.makeSectionPack();
     }
     private rawDescendantSections(): RawSections<SN> {
@@ -92,13 +92,13 @@ export function ApplySectionPackMakersNext<
     }
     static init<S extends SectionName>(
       props: SectionSelfGettersProps<S>
-    ): SectionPackMakerINext<S> {
+    ): SectionPackMakerI<S> {
       return new SectionPackMakerNext(props) as any;
     }
   };
 }
 
-export const SectionPackMaker = ApplySectionPackMakersNext(FocalSectionBase);
+export const SectionPackMaker = ApplySectionPackMakers(FocalSectionBase);
 
 type FeSectionPackArrs<SN extends SectionName> = {
   [S in SN]: SectionPackRaw<S>[];

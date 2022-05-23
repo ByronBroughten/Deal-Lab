@@ -63,7 +63,9 @@ function MakeFeVarbs<
   return class FeVarbs extends Base implements FeVarbsI<SN> {
     one(varbName: string): FeVarb {
       const varb = this.core.varbs[varbName];
-      if (!varb) throw varbNotFound(InfoS.feVarb(varbName, this.feInfo));
+      if (!varb) {
+        throw varbNotFound(InfoS.feVarb(varbName, this.feInfo));
+      }
       return varb;
     }
     value<T extends StateValueAnyKey = "any">(

@@ -6,7 +6,7 @@ import useToggleView from "../../../../modules/customHooks/useToggleView";
 import { auth } from "../../../../modules/services/authService";
 import { useAnalyzerContext } from "../../../../modules/usePropertyAnalyzer";
 import { useRowIndexSourceActions } from "../../../../modules/useRowIndexSourceActions";
-import { FeInfo } from "../../../../sharedWithServer/SectionsMeta/Info";
+import { FeInfoByType } from "../../../../sharedWithServer/SectionsMeta/Info";
 import theme from "../../../../theme/Theme";
 import BtnTooltip from "../../BtnTooltip";
 import { IconBtn } from "../../IconBtn";
@@ -16,23 +16,20 @@ import MainSectionTitleRowTitle from "./MainSectionTitleRowTitle.tsx/MainSection
 import MainSectionTitleSaveBtn from "./MainSectionTitleRowTitle.tsx/MainSectionTitleSaveBtn";
 
 type Props = {
-  feInfo: FeInfo<"hasRowIndex">;
+  info: FeInfoByType<"hasRowIndex">;
   pluralName: string;
   xBtn?: boolean;
   droptop?: boolean;
 };
-export default function MainSectionTitleRow({
+export function MainSectionTitleRowNext({
   // Table Entry Title Row
-  feInfo,
+  info,
   pluralName,
   xBtn = false,
   droptop = false,
 }: Props) {
   const { handleRemoveSection, handleSet } = useAnalyzerContext();
-  const { update, isIndexSaved } = useRowIndexSourceActions({
-    feId: feInfo.id,
-    sectionName: feInfo.sectionName,
-  });
+  const { update, isIndexSaved } = useRowIndexSourceActions(info);
 
   const { btnMenuIsOpen, toggleBtnMenu } = useToggleView({
     initValue: false,
@@ -40,6 +37,12 @@ export default function MainSectionTitleRow({
   });
 
   const isGuest = !auth.isLoggedIn;
+
+  const feInfo = {
+    sectionName: info.sectionName,
+    id: info.feId,
+    idType: "feId",
+  } as const;
 
   return (
     <MainEntryTitleRowStyled
