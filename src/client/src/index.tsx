@@ -10,41 +10,21 @@ AppRegistry.runApplication("App", {
 
 reportWebVitals();
 
-// 2. Make NewOrDefaultChildAdder
-// ...For this you may need to create default sections on the fly
-// 3. Make SectionBuilder (a FocalSection)
-// 4. Work on EntitiesSections and SectionSolver
-
-// to Integrate the new Sections, you will need a solver.
-
-// Try building a default sectionPack with AddsSections and makesSections
-
 // Integrate the new core and handlers
-// Option 1.
-// Edit analyzer
-// I would have to make FeSections be the state
-// And I would have to make Analyzer take FeSections
-// as an argument that can produce its core.
-// Except that whenever there is a set state, analyzer must produce
-// its core.
+// 1. Convert all the parentInfos of both analyzer and sections so they can swap states
 
-// Option 2.
-// Make a state adjacent to Analyzer
-// Add new state handlers
+// 2. Is there a way to use one state for one section of the app and use the other state
+// for the other section?
+// I can do that. But they won't be able to solve based on the stuff from analyzer.
+// That might be ok for the time being.
 
-// Ok. In order to use this to create the defaults.
-// I need to be able to initialize its core.
-// and it needs to produce a sectionPack
+// Alright. It's time to try substituting the new state for a portion of the app.
+// Try using it for mgmtGeneral and its children, and outputLists, and see if the
+// upfrontInvestment updates as it should
+
+// first, add the replacement for mgmtGeneral
 
 // Redo the tableColumns route
-
-// Revamp defaults
-// 1. Make the FeSections be able to initialize an empty
-// section whose only children are "alwaysOne"
-// 2. Make it able to produce rawSectionPacks
-// 3. Try using it to create default sectionPacks
-// including perhaps one default analyzer sectionPack (which lacks a loan)
-// 4. Hook the new sectionAdder up to the main
 
 // Get rid of defaultSections and defaultStore.
 // Get rid of different kinds of SectionPack

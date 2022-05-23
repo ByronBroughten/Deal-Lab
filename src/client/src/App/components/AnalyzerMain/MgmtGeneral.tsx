@@ -1,29 +1,29 @@
 import React from "react";
-import MainSection from "../appWide/GeneralSection";
-import Mgmt from "./Mgmts/Mgmt";
 import { useAnalyzerContext } from "../../modules/usePropertyAnalyzer";
+import { useSectionSetter } from "../../sharedWithServer/SectionFocal/SectionSetter";
+import MainSection from "../appWide/GeneralSection";
 import GeneralSectionTitle from "../appWide/GeneralSection/GeneralSectionTitle";
-import styled from "styled-components";
+import Mgmt from "./MgmtGeneral/Mgmt";
 
-type Props = { className?: string };
-export default function Mgmts(props: Props) {
+type Props = { className?: string; feId: string };
+export function MgmtGeneral({ className, feId }: Props) {
+  const sectionName = "mgmtGeneral";
   const { analyzer } = useAnalyzerContext();
+  const mgmtGeneral = useSectionSetter({ sectionName, feId });
 
-  const section = analyzer.section("mgmtGeneral");
-  const mgmtIds = section.childFeIds("mgmt");
+  const section = analyzer.parent("mgmt");
+  const sectionIds = section.childFeIds("mgmt");
+
+  const mgmts = mgmtGeneral.children("mgmt");
 
   return (
-    <Styled sectionName="mgmt" {...props}>
-      <GeneralSectionTitle title="Management" sectionName="mgmt" />
-      <div>
-        {mgmtIds.map((id) => (
-          <Mgmt key={id} id={id} />
-        ))}
+    <MainSection {...{ sectionName: "mgmt", className }}>
+      <GeneralSectionTitle {...{ title: "Management", sectionName }} />
+      <div className="MainSection-entries">
+        {mgmts.map(({ feId }) => {
+          <Mgmt {...{ feId, key: feId }} />;
+        })}
       </div>
-    </Styled>
+    </MainSection>
   );
 }
-
-const Styled = styled(MainSection)`
-  margin-top: 0px;
-`;

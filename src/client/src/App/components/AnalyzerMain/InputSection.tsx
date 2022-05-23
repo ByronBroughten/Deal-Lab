@@ -2,7 +2,7 @@ import React from "react";
 import { useAnalyzerContext } from "../../modules/usePropertyAnalyzer";
 import MainSection from "../appWide/GeneralSection";
 import GeneralSectionTitle from "../appWide/GeneralSection/GeneralSectionTitle";
-import Mgmt from "./Mgmts/Mgmt";
+import Mgmt from "./MgmtGeneral/Mgmt";
 import Property from "./PropertyGeneral/Property";
 
 type Props = {

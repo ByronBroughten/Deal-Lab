@@ -13,34 +13,26 @@ import {
   OutUpdatePack,
 } from "../SectionsMeta/VarbMeta";
 import FeVarb from "../SectionsState/FeSection/FeVarb";
+import { FeSections } from "../SectionsState/SectionsState";
 import { Arr } from "../utils/Arr";
 import { SharedSections } from "./HasSharedSections";
-import { UpdaterSections } from "./UpdaterSections";
 
-export interface SolverSharedProps extends SharedSections {
-  varbFullNamesToSolveFor?: Set<string>;
-}
-export interface SolverShared extends SolverSharedProps {
+export interface SolverShared extends SharedSections {
   varbFullNamesToSolveFor: Set<string>;
+}
+export interface SolverSharedProps {
+  shared: SolverShared;
 }
 
 type OutVarbMap = Record<string, Set<string>>;
 
-export class SolverSections extends UpdaterSections {
-  readonly shared: SolverShared;
-  constructor({
-    varbFullNamesToSolveFor = new Set(),
-    ...rest
-  }: SolverSharedProps) {
-    super(rest);
-    this.shared = {
-      varbFullNamesToSolveFor,
-      ...rest,
-    };
-  }
-
+export class SolverSections {
+  constructor(readonly shared: SolverShared) {}
   get varbFullNamesToSolveFor(): Set<string> {
     return this.shared.varbFullNamesToSolveFor;
+  }
+  get sections(): FeSections {
+    return this.shared.sections;
   }
 
   solve() {
@@ -91,7 +83,7 @@ export class SolverSections extends UpdaterSections {
     let varbFullNamesToSolveFor = [...this.varbFullNamesToSolveFor];
     while (varbFullNamesToSolveFor.length > 0) {
       const nextVarbsToSolveFor = [] as string[];
-      for (const stringInfo of [...this.varbFullNamesToSolveFor]) {
+      for (const stringInfo of [...varbFullNamesToSolveFor]) {
         if (!(stringInfo in outVarbMap)) outVarbMap[stringInfo] = new Set();
         const feVarbInfo = FeVarb.fullNameToFeVarbInfo(stringInfo);
         const outInfos = this.outVarbInfos(feVarbInfo);
@@ -108,7 +100,8 @@ export class SolverSections extends UpdaterSections {
     return outVarbMap;
   }
   private outVarbInfos(feVarbInfo: FeVarbInfo): FeVarbInfo[] {
-    const { outEntities, outUpdatePacks } = this.varbByMixed(feVarbInfo);
+    const { outEntities, outUpdatePacks } =
+      this.sections.varbByMixed(feVarbInfo);
     return [
       ...outEntities,
       ...outUpdatePacks.reduce((varbInfos, outUpdatePack) => {
@@ -133,7 +126,7 @@ export class SolverSections extends UpdaterSections {
     if (!Array.isArray(relatives)) relatives = [relatives];
     let feVarbInfos: FeVarbInfo[] = [];
     for (const relVarbInfo of relatives) {
-      const varbs = this.varbsByFocal(feInfo, relVarbInfo);
+      const varbs = this.sections.varbsByFocal(feInfo, relVarbInfo);
       const varbInfos = varbs.map((varb) => varb.feVarbInfo);
       feVarbInfos = feVarbInfos.concat(varbInfos);
     }
@@ -161,7 +154,8 @@ export class SolverSections extends UpdaterSections {
     switchValue: string
   ): boolean {
     return (
-      switchValue === this.varbByFocal(focalInfo, relSwitchInfo).value("string")
+      switchValue ===
+      this.sections.varbByFocal(focalInfo, relSwitchInfo).value("string")
     );
   }
 }

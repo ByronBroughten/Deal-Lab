@@ -4,6 +4,7 @@ import Analyzer from "../sharedWithServer/Analyzer";
 import StateVarb from "../sharedWithServer/Analyzer/StateSection/StateVarb";
 import { DirectUpdateFnValue } from "../sharedWithServer/Analyzer/StateSection/StateVarb/stateValue";
 import { FeVarbInfo } from "../sharedWithServer/SectionsMeta/relSections/rel/relVarbInfoTypes";
+import { FeSections } from "../sharedWithServer/SectionsState/SectionsState";
 import { NoProviderErr } from "../utils/react";
 import {
   getStoredAnalyzerState,
@@ -13,8 +14,13 @@ import {
 import { updateFromEditorAndSolve } from "./ClientAnalyzer/updateFromEditor";
 import { auth } from "./services/authService";
 
-type Props = { prePopulatedState?: Analyzer; main?: boolean };
+type Props = {
+  prePopulatedState?: Analyzer;
+  main?: boolean;
+  prePopulatedSections?: FeSections;
+};
 export default function usePropertyAnalyzer({
+  prePopulatedSections,
   prePopulatedState,
   main,
 }: Props) {
