@@ -1,29 +1,27 @@
 import assert from "assert";
-import { NumberProps } from "../../Analyzer/methods/solveVarbs/solveAndUpdateValue/updateNumericObjCalc";
-import { GetterSections } from "../../Sections/GetterSections";
+import { NumberProps } from "../Analyzer/methods/solveVarbs/solveAndUpdateValue/updateNumericObjCalc";
 import calculations, {
   isCalculationName,
-} from "../../SectionsMeta/baseSections/baseValues/calculations";
+} from "../SectionsMeta/baseSections/baseValues/calculations";
 import {
   DbNumObj,
   FailedVarbs,
   NumObj,
   NumObjCache,
   NumObjNumber,
-} from "../../SectionsMeta/baseSections/baseValues/NumObj";
-import { isNumObjUpdateFnName } from "../../SectionsMeta/baseSections/baseValues/updateFnNames";
-import { SpecificVarbInfo } from "../../SectionsMeta/relSections/rel/relVarbInfoTypes";
-import { SectionName } from "../../SectionsMeta/SectionName";
-import { Str } from "../../utils/Str";
-import { SectionSelfGettersProps } from "../SectionSelfGetters";
-import { FocalVarbBase } from "./FocalVarbBase";
+} from "../SectionsMeta/baseSections/baseValues/NumObj";
+import { isNumObjUpdateFnName } from "../SectionsMeta/baseSections/baseValues/updateFnNames";
+import { SpecificVarbInfo } from "../SectionsMeta/relSections/rel/relVarbInfoTypes";
+import { SectionName } from "../SectionsMeta/SectionName";
+import { GetterSectionProps } from "../StateGetters/GetterSection";
+import { Str } from "../utils/Str";
+import { FocalVarbBase } from "../VarbFocal/FocalVarbBase";
 import { solveText } from "./ValueSolver/solveText";
 import { UserVarbValueSolver } from "./ValueSolver/UserVarbValueSolver";
 
 export class ValueSolver<
   SN extends SectionName<"hasVarb">
 > extends FocalVarbBase<SN> {
-  private sections = new GetterSections(this.shared);
   private updateFns = {
     string: (): string => {
       return this.selfVarb.value("string");
@@ -85,7 +83,7 @@ export class ValueSolver<
     userVarb: (): NumObj => {
       if (this.self.sectionName === "userVarbItem") {
         const userVarbSolver = new UserVarbValueSolver(
-          this.constructorProps as SectionSelfGettersProps<"userVarbItem">
+          this.constructorProps as GetterSectionProps<"userVarbItem">
         );
 
         return userVarbSolver.getUserVarbValue();

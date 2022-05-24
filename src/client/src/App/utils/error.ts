@@ -4,6 +4,8 @@ export class HandledError extends Error {
   }
 }
 
+export class SectionNotFoundError extends Error {}
+
 export function errorToHandledError(error: unknown): HandledError {
   return new HandledError(getErrorMessage(error));
 }

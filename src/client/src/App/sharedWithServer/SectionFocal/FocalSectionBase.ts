@@ -1,6 +1,4 @@
-import { GetterSections } from "../Sections/GetterSections";
-import { HasSharedSections } from "../Sections/HasSharedSections";
-import { UpdaterSections } from "../Sections/UpdaterSections";
+import { HasSharedSectionsProp } from "../HasInfoProps/HasSharedSectionsProp";
 import { Id } from "../SectionsMeta/baseSections/id";
 import { noParentInfoNext } from "../SectionsMeta/Info";
 import { SectionName } from "../SectionsMeta/SectionName";
@@ -8,16 +6,19 @@ import { FeSection } from "../SectionsState/FeSection";
 import { SectionList } from "../SectionsState/SectionList";
 import { FeSections } from "../SectionsState/SectionsState";
 import {
-  SectionSelfGetters,
-  SectionSelfGettersProps,
-} from "./SectionSelfGetters";
+  GetterSection,
+  GetterSectionProps,
+} from "../StateGetters/GetterSection";
+import { GetterSections } from "../StateGetters/GetterSections";
+import { UpdaterSections } from "../StateUpdaters/SectionUpdater";
 
 export class FocalSectionBase<
   SN extends SectionName = "main"
-> extends HasSharedSections {
-  readonly self: SectionSelfGetters<SN>;
+> extends HasSharedSectionsProp {
+  readonly self: GetterSection<SN>;
+  readonly getterSections: GetterSections;
   constructor(
-    props: SectionSelfGettersProps<SN> = FocalSectionBase.defaultProps() as any as SectionSelfGettersProps<SN>
+    props: GetterSectionProps<SN> = FocalSectionBase.defaultProps() as any as GetterSectionProps<SN>
   ) {
     const { shared, ...sectionInfo } = props;
     const getters = new GetterSections(shared);
@@ -27,12 +28,13 @@ export class FocalSectionBase<
       );
     }
     super(shared);
-    this.self = new SectionSelfGetters(props);
+    this.self = new GetterSection(props);
+    this.getterSections = getters;
   }
-  static defaultProps(): SectionSelfGettersProps<"main"> {
-    const updaterSections = new UpdaterSections({
-      sections: FeSections.init(),
-    });
+  static defaultProps(): GetterSectionProps<"main"> {
+    const shared = { sections: FeSections.init() };
+    const getterSections = new GetterSections(shared);
+    const updaterSections = new UpdaterSections(shared);
 
     const mainSection = FeSection.initNext({
       sectionName: "main",
@@ -40,9 +42,16 @@ export class FocalSectionBase<
       parentInfo: noParentInfoNext,
     });
 
+    // so this will just provide UpdaterList
+    // All I need is UpdaterList
+
     updaterSections.updateList(
-      updaterSections.list("main").push(mainSection) as SectionList
+      getterSections.list("main").push(mainSection) as SectionList
     );
+    // well, this is annoying.
+    // I suppose it's fair.
+    // Something shouldn't have updaterSections if its not supposed to.
+    // they could be a superset of getterSections, though.
 
     return {
       ...mainSection.info,

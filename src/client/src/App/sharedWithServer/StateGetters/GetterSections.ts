@@ -1,4 +1,4 @@
-import { SectionSelfGetters } from "../SectionFocal/SectionSelfGetters";
+import { HasSharedSectionsProp } from "../HasInfoProps/HasSharedSectionsProp";
 import { sectionMetas } from "../SectionsMeta";
 import { SimpleSectionName } from "../SectionsMeta/baseSections";
 import { FeSectionInfo, InfoS, VarbInfo } from "../SectionsMeta/Info";
@@ -7,6 +7,7 @@ import {
   MultiFindByFocalVarbInfo,
   MultiSectionInfo,
   MultiVarbInfo,
+  RelSectionInfo,
   SpecificSectionInfo,
   SpecificVarbInfo,
 } from "../SectionsMeta/relSections/rel/relVarbInfoTypes";
@@ -15,11 +16,16 @@ import { FeSectionI } from "../SectionsState/FeSection";
 import FeVarb from "../SectionsState/FeSection/FeVarb";
 import { FeVarbsI } from "../SectionsState/FeSection/FeVarbs";
 import { SectionList } from "../SectionsState/SectionList";
-import { FeSections } from "../SectionsState/SectionsState";
-import { HasSharedSections } from "./HasSharedSections";
+import { GetterList } from "./GetterList";
+import { GetterSection } from "./GetterSection";
 
-export class GetterSections extends HasSharedSections {
-  protected get sections(): FeSections {
+// GetterSections
+// GetterList
+// GetterSection
+// GetterVarb
+
+export class GetterSections extends HasSharedSectionsProp {
+  get stateSections() {
     return this.shared.sections;
   }
   get meta() {
@@ -29,6 +35,13 @@ export class GetterSections extends HasSharedSections {
     const list = this.sections.core[sectionName] as SectionList;
     return list as any;
   }
+  listNext<SN extends SectionName>(sectionName: SN): GetterList<SN> {
+    return new GetterList({
+      sectionName,
+      shared: this.shared,
+    });
+  }
+
   get mainFeInfo() {
     return this.list("main").first.feInfo;
   }
@@ -59,6 +72,14 @@ export class GetterSections extends HasSharedSections {
   get one() {
     return this.section;
   }
+  sectionNext<SN extends SectionName>(
+    info: FeSectionInfo<SN>
+  ): GetterSection<SN> {
+    return new GetterSection({
+      ...info,
+      shared: this.shared,
+    });
+  }
   varbs<SN extends SimpleSectionName>(info: FeSectionInfo<SN>): FeVarbsI<SN> {
     return this.section(info).varbs;
   }
@@ -87,25 +108,8 @@ export class GetterSections extends HasSharedSections {
     info: MultiFindByFocalInfo<SN>
   ): FeSectionI<SN> {
     if (InfoS.is.specific(info)) return this.sectionByMixed(info);
-    const focalSection = this.sectionByMixed(focalInfo);
-    switch (info.id) {
-      case "local": {
-        if (focalSection.sectionName === info.sectionName) {
-          return focalSection as any as FeSectionI<SN>;
-        } else
-          throw new Error("Local section did not match the focal section.");
-      }
-      case "parent": {
-        const { parentInfoSafe } = focalSection;
-        if (parentInfoSafe.sectionName !== info.sectionName)
-          throw new Error(
-            "Parent section does not match the focal section's parent."
-          );
-        return this.section(parentInfoSafe) as any as FeSectionI<SN>;
-      }
-      default:
-        throw new Error("Exhausted MultiFindByFocalInfo options.");
-    }
+    const section = this.sectionNext(this.sectionByMixed(focalInfo).info);
+    return section.sectionByRelative(info as RelSectionInfo<SN>).stateSection;
   }
   sectionsByFocal<SN extends SectionName>(
     focalInfo: SpecificSectionInfo,
@@ -154,8 +158,8 @@ export class GetterSections extends HasSharedSections {
   }
   makeFocalGetter<SN extends SectionName>(
     info: FeSectionInfo<SN>
-  ): SectionSelfGetters<SN> {
-    return new SectionSelfGetters({
+  ): GetterSection<SN> {
+    return new GetterSection({
       shared: this.shared,
       ...info,
     });

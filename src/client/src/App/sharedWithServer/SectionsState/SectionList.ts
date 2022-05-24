@@ -8,11 +8,7 @@ import { Arr } from "../utils/Arr";
 import { FeSectionI } from "./FeSection";
 import { FeSectionCore } from "./FeSection/FeSectionCore";
 
-class SectionNotFoundError extends Error {
-  constructor(message: string) {
-    super(message);
-  }
-}
+class SectionNotFoundError extends Error {}
 
 export class SectionList<SN extends SimpleSectionName = SimpleSectionName> {
   constructor(

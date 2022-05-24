@@ -3,12 +3,12 @@ import { FeSectionInfo } from "../SectionsMeta/Info";
 import { ChildName } from "../SectionsMeta/relSectionTypes/ChildTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { FeSectionI } from "../SectionsState/FeSection";
+import { GetterSectionProps } from "../StateGetters/GetterSection";
 import { StrictOmit } from "../utils/types";
 import { FocalSectionBase } from "./FocalSectionBase";
-import { SectionSelfGettersProps } from "./SectionSelfGetters";
 import { SectionSolver } from "./SectionSolver";
 
-interface Props<SN extends SectionName> extends SectionSelfGettersProps<SN> {
+interface Props<SN extends SectionName> extends GetterSectionProps<SN> {
   setSections: SetSections;
 }
 
@@ -27,17 +27,22 @@ export class SectionSetter<
   children<CN extends ChildName<SN>>(childName: CN): FeSectionI<CN>[] {
     return this.self.childSections(childName);
   }
+  childFeIds(childName: ChildName<SN>): string[] {
+    return this.self.childFeIds(childName);
+  }
   addChild(childName: ChildName<SN>) {
     this.solver.addChildAndSolve(childName);
     this.setSections();
   }
+  updateValueByEditor() {}
+
   // updateValueByEditor
   // removeSelf
   // replaceSelf
 }
 
 interface UseSectionSetterProps<SN extends SectionName>
-  extends StrictOmit<SectionSelfGettersProps<SN>, "shared"> {}
+  extends StrictOmit<GetterSectionProps<SN>, "shared"> {}
 
 export function useSectionSetter<SN extends SectionName>(
   props: UseSectionSetterProps<SN>

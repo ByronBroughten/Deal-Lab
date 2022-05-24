@@ -1,5 +1,15 @@
-import { SharedSections } from "../Sections/HasSharedSections";
-import { FeParentInfo, FeSectionInfo } from "../SectionsMeta/Info";
+import { HasSectionInfoProps } from "../HasInfoProps/HasSectionInfoProps";
+import { SharedSections } from "../HasInfoProps/HasSharedSectionsProp";
+import {
+  FeParentInfo,
+  FeParentInfoSafe,
+  FeSectionInfo,
+  noParentWarning,
+} from "../SectionsMeta/Info";
+import {
+  FeVarbInfo,
+  RelSectionInfo,
+} from "../SectionsMeta/relSections/rel/relVarbInfoTypes";
 import { ValueTypeName } from "../SectionsMeta/relSections/rel/valueMetaTypes";
 import {
   ChildIdArrs,
@@ -13,34 +23,59 @@ import { SectionName } from "../SectionsMeta/SectionName";
 import { FeSectionI } from "../SectionsState/FeSection";
 import FeVarb, { ValueTypesPlusAny } from "../SectionsState/FeSection/FeVarb";
 import { FeVarbsI } from "../SectionsState/FeSection/FeVarbs";
-import { HasSectionInfoProps } from "../SectionsState/HasSectionInfoProps";
 import { FeSections } from "../SectionsState/SectionsState";
 import { Obj } from "../utils/Obj";
-import { FeVarbInfo } from "./../SectionsMeta/relSections/rel/relVarbInfoTypes";
+import { GetterSections } from "./GetterSections";
 
-export interface SectionSelfGettersProps<SN extends SectionName>
+export interface GetterSectionProps<SN extends SectionName>
   extends FeSectionInfo<SN> {
   shared: SharedSections;
 }
 
-export class SectionSelfGetters<
+export class GetterSection<
   SN extends SectionName
 > extends HasSectionInfoProps<SN> {
   readonly shared: SharedSections;
-  constructor({ shared, ...info }: SectionSelfGettersProps<SN>) {
+  private getterSections: GetterSections;
+  constructor({ shared, ...info }: GetterSectionProps<SN>) {
     super(info);
     this.shared = shared;
+    this.getterSections = new GetterSections(this.shared);
   }
-  private get sections(): FeSections {
+  private get stateSections(): FeSections {
     return this.shared.sections;
   }
-
-  get constructorProps(): SectionSelfGettersProps<SN> {
+  get stateSection(): FeSectionI<SN> {
+    return this.stateSections.one(this.feInfo);
+  }
+  get constructorProps(): GetterSectionProps<SN> {
     return {
-      shared: this.shared,
       ...this.feInfo,
+      shared: this.shared,
     };
   }
+
+  thisIsSectionType<S extends SectionName>(
+    sectionName: S
+  ): this is GetterSection<S> {
+    return this.sectionName === (sectionName as any);
+  }
+  sectionByRelative<S extends SectionName>(
+    info: RelSectionInfo<S>
+  ): GetterSection<S> {
+    switch (info.id) {
+      case "local": {
+        if (this.thisIsSectionType(info.sectionName)) return this;
+        else throw new Error("Local section did not match the focal section.");
+      }
+      case "parent": {
+        return this.parent as any as GetterSection<S>;
+      }
+      default:
+        throw new Error("Exhausted MultiFindByFocalInfo options.");
+    }
+  }
+
   get meta() {
     return this.section.meta;
   }
@@ -54,7 +89,7 @@ export class SectionSelfGetters<
     };
   }
   get idx() {
-    return this.sections.list(this.sectionName).idx(this.feId);
+    return this.getterSections.list(this.sectionName).idx(this.feId);
   }
   childSections<CN extends ChildName<SN>>(childName: CN): FeSectionI<CN>[] {
     const ids = this.section.childFeIds(childName);
@@ -106,6 +141,9 @@ export class SectionSelfGetters<
       return feVarbInfos.concat(...section.varbs.infos);
     }, [] as FeVarbInfo[]);
   }
+  childFeIds<CN extends ChildName<SN>>(childName: CN): string[] {
+    return this.section.childFeIds(childName);
+  }
   descendantFeIds(): DescendantIds<SN> {
     const descendantIds: { [key: string]: string[] } = {};
 
@@ -153,7 +191,7 @@ export class SectionSelfGetters<
     return Obj.entries(allChildFeIds).reduce(
       (childDbIds, [sectionName, idArr]) => {
         const dbIds = idArr.map(
-          (feId) => this.sections.one({ sectionName, feId }).dbId
+          (feId) => this.getterSections.sectionNext({ sectionName, feId }).dbId
         );
         childDbIds[sectionName] = dbIds;
         return childDbIds;
@@ -164,12 +202,14 @@ export class SectionSelfGetters<
   get parentInfo(): FeParentInfo<SN> {
     return this.section.feParentInfo;
   }
-  parent(): FeSectionI<ParentNameSafe<SN>> {
-    const { parentInfo } = this;
-    if (parentInfo.sectionName === "no parent")
-      throw new Error(
-        `Section with sectionName ${this.sectionName} has no parent.`
-      );
-    return this.sections.one(parentInfo as FeSectionInfo<ParentNameSafe<SN>>);
+  get parentInfoSafe(): FeParentInfoSafe<SN> {
+    const { parentInfo } = this.stateSection;
+    if (parentInfo.sectionName === noParentWarning)
+      throw new Error("This section doesn't have a parent.");
+    return parentInfo as FeParentInfoSafe<SN>;
+  }
+  get parent(): GetterSection<ParentNameSafe<SN>> {
+    const { parentInfoSafe } = this;
+    return this.getterSections.sectionNext(parentInfoSafe);
   }
 }

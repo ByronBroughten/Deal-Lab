@@ -161,7 +161,16 @@ export class VarbMeta {
       ),
     };
   }
-  //
+  static isSwitchOutPack(pack: OutUpdatePack): pack is OutSwitchPack {
+    return "switchInfo" in pack;
+  }
+  static isDefaultOutPack(pack: OutUpdatePack): pack is OutDefaultPack {
+    return "inverseSwitches" in pack;
+  }
+  static isDefaultInPack(pack: InUpdatePack): pack is InDefaultUpdatePack {
+    return "inverseSwitches" in pack;
+  }
+
   static initCore(
     relVarb: RelVarb,
     sectionName: AnySectionName,

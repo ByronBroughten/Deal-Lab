@@ -14,14 +14,13 @@ export function MgmtGeneral({ className, feId }: Props) {
   const section = analyzer.parent("mgmt");
   const sectionIds = section.childFeIds("mgmt");
 
-  const mgmts = mgmtGeneral.children("mgmt");
-
+  const mgmtIds = mgmtGeneral.childFeIds("mgmt");
   return (
     <MainSection {...{ sectionName: "mgmt", className }}>
       <GeneralSectionTitle {...{ title: "Management", sectionName }} />
       <div className="MainSection-entries">
-        {mgmts.map(({ feId }) => {
-          <Mgmt {...{ feId, key: feId }} />;
+        {mgmtIds.map((feId) => {
+          <Mgmt {...{ id: feId, key: feId }} />;
         })}
       </div>
     </MainSection>

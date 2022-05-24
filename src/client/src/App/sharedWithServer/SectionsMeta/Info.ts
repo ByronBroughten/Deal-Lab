@@ -1,4 +1,5 @@
 import { StateValue } from "../SectionsState/FeSection/FeVarb/feValue";
+import { Id } from "./baseSections/id";
 import { BaseName } from "./baseSectionTypes";
 import {
   DbNameInfo,
@@ -14,7 +15,7 @@ import {
   DescendantName,
   SelfOrDescendantName,
 } from "./relSectionTypes/ChildTypes";
-import { ParentName } from "./relSectionTypes/ParentTypes";
+import { ParentName, ParentNameSafe } from "./relSectionTypes/ParentTypes";
 import { FeSectionNameType, SectionName, sectionNameS } from "./SectionName";
 
 export interface FeInfoByType<T extends FeSectionNameType = "all"> {
@@ -43,6 +44,10 @@ export interface FeParentInfo<SN extends SectionName> {
   sectionName: ParentName<SN>;
   feId: string;
 }
+export interface FeParentInfoSafe<SN extends SectionName> {
+  sectionName: ParentNameSafe<SN>;
+  feId: string;
+}
 
 export interface VarbInfo<SN extends SectionName = SectionName<"hasVarb">>
   extends FeSectionInfo<SN> {
@@ -61,7 +66,7 @@ export type DbInfo<T extends FeSectionNameType = "all"> = DbNameInfo<
   SectionName<T>
 >;
 
-const noParentWarning = "no parent";
+export const noParentWarning = "no parent";
 
 export const noParentFeInfo = {
   sectionName: noParentWarning,
@@ -81,6 +86,13 @@ type MakeVarbInfo<I extends MultiSectionInfo> = MultiVarbInfo<
 > & { idType: I["idType"]; id: I["id"] };
 
 export const InfoS = {
+  isFeVarbInfo(value: any): value is VarbInfo {
+    return (
+      Id.is(value.feId) &&
+      sectionNameS.is(value.sectionName) &&
+      typeof value.varbName === "string"
+    );
+  },
   is: {
     singleMulti(info: MultiSectionInfo): info is MultiFindByFocalInfo {
       const { id, idType } = info;

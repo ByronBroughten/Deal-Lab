@@ -1,26 +1,40 @@
-import { GetterSections } from "../../Sections/GetterSections";
-import { InEntity } from "../../SectionsMeta/baseSections/baseValues/entities";
-import { InfoS, VarbInfo } from "../../SectionsMeta/Info";
+import { SharedSections } from "../HasInfoProps/HasSharedSectionsProp";
+import { HasVarbInfoProps } from "../HasInfoProps/HasVarbInfoProps";
+import { FocalSectionBase } from "../SectionFocal/FocalSectionBase";
+import { InEntity } from "../SectionsMeta/baseSections/baseValues/entities";
+import { InfoS, VarbInfo } from "../SectionsMeta/Info";
 import {
   FeVarbInfo,
   LocalRelVarbInfo,
   MultiVarbInfo,
-} from "../../SectionsMeta/relSections/rel/relVarbInfoTypes";
-import { ValueTypeName } from "../../SectionsMeta/relSections/rel/valueMetaTypes";
-import { SectionName } from "../../SectionsMeta/SectionName";
-import { InUpdatePack, VarbMeta } from "../../SectionsMeta/VarbMeta";
-import FeVarb, {
-  ValueTypesPlusAny,
-} from "../../SectionsState/FeSection/FeVarb";
-import { FocalSectionBase } from "../FocalSectionBase";
-import { SectionSelfGettersProps } from "../SectionSelfGetters";
+} from "../SectionsMeta/relSections/rel/relVarbInfoTypes";
+import { ValueTypeName } from "../SectionsMeta/relSections/rel/valueMetaTypes";
+import { SectionName } from "../SectionsMeta/SectionName";
+import { InUpdatePack, VarbMeta } from "../SectionsMeta/VarbMeta";
+import FeVarb, { ValueTypesPlusAny } from "../SectionsState/FeSection/FeVarb";
+import { GetterSectionProps } from "./GetterSection";
+
+interface GetterVarbProps<SN extends SectionName<"hasVarb">>
+  extends VarbInfo<SN> {
+  shared: SharedSections;
+}
+
+class GetterVarbBase<
+  SN extends SectionName<"hasVarb">
+> extends HasVarbInfoProps<SN> {
+  readonly shared: SharedSections;
+  constructor(props: GetterVarbProps<SN>) {
+    super(props);
+    this.shared = props.shared;
+  }
+}
 
 export interface FocalVarbGetterProps<SN extends SectionName>
-  extends SectionSelfGettersProps<SN> {
+  extends GetterSectionProps<SN> {
   varbName: string;
 }
 
-export class FocalVarbGetters<
+export class GetterVarb<
   SN extends SectionName<"hasVarb">
 > extends FocalSectionBase<SN> {
   readonly varbName: string;
@@ -28,7 +42,6 @@ export class FocalVarbGetters<
     super(rest);
     this.varbName = varbName;
   }
-  sections = new GetterSections(this.shared);
   get varb(): FeVarb {
     return this.self.varb(this.varbName);
   }

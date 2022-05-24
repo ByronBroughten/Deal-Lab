@@ -4,13 +4,12 @@ import {
   OneRawSection,
   RawSections,
 } from "../Analyzer/SectionPackRaw/RawSection";
-import { GetterSections } from "../Sections/GetterSections";
 import { FeSectionInfo } from "../SectionsMeta/Info";
 import { ChildName } from "../SectionsMeta/relSectionTypes/ChildTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
+import { GetterSectionProps } from "../StateGetters/GetterSection";
 import { Obj } from "../utils/Obj";
 import { FocalSectionBase } from "./FocalSectionBase";
-import { SectionSelfGettersProps } from "./SectionSelfGetters";
 
 export interface SectionPackMakerI<SN extends SectionName>
   extends FocalSectionBase<SN> {
@@ -31,7 +30,6 @@ export function ApplySectionPackMakers<
   TBase extends GConstructor<FocalSectionBase<SN>>
 >(Base: TBase): GConstructor<SectionPackMakerI<SN>> & TBase {
   return class SectionPackMakerNext extends Base {
-    private sections = new GetterSections(this.shared);
     makeSectionPack(): SectionPackRaw<SN> {
       return {
         sectionName: this.self.sectionName,
@@ -91,7 +89,7 @@ export function ApplySectionPackMakers<
       };
     }
     static init<S extends SectionName>(
-      props: SectionSelfGettersProps<S>
+      props: GetterSectionProps<S>
     ): SectionPackMakerI<S> {
       return new SectionPackMakerNext(props) as any;
     }

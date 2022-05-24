@@ -19,9 +19,9 @@ export function initStateVarb(props: NextStateVarbInitProps) {
   return new FeVarb(initCore(props));
 }
 
-export type FeVarbCore = {
+export type FeVarbCore<SN extends SectionName<"hasVarb">> = {
   varbName: string;
-  sectionName: SectionName;
+  sectionName: SN;
   feId: string;
   value: StateValue;
   outEntities: OutEntity[];

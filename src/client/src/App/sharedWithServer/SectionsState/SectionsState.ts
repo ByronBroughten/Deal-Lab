@@ -1,6 +1,5 @@
 import { SectionPackRaw } from "../Analyzer/SectionPackRaw";
 import { SectionPackLoader } from "../SectionFocal/SectionPackLoader";
-import { SectionSelfGetters } from "../SectionFocal/SectionSelfGetters";
 import { sectionMetas } from "../SectionsMeta";
 import { SimpleSectionName } from "../SectionsMeta/baseSections";
 import {
@@ -18,6 +17,7 @@ import {
   SpecificVarbInfo,
 } from "../SectionsMeta/relSections/rel/relVarbInfoTypes";
 import { SectionName, sectionNameS } from "../SectionsMeta/SectionName";
+import { GetterSection } from "../StateGetters/GetterSection";
 import { FeSection, FeSectionI } from "./FeSection";
 import FeVarb from "./FeSection/FeVarb";
 import { FeVarbsI } from "./FeSection/FeVarbs";
@@ -69,10 +69,16 @@ export class FeSections {
   varbs<SN extends SimpleSectionName>(info: FeSectionInfo<SN>): FeVarbsI<SN> {
     return this.section(info).varbs;
   }
-  varb({ varbName, ...info }: VarbInfo): FeVarb {
+  varb<SN extends SectionName<"hasVarb">>({
+    varbName,
+    ...info
+  }: VarbInfo<SN>): FeVarb<SN> {
     return this.varbs(info).one(varbName);
   }
-  varbByMixed({ varbName, ...info }: SpecificVarbInfo): FeVarb {
+  varbByMixed<SN extends SectionName<"hasVarb">>({
+    varbName,
+    ...info
+  }: SpecificVarbInfo<SN>): FeVarb<SN> {
     return this.sectionByMixed(info).varbs.one(varbName);
   }
   varbByFocal(
@@ -85,10 +91,11 @@ export class FeSections {
     // a chance the parent won't have the varbName
     return section.varb(varbName);
   }
-  varbsByFocal(
+  varbsByFocal<SN extends SectionName<"hasVarb">>(
+    // this would be better on some kind of varb getter
     focalInfo: SpecificSectionInfo,
-    { varbName, ...feInfo }: MultiVarbInfo
-  ): FeVarb[] {
+    { varbName, ...feInfo }: MultiVarbInfo<SN>
+  ): FeVarb<SN>[] {
     const sections = this.sectionsByFocal(focalInfo, feInfo);
     return sections.map((section) => section.varb(varbName));
   }
@@ -96,6 +103,13 @@ export class FeSections {
     focalInfo: SpecificSectionInfo,
     info: MultiFindByFocalInfo<SN>
   ): FeSectionI<SN> {
+    // so, I'm already checking if the section is specific
+    // and in that case returning it.
+    // Am I dealing with specific?
+
+    // wherever I use this, I would want to check that
+    // the section is rel
+
     if (InfoS.is.specific(info)) return this.sectionByMixed(info);
     const focalSection = this.sectionByMixed(focalInfo);
     switch (info.id) {
@@ -160,8 +174,8 @@ export class FeSections {
   }
   makeFocalGetter<SN extends SectionName>(
     info: FeSectionInfo<SN>
-  ): SectionSelfGetters<SN> {
-    return new SectionSelfGetters({
+  ): GetterSection<SN> {
+    return new GetterSection({
       shared: { sections: this },
       ...info,
     });

@@ -6,7 +6,7 @@ import {
   InEntity,
 } from "../../SectionsMeta/baseSections/baseValues/entities";
 import { NumObj } from "../../SectionsMeta/baseSections/baseValues/NumObj";
-import { InfoS } from "../../SectionsMeta/Info";
+import { FeSectionInfo, InfoS, VarbInfo } from "../../SectionsMeta/Info";
 import {
   FeNameInfo,
   FeVarbInfo,
@@ -36,14 +36,17 @@ import { FeVarbCore, initStateVarb } from "./FeVarb/init";
 
 export type InVarbInfo = InEntity | FeVarbInfo;
 
-type MutableCore = StrictOmit<FeVarbCore, "varbName" | "sectionName" | "feId">;
+export type VariableCore = StrictOmit<
+  FeVarbCore<SectionName<"hasVarb">>,
+  "varbName" | "sectionName" | "feId"
+>;
 
 export type Adornments = {
   startAdornment: string;
   endAdornment: string;
 };
 
-export type StateVarbOptions = Partial<MutableCore>;
+export type FeVarbOptions = Partial<VariableCore>;
 
 export type ValueTypesPlusAny = ValueTypes & { any: StateValue };
 export const valueSchemasPlusAny = {
@@ -52,48 +55,56 @@ export const valueSchemasPlusAny = {
 } as const;
 
 export type StateValueAnyKey = keyof ValueTypesPlusAny;
-export default class FeVarb {
-  constructor(protected core: FeVarbCore) {}
+export default class FeVarb<
+  SN extends SectionName<"hasVarb"> = SectionName<"hasVarb">
+> {
+  constructor(readonly core: FeVarbCore<SN>) {}
   get meta() {
     return sectionMetas.varb({ ...this.info }, "fe");
   }
-  update(props: Partial<MutableCore>) {
+  update(props: Partial<VariableCore>): FeVarb<SN> {
     return new FeVarb({
       ...this.core,
       ...props,
     });
   }
-  updateValue(newValue: StateValue): FeVarb {
+  updateValue(newValue: StateValue): FeVarb<SN> {
     return this.update({ value: newValue });
   }
-  triggerEditorUpdate(): FeVarb {
+  triggerEditorUpdate(): FeVarb<SN> {
     return this.update({
       manualUpdateEditorToggle: !this.manualUpdateEditorToggle,
     });
   }
 
   get fullName(): string {
-    return FeVarb.feVarbInfoToFullName(this.feVarbInfo);
+    return FeVarb.feVarbInfoToFullName(this.info);
   }
-  get varbName() {
+  get varbName(): string {
     return this.core.varbName;
   }
-  get feId() {
+  get feId(): string {
     return this.core.feId;
   }
-  get sectionName() {
+  get sectionName(): SN {
     return this.core.sectionName;
   }
-  get sectionInfo() {
+  get sectionInfo(): FeSectionInfo<SN> {
     return {
       feId: this.feId,
       sectionName: this.sectionName,
     };
   }
-  get info() {
+  get info(): VarbInfo<SN> {
     return {
-      varbName: this.varbName,
       ...this.sectionInfo,
+      varbName: this.varbName,
+    };
+  }
+  get feMixedInfo(): FeVarbInfo<SN> {
+    return {
+      ...this.feInfo,
+      varbName: this.varbName,
     };
   }
   get manualUpdateEditorToggle() {
@@ -132,7 +143,7 @@ export default class FeVarb {
     if (value instanceof NumObj) return `${value.number}`;
     else return `${value}`;
   }
-  get feInfo(): FeNameInfo {
+  get feInfo(): FeNameInfo<SN> {
     return {
       sectionName: this.sectionName,
       id: this.feId,
@@ -140,7 +151,7 @@ export default class FeVarb {
     };
   }
   get stringFeVarbInfo(): string {
-    return FeVarb.feVarbInfoToFullName(this.feVarbInfo);
+    return FeVarb.feVarbInfoToFullName(this.info);
   }
   get name(): string {
     return this.stringFeVarbInfo;
@@ -220,18 +231,18 @@ export default class FeVarb {
   }
 
   static init = initStateVarb;
-  static feVarbInfoToFullName(info: FeVarbInfo): string {
-    const { sectionName, varbName, id } = info;
-    return [sectionName, varbName, id].join(".");
+  static feVarbInfoToFullName(info: VarbInfo): string {
+    const { sectionName, varbName, feId } = info;
+    return [sectionName, varbName, feId].join(".");
   }
-  static fullNameToFeVarbInfo(fullName: string): FeVarbInfo {
-    const [sectionName, varbName, id] = fullName.split(".") as [
+  static fullNameToFeVarbInfo(fullName: string): VarbInfo {
+    const [sectionName, varbName, feId] = fullName.split(".") as [
       SectionName,
       string,
       string
     ];
-    const info = { sectionName, varbName, id, idType: "feId" };
-    if (InfoS.is.feVarb(info)) return info;
+    const info = { sectionName, varbName, feId };
+    if (InfoS.isFeVarbInfo(info)) return info;
     else throw new Error(`Was passed an invalid fullName: ${fullName}`);
   }
 
