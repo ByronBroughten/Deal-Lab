@@ -4,7 +4,7 @@ import { react } from "../utils/react";
 import {
   SectionsStore,
   StateMissingFromStorageError,
-} from "./ClientAnalyzer/storedSectionsState";
+} from "./storedSectionsState";
 
 export function useSections(prePopulatedSections?: FeSections) {
   const [sections, setSections] = React.useState(() =>

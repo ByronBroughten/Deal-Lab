@@ -1,9 +1,9 @@
 import { cloneDeep } from "lodash";
 import { GConstructor } from "../../../utils/classObjects";
+import { SectionInfoGettersI } from "../../HasInfoProps/HasSectionInfoProps";
 import { FeParentInfo } from "../../SectionsMeta/Info";
 import { DbNameInfo } from "../../SectionsMeta/relSections/rel/relVarbInfoTypes";
 import { SectionName, sectionNameS } from "../../SectionsMeta/SectionName";
-import { SectionInfoGettersI } from "../HasSectionInfoProps";
 import { FeSectionCore } from "./FeSectionCore";
 import FeVarb from "./FeVarb";
 import { FeVarbsI } from "./FeVarbs";
@@ -17,9 +17,9 @@ export interface FeSectionGettersI<SN extends SectionName>
   get parentFeId(): string;
   get parentInfo(): FeParentInfo<SN>;
   get feParentInfo(): FeParentInfo<SN>;
-  get parentInfoSafe(): FeParentInfo<SectionName<"hasParent">>;
+  get parentInfoSafe(): FeParentInfo<SN & SectionName<"hasParent">>;
   get varbs(): FeVarbsI<SN>;
-  varb(varbName: string): FeVarb;
+  varb(varbName: string): FeVarb<SN & SectionName<"hasVarb">>;
 }
 
 interface FeSectionGettersMixins<SN extends SectionName>
@@ -56,20 +56,20 @@ export function ApplySectionGetters<
         sectionName: this.core.parentInfo.sectionName,
       };
     }
-    get parentInfoSafe(): FeParentInfo<SectionName<"hasParent">> {
+    get parentInfoSafe(): FeParentInfo<SN & SectionName<"hasParent">> {
       const { parentInfo } = this.core;
       if (
         !sectionNameS.is(this.sectionName, "hasParent") ||
         parentInfo.sectionName === "no parent"
       )
         throw new Error("This section doesn't have a parent.");
-      return parentInfo as FeParentInfo<SectionName<"hasParent">>;
+      return parentInfo as FeParentInfo<SN & SectionName<"hasParent">>;
     }
 
     get varbs(): FeVarbsI<SN> {
       return this.core.varbs;
     }
-    varb(varbName: string): FeVarb {
+    varb(varbName: string): FeVarb<SN & SectionName<"hasVarb">> {
       return this.varbs.one(varbName);
     }
   };

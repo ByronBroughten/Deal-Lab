@@ -1,4 +1,5 @@
 import { GConstructor } from "../../utils/classObjects";
+import { ApplySectionInfoGetters } from "../HasInfoProps/HasSectionInfoProps";
 import {
   ChildName,
   NewChildInfo,
@@ -24,7 +25,6 @@ import {
 } from "./FeSection/FeSectionGetters";
 import FeVarb from "./FeSection/FeVarb";
 import { HasFeSectionProps } from "./FeSection/HasFeSectionProps";
-import { ApplySectionInfoGetters } from "./HasSectionInfoProps";
 
 export interface FeSectionI<SN extends SectionName = SectionName>
   extends FeSectionMixins<SN> {

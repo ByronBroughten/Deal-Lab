@@ -1,6 +1,10 @@
 import { GConstructor } from "../../../utils/classObjects";
 import { DbVarbs } from "../../Analyzer/SectionPackRaw/RawSection";
 import {
+  ApplySectionInfoGetters,
+  SectionInfoGettersI,
+} from "../../HasInfoProps/HasSectionInfoProps";
+import {
   InEntities,
   InEntityVarbInfo,
 } from "../../SectionsMeta/baseSections/baseValues/entities";
@@ -12,10 +16,6 @@ import {
 import { SectionName } from "../../SectionsMeta/SectionName";
 import { OutUpdatePack } from "../../SectionsMeta/VarbMeta";
 import { Obj } from "../../utils/Obj";
-import {
-  ApplySectionInfoGetters,
-  SectionInfoGettersI,
-} from "../HasSectionInfoProps";
 import FeVarb, { StateValueAnyKey, ValueTypesPlusAny } from "./FeVarb";
 import { OutEntity } from "./FeVarb/entities";
 import {
@@ -26,7 +26,7 @@ import {
 import { HasFeVarbsProps } from "./FeVarbs/HasFeVarbsProps";
 
 export interface FeVarbsI<SN extends SectionName> extends TopMixins<SN> {
-  one(varbName: string): FeVarb;
+  one(varbName: string): FeVarb<SN & SectionName<"hasVarb">>;
   value<T extends StateValueAnyKey = "any">(
     varbName: string,
     valueType?: T
@@ -61,12 +61,12 @@ function MakeFeVarbs<
   TBase extends FeVarbsConstructor<SN>
 >(Base: TBase): FullClass<SN> {
   return class FeVarbs extends Base implements FeVarbsI<SN> {
-    one(varbName: string): FeVarb {
+    one(varbName: string): FeVarb<SN & SectionName<"hasVarb">> {
       const varb = this.core.varbs[varbName];
       if (!varb) {
-        throw varbNotFound(InfoS.feVarb(varbName, this.feInfo));
+        throw varbNotFoundMixed(InfoS.feVarb(varbName, this.feInfo));
       }
-      return varb;
+      return varb as FeVarb<SN & SectionName<"hasVarb">>;
     }
     value<T extends StateValueAnyKey = "any">(
       varbName: string,
@@ -170,7 +170,12 @@ type RequestedValues<T extends ValuesRequest> = {
   [Prop in keyof T]: ValueTypesPlusAny[T[Prop]];
 };
 
-function varbNotFound({ varbName, sectionName, idType, id }: MultiVarbInfo) {
+export function varbNotFoundMixed({
+  varbName,
+  sectionName,
+  idType,
+  id,
+}: MultiVarbInfo) {
   return new Error(
     `There is no varb at ${sectionName}.${id}.${varbName} with idType ${idType}.`
   );

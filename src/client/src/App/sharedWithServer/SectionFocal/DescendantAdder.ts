@@ -1,6 +1,5 @@
 import { GConstructor } from "../../utils/classObjects";
 import { AddSectionPropsNext } from "../Analyzer/methods/internal/addSections/addSectionsTypes";
-import { UpdaterSections } from "../Sections/UpdaterSections";
 import {
   FeParentInfo,
   FeSectionInfo,
@@ -13,6 +12,7 @@ import {
 } from "../SectionsMeta/relSectionTypes/ChildTypes";
 import { SectionName, sectionNameS } from "../SectionsMeta/SectionName";
 import { FeSection } from "../SectionsState/FeSection";
+import { UpdaterSections } from "../StateUpdaters/SectionUpdater";
 import { StrictOmit } from "../utils/types";
 import { FocalSectionBase } from "./FocalSectionBase";
 
@@ -36,6 +36,7 @@ export function ApplyDescendantAdderNext<
 >(Base: TBase): GConstructor<DescendantAdderI<SN>> & TBase {
   return class DescendantAdder extends Base {
     private sections = new UpdaterSections(this.shared);
+    // getterList, right?
     addDescendant<DN extends DescendantName<SN>>(
       descendantPath: DescendantList<SN, DN>,
       options: AddDescendantOptions<SN, DN> = {}

@@ -1,16 +1,16 @@
-import { SolverSections, SolverShared } from "../Sections/SolverSections";
-import { FeSectionInfo } from "../SectionsMeta/Info";
-import { FeVarbInfo } from "../SectionsMeta/relSections/rel/relVarbInfoTypes";
+import { HasSectionInfoProps } from "../HasInfoProps/HasSectionInfoProps";
+import { FeSectionInfo, VarbInfo } from "../SectionsMeta/Info";
 import { ChildName } from "../SectionsMeta/relSectionTypes/ChildTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
 import FeVarb from "../SectionsState/FeSection/FeVarb";
-import { HasSectionInfoProps } from "../SectionsState/HasSectionInfoProps";
 import { FeSections } from "../SectionsState/SectionsState";
+import { GetterSection } from "../StateGetters/GetterSection";
+import { SolverSections, SolverShared } from "../StateSolvers/SolverSections";
 import { StrictOmit } from "../utils/types";
 import { DefaultOrNewChildAdder } from "./DefaultOrNewDescendantAdder";
-import { SectionSelfGetters } from "./SectionSelfGetters";
 
-interface SectionSolverProps<SN extends SectionName> extends FeSectionInfo<SN> {
+export interface SectionSolverProps<SN extends SectionName>
+  extends FeSectionInfo<SN> {
   shared: SolverShared;
 }
 
@@ -27,13 +27,13 @@ export class SectionSolver<
   SN extends SectionName
 > extends HasSectionInfoProps<SN> {
   readonly shared: SolverShared;
-  private selfSection: SectionSelfGetters<SN>;
+  private selfSection: GetterSection<SN>;
   private adder: DefaultOrNewChildAdder<SN>;
   private solverSections: SolverSections;
   constructor(props: SectionSolverProps<SN>) {
     super(props);
     this.shared = props.shared;
-    this.selfSection = new SectionSelfGetters(props);
+    this.selfSection = new GetterSection(props);
     this.adder = new DefaultOrNewChildAdder(this.selfSection.constructorProps);
     this.solverSections = new SolverSections(this.shared);
   }
@@ -63,7 +63,7 @@ export class SectionSolver<
   }
   // editorUpdateAndSolve() {}
 
-  private addVarbInfosToSolveFor(...varbInfos: FeVarbInfo[]) {
+  private addVarbInfosToSolveFor(...varbInfos: VarbInfo[]) {
     const fullNames = varbInfos.map((info) =>
       FeVarb.feVarbInfoToFullName(info)
     );

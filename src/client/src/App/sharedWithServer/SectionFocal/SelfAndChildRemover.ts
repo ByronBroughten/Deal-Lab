@@ -1,11 +1,11 @@
 import { GConstructor } from "../../utils/classObjects";
-import { UpdaterSections } from "../Sections/UpdaterSections";
 import { FeSectionInfo, InfoS } from "../SectionsMeta/Info";
 import {
   ChildName,
   FeChildInfo,
 } from "../SectionsMeta/relSectionTypes/ChildTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
+import { UpdaterSections } from "../StateUpdaters/SectionUpdater";
 import { FocalSectionBase } from "./FocalSectionBase";
 
 export interface SelfAndChildRemoverI<SN extends SectionName>

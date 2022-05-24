@@ -1,11 +1,11 @@
 import { SectionPackRaw } from "../Analyzer/SectionPackRaw";
-import { UpdaterSections } from "../Sections/UpdaterSections";
 import { FeSectionInfo } from "../SectionsMeta/Info";
 import {
   ChildName,
   DescendantName,
 } from "../SectionsMeta/relSectionTypes/ChildTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
+import { UpdaterSections } from "../StateUpdaters/SectionUpdater";
 import { Arr } from "../utils/Arr";
 import {
   AddChildOptions,

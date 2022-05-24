@@ -5,8 +5,8 @@ import MainSectionTitleRow from "../../appWide/GeneralSection/MainSection/MainSe
 import ListGroup from "../general/ListGroup";
 import BasicPropertyInfo from "./Property/BasicPropertyInfo";
 
-const sectionName = "property";
 export default function Property({ id }: { id: string }) {
+  const sectionName = "property";
   const feInfo = { sectionName, id, idType: "feId" } as const;
   return (
     <MainSection>
