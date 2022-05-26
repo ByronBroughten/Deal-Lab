@@ -2,7 +2,6 @@ import { SetSections, useSectionsContext } from "../../modules/useSections";
 import { FeSectionInfo } from "../SectionsMeta/Info";
 import { ChildName } from "../SectionsMeta/relSectionTypes/ChildTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
-import { FeSectionI } from "../SectionsState/FeSection";
 import { GetterSectionProps } from "../StateGetters/GetterSection";
 import { StrictOmit } from "../utils/types";
 import { FocalSectionBase } from "./FocalSectionBase";
@@ -23,9 +22,6 @@ export class SectionSetter<
   private solver = SectionSolver.init(this.self.constructorProps);
   get feInfo(): FeSectionInfo<SN> {
     return this.self.feInfo;
-  }
-  children<CN extends ChildName<SN>>(childName: CN): FeSectionI<CN>[] {
-    return this.self.childSections(childName);
   }
   childFeIds(childName: ChildName<SN>): string[] {
     return this.self.childFeIds(childName);

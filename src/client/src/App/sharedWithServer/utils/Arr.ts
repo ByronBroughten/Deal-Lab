@@ -131,7 +131,7 @@ export const Arr = {
   ): Extract<A, B>[] {
     return a.filter((str) => b.includes(str as any)) as Extract<A, B>[];
   },
-  removeAtIndex<T>(arr: readonly T[], idx: number): T[] {
+  removeAtIndexClone<T>(arr: readonly T[], idx: number): T[] {
     this.validateIdx(arr, idx);
     const nextArr = [...arr];
     nextArr.splice(idx);

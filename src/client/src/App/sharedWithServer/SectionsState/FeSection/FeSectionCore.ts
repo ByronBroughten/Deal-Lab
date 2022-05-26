@@ -5,6 +5,7 @@ import { Id } from "../../SectionsMeta/baseSections/id";
 import { FeParentInfo } from "../../SectionsMeta/Info";
 import { ChildIdArrsNarrow } from "../../SectionsMeta/relSectionTypes/ChildTypes";
 import { SectionName } from "../../SectionsMeta/SectionName";
+import { StrictPick } from "../../utils/types";
 import { FeVarbsI, initFeVarbs } from "./FeVarbs";
 
 export class HasFeSectionCore<SN extends SectionName> {
@@ -13,12 +14,17 @@ export class HasFeSectionCore<SN extends SectionName> {
 
 export type FeSectionCore<SN extends SectionName> = {
   sectionName: SN;
+  feId: string;
   parentInfo: FeParentInfo<SN>;
   childFeIds: ChildIdArrsNarrow<SN>;
-  feId: string;
   dbId: string;
   varbs: FeVarbsI<SN>;
 };
+
+export type UpdatableFeSectionCore<SN extends SectionName> = StrictPick<
+  FeSectionCore<SN>,
+  "childFeIds" | "dbId" | "varbs" | "parentInfo"
+>;
 
 export interface InitFeSectionCoreProps<SN extends SectionName> {
   sectionName: SN;

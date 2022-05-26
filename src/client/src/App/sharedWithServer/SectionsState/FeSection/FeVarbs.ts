@@ -33,7 +33,7 @@ export interface FeVarbsI<SN extends SectionName> extends TopMixins<SN> {
   ): ValueTypesPlusAny[T];
   values<T extends ValuesRequest>(varbTypes: T): RequestedValues<T>;
   get varbInfoValues(): InEntityVarbInfo;
-  replaceOne(nextVarb: FeVarb): FeVarbsI<SN>;
+  replaceOne(nextVarb: FeVarb<SN & SectionName<"hasVarb">>): FeVarbsI<SN>;
   update(partial: FeVarbsCore<SN>): FeVarbsI<SN>;
   get db(): DbVarbs;
   get arr(): FeVarb[];
@@ -83,7 +83,7 @@ function MakeFeVarbs<
         {} as RequestedValues<T>
       );
     }
-    replaceOne(nextVarb: FeVarb): FeVarbsI<SN> {
+    replaceOne(nextVarb: FeVarb<SN & SectionName<"hasVarb">>): FeVarbsI<SN> {
       const { varbName } = nextVarb;
       return this.update({
         varbs: {

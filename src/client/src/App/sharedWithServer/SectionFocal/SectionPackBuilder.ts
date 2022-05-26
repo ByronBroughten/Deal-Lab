@@ -5,7 +5,6 @@ import {
   DescendantName,
 } from "../SectionsMeta/relSectionTypes/ChildTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
-import { UpdaterSections } from "../StateUpdaters/SectionUpdater";
 import { Arr } from "../utils/Arr";
 import {
   AddChildOptions,
@@ -30,8 +29,6 @@ export class SectionPackBuilder<
   private maker = new SectionPackMaker(
     this.self.constructorProps
   ) as any as SectionPackMakerI<SN>;
-  private sections = new UpdaterSections(this.shared);
-
   makeSectionPack(): SectionPackRaw<SN> {
     return this.maker.makeSectionPack();
   }
@@ -62,8 +59,8 @@ export class SectionPackBuilder<
   private newSectionBuilder<S extends SectionName>(
     sectionName: S
   ): SectionPackBuilder<S> {
-    const { info } = this.sections.list(sectionName).last;
-    return this.sectionBuilder(info);
+    const { feInfo } = this.getterSections.listNext(sectionName).last;
+    return this.sectionBuilder(feInfo);
   }
   private sectionBuilder<S extends SectionName>(
     info: FeSectionInfo<S>

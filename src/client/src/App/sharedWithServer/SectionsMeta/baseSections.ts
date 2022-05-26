@@ -49,7 +49,7 @@ export const baseSections = {
   fe: {
     main: base.section.schema(
       {
-        // _placeholder: "string"
+        _placeholder: "string",
       } as const,
       {
         alwaysOne: true,

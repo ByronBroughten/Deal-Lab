@@ -6,10 +6,12 @@ import { SectionName } from "../../../SectionsMeta/SectionName";
 import FeVarb from "../FeVarb";
 
 export interface FeVarbsCore<SN extends SectionName> extends FeInfoByType<SN> {
-  varbs: FeVarbsInner;
+  varbs: FeVarbsInner<SN>;
 }
 
-type FeVarbsInner = { [key: string]: FeVarb };
+export type FeVarbsInner<SN extends SectionName> = {
+  [key: string]: FeVarb<SN & SectionName<"hasVarb">>;
+};
 
 export function initFeVarbsCore<SN extends SectionName>(
   props: InitFeVarbsCoreProps<SN>
@@ -29,15 +31,15 @@ function initFeVarbsInner<SN extends SectionName>({
   dbVarbs,
   sectionName,
   feId,
-}: InitFeVarbsCoreProps<SN>): FeVarbsInner {
+}: InitFeVarbsCoreProps<SN>): FeVarbsInner<SN> {
   const { varbNames } = sectionMetas.section(sectionName);
   return varbNames.reduce((varbs, varbName) => {
-    varbs[varbName] = FeVarb.init({
+    (varbs as FeVarbsInner<SectionName<"hasVarb">>)[varbName] = FeVarb.init({
       sectionName,
       feId,
       varbName,
       dbVarb: dbVarbs[varbName],
     });
     return varbs;
-  }, {} as FeVarbsInner);
+  }, {} as FeVarbsInner<SN>);
 }

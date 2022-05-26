@@ -76,7 +76,7 @@ export class SectionList<SN extends SimpleSectionName = SimpleSectionName> {
   }
   removeByFeId(feId: string): SectionList<SN> {
     const idx = this.list.findIndex((section) => section.feId === feId);
-    return this.updateList(Arr.removeAtIndex(this.list, idx));
+    return this.updateList(Arr.removeAtIndexClone(this.list, idx));
   }
   getByFeId(id: string): FeSectionI<SN> {
     const section = this.list.find((section) => section.feId === id);
@@ -87,11 +87,6 @@ export class SectionList<SN extends SimpleSectionName = SimpleSectionName> {
     const section = this.list.find((section) => section.dbId === id);
     if (!section) throw this.sectionNotFoundError(id);
     return section;
-  }
-  sectionNotFoundError(id: string): SectionNotFoundError {
-    return new SectionNotFoundError(
-      `No section with sectionName ${this.sectionName} and id ${id}`
-    );
   }
   getSpecific({ id, idType }: SpecificIdInfo): FeSectionI<SN> {
     switch (idType) {
@@ -107,6 +102,11 @@ export class SectionList<SN extends SimpleSectionName = SimpleSectionName> {
         return this.first;
       }
     }
+  }
+  sectionNotFoundError(id: string): SectionNotFoundError {
+    return new SectionNotFoundError(
+      `No section with sectionName ${this.sectionName} and id ${id}`
+    );
   }
   feIdToValidIdx(feId: string): number {
     const idx = this.list.findIndex((section) => section.feId === feId);

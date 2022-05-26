@@ -1,7 +1,7 @@
 import { ContextName } from "../../SectionsMeta/baseSections";
 import { SelfOrDescendantName } from "../../SectionsMeta/relSectionTypes/ChildTypes";
 import { SectionName } from "../../SectionsMeta/SectionName";
-export type DbSectionInfo<SN extends SectionName> = {
+export type DbSectionInfo<SN extends SectionName = SectionName> = {
   sectionName: SN;
   dbId: string;
 };

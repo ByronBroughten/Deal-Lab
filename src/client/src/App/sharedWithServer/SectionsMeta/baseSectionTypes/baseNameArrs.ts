@@ -173,6 +173,9 @@ function makeBaseNameArrsForContext<SC extends ContextName>(
       );
       return varbNames.length > 0;
     }) as HasVarbSectionName[],
+    get hasNoVarbs() {
+      return Arr.exclude(this.all, this.hasVarb);
+    },
     hasGlobalVarbs: Obj.entryKeysWithPropValue(
       baseSectionsOfContext,
       "hasGlobalVarbs",

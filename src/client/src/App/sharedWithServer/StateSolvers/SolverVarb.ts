@@ -20,7 +20,7 @@ import { OutEntity } from "../SectionsState/FeSection/FeVarb/entities";
 import { StateValue } from "../SectionsState/FeSection/FeVarb/feValue";
 import { varbNotFoundMixed } from "../SectionsState/FeSection/FeVarbs";
 import { FeSections } from "../SectionsState/SectionsState";
-import { VarbUpdater } from "../StateUpdaters/VarbUpdater";
+import { UpdaterVarb } from "../StateUpdaters/UpdaterVarb";
 import { SolverSections, SolverShared } from "./SolverSections";
 import { ValueSolver } from "./ValueSolver";
 
@@ -41,14 +41,14 @@ export class VarbSolver<
 > extends HasVarbInfoProps<SN> {
   readonly shared: SolverShared;
   private valueSolver: ValueSolver<SN>;
-  private varbUpdater: VarbUpdater<SN>;
+  private varbUpdater: UpdaterVarb<SN>;
   private editorUpdater: EditorUpdater<SN>;
   private solverSections: SolverSections;
   private initialVarb: FeVarb<SN>;
   constructor(props: VarbSolverProps<SN>) {
     super(props);
     this.shared = props.shared;
-    this.varbUpdater = new VarbUpdater(this.constructorProps);
+    this.varbUpdater = new UpdaterVarb(this.constructorProps);
     this.valueSolver = new ValueSolver(this.constructorProps);
     this.editorUpdater = new EditorUpdater(this.constructorProps);
     this.solverSections = new SolverSections(this.shared);

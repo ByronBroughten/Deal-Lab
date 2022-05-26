@@ -4,7 +4,7 @@ import { ChildName } from "../SectionsMeta/relSectionTypes/ChildTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
 import FeVarb from "../SectionsState/FeSection/FeVarb";
 import { FeSections } from "../SectionsState/SectionsState";
-import { GetterSection } from "../StateGetters/GetterSection";
+import { GetterSections } from "../StateGetters/GetterSections";
 import { SolverSections, SolverShared } from "../StateSolvers/SolverSections";
 import { StrictOmit } from "../utils/types";
 import { DefaultOrNewChildAdder } from "./DefaultOrNewDescendantAdder";
@@ -27,15 +27,15 @@ export class SectionSolver<
   SN extends SectionName
 > extends HasSectionInfoProps<SN> {
   readonly shared: SolverShared;
-  private selfSection: GetterSection<SN>;
+  private getterSections: GetterSections;
   private adder: DefaultOrNewChildAdder<SN>;
   private solverSections: SolverSections;
   constructor(props: SectionSolverProps<SN>) {
     super(props);
     this.shared = props.shared;
-    this.selfSection = new GetterSection(props);
-    this.adder = new DefaultOrNewChildAdder(this.selfSection.constructorProps);
-    this.solverSections = new SolverSections(this.shared);
+    this.getterSections = new GetterSections(props.shared);
+    this.adder = new DefaultOrNewChildAdder(props);
+    this.solverSections = new SolverSections(props.shared);
   }
   static init<S extends SectionName>(
     props: SectionSolverInitProps<S>
@@ -53,16 +53,11 @@ export class SectionSolver<
   }
   addChildAndSolve(childName: ChildName<SN>) {
     this.adder.addChild(childName);
-    const addedChild = this.sections.newestEntry(childName);
-
-    const childGetter = this.sections.makeFocalGetter(addedChild.info);
-    const { selfAndDescendantVarbInfos } = childGetter;
-
+    const { selfAndDescendantVarbInfos } =
+      this.getterSections.newestEntry(childName);
     this.addVarbInfosToSolveFor(...selfAndDescendantVarbInfos);
     this.solverSections.solve();
   }
-  // editorUpdateAndSolve() {}
-
   private addVarbInfosToSolveFor(...varbInfos: VarbInfo[]) {
     const fullNames = varbInfos.map((info) =>
       FeVarb.feVarbInfoToFullName(info)

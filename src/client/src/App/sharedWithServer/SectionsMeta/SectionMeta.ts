@@ -88,6 +88,9 @@ export class SectionMeta<CN extends ContextName, SN extends SimpleSectionName> {
   get varbNames(): string[] {
     return this.core.varbMetas.varbNames;
   }
+  get varbsMeta(): VarbMetas {
+    return this.core.varbMetas;
+  }
   isChildName(value: any): value is ChildName<SN> {
     return (this.childNames as string[]).includes(value);
   }

@@ -30,7 +30,7 @@ export interface FeSectionI<SN extends SectionName = SectionName>
   extends FeSectionMixins<SN> {
   addChildFeId({ idx, ...childInfo }: NewChildInfo<SN>): FeSectionI<SN>;
   removeChildFeId({ sectionName, feId }: NewChildInfo<SN>): FeSectionI<SN>;
-  updateVarb(nextVarb: FeVarb): FeSectionI<SN>;
+  updateVarb(nextVarb: FeVarb<SN & SectionName<"hasVarb">>): FeSectionI<SN>;
   update(nextBaseProps: Partial<FeSectionCore<SN>>): FeSectionI<SN>;
 }
 function FeSectionMaker<
@@ -79,7 +79,7 @@ function FeSectionMaker<
         },
       });
     }
-    updateVarb(nextVarb: FeVarb): FeSection {
+    updateVarb(nextVarb: FeVarb<SN & SectionName<"hasVarb">>): FeSection {
       return this.update({
         varbs: this.varbs.replaceOne(nextVarb),
       });
