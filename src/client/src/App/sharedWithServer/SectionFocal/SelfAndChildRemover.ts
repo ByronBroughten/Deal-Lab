@@ -5,7 +5,7 @@ import {
   FeChildInfo,
 } from "../SectionsMeta/relSectionTypes/ChildTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
-import { UpdaterSections } from "../StateUpdaters/SectionUpdater";
+import { UpdaterSections } from "../StateUpdaters/UpdaterSections";
 import { FocalSectionBase } from "./FocalSectionBase";
 
 export interface SelfAndChildRemoverI<SN extends SectionName>

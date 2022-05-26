@@ -12,7 +12,7 @@ import {
 } from "../SectionsMeta/relSectionTypes/ChildTypes";
 import { SectionName, sectionNameS } from "../SectionsMeta/SectionName";
 import { FeSection } from "../SectionsState/FeSection";
-import { UpdaterSections } from "../StateUpdaters/SectionUpdater";
+import { UpdaterSections } from "../StateUpdaters/UpdaterSections";
 import { StrictOmit } from "../utils/types";
 import { FocalSectionBase } from "./FocalSectionBase";
 

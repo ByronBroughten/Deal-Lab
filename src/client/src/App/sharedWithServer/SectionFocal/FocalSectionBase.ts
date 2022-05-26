@@ -10,7 +10,7 @@ import {
   GetterSectionProps,
 } from "../StateGetters/GetterSection";
 import { GetterSections } from "../StateGetters/GetterSections";
-import { UpdaterSections } from "../StateUpdaters/SectionUpdater";
+import { UpdaterSections } from "../StateUpdaters/UpdaterSections";
 
 export class FocalSectionBase<
   SN extends SectionName = "main"

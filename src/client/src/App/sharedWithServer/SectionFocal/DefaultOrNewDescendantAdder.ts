@@ -6,6 +6,10 @@ import { DescendantAdder, DescendantAdderI } from "./DescendantAdder";
 import { FocalSectionBase } from "./FocalSectionBase";
 import { SectionPackLoader, SectionPackLoaderI } from "./SectionPackLoader";
 
+// SectionPackLoader
+// That will probably need more than just addChild
+// shoot. I hadn't thought about that.
+
 export class DefaultOrNewChildAdder<
   SN extends SectionName
 > extends FocalSectionBase<SN> {
@@ -15,6 +19,7 @@ export class DefaultOrNewChildAdder<
   private loader = new SectionPackLoader(
     this.self.constructorProps
   ) as any as SectionPackLoaderI<SN>;
+
   addChild<CN extends ChildName<SN>>(childName: CN): void {
     if (defaultMaker.has(childName)) {
       const sectionPack = defaultMaker.make(childName);

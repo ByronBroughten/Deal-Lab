@@ -167,7 +167,7 @@ export class ValueSolver<
       if (Array.isArray(propOrArr)) numberVarbs[propName] = [];
       else propOrArr = [propOrArr];
       for (const relInfo of propOrArr) {
-        const inVarbs = this.selfVarb.varbsByFocal(relInfo);
+        const inVarbs = this.selfVarb.varbsByFocalMulti(relInfo);
         for (const inVarb of inVarbs) {
           const value = inVarb.value();
           if (!(value instanceof NumObj)) continue;

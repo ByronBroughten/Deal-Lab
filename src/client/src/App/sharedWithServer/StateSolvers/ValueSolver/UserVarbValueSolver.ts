@@ -13,7 +13,7 @@ export class UserVarbValueSolver extends FocalSectionBase<"userVarbItem"> {
     else return this.conditionalUserVarbValue();
   }
   conditionalUserVarbValue(): NumObj {
-    const rows = this.self.childSections("conditionalRow");
+    const rows = this.self.children("conditionalRow");
     const levelsThatPass: LevelsThatPass = {};
     for (const row of rows) {
       const vals = row.varbs.values({
