@@ -46,8 +46,6 @@ type _LoadOnLoginTest = DbStoreNameCheck<typeof loadOnLoginNames[number]>;
 
 export const dbStoreNamesDepreciated = [
   "user",
-  "propertyDefault",
-  "mgmtDefault",
 
   "property",
   "loan",

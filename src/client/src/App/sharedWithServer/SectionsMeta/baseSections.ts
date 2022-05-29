@@ -143,10 +143,6 @@ export const baseSections = {
       numBedrooms: "numObj",
       ...base.varbs.ongoing("targetRent"),
     }),
-    propertyDefault: base.section.schema(
-      base.varbs.property,
-      base.options.defaultSection
-    ),
     propertyGeneral: base.section.schema(omit(base.varbs.property, ["title"]), {
       ...base.options.alwaysOneFromStart,
       hasGlobalVarbs: true,
@@ -170,9 +166,6 @@ export const baseSections = {
     ),
 
     mgmt: base.section.schema(base.varbs.mgmt, { makeOneOnStartup: true }),
-    mgmtDefault: base.section.schema(base.varbs.mgmt, {
-      ...base.options.defaultSection,
-    }),
     mgmtGeneral: base.section.schema(omit(base.varbs.mgmt, ["title"]), {
       ...base.options.alwaysOneFromStart,
       hasGlobalVarbs: true,

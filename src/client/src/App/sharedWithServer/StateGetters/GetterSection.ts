@@ -66,7 +66,9 @@ export class GetterSection<
     switch (info.id) {
       case "local": {
         if (this.thisIsSectionType(info.sectionName)) return this;
-        else throw new Error("Local section did not match the focal section.");
+        else {
+          throw new Error("Local section did not match the focal section.");
+        }
       }
       case "parent": {
         return this.parent as any as GetterSection<S>;

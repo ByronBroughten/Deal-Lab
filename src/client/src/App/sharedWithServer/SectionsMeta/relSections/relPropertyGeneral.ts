@@ -93,29 +93,13 @@ export const relPropertyGeneral = {
       ]),
     },
     {
-      childNames: ["property", "propertyDefault"] as const,
+      childNames: ["property"] as const,
     }
   ),
   ...propertySection("property", {
-    defaultStoreName: "propertyDefault",
     rowIndexName: "propertyIndexNext",
   } as const),
   ...propertySection("propertyIndexNext"),
-  ...relSection.base(
-    "both",
-    "propertyDefault",
-    "Default Property",
-    propertyRelVarbs("property"),
-    {
-      childNames: [
-        "upfrontCostList",
-        "upfrontRevenueList",
-        "ongoingCostList",
-        "ongoingRevenueList",
-        "unit",
-      ] as const,
-    }
-  ),
   ...relSection.base("both", "unit", "Unit", {
     one: rel.varb.numObj("Unit", {
       updateFnName: "one",
