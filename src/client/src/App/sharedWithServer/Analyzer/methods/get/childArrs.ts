@@ -1,7 +1,7 @@
 import Analyzer from "../../../Analyzer";
 import { SectionFinder } from "../../../SectionsMeta/baseSectionTypes";
 import {
-  ChildIdArrs,
+  ChildIdArrsWide,
   ChildName,
   DescendantIds,
   SelfAndDescendantIds,
@@ -13,7 +13,7 @@ import StateSection from "../../StateSection";
 export function allChildDbIds<S extends SectionName>(
   this: Analyzer,
   finder: SectionFinder<S>
-): ChildIdArrs<S> {
+): ChildIdArrsWide<S> {
   const childFeIds = this.section(finder).allChildFeIds();
   return Obj.entries(childFeIds).reduce((childDbIds, [sectionName, idArr]) => {
     const dbIds = [];
@@ -24,7 +24,7 @@ export function allChildDbIds<S extends SectionName>(
     );
     childDbIds[sectionName as ChildName<S>] = dbIds;
     return childDbIds;
-  }, {} as ChildIdArrs<S>);
+  }, {} as ChildIdArrsWide<S>);
 }
 
 export function childSections<

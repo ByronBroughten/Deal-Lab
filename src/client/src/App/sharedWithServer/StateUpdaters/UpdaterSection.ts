@@ -1,4 +1,5 @@
 import { AddSectionPropsNext } from "../Analyzer/methods/internal/addSections/addSectionsTypes";
+import { DbVarbs } from "../Analyzer/SectionPackRaw/RawSection";
 import { FeChildInfo, FeSectionInfo } from "../SectionsMeta/Info";
 import {
   ChildName,
@@ -7,31 +8,30 @@ import {
 } from "../SectionsMeta/relSectionTypes/ChildTypes";
 import { ParentNameSafe } from "../SectionsMeta/relSectionTypes/ParentTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
-import { FeSection, FeSectionI } from "../SectionsState/FeSection";
-import { UpdatableFeSectionCore } from "../SectionsState/FeSection/FeSectionCore";
+import { GetterSectionBase } from "../StateGetters/Bases/GetterSectionBase";
+import { GetterSection } from "../StateGetters/GetterSection";
 import {
-  GetterSection,
-  GetterSectionBase,
-  GetterSectionProps,
-} from "../StateGetters/GetterSection";
+  RawFeSection,
+  StateSections,
+} from "../StateSections/StateSectionsNext";
 import { Arr } from "../utils/Arr";
 import { StrictOmit } from "../utils/types";
 import { FeParentInfo } from "./../SectionsMeta/Info";
 import { GetterSections } from "./../StateGetters/GetterSections";
 import { UpdaterList } from "./UpdaterList";
 
+type UpdateableRawFeSection<SN extends SectionName> = StrictOmit<
+  RawFeSection<SN>,
+  "sectionName"
+>;
+
 export class UpdaterSection<
   SN extends SectionName
 > extends GetterSectionBase<SN> {
-  private updaterList: UpdaterList<SN>;
-  private getterSection: GetterSection<SN>;
-  private getterSections: GetterSections;
-  constructor(props: GetterSectionProps<SN>) {
-    super(props);
-    this.updaterList = new UpdaterList(props);
-    this.getterSection = new GetterSection(props);
-    this.getterSections = new GetterSections(this.shared);
-  }
+  private updaterList = new UpdaterList(this.getterSectionProps);
+  private getterSection = new GetterSection(this.getterSectionProps);
+  private getterSections = new GetterSections(this.sectionsShare);
+
   private get parent(): UpdaterSection<ParentNameSafe<SN>> {
     const { parentInfoSafe } = this.getterSection;
     return this.updaterSection(parentInfoSafe);
@@ -60,11 +60,12 @@ export class UpdaterSection<
     childName: CN,
     { idx, ...rest }: AddChildOptions<SN> = {}
   ): void {
-    const section = FeSection.initNext({
+    const section = StateSections.initRawSection({
       sectionName: childName,
       parentInfo: this.feSectionInfo as any as FeParentInfo<typeof childName>,
       ...rest,
     });
+
     const childList = this.updaterList.updaterList(childName);
     if (typeof idx === "undefined") {
       childList.push(section);
@@ -72,7 +73,7 @@ export class UpdaterSection<
       childList.insert({ section, idx });
     }
 
-    const { feSectionInfo } = this.getterSections.newestEntry(childName);
+    const { feSectionInfo } = childList.get.last;
     this.addChildFeId(feSectionInfo);
   }
   addDescendant<DN extends DescendantName<SN>>(
@@ -113,15 +114,22 @@ export class UpdaterSection<
   ): UpdaterSection<S> {
     return new UpdaterSection({
       ...feInfo,
-      shared: this.shared,
+      sectionsShare: this.sectionsShare,
     });
   }
-  updateProps(nextBaseProps: Partial<UpdatableFeSectionCore<SN>>) {
-    const section = new FeSection({
-      ...this.getterSection.stateSection.core,
+  updateVarbsFromDb(dbVarbs: DbVarbs): void {
+    this.updateProps({
+      varbs: StateSections.initRawVarbs({
+        dbVarbs,
+        ...this.feSectionInfo,
+      }),
+    });
+  }
+  updateProps(nextBaseProps: Partial<UpdateableRawFeSection<SN>>) {
+    this.updaterList.replace({
+      ...this.getterSection.raw,
       ...nextBaseProps,
     });
-    this.updaterList.replace(section as any as FeSectionI<SN>);
   }
   private updateChildFeIds({
     sectionName,

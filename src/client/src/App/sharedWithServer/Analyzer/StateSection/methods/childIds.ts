@@ -2,7 +2,7 @@ import { cloneDeep } from "lodash";
 import { FeInfo, InfoS } from "../../../SectionsMeta/Info";
 import {
   ChildFeInfo,
-  ChildIdArrs,
+  ChildIdArrsWide,
   ChildName,
 } from "../../../SectionsMeta/relSectionTypes/ChildTypes";
 import { SectionName } from "../../../SectionsMeta/SectionName";
@@ -25,7 +25,7 @@ export function childFeIds<S extends SectionName>(
 
 export function allChildFeIds<S extends SectionName>(
   this: StateSection<S>
-): ChildIdArrs<S> {
+): ChildIdArrsWide<S> {
   return cloneDeep(this.core.childFeIds);
 }
 

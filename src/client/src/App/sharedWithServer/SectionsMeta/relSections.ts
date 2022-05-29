@@ -14,7 +14,7 @@ import { RelVarbs } from "./relSections/rel/relVarbs";
 import { relAnalysisStuff } from "./relSections/relAnalysisStuff";
 import { relFinancing } from "./relSections/relFinancing";
 import { preMgmtGeneral } from "./relSections/relMgmtGeneral";
-import { prePropertyGeneral } from "./relSections/relPropertyGeneral";
+import { relPropertyGeneral } from "./relSections/relPropertyGeneral";
 import { preUserLists } from "./relSections/relUserLists";
 
 export function makeRelSections() {
@@ -153,7 +153,7 @@ export function makeRelSections() {
 
       // savable sections and their children
       ...preUserLists,
-      ...prePropertyGeneral,
+      ...relPropertyGeneral,
       ...relFinancing,
       ...preMgmtGeneral,
       ...relAnalysisStuff,

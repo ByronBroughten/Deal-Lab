@@ -24,6 +24,7 @@
     "@types/react-router-dom": "^5.3.3",
     "@types/styled-components": "^5.1.22",
     "@types/url-join": "^4.0.1",
+    "assert": "^2.0.0",
     "axios": "^0.25.0",
     "compression": "^1.7.4",
     "config-webpack": "^1.0.5",

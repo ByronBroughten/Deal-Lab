@@ -123,7 +123,7 @@ describe("Analyzer.updateValues", () => {
     expect(outEntity1).toEqual(entityS.outEntity(homeInsYearlyInfo, entity1));
     expect(outEntity2).toEqual(entityS.outEntity(homeInsYearlyInfo, entity2));
   });
-  it("should remove outEntities when inEntitites are removed", () => {
+  it("should remove outEntities when inEntities are removed", () => {
     const varbName1 = "sqft";
     const varbName2 = "price";
     const [entity1Name, entity1] = pgInEntity(varbName1, 0);

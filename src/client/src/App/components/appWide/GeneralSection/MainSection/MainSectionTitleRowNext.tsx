@@ -6,30 +6,38 @@ import useToggleView from "../../../../modules/customHooks/useToggleView";
 import { auth } from "../../../../modules/services/authService";
 import { useAnalyzerContext } from "../../../../modules/usePropertyAnalyzer";
 import { useRowIndexSourceActions } from "../../../../modules/useRowIndexSourceActions";
-import { FeInfoByType } from "../../../../sharedWithServer/SectionsMeta/Info";
+import {
+  FeInfo,
+  FeInfoByType,
+} from "../../../../sharedWithServer/SectionsMeta/Info";
 import theme from "../../../../theme/Theme";
 import BtnTooltip from "../../BtnTooltip";
 import { IconBtn } from "../../IconBtn";
 import RowIndexSectionList from "../../RowIndexSectionList";
 import XBtn from "../../Xbtn";
-import MainSectionTitleRowTitle from "./MainSectionTitleRowTitle.tsx/MainSectionTitleRowTitle";
+import { MainSectionTitleRowTitleNext } from "./MainSectionTitleRowTitle.tsx/MainSectionTitleRowTitleNext";
 import MainSectionTitleSaveBtn from "./MainSectionTitleRowTitle.tsx/MainSectionTitleSaveBtn";
 
 type Props = {
-  info: FeInfoByType<"hasRowIndex">;
+  feInfo: FeInfo<"hasRowIndex">;
+  feSectionInfo: FeInfoByType<"hasRowIndex">;
   pluralName: string;
   xBtn?: boolean;
   droptop?: boolean;
 };
 export function MainSectionTitleRowNext({
   // Table Entry Title Row
-  info,
+  feInfo,
+  feSectionInfo,
   pluralName,
   xBtn = false,
   droptop = false,
 }: Props) {
   const { handleRemoveSection, handleSet } = useAnalyzerContext();
-  const { update, isIndexSaved } = useRowIndexSourceActions(info);
+  const { update, isIndexSaved } = useRowIndexSourceActions({
+    sectionName: feInfo.sectionName,
+    feId: feInfo.id,
+  });
 
   const { btnMenuIsOpen, toggleBtnMenu } = useToggleView({
     initValue: false,
@@ -38,19 +46,13 @@ export function MainSectionTitleRowNext({
 
   const isGuest = !auth.isLoggedIn;
 
-  const feInfo = {
-    sectionName: info.sectionName,
-    id: info.feId,
-    idType: "feId",
-  } as const;
-
   return (
     <MainEntryTitleRowStyled
       className="MainSectionTitleRow-root"
       btnMenuIsOpen={btnMenuIsOpen}
     >
       <div className="MainSectionTitleRow-leftSide">
-        <MainSectionTitleRowTitle feInfo={feInfo} />
+        <MainSectionTitleRowTitleNext feInfo={feSectionInfo} />
         <div className="MainSectionTitleRow-leftSide-btnsRow">
           {
             <>
@@ -64,7 +66,7 @@ export function MainSectionTitleRowNext({
                   <BiReset />
                 </IconBtn>
               </BtnTooltip>
-              <MainSectionTitleSaveBtn feInfo={feInfo} />
+              <MainSectionTitleSaveBtn feInfo={feSectionInfo} />
               {isIndexSaved && (
                 <BtnTooltip
                   title="Save updates"

@@ -1,60 +1,39 @@
 import tsort from "../Analyzer/methods/solveVarbs/tsort/tsort";
-import { SharedSections } from "../HasInfoProps/HasSharedSectionsProp";
-import {
-  FeVarbInfo,
-  SpecificVarbInfo,
-} from "../SectionsMeta/relSections/rel/relVarbInfoTypes";
+import FeVarb from "../FeSections/FeSection/FeVarb";
+import { VarbInfo } from "../SectionsMeta/Info";
+import { SpecificVarbInfo } from "../SectionsMeta/relSections/rel/relVarbInfoTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
-import FeVarb from "../SectionsState/FeSection/FeVarb";
-import { FeSections } from "../SectionsState/SectionsState";
+import { GetterSections } from "../StateGetters/GetterSections";
 import { Arr } from "../utils/Arr";
-import { VarbSolver } from "../VarbFocal/VarbSolver";
-
-export interface SolverShared extends SharedSections {
-  varbFullNamesToSolveFor: Set<string>;
-}
-export interface SolverSharedProps {
-  shared: SolverShared;
-}
+import { SolverSectionsBase } from "./SolverBases/SolverSectionsBase";
+import { SolverVarb } from "./SolverVarb";
 
 type OutVarbMap = Record<string, Set<string>>;
 
-export class SolverSections {
-  constructor(readonly shared: SolverShared) {}
-  get varbFullNamesToSolveFor(): Set<string> {
-    return this.shared.varbFullNamesToSolveFor;
-  }
-  get sections(): FeSections {
-    return this.shared.sections;
-  }
+export class SolverSections extends SolverSectionsBase {
+  private getterSections = new GetterSections(
+    this.getterSectionsBase.sectionsShare
+  );
   varbByMixed<SN extends SectionName<"hasVarb">>(
     mixedInfo: SpecificVarbInfo<SN>
-  ): VarbSolver<SN> {
-    const varb = this.sections.varbByMixed(mixedInfo);
-    return new VarbSolver({
-      ...varb.info,
-      shared: this.shared,
-    });
+  ): SolverVarb<SN> {
+    const varb = this.getterSections.varbByMixed(mixedInfo);
+    return this.solverVarb(varb.feVarbInfo);
   }
   solve() {
     const orderedInfos = this.gatherAndSortInfosToSolve();
-    for (const { id, varbName, sectionName } of orderedInfos) {
-      const varbSolver = new VarbSolver({
-        shared: this.shared,
-        feId: id,
-        sectionName,
-        varbName,
-      });
-      varbSolver.solveAndUpdateValue();
+    for (const varbInfo of orderedInfos) {
+      const solverVarb = this.solverVarb(varbInfo);
+      solverVarb.calculateAndUpdateValue();
     }
     this.resetVarbFullNamesToSolveFor();
   }
 
   private resetVarbFullNamesToSolveFor() {
-    this.shared.varbFullNamesToSolveFor = new Set();
+    this.solveShare.varbFullNamesToSolveFor = new Set();
   }
 
-  private gatherAndSortInfosToSolve(): FeVarbInfo[] {
+  private gatherAndSortInfosToSolve(): VarbInfo[] {
     const { edges, loneVarbs } = this.getDagEdgesAndLoneVarbs();
     let solveOrder = tsort(edges);
     solveOrder = solveOrder.concat(loneVarbs);
@@ -87,8 +66,8 @@ export class SolverSections {
       for (const stringInfo of [...varbFullNamesToSolveFor]) {
         if (!(stringInfo in outVarbMap)) outVarbMap[stringInfo] = new Set();
         const feVarbInfo = FeVarb.fullNameToFeVarbInfo(stringInfo);
-        const outInfos = this.outVarbInfos(feVarbInfo);
-        const outFullNames = outInfos.map((info) =>
+        const { outVarbInfos } = this.solverVarb(feVarbInfo);
+        const outFullNames = outVarbInfos.map((info) =>
           FeVarb.feVarbInfoToFullName(info)
         );
         outFullNames.forEach((fullName) =>
@@ -100,5 +79,10 @@ export class SolverSections {
     }
     return outVarbMap;
   }
-  // this should go to varbSolver
+  solverVarb<S extends SectionName>(feVarbInfo: VarbInfo<S>): SolverVarb<S> {
+    return new SolverVarb({
+      ...feVarbInfo,
+      ...this.solverSectionsProps,
+    });
+  }
 }

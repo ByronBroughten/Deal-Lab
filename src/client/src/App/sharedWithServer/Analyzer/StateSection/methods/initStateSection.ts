@@ -2,10 +2,7 @@ import { pick } from "lodash";
 import Analyzer from "../../../Analyzer";
 import { sectionMetas } from "../../../SectionsMeta";
 import { FeInfo, InfoS } from "../../../SectionsMeta/Info";
-import {
-  ChildIdArrs,
-  OneChildIdArrs,
-} from "../../../SectionsMeta/relSectionTypes/ChildTypes";
+import { ChildIdArrsWide } from "../../../SectionsMeta/relSectionTypes/ChildTypes";
 import { SectionName } from "../../../SectionsMeta/SectionName";
 import StateSection, { StateSectionCore } from "../../StateSection";
 import { InitStateSectionProps } from "../../StateSectionOld";
@@ -50,13 +47,13 @@ export function initVarbs(feInfo: FeInfo, values: VarbValues = {}): StateVarbs {
 
 function initChildFeIds<SN extends SectionName>(
   sectionName: SN,
-  proposed: Partial<ChildIdArrs<SN, "fe">> = {}
-): OneChildIdArrs<SN, "fe"> {
-  const sectionMeta = sectionMetas.section(sectionName, "fe");
+  proposed: Partial<ChildIdArrsWide<SN>> = {}
+): ChildIdArrsWide<SN> {
+  const sectionMeta = sectionMetas.section(sectionName);
   return {
     ...sectionMeta.emptyChildIdsWide(),
     ...pick(proposed, [
-      sectionMeta.get("childNames") as any as keyof ChildIdArrs<SN, "fe">,
+      sectionMeta.get("childNames") as any as keyof ChildIdArrsWide<SN>,
     ]),
   };
 }

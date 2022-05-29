@@ -1,10 +1,7 @@
 import { pick } from "lodash";
 import { sectionMetas } from "../../../SectionsMeta";
 import { Id } from "../../../SectionsMeta/baseSections/id";
-import {
-  ChildIdArrs,
-  OneChildIdArrs,
-} from "../../../SectionsMeta/relSectionTypes/ChildTypes";
+import { ChildIdArrsWide } from "../../../SectionsMeta/relSectionTypes/ChildTypes";
 import { SectionName } from "../../../SectionsMeta/SectionName";
 import { Obj } from "../../../utils/Obj";
 import { DbVarbs } from "../../DbEntry";
@@ -41,13 +38,13 @@ function initCore<SN extends SectionName>({
 
 function initChildFeIds<SN extends SectionName>(
   sectionName: SN,
-  proposed: Partial<ChildIdArrs<SN>> = {}
-): OneChildIdArrs<SN, "fe"> {
+  proposed: Partial<ChildIdArrsWide<SN>> = {}
+): ChildIdArrsWide<SN> {
   const sectionMeta = sectionMetas.section(sectionName, "fe");
   return {
     ...sectionMeta.emptyChildIdsWide(),
     ...pick(proposed, [
-      sectionMeta.get("childNames") as any as keyof ChildIdArrs<SN>,
+      sectionMeta.get("childNames") as any as keyof ChildIdArrsWide<SN>,
     ]),
   };
 }

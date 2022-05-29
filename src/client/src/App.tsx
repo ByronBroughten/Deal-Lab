@@ -21,7 +21,7 @@ const App: React.FC = () => {
     main: true,
   });
 
-  const sectionsContext = useSections();
+  const sectionsContext = useSections({ storeSectionsLocally: true });
   return (
     <React.StrictMode>
       <Normalize />

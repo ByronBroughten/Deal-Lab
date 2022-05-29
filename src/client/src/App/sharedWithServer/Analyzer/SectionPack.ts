@@ -2,8 +2,8 @@ import { omit } from "lodash";
 import { sectionMetas } from "../SectionsMeta";
 import { Id } from "../SectionsMeta/baseSections/id";
 import {
+  ChildIdArrsWide,
   FeToDbNameWithSameChildren,
-  OneChildIdArrs,
 } from "../SectionsMeta/relSectionTypes/ChildTypes";
 import {
   SectionName,
@@ -16,7 +16,7 @@ import { DbVarbs, RawSections } from "./SectionPackRaw/RawSection";
 export type OneHeadSectionNode<SN extends SectionName> = {
   sectionName: SN;
   dbId?: string;
-  childDbIds?: Partial<OneChildIdArrs<SN>>;
+  childDbIds?: Partial<ChildIdArrsWide<SN>>;
   dbVarbs?: Partial<DbVarbs>;
 };
 export class SectionPack<SN extends SectionName> {

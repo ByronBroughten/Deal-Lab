@@ -1,3 +1,4 @@
+import { InitFeSectionCoreProps } from "../../../../FeSections/FeSection/FeSectionCore";
 import { SimpleSectionName } from "../../../../SectionsMeta/baseSections";
 import { FeParentInfo } from "../../../../SectionsMeta/Info";
 import {
@@ -5,7 +6,6 @@ import {
   ChildIdArrsNext,
 } from "../../../../SectionsMeta/relSectionTypes/ChildTypes";
 import { ParentFeInfo } from "../../../../SectionsMeta/relSectionTypes/ParentTypes";
-import { InitFeSectionCoreProps } from "../../../../SectionsState/FeSection/FeSectionCore";
 import { DbVarbs } from "../../../DbEntry";
 
 export type AddSectionProps<SN extends SimpleSectionName = SimpleSectionName> =

@@ -1,5 +1,4 @@
-import { HasSectionInfoProps } from "../HasInfoProps/HasSectionInfoProps";
-import { SharedSections } from "../HasInfoProps/HasSharedSectionsProp";
+import { ValueTypesPlusAny } from "../FeSections/FeSection/FeVarb";
 import {
   FeParentInfo,
   FeParentInfoSafe,
@@ -9,83 +8,53 @@ import {
   VarbInfo,
 } from "../SectionsMeta/Info";
 import {
+  FeNameInfo,
   MultiFindByFocalInfo,
   MultiSectionInfo,
   RelSectionInfo,
 } from "../SectionsMeta/relSections/rel/relVarbInfoTypes";
 import { ValueTypeName } from "../SectionsMeta/relSections/rel/valueMetaTypes";
 import {
-  ChildIdArrs,
+  ChildIdArrsWide,
   ChildName,
   DescendantIds,
+  GeneralChildIdArrs,
   SelfAndDescendantIds,
 } from "../SectionsMeta/relSectionTypes/ChildTypes";
 import { ParentNameSafe } from "../SectionsMeta/relSectionTypes/ParentTypes";
 import { SectionMeta } from "../SectionsMeta/SectionMeta";
 import { SectionName } from "../SectionsMeta/SectionName";
-import { FeSectionI } from "../SectionsState/FeSection";
-import { ValueTypesPlusAny } from "../SectionsState/FeSection/FeVarb";
-import { FeSections } from "../SectionsState/SectionsState";
+import { RawFeSection } from "../StateSections/StateSectionsNext";
 import { Arr } from "../utils/Arr";
 import { Obj } from "../utils/Obj";
+import {
+  GetterSectionBase,
+  GetterSectionProps,
+} from "./Bases/GetterSectionBase";
 import { GetterList } from "./GetterList";
 import { GetterSections } from "./GetterSections";
 import { GetterVarb } from "./GetterVarb";
 import { GetterVarbs } from "./GetterVarbs";
 
-export interface GetterSectionProps<SN extends SectionName>
-  extends FeSectionInfo<SN> {
-  shared: SharedSections;
-}
-
-export class GetterSectionBase<
-  SN extends SectionName
-> extends HasSectionInfoProps<SN> {
-  readonly shared: SharedSections;
-  constructor(props: GetterSectionProps<SN>) {
-    super(props);
-    this.shared = props.shared;
-  }
-  get getterSectionProps(): GetterSectionProps<SN> {
-    return {
-      ...this.feSectionInfo,
-      shared: this.shared,
-    };
-  }
-}
-
 export class GetterSection<
   SN extends SectionName
 > extends GetterSectionBase<SN> {
   private getterSections: GetterSections;
-  readonly varbs: GetterVarbs<SN>;
   constructor(props: GetterSectionProps<SN>) {
     super(props);
-    this.getterSections = new GetterSections(props.shared);
-    this.varbs = new GetterVarbs(props);
+    this.getterSections = new GetterSections(props.sectionsShare);
   }
-  private get stateSections(): FeSections {
-    return this.shared.sections;
+  get raw(): RawFeSection<SN> {
+    return this.sectionsShare.sections.rawSection(this.feInfo);
   }
-  get stateSection(): FeSectionI<SN> {
-    return this.stateSections.one(this.feInfo);
-  }
-  get constructorProps(): GetterSectionProps<SN> {
-    return {
-      ...this.feInfo,
-      shared: this.shared,
-    };
+  get varbs(): GetterVarbs<SN> {
+    return new GetterVarbs(this.getterSectionProps);
   }
   thisIsSectionType<S extends SectionName>(
     sectionName: S
   ): this is GetterSection<S> {
     return this.sectionName === (sectionName as any);
   }
-
-  // there are these, which are about getting a varb based also on a focal section
-  // varbByRelative—varbs
-  // varbsByRelative—varbs
-
   sectionByFocalMixed<S extends SectionName>(info: MultiFindByFocalInfo<S>) {
     if (InfoS.is.specific(info))
       return this.getterSections.sectionByMixed(info);
@@ -125,7 +94,7 @@ export class GetterSection<
     const { sectionName } = info;
     switch (info.id) {
       case "all": {
-        return this.getterSections.listNext(sectionName).arr;
+        return this.getterSections.list(sectionName).arr;
       }
       case "children": {
         if (this.meta.isChildName(sectionName)) {
@@ -143,7 +112,7 @@ export class GetterSection<
     return this.getterSections.meta.section(this.sectionName);
   }
   get dbId(): string {
-    return this.stateSection.dbId;
+    return this.raw.dbId;
   }
   get idx() {
     return this.getterSections.list(this.sectionName).idx(this.feId);
@@ -154,6 +123,13 @@ export class GetterSection<
       sectionName: this.sectionName,
     };
   }
+  get feInfoMixed(): FeNameInfo<SN> {
+    return {
+      id: this.feId,
+      idType: "feId",
+      sectionName: this.sectionName,
+    };
+  }
   children<CN extends ChildName<SN>>(childName: CN): GetterSection<CN>[] {
     const childIds = this.childFeIds(childName);
     return childIds.map((feId) =>
@@ -161,7 +137,7 @@ export class GetterSection<
     );
   }
   childList<CN extends ChildName<SN>>(childName: CN): GetterList<CN> {
-    return this.getterSections.listNext(childName);
+    return this.getterSections.list(childName);
   }
   childrenOldToYoung<CN extends ChildName<SN>>(
     childName: CN
@@ -209,8 +185,24 @@ export class GetterSection<
   get childNames(): ChildName<SN>[] {
     return this.meta.childNames;
   }
+  get allChildFeIds(): ChildIdArrsWide<SN> {
+    return this.raw.childFeIds as GeneralChildIdArrs as ChildIdArrsWide<SN>;
+  }
   childFeIds<CN extends ChildName<SN>>(childName: CN): string[] {
-    return this.stateSection.childFeIds(childName);
+    return this.allChildFeIds[childName];
+  }
+  get allChildDbIds(): ChildIdArrsWide<SN> {
+    const { allChildFeIds } = this;
+    return Obj.entries(allChildFeIds).reduce(
+      (childDbIds, [sectionName, idArr]) => {
+        const dbIds = idArr.map(
+          (feId) => this.getterSections.section({ sectionName, feId }).dbId
+        );
+        childDbIds[sectionName] = dbIds;
+        return childDbIds;
+      },
+      {} as ChildIdArrsWide<SN>
+    );
   }
   descendantFeIds(): DescendantIds<SN> {
     const descendantIds: { [key: string]: string[] } = {};
@@ -237,22 +229,6 @@ export class GetterSection<
     }
     return descendantIds as any;
   }
-  get allChildFeIds(): ChildIdArrs<SN> {
-    return this.stateSection.core.childFeIds as any as ChildIdArrs<SN>;
-  }
-  allChildDbIds(): ChildIdArrs<SN> {
-    const { allChildFeIds } = this.stateSection;
-    return Obj.entries(allChildFeIds).reduce(
-      (childDbIds, [sectionName, idArr]) => {
-        const dbIds = idArr.map(
-          (feId) => this.getterSections.sectionNext({ sectionName, feId }).dbId
-        );
-        childDbIds[sectionName] = dbIds;
-        return childDbIds;
-      },
-      {} as ChildIdArrs<SN>
-    );
-  }
   childInfos<CN extends ChildName<SN>>(childName: CN): FeSectionInfo<CN>[] {
     const childFeIds = this.childFeIds(childName);
     return childFeIds.map((feId) => ({
@@ -271,24 +247,24 @@ export class GetterSection<
     } else return true;
   }
   get parentInfo(): FeParentInfo<SN> {
-    return this.stateSection.feParentInfo;
+    return this.raw.parentInfo;
   }
   get parentInfoSafe(): FeParentInfoSafe<SN> {
-    const { parentInfo } = this.stateSection;
+    const { parentInfo } = this;
     if (parentInfo.sectionName === noParentWarning)
       throw new Error("This section doesn't have a parent.");
     return parentInfo as FeParentInfoSafe<SN>;
   }
   get parent(): GetterSection<ParentNameSafe<SN>> {
     const { parentInfoSafe } = this;
-    return this.getterSections.sectionNext(parentInfoSafe);
+    return this.getterSections.section(parentInfoSafe);
   }
   getterSection<S extends SectionName>(
     feInfo: FeSectionInfo<S>
   ): GetterSection<S> {
     return new GetterSection({
       ...feInfo,
-      shared: this.shared,
+      sectionsShare: this.sectionsShare,
     });
   }
 }

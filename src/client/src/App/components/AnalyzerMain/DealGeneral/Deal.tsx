@@ -16,12 +16,19 @@ export default function Deal({
   feId: string;
   detailsIsOpen: boolean;
 }) {
-  const feInfo = InfoS.fe("analysis", feId);
+  const sectionName = "analysis";
+
+  const feInfo = InfoS.fe(sectionName, feId);
+  const feSectionInfo = {
+    sectionName,
+    feId,
+  } as const;
+
   return (
     <MainSection>
       <View style={{ flexDirection: "row" }}>
         <MainSectionTitleRowTitle feInfo={feInfo} />
-        <MainSectionTitleSaveBtn feInfo={feInfo} />
+        <MainSectionTitleSaveBtn feInfo={feSectionInfo} />
       </View>
       {/* <MainSectionTitleRow
         {...{ feInfo, pluralName: "deals", droptop: true }}

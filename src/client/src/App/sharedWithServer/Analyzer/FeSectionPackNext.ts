@@ -3,7 +3,6 @@ import { Id } from "../SectionsMeta/baseSections/id";
 import { FeParentInfo } from "../SectionsMeta/Info";
 import {
   ChildIdArrsWide,
-  OneChildIdArrs,
   SelfOrDescendantName,
 } from "../SectionsMeta/relSectionTypes/ChildTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
@@ -45,14 +44,14 @@ export class FeSectionPackNext<SN extends SectionName> {
     return fePack.core;
   }
   private dbToFeIds<SN extends SectionName>(
-    childDbIds: OneChildIdArrs<SN>
-  ): OneChildIdArrs<SN> {
+    childDbIds: ChildIdArrsWide<SN>
+  ): ChildIdArrsWide<SN> {
     return Obj.entries(childDbIds).reduce(
       (childFeIds, [childName, dbIdArr]) => {
         (childFeIds[childName] as string[]) = dbIdArr.map(() => Id.make());
         return childFeIds;
       },
-      {} as OneChildIdArrs<SN>
+      {} as ChildIdArrsWide<SN>
     );
   }
   static makeOrderedPreSections<SN extends SectionName>({
@@ -98,7 +97,7 @@ export class FeSectionPackNext<SN extends SectionName> {
     return {
       ...nodeMaker,
       dbVarbs,
-      childFeIds: this.dbToFeIds(childDbIds as OneChildIdArrs<DN>),
+      childFeIds: this.dbToFeIds(childDbIds as ChildIdArrsWide<DN>),
     } as SectionNodeNext<DN>;
   }
   private rawSection<DN extends SelfOrDescendantName<SN>>({

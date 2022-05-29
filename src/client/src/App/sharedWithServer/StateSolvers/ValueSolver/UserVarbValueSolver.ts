@@ -1,19 +1,21 @@
-import { FocalSectionBase } from "../../SectionFocal/FocalSectionBase";
 import { NumObj } from "../../SectionsMeta/baseSections/baseValues/NumObj";
+import { GetterSectionBase } from "../../StateGetters/Bases/GetterSectionBase";
+import { GetterSection } from "../../StateGetters/GetterSection";
 
 type LevelsThatPass = Record<number, boolean>;
-export class UserVarbValueSolver extends FocalSectionBase<"userVarbItem"> {
+export class UserVarbValueSolver extends GetterSectionBase<"userVarbItem"> {
+  private getterSection = new GetterSection(this.getterSectionProps);
   getUserVarbValue(): NumObj {
-    const varbType = this.self.value("valueSwitch", "string") as
+    const varbType = this.getterSection.value("valueSwitch", "string") as
       | "labeledEquation"
       | "ifThen";
 
     if (varbType === "labeledEquation")
-      return this.self.value("editorValue", "numObj");
+      return this.getterSection.value("editorValue", "numObj");
     else return this.conditionalUserVarbValue();
   }
   conditionalUserVarbValue(): NumObj {
-    const rows = this.self.children("conditionalRow");
+    const rows = this.getterSection.children("conditionalRow");
     const levelsThatPass: LevelsThatPass = {};
     for (const row of rows) {
       const vals = row.varbs.values({

@@ -9,10 +9,7 @@ import {
   FeNameInfo,
   FeVarbInfo,
 } from "../SectionsMeta/relSections/rel/relVarbInfoTypes";
-import {
-  ChildIdArrs,
-  OneChildIdArrs,
-} from "../SectionsMeta/relSectionTypes/ChildTypes";
+import { ChildIdArrsWide } from "../SectionsMeta/relSectionTypes/ChildTypes";
 import { DefaultStoreName } from "../SectionsMeta/relSectionTypes/DefaultStoreTypes";
 import {
   ParentFeInfo,
@@ -66,13 +63,13 @@ export function initVarbs(feInfo: FeInfo, values: VarbValues = {}): StateVarbs {
 
 function initChildFeIds<SN extends SectionName>(
   sectionName: SN,
-  proposed: Partial<ChildIdArrs<SN>> = {}
-): OneChildIdArrs<SN, "fe"> {
+  proposed: Partial<ChildIdArrsWide<SN>> = {}
+): ChildIdArrsWide<SN> {
   const sectionMeta = sectionMetas.section(sectionName, "fe");
   return {
     ...sectionMeta.emptyChildIdsWide(),
     ...pick(proposed, [
-      sectionMeta.get("childNames") as any as keyof ChildIdArrs<SN>,
+      sectionMeta.get("childNames") as any as keyof ChildIdArrsWide<SN>,
     ]),
   };
 }
@@ -88,7 +85,7 @@ type ClientCore<S extends SectionName> = {
   sectionName: S;
 
   // childFeIdArrs are initialized as empty; ids added as children are added
-  childFeIdArrs: ChildIdArrs<S>;
+  childFeIdArrs: ChildIdArrsWide<S>;
 };
 
 export type InitStateSectionProps<S extends SectionName> = Pick<

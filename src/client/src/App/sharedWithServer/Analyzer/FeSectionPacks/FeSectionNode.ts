@@ -1,5 +1,5 @@
 import {
-  OneChildIdArrs,
+  ChildIdArrsWide,
   SelfOrDescendantName,
 } from "../../SectionsMeta/relSectionTypes/ChildTypes";
 import { ParentFeInfo } from "../../SectionsMeta/relSectionTypes/ParentTypes";
@@ -9,7 +9,7 @@ import { DbSectionInfo } from "../SectionPackRaw/RawSectionFinder";
 export type OneFeSectionNode<SN extends SectionName> = {
   sectionName: SN;
   parentInfo: ParentFeInfo<SN>;
-  childFeIds: OneChildIdArrs<SN, "fe">;
+  childFeIds: ChildIdArrsWide<SN>;
   feId: string;
   dbId: string;
   dbVarbs: DbVarbs;

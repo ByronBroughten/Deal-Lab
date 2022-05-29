@@ -8,7 +8,7 @@ import {
   FeNameInfo,
   FeVarbInfo,
 } from "../SectionsMeta/relSections/rel/relVarbInfoTypes";
-import { OneChildIdArrs } from "../SectionsMeta/relSectionTypes/ChildTypes";
+import { ChildIdArrsWide } from "../SectionsMeta/relSectionTypes/ChildTypes";
 import { DefaultStoreName } from "../SectionsMeta/relSectionTypes/DefaultStoreTypes";
 import {
   ParentFeInfo,
@@ -47,7 +47,7 @@ export type StateSectionCore<SN extends SectionName> = {
   sectionName: SN;
   dbId: string;
   varbs: StateVarbs;
-  childFeIds: OneChildIdArrs<SN, "fe">;
+  childFeIds: ChildIdArrsWide<SN>;
 };
 
 export type StateSectionInitProps<SN extends SectionName> = {
@@ -55,7 +55,7 @@ export type StateSectionInitProps<SN extends SectionName> = {
   parentInfo: ParentFeInfo<SN>;
   feId?: string;
 
-  childFeIds?: Partial<OneChildIdArrs<SN, "fe">>; // empty
+  childFeIds?: Partial<ChildIdArrsWide<SN>>; // empty
   dbId?: string; // create new
   dbVarbs?: Partial<DbVarbs>; // empty
 };

@@ -2,8 +2,8 @@ import { z } from "zod";
 import { zDbValue } from "../../SectionsMeta/baseSections/baseValues";
 import { DbValue } from "../../SectionsMeta/relSections/rel/valueMetaTypes";
 import {
+  ChildIdArrsWide,
   GeneralChildIdArrs,
-  OneChildIdArrs,
   SelfOrDescendantName,
 } from "../../SectionsMeta/relSectionTypes/ChildTypes";
 import { SectionName } from "../../SectionsMeta/SectionName";
@@ -19,12 +19,11 @@ export type GeneralRawSection = {
 export type GeneralRawSections = {
   [key: string]: GeneralRawSection[];
 };
-export type OneRawSection<SN extends SectionName = SectionName> =
-  GeneralRawSection & {
-    dbId: string;
-    dbVarbs: DbVarbs;
-    childDbIds: OneChildIdArrs<SN>;
-  };
+export type OneRawSection<SN extends SectionName = SectionName> = {
+  dbId: string;
+  dbVarbs: DbVarbs;
+  childDbIds: ChildIdArrsWide<SN>;
+};
 export type RawSections<SN extends SectionName> = {
   [DSN in SelfOrDescendantName<SN>]: OneRawSection<DSN>[];
 };

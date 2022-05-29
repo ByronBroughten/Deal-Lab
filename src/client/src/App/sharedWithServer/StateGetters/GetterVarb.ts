@@ -1,6 +1,9 @@
 import { cloneDeep } from "lodash";
-import { SharedSections } from "../HasInfoProps/HasSharedSectionsProp";
-import { HasVarbInfoProps } from "../HasInfoProps/HasVarbInfoProps";
+import {
+  valueSchemasPlusAny,
+  ValueTypesPlusAny,
+} from "../FeSections/FeSection/FeVarb";
+import { OutEntity } from "../FeSections/FeSection/FeVarb/entities";
 import { InEntity } from "../SectionsMeta/baseSections/baseValues/entities";
 import { NumObj } from "../SectionsMeta/baseSections/baseValues/NumObj";
 import { InfoS, VarbInfo } from "../SectionsMeta/Info";
@@ -8,35 +11,15 @@ import {
   FeVarbInfo,
   LocalRelVarbInfo,
 } from "../SectionsMeta/relSections/rel/relVarbInfoTypes";
-import { ValueTypeName } from "../SectionsMeta/relSections/rel/valueMetaTypes";
+import {
+  DbValue,
+  ValueTypeName,
+} from "../SectionsMeta/relSections/rel/valueMetaTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { cloneValue, InUpdatePack, VarbMeta } from "../SectionsMeta/VarbMeta";
-import {
-  valueSchemasPlusAny,
-  ValueTypesPlusAny,
-} from "../SectionsState/FeSection/FeVarb";
-import { FeVarbCore } from "../SectionsState/FeSection/FeVarb/init";
-import { GetterSectionProps } from "./GetterSection";
+import { RawFeVarb } from "../StateSections/StateSectionsNext";
+import { GetterVarbBase, GetterVarbProps } from "./Bases/GetterVarbBase";
 import { GetterVarbs } from "./GetterVarbs";
-export interface FocalVarbGetterProps<SN extends SectionName>
-  extends GetterSectionProps<SN> {
-  varbName: string;
-}
-
-interface GetterVarbProps<SN extends SectionName<"hasVarb">>
-  extends VarbInfo<SN> {
-  shared: SharedSections;
-}
-
-class GetterVarbBase<
-  SN extends SectionName<"hasVarb">
-> extends HasVarbInfoProps<SN> {
-  readonly shared: SharedSections;
-  constructor(props: GetterVarbProps<SN>) {
-    super(props);
-    this.shared = props.shared;
-  }
-}
 
 export class GetterVarb<
   SN extends SectionName<"hasVarb">
@@ -55,30 +38,43 @@ export class GetterVarb<
       varbName: this.varbName,
     };
   }
-  get infoMixed(): FeVarbInfo<SN> {
+  get outEntities(): OutEntity[] {
+    return this.raw.outEntities;
+  }
+  get feVarbInfoMixed(): FeVarbInfo<SN> {
     return InfoS.feToMixedVarb(this.feVarbInfo);
   }
-  private get stateVarb(): FeVarbCore<SN> {
-    return this.getterVarbs.stateVarbs[this.varbName].core;
+  get raw(): RawFeVarb<SN> {
+    return this.sectionsShare.sections.rawVarb({
+      ...this.feVarbInfo,
+    });
+  }
+  get varbId() {
+    return GetterVarb.feVarbInfoToFullName(this.feVarbInfo);
   }
   value<VT extends ValueTypeName | "any" = "any">(
     valueType?: VT
   ): ValueTypesPlusAny[VT] {
-    const { value } = this.stateVarb;
+    const { value } = this.raw;
     if (valueSchemasPlusAny[valueType ?? "any"].is(value))
       return cloneValue(value) as ValueTypesPlusAny[VT];
     throw new Error(`Value not of type ${valueType}`);
   }
-  get inEntitites(): InEntity[] {
+  get inEntities(): InEntity[] {
     const val = this.value("any");
     if (val instanceof NumObj) return cloneDeep(val.entities);
     else return [];
   }
-  displayName(): string {
+  get displayName(): string {
     const { displayName } = this.meta;
     if (typeof displayName === "string") return displayName;
     const displayNameVarb = this.getterVarbs.varbByFocalMixed(displayName);
     return displayNameVarb.value("string");
+  }
+  get displayValue(): string {
+    const value = this.value();
+    if (value instanceof NumObj) return `${value.number}`;
+    else return `${value}`;
   }
   localVarb(varbName: string) {
     return this.getterVarbs.one(varbName);
@@ -89,7 +85,13 @@ export class GetterVarb<
   ): ValueTypesPlusAny[VT] {
     return this.localVarb(varbName).value(valueType);
   }
-
+  toDbValue(): DbValue {
+    const value = this.value("any");
+    if (value instanceof NumObj) {
+      const dbValue = value.dbNumObj;
+      return dbValue;
+    } else return value;
+  }
   get updateFnName() {
     return this.inUpdatePack.updateFnName;
   }
@@ -120,7 +122,7 @@ export class GetterVarb<
       inUpdateInfos: defaultInUpdateFnInfos,
     };
   }
-  private switchIsActive(
+  switchIsActive(
     relSwitchInfo: LocalRelVarbInfo,
     switchValue: string
   ): boolean {
@@ -128,5 +130,15 @@ export class GetterVarb<
       switchValue ===
       this.getterVarbs.varbByFocalMixed(relSwitchInfo).value("string")
     );
+  }
+  getterVarb<S extends SectionName>(varbInfo: VarbInfo<S>): GetterVarb<S> {
+    return new GetterVarb({
+      ...varbInfo,
+      sectionsShare: this.sectionsShare,
+    });
+  }
+  static feVarbInfoToFullName(info: VarbInfo): string {
+    const { sectionName, varbName, feId } = info;
+    return [sectionName, varbName, feId].join(".");
   }
 }

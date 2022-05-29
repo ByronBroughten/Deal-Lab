@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { StrictExtract } from "../../../utils/types";
 import { valueMeta } from "../../baseSections/baseValues";
 
 export type ValueSchemas = typeof valueMeta;
@@ -6,6 +7,11 @@ export type ValueTypes = {
   [Prop in keyof ValueSchemas]: ReturnType<ValueSchemas[Prop]["defaultInit"]>;
 };
 export type ValueTypeName = keyof ValueTypes;
+
+export type EditorValueTypeName = StrictExtract<
+  ValueTypeName,
+  "string" | "numObj" | "stringArray"
+>;
 
 export type DbValueTypes = {
   [Prop in ValueTypeName]: z.infer<ValueSchemas[Prop]["dbZod"]>;

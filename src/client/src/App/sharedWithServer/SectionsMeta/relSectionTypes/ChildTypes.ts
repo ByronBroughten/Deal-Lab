@@ -119,34 +119,16 @@ export type GeneralChildIdArrs = {
   [key: string]: string[];
 };
 
-// when multiple sections have the
-
-type AllChildIdArrs = {
-  [SN in SimpleSectionName]: OneChildIdArrs<SN>;
-};
-
-export type ChildIdArrsNext<SN extends SimpleSectionName> = AllChildIdArrs[SN];
-
-export type ChildIdArrsNarrow<SN extends SimpleSectionName> = MergeUnionObj<
-  AllChildIdArrs[SN]
->;
 export type ChildIdArrsWide<SN extends SimpleSectionName> = {
   [CHN in ChildName<SN>]: string[];
 };
-
-export type OneChildIdArrs<
-  SN extends SimpleSectionName,
-  CN extends ContextName = "fe"
-> = {
-  [CHN in ChildName<SN, CN>]: string[];
+type AllChildIdArrs = {
+  [SN in SimpleSectionName]: ChildIdArrsWide<SN>;
 };
-
-export type ChildIdArrs<
-  SN extends SimpleSectionName<CN>,
-  CN extends ContextName = "fe"
-> = {
-  [CHN in ChildName<SN, CN>]: string[];
-};
+export type ChildIdArrsNext<SN extends SimpleSectionName> = AllChildIdArrs[SN];
+export type ChildIdArrsNarrow<SN extends SimpleSectionName> = MergeUnionObj<
+  AllChildIdArrs[SN]
+>;
 
 export interface ChildFeInfo<SN extends SimpleSectionName> extends FeNameInfo {
   sectionName: ChildName<SN>;
@@ -169,8 +151,8 @@ export interface NewDescendantInfo<
   DN extends DescendantName<SN> = DescendantName<SN>
 > extends NewSectionInfo<DN> {}
 
-export interface NewSectionInfo<SN extends SectionNameType>
-  extends FeInfoByType<SN> {
+export interface NewSectionInfo<ST extends SectionNameType>
+  extends FeInfoByType<ST> {
   idx?: number | undefined;
 }
 

@@ -1,4 +1,4 @@
-import { StateValue } from "../SectionsState/FeSection/FeVarb/feValue";
+import { StateValue } from "../FeSections/FeSection/FeVarb/feValue";
 import { Id } from "./baseSections/id";
 import { BaseName } from "./baseSectionTypes";
 import {

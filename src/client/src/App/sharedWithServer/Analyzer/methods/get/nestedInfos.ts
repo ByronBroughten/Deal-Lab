@@ -41,7 +41,7 @@ export function nestedFeInfos<S extends SectionName>(
       if (!Arr.objIsIn(entityInfo, feInfos))
         this.nestedFeInfos(entityInfo, options);
 
-      const { feInfo: parentInfo } = this.parent(entity);
+      const { feInfo: parentInfo } = this.parent(entity as any);
       if (!Arr.objIsIn(parentInfo, feInfos)) feInfos.push(parentInfo);
     }
   }

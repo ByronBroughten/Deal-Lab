@@ -36,7 +36,23 @@ export function extend<A extends object = {}, B extends object = {}>(
   return { ...a, ...b } as A & B;
 }
 
+type UpdateObjProps<O, K extends keyof O> = {
+  obj: O;
+  key: K;
+  val: O[K];
+};
+
 export const Obj = {
+  updateIfPropExists<O, K extends keyof O>({
+    obj,
+    key,
+    val,
+  }: UpdateObjProps<O, K>): O {
+    if (key in obj) {
+      obj[key] = val;
+      return obj;
+    } else throw new Error(`Prop "${key}" is not in the passed object.`);
+  },
   isAnyIfIsObj(value: any): value is any {
     if (value && typeof value === "object") return true;
     else return false;

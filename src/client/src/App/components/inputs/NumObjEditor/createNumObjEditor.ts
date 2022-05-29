@@ -61,14 +61,6 @@ function restoreRawEditorState({
   };
 }
 
-function valueToRawContent(value: any) {
-  if (value === undefined) return getNewRawContent();
-  if (typeof value === "string") return textToRawContent(value);
-  if (value instanceof NumObj) return numObjToRawContent(value);
-  if ("entities" in value) return restoreRawEditorState(value);
-  throw new Error(`This value didn't work for creating an editor: ${value}`);
-}
-
 export default function createNumObjEditor({
   varb,
   compositeDecorator,
@@ -78,4 +70,12 @@ export default function createNumObjEditor({
     convertFromRaw(rawContent),
     compositeDecorator
   );
+}
+
+function valueToRawContent(value: any) {
+  if (value === undefined) return getNewRawContent();
+  if (typeof value === "string") return textToRawContent(value);
+  if (value instanceof NumObj) return numObjToRawContent(value);
+  if ("entities" in value) return restoreRawEditorState(value);
+  throw new Error(`This value didn't work for creating an editor: ${value}`);
 }

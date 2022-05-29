@@ -28,13 +28,17 @@ export const textFromRaw = (rawContent: any) => {
   const text = rawContent.blocks[0].text;
   return text;
 };
+export const draftUtils = {
+  editorStateToText,
+  getRawEditorState,
+};
 
-export const editorStateToText = (editorState: EditorState) => {
+export function editorStateToText(editorState: EditorState) {
   const content = editorState.getCurrentContent();
   const raw = convertToRaw(content);
   const text = textFromRaw(raw);
   return text;
-};
+}
 
 export const textToRawContent = (text: string): RawDraftContentState => {
   const rawContent = getNewRawContent();

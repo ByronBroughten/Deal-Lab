@@ -1,43 +1,25 @@
 import { SectionNotFoundError } from "../../utils/error";
-import { HasSectionNameProp } from "../HasInfoProps/HasSectionNameProp";
-import {
-  HasSharedSections,
-  SharedSections,
-} from "../HasInfoProps/HasSharedSectionsProp";
 import { SpecificIdInfo } from "../SectionsMeta/baseSections/id";
 import { SectionName } from "../SectionsMeta/SectionName";
-import { FeSections } from "../SectionsState/SectionsState";
+import { RawFeSection } from "../StateSections/StateSectionsNext";
 import { Arr } from "../utils/Arr";
+import { GetterListBase } from "./Bases/GetterListBase";
 import { GetterSection } from "./GetterSection";
 
-export interface GetterListProps<SN extends SectionName>
-  extends HasSharedSections {
-  sectionName: SN;
-}
-
-export class GetterListBase<
-  SN extends SectionName
-> extends HasSectionNameProp<SN> {
-  readonly shared: SharedSections;
-  constructor(props: GetterListProps<SN>) {
-    super(props.sectionName);
-    this.shared = props.shared;
-  }
-}
-
 export class GetterList<SN extends SectionName> extends GetterListBase<SN> {
-  get stateSections(): FeSections {
-    return this.shared.sections;
+  private get stateList(): RawFeSection<SN>[] {
+    return this.sectionsShare.sections.rawSectionList(this.sectionName);
   }
-  get stateList() {
-    return this.stateSections.list(this.sectionName).core.list;
+  get oneAndOnly(): GetterSection<SN> {
+    if (this.stateList.length !== 1)
+      throw new Error(
+        `There is not exactly one section with sectionName ${this.sectionName}.`
+      );
+    return this.last;
   }
   get last(): GetterSection<SN> {
     const stateSection = Arr.lastOrThrow(this.stateList);
-    return new GetterSection({
-      ...stateSection.info,
-      shared: this.shared,
-    });
+    return this.getterSection(stateSection.feId);
   }
   get arr(): GetterSection<SN>[] {
     return this.stateList.map(({ feId }) => this.getterSection(feId));
@@ -56,13 +38,22 @@ export class GetterList<SN extends SectionName> extends GetterListBase<SN> {
     return new GetterSection({
       sectionName: this.sectionName,
       feId,
-      shared: this.shared,
+      sectionsShare: this.sectionsShare,
     });
   }
   getByFeId(feId: string): GetterSection<SN> {
     const section = this.stateList.find((section) => section.feId === feId);
     if (!section) throw this.sectionNotFoundError(feId);
     return this.getterSection(feId);
+  }
+  hasByFeId(feId: string): boolean {
+    try {
+      this.getByFeId(feId);
+      return true;
+    } catch (error) {
+      if (error instanceof SectionNotFoundError) return false;
+      else throw error;
+    }
   }
   getByFeIds(feIds: string[]): GetterSection<SN>[] {
     const rawSections = this.stateList.filter(({ feId }) =>
@@ -88,6 +79,15 @@ export class GetterList<SN extends SectionName> extends GetterListBase<SN> {
           );
         return this.last;
       }
+    }
+  }
+  hasByMixed(idInfo: SpecificIdInfo): boolean {
+    try {
+      this.getSpecific(idInfo);
+      return true;
+    } catch (error) {
+      if (error instanceof SectionNotFoundError) return false;
+      else throw error;
     }
   }
 }

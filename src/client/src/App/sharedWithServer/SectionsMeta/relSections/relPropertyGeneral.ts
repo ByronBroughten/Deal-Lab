@@ -81,8 +81,7 @@ function propertySection<
     }
   );
 }
-
-export const prePropertyGeneral = {
+export const relPropertyGeneral = {
   ...relSection.base(
     "both",
     "propertyGeneral",

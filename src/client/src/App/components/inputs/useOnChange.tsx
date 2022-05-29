@@ -1,10 +1,8 @@
 import { EditorState } from "draft-js";
 import { Dispatch, SetStateAction } from "react";
-import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/relSections/rel/relVarbInfoTypes";
 import { isEditorChanged } from "../../utils/DraftS";
 
 interface UseOnChangeProps {
-  feVarbInfo: FeVarbInfo;
   editorState: EditorState;
   setEditorState: Dispatch<SetStateAction<EditorState>>;
 }

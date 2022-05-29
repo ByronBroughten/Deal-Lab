@@ -9,8 +9,8 @@ AppRegistry.runApplication("App", {
 });
 
 reportWebVitals();
+
 // add and test editor update and solve
-// implement a bigStringEditor update (property title)
 // implement a numObj update in a basicInfo (property price)
 // implement units in property, for the sake of adding one, with the new numObj update
 // implement outputList

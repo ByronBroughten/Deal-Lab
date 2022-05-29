@@ -49,7 +49,6 @@ export default function useDraftInput(
 
   const value = varb.value(valueType);
   const onChange = useOnChange({
-    feVarbInfo,
     editorState,
     setEditorState,
   });

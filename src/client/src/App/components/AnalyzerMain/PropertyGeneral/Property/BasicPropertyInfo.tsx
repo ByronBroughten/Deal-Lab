@@ -4,10 +4,12 @@ import { FeInfo, InfoS } from "../../../../sharedWithServer/SectionsMeta/Info";
 import theme from "../../../../theme/Theme";
 import BasicSectionInfo from "../../../appWide/GeneralSection/MainSection/MainSectionBody/BasicSectionInfo";
 import NumObjEditor from "../../../inputs/NumObjEditor";
+import { NumObjEditorNext } from "../../../inputs/NumObjEditorNext";
 import UnitList from "./UnitList";
 
-type Props = { feInfo: FeInfo; className?: string };
-export default function BasicPropertyInfo({ feInfo, className }: Props) {
+type Props = { feId: string; feInfo: FeInfo; className?: string };
+export default function BasicPropertyInfo({ feId, feInfo, className }: Props) {
+  const sectionName = "property";
   const varbInfo = InfoS.feVarbMaker(feInfo);
   return (
     <Styled
@@ -21,7 +23,9 @@ export default function BasicPropertyInfo({ feInfo, className }: Props) {
         <div className="BasicSectionInfo-subSections">
           <div className="BasicSectionInfo-subSection">
             <div className="BasicSectionInfo-subSection-viewable">
-              <NumObjEditor feVarbInfo={varbInfo("price")} />
+              <NumObjEditorNext
+                feVarbInfo={{ sectionName, feId, varbName: "price" }}
+              />
               <NumObjEditor feVarbInfo={varbInfo("taxesYearly")} />
               <NumObjEditor feVarbInfo={varbInfo("homeInsYearly")} />
               <NumObjEditor feVarbInfo={varbInfo("sqft")} />

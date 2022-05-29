@@ -37,8 +37,8 @@ type InSwitchUpdatePack = InBaseUpdatePack & SwitchUpdateInfo;
 export type InUpdatePack = InBaseUpdatePack | InSwitchUpdatePack;
 
 type OutBaseUpdatePack = { relTargetVarbInfo: OutRelVarbInfo };
-type OutSwitchPack = OutBaseUpdatePack & SwitchUpdateInfo;
-type OutDefaultPack = OutBaseUpdatePack & {
+export type OutSwitchPack = OutBaseUpdatePack & SwitchUpdateInfo;
+export type OutDefaultPack = OutBaseUpdatePack & {
   inverseSwitches: SwitchUpdateInfo[];
 };
 export function isDefaultOutPack(pack: OutUpdatePack): pack is OutDefaultPack {

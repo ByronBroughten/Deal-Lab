@@ -137,6 +137,13 @@ export const Arr = {
     nextArr.splice(idx);
     return nextArr;
   },
+  idxOrThrow<T>(arr: readonly T[], finder: (val: T) => boolean): number {
+    const idx = arr.findIndex(finder);
+    if (idx < 0) {
+      throw new Error("Value not found at any index.");
+    }
+    return idx;
+  },
   validateIdx(arr: readonly any[], idx: number) {
     const highestIdx = arr.length - 1;
     if (highestIdx > idx)

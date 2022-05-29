@@ -1,4 +1,4 @@
-import { SectionPackBuilder } from "../../../../../../SectionFocal/SectionPackBuilder";
+import { SectionPackBuilder } from "../../../../../../StatePackers.ts/PackBuilderSection";
 import { SectionPackRaw } from "../../../../../SectionPackRaw";
 import { makeDefaultMgmtPack } from "./initMgmtDefaultNext";
 import { makeDefaultPropertyPack } from "./initPropertyDefaultNext";

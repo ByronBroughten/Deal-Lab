@@ -29,10 +29,12 @@ export default function MainSectionTitleRow({
   droptop = false,
 }: Props) {
   const { handleRemoveSection, handleSet } = useAnalyzerContext();
-  const { update, isIndexSaved } = useRowIndexSourceActions({
-    feId: feInfo.id,
+  const feSectionInfo = {
     sectionName: feInfo.sectionName,
-  });
+    feId: feInfo.id,
+  } as const;
+
+  const { update, isIndexSaved } = useRowIndexSourceActions(feSectionInfo);
 
   const { btnMenuIsOpen, toggleBtnMenu } = useToggleView({
     initValue: false,
@@ -61,7 +63,7 @@ export default function MainSectionTitleRow({
                   <BiReset />
                 </IconBtn>
               </BtnTooltip>
-              <MainSectionTitleSaveBtn feInfo={feInfo} />
+              <MainSectionTitleSaveBtn feInfo={feSectionInfo} />
               {isIndexSaved && (
                 <BtnTooltip
                   title="Save updates"
