@@ -1,6 +1,6 @@
 import React from "react";
-import { defaultMaker } from "../sharedWithServer/Analyzer/methods/internal/addSections/gatherSectionInitProps/defaultMaker";
 import { StateSections } from "../sharedWithServer/StateSections/StateSectionsNext";
+import { SolverSection } from "../sharedWithServer/StateSolvers/SolverSection";
 import { react } from "../utils/react";
 import {
   SectionsStore,
@@ -38,7 +38,7 @@ function initializeSections(prePopulatedSections?: StateSections) {
       return SectionsStore.getStoredSections();
     } catch (err) {
       if (err instanceof StateMissingFromStorageError) {
-        return defaultMaker.initSectionsFromMain();
+        return SolverSection.initSectionsFromDefaultMain();
       } else throw err;
     }
 }

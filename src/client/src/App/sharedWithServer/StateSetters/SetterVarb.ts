@@ -35,22 +35,13 @@ export class SetterVarb<
   createEditor(props: CreateEditorProps): EditorState {
     return this.editorUpdater.createEditor(props);
   }
-  createStringEditor(): EditorState {
-    return this.editorUpdater.createStringEditor();
-  }
   get manualUpdateEditorToggle(): boolean | undefined {
     return this.updaterVarb.manualUpdateEditorToggle;
-  }
-  get varbId(): string {
-    return this.getterVarb.varbId;
   }
   value<VT extends ValueTypeName | "any">(
     valueType: VT
   ): ValueTypesPlusAny[VT] {
     return this.getterVarb.value(valueType);
-  }
-  displayName(): string {
-    return this.getterVarb.displayName;
   }
 }
 

@@ -9,6 +9,9 @@ AppRegistry.runApplication("App", {
 });
 
 reportWebVitals();
+// solve after loading a default (like default main)
+// or perhaps after loading anything
+// I think you need a "load and solve" function.
 
 // add and test editor update and solve
 // implement a numObj update in a basicInfo (property price)

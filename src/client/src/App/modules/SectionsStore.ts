@@ -44,7 +44,7 @@ export class SectionsStore {
   static getStoredSections(): StateSections {
     this.rmStoredStateIfPreframesChanged();
     const storedState = this.getSectionsFromStore();
-    return PackLoaderSection.initSectionsFromPack(storedState);
+    return PackLoaderSection.initSectionsFromMainPack(storedState);
   }
 
   private static setSectionsInStore(mainSectionPack: StoredSectionsState) {

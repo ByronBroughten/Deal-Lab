@@ -6,7 +6,7 @@ export const dbStoreNamesNext = [
   "analysis",
 
   "propertyIndexNext",
-  "loanIndexNext",
+  "loanIndex",
   "mgmtIndexNext",
   "analysisIndexNext",
 
@@ -31,14 +31,14 @@ export const feGuestAccessNames = Arr.exclude(dbStoreNamesNext, [
   "user",
   "propertyIndexNext",
   "propertyIndexNext",
-  "loanIndexNext",
+  "loanIndex",
   "mgmtIndexNext",
   "analysisIndexNext",
 ] as const);
 
 export const loadOnLoginNames = Arr.exclude(dbStoreNamesNext, [
   "propertyIndexNext",
-  "loanIndexNext",
+  "loanIndex",
   "mgmtIndexNext",
   "analysisIndexNext",
 ] as const);
@@ -47,7 +47,6 @@ type _LoadOnLoginTest = DbStoreNameCheck<typeof loadOnLoginNames[number]>;
 export const dbStoreNamesDepreciated = [
   "user",
   "propertyDefault",
-  "loanDefault",
   "mgmtDefault",
 
   "property",

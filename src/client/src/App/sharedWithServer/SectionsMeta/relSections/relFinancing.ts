@@ -6,12 +6,9 @@ import { relSection, RelSectionOptions } from "./rel/relSection";
 import { RelVarbs } from "./rel/relVarbs";
 
 const loanAmountBase = switchNames("loanAmountBase", "dollarsPercent");
-
-// is now the time to get rid of the defaults?
-// I would like to wait a little longer before doing that.
-
-// I should fix this
-function loanRelVarbs(): RelVarbs<ContextName, "loan"> {
+function loanRelVarbs(
+  sectionName: "loan" | "loanIndex"
+): RelVarbs<ContextName, "loan"> {
   return {
     title: rel.varb.string(),
     [loanAmountBase.switch]: rel.varb.string({ initValue: "percent" }),
@@ -19,10 +16,10 @@ function loanRelVarbs(): RelVarbs<ContextName, "loan"> {
       initNumber: 5,
       inUpdateSwitchProps: [
         rel.updateSwitch.divideToPercent(
-          "loan",
+          sectionName,
           loanAmountBase.switch,
           "dollars",
-          rel.varbInfo.local("loan", "loanAmountBaseDollars"),
+          rel.varbInfo.local(sectionName, "loanAmountBaseDollars"),
           rel.varbInfo.static("propertyGeneral", "price")
         ),
       ],
@@ -31,7 +28,7 @@ function loanRelVarbs(): RelVarbs<ContextName, "loan"> {
     [loanAmountBase.dollars]: rel.varb.calcVarb("Base loan amount", {
       inUpdateSwitchProps: [
         rel.updateSwitch.percentToDecimalTimesBase(
-          "loan",
+          sectionName,
           "loanAmountBase",
           rel.varbInfo.static("propertyGeneral", "price")
         ),
@@ -39,22 +36,27 @@ function loanRelVarbs(): RelVarbs<ContextName, "loan"> {
       startAdornment: "$",
     }),
     loanAmountDollarsTotal: rel.varb.sumMoney("Loan amount", [
-      rel.varbInfo.local("loan", "loanAmountBaseDollars"),
+      rel.varbInfo.local(sectionName, "loanAmountBaseDollars"),
       rel.varbInfo.children("wrappedInLoanList", "total"),
     ]),
-    ...rel.varbs.ongoingInput("interestRatePercent", "Interest rate", "loan", {
-      switchInit: "yearly",
-      yearly: {
-        initValue: rel.value.numObj(3),
-        endAdornment: "% annual",
-      },
-      monthly: { endAdornment: "% monthly" },
-    }),
-    ...rel.varbs.monthsYearsInput("loanTerm", "Loan term", "loan", {
+    ...rel.varbs.ongoingInput(
+      "interestRatePercent",
+      "Interest rate",
+      sectionName,
+      {
+        switchInit: "yearly",
+        yearly: {
+          initValue: rel.value.numObj(3),
+          endAdornment: "% annual",
+        },
+        monthly: { endAdornment: "% monthly" },
+      }
+    ),
+    ...rel.varbs.monthsYearsInput("loanTerm", "Loan term", sectionName, {
       switchInit: "years",
       years: { initValue: rel.value.numObj(30) },
     }),
-    ...rel.varbs.timeMoney("mortgageIns", "Mortgage insurance", "loan", {
+    ...rel.varbs.timeMoney("mortgageIns", "Mortgage insurance", sectionName, {
       switchInit: "yearly",
       shared: { initNumber: 0 },
     }),
@@ -68,6 +70,7 @@ function loanRelVarbs(): RelVarbs<ContextName, "loan"> {
     wrappedInLoan: rel.varb.sumMoney("Wrapped into loan", [
       rel.varbInfo.children("wrappedInLoanList", "total"),
     ]),
+
     ...rel.varbs.ongoingPureCalc(
       "pi",
       "Principal plus interest payments",
@@ -76,17 +79,17 @@ function loanRelVarbs(): RelVarbs<ContextName, "loan"> {
           updateFnName: "piMonthly",
           updateFnProps: {
             loanAmountDollarsTotal: rel.varbInfo.relative(
-              "loan",
+              sectionName,
               "loanAmountDollarsTotal",
               "local"
             ),
             loanTermMonths: rel.varbInfo.relative(
-              "loan",
+              sectionName,
               "loanTermMonths",
               "local"
             ),
             interestRatePercentMonthly: rel.varbInfo.relative(
-              "loan",
+              sectionName,
               "interestRatePercentMonthly",
               "local"
             ),
@@ -96,17 +99,17 @@ function loanRelVarbs(): RelVarbs<ContextName, "loan"> {
           updateFnName: "piYearly",
           updateFnProps: {
             loanAmountDollarsTotal: rel.varbInfo.relative(
-              "loan",
+              sectionName,
               "loanAmountDollarsTotal",
               "local"
             ),
             loanTermYears: rel.varbInfo.relative(
-              "loan",
+              sectionName,
               "loanTermYears",
               "local"
             ),
             interestRatePercentYearly: rel.varbInfo.relative(
-              "loan",
+              sectionName,
               "interestRatePercentYearly",
               "local"
             ),
@@ -119,7 +122,7 @@ function loanRelVarbs(): RelVarbs<ContextName, "loan"> {
 }
 
 function loanSection<
-  SN extends "loan" | "loanIndexNext",
+  SN extends "loan" | "loanIndex",
   O extends StrictOmit<
     RelSectionOptions<"fe", "loan">,
     "childNames" | "relVarbs"
@@ -129,7 +132,7 @@ function loanSection<
     "fe" as ContextName,
     sectionName,
     "Loan",
-    loanRelVarbs() as RelVarbs<"fe", SN>,
+    loanRelVarbs(sectionName) as RelVarbs<"fe", SN>,
     {
       ...((options ?? {}) as O),
       childNames: ["closingCostList", "wrappedInLoanList"] as const,
@@ -145,6 +148,7 @@ const financingRelVarbs: RelVarbs<ContextName, "financing"> = {
       rel.varbInfo.relative("propertyGeneral", "price", "static"),
       rel.varbInfo.relative("financing", "loanAmountBaseDollars", "static"),
     ],
+    // "loanAmountBaseDollars" is not initialized as zero.
     { startAdornment: "$" }
   ),
   downPaymentPercent: rel.varb.leftRightPropFn(
@@ -167,8 +171,12 @@ const financingRelVarbs: RelVarbs<ContextName, "financing"> = {
     ]),
     { shared: { startAdornment: "$" }, switchInit: "monthly" }
   ),
-  ...rel.varbs.sumSection("loan", loanRelVarbs(), loanVarbsNotInFinancing),
-  ...rel.varbs.sectionStrings("loan", loanRelVarbs(), ["title"]),
+  ...rel.varbs.sumSection(
+    "loan",
+    loanRelVarbs("loan"),
+    loanVarbsNotInFinancing
+  ),
+  ...rel.varbs.sectionStrings("loan", loanRelVarbs("loan"), ["title"]),
 };
 
 export const relFinancing = {
@@ -178,21 +186,13 @@ export const relFinancing = {
     "Financing",
     financingRelVarbs,
     {
-      childNames: ["loan", "loanDefault"] as const,
+      childNames: ["loan"] as const,
     }
   ),
   ...loanSection("loan", {
-    defaultStoreName: "loanDefault",
-    rowIndexName: "loanIndexNext",
+    rowIndexName: "loanIndex",
   } as const),
-  ...loanSection("loanIndexNext"),
-  ...relSection.base(
-    "fe" as ContextName,
-    "loanDefault",
-    "Default Loan",
-    loanRelVarbs(),
-    { childNames: ["closingCostList", "wrappedInLoanList"] as const }
-  ),
+  ...loanSection("loanIndex"),
   ...rel.section.singleTimeList("closingCostList", "Closing Costs", {
     fullIndexName: "userSingleList",
   }),

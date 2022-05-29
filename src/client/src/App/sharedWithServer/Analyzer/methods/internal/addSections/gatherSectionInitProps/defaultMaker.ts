@@ -1,5 +1,4 @@
 import { SectionName } from "../../../../../SectionsMeta/SectionName";
-import { PackLoaderSection } from "../../../../../StatePackers.ts/PackLoaderSection";
 import { SectionPackRaw } from "../../../../SectionPackRaw";
 import { makeDefaultLoanPack } from "./saneInitialSections/initLoanDefaultNext";
 import { makeDefaultMgmtPack } from "./saneInitialSections/initMgmtDefaultNext";
@@ -17,13 +16,6 @@ class DefaultSectionPackMaker<SN extends SectionName> {
   }
   make<S extends SN>(sectionName: S): SectionPackRaw<S> {
     return this.makeDefaults[sectionName]();
-  }
-  initSectionsFromMain() {
-    const sectionName = "main";
-    if (this.has(sectionName)) {
-      const mainPack = this.make(sectionName) as any as SectionPackRaw<"main">;
-      return PackLoaderSection.initSectionsFromPack(mainPack);
-    } else throw new Error(`"main" is not an option in this defaultMaker`);
   }
 }
 

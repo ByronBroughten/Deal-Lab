@@ -61,7 +61,7 @@ export class PackLoaderSection<
     });
     childPackLoader.loadChild();
   }
-  static initSectionsFromPack(
+  static initSectionsFromMainPack(
     sectionPack: SectionPackRaw<"main">
   ): StateSections {
     const sections = StateSections.initWithMain();

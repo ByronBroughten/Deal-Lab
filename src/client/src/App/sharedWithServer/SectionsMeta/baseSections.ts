@@ -59,7 +59,7 @@ export const baseSections = {
     propertyIndexNext: base.section.schema(base.varbs.property, {
       uniqueDbId: true,
     }),
-    loanIndexNext: base.section.schema(base.varbs.loan, { uniqueDbId: true }),
+    loanIndex: base.section.schema(base.varbs.loan, { uniqueDbId: true }),
     mgmtIndexNext: base.section.schema(base.varbs.mgmt, { uniqueDbId: true }),
     analysisIndexNext: base.section.schema(base.varbs.analysis, {
       uniqueDbId: true,
@@ -151,13 +151,9 @@ export const baseSections = {
       ...base.options.alwaysOneFromStart,
       hasGlobalVarbs: true,
     }),
-
     loan: base.section.schema(base.varbs.loan, {}),
     closingCostList: base.section.singleTimeListSolves,
     wrappedInLoanList: base.section.singleTimeListSolves,
-    loanDefault: base.section.schema(base.varbs.loan, {
-      ...base.options.defaultSection,
-    }),
     financing: base.section.schema(
       {
         ...omit(base.varbs.loan, loanVarbsNotInFinancing),

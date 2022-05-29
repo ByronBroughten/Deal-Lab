@@ -52,7 +52,7 @@ function useUpdateValueFromEditor({
       return;
     }
     setterVarb.updateValueFromEditor(editorState);
-  }, [editorState]);
+  }, [editorState.getCurrentContent()]);
 }
 
 interface ManualUpdateIfTriggeredProps extends CreateEditorProps {

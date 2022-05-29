@@ -155,12 +155,6 @@ export class SolverVarb<
   }
   private solveOutVarbs(): void {
     this.gatherOutVarbInfos();
-    // This will result in there being duplicate outVarbInfos
-    // It would be better if it were a set
-    // It could only really be a set if it had strings, though
-    // I would just need a function to add outVarbInfos to it
-    // I
-
     this.addVarbInfosToSolveFor(...this.outVarbInfos);
     this.solverSections.solve();
   }

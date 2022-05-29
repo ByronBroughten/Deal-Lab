@@ -61,12 +61,6 @@ export class EditorUpdaterVarb<
     const content = contentCreators[valueType]();
     return EditorState.createWithContent(content, compositeDecorator);
   }
-  createStringEditor(): EditorState {
-    const content = ContentState.createFromText(
-      this.getterVarb.value("string")
-    );
-    return EditorState.createWithContent(content);
-  }
   update(editorState: EditorState): void {
     const nextValue = this.valueFromEditor(editorState);
     this.updaterVarb.update({

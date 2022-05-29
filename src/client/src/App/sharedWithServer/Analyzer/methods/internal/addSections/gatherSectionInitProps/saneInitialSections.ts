@@ -1,5 +1,4 @@
 import { cloneDeep } from "lodash";
-import { initLoanDefault } from "./saneInitialSections/initLoanDefault";
 import { initMgmtDefault } from "./saneInitialSections/initMgmtDefault";
 import { initOutputListDefault } from "./saneInitialSections/initOutputListDefault";
 import { initPropertyDefault } from "./saneInitialSections/initPropertyDefault";
@@ -7,7 +6,6 @@ import { initPropertyDefault } from "./saneInitialSections/initPropertyDefault";
 const core = {
   outputListDefault: initOutputListDefault,
   propertyDefault: initPropertyDefault,
-  loanDefault: initLoanDefault,
   mgmtDefault: initMgmtDefault,
 } as const;
 
@@ -17,7 +15,6 @@ class SaneInitialSections {
   protected core = {
     outputListDefault: initOutputListDefault,
     propertyDefault: initPropertyDefault,
-    loanDefault: initLoanDefault,
     mgmtDefault: initMgmtDefault,
   } as const;
   constructor() {}

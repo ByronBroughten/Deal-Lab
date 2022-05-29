@@ -1,7 +1,7 @@
 import { SetStateAction } from "react";
 import { SetSections } from "../../modules/useSections";
-import { defaultMaker } from "../Analyzer/methods/internal/addSections/gatherSectionInitProps/defaultMaker";
 import { StateSections } from "../StateSections/StateSectionsNext";
+import { SolverSection } from "../StateSolvers/SolverSection";
 import { SetterSection } from "./SetterSection";
 
 type State = { sections: StateSections };
@@ -9,7 +9,7 @@ describe("SetterSection", () => {
   let state: State;
   let sections: StateSections;
   beforeEach(() => {
-    sections = defaultMaker.initSectionsFromMain();
+    sections = SolverSection.initSectionsFromDefaultMain();
     state = { sections };
   });
   const setSectionsTest: SetSections = (
