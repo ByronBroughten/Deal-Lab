@@ -6,6 +6,11 @@ import { relSection, RelSectionOptions } from "./rel/relSection";
 import { RelVarbs } from "./rel/relVarbs";
 
 const loanAmountBase = switchNames("loanAmountBase", "dollarsPercent");
+
+// is now the time to get rid of the defaults?
+// I would like to wait a little longer before doing that.
+
+// I should fix this
 function loanRelVarbs(): RelVarbs<ContextName, "loan"> {
   return {
     title: rel.varb.string(),
