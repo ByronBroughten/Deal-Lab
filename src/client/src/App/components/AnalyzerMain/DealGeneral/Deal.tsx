@@ -1,15 +1,16 @@
 import { View } from "react-native";
 import styled from "styled-components";
 import { InfoS } from "../../../sharedWithServer/SectionsMeta/Info";
+import { useSetterSection } from "../../../sharedWithServer/StateSetters/SetterSection";
 import theme from "../../../theme/Theme";
 import MainSection from "../../appWide/GeneralSection/MainSection";
 import MainSectionBody from "../../appWide/GeneralSection/MainSection/MainSectionBody";
 import MainSectionTitleRowTitle from "../../appWide/GeneralSection/MainSection/MainSectionTitleRowTitle.tsx/MainSectionTitleRowTitle";
 import MainSectionTitleSaveBtn from "../../appWide/GeneralSection/MainSection/MainSectionTitleRowTitle.tsx/MainSectionTitleSaveBtn";
-import DealBasics from "./Deal/DealBasics";
 import DealDetails from "./Deal/DealDetails";
+import DealOutputList from "./Deal/DealOutputList";
 
-export default function Deal({
+export function Deal({
   feId,
   detailsIsOpen,
 }: {
@@ -18,11 +19,22 @@ export default function Deal({
 }) {
   const sectionName = "analysis";
 
+  const main = useSetterSection();
+  const dealFeId = main.oneChildFeId(sectionName);
+  const deal = useSetterSection({
+    sectionName,
+    feId: dealFeId,
+  });
+
+  const outputListId = deal.oneChildFeId("dealOutputList");
+
   const feInfo = InfoS.fe(sectionName, feId);
   const feSectionInfo = {
     sectionName,
     feId,
   } as const;
+
+  // Tackle DealDetails next.
 
   return (
     <MainSection>
@@ -36,7 +48,7 @@ export default function Deal({
       <MainSectionBody>
         <Styled className="ListGroup-root">
           <div className="Deal-viewable viewable">
-            {!detailsIsOpen && <DealBasics id={feId} />}
+            {!detailsIsOpen && <DealOutputList feId={outputListId} />}
             {detailsIsOpen && <DealDetails id={feId} />}
           </div>
         </Styled>
