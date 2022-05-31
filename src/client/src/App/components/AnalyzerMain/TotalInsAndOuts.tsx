@@ -1,6 +1,6 @@
 import { useAnalyzerContext } from "../../modules/usePropertyAnalyzer";
 import { InfoS } from "../../sharedWithServer/SectionsMeta/Info";
-import LabeledOutputRow from "../appWide/LabeledOutputRow";
+import LabeledOutputRowSimple from "../appWide/LabeledOutputRowSimple";
 import { LabeledVarbSimple } from "../appWide/LabeledVarbSimple";
 import ListGroupShell from "./general/ListGroupShell";
 import GlobalInfoSection from "./general/StaticInfoSection";
@@ -11,7 +11,7 @@ export default function TotalInsAndOuts() {
   const varbInfo = InfoS.feVarbMaker(feInfo);
   return (
     <GlobalInfoSection>
-      <LabeledOutputRow>
+      <LabeledOutputRowSimple>
         <ListGroupShell titleText="Upfront Totals">
           <LabeledVarbSimple
             feVarbInfo={varbInfo("upfrontRevenue")}
@@ -32,7 +32,7 @@ export default function TotalInsAndOuts() {
             displayLabel="Expenses"
           />
         </ListGroupShell>
-      </LabeledOutputRow>
+      </LabeledOutputRowSimple>
     </GlobalInfoSection>
   );
 }

@@ -87,7 +87,7 @@ export default class StateVarb {
   }
 
   get fullName(): string {
-    return StateVarb.feVarbInfoToFullName(this.feVarbInfo);
+    return StateVarb.feVarbInfoToVarbId(this.feVarbInfo);
   }
   get varbName() {
     return this.meta.varbName;
@@ -142,7 +142,7 @@ export default class StateVarb {
     };
   }
   get stringFeVarbInfo(): string {
-    return StateVarb.feVarbInfoToFullName(this.feVarbInfo);
+    return StateVarb.feVarbInfoToVarbId(this.feVarbInfo);
   }
   get name(): string {
     return this.stringFeVarbInfo;
@@ -222,11 +222,11 @@ export default class StateVarb {
   }
 
   static init = initStateVarb;
-  static feVarbInfoToFullName(info: FeVarbInfo): string {
+  static feVarbInfoToVarbId(info: FeVarbInfo): string {
     const { sectionName, varbName, id } = info;
     return [sectionName, varbName, id].join(".");
   }
-  static fullNameToFeVarbInfo(fullName: string): FeVarbInfo {
+  static varbIdToFeVarbInfo(fullName: string): FeVarbInfo {
     const [sectionName, varbName, id] = fullName.split(".") as [
       SectionName,
       string,

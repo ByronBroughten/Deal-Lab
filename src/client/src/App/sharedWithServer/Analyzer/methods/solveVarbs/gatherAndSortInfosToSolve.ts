@@ -13,7 +13,7 @@ export function getOutVarbMap(
   parentStringInfo?: string
 ): OutVarbMap {
   for (const info of feInfosToSolve) {
-    const stringInfo = StateVarb.feVarbInfoToFullName(info);
+    const stringInfo = StateVarb.feVarbInfoToVarbId(info);
     if (visitedInfos.includes(stringInfo)) continue;
     if (!(stringInfo in outVarbMap)) outVarbMap[stringInfo] = [];
     if (parentStringInfo && !outVarbMap[parentStringInfo].includes(stringInfo))
@@ -54,6 +54,6 @@ export function gatherAndSortInfosToSolve(
   let solveOrder = tsort(edges);
   solveOrder = solveOrder.concat(loneVarbs);
   return solveOrder.map((stringInfo) =>
-    StateVarb.fullNameToFeVarbInfo(stringInfo)
+    StateVarb.varbIdToFeVarbInfo(stringInfo)
   );
 }

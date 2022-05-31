@@ -96,7 +96,7 @@ export default function usePropertyAnalyzer({
     handleChange: ({ currentTarget }: { currentTarget: any }) => {
       // needed for certain third-party components
       const { name, value } = currentTarget;
-      const feVarbInfo = StateVarb.fullNameToFeVarbInfo(name);
+      const feVarbInfo = StateVarb.varbIdToFeVarbInfo(name);
       setAnalyzer((prev) => prev.directUpdateAndSolve(feVarbInfo, value));
     },
   };

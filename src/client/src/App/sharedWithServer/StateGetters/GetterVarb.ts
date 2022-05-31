@@ -1,10 +1,14 @@
 import { cloneDeep } from "lodash";
+import { Adornments } from "../Analyzer/StateSection/StateVarb";
 import {
   valueSchemasPlusAny,
   ValueTypesPlusAny,
 } from "../FeSections/FeSection/FeVarb";
 import { OutEntity } from "../FeSections/FeSection/FeVarb/entities";
-import { InEntity } from "../SectionsMeta/baseSections/baseValues/entities";
+import {
+  InEntity,
+  InEntityVarbInfo,
+} from "../SectionsMeta/baseSections/baseValues/entities";
 import { NumObj } from "../SectionsMeta/baseSections/baseValues/NumObj";
 import { InfoS, VarbInfo } from "../SectionsMeta/Info";
 import {
@@ -50,7 +54,7 @@ export class GetterVarb<
     });
   }
   get varbId() {
-    return GetterVarb.feVarbInfoToFullName(this.feVarbInfo);
+    return GetterVarb.feVarbInfoToVarbId(this.feVarbInfo);
   }
   value<VT extends ValueTypeName | "any" = "any">(
     valueType?: VT
@@ -75,6 +79,11 @@ export class GetterVarb<
     const value = this.value();
     if (value instanceof NumObj) return `${value.number}`;
     else return `${value}`;
+  }
+  displayVarb({ startAdornment, endAdornment }: Partial<Adornments> = {}) {
+    return `${startAdornment ?? this.meta.startAdornment}${this.displayValue}${
+      endAdornment ?? this.meta.endAdornment
+    }`;
   }
   localVarb(varbName: string) {
     return this.getterVarbs.one(varbName);
@@ -126,10 +135,10 @@ export class GetterVarb<
     relSwitchInfo: LocalRelVarbInfo,
     switchValue: string
   ): boolean {
-    return (
-      switchValue ===
-      this.getterVarbs.varbByFocalMixed(relSwitchInfo).value("string")
-    );
+    const actualSwitchValue = this.getterVarbs
+      .varbByFocalMixed(relSwitchInfo)
+      .value("string");
+    return switchValue === actualSwitchValue;
   }
   getterVarb<S extends SectionName>(varbInfo: VarbInfo<S>): GetterVarb<S> {
     return new GetterVarb({
@@ -137,8 +146,27 @@ export class GetterVarb<
       sectionsShare: this.sectionsShare,
     });
   }
-  static feVarbInfoToFullName(info: VarbInfo): string {
+  static mixedVarbInfoToMixedVarbId(info: InEntityVarbInfo): string {
+    const { sectionName, idType, id, varbName } = info;
+    return [sectionName, idType, id, varbName].join(".");
+  }
+  static feVarbInfoToVarbId(info: VarbInfo): string {
     const { sectionName, varbName, feId } = info;
     return [sectionName, varbName, feId].join(".");
+  }
+  static varbInfosToVarbIds(varbInfos: VarbInfo[]): string[] {
+    return varbInfos.map((varbInfo) => {
+      return GetterVarb.feVarbInfoToVarbId(varbInfo);
+    });
+  }
+  static varbIdToVarbInfo(varbId: string): VarbInfo {
+    const [sectionName, varbName, feId] = varbId.split(".") as [
+      SectionName,
+      string,
+      string
+    ];
+    const info = { sectionName, varbName, feId };
+    if (InfoS.isFeVarbInfo(info)) return info;
+    else throw new Error(`Was passed an invalid varbId: ${varbId}`);
   }
 }

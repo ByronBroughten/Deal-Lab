@@ -70,6 +70,8 @@ export class GetterSection<
           throw new Error("Local section did not match the focal section.");
         }
       }
+      // Parent can be one or none. For that reason,
+      // it might better belong in the array category
       case "parent": {
         return this.parent as any as GetterSection<S>;
       }
@@ -146,6 +148,18 @@ export class GetterSection<
   ): GetterSection<CN>[] {
     return this.childList(childName).getByFeIds(this.childFeIds(childName));
   }
+  hasChild<CN extends ChildName<SN>>({
+    sectionName,
+    feId,
+  }: FeSectionInfo<CN>): boolean {
+    return this.childList(sectionName).hasByFeId(feId);
+  }
+  child<CN extends ChildName<SN>>({
+    sectionName,
+    feId,
+  }: FeSectionInfo<CN>): GetterSection<CN> {
+    return this.childList(sectionName).getByFeId(feId);
+  }
   varb(varbName: string): GetterVarb<SN> {
     return this.varbs.one(varbName);
   }
@@ -155,7 +169,10 @@ export class GetterSection<
   ): ValueTypesPlusAny[VT] {
     return this.varb(varbName).value(valueType);
   }
-  get selfAndDescendantVarbInfos() {
+  get selfAndDescendantVarbIds(): string[] {
+    return GetterVarb.varbInfosToVarbIds(this.selfAndDescendantVarbInfos);
+  }
+  get selfAndDescendantVarbInfos(): VarbInfo[] {
     const sectionInfos = this.selfAndDescendantSectionInfos;
     return sectionInfos.reduce((feVarbInfos, sectionInfo) => {
       const section = this.getterSection(sectionInfo);
@@ -163,7 +180,7 @@ export class GetterSection<
       return feVarbInfos.concat(...section.varbs.feVarbInfos);
     }, [] as VarbInfo[]);
   }
-  get selfAndDescendantSectionInfos() {
+  get selfAndDescendantSectionInfos(): FeSectionInfo[] {
     const feIds = this.selfAndDescendantFeIds;
     return Obj.keys(feIds).reduce((feSectionInfos, sectionName) => {
       const sectionInfos = feIds[sectionName].map(

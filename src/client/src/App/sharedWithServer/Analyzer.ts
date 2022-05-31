@@ -169,7 +169,7 @@ type RawCore = { [SN in SectionName]: StateSectionCore<SN>[] };
 type VarbFullnamesToSolveFor = Set<string>;
 export type AnalyzerCore = {
   sections: StateSections;
-  varbFullNamesToSolveFor: VarbFullnamesToSolveFor;
+  varbIdsToSolveFor: VarbFullnamesToSolveFor;
 };
 
 export default class Analyzer {
@@ -177,7 +177,7 @@ export default class Analyzer {
   protected static makeInitialCore(): AnalyzerCore {
     return {
       sections: Analyzer.blankStateSections(),
-      varbFullNamesToSolveFor: new Set(),
+      varbIdsToSolveFor: new Set(),
     };
   }
   get sections() {
@@ -186,23 +186,20 @@ export default class Analyzer {
   sectionInfo<SN extends SectionName>(finder: SectionFinder<SN>) {
     return this.section(finder).feInfo as FeNameInfo<SN>;
   }
-  get varbFullNamesToSolveFor() {
-    return this.core.varbFullNamesToSolveFor;
+  get varbIdsToSolveFor() {
+    return this.core.varbIdsToSolveFor;
   }
   addVarbsToSolveFor(...varbInfos: FeVarbInfo[]): Analyzer {
     const fullNames = varbInfos.map((info) =>
-      StateVarb.feVarbInfoToFullName(info)
+      StateVarb.feVarbInfoToVarbId(info)
     );
     return this.updateAnalyzer({
-      varbFullNamesToSolveFor: new Set([
-        ...this.varbFullNamesToSolveFor,
-        ...fullNames,
-      ]),
+      varbIdsToSolveFor: new Set([...this.varbIdsToSolveFor, ...fullNames]),
     });
   }
   getVarbInfosToSolveFor(): FeVarbInfo[] {
-    return [...this.varbFullNamesToSolveFor].map((fullName) =>
-      StateVarb.fullNameToFeVarbInfo(fullName)
+    return [...this.varbIdsToSolveFor].map((fullName) =>
+      StateVarb.varbIdToFeVarbInfo(fullName)
     );
   }
 

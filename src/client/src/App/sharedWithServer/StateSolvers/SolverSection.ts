@@ -1,23 +1,42 @@
 import { defaultMaker } from "../Analyzer/methods/internal/addSections/gatherSectionInitProps/defaultMaker";
 import { SectionPackRaw } from "../Analyzer/SectionPackRaw";
+import { VarbInfo } from "../SectionsMeta/Info";
 import { ChildName } from "../SectionsMeta/relSectionTypes/ChildTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { GetterSectionProps } from "../StateGetters/Bases/GetterSectionBase";
 import { GetterSection } from "../StateGetters/GetterSection";
 import { GetterSections } from "../StateGetters/GetterSections";
+import { GetterVarb } from "../StateGetters/GetterVarb";
 import { PackLoaderSection } from "../StatePackers.ts/PackLoaderSection";
 import { StateSections } from "../StateSections/StateSectionsNext";
 import { DefaultOrNewChildAdder } from "../StateUpdaters/DefaultOrNewDescendantAdder";
+import {
+  AddChildOptions,
+  UpdaterSection,
+} from "../StateUpdaters/UpdaterSection";
+import { Arr } from "../utils/Arr";
 import {
   SolverSectionBase,
   SolverSectionProps,
 } from "./SolverBases/SolverSectionBase";
 import { HasSolveShare } from "./SolverBases/SolverSectionsBase";
 import { SolverSections } from "./SolverSections";
+import { SolverVarb } from "./SolverVarb";
 
 interface SolverSectionInitProps<SN extends SectionName>
   extends GetterSectionProps<SN>,
     Partial<HasSolveShare> {}
+
+// function varbInfosToSolveAfterErase(
+//   analyzer: Analyzer,
+//   feInfo: FeInfo | FeInfo[]
+// ): FeVarbInfo[] {
+//   const nestedVarbInfos = analyzer.nestedFeVarbInfos(feInfo);
+//   const nestedOutVarbInfos = analyzer.nestedFeOutVarbInfos(feInfo);
+//   return nestedOutVarbInfos.filter((feInfo) => {
+//     return !Arr.objIsIn(feInfo, nestedVarbInfos);
+//   });
+// }
 
 export class SolverSection<
   SN extends SectionName
@@ -25,15 +44,12 @@ export class SolverSection<
   private getterSections = new GetterSections(
     this.getterSectionsBase.sectionsShare
   );
-  private adder = new DefaultOrNewChildAdder(
+  private defaultAdder = new DefaultOrNewChildAdder(
     this.getterSectionBase.getterSectionProps
   );
-  private loader = new PackLoaderSection(
-    this.getterSectionBase.getterSectionProps
-  );
-  private getterSection = new GetterSection(
-    this.getterSectionBase.getterSectionProps
-  );
+  private updater = new UpdaterSection(this.getterSectionProps);
+  private loader = new PackLoaderSection(this.getterSectionProps);
+  private getterSection = new GetterSection(this.getterSectionProps);
   private solverSections = new SolverSections(this.solverSectionsProps);
 
   static init<S extends SectionName>(
@@ -41,16 +57,46 @@ export class SolverSection<
   ): SolverSection<S> {
     if (!props.solveShare) {
       props.solveShare = {
-        varbFullNamesToSolveFor: new Set(),
+        varbIdsToSolveFor: new Set(),
       };
     }
     return new SolverSection(props as SolverSectionProps<S>);
   }
-  get varbFullNamesToSolveFor(): Set<string> {
-    return this.solveShare.varbFullNamesToSolveFor;
+  get varbIdsToSolveFor(): Set<string> {
+    return this.solveShare.varbIdsToSolveFor;
   }
-  addChildAndSolve(childName: ChildName<SN>) {
-    this.adder.addChild(childName);
+  removeSelfAndSolve(): void {
+    const { selfAndDescendantVarbIds } = this.getterSection;
+    const { selfAndDescendantOutVarbIds } = this;
+    const varbIdsToSolveFor = Arr.exclude(
+      selfAndDescendantOutVarbIds,
+      selfAndDescendantVarbIds
+    );
+    this.addVarbIdsToSolveFor(...varbIdsToSolveFor);
+    this.updater.removeSelf();
+    this.solve();
+  }
+  get selfAndDescendantOutVarbIds(): string[] {
+    return GetterVarb.varbInfosToVarbIds(this.selfAndDescendantOutVarbInfos);
+  }
+  get selfAndDescendantOutVarbInfos(): VarbInfo[] {
+    const outVarbInfos: VarbInfo[] = [];
+    const { selfAndDescendantVarbInfos } = this.getterSection;
+    for (const varbInfo of selfAndDescendantVarbInfos) {
+      const solverVarb = new SolverVarb({
+        ...this.solverSectionsProps,
+        ...varbInfo,
+      });
+      outVarbInfos.push(...solverVarb.outVarbInfos);
+    }
+    return outVarbInfos;
+  }
+
+  addChildAndSolve<CN extends ChildName<SN>>(
+    childName: ChildName<SN>,
+    options?: AddChildOptions<CN>
+  ): void {
+    this.defaultAdder.addChild(childName, options);
     const { selfAndDescendantVarbInfos } =
       this.getterSections.newestEntry(childName);
     this.addVarbInfosToSolveFor(...selfAndDescendantVarbInfos);

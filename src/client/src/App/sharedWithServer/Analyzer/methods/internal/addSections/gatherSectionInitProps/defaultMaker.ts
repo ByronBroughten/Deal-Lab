@@ -1,10 +1,10 @@
 import { SectionName } from "../../../../../SectionsMeta/SectionName";
 import { SectionPackRaw } from "../../../../SectionPackRaw";
-import { makeDefaultLoanPack } from "./saneInitialSections/initLoanDefaultNext";
-import { makeDefaultMgmtPack } from "./saneInitialSections/initMgmtDefaultNext";
-import { makeDefaultPropertyPack } from "./saneInitialSections/initPropertyDefaultNext";
-import { makeDefaultDealPack } from "./saneInitialSections/makeDefaultDealPack";
-import { makeDefaultMainPack } from "./saneInitialSections/makeDefaultMainPack";
+import { makeDefaultDealPack } from "./defaultMaker/makeDefaultDealPack";
+import { makeDefaultLoanPack } from "./defaultMaker/makeDefaultLoanPack";
+import { makeDefaultMainPack } from "./defaultMaker/makeDefaultMainPack";
+import { makeDefaultMgmtPack } from "./defaultMaker/makeDefaultMgmtPack";
+import { makeDefaultPropertyPack } from "./defaultMaker/makeDefaultPropertyPack";
 
 type FunctionsMakeDefault<SN extends SectionName> = {
   [S in SN]: () => SectionPackRaw<S>;

@@ -3,19 +3,22 @@ import { ChildName } from "../SectionsMeta/relSectionTypes/ChildTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { GetterSectionBase } from "../StateGetters/Bases/GetterSectionBase";
 import { PackLoaderSection } from "../StatePackers.ts/PackLoaderSection";
-import { UpdaterSection } from "./UpdaterSection";
+import { AddChildOptions, UpdaterSection } from "./UpdaterSection";
 
 export class DefaultOrNewChildAdder<
   SN extends SectionName
 > extends GetterSectionBase<SN> {
   private updater = new UpdaterSection(this.getterSectionProps);
   private loader = new PackLoaderSection(this.getterSectionProps);
-  addChild<CN extends ChildName<SN>>(childName: CN): void {
+  addChild<CN extends ChildName<SN>>(
+    childName: CN,
+    options?: AddChildOptions<CN>
+  ): void {
     if (defaultMaker.has(childName)) {
       const sectionPack = defaultMaker.make(childName);
       this.loader.loadChildSectionPack(sectionPack);
     } else {
-      this.updater.addChild(childName);
+      this.updater.addChild(childName, options);
     }
   }
 }

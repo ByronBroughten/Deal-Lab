@@ -119,6 +119,9 @@ export class VarbMeta {
   get initValue() {
     return cloneValue(this.core.initValue);
   }
+  get dbInitValue() {
+    return cloneDeep(this.core.dbInitValue);
+  }
   get varbName() {
     return this.core.varbName;
   }

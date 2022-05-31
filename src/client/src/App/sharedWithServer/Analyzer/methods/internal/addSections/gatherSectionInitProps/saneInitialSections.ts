@@ -1,5 +1,5 @@
 import { cloneDeep } from "lodash";
-import { initOutputListDefault } from "./saneInitialSections/initOutputListDefault";
+import { initOutputListDefault } from "./defaultMaker/initOutputListDefault";
 
 const core = {
   outputListDefault: initOutputListDefault,

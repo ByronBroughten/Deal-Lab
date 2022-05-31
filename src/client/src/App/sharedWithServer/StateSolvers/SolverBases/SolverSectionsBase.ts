@@ -5,7 +5,7 @@ import {
 } from "../../StateGetters/Bases/GetterSectionsBase";
 import { GetterVarb } from "../../StateGetters/GetterVarb";
 
-export type SolveShare = { varbFullNamesToSolveFor: Set<string> };
+export type SolveShare = { varbIdsToSolveFor: Set<string> };
 export type HasSolveShare = {
   solveShare: SolveShare;
 };
@@ -27,17 +27,17 @@ export class SolverSectionsBase {
       solveShare: this.solveShare,
     };
   }
-  get varbFullNamesToSolveFor(): Set<string> {
-    return this.solveShare.varbFullNamesToSolveFor;
+  get varbIdsToSolveFor(): Set<string> {
+    return this.solveShare.varbIdsToSolveFor;
   }
   addVarbInfosToSolveFor(...varbInfos: VarbInfo[]): void {
-    // ok. I'll change this to use VarbInfo
-    const fullNames = varbInfos.map((info) =>
-      GetterVarb.feVarbInfoToFullName(info)
-    );
-    this.solveShare.varbFullNamesToSolveFor = new Set([
-      ...this.varbFullNamesToSolveFor,
-      ...fullNames,
+    const varbIds = GetterVarb.varbInfosToVarbIds(varbInfos);
+    this.addVarbIdsToSolveFor(...varbIds);
+  }
+  addVarbIdsToSolveFor(...varbIds: string[]): void {
+    this.solveShare.varbIdsToSolveFor = new Set([
+      ...this.varbIdsToSolveFor,
+      ...varbIds,
     ]);
   }
 }

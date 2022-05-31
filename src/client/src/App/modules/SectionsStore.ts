@@ -4,9 +4,9 @@ import { config } from "../Constants";
 import { SectionPackRaw } from "../sharedWithServer/Analyzer/SectionPackRaw";
 import { relSections } from "../sharedWithServer/SectionsMeta/relSections";
 import { GetterSections } from "../sharedWithServer/StateGetters/GetterSections";
-import { PackLoaderSection } from "../sharedWithServer/StatePackers.ts/PackLoaderSection";
 import { SectionPackMaker } from "../sharedWithServer/StatePackers.ts/SectionPackMaker";
 import { StateSections } from "../sharedWithServer/StateSections/StateSectionsNext";
+import { SolverSection } from "../sharedWithServer/StateSolvers/SolverSection";
 import { getStoredObj } from "../utils/localStorage";
 
 type UseSectionsStoreProps = {
@@ -44,7 +44,7 @@ export class SectionsStore {
   static getStoredSections(): StateSections {
     this.rmStoredStateIfPreframesChanged();
     const storedState = this.getSectionsFromStore();
-    return PackLoaderSection.initSectionsFromMainPack(storedState);
+    return SolverSection.initSolvedSectionsFromMainPack(storedState);
   }
 
   private static setSectionsInStore(mainSectionPack: StoredSectionsState) {

@@ -1,64 +1,61 @@
 import styled from "styled-components";
-import { useAnalyzerContext } from "../../modules/usePropertyAnalyzer";
-import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/relSections/rel/relVarbInfoTypes";
+import { InEntityVarbInfo } from "../../sharedWithServer/SectionsMeta/baseSections/baseValues/entities";
+import { useGetterVarbEntity } from "../../sharedWithServer/StateGetters/useGetterVarb";
 import theme from "../../theme/Theme";
+import { GetterVarb } from "./../../sharedWithServer/StateGetters/GetterVarb";
 
-type UseLabeledOutputProps = {
-  feVarbInfo?: FeVarbInfo;
-  displayVarb?: string;
-  displayLabel?: string;
-  parenthInfo?: FeVarbInfo | string;
+type LabeledVarbProps = {
+  className?: string;
+  entityVarbInfo: InEntityVarbInfo;
+  onXBtnClick?: () => void;
 };
-function useLabeledOutput({
-  feVarbInfo,
-  displayLabel,
-  displayVarb,
-  parenthInfo,
-  ...adornments
-}: UseLabeledOutputProps): { displayLabel: string; displayVarb: string } {
-  const { analyzer } = useAnalyzerContext();
-  if (!feVarbInfo || !analyzer.hasSection(feVarbInfo))
-    return {
-      displayLabel: "Variable not found",
-      displayVarb: "?",
-    };
-
-  displayLabel = displayLabel ?? analyzer.displayName(feVarbInfo);
-  displayVarb =
-    displayVarb ?? analyzer.varb(feVarbInfo).displayVarb(adornments);
-
-  if (parenthInfo) {
-    if (typeof parenthInfo === "string")
-      displayVarb = `${displayVarb} (${parenthInfo})`;
-    else
-      displayVarb = `${displayVarb} (${analyzer
-        .varb(parenthInfo)
-        .displayVarb()})`;
-  }
-  return { displayLabel, displayVarb };
+export function LabeledVarbNotFound({
+  entityVarbInfo,
+  ...rest
+}: LabeledVarbProps) {
+  return (
+    <StyledLabeledVarb
+      {...{
+        entityVarbInfo,
+        labelText: "Variable not found",
+        displayVarb: "?",
+        ...rest,
+      }}
+    />
+  );
 }
 
-type Props = UseLabeledOutputProps & {
-  id: string;
-  onXBtnClick?: () => void;
-  className?: string;
-};
-export default function LabeledVarbNext({
-  id,
-  feVarbInfo,
-  className,
-  onXBtnClick,
-  ...rest
-}: Props) {
-  const { displayLabel, displayVarb } = useLabeledOutput({
-    feVarbInfo,
-    ...rest,
-  });
+export function LabeledVarbNext({ entityVarbInfo, ...rest }: LabeledVarbProps) {
+  // make useGetterVarbMixed
+  const varb = useGetterVarbEntity(entityVarbInfo);
   return (
-    <Styled className={`LabeledVarb-root ${className}`}>
+    <StyledLabeledVarb
+      {...{
+        entityVarbInfo,
+        labelText: varb.displayName,
+        displayVarb: varb.displayVarb(),
+        ...rest,
+      }}
+    />
+  );
+}
+
+interface StyledLabeledVarbProps extends LabeledVarbProps {
+  labelText: string;
+  displayVarb: string;
+}
+function StyledLabeledVarb({
+  className,
+  entityVarbInfo,
+  labelText,
+  displayVarb,
+}: StyledLabeledVarbProps) {
+  const labelId = GetterVarb.mixedVarbInfoToMixedVarbId(entityVarbInfo);
+  return (
+    <Styled className={`LabeledVarb-root ${className ?? ""}`}>
       <div className="LabeledVarb-labelPositioner">
-        <label htmlFor={id} className="LabeledVarb-label">
-          {displayLabel}
+        <label htmlFor={labelId} className="LabeledVarb-label">
+          {labelText}
         </label>
         {/* {onXBtnClick && (
           <PlainBtn className="LabeledVarb-xBtn" onClick={onXBtnClick}>
@@ -66,7 +63,10 @@ export default function LabeledVarbNext({
           </PlainBtn>
         )} */}
       </div>
-      <output id={id} className="LabeledVarb-output">{`${displayVarb}`}</output>
+      <output
+        id={labelId}
+        className="LabeledVarb-output"
+      >{`${displayVarb}`}</output>
     </Styled>
   );
 }

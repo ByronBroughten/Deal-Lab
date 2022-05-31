@@ -1,19 +1,20 @@
-import { useAnalyzerContext } from "../../modules/usePropertyAnalyzer";
-import LabeledVarb from "./LabeledVarb";
+import { useSetterSection } from "../../sharedWithServer/StateSetters/SetterSection";
+import { LabeledVarbNext, LabeledVarbNotFound } from "./LabeledVarbNext";
 
-const sectionName = "output";
-export function LabeledVarbOutput({ id }: { id: string }) {
-  const feInfo = { sectionName, id, idType: "feId" } as const;
-  const { analyzer, handleRemoveSection } = useAnalyzerContext();
+export function LabeledVarbOutput({ feId }: { feId: string }) {
+  const output = useSetterSection({
+    sectionName: "output",
+    feId,
+  });
+  const { varbInfoValues: entityVarbInfo } = output.get.varbs;
+  const props = {
+    entityVarbInfo,
+    onXBtnClick: () => output.removeSelf(),
+  } as const;
 
-  const multiVarbInfo = analyzer.outputValues(id);
-  const varb = analyzer.findVarb(multiVarbInfo);
-  const feVarbInfo = varb ? varb.feVarbInfo : undefined;
-  return (
-    <LabeledVarb
-      id={id}
-      feVarbInfo={feVarbInfo}
-      onXBtnClick={() => handleRemoveSection(feInfo)}
-    />
+  return output.allSections.hasSectionMixed(entityVarbInfo) ? (
+    <LabeledVarbNext {...props} />
+  ) : (
+    <LabeledVarbNotFound {...props} />
   );
 }

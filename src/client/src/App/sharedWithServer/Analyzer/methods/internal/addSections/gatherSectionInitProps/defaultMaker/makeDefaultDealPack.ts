@@ -1,8 +1,8 @@
 import { SectionPackBuilder } from "../../../../../../StatePackers.ts/PackBuilderSection";
 import { SectionPackRaw } from "../../../../../SectionPackRaw";
-import { makeDefaultMgmtPack } from "./initMgmtDefaultNext";
-import { makeDefaultPropertyPack } from "./initPropertyDefaultNext";
+import { makeDefaultMgmtPack } from "./makeDefaultMgmtPack";
 import { makeDefaultOutputList } from "./makeDefaultOutputList";
+import { makeDefaultPropertyPack } from "./makeDefaultPropertyPack";
 
 export function makeDefaultDealPack(): SectionPackRaw<"analysis"> {
   const main = new SectionPackBuilder();

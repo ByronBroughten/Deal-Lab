@@ -146,10 +146,11 @@ const financingRelVarbs: RelVarbs<ContextName, "financing"> = {
     "simpleSubtract",
     [
       rel.varbInfo.relative("propertyGeneral", "price", "static"),
-      rel.varbInfo.relative("financing", "loanAmountBaseDollars", "static"),
+      rel.varbInfo.relative("financing", "loanAmountBaseDollars", "local"),
     ],
-    // "loanAmountBaseDollars" is not initialized as zero.
     { startAdornment: "$" }
+    // this should respond to propertyGeneral's price change and be 0
+    // but it's not.
   ),
   downPaymentPercent: rel.varb.leftRightPropFn(
     "Down payment",

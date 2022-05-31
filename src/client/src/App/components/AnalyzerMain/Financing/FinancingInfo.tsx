@@ -3,7 +3,7 @@ import { useAnalyzerContext } from "../../../modules/usePropertyAnalyzer";
 import { InfoS } from "../../../sharedWithServer/SectionsMeta/Info";
 import theme from "../../../theme/Theme";
 import useHowMany from "../../appWide/customHooks/useHowMany";
-import LabeledOutputRow from "../../appWide/LabeledOutputRow";
+import LabeledOutputRowSimple from "../../appWide/LabeledOutputRowSimple";
 import { LabeledVarbSimple } from "../../appWide/LabeledVarbSimple";
 import GlobalInfoSection from "../general/StaticInfoSection";
 
@@ -22,7 +22,7 @@ export default function FinancingInfo() {
   const varbInfo = InfoS.feVarbMaker(financing.feInfo);
   return (
     <Styled className="FinancingInfo-root">
-      <LabeledOutputRow>
+      <LabeledOutputRowSimple>
         {isAtLeastOne && (
           <>
             <LabeledVarbSimple
@@ -46,7 +46,7 @@ export default function FinancingInfo() {
             feVarbInfo={varbInfo("loanAmountDollarsTotal")}
           />
         )}
-      </LabeledOutputRow>
+      </LabeledOutputRowSimple>
     </Styled>
   );
 }

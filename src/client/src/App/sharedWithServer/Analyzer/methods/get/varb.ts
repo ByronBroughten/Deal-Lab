@@ -198,6 +198,8 @@ export function replaceVarb(this: Analyzer, nextVarb: StateVarb): Analyzer {
   return this.updateSection(nextSection);
 }
 
+function nextSwitchVarbName() {}
+
 export function switchedVarbName(
   this: Analyzer,
   feInfo: FeNameInfo,

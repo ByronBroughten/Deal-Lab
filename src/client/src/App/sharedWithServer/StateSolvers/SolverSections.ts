@@ -1,9 +1,9 @@
 import tsort from "../Analyzer/methods/solveVarbs/tsort/tsort";
-import FeVarb from "../FeSections/FeSection/FeVarb";
 import { VarbInfo } from "../SectionsMeta/Info";
 import { SpecificVarbInfo } from "../SectionsMeta/relSections/rel/relVarbInfoTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { GetterSections } from "../StateGetters/GetterSections";
+import { GetterVarb } from "../StateGetters/GetterVarb";
 import { Arr } from "../utils/Arr";
 import { SolverSectionsBase } from "./SolverBases/SolverSectionsBase";
 import { SolverVarb } from "./SolverVarb";
@@ -30,20 +30,21 @@ export class SolverSections extends SolverSectionsBase {
   }
 
   private resetVarbFullNamesToSolveFor() {
-    this.solveShare.varbFullNamesToSolveFor = new Set();
+    this.solveShare.varbIdsToSolveFor = new Set();
   }
-
+  // how did I use a switch to differentiate those before?
+  // or
   private gatherAndSortInfosToSolve(): VarbInfo[] {
-    const { edges, loneVarbs } = this.getDagEdgesAndLoneVarbs();
-    let solveOrder = tsort(edges);
-    solveOrder = solveOrder.concat(loneVarbs);
-    return solveOrder.map((stringInfo) =>
-      FeVarb.fullNameToFeVarbInfo(stringInfo)
+    const outVarbMap = this.getOutVarbMap();
+    const { edges, loneVarbs } = this.getDagEdgesAndLoneVarbs(outVarbMap);
+    let orderedVarbIds = tsort(edges); // tsort must have found a circularity issue
+    orderedVarbIds = orderedVarbIds.concat(loneVarbs);
+    return orderedVarbIds.map((stringInfo) =>
+      GetterVarb.varbIdToVarbInfo(stringInfo)
     );
   }
 
-  private getDagEdgesAndLoneVarbs() {
-    const outVarbMap = this.getOutVarbMap();
+  private getDagEdgesAndLoneVarbs(outVarbMap: OutVarbMap) {
     const edges: [string, string][] = [];
     const loneVarbs = Object.keys(outVarbMap).filter(
       (k) => outVarbMap[k].size === 0
@@ -60,29 +61,31 @@ export class SolverSections extends SolverSectionsBase {
 
   private getOutVarbMap(): OutVarbMap {
     const outVarbMap: OutVarbMap = {};
-    let varbFullNamesToSolveFor = [...this.varbFullNamesToSolveFor];
-    while (varbFullNamesToSolveFor.length > 0) {
+    let varbIdsToSolveFor = [...this.varbIdsToSolveFor];
+    while (varbIdsToSolveFor.length > 0) {
       const nextVarbsToSolveFor = [] as string[];
-      for (const stringInfo of [...varbFullNamesToSolveFor]) {
-        if (!(stringInfo in outVarbMap)) outVarbMap[stringInfo] = new Set();
-        const feVarbInfo = FeVarb.fullNameToFeVarbInfo(stringInfo);
-        const { outVarbInfos } = this.solverVarb(feVarbInfo);
-        const outFullNames = outVarbInfos.map((info) =>
-          FeVarb.feVarbInfoToFullName(info)
-        );
-        outFullNames.forEach((fullName) =>
-          outVarbMap[stringInfo].add(fullName)
-        );
-        nextVarbsToSolveFor.push(...outFullNames);
+      for (const varbId of [...varbIdsToSolveFor]) {
+        if (varbId in outVarbMap) continue;
+        const { outVarbIds } = this.solverVarbById(varbId);
+        // outVarbIds.forEach((id) => {
+        //   if (outVarbMap[id].has(varbId)) return;
+        //   outVarbMap[varbId].add(id);
+        // })
+        outVarbMap[varbId] = new Set(outVarbIds);
+        nextVarbsToSolveFor.push(...outVarbIds);
       }
-      varbFullNamesToSolveFor = nextVarbsToSolveFor;
+      varbIdsToSolveFor = nextVarbsToSolveFor;
     }
     return outVarbMap;
   }
+  solverVarbById(varbId: string): SolverVarb {
+    const feVarbInfo = GetterVarb.varbIdToVarbInfo(varbId);
+    return this.solverVarb(feVarbInfo);
+  }
   solverVarb<S extends SectionName>(feVarbInfo: VarbInfo<S>): SolverVarb<S> {
     return new SolverVarb({
-      ...feVarbInfo,
       ...this.solverSectionsProps,
+      ...feVarbInfo,
     });
   }
 }

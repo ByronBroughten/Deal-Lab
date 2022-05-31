@@ -1,3 +1,4 @@
+import { pick } from "lodash";
 import { OutEntity } from "../FeSections/FeSection/FeVarb/entities";
 import { StateValue } from "../FeSections/FeSection/FeVarb/feValue";
 import { Id } from "../SectionsMeta/baseSections/id";
@@ -61,8 +62,19 @@ export class StateSections {
       (section) => section.feId === feId
     );
   }
-  // property feId received: "ZS5eR_IZ5j11"
-  // feId for the one property: "h7HylG67O_5p"
+  onlyOneRawSection<SN extends SectionName>(sectionName: SN): RawFeSection<SN> {
+    const sectionList = this.rawSectionList(sectionName);
+    if (sectionList.length !== 1) {
+      throw new Error(`There should only be one "main" section.`);
+    }
+    return sectionList[0];
+  }
+  get mainRawSection(): RawFeSection<"main"> {
+    return this.onlyOneRawSection("main");
+  }
+  get mainSectionInfo(): FeSectionInfo<"main"> {
+    return pick(this.mainRawSection, ["sectionName", "feId"]);
+  }
   rawSection<SN extends SectionName>(
     feInfo: FeSectionInfo<SN>
   ): RawFeSection<SN> {

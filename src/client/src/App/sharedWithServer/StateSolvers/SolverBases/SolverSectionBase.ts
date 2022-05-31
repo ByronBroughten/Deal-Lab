@@ -1,6 +1,9 @@
 import { FeSectionInfo } from "../../SectionsMeta/Info";
 import { SectionName } from "../../SectionsMeta/SectionName";
-import { GetterSectionBase } from "../../StateGetters/Bases/GetterSectionBase";
+import {
+  GetterSectionBase,
+  GetterSectionProps,
+} from "../../StateGetters/Bases/GetterSectionBase";
 import { SolverSectionsBase, SolverSectionsProps } from "./SolverSectionsBase";
 
 export interface SolverSectionProps<SN extends SectionName>
@@ -14,5 +17,8 @@ export class SolverSectionBase<
   constructor(props: SolverSectionProps<SN>) {
     super(props);
     this.getterSectionBase = new GetterSectionBase(props);
+  }
+  get getterSectionProps(): GetterSectionProps<SN> {
+    return this.getterSectionBase.getterSectionProps;
   }
 }

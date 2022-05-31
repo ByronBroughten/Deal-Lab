@@ -100,7 +100,8 @@ function getValidDbValue(
   dbValue: DbValue | undefined
 ): DbValue {
   const valueMeta = sectionMetas.value(varbNames, "fe");
-  return valueMeta.isRaw(dbValue)
-    ? dbValue
-    : (valueMeta.dbInitValue as DbValue);
+  const varbMeta = sectionMetas.varb(varbNames);
+  // for now, the correct dbInitValue lies on varbMeta
+  // not valueMeta
+  return valueMeta.isRaw(dbValue) ? dbValue : (varbMeta.dbInitValue as DbValue);
 }

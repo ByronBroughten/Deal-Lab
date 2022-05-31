@@ -30,7 +30,7 @@ type InitSolverVarbProps<SN extends SectionName> = StrictOmit<
 >;
 
 export class SolverVarb<
-  SN extends SectionName<"hasVarb">
+  SN extends SectionName<"hasVarb"> = SectionName<"hasVarb">
 > extends SolverVarbBase<SN> {
   private initialEntities: InEntity[];
   outVarbInfos: VarbInfo[];
@@ -61,7 +61,7 @@ export class SolverVarb<
     return new SolverVarb({
       ...props,
       solveShare: {
-        varbFullNamesToSolveFor: new Set(),
+        varbIdsToSolveFor: new Set(),
       },
     });
   } // I definitely need editorUpdateAndSolve
@@ -163,6 +163,9 @@ export class SolverVarb<
     this.gatherOutEntities();
     this.gatherOutRelatives();
   }
+  get outVarbIds(): string[] {
+    return GetterVarb.varbInfosToVarbIds(this.outVarbInfos);
+  }
   private gatherOutEntities() {
     const { outEntities } = this.getterVarb;
     const feOutEntities = outEntities.map((outEntity) => {
@@ -207,8 +210,6 @@ export class SolverVarb<
           break;
         }
       }
-      // why is that static?
-      //
       if (gatherTargetVarb) {
         this.outVarbInfos.push(targetInfo);
       }

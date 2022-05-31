@@ -1,21 +1,24 @@
-import { useAnalyzerContext } from "../../modules/usePropertyAnalyzer";
+import { CgDetailsLess, CgDetailsMore } from "react-icons/cg";
+import { MdCompareArrows } from "react-icons/md";
+import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
+import useToggleView from "../../modules/customHooks/useToggleView";
+import { auth } from "../../modules/services/authService";
+import { useAnalyzerContext } from "../../modules/usePropertyAnalyzer";
+import { useSetterSection } from "../../sharedWithServer/StateSetters/SetterSection";
 import theme from "../../theme/Theme";
+import MainSection from "../appWide/GeneralSection";
 import GeneralSectionTitle from "../appWide/GeneralSection/GeneralSectionTitle";
 import MainSectionTitleBtn from "../appWide/GeneralSection/GeneralSectionTitle/MainSectionTitleBtn";
-import Deal from "./DealGeneral/Deal";
-import MainSection from "../appWide/GeneralSection";
-import useToggleView from "../../modules/customHooks/useToggleView";
-import { Link } from "react-router-dom";
-import { auth } from "../../modules/services/authService";
-import { MdCompareArrows } from "react-icons/md";
-import { CgDetailsMore, CgDetailsLess } from "react-icons/cg";
-import LoginToAccessBtnTooltip from "../appWide/LoginToAccessBtnTooltip";
 import StandardToolTip from "../appWide/StandardTooltip";
+import { Deal } from "./DealGeneral/Deal";
 
 type Props = { className?: string };
 
 export default function DealGeneral({ className }: Props) {
+  const main = useSetterSection();
+  const dealFeId = main.oneChildFeId("analysis");
+
   const { analyzer } = useAnalyzerContext();
   const { feId } = analyzer.firstSection("analysis");
   const { detailsIsOpen, toggleDetails } = useToggleView({

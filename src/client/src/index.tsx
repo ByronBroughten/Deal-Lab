@@ -7,36 +7,47 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
+// Ok. This thing is almost ready. Once I reimplement the new state
+// all throughout the app, and then finalize the ability for people to pay
+
+// I can focus on a few UI and theme things
+// and then it's ready to sell.
+// I know that technically, it would still benefit from a few
+// other things:
+
+// UI
+// What about auto-save? Autosave would be really cool to have
+//instead of "Save Updates". It would make it more intuitive
+// Then I wouldn't need "Save New" or "Save Update". I would
+// just need "Make Copy" and "Save". Save would just initialize
+// the auto-saving.
+// That's kind of the only way to make the component-aspects of this
+// make sense. Otherwise, if someone loads a list, for instance, edits
+// the list but doesn't save it, and then loads the property again, that
+// list won't be updated, or it will be, but it'll feel like a bug.
+// I want a way to sync up the properties and deals and whatnot.
+
+// Hide the save menus behind a click, then label their buttons.
+// Always have "Save New"; also have "Save Updates", "Make Copy", "Saved Plural"
+// Allow interest only payments on loans
+// Allow ongoing income on property, or a list of "other income" on each unit
+// Load deal:
+// grab the deal from where it's saved
+// load it into sectionPack builder
+// check whether its property, loans, and mgmt are saved
+// if they are, load them from the db and replace them
+// in the deal.
+// send the updated deal sectionPack and load it up
 
 reportWebVitals();
-// solve after loading a default (like default main)
-// or perhaps after loading anything
-// I think you need a "load and solve" function.
-
-// add and test editor update and solve
-// implement a numObj update in a basicInfo (property price)
-// implement units in property, for the sake of adding one, with the new numObj update
 // implement outputList
-// implement remove unit
-
-// Integrate the new core and handlers
-// 1. Convert all the parentInfos of both analyzer and sections so they can swap states
-
-// 2. Is there a way to use one state for one section of the app and use the other state
-// for the other section?
-// I can do that. But they won't be able to solve based on the stuff from analyzer.
-// That might be ok for the time being.
-
-// Alright. It's time to try substituting the new state for a portion of the app.
-// Try using it for mgmtGeneral and its children, and outputLists, and see if the
-// upfrontInvestment updates as it should
-
-// first, add the replacement for mgmtGeneral
+// implement the rest of property
+// completely remove analyzer and replace it with sections
 
 // Redo the tableColumns route
 
 // Get rid of defaultSections and defaultStore.
-// Get rid of different kinds of SectionPack
+// Get rid of different kinds of SectionPack. You only need raw.
 // Get rid of dbEntry
 
 // private resetRowCells(rowFeId: string) {

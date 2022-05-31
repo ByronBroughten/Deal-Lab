@@ -17,7 +17,7 @@ export function solveVarbs(
   }
 
   return next.updateAnalyzer({
-    varbFullNamesToSolveFor: new Set(),
+    varbIdsToSolveFor: new Set(),
   });
 }
 
