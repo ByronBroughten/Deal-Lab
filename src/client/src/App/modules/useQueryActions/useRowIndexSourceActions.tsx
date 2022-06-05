@@ -1,16 +1,19 @@
-import { sectionMetas } from "../sharedWithServer/SectionsMeta";
-import { InEntityVarbInfo } from "../sharedWithServer/SectionsMeta/baseSections/baseValues/entities";
+import { sectionMetas } from "../../sharedWithServer/SectionsMeta";
+import { InEntityVarbInfo } from "../../sharedWithServer/SectionsMeta/baseSections/baseValues/entities";
 import {
   DbInfo,
   FeInfo,
   FeInfoByType,
   InfoS,
-} from "../sharedWithServer/SectionsMeta/Info";
-import { FeVarbInfo } from "../sharedWithServer/SectionsMeta/relSections/rel/relVarbInfoTypes";
-import { SectionName } from "../sharedWithServer/SectionsMeta/SectionName";
-import { StateQuerierBase, StateQuerierBaseProps } from "./StateQuerierBase";
-import { IndexSectionQuerier } from "./StateQueriersShared/IndexQuerier";
-import { useAnalyzerContext } from "./usePropertyAnalyzer";
+} from "../../sharedWithServer/SectionsMeta/Info";
+import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/relSections/rel/relVarbInfoTypes";
+import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
+import { IndexSectionQuerier } from "../QueriersRelative/IndexQuerier";
+import {
+  StateQuerierBase,
+  StateQuerierBaseProps,
+} from "../QueriersRelative/StateQuerierBase";
+import { useAnalyzerContext } from "../usePropertyAnalyzer";
 
 export function useRowIndexSourceActions({
   sectionName,

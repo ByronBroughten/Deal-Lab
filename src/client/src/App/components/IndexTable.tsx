@@ -1,12 +1,13 @@
 import React from "react";
 import styled from "styled-components";
-import { auth } from "../modules/services/authService";
 import {
   IndexTableActionsProps,
   useIndexTableActions,
-} from "../modules/TableStateQuerier";
+} from "../modules/QueriersFinal/TableStateQuerier";
+import { auth } from "../modules/services/authService";
 import { useAnalyzerContext } from "../modules/usePropertyAnalyzer";
 import { SectionName } from "../sharedWithServer/SectionsMeta/SectionName";
+import { useGetterSection } from "../sharedWithServer/StateHooks/useGetterSection";
 import theme from "../theme/Theme";
 import useHowMany from "./appWide/customHooks/useHowMany";
 import ColumnHeader from "./IndexTable/ColumnHeader";
@@ -14,7 +15,17 @@ import IndexRow from "./IndexTable/IndexRow";
 import MaterialStringEditor from "./inputs/MaterialStringEditor";
 import VarbAutoComplete from "./inputs/VarbAutoComplete";
 
+// 1. Make the indexTable work with the new state
+// 2. abstract out some parts to use for loading a section
+// - Display the same rows (unfiltered, with just title and dbId)
+// - Sorted by title alphabetically
+// - Allow filtering by title
+// - Allow loading and deleting (trash can to right of each)
+//   Menu title "Load ..."
+
 function useTableParts(tableName: SectionName<"tableNext">) {
+  useGetterSection();
+
   const { analyzer } = useAnalyzerContext();
 
   const table = analyzer.section(tableName);

@@ -10,7 +10,6 @@ AppRegistry.runApplication("App", {
 
 // You're making this to use and to show off your programming abilities.
 
-// 1. Bring the new state to mgmt and financing
 // 2. bring the new state to Compare Deals (IndexTable)
 // 3. Bring some of IndexTable to the load property menu (searchable)
 

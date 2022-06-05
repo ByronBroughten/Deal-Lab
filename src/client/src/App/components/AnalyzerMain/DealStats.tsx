@@ -4,8 +4,6 @@ import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 import useToggleView from "../../modules/customHooks/useToggleView";
 import { auth } from "../../modules/services/authService";
-import { useAnalyzerContext } from "../../modules/usePropertyAnalyzer";
-import { useSetterSection } from "../../sharedWithServer/StateHooks/useSetterSection";
 import theme from "../../theme/Theme";
 import MainSection from "../appWide/GeneralSection";
 import GeneralSectionTitle from "../appWide/GeneralSection/GeneralSectionTitle";
@@ -15,12 +13,7 @@ import { Deal } from "./DealStats/Deal";
 
 type Props = { className?: string; feId: string };
 
-export default function DealStats({ className }: Props) {
-  const main = useSetterSection();
-  const dealFeId = main.oneChildFeId("analysis");
-
-  const { analyzer } = useAnalyzerContext();
-  const { feId } = analyzer.firstSection("analysis");
+export default function DealStats({ className, feId }: Props) {
   const { detailsIsOpen, toggleDetails } = useToggleView({
     initValue: false,
     viewWhat: "details",

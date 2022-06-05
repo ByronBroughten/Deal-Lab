@@ -3,7 +3,7 @@ import { useAnalyzerContext } from "../../modules/usePropertyAnalyzer";
 import {
   useRowIndexActions,
   UseRowIndexActionsProps,
-} from "../../modules/useRowIndexActions";
+} from "../../modules/useQueryActions/useRowIndexActions";
 import { InfoS } from "../../sharedWithServer/SectionsMeta/Info";
 import TrashBtn from "../general/TrashBtn";
 import LoadIndexSectionBtn from "./IndexSectionList/LoadIndexSectionBtn";

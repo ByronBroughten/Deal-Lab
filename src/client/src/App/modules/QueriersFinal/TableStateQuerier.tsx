@@ -1,13 +1,16 @@
-import { VariableOption } from "../sharedWithServer/Analyzer/methods/get/variableOptions";
-import { InfoS } from "../sharedWithServer/SectionsMeta/Info";
-import { SavableSectionName } from "../sharedWithServer/SectionsMeta/relNameArrs/storeArrs";
+import { VariableOption } from "../../sharedWithServer/Analyzer/methods/get/variableOptions";
+import { InfoS } from "../../sharedWithServer/SectionsMeta/Info";
+import { SavableSectionName } from "../../sharedWithServer/SectionsMeta/relNameArrs/storeArrs";
 import {
   SectionFinderNext,
   SectionName,
-} from "../sharedWithServer/SectionsMeta/SectionName";
-import { StateQuerierBase, StateQuerierBaseProps } from "./StateQuerierBase";
-import { SectionArrQuerier } from "./StateQueriersShared/Queriers";
-import { useAnalyzerContext } from "./usePropertyAnalyzer";
+} from "../../sharedWithServer/SectionsMeta/SectionName";
+import { SectionArrQuerier } from "../QueriersBasic/SectionArrQuerier";
+import {
+  StateQuerierBase,
+  StateQuerierBaseProps,
+} from "../QueriersRelative/StateQuerierBase";
+import { useAnalyzerContext } from "../usePropertyAnalyzer";
 
 export type IndexTableActionsProps = {
   tableName: SectionName<"tableNext">;

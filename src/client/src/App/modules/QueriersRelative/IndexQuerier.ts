@@ -6,7 +6,7 @@ import {
 } from "../../sharedWithServer/Analyzer/SectionPackRaw";
 import { FeInfo, InfoS } from "../../sharedWithServer/SectionsMeta/Info";
 import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
-import { SectionQuerier } from "./Queriers";
+import { SectionQuerier } from "../QueriersBasic/SectionQuerier";
 
 interface IndexSectionQuerierProps {
   sectionName: SectionName<"hasIndexStore">;
@@ -49,23 +49,37 @@ export class IndexSectionQuerier {
       } as any,
     };
   }
-  private get sectionQuery() {
+  private get query() {
     return new SectionQuerier(this.indexName);
   }
 
   async add(feId: string): Promise<string> {
-    return await this.sectionQuery.add(this.indexSectionPack(feId));
+    return await this.query.add(this.indexSectionPack(feId));
   }
   async update(feId: string): Promise<string> {
-    return await this.sectionQuery.update(this.indexSectionPack(feId));
+    return await this.query.update(this.indexSectionPack(feId));
   }
   async get(
     dbId: string
   ): Promise<SectionPackRaw<SectionName<"hasIndexStore">>> {
-    const serverSectionPack = await this.sectionQuery.get(dbId);
+    const serverSectionPack = await this.query.get(dbId);
     return this.indexToSourceSectionPack(serverSectionPack);
   }
   async delete(dbId: string): Promise<string> {
-    return await this.sectionQuery.delete(dbId);
+    return await this.query.delete(dbId);
   }
 }
+
+// Doesn't require source, nor state:
+// - save with sectionPack
+// - update with sectionPack
+// - get (sectionPack)
+// - delete
+// the table will have access to these, particularly delete
+
+// Requires source and state:
+// - save
+// - update
+// - load
+// the section menu will have access to these
+// load may require more info than the other two

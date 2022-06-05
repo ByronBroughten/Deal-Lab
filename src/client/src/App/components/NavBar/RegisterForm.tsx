@@ -1,6 +1,6 @@
 import { Button } from "@material-ui/core";
 import styled from "styled-components";
-import { useQueryActorContext } from "../../modules/StateQuerierGeneral";
+import { useQueryActorContext } from "../../modules/QueriersRelative/StateQuerierGeneral";
 import { useAnalyzerContext } from "../../modules/usePropertyAnalyzer";
 import { RegisterFormData } from "../../sharedWithServer/apiQueriesShared/register";
 import theme from "../../theme/Theme";

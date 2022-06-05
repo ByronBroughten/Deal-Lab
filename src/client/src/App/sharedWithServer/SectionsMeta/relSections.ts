@@ -32,7 +32,7 @@ export function makeRelSections() {
         "mgmtIndexNext"
       ),
       ...rel.section.sectionTableNext(
-        "analysisTableNext",
+        "analysisTable",
         "Analysis Table",
         "analysisIndexNext"
       ),
@@ -59,7 +59,7 @@ export function makeRelSections() {
             "propertyTable",
             "loanTable",
             "mgmtTable",
-            "analysisTableNext",
+            "analysisTable",
 
             "userVarbList",
             "userSingleList",

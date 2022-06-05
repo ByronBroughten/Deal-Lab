@@ -1,9 +1,13 @@
-import { FeSectionPack } from "../sharedWithServer/Analyzer/FeSectionPack";
-import { sectionMetas } from "../sharedWithServer/SectionsMeta";
-import { DbInfo, FeInfo, InfoS } from "../sharedWithServer/SectionsMeta/Info";
-import { SectionName } from "../sharedWithServer/SectionsMeta/SectionName";
+import { FeSectionPack } from "../../sharedWithServer/Analyzer/FeSectionPack";
+import { sectionMetas } from "../../sharedWithServer/SectionsMeta";
+import {
+  DbInfo,
+  FeInfo,
+  InfoS,
+} from "../../sharedWithServer/SectionsMeta/Info";
+import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
+import { IndexSectionQuerier } from "./IndexQuerier";
 import { StateQuerierBase, StateQuerierBaseProps } from "./StateQuerierBase";
-import { IndexSectionQuerier } from "./StateQueriersShared/IndexQuerier";
 
 interface ReplaceProps {
   sectionFeId: string;

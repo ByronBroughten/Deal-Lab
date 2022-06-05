@@ -1,13 +1,13 @@
 import React from "react";
-import { config } from "../Constants";
-import { NextRes } from "../sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
-import { SavableSectionName } from "../sharedWithServer/SectionsMeta/relNameArrs/storeArrs";
-import { applyMixins } from "../utils/classObjects";
-import { makeContextUseContext } from "../utils/react";
-import { auth } from "./services/authService";
+import { config } from "../../Constants";
+import { NextRes } from "../../sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
+import { SavableSectionName } from "../../sharedWithServer/SectionsMeta/relNameArrs/storeArrs";
+import { applyMixins } from "../../utils/classObjects";
+import { makeContextUseContext } from "../../utils/react";
+import { auth } from "../services/authService";
+import { useAnalyzerContext } from "../usePropertyAnalyzer";
+import { apiQueries } from "../useQueryActions/apiQueriesClient";
 import { StateQuerierBase, StateQuerierBaseProps } from "./StateQuerierBase";
-import { useAnalyzerContext } from "./usePropertyAnalyzer";
-import { apiQueries } from "./useQueryActions/apiQueriesClient";
 
 class AuthQueryActor extends StateQuerierBase {
   protected setLogin({ data, headers }: NextRes<"nextLogin">) {

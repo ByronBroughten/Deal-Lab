@@ -1,6 +1,6 @@
 import { AiOutlineSave } from "react-icons/ai";
 import { auth } from "../../../../../modules/services/authService";
-import { useRowIndexSourceActions } from "../../../../../modules/useRowIndexSourceActions";
+import { useRowIndexSourceActions } from "../../../../../modules/useQueryActions/useRowIndexSourceActions";
 import { FeInfoByType } from "../../../../../sharedWithServer/SectionsMeta/Info";
 import TooltipIconBtn from "../../../TooltipIconBtn";
 

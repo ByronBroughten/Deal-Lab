@@ -1,13 +1,13 @@
 import hash from "object-hash";
 import React from "react";
-import { config } from "../Constants";
-import { SectionPackRaw } from "../sharedWithServer/Analyzer/SectionPackRaw";
-import { relSections } from "../sharedWithServer/SectionsMeta/relSections";
-import { GetterSections } from "../sharedWithServer/StateGetters/GetterSections";
-import { SectionPackMaker } from "../sharedWithServer/StatePackers.ts/SectionPackMaker";
-import { StateSections } from "../sharedWithServer/StateSections/StateSectionsNext";
-import { SolverSection } from "../sharedWithServer/StateSolvers/SolverSection";
-import { getStoredObj } from "../utils/localStorage";
+import { config } from "../../../Constants";
+import { getStoredObj } from "../../../utils/localStorage";
+import { SectionPackRaw } from "../../Analyzer/SectionPackRaw";
+import { relSections } from "../../SectionsMeta/relSections";
+import { GetterSections } from "../../StateGetters/GetterSections";
+import { SectionPackMaker } from "../../StatePackers.ts/SectionPackMaker";
+import { StateSections } from "../../StateSections/StateSectionsNext";
+import { SolverSection } from "../../StateSolvers/SolverSection";
 
 type UseSectionsStoreProps = {
   storeSectionsLocally: boolean;

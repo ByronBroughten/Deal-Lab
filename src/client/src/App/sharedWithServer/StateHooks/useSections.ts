@@ -1,12 +1,12 @@
 import React from "react";
+import { react } from "../../utils/react";
+import { StateSections } from "../StateSections/StateSectionsNext";
+import { SolverSection } from "../StateSolvers/SolverSection";
 import {
   SectionsStore,
   StateMissingFromStorageError,
   useLocalSectionsStore,
-} from "../../modules/SectionsStore";
-import { react } from "../../utils/react";
-import { StateSections } from "../StateSections/StateSectionsNext";
-import { SolverSection } from "../StateSolvers/SolverSection";
+} from "./useSections/SectionsStore";
 
 type UseSectionsProps = {
   prePopulatedSections?: StateSections;

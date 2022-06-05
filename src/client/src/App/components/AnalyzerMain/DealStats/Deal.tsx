@@ -1,12 +1,11 @@
 import { View } from "react-native";
 import styled from "styled-components";
-import { InfoS } from "../../../sharedWithServer/SectionsMeta/Info";
-import { useSetterSection } from "../../../sharedWithServer/StateHooks/useSetterSection";
 import theme from "../../../theme/Theme";
 import MainSection from "../../appWide/GeneralSection/MainSection";
 import MainSectionBody from "../../appWide/GeneralSection/MainSection/MainSectionBody";
-import MainSectionTitleRowTitle from "../../appWide/GeneralSection/MainSection/MainSectionTitleRowTitle.tsx/MainSectionTitleRowTitle";
 import MainSectionTitleSaveBtn from "../../appWide/GeneralSection/MainSection/MainSectionTitleRowTitle.tsx/MainSectionTitleSaveBtn";
+import { useGetterSection } from "./../../../sharedWithServer/StateHooks/useGetterSection";
+import { MainSectionTitleRowTitleNext } from "./../../appWide/GeneralSection/MainSection/MainSectionTitleRowTitle.tsx/MainSectionTitleRowTitleNext";
 import DealDetails from "./Deal/DealDetails";
 import DealOutputList from "./Deal/DealOutputList";
 
@@ -17,28 +16,16 @@ export function Deal({
   feId: string;
   detailsIsOpen: boolean;
 }) {
-  const sectionName = "analysis";
-
-  const main = useSetterSection();
-  const dealFeId = main.oneChildFeId(sectionName);
-  const deal = useSetterSection({
-    sectionName,
-    feId: dealFeId,
+  const deal = useGetterSection({
+    sectionName: "analysis",
+    feId: feId,
   });
-
-  const outputListId = deal.oneChildFeId("dealOutputList");
-
-  const feInfo = InfoS.fe(sectionName, feId);
-  const feSectionInfo = {
-    sectionName,
-    feId,
-  } as const;
-
+  const outputListId = deal.onlyChildFeId("dealOutputList");
   return (
     <MainSection>
       <View style={{ flexDirection: "row" }}>
-        <MainSectionTitleRowTitle feInfo={feInfo} />
-        <MainSectionTitleSaveBtn feInfo={feSectionInfo} />
+        <MainSectionTitleRowTitleNext feInfo={deal.feInfo} />
+        <MainSectionTitleSaveBtn feInfo={deal.feInfo} />
       </View>
       {/* <MainSectionTitleRow
         {...{ feInfo, pluralName: "deals", droptop: true }}

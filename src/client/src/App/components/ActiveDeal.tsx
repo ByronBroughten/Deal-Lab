@@ -12,7 +12,7 @@ type Props = {
   feId: string;
   className?: string;
 };
-export function DealMain({ className, feId }: Props) {
+export function ActiveDeal({ className, feId }: Props) {
   const analysis = useGetterSection({
     sectionName: "analysis",
     feId,

@@ -1,4 +1,4 @@
-import { StateQuerierBaseProps } from "../StateQuerierBase";
+import { StateQuerierBaseProps } from "../QueriersRelative/StateQuerierBase";
 import { useAnalyzerContext } from "../usePropertyAnalyzer";
 
 export function useStateQuerierBaseProps(): StateQuerierBaseProps {

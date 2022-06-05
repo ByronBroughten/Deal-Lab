@@ -1,11 +1,14 @@
-import { FeInfo, InfoS } from "../sharedWithServer/SectionsMeta/Info";
+import { FeInfo, InfoS } from "../../sharedWithServer/SectionsMeta/Info";
 import {
   SectionFinderNext,
   SectionName,
-} from "../sharedWithServer/SectionsMeta/SectionName";
-import { StateQuerierBase, StateQuerierBaseProps } from "./StateQuerierBase";
-import { IndexSectionQuerier } from "./StateQueriersShared/IndexQuerier";
-import { useAnalyzerContext } from "./usePropertyAnalyzer";
+} from "../../sharedWithServer/SectionsMeta/SectionName";
+import { IndexSectionQuerier } from "../QueriersRelative/IndexQuerier";
+import {
+  StateQuerierBase,
+  StateQuerierBaseProps,
+} from "../QueriersRelative/StateQuerierBase";
+import { useAnalyzerContext } from "../usePropertyAnalyzer";
 
 export type UseRowIndexActionsProps = {
   rowDbId: string;

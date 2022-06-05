@@ -10,7 +10,7 @@ export const dbStoreNamesNext = [
   "mgmtIndexNext",
   "analysisIndexNext",
 
-  "analysisTableNext",
+  "analysisTable",
   "propertyTable",
   "loanTable",
   "mgmtTable",
@@ -52,7 +52,7 @@ export const dbStoreNamesDepreciated = [
   "mgmt",
   "analysis",
 
-  "analysisTableNext",
+  "analysisTable",
   "propertyTable",
   "loanTable",
   "mgmtTable",

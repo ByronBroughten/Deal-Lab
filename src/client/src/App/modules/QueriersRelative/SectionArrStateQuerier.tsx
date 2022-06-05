@@ -1,8 +1,8 @@
-import { SavableSectionName } from "../sharedWithServer/SectionsMeta/relNameArrs/storeArrs";
-import { SectionName } from "../sharedWithServer/SectionsMeta/SectionName";
+import { SavableSectionName } from "../../sharedWithServer/SectionsMeta/relNameArrs/storeArrs";
+import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
+import { SectionArrQuerier } from "../QueriersBasic/SectionArrQuerier";
+import { useStateQuerierBaseProps } from "../useQueryActions/useBaseQuerierProps";
 import { StateQuerierBase, StateQuerierBaseProps } from "./StateQuerierBase";
-import { useStateQuerierBaseProps } from "./StateQuerierBase/useBaseQuerierProps";
-import { SectionArrQuerier } from "./StateQueriersShared/Queriers";
 
 export function useSectionArrQueries(
   sectionName: SavableSectionName<"arrStore">
