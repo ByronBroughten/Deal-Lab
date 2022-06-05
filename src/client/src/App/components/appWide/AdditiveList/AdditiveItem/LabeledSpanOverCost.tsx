@@ -11,7 +11,7 @@ type Props = { feInfo: FeInfo; valueVarbName: string };
 export default function LabeledSpanOverCost({ valueVarbName, feInfo }: Props) {
   const { analyzer } = useAnalyzerContext();
   const valueVarb = analyzer.feVarb(valueVarbName, feInfo);
-  const lifeSpanName = analyzer.switchedVarbName(
+  const lifespanName = analyzer.switchedVarbName(
     feInfo,
     switchNames("lifespan", "monthsYears")
   );
@@ -28,7 +28,7 @@ export default function LabeledSpanOverCost({ valueVarbName, feInfo }: Props) {
           />
           <span className="LabeledSpanOverCost-over">/</span>
           <NumObjEditor
-            feVarbInfo={InfoS.feVarb(lifeSpanName, feInfo)}
+            feVarbInfo={InfoS.feVarb(lifespanName, feInfo)}
             className="lifespan"
             labeled={false}
           />

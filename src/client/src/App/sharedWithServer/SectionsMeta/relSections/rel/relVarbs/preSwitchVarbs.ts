@@ -105,7 +105,10 @@ export function simpleSwitch<
         ...options2,
       }
     ),
-    [switchVarbName]: relVarb.type("string", { initValue: switchValue1 }),
+    [switchVarbName]: relVarb.type("string", {
+      initValue: switchValue1,
+      dbInitValue: switchValue1,
+    }),
   } as DualSwitch<One, Two, Switch>;
 }
 

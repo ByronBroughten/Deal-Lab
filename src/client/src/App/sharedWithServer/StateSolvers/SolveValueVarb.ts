@@ -1,4 +1,3 @@
-import assert from "assert";
 import { NumberProps } from "../Analyzer/methods/solveVarbs/solveAndUpdateValue/updateNumericObjCalc";
 import calculations, {
   isCalculationName,
@@ -11,6 +10,7 @@ import {
   NumObjNumber,
 } from "../SectionsMeta/baseSections/baseValues/NumObj";
 import { isNumObjUpdateFnName } from "../SectionsMeta/baseSections/baseValues/updateFnNames";
+import { InfoS } from "../SectionsMeta/Info";
 import { SpecificVarbInfo } from "../SectionsMeta/relSections/rel/relVarbInfoTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { GetterSectionProps } from "../StateGetters/Bases/GetterSectionBase";
@@ -20,13 +20,13 @@ import { GetterSections } from "../StateGetters/GetterSections";
 import { GetterVarb } from "../StateGetters/GetterVarb";
 import { GetterVarbs } from "../StateGetters/GetterVarbs";
 import { Str } from "../utils/Str";
-import { solveText } from "./ValueSolver/solveText";
-import { UserVarbValueSolver } from "./ValueSolver/UserVarbValueSolver";
+import { solveText } from "./SolveValueVarb/solveText";
+import { UserVarbValueSolver } from "./SolveValueVarb/UserVarbValueSolver";
 
-export class ValueSolver<
+export class SolveValueVarb<
   SN extends SectionName<"hasVarb">
 > extends GetterVarbBase<SN> {
-  private getterSections = new GetterSections(this.sectionsShare);
+  private getterSections = new GetterSections(this.getterSectionsProps);
   private getterList = new GetterList(this.getterListProps);
   private getterVarbs = new GetterVarbs(this.getterSectionProps);
   private getterVarb = new GetterVarb(this.getterVarbProps);
@@ -35,17 +35,19 @@ export class ValueSolver<
       return this.getterVarb.value("string");
     },
     editorValue: (): NumObj => {
-      assert(this.getterVarb.varbName === "editorValue");
       const value = this.getterVarb.value("numObj");
       const { cache } = this.getterVarb.localValue("editorValue", "numObj");
       return value.updateCache(cache);
     },
     loadedNumObj: (): NumObj => {
       const numObj = this.getterVarb.value("numObj");
-      const loadingVarbInfo = this.getterVarbs.varbInfoValues;
+      const loadingVarbInfo = this.getterVarbs.varbInfoStringValues;
 
       let nextCache: NumObjCache;
-      if (this.getterList.hasByMixed(loadingVarbInfo)) {
+      if (
+        InfoS.is.inEntityVarb(loadingVarbInfo) &&
+        this.getterList.hasByMixed(loadingVarbInfo)
+      ) {
         const varb = this.getterSections.varbByMixed(loadingVarbInfo);
         const loadedValue = varb.value("numObj");
         nextCache = loadedValue.cache;

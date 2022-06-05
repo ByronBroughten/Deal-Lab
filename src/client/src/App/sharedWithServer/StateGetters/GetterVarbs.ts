@@ -4,7 +4,7 @@ import {
   ValueTypesPlusAny,
 } from "../FeSections/FeSection/FeVarb";
 import { InEntityVarbInfo } from "../SectionsMeta/baseSections/baseValues/entities";
-import { VarbInfo } from "../SectionsMeta/Info";
+import { InfoS, VarbInfo, VarbStringInfo } from "../SectionsMeta/Info";
 import {
   MultiFindByFocalVarbInfo,
   MultiVarbInfo,
@@ -69,13 +69,20 @@ export class GetterVarbs<SN extends SectionName> extends GetterSectionBase<SN> {
       {} as RequestedValues<T>
     );
   }
-  get varbInfoValues(): InEntityVarbInfo {
+  get varbInfoStringValues(): VarbStringInfo {
     return this.values({
       sectionName: "string",
       varbName: "string",
       id: "string",
       idType: "string",
-    }) as InEntityVarbInfo;
+    });
+  }
+  get varbInfoValues(): InEntityVarbInfo {
+    const values = this.varbInfoStringValues;
+    if (!InfoS.is.inEntityVarb(values)) {
+      throw new Error(`"values" should be an inEntityVarbInfo`);
+    }
+    return values;
   }
   varbByFocalMixed<S extends SectionName<"hasVarb">>({
     varbName,
@@ -84,6 +91,8 @@ export class GetterVarbs<SN extends SectionName> extends GetterSectionBase<SN> {
     const section = this.getterSection.sectionByFocalMixed(mixedInfo);
     return section.varb(varbName);
   }
+  // it can remove the last entry just fine.
+  // It's just having trouble removing the rest.
   varbsByFocalMixed<S extends SectionName<"hasVarb">>({
     varbName,
     ...mixedInfo

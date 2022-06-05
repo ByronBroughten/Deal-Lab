@@ -1,5 +1,6 @@
 import { StrictOmit } from "../../utils/types";
 import { ContextName, loanVarbsNotInFinancing } from "../baseSections";
+import { dbNumObj } from "../baseSections/baseValues/NumObj";
 import { switchNames } from "../baseSections/switchNames";
 import { rel } from "./rel";
 import { relSection, RelSectionOptions } from "./rel/relSection";
@@ -11,7 +12,10 @@ function loanRelVarbs(
 ): RelVarbs<ContextName, "loan"> {
   return {
     title: rel.varb.string(),
-    [loanAmountBase.switch]: rel.varb.string({ initValue: "percent" }),
+    [loanAmountBase.switch]: rel.varb.string({
+      initValue: "percent",
+      dbInitValue: "percent",
+    }),
     [loanAmountBase.percent]: rel.varb.calcVarb("Base loan amount", {
       initNumber: 5,
       inUpdateSwitchProps: [
@@ -47,6 +51,7 @@ function loanRelVarbs(
         switchInit: "yearly",
         yearly: {
           initValue: rel.value.numObj(3),
+          dbInitValue: dbNumObj(3),
           endAdornment: "% annual",
         },
         monthly: { endAdornment: "% monthly" },
@@ -54,7 +59,10 @@ function loanRelVarbs(
     ),
     ...rel.varbs.monthsYearsInput("loanTerm", "Loan term", sectionName, {
       switchInit: "years",
-      years: { initValue: rel.value.numObj(30) },
+      years: {
+        initValue: rel.value.numObj(30),
+        dbInitValue: dbNumObj(30),
+      },
     }),
     ...rel.varbs.timeMoney("mortgageIns", "Mortgage insurance", sectionName, {
       switchInit: "yearly",

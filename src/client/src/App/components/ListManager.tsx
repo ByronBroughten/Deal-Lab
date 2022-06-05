@@ -55,7 +55,7 @@ export default function ListManager({ sectionName }: Props) {
       <Styled sectionName={sectionName}>
         <GeneralSectionTitle
           title={titles[sectionName]}
-          sectionName={sectionName}
+          themeName={sectionName}
         />
         <div className="ListManager-entry">
           {/* <Prompt when={didChange} message={"Close without saving changes?"} /> */}

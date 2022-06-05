@@ -4,7 +4,7 @@ import { useAnalyzerContext } from "../../../../../../../modules/usePropertyAnal
 import { listOperators } from "../../../../../../../sharedWithServer/Analyzer/methods/solveVarbs/solveAndUpdateValue/updateUserVarb";
 import { InfoS } from "../../../../../../../sharedWithServer/SectionsMeta/Info";
 import LogicOperators from "../../../../../../appWide/LogicOperators";
-import ListMaker from "../../../../../../inputs/ListEditor";
+import ListEditor from "../../../../../../inputs/ListEditor";
 import NumObjEditor from "../../../../../../inputs/NumObjEditor";
 import MaterialSelect from "./../../../../../../inputs/MaterialSelect";
 
@@ -46,7 +46,7 @@ export default function IfLogic({ rowId }: { rowId: string }) {
         {LogicOperators()}
       </MaterialSelect>
       {logicType === "listLogic" && (
-        <ListMaker
+        <ListEditor
           className="logic-right"
           feVarbInfo={InfoS.feVarb("rightList", feInfo)}
         />

@@ -71,7 +71,7 @@ export const valueMeta = {
     mon: [reqMonString],
   },
   numObj: {
-    is: (v: any) => v instanceof NumObj,
+    is: (v: any): v is NumObj => v instanceof NumObj,
     get isRaw() {
       return isDbNumObj;
     },

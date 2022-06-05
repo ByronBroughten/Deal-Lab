@@ -33,6 +33,7 @@ export function loadValueFromVarb(
   feVarbInfo: FeVarbInfo,
   varbInfo: InEntityVarbInfo
 ): Analyzer {
+  // where do I put this?
   let next = this;
   const entityId = next.feValue("entityId", feVarbInfo, "string");
   const entityInfo = next.varbInfoValues(feVarbInfo);

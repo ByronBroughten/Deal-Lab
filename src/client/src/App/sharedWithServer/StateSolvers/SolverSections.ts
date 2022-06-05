@@ -12,7 +12,7 @@ type OutVarbMap = Record<string, Set<string>>;
 
 export class SolverSections extends SolverSectionsBase {
   private getterSections = new GetterSections(
-    this.getterSectionsBase.sectionsShare
+    this.getterSectionsBase.getterSectionsProps
   );
   varbByMixed<SN extends SectionName<"hasVarb">>(
     mixedInfo: SpecificVarbInfo<SN>
@@ -52,7 +52,7 @@ export class SolverSections extends SolverSectionsBase {
     for (const [stringInfo, outStrings] of Object.entries(outVarbMap)) {
       for (const outString of outStrings) {
         if (loneVarbs.includes(outString))
-          Arr.rmFirstValueMutate(loneVarbs, outString);
+          Arr.rmFirstMatchMutate(loneVarbs, outString);
         edges.push([stringInfo, outString]);
       }
     }

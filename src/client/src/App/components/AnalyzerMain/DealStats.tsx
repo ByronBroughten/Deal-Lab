@@ -5,17 +5,17 @@ import styled, { css } from "styled-components";
 import useToggleView from "../../modules/customHooks/useToggleView";
 import { auth } from "../../modules/services/authService";
 import { useAnalyzerContext } from "../../modules/usePropertyAnalyzer";
-import { useSetterSection } from "../../sharedWithServer/StateSetters/SetterSection";
+import { useSetterSection } from "../../sharedWithServer/StateHooks/useSetterSection";
 import theme from "../../theme/Theme";
 import MainSection from "../appWide/GeneralSection";
 import GeneralSectionTitle from "../appWide/GeneralSection/GeneralSectionTitle";
 import MainSectionTitleBtn from "../appWide/GeneralSection/GeneralSectionTitle/MainSectionTitleBtn";
 import StandardToolTip from "../appWide/StandardTooltip";
-import { Deal } from "./DealGeneral/Deal";
+import { Deal } from "./DealStats/Deal";
 
-type Props = { className?: string };
+type Props = { className?: string; feId: string };
 
-export default function DealGeneral({ className }: Props) {
+export default function DealStats({ className }: Props) {
   const main = useSetterSection();
   const dealFeId = main.oneChildFeId("analysis");
 
@@ -30,10 +30,10 @@ export default function DealGeneral({ className }: Props) {
       {...{
         $showDetails: detailsIsOpen,
         sectionName: "analysis",
-        className: `DealGeneral-root ${className}`,
+        className: `DealStats-root ${className}`,
       }}
     >
-      <GeneralSectionTitle title="Deal" sectionName="analysis">
+      <GeneralSectionTitle title="Deal" themeName="analysis">
         <div className="GeneralSectionTitle-children">
           <MainSectionTitleBtn
             themeName="analysis"
@@ -85,7 +85,7 @@ export default function DealGeneral({ className }: Props) {
         </div>
       </GeneralSectionTitle>
       <Deal {...{ feId, detailsIsOpen }} />
-      <div className="DealGeneral-appInfo">
+      <div className="DealStats-appInfo">
         Ultimate Property Analyzer LLC | support@dealanalyzer.app
       </div>
     </Styled>
@@ -145,7 +145,7 @@ const Styled = styled(MainSection)<{ $showDetails: boolean }>`
       `}
   }
 
-  .DealGeneral-appInfo {
+  .DealStats-appInfo {
     display: flex;
     justify-content: center;
     background: ${theme.analysis.dark};

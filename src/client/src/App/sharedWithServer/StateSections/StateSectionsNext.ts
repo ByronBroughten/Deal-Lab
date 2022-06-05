@@ -51,15 +51,14 @@ export class StateSections {
     return this.core;
   }
   rawSectionList<SN extends SectionName>(sectionName: SN): RawFeSection<SN>[] {
-    return this.core[sectionName] as RawFeSection<SN>[];
+    const test = this.core[sectionName];
+    return test as RawFeSection<SN>[];
   }
-  sectionIdx<SN extends SectionName>({
-    sectionName,
-    feId,
-  }: FeSectionInfo<SN>): number {
+  sectionIdx<SN extends SectionName>(feInfo: FeSectionInfo<SN>): number {
+    const sectionList = this.rawSectionList(feInfo.sectionName);
     return Arr.idxOrThrow(
-      this.rawSectionList(sectionName),
-      (section) => section.feId === feId
+      sectionList,
+      (section) => section.feId === feInfo.feId
     );
   }
   onlyOneRawSection<SN extends SectionName>(sectionName: SN): RawFeSection<SN> {

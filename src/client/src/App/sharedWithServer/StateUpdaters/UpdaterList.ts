@@ -7,7 +7,7 @@ import { UpdaterSections } from "./UpdaterSections";
 
 export class UpdaterList<SN extends SectionName> extends GetterListBase<SN> {
   private getterList = new GetterList(this.getterListProps);
-  private updaterSections = new UpdaterSections(this.sectionsShare);
+  private updaterSections = new UpdaterSections(this.getterSectionsProps);
 
   private get raw(): RawFeSection<SN>[] {
     return this.sectionsShare.sections.rawSectionList(this.sectionName);

@@ -1,18 +1,23 @@
 import React from "react";
 import MainSection from "../../appWide/GeneralSection/MainSection";
 import MainSectionBody from "../../appWide/GeneralSection/MainSection/MainSectionBody";
+import { MainSectionTitleRowNext } from "./../../appWide/GeneralSection/MainSection/MainSectionTitleRowNext";
+import { ListGroupNext } from "./../general/ListGroupNext";
 import BasicLoanInfo from "./Loan/BasicLoanInfo";
-import MainSectionTitleRow from "../../appWide/GeneralSection/MainSection/MainSectionTitleRow";
-import ListGroup from "../general/ListGroup";
 
-const sectionName = "loan";
-export default function Loan({ id }: { id: string }) {
-  const feInfo = { sectionName, id, idType: "feId" } as const;
-
+export default function Loan({ feId }: { feId: string }) {
+  const feInfo = {
+    sectionName: "loan",
+    feId,
+  } as const;
   return (
     <MainSection className="Loan-root">
       <div className="MainSection-viewable">
-        <MainSectionTitleRow feInfo={feInfo} pluralName="loans" xBtn={true} />
+        <MainSectionTitleRowNext
+          feInfo={feInfo}
+          pluralName="loans"
+          xBtn={true}
+        />
         <MainSectionBody>
           <div className="ListGroup-root">
             <div className="ListGroup-viewable">
@@ -20,12 +25,12 @@ export default function Loan({ id }: { id: string }) {
                 <h6 className="ListGroup-titleText">Basic Info</h6>
               </div> */}
               <div className="ListGroup-lists">
-                <BasicLoanInfo feInfo={feInfo} className="ListGroup-root" />
+                <BasicLoanInfo feId={feId} className="ListGroup-root" />
               </div>
             </div>
           </div>
 
-          <ListGroup
+          <ListGroupNext
             {...{
               feInfo,
               listSectionName: "closingCostList",
@@ -33,7 +38,7 @@ export default function Loan({ id }: { id: string }) {
             titleText="Loan Fees"
             totalVarbName="closingCosts"
           />
-          <ListGroup
+          <ListGroupNext
             feInfo={feInfo}
             listSectionName="wrappedInLoanList"
             titleText="Wrapped in loan"

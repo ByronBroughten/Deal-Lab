@@ -1,20 +1,19 @@
 import React from "react";
 import styled from "styled-components";
-import { FeInfo, InfoS } from "../../../../sharedWithServer/SectionsMeta/Info";
+import { useGetterSection } from "../../../../sharedWithServer/StateHooks/useGetterSection";
 import theme from "../../../../theme/Theme";
 import BasicSectionInfo from "../../../appWide/GeneralSection/MainSection/MainSectionBody/BasicSectionInfo";
 import StandardLabel from "../../../general/StandardLabel";
-import NumObjEditor from "../../../inputs/NumObjEditor";
+import { NumObjEditorNext } from "../../../inputs/NumObjEditorNext";
 import DollarPercentRadioSwap from "../../general/DollarPercentRadioSwap";
 
-type Props = { feInfo: FeInfo; className?: string };
-export default function BasicLoanInfo({ feInfo, className }: Props) {
-  const feVarbInfo = InfoS.feVarbMaker(feInfo);
-  const names = {
-    percent: "loanAmountBasePercent",
-    dollars: "loanAmountBaseDollars",
-    switch: "loanAmountBaseUnitSwitch",
-  };
+type Props = { feId: string; className?: string };
+export default function BasicLoanInfo({ feId, className }: Props) {
+  const loan = useGetterSection({
+    sectionName: "loan",
+    feId,
+  });
+
   return (
     <Styled
       {...{ className: `BasicLoanInfo-root ${className}`, sectionName: "loan" }}
@@ -25,8 +24,12 @@ export default function BasicLoanInfo({ feInfo, className }: Props) {
             <div className="BasicSectionInfo-subSection-viewable">
               <DollarPercentRadioSwap
                 {...{
-                  names,
-                  feInfo,
+                  names: {
+                    percent: "loanAmountBasePercent",
+                    dollars: "loanAmountBaseDollars",
+                    switch: "loanAmountBaseUnitSwitch",
+                  },
+                  feInfo: loan.feInfo,
                   title: "Base loan amount",
                   percentAdornment: "% LTV",
                   className: "BasicLoanInfo-radioSwap",
@@ -37,11 +40,11 @@ export default function BasicLoanInfo({ feInfo, className }: Props) {
           <div className="BasicSectionInfo-subSection">
             <div className="BasicSectionInfo-subSection-viewable">
               <div className="BasicSectionInfo-dualEditors BasicSectionInfo-editorBlock">
-                <NumObjEditor
-                  feVarbInfo={feVarbInfo("interestRatePercentYearly")}
+                <NumObjEditorNext
+                  feVarbInfo={loan.varbInfo("interestRatePercentYearly")}
                 />
-                <NumObjEditor
-                  feVarbInfo={feVarbInfo("loanTermYears")}
+                <NumObjEditorNext
+                  feVarbInfo={loan.varbInfo("loanTermYears")}
                   label="Loan term"
                   className="BasicSectionInfo-numObjEditor secondEditor"
                 />
@@ -55,12 +58,12 @@ export default function BasicLoanInfo({ feInfo, className }: Props) {
                   Mortgage Insurance
                 </StandardLabel>
                 <div className="BasicSectionInfo-dualEditors">
-                  <NumObjEditor
-                    feVarbInfo={feVarbInfo("mortInsUpfront")}
+                  <NumObjEditorNext
+                    feVarbInfo={loan.varbInfo("mortInsUpfront")}
                     label="Upfront"
                   />
-                  <NumObjEditor
-                    feVarbInfo={feVarbInfo("mortgageInsYearly")}
+                  <NumObjEditorNext
+                    feVarbInfo={loan.varbInfo("mortgageInsYearly")}
                     label="Ongoing"
                     className="BasicSectionInfo-numObjEditor secondEditor"
                   />

@@ -4,7 +4,7 @@ import {
   InRelVarbInfo,
   LocalRelVarbInfo,
   RelVarbInfo,
-  StaticRelVarbInfo,
+  RelVarbInfoStatic,
 } from "./relVarbInfoTypes";
 
 type SectionVarbSpecifier = [BaseName<"hasVarb">, string, Relative];
@@ -66,7 +66,7 @@ export const relVarbInfo = {
   },
   statics(
     names: [sectionName: BaseName<"alwaysOneHasVarb">, varbName: string][]
-  ): StaticRelVarbInfo[] {
+  ): RelVarbInfoStatic[] {
     return names.map(([sectionName, varbName]) =>
       this.static(sectionName, varbName)
     );

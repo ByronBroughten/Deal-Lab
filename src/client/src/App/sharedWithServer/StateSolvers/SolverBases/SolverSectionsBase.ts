@@ -1,7 +1,7 @@
 import { VarbInfo } from "../../SectionsMeta/Info";
 import {
   GetterSectionsBase,
-  HasSectionsShare,
+  GetterSectionsProps,
 } from "../../StateGetters/Bases/GetterSectionsBase";
 import { GetterVarb } from "../../StateGetters/GetterVarb";
 
@@ -10,13 +10,15 @@ export type HasSolveShare = {
   solveShare: SolveShare;
 };
 
-export interface SolverSectionsProps extends HasSectionsShare, HasSolveShare {}
+export interface SolverSectionsProps
+  extends GetterSectionsProps,
+    HasSolveShare {}
 export class SolverSectionsBase {
   readonly solveShare: SolveShare;
   readonly getterSectionsBase: GetterSectionsBase;
-  constructor({ solveShare, sectionsShare }: SolverSectionsProps) {
+  constructor({ solveShare, ...rest }: SolverSectionsProps) {
     this.solveShare = solveShare;
-    this.getterSectionsBase = new GetterSectionsBase(sectionsShare);
+    this.getterSectionsBase = new GetterSectionsBase(rest);
   }
   get sectionsShare() {
     return this.getterSectionsBase.sectionsShare;

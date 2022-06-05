@@ -154,3 +154,5 @@ export function variableOptions(this: Analyzer): VariableOption[] {
     ...userListTotalOptions(this),
   ];
 }
+// how do I want to handle these?
+// I can put them on SolverSections

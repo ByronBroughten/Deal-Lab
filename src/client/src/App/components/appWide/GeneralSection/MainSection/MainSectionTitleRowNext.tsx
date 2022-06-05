@@ -1,26 +1,19 @@
 import React from "react";
 import { BiReset } from "react-icons/bi";
-import { MdSystemUpdateAlt } from "react-icons/md";
 import styled from "styled-components";
 import useToggleView from "../../../../modules/customHooks/useToggleView";
 import { auth } from "../../../../modules/services/authService";
-import { useAnalyzerContext } from "../../../../modules/usePropertyAnalyzer";
-import { useRowIndexSourceActions } from "../../../../modules/useRowIndexSourceActions";
-import {
-  FeInfo,
-  FeInfoByType,
-} from "../../../../sharedWithServer/SectionsMeta/Info";
+import { FeInfoByType } from "../../../../sharedWithServer/SectionsMeta/Info";
+import { useSetterSection } from "../../../../sharedWithServer/StateHooks/useSetterSection";
 import theme from "../../../../theme/Theme";
 import BtnTooltip from "../../BtnTooltip";
 import { IconBtn } from "../../IconBtn";
-import RowIndexSectionList from "../../RowIndexSectionList";
 import XBtn from "../../Xbtn";
 import { MainSectionTitleRowTitleNext } from "./MainSectionTitleRowTitle.tsx/MainSectionTitleRowTitleNext";
 import MainSectionTitleSaveBtn from "./MainSectionTitleRowTitle.tsx/MainSectionTitleSaveBtn";
 
 type Props = {
-  feInfo: FeInfo<"hasRowIndex">;
-  feSectionInfo: FeInfoByType<"hasRowIndex">;
+  feInfo: FeInfoByType<"hasRowIndex">;
   pluralName: string;
   xBtn?: boolean;
   droptop?: boolean;
@@ -28,46 +21,37 @@ type Props = {
 export function MainSectionTitleRowNext({
   // Table Entry Title Row
   feInfo,
-  feSectionInfo,
   pluralName,
   xBtn = false,
   droptop = false,
 }: Props) {
-  const { handleRemoveSection, handleSet } = useAnalyzerContext();
-  const { update, isIndexSaved } = useRowIndexSourceActions({
-    sectionName: feInfo.sectionName,
-    feId: feInfo.id,
-  });
-
+  const section = useSetterSection(feInfo);
+  // const { update, isIndexSaved } = useRowIndexSourceActions(feInfo);
   const { btnMenuIsOpen, toggleBtnMenu } = useToggleView({
     initValue: false,
     viewWhat: "btnMenu",
   });
-
   const isGuest = !auth.isLoggedIn;
-
   return (
     <MainEntryTitleRowStyled
       className="MainSectionTitleRow-root"
       btnMenuIsOpen={btnMenuIsOpen}
     >
       <div className="MainSectionTitleRow-leftSide">
-        <MainSectionTitleRowTitleNext feInfo={feSectionInfo} />
+        <MainSectionTitleRowTitleNext feInfo={feInfo} />
         <div className="MainSectionTitleRow-leftSide-btnsRow">
           {
             <>
               <BtnTooltip title="New">
                 <IconBtn
                   className="MainSectionTitleRow-flexUnit"
-                  onClick={async () =>
-                    handleSet("loadSectionFromFeDefault", feInfo as any)
-                  }
+                  onClick={async () => section.resetSelf()}
                 >
                   <BiReset />
                 </IconBtn>
               </BtnTooltip>
-              <MainSectionTitleSaveBtn feInfo={feSectionInfo} />
-              {isIndexSaved && (
+              <MainSectionTitleSaveBtn feInfo={feInfo} />
+              {/* {isIndexSaved && (
                 <BtnTooltip
                   title="Save updates"
                   className="MainSectionTitleRow-flexUnit"
@@ -76,8 +60,9 @@ export function MainSectionTitleRowNext({
                     <MdSystemUpdateAlt />
                   </IconBtn>
                 </BtnTooltip>
-              )}
-              <RowIndexSectionList
+              )} */}
+              {/* <RowIndexSectionList
+              This will be switched to some version of the IndexTable
                 {...{
                   className: "MainSectionTitleRow-flexUnit",
                   feInfo,
@@ -85,12 +70,12 @@ export function MainSectionTitleRowNext({
                   disabled: isGuest,
                   droptop,
                 }}
-              />
+              /> */}
             </>
           }
         </div>
       </div>
-      {xBtn && <XBtn onClick={() => handleRemoveSection(feInfo)} />}
+      {xBtn && <XBtn onClick={() => section.removeSelf()} />}
     </MainEntryTitleRowStyled>
   );
 }

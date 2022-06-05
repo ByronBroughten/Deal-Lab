@@ -1,5 +1,9 @@
 import { ValueTypesPlusAny } from "../FeSections/FeSection/FeVarb";
 import {
+  SwitchEndingKey,
+  switchNames,
+} from "../SectionsMeta/baseSections/switchNames";
+import {
   FeParentInfo,
   FeParentInfoSafe,
   FeSectionInfo,
@@ -13,6 +17,10 @@ import {
   MultiSectionInfo,
   RelSectionInfo,
 } from "../SectionsMeta/relSections/rel/relVarbInfoTypes";
+import {
+  UniqueIdMixedInfo,
+  UniqueIdType,
+} from "../SectionsMeta/relSections/rel/uniqueIdInfo";
 import { ValueTypeName } from "../SectionsMeta/relSections/rel/valueMetaTypes";
 import {
   ChildIdArrsWide,
@@ -23,14 +31,15 @@ import {
 } from "../SectionsMeta/relSectionTypes/ChildTypes";
 import { ParentNameSafe } from "../SectionsMeta/relSectionTypes/ParentTypes";
 import { SectionMeta } from "../SectionsMeta/SectionMeta";
-import { SectionName } from "../SectionsMeta/SectionName";
+import {
+  SectionName,
+  sectionNameS,
+  SectionNameType,
+} from "../SectionsMeta/SectionName";
 import { RawFeSection } from "../StateSections/StateSectionsNext";
 import { Arr } from "../utils/Arr";
 import { Obj } from "../utils/Obj";
-import {
-  GetterSectionBase,
-  GetterSectionProps,
-} from "./Bases/GetterSectionBase";
+import { GetterSectionBase } from "./Bases/GetterSectionBase";
 import { GetterList } from "./GetterList";
 import { GetterSections } from "./GetterSections";
 import { GetterVarb } from "./GetterVarb";
@@ -39,10 +48,10 @@ import { GetterVarbs } from "./GetterVarbs";
 export class GetterSection<
   SN extends SectionName
 > extends GetterSectionBase<SN> {
-  private getterSections: GetterSections;
-  constructor(props: GetterSectionProps<SN>) {
-    super(props);
-    this.getterSections = new GetterSections(props.sectionsShare);
+  private getterSections = new GetterSections(this.getterSectionsProps);
+
+  get sections() {
+    return this.getterSections;
   }
   get raw(): RawFeSection<SN> {
     return this.sectionsShare.sections.rawSection(this.feInfo);
@@ -50,10 +59,15 @@ export class GetterSection<
   get varbs(): GetterVarbs<SN> {
     return new GetterVarbs(this.getterSectionProps);
   }
-  thisIsSectionType<S extends SectionName>(
+  thisHasSectionName<S extends SectionName>(
     sectionName: S
   ): this is GetterSection<S> {
     return this.sectionName === (sectionName as any);
+  }
+  thisIsSectionType<ST extends SectionNameType>(
+    sectionNameType: ST
+  ): this is GetterSection<SectionName<ST>> {
+    return sectionNameS.is(this.sectionName, sectionNameType);
   }
   sectionByFocalMixed<S extends SectionName>(info: MultiFindByFocalInfo<S>) {
     if (InfoS.is.specific(info))
@@ -65,7 +79,7 @@ export class GetterSection<
   ): GetterSection<S> {
     switch (info.id) {
       case "local": {
-        if (this.thisIsSectionType(info.sectionName)) return this;
+        if (this.thisHasSectionName(info.sectionName)) return this;
         else {
           throw new Error("Local section did not match the focal section.");
         }
@@ -134,6 +148,16 @@ export class GetterSection<
       sectionName: this.sectionName,
     };
   }
+  get siblingFeInfos(): FeSectionInfo<SN>[] {
+    const siblingIds = this.parent.childFeIds(this.sectionName as any);
+    return siblingIds.map((feId) => ({
+      sectionName: this.sectionName,
+      feId,
+    }));
+  }
+  get siblings(): GetterSection<SN>[] {
+    return this.siblingFeInfos.map((feInfo) => this.getterSection(feInfo));
+  }
   children<CN extends ChildName<SN>>(childName: CN): GetterSection<CN>[] {
     const childIds = this.childFeIds(childName);
     return childIds.map((feId) =>
@@ -147,6 +171,12 @@ export class GetterSection<
     childName: CN
   ): GetterSection<CN>[] {
     return this.childList(childName).getByFeIds(this.childFeIds(childName));
+  }
+  onlyChild<CN extends ChildName<SN>>(childName: CN): GetterSection<CN> {
+    return this.childList(childName).oneAndOnly;
+  }
+  onlyChildFeId<CN extends ChildName<SN>>(childName: CN): string {
+    return this.onlyChild(childName).feId;
   }
   hasChild<CN extends ChildName<SN>>({
     sectionName,
@@ -162,6 +192,40 @@ export class GetterSection<
   }
   varb(varbName: string): GetterVarb<SN> {
     return this.varbs.one(varbName);
+  }
+  varbInfo(varbName: string): VarbInfo<SN> {
+    return this.varb(varbName).feVarbInfo;
+  }
+  switchVarbName(varbNameBase: string, switchEnding: SwitchEndingKey): string {
+    const varbNames = switchNames(varbNameBase, switchEnding);
+    const switchValue = this.value(varbNames.switch, "string");
+    return varbNames[switchValue as keyof typeof varbNames];
+  }
+  switchVarbInfo(
+    varbNameBase: string,
+    switchEnding: SwitchEndingKey
+  ): VarbInfo<SN> {
+    const varbName = this.switchVarbName(varbNameBase, switchEnding);
+    return this.varbInfo(varbName);
+  }
+  switchVarb(
+    varbNameBase: string,
+    switchEnding: SwitchEndingKey
+  ): GetterVarb<SN> {
+    const varbName = this.switchVarbName(varbNameBase, switchEnding);
+    return this.varb(varbName);
+  }
+  uniqueId<T extends UniqueIdType>(idType: T): string {
+    return this[idType];
+  }
+  uniqueIdInfoMixed<T extends UniqueIdType>(
+    idType: T
+  ): UniqueIdMixedInfo<T, SN> {
+    return {
+      sectionName: this.sectionName,
+      id: this.uniqueId(idType),
+      idType,
+    };
   }
   value<VT extends ValueTypeName | "any">(
     varbName: string,

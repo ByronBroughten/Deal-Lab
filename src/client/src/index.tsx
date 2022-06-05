@@ -7,6 +7,13 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
+
+// You're making this to use and to show off your programming abilities.
+
+// 1. Bring the new state to mgmt and financing
+// 2. bring the new state to Compare Deals (IndexTable)
+// 3. Bring some of IndexTable to the load property menu (searchable)
+
 // Ok. This thing is almost ready. Once I reimplement the new state
 // all throughout the app, and then finalize the ability for people to pay
 
@@ -40,11 +47,17 @@ AppRegistry.runApplication("App", {
 // send the updated deal sectionPack and load it up
 
 reportWebVitals();
-// implement outputList
-// implement the rest of property
-// completely remove analyzer and replace it with sections
+// implement rest of property
+// mgmt
+// loan
 
-// Redo the tableColumns route
+// Redo the tableColumns route, probably using sectionBuilder
+// useSectionBuilder with a focal point of the table
+// add rows to the table
+// add cells to the row, each with a dbValue
+// you'll need a way to index the sectionPack to get the values
+// for the cells
+// produce the table sectionPack and send it with the rest
 
 // Get rid of defaultSections and defaultStore.
 // Get rid of different kinds of SectionPack. You only need raw.

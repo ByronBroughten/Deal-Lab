@@ -1,13 +1,12 @@
 import { EditorState } from "draft-js";
-import { useSectionsContext } from "../../modules/useSections";
 import { StateValue } from "../Analyzer/StateSection/StateVarb/stateValue";
-import { ValueTypesPlusAny } from "../FeSections/FeSection/FeVarb";
+import { InVarbInfo, ValueTypesPlusAny } from "../FeSections/FeSection/FeVarb";
+import { InEntityVarbInfo } from "../SectionsMeta/baseSections/baseValues/entities";
 import { ValueTypeName } from "../SectionsMeta/relSections/rel/valueMetaTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
-import { GetterVarbProps } from "../StateGetters/Bases/GetterVarbBase";
+import { GetterSections } from "../StateGetters/GetterSections";
 import { GetterVarb } from "../StateGetters/GetterVarb";
 import { SolverVarb } from "../StateSolvers/SolverVarb";
-import { StrictOmit } from "../utils/types";
 import { UpdaterVarb } from "./../StateUpdaters/UpdaterVarb";
 import { CreateEditorProps, EditorUpdaterVarb } from "./EditorUpdaterVarb";
 import { SetterVarbBase } from "./SetterBases/SetterVarbBase";
@@ -15,14 +14,24 @@ import { SetterVarbBase } from "./SetterBases/SetterVarbBase";
 export class SetterVarb<
   SN extends SectionName = SectionName
 > extends SetterVarbBase<SN> {
-  solverVarb = SolverVarb.init(this.getterVarbBase.getterVarbProps);
-  updaterVarb = new UpdaterVarb(this.getterVarbBase.getterVarbProps);
-  getterVarb = new GetterVarb(this.getterVarbBase.getterVarbProps);
+  private solverVarb = SolverVarb.init(this.getterVarbBase.getterVarbProps);
+  private updaterVarb = new UpdaterVarb(this.getterVarbBase.getterVarbProps);
+  private getterVarb = new GetterVarb(this.getterVarbBase.getterVarbProps);
   private editorUpdater = new EditorUpdaterVarb(
     this.getterVarbBase.getterVarbProps
   );
+  get get() {
+    return this.getterVarb;
+  }
+  get sections() {
+    return new GetterSections(this.getterVarbBase.getterSectionsProps);
+  }
   updateValueDirectly(value: StateValue): void {
     this.solverVarb.directUpdateAndSolve(value);
+    this.setSections();
+  }
+  loadValueFromVarb(varbInfo: InEntityVarbInfo) {
+    this.solverVarb.loadValueFromVarb(varbInfo);
     this.setSections();
   }
   updateValueFromEditor(editorState: EditorState): void {
@@ -43,18 +52,10 @@ export class SetterVarb<
   ): ValueTypesPlusAny[VT] {
     return this.getterVarb.value(valueType);
   }
-}
-
-interface UseSetterVarbProps<SN extends SectionName>
-  extends StrictOmit<GetterVarbProps<SN>, "sectionsShare"> {}
-
-export function useSetterVarb<SN extends SectionName>(
-  props: UseSetterVarbProps<SN>
-): SetterVarb<SN> {
-  const { sections, setSections } = useSectionsContext();
-  return new SetterVarb({
-    ...props,
-    setSections,
-    sectionsShare: { sections },
-  });
+  get hasInVarbs(): boolean {
+    return this.solverVarb.hasInVarbs;
+  }
+  get inVarbInfos(): InVarbInfo[] {
+    return this.solverVarb.inVarbInfos;
+  }
 }

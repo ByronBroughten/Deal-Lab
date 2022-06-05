@@ -1,15 +1,15 @@
-import React from "react";
-import { useAnalyzerContext } from "../../modules/usePropertyAnalyzer";
+import { Popper, TextField } from "@material-ui/core";
 import { Autocomplete } from "@material-ui/lab";
-import { TextField, Popper } from "@material-ui/core";
-import useToggle from "../../modules/customHooks/useToggle";
-import theme from "../../theme/Theme";
-import ccs from "../../theme/cssChunks";
+import React from "react";
 import styled from "styled-components";
+import useToggle from "../../modules/customHooks/useToggle";
 import {
   SectionOption,
   VariableOption,
 } from "../../sharedWithServer/Analyzer/methods/get/variableOptions";
+import { useVariableSections } from "../../sharedWithServer/StateHooks/useVariableOptions";
+import ccs from "../../theme/cssChunks";
+import theme from "../../theme/Theme";
 
 type PopParams = Parameters<typeof Popper>;
 type PopperProps = PopParams extends (infer T)[] ? T : never;
@@ -86,8 +86,8 @@ const VarbAutoComplete = React.forwardRef(
     }: Props,
     ref: PopperRef
   ) => {
-    const { analyzer } = useAnalyzerContext();
-    options = options ?? analyzer.variableOptions();
+    const variableSections = useVariableSections();
+    options = options ?? variableSections.variableOptions();
     const [inputValue, setInputValue] = React.useState(
       value ? value.displayName : ""
     );

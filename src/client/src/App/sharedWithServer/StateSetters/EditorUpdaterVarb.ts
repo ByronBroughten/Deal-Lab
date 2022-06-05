@@ -22,7 +22,7 @@ import { SectionName } from "../SectionsMeta/SectionName";
 import { GetterVarbBase } from "../StateGetters/Bases/GetterVarbBase";
 import { GetterSections } from "../StateGetters/GetterSections";
 import { GetterVarb } from "../StateGetters/GetterVarb";
-import { solveText } from "../StateSolvers/ValueSolver/solveText";
+import { solveText } from "../StateSolvers/SolveValueVarb/solveText";
 import { UpdaterVarb } from "../StateUpdaters/UpdaterVarb";
 import { Arr } from "../utils/Arr";
 import { Str } from "../utils/Str";
@@ -40,7 +40,7 @@ export class EditorUpdaterVarb<
 > extends GetterVarbBase<SN> {
   private updaterVarb = new UpdaterVarb(this.getterVarbProps);
   private getterVarb = new GetterVarb(this.getterVarbProps);
-  private getterSections = new GetterSections(this.sectionsShare);
+  private getterSections = new GetterSections(this.getterSectionsProps);
   createEditor({ valueType, compositeDecorator }: CreateEditorProps) {
     const contentCreators: ContentCreators = {
       string: () => {

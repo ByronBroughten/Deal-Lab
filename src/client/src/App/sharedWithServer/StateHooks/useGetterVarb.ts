@@ -1,10 +1,10 @@
-import { useSectionsContext } from "../../modules/useSections";
 import { InEntityVarbInfo } from "../SectionsMeta/baseSections/baseValues/entities";
 import { SectionName } from "../SectionsMeta/SectionName";
+import { GetterVarbProps } from "../StateGetters/Bases/GetterVarbBase";
+import { GetterSections } from "../StateGetters/GetterSections";
+import { GetterVarb } from "../StateGetters/GetterVarb";
 import { StrictOmit } from "../utils/types";
-import { GetterVarbProps } from "./Bases/GetterVarbBase";
-import { GetterSections } from "./GetterSections";
-import { GetterVarb } from "./GetterVarb";
+import { useSectionsContext } from "./useSections";
 
 export interface UseGetterVarbProps<SN extends SectionName>
   extends StrictOmit<GetterVarbProps<SN>, "sectionsShare"> {}
@@ -23,7 +23,6 @@ export function useGetterVarbEntity<SN extends SectionName>(
   entityVarbInfo: InEntityVarbInfo
 ) {
   const { sections } = useSectionsContext();
-  const sectionsShare = { sections };
-  const getterSections = new GetterSections(sectionsShare);
+  const getterSections = new GetterSections({ sectionsShare: { sections } });
   return getterSections.varbByMixed(entityVarbInfo);
 }

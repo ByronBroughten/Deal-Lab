@@ -189,7 +189,10 @@ export const relVarbs = {
     const valueSwitchProp = relVarbInfo.local(sectionName, "valueSwitch");
     const r: R = {
       name: relVarb.stringOrLoaded(sectionName),
-      valueSwitch: relVarb.string({ initValue: "labeledEquation" }),
+      valueSwitch: relVarb.string({
+        initValue: "labeledEquation",
+        dbInitValue: "labeledEquation",
+      }),
       ...relVarbs.entityInfo(),
       editorValue: relVarb.calcVarb("", { startAdornment: "$" }),
       value: relVarb.numObj(relVarbInfo.local(sectionName, "name"), {
@@ -237,7 +240,10 @@ export const relVarbs = {
     const valueSwitchProp = relVarbInfo.local(sectionName, "valueSwitch");
     const r: R = {
       name: relVarb.stringOrLoaded(sectionName),
-      valueSwitch: relVarb.string({ initValue: "labeledEquation" }),
+      valueSwitch: relVarb.string({
+        initValue: "labeledEquation",
+        dbInitValue: "labeledEquation",
+      }),
 
       ...relVarbs.entityInfo(),
       costToReplace: relVarb.calcVarb("Replacement cost", {
@@ -256,6 +262,7 @@ export const relVarbs = {
       ),
       [ongoingValueNames.switch]: relVarb.string({
         initValue: "yearly",
+        dbInitValue: "yearly",
       }),
       [ongoingValueNames.monthly]: relVarb.moneyMonth("Monthly amount", {
         ...defaultValueUpdatePack,
@@ -337,6 +344,7 @@ export const relVarbs = {
       title: relVarb.string(),
       defaultValueSwitch: relVarb.string({
         initValue: "labeledEquation",
+        dbInitValue: "labeledEquation",
       }),
     } as R;
     return r;
@@ -349,6 +357,7 @@ export const relVarbs = {
       title: relVarb.string(),
       defaultValueSwitch: relVarb.string({
         initValue: "labeledEquation",
+        dbInitValue: "labeledEquation",
       }),
       ...relVarbs.ongoingSumNums(
         "total",

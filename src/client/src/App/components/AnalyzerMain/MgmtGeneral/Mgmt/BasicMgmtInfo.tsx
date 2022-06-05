@@ -1,25 +1,23 @@
 import React from "react";
 import styled from "styled-components";
 import { switchNames } from "../../../../sharedWithServer/SectionsMeta/baseSections/switchNames";
-import { FeInfo } from "../../../../sharedWithServer/SectionsMeta/Info";
 import BasicSectionInfo from "../../../appWide/GeneralSection/MainSection/MainSectionBody/BasicSectionInfo";
 import { useOpenWidth } from "../../../appWide/SectionTitleRow";
 import DollarPercentRadioSwap from "../../general/DollarPercentRadioSwap";
 import VacancyRate from "./BasicMgmtInfo/VacancyRate";
 
-type Props = { feInfo: FeInfo; className?: string };
-export default function BasicMgmtInfo({ feInfo, className }: Props) {
+type Props = { feId: string; className?: string };
+export default function BasicMgmtInfo({ feId, className }: Props) {
+  const feInfo = {
+    sectionName: "mgmt",
+    feId,
+  } as const;
+
   const { trackWidthToggleView, ...titleRowProps } = useOpenWidth();
   const { viewIsOpen } = titleRowProps;
 
   const rentCut = switchNames("rentCut", "dollarsPercent");
   const rentCutDollars = switchNames(rentCut.dollars, "ongoing");
-  const rentCutNames = {
-    switch: rentCut.switch,
-    percent: rentCut.percent,
-    dollars: rentCutDollars.monthly,
-  };
-
   return (
     <Styled
       {...{ sectionName: "mgmt", className: `BasicMgmtInfo-root ${className}` }}
@@ -31,7 +29,11 @@ export default function BasicMgmtInfo({ feInfo, className }: Props) {
               <div className="BasicSectionInfo-subSection-viewable">
                 <DollarPercentRadioSwap
                   {...{
-                    names: rentCutNames,
+                    names: {
+                      switch: rentCut.switch,
+                      percent: rentCut.percent,
+                      dollars: rentCutDollars.monthly,
+                    },
                     feInfo,
                     title: "Cut of rent",
                     className: "BasicMgmtInfo-radioSwap",
@@ -41,7 +43,7 @@ export default function BasicMgmtInfo({ feInfo, className }: Props) {
             </div>
             <div className="BasicSectionInfo-subSection">
               <div className="BasicSectionInfo-subSection-viewable">
-                <VacancyRate feInfo={feInfo} />
+                <VacancyRate feId={feId} />
               </div>
             </div>
           </div>

@@ -1,21 +1,26 @@
-import { SetSections } from "../../../modules/useSections";
 import { SectionName } from "../../SectionsMeta/SectionName";
 import {
   GetterSectionBase,
   GetterSectionProps,
 } from "../../StateGetters/Bases/GetterSectionBase";
+import { SetterSectionsBase, SetterSectionsProps } from "./SetterSectionsBase";
 
 export interface SetterSectionProps<SN extends SectionName>
-  extends GetterSectionProps<SN> {
-  setSections: SetSections;
-}
+  extends SetterSectionsProps,
+    GetterSectionProps<SN> {}
 
-export class SetterSectionBase<SN extends SectionName> {
+export class SetterSectionBase<
+  SN extends SectionName
+> extends SetterSectionsBase {
   readonly getterSectionBase: GetterSectionBase<SN>;
-  readonly setSections: () => void;
-  constructor({ setSections, ...rest }: SetterSectionProps<SN>) {
-    this.setSections = () =>
-      setSections(() => this.getterSectionBase.sectionsShare.sections);
-    this.getterSectionBase = new GetterSectionBase(rest);
+  constructor(props: SetterSectionProps<SN>) {
+    super(props);
+    this.getterSectionBase = new GetterSectionBase(props);
+  }
+  get setterSectionProps(): SetterSectionProps<SN> {
+    return {
+      ...this.setterSectionsProps,
+      ...this.getterSectionBase.getterSectionProps,
+    };
   }
 }

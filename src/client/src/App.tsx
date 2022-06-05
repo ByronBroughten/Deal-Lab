@@ -5,14 +5,18 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import styled from "styled-components";
 import { Normalize } from "styled-normalize";
-import AnalyzerMain from "./App/components/AnalyzerMain";
+import { DealMain } from "./App/components/DealMain";
 import NotFound from "./App/components/general/NotFound";
 import IndexTable from "./App/components/IndexTable";
 import NavBar from "./App/components/NavBar";
 import usePropertyAnalyzer, {
   AnalyzerContext,
 } from "./App/modules/usePropertyAnalyzer";
-import { SectionsContext, useSections } from "./App/modules/useSections";
+import { useGetterSection } from "./App/sharedWithServer/StateHooks/useGetterSection";
+import {
+  SectionsContext,
+  useSections,
+} from "./App/sharedWithServer/StateHooks/useSections";
 import GlobalStyle from "./App/theme/globalStyles";
 import theme, { Theme } from "./App/theme/Theme";
 
@@ -31,29 +35,7 @@ const App: React.FC = () => {
             <AnalyzerContext.Provider value={analyzerContext}>
               <SectionsContext.Provider value={sectionsContext}>
                 <GlobalStyle />
-                <Styled className="App-root">
-                  <NavBar className="NavBar-visible" />
-                  <div className="NavSpaceDiv-root"></div>
-                  <Routes>
-                    <Route
-                      path="/deals"
-                      element={
-                        <IndexTable
-                          {...{
-                            tableName: "analysisTableNext",
-                            indexSourceFinder: "analysis",
-                          }}
-                        />
-                      }
-                    />
-                    {/* <Route path="/variables" element={<UserVarbsManager/>} /> */}
-                    {/* <Route path="/lists" element={<UserListsManager/>} /> */}
-                    <Route path="/not-found" element={<NotFound />} />
-                    <Route path="/" element={<AnalyzerMain />} />
-                    {/* <Route path="/" element={<Navigate replace to="/analyzer" />} /> */}
-                    <Route path="*" element={<NotFound />} />
-                  </Routes>
-                </Styled>
+                <Main />
                 <ToastContainer />
               </SectionsContext.Provider>
             </AnalyzerContext.Provider>
@@ -64,6 +46,36 @@ const App: React.FC = () => {
   );
 };
 export default App;
+
+function Main() {
+  const main = useGetterSection();
+  const mainDealId = main.onlyChild("analysis").feId;
+  return (
+    <Styled className="App-root">
+      <NavBar className="NavBar-visible" />
+      <div className="NavSpaceDiv-root"></div>
+      <Routes>
+        <Route
+          path="/deals"
+          element={
+            <IndexTable
+              {...{
+                tableName: "analysisTableNext",
+                indexSourceFinder: "analysis",
+              }}
+            />
+          }
+        />
+        {/* <Route path="/variables" element={<UserVarbsManager/>} /> */}
+        {/* <Route path="/lists" element={<UserListsManager/>} /> */}
+        <Route path="/not-found" element={<NotFound />} />
+        <Route path="/" element={<DealMain feId={mainDealId} />} />
+        {/* <Route path="/" element={<Navigate replace to="/analyzer" />} /> */}
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </Styled>
+  );
+}
 
 const Styled = styled.div`
   display: flex;

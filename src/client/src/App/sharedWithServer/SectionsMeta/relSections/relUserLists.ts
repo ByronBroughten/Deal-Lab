@@ -1,5 +1,6 @@
 import { StrictOmit } from "../../utils/types";
 import { ContextName } from "../baseSections";
+import { dbNumObj } from "../baseSections/baseValues/NumObj";
 import { rel } from "./rel";
 import { relSection, RelSectionOptions } from "./rel/relSection";
 import { RelVarbs } from "./rel/relVarbs";
@@ -17,7 +18,10 @@ function userVarbList<
     "User Variable List",
     {
       title: rel.varb.string(),
-      defaultValueSwitch: rel.varb.string({ initValue: "labeledEquation" }),
+      defaultValueSwitch: rel.varb.string({
+        initValue: "labeledEquation",
+        dbInitValue: "labeledEquation",
+      }),
     } as RelVarbs<"fe", SN>,
     {
       ...((options ?? {}) as O),
@@ -45,12 +49,16 @@ export const preUserLists = {
       name: rel.varb.string(),
       startAdornment: rel.varb.string(),
       endAdornment: rel.varb.string(),
-      valueSwitch: rel.varb.string({ initValue: "labeledEquation" }),
+      valueSwitch: rel.varb.string({
+        initValue: "labeledEquation",
+        dbInitValue: "labeledEquation",
+      }),
       editorValue: rel.varb.type("numObj"),
       value: rel.varb.type("numObj", {
         displayName: rel.varbInfo.relative("userVarbItem", "name", "local"),
         updateFnName: "userVarb",
         initValue: rel.value.numObj(0),
+        dbInitValue: dbNumObj(0),
         updateFnProps: {
           varbType: rel.varbInfo.relative(
             "userVarbItem",
@@ -84,10 +92,10 @@ export const preUserLists = {
     "Conditional Row",
     {
       level: rel.varb.type("number"),
-      type: rel.varb.string({ initValue: "if" }),
+      type: rel.varb.string({ initValue: "if", dbInitValue: "if" }),
       // if
       left: rel.varb.type("numObj"),
-      operator: rel.varb.string({ initValue: "===" }),
+      operator: rel.varb.string({ initValue: "===", dbInitValue: "===" }),
       rightList: rel.varb.type("stringArray"),
       rightValue: rel.varb.type("numObj"),
       // then

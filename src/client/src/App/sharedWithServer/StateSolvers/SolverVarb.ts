@@ -1,3 +1,4 @@
+import { InVarbInfo } from "../FeSections/FeSection/FeVarb";
 import { OutEntity } from "../FeSections/FeSection/FeVarb/entities";
 import { StateValue } from "../FeSections/FeSection/FeVarb/feValue";
 import { varbNotFoundMixed } from "../FeSections/FeSection/FeVarbs";
@@ -8,7 +9,10 @@ import {
 } from "../SectionsMeta/baseSections/baseValues/entities";
 import { Id } from "../SectionsMeta/baseSections/id";
 import { VarbInfo } from "../SectionsMeta/Info";
-import { RelVarbInfo } from "../SectionsMeta/relSections/rel/relVarbInfoTypes";
+import {
+  InRelVarbInfo,
+  RelVarbInfo,
+} from "../SectionsMeta/relSections/rel/relVarbInfoTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
 import {
   OutDefaultPack,
@@ -21,8 +25,9 @@ import { GetterVarbs } from "../StateGetters/GetterVarbs";
 import { UpdaterVarb } from "../StateUpdaters/UpdaterVarb";
 import { StrictOmit } from "../utils/types";
 import { SolverVarbBase, SolverVarbProps } from "./SolverBases/SolverVarbBase";
+import { SolverSection } from "./SolverSection";
 import { SolverSections } from "./SolverSections";
-import { ValueSolver } from "./SolveValueVarb";
+import { SolveValueVarb } from "./SolveValueVarb";
 
 type InitSolverVarbProps<SN extends SectionName> = StrictOmit<
   SolverVarbProps<SN>,
@@ -47,14 +52,20 @@ export class SolverVarb<
   // I really don't need defaultLoan anymore
   // Default
 
-  private getterSections = new GetterSections(this.sectionsShare);
+  private getterSections = new GetterSections(
+    this.getterSectionsBase.getterSectionsProps
+  );
   private getterVarbs = new GetterVarbs(
     this.getterSectionBase.getterSectionProps
   );
-  private varbUpdater = new UpdaterVarb(this.getterVarbBase.getterVarbProps);
-  private valueSolver = new ValueSolver(this.getterVarbBase.getterVarbProps);
+  private updaterVarb = new UpdaterVarb(this.getterVarbBase.getterVarbProps);
+  private valueSolver = new SolveValueVarb(this.getterVarbBase.getterVarbProps);
 
   private solverSections = new SolverSections(this.solverSectionsProps);
+  private get solverSection(): SolverSection<SN> {
+    return new SolverSection(this.solverVarbProps);
+  }
+
   static init<SN extends SectionName>(
     props: InitSolverVarbProps<SN>
   ): SolverVarb<SN> {
@@ -67,12 +78,28 @@ export class SolverVarb<
   } // I definitely need editorUpdateAndSolve
   calculateAndUpdateValue() {
     const newValue = this.valueSolver.solveValue();
-    this.varbUpdater.updateValueDirectly(newValue);
+    this.updaterVarb.updateValueDirectly(newValue);
   }
   directUpdateAndSolve(value: StateValue): void {
-    this.varbUpdater.updateValueDirectly(value);
+    this.updaterVarb.updateValueDirectly(value);
     this.updateConnectedVarbs();
   }
+  loadValueFromVarb(varbInfo: InEntityVarbInfo) {
+    const entityId = this.getterVarbs.one("entityId").value("string");
+    const { varbInfoValues } = this.getterVarbs;
+    this.removeInEntity({ ...varbInfoValues, entityId });
+    const nextValues = {
+      ...varbInfo,
+      entityId: Id.make(),
+    };
+    this.addInEntity({
+      ...nextValues,
+      length: 0, // length and offset are arbitrary
+      offset: 0, // just borrowing functionality from editor entities
+    });
+    this.solverSection.updateValuesAndSolve(nextValues);
+  }
+
   updateConnectedVarbs(): void {
     this.updateConnectedEntities();
     this.solveOutVarbs();
@@ -131,13 +158,13 @@ export class SolverVarb<
     const nextOutEntities = this.getterVarb.outEntities.filter(
       (outEntity) => outEntity.entityId !== entityId
     );
-    this.varbUpdater.update({
+    this.updaterVarb.update({
       outEntities: nextOutEntities,
     });
   }
   private addOutEntity(outEntity: OutEntity): void {
     const nextOutEntities = [...this.getterVarb.outEntities, outEntity];
-    this.varbUpdater.update({
+    this.updaterVarb.update({
       outEntities: nextOutEntities,
     });
   }
@@ -158,6 +185,24 @@ export class SolverVarb<
     this.addVarbInfosToSolveFor(...this.outVarbInfos);
     this.solverSections.solve();
   }
+  get hasInVarbs(): boolean {
+    return this.inVarbInfos.length > 0;
+  }
+  get inVarbInfos(): InVarbInfo[] {
+    const relativeInfos = this.inRelToFeMixedInfos();
+    const { inEntities } = this.getterVarb;
+    return [...relativeInfos, ...inEntities];
+  }
+  private inRelToFeMixedInfos(): InVarbInfo[] {
+    return this.inRelativeInfos.reduce((inFeInfos, inRelInfo) => {
+      const varbs = this.getterVarbs.varbsByFocalMixed(inRelInfo);
+      return inFeInfos.concat(varbs.map((varb) => varb.feVarbInfoMixed));
+    }, [] as InVarbInfo[]);
+  }
+  private get inRelativeInfos(): InRelVarbInfo[] {
+    return this.getterVarb.inUpdatePack.inUpdateInfos;
+  }
+
   gatherOutVarbInfos() {
     this.outVarbInfos = [];
     this.gatherOutEntities();
@@ -222,30 +267,31 @@ export class SolverVarb<
     const feVarbInfos = varbs.map((varb) => varb.feVarbInfo);
     return feVarbInfos;
   }
+
+  private removeInEntity({
+    entityId,
+    ...inEntityVarbInfo
+  }: InEntityVarbInfo & { entityId: string }): void {
+    const value = this.getterVarb.value("numObj");
+    this.updaterVarb.update({
+      value: value.removeEntity(entityId),
+    });
+    if (this.getterSections.hasSectionMixed(inEntityVarbInfo)) {
+      const inEntityVarb = this.solverSections.varbByMixed(inEntityVarbInfo);
+      inEntityVarb.removeOutEntity(entityId);
+    }
+  }
+  private addInEntity(inEntity: InEntity): void {
+    const value = this.getterVarb.value("numObj");
+    this.updaterVarb.update({
+      value: value.addEntity(inEntity),
+    });
+    if (this.inEntitySectionExists(inEntity)) {
+      const inEntityVarb = this.solverSections.varbByMixed(inEntity);
+      inEntityVarb.addOutEntity(this.newSelfOutEntity);
+    }
+  }
 }
 
 // I probably don't need these, because the inEntities are already updated with
 // the new value. Only the out entities need to be updated in response.
-// private removeInEntity(
-//   { entityId, ...inEntityVarbInfo }: InEntityVarbInfo & { entityId: string }
-// ): void {
-//   const value = this.selfVarb.value("numObj");
-//   this.varbUpdater.updateProps({
-//     value: value.removeEntity(entityId)
-//   })
-//   if (this.sections.hasSectionMixed(inEntityVarbInfo)) {
-//     const inEntityVarb = this.solverSections.varbByMixed(inEntityVarbInfo);
-//     inEntityVarb.removeOutEntity(entityId)
-//   }
-// }
-// private addInEntity(inEntity: InEntity): void {
-//   const value = this.selfVarb.value("numObj");
-//   this.varbUpdater.updateProps({
-//     value: value.addEntity(inEntity)
-//   });
-
-//   if (this.inEntitySectionExists(inEntity)) {
-//     const inEntityVarb = this.solverSections.varbByMixed(inEntity);
-//     inEntityVarb.addOutEntity(this.newSelfOutEntity);
-//   }
-// }

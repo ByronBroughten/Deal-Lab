@@ -204,6 +204,7 @@ export function ongoingPercentToPortion<Base extends string>(
   return {
     [varbNames.switch]: relVarb.string({
       initValue: "monthly",
+      dbInitValue: "monthly",
     }),
     [varbNames.monthly]: relVarb.moneyMonth(displayName, {
       updateFnName: "percentToPortion",
@@ -250,7 +251,10 @@ export function ongoingPureCalc<Base extends string>(
       ...options.shared,
     }),
     ...(switchInit && {
-      [varbNames.switch]: relVarb.string({ initValue: switchInit }),
+      [varbNames.switch]: relVarb.string({
+        initValue: switchInit,
+        dbInitValue: switchInit,
+      }),
     }),
   };
 }

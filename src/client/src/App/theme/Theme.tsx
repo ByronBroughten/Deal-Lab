@@ -96,6 +96,8 @@ export function themeSectionNameOrDefault(
   return isThemeSectionName(sectionName) ? sectionName : "default";
 }
 
+// replace all instances of "themeSectionName" with just "themeName"
+// decouple those two things
 const themeSections = {
   default: {
     ...getStandardSection({

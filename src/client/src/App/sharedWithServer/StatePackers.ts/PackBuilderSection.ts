@@ -27,7 +27,7 @@ export class SectionPackBuilder<
   ) {
     super(props);
   }
-  private getterSections = new GetterSections(this.sectionsShare);
+  private getterSections = new GetterSections(this.getterSectionsProps);
   private updater = new UpdaterSection(this.getterSectionProps);
   private loader = new PackLoaderSection(this.getterSectionProps);
   private maker = new SectionPackMaker(this.getterSectionProps);

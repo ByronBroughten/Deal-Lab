@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { useAnalyzerContext } from "../../modules/usePropertyAnalyzer";
+import { useSetterSection } from "../../sharedWithServer/StateHooks/useSetterSection";
 import theme from "../../theme/Theme";
 import MainSection from "../appWide/GeneralSection";
 import GeneralSectionTitle from "../appWide/GeneralSection/GeneralSectionTitle";
@@ -8,18 +8,20 @@ import MainSectionTitleBtn from "../appWide/GeneralSection/GeneralSectionTitle/M
 import FinancingInfo from "./Financing/FinancingInfo";
 import Loan from "./Financing/Loan";
 
-type Props = { className?: string };
-export default function Financing(props: Props) {
-  const { analyzer, handleSet } = useAnalyzerContext();
-  const section = analyzer.section("financing");
-  const loanIds = section.childFeIds("loan");
-  const addLoan = () => handleSet("addSectionAndSolve", "loan", "financing");
+type Props = { feId: string; className?: string };
+export default function Financing({ feId, ...rest }: Props) {
+  const financing = useSetterSection({
+    sectionName: "financing",
+    feId,
+  });
+  const loanIds = financing.childFeIds("loan");
+  const addLoan = () => financing.addChild("loan");
   return (
-    <Styled {...{ ...props, sectionName: "loan", className: "Financing-root" }}>
+    <Styled {...{ ...rest, sectionName: "loan", className: "Financing-root" }}>
       <GeneralSectionTitle
         {...{
           title: "Financing",
-          sectionName: "loan",
+          themeName: "loan",
         }}
       >
         <MainSectionTitleBtn
@@ -30,10 +32,10 @@ export default function Financing(props: Props) {
           + Loan
         </MainSectionTitleBtn>
       </GeneralSectionTitle>
-      <FinancingInfo />
+      <FinancingInfo feId={feId} />
       <div className="MainSection-entries">
-        {loanIds.map((id) => (
-          <Loan key={id} id={id} />
+        {loanIds.map((feId) => (
+          <Loan key={feId} feId={feId} />
         ))}
       </div>
     </Styled>

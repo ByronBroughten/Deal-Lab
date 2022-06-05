@@ -66,7 +66,7 @@ const createEditor = ({ varb }: { varb: StateVarb }) => {
   return EditorState.createWithContent(content, compositeDecorator);
 };
 
-export default function ListMaker({
+export default function ListEditor({
   feVarbInfo,
   ...rest
 }: {

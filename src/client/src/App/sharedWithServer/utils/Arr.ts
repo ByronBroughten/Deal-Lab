@@ -26,12 +26,13 @@ export const Arr = {
     if (Array.isArray(value)) return value;
     else return [value];
   },
-  rmFirstValueMutate(arr: any[], value: any): void {
+  rmFirstMatchMutate(arr: any[], value: any): void {
     const index = arr.indexOf(value);
     arr.splice(index, 1);
   },
-  rmFirstValueClone<T extends any>(arr: T[], value: T): T[] {
+  rmFirstMatchCloneOrThrow<T extends any>(arr: T[], value: T): T[] {
     const index = arr.indexOf(value);
+    if (index < 0) throw new Error(`No value in the array matches "${value}".`);
     const nextArr = [...arr];
     nextArr.splice(index, 1);
     return nextArr;
@@ -132,9 +133,9 @@ export const Arr = {
     return a.filter((str) => b.includes(str as any)) as Extract<A, B>[];
   },
   removeAtIndexClone<T>(arr: readonly T[], idx: number): T[] {
-    this.validateIdx(arr, idx);
+    this.validateIdxOrThrow(arr, idx);
     const nextArr = [...arr];
-    nextArr.splice(idx);
+    nextArr.splice(idx, 1);
     return nextArr;
   },
   idxOrThrow<T>(arr: readonly T[], finder: (val: T) => boolean): number {
@@ -144,12 +145,14 @@ export const Arr = {
     }
     return idx;
   },
-  validateIdx(arr: readonly any[], idx: number) {
+  validateIdxOrThrow(arr: readonly any[], idx: number): true {
     const highestIdx = arr.length - 1;
-    if (highestIdx > idx)
+    if (idx > highestIdx) {
       throw new Error(
         `The passed array does not have a value at passed idx ${idx}`
       );
+    }
+    return true;
   },
   combineWithoutIdenticals<A extends any, B extends any>(
     a: A[],

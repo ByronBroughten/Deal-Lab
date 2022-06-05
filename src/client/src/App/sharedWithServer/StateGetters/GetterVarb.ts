@@ -15,6 +15,7 @@ import {
   FeVarbInfo,
   LocalRelVarbInfo,
 } from "../SectionsMeta/relSections/rel/relVarbInfoTypes";
+import { UniqueIdMixedVarbInfo } from "../SectionsMeta/relSections/rel/uniqueIdInfo";
 import {
   DbValue,
   ValueTypeName,
@@ -22,16 +23,16 @@ import {
 import { SectionName } from "../SectionsMeta/SectionName";
 import { cloneValue, InUpdatePack, VarbMeta } from "../SectionsMeta/VarbMeta";
 import { RawFeVarb } from "../StateSections/StateSectionsNext";
-import { GetterVarbBase, GetterVarbProps } from "./Bases/GetterVarbBase";
+import { GetterVarbBase } from "./Bases/GetterVarbBase";
+import { GetterSection } from "./GetterSection";
 import { GetterVarbs } from "./GetterVarbs";
 
 export class GetterVarb<
   SN extends SectionName<"hasVarb">
 > extends GetterVarbBase<SN> {
-  private getterVarbs: GetterVarbs<SN>;
-  constructor(props: GetterVarbProps<SN>) {
-    super(props);
-    this.getterVarbs = new GetterVarbs(props);
+  private getterVarbs = new GetterVarbs(this.getterSectionProps);
+  get getterSection() {
+    return new GetterSection(this.getterSectionProps);
   }
   get meta(): VarbMeta {
     return this.getterVarbs.meta.get(this.varbName);
@@ -52,6 +53,17 @@ export class GetterVarb<
     return this.sectionsShare.sections.rawVarb({
       ...this.feVarbInfo,
     });
+  }
+  uniqueIdVarbInfoMixed<T extends "feId" | "dbId">(
+    idType: T
+  ): UniqueIdMixedVarbInfo<T, SN> {
+    return {
+      ...this.getterSection.uniqueIdInfoMixed(idType),
+      varbName: this.varbName,
+    };
+  }
+  get dbId() {
+    return;
   }
   get varbId() {
     return GetterVarb.feVarbInfoToVarbId(this.feVarbInfo);
@@ -107,7 +119,20 @@ export class GetterVarb<
   get updateFnProps() {
     return this.inUpdatePack.updateFnProps;
   }
-  private get inUpdatePack(): InUpdatePack {
+  entityText(entityId: string) {
+    const inEntity = this.inEntities.find(
+      (entity) => entity.entityId === entityId
+    );
+    if (!inEntity)
+      throw new Error(
+        `inEntity with entityId ${entityId} not found at ${this.sectionName}.${this.varbName}`
+      );
+
+    const { editorText } = this.value("numObj");
+    const { length, offset } = inEntity;
+    return editorText.substring(offset, offset + length);
+  }
+  get inUpdatePack(): InUpdatePack {
     const {
       inSwitchUpdatePacks,
       defaultUpdateFnName,

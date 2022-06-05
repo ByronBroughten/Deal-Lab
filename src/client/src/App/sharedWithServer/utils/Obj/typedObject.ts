@@ -14,8 +14,8 @@ type NextEntries<O extends object> = { [K in keyof O]: [K, O[K]] }[keyof O][];
 export function NextObjEntries<O extends object>(obj: O): NextEntries<Full<O>> {
   return Object.entries(obj) as any;
 }
-type Keys<T> = [keyof T];
-export function ObjectKeys<O extends object>(obj: O): Keys<O> {
+type Keys<T> = (keyof T)[];
+export function ObjectKeys<O extends object>(obj: O): (keyof O)[] {
   return Object.keys(obj) as any;
 }
 export function NextObjKeys<O extends object>(obj: O): Keys<Full<O>> {

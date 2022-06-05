@@ -1,10 +1,9 @@
-import { useSectionsContext } from "../../modules/useSections";
-import {
-  SwitchEndingKey,
-  switchNames,
-} from "../SectionsMeta/baseSections/switchNames";
+import { pick } from "lodash";
+import { SectionOption } from "../Analyzer/methods/get/variableOptions";
+import { SwitchEndingKey } from "../SectionsMeta/baseSections/switchNames";
 import { FeSectionInfo, VarbInfo } from "../SectionsMeta/Info";
 import { ChildName } from "../SectionsMeta/relSectionTypes/ChildTypes";
+import { ParentNameSafe } from "../SectionsMeta/relSectionTypes/ParentTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { GetterSection } from "../StateGetters/GetterSection";
 import { GetterSections } from "../StateGetters/GetterSections";
@@ -12,12 +11,13 @@ import { GetterVarb } from "../StateGetters/GetterVarb";
 import { SolverSection } from "../StateSolvers/SolverSection";
 import { AddChildOptions } from "../StateUpdaters/UpdaterSection";
 import { SetterSectionBase } from "./SetterBases/SetterSectionBase";
+import { SetterVarb } from "./SetterVarb";
 
 export class SetterSection<
   SN extends SectionName
 > extends SetterSectionBase<SN> {
   get = new GetterSection(this.getterSectionBase.getterSectionProps);
-  allSections = new GetterSections(this.get.sectionsShare);
+  allSections = new GetterSections(this.getterSectionBase.getterSectionsProps);
   private solver = SolverSection.init(
     this.getterSectionBase.getterSectionProps
   );
@@ -33,6 +33,12 @@ export class SetterSection<
     }
     return ids[0];
   }
+  get parent(): SetterSection<ParentNameSafe<SN>> {
+    return new SetterSection({
+      ...this.setterSectionProps,
+      ...this.get.parentInfoSafe,
+    });
+  }
   addChild<CN extends ChildName<SN>>(
     childName: CN,
     options?: AddChildOptions<CN>
@@ -44,40 +50,37 @@ export class SetterSection<
     this.solver.removeSelfAndSolve();
     this.setSections();
   }
-  // reset self
-  // replaceSelf
-
+  resetSelf(): void {
+    this.solver.resetSelfAndSolve();
+    this.setSections();
+  }
+  varb(varbName: string): SetterVarb<SN> {
+    return new SetterVarb({
+      ...this.setterSectionProps,
+      varbName,
+    });
+  }
   varbInfo(varbName: string): VarbInfo<SN> {
-    return this.get.varb(varbName).feVarbInfo;
+    return this.get.varbInfo(varbName);
   }
   switchVarbInfo(
     varbNameBase: string,
     switchEnding: SwitchEndingKey
   ): VarbInfo<SN> {
-    const varbNames = switchNames(varbNameBase, switchEnding);
-    const switchValue = this.get.value(varbNames.switch, "string");
-    const varbName = varbNames[switchValue as keyof typeof varbNames];
-    return this.varbInfo(varbName);
+    return this.get.switchVarbInfo(varbNameBase, switchEnding);
   }
   switchVarb(
     varbNameBase: string,
     switchEnding: SwitchEndingKey
   ): GetterVarb<SN> {
-    const { varbName } = this.switchVarbInfo(varbNameBase, switchEnding);
-    return this.get.varb(varbName);
+    return this.get.switchVarb(varbNameBase, switchEnding);
   }
   get feSectionInfo(): FeSectionInfo<SN> {
     return this.get.feSectionInfo;
   }
-}
-
-export function useSetterSection<SN extends SectionName = "main">(
-  props?: FeSectionInfo<SN>
-): SetterSection<SN> {
-  const { sections, setSections } = useSectionsContext();
-  return new SetterSection({
-    ...(props ?? (sections.mainSectionInfo as FeSectionInfo<SN>)),
-    setSections,
-    sectionsShare: { sections },
-  });
+  get siblingOptions(): SectionOption[] {
+    return this.get.siblings.map(
+      (sibling) => pick(sibling, ["dbId", "displayName"]) as SectionOption
+    );
+  }
 }

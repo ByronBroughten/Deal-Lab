@@ -1,4 +1,6 @@
+import { valueMeta } from "../../../SectionsMeta/baseSections/baseValues";
 import { ValueTypes } from "../../../SectionsMeta/relSections/rel/valueMetaTypes";
+import { Obj } from "../../../utils/Obj";
 
 const editorUpdateNames = ["calcVarbs", "string", "stringArray"] as const;
 type EditorUpdateName = typeof editorUpdateNames[number];
@@ -27,4 +29,11 @@ type BasicValues = {
 export type BasicValue = BasicValues[keyof BasicValues];
 export function isBasicValue(value: any): value is BasicValue {
   return basicValueNames.includes(value as any);
+}
+
+export function isStateValue(value: any): value is StateValue {
+  for (const valueType of Obj.keys(valueMeta)) {
+    if (valueMeta[valueType].is(value)) return true;
+  }
+  return false;
 }

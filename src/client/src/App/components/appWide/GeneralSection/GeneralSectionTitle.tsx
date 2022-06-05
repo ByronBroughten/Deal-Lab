@@ -1,20 +1,16 @@
 import React from "react";
 import styled from "styled-components";
-import { SectionName } from "../../../sharedWithServer/SectionsMeta/SectionName";
-import theme, {
-  ThemeSectionName,
-  themeSectionNameOrDefault,
-} from "../../../theme/Theme";
+import theme, { ThemeSectionName } from "../../../theme/Theme";
 import { StandardProps } from "../../general/StandardProps";
 
 type Props = StandardProps & {
   title: string;
-  sectionName: SectionName;
+  themeName?: ThemeSectionName;
 };
 
 export default function GeneralSectionTitle({
   title,
-  sectionName,
+  themeName,
   className,
   children,
 }: Props) {
@@ -22,7 +18,7 @@ export default function GeneralSectionTitle({
     <MainSectionTitleStyled
       {...{
         className: "GeneralSectionTitle-root main-section-title " + className,
-        sectionName: themeSectionNameOrDefault(sectionName),
+        themeName: themeName ?? "default",
       }}
     >
       <h4 className="GeneralSectionTitle-titleText">{title}</h4>
@@ -34,14 +30,14 @@ export default function GeneralSectionTitle({
 
 const toggleViewBtnSize = "17px";
 export const MainSectionTitleStyled = styled.div<{
-  sectionName: ThemeSectionName;
+  themeName: ThemeSectionName;
 }>`
   position: relative;
   z-index: 1;
   display: flex;
   justify-content: space-between;
   color: ${theme["gray-800"]};
-  background-color: ${({ sectionName }) => theme[sectionName].main};
+  background-color: ${({ themeName }) => theme[themeName].main};
   height: 32px;
   align-items: center;
   box-shadow: ${theme.boxShadow1};

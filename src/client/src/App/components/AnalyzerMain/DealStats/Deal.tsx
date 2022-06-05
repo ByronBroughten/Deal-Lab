@@ -1,7 +1,7 @@
 import { View } from "react-native";
 import styled from "styled-components";
 import { InfoS } from "../../../sharedWithServer/SectionsMeta/Info";
-import { useSetterSection } from "../../../sharedWithServer/StateSetters/SetterSection";
+import { useSetterSection } from "../../../sharedWithServer/StateHooks/useSetterSection";
 import theme from "../../../theme/Theme";
 import MainSection from "../../appWide/GeneralSection/MainSection";
 import MainSectionBody from "../../appWide/GeneralSection/MainSection/MainSectionBody";
@@ -34,8 +34,6 @@ export function Deal({
     feId,
   } as const;
 
-  // Tackle DealDetails next.
-
   return (
     <MainSection>
       <View style={{ flexDirection: "row" }}>
@@ -49,7 +47,7 @@ export function Deal({
         <Styled className="ListGroup-root">
           <div className="Deal-viewable viewable">
             {!detailsIsOpen && <DealOutputList feId={outputListId} />}
-            {detailsIsOpen && <DealDetails id={feId} />}
+            {detailsIsOpen && <DealDetails feId={outputListId} />}
           </div>
         </Styled>
       </MainSectionBody>

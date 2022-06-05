@@ -7,13 +7,13 @@ import {
   DbUserDefVarbInfo,
   FeVarbInfo,
   RelInfoStatic,
-  StaticRelVarbInfo,
+  RelVarbInfoStatic,
   zDbVarbInfo,
   zImmutableRelVarbInfo,
 } from "../../relSections/rel/relVarbInfoTypes";
 import { Id } from "../id";
 
-export type InEntityVarbInfo = DbUserDefVarbInfo | StaticRelVarbInfo;
+export type InEntityVarbInfo = DbUserDefVarbInfo | RelVarbInfoStatic;
 export type InEntityInfo = DbUserDefVarbInfo | RelInfoStatic;
 
 type Test<T extends { [key: string]: string }> = T;
@@ -29,7 +29,7 @@ const zInEntity = z.union([zDbInEntity, zImmutableRelInEntity]);
 export const zInEntities = z.array(zInEntity);
 type InEntityBase = z.infer<typeof zInEntityBase>;
 type DbInEntity = InEntityBase & DbUserDefVarbInfo;
-type StaticRelInEntity = InEntityBase & StaticRelVarbInfo;
+type StaticRelInEntity = InEntityBase & RelVarbInfoStatic;
 export type InEntity = DbInEntity | StaticRelInEntity;
 export type InEntities = InEntity[];
 // As things stand, I can't infer much from the zod schemas because

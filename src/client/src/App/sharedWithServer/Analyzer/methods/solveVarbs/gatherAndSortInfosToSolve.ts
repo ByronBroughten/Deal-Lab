@@ -39,7 +39,7 @@ export function getDagEdgesAndLoneVarbs(
   for (const [stringInfo, outStrings] of Object.entries(outVarbMap)) {
     for (const outString of outStrings) {
       if (loneVarbs.includes(outString))
-        Arr.rmFirstValueMutate(loneVarbs, outString);
+        Arr.rmFirstMatchMutate(loneVarbs, outString);
       edges.push([stringInfo, outString]);
     }
   }

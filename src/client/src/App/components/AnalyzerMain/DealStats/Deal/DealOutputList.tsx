@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { VariableOption } from "../../../../sharedWithServer/Analyzer/methods/get/variableOptions";
-import { useSetterSection } from "../../../../sharedWithServer/StateSetters/SetterSection";
+import { useSetterSection } from "../../../../sharedWithServer/StateHooks/useSetterSection";
 import theme from "../../../../theme/Theme";
 import { LabeledOutputRow } from "../../../appWide/LabeledOutputRow";
 import { LabeledVarbOutput } from "../../../appWide/LabeledVarbOutput";

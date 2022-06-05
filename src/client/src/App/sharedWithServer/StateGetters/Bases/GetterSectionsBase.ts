@@ -1,9 +1,18 @@
 import { StateSections } from "../../StateSections/StateSectionsNext";
 
-export type SharedStateSections = { sections: StateSections };
-export type HasSectionsShare = {
+export interface GetterSectionsProps {
   sectionsShare: SharedStateSections;
-};
+}
+
+type SharedStateSections = { sections: StateSections };
 export class GetterSectionsBase {
-  constructor(readonly sectionsShare: SharedStateSections) {}
+  readonly sectionsShare: SharedStateSections;
+  constructor({ sectionsShare }: GetterSectionsProps) {
+    this.sectionsShare = sectionsShare;
+  }
+  get getterSectionsProps(): GetterSectionsProps {
+    return {
+      sectionsShare: this.sectionsShare,
+    };
+  }
 }

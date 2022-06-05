@@ -125,7 +125,7 @@ export interface RelInfoAll<S extends BaseName> extends RelSectionInfo<S> {
   id: "all";
 }
 
-export interface StaticRelVarbInfo<
+export interface RelVarbInfoStatic<
   S extends BaseName<"alwaysOneHasVarb"> = BaseName<"alwaysOneHasVarb">
 > extends RelInfoStatic<S>,
     VarbParam {}

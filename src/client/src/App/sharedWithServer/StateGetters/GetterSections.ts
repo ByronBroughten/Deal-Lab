@@ -22,11 +22,14 @@ export class GetterSections extends GetterSectionsBase {
       sectionsShare: this.sectionsShare,
     });
   }
+  get main(): GetterSection<"main"> {
+    return this.list("main").oneAndOnly;
+  }
   get mainFeInfo() {
-    return this.list("main").oneAndOnly.feInfo;
+    return this.main.feInfo;
   }
   get mainFeInfoMixed() {
-    return this.list("main").oneAndOnly.feInfoMixed;
+    return this.main.feInfoMixed;
   }
   newestEntry<SN extends SectionName>(sectionName: SN): GetterSection<SN> {
     return this.list(sectionName).last;

@@ -29,7 +29,7 @@ export function useLocalSectionsStore({
 const { tokenKey } = config;
 export class SectionsStore {
   static storeSections(sections: StateSections): void {
-    const getterSections = new GetterSections({ sections });
+    const getterSections = new GetterSections({ sectionsShare: { sections } });
     const { mainFeInfo } = getterSections;
 
     const sectionPackMaker = new SectionPackMaker({

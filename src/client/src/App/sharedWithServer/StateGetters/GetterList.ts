@@ -79,6 +79,9 @@ export class GetterList<SN extends SectionName> extends GetterListBase<SN> {
           );
         return this.last;
       }
+      default: {
+        throw new Error(`invalid idType: ${idType}`);
+      }
     }
   }
   hasByMixed(idInfo: SpecificIdInfo): boolean {

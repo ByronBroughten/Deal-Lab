@@ -1,5 +1,6 @@
 import { AddSectionPropsNext } from "../Analyzer/methods/internal/addSections/addSectionsTypes";
 import { DbVarbs } from "../Analyzer/SectionPackRaw/RawSection";
+import { VarbValues } from "../Analyzer/StateSection/methods/varbs";
 import { FeChildInfo, FeSectionInfo } from "../SectionsMeta/Info";
 import {
   ChildName,
@@ -15,10 +16,12 @@ import {
   StateSections,
 } from "../StateSections/StateSectionsNext";
 import { Arr } from "../utils/Arr";
+import { Obj } from "../utils/Obj";
 import { StrictOmit } from "../utils/types";
 import { FeParentInfo } from "./../SectionsMeta/Info";
 import { GetterSections } from "./../StateGetters/GetterSections";
 import { UpdaterList } from "./UpdaterList";
+import { UpdaterVarb } from "./UpdaterVarb";
 
 type UpdateableRawFeSection<SN extends SectionName> = StrictOmit<
   RawFeSection<SN>,
@@ -29,12 +32,18 @@ export class UpdaterSection<
   SN extends SectionName
 > extends GetterSectionBase<SN> {
   private updaterList = new UpdaterList(this.getterSectionProps);
-  private getterSection = new GetterSection(this.getterSectionProps);
-  private getterSections = new GetterSections(this.sectionsShare);
+  get = new GetterSection(this.getterSectionProps);
+  private getterSections = new GetterSections(this.getterSectionsProps);
 
   private get parent(): UpdaterSection<ParentNameSafe<SN>> {
-    const { parentInfoSafe } = this.getterSection;
+    const { parentInfoSafe } = this.get;
     return this.updaterSection(parentInfoSafe);
+  }
+  varb(varbName: string): UpdaterVarb<SN> {
+    return new UpdaterVarb({
+      ...this.getterSectionProps,
+      varbName,
+    });
   }
   removeSelf(): void {
     this.removeAllChildren();
@@ -42,12 +51,12 @@ export class UpdaterSection<
     this.updaterList.removeByFeId(this.feId);
   }
   removeAllChildren() {
-    for (const childName of this.getterSection.childNames) {
+    for (const childName of this.get.childNames) {
       this.removeChildren(childName);
     }
   }
   removeChildren(childName: ChildName<SN>): void {
-    const childIds = this.getterSection.childFeIds(childName);
+    const childIds = this.get.childFeIds(childName);
     for (const feId of childIds) {
       this.removeChild({ sectionName: childName, feId });
     }
@@ -80,9 +89,9 @@ export class UpdaterSection<
     descendantPath: DescendantList<SN, DN>,
     options: AddDescendantOptions<SN, DN> = {}
   ): void {
-    let feInfo = this.getterSection.feSectionInfo as FeSectionInfo;
+    let feInfo = this.get.feSectionInfo as FeSectionInfo;
     for (let i = 0; i < descendantPath.length; i++) {
-      const getter = this.getterSection.getterSection(feInfo);
+      const getter = this.get.getterSection(feInfo);
       const childName = descendantPath[i];
       if (getter.isChildNameOrThrow(childName)) {
         const updater = this.updaterSection(feInfo);
@@ -95,9 +104,15 @@ export class UpdaterSection<
       };
     }
   }
+  updateValuesDirectlyAndSolve(values: VarbValues): void {
+    for (const varbName of Obj.keys(values)) {
+      const varb = this.varb(varbName as string);
+      varb.updateValueDirectly(values[varbName]);
+    }
+  }
   private addChildFeId(childInfo: NewChildInfo<SN>): void {
     const { sectionName, feId, idx } = childInfo;
-    const feIds = this.getterSection.childFeIds(sectionName);
+    const feIds = this.get.childFeIds(sectionName);
     let nextIds: string[];
     if (typeof idx === "undefined") nextIds = [...feIds, feId];
     else nextIds = Arr.insert(feIds, feId, idx);
@@ -105,8 +120,8 @@ export class UpdaterSection<
   }
   private removeChildFeId(childInfo: FeSectionInfo<ChildName<SN>>): void {
     const { sectionName, feId } = childInfo;
-    const feIds = this.getterSection.childFeIds(sectionName);
-    const nextIds = Arr.rmFirstValueClone(feIds, feId);
+    const feIds = this.get.childFeIds(sectionName);
+    const nextIds = Arr.rmFirstMatchCloneOrThrow(feIds, feId);
     this.updateChildFeIds({ sectionName, feIds: nextIds });
   }
   private updaterSection<S extends SectionName>(
@@ -125,9 +140,9 @@ export class UpdaterSection<
       }),
     });
   }
-  updateProps(nextBaseProps: Partial<UpdateableRawFeSection<SN>>) {
+  updateProps(nextBaseProps: Partial<UpdateableRawFeSection<SN>>): void {
     this.updaterList.replace({
-      ...this.getterSection.raw,
+      ...this.get.raw,
       ...nextBaseProps,
     });
   }
@@ -137,10 +152,10 @@ export class UpdaterSection<
   }: {
     sectionName: ChildName<SN>;
     feIds: string[];
-  }) {
+  }): void {
     this.updateProps({
       childFeIds: {
-        ...(this.getterSection.allChildFeIds as any),
+        ...(this.get.allChildFeIds as any),
         [sectionName]: feIds,
       },
     });

@@ -1,13 +1,14 @@
 import { FormControl, FormControlLabel, RadioGroup } from "@material-ui/core";
 import styled from "styled-components";
-import { useAnalyzerContext } from "../../../modules/usePropertyAnalyzer";
-import { FeInfo } from "../../../sharedWithServer/SectionsMeta/Info";
+import { FeSectionInfo } from "../../../sharedWithServer/SectionsMeta/Info";
+import { useHandleChange } from "../../../sharedWithServer/StateHooks/useHandleChange";
+import { useSetterSection } from "../../../sharedWithServer/StateHooks/useSetterSection";
 import DualInputsRadioSwap from "../../general/DualInputsRadioSwap";
 import Radio from "../../general/Radio";
-import NumObjEditor from "../../inputs/NumObjEditor";
+import { NumObjEditorNext } from "../../inputs/NumObjEditorNext";
 
 type Props = {
-  feInfo: FeInfo;
+  feInfo: FeSectionInfo;
   names: { switch: string; percent: string; dollars: string };
   title: string;
   percentAdornment?: string;
@@ -26,19 +27,22 @@ export default function DollarPercentRadioSwap({
   percentAdornment = "%",
   className,
 }: Props) {
-  const { analyzer, handleChange } = useAnalyzerContext();
-  const varbs = analyzer.section(feInfo).varbs;
-  const dollarsVarb = varbs[names.dollars];
-  const percentVarb = varbs[names.percent];
+  const handleChange = useHandleChange();
+  const section = useSetterSection(feInfo);
 
-  const switchValue = varbs[names.switch].value("string") as
-    | "percent"
-    | "dollars";
+  const dollarsVarb = section.get.varb(names.dollars);
+  const percentVarb = section.get.varb(names.percent);
+  const switchVarb = section.get.varb(names.switch);
+
+  const switchValue = switchVarb.value("string");
+  if (!isPercentOrDollars(switchValue)) {
+    throw new Error(
+      `switchValue should be "percent" or "dollars" but is ${switchValue}`
+    );
+  }
   const radio = radios[switchValue];
-
   const dollarsValue = dollarsVarb.value("numObj");
   const percentValue = percentVarb.value("numObj");
-
   return (
     <Styled className={`DualPercentRadioSwap-root ${className ?? ""}`}>
       <FormControl component="fieldset" className="radio-part">
@@ -47,7 +51,7 @@ export default function DollarPercentRadioSwap({
             value="percent"
             control={<Radio />}
             label="%"
-            name={varbs[names.switch].fullName}
+            name={switchVarb.varbId}
             checked={radio === "%"}
             onChange={handleChange}
           />
@@ -55,7 +59,7 @@ export default function DollarPercentRadioSwap({
             value="dollars"
             control={<Radio />}
             label="$"
-            name={varbs[names.switch].fullName}
+            name={switchVarb.varbId}
             checked={radio === "$"}
             onChange={handleChange}
           />
@@ -64,7 +68,7 @@ export default function DollarPercentRadioSwap({
       <FormControl component="fieldset" className="labeled-input-group-part">
         {radio === "%" && (
           <div className="swappable-editors">
-            <NumObjEditor
+            <NumObjEditorNext
               className="percent-down"
               label={title}
               feVarbInfo={percentVarb.feVarbInfo}
@@ -78,7 +82,7 @@ export default function DollarPercentRadioSwap({
         )}
         {radio === "$" && (
           <div className="swappable-editors">
-            <NumObjEditor
+            <NumObjEditorNext
               className="dollars-down"
               label={title}
               feVarbInfo={dollarsVarb.feVarbInfo}
@@ -93,6 +97,12 @@ export default function DollarPercentRadioSwap({
       </FormControl>
     </Styled>
   );
+}
+
+const percentOrDollars = ["percent", "dollars"] as const;
+type PercentOrDollars = typeof percentOrDollars[number];
+function isPercentOrDollars(value: any): value is PercentOrDollars {
+  return percentOrDollars.includes(value);
 }
 
 const Styled = styled(DualInputsRadioSwap)``;

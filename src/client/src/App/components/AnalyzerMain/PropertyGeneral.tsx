@@ -1,19 +1,21 @@
 import React from "react";
-import { useAnalyzerContext } from "../../modules/usePropertyAnalyzer";
+import { useGetterSection } from "../../sharedWithServer/StateHooks/useGetterSection";
 import MainSection from "../appWide/GeneralSection";
 import GeneralSectionTitle from "../appWide/GeneralSection/GeneralSectionTitle";
 import Property from "./PropertyGeneral/Property";
 
-export default function PropertyGeneral() {
-  const { analyzer } = useAnalyzerContext();
-  const section = analyzer.section("propertyGeneral");
-  const propertyIds = section.childFeIds("property");
+export function PropertyGeneral({ feId }: { feId: string }) {
+  const propertyGeneral = useGetterSection({
+    sectionName: "propertyGeneral",
+    feId,
+  });
+  const propertyIds = propertyGeneral.childFeIds("property");
   return (
-    <MainSection sectionName="property">
-      <GeneralSectionTitle title="Property" sectionName="property" />
+    <MainSection sectionName="property" className="PropertyGeneral-root">
+      <GeneralSectionTitle title="Property" themeName="property" />
       <div>
-        {propertyIds.map((id) => (
-          <Property key={id} id={id} />
+        {propertyIds.map((feId) => (
+          <Property key={feId} feId={feId} />
         ))}
       </div>
     </MainSection>

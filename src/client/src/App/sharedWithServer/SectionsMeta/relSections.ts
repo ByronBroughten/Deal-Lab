@@ -236,7 +236,10 @@ export function makeRelSections() {
           ]) as LeftRightVarbInfos,
           rel.adorn.moneyYear
         ),
-        cashFlowOngoingSwitch: rel.varb.string({ initValue: "yearly" }),
+        cashFlowOngoingSwitch: rel.varb.string({
+          initValue: "yearly",
+          dbInitValue: "yearly",
+        }),
         roiMonthly: rel.varb.leftRightPropFn(
           "Monthly ROI",
           "divideToPercent",
@@ -255,7 +258,10 @@ export function makeRelSections() {
           ]) as LeftRightVarbInfos,
           { endAdornment: "%", unit: "percent" }
         ),
-        roiOngoingSwitch: rel.varb.string({ initValue: "yearly" }),
+        roiOngoingSwitch: rel.varb.string({
+          initValue: "yearly",
+          dbInitValue: "yearly",
+        }),
       }),
     },
     get db() {

@@ -1,49 +1,47 @@
 import styled from "styled-components";
-import { useAnalyzerContext } from "../../../modules/usePropertyAnalyzer";
-import { InfoS } from "../../../sharedWithServer/SectionsMeta/Info";
+import { useGetterSection } from "../../../sharedWithServer/StateHooks/useGetterSection";
 import theme from "../../../theme/Theme";
 import useHowMany from "../../appWide/customHooks/useHowMany";
 import LabeledOutputRowSimple from "../../appWide/LabeledOutputRowSimple";
-import { LabeledVarbSimple } from "../../appWide/LabeledVarbSimple";
+import { LabeledVarbSimpleNext } from "../../appWide/LabeledVarbSimpleNext";
 import GlobalInfoSection from "../general/StaticInfoSection";
 
-export default function FinancingInfo() {
-  const { analyzer } = useAnalyzerContext();
-  const financing = analyzer.singleSection("financing");
-
+export default function FinancingInfo({ feId }: { feId: string }) {
+  const financing = useGetterSection({
+    sectionName: "financing",
+    feId,
+  });
   const downPaymentDollars = financing.value(
     "downPaymentDollars",
     "numObj"
   ).number;
   const downPaymentIsPercentable = ![0, "?"].includes(downPaymentDollars);
-
   const loanIds = financing.childFeIds("loan");
   const { isAtLeastOne, areMultiple } = useHowMany(loanIds);
-  const varbInfo = InfoS.feVarbMaker(financing.feInfo);
   return (
     <Styled className="FinancingInfo-root">
       <LabeledOutputRowSimple>
         {isAtLeastOne && (
           <>
-            <LabeledVarbSimple
+            <LabeledVarbSimpleNext
               themeSectionName="loan"
-              feVarbInfo={varbInfo("downPaymentDollars")}
+              feVarbInfo={financing.varbInfo("downPaymentDollars")}
               parenthInfo={
                 downPaymentIsPercentable
-                  ? varbInfo("downPaymentPercent")
+                  ? financing.varbInfo("downPaymentPercent")
                   : undefined
               }
             />
-            <LabeledVarbSimple
+            <LabeledVarbSimpleNext
               themeSectionName="loan"
-              feVarbInfo={varbInfo("pitiMonthly")}
+              feVarbInfo={financing.varbInfo("pitiMonthly")}
             />
           </>
         )}
         {areMultiple && (
-          <LabeledVarbSimple
+          <LabeledVarbSimpleNext
             themeSectionName="loan"
-            feVarbInfo={varbInfo("loanAmountDollarsTotal")}
+            feVarbInfo={financing.varbInfo("loanAmountDollarsTotal")}
           />
         )}
       </LabeledOutputRowSimple>

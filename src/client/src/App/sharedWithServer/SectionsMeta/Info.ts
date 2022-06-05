@@ -1,13 +1,18 @@
 import { StateValue } from "../FeSections/FeSection/FeVarb/feValue";
+import { InEntityVarbInfo } from "./baseSections/baseValues/entities";
 import { Id } from "./baseSections/id";
 import { BaseName } from "./baseSectionTypes";
 import {
   DbNameInfo,
+  DbUserDefInfo,
+  DbUserDefVarbInfo,
   FeNameInfo,
   FeVarbInfo,
   MultiFindByFocalInfo,
   MultiSectionInfo,
   MultiVarbInfo,
+  RelInfoStatic,
+  RelVarbInfoStatic,
   SpecificSectionInfo,
 } from "./relSections/rel/relVarbInfoTypes";
 import {
@@ -59,6 +64,13 @@ export interface VarbValueInfo<SN extends SectionName = SectionName<"hasVarb">>
   value: StateValue;
 }
 
+export type VarbStringInfo = {
+  sectionName: string;
+  varbName: string;
+  id: string;
+  idType: string;
+};
+
 export type FeInfo<T extends FeSectionNameType = "all"> = FeNameInfo<
   SectionName<T>
 >;
@@ -94,6 +106,25 @@ export const InfoS = {
     );
   },
   is: {
+    inEntityVarb(value: any): value is InEntityVarbInfo {
+      return this.dbUserDefVarb(value) || this.relStaticVarb(value);
+    },
+    dbUserDef(value: any): value is DbUserDefInfo {
+      return sectionNameS.is(value.sectionName, "uniqueDbId") && this.db(value);
+    },
+    dbUserDefVarb(value: any): value is DbUserDefVarbInfo {
+      return typeof value.varbName === "string" && this.dbUserDef(value);
+    },
+    relStatic(value: any): value is RelInfoStatic {
+      return (
+        sectionNameS.is(value.sectionName) &&
+        value.idType === "relative" &&
+        value.id === "static"
+      );
+    },
+    relStaticVarb(value: any): value is RelVarbInfoStatic {
+      return typeof value.varbName === "string" && this.relStatic(value);
+    },
     singleMulti(info: MultiSectionInfo): info is MultiFindByFocalInfo {
       const { id, idType } = info;
       return (

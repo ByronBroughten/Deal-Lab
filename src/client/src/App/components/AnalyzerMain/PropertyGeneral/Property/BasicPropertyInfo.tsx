@@ -1,17 +1,15 @@
 import React from "react";
 import styled from "styled-components";
-import { FeInfo, InfoS } from "../../../../sharedWithServer/SectionsMeta/Info";
-import { useSetterSection } from "../../../../sharedWithServer/StateSetters/SetterSection";
+import { useSetterSection } from "../../../../sharedWithServer/StateHooks/useSetterSection";
 import theme from "../../../../theme/Theme";
 import BasicSectionInfo from "../../../appWide/GeneralSection/MainSection/MainSectionBody/BasicSectionInfo";
-import NumObjEditor from "../../../inputs/NumObjEditor";
 import { NumObjEditorNext } from "../../../inputs/NumObjEditorNext";
 import { UnitListNext } from "./UnitListNext";
 
-type Props = { feId: string; feInfo: FeInfo; className?: string };
-export default function BasicPropertyInfo({ feId, feInfo, className }: Props) {
+type Props = { feId: string; className?: string };
+export default function BasicPropertyInfo({ feId, className }: Props) {
   const property = useSetterSection({ sectionName: "property", feId });
-  const varbInfo = InfoS.feVarbMaker(feInfo);
+  const varbNames = ["price", "taxesYearly", "homeInsYearly", "sqft"] as const;
   return (
     <Styled
       {...{
@@ -24,10 +22,12 @@ export default function BasicPropertyInfo({ feId, feInfo, className }: Props) {
         <div className="BasicSectionInfo-subSections">
           <div className="BasicSectionInfo-subSection">
             <div className="BasicSectionInfo-subSection-viewable">
-              <NumObjEditorNext feVarbInfo={property.varbInfo("price")} />
-              <NumObjEditor feVarbInfo={varbInfo("taxesYearly")} />
-              <NumObjEditor feVarbInfo={varbInfo("homeInsYearly")} />
-              <NumObjEditor feVarbInfo={varbInfo("sqft")} />
+              {varbNames.map((varbName) => (
+                <NumObjEditorNext
+                  key={varbName}
+                  feVarbInfo={property.varbInfo(varbName)}
+                />
+              ))}
             </div>
           </div>
         </div>
