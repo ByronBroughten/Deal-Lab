@@ -142,13 +142,9 @@ function makeBaseNameArrsForContext<SC extends ContextName>(
       baseSectionsOfContext,
       base.section.rowIndex
     ),
-    table: Obj.filterKeysForEntryShape(
+    tableName: Obj.filterKeysForEntryShape(
       baseSectionsOfContext,
-      base.section.table
-    ),
-    tableNext: Obj.filterKeysForEntryShape(
-      baseSectionsOfContext,
-      base.section.tableNext
+      base.section.tableName
     ),
 
     // varbShape

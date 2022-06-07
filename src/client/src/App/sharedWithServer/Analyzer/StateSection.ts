@@ -9,7 +9,6 @@ import {
   FeVarbInfo,
 } from "../SectionsMeta/relSections/rel/relVarbInfoTypes";
 import { ChildIdArrsWide } from "../SectionsMeta/relSectionTypes/ChildTypes";
-import { DefaultStoreName } from "../SectionsMeta/relSectionTypes/DefaultStoreTypes";
 import {
   ParentFeInfo,
   ParentName,
@@ -129,15 +128,6 @@ export default class StateSection<
     )
       throw new Error("This section doesn't have a parent.");
     return parentInfo as ParentFeInfo<SectionName<"hasParent">>;
-  }
-
-  get defaultStoreName(): DefaultStoreName<
-    Extract<S, SectionName<"hasDefaultStore">>
-  > {
-    const next = this as any as StateSection<SectionName>;
-    const defaultStoreName = next.meta.get("defaultStoreName");
-    if (defaultStoreName) return defaultStoreName as DefaultStoreName;
-    else throw new Error("This section has no defaultStoreName.");
   }
 
   get parentName(): ParentName<S> {

@@ -1,5 +1,5 @@
+import { SectionPackRaw } from "../../../../../../SectionPack/SectionPackRaw";
 import { SectionPackBuilder } from "../../../../../../StatePackers.ts/PackBuilderSection";
-import { SectionPackRaw } from "../../../../../SectionPackRaw";
 
 export function makeDefaultMgmtPack(): SectionPackRaw<"mgmt"> {
   const main = new SectionPackBuilder();

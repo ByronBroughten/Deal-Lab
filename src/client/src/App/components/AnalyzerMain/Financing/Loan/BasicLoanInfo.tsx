@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { useGetterSection } from "../../../../sharedWithServer/StateHooks/useGetterSection";
+import { useGetterSection } from "../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import theme from "../../../../theme/Theme";
 import BasicSectionInfo from "../../../appWide/GeneralSection/MainSection/MainSectionBody/BasicSectionInfo";
 import StandardLabel from "../../../general/StandardLabel";

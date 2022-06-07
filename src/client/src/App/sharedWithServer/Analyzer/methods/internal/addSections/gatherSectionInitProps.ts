@@ -5,15 +5,11 @@ import {
   ParentFeInfo,
   ParentFinder,
 } from "../../../../SectionsMeta/relSectionTypes/ParentTypes";
-import {
-  SectionName,
-  sectionNameS,
-} from "../../../../SectionsMeta/SectionName";
+import { SectionName } from "../../../../SectionsMeta/SectionName";
 import { Arr } from "../../../../utils/Arr";
 import { DbEntry, DbSection } from "../../../DbEntry";
 import { VarbValues } from "../../../StateSection/methods/varbs";
 import { initValuesFromDb } from "./gatherSectionInitProps/initValuesFromDb";
-import { saneInitialSections } from "./gatherSectionInitProps/saneInitialSections";
 import { InitOneSectionProps } from "./initOneSection";
 
 type BaseSectionProps<SN extends SectionName> = {
@@ -137,20 +133,6 @@ export function gatherSectionInitProps<S extends SectionName>(
     initFromDefault = true,
   }: GatherSectionInitPropsProps<S>
 ): InitOneSectionProps[] {
-  if (!dbEntry) {
-    if (!initFromDefault && saneInitialSections.isIn(sectionName)) {
-      dbEntry = saneInitialSections.get(sectionName);
-    }
-    if (initFromDefault && sectionNameS.is(sectionName, "hasDefaultStore")) {
-      const storeName = analyzer.meta
-        .section(sectionName)
-        .get("defaultStoreName");
-      dbEntry = analyzer.dbEntry(storeName, {
-        newMainSectionName: sectionName,
-      });
-    }
-  }
-
   const feId = Analyzer.makeId();
   const basicProps: BaseSectionProps<S> = {
     sectionName,

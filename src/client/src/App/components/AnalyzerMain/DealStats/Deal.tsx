@@ -1,11 +1,11 @@
 import { View } from "react-native";
 import styled from "styled-components";
+import { useGetterSection } from "../../../sharedWithServer/stateClassHooks/useGetterSection";
 import theme from "../../../theme/Theme";
 import MainSection from "../../appWide/GeneralSection/MainSection";
 import MainSectionBody from "../../appWide/GeneralSection/MainSection/MainSectionBody";
-import MainSectionTitleSaveBtn from "../../appWide/GeneralSection/MainSection/MainSectionTitleRowTitle.tsx/MainSectionTitleSaveBtn";
-import { useGetterSection } from "./../../../sharedWithServer/StateHooks/useGetterSection";
-import { MainSectionTitleRowTitleNext } from "./../../appWide/GeneralSection/MainSection/MainSectionTitleRowTitle.tsx/MainSectionTitleRowTitleNext";
+import { MainSectionTitleRowTitleNext } from "../../appWide/GeneralSection/MainSection/MainSectionTitleRow/MainSectionTitleRowTitle";
+import MainSectionTitleSaveBtn from "../../appWide/GeneralSection/MainSection/MainSectionTitleRow/MainSectionTitleSaveBtn";
 import DealDetails from "./Deal/DealDetails";
 import DealOutputList from "./Deal/DealOutputList";
 
@@ -27,9 +27,6 @@ export function Deal({
         <MainSectionTitleRowTitleNext feInfo={deal.feInfo} />
         <MainSectionTitleSaveBtn feInfo={deal.feInfo} />
       </View>
-      {/* <MainSectionTitleRow
-        {...{ feInfo, pluralName: "deals", droptop: true }}
-      /> */}
       <MainSectionBody>
         <Styled className="ListGroup-root">
           <div className="Deal-viewable viewable">

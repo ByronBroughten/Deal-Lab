@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { useSetterSection } from "../../../../../sharedWithServer/StateHooks/useSetterSection";
+import { useSetterSection } from "../../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import ccs from "../../../../../theme/cssChunks";
 import theme from "../../../../../theme/Theme";
 import XBtn from "../../../../appWide/Xbtn";

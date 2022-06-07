@@ -1,9 +1,9 @@
 import Analyzer from "../../Analyzer";
+import { SectionPackRaw } from "../../SectionPack/SectionPackRaw";
 import { SectionFinder } from "../../SectionsMeta/baseSectionTypes";
 import { FeNameInfo } from "../../SectionsMeta/relSections/rel/relVarbInfoTypes";
 import { ChildFeInfo } from "../../SectionsMeta/relSectionTypes/ChildTypes";
 import { SectionName } from "../../SectionsMeta/SectionName";
-import { SectionPackRaw } from "../SectionPackRaw";
 import { internal } from "./internal";
 
 export function replaceSectionAndSolve<SN extends SectionName<"hasParent">>(

@@ -1,4 +1,7 @@
 import { pick } from "lodash";
+import { DbSectionInfo } from "../SectionPack/DbSectionInfo";
+import { DbVarbs, RawSection, RawSections } from "../SectionPack/RawSection";
+import { SectionPackRaw } from "../SectionPack/SectionPackRaw";
 import { Id } from "../SectionsMeta/baseSections/id";
 import { FeParentInfo } from "../SectionsMeta/Info";
 import {
@@ -9,9 +12,6 @@ import { SectionName } from "../SectionsMeta/SectionName";
 import { Obj } from "../utils/Obj";
 import { StrictOmit, StrictPick } from "../utils/types";
 import { AddSectionPropsNext } from "./methods/internal/addSections/addSectionsTypes";
-import { SectionPackRaw } from "./SectionPackRaw";
-import { DbVarbs, RawSection, RawSections } from "./SectionPackRaw/RawSection";
-import { DbSectionInfo } from "./SectionPackRaw/RawSectionFinder";
 
 export class FeSectionPackNext<SN extends SectionName> {
   constructor(readonly core: SectionPackRaw<SN>) {}

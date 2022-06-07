@@ -1,5 +1,5 @@
 import { pick } from "lodash";
-import { DbVarbs } from "../../../Analyzer/SectionPackRaw/RawSection";
+import { DbVarbs } from "../../../SectionPack/RawSection";
 import { sectionMetas } from "../../../SectionsMeta";
 import { FeSectionInfo } from "../../../SectionsMeta/Info";
 import { SectionName } from "../../../SectionsMeta/SectionName";

@@ -74,7 +74,7 @@ export class MainSectionIndexStateQuerier extends StateQuerierBase {
   private get indexName(): SectionName<"rowIndexNext"> {
     return sectionMetas.section(this.sectionName).get("rowIndexName");
   }
-  private get indexTableName(): SectionName<"tableNext"> {
+  private get indexTableName(): SectionName<"tableName"> {
     return sectionMetas.section(this.indexName).get("indexTableName");
   }
 

@@ -1,6 +1,7 @@
 import { cloneDeep } from "lodash";
 import { Adornments } from "../Analyzer/StateSection/StateVarb";
 import {
+  StateValueAnyKey,
   valueSchemasPlusAny,
   ValueTypesPlusAny,
 } from "../FeSections/FeSection/FeVarb";
@@ -14,6 +15,7 @@ import { InfoS, VarbInfo } from "../SectionsMeta/Info";
 import {
   FeVarbInfo,
   LocalRelVarbInfo,
+  MultiVarbInfo,
 } from "../SectionsMeta/relSections/rel/relVarbInfoTypes";
 import { UniqueIdMixedVarbInfo } from "../SectionsMeta/relSections/rel/uniqueIdInfo";
 import {
@@ -170,6 +172,19 @@ export class GetterVarb<
       ...varbInfo,
       sectionsShare: this.sectionsShare,
     });
+  }
+  varbsByFocalMixed<S extends SectionName>(
+    multiVarbInfo: MultiVarbInfo<S>
+  ): GetterVarb<S>[] {
+    return this.getterVarbs.varbsByFocalMixed(multiVarbInfo);
+  }
+  inputProps(valueType?: StateValueAnyKey) {
+    return {
+      id: this.varbName,
+      name: this.varbName,
+      value: this.value(valueType),
+      label: this.displayName,
+    };
   }
   static mixedVarbInfoToMixedVarbId(info: InEntityVarbInfo): string {
     const { sectionName, idType, id, varbName } = info;

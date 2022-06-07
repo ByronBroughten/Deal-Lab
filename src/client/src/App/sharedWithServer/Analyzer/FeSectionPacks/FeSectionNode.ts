@@ -1,11 +1,11 @@
+import { DbSectionInfo } from "../../SectionPack/DbSectionInfo";
+import { DbVarbs } from "../../SectionPack/RawSection";
 import {
   ChildIdArrsWide,
   SelfOrDescendantName,
 } from "../../SectionsMeta/relSectionTypes/ChildTypes";
 import { ParentFeInfo } from "../../SectionsMeta/relSectionTypes/ParentTypes";
 import { SectionName } from "../../SectionsMeta/SectionName";
-import { DbVarbs } from "../SectionPackRaw/RawSection";
-import { DbSectionInfo } from "../SectionPackRaw/RawSectionFinder";
 export type OneFeSectionNode<SN extends SectionName> = {
   sectionName: SN;
   parentInfo: ParentFeInfo<SN>;

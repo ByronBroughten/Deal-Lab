@@ -1,7 +1,7 @@
 import React from "react";
 import MainSection from "../../appWide/GeneralSection/MainSection";
 import MainSectionBody from "../../appWide/GeneralSection/MainSection/MainSectionBody";
-import { MainSectionTitleRowNext } from "../../appWide/GeneralSection/MainSection/MainSectionTitleRowNext";
+import { MainSectionTitleRow } from "../../appWide/GeneralSection/MainSection/MainSectionTitleRow";
 import { ListGroupNext } from "../general/ListGroupNext";
 import BasicMgmtInfo from "./Mgmt/BasicMgmtInfo";
 
@@ -9,7 +9,7 @@ export default function Mgmt({ feId }: { feId: string }) {
   const feInfo = { sectionName: "mgmt", feId } as const;
   return (
     <MainSection>
-      <MainSectionTitleRowNext {...{ feInfo, pluralName: "managements" }} />
+      <MainSectionTitleRow {...{ feInfo, pluralName: "managements" }} />
       <MainSectionBody>
         <div className="ListGroup-root">
           <div className="ListGroup-viewable">

@@ -1,13 +1,13 @@
 import { z } from "zod";
-import { zDbValue } from "../../SectionsMeta/baseSections/baseValues";
-import { DbValue } from "../../SectionsMeta/relSections/rel/valueMetaTypes";
+import { zDbValue } from "../SectionsMeta/baseSections/baseValues";
+import { DbValue } from "../SectionsMeta/relSections/rel/valueMetaTypes";
 import {
   ChildIdArrsWide,
   GeneralChildIdArrs,
   SelfOrDescendantName,
-} from "../../SectionsMeta/relSectionTypes/ChildTypes";
-import { SectionName } from "../../SectionsMeta/SectionName";
-import { zodSchema } from "../../utils/zod";
+} from "../SectionsMeta/relSectionTypes/ChildTypes";
+import { SectionName } from "../SectionsMeta/SectionName";
+import { zodSchema } from "../utils/zod";
 export type DbVarbs = {
   [varbName: string]: DbValue;
 };

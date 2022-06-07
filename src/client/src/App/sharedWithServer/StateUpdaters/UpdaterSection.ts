@@ -1,6 +1,6 @@
 import { AddSectionPropsNext } from "../Analyzer/methods/internal/addSections/addSectionsTypes";
-import { DbVarbs } from "../Analyzer/SectionPackRaw/RawSection";
 import { VarbValues } from "../Analyzer/StateSection/methods/varbs";
+import { DbVarbs } from "../SectionPack/RawSection";
 import { FeChildInfo, FeSectionInfo } from "../SectionsMeta/Info";
 import {
   ChildName,
@@ -146,7 +146,7 @@ export class UpdaterSection<
       ...nextBaseProps,
     });
   }
-  private updateChildFeIds({
+  updateChildFeIds({
     sectionName,
     feIds,
   }: {

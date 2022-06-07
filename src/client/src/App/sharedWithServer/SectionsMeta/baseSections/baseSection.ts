@@ -73,7 +73,7 @@ export const baseSection = {
       (options ?? {}) as O
     );
   },
-  get tableNext() {
+  get tableName() {
     return this.schema(
       { searchFilter: "string" },
       {

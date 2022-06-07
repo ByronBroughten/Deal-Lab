@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { InEntityVarbInfo } from "../../sharedWithServer/SectionsMeta/baseSections/baseValues/entities";
-import { useGetterVarbEntity } from "../../sharedWithServer/StateHooks/useGetterVarb";
+import { useGetterVarbEntity } from "../../sharedWithServer/stateClassHooks/useGetterVarb";
 import theme from "../../theme/Theme";
 import { GetterVarb } from "./../../sharedWithServer/StateGetters/GetterVarb";
 

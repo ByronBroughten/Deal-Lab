@@ -1,8 +1,8 @@
-import { DbVarbs } from "../Analyzer/SectionPackRaw/RawSection";
 import {
   StateValueAnyKey,
   ValueTypesPlusAny,
 } from "../FeSections/FeSection/FeVarb";
+import { DbVarbs } from "../SectionPack/RawSection";
 import { InEntityVarbInfo } from "../SectionsMeta/baseSections/baseValues/entities";
 import { InfoS, VarbInfo, VarbStringInfo } from "../SectionsMeta/Info";
 import {
@@ -19,12 +19,16 @@ import { RawFeVarbs } from "../StateSections/StateSectionsNext";
 import { Obj } from "../utils/Obj";
 import { GetterSectionBase } from "./Bases/GetterSectionBase";
 import { GetterSection } from "./GetterSection";
+import { GetterSections } from "./GetterSections";
 import { GetterVarb } from "./GetterVarb";
 
 export class GetterVarbs<SN extends SectionName> extends GetterSectionBase<SN> {
   private getterSection = new GetterSection(this.getterSectionProps);
   private get stateVarbs(): RawFeVarbs<SN> {
     return this.sectionsShare.sections.rawSection(this.feSectionInfo).varbs;
+  }
+  get sections(): GetterSections {
+    return new GetterSections(this.getterSectionsProps);
   }
   get meta(): VarbMetas {
     return this.getterSection.meta.varbsMeta;

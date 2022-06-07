@@ -34,11 +34,6 @@ function makeRelNameArrs<
     ...arrs,
     savable: savableSectionNames,
     tableSource: tableIndexNames,
-    hasDefaultStore: Obj.entryKeysWithPropOfType(
-      relSections[sectionContext],
-      "defaultStoreName",
-      "string"
-    ),
     savableAlwaysOne: Arr.extract(
       savableSectionNames,
       baseNameArrs[sectionContext].alwaysOne

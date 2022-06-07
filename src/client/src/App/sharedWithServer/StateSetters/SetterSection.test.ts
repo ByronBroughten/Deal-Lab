@@ -1,5 +1,5 @@
 import { SetStateAction } from "react";
-import { SetSections } from "../StateHooks/useSections";
+import { SetSections } from "../stateClassHooks/useSections";
 import { StateSections } from "../StateSections/StateSectionsNext";
 import { SolverSection } from "../StateSolvers/SolverSection";
 import { SetterSection } from "./SetterSection";

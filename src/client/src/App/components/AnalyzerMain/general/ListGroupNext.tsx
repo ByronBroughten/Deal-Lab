@@ -5,7 +5,7 @@ import { FeParentInfo } from "../../../sharedWithServer/SectionsMeta/Info";
 import { ListSectionName } from "../../../sharedWithServer/SectionsMeta/relNameArrs";
 import { userListItemTypes } from "../../../sharedWithServer/SectionsMeta/relSectionTypes/UserListTypes";
 import { sectionNameS } from "../../../sharedWithServer/SectionsMeta/SectionName";
-import { useSetterSection } from "../../../sharedWithServer/StateHooks/useSetterSection";
+import { useSetterSection } from "../../../sharedWithServer/stateClassHooks/useSetterSection";
 import ccs from "../../../theme/cssChunks";
 import theme, { themeSectionNameOrDefault } from "../../../theme/Theme";
 import AdditiveListNext from "../../appWide/AdditiveListNext";

@@ -1,4 +1,4 @@
-import { ServerSectionPack } from "../../sharedWithServer/Analyzer/SectionPackRaw";
+import { ServerSectionPack } from "../../sharedWithServer/SectionPack/SectionPackRaw";
 import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
 import { ApiQuerier } from "./ApiQuerier";
 

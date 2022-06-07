@@ -1,5 +1,5 @@
+import { SectionPackRaw } from "../../../../../../SectionPack/SectionPackRaw";
 import { SectionPackBuilder } from "../../../../../../StatePackers.ts/PackBuilderSection";
-import { SectionPackRaw } from "../../../../../SectionPackRaw";
 import { makeDefaultDealPack } from "./makeDefaultDealPack";
 
 export function makeDefaultMainPack(): SectionPackRaw<"main"> {

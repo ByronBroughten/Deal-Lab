@@ -40,7 +40,6 @@ export default function usePropertyAnalyzer({
 
   const actions = [
     "addSectionAndSolve",
-    "loadSectionFromFeDefault",
     "loadUserAndSolve",
     "resetSectionAndSolve",
     "copySection",

@@ -1,7 +1,7 @@
 import Analyzer from "../../Analyzer";
+import { SectionPackRaw } from "../../SectionPack/SectionPackRaw";
 import { NumObj } from "../../SectionsMeta/baseSections/baseValues/NumObj";
 import { FeNameInfo } from "../../SectionsMeta/relSections/rel/relVarbInfoTypes";
-import { SectionPackRaw } from "../SectionPackRaw";
 import StateSection from "../StateSection";
 
 describe("Analyzer.addSectionAndSolve", () => {

@@ -3,7 +3,7 @@ import { FeSectionPack } from "../../sharedWithServer/Analyzer/FeSectionPack";
 import {
   SectionPackRaw,
   ServerSectionPack,
-} from "../../sharedWithServer/Analyzer/SectionPackRaw";
+} from "../../sharedWithServer/SectionPack/SectionPackRaw";
 import { FeInfo, InfoS } from "../../sharedWithServer/SectionsMeta/Info";
 import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
 import { SectionQuerier } from "../QueriersBasic/SectionQuerier";

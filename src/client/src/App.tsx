@@ -10,7 +10,7 @@ import usePropertyAnalyzer, {
 import {
   SectionsContext,
   useSections,
-} from "./App/sharedWithServer/StateHooks/useSections";
+} from "./App/sharedWithServer/stateClassHooks/useSections";
 import GlobalStyle from "./App/theme/globalStyles";
 import { Theme } from "./App/theme/Theme";
 import { Main } from "./Main";

@@ -1,8 +1,8 @@
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import styled, { css } from "styled-components";
 import { VarbInfo } from "../../sharedWithServer/SectionsMeta/Info";
+import { useGetterSections } from "../../sharedWithServer/stateClassHooks/useGetterSections";
 import { GetterVarb } from "../../sharedWithServer/StateGetters/GetterVarb";
-import { useGetterSections } from "../../sharedWithServer/StateHooks/useGetterSections";
 import theme, { ThemeSectionName } from "../../theme/Theme";
 import PlainBtn from "../general/PlainBtn";
 

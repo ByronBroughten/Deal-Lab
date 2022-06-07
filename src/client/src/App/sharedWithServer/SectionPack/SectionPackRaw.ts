@@ -1,13 +1,9 @@
 import { z } from "zod";
-import { SectionName } from "../SectionsMeta/SectionName";
+import { SectionName, SectionNameType } from "../SectionsMeta/SectionName";
 import { Obj } from "../utils/Obj";
 import { StrictOmit } from "../utils/types";
 import { zodSchema } from "../utils/zod";
-import {
-  GeneralRawSections,
-  RawSections,
-  zRawSections,
-} from "./SectionPackRaw/RawSection";
+import { GeneralRawSections, RawSections, zRawSections } from "./RawSection";
 
 export type GeneralSectionPack = {
   sectionName: SectionName;
@@ -18,6 +14,10 @@ export type GeneralSectionPack = {
 export type SectionArrPack<SN extends SectionName> = {
   sectionName: SN;
   sectionPacks: SectionPackRaw<SN>[];
+};
+
+export type SectionPackArrs<ST extends SectionNameType> = {
+  [SN in SectionName<ST>]: SectionPackRaw<SN>[];
 };
 
 export type SectionPackRaw<SN extends SectionName = SectionName> = {

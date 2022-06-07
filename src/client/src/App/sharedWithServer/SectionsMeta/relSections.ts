@@ -67,26 +67,15 @@ export function makeRelSections() {
             "userOutputList",
 
             "analysis",
-            "outputListDefault",
           ] as const,
         }
       ),
       ...relSection.outputList("dealOutputList", {
-        defaultStoreName: "outputListDefault",
         fullIndexName: "userOutputList",
       }),
-      ...relSection.outputList("outputListDefault"),
       ...relSection.outputList("userOutputList", {
         arrStoreName: "userOutputList",
       }),
-      ...relSection.base(
-        "both",
-        "outputListDefault",
-        "Output List",
-        { title: rel.varb.string() },
-        { childNames: ["output"] as const }
-      ),
-
       // these are for tables
       ...relSection.rowIndex("tableRow", "Row"),
       ...relSection.base("both", "column", "Column", {

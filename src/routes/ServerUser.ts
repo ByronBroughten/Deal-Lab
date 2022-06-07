@@ -57,7 +57,7 @@ export class ServerUser {
     storeName: SN
   ): SectionPackRaw<SN>[] {
     // I'm not creating all the tables at the outset, I guess.
-    if (sectionNameS.is(storeName, "tableNext")) {
+    if (sectionNameS.is(storeName, "tableName")) {
       return this.makeTableSectionPackFeArr(storeName) as SectionPackRaw<SN>[];
     } else {
       return this.sectionPackArr(storeName).map(
@@ -65,7 +65,7 @@ export class ServerUser {
       );
     }
   }
-  makeTableSectionPackFeArr<SN extends SectionName<"tableNext">>(
+  makeTableSectionPackFeArr<SN extends SectionName<"tableName">>(
     tableName: SN
   ): SectionPackRaw<SN>[] {
     const tableSectionPack = this.firstSectionPack(tableName);

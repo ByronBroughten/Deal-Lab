@@ -1,5 +1,5 @@
+import { SectionPackRaw } from "../../../../../../SectionPack/SectionPackRaw";
 import { SectionPackBuilder } from "../../../../../../StatePackers.ts/PackBuilderSection";
-import { SectionPackRaw } from "../../../../../SectionPackRaw";
 
 export function makeDefaultOutputList(): SectionPackRaw<"dealOutputList"> {
   const main = new SectionPackBuilder();

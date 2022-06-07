@@ -1,4 +1,4 @@
-import { useSetterSection } from "../../sharedWithServer/StateHooks/useSetterSection";
+import { useSetterSection } from "../../sharedWithServer/stateClassHooks/useSetterSection";
 import { LabeledVarbNext, LabeledVarbNotFound } from "./LabeledVarbNext";
 
 export function LabeledVarbOutput({ feId }: { feId: string }) {

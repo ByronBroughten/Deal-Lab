@@ -1,5 +1,5 @@
+import { SectionPackRaw } from "../../../../../../SectionPack/SectionPackRaw";
 import { SectionPackBuilder } from "../../../../../../StatePackers.ts/PackBuilderSection";
-import { SectionPackRaw } from "../../../../../SectionPackRaw";
 import { makeDefaultMgmtPack } from "./makeDefaultMgmtPack";
 import { makeDefaultOutputList } from "./makeDefaultOutputList";
 import { makeDefaultPropertyPack } from "./makeDefaultPropertyPack";

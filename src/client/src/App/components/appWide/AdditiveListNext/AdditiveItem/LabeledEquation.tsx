@@ -1,5 +1,5 @@
 import { FeSectionInfo } from "../../../../sharedWithServer/SectionsMeta/Info";
-import { useGetterSection } from "../../../../sharedWithServer/StateHooks/useGetterSection";
+import { useGetterSection } from "../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { MaterialStringEditorNext } from "../../../inputs/MaterialStringEditorNext";
 import { NumObjEditorNext } from "../../../inputs/NumObjEditorNext";
 

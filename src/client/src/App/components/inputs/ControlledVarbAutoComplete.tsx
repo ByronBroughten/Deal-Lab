@@ -3,7 +3,7 @@ import React from "react";
 import { VariableOption } from "../../sharedWithServer/Analyzer/methods/get/variableOptions";
 import { InEntityVarbInfo } from "../../sharedWithServer/SectionsMeta/baseSections/baseValues/entities";
 import { VarbStringInfo } from "../../sharedWithServer/SectionsMeta/Info";
-import { useVariableSections } from "../../sharedWithServer/StateHooks/useVariableOptions";
+import { useVariableSections } from "../../sharedWithServer/stateClassHooks/useVariableOptions";
 import VarbAutoComplete from "./VarbAutoComplete";
 
 type Props = {

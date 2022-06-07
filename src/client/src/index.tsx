@@ -10,6 +10,10 @@ AppRegistry.runApplication("App", {
 
 // You're making this to use and to show off your programming abilities.
 
+// - fix login and register
+// - fix the mainSection menu
+// - fix the table and table rows
+
 // 2. bring the new state to Compare Deals (IndexTable)
 // 3. Bring some of IndexTable to the load property menu (searchable)
 

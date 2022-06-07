@@ -6,9 +6,11 @@ import { SectionName } from "../../SectionsMeta/SectionName";
 import { Str } from "../../utils/Str";
 import StateSection from "../StateSection";
 
+// does this belong on tableActor?
+// or should there be some kind of tableState section?
 export function sortTableRowIdsByColumnNext(
   this: Analyzer,
-  tableName: SectionName<"tableNext">,
+  tableName: SectionName<"tableName">,
   colIdOrTitle: string | "title",
   { reverse = false }: { reverse?: boolean } = {}
 ): Analyzer {
@@ -22,7 +24,7 @@ export function sortTableRowIdsByColumnNext(
 
 function getSortedRows(
   analyzer: Analyzer,
-  tableName: SectionName<"tableNext">,
+  tableName: SectionName<"tableName">,
   colIdOrTitle: string | "title"
 ): StateSection<SectionName<"tableRow">>[] {
   const rows = analyzer.childSections(tableName, "tableRow");

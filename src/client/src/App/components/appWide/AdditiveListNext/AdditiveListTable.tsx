@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { listNameToStoreName } from "../../../sharedWithServer/SectionsMeta/baseSectionTypes";
 import { FeInfoByType } from "../../../sharedWithServer/SectionsMeta/Info";
 import { userListItemTypes } from "../../../sharedWithServer/SectionsMeta/relSectionTypes/UserListTypes";
-import { useSetterSection } from "../../../sharedWithServer/StateHooks/useSetterSection";
+import { useSetterSection } from "../../../sharedWithServer/stateClassHooks/useSetterSection";
 import ccs from "../../../theme/cssChunks";
 import theme, { ThemeSectionName } from "../../../theme/Theme";
 import useHowMany from "../customHooks/useHowMany";

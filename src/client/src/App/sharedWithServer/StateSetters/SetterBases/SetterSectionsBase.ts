@@ -1,8 +1,9 @@
+import { SetSections } from "../../stateClassHooks/useSections";
 import {
   GetterSectionsBase,
   GetterSectionsProps,
 } from "../../StateGetters/Bases/GetterSectionsBase";
-import { SetSections } from "../../StateHooks/useSections";
+import { StateSections } from "../../StateSections/StateSectionsNext";
 
 export interface SetterSectionsProps extends GetterSectionsProps {
   setSections: SetSections;
@@ -10,14 +11,27 @@ export interface SetterSectionsProps extends GetterSectionsProps {
 export class SetterSectionsBase {
   readonly getterSectionsBase: GetterSectionsBase;
   private setSectionsProp: SetSections;
-  readonly setSections: () => void;
+  readonly initialSections: StateSections;
   constructor({ setSections, ...rest }: SetterSectionsProps) {
+    this.initialSections = rest.sectionsShare.sections;
     this.getterSectionsBase = new GetterSectionsBase(rest);
     this.setSectionsProp = setSections;
-    this.setSections = () =>
-      this.setSectionsProp(
-        () => this.getterSectionsBase.sectionsShare.sections
-      );
+  }
+  setSections(): void {
+    this.setSectionsProp(() => this.getterSectionsBase.sectionsShare.sections);
+  }
+  revertSections(): void {
+    this.setSectionsProp(() => this.initialSections);
+  }
+  async tryAndRevertIfFail<FN extends () => any>(
+    fn: FN
+  ): Promise<ReturnType<FN>> {
+    try {
+      return fn();
+    } catch (err) {
+      this.revertSections();
+      throw err;
+    }
   }
   get setterSectionsProps(): SetterSectionsProps {
     return {

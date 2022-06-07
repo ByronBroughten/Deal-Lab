@@ -1,6 +1,6 @@
 import { VarbInfo } from "../../../../../sharedWithServer/SectionsMeta/Info";
-import { useGetterVarb } from "../../../../../sharedWithServer/StateHooks/useGetterVarb";
-import { useSetterVarb } from "../../../../../sharedWithServer/StateHooks/useSetterVarb";
+import { useGetterVarb } from "../../../../../sharedWithServer/stateClassHooks/useGetterVarb";
+import { useSetterVarb } from "../../../../../sharedWithServer/stateClassHooks/useSetterVarb";
 import {
   DealDetailRowDropDown,
   DealDetailRowEndPoint,

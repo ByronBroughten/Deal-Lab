@@ -8,6 +8,7 @@ import { SectionName } from "../SectionsMeta/SectionName";
 import { GetterSection } from "../StateGetters/GetterSection";
 import { GetterSections } from "../StateGetters/GetterSections";
 import { GetterVarb } from "../StateGetters/GetterVarb";
+import { ChildSectionPackArrs } from "../StatePackers.ts/PackLoaderSection";
 import { SolverSection } from "../StateSolvers/SolverSection";
 import { AddChildOptions } from "../StateUpdaters/UpdaterSection";
 import { SetterSectionBase } from "./SetterBases/SetterSectionBase";
@@ -44,6 +45,14 @@ export class SetterSection<
     options?: AddChildOptions<CN>
   ): void {
     this.solver.addChildAndSolve(childName, options);
+    this.setSections();
+  }
+  removeChild<CN extends ChildName<SN>>(feInfo: FeSectionInfo<CN>): void {
+    this.solver.removeChildAndSolve(feInfo);
+    this.setSections();
+  }
+  loadChildPackArrs(childPackArrs: Partial<ChildSectionPackArrs<SN>>): void {
+    this.solver.loadChildPackArrsAndSolve(childPackArrs);
     this.setSections();
   }
   removeSelf(): void {

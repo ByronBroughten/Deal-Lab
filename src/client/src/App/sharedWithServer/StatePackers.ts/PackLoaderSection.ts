@@ -1,5 +1,5 @@
 import { pick } from "lodash";
-import { SectionArrPack, SectionPackRaw } from "../Analyzer/SectionPackRaw";
+import { SectionArrPack, SectionPackRaw } from "../SectionPack/SectionPackRaw";
 import { ChildName } from "../SectionsMeta/relSectionTypes/ChildTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
 import {
@@ -28,9 +28,7 @@ export class PackLoaderSection<
     });
     selfPackLoader.updateSelfWithSectionPack();
   }
-  loadMultipleSectionPackChildren(
-    childPackArrs: ChildSectionPackArrs<SN>
-  ): void {
+  loadChildPackArrs(childPackArrs: ChildSectionPackArrs<SN>): void {
     for (const [sectionName, sectionPacks] of Obj.entries(childPackArrs)) {
       this.loadSectionPackChildren({
         sectionName,
@@ -80,6 +78,6 @@ export class PackLoaderSection<
   }
 }
 
-type ChildSectionPackArrs<SN extends SectionName> = {
+export type ChildSectionPackArrs<SN extends SectionName> = {
   [CN in ChildName<SN>]: SectionPackRaw<CN>[];
 };

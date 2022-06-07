@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useGetterSection } from "../../../../sharedWithServer/StateHooks/useGetterSection";
+import { useGetterSection } from "../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import theme from "../../../../theme/Theme";
 import {
   DealDetailRowVarbFound,

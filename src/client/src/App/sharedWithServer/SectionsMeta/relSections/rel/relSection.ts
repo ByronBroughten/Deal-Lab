@@ -25,8 +25,6 @@ export type GeneralRelSection = {
   fullIndexName: SimpleDbStoreName | null;
   rowIndexName: SimpleDbStoreName | null;
   arrStoreName: SimpleDbStoreName | null;
-
-  defaultStoreName: BaseName<"dbStore", "db"> | null;
 };
 type FullOptions<
   SC extends ContextName,
@@ -66,8 +64,6 @@ type DefaultRelSection<
 
   tableIndexName: null;
 
-  defaultStoreName: null;
-
   fullIndexName: null;
   rowIndexName: null;
   arrStoreName: null;
@@ -99,8 +95,6 @@ export const relSection = {
       displayName,
       relVarbs,
       childNames: [],
-
-      defaultStoreName: null,
       // something probably wouldn't have
       // both an indexName and a fullIndexName
       // why have both a fullIndex and a rowIndex?
@@ -206,7 +200,7 @@ export const relSection = {
     );
   },
   sectionTableNext<
-    S extends BaseName<"tableNext">,
+    S extends BaseName<"tableName">,
     D extends string,
     R extends BaseName
   >(sectionName: S, displayName: D, tableIndexName: R) {

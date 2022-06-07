@@ -1,5 +1,8 @@
 import { z } from "zod";
-import { SectionPackRaw, zSectionPackDbArr } from "../Analyzer/SectionPackRaw";
+import {
+  SectionPackRaw,
+  zSectionPackDbArr,
+} from "../SectionPack/SectionPackRaw";
 import { SectionName, sectionNameS } from "../SectionsMeta/SectionName";
 import { dbLimits } from "../utils/dbLimts";
 import { validationMessage, zodSchema } from "../utils/zod";

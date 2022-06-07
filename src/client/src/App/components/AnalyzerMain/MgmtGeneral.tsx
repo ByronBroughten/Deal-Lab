@@ -1,5 +1,5 @@
 import React from "react";
-import { useSetterSection } from "../../sharedWithServer/StateHooks/useSetterSection";
+import { useSetterSection } from "../../sharedWithServer/stateClassHooks/useSetterSection";
 import MainSection from "../appWide/GeneralSection";
 import GeneralSectionTitle from "../appWide/GeneralSection/GeneralSectionTitle";
 import Mgmt from "./MgmtGeneral/Mgmt";

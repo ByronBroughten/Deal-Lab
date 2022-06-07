@@ -1,7 +1,7 @@
 import React from "react";
 import MainSection from "../../appWide/GeneralSection/MainSection";
 import MainSectionBody from "../../appWide/GeneralSection/MainSection/MainSectionBody";
-import { MainSectionTitleRowNext } from "./../../appWide/GeneralSection/MainSection/MainSectionTitleRowNext";
+import { MainSectionTitleRow } from "../../appWide/GeneralSection/MainSection/MainSectionTitleRow";
 import { ListGroupNext } from "./../general/ListGroupNext";
 import BasicLoanInfo from "./Loan/BasicLoanInfo";
 
@@ -13,11 +13,7 @@ export default function Loan({ feId }: { feId: string }) {
   return (
     <MainSection className="Loan-root">
       <div className="MainSection-viewable">
-        <MainSectionTitleRowNext
-          feInfo={feInfo}
-          pluralName="loans"
-          xBtn={true}
-        />
+        <MainSectionTitleRow feInfo={feInfo} pluralName="loans" xBtn={true} />
         <MainSectionBody>
           <div className="ListGroup-root">
             <div className="ListGroup-viewable">

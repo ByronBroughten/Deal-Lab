@@ -1,4 +1,4 @@
-import { SectionPackRaw } from "../Analyzer/SectionPackRaw";
+import { SectionPackRaw } from "../SectionPack/SectionPackRaw";
 import {
   ChildName,
   DescendantName,

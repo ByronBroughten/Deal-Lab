@@ -57,7 +57,6 @@ export const dbStoreNamesDepreciated = [
   "loanTable",
   "mgmtTable",
 
-  "outputListDefault",
   "userOutputList",
   "userVarbList",
   "userSingleList",

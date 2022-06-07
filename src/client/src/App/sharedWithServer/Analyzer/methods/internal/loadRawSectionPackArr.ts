@@ -1,7 +1,7 @@
 import Analyzer from "../../../Analyzer";
+import { SectionPackRaw } from "../../../SectionPack/SectionPackRaw";
 import { SectionName } from "../../../SectionsMeta/SectionName";
 import { FeSectionPack } from "../../FeSectionPack";
-import { SectionPackRaw } from "../../SectionPackRaw";
 import { internal } from "../internal";
 import { AddSectionProps } from "./addSections/addSectionsTypes";
 

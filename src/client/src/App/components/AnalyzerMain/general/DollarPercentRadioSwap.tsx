@@ -1,8 +1,8 @@
 import { FormControl, FormControlLabel, RadioGroup } from "@material-ui/core";
 import styled from "styled-components";
 import { FeSectionInfo } from "../../../sharedWithServer/SectionsMeta/Info";
-import { useHandleChange } from "../../../sharedWithServer/StateHooks/useHandleChange";
-import { useSetterSection } from "../../../sharedWithServer/StateHooks/useSetterSection";
+import { useHandleChange } from "../../../sharedWithServer/stateClassHooks/useHandleChange";
+import { useSetterSection } from "../../../sharedWithServer/stateClassHooks/useSetterSection";
 import DualInputsRadioSwap from "../../general/DualInputsRadioSwap";
 import Radio from "../../general/Radio";
 import { NumObjEditorNext } from "../../inputs/NumObjEditorNext";

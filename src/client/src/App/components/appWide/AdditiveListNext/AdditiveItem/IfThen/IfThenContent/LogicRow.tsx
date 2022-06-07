@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { useSetterSection } from "../../../../../../sharedWithServer/StateHooks/useSetterSection";
-import { useSetterSections } from "../../../../../../sharedWithServer/StateHooks/useSetterSections";
+import { useSetterSection } from "../../../../../../sharedWithServer/stateClassHooks/useSetterSection";
+import { useSetterSections } from "../../../../../../sharedWithServer/stateClassHooks/useSetterSections";
 import theme from "../../../../../../theme/Theme";
 import MaterialSelect from "../../../../../inputs/MaterialSelect";
 import { NumObjEditorNext } from "../../../../../inputs/NumObjEditorNext";

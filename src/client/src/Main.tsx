@@ -4,7 +4,7 @@ import { ActiveDeal } from "./App/components/ActiveDeal";
 import NotFound from "./App/components/general/NotFound";
 import IndexTable from "./App/components/IndexTable";
 import NavBar from "./App/components/NavBar";
-import { useGetterSection } from "./App/sharedWithServer/StateHooks/useGetterSection";
+import { useGetterSection } from "./App/sharedWithServer/stateClassHooks/useGetterSection";
 import theme from "./App/theme/Theme";
 
 export function Main() {

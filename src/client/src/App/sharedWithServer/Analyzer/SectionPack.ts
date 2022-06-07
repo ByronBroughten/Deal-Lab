@@ -1,4 +1,6 @@
 import { omit } from "lodash";
+import { DbVarbs, RawSections } from "../SectionPack/RawSection";
+import { SectionPackRaw, zRawSectionPack } from "../SectionPack/SectionPackRaw";
 import { sectionMetas } from "../SectionsMeta";
 import { Id } from "../SectionsMeta/baseSections/id";
 import {
@@ -10,8 +12,6 @@ import {
   sectionNameS,
   SectionNameType,
 } from "../SectionsMeta/SectionName";
-import { SectionPackRaw, zRawSectionPack } from "./SectionPackRaw";
-import { DbVarbs, RawSections } from "./SectionPackRaw/RawSection";
 
 export type OneHeadSectionNode<SN extends SectionName> = {
   sectionName: SN;

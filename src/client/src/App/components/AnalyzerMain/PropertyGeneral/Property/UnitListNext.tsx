@@ -2,7 +2,7 @@ import { rem } from "polished";
 import React from "react";
 import styled, { css } from "styled-components";
 import { FeParentInfo } from "../../../../sharedWithServer/SectionsMeta/Info";
-import { useSetterSection } from "../../../../sharedWithServer/StateHooks/useSetterSection";
+import { useSetterSection } from "../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import { Arr } from "../../../../sharedWithServer/utils/Arr";
 import ccs from "../../../../theme/cssChunks";
 import theme from "../../../../theme/Theme";

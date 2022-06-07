@@ -1,9 +1,9 @@
 import { GConstructor } from "../../../utils/classObjects";
-import { DbVarbs } from "../../Analyzer/SectionPackRaw/RawSection";
 import {
   ApplySectionInfoGetters,
   SectionInfoGettersI,
 } from "../../HasInfoProps/HasSectionInfoProps";
+import { DbVarbs } from "../../SectionPack/RawSection";
 import {
   InEntities,
   InEntityVarbInfo,

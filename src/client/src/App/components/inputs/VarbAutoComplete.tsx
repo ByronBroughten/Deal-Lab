@@ -7,7 +7,7 @@ import {
   SectionOption,
   VariableOption,
 } from "../../sharedWithServer/Analyzer/methods/get/variableOptions";
-import { useVariableSections } from "../../sharedWithServer/StateHooks/useVariableOptions";
+import { useVariableSections } from "../../sharedWithServer/stateClassHooks/useVariableOptions";
 import ccs from "../../theme/cssChunks";
 import theme from "../../theme/Theme";
 

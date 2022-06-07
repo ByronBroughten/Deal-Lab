@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
+import { useSetterVarb } from "../../../../../../../sharedWithServer/stateClassHooks/useSetterVarb";
 import theme from "../../../../../../../theme/Theme";
-import { useSetterVarb } from "./../../../../../../../sharedWithServer/StateHooks/useSetterVarb";
 import TicBtn from "./ControlRow/TicBtn";
 
 export default function ControlRow({

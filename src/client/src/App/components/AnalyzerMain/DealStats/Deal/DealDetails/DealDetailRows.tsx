@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { VarbInfo } from "../../../../../sharedWithServer/SectionsMeta/Info";
-import { useSetterVarb } from "../../../../../sharedWithServer/StateHooks/useSetterVarb";
+import { useSetterVarb } from "../../../../../sharedWithServer/stateClassHooks/useSetterVarb";
 import {
   DealDetailRowVarbFound,
   DealDetailRowVarbNotFound,

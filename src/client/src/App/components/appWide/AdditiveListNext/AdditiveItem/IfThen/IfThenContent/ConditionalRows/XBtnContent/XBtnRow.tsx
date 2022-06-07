@@ -1,5 +1,5 @@
 import React from "react";
-import { useSetterSection } from "../../../../../../../../sharedWithServer/StateHooks/useSetterSection";
+import { useSetterSection } from "../../../../../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import PlusBtn from "../../../../../../PlusBtn";
 import XBtn from "../../../../../../Xbtn";
 import { conditionalRowSectionName } from "../../ConditionalRows";

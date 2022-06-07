@@ -1,4 +1,5 @@
 import Analyzer from "../../../Analyzer";
+import { SectionPackRaw } from "../../../SectionPack/SectionPackRaw";
 import {
   SectionName,
   sectionNameS,
@@ -6,7 +7,6 @@ import {
 } from "../../../SectionsMeta/SectionName";
 import { Obj } from "../../../utils/Obj";
 import { FeSectionPack } from "../../FeSectionPack";
-import { SectionPackRaw } from "../../SectionPackRaw";
 
 export function makeRawSectionPackArr<SN extends SectionName>(
   this: Analyzer,
@@ -19,6 +19,7 @@ export function makeRawSectionPackArr<SN extends SectionName>(
 type FeSectionPackArrs<ST extends SectionNameType> = {
   [SN in SectionName<ST & SectionNameType>]: SectionPackRaw<SN>[];
 };
+
 export function makeRawSectionPackArrs<ST extends SectionNameType>(
   this: Analyzer,
   sectionNameType: ST

@@ -1,7 +1,7 @@
 import React from "react";
 import MainSection from "../../appWide/GeneralSection/MainSection";
 import MainSectionBody from "../../appWide/GeneralSection/MainSection/MainSectionBody";
-import { MainSectionTitleRowNext } from "../../appWide/GeneralSection/MainSection/MainSectionTitleRowNext";
+import { MainSectionTitleRow } from "../../appWide/GeneralSection/MainSection/MainSectionTitleRow";
 import { ListGroupNext } from "../general/ListGroupNext";
 import BasicPropertyInfo from "./Property/BasicPropertyInfo";
 
@@ -12,7 +12,7 @@ export default function Property({ feId }: { feId: string }) {
   } as const;
   return (
     <MainSection>
-      <MainSectionTitleRowNext {...{ feInfo, pluralName: "properties" }} />
+      <MainSectionTitleRow {...{ feInfo, pluralName: "properties" }} />
       <MainSectionBody>
         <div className="ListGroup-root">
           <div className="ListGroup-viewable">

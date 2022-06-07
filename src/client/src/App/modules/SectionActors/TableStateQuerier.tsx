@@ -13,14 +13,14 @@ import {
 import { useAnalyzerContext } from "../usePropertyAnalyzer";
 
 export type IndexTableActionsProps = {
-  tableName: SectionName<"tableNext">;
+  tableName: SectionName<"tableName">;
   indexSourceFinder: SectionFinderNext<"hasRowIndex">;
 };
 interface TableStateQuerierProps
   extends IndexTableActionsProps,
     StateQuerierBaseProps {}
 export class TableStateQuerier extends StateQuerierBase {
-  readonly tableName: SectionName<"tableNext">;
+  readonly tableName: SectionName<"tableName">;
   readonly indexSourceFinder: SectionFinderNext<"hasRowIndex">;
   constructor({
     tableName,
@@ -40,9 +40,7 @@ export class TableStateQuerier extends StateQuerierBase {
   }
   private async sendTable(): Promise<SavableSectionName<"arrStore">> {
     return this.tableQuerier.replace(
-      this.nextSections.makeRawSectionPackArr(
-        this.tableName as SavableSectionName<"arrStore">
-      )
+      this.nextSections.makeRawSectionPackArr(this.tableName)
     );
   }
 
@@ -66,7 +64,7 @@ export class TableStateQuerier extends StateQuerierBase {
     this.sendTable();
   }
   async addColumn({ varbInfo }: VariableOption) {
-    // For this, you will need the sections on the server side
+    // For this, you will need the rowIndexSections on the server side
     // You will need to do what you were worried about.
     // You can ignore the column stuff for now.
     // const { feInfo: tableInfo } = this.sections.section(this.tableName);

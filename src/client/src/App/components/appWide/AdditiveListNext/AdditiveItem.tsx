@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import { SectionName } from "../../../sharedWithServer/SectionsMeta/SectionName";
+import { useSetterSection } from "../../../sharedWithServer/stateClassHooks/useSetterSection";
 import theme from "../../../theme/Theme";
 import NextBtn from "../NextBtn";
 import XBtn from "../Xbtn";
-import { useSetterSection } from "./../../../sharedWithServer/StateHooks/useSetterSection";
 import IfThen from "./AdditiveItem/IfThen";
 import LabeledEquation from "./AdditiveItem/LabeledEquation";
 import LabeledSpanOverCost from "./AdditiveItem/LabeledSpanOverCost";

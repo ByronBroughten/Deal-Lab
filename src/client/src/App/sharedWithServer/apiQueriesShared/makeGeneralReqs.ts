@@ -4,7 +4,7 @@ import {
   SectionPackRaw,
   ServerSectionPack,
   StoredSectionPackInfo,
-} from "../Analyzer/SectionPackRaw";
+} from "../SectionPack/SectionPackRaw";
 import { SavableSectionName } from "../SectionsMeta/relNameArrs/storeArrs";
 import { FeNameInfo } from "../SectionsMeta/relSections/rel/relVarbInfoTypes";
 import { FeToDbStoreNameWithSameChildren } from "../SectionsMeta/relSectionTypes/ChildTypes";

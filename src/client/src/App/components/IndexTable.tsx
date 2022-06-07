@@ -3,11 +3,11 @@ import styled from "styled-components";
 import {
   IndexTableActionsProps,
   useIndexTableActions,
-} from "../modules/QueriersFinal/TableStateQuerier";
+} from "../modules/SectionActors/TableStateQuerier";
 import { auth } from "../modules/services/authService";
 import { useAnalyzerContext } from "../modules/usePropertyAnalyzer";
 import { SectionName } from "../sharedWithServer/SectionsMeta/SectionName";
-import { useGetterSection } from "../sharedWithServer/StateHooks/useGetterSection";
+import { useGetterSection } from "../sharedWithServer/stateClassHooks/useGetterSection";
 import theme from "../theme/Theme";
 import useHowMany from "./appWide/customHooks/useHowMany";
 import ColumnHeader from "./IndexTable/ColumnHeader";
@@ -23,7 +23,7 @@ import VarbAutoComplete from "./inputs/VarbAutoComplete";
 // - Allow loading and deleting (trash can to right of each)
 //   Menu title "Load ..."
 
-function useTableParts(tableName: SectionName<"tableNext">) {
+function useTableParts(tableName: SectionName<"tableName">) {
   useGetterSection();
 
   const { analyzer } = useAnalyzerContext();

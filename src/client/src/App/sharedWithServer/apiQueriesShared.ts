@@ -2,7 +2,6 @@ import urljoin from "url-join";
 import { config } from "../Constants";
 import Analyzer from "./Analyzer";
 import { FeSectionPack } from "./Analyzer/FeSectionPack";
-import { StoredSectionPackInfo } from "./Analyzer/SectionPackRaw";
 import {
   ApiQueryName,
   NextReq,
@@ -14,6 +13,7 @@ import {
   makeReq,
   SectionPackReq,
 } from "./apiQueriesShared/makeGeneralReqs";
+import { StoredSectionPackInfo } from "./SectionPack/SectionPackRaw";
 import { SectionFinder } from "./SectionsMeta/baseSectionTypes";
 import { SavableSectionName } from "./SectionsMeta/relNameArrs/storeArrs";
 

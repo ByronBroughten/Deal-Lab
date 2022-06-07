@@ -65,10 +65,10 @@ export const baseSections = {
       uniqueDbId: true,
     }),
 
-    propertyTable: base.section.tableNext,
-    loanTable: base.section.tableNext,
-    mgmtTable: base.section.tableNext,
-    analysisTable: base.section.tableNext,
+    propertyTable: base.section.tableName,
+    loanTable: base.section.tableName,
+    mgmtTable: base.section.tableName,
+    analysisTable: base.section.tableName,
 
     tableRow: base.section.schema(base.varbs.tableRow, { uniqueDbId: true }),
     column: base.section.schema(base.varbs.varbInfo),
@@ -181,10 +181,6 @@ export const baseSections = {
     userOutputList: base.section.schema(
       { title: "string" },
       { uniqueDbId: true }
-    ),
-    outputListDefault: base.section.schema(
-      { title: "string" },
-      base.options.defaultSection
     ),
     output: base.section.schema(base.varbs.varbInfo, {}),
     totalInsAndOuts: base.section.schema(

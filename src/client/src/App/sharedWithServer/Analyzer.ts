@@ -119,10 +119,6 @@ import { variableOptions } from "./Analyzer/methods/get/variableOptions";
 import { eraseChildren } from "./Analyzer/methods/internal/eraseSectionAndChildren";
 import { resetSectionAndChildDbIds } from "./Analyzer/methods/internal/resetSectionAndChildDbIds";
 import { loadSectionArrAndSolve } from "./Analyzer/methods/loadSectionFromEntry";
-import {
-  loadSectionFromFeDefault,
-  setAsDefaultSectionArr,
-} from "./Analyzer/methods/loadSectionFromStore";
 import { loadRawSectionPack } from "./Analyzer/methods/loadSectionPack";
 import { loadUserAndSolve } from "./Analyzer/methods/loadUserAndSolve";
 import { replaceSectionAndSolve } from "./Analyzer/methods/replaceSectionAndSolve";
@@ -161,7 +157,7 @@ import {
   FeVarbInfo,
 } from "./SectionsMeta/relSections/rel/relVarbInfoTypes";
 import { SectionMeta } from "./SectionsMeta/SectionMeta";
-import { SectionName, sectionNameS } from "./SectionsMeta/SectionName";
+import { SectionName } from "./SectionsMeta/SectionName";
 import { Obj } from "./utils/Obj";
 
 type StateSections = { [SN in SectionName]: StateSection<SN>[] };
@@ -215,21 +211,6 @@ export default class Analyzer {
       initFromDefault: false,
       // default section stores are created, to be used momentarily
     });
-
-    for (const sectionName of next.meta.sectionNames) {
-      if (sectionNameS.is(sectionName, "hasDefaultStore")) {
-        const sectionArrInfos = next.sectionArrInfos(sectionName);
-        if (sectionArrInfos.length > 0) {
-          for (const feInfo of sectionArrInfos) {
-            next = next.resetSectionAndSolve(feInfo, {
-              resetDbIds: true,
-              initFromDefault: true,
-              // sections load from their default stores
-            });
-          }
-        }
-      }
-    }
     next = next.solveAllActiveVarbs();
     return next;
   }
@@ -285,9 +266,6 @@ export default class Analyzer {
   nestedNumObjInfos = nestedNumObjInfos;
   relativeToFeVarbInfo = relativeToFeVarbInfo;
   relativesToFeVarbInfos = relativesToFeVarbInfos;
-
-  loadSectionFromFeDefault = loadSectionFromFeDefault;
-  setAsDefaultSectionArr = setAsDefaultSectionArr;
 
   copySection = copySection;
 

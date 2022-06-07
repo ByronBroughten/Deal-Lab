@@ -8,20 +8,12 @@ import {
   InEntityVarbInfo,
 } from "../SectionsMeta/baseSections/baseValues/entities";
 import { Id } from "../SectionsMeta/baseSections/id";
-import { VarbInfo } from "../SectionsMeta/Info";
-import {
-  InRelVarbInfo,
-  RelVarbInfo,
-} from "../SectionsMeta/relSections/rel/relVarbInfoTypes";
+import { InRelVarbInfo } from "../SectionsMeta/relSections/rel/relVarbInfoTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
-import {
-  OutDefaultPack,
-  OutSwitchPack,
-  VarbMeta,
-} from "../SectionsMeta/VarbMeta";
 import { GetterSections } from "../StateGetters/GetterSections";
 import { GetterVarb } from "../StateGetters/GetterVarb";
 import { GetterVarbs } from "../StateGetters/GetterVarbs";
+import { OutVarbGetterVarb } from "../StateInOutVarbs/OutVarbGetterVarb";
 import { UpdaterVarb } from "../StateUpdaters/UpdaterVarb";
 import { StrictOmit } from "../utils/types";
 import { SolverVarbBase, SolverVarbProps } from "./SolverBases/SolverVarbBase";
@@ -38,20 +30,12 @@ export class SolverVarb<
   SN extends SectionName<"hasVarb"> = SectionName<"hasVarb">
 > extends SolverVarbBase<SN> {
   private initialEntities: InEntity[];
-  outVarbInfos: VarbInfo[];
   private getterVarb = new GetterVarb(this.getterVarbBase.getterVarbProps);
   constructor(props: SolverVarbProps<SN>) {
     super(props);
     this.initialEntities = [...this.getterVarb.inEntities];
-    this.outVarbInfos = [];
-    this.gatherOutVarbInfos();
   }
-  // this is a fairly nasty problem.
-  // for some reason, propertyGeneral has an outVarbInfo for
-  // defaultLoan
-  // I really don't need defaultLoan anymore
-  // Default
-
+  outVarbGetter = new OutVarbGetterVarb(this.getterVarbBase.getterVarbProps);
   private getterSections = new GetterSections(
     this.getterSectionsBase.getterSectionsProps
   );
@@ -181,8 +165,7 @@ export class SolverVarb<
     );
   }
   private solveOutVarbs(): void {
-    this.gatherOutVarbInfos();
-    this.addVarbInfosToSolveFor(...this.outVarbInfos);
+    this.addVarbInfosToSolveFor(...this.outVarbGetter.outVarbInfos);
     this.solverSections.solve();
   }
   get hasInVarbs(): boolean {
@@ -201,71 +184,6 @@ export class SolverVarb<
   }
   private get inRelativeInfos(): InRelVarbInfo[] {
     return this.getterVarb.inUpdatePack.inUpdateInfos;
-  }
-
-  gatherOutVarbInfos() {
-    this.outVarbInfos = [];
-    this.gatherOutEntities();
-    this.gatherOutRelatives();
-  }
-  get outVarbIds(): string[] {
-    return GetterVarb.varbInfosToVarbIds(this.outVarbInfos);
-  }
-  private gatherOutEntities() {
-    const { outEntities } = this.getterVarb;
-    const feOutEntities = outEntities.map((outEntity) => {
-      const varb = this.getterSections.varbByMixed(outEntity);
-      return varb.feVarbInfo;
-    });
-    this.outVarbInfos.push(...feOutEntities);
-  }
-  private gatherOutRelatives() {
-    const { outUpdatePacks } = this.getterVarb.meta;
-    for (const outUpdatePack of outUpdatePacks) {
-      if (VarbMeta.isSwitchOutPack(outUpdatePack)) {
-        this.gatherFromSwitchUpdatePack(outUpdatePack);
-      } else {
-        this.gatherFromDefaultUpdatePack(outUpdatePack);
-      }
-    }
-  }
-  private gatherFromSwitchUpdatePack({
-    relTargetVarbInfo,
-    switchInfo,
-    switchValue,
-  }: OutSwitchPack) {
-    const targetVarbInfos = this.relativesToFeVarbInfos(relTargetVarbInfo);
-    for (const targetInfo of targetVarbInfos) {
-      const targetVarb = this.getterVarb.getterVarb(targetInfo);
-      if (targetVarb.switchIsActive(switchInfo, switchValue))
-        this.outVarbInfos.push(targetInfo);
-    }
-  }
-  private gatherFromDefaultUpdatePack({
-    relTargetVarbInfo,
-    inverseSwitches,
-  }: OutDefaultPack) {
-    const targetVarbInfos = this.relativesToFeVarbInfos(relTargetVarbInfo);
-    for (const targetInfo of targetVarbInfos) {
-      const targetVarb = this.getterVarb.getterVarb(targetInfo);
-      let gatherTargetVarb = true;
-      for (const { switchInfo, switchValue } of inverseSwitches) {
-        if (targetVarb.switchIsActive(switchInfo, switchValue)) {
-          gatherTargetVarb = false;
-          break;
-        }
-      }
-      if (gatherTargetVarb) {
-        this.outVarbInfos.push(targetInfo);
-      }
-    }
-  }
-  private relativesToFeVarbInfos<SN extends SectionName<"hasVarb">>(
-    relVarbInfo: RelVarbInfo<SN>
-  ): VarbInfo<SN>[] {
-    const varbs = this.getterVarbs.varbsByFocalMixed(relVarbInfo);
-    const feVarbInfos = varbs.map((varb) => varb.feVarbInfo);
-    return feVarbInfos;
   }
 
   private removeInEntity({

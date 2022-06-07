@@ -12,7 +12,7 @@ import {
   SectionName,
   sectionNameS,
 } from "../../sharedWithServer/SectionsMeta/SectionName";
-import { useGetterSection } from "../../sharedWithServer/StateHooks/useGetterSection";
+import { useGetterSection } from "../../sharedWithServer/stateClassHooks/useGetterSection";
 import ccs from "../../theme/cssChunks";
 import theme, { ThemeSectionName } from "../../theme/Theme";
 import PlainIconBtn from "../general/PlainIconBtn";

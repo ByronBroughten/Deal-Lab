@@ -1,5 +1,5 @@
 import React from "react";
-import { useGetterSection } from "../../sharedWithServer/StateHooks/useGetterSection";
+import { useGetterSection } from "../../sharedWithServer/stateClassHooks/useGetterSection";
 import MainSection from "../appWide/GeneralSection";
 import GeneralSectionTitle from "../appWide/GeneralSection/GeneralSectionTitle";
 import Property from "./PropertyGeneral/Property";

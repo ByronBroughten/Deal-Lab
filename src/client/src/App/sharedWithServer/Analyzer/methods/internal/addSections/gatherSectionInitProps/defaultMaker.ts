@@ -1,5 +1,5 @@
+import { SectionPackRaw } from "../../../../../SectionPack/SectionPackRaw";
 import { SectionName } from "../../../../../SectionsMeta/SectionName";
-import { SectionPackRaw } from "../../../../SectionPackRaw";
 import { makeDefaultDealPack } from "./defaultMaker/makeDefaultDealPack";
 import { makeDefaultLoanPack } from "./defaultMaker/makeDefaultLoanPack";
 import { makeDefaultMainPack } from "./defaultMaker/makeDefaultMainPack";

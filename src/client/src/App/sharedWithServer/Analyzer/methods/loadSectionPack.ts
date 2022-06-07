@@ -1,8 +1,8 @@
 import Analyzer from "../../Analyzer";
+import { SectionPackRaw } from "../../SectionPack/SectionPackRaw";
 import { SectionName } from "../../SectionsMeta/SectionName";
 import { FeSectionPack, SectionPackSupplements } from "../FeSectionPack";
 import { FeSelfOrDescendantNode } from "../FeSectionPacks/FeSectionNode";
-import { SectionPackRaw } from "../SectionPackRaw";
 import { AddSectionProps } from "./internal/addSections/addSectionsTypes";
 
 export function loadRawSectionPack<
