@@ -1,11 +1,13 @@
 import { VariableOption } from "../Analyzer/methods/get/variableOptions";
 import { StateValue } from "../Analyzer/StateSection/StateVarb/stateValue";
 import { isStateValue } from "../FeSections/FeSection/FeVarb/feValue";
-import { VarbInfo } from "../SectionsMeta/Info";
+import { FeSectionInfo, VarbInfo } from "../SectionsMeta/Info";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { VariableGetterSections } from "../StateEntityGetters/VariableGetterSections";
+import { GetterSections } from "../StateGetters/GetterSections";
 import { GetterVarb } from "../StateGetters/GetterVarb";
 import { SetterSectionsBase } from "./SetterBases/SetterSectionsBase";
+import { SetterSection } from "./SetterSection";
 import { SetterVarb } from "./SetterVarb";
 
 type ValidTarget = {
@@ -14,6 +16,26 @@ type ValidTarget = {
 };
 
 export class SetterSections extends SetterSectionsBase {
+  get get(): GetterSections {
+    return new GetterSections(this.setterSectionsProps);
+  }
+  section<SN extends SectionName>(
+    feInfo: FeSectionInfo<SN>
+  ): SetterSection<SN> {
+    return new SetterSection({
+      ...this.setterSectionsProps,
+      ...feInfo,
+    });
+  }
+  varb<SN extends SectionName>(varbInfo: VarbInfo<SN>): SetterVarb<SN> {
+    return new SetterVarb({
+      ...this.setterSectionsProps,
+      ...varbInfo,
+    });
+  }
+  get main(): SetterSection<"main"> {
+    return this.section(this.get.main.feInfo);
+  }
   get variableSections() {
     return new VariableGetterSections(
       this.getterSectionsBase.getterSectionsProps
@@ -32,21 +54,17 @@ export class SetterSections extends SetterSectionsBase {
     return true;
   }
   handleChange({ currentTarget }: { currentTarget: any }) {
+    // you can put a version of this on setterVarb
+
     if (this.validateTarget(currentTarget)) {
       const { name, value } = currentTarget;
       const feVarbInfo = GetterVarb.varbIdToVarbInfo(name);
-      const varb = this.setterVarb(feVarbInfo);
+      const varb = this.varb(feVarbInfo);
       varb.updateValueDirectly(value);
       this.setSections();
     }
   }
   variableOptions(): VariableOption[] {
     return this.variableSections.variableOptions();
-  }
-  setterVarb<SN extends SectionName>(varbInfo: VarbInfo<SN>): SetterVarb<SN> {
-    return new SetterVarb({
-      ...this.setterSectionsProps,
-      ...varbInfo,
-    });
   }
 }

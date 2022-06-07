@@ -1,8 +1,7 @@
 import { Button } from "@material-ui/core";
 import React from "react";
 import styled from "styled-components";
-import { useQueryActorContext } from "../../modules/QueriersRelative/StateQuerierGeneral";
-import { useAnalyzerContext } from "../../modules/usePropertyAnalyzer";
+import { useLoginActor } from "../../modules/sectionActorHooks/useLoginActor";
 import { LoginFormData } from "../../sharedWithServer/apiQueriesShared/login";
 import theme from "../../theme/Theme";
 import DropdownForm from "../general/DropdownForm";
@@ -10,17 +9,15 @@ import SmallFormTextField from "../general/SmallFormTextField";
 
 export function LoginForm() {
   const loginVarbNames: (keyof LoginFormData)[] = ["email", "password"];
-  const { analyzer, handleChange } = useAnalyzerContext();
-  const { varbs } = analyzer.section("login");
-  const queryActor = useQueryActorContext();
-
+  const loginActor = useLoginActor();
+  const { varbs } = loginActor;
   return (
     <StyledLoginForm>
       {loginVarbNames.map((varbName) => (
         <SmallFormTextField
           {...{
             key: varbName,
-            ...varbs[varbName].inputProps("string"),
+            ...varbs.one(varbName).inputProps("string"),
             ...(varbName === "password" && { type: "password" }),
             onChange: handleChange,
           }}
@@ -29,7 +26,7 @@ export function LoginForm() {
       <Button
         className="submit-btn"
         variant="contained"
-        onClick={() => queryActor.login()}
+        onClick={() => loginActor.login()}
       >
         Login
       </Button>
