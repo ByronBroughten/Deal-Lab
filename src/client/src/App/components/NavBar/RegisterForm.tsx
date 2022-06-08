@@ -1,33 +1,26 @@
 import { Button } from "@material-ui/core";
 import styled from "styled-components";
-import { useQueryActorContext } from "../../modules/QueriersRelative/StateQuerierGeneral";
-import { useAnalyzerContext } from "../../modules/usePropertyAnalyzer";
+import { useRegisterActor } from "../../modules/sectionActorHooks/useRegisterActor";
 import { RegisterFormData } from "../../sharedWithServer/apiQueriesShared/register";
 import theme from "../../theme/Theme";
 import { StyledDropdownForm } from "../general/DropdownForm";
 import SmallFormTextField from "../general/SmallFormTextField";
 
 export function RegisterForm() {
-  const { analyzer, handleChange } = useAnalyzerContext();
-  const { varbs } = analyzer.section("register");
-  const queryActor = useQueryActorContext();
-
-  // this controls the order that the fields are in
   const registerVarbNames: (keyof RegisterFormData)[] = [
     "userName",
     "email",
     "password",
   ];
-
+  const registerActor = useRegisterActor();
   return (
     <StyledRegisterForm>
       {registerVarbNames.map((varbName) => (
         <SmallFormTextField
-          key={varbName}
           {...{
-            ...varbs[varbName].inputProps("string"),
+            key: varbName,
+            ...registerActor.varb(varbName).inputProps("string"),
             ...(varbName === "password" && { type: "password" }),
-            onChange: handleChange,
           }}
         />
       ))}
@@ -35,7 +28,7 @@ export function RegisterForm() {
       <Button
         className="submit-btn"
         variant="contained"
-        onClick={() => queryActor.register()}
+        onClick={() => registerActor.register()}
       >
         Create Account
       </Button>

@@ -5,13 +5,17 @@ import { makeDefaultOutputList } from "./makeDefaultOutputList";
 import { makeDefaultPropertyPack } from "./makeDefaultPropertyPack";
 
 export function makeDefaultDealPack(): SectionPackRaw<"analysis"> {
+  const childNames = [
+    "financing",
+    "totalInsAndOuts",
+    "final",
+    "dealVarbList",
+  ] as const;
   const main = new SectionPackBuilder();
   const deal = main.addAndGetChild("analysis");
-
-  deal.addChild("financing");
-  deal.addChild("totalInsAndOuts");
-  deal.addChild("final");
-  deal.addChild("dealVarbList");
+  childNames.forEach((childName) => {
+    deal.addChild(childName);
+  });
   deal.loadChild(makeDefaultOutputList());
 
   const propertyGeneral = deal.addAndGetChild("propertyGeneral");

@@ -19,7 +19,7 @@ export function useLocalSectionsStore({
 }: UseSectionsStoreProps) {
   React.useEffect(() => {
     if (storeSectionsLocally) SectionsStore.rmStoredStateIfPreframesChanged();
-  }, []);
+  }, [storeSectionsLocally]);
 
   React.useEffect(() => {
     if (storeSectionsLocally) SectionsStore.storeSections(sections);

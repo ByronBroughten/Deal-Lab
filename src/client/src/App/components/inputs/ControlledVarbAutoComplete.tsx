@@ -18,7 +18,7 @@ export function ControlledVarbAutoComplete({
   const options = variableSections.variableOptions();
   const value = React.useMemo(() => {
     return options.find((option) => isEqual(option.varbInfo, selectedVarbInfo));
-  }, [selectedVarbInfo, variableSections]);
+  }, [selectedVarbInfo, options]);
   return (
     <VarbAutoComplete {...{ value, options, clearOnBlur: false, ...props }} />
   );

@@ -1,9 +1,14 @@
-import Draft, { CompositeDecorator, ContentState, EditorState } from "draft-js";
+import Draft, {
+  CompositeDecorator,
+  ContentState,
+  EditorState,
+  RawDraftContentState,
+} from "draft-js";
 import { pick } from "lodash";
 import {
   draftUtils,
   numObjToRawContent,
-} from "../../modules/draftjs/rawEditorContent";
+} from "../../modules/draftjs/draftUtils";
 import { EntityMap, EntityRanges, RawEditorState } from "../../utils/DraftS";
 import { isEditorUpdateFnName } from "../Analyzer/StateSection/StateVarb/stateValue";
 import {
@@ -61,25 +66,25 @@ export class EditorUpdaterVarb<
     const content = contentCreators[valueType]();
     return EditorState.createWithContent(content, compositeDecorator);
   }
-  update(editorState: EditorState): void {
-    const nextValue = this.valueFromEditor(editorState);
+  update(contentState: ContentState): void {
+    const nextValue = this.valueFromContentState(contentState);
     this.updaterVarb.update({
       value: nextValue,
     });
   }
-  private valueFromEditor(
-    editorState: EditorState
+  private valueFromContentState(
+    contentState: ContentState
   ): string | string[] | NumObj {
     const { updateFnName } = this.getterVarb;
     if (!isEditorUpdateFnName(updateFnName)) {
       throw new Error(`${updateFnName} is not an editor updateFnName`);
     }
     if (updateFnName === "calcVarbs") {
-      return this.numObjFromEditor(editorState);
-    } else return updateEditorByBasicType[updateFnName](editorState);
+      return this.numObjFromContent(contentState);
+    } else return updateEditorByBasicType[updateFnName](contentState);
   }
-  private numObjFromEditor(editorState: EditorState): NumObj {
-    const textAndEntities = textAndEntitiesFromEditorState(editorState);
+  private numObjFromContent(contentState: ContentState): NumObj {
+    const textAndEntities = textAndEntitiesFromContentState(contentState);
     const solvableText =
       this.solvableTextFromEditorTextAndEntities(textAndEntities);
     const number = this.solvableTextToNumber(solvableText);
@@ -118,27 +123,27 @@ export class EditorUpdaterVarb<
 }
 
 const updateEditorByBasicType = {
-  string(editorState: EditorState): string {
-    return draftUtils.editorStateToText(editorState);
+  string(contentState: ContentState): string {
+    return draftUtils.contentStateToText(contentState);
   },
-  stringArray(editorState: EditorState): string[] {
-    const text = draftUtils.editorStateToText(editorState);
+  stringArray(contentState: ContentState): string[] {
+    const text = this.string(contentState);
     const arr = text.split(",");
     if (arr.length > 0 && Arr.lastOrThrow(arr) === "") arr.pop();
     return arr;
   },
 };
 
-function textAndEntitiesFromEditorState(
-  editorState: EditorState
+function textAndEntitiesFromContentState(
+  contentState: ContentState
 ): EntitiesAndEditorText {
-  const rawEditorState = draftUtils.getRawEditorState(editorState);
+  const rawEditorState = draftUtils.contentStateToRaw(contentState);
   return textAndEntitiesFromRaw(rawEditorState);
 }
 function textAndEntitiesFromRaw(
-  rawEditorState: RawEditorState
+  rawEditorState: RawDraftContentState
 ): EntitiesAndEditorText {
-  const { blocks, entityMap } = rawEditorState;
+  const { blocks, entityMap } = rawEditorState as RawEditorState;
   const { text: editorText, entityRanges } = blocks[0];
   return {
     editorText,

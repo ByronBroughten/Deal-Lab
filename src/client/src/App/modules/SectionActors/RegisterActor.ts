@@ -8,6 +8,7 @@ import {
   SetterSectionBase,
   SetterSectionProps,
 } from "../../sharedWithServer/StateSetters/SetterBases/SetterSectionBase";
+import { SetterVarb } from "../../sharedWithServer/StateSetters/SetterVarb";
 import { StrictOmit } from "../../sharedWithServer/utils/types";
 import { apiQueries } from "../useQueryActions/apiQueriesClient";
 import { SectionPackMaker } from "./../../sharedWithServer/StatePackers.ts/SectionPackMaker";
@@ -31,7 +32,12 @@ export class RegisterActor extends SetterSectionBase<"register"> {
   private get loginSetter(): LoginSetter {
     return new LoginSetter(this.setterSectionsProps);
   }
-
+  varb(varbName: string): SetterVarb<"register"> {
+    return new SetterVarb({
+      ...this.setterSectionProps,
+      varbName,
+    });
+  }
   get registerReq(): NextReq<"nextRegister"> {
     return makeReq({
       registerFormData: this.getterVarbs.values({

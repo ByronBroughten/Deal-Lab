@@ -1,14 +1,14 @@
 import { z } from "zod";
 import {
-  SectionPackDbRaw,
-  SectionPackRaw,
-  ServerSectionPack,
-} from "../client/src/App/sharedWithServer/Analyzer/SectionPackRaw";
-import {
   RawSection,
   RawSections,
   zRawSections,
-} from "../client/src/App/sharedWithServer/Analyzer/SectionPackRaw/RawSection";
+} from "../client/src/App/sharedWithServer/SectionPack/RawSection";
+import {
+  SectionPackDbRaw,
+  SectionPackRaw,
+  ServerSectionPack,
+} from "../client/src/App/sharedWithServer/SectionPack/SectionPackRaw";
 import { SavableSectionName } from "../client/src/App/sharedWithServer/SectionsMeta/relNameArrs/storeArrs";
 import { SelfOrDescendantName } from "../client/src/App/sharedWithServer/SectionsMeta/relSectionTypes/ChildTypes";
 import {

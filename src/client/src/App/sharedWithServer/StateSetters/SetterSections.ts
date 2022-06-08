@@ -61,7 +61,6 @@ export class SetterSections extends SetterSectionsBase {
       const feVarbInfo = GetterVarb.varbIdToVarbInfo(name);
       const varb = this.varb(feVarbInfo);
       varb.updateValueDirectly(value);
-      this.setSections();
     }
   }
   variableOptions(): VariableOption[] {

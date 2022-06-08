@@ -49,17 +49,19 @@ export class SectionPack<SN extends SectionName> {
       dbId,
       rawSections: {
         ...SectionPack.emptyRawSections(sectionName),
-        [sectionName]: {
-          dbId,
-          childDbIds: {
-            ...sectionMeta.emptyChildIdsWide(),
-            ...childDbIds,
+        [sectionName]: [
+          {
+            dbId,
+            childDbIds: {
+              ...sectionMeta.emptyChildIdsWide(),
+              ...childDbIds,
+            },
+            dbVarbs: {
+              ...sectionMeta.defaultDbVarbs(),
+              ...dbVarbs,
+            },
           },
-          dbVarbs: {
-            ...sectionMeta.defaultDbVarbs(),
-            ...dbVarbs,
-          },
-        },
+        ],
       },
     };
   }

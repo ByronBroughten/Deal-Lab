@@ -65,7 +65,7 @@ export class GetterVarb<
     };
   }
   get dbId() {
-    return;
+    return this.getterSection.dbId;
   }
   get varbId() {
     return GetterVarb.feVarbInfoToVarbId(this.feVarbInfo);

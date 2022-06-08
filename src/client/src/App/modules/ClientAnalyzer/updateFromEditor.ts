@@ -13,8 +13,8 @@ import { Arr } from "../../sharedWithServer/utils/Arr";
 import { EntityMap, EntityRanges, RawEditorState } from "../../utils/DraftS";
 import {
   editorStateToText,
-  getRawEditorState,
-} from "../draftjs/rawEditorContent";
+  getRawContentFromEditorState,
+} from "../draftjs/draftUtils";
 
 const updateEditorByBasicType = {
   string(editorState: EditorState): string {
@@ -46,6 +46,7 @@ function updateValueFromEditor(
   editorState: EditorState
 ): Analyzer {
   let next = analyzer;
+
   const nextValue = valueFromEditor(next, feVarbInfo, editorState);
   return internal.updateValue(next, feVarbInfo, nextValue, true);
 }
@@ -77,7 +78,7 @@ function numObjFromEditor(
 function textAndEntitiesFromEditorState(
   editorState: EditorState
 ): EntitiesAndEditorText {
-  const rawEditorState = getRawEditorState(editorState);
+  const rawEditorState = getRawContentFromEditorState(editorState);
   return textAndEntitiesFromRaw(rawEditorState);
 }
 function textAndEntitiesFromRaw(

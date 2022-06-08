@@ -88,6 +88,13 @@ export function cloneValue(value: StateValue): StateValue {
 export type VarbMetaCore = RelVarb & VarbMetaProps;
 export class VarbMeta {
   constructor(readonly core: VarbMetaCore) {}
+  validateVarbValue(value: any): true {
+    if (this.isVarbValueType(value)) return true;
+    else
+      throw new Error(
+        `value of "${value}" does not match the varb value type.`
+      );
+  }
   isVarbValueType(value: any): boolean {
     return this.value.is(value);
   }

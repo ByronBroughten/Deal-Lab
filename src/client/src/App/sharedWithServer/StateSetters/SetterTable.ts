@@ -1,6 +1,7 @@
 import { isEqual } from "lodash";
 import { DbVarbs } from "../SectionPack/RawSection";
 import { InEntityVarbInfo } from "../SectionsMeta/baseSections/baseValues/entities";
+import { FeInfoByType } from "../SectionsMeta/Info";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { GetterSection } from "../StateGetters/GetterSection";
 import { UpdaterSection } from "../StateUpdaters/UpdaterSection";
@@ -9,7 +10,7 @@ import { SetterSectionBase } from "./SetterBases/SetterSectionBase";
 import { SetterSection } from "./SetterSection";
 
 export class SetterTable<
-  SN extends SectionName<"tableName">
+  SN extends SectionName<"tableName"> = SectionName<"tableName">
 > extends SetterSectionBase<SN> {
   setter = new SetterSection(this.setterSectionProps);
   get get(): GetterSection<SN> {
@@ -36,6 +37,69 @@ export class SetterTable<
       feId,
     });
   }
+  addRowFromSource(feInfo: FeInfoByType<"hasRowIndex">) {
+    const source = this.get.getterSection(feInfo);
+    const row = this.setter.addAndGetChild("tableRow", {
+      dbVarbs: { title: source.value("title", "string") },
+    });
+
+    const columns = this.get.children("column");
+    for (const col of columns) {
+      const { varbInfoValues } = col.varbs;
+      const { sectionName, varbName } = varbInfoValues;
+      const values = sectionName;
+      // if the varbInfoValues have an indexName as a sectionName
+      // (for the server-side)
+      // replace that with the sectionName of the source
+      row.addChild("cell", {
+        dbVarbs: {
+          ...varbInfo,
+          value, // why is the value a numObj? or Not Found
+        },
+      });
+    }
+
+    // a couple of options:
+    // 1. do the conversion from the source—make the source
+    // able to do that, and add get to it for the rest.
+    // 2. convert column values on the client and server side
+
+    // for column of columns, row.add
+  }
+  private getVarbFinder(
+    varbInfo: InEntityVarbInfo
+  ): FeVarbInfo<SectionName<"hasRowIndex">> | InEntityVarbInfo {
+    // so. if the varbInfo has an indexName
+    // it should instead use the present source
+    // as the index won't exist.
+    // but on the serverside it will use the index.
+    if (varbInfo.sectionName === this.indexName) {
+      return InfoS.feVarb(varbInfo.varbName, this.sectionFeInfo);
+    } else return varbInfo;
+  }
+
+  private initRowCells() {
+    let next = this.nextSections;
+    const columns = next.childSections(this.indexTableName, "column");
+    for (const column of columns) {
+      const varbInfo = column.varbInfoValues();
+      const varbFinder = this.getVarbFinder(varbInfo);
+      const varb = next.findVarb(varbFinder);
+      const value = varb ? varb.value("numObj") : "Not Found";
+      next = next.addSectionsAndSolveNext([
+        {
+          sectionName: "cell",
+          parentInfo: next.section(this.rowDbInfo).feInfo,
+          dbVarbs: {
+            ...varbInfo,
+            value,
+          },
+        },
+      ]);
+    }
+    this.nextSections = next;
+  }
+
   addColumn(entityInfo: InEntityVarbInfo): void {
     this.setter.addChild("column", {
       dbVarbs: entityInfo as any as DbVarbs,

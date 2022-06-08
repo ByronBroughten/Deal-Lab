@@ -2,7 +2,7 @@ import { Response } from "express";
 import {
   SectionPackDbRaw,
   StoredSectionPackInfo,
-} from "../../../client/src/App/sharedWithServer/Analyzer/SectionPackRaw";
+} from "../../../client/src/App/sharedWithServer/SectionPack/SectionPackRaw";
 import { SavableSectionName } from "../../../client/src/App/sharedWithServer/SectionsMeta/relNameArrs/storeArrs";
 import { getUserById } from "./getUserById";
 

@@ -43,14 +43,15 @@ function useUpdateValueFromEditor({
   editorState,
   setterVarb,
 }: UseUpdateValueFromEditorProps) {
+  const contentState = editorState.getCurrentContent();
   const isFirstUpdateRef = React.useRef(true);
   useEffect(() => {
     if (isFirstUpdateRef.current) {
       isFirstUpdateRef.current = false;
       return;
     }
-    setterVarb.updateValueFromEditor(editorState);
-  }, [editorState.getCurrentContent()]);
+    setterVarb.updateValueFromEditor(contentState);
+  }, [contentState]);
 }
 
 interface ManualUpdateIfTriggeredProps extends CreateEditorProps {
@@ -70,3 +71,20 @@ function useManualUpdateIfTriggered({
     }
   }, [setterVarb.manualUpdateEditorToggle]);
 }
+
+// function useManualUpdateIfTriggered({
+//   setterVarb,
+//   setEditorState,
+//   ...rest
+// }: ManualUpdateIfTriggeredProps): void {
+//   const { manualUpdateEditorToggle } = setterVarb;
+//   const editorToggleRef = React.useRef(setterVarb.manualUpdateEditorToggle);
+//   useEffect(() => {
+//     if (
+//       ![undefined, editorToggleRef.current].includes(manualUpdateEditorToggle)
+//     ) {
+//       setEditorState(setterVarb.createEditor(rest));
+//       editorToggleRef.current = manualUpdateEditorToggle;
+//     }
+//   }, [manualUpdateEditorToggle, editorToggleRef, setterVarb, setEditorState]);
+// }

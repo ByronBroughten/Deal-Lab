@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
 import { SectionPack } from "../../../client/src/App/sharedWithServer/Analyzer/SectionPack";
-import { ServerSectionPack } from "../../../client/src/App/sharedWithServer/Analyzer/SectionPackRaw";
 import {
   SectionPackArrReq,
   SectionPackReq,
 } from "../../../client/src/App/sharedWithServer/apiQueriesShared/makeGeneralReqs";
+import { ServerSectionPack } from "../../../client/src/App/sharedWithServer/SectionPack/SectionPackRaw";
 import { SavableSectionName } from "../../../client/src/App/sharedWithServer/SectionsMeta/relNameArrs/storeArrs";
 import { resHandledError } from "../../../middleware/error";
 import { validateDbStoreName } from "./validateDbSectionInfoReq";

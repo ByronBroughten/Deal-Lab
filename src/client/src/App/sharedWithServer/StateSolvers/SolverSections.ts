@@ -5,6 +5,7 @@ import { SectionName } from "../SectionsMeta/SectionName";
 import { GetterSections } from "../StateGetters/GetterSections";
 import { GetterVarb } from "../StateGetters/GetterVarb";
 import { Arr } from "../utils/Arr";
+import { OutVarbGetterVarb } from "./../StateInOutVarbs/OutVarbGetterVarb";
 import { SolverSectionsBase } from "./SolverBases/SolverSectionsBase";
 import { SolverVarb } from "./SolverVarb";
 
@@ -66,7 +67,8 @@ export class SolverSections extends SolverSectionsBase {
       const nextVarbsToSolveFor = [] as string[];
       for (const varbId of [...varbIdsToSolveFor]) {
         if (varbId in outVarbMap) continue;
-        const { outVarbIds } = this.solverVarbById(varbId);
+
+        const { outVarbIds } = this.outVarbGetterById(varbId);
         // outVarbIds.forEach((id) => {
         //   if (outVarbMap[id].has(varbId)) return;
         //   outVarbMap[varbId].add(id);
@@ -77,6 +79,13 @@ export class SolverSections extends SolverSectionsBase {
       varbIdsToSolveFor = nextVarbsToSolveFor;
     }
     return outVarbMap;
+  }
+  outVarbGetterById(varbId: string): OutVarbGetterVarb {
+    const feVarbInfo = GetterVarb.varbIdToVarbInfo(varbId);
+    return new OutVarbGetterVarb({
+      ...this.solverSectionsProps,
+      ...feVarbInfo,
+    });
   }
   solverVarbById(varbId: string): SolverVarb {
     const feVarbInfo = GetterVarb.varbIdToVarbInfo(varbId);

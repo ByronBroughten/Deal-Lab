@@ -1,11 +1,14 @@
 import urljoin from "url-join";
 import { config } from "../Constants";
+import { makeResValidationQueryError } from "../modules/useQueryActions/apiQueriesClient/validateRes";
 import Analyzer from "./Analyzer";
 import { FeSectionPack } from "./Analyzer/FeSectionPack";
 import {
   ApiQueryName,
   NextReq,
+  NextRes,
 } from "./apiQueriesShared/apiQueriesSharedTypes";
+import { isLoginHeaders, isLoginUserNext } from "./apiQueriesShared/login";
 import {
   makeDbIdSectionPackReq,
   makeRawSectionPackArrReq,
@@ -50,6 +53,17 @@ function makeApiQueriesShared() {
 
 type ApiQueriesShared = {
   [QN in ApiQueryName]: ApiQueryShared<QN>;
+};
+
+export const resValidators = {
+  nextRegister: (res: any): NextRes<"nextRegister"> => {
+    if (res && isLoginUserNext(res.data) && isLoginHeaders(res.headers)) {
+      return {
+        data: res.data,
+        headers: res.headers,
+      };
+    } else throw makeResValidationQueryError();
+  },
 };
 
 export class ReqMaker {

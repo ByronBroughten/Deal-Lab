@@ -3,7 +3,7 @@ import { omit, pick } from "lodash";
 import getNewRawContent, {
   numObjToRawContent,
   textToRawContent,
-} from "../../../modules/draftjs/rawEditorContent";
+} from "../../../modules/draftjs/draftUtils";
 import StateVarb from "../../../sharedWithServer/Analyzer/StateSection/StateVarb";
 import {
   EntityMapData,

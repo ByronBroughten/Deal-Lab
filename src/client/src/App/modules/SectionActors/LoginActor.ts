@@ -5,6 +5,7 @@ import {
   SetterSectionBase,
   SetterSectionProps,
 } from "../../sharedWithServer/StateSetters/SetterBases/SetterSectionBase";
+import { SetterVarb } from "../../sharedWithServer/StateSetters/SetterVarb";
 import { StrictOmit } from "../../sharedWithServer/utils/types";
 import { apiQueries } from "../useQueryActions/apiQueriesClient";
 import { LoginSetter } from "./shared/LoginSetter";
@@ -17,6 +18,12 @@ export class LoginActor extends SetterSectionBase<"login"> {
     super({
       ...props,
       sectionName: "login",
+    });
+  }
+  varb(varbName: string): SetterVarb<"login"> {
+    return new SetterVarb({
+      ...this.setterSectionProps,
+      varbName,
     });
   }
   varbs = new GetterVarbs(this.setterSectionProps);

@@ -8,9 +8,14 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
+// putting setterVarb in dependency arrays messes things up,
+// cause right now I make a new setterVarb every time the state changes.
+
 // You're making this to use and to show off your programming abilities.
 
-// - fix login and register
+// should I "fix" the various things, and then run their tests?
+
+// - fix login and register, and try them out.
 // - fix the mainSection menu
 // - fix the table and table rows
 

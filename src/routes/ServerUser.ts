@@ -1,10 +1,10 @@
 import { SectionPack } from "../client/src/App/sharedWithServer/Analyzer/SectionPack";
+import { LoginUser } from "../client/src/App/sharedWithServer/apiQueriesShared/login";
+import { DbVarbs } from "../client/src/App/sharedWithServer/SectionPack/RawSection";
 import {
   SectionPackDbRaw,
   SectionPackRaw,
-} from "../client/src/App/sharedWithServer/Analyzer/SectionPackRaw";
-import { DbVarbs } from "../client/src/App/sharedWithServer/Analyzer/SectionPackRaw/RawSection";
-import { LoginUser } from "../client/src/App/sharedWithServer/apiQueriesShared/login";
+} from "../client/src/App/sharedWithServer/SectionPack/SectionPackRaw";
 import { SavableSectionName } from "../client/src/App/sharedWithServer/SectionsMeta/relNameArrs/storeArrs";
 import {
   SectionName,

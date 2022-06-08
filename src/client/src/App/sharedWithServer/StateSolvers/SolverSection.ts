@@ -99,7 +99,7 @@ export class SolverSection<
     const child = this.solverSection(feInfo);
     child.removeSelfAndSolve();
   }
-  resetSelfAndSolve(): void {
+  replaceWithDefaultAndSolve(): void {
     const { feId, idx, sectionName } = this.get;
     const { parent } = this;
     this.remover.removeSelfAndExtractVarbIds();

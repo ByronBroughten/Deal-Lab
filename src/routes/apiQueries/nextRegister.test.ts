@@ -1,7 +1,10 @@
 import { Server } from "http";
 import request from "supertest";
 import Analyzer from "../../client/src/App/sharedWithServer/Analyzer";
-import { apiQueriesShared } from "../../client/src/App/sharedWithServer/apiQueriesShared";
+import {
+  apiQueriesShared,
+  resValidators,
+} from "../../client/src/App/sharedWithServer/apiQueriesShared";
 import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import { runApp } from "../../runApp";
 import { UserModel } from "../UserModel";
@@ -34,8 +37,10 @@ describe(testedRoute, () => {
     server.close();
   });
 
-  const exec = async () =>
-    await request(server).post(testedRoute).send(reqObj.body);
+  const exec = async () => {
+    const res = await request(server).post(testedRoute).send(reqObj.body);
+    return res;
+  };
 
   async function testStatus(statusNumber: number) {
     const res = await exec();
@@ -43,7 +48,10 @@ describe(testedRoute, () => {
     return res;
   }
   it("should return status 200 and create a user if happy path", async () => {
-    await testStatus(200);
+    const res = await testStatus(200);
+    (res as any).data = JSON.parse(res.text);
+    expect(() => resValidators.nextRegister(res)).not.toThrow();
+
     const userDoc = await UserModel.findById(testRegisterId);
     expect(userDoc).toBeTruthy();
   });

@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
+import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import {
   SectionPackDbRaw,
   ServerSectionPack,
-} from "../../client/src/App/sharedWithServer/Analyzer/SectionPackRaw";
-import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
+} from "../../client/src/App/sharedWithServer/SectionPack/SectionPackRaw";
 import authWare from "../../middleware/authWare";
 import { ResHandledError } from "../../middleware/error";
 import { SectionPackDb } from "../SectionPackDb";

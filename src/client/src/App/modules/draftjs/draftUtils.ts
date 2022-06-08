@@ -1,4 +1,9 @@
-import { convertToRaw, EditorState, RawDraftContentState } from "draft-js";
+import {
+  ContentState,
+  convertToRaw,
+  EditorState,
+  RawDraftContentState,
+} from "draft-js";
 import { NumObj } from "../../sharedWithServer/SectionsMeta/baseSections/baseValues/NumObj";
 import { RawEditorState } from "../../utils/DraftS";
 
@@ -9,7 +14,7 @@ export default function getNewRawContent() {
   return rawContent;
 }
 
-export const getRawEditorState = (editorState: EditorState) => {
+export const getRawContentFromEditorState = (editorState: EditorState) => {
   const content = editorState.getCurrentContent();
   return convertToRaw(content) as any as RawEditorState;
 };
@@ -30,7 +35,14 @@ export const textFromRaw = (rawContent: any) => {
 };
 export const draftUtils = {
   editorStateToText,
-  getRawEditorState,
+  getRawContentFromEditorState,
+  contentStateToRaw(contentState: ContentState): RawDraftContentState {
+    return convertToRaw(contentState);
+  },
+  contentStateToText(contentState: ContentState): string {
+    const raw = convertToRaw(contentState);
+    return textFromRaw(raw);
+  },
 };
 
 export function editorStateToText(editorState: EditorState) {

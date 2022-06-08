@@ -14,7 +14,7 @@ import { GetterSections } from "../StateGetters/GetterSections";
 import { GetterVarb } from "../StateGetters/GetterVarb";
 
 export class OutVarbGetterVarb<
-  SN extends SectionName<"hasVarb">
+  SN extends SectionName<"hasVarb"> = SectionName<"hasVarb">
 > extends GetterVarbBase<SN> {
   private outVarbInfoStore: VarbInfo[];
   constructor(props: GetterVarbProps<SN>) {

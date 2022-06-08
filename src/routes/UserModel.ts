@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
-import { SectionPackDbRaw } from "../client/src/App/sharedWithServer/Analyzer/SectionPackRaw";
-import { RawSection } from "../client/src/App/sharedWithServer/Analyzer/SectionPackRaw/RawSection";
+import { RawSection } from "../client/src/App/sharedWithServer/SectionPack/RawSection";
+import { SectionPackDbRaw } from "../client/src/App/sharedWithServer/SectionPack/SectionPackRaw";
 import { SelfOrDescendantName } from "../client/src/App/sharedWithServer/SectionsMeta/relSectionTypes/ChildTypes";
 import { monSchemas } from "../client/src/App/sharedWithServer/utils/mongoose";
 import { ServerSectionName, serverSectionS } from "./ServerSectionName";

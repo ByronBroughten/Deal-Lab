@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { ServerSectionPack } from "../../client/src/App/sharedWithServer/Analyzer/SectionPackRaw";
+import { ServerSectionPack } from "../../client/src/App/sharedWithServer/SectionPack/SectionPackRaw";
 import { SavableSectionName } from "../../client/src/App/sharedWithServer/SectionsMeta/relNameArrs/storeArrs";
 import authWare from "../../middleware/authWare";
 import { SectionPackDb } from "../SectionPackDb";

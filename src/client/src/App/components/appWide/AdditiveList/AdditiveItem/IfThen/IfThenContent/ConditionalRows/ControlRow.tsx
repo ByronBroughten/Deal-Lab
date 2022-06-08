@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import TicBtn from "./ControlRow/TicBtn";
 import { useAnalyzerContext } from "../../../../../../../modules/usePropertyAnalyzer";
 import theme from "../../../../../../../theme/Theme";
+import TicBtn from "./ControlRow/TicBtn";
 
 const sectionName = "conditionalRow";
 export default function ControlRow({ id, idx }: { id: string; idx: number }) {
@@ -24,7 +24,7 @@ export default function ControlRow({ id, idx }: { id: string; idx: number }) {
         setHeight(newHeight);
       }
     }
-  });
+  }, [ccRef.current, idx, height]);
 
   return (
     <StyledBox

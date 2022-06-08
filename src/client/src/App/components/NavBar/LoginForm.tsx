@@ -10,16 +10,14 @@ import SmallFormTextField from "../general/SmallFormTextField";
 export function LoginForm() {
   const loginVarbNames: (keyof LoginFormData)[] = ["email", "password"];
   const loginActor = useLoginActor();
-  const { varbs } = loginActor;
   return (
     <StyledLoginForm>
       {loginVarbNames.map((varbName) => (
         <SmallFormTextField
           {...{
             key: varbName,
-            ...varbs.one(varbName).inputProps("string"),
+            ...loginActor.varb(varbName).inputProps("string"),
             ...(varbName === "password" && { type: "password" }),
-            onChange: handleChange,
           }}
         />
       ))}

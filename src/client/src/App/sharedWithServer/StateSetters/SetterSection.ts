@@ -4,6 +4,7 @@ import { SwitchEndingKey } from "../SectionsMeta/baseSections/switchNames";
 import { FeSectionInfo, VarbInfo } from "../SectionsMeta/Info";
 import { ChildName } from "../SectionsMeta/relSectionTypes/ChildTypes";
 import { ParentNameSafe } from "../SectionsMeta/relSectionTypes/ParentTypes";
+import { SectionMeta } from "../SectionsMeta/SectionMeta";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { GetterSection } from "../StateGetters/GetterSection";
 import { GetterSections } from "../StateGetters/GetterSections";
@@ -22,6 +23,9 @@ export class SetterSection<
   private solver = SolverSection.init(
     this.getterSectionBase.getterSectionProps
   );
+  get meta(): SectionMeta<"fe", SN> {
+    return this.get.meta;
+  }
   childFeIds(childName: ChildName<SN>): string[] {
     return this.get.childFeIds(childName);
   }
@@ -47,6 +51,22 @@ export class SetterSection<
     this.solver.addChildAndSolve(childName, options);
     this.setSections();
   }
+  addAndGetChild<CN extends ChildName<SN>>(
+    childName: CN,
+    options?: AddChildOptions<CN>
+  ): SetterSection<CN> {
+    this.addChild(childName, options);
+    const { feInfo } = this.get.youngestChild(childName);
+    return this.setterSection(feInfo);
+  }
+  setterSection<S extends SectionName>(
+    feInfo: FeSectionInfo<S>
+  ): SetterSection<S> {
+    return new SetterSection({
+      ...this.setterSectionsProps,
+      ...feInfo,
+    });
+  }
   removeChild<CN extends ChildName<SN>>(feInfo: FeSectionInfo<CN>): void {
     this.solver.removeChildAndSolve(feInfo);
     this.setSections();
@@ -59,8 +79,8 @@ export class SetterSection<
     this.solver.removeSelfAndSolve();
     this.setSections();
   }
-  resetSelf(): void {
-    this.solver.resetSelfAndSolve();
+  replaceWithDefault(): void {
+    this.solver.replaceWithDefaultAndSolve();
     this.setSections();
   }
   varb(varbName: string): SetterVarb<SN> {

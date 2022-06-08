@@ -45,7 +45,7 @@ export function MainSectionTitleRow({
               <BtnTooltip title="New">
                 <IconBtn
                   className="MainSectionTitleRow-flexUnit"
-                  onClick={async () => section.resetSelf()}
+                  onClick={async () => section.replaceWithDefault()}
                 >
                   <BiReset />
                 </IconBtn>
