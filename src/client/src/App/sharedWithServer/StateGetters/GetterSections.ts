@@ -1,3 +1,4 @@
+import { DbSectionInfo } from "../SectionPack/DbSectionInfo";
 import { sectionMetas, SectionsMeta } from "../SectionsMeta";
 import { SimpleSectionName } from "../SectionsMeta/baseSections";
 import { FeSectionInfo, VarbInfo } from "../SectionsMeta/Info";
@@ -68,6 +69,12 @@ export class GetterSections extends GetterSectionsBase {
   }: SpecificSectionInfo<SN>): GetterSection<SN> {
     return this.list(sectionName).getSpecific(idInfo);
   }
+  sectionByDbInfo<SN extends SimpleSectionName>({
+    sectionName,
+    dbId,
+  }: DbSectionInfo<SN>): GetterSection<SN> {
+    return this.list(sectionName).getByDbId(dbId);
+  }
   varbsByMixed<SN extends SectionName>(
     mixedSectionInfo: SpecificSectionInfo<SN>
   ): GetterVarbs<SN> {
@@ -79,10 +86,22 @@ export class GetterSections extends GetterSectionsBase {
   }: SpecificVarbInfo<SN>): GetterVarb<SN> {
     return this.varbsByMixed(info).one(varbName);
   }
+  numObjOrNotFoundByMixed<SN extends SectionName>(info: SpecificVarbInfo<SN>) {
+    if (this.hasSectionMixed(info)) {
+      return this.varbByMixed(info).value("numObj");
+    } else return "Not Found";
+  }
   hasSection({ sectionName, feId }: FeSectionInfo): boolean {
     return this.list(sectionName).hasByFeId(feId);
   }
-  hasSectionMixed({ sectionName, ...idInfo }: SpecificSectionInfo) {
+  hasSectionByDbInfo({ sectionName, dbId }: DbSectionInfo): boolean {
+    return this.hasSectionMixed({
+      sectionName,
+      id: dbId,
+      idType: "dbId",
+    } as SpecificSectionInfo);
+  }
+  hasSectionMixed({ sectionName, ...idInfo }: SpecificSectionInfo): boolean {
     return this.list(sectionName).hasByMixed(idInfo);
   }
 }

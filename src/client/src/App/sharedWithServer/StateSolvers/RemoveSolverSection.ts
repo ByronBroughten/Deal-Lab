@@ -73,15 +73,22 @@ export class RemoveSolverSection<
     this.extractVarbIdsToSolveFor();
   }
   private removeChildrenGroups(childNames: ChildName<SN>[]): void {
-    for (const sectionName of childNames) {
-      const childIds = this.get.childFeIds(sectionName);
-      for (const feId of childIds) {
-        const child = this.removeSolverSection({
-          sectionName,
-          feId,
-        });
-        child.removeSelf();
-      }
+    for (const childName of childNames) {
+      this.removeChildren(childName);
+    }
+  }
+  removeChildrenAndExtractVarbIds(childName: ChildName<SN>): void {
+    this.removeChildren(childName);
+    this.extractVarbIdsToSolveFor();
+  }
+  private removeChildren(sectionName: ChildName<SN>): void {
+    const childIds = this.get.childFeIds(sectionName);
+    for (const feId of childIds) {
+      const child = this.removeSolverSection({
+        sectionName,
+        feId,
+      });
+      child.removeSelf();
     }
   }
   extractVarbIdsToSolveFor() {

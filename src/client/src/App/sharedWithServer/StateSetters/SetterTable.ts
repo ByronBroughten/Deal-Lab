@@ -1,13 +1,14 @@
 import { isEqual } from "lodash";
+import { SectionNotFoundError } from "../../utils/error";
 import { DbVarbs } from "../SectionPack/RawSection";
 import { InEntityVarbInfo } from "../SectionsMeta/baseSections/baseValues/entities";
-import { FeInfoByType } from "../SectionsMeta/Info";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { GetterSection } from "../StateGetters/GetterSection";
 import { UpdaterSection } from "../StateUpdaters/UpdaterSection";
 import { Str } from "../utils/Str";
 import { SetterSectionBase } from "./SetterBases/SetterSectionBase";
 import { SetterSection } from "./SetterSection";
+import { SetterTableRow } from "./SetterTableRow";
 
 export class SetterTable<
   SN extends SectionName<"tableName"> = SectionName<"tableName">
@@ -31,75 +32,39 @@ export class SetterTable<
       feId,
     });
   }
-  row(feId: string): GetterSection<"tableRow"> {
-    return this.get.child({
-      sectionName: "tableRow",
+  row(feId: string): SetterTableRow {
+    return new SetterTableRow({
+      ...this.setterSectionsProps,
       feId,
     });
   }
-  addRowFromSource(feInfo: FeInfoByType<"hasRowIndex">) {
-    const source = this.get.getterSection(feInfo);
-    const row = this.setter.addAndGetChild("tableRow", {
-      dbVarbs: { title: source.value("title", "string") },
+  hasRowByDbId(dbId: string): boolean {
+    try {
+      this.rowByDbId(dbId);
+      return true;
+    } catch (err) {
+      if (err instanceof SectionNotFoundError) return false;
+      else throw err;
+    }
+  }
+  rowByDbId(dbId: string): SetterTableRow {
+    const { feId } = this.get.sections.sectionByDbInfo({
+      dbId,
+      sectionName: "tableRow",
     });
-
-    const columns = this.get.children("column");
-    for (const col of columns) {
-      const { varbInfoValues } = col.varbs;
-      const { sectionName, varbName } = varbInfoValues;
-      const values = sectionName;
-      // if the varbInfoValues have an indexName as a sectionName
-      // (for the server-side)
-      // replace that with the sectionName of the source
-      row.addChild("cell", {
-        dbVarbs: {
-          ...varbInfo,
-          value, // why is the value a numObj? or Not Found
-        },
-      });
-    }
-
-    // a couple of options:
-    // 1. do the conversion from the source—make the source
-    // able to do that, and add get to it for the rest.
-    // 2. convert column values on the client and server side
-
-    // for column of columns, row.add
+    return this.row(feId);
   }
-  private getVarbFinder(
-    varbInfo: InEntityVarbInfo
-  ): FeVarbInfo<SectionName<"hasRowIndex">> | InEntityVarbInfo {
-    // so. if the varbInfo has an indexName
-    // it should instead use the present source
-    // as the index won't exist.
-    // but on the serverside it will use the index.
-    if (varbInfo.sectionName === this.indexName) {
-      return InfoS.feVarb(varbInfo.varbName, this.sectionFeInfo);
-    } else return varbInfo;
+  get columns(): GetterSection<"column">[] {
+    return this.get.children("column");
   }
-
-  private initRowCells() {
-    let next = this.nextSections;
-    const columns = next.childSections(this.indexTableName, "column");
-    for (const column of columns) {
-      const varbInfo = column.varbInfoValues();
-      const varbFinder = this.getVarbFinder(varbInfo);
-      const varb = next.findVarb(varbFinder);
-      const value = varb ? varb.value("numObj") : "Not Found";
-      next = next.addSectionsAndSolveNext([
-        {
-          sectionName: "cell",
-          parentInfo: next.section(this.rowDbInfo).feInfo,
-          dbVarbs: {
-            ...varbInfo,
-            value,
-          },
-        },
-      ]);
-    }
-    this.nextSections = next;
+  addRow({ title, dbId }: { title: string; dbId: string }): void {
+    this.setter.addChild("tableRow", {
+      dbId,
+      dbVarbs: {
+        title,
+      },
+    });
   }
-
   addColumn(entityInfo: InEntityVarbInfo): void {
     this.setter.addChild("column", {
       dbVarbs: entityInfo as any as DbVarbs,
@@ -159,7 +124,7 @@ export class SetterTable<
   }
   private cellValueByColumn({ rowId, columnId }: RowColumnIds): string {
     const column = this.column(columnId);
-    const cells = this.row(rowId).children("cell");
+    const cells = this.row(rowId).get.children("cell");
     const colInfoValues = column.varbs.varbInfoValues;
     const cell = cells.find((cell) => {
       const cellInfoValues = cell.varbs.varbInfoValues;

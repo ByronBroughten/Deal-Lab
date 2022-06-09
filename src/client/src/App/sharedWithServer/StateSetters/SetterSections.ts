@@ -1,6 +1,7 @@
 import { VariableOption } from "../Analyzer/methods/get/variableOptions";
 import { StateValue } from "../Analyzer/StateSection/StateVarb/stateValue";
 import { isStateValue } from "../FeSections/FeSection/FeVarb/feValue";
+import { DbSectionInfo } from "../SectionPack/DbSectionInfo";
 import { FeSectionInfo, VarbInfo } from "../SectionsMeta/Info";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { VariableGetterSections } from "../StateEntityGetters/VariableGetterSections";
@@ -26,6 +27,11 @@ export class SetterSections extends SetterSectionsBase {
       ...this.setterSectionsProps,
       ...feInfo,
     });
+  }
+  sectionByDbInfo<SN extends SectionName>(
+    dbInfo: DbSectionInfo<SN>
+  ): SetterSection<SN> {
+    return this.section(this.get.sectionByDbInfo(dbInfo).feInfo);
   }
   varb<SN extends SectionName>(varbInfo: VarbInfo<SN>): SetterVarb<SN> {
     return new SetterVarb({

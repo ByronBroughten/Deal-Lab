@@ -15,4 +15,7 @@ export class GetterSectionsBase {
       sectionsShare: this.sectionsShare,
     };
   }
+  updateSections(sections: StateSections) {
+    this.sectionsShare.sections = sections;
+  }
 }

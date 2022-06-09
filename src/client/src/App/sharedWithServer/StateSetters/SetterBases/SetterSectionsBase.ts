@@ -8,6 +8,10 @@ import { StateSections } from "../../StateSections/StateSectionsNext";
 export interface SetterSectionsProps extends GetterSectionsProps {
   setSections: SetSections;
 }
+interface SectionsAndSetSections {
+  sections: StateSections;
+  setSections: SetSections;
+}
 export class SetterSectionsBase {
   readonly getterSectionsBase: GetterSectionsBase;
   private setSectionsProp: SetSections;
@@ -15,6 +19,10 @@ export class SetterSectionsBase {
   constructor({ setSections, ...rest }: SetterSectionsProps) {
     this.initialSections = rest.sectionsShare.sections;
     this.getterSectionsBase = new GetterSectionsBase(rest);
+    this.setSectionsProp = setSections;
+  }
+  updateSetterProps({ sections, setSections }: SectionsAndSetSections) {
+    this.getterSectionsBase.updateSections(sections);
     this.setSectionsProp = setSections;
   }
   setSections(): void {

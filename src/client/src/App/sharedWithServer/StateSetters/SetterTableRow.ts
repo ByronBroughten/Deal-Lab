@@ -1,0 +1,33 @@
+import { FeCellValueInfo } from "../StateGetters/GetterMainSection";
+import { StrictOmit } from "../utils/types";
+import {
+  SetterSectionBase,
+  SetterSectionProps,
+} from "./SetterBases/SetterSectionBase";
+import { SetterSection } from "./SetterSection";
+
+interface SetterTableRowProps
+  extends StrictOmit<SetterSectionProps<"tableRow">, "sectionName"> {}
+
+export class SetterTableRow extends SetterSectionBase<"tableRow"> {
+  constructor(props: SetterTableRowProps) {
+    super({
+      ...props,
+      sectionName: "tableRow",
+    });
+  }
+  private setter = new SetterSection(this.setterSectionProps);
+  get = this.setter.get;
+  clearCells(): void {
+    this.setter.removeChildren("cell");
+  }
+  addCell(cellValueInfo: FeCellValueInfo): void {
+    const value = this.get.sections.numObjOrNotFoundByMixed(cellValueInfo);
+    this.setter.addChild("cell", {
+      dbVarbs: {
+        ...cellValueInfo,
+        value,
+      },
+    });
+  }
+}

@@ -1,13 +1,32 @@
 import { sectionMetas } from "../../sharedWithServer/SectionsMeta";
 import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
+import { GetterMainSection } from "../../sharedWithServer/StateGetters/GetterMainSection";
 import { GetterSections } from "../../sharedWithServer/StateGetters/GetterSections";
 import { SetterSectionBase } from "../../sharedWithServer/StateSetters/SetterBases/SetterSectionBase";
 import { SetterSection } from "../../sharedWithServer/StateSetters/SetterSection";
 import { SetterTable } from "../../sharedWithServer/StateSetters/SetterTable";
+import { IndexListQuerier } from "../QueriersRelative/IndexListQuerier";
+import { IndexSectionQuerier } from "../QueriersRelative/IndexSectionQuerier";
 
-class MainSectionActor<
+export class MainSectionActor<
   SN extends SectionName<"hasRowIndex">
 > extends SetterSectionBase<SN> {
+  get indexSectionQuerier() {
+    return new IndexSectionQuerier({
+      ...this.setterSectionProps,
+      indexName: this.indexName,
+    });
+  }
+  get = new GetterMainSection(this.setterSectionProps);
+  get indexListQuerier() {
+    return new IndexListQuerier({
+      ...this.setterSectionProps,
+      indexName: this.indexName,
+    });
+  }
+  get isSaved(): boolean {
+    return this.table.hasRowByDbId(this.dbId);
+  }
   get setter(): SetterSection<SN> {
     return new SetterSection(this.setterSectionProps);
   }
@@ -20,77 +39,61 @@ class MainSectionActor<
   private get indexTableName(): SectionName<"tableName"> {
     return sectionMetas.section(this.indexName).get("indexTableName");
   }
+  get dbId(): string {
+    return this.get.dbId;
+  }
   private get table(): SetterTable {
     const { main } = this.getterSections;
     return new SetterTable({
       ...this.setterSectionsProps,
       ...main.onlyChild(this.indexTableName).feInfo,
     });
-
-    this.nextSections = next.addSectionAndSolve(
-      "tableRow",
-      this.indexTableName
-    );
   }
-  replaceWithDefault() {
+  removeSelf(): void {
+    this.setter.removeSelf();
+  }
+  replaceWithDefault(): void {
     this.setter.replaceWithDefault();
   }
-  async saveNew() {}
-  async saveUpdates() {}
-  async add(): Promise<string> {
-    this.addToFeRowIndexStore();
-    return this.tryAndRevertIfFail(async () =>
-      this.indexQuerier.add(this.feId)
+  resetToDefault(): void {
+    this.setter.resetToDefault();
+  }
+  async saveNew(): Promise<void> {
+    this.addRow();
+    this.setter.tryAndRevertIfFail(() =>
+      this.indexSectionQuerier.saveNewToIndex()
     );
   }
-  private addToFeRowIndexStore() {
-    const feInfo = this.sectionFeInfo;
-    let next = this.sections.resetSectionAndChildDbIds(feInfo);
-    this.nextSections = next.addSectionAndSolve(
-      "tableRow",
-      this.indexTableName
+  async saveUpdates(): Promise<void> {
+    this.updateRow();
+    this.setter.tryAndRevertIfFail(() =>
+      this.indexSectionQuerier.updateIndex()
     );
-    this.initRowCells();
-    this.setNextSectionsAsState();
   }
-  private initRowCells() {
-    let next = this.nextSections;
-    const columns = next.childSections(this.indexTableName, "column");
-    for (const column of columns) {
-      const varbInfo = column.varbInfoValues();
-      const varbFinder = this.getVarbFinder(varbInfo);
-      const varb = next.findVarb(varbFinder);
-      const value = varb ? varb.value("numObj") : "Not Found";
-      next = next.addSectionsAndSolveNext([
-        {
-          sectionName: "cell",
-          parentInfo: next.section(this.rowDbInfo).feInfo,
-          dbVarbs: {
-            ...varbInfo,
-            value,
-          },
-        },
-      ]);
+  async loadFromIndex(dbId: string): Promise<void> {
+    const sectionPack = await this.indexListQuerier.retriveFromIndex(dbId);
+    this.setter.loadSelfSectionPack(sectionPack);
+  }
+  private updateRow(): void {
+    // for greater efficiency, most of this could be done at the solver
+    // section level to refrain from solving and setting the sections
+    // until the end.
+    const { table, dbId } = this;
+    const row = table.rowByDbId(dbId);
+    row.clearCells();
+    const { columns } = table;
+    for (const col of columns) {
+      const { varbInfoValues } = col.varbs;
+      const varbInfo = this.get.inEntityInfoToFeInfo(varbInfoValues);
+      row.addCell(varbInfo);
     }
-    this.nextSections = next;
   }
-  private getVarbFinder(
-    varbInfo: InEntityVarbInfo
-  ): FeVarbInfo<SectionName<"hasRowIndex">> | InEntityVarbInfo {
-    if (varbInfo.sectionName === this.indexName) {
-      return InfoS.feVarb(varbInfo.varbName, this.sectionFeInfo);
-    } else return varbInfo;
-  }
-
-  async update(): Promise<string> {
-    this.updateFeRowIndexStore();
-    return this.tryAndRevertIfFail(async () =>
-      this.indexQuerier.update(this.feId)
-    );
-  }
-  private updateFeRowIndexStore() {
-    this.nextSections = this.sections.eraseChildren(this.rowDbInfo, "cell");
-    this.initRowCells();
-    this.setNextSectionsAsState();
+  private addRow(): void {
+    const { table, dbId } = this;
+    table.addRow({
+      title: this.get.value("title", "string"),
+      dbId,
+    });
+    this.updateRow();
   }
 }

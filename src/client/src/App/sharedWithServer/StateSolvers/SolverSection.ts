@@ -1,6 +1,7 @@
 import { defaultMaker } from "../Analyzer/methods/internal/addSections/gatherSectionInitProps/defaultMaker";
 import { VarbValues } from "../Analyzer/StateSection/methods/varbs";
 import { SectionPackRaw } from "../SectionPack/SectionPackRaw";
+import { Id } from "../SectionsMeta/baseSections/id";
 import { FeSectionInfo } from "../SectionsMeta/Info";
 import { ChildName } from "../SectionsMeta/relSectionTypes/ChildTypes";
 import { ParentNameSafe } from "../SectionsMeta/relSectionTypes/ParentTypes";
@@ -93,18 +94,32 @@ export class SolverSection<
     this.remover.removeSelfAndExtractVarbIds();
     this.solve();
   }
+  removeChildrenAndSolve(childName: ChildName<SN>): void {
+    this.remover.removeChildrenAndExtractVarbIds(childName);
+    this.solve();
+  }
   removeChildAndSolve<CN extends ChildName<SN>>(
     feInfo: FeSectionInfo<CN>
   ): void {
     const child = this.solverSection(feInfo);
     child.removeSelfAndSolve();
   }
+  resetToDefaultAndSolve(): void {
+    this.resetToDefault();
+    this.solve();
+  }
   replaceWithDefaultAndSolve(): void {
-    const { feId, idx, sectionName } = this.get;
+    this.resetToDefault();
+    this.updater.updateProps({
+      dbId: Id.make(),
+    });
+    this.solve();
+  }
+  private resetToDefault(): void {
+    const { feId, idx, sectionName, dbId } = this.get;
     const { parent } = this;
     this.remover.removeSelfAndExtractVarbIds();
-    parent.addChild(sectionName as any, { feId, idx });
-    this.solve();
+    parent.addChild(sectionName as any, { feId, idx, dbId });
   }
   loadSelfSectionPackAndSolve(sectionPack: SectionPackRaw<SN>): void {
     this.loader.updateSelfWithSectionPack(sectionPack);

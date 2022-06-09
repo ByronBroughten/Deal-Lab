@@ -4,8 +4,6 @@ import { SetterSectionBase } from "../../sharedWithServer/StateSetters/SetterBas
 import { SetterSection } from "../../sharedWithServer/StateSetters/SetterSection";
 import { SectionQuerier } from "../QueriersBasic/SectionQuerier";
 
-export class SetterTableRow {}
-
 export class TableRowActor<
   SN extends SectionName<"rowIndexNext">
 > extends SetterSectionBase<SN> {

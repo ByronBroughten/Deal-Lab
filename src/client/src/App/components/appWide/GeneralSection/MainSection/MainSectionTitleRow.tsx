@@ -1,10 +1,11 @@
 import React from "react";
 import { BiReset } from "react-icons/bi";
+import { MdSystemUpdateAlt } from "react-icons/md";
 import styled from "styled-components";
 import useToggleView from "../../../../modules/customHooks/useToggleView";
+import { useMainSectionActor } from "../../../../modules/sectionActorHooks/useMainSectionActor";
 import { auth } from "../../../../modules/services/authService";
 import { FeInfoByType } from "../../../../sharedWithServer/SectionsMeta/Info";
-import { useSetterSection } from "../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import theme from "../../../../theme/Theme";
 import BtnTooltip from "../../BtnTooltip";
 import { IconBtn } from "../../IconBtn";
@@ -25,8 +26,7 @@ export function MainSectionTitleRow({
   xBtn = false,
   droptop = false,
 }: Props) {
-  const section = useSetterSection(feInfo);
-  // const { update, isIndexSaved } = useRowIndexSourceActions(feInfo);
+  const mainSection = useMainSectionActor(feInfo);
   const { btnMenuIsOpen, toggleBtnMenu } = useToggleView({
     initValue: false,
     viewWhat: "btnMenu",
@@ -45,22 +45,22 @@ export function MainSectionTitleRow({
               <BtnTooltip title="New">
                 <IconBtn
                   className="MainSectionTitleRow-flexUnit"
-                  onClick={async () => section.replaceWithDefault()}
+                  onClick={() => mainSection.replaceWithDefault()}
                 >
                   <BiReset />
                 </IconBtn>
               </BtnTooltip>
-              <MainSectionTitleSaveBtn feInfo={feInfo} />
-              {/* {isIndexSaved && (
+              <MainSectionTitleSaveBtn onClick={() => mainSection.saveNew()} />
+              {mainSection.isSaved && (
                 <BtnTooltip
                   title="Save updates"
                   className="MainSectionTitleRow-flexUnit"
                 >
-                  <IconBtn onClick={update}>
+                  <IconBtn onClick={() => mainSection.saveUpdates()}>
                     <MdSystemUpdateAlt />
                   </IconBtn>
                 </BtnTooltip>
-              )} */}
+              )}
               {/* <RowIndexSectionList
               This will be switched to some version of the IndexTable
                 {...{
@@ -75,7 +75,7 @@ export function MainSectionTitleRow({
           }
         </div>
       </div>
-      {xBtn && <XBtn onClick={() => section.removeSelf()} />}
+      {xBtn && <XBtn onClick={() => mainSection.removeSelf()} />}
     </MainEntryTitleRowStyled>
   );
 }
