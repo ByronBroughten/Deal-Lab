@@ -30,10 +30,10 @@ export class SolverVarb<
   SN extends SectionName<"hasVarb"> = SectionName<"hasVarb">
 > extends SolverVarbBase<SN> {
   private initialEntities: InEntity[];
-  private getterVarb = new GetterVarb(this.getterVarbBase.getterVarbProps);
+  private get = new GetterVarb(this.getterVarbBase.getterVarbProps);
   constructor(props: SolverVarbProps<SN>) {
     super(props);
-    this.initialEntities = [...this.getterVarb.inEntities];
+    this.initialEntities = [...this.get.inEntities];
   }
   outVarbGetter = new OutVarbGetterVarb(this.getterVarbBase.getterVarbProps);
   private getterSections = new GetterSections(
@@ -66,8 +66,10 @@ export class SolverVarb<
   }
   directUpdateAndSolve(value: StateValue): void {
     this.updaterVarb.updateValueDirectly(value);
+    this.addVarbIdsToSolveFor(this.get.varbId);
     this.updateConnectedVarbs();
   }
+
   loadValueFromVarb(varbInfo: InEntityVarbInfo) {
     const entityId = this.getterVarbs.one("entityId").value("string");
     const { varbInfoValues } = this.getterVarbs;
@@ -87,7 +89,7 @@ export class SolverVarb<
   updateConnectedVarbs(): void {
     this.updateConnectedEntities();
     this.solveOutVarbs();
-    this.initialEntities = [...this.getterVarb.inEntities];
+    this.initialEntities = [...this.get.inEntities];
   }
   private updateConnectedEntities() {
     this.removeObsoleteOutEntities();
@@ -117,7 +119,7 @@ export class SolverVarb<
   } {
     return {
       initialEntities: this.initialEntities,
-      nextEntities: this.getterVarb.inEntities,
+      nextEntities: this.get.inEntities,
     };
   }
   private get missingEntities(): InEntity[] {
@@ -134,12 +136,12 @@ export class SolverVarb<
   }
   private get newSelfOutEntity(): OutEntity {
     return {
-      ...this.getterVarb.feVarbInfoMixed,
+      ...this.get.feVarbInfoMixed,
       entityId: Id.make(),
     };
   }
   private removeOutEntity(entityId: string): void {
-    const nextOutEntities = this.getterVarb.outEntities.filter(
+    const nextOutEntities = this.get.outEntities.filter(
       (outEntity) => outEntity.entityId !== entityId
     );
     this.updaterVarb.update({
@@ -147,7 +149,7 @@ export class SolverVarb<
     });
   }
   private addOutEntity(outEntity: OutEntity): void {
-    const nextOutEntities = [...this.getterVarb.outEntities, outEntity];
+    const nextOutEntities = [...this.get.outEntities, outEntity];
     this.updaterVarb.update({
       outEntities: nextOutEntities,
     });
@@ -173,7 +175,7 @@ export class SolverVarb<
   }
   get inVarbInfos(): InVarbInfo[] {
     const relativeInfos = this.inRelToFeMixedInfos();
-    const { inEntities } = this.getterVarb;
+    const { inEntities } = this.get;
     return [...relativeInfos, ...inEntities];
   }
   private inRelToFeMixedInfos(): InVarbInfo[] {
@@ -183,14 +185,14 @@ export class SolverVarb<
     }, [] as InVarbInfo[]);
   }
   private get inRelativeInfos(): InRelVarbInfo[] {
-    return this.getterVarb.inUpdatePack.inUpdateInfos;
+    return this.get.inUpdatePack.inUpdateInfos;
   }
 
   private removeInEntity({
     entityId,
     ...inEntityVarbInfo
   }: InEntityVarbInfo & { entityId: string }): void {
-    const value = this.getterVarb.value("numObj");
+    const value = this.get.value("numObj");
     this.updaterVarb.update({
       value: value.removeEntity(entityId),
     });
@@ -200,7 +202,7 @@ export class SolverVarb<
     }
   }
   private addInEntity(inEntity: InEntity): void {
-    const value = this.getterVarb.value("numObj");
+    const value = this.get.value("numObj");
     this.updaterVarb.update({
       value: value.addEntity(inEntity),
     });

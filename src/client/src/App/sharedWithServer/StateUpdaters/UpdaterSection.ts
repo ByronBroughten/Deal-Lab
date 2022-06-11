@@ -104,7 +104,7 @@ export class UpdaterSection<
       };
     }
   }
-  updateValuesDirectlyAndSolve(values: VarbValues): void {
+  updateValuesDirectly(values: VarbValues): void {
     for (const varbName of Obj.keys(values)) {
       const varb = this.varb(varbName as string);
       varb.updateValueDirectly(values[varbName]);

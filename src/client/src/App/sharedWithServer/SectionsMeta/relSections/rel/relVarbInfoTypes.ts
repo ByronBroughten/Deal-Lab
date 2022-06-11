@@ -96,10 +96,11 @@ type VarbNameObj = {
   };
 };
 export type NextVarbNames = VarbNameObj[ContextName][SimpleSectionName];
-export type SimpleVarbNames = {
-  varbName: string;
-  sectionName: SimpleSectionName;
-};
+export type SimpleVarbNames<SN extends SimpleSectionName = SimpleSectionName> =
+  {
+    varbName: string;
+    sectionName: SN;
+  };
 
 export interface VarbNames<
   SN extends SimpleSectionName<SC>,

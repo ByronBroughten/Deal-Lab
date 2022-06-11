@@ -85,10 +85,14 @@ export class EditorUpdaterVarb<
   }
   private numObjFromContent(contentState: ContentState): NumObj {
     const textAndEntities = textAndEntitiesFromContentState(contentState);
-    const solvableText =
-      this.solvableTextFromEditorTextAndEntities(textAndEntities);
+    return this.numObjFromDbNumObj(textAndEntities);
+  }
+  private numObjFromDbNumObj(dbNumObj: DbNumObj): NumObj {
+    // this should probably be somewhere else, or numObj ought
+    // to be simplifid
+    const solvableText = this.solvableTextFromEditorTextAndEntities(dbNumObj);
     const number = this.solvableTextToNumber(solvableText);
-    return new NumObj(textAndEntities, { solvableText, number });
+    return new NumObj(dbNumObj, { solvableText, number });
   }
   private solvableTextFromEditorTextAndEntities({
     editorText,
@@ -108,7 +112,8 @@ export class EditorUpdaterVarb<
   }
   private getSolvableNumber(inEntity: InEntity): NumObjNumber {
     if (this.getterSections.hasSectionMixed(inEntity)) {
-      return this.getterVarb.value("numObj").number;
+      const varb = this.getterSections.varbByMixed(inEntity);
+      return varb.value("numObj").number;
     } else return "?";
   }
   private solvableTextToNumber(solvableText: string): NumObjNumber {

@@ -67,7 +67,6 @@ export class NumObj {
   get isDividable() {
     return !undividable.includes(this.number);
   }
-
   get editorText(): string {
     return this.core.editorText;
   }
@@ -79,6 +78,9 @@ export class NumObj {
   }
   get number(): NumObjNumber {
     return this.cache.number;
+  }
+  get numberOrZero(): number {
+    return typeof this.number === "number" ? this.number : 0;
   }
   get editorTextNumber(): string {
     return this.number === "?" ? "" : `${this.number}`;

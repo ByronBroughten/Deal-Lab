@@ -84,7 +84,7 @@ export class SolverSection<
     this.solverSections.solve();
   }
   updateValuesAndSolve(values: VarbValues): void {
-    this.updater.updateValuesDirectlyAndSolve(values);
+    this.updater.updateValuesDirectly(values);
     const varbNames = Obj.keys(values) as string[];
     const varbInfos = varbNames.map((varbName) => this.get.varbInfo(varbName));
     this.addVarbInfosToSolveFor(...varbInfos);

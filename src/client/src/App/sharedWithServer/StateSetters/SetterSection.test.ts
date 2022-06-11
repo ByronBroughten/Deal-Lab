@@ -1,62 +1,31 @@
 import { FeSectionInfo } from "../SectionsMeta/Info";
 import { ChildName } from "../SectionsMeta/relSectionTypes/ChildTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
-import { SetSections } from "../stateClassHooks/useSections";
-import { SectionsShare } from "../StateGetters/Bases/GetterSectionsBase";
-import { GetterList } from "../StateGetters/GetterList";
-import { GetterSection } from "../StateGetters/GetterSection";
 import { SetterSection } from "./SetterSection";
-import {
-  makeSetterTestProps,
-  SectionsTestState,
-} from "./TestUtils/SetSectionsTester";
+import { SetterTester } from "./TestUtils/SetSectionsTester";
 
 // loadSelfSectionPack
 // loadChildPackArrs
 // replaceWithDefault, resetToDefault
 
 describe("SetterSection", () => {
-  let state: SectionsTestState;
-  let setSections: SetSections;
-
-  function setterFromState<SN extends SectionName>(
+  let setterTester: SetterTester;
+  beforeEach(() => {
+    setterTester = new SetterTester();
+  });
+  function setterSectionFromState<SN extends SectionName>(
     feInfo: FeSectionInfo<SN>
   ): SetterSection<SN> {
     return new SetterSection({
       ...feInfo,
-      ...SetterSection.initSectionsProps({
-        setSections,
-        sections: state.sections,
-      }),
+      ...setterTester.initSetterSectionsProps(),
     });
   }
-  function sectionsSharePropFromState(): { sectionsShare: SectionsShare } {
-    return { sectionsShare: { sections: state.sections } };
-  }
-  function getLastSectionInfo<SN extends SectionName>(
-    sectionName: SN
-  ): FeSectionInfo<SN> {
-    const list = new GetterList({
-      sectionName,
-      ...sectionsSharePropFromState(),
-    });
-    const { feInfo } = list.last;
-    return feInfo;
-  }
-  function getterSectionFromState<SN extends SectionName>(
-    feInfo: FeSectionInfo<SN>
-  ): GetterSection<SN> {
-    return new GetterSection({ ...feInfo, ...sectionsSharePropFromState() });
-  }
-
-  beforeEach(() => {
-    ({ state, setSections } = makeSetterTestProps());
-  });
   function childCountsFromState<SN extends SectionName<"hasChild">>(
     feInfo: FeSectionInfo<SN>,
     childName: ChildName<SN>
   ) {
-    const getter = getterSectionFromState(feInfo);
+    const getter = setterTester.getterSectionFromState(feInfo);
     return {
       childIds: getter.childFeIds(childName).length,
       childSections: getter.childList(childName).length,
@@ -64,15 +33,15 @@ describe("SetterSection", () => {
   }
   it("should remove its own section", () => {
     const sectionName = "property";
-    const feInfo = getLastSectionInfo(sectionName);
-    const { parent } = getterSectionFromState(feInfo);
+    const feInfo = setterTester.getLastSectionInfo(sectionName);
+    const { parent } = setterTester.getterSectionFromState(feInfo);
     const parentInfo = parent.feInfo;
     const preCounts = childCountsFromState(parentInfo, sectionName);
 
-    const setter = setterFromState(feInfo);
+    const setter = setterSectionFromState(feInfo);
     setter.removeSelf();
 
-    const postParent = getterSectionFromState(parentInfo);
+    const postParent = setterTester.getterSectionFromState(parentInfo);
     const postCounts = childCountsFromState(parentInfo, sectionName);
     expect(postParent.hasChild(feInfo)).toBe(false);
     expect(postCounts.childIds).toBe(preCounts.childIds - 1);
@@ -98,23 +67,23 @@ describe("SetterSection", () => {
           fn({
             sectionName,
             childName,
-            feInfo: getLastSectionInfo(sectionName),
+            feInfo: setterTester.getLastSectionInfo(sectionName),
           });
         }
       }
     }
     it("should add a child to state and get it", () => {
       runWithNames(({ feInfo, childName }) => {
-        const preGetter = getterSectionFromState(feInfo);
+        const preGetter = setterTester.getterSectionFromState(feInfo);
         const preChildIds = preGetter.childFeIds(childName);
 
-        const setter = setterFromState(feInfo);
+        const setter = setterSectionFromState(feInfo);
         const child = setter.addAndGetChild(childName);
 
         expect(preChildIds).not.toContain(child.get.feId);
         expect(child.get.sectionName).toBe(childName);
 
-        const postGetter = getterSectionFromState(feInfo);
+        const postGetter = setterTester.getterSectionFromState(feInfo);
         const postChildIds = postGetter.childFeIds(childName);
         expect(postChildIds).toContain(child.get.feId);
       });
@@ -122,7 +91,7 @@ describe("SetterSection", () => {
     it("should add a child to state", () => {
       runWithNames(({ feInfo, childName }) => {
         const preCounts = childCountsFromState(feInfo, childName);
-        const setter = setterFromState(feInfo);
+        const setter = setterSectionFromState(feInfo);
         setter.addChild(childName);
         const postCounts = childCountsFromState(feInfo, childName);
 
@@ -132,19 +101,19 @@ describe("SetterSection", () => {
     });
     it("should remove a child from state", () => {
       runWithNames(({ feInfo, childName }) => {
-        const preSetter = setterFromState(feInfo);
+        const preSetter = setterSectionFromState(feInfo);
         preSetter.addChild(childName);
         const { feInfo: childInfo } = preSetter.get.youngestChild(childName);
 
         const preCounts = childCountsFromState(feInfo, childName);
-        const preGetter = getterSectionFromState(feInfo);
+        const preGetter = setterTester.getterSectionFromState(feInfo);
         expect(preGetter.hasChild(childInfo)).toBe(true);
 
-        const setter = setterFromState(feInfo);
+        const setter = setterSectionFromState(feInfo);
         setter.removeChild(childInfo);
 
         const postCounts = childCountsFromState(feInfo, childName);
-        const postGetter = getterSectionFromState(feInfo);
+        const postGetter = setterTester.getterSectionFromState(feInfo);
         expect(postGetter.hasChild(childInfo)).toBe(false);
         expect(postCounts.childIds).toBe(preCounts.childIds - 1);
         expect(postCounts.childSections).toBe(preCounts.childSections - 1);
@@ -152,12 +121,12 @@ describe("SetterSection", () => {
     });
     it("should remove all children of a childName from state", () => {
       runWithNames(({ feInfo, childName }) => {
-        const preSetter = setterFromState(feInfo);
+        const preSetter = setterSectionFromState(feInfo);
         preSetter.addChild(childName);
         preSetter.addChild(childName);
         const preCounts = childCountsFromState(feInfo, childName);
 
-        const setter = setterFromState(feInfo);
+        const setter = setterSectionFromState(feInfo);
         setter.removeChildren(childName);
 
         const postCounts = childCountsFromState(feInfo, childName);
