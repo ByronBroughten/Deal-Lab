@@ -1,30 +1,23 @@
-import { useAnalyzerContext } from "../../modules/usePropertyAnalyzer";
 import {
-  useRowIndexActions,
-  UseRowIndexActionsProps,
-} from "../../modules/useQueryActions/useRowIndexActions";
-import { InfoS } from "../../sharedWithServer/SectionsMeta/Info";
+  useIndexTableRowActor,
+  UseIndexTableRowActorProps,
+} from "../../modules/sectionActorHooks/useIndexTableRowActor";
 import TrashBtn from "../general/TrashBtn";
 
-export default function IndexRow(props: UseRowIndexActionsProps) {
-  const { analyzer } = useAnalyzerContext();
-  const { deleteRowAndSource } = useRowIndexActions(props);
-
-  const rowDbInfo = InfoS.db("tableRow", props.rowDbId);
-  const row = analyzer.section(rowDbInfo);
-  const cells = analyzer.childSections(rowDbInfo, "cell");
-
+export default function IndexRow(props: UseIndexTableRowActorProps) {
+  const indexRow = useIndexTableRowActor(props);
+  const title = indexRow.get.value("title", "string");
   return (
     <tr className="IndexTable-tableRow">
-      <td className="IndexTable-tableCell">{row.value("title", "string")}</td>
-      {cells.map((cell) => {
-        const value = analyzer.displayVarb("value", cell.feInfo);
+      <td className="IndexTable-tableCell">{title}</td>
+      {indexRow.cells.map((cell) => {
+        const value = cell.varb("value").displayVarb();
         return <td className="IndexTable-tableCell">{value}</td>;
       })}
       <td className="IndexTable-tableCell">
         <TrashBtn
           className="IndexTable-trashBtn"
-          onClick={deleteRowAndSource}
+          onClick={() => indexRow.deleteSelf()}
         />
       </td>
     </tr>

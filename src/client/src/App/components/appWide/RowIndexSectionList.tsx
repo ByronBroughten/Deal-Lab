@@ -2,7 +2,7 @@ import { FaList } from "react-icons/fa";
 import styled, { css } from "styled-components";
 import useOnOutsideClickRef from "../../modules/customHooks/useOnOutsideClickRef";
 import useToggle from "../../modules/customHooks/useToggle";
-import { FeInfo } from "../../sharedWithServer/SectionsMeta/Info";
+import { FeInfoByType } from "../../sharedWithServer/SectionsMeta/Info";
 import theme, {
   ThemeSectionName,
   themeSectionNameOrDefault,
@@ -11,7 +11,7 @@ import { LoggedInOrOutIconBtn } from "./LoggedInOrNotBtn";
 import { RowIndexRows } from "./RowIndexRows";
 
 type Props = {
-  feInfo: FeInfo<"hasRowIndex">;
+  feInfo: FeInfoByType<"hasRowIndex">;
   pluralName: string;
   disabled: boolean;
   className?: string;

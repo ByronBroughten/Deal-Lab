@@ -8,23 +8,16 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-// putting setterVarb in dependency arrays messes things up,
-// cause right now I make a new setterVarb every time the state changes.
+// make anything that accesses the queries take apiQueries as
+// an argument
 
-// You're making this to use and to show off your programming abilities.
+// test the stateSetter stuff that is used throughout the app
+// test the all the SectionActors
 
-// should I "fix" the various things, and then run their tests?
-
-// - fix login and register, and try them out.
-// - fix the mainSection menu
-// - fix the table and table rows
-
-// 2. bring the new state to Compare Deals (IndexTable)
-// 3. Bring some of IndexTable to the load property menu (searchable)
+// - make the mainSectionLoadMenu use GenericAutoComplete
 
 // Ok. This thing is almost ready. Once I reimplement the new state
 // all throughout the app, and then finalize the ability for people to pay
-
 // I can focus on a few UI and theme things
 // and then it's ready to sell.
 // I know that technically, it would still benefit from a few

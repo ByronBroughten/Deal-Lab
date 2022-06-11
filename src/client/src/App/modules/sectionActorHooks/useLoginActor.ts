@@ -1,12 +1,12 @@
-import { useSectionsContext } from "../../sharedWithServer/stateClassHooks/useSections";
+import { useSectionsActorProps } from "../../sharedWithServer/stateClassHooks/useSectionActorProps";
 import { LoginActor } from "../SectionActors/LoginActor";
 
 export function useLoginActor(): LoginActor {
-  const { sections, setSections } = useSectionsContext();
+  const props = useSectionsActorProps();
+  const { sections } = props.sectionsShare;
   const { feId } = sections.onlyOneRawSection("login");
   return new LoginActor({
+    ...props,
     feId,
-    setSections,
-    sectionsShare: { sections },
   });
 }

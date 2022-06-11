@@ -27,6 +27,7 @@ type ApiQuery<QN extends ApiQueryName> = (
   reqObj: NextReq<QN>
 ) => Promise<NextRes<QN>>;
 
+// these are what I need to replace.
 export const apiQueries = makeApiQueries();
 
 async function _testApiQueries() {

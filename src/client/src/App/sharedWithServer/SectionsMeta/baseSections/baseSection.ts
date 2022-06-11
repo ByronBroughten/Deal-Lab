@@ -75,7 +75,7 @@ export const baseSection = {
   },
   get tableName() {
     return this.schema(
-      { searchFilter: "string" },
+      { titleFilter: "string" },
       {
         ...baseOptions.alwaysOneFromStart,
         placeholder: true,

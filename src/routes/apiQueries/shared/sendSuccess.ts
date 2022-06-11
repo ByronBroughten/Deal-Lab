@@ -12,3 +12,8 @@ export function sendSuccess<QN extends ApiQueryName>(
   const { headers } = resObj as any;
   res.header(headers).status(200).send(resObj.data);
 }
+// I'll want to test the setterSection queries
+
+// to test the actors, I'll basically create a fake axios api
+// and as long as the req validation passes, it'll return
+// the res object.

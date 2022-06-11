@@ -4,19 +4,15 @@ import { SectionPackArrs } from "../../sharedWithServer/SectionPack/SectionPackR
 import { sectionNameS } from "../../sharedWithServer/SectionsMeta/SectionName";
 import { GetterSections } from "../../sharedWithServer/StateGetters/GetterSections";
 import { GetterVarbs } from "../../sharedWithServer/StateGetters/GetterVarbs";
-import {
-  SetterSectionBase,
-  SetterSectionProps,
-} from "../../sharedWithServer/StateSetters/SetterBases/SetterSectionBase";
 import { SetterVarb } from "../../sharedWithServer/StateSetters/SetterVarb";
 import { StrictOmit } from "../../sharedWithServer/utils/types";
-import { apiQueries } from "../useQueryActions/apiQueriesClient";
 import { SectionPackMaker } from "./../../sharedWithServer/StatePackers.ts/SectionPackMaker";
+import { SectionActorBase, SectionActorBaseProps } from "./SectionActorBase";
 import { LoginSetter } from "./shared/LoginSetter";
 
 interface RegisterActorInitProps
-  extends StrictOmit<SetterSectionProps<"register">, "sectionName"> {}
-export class RegisterActor extends SetterSectionBase<"register"> {
+  extends StrictOmit<SectionActorBaseProps<"register">, "sectionName"> {}
+export class RegisterActor extends SectionActorBase<"register"> {
   constructor(props: RegisterActorInitProps) {
     super({
       ...props,
@@ -24,17 +20,17 @@ export class RegisterActor extends SetterSectionBase<"register"> {
     });
   }
   private get getterVarbs() {
-    return new GetterVarbs(this.setterSectionProps);
+    return new GetterVarbs(this.sectionActorBaseProps);
   }
   private get getterSections() {
-    return new GetterSections(this.setterSectionsProps);
+    return new GetterSections(this.sectionActorBaseProps);
   }
   private get loginSetter(): LoginSetter {
-    return new LoginSetter(this.setterSectionsProps);
+    return new LoginSetter(this.sectionActorBaseProps);
   }
   varb(varbName: string): SetterVarb<"register"> {
     return new SetterVarb({
-      ...this.setterSectionProps,
+      ...this.sectionActorBaseProps,
       varbName,
     });
   }
@@ -49,7 +45,7 @@ export class RegisterActor extends SetterSectionBase<"register"> {
     });
   }
   async register(): Promise<void> {
-    const res = await apiQueries.nextRegister(this.registerReq);
+    const res = await this.apiQueries.nextRegister(this.registerReq);
     this.loginSetter.setLogin(res);
   }
   private get guestAccessSectionPacks(): SectionPackArrs<"feGuestAccess"> {

@@ -1,106 +1,45 @@
-import { Popper, TextField } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
 import { Autocomplete } from "@material-ui/lab";
 import React from "react";
 import styled from "styled-components";
 import useToggle from "../../modules/customHooks/useToggle";
-import {
-  SectionOption,
-  VariableOption,
-} from "../../sharedWithServer/Analyzer/methods/get/variableOptions";
-import { useVariableSections } from "../../sharedWithServer/stateClassHooks/useVariableOptions";
-import ccs from "../../theme/cssChunks";
 import theme from "../../theme/Theme";
+import { PopperCustom, PopperProps } from "./GenericAutoComplete/CustomPopper";
 
-type PopParams = Parameters<typeof Popper>;
-type PopperProps = PopParams extends (infer T)[] ? T : never;
-
-export type PopperRef = React.Ref<HTMLDivElement>;
-const PopperCustom = React.forwardRef(
-  (props: PopperProps, ref: React.Ref<HTMLDivElement>) => (
-    <StyledPopper {...props} style={{}} ref={ref} /> // for some reason, style={{}} is necessary
-  )
-);
-
-const StyledPopper = styled(Popper)`
-  .MuiAutocomplete-paper {
-    margin: 0;
-    line-height: 1rem;
-    font-size: 0.9rem;
-  }
-
-  .MuiAutocomplete-listbox {
-    max-height: 30vh;
-    width: auto;
-    padding: 0;
-    ${ccs.dropdown.scrollbar};
-  }
-
-  ul {
-    li.MuiAutocomplete-option {
-      padding: ${theme.s2};
-      padding-left: calc(${theme.s4} + ${theme.s2});
-      width: 210px;
-      line-height: 1rem;
-      min-height: 30px;
-      :not(:first-child) {
-        border-top: 1px solid ${theme["gray-400"]};
-      }
-    }
-  }
-
-  li {
-    .MuiListSubheader-root {
-      top: 0;
-      padding: ${theme.s3};
-      padding-bottom: ${theme.s2};
-      line-height: 1rem;
-      font-weight: 600;
-      border-top: 1px solid ${theme["gray-400"]};
-      border-bottom: 2px solid ${theme["gray-500"]};
-      background-color: ${theme["gray-200"]};
-    }
-  }
-`;
-
-export type OnSelect =
-  | ((value: VariableOption) => void)
-  | ((value: SectionOption) => void);
-
-type Props = {
-  onSelect: OnSelect;
+type OnSelectNext<O> = (value: O) => void;
+type Props<O = any> = {
+  onSelect: OnSelectNext<O>;
+  options: O[];
   className?: string;
   placeholder?: string;
   clearOnBlur?: boolean;
-  value?: any;
-  options?: VariableOption[] | SectionOption[];
+  value?: string;
 };
 
-const VarbAutoComplete = React.forwardRef(
+export type PopperRef = React.Ref<HTMLDivElement>;
+export const GenericAutoComplete = React.forwardRef(
   (
     {
       onSelect,
+      options,
       className,
       placeholder,
       clearOnBlur = true,
       value,
-      options,
     }: Props,
     ref: PopperRef
   ) => {
-    const variableSections = useVariableSections();
-    options = options ?? variableSections.variableOptions();
-    const [inputValue, setInputValue] = React.useState(
-      value ? value.displayName : ""
-    );
-    const { value: keyBool, toggle: clearSelect } = useToggle();
-
+    // inputValue is the state of the text doing the search.
+    // value is the selected value
+    const [inputValue, setInputValue] = React.useState(value ?? "");
+    const { value: keyBoolean, toggle: clearSelect } = useToggle();
     return (
       <Styled className={`VarbAutoComplete-root ${className ?? ""}`}>
         <Autocomplete
           PopperComponent={(props: PopperProps) => (
             <PopperCustom {...props} ref={ref} />
           )}
-          key={`${keyBool}`}
+          key={`${keyBoolean}`}
           id="VarbAutoComplete-autoComplete"
           onInputChange={(_, newInputValue) => setInputValue(newInputValue)}
           {...{
@@ -147,8 +86,6 @@ const VarbAutoComplete = React.forwardRef(
     );
   }
 );
-
-export default VarbAutoComplete;
 
 const minWidth = "110px";
 

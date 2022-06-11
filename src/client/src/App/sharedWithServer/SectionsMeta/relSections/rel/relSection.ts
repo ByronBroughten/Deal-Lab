@@ -208,7 +208,7 @@ export const relSection = {
       "fe" as ContextName,
       sectionName,
       displayName,
-      { searchFilter: relVarb.string() } as RelVarbs<ContextName, S>,
+      { titleFilter: relVarb.string() } as RelVarbs<ContextName, S>,
       {
         tableIndexName,
         parent: "main",

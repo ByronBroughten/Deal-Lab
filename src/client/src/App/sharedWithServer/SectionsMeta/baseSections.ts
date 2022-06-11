@@ -61,7 +61,7 @@ export const baseSections = {
     }),
     loanIndex: base.section.schema(base.varbs.loan, { uniqueDbId: true }),
     mgmtIndexNext: base.section.schema(base.varbs.mgmt, { uniqueDbId: true }),
-    analysisIndexNext: base.section.schema(base.varbs.analysis, {
+    analysisIndex: base.section.schema(base.varbs.analysis, {
       uniqueDbId: true,
     }),
 

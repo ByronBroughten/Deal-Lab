@@ -1,52 +1,34 @@
 import React from "react";
 import styled from "styled-components";
-import { useAnalyzerContext } from "../../modules/usePropertyAnalyzer";
-import { FeInfo, InfoS } from "../../sharedWithServer/SectionsMeta/Info";
-import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
 import ccs from "../../theme/cssChunks";
 import theme, {
   ThemeSectionName,
   themeSectionNameOrDefault,
 } from "../../theme/Theme";
+import { useMainSectionActor } from "./../../modules/sectionActorHooks/useMainSectionActor";
+import { FeInfoByType } from "./../../sharedWithServer/SectionsMeta/Info";
 import useHowMany from "./customHooks/useHowMany";
 import RowIndexListRow from "./RowIndexListRow";
 
-function useRowEntries<S extends SectionName<"hasRowIndex">>(
-  sectionName: S
-): { dbId: string }[] {
-  const { analyzer } = useAnalyzerContext();
-  const rowIndexName = analyzer.meta.section(sectionName).get("rowIndexName");
-  const feIds = analyzer.parent(rowIndexName).childFeIds(rowIndexName);
-  const rowEntries = feIds.map((id) => {
-    const section = analyzer.section(InfoS.fe(rowIndexName, id));
-    return {
-      title: section.value("title", "string"),
-      dbId: section.dbId,
-    };
-  });
-  return rowEntries.sort((a, b) => {
-    return a.title.localeCompare(b.title);
-  });
-}
-
 type Props = {
-  feInfo: FeInfo<"hasRowIndex">;
+  feInfo: FeInfoByType<"hasRowIndex">;
   className?: string;
 };
 export function RowIndexRows({ feInfo, className }: Props) {
-  const { sectionName } = feInfo;
-  const entries = useRowEntries(sectionName);
-  const { isAtLeastOne } = useHowMany(entries);
-
+  const section = useMainSectionActor(feInfo);
+  const rows = section.table.alphabeticalGetterRows();
+  const { isAtLeastOne } = useHowMany(rows);
   return (
     <Styled
       className={`RowIndexRows-root ${className}`}
       tabIndex={0}
-      sectionName={themeSectionNameOrDefault(sectionName)}
+      sectionName={themeSectionNameOrDefault(feInfo.sectionName)}
     >
       {isAtLeastOne &&
-        entries.map(({ dbId }) => (
-          <RowIndexListRow {...{ rowDbId: dbId, indexSourceFinder: feInfo }} />
+        rows.map(({ dbId, title }) => (
+          <RowIndexListRow
+            {...{ title, onClick: () => section.loadFromIndex(dbId) }}
+          />
         ))}
       {!isAtLeastOne && (
         <div className="RowIndexRows-entry">

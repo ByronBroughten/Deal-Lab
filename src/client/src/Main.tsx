@@ -10,7 +10,7 @@ import theme from "./App/theme/Theme";
 export function Main() {
   const main = useGetterSection();
   const activeDealId = main.onlyChild("analysis").feId;
-  const dealTableId = main.onlyChild("analysisTable").feId;
+  const { feInfo: dealTableInfo } = main.onlyChild("analysisTable");
   return (
     <Styled className="App-root">
       <NavBar className="NavBar-visible" />
@@ -21,9 +21,8 @@ export function Main() {
           element={
             <IndexTable
               {...{
-                tableName: "analysisTable",
-                feId: dealTableId,
-                indexSourceFinder: "analysis",
+                feInfo: dealTableInfo,
+                indexName: "analysisIndex",
               }}
             />
           }

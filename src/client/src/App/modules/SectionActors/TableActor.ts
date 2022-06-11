@@ -9,6 +9,18 @@ import { SetterSection } from "../../sharedWithServer/StateSetters/SetterSection
 import { SetterTable } from "../../sharedWithServer/StateSetters/SetterTable";
 import { SectionArrQuerier } from "../QueriersBasic/SectionArrQuerier";
 
+class GetterColumn extends GetterSection<"column"> {
+  get displayNameOrNotFound(): string {
+    const { varbInfoValues } = this.varbs;
+    if (this.sections.hasSectionMixed(varbInfoValues)) {
+      const varb = this.sections.varbByMixed(varbInfoValues);
+      return varb.displayName;
+    } else {
+      return "Variable not found";
+    }
+  }
+}
+
 export class TableActor<
   SN extends SectionName<"tableName">
 > extends SetterSectionBase<SN> {
@@ -25,6 +37,20 @@ export class TableActor<
   }
   private async sendTable(): Promise<void> {
     this.querier.replace([this.packMaker.makeSectionPack()]);
+  }
+  get rows(): GetterSection<"tableRow">[] {
+    return this.get.children("tableRow");
+  }
+  get columns(): GetterColumn[] {
+    return this.get.children("column").map((col) => {
+      return new GetterColumn(col.getterSectionProps);
+    });
+  }
+  get filteredRows() {
+    const titleFilter = this.get.value("titleFilter", "string");
+    return this.rows.filter((row) => {
+      return row.value("title", "string").includes(titleFilter);
+    });
   }
   // do I need to save the order of the sorted table rows?
   // I guess I might as well

@@ -25,6 +25,9 @@ export class GetterList<SN extends SectionName> extends GetterListBase<SN> {
   get arr(): GetterSection<SN>[] {
     return this.stateList.map(({ feId }) => this.getterSection(feId));
   }
+  get length(): number {
+    return this.stateList.length;
+  }
   idx(feId: string): number {
     const idx = this.stateList.findIndex((section) => section.feId === feId);
     if (idx < 0) throw this.sectionNotFoundError(feId);

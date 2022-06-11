@@ -2,36 +2,45 @@ import { sectionMetas } from "../../sharedWithServer/SectionsMeta";
 import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
 import { GetterMainSection } from "../../sharedWithServer/StateGetters/GetterMainSection";
 import { GetterSections } from "../../sharedWithServer/StateGetters/GetterSections";
-import { SetterSectionBase } from "../../sharedWithServer/StateSetters/SetterBases/SetterSectionBase";
+import { SetterSectionProps } from "../../sharedWithServer/StateSetters/SetterBases/SetterSectionBase";
 import { SetterSection } from "../../sharedWithServer/StateSetters/SetterSection";
 import { SetterTable } from "../../sharedWithServer/StateSetters/SetterTable";
+import { ApiQuerierProps } from "../QueriersBasic/ApiQuerierNext";
 import { IndexListQuerier } from "../QueriersRelative/IndexListQuerier";
-import { IndexSectionQuerier } from "../QueriersRelative/IndexSectionQuerier";
+import {
+  IndexSectionQuerier,
+  IndexSectionQuerierProps,
+} from "../QueriersRelative/IndexSectionQuerier";
+import { SectionActorBase } from "./SectionActorBase";
+
+interface Props<SN extends SectionName<"hasRowIndex">>
+  extends SetterSectionProps<SN>,
+    ApiQuerierProps {}
 
 export class MainSectionActor<
   SN extends SectionName<"hasRowIndex">
-> extends SetterSectionBase<SN> {
-  get indexSectionQuerier() {
-    return new IndexSectionQuerier({
-      ...this.setterSectionProps,
+> extends SectionActorBase<SN> {
+  get = new GetterMainSection(this.sectionActorBaseProps);
+  private get indexQuerierProps(): IndexSectionQuerierProps<SN> {
+    return {
+      ...this.sectionActorBaseProps,
       indexName: this.indexName,
-    });
+    };
   }
-  get = new GetterMainSection(this.setterSectionProps);
-  get indexListQuerier() {
-    return new IndexListQuerier({
-      ...this.setterSectionProps,
-      indexName: this.indexName,
-    });
+  private get indexListQuerier() {
+    return new IndexListQuerier(this.indexQuerierProps);
+  }
+  private get indexSectionQuerier() {
+    return new IndexSectionQuerier(this.indexQuerierProps);
   }
   get isSaved(): boolean {
     return this.table.hasRowByDbId(this.dbId);
   }
   get setter(): SetterSection<SN> {
-    return new SetterSection(this.setterSectionProps);
+    return new SetterSection(this.sectionActorBaseProps);
   }
   get getterSections() {
-    return new GetterSections(this.setterSectionsProps);
+    return new GetterSections(this.sectionActorBaseProps);
   }
   private get indexName(): SectionName<"rowIndexNext"> {
     return this.setter.meta.get("rowIndexName");
@@ -42,10 +51,10 @@ export class MainSectionActor<
   get dbId(): string {
     return this.get.dbId;
   }
-  private get table(): SetterTable {
+  get table(): SetterTable {
     const { main } = this.getterSections;
     return new SetterTable({
-      ...this.setterSectionsProps,
+      ...this.sectionActorBaseProps,
       ...main.onlyChild(this.indexTableName).feInfo,
     });
   }
@@ -73,6 +82,9 @@ export class MainSectionActor<
   async loadFromIndex(dbId: string): Promise<void> {
     const sectionPack = await this.indexListQuerier.retriveFromIndex(dbId);
     this.setter.loadSelfSectionPack(sectionPack);
+  }
+  async deleteFromIndex() {
+    await this.indexListQuerier.deleteFromIndex(this.dbId);
   }
   private updateRow(): void {
     // for greater efficiency, most of this could be done at the solver

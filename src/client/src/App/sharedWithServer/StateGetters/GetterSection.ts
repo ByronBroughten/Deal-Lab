@@ -1,4 +1,5 @@
 import { ValueTypesPlusAny } from "../FeSections/FeSection/FeVarb";
+import { DbSectionInfo } from "../SectionPack/DbSectionInfo";
 import {
   SwitchEndingKey,
   switchNames,
@@ -183,6 +184,12 @@ export class GetterSection<
     feId,
   }: FeSectionInfo<CN>): boolean {
     return this.childList(sectionName).hasByFeId(feId);
+  }
+  hasChildByDbInfo<CN extends ChildName<SN>>({
+    sectionName,
+    dbId,
+  }: DbSectionInfo<CN>): boolean {
+    return this.childList(sectionName).hasByMixed({ idType: "dbId", id: dbId });
   }
   child<CN extends ChildName<SN>>({
     sectionName,

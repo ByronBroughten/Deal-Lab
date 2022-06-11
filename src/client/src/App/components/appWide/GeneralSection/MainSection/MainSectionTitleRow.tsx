@@ -1,6 +1,6 @@
 import React from "react";
 import { BiReset } from "react-icons/bi";
-import { MdSystemUpdateAlt } from "react-icons/md";
+import { MdDelete, MdSystemUpdateAlt } from "react-icons/md";
 import styled from "styled-components";
 import useToggleView from "../../../../modules/customHooks/useToggleView";
 import { useMainSectionActor } from "../../../../modules/sectionActorHooks/useMainSectionActor";
@@ -9,6 +9,7 @@ import { FeInfoByType } from "../../../../sharedWithServer/SectionsMeta/Info";
 import theme from "../../../../theme/Theme";
 import BtnTooltip from "../../BtnTooltip";
 import { IconBtn } from "../../IconBtn";
+import RowIndexSectionList from "../../RowIndexSectionList";
 import XBtn from "../../Xbtn";
 import { MainSectionTitleRowTitleNext } from "./MainSectionTitleRow/MainSectionTitleRowTitle";
 import MainSectionTitleSaveBtn from "./MainSectionTitleRow/MainSectionTitleSaveBtn";
@@ -52,17 +53,21 @@ export function MainSectionTitleRow({
               </BtnTooltip>
               <MainSectionTitleSaveBtn onClick={() => mainSection.saveNew()} />
               {mainSection.isSaved && (
-                <BtnTooltip
-                  title="Save updates"
-                  className="MainSectionTitleRow-flexUnit"
-                >
-                  <IconBtn onClick={() => mainSection.saveUpdates()}>
-                    <MdSystemUpdateAlt />
+                <>
+                  <BtnTooltip
+                    title="Save updates"
+                    className="MainSectionTitleRow-flexUnit"
+                  >
+                    <IconBtn onClick={() => mainSection.saveUpdates()}>
+                      <MdSystemUpdateAlt />
+                    </IconBtn>
+                  </BtnTooltip>
+                  <IconBtn>
+                    <MdDelete />
                   </IconBtn>
-                </BtnTooltip>
+                </>
               )}
-              {/* <RowIndexSectionList
-              This will be switched to some version of the IndexTable
+              <RowIndexSectionList
                 {...{
                   className: "MainSectionTitleRow-flexUnit",
                   feInfo,
@@ -70,7 +75,7 @@ export function MainSectionTitleRow({
                   disabled: isGuest,
                   droptop,
                 }}
-              /> */}
+              />
             </>
           }
         </div>

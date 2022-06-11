@@ -1,72 +1,25 @@
 import React from "react";
 import styled from "styled-components";
-import {
-  IndexTableActionsProps,
-  useIndexTableActions,
-} from "../modules/SectionActors/TableStateQuerier";
+import { useTableActor } from "../modules/sectionActorHooks/useTableActor";
 import { auth } from "../modules/services/authService";
-import { useAnalyzerContext } from "../modules/usePropertyAnalyzer";
+import { VariableOption } from "../sharedWithServer/Analyzer/methods/get/variableOptions";
+import { FeInfoByType } from "../sharedWithServer/SectionsMeta/Info";
 import { SectionName } from "../sharedWithServer/SectionsMeta/SectionName";
-import { useGetterSection } from "../sharedWithServer/stateClassHooks/useGetterSection";
 import theme from "../theme/Theme";
 import useHowMany from "./appWide/customHooks/useHowMany";
 import ColumnHeader from "./IndexTable/ColumnHeader";
 import IndexRow from "./IndexTable/IndexRow";
-import MaterialStringEditor from "./inputs/MaterialStringEditor";
+import { MaterialStringEditorNext } from "./inputs/MaterialStringEditorNext";
 import VarbAutoComplete from "./inputs/VarbAutoComplete";
 
-// 1. Make the indexTable work with the new state
-// 2. abstract out some parts to use for loading a section
-// - Display the same rows (unfiltered, with just title and dbId)
-// - Sorted by title alphabetically
-// - Allow filtering by title
-// - Allow loading and deleting (trash can to right of each)
-//   Menu title "Load ..."
-
-function useTableParts(tableName: SectionName<"tableName">) {
-  useGetterSection();
-
-  const { analyzer } = useAnalyzerContext();
-
-  const table = analyzer.section(tableName);
-  const rows = analyzer.childSections(tableName, "tableRow");
-  const { isAtLeastOne, areNone } = useHowMany(rows);
-
-  const searchFilter = table.varb("searchFilter");
-
-  const filterValue = searchFilter.value("string");
-  const filteredRows = rows.filter((row) => {
-    return row.value("title", "string").includes(filterValue);
-  });
-
-  const columns = analyzer.childSections(tableName, "column");
-  const displayNameColumns = columns.map((column) => ({
-    displayName: analyzer.displayNameOrNotFound(column.varbInfoValues()),
-    feId: column.feId,
-  }));
-
-  return {
-    isAtLeastOne,
-    areNone,
-    searchFilter,
-    filteredRows,
-    displayNameColumns,
-  };
+interface Props {
+  indexName: SectionName<"rowIndexNext">;
+  feInfo: FeInfoByType<"tableName">;
 }
-
-export default function IndexTable(props: IndexTableActionsProps) {
-  const { tableName, indexSourceFinder } = props;
-  const {
-    searchFilter,
-    filteredRows,
-    isAtLeastOne,
-    areNone,
-    displayNameColumns,
-  } = useTableParts(tableName);
-
-  const { addColumn, removeColumn, sortRowsAZ, sortRowsZA } =
-    useIndexTableActions(props);
-
+export default function IndexTable({ indexName, feInfo }: Props) {
+  const table = useTableActor(feInfo);
+  const { filteredRows } = table;
+  const { isAtLeastOne, areNone } = useHowMany(filteredRows);
   return (
     <Styled className="IndexTable-root">
       {!auth.isLoggedIn && (
@@ -75,7 +28,7 @@ export default function IndexTable(props: IndexTableActionsProps) {
         </div>
       )}
       {auth.isLoggedIn && areNone && (
-        <div className="IndexTable-areNone">You have no saved analyses.</div>
+        <div className="IndexTable-areNone">None</div>
       )}
       {auth.isLoggedIn && isAtLeastOne && (
         <div className="IndexTable-viewable">
@@ -84,13 +37,13 @@ export default function IndexTable(props: IndexTableActionsProps) {
               {"Deals"}
             </h5>
             <div className="IndexTable-controlRow">
-              <MaterialStringEditor
+              <MaterialStringEditorNext
                 label="Filter by title"
                 className="IndexTable-filterEditor IndexTable-controlRowItem"
-                feVarbInfo={searchFilter.feVarbInfo}
+                feVarbInfo={table.get.varbInfo("titleFilter")}
               />
               <VarbAutoComplete
-                onSelect={addColumn}
+                onSelect={(o: VariableOption) => table.addColumn(o.varbInfo)}
                 placeholder="Add column"
                 className="IndexTable-addColumnSelector IndexTable-controlRowItem"
               />
@@ -102,19 +55,20 @@ export default function IndexTable(props: IndexTableActionsProps) {
                 <ColumnHeader
                   {...{
                     displayName: "Title",
-                    sortRowsAZ: () => sortRowsAZ("title"),
-                    sortRowsZA: () => sortRowsZA("title"),
+                    sortRowsAZ: () => table.sortRows("title"),
+                    sortRowsZA: () =>
+                      table.sortRows("title", { reverse: true }),
                   }}
                 />
-
-                {displayNameColumns.map((col) => {
+                {table.columns.map((col) => {
                   return (
                     <ColumnHeader
                       {...{
-                        displayName: col.displayName,
-                        sortRowsAZ: () => sortRowsAZ(col.feId),
-                        sortRowsZA: () => sortRowsZA(col.feId),
-                        removeColumn: () => removeColumn(col.feId),
+                        displayName: col.displayNameOrNotFound,
+                        sortRowsAZ: () => table.sortRows(col.feId),
+                        sortRowsZA: () =>
+                          table.sortRows(col.feId, { reverse: true }),
+                        removeColumn: () => table.removeColumn(col.feId),
                       }}
                     />
                   );
@@ -123,10 +77,8 @@ export default function IndexTable(props: IndexTableActionsProps) {
               </tr>
             </thead>
             <tbody>
-              {filteredRows.map((row) => {
-                return (
-                  <IndexRow {...{ rowDbId: row.dbId, indexSourceFinder }} />
-                );
+              {filteredRows.map(({ feId }) => {
+                return <IndexRow {...{ feId, indexName }} />;
               })}
             </tbody>
           </table>

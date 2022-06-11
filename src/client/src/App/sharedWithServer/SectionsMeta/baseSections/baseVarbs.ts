@@ -110,7 +110,7 @@ export const baseVarbs = {
     } as const;
   },
   table: {
-    searchFilter: "string",
+    titleFilter: "string",
     rowIds: "stringArray",
   },
   tableRow: {

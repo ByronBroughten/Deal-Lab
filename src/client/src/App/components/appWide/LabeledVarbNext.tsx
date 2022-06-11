@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { InEntityVarbInfo } from "../../sharedWithServer/SectionsMeta/baseSections/baseValues/entities";
-import { useGetterVarbEntity } from "../../sharedWithServer/stateClassHooks/useGetterVarb";
+import { useGetterVarbByEntity } from "../../sharedWithServer/stateClassHooks/useGetterVarbByEntity";
 import theme from "../../theme/Theme";
 import { GetterVarb } from "./../../sharedWithServer/StateGetters/GetterVarb";
 
@@ -27,7 +27,7 @@ export function LabeledVarbNotFound({
 
 export function LabeledVarbNext({ entityVarbInfo, ...rest }: LabeledVarbProps) {
   // make useGetterVarbMixed
-  const varb = useGetterVarbEntity(entityVarbInfo);
+  const varb = useGetterVarbByEntity(entityVarbInfo);
   return (
     <StyledLabeledVarb
       {...{

@@ -6,30 +6,39 @@ import {
   GetterSectionProps,
 } from "../../sharedWithServer/StateGetters/Bases/GetterSectionBase";
 import { SectionPackMaker } from "../../sharedWithServer/StatePackers.ts/SectionPackMaker";
+import { ApiQuerierProps } from "../QueriersBasic/ApiQuerierNext";
 import { SectionQuerier } from "../QueriersBasic/SectionQuerier";
 
-interface IndexSectionQuerierProps<SN extends SectionName<"hasIndexStore">>
-  extends GetterSectionProps<SN> {
+export interface IndexSectionQuerierProps<
+  SN extends SectionName<"hasIndexStore">
+> extends GetterSectionProps<SN>,
+    ApiQuerierProps {
   indexName: SectionName<"indexStore">;
 }
 
 export class IndexSectionQuerier<
   SN extends SectionName<"hasIndexStore"> = SectionName<"hasIndexStore">
 > extends GetterSectionBase<SN> {
-  indexName: SectionName<"indexStore">;
+  readonly indexName: SectionName<"indexStore">;
+  private query: SectionQuerier;
   private packMaker = new SectionPackMaker(this.getterSectionProps);
-  constructor({ indexName, ...rest }: IndexSectionQuerierProps<SN>) {
+  constructor({
+    indexName,
+    apiQueries,
+    ...rest
+  }: IndexSectionQuerierProps<SN>) {
     super(rest);
     this.indexName = indexName;
+    this.query = new SectionQuerier({
+      sectionName: indexName,
+      apiQueries,
+    });
   }
   makeIndexSectionPack(): ServerSectionPack {
     const sourceSectionPack = this.packMaker.makeSectionPack();
     return (
       FeSectionPack.rawFeToServer as (...props: any[]) => ServerSectionPack
     )(sourceSectionPack, this.indexName);
-  }
-  private get query() {
-    return new SectionQuerier(this.indexName);
   }
   async saveNewToIndex(): Promise<void> {
     await this.query.add(this.makeIndexSectionPack());

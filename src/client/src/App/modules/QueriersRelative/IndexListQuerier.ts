@@ -7,20 +7,27 @@ import {
   GetterListBase,
   GetterListProps,
 } from "../../sharedWithServer/StateGetters/Bases/GetterListBase";
+import { ApiQuerierProps } from "../QueriersBasic/ApiQuerierNext";
 import { SectionQuerier } from "../QueriersBasic/SectionQuerier";
 
 interface IndexListQuerierProps<SN extends SectionName<"hasIndexStore">>
-  extends GetterListProps<SN> {
+  extends GetterListProps<SN>,
+    ApiQuerierProps {
   indexName: SectionName<"indexStore">;
 }
 
 export class IndexListQuerier<
   SN extends SectionName<"hasIndexStore"> = SectionName<"hasIndexStore">
 > extends GetterListBase<SN> {
-  indexName: SectionName<"indexStore">;
-  constructor({ indexName, ...rest }: IndexListQuerierProps<SN>) {
+  readonly indexName: SectionName<"indexStore">;
+  readonly query: SectionQuerier;
+  constructor({ indexName, apiQueries, ...rest }: IndexListQuerierProps<SN>) {
     super(rest);
     this.indexName = indexName;
+    this.query = new SectionQuerier({
+      sectionName: indexName,
+      apiQueries,
+    });
   }
   private indexToSourceSectionPack(
     indexSectionPack: ServerSectionPack
@@ -36,11 +43,11 @@ export class IndexListQuerier<
       } as any,
     };
   }
-  private get query() {
-    return new SectionQuerier(this.indexName);
-  }
   async retriveFromIndex(dbId: string): Promise<SectionPackRaw<SN>> {
     const serverSectionPack = await this.query.get(dbId);
     return this.indexToSourceSectionPack(serverSectionPack);
+  }
+  async deleteFromIndex(dbId: string): Promise<void> {
+    this.query.delete(dbId);
   }
 }

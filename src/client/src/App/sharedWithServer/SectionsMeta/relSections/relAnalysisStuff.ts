@@ -4,7 +4,7 @@ import { relSection, RelSectionOptions } from "./rel/relSection";
 import { RelVarbs } from "./rel/relVarbs";
 
 function analysisSection<
-  SN extends "analysis" | "analysisIndexNext",
+  SN extends "analysis" | "analysisIndex",
   O extends StrictOmit<
     RelSectionOptions<"fe", "analysis">,
     "childNames" | "relVarbs"
@@ -32,9 +32,9 @@ function analysisSection<
 
 export const relAnalysisStuff = {
   ...analysisSection("analysis", {
-    rowIndexName: "analysisIndexNext",
+    rowIndexName: "analysisIndex",
     arrStoreName: "analysis",
   } as const),
-  ...analysisSection("analysisIndexNext"),
+  ...analysisSection("analysisIndex"),
   ...relSection.base("both", "output", "Output", rel.varbs.varbInfo()),
 } as const;

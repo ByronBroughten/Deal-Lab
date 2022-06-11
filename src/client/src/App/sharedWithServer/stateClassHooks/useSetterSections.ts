@@ -1,10 +1,13 @@
+import React from "react";
+import { useUpdateSetterSections } from "../../modules/sectionActorHooks/useUpdateSetterSections";
 import { SetterSections } from "../StateSetters/SetterSections";
-import { useSectionsContext } from "./useSections";
+import { useSetterSectionsProps } from "./useSetterSectionsProps";
 
 export function useSetterSections(): SetterSections {
-  const { sections, setSections } = useSectionsContext();
-  return new SetterSections({
-    sectionsShare: { sections },
-    setSections,
-  });
+  const props = useSetterSectionsProps();
+  const setterSections = React.useMemo(() => {
+    return new SetterSections(props);
+  }, []);
+  useUpdateSetterSections(setterSections);
+  return setterSections;
 }

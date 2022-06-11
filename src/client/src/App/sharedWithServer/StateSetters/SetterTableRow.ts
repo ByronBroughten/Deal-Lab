@@ -18,6 +18,12 @@ export class SetterTableRow extends SetterSectionBase<"tableRow"> {
   }
   private setter = new SetterSection(this.setterSectionProps);
   get = this.setter.get;
+  get dbId(): string {
+    return this.get.dbId;
+  }
+  get title(): string {
+    return this.get.value("title", "string");
+  }
   clearCells(): void {
     this.setter.removeChildren("cell");
   }

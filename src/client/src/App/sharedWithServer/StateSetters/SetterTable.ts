@@ -1,5 +1,4 @@
 import { isEqual } from "lodash";
-import { SectionNotFoundError } from "../../utils/error";
 import { DbVarbs } from "../SectionPack/RawSection";
 import { InEntityVarbInfo } from "../SectionsMeta/baseSections/baseValues/entities";
 import { SectionName } from "../SectionsMeta/SectionName";
@@ -38,14 +37,12 @@ export class SetterTable<
       feId,
     });
   }
+  alphabeticalRows() {}
   hasRowByDbId(dbId: string): boolean {
-    try {
-      this.rowByDbId(dbId);
-      return true;
-    } catch (err) {
-      if (err instanceof SectionNotFoundError) return false;
-      else throw err;
-    }
+    return this.get.hasChildByDbInfo({
+      sectionName: "tableRow",
+      dbId,
+    });
   }
   rowByDbId(dbId: string): SetterTableRow {
     const { feId } = this.get.sections.sectionByDbInfo({
@@ -86,6 +83,10 @@ export class SetterTable<
       sectionName: "tableRow",
       feIds: sortedIds,
     });
+  }
+  alphabeticalGetterRows() {
+    const feIds = this.getSortedRowIds("title");
+    return feIds.map((feId) => this.row(feId));
   }
   getSortedRowIds(colIdOrTitle: string | "title"): string[] {
     const rowsWithCellValues = this.getRowsWithCellValues(colIdOrTitle);

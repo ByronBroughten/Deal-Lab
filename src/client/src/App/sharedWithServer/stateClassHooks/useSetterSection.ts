@@ -1,15 +1,15 @@
 import { FeSectionInfo } from "../SectionsMeta/Info";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { SetterSection } from "../StateSetters/SetterSection";
-import { useSectionsContext } from "./useSections";
+import { useSetterSectionsProps } from "./useSetterSectionsProps";
 
 export function useSetterSection<SN extends SectionName = "main">(
   props?: FeSectionInfo<SN>
 ): SetterSection<SN> {
-  const { sections, setSections } = useSectionsContext();
+  const moreProps = useSetterSectionsProps();
+  const { sections } = moreProps.sectionsShare;
   return new SetterSection({
     ...(props ?? (sections.mainSectionInfo as FeSectionInfo<SN>)),
-    setSections,
-    sectionsShare: { sections },
+    ...moreProps,
   });
 }

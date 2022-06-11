@@ -12,10 +12,14 @@ type UseSectionsProps = {
   prePopulatedSections?: StateSections;
   storeSectionsLocally?: boolean;
 };
+export interface SectionsAndSetSections {
+  sections: StateSections;
+  setSections: React.Dispatch<React.SetStateAction<StateSections>>;
+}
 export function useSections({
   prePopulatedSections,
   storeSectionsLocally = false,
-}: UseSectionsProps = {}) {
+}: UseSectionsProps = {}): SectionsAndSetSections {
   const [sections, setSections] = React.useState(() =>
     initializeSections(prePopulatedSections)
   );

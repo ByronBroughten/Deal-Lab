@@ -34,7 +34,7 @@ export function makeRelSections() {
       ...rel.section.sectionTableNext(
         "analysisTable",
         "Analysis Table",
-        "analysisIndexNext"
+        "analysisIndex"
       ),
 
       ...relSection.base(
@@ -54,7 +54,7 @@ export function makeRelSections() {
             "propertyIndexNext",
             "loanIndex",
             "mgmtIndexNext",
-            "analysisIndexNext",
+            "analysisIndex",
 
             "propertyTable",
             "loanTable",

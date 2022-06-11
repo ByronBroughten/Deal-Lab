@@ -1,19 +1,15 @@
 import { NextReq } from "../../sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import { makeReq } from "../../sharedWithServer/apiQueriesShared/makeGeneralReqs";
 import { GetterVarbs } from "../../sharedWithServer/StateGetters/GetterVarbs";
-import {
-  SetterSectionBase,
-  SetterSectionProps,
-} from "../../sharedWithServer/StateSetters/SetterBases/SetterSectionBase";
 import { SetterVarb } from "../../sharedWithServer/StateSetters/SetterVarb";
 import { StrictOmit } from "../../sharedWithServer/utils/types";
-import { apiQueries } from "../useQueryActions/apiQueriesClient";
+import { SectionActorBase, SectionActorBaseProps } from "./SectionActorBase";
 import { LoginSetter } from "./shared/LoginSetter";
 
 interface LoginActorInitProps
-  extends StrictOmit<SetterSectionProps<"login">, "sectionName"> {}
+  extends StrictOmit<SectionActorBaseProps<"login">, "sectionName"> {}
 
-export class LoginActor extends SetterSectionBase<"login"> {
+export class LoginActor extends SectionActorBase<"login"> {
   constructor(props: LoginActorInitProps) {
     super({
       ...props,
@@ -22,12 +18,12 @@ export class LoginActor extends SetterSectionBase<"login"> {
   }
   varb(varbName: string): SetterVarb<"login"> {
     return new SetterVarb({
-      ...this.setterSectionProps,
+      ...this.sectionActorBaseProps,
       varbName,
     });
   }
-  varbs = new GetterVarbs(this.setterSectionProps);
-  loginSetter = new LoginSetter(this.setterSectionsProps);
+  varbs = new GetterVarbs(this.sectionActorBaseProps);
+  loginSetter = new LoginSetter(this.sectionActorBaseProps);
   get loginReq(): NextReq<"nextLogin"> {
     return makeReq(
       this.varbs.values({
@@ -37,7 +33,7 @@ export class LoginActor extends SetterSectionBase<"login"> {
     );
   }
   async login() {
-    const res = await apiQueries.nextLogin(this.loginReq);
+    const res = await this.apiQueries.nextLogin(this.loginReq);
     this.loginSetter.setLogin(res);
   }
 }

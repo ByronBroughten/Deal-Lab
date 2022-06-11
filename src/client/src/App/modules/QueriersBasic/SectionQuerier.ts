@@ -1,11 +1,18 @@
 import { ServerSectionPack } from "../../sharedWithServer/SectionPack/SectionPackRaw";
 import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
-import { ApiQuerier } from "./ApiQuerier";
+import { ApiQuerierNext, ApiQuerierProps } from "./ApiQuerierNext";
+
+interface SectionQuerierProps extends ApiQuerierProps {
+  sectionName: SectionName<"indexStore">;
+}
 
 export class SectionQuerier {
-  constructor(readonly sectionName: SectionName<"indexStore">) {}
-  api = new ApiQuerier();
-
+  readonly sectionName: SectionName<"indexStore">;
+  readonly api: ApiQuerierNext;
+  constructor({ sectionName, ...rest }: SectionQuerierProps) {
+    this.sectionName = sectionName;
+    this.api = new ApiQuerierNext(rest);
+  }
   async add(sectionPack: ServerSectionPack): Promise<string> {
     const req = this.api.makeReq({ sectionPack });
     const res = await this.api.query.addSection(req);
