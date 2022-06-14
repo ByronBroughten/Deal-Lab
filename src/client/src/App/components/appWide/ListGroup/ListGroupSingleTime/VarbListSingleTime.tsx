@@ -1,7 +1,7 @@
 import { FeInfoByType } from "../../../../sharedWithServer/SectionsMeta/Info";
 import { SectionName } from "../../../../sharedWithServer/SectionsMeta/SectionName";
 import { ThemeName } from "../../../../theme/Theme";
-import { VarbListGeneric } from "../../ListGroupShared/VarbListGeneric";
+import { VarbListGeneric } from "../ListGroupShared/VarbListGeneric";
 import { ListItemSingleTime } from "./VarbListSingleTime/ListItemSingleTime";
 
 type Props<SN extends SectionName<"singleTimeList">> = {

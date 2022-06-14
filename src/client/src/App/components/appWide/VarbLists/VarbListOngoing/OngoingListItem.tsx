@@ -3,7 +3,7 @@ import { useSetterSection } from "../../../../sharedWithServer/stateClassHooks/u
 import LabeledEquation from "../../AdditiveListNext/AdditiveItem/LabeledEquation";
 import LabeledSpanOverCost from "../../AdditiveListNext/AdditiveItem/LabeledSpanOverCost";
 import LoadedVarb from "../../AdditiveListNext/AdditiveItem/LoadedVarb";
-import { VarbListItemGeneric } from "../../ListGroupShared/VarbListItemGeneric";
+import { VarbListItemGeneric } from "../../ListGroup/ListGroupShared/VarbListItemGeneric";
 
 export function OngoingListItem({ feId }: { feId: string }) {
   const feInfo = { sectionName: "ongoingItem", feId } as const;

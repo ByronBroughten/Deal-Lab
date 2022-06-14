@@ -5,7 +5,7 @@ import { ThemeName } from "../../../theme/Theme";
 import {
   ListGroupGeneric,
   MakeListNodeProps,
-} from "../ListGroupShared/ListGroupGeneric";
+} from "./ListGroupShared/ListGroupGeneric";
 import { VarbListSingleTime } from "./ListGroupSingleTime/VarbListSingleTime";
 
 type Props<

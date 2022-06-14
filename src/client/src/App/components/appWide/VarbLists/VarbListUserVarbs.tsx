@@ -1,6 +1,6 @@
 import { FeInfoByType } from "../../../sharedWithServer/SectionsMeta/Info";
 import { ThemeName } from "../../../theme/Theme";
-import { VarbListGeneric } from "../ListGroupShared/VarbListGeneric";
+import { VarbListGeneric } from "../ListGroup/ListGroupShared/VarbListGeneric";
 import { UserVarbItem } from "./VarbListUserVarbs/UserVarbItem";
 
 type Props = {

@@ -2,24 +2,23 @@ import { FeParentInfo } from "../../../sharedWithServer/SectionsMeta/Info";
 import { ChildName } from "../../../sharedWithServer/SectionsMeta/relSectionTypes/ChildTypes";
 import { SectionName } from "../../../sharedWithServer/SectionsMeta/SectionName";
 import { ThemeName } from "../../../theme/Theme";
+import { VarbListUserVarbs } from "../VarbLists/VarbListUserVarbs";
 import {
   ListGroupGeneric,
   MakeListNodeProps,
-} from "../ListGroupShared/ListGroupGeneric";
-import { VarbListSingleTime } from "./ListGroupSingleTime/VarbListSingleTime";
+} from "./ListGroupShared/ListGroupGeneric";
 
 type Props<
-  SN extends SectionName<"singleTimeList"> = SectionName<"singleTimeList">
+  SN extends SectionName<"userVarbList"> = SectionName<"userVarbList">
 > = {
   parentInfo: FeParentInfo<SN>;
   sectionName: SN;
   itemName: ChildName<SN>;
   titleText: string;
   themeName: ThemeName;
-  totalVarbName: string;
   className?: string;
 };
-export function ListGroupSingleTime<SN extends SectionName<"singleTimeList">>(
+export function ListGroupUserVarbs<SN extends SectionName<"userVarbList">>(
   props: Props<SN>
 ) {
   return (
@@ -27,7 +26,7 @@ export function ListGroupSingleTime<SN extends SectionName<"singleTimeList">>(
       {...{
         ...props,
         makeListNode: (nodeProps) => (
-          <VarbListSingleTime {...(nodeProps as MakeListNodeProps<SN>)} />
+          <VarbListUserVarbs {...(nodeProps as MakeListNodeProps<SN>)} />
         ),
       }}
     />

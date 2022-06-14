@@ -1,7 +1,7 @@
 import React from "react";
 import LabeledEquation from "../../../AdditiveListNext/AdditiveItem/LabeledEquation";
 import LoadedVarb from "../../../AdditiveListNext/AdditiveItem/LoadedVarb";
-import { VarbListItemGeneric } from "../../../ListGroupShared/VarbListItemGeneric";
+import { VarbListItemGeneric } from "../../ListGroupShared/VarbListItemGeneric";
 
 export function ListItemSingleTime({ feId }: { feId: string }) {
   const feInfo = { sectionName: "singleTimeItem", feId } as const;

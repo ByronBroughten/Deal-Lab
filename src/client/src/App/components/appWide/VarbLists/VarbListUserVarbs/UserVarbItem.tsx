@@ -1,6 +1,6 @@
 import IfThen from "../../AdditiveListNext/AdditiveItem/IfThen";
 import LabeledEquation from "../../AdditiveListNext/AdditiveItem/LabeledEquation";
-import { VarbListItemGeneric } from "../../ListGroupShared/VarbListItemGeneric";
+import { VarbListItemGeneric } from "../../ListGroup/ListGroupShared/VarbListItemGeneric";
 
 type Props = { feId: string };
 export function UserVarbItem({ feId }: Props) {

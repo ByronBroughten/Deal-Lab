@@ -2,7 +2,7 @@ import React from "react";
 import MainSection from "../../appWide/GeneralSection/MainSection";
 import MainSectionBody from "../../appWide/GeneralSection/MainSection/MainSectionBody";
 import { MainSectionTitleRow } from "../../appWide/GeneralSection/MainSection/MainSectionTitleRow";
-import { ListGroupNext } from "./../general/ListGroupNext";
+import { ListGroupSingleTime } from "../../appWide/ListGroup/ListGroupSingleTime";
 import BasicLoanInfo from "./Loan/BasicLoanInfo";
 
 export default function Loan({ feId }: { feId: string }) {
@@ -25,20 +25,21 @@ export default function Loan({ feId }: { feId: string }) {
               </div>
             </div>
           </div>
-
-          <ListGroupNext
-            {...{
-              feInfo,
-              listSectionName: "closingCostList",
-            }}
-            titleText="Loan Fees"
+          <ListGroupSingleTime
+            parentInfo={feInfo}
+            sectionName="closingCostList"
+            itemName="singleTimeItem"
             totalVarbName="closingCosts"
+            titleText="Loan Fees"
+            themeName="loan"
           />
-          <ListGroupNext
-            feInfo={feInfo}
-            listSectionName="wrappedInLoanList"
-            titleText="Wrapped in loan"
+          <ListGroupSingleTime
+            parentInfo={feInfo}
+            sectionName="wrappedInLoanList"
+            itemName="singleTimeItem"
             totalVarbName="wrappedInLoan"
+            titleText="Wrapped in loan"
+            themeName="loan"
           />
         </MainSectionBody>
       </div>

@@ -2,7 +2,7 @@ import { FeSectionInfo } from "../../../sharedWithServer/SectionsMeta/Info";
 import { SectionName } from "../../../sharedWithServer/SectionsMeta/SectionName";
 import { useSetterSection } from "../../../sharedWithServer/stateClassHooks/useSetterSection";
 import { ThemeName } from "../../../theme/Theme";
-import { VarbListGeneric } from "../ListGroupShared/VarbListGeneric";
+import { VarbListGeneric } from "../ListGroup/ListGroupShared/VarbListGeneric";
 import { OngoingListItem } from "./VarbListOngoing/OngoingListItem";
 
 type Props<SN extends SectionName<"ongoingList"> = SectionName<"ongoingList">> =

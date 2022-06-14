@@ -4,14 +4,14 @@ import styled, { css } from "styled-components";
 import {
   FeParentInfo,
   FeSectionInfo,
-} from "../../../sharedWithServer/SectionsMeta/Info";
-import { ChildName } from "../../../sharedWithServer/SectionsMeta/relSectionTypes/ChildTypes";
-import { SectionName } from "../../../sharedWithServer/SectionsMeta/SectionName";
-import { useSetterSection } from "../../../sharedWithServer/stateClassHooks/useSetterSection";
-import ccs from "../../../theme/cssChunks";
-import theme, { ThemeName } from "../../../theme/Theme";
-import useHowMany from "../customHooks/useHowMany";
-import PlusBtn from "../PlusBtn";
+} from "../../../../sharedWithServer/SectionsMeta/Info";
+import { ChildName } from "../../../../sharedWithServer/SectionsMeta/relSectionTypes/ChildTypes";
+import { SectionName } from "../../../../sharedWithServer/SectionsMeta/SectionName";
+import { useSetterSection } from "../../../../sharedWithServer/stateClassHooks/useSetterSection";
+import ccs from "../../../../theme/cssChunks";
+import theme, { ThemeName } from "../../../../theme/Theme";
+import useHowMany from "../../customHooks/useHowMany";
+import PlusBtn from "../../PlusBtn";
 import { ListGroupTotal } from "./ListGroupGeneric/ListGroupTotal";
 
 type Props<SN extends SectionName<"allList"> = SectionName<"allList">> = {

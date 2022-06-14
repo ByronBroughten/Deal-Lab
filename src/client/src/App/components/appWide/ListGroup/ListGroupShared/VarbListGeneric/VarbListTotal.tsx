@@ -1,5 +1,5 @@
-import { VarbInfo } from "../../../../sharedWithServer/SectionsMeta/Info";
-import { useGetterVarb } from "../../../../sharedWithServer/stateClassHooks/useGetterVarb";
+import { VarbInfo } from "../../../../../sharedWithServer/SectionsMeta/Info";
+import { useGetterVarb } from "../../../../../sharedWithServer/stateClassHooks/useGetterVarb";
 
 type Props = { varbInfo: VarbInfo };
 export function VarbListTotal({ varbInfo }: Props) {

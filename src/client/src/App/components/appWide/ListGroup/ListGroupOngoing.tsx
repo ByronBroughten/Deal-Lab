@@ -2,12 +2,12 @@ import { FeParentInfo } from "../../../sharedWithServer/SectionsMeta/Info";
 import { ChildName } from "../../../sharedWithServer/SectionsMeta/relSectionTypes/ChildTypes";
 import { SectionName } from "../../../sharedWithServer/SectionsMeta/SectionName";
 import { ThemeName } from "../../../theme/Theme";
+import { VarbListOngoing } from "../VarbLists/VarbListOngoing";
+import { useGetterSection } from "./../../../sharedWithServer/stateClassHooks/useGetterSection";
 import {
   ListGroupGeneric,
   MakeListNodeProps,
-} from "../ListGroupShared/ListGroupGeneric";
-import { VarbListOngoing } from "../VarbLists/VarbListOngoing";
-import { useGetterSection } from "./../../../sharedWithServer/stateClassHooks/useGetterSection";
+} from "./ListGroupShared/ListGroupGeneric";
 
 type Props<SN extends SectionName<"ongoingList"> = SectionName<"ongoingList">> =
   {
