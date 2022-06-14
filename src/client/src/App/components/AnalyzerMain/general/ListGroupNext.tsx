@@ -8,7 +8,7 @@ import { sectionNameS } from "../../../sharedWithServer/SectionsMeta/SectionName
 import { useSetterSection } from "../../../sharedWithServer/stateClassHooks/useSetterSection";
 import ccs from "../../../theme/cssChunks";
 import theme, { themeSectionNameOrDefault } from "../../../theme/Theme";
-import AdditiveListNext from "../../appWide/AdditiveListNext";
+import { AdditiveListNext } from "../../appWide/AdditiveListNext";
 import useHowMany from "../../appWide/customHooks/useHowMany";
 import PlusBtn from "../../appWide/PlusBtn";
 
@@ -73,7 +73,7 @@ export function ListGroupNext({
               <AdditiveListNext
                 {...{
                   key: feId,
-                  themeSectionName: themeSectionNameOrDefault(sectionName),
+                  themeName: themeSectionNameOrDefault(sectionName),
                   className: "ListGroup-list",
                   feInfo: {
                     sectionName: listSectionName,

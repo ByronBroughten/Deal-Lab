@@ -1,9 +1,9 @@
-import styled, { ThemeProvider } from "styled-components";
-import theme, { ThemeSectionName } from "../../theme/Theme";
 import React from "react";
+import styled, { ThemeProvider } from "styled-components";
+import theme, { ThemeName } from "../../theme/Theme";
 
 type Props = {
-  sectionName: ThemeSectionName;
+  sectionName: ThemeName;
   children?: React.ReactNode;
   className?: string;
 };
@@ -27,7 +27,7 @@ export default function MainSection({
     </ThemeProvider>
   );
 }
-const Styled = styled.section<{ sectionName: ThemeSectionName }>`
+const Styled = styled.section<{ sectionName: ThemeName }>`
   display: flex;
   flex: 0;
 

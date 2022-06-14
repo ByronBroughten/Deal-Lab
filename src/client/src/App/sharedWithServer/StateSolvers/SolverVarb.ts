@@ -95,6 +95,27 @@ export class SolverVarb<
     this.removeObsoleteOutEntities();
     this.addNewOutEntitites();
   }
+  addOutEntitiesOfInEntities() {
+    const { inEntities } = this.get;
+    for (const inEntity of inEntities) {
+      if (this.getterSections.hasSectionMixed(inEntity)) {
+        const inEntityVarb = this.solverSections.varbByMixed(inEntity);
+        inEntityVarb.addOutEntity({
+          ...this.get.feVarbInfoMixed,
+          entityId: inEntity.entityId,
+        });
+      }
+    }
+  }
+  removeOutEntitiesOfInEntities() {
+    const { inEntities } = this.get;
+    for (const inEntity of inEntities) {
+      if (this.getterSections.hasSectionMixed(inEntity)) {
+        const inEntityVarb = this.solverSections.varbByMixed(inEntity);
+        inEntityVarb.removeOutEntity(inEntity.entityId);
+      }
+    }
+  }
   private removeObsoleteOutEntities() {
     const { missingEntities } = this;
     for (const entity of missingEntities) {

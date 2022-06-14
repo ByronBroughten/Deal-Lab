@@ -1,5 +1,5 @@
 import { css } from "styled-components";
-import theme, { ThemeSectionName } from "./Theme";
+import theme, { ThemeName } from "./Theme";
 
 const ccs = {
   coloring: {
@@ -106,7 +106,7 @@ const ccs = {
       font-weight: 600;
       color: ${theme["gray-700"]};
     `,
-    main(sectionName: ThemeSectionName) {
+    main(sectionName: ThemeName) {
       return css`
         .viewable {
           ${this.viewable};
@@ -124,7 +124,7 @@ const ccs = {
     },
   },
   listTable: {
-    main(sectionName: ThemeSectionName) {
+    main(sectionName: ThemeName) {
       return css`
         border-collapse: collapse;
         border-radius: ${theme.br1};
@@ -144,7 +144,7 @@ const ccs = {
         }
       `;
     },
-    headRow(sectionName: ThemeSectionName) {
+    headRow(sectionName: ThemeName) {
       return css`
         //tr
         background-color: ${theme[sectionName].row};
@@ -171,7 +171,7 @@ const ccs = {
         }
       `;
     },
-    bodyRow(sectionName: ThemeSectionName) {
+    bodyRow(sectionName: ThemeName) {
       return css`
         // tr
         background-color: ${theme[sectionName].row};
@@ -217,7 +217,7 @@ const ccs = {
       `;
     },
   },
-  listSection(sectionName: ThemeSectionName) {
+  listSection(sectionName: ThemeName) {
     return css`
       ${ccs.subSection.main(sectionName)}
     `;
@@ -226,13 +226,7 @@ const ccs = {
     root: css`
       padding: ${theme.s1} ${theme.s2} 0 ${theme.s2};
     `,
-    main({
-      label,
-      sectionName,
-    }: {
-      label?: string;
-      sectionName?: ThemeSectionName;
-    }) {
+    main({ label, sectionName }: { label?: string; sectionName?: ThemeName }) {
       return css`
         display: inline-block;
         .editor-background {

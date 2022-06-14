@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "styled-components";
-import theme, { ThemeSectionName } from "../../../theme/Theme";
+import theme, { ThemeName } from "../../../theme/Theme";
 import { StandardProps } from "../../general/StandardProps";
 
 type Props = StandardProps & {
   title: string;
-  themeName?: ThemeSectionName;
+  themeName?: ThemeName;
 };
 
 export default function GeneralSectionTitle({
@@ -30,7 +30,7 @@ export default function GeneralSectionTitle({
 
 const toggleViewBtnSize = "17px";
 export const MainSectionTitleStyled = styled.div<{
-  themeName: ThemeSectionName;
+  themeName: ThemeName;
 }>`
   position: relative;
   z-index: 1;

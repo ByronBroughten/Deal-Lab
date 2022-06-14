@@ -3,10 +3,7 @@ import styled, { css } from "styled-components";
 import useOnOutsideClickRef from "../../modules/customHooks/useOnOutsideClickRef";
 import useToggle from "../../modules/customHooks/useToggle";
 import { FeInfoByType } from "../../sharedWithServer/SectionsMeta/Info";
-import theme, {
-  ThemeSectionName,
-  themeSectionNameOrDefault,
-} from "../../theme/Theme";
+import theme, { ThemeName, themeSectionNameOrDefault } from "../../theme/Theme";
 import { LoggedInOrOutIconBtn } from "./LoggedInOrNotBtn";
 import { RowIndexRows } from "./RowIndexRows";
 
@@ -71,7 +68,7 @@ export default function RowIndexSectionList({
 }
 
 const Styled = styled.div<{
-  sectionName: ThemeSectionName;
+  sectionName: ThemeName;
   $active: boolean;
   $droptop: boolean;
 }>`

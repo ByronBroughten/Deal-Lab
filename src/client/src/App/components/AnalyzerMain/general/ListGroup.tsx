@@ -84,7 +84,7 @@ export default function ListGroup({
                 {...{
                   key: listId,
                   feInfo: InfoS.fe(listSectionName, listId),
-                  themeSectionName: themeSectionNameOrDefault(sectionName),
+                  themeName: themeSectionNameOrDefault(sectionName),
                   className: "ListGroup-list",
                 }}
               />

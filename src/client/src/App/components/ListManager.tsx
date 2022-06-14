@@ -74,7 +74,7 @@ export default function ListManager({ sectionName }: Props) {
               <AdditiveList
                 {...{
                   feInfo: { sectionName, id, idType: "feId" },
-                  themeSectionName: sectionName,
+                  themeName: sectionName,
                   listType: sectionName,
                 }}
               />

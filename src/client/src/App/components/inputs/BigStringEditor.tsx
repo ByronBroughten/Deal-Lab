@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/relSections/rel/relVarbInfoTypes";
-import { ThemeSectionName } from "../../theme/Theme";
+import { ThemeName } from "../../theme/Theme";
 import MaterialDraftEditor from "./MaterialDraftEditor";
 import { createStringEditor } from "./MaterialStringEditor";
 import useDraftInput from "./useDraftInput";
@@ -10,7 +10,7 @@ export interface Props {
   feVarbInfo: FeVarbInfo;
   className?: string;
   label?: any;
-  sectionName?: ThemeSectionName;
+  sectionName?: ThemeName;
   placeholder?: string;
 }
 

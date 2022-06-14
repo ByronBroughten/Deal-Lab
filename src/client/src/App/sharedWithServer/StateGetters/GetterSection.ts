@@ -1,5 +1,6 @@
 import { ValueTypesPlusAny } from "../FeSections/FeSection/FeVarb";
 import { DbSectionInfo } from "../SectionPack/DbSectionInfo";
+import { SwitchTargetKey } from "../SectionsMeta/baseSections/baseSwitchNames";
 import {
   SwitchEndingKey,
   switchNames,
@@ -203,9 +204,23 @@ export class GetterSection<
   varbInfo(varbName: string): VarbInfo<SN> {
     return this.varb(varbName).feVarbInfo;
   }
-  switchVarbName(varbNameBase: string, switchEnding: SwitchEndingKey): string {
+  switchValue<SK extends SwitchEndingKey>(
+    varbNameBase: string,
+    switchEnding: SK
+  ): SwitchTargetKey<SK> {
     const varbNames = switchNames(varbNameBase, switchEnding);
     const switchValue = this.value(varbNames.switch, "string");
+    if (!(switchValue in varbNames) || switchValue === "switch")
+      throw new Error(
+        `switchValue of "${switchValue}" not a switch key: ${Object.keys(
+          varbNames
+        )}`
+      );
+    return switchValue as SwitchTargetKey<SK>;
+  }
+  switchVarbName(varbNameBase: string, switchEnding: SwitchEndingKey): string {
+    const varbNames = switchNames(varbNameBase, switchEnding);
+    const switchValue = this.switchValue(varbNameBase, switchEnding);
     return varbNames[switchValue as keyof typeof varbNames];
   }
   switchVarbInfo(

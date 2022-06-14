@@ -1,11 +1,11 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import ccs from "../../../../../theme/cssChunks";
-import theme, { ThemeSectionName } from "../../../../../theme/Theme";
+import theme, { ThemeName } from "../../../../../theme/Theme";
 
 type Props = {
   className?: string;
-  sectionName: ThemeSectionName;
+  sectionName: ThemeName;
 };
 export default function BasicSectionInfo({
   className,
@@ -22,7 +22,7 @@ export default function BasicSectionInfo({
     />
   );
 }
-const Styled = styled.div<{ sectionName: ThemeSectionName }>`
+const Styled = styled.div<{ sectionName: ThemeName }>`
   ${({ sectionName }) => css`
     ${ccs.subSection.main(sectionName)};
     .BasicSectionInfo-subSection-viewable,

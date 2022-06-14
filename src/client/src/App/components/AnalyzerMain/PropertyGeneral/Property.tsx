@@ -2,7 +2,8 @@ import React from "react";
 import MainSection from "../../appWide/GeneralSection/MainSection";
 import MainSectionBody from "../../appWide/GeneralSection/MainSection/MainSectionBody";
 import { MainSectionTitleRow } from "../../appWide/GeneralSection/MainSection/MainSectionTitleRow";
-import { ListGroupNext } from "../general/ListGroupNext";
+import { ListGroupOngoing } from "../../appWide/ListGroup/ListGroupOngoing";
+import { ListGroupSingleTime } from "../../appWide/ListGroup/ListGroupSingleTime";
 import BasicPropertyInfo from "./Property/BasicPropertyInfo";
 
 export default function Property({ feId }: { feId: string }) {
@@ -25,17 +26,21 @@ export default function Property({ feId }: { feId: string }) {
             </div>
           </div>
         </div>
-        <ListGroupNext
-          feInfo={feInfo}
-          listSectionName="ongoingCostList"
+        <ListGroupOngoing
+          parentInfo={feInfo}
+          sectionName="ongoingCostList"
+          itemName="ongoingItem"
+          totalVarbNameBase="ongoingExpenses"
           titleText="Ongoing Costs"
-          totalVarbName="ongoingExpenses"
+          themeName="property"
         />
-        <ListGroupNext
-          feInfo={feInfo}
-          listSectionName="upfrontCostList"
-          titleText="Upfront Costs"
+        <ListGroupSingleTime
+          parentInfo={feInfo}
+          sectionName="upfrontCostList"
+          itemName="singleTimeItem"
           totalVarbName="upfrontExpenses"
+          titleText="Upfront Costs"
+          themeName="property"
         />
       </MainSectionBody>
     </MainSection>

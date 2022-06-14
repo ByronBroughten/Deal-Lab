@@ -17,13 +17,19 @@ export function makeDefaultPropertyPack(): SectionPackRaw<"property"> {
     }
   );
   property.addChild("ongoingCostList", {
-    dbVarbs: { title: "Utilities" },
+    dbVarbs: {
+      title: "Utilities",
+      totalOngoingSwitch: "monthly",
+      defaultValueSwitch: "labeledEquation",
+      defaultOngoingSwitch: "monthly",
+    },
   });
   property.addChild("ongoingCostList", {
     dbVarbs: {
       title: "CapEx",
       totalOngoingSwitch: "yearly",
       defaultValueSwitch: "labeledSpanOverCost",
+      defaultOngoingSwitch: "yearly",
     },
   });
   property.addChild("upfrontCostList", {

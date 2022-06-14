@@ -83,20 +83,18 @@ function getStandardSection({ main, light, dark, ...rest }: SectionThemeBase) {
   };
 }
 
-export type ThemeSectionName = keyof typeof themeSections;
+export type ThemeName = keyof typeof themeSections;
 export type ThemeFeInfo = FeInfo & {
-  sectionName: ThemeSectionName;
+  sectionName: ThemeName;
 };
-function isThemeSectionName(str: string): str is ThemeSectionName {
+function isThemeSectionName(str: string): str is ThemeName {
   return Obj.keys(themeSections).includes(str as any);
 }
-export function themeSectionNameOrDefault(
-  sectionName: string
-): ThemeSectionName {
+export function themeSectionNameOrDefault(sectionName: string): ThemeName {
   return isThemeSectionName(sectionName) ? sectionName : "default";
 }
 
-// replace all instances of "themeSectionName" with just "themeName"
+// replace all instances of "themeName" with just "themeName"
 // decouple those two things
 const themeSections = {
   default: {

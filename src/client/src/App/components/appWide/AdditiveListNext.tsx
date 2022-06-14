@@ -14,7 +14,7 @@ import {
 } from "../../sharedWithServer/SectionsMeta/SectionName";
 import { useGetterSection } from "../../sharedWithServer/stateClassHooks/useGetterSection";
 import ccs from "../../theme/cssChunks";
-import theme, { ThemeSectionName } from "../../theme/Theme";
+import theme, { ThemeName } from "../../theme/Theme";
 import PlainIconBtn from "../general/PlainIconBtn";
 import { BigStringEditorNext } from "../inputs/BigStringEditorNext";
 import AdditiveListTable from "./AdditiveListNext/AdditiveListTable";
@@ -43,15 +43,11 @@ function AdditiveListTotal({ feInfo, listType }: AdditiveListTotalProps) {
 
 type Props = {
   feInfo: FeInfoByType<"allList">;
-  themeSectionName: ThemeSectionName;
+  themeName: ThemeName;
   className?: string;
 };
 
-export default function AdditiveList({
-  feInfo,
-  themeSectionName,
-  className,
-}: Props) {
+export function AdditiveListNext({ feInfo, themeName, className }: Props) {
   const section = useGetterSection(feInfo);
   const listType = listNameToStoreName(feInfo.sectionName);
   const titleVarb = section.varb("title");
@@ -69,7 +65,7 @@ export default function AdditiveList({
   return (
     <Styled
       className={"AdditiveList-root " + className}
-      {...{ sectionName: themeSectionName, listMenuIsOpen }}
+      {...{ sectionName: themeName, listMenuIsOpen }}
     >
       <div className="AdditiveList-viewable viewable">
         <div className="AdditiveList-titleRow">
@@ -79,7 +75,7 @@ export default function AdditiveList({
                 feVarbInfo: titleVarb.feVarbInfo,
                 placeholder: "List Title",
                 className: "AdditiveList-title",
-                sectionName: themeSectionName,
+                sectionName: themeName,
               }}
             />
             {sectionNameS.is(listType, "additiveList") && isAtLeastOne && (
@@ -94,7 +90,7 @@ export default function AdditiveList({
             <IoEllipsisVertical size="22" />
           </PlainIconBtn>
         </div>
-        {viewIsOpen && <AdditiveListTable {...{ feInfo, themeSectionName }} />}
+        {viewIsOpen && <AdditiveListTable {...{ feInfo, themeName }} />}
       </div>
       {section.thisIsSectionType("hasIndexStore") && listMenuIsOpen && (
         <ListMenu
@@ -102,7 +98,7 @@ export default function AdditiveList({
           {...{
             viewIsOpen,
             feInfo: section.feInfo,
-            themeSectionName,
+            themeName,
             toggleListView: trackWidthToggleView,
           }}
         />
@@ -112,7 +108,7 @@ export default function AdditiveList({
 }
 
 const Styled = styled.div<{
-  sectionName: ThemeSectionName;
+  sectionName: ThemeName;
   listMenuIsOpen: boolean;
 }>`
   // needed to display list menu correctly

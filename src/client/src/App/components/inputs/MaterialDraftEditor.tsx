@@ -4,7 +4,7 @@ import { pick } from "lodash";
 import React from "react";
 import styled from "styled-components";
 import ccs from "../../theme/cssChunks";
-import theme, { ThemeSectionName } from "../../theme/Theme";
+import theme, { ThemeName } from "../../theme/Theme";
 import { HandleOnChange } from "../../utils/DraftS";
 import MaterialDraftField from "./MaterialDraftField";
 
@@ -18,7 +18,7 @@ interface TweakedEditorProps extends Omit<EditorProps, "onChange"> {
 }
 
 interface Props extends Omit<FilledTextFieldProps, "InputProps" | "variant"> {
-  sectionName?: ThemeSectionName;
+  sectionName?: ThemeName;
   editorProps: TweakedEditorProps;
   shellProps?: ShellProps;
   onClick?: () => void;
@@ -92,7 +92,7 @@ export default function MaterialDraftEditor({
   );
 }
 
-const Styled = styled.div<{ label?: any; sectionName?: ThemeSectionName }>`
+const Styled = styled.div<{ label?: any; sectionName?: ThemeName }>`
   ${({ label, sectionName }) =>
     ccs.materialDraftEditor.main({ label, sectionName })};
   .public-DraftEditorPlaceholder-root {

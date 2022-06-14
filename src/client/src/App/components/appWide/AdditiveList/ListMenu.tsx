@@ -5,7 +5,7 @@ import styled, { css } from "styled-components";
 import useToggleView from "../../../modules/customHooks/useToggleView";
 import { useAnalyzerContext } from "../../../modules/usePropertyAnalyzer";
 import { FeInfo } from "../../../sharedWithServer/SectionsMeta/Info";
-import theme, { ThemeSectionName } from "../../../theme/Theme";
+import theme, { ThemeName } from "../../../theme/Theme";
 import { StandardProps } from "../../general/StandardProps";
 import XBtn from "../Xbtn";
 import ListMenuBtn from "./ListMenuBtn";
@@ -37,7 +37,7 @@ function useFullIndexStoreMenu(feInfo: FeInfo<"hasFullIndex">) {
 
 type Props = StandardProps & {
   feInfo: FeInfo<"hasFullIndex">;
-  themeSectionName: ThemeSectionName;
+  themeName: ThemeName;
   toggleListView: () => void;
   viewIsOpen: boolean;
 };
@@ -45,7 +45,7 @@ export function ListMenu({
   className,
   feInfo,
   toggleListView,
-  themeSectionName,
+  themeName,
   viewIsOpen,
 }: Props) {
   const menu = useFullIndexStoreMenu(feInfo);
@@ -53,7 +53,7 @@ export function ListMenu({
     <Styled
       {...{
         className: "ListMenu-root " + className,
-        themeSectionName,
+        themeName,
       }}
     >
       <div className="ListMenu-viewable">
@@ -89,7 +89,7 @@ export function ListMenu({
   );
 }
 
-const Styled = styled.div<{ themeSectionName: ThemeSectionName }>`
+const Styled = styled.div<{ themeName: ThemeName }>`
   .ListMenu-viewable {
     border-radius: 0 ${theme.br1} ${theme.br1} 0;
     border: 1px solid;
@@ -97,9 +97,9 @@ const Styled = styled.div<{ themeSectionName: ThemeSectionName }>`
     box-shadow: ${theme.boxShadow1};
     position: relative;
 
-    ${({ themeSectionName }) => css`
-      background-color: ${theme[themeSectionName].main};
-      border-color: ${theme[themeSectionName].border};
+    ${({ themeName }) => css`
+      background-color: ${theme[themeName].main};
+      border-color: ${theme[themeName].border};
     `}
   }
   .ListMenu-listMenuBtn {

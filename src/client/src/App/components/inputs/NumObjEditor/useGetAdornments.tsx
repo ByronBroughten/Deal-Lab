@@ -22,7 +22,6 @@ function getAdornments({
 }: GetAdornmentsProps): Adornments {
   let startAdornment = pAdornments.startAdornment ?? vAdornments.startAdornment;
   let endAdornment = pAdornments.endAdornment ?? vAdornments.endAdornment;
-
   if (editorTextStatus === "solvableText") {
     return {
       startAdornment: "",
@@ -38,9 +37,6 @@ function getAdornments({
 }
 
 export default function useGetEndAdornments(props: GetAdornmentsProps) {
-  return getAdornments(props);
-
-  return React.useMemo(() => {
-    return getAdornments(props);
-  }, [...Object.values(props)]);
+  const endAdornment = getAdornments(props);
+  return endAdornment;
 }

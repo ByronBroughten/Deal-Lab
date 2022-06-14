@@ -132,6 +132,7 @@ export const baseVarbs = {
       title: "string",
       ...this.ongoing("total"),
       defaultValueSwitch: "string",
+      defaultOngoingSwitch: "string",
     } as const;
   },
   get varbInfo() {

@@ -8,11 +8,18 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-// make anything that accesses the queries take apiQueries as
-// an argument
+// *update outEntities—this should happen whenever
+// a section is added or loaded*
+// *also, update outEntities whenever
+// a section is remomved*
 
-// test the stateSetter stuff that is used throughout the app
-// test the all the SectionActors
+// ongoingItem monthly value is being divided by 12 before feeding
+// into the monthly
+
+// upon loading, the editorValue isn't loading
+
+// fix the theme
+// make fix the bug with ongoing costs always dividing the displayed value by 12
 
 // - make the mainSectionLoadMenu use GenericAutoComplete
 
@@ -22,6 +29,8 @@ AppRegistry.runApplication("App", {
 // and then it's ready to sell.
 // I know that technically, it would still benefit from a few
 // other things:
+
+// Test sectionActors
 
 // UI
 // What about auto-save? Autosave would be really cool to have

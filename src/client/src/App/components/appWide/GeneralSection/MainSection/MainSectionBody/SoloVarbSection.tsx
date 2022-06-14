@@ -1,11 +1,8 @@
 import React from "react";
-import NumObjEditor from "../../../../inputs/NumObjEditor";
 import styled from "styled-components";
-import theme, {
-  ThemeFeInfo,
-  ThemeSectionName,
-} from "../../../../../theme/Theme";
 import ccs from "../../../../../theme/cssChunks";
+import theme, { ThemeFeInfo, ThemeName } from "../../../../../theme/Theme";
+import NumObjEditor from "../../../../inputs/NumObjEditor";
 
 type Props = {
   feInfo: ThemeFeInfo;
@@ -35,7 +32,7 @@ export default function SoloVarbSection({
   );
 }
 
-const Styled = styled.div<{ sectionName: ThemeSectionName }>`
+const Styled = styled.div<{ sectionName: ThemeName }>`
   ${({ sectionName }) => ccs.subSection.main(sectionName)};
 
   .light-strip {

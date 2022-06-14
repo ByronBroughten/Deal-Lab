@@ -17,6 +17,11 @@ export const Arr = {
     nextArr.splice(idx, 0, value);
     return nextArr;
   },
+  nextRotatingValue<T>(arr: readonly T[], currentValue: T): T {
+    const currentIdx = arr.indexOf(currentValue as any);
+    const nextIdx = (currentIdx + 1) % arr.length;
+    return arr[nextIdx];
+  },
   replaceAtIdxClone<V>(arr: readonly V[], value: V, idx: number): V[] {
     const nextArr = [...arr];
     nextArr[idx] = value;

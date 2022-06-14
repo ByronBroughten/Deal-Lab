@@ -3,8 +3,8 @@ import { useGetterSection } from "../../../../sharedWithServer/stateClassHooks/u
 import { MaterialStringEditorNext } from "../../../inputs/MaterialStringEditorNext";
 import { NumObjEditorNext } from "../../../inputs/NumObjEditorNext";
 
-type Props = { feInfo: FeSectionInfo };
-export default function LabeledEquation({ feInfo }: Props) {
+type Props = { feInfo: FeSectionInfo; endAdornment?: string };
+export default function LabeledEquation({ feInfo, endAdornment }: Props) {
   const section = useGetterSection(feInfo);
   return (
     <>
@@ -17,6 +17,7 @@ export default function LabeledEquation({ feInfo }: Props) {
             feVarbInfo={section.varbInfo("editorValue")}
             className="cost"
             labeled={false}
+            endAdornment={endAdornment}
           />
         </div>
       </td>

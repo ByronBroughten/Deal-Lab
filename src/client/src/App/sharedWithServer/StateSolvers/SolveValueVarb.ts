@@ -12,6 +12,7 @@ import {
 import { isNumObjUpdateFnName } from "../SectionsMeta/baseSections/baseValues/updateFnNames";
 import { InfoS } from "../SectionsMeta/Info";
 import { SpecificVarbInfo } from "../SectionsMeta/relSections/rel/relVarbInfoTypes";
+import { UpdateFnProps } from "../SectionsMeta/relSections/rel/relVarbTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { GetterSectionProps } from "../StateGetters/Bases/GetterSectionBase";
 import { GetterVarbBase } from "../StateGetters/Bases/GetterVarbBase";
@@ -34,6 +35,7 @@ export class SolveValueVarb<
     string: (): string => {
       return this.getterVarb.value("string");
     },
+
     editorValue: (): NumObj => {
       const value = this.getterVarb.value("numObj");
       const { cache } = this.getterVarb.localValue("editorValue", "numObj");
@@ -160,18 +162,17 @@ export class SolveValueVarb<
         `updateFnName is ${updateFnName}, but this is only for pure calculations`
       );
 
-    const { numberVarbs } = this.getNumberVarbs();
+    const { updateFnProps } = this.getterVarb;
+    const { numberVarbs } = this.getNumberVarbs(updateFnProps);
     const solvableText = calculations[updateFnName](numberVarbs as any);
     return solvableText;
   }
-  private getNumberVarbs(): {
+  private getNumberVarbs(updateFnProps: UpdateFnProps): {
     numberVarbs: NumberProps;
     failedVarbs: FailedVarbs;
   } {
     const numberVarbs: NumberProps = {};
     const failedVarbs: FailedVarbs = [];
-
-    const { updateFnProps } = this.getterVarb;
 
     for (let [propName, propOrArr] of Object.entries(updateFnProps)) {
       if (Array.isArray(propOrArr)) numberVarbs[propName] = [];

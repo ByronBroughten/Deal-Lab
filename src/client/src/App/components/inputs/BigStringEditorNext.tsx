@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { VarbInfo } from "../../sharedWithServer/SectionsMeta/Info";
-import { ThemeSectionName } from "../../theme/Theme";
+import { ThemeName } from "../../theme/Theme";
 import MaterialDraftEditor from "./MaterialDraftEditor";
 import { useDraftInputNext } from "./useDraftInputNext";
 
@@ -9,7 +9,7 @@ interface Props {
   feVarbInfo: VarbInfo;
   className?: string;
   label?: any;
-  themeName?: ThemeSectionName;
+  themeName?: ThemeName;
   placeholder?: string;
 }
 

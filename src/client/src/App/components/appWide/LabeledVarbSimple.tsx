@@ -3,7 +3,7 @@ import styled, { css } from "styled-components";
 import { useAnalyzerContext } from "../../modules/usePropertyAnalyzer";
 import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/relSections/rel/relVarbInfoTypes";
 import { GetterVarb } from "../../sharedWithServer/StateGetters/GetterVarb";
-import theme, { ThemeSectionName } from "../../theme/Theme";
+import theme, { ThemeName } from "../../theme/Theme";
 import PlainBtn from "../general/PlainBtn";
 
 type UseLabeledOutputProps = {
@@ -45,13 +45,13 @@ type LabeledVarbProps = UseLabeledOutputProps & {
   feVarbInfo: FeVarbInfo;
   onXBtnClick?: () => void;
   className?: string;
-  themeSectionName?: ThemeSectionName;
+  themeName?: ThemeName;
 };
 export function LabeledVarbSimple({
   feVarbInfo,
   className,
   onXBtnClick,
-  themeSectionName = "default",
+  themeName = "default",
   ...rest
 }: LabeledVarbProps) {
   const varbId = GetterVarb.feVarbInfoToVarbId({
@@ -66,7 +66,7 @@ export function LabeledVarbSimple({
   return (
     <Styled
       className={`LabeledVarb-root ${className}`}
-      {...{ $themeSectionName: themeSectionName }}
+      {...{ $themeName: themeName }}
     >
       <div className="LabeledVarb-labelPositioner">
         <label htmlFor={varbId} className="LabeledVarb-label">
@@ -86,7 +86,7 @@ export function LabeledVarbSimple({
   );
 }
 
-const Styled = styled.div<{ $themeSectionName: ThemeSectionName }>`
+const Styled = styled.div<{ $themeName: ThemeName }>`
   position: relative;
   display: flex;
   flex-direction: column;
@@ -111,8 +111,8 @@ const Styled = styled.div<{ $themeSectionName: ThemeSectionName }>`
     bottom: 0px;
     background: ${theme.plus.light};
 
-    ${({ $themeSectionName }) => css`
-      background: ${theme[$themeSectionName].light};
+    ${({ $themeName }) => css`
+      background: ${theme[$themeName].light};
     `}
 
     padding: 0 2px;
@@ -133,8 +133,8 @@ const Styled = styled.div<{ $themeSectionName: ThemeSectionName }>`
     /* padding-right: 2px; */
     border-radius: 1rem;
 
-    ${({ $themeSectionName }) => css`
-      background: ${theme[$themeSectionName].light};
+    ${({ $themeName }) => css`
+      background: ${theme[$themeName].light};
     `}
     :hover {
       background-color: ${theme["gray-700"]};
@@ -147,8 +147,8 @@ const Styled = styled.div<{ $themeSectionName: ThemeSectionName }>`
     z-index: 1;
     text-align: center;
 
-    ${({ $themeSectionName }) => css`
-      border: 2px solid ${theme[$themeSectionName].dark};
+    ${({ $themeName }) => css`
+      border: 2px solid ${theme[$themeName].dark};
     `}
 
     border-radius: ${theme.brMaterialEditor};

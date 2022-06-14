@@ -4,21 +4,18 @@ import { SectionPackRaw } from "../SectionPack/SectionPackRaw";
 import { Id } from "../SectionsMeta/baseSections/id";
 import { FeSectionInfo } from "../SectionsMeta/Info";
 import { ChildName } from "../SectionsMeta/relSectionTypes/ChildTypes";
-import { ParentNameSafe } from "../SectionsMeta/relSectionTypes/ParentTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { GetterSectionProps } from "../StateGetters/Bases/GetterSectionBase";
 import { GetterSection } from "../StateGetters/GetterSection";
-import {
-  ChildSectionPackArrs,
-  PackLoaderSection,
-} from "../StatePackers.ts/PackLoaderSection";
+import { ChildSectionPackArrs } from "../StatePackers.ts/PackLoaderSection";
 import { StateSections } from "../StateSections/StateSectionsNext";
-import { DefaultOrNewChildAdder } from "../StateUpdaters/DefaultOrNewDescendantAdder";
 import {
   AddChildOptions,
   UpdaterSection,
 } from "../StateUpdaters/UpdaterSection";
 import { Obj } from "../utils/Obj";
+import { AddSolverSection } from "./AddSolverSection";
+import { ComboSolverSection } from "./ComboSolverSection";
 import { RemoveSolverSection } from "./RemoveSolverSection";
 import {
   SolverSectionBase,
@@ -34,23 +31,6 @@ interface SolverSectionInitProps<SN extends SectionName>
 export class SolverSection<
   SN extends SectionName
 > extends SolverSectionBase<SN> {
-  get = new GetterSection(this.getterSectionProps);
-  private solverSections = new SolverSections(this.solverSectionsProps);
-  private get updater() {
-    return new UpdaterSection(this.getterSectionProps);
-  }
-  private get defaultAdder() {
-    return new DefaultOrNewChildAdder(this.getterSectionProps);
-  }
-  private get remover() {
-    return RemoveSolverSection.init(this.solverSectionProps);
-  }
-  private get loader() {
-    return new PackLoaderSection(this.getterSectionProps);
-  }
-  get varbIdsToSolveFor(): Set<string> {
-    return this.solveShare.varbIdsToSolveFor;
-  }
   static init<S extends SectionName>(
     props: SolverSectionInitProps<S>
   ): SolverSection<S> {
@@ -61,19 +41,29 @@ export class SolverSection<
     }
     return new SolverSection(props as SolverSectionProps<S>);
   }
+  get = new GetterSection(this.getterSectionProps);
+  private solverSections = new SolverSections(this.solverSectionsProps);
+  private get updater() {
+    return new UpdaterSection(this.getterSectionProps);
+  }
+  private get remover() {
+    return RemoveSolverSection.init(this.solverSectionProps);
+  }
+  private get adder() {
+    return AddSolverSection.init(this.solverSectionProps);
+  }
+  private get combo() {
+    return new ComboSolverSection(this.solverSectionProps);
+  }
+  get varbIdsToSolveFor(): Set<string> {
+    return this.solveShare.varbIdsToSolveFor;
+  }
   solverSection<S extends SectionName>(
     feInfo: FeSectionInfo<S>
   ): SolverSection<S> {
     return new SolverSection({
       ...this.solverSectionsProps,
       ...feInfo,
-    });
-  }
-  private get parent(): SolverSection<ParentNameSafe<SN>> {
-    const { parentInfoSafe } = this.get;
-    return new SolverSection({
-      ...this.solverSectionsProps,
-      ...parentInfoSafe,
     });
   }
   youngestChild<CN extends ChildName<SN>>(childName: CN): SolverSection<CN> {
@@ -105,66 +95,32 @@ export class SolverSection<
     child.removeSelfAndSolve();
   }
   resetToDefaultAndSolve(): void {
-    this.resetToDefault();
+    this.combo.resetToDefaultAndExtractIds();
     this.solve();
   }
   replaceWithDefaultAndSolve(): void {
-    this.resetToDefault();
+    this.combo.resetToDefaultAndExtractIds();
     this.updater.updateProps({
       dbId: Id.make(),
     });
     this.solve();
   }
-  private resetToDefault(): void {
-    const { feId, idx, sectionName, dbId } = this.get;
-    const { parent } = this;
-    this.remover.removeSelfAndExtractVarbIds();
-    parent.addChild(sectionName as any, { feId, idx, dbId });
-  }
   loadSelfSectionPackAndSolve(sectionPack: SectionPackRaw<SN>): void {
-    this.loader.updateSelfWithSectionPack(sectionPack);
-    this.collectNestedVarbIds();
+    this.combo.loadSelfSectionPackAndExtractIds(sectionPack);
     this.solve();
   }
   addChildAndSolve<CN extends ChildName<SN>>(
     childName: ChildName<SN>,
     options?: AddChildOptions<CN>
   ): void {
-    this.addChild(childName, options);
+    this.adder.addChildAndFinalize(childName, options);
     this.solve();
-  }
-  private addChild<CN extends ChildName<SN>>(
-    childName: ChildName<SN>,
-    options?: AddChildOptions<CN>
-  ) {
-    this.defaultAdder.addChild(childName, options);
-    const child = this.youngestChild(childName);
-    child.collectNestedVarbIds();
   }
   loadChildPackArrsAndSolve(
     childPackArrs: Partial<ChildSectionPackArrs<SN>>
   ): void {
-    const childNames = Obj.keys(childPackArrs);
-    this.remover.removeChildrenGroupsAndExtractVarbIds(childNames);
-    for (const childName of childNames) {
-      for (const childPack of (childPackArrs as ChildSectionPackArrs<SN>)[
-        childName
-      ]) {
-        this.loadChildSectionPack(childPack);
-      }
-    }
+    this.combo.loadChildPackArrsAndExtractIds(childPackArrs);
     this.solve();
-  }
-  private loadChildSectionPack<CN extends ChildName<SN>>(
-    sectionPack: SectionPackRaw<CN>
-  ): void {
-    this.loader.loadChildSectionPack(sectionPack);
-    const child = this.youngestChild(sectionPack.sectionName);
-    child.collectNestedVarbIds();
-  }
-  private collectNestedVarbIds() {
-    const { selfAndDescendantVarbIds } = this.get;
-    this.addVarbIdsToSolveFor(...selfAndDescendantVarbIds);
   }
   static initSolvedSectionsFromMainPack(
     sectionPack: SectionPackRaw<"main">

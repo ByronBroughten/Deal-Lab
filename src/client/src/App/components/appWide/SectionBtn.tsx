@@ -1,11 +1,11 @@
-import styled, { css } from "styled-components";
 import { Button } from "@material-ui/core";
-import theme, { ThemeSectionName } from "../../theme/Theme";
+import styled, { css } from "styled-components";
 import ccs from "../../theme/cssChunks";
-import { StandardBtnProps } from "../general/StandardProps";
+import theme, { ThemeName } from "../../theme/Theme";
 import { processProps } from "../../utils/component";
+import { StandardBtnProps } from "../general/StandardProps";
 
-type Props = StandardBtnProps & { themeName?: ThemeSectionName };
+type Props = StandardBtnProps & { themeName?: ThemeName };
 export default function SectionBtn({ themeName, ...props }: Props) {
   return (
     <Styled
@@ -19,7 +19,7 @@ export default function SectionBtn({ themeName, ...props }: Props) {
   );
 }
 
-const sectionTheme = (themeName: ThemeSectionName) => css`
+const sectionTheme = (themeName: ThemeName) => css`
   background-color: ${theme[themeName].light};
   :disabled {
     background-color: ${theme[themeName].light};
@@ -30,7 +30,7 @@ const sectionTheme = (themeName: ThemeSectionName) => css`
   }
 `;
 
-const Styled = styled(Button)<{ $themeName?: ThemeSectionName }>`
+const Styled = styled(Button)<{ $themeName?: ThemeName }>`
   height: calc(1.5em + 0.5rem + 2px);
   white-space: nowrap;
 

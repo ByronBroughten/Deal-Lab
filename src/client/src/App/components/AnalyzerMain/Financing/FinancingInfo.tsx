@@ -24,7 +24,7 @@ export default function FinancingInfo({ feId }: { feId: string }) {
         {isAtLeastOne && (
           <>
             <LabeledVarbSimpleNext
-              themeSectionName="loan"
+              themeName="loan"
               feVarbInfo={financing.varbInfo("downPaymentDollars")}
               parenthInfo={
                 downPaymentIsPercentable
@@ -33,14 +33,14 @@ export default function FinancingInfo({ feId }: { feId: string }) {
               }
             />
             <LabeledVarbSimpleNext
-              themeSectionName="loan"
+              themeName="loan"
               feVarbInfo={financing.varbInfo("pitiMonthly")}
             />
           </>
         )}
         {areMultiple && (
           <LabeledVarbSimpleNext
-            themeSectionName="loan"
+            themeName="loan"
             feVarbInfo={financing.varbInfo("loanAmountDollarsTotal")}
           />
         )}

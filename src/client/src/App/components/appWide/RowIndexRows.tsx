@@ -1,10 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import ccs from "../../theme/cssChunks";
-import theme, {
-  ThemeSectionName,
-  themeSectionNameOrDefault,
-} from "../../theme/Theme";
+import theme, { ThemeName, themeSectionNameOrDefault } from "../../theme/Theme";
 import { useMainSectionActor } from "./../../modules/sectionActorHooks/useMainSectionActor";
 import { FeInfoByType } from "./../../sharedWithServer/SectionsMeta/Info";
 import useHowMany from "./customHooks/useHowMany";
@@ -39,7 +36,7 @@ export function RowIndexRows({ feInfo, className }: Props) {
   );
 }
 
-const Styled = styled.div<{ sectionName: ThemeSectionName }>`
+const Styled = styled.div<{ sectionName: ThemeName }>`
   display: block;
   position: absolute;
   z-index: 2; // 2 beats editor title labels

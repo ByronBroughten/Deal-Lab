@@ -252,7 +252,7 @@ export const relVarbs = {
 
       editorValue: relVarb.calcVarb("", {
         startAdornment: "$",
-        endAdornment: "/month",
+        endAdornment: "provide adornment to editor",
       }),
       ...relVarbs.monthsYearsInput(
         "lifespan",
@@ -264,6 +264,8 @@ export const relVarbs = {
         initValue: "yearly",
         dbInitValue: "yearly",
       }),
+      // So... that's the editorValue, is that right?
+
       [ongoingValueNames.monthly]: relVarb.moneyMonth("Monthly amount", {
         ...defaultValueUpdatePack,
         inUpdateSwitchProps: [
@@ -358,6 +360,10 @@ export const relVarbs = {
       defaultValueSwitch: relVarb.string({
         initValue: "labeledEquation",
         dbInitValue: "labeledEquation",
+      }),
+      defaultOngoingSwitch: relVarb.string({
+        initValue: "monthly",
+        dbInitValue: "monthly",
       }),
       ...relVarbs.ongoingSumNums(
         "total",

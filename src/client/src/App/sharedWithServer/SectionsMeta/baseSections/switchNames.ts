@@ -1,5 +1,27 @@
 import { Obj } from "../../utils/Obj";
 
+export const ongoingStuff = {
+  get monthly() {
+    return this.targets.monthly;
+  },
+  get yearly() {
+    return this.targets.yearly;
+  },
+  targets: {
+    monthly: {
+      endAdornment: "/month",
+      nameEnding: "Monthly",
+    },
+    yearly: {
+      endAdornment: "/year",
+      nameEnding: "Yearly",
+    },
+  },
+  switch: {
+    nameEnding: "OngoingSwitch",
+  },
+};
+
 type NamePlusEndings<
   Base extends string,
   Endings extends Record<string, string>

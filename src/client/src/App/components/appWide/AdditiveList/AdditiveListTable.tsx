@@ -6,7 +6,7 @@ import { listNameToStoreName } from "../../../sharedWithServer/SectionsMeta/base
 import { FeInfo } from "../../../sharedWithServer/SectionsMeta/Info";
 import { userListItemTypes } from "../../../sharedWithServer/SectionsMeta/relSectionTypes/UserListTypes";
 import ccs from "../../../theme/cssChunks";
-import theme, { ThemeSectionName } from "../../../theme/Theme";
+import theme, { ThemeName } from "../../../theme/Theme";
 import useHowMany from "../customHooks/useHowMany";
 import AdditiveItem from "./AdditiveItem";
 import AddItemBtn from "./AdditiveListTable/AddItemBtn";
@@ -20,8 +20,8 @@ const switchValueToDisplay = {
   loadedVarb: "Saved variable",
 } as const;
 
-type Props = { feInfo: FeInfo<"allList">; themeSectionName: ThemeSectionName };
-export default function AdditiveListTable({ feInfo, themeSectionName }: Props) {
+type Props = { feInfo: FeInfo<"allList">; themeName: ThemeName };
+export default function AdditiveListTable({ feInfo, themeName }: Props) {
   const { sectionName } = feInfo;
   const { analyzer, handleDirectUpdate } = useAnalyzerContext();
 
@@ -54,7 +54,7 @@ export default function AdditiveListTable({ feInfo, themeSectionName }: Props) {
   const selectDefaultHeaderRef = useOnOutsideClickRef(closeSelectDefault, "th");
 
   return (
-    <Styled className="AdditiveListTable-root" sectionName={themeSectionName}>
+    <Styled className="AdditiveListTable-root" sectionName={themeName}>
       {areNone && (
         // <BtnTooltip
         //   title="Add list item"
@@ -96,7 +96,7 @@ export default function AdditiveListTable({ feInfo, themeSectionName }: Props) {
 }
 
 const Styled = styled.div<{
-  sectionName: ThemeSectionName;
+  sectionName: ThemeName;
 }>`
   .AdditiveListTable-addItemBtn {
     font-weight: 900;
