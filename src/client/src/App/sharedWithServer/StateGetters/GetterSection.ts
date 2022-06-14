@@ -51,7 +51,6 @@ export class GetterSection<
   SN extends SectionName
 > extends GetterSectionBase<SN> {
   private getterSections = new GetterSections(this.getterSectionsProps);
-
   get sections() {
     return this.getterSections;
   }

@@ -17,7 +17,7 @@ export default function Financing({ feId, ...rest }: Props) {
   const loanIds = financing.childFeIds("loan");
   const addLoan = () => financing.addChild("loan");
   return (
-    <Styled {...{ ...rest, sectionName: "loan", className: "Financing-root" }}>
+    <Styled {...{ ...rest, themeName: "loan", className: "Financing-root" }}>
       <GeneralSectionTitle
         {...{
           title: "Financing",

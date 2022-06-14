@@ -43,7 +43,7 @@ export class MainSectionActor<
     return new GetterSections(this.sectionActorBaseProps);
   }
   private get indexName(): SectionName<"rowIndexNext"> {
-    return this.setter.meta.get("rowIndexName");
+    return this.get.meta.get("rowIndexName");
   }
   private get indexTableName(): SectionName<"tableName"> {
     return sectionMetas.section(this.indexName).get("indexTableName");

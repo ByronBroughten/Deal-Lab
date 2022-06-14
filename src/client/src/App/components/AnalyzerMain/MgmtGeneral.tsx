@@ -14,7 +14,7 @@ export function MgmtGeneral({ feId }: Props) {
   return (
     <MainSection
       {...{
-        sectionName: "mgmt",
+        themeName: "mgmt",
         className: "MgmtGeneral-root",
       }}
     >

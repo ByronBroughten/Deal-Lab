@@ -11,7 +11,7 @@ export function PropertyGeneral({ feId }: { feId: string }) {
   });
   const propertyIds = propertyGeneral.childFeIds("property");
   return (
-    <MainSection sectionName="property" className="PropertyGeneral-root">
+    <MainSection themeName="property" className="PropertyGeneral-root">
       <GeneralSectionTitle title="Property" themeName="property" />
       <div>
         {propertyIds.map((feId) => (

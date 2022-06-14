@@ -14,5 +14,5 @@ const Styled = styled.label<{ $active?: boolean }>`
   margin: 0;
   padding: 0;
   font-weight: 700;
-  color: ${({ $active }) => ($active ? theme.loan.dark : theme["gray-600"])}}
+  color: ${({ $active }) => ($active ? theme.next.dark : theme["gray-600"])}}
 `;

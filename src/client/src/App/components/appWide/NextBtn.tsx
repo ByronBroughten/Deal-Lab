@@ -1,9 +1,9 @@
-import React from "react";
-import styled from "styled-components";
 import { Button } from "@material-ui/core";
-import theme from "../../theme/Theme";
-import ccs from "../../theme/cssChunks";
+import React from "react";
 import { AiOutlineArrowRight } from "react-icons/ai";
+import styled from "styled-components";
+import ccs from "../../theme/cssChunks";
+import theme from "../../theme/Theme";
 
 export default styled(Button).attrs(({ className = "", ...rest }) => ({
   className: "NextBtn-root" + className,
@@ -12,10 +12,10 @@ export default styled(Button).attrs(({ className = "", ...rest }) => ({
   ...rest,
 }))`
   ${ccs.xPlusBtnBody}
-  background-color: ${theme.loan.border};
+  background-color: ${theme.next.main};
   color: ${theme.dark};
   :hover {
     color: ${theme.light};
-    background-color: ${theme.loan.dark};
+    background-color: ${theme.next.dark};
   }
 `;

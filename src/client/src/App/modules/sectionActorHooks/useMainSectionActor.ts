@@ -16,7 +16,13 @@ export function useMainSectionActor<SN extends SectionName<"hasRowIndex">>(
       ...props,
       apiQueries,
     });
-  }, []);
+  }, [JSON.stringify(feInfo)]);
+  // how do I want to handle this?
+  // I guess I do want the SectionActor
+  // to chnage if the feInfo changes
+  // but that's an equality check, right?
+
+  // ok, so feInfo changed, but mainActor didn't.
   useUpdateSetterSections(mainActor);
   return mainActor;
 }

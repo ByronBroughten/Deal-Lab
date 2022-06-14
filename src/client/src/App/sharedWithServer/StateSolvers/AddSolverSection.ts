@@ -51,7 +51,7 @@ export class AddSolverSection<
   ): AddSolverSection<S> {
     return new AddSolverSection({
       ...this.solverSectionsProps,
-      addSolveShare: { addedVarbIds: new Set() },
+      addSolveShare: this.addSolveShare,
       ...feInfo,
     });
   }

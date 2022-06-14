@@ -1,4 +1,4 @@
-import { darken, lighten } from "polished";
+import { darken, lighten, transparentize } from "polished";
 import React from "react";
 import { ThemeProvider } from "styled-components";
 import { FeInfo } from "../sharedWithServer/SectionsMeta/Info";
@@ -53,6 +53,14 @@ const testThemes = {
   },
 };
 
+const themeColors = {
+  property: "#fbc599",
+  mgmt: "#f6a272",
+  loan: "#e78472",
+  plus: "#80c883",
+  next: "#717cbb",
+};
+
 const muiModDefault = testThemes.current;
 
 // const muiDefault = {
@@ -64,21 +72,29 @@ const muiModDefault = testThemes.current;
 // };
 
 type SectionThemeBase = {
-  light: string;
   main: string;
-  dark: string;
   [key: string]: string;
 };
 
-function getStandardSection({ main, light, dark, ...rest }: SectionThemeBase) {
+function standardSection({ main, ...rest }: SectionThemeBase) {
   return {
     main,
-    light,
-    dark,
+    get light(): string {
+      return lighten(0.25, this.main);
+    },
+    get dark(): string {
+      return darken(0.1, this.main);
+    },
     subSection: main,
-    row: light,
-    editor: light,
-    border: dark,
+    get row(): string {
+      return this.light;
+    },
+    get editor(): string {
+      return this.light;
+    },
+    get border(): string {
+      return this.dark;
+    },
     ...rest,
   };
 }
@@ -94,11 +110,9 @@ export function themeSectionNameOrDefault(sectionName: string): ThemeName {
   return isThemeSectionName(sectionName) ? sectionName : "default";
 }
 
-// replace all instances of "themeName" with just "themeName"
-// decouple those two things
 const themeSections = {
   default: {
-    ...getStandardSection({
+    ...standardSection({
       light: color["gray-200"],
       main: color["gray-400"],
       dark: color["gray-600"],
@@ -106,60 +120,84 @@ const themeSections = {
     }),
   },
   property: {
-    ...getStandardSection({
-      main: lighten(0.32, muiModDefault.warning),
-      dark: muiModDefault.warning,
-      light: lighten(0.47, muiModDefault.warning),
+    ...standardSection({
+      main: themeColors.property,
+      get light() {
+        return lighten(0.17, themeColors.property);
+      },
+      get dark() {
+        return darken(0.1, themeColors.property);
+      },
       get border() {
-        return darken(0.07, this.main);
+        return darken(0.1, themeColors.property);
       },
     }),
   },
-  get upfrontCostList() {
-    return this.property;
+  mgmt: {
+    ...standardSection({
+      main: lighten(0.04, themeColors.mgmt),
+      get light() {
+        return lighten(0.23, themeColors.mgmt);
+      },
+      get dark() {
+        return darken(0.1, themeColors.mgmt);
+      },
+      get border() {
+        return darken(0.1, themeColors.mgmt);
+      },
+    }),
   },
   loan: {
-    ...getStandardSection({
-      main: lighten(0.33, muiModDefault.primary),
-      dark: muiModDefault.primary,
-      light: lighten(0.45, muiModDefault.primary),
+    ...standardSection({
+      main: lighten(0.02, themeColors.loan),
+      get light() {
+        return lighten(0.25, themeColors.loan);
+      },
+      get dark() {
+        return darken(0.1, themeColors.loan);
+      },
+      get border() {
+        return darken(0.1, themeColors.loan);
+      },
+    }),
+  },
+  next: {
+    ...standardSection({
+      main: themeColors.next,
+    }),
+  },
+  get analysis() {
+    return this.plus;
+  },
+  get deal() {
+    return this.plus;
+  },
+  plus: {
+    ...standardSection({
+      main: themeColors.plus,
+      get light() {
+        return lighten(0.3, this.main);
+      },
+      get dark() {
+        return darken(0.1, this.main);
+      },
       get border() {
         return darken(0.1, this.main);
       },
     }),
   },
-  mgmt: {
-    ...getStandardSection({
-      dark: muiModDefault.secondary,
-      main: lighten(0.32, muiModDefault.secondary),
-      light: lighten(0.47, muiModDefault.secondary),
-      get border() {
-        return darken(0.06, this.main);
-      },
-    }),
-  },
+
   get userVarbList() {
     return this.default;
   },
-  get userSingleList() {
-    return this.loan;
-  },
+  // get userSingleList() {
+  //   return this.loan;
+  // },
   get userOngoingList() {
     return this.mgmt;
   },
-  get analysis() {
-    return this.plus;
-  },
-  plus: {
-    ...getStandardSection({
-      border: darken(0.1, muiModDefault.success),
-      dark: muiModDefault.success,
-      main: lighten(0.15, muiModDefault.success),
-      light: lighten(0.4, muiModDefault.success),
-    }),
-  },
   error: {
-    ...getStandardSection({
+    ...standardSection({
       dark: darken(0.25, muiModDefault.danger),
       main: muiModDefault.danger,
       light: lighten(0.15, muiModDefault.danger),
@@ -174,8 +212,8 @@ const theme = {
   ...themeSections,
   light: color["gray-100"],
   dark: color["gray-900"],
-  transparentGray: color["gray-300"] + "e0",
-  transparentGrayBorder: color["gray-500"] + "e0",
+  transparentGray: transparentize(0.8, color["gray-400"]),
+  transparentGrayBorder: transparentize(0.75, color["gray-800"]),
   placeholderGray: color["gray-600"] + "e0",
 
   // spacing sizes

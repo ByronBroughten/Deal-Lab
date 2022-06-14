@@ -22,7 +22,7 @@ export default function DealStats({ className, feId }: Props) {
     <Styled
       {...{
         $showDetails: detailsIsOpen,
-        sectionName: "analysis",
+        themeName: "analysis",
         className: `DealStats-root ${className}`,
       }}
     >

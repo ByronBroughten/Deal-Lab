@@ -5,7 +5,9 @@ import { SetterSections } from "../../../sharedWithServer/StateSetters/SetterSec
 import { auth } from "../../services/authService";
 
 export class LoginSetter extends SetterSectionsBase {
-  setterSections = new SetterSections(this.setterSectionsProps);
+  get setterSections(): SetterSections {
+    return new SetterSections(this.setterSectionsProps);
+  }
   setLogin({ data, headers }: NextRes<"nextLogin">) {
     auth.setToken(headers[constants.tokenKey.apiUserAuth]);
     const { main } = this.setterSections;

@@ -50,12 +50,13 @@ export default function ListManager({ sectionName }: Props) {
     ...vmContext
   } = useListManager(sectionName);
 
+  const themeName = "loan";
   return (
     <AnalyzerContext.Provider value={vmContext}>
-      <Styled sectionName={sectionName}>
+      <Styled themeName={themeName}>
         <GeneralSectionTitle
           title={titles[sectionName]}
-          themeName={sectionName}
+          themeName={themeName}
         />
         <div className="ListManager-entry">
           {/* <Prompt when={didChange} message={"Close without saving changes?"} /> */}
@@ -74,7 +75,7 @@ export default function ListManager({ sectionName }: Props) {
               <AdditiveList
                 {...{
                   feInfo: { sectionName, id, idType: "feId" },
-                  themeName: sectionName,
+                  themeName: themeName,
                   listType: sectionName,
                 }}
               />

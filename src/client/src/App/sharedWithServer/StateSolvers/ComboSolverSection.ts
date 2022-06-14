@@ -30,7 +30,9 @@ export class ComboSolverSection<
     childPackArrs: Partial<ChildSectionPackArrs<SN>>
   ): void {
     const childNames = Obj.keys(childPackArrs);
+    // when I log in, this isn't really solving everything
     this.remover.removeChildrenGroupsAndExtractVarbIds(childNames);
+
     for (const childName of childNames) {
       for (const childPack of (childPackArrs as ChildSectionPackArrs<SN>)[
         childName

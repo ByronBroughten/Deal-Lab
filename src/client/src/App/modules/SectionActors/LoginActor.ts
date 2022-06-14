@@ -22,8 +22,12 @@ export class LoginActor extends SectionActorBase<"login"> {
       varbName,
     });
   }
-  varbs = new GetterVarbs(this.sectionActorBaseProps);
-  loginSetter = new LoginSetter(this.sectionActorBaseProps);
+  get varbs() {
+    return new GetterVarbs(this.sectionActorBaseProps);
+  }
+  get loginSetter() {
+    return new LoginSetter(this.sectionActorBaseProps);
+  }
   get loginReq(): NextReq<"nextLogin"> {
     return makeReq(
       this.varbs.values({

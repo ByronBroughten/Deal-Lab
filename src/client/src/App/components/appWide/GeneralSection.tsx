@@ -3,22 +3,22 @@ import styled, { ThemeProvider } from "styled-components";
 import theme, { ThemeName } from "../../theme/Theme";
 
 type Props = {
-  sectionName: ThemeName;
+  themeName: ThemeName;
   children?: React.ReactNode;
   className?: string;
 };
 export default function MainSection({
   className,
-  sectionName,
+  themeName,
   children,
   ...rest
 }: Props) {
   return (
-    <ThemeProvider theme={{ section: theme[sectionName] }}>
+    <ThemeProvider theme={{ section: theme[themeName] }}>
       <Styled
         {...{
-          className: `MainSection-root ${sectionName} ${className ?? ""}`,
-          sectionName,
+          className: `MainSection-root ${themeName} ${className ?? ""}`,
+          themeName,
           ...rest,
         }}
       >
@@ -27,7 +27,7 @@ export default function MainSection({
     </ThemeProvider>
   );
 }
-const Styled = styled.section<{ sectionName: ThemeName }>`
+const Styled = styled.section<{ themeName: ThemeName }>`
   display: flex;
   flex: 0;
 
@@ -37,12 +37,12 @@ const Styled = styled.section<{ sectionName: ThemeName }>`
     display: flex;
     flex: 1;
     flex-direction: column;
-    background-color: ${({ sectionName }) => theme[sectionName].light};
+    background-color: ${({ themeName }) => theme[themeName].light};
   }
 
   .MainSection-entries {
     .MainSection-entry:not(:first-child) {
-      border-top: 2px solid ${({ sectionName }) => theme[sectionName].dark};
+      border-top: 2px solid ${({ themeName }) => theme[themeName].dark};
     }
   }
 `;

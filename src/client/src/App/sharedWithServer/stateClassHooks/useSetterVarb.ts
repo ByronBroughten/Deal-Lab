@@ -10,15 +10,15 @@ interface UseSetterVarbProps<SN extends SectionName>
   extends StrictOmit<GetterVarbProps<SN>, "sectionsShare"> {}
 
 export function useSetterVarb<SN extends SectionName>(
-  props: UseSetterVarbProps<SN>
+  varbInfo: UseSetterVarbProps<SN>
 ): SetterVarb<SN> {
   const moreProps = useSetterSectionsProps();
   const setterVarb = useMemo(() => {
     return new SetterVarb({
-      ...props,
+      ...varbInfo,
       ...moreProps,
     });
-  }, []);
+  }, [JSON.stringify(varbInfo)]);
   useUpdateSetterSections(setterVarb);
   return setterVarb;
 }

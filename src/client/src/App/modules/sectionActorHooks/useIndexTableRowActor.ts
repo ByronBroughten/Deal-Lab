@@ -9,15 +9,15 @@ export type UseIndexTableRowActorProps = {
   indexName: SectionName<"rowIndexNext">;
 };
 export function useIndexTableRowActor(
-  props: UseIndexTableRowActorProps
+  indexInfo: UseIndexTableRowActorProps
 ): IndexTableRowActor {
   const moreProps = useSectionsActorProps();
   const indexRowActor = React.useMemo(() => {
     return new IndexTableRowActor({
-      ...props,
+      ...indexInfo,
       ...moreProps,
     });
-  }, []);
+  }, [JSON.stringify(indexInfo)]);
   useUpdateSetterSections(indexRowActor);
   return indexRowActor;
 }

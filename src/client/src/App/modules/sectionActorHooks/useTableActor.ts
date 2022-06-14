@@ -14,7 +14,7 @@ export function useTableActor<SN extends SectionName<"tableName">>(
       ...feInfo,
       ...props,
     });
-  }, []);
+  }, [JSON.stringify(feInfo)]);
   useUpdateSetterSections(tableActor);
   return tableActor;
 }

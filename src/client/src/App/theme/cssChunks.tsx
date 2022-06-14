@@ -22,11 +22,11 @@ const ccs = {
         `;
       },
       varbSelector: css`
-        background-color: ${theme.loan.dark};
+        background-color: ${theme.next.dark};
         color: ${theme.light};
         :hover,
         :focus {
-          background-color: ${theme.loan.main};
+          background-color: ${theme.next.main};
           color: ${theme.dark};
         }
       `,

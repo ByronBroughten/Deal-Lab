@@ -1,4 +1,5 @@
 import { pick } from "lodash";
+import { SectionNotFoundError } from "../../utils/error";
 import { OutEntity } from "../FeSections/FeSection/FeVarb/entities";
 import { StateValue } from "../FeSections/FeSection/FeVarb/feValue";
 import { Id } from "../SectionsMeta/baseSections/id";
@@ -61,6 +62,16 @@ export class StateSections {
       (section) => section.feId === feInfo.feId
     );
   }
+  hasSection(feInfo: FeSectionInfo): boolean {
+    try {
+      this.sectionIdx(feInfo);
+      return true;
+    } catch (error) {
+      if (error instanceof SectionNotFoundError) return false;
+      else throw error;
+    }
+  }
+
   onlyOneRawSection<SN extends SectionName>(sectionName: SN): RawFeSection<SN> {
     const sectionList = this.rawSectionList(sectionName);
     if (sectionList.length !== 1) {

@@ -1,14 +1,14 @@
 import { Button } from "@material-ui/core";
-import styled from "styled-components";
-import { StandardProps } from "../general/StandardProps";
-import { AiOutlineMenu } from "react-icons/ai";
-import NavBtn from "./NavBtn";
-import useToggleView from "../../modules/customHooks/useToggleView";
-import useOnOutsideClickRef from "../../modules/customHooks/useOnOutsideClickRef";
-import theme from "../../theme/Theme";
 import { rem } from "polished";
-import { useAnalyzerContext } from "../../modules/usePropertyAnalyzer";
+import { AiOutlineMenu } from "react-icons/ai";
+import styled from "styled-components";
+import useOnOutsideClickRef from "../../modules/customHooks/useOnOutsideClickRef";
+import useToggleView from "../../modules/customHooks/useToggleView";
 import { auth } from "../../modules/services/authService";
+import { useAnalyzerContext } from "../../modules/usePropertyAnalyzer";
+import theme from "../../theme/Theme";
+import { StandardProps } from "../general/StandardProps";
+import NavBtn from "./NavBtn";
 
 function BtnDiv({ children, className }: StandardProps) {
   return <div className={`NavUserMenu-btnDiv ${className}`}>{children}</div>;
@@ -108,7 +108,7 @@ const Styled = styled.div`
       :hover,
       :focus {
         background-color: ${theme.error.light};
-        color: ${theme.loan.dark};
+        color: ${theme.next.dark};
       }
 
       .MuiTouchRipple-root {

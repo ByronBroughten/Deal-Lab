@@ -15,10 +15,13 @@ export class GetterSectionBase<
   readonly feId: string;
   constructor(props: GetterSectionProps<SN>) {
     super(props);
-    if (!GetterSectionBase.isGetterBaseProps(props)) {
-      throw new Error("`props` is not GetterSectionProps.");
-    }
     this.feId = props.feId;
+    const { sections } = props.sectionsShare;
+    if (!sections.hasSection(this.feSectionInfo)) {
+      throw new Error(
+        `No section with sectionName ${this.sectionName} and feId ${this.feId}`
+      );
+    }
   }
   get feSectionInfo(): FeSectionInfo<SN> {
     return {

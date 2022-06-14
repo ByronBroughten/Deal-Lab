@@ -16,6 +16,8 @@ AppRegistry.runApplication("App", {
 // ongoingItem monthly value is being divided by 12 before feeding
 // into the monthly
 
+// add date saved and date created to the main sections
+
 // upon loading, the editorValue isn't loading
 
 // fix the theme

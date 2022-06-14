@@ -61,7 +61,7 @@ const Styled = styled.div`
     border-top: 1px solid;
     border-left: 1px solid;
     border-radius: ${theme.br1};
-    border-color: ${theme.loan.dark};
+    border-color: ${theme.next.dark};
     background-color: ${theme["gray-300"]};
   }
   .NumObjVarbSelector-selectorWrapper {
