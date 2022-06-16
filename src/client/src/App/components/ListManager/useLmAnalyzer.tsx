@@ -1,6 +1,6 @@
 import React from "react";
 import { unstable_batchedUpdates } from "react-dom";
-import { useSectionArrQueries } from "../../modules/QueriersRelative/SectionArrStateQuerier";
+import { useSectionArrQueries } from "../../modules/QueriersRelative/SectionArrAnalyzerQuerier";
 import usePropertyAnalyzer from "../../modules/usePropertyAnalyzer";
 import Analyzer from "../../sharedWithServer/Analyzer";
 import { FeInfo } from "../../sharedWithServer/SectionsMeta/Info";

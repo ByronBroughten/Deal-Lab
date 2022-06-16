@@ -2,20 +2,12 @@ import { sectionMetas } from "../../sharedWithServer/SectionsMeta";
 import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
 import { GetterMainSection } from "../../sharedWithServer/StateGetters/GetterMainSection";
 import { GetterSections } from "../../sharedWithServer/StateGetters/GetterSections";
-import { SetterSectionProps } from "../../sharedWithServer/StateSetters/SetterBases/SetterSectionBase";
 import { SetterSection } from "../../sharedWithServer/StateSetters/SetterSection";
 import { SetterTable } from "../../sharedWithServer/StateSetters/SetterTable";
-import { ApiQuerierProps } from "../QueriersBasic/ApiQuerierNext";
+import { IndexSectionQuerierProps } from "../QueriersRelative/Bases.ts/IndexSectionQuerierBase";
 import { IndexListQuerier } from "../QueriersRelative/IndexListQuerier";
-import {
-  IndexSectionQuerier,
-  IndexSectionQuerierProps,
-} from "../QueriersRelative/IndexSectionQuerier";
+import { IndexSectionQuerier } from "../QueriersRelative/IndexSectionQuerier";
 import { SectionActorBase } from "./SectionActorBase";
-
-interface Props<SN extends SectionName<"hasRowIndex">>
-  extends SetterSectionProps<SN>,
-    ApiQuerierProps {}
 
 export class MainSectionActor<
   SN extends SectionName<"hasRowIndex">
@@ -24,6 +16,7 @@ export class MainSectionActor<
   private get indexQuerierProps(): IndexSectionQuerierProps<SN> {
     return {
       ...this.sectionActorBaseProps,
+      apiQueries: this.apiQueries,
       indexName: this.indexName,
     };
   }
@@ -58,6 +51,9 @@ export class MainSectionActor<
       ...main.onlyChild(this.indexTableName).feInfo,
     });
   }
+  newDateTime(): string {
+    return new Date().toISOString();
+  }
   removeSelf(): void {
     this.setter.removeSelf();
   }
@@ -69,12 +65,20 @@ export class MainSectionActor<
   }
   async saveNew(): Promise<void> {
     this.addRow();
+    const dateTime = this.newDateTime();
+    this.setter.updateValues({
+      dateTimeFirstSaved: dateTime,
+      dateTimeLastSaved: dateTime,
+    });
     this.setter.tryAndRevertIfFail(() =>
       this.indexSectionQuerier.saveNewToIndex()
     );
   }
   async saveUpdates(): Promise<void> {
     this.updateRow();
+    this.setter.updateValues({
+      dateTimeLastSaved: this.newDateTime(),
+    });
     this.setter.tryAndRevertIfFail(() =>
       this.indexSectionQuerier.updateIndex()
     );

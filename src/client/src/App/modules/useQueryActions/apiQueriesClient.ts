@@ -1,8 +1,11 @@
 import { AxiosResponse } from "axios";
-import { apiQueriesShared } from "../../sharedWithServer/apiQueriesShared";
+import {
+  ApiQueries,
+  apiQueriesShared,
+  ApiQuery,
+} from "../../sharedWithServer/apiQueriesShared";
 import {
   ApiQueryName,
-  NextReq,
   NextRes,
 } from "../../sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import {
@@ -19,13 +22,6 @@ import {
   validateDbStoreNameRes,
   validateServerSectionPackRes,
 } from "./apiQueriesClient/validateRes";
-
-export type ApiQueries = {
-  [QN in ApiQueryName]: ApiQuery<QN>;
-};
-type ApiQuery<QN extends ApiQueryName> = (
-  reqObj: NextReq<QN>
-) => Promise<NextRes<QN>>;
 
 // these are what I need to replace.
 export const apiQueries = makeApiQueries();

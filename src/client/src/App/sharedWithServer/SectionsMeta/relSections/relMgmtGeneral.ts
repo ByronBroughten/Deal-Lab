@@ -13,7 +13,7 @@ function makeMgmtPreVarbs<
   R extends RelVarbs<ContextName, "mgmt">
 >(sectionName: SN): R {
   return {
-    title: rel.varb.string(),
+    ...rel.varbs.savableSection,
     [rentCut.switch]: rel.varb.string({
       initValue: "percent",
       dbInitValue: "percent",
@@ -102,7 +102,11 @@ function mgmtSection<
     makeMgmtPreVarbs(sectionName) as RelVarbs<"fe" | "db", SN>,
     {
       ...((options ?? {}) as O),
-      childNames: ["upfrontCostList", "ongoingCostList"] as const,
+      childNames: [
+        "upfrontCostList",
+        "ongoingCostList",
+        "internalVarbList",
+      ] as const,
     }
   );
 }

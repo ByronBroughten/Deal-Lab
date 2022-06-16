@@ -8,6 +8,7 @@ import { runApp } from "../../runApp";
 import { UserModel } from "../UserModel";
 import { loginUtils } from "./nextLogin/loginUtils";
 import { createTestUserModelNext } from "./test/createTestUserModelNext";
+import { SectionQueryTester } from "./test/SectionQueryTester";
 
 type TestReqs = {
   addSection: NextReq<"addSection">;
@@ -16,23 +17,13 @@ type TestReqs = {
 
 function makeReqs(): TestReqs {
   const sectionName = "property";
-  let next = Analyzer.initAnalyzer();
-  const { feInfo } = next.lastSection(sectionName);
-
-  const addSectionReq = apiQueriesShared.addSection.makeReq({
-    analyzer: next,
-    feInfo,
-    dbStoreName: "propertyIndexNext",
+  const tester = SectionQueryTester.init({
+    sectionName,
+    indexName: "propertyIndexNext",
   });
-  const { sectionName: dbStoreName, dbId } = addSectionReq.body.sectionPack;
   return {
-    addSection: addSectionReq,
-    deleteSection: {
-      body: {
-        dbStoreName,
-        dbId,
-      },
-    },
+    addSection: tester.makeSectionPackReq(),
+    deleteSection: tester.makeDbInfoReq(),
   };
 }
 

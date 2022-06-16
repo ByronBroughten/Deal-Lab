@@ -7,12 +7,12 @@ import {
   GetterListBase,
   GetterListProps,
 } from "../../sharedWithServer/StateGetters/Bases/GetterListBase";
-import { ApiQuerierProps } from "../QueriersBasic/ApiQuerierNext";
+import { ApiQuerierBaseProps } from "../QueriersBasic/Bases/ApiQuerierBase";
 import { SectionQuerier } from "../QueriersBasic/SectionQuerier";
 
 interface IndexListQuerierProps<SN extends SectionName<"hasIndexStore">>
   extends GetterListProps<SN>,
-    ApiQuerierProps {
+    ApiQuerierBaseProps {
   indexName: SectionName<"indexStore">;
 }
 

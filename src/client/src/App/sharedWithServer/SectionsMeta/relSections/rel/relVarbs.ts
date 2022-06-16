@@ -97,6 +97,11 @@ export const relVarbs = {
       {} as Partial<StringPreVarbsFromNames<VN>>
     ) as StringPreVarbsFromNames<VN>;
   },
+  get savableSection() {
+    return {
+      ...this.strings(["title", "dateTimeFirstSaved", "dateTimeLastSaved"]),
+    };
+  },
   ongoingPureCalc,
   ongoingPercentToPortion,
   ongoingSumNums,
@@ -338,12 +343,12 @@ export const relVarbs = {
     R extends RelVarbs<ContextName, S>
   >(sectionName: S): R {
     const r: R = {
+      ...this.savableSection,
       total: relVarb.sumNums(
         relVarbInfo.local(sectionName, "title"),
         [relVarbInfo.relative("singleTimeItem", "value", "children")],
         { startAdornment: "$" }
       ),
-      title: relVarb.string(),
       defaultValueSwitch: relVarb.string({
         initValue: "labeledEquation",
         dbInitValue: "labeledEquation",
@@ -356,7 +361,7 @@ export const relVarbs = {
     R extends RelVarbs<ContextName, S>
   >(sectionName: S) {
     const r: R = {
-      title: relVarb.string(),
+      ...this.savableSection,
       defaultValueSwitch: relVarb.string({
         initValue: "labeledEquation",
         dbInitValue: "labeledEquation",

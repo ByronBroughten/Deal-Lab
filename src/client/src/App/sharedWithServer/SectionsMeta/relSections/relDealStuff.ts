@@ -3,8 +3,8 @@ import { rel } from "./rel";
 import { relSection, RelSectionOptions } from "./rel/relSection";
 import { RelVarbs } from "./rel/relVarbs";
 
-function analysisSection<
-  SN extends "analysis" | "analysisIndex",
+function dealSection<
+  SN extends "analysis" | "dealIndex",
   O extends StrictOmit<
     RelSectionOptions<"fe", "analysis">,
     "childNames" | "relVarbs"
@@ -14,7 +14,7 @@ function analysisSection<
     "both",
     sectionName,
     "Analysis",
-    { title: rel.varb.string() } as RelVarbs<"fe" | "db", SN>,
+    rel.varbs.savableSection as RelVarbs<"fe" | "db", SN>,
     {
       ...((options ?? {}) as O),
       childNames: [
@@ -24,17 +24,17 @@ function analysisSection<
         "totalInsAndOuts",
         "final",
         "dealOutputList",
-        "dealVarbList",
+        "internalVarbList",
       ] as const,
     }
   );
 }
 
-export const relAnalysisStuff = {
-  ...analysisSection("analysis", {
-    rowIndexName: "analysisIndex",
+export const relDealStuff = {
+  ...dealSection("analysis", {
+    rowIndexName: "dealIndex",
     arrStoreName: "analysis",
   } as const),
-  ...analysisSection("analysisIndex"),
+  ...dealSection("dealIndex"),
   ...relSection.base("both", "output", "Output", rel.varbs.varbInfo()),
 } as const;

@@ -20,6 +20,13 @@ import { StoredSectionPackInfo } from "./SectionPack/SectionPackRaw";
 import { SectionFinder } from "./SectionsMeta/baseSectionTypes";
 import { SavableSectionName } from "./SectionsMeta/relNameArrs/storeArrs";
 
+export type ApiQueries = {
+  [QN in ApiQueryName]: ApiQuery<QN>;
+};
+export type ApiQuery<QN extends ApiQueryName> = (
+  reqObj: NextReq<QN>
+) => Promise<NextRes<QN>>;
+
 const makeApiReqs = makeReqMakers();
 const apiPaths = makeApiPaths();
 

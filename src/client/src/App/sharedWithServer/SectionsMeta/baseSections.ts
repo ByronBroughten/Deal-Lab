@@ -1,4 +1,5 @@
 import { omit } from "lodash";
+import { Obj } from "../utils/Obj";
 import { base } from "./baseSections/base";
 import { GeneralBaseSection } from "./baseSections/baseSection";
 import { switchEndings } from "./baseSections/switchNames";
@@ -61,7 +62,7 @@ export const baseSections = {
     }),
     loanIndex: base.section.schema(base.varbs.loan, { uniqueDbId: true }),
     mgmtIndexNext: base.section.schema(base.varbs.mgmt, { uniqueDbId: true }),
-    analysisIndex: base.section.schema(base.varbs.analysis, {
+    dealIndex: base.section.schema(base.varbs.analysis, {
       uniqueDbId: true,
     }),
 
@@ -115,7 +116,6 @@ export const baseSections = {
     upfrontRevenueList: base.section.singleTimeListSolves,
     ongoingCostList: base.section.ongoingListSolves,
     ongoingRevenueList: base.section.ongoingListSolves,
-
     userSingleList: base.section.schema(
       base.varbs.singleTimeList,
       base.options.userList
@@ -125,7 +125,7 @@ export const baseSections = {
       base.options.userList
     ),
     userVarbList: base.section.varbList(base.options.userList),
-    dealVarbList: base.section.varbList(),
+    internalVarbList: base.section.varbList(),
     login: base.section.schema(
       base.varbs.string(["email", "password"] as const),
       base.options.alwaysOneFromStart
@@ -134,20 +134,21 @@ export const baseSections = {
       base.varbs.string(["email", "password", "userName"] as const),
       base.options.alwaysOneFromStart
     ),
-    property: base.section.schema(base.varbs.property, {
-      makeOneOnStartup: true,
-      solvesForFinal: true,
-    }),
+    property: base.section.schema(base.varbs.property),
     unit: base.section.schema({
       one: "numObj",
       numBedrooms: "numObj",
       ...base.varbs.ongoing("targetRent"),
     }),
-    propertyGeneral: base.section.schema(omit(base.varbs.property, ["title"]), {
-      ...base.options.alwaysOneFromStart,
-      hasGlobalVarbs: true,
-    }),
-    loan: base.section.schema(base.varbs.loan, {}),
+    propertyGeneral: base.section.schema(
+      omit(base.varbs.property, Obj.keys(base.varbs.savableSection)),
+      {
+        ...base.options.alwaysOneFromStart,
+        hasGlobalVarbs: true,
+      }
+    ),
+
+    loan: base.section.schema(base.varbs.loan),
     closingCostList: base.section.singleTimeListSolves,
     wrappedInLoanList: base.section.singleTimeListSolves,
     financing: base.section.schema(

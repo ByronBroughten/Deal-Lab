@@ -9,7 +9,7 @@ export function makeDefaultDealPack(): SectionPackRaw<"analysis"> {
     "financing",
     "totalInsAndOuts",
     "final",
-    "dealVarbList",
+    "internalVarbList",
   ] as const;
   const main = new SectionPackBuilder();
   const deal = main.addAndGetChild("analysis");

@@ -11,7 +11,7 @@ import { rel } from "./relSections/rel";
 import { GeneralRelSection, relSection } from "./relSections/rel/relSection";
 import { LeftRightVarbInfos, relVarb } from "./relSections/rel/relVarb";
 import { RelVarbs } from "./relSections/rel/relVarbs";
-import { relAnalysisStuff } from "./relSections/relAnalysisStuff";
+import { relDealStuff } from "./relSections/relDealStuff";
 import { relFinancing } from "./relSections/relFinancing";
 import { preMgmtGeneral } from "./relSections/relMgmtGeneral";
 import { relPropertyGeneral } from "./relSections/relPropertyGeneral";
@@ -34,7 +34,7 @@ export function makeRelSections() {
       ...rel.section.sectionTableNext(
         "analysisTable",
         "Analysis Table",
-        "analysisIndex"
+        "dealIndex"
       ),
 
       ...relSection.base(
@@ -54,7 +54,7 @@ export function makeRelSections() {
             "propertyIndexNext",
             "loanIndex",
             "mgmtIndexNext",
-            "analysisIndex",
+            "dealIndex",
 
             "propertyTable",
             "loanTable",
@@ -141,7 +141,7 @@ export function makeRelSections() {
       ...relPropertyGeneral,
       ...relFinancing,
       ...preMgmtGeneral,
-      ...relAnalysisStuff,
+      ...relDealStuff,
 
       ...relSection.base(
         "both",

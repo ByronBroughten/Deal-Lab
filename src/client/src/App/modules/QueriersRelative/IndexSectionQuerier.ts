@@ -1,37 +1,23 @@
 import { FeSectionPack } from "../../sharedWithServer/Analyzer/FeSectionPack";
 import { ServerSectionPack } from "../../sharedWithServer/SectionPack/SectionPackRaw";
 import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
-import {
-  GetterSectionBase,
-  GetterSectionProps,
-} from "../../sharedWithServer/StateGetters/Bases/GetterSectionBase";
 import { SectionPackMaker } from "../../sharedWithServer/StatePackers.ts/SectionPackMaker";
-import { ApiQuerierProps } from "../QueriersBasic/ApiQuerierNext";
 import { SectionQuerier } from "../QueriersBasic/SectionQuerier";
-
-export interface IndexSectionQuerierProps<
-  SN extends SectionName<"hasIndexStore">
-> extends GetterSectionProps<SN>,
-    ApiQuerierProps {
-  indexName: SectionName<"indexStore">;
-}
+import {
+  IndexSectionQuerierBase,
+  IndexSectionQuerierProps,
+} from "./Bases.ts/IndexSectionQuerierBase";
 
 export class IndexSectionQuerier<
   SN extends SectionName<"hasIndexStore"> = SectionName<"hasIndexStore">
-> extends GetterSectionBase<SN> {
-  readonly indexName: SectionName<"indexStore">;
-  private query: SectionQuerier;
-  private packMaker = new SectionPackMaker(this.getterSectionProps);
-  constructor({
-    indexName,
-    apiQueries,
-    ...rest
-  }: IndexSectionQuerierProps<SN>) {
-    super(rest);
-    this.indexName = indexName;
+> extends IndexSectionQuerierBase<SN> {
+  readonly query: SectionQuerier;
+  private packMaker = new SectionPackMaker(this.indexSectionQuerierProps);
+  constructor(props: IndexSectionQuerierProps<SN>) {
+    super(props);
     this.query = new SectionQuerier({
-      sectionName: indexName,
-      apiQueries,
+      sectionName: this.indexName,
+      apiQueries: this.apiQueries,
     });
   }
   makeIndexSectionPack(): ServerSectionPack {

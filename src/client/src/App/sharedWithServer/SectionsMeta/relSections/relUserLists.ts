@@ -6,7 +6,7 @@ import { relSection, RelSectionOptions } from "./rel/relSection";
 import { RelVarbs } from "./rel/relVarbs";
 
 function userVarbList<
-  SN extends "userVarbList" | "dealVarbList",
+  SN extends "userVarbList" | "internalVarbList",
   O extends StrictOmit<
     RelSectionOptions<"fe", "userVarbList">,
     "childNames" | "relVarbs"
@@ -17,7 +17,7 @@ function userVarbList<
     sectionName,
     "User Variable List",
     {
-      title: rel.varb.string(),
+      ...rel.varbs.savableSection,
       defaultValueSwitch: rel.varb.string({
         initValue: "labeledEquation",
         dbInitValue: "labeledEquation",
@@ -40,7 +40,7 @@ export const preUserLists = {
   ...userVarbList("userVarbList", {
     arrStoreName: "userVarbList",
   }),
-  ...userVarbList("dealVarbList"),
+  ...userVarbList("internalVarbList"),
   ...relSection.base(
     "both",
     "userVarbItem",

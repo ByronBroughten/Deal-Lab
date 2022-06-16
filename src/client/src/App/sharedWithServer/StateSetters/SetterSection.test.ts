@@ -8,6 +8,8 @@ import { SetterTester } from "./TestUtils/SetSectionsTester";
 // loadChildPackArrs
 // replaceWithDefault, resetToDefault
 
+// No, I should make SetterTester take a sectionName
+//
 describe("SetterSection", () => {
   let setterTester: SetterTester;
   beforeEach(() => {

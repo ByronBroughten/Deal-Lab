@@ -22,7 +22,7 @@ export function Main() {
             <IndexTable
               {...{
                 feInfo: dealTableInfo,
-                indexName: "analysisIndex",
+                indexName: "dealIndex",
               }}
             />
           }

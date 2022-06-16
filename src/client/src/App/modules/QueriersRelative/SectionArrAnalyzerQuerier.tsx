@@ -1,6 +1,6 @@
 import { SavableSectionName } from "../../sharedWithServer/SectionsMeta/relNameArrs/storeArrs";
 import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
-import { SectionArrQuerier } from "../QueriersBasic/SectionArrQuerier";
+import { SectionArrDepreciatedQuerier } from "../QueriersBasic/SectionArrDepreciatedQuerier";
 import { useStateQuerierBaseProps } from "../useQueryActions/useBaseQuerierProps";
 import { StateQuerierBase, StateQuerierBaseProps } from "./StateQuerierBase";
 
@@ -8,7 +8,7 @@ export function useSectionArrQueries(
   sectionName: SavableSectionName<"arrStore">
 ) {
   const baseProps = useStateQuerierBaseProps();
-  const stateQuerier = new SectionArrStateQuerier({
+  const stateQuerier = new SectionArrAnalyzerQuerier({
     ...baseProps,
     sectionName,
   });
@@ -24,7 +24,8 @@ interface SectionArrStateQuerierProps
   extends StateQuerierBaseProps,
     UseSectionArrStateQuerierProps {}
 
-class SectionArrStateQuerier extends StateQuerierBase {
+//
+class SectionArrAnalyzerQuerier extends StateQuerierBase {
   sectionName: SectionName<"arrStore">;
   constructor({ sectionName, ...baseProps }: SectionArrStateQuerierProps) {
     super(baseProps);
@@ -32,7 +33,7 @@ class SectionArrStateQuerier extends StateQuerierBase {
   }
 
   private get arrQuerier() {
-    return new SectionArrQuerier(this.sectionName);
+    return new SectionArrDepreciatedQuerier({ sectionName: this.sectionName });
   }
 
   async updateSavedSectionArr() {

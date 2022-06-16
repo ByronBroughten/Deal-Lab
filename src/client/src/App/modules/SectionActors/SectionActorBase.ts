@@ -4,19 +4,20 @@ import {
   SetterSectionBase,
   SetterSectionProps,
 } from "../../sharedWithServer/StateSetters/SetterBases/SetterSectionBase";
-import { ApiQuerierProps } from "../QueriersBasic/ApiQuerierNext";
-import { ApiQueries } from "../useQueryActions/apiQueriesClient";
+import {
+  ApiQuerierBase,
+  ApiQuerierBaseProps,
+} from "../QueriersBasic/Bases/ApiQuerierBase";
 
 export interface SectionActorBaseProps<SN extends SectionName>
   extends SetterSectionProps<SN>,
-    ApiQuerierProps {}
+    ApiQuerierBaseProps {}
 
-export class SectionActorBase<SN extends SectionName> {
+export class SectionActorBase<SN extends SectionName> extends ApiQuerierBase {
   readonly setterSectionBase: SetterSectionBase<SN>;
-  readonly apiQueries: ApiQueries;
-  constructor({ apiQueries, ...props }: SectionActorBaseProps<SN>) {
+  constructor(props: SectionActorBaseProps<SN>) {
+    super(props);
     this.setterSectionBase = new SetterSectionBase(props);
-    this.apiQueries = apiQueries;
   }
   get sectionActorBaseProps(): SectionActorBaseProps<SN> {
     return {

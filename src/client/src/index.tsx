@@ -8,31 +8,28 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-// *update outEntities—this should happen whenever
-// a section is added or loaded*
-// *also, update outEntities whenever
-// a section is remomved*
+// Write Tests
+// - the rest of sectionSetter and varbSetter tests
+// - the actor tests
 
-// ongoingItem monthly value is being divided by 12 before feeding
-// into the monthly
+// update the query tests:
+// - addSection
+// extract tests from fe
+// - loadSectionPack, directUpdateAndSolve
 
-// add date saved and date created to the main sections
+// For loading deals, start with straightforward loading
+// Just load the deal such that its values update.
 
-// upon loading, the editorValue isn't loading
+// To make it possible to query the properties of property, loan, mgmt
+// for columns, add variables to those, like "propertyUserVarbs", or whatever
+// Just add those—no need to fuck with em quite yet. Or call it,
+// "localUserVarbs", or something. Yeah, call it the same thing for all of em.
 
-// fix the theme
-// make fix the bug with ongoing costs always dividing the displayed value by 12
-
-// - make the mainSectionLoadMenu use GenericAutoComplete
-
-// Ok. This thing is almost ready. Once I reimplement the new state
-// all throughout the app, and then finalize the ability for people to pay
-// I can focus on a few UI and theme things
-// and then it's ready to sell.
-// I know that technically, it would still benefit from a few
-// other things:
-
-// Test sectionActors
+// Implement paying for Pro
+// Upload to Heroku
+// Make a video demo/ad
+// Get loading entire deals to work-just implement straightforward, variable-update loading
+// Make the mainSectionLoadMenu use GenericAutoComplete
 
 // UI
 // What about auto-save? Autosave would be really cool to have
@@ -41,10 +38,19 @@ AppRegistry.runApplication("App", {
 // just need "Make Copy" and "Save". Save would just initialize
 // the auto-saving.
 // That's kind of the only way to make the component-aspects of this
-// make sense. Otherwise, if someone loads a list, for instance, edits
-// the list but doesn't save it, and then loads the property again, that
-// list won't be updated, or it will be, but it'll feel like a bug.
-// I want a way to sync up the properties and deals and whatnot.
+// make sense.
+
+// Someone loads a property with a list that is saved
+// the list's values are synced with the saved list
+// the list items are edited on the property
+// the property is saved
+// the property is switched
+// the property is switched back
+// if the list's save takes precedent, the property's list remains unedited.
+// That makes sense if the user is using those lists as intended, to sync
+// up properties
+// There should be a way to unteather the list from the saved ones
+// I guess making a copy would be the way to go, then it's no longer saved.
 
 // Hide the save menus behind a click, then label their buttons.
 // Always have "Save New"; also have "Save Updates", "Make Copy", "Saved Plural"

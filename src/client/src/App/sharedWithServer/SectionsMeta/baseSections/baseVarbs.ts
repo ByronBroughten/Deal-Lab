@@ -56,9 +56,16 @@ export const baseVarbs = {
   ongoing<Base extends string>(baseName: Base): BaseOngoingVarb<Base> {
     return this.switch(baseName, switchEndings.ongoing);
   },
-  get property() {
+  get savableSection() {
     return {
       title: "string",
+      dateTimeFirstSaved: "string",
+      dateTimeLastSaved: "string",
+    } as const;
+  },
+  get property() {
+    return {
+      ...this.savableSection,
       ...this.numObj([
         "price",
         "sqft",
@@ -77,7 +84,7 @@ export const baseVarbs = {
   },
   get loan() {
     return {
-      title: "string",
+      ...this.savableSection,
       ...this.numObj([
         "loanAmountDollarsTotal",
         "mortInsUpfront",
@@ -93,7 +100,7 @@ export const baseVarbs = {
   },
   get mgmt() {
     return {
-      title: "string",
+      ...this.savableSection,
       ...this.numObj(["vacancyRatePercent", "upfrontExpenses"] as const),
       ...this.ongoing("ongoingExpenses"),
       ...this.ongoing("vacancyLossDollars"),
@@ -106,7 +113,7 @@ export const baseVarbs = {
   },
   get analysis() {
     return {
-      title: "string",
+      ...this.savableSection,
     } as const;
   },
   table: {
@@ -122,14 +129,14 @@ export const baseVarbs = {
   },
   get singleTimeList() {
     return {
+      ...this.savableSection,
       total: "numObj",
-      title: "string",
       defaultValueSwitch: "string",
     } as const;
   },
   get ongoingList() {
     return {
-      title: "string",
+      ...this.savableSection,
       ...this.ongoing("total"),
       defaultValueSwitch: "string",
       defaultOngoingSwitch: "string",

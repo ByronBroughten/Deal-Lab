@@ -1,4 +1,3 @@
-import Analyzer from "../../Analyzer";
 import { entityS } from "../../SectionsMeta/baseSections/baseValues/entities";
 import {
   dbNumObj,
@@ -6,8 +5,10 @@ import {
 } from "../../SectionsMeta/baseSections/baseValues/NumObj";
 import { switchNames } from "../../SectionsMeta/baseSections/switchNames";
 import { FeInfo, InfoS } from "../../SectionsMeta/Info";
+import Analyzer from "../Analyzer";
 import { DbEntry } from "../DbEntry";
 import { StateValue } from "../StateSection/StateVarb/stateValue";
+import { SetterTester } from "./TestUtils/SetSectionsTester";
 
 function makePropertyEntry(values: {
   homeInsYearly: number;
@@ -55,6 +56,9 @@ describe("Analyzer.updateValues", () => {
   let propertyInfo: FeInfo;
 
   beforeEach(() => {
+    // Hmmm... this probably ought to embody
+    const tester = new SetterTester();
+
     analyzer = Analyzer.initAnalyzer();
     analyzer.addSectionAndSolve("property", "propertyGeneral", {
       dbEntry: makePropertyEntry({

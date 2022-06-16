@@ -1,5 +1,6 @@
 import { pick } from "lodash";
 import { SectionOption } from "../Analyzer/methods/get/variableOptions";
+import { VarbValues } from "../Analyzer/StateSection/methods/varbs";
 import { SectionPackRaw } from "../SectionPack/SectionPackRaw";
 import { SwitchEndingKey } from "../SectionsMeta/baseSections/switchNames";
 import { FeSectionInfo, VarbInfo } from "../SectionsMeta/Info";
@@ -64,6 +65,10 @@ export class SetterSection<
   }
   loadSelfSectionPack(sectionPack: SectionPackRaw<SN>): void {
     this.solver.loadSelfSectionPackAndSolve(sectionPack);
+    this.setSections();
+  }
+  updateValues(values: VarbValues): void {
+    this.solver.updateValuesAndSolve(values);
     this.setSections();
   }
   addChild<CN extends ChildName<SN>>(

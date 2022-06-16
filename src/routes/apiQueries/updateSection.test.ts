@@ -1,7 +1,6 @@
 import { Server } from "http";
 import request from "supertest";
 import { config } from "../../client/src/App/Constants";
-import Analyzer from "../../client/src/App/sharedWithServer/Analyzer";
 import { apiQueriesShared } from "../../client/src/App/sharedWithServer/apiQueriesShared";
 import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import { NumObj } from "../../client/src/App/sharedWithServer/SectionsMeta/baseSections/baseValues/NumObj";
@@ -11,6 +10,7 @@ import { UserModel } from "../UserModel";
 import { loginUtils } from "./nextLogin/loginUtils";
 import { getUserByIdNoRes } from "./shared/getUserById";
 import { createTestUserModelNext } from "./test/createTestUserModelNext";
+import { SectionQueryTester } from "./test/SectionQueryTester";
 
 const sectionName = "property";
 const originalValues = {
@@ -28,22 +28,19 @@ type TestReqs = {
   updateSection: NextReq<"updateSection">;
 };
 function makeReqs(): TestReqs {
-  let next = Analyzer.initAnalyzer();
-  const { feInfo } = next.lastSection(sectionName);
-  next = next.updateSectionValuesAndSolve(feInfo, originalValues);
-  const addSectionReq = apiQueriesShared.addSection.makeReq({
-    analyzer: next,
-    feInfo,
-    dbStoreName: "propertyIndexNext",
+  const tester = SectionQueryTester.init({
+    sectionName,
+    indexName: "propertyIndexNext",
   });
-  next = next.updateSectionValuesAndSolve(feInfo, updatedValues);
+  const { updater } = tester;
+  updater.updateValuesDirectly(originalValues);
+  const originalSection = tester.makeSectionPackReq();
+
+  updater.updateValuesDirectly(updatedValues);
+  const updatedSection = tester.makeSectionPackReq();
   return {
-    addSection: addSectionReq,
-    updateSection: apiQueriesShared.updateSection.makeReq({
-      analyzer: next,
-      feInfo,
-      dbStoreName: "propertyIndexNext",
-    }),
+    addSection: originalSection,
+    updateSection: updatedSection,
   };
 }
 

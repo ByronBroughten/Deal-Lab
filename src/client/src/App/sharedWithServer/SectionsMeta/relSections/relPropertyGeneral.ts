@@ -9,7 +9,7 @@ function propertyRelVarbs<
   R extends RelVarbs<ContextName, SN>
 >(sectionName: SN): R {
   return {
-    title: rel.varb.string(),
+    ...rel.varbs.savableSection,
     price: rel.varb.moneyObj("Price"),
     sqft: rel.varb.calcVarb("Square feet"),
     ...rel.varbs.timeMoney("taxes", "Taxes", sectionName, {
@@ -77,6 +77,7 @@ function propertySection<
         "ongoingCostList",
         "ongoingRevenueList",
         "unit",
+        "internalVarbList",
       ] as const,
     }
   );

@@ -67,7 +67,7 @@ export const baseSection = {
   varbList<O extends BaseSectionOptions = {}>(options?: O) {
     return this.schema(
       {
-        title: "string",
+        ...baseVarbs.savableSection,
         defaultValueSwitch: "string",
       },
       (options ?? {}) as O

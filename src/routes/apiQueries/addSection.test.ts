@@ -1,7 +1,6 @@
 import { Server } from "http";
 import request from "supertest";
 import { config } from "../../client/src/App/Constants";
-import Analyzer from "../../client/src/App/sharedWithServer/Analyzer";
 import { apiQueriesShared } from "../../client/src/App/sharedWithServer/apiQueriesShared";
 import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import { Arr } from "../../client/src/App/sharedWithServer/utils/Arr";
@@ -10,16 +9,15 @@ import { UserModel } from "../UserModel";
 import { loginUtils } from "./nextLogin/loginUtils";
 import { getUserByIdNoRes } from "./shared/getUserById";
 import { createTestUserModelNext } from "./test/createTestUserModelNext";
+import { SectionQueryTester } from "./test/SectionQueryTester";
 
-const sectionName = "property";
 function makeAddSectionReq(): NextReq<"addSection"> {
-  const analyzer = Analyzer.initAnalyzer();
-  const { feInfo } = analyzer.lastSection(sectionName);
-  return apiQueriesShared.addSection.makeReq({
-    analyzer,
-    feInfo,
-    dbStoreName: "propertyIndexNext",
+  const sectionName = "property";
+  const tester = SectionQueryTester.init({
+    sectionName,
+    indexName: "propertyIndexNext",
   });
+  return tester.makeSectionPackReq();
 }
 
 const apiRoute = apiQueriesShared.addSection.pathRoute;

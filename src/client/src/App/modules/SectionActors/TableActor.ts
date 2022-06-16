@@ -4,10 +4,10 @@ import { InEntityVarbInfo } from "../../sharedWithServer/SectionsMeta/baseSectio
 import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
 import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
 import { SectionPackMaker } from "../../sharedWithServer/StatePackers.ts/SectionPackMaker";
-import { SetterSectionBase } from "../../sharedWithServer/StateSetters/SetterBases/SetterSectionBase";
 import { SetterSection } from "../../sharedWithServer/StateSetters/SetterSection";
 import { SetterTable } from "../../sharedWithServer/StateSetters/SetterTable";
 import { SectionArrQuerier } from "../QueriersBasic/SectionArrQuerier";
+import { SectionActorBase } from "./SectionActorBase";
 
 class GetterColumn extends GetterSection<"column"> {
   get displayNameOrNotFound(): string {
@@ -23,17 +23,17 @@ class GetterColumn extends GetterSection<"column"> {
 
 export class TableActor<
   SN extends SectionName<"tableName">
-> extends SetterSectionBase<SN> {
-  get = new GetterSection(this.setterSectionProps);
-  tableState = new SetterTable(this.setterSectionProps);
+> extends SectionActorBase<SN> {
+  get = new GetterSection(this.sectionActorBaseProps);
+  tableState = new SetterTable(this.sectionActorBaseProps);
   get querier() {
-    return new SectionArrQuerier(this.get.sectionName);
+    return new SectionArrQuerier(this.sectionActorBaseProps);
   }
   get setter() {
-    return new SetterSection(this.setterSectionProps);
+    return new SetterSection(this.sectionActorBaseProps);
   }
   get packMaker() {
-    return new SectionPackMaker(this.setterSectionProps);
+    return new SectionPackMaker(this.sectionActorBaseProps);
   }
   private async sendTable(): Promise<void> {
     this.querier.replace([this.packMaker.makeSectionPack()]);

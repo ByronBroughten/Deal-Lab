@@ -11,7 +11,7 @@ function loanRelVarbs(
   sectionName: "loan" | "loanIndex"
 ): RelVarbs<ContextName, "loan"> {
   return {
-    title: rel.varb.string(),
+    ...rel.varbs.savableSection,
     [loanAmountBase.switch]: rel.varb.string({
       initValue: "percent",
       dbInitValue: "percent",
@@ -143,7 +143,11 @@ function loanSection<
     loanRelVarbs(sectionName) as RelVarbs<"fe", SN>,
     {
       ...((options ?? {}) as O),
-      childNames: ["closingCostList", "wrappedInLoanList"] as const,
+      childNames: [
+        "closingCostList",
+        "wrappedInLoanList",
+        "internalVarbList",
+      ] as const,
     }
   );
 }
