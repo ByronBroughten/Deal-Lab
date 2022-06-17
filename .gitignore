@@ -5,3 +5,4 @@ coverage/
 logfile.log
 /.vscode/
 /.gitignore/
+src/client/build

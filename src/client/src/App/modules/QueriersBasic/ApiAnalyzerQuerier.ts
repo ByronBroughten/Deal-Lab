@@ -1,5 +1,5 @@
 import { ApiQueries } from "../../sharedWithServer/apiQueriesShared";
-import { apiQueries } from "../useQueryActions/apiQueriesClient";
+import { apiQueries } from "../useQueryActionsTest/apiQueriesClient";
 
 export class ApiQuerier {
   get query(): ApiQueries {

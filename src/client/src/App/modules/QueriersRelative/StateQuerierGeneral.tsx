@@ -6,7 +6,7 @@ import { applyMixins } from "../../utils/classObjects";
 import { makeContextUseContext } from "../../utils/react";
 import { auth } from "../services/authService";
 import { useAnalyzerContext } from "../usePropertyAnalyzer";
-import { apiQueries } from "../useQueryActions/apiQueriesClient";
+import { apiQueries } from "../useQueryActionsTest/apiQueriesClient";
 import { StateQuerierBase, StateQuerierBaseProps } from "./StateQuerierBase";
 
 class AuthQueryActor extends StateQuerierBase {

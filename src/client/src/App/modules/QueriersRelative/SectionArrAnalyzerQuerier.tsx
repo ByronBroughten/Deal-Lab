@@ -1,7 +1,7 @@
 import { SavableSectionName } from "../../sharedWithServer/SectionsMeta/relNameArrs/storeArrs";
 import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
 import { SectionArrDepreciatedQuerier } from "../QueriersBasic/SectionArrDepreciatedQuerier";
-import { useStateQuerierBaseProps } from "../useQueryActions/useBaseQuerierProps";
+import { useStateQuerierBaseProps } from "../useQueryActionsTest/useBaseQuerierProps";
 import { StateQuerierBase, StateQuerierBaseProps } from "./StateQuerierBase";
 
 export function useSectionArrQueries(

@@ -1,6 +1,6 @@
 import urljoin from "url-join";
 import { config } from "../Constants";
-import { makeResValidationQueryError } from "../modules/useQueryActions/apiQueriesClient/validateRes";
+import { makeResValidationQueryError } from "../modules/useQueryActionsTest/apiQueriesClient/validateRes";
 import Analyzer from "./Analyzer";
 import { FeSectionPack } from "./Analyzer/FeSectionPack";
 import {

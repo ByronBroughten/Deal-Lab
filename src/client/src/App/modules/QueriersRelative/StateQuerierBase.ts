@@ -1,6 +1,6 @@
 import Analyzer from "../../sharedWithServer/Analyzer";
 import { ReqMaker } from "../../sharedWithServer/apiQueriesShared";
-import { apiQueries } from "../useQueryActions/apiQueriesClient";
+import { apiQueries } from "../useQueryActionsTest/apiQueriesClient";
 
 export interface StateQuerierBaseProps {
   sections: Analyzer;
