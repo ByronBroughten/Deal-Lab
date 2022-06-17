@@ -3,8 +3,13 @@ const webpack = require("webpack"); //to access built-in plugins
 const path = require("path");
 const ConfigWebpackPlugin = require("config-webpack");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
+const CaseSensitivePathsWebpackPlugin = require("case-sensitive-paths-webpack-plugin");
 
 module.exports = {
+  // stats: { modules: false },
+  // resolve: {
+  //   extensions: ['.js', '.jsx', '.ts', '.tsx', '.css']
+  // },
   entry: "./src/index.js",
   output: {
     filename: "webpack.bundle.js",
@@ -19,6 +24,7 @@ module.exports = {
     ],
   },
   plugins: [
+    new CaseSensitivePathsWebpackPlugin(),
     new ConfigWebpackPlugin(),
     new ForkTsCheckerWebpackPlugin({
       typescript: {

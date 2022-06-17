@@ -20,6 +20,7 @@ AppRegistry.runApplication("App", {
 //   check for the section by dbId
 //   if it is found, replace the section with the saved version
 //   send the updated deal to the client
+// this is what I want. this makes the most sense.
 
 // Upload to Heroku
 // Implement paying for Pro
