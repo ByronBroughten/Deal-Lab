@@ -7,6 +7,7 @@ import {
   ContextName,
   SimpleSectionName,
 } from "./baseSections";
+import { baseNameArrs } from "./baseSectionTypes/baseNameArrs";
 import { rel } from "./relSections/rel";
 import { GeneralRelSection, relSection } from "./relSections/rel/relSection";
 import { LeftRightVarbInfos, relVarb } from "./relSections/rel/relVarb";
@@ -36,13 +37,23 @@ export function makeRelSections() {
         "Analysis Table",
         "dealIndex"
       ),
-
+      ...relSection.base(
+        "both",
+        "omniParent",
+        "Omni Parent",
+        {
+          _typeUniformity: rel.varb.string(),
+        } as RelVarbs<ContextName, "omniParent">,
+        {
+          childNames: baseNameArrs.fe.all,
+        }
+      ),
       ...relSection.base(
         "both",
         "main",
         "Main",
         {
-          _placeholder: rel.varb.string(),
+          _typeUniformity: rel.varb.string(),
         } as RelVarbs<ContextName, "main">,
         {
           childNames: [

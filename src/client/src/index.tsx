@@ -12,6 +12,29 @@ AppRegistry.runApplication("App", {
 // - the rest of sectionSetter and varbSetter tests
 // - the actor tests
 
+// Core Features
+// * Load "main" with updates
+// * Load  "deal" with updates
+// * Load "property", etc, with updates
+// * Load "singleTimeList", etc, with updates
+
+// I'll need to make the list groups be sections
+// I'll need to make propertyGeneral access the total
+// of the appropriate list groups.
+
+// loan would have two singleTime list groups, though.
+// one would have to have a different sectionName than the other.
+
+// there is a complication.
+// if "property" has its own singleTimeList category
+// and it has a list that has been saved
+// each will have the same dbId
+// as will the varbs.
+
+// I ought to make a list of everything I want this to do
+// for the core to be considered complete.
+// And then try to figure out the best way to implement each item.
+
 // 2. Load everything as it was saved (except entities will update)
 //    There is no easy way to update the property, though.
 // For loading deals

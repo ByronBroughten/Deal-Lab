@@ -1,7 +1,7 @@
 import { Obj } from "../../utils/Obj";
 import { EntryKeysWithPropOfType } from "../../utils/Obj/entryKeysWithProp";
 import {
-  dbStoreNamesNext,
+  dbStoreNames,
   SimpleDbStoreName,
 } from "../baseSectionTypes/dbStoreNames";
 import { RelSections, relSections } from "../relSections";
@@ -114,7 +114,7 @@ export type SavableSectionName<SN extends SavableSectionType = "all"> =
 
 const storeNameArrsPlusAll: StoreNameArrsPlusAll = {
   ...storeNameArrs,
-  all: dbStoreNamesNext,
+  all: dbStoreNames,
 };
 
 export const savableNameS = {

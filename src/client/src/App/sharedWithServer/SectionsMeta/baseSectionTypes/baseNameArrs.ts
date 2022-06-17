@@ -13,8 +13,8 @@ import { base } from "../baseSections/base";
 import { GeneralBaseSection } from "../baseSections/baseSection";
 import { switchName, SwitchName } from "../baseSections/baseSwitchNames";
 import {
+  dbStoreNames,
   dbStoreNamesDepreciated,
-  dbStoreNamesNext,
   feGuestAccessNames,
   loadOnLoginNames,
 } from "./dbStoreNames";
@@ -112,7 +112,7 @@ function makeBaseNameArrsForContext<SC extends ContextName>(
 
   return {
     ...makeSingleSectionNameArrs(sectionContext),
-    dbStoreNext: dbStoreNamesNext,
+    dbStoreNext: dbStoreNames,
     dbStore: dbStoreNamesDepreciated,
     all: Obj.keys(baseSectionsOfContext) as SimpleSectionName<SC>[],
 

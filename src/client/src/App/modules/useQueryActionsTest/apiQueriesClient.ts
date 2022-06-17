@@ -26,12 +26,6 @@ import {
 // these are what I need to replace.
 export const apiQueries = makeApiQueries();
 
-async function _testApiQueries() {
-  const _test: NextRes<"getSection"> = await apiQueries.getSection({
-    body: { dbStoreName: "analysis", dbId: "string" },
-  });
-}
-
 function makeApiQueries(): ApiQueries {
   const apiQueryProps: AllApiQueryProps = {
     nextRegister: {
@@ -136,4 +130,10 @@ function makeApiQuery<QN extends ApiQueryName>({
     if (!res) throw makeResValidationQueryError();
     return validateRes(res);
   };
+}
+
+async function _testApiQueries() {
+  const _test: NextRes<"getSection"> = await apiQueries.getSection({
+    body: { dbStoreName: "analysis", dbId: "string" },
+  });
 }
