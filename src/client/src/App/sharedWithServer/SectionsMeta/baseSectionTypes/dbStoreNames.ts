@@ -5,9 +5,9 @@ export const dbStoreNamesNext = [
   "user",
   "analysis",
 
-  "propertyIndexNext",
+  "propertyIndex",
   "loanIndex",
-  "mgmtIndexNext",
+  "mgmtIndex",
   "dealIndex",
 
   "analysisTable",
@@ -29,17 +29,17 @@ type DbStoreNameCheck<DS extends SimpleDbStoreName> = DS;
 export const feGuestAccessNames = Arr.exclude(dbStoreNamesNext, [
   // for now, this determines which sections the dbUser starts having populated.
   "user",
-  "propertyIndexNext",
-  "propertyIndexNext",
+  "propertyIndex",
+  "propertyIndex",
   "loanIndex",
-  "mgmtIndexNext",
+  "mgmtIndex",
   "dealIndex",
 ] as const);
 
 export const loadOnLoginNames = Arr.exclude(dbStoreNamesNext, [
-  "propertyIndexNext",
+  "propertyIndex",
   "loanIndex",
-  "mgmtIndexNext",
+  "mgmtIndex",
   "dealIndex",
 ] as const);
 type _LoadOnLoginTest = DbStoreNameCheck<typeof loadOnLoginNames[number]>;

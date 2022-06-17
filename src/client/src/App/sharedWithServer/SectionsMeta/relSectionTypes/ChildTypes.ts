@@ -66,7 +66,7 @@ type ChildToSectionWithChildWide<
 const _testFeToDbNameWithSameChildren = (): void => {
   type TestName = FeToDbNameWithSameChildren<"property">;
   const _testName2: TestName = "property";
-  const _testName1: TestName = "propertyIndexNext";
+  const _testName1: TestName = "propertyIndex";
   // @ts-expect-error
   const _testName3: TestName = "mgmt";
 };

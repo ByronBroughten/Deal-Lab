@@ -16,6 +16,7 @@ import {
   FeVarbInfo,
   LocalRelVarbInfo,
   MultiVarbInfo,
+  SimpleVarbNames,
 } from "../SectionsMeta/relSections/rel/relVarbInfoTypes";
 import { UniqueIdMixedVarbInfo } from "../SectionsMeta/relSections/rel/uniqueIdInfo";
 import {
@@ -27,6 +28,7 @@ import { cloneValue, InUpdatePack, VarbMeta } from "../SectionsMeta/VarbMeta";
 import { RawFeVarb } from "../StateSections/StateSectionsNext";
 import { GetterVarbBase } from "./Bases/GetterVarbBase";
 import { GetterSection } from "./GetterSection";
+import { GetterSections } from "./GetterSections";
 import { GetterVarbs } from "./GetterVarbs";
 
 export class GetterVarb<
@@ -35,6 +37,12 @@ export class GetterVarb<
   private getterVarbs = new GetterVarbs(this.getterSectionProps);
   get getterSection() {
     return new GetterSection(this.getterSectionProps);
+  }
+  get section() {
+    return this.getterSection;
+  }
+  get sections() {
+    return new GetterSections(this.getterSectionsProps);
   }
   get meta(): VarbMeta {
     return this.getterVarbs.meta.get(this.varbName);
@@ -186,6 +194,14 @@ export class GetterVarb<
       label: this.displayName,
     };
   }
+  nearestAnscestor<S extends SectionName>({
+    sectionName,
+    varbName,
+  }: SimpleVarbNames<S>): GetterVarb<S> {
+    const anscestor = this.getterSection.nearestAnscestor(sectionName);
+    return anscestor.varb(varbName);
+  }
+
   static mixedVarbInfoToMixedVarbId(info: InEntityVarbInfo): string {
     const { sectionName, idType, id, varbName } = info;
     return [sectionName, idType, id, varbName].join(".");

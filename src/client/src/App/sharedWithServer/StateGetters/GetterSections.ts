@@ -23,6 +23,9 @@ export class GetterSections extends GetterSectionsBase {
       sectionsShare: this.sectionsShare,
     });
   }
+  oneAndOnly<SN extends SectionName>(sectionName: SN): GetterSection<SN> {
+    return this.list(sectionName).oneAndOnly;
+  }
   get main(): GetterSection<"main"> {
     return this.list("main").oneAndOnly;
   }

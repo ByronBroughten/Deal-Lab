@@ -12,33 +12,21 @@ AppRegistry.runApplication("App", {
 // - the rest of sectionSetter and varbSetter tests
 // - the actor tests
 
-// update the query tests:
-// - addSection
-// extract tests from fe
-// - loadSectionPack, directUpdateAndSolve
+// 2. Load everything as it was saved (except entities will update)
+//    There is no easy way to update the property, though.
+// For loading deals
+// 1. On the serverside
+//   for each sectionName that the deal has which is also a storeName
+//   check for the section by dbId
+//   if it is found, replace the section with the saved version
+//   send the updated deal to the client
 
-// For loading deals, start with straightforward loading
-// Just load the deal such that its values update.
-
-// To make it possible to query the properties of property, loan, mgmt
-// for columns, add variables to those, like "propertyUserVarbs", or whatever
-// Just add those—no need to fuck with em quite yet. Or call it,
-// "localUserVarbs", or something. Yeah, call it the same thing for all of em.
-
-// Implement paying for Pro
 // Upload to Heroku
-// Make a video demo/ad
-// Get loading entire deals to work-just implement straightforward, variable-update loading
+// Implement paying for Pro
 // Make the mainSectionLoadMenu use GenericAutoComplete
+// Make a video demo/ad
 
-// UI
-// What about auto-save? Autosave would be really cool to have
-//instead of "Save Updates". It would make it more intuitive
-// Then I wouldn't need "Save New" or "Save Update". I would
-// just need "Make Copy" and "Save". Save would just initialize
-// the auto-saving.
-// That's kind of the only way to make the component-aspects of this
-// make sense.
+// Implement interest only payments on loans
 
 // Someone loads a property with a list that is saved
 // the list's values are synced with the saved list
@@ -52,17 +40,9 @@ AppRegistry.runApplication("App", {
 // There should be a way to unteather the list from the saved ones
 // I guess making a copy would be the way to go, then it's no longer saved.
 
-// Hide the save menus behind a click, then label their buttons.
+// Hide the save menus behind a click; label their buttons.
 // Always have "Save New"; also have "Save Updates", "Make Copy", "Saved Plural"
-// Allow interest only payments on loans
 // Allow ongoing income on property, or a list of "other income" on each unit
-// Load deal:
-// grab the deal from where it's saved
-// load it into sectionPack builder
-// check whether its property, loans, and mgmt are saved
-// if they are, load them from the db and replace them
-// in the deal.
-// send the updated deal sectionPack and load it up
 
 reportWebVitals();
 // implement rest of property

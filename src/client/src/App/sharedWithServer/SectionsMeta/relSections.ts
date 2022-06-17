@@ -23,13 +23,13 @@ export function makeRelSections() {
       ...rel.section.sectionTableNext(
         "propertyTable",
         "Property Table",
-        "propertyIndexNext"
+        "propertyIndex"
       ),
       ...rel.section.sectionTableNext("loanTable", "Loan Table", "loanIndex"),
       ...rel.section.sectionTableNext(
         "mgmtTable",
         "Management Table",
-        "mgmtIndexNext"
+        "mgmtIndex"
       ),
       ...rel.section.sectionTableNext(
         "analysisTable",
@@ -51,9 +51,9 @@ export function makeRelSections() {
             "login",
             "register",
 
-            "propertyIndexNext",
+            "propertyIndex",
             "loanIndex",
-            "mgmtIndexNext",
+            "mgmtIndex",
             "dealIndex",
 
             "propertyTable",

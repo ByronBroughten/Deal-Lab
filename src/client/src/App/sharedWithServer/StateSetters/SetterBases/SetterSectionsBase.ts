@@ -28,7 +28,7 @@ export class SetterSectionsBase {
     this.initialSectionsShare = initialSectionsShare;
     this.setSectionsShare = setSectionsShare;
   }
-  static initSectionsProps({
+  static initProps({
     sections,
     setSections,
   }: SectionsAndSetSections): SetterSectionsProps {

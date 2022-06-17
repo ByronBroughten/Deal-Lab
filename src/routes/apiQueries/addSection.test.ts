@@ -15,7 +15,7 @@ function makeAddSectionReq(): NextReq<"addSection"> {
   const sectionName = "property";
   const tester = SectionQueryTester.init({
     sectionName,
-    indexName: "propertyIndexNext",
+    indexName: "propertyIndex",
   });
   return tester.makeSectionPackReq();
 }
@@ -55,10 +55,8 @@ describe(apiRoute, () => {
     await testStatus(200);
     const postDoc = await getUserByIdNoRes(userId);
 
-    expect(postDoc.propertyIndexNext.length).toBe(
-      preDoc.propertyIndexNext.length + 1
-    );
-    expect(Arr.lastOrThrow(postDoc.propertyIndexNext).dbId).toBe(
+    expect(postDoc.propertyIndex.length).toBe(preDoc.propertyIndex.length + 1);
+    expect(Arr.lastOrThrow(postDoc.propertyIndex).dbId).toBe(
       req.body.sectionPack.dbId
     );
   });

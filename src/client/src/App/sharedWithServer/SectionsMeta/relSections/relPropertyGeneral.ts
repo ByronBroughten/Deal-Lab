@@ -5,7 +5,7 @@ import { relSection, RelSectionOptions } from "./rel/relSection";
 import { RelVarbs } from "./rel/relVarbs";
 
 function propertyRelVarbs<
-  SN extends "property" | "propertyIndexNext",
+  SN extends "property" | "propertyIndex",
   R extends RelVarbs<ContextName, SN>
 >(sectionName: SN): R {
   return {
@@ -58,7 +58,7 @@ function propertyRelVarbs<
 }
 
 function propertySection<
-  SN extends "property" | "propertyIndexNext",
+  SN extends "property" | "propertyIndex",
   O extends StrictOmit<
     RelSectionOptions<"fe", "property">,
     "childNames" | "relVarbs"
@@ -98,9 +98,9 @@ export const relPropertyGeneral = {
     }
   ),
   ...propertySection("property", {
-    rowIndexName: "propertyIndexNext",
+    rowIndexName: "propertyIndex",
   } as const),
-  ...propertySection("propertyIndexNext"),
+  ...propertySection("propertyIndex"),
   ...relSection.base("both", "unit", "Unit", {
     one: rel.varb.numObj("Unit", {
       updateFnName: "one",

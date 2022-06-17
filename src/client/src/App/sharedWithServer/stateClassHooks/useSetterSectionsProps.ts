@@ -6,5 +6,5 @@ import { useSectionsContext } from "./useSections";
 
 export function useSetterSectionsProps(): SetterSectionsProps {
   const { sections, setSections } = useSectionsContext();
-  return SetterSectionsBase.initSectionsProps({ sections, setSections });
+  return SetterSectionsBase.initProps({ sections, setSections });
 }

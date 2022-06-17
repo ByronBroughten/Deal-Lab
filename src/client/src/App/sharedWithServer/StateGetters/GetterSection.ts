@@ -31,7 +31,10 @@ import {
   GeneralChildIdArrs,
   SelfAndDescendantIds,
 } from "../SectionsMeta/relSectionTypes/ChildTypes";
-import { ParentNameSafe } from "../SectionsMeta/relSectionTypes/ParentTypes";
+import {
+  ParentName,
+  ParentNameSafe,
+} from "../SectionsMeta/relSectionTypes/ParentTypes";
 import { SectionMeta } from "../SectionsMeta/SectionMeta";
 import {
   SectionName,
@@ -48,7 +51,7 @@ import { GetterVarb } from "./GetterVarb";
 import { GetterVarbs } from "./GetterVarbs";
 
 export class GetterSection<
-  SN extends SectionName
+  SN extends SectionName = SectionName
 > extends GetterSectionBase<SN> {
   private getterSections = new GetterSections(this.getterSectionsProps);
   get sections() {
@@ -248,9 +251,9 @@ export class GetterSection<
       idType,
     };
   }
-  value<VT extends ValueTypeName | "any">(
+  value<VT extends ValueTypeName | "any" = "any">(
     varbName: string,
-    valueType: VT
+    valueType?: VT
   ): ValueTypesPlusAny[VT] {
     return this.varb(varbName).value(valueType);
   }
@@ -353,6 +356,9 @@ export class GetterSection<
   get parentInfo(): FeParentInfo<SN> {
     return this.raw.parentInfo;
   }
+  get parentName(): ParentName<SN> {
+    return this.parentInfo.sectionName;
+  }
   get parentInfoSafe(): FeParentInfoSafe<SN> {
     const { parentInfo } = this;
     if (parentInfo.sectionName === noParentWarning)
@@ -362,6 +368,22 @@ export class GetterSection<
   get parent(): GetterSection<ParentNameSafe<SN>> {
     const { parentInfoSafe } = this;
     return this.getterSections.section(parentInfoSafe);
+  }
+  nearestAnscestor<S extends SectionName>(anscestorName: S): GetterSection<S> {
+    let section = this as any as GetterSection;
+    for (let i = 0; i < 100; i++) {
+      if (section.sectionName === "main") {
+        throw new Error(
+          `An anscestor with sectionName ${anscestorName} was not found from sectionName ${this.sectionName}`
+        );
+      }
+      const info = section.parentInfo;
+      if (anscestorName === info.sectionName) {
+        return this.getterSection(info as any) as any as GetterSection<S>;
+      }
+      section = section.parent as any;
+    }
+    throw new Error("Neither anscestor nor main were found.");
   }
   getterSection<S extends SectionName>(
     feInfo: FeSectionInfo<S>
