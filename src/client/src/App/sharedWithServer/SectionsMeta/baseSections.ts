@@ -56,14 +56,14 @@ export const baseSections = {
         alwaysOne: true,
       }
     ),
-    omniParent: base.section.schema(
-      {
-        _typeUniformity: "string",
-      } as const,
-      {
-        alwaysOne: true,
-      }
-    ),
+    // omniParent: base.section.schema(
+    //   {
+    //     _typeUniformity: "string",
+    //   } as const,
+    //   {
+    //     alwaysOne: true,
+    //   }
+    // ),
     propertyIndex: base.section.schema(base.varbs.property, {
       uniqueDbId: true,
     }),

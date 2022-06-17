@@ -95,16 +95,6 @@ export const relSection = {
       displayName,
       relVarbs,
       childNames: [],
-      // something probably wouldn't have
-      // both an indexName and a fullIndexName
-      // why have both a fullIndex and a rowIndex?
-      // Doesn't make sense.
-      // A table should be able to function with either if need be.
-      // What would be best is, index: { type: "full" | "row", sectionName: "propertyIndex" }
-      // and then I would just define the arrStores separately in one of the
-      // dbStore contexts
-      // they will always just be themselves, right?
-
       fullIndexName: null,
       rowIndexName: null,
       arrStoreName: null,

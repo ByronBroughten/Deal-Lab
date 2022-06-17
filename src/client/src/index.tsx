@@ -7,6 +7,20 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
+// - let main have a parent ("omni parent"). Set off alarm bells when
+//   a parent is accessed but the info is "no parent"
+// - get rid of static sections
+// -
+
+// To make this system work as it should, I have to get rid of
+// static sections, and I have to address the possibility of main
+// having another main as a child (and thus having a parent, rather than
+// just "no parent").
+
+// to get rid of static sections, I would need to implement a new
+// kind of rel sectionFinder. One that includes paths rather than sectionNames.
+// I would probably have to put propertyGeneral and the like under "final"
+// or under "totals ins and outs". I could combine those with final"
 
 // Write Tests
 // - the rest of sectionSetter and varbSetter tests
