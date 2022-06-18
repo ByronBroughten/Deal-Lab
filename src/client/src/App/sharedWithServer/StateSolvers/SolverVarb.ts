@@ -1,14 +1,16 @@
-import { InVarbInfo } from "../FeSections/FeSection/FeVarb";
-import { OutEntity } from "../FeSections/FeSection/FeVarb/entities";
-import { StateValue } from "../FeSections/FeSection/FeVarb/feValue";
-import { varbNotFoundMixed } from "../FeSections/FeSection/FeVarbs";
 import {
   entityS,
   InEntity,
   InEntityVarbInfo,
+  InVarbInfo,
+  OutEntity,
 } from "../SectionsMeta/baseSections/baseValues/entities";
+import { StateValue } from "../SectionsMeta/baseSections/baseValues/StateValueTypes";
 import { Id } from "../SectionsMeta/baseSections/id";
-import { InRelVarbInfo } from "../SectionsMeta/relSections/rel/relVarbInfoTypes";
+import {
+  InRelVarbInfo,
+  MultiVarbInfo,
+} from "../SectionsMeta/relSections/rel/relVarbInfoTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { GetterSections } from "../StateGetters/GetterSections";
 import { GetterVarb } from "../StateGetters/GetterVarb";
@@ -234,5 +236,13 @@ export class SolverVarb<
   }
 }
 
-// I probably don't need these, because the inEntities are already updated with
-// the new value. Only the out entities need to be updated in response.
+export function varbNotFoundMixed({
+  varbName,
+  sectionName,
+  idType,
+  id,
+}: MultiVarbInfo) {
+  return new Error(
+    `There is no varb at ${sectionName}.${id}.${varbName} with idType ${idType}.`
+  );
+}

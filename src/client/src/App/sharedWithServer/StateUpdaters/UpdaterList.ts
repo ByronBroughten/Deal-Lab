@@ -1,6 +1,6 @@
 import { SectionName } from "../SectionsMeta/SectionName";
 import { GetterListBase } from "../StateGetters/Bases/GetterListBase";
-import { RawFeSection } from "../StateSections/StateSectionsNext";
+import { RawFeSection } from "../StateSections/StateSections";
 import { Arr } from "../utils/Arr";
 import { GetterList } from "./../StateGetters/GetterList";
 import { UpdaterSections } from "./UpdaterSections";

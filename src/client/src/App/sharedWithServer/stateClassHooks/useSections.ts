@@ -1,6 +1,6 @@
 import React from "react";
 import { react } from "../../utils/react";
-import { StateSections } from "../StateSections/StateSectionsNext";
+import { StateSections } from "../StateSections/StateSections";
 import { SolverSections } from "../StateSolvers/SolverSections";
 import {
   SectionsStore,

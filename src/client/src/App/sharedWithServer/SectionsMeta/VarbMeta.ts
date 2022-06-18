@@ -1,9 +1,9 @@
 import { cloneDeep, pick } from "lodash";
-import { StateValue } from "../FeSections/FeSection/FeVarb/feValue";
 import { NumObjUnit } from "../StateSolvers/SolveValueVarb/solveText";
 import { AnySectionName } from "./baseSections";
 import { valueMeta } from "./baseSections/baseValues";
 import { NumObj } from "./baseSections/baseValues/NumObj";
+import { StateValue } from "./baseSections/baseValues/StateValueTypes";
 import {
   InRelVarbInfo,
   OutRelVarbInfo,

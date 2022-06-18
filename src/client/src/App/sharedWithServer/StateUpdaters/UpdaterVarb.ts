@@ -1,8 +1,8 @@
-import { StateValue } from "../FeSections/FeSection/FeVarb/feValue";
+import { StateValue } from "../SectionsMeta/baseSections/baseValues/StateValueTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { GetterVarbBase } from "../StateGetters/Bases/GetterVarbBase";
 import { GetterVarb } from "../StateGetters/GetterVarb";
-import { RawFeVarb } from "../StateSections/StateSectionsNext";
+import { RawFeVarb } from "../StateSections/StateSections";
 
 export class UpdaterVarb<
   SN extends SectionName<"hasVarb">

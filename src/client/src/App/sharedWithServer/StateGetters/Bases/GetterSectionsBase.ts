@@ -1,4 +1,4 @@
-import { StateSections } from "../../StateSections/StateSectionsNext";
+import { StateSections } from "../../StateSections/StateSections";
 
 export interface GetterSectionsProps {
   sectionsShare: SectionsShare;

@@ -1,6 +1,6 @@
-import { valueMeta } from "../../../SectionsMeta/baseSections/baseValues";
-import { ValueTypes } from "../../../SectionsMeta/relSections/rel/valueMetaTypes";
 import { Obj } from "../../../utils/Obj";
+import { ValueTypes } from "../../relSections/rel/valueMetaTypes";
+import { valueMeta } from "../baseValues";
 
 const editorUpdateNames = ["calcVarbs", "string", "stringArray"] as const;
 type EditorUpdateName = typeof editorUpdateNames[number];
@@ -9,17 +9,6 @@ export function isEditorUpdateFnName(value: string): value is EditorUpdateName {
 }
 
 export type StateValue = ValueTypes[keyof ValueTypes];
-
-// basic updateFnNames simply return editorText upon user input
-const directUpdateFnNames = ["number", "boolean", "string"] as const;
-type DirectUpdateFnName = typeof directUpdateFnNames[number];
-export function isBasicUpdateFnName(
-  value: string
-): value is DirectUpdateFnName {
-  return directUpdateFnNames.includes(value as any);
-}
-export type DirectUpdateFnValue =
-  ValueTypes[typeof directUpdateFnNames[number]];
 
 // basic values don't have to change form before going into the database
 const basicValueNames = ["number", "boolean", "string", "stringArray"] as const;

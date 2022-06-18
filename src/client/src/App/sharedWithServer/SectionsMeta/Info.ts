@@ -1,5 +1,5 @@
-import { StateValue } from "../FeSections/FeSection/FeVarb/feValue";
 import { InEntityVarbInfo } from "./baseSections/baseValues/entities";
+import { StateValue } from "./baseSections/baseValues/StateValueTypes";
 import { Id } from "./baseSections/id";
 import { BaseName } from "./baseSectionTypes";
 import {

@@ -5,7 +5,7 @@ import { SpecificVarbInfo } from "../SectionsMeta/relSections/rel/relVarbInfoTyp
 import { SectionName } from "../SectionsMeta/SectionName";
 import { GetterSections } from "../StateGetters/GetterSections";
 import { GetterVarb } from "../StateGetters/GetterVarb";
-import { StateSections } from "../StateSections/StateSectionsNext";
+import { StateSections } from "../StateSections/StateSections";
 import { Arr } from "../utils/Arr";
 import { OutVarbGetterVarb } from "./../StateInOutVarbs/OutVarbGetterVarb";
 import { SolverSectionsBase } from "./SolverBases/SolverSectionsBase";

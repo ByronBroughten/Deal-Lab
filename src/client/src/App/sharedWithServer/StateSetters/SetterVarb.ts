@@ -1,7 +1,10 @@
 import { ContentState, EditorState } from "draft-js";
-import { InVarbInfo, ValueTypesPlusAny } from "../FeSections/FeSection/FeVarb";
-import { StateValue } from "../FeSections/FeSection/FeVarb/feValue";
-import { InEntityVarbInfo } from "../SectionsMeta/baseSections/baseValues/entities";
+import {
+  InEntityVarbInfo,
+  InVarbInfo,
+} from "../SectionsMeta/baseSections/baseValues/entities";
+import { StateValue } from "../SectionsMeta/baseSections/baseValues/StateValueTypes";
+import { ValueTypesPlusAny } from "../SectionsMeta/baseSections/StateVarbTypes";
 import { ValueTypeName } from "../SectionsMeta/relSections/rel/valueMetaTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { VarbMeta } from "../SectionsMeta/VarbMeta";

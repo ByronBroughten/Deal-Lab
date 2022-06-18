@@ -1,6 +1,5 @@
 import { pick } from "lodash";
 import { z } from "zod";
-import { OutEntity } from "../../../FeSections/FeSection/FeVarb/entities";
 import { reqMonNumber, reqMonString } from "../../../utils/mongoose";
 import { zNumber, zString } from "../../../utils/zod";
 import {
@@ -13,8 +12,10 @@ import {
 } from "../../relSections/rel/relVarbInfoTypes";
 import { Id } from "../id";
 
+export type OutEntity = FeVarbInfo & { entityId: string };
 export type InEntityVarbInfo = DbUserDefVarbInfo | RelVarbInfoStatic;
 export type InEntityInfo = DbUserDefVarbInfo | RelInfoStatic;
+export type InVarbInfo = InEntity | FeVarbInfo;
 
 type Test<T extends { [key: string]: string }> = T;
 

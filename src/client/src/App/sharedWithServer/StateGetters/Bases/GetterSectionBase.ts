@@ -2,7 +2,7 @@ import { pick } from "lodash";
 import { Id } from "../../SectionsMeta/baseSections/id";
 import { FeSectionInfo } from "../../SectionsMeta/Info";
 import { SectionName, sectionNameS } from "../../SectionsMeta/SectionName";
-import { StateSections } from "../../StateSections/StateSectionsNext";
+import { StateSections } from "../../StateSections/StateSections";
 import { GetterListBase, GetterListProps } from "./GetterListBase";
 
 export interface GetterSectionProps<SN extends SectionName>

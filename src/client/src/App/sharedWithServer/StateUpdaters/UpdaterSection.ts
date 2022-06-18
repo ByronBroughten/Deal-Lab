@@ -1,4 +1,3 @@
-import { InitFeSectionCoreProps } from "../FeSections/FeSection/FeSectionCore";
 import { DbVarbs } from "../SectionPack/RawSection";
 import { SimpleSectionName } from "../SectionsMeta/baseSections";
 import { VarbValues } from "../SectionsMeta/baseSectionTypes";
@@ -13,14 +12,11 @@ import { ParentNameSafe } from "../SectionsMeta/relSectionTypes/ParentTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { GetterSectionBase } from "../StateGetters/Bases/GetterSectionBase";
 import { GetterSection } from "../StateGetters/GetterSection";
-import {
-  RawFeSection,
-  StateSections,
-} from "../StateSections/StateSectionsNext";
+import { InitRawFeSectionProps } from "../StateSections/initRawSection";
+import { RawFeSection, StateSections } from "../StateSections/StateSections";
 import { Arr } from "../utils/Arr";
 import { Obj } from "../utils/Obj";
 import { StrictOmit } from "../utils/types";
-import { FeParentInfo } from "./../SectionsMeta/Info";
 import { GetterSections } from "./../StateGetters/GetterSections";
 import { UpdaterList } from "./UpdaterList";
 import { UpdaterVarb } from "./UpdaterVarb";
@@ -73,7 +69,6 @@ export class UpdaterSection<
   ): void {
     const section = StateSections.initRawSection({
       sectionName: childName,
-      parentInfo: this.feSectionInfo as any as FeParentInfo<typeof childName>,
       ...rest,
     });
 
@@ -165,13 +160,9 @@ export class UpdaterSection<
 }
 
 interface AddSectionPropsNext<SN extends SimpleSectionName = SimpleSectionName>
-  extends InitFeSectionCoreProps<SN> {
+  extends InitRawFeSectionProps<SN> {
   sectionName: SN;
-  parentInfo: FeParentInfo<SN>;
-  feId?: string;
   childFeIds?: ChildIdArrsNarrow<SN>;
-  dbId?: string;
-  dbVarbs?: DbVarbs;
   idx?: number;
 }
 
@@ -190,4 +181,4 @@ export type AddDescendantOptions<
   DN extends DescendantName<SN> = DescendantName<SN>
 > = StrictOmit<AddSectionPropsNext<DN>, OmitProps>;
 
-type OmitProps = "sectionName" | "parentInfo" | "childFeIds";
+type OmitProps = "sectionName" | "childFeIds";

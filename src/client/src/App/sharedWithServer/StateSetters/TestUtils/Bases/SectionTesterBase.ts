@@ -2,7 +2,7 @@ import { SetStateAction } from "react";
 import { FeSectionInfo } from "../../../SectionsMeta/Info";
 import { SectionName } from "../../../SectionsMeta/SectionName";
 import { SetSections } from "../../../stateClassHooks/useSections";
-import { StateSections } from "../../../StateSections/StateSectionsNext";
+import { StateSections } from "../../../StateSections/StateSections";
 import { SetterSectionProps } from "../../SetterBases/SetterSectionBase";
 import { SetterSections } from "../../SetterSections";
 

@@ -1,9 +1,9 @@
+import { DbVarbs } from "../SectionPack/RawSection";
+import { InEntityVarbInfo } from "../SectionsMeta/baseSections/baseValues/entities";
 import {
   StateValueAnyKey,
   ValueTypesPlusAny,
-} from "../FeSections/FeSection/FeVarb";
-import { DbVarbs } from "../SectionPack/RawSection";
-import { InEntityVarbInfo } from "../SectionsMeta/baseSections/baseValues/entities";
+} from "../SectionsMeta/baseSections/StateVarbTypes";
 import { InfoS, VarbInfo, VarbStringInfo } from "../SectionsMeta/Info";
 import {
   MultiFindByFocalVarbInfo,
@@ -15,7 +15,7 @@ import {
   SectionNameType,
 } from "../SectionsMeta/SectionName";
 import { VarbMetas } from "../SectionsMeta/VarbMetas";
-import { RawFeVarbs } from "../StateSections/StateSectionsNext";
+import { RawFeVarbs } from "../StateSections/StateSections";
 import { Obj } from "../utils/Obj";
 import { GetterSectionBase } from "./Bases/GetterSectionBase";
 import { GetterSection } from "./GetterSection";

@@ -1,4 +1,3 @@
-import { StateValue } from "../FeSections/FeSection/FeVarb/feValue";
 import { SubType } from "../utils/types";
 import {
   BaseSections,
@@ -6,6 +5,7 @@ import {
   ContextName,
   SimpleSectionName,
 } from "./baseSections";
+import { StateValue } from "./baseSections/baseValues/StateValueTypes";
 import { ValueName } from "./baseSections/baseVarb";
 import {
   baseNameArrs,

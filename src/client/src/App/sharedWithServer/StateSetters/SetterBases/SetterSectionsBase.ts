@@ -6,7 +6,7 @@ import {
   GetterSectionsBase,
   GetterSectionsProps,
 } from "../../StateGetters/Bases/GetterSectionsBase";
-import { StateSections } from "../../StateSections/StateSectionsNext";
+import { StateSections } from "../../StateSections/StateSections";
 
 export interface SetterSectionsProps extends GetterSectionsProps {
   setSectionsShare: SetSectionsShare;

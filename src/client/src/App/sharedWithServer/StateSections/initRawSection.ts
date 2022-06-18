@@ -1,7 +1,7 @@
 import { pick } from "lodash";
-import { StateValue } from "../FeSections/FeSection/FeVarb/feValue";
 import { DbVarbs } from "../SectionPack/RawSection";
 import { sectionMetas } from "../SectionsMeta";
+import { StateValue } from "../SectionsMeta/baseSections/baseValues/StateValueTypes";
 import { Id } from "../SectionsMeta/baseSections/id";
 import { FeSectionInfo, VarbInfo } from "../SectionsMeta/Info";
 import { VarbNames } from "../SectionsMeta/relSections/rel/relVarbInfoTypes";
@@ -9,12 +9,12 @@ import { DbValue } from "../SectionsMeta/relSections/rel/valueMetaTypes";
 import { ChildIdArrsNarrow } from "../SectionsMeta/relSectionTypes/ChildTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { StrictPick, StrictPickPartial } from "../utils/types";
-import { RawFeSection, RawFeVarb, RawFeVarbs } from "./StateSectionsNext";
+import { RawFeSection, RawFeVarb, RawFeVarbs } from "./StateSections";
 
 type InitVarbs = Partial<DbVarbs>;
 type InitChildIdArrs<SN extends SectionName> = Partial<ChildIdArrsNarrow<SN>>;
-interface InitRawFeSectionProps<SN extends SectionName>
-  extends StrictPick<RawFeSection<SN>, "sectionName" | "parentInfo">,
+export interface InitRawFeSectionProps<SN extends SectionName>
+  extends StrictPick<RawFeSection<SN>, "sectionName">,
     StrictPickPartial<RawFeSection<SN>, "feId" | "dbId"> {
   dbVarbs?: InitVarbs;
   childFeIds?: InitChildIdArrs<SN>;
@@ -24,15 +24,14 @@ interface InitRawFeSectionProps<SN extends SectionName>
 export function initRawSection<SN extends SectionName>({
   sectionName,
   feId = Id.make(),
+  dbId = Id.make(),
   childFeIds = {},
   dbVarbs = {},
-  ...rest
 }: InitRawFeSectionProps<SN>): RawFeSection<SN> {
   return {
-    ...rest,
     sectionName,
     feId,
-    dbId: Id.make(),
+    dbId,
     childFeIds: initChildFeIds(sectionName, childFeIds),
     varbs: initRawVarbs({
       sectionName,

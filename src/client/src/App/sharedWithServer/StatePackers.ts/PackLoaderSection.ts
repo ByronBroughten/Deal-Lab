@@ -7,7 +7,7 @@ import {
   GetterSectionProps,
 } from "../StateGetters/Bases/GetterSectionBase";
 import { GetterList } from "../StateGetters/GetterList";
-import { StateSections } from "../StateSections/StateSectionsNext";
+import { StateSections } from "../StateSections/StateSections";
 import { UpdaterSection } from "../StateUpdaters/UpdaterSection";
 import { Obj } from "../utils/Obj";
 import { ChildPackLoader } from "./PackLoaderSection/ChildPackLoader";

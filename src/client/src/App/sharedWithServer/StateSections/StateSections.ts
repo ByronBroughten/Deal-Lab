@@ -1,14 +1,9 @@
 import { pick } from "lodash";
 import { SectionNotFoundError } from "../../utils/error";
-import { OutEntity } from "../FeSections/FeSection/FeVarb/entities";
-import { StateValue } from "../FeSections/FeSection/FeVarb/feValue";
+import { OutEntity } from "../SectionsMeta/baseSections/baseValues/entities";
+import { StateValue } from "../SectionsMeta/baseSections/baseValues/StateValueTypes";
 import { Id } from "../SectionsMeta/baseSections/id";
-import {
-  FeParentInfo,
-  FeSectionInfo,
-  noParentInfoNext,
-  VarbInfo,
-} from "../SectionsMeta/Info";
+import { FeSectionInfo, VarbInfo } from "../SectionsMeta/Info";
 import { ChildIdArrsNarrow } from "../SectionsMeta/relSectionTypes/ChildTypes";
 import { SectionName, sectionNameS } from "../SectionsMeta/SectionName";
 import { Arr } from "../utils/Arr";
@@ -27,7 +22,6 @@ export type RawFeVarbs<SN extends SectionName> = {
 export type RawFeSection<SN extends SectionName> = {
   readonly sectionName: SN;
   readonly feId: string;
-  readonly parentInfo: FeParentInfo<SN>;
   readonly childFeIds: ChildIdArrsNarrow<SN>;
   readonly dbId: string;
   readonly varbs: RawFeVarbs<SN>;
@@ -144,7 +138,6 @@ export class StateSections {
     const mainSection = StateSections.initRawSection({
       sectionName: "main",
       feId: Id.make(),
-      parentInfo: noParentInfoNext,
     });
     const sections = this.initEmpty();
     return sections.updateSectionList({

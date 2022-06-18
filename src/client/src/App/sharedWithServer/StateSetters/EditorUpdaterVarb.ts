@@ -10,7 +10,6 @@ import {
   numObjToRawContent,
 } from "../../modules/draftjs/draftUtils";
 import { EntityMap, EntityRanges, RawEditorState } from "../../utils/DraftS";
-import { isEditorUpdateFnName } from "../FeSections/FeSection/FeVarb/feValue";
 import {
   InEntities,
   InEntity,
@@ -21,6 +20,7 @@ import {
   NumObj,
   NumObjNumber,
 } from "../SectionsMeta/baseSections/baseValues/NumObj";
+import { isEditorUpdateFnName } from "../SectionsMeta/baseSections/baseValues/StateValueTypes";
 import { isNumObjUpdateFnName } from "../SectionsMeta/baseSections/baseValues/updateFnNames";
 import { EditorValueTypeName } from "../SectionsMeta/relSections/rel/valueMetaTypes";
 import { SectionName } from "../SectionsMeta/SectionName";

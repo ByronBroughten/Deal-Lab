@@ -1,6 +1,6 @@
-import { ValueTypesPlusAny } from "../FeSections/FeSection/FeVarb";
 import { DbSectionInfo } from "../SectionPack/DbSectionInfo";
 import { SwitchTargetKey } from "../SectionsMeta/baseSections/baseSwitchNames";
+import { ValueTypesPlusAny } from "../SectionsMeta/baseSections/StateVarbTypes";
 import {
   SwitchEndingKey,
   switchNames,
@@ -41,7 +41,7 @@ import {
   sectionNameS,
   SectionNameType,
 } from "../SectionsMeta/SectionName";
-import { RawFeSection } from "../StateSections/StateSectionsNext";
+import { RawFeSection } from "../StateSections/StateSections";
 import { Arr } from "../utils/Arr";
 import { Obj } from "../utils/Obj";
 import { GetterSectionBase } from "./Bases/GetterSectionBase";
@@ -373,7 +373,7 @@ export class GetterSection<
     return this.parent.feInfo;
   }
   get parentName(): ParentName<SN> {
-    return this.parentInfo.sectionName;
+    return this.parent.sectionName;
   }
   get parentInfoSafe(): FeParentInfoSafe<SN> {
     const { parentInfo } = this;
@@ -389,9 +389,9 @@ export class GetterSection<
           `An anscestor with sectionName ${anscestorName} was not found from sectionName ${this.sectionName}`
         );
       }
-      const info = section.parentInfo;
-      if (anscestorName === info.sectionName) {
-        return this.getterSection(info as any) as any as GetterSection<S>;
+      const { parent } = section;
+      if (anscestorName === parent.sectionName) {
+        return parent as any as GetterSection<S>;
       }
       section = section.parent as any;
     }

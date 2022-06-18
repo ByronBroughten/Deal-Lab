@@ -6,7 +6,7 @@ import { SectionPackRaw } from "../../SectionPack/SectionPackRaw";
 import { relSections } from "../../SectionsMeta/relSections";
 import { GetterSections } from "../../StateGetters/GetterSections";
 import { SectionPackMaker } from "../../StatePackers.ts/SectionPackMaker";
-import { StateSections } from "../../StateSections/StateSectionsNext";
+import { StateSections } from "../../StateSections/StateSections";
 import { SolverSection } from "../../StateSolvers/SolverSection";
 
 type UseSectionsStoreProps = {

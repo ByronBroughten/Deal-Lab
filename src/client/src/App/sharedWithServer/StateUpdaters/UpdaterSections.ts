@@ -1,8 +1,5 @@
 import { GetterSectionsBase } from "../StateGetters/Bases/GetterSectionsBase";
-import {
-  RawFeSections,
-  StateSections,
-} from "../StateSections/StateSectionsNext";
+import { RawFeSections, StateSections } from "../StateSections/StateSections";
 
 export class UpdaterSections extends GetterSectionsBase {
   updateState(nextState: StateSections): void {

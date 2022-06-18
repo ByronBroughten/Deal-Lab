@@ -1,16 +1,16 @@
 import { cloneDeep } from "lodash";
 import {
+  InEntity,
+  InEntityVarbInfo,
+  OutEntity,
+} from "../SectionsMeta/baseSections/baseValues/entities";
+import { NumObj } from "../SectionsMeta/baseSections/baseValues/NumObj";
+import {
   Adornments,
   StateValueAnyKey,
   valueSchemasPlusAny,
   ValueTypesPlusAny,
-} from "../FeSections/FeSection/FeVarb";
-import { OutEntity } from "../FeSections/FeSection/FeVarb/entities";
-import {
-  InEntity,
-  InEntityVarbInfo,
-} from "../SectionsMeta/baseSections/baseValues/entities";
-import { NumObj } from "../SectionsMeta/baseSections/baseValues/NumObj";
+} from "../SectionsMeta/baseSections/StateVarbTypes";
 import { InfoS, VarbInfo } from "../SectionsMeta/Info";
 import {
   FeVarbInfo,
@@ -25,7 +25,7 @@ import {
 } from "../SectionsMeta/relSections/rel/valueMetaTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { cloneValue, InUpdatePack, VarbMeta } from "../SectionsMeta/VarbMeta";
-import { RawFeVarb } from "../StateSections/StateSectionsNext";
+import { RawFeVarb } from "../StateSections/StateSections";
 import { GetterVarbBase } from "./Bases/GetterVarbBase";
 import { GetterSection } from "./GetterSection";
 import { GetterSections } from "./GetterSections";

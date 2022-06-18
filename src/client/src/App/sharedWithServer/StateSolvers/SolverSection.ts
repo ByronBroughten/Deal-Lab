@@ -7,7 +7,7 @@ import { SectionName } from "../SectionsMeta/SectionName";
 import { GetterSectionProps } from "../StateGetters/Bases/GetterSectionBase";
 import { GetterSection } from "../StateGetters/GetterSection";
 import { ChildSectionPackArrs } from "../StatePackers.ts/PackLoaderSection";
-import { StateSections } from "../StateSections/StateSectionsNext";
+import { StateSections } from "../StateSections/StateSections";
 import {
   AddChildOptions,
   UpdaterSection,
