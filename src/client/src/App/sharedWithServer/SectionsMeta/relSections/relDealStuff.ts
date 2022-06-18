@@ -4,9 +4,9 @@ import { relSection, RelSectionOptions } from "./rel/relSection";
 import { RelVarbs } from "./rel/relVarbs";
 
 function dealSection<
-  SN extends "analysis" | "dealIndex",
+  SN extends "deal" | "dealIndex",
   O extends StrictOmit<
-    RelSectionOptions<"fe", "analysis">,
+    RelSectionOptions<"fe", "deal">,
     "childNames" | "relVarbs"
   > = {}
 >(sectionName: SN, options?: O) {
@@ -31,9 +31,9 @@ function dealSection<
 }
 
 export const relDealStuff = {
-  ...dealSection("analysis", {
+  ...dealSection("deal", {
     rowIndexName: "dealIndex",
-    arrStoreName: "analysis",
+    arrStoreName: "deal",
   } as const),
   ...dealSection("dealIndex"),
   ...relSection.base("both", "output", "Output", rel.varbs.varbInfo()),

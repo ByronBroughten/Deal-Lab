@@ -111,7 +111,7 @@ export const baseVarbs = {
       ...this.ongoing("rentCutDollars"),
     } as const;
   },
-  get analysis() {
+  get deal() {
     return {
       ...this.savableSection,
     } as const;

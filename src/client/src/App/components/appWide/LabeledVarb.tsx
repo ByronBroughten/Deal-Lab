@@ -80,7 +80,7 @@ const Styled = styled.div`
   align-items: center;
 
   box-shadow: ${theme.boxShadow1};
-  background: ${theme.analysis.light};
+  background: ${theme.deal.light};
   border-radius: ${theme.br0};
   padding: ${theme.s2};
 

@@ -40,10 +40,9 @@ const dbStoreNamesNext = [
   "loanTableStore",
   "mgmtTableStore",
 ];
-
 export const dbStoreNames = [
   "user",
-  "analysis",
+  "deal",
 
   "propertyIndex",
   "loanIndex",
@@ -83,24 +82,3 @@ export const loadOnLoginNames = Arr.exclude(dbStoreNames, [
   "dealIndex",
 ] as const);
 type _LoadOnLoginTest = DbStoreNameCheck<typeof loadOnLoginNames[number]>;
-
-export const dbStoreNamesDepreciated = [
-  "user",
-
-  "property",
-  "loan",
-  "mgmt",
-  "analysis",
-
-  "analysisTable",
-  "propertyTable",
-  "loanTable",
-  "mgmtTable",
-
-  "userOutputList",
-  "userVarbList",
-  "userSingleList",
-  "userOngoingList",
-] as const;
-
-export type DbStoreName = typeof dbStoreNamesDepreciated[number];

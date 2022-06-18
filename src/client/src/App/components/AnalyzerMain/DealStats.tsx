@@ -22,14 +22,14 @@ export default function DealStats({ className, feId }: Props) {
     <Styled
       {...{
         $showDetails: detailsIsOpen,
-        themeName: "analysis",
+        themeName: "deal",
         className: `DealStats-root ${className}`,
       }}
     >
-      <GeneralSectionTitle title="Deal" themeName="analysis">
+      <GeneralSectionTitle title="Deal" themeName="deal">
         <div className="GeneralSectionTitle-children">
           <MainSectionTitleBtn
-            themeName="analysis"
+            themeName="deal"
             className="GeneralSectionTitle-child"
             onClick={toggleDetails}
           >
@@ -49,7 +49,7 @@ export default function DealStats({ className, feId }: Props) {
           {auth.isLoggedIn && (
             <Link className="GeneralSectionTitle-dealsLink" to="/deals">
               <MainSectionTitleBtn
-                themeName="analysis"
+                themeName="deal"
                 className="GeneralSectionTitle-child"
                 // disabled={!auth.isLoggedIn}
               >
@@ -65,7 +65,7 @@ export default function DealStats({ className, feId }: Props) {
             >
               <div className="GeneralSectionTitle-disabledBtnWrapper">
                 <MainSectionTitleBtn
-                  themeName="analysis"
+                  themeName="deal"
                   className="GeneralSectionTitle-child GeneralSectionTitle-compareDealsBtn"
                   disabled={true}
                 >
@@ -141,8 +141,8 @@ const Styled = styled(MainSection)<{ $showDetails: boolean }>`
   .DealStats-appInfo {
     display: flex;
     justify-content: center;
-    background: ${theme.analysis.dark};
-    color: ${theme.analysis.light};
+    background: ${theme.deal.dark};
+    color: ${theme.deal.light};
     font-size: 12px;
     padding: ${theme.s0} 0;
     /* font-size: 0.9rem; */

@@ -166,7 +166,7 @@ const themeSections = {
       main: themeColors.next,
     }),
   },
-  get analysis() {
+  get deal() {
     return this.plus;
   },
   get deal() {

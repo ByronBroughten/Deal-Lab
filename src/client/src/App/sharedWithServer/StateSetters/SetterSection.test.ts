@@ -9,7 +9,7 @@ import { SetterTesterSection } from "./TestUtils/SetterTesterSection";
 // replaceWithDefault, resetToDefault
 
 describe("SetterSection", () => {
-  const sectionNames = ["property", "mgmt", "analysis"] as const;
+  const sectionNames = ["property", "mgmt", "deal"] as const;
   type TestName = typeof sectionNames[number];
   type SnTesterProps<SN extends TestName> = { tester: SetterTesterSection<SN> };
   type FnWithSnProp<SN extends TestName = TestName> = (
@@ -53,7 +53,7 @@ describe("SetterSection", () => {
     } as const;
 
     const packBuilder = mainBuilder.addAndGetDescendant(
-      ["analysis", "propertyGeneral", "property"],
+      ["deal", "propertyGeneral", "property"],
       { dbVarbs: packVarbs }
     );
     for (let i = 0; i < numChildrenNext; i++) {

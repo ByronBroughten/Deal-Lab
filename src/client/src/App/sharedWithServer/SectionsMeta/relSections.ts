@@ -79,7 +79,7 @@ export function makeRelSections() {
             "userOngoingList",
             "userOutputList",
 
-            "analysis",
+            "deal",
             "omniParent",
           ] as const,
         }

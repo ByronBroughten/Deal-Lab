@@ -22,7 +22,7 @@ describe("SectionPackBuilder", () => {
   it("should make a sectionPack with the added values and children", () => {
     const main = new SectionPackBuilder();
     const property = main.addAndGetDescendant(
-      ["analysis", "propertyGeneral", "property"] as const,
+      ["deal", "propertyGeneral", "property"] as const,
       { dbVarbs: dbVarbs.property }
     );
     property.addChild("upfrontCostList", { dbVarbs: dbVarbs.upfrontCostList });

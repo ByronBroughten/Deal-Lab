@@ -25,19 +25,9 @@ function makeRelNameArrs<
   AS extends { [key: string]: readonly any[] }
 >(sectionContext: SC, arrs: AS) {
   const sectionToParentArrs = makeSectionToParentArrs()[sectionContext];
-  const savableSectionNames = Arr.extract(
-    baseNameArrs.db.dbStore,
-    baseNameArrs.fe.all
-  );
-
   return {
     ...arrs,
-    savable: savableSectionNames,
     tableSource: tableIndexNames,
-    savableAlwaysOne: Arr.extract(
-      savableSectionNames,
-      baseNameArrs[sectionContext].alwaysOne
-    ),
     hasChild: Obj.keys(relSections[sectionContext]).filter((sectionName) => {
       return (
         (relSections[sectionContext][sectionName] as any as GeneralRelSection)
@@ -62,15 +52,6 @@ function makeRelNameArrs<
           )
         );
       }) as HasOneParentSectionName<SC>[];
-    },
-    get savableOneParent() {
-      return Arr.extract(
-        savableSectionNames,
-        this.hasOneParent as any
-      ) as Extract<
-        typeof savableSectionNames[number],
-        HasOneParentSectionName<SC>[number]
-      >[];
     },
     get isSingleParent() {
       return (this.hasOneParent as SimpleSectionName[]).reduce(

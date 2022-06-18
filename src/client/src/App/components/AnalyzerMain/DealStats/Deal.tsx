@@ -15,7 +15,7 @@ export function Deal({
   detailsIsOpen: boolean;
 }) {
   const deal = useGetterSection({
-    sectionName: "analysis",
+    sectionName: "deal",
     feId: feId,
   });
   const outputListId = deal.onlyChildFeId("dealOutputList");
@@ -39,8 +39,8 @@ export function Deal({
   );
 }
 const Styled = styled.div`
-  background: ${theme.analysis.main};
-  border: solid 1px ${theme.analysis.border};
+  background: ${theme.deal.main};
+  border: solid 1px ${theme.deal.border};
   border-radius: ${theme.s1};
   box-shadow: ${theme.boxShadow1};
   .MainSection-entry {

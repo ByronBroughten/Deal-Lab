@@ -23,6 +23,6 @@ export const defaultMaker = new DefaultSectionPackMaker({
   property: makeDefaultPropertyPack,
   mgmt: makeDefaultMgmtPack,
   loan: makeDefaultLoanPack,
-  analysis: makeDefaultDealPack,
+  deal: makeDefaultDealPack,
   main: makeDefaultMainPack,
 } as const);

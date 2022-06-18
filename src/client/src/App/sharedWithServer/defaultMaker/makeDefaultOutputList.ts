@@ -3,7 +3,7 @@ import { SectionPackBuilder } from "../StatePackers.ts/PackBuilderSection";
 
 export function makeDefaultOutputList(): SectionPackRaw<"dealOutputList"> {
   const main = new SectionPackBuilder();
-  const outputList = main.addAndGetDescendant(["analysis", "dealOutputList"]);
+  const outputList = main.addAndGetDescendant(["deal", "dealOutputList"]);
   outputList.addChild("output", {
     dbVarbs: {
       id: "static",

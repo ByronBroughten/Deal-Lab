@@ -75,7 +75,7 @@ const Styled = styled(AppBar)`
     position: static;
   }
   padding: 0;
-  background-color: ${theme.analysis.main};
+  background-color: ${theme.deal.main};
   color: ${theme.dark};
   height: ${theme.navBar.height};
   div.MuiToolbar-root.MuiToolbar-regular {

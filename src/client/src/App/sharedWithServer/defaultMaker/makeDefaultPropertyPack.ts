@@ -4,7 +4,7 @@ import { SectionPackBuilder } from "../StatePackers.ts/PackBuilderSection";
 export function makeDefaultPropertyPack(): SectionPackRaw<"property"> {
   const main = new SectionPackBuilder();
   const property = main.addAndGetDescendant(
-    ["analysis", "propertyGeneral", "property"] as const,
+    ["deal", "propertyGeneral", "property"] as const,
     {
       dbVarbs: {
         taxesOngoingSwitch: "yearly",

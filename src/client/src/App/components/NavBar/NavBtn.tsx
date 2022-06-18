@@ -1,8 +1,8 @@
 import { ButtonProps } from "@material-ui/core/Button";
+import { rem } from "polished";
+import styled, { css } from "styled-components";
 import theme from "../../theme/Theme";
 import PlainBtn from "../general/PlainBtn";
-import styled, { css } from "styled-components";
-import { rem } from "polished";
 
 export type NavBtnProps = ButtonProps & {
   $isactive?: boolean;
@@ -28,13 +28,13 @@ const Styled = styled(PlainBtn)<{ $isactive?: boolean }>`
 
   flex: 1;
   white-space: nowrap;
-  background-color: ${theme.analysis.main};
+  background-color: ${theme.deal.main};
   font-weight: 700;
 
   :hover {
     box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.5);
     color: ${theme.light};
-    background-color: ${theme.analysis.main};
+    background-color: ${theme.deal.main};
   }
 
   ${({ $isactive }) =>
@@ -42,7 +42,7 @@ const Styled = styled(PlainBtn)<{ $isactive?: boolean }>`
     css`
       box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.5);
       color: ${theme.light};
-      background-color: ${theme.analysis.main};
+      background-color: ${theme.deal.main};
 
       /* background-color: ${theme.navBar.activeBtn};
       border-bottom: none;

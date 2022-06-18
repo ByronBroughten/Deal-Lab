@@ -14,7 +14,7 @@ export function Main() {
     auth.removeToken();
     main.resetToDefault();
   };
-  const activeDealId = main.get.onlyChild("analysis").feId;
+  const activeDealId = main.get.onlyChild("deal").feId;
   return (
     <Styled className="App-root">
       <NavBar

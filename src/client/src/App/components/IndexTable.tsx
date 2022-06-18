@@ -136,10 +136,10 @@ const Styled = styled.div`
 
   .IndexTable-viewable {
     border-radius: ${theme.br1};
-    border: 2px solid ${theme.analysis.border};
+    border: 2px solid ${theme.deal.border};
     padding: ${theme.s2} 0 0 0;
     box-shadow: 0 5px 16px rgba(0, 0, 0, 0.2);
-    background: ${theme.analysis.light};
+    background: ${theme.deal.light};
   }
 
   .IndexTable-thContent {
@@ -167,7 +167,7 @@ const Styled = styled.div`
   }
 
   thead {
-    border-bottom: 1px solid ${theme.analysis.border};
+    border-bottom: 1px solid ${theme.deal.border};
   }
 
   td,
@@ -178,13 +178,13 @@ const Styled = styled.div`
   tbody {
     tr {
       :hover {
-        background: ${theme.analysis.main};
+        background: ${theme.deal.main};
         .IndexTable-trashBtn {
           visibility: visible;
         }
       }
       :not(:first-child) {
-        border-top: 1px solid ${theme.analysis.light};
+        border-top: 1px solid ${theme.deal.light};
       }
     }
   }
@@ -205,10 +205,10 @@ const Styled = styled.div`
     justify-content: center;
   }
 
-  .analysis:last-child {
+  .deal:last-child {
     border-bottom: 1px solid ${theme.dark};
   }
-  .analysis {
+  .deal {
     border-top: 1px solid ${theme.dark};
   }
 `;

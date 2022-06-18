@@ -4,7 +4,7 @@ import { makeDefaultMgmtPack } from "./makeDefaultMgmtPack";
 import { makeDefaultOutputList } from "./makeDefaultOutputList";
 import { makeDefaultPropertyPack } from "./makeDefaultPropertyPack";
 
-export function makeDefaultDealPack(): SectionPackRaw<"analysis"> {
+export function makeDefaultDealPack(): SectionPackRaw<"deal"> {
   const childNames = [
     "financing",
     "totalInsAndOuts",
@@ -12,7 +12,7 @@ export function makeDefaultDealPack(): SectionPackRaw<"analysis"> {
     "internalVarbList",
   ] as const;
   const main = new SectionPackBuilder();
-  const deal = main.addAndGetChild("analysis");
+  const deal = main.addAndGetChild("deal");
   childNames.forEach((childName) => {
     deal.addChild(childName);
   });

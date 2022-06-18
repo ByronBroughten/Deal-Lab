@@ -69,7 +69,7 @@ export const baseSections = {
     }),
     loanIndex: base.section.schema(base.varbs.loan, { uniqueDbId: true }),
     mgmtIndex: base.section.schema(base.varbs.mgmt, { uniqueDbId: true }),
-    dealIndex: base.section.schema(base.varbs.analysis, {
+    dealIndex: base.section.schema(base.varbs.deal, {
       uniqueDbId: true,
     }),
 
@@ -178,7 +178,7 @@ export const baseSections = {
       ...base.options.alwaysOneFromStart,
       hasGlobalVarbs: true,
     }),
-    analysis: base.section.schema(
+    deal: base.section.schema(
       { title: "string" },
       base.options.alwaysOneFromStart
     ),

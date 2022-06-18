@@ -13,17 +13,17 @@ type Props = {
   className?: string;
 };
 export function ActiveDeal({ className, feId }: Props) {
-  const analysis = useGetterSection({
-    sectionName: "analysis",
+  const deal = useGetterSection({
+    sectionName: "deal",
     feId,
   });
   return (
     <>
       <Styled {...{ className: `MainSections-root ${className ?? ""}` }}>
         <View style={{ flex: 1 }}>
-          <PropertyGeneral feId={analysis.onlyChildFeId("propertyGeneral")} />
-          <MgmtGeneral feId={analysis.onlyChildFeId("mgmtGeneral")} />
-          <Financing feId={analysis.onlyChildFeId("financing")} />
+          <PropertyGeneral feId={deal.onlyChildFeId("propertyGeneral")} />
+          <MgmtGeneral feId={deal.onlyChildFeId("mgmtGeneral")} />
+          <Financing feId={deal.onlyChildFeId("financing")} />
         </View>
       </Styled>
       <DealStats className="Footer-root" feId={feId} />

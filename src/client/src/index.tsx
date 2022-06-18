@@ -8,8 +8,7 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-// I want to get rid of indexName
-//
+// at this point, I can get rid of indexSection
 
 // - replace propertyIndex ect with "property"
 // - let main have a parent ("omni parent", or "main").
