@@ -61,25 +61,20 @@ function getRowIndexTableNameParam<SN extends SimpleSectionName>(
 //   } else return [] as IndexToSourceNamesParam[SN];
 // }
 
-function getParentNamesParam<
-  CN extends ContextName,
-  SN extends SimpleSectionName
->(contextName: CN, sectionName: SN): SectionToParentArrs<CN>[SN] {
-  return sectionParentNames[contextName][sectionName] as any;
+function getParentNamesParam<SN extends SimpleSectionName>(
+  sectionName: SN
+): SectionToParentArrs<"fe">[SN] {
+  return sectionParentNames["fe"][sectionName] as any;
 }
 
-export type SectionMetaCore<
-  CN extends ContextName,
-  SN extends SimpleSectionName
-> = RelSections[CN][SN & keyof RelSections[CN]] &
-  BaseSections[CN][SN] &
-  SectionMetaExtra<CN, SN>;
+export type SectionMetaCore<SN extends SimpleSectionName> =
+  RelSections["fe"][SN] & BaseSections["fe"][SN] & SectionMetaExtra<"fe", SN>;
 
-export class SectionMeta<CN extends ContextName, SN extends SimpleSectionName> {
-  constructor(readonly core: SectionMetaCore<CN, SN>) {}
-  get<PN extends keyof SectionMetaCore<CN, SN>>(
+export class SectionMeta<SN extends SimpleSectionName> {
+  constructor(readonly core: SectionMetaCore<SN>) {}
+  get<PN extends keyof SectionMetaCore<SN>>(
     propName: PN
-  ): SectionMetaCore<CN, SN>[PN] {
+  ): SectionMetaCore<SN>[PN] {
     return this.core[propName];
   }
   get childNames(): ChildName<SN>[] {
@@ -119,17 +114,14 @@ export class SectionMeta<CN extends ContextName, SN extends SimpleSectionName> {
     nextCore.varbMetas = nextVarbMetas;
     return new SectionMeta(nextCore);
   }
-  static init<CN extends ContextName, SN extends SimpleSectionName>(
-    contextName: CN,
-    sectionName: SN
-  ): SectionMeta<CN, SN> {
-    const relSection = relSections[contextName][sectionName];
-    const baseSection = baseSections[contextName][sectionName];
+  static init<SN extends SimpleSectionName>(sectionName: SN): SectionMeta<SN> {
+    const relSection = relSections["fe"][sectionName];
+    const baseSection = baseSections["fe"][sectionName];
     return new SectionMeta({
       ...relSection,
       ...baseSection,
       varbMetas: VarbMetas.initFromRelVarbs(relSection.relVarbs, sectionName),
-      parentNames: getParentNamesParam(contextName, sectionName),
+      parentNames: getParentNamesParam(sectionName),
       indexTableName: getRowIndexTableNameParam(sectionName),
       // indexSourceName: getIndexSourceNamesParam(sectionName),
     });

@@ -16,7 +16,7 @@ import {
   FeVarbInfo,
   LocalRelVarbInfo,
   MultiVarbInfo,
-  SimpleVarbNames,
+  VarbNames,
 } from "../SectionsMeta/relSections/rel/relVarbInfoTypes";
 import { UniqueIdMixedVarbInfo } from "../SectionsMeta/relSections/rel/uniqueIdInfo";
 import {
@@ -197,7 +197,7 @@ export class GetterVarb<
   nearestAnscestor<S extends SectionName>({
     sectionName,
     varbName,
-  }: SimpleVarbNames<S>): GetterVarb<S> {
+  }: VarbNames<S>): GetterVarb<S> {
     const anscestor = this.getterSection.nearestAnscestor(sectionName);
     return anscestor.varb(varbName);
   }

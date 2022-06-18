@@ -88,17 +88,16 @@ export class VariableGetterSections extends GetterSectionsBase {
     return options;
   }
   private initStaticVarbOptions(): VariableOption[] {
-    const sectionMetaEntries = Object.entries(sectionMetas.raw.fe);
-    return sectionMetaEntries.reduce((options, [sectionName, sectionMeta]) => {
-      const varbNames = Obj.keys(sectionMeta.varbMetas) as string[];
+    const sectionNames = sectionNameS.arrs.all;
+    return sectionNames.reduce((options, sectionName) => {
+      const sectionMeta = sectionMetas.section(sectionName);
+      const { varbNames } = sectionMeta;
       if (sectionNameS.is(sectionName, "hasGlobalVarbs"))
         options = options.concat(
           varbNames
             .map((varbName) => this.initStaticVarbOption(sectionName, varbName))
             .filter((val) => val.displayName !== "")
         );
-      // I'm not a big fan of static varbs anymore, though
-      // I prefer the idea of "single anscestor"
       return options;
     }, [] as VariableOption[]);
   }

@@ -130,7 +130,7 @@ export class GetterSection<
         throw new Error("Exhausted MultiSectionInfo options.");
     }
   }
-  get meta(): SectionMeta<"fe", SN> {
+  get meta(): SectionMeta<SN> {
     return this.getterSections.meta.section(this.sectionName);
   }
   get dbId(): string {

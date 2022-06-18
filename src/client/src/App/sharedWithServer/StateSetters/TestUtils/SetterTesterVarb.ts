@@ -1,4 +1,4 @@
-import { SimpleVarbNames } from "../../SectionsMeta/relSections/rel/relVarbInfoTypes";
+import { VarbNames } from "../../SectionsMeta/relSections/rel/relVarbInfoTypes";
 import { SectionName } from "../../SectionsMeta/SectionName";
 import { GetterVarb } from "../../StateGetters/GetterVarb";
 import { SetterVarb } from "../SetterVarb";
@@ -14,15 +14,13 @@ export class SetterTesterVarb<
   static initProps<S extends SectionName>({
     sectionName,
     varbName,
-  }: SimpleVarbNames<S>): SetterTesterVarbProps<S> {
+  }: VarbNames<S>): SetterTesterVarbProps<S> {
     return {
       ...SetterTesterSection.initProps(sectionName),
       varbName,
     };
   }
-  static init<S extends SectionName>(
-    props: SimpleVarbNames<S>
-  ): SetterTesterVarb<S> {
+  static init<S extends SectionName>(props: VarbNames<S>): SetterTesterVarb<S> {
     return new SetterTesterVarb(this.initProps(props));
   }
 

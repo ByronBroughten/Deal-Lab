@@ -12,7 +12,7 @@ export interface SectionInfoGettersI<SN extends SectionName>
   get feIdInfo(): FeIdInfo;
   get feInfo(): FeNameInfo<SN>;
   get info(): FeSectionInfo<SN>;
-  get meta(): SectionMeta<"fe", SN>;
+  get meta(): SectionMeta<SN>;
   sectionMeta<S extends SectionName>(sectionName: S): SectionMeta<"fe", S>;
 }
 
@@ -42,7 +42,7 @@ export function ApplySectionInfoGetters<
         sectionName: this.sectionName,
       };
     }
-    get meta(): SectionMeta<"fe", SN> {
+    get meta(): SectionMeta<SN> {
       return this.sectionMeta(this.sectionName);
     }
     sectionMeta<S extends SectionName>(sectionName: S): SectionMeta<"fe", S> {

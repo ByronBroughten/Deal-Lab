@@ -13,7 +13,7 @@ function dealSection<
   return relSection.base(
     "both",
     sectionName,
-    "Analysis",
+    "Deal",
     rel.varbs.savableSection as RelVarbs<"fe" | "db", SN>,
     {
       ...((options ?? {}) as O),
@@ -21,7 +21,6 @@ function dealSection<
         "propertyGeneral",
         "financing",
         "mgmtGeneral",
-        "totalInsAndOuts",
         "final",
         "dealOutputList",
         "internalVarbList",

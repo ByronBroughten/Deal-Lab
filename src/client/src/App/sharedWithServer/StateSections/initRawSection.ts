@@ -45,7 +45,7 @@ function initChildFeIds<SN extends SectionName>(
   sectionName: SN,
   proposed: Partial<ChildIdArrsNarrow<SN>> = {}
 ): ChildIdArrsNarrow<SN> {
-  const sectionMeta = sectionMetas.section(sectionName, "fe");
+  const sectionMeta = sectionMetas.section(sectionName);
   return {
     ...sectionMeta.emptyChildIdsNarrow(),
     ...pick(proposed, [sectionMeta.childNames as any]),
@@ -80,7 +80,7 @@ function initRawVarb<SN extends SectionName>({
   ...rest
 }: InitRawVarbProps<SN>): RawFeVarb<SN> {
   return {
-    value: dbToFeValue({ ...rest, sectionContext: "fe" }, dbVarb),
+    value: dbToFeValue(rest, dbVarb),
     manualUpdateEditorToggle: undefined,
     outEntities: [],
   };
@@ -90,7 +90,7 @@ function dbToFeValue(
   proposedDbValue: DbValue | undefined
 ) {
   const dbValue = getValidDbValue(varbNames, proposedDbValue);
-  const valueMeta = sectionMetas.value(varbNames, "fe");
+  const valueMeta = sectionMetas.value(varbNames);
   const value = (valueMeta.rawToState as (_: DbValue) => StateValue)(dbValue);
   return value;
 }
@@ -98,7 +98,7 @@ function getValidDbValue(
   varbNames: VarbNames<SectionName>,
   dbValue: DbValue | undefined
 ): DbValue {
-  const valueMeta = sectionMetas.value(varbNames, "fe");
+  const valueMeta = sectionMetas.value(varbNames);
   const varbMeta = sectionMetas.varb(varbNames);
   // for now, the correct dbInitValue lies on varbMeta
   // not valueMeta

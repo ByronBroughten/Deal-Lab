@@ -5,12 +5,7 @@ import { makeDefaultOutputList } from "./makeDefaultOutputList";
 import { makeDefaultPropertyPack } from "./makeDefaultPropertyPack";
 
 export function makeDefaultDealPack(): SectionPackRaw<"deal"> {
-  const childNames = [
-    "financing",
-    "totalInsAndOuts",
-    "final",
-    "internalVarbList",
-  ] as const;
+  const childNames = ["financing", "final", "internalVarbList"] as const;
   const main = new SectionPackBuilder();
   const deal = main.addAndGetChild("deal");
   childNames.forEach((childName) => {

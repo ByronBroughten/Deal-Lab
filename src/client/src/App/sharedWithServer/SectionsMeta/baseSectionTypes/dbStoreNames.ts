@@ -29,6 +29,7 @@ const dbStoreNamesNext = [
   "loan",
   "mgmt",
   "deal",
+
   "outputList",
   "varbList",
   "singleTimeList",
@@ -47,6 +48,9 @@ export const dbStoreNames = [
   "property",
   "loan",
   "mgmt",
+
+  "table",
+  "propertyTableStore",
 
   "analysisTable",
   "propertyTable",

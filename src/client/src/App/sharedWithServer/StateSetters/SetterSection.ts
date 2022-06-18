@@ -26,7 +26,7 @@ export class SetterSection<
   private solver = SolverSection.init(
     this.getterSectionBase.getterSectionProps
   );
-  get meta(): SectionMeta<"fe", SN> {
+  get meta(): SectionMeta<SN> {
     return this.get.meta;
   }
   get sections(): SetterSections {

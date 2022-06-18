@@ -1,10 +1,6 @@
-import { omit } from "lodash";
 import { sectionMetas } from "../SectionsMeta";
 import { Id } from "../SectionsMeta/baseSections/id";
-import {
-  ChildIdArrsWide,
-  FeToDbNameWithSameChildren,
-} from "../SectionsMeta/relSectionTypes/ChildTypes";
+import { ChildIdArrsWide } from "../SectionsMeta/relSectionTypes/ChildTypes";
 import {
   SectionName,
   sectionNameS,
@@ -23,19 +19,6 @@ export class SectionPack<SN extends SectionName> {
   constructor(readonly core: SectionPackRaw<SN>) {}
   get sectionName(): SN {
     return this.core.sectionName;
-  }
-  feToServerRaw<NextSN extends FeToDbNameWithSameChildren<SN>>(
-    nextSectionName: NextSN
-  ): SectionPackRaw<NextSN> {
-    const { sectionName } = this;
-    return {
-      sectionName: nextSectionName,
-      dbId: this.core.dbId,
-      rawSections: {
-        ...omit(this.core.rawSections, [sectionName]),
-        [nextSectionName]: this.core.rawSections[sectionName],
-      },
-    } as Record<keyof SectionPackRaw<NextSN>, any> as SectionPackRaw<NextSN>;
   }
   static init<SN extends SectionName>({
     sectionName,

@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { zNanoId, zString } from "../../../utils/zod";
-import { ContextName, SimpleSectionName } from "../../baseSections";
+import { SimpleSectionName } from "../../baseSections";
 import {
   DbIdInfo,
   FeIdInfo,
@@ -86,30 +86,10 @@ export type MultiFindByFocalVarbInfo<
   S extends BaseName<"hasVarb"> = BaseName<"hasVarb">
 > = MultiFindByFocalInfo<S> & VarbParam;
 
-type VarbNameObj = {
-  [SC in ContextName]: {
-    [SN in SimpleSectionName]: {
-      varbName: string;
-      sectionName: SN;
-      sectionContext: SC;
-    };
-  };
-};
-export type NextVarbNames = VarbNameObj[ContextName][SimpleSectionName];
-export type SimpleVarbNames<SN extends SimpleSectionName = SimpleSectionName> =
-  {
-    varbName: string;
-    sectionName: SN;
-  };
-
-export interface VarbNames<
-  SN extends SimpleSectionName<SC>,
-  SC extends ContextName = "fe"
-> {
+export type VarbNames<SN extends SimpleSectionName = SimpleSectionName> = {
   varbName: string;
   sectionName: SN;
-  sectionContext: SC;
-}
+};
 
 // relative infos
 export interface LocalRelVarbInfo extends RelVarbInfo {

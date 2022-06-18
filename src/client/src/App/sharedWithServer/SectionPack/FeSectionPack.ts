@@ -1,12 +1,7 @@
-import { extend, omit } from "lodash";
-import { sectionMetas } from "../SectionsMeta";
+import { extend } from "lodash";
 import { Id } from "../SectionsMeta/baseSections/id";
 import { InfoS } from "../SectionsMeta/Info";
-import {
-  FeToDbNameWithSameChildren,
-  SectionNameWithSameChildrenWide,
-  SelfAndDescendantIds,
-} from "../SectionsMeta/relSectionTypes/ChildTypes";
+import { SelfAndDescendantIds } from "../SectionsMeta/relSectionTypes/ChildTypes";
 import { ParentFeInfo } from "../SectionsMeta/relSectionTypes/ParentTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { Obj } from "../utils/Obj";
@@ -18,7 +13,7 @@ import {
   SectionNodeMaker,
 } from "./FeSectionPacks/FeSectionNode";
 import { GeneralRawSection, RawSection, RawSections } from "./RawSection";
-import { SectionPackRaw, ServerSectionPack } from "./SectionPackRaw";
+import { SectionPackRaw } from "./SectionPackRaw";
 export type SectionPackSupplements<SN extends SectionName> = {
   parentInfo: ParentFeInfo<SN>;
   feId?: string;
@@ -58,59 +53,6 @@ export class FeSectionPack<SN extends SectionName> {
   }
   get headSection(): RawSection<SN> {
     return this.rawSection(this.headSectionFinder);
-  }
-  changeType<NextSN extends SectionNameWithSameChildrenWide<SN, "fe", "fe">>(
-    nextSectionName: NextSN
-  ): FeSectionPack<NextSN> {
-    const { sectionName } = this;
-
-    if (
-      sectionMetas.isFeSectionNameWithSameChildren(sectionName, nextSectionName)
-    ) {
-      return new FeSectionPack({
-        ...this.core,
-        sectionName: nextSectionName,
-        rawSections: {
-          ...omit(this.rawSections, [sectionName]),
-          [nextSectionName]: this.rawSections[sectionName],
-        },
-      } as FeSectionPackCore<NextSN>);
-    } else
-      throw new Error(
-        `Sections with the name ${sectionName} do not have the same children as sections with the name ${nextSectionName}.`
-      );
-  }
-  feToServerRaw<NextSN extends SectionNameWithSameChildrenWide<SN, "fe", "db">>(
-    nextSectionName: NextSN
-  ): SectionPackRaw<NextSN> {
-    const { sectionName } = this;
-
-    if (
-      sectionMetas.isDbSectionNameWithSameChildren(sectionName, nextSectionName)
-    ) {
-      return {
-        contextName: "db",
-        sectionName: nextSectionName,
-        dbId: this.core.dbId,
-        rawSections: {
-          ...omit(this.core.rawSections, [sectionName]),
-          [nextSectionName]: this.core.rawSections[sectionName],
-        },
-      } as Record<keyof SectionPackRaw<NextSN>, any> as SectionPackRaw<NextSN>;
-    } else
-      throw new Error(
-        `Fe sections with the name ${sectionName} do not have the same children as db sections with the name ${nextSectionName}`
-      );
-  }
-
-  static rawFeToServer<SN extends SectionName, NextSN extends SectionName>(
-    feSectionPackRaw: SectionPackRaw<SN>,
-    nextSectionName: NextSN
-  ): ServerSectionPack {
-    const sectionPack = new FeSectionPack(feSectionPackRaw);
-    return sectionPack.feToServerRaw(
-      nextSectionName as any as FeToDbNameWithSameChildren<SN>
-    ) as any as ServerSectionPack;
   }
   dbToFeIds(childDbIds: SelfAndDescendantIds<SN>): SelfAndDescendantIds<SN> {
     return Obj.entries(childDbIds as SelfAndDescendantIds).reduce(

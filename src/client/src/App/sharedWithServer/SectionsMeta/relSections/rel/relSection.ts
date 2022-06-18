@@ -71,7 +71,7 @@ type DefaultRelSection<
 
 export type RelSectionProp<
   SC extends ContextName,
-  SN extends SimpleSectionName<SC>,
+  SN extends SimpleSectionName,
   D extends string,
   RVS extends RelVarbs<SC, SN>,
   O extends RelSectionOptions<SC, SN> = {}
@@ -201,7 +201,6 @@ export const relSection = {
       { titleFilter: relVarb.string() } as RelVarbs<ContextName, S>,
       {
         tableIndexName,
-        parent: "main",
         arrStoreName: sectionName,
         childNames: ["column", "tableRow"] as const,
       }

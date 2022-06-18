@@ -1,4 +1,3 @@
-import { FeSectionPack } from "../../sharedWithServer/SectionPack/FeSectionPack";
 import { ServerSectionPack } from "../../sharedWithServer/SectionPack/SectionPackRaw";
 import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
 import { SectionPackMaker } from "../../sharedWithServer/StatePackers.ts/SectionPackMaker";
@@ -21,10 +20,7 @@ export class IndexSectionQuerier<
     });
   }
   makeIndexSectionPack(): ServerSectionPack {
-    const sourceSectionPack = this.packMaker.makeSectionPack();
-    return (
-      FeSectionPack.rawFeToServer as (...props: any[]) => ServerSectionPack
-    )(sourceSectionPack, this.indexName);
+    return this.packMaker.makeSectionPack() as any as ServerSectionPack;
   }
   async saveNewToIndex(): Promise<void> {
     await this.query.add(this.makeIndexSectionPack());

@@ -27,11 +27,19 @@ export function makeRelSections() {
         "Property Table",
         "property"
       ),
-      ...rel.section.sectionTableNext(
-        "analysisTable",
-        "Analysis Table",
-        "deal"
+      ...rel.section.base(
+        "fe" as ContextName,
+        "table",
+        "Table",
+        { titleFilter: relVarb.string() } as RelVarbs<ContextName, "table">,
+        {
+          childNames: ["column", "tableRow"] as const,
+        }
       ),
+      ...relSection.base("both", "propertyTableStore", "Property Table Store", {
+        _typeUniformity: rel.varb.string(),
+      }),
+      ...rel.section.sectionTableNext("analysisTable", "Deal Table", "deal"),
       ...rel.section.sectionTableNext("loanTable", "Loan Table", "loan"),
       ...rel.section.sectionTableNext("mgmtTable", "Management Table", "mgmt"),
       ...relSection.base(
@@ -148,68 +156,13 @@ export function makeRelSections() {
       ...relFinancing,
       ...preMgmtGeneral,
       ...relDealStuff,
-
-      ...relSection.base(
-        "both",
-        "totalInsAndOuts",
-        "Total Incomes and Expenses",
-        {
-          upfrontExpensesSum: rel.varb.sumNums(
-            "Sum of upfront expenses",
-            rel.varbInfo.specifiers("static", [
-              ["propertyGeneral", "upfrontExpenses"],
-              ["mgmtGeneral", "upfrontExpenses"],
-              ["financing", "downPaymentDollars"],
-              ["financing", "closingCosts"],
-              ["financing", "mortInsUpfront"],
-            ]),
-            { startAdornment: "$" }
-          ),
-          upfrontExpenses: rel.varb.leftRightPropFn(
-            "Total upfront expenses",
-            "simpleSubtract",
-            rel.varbInfo.specifiers("static", [
-              ["totalInsAndOuts", "upfrontExpensesSum"],
-              ["financing", "wrappedInLoan"],
-            ]) as LeftRightVarbInfos,
-            { startAdornment: "$" }
-          ),
-          upfrontRevenue: rel.varb.sumNums(
-            "Upfront revenue",
-            [
-              rel.varbInfo.relative(
-                "propertyGeneral",
-                "upfrontRevenue",
-                "static"
-              ),
-            ],
-            { startAdornment: "$" }
-          ),
-          ...rel.varbs.ongoingSumNums(
-            "expenses",
-            "Ongoing expenses",
-            rel.varbInfo.statics([
-              ["propertyGeneral", "ongoingExpenses"],
-              ["mgmtGeneral", "ongoingExpenses"],
-              ["financing", "piti"],
-            ])
-          ),
-          ...rel.varbs.ongoingSumNums(
-            "revenue",
-            "Ongoing revenue",
-            [rel.varbInfo.static("propertyGeneral", "ongoingRevenue")],
-            { shared: { startAdornment: "$" }, switchInit: "monthly" }
-          ),
-        }
-      ),
-      //
       ...relSection.base("both", "final", "Final Calculations", {
         totalInvestment: rel.varb.leftRightPropFn(
           "Upfront investment",
           "simpleSubtract",
           rel.varbInfo.specifiers("static", [
-            ["totalInsAndOuts", "upfrontExpenses"],
-            ["totalInsAndOuts", "upfrontRevenue"],
+            ["final", "upfrontExpenses"],
+            ["final", "upfrontRevenue"],
           ]) as LeftRightVarbInfos,
           { startAdornment: "$" }
         ),
@@ -217,8 +170,8 @@ export function makeRelSections() {
           "Monthly cash flow",
           "simpleSubtract",
           rel.varbInfo.specifiers("static", [
-            ["totalInsAndOuts", "revenueMonthly"],
-            ["totalInsAndOuts", "expensesMonthly"],
+            ["final", "revenueMonthly"],
+            ["final", "expensesMonthly"],
           ]) as LeftRightVarbInfos,
           rel.adorn.moneyMonth
         ),
@@ -226,8 +179,8 @@ export function makeRelSections() {
           "Annual cash flow",
           "simpleSubtract",
           rel.varbInfo.specifiers("static", [
-            ["totalInsAndOuts", "revenueYearly"],
-            ["totalInsAndOuts", "expensesYearly"],
+            ["final", "revenueYearly"],
+            ["final", "expensesYearly"],
           ]) as LeftRightVarbInfos,
           rel.adorn.moneyYear
         ),
@@ -257,6 +210,52 @@ export function makeRelSections() {
           initValue: "yearly",
           dbInitValue: "yearly",
         }),
+        upfrontExpensesSum: rel.varb.sumNums(
+          "Sum of upfront expenses",
+          rel.varbInfo.specifiers("static", [
+            ["propertyGeneral", "upfrontExpenses"],
+            ["mgmtGeneral", "upfrontExpenses"],
+            ["financing", "downPaymentDollars"],
+            ["financing", "closingCosts"],
+            ["financing", "mortInsUpfront"],
+          ]),
+          { startAdornment: "$" }
+        ),
+        upfrontExpenses: rel.varb.leftRightPropFn(
+          "Total upfront expenses",
+          "simpleSubtract",
+          rel.varbInfo.specifiers("static", [
+            ["final", "upfrontExpensesSum"],
+            ["financing", "wrappedInLoan"],
+          ]) as LeftRightVarbInfos,
+          { startAdornment: "$" }
+        ),
+        upfrontRevenue: rel.varb.sumNums(
+          "Upfront revenue",
+          [
+            rel.varbInfo.relative(
+              "propertyGeneral",
+              "upfrontRevenue",
+              "static"
+            ),
+          ],
+          { startAdornment: "$" }
+        ),
+        ...rel.varbs.ongoingSumNums(
+          "expenses",
+          "Ongoing expenses",
+          rel.varbInfo.statics([
+            ["propertyGeneral", "ongoingExpenses"],
+            ["mgmtGeneral", "ongoingExpenses"],
+            ["financing", "piti"],
+          ])
+        ),
+        ...rel.varbs.ongoingSumNums(
+          "revenue",
+          "Ongoing revenue",
+          [rel.varbInfo.static("propertyGeneral", "ongoingRevenue")],
+          { shared: { startAdornment: "$" }, switchInit: "monthly" }
+        ),
       }),
     },
     get db() {

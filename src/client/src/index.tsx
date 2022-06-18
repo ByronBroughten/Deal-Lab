@@ -8,19 +8,16 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-// combine final and totalInsAndOuts into final
-// make propertyGeneral, financing, and mgmtGeneral be children of it
-// - get rid of "Static" and "all"; restructure the app as needed
+// reimplement tables like propertyTableStore: { table: etc. }
 
 // get rid of all duplicate sectionNames (for the lists, etc)
 // - you will need to add sections to differentiate the
 // - ones with the same names
 
-// - think about implementing rel parent such that the sectionName is negotiable
-// reimplement tables like propertyTableStore: { table: etc. }
-
 // write the load code that checks the db for children with the same
 // dbId to update
+
+// - think about implementing rel parent such that the sectionName is negotiable
 
 // Write Tests
 // - the rest of sectionSetter and varbSetter tests

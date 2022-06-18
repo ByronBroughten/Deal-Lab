@@ -64,8 +64,11 @@ export const baseSections = {
         alwaysOne: true,
       }
     ),
-
+    table: base.section.schema({ titleFilter: "string" } as const),
     propertyTable: base.section.tableName,
+    propertyTableStore: base.section.schema({
+      _typeUniformity: "string",
+    } as const),
     loanTable: base.section.tableName,
     mgmtTable: base.section.tableName,
     analysisTable: base.section.tableName,
@@ -183,21 +186,16 @@ export const baseSections = {
       { uniqueDbId: true }
     ),
     output: base.section.schema(base.varbs.varbInfo, {}),
-    totalInsAndOuts: base.section.schema(
+    final: base.section.schema(
       {
         ...base.varbs.numObj([
           "upfrontExpensesSum",
           "upfrontExpenses",
           "upfrontRevenue",
+          "totalInvestment",
         ] as const),
         ...base.varbs.ongoing("expenses"),
         ...base.varbs.ongoing("revenue"),
-      },
-      { ...base.options.alwaysOneFromStart, hasGlobalVarbs: true }
-    ),
-    final: base.section.schema(
-      {
-        totalInvestment: "numObj",
         ...base.varbs.ongoing("cashFlow"),
         ...base.varbs.ongoing("roi"),
       },
