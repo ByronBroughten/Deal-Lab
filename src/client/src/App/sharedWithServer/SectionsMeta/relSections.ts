@@ -1,3 +1,4 @@
+import { Arr } from "../utils/Arr";
 import {
   MergeUnionObj,
   MergeUnionObjNonNullable,
@@ -7,6 +8,7 @@ import {
   ContextName,
   SimpleSectionName,
 } from "./baseSections";
+import { baseNameArrs } from "./baseSectionTypes/baseNameArrs";
 import { rel } from "./relSections/rel";
 import { GeneralRelSection, relSection } from "./relSections/rel/relSection";
 import { LeftRightVarbInfos, relVarb } from "./relSections/rel/relVarb";
@@ -38,6 +40,18 @@ export function makeRelSections() {
       ),
       ...relSection.base(
         "both",
+        "omniParent",
+        "Parent of All",
+        {
+          _typeUniformity: rel.varb.string(),
+        } as RelVarbs<ContextName, "main">,
+        {
+          childNames: Arr.exclude(baseNameArrs.fe.all, ["main"]),
+        }
+      ),
+
+      ...relSection.base(
+        "both",
         "main",
         "Main",
         {
@@ -66,6 +80,7 @@ export function makeRelSections() {
             "userOutputList",
 
             "analysis",
+            "omniParent",
           ] as const,
         }
       ),

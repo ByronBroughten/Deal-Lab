@@ -8,7 +8,9 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-// - remove parentInfo from each section.
+// I want to get rid of indexName
+//
+
 // - replace propertyIndex ect with "property"
 // - let main have a parent ("omni parent", or "main").
 //   - Set off alarm bells when
