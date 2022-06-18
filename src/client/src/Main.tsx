@@ -31,7 +31,7 @@ export function Main() {
             <IndexTable
               {...{
                 feInfo: main.get.onlyChild("analysisTable").feInfo,
-                indexName: "dealIndex",
+                indexName: "deal",
               }}
             />
           }

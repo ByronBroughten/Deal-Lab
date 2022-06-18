@@ -9,7 +9,7 @@ const rentCut = switchNames("rentCut", "dollarsPercent");
 const rentCutDollars = switchNames(rentCut.dollars, "ongoing");
 
 function makeMgmtPreVarbs<
-  SN extends "mgmt" | "mgmtIndex",
+  SN extends "mgmt",
   R extends RelVarbs<ContextName, "mgmt">
 >(sectionName: SN): R {
   return {
@@ -89,7 +89,7 @@ function makeMgmtPreVarbs<
 }
 
 function mgmtSection<
-  SN extends "mgmt" | "mgmtIndex",
+  SN extends "mgmt",
   O extends StrictOmit<
     RelSectionOptions<"fe", "mgmt">,
     "childNames" | "relVarbs"
@@ -125,7 +125,6 @@ export const preMgmtGeneral = {
     { childNames: ["mgmt"] as const }
   ),
   ...mgmtSection("mgmt", {
-    rowIndexName: "mgmtIndex",
+    rowIndexName: "mgmt",
   } as const),
-  ...mgmtSection("mgmtIndex"),
 };

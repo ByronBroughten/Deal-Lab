@@ -64,14 +64,6 @@ export const baseSections = {
         alwaysOne: true,
       }
     ),
-    propertyIndex: base.section.schema(base.varbs.property, {
-      uniqueDbId: true,
-    }),
-    loanIndex: base.section.schema(base.varbs.loan, { uniqueDbId: true }),
-    mgmtIndex: base.section.schema(base.varbs.mgmt, { uniqueDbId: true }),
-    dealIndex: base.section.schema(base.varbs.deal, {
-      uniqueDbId: true,
-    }),
 
     propertyTable: base.section.tableName,
     loanTable: base.section.tableName,

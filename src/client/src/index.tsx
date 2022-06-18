@@ -8,16 +8,19 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-// at this point, I can get rid of indexSection
+// combine final and totalInsAndOuts into final
+// make propertyGeneral, financing, and mgmtGeneral be children of it
+// - get rid of "Static" and "all"; restructure the app as needed
 
-// - replace propertyIndex ect with "property"
-// - let main have a parent ("omni parent", or "main").
-//   - Set off alarm bells when
-//     a parent is accessed but the info is "no parent"
-// - restructure the app sections so that rel parent and child suffice.
+// get rid of all duplicate sectionNames (for the lists, etc)
+// - you will need to add sections to differentiate the
+// - ones with the same names
+
 // - think about implementing rel parent such that the sectionName is negotiable
-// - get rid of "Static"
 // reimplement tables like propertyTableStore: { table: etc. }
+
+// write the load code that checks the db for children with the same
+// dbId to update
 
 // Write Tests
 // - the rest of sectionSetter and varbSetter tests

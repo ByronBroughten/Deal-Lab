@@ -25,19 +25,15 @@ export function makeRelSections() {
       ...rel.section.sectionTableNext(
         "propertyTable",
         "Property Table",
-        "propertyIndex"
-      ),
-      ...rel.section.sectionTableNext("loanTable", "Loan Table", "loanIndex"),
-      ...rel.section.sectionTableNext(
-        "mgmtTable",
-        "Management Table",
-        "mgmtIndex"
+        "property"
       ),
       ...rel.section.sectionTableNext(
         "analysisTable",
         "Analysis Table",
-        "dealIndex"
+        "deal"
       ),
+      ...rel.section.sectionTableNext("loanTable", "Loan Table", "loan"),
+      ...rel.section.sectionTableNext("mgmtTable", "Management Table", "mgmt"),
       ...relSection.base(
         "both",
         "omniParent",
@@ -64,10 +60,7 @@ export function makeRelSections() {
             "login",
             "register",
 
-            "propertyIndex",
-            "loanIndex",
-            "mgmtIndex",
-            "dealIndex",
+            "deal",
 
             "propertyTable",
             "loanTable",
@@ -79,7 +72,6 @@ export function makeRelSections() {
             "userOngoingList",
             "userOutputList",
 
-            "deal",
             "omniParent",
           ] as const,
         }

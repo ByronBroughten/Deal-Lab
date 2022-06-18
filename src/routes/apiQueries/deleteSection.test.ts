@@ -19,7 +19,7 @@ function makeReqs(): TestReqs {
   const sectionName = "property";
   const tester = SectionQueryTester.init({
     sectionName,
-    indexName: "propertyIndex",
+    indexName: "property",
   });
   return {
     addSection: tester.makeSectionPackReq(),

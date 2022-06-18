@@ -7,9 +7,7 @@ import { relSection, RelSectionOptions } from "./rel/relSection";
 import { RelVarbs } from "./rel/relVarbs";
 
 const loanAmountBase = switchNames("loanAmountBase", "dollarsPercent");
-function loanRelVarbs(
-  sectionName: "loan" | "loanIndex"
-): RelVarbs<ContextName, "loan"> {
+function loanRelVarbs(sectionName: "loan"): RelVarbs<ContextName, "loan"> {
   return {
     ...rel.varbs.savableSection,
     [loanAmountBase.switch]: rel.varb.string({
@@ -130,7 +128,7 @@ function loanRelVarbs(
 }
 
 function loanSection<
-  SN extends "loan" | "loanIndex",
+  SN extends "loan",
   O extends StrictOmit<
     RelSectionOptions<"fe", "loan">,
     "childNames" | "relVarbs"
@@ -203,9 +201,8 @@ export const relFinancing = {
     }
   ),
   ...loanSection("loan", {
-    rowIndexName: "loanIndex",
+    rowIndexName: "loan",
   } as const),
-  ...loanSection("loanIndex"),
   ...rel.section.singleTimeList("closingCostList", "Closing Costs", {
     fullIndexName: "userSingleList",
   }),
