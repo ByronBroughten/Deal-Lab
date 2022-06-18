@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
-import { DbSectionPackInfo } from "../../client/src/App/sharedWithServer/apiQueriesShared/makeGeneralReqs";
+import { DbSectionPackInfo } from "../../client/src/App/sharedWithServer/apiQueriesShared/makeReqAndRes";
 import authWare from "../../middleware/authWare";
 import { findUserByIdAndUpdate } from "./shared/findAndUpdate";
 import { sendSuccess } from "./shared/sendSuccess";

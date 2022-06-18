@@ -6,7 +6,7 @@ import { SectionsShare } from "../../StateGetters/Bases/GetterSectionsBase";
 import { GetterList } from "../../StateGetters/GetterList";
 import { GetterSection } from "../../StateGetters/GetterSection";
 import { GetterVarb } from "../../StateGetters/GetterVarb";
-import { SolverSection } from "../../StateSolvers/SolverSection";
+import { SolverSections } from "../../StateSolvers/SolverSections";
 import { SetterSection } from "../SetterSection";
 import {
   SectionTesterBase,
@@ -19,7 +19,7 @@ export class SetterTesterSection<
   static initProps<S extends SectionName>(
     sectionName: S
   ): SectionTesterProps<S> {
-    const sections = SolverSection.initSectionsFromDefaultMain();
+    const sections = SolverSections.initSectionsFromDefaultMain();
     const list = new GetterList({
       sectionName,
       sectionsShare: { sections },

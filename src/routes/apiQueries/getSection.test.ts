@@ -1,9 +1,9 @@
 import { Server } from "http";
 import request from "supertest";
 import { config } from "../../client/src/App/Constants";
-import Analyzer from "../../client/src/App/sharedWithServer/Analyzer";
 import { apiQueriesShared } from "../../client/src/App/sharedWithServer/apiQueriesShared";
 import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
+import { Id } from "../../client/src/App/sharedWithServer/SectionsMeta/baseSections/id";
 import { runApp } from "../../runApp";
 import { UserModel } from "../UserModel";
 import { loginUtils } from "./nextLogin/loginUtils";
@@ -70,11 +70,11 @@ describe(testedApiRoute, () => {
     // See if JSON.parse(res.text) has a dbId that matches.
   });
   it("should return 500 if the dbId isn't a valid dbId", async () => {
-    reqs.getSection.body.dbId = Analyzer.makeId().substring(1);
+    reqs.getSection.body.dbId = Id.make().substring(1);
     await testStatus(500);
   });
   it("should return 404 if no section in the queried sectionArr has the dbId", async () => {
-    reqs.getSection.body.dbId = Analyzer.makeId();
+    reqs.getSection.body.dbId = Id.make();
     await testStatus(404);
   });
 });

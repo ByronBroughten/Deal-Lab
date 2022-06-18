@@ -1,11 +1,11 @@
 import { Server } from "http";
 import request from "supertest";
-import Analyzer from "../../client/src/App/sharedWithServer/Analyzer";
 import {
   apiQueriesShared,
   resValidators,
 } from "../../client/src/App/sharedWithServer/apiQueriesShared";
 import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
+import { RegisterReqMaker } from "../../client/src/App/sharedWithServer/ReqMakers/RegisterReqMaker";
 import { runApp } from "../../runApp";
 import { UserModel } from "../UserModel";
 import { testRegisterId } from "./nextRegister";
@@ -13,13 +13,12 @@ import { userServerSide } from "./userServerSide";
 
 const testedRoute = apiQueriesShared.nextRegister.pathRoute;
 function makeTestRegisterReq(): NextReq<"nextRegister"> {
-  let next = Analyzer.initAnalyzer();
-  next = next.updateSectionValuesAndSolve("register", {
+  const reqMaker = RegisterReqMaker.init({
     email: `${testedRoute}Test@gmail.com`,
     password: "testpassword",
     userName: "Testosis",
   });
-  return apiQueriesShared.nextRegister.makeReq(next);
+  return reqMaker.makeReq();
 }
 
 describe(testedRoute, () => {

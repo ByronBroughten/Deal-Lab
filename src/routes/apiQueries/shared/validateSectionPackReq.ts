@@ -1,11 +1,14 @@
 import { Request, Response } from "express";
-import { SectionPack } from "../../../client/src/App/sharedWithServer/Analyzer/SectionPack";
 import {
   SectionPackArrReq,
   SectionPackReq,
-} from "../../../client/src/App/sharedWithServer/apiQueriesShared/makeGeneralReqs";
-import { ServerSectionPack } from "../../../client/src/App/sharedWithServer/SectionPack/SectionPackRaw";
-import { SavableSectionName } from "../../../client/src/App/sharedWithServer/SectionsMeta/relNameArrs/storeArrs";
+} from "../../../client/src/App/sharedWithServer/apiQueriesShared/makeReqAndRes";
+import { SectionPack } from "../../../client/src/App/sharedWithServer/SectionPack/SectionPack";
+import {
+  SectionPackRaw,
+  ServerSectionPack,
+} from "../../../client/src/App/sharedWithServer/SectionPack/SectionPackRaw";
+import { SectionName } from "../../../client/src/App/sharedWithServer/SectionsMeta/SectionName";
 import { resHandledError } from "../../../middleware/error";
 import { validateDbStoreName } from "./validateDbSectionInfoReq";
 import { LoggedIn, validateLoggedInUser } from "./validateLoggedInUser";
@@ -44,18 +47,20 @@ export function validateSectionPackReq(
 type ValidateServerSectionPackArrProps = {
   value: any;
   res: Response;
-  dbStoreName: SavableSectionName;
+  dbStoreName: SectionName<"arrStore">;
 };
 function validateServerSectionPackArr({
   value,
   res,
   dbStoreName,
-}: ValidateServerSectionPackArrProps): ServerSectionPack[] {
+}: ValidateServerSectionPackArrProps): SectionPackRaw<
+  SectionName<"arrStore">
+>[] {
   if (
     Array.isArray(value) &&
     value.every((v) => SectionPack.isServer(v) && v.sectionName === dbStoreName)
   ) {
-    return value as ServerSectionPack[];
+    return value as SectionPackRaw<SectionName<"arrStore">>[];
   } else
     throw resHandledError(
       res,

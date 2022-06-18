@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import { listOperators } from "../../../../../../../sharedWithServer/Analyzer/methods/solveVarbs/solveAndUpdateValue/updateUserVarb";
 import { useSetterSection } from "../../../../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import { useSetterSections } from "../../../../../../../sharedWithServer/stateClassHooks/useSetterSections";
+import { listOperators } from "../../../../../../../sharedWithServer/StateSolvers/SolveValueVarb/UserVarbValueSolver";
 import LogicOperators from "../../../../../../appWide/LogicOperators";
 import { ListEditorNext } from "../../../../../../inputs/ListEditorNext";
 import { NumObjEditorNext } from "../../../../../../inputs/NumObjEditorNext";

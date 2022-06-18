@@ -123,6 +123,9 @@ function isListOperator(value: string): value is ListOperator {
   return listOperators.includes(value as any);
 }
 
+const logicOperators = [...valueOperators, ...listOperators] as const;
+export type LogicOperator = typeof logicOperators[number];
+
 function testValue(
   leftSide: NumObj,
   operator: ValueOperator,

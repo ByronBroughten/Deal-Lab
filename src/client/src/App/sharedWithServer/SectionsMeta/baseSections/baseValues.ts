@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { numObjUnits } from "../../Analyzer/methods/solveVarbs/solveAndUpdateValue/updateNumericObjCalc";
+import { numObjUnits } from "../../StateSolvers/SolveValueVarb/solveText";
 import { reqMonNumber, reqMonString } from "../../utils/mongoose";
 import {
   DbNumObj,

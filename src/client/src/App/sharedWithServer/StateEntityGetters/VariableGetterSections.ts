@@ -1,10 +1,20 @@
-import { VariableOption } from "../Analyzer/methods/get/variableOptions";
 import { sectionMetas } from "../SectionsMeta";
 import { switchVarbNames } from "../SectionsMeta/baseSections/baseSwitchNames";
+import { InEntityVarbInfo } from "../SectionsMeta/baseSections/baseValues/entities";
 import { SectionName, sectionNameS } from "../SectionsMeta/SectionName";
 import { GetterSectionsBase } from "../StateGetters/Bases/GetterSectionsBase";
 import { GetterSections } from "../StateGetters/GetterSections";
 import { Obj } from "../utils/Obj";
+
+export type SectionOption = {
+  dbId: string;
+  displayName: string;
+};
+export type VariableOption = {
+  varbInfo: InEntityVarbInfo;
+  collectionName: string;
+  displayName: string;
+};
 
 export class VariableGetterSections extends GetterSectionsBase {
   getterSections = new GetterSections(this.getterSectionsProps);

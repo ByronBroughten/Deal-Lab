@@ -1,13 +1,13 @@
 import { pick } from "lodash";
-import { SectionOption } from "../Analyzer/methods/get/variableOptions";
-import { VarbValues } from "../Analyzer/StateSection/methods/varbs";
 import { SectionPackRaw } from "../SectionPack/SectionPackRaw";
 import { SwitchEndingKey } from "../SectionsMeta/baseSections/switchNames";
+import { VarbValues } from "../SectionsMeta/baseSectionTypes";
 import { FeSectionInfo, VarbInfo } from "../SectionsMeta/Info";
 import { ChildName } from "../SectionsMeta/relSectionTypes/ChildTypes";
 import { ParentNameSafe } from "../SectionsMeta/relSectionTypes/ParentTypes";
 import { SectionMeta } from "../SectionsMeta/SectionMeta";
 import { SectionName } from "../SectionsMeta/SectionName";
+import { SectionOption } from "../StateEntityGetters/VariableGetterSections";
 import { GetterSection } from "../StateGetters/GetterSection";
 import { GetterSections } from "../StateGetters/GetterSections";
 import { GetterVarb } from "../StateGetters/GetterVarb";

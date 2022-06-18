@@ -1,5 +1,5 @@
 import { useSetterSection } from "../../sharedWithServer/stateClassHooks/useSetterSection";
-import { LabeledVarbNext, LabeledVarbNotFound } from "./LabeledVarbNext";
+import { LabeledVarbNext, LabeledVarbNotFound } from "./LabeledVarb";
 
 export function LabeledVarbOutput({ feId }: { feId: string }) {
   const output = useSetterSection({

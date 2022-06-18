@@ -2,9 +2,9 @@ import { EditorState } from "draft-js";
 import React from "react";
 import styled from "styled-components";
 import { insertEntity } from "../../../modules/draftjs/insert";
-import Analyzer from "../../../sharedWithServer/Analyzer";
-import { VariableOption } from "../../../sharedWithServer/Analyzer/methods/get/variableOptions";
 import { EntityMapData } from "../../../sharedWithServer/SectionsMeta/baseSections/baseValues/entities";
+import { Id } from "../../../sharedWithServer/SectionsMeta/baseSections/id";
+import { VariableOption } from "../../../sharedWithServer/StateEntityGetters/VariableGetterSections";
 import theme from "../../../theme/Theme";
 import VarbAutoComplete, { PopperRef } from "../VarbAutoComplete";
 
@@ -19,7 +19,7 @@ const NumObjVarbSelector = React.forwardRef(
       const { displayName, varbInfo } = value;
       const entity: EntityMapData = {
         ...varbInfo,
-        entityId: Analyzer.makeId(),
+        entityId: Id.make(),
       };
 
       const newEditorState = insertEntity(editorState, displayName, entity);

@@ -1,8 +1,6 @@
 import { Request, Response } from "express";
-import { ServerSectionPack } from "../../client/src/App/sharedWithServer/SectionPack/SectionPackRaw";
-import { SavableSectionName } from "../../client/src/App/sharedWithServer/SectionsMeta/relNameArrs/storeArrs";
+import { SectionPackArrReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/makeReqAndRes";
 import authWare from "../../middleware/authWare";
-import { SectionPackDb } from "../SectionPackDb";
 import { findUserByIdAndUpdate } from "./shared/findAndUpdate";
 import { sendSuccess } from "./shared/sendSuccess";
 import { validateSectionPackArrReq } from "./shared/validateSectionPackReq";
@@ -28,19 +26,12 @@ async function replaceSectionArrServerSide(req: Request, res: Response) {
   });
 }
 
-type MakeSetSectionArrParametersProps = {
-  dbStoreName: SavableSectionName<"arrStore">;
-  sectionPackArr: ServerSectionPack[];
-};
 function makeSetSectionArrParameters({
   dbStoreName,
   sectionPackArr,
-}: MakeSetSectionArrParametersProps) {
-  const dbPackArr = sectionPackArr.map((serverPack) =>
-    SectionPackDb.serverToDbRaw(serverPack)
-  );
+}: SectionPackArrReq["body"]) {
   return {
-    operation: { $set: { [`${dbStoreName}`]: dbPackArr } },
+    operation: { $set: { [`${dbStoreName}`]: sectionPackArr } },
     options: {
       new: true,
       lean: true,

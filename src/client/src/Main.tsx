@@ -4,16 +4,25 @@ import { ActiveDeal } from "./App/components/ActiveDeal";
 import NotFound from "./App/components/general/NotFound";
 import IndexTable from "./App/components/IndexTable";
 import NavBar from "./App/components/NavBar";
-import { useGetterSection } from "./App/sharedWithServer/stateClassHooks/useGetterSection";
+import { auth } from "./App/modules/services/authService";
+import { useSetterSection } from "./App/sharedWithServer/stateClassHooks/useSetterSection";
 import theme from "./App/theme/Theme";
 
 export function Main() {
-  const main = useGetterSection();
-  const activeDealId = main.onlyChild("analysis").feId;
-  const { feInfo: dealTableInfo } = main.onlyChild("analysisTable");
+  const main = useSetterSection();
+  const logout = () => {
+    auth.removeToken();
+    main.resetToDefault();
+  };
+  const activeDealId = main.get.onlyChild("analysis").feId;
   return (
     <Styled className="App-root">
-      <NavBar className="NavBar-visible" />
+      <NavBar
+        {...{
+          feInfo: main.get.onlyChild("user").feInfo,
+          logout,
+        }}
+      />
       <div className="NavSpaceDiv-root"></div>
       <Routes>
         <Route
@@ -21,7 +30,7 @@ export function Main() {
           element={
             <IndexTable
               {...{
-                feInfo: dealTableInfo,
+                feInfo: main.get.onlyChild("analysisTable").feInfo,
                 indexName: "dealIndex",
               }}
             />
@@ -44,7 +53,7 @@ const Styled = styled.div`
   min-height: 100vh;
   background-color: ${theme.light};
 
-  .NavBar-visible {
+  .NavBar-root {
     position: sticky;
   }
   .NavSpaceDiv-root {

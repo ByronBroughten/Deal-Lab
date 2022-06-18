@@ -1,27 +1,26 @@
 import request from "supertest";
 import { config } from "../../client/src/App/Constants";
-import Analyzer from "../../client/src/App/sharedWithServer/Analyzer";
 import { apiQueriesShared } from "../../client/src/App/sharedWithServer/apiQueriesShared";
-import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
+import { SectionPackArrReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/makeReqAndRes";
+import { SectionArrReqMaker } from "../../client/src/App/sharedWithServer/ReqMakers/SectionArrReqMaker";
 import { runApp } from "../../runApp";
 import { UserModel } from "../UserModel";
 import { loginUtils } from "./nextLogin/loginUtils";
 import { createTestUserModelNext } from "./test/createTestUserModelNext";
 
+// to make the sectionArr req and the register req, do I make
+// entirely new testers? No, I think I'll make a reqMaker
+// class for each that RegisterActor and SectionArrQuerier contain
+
 const sectionName = "loanTable";
-function makeReq(): NextReq<"replaceSectionArr"> {
-  let next = Analyzer.initAnalyzer();
-  next = next.addSectionAndSolve(sectionName, "main", {});
-  return apiQueriesShared.replaceSectionArr.makeReq({
-    analyzer: next,
-    sectionName: sectionName,
-    dbStoreName: sectionName,
-  });
+function makeReq(): SectionPackArrReq<typeof sectionName> {
+  const reqMaker = SectionArrReqMaker.init(sectionName);
+  return reqMaker.makeReq();
 }
 
 const testedApiRoute = apiQueriesShared.replaceSectionArr.pathRoute;
 describe(testedApiRoute, () => {
-  let req: NextReq<"replaceSectionArr">;
+  let req: SectionPackArrReq<typeof sectionName>;
   let server: any;
   let userId: string;
   let token: string;

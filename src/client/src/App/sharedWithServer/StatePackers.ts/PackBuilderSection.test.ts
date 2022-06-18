@@ -1,5 +1,5 @@
 import { pick } from "lodash";
-import { SectionPack } from "../Analyzer/SectionPack";
+import { SectionPack } from "../SectionPack/SectionPack";
 import { dbNumObj } from "../SectionsMeta/baseSections/baseValues/NumObj";
 import { Obj } from "../utils/Obj";
 import { SectionPackBuilder } from "./PackBuilderSection";

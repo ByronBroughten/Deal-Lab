@@ -9,13 +9,13 @@ import theme from "../theme/Theme";
 import { LoginForm } from "./NavBar/LoginForm";
 import NavBtn from "./NavBar/NavBtn";
 import NavDropDown from "./NavBar/NavDropDown";
-import NavUserMenu from "./NavBar/NavUserMenu";
+import { NavUserMenu, NavUserMenuProps } from "./NavBar/NavUserMenu";
 import { ProUpgradeForm } from "./NavBar/ProUpgradeForm";
 import { RegisterForm } from "./NavBar/RegisterForm";
 
-export default function NavBar({ className }: { className?: string }) {
+export default function NavBar(props: NavUserMenuProps) {
   return (
-    <Styled className={`NavBar-root ${className ?? ""}`}>
+    <Styled className="NavBar-root">
       <Toolbar disableGutters={true}>
         <div className="NavBar-leftSide">
           <Link className="NavBar-analyzerLink" to="/">
@@ -59,7 +59,7 @@ export default function NavBar({ className }: { className?: string }) {
               {/* </StyledDropdownForm> */}
             </NavDropDown>
           )}
-          <NavUserMenu />
+          <NavUserMenu {...props} />
         </div>
       </Toolbar>
     </Styled>

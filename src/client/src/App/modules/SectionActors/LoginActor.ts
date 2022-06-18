@@ -1,5 +1,5 @@
 import { NextReq } from "../../sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
-import { makeReq } from "../../sharedWithServer/apiQueriesShared/makeGeneralReqs";
+import { makeReq } from "../../sharedWithServer/apiQueriesShared/makeReqAndRes";
 import { GetterVarbs } from "../../sharedWithServer/StateGetters/GetterVarbs";
 import { SetterVarb } from "../../sharedWithServer/StateSetters/SetterVarb";
 import { StrictOmit } from "../../sharedWithServer/utils/types";

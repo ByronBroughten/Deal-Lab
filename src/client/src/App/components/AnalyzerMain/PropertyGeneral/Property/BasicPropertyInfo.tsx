@@ -4,7 +4,7 @@ import { useSetterSection } from "../../../../sharedWithServer/stateClassHooks/u
 import theme from "../../../../theme/Theme";
 import BasicSectionInfo from "../../../appWide/GeneralSection/MainSection/MainSectionBody/BasicSectionInfo";
 import { NumObjEditorNext } from "../../../inputs/NumObjEditorNext";
-import { UnitListNext } from "./UnitListNext";
+import { UnitList } from "./UnitList";
 
 type Props = { feId: string; className?: string };
 export default function BasicPropertyInfo({ feId, className }: Props) {
@@ -31,7 +31,7 @@ export default function BasicPropertyInfo({ feId, className }: Props) {
             </div>
           </div>
         </div>
-        <UnitListNext feInfo={property.feSectionInfo} />
+        <UnitList feInfo={property.feSectionInfo} />
       </div>
     </Styled>
   );

@@ -10,7 +10,7 @@ import {
   numObjToRawContent,
 } from "../../modules/draftjs/draftUtils";
 import { EntityMap, EntityRanges, RawEditorState } from "../../utils/DraftS";
-import { isEditorUpdateFnName } from "../Analyzer/StateSection/StateVarb/stateValue";
+import { isEditorUpdateFnName } from "../FeSections/FeSection/FeVarb/feValue";
 import {
   InEntities,
   InEntity,

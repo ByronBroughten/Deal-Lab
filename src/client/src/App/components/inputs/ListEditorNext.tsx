@@ -1,9 +1,4 @@
-import {
-  CompositeDecorator,
-  ContentState,
-  Editor,
-  EditorState,
-} from "draft-js";
+import { CompositeDecorator, Editor, EditorState } from "draft-js";
 import { darken, lighten } from "polished";
 import React from "react";
 import { css } from "styled-components";
@@ -11,7 +6,6 @@ import styled from "styled-components/macro";
 import useOnOutsideClickRef from "../../modules/customHooks/useOnOutsideClickRef";
 import { getEntityStrategy } from "../../modules/draftjs/getEntityStrategies";
 import { insertEntity } from "../../modules/draftjs/insert";
-import StateVarb from "../../sharedWithServer/Analyzer/StateSection/StateVarb";
 import { VarbInfo } from "../../sharedWithServer/SectionsMeta/Info";
 import ErrorMessage from "../appWide/ErrorMessage";
 import ItemOrCommaSpan, {
@@ -59,12 +53,6 @@ const compositeDecorator = new CompositeDecorator([
     component: ItemOrCommaSpan,
   },
 ]);
-
-const createEditor = ({ varb }: { varb: StateVarb }) => {
-  const value = varb.value("stringArray");
-  const content = ContentState.createFromText(value.join());
-  return EditorState.createWithContent(content, compositeDecorator);
-};
 
 export function ListEditorNext({
   feVarbInfo,

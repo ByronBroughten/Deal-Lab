@@ -1,16 +1,16 @@
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import styled, { css } from "styled-components";
-import { useAnalyzerContext } from "../../modules/usePropertyAnalyzer";
-import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/relSections/rel/relVarbInfoTypes";
+import { VarbInfo } from "../../sharedWithServer/SectionsMeta/Info";
+import { useGetterSections } from "../../sharedWithServer/stateClassHooks/useGetterSections";
 import { GetterVarb } from "../../sharedWithServer/StateGetters/GetterVarb";
 import theme, { ThemeName } from "../../theme/Theme";
 import PlainBtn from "../general/PlainBtn";
 
 type UseLabeledOutputProps = {
-  feVarbInfo?: FeVarbInfo;
+  feVarbInfo?: VarbInfo;
   displayVarb?: string;
   displayLabel?: string;
-  parenthInfo?: FeVarbInfo | string;
+  parenthInfo?: VarbInfo | string;
 };
 function useLabeledOutput({
   feVarbInfo,
@@ -19,22 +19,22 @@ function useLabeledOutput({
   parenthInfo,
   ...adornments
 }: UseLabeledOutputProps): { displayLabel: string; displayVarb: string } {
-  const { analyzer } = useAnalyzerContext();
-  if (!feVarbInfo || !analyzer.hasSection(feVarbInfo))
+  const sections = useGetterSections();
+  if (!feVarbInfo || !sections.hasSection(feVarbInfo))
     return {
       displayLabel: "Variable not found",
       displayVarb: "?",
     };
 
-  displayLabel = displayLabel ?? analyzer.displayName(feVarbInfo);
-  displayVarb =
-    displayVarb ?? analyzer.varb(feVarbInfo).displayVarb(adornments);
+  const varb = sections.varb(feVarbInfo);
+  displayLabel = displayLabel ?? varb.displayName;
+  displayVarb = displayVarb ?? varb.displayVarb(adornments);
 
   if (parenthInfo) {
     if (typeof parenthInfo === "string")
       displayVarb = `${displayVarb} (${parenthInfo})`;
     else
-      displayVarb = `${displayVarb} (${analyzer
+      displayVarb = `${displayVarb} (${sections
         .varb(parenthInfo)
         .displayVarb()})`;
   }
@@ -42,23 +42,19 @@ function useLabeledOutput({
 }
 
 type LabeledVarbProps = UseLabeledOutputProps & {
-  feVarbInfo: FeVarbInfo;
+  feVarbInfo: VarbInfo;
   onXBtnClick?: () => void;
   className?: string;
   themeName?: ThemeName;
 };
-export function LabeledVarbSimple({
+export function LabeledVarbSimpleNext({
   feVarbInfo,
   className,
   onXBtnClick,
   themeName = "default",
   ...rest
 }: LabeledVarbProps) {
-  const varbId = GetterVarb.feVarbInfoToVarbId({
-    ...feVarbInfo,
-    feId: feVarbInfo.id,
-  });
-
+  const varbId = GetterVarb.feVarbInfoToVarbId(feVarbInfo);
   const { displayLabel, displayVarb } = useLabeledOutput({
     feVarbInfo,
     ...rest,

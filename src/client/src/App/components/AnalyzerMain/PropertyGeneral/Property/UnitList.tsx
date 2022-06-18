@@ -1,36 +1,30 @@
 import { rem } from "polished";
 import React from "react";
 import styled, { css } from "styled-components";
-import { useAnalyzerContext } from "../../../../modules/usePropertyAnalyzer";
-import { ParentFeInfo } from "../../../../sharedWithServer/SectionsMeta/relSectionTypes/ParentTypes";
+import { FeParentInfo } from "../../../../sharedWithServer/SectionsMeta/Info";
+import { useSetterSection } from "../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import { Arr } from "../../../../sharedWithServer/utils/Arr";
 import ccs from "../../../../theme/cssChunks";
 import theme from "../../../../theme/Theme";
 import useHowMany from "../../../appWide/customHooks/useHowMany";
 import PlusBtn from "../../../appWide/PlusBtn";
 import { useOpenWidth } from "../../../appWide/SectionTitleRow";
-import Unit from "./UnitList/UnitItem";
+import { UnitItemNext } from "./UnitList/UnitItem";
 
-type Props = { feInfo: ParentFeInfo<"unit">; className?: string };
-export default function UnitList({ feInfo, className }: Props) {
-  const { analyzer, handleAddSection } = useAnalyzerContext();
-  const totalDisplay = analyzer.switchedOngoingDisplayVarb(
-    "targetRent",
-    feInfo
-  );
-
-  const totalVarb = analyzer.switchedOngoingVarb("targetRent", feInfo);
-
-  const unitIds = analyzer.section(feInfo).childFeIds("unit");
-  const { isAtLeastOne, areMultiple, areNone } = useHowMany(unitIds);
+type Props = { feInfo: FeParentInfo<"unit">; className?: string };
+export function UnitList({ feInfo, className }: Props) {
   const numUnitsPerRow = 2;
-  const unitIdRows = Arr.upOneDimension(unitIds, numUnitsPerRow);
+  const unitParent = useSetterSection(feInfo);
+  const totalVarb = unitParent.switchVarb("targetRent", "ongoing");
 
+  const unitIds = unitParent.childFeIds("unit");
+
+  const { isAtLeastOne, areMultiple, areNone } = useHowMany(unitIds);
+  const unitIdRows = Arr.upOneDimension(unitIds, numUnitsPerRow);
   const { trackWidthToggleView, ...titleRowProps } = useOpenWidth();
   const { viewIsOpen } = titleRowProps;
 
-  const addUnit = () => handleAddSection("unit", feInfo);
-
+  const addUnit = () => unitParent.addChild("unit");
   return (
     <Styled
       className={`UnitList-root ${className ?? ""}`}
@@ -66,7 +60,7 @@ export default function UnitList({ feInfo, className }: Props) {
                             {areMultiple && (
                               <div className="UnitList-total">
                                 <span className="UnitList-totalText">{`Total Rent`}</span>
-                                <span className="UnitList-totalNumber">{`(${totalDisplay})`}</span>
+                                <span className="UnitList-totalNumber">{`(${totalVarb.displayVarb()})`}</span>
                               </div>
                             )}
                           </>
@@ -76,10 +70,9 @@ export default function UnitList({ feInfo, className }: Props) {
                             const unitIndex = unitNumberOffset + unitInnerIndex;
                             const unitNumber = unitIndex + 1;
                             return (
-                              <Unit
+                              <UnitItemNext
                                 key={unitId}
-                                id={unitId}
-                                idx={unitIndex}
+                                feId={unitId}
                                 unitNumber={unitNumber}
                               />
                             );

@@ -1,7 +1,6 @@
-import { defaultMaker } from "../Analyzer/methods/internal/addSections/gatherSectionInitProps/defaultMaker";
-import { VarbValues } from "../Analyzer/StateSection/methods/varbs";
 import { SectionPackRaw } from "../SectionPack/SectionPackRaw";
 import { Id } from "../SectionsMeta/baseSections/id";
+import { VarbValues } from "../SectionsMeta/baseSectionTypes";
 import { FeSectionInfo } from "../SectionsMeta/Info";
 import { ChildName } from "../SectionsMeta/relSectionTypes/ChildTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
@@ -132,9 +131,5 @@ export class SolverSection<
     });
     solver.loadSelfSectionPackAndSolve(sectionPack);
     return solver.sectionsShare.sections;
-  }
-  static initSectionsFromDefaultMain() {
-    const defaultMainPack = defaultMaker.make("main");
-    return this.initSolvedSectionsFromMainPack(defaultMainPack);
   }
 }

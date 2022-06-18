@@ -44,7 +44,8 @@ const zLoginFormData = zRegisterFormData.pick({
 export type LoginFormData = z.infer<typeof zLoginFormData>;
 
 export function isLoginFormData(value: any): value is LoginFormData {
-  return zLoginFormData.safeParse(value).success;
+  const test = zLoginFormData.safeParse(value);
+  return test.success;
 }
 
 export type LoginHeaders = { [config.tokenKey.apiUserAuth]: string };

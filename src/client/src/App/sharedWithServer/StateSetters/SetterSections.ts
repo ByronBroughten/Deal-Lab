@@ -1,10 +1,14 @@
-import { VariableOption } from "../Analyzer/methods/get/variableOptions";
-import { StateValue } from "../Analyzer/StateSection/StateVarb/stateValue";
-import { isStateValue } from "../FeSections/FeSection/FeVarb/feValue";
+import {
+  isStateValue,
+  StateValue,
+} from "../FeSections/FeSection/FeVarb/feValue";
 import { DbSectionInfo } from "../SectionPack/DbSectionInfo";
 import { FeSectionInfo, VarbInfo } from "../SectionsMeta/Info";
 import { SectionName } from "../SectionsMeta/SectionName";
-import { VariableGetterSections } from "../StateEntityGetters/VariableGetterSections";
+import {
+  VariableGetterSections,
+  VariableOption,
+} from "../StateEntityGetters/VariableGetterSections";
 import { GetterSections } from "../StateGetters/GetterSections";
 import { GetterVarb } from "../StateGetters/GetterVarb";
 import { SetterSectionsBase } from "./SetterBases/SetterSectionsBase";

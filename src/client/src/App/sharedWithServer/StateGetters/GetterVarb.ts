@@ -1,6 +1,6 @@
 import { cloneDeep } from "lodash";
-import { Adornments } from "../Analyzer/StateSection/StateVarb";
 import {
+  Adornments,
   StateValueAnyKey,
   valueSchemasPlusAny,
   ValueTypesPlusAny,

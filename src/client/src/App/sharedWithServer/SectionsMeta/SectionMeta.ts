@@ -1,4 +1,4 @@
-import { DbVarbs } from "../Analyzer/DbEntry";
+import { DbVarbs } from "../SectionPack/RawSection";
 import { Obj } from "../utils/Obj";
 import {
   baseSections,

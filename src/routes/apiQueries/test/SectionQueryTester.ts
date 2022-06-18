@@ -5,13 +5,13 @@ import {
   DbSectionPackInfoReq,
   makeReq,
   SectionPackReq,
-} from "../../../client/src/App/sharedWithServer/apiQueriesShared/makeGeneralReqs";
+} from "../../../client/src/App/sharedWithServer/apiQueriesShared/makeReqAndRes";
 import { SectionName } from "../../../client/src/App/sharedWithServer/SectionsMeta/SectionName";
 import { GetterListProps } from "../../../client/src/App/sharedWithServer/StateGetters/Bases/GetterListBase";
 import { GetterSectionProps } from "../../../client/src/App/sharedWithServer/StateGetters/Bases/GetterSectionBase";
 import { GetterList } from "../../../client/src/App/sharedWithServer/StateGetters/GetterList";
 import { GetterSection } from "../../../client/src/App/sharedWithServer/StateGetters/GetterSection";
-import { SolverSection } from "../../../client/src/App/sharedWithServer/StateSolvers/SolverSection";
+import { SolverSections } from "../../../client/src/App/sharedWithServer/StateSolvers/SolverSections";
 import { UpdaterSection } from "../../../client/src/App/sharedWithServer/StateUpdaters/UpdaterSection";
 
 export function makeLastSectionProps<SN extends SectionName>(
@@ -49,7 +49,7 @@ export class SectionQueryTester<
       ...makeLastSectionProps({
         sectionName,
         sectionsShare: {
-          sections: SolverSection.initSectionsFromDefaultMain(),
+          sections: SolverSections.initSectionsFromDefaultMain(),
         },
       }),
     });

@@ -1,8 +1,10 @@
-import { AddSectionPropsNext } from "../Analyzer/methods/internal/addSections/addSectionsTypes";
-import { VarbValues } from "../Analyzer/StateSection/methods/varbs";
+import { InitFeSectionCoreProps } from "../FeSections/FeSection/FeSectionCore";
 import { DbVarbs } from "../SectionPack/RawSection";
+import { SimpleSectionName } from "../SectionsMeta/baseSections";
+import { VarbValues } from "../SectionsMeta/baseSectionTypes";
 import { FeChildInfo, FeSectionInfo } from "../SectionsMeta/Info";
 import {
+  ChildIdArrsNarrow,
   ChildName,
   DescendantName,
   NewChildInfo,
@@ -160,6 +162,17 @@ export class UpdaterSection<
       },
     });
   }
+}
+
+interface AddSectionPropsNext<SN extends SimpleSectionName = SimpleSectionName>
+  extends InitFeSectionCoreProps<SN> {
+  sectionName: SN;
+  parentInfo: FeParentInfo<SN>;
+  feId?: string;
+  childFeIds?: ChildIdArrsNarrow<SN>;
+  dbId?: string;
+  dbVarbs?: DbVarbs;
+  idx?: number;
 }
 
 export type DescendantList<

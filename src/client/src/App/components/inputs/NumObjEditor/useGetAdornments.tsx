@@ -36,7 +36,7 @@ function getAdornments({
   } else return { startAdornment, endAdornment };
 }
 
-export default function useGetEndAdornments(props: GetAdornmentsProps) {
-  const endAdornment = getAdornments(props);
-  return endAdornment;
+export function useGetAdornments(props: GetAdornmentsProps) {
+  const adornments = getAdornments(props);
+  return adornments;
 }

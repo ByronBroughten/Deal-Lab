@@ -1,6 +1,6 @@
-import { SectionPack } from "../client/src/App/sharedWithServer/Analyzer/SectionPack";
 import { LoginUser } from "../client/src/App/sharedWithServer/apiQueriesShared/login";
 import { DbVarbs } from "../client/src/App/sharedWithServer/SectionPack/RawSection";
+import { SectionPack } from "../client/src/App/sharedWithServer/SectionPack/SectionPack";
 import {
   SectionPackDbRaw,
   SectionPackRaw,

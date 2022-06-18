@@ -1,4 +1,4 @@
-### Ultimate Property Analyzer Server
+### Ultimate Deal Analyzer Server
 
 [Live Test Website](https://ultimate-property-analyzer.herokuapp.com/).
 

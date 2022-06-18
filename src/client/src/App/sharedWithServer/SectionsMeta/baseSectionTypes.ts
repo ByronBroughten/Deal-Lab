@@ -1,3 +1,4 @@
+import { StateValue } from "../FeSections/FeSection/FeVarb/feValue";
 import { SubType } from "../utils/types";
 import {
   BaseSections,
@@ -12,6 +13,8 @@ import {
   BaseNameSelector,
 } from "./baseSectionTypes/baseNameArrs";
 import { SpecificSectionInfo } from "./relSections/rel/relVarbInfoTypes";
+
+export type VarbValues = { [varbName: string]: StateValue };
 
 export type BaseName<
   ST extends BaseNameSelector<SC> = "all",

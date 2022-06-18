@@ -1,6 +1,6 @@
-import { NumberProps } from "../Analyzer/methods/solveVarbs/solveAndUpdateValue/updateNumericObjCalc";
 import calculations, {
   isCalculationName,
+  NumberProps,
 } from "../SectionsMeta/baseSections/baseValues/calculations";
 import {
   DbNumObj,

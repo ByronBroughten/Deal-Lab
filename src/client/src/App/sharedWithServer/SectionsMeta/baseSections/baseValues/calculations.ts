@@ -6,6 +6,8 @@ export type Calculate = (props: any) => string;
 
 type LRSides = { leftSide: number; rightSide: number };
 export type CalcProp = NumObjNumber;
+export type NumberProps = { [name: string]: CalcProp | CalcProp[] };
+
 type NumProp = { num: CalcProp };
 const solvableTextByArgs = {
   single: {

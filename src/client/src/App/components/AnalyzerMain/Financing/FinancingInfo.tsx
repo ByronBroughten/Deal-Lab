@@ -3,7 +3,7 @@ import { useGetterSection } from "../../../sharedWithServer/stateClassHooks/useG
 import theme from "../../../theme/Theme";
 import useHowMany from "../../appWide/customHooks/useHowMany";
 import LabeledOutputRowSimple from "../../appWide/LabeledOutputRowSimple";
-import { LabeledVarbSimpleNext } from "../../appWide/LabeledVarbSimpleNext";
+import { LabeledVarbSimpleNext } from "../../appWide/LabeledVarbSimple";
 import GlobalInfoSection from "../general/StaticInfoSection";
 
 export default function FinancingInfo({ feId }: { feId: string }) {

@@ -1,6 +1,6 @@
 import { cloneDeep, pick } from "lodash";
-import { NumObjUnit } from "../Analyzer/methods/solveVarbs/solveAndUpdateValue/updateNumericObjCalc";
-import { StateValue } from "../Analyzer/StateSection/StateVarb/stateValue";
+import { StateValue } from "../FeSections/FeSection/FeVarb/feValue";
+import { NumObjUnit } from "../StateSolvers/SolveValueVarb/solveText";
 import { AnySectionName } from "./baseSections";
 import { valueMeta } from "./baseSections/baseValues";
 import { NumObj } from "./baseSections/baseValues/NumObj";

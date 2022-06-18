@@ -1,35 +1,29 @@
 import request from "supertest";
 import { config } from "../../client/src/App/Constants";
-import Analyzer from "../../client/src/App/sharedWithServer/Analyzer";
 import { apiQueriesShared } from "../../client/src/App/sharedWithServer/apiQueriesShared";
 import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
-import { RegisterReqBody } from "../../client/src/App/sharedWithServer/apiQueriesShared/register";
+import { makeReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/makeReqAndRes";
+import { RegisterReqMaker } from "../../client/src/App/sharedWithServer/ReqMakers/RegisterReqMaker";
 import { runApp } from "../../runApp";
 import { UserModel } from "../UserModel";
 import { loginUtils } from "./nextLogin/loginUtils";
 import { userServerSide } from "./userServerSide";
 
 const testedRoute = apiQueriesShared.nextLogin.pathRoute;
-const testLoginFormData = {
-  email: `${testedRoute}Test@gmail.com`,
-  password: "testpassword",
-} as const;
+function makeReqStuff() {
+  const testLoginFormData = {
+    email: `${testedRoute}Test@gmail.com`,
+    password: "testpassword",
+  } as const;
 
-const testRegisterFormData = {
-  ...testLoginFormData,
-  userName: "Testosis",
-} as const;
-
-function makeTestLoginReq() {
-  let next = Analyzer.initAnalyzer();
-  next = next.updateSectionValuesAndSolve("login", testLoginFormData);
-  return apiQueriesShared.nextLogin.makeReq(next);
-}
-
-function makeTestRegisterReqBody(): RegisterReqBody {
-  let next = Analyzer.initAnalyzer();
-  next = next.updateSectionValuesAndSolve("register", testRegisterFormData);
-  return apiQueriesShared.nextRegister.makeReq(next).body;
+  const reqMaker = RegisterReqMaker.init({
+    ...testLoginFormData,
+    userName: "Testosis",
+  });
+  return {
+    loginReq: makeReq(testLoginFormData),
+    registerBody: reqMaker.reqBody,
+  };
 }
 
 describe(testedRoute, () => {
@@ -39,10 +33,9 @@ describe(testedRoute, () => {
 
   beforeEach(async () => {
     server = runApp();
-    reqObj = makeTestLoginReq();
-    const userDoc = await userServerSide.entireMakeUserProcess(
-      makeTestRegisterReqBody()
-    );
+    const { loginReq, registerBody } = makeReqStuff();
+    const userDoc = await userServerSide.entireMakeUserProcess(registerBody);
+    reqObj = loginReq;
     userId = userDoc._id.toHexString();
   });
 

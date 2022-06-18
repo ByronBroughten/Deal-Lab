@@ -1,0 +1,54 @@
+import { InEntityVarbInfo } from "../../../../App/sharedWithServer/SectionsMeta/baseSections/baseValues/entities";
+import { SectionFinder } from "../../../../App/sharedWithServer/SectionsMeta/baseSectionTypes";
+import { InfoS } from "../../../../App/sharedWithServer/SectionsMeta/Info";
+import { FeVarbInfo } from "../../../../App/sharedWithServer/SectionsMeta/relSections/rel/relVarbInfoTypes";
+import Analyzer from "../../Analyzer";
+import { StateValue } from "../StateSection/StateVarb/stateValue";
+import { internal } from "./internal";
+
+export function directUpdateAndSolve(
+  this: Analyzer,
+  feVarbInfo: FeVarbInfo,
+  value: StateValue
+) {
+  let next = this;
+  next = internal.updateValueDirectly(next, feVarbInfo, value);
+  return next.solveVarbs([feVarbInfo]);
+}
+
+export function updateSectionValuesAndSolve(
+  this: Analyzer,
+  finder: SectionFinder,
+  values: { [varbName: string]: StateValue }
+): Analyzer {
+  const { feInfo } = this.section(finder);
+  return Object.keys(values).reduce((next, varbName) => {
+    const varbInfo = InfoS.feVarb(varbName, feInfo);
+    return internal.updateValueDirectly(next, varbInfo, values[varbName]);
+  }, this);
+}
+
+export function loadValueFromVarb(
+  this: Analyzer,
+  feVarbInfo: FeVarbInfo,
+  varbInfo: InEntityVarbInfo
+): Analyzer {
+  // where do I put this?
+  let next = this;
+  const entityId = next.feValue("entityId", feVarbInfo, "string");
+  const entityInfo = next.varbInfoValues(feVarbInfo);
+  next = internal.removeInEntity(next, feVarbInfo, { ...entityInfo, entityId });
+
+  const nextEntityId = Analyzer.makeId();
+  next = internal.addInEntity(next, feVarbInfo, {
+    ...varbInfo,
+    length: 0, // length and offset are arbitrary
+    offset: 0, // just borrowing functionality from editor entities
+    entityId: nextEntityId,
+  });
+  next = next.updateSectionValuesAndSolve(feVarbInfo, {
+    ...varbInfo,
+    entityId: nextEntityId,
+  });
+  return next.solveVarbs([feVarbInfo]);
+}

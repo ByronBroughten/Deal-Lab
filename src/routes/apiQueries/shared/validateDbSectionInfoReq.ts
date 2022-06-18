@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { DbSectionPackInfoReq } from "../../../client/src/App/sharedWithServer/apiQueriesShared/makeGeneralReqs";
+import { DbSectionPackInfoReq } from "../../../client/src/App/sharedWithServer/apiQueriesShared/makeReqAndRes";
 import { Id } from "../../../client/src/App/sharedWithServer/SectionsMeta/baseSections/id";
 import {
   savableNameS,

@@ -1,6 +1,6 @@
-import React from "react";
 import { MenuItem } from "@material-ui/core";
-import { LogicOperator } from "../../sharedWithServer/Analyzer/methods/solveVarbs/solveAndUpdateValue/updateUserVarb";
+import React from "react";
+import { LogicOperator } from "../../sharedWithServer/StateSolvers/SolveValueVarb/UserVarbValueSolver";
 
 const valueChildObj: Record<LogicOperator, string> = {
   "===": "=",

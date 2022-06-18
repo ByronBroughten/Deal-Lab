@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
-import { makeReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/makeGeneralReqs";
+import { makeReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/makeReqAndRes";
 import {
   areGuestAccessSectionsNext,
   isRegisterFormData,

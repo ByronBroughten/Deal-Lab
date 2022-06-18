@@ -5,7 +5,8 @@ import styled from "styled-components";
 import useOnOutsideClickRef from "../../modules/customHooks/useOnOutsideClickRef";
 import useToggleView from "../../modules/customHooks/useToggleView";
 import { auth } from "../../modules/services/authService";
-import { useAnalyzerContext } from "../../modules/usePropertyAnalyzer";
+import { FeSectionInfo } from "../../sharedWithServer/SectionsMeta/Info";
+import { useGetterSection } from "../../sharedWithServer/stateClassHooks/useGetterSection";
 import theme from "../../theme/Theme";
 import { StandardProps } from "../general/StandardProps";
 import NavBtn from "./NavBtn";
@@ -14,16 +15,18 @@ function BtnDiv({ children, className }: StandardProps) {
   return <div className={`NavUserMenu-btnDiv ${className}`}>{children}</div>;
 }
 
-export default function NavUserMenu() {
-  const { logout, analyzer } = useAnalyzerContext();
+export type NavUserMenuProps = {
+  logout: () => void;
+  feInfo: FeSectionInfo<"user">;
+};
+export function NavUserMenu({ feInfo, logout }: NavUserMenuProps) {
+  const user = useGetterSection(feInfo);
+
   const { viewIsOpen, toggleView, openView, closeView } = useToggleView({
     initValue: false,
   });
   const closeIfClickOutsideRef = useOnOutsideClickRef(closeView);
-  const userName = analyzer.singleSection("user").value("userName", "string");
-
-  const preceding = auth.isLoggedIn ? "Your " : "Guest ";
-
+  const userName = user.value("userName", "string");
   return (
     <Styled ref={closeIfClickOutsideRef}>
       {auth.isLoggedIn && (

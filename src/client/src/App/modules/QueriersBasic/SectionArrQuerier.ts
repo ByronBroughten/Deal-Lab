@@ -1,7 +1,9 @@
-import { FeSectionPack } from "../../sharedWithServer/Analyzer/FeSectionPack";
+import {
+  makeReq,
+  SectionPackArrReq,
+} from "../../sharedWithServer/apiQueriesShared/makeReqAndRes";
 import { SectionPackRaw } from "../../sharedWithServer/SectionPack/SectionPackRaw";
 import { SavableSectionName } from "../../sharedWithServer/SectionsMeta/relNameArrs/storeArrs";
-import { makeReq } from "./../../sharedWithServer/apiQueriesShared/makeGeneralReqs";
 import { ApiQuerierBase, ApiQuerierBaseProps } from "./Bases/ApiQuerierBase";
 
 interface SectionArrQuerierProps<SN extends SavableSectionName<"arrStore">>
@@ -19,14 +21,11 @@ export class SectionArrQuerier<
   }
 
   async replace(feSectionPackArr: SectionPackRaw<SN>[]): Promise<SN> {
-    const serverSectionPackArr = feSectionPackArr.map((rawPack) =>
-      FeSectionPack.rawFeToServer(rawPack, this.sectionName as any)
-    );
     const req = makeReq({
       dbStoreName: this.sectionName,
-      sectionPackArr: serverSectionPackArr,
-    } as const);
-    const res = await this.apiQueries.replaceSectionArr(req);
+      sectionPackArr: feSectionPackArr,
+    }) as SectionPackArrReq<SN>;
+    const res = await this.apiQueries.replaceSectionArr(req as any);
     return res.data.dbStoreName as SN;
   }
 }

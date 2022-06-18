@@ -1,9 +1,9 @@
 import { isEqual } from "lodash";
 import React from "react";
-import { VariableOption } from "../../sharedWithServer/Analyzer/methods/get/variableOptions";
 import { InEntityVarbInfo } from "../../sharedWithServer/SectionsMeta/baseSections/baseValues/entities";
 import { VarbStringInfo } from "../../sharedWithServer/SectionsMeta/Info";
 import { useVariableSections } from "../../sharedWithServer/stateClassHooks/useVariableOptions";
+import { VariableOption } from "../../sharedWithServer/StateEntityGetters/VariableGetterSections";
 import VarbAutoComplete from "./VarbAutoComplete";
 
 type Props = {

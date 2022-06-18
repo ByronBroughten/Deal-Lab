@@ -7,10 +7,11 @@ import { VarbInfo } from "../../sharedWithServer/SectionsMeta/Info";
 import theme from "../../theme/Theme";
 import MaterialDraftEditor from "./MaterialDraftEditor";
 import NumObjVarbSelector from "./NumObjEditor/NumObjVarbSelector";
-import useGetAdornments, {
+import {
   PropAdornments,
+  useGetAdornments,
 } from "./NumObjEditor/useGetAdornments";
-import { varSpanDecorator } from "./shared/VarSpan";
+import { varSpanDecorator } from "./shared/VarSpanNext";
 import { useDraftInputNext } from "./useDraftInputNext";
 
 const numericRegEx = /^[0-9.-]*$/;

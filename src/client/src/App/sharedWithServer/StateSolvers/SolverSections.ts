@@ -1,12 +1,16 @@
-import tsort from "../Analyzer/methods/solveVarbs/tsort/tsort";
+import { defaultMaker } from "../defaultMaker/defaultMaker";
+import { SectionPackRaw } from "../SectionPack/SectionPackRaw";
 import { VarbInfo } from "../SectionsMeta/Info";
 import { SpecificVarbInfo } from "../SectionsMeta/relSections/rel/relVarbInfoTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { GetterSections } from "../StateGetters/GetterSections";
 import { GetterVarb } from "../StateGetters/GetterVarb";
+import { StateSections } from "../StateSections/StateSectionsNext";
 import { Arr } from "../utils/Arr";
 import { OutVarbGetterVarb } from "./../StateInOutVarbs/OutVarbGetterVarb";
 import { SolverSectionsBase } from "./SolverBases/SolverSectionsBase";
+import { SolverSection } from "./SolverSection";
+import tsort from "./SolverSections/tsort/tsort";
 import { SolverVarb } from "./SolverVarb";
 
 type OutVarbMap = Record<string, Set<string>>;
@@ -96,5 +100,20 @@ export class SolverSections extends SolverSectionsBase {
       ...this.solverSectionsProps,
       ...feVarbInfo,
     });
+  }
+  static initSectionsFromDefaultMain(): StateSections {
+    const defaultMainPack = defaultMaker.make("main");
+    return this.initSolvedSectionsFromMainPack(defaultMainPack);
+  }
+  private static initSolvedSectionsFromMainPack(
+    sectionPack: SectionPackRaw<"main">
+  ): StateSections {
+    const sections = StateSections.initWithMain();
+    const solver = SolverSection.init({
+      ...sections.rawSectionList("main")[0],
+      sectionsShare: { sections },
+    });
+    solver.loadSelfSectionPackAndSolve(sectionPack);
+    return solver.sectionsShare.sections;
   }
 }

@@ -1,4 +1,4 @@
-import { FeSectionPack } from "../../sharedWithServer/Analyzer/FeSectionPack";
+import { FeSectionPack } from "../../sharedWithServer/SectionPack/FeSectionPack";
 import { ServerSectionPack } from "../../sharedWithServer/SectionPack/SectionPackRaw";
 import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
 import { SectionPackMaker } from "../../sharedWithServer/StatePackers.ts/SectionPackMaker";

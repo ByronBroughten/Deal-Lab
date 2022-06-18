@@ -1,6 +1,6 @@
 import { pick } from "lodash";
 import { z } from "zod";
-import { OutEntity } from "../../../Analyzer/StateSection/StateVarb/entities";
+import { OutEntity } from "../../../FeSections/FeSection/FeVarb/entities";
 import { reqMonNumber, reqMonString } from "../../../utils/mongoose";
 import { zNumber, zString } from "../../../utils/zod";
 import {

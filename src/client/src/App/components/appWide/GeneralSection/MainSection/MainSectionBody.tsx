@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import theme from "../../../../theme/Theme";
-import { listGroupCss } from "../../../AnalyzerMain/general/ListGroup";
+import { listGroupCss } from "../../ListGroup/ListGroupShared/ListGroupGeneric";
 
 export default function MainSectionBody({ children }: { children: any }) {
   return (

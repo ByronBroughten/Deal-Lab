@@ -1,36 +1,28 @@
 import React from "react";
 import styled from "styled-components";
-import { useAnalyzerContext } from "../../../../../modules/usePropertyAnalyzer";
-import { InfoS } from "../../../../../sharedWithServer/SectionsMeta/Info";
+import { useSetterSection } from "../../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import ccs from "../../../../../theme/cssChunks";
 import theme from "../../../../../theme/Theme";
 import XBtn from "../../../../appWide/Xbtn";
-import NumObjEditor from "../../../../inputs/NumObjEditor";
+import { NumObjEditorNext } from "../../../../inputs/NumObjEditorNext";
 
-type Props = { id: string; idx: number; unitNumber: number };
-const sectionName = "unit";
-export default function UnitItem({ id, unitNumber }: Props) {
-  const feInfo = { sectionName, id, idType: "feId" } as const;
-  const { analyzer, handleRemoveSection } = useAnalyzerContext();
-
-  const targetRentVarb = analyzer.switchedOngoingVarb("targetRent", feInfo);
+type Props = { feId: string; unitNumber: number };
+export function UnitItemNext({ feId, unitNumber }: Props) {
+  const unit = useSetterSection({ sectionName: "unit", feId });
   return (
-    <Styled className="UnitItem-root" key={id}>
+    <Styled className="UnitItem-root" key={feId}>
       <div className="UnitItem-viewable">
         <div className="UnitItem-titleRow title-row">
           <h6 className="title-text">Unit {unitNumber}</h6>
-          <XBtn
-            className="UnitItem-xBtn"
-            onClick={() => handleRemoveSection(feInfo)}
-          />
+          <XBtn className="UnitItem-xBtn" onClick={() => unit.removeSelf()} />
         </div>
-        <NumObjEditor
+        <NumObjEditorNext
           className="brs"
-          feVarbInfo={InfoS.feVarb("numBedrooms", feInfo)}
+          feVarbInfo={unit.varbInfo("numBedrooms")}
         />
-        <NumObjEditor
+        <NumObjEditorNext
           className="target-rent"
-          feVarbInfo={targetRentVarb.feVarbInfo}
+          feVarbInfo={unit.switchVarbInfo("targetRent", "ongoing")}
         />
       </div>
     </Styled>

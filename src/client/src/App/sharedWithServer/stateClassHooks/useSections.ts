@@ -1,7 +1,7 @@
 import React from "react";
 import { react } from "../../utils/react";
 import { StateSections } from "../StateSections/StateSectionsNext";
-import { SolverSection } from "../StateSolvers/SolverSection";
+import { SolverSections } from "../StateSolvers/SolverSections";
 import {
   SectionsStore,
   StateMissingFromStorageError,
@@ -42,7 +42,7 @@ function initializeSections(prePopulatedSections?: StateSections) {
       return SectionsStore.getStoredSections();
     } catch (err) {
       if (err instanceof StateMissingFromStorageError) {
-        return SolverSection.initSectionsFromDefaultMain();
+        return SolverSections.initSectionsFromDefaultMain();
       } else throw err;
     }
 }

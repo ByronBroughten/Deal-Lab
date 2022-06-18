@@ -1,4 +1,3 @@
-import StateSection from "../../Analyzer/StateSection";
 import { RemoveNotStrings, StrictSubType, SubType } from "../../utils/types";
 import { MergeUnionObj } from "../../utils/types/mergeUnionObj";
 import { ContextName, SimpleSectionName } from "../baseSections";
@@ -99,12 +98,6 @@ export type SelfAndDescendantIds<
   SN extends SimpleSectionName = SimpleSectionName
 > = {
   [S in SelfOrDescendantName<SN, "fe">]: string[];
-};
-export type DescendantSections<
-  SN extends SimpleSectionName,
-  CN extends ContextName
-> = {
-  [S in DescendantName<SN, CN>]: StateSection<S>[];
 };
 
 function _testDescendantName() {

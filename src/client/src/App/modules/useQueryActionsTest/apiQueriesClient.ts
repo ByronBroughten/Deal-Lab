@@ -12,7 +12,7 @@ import {
   isLoginHeaders,
   isLoginUserNext,
 } from "../../sharedWithServer/apiQueriesShared/login";
-import { makeRes } from "../../sharedWithServer/apiQueriesShared/makeGeneralReqs";
+import { makeRes } from "../../sharedWithServer/apiQueriesShared/makeReqAndRes";
 import { Obj } from "../../sharedWithServer/utils/Obj";
 import { StrictOmit } from "../../sharedWithServer/utils/types";
 import https from "../services/httpService";

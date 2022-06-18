@@ -7,7 +7,7 @@ import {
   SectionPackArrReq,
   SectionPackReq,
   SectionPackRes,
-} from "./makeGeneralReqs";
+} from "./makeReqAndRes";
 import { RegisterQueryObjects } from "./register";
 
 export type ApiQueryName = keyof ApiHttpObjects;
