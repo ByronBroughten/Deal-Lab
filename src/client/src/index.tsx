@@ -8,23 +8,15 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-// to get rid of analyzer, I must first get rid of everything
-// it touches.
-
-// here's the thing. I don't want to implement ListManager yet
-// but I want to clear away analyzer.
-// I will try to quarantine all things dependent on Analyzer into one folder
-// then I will make a branch for reference later.
-// then I will essentially nuke that folder in this app
-
-// - cleanse the app of analyzer...?
-// - remove parentInfo from sections.
+// - remove parentInfo from each section.
 // - replace propertyIndex ect with "property"
 // - let main have a parent ("omni parent", or "main").
 //   - Set off alarm bells when
 //     a parent is accessed but the info is "no parent"
 // - restructure the app sections so that rel parent and child suffice.
 // - think about implementing rel parent such that the sectionName is negotiable
+// - get rid of "Static"
+// reimplement tables like propertyTableStore: { table: etc. }
 
 // Write Tests
 // - the rest of sectionSetter and varbSetter tests

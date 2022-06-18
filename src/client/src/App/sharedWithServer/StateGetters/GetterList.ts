@@ -59,7 +59,7 @@ export class GetterList<SN extends SectionName> extends GetterListBase<SN> {
       else throw error;
     }
   }
-  getByFeIds(feIds: string[]): GetterSection<SN>[] {
+  filterByFeIds(feIds: string[]): GetterSection<SN>[] {
     const rawSections = this.stateList.filter(({ feId }) =>
       feIds.includes(feId)
     );

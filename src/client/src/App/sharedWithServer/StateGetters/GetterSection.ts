@@ -174,7 +174,7 @@ export class GetterSection<
   childrenOldToYoung<CN extends ChildName<SN>>(
     childName: CN
   ): GetterSection<CN>[] {
-    return this.childList(childName).getByFeIds(this.childFeIds(childName));
+    return this.childList(childName).filterByFeIds(this.childFeIds(childName));
   }
   onlyChild<CN extends ChildName<SN>>(childName: CN): GetterSection<CN> {
     return this.childList(childName).oneAndOnly;
@@ -186,7 +186,7 @@ export class GetterSection<
     sectionName,
     feId,
   }: FeSectionInfo<CN>): boolean {
-    return this.childList(sectionName).hasByFeId(feId);
+    return this.childFeIds(sectionName).includes(feId);
   }
   hasChildByDbInfo<CN extends ChildName<SN>>({
     sectionName,
@@ -353,8 +353,24 @@ export class GetterSection<
       throw new Error(`${childName} is not a child of ${this.sectionName}`);
     } else return true;
   }
+  get parent(): GetterSection<ParentNameSafe<SN>> {
+    const { parentNames } = this.meta.core;
+    for (const parentName of parentNames) {
+      const parentList = new GetterList({
+        sectionsShare: this.sectionsShare,
+        sectionName: parentName,
+      });
+
+      for (const parent of parentList.arr) {
+        if (parent.hasChild(this.feInfo as any)) {
+          return parent as any;
+        }
+      }
+    }
+    throw new Error(`parent not found for ${this.sectionName}.${this.feId}`);
+  }
   get parentInfo(): FeParentInfo<SN> {
-    return this.raw.parentInfo;
+    return this.parent.feInfo;
   }
   get parentName(): ParentName<SN> {
     return this.parentInfo.sectionName;
@@ -364,10 +380,6 @@ export class GetterSection<
     if (parentInfo.sectionName === noParentWarning)
       throw new Error("This section doesn't have a parent.");
     return parentInfo as FeParentInfoSafe<SN>;
-  }
-  get parent(): GetterSection<ParentNameSafe<SN>> {
-    const { parentInfoSafe } = this;
-    return this.getterSections.section(parentInfoSafe);
   }
   nearestAnscestor<S extends SectionName>(anscestorName: S): GetterSection<S> {
     let section = this as any as GetterSection;

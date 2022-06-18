@@ -90,8 +90,14 @@ export class SolverSection<
   removeChildAndSolve<CN extends ChildName<SN>>(
     feInfo: FeSectionInfo<CN>
   ): void {
-    const child = this.solverSection(feInfo);
-    child.removeSelfAndSolve();
+    if (this.get.hasChild(feInfo)) {
+      const child = this.solverSection(feInfo);
+      child.removeSelfAndSolve();
+    } else {
+      throw new Error(
+        `Section ${this.get.sectionName}.${this.get.feId} does not have child ${feInfo.sectionName}.${feInfo.feId}.`
+      );
+    }
   }
   resetToDefaultAndSolve(): void {
     this.combo.resetToDefaultAndExtractIds();

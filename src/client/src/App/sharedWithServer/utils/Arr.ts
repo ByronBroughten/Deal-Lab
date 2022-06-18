@@ -37,7 +37,9 @@ export const Arr = {
   },
   rmFirstMatchCloneOrThrow<T extends any>(arr: T[], value: T): T[] {
     const index = arr.indexOf(value);
-    if (index < 0) throw new Error(`No value in the array matches "${value}".`);
+    if (index < 0) {
+      throw new Error(`No value in the array matches "${value}".`);
+    }
     const nextArr = [...arr];
     nextArr.splice(index, 1);
     return nextArr;
