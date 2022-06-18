@@ -36,9 +36,17 @@ export function makeRelSections() {
           childNames: ["column", "tableRow"] as const,
         }
       ),
-      ...relSection.base("both", "propertyTableStore", "Property Table Store", {
-        _typeUniformity: rel.varb.string(),
-      }),
+      ...relSection.base(
+        "both",
+        "propertyTableStore",
+        "Property Table Store",
+        {
+          _typeUniformity: rel.varb.string(),
+        },
+        {
+          childNames: ["table"],
+        } as const
+      ),
       ...rel.section.sectionTableNext("analysisTable", "Deal Table", "deal"),
       ...rel.section.sectionTableNext("loanTable", "Loan Table", "loan"),
       ...rel.section.sectionTableNext("mgmtTable", "Management Table", "mgmt"),
@@ -70,6 +78,7 @@ export function makeRelSections() {
 
             "deal",
 
+            "propertyTableStore",
             "propertyTable",
             "loanTable",
             "mgmtTable",
@@ -267,7 +276,7 @@ export type RelSections = ReturnType<typeof makeRelSections>;
 
 type PreGeneralRelSections = {
   [SC in ContextName]: {
-    [SN in SimpleSectionName<SC>]: GeneralRelSection;
+    [SN in SimpleSectionName]: GeneralRelSection;
   };
 };
 

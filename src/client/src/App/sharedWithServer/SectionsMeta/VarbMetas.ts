@@ -1,5 +1,5 @@
 import { Obj } from "../utils/Obj";
-import { AnySectionName } from "./baseSections";
+import { SimpleSectionName } from "./baseSections";
 import { GeneralRelVarbs } from "./relSections/rel/relVarbs";
 import { VarbMeta, VarbMetaCore } from "./VarbMeta";
 
@@ -32,7 +32,7 @@ export class VarbMetas {
   }
   static initFromRelVarbs(
     relVarbs: GeneralRelVarbs,
-    sectionName: AnySectionName
+    sectionName: SimpleSectionName
   ): VarbMetas {
     const core: VarbMetasCore = {};
     for (const [varbName, relVarb] of Object.entries(relVarbs)) {

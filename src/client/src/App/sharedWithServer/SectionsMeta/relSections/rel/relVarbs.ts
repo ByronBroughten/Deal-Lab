@@ -33,12 +33,12 @@ import {
 export type GeneralRelVarbs = Record<string, RelVarb>;
 export type RelVarbs<
   SC extends ContextName,
-  SN extends SimpleSectionName<SC>
+  SN extends SimpleSectionName
 > = Record<SectionVarbName<SC, SN>, RelVarb>;
 
 type RelVarbsByType<
   SC extends ContextName,
-  SN extends SimpleSectionName<SC>,
+  SN extends SimpleSectionName,
   VLN extends ValueName
 > = Pick<RelVarbs<SC, SN>, SectionVarbNameByType<SC, SN, VLN>>;
 

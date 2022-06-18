@@ -1,6 +1,6 @@
 import { cloneDeep, pick } from "lodash";
 import { NumObjUnit } from "../StateSolvers/SolveValueVarb/solveText";
-import { AnySectionName } from "./baseSections";
+import { SimpleSectionName } from "./baseSections";
 import { valueMeta } from "./baseSections/baseValues";
 import { NumObj } from "./baseSections/baseValues/NumObj";
 import { StateValue } from "./baseSections/baseValues/StateValueTypes";
@@ -71,7 +71,7 @@ function inSwitchPropsToInfos(inSwitchProps: UpdateSwitchProp[]) {
 
 export interface VarbMetaProps {
   varbName: string;
-  sectionName: AnySectionName;
+  sectionName: SimpleSectionName;
   inDefaultInfos: InRelVarbInfo[];
   InSwitchUpdatePacks: InSwitchUpdatePack[];
   outUpdatePacks: OutUpdatePack[];
@@ -183,7 +183,7 @@ export class VarbMeta {
 
   static initCore(
     relVarb: RelVarb,
-    sectionName: AnySectionName,
+    sectionName: SimpleSectionName,
     varbName: string
   ): VarbMetaCore {
     return {

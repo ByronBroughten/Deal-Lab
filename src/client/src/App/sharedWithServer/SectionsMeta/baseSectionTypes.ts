@@ -34,18 +34,18 @@ export type SectionFinder<S extends SimpleSectionName = SimpleSectionName> =
 
 type BaseSectionVarbs<
   SC extends ContextName,
-  SN extends SimpleSectionName<SC>,
+  SN extends SimpleSectionName,
   BaseSection = BaseSections[SC][SN]
 > = BaseSection["varbSchemas" & keyof BaseSection];
 
 export type SectionVarbName<
   SC extends ContextName,
-  SN extends SimpleSectionName<SC>
+  SN extends SimpleSectionName
 > = keyof BaseSectionVarbs<SC, SN>;
 
 export type SectionVarbNameByType<
   SC extends ContextName,
-  SN extends SimpleSectionName<SC>,
+  SN extends SimpleSectionName,
   VLN extends ValueName
 > = keyof SubType<BaseSectionVarbs<SC, SN>, VLN>;
 

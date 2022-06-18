@@ -1,7 +1,6 @@
 import { Obj } from "../../../utils/Obj";
 import { Merge } from "../../../utils/Obj/merge";
 import {
-  AnySectionName,
   BaseSections,
   baseSections,
   ContextName,
@@ -17,7 +16,7 @@ import { GeneralRelVarbs, RelVarbs, relVarbs } from "./relVarbs";
 
 export type GeneralRelSection = {
   relVarbs: GeneralRelVarbs;
-  childNames: readonly AnySectionName[];
+  childNames: readonly SimpleSectionName[];
 
   displayName: string;
   tableIndexName: BaseName | null;
@@ -26,25 +25,22 @@ export type GeneralRelSection = {
   rowIndexName: SimpleDbStoreName | null;
   arrStoreName: SimpleDbStoreName | null;
 };
-type FullOptions<
-  SC extends ContextName,
-  SN extends SimpleSectionName<SC>
-> = Merge<
+type FullOptions<SC extends ContextName, SN extends SimpleSectionName> = Merge<
   GeneralRelSection,
   {
     relVarbs: RelVarbs<SC, SN>;
-    childNames: readonly SimpleSectionName<SC>[];
+    childNames: readonly SimpleSectionName[];
   }
 >;
 
 export type RelSectionOptions<
   SC extends ContextName,
-  SN extends SimpleSectionName<SC>
+  SN extends SimpleSectionName
 > = Partial<FullOptions<SC, SN>>;
 
 export type RelSection<
   SC extends ContextName,
-  SN extends SimpleSectionName<SC>,
+  SN extends SimpleSectionName,
   D extends string,
   RVS extends RelVarbs<SC, SN>,
   O extends RelSectionOptions<SC, SN> = {}
@@ -53,14 +49,14 @@ export type RelSection<
 type DefaultRelSection<
   D extends string,
   SC extends ContextName,
-  SN extends SimpleSectionName<SC>,
+  SN extends SimpleSectionName,
   RVS extends RelVarbs<SC, SN>
 > = {
   sectionContext: SC;
   sectionName: SN;
   displayName: D;
   relVarbs: RVS;
-  childNames: [];
+  childNames: readonly [];
 
   tableIndexName: null;
 
@@ -81,7 +77,7 @@ export const relSection = {
   default<
     D extends string,
     SC extends ContextName,
-    SN extends SimpleSectionName<SC>,
+    SN extends SimpleSectionName,
     RVS extends RelVarbs<SC, SN>
   >(
     displayName: D,
@@ -103,7 +99,7 @@ export const relSection = {
   },
   base<
     SCB extends SectionContextOrBoth,
-    SN extends SimpleSectionName<ExtractSectionContext<SCB>>,
+    SN extends SimpleSectionName,
     D extends string,
     PVS extends RelVarbs<ExtractSectionContext<SCB>, SN>,
     O extends RelSectionOptions<ExtractSectionContext<SCB>, SN> = {}

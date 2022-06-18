@@ -74,6 +74,7 @@ export const feGuestAccessNames = Arr.exclude(dbStoreNames, [
   "property",
   "loan",
   "mgmt",
+  "table",
 ] as const);
 
 export const loadOnLoginNames = Arr.exclude(dbStoreNames, [
@@ -81,6 +82,7 @@ export const loadOnLoginNames = Arr.exclude(dbStoreNames, [
   "property",
   "loan",
   "mgmt",
+  "table",
 ] as const);
 
 type _LoadOnLoginTest = DbStoreNameCheck<typeof loadOnLoginNames[number]>;

@@ -153,8 +153,8 @@ export type HasChildSectionName<SC extends ContextName> =
 
 export type ChildOrNull<
   SC extends ContextName,
-  SN extends SimpleSectionName<SC>,
-  CN extends SimpleSectionName<SC>
+  SN extends SimpleSectionName,
+  CN extends SimpleSectionName
 > = Extract<
   ChildNameArr<SC, SN>[number & keyof ChildNameArr<SC, SN>],
   CN

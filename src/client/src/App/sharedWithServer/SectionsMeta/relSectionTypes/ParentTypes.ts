@@ -18,14 +18,14 @@ import { ChildOrNull } from "./ChildTypes";
 
 type ParentToChildOrNullMap<
   SC extends ContextName,
-  CN extends SimpleSectionName<SC>
+  CN extends SimpleSectionName
 > = {
-  [SN in SimpleSectionName<SC>]: ChildOrNull<SC, SN, CN>;
+  [SN in SimpleSectionName]: ChildOrNull<SC, SN, CN>;
 };
 
 type ParentNameOrNever<
   SC extends ContextName,
-  SN extends SimpleSectionName<SC>
+  SN extends SimpleSectionName
 > = keyof SubType<ParentToChildOrNullMap<SC, SN>, SN>;
 function _testParentNameOrNever() {
   type CellParent = ParentNameOrNever<"fe", "cell">;
@@ -35,7 +35,7 @@ function _testParentNameOrNever() {
 }
 
 type SectionToParentsOrNever<SC extends ContextName> = {
-  [SN in SimpleSectionName<SC>]: ParentNameOrNever<SC, SN>;
+  [SN in SimpleSectionName]: ParentNameOrNever<SC, SN>;
 };
 
 // this is for consistency in sectionMeta
@@ -104,7 +104,7 @@ function _testParentName() {
 }
 
 export type ParentFeInfo<
-  SN extends SimpleSectionName<SC>,
+  SN extends SimpleSectionName,
   SC extends ContextName = "fe"
 > = FeNameInfo<ParentName<SN, SC>>;
 

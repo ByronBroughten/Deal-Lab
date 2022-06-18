@@ -112,7 +112,7 @@ function makeBaseNameArrsForContext<SC extends ContextName>(
   return {
     ...makeSingleSectionNameArrs(sectionContext),
     dbStoreNext: dbStoreNames,
-    all: Obj.keys(baseSectionsOfContext) as SimpleSectionName<SC>[],
+    all: Obj.keys(baseSectionsOfContext) as SimpleSectionName[],
 
     // booleans
     loadOnLogin: loadOnLoginNames,
