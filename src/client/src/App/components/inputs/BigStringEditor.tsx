@@ -13,7 +13,7 @@ interface Props {
   placeholder?: string;
 }
 
-export function BigStringEditorNext({
+export function BigStringEditor({
   feVarbInfo,
   className,
   themeName,
@@ -43,7 +43,7 @@ export function BigStringEditorNext({
 
 const Styled = styled(MaterialDraftEditor)`
   .DraftEditor-root {
-    min-width: 50px;
+    min-width: 100px;
     font-size: 1.1rem;
   }
 `;

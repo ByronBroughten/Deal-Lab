@@ -11,7 +11,7 @@ import { GetterSection } from "../../../../sharedWithServer/StateGetters/GetterS
 import ccs from "../../../../theme/cssChunks";
 import theme, { ThemeName } from "../../../../theme/Theme";
 import PlainIconBtn from "../../../general/PlainIconBtn";
-import { BigStringEditorNext } from "../../../inputs/BigStringEditorNext";
+import { BigStringEditor } from "../../../inputs/BigStringEditor";
 import { ListMenu } from "../../AdditiveListNext/ListMenu";
 import { useOpenWidth } from "../../SectionTitleRow";
 import { VarbListTable } from "./VarbListGeneric/VarbListTable";
@@ -71,7 +71,7 @@ export function VarbListGeneric<
       <div className="AdditiveList-viewable viewable">
         <div className="AdditiveList-titleRow">
           <div className="AdditiveList-titleRowLeft">
-            <BigStringEditorNext
+            <BigStringEditor
               {...{
                 feVarbInfo: titleVarb.get.feVarbInfo,
                 placeholder: "List Title",

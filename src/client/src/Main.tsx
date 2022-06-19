@@ -2,8 +2,8 @@ import { Route, Routes } from "react-router-dom";
 import styled from "styled-components";
 import { ActiveDeal } from "./App/components/ActiveDeal";
 import NotFound from "./App/components/general/NotFound";
-import IndexTable from "./App/components/IndexTable";
 import NavBar from "./App/components/NavBar";
+import { TableStore } from "./App/components/TableStore";
 import { auth } from "./App/modules/services/authService";
 import { useSetterSection } from "./App/sharedWithServer/stateClassHooks/useSetterSection";
 import theme from "./App/theme/Theme";
@@ -15,7 +15,7 @@ export function Main() {
     main.resetToDefault();
   };
   const activeDealId = main.get.onlyChild("deal").feId;
-  const dealTableStore = main.get.onlyChild("dealTableStore");
+  const tableStoreInfo = main.get.onlyChild("dealTableStore").feInfo;
   return (
     <Styled className="App-root">
       <NavBar
@@ -26,17 +26,7 @@ export function Main() {
       />
       <div className="NavSpaceDiv-root"></div>
       <Routes>
-        <Route
-          path="/deals"
-          element={
-            <IndexTable
-              {...{
-                tableId: dealTableStore.onlyChild("table").feId,
-                indexName: "deal",
-              }}
-            />
-          }
-        />
+        <Route path="/deals" element={<TableStore {...tableStoreInfo} />} />
         {/* <Route path="/variables" element={<UserVarbsManager/>} /> */}
         {/* <Route path="/lists" element={<UserListsManager/>} /> */}
         <Route path="/not-found" element={<NotFound />} />

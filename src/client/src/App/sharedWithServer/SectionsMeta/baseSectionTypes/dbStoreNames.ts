@@ -49,7 +49,12 @@ export const dbStoreNames = [
   "property",
   "mgmt",
   "loan",
-  "table",
+  // "table",
+
+  "propertyTableStore",
+  "dealTableStore",
+  "loanTableStore",
+  "mgmtTableStore",
 
   "userOutputList",
   "userVarbList",
@@ -62,18 +67,15 @@ type TestDbStoreNames<DS extends readonly SimpleSectionName[]> = DS;
 type _Test1 = TestDbStoreNames<typeof dbStoreNames>;
 
 type DbStoreNameCheck<DS extends SimpleDbStoreName> = DS;
-export const feGuestAccessNames = Arr.exclude(dbStoreNames, [
-  // for now, this determines which sections the dbUser starts having populated.
-  "user",
-  "table",
+export const feGuestAccessNames = Arr.extract(dbStoreNames, [
+  // this determines which sections the dbUser has populated from when the user is a guest.
+  "propertyTableStore",
+  "dealTableStore",
+  "loanTableStore",
+  "mgmtTableStore",
+  "deal",
 ] as const);
 
-export const loadOnLoginNames = Arr.exclude(dbStoreNames, [
-  "deal",
-  "property",
-  "loan",
-  "mgmt",
-  "table",
-] as const);
+export const loadOnLoginNames = Arr.exclude(dbStoreNames, ["main"] as const);
 
 type _LoadOnLoginTest = DbStoreNameCheck<typeof loadOnLoginNames[number]>;

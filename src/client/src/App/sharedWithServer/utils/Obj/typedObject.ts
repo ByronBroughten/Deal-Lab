@@ -15,9 +15,10 @@ export function NextObjEntries<O extends object>(obj: O): NextEntries<Full<O>> {
   return Object.entries(obj) as any;
 }
 type Keys<T> = (keyof T)[];
-export function ObjectKeys<O extends object>(obj: O): (keyof O)[] {
+export function ObjectKeys<O extends object>(obj: O): (keyof O & string)[] {
   return Object.keys(obj) as any;
 }
+
 export function NextObjKeys<O extends object>(obj: O): Keys<Full<O>> {
   return Object.keys(obj) as any;
 }

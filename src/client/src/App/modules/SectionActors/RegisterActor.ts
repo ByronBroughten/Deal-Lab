@@ -1,5 +1,6 @@
 import { NextReq } from "../../sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import { RegisterReqMaker } from "../../sharedWithServer/ReqMakers/RegisterReqMaker";
+import { SetterSection } from "../../sharedWithServer/StateSetters/SetterSection";
 import { SetterVarb } from "../../sharedWithServer/StateSetters/SetterVarb";
 import { StrictOmit } from "../../sharedWithServer/utils/types";
 import { SectionActorBase, SectionActorBaseProps } from "./SectionActorBase";
@@ -29,8 +30,12 @@ export class RegisterActor extends SectionActorBase<"register"> {
   get registerReq(): NextReq<"register"> {
     return this.reqMaker.makeReq();
   }
+  get section() {
+    return new SetterSection(this.sectionActorBaseProps);
+  }
   async register(): Promise<void> {
     const res = await this.apiQueries.register(this.registerReq);
     this.loginSetter.setLogin(res);
+    this.section.resetToDefault();
   }
 }

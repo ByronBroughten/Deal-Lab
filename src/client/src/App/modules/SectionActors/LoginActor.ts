@@ -1,6 +1,7 @@
 import { NextReq } from "../../sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import { makeReq } from "../../sharedWithServer/apiQueriesShared/makeReqAndRes";
 import { GetterVarbs } from "../../sharedWithServer/StateGetters/GetterVarbs";
+import { SetterSection } from "../../sharedWithServer/StateSetters/SetterSection";
 import { SetterVarb } from "../../sharedWithServer/StateSetters/SetterVarb";
 import { StrictOmit } from "../../sharedWithServer/utils/types";
 import { SectionActorBase, SectionActorBaseProps } from "./SectionActorBase";
@@ -22,6 +23,9 @@ export class LoginActor extends SectionActorBase<"login"> {
       varbName,
     });
   }
+  get section() {
+    return new SetterSection(this.sectionActorBaseProps);
+  }
   get varbs() {
     return new GetterVarbs(this.sectionActorBaseProps);
   }
@@ -39,5 +43,6 @@ export class LoginActor extends SectionActorBase<"login"> {
   async login() {
     const res = await this.apiQueries.login(this.loginReq);
     this.loginSetter.setLogin(res);
+    this.section.resetToDefault();
   }
 }

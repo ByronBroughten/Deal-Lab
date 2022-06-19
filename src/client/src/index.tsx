@@ -8,7 +8,7 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-// Fix RegisterReqMaker
+// implement the new way of loading from the db.
 
 // get rid of all duplicate sectionNames (for the lists, etc)
 // - you will need to add sections to differentiate the

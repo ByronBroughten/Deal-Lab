@@ -6,6 +6,10 @@ import {
   ContextName,
   SimpleSectionName,
 } from "./baseSections";
+import {
+  allTableSourceParams,
+  TableSourceParams,
+} from "./relNameArrs/tableStoreArrs";
 import { relSections, RelSections } from "./relSections";
 import {
   ChildIdArrsNarrow,
@@ -21,14 +25,8 @@ import { VarbMetas } from "./VarbMetas";
 type SectionMetaExtra<CN extends ContextName, SN extends SimpleSectionName> = {
   varbMetas: VarbMetas;
   parentNames: SectionToParentArrs<CN>[SN];
-  // indexSourceName: IndexToSourceNamesParam[SN];
+  tableSource: TableSourceParams[SN];
 };
-
-function getParentNamesParam<SN extends SimpleSectionName>(
-  sectionName: SN
-): SectionToParentArrs<"fe">[SN] {
-  return sectionParentNames["fe"][sectionName] as any;
-}
 
 export type SectionMetaCore<SN extends SimpleSectionName> =
   RelSections["fe"][SN] & BaseSections["fe"][SN] & SectionMetaExtra<"fe", SN>;
@@ -84,7 +82,18 @@ export class SectionMeta<SN extends SimpleSectionName> {
       ...relSection,
       ...baseSection,
       varbMetas: VarbMetas.initFromRelVarbs(relSection.relVarbs, sectionName),
-      parentNames: getParentNamesParam(sectionName),
+      parentNames: this.getParentNamesParam(sectionName),
+      tableSource: this.getTableSourceParam(sectionName),
     });
+  }
+  private static getParentNamesParam<SN extends SimpleSectionName>(
+    sectionName: SN
+  ): SectionToParentArrs<"fe">[SN] {
+    return sectionParentNames["fe"][sectionName] as any;
+  }
+  private static getTableSourceParam<SN extends SimpleSectionName>(
+    sectionName: SN
+  ): TableSourceParams[SN] {
+    return allTableSourceParams[sectionName];
   }
 }

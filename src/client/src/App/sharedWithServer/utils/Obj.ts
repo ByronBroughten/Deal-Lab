@@ -43,7 +43,18 @@ type UpdateObjProps<O, K extends keyof O> = {
   val: O[K];
 };
 
+type StringObj = { [key: string]: string };
+type SwapKeysAndValues<O extends { [key: string]: string }> = {
+  [K in keyof O as O[K]]: K;
+};
+
 export const Obj = {
+  swapKeysAndValues<O extends StringObj>(obj: O): SwapKeysAndValues<O> {
+    return this.keys(obj).reduce((swapObj, key) => {
+      swapObj[obj[key]] = key;
+      return swapObj;
+    }, {} as StringObj) as SwapKeysAndValues<O>;
+  },
   updateIfPropExists<O, K extends keyof O>({
     obj,
     key,

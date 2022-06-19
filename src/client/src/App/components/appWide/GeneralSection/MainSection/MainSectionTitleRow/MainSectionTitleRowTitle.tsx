@@ -1,10 +1,10 @@
 import { FeInfoByType } from "../../../../../sharedWithServer/SectionsMeta/Info";
-import { BigStringEditorNext } from "../../../../inputs/BigStringEditorNext";
+import { BigStringEditor } from "../../../../inputs/BigStringEditor";
 
 type Props = { feInfo: FeInfoByType<"hasRowIndex"> };
 export function MainSectionTitleRowTitleNext({ feInfo }: Props) {
   return (
-    <BigStringEditorNext
+    <BigStringEditor
       {...{
         feVarbInfo: { ...feInfo, varbName: "title" },
         label: "Title",

@@ -216,6 +216,11 @@ export const baseSections = {
 export const simpleSectionNames = Obj.keys(baseSections.fe);
 export type SimpleSectionName = typeof simpleSectionNames[number];
 
+export const allNull = simpleSectionNames.reduce((allNull, sectionName) => {
+  allNull[sectionName] = null;
+  return allNull;
+}, {} as Record<SimpleSectionName, null>);
+
 export type ApiAccessStatus = "readonly" | "basicStorage" | "fullStorage";
 
 type FeSectionName = keyof BaseSections["fe"];

@@ -1,54 +1,54 @@
 import React from "react";
 import styled from "styled-components";
-import { useTableActor } from "../modules/sectionActorHooks/useTableActor";
+import { useTableStoreActor } from "../modules/sectionActorHooks/useTableStoreActor";
 import { auth } from "../modules/services/authService";
+import { FeSectionInfo } from "../sharedWithServer/SectionsMeta/Info";
 import { SectionName } from "../sharedWithServer/SectionsMeta/SectionName";
 import { VariableOption } from "../sharedWithServer/StateEntityGetters/VariableGetterSections";
 import theme from "../theme/Theme";
 import useHowMany from "./appWide/customHooks/useHowMany";
-import ColumnHeader from "./IndexTable/ColumnHeader";
-import IndexRow from "./IndexTable/IndexRow";
 import { MaterialStringEditorNext } from "./inputs/MaterialStringEditorNext";
 import VarbAutoComplete from "./inputs/VarbAutoComplete";
+import ColumnHeader from "./TableStore/ColumnHeader";
+import IndexRow from "./TableStore/IndexRow";
 
-interface Props {
-  indexName: SectionName<"tableSource">;
-  tableId: string;
-}
-export default function IndexTable({ indexName, tableId }: Props) {
-  const table = useTableActor(tableId);
+export function TableStore<SN extends SectionName<"tableStore">>(
+  feInfo: FeSectionInfo<SN>
+) {
+  const tableStore = useTableStoreActor(feInfo);
+  const table = tableStore.tableActor;
   const { filteredRows } = table;
   const { isAtLeastOne, areNone } = useHowMany(filteredRows);
   return (
-    <Styled className="IndexTable-root">
+    <Styled className="TableStore-root">
       {!auth.isLoggedIn && (
-        <div className="IndexTable-notLoggedIn">
+        <div className="TableStore-notLoggedIn">
           To view saved analyses, create an account or login.
         </div>
       )}
       {auth.isLoggedIn && areNone && (
-        <div className="IndexTable-areNone">None</div>
+        <div className="TableStore-areNone">None</div>
       )}
       {auth.isLoggedIn && isAtLeastOne && (
-        <div className="IndexTable-viewable">
-          <div className="IndexTable-titleRow">
-            <h5 className="IndexTable-title IndexTable-controlRowItem">
+        <div className="TableStore-viewable">
+          <div className="TableStore-titleRow">
+            <h5 className="TableStore-title TableStore-controlRowItem">
               {"Deals"}
             </h5>
-            <div className="IndexTable-controlRow">
+            <div className="TableStore-controlRow">
               <MaterialStringEditorNext
                 label="Filter by title"
-                className="IndexTable-filterEditor IndexTable-controlRowItem"
+                className="TableStore-filterEditor TableStore-controlRowItem"
                 feVarbInfo={table.get.varbInfo("titleFilter")}
               />
               <VarbAutoComplete
                 onSelect={(o: VariableOption) => table.addColumn(o.varbInfo)}
                 placeholder="Add column"
-                className="IndexTable-addColumnSelector IndexTable-controlRowItem"
+                className="TableStore-addColumnSelector TableStore-controlRowItem"
               />
             </div>
           </div>
-          <table className="IndexTable-table">
+          <table className="TableStore-table">
             <thead>
               <tr>
                 <ColumnHeader
@@ -77,7 +77,11 @@ export default function IndexTable({ indexName, tableId }: Props) {
             </thead>
             <tbody>
               {filteredRows.map(({ feId }) => {
-                return <IndexRow {...{ feId, indexName }} />;
+                return (
+                  <IndexRow
+                    {...{ feId, indexName: tableStore.tableSourceName }}
+                  />
+                );
               })}
             </tbody>
           </table>
@@ -93,47 +97,47 @@ const Styled = styled.div`
   overflow: auto;
   align-items: center;
 
-  .IndexTable-addColumnSelector {
+  .TableStore-addColumnSelector {
     .MuiInputBase-root {
       min-width: 130px;
     }
   }
 
-  .IndexTable-title {
+  .TableStore-title {
     font-size: 2rem;
     color: ${theme["gray-700"]};
   }
-  .IndexTable-titleRow {
+  .TableStore-titleRow {
     display: flex;
     align-items: center;
   }
-  .IndexTable-controlRow {
+  .TableStore-controlRow {
     display: flex;
     align-items: flex-start;
   }
 
-  .IndexTable-trashBtn {
+  .TableStore-trashBtn {
     width: 1.1rem;
     height: 1.1rem;
   }
 
-  .IndexTable-filterEditor {
+  .TableStore-filterEditor {
     .DraftTextField-root {
       min-width: 100px;
     }
   }
-  .IndexTable-controlRowItem {
+  .TableStore-controlRowItem {
     margin: ${theme.s2};
   }
 
-  .IndexTable-tableCell {
+  .TableStore-tableCell {
     vertical-align: middle;
   }
-  .IndexTable-trashBtn {
+  .TableStore-trashBtn {
     visibility: hidden;
   }
 
-  .IndexTable-viewable {
+  .TableStore-viewable {
     border-radius: ${theme.br1};
     border: 2px solid ${theme.deal.border};
     padding: ${theme.s2} 0 0 0;
@@ -141,10 +145,10 @@ const Styled = styled.div`
     background: ${theme.deal.light};
   }
 
-  .IndexTable-thContent {
+  .TableStore-thContent {
     display: flex;
   }
-  .IndexTable-columnArrow {
+  .TableStore-columnArrow {
     margin-left: ${theme.s1};
   }
 
@@ -178,7 +182,7 @@ const Styled = styled.div`
     tr {
       :hover {
         background: ${theme.deal.main};
-        .IndexTable-trashBtn {
+        .TableStore-trashBtn {
           visibility: visible;
         }
       }
@@ -198,8 +202,8 @@ const Styled = styled.div`
     vertical-align: top;
   }
 
-  .IndexTable-notLoggedIn,
-  .IndexTable-areNone {
+  .TableStore-notLoggedIn,
+  .TableStore-areNone {
     display: flex;
     justify-content: center;
   }

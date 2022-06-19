@@ -1,13 +1,11 @@
 // make TableActor
 
-import { ServerSectionPack } from "../../sharedWithServer/SectionPack/SectionPackRaw";
 import { InEntityVarbInfo } from "../../sharedWithServer/SectionsMeta/baseSections/baseValues/entities";
 import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
 import { SectionPackMaker } from "../../sharedWithServer/StatePackers.ts/SectionPackMaker";
 import { SetterSection } from "../../sharedWithServer/StateSetters/SetterSection";
 import { SetterTableNext } from "../../sharedWithServer/StateSetters/SetterTableNext";
 import { StrictOmit } from "../../sharedWithServer/utils/types";
-import { SectionQuerier } from "../QueriersBasic/SectionQuerier";
 import { SectionActorBase, SectionActorBaseProps } from "./SectionActorBase";
 
 class GetterColumn extends GetterSection<"column"> {
@@ -22,31 +20,39 @@ class GetterColumn extends GetterSection<"column"> {
   }
 }
 
+// table actor and tableStoreActor will be very similar
+// TableStoreActor
+
 interface TableActorProps
-  extends StrictOmit<SectionActorBaseProps<"table">, "sectionName"> {}
+  extends StrictOmit<SectionActorBaseProps<"table">, "sectionName"> {
+  sendTable: () => void;
+}
 export class TableActor extends SectionActorBase<"table"> {
-  constructor(props: TableActorProps) {
+  sendTable: () => void;
+  constructor({ sendTable, ...rest }: TableActorProps) {
     super({
-      ...props,
+      ...rest,
       sectionName: "table",
     });
+    this.sendTable = sendTable;
   }
+  // should table have sendTable?
 
   get = new GetterSection(this.sectionActorBaseProps);
   tableState = new SetterTableNext(this.sectionActorBaseProps);
-  get querier() {
-    return new SectionQuerier(this.sectionActorBaseProps);
-  }
+  // get querier() {
+  //   return new SectionQuerier(this.sectionActorBaseProps);
+  // }
+  // private async sendTable(): Promise<void> {
+  //   this.querier.update(
+  //     this.packMaker.makeSectionPack() as any as ServerSectionPack
+  //   );
+  // }
   get setter() {
     return new SetterSection(this.sectionActorBaseProps);
   }
   get packMaker() {
     return new SectionPackMaker(this.sectionActorBaseProps);
-  }
-  private async sendTable(): Promise<void> {
-    this.querier.update(
-      this.packMaker.makeSectionPack() as any as ServerSectionPack
-    );
   }
   get rows(): GetterSection<"tableRow">[] {
     return this.get.children("tableRow");
