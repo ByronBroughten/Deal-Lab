@@ -42,20 +42,14 @@ const dbStoreNamesNext = [
   "mgmtTableStore",
 ];
 export const dbStoreNames = [
-  "user",
+  "main",
 
+  "user",
   "deal",
   "property",
-  "loan",
   "mgmt",
-
+  "loan",
   "table",
-  "propertyTableStore",
-
-  "analysisTable",
-  "propertyTable",
-  "loanTable",
-  "mgmtTable",
 
   "userOutputList",
   "userVarbList",
@@ -71,9 +65,6 @@ type DbStoreNameCheck<DS extends SimpleDbStoreName> = DS;
 export const feGuestAccessNames = Arr.exclude(dbStoreNames, [
   // for now, this determines which sections the dbUser starts having populated.
   "user",
-  "property",
-  "loan",
-  "mgmt",
   "table",
 ] as const);
 

@@ -125,6 +125,7 @@ export const preMgmtGeneral = {
     { childNames: ["mgmt"] as const }
   ),
   ...mgmtSection("mgmt", {
+    tableStoreName: "mgmtTableStore",
     rowIndexName: "mgmt",
   } as const),
 };

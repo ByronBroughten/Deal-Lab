@@ -86,9 +86,9 @@ export const userServerSide = {
   }: RegisterReqBody & { _id?: mongoose.Types.ObjectId }): Promise<
     UserDbRaw & mongoose.Document<any, UserDbRaw>
   > {
-    const userSections = await this.makeUserSections(registerFormData);
+    const dbSections = await this.makeUserSections(registerFormData);
     const userDoc = this.makeMongoUser({
-      ...userSections,
+      ...dbSections,
       guestAccessSections,
       _id,
     });

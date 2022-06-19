@@ -4,7 +4,7 @@ import {
   StoredSectionPackInfo,
 } from "../../../client/src/App/sharedWithServer/SectionPack/SectionPackRaw";
 import { SavableSectionName } from "../../../client/src/App/sharedWithServer/SectionsMeta/relNameArrs/storeArrs";
-import { getUserById } from "./getUserById";
+import { getUserSectionsById } from "./getUserDbSectionsById";
 
 export type FindSectionPackProps<
   DN extends SavableSectionName = SavableSectionName
@@ -22,8 +22,8 @@ export async function findSectionPack<
   res,
 }: FindSectionPackProps<DN>): Promise<SectionPackDbRaw<DN> | undefined> {
   const { dbStoreName, dbId } = spInfo;
-  const user = await getUserById({ userId, res });
-  return (user[dbStoreName] as { dbId: string }[]).find(
+  const dbSections = await getUserSectionsById({ userId, res });
+  return (dbSections[dbStoreName] as { dbId: string }[]).find(
     (sectionPack) => sectionPack.dbId === dbId
   ) as SectionPackDbRaw<DN>;
 }

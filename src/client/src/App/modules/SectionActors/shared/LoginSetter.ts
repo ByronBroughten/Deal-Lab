@@ -8,7 +8,7 @@ export class LoginSetter extends SetterSectionsBase {
   get setterSections(): SetterSections {
     return new SetterSections(this.setterSectionsProps);
   }
-  setLogin({ data, headers }: NextRes<"nextLogin">) {
+  setLogin({ data, headers }: NextRes<"login">) {
     auth.setToken(headers[constants.tokenKey.apiUserAuth]);
     const { main } = this.setterSections;
     main.loadChildPackArrs(data);

@@ -73,15 +73,6 @@ export const baseSection = {
       (options ?? {}) as O
     );
   },
-  get tableName() {
-    return this.schema(
-      { titleFilter: "string" },
-      {
-        ...baseOptions.alwaysOneFromStart,
-        placeholder: true,
-      }
-    );
-  },
   get rowIndex() {
     return this.schema(baseVarbs.tableRow);
   },

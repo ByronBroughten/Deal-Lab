@@ -57,19 +57,9 @@ export class ServerUser {
     storeName: SN
   ): SectionPackRaw<SN>[] {
     // I'm not creating all the tables at the outset, I guess.
-    if (sectionNameS.is(storeName, "tableName")) {
-      return this.makeTableSectionPackFeArr(storeName) as SectionPackRaw<SN>[];
-    } else {
-      return this.sectionPackArr(storeName).map(
-        (dbPack) => dbPack.toFeSectionPack() as SectionPackRaw<SN>
-      );
-    }
-  }
-  makeTableSectionPackFeArr<SN extends SectionName<"tableName">>(
-    tableName: SN
-  ): SectionPackRaw<SN>[] {
-    const tableSectionPack = this.firstSectionPack(tableName);
-    return [tableSectionPack.toFeSectionPack()];
+    return this.sectionPackArr(storeName).map(
+      (dbPack) => dbPack.toFeSectionPack() as SectionPackRaw<SN>
+    );
   }
   static init(userDbRaw: UserDbRaw): ServerUser {
     const core = serverSectionS.arrs.all.reduce((userDbCore, storeName) => {

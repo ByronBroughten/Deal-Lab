@@ -19,8 +19,8 @@ export const config = {
     upgradeUserToPro: 1000,
   },
   apiQueryNames: [
-    "nextRegister",
-    "nextLogin",
+    "register",
+    "login",
     "addSection",
     "updateSection",
     "getSection",

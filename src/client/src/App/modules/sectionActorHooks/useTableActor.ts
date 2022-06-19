@@ -1,22 +1,18 @@
 import React from "react";
-import { FeSectionInfo } from "../../sharedWithServer/SectionsMeta/Info";
-import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
 import { useSetterSectionsProps } from "../../sharedWithServer/stateClassHooks/useSetterSectionsProps";
 import { TableActor } from "../SectionActors/TableActor";
 import { apiQueries } from "../useQueryActionsTest/apiQueriesClient";
 import { useUpdateSetterSections } from "./useUpdateSetterSections";
 
-export function useTableActor<SN extends SectionName<"tableName">>(
-  feInfo: FeSectionInfo<SN>
-): TableActor<SN> {
+export function useTableActor(feId: string): TableActor {
   const props = useSetterSectionsProps();
   const tableActor = React.useMemo(() => {
     return new TableActor({
-      ...feInfo,
+      feId,
       ...props,
       apiQueries,
     });
-  }, [JSON.stringify(feInfo)]);
+  }, [JSON.stringify(feId)]);
   useUpdateSetterSections(tableActor);
   return tableActor;
 }

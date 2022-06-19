@@ -28,7 +28,7 @@ export class LoginActor extends SectionActorBase<"login"> {
   get loginSetter() {
     return new LoginSetter(this.sectionActorBaseProps);
   }
-  get loginReq(): NextReq<"nextLogin"> {
+  get loginReq(): NextReq<"login"> {
     return makeReq(
       this.varbs.values({
         email: "string",
@@ -37,7 +37,7 @@ export class LoginActor extends SectionActorBase<"login"> {
     );
   }
   async login() {
-    const res = await this.apiQueries.nextLogin(this.loginReq);
+    const res = await this.apiQueries.login(this.loginReq);
     this.loginSetter.setLogin(res);
   }
 }

@@ -31,6 +31,7 @@ function dealSection<
 
 export const relDealStuff = {
   ...dealSection("deal", {
+    tableStoreName: "dealTableStore",
     rowIndexName: "deal",
     arrStoreName: "deal",
   } as const),

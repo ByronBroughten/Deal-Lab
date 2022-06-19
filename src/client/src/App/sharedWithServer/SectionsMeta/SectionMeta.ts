@@ -6,11 +6,6 @@ import {
   ContextName,
   SimpleSectionName,
 } from "./baseSections";
-import { RelName } from "./relNameArrs";
-import {
-  IndexTableNames,
-  indexToTableNames,
-} from "./relNameArrs/tableSourceArrs";
 import { relSections, RelSections } from "./relSections";
 import {
   ChildIdArrsNarrow,
@@ -21,45 +16,13 @@ import {
   sectionParentNames,
   SectionToParentArrs,
 } from "./relSectionTypes/ParentTypes";
-import { sectionNameS } from "./SectionName";
 import { VarbMetas } from "./VarbMetas";
 
 type SectionMetaExtra<CN extends ContextName, SN extends SimpleSectionName> = {
   varbMetas: VarbMetas;
   parentNames: SectionToParentArrs<CN>[SN];
-  indexTableName: IndexToTableNameParam[SN];
   // indexSourceName: IndexToSourceNamesParam[SN];
 };
-
-type IndexToTableNameParam = {
-  [SN in SimpleSectionName]: SN extends RelName<"rowIndexNext">
-    ? IndexTableNames[SN]
-    : null;
-};
-
-// type IndexToSourceNamesParam = {
-//   [SN in SimpleSectionName]: SN extends RelName<"indexStore">
-//     ? IndexToSourceNames[SN]
-//     : [];
-// };
-
-function getRowIndexTableNameParam<SN extends SimpleSectionName>(
-  sectionName: SN
-): IndexToTableNameParam[SN] {
-  if (sectionNameS.is(sectionName, "rowIndexNext")) {
-    return indexToTableNames[sectionName] as IndexToTableNameParam[SN];
-  } else return null as IndexToTableNameParam[SN];
-}
-
-// function getIndexSourceNamesParam<SN extends SimpleSectionName>(
-//   sectionName: SN
-// ): IndexToSourceNamesParam[SN] {
-//   if (sectionNameS.is(sectionName, "hasIndexStore")) {
-//     return indexToSourceNames[
-//       sectionName as keyof typeof indexToSourceNames
-//     ] as IndexToSourceNamesParam[SN];
-//   } else return [] as IndexToSourceNamesParam[SN];
-// }
 
 function getParentNamesParam<SN extends SimpleSectionName>(
   sectionName: SN
@@ -122,8 +85,6 @@ export class SectionMeta<SN extends SimpleSectionName> {
       ...baseSection,
       varbMetas: VarbMetas.initFromRelVarbs(relSection.relVarbs, sectionName),
       parentNames: getParentNamesParam(sectionName),
-      indexTableName: getRowIndexTableNameParam(sectionName),
-      // indexSourceName: getIndexSourceNamesParam(sectionName),
     });
   }
 }

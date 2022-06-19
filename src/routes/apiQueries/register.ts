@@ -7,7 +7,7 @@ import {
 } from "../../client/src/App/sharedWithServer/apiQueriesShared/register";
 import { makeMongooseObjectId } from "../../client/src/App/sharedWithServer/utils/mongoose";
 import { resHandledError } from "../../middleware/error";
-import { loginUtils } from "./nextLogin/loginUtils";
+import { loginUtils } from "./login/loginUtils";
 import { MakeDbUserProps, userServerSide } from "./userServerSide";
 
 export const nextRegisterWare = [registerServerSide] as const;
@@ -29,10 +29,7 @@ async function registerServerSide(req: Request, res: Response) {
   return loginUtils.doLogin(res, serverUser);
 }
 
-function validateRegisterReq(
-  req: Request,
-  res: Response
-): NextReq<"nextRegister"> {
+function validateRegisterReq(req: Request, res: Response): NextReq<"register"> {
   const { registerFormData, guestAccessSections } = req.body;
   if (!isRegisterFormData(registerFormData)) {
     throw resHandledError(res, 400, "Register form data failed validation");

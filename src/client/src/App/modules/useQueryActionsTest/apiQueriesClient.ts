@@ -28,12 +28,12 @@ export const apiQueries = makeApiQueries();
 
 function makeApiQueries(): ApiQueries {
   const apiQueryProps: AllApiQueryProps = {
-    nextRegister: {
+    register: {
       doingWhat: "registering",
       // The only other thing I need is
       // the createReq function
       // And I already have that
-      validateRes(res: AxiosResponse<unknown>): NextRes<"nextRegister"> {
+      validateRes(res: AxiosResponse<unknown>): NextRes<"register"> {
         if (res && isLoginUserNext(res.data) && isLoginHeaders(res.headers)) {
           return {
             data: res.data,
@@ -42,9 +42,9 @@ function makeApiQueries(): ApiQueries {
         } else throw makeResValidationQueryError();
       },
     },
-    nextLogin: {
+    login: {
       doingWhat: "logging in",
-      validateRes(res: AxiosResponse<unknown>): NextRes<"nextLogin"> {
+      validateRes(res: AxiosResponse<unknown>): NextRes<"login"> {
         if (res && isLoginUserNext(res.data) && isLoginHeaders(res.headers)) {
           return {
             data: res.data,

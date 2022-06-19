@@ -1,23 +1,22 @@
-import { sectionMetas } from "../../sharedWithServer/SectionsMeta";
 import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
 import { GetterMainSection } from "../../sharedWithServer/StateGetters/GetterMainSection";
 import { GetterSections } from "../../sharedWithServer/StateGetters/GetterSections";
 import { SetterSection } from "../../sharedWithServer/StateSetters/SetterSection";
-import { SetterTable } from "../../sharedWithServer/StateSetters/SetterTable";
+import { SetterTableNext } from "../../sharedWithServer/StateSetters/SetterTableNext";
 import { IndexSectionQuerierProps } from "../QueriersRelative/Bases.ts/IndexSectionQuerierBase";
 import { IndexListQuerier } from "../QueriersRelative/IndexListQuerier";
 import { IndexSectionQuerier } from "../QueriersRelative/IndexSectionQuerier";
 import { SectionActorBase } from "./SectionActorBase";
 
-export class MainSectionActor<
-  SN extends SectionName<"hasRowIndex">
+export class MainSectionActorNext<
+  SN extends SectionName<"tableSource">
 > extends SectionActorBase<SN> {
   get = new GetterMainSection(this.sectionActorBaseProps);
   private get indexQuerierProps(): IndexSectionQuerierProps<SN> {
     return {
       ...this.sectionActorBaseProps,
       apiQueries: this.apiQueries,
-      indexName: this.indexName,
+      indexName: this.get.sectionName,
     };
   }
   private get indexListQuerier() {
@@ -35,20 +34,16 @@ export class MainSectionActor<
   get getterSections() {
     return new GetterSections(this.sectionActorBaseProps);
   }
-  private get indexName(): SectionName<"rowIndexNext"> {
-    return this.get.meta.get("rowIndexName");
-  }
-  private get indexTableName(): SectionName<"tableName"> {
-    return sectionMetas.section(this.indexName).get("indexTableName");
-  }
   get dbId(): string {
     return this.get.dbId;
   }
-  get table(): SetterTable {
+  get table(): SetterTableNext {
     const { main } = this.getterSections;
-    return new SetterTable({
+    const { tableStoreName } = this.get.meta.core;
+    const tableStore = main.onlyChild(tableStoreName);
+    return new SetterTableNext({
       ...this.sectionActorBaseProps,
-      ...main.onlyChild(this.indexTableName).feInfo,
+      ...tableStore.onlyChild("table").feInfo,
     });
   }
   newDateTime(): string {

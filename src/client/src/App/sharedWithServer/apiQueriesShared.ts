@@ -47,7 +47,7 @@ type ApiQueriesShared = {
 };
 
 export const resValidators = {
-  nextRegister: (res: any): NextRes<"nextRegister"> => {
+  register: (res: any): NextRes<"register"> => {
     if (res && isLoginUserNext(res.data) && isLoginHeaders(res.headers)) {
       return {
         data: res.data,

@@ -8,7 +8,7 @@ import {
 } from "../../client/src/App/sharedWithServer/apiQueriesShared/login";
 import { resHandledError, ResHandledError } from "../../middleware/error";
 import { ServerUser, UserDbRaw } from "../ServerUser";
-import { loginUtils } from "./nextLogin/loginUtils";
+import { loginUtils } from "./login/loginUtils";
 import { userServerSide } from "./userServerSide";
 
 export const nextLoginWare = [loginServerSide] as const;
@@ -25,7 +25,7 @@ async function loginServerSide(req: Request, res: Response) {
   return loginUtils.doLogin(res, user);
 }
 
-function validateLoginReq(req: Request, res: Response): NextReq<"nextLogin"> {
+function validateLoginReq(req: Request, res: Response): NextReq<"login"> {
   return { body: validateLoginFormData(req.body, res) };
 }
 

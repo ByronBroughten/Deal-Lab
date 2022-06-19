@@ -10,8 +10,8 @@ import {
 } from "../QueriersBasic/Bases/ApiQuerierBase";
 
 export interface SectionActorBaseProps<SN extends SectionName>
-  extends SetterSectionProps<SN>,
-    ApiQuerierBaseProps {}
+  extends ApiQuerierBaseProps,
+    SetterSectionProps<SN> {}
 
 export class SectionActorBase<SN extends SectionName> extends ApiQuerierBase {
   readonly setterSectionBase: SetterSectionBase<SN>;

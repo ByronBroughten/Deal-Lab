@@ -27,11 +27,11 @@ async function getSectionServerSide(req: Request, res: Response) {
   sendSuccess(res, "getSection", { data: { rawServerSectionPack } });
 }
 
-export async function getSectionPack(
+async function getSectionPack(
   props: FindSectionPackProps
 ): Promise<ServerSectionPack> {
-  const sectionPackDb = (await findSectionPack(props)) as SectionPackDbRaw;
   const { res, spInfo } = props;
+  const sectionPackDb = (await findSectionPack(props)) as SectionPackDbRaw;
   if (sectionPackDb)
     return SectionPackDb.rawDbToServer({
       sectionPackDb,

@@ -285,7 +285,7 @@ const ccs = {
             white-space: nowrap;
           }
           .MuiFormLabel-root.Mui-focused {
-            color: ${theme.primary};
+            color: ${theme.next.dark};
           }
 
           // label location without text

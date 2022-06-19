@@ -5,14 +5,10 @@ import { SectionPackArrReq } from "../../client/src/App/sharedWithServer/apiQuer
 import { SectionArrReqMaker } from "../../client/src/App/sharedWithServer/ReqMakers/SectionArrReqMaker";
 import { runApp } from "../../runApp";
 import { UserModel } from "../UserModel";
-import { loginUtils } from "./nextLogin/loginUtils";
+import { loginUtils } from "./login/loginUtils";
 import { createTestUserModelNext } from "./test/createTestUserModelNext";
 
-// to make the sectionArr req and the register req, do I make
-// entirely new testers? No, I think I'll make a reqMaker
-// class for each that RegisterActor and SectionArrQuerier contain
-
-const sectionName = "loanTable";
+const sectionName = "deal";
 function makeReq(): SectionPackArrReq<typeof sectionName> {
   const reqMaker = SectionArrReqMaker.init(sectionName);
   return reqMaker.makeReq();

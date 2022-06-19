@@ -6,7 +6,7 @@ import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/
 import { Id } from "../../client/src/App/sharedWithServer/SectionsMeta/baseSections/id";
 import { runApp } from "../../runApp";
 import { UserModel } from "../UserModel";
-import { loginUtils } from "./nextLogin/loginUtils";
+import { loginUtils } from "./login/loginUtils";
 import { createTestUserModelNext } from "./test/createTestUserModelNext";
 import { SectionQueryTester } from "./test/SectionQueryTester";
 

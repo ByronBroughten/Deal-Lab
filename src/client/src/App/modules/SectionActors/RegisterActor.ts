@@ -26,11 +26,11 @@ export class RegisterActor extends SectionActorBase<"register"> {
       varbName,
     });
   }
-  get registerReq(): NextReq<"nextRegister"> {
+  get registerReq(): NextReq<"register"> {
     return this.reqMaker.makeReq();
   }
   async register(): Promise<void> {
-    const res = await this.apiQueries.nextRegister(this.registerReq);
+    const res = await this.apiQueries.register(this.registerReq);
     this.loginSetter.setLogin(res);
   }
 }

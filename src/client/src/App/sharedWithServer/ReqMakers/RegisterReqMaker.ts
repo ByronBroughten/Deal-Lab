@@ -56,7 +56,7 @@ export class RegisterReqMaker extends GetterSectionBase<"register"> {
       guestAccessSections: this.guestAccessSectionPacks,
     };
   }
-  makeReq(): NextReq<"nextRegister"> {
+  makeReq(): NextReq<"register"> {
     return makeReq(this.reqBody);
   }
   private get guestAccessSectionPacks(): SectionPackArrs<"feGuestAccess"> {
@@ -65,8 +65,16 @@ export class RegisterReqMaker extends GetterSectionBase<"register"> {
       ...getterSectionsProps,
       ...main.feInfo,
     });
+    // main doesn't contain the table.
+    // this is where omniParent would come in handy.
+
+    // why do the tables need to be guest access?
+    // they don't have to be right now.
+    // all that really needs to be is main.
+    // I don't want user to be, though.
+
     return mainPackMaker.makeChildSectionPackArrs(
-      sectionNameS.arrs.feGuestAccess
-    );
+      sectionNameS.arrs.feGuestAccess as any
+    ) as any;
   }
 }

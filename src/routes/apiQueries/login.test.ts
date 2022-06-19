@@ -6,10 +6,10 @@ import { makeReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/
 import { RegisterReqMaker } from "../../client/src/App/sharedWithServer/ReqMakers/RegisterReqMaker";
 import { runApp } from "../../runApp";
 import { UserModel } from "../UserModel";
-import { loginUtils } from "./nextLogin/loginUtils";
+import { loginUtils } from "./login/loginUtils";
 import { userServerSide } from "./userServerSide";
 
-const testedRoute = apiQueriesShared.nextLogin.pathRoute;
+const testedRoute = apiQueriesShared.login.pathRoute;
 function makeReqStuff() {
   const testLoginFormData = {
     email: `${testedRoute}Test@gmail.com`,
@@ -28,7 +28,7 @@ function makeReqStuff() {
 
 describe(testedRoute, () => {
   let server: ReturnType<typeof runApp>;
-  let reqObj: NextReq<"nextLogin">;
+  let reqObj: NextReq<"login">;
   let userId: string;
 
   beforeEach(async () => {

@@ -19,7 +19,9 @@ describe(`relSectionsDidChange`, () => {
     expect(relSectionsHash).toBe(relSections2Hash);
   });
   it("should produce a hash that is not equal", () => {
-    (relSections2.fe.user.childNames as string[]).push("fakeSectionName");
+    (relSections2.fe.user.childNames as readonly string[] as string[]).push(
+      "fakeSectionName"
+    );
     relSections2Hash = hash(relSections2);
     expect(relSectionsHash).not.toBe(relSections2Hash);
   });

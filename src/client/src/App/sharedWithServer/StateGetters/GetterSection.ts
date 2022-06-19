@@ -177,7 +177,13 @@ export class GetterSection<
     return this.childList(childName).filterByFeIds(this.childFeIds(childName));
   }
   onlyChild<CN extends ChildName<SN>>(childName: CN): GetterSection<CN> {
-    return this.childList(childName).oneAndOnly;
+    const children = this.children(childName);
+    if (children.length !== 1) {
+      throw new Error(
+        `There is not exactly one section with sectionName ${this.sectionName}.`
+      );
+    }
+    return children[0];
   }
   onlyChildFeId<CN extends ChildName<SN>>(childName: CN): string {
     return this.onlyChild(childName).feId;

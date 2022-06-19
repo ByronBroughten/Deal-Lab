@@ -20,8 +20,8 @@ export class QueryError extends Error {
 }
 
 type ApiHttpObjects = {
-  nextRegister: RegisterQueryObjects;
-  nextLogin: LoginQueryObjects;
+  register: RegisterQueryObjects;
+  login: LoginQueryObjects;
   addSection: {
     req: SectionPackReq;
     res: DbIdRes;

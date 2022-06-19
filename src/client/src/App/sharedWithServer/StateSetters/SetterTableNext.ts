@@ -1,7 +1,6 @@
 import { isEqual } from "lodash";
 import { DbVarbs } from "../SectionPack/RawSection";
 import { InEntityVarbInfo } from "../SectionsMeta/baseSections/baseValues/entities";
-import { SectionName } from "../SectionsMeta/SectionName";
 import { GetterSection } from "../StateGetters/GetterSection";
 import { UpdaterSection } from "../StateUpdaters/UpdaterSection";
 import { Str } from "../utils/Str";
@@ -9,14 +8,12 @@ import { SetterSectionBase } from "./SetterBases/SetterSectionBase";
 import { SetterSection } from "./SetterSection";
 import { SetterTableRow } from "./SetterTableRow";
 
-export class SetterTable<
-  SN extends SectionName<"tableName"> = SectionName<"tableName">
-> extends SetterSectionBase<SN> {
+export class SetterTableNext extends SetterSectionBase<"table"> {
   setter = new SetterSection(this.setterSectionProps);
-  get get(): GetterSection<SN> {
+  get get(): GetterSection<"table"> {
     return this.setter.get;
   }
-  get updater(): UpdaterSection<SN> {
+  get updater(): UpdaterSection<"table"> {
     return new UpdaterSection(this.setterSectionProps);
   }
   column(feId: string): GetterSection<"column"> {
@@ -37,7 +34,6 @@ export class SetterTable<
       feId,
     });
   }
-  alphabeticalRows() {}
   hasRowByDbId(dbId: string): boolean {
     return this.get.hasChildByDbInfo({
       sectionName: "tableRow",

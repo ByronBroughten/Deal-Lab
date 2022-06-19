@@ -43,9 +43,5 @@ const Styled = styled(PlainBtn)<{ $isactive?: boolean }>`
       box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.5);
       color: ${theme.light};
       background-color: ${theme.deal.main};
-
-      /* background-color: ${theme.navBar.activeBtn};
-      border-bottom: none;
-      color: ${theme.primary}; */
     `};
 `;

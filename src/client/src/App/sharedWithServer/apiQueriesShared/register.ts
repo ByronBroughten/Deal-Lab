@@ -12,7 +12,7 @@ export type RegisterQueryObjects = {
   req: {
     body: RegisterReqBody;
   };
-  res: NextRes<"nextLogin">;
+  res: NextRes<"login">;
 };
 export type RegisterReqBody = {
   registerFormData: RegisterFormData;

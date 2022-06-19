@@ -53,14 +53,6 @@ const testThemes = {
   },
 };
 
-const themeColors = {
-  property: "#fbc599",
-  mgmt: "#f6a272",
-  loan: "#e78472",
-  plus: "#80c883",
-  next: "#717cbb",
-};
-
 const muiModDefault = testThemes.current;
 
 // const muiDefault = {
@@ -76,7 +68,7 @@ type SectionThemeBase = {
   [key: string]: string;
 };
 
-function standardSection({ main, ...rest }: SectionThemeBase) {
+function themeSection({ main, ...rest }: SectionThemeBase) {
   return {
     main,
     get light(): string {
@@ -110,9 +102,24 @@ export function themeSectionNameOrDefault(sectionName: string): ThemeName {
   return isThemeSectionName(sectionName) ? sectionName : "default";
 }
 
+const themeColors = {
+  property: "#ffc99d",
+  mgmt: "#ff9d64", // #f6a272
+  loan: "#ff8b68", // "#e78472"
+  plus: "#80c883",
+  success: "#4caf50",
+  next: "#717cbb",
+  danger: "#f52617",
+};
+
+// light burgundy #f17a7a
+
+// #ad6f69
+// #a27d66
+
 const themeSections = {
   default: {
-    ...standardSection({
+    ...themeSection({
       light: color["gray-200"],
       main: color["gray-400"],
       dark: color["gray-600"],
@@ -120,7 +127,7 @@ const themeSections = {
     }),
   },
   property: {
-    ...standardSection({
+    ...themeSection({
       main: themeColors.property,
       get light() {
         return lighten(0.17, themeColors.property);
@@ -134,7 +141,7 @@ const themeSections = {
     }),
   },
   mgmt: {
-    ...standardSection({
+    ...themeSection({
       main: lighten(0.04, themeColors.mgmt),
       get light() {
         return lighten(0.23, themeColors.mgmt);
@@ -148,7 +155,7 @@ const themeSections = {
     }),
   },
   loan: {
-    ...standardSection({
+    ...themeSection({
       main: lighten(0.02, themeColors.loan),
       get light() {
         return lighten(0.25, themeColors.loan);
@@ -162,18 +169,15 @@ const themeSections = {
     }),
   },
   next: {
-    ...standardSection({
+    ...themeSection({
       main: themeColors.next,
     }),
   },
   get deal() {
     return this.plus;
   },
-  get deal() {
-    return this.plus;
-  },
   plus: {
-    ...standardSection({
+    ...themeSection({
       main: themeColors.plus,
       get light() {
         return lighten(0.3, this.main);
@@ -197,10 +201,10 @@ const themeSections = {
     return this.mgmt;
   },
   error: {
-    ...standardSection({
-      dark: darken(0.25, muiModDefault.danger),
-      main: muiModDefault.danger,
-      light: lighten(0.15, muiModDefault.danger),
+    ...themeSection({
+      dark: darken(0.25, themeColors.danger),
+      main: themeColors.danger,
+      light: lighten(0.15, themeColors.danger),
     }),
   },
 };
@@ -208,7 +212,7 @@ const themeSections = {
 const theme = {
   // palette
   ...color,
-  ...muiModDefault,
+  ...themeColors,
   ...themeSections,
   light: color["gray-100"],
   dark: color["gray-900"],

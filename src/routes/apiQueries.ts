@@ -5,15 +5,15 @@ import { Obj } from "../client/src/App/sharedWithServer/utils/Obj";
 import { addSectionWare } from "./apiQueries/addSection";
 import { deleteSectionWare } from "./apiQueries/deleteSection";
 import { getSectionWare } from "./apiQueries/getSection";
-import { nextLoginWare } from "./apiQueries/nextLogin";
-import { nextRegisterWare } from "./apiQueries/nextRegister";
+import { nextLoginWare } from "./apiQueries/login";
+import { nextRegisterWare } from "./apiQueries/register";
 import { replaceSectionArrWare } from "./apiQueries/replaceSectionArr";
 import { updateSectionWare } from "./apiQueries/updateSection";
 import { upgradeUserToProWare } from "./apiQueries/upgradeUserToPro";
 
 const endpointWare: Record<ApiQueryName, any> = {
-  nextRegister: nextRegisterWare,
-  nextLogin: nextLoginWare,
+  register: nextRegisterWare,
+  login: nextLoginWare,
   addSection: addSectionWare,
   updateSection: updateSectionWare,
   getSection: getSectionWare,

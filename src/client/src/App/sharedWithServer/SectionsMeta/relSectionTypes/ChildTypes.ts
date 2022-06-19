@@ -12,7 +12,7 @@ import { SectionNameType } from "../SectionName";
 
 type ChildNameArr<
   CN extends ContextName,
-  SN extends SimpleSectionName<CN>
+  SN extends SimpleSectionName
 > = RelSections[CN][SN]["childNames" & keyof RelSections[CN][SN]];
 
 type SectionToChildrenOrNever<CN extends ContextName> = {

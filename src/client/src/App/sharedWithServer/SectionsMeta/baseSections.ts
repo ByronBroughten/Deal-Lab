@@ -12,8 +12,6 @@ export const loanVarbsNotInFinancing = [
   "title",
 ] as const;
 
-export type SimpleSectionName = keyof BaseSections["fe"];
-
 export type SectionContextNames = {
   sectionName: SimpleSectionName;
   contextName: ContextName;
@@ -63,14 +61,18 @@ export const baseSections = {
       }
     ),
     table: base.section.schema({ titleFilter: "string" } as const),
-    propertyTable: base.section.tableName,
     propertyTableStore: base.section.schema({
       _typeUniformity: "string",
     } as const),
-    loanTable: base.section.tableName,
-    mgmtTable: base.section.tableName,
-    analysisTable: base.section.tableName,
-
+    loanTableStore: base.section.schema({
+      _typeUniformity: "string",
+    } as const),
+    mgmtTableStore: base.section.schema({
+      _typeUniformity: "string",
+    } as const),
+    dealTableStore: base.section.schema({
+      _typeUniformity: "string",
+    } as const),
     tableRow: base.section.schema(base.varbs.tableRow, { uniqueDbId: true }),
     column: base.section.schema(base.varbs.varbInfo),
     cell: base.section.schema({ ...base.varbs.varbInfo, value: "numObj" }),
@@ -210,6 +212,9 @@ export const baseSections = {
     return this.fe;
   },
 } as const;
+
+export const simpleSectionNames = Obj.keys(baseSections.fe);
+export type SimpleSectionName = typeof simpleSectionNames[number];
 
 export type ApiAccessStatus = "readonly" | "basicStorage" | "fullStorage";
 

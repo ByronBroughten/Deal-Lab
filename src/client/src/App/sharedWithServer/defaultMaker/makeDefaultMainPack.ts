@@ -7,15 +7,20 @@ export function makeDefaultMainPack(): SectionPackRaw<"main"> {
   const main = new SectionPackBuilder();
   main.loadChild(makeDefaultDealPack());
   main.loadChild(makeDefaultUser());
-  const childNames = [
-    "analysisTable",
-    "propertyTable",
-    "loanTable",
-    "mgmtTable",
 
-    "login",
-    "register",
+  const tableStoreNames = [
+    "propertyTableStore",
+    "loanTableStore",
+    "mgmtTableStore",
+    "dealTableStore",
   ] as const;
+
+  for (const tableStoreName of tableStoreNames) {
+    const tableStore = main.addAndGetChild(tableStoreName);
+    tableStore.addChild("table");
+  }
+
+  const childNames = ["login", "register"] as const;
   for (const childName of childNames) {
     main.addChild(childName);
   }

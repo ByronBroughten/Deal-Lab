@@ -201,6 +201,7 @@ export const relFinancing = {
     }
   ),
   ...loanSection("loan", {
+    tableStoreName: "loanTableStore",
     rowIndexName: "loan",
   } as const),
   ...rel.section.singleTimeList("closingCostList", "Closing Costs", {

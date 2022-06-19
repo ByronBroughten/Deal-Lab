@@ -98,6 +98,7 @@ export const relPropertyGeneral = {
     }
   ),
   ...propertySection("property", {
+    tableStoreName: "propertyTableStore",
     rowIndexName: "property",
   } as const),
   ...relSection.base("both", "unit", "Unit", {

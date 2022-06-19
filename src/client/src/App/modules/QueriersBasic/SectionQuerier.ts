@@ -4,11 +4,11 @@ import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
 import { ApiQuerierBase, ApiQuerierBaseProps } from "./Bases/ApiQuerierBase";
 
 interface SectionQuerierProps extends ApiQuerierBaseProps {
-  sectionName: SectionName<"indexStore">;
+  sectionName: SectionName<"dbStoreNext">;
 }
 
 export class SectionQuerier extends ApiQuerierBase {
-  readonly sectionName: SectionName<"indexStore">;
+  readonly sectionName: SectionName<"dbStoreNext">;
   constructor({ sectionName, ...rest }: SectionQuerierProps) {
     super(rest);
     this.sectionName = sectionName;

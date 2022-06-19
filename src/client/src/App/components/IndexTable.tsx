@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import { useTableActor } from "../modules/sectionActorHooks/useTableActor";
 import { auth } from "../modules/services/authService";
-import { FeInfoByType } from "../sharedWithServer/SectionsMeta/Info";
 import { SectionName } from "../sharedWithServer/SectionsMeta/SectionName";
 import { VariableOption } from "../sharedWithServer/StateEntityGetters/VariableGetterSections";
 import theme from "../theme/Theme";
@@ -13,11 +12,11 @@ import { MaterialStringEditorNext } from "./inputs/MaterialStringEditorNext";
 import VarbAutoComplete from "./inputs/VarbAutoComplete";
 
 interface Props {
-  indexName: SectionName<"rowIndexNext">;
-  feInfo: FeInfoByType<"tableName">;
+  indexName: SectionName<"tableSource">;
+  tableId: string;
 }
-export default function IndexTable({ indexName, feInfo }: Props) {
-  const table = useTableActor(feInfo);
+export default function IndexTable({ indexName, tableId }: Props) {
+  const table = useTableActor(tableId);
   const { filteredRows } = table;
   const { isAtLeastOne, areNone } = useHowMany(filteredRows);
   return (

@@ -8,11 +8,34 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-// reimplement tables like propertyTableStore: { table: etc. }
+// Fix RegisterReqMaker
 
 // get rid of all duplicate sectionNames (for the lists, etc)
 // - you will need to add sections to differentiate the
 // - ones with the same names
+
+// when do I implement the new way of loading from the db?
+
+// ok. the plan is to only load "main"
+// is this a bad idea for any reason?
+// oh. I must load parents before children
+
+// make main db savable
+// get the main sectionPack from the db (there should only be one).
+// make a sectionPackBuilder
+// for each child in main, if it is a dbStoreName
+// add its dbInfo (plus feId) to an array
+// use the dbInfos to try to get all of them from the db
+// go through the array with the children, and if the dbInfo was found
+// load it
+// I can probably query all the children of each section at a time, at least;
+// I'll try doing individual queries first, though.
+
+// for all the dbSections that are found,
+//  use omniParent to make a sectionPack loader to replace each section that has the same dbInfo
+// make that sectionPack and send it
+
+// get rid of indexName
 
 // write the load code that checks the db for children with the same
 // dbId to update
@@ -95,36 +118,3 @@ reportWebVitals();
 // Get rid of defaultSections and defaultStore.
 // Get rid of different kinds of SectionPack. You only need raw.
 // Get rid of dbEntry
-
-// private resetRowCells(rowFeId: string) {
-// const feRowInfo = InfoS.fe("tableRow", rowFeId);
-// let next = this.nextSections.eraseChildren(feRowInfo, "cell");
-//   const columns = next.childSections(this.indexTableName, "column");
-//   for (const column of columns) {
-//     const varbInfo = column.varbInfoValues();
-//     // Ok. Normally, I'll just use what the varbInfo says.
-//     // But when the prop
-
-//     const varbFinder =
-//       varbInfo.sectionName === this.indexName
-//         ? { ...varbInfo, sectionName: this.sectionName }
-//         : varbInfo;
-//     // I also need the source section's feId
-//     // and this is only for this
-
-//     const varb = next.findVarb(varbInfo);
-//     const value = varb ? varb.value("numObj") : "Not Found";
-
-//     next = next.addSectionsAndSolveNext([
-//       {
-//         sectionName: "cell",
-//         parentFinder: feRowInfo,
-//         dbVarbs: {
-//           ...varbInfo,
-//           value,
-//         },
-//       },
-//     ]);
-//   }
-//   this.nextSections = next;
-// }

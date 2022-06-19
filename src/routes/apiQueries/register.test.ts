@@ -8,11 +8,11 @@ import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/
 import { RegisterReqMaker } from "../../client/src/App/sharedWithServer/ReqMakers/RegisterReqMaker";
 import { runApp } from "../../runApp";
 import { UserModel } from "../UserModel";
-import { testRegisterId } from "./nextRegister";
+import { testRegisterId } from "./register";
 import { userServerSide } from "./userServerSide";
 
-const testedRoute = apiQueriesShared.nextRegister.pathRoute;
-function makeTestRegisterReq(): NextReq<"nextRegister"> {
+const testedRoute = apiQueriesShared.register.pathRoute;
+function makeTestRegisterReq(): NextReq<"register"> {
   const reqMaker = RegisterReqMaker.init({
     email: `${testedRoute}Test@gmail.com`,
     password: "testpassword",
@@ -24,7 +24,7 @@ function makeTestRegisterReq(): NextReq<"nextRegister"> {
 describe(testedRoute, () => {
   // prep
   let server: Server;
-  let reqObj: NextReq<"nextRegister">;
+  let reqObj: NextReq<"register">;
 
   beforeEach(async () => {
     reqObj = makeTestRegisterReq();
@@ -49,7 +49,7 @@ describe(testedRoute, () => {
   it("should return status 200 and create a user if happy path", async () => {
     const res = await testStatus(200);
     (res as any).data = JSON.parse(res.text);
-    expect(() => resValidators.nextRegister(res)).not.toThrow();
+    expect(() => resValidators.register(res)).not.toThrow();
 
     const userDoc = await UserModel.findById(testRegisterId);
     expect(userDoc).toBeTruthy();

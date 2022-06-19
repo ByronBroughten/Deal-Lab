@@ -1,13 +1,14 @@
 // make TableActor
 
+import { ServerSectionPack } from "../../sharedWithServer/SectionPack/SectionPackRaw";
 import { InEntityVarbInfo } from "../../sharedWithServer/SectionsMeta/baseSections/baseValues/entities";
-import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
 import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
 import { SectionPackMaker } from "../../sharedWithServer/StatePackers.ts/SectionPackMaker";
 import { SetterSection } from "../../sharedWithServer/StateSetters/SetterSection";
-import { SetterTable } from "../../sharedWithServer/StateSetters/SetterTable";
-import { SectionArrQuerier } from "../QueriersBasic/SectionArrQuerier";
-import { SectionActorBase } from "./SectionActorBase";
+import { SetterTableNext } from "../../sharedWithServer/StateSetters/SetterTableNext";
+import { StrictOmit } from "../../sharedWithServer/utils/types";
+import { SectionQuerier } from "../QueriersBasic/SectionQuerier";
+import { SectionActorBase, SectionActorBaseProps } from "./SectionActorBase";
 
 class GetterColumn extends GetterSection<"column"> {
   get displayNameOrNotFound(): string {
@@ -21,13 +22,20 @@ class GetterColumn extends GetterSection<"column"> {
   }
 }
 
-export class TableActor<
-  SN extends SectionName<"tableName">
-> extends SectionActorBase<SN> {
+interface TableActorProps
+  extends StrictOmit<SectionActorBaseProps<"table">, "sectionName"> {}
+export class TableActor extends SectionActorBase<"table"> {
+  constructor(props: TableActorProps) {
+    super({
+      ...props,
+      sectionName: "table",
+    });
+  }
+
   get = new GetterSection(this.sectionActorBaseProps);
-  tableState = new SetterTable(this.sectionActorBaseProps);
+  tableState = new SetterTableNext(this.sectionActorBaseProps);
   get querier() {
-    return new SectionArrQuerier(this.sectionActorBaseProps);
+    return new SectionQuerier(this.sectionActorBaseProps);
   }
   get setter() {
     return new SetterSection(this.sectionActorBaseProps);
@@ -36,7 +44,9 @@ export class TableActor<
     return new SectionPackMaker(this.sectionActorBaseProps);
   }
   private async sendTable(): Promise<void> {
-    this.querier.replace([this.packMaker.makeSectionPack()]);
+    this.querier.update(
+      this.packMaker.makeSectionPack() as any as ServerSectionPack
+    );
   }
   get rows(): GetterSection<"tableRow">[] {
     return this.get.children("tableRow");

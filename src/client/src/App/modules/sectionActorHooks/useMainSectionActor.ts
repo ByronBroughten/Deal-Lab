@@ -2,16 +2,16 @@ import React from "react";
 import { FeSectionInfo } from "../../sharedWithServer/SectionsMeta/Info";
 import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
 import { useSetterSectionsProps } from "../../sharedWithServer/stateClassHooks/useSetterSectionsProps";
-import { MainSectionActor } from "../SectionActors/MainSectionActor";
+import { MainSectionActorNext } from "../SectionActors/MainSectionActorNext";
 import { apiQueries } from "../useQueryActionsTest/apiQueriesClient";
 import { useUpdateSetterSections } from "./useUpdateSetterSections";
 
-export function useMainSectionActor<SN extends SectionName<"hasRowIndex">>(
+export function useMainSectionActor<SN extends SectionName<"tableSource">>(
   feInfo: FeSectionInfo<SN>
-): MainSectionActor<SN> {
+): MainSectionActorNext<SN> {
   const props = useSetterSectionsProps();
   const mainActor = React.useMemo(() => {
-    return new MainSectionActor({
+    return new MainSectionActorNext({
       ...feInfo,
       ...props,
       apiQueries,

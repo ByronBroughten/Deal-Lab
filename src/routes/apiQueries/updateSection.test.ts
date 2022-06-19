@@ -7,8 +7,8 @@ import { NumObj } from "../../client/src/App/sharedWithServer/SectionsMeta/baseS
 import { Id } from "../../client/src/App/sharedWithServer/SectionsMeta/baseSections/id";
 import { runApp } from "../../runApp";
 import { UserModel } from "../UserModel";
-import { loginUtils } from "./nextLogin/loginUtils";
-import { getUserByIdNoRes } from "./shared/getUserById";
+import { loginUtils } from "./login/loginUtils";
+import { getUserByIdNoRes } from "./shared/getUserDbSectionsById";
 import { createTestUserModelNext } from "./test/createTestUserModelNext";
 import { SectionQueryTester } from "./test/SectionQueryTester";
 

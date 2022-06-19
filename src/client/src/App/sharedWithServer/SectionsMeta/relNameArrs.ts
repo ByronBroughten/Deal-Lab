@@ -4,7 +4,7 @@ import { ContextName, SimpleSectionName } from "./baseSections";
 import { BaseName } from "./baseSectionTypes";
 import { baseNameArrs } from "./baseSectionTypes/baseNameArrs";
 import { hasStoreNameArrs, storeNameArrs } from "./relNameArrs/storeArrs";
-import { tableIndexNames } from "./relNameArrs/tableSourceArrs";
+import { tableStoreNameArrs } from "./relNameArrs/tableStoreArrs";
 import { relSections } from "./relSections";
 import { GeneralRelSection } from "./relSections/rel/relSection";
 import { HasChildSectionName } from "./relSectionTypes/ChildTypes";
@@ -27,13 +27,13 @@ function makeRelNameArrs<
   const sectionToParentArrs = makeSectionToParentArrs()[sectionContext];
   return {
     ...arrs,
-    tableSource: tableIndexNames,
     hasChild: Obj.keys(relSections[sectionContext]).filter((sectionName) => {
       return (
         (relSections[sectionContext][sectionName] as any as GeneralRelSection)
           .childNames.length > 0
       );
     }) as HasChildSectionName<SC>[],
+    ...tableStoreNameArrs,
     hasParent: Obj.keys(sectionToParentArrs).filter((sectionName) => {
       return (sectionToParentArrs[sectionName] as any as string[]).length > 0;
     }) as HasParentSectionName<SC>[],

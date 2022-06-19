@@ -22,11 +22,6 @@ import { preUserLists } from "./relSections/relUserLists";
 export function makeRelSections() {
   return {
     fe: {
-      ...rel.section.sectionTableNext(
-        "propertyTable",
-        "Property Table",
-        "property"
-      ),
       ...rel.section.base(
         "fe" as ContextName,
         "table",
@@ -40,16 +35,30 @@ export function makeRelSections() {
         "both",
         "propertyTableStore",
         "Property Table Store",
-        {
-          _typeUniformity: rel.varb.string(),
-        },
-        {
-          childNames: ["table"],
-        } as const
+        { _typeUniformity: rel.varb.string() },
+        { childNames: ["table"] } as const
       ),
-      ...rel.section.sectionTableNext("analysisTable", "Deal Table", "deal"),
-      ...rel.section.sectionTableNext("loanTable", "Loan Table", "loan"),
-      ...rel.section.sectionTableNext("mgmtTable", "Management Table", "mgmt"),
+      ...relSection.base(
+        "both",
+        "loanTableStore",
+        "Loan Table Store",
+        { _typeUniformity: rel.varb.string() },
+        { childNames: ["table"] } as const
+      ),
+      ...relSection.base(
+        "both",
+        "mgmtTableStore",
+        "Mgmt Table Store",
+        { _typeUniformity: rel.varb.string() },
+        { childNames: ["table"] } as const
+      ),
+      ...relSection.base(
+        "both",
+        "dealTableStore",
+        "Deal Table Store",
+        { _typeUniformity: rel.varb.string() },
+        { childNames: ["table"] } as const
+      ),
       ...relSection.base(
         "both",
         "omniParent",
@@ -79,10 +88,9 @@ export function makeRelSections() {
             "deal",
 
             "propertyTableStore",
-            "propertyTable",
-            "loanTable",
-            "mgmtTable",
-            "analysisTable",
+            "loanTableStore",
+            "mgmtTableStore",
+            "dealTableStore",
 
             "userVarbList",
             "userSingleList",

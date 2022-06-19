@@ -21,6 +21,8 @@ export type GeneralRelSection = {
   displayName: string;
   tableIndexName: BaseName | null;
 
+  tableStoreName: BaseName | null;
+
   fullIndexName: SimpleDbStoreName | null;
   rowIndexName: SimpleDbStoreName | null;
   arrStoreName: SimpleDbStoreName | null;
@@ -58,6 +60,7 @@ type DefaultRelSection<
   relVarbs: RVS;
   childNames: readonly [];
 
+  tableStoreName: null;
   tableIndexName: null;
 
   fullIndexName: null;
@@ -95,6 +98,8 @@ export const relSection = {
       rowIndexName: null,
       arrStoreName: null,
       tableIndexName: null,
+
+      tableStoreName: null,
     };
   },
   base<
@@ -121,6 +126,19 @@ export const relSection = {
       ),
     } as RelSectionProp<ExtractSectionContext<SCB>, SN, D, PVS, O>;
   },
+  // pureNameSpace<
+  //   SN extends BaseName,
+  //   DN extends string,
+  //   CNS extends BaseName[]
+  // >(sectionName: SN, displayName: DN, childNames: CNS) {
+  //   return this.base(
+  //     "both",
+  //     sectionName,
+  //     displayName,
+  //     { _typeUniformity: relVarb.string() },
+  //     { childNames } as const
+  //   )
+  // },
   singleTimeList<
     SN extends BaseName<"singleTimeList">,
     D extends string,
@@ -182,23 +200,6 @@ export const relSection = {
       } as RelVarbs<"fe", S>,
       {
         childNames: ["cell"] as const,
-      }
-    );
-  },
-  sectionTableNext<
-    S extends BaseName<"tableName">,
-    D extends string,
-    R extends BaseName
-  >(sectionName: S, displayName: D, tableIndexName: R) {
-    return this.base(
-      "fe" as ContextName,
-      sectionName,
-      displayName,
-      { titleFilter: relVarb.string() } as RelVarbs<ContextName, S>,
-      {
-        tableIndexName,
-        arrStoreName: sectionName,
-        childNames: ["column", "tableRow"] as const,
       }
     );
   },

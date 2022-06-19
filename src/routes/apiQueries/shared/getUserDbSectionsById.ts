@@ -9,7 +9,7 @@ const options = {
 };
 
 type FindUserByIdProps = { userId: string; res: Response };
-export async function getUserById({ userId, res }: FindUserByIdProps) {
+export async function getUserSectionsById({ userId, res }: FindUserByIdProps) {
   const user = await UserModel.findById(userId, undefined, options);
   if (user) return user;
   else throw resHandledError(res, 404, "You are not logged in.");

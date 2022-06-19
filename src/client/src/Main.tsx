@@ -15,6 +15,7 @@ export function Main() {
     main.resetToDefault();
   };
   const activeDealId = main.get.onlyChild("deal").feId;
+  const dealTableStore = main.get.onlyChild("dealTableStore");
   return (
     <Styled className="App-root">
       <NavBar
@@ -30,7 +31,7 @@ export function Main() {
           element={
             <IndexTable
               {...{
-                feInfo: main.get.onlyChild("analysisTable").feInfo,
+                tableId: dealTableStore.onlyChild("table").feId,
                 indexName: "deal",
               }}
             />
