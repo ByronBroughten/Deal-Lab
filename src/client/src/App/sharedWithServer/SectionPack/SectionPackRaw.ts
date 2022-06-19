@@ -29,7 +29,7 @@ export type SectionPackRaw<SN extends SectionName = SectionName> = {
 export type StoredSectionPackInfo<
   SN extends SectionName<"dbStoreNext"> = SectionName<"dbStoreNext">
 > = {
-  dbStoreName: SN;
+  sectionName: SN;
   dbId: string;
 };
 
@@ -57,9 +57,7 @@ const zSectionPackDbRawFrame = Obj.strictPick(zRawSectionPackFrame, [
 const zSectionPackDb = z.object(zSectionPackDbRawFrame);
 export const zSectionPackDbArr = z.array(zSectionPackDb);
 
-function _testRawSectionPack(
-  feRaw: SectionPackRaw<"tableRow">,
-) {
+function _testRawSectionPack(feRaw: SectionPackRaw<"tableRow">) {
   const _test1 = feRaw.rawSections.cell;
   // @ts-expect-error
   const _test2 = feRaw.rawSections.unit;

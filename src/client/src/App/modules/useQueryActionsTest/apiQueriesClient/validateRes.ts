@@ -24,8 +24,8 @@ export function validateDbStoreNameRes(
 ): DbStoreNameRes {
   const { data } = res;
   if (Obj.isAnyIfIsObj(data)) {
-    const { dbStoreName } = data;
-    if (savableNameS.is(dbStoreName)) return makeRes({ dbStoreName });
+    const { sectionName } = data;
+    if (savableNameS.is(sectionName)) return makeRes({ sectionName });
   }
   throw makeResValidationQueryError();
 }

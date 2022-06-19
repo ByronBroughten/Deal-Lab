@@ -59,7 +59,7 @@ export class SectionQueryTester<
   }
   makeDbInfoReq(): DbSectionPackInfoReq {
     return makeReq({
-      dbStoreName: this.indexName,
+      sectionName: this.indexName,
       dbId: this.get.dbId,
     });
   }

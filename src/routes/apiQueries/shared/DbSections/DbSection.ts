@@ -5,10 +5,11 @@ import { ResStatusError } from "../../../../resErrorUtils";
 import { DbSectionBase } from "./Bases/DbSectionBase";
 import { DbSections, DbSectionsInitProps } from "./DbSections";
 
-interface DbSectionInitProps<SN extends SimpleDbStoreName>
+export interface DbSectionInitProps<SN extends SimpleDbStoreName>
   extends DbSectionsInitProps,
     DbSectionInfo<SN> {}
 
+export class DbSectionNotFoundError extends ResStatusError {}
 export class DbSection<SN extends SimpleDbStoreName> extends DbSectionBase<SN> {
   static async init<SN extends SimpleDbStoreName>(
     props: DbSectionInitProps<SN>
@@ -27,7 +28,7 @@ export class DbSection<SN extends SimpleDbStoreName> extends DbSectionBase<SN> {
         sectionName: this.sectionName,
       } as SectionPackRaw<SN>;
     } else {
-      throw new ResStatusError({
+      throw new DbSectionNotFoundError({
         errorMessage: `Section not found at ${this.sectionName}.${this.dbId}`,
         resMessage: "The requested entry was not found",
         status: 404,

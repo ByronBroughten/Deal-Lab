@@ -26,7 +26,7 @@ export class SectionQuerier extends ApiQuerierBase {
   }
   async get(dbId: string): Promise<ServerSectionPack> {
     const req = makeReq({
-      dbStoreName: this.sectionName,
+      sectionName: this.sectionName,
       dbId,
     } as const);
     const res = await this.apiQueries.getSection(req);
@@ -34,7 +34,7 @@ export class SectionQuerier extends ApiQuerierBase {
   }
   async delete(dbId: string): Promise<string> {
     const req = makeReq({
-      dbStoreName: this.sectionName,
+      sectionName: this.sectionName,
       dbId,
     } as const);
     const res = await this.apiQueries.deleteSection(req);

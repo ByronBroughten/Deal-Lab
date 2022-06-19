@@ -20,7 +20,7 @@ export class SectionArrReqMaker<
   }
   makeReq(): SectionPackArrReq<SN> {
     return makeReq({
-      dbStoreName: this.sectionName,
+      sectionName: this.sectionName,
       sectionPackArr: [this.packMaker.makeSectionPack()],
     });
   }

@@ -30,9 +30,9 @@ function validateDeleteSectionReq(
   return validateDbSectionInfoReq(req, res);
 }
 
-function makePullParameters({ dbStoreName, dbId }: DbSectionPackInfo) {
+function makePullParameters({ sectionName, dbId }: DbSectionPackInfo) {
   return {
-    operation: { $pull: { [dbStoreName]: { dbId } } },
+    operation: { $pull: { [sectionName]: { dbId } } },
     options: {
       // new: true,
       lean: true,

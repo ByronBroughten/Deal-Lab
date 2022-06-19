@@ -1,29 +1,13 @@
-import { Response } from "express";
-import {
-  SectionPackDbRaw,
-  StoredSectionPackInfo,
-} from "../../../client/src/App/sharedWithServer/SectionPack/SectionPackRaw";
-import { SavableSectionName } from "../../../client/src/App/sharedWithServer/SectionsMeta/relNameArrs/storeArrs";
-import { getUserSectionsById } from "./getUserDbSectionsById";
+import { SectionPackRaw } from "../../../client/src/App/sharedWithServer/SectionPack/SectionPackRaw";
+import { DbSectionName } from "../../../client/src/App/sharedWithServer/SectionsMeta/relNameArrs/storeArrs";
+import { DbSection, DbSectionInitProps } from "./DbSections/DbSection";
 
-export type FindSectionPackProps<
-  DN extends SavableSectionName = SavableSectionName
-> = {
-  userId: string;
-  spInfo: StoredSectionPackInfo<DN>;
-  res: Response;
-};
+export interface FindSectionPackProps<SN extends DbSectionName = DbSectionName>
+  extends DbSectionInitProps<SN> {}
 
-export async function findSectionPack<
-  DN extends SavableSectionName = SavableSectionName
->({
-  userId,
-  spInfo,
-  res,
-}: FindSectionPackProps<DN>): Promise<SectionPackDbRaw<DN> | undefined> {
-  const { dbStoreName, dbId } = spInfo;
-  const dbSections = await getUserSectionsById({ userId, res });
-  return (dbSections[dbStoreName] as { dbId: string }[]).find(
-    (sectionPack) => sectionPack.dbId === dbId
-  ) as SectionPackDbRaw<DN>;
+export async function findSectionPack<SN extends DbSectionName = DbSectionName>(
+  props: FindSectionPackProps<SN>
+): Promise<SectionPackRaw<SN>> {
+  const dbSection = DbSection.init(props);
+  return (await dbSection).sectionPack();
 }

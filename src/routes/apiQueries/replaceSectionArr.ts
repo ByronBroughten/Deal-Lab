@@ -21,17 +21,17 @@ async function replaceSectionArrServerSide(req: Request, res: Response) {
 
   sendSuccess(res, "replaceSectionArr", {
     data: {
-      dbStoreName: rest.dbStoreName,
+      sectionName: rest.sectionName,
     },
   });
 }
 
 function makeSetSectionArrParameters({
-  dbStoreName,
+  sectionName,
   sectionPackArr,
 }: SectionPackArrReq["body"]) {
   return {
-    operation: { $set: { [`${dbStoreName}`]: sectionPackArr } },
+    operation: { $set: { [`${sectionName}`]: sectionPackArr } },
     options: {
       new: true,
       lean: true,

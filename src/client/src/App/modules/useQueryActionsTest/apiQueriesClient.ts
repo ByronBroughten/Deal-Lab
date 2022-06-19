@@ -134,6 +134,6 @@ function makeApiQuery<QN extends ApiQueryName>({
 
 async function _testApiQueries() {
   const _test: NextRes<"getSection"> = await apiQueries.getSection({
-    body: { dbStoreName: "deal", dbId: "string" },
+    body: { sectionName: "deal", dbId: "string" },
   });
 }

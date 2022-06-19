@@ -17,22 +17,6 @@ export class ResStatusError extends Error {
     this.status = status;
   }
 }
-export async function trySendResIfFail<T>(
-  res: Response,
-  fn: () => T
-): Promise<T> {
-  try {
-    return fn();
-  } catch (ex) {
-    if (ex instanceof ResStatusError) {
-      const { resMessage, status } = ex;
-      res.status(status).send(resMessage);
-    } else {
-      res.status(500).send("Something went wrong.");
-    }
-    throw new ResHandledError(getErrorMessage(ex));
-  }
-}
 
 export function handleResAndMakeError(
   res: Response,
@@ -42,3 +26,20 @@ export function handleResAndMakeError(
   res.status(status).send(errOrMessage);
   return new ResHandledError(getErrorMessage(errOrMessage));
 }
+
+// export async function trySendResIfFail<T>(
+//   res: Response,
+//   fn: () => T
+// ): Promise<T> {
+//   try {
+//     return fn();
+//   } catch (ex) {
+//     if (ex instanceof ResStatusError) {
+//       const { resMessage, status } = ex;
+//       res.status(status).send(resMessage);
+//     } else {
+//       res.status(500).send("Something went wrong.");
+//     }
+//     throw new ResHandledError(getErrorMessage(ex));
+//   }
+// }

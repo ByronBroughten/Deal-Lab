@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import { ServerSectionPack } from "../../client/src/App/sharedWithServer/SectionPack/SectionPackRaw";
-import { SavableSectionName } from "../../client/src/App/sharedWithServer/SectionsMeta/relNameArrs/storeArrs";
+import { DbSectionName } from "../../client/src/App/sharedWithServer/SectionsMeta/relNameArrs/storeArrs";
 import authWare from "../../middleware/authWare";
 import { SectionPackDb } from "../SectionPackDb";
 import { findOneAndUpdate } from "./shared/findAndUpdate";
@@ -34,7 +34,7 @@ function validateUpdateSectionReq(
 
 type MakeUpdateSectionFilterProps = {
   userId: string;
-  sectionName: SavableSectionName;
+  sectionName: DbSectionName;
   dbId: string;
 };
 function makeUpdateSectionFilter({

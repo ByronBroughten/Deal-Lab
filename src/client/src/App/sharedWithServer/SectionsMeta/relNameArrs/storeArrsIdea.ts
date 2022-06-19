@@ -109,7 +109,7 @@ interface StoreNameArrsPlusAll extends StoreNameArrs {
 }
 
 export type SavableSectionType = keyof StoreNameArrsPlusAll;
-export type SavableSectionName<SN extends SavableSectionType = "all"> =
+export type DbSectionName<SN extends SavableSectionType = "all"> =
   StoreNameArrsPlusAll[SN][number];
 
 const storeNameArrsPlusAll: StoreNameArrsPlusAll = {
@@ -122,7 +122,7 @@ export const savableNameS = {
   is<T extends SavableSectionType = "all">(
     value: any,
     type?: T
-  ): value is SavableSectionName<T> {
+  ): value is DbSectionName<T> {
     return (this.arrs[(type ?? "all") as T] as any).includes(value);
   },
 } as const;

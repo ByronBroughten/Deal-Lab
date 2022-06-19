@@ -2,8 +2,8 @@ import { Request, Response } from "express";
 import { DbSectionPackInfoReq } from "../../../client/src/App/sharedWithServer/apiQueriesShared/makeReqAndRes";
 import { Id } from "../../../client/src/App/sharedWithServer/SectionsMeta/baseSections/id";
 import {
+  DbSectionName,
   savableNameS,
-  SavableSectionName,
   SavableSectionType,
 } from "../../../client/src/App/sharedWithServer/SectionsMeta/relNameArrs/storeArrs";
 import { ResHandledError } from "../../../resErrorUtils";
@@ -13,11 +13,11 @@ export function validateDbSectionInfoReq(
   req: Request,
   res: Response
 ): LoggedIn<DbSectionPackInfoReq> {
-  const { user, dbId, dbStoreName } = req.body;
+  const { user, dbId, sectionName } = req.body;
   return {
     body: {
       dbId: validateDbId(dbId, res),
-      dbStoreName: validateDbStoreName(dbStoreName, res),
+      sectionName: validateDbStoreName(sectionName, res),
       user: validateLoggedInUser(user, res),
     },
   };
@@ -35,7 +35,7 @@ export function validateDbStoreName<DT extends SavableSectionType = "all">(
   value: any,
   res: Response,
   type?: DT
-): SavableSectionName<DT> {
+): DbSectionName<DT> {
   if (savableNameS.is(value, type)) return value;
   else {
     res.status(500).send("The received dbId is not valid.");

@@ -17,14 +17,14 @@ export function validateSectionPackArrReq(
   req: Request,
   res: Response
 ): LoggedIn<SectionPackArrReq> {
-  const { sectionPackArr, user, dbStoreName } = req.body;
+  const { sectionPackArr, user, sectionName } = req.body;
   return {
     body: {
       user: validateLoggedInUser(user, res),
-      dbStoreName: validateDbStoreName(dbStoreName, res, "arrStore"),
+      sectionName: validateDbStoreName(sectionName, res, "arrStore"),
       sectionPackArr: validateServerSectionPackArr({
         value: sectionPackArr,
-        dbStoreName,
+        sectionName,
         res,
       }),
     },
@@ -47,18 +47,18 @@ export function validateSectionPackReq(
 type ValidateServerSectionPackArrProps = {
   value: any;
   res: Response;
-  dbStoreName: SectionName<"arrStore">;
+  sectionName: SectionName<"arrStore">;
 };
 function validateServerSectionPackArr({
   value,
   res,
-  dbStoreName,
+  sectionName,
 }: ValidateServerSectionPackArrProps): SectionPackRaw<
   SectionName<"arrStore">
 >[] {
   if (
     Array.isArray(value) &&
-    value.every((v) => SectionPack.isServer(v) && v.sectionName === dbStoreName)
+    value.every((v) => SectionPack.isServer(v) && v.sectionName === sectionName)
   ) {
     return value as SectionPackRaw<SectionName<"arrStore">>[];
   } else

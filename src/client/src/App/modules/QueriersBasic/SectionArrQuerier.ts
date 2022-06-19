@@ -3,16 +3,16 @@ import {
   SectionPackArrReq,
 } from "../../sharedWithServer/apiQueriesShared/makeReqAndRes";
 import { SectionPackRaw } from "../../sharedWithServer/SectionPack/SectionPackRaw";
-import { SavableSectionName } from "../../sharedWithServer/SectionsMeta/relNameArrs/storeArrs";
+import { DbSectionName } from "../../sharedWithServer/SectionsMeta/relNameArrs/storeArrs";
 import { ApiQuerierBase, ApiQuerierBaseProps } from "./Bases/ApiQuerierBase";
 
-interface SectionArrQuerierProps<SN extends SavableSectionName<"arrStore">>
+interface SectionArrQuerierProps<SN extends DbSectionName<"arrStore">>
   extends ApiQuerierBaseProps {
   sectionName: SN;
 }
 
 export class SectionArrQuerier<
-  SN extends SavableSectionName<"arrStore">
+  SN extends DbSectionName<"arrStore">
 > extends ApiQuerierBase {
   readonly sectionName: SN;
   constructor({ sectionName, ...rest }: SectionArrQuerierProps<SN>) {
@@ -22,10 +22,10 @@ export class SectionArrQuerier<
 
   async replace(feSectionPackArr: SectionPackRaw<SN>[]): Promise<SN> {
     const req = makeReq({
-      dbStoreName: this.sectionName,
+      sectionName: this.sectionName,
       sectionPackArr: feSectionPackArr,
     }) as SectionPackArrReq<SN>;
     const res = await this.apiQueries.replaceSectionArr(req as any);
-    return res.data.dbStoreName as SN;
+    return res.data.sectionName as SN;
   }
 }

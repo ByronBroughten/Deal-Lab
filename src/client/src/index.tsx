@@ -27,7 +27,7 @@ AppRegistry.runApplication("App", {
 // make main db savable
 // get the main sectionPack from the db (there should only be one).
 // make a sectionPackBuilder
-// for each child in main, if it is a dbStoreName
+// for each child in main, if it is a sectionName
 // add its dbInfo (plus feId) to an array
 // use the dbInfos to try to get all of them from the db
 // go through the array with the children, and if the dbInfo was found

@@ -5,7 +5,7 @@ import {
   SectionPackDbRaw,
   SectionPackRaw,
 } from "../client/src/App/sharedWithServer/SectionPack/SectionPackRaw";
-import { SavableSectionName } from "../client/src/App/sharedWithServer/SectionsMeta/relNameArrs/storeArrs";
+import { DbSectionName } from "../client/src/App/sharedWithServer/SectionsMeta/relNameArrs/storeArrs";
 import {
   SectionName,
   sectionNameS,
@@ -53,7 +53,7 @@ export class ServerUser {
       throw new Error(`There is no sectionPack in this.core[${sectionName}]`);
     }
   }
-  makeRawFeSectionPackArr<SN extends SavableSectionName>(
+  makeRawFeSectionPackArr<SN extends DbSectionName>(
     storeName: SN
   ): SectionPackRaw<SN>[] {
     // I'm not creating all the tables at the outset, I guess.

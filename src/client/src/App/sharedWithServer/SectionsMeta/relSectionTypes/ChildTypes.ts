@@ -2,10 +2,7 @@ import { RemoveNotStrings, StrictSubType, SubType } from "../../utils/types";
 import { MergeUnionObj } from "../../utils/types/mergeUnionObj";
 import { ContextName, SimpleSectionName } from "../baseSections";
 import { FeInfoByType } from "../Info";
-import {
-  SavableSectionName,
-  SavableSectionType,
-} from "../relNameArrs/storeArrs";
+import { DbSectionName, SavableSectionType } from "../relNameArrs/storeArrs";
 import { RelSections } from "../relSections";
 import { FeNameInfo } from "../relSections/rel/relVarbInfoTypes";
 import { SectionNameType } from "../SectionName";
@@ -45,7 +42,7 @@ export type FeToDbNameWithSameChildren<SN extends SimpleSectionName> =
 export type FeToDbStoreNameWithSameChildren<
   SN extends SimpleSectionName,
   DT extends SavableSectionType = "all"
-> = Extract<FeToDbNameWithSameChildren<SN>, SavableSectionName<DT>>;
+> = Extract<FeToDbNameWithSameChildren<SN>, DbSectionName<DT>>;
 
 export type DbToFeNameWithSameChildren<SN extends SimpleSectionName> =
   SectionNameWithSameChildren<SN, "db", "fe">;

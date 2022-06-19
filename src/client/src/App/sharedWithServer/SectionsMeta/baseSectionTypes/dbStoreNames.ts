@@ -8,7 +8,7 @@ const fullIndexStore = {
 // ideal:
 // whenever a section is loaded, its descendants are looked through,
 // from children on down
-// if a childName is a dbStoreName, each child is searched for in the db
+// if a childName is a sectionName, each child is searched for in the db
 // if it is found, it replaces the child, and the process continues.
 
 // I could make this happen by creating a section that has every other

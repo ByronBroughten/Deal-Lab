@@ -2,7 +2,7 @@ import {
   SectionPackRaw,
   ServerSectionPack,
 } from "../SectionPack/SectionPackRaw";
-import { SavableSectionName } from "../SectionsMeta/relNameArrs/storeArrs";
+import { DbSectionName } from "../SectionsMeta/relNameArrs/storeArrs";
 import { SectionName } from "../SectionsMeta/SectionName";
 
 export const makeReq = <B extends QueryObj>(body: B): MakeReq<B> => ({ body });
@@ -18,11 +18,11 @@ export type MakeRes<Data extends QueryObj> = {
 type QueryObj = { [key: string]: any };
 
 export type DbSectionPackInfo = {
-  dbStoreName: SavableSectionName;
+  sectionName: DbSectionName;
   dbId: string;
 };
 export type DbSectionPackInfoNext = {
-  dbStoreName: SavableSectionName<"indexStore">;
+  sectionName: DbSectionName<"indexStore">;
   dbId: string;
 };
 
@@ -31,7 +31,7 @@ export type SectionPackArrReq<
   SN extends SectionName<"arrStore"> = SectionName<"arrStore">
 > = MakeReq<{
   sectionPackArr: SectionPackRaw<SN>[];
-  dbStoreName: SN;
+  sectionName: SN;
 }>;
 export type TableSourcePackReq = MakeReq<{
   sourceSectionPack: ServerSectionPack;
@@ -43,4 +43,4 @@ export type SectionPackRes = MakeRes<{
   rawServerSectionPack: ServerSectionPack;
 }>;
 export type DbIdRes = MakeRes<{ dbId: string }>;
-export type DbStoreNameRes = MakeRes<{ dbStoreName: SavableSectionName }>;
+export type DbStoreNameRes = MakeRes<{ sectionName: DbSectionName }>;
