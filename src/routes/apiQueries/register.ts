@@ -3,10 +3,10 @@ import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/
 import { makeReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/makeReqAndRes";
 import {
   areGuestAccessSectionsNext,
-  isRegisterFormData,
+  isRegisterFormData
 } from "../../client/src/App/sharedWithServer/apiQueriesShared/register";
 import { makeMongooseObjectId } from "../../client/src/App/sharedWithServer/utils/mongoose";
-import { resHandledError } from "../../middleware/error";
+import { handleResAndMakeError } from "../../resErrorUtils";
 import { loginUtils } from "./login/loginUtils";
 import { MakeDbUserProps, userServerSide } from "./userServerSide";
 
@@ -32,10 +32,10 @@ async function registerServerSide(req: Request, res: Response) {
 function validateRegisterReq(req: Request, res: Response): NextReq<"register"> {
   const { registerFormData, guestAccessSections } = req.body;
   if (!isRegisterFormData(registerFormData)) {
-    throw resHandledError(res, 400, "Register form data failed validation");
+    throw handleResAndMakeError(res, 400, "Register form data failed validation");
   }
   if (!areGuestAccessSectionsNext(guestAccessSections)) {
-    throw resHandledError(res, 500, "Invalid guest access sections.");
+    throw handleResAndMakeError(res, 500, "Invalid guest access sections.");
   }
 
   return makeReq({
@@ -47,7 +47,7 @@ function validateRegisterReq(req: Request, res: Response): NextReq<"register"> {
 async function checkThatUserDoesntExist(lowercaseEmail: string, res: Response) {
   const foundUser = await loginUtils.tryFindOneUserByEmail(lowercaseEmail);
   if (foundUser)
-    throw resHandledError(
+    throw handleResAndMakeError(
       res,
       400,
       "An account with that email already exists."

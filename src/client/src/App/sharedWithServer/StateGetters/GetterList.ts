@@ -1,7 +1,9 @@
-import { SectionNotFoundError } from "../../utils/error";
 import { SpecificIdInfo } from "../SectionsMeta/baseSections/id";
 import { SectionName } from "../SectionsMeta/SectionName";
-import { RawFeSection } from "../StateSections/StateSections";
+import {
+  RawFeSection,
+  SectionNotFoundError,
+} from "../StateSections/StateSectionsTypes";
 import { Arr } from "../utils/Arr";
 import { GetterListBase } from "./Bases/GetterListBase";
 import { GetterSection } from "./GetterSection";

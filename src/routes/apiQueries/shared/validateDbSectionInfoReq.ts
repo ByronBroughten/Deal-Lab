@@ -6,7 +6,7 @@ import {
   SavableSectionName,
   SavableSectionType,
 } from "../../../client/src/App/sharedWithServer/SectionsMeta/relNameArrs/storeArrs";
-import { ResHandledError } from "../../../middleware/error";
+import { ResHandledError } from "../../../resErrorUtils";
 import { LoggedIn, validateLoggedInUser } from "./validateLoggedInUser";
 
 export function validateDbSectionInfoReq(

@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import Stripe from "stripe";
 import { config } from "../../client/src/App/Constants";
 import authWare from "../../middleware/authWare";
-import { resHandledError } from "../../middleware/error";
+import { handleResAndMakeError } from "../../resErrorUtils";
 import { findUserByIdAndUpdate } from "./shared/findAndUpdate";
 import { sendSuccess } from "./shared/sendSuccess";
 import {
@@ -37,7 +37,7 @@ async function doUpgradeUserToPro({ userId, res }: DoUpgradeUserToProProps) {
   const isProUser =
     userDoc.user[0].rawSections.user[0].dbVarbs.apiAccessStatus === "proUser";
   if (!isProUser)
-    throw resHandledError(
+    throw handleResAndMakeError(
       res,
       400,
       "Failed to upgrade to pro user. Please contact customer support."
@@ -85,5 +85,5 @@ function validateUpgradeUserToProReq(
 
 function validatePaymentMethodId(value: any, res: Response): string {
   if (typeof value === "string") return value;
-  throw resHandledError(res, 500, "Failed to validate paymentMethodId.");
+  throw handleResAndMakeError(res, 500, "Failed to validate paymentMethodId.");
 }

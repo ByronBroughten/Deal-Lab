@@ -1,5 +1,5 @@
 import { Response } from "express";
-import { resHandledError } from "../../../middleware/error";
+import { handleResAndMakeError } from "../../../resErrorUtils";
 import { UserModel } from "../../UserModel";
 
 const options = {
@@ -12,7 +12,7 @@ type FindUserByIdProps = { userId: string; res: Response };
 export async function getUserSectionsById({ userId, res }: FindUserByIdProps) {
   const user = await UserModel.findById(userId, undefined, options);
   if (user) return user;
-  else throw resHandledError(res, 404, "You are not logged in.");
+  else throw handleResAndMakeError(res, 404, "You are not logged in.");
 }
 
 export async function getUserByIdNoRes(userId: string) {

@@ -1,6 +1,6 @@
 import { Response } from "express";
 import { FilterQuery, QueryOptions } from "mongoose";
-import { resHandledError, ResHandledError } from "../../../middleware/error";
+import { handleResAndMakeError, ResHandledError } from "../../../resErrorUtils";
 import { UserDbRaw } from "../../ServerUser";
 import { UserModel } from "../../UserModel";
 
@@ -34,7 +34,7 @@ export async function findOneAndUpdate({
 }: FindOneAndUpdateProps) {
   const result = await UserModel.findOneAndUpdate(filter, operation, options);
   if (result) return result;
-  else throw resHandledError(res, 404, `Failed to ${doWhat}.`);
+  else throw handleResAndMakeError(res, 404, `Failed to ${doWhat}.`);
 }
 
 export async function updateOneUser({

@@ -15,7 +15,7 @@ import {
   SectionNameType,
 } from "../SectionsMeta/SectionName";
 import { VarbMetas } from "../SectionsMeta/VarbMetas";
-import { RawFeVarbs } from "../StateSections/StateSections";
+import { RawFeVarbs } from "../StateSections/StateSectionsTypes";
 import { Obj } from "../utils/Obj";
 import { GetterSectionBase } from "./Bases/GetterSectionBase";
 import { GetterSection } from "./GetterSection";

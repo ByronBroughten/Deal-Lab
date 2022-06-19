@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 import { isObject } from "lodash";
 import mongoose from "mongoose";
 import { constants } from "../../../client/src/App/Constants";
-import { resHandledError } from "../../../middleware/error";
+import { handleResAndMakeError } from "../../../resErrorUtils";
 import { ServerUser, UserDbRaw } from "../../ServerUser";
 import { UserModel } from "../../UserModel";
 import { userServerSide } from "../userServerSide";
@@ -30,7 +30,11 @@ export const loginUtils = {
     const decoded = this.decodeUserAuthToken(token);
     if (decoded) return decoded;
     else
-      throw resHandledError(res, 401, "Access denied. Invalid token provided.");
+      throw handleResAndMakeError(
+        res,
+        401,
+        "Access denied. Invalid token provided."
+      );
   },
   dummyUserAuthToken() {
     const arbitraryId = new mongoose.Types.ObjectId();

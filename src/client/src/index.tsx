@@ -8,6 +8,10 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
+// get tests to pass
+// replace getUserSectionsById
+// replace findSectionPack
+
 // implement the new way of loading from the db.
 
 // get rid of all duplicate sectionNames (for the lists, etc)

@@ -1,12 +1,12 @@
 import { Response } from "express";
 import { DbSectionInfo } from "../../../../client/src/App/sharedWithServer/SectionPack/DbSectionInfo";
 import { SimpleDbStoreName } from "../../../../client/src/App/sharedWithServer/SectionsMeta/baseSectionTypes/dbStoreNames";
-import { resHandledError } from "../../../../middleware/error";
+import { ResStatusError } from "../../../../resErrorUtils";
 import { UserModel } from "../../../UserModel";
 import { DbSectionsBase } from "./Bases/DbSectionsBase";
 import { DbSection } from "./DbSection";
 
-interface InitProps {
+export interface DbSectionsInitProps {
   res: Response;
   userId: string;
 }
@@ -18,7 +18,6 @@ const queryOptions = {
 } as const;
 
 export class UserNotFoundError extends Error {}
-
 export class DbSections extends DbSectionsBase {
   section<SN extends SimpleDbStoreName>(
     dbInfo: DbSectionInfo<SN>
@@ -28,22 +27,18 @@ export class DbSections extends DbSectionsBase {
       ...dbInfo,
     });
   }
-  static async init({ userId, res }: InitProps) {
+  static async init({ userId, res }: DbSectionsInitProps): Promise<DbSections> {
     const dbSections = await UserModel.findById(
       userId,
       undefined,
       queryOptions
     );
     if (dbSections) return new DbSections({ dbSections, res });
-    else throw new UserNotFoundError("User not found.");
-  }
-  static async initOrSend404(props: InitProps) {
-    try {
-      return await this.init(props);
-    } catch (ex) {
-      if (ex instanceof UserNotFoundError) {
-        throw resHandledError(props.res, 404, "You are not logged in.");
-      }
-    }
+    else
+      throw new ResStatusError({
+        errorMessage: "User not found.",
+        resMessage: "Could not access user account.",
+        status: 400,
+      });
   }
 }

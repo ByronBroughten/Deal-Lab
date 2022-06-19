@@ -3,16 +3,17 @@ import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/
 import { ServerSectionPack } from "../../client/src/App/sharedWithServer/SectionPack/SectionPackRaw";
 import { SectionName } from "../../client/src/App/sharedWithServer/SectionsMeta/SectionName";
 import authWare from "../../middleware/authWare";
-import { ResHandledError } from "../../middleware/error";
+import { ResHandledError } from "../../resErrorUtils";
 import { SectionPackDb } from "../SectionPackDb";
 import { findUserByIdAndUpdate } from "./shared/findAndUpdate";
 import {
   findSectionPack,
-  FindSectionPackProps,
+  FindSectionPackProps
 } from "./shared/findSectionPack";
 import { sendSuccess } from "./shared/sendSuccess";
 import { LoggedIn } from "./shared/validateLoggedInUser";
 import { validateSectionPackReq } from "./shared/validateSectionPackReq";
+
 
 export const addSectionWare = [authWare, addSectionServerSide] as const;
 async function addSectionServerSide(req: Request, res: Response) {

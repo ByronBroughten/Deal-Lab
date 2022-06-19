@@ -6,7 +6,7 @@ import {
   isLoginFormData,
   LoginFormData,
 } from "../../client/src/App/sharedWithServer/apiQueriesShared/login";
-import { resHandledError, ResHandledError } from "../../middleware/error";
+import { handleResAndMakeError, ResHandledError } from "../../resErrorUtils";
 import { ServerUser, UserDbRaw } from "../ServerUser";
 import { loginUtils } from "./login/loginUtils";
 import { userServerSide } from "./userServerSide";
@@ -40,7 +40,7 @@ function validateLoginFormData(value: any, res: Response): LoginFormData {
 export async function validateEmail(email: string, res: Response) {
   const user = await loginUtils.tryFindOneUserByEmail(email);
   if (user) return user as LeanDocument<typeof user>;
-  else throw resHandledError(res, 400, "Invalid email address.");
+  else throw handleResAndMakeError(res, 400, "Invalid email address.");
 }
 
 type ValidateUserPasswordProps = {

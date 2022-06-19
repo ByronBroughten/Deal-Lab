@@ -7,7 +7,7 @@ import { Arr } from "../../client/src/App/sharedWithServer/utils/Arr";
 import { runApp } from "../../runApp";
 import { UserModel } from "../UserModel";
 import { loginUtils } from "./login/loginUtils";
-import { getUserByIdNoRes } from "./shared/getUserSectionsById";
+import { getUserByIdNoRes } from "./shared/getUserDbSectionsById";
 import { createTestUserModelNext } from "./test/createTestUserModelNext";
 import { SectionQueryTester } from "./test/SectionQueryTester";
 

@@ -2,7 +2,7 @@ import { StateValue } from "../SectionsMeta/baseSections/baseValues/StateValueTy
 import { SectionName } from "../SectionsMeta/SectionName";
 import { GetterVarbBase } from "../StateGetters/Bases/GetterVarbBase";
 import { GetterVarb } from "../StateGetters/GetterVarb";
-import { RawFeVarb } from "../StateSections/StateSections";
+import { RawFeVarb } from "../StateSections/StateSectionsTypes";
 
 export class UpdaterVarb<
   SN extends SectionName<"hasVarb">

@@ -3,7 +3,7 @@ import {
   ApiQueryName,
   NextReq,
 } from "../../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
-import { ResHandledError } from "../../../middleware/error";
+import { ResHandledError } from "../../../resErrorUtils";
 
 export type UserAuthedReq<QN extends ApiQueryName> = LoggedIn<
   NextReq<"upgradeUserToPro">

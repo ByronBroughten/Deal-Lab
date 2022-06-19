@@ -9,7 +9,7 @@ import { DbValue } from "../SectionsMeta/relSections/rel/valueMetaTypes";
 import { ChildIdArrsNarrow } from "../SectionsMeta/relSectionTypes/ChildTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { StrictPick, StrictPickPartial } from "../utils/types";
-import { RawFeSection, RawFeVarb, RawFeVarbs } from "./StateSections";
+import { RawFeSection, RawFeVarb, RawFeVarbs } from "./StateSectionsTypes";
 
 type InitVarbs = Partial<DbVarbs>;
 type InitChildIdArrs<SN extends SectionName> = Partial<ChildIdArrsNarrow<SN>>;

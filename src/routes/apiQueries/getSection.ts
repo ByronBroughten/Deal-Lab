@@ -5,7 +5,7 @@ import {
   ServerSectionPack,
 } from "../../client/src/App/sharedWithServer/SectionPack/SectionPackRaw";
 import authWare from "../../middleware/authWare";
-import { ResHandledError } from "../../middleware/error";
+import { handleResAndMakeError } from "../../resErrorUtils";
 import { SectionPackDb } from "../SectionPackDb";
 import {
   findSectionPack,
@@ -38,8 +38,7 @@ async function getSectionPack(
       dbStoreName: spInfo.dbStoreName,
     });
   else {
-    res.status(404).send("Section not found.");
-    throw new ResHandledError("Handled in getSectionPack");
+    throw handleResAndMakeError(res, 404, "Section not found.");
   }
 }
 

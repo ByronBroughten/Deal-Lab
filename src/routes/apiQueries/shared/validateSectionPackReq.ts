@@ -9,7 +9,7 @@ import {
   ServerSectionPack,
 } from "../../../client/src/App/sharedWithServer/SectionPack/SectionPackRaw";
 import { SectionName } from "../../../client/src/App/sharedWithServer/SectionsMeta/SectionName";
-import { resHandledError } from "../../../middleware/error";
+import { handleResAndMakeError } from "../../../resErrorUtils";
 import { validateDbStoreName } from "./validateDbSectionInfoReq";
 import { LoggedIn, validateLoggedInUser } from "./validateLoggedInUser";
 
@@ -62,7 +62,7 @@ function validateServerSectionPackArr({
   ) {
     return value as SectionPackRaw<SectionName<"arrStore">>[];
   } else
-    throw resHandledError(
+    throw handleResAndMakeError(
       res,
       500,
       "Payload is not a valid server section array."
@@ -75,7 +75,7 @@ function validateServerSectionPack(
 ): ServerSectionPack {
   if (SectionPack.isServer(value)) return value;
   else {
-    throw resHandledError(
+    throw handleResAndMakeError(
       res,
       500,
       "Payload is not a valid server section pack."

@@ -25,7 +25,7 @@ import {
 } from "../SectionsMeta/relSections/rel/valueMetaTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { cloneValue, InUpdatePack, VarbMeta } from "../SectionsMeta/VarbMeta";
-import { RawFeVarb } from "../StateSections/StateSections";
+import { RawFeVarb } from "../StateSections/StateSectionsTypes";
 import { GetterVarbBase } from "./Bases/GetterVarbBase";
 import { GetterSection } from "./GetterSection";
 import { GetterSections } from "./GetterSections";

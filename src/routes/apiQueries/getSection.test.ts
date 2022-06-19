@@ -21,7 +21,6 @@ function makeReqs(): TestReqs {
     sectionName,
     indexName: "property",
   });
-  const addSectionReq = tester.makeSectionPackReq();
   return {
     addSection: tester.makeSectionPackReq(),
     getSection: tester.makeDbInfoReq(),

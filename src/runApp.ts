@@ -5,7 +5,7 @@ import Debug from "debug";
 import express from "express";
 import helmet from "helmet";
 import morgan from "morgan";
-import error from "./middleware/error";
+import { errorBackstop } from "./middleware/errorBackstop";
 import checkConfig from "./startup/config";
 import routes from "./startup/routes";
 import setupLogger, { logger } from "./startup/setupLogger";
@@ -35,7 +35,7 @@ export function runApp() {
   }
 
   routes(app);
-  app.use(error);
+  app.use(errorBackstop);
   if (process.env.NODE_ENV === "production") {
     app.get("*", function (req, res) {
       res.sendFile("index.html", { root: "src/client/build/" });
