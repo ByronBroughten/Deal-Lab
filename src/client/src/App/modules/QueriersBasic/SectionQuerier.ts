@@ -30,7 +30,7 @@ export class SectionQuerier extends ApiQuerierBase {
       dbId,
     } as const);
     const res = await this.apiQueries.getSection(req);
-    return res.data.rawServerSectionPack;
+    return res.data.sectionPack;
   }
   async delete(dbId: string): Promise<string> {
     const req = makeReq({

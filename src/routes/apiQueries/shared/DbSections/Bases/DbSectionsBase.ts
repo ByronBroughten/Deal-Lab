@@ -1,25 +1,15 @@
-import { Response } from "express";
-import { Document } from "mongoose";
-import { UserDbRaw } from "../../../../ServerUser";
+import { DbSectionsRaw } from "../DbSectionsQuerierTypes";
 
-interface DbSectionsCore extends UserDbRaw, Document<any, any> {}
 export type DbSectionsProps = {
-  dbSections: DbSectionsCore;
-  res: Response;
+  dbSectionsRaw: DbSectionsRaw;
 };
 
 export class DbSectionsBase {
-  readonly dbSections: DbSectionsCore;
-  readonly res: Response;
-  constructor({ dbSections, res }: DbSectionsProps) {
-    this.dbSections = dbSections;
-
-    this.res = res;
+  readonly dbSectionsRaw: DbSectionsRaw;
+  constructor({ dbSectionsRaw }: DbSectionsProps) {
+    this.dbSectionsRaw = dbSectionsRaw;
   }
   get dbSectionsProps(): DbSectionsProps {
-    return {
-      dbSections: this.dbSections,
-      res: this.res,
-    };
+    return { dbSectionsRaw: this.dbSectionsRaw };
   }
 }

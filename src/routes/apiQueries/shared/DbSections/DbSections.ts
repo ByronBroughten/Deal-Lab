@@ -1,25 +1,17 @@
-import { Response } from "express";
 import { DbSectionInfo } from "../../../../client/src/App/sharedWithServer/SectionPack/DbSectionInfo";
-import { SimpleDbStoreName } from "../../../../client/src/App/sharedWithServer/SectionsMeta/baseSectionTypes/dbStoreNames";
-import { ResStatusError } from "../../../../resErrorUtils";
-import { UserModel } from "../../../UserModel";
+import { ServerSectionName } from "../../../ServerSectionName";
 import { DbSectionsBase } from "./Bases/DbSectionsBase";
 import { DbSection } from "./DbSection";
+import { DbSectionsQuerier } from "./DbSectionsQuerier";
 
-export interface DbSectionsInitProps {
-  res: Response;
+export interface DbSectionsInitByIdProps {
   userId: string;
 }
-
-const queryOptions = {
-  new: true,
-  lean: true,
-  useFindAndModify: false,
-} as const;
-
-export class UserNotFoundError extends Error {}
+export interface DbSectionsInitByEmailProps {
+  email: string;
+}
 export class DbSections extends DbSectionsBase {
-  section<SN extends SimpleDbStoreName>(
+  section<SN extends ServerSectionName>(
     dbInfo: DbSectionInfo<SN>
   ): DbSection<SN> {
     return new DbSection({
@@ -27,18 +19,34 @@ export class DbSections extends DbSectionsBase {
       ...dbInfo,
     });
   }
-  static async init({ userId, res }: DbSectionsInitProps): Promise<DbSections> {
-    const dbSections = await UserModel.findById(
-      userId,
-      undefined,
-      queryOptions
+  oneAndOnly<SN extends ServerSectionName>(sectionName: SN): DbSection<SN> {
+    if (this.dbSectionsRaw[sectionName].length !== 1) {
+      throw new Error("Something went wrong");
+    }
+    const { dbId } = this.dbSectionsRaw[sectionName][0];
+    return this.section({ sectionName, dbId });
+  }
+  hasSection({ sectionName, dbId }: DbSectionInfo<ServerSectionName>): boolean {
+    const sectionPack = [...this.dbSectionsRaw[sectionName]].find(
+      (section) => section.dbId === dbId
     );
-    if (dbSections) return new DbSections({ dbSections, res });
-    else
-      throw new ResStatusError({
-        errorMessage: "User not found.",
-        resMessage: "Could not access user account.",
-        status: 400,
-      });
+    if (sectionPack) return true;
+    else return false;
+  }
+  static async initByEmail({
+    email,
+  }: DbSectionsInitByEmailProps): Promise<DbSections> {
+    const querier = await DbSectionsQuerier.initByEmail(email);
+    return new DbSections({
+      dbSectionsRaw: await querier.getDbSectionsRaw(),
+    });
+  }
+  static async initById({
+    userId,
+  }: DbSectionsInitByIdProps): Promise<DbSections> {
+    const querier = await DbSectionsQuerier.initByUserId(userId);
+    return new DbSections({
+      dbSectionsRaw: await querier.getDbSectionsRaw(),
+    });
   }
 }

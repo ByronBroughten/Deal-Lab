@@ -58,6 +58,17 @@ export class SectionPack<SN extends SectionName> {
         return rawSections;
       }, {} as RawSections<SN>);
   }
+  static isOfSectionName<SN extends SectionName>(
+    value: any,
+    sectionName: SN
+  ): value is SectionPackRaw<SN> {
+    if (
+      zRawSectionPack.safeParse(value).success &&
+      value.sectionName === sectionName
+    ) {
+      return true;
+    } else return false;
+  }
   static isRaw<ST extends SectionNameType = "all">(
     value: any,
     sectionType?: ST

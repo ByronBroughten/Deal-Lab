@@ -5,12 +5,12 @@ import { SectionName } from "../../client/src/App/sharedWithServer/SectionsMeta/
 import authWare from "../../middleware/authWare";
 import { ResStatusError } from "../../resErrorUtils";
 import { SectionPackDb } from "../SectionPackDb";
-import { DbSectionNotFoundError } from "./shared/DbSections/DbSection";
-import { findUserByIdAndUpdate } from "./shared/findAndUpdate";
 import {
-  findSectionPack,
-  FindSectionPackProps,
-} from "./shared/findSectionPack";
+  DbSection,
+  DbSectionInitByIdProps,
+} from "./shared/DbSections/DbSection";
+import { SectionPackNotFoundError } from "./shared/DbSections/DbSectionsQuerierTypes";
+import { findUserByIdAndUpdate } from "./shared/findAndUpdate";
 import { sendSuccess } from "./shared/sendSuccess";
 import { LoggedIn } from "./shared/validateLoggedInUser";
 import { validateSectionPackReq } from "./shared/validateSectionPackReq";
@@ -24,7 +24,6 @@ async function addSectionServerSide(req: Request, res: Response) {
   await checkThatSectionPackIsNotThere({
     ...sectionPack,
     userId,
-    res,
   });
   await findUserByIdAndUpdate({
     res,
@@ -43,17 +42,17 @@ function validateAddSectionReq(
 
 async function checkThatSectionPackIsNotThere<
   SN extends SectionName<"dbStoreNext">
->(props: FindSectionPackProps<SN>): Promise<true> {
+>(props: DbSectionInitByIdProps<SN>): Promise<true> {
   const { sectionName, dbId } = props;
   try {
-    await findSectionPack(props);
+    await DbSection.sectionPack(props);
     throw new ResStatusError({
       errorMessage: `An entry at ${sectionName}.${dbId} already exists.`,
       resMessage: "The sent payload has already been saved.",
       status: 500,
     });
   } catch (err) {
-    if (err instanceof DbSectionNotFoundError) {
+    if (err instanceof SectionPackNotFoundError) {
       return true;
     } else {
       throw err;

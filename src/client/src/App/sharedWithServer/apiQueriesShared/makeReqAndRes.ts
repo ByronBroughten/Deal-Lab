@@ -40,7 +40,7 @@ export type TableSourcePackReq = MakeReq<{
 
 export type DbSectionPackInfoReq = MakeReq<DbSectionPackInfo>;
 export type SectionPackRes = MakeRes<{
-  rawServerSectionPack: ServerSectionPack;
+  sectionPack: ServerSectionPack;
 }>;
 export type DbIdRes = MakeRes<{ dbId: string }>;
 export type DbStoreNameRes = MakeRes<{ sectionName: DbSectionName }>;

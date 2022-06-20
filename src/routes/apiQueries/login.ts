@@ -1,14 +1,14 @@
 import bcrypt from "bcrypt";
 import { Request, Response } from "express";
-import { LeanDocument } from "mongoose";
 import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import {
   isLoginFormData,
-  LoginFormData,
+  LoginFormData
 } from "../../client/src/App/sharedWithServer/apiQueriesShared/login";
-import { handleResAndMakeError, ResHandledError } from "../../resErrorUtils";
+import { ResHandledError } from "../../resErrorUtils";
 import { ServerUser, UserDbRaw } from "../ServerUser";
 import { loginUtils } from "./login/loginUtils";
+import { DbSections } from "./shared/DbSections/DbSections";
 import { userServerSide } from "./userServerSide";
 
 export const nextLoginWare = [loginServerSide] as const;
@@ -19,9 +19,9 @@ async function loginServerSide(req: Request, res: Response) {
   const { email: rawEmail, password } = reqObj.body;
   const { email } = userServerSide.prepEmail(rawEmail);
 
-  const user = await validateEmail(email, res);
-
-  await validateUserPassword({ user: user, attemptedPassword: password, res });
+  const dbSections = await DbSections.initByEmail({ email });
+  const user = dbSections.dbSectionsRaw;
+  await validateUserPassword({ user, attemptedPassword: password, res });
   return loginUtils.doLogin(res, user);
 }
 
@@ -35,12 +35,6 @@ function validateLoginFormData(value: any, res: Response): LoginFormData {
     res.status(400).send("Payload failed loginFormData validation");
     throw new ResHandledError("Handled in validateLoginFormData");
   }
-}
-
-export async function validateEmail(email: string, res: Response) {
-  const user = await loginUtils.tryFindOneUserByEmail(email);
-  if (user) return user as LeanDocument<typeof user>;
-  else throw handleResAndMakeError(res, 400, "Invalid email address.");
 }
 
 type ValidateUserPasswordProps = {

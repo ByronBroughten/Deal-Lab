@@ -1,13 +1,15 @@
-import { SimpleDbStoreName } from "../../../../../client/src/App/sharedWithServer/SectionsMeta/baseSectionTypes/dbStoreNames";
+import { DbSectionInfo } from "../../../../../client/src/App/sharedWithServer/SectionPack/DbSectionInfo";
+import { ServerSectionName } from "../../../../ServerSectionName";
 import { DbSectionsBase, DbSectionsProps } from "./DbSectionsBase";
 
-interface DbSectionProps<SN extends SimpleDbStoreName> extends DbSectionsProps {
+export interface DbSectionProps<SN extends ServerSectionName>
+  extends DbSectionsProps {
   sectionName: SN;
   dbId: string;
 }
 
 export class DbSectionBase<
-  SN extends SimpleDbStoreName
+  SN extends ServerSectionName
 > extends DbSectionsBase {
   readonly sectionName: SN;
   readonly dbId: string;
@@ -15,5 +17,17 @@ export class DbSectionBase<
     super(rest);
     this.sectionName = sectionName;
     this.dbId = dbId;
+  }
+  get dbInfo(): DbSectionInfo<SN> {
+    return {
+      sectionName: this.sectionName,
+      dbId: this.dbId,
+    };
+  }
+  get dbSectionProps(): DbSectionProps<SN> {
+    return {
+      ...this.dbSectionsProps,
+      ...this.dbInfo,
+    };
   }
 }

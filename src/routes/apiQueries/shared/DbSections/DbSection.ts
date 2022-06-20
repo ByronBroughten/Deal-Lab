@@ -1,25 +1,61 @@
 import { DbSectionInfo } from "../../../../client/src/App/sharedWithServer/SectionPack/DbSectionInfo";
 import { SectionPackRaw } from "../../../../client/src/App/sharedWithServer/SectionPack/SectionPackRaw";
-import { SimpleDbStoreName } from "../../../../client/src/App/sharedWithServer/SectionsMeta/baseSectionTypes/dbStoreNames";
-import { ResStatusError } from "../../../../resErrorUtils";
-import { DbSectionBase } from "./Bases/DbSectionBase";
-import { DbSections, DbSectionsInitProps } from "./DbSections";
+import { StrictOmit } from "../../../../client/src/App/sharedWithServer/utils/types";
+import { ServerSectionName } from "../../../ServerSectionName";
+import { DbSectionBase, DbSectionProps } from "./Bases/DbSectionBase";
+import { DbSections, DbSectionsInitByIdProps } from "./DbSections";
+import { DbSectionsQuerier } from "./DbSectionsQuerier";
+import { SectionPackNotFoundError } from "./DbSectionsQuerierTypes";
 
-export interface DbSectionInitProps<SN extends SimpleDbStoreName>
-  extends DbSectionsInitProps,
+export interface DbSectionInitByIdProps<SN extends ServerSectionName>
+  extends DbSectionsInitByIdProps,
     DbSectionInfo<SN> {}
 
-export class DbSectionNotFoundError extends ResStatusError {}
-export class DbSection<SN extends SimpleDbStoreName> extends DbSectionBase<SN> {
-  static async init<SN extends SimpleDbStoreName>(
-    props: DbSectionInitProps<SN>
-  ): Promise<DbSection<SN>> {
-    const userSections = await DbSections.init(props);
-    return userSections.section(props);
+export interface DbSectionInitOnlyProps<SN extends ServerSectionName>
+  extends StrictOmit<DbSectionInitByIdProps<SN>, "dbId"> {}
+
+export class DbSection<SN extends ServerSectionName> extends DbSectionBase<SN> {
+  dbSections = new DbSections(this.dbSectionsProps);
+  constructor(props: DbSectionProps<SN>) {
+    super(props);
+    if (!this.dbSections.hasSection(this.dbInfo)) {
+      throw new SectionPackNotFoundError({
+        errorMessage: `Section not found at ${this.sectionName}.${this.dbId}`,
+        resMessage: "The requested entry was not found",
+        status: 404,
+      });
+    }
   }
-  sectionPack(): SectionPackRaw<SN> {
-    this.dbSections[this.sectionName];
-    const sectionPack = [...this.dbSections[this.sectionName]].find(
+  static async initOneAndOnly<SN extends ServerSectionName>(
+    props: DbSectionInitOnlyProps<SN>
+  ): Promise<DbSection<SN>> {
+    const dbSections = await DbSections.initById(props);
+    return dbSections.oneAndOnly(props.sectionName);
+  }
+  static async initById<SN extends ServerSectionName>(
+    props: DbSectionInitByIdProps<SN>
+  ): Promise<DbSection<SN>> {
+    const dbSections = await DbSections.initById(props);
+    return dbSections.section(props);
+  }
+  static async sectionPack<SN extends ServerSectionName>(
+    props: DbSectionInitByIdProps<SN>
+  ) {
+    const querier = await DbSectionsQuerier.initByUserId(props.userId);
+    return await querier.getSectionPack(props);
+    // const dbSection = DbSection.initById(props);
+    // return (await dbSection).sectionPack;
+  }
+  get rawSectionArr() {
+    return this.sectionPack.rawSections[this.sectionName];
+  }
+  get rawSection() {
+    const test = this.sectionPack.rawSections[this.sectionName];
+    return test;
+  }
+  get sectionPack(): SectionPackRaw<SN> {
+    this.dbSectionsRaw[this.sectionName];
+    const sectionPack = [...this.dbSectionsRaw[this.sectionName]].find(
       (section) => section.dbId === this.dbId
     );
     if (sectionPack) {
@@ -28,11 +64,7 @@ export class DbSection<SN extends SimpleDbStoreName> extends DbSectionBase<SN> {
         sectionName: this.sectionName,
       } as SectionPackRaw<SN>;
     } else {
-      throw new DbSectionNotFoundError({
-        errorMessage: `Section not found at ${this.sectionName}.${this.dbId}`,
-        resMessage: "The requested entry was not found",
-        status: 404,
-      });
+      throw new Error("Something went wrong.");
     }
   }
 }
