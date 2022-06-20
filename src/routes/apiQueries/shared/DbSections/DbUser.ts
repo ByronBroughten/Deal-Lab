@@ -1,6 +1,5 @@
 import { StrictOmit } from "../../../../client/src/App/sharedWithServer/utils/types";
 import { DbSectionBase, DbSectionProps } from "./Bases/DbSectionBase";
-import { DbSection } from "./DbSection";
 import { DbSections } from "./DbSections";
 
 interface DbUserProps
@@ -9,15 +8,14 @@ class DbUser extends DbSectionBase<"user"> {
   constructor(props: DbUserProps) {
     super({ ...props, sectionName: "user" });
   }
-  get dbSection() {
-    return new DbSection(this.dbSectionProps);
-  }
   get dbSections() {
     return new DbSections(this.dbSectionsProps);
   }
   get serverOnlyUser() {
     return this.dbSections.oneAndOnly("serverOnlyUser");
   }
+  
+
   // getUserEncryptedPassword(user: UserDbRaw): string {
   //   const dbUser = ServerUser.init(user);
   //   const userSection = dbUser.firstSectionPackHeadSection("serverOnlyUser");

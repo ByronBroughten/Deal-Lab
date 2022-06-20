@@ -53,6 +53,11 @@ export const baseSection = {
       ...options,
     } as ReturnSchema<V, O>;
   },
+  get container() {
+    return this.schema({
+      _typeUniformity: "string",
+    } as const);
+  },
   get singleTimeListSolves() {
     return this.schema(baseVarbs.singleTimeList, { solvesForFinal: true });
   },

@@ -6,9 +6,9 @@ import authWare from "../../middleware/authWare";
 import { ResStatusError } from "../../resErrorUtils";
 import { SectionPackDb } from "../SectionPackDb";
 import {
-  DbSection,
-  DbSectionInitByIdProps,
+  DbSectionInitByIdProps
 } from "./shared/DbSections/DbSection";
+import { DbSectionsQuerier } from "./shared/DbSections/DbSectionsQuerier";
 import { SectionPackNotFoundError } from "./shared/DbSections/DbSectionsQuerierTypes";
 import { findUserByIdAndUpdate } from "./shared/findAndUpdate";
 import { sendSuccess } from "./shared/sendSuccess";
@@ -45,7 +45,8 @@ async function checkThatSectionPackIsNotThere<
 >(props: DbSectionInitByIdProps<SN>): Promise<true> {
   const { sectionName, dbId } = props;
   try {
-    await DbSection.sectionPack(props);
+    const querier = await DbSectionsQuerier.initByUserId(props.userId);
+    await querier.getSectionPack(props);
     throw new ResStatusError({
       errorMessage: `An entry at ${sectionName}.${dbId} already exists.`,
       resMessage: "The sent payload has already been saved.",

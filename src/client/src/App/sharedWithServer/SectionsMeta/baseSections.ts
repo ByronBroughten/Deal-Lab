@@ -44,6 +44,7 @@ export function extractSectionContext<SCB extends SectionContextOrBoth>(
 export type BaseSections = typeof baseSections;
 export const baseSections = {
   fe: {
+    // root: base.section.container,
     main: base.section.schema(
       {
         _typeUniformity: "string",
@@ -52,27 +53,12 @@ export const baseSections = {
         alwaysOne: true,
       }
     ),
-    omniParent: base.section.schema(
-      {
-        _typeUniformity: "string",
-      } as const,
-      {
-        alwaysOne: true,
-      }
-    ),
+    omniParent: base.section.container,
     table: base.section.schema({ titleFilter: "string" } as const),
-    propertyTableStore: base.section.schema({
-      _typeUniformity: "string",
-    } as const),
-    loanTableStore: base.section.schema({
-      _typeUniformity: "string",
-    } as const),
-    mgmtTableStore: base.section.schema({
-      _typeUniformity: "string",
-    } as const),
-    dealTableStore: base.section.schema({
-      _typeUniformity: "string",
-    } as const),
+    propertyTableStore: base.section.container,
+    loanTableStore: base.section.container,
+    mgmtTableStore: base.section.container,
+    dealTableStore: base.section.container,
     tableRow: base.section.schema(base.varbs.tableRow, { uniqueDbId: true }),
     column: base.section.schema(base.varbs.varbInfo),
     cell: base.section.schema({ ...base.varbs.varbInfo, value: "numObj" }),

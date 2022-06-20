@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import authWare from "../../middleware/authWare";
-import { DbSection } from "./shared/DbSections/DbSection";
+import { DbSectionsQuerier } from "./shared/DbSections/DbSectionsQuerier";
 import { sendSuccess } from "./shared/sendSuccess";
 import { validateDbSectionInfoReq } from "./shared/validateDbSectionInfoReq";
 import { LoggedIn } from "./shared/validateLoggedInUser";
@@ -11,12 +11,11 @@ export const getSectionWare = [authWare, getSectionServerSide] as const;
 async function getSectionServerSide(req: Request, res: Response) {
   const {
     user: { _id: userId },
-    ...spInfo
+    ...dbInfo
   } = validateGetSectionReq(req, res).body;
-  const sectionPack = await DbSection.sectionPack({
-    ...spInfo,
-    userId,
-  });
+
+  const querier = await DbSectionsQuerier.initByUserId(userId);
+  const sectionPack = await querier.getSectionPack(dbInfo);
   sendSuccess(res, "getSection", { data: { sectionPack } });
 }
 
