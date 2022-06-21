@@ -44,7 +44,7 @@ export function extractSectionContext<SCB extends SectionContextOrBoth>(
 export type BaseSections = typeof baseSections;
 export const baseSections = {
   fe: {
-    // root: base.section.container,
+    root: base.section.container,
     main: base.section.schema(
       {
         _typeUniformity: "string",

@@ -8,7 +8,20 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-// implement the new way of loading from the db.
+// implement DbUser
+// let DbUser have a getterSection
+// make it so that to initialize DbUser,
+// - create sections that just have root and omniparent
+// - load the sectionPack as a child to omniParent
+// - use the sectionPack's info to create a getter
+//   section
+// - do the same for serverSideUser
+// - In DbUser, access the password of serverSideUser
+//   and check it
+
+// make the dbSectionsRaw able to convert into
+// sections, for the sake of being able to search for
+// getterSections
 
 // get rid of all duplicate sectionNames (for the lists, etc)
 // - you will need to add sections to differentiate the

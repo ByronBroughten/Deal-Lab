@@ -7,7 +7,7 @@ import { NumObj } from "../../client/src/App/sharedWithServer/SectionsMeta/baseS
 import { Id } from "../../client/src/App/sharedWithServer/SectionsMeta/baseSections/id";
 import { runApp } from "../../runApp";
 import { UserModel } from "../UserModel";
-import { loginUtils } from "./login/loginUtils";
+import { DbUser } from "./shared/DbSections/DbUser";
 import { getUserByIdNoRes } from "./shared/getUserDbSectionsById";
 import { createTestUserModelNext } from "./test/createTestUserModelNext";
 import { SectionQueryTester } from "./test/SectionQueryTester";
@@ -55,7 +55,7 @@ describe(testedRoute, () => {
     reqs = makeReqs();
     server = runApp();
     userId = await createTestUserModelNext(testedRoute);
-    token = loginUtils.makeUserAuthToken(userId);
+    token = DbUser.makeUserAuthToken(userId);
   });
 
   afterEach(async () => {

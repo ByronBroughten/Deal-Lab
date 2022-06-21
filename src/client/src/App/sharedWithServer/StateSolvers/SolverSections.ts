@@ -105,15 +105,15 @@ export class SolverSections extends SolverSectionsBase {
     const defaultMainPack = defaultMaker.make("main");
     return this.initSolvedSectionsFromMainPack(defaultMainPack);
   }
-  private static initSolvedSectionsFromMainPack(
+  static initSolvedSectionsFromMainPack(
     sectionPack: SectionPackRaw<"main">
   ): StateSections {
-    const sections = StateSections.initWithMain();
+    const sections = StateSections.initWithRoot();
     const solver = SolverSection.init({
-      ...sections.rawSectionList("main")[0],
+      ...sections.rawSectionList("root")[0],
       sectionsShare: { sections },
     });
-    solver.loadSelfSectionPackAndSolve(sectionPack);
+    solver.loadChildPackAndSolve(sectionPack);
     return solver.sectionsShare.sections;
   }
 }

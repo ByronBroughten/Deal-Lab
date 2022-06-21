@@ -3,12 +3,12 @@ import {
   IsUnion,
   NeversToSomething,
   RemoveNotStrings,
-  SubType,
+  SubType
 } from "../../utils/types";
 import {
   ContextName,
   sectionContext,
-  SimpleSectionName,
+  SimpleSectionName
 } from "../baseSections";
 import { BaseName, SectionFinder } from "../baseSectionTypes";
 import { relSections } from "../relSections";
@@ -99,7 +99,7 @@ function _testParentName() {
   //@ts-expect-error
   const _case2: OneParent = "financing";
 
-  type NoParent = ParentName<"main", "fe">;
+  type NoParent = ParentName<"root", "fe">;
   const _case3: NoParent = "no parent";
 }
 

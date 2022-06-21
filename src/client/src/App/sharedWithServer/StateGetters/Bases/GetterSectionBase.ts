@@ -1,4 +1,3 @@
-import { pick } from "lodash";
 import { Id } from "../../SectionsMeta/baseSections/id";
 import { FeSectionInfo } from "../../SectionsMeta/Info";
 import { SectionName, sectionNameS } from "../../SectionsMeta/SectionName";
@@ -34,16 +33,6 @@ export class GetterSectionBase<
       ...this.feSectionInfo,
       sectionsShare: this.sectionsShare,
     };
-  }
-  static initPropsWithMain(): GetterSectionProps<"main"> {
-    const sections = StateSections.initWithMain();
-    const main = sections.rawSectionList("main")[0];
-    if (main)
-      return {
-        ...pick(main, ["sectionName", "feId"]),
-        sectionsShare: { sections },
-      };
-    else throw new Error("A main section should have been initialized.");
   }
   static isGetterBaseProps(
     value: any

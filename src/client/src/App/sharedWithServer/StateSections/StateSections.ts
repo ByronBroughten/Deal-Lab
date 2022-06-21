@@ -112,15 +112,15 @@ export class StateSections {
   }
   static initRawSection = initRawSection;
   static initRawVarbs = initRawVarbs;
-  static initWithMain(): StateSections {
-    const mainSection = StateSections.initRawSection({
-      sectionName: "main",
+  static initWithRoot(): StateSections {
+    const rootSection = StateSections.initRawSection({
+      sectionName: "root",
       feId: Id.make(),
     });
     const sections = this.initEmpty();
     return sections.updateSectionList({
-      sectionName: "main",
-      list: [mainSection],
+      sectionName: "root",
+      list: [rootSection],
     });
   }
 

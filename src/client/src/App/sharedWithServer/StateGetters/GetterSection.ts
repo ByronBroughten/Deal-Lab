@@ -3,7 +3,7 @@ import { SwitchTargetKey } from "../SectionsMeta/baseSections/baseSwitchNames";
 import { ValueTypesPlusAny } from "../SectionsMeta/baseSections/StateVarbTypes";
 import {
   SwitchEndingKey,
-  switchNames,
+  switchNames
 } from "../SectionsMeta/baseSections/switchNames";
 import {
   FeParentInfo,
@@ -11,17 +11,17 @@ import {
   FeSectionInfo,
   InfoS,
   noParentWarning,
-  VarbInfo,
+  VarbInfo
 } from "../SectionsMeta/Info";
 import {
   FeNameInfo,
   MultiFindByFocalInfo,
   MultiSectionInfo,
-  RelSectionInfo,
+  RelSectionInfo
 } from "../SectionsMeta/relSections/rel/relVarbInfoTypes";
 import {
   UniqueIdMixedInfo,
-  UniqueIdType,
+  UniqueIdType
 } from "../SectionsMeta/relSections/rel/uniqueIdInfo";
 import { ValueTypeName } from "../SectionsMeta/relSections/rel/valueMetaTypes";
 import {
@@ -29,17 +29,17 @@ import {
   ChildName,
   DescendantIds,
   GeneralChildIdArrs,
-  SelfAndDescendantIds,
+  SelfAndDescendantIds
 } from "../SectionsMeta/relSectionTypes/ChildTypes";
 import {
   ParentName,
-  ParentNameSafe,
+  ParentNameSafe
 } from "../SectionsMeta/relSectionTypes/ParentTypes";
 import { SectionMeta } from "../SectionsMeta/SectionMeta";
 import {
   SectionName,
   sectionNameS,
-  SectionNameType,
+  SectionNameType
 } from "../SectionsMeta/SectionName";
 import { RawFeSection } from "../StateSections/StateSectionsTypes";
 import { Arr } from "../utils/Arr";
@@ -161,6 +161,9 @@ export class GetterSection<
   }
   get siblings(): GetterSection<SN>[] {
     return this.siblingFeInfos.map((feInfo) => this.getterSection(feInfo));
+  }
+  onlyCousin<SN extends SectionName>(sectionName: SN): GetterSection<SN> {
+    return this.parent.onlyChild(sectionName as any);
   }
   children<CN extends ChildName<SN>>(childName: CN): GetterSection<CN>[] {
     const childIds = this.childFeIds(childName);
@@ -302,7 +305,9 @@ export class GetterSection<
     return this.raw.childFeIds as GeneralChildIdArrs as ChildIdArrsWide<SN>;
   }
   childFeIds<CN extends ChildName<SN>>(childName: CN): string[] {
-    return this.allChildFeIds[childName];
+    const ids = this.allChildFeIds[childName];
+    if (ids) return ids;
+    else throw new Error(`"${childName}" is not a possible child section for ${this.sectionName}`)
   }
   get allChildDbIds(): ChildIdArrsWide<SN> {
     const { allChildFeIds } = this;

@@ -5,7 +5,7 @@ import { SectionPackArrReq } from "../../client/src/App/sharedWithServer/apiQuer
 import { SectionArrReqMaker } from "../../client/src/App/sharedWithServer/ReqMakers/SectionArrReqMaker";
 import { runApp } from "../../runApp";
 import { UserModel } from "../UserModel";
-import { loginUtils } from "./login/loginUtils";
+import { DbUser } from "./shared/DbSections/DbUser";
 import { createTestUserModelNext } from "./test/createTestUserModelNext";
 
 const sectionName = "deal";
@@ -24,7 +24,7 @@ describe(testedApiRoute, () => {
   beforeEach(async () => {
     server = runApp();
     userId = await createTestUserModelNext(testedApiRoute);
-    token = loginUtils.makeUserAuthToken(userId);
+    token = DbUser.makeUserAuthToken(userId);
     req = makeReq();
   });
 

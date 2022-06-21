@@ -1,12 +1,12 @@
 import { SectionPackRaw } from "../SectionPack/SectionPackRaw";
-import { SectionPackBuilder } from "../StatePackers.ts/PackBuilderSection";
+import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
 import { makeDefaultMgmtPack } from "./makeDefaultMgmtPack";
 import { makeDefaultOutputList } from "./makeDefaultOutputList";
 import { makeDefaultPropertyPack } from "./makeDefaultPropertyPack";
 
 export function makeDefaultDealPack(): SectionPackRaw<"deal"> {
   const childNames = ["financing", "final", "internalVarbList"] as const;
-  const main = new SectionPackBuilder();
+  const main = PackBuilderSection.initAsMain();
   const deal = main.addAndGetChild("deal");
   childNames.forEach((childName) => {
     deal.addChild(childName);

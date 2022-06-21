@@ -1,8 +1,8 @@
 import { SectionPackRaw } from "../SectionPack/SectionPackRaw";
-import { SectionPackBuilder } from "../StatePackers.ts/PackBuilderSection";
+import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
 
 export function makeDefaultOutputList(): SectionPackRaw<"dealOutputList"> {
-  const main = new SectionPackBuilder();
+  const main = PackBuilderSection.initAsMain();
   const outputList = main.addAndGetDescendant(["deal", "dealOutputList"]);
   outputList.addChild("output", {
     dbVarbs: {

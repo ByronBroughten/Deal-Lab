@@ -1,8 +1,10 @@
 import { DbSectionInfo } from "../../../../client/src/App/sharedWithServer/SectionPack/DbSectionInfo";
+import { SectionPackRaw } from "../../../../client/src/App/sharedWithServer/SectionPack/SectionPackRaw";
 import { ServerSectionName } from "../../../ServerSectionName";
 import { DbSectionsBase } from "./Bases/DbSectionsBase";
 import { DbSection } from "./DbSection";
 import { DbSectionsQuerier } from "./DbSectionsQuerier";
+import { SectionPackNotFoundError } from "./DbSectionsQuerierTypes";
 
 export interface DbSectionsInitByIdProps {
   userId: string;
@@ -11,6 +13,39 @@ export interface DbSectionsInitByEmailProps {
   email: string;
 }
 export class DbSections extends DbSectionsBase {
+  onlySectionPack<SN extends ServerSectionName>(sectionName: SN): SectionPackRaw<SN> {
+    const sectionPacks = this.dbSectionsRaw[sectionName];
+    if (sectionPacks.length !== 1) {
+      throw new Error(
+        `There are ${sectionPacks.length} sectionPacks with sectionName ${sectionName}, but there should be exactly 1.`
+      );
+    }
+    return {
+      ...sectionPacks[0],
+      sectionName
+    } as SectionPackRaw<SN>;
+  }
+  sectionPack<SN extends ServerSectionName>({
+    sectionName,
+    dbId,
+  }: DbSectionInfo<SN>): SectionPackRaw<SN> {
+    const dbPack = [...this.dbSectionsRaw[sectionName]].find(
+      (dbPack) => dbPack.dbId === dbId
+    );
+    if (dbPack) {
+      return {
+        ...dbPack,
+        sectionName,
+      } as SectionPackRaw<SN>;
+    } else {
+      throw new SectionPackNotFoundError({
+        errorMessage: `dbSectionPack not found at ${sectionName}.${dbId}`,
+        resMessage: "The requested entry was not found",
+        status: 404,
+      });
+    }
+  }
+
   section<SN extends ServerSectionName>(
     dbInfo: DbSectionInfo<SN>
   ): DbSection<SN> {

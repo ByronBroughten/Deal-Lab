@@ -6,8 +6,7 @@ import {
   GetterSectionBase,
   GetterSectionProps,
 } from "../StateGetters/Bases/GetterSectionBase";
-import { GetterList } from "../StateGetters/GetterList";
-import { StateSections } from "../StateSections/StateSections";
+import { GetterSection } from "../StateGetters/GetterSection";
 import { UpdaterSection } from "../StateUpdaters/UpdaterSection";
 import { Obj } from "../utils/Obj";
 import { ChildPackLoader } from "./PackLoaderSection/ChildPackLoader";
@@ -16,10 +15,14 @@ import { SelfPackLoader } from "./PackLoaderSection/SelfPackLoader";
 export class PackLoaderSection<
   SN extends SectionName
 > extends GetterSectionBase<SN> {
-  updaterSection: UpdaterSection<SN>;
   constructor(props: GetterSectionProps<SN>) {
     super(props);
-    this.updaterSection = new UpdaterSection(props);
+  }
+  private get updater(): UpdaterSection<SN> {
+    return new UpdaterSection(this.getterSectionProps);
+  }
+  get get(): GetterSection<SN> {
+    return new GetterSection(this.getterSectionProps);
   }
   updateSelfWithSectionPack(sectionPack: SectionPackRaw<SN>): void {
     const selfPackLoader = new SelfPackLoader({
@@ -40,7 +43,7 @@ export class PackLoaderSection<
     sectionName,
     sectionPacks,
   }: SectionArrPack<CN>): void {
-    this.updaterSection.removeChildren(sectionName);
+    this.updater.removeChildren(sectionName);
     for (const childPack of sectionPacks) {
       this.loadChildSectionPack(childPack);
     }
@@ -58,23 +61,6 @@ export class PackLoaderSection<
       },
     });
     childPackLoader.loadChild();
-  }
-  static initSectionsFromMainPack(
-    sectionPack: SectionPackRaw<"main">
-  ): StateSections {
-    const sections = StateSections.initWithMain();
-    const mainList = new GetterList({
-      sectionName: "main",
-      sectionsShare: { sections },
-    });
-
-    const loader = new PackLoaderSection({
-      ...mainList.oneAndOnly.feSectionInfo,
-      sectionsShare: { sections },
-    });
-
-    loader.updateSelfWithSectionPack(sectionPack);
-    return loader.sectionsShare.sections;
   }
 }
 

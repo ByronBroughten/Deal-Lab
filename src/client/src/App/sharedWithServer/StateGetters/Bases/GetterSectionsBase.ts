@@ -10,6 +10,9 @@ export class GetterSectionsBase {
   constructor({ sectionsShare }: GetterSectionsProps) {
     this.sectionsShare = sectionsShare;
   }
+  get stateSections(): StateSections {
+    return this.sectionsShare.sections;
+  }
   get getterSectionsProps(): GetterSectionsProps {
     return {
       sectionsShare: this.sectionsShare,

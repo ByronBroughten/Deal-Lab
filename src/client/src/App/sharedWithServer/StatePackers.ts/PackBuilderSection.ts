@@ -4,10 +4,7 @@ import {
   DescendantName,
 } from "../SectionsMeta/relSectionTypes/ChildTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
-import {
-  GetterSectionBase,
-  GetterSectionProps,
-} from "../StateGetters/Bases/GetterSectionBase";
+import { GetterSectionBase } from "../StateGetters/Bases/GetterSectionBase";
 import { GetterSections } from "../StateGetters/GetterSections";
 import {
   AddChildOptions,
@@ -19,13 +16,11 @@ import { Arr } from "../utils/Arr";
 import { PackLoaderSection } from "./PackLoaderSection";
 import { SectionPackMaker } from "./SectionPackMaker";
 
-export class SectionPackBuilder<
-  SN extends SectionName = "main"
+export class PackBuilderSection<
+  SN extends SectionName
 > extends GetterSectionBase<SN> {
-  constructor(
-    props: GetterSectionProps<SN> = GetterSectionBase.initPropsWithMain() as GetterSectionProps<SN>
-  ) {
-    super(props);
+  static initAsMain() {
+    return new PackBuilderSection(UpdaterSection.initMainProps());
   }
   private getterSections = new GetterSections(this.getterSectionsProps);
   private updater = new UpdaterSection(this.getterSectionProps);
@@ -33,12 +28,13 @@ export class SectionPackBuilder<
   private maker = new SectionPackMaker(this.getterSectionProps);
 
   makeSectionPack(): SectionPackRaw<SN> {
+    // it should probably start with root
     return this.maker.makeSectionPack();
   }
   addAndGetDescendant<DN extends DescendantName<SN>>(
     descendantList: DescendantList<SN, DN>,
     options?: AddDescendantOptions<SN, DN>
-  ): SectionPackBuilder<DN> {
+  ): PackBuilderSection<DN> {
     this.updater.addDescendant(descendantList, options);
     const descendantName = Arr.lastOrThrow(descendantList) as DN;
     return this.newSectionBuilder(descendantName);
@@ -46,7 +42,7 @@ export class SectionPackBuilder<
   addAndGetChild<CN extends ChildName<SN>>(
     childName: CN,
     options?: AddChildOptions<SN, CN>
-  ): SectionPackBuilder<CN> {
+  ): PackBuilderSection<CN> {
     this.addChild(childName, options);
     return this.newSectionBuilder(childName);
   }
@@ -61,9 +57,9 @@ export class SectionPackBuilder<
   }
   private newSectionBuilder<S extends SectionName>(
     sectionName: S
-  ): SectionPackBuilder<S> {
+  ): PackBuilderSection<S> {
     const { feInfo } = this.getterSections.list(sectionName).last;
-    return new SectionPackBuilder({
+    return new PackBuilderSection({
       ...feInfo,
       sectionsShare: this.sectionsShare,
     });

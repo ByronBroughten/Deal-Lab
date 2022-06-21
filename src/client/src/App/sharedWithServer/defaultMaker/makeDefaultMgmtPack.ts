@@ -1,8 +1,8 @@
 import { SectionPackRaw } from "../SectionPack/SectionPackRaw";
-import { SectionPackBuilder } from "../StatePackers.ts/PackBuilderSection";
+import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
 
 export function makeDefaultMgmtPack(): SectionPackRaw<"mgmt"> {
-  const main = new SectionPackBuilder();
+  const main = PackBuilderSection.initAsMain();
   const mgmt = main.addAndGetDescendant(["deal", "mgmtGeneral", "mgmt"], {
     dbVarbs: {
       rentCutUnitSwitch: "percent",

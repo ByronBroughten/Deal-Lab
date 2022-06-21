@@ -3,12 +3,11 @@ import { SectionPackRaw } from "../../../../client/src/App/sharedWithServer/Sect
 import { ServerSectionName } from "../../../ServerSectionName";
 import { UserModel } from "../../../UserModel";
 import { DbSectionsQuerierBase } from "./Bases/DbSectionsQuerierBase";
+import { DbSections } from "./DbSections";
 import {
   dbSectionsFilters,
   DbSectionsRaw,
-  queryOptions,
-  SectionPackNotFoundError,
-  UserNotFoundError,
+  queryOptions, UserNotFoundError
 } from "./DbSectionsQuerierTypes";
 
 const filter = dbSectionsFilters;
@@ -33,10 +32,7 @@ export class DbSectionsQuerier extends DbSectionsQuerierBase {
   async exists(): Promise<boolean> {
     return await UserModel.exists(this.userFilter);
   }
-  async getSectionPack<SN extends ServerSectionName>({
-    sectionName,
-    dbId,
-  }: DbSectionInfo<SN>): Promise<SectionPackRaw<SN>> {
+  async getSectionPack<SN extends ServerSectionName>(dbInfo: DbSectionInfo<SN>): Promise<SectionPackRaw<SN>> {
     // const users = await UserModel.aggregate([{ $match: this.userFilter }]);
     // const userDocs = await UserModel.aggregate([
     //   { $match: this.userFilter },
@@ -44,21 +40,8 @@ export class DbSectionsQuerier extends DbSectionsQuerierBase {
     //   // { $match: { [`${sectionName}.${dbId}`]: dbId } },
     // ]);
     const dbSectionsRaw = await this.getDbSectionsRaw();
-    const sectionPack = [...dbSectionsRaw[sectionName]].find(
-      (sectionPack) => sectionPack.dbId === dbId
-    );
-    if (sectionPack) {
-      return {
-        ...sectionPack,
-        sectionName,
-      } as SectionPackRaw<SN>;
-    } else {
-      throw new SectionPackNotFoundError({
-        errorMessage: `Section not found at ${sectionName}.${dbId}`,
-        resMessage: "The requested entry was not found",
-        status: 404,
-      });
-    }
+    const dbSections = new DbSections({ dbSectionsRaw });
+    return dbSections.sectionPack(dbInfo);
   }
   async getDbSectionsRaw(): Promise<DbSectionsRaw> {
     const dbSectionsRaw = await UserModel.findOne(

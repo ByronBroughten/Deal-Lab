@@ -24,6 +24,56 @@ export function makeRelSections() {
     fe: {
       ...rel.section.base(
         "fe" as ContextName,
+        "root",
+        "Root",
+        { _typeUniformity: rel.varb.string() },
+        { childNames: ["omniParent", "main"] as const }
+      ),
+      ...relSection.base(
+        "both",
+        "omniParent",
+        "Parent of All",
+        {
+          _typeUniformity: rel.varb.string(),
+        } as RelVarbs<ContextName, "main">,
+        {
+          childNames: Arr.exclude(baseNameArrs.fe.all, [
+            "root",
+            "omniParent",
+          ] as const),
+        }
+      ),
+      ...relSection.base(
+        "both",
+        "main",
+        "Main",
+        {
+          _typeUniformity: rel.varb.string(),
+        } as RelVarbs<ContextName, "main">,
+        {
+          childNames: [
+            "user",
+            "serverOnlyUser",
+            "login",
+            "register",
+
+            "deal",
+
+            "propertyTableStore",
+            "loanTableStore",
+            "mgmtTableStore",
+            "dealTableStore",
+
+            "userVarbList",
+            "userSingleList",
+            "userOngoingList",
+            "userOutputList",
+          ] as const,
+        }
+      ),
+
+      ...rel.section.base(
+        "fe" as ContextName,
         "table",
         "Table",
         { titleFilter: relVarb.string() } as RelVarbs<ContextName, "table">,
@@ -58,48 +108,6 @@ export function makeRelSections() {
         "Deal Table Store",
         { _typeUniformity: rel.varb.string() },
         { childNames: ["table"] } as const
-      ),
-      ...relSection.base(
-        "both",
-        "omniParent",
-        "Parent of All",
-        {
-          _typeUniformity: rel.varb.string(),
-        } as RelVarbs<ContextName, "main">,
-        {
-          childNames: Arr.exclude(baseNameArrs.fe.all, ["main"]),
-        }
-      ),
-
-      ...relSection.base(
-        "both",
-        "main",
-        "Main",
-        {
-          _typeUniformity: rel.varb.string(),
-        } as RelVarbs<ContextName, "main">,
-        {
-          childNames: [
-            "user",
-            "serverOnlyUser",
-            "login",
-            "register",
-
-            "deal",
-
-            "propertyTableStore",
-            "loanTableStore",
-            "mgmtTableStore",
-            "dealTableStore",
-
-            "userVarbList",
-            "userSingleList",
-            "userOngoingList",
-            "userOutputList",
-
-            "omniParent",
-          ] as const,
-        }
       ),
       ...relSection.outputList("dealOutputList", {
         fullIndexName: "userOutputList",

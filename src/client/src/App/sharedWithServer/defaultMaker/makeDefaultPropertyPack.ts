@@ -1,8 +1,8 @@
 import { SectionPackRaw } from "../SectionPack/SectionPackRaw";
-import { SectionPackBuilder } from "../StatePackers.ts/PackBuilderSection";
+import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
 
 export function makeDefaultPropertyPack(): SectionPackRaw<"property"> {
-  const main = new SectionPackBuilder();
+  const main = PackBuilderSection.initAsMain();
   const property = main.addAndGetDescendant(
     ["deal", "propertyGeneral", "property"] as const,
     {

@@ -1,7 +1,7 @@
 import { dbNumObj } from "../SectionsMeta/baseSections/baseValues/NumObj";
 import { ChildName } from "../SectionsMeta/relSectionTypes/ChildTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
-import { SectionPackBuilder } from "../StatePackers.ts/PackBuilderSection";
+import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
 import { SetterTesterSection } from "./TestUtils/SetterTesterSection";
 
 // loadSelfSectionPack
@@ -37,7 +37,7 @@ describe("SetterSection", () => {
   it("should load a sectionPack", () => {
     const sectionName = "property";
     const tester = SetterTesterSection.init(sectionName);
-    const mainBuilder = new SectionPackBuilder();
+    const mainBuilder = PackBuilderSection.initAsMain();
 
     const childName = "unit";
     const numChildrenInit = tester.get.childFeIds(childName);

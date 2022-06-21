@@ -7,7 +7,7 @@ import { relSections } from "../../SectionsMeta/relSections";
 import { GetterSections } from "../../StateGetters/GetterSections";
 import { SectionPackMaker } from "../../StatePackers.ts/SectionPackMaker";
 import { StateSections } from "../../StateSections/StateSections";
-import { SolverSection } from "../../StateSolvers/SolverSection";
+import { SolverSections } from "../../StateSolvers/SolverSections";
 
 type UseSectionsStoreProps = {
   storeSectionsLocally: boolean;
@@ -44,7 +44,7 @@ export class SectionsStore {
   static getStoredSections(): StateSections {
     this.rmStoredStateIfPreframesChanged();
     const storedState = this.getSectionsFromStore();
-    return SolverSection.initSolvedSectionsFromMainPack(storedState);
+    return SolverSections.initSolvedSectionsFromMainPack(storedState);
   }
 
   private static setSectionsInStore(mainSectionPack: StoredSectionsState) {

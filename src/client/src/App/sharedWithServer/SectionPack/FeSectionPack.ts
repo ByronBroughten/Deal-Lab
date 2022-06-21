@@ -1,16 +1,12 @@
-import { extend } from "lodash";
 import { Id } from "../SectionsMeta/baseSections/id";
-import { InfoS } from "../SectionsMeta/Info";
-import { SelfAndDescendantIds } from "../SectionsMeta/relSectionTypes/ChildTypes";
 import { ParentFeInfo } from "../SectionsMeta/relSectionTypes/ParentTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { Obj } from "../utils/Obj";
 import { RawSectionFinder } from "./DbSectionInfo";
 import { FeSelfOrDescendantParentStub } from "./FeSectionPacks/FeParentStub";
 import {
-  FeSelfOrDescendantNode,
   OneSectionNodeMaker,
-  SectionNodeMaker,
+  SectionNodeMaker
 } from "./FeSectionPacks/FeSectionNode";
 import { GeneralRawSection, RawSection, RawSections } from "./RawSection";
 import { SectionPackRaw } from "./SectionPackRaw";
@@ -54,36 +50,6 @@ export class FeSectionPack<SN extends SectionName> {
   get headSection(): RawSection<SN> {
     return this.rawSection(this.headSectionFinder);
   }
-  dbToFeIds(childDbIds: SelfAndDescendantIds<SN>): SelfAndDescendantIds<SN> {
-    return Obj.entries(childDbIds as SelfAndDescendantIds).reduce(
-      (childFeIds, [childName, dbIdArr]) => {
-        (childFeIds[childName] as string[]) = dbIdArr.map(() => Id.make());
-        return childFeIds;
-      },
-      {} as SelfAndDescendantIds
-    ) as SelfAndDescendantIds<SN>;
-  }
-  makeFeNode(nodeMaker: SectionNodeMaker<SN>): FeSelfOrDescendantNode<SN> {
-    const { dbVarbs, childDbIds } = this.rawSection(
-      nodeMaker as RawSectionFinder<SN>
-    );
-    return extend(nodeMaker, {
-      dbVarbs,
-      childFeIds: this.dbToFeIds(childDbIds as SelfAndDescendantIds<SN>),
-    }) as any;
-  }
-  makeParentStub(
-    feNode: FeSelfOrDescendantNode<SN>
-  ): FeSelfOrDescendantParentStub<SN> {
-    const { childDbIds } = this.rawSection(
-      feNode as any as RawSectionFinder<SN>
-    );
-    return {
-      parentInfo: InfoS.fe(feNode.sectionName, feNode.feId),
-      childDbIds,
-      childFeIds: feNode.childFeIds,
-    } as FeSelfOrDescendantParentStub<SN>;
-  }
   makeHeadNodeMaker({ feId, ...rest }: SectionPackSupplements<SN>) {
     return {
       feId: feId ?? Id.make(),
@@ -110,23 +76,5 @@ export class FeSectionPack<SN extends SectionName> {
       }
     }
     return sectionNodeMakers;
-  }
-  makeOrderedPreSections(
-    props: SectionPackSupplements<SN>
-  ): FeSelfOrDescendantNode<SN>[] {
-    const orderedPreSections: FeSelfOrDescendantNode<SN>[] = [];
-    const queue: SectionNodeMaker<SN>[] = [];
-    queue.push(this.makeHeadNodeMaker(props));
-    while (queue.length > 0) {
-      const queueLength = queue.length;
-      for (let i = 0; i < queueLength; i++) {
-        const nodeMaker = queue.shift() as SectionNodeMaker<SN>;
-        const feNode = this.makeFeNode(nodeMaker);
-        orderedPreSections.push(feNode);
-        const parentStub = this.makeParentStub(feNode);
-        queue.push(...this.makeNodeMakers(parentStub));
-      }
-    }
-    return orderedPreSections;
   }
 }

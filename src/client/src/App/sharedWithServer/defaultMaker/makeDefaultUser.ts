@@ -1,7 +1,7 @@
-import { SectionPackBuilder } from "../StatePackers.ts/PackBuilderSection";
+import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
 
 export function makeDefaultUser() {
-  const main = new SectionPackBuilder();
+  const main = PackBuilderSection.initAsMain();
   const user = main.addAndGetChild("user", {
     dbVarbs: {
       email: "",

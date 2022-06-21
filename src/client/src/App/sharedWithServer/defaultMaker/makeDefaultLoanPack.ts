@@ -1,8 +1,8 @@
 import { SectionPackRaw } from "../SectionPack/SectionPackRaw";
-import { SectionPackBuilder } from "../StatePackers.ts/PackBuilderSection";
+import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
 
 export function makeDefaultLoanPack(): SectionPackRaw<"loan"> {
-  const main = new SectionPackBuilder();
+  const main = PackBuilderSection.initAsMain();
   const loan = main.addAndGetDescendant(["deal", "financing", "loan"], {
     dbVarbs: {
       loanAmountBaseUnitSwitch: "percent",

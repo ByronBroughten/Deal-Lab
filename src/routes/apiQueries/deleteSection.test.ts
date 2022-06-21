@@ -6,7 +6,7 @@ import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/
 import { Id } from "../../client/src/App/sharedWithServer/SectionsMeta/baseSections/id";
 import { runApp } from "../../runApp";
 import { UserModel } from "../UserModel";
-import { loginUtils } from "./login/loginUtils";
+import { DbUser } from "./shared/DbSections/DbUser";
 import { createTestUserModelNext } from "./test/createTestUserModelNext";
 import { SectionQueryTester } from "./test/SectionQueryTester";
 
@@ -37,7 +37,7 @@ describe(testedApiRoute, () => {
   beforeEach(async () => {
     server = runApp();
     userId = await createTestUserModelNext(testedApiRoute);
-    token = loginUtils.makeUserAuthToken(userId);
+    token = DbUser.makeUserAuthToken(userId);
     reqs = makeReqs();
   });
 

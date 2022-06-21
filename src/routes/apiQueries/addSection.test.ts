@@ -6,7 +6,7 @@ import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/
 import { Arr } from "../../client/src/App/sharedWithServer/utils/Arr";
 import { runApp } from "../../runApp";
 import { UserModel } from "../UserModel";
-import { loginUtils } from "./login/loginUtils";
+import { DbUser } from "./shared/DbSections/DbUser";
 import { getUserByIdNoRes } from "./shared/getUserDbSectionsById";
 import { createTestUserModelNext } from "./test/createTestUserModelNext";
 import { SectionQueryTester } from "./test/SectionQueryTester";
@@ -30,7 +30,7 @@ describe(apiRoute, () => {
   beforeEach(async () => {
     server = runApp();
     userId = await createTestUserModelNext(apiRoute);
-    token = loginUtils.makeUserAuthToken(userId);
+    token = DbUser.makeUserAuthToken(userId);
     req = makeAddSectionReq();
   });
 

@@ -6,7 +6,7 @@ import { makeReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/
 import { RegisterReqMaker } from "../../client/src/App/sharedWithServer/ReqMakers/RegisterReqMaker";
 import { runApp } from "../../runApp";
 import { UserModel } from "../UserModel";
-import { loginUtils } from "./login/loginUtils";
+import { DbUser } from "./shared/DbSections/DbUser";
 import { userServerSide } from "./userServerSide";
 
 const testedRoute = apiQueriesShared.login.pathRoute;
@@ -71,8 +71,6 @@ describe(testedRoute, () => {
     const res = await exec();
     const token = res.headers[config.tokenKey.apiUserAuth];
     expect(token).not.toBeUndefined();
-
-    const decoded = loginUtils.decodeUserAuthToken(token);
-    expect(decoded).not.toBeNull();
+    expect(() => DbUser.checkUserAuthToken(token)).not.toThrow();
   });
 });

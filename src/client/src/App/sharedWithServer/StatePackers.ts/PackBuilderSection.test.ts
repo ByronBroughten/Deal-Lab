@@ -2,9 +2,9 @@ import { pick } from "lodash";
 import { SectionPack } from "../SectionPack/SectionPack";
 import { dbNumObj } from "../SectionsMeta/baseSections/baseValues/NumObj";
 import { Obj } from "../utils/Obj";
-import { SectionPackBuilder } from "./PackBuilderSection";
+import { PackBuilderSection } from "./PackBuilderSection";
 
-describe("SectionPackBuilder", () => {
+describe("PackBuilderSection", () => {
   const dbVarbs = {
     property: {
       title: "String",
@@ -20,7 +20,7 @@ describe("SectionPackBuilder", () => {
   } as const;
 
   it("should make a sectionPack with the added values and children", () => {
-    const main = new SectionPackBuilder();
+    const main = PackBuilderSection.initAsMain();
     const property = main.addAndGetDescendant(
       ["deal", "propertyGeneral", "property"] as const,
       { dbVarbs: dbVarbs.property }

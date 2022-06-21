@@ -7,10 +7,9 @@ import { SectionName } from "../SectionsMeta/SectionName";
 import { GetterSectionProps } from "../StateGetters/Bases/GetterSectionBase";
 import { GetterSection } from "../StateGetters/GetterSection";
 import { ChildSectionPackArrs } from "../StatePackers.ts/PackLoaderSection";
-import { StateSections } from "../StateSections/StateSections";
 import {
   AddChildOptions,
-  UpdaterSection,
+  UpdaterSection
 } from "../StateUpdaters/UpdaterSection";
 import { Obj } from "../utils/Obj";
 import { AddSolverSection } from "./AddSolverSection";
@@ -18,7 +17,7 @@ import { ComboSolverSection } from "./ComboSolverSection";
 import { RemoveSolverSection } from "./RemoveSolverSection";
 import {
   SolverSectionBase,
-  SolverSectionProps,
+  SolverSectionProps
 } from "./SolverBases/SolverSectionBase";
 import { HasSolveShare } from "./SolverBases/SolverSectionsBase";
 import { SolverSections } from "./SolverSections";
@@ -121,21 +120,22 @@ export class SolverSection<
     this.adder.addChildAndFinalize(childName, options);
     this.solve();
   }
+  loadChildPackAndSolve<CN extends ChildName<SN>>(
+    childPack: SectionPackRaw<CN>
+  ) {
+    const { sectionName } = childPack;
+    this.updater.addChild(sectionName);
+    const child = this.youngestChild(sectionName);
+    child.loadSelfSectionPackAndSolve(childPack);
+
+    // this.adder.loadChildAndCollectVarbIds(childPack);
+    // this.adder.finalizeVarbsAndExtractIds();
+    // this.solve();
+  }
   loadChildPackArrsAndSolve(
     childPackArrs: Partial<ChildSectionPackArrs<SN>>
   ): void {
     this.combo.loadChildPackArrsAndExtractIds(childPackArrs);
     this.solve();
-  }
-  static initSolvedSectionsFromMainPack(
-    sectionPack: SectionPackRaw<"main">
-  ): StateSections {
-    const sections = StateSections.initWithMain();
-    const solver = SolverSection.init({
-      ...sections.rawSectionList("main")[0],
-      sectionsShare: { sections },
-    });
-    solver.loadSelfSectionPackAndSolve(sectionPack);
-    return solver.sectionsShare.sections;
   }
 }
