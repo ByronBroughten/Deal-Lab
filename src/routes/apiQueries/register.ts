@@ -7,8 +7,8 @@ import {
 } from "../../client/src/App/sharedWithServer/apiQueriesShared/register";
 import { makeMongooseObjectId } from "../../client/src/App/sharedWithServer/utils/mongoose";
 import { handleResAndMakeError, ResStatusError } from "../../resErrorUtils";
-import { loginUtils } from "./login/loginUtils";
 import { DbSectionsQuerier } from "./shared/DbSections/DbSectionsQuerier";
+import { DbUser } from "./shared/DbSections/DbUser";
 import { MakeDbUserProps, userServerSide } from "./userServerSide";
 
 export const nextRegisterWare = [registerServerSide] as const;
@@ -22,12 +22,13 @@ async function registerServerSide(req: Request, res: Response) {
     registerFormData
   );
   await checkEmailIsUnique(user.email);
-  const serverUser = await addUser({
+  await addUser({
     user,
     serverOnlyUser,
     guestAccessSections,
   });
-  return loginUtils.doLogin(res, serverUser);
+  const dbUser = await DbUser.queryByEmail(user.email);
+  dbUser.sendLogin(res);
 }
 
 function validateRegisterReq(req: Request, res: Response): NextReq<"register"> {

@@ -27,17 +27,16 @@ export const reqMonString = {
   ...monString,
   validate: (v: any) => typeof v === "string",
 };
-export const reqMonDbId = {
-  type: String,
-  maxLength: dbLimits.dbId.length,
-  minLength: dbLimits.dbId.length,
-  required: true,
-};
 
 export const monSchemas = {
   number: monNumber,
   reqNumber: reqMonNumber,
   string: monString,
   reqString: reqMonString,
-  reqDbId: reqMonDbId,
+  reqDbId: {
+    type: String,
+    maxLength: dbLimits.dbId.length,
+    minLength: dbLimits.dbId.length,
+    required: true,
+  },
 };

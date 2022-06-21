@@ -13,6 +13,7 @@ import { HandledResStatusError } from "../../../../resErrorUtils";
 import { ServerUser } from "../../../ServerUser";
 import { DbSectionsProps } from "./Bases/DbSectionsBase";
 import { DbSections } from "./DbSections";
+import { DbSectionsQuerier } from "./DbSectionsQuerier";
 import { DbSectionsRaw } from "./DbSectionsQuerierTypes";
 import { checkUserAuthToken, makeUserAuthToken } from "./DbUser/userAuthToken";
 
@@ -45,6 +46,13 @@ export class DbUser extends GetterSectionsBase {
     return new DbUser({
       ...omniLoader.getterSectionsProps,
       dbSections,
+    });
+  }
+  static async queryByEmail(email: string): Promise<DbUser> {
+    const querier = await DbSectionsQuerier.initByEmail(email);
+    const dbSectionsRaw = await querier.getDbSectionsRaw();
+    return DbUser.init({
+      dbSectionsRaw,
     });
   }
   get get(): GetterSection<"user"> {
@@ -82,7 +90,7 @@ export class DbUser extends GetterSectionsBase {
 
   // register should save main the correct way, though.
 
-  loginAndSend(res: Response) {
+  sendLogin(res: Response) {
     const userDb = ServerUser.init(this.dbSectionsRaw);
     const loggedInUser = userDb.makeRawFeLoginUser();
     const token = this.makeUserAuthToken();

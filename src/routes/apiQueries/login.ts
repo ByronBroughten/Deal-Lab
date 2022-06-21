@@ -5,7 +5,6 @@ import {
   LoginFormData,
 } from "../../client/src/App/sharedWithServer/apiQueriesShared/login";
 import { ResHandledError } from "../../resErrorUtils";
-import { DbSectionsQuerier } from "./shared/DbSections/DbSectionsQuerier";
 import { DbUser } from "./shared/DbSections/DbUser";
 import { userServerSide } from "./userServerSide";
 
@@ -16,14 +15,9 @@ async function loginServerSide(req: Request, res: Response) {
 
   const { email: rawEmail, password } = reqObj.body;
   const { email } = userServerSide.prepEmail(rawEmail);
-
-  const querier = await DbSectionsQuerier.initByEmail(email);
-  const dbSectionsRaw = await querier.getDbSectionsRaw();
-  const dbUser = DbUser.init({
-    dbSectionsRaw,
-  });
+  const dbUser = await DbUser.queryByEmail(email);
   await dbUser.validatePassword(password);
-  await dbUser.loginAndSend(res);
+  dbUser.sendLogin(res);
 }
 
 function validateLoginReq(req: Request, res: Response): NextReq<"login"> {
