@@ -3,12 +3,12 @@ import { DbVarbs } from "../client/src/App/sharedWithServer/SectionPack/RawSecti
 import { SectionPack } from "../client/src/App/sharedWithServer/SectionPack/SectionPack";
 import {
   SectionPackDbRaw,
-  SectionPackRaw,
+  SectionPackRaw
 } from "../client/src/App/sharedWithServer/SectionPack/SectionPackRaw";
 import { DbSectionName } from "../client/src/App/sharedWithServer/SectionsMeta/relNameArrs/storeArrs";
 import {
   SectionName,
-  sectionNameS,
+  sectionNameS
 } from "../client/src/App/sharedWithServer/SectionsMeta/SectionName";
 import { Obj } from "../client/src/App/sharedWithServer/utils/Obj";
 import { SectionPackDb } from "./SectionPackDb";
@@ -16,6 +16,22 @@ import { ServerSectionName, serverSectionS } from "./ServerSectionName";
 
 export class ServerUser {
   constructor(readonly core: UserDbCore) {}
+  static init(userDbRaw: UserDbRaw): ServerUser {
+    const core = serverSectionS.arrs.all.reduce((userDbCore, storeName) => {
+      if (storeName in userDbRaw) {
+        (userDbCore[storeName] as SectionPackDb<typeof storeName>[]) = (
+          userDbRaw[storeName] as SectionPackDbRaw<SectionName>[]
+        ).map(
+          (rawPack) => new SectionPackDb({ ...rawPack, sectionName: storeName })
+        );
+      } else {
+        userDbCore[storeName] = [];
+      }
+      return userDbCore;
+    }, {} as UserDbCore);
+
+    return new ServerUser(core);
+  }
   makeRawFeLoginUser(): LoginUser {
     return sectionNameS.arrs.loadOnLogin.reduce((loginUser, sectionName) => {
       (loginUser[sectionName] as SectionPackRaw<typeof sectionName>[]) =
@@ -60,22 +76,6 @@ export class ServerUser {
     return this.sectionPackArr(storeName).map(
       (dbPack) => dbPack.toFeSectionPack() as SectionPackRaw<SN>
     );
-  }
-  static init(userDbRaw: UserDbRaw): ServerUser {
-    const core = serverSectionS.arrs.all.reduce((userDbCore, storeName) => {
-      if (storeName in userDbRaw) {
-        (userDbCore[storeName] as SectionPackDb<typeof storeName>[]) = (
-          userDbRaw[storeName] as SectionPackDbRaw<SectionName>[]
-        ).map(
-          (rawPack) => new SectionPackDb({ ...rawPack, sectionName: storeName })
-        );
-      } else {
-        userDbCore[storeName] = [];
-      }
-      return userDbCore;
-    }, {} as UserDbCore);
-
-    return new ServerUser(core);
   }
 }
 

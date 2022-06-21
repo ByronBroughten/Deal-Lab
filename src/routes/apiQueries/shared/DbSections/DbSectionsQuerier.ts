@@ -7,7 +7,8 @@ import { DbSections } from "./DbSections";
 import {
   dbSectionsFilters,
   DbSectionsRaw,
-  queryOptions, UserNotFoundError
+  queryOptions,
+  UserNotFoundError,
 } from "./DbSectionsQuerierTypes";
 
 const filter = dbSectionsFilters;
@@ -22,6 +23,9 @@ export class DbSectionsQuerier extends DbSectionsQuerierBase {
         status: 400,
       });
   }
+  static async existsByEmail(email: string): Promise<boolean> {
+    return await UserModel.exists(filter.email(email));
+  }
   static async initByUserId(userId: string): Promise<DbSectionsQuerier> {
     const querier = new DbSectionsQuerier({
       userFilter: filter.userId(userId),
@@ -32,7 +36,9 @@ export class DbSectionsQuerier extends DbSectionsQuerierBase {
   async exists(): Promise<boolean> {
     return await UserModel.exists(this.userFilter);
   }
-  async getSectionPack<SN extends ServerSectionName>(dbInfo: DbSectionInfo<SN>): Promise<SectionPackRaw<SN>> {
+  async getSectionPack<SN extends ServerSectionName>(
+    dbInfo: DbSectionInfo<SN>
+  ): Promise<SectionPackRaw<SN>> {
     // const users = await UserModel.aggregate([{ $match: this.userFilter }]);
     // const userDocs = await UserModel.aggregate([
     //   { $match: this.userFilter },

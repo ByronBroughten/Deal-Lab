@@ -6,8 +6,9 @@ import {
   isRegisterFormData
 } from "../../client/src/App/sharedWithServer/apiQueriesShared/register";
 import { makeMongooseObjectId } from "../../client/src/App/sharedWithServer/utils/mongoose";
-import { handleResAndMakeError } from "../../resErrorUtils";
+import { handleResAndMakeError, ResStatusError } from "../../resErrorUtils";
 import { loginUtils } from "./login/loginUtils";
+import { DbSectionsQuerier } from "./shared/DbSections/DbSectionsQuerier";
 import { MakeDbUserProps, userServerSide } from "./userServerSide";
 
 export const nextRegisterWare = [registerServerSide] as const;
@@ -20,7 +21,7 @@ async function registerServerSide(req: Request, res: Response) {
   const { user, serverOnlyUser } = await userServerSide.makeUserSections(
     registerFormData
   );
-  await checkThatUserDoesntExist(user.email, res);
+  await checkEmailIsUnique(user.email);
   const serverUser = await addUser({
     user,
     serverOnlyUser,
@@ -32,7 +33,11 @@ async function registerServerSide(req: Request, res: Response) {
 function validateRegisterReq(req: Request, res: Response): NextReq<"register"> {
   const { registerFormData, guestAccessSections } = req.body;
   if (!isRegisterFormData(registerFormData)) {
-    throw handleResAndMakeError(res, 400, "Register form data failed validation");
+    throw handleResAndMakeError(
+      res,
+      400,
+      "Register form data failed validation"
+    );
   }
   if (!areGuestAccessSectionsNext(guestAccessSections)) {
     throw handleResAndMakeError(res, 500, "Invalid guest access sections.");
@@ -44,14 +49,14 @@ function validateRegisterReq(req: Request, res: Response): NextReq<"register"> {
   });
 }
 
-async function checkThatUserDoesntExist(lowercaseEmail: string, res: Response) {
-  const foundUser = await loginUtils.tryFindOneUserByEmail(lowercaseEmail);
-  if (foundUser)
-    throw handleResAndMakeError(
-      res,
-      400,
-      "An account with that email already exists."
-    );
+async function checkEmailIsUnique(lowercaseEmail: string) {
+  if (await DbSectionsQuerier.existsByEmail(lowercaseEmail)) {
+    throw new ResStatusError({
+      errorMessage: `An account with the email ${lowercaseEmail} already exists.`,
+      resMessage: "An account with that email already exists",
+      status: 400,
+    });
+  }
 }
 
 async function addUser(makeDbUserProps: MakeDbUserProps) {
