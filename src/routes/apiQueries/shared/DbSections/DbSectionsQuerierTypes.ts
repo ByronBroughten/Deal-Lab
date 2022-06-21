@@ -1,4 +1,4 @@
-import { Document } from "mongoose";
+import mongoose, { Document } from "mongoose";
 import { SelfOrDescendantName } from "../../../../client/src/App/sharedWithServer/SectionsMeta/relSectionTypes/ChildTypes";
 import { ResStatusError } from "../../../../resErrorUtils";
 import { ServerSectionName } from "../../../ServerSectionName";
@@ -12,7 +12,9 @@ export const queryOptions = {
 
 export class UserNotFoundError extends ResStatusError {}
 export class SectionPackNotFoundError extends ResStatusError {}
-export interface DbSectionsRaw extends UserDbRaw, Document<any, any> {}
+export interface DbSectionsRaw extends UserDbRaw, Document<any, any> {
+  _id: mongoose.Types.ObjectId;
+}
 
 interface FirstRawSectionProps<SN extends ServerSectionName> {
   sectionName: SN;

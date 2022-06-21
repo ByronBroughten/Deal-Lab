@@ -55,7 +55,7 @@ export class DbSectionsQuerier extends DbSectionsQuerierBase {
       undefined,
       queryOptions
     );
-    if (dbSectionsRaw) return dbSectionsRaw;
+    if (dbSectionsRaw) return dbSectionsRaw as DbSectionsRaw;
     else throw this.userNotFoundError();
   }
   static userNotFoundError(): UserNotFoundError {

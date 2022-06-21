@@ -2,10 +2,9 @@ import { Request, Response } from "express";
 import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import {
   isLoginFormData,
-  LoginFormData
+  LoginFormData,
 } from "../../client/src/App/sharedWithServer/apiQueriesShared/login";
 import { ResHandledError } from "../../resErrorUtils";
-import { loginUtils } from "./login/loginUtils";
 import { DbSectionsQuerier } from "./shared/DbSections/DbSectionsQuerier";
 import { DbUser } from "./shared/DbSections/DbUser";
 import { userServerSide } from "./userServerSide";
@@ -19,13 +18,12 @@ async function loginServerSide(req: Request, res: Response) {
   const { email } = userServerSide.prepEmail(rawEmail);
 
   const querier = await DbSectionsQuerier.initByEmail(email);
-  const user = await querier.getDbSectionsRaw();
-
+  const dbSectionsRaw = await querier.getDbSectionsRaw();
   const dbUser = DbUser.init({
-    dbSectionsRaw: await querier.getDbSectionsRaw(),
+    dbSectionsRaw,
   });
   await dbUser.validatePassword(password);
-  return loginUtils.doLogin(res, user);
+  await dbUser.loginAndSend(res);
 }
 
 function validateLoginReq(req: Request, res: Response): NextReq<"login"> {

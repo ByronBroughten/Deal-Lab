@@ -1,15 +1,19 @@
 import bcrypt from "bcrypt";
 import { Response } from "express";
+import mongoose from "mongoose";
+import { constants } from "../../../../client/src/App/Constants";
 import {
   GetterSectionsBase,
-  GetterSectionsProps
+  GetterSectionsProps,
 } from "../../../../client/src/App/sharedWithServer/StateGetters/Bases/GetterSectionsBase";
 import { GetterSection } from "../../../../client/src/App/sharedWithServer/StateGetters/GetterSection";
 import { PackLoaderSection } from "../../../../client/src/App/sharedWithServer/StatePackers.ts/PackLoaderSection";
 import { UpdaterSection } from "../../../../client/src/App/sharedWithServer/StateUpdaters/UpdaterSection";
 import { HandledResStatusError } from "../../../../resErrorUtils";
+import { ServerUser } from "../../../ServerUser";
 import { DbSectionsProps } from "./Bases/DbSectionsBase";
 import { DbSections } from "./DbSections";
+import { DbSectionsRaw } from "./DbSectionsQuerierTypes";
 import { checkUserAuthToken, makeUserAuthToken } from "./DbUser/userAuthToken";
 
 interface DbUserProps extends GetterSectionsProps {
@@ -22,10 +26,12 @@ export class DbUser extends GetterSectionsBase {
     super(rest);
     this.dbSections = dbSections;
   }
+  get dbSectionsRaw(): DbSectionsRaw {
+    return this.dbSections.dbSectionsRaw;
+  }
   get userId(): string {
-    const { _id } = this.dbSections.dbSectionsRaw;
-    if (typeof _id === "string") return _id;
-    else throw new Error(`_id is "${_id}", and not a string.`);
+    const userId = this.dbSectionsRaw._id as mongoose.Types.ObjectId;
+    return userId.toHexString();
   }
   static init(props: DbSectionsProps) {
     const dbSections = new DbSections(props);
@@ -76,12 +82,18 @@ export class DbUser extends GetterSectionsBase {
 
   // register should save main the correct way, though.
 
-  async loginAndSend(res: Response) {
-    const authToken = this.makeUserAuthToken();
+  loginAndSend(res: Response) {
+    const userDb = ServerUser.init(this.dbSectionsRaw);
+    const loggedInUser = userDb.makeRawFeLoginUser();
+    const token = this.makeUserAuthToken();
+    res
+      .header(constants.tokenKey.apiUserAuth, token)
+      .status(200)
+      .send(loggedInUser);
   }
   makeUserAuthToken() {
-    DbUser.makeUserAuthToken(this.userId);
+    return DbUser.makeUserAuthToken(this.userId);
   }
   static checkUserAuthToken = checkUserAuthToken;
-  static makeUserAuthToken = makeUserAuthToken;  
+  static makeUserAuthToken = makeUserAuthToken;
 }
