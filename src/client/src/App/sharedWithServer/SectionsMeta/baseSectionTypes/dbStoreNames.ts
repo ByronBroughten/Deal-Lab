@@ -1,27 +1,12 @@
 import { Arr } from "../../utils/Arr";
-import { SimpleSectionName } from "../baseSections";
+import { Obj } from "../../utils/Obj";
+import { SimpleSectionName, simpleSectionNames } from "../baseSections";
 
 const fullIndexStore = {
   children: ["outputList", "varbList", "singleTimeList", "ongoingList"],
 };
 
-// ideal:
-// whenever a section is loaded, its descendants are looked through,
-// from children on down
-// if a childName is a sectionName, each child is searched for in the db
-// if it is found, it replaces the child, and the process continues.
-
-// I could make this happen by creating a section that has every other
-// section as a child.
-
-// I then create a sectionBuilder focused round that section
-// that builder then adds the sectionPack from the db as a child
-// and refocuses on that.
-// then we go down the children, building out the sectionPackBuilder
-// as we go
-// I think this works!
-
-const dbStoreNamesNext = [
+const dbStoreSectionTypes = [
   "main",
   "user",
 
@@ -36,12 +21,72 @@ const dbStoreNamesNext = [
   "ongoingList",
 
   "table",
-  "propertyTableStore",
-  "dealTableStore",
-  "loanTableStore",
-  "mgmtTableStore",
-];
-export const dbStoreNames = [
+] as const;
+
+// I like this, because it decouples sectionNames from
+// dbStoreNames.
+
+// I like the idea of doing this with children in the front-end state, too
+// and I like the idea of those childNames being decoupled from these
+// dbStoreNames.
+
+// The decoupling is good.
+
+// How would I go about implementing this?
+// first, I would try to implement it just for the main sections
+
+// 1. edit the mongoose schema to add these storeNames.
+// 2. add "mainStoreName" to the relSection of each of the sectionTypes
+// 3. make addSection share code with updateSection
+// 4. make new ordinary CRUD functions on the serverSide
+// 5. make their req require both the storeName and the corresponding sectionPack
+
+const dbStoreSchema = {
+  dealMain: {
+    sectionType: "deal",
+    loadToMain: true,
+    onlyOne: false,
+    tableSoruce: null,
+  },
+  loanMain: {
+    sectionType: "loan",
+    loadToMain: true,
+    onlyOne: false,
+    tableSource: null,
+  },
+  mgmtMain: {
+    sectionType: "mgmt",
+    loadToMain: true,
+    onlyOne: false,
+    tableSource: null,
+  },
+  propertyMain: {
+    sectionType: "property",
+    loadToMain: true,
+    onlyOne: false,
+    tableSource: null,
+  },
+  // userMain: {
+  //   sectionType: "user",
+  //   loadToMain: true,
+  //   onlyOne: true,
+  //   tableSource: null
+  // },
+  // propertyTableMain: {
+  //   sectionType: "table",
+  //   tableSource: "propertyMain",
+  //   loadToMain: true,
+  //   onlyOne: true,
+  // },
+} as const;
+
+// dbSectionsRaw will have these now, too.
+// that complicates things.
+//
+export const dbStoreNamesNext = Obj.keys(dbStoreSchema);
+
+
+export const dbStoreNames = Arr.extractStrict(simpleSectionNames, [
   "main",
 
   "user",
@@ -49,18 +94,16 @@ export const dbStoreNames = [
   "property",
   "mgmt",
   "loan",
-  // "table",
 
-  "propertyTableStore",
-  "dealTableStore",
-  "loanTableStore",
-  "mgmtTableStore",
+  "outputList",
+  "varbList",
+  "singleTimeList",
+  "ongoingList",
+] as const);
 
-  "userOutputList",
-  "userVarbList",
-  "userSingleList",
-  "userOngoingList",
-] as const;
+export const loadOnLoginNamesNext = Arr.extract(dbStoreNames, [
+  "main",
+] as const);
 
 export type SimpleDbStoreName = typeof dbStoreNames[number];
 type TestDbStoreNames<DS extends readonly SimpleSectionName[]> = DS;

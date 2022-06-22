@@ -7,7 +7,7 @@ import {
   baseSections,
   ContextName,
   sectionContext,
-  SimpleSectionName,
+  SimpleSectionName
 } from "../baseSections";
 import { base } from "../baseSections/base";
 import { GeneralBaseSection } from "../baseSections/baseSection";
@@ -16,6 +16,7 @@ import {
   dbStoreNames,
   feGuestAccessNames,
   loadOnLoginNames,
+  loadOnLoginNamesNext
 } from "./dbStoreNames";
 
 type HasVarbSectionName<
@@ -116,6 +117,7 @@ function makeBaseNameArrsForContext<SC extends ContextName>(
 
     // booleans
     loadOnLogin: loadOnLoginNames,
+    loadOnLoginNext: loadOnLoginNamesNext,
     feGuestAccess: feGuestAccessNames,
     alwaysOne: Obj.entryKeysWithPropValue(
       baseSectionsOfContext,
@@ -144,15 +146,15 @@ function makeBaseNameArrsForContext<SC extends ContextName>(
     // varbShape
     // In some cases it might be safer to go by whether they have the same children
     // in which cases they would be derived at a higher level
-    singleTimeList: Obj.filterKeysForEntryShape(
+    singleTimeListType: Obj.filterKeysForEntryShape(
       feBaseSectionVarbs,
       feBaseSectionVarbs.userSingleList
     ),
-    ongoingList: Obj.filterKeysForEntryShape(
+    ongoingListType: Obj.filterKeysForEntryShape(
       feBaseSectionVarbs,
       feBaseSectionVarbs.userOngoingList
     ),
-    outputList: Obj.filterKeysForEntryShape(
+    outputListType: Obj.filterKeysForEntryShape(
       feBaseSectionVarbs,
       feBaseSectionVarbs.userOutputList
     ),
@@ -195,8 +197,8 @@ function makeBaseNameArrsForContext<SC extends ContextName>(
     // combo
     get allList() {
       return [
-        ...this.singleTimeList,
-        ...this.ongoingList,
+        ...this.singleTimeListType,
+        ...this.ongoingListType,
         "userVarbList",
       ] as const;
     },

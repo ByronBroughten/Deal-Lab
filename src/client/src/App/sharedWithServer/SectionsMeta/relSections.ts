@@ -1,12 +1,12 @@
 import { Arr } from "../utils/Arr";
 import {
   MergeUnionObj,
-  MergeUnionObjNonNullable,
+  MergeUnionObjNonNullable
 } from "../utils/types/mergeUnionObj";
 import {
   ApiAccessStatus,
   ContextName,
-  SimpleSectionName,
+  SimpleSectionName
 } from "./baseSections";
 import { baseNameArrs } from "./baseSectionTypes/baseNameArrs";
 import { rel } from "./relSections/rel";
@@ -109,12 +109,17 @@ export function makeRelSections() {
         { _typeUniformity: rel.varb.string() },
         { childNames: ["table"] } as const
       ),
+      ...relSection.base("both", "outputList","Output List", {
+        title: rel.varb.string()
+      }, { childNames: ["output"] as const }),
+      
       ...relSection.outputList("dealOutputList", {
-        fullIndexName: "userOutputList",
+        fullIndexName: "outputList",
       }),
       ...relSection.outputList("userOutputList", {
-        arrStoreName: "userOutputList",
+        arrStoreName: "outputList",
       }),
+
       // these are for tables
       ...relSection.rowIndex("tableRow", "Row"),
       ...relSection.base("both", "column", "Column", {
@@ -162,18 +167,30 @@ export function makeRelSections() {
 
       // these are shared between property and mgmt
       ...rel.section.singleTimeList("upfrontCostList", "Upfront Costs", {
-        fullIndexName: "userSingleList",
+        fullIndexName: "singleTimeList",
       }),
       ...rel.section.singleTimeList("upfrontRevenueList", "Upfront Revenue", {
-        fullIndexName: "userSingleList",
+        fullIndexName: "singleTimeList",
       }),
-
       ...rel.section.ongoingList("ongoingCostList", "Ongoing Costs", {
-        fullIndexName: "userOngoingList",
+        fullIndexName: "ongoingList",
       }),
       ...rel.section.ongoingList("ongoingRevenueList", "Ongoing Revenue", {
-        fullIndexName: "userOngoingList",
+        fullIndexName: "ongoingList",
       }),
+      ...rel.section.ongoingList("ongoingCostList", "Ongoing Costs", {
+        fullIndexName: "ongoingList",
+      }),
+
+      ...rel.section.ongoingList("ongoingList", "Ongoing Costs", {
+        fullIndexName: "ongoingList",
+      }),
+      ...rel.section.singleTimeList("singleTimeList", "Upfront Revenue", {
+        fullIndexName: "singleTimeList",
+      }),
+
+      
+      
 
       // savable sections and their children
       ...preUserLists,

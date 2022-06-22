@@ -8,6 +8,22 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
+// if you want to decouple the childName from the sectionType,
+// you probably want to do that before you save all the sectionPacks...
+
+const testRelSection = {
+  children: {},
+};
+
+// Create tables on startup from the source of truth (saved properties, ect) and keep them synced on the front-end.
+// For now, stick with sectionName for store names—you can always add new stores later if you need to, and you may not need to.
+// For stores, you'll only have: main, deal, property, mgmt, loan, and the lists. One will sync with a table on the fe, the other will sync with a corresponding fullStore section on the front-end.
+// When saving, delete all the unused user-varb if-then sub sections.
+// As for the custom varbs, each property, deal, ect, can have "varbList" children.
+// When saving them, the varbs referenced by or attached to the section are saved with it.
+// In the event of loading and not updating the property, all of the entities would have to be edited to reference those userVarbs that are descendants of the main section.
+// Actually, I don't really care about loading without updating. I should take care to delete those when loading the property/mgmt/loan/etc.
+
 // implement DbUser
 // let DbUser have a getterSection
 // make it so that to initialize DbUser,

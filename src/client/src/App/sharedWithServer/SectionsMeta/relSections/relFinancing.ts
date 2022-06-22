@@ -205,9 +205,9 @@ export const relFinancing = {
     rowIndexName: "loan",
   } as const),
   ...rel.section.singleTimeList("closingCostList", "Closing Costs", {
-    fullIndexName: "userSingleList",
+    fullIndexName: "singleTimeList",
   }),
   ...rel.section.singleTimeList("wrappedInLoanList", "Items Wrapped in Loan", {
-    fullIndexName: "userSingleList",
+    fullIndexName: "singleTimeList",
   }),
 };

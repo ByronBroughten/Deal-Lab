@@ -1,16 +1,17 @@
 import { SectionPackRaw } from "../SectionPack/SectionPackRaw";
+import { FeSectionInfo } from "../SectionsMeta/Info";
 import {
   ChildName,
-  DescendantName,
+  DescendantName
 } from "../SectionsMeta/relSectionTypes/ChildTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
-import { GetterSectionBase } from "../StateGetters/Bases/GetterSectionBase";
 import { GetterSections } from "../StateGetters/GetterSections";
+import { UpdaterSectionBase } from "../StateUpdaters/bases/updaterSectionBase";
 import {
   AddChildOptions,
   AddDescendantOptions,
   DescendantList,
-  UpdaterSection,
+  UpdaterSection
 } from "../StateUpdaters/UpdaterSection";
 import { Arr } from "../utils/Arr";
 import { PackLoaderSection } from "./PackLoaderSection";
@@ -18,15 +19,31 @@ import { SectionPackMaker } from "./SectionPackMaker";
 
 export class PackBuilderSection<
   SN extends SectionName
-> extends GetterSectionBase<SN> {
+> extends UpdaterSectionBase<SN> {
   static initAsMain() {
     return new PackBuilderSection(UpdaterSection.initMainProps());
   }
-  private getterSections = new GetterSections(this.getterSectionsProps);
-  private updater = new UpdaterSection(this.getterSectionProps);
-  private loader = new PackLoaderSection(this.getterSectionProps);
-  private maker = new SectionPackMaker(this.getterSectionProps);
-
+  static initAsRoot() {
+    return new PackBuilderSection(UpdaterSection.initRootProps());
+  }
+  private get getterSections() {
+    return new GetterSections(this.getterSectionsProps);
+  }
+  get updater(): UpdaterSection<SN> {
+    return new UpdaterSection(this.getterSectionProps);
+  }
+  get loader(): PackLoaderSection<SN> {
+    return new PackLoaderSection(this.getterSectionProps);
+  }
+  get maker(): SectionPackMaker<SN> {
+    return new SectionPackMaker(this.getterSectionProps);
+  }
+  children<CN extends ChildName<SN>>(sectionName: CN): PackBuilderSection<CN>[] {
+    return this.get.childFeIds(sectionName).map((feId) => this.packBuilderSection({
+      sectionName,
+      feId
+    }));
+  }
   makeSectionPack(): SectionPackRaw<SN> {
     // it should probably start with root
     return this.maker.makeSectionPack();
@@ -37,14 +54,14 @@ export class PackBuilderSection<
   ): PackBuilderSection<DN> {
     this.updater.addDescendant(descendantList, options);
     const descendantName = Arr.lastOrThrow(descendantList) as DN;
-    return this.newSectionBuilder(descendantName);
+    return this.youngestPackBuilder(descendantName);
   }
   addAndGetChild<CN extends ChildName<SN>>(
     childName: CN,
     options?: AddChildOptions<SN, CN>
   ): PackBuilderSection<CN> {
     this.addChild(childName, options);
-    return this.newSectionBuilder(childName);
+    return this.youngestPackBuilder(childName);
   }
   addChild<CN extends ChildName<SN>>(
     childName: CN,
@@ -55,13 +72,19 @@ export class PackBuilderSection<
   loadChild<CN extends ChildName<SN>>(childPack: SectionPackRaw<CN>) {
     this.loader.loadChildSectionPack(childPack);
   }
-  private newSectionBuilder<S extends SectionName>(
-    sectionName: S
-  ): PackBuilderSection<S> {
-    const { feInfo } = this.getterSections.list(sectionName).last;
+  loadSelf(sectionPack: SectionPackRaw<SN>) {
+    this.loader.updateSelfWithSectionPack(sectionPack);
+  }
+  packBuilderSection<S extends SectionName>(feInfo: FeSectionInfo<S>): PackBuilderSection<S> {
     return new PackBuilderSection({
       ...feInfo,
       sectionsShare: this.sectionsShare,
-    });
+    })
+  }
+  private youngestPackBuilder<S extends SectionName>(
+    sectionName: S
+  ): PackBuilderSection<S> {
+    const { feInfo } = this.getterSections.newestEntry(sectionName);
+    return this.packBuilderSection(feInfo);
   }
 }

@@ -4,6 +4,8 @@ import { GetterSectionBase } from "../StateGetters/Bases/GetterSectionBase";
 import { SectionPackMaker } from "../StatePackers.ts/SectionPackMaker";
 import { SolverSections } from "../StateSolvers/SolverSections";
 
+// this may assume that everything that has an arrStore itself has the
+// same name as the arrStore.
 export class SectionArrReqMaker<
   SN extends SectionName<"arrStore">
 > extends GetterSectionBase<SN> {
@@ -25,7 +27,3 @@ export class SectionArrReqMaker<
     });
   }
 }
-
-function test(props: SectionName<"arrStore">) {}
-
-test({} as SectionName<"hasArrStore">);

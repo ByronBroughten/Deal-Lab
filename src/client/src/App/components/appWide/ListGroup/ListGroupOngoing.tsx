@@ -6,10 +6,10 @@ import { VarbListOngoing } from "../VarbLists/VarbListOngoing";
 import { useGetterSection } from "./../../../sharedWithServer/stateClassHooks/useGetterSection";
 import {
   ListGroupGeneric,
-  MakeListNodeProps,
+  MakeListNodeProps
 } from "./ListGroupShared/ListGroupGeneric";
 
-type Props<SN extends SectionName<"ongoingList"> = SectionName<"ongoingList">> =
+type Props<SN extends SectionName<"ongoingListType"> = SectionName<"ongoingListType">> =
   {
     parentInfo: FeParentInfo<SN>;
     sectionName: SN;
@@ -19,7 +19,7 @@ type Props<SN extends SectionName<"ongoingList"> = SectionName<"ongoingList">> =
     totalVarbNameBase: string;
     className?: string;
   };
-export function ListGroupOngoing<SN extends SectionName<"ongoingList">>({
+export function ListGroupOngoing<SN extends SectionName<"ongoingListType">>({
   totalVarbNameBase,
   ...props
 }: Props<SN>) {

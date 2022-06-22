@@ -63,7 +63,7 @@ export class VariableGetterSections extends GetterSectionsBase {
       const lists = main.children(sectionName);
       for (const list of lists) {
         const displayName = list.value("title", "string");
-        if (sectionNameS.is(sectionName, "ongoingList")) {
+        if (sectionNameS.is(sectionName, "ongoingListType")) {
           const ongoingNames = switchVarbNames("total", "ongoing");
           for (const key of Obj.keys(ongoingNames)) {
             if (key === "switch") continue;

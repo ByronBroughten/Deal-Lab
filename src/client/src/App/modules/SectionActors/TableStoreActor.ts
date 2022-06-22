@@ -1,8 +1,6 @@
-import { ServerSectionPack } from "../../sharedWithServer/SectionPack/SectionPackRaw";
 import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
 import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
 import { SectionPackMaker } from "../../sharedWithServer/StatePackers.ts/SectionPackMaker";
-import { SectionQuerier } from "./../QueriersBasic/SectionQuerier";
 import { SectionActorBase } from "./SectionActorBase";
 import { TableActor } from "./TableActor";
 
@@ -12,7 +10,7 @@ export class TableStoreActor<
   get tableActor(): TableActor {
     return new TableActor({
       ...this.sectionActorBaseProps,
-      sendTable: this.makeSendTable(),
+      sendTable: () => {},
     });
   }
   get tableSourceName() {
@@ -21,17 +19,17 @@ export class TableStoreActor<
   get get() {
     return new GetterSection(this.sectionActorBaseProps);
   }
-  get querier() {
-    return new SectionQuerier(this.sectionActorBaseProps);
-  }
+  // get querier() {
+  //   return new SectionQuerier(this.sectionActorBaseProps);
+  // }
   get packMaker() {
     return new SectionPackMaker(this.sectionActorBaseProps);
   }
-  makeSendTable() {
-    return async () => {
-      this.querier.update(
-        this.packMaker.makeSectionPack() as any as ServerSectionPack
-      );
-    };
-  }
+  // makeSendTable() {
+  //   return async () => {
+  //     this.querier.update(
+  //       this.packMaker.makeSectionPack() as any as ServerSectionPack
+  //     );
+  //   };
+  // }
 }

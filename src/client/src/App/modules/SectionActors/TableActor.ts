@@ -75,11 +75,11 @@ export class TableActor extends SectionActorBase<"table"> {
     options: { reverse?: boolean } = {}
   ) {
     this.tableState.sortTableRowIdsByColumn(colIdOrTitle, options);
-    this.sendTable();
+    // this.sendTable();
   }
   async removeColumn(columnFeId: string) {
     this.tableState.removeColumn(columnFeId);
-    this.sendTable();
+    // this.sendTable();
   }
   async addColumn(entityInfo: InEntityVarbInfo) {
     const { setter } = this;

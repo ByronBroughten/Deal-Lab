@@ -140,7 +140,7 @@ export const relSection = {
   //   )
   // },
   singleTimeList<
-    SN extends BaseName<"singleTimeList">,
+    SN extends BaseName<"singleTimeListType">,
     D extends string,
     O extends RelSectionOptions<ContextName, SN> = {}
   >(sectionName: SN, displayName: D, options?: O) {
@@ -156,7 +156,7 @@ export const relSection = {
     );
   },
   ongoingList<
-    SN extends BaseName<"ongoingList">,
+    SN extends BaseName<"ongoingListType">,
     D extends string,
     O extends RelSectionOptions<ContextName, SN> = {}
   >(sectionName: SN, displayName: D, options?: O) {
@@ -172,7 +172,7 @@ export const relSection = {
     );
   },
   outputList<
-    SN extends BaseName<"outputList">,
+    SN extends BaseName<"outputListType">,
     O extends RelSectionOptions<ContextName, SN> = {}
   >(sectionName: SN, options?: O) {
     return relSection.base(

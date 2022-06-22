@@ -6,15 +6,11 @@ import {
   ChildIdArrsNarrow,
   ChildName,
   DescendantName,
-  NewChildInfo
+  NewChildInfo,
 } from "../SectionsMeta/relSectionTypes/ChildTypes";
 import { ParentNameSafe } from "../SectionsMeta/relSectionTypes/ParentTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
-import {
-  GetterSectionBase,
-  GetterSectionProps
-} from "../StateGetters/Bases/GetterSectionBase";
-import { GetterSection } from "../StateGetters/GetterSection";
+import { GetterSectionProps } from "../StateGetters/Bases/GetterSectionBase";
 import { InitRawFeSectionProps } from "../StateSections/initRawSection";
 import { StateSections } from "../StateSections/StateSections";
 import { RawFeSection } from "../StateSections/StateSectionsTypes";
@@ -22,6 +18,7 @@ import { Arr } from "../utils/Arr";
 import { Obj } from "../utils/Obj";
 import { StrictOmit } from "../utils/types";
 import { GetterSections } from "./../StateGetters/GetterSections";
+import { UpdaterSectionBase } from "./bases/updaterSectionBase";
 import { UpdaterList } from "./UpdaterList";
 import { UpdaterVarb } from "./UpdaterVarb";
 
@@ -32,14 +29,16 @@ type UpdateableRawFeSection<SN extends SectionName> = StrictOmit<
 
 export class UpdaterSection<
   SN extends SectionName
-> extends GetterSectionBase<SN> {
-  private updaterList = new UpdaterList(this.getterSectionProps);
-  get = new GetterSection(this.getterSectionProps);
-  private getterSections = new GetterSections(this.getterSectionsProps);
-
+> extends UpdaterSectionBase<SN> {
   private get parent(): UpdaterSection<ParentNameSafe<SN>> {
     const { parentInfoSafe } = this.get;
     return this.updaterSection(parentInfoSafe);
+  }
+  get updaterList(): UpdaterList<SN> {
+    return new UpdaterList(this.getterSectionProps);
+  }
+  get getterSections(): GetterSections {
+    return new GetterSections(this.getterSectionsProps);
   }
   varb(varbName: string): UpdaterVarb<SN> {
     return new UpdaterVarb({
@@ -167,6 +166,14 @@ export class UpdaterSection<
     const main = root.get.youngestChild("main");
     return main.getterSectionProps;
   }
+  static initRootProps(): GetterSectionProps<"root"> {
+    const sections = StateSections.initWithRoot();
+    const rootRaw = sections.onlyOneRawSection("root");
+    return {
+      ...rootRaw,
+      sectionsShare: { sections },
+    };
+  }
   static initOmniParentProps(): GetterSectionProps<"omniParent"> {
     const root = this.initRootUpdater();
     root.addChild("omniParent");
@@ -174,12 +181,7 @@ export class UpdaterSection<
     return omniParent.getterSectionProps;
   }
   static initRootUpdater(): UpdaterSection<"root"> {
-    const sections = StateSections.initWithRoot();
-    const rootRaw = sections.onlyOneRawSection("root");
-    return new UpdaterSection({
-      ...rootRaw,
-      sectionsShare: { sections },
-    });
+    return new UpdaterSection(this.initRootProps());
   }
 }
 

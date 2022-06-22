@@ -2,14 +2,14 @@ import { Obj } from "../../../utils/Obj";
 import {
   baseSections,
   ContextName,
-  SimpleSectionName,
+  SimpleSectionName
 } from "../../baseSections";
 import { ValueName } from "../../baseSections/baseVarb";
 import { switchNames } from "../../baseSections/switchNames";
 import {
   BaseName,
   SectionVarbName,
-  SectionVarbNameByType,
+  SectionVarbNameByType
 } from "../../baseSectionTypes";
 import { relProps } from "./relMisc";
 import { relVarb } from "./relVarb";
@@ -20,14 +20,14 @@ import {
   ongoingInput,
   ongoingPercentToPortion,
   ongoingPureCalc,
-  ongoingSumNums,
+  ongoingSumNums
 } from "./relVarbs/preOngoingVarbs";
 import { simpleSwitch, switchInput } from "./relVarbs/preSwitchVarbs";
 import {
   DisplayName,
   RelVarb,
   RelVarbByType,
-  StringPreVarb,
+  StringPreVarb
 } from "./relVarbTypes";
 
 export type GeneralRelVarbs = Record<string, RelVarb>;
@@ -339,7 +339,7 @@ export const relVarbs = {
     return r;
   },
   singleTimeList<
-    S extends BaseName<"singleTimeList">,
+    S extends BaseName<"singleTimeListType">,
     R extends RelVarbs<ContextName, S>
   >(sectionName: S): R {
     const r: R = {
@@ -357,7 +357,7 @@ export const relVarbs = {
     return r;
   },
   ongoingList<
-    S extends BaseName<"ongoingList">,
+    S extends BaseName<"ongoingListType">,
     R extends RelVarbs<ContextName, S>
   >(sectionName: S) {
     const r: R = {

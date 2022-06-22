@@ -3,13 +3,13 @@ import { FeSectionInfo } from "../SectionsMeta/Info";
 import { ChildName } from "../SectionsMeta/relSectionTypes/ChildTypes";
 import { ParentNameSafe } from "../SectionsMeta/relSectionTypes/ParentTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
-import { GetterSectionBase } from "../StateGetters/Bases/GetterSectionBase";
 import { PackLoaderSection } from "../StatePackers.ts/PackLoaderSection";
+import { UpdaterSectionBase } from "./bases/updaterSectionBase";
 import { AddChildOptions, UpdaterSection } from "./UpdaterSection";
 
 export class DefaultOrNewChildAdder<
   SN extends SectionName
-> extends GetterSectionBase<SN> {
+> extends UpdaterSectionBase<SN> {
   private updater = new UpdaterSection(this.getterSectionProps);
   private loader = new PackLoaderSection(this.getterSectionProps);
   addChild<CN extends ChildName<SN>>(

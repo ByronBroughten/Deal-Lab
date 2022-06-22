@@ -6,7 +6,7 @@ import { relSection, RelSectionOptions } from "./rel/relSection";
 import { RelVarbs } from "./rel/relVarbs";
 
 function userVarbList<
-  SN extends "userVarbList" | "internalVarbList",
+  SN extends "userVarbList" | "internalVarbList" | "varbList",
   O extends StrictOmit<
     RelSectionOptions<"fe", "userVarbList">,
     "childNames" | "relVarbs"
@@ -32,13 +32,16 @@ function userVarbList<
 
 export const preUserLists = {
   ...rel.section.singleTimeList("userSingleList", "User List", {
-    arrStoreName: "userSingleList",
+    arrStoreName: "singleTimeList",
   }),
   ...rel.section.ongoingList("userOngoingList", "User Ongoing List", {
-    arrStoreName: "userOngoingList",
+    arrStoreName: "ongoingList",
+  }),
+  ...userVarbList("varbList", {
+    arrStoreName: "varbList",
   }),
   ...userVarbList("userVarbList", {
-    arrStoreName: "userVarbList",
+    arrStoreName: "varbList",
   }),
   ...userVarbList("internalVarbList"),
   ...relSection.base(

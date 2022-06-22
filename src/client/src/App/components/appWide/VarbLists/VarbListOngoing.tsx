@@ -5,7 +5,7 @@ import { ThemeName } from "../../../theme/Theme";
 import { VarbListGeneric } from "../ListGroup/ListGroupShared/VarbListGeneric";
 import { OngoingListItem } from "./VarbListOngoing/OngoingListItem";
 
-type Props<SN extends SectionName<"ongoingList"> = SectionName<"ongoingList">> =
+type Props<SN extends SectionName<"ongoingListType"> = SectionName<"ongoingListType">> =
   {
     feInfo: FeSectionInfo<SN>;
     themeName: ThemeName;

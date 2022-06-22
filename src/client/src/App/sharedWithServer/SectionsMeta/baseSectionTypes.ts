@@ -3,14 +3,14 @@ import {
   BaseSections,
   baseSections,
   ContextName,
-  SimpleSectionName,
+  SimpleSectionName
 } from "./baseSections";
 import { StateValue } from "./baseSections/baseValues/StateValueTypes";
 import { ValueName } from "./baseSections/baseVarb";
 import {
   baseNameArrs,
   BaseNameArrs,
-  BaseNameSelector,
+  BaseNameSelector
 } from "./baseSectionTypes/baseNameArrs";
 import { SpecificSectionInfo } from "./relSections/rel/relVarbInfoTypes";
 
@@ -53,8 +53,8 @@ export type SectionVarbNameByType<
 export type BaseSectionsDb = typeof baseSections.db;
 
 export function listNameToStoreName(sectionName: BaseName<"allList">) {
-  if (isBaseName(sectionName, "singleTimeList")) return "userSingleList";
-  if (isBaseName(sectionName, "ongoingList")) return "userOngoingList";
+  if (isBaseName(sectionName, "singleTimeListType")) return "userSingleList";
+  if (isBaseName(sectionName, "ongoingListType")) return "userOngoingList";
   else if (sectionName === "userVarbList") return "userVarbList";
   else throw new Error("A list sectionName was not provided");
 }

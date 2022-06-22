@@ -53,6 +53,7 @@ export const baseSections = {
         alwaysOne: true,
       }
     ),
+
     omniParent: base.section.container,
     table: base.section.schema({ titleFilter: "string" } as const),
     propertyTableStore: base.section.container,
@@ -114,6 +115,20 @@ export const baseSections = {
     ),
     userVarbList: base.section.varbList(base.options.userList),
     internalVarbList: base.section.varbList(),
+
+    outputList: base.section.schema(
+      { title: "string" },
+      base.options.alwaysOneFromStart
+    ),
+    varbList: base.section.varbList(base.options.userList),
+    singleTimeList: base.section.schema(
+      base.varbs.singleTimeList,
+      base.options.userList
+    ),
+    ongoingList: base.section.schema(
+      base.varbs.ongoingList,
+      base.options.userList
+    ),
     login: base.section.schema(
       base.varbs.string(["email", "password"] as const),
       base.options.alwaysOneFromStart
