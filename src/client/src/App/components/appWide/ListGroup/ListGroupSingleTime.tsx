@@ -9,7 +9,7 @@ import {
 import { VarbListSingleTime } from "./ListGroupSingleTime/VarbListSingleTime";
 
 type Props<
-  SN extends SectionName<"singleTimeList"> = SectionName<"singleTimeList">
+  SN extends SectionName<"singleTimeListType"> = SectionName<"singleTimeListType">
 > = {
   parentInfo: FeParentInfo<SN>;
   sectionName: SN;
@@ -19,9 +19,9 @@ type Props<
   totalVarbName: string;
   className?: string;
 };
-export function ListGroupSingleTime<SN extends SectionName<"singleTimeList">>(
-  props: Props<SN>
-) {
+export function ListGroupSingleTime<
+  SN extends SectionName<"singleTimeListType">
+>(props: Props<SN>) {
   return (
     <ListGroupGeneric
       {...{
