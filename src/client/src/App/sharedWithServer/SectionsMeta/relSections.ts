@@ -1,12 +1,12 @@
 import { Arr } from "../utils/Arr";
 import {
   MergeUnionObj,
-  MergeUnionObjNonNullable
+  MergeUnionObjNonNullable,
 } from "../utils/types/mergeUnionObj";
 import {
   ApiAccessStatus,
   ContextName,
-  SimpleSectionName
+  SimpleSectionName,
 } from "./baseSections";
 import { baseNameArrs } from "./baseSectionTypes/baseNameArrs";
 import { rel } from "./relSections/rel";
@@ -68,6 +68,11 @@ export function makeRelSections() {
             "userSingleList",
             "userOngoingList",
             "userOutputList",
+
+            "varbList",
+            "singleTimeList",
+            "ongoingList",
+            "outputList",
           ] as const,
         }
       ),
@@ -109,10 +114,16 @@ export function makeRelSections() {
         { _typeUniformity: rel.varb.string() },
         { childNames: ["table"] } as const
       ),
-      ...relSection.base("both", "outputList","Output List", {
-        title: rel.varb.string()
-      }, { childNames: ["output"] as const }),
-      
+      ...relSection.base(
+        "both",
+        "outputList",
+        "Output List",
+        {
+          title: rel.varb.string(),
+        },
+        { childNames: ["output"] as const }
+      ),
+
       ...relSection.outputList("dealOutputList", {
         fullIndexName: "outputList",
       }),
@@ -188,9 +199,6 @@ export function makeRelSections() {
       ...rel.section.singleTimeList("singleTimeList", "Upfront Revenue", {
         fullIndexName: "singleTimeList",
       }),
-
-      
-      
 
       // savable sections and their children
       ...preUserLists,

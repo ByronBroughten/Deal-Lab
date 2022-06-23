@@ -1,7 +1,7 @@
 import { rem } from "polished";
 import styled from "styled-components";
-import { useGetterSection } from "../../../../../sharedWithServer/stateClassHooks/useGetterSection";
-import theme from "../../../../../theme/Theme";
+import { useGetterSection } from "../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
+import theme from "../../../../../../theme/Theme";
 import ConditionalRows from "./IfThenContent/ConditionalRows";
 import LogicRow from "./IfThenContent/LogicRow";
 

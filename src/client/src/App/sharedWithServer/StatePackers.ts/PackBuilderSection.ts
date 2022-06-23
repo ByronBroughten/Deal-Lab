@@ -1,8 +1,8 @@
-import { SectionPackRaw } from "../SectionPack/SectionPackRaw";
+import { SectionArrPack, SectionPackRaw } from "../SectionPack/SectionPackRaw";
 import { FeSectionInfo } from "../SectionsMeta/Info";
 import {
   ChildName,
-  DescendantName
+  DescendantName,
 } from "../SectionsMeta/relSectionTypes/ChildTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { GetterSections } from "../StateGetters/GetterSections";
@@ -11,7 +11,7 @@ import {
   AddChildOptions,
   AddDescendantOptions,
   DescendantList,
-  UpdaterSection
+  UpdaterSection,
 } from "../StateUpdaters/UpdaterSection";
 import { Arr } from "../utils/Arr";
 import { PackLoaderSection } from "./PackLoaderSection";
@@ -20,6 +20,9 @@ import { SectionPackMaker } from "./SectionPackMaker";
 export class PackBuilderSection<
   SN extends SectionName
 > extends UpdaterSectionBase<SN> {
+  static initAsOmniParent() {
+    return new PackBuilderSection(UpdaterSection.initOmniParentProps());
+  }
   static initAsMain() {
     return new PackBuilderSection(UpdaterSection.initMainProps());
   }
@@ -38,11 +41,15 @@ export class PackBuilderSection<
   get maker(): SectionPackMaker<SN> {
     return new SectionPackMaker(this.getterSectionProps);
   }
-  children<CN extends ChildName<SN>>(sectionName: CN): PackBuilderSection<CN>[] {
-    return this.get.childFeIds(sectionName).map((feId) => this.packBuilderSection({
-      sectionName,
-      feId
-    }));
+  children<CN extends ChildName<SN>>(
+    sectionName: CN
+  ): PackBuilderSection<CN>[] {
+    return this.get.childFeIds(sectionName).map((feId) =>
+      this.packBuilderSection({
+        sectionName,
+        feId,
+      })
+    );
   }
   makeSectionPack(): SectionPackRaw<SN> {
     // it should probably start with root
@@ -72,14 +79,19 @@ export class PackBuilderSection<
   loadChild<CN extends ChildName<SN>>(childPack: SectionPackRaw<CN>) {
     this.loader.loadChildSectionPack(childPack);
   }
+  loadChildren<CN extends ChildName<SN>>(childArrPack: SectionArrPack<CN>) {
+    this.loader.loadChildSectionPackArr(childArrPack);
+  }
   loadSelf(sectionPack: SectionPackRaw<SN>) {
     this.loader.updateSelfWithSectionPack(sectionPack);
   }
-  packBuilderSection<S extends SectionName>(feInfo: FeSectionInfo<S>): PackBuilderSection<S> {
+  packBuilderSection<S extends SectionName>(
+    feInfo: FeSectionInfo<S>
+  ): PackBuilderSection<S> {
     return new PackBuilderSection({
       ...feInfo,
       sectionsShare: this.sectionsShare,
-    })
+    });
   }
   private youngestPackBuilder<S extends SectionName>(
     sectionName: S

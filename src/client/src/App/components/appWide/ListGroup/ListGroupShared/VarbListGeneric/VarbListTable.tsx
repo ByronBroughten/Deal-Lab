@@ -3,8 +3,8 @@ import styled from "styled-components";
 import ccs from "../../../../../theme/cssChunks";
 import theme, { ThemeName } from "../../../../../theme/Theme";
 import { StandardProps } from "../../../../general/StandardProps";
-import AddItemBtn from "../../../AdditiveListNext/AdditiveListTable/AddItemBtn";
 import useHowMany from "../../../customHooks/useHowMany";
+import { AddItemBtn } from "../AddItemBtn";
 
 interface Props extends StandardProps {
   themeName: ThemeName;

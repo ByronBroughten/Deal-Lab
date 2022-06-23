@@ -7,7 +7,7 @@ import {
   baseSections,
   ContextName,
   sectionContext,
-  SimpleSectionName
+  SimpleSectionName,
 } from "../baseSections";
 import { base } from "../baseSections/base";
 import { GeneralBaseSection } from "../baseSections/baseSection";
@@ -15,8 +15,10 @@ import { switchName, SwitchName } from "../baseSections/baseSwitchNames";
 import {
   dbStoreNames,
   feGuestAccessNames,
+  fullLoadOnLoginNames,
   loadOnLoginNames,
-  loadOnLoginNamesNext
+  loadOnLoginNamesNext,
+  tableLoadOnLoginNames,
 } from "./dbStoreNames";
 
 type HasVarbSectionName<
@@ -118,6 +120,10 @@ function makeBaseNameArrsForContext<SC extends ContextName>(
     // booleans
     loadOnLogin: loadOnLoginNames,
     loadOnLoginNext: loadOnLoginNamesNext,
+
+    fullLoadOnLogin: fullLoadOnLoginNames,
+    tableLoadOnLogin: tableLoadOnLoginNames,
+
     feGuestAccess: feGuestAccessNames,
     alwaysOne: Obj.entryKeysWithPropValue(
       baseSectionsOfContext,

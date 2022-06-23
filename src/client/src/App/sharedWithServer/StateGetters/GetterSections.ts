@@ -1,5 +1,5 @@
 import { DbSectionInfo } from "../SectionPack/DbSectionInfo";
-import { sectionMetas, SectionsMeta } from "../SectionsMeta";
+import { sectionsMeta, SectionsMeta } from "../SectionsMeta";
 import { SimpleSectionName } from "../SectionsMeta/baseSections";
 import { FeSectionInfo, VarbInfo } from "../SectionsMeta/Info";
 import {
@@ -15,7 +15,7 @@ import { GetterVarbs } from "./GetterVarbs";
 
 export class GetterSections extends GetterSectionsBase {
   get meta(): SectionsMeta {
-    return sectionMetas;
+    return sectionsMeta;
   }
   list<SN extends SectionName>(sectionName: SN): GetterList<SN> {
     return new GetterList({

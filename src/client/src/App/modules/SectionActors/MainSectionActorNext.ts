@@ -2,7 +2,7 @@ import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
 import { GetterMainSection } from "../../sharedWithServer/StateGetters/GetterMainSection";
 import { GetterSections } from "../../sharedWithServer/StateGetters/GetterSections";
 import { SetterSection } from "../../sharedWithServer/StateSetters/SetterSection";
-import { SetterTableNext } from "../../sharedWithServer/StateSetters/SetterTableNext";
+import { SetterTableNext } from "../../sharedWithServer/StateSetters/SetterTable";
 import { IndexSectionQuerierProps } from "../QueriersRelative/Bases.ts/IndexSectionQuerierBase";
 import { IndexListQuerier } from "../QueriersRelative/IndexListQuerier";
 import { IndexSectionQuerier } from "../QueriersRelative/IndexSectionQuerier";

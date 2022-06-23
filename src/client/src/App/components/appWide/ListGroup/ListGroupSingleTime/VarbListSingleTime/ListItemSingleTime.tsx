@@ -1,6 +1,6 @@
 import React from "react";
-import LabeledEquation from "../../../AdditiveListNext/AdditiveItem/LabeledEquation";
-import LoadedVarb from "../../../AdditiveListNext/AdditiveItem/LoadedVarb";
+import LabeledEquation from "../../ListGroupShared/ListItemValue/LabeledEquation";
+import LoadedVarb from "../../ListGroupShared/ListItemValue/LoadedVarb";
 import { VarbListItemGeneric } from "../../ListGroupShared/VarbListItemGeneric";
 
 export function ListItemSingleTime({ feId }: { feId: string }) {

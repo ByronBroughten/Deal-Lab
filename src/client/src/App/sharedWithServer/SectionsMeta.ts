@@ -175,4 +175,4 @@ export class SectionsMeta {
   }
 }
 
-export const sectionMetas = new SectionsMeta();
+export const sectionsMeta = new SectionsMeta();

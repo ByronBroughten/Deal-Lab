@@ -1,9 +1,9 @@
 import styled from "styled-components";
-import { FeSectionInfo } from "../../../../sharedWithServer/SectionsMeta/Info";
-import { useGetterSection } from "../../../../sharedWithServer/stateClassHooks/useGetterSection";
-import theme from "../../../../theme/Theme";
-import { MaterialStringEditorNext } from "../../../inputs/MaterialStringEditorNext";
-import { NumObjEditorNext } from "../../../inputs/NumObjEditorNext";
+import { FeSectionInfo } from "../../../../../sharedWithServer/SectionsMeta/Info";
+import { useGetterSection } from "../../../../../sharedWithServer/stateClassHooks/useGetterSection";
+import theme from "../../../../../theme/Theme";
+import { MaterialStringEditorNext } from "../../../../inputs/MaterialStringEditorNext";
+import { NumObjEditorNext } from "../../../../inputs/NumObjEditorNext";
 
 type Props = { feInfo: FeSectionInfo; valueVarbName: string };
 

@@ -85,11 +85,9 @@ const dbStoreSchema = {
 //
 export const dbStoreNamesNext = Obj.keys(dbStoreSchema);
 
-
 export const dbStoreNames = Arr.extractStrict(simpleSectionNames, [
-  "main",
-
   "user",
+
   "deal",
   "property",
   "mgmt",
@@ -101,8 +99,33 @@ export const dbStoreNames = Arr.extractStrict(simpleSectionNames, [
   "ongoingList",
 ] as const);
 
-export const loadOnLoginNamesNext = Arr.extract(dbStoreNames, [
-  "main",
+export const loadOnLoginNamesNext = [
+  // grabbed right out of the db
+  "user",
+  "outputList",
+  "varbList",
+  "singleTimeList",
+  "ongoingList",
+
+  // whipped up from their corresponding stores
+  "propertyTableStore",
+  "dealTableStore",
+  "loanTableStore",
+  "mgmtTableStore",
+] as const;
+
+export const fullLoadOnLoginNames = Arr.extract(loadOnLoginNamesNext, [
+  "user",
+  "outputList",
+  "varbList",
+  "singleTimeList",
+  "ongoingList",
+] as const);
+export const tableLoadOnLoginNames = Arr.extractStrict(loadOnLoginNamesNext, [
+  "propertyTableStore",
+  "dealTableStore",
+  "loanTableStore",
+  "mgmtTableStore",
 ] as const);
 
 export type SimpleDbStoreName = typeof dbStoreNames[number];
@@ -110,15 +133,15 @@ type TestDbStoreNames<DS extends readonly SimpleSectionName[]> = DS;
 type _Test1 = TestDbStoreNames<typeof dbStoreNames>;
 
 type DbStoreNameCheck<DS extends SimpleDbStoreName> = DS;
-export const feGuestAccessNames = Arr.extract(dbStoreNames, [
-  // this determines which sections the dbUser has populated from when the user is a guest.
-  "propertyTableStore",
-  "dealTableStore",
-  "loanTableStore",
-  "mgmtTableStore",
-  "deal",
-] as const);
 
+export const feGuestAccessNames = Arr.extract(dbStoreNames, [
+  // children of main that users should be able to play with and save
+  // before making an account.
+  "outputList",
+  "varbList",
+  "singleTimeList",
+  "ongoingList",
+] as const);
 export const loadOnLoginNames = Arr.exclude(dbStoreNames, ["main"] as const);
 
 type _LoadOnLoginTest = DbStoreNameCheck<typeof loadOnLoginNames[number]>;

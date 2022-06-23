@@ -1,6 +1,6 @@
-import styled from "styled-components";
 import { FormControl, InputLabel, Select } from "@material-ui/core";
-import { StandardSelectProps } from "../../general/StandardProps";
+import styled from "styled-components";
+import { StandardSelectProps } from "../../../../general/StandardProps";
 
 export default function ListMenuSelect({
   className,

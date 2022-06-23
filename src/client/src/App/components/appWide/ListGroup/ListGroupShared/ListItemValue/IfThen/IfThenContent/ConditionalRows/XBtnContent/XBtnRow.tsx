@@ -1,7 +1,7 @@
 import React from "react";
-import { useSetterSection } from "../../../../../../../../sharedWithServer/stateClassHooks/useSetterSection";
-import PlusBtn from "../../../../../../PlusBtn";
-import XBtn from "../../../../../../Xbtn";
+import { useSetterSection } from "../../../../../../../../../sharedWithServer/stateClassHooks/useSetterSection";
+import PlusBtn from "../../../../../../../PlusBtn";
+import XBtn from "../../../../../../../Xbtn";
 import { conditionalRowSectionName } from "../../ConditionalRows";
 
 export default function XBtnRow({ feId, idx }: { feId: string; idx: number }) {

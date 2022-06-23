@@ -1,3 +1,4 @@
+import { sectionsMeta } from "../../SectionsMeta";
 import { StateSections } from "../../StateSections/StateSections";
 
 export interface GetterSectionsProps {
@@ -9,6 +10,9 @@ export class GetterSectionsBase {
   readonly sectionsShare: SectionsShare;
   constructor({ sectionsShare }: GetterSectionsProps) {
     this.sectionsShare = sectionsShare;
+  }
+  get sectionsMeta() {
+    return sectionsMeta;
   }
   get stateSections(): StateSections {
     return this.sectionsShare.sections;

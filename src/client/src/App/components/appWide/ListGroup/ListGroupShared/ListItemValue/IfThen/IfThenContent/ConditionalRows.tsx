@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import theme from "../../../../../../theme/Theme";
+import theme from "../../../../../../../theme/Theme";
 import ControlContent from "./ConditionalRows/ControlContent";
 import LogicContent from "./ConditionalRows/LogicContent";
 import XBtnContent from "./ConditionalRows/XBtnContent";

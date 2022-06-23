@@ -18,7 +18,7 @@ export class PackLoaderSection<
   constructor(props: GetterSectionProps<SN>) {
     super(props);
   }
-  private get updater(): UpdaterSection<SN> {
+  get update(): UpdaterSection<SN> {
     return new UpdaterSection(this.getterSectionProps);
   }
   get get(): GetterSection<SN> {
@@ -33,17 +33,17 @@ export class PackLoaderSection<
   }
   loadChildPackArrs(childPackArrs: ChildSectionPackArrs<SN>): void {
     for (const [sectionName, sectionPacks] of Obj.entries(childPackArrs)) {
-      this.loadSectionPackChildren({
+      this.loadChildSectionPackArr({
         sectionName,
         sectionPacks: sectionPacks as SectionPackRaw<typeof sectionName>[],
       });
     }
   }
-  loadSectionPackChildren<CN extends ChildName<SN>>({
+  loadChildSectionPackArr<CN extends ChildName<SN>>({
     sectionName,
     sectionPacks,
   }: SectionArrPack<CN>): void {
-    this.updater.removeChildren(sectionName);
+    this.update.removeChildren(sectionName);
     for (const childPack of sectionPacks) {
       this.loadChildSectionPack(childPack);
     }

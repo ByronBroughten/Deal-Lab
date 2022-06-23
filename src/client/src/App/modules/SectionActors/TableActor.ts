@@ -4,7 +4,7 @@ import { InEntityVarbInfo } from "../../sharedWithServer/SectionsMeta/baseSectio
 import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
 import { SectionPackMaker } from "../../sharedWithServer/StatePackers.ts/SectionPackMaker";
 import { SetterSection } from "../../sharedWithServer/StateSetters/SetterSection";
-import { SetterTableNext } from "../../sharedWithServer/StateSetters/SetterTableNext";
+import { SetterTableNext } from "../../sharedWithServer/StateSetters/SetterTable";
 import { StrictOmit } from "../../sharedWithServer/utils/types";
 import { SectionActorBase, SectionActorBaseProps } from "./SectionActorBase";
 

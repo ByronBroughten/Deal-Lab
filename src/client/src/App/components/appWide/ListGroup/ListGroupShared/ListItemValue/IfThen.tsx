@@ -1,5 +1,5 @@
-import useToggleView from "../../../../modules/customHooks/useToggleView";
-import { MaterialStringEditorNext } from "../../../inputs/MaterialStringEditorNext";
+import useToggleView from "../../../../../modules/customHooks/useToggleView";
+import { MaterialStringEditorNext } from "../../../../inputs/MaterialStringEditorNext";
 import IfThenContent from "./IfThen/IfThenContent";
 
 type Props = { feId: string };

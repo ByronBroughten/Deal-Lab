@@ -1,8 +1,8 @@
-import { VarbInfo } from "../../../../sharedWithServer/SectionsMeta/Info";
-import { useGetterSection } from "../../../../sharedWithServer/stateClassHooks/useGetterSection";
-import { useSetterVarb } from "../../../../sharedWithServer/stateClassHooks/useSetterVarb";
-import { VariableOption } from "../../../../sharedWithServer/StateEntityGetters/VariableGetterSections";
-import { ControlledVarbAutoComplete } from "../../../inputs/ControlledVarbAutoComplete";
+import { VarbInfo } from "../../../../../sharedWithServer/SectionsMeta/Info";
+import { useGetterSection } from "../../../../../sharedWithServer/stateClassHooks/useGetterSection";
+import { useSetterVarb } from "../../../../../sharedWithServer/stateClassHooks/useSetterVarb";
+import { VariableOption } from "../../../../../sharedWithServer/StateEntityGetters/VariableGetterSections";
+import { ControlledVarbAutoComplete } from "../../../../inputs/ControlledVarbAutoComplete";
 
 export default function LoadedVarb({ feVarbInfo }: { feVarbInfo: VarbInfo }) {
   const varb = useSetterVarb(feVarbInfo);

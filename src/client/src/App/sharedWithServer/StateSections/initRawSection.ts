@@ -1,6 +1,6 @@
 import { pick } from "lodash";
 import { DbVarbs } from "../SectionPack/RawSection";
-import { sectionMetas } from "../SectionsMeta";
+import { sectionsMeta } from "../SectionsMeta";
 import { StateValue } from "../SectionsMeta/baseSections/baseValues/StateValueTypes";
 import { Id } from "../SectionsMeta/baseSections/id";
 import { FeSectionInfo, VarbInfo } from "../SectionsMeta/Info";
@@ -45,7 +45,7 @@ function initChildFeIds<SN extends SectionName>(
   sectionName: SN,
   proposed: Partial<ChildIdArrsNarrow<SN>> = {}
 ): ChildIdArrsNarrow<SN> {
-  const sectionMeta = sectionMetas.section(sectionName);
+  const sectionMeta = sectionsMeta.section(sectionName);
   return {
     ...sectionMeta.emptyChildIdsNarrow(),
     ...pick(proposed, [sectionMeta.childNames as any]),
@@ -61,7 +61,7 @@ export function initRawVarbs<SN extends SectionName>({
   ...feSectionInfo
 }: InitRawVarbsProps<SN>): RawFeVarbs<SN> {
   const { sectionName } = feSectionInfo;
-  const { varbNames } = sectionMetas.section(sectionName);
+  const { varbNames } = sectionsMeta.section(sectionName);
   return varbNames.reduce((varbs, varbName) => {
     varbs[varbName] = initRawVarb({
       ...feSectionInfo,
@@ -90,7 +90,7 @@ function dbToFeValue(
   proposedDbValue: DbValue | undefined
 ) {
   const dbValue = getValidDbValue(varbNames, proposedDbValue);
-  const valueMeta = sectionMetas.value(varbNames);
+  const valueMeta = sectionsMeta.value(varbNames);
   const value = (valueMeta.rawToState as (_: DbValue) => StateValue)(dbValue);
   return value;
 }
@@ -98,8 +98,8 @@ function getValidDbValue(
   varbNames: VarbNames<SectionName>,
   dbValue: DbValue | undefined
 ): DbValue {
-  const valueMeta = sectionMetas.value(varbNames);
-  const varbMeta = sectionMetas.varb(varbNames);
+  const valueMeta = sectionsMeta.value(varbNames);
+  const varbMeta = sectionsMeta.varb(varbNames);
   // for now, the correct dbInitValue lies on varbMeta
   // not valueMeta
   return valueMeta.isRaw(dbValue) ? dbValue : (varbMeta.dbInitValue as DbValue);

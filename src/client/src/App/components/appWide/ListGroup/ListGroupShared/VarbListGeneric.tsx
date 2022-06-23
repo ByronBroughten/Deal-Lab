@@ -12,8 +12,8 @@ import ccs from "../../../../theme/cssChunks";
 import theme, { ThemeName } from "../../../../theme/Theme";
 import PlainIconBtn from "../../../general/PlainIconBtn";
 import { BigStringEditor } from "../../../inputs/BigStringEditor";
-import { ListMenu } from "../../AdditiveListNext/ListMenu";
 import { useOpenWidth } from "../../SectionTitleRow";
+import { ListMenu } from "./ListMenu";
 import { VarbListTable } from "./VarbListGeneric/VarbListTable";
 import { VarbListTotal } from "./VarbListGeneric/VarbListTotal";
 

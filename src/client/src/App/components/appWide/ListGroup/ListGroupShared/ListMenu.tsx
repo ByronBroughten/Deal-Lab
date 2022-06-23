@@ -2,13 +2,13 @@ import React from "react";
 import { FiMaximize2, FiMinimize2 } from "react-icons/fi";
 import { MdDelete } from "react-icons/md";
 import styled, { css } from "styled-components";
-import useToggleView from "../../../modules/customHooks/useToggleView";
-import { FeInfoByType } from "../../../sharedWithServer/SectionsMeta/Info";
-import { useSetterSection } from "../../../sharedWithServer/stateClassHooks/useSetterSection";
-import theme, { ThemeName } from "../../../theme/Theme";
-import { StandardProps } from "../../general/StandardProps";
-import XBtn from "../Xbtn";
-import ListMenuBtn from "./ListMenuBtn";
+import useToggleView from "../../../../modules/customHooks/useToggleView";
+import { FeInfoByType } from "../../../../sharedWithServer/SectionsMeta/Info";
+import { useSetterSection } from "../../../../sharedWithServer/stateClassHooks/useSetterSection";
+import theme, { ThemeName } from "../../../../theme/Theme";
+import { StandardProps } from "../../../general/StandardProps";
+import XBtn from "../../Xbtn";
+import ListMenuBtn from "./ListMenu/ListMenuBtn";
 
 function useFullIndexStoreMenu(feInfo: FeInfoByType<"hasFullIndex">) {
   const section = useSetterSection(feInfo);

@@ -85,6 +85,7 @@ export class UpdaterSection<
     const { feSectionInfo } = childList.get.last;
     this.addChildFeId(feSectionInfo);
   }
+  addAndGetChild<CN>() {}
   addDescendant<DN extends DescendantName<SN>>(
     descendantPath: DescendantList<SN, DN>,
     options: AddDescendantOptions<SN, DN> = {}

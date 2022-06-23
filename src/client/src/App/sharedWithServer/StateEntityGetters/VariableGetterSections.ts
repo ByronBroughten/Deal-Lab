@@ -1,4 +1,4 @@
-import { sectionMetas } from "../SectionsMeta";
+import { sectionsMeta } from "../SectionsMeta";
 import { switchVarbNames } from "../SectionsMeta/baseSections/baseSwitchNames";
 import { InEntityVarbInfo } from "../SectionsMeta/baseSections/baseValues/entities";
 import { SectionName, sectionNameS } from "../SectionsMeta/SectionName";
@@ -90,7 +90,7 @@ export class VariableGetterSections extends GetterSectionsBase {
   private initStaticVarbOptions(): VariableOption[] {
     const sectionNames = sectionNameS.arrs.all;
     return sectionNames.reduce((options, sectionName) => {
-      const sectionMeta = sectionMetas.section(sectionName);
+      const sectionMeta = sectionsMeta.section(sectionName);
       const { varbNames } = sectionMeta;
       if (sectionNameS.is(sectionName, "hasGlobalVarbs"))
         options = options.concat(
@@ -105,11 +105,11 @@ export class VariableGetterSections extends GetterSectionsBase {
     sectionName: SectionName<"hasGlobalVarbs">,
     varbName: string
   ): VariableOption {
-    const varbMeta = sectionMetas.varb({
+    const varbMeta = sectionsMeta.varb({
       sectionName,
       varbName,
     });
-    const sectionMeta = sectionMetas.section(sectionName);
+    const sectionMeta = sectionsMeta.section(sectionName);
     return {
       varbInfo: {
         sectionName,

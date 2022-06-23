@@ -13,7 +13,9 @@ export interface DbSectionsInitByEmailProps {
   email: string;
 }
 export class DbSections extends DbSectionsBase {
-  onlySectionPack<SN extends ServerSectionName>(sectionName: SN): SectionPackRaw<SN> {
+  onlySectionPack<SN extends ServerSectionName>(
+    sectionName: SN
+  ): SectionPackRaw<SN> {
     const sectionPacks = this.dbSectionsRaw[sectionName];
     if (sectionPacks.length !== 1) {
       throw new Error(
@@ -22,8 +24,18 @@ export class DbSections extends DbSectionsBase {
     }
     return {
       ...sectionPacks[0],
-      sectionName
+      sectionName,
     } as SectionPackRaw<SN>;
+  }
+  sectionPackArr<SN extends ServerSectionName>(
+    sectionName: SN
+  ): SectionPackRaw<SN>[] {
+    return this.dbSectionsRaw[sectionName].map((dbPack) => {
+      return {
+        ...dbPack,
+        sectionName,
+      } as SectionPackRaw<SN>;
+    });
   }
   sectionPack<SN extends ServerSectionName>({
     sectionName,

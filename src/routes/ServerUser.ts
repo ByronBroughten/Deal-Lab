@@ -3,12 +3,12 @@ import { DbVarbs } from "../client/src/App/sharedWithServer/SectionPack/RawSecti
 import { SectionPack } from "../client/src/App/sharedWithServer/SectionPack/SectionPack";
 import {
   SectionPackDbRaw,
-  SectionPackRaw
+  SectionPackRaw,
 } from "../client/src/App/sharedWithServer/SectionPack/SectionPackRaw";
 import { DbSectionName } from "../client/src/App/sharedWithServer/SectionsMeta/relNameArrs/storeArrs";
 import {
   SectionName,
-  sectionNameS
+  sectionNameS,
 } from "../client/src/App/sharedWithServer/SectionsMeta/SectionName";
 import { Obj } from "../client/src/App/sharedWithServer/utils/Obj";
 import { SectionPackDb } from "./SectionPackDb";
@@ -102,7 +102,7 @@ export function initDbSectionPack<SN extends SectionName>(
 //   const tableName = rowIndexToTableName[sectionName];
 //   const tableSectionPack = this.firstSectionPack(tableName);
 
-//   const { rowSourceName } = sectionMetas.section(tableName).core;
+//   const { rowSourceName } = sectionsMeta.section(tableName).core;
 //   const tableColumnSections = tableSectionPack.rawSectionArr("column");
 //   const rowSourceArr = this.sectionPackArr(rowSourceName);
 

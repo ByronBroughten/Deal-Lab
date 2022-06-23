@@ -77,7 +77,7 @@ function propertySection<
         "ongoingCostList",
         "ongoingRevenueList",
         "unit",
-        "internalVarbList",
+        "varbList",
       ] as const,
     }
   );

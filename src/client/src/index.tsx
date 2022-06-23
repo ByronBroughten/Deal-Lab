@@ -8,46 +8,41 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-// if you want to decouple the childName from the sectionType,
-// you probably want to do that before you save all the sectionPacks...
-
-const testRelSection = {
-  children: {},
+const testRelProperty = {
+  children: {
+    upfrontCostList: {
+      sectionType: "singleTimeList",
+    },
+    ongoingCostList: {
+      sectionType: "ongoingList",
+    },
+  },
 };
 
+// Start by eliminating all sectionPack utils.
+// Get all the sectionPack stuff in one place.
+// Make Queryable SectionPacks
+// Now that sectionPacks are just for transferring data,
+// I could make new ones that are hierarchical, which I think
+// would allow me to query them in the database in the same
+// way as in the state. And it would simplify the
+// child/rawSection relationship
+
+// Try decoupling childName from sectionType
+// Would I do this before or after changing the sectionPack?
+
 // Create tables on startup from the source of truth (saved properties, ect) and keep them synced on the front-end.
-// For now, stick with sectionName for store names—you can always add new stores later if you need to, and you may not need to.
-// For stores, you'll only have: main, deal, property, mgmt, loan, and the lists. One will sync with a table on the fe, the other will sync with a corresponding fullStore section on the front-end.
-// When saving, delete all the unused user-varb if-then sub sections.
+// When loading a deal, delete its internal userVarblist
 // As for the custom varbs, each property, deal, ect, can have "varbList" children.
 // When saving them, the varbs referenced by or attached to the section are saved with it.
-// In the event of loading and not updating the property, all of the entities would have to be edited to reference those userVarbs that are descendants of the main section.
-// Actually, I don't really care about loading without updating. I should take care to delete those when loading the property/mgmt/loan/etc.
-
-// implement DbUser
-// let DbUser have a getterSection
-// make it so that to initialize DbUser,
-// - create sections that just have root and omniparent
-// - load the sectionPack as a child to omniParent
-// - use the sectionPack's info to create a getter
-//   section
-// - do the same for serverSideUser
-// - In DbUser, access the password of serverSideUser
-//   and check it
-
-// make the dbSectionsRaw able to convert into
-// sections, for the sake of being able to search for
-// getterSections
 
 // get rid of all duplicate sectionNames (for the lists, etc)
 // - you will need to add sections to differentiate the
 // - ones with the same names
 
-// when do I implement the new way of loading from the db?
-
-// ok. the plan is to only load "main"
-// is this a bad idea for any reason?
-// oh. I must load parents before children
+// Start by just saving main and then just loading main without the tables.
+// What if I start by not even loading main at all.
+// Then just load the tables.
 
 // make main db savable
 // get the main sectionPack from the db (there should only be one).

@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components/macro";
-import theme from "../../../../../../../theme/Theme";
+import theme from "../../../../../../../../theme/Theme";
 import XBtnRow from "./XBtnContent/XBtnRow";
 
 export default function XBtnContent({

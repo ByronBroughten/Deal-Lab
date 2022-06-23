@@ -1,5 +1,5 @@
-import IfThen from "../../AdditiveListNext/AdditiveItem/IfThen";
-import LabeledEquation from "../../AdditiveListNext/AdditiveItem/LabeledEquation";
+import IfThen from "../../ListGroup/ListGroupShared/ListItemValue/IfThen";
+import LabeledEquation from "../../ListGroup/ListGroupShared/ListItemValue/LabeledEquation";
 import { VarbListItemGeneric } from "../../ListGroup/ListGroupShared/VarbListItemGeneric";
 
 type Props = { feId: string };

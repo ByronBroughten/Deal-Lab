@@ -1,8 +1,8 @@
 import { ongoingStuff } from "../../../../sharedWithServer/SectionsMeta/baseSections/switchNames";
 import { useSetterSection } from "../../../../sharedWithServer/stateClassHooks/useSetterSection";
-import LabeledEquation from "../../AdditiveListNext/AdditiveItem/LabeledEquation";
-import LabeledSpanOverCost from "../../AdditiveListNext/AdditiveItem/LabeledSpanOverCost";
-import LoadedVarb from "../../AdditiveListNext/AdditiveItem/LoadedVarb";
+import LabeledEquation from "../../ListGroup/ListGroupShared/ListItemValue/LabeledEquation";
+import LabeledSpanOverCost from "../../ListGroup/ListGroupShared/ListItemValue/LabeledSpanOverCost";
+import LoadedVarb from "../../ListGroup/ListGroupShared/ListItemValue/LoadedVarb";
 import { VarbListItemGeneric } from "../../ListGroup/ListGroupShared/VarbListItemGeneric";
 
 export function OngoingListItem({ feId }: { feId: string }) {

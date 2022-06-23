@@ -3,7 +3,7 @@ import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/
 import { makeReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/makeReqAndRes";
 import {
   areGuestAccessSectionsNext,
-  isRegisterFormData
+  isRegisterFormData,
 } from "../../client/src/App/sharedWithServer/apiQueriesShared/register";
 import { makeMongooseObjectId } from "../../client/src/App/sharedWithServer/utils/mongoose";
 import { handleResAndMakeError, ResStatusError } from "../../resErrorUtils";

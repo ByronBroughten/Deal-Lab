@@ -6,6 +6,7 @@ import useToggleView from "../../../../modules/customHooks/useToggleView";
 import { useMainSectionActor } from "../../../../modules/sectionActorHooks/useMainSectionActor";
 import { auth } from "../../../../modules/services/authService";
 import { FeInfoByType } from "../../../../sharedWithServer/SectionsMeta/Info";
+import { SectionName } from "../../../../sharedWithServer/SectionsMeta/SectionName";
 import theme from "../../../../theme/Theme";
 import BtnTooltip from "../../BtnTooltip";
 import { IconBtn } from "../../IconBtn";
@@ -13,6 +14,8 @@ import RowIndexSectionList from "../../RowIndexSectionList";
 import XBtn from "../../Xbtn";
 import { MainSectionTitleRowTitleNext } from "./MainSectionTitleRow/MainSectionTitleRowTitle";
 import MainSectionTitleSaveBtn from "./MainSectionTitleRow/MainSectionTitleSaveBtn";
+
+type Test = SectionName<"hasRowIndex">;
 
 type Props = {
   feInfo: FeInfoByType<"hasRowIndex">;

@@ -1,7 +1,6 @@
-import React from "react";
-import styled from "styled-components";
 import { Button } from "@material-ui/core";
-import theme from "../../../../../../../../theme/Theme";
+import styled from "styled-components";
+import theme from "../../../../../../../../../theme/Theme";
 
 export default styled(Button).attrs(({ className, ...rest }) => ({
   color: "outline-secondary",

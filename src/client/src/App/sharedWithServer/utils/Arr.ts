@@ -136,7 +136,7 @@ export const Arr = {
   extractStrict<A extends any, B extends A>(
     a: readonly A[],
     b: readonly B[]
-  ) {
+  ): Extract<A, B>[] {
     return a.filter((str) => b.includes(str as any)) as Extract<A, B>[];
   },
   extract<A extends any, B extends any>(

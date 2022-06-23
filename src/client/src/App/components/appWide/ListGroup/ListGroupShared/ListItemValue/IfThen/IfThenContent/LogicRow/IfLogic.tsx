@@ -1,12 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-import { useSetterSection } from "../../../../../../../sharedWithServer/stateClassHooks/useSetterSection";
-import { useSetterSections } from "../../../../../../../sharedWithServer/stateClassHooks/useSetterSections";
-import { listOperators } from "../../../../../../../sharedWithServer/StateSolvers/SolveValueVarb/UserVarbValueSolver";
-import LogicOperators from "../../../../../../appWide/LogicOperators";
-import { ListEditorNext } from "../../../../../../inputs/ListEditorNext";
-import { NumObjEditorNext } from "../../../../../../inputs/NumObjEditorNext";
-import MaterialSelect from "./../../../../../../inputs/MaterialSelect";
+import { useSetterSection } from "../../../../../../../../sharedWithServer/stateClassHooks/useSetterSection";
+import { useSetterSections } from "../../../../../../../../sharedWithServer/stateClassHooks/useSetterSections";
+import { listOperators } from "../../../../../../../../sharedWithServer/StateSolvers/SolveValueVarb/UserVarbValueSolver";
+import { ListEditorNext } from "../../../../../../../inputs/ListEditorNext";
+import MaterialSelect from "../../../../../../../inputs/MaterialSelect";
+import { NumObjEditorNext } from "../../../../../../../inputs/NumObjEditorNext";
+import LogicOperators from "../../../../../../LogicOperators";
 
 export default function IfLogic({ rowId }: { rowId: string }) {
   const sectionName = "conditionalRow";

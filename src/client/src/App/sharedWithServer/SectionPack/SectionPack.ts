@@ -1,4 +1,4 @@
-import { sectionMetas } from "../SectionsMeta";
+import { sectionsMeta } from "../SectionsMeta";
 import { Id } from "../SectionsMeta/baseSections/id";
 import { ChildIdArrsWide } from "../SectionsMeta/relSectionTypes/ChildTypes";
 import {
@@ -26,7 +26,7 @@ export class SectionPack<SN extends SectionName> {
     dbVarbs,
     dbId = Id.make(),
   }: OneHeadSectionNode<SN>): SectionPackRaw<SN> {
-    const sectionMeta = sectionMetas.section(sectionName);
+    const sectionMeta = sectionsMeta.section(sectionName);
     return {
       sectionName,
       dbId,
@@ -51,7 +51,7 @@ export class SectionPack<SN extends SectionName> {
   static emptyRawSections<SN extends SectionName>(
     sectionName: SN
   ): RawSections<SN> {
-    return sectionMetas
+    return sectionsMeta
       .selfAndDescendantNames(sectionName)
       .reduce((rawSections, name) => {
         rawSections[name] = [];

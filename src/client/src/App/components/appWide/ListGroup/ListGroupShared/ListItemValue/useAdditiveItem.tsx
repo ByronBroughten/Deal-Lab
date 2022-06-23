@@ -1,7 +1,7 @@
-import { FeSectionInfo } from "../../../../sharedWithServer/SectionsMeta/Info";
-import { SectionName } from "../../../../sharedWithServer/SectionsMeta/SectionName";
-import { useGetterSection } from "../../../../sharedWithServer/stateClassHooks/useGetterSection";
-import { useSetterSection } from "../../../../sharedWithServer/stateClassHooks/useSetterSection";
+import { FeSectionInfo } from "../../../../../sharedWithServer/SectionsMeta/Info";
+import { SectionName } from "../../../../../sharedWithServer/SectionsMeta/SectionName";
+import { useGetterSection } from "../../../../../sharedWithServer/stateClassHooks/useGetterSection";
+import { useSetterSection } from "../../../../../sharedWithServer/stateClassHooks/useSetterSection";
 
 const valueSwitchValues = [
   "loadedVarb",
