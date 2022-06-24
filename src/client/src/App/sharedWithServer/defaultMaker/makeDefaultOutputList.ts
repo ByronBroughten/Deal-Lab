@@ -7,26 +7,14 @@ export const outputNames = [
   "roiYearly",
 ] as const;
 
-export const defaultDealOutputInfos = [
-  {
+export const defaultDealOutputInfos = outputNames.map((varbName) => {
+  return {
     id: "static",
     idType: "relative",
-    sectionName: "final",
-    varbName: "totalInvestment",
-  },
-  {
-    id: "static",
-    idType: "relative",
-    sectionName: "final",
-    varbName: "cashFlowYearly",
-  },
-  {
-    id: "static",
-    idType: "relative",
-    sectionName: "final",
-    varbName: "roiYearly",
-  },
-] as const;
+    sectionName: "deal",
+    varbName,
+  } as const;
+});
 
 export function makeDefaultOutputList(): SectionPackRaw<"dealOutputList"> {
   const main = PackBuilderSection.initAsMain();

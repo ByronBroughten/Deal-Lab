@@ -1,8 +1,11 @@
+import { SectionPackRaw } from "../SectionPack/SectionPackRaw";
+import { SectionName } from "../SectionsMeta/SectionName";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
-import { defaultDealOutputInfos } from "./makeDefaultOutputList";
+import { Obj } from "../utils/Obj";
+import { outputNames } from "./makeDefaultOutputList";
 
-const columnVarbInfos = {
-  deal: defaultDealOutputInfos,
+const columnVarbnames = {
+  deal: outputNames,
   property: ["price", "numBedrooms", "targetRentMonthly"],
   loan: ["interestRatePercentMonthly", "loanTermYears"],
   mgmt: [
@@ -13,22 +16,24 @@ const columnVarbInfos = {
   ],
 } as const;
 
-function makeDefaultTablePacks() {
+type TablePacks = {
+  [SN in SectionName<"tableSource">]: SectionPackRaw<"table">;
+};
+export function makeDefaultTablePacks(): TablePacks {
   const parent = PackBuilderSection.initAsOmniParent();
-
-  const dealTable = parent.addAndGetChild("table");
-  for (const outputVarbInfo of defaultDealOutputInfos) {
-    dealTable.addChild("column", {
-      dbVarbs: outputVarbInfo,
-    });
-  }
-
-  const varbInfo = {
-    id: "local",
-    idType: "relative",
-    sectionName: "property",
-    varbName: "price",
-  };
-
-  // const propertyTable = parent.addAnd;
+  return Obj.keys(columnVarbnames).reduce((tablePacks, sectionName) => {
+    const table = parent.addAndGetChild("table");
+    for (const varbName of columnVarbnames[sectionName]) {
+      table.addChild("column", {
+        dbVarbs: {
+          id: "local",
+          idType: "relative",
+          sectionName,
+          varbName,
+        },
+      });
+    }
+    tablePacks[sectionName] = table.makeSectionPack();
+    return tablePacks;
+  }, {} as TablePacks);
 }

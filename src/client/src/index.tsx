@@ -19,6 +19,8 @@ const testRelProperty = {
   },
 };
 
+// Make dbNumObj include solvableText
+
 // Start by eliminating all sectionPack utils.
 // Get all the sectionPack stuff in one place.
 // Make Queryable SectionPacks
@@ -75,6 +77,10 @@ const testRelProperty = {
 // * Load  "deal" with updates
 // * Load "property", etc, with updates
 // * Load "singleTimeList", etc, with updates
+
+// To make sure the userVarbs come from the right place:
+// 1. Make the relative varbs be not static, but local or children
+// 2. Make the userVarbs all be from main.userVarb
 
 // I'll need to make the list groups be sections
 // I'll need to make propertyGeneral access the total

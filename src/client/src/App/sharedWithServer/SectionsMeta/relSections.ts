@@ -11,7 +11,7 @@ import {
 import { baseNameArrs } from "./baseSectionTypes/baseNameArrs";
 import { rel } from "./relSections/rel";
 import { GeneralRelSection, relSection } from "./relSections/rel/relSection";
-import { LeftRightVarbInfos, relVarb } from "./relSections/rel/relVarb";
+import { relVarb } from "./relSections/rel/relVarb";
 import { RelVarbs } from "./relSections/rel/relVarbs";
 import { relDealStuff } from "./relSections/relDealStuff";
 import { relFinancing } from "./relSections/relFinancing";
@@ -206,107 +206,6 @@ export function makeRelSections() {
       ...relFinancing,
       ...preMgmtGeneral,
       ...relDealStuff,
-      ...relSection.base("both", "final", "Final Calculations", {
-        totalInvestment: rel.varb.leftRightPropFn(
-          "Upfront investment",
-          "simpleSubtract",
-          rel.varbInfo.specifiers("static", [
-            ["final", "upfrontExpenses"],
-            ["final", "upfrontRevenue"],
-          ]) as LeftRightVarbInfos,
-          { startAdornment: "$" }
-        ),
-        cashFlowMonthly: rel.varb.leftRightPropFn(
-          "Monthly cash flow",
-          "simpleSubtract",
-          rel.varbInfo.specifiers("static", [
-            ["final", "revenueMonthly"],
-            ["final", "expensesMonthly"],
-          ]) as LeftRightVarbInfos,
-          rel.adorn.moneyMonth
-        ),
-        cashFlowYearly: rel.varb.leftRightPropFn(
-          "Annual cash flow",
-          "simpleSubtract",
-          rel.varbInfo.specifiers("static", [
-            ["final", "revenueYearly"],
-            ["final", "expensesYearly"],
-          ]) as LeftRightVarbInfos,
-          rel.adorn.moneyYear
-        ),
-        cashFlowOngoingSwitch: rel.varb.string({
-          initValue: "yearly",
-          dbInitValue: "yearly",
-        }),
-        roiMonthly: rel.varb.leftRightPropFn(
-          "Monthly ROI",
-          "divideToPercent",
-          rel.varbInfo.specifiers("static", [
-            ["final", "cashFlowMonthly"],
-            ["final", "totalInvestment"],
-          ]) as LeftRightVarbInfos,
-          { endAdornment: "%", unit: "percent" }
-        ),
-        roiYearly: rel.varb.leftRightPropFn(
-          "Annual ROI",
-          "divideToPercent",
-          rel.varbInfo.specifiers("static", [
-            ["final", "cashFlowYearly"],
-            ["final", "totalInvestment"],
-          ]) as LeftRightVarbInfos,
-          { endAdornment: "%", unit: "percent" }
-        ),
-        roiOngoingSwitch: rel.varb.string({
-          initValue: "yearly",
-          dbInitValue: "yearly",
-        }),
-        upfrontExpensesSum: rel.varb.sumNums(
-          "Sum of upfront expenses",
-          rel.varbInfo.specifiers("static", [
-            ["propertyGeneral", "upfrontExpenses"],
-            ["mgmtGeneral", "upfrontExpenses"],
-            ["financing", "downPaymentDollars"],
-            ["financing", "closingCosts"],
-            ["financing", "mortInsUpfront"],
-          ]),
-          { startAdornment: "$" }
-        ),
-        upfrontExpenses: rel.varb.leftRightPropFn(
-          "Total upfront expenses",
-          "simpleSubtract",
-          rel.varbInfo.specifiers("static", [
-            ["final", "upfrontExpensesSum"],
-            ["financing", "wrappedInLoan"],
-          ]) as LeftRightVarbInfos,
-          { startAdornment: "$" }
-        ),
-        upfrontRevenue: rel.varb.sumNums(
-          "Upfront revenue",
-          [
-            rel.varbInfo.relative(
-              "propertyGeneral",
-              "upfrontRevenue",
-              "static"
-            ),
-          ],
-          { startAdornment: "$" }
-        ),
-        ...rel.varbs.ongoingSumNums(
-          "expenses",
-          "Ongoing expenses",
-          rel.varbInfo.statics([
-            ["propertyGeneral", "ongoingExpenses"],
-            ["mgmtGeneral", "ongoingExpenses"],
-            ["financing", "piti"],
-          ])
-        ),
-        ...rel.varbs.ongoingSumNums(
-          "revenue",
-          "Ongoing revenue",
-          [rel.varbInfo.static("propertyGeneral", "ongoingRevenue")],
-          { shared: { startAdornment: "$" }, switchInit: "monthly" }
-        ),
-      }),
     },
     get db() {
       return this.fe;

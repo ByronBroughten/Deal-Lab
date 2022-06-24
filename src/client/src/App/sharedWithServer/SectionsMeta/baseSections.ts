@@ -175,20 +175,8 @@ export const baseSections = {
       hasGlobalVarbs: true,
     }),
     deal: base.section.schema(
-      { title: "string" },
-      base.options.alwaysOneFromStart
-    ),
-    dealOutputList: base.section.schema(
-      { title: "string" },
-      base.options.alwaysOneFromStart
-    ),
-    userOutputList: base.section.schema(
-      { title: "string" },
-      { uniqueDbId: true }
-    ),
-    output: base.section.schema(base.varbs.varbInfo, {}),
-    final: base.section.schema(
       {
+        title: "string",
         ...base.varbs.numObj([
           "upfrontExpensesSum",
           "upfrontExpenses",
@@ -200,8 +188,18 @@ export const baseSections = {
         ...base.varbs.ongoing("cashFlow"),
         ...base.varbs.ongoing("roi"),
       },
-      { ...base.options.alwaysOneFromStart, hasGlobalVarbs: true }
+      base.options.alwaysOneFromStart
     ),
+    dealOutputList: base.section.schema(
+      { title: "string" },
+      base.options.alwaysOneFromStart
+    ),
+    userOutputList: base.section.schema(
+      { title: "string" },
+      { uniqueDbId: true }
+    ),
+    output: base.section.schema(base.varbs.varbInfo, {}),
+
     user: base.section.schema(base.varbs.feUser, {
       ...base.options.alwaysOneFromStart,
     }),

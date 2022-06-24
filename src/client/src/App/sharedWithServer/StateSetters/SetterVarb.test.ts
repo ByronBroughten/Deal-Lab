@@ -26,7 +26,7 @@ describe("SetterVarb", () => {
     const preNum = tester.get.value("numObj").numberOrZero;
 
     const preFinal = tester.get.sections
-      .oneAndOnly("final")
+      .oneAndOnly("deal")
       .varb("totalInvestment");
     const preFinalNum = preFinal.value("numObj").numberOrZero;
 
@@ -36,7 +36,7 @@ describe("SetterVarb", () => {
 
     const postNum = tester.get.value("numObj").number;
     const postFinal = tester.get.sections
-      .oneAndOnly("final")
+      .oneAndOnly("deal")
       .varb("totalInvestment");
     const postFinalNum = postFinal.value("numObj").numberOrZero;
 
