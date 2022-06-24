@@ -18,7 +18,7 @@ const testRelProperty = {
     },
   },
 };
-// if you clean up RelSections (i.e, get rid of all "SC" stuff)
+
 // you will be able to create a "RelProp" type that takes an SN
 // and property name and gives the property.
 // You can make a version that excludes null.

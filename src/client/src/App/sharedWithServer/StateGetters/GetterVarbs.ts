@@ -31,7 +31,7 @@ export class GetterVarbs<SN extends SectionName> extends GetterSectionBase<SN> {
     return new GetterSections(this.getterSectionsProps);
   }
   get meta(): VarbMetas {
-    return this.getterSection.meta.varbsMeta;
+    return this.getterSection.meta.varbMetas;
   }
   get feVarbInfos(): VarbInfo<SN>[] {
     const { feSectionInfo } = this;

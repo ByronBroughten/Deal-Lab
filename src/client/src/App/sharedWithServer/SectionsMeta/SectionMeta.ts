@@ -1,61 +1,86 @@
 import { DbVarbs } from "../SectionPack/RawSection";
 import { Obj } from "../utils/Obj";
-import { baseSections, BaseSections, SimpleSectionName } from "./baseSections";
-import {
-  allTableSourceParams,
-  TableSourceParams,
-} from "./relNameArrs/tableStoreArrs";
-import { relSections, RelSections } from "./relSections";
+import { SimpleSectionName } from "./baseSections";
+import { relSections } from "./relSections";
 import {
   ChildIdArrsNarrow,
   ChildIdArrsWide,
   ChildName,
 } from "./relSectionTypes/ChildTypes";
 import {
-  sectionParentNames,
-  SectionToParentNameArrs,
-} from "./relSectionTypes/ParentTypes";
+  CorePropName,
+  sectionMetasCore,
+  SectionsMetaCore,
+} from "./sectionMetasCore";
 import { VarbMetas } from "./VarbMetas";
 
-type SectionMetaExtra<SN extends SimpleSectionName> = {
+type SectionMetaExtra = {
   varbMetas: VarbMetas;
-  parentNames: SectionToParentNameArrs[SN];
-  tableSource: TableSourceParams[SN];
 };
+export interface SectionMetaProps<SN extends SimpleSectionName>
+  extends SectionMetaExtra {
+  sectionName: SN;
+}
 
-type RelSection<SN extends SimpleSectionName> = RelSections[SN];
-type BaseSection<SN extends SimpleSectionName> = BaseSections["fe"][SN];
+type CoreProp<
+  SN extends SimpleSectionName,
+  PN extends CorePropName
+> = SectionsMetaCore[SN][PN];
 
-export type SectionMetaCore<SN extends SimpleSectionName> = RelSection<SN> &
-  BaseSection<SN> &
-  SectionMetaExtra<SN>;
+type CorePropNoNull<
+  SN extends SimpleSectionName,
+  PN extends CorePropName
+> = Exclude<CoreProp<SN, PN>, null>;
 
 export class SectionMeta<SN extends SimpleSectionName> {
-  constructor(readonly core: SectionMetaCore<SN>) {}
-  get rowIndexName(): Exclude<RelSections[SN]["rowIndexName"], null> {
-    const { rowIndexName } = this.core;
-    if (rowIndexName === null) throw new Error("Can't be null.");
-    return rowIndexName as any;
+  constructor(readonly props: SectionMetaProps<SN>) {}
+  get sectionName(): SN {
+    return this.props.sectionName;
   }
-  get<PN extends keyof SectionMetaCore<SN>>(
-    propName: PN
-  ): SectionMetaCore<SN>[PN] {
+  get core() {
+    return sectionMetasCore[this.sectionName];
+  }
+  get rowIndexName(): CorePropNoNull<SN, "rowIndexName"> {
+    return this.propNoNull("rowIndexName");
+  }
+  get tableSourceName(): CorePropNoNull<SN, "tableSourceName"> {
+    return this.propNoNull("tableSourceName");
+  }
+  get tableStoreName(): CorePropNoNull<SN, "tableStoreName"> {
+    return this.propNoNull("tableStoreName");
+  }
+  get displayName(): string {
+    return this.prop("displayName");
+  }
+  propNoNull<PN extends CorePropName>(propName: PN): CorePropNoNull<SN, PN> {
+    const prop = this.core[propName];
+    if (prop === null) {
+      throw new Error(
+        `Prop at relSections.${this.sectionName}.${propName} is null`
+      );
+    }
+    return prop as CorePropNoNull<SN, PN>;
+  }
+  prop<PN extends CorePropName>(propName: PN): CoreProp<SN, PN> {
     return this.core[propName];
   }
+  get parentNames(): CoreProp<SN, "parentNames"> {
+    return this.prop("parentNames");
+  }
   get childNames(): ChildName<SN>[] {
-    return this.core.childNames as ChildName<SN>[];
+    return this.prop("childNames") as string[] as ChildName<SN>[];
+  }
+  get alwaysOne(): boolean {
+    return this.prop("alwaysOne");
+  }
+  get varbMetas(): VarbMetas {
+    return this.props.varbMetas;
   }
   get varbNames(): string[] {
-    return this.core.varbMetas.varbNames;
-  }
-  get varbsMeta(): VarbMetas {
-    return this.core.varbMetas;
+    return this.varbMetas.varbNames;
   }
   isChildName(value: any): value is ChildName<SN> {
     return (this.childNames as string[]).includes(value);
-  }
-  get props() {
-    return this.core;
   }
   emptyChildIdsWide(): ChildIdArrsWide<SN> {
     return this.childNames.reduce((childIds, childName) => {
@@ -68,36 +93,22 @@ export class SectionMeta<SN extends SimpleSectionName> {
   }
   defaultDbVarbs(): DbVarbs {
     const defaultDbVarbs: DbVarbs = {};
-    const varbMetasCore = this.get("varbMetas").getCore();
+    const varbMetasCore = this.varbMetas.getCore();
     for (const [varbName, varbMeta] of Obj.entries(varbMetasCore)) {
       defaultDbVarbs[varbName] = varbMeta.get("dbInitValue");
     }
     return defaultDbVarbs;
   }
   depreciatingUpdateVarbMetas(nextVarbMetas: VarbMetas) {
-    const nextCore = { ...this.core };
+    const nextCore = { ...this.props };
     nextCore.varbMetas = nextVarbMetas;
     return new SectionMeta(nextCore);
   }
   static init<SN extends SimpleSectionName>(sectionName: SN): SectionMeta<SN> {
-    const relSection = relSections[sectionName];
-    const baseSection = baseSections["fe"][sectionName];
+    const { relVarbs } = relSections[sectionName];
     return new SectionMeta({
-      ...relSection,
-      ...baseSection,
-      varbMetas: VarbMetas.initFromRelVarbs(relSection.relVarbs, sectionName),
-      parentNames: this.getParentNamesParam(sectionName),
-      tableSource: this.getTableSourceParam(sectionName),
+      sectionName,
+      varbMetas: VarbMetas.initFromRelVarbs(relVarbs, sectionName),
     });
-  }
-  private static getParentNamesParam<SN extends SimpleSectionName>(
-    sectionName: SN
-  ): SectionToParentNameArrs[SN] {
-    return sectionParentNames[sectionName] as any;
-  }
-  private static getTableSourceParam<SN extends SimpleSectionName>(
-    sectionName: SN
-  ): TableSourceParams[SN] {
-    return allTableSourceParams[sectionName];
   }
 }

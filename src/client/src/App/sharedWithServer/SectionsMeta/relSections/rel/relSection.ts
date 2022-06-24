@@ -6,6 +6,8 @@ import { SimpleDbStoreName } from "../../baseSectionTypes/dbStoreNames";
 import { relVarb } from "./relVarb";
 import { GeneralRelVarbs, RelVarbs, relVarbs } from "./relVarbs";
 
+export type RelPropName = keyof GeneralRelSection;
+
 export type GeneralRelSection = {
   relVarbs: GeneralRelVarbs;
   childNames: readonly SimpleSectionName[];

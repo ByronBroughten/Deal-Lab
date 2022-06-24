@@ -2,6 +2,7 @@ import { omit } from "lodash";
 import { Obj } from "../../utils/Obj";
 import { baseVarbs, BaseVarbSchemas } from "./baseVarbs";
 
+export type BasePropName = keyof GeneralBaseSection;
 export type GeneralBaseSection = {
   alwaysOne: boolean;
   makeOneOnStartup: boolean;

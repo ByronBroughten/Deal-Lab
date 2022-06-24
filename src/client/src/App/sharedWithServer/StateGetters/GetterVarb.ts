@@ -45,7 +45,7 @@ export class GetterVarb<
     return new GetterSections(this.getterSectionsProps);
   }
   get meta(): VarbMeta {
-    return this.sectionMeta.varbsMeta.get(this.varbName);
+    return this.sectionMeta.varbMetas.get(this.varbName);
   }
   get feVarbInfo(): VarbInfo<SN> {
     return {

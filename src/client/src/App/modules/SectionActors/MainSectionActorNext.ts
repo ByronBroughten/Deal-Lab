@@ -39,7 +39,7 @@ export class MainSectionActorNext<
   }
   get table(): SetterTableNext {
     const { main } = this.getterSections;
-    const { tableStoreName } = this.get.meta.core;
+    const { tableStoreName } = this.get.meta;
     const tableStore = main.onlyChild(tableStoreName);
     return new SetterTableNext({
       ...this.sectionActorBaseProps,

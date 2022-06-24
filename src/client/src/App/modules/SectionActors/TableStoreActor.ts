@@ -14,7 +14,7 @@ export class TableStoreActor<
     });
   }
   get tableSourceName() {
-    return this.get.meta.core.tableSource;
+    return this.get.meta.tableSourceName;
   }
   get get() {
     return new GetterSection(this.sectionActorBaseProps);

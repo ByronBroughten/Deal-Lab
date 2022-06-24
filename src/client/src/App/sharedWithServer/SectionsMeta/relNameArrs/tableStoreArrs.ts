@@ -1,5 +1,4 @@
 import { Obj } from "../../utils/Obj";
-import { allNull } from "../baseSections";
 import { relSections } from "../relSections";
 import { getRelParams } from "./getRelParams";
 
@@ -8,11 +7,9 @@ const tableSourceNames = Obj.entryKeysWithPropOfType(
   "tableStoreName",
   "string"
 );
-const tableStoreParams = getRelParams(tableSourceNames, "tableStoreName");
-const tableSourceParams = Obj.swapKeysAndValues(tableStoreParams);
 
-export const allTableSourceParams = Obj.merge(allNull, tableSourceParams);
-export type TableSourceParams = typeof allTableSourceParams;
+const tableStoreParams = getRelParams(tableSourceNames, "tableStoreName");
+export const tableSourceParams = Obj.swapKeysAndValues(tableStoreParams);
 
 const tableStoreNames = Obj.values(tableStoreParams);
 export const tableStoreNameArrs = {

@@ -9,8 +9,7 @@ import {
   DescendantName,
   SelfOrDescendantName,
 } from "./SectionsMeta/relSectionTypes/ChildTypes";
-import { ParentName } from "./SectionsMeta/relSectionTypes/ParentTypes";
-import { SectionMeta, SectionMetaCore } from "./SectionsMeta/SectionMeta";
+import { SectionMeta } from "./SectionsMeta/SectionMeta";
 import { SectionName, sectionNameS } from "./SectionsMeta/SectionName";
 import {
   InUpdatePack,
@@ -44,7 +43,7 @@ export class SectionsMeta {
     return sectionMeta as SectionMeta<SectionName> as any;
   }
   varbs<SN extends SimpleSectionName>(sectionName: SN): VarbMetas {
-    return this.get(sectionName).get("varbMetas");
+    return this.get(sectionName).varbMetas;
   }
   varb<VNS extends VarbNames>(varbNames: VNS): VarbMeta {
     const { sectionName, varbName } = varbNames;
@@ -60,12 +59,6 @@ export class SectionsMeta {
   varbNames<SN extends SimpleSectionName>(sectionName: SN): string[] {
     return this.varbs(sectionName).varbNames;
   }
-  parentName<SN extends SectionName<"hasOneParent">>(
-    sectionName: SN
-  ): ParentName<SN> {
-    const sectionMeta = this.section(sectionName);
-    return sectionMeta.get("parentNames")[0] as any as ParentName<SN>;
-  }
   selfAndDescendantNames<SN extends SectionName>(
     sectionName: SN
   ): SelfOrDescendantName<SN>[] {
@@ -77,27 +70,24 @@ export class SectionsMeta {
         const descendantName = queue.shift() as DescendantName<SN>;
         selfAndDescendantNames.push(descendantName);
 
-        const { childNames } = this.section(descendantName)
-          .core as SectionMetaCore<SN>;
+        const { childNames } = this.section(descendantName);
         queue.push(...(childNames as DescendantName<SN>[]));
       }
     }
     return selfAndDescendantNames;
   }
-
   private inToOutRelative<SN extends SimpleSectionName>(
     focalSectionName: SN,
     inRelative: RelativeIds["inVarb"]
   ): RelativeIds["outVarb"] {
-    const focalSectionMeta = this.get(focalSectionName);
-    const childSpecifiers = ["children"] as const;
+    const focalSectionMeta = this.section(focalSectionName);
     if (inRelative === "local") return "local";
-    else if (childSpecifiers.includes(inRelative as any)) return "parent";
+    else if (inRelative === "children") return "parent";
     else if (inRelative === "static") {
-      if (focalSectionMeta.get("alwaysOne")) return "static";
+      if (focalSectionMeta.alwaysOne) return "static";
       else return "all";
     } else if (inRelative === "all") {
-      if (focalSectionMeta.get("alwaysOne")) return "static";
+      if (focalSectionMeta.alwaysOne) return "static";
       // only static variables should have inRelatives of "all"
     }
     throw new Error(`Relative '${inRelative}' is not valid.`);
@@ -153,7 +143,7 @@ export class SectionsMeta {
     for (const [sectionName, sectionMeta] of Obj.entriesFull(this.core)) {
       if (!sectionNameS.is(sectionName, "hasVarb")) continue;
       for (const [varbName, varbMeta] of Obj.entriesFull(
-        (sectionMeta as SectionMeta<SectionName>).get("varbMetas").getCore()
+        (sectionMeta as SectionMeta<SectionName>).varbMetas.getCore()
       )) {
         for (const inUpdatePack of varbMeta.inUpdatePacks) {
           this.inUpdatePackToOuts(

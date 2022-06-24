@@ -110,6 +110,7 @@ export class VariableGetterSections extends GetterSectionsBase {
       varbName,
     });
     const sectionMeta = sectionsMeta.section(sectionName);
+
     return {
       varbInfo: {
         sectionName,
@@ -117,7 +118,7 @@ export class VariableGetterSections extends GetterSectionsBase {
         id: "static",
         idType: "relative",
       },
-      collectionName: sectionMeta.get("displayName"),
+      collectionName: sectionMeta.displayName,
       displayName: varbMeta.displayName as string,
     };
   }

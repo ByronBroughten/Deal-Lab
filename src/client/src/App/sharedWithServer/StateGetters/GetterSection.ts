@@ -374,7 +374,7 @@ export class GetterSection<
     } else return true;
   }
   get parent(): GetterSection<ParentNameSafe<SN>> {
-    const { parentNames } = this.meta.core;
+    const { parentNames } = this.meta;
     for (const parentName of parentNames) {
       const parentList = new GetterList({
         sectionsShare: this.sectionsShare,
