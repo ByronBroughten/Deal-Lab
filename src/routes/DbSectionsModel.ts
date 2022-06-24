@@ -7,7 +7,7 @@ import { ServerSectionName, serverSectionS } from "./ServerSectionName";
 
 export type UserDbRaw = {
   [SN in ServerSectionName]: SectionPackRaw<SN>[];
-};
+} & { _id: mongoose.Types.ObjectId };
 
 export const DbSectionsModel = mongoose.model<UserDbRaw>(
   "userNext",

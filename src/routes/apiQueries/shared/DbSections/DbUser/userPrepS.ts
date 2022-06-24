@@ -1,6 +1,4 @@
 import bcrypt from "bcrypt";
-import mongoose from "mongoose";
-import { makeMongooseObjectId } from "../../../../../client/src/App/sharedWithServer/utils/mongoose";
 import { ResStatusError } from "../../../../../resErrorUtils";
 import { DbSectionsQuerier } from "../DbSectionsQuerier";
 
@@ -8,8 +6,6 @@ type PreppedEmails = {
   emailAsSubmitted: string;
   email: string;
 };
-
-export const testRegisterId = makeMongooseObjectId();
 
 export const userPrepS = {
   async encryptPassword(unencrypted: string): Promise<string> {
@@ -32,9 +28,5 @@ export const userPrepS = {
         status: 400,
       });
     }
-  },
-  makeNewUserId(): mongoose.Types.ObjectId {
-    if (process.env.NODE_ENV === "test") return testRegisterId;
-    else return makeMongooseObjectId();
   },
 };

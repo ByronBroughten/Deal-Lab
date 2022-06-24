@@ -39,11 +39,13 @@ export const userServerSide = {
     };
   },
   makeDbUser({
+    _id = makeMongooseObjectId(),
     user,
     serverOnlyUser,
     guestAccessSections,
   }: MakeDbUserProps): UserDbRaw {
     const partial: Partial<UserDbRaw> = {
+      _id,
       ...guestAccessSections,
       user: [sectionPackS.init({ sectionName: "user", dbVarbs: user })],
       serverOnlyUser: [
@@ -59,18 +61,12 @@ export const userServerSide = {
 
     return partial as UserDbRaw;
   },
-  makeMongoUser({ _id, ...makeUserProps }: MakeMongoUserProps) {
-    return new DbSectionsModel({
-      _id: _id ?? makeMongooseObjectId(),
-      ...this.makeDbUser(makeUserProps),
-    });
+  makeMongoUser(props: MakeDbUserProps) {
+    return new DbSectionsModel(this.makeDbUser(props));
   },
-  makeDbAndMongoUser({ _id, ...makeUserProps }: MakeMongoUserProps) {
-    const dbUser = this.makeDbUser(makeUserProps);
-    const mongoUser = new DbSectionsModel({
-      _id: _id ?? makeMongooseObjectId(),
-      ...dbUser,
-    });
+  makeDbAndMongoUser(props: MakeDbUserProps) {
+    const dbUser = this.makeDbUser(props);
+    const mongoUser = new DbSectionsModel(dbUser);
     return {
       dbUser,
       mongoUser,
@@ -94,11 +90,8 @@ export const userServerSide = {
   },
 };
 
-interface MakeMongoUserProps extends MakeDbUserProps {
-  _id?: mongoose.Types.ObjectId;
-}
-
 export interface MakeDbUserProps extends UserSections {
+  _id?: mongoose.Types.ObjectId;
   guestAccessSections: GuestAccessSectionsNext;
 }
 interface UserSections {
