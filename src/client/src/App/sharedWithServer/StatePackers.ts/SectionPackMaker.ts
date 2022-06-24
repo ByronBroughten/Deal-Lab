@@ -1,5 +1,5 @@
 import { OneRawSection, RawSections } from "../SectionPack/RawSection";
-import { SectionPackRaw } from "../SectionPack/SectionPackRaw";
+import { SectionPackRaw } from "../SectionPack/SectionPack";
 import { FeSectionInfo } from "../SectionsMeta/Info";
 import { ChildName } from "../SectionsMeta/relSectionTypes/ChildTypes";
 import { SectionName } from "../SectionsMeta/SectionName";

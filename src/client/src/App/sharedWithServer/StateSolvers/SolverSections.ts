@@ -1,5 +1,5 @@
 import { defaultMaker } from "../defaultMaker/defaultMaker";
-import { SectionPackRaw } from "../SectionPack/SectionPackRaw";
+import { SectionPackRaw } from "../SectionPack/SectionPack";
 import { VarbInfo } from "../SectionsMeta/Info";
 import { SpecificVarbInfo } from "../SectionsMeta/relSections/rel/relVarbInfoTypes";
 import { SectionName } from "../SectionsMeta/SectionName";

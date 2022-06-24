@@ -23,8 +23,8 @@ export function Deal({
     <MainSection>
       <MainSectionTitleRow
         {...{
+          ...deal.feInfo,
           pluralName: "analyses",
-          feInfo: deal.feInfo,
         }}
       />
       <MainSectionBody>

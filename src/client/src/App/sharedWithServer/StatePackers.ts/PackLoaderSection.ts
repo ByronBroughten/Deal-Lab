@@ -1,5 +1,5 @@
 import { pick } from "lodash";
-import { SectionArrPack, SectionPackRaw } from "../SectionPack/SectionPackRaw";
+import { SectionArrPack, SectionPackRaw } from "../SectionPack/SectionPack";
 import { ChildName } from "../SectionsMeta/relSectionTypes/ChildTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
 import {

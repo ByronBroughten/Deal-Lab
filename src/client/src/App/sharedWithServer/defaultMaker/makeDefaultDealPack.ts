@@ -1,4 +1,4 @@
-import { SectionPackRaw } from "../SectionPack/SectionPackRaw";
+import { SectionPackRaw } from "../SectionPack/SectionPack";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
 import { makeDefaultMgmtPack } from "./makeDefaultMgmtPack";
 import { makeDefaultOutputList } from "./makeDefaultOutputList";

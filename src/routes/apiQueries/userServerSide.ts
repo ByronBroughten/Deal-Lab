@@ -5,12 +5,12 @@ import {
   RegisterFormData,
   RegisterReqBody,
 } from "../../client/src/App/sharedWithServer/apiQueriesShared/register";
+import { sectionPackS } from "../../client/src/App/sharedWithServer/SectionPack/SectionPack";
 import { BaseSectionsDb } from "../../client/src/App/sharedWithServer/SectionsMeta/baseSectionTypes";
 import { SchemaVarbsToDbValues } from "../../client/src/App/sharedWithServer/SectionsMeta/relSections/rel/valueMetaTypes";
 import { makeMongooseObjectId } from "../../client/src/App/sharedWithServer/utils/mongoose";
 import { serverSectionS } from "../ServerSectionName";
-import { initDbSectionPack, UserDbRaw } from "../UserDbRaw";
-import { UserModel } from "../UserModel";
+import { UserDbRaw, UserModel } from "../UserModel";
 
 export const userServerSide = {
   prepEmail(rawEmail: string): PreppedEmails {
@@ -45,8 +45,13 @@ export const userServerSide = {
   }: MakeDbUserProps): UserDbRaw {
     const partial: Partial<UserDbRaw> = {
       ...guestAccessSections,
-      user: [initDbSectionPack("user", user)],
-      serverOnlyUser: [initDbSectionPack("serverOnlyUser", serverOnlyUser)],
+      user: [sectionPackS.init({ sectionName: "user", dbVarbs: user })],
+      serverOnlyUser: [
+        sectionPackS.init({
+          sectionName: "serverOnlyUser",
+          dbVarbs: serverOnlyUser,
+        }),
+      ],
     };
     for (const storeName of serverSectionS.arrs.all) {
       if (!(storeName in partial)) partial[storeName] = [];

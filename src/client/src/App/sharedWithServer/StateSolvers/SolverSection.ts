@@ -1,4 +1,4 @@
-import { SectionPackRaw } from "../SectionPack/SectionPackRaw";
+import { SectionPackRaw } from "../SectionPack/SectionPack";
 import { Id } from "../SectionsMeta/baseSections/id";
 import { VarbValues } from "../SectionsMeta/baseSectionTypes";
 import { FeSectionInfo } from "../SectionsMeta/Info";
@@ -9,7 +9,7 @@ import { GetterSection } from "../StateGetters/GetterSection";
 import { ChildSectionPackArrs } from "../StatePackers.ts/PackLoaderSection";
 import {
   AddChildOptions,
-  UpdaterSection
+  UpdaterSection,
 } from "../StateUpdaters/UpdaterSection";
 import { Obj } from "../utils/Obj";
 import { AddSolverSection } from "./AddSolverSection";
@@ -17,7 +17,7 @@ import { ComboSolverSection } from "./ComboSolverSection";
 import { RemoveSolverSection } from "./RemoveSolverSection";
 import {
   SolverSectionBase,
-  SolverSectionProps
+  SolverSectionProps,
 } from "./SolverBases/SolverSectionBase";
 import { HasSolveShare } from "./SolverBases/SolverSectionsBase";
 import { SolverSections } from "./SolverSections";

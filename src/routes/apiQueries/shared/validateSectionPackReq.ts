@@ -3,13 +3,12 @@ import {
   SectionPackArrReq,
   SectionPackReq,
 } from "../../../client/src/App/sharedWithServer/apiQueriesShared/makeReqAndRes";
-import { SectionPack } from "../../../client/src/App/sharedWithServer/SectionPack/SectionPack";
 import {
   SectionPackRaw,
+  sectionPackS,
   ServerSectionPack,
-} from "../../../client/src/App/sharedWithServer/SectionPack/SectionPackRaw";
+} from "../../../client/src/App/sharedWithServer/SectionPack/SectionPack";
 import { SectionName } from "../../../client/src/App/sharedWithServer/SectionsMeta/SectionName";
-import { handleResAndMakeError } from "../../../resErrorUtils";
 import { validateDbStoreName } from "./validateDbSectionInfoReq";
 import { LoggedIn, validateLoggedInUser } from "./validateLoggedInUser";
 
@@ -39,7 +38,7 @@ export function validateSectionPackReq(
   return {
     body: {
       user: validateLoggedInUser(user, res),
-      sectionPack: validateServerSectionPack(sectionPack, res),
+      sectionPack: validateServerSectionPack(sectionPack),
     },
   };
 }
@@ -58,27 +57,15 @@ function validateServerSectionPackArr({
 >[] {
   if (
     Array.isArray(value) &&
-    value.every((v) => SectionPack.isServer(v) && v.sectionName === sectionName)
+    value.every(
+      (v) => sectionPackS.is(v, "dbStoreNext") && v.sectionName === sectionName
+    )
   ) {
     return value as SectionPackRaw<SectionName<"arrStore">>[];
-  } else
-    throw handleResAndMakeError(
-      res,
-      500,
-      "Payload is not a valid server section array."
-    );
+  } else throw new Error("Payload is not a valid server section array.");
 }
 
-function validateServerSectionPack(
-  value: any,
-  res: Response
-): ServerSectionPack {
-  if (SectionPack.isServer(value)) return value;
-  else {
-    throw handleResAndMakeError(
-      res,
-      500,
-      "Payload is not a valid server section pack."
-    );
-  }
+function validateServerSectionPack(value: any): ServerSectionPack {
+  if (sectionPackS.is(value, "dbStoreNext")) return value;
+  throw new Error("Payload is not a valid server sectionPack");
 }

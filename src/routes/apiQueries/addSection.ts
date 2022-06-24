@@ -1,10 +1,9 @@
 import { Request, Response } from "express";
 import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
-import { ServerSectionPack } from "../../client/src/App/sharedWithServer/SectionPack/SectionPackRaw";
+import { ServerSectionPack } from "../../client/src/App/sharedWithServer/SectionPack/SectionPack";
 import { SectionName } from "../../client/src/App/sharedWithServer/SectionsMeta/SectionName";
 import authWare from "../../middleware/authWare";
 import { ResStatusError } from "../../resErrorUtils";
-import { sectionPackDbS } from "../sectionPackDbS";
 import { DbSectionInitByIdProps } from "./shared/DbSections/DbSection";
 import { DbSectionsQuerier } from "./shared/DbSections/DbSectionsQuerier";
 import { SectionPackNotFoundError } from "./shared/DbSections/DbSectionsQuerierTypes";
@@ -61,9 +60,8 @@ async function checkThatSectionPackIsNotThere<
 
 function makePushParameters(serverSectionPack: ServerSectionPack) {
   const { sectionName } = serverSectionPack;
-  const dbSectionPack = sectionPackDbS.serverToDbRaw(serverSectionPack);
   return {
-    operation: { $push: { [sectionName]: dbSectionPack } },
+    operation: { $push: { [sectionName]: serverSectionPack } },
     options: {
       new: true,
       lean: true,

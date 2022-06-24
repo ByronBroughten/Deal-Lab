@@ -1,7 +1,7 @@
 import { pick } from "lodash";
-import { DbSectionInfo } from "../../SectionPack/DbSectionInfo";
 import { OneRawSection } from "../../SectionPack/RawSection";
-import { SectionPackRaw } from "../../SectionPack/SectionPackRaw";
+import { SectionPackRaw } from "../../SectionPack/SectionPack";
+import { DbSectionInfo } from "../../SectionsMeta/DbSectionInfo";
 import {
   ChildIdArrsWide,
   ChildName,

@@ -19,10 +19,9 @@ const testRelProperty = {
   },
 };
 
+// redo register with DbUser
 // Make dbNumObj include solvableText
 
-// Start by eliminating all sectionPack utils.
-// Get all the sectionPack stuff in one place.
 // Make Queryable SectionPacks
 // Now that sectionPacks are just for transferring data,
 // I could make new ones that are hierarchical, which I think

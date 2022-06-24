@@ -1,8 +1,5 @@
 import { z } from "zod";
-import {
-  SectionPackRaw,
-  zSectionPackDbArr,
-} from "../SectionPack/SectionPackRaw";
+import { SectionPackRaw, zRawSectionPackArr } from "../SectionPack/SectionPack";
 import { SectionName, sectionNameS } from "../SectionsMeta/SectionName";
 import { dbLimits } from "../utils/dbLimts";
 import { validationMessage, zodSchema } from "../utils/zod";
@@ -33,7 +30,7 @@ function makeZGuestAccessSectionsNext() {
   const feGuestAccessStoreNames = sectionNameS.arrs.feGuestAccess;
   const schemaFrame = feGuestAccessStoreNames.reduce(
     (feGuestAccessSections, sectionName) => {
-      feGuestAccessSections[sectionName] = zSectionPackDbArr;
+      feGuestAccessSections[sectionName] = zRawSectionPackArr;
       return feGuestAccessSections;
     },
     {} as Record<SectionName<"feGuestAccess">, any>

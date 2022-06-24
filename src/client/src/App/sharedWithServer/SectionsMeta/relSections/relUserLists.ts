@@ -1,5 +1,4 @@
 import { StrictOmit } from "../../utils/types";
-import { ContextName } from "../baseSections";
 import { dbNumObj } from "../baseSections/baseValues/NumObj";
 import { rel } from "./rel";
 import { relSection, RelSectionOptions } from "./rel/relSection";
@@ -13,7 +12,6 @@ function userVarbList<
   > = {}
 >(sectionName: SN, options?: O) {
   return relSection.base(
-    "fe" as ContextName,
     sectionName,
     "User Variable List",
     {
@@ -45,7 +43,6 @@ export const preUserLists = {
   }),
   ...userVarbList("internalVarbList"),
   ...relSection.base(
-    "both",
     "userVarbItem",
     "User Variable",
     {
@@ -90,7 +87,6 @@ export const preUserLists = {
   ),
 
   ...relSection.base(
-    "both",
     "conditionalRow",
     "Conditional Row",
     {

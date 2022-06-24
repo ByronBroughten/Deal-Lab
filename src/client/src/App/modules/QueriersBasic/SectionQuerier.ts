@@ -1,5 +1,5 @@
 import { makeReq } from "../../sharedWithServer/apiQueriesShared/makeReqAndRes";
-import { ServerSectionPack } from "../../sharedWithServer/SectionPack/SectionPackRaw";
+import { ServerSectionPack } from "../../sharedWithServer/SectionPack/SectionPack";
 import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
 import { ApiQuerierBase, ApiQuerierBaseProps } from "./Bases/ApiQuerierBase";
 

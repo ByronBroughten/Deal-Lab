@@ -23,14 +23,12 @@ export function makeRelSections() {
   return {
     fe: {
       ...rel.section.base(
-        "fe" as ContextName,
         "root",
         "Root",
         { _typeUniformity: rel.varb.string() },
         { childNames: ["omniParent", "main"] as const }
       ),
       ...relSection.base(
-        "both",
         "omniParent",
         "Parent of All",
         {
@@ -44,7 +42,6 @@ export function makeRelSections() {
         }
       ),
       ...relSection.base(
-        "both",
         "main",
         "Main",
         {
@@ -78,7 +75,6 @@ export function makeRelSections() {
       ),
 
       ...rel.section.base(
-        "fe" as ContextName,
         "table",
         "Table",
         { titleFilter: relVarb.string() } as RelVarbs<ContextName, "table">,
@@ -87,35 +83,30 @@ export function makeRelSections() {
         }
       ),
       ...relSection.base(
-        "both",
         "propertyTableStore",
         "Property Table Store",
         { _typeUniformity: rel.varb.string() },
         { childNames: ["table"] } as const
       ),
       ...relSection.base(
-        "both",
         "loanTableStore",
         "Loan Table Store",
         { _typeUniformity: rel.varb.string() },
         { childNames: ["table"] } as const
       ),
       ...relSection.base(
-        "both",
         "mgmtTableStore",
         "Mgmt Table Store",
         { _typeUniformity: rel.varb.string() },
         { childNames: ["table"] } as const
       ),
       ...relSection.base(
-        "both",
         "dealTableStore",
         "Deal Table Store",
         { _typeUniformity: rel.varb.string() },
         { childNames: ["table"] } as const
       ),
       ...relSection.base(
-        "both",
         "outputList",
         "Output List",
         {
@@ -133,28 +124,22 @@ export function makeRelSections() {
 
       // these are for tables
       ...relSection.rowIndex("tableRow", "Row"),
-      ...relSection.base("both", "column", "Column", {
+      ...relSection.base("column", "Column", {
         ...rel.varbs.varbInfo(),
       }),
-      ...relSection.base("both", "cell", "Cell", {
+      ...relSection.base("cell", "Cell", {
         ...rel.varbs.varbInfo(),
         value: rel.varb.numObj("cell"),
       }),
 
       // singleTimeItem and ongoingItem are for additiveLists
       ...relSection.base(
-        "both",
         "singleTimeItem",
         "List Item",
         rel.varbs.singleTimeItem()
       ),
-      ...relSection.base(
-        "both",
-        "ongoingItem",
-        "List Item",
-        rel.varbs.ongoingItem()
-      ),
-      ...relSection.base("both", "user", "User", {
+      ...relSection.base("ongoingItem", "List Item", rel.varbs.ongoingItem()),
+      ...relSection.base("user", "User", {
         email: rel.varb.string({ displayName: "Email" }),
         userName: rel.varb.string({ displayName: "Name" }),
         apiAccessStatus: relVarb.string({
@@ -162,15 +147,15 @@ export function makeRelSections() {
           dbInitValue: "basicStorage" as ApiAccessStatus,
         }),
       }),
-      ...relSection.base("both", "serverOnlyUser", "User", {
+      ...relSection.base("serverOnlyUser", "User", {
         encryptedPassword: rel.varb.string(),
         emailAsSubmitted: rel.varb.string(),
       }),
-      ...relSection.base("both", "login", "Login Form", {
+      ...relSection.base("login", "Login Form", {
         email: rel.varb.string({ displayName: "Email" }),
         password: rel.varb.string({ displayName: "Password" }),
       }),
-      ...relSection.base("both", "register", "Register Form", {
+      ...relSection.base("register", "Register Form", {
         email: rel.varb.string({ displayName: "Email" }),
         userName: rel.varb.string({ displayName: "Name" }),
         password: rel.varb.string({ displayName: "Password" }),

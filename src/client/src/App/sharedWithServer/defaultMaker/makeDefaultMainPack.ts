@@ -1,9 +1,9 @@
-import { SectionPackRaw } from "../SectionPack/SectionPackRaw";
+import { SectionPackRaw } from "../SectionPack/SectionPack";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
 import { makeDefaultDealPack } from "./makeDefaultDealPack";
 import { makeDefaultUser } from "./makeDefaultUser";
 
-export function makeDefaultMainPack(): SectionPackRaw<"main"> {  
+export function makeDefaultMainPack(): SectionPackRaw<"main"> {
   const main = PackBuilderSection.initAsMain();
   main.loadChild(makeDefaultDealPack());
   main.loadChild(makeDefaultUser());

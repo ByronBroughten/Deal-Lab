@@ -2,7 +2,7 @@ import mongoose, { Document } from "mongoose";
 import { SelfOrDescendantName } from "../../../../client/src/App/sharedWithServer/SectionsMeta/relSectionTypes/ChildTypes";
 import { ResStatusError } from "../../../../resErrorUtils";
 import { ServerSectionName } from "../../../ServerSectionName";
-import { UserDbRaw } from "../../../UserDbRaw";
+import { UserDbRaw } from "../../../UserModel";
 
 export const queryOptions = {
   new: true,

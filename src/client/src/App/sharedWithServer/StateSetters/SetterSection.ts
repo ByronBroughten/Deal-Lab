@@ -1,5 +1,5 @@
 import { pick } from "lodash";
-import { SectionPackRaw } from "../SectionPack/SectionPackRaw";
+import { SectionPackRaw } from "../SectionPack/SectionPack";
 import { SwitchEndingKey } from "../SectionsMeta/baseSections/switchNames";
 import { VarbValues } from "../SectionsMeta/baseSectionTypes";
 import { FeSectionInfo, VarbInfo } from "../SectionsMeta/Info";

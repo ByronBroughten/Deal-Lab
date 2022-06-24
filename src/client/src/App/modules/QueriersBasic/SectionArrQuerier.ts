@@ -2,7 +2,7 @@ import {
   makeReq,
   SectionPackArrReq,
 } from "../../sharedWithServer/apiQueriesShared/makeReqAndRes";
-import { SectionPackRaw } from "../../sharedWithServer/SectionPack/SectionPackRaw";
+import { SectionPackRaw } from "../../sharedWithServer/SectionPack/SectionPack";
 import { DbSectionName } from "../../sharedWithServer/SectionsMeta/relNameArrs/storeArrs";
 import { ApiQuerierBase, ApiQuerierBaseProps } from "./Bases/ApiQuerierBase";
 

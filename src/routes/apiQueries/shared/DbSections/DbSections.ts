@@ -1,5 +1,5 @@
-import { DbSectionInfo } from "../../../../client/src/App/sharedWithServer/SectionPack/DbSectionInfo";
-import { SectionPackRaw } from "../../../../client/src/App/sharedWithServer/SectionPack/SectionPackRaw";
+import { SectionPackRaw } from "../../../../client/src/App/sharedWithServer/SectionPack/SectionPack";
+import { DbSectionInfo } from "../../../../client/src/App/sharedWithServer/SectionsMeta/DbSectionInfo";
 import { ServerSectionName } from "../../../ServerSectionName";
 import { DbSectionsBase } from "./Bases/DbSectionsBase";
 import { DbSection } from "./DbSection";

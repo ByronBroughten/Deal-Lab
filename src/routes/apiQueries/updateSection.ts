@@ -1,9 +1,8 @@
 import { Request, Response } from "express";
 import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
-import { ServerSectionPack } from "../../client/src/App/sharedWithServer/SectionPack/SectionPackRaw";
+import { ServerSectionPack } from "../../client/src/App/sharedWithServer/SectionPack/SectionPack";
 import { DbSectionName } from "../../client/src/App/sharedWithServer/SectionsMeta/relNameArrs/storeArrs";
 import authWare from "../../middleware/authWare";
-import { sectionPackDbS } from "../sectionPackDbSS";
 import { findOneAndUpdate } from "./shared/findAndUpdate";
 import { sendSuccess } from "./shared/sendSuccess";
 import { LoggedIn } from "./shared/validateLoggedInUser";
@@ -47,9 +46,8 @@ function makeUpdateSectionFilter({
 
 function makeSetParameters(serverSectionPack: ServerSectionPack) {
   const { sectionName } = serverSectionPack;
-  const dbSectionPack = sectionPackDbS.serverToDbRaw(serverSectionPack);
   return {
-    operation: { $set: { [`${sectionName}.$`]: dbSectionPack } },
+    operation: { $set: { [`${sectionName}.$`]: serverSectionPack } },
     options: {
       new: true,
       lean: true,

@@ -65,7 +65,6 @@ function propertySection<
   > = {}
 >(sectionName: SN, options?: O) {
   return relSection.base(
-    "fe" as ContextName,
     sectionName,
     "Property",
     propertyRelVarbs(sectionName),
@@ -84,7 +83,6 @@ function propertySection<
 }
 export const relPropertyGeneral = {
   ...relSection.base(
-    "both",
     "propertyGeneral",
     "Property",
     {
@@ -101,7 +99,7 @@ export const relPropertyGeneral = {
     tableStoreName: "propertyTableStore",
     rowIndexName: "property",
   } as const),
-  ...relSection.base("both", "unit", "Unit", {
+  ...relSection.base("unit", "Unit", {
     one: rel.varb.numObj("Unit", {
       updateFnName: "one",
       initNumber: 1,

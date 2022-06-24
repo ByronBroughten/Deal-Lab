@@ -1,3 +1,4 @@
+import { z } from "zod";
 import { sectionsMeta } from "../SectionsMeta";
 import { Id } from "../SectionsMeta/baseSections/id";
 import { ChildIdArrsWide } from "../SectionsMeta/relSectionTypes/ChildTypes";
@@ -6,11 +7,38 @@ import {
   sectionNameS,
   SectionNameType,
 } from "../SectionsMeta/SectionName";
-import { DbVarbs, RawSections } from "./RawSection";
-import { SectionPackRaw, zRawSectionPack } from "./SectionPackRaw";
+import { zodSchema } from "../utils/zod";
+import { DbVarbs, RawSections, zRawSections } from "./RawSection";
+
+export type SectionPackRaw<SN extends SectionName = SectionName> = {
+  sectionName: SN;
+  dbId: string;
+  rawSections: RawSections<SN>;
+};
+
+export type SectionPackArrs<ST extends SectionNameType> = {
+  [SN in SectionName<ST>]: SectionPackRaw<SN>[];
+};
+
+export type SectionArrPack<SN extends SectionName> = {
+  sectionName: SN;
+  sectionPacks: SectionPackRaw<SN>[];
+};
+
+export type ServerSectionPack<
+  SN extends SectionName<"dbStoreNext"> = SectionName<"dbStoreNext">
+> = SectionPackRaw<SN>;
+
+const zRawSectionPackFrame: Record<keyof SectionPackRaw, any> = {
+  sectionName: zodSchema.string,
+  dbId: zodSchema.nanoId,
+  rawSections: zRawSections,
+};
+export const zRawSectionPack = z.object(zRawSectionPackFrame);
+export const zRawSectionPackArr = z.array(zRawSectionPack);
 
 export const sectionPackS = {
-  isRaw<ST extends SectionNameType = "all">(
+  is<ST extends SectionNameType = "all">(
     value: any,
     sectionType?: ST
   ): value is SectionPackRaw<SectionName<ST>> {
@@ -21,20 +49,7 @@ export const sectionPackS = {
       return true;
     } else return false;
   },
-} as const;
-
-export type OneHeadSectionNode<SN extends SectionName> = {
-  sectionName: SN;
-  dbId?: string;
-  childDbIds?: Partial<ChildIdArrsWide<SN>>;
-  dbVarbs?: Partial<DbVarbs>;
-};
-export class SectionPack<SN extends SectionName> {
-  constructor(readonly core: SectionPackRaw<SN>) {}
-  get sectionName(): SN {
-    return this.core.sectionName;
-  }
-  static init<SN extends SectionName>({
+  init<SN extends SectionName>({
     sectionName,
     childDbIds,
     dbVarbs,
@@ -45,7 +60,7 @@ export class SectionPack<SN extends SectionName> {
       sectionName,
       dbId,
       rawSections: {
-        ...SectionPack.emptyRawSections(sectionName),
+        ...emptyRawSections(sectionName),
         [sectionName]: [
           {
             dbId,
@@ -61,40 +76,29 @@ export class SectionPack<SN extends SectionName> {
         ],
       },
     };
-  }
-  static emptyRawSections<SN extends SectionName>(
-    sectionName: SN
-  ): RawSections<SN> {
-    return sectionsMeta
-      .selfAndDescendantNames(sectionName)
-      .reduce((rawSections, name) => {
-        rawSections[name] = [];
-        return rawSections;
-      }, {} as RawSections<SN>);
-  }
-  static isOfSectionName<SN extends SectionName>(
-    value: any,
-    sectionName: SN
-  ): value is SectionPackRaw<SN> {
-    if (
-      zRawSectionPack.safeParse(value).success &&
-      value.sectionName === sectionName
-    ) {
-      return true;
-    } else return false;
-  }
-  static isRaw<ST extends SectionNameType = "all">(
-    value: any,
-    sectionType?: ST
-  ): value is SectionPackRaw<SectionName<ST>> {
-    if (
-      zRawSectionPack.safeParse(value).success &&
-      sectionNameS.is(value.sectionName, sectionType ?? "all")
-    ) {
-      return true;
-    } else return false;
-  }
-  static isServer(value: any) {
-    return SectionPack.isRaw(value, "dbStoreNext");
-  }
+  },
+} as const;
+
+function emptyRawSections<SN extends SectionName>(
+  sectionName: SN
+): RawSections<SN> {
+  return sectionsMeta
+    .selfAndDescendantNames(sectionName)
+    .reduce((rawSections, name) => {
+      rawSections[name] = [];
+      return rawSections;
+    }, {} as RawSections<SN>);
+}
+
+type OneHeadSectionNode<SN extends SectionName> = {
+  sectionName: SN;
+  dbId?: string;
+  childDbIds?: Partial<ChildIdArrsWide<SN>>;
+  dbVarbs?: Partial<DbVarbs>;
+};
+
+function _testRawSectionPack(feRaw: SectionPackRaw<"tableRow">) {
+  const _test1 = feRaw.rawSections.cell;
+  // @ts-expect-error
+  const _test2 = feRaw.rawSections.unit;
 }

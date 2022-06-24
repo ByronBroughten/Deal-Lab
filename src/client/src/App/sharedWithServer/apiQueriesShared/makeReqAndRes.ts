@@ -1,7 +1,4 @@
-import {
-  SectionPackRaw,
-  ServerSectionPack,
-} from "../SectionPack/SectionPackRaw";
+import { SectionPackRaw, ServerSectionPack } from "../SectionPack/SectionPack";
 import { DbSectionName } from "../SectionsMeta/relNameArrs/storeArrs";
 import { SectionName } from "../SectionsMeta/SectionName";
 

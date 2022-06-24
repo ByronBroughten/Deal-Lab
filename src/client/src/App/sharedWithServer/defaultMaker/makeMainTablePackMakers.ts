@@ -1,4 +1,4 @@
-import { SectionPackRaw } from "../SectionPack/SectionPackRaw";
+import { SectionPackRaw } from "../SectionPack/SectionPack";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
 import { Obj } from "../utils/Obj";

@@ -1,4 +1,4 @@
-import { SectionArrPack, SectionPackRaw } from "../SectionPack/SectionPackRaw";
+import { SectionArrPack, SectionPackRaw } from "../SectionPack/SectionPack";
 import { FeSectionInfo } from "../SectionsMeta/Info";
 import {
   ChildName,

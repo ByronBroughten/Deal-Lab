@@ -1,6 +1,6 @@
 import { NextReq } from "../apiQueriesShared/apiQueriesSharedTypes";
 import { makeReq } from "../apiQueriesShared/makeReqAndRes";
-import { SectionPackArrs } from "../SectionPack/SectionPackRaw";
+import { SectionPackArrs } from "../SectionPack/SectionPack";
 import { sectionNameS } from "../SectionsMeta/SectionName";
 import {
   GetterSectionBase,

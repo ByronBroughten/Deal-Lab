@@ -13,7 +13,13 @@ export default function Loan({ feId }: { feId: string }) {
   return (
     <MainSection className="Loan-root">
       <div className="MainSection-viewable">
-        <MainSectionTitleRow feInfo={feInfo} pluralName="loans" xBtn={true} />
+        <MainSectionTitleRow
+          {...{
+            ...feInfo,
+            pluralName: "loans",
+            xBtn: true,
+          }}
+        />
         <MainSectionBody>
           <div className="ListGroup-root">
             <div className="ListGroup-viewable">

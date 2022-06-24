@@ -1,4 +1,4 @@
-import { ServerSectionPack } from "../../sharedWithServer/SectionPack/SectionPackRaw";
+import { ServerSectionPack } from "../../sharedWithServer/SectionPack/SectionPack";
 import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
 import { SectionPackMaker } from "../../sharedWithServer/StatePackers.ts/SectionPackMaker";
 import { SectionQuerier } from "../QueriersBasic/SectionQuerier";

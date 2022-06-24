@@ -12,7 +12,6 @@ function dealSection<
   > = {}
 >(sectionName: SN, options?: O) {
   return relSection.base(
-    "both",
     sectionName,
     "Deal",
     {
@@ -136,5 +135,5 @@ export const relDealStuff = {
     rowIndexName: "deal",
     arrStoreName: "deal",
   } as const),
-  ...relSection.base("both", "output", "Output", rel.varbs.varbInfo()),
+  ...relSection.base("output", "Output", rel.varbs.varbInfo()),
 } as const;

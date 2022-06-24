@@ -10,7 +10,7 @@ export default function Mgmt({ feId }: { feId: string }) {
   const feInfo = { sectionName: "mgmt", feId } as const;
   return (
     <MainSection>
-      <MainSectionTitleRow {...{ feInfo, pluralName: "managements" }} />
+      <MainSectionTitleRow {...{ ...feInfo, pluralName: "managements" }} />
       <MainSectionBody>
         <div className="ListGroup-root">
           <div className="ListGroup-viewable">

@@ -5,7 +5,6 @@ import styled from "styled-components";
 import useToggleView from "../../../../modules/customHooks/useToggleView";
 import { useMainSectionActor } from "../../../../modules/sectionActorHooks/useMainSectionActor";
 import { auth } from "../../../../modules/services/authService";
-import { FeInfoByType } from "../../../../sharedWithServer/SectionsMeta/Info";
 import { SectionName } from "../../../../sharedWithServer/SectionsMeta/SectionName";
 import theme from "../../../../theme/Theme";
 import BtnTooltip from "../../BtnTooltip";
@@ -15,20 +14,19 @@ import XBtn from "../../Xbtn";
 import { MainSectionTitleRowTitleNext } from "./MainSectionTitleRow/MainSectionTitleRowTitle";
 import MainSectionTitleSaveBtn from "./MainSectionTitleRow/MainSectionTitleSaveBtn";
 
-type Test = SectionName<"hasRowIndex">;
-
 type Props = {
-  feInfo: FeInfoByType<"hasRowIndex">;
+  sectionName: SectionName<"hasRowIndex">;
+  feId: string;
   pluralName: string;
   xBtn?: boolean;
   droptop?: boolean;
 };
 export function MainSectionTitleRow({
   // Table Entry Title Row
-  feInfo,
   pluralName,
   xBtn = false,
   droptop = false,
+  ...feInfo
 }: Props) {
   const mainSection = useMainSectionActor(feInfo);
   const { btnMenuIsOpen, toggleBtnMenu } = useToggleView({

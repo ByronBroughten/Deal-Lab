@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 import { constants } from "../../../../client/src/App/Constants";
 import { LoginUser } from "../../../../client/src/App/sharedWithServer/apiQueriesShared/login";
 import { defaultMaker } from "../../../../client/src/App/sharedWithServer/defaultMaker/defaultMaker";
-import { SectionPackRaw } from "../../../../client/src/App/sharedWithServer/SectionPack/SectionPackRaw";
+import { SectionPackRaw } from "../../../../client/src/App/sharedWithServer/SectionPack/SectionPack";
 import {
   SectionName,
   sectionNameS,

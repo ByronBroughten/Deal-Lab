@@ -1,10 +1,10 @@
-import { DbSectionInfo } from "../SectionPack/DbSectionInfo";
 import { SwitchTargetKey } from "../SectionsMeta/baseSections/baseSwitchNames";
 import { ValueTypesPlusAny } from "../SectionsMeta/baseSections/StateVarbTypes";
 import {
   SwitchEndingKey,
   switchNames,
 } from "../SectionsMeta/baseSections/switchNames";
+import { DbSectionInfo } from "../SectionsMeta/DbSectionInfo";
 import {
   FeParentInfo,
   FeParentInfoSafe,

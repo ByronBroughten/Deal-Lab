@@ -13,7 +13,7 @@ export default function Property({ feId }: { feId: string }) {
   } as const;
   return (
     <MainSection>
-      <MainSectionTitleRow {...{ feInfo, pluralName: "properties" }} />
+      <MainSectionTitleRow {...{ ...feInfo, pluralName: "properties" }} />
       <MainSectionBody>
         <div className="ListGroup-root">
           <div className="ListGroup-viewable">

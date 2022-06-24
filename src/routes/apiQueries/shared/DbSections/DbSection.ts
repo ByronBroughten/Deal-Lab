@@ -1,4 +1,4 @@
-import { DbSectionInfo } from "../../../../client/src/App/sharedWithServer/SectionPack/DbSectionInfo";
+import { DbSectionInfo } from "../../../../client/src/App/sharedWithServer/SectionsMeta/DbSectionInfo";
 import { StrictOmit } from "../../../../client/src/App/sharedWithServer/utils/types";
 import { ServerSectionName } from "../../../ServerSectionName";
 import { DbSectionBase, DbSectionProps } from "./Bases/DbSectionBase";

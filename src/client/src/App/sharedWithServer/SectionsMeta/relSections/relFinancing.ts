@@ -135,7 +135,6 @@ function loanSection<
   > = {}
 >(sectionName: SN, options?: O) {
   return relSection.base(
-    "fe" as ContextName,
     sectionName,
     "Loan",
     loanRelVarbs(sectionName) as RelVarbs<"fe", SN>,
@@ -191,15 +190,9 @@ const financingRelVarbs: RelVarbs<ContextName, "financing"> = {
 };
 
 export const relFinancing = {
-  ...relSection.base(
-    "fe" as ContextName,
-    "financing",
-    "Financing",
-    financingRelVarbs,
-    {
-      childNames: ["loan"] as const,
-    }
-  ),
+  ...relSection.base("financing", "Financing", financingRelVarbs, {
+    childNames: ["loan"] as const,
+  }),
   ...loanSection("loan", {
     tableStoreName: "loanTableStore",
     rowIndexName: "loan",

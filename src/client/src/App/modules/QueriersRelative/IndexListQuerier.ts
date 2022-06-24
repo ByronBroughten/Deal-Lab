@@ -1,7 +1,7 @@
 import {
   SectionPackRaw,
   ServerSectionPack,
-} from "../../sharedWithServer/SectionPack/SectionPackRaw";
+} from "../../sharedWithServer/SectionPack/SectionPack";
 import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
 import {
   GetterListBase,

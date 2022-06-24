@@ -96,7 +96,6 @@ function mgmtSection<
   > = {}
 >(sectionName: SN, options?: O) {
   return relSection.base(
-    "fe" as ContextName,
     sectionName,
     "Management",
     makeMgmtPreVarbs(sectionName) as RelVarbs<"fe" | "db", SN>,
@@ -113,7 +112,6 @@ function mgmtSection<
 
 export const preMgmtGeneral = {
   ...relSection.base(
-    "fe" as ContextName,
     "mgmtGeneral",
     "Management",
     {
