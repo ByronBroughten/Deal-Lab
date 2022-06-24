@@ -133,6 +133,12 @@ export const Arr = {
   ): Exclude<A, B>[] {
     return a.filter((str) => !b.includes(str as any)) as Exclude<A, B>[];
   },
+  excludeStrict<A extends any, B extends A>(
+    a: readonly A[],
+    b: readonly B[]
+  ): Exclude<A, B>[] {
+    return a.filter((str) => !b.includes(str as any)) as Exclude<A, B>[];
+  },
   extractStrict<A extends any, B extends A>(
     a: readonly A[],
     b: readonly B[]

@@ -13,15 +13,15 @@ export type RegisterQueryObjects = {
 };
 export type RegisterReqBody = {
   registerFormData: RegisterFormData;
-  guestAccessSections: GuestAccessSectionsNext;
+  guestAccessSections: GuestAccessSectionPackArrs;
 };
 
-export type GuestAccessSectionsNext = {
+export type GuestAccessSectionPackArrs = {
   [SN in SectionName<"feGuestAccess">]: SectionPackRaw<SN>[];
 };
 export function areGuestAccessSectionsNext(
   value: any
-): value is GuestAccessSectionsNext {
+): value is GuestAccessSectionPackArrs {
   const zGuestAccessSections = makeZGuestAccessSectionsNext();
   zGuestAccessSections.parse(value);
   return true;

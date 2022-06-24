@@ -1,7 +1,7 @@
 import { Response } from "express";
 import { FilterQuery, QueryOptions } from "mongoose";
 import { handleResAndMakeError, ResHandledError } from "../../../resErrorUtils";
-import { DbSectionsModel, UserDbRaw } from "../../DbSectionsModel";
+import { DbSectionsModel, DbSectionsModelCore } from "../../DbSectionsModel";
 
 type QueryParameters = { operation: any; options: QueryOptions };
 
@@ -21,7 +21,7 @@ export async function findUserByIdAndUpdate({
 
 type FindOneAndUpdateProps = {
   res: Response;
-  filter: FilterQuery<UserDbRaw>;
+  filter: FilterQuery<DbSectionsModelCore>;
   queryParameters: QueryParameters;
   doWhat?: string;
 };

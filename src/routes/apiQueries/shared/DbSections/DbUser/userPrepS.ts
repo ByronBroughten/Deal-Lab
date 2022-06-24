@@ -1,11 +1,18 @@
 import bcrypt from "bcrypt";
+import { RegisterFormData } from "../../../../../client/src/App/sharedWithServer/apiQueriesShared/register";
+import { sectionPackS } from "../../../../../client/src/App/sharedWithServer/SectionPack/SectionPack";
+import { makeMongooseObjectId } from "../../../../../client/src/App/sharedWithServer/utils/mongoose";
 import { ResStatusError } from "../../../../../resErrorUtils";
+import { DbSectionsModel } from "../../../../DbSectionsModel";
 import { DbSectionsQuerier } from "../DbSectionsQuerier";
-
-type PreppedEmails = {
-  emailAsSubmitted: string;
-  email: string;
-};
+import { DbSectionsRaw } from "../DbSectionsQuerierTypes";
+import {
+  initEmptyNames,
+  InitEmptyPackArrs,
+  MakeDbUserProps,
+  PreppedEmails,
+  UserSectionPackArrs,
+} from "./userPrepSTypes";
 
 export const userPrepS = {
   async encryptPassword(unencrypted: string): Promise<string> {
@@ -28,5 +35,51 @@ export const userPrepS = {
         status: 400,
       });
     }
+  },
+  async initUserSectionPacks(
+    registerFormData: RegisterFormData
+  ): Promise<UserSectionPackArrs> {
+    const { email, emailAsSubmitted } = userPrepS.processEmail(
+      registerFormData.email
+    );
+    await userPrepS.checkThatEmailIsUnique(email);
+    return {
+      user: [
+        sectionPackS.init({
+          sectionName: "user",
+          dbVarbs: {
+            userName: registerFormData.userName,
+            email,
+            apiAccessStatus: "basicStorage",
+          },
+        }),
+      ],
+      serverOnlyUser: [
+        sectionPackS.init({
+          sectionName: "serverOnlyUser",
+          dbVarbs: {
+            emailAsSubmitted,
+            encryptedPassword: await userPrepS.encryptPassword(
+              registerFormData.password
+            ),
+          },
+        }),
+      ],
+    };
+  },
+  makeDbSectionsRaw({
+    _id = makeMongooseObjectId(),
+    ...sections
+  }: MakeDbUserProps): DbSectionsRaw {
+    const emptySectionArrs = initEmptyNames.reduce((packArrs, sectionName) => {
+      packArrs[sectionName] = [];
+      return packArrs;
+    }, {} as InitEmptyPackArrs);
+
+    return new DbSectionsModel({
+      _id,
+      ...sections,
+      ...emptySectionArrs,
+    });
   },
 };

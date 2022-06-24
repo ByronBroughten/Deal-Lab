@@ -56,7 +56,7 @@ describe(testedRoute, () => {
   });
   it("should return 400 if a user with that email already exists", async () => {
     const reqObj2 = makeTestRegisterReq();
-    await userServerSide.entireMakeUserProcess({
+    await userServerSide.makeAndSaveUser({
       ...reqObj2.body,
       _id: registerTestId,
     });

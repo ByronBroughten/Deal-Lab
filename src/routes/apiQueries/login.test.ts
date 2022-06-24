@@ -34,7 +34,7 @@ describe(testedRoute, () => {
   beforeEach(async () => {
     server = runApp();
     const { loginReq, registerBody } = makeReqStuff();
-    const userDoc = await userServerSide.entireMakeUserProcess(registerBody);
+    const userDoc = await userServerSide.makeAndSaveUser(registerBody);
     reqObj = loginReq;
     userId = userDoc._id;
   });

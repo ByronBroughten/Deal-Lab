@@ -3,7 +3,10 @@ import { Response } from "express";
 import mongoose from "mongoose";
 import { constants } from "../../../../client/src/App/Constants";
 import { LoginUser } from "../../../../client/src/App/sharedWithServer/apiQueriesShared/login";
-import { RegisterFormData } from "../../../../client/src/App/sharedWithServer/apiQueriesShared/register";
+import {
+  RegisterFormData,
+  RegisterReqBody,
+} from "../../../../client/src/App/sharedWithServer/apiQueriesShared/register";
 import { defaultMaker } from "../../../../client/src/App/sharedWithServer/defaultMaker/defaultMaker";
 import { SectionPackRaw } from "../../../../client/src/App/sharedWithServer/SectionPack/SectionPack";
 import { SafeDbVarbs } from "../../../../client/src/App/sharedWithServer/SectionsMeta/relSections/rel/valueMetaTypes";
@@ -53,7 +56,7 @@ export class DbUser extends GetterSectionsBase {
       throw new Error(`userId "${userId}" is not valid.`);
     return userId.toHexString();
   }
-  static init(props: DbSectionsProps) {
+  private static init(props: DbSectionsProps) {
     const dbSections = new DbSections(props);
     const userPack = dbSections.onlySectionPack("user");
     const serverUserPack = dbSections.onlySectionPack("serverOnlyUser");
@@ -66,6 +69,22 @@ export class DbUser extends GetterSectionsBase {
       ...omniLoader.getterSectionsProps,
       dbSections,
     });
+  }
+  static async createAndSaveNew({
+    registerFormData,
+    guestAccessSections,
+    _id,
+  }: RegisterReqBody & {
+    _id?: mongoose.Types.ObjectId;
+  }): Promise<DbSectionsRaw> {
+    const userPackArrs = await userPrepS.initUserSectionPacks(registerFormData);
+    const dbSectionsRaw = userPrepS.makeDbSectionsRaw({
+      ...userPackArrs,
+      ...guestAccessSections,
+      _id,
+    });
+    await dbSectionsRaw.save();
+    return dbSectionsRaw;
   }
   static async initUserSections(
     registerFormData: RegisterFormData
@@ -87,13 +106,6 @@ export class DbUser extends GetterSectionsBase {
         ),
       },
     };
-  }
-
-  static async queryByUserId(userId: mongoose.Types.ObjectId): Promise<DbUser> {
-    const querier = await DbSectionsQuerier.initByUserId(userId.toHexString());
-    return DbUser.init({
-      dbSectionsRaw: await querier.getDbSectionsRaw(),
-    });
   }
   static async queryByEmail(email: string): Promise<DbUser> {
     const querier = await DbSectionsQuerier.initByEmail(email);

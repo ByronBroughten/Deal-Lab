@@ -1,22 +1,23 @@
 import mongoose from "mongoose";
 import {
-  GuestAccessSectionsNext,
+  GuestAccessSectionPackArrs,
   RegisterReqBody,
 } from "../../client/src/App/sharedWithServer/apiQueriesShared/register";
 import { sectionPackS } from "../../client/src/App/sharedWithServer/SectionPack/SectionPack";
 import { makeMongooseObjectId } from "../../client/src/App/sharedWithServer/utils/mongoose";
-import { DbSectionsModel, UserDbRaw } from "../DbSectionsModel";
+import { DbSectionsModel, DbSectionsModelCore } from "../DbSectionsModel";
 import { serverSectionS } from "../ServerSectionName";
+import { DbSectionsRaw } from "./shared/DbSections/DbSectionsQuerierTypes";
 import { DbUser, UserSections } from "./shared/DbSections/DbUser";
 
 export const userServerSide = {
-  makeDbUser({
+  makeDbSectionsRaw({
     _id = makeMongooseObjectId(),
     user,
     serverOnlyUser,
     guestAccessSections,
-  }: MakeDbUserProps): UserDbRaw {
-    const partial: Partial<UserDbRaw> = {
+  }: MakeDbUserProps): DbSectionsRaw {
+    const partial: Partial<DbSectionsModelCore> = {
       _id,
       ...guestAccessSections,
       user: [sectionPackS.init({ sectionName: "user", dbVarbs: user })],
@@ -31,20 +32,17 @@ export const userServerSide = {
       if (!(storeName in partial)) partial[storeName] = [];
     }
 
-    return partial as UserDbRaw;
+    return new DbSectionsModel(partial as DbSectionsModelCore);
   },
-  makeMongoUser(props: MakeDbUserProps) {
-    return new DbSectionsModel(this.makeDbUser(props));
-  },
-  async entireMakeUserProcess({
+  async makeAndSaveUser({
     _id,
     registerFormData,
     guestAccessSections,
   }: RegisterReqBody & { _id?: mongoose.Types.ObjectId }): Promise<
-    UserDbRaw & mongoose.Document<any, UserDbRaw>
+    DbSectionsModelCore & mongoose.Document<any, DbSectionsModelCore>
   > {
     const dbSections = await DbUser.initUserSections(registerFormData);
-    const userDoc = this.makeMongoUser({
+    const userDoc = this.makeDbSectionsRaw({
       ...dbSections,
       guestAccessSections,
       _id,
@@ -56,5 +54,5 @@ export const userServerSide = {
 
 export interface MakeDbUserProps extends UserSections {
   _id?: mongoose.Types.ObjectId;
-  guestAccessSections: GuestAccessSectionsNext;
+  guestAccessSections: GuestAccessSectionPackArrs;
 }

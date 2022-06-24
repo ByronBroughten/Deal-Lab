@@ -5,18 +5,14 @@ import { SelfOrDescendantName } from "../client/src/App/sharedWithServer/Section
 import { monSchemas } from "../client/src/App/sharedWithServer/utils/mongoose";
 import { ServerSectionName, serverSectionS } from "./ServerSectionName";
 
-export type UserDbRaw = {
+export type DbSectionsModelCore = {
   [SN in ServerSectionName]: SectionPackRaw<SN>[];
 } & { _id: mongoose.Types.ObjectId };
 
-export const DbSectionsModel = mongoose.model<UserDbRaw>(
+export const DbSectionsModel = mongoose.model<DbSectionsModelCore>(
   "userNext",
   makeMongooseUserSchema()
 );
-
-export function createUserModel(modelName: string) {
-  return mongoose.model<UserDbRaw>(modelName, makeMongooseUserSchema());
-}
 
 function makeMongooseUserSchema(): Schema<Record<ServerSectionName, any>> {
   const partial: Partial<Record<ServerSectionName, any>> = {};

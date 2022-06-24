@@ -1,21 +1,30 @@
-import { SimpleSectionName } from "../client/src/App/sharedWithServer/SectionsMeta/baseSections";
+import {
+  SimpleSectionName,
+  simpleSectionNames,
+} from "../client/src/App/sharedWithServer/SectionsMeta/baseSections";
 import {
   DbSectionName,
   savableNameS,
 } from "../client/src/App/sharedWithServer/SectionsMeta/relNameArrs/storeArrs";
+import { Arr } from "../client/src/App/sharedWithServer/utils/Arr";
 import { StrictExtract } from "../client/src/App/sharedWithServer/utils/types";
 import { StringTypeChecker } from "../client/src/App/utils/StringTypeChecker";
 
 type ServerOnlyName = StrictExtract<SimpleSectionName, "serverOnlyUser">;
 export type ServerSectionName = DbSectionName | ServerOnlyName;
 
+const serverOnlyNames = Arr.extractStrict(simpleSectionNames, [
+  "serverOnlyUser",
+] as const);
+export const serverSectionNames = [
+  ...serverOnlyNames,
+  ...savableNameS.arrs.all,
+] as ServerSectionName[];
+
 const serverNameArrs = {
   serverOnly: ["serverOnlyUser"] as ServerOnlyName[],
   get all() {
-    return [
-      ...this.serverOnly,
-      ...savableNameS.arrs.all,
-    ] as ServerSectionName[];
+    return serverSectionNames;
   },
 } as const;
 

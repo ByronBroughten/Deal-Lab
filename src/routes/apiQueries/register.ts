@@ -10,7 +10,6 @@ import { makeMongooseObjectId } from "../../client/src/App/sharedWithServer/util
 import { handleResAndMakeError } from "../../resErrorUtils";
 import { DbUser } from "./shared/DbSections/DbUser";
 import { userPrepS } from "./shared/DbSections/DbUser/userPrepS";
-import { userServerSide } from "./userServerSide";
 
 export const registerTestId = makeMongooseObjectId();
 export const nextRegisterWare = [registerServerSide] as const;
@@ -19,7 +18,7 @@ async function registerServerSide(req: Request, res: Response) {
   const reqObj = validateRegisterReq(req, res);
   const { registerFormData } = reqObj.body;
   const { email } = userPrepS.processEmail(registerFormData.email);
-  await userServerSide.entireMakeUserProcess({
+  await DbUser.createAndSaveNew({
     _id: makeRegisterId(),
     ...reqObj.body,
   });
