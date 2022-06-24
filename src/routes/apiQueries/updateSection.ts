@@ -3,7 +3,7 @@ import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/
 import { ServerSectionPack } from "../../client/src/App/sharedWithServer/SectionPack/SectionPackRaw";
 import { DbSectionName } from "../../client/src/App/sharedWithServer/SectionsMeta/relNameArrs/storeArrs";
 import authWare from "../../middleware/authWare";
-import { SectionPackDb } from "../SectionPackDb";
+import { sectionPackDbS } from "../sectionPackDbSS";
 import { findOneAndUpdate } from "./shared/findAndUpdate";
 import { sendSuccess } from "./shared/sendSuccess";
 import { LoggedIn } from "./shared/validateLoggedInUser";
@@ -47,7 +47,7 @@ function makeUpdateSectionFilter({
 
 function makeSetParameters(serverSectionPack: ServerSectionPack) {
   const { sectionName } = serverSectionPack;
-  const dbSectionPack = SectionPackDb.serverToDbRaw(serverSectionPack);
+  const dbSectionPack = sectionPackDbS.serverToDbRaw(serverSectionPack);
   return {
     operation: { $set: { [`${sectionName}.$`]: dbSectionPack } },
     options: {

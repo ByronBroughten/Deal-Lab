@@ -1,7 +1,7 @@
 import { Response } from "express";
 import { FilterQuery, QueryOptions } from "mongoose";
 import { handleResAndMakeError, ResHandledError } from "../../../resErrorUtils";
-import { UserDbRaw } from "../../ServerUser";
+import { UserDbRaw } from "../../UserDbRaw";
 import { UserModel } from "../../UserModel";
 
 type QueryParameters = { operation: any; options: QueryOptions };

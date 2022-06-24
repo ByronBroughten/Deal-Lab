@@ -99,6 +99,21 @@ export const dbStoreNames = Arr.extractStrict(simpleSectionNames, [
   "ongoingList",
 ] as const);
 
+export type SimpleDbStoreName = typeof dbStoreNames[number];
+type TestDbStoreNames<DS extends readonly SimpleSectionName[]> = DS;
+type _Test1 = TestDbStoreNames<typeof dbStoreNames>;
+
+type DbStoreNameCheck<DS extends SimpleDbStoreName> = DS;
+
+export const feGuestAccessNames = Arr.extract(dbStoreNames, [
+  // children of main that users should be able to play with and save
+  // before making an account.
+  "outputList",
+  "varbList",
+  "singleTimeList",
+  "ongoingList",
+] as const);
+
 export const loadOnLoginNamesNext = [
   // grabbed right out of the db
   "user",
@@ -127,21 +142,4 @@ export const tableLoadOnLoginNames = Arr.extractStrict(loadOnLoginNamesNext, [
   "loanTableStore",
   "mgmtTableStore",
 ] as const);
-
-export type SimpleDbStoreName = typeof dbStoreNames[number];
-type TestDbStoreNames<DS extends readonly SimpleSectionName[]> = DS;
-type _Test1 = TestDbStoreNames<typeof dbStoreNames>;
-
-type DbStoreNameCheck<DS extends SimpleDbStoreName> = DS;
-
-export const feGuestAccessNames = Arr.extract(dbStoreNames, [
-  // children of main that users should be able to play with and save
-  // before making an account.
-  "outputList",
-  "varbList",
-  "singleTimeList",
-  "ongoingList",
-] as const);
-export const loadOnLoginNames = Arr.exclude(dbStoreNames, ["main"] as const);
-
-type _LoadOnLoginTest = DbStoreNameCheck<typeof loadOnLoginNames[number]>;
+export const loadOnLoginNames = loadOnLoginNamesNext;

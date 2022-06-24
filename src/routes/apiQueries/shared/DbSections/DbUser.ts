@@ -2,6 +2,7 @@ import bcrypt from "bcrypt";
 import { Response } from "express";
 import mongoose from "mongoose";
 import { constants } from "../../../../client/src/App/Constants";
+import { LoginUser } from "../../../../client/src/App/sharedWithServer/apiQueriesShared/login";
 import { defaultMaker } from "../../../../client/src/App/sharedWithServer/defaultMaker/defaultMaker";
 import { SectionPackRaw } from "../../../../client/src/App/sharedWithServer/SectionPack/SectionPackRaw";
 import {
@@ -17,7 +18,6 @@ import { PackBuilderSection } from "../../../../client/src/App/sharedWithServer/
 import { PackLoaderSection } from "../../../../client/src/App/sharedWithServer/StatePackers.ts/PackLoaderSection";
 import { UpdaterSection } from "../../../../client/src/App/sharedWithServer/StateUpdaters/UpdaterSection";
 import { HandledResStatusError } from "../../../../resErrorUtils";
-import { ServerUser } from "../../../ServerUser";
 import { DbSectionsProps } from "./Bases/DbSectionsBase";
 import { DbSections } from "./DbSections";
 import { DbSectionsQuerier } from "./DbSectionsQuerier";
@@ -103,7 +103,7 @@ export class DbUser extends GetterSectionsBase {
   // "dealTableStore",
   // "loanTableStore",
   // "mgmtTableStore",
-  makeLoginUser() {
+  makeLoginUser(): LoginUser {
     return {
       ...this.getFullLoginArrs(),
       ...this.makeTableLoginArrs(),
@@ -127,23 +127,36 @@ export class DbUser extends GetterSectionsBase {
   }
   makeTablePackArr<SN extends SectionName<"tableLoadOnLogin">>(
     sectionName: SN
-  ) {
+  ): SectionPackRaw<SN>[] {
     const omniParent = PackBuilderSection.initAsOmniParent();
     const tableStore = omniParent.addAndGetChild(sectionName);
-    const table = tableStore.addAndGetChild("table");
 
-    // I must load the default columns.
-    // or rather, the default table.
-    const columns = table.children("column");
-    const sourceName = tableStore.get.meta.core.tableSource;
-    omniParent.loadChildren({
+    const sourceName = tableStore.sectionMeta.core.tableSource;
+    const tablePack = defaultMaker.makeMainTablePack[sourceName]();
+    const defaultTable = tableStore.loadAndGetChild(tablePack);
+
+    const sources = omniParent.loadAndGetChildren({
       sectionName: sourceName,
       sectionPacks: this.dbSections.sectionPackArr(sourceName),
     });
 
-    const tablePacks = defaultMaker.makeMainTablePacks();
-    for (const section of omniParent.get.children(sourceName)) {
+    // You need to create "TableUpdater" and use it in
+    // both this and SetterTable.
+    const columns = defaultTable.get.children("column");
+    for (const source of sources) {
+      for (const column of columns) {
+        const title = source.get.value("title", "string");
+        const { dbId } = source.get;
+        defaultTable.addAndGetChild("tableRow", {
+          dbId,
+          dbVarbs: { title },
+        });
+        const varb = source.get.varbs.varbByFocalMixed(
+          column.varbs.varbInfoValues
+        );
+      }
     }
+    return [tableStore.makeSectionPack()];
   }
   // makeNewTableRows(sectionName: SectionName<"rowIndex">) {
   //   const tableName = rowIndexToTableName[sectionName];
@@ -199,13 +212,7 @@ export class DbUser extends GetterSectionsBase {
   //   return rowEntry;
   // }
   sendLogin(res: Response) {
-    const serverUser = ServerUser.init(this.dbSectionsRaw);
-    const loggedInUser = serverUser.makeRawFeLoginUser();
-
-    // change the login req so that loginUser is RawSectionPack<"main">
-    // re-implement the serverUser "makeRawFeLoginUser" to essentially
-    //   construct a "main" sectionPack
-
+    const loggedInUser = this.makeLoginUser();
     const token = this.makeUserAuthToken();
     res
       .header(constants.tokenKey.apiUserAuth, token)

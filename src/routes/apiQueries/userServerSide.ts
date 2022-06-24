@@ -9,18 +9,10 @@ import { BaseSectionsDb } from "../../client/src/App/sharedWithServer/SectionsMe
 import { SchemaVarbsToDbValues } from "../../client/src/App/sharedWithServer/SectionsMeta/relSections/rel/valueMetaTypes";
 import { makeMongooseObjectId } from "../../client/src/App/sharedWithServer/utils/mongoose";
 import { serverSectionS } from "../ServerSectionName";
-import { initDbSectionPack, UserDbRaw } from "../ServerUser";
-import { modelPath, UserModel } from "../UserModel";
+import { initDbSectionPack, UserDbRaw } from "../UserDbRaw";
+import { UserModel } from "../UserModel";
 
 export const userServerSide = {
-  userEmailLowerPath: modelPath.firstSectionPackSectionVarb(
-    "user",
-    "user",
-    "email"
-  ),
-  findByEmailFilter(emailLower: string) {
-    return { [this.userEmailLowerPath]: emailLower };
-  },
   prepEmail(rawEmail: string): PreppedEmails {
     return {
       emailAsSubmitted: rawEmail.trim(),

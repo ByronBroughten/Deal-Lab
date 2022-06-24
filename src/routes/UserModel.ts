@@ -4,7 +4,7 @@ import { SectionPackDbRaw } from "../client/src/App/sharedWithServer/SectionPack
 import { SelfOrDescendantName } from "../client/src/App/sharedWithServer/SectionsMeta/relSectionTypes/ChildTypes";
 import { monSchemas } from "../client/src/App/sharedWithServer/utils/mongoose";
 import { ServerSectionName, serverSectionS } from "./ServerSectionName";
-import { UserDbRaw } from "./ServerUser";
+import { UserDbRaw } from "./UserDbRaw";
 
 export const UserModel = mongoose.model<UserDbRaw>(
   "userNext",

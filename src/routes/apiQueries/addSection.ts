@@ -4,10 +4,8 @@ import { ServerSectionPack } from "../../client/src/App/sharedWithServer/Section
 import { SectionName } from "../../client/src/App/sharedWithServer/SectionsMeta/SectionName";
 import authWare from "../../middleware/authWare";
 import { ResStatusError } from "../../resErrorUtils";
-import { SectionPackDb } from "../SectionPackDb";
-import {
-  DbSectionInitByIdProps
-} from "./shared/DbSections/DbSection";
+import { sectionPackDbS } from "../sectionPackDbS";
+import { DbSectionInitByIdProps } from "./shared/DbSections/DbSection";
 import { DbSectionsQuerier } from "./shared/DbSections/DbSectionsQuerier";
 import { SectionPackNotFoundError } from "./shared/DbSections/DbSectionsQuerierTypes";
 import { findUserByIdAndUpdate } from "./shared/findAndUpdate";
@@ -63,7 +61,7 @@ async function checkThatSectionPackIsNotThere<
 
 function makePushParameters(serverSectionPack: ServerSectionPack) {
   const { sectionName } = serverSectionPack;
-  const dbSectionPack = SectionPackDb.serverToDbRaw(serverSectionPack);
+  const dbSectionPack = sectionPackDbS.serverToDbRaw(serverSectionPack);
   return {
     operation: { $push: { [sectionName]: dbSectionPack } },
     options: {

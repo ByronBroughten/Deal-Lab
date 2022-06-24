@@ -9,6 +9,20 @@ import {
 import { DbVarbs, RawSections } from "./RawSection";
 import { SectionPackRaw, zRawSectionPack } from "./SectionPackRaw";
 
+export const sectionPackS = {
+  isRaw<ST extends SectionNameType = "all">(
+    value: any,
+    sectionType?: ST
+  ): value is SectionPackRaw<SectionName<ST>> {
+    if (
+      zRawSectionPack.safeParse(value).success &&
+      sectionNameS.is(value.sectionName, sectionType ?? "all")
+    ) {
+      return true;
+    } else return false;
+  },
+} as const;
+
 export type OneHeadSectionNode<SN extends SectionName> = {
   sectionName: SN;
   dbId?: string;

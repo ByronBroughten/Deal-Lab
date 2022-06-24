@@ -5,7 +5,7 @@ import { makeDefaultLoanPack } from "./makeDefaultLoanPack";
 import { makeDefaultMainPack } from "./makeDefaultMainPack";
 import { makeDefaultMgmtPack } from "./makeDefaultMgmtPack";
 import { makeDefaultPropertyPack } from "./makeDefaultPropertyPack";
-import { makeMainTablePacks } from "./makeMainTablePacks";
+import { makeMainTablePackMakers } from "./makeMainTablePackMakers";
 
 type FunctionsMakeDefault<SN extends SectionName> = {
   [S in SN]: () => SectionPackRaw<S>;
@@ -18,7 +18,7 @@ class DefaultSectionPackMaker<SN extends SectionName> {
   makeSectionPack<S extends SN>(sectionName: S): SectionPackRaw<S> {
     return this.makeDefaults[sectionName]();
   }
-  makeMainTablePacks = makeMainTablePacks;
+  makeMainTablePack = makeMainTablePackMakers();
 }
 
 export const defaultMaker = new DefaultSectionPackMaker({

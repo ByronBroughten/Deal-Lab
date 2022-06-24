@@ -19,11 +19,11 @@ function makeNameArrs(): NameArrs {
   return partial as NameArrs;
 }
 
-export type SectionNameType<SC extends "fe" = "fe"> = keyof NameArrs["fe"];
+export type SectionNameType = keyof NameArrs["fe"];
 
-export type FeSectionNameType = SectionNameType<"fe">;
+export type FeSectionNameType = SectionNameType;
 
-export type SectionName<T extends SectionNameType<"fe"> = "all"> =
+export type SectionName<T extends SectionNameType = "all"> =
   NameArrs["fe"][T][number & keyof NameArrs["fe"][T]];
 
 export type AlwaysOneVarbFinder<
@@ -35,9 +35,6 @@ export type AlwaysOneVarbFinder<
 
 export const sectionNameS = new StringTypeChecker(makeNameArrs().fe);
 
-type GeneralNameArrs = Record<
-  SectionNameType<"fe">,
-  readonly SimpleSectionName[]
->;
+type GeneralNameArrs = Record<SectionNameType, readonly SimpleSectionName[]>;
 const _testNameArrs = <T extends GeneralNameArrs>(_: T) => undefined;
 _testNameArrs(sectionNameS.arrs);

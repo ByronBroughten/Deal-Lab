@@ -73,11 +73,26 @@ export class PackBuilderSection<
   addChild<CN extends ChildName<SN>>(
     childName: CN,
     options?: AddChildOptions<SN, CN>
-  ) {
+  ): void {
     this.updater.addChild(childName, options);
   }
-  loadChild<CN extends ChildName<SN>>(childPack: SectionPackRaw<CN>) {
+  loadAndGetChild<CN extends ChildName<SN>>(
+    childPack: SectionPackRaw<CN>
+  ): PackBuilderSection<CN> {
+    this.loadChild(childPack);
+    return this.youngestPackBuilder(childPack.sectionName);
+  }
+  loadChild<CN extends ChildName<SN>>(childPack: SectionPackRaw<CN>): void {
     this.loader.loadChildSectionPack(childPack);
+  }
+  loadAndGetChildren<CN extends ChildName<SN>>(
+    childArrPack: SectionArrPack<CN>
+  ): PackBuilderSection<CN>[] {
+    const children: PackBuilderSection<CN>[] = [];
+    for (const pack of childArrPack.sectionPacks) {
+      children.push(this.loadAndGetChild(pack));
+    }
+    return children;
   }
   loadChildren<CN extends ChildName<SN>>(childArrPack: SectionArrPack<CN>) {
     this.loader.loadChildSectionPackArr(childArrPack);
