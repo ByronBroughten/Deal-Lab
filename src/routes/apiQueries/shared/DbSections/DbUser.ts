@@ -2,6 +2,7 @@ import bcrypt from "bcrypt";
 import { Response } from "express";
 import mongoose from "mongoose";
 import { constants } from "../../../../client/src/App/Constants";
+import { defaultMaker } from "../../../../client/src/App/sharedWithServer/defaultMaker/defaultMaker";
 import { SectionPackRaw } from "../../../../client/src/App/sharedWithServer/SectionPack/SectionPackRaw";
 import {
   SectionName,
@@ -134,13 +135,13 @@ export class DbUser extends GetterSectionsBase {
     // I must load the default columns.
     // or rather, the default table.
     const columns = table.children("column");
-
     const sourceName = tableStore.get.meta.core.tableSource;
     omniParent.loadChildren({
       sectionName: sourceName,
       sectionPacks: this.dbSections.sectionPackArr(sourceName),
     });
 
+    const tablePacks = defaultMaker.makeMainTablePacks();
     for (const section of omniParent.get.children(sourceName)) {
     }
   }

@@ -102,7 +102,7 @@ export class SolverSections extends SolverSectionsBase {
     });
   }
   static initSectionsFromDefaultMain(): StateSections {
-    const defaultMainPack = defaultMaker.make("main");
+    const defaultMainPack = defaultMaker.makeSectionPack("main");
     return this.initSolvedSectionsFromMainPack(defaultMainPack);
   }
   static initSolvedSectionsFromMainPack(

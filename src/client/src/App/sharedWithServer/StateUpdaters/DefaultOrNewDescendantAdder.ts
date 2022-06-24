@@ -17,7 +17,7 @@ export class DefaultOrNewChildAdder<
     options?: AddChildOptions<CN>
   ): void {
     if (defaultMaker.has(childName)) {
-      const sectionPack = defaultMaker.make(childName);
+      const sectionPack = defaultMaker.makeSectionPack(childName);
       this.loader.loadChildSectionPack(sectionPack);
     } else {
       this.updater.addChild(childName, options);

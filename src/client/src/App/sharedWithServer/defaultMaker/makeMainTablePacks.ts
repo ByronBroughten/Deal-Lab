@@ -19,7 +19,7 @@ const columnVarbnames = {
 type TablePacks = {
   [SN in SectionName<"tableSource">]: SectionPackRaw<"table">;
 };
-export function makeDefaultTablePacks(): TablePacks {
+export function makeMainTablePacks(): TablePacks {
   const parent = PackBuilderSection.initAsOmniParent();
   return Obj.keys(columnVarbnames).reduce((tablePacks, sectionName) => {
     const table = parent.addAndGetChild("table");
