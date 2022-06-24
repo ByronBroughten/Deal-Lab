@@ -33,6 +33,11 @@ export type SectionMetaCore<SN extends SimpleSectionName> =
 
 export class SectionMeta<SN extends SimpleSectionName> {
   constructor(readonly core: SectionMetaCore<SN>) {}
+  get rowIndexName(): Exclude<RelSections["fe"][SN]["rowIndexName"], null> {
+    const { rowIndexName } = this.core;
+    if (rowIndexName === null) throw new Error("Can't be null.");
+    return rowIndexName as any;
+  }
   get<PN extends keyof SectionMetaCore<SN>>(
     propName: PN
   ): SectionMetaCore<SN>[PN] {

@@ -12,7 +12,7 @@ export class GetterMainSection<
   SN extends SectionName<"hasRowIndex"> = SectionName<"hasRowIndex">
 > extends GetterSection<SN> {
   get indexName(): SectionName<"rowIndexNext"> {
-    return this.meta.core.rowIndexName;
+    return this.meta.rowIndexName;
   }
   inEntityInfoToFeInfo(varbInfo: InEntityVarbInfo): FeCellValueInfo {
     // so. if the varbInfo has an indexName
