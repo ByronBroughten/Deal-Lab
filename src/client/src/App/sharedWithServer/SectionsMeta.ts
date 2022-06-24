@@ -64,7 +64,7 @@ export class SectionsMeta {
     sectionName: SN
   ): ParentName<SN> {
     const sectionMeta = this.section(sectionName);
-    return sectionMeta.get("parentNames")[0] as any as ParentName<SN, "fe">;
+    return sectionMeta.get("parentNames")[0] as any as ParentName<SN>;
   }
   selfAndDescendantNames<SN extends SectionName>(
     sectionName: SN

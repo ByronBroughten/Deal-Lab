@@ -1,13 +1,11 @@
 import { StrictOmit } from "../../utils/types";
-import { ContextName } from "../baseSections";
 import { rel } from "./rel";
 import { relSection, RelSectionOptions } from "./rel/relSection";
 import { RelVarbs } from "./rel/relVarbs";
 
-function propertyRelVarbs<
-  SN extends "property",
-  R extends RelVarbs<ContextName, SN>
->(sectionName: SN): R {
+function propertyRelVarbs<SN extends "property", R extends RelVarbs<SN>>(
+  sectionName: SN
+): R {
   return {
     ...rel.varbs.savableSection,
     price: rel.varb.moneyObj("Price"),
@@ -106,5 +104,5 @@ export const relPropertyGeneral = {
     }),
     numBedrooms: rel.varb.calcVarb("BRs"),
     ...rel.varbs.timeMoney("targetRent", "Rent", "unit"),
-  } as RelVarbs<ContextName, "unit">),
+  } as RelVarbs<"unit">),
 } as const;

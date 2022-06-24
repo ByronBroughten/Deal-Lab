@@ -20,7 +20,7 @@ function userVarbList<
         initValue: "labeledEquation",
         dbInitValue: "labeledEquation",
       }),
-    } as RelVarbs<"fe", SN>,
+    } as RelVarbs<SN>,
     {
       ...((options ?? {}) as O),
       childNames: ["userVarbItem"] as const,

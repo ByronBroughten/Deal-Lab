@@ -22,7 +22,7 @@ export type GeneralRelSection = {
 type FullOptions<SN extends SimpleSectionName> = Merge<
   GeneralRelSection,
   {
-    relVarbs: RelVarbs<"fe", SN>;
+    relVarbs: RelVarbs<SN>;
     childNames: readonly SimpleSectionName[];
   }
 >;
@@ -34,14 +34,14 @@ export type RelSectionOptions<SN extends SimpleSectionName> = Partial<
 type RelSection<
   SN extends SimpleSectionName,
   D extends string,
-  RVS extends RelVarbs<"fe", SN>,
+  RVS extends RelVarbs<SN>,
   O extends RelSectionOptions<SN> = {}
 > = Merge<DefaultRelSection<D, SN, RVS>, O>;
 
 type DefaultRelSection<
   D extends string,
   SN extends SimpleSectionName,
-  RVS extends RelVarbs<"fe", SN>
+  RVS extends RelVarbs<SN>
 > = {
   sectionName: SN;
   displayName: D;
@@ -59,7 +59,7 @@ type DefaultRelSection<
 export type RelSectionProp<
   SN extends SimpleSectionName,
   D extends string,
-  RVS extends RelVarbs<"fe", SN>,
+  RVS extends RelVarbs<SN>,
   O extends RelSectionOptions<SN> = {}
 > = Record<SN, RelSection<SN, D, RVS, O>>;
 
@@ -67,7 +67,7 @@ export const relSection = {
   default<
     D extends string,
     SN extends SimpleSectionName,
-    RVS extends RelVarbs<"fe", SN>
+    RVS extends RelVarbs<SN>
   >(
     displayName: D,
     sectionName: SN,
@@ -89,7 +89,7 @@ export const relSection = {
   base<
     SN extends SimpleSectionName,
     D extends string,
-    PVS extends RelVarbs<"fe", SN>,
+    PVS extends RelVarbs<SN>,
     O extends RelSectionOptions<SN> = {}
   >(
     sectionName: SN,
@@ -154,7 +154,7 @@ export const relSection = {
     return relSection.base(
       sectionName,
       "Output List",
-      { title: relVarb.string() } as RelVarbs<"fe", SN>,
+      { title: relVarb.string() } as RelVarbs<SN>,
       {
         childNames: ["output"] as const,
         ...((options ?? {}) as O),
@@ -171,7 +171,7 @@ export const relSection = {
       {
         title: relVarb.string(),
         compareToggle: relVarb.type("boolean"),
-      } as RelVarbs<"fe", S>,
+      } as RelVarbs<S>,
       {
         childNames: ["cell"] as const,
       }

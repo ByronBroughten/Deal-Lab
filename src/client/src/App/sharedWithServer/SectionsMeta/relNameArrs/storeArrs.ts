@@ -8,17 +8,17 @@ import { getRelParams } from "./getRelParams";
 
 export const hasStoreNameArrs = {
   hasRowIndex: Obj.entryKeysWithPropOfType(
-    relSections["fe"],
+    relSections,
     "rowIndexName",
     "string"
   ),
   hasFullIndex: Obj.entryKeysWithPropOfType(
-    relSections["fe"],
+    relSections,
     "fullIndexName",
     "string"
   ),
   hasArrStore: Obj.entryKeysWithPropOfType(
-    relSections["fe"],
+    relSections,
     "arrStoreName",
     "string"
   ),

@@ -4,12 +4,13 @@ import { relSections } from "../relSections";
 import { getRelParams } from "./getRelParams";
 
 const tableSourceNames = Obj.entryKeysWithPropOfType(
-  relSections["fe"],
+  relSections,
   "tableStoreName",
   "string"
 );
 const tableStoreParams = getRelParams(tableSourceNames, "tableStoreName");
 const tableSourceParams = Obj.swapKeysAndValues(tableStoreParams);
+
 export const allTableSourceParams = Obj.merge(allNull, tableSourceParams);
 export type TableSourceParams = typeof allTableSourceParams;
 

@@ -1,6 +1,10 @@
 import { Arr } from "../utils/Arr";
 import { Obj } from "../utils/Obj";
-import { ContextName, SimpleSectionName } from "./baseSections";
+import {
+  ContextName,
+  SimpleSectionName,
+  simpleSectionNames,
+} from "./baseSections";
 import { BaseName } from "./baseSectionTypes";
 import { baseNameArrs } from "./baseSectionTypes/baseNameArrs";
 import { hasStoreNameArrs, storeNameArrs } from "./relNameArrs/storeArrs";
@@ -24,19 +28,18 @@ function makeRelNameArrs<
   SC extends ContextName,
   AS extends { [key: string]: readonly any[] }
 >(sectionContext: SC, arrs: AS) {
-  const sectionToParentArrs = makeSectionToParentArrs()[sectionContext];
+  const sectionToParentArrs = makeSectionToParentArrs();
   return {
     ...arrs,
-    hasChild: Obj.keys(relSections[sectionContext]).filter((sectionName) => {
+    hasChild: simpleSectionNames.filter((sectionName) => {
       return (
-        (relSections[sectionContext][sectionName] as any as GeneralRelSection)
-          .childNames.length > 0
+        (relSections[sectionName] as GeneralRelSection).childNames.length > 0
       );
     }) as HasChildSectionName<SC>[],
     ...tableStoreNameArrs,
     hasParent: Obj.keys(sectionToParentArrs).filter((sectionName) => {
       return (sectionToParentArrs[sectionName] as any as string[]).length > 0;
-    }) as HasParentSectionName<SC>[],
+    }) as HasParentSectionName[],
     get alwaysOneHasParent() {
       return Arr.extract(
         this.hasParent,
@@ -51,7 +54,7 @@ function makeRelNameArrs<
             sectionToParentArrs[sectionName][0] as any
           )
         );
-      }) as HasOneParentSectionName<SC>[];
+      }) as HasOneParentSectionName[];
     },
     get isSingleParent() {
       return (this.hasOneParent as SimpleSectionName[]).reduce(
@@ -62,7 +65,7 @@ function makeRelNameArrs<
           return names;
         },
         [] as string[]
-      ) as string[] as IsSingleParentName<SC>[];
+      ) as string[] as IsSingleParentName[];
     },
     userListItem: Obj.values(userListItemTypes) as UserItemSectionName[],
   } as const;

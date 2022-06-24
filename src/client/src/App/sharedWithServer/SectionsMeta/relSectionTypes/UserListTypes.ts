@@ -3,7 +3,7 @@ import { BaseName } from "../baseSectionTypes";
 import { RelSections } from "../relSections";
 
 type PreUserLists = {
-  [Prop in BaseName<"userList", ContextName>]: RelSections[ContextName][Prop];
+  [Prop in BaseName<"userList", ContextName>]: RelSections[Prop];
 };
 type UserListItemTypes = {
   [Prop in BaseName<"userList">]: PreUserLists[Prop]["childNames"][number];

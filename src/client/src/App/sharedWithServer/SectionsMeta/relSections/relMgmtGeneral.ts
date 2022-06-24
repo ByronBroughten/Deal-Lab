@@ -1,5 +1,4 @@
 import { StrictOmit } from "../../utils/types";
-import { ContextName } from "../baseSections";
 import { switchNames } from "../baseSections/switchNames";
 import { rel } from "./rel";
 import { relSection, RelSectionOptions } from "./rel/relSection";
@@ -8,10 +7,9 @@ import { RelVarbs } from "./rel/relVarbs";
 const rentCut = switchNames("rentCut", "dollarsPercent");
 const rentCutDollars = switchNames(rentCut.dollars, "ongoing");
 
-function makeMgmtPreVarbs<
-  SN extends "mgmt",
-  R extends RelVarbs<ContextName, "mgmt">
->(sectionName: SN): R {
+function makeMgmtPreVarbs<SN extends "mgmt", R extends RelVarbs<"mgmt">>(
+  sectionName: SN
+): R {
   return {
     ...rel.varbs.savableSection,
     [rentCut.switch]: rel.varb.string({
@@ -98,7 +96,7 @@ function mgmtSection<
   return relSection.base(
     sectionName,
     "Management",
-    makeMgmtPreVarbs(sectionName) as RelVarbs<"fe" | "db", SN>,
+    makeMgmtPreVarbs(sectionName) as RelVarbs<SN>,
     {
       ...((options ?? {}) as O),
       childNames: [

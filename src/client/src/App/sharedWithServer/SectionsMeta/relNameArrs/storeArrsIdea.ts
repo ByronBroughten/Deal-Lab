@@ -17,7 +17,7 @@ type HasIndexNameParam = keyof IndexNameParams;
 
 type HasIndexNameArrs = {
   [S in HasIndexNameParam]: EntryKeysWithPropOfType<
-    RelSections["fe"],
+    RelSections,
     IndexNameParams[S],
     "string"
   >;
@@ -39,7 +39,7 @@ interface SourceToIndexNames
 function makeHasIndexNameArrs(): HasIndexNameArrs {
   return Obj.keys(indexNameParams).reduce((nameArrs, key) => {
     nameArrs[key] = Obj.entryKeysWithPropOfType(
-      relSections["fe"],
+      relSections,
       indexNameParams[key],
       "string"
     );
@@ -78,7 +78,7 @@ function makeHasStoreNameArrs() {
   return {
     ...hasIndexNameArrs,
     hasArrStore: Obj.entryKeysWithPropOfType(
-      relSections["fe"],
+      relSections,
       "arrStoreName",
       "string"
     ),

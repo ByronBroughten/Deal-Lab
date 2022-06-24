@@ -115,7 +115,7 @@ function dealSection<
         [rel.varbInfo.children("propertyGeneral", "ongoingRevenue")],
         { shared: { startAdornment: "$" }, switchInit: "monthly" }
       ),
-    } as RelVarbs<"fe" | "db", SN>,
+    } as RelVarbs<SN>,
     {
       ...((options ?? {}) as O),
       childNames: [

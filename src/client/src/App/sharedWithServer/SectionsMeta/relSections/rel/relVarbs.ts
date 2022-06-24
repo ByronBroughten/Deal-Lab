@@ -1,15 +1,11 @@
 import { Obj } from "../../../utils/Obj";
-import {
-  baseSections,
-  ContextName,
-  SimpleSectionName
-} from "../../baseSections";
+import { baseSections, SimpleSectionName } from "../../baseSections";
 import { ValueName } from "../../baseSections/baseVarb";
 import { switchNames } from "../../baseSections/switchNames";
 import {
   BaseName,
   SectionVarbName,
-  SectionVarbNameByType
+  SectionVarbNameByType,
 } from "../../baseSectionTypes";
 import { relProps } from "./relMisc";
 import { relVarb } from "./relVarb";
@@ -20,63 +16,56 @@ import {
   ongoingInput,
   ongoingPercentToPortion,
   ongoingPureCalc,
-  ongoingSumNums
+  ongoingSumNums,
 } from "./relVarbs/preOngoingVarbs";
 import { simpleSwitch, switchInput } from "./relVarbs/preSwitchVarbs";
 import {
   DisplayName,
   RelVarb,
   RelVarbByType,
-  StringPreVarb
+  StringPreVarb,
 } from "./relVarbTypes";
 
 export type GeneralRelVarbs = Record<string, RelVarb>;
-export type RelVarbs<
-  SC extends ContextName,
-  SN extends SimpleSectionName
-> = Record<SectionVarbName<SC, SN>, RelVarb>;
+export type RelVarbs<SN extends SimpleSectionName> = Record<
+  SectionVarbName<"fe", SN>,
+  RelVarb
+>;
 
-type RelVarbsByType<
-  SC extends ContextName,
-  SN extends SimpleSectionName,
-  VLN extends ValueName
-> = Pick<RelVarbs<SC, SN>, SectionVarbNameByType<SC, SN, VLN>>;
+type RelVarbsByType<SN extends SimpleSectionName, VLN extends ValueName> = Pick<
+  RelVarbs<SN>,
+  SectionVarbNameByType<"fe", SN, VLN>
+>;
 
 function isRelVarbOfType<
-  SC extends ContextName,
-  SN extends BaseName<"hasVarb", SC>,
+  SN extends BaseName<"hasVarb", "fe">,
   VLN extends ValueName
 >(
-  sectionContext: SC,
   sectionName: SN,
-  varbName: SectionVarbName<SC, SN>,
+  varbName: SectionVarbName<"fe", SN>,
   valueName: VLN,
   _value: any
 ): _value is RelVarbByType[VLN] {
-  const schema = baseSections[sectionContext][sectionName];
+  const schema = baseSections["fe"][sectionName];
   const varbType =
     schema.varbSchemas[varbName as keyof typeof schema.varbSchemas];
   return varbType === valueName;
 }
 
 function filterRelVarbsByType<
-  SC extends ContextName,
-  SN extends BaseName<"hasVarb", SC>,
+  SN extends BaseName<"hasVarb", "fe">,
   VLN extends ValueName
 >(
-  sectionContext: SC,
   sectionName: SN,
   valueName: VLN,
-  relVarbs: RelVarbs<SC, SN>
-): RelVarbsByType<SC, SN, VLN> {
-  const partial: Partial<RelVarbsByType<SC, SN, VLN>> = {};
+  relVarbs: RelVarbs<SN>
+): RelVarbsByType<SN, VLN> {
+  const partial: Partial<RelVarbsByType<SN, VLN>> = {};
   for (const [varbName, relVarb] of Obj.entriesFull(relVarbs)) {
-    if (
-      isRelVarbOfType(sectionContext, sectionName, varbName, valueName, relVarb)
-    )
-      partial[varbName as keyof RelVarbsByType<SC, SN, VLN>] = relVarb;
+    if (isRelVarbOfType(sectionName, varbName, valueName, relVarb))
+      partial[varbName as keyof RelVarbsByType<SN, VLN>] = relVarb;
   }
-  return partial as RelVarbsByType<SC, SN, VLN>;
+  return partial as RelVarbsByType<SN, VLN>;
 }
 
 export type StringPreVarbsFromNames<VN extends readonly string[]> = Record<
@@ -122,16 +111,15 @@ export const relVarbs = {
   },
   sectionStrings<
     SN extends BaseName<"hasVarb", "fe">,
-    PV extends RelVarbs<"fe", SN>,
+    PV extends RelVarbs<SN>,
     ToSkip extends (keyof PV)[] = []
   >(sectionName: SN, relVarbs: PV, toSkip?: ToSkip) {
-    type ToReturn = Omit<RelVarbsByType<"fe", SN, "string">, keyof ToSkip>;
+    type ToReturn = Omit<RelVarbsByType<SN, "string">, keyof ToSkip>;
     function isInToReturn(value: any): value is keyof ToReturn {
       return value in relVarbs && !toSkip?.includes(value);
     }
     const ssPreVarbs: Partial<ToReturn> = {};
     const stringPreVarbs = filterRelVarbsByType(
-      "fe",
       sectionName,
       "string",
       relVarbs
@@ -145,17 +133,16 @@ export const relVarbs = {
   },
   sumSection<
     S extends BaseName<"hasVarb">,
-    PV extends RelVarbs<"fe", S>,
+    PV extends RelVarbs<S>,
     ToSkip extends readonly (keyof PV)[] = []
   >(sectionName: S, relVarbs: PV, toSkip?: ToSkip) {
-    type ToReturn = Omit<RelVarbsByType<"fe", S, "numObj">, keyof ToSkip>;
+    type ToReturn = Omit<RelVarbsByType<S, "numObj">, keyof ToSkip>;
     function isInToReturn(value: any): value is keyof ToReturn {
       return value in relVarbs && !toSkip?.includes(value);
     }
 
     const ssPreVarbs: Partial<ToReturn> = {};
     const numObjPreVarbs = filterRelVarbsByType(
-      "fe",
       sectionName,
       "numObj",
       relVarbs
@@ -189,7 +176,7 @@ export const relVarbs = {
       entityId: StringPreVarb;
     };
   },
-  singleTimeItem<R extends RelVarbs<ContextName, "singleTimeItem">>(): R {
+  singleTimeItem<R extends RelVarbs<"singleTimeItem">>(): R {
     const sectionName = "singleTimeItem";
     const valueSwitchProp = relVarbInfo.local(sectionName, "valueSwitch");
     const r: R = {
@@ -227,7 +214,7 @@ export const relVarbs = {
     } as R;
     return r;
   },
-  ongoingItem<R extends RelVarbs<ContextName, "ongoingItem">>(): R {
+  ongoingItem<R extends RelVarbs<"ongoingItem">>(): R {
     const sectionName = "ongoingItem";
     const ongoingValueNames = switchNames("value", "ongoing");
 
@@ -340,7 +327,7 @@ export const relVarbs = {
   },
   singleTimeList<
     S extends BaseName<"singleTimeListType">,
-    R extends RelVarbs<ContextName, S>
+    R extends RelVarbs<S>
   >(sectionName: S): R {
     const r: R = {
       ...this.savableSection,
@@ -356,10 +343,9 @@ export const relVarbs = {
     } as R;
     return r;
   },
-  ongoingList<
-    S extends BaseName<"ongoingListType">,
-    R extends RelVarbs<ContextName, S>
-  >(sectionName: S) {
+  ongoingList<S extends BaseName<"ongoingListType">, R extends RelVarbs<S>>(
+    sectionName: S
+  ) {
     const r: R = {
       ...this.savableSection,
       defaultValueSwitch: relVarb.string({

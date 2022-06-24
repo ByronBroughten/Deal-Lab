@@ -1,5 +1,5 @@
 import { StrictOmit } from "../../utils/types";
-import { ContextName, loanVarbsNotInFinancing } from "../baseSections";
+import { loanVarbsNotInFinancing } from "../baseSections";
 import { dbNumObj } from "../baseSections/baseValues/NumObj";
 import { switchNames } from "../baseSections/switchNames";
 import { rel } from "./rel";
@@ -7,7 +7,7 @@ import { relSection, RelSectionOptions } from "./rel/relSection";
 import { RelVarbs } from "./rel/relVarbs";
 
 const loanAmountBase = switchNames("loanAmountBase", "dollarsPercent");
-function loanRelVarbs(sectionName: "loan"): RelVarbs<ContextName, "loan"> {
+function loanRelVarbs(sectionName: "loan"): RelVarbs<"loan"> {
   return {
     ...rel.varbs.savableSection,
     [loanAmountBase.switch]: rel.varb.string({
@@ -124,7 +124,7 @@ function loanRelVarbs(sectionName: "loan"): RelVarbs<ContextName, "loan"> {
       },
       { shared: { startAdornment: "$" } }
     ),
-  } as RelVarbs<ContextName, "loan">;
+  } as RelVarbs<"loan">;
 }
 
 function loanSection<
@@ -137,7 +137,7 @@ function loanSection<
   return relSection.base(
     sectionName,
     "Loan",
-    loanRelVarbs(sectionName) as RelVarbs<"fe", SN>,
+    loanRelVarbs(sectionName) as RelVarbs<SN>,
     {
       ...((options ?? {}) as O),
       childNames: [
@@ -149,7 +149,7 @@ function loanSection<
   );
 }
 
-const financingRelVarbs: RelVarbs<ContextName, "financing"> = {
+const financingRelVarbs: RelVarbs<"financing"> = {
   downPaymentDollars: rel.varb.leftRightPropFn(
     "Down payment",
     "simpleSubtract",

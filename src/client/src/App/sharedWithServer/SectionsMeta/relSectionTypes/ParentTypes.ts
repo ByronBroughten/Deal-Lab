@@ -1,92 +1,63 @@
-import { Obj } from "../../utils/Obj";
 import {
   IsUnion,
   NeversToSomething,
   RemoveNotStrings,
-  SubType
+  SubType,
 } from "../../utils/types";
-import {
-  ContextName,
-  sectionContext,
-  SimpleSectionName
-} from "../baseSections";
-import { BaseName, SectionFinder } from "../baseSectionTypes";
+import { SimpleSectionName, simpleSectionNames } from "../baseSections";
+import { BaseName } from "../baseSectionTypes";
 import { relSections } from "../relSections";
 import { FeNameInfo } from "../relSections/rel/relVarbInfoTypes";
-import { SectionName } from "../SectionName";
 import { ChildOrNull } from "./ChildTypes";
 
-type ParentToChildOrNullMap<
-  SC extends ContextName,
-  CN extends SimpleSectionName
-> = {
-  [SN in SimpleSectionName]: ChildOrNull<SC, SN, CN>;
+type ParentToChildOrNullMap<CN extends SimpleSectionName> = {
+  [SN in SimpleSectionName]: ChildOrNull<SN, CN>;
 };
 
-type ParentNameOrNever<
-  SC extends ContextName,
-  SN extends SimpleSectionName
-> = keyof SubType<ParentToChildOrNullMap<SC, SN>, SN>;
+type ParentNameOrNever<SN extends SimpleSectionName> = keyof SubType<
+  ParentToChildOrNullMap<SN>,
+  SN
+>;
 function _testParentNameOrNever() {
-  type CellParent = ParentNameOrNever<"fe", "cell">;
+  type CellParent = ParentNameOrNever<"cell">;
   const _case1: CellParent = "tableRow";
   //@ts-expect-error
   const _case3: CellParent = "propertyGeneral";
 }
 
-type SectionToParentsOrNever<SC extends ContextName> = {
-  [SN in SimpleSectionName]: ParentNameOrNever<SC, SN>;
+type SectionToParentsOrNever = {
+  [SN in SimpleSectionName]: ParentNameOrNever<SN>;
 };
 
 // this is for consistency in sectionMeta
-export type SectionToParentArrs<SC extends ContextName> = {
-  [SN in keyof SectionToParentsOrNever<SC>]: SectionToParentsOrNever<SC>[SN][];
+export type SectionToParentNameArrs = {
+  [SN in keyof SectionToParentsOrNever]: SectionToParentsOrNever[SN][];
 };
 
-type SectionToParents<SC extends ContextName> = RemoveNotStrings<
-  SectionToParentsOrNever<SC>
->;
-type SectionToParentOrNos<SC extends ContextName> = NeversToSomething<
-  SectionToParentsOrNever<SC>,
+type SectionToParents = RemoveNotStrings<SectionToParentsOrNever>;
+type SectionToParentOrNos = NeversToSomething<
+  SectionToParentsOrNever,
   "no parent"
 >;
 
-export type SectionToParentNameArrs = {
-  [SC in ContextName]: SectionToParentArrs<SC>;
-};
+type SectionNameArrs = Record<SimpleSectionName, SimpleSectionName[]>;
 export function makeSectionToParentArrs(): SectionToParentNameArrs {
-  const partial = sectionContext.makeBlankContextObj();
-  for (const contextName of sectionContext.names) {
-    type AllParents = Record<SimpleSectionName, SimpleSectionName[]>;
-    const sectionToParentArrs = Obj.keys(relSections[contextName]).reduce(
-      (parentNames, key) => {
-        parentNames[key as keyof typeof parentNames] = [];
-        return parentNames;
-      },
-      {} as AllParents
-    ) as AllParents;
+  const emptyArrs = simpleSectionNames.reduce((parentNames, sectionName) => {
+    parentNames[sectionName] = [];
+    return parentNames;
+  }, {} as SectionNameArrs);
 
-    for (const sectionName of Obj.keys(relSections[contextName])) {
-      for (const childName of relSections[contextName][sectionName]
-        .childNames) {
-        sectionToParentArrs[childName as keyof typeof sectionToParentArrs].push(
-          sectionName
-        );
-      }
+  return simpleSectionNames.reduce((parentNameArrs, sectionName) => {
+    for (const childName of relSections[sectionName].childNames) {
+      parentNameArrs[childName].push(sectionName);
     }
-    partial[contextName] = sectionToParentArrs;
-  }
-  return partial as SectionToParentNameArrs;
+    return parentNameArrs;
+  }, emptyArrs) as SectionToParentNameArrs;
 }
 export const sectionParentNames = makeSectionToParentArrs();
+export type HasParentSectionName = keyof SectionToParents;
 
-export type HasParentSectionName<SC extends ContextName> =
-  keyof SectionToParents<SC>;
-
-export type ParentName<
-  SN extends SimpleSectionName,
-  SC extends ContextName = "fe"
-> = SectionToParentOrNos<"fe">[SN];
+export type ParentName<SN extends SimpleSectionName> = SectionToParentOrNos[SN];
 
 export type ParentNameSafe<SN extends SimpleSectionName> = Exclude<
   ParentName<SN>,
@@ -94,62 +65,30 @@ export type ParentNameSafe<SN extends SimpleSectionName> = Exclude<
 >;
 
 function _testParentName() {
-  type OneParent = ParentName<"property", "fe">;
+  type OneParent = ParentName<"property">;
   const _case1: OneParent = "propertyGeneral";
   //@ts-expect-error
   const _case2: OneParent = "financing";
 
-  type NoParent = ParentName<"root", "fe">;
+  type NoParent = ParentName<"root">;
   const _case3: NoParent = "no parent";
 }
 
-export type ParentFeInfo<
-  SN extends SimpleSectionName,
-  SC extends ContextName = "fe"
-> = FeNameInfo<ParentName<SN, SC>>;
+export type ParentFeInfo<SN extends SimpleSectionName> = FeNameInfo<
+  ParentName<SN>
+>;
 
-export type ParentFinder<SN extends SimpleSectionName> =
-  | ParentFeInfo<SN, "fe">
-  | Extract<ParentName<SN>, SectionName<"alwaysOne">>;
-
-export type SectionFinderForParent<SN extends SimpleSectionName> =
-  | SectionFinder<SN>
-  | HasOneParentFinder<SN, "fe">;
-
-type HasOneParentFinder<
-  SN extends SimpleSectionName,
-  CN extends ContextName
-> = Extract<SN, HasOneParentSectionName<CN>>;
-
-type SectionToOneParentOrNull<SC extends ContextName> = {
-  [SN in keyof SectionToParents<SC>]: IsUnion<
-    SectionToParentsOrNever<SC>[SN]
+type SectionToOneParentOrNull = {
+  [SN in keyof SectionToParents]: IsUnion<
+    SectionToParentsOrNever[SN]
   > extends true
     ? null
-    : SectionToParentsOrNever<SC>[SN] extends BaseName<"notAlwaysOne">
+    : SectionToParentsOrNever[SN] extends BaseName<"notAlwaysOne">
     ? null
-    : SectionToParentsOrNever<SC>[SN];
+    : SectionToParentsOrNever[SN];
 };
-type SectionToAlwaysOneParent<SC extends ContextName> = SubType<
-  SectionToOneParentOrNull<SC>,
-  string
->;
-export type HasOneParentSectionName<SC extends ContextName> =
-  keyof SectionToAlwaysOneParent<SC>;
+type SectionToAlwaysOneParent = SubType<SectionToOneParentOrNull, string>;
+export type HasOneParentSectionName = keyof SectionToAlwaysOneParent;
 
-export function makeParentSectionNames<SC extends ContextName>(
-  sectionContext: SC
-) {
-  const sectionToParentArrs = makeSectionToParentArrs()[sectionContext];
-  const hasParentSectionNames = Obj.keys(sectionToParentArrs).filter(
-    (sectionName) =>
-      sectionToParentArrs[sectionName as SimpleSectionName].length > 0
-  ) as HasParentSectionName<SC>[];
-
-  return {
-    hasParent: hasParentSectionNames,
-  };
-}
-
-export type IsSingleParentName<SC extends ContextName> =
-  SectionToAlwaysOneParent<SC>[HasOneParentSectionName<SC>];
+export type IsSingleParentName =
+  SectionToAlwaysOneParent[HasOneParentSectionName];
