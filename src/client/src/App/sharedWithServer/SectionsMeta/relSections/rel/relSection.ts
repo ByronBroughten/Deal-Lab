@@ -27,25 +27,24 @@ export type GeneralRelSection = {
   rowIndexName: SimpleDbStoreName | null;
   arrStoreName: SimpleDbStoreName | null;
 };
-type FullOptions<SC extends ContextName, SN extends SimpleSectionName> = Merge<
+type FullOptions<SN extends SimpleSectionName> = Merge<
   GeneralRelSection,
   {
-    relVarbs: RelVarbs<SC, SN>;
+    relVarbs: RelVarbs<"fe", SN>;
     childNames: readonly SimpleSectionName[];
   }
 >;
 
-export type RelSectionOptions<
-  SC extends ContextName,
-  SN extends SimpleSectionName
-> = Partial<FullOptions<SC, SN>>;
+export type RelSectionOptions<SN extends SimpleSectionName> = Partial<
+  FullOptions<SN>
+>;
 
 export type RelSection<
   SC extends ContextName,
   SN extends SimpleSectionName,
   D extends string,
   RVS extends RelVarbs<SC, SN>,
-  O extends RelSectionOptions<SC, SN> = {}
+  O extends RelSectionOptions<SN> = {}
 > = Merge<DefaultRelSection<D, SC, SN, RVS>, O>;
 
 type DefaultRelSection<
@@ -73,7 +72,7 @@ export type RelSectionProp<
   SN extends SimpleSectionName,
   D extends string,
   RVS extends RelVarbs<SC, SN>,
-  O extends RelSectionOptions<SC, SN> = {}
+  O extends RelSectionOptions<SN> = {}
 > = Record<SN, RelSection<SC, SN, D, RVS, O>>;
 
 export const relSection = {
@@ -107,7 +106,7 @@ export const relSection = {
     SN extends SimpleSectionName,
     D extends string,
     PVS extends RelVarbs<ExtractSectionContext<SCB>, SN>,
-    O extends RelSectionOptions<ExtractSectionContext<SCB>, SN> = {}
+    O extends RelSectionOptions<SN> = {}
   >(
     sectionContextOrBoth: SCB,
     sectionName: SN,
@@ -142,7 +141,7 @@ export const relSection = {
   singleTimeList<
     SN extends BaseName<"singleTimeListType">,
     D extends string,
-    O extends RelSectionOptions<ContextName, SN> = {}
+    O extends RelSectionOptions<SN> = {}
   >(sectionName: SN, displayName: D, options?: O) {
     return this.base(
       "both",
@@ -158,7 +157,7 @@ export const relSection = {
   ongoingList<
     SN extends BaseName<"ongoingListType">,
     D extends string,
-    O extends RelSectionOptions<ContextName, SN> = {}
+    O extends RelSectionOptions<SN> = {}
   >(sectionName: SN, displayName: D, options?: O) {
     return this.base(
       "both",
@@ -173,7 +172,7 @@ export const relSection = {
   },
   outputList<
     SN extends BaseName<"outputListType">,
-    O extends RelSectionOptions<ContextName, SN> = {}
+    O extends RelSectionOptions<SN> = {}
   >(sectionName: SN, options?: O) {
     return relSection.base(
       "both",

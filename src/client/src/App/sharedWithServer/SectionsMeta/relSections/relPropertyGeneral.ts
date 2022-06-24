@@ -60,7 +60,7 @@ function propertyRelVarbs<
 function propertySection<
   SN extends "property",
   O extends StrictOmit<
-    RelSectionOptions<"fe", "property">,
+    RelSectionOptions<"property">,
     "childNames" | "relVarbs"
   > = {}
 >(sectionName: SN, options?: O) {

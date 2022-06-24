@@ -8,7 +8,7 @@ import { RelVarbs } from "./rel/relVarbs";
 function userVarbList<
   SN extends "userVarbList" | "internalVarbList" | "varbList",
   O extends StrictOmit<
-    RelSectionOptions<"fe", "userVarbList">,
+    RelSectionOptions<"userVarbList">,
     "childNames" | "relVarbs"
   > = {}
 >(sectionName: SN, options?: O) {

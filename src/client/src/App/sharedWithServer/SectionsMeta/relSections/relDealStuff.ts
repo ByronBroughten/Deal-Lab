@@ -7,7 +7,7 @@ import { RelVarbs } from "./rel/relVarbs";
 function dealSection<
   SN extends "deal",
   O extends StrictOmit<
-    RelSectionOptions<"fe", "deal">,
+    RelSectionOptions<"deal">,
     "childNames" | "relVarbs"
   > = {}
 >(sectionName: SN, options?: O) {

@@ -130,7 +130,7 @@ function loanRelVarbs(sectionName: "loan"): RelVarbs<ContextName, "loan"> {
 function loanSection<
   SN extends "loan",
   O extends StrictOmit<
-    RelSectionOptions<"fe", "loan">,
+    RelSectionOptions<"loan">,
     "childNames" | "relVarbs"
   > = {}
 >(sectionName: SN, options?: O) {

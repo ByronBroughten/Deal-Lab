@@ -91,7 +91,7 @@ function makeMgmtPreVarbs<
 function mgmtSection<
   SN extends "mgmt",
   O extends StrictOmit<
-    RelSectionOptions<"fe", "mgmt">,
+    RelSectionOptions<"mgmt">,
     "childNames" | "relVarbs"
   > = {}
 >(sectionName: SN, options?: O) {
