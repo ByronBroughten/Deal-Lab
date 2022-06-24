@@ -2,10 +2,10 @@ import hash from "object-hash";
 import React from "react";
 import { config } from "../../../Constants";
 import { getStoredObj } from "../../../utils/localStorage";
-import { SectionPackRaw } from "../../SectionPack/SectionPack";
+import { SectionPack } from "../../SectionPack/SectionPack";
 import { relSections } from "../../SectionsMeta/relSections";
 import { GetterSections } from "../../StateGetters/GetterSections";
-import { SectionPackMaker } from "../../StatePackers.ts/SectionPackMaker";
+import { PackMakerSection } from "../../StatePackers.ts/PackMakerSection";
 import { StateSections } from "../../StateSections/StateSections";
 import { SolverSections } from "../../StateSolvers/SolverSections";
 
@@ -32,7 +32,7 @@ export class SectionsStore {
     const getterSections = new GetterSections({ sectionsShare: { sections } });
     const { mainFeInfo } = getterSections;
 
-    const sectionPackMaker = new SectionPackMaker({
+    const sectionPackMaker = new PackMakerSection({
       sectionsShare: { sections },
       ...mainFeInfo,
     });
@@ -80,5 +80,5 @@ export class SectionsStore {
   }
 }
 
-type StoredSectionsState = SectionPackRaw<"main">;
+type StoredSectionsState = SectionPack<"main">;
 export class StateMissingFromStorageError extends Error {}

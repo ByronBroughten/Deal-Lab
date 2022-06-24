@@ -8,7 +8,7 @@ import {
   RegisterReqBody,
 } from "../../../../client/src/App/sharedWithServer/apiQueriesShared/register";
 import { defaultMaker } from "../../../../client/src/App/sharedWithServer/defaultMaker/defaultMaker";
-import { SectionPackRaw } from "../../../../client/src/App/sharedWithServer/SectionPack/SectionPack";
+import { SectionPack } from "../../../../client/src/App/sharedWithServer/SectionPack/SectionPack";
 import { SafeDbVarbs } from "../../../../client/src/App/sharedWithServer/SectionsMeta/relSections/rel/valueMetaTypes";
 import {
   SectionName,
@@ -35,10 +35,10 @@ interface DbUserProps extends GetterSectionsProps {
 }
 
 type FullLoginArrs = {
-  [SN in SectionName<"fullLoadOnLogin">]: SectionPackRaw<SN>[];
+  [SN in SectionName<"fullLoadOnLogin">]: SectionPack<SN>[];
 };
 type TableLoginArrs = {
-  [SN in SectionName<"tableLoadOnLogin">]: SectionPackRaw<SN>[];
+  [SN in SectionName<"tableLoadOnLogin">]: SectionPack<SN>[];
 };
 
 export class DbUser extends GetterSectionsBase {
@@ -74,9 +74,7 @@ export class DbUser extends GetterSectionsBase {
     registerFormData,
     guestAccessSections,
     _id,
-  }: RegisterReqBody & {
-    _id?: mongoose.Types.ObjectId;
-  }): Promise<DbSectionsRaw> {
+  }: CreateUserProps): Promise<string> {
     const userPackArrs = await userPrepS.initUserSectionPacks(registerFormData);
     const dbSectionsRaw = userPrepS.makeDbSectionsRaw({
       ...userPackArrs,
@@ -84,8 +82,13 @@ export class DbUser extends GetterSectionsBase {
       _id,
     });
     await dbSectionsRaw.save();
-    return dbSectionsRaw;
+    return dbSectionsRaw._id.toHexString();
   }
+  static async createSaveGet(props: CreateUserProps): Promise<DbUser> {
+    const userId = await this.createAndSaveNew(props);
+    return DbUser.queryByUserId(userId);
+  }
+
   static async initUserSections(
     registerFormData: RegisterFormData
   ): Promise<UserSections> {
@@ -106,6 +109,12 @@ export class DbUser extends GetterSectionsBase {
         ),
       },
     };
+  }
+  static async queryByUserId(userId: string): Promise<DbUser> {
+    const querier = await DbSectionsQuerier.initByUserId(userId);
+    return DbUser.init({
+      dbSectionsRaw: await querier.getDbSectionsRaw(),
+    });
   }
   static async queryByEmail(email: string): Promise<DbUser> {
     const querier = await DbSectionsQuerier.initByEmail(email);
@@ -171,7 +180,7 @@ export class DbUser extends GetterSectionsBase {
   }
   makeTablePackArr<SN extends SectionName<"tableLoadOnLogin">>(
     sectionName: SN
-  ): SectionPackRaw<SN>[] {
+  ): SectionPack<SN>[] {
     const omniParent = PackBuilderSection.initAsOmniParent();
     const tableStore = omniParent.addAndGetChild(sectionName);
 
@@ -210,7 +219,7 @@ export class DbUser extends GetterSectionsBase {
   //   const tableColumnSections = tableSectionPack.rawSectionArr("column");
   //   const rowSourceArr = this.sectionPackArr(rowSourceName);
 
-  //   const indexRows: SectionPackRaw< SectionName<"rowIndex">>[] = [];
+  //   const indexRows: SectionPack< SectionName<"rowIndex">>[] = [];
   //   for (const sourceSectionPack of rowSourceArr) {
   //     indexRows.push(
   //       this.toRowIndexEntry(rowSourceName, sourceSectionPack, tableColumnSections)
@@ -221,7 +230,7 @@ export class DbUser extends GetterSectionsBase {
   //   indexName: SN,
   //   sourceSectionPack: SectionPackDb<SN>,
   //   tableColumns: OneRawSection<"db", "column">[]
-  // ): SectionPackRaw< SN> {
+  // ): SectionPack< SN> {
   //   // for now, there is very little type safety for dbEntry
 
   //   const sourceSection = sourceSectionPack.headSection()
@@ -277,3 +286,7 @@ export interface UserSections {
 
 type SharedUser = SafeDbVarbs<"user">;
 type ServerOnlyUser = SafeDbVarbs<"serverOnlyUser">;
+
+interface CreateUserProps extends RegisterReqBody {
+  _id?: mongoose.Types.ObjectId;
+}

@@ -1,5 +1,5 @@
 import { RegisterReqMaker } from "../../../client/src/App/sharedWithServer/ReqMakers/RegisterReqMaker";
-import { userServerSide } from "../userServerSide";
+import { DbUser } from "../shared/DbSections/DbUser";
 
 export async function createTestUserModelNext(
   testSuiteName: string
@@ -9,6 +9,5 @@ export async function createTestUserModelNext(
     password: "testPassword",
     userName: "Testosis",
   });
-  const dbUser = await userServerSide.makeAndSaveUser(reqMaker.reqBody);
-  return dbUser._id;
+  return await DbUser.createAndSaveNew(reqMaker.reqBody);
 }

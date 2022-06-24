@@ -10,26 +10,26 @@ import {
 import { zodSchema } from "../utils/zod";
 import { DbVarbs, RawSections, zRawSections } from "./RawSection";
 
-export type SectionPackRaw<SN extends SectionName = SectionName> = {
+export type SectionPack<SN extends SectionName = SectionName> = {
   sectionName: SN;
   dbId: string;
   rawSections: RawSections<SN>;
 };
 
 export type SectionPackArrs<ST extends SectionNameType> = {
-  [SN in SectionName<ST>]: SectionPackRaw<SN>[];
+  [SN in SectionName<ST>]: SectionPack<SN>[];
 };
 
 export type SectionArrPack<SN extends SectionName> = {
   sectionName: SN;
-  sectionPacks: SectionPackRaw<SN>[];
+  sectionPacks: SectionPack<SN>[];
 };
 
 export type ServerSectionPack<
   SN extends SectionName<"dbStoreNext"> = SectionName<"dbStoreNext">
-> = SectionPackRaw<SN>;
+> = SectionPack<SN>;
 
-const zRawSectionPackFrame: Record<keyof SectionPackRaw, any> = {
+const zRawSectionPackFrame: Record<keyof SectionPack, any> = {
   sectionName: zodSchema.string,
   dbId: zodSchema.nanoId,
   rawSections: zRawSections,
@@ -41,7 +41,7 @@ export const sectionPackS = {
   is<ST extends SectionNameType = "all">(
     value: any,
     sectionType?: ST
-  ): value is SectionPackRaw<SectionName<ST>> {
+  ): value is SectionPack<SectionName<ST>> {
     if (
       zRawSectionPack.safeParse(value).success &&
       sectionNameS.is(value.sectionName, sectionType ?? "all")
@@ -54,7 +54,7 @@ export const sectionPackS = {
     childDbIds,
     dbVarbs,
     dbId = Id.make(),
-  }: OneHeadSectionNode<SN>): SectionPackRaw<SN> {
+  }: OneHeadSectionNode<SN>): SectionPack<SN> {
     const sectionMeta = sectionsMeta.section(sectionName);
     return {
       sectionName,
@@ -97,7 +97,7 @@ type OneHeadSectionNode<SN extends SectionName> = {
   dbVarbs?: Partial<DbVarbs>;
 };
 
-function _testRawSectionPack(feRaw: SectionPackRaw<"tableRow">) {
+function _testRawSectionPack(feRaw: SectionPack<"tableRow">) {
   const _test1 = feRaw.rawSections.cell;
   // @ts-expect-error
   const _test2 = feRaw.rawSections.unit;

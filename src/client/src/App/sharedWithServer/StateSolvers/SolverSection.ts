@@ -1,4 +1,4 @@
-import { SectionPackRaw } from "../SectionPack/SectionPack";
+import { SectionPack } from "../SectionPack/SectionPack";
 import { Id } from "../SectionsMeta/baseSections/id";
 import { VarbValues } from "../SectionsMeta/baseSectionTypes";
 import { FeSectionInfo } from "../SectionsMeta/Info";
@@ -109,7 +109,7 @@ export class SolverSection<
     });
     this.solve();
   }
-  loadSelfSectionPackAndSolve(sectionPack: SectionPackRaw<SN>): void {
+  loadSelfSectionPackAndSolve(sectionPack: SectionPack<SN>): void {
     this.combo.loadSelfSectionPackAndExtractIds(sectionPack);
     this.solve();
   }
@@ -120,9 +120,7 @@ export class SolverSection<
     this.adder.addChildAndFinalize(childName, options);
     this.solve();
   }
-  loadChildPackAndSolve<CN extends ChildName<SN>>(
-    childPack: SectionPackRaw<CN>
-  ) {
+  loadChildPackAndSolve<CN extends ChildName<SN>>(childPack: SectionPack<CN>) {
     const { sectionName } = childPack;
     this.updater.addChild(sectionName);
     const child = this.youngestChild(sectionName);

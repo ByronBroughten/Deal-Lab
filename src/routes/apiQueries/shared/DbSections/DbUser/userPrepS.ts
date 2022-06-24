@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 import { RegisterFormData } from "../../../../../client/src/App/sharedWithServer/apiQueriesShared/register";
-import { sectionPackS } from "../../../../../client/src/App/sharedWithServer/SectionPack/SectionPack";
+import { PackBuilderSection } from "../../../../../client/src/App/sharedWithServer/StatePackers.ts/PackBuilderSection";
 import { makeMongooseObjectId } from "../../../../../client/src/App/sharedWithServer/utils/mongoose";
 import { ResStatusError } from "../../../../../resErrorUtils";
 import { DbSectionsModel } from "../../../../DbSectionsModel";
@@ -45,8 +45,7 @@ export const userPrepS = {
     await userPrepS.checkThatEmailIsUnique(email);
     return {
       user: [
-        sectionPackS.init({
-          sectionName: "user",
+        PackBuilderSection.initSectionPack("user", {
           dbVarbs: {
             userName: registerFormData.userName,
             email,
@@ -55,8 +54,7 @@ export const userPrepS = {
         }),
       ],
       serverOnlyUser: [
-        sectionPackS.init({
-          sectionName: "serverOnlyUser",
+        PackBuilderSection.initSectionPack("serverOnlyUser", {
           dbVarbs: {
             emailAsSubmitted,
             encryptedPassword: await userPrepS.encryptPassword(

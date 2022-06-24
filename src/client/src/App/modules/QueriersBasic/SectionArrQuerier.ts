@@ -2,7 +2,7 @@ import {
   makeReq,
   SectionPackArrReq,
 } from "../../sharedWithServer/apiQueriesShared/makeReqAndRes";
-import { SectionPackRaw } from "../../sharedWithServer/SectionPack/SectionPack";
+import { SectionPack } from "../../sharedWithServer/SectionPack/SectionPack";
 import { DbSectionName } from "../../sharedWithServer/SectionsMeta/relNameArrs/storeArrs";
 import { ApiQuerierBase, ApiQuerierBaseProps } from "./Bases/ApiQuerierBase";
 
@@ -20,7 +20,7 @@ export class SectionArrQuerier<
     this.sectionName = sectionName;
   }
 
-  async replace(feSectionPackArr: SectionPackRaw<SN>[]): Promise<SN> {
+  async replace(feSectionPackArr: SectionPack<SN>[]): Promise<SN> {
     const req = makeReq({
       sectionName: this.sectionName,
       sectionPackArr: feSectionPackArr,

@@ -1,5 +1,5 @@
 import { pick } from "lodash";
-import { SectionArrPack, SectionPackRaw } from "../SectionPack/SectionPack";
+import { SectionArrPack, SectionPack } from "../SectionPack/SectionPack";
 import { ChildName } from "../SectionsMeta/relSectionTypes/ChildTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
 import {
@@ -24,7 +24,7 @@ export class PackLoaderSection<
   get get(): GetterSection<SN> {
     return new GetterSection(this.getterSectionProps);
   }
-  updateSelfWithSectionPack(sectionPack: SectionPackRaw<SN>): void {
+  updateSelfWithSectionPack(sectionPack: SectionPack<SN>): void {
     const selfPackLoader = new SelfPackLoader({
       ...this.getterSectionProps,
       sectionPack,
@@ -35,7 +35,7 @@ export class PackLoaderSection<
     for (const [sectionName, sectionPacks] of Obj.entries(childPackArrs)) {
       this.loadChildSectionPackArr({
         sectionName,
-        sectionPacks: sectionPacks as SectionPackRaw<typeof sectionName>[],
+        sectionPacks: sectionPacks as SectionPack<typeof sectionName>[],
       });
     }
   }
@@ -49,12 +49,12 @@ export class PackLoaderSection<
     }
   }
   loadChildSectionPack<CN extends ChildName<SN>>(
-    sectionPack: SectionPackRaw<CN>,
+    sectionPack: SectionPack<CN>,
     options: { idx?: number } = {}
   ): void {
     const childPackLoader = new ChildPackLoader({
       ...this.getterSectionProps,
-      sectionPack: sectionPack as any as SectionPackRaw,
+      sectionPack: sectionPack as any as SectionPack,
       childDbInfo: {
         ...pick(sectionPack, ["sectionName", "dbId"]),
         ...options,
@@ -65,5 +65,5 @@ export class PackLoaderSection<
 }
 
 export type ChildSectionPackArrs<SN extends SectionName> = {
-  [CN in ChildName<SN>]: SectionPackRaw<CN>[];
+  [CN in ChildName<SN>]: SectionPack<CN>[];
 };

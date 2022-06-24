@@ -2,7 +2,7 @@
 
 import { InEntityVarbInfo } from "../../sharedWithServer/SectionsMeta/baseSections/baseValues/entities";
 import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
-import { SectionPackMaker } from "../../sharedWithServer/StatePackers.ts/SectionPackMaker";
+import { PackMakerSection } from "../../sharedWithServer/StatePackers.ts/PackMakerSection";
 import { SetterSection } from "../../sharedWithServer/StateSetters/SetterSection";
 import { SetterTableNext } from "../../sharedWithServer/StateSetters/SetterTable";
 import { StrictOmit } from "../../sharedWithServer/utils/types";
@@ -52,7 +52,7 @@ export class TableActor extends SectionActorBase<"table"> {
     return new SetterSection(this.sectionActorBaseProps);
   }
   get packMaker() {
-    return new SectionPackMaker(this.sectionActorBaseProps);
+    return new PackMakerSection(this.sectionActorBaseProps);
   }
   get rows(): GetterSection<"tableRow">[] {
     return this.get.children("tableRow");

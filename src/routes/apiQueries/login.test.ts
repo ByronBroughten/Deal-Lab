@@ -7,7 +7,6 @@ import { RegisterReqMaker } from "../../client/src/App/sharedWithServer/ReqMaker
 import { runApp } from "../../runApp";
 import { DbSectionsModel } from "../DbSectionsModel";
 import { DbUser } from "./shared/DbSections/DbUser";
-import { userServerSide } from "./userServerSide";
 
 const testedRoute = apiQueriesShared.login.pathRoute;
 function makeReqStuff() {
@@ -34,9 +33,8 @@ describe(testedRoute, () => {
   beforeEach(async () => {
     server = runApp();
     const { loginReq, registerBody } = makeReqStuff();
-    const userDoc = await userServerSide.makeAndSaveUser(registerBody);
+    userId = await DbUser.createAndSaveNew(registerBody);
     reqObj = loginReq;
-    userId = userDoc._id;
   });
 
   afterEach(async () => {

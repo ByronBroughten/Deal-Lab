@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { config } from "../../Constants";
-import { SectionPackRaw, zRawSectionPack } from "../SectionPack/SectionPack";
+import { SectionPack, zRawSectionPack } from "../SectionPack/SectionPack";
 import { SectionName, sectionNameS } from "../SectionsMeta/SectionName";
 import { zodSchema } from "../utils/zod";
 import { zRegisterFormData } from "./register";
@@ -16,7 +16,7 @@ export type LoginQueryObjects = {
 };
 
 export type LoginUser = {
-  [SN in SectionName<"loadOnLogin">]: SectionPackRaw<SN>[];
+  [SN in SectionName<"loadOnLogin">]: SectionPack<SN>[];
 };
 export function isLoginUserNext(value: any): value is LoginUser {
   const zLoginUserSchema = makeZLoginUserSchema();

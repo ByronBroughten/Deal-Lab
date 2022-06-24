@@ -1,4 +1,4 @@
-import { SectionPackRaw } from "../../../../client/src/App/sharedWithServer/SectionPack/SectionPack";
+import { SectionPack } from "../../../../client/src/App/sharedWithServer/SectionPack/SectionPack";
 import { DbSectionInfo } from "../../../../client/src/App/sharedWithServer/SectionsMeta/DbSectionInfo";
 import { DbSectionsModel } from "../../../DbSectionsModel";
 import { ServerSectionName } from "../../../ServerSectionName";
@@ -38,7 +38,7 @@ export class DbSectionsQuerier extends DbSectionsQuerierBase {
   }
   async getSectionPack<SN extends ServerSectionName>(
     dbInfo: DbSectionInfo<SN>
-  ): Promise<SectionPackRaw<SN>> {
+  ): Promise<SectionPack<SN>> {
     // const users = await DbSectionsModel.aggregate([{ $match: this.userFilter }]);
     // const userDocs = await DbSectionsModel.aggregate([
     //   { $match: this.userFilter },

@@ -1,4 +1,4 @@
-import { SectionPackRaw } from "../SectionPack/SectionPack";
+import { SectionPack } from "../SectionPack/SectionPack";
 import { SectionName } from "../SectionsMeta/SectionName";
 import {
   ChildSectionPackArrs,
@@ -21,7 +21,7 @@ export class ComboSolverSection<
   get get() {
     return new GetterSection(this.solverSectionProps);
   }
-  loadSelfSectionPackAndExtractIds(sectionPack: SectionPackRaw<SN>): void {
+  loadSelfSectionPackAndExtractIds(sectionPack: SectionPack<SN>): void {
     this.remover.prepForRemoveAndExtractVarbIds();
     this.loader.updateSelfWithSectionPack(sectionPack);
     this.adder.finalizeAddAndExtractVarbIds();

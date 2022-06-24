@@ -1,4 +1,4 @@
-import { SectionPackRaw } from "../../../../client/src/App/sharedWithServer/SectionPack/SectionPack";
+import { SectionPack } from "../../../../client/src/App/sharedWithServer/SectionPack/SectionPack";
 import { DbSectionInfo } from "../../../../client/src/App/sharedWithServer/SectionsMeta/DbSectionInfo";
 import { ServerSectionName } from "../../../ServerSectionName";
 import { DbSectionsBase } from "./Bases/DbSectionsBase";
@@ -15,7 +15,7 @@ export interface DbSectionsInitByEmailProps {
 export class DbSections extends DbSectionsBase {
   onlySectionPack<SN extends ServerSectionName>(
     sectionName: SN
-  ): SectionPackRaw<SN> {
+  ): SectionPack<SN> {
     const sectionPacks = this.dbSectionsRaw[sectionName];
     if (sectionPacks.length !== 1) {
       throw new Error(
@@ -25,22 +25,22 @@ export class DbSections extends DbSectionsBase {
     return {
       ...sectionPacks[0],
       sectionName,
-    } as SectionPackRaw<SN>;
+    } as SectionPack<SN>;
   }
   sectionPackArr<SN extends ServerSectionName>(
     sectionName: SN
-  ): SectionPackRaw<SN>[] {
+  ): SectionPack<SN>[] {
     return this.dbSectionsRaw[sectionName].map((dbPack) => {
       return {
         ...dbPack,
         sectionName,
-      } as SectionPackRaw<SN>;
+      } as SectionPack<SN>;
     });
   }
   sectionPack<SN extends ServerSectionName>({
     sectionName,
     dbId,
-  }: DbSectionInfo<SN>): SectionPackRaw<SN> {
+  }: DbSectionInfo<SN>): SectionPack<SN> {
     const dbPack = [...this.dbSectionsRaw[sectionName]].find(
       (dbPack) => dbPack.dbId === dbId
     );
@@ -48,7 +48,7 @@ export class DbSections extends DbSectionsBase {
       return {
         ...dbPack,
         sectionName,
-      } as SectionPackRaw<SN>;
+      } as SectionPack<SN>;
     } else {
       throw new SectionPackNotFoundError({
         errorMessage: `dbSectionPack not found at ${sectionName}.${dbId}`,

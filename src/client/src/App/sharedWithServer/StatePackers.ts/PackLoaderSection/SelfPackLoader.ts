@@ -1,5 +1,5 @@
 import { OneRawSection } from "../../SectionPack/RawSection";
-import { SectionPackRaw } from "../../SectionPack/SectionPack";
+import { SectionPack } from "../../SectionPack/SectionPack";
 import { DbSectionInfo } from "../../SectionsMeta/DbSectionInfo";
 import {
   ChildIdArrsWide,
@@ -17,12 +17,12 @@ import { ChildPackLoader } from "./ChildPackLoader";
 
 interface SelfPackLoaderSectionProps<SN extends SectionName>
   extends GetterSectionProps<SN> {
-  sectionPack: SectionPackRaw<SN>;
+  sectionPack: SectionPack<SN>;
 }
 export class SelfPackLoader<
   SN extends SectionName
 > extends GetterSectionBase<SN> {
-  sectionPack: SectionPackRaw<SN>;
+  sectionPack: SectionPack<SN>;
   constructor({ sectionPack, ...props }: SelfPackLoaderSectionProps<SN>) {
     super(props);
     this.sectionPack = sectionPack;
@@ -65,7 +65,7 @@ export class SelfPackLoader<
   ): ChildPackLoader<SN, CN> {
     return new ChildPackLoader({
       ...this.getterSectionProps,
-      sectionPack: this.sectionPack as any as SectionPackRaw,
+      sectionPack: this.sectionPack as any as SectionPack,
       childDbInfo: childDbInfo,
     });
   }

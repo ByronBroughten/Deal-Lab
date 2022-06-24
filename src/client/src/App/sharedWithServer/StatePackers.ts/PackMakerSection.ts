@@ -1,5 +1,5 @@
 import { OneRawSection, RawSections } from "../SectionPack/RawSection";
-import { SectionPackRaw } from "../SectionPack/SectionPack";
+import { SectionPack } from "../SectionPack/SectionPack";
 import { FeSectionInfo } from "../SectionsMeta/Info";
 import { ChildName } from "../SectionsMeta/relSectionTypes/ChildTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
@@ -8,14 +8,14 @@ import { GetterSection } from "../StateGetters/GetterSection";
 import { Obj } from "../utils/Obj";
 
 type FeSectionPackArrs<SN extends SectionName> = {
-  [S in SN]: SectionPackRaw<S>[];
+  [S in SN]: SectionPack<S>[];
 };
 
-export class SectionPackMaker<
+export class PackMakerSection<
   SN extends SectionName
 > extends GetterSectionBase<SN> {
   get = new GetterSection(this.getterSectionProps);
-  makeSectionPack(): SectionPackRaw<SN> {
+  makeSectionPack(): SectionPack<SN> {
     return {
       sectionName: this.sectionName,
       dbId: this.get.dbId,
@@ -32,11 +32,11 @@ export class SectionPackMaker<
   }
   makeChildSectionPackArr<CN extends ChildName<SN>>(
     childName: CN
-  ): SectionPackRaw<CN>[] {
+  ): SectionPack<CN>[] {
     const childInfos = this.get.childInfos(childName);
     return childInfos.map((feInfo) => this.makeChildSectionPack(feInfo));
   }
-  makeSiblingSectionPackArr(): SectionPackRaw<SN>[] {
+  makeSiblingSectionPackArr(): SectionPack<SN>[] {
     const { siblingFeInfos } = this.get;
     return siblingFeInfos.map((feInfo) => {
       const siblingMaker = this.sectionPackMaker(feInfo);
@@ -45,15 +45,15 @@ export class SectionPackMaker<
   }
   sectionPackMaker<S extends SectionName>(
     feInfo: FeSectionInfo<S>
-  ): SectionPackMaker<S> {
-    return new SectionPackMaker({
+  ): PackMakerSection<S> {
+    return new PackMakerSection({
       ...feInfo,
       sectionsShare: this.sectionsShare,
     });
   }
   makeChildSectionPack<CN extends ChildName<SN>>(
     feInfo: FeSectionInfo<CN>
-  ): SectionPackRaw<CN> {
+  ): SectionPack<CN> {
     const childPackMaker = this.sectionPackMaker(feInfo);
     return childPackMaker.makeSectionPack();
   }

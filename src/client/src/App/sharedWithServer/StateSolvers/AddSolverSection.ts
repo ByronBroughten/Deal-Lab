@@ -1,4 +1,4 @@
-import { SectionPackRaw } from "../SectionPack/SectionPack";
+import { SectionPack } from "../SectionPack/SectionPack";
 import { FeSectionInfo } from "../SectionsMeta/Info";
 import { ChildName } from "../SectionsMeta/relSectionTypes/ChildTypes";
 import { ParentNameSafe } from "../SectionsMeta/relSectionTypes/ParentTypes";
@@ -65,7 +65,7 @@ export class AddSolverSection<
   }
 
   loadChildAndCollectVarbIds<CN extends ChildName<SN>>(
-    sectionPack: SectionPackRaw<CN>
+    sectionPack: SectionPack<CN>
   ): void {
     this.loader.loadChildSectionPack(sectionPack);
     const child = this.youngestChild(sectionPack.sectionName);

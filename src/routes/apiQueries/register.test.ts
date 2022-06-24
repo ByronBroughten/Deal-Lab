@@ -9,7 +9,7 @@ import { RegisterReqMaker } from "../../client/src/App/sharedWithServer/ReqMaker
 import { runApp } from "../../runApp";
 import { DbSectionsModel } from "../DbSectionsModel";
 import { registerTestId } from "./register";
-import { userServerSide } from "./userServerSide";
+import { DbUser } from "./shared/DbSections/DbUser";
 
 const testedRoute = apiQueriesShared.register.pathRoute;
 function makeTestRegisterReq(): NextReq<"register"> {
@@ -56,7 +56,7 @@ describe(testedRoute, () => {
   });
   it("should return 400 if a user with that email already exists", async () => {
     const reqObj2 = makeTestRegisterReq();
-    await userServerSide.makeAndSaveUser({
+    await DbUser.createAndSaveNew({
       ...reqObj2.body,
       _id: registerTestId,
     });

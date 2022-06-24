@@ -8,6 +8,7 @@ import {
   ContextName,
   sectionContext,
   SimpleSectionName,
+  simpleSectionNames
 } from "../baseSections";
 import { base } from "../baseSections/base";
 import { GeneralBaseSection } from "../baseSections/baseSection";
@@ -18,7 +19,7 @@ import {
   fullLoadOnLoginNames,
   loadOnLoginNames,
   loadOnLoginNamesNext,
-  tableLoadOnLoginNames,
+  tableLoadOnLoginNames
 } from "./dbStoreNames";
 
 type HasVarbSectionName<
@@ -115,7 +116,8 @@ function makeBaseNameArrsForContext<SC extends ContextName>(
   return {
     ...makeSingleSectionNameArrs(sectionContext),
     dbStoreNext: dbStoreNames,
-    all: Obj.keys(baseSectionsOfContext) as SimpleSectionName[],
+    all: simpleSectionNames as SimpleSectionName[],
+    notRootNorOmni: Arr.excludeStrict(simpleSectionNames, ["root", "omniParent"] as const),
 
     // booleans
     loadOnLogin: loadOnLoginNames,

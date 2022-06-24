@@ -1,7 +1,7 @@
-import { SectionPackRaw } from "../SectionPack/SectionPack";
+import { SectionPack } from "../SectionPack/SectionPack";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
 
-export function makeDefaultMgmtPack(): SectionPackRaw<"mgmt"> {
+export function makeDefaultMgmtPack(): SectionPack<"mgmt"> {
   const main = PackBuilderSection.initAsMain();
   const mgmt = main.addAndGetDescendant(["deal", "mgmtGeneral", "mgmt"], {
     dbVarbs: {

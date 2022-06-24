@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { SectionPackRaw, zRawSectionPackArr } from "../SectionPack/SectionPack";
+import { SectionPack, zRawSectionPackArr } from "../SectionPack/SectionPack";
 import { SectionName, sectionNameS } from "../SectionsMeta/SectionName";
 import { dbLimits } from "../utils/dbLimts";
 import { validationMessage, zodSchema } from "../utils/zod";
@@ -17,7 +17,7 @@ export type RegisterReqBody = {
 };
 
 export type GuestAccessSectionPackArrs = {
-  [SN in SectionName<"feGuestAccess">]: SectionPackRaw<SN>[];
+  [SN in SectionName<"feGuestAccess">]: SectionPack<SN>[];
 };
 export function areGuestAccessSectionsNext(
   value: any

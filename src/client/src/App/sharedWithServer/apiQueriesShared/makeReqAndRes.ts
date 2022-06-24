@@ -1,4 +1,4 @@
-import { SectionPackRaw, ServerSectionPack } from "../SectionPack/SectionPack";
+import { SectionPack, ServerSectionPack } from "../SectionPack/SectionPack";
 import { DbSectionName } from "../SectionsMeta/relNameArrs/storeArrs";
 import { SectionName } from "../SectionsMeta/SectionName";
 
@@ -27,7 +27,7 @@ export type SectionPackReq = MakeReq<{ sectionPack: ServerSectionPack }>;
 export type SectionPackArrReq<
   SN extends SectionName<"arrStore"> = SectionName<"arrStore">
 > = MakeReq<{
-  sectionPackArr: SectionPackRaw<SN>[];
+  sectionPackArr: SectionPack<SN>[];
   sectionName: SN;
 }>;
 export type TableSourcePackReq = MakeReq<{

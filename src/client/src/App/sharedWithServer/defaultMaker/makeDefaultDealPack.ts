@@ -1,10 +1,10 @@
-import { SectionPackRaw } from "../SectionPack/SectionPack";
+import { SectionPack } from "../SectionPack/SectionPack";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
 import { makeDefaultMgmtPack } from "./makeDefaultMgmtPack";
 import { makeDefaultOutputList } from "./makeDefaultOutputList";
 import { makeDefaultPropertyPack } from "./makeDefaultPropertyPack";
 
-export function makeDefaultDealPack(): SectionPackRaw<"deal"> {
+export function makeDefaultDealPack(): SectionPack<"deal"> {
   const childNames = ["financing", "internalVarbList"] as const;
   const main = PackBuilderSection.initAsMain();
   const deal = main.addAndGetChild("deal");

@@ -1,12 +1,12 @@
 import mongoose, { Schema } from "mongoose";
 import { RawSection } from "../client/src/App/sharedWithServer/SectionPack/RawSection";
-import { SectionPackRaw } from "../client/src/App/sharedWithServer/SectionPack/SectionPack";
+import { SectionPack } from "../client/src/App/sharedWithServer/SectionPack/SectionPack";
 import { SelfOrDescendantName } from "../client/src/App/sharedWithServer/SectionsMeta/relSectionTypes/ChildTypes";
 import { monSchemas } from "../client/src/App/sharedWithServer/utils/mongoose";
 import { ServerSectionName, serverSectionS } from "./ServerSectionName";
 
 export type DbSectionsModelCore = {
-  [SN in ServerSectionName]: SectionPackRaw<SN>[];
+  [SN in ServerSectionName]: SectionPack<SN>[];
 } & { _id: mongoose.Types.ObjectId };
 
 export const DbSectionsModel = mongoose.model<DbSectionsModelCore>(
@@ -24,7 +24,7 @@ function makeMongooseUserSchema(): Schema<Record<ServerSectionName, any>> {
 }
 
 export function makeMongooseSectionPack() {
-  const schemaFrame: Record<keyof SectionPackRaw, any> = {
+  const schemaFrame: Record<keyof SectionPack, any> = {
     sectionName: monSchemas.reqString,
     dbId: monSchemas.reqDbId,
     rawSections: {

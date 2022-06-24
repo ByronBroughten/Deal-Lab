@@ -1,6 +1,6 @@
 import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
 import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
-import { SectionPackMaker } from "../../sharedWithServer/StatePackers.ts/SectionPackMaker";
+import { PackMakerSection } from "../../sharedWithServer/StatePackers.ts/PackMakerSection";
 import { SectionActorBase } from "./SectionActorBase";
 import { TableActor } from "./TableActor";
 
@@ -23,7 +23,7 @@ export class TableStoreActor<
   //   return new SectionQuerier(this.sectionActorBaseProps);
   // }
   get packMaker() {
-    return new SectionPackMaker(this.sectionActorBaseProps);
+    return new PackMakerSection(this.sectionActorBaseProps);
   }
   // makeSendTable() {
   //   return async () => {

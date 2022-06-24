@@ -1,5 +1,5 @@
 import { defaultMaker } from "../defaultMaker/defaultMaker";
-import { SectionPackRaw } from "../SectionPack/SectionPack";
+import { SectionPack } from "../SectionPack/SectionPack";
 import { VarbInfo } from "../SectionsMeta/Info";
 import { SpecificVarbInfo } from "../SectionsMeta/relSections/rel/relVarbInfoTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
@@ -106,7 +106,7 @@ export class SolverSections extends SolverSectionsBase {
     return this.initSolvedSectionsFromMainPack(defaultMainPack);
   }
   static initSolvedSectionsFromMainPack(
-    sectionPack: SectionPackRaw<"main">
+    sectionPack: SectionPack<"main">
   ): StateSections {
     const sections = StateSections.initWithRoot();
     const solver = SolverSection.init({

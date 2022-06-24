@@ -1,11 +1,11 @@
-import { SectionPackRaw } from "../SectionPack/SectionPack";
+import { SectionPack } from "../SectionPack/SectionPack";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
 import { Obj } from "../utils/Obj";
 import { outputNames } from "./makeDefaultOutputList";
 
 type TablePackMakers = {
-  [SN in SectionName<"tableSource">]: () => SectionPackRaw<"table">;
+  [SN in SectionName<"tableSource">]: () => SectionPack<"table">;
 };
 export function makeMainTablePackMakers(): TablePackMakers {
   const columnVarbnames = {
@@ -21,7 +21,7 @@ export function makeMainTablePackMakers(): TablePackMakers {
   } as const;
 
   return Obj.keys(columnVarbnames).reduce((packMakers, sectionName) => {
-    packMakers[sectionName] = (): SectionPackRaw<"table"> => {
+    packMakers[sectionName] = (): SectionPack<"table"> => {
       const parent = PackBuilderSection.initAsOmniParent();
       const table = parent.addAndGetChild("table");
       for (const varbName of columnVarbnames[sectionName]) {

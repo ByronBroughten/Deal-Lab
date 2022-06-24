@@ -1,7 +1,7 @@
 import { makeReq, SectionPackArrReq } from "../apiQueriesShared/makeReqAndRes";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { GetterSectionBase } from "../StateGetters/Bases/GetterSectionBase";
-import { SectionPackMaker } from "../StatePackers.ts/SectionPackMaker";
+import { PackMakerSection } from "../StatePackers.ts/PackMakerSection";
 import { SolverSections } from "../StateSolvers/SolverSections";
 
 // this may assume that everything that has an arrStore itself has the
@@ -18,7 +18,7 @@ export class SectionArrReqMaker<
     });
   }
   get packMaker() {
-    return new SectionPackMaker(this.getterSectionProps);
+    return new PackMakerSection(this.getterSectionProps);
   }
   makeReq(): SectionPackArrReq<SN> {
     return makeReq({

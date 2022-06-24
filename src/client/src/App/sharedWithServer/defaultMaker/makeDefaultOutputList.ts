@@ -1,4 +1,4 @@
-import { SectionPackRaw } from "../SectionPack/SectionPack";
+import { SectionPack } from "../SectionPack/SectionPack";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
 
 export const outputNames = [
@@ -16,7 +16,7 @@ export const defaultDealOutputInfos = outputNames.map((varbName) => {
   } as const;
 });
 
-export function makeDefaultOutputList(): SectionPackRaw<"dealOutputList"> {
+export function makeDefaultOutputList(): SectionPack<"dealOutputList"> {
   const main = PackBuilderSection.initAsMain();
   const outputList = main.addAndGetDescendant(["deal", "dealOutputList"]);
   for (const outputVarbInfo of defaultDealOutputInfos) {

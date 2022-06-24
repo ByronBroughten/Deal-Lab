@@ -1,4 +1,4 @@
-import { SectionArrPack, SectionPackRaw } from "../SectionPack/SectionPack";
+import { SectionArrPack, SectionPack } from "../SectionPack/SectionPack";
 import { FeSectionInfo } from "../SectionsMeta/Info";
 import {
   ChildName,
@@ -15,7 +15,7 @@ import {
 } from "../StateUpdaters/UpdaterSection";
 import { Arr } from "../utils/Arr";
 import { PackLoaderSection } from "./PackLoaderSection";
-import { SectionPackMaker } from "./SectionPackMaker";
+import { PackMakerSection } from "./PackMakerSection";
 
 export class PackBuilderSection<
   SN extends SectionName
@@ -29,6 +29,20 @@ export class PackBuilderSection<
   static initAsRoot() {
     return new PackBuilderSection(UpdaterSection.initRootProps());
   }
+  static initAsOmniChild<SN extends SectionName<"notRootNorOmni">>(
+    sectionName: SN,
+    options?: AddChildOptions<SN>
+  ): PackBuilderSection<SN> {
+    const builder = this.initAsOmniParent();
+    return builder.addAndGetChild(sectionName, options);
+  }
+  static initSectionPack<SN extends SectionName<"notRootNorOmni">>(
+    sectionName: SN,
+    options?: AddChildOptions<SN>
+  ): SectionPack<SN> {
+    const section = this.initAsOmniChild(sectionName, options);
+    return section.makeSectionPack();
+  }
   private get getterSections() {
     return new GetterSections(this.getterSectionsProps);
   }
@@ -38,8 +52,8 @@ export class PackBuilderSection<
   get loader(): PackLoaderSection<SN> {
     return new PackLoaderSection(this.getterSectionProps);
   }
-  get maker(): SectionPackMaker<SN> {
-    return new SectionPackMaker(this.getterSectionProps);
+  get maker(): PackMakerSection<SN> {
+    return new PackMakerSection(this.getterSectionProps);
   }
   children<CN extends ChildName<SN>>(
     sectionName: CN
@@ -51,7 +65,7 @@ export class PackBuilderSection<
       })
     );
   }
-  makeSectionPack(): SectionPackRaw<SN> {
+  makeSectionPack(): SectionPack<SN> {
     // it should probably start with root
     return this.maker.makeSectionPack();
   }
@@ -77,12 +91,12 @@ export class PackBuilderSection<
     this.updater.addChild(childName, options);
   }
   loadAndGetChild<CN extends ChildName<SN>>(
-    childPack: SectionPackRaw<CN>
+    childPack: SectionPack<CN>
   ): PackBuilderSection<CN> {
     this.loadChild(childPack);
     return this.youngestPackBuilder(childPack.sectionName);
   }
-  loadChild<CN extends ChildName<SN>>(childPack: SectionPackRaw<CN>): void {
+  loadChild<CN extends ChildName<SN>>(childPack: SectionPack<CN>): void {
     this.loader.loadChildSectionPack(childPack);
   }
   loadAndGetChildren<CN extends ChildName<SN>>(
@@ -97,7 +111,7 @@ export class PackBuilderSection<
   loadChildren<CN extends ChildName<SN>>(childArrPack: SectionArrPack<CN>) {
     this.loader.loadChildSectionPackArr(childArrPack);
   }
-  loadSelf(sectionPack: SectionPackRaw<SN>) {
+  loadSelf(sectionPack: SectionPack<SN>) {
     this.loader.updateSelfWithSectionPack(sectionPack);
   }
   packBuilderSection<S extends SectionName>(

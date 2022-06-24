@@ -1,5 +1,5 @@
 import { pick } from "lodash";
-import { SectionPackRaw } from "../SectionPack/SectionPack";
+import { SectionPack } from "../SectionPack/SectionPack";
 import { SwitchEndingKey } from "../SectionsMeta/baseSections/switchNames";
 import { VarbValues } from "../SectionsMeta/baseSectionTypes";
 import { FeSectionInfo, VarbInfo } from "../SectionsMeta/Info";
@@ -63,7 +63,7 @@ export class SetterSection<
   ): SetterSection<CN> {
     return this.setterSection(feInfo);
   }
-  loadSelfSectionPack(sectionPack: SectionPackRaw<SN>): void {
+  loadSelfSectionPack(sectionPack: SectionPack<SN>): void {
     this.solver.loadSelfSectionPackAndSolve(sectionPack);
     this.setSections();
   }

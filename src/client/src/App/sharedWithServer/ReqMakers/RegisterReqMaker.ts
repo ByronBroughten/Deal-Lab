@@ -8,7 +8,7 @@ import {
 } from "../StateGetters/Bases/GetterSectionBase";
 import { GetterSection } from "../StateGetters/GetterSection";
 import { GetterVarbs } from "../StateGetters/GetterVarbs";
-import { SectionPackMaker } from "../StatePackers.ts/SectionPackMaker";
+import { PackMakerSection } from "../StatePackers.ts/PackMakerSection";
 import { SolverSections } from "../StateSolvers/SolverSections";
 import { StrictOmit } from "../utils/types";
 import {
@@ -61,7 +61,7 @@ export class RegisterReqMaker extends GetterSectionBase<"register"> {
   }
   private get guestAccessSectionPacks(): SectionPackArrs<"feGuestAccess"> {
     const { getterSectionsProps, main } = this.get.sections;
-    const mainPackMaker = new SectionPackMaker({
+    const mainPackMaker = new PackMakerSection({
       ...getterSectionsProps,
       ...main.feInfo,
     });

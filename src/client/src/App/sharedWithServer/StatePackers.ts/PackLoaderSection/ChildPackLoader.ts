@@ -1,6 +1,6 @@
 import { pick } from "lodash";
 import { OneRawSection } from "../../SectionPack/RawSection";
-import { SectionPackRaw } from "../../SectionPack/SectionPack";
+import { SectionPack } from "../../SectionPack/SectionPack";
 import { DbSectionInfo } from "../../SectionsMeta/DbSectionInfo";
 import {
   ChildIdArrsWide,
@@ -17,7 +17,7 @@ import { Obj } from "../../utils/Obj";
 
 interface ChildPackLoaderProps<SN extends SectionName, CN extends ChildName<SN>>
   extends GetterSectionProps<SN> {
-  sectionPack: SectionPackRaw;
+  sectionPack: SectionPack;
   childDbInfo: DbSectionInfo<CN>;
 }
 
@@ -25,7 +25,7 @@ export class ChildPackLoader<
   SN extends SectionName,
   CN extends ChildName<SN>
 > extends GetterSectionBase<SN> {
-  sectionPack: SectionPackRaw;
+  sectionPack: SectionPack;
   childDbInfo: DbSectionInfo<CN> & { idx?: number };
   updaterSection: UpdaterSection<SN>;
   getterSection: GetterSection<SN>;

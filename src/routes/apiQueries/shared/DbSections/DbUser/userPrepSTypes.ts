@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import { GuestAccessSectionPackArrs } from "../../../../../client/src/App/sharedWithServer/apiQueriesShared/register";
-import { SectionPackRaw } from "../../../../../client/src/App/sharedWithServer/SectionPack/SectionPack";
+import { SectionPack } from "../../../../../client/src/App/sharedWithServer/SectionPack/SectionPack";
 import { sectionNameS } from "../../../../../client/src/App/sharedWithServer/SectionsMeta/SectionName";
 import { Arr } from "../../../../../client/src/App/sharedWithServer/utils/Arr";
 import { serverSectionNames } from "../../../../ServerSectionName";
@@ -16,7 +16,7 @@ const userSectionNames = Arr.extractStrict(serverSectionNames, [
 ] as const);
 type UserSectionName = typeof userSectionNames[number];
 export type UserSectionPackArrs = {
-  [SN in UserSectionName]: SectionPackRaw<SN>[];
+  [SN in UserSectionName]: SectionPack<SN>[];
 };
 
 const initFullNames = [
@@ -30,7 +30,7 @@ export const initEmptyNames = Arr.excludeStrict(
 );
 type InitEmptyName = typeof initEmptyNames[number];
 export type InitEmptyPackArrs = {
-  [SN in InitEmptyName]: SectionPackRaw<SN>[];
+  [SN in InitEmptyName]: SectionPack<SN>[];
 };
 
 export interface MakeDbUserProps

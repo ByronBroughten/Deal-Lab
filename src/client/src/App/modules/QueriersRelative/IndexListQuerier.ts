@@ -1,5 +1,5 @@
 import {
-  SectionPackRaw,
+  SectionPack,
   ServerSectionPack,
 } from "../../sharedWithServer/SectionPack/SectionPack";
 import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
@@ -31,7 +31,7 @@ export class IndexListQuerier<
   }
   private indexToSourceSectionPack(
     indexSectionPack: ServerSectionPack
-  ): SectionPackRaw<SN> {
+  ): SectionPack<SN> {
     return {
       sectionName: this.sectionName,
       dbId: indexSectionPack.dbId,
@@ -43,7 +43,7 @@ export class IndexListQuerier<
       } as any,
     };
   }
-  async retriveFromIndex(dbId: string): Promise<SectionPackRaw<SN>> {
+  async retriveFromIndex(dbId: string): Promise<SectionPack<SN>> {
     const serverSectionPack = await this.query.get(dbId);
     return this.indexToSourceSectionPack(serverSectionPack);
   }

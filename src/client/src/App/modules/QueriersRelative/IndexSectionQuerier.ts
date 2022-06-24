@@ -1,6 +1,6 @@
 import { ServerSectionPack } from "../../sharedWithServer/SectionPack/SectionPack";
 import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
-import { SectionPackMaker } from "../../sharedWithServer/StatePackers.ts/SectionPackMaker";
+import { PackMakerSection } from "../../sharedWithServer/StatePackers.ts/PackMakerSection";
 import { SectionQuerier } from "../QueriersBasic/SectionQuerier";
 import {
   IndexSectionQuerierBase,
@@ -11,7 +11,7 @@ export class IndexSectionQuerier<
   SN extends SectionName<"hasIndexStore"> = SectionName<"hasIndexStore">
 > extends IndexSectionQuerierBase<SN> {
   readonly query: SectionQuerier;
-  private packMaker = new SectionPackMaker(this.indexSectionQuerierProps);
+  private packMaker = new PackMakerSection(this.indexSectionQuerierProps);
   constructor(props: IndexSectionQuerierProps<SN>) {
     super(props);
     this.query = new SectionQuerier({
