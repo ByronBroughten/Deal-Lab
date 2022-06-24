@@ -5,7 +5,7 @@ import { apiQueriesShared } from "../../client/src/App/sharedWithServer/apiQueri
 import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import { Id } from "../../client/src/App/sharedWithServer/SectionsMeta/baseSections/id";
 import { runApp } from "../../runApp";
-import { UserModel } from "../UserModel";
+import { DbSectionsModel } from "../DbSectionsModel";
 import { DbUser } from "./shared/DbSections/DbUser";
 import { createTestUserModelNext } from "./test/createTestUserModelNext";
 import { SectionQueryTester } from "./test/SectionQueryTester";
@@ -42,7 +42,7 @@ describe(testedApiRoute, () => {
   });
 
   afterEach(async () => {
-    await UserModel.deleteOne({ _id: userId });
+    await DbSectionsModel.deleteOne({ _id: userId });
     server.close();
   });
 

@@ -5,7 +5,7 @@ import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/
 import { makeReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/makeReqAndRes";
 import { RegisterReqMaker } from "../../client/src/App/sharedWithServer/ReqMakers/RegisterReqMaker";
 import { runApp } from "../../runApp";
-import { UserModel } from "../UserModel";
+import { DbSectionsModel } from "../DbSectionsModel";
 import { DbUser } from "./shared/DbSections/DbUser";
 import { userServerSide } from "./userServerSide";
 
@@ -36,11 +36,11 @@ describe(testedRoute, () => {
     const { loginReq, registerBody } = makeReqStuff();
     const userDoc = await userServerSide.entireMakeUserProcess(registerBody);
     reqObj = loginReq;
-    userId = userDoc._id.toHexString();
+    userId = userDoc._id;
   });
 
   afterEach(async () => {
-    await UserModel.deleteOne({ _id: userId });
+    await DbSectionsModel.deleteOne({ _id: userId });
     server.close();
   });
 

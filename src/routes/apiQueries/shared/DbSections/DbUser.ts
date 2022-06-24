@@ -3,8 +3,10 @@ import { Response } from "express";
 import mongoose from "mongoose";
 import { constants } from "../../../../client/src/App/Constants";
 import { LoginUser } from "../../../../client/src/App/sharedWithServer/apiQueriesShared/login";
+import { RegisterFormData } from "../../../../client/src/App/sharedWithServer/apiQueriesShared/register";
 import { defaultMaker } from "../../../../client/src/App/sharedWithServer/defaultMaker/defaultMaker";
 import { SectionPackRaw } from "../../../../client/src/App/sharedWithServer/SectionPack/SectionPack";
+import { SafeDbVarbs } from "../../../../client/src/App/sharedWithServer/SectionsMeta/relSections/rel/valueMetaTypes";
 import {
   SectionName,
   sectionNameS,
@@ -23,6 +25,7 @@ import { DbSections } from "./DbSections";
 import { DbSectionsQuerier } from "./DbSectionsQuerier";
 import { DbSectionsRaw } from "./DbSectionsQuerierTypes";
 import { checkUserAuthToken, makeUserAuthToken } from "./DbUser/userAuthToken";
+import { userPrepS } from "./DbUser/userPrepS";
 
 interface DbUserProps extends GetterSectionsProps {
   dbSections: DbSections;
@@ -46,6 +49,8 @@ export class DbUser extends GetterSectionsBase {
   }
   get userId(): string {
     const userId = this.dbSectionsRaw._id as mongoose.Types.ObjectId;
+    if (!(userId instanceof mongoose.Types.ObjectId))
+      throw new Error(`userId "${userId}" is not valid.`);
     return userId.toHexString();
   }
   static init(props: DbSectionsProps) {
@@ -62,11 +67,38 @@ export class DbUser extends GetterSectionsBase {
       dbSections,
     });
   }
+  static async initUserSections(
+    registerFormData: RegisterFormData
+  ): Promise<UserSections> {
+    const { email, emailAsSubmitted } = userPrepS.processEmail(
+      registerFormData.email
+    );
+    await userPrepS.checkThatEmailIsUnique(email);
+    return {
+      user: {
+        userName: registerFormData.userName,
+        email,
+        apiAccessStatus: "basicStorage",
+      },
+      serverOnlyUser: {
+        emailAsSubmitted,
+        encryptedPassword: await userPrepS.encryptPassword(
+          registerFormData.password
+        ),
+      },
+    };
+  }
+
+  static async queryByUserId(userId: mongoose.Types.ObjectId): Promise<DbUser> {
+    const querier = await DbSectionsQuerier.initByUserId(userId.toHexString());
+    return DbUser.init({
+      dbSectionsRaw: await querier.getDbSectionsRaw(),
+    });
+  }
   static async queryByEmail(email: string): Promise<DbUser> {
     const querier = await DbSectionsQuerier.initByEmail(email);
-    const dbSectionsRaw = await querier.getDbSectionsRaw();
     return DbUser.init({
-      dbSectionsRaw,
+      dbSectionsRaw: await querier.getDbSectionsRaw(),
     });
   }
   get get(): GetterSection<"user"> {
@@ -225,3 +257,11 @@ export class DbUser extends GetterSectionsBase {
   static checkUserAuthToken = checkUserAuthToken;
   static makeUserAuthToken = makeUserAuthToken;
 }
+
+export interface UserSections {
+  user: SharedUser;
+  serverOnlyUser: ServerOnlyUser;
+}
+
+type SharedUser = SafeDbVarbs<"user">;
+type ServerOnlyUser = SafeDbVarbs<"serverOnlyUser">;

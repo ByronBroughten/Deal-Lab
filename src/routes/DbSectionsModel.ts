@@ -9,7 +9,7 @@ export type UserDbRaw = {
   [SN in ServerSectionName]: SectionPackRaw<SN>[];
 };
 
-export const UserModel = mongoose.model<UserDbRaw>(
+export const DbSectionsModel = mongoose.model<UserDbRaw>(
   "userNext",
   makeMongooseUserSchema()
 );

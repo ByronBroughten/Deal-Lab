@@ -9,10 +9,10 @@ import { makeMongooseObjectId } from "../../client/src/App/sharedWithServer/util
 import { handleResAndMakeError, ResStatusError } from "../../resErrorUtils";
 import { DbSectionsQuerier } from "./shared/DbSections/DbSectionsQuerier";
 import { DbUser } from "./shared/DbSections/DbUser";
+import { testRegisterId } from "./shared/DbSections/DbUser/userPrepS";
 import { MakeDbUserProps, userServerSide } from "./userServerSide";
 
 export const nextRegisterWare = [registerServerSide] as const;
-export const testRegisterId = makeMongooseObjectId();
 
 async function registerServerSide(req: Request, res: Response) {
   const reqObj = validateRegisterReq(req, res);

@@ -4,7 +4,7 @@ import { apiQueriesShared } from "../../client/src/App/sharedWithServer/apiQueri
 import { SectionPackArrReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/makeReqAndRes";
 import { SectionArrReqMaker } from "../../client/src/App/sharedWithServer/ReqMakers/SectionArrReqMaker";
 import { runApp } from "../../runApp";
-import { UserModel } from "../UserModel";
+import { DbSectionsModel } from "../DbSectionsModel";
 import { DbUser } from "./shared/DbSections/DbUser";
 import { createTestUserModelNext } from "./test/createTestUserModelNext";
 
@@ -29,7 +29,7 @@ describe(testedApiRoute, () => {
   });
 
   afterEach(async () => {
-    await UserModel.deleteOne({ _id: userId });
+    await DbSectionsModel.deleteOne({ _id: userId });
     server.close();
   });
 

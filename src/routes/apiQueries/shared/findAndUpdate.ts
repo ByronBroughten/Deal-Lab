@@ -1,7 +1,7 @@
 import { Response } from "express";
 import { FilterQuery, QueryOptions } from "mongoose";
 import { handleResAndMakeError, ResHandledError } from "../../../resErrorUtils";
-import { UserDbRaw, UserModel } from "../../UserModel";
+import { DbSectionsModel, UserDbRaw } from "../../DbSectionsModel";
 
 type QueryParameters = { operation: any; options: QueryOptions };
 
@@ -31,7 +31,11 @@ export async function findOneAndUpdate({
   queryParameters: { operation, options },
   doWhat = "query the database",
 }: FindOneAndUpdateProps) {
-  const result = await UserModel.findOneAndUpdate(filter, operation, options);
+  const result = await DbSectionsModel.findOneAndUpdate(
+    filter,
+    operation,
+    options
+  );
   if (result) return result;
   else throw handleResAndMakeError(res, 404, `Failed to ${doWhat}.`);
 }
@@ -42,9 +46,15 @@ export async function updateOneUser({
   queryParameters: { operation, options },
   doWhat = "query the database",
 }: FindOneAndUpdateProps) {
-  const result = await UserModel.findOneAndUpdate(filter, operation, options);
+  const result = await DbSectionsModel.findOneAndUpdate(
+    filter,
+    operation,
+    options
+  );
   if (!result) {
     res.status(404).send(`Failed to ${doWhat}.`);
-    throw new ResHandledError("UserModel.updateOne failed to update a user.");
+    throw new ResHandledError(
+      "DbSectionsModel.updateOne failed to update a user."
+    );
   }
 }

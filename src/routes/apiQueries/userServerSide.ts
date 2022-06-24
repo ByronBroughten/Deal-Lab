@@ -9,8 +9,8 @@ import { sectionPackS } from "../../client/src/App/sharedWithServer/SectionPack/
 import { BaseSectionsDb } from "../../client/src/App/sharedWithServer/SectionsMeta/baseSectionTypes";
 import { SchemaVarbsToDbValues } from "../../client/src/App/sharedWithServer/SectionsMeta/relSections/rel/valueMetaTypes";
 import { makeMongooseObjectId } from "../../client/src/App/sharedWithServer/utils/mongoose";
+import { DbSectionsModel, UserDbRaw } from "../DbSectionsModel";
 import { serverSectionS } from "../ServerSectionName";
-import { UserDbRaw, UserModel } from "../UserModel";
 
 export const userServerSide = {
   prepEmail(rawEmail: string): PreppedEmails {
@@ -60,14 +60,14 @@ export const userServerSide = {
     return partial as UserDbRaw;
   },
   makeMongoUser({ _id, ...makeUserProps }: MakeMongoUserProps) {
-    return new UserModel({
+    return new DbSectionsModel({
       _id: _id ?? makeMongooseObjectId(),
       ...this.makeDbUser(makeUserProps),
     });
   },
   makeDbAndMongoUser({ _id, ...makeUserProps }: MakeMongoUserProps) {
     const dbUser = this.makeDbUser(makeUserProps);
-    const mongoUser = new UserModel({
+    const mongoUser = new DbSectionsModel({
       _id: _id ?? makeMongooseObjectId(),
       ...dbUser,
     });

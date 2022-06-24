@@ -1,7 +1,7 @@
 import { SectionPackRaw } from "../../../../client/src/App/sharedWithServer/SectionPack/SectionPack";
 import { DbSectionInfo } from "../../../../client/src/App/sharedWithServer/SectionsMeta/DbSectionInfo";
+import { DbSectionsModel } from "../../../DbSectionsModel";
 import { ServerSectionName } from "../../../ServerSectionName";
-import { UserModel } from "../../../UserModel";
 import { DbSectionsQuerierBase } from "./Bases/DbSectionsQuerierBase";
 import { DbSections } from "./DbSections";
 import {
@@ -24,7 +24,7 @@ export class DbSectionsQuerier extends DbSectionsQuerierBase {
       });
   }
   static async existsByEmail(email: string): Promise<boolean> {
-    return await UserModel.exists(filter.email(email));
+    return await DbSectionsModel.exists(filter.email(email));
   }
   static async initByUserId(userId: string): Promise<DbSectionsQuerier> {
     const querier = new DbSectionsQuerier({
@@ -34,13 +34,13 @@ export class DbSectionsQuerier extends DbSectionsQuerierBase {
     else throw this.userNotFoundError();
   }
   async exists(): Promise<boolean> {
-    return await UserModel.exists(this.userFilter);
+    return await DbSectionsModel.exists(this.userFilter);
   }
   async getSectionPack<SN extends ServerSectionName>(
     dbInfo: DbSectionInfo<SN>
   ): Promise<SectionPackRaw<SN>> {
-    // const users = await UserModel.aggregate([{ $match: this.userFilter }]);
-    // const userDocs = await UserModel.aggregate([
+    // const users = await DbSectionsModel.aggregate([{ $match: this.userFilter }]);
+    // const userDocs = await DbSectionsModel.aggregate([
     //   { $match: this.userFilter },
     //   { $unwind: `$${sectionName}` },
     //   // { $match: { [`${sectionName}.${dbId}`]: dbId } },
@@ -50,7 +50,7 @@ export class DbSectionsQuerier extends DbSectionsQuerierBase {
     return dbSections.sectionPack(dbInfo);
   }
   async getDbSectionsRaw(): Promise<DbSectionsRaw> {
-    const dbSectionsRaw = await UserModel.findOne(
+    const dbSectionsRaw = await DbSectionsModel.findOne(
       this.userFilter,
       undefined,
       queryOptions

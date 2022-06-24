@@ -9,6 +9,6 @@ export async function createTestUserModelNext(
     password: "testPassword",
     userName: "Testosis",
   });
-  const userDoc = await userServerSide.entireMakeUserProcess(reqMaker.reqBody);
-  return userDoc._id.toHexString();
+  const dbUser = await userServerSide.entireMakeUserProcess(reqMaker.reqBody);
+  return dbUser._id;
 }

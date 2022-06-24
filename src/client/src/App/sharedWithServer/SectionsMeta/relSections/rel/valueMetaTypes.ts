@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { StrictExtract } from "../../../utils/types";
+import { BaseSections, SimpleSectionName } from "../../baseSections";
 import { valueMeta } from "../../baseSections/baseValues";
 
 export type ValueSchemas = typeof valueMeta;
@@ -26,6 +27,10 @@ export type SchemaVarbsToDbValues<
 > = {
   [Prop in keyof T]: DbValueTypes[T[Prop]];
 };
+
+export type SafeDbVarbs<SN extends SimpleSectionName> = SchemaVarbsToDbValues<
+  BaseSections["fe"][SN]["varbSchemas"]
+>;
 
 export type UpdateFnName =
   ValueSchemas[keyof ValueSchemas]["updateFnNames"][number];

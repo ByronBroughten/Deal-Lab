@@ -7,8 +7,8 @@ import {
 import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import { RegisterReqMaker } from "../../client/src/App/sharedWithServer/ReqMakers/RegisterReqMaker";
 import { runApp } from "../../runApp";
-import { UserModel } from "../UserModel";
-import { testRegisterId } from "./register";
+import { DbSectionsModel } from "../DbSectionsModel";
+import { testRegisterId } from "./shared/DbSections/DbUser/userPrepS";
 import { userServerSide } from "./userServerSide";
 
 const testedRoute = apiQueriesShared.register.pathRoute;
@@ -32,7 +32,7 @@ describe(testedRoute, () => {
   });
 
   afterEach(async () => {
-    await UserModel.deleteOne({ _id: testRegisterId });
+    await DbSectionsModel.deleteOne({ _id: testRegisterId });
     server.close();
   });
 
@@ -51,7 +51,7 @@ describe(testedRoute, () => {
     (res as any).data = JSON.parse(res.text);
     expect(() => resValidators.register(res)).not.toThrow();
 
-    const userDoc = await UserModel.findById(testRegisterId);
+    const userDoc = await DbSectionsModel.findById(testRegisterId);
     expect(userDoc).toBeTruthy();
   });
   it("should return 400 if a user with that email already exists", async () => {
