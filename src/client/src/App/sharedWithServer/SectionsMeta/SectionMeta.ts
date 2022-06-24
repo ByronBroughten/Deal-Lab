@@ -1,11 +1,6 @@
 import { DbVarbs } from "../SectionPack/RawSection";
 import { Obj } from "../utils/Obj";
-import {
-  baseSections,
-  BaseSections,
-  ContextName,
-  SimpleSectionName,
-} from "./baseSections";
+import { baseSections, BaseSections, SimpleSectionName } from "./baseSections";
 import {
   allTableSourceParams,
   TableSourceParams,
@@ -18,22 +13,26 @@ import {
 } from "./relSectionTypes/ChildTypes";
 import {
   sectionParentNames,
-  SectionToParentArrs,
+  SectionToParentNameArrs,
 } from "./relSectionTypes/ParentTypes";
 import { VarbMetas } from "./VarbMetas";
 
-type SectionMetaExtra<CN extends ContextName, SN extends SimpleSectionName> = {
+type SectionMetaExtra<SN extends SimpleSectionName> = {
   varbMetas: VarbMetas;
-  parentNames: SectionToParentArrs<CN>[SN];
+  parentNames: SectionToParentNameArrs[SN];
   tableSource: TableSourceParams[SN];
 };
 
-export type SectionMetaCore<SN extends SimpleSectionName> =
-  RelSections["fe"][SN] & BaseSections["fe"][SN] & SectionMetaExtra<"fe", SN>;
+type RelSection<SN extends SimpleSectionName> = RelSections[SN];
+type BaseSection<SN extends SimpleSectionName> = BaseSections["fe"][SN];
+
+export type SectionMetaCore<SN extends SimpleSectionName> = RelSection<SN> &
+  BaseSection<SN> &
+  SectionMetaExtra<SN>;
 
 export class SectionMeta<SN extends SimpleSectionName> {
   constructor(readonly core: SectionMetaCore<SN>) {}
-  get rowIndexName(): Exclude<RelSections["fe"][SN]["rowIndexName"], null> {
+  get rowIndexName(): Exclude<RelSections[SN]["rowIndexName"], null> {
     const { rowIndexName } = this.core;
     if (rowIndexName === null) throw new Error("Can't be null.");
     return rowIndexName as any;
@@ -81,7 +80,7 @@ export class SectionMeta<SN extends SimpleSectionName> {
     return new SectionMeta(nextCore);
   }
   static init<SN extends SimpleSectionName>(sectionName: SN): SectionMeta<SN> {
-    const relSection = relSections["fe"][sectionName];
+    const relSection = relSections[sectionName];
     const baseSection = baseSections["fe"][sectionName];
     return new SectionMeta({
       ...relSection,
@@ -93,8 +92,8 @@ export class SectionMeta<SN extends SimpleSectionName> {
   }
   private static getParentNamesParam<SN extends SimpleSectionName>(
     sectionName: SN
-  ): SectionToParentArrs<"fe">[SN] {
-    return sectionParentNames["fe"][sectionName] as any;
+  ): SectionToParentNameArrs[SN] {
+    return sectionParentNames[sectionName] as any;
   }
   private static getTableSourceParam<SN extends SimpleSectionName>(
     sectionName: SN
