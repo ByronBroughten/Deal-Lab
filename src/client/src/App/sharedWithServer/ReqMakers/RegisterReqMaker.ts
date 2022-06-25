@@ -1,6 +1,5 @@
 import { NextReq } from "../apiQueriesShared/apiQueriesSharedTypes";
 import { makeReq } from "../apiQueriesShared/makeReqAndRes";
-import { SectionPackArrs } from "../SectionPack/SectionPack";
 import { sectionNameS } from "../SectionsMeta/SectionName";
 import {
   GetterSectionBase,
@@ -12,6 +11,7 @@ import { PackMakerSection } from "../StatePackers.ts/PackMakerSection";
 import { SolverSections } from "../StateSolvers/SolverSections";
 import { StrictOmit } from "../utils/types";
 import {
+  GuestAccessSectionPackArrs,
   RegisterFormData,
   RegisterReqBody,
 } from "./../apiQueriesShared/register";
@@ -59,15 +59,14 @@ export class RegisterReqMaker extends GetterSectionBase<"register"> {
   makeReq(): NextReq<"register"> {
     return makeReq(this.reqBody);
   }
-  private get guestAccessSectionPacks(): SectionPackArrs<"feGuestAccess"> {
+  private get guestAccessSectionPacks(): GuestAccessSectionPackArrs {
     const { getterSectionsProps, main } = this.get.sections;
     const mainPackMaker = new PackMakerSection({
       ...getterSectionsProps,
       ...main.feInfo,
     });
-    const guestAccessArrs = mainPackMaker.makeChildSectionPackArrs(
+    return mainPackMaker.makeChildSectionPackArrs(
       sectionNameS.arrs.feGuestAccess
     );
-    return guestAccessArrs;
   }
 }
