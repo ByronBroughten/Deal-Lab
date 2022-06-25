@@ -2,8 +2,11 @@ import { cloneDeep } from "lodash";
 import { Schema } from "mongoose";
 import { z } from "zod";
 import { Arr } from "../../../utils/Arr";
+import { mathS, NotANumberError } from "../../../utils/math";
 import { reqMonString } from "../../../utils/mongoose";
+import { Obj } from "../../../utils/Obj";
 import { isStringRationalNumber } from "../../../utils/Str";
+import { StrictPick } from "../../../utils/types";
 import {
   DbVarbInfo,
   RelVarbInfo,
@@ -14,11 +17,15 @@ import { NumObjUpdateFnName } from "./updateFnNames";
 export const zDbNumObj = z.object({
   editorText: z.string(),
   entities: zInEntities,
+  solvableText: z.string(),
+  numString: z.string(),
 });
 export type DbNumObj = z.infer<typeof zDbNumObj> & { entities: InEntities };
+export type NumObjCore = DbNumObj;
+export type NumObjCache = StrictPick<NumObjCore, "solvableText" | "numString">;
 
 export function isDbNumObj(value: any): value is DbNumObj {
-  // speed is important for this
+  // speed is important here, which is why I don't use zod for it
   return (
     typeof value === "object" &&
     "editorText" in value &&
@@ -28,20 +35,22 @@ export function isDbNumObj(value: any): value is DbNumObj {
 }
 export function dbNumObj(
   editorText: string | number,
-  entities: InEntities = []
+  entities: InEntities = [],
+  solvableText: string = `${editorText}`,
+  numString: string = `${editorText}`
 ): DbNumObj {
   return {
     editorText: `${editorText}`,
     entities,
+    solvableText,
+    numString,
   };
 }
 
-export type EntitiesAndEditorText = DbNumObj;
-export type NumObjCore = EntitiesAndEditorText;
-export type NumObjCache = {
-  solvableText: string;
-  number: NumObjNumber;
-};
+export type EntitiesAndEditorText = StrictPick<
+  DbNumObj,
+  "editorText" | "entities"
+>;
 
 export type GetSolvableTextProps = {
   editorText: string;
@@ -54,15 +63,18 @@ export type FailedVarb = { errorMessage: string } & UpdateVarbInfo;
 export type FailedVarbs = FailedVarb[];
 export type NumObjNumber = number | "?";
 
+// I like the idea of NumObj having access to the rest of the state.
+// I'm not sure if I would be allowed to build that out.
+
 const undividable = ["?", 0];
 export class NumObj {
-  constructor(
-    readonly core: NumObjCore,
-    readonly cache: NumObjCache = { solvableText: "", number: "?" }
-  ) {
+  constructor(readonly core: NumObjCore) {
     if ("core" in core) {
       throw new Error("That is not a valid numObj core.");
     }
+  }
+  get cache(): NumObjCache {
+    return Obj.strictPick(this.core, ["solvableText", "numString"]);
   }
   get isDividable() {
     return !undividable.includes(this.number);
@@ -71,34 +83,46 @@ export class NumObj {
     return this.core.editorText;
   }
   get solvableText(): string {
-    return this.cache.solvableText;
+    return this.core.solvableText;
   }
   get entities(): InEntities {
     return cloneDeep(this.core.entities);
   }
-  get number(): NumObjNumber {
-    return this.cache.number;
+  get numberStrict(): number {
+    return mathS.parseFloatStrict(this.core.numString);
   }
   get numberOrZero(): number {
-    return typeof this.number === "number" ? this.number : 0;
+    try {
+      return this.numberStrict;
+    } catch (ex) {
+      if (ex instanceof NotANumberError) {
+        return 0;
+      } else {
+        throw ex;
+      }
+    }
+  }
+  get number(): NumObjNumber {
+    try {
+      return this.numberStrict;
+    } catch (ex) {
+      if (ex instanceof NotANumberError) {
+        return "?";
+      } else {
+        throw ex;
+      }
+    }
   }
   get editorTextNumber(): string {
     return this.number === "?" ? "" : `${this.number}`;
   }
-  get numberStrict(): number {
-    const num = this.cache.number;
-    if (typeof num === "number") return num;
-    throw new Error("If this getter is used, num must be a number.");
-  }
+
   get editorTextStatus() {
     if (["", "-"].includes(this.editorText as any)) return "empty";
     if (isStringRationalNumber(this.editorText)) return "number";
     else return "solvableText";
   }
   get dbNumObj(): DbNumObj {
-    return this.core;
-  }
-  get base(): DbNumObj {
     return this.core;
   }
   removeEntity(entityId: string): NumObj {
@@ -109,17 +133,10 @@ export class NumObj {
   }
   updateCore(partial: Partial<NumObjCore>): NumObj {
     // when the core is updated, the cache is cleared, right?
-    return new NumObj(
-      {
-        ...this.core,
-        ...partial,
-      },
-      this.cache
-    );
-  }
-
-  updateCache(partial: Partial<NumObjCache>): NumObj {
-    return new NumObj(this.core, { ...this.cache, ...partial });
+    return new NumObj({
+      ...this.core,
+      ...partial,
+    });
   }
   addEntity(entity: InEntity): NumObj {
     return this.updateCore({
@@ -127,12 +144,14 @@ export class NumObj {
     });
   }
   clone() {
-    return new NumObj(cloneDeep(this.core), cloneDeep(this.cache));
+    return new NumObj(cloneDeep(this.core));
   }
   static init(initValue: string | number): NumObj {
     return new NumObj({
       editorText: `${initValue}`,
       entities: [],
+      solvableText: `${initValue}`,
+      numString: `${initValue}`,
     });
   }
 }
@@ -147,4 +166,6 @@ export const zNumObj = z
 export const mDbNumObj: { [key in keyof DbNumObj]: any } = {
   editorText: reqMonString,
   entities: [new Schema(mEntityFrame)],
+  solvableText: reqMonString,
+  numString: reqMonString,
 };

@@ -19,7 +19,6 @@ const testRelProperty = {
   },
 };
 
-// redo register with DbUser
 // Make dbNumObj include solvableText
 
 // Make Queryable SectionPacks
@@ -31,6 +30,7 @@ const testRelProperty = {
 
 // Try decoupling childName from sectionType
 // Would I do this before or after changing the sectionPack?
+// probably after. The new sectionPacks will be less unweildy in that regard.
 
 // Create tables on startup from the source of truth (saved properties, ect) and keep them synced on the front-end.
 // When loading a deal, delete its internal userVarblist

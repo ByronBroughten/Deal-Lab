@@ -10,27 +10,19 @@ import {
   numObjToRawContent,
 } from "../../modules/draftjs/draftUtils";
 import { EntityMap, EntityRanges, RawEditorState } from "../../utils/DraftS";
+import { InEntities } from "../SectionsMeta/baseSections/baseValues/entities";
 import {
-  InEntities,
-  InEntity,
-} from "../SectionsMeta/baseSections/baseValues/entities";
-import {
-  DbNumObj,
   EntitiesAndEditorText,
   NumObj,
-  NumObjNumber,
 } from "../SectionsMeta/baseSections/baseValues/NumObj";
 import { isEditorUpdateFnName } from "../SectionsMeta/baseSections/baseValues/StateValueTypes";
-import { isNumObjUpdateFnName } from "../SectionsMeta/baseSections/baseValues/updateFnNames";
 import { EditorValueTypeName } from "../SectionsMeta/relSections/rel/valueMetaTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { GetterVarbBase } from "../StateGetters/Bases/GetterVarbBase";
-import { GetterSections } from "../StateGetters/GetterSections";
 import { GetterVarb } from "../StateGetters/GetterVarb";
-import { solveText } from "../StateSolvers/SolveValueVarb/solveText";
+import { SolveNumObjVarb } from "../StateSolvers/SolveNumObjVarb";
 import { UpdaterVarb } from "../StateUpdaters/UpdaterVarb";
 import { Arr } from "../utils/Arr";
-import { Str } from "../utils/Str";
 
 type ContentCreators = {
   [EN in EditorValueTypeName]: () => ContentState;
@@ -43,9 +35,16 @@ export type CreateEditorProps = {
 export class EditorUpdaterVarb<
   SN extends SectionName<"hasVarb">
 > extends GetterVarbBase<SN> {
-  private updaterVarb = new UpdaterVarb(this.getterVarbProps);
-  private getterVarb = new GetterVarb(this.getterVarbProps);
-  private getterSections = new GetterSections(this.getterSectionsProps);
+  get updaterVarb(): UpdaterVarb<SN> {
+    return new UpdaterVarb(this.getterVarbProps);
+  }
+  get getterVarb(): GetterVarb<SN> {
+    return new GetterVarb(this.getterVarbProps);
+  }
+  private get numObjSolver() {
+    return new SolveNumObjVarb(this.getterVarbProps);
+  }
+
   createEditor({ valueType, compositeDecorator }: CreateEditorProps) {
     const contentCreators: ContentCreators = {
       string: () => {
@@ -85,45 +84,15 @@ export class EditorUpdaterVarb<
   }
   private numObjFromContent(contentState: ContentState): NumObj {
     const textAndEntities = textAndEntitiesFromContentState(contentState);
-    return this.numObjFromDbNumObj(textAndEntities);
+    return this.numObjFromTextAndEntities(textAndEntities);
   }
-  private numObjFromDbNumObj(dbNumObj: DbNumObj): NumObj {
-    // this should probably be somewhere else, or numObj ought
-    // to be simplifid
-    const solvableText = this.solvableTextFromEditorTextAndEntities(dbNumObj);
-    const number = this.solvableTextToNumber(solvableText);
-    return new NumObj(dbNumObj, { solvableText, number });
-  }
-  private solvableTextFromEditorTextAndEntities({
-    editorText,
-    entities,
-  }: DbNumObj): string {
-    let solvableText = editorText;
-    for (const entity of entities) {
-      const num = this.getSolvableNumber(entity);
-      solvableText = Str.replaceRange(
-        solvableText,
-        entity.offset,
-        entity.offset + entity.length,
-        `${num}`
-      );
-    }
-    return solvableText;
-  }
-  private getSolvableNumber(inEntity: InEntity): NumObjNumber {
-    if (this.getterSections.hasSectionMixed(inEntity)) {
-      const varb = this.getterSections.varbByMixed(inEntity);
-      return varb.value("numObj").number;
-    } else return "?";
-  }
-  private solvableTextToNumber(solvableText: string): NumObjNumber {
-    const { updateFnName } = this.getterVarb;
-    if (isNumObjUpdateFnName(updateFnName)) {
-      const { unit } = this.getterVarb.meta;
-      return solveText(solvableText, unit, updateFnName);
-    } else {
-      throw new Error("For now, this is only for numObjs.");
-    }
+  private numObjFromTextAndEntities(
+    textAndEntities: EntitiesAndEditorText
+  ): NumObj {
+    const solvableText =
+      this.numObjSolver.solvableTextFromTextAndEntities(textAndEntities);
+    const numString = this.numObjSolver.solvableTextToNumString(solvableText);
+    return new NumObj({ ...textAndEntities, solvableText, numString });
   }
 }
 

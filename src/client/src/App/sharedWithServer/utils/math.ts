@@ -1,7 +1,23 @@
 import { round } from "lodash";
+import { isStringRationalNumber } from "./Str";
 
-export const MathUtils = {
+export class NotANumberError extends Error {}
+
+export const mathS = {
   decimalToPercent,
+  parseFloatStrict(str: string): number {
+    const parsed = parseFloat(str);
+    if (isNaN(parsed) || `${parsed}` !== str) {
+      throw new NotANumberError(
+        `The passed string "${str}" was parsed as "${parsed}", which is not an exact conversion.`
+      );
+    } else {
+      return parsed;
+    }
+  },
+  isRationalNumber(num: any): num is number {
+    return typeof num === "number" && isStringRationalNumber(`${num}`);
+  },
 } as const;
 
 export const arithmeticOperatorsArr = ["*", "/", "+", "-"];

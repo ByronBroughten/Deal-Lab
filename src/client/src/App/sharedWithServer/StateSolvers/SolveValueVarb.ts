@@ -3,15 +3,11 @@ import calculations, {
   NumberProps,
 } from "../SectionsMeta/baseSections/baseValues/calculations";
 import {
-  DbNumObj,
   FailedVarbs,
   NumObj,
   NumObjCache,
-  NumObjNumber,
 } from "../SectionsMeta/baseSections/baseValues/NumObj";
-import { isNumObjUpdateFnName } from "../SectionsMeta/baseSections/baseValues/updateFnNames";
 import { InfoS } from "../SectionsMeta/Info";
-import { SpecificVarbInfo } from "../SectionsMeta/relSections/rel/relVarbInfoTypes";
 import { UpdateFnProps } from "../SectionsMeta/relSections/rel/relVarbTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { GetterSectionProps } from "../StateGetters/Bases/GetterSectionBase";
@@ -20,17 +16,28 @@ import { GetterList } from "../StateGetters/GetterList";
 import { GetterSections } from "../StateGetters/GetterSections";
 import { GetterVarb } from "../StateGetters/GetterVarb";
 import { GetterVarbs } from "../StateGetters/GetterVarbs";
-import { Str } from "../utils/Str";
-import { solveText } from "./SolveValueVarb/solveText";
+import { SolveNumObjVarb } from "./SolveNumObjVarb";
 import { UserVarbValueSolver } from "./SolveValueVarb/UserVarbValueSolver";
 
 export class SolveValueVarb<
   SN extends SectionName<"hasVarb">
 > extends GetterVarbBase<SN> {
-  private getterSections = new GetterSections(this.getterSectionsProps);
-  private getterList = new GetterList(this.getterListProps);
-  private getterVarbs = new GetterVarbs(this.getterSectionProps);
-  private getterVarb = new GetterVarb(this.getterVarbProps);
+  private get getterSections() {
+    return new GetterSections(this.getterSectionsProps);
+  }
+  private get getterList() {
+    return new GetterList(this.getterListProps);
+  }
+  private get getterVarbs() {
+    return new GetterVarbs(this.getterSectionProps);
+  }
+  private get getterVarb() {
+    return new GetterVarb(this.getterVarbProps);
+  }
+
+  private get numObjSolver() {
+    return new SolveNumObjVarb(this.getterVarbProps);
+  }
   private updateFns = {
     string: (): string => {
       return this.getterVarb.value("string");
@@ -39,7 +46,7 @@ export class SolveValueVarb<
     editorValue: (): NumObj => {
       const value = this.getterVarb.value("numObj");
       const { cache } = this.getterVarb.localValue("editorValue", "numObj");
-      return value.updateCache(cache);
+      return value.updateCore(cache);
     },
     loadedNumObj: (): NumObj => {
       const numObj = this.getterVarb.value("numObj");
@@ -56,38 +63,38 @@ export class SolveValueVarb<
       } else {
         nextCache = {
           solvableText: "?",
-          number: "?",
+          numString: "?",
         };
       }
-      const nextNumObj = numObj.updateCache(nextCache);
+      const nextNumObj = numObj.updateCore(nextCache);
       const nextEntities = numObj.entities.filter(
         (entity) => entity.length === 0
       );
       return nextNumObj.updateCore({
-        editorText: `${nextCache.number === "?" ? "" : nextCache.number}`,
+        editorText: `${nextCache.numString === "?" ? "" : nextCache.numString}`,
         entities: nextEntities,
       });
     },
     calcVarbs: (): NumObj => {
       const solvableText = this.solvableTextFromCalcVarbs();
-      const number = this.solvableTextToNumber(solvableText);
+      const numString = this.numObjSolver.solvableTextToNumString(solvableText);
       const numObj = this.getterVarb.value("numObj");
-      const next = numObj.updateCache({
+      const next = numObj.updateCore({
         solvableText,
-        number,
+        numString,
       });
       return next;
     },
     calculation: (): NumObj => {
       const solvableText = this.solvableTextFromCalculation();
-      const number = this.solvableTextToNumber(solvableText);
+      const numString = this.numObjSolver.solvableTextToNumString(solvableText);
       const numObj = this.getterVarb.value("numObj");
-      const nextNumObj = numObj.updateCache({
+      const nextNumObj = numObj.updateCore({
         solvableText,
-        number,
+        numString,
       });
       return nextNumObj.updateCore({
-        editorText: `${number === "?" ? "" : number}`,
+        editorText: numString === "?" ? "" : numString,
         entities: [],
       });
     },
@@ -108,7 +115,6 @@ export class SolveValueVarb<
       } else return "Variable not found.";
     },
   };
-
   solveValue(): NumObj | string {
     const { updateFnName } = this.getterVarb;
     if (isCalculationName(updateFnName)) return this.updateFns.calculation();
@@ -123,38 +129,9 @@ export class SolveValueVarb<
       throw new Error("This is only for calcVarbs");
 
     const { core } = this.getterVarb.value("numObj");
-    return this.solvableTextFromEditorTextAndEntities(core);
+    return this.numObjSolver.solvableTextFromTextAndEntities(core);
   }
-  private solvableTextFromEditorTextAndEntities({
-    editorText,
-    entities,
-  }: DbNumObj): string {
-    let solvableText = editorText;
-    for (const entity of entities) {
-      const num = this.getSolvableNumber(entity);
-      solvableText = Str.replaceRange(
-        solvableText,
-        entity.offset,
-        entity.offset + entity.length,
-        `${num}`
-      );
-    }
-    return solvableText;
-  }
-  private getSolvableNumber(feVarbInfo: SpecificVarbInfo): NumObjNumber {
-    const varb = this.getterSections.varbByMixed(feVarbInfo);
-    if (!varb) return "?";
-    return varb.value("numObj").number;
-  }
-  private solvableTextToNumber(solvableText: string): NumObjNumber {
-    const { updateFnName } = this.getterVarb;
-    if (isNumObjUpdateFnName(updateFnName)) {
-      const { unit } = this.getterVarb.meta;
-      return solveText(solvableText, unit, updateFnName);
-    } else {
-      throw new Error("For now, this is only for numObjs.");
-    }
-  }
+
   private solvableTextFromCalculation() {
     const { updateFnName } = this.getterVarb;
     if (!isCalculationName(updateFnName))

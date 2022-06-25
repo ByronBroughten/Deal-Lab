@@ -81,11 +81,21 @@ export const valueMeta = {
     dbInitValue: {
       editorText: "",
       entities: [],
-    },
+      solvableText: "",
+      numString: "",
+    } as DbNumObj,
     defaultInit: ({
       editorText = "",
       entities = [],
-    }: Partial<NumObjCore> = {}) => new NumObj({ editorText, entities }),
+      solvableText = editorText,
+      numString = solvableText,
+    }: Partial<NumObjCore> = {}) =>
+      new NumObj({
+        editorText,
+        entities,
+        solvableText,
+        numString,
+      }),
     zod: z
       .any()
       .refine(
