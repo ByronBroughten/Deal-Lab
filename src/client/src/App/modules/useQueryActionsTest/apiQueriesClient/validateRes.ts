@@ -6,7 +6,7 @@ import {
   makeRes,
   SectionPackRes,
 } from "../../../sharedWithServer/apiQueriesShared/makeReqAndRes";
-import { sectionPackS } from "../../../sharedWithServer/SectionPack/SectionPack";
+import { isSectionPack } from "../../../sharedWithServer/SectionPack/SectionPack";
 import { Id } from "../../../sharedWithServer/SectionsMeta/baseSections/id";
 import { savableNameS } from "../../../sharedWithServer/SectionsMeta/relNameArrs/storeArrs";
 import { Obj } from "../../../sharedWithServer/utils/Obj";
@@ -35,7 +35,7 @@ export function validateServerSectionPackRes(
   const { data } = res;
   if (Obj.isAnyIfIsObj(data)) {
     const { sectionPack } = data;
-    if (sectionPackS.is(sectionPack, "dbStoreNext")) {
+    if (isSectionPack(sectionPack, "dbStoreNext")) {
       return makeRes({ sectionPack });
     }
   }

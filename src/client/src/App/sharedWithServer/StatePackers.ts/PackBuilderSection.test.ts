@@ -1,5 +1,5 @@
 import { pick } from "lodash";
-import { sectionPackS } from "../SectionPack/SectionPack";
+import { isSectionPack } from "../SectionPack/SectionPack";
 import { dbNumObj } from "../SectionsMeta/baseSections/baseValues/NumObj";
 import { Obj } from "../utils/Obj";
 import { PackBuilderSection } from "./PackBuilderSection";
@@ -29,7 +29,7 @@ describe("PackBuilderSection", () => {
     property.addChild("ongoingCostList", { dbVarbs: dbVarbs.ongoingCostList });
 
     const sectionPack = property.makeSectionPack();
-    expect(sectionPackS.is(sectionPack)).toBe(true);
+    expect(isSectionPack(sectionPack)).toBe(true);
 
     const { rawSections } = sectionPack;
 

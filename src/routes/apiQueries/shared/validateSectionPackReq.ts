@@ -4,8 +4,8 @@ import {
   SectionPackReq,
 } from "../../../client/src/App/sharedWithServer/apiQueriesShared/makeReqAndRes";
 import {
+  isSectionPack,
   SectionPack,
-  sectionPackS,
   ServerSectionPack,
 } from "../../../client/src/App/sharedWithServer/SectionPack/SectionPack";
 import { SectionName } from "../../../client/src/App/sharedWithServer/SectionsMeta/SectionName";
@@ -56,7 +56,7 @@ function validateServerSectionPackArr({
   if (
     Array.isArray(value) &&
     value.every(
-      (v) => sectionPackS.is(v, "dbStoreNext") && v.sectionName === sectionName
+      (v) => isSectionPack(v, "dbStoreNext") && v.sectionName === sectionName
     )
   ) {
     return value as SectionPack<SectionName<"arrStore">>[];
@@ -64,6 +64,6 @@ function validateServerSectionPackArr({
 }
 
 function validateServerSectionPack(value: any): ServerSectionPack {
-  if (sectionPackS.is(value, "dbStoreNext")) return value;
+  if (isSectionPack(value, "dbStoreNext")) return value;
   throw new Error("Payload is not a valid server sectionPack");
 }
