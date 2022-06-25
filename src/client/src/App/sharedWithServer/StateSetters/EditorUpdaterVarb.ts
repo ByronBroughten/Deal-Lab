@@ -20,7 +20,7 @@ import { EditorValueTypeName } from "../SectionsMeta/relSections/rel/valueMetaTy
 import { SectionName } from "../SectionsMeta/SectionName";
 import { GetterVarbBase } from "../StateGetters/Bases/GetterVarbBase";
 import { GetterVarb } from "../StateGetters/GetterVarb";
-import { SolveNumObjVarb } from "../StateSolvers/SolveNumObjVarb";
+import { GetterVarbNumObj } from "../StateGetters/GetterVarbNumObj";
 import { UpdaterVarb } from "../StateUpdaters/UpdaterVarb";
 import { Arr } from "../utils/Arr";
 
@@ -42,7 +42,7 @@ export class EditorUpdaterVarb<
     return new GetterVarb(this.getterVarbProps);
   }
   private get numObjSolver() {
-    return new SolveNumObjVarb(this.getterVarbProps);
+    return new GetterVarbNumObj(this.getterVarbProps);
   }
 
   createEditor({ valueType, compositeDecorator }: CreateEditorProps) {
@@ -91,7 +91,7 @@ export class EditorUpdaterVarb<
   ): NumObj {
     const solvableText =
       this.numObjSolver.solvableTextFromTextAndEntities(textAndEntities);
-    const numString = this.numObjSolver.solvableTextToNumString(solvableText);
+    const numString = this.numObjSolver.solveTextToNumString(solvableText);
     return new NumObj({ ...textAndEntities, solvableText, numString });
   }
 }

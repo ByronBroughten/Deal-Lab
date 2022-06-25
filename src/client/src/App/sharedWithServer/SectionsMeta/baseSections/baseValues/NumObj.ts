@@ -5,7 +5,6 @@ import { Arr } from "../../../utils/Arr";
 import { mathS, NotANumberError } from "../../../utils/math";
 import { reqMonString } from "../../../utils/mongoose";
 import { Obj } from "../../../utils/Obj";
-import { isStringRationalNumber } from "../../../utils/Str";
 import { StrictPick } from "../../../utils/types";
 import {
   DbVarbInfo,
@@ -73,12 +72,6 @@ export class NumObj {
       throw new Error("That is not a valid numObj core.");
     }
   }
-  get cache(): NumObjCache {
-    return Obj.strictPick(this.core, ["solvableText", "numString"]);
-  }
-  get isDividable() {
-    return !undividable.includes(this.number);
-  }
   get editorText(): string {
     return this.core.editorText;
   }
@@ -88,19 +81,13 @@ export class NumObj {
   get entities(): InEntities {
     return cloneDeep(this.core.entities);
   }
+
+  get cache(): NumObjCache {
+    return Obj.strictPick(this.core, ["solvableText", "numString"]);
+  }
+
   get numberStrict(): number {
     return mathS.parseFloatStrict(this.core.numString);
-  }
-  get numberOrZero(): number {
-    try {
-      return this.numberStrict;
-    } catch (ex) {
-      if (ex instanceof NotANumberError) {
-        return 0;
-      } else {
-        throw ex;
-      }
-    }
   }
   get number(): NumObjNumber {
     try {
@@ -113,15 +100,7 @@ export class NumObj {
       }
     }
   }
-  get editorTextNumber(): string {
-    return this.number === "?" ? "" : `${this.number}`;
-  }
 
-  get editorTextStatus() {
-    if (["", "-"].includes(this.editorText as any)) return "empty";
-    if (isStringRationalNumber(this.editorText)) return "number";
-    else return "solvableText";
-  }
   get dbNumObj(): DbNumObj {
     return this.core;
   }

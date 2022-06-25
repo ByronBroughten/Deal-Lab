@@ -54,7 +54,7 @@ export function NumObjEditorNext({
   const { startAdornment, endAdornment } = useGetAdornments({
     pAdornments: pick(props, adornmentNames),
     vAdornments: pick(varb.meta, adornmentNames),
-    editorTextStatus: value.editorTextStatus,
+    editorTextStatus: varb.numObj.editorTextStatus,
     displayValue: varb.displayValue,
   });
 

@@ -18,7 +18,7 @@ export const Str = {
     return a.localeCompare(b, undefined, { numeric: true });
   },
   replaceRange,
-  isRationalNumber,
+  isRationalNumber: isStringRationalNumber,
 } as const;
 
 const numberRegEx = /^\-?[0-9]+(e[0-9]+)?(\.[0-9]+)?$/;
@@ -34,10 +34,6 @@ export function isStringRationalNumber(str: string) {
   if (str[str.length - 1] === ".") str = str + "0";
 
   return numberRegEx.test(str);
-}
-
-export function isRationalNumber(num: any): num is number {
-  return typeof num === "number" && isStringRationalNumber(`${num}`);
 }
 
 export function splitAtDot(fullName: string) {

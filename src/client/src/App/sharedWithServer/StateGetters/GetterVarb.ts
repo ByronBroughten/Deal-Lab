@@ -4,7 +4,10 @@ import {
   InEntityVarbInfo,
   OutEntity,
 } from "../SectionsMeta/baseSections/baseValues/entities";
-import { NumObj } from "../SectionsMeta/baseSections/baseValues/NumObj";
+import {
+  NumObj,
+  NumObjNumber,
+} from "../SectionsMeta/baseSections/baseValues/NumObj";
 import {
   Adornments,
   StateValueAnyKey,
@@ -26,15 +29,20 @@ import {
 import { SectionName } from "../SectionsMeta/SectionName";
 import { cloneValue, InUpdatePack, VarbMeta } from "../SectionsMeta/VarbMeta";
 import { RawFeVarb } from "../StateSections/StateSectionsTypes";
+import { mathS, NotANumberError } from "../utils/math";
 import { GetterVarbBase } from "./Bases/GetterVarbBase";
 import { GetterSection } from "./GetterSection";
 import { GetterSections } from "./GetterSections";
+import { GetterVarbNumObj } from "./GetterVarbNumObj";
 import { GetterVarbs } from "./GetterVarbs";
 
 export class GetterVarb<
   SN extends SectionName<"hasVarb">
 > extends GetterVarbBase<SN> {
   private getterVarbs = new GetterVarbs(this.getterSectionProps);
+  get numObj() {
+    return new GetterVarbNumObj(this.getterVarbProps);
+  }
   get getterSection() {
     return new GetterSection(this.getterSectionProps);
   }
@@ -56,6 +64,44 @@ export class GetterVarb<
   get outEntities(): OutEntity[] {
     return this.raw.outEntities;
   }
+  get inEntities(): InEntity[] {
+    const val = this.value("any");
+    if (typeof val === "object" && "entities" in val) {
+      return cloneDeep(val.entities);
+    } else return [];
+  }
+  get numberValue(): number {
+    const val = this.value("any");
+    if (typeof val === "object" && "solvableText" in val) {
+      const numString = this.numObj.solveTextToNumStringNext();
+      return mathS.parseFloatStrict(numString);
+    } else {
+      return mathS.parseFloatStrict(`${this.value("any")}`);
+    }
+  }
+  get numberOrZero(): number {
+    try {
+      return this.numberValue;
+    } catch (ex) {
+      if (ex instanceof NotANumberError) {
+        return 0;
+      } else {
+        throw ex;
+      }
+    }
+  }
+  get numberOrQuestionMark(): NumObjNumber {
+    try {
+      return this.numberValue;
+    } catch (ex) {
+      if (ex instanceof NotANumberError) {
+        return "?";
+      } else {
+        throw ex;
+      }
+    }
+  }
+
   get feVarbInfoMixed(): FeVarbInfo<SN> {
     return InfoS.feToMixedVarb(this.feVarbInfo);
   }
@@ -86,11 +132,7 @@ export class GetterVarb<
       return cloneValue(value) as ValueTypesPlusAny[VT];
     throw new Error(`Value not of type ${valueType}`);
   }
-  get inEntities(): InEntity[] {
-    const val = this.value("any");
-    if (val instanceof NumObj) return cloneDeep(val.entities);
-    else return [];
-  }
+
   get displayName(): string {
     const { displayName } = this.meta;
     if (typeof displayName === "string") return displayName;

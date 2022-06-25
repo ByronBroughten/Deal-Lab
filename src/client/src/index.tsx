@@ -22,6 +22,7 @@ const testRelProperty = {
 // NumObj options:
 // 1. the value is primitive; all solving and number accessing happens at the varb level
 //    this would be pretty straightforward
+//    I like this option
 // 2. the value extends GetterVarbBase
 //    This might not work (or maybe it would with a lot of effort)
 //    The value would have to take sectionName as a prop. very weird
@@ -36,6 +37,20 @@ const testRelProperty = {
 // would allow me to query them in the database in the same
 // way as in the state. And it would simplify the
 // child/rawSection relationship
+
+// SectionPacks stay the same—the db structure changes.
+// Pros:
+//   - As things stand, I can't query a child without first querying its parent;
+//     The problem gets worse the deeper the child is nested.
+//     This problem goes away if the object in the shape in which it theoretically exists.
+//   - It's not difficult to validate
+//   - The easiest way to go about it would be to convert the hierarchical sectionPack
+//     into the present sectionPack, which would be pretty simple.
+
+// Cons:
+//   - I will have to redesign the mongoose hierarchy.
+//   - The benefits of doing this are only theoretical right now
+//   - The current setup makes it easier to specifically target section values
 
 // Try decoupling childName from sectionType
 // Would I do this before or after changing the sectionPack?

@@ -3,14 +3,15 @@ import { evaluate } from "mathjs";
 import { InEntity } from "../SectionsMeta/baseSections/baseValues/entities";
 import {
   EntitiesAndEditorText,
+  NumObj,
   NumObjNumber,
 } from "../SectionsMeta/baseSections/baseValues/NumObj";
 import { isNumObjUpdateFnName } from "../SectionsMeta/baseSections/baseValues/updateFnNames";
 import { SectionName } from "../SectionsMeta/SectionName";
-import { GetterVarbBase } from "../StateGetters/Bases/GetterVarbBase";
-import { GetterVarb } from "../StateGetters/GetterVarb";
 import { arithmeticOperatorsArr, mathS } from "../utils/math";
 import { Str } from "../utils/Str";
+import { GetterVarbBase } from "./Bases/GetterVarbBase";
+import { GetterVarb } from "./GetterVarb";
 
 export const numObjUnits = {
   percent: { roundTo: 2 },
@@ -18,11 +19,21 @@ export const numObjUnits = {
   money: { roundTo: 2, roundWithZeros: true },
 } as const;
 
-export class SolveNumObjVarb<
+export type NumObjUnit = keyof typeof numObjUnits;
+
+export class GetterVarbNumObj<
   SN extends SectionName
 > extends GetterVarbBase<SN> {
   get get() {
     return new GetterVarb(this.getterVarbProps);
+  }
+  get value(): NumObj {
+    return this.get.value("numObj");
+  }
+  get editorTextStatus() {
+    if (["", "-"].includes(this.value.editorText as any)) return "empty";
+    if (Str.isRationalNumber(this.value.editorText)) return "number";
+    else return "solvableText";
   }
   solvableTextFromTextAndEntities({
     editorText,
@@ -46,14 +57,12 @@ export class SolveNumObjVarb<
       return varb.value("numObj").number;
     } else return "?";
   }
-  solvableTextToNumString(solvableText: string): string {
-    const { updateFnName } = this.get;
-    if (isNumObjUpdateFnName(updateFnName)) {
-      const { unit } = this.get.meta;
-      return `${this.solveText(solvableText)}`;
-    } else {
-      throw new Error("For now, this is only for numObjs.");
-    }
+  solveTextToNumStringNext(): string {
+    const { solvableText } = this.get.value("numObj");
+    return this.solveTextToNumString(solvableText);
+  }
+  solveTextToNumString(solvableText: string): string {
+    return `${this.solveText(solvableText)}`;
   }
   solveText(text: string): NumObjNumber {
     const { updateFnName } = this.get;

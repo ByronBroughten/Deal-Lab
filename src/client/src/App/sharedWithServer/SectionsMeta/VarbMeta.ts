@@ -1,5 +1,5 @@
 import { cloneDeep, pick } from "lodash";
-import { NumObjUnit } from "../StateSolvers/SolveValueVarb/solveText";
+import { NumObjUnit } from "../StateGetters/GetterVarbNumObj";
 import { SimpleSectionName } from "./baseSections";
 import { valueMeta } from "./baseSections/baseValues";
 import { NumObj } from "./baseSections/baseValues/NumObj";

@@ -23,12 +23,12 @@ describe("SetterVarb", () => {
       varbName: "price",
     });
 
-    const preNum = tester.get.value("numObj").numberOrZero;
+    const preNum = tester.get.numberOrZero;
 
     const preFinal = tester.get.sections
       .oneAndOnly("deal")
       .varb("totalInvestment");
-    const preFinalNum = preFinal.value("numObj").numberOrZero;
+    const preFinalNum = preFinal.numberOrZero;
 
     const amountToAdd = 10000;
     const nextValue = NumObj.init(preNum + amountToAdd);
@@ -38,7 +38,7 @@ describe("SetterVarb", () => {
     const postFinal = tester.get.sections
       .oneAndOnly("deal")
       .varb("totalInvestment");
-    const postFinalNum = postFinal.value("numObj").numberOrZero;
+    const postFinalNum = postFinal.numberOrZero;
 
     expect(postNum).toBe(preNum + amountToAdd);
     expect(postFinalNum).toBe(preFinalNum + amountToAdd);

@@ -15,8 +15,8 @@ import { GetterVarbBase } from "../StateGetters/Bases/GetterVarbBase";
 import { GetterList } from "../StateGetters/GetterList";
 import { GetterSections } from "../StateGetters/GetterSections";
 import { GetterVarb } from "../StateGetters/GetterVarb";
+import { GetterVarbNumObj } from "../StateGetters/GetterVarbNumObj";
 import { GetterVarbs } from "../StateGetters/GetterVarbs";
-import { SolveNumObjVarb } from "./SolveNumObjVarb";
 import { UserVarbValueSolver } from "./SolveValueVarb/UserVarbValueSolver";
 
 export class SolveValueVarb<
@@ -36,7 +36,7 @@ export class SolveValueVarb<
   }
 
   private get numObjSolver() {
-    return new SolveNumObjVarb(this.getterVarbProps);
+    return new GetterVarbNumObj(this.getterVarbProps);
   }
   private updateFns = {
     string: (): string => {
@@ -77,7 +77,7 @@ export class SolveValueVarb<
     },
     calcVarbs: (): NumObj => {
       const solvableText = this.solvableTextFromCalcVarbs();
-      const numString = this.numObjSolver.solvableTextToNumString(solvableText);
+      const numString = this.numObjSolver.solveTextToNumString(solvableText);
       const numObj = this.getterVarb.value("numObj");
       const next = numObj.updateCore({
         solvableText,
@@ -87,7 +87,7 @@ export class SolveValueVarb<
     },
     calculation: (): NumObj => {
       const solvableText = this.solvableTextFromCalculation();
-      const numString = this.numObjSolver.solvableTextToNumString(solvableText);
+      const numString = this.numObjSolver.solveTextToNumString(solvableText);
       const numObj = this.getterVarb.value("numObj");
       const nextNumObj = numObj.updateCore({
         solvableText,
