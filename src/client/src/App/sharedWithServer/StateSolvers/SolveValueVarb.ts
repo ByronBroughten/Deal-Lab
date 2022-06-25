@@ -2,12 +2,12 @@ import calculations, {
   isCalculationName,
   NumberProps,
 } from "../SectionsMeta/baseSections/baseValues/calculations";
-import {
-  FailedVarbs,
-  NumObj,
-  NumObjCache,
-} from "../SectionsMeta/baseSections/baseValues/NumObj";
+import { NumObj } from "../SectionsMeta/baseSections/baseValues/NumObj";
 import { InfoS } from "../SectionsMeta/Info";
+import {
+  DbVarbInfo,
+  RelVarbInfo,
+} from "../SectionsMeta/relSections/rel/relVarbInfoTypes";
 import { UpdateFnProps } from "../SectionsMeta/relSections/rel/relVarbTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { GetterSectionProps } from "../StateGetters/Bases/GetterSectionBase";
@@ -42,61 +42,37 @@ export class SolveValueVarb<
     string: (): string => {
       return this.getterVarb.value("string");
     },
-
     editorValue: (): NumObj => {
       const value = this.getterVarb.value("numObj");
-      const { cache } = this.getterVarb.localValue("editorValue", "numObj");
-      return value.updateCore(cache);
+      const { solvableText } = this.getterVarb.localValue(
+        "editorValue",
+        "numObj"
+      );
+      return { ...value, solvableText };
     },
     loadedNumObj: (): NumObj => {
-      const numObj = this.getterVarb.value("numObj");
-      const loadingVarbInfo = this.getterVarbs.varbInfoStringValues;
-
-      let nextCache: NumObjCache;
-      if (
-        InfoS.is.inEntityVarb(loadingVarbInfo) &&
-        this.getterList.hasByMixed(loadingVarbInfo)
-      ) {
-        const varb = this.getterSections.varbByMixed(loadingVarbInfo);
-        const loadedValue = varb.value("numObj");
-        nextCache = loadedValue.cache;
-      } else {
-        nextCache = {
-          solvableText: "?",
-          numString: "?",
-        };
-      }
-      const nextNumObj = numObj.updateCore(nextCache);
-      const nextEntities = numObj.entities.filter(
-        (entity) => entity.length === 0
-      );
-      return nextNumObj.updateCore({
-        editorText: `${nextCache.numString === "?" ? "" : nextCache.numString}`,
-        entities: nextEntities,
-      });
+      const current = this.getterVarb.value("numObj");
+      const nextTexts = this.loadNextTexts();
+      return {
+        ...nextTexts,
+        entities: current.entities.filter((entity) => entity.length === 0),
+      };
     },
     calcVarbs: (): NumObj => {
-      const solvableText = this.solvableTextFromCalcVarbs();
-      const numString = this.numObjSolver.solveTextToNumString(solvableText);
-      const numObj = this.getterVarb.value("numObj");
-      const next = numObj.updateCore({
-        solvableText,
-        numString,
-      });
-      return next;
+      const current = this.getterVarb.value("numObj");
+      return {
+        ...current,
+        solvableText: this.solvableTextFromCalcVarbs(),
+      };
     },
     calculation: (): NumObj => {
       const solvableText = this.solvableTextFromCalculation();
       const numString = this.numObjSolver.solveTextToNumString(solvableText);
-      const numObj = this.getterVarb.value("numObj");
-      const nextNumObj = numObj.updateCore({
+      return {
         solvableText,
-        numString,
-      });
-      return nextNumObj.updateCore({
         editorText: numString === "?" ? "" : numString,
         entities: [],
-      });
+      };
     },
     userVarb: (): NumObj => {
       if (this.getterVarb.sectionName === "userVarbItem") {
@@ -121,15 +97,33 @@ export class SolveValueVarb<
     if (this.isInUpdateFns(updateFnName)) return this.updateFns[updateFnName]();
     else throw new Error(`updateFnName ${updateFnName} not found.`);
   }
+  private loadNextTexts(): { editorText: string; solvableText: string } {
+    const loadingVarbInfo = this.getterVarbs.varbInfoStringValues;
+    if (
+      InfoS.is.inEntityVarb(loadingVarbInfo) &&
+      this.getterList.hasByMixed(loadingVarbInfo)
+    ) {
+      const varb = this.getterSections.varbByMixed(loadingVarbInfo);
+      return {
+        solvableText: varb.value("numObj").solvableText,
+        editorText:
+          varb.numberOrQuestionMark === "?" ? "" : `${varb.numberValue}`,
+      };
+    } else {
+      return {
+        solvableText: "?",
+        editorText: "",
+      };
+    }
+  }
   private isInUpdateFns(str: string): str is keyof typeof this.updateFns {
     return str in this.updateFns;
   }
   private solvableTextFromCalcVarbs(): string {
     if (this.getterVarb.updateFnName !== "calcVarbs")
       throw new Error("This is only for calcVarbs");
-
-    const { core } = this.getterVarb.value("numObj");
-    return this.numObjSolver.solvableTextFromTextAndEntities(core);
+    const numObj = this.getterVarb.value("numObj");
+    return this.numObjSolver.solvableTextFromTextAndEntities(numObj);
   }
 
   private solvableTextFromCalculation() {
@@ -157,21 +151,25 @@ export class SolveValueVarb<
       for (const relInfo of propOrArr) {
         const inVarbs = this.getterVarbs.varbsByFocalMixed(relInfo);
         for (const inVarb of inVarbs) {
-          const value = inVarb.value();
-          if (!(value instanceof NumObj)) continue;
-          let { number: num } = inVarb.value("numObj");
-          if (num === "?") {
-            failedVarbs.push({
-              errorMessage: "failed varb",
-              ...relInfo,
-            });
+          if (inVarb.hasValueType("numObj")) {
+            const num = inVarb.numberOrQuestionMark;
+            if (num === "?") {
+              failedVarbs.push({
+                errorMessage: "failed varb",
+                ...relInfo,
+              });
+            }
+            const numArr = numberVarbs[propName];
+            if (Array.isArray(numArr)) numArr.push(num);
+            else numberVarbs[propName] = num;
           }
-          const numArr = numberVarbs[propName];
-          if (Array.isArray(numArr)) numArr.push(num);
-          else numberVarbs[propName] = num;
         }
       }
     }
     return { numberVarbs, failedVarbs };
   }
 }
+
+export type FailedVarbs = FailedVarb[];
+type FailedVarb = { errorMessage: string } & UpdateVarbInfo;
+type UpdateVarbInfo = RelVarbInfo | DbVarbInfo;

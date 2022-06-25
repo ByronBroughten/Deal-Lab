@@ -19,18 +19,6 @@ const testRelProperty = {
   },
 };
 
-// NumObj options:
-// 1. the value is primitive; all solving and number accessing happens at the varb level
-//    this would be pretty straightforward
-//    I like this option
-// 2. the value extends GetterVarbBase
-//    This might not work (or maybe it would with a lot of effort)
-//    The value would have to take sectionName as a prop. very weird
-//    This would keep everything numObj related more or less where it belongs, though
-// 3. Keep it how it is.
-//    I would just have to save one extra thing: numString
-//    It might not be too difficult to fix in the future.
-
 // Make Queryable SectionPacks
 // Now that sectionPacks are just for transferring data,
 // I could make new ones that are hierarchical, which I think

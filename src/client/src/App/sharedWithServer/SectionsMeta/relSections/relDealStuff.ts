@@ -45,7 +45,6 @@ function dealSection<
       ),
       cashFlowOngoingSwitch: rel.varb.string({
         initValue: "yearly",
-        dbInitValue: "yearly",
       }),
       roiMonthly: rel.varb.leftRightPropFn(
         "Monthly ROI",
@@ -67,7 +66,6 @@ function dealSection<
       ),
       roiOngoingSwitch: rel.varb.string({
         initValue: "yearly",
-        dbInitValue: "yearly",
       }),
       upfrontExpensesSum: rel.varb.sumNums(
         "Sum of upfront expenses",

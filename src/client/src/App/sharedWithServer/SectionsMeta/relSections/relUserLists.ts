@@ -1,5 +1,5 @@
 import { StrictOmit } from "../../utils/types";
-import { dbNumObj } from "../baseSections/baseValues/NumObj";
+import { numObj } from "../baseSections/baseValues/NumObj";
 import { rel } from "./rel";
 import { relSection, RelSectionOptions } from "./rel/relSection";
 import { RelVarbs } from "./rel/relVarbs";
@@ -18,7 +18,6 @@ function userVarbList<
       ...rel.varbs.savableSection,
       defaultValueSwitch: rel.varb.string({
         initValue: "labeledEquation",
-        dbInitValue: "labeledEquation",
       }),
     } as RelVarbs<SN>,
     {
@@ -51,14 +50,12 @@ export const preUserLists = {
       endAdornment: rel.varb.string(),
       valueSwitch: rel.varb.string({
         initValue: "labeledEquation",
-        dbInitValue: "labeledEquation",
       }),
       editorValue: rel.varb.type("numObj"),
       value: rel.varb.type("numObj", {
         displayName: rel.varbInfo.relative("userVarbItem", "name", "local"),
         updateFnName: "userVarb",
-        initValue: rel.value.numObj(0),
-        dbInitValue: dbNumObj(0),
+        initValue: numObj(0),
         updateFnProps: {
           varbType: rel.varbInfo.relative(
             "userVarbItem",
@@ -91,10 +88,10 @@ export const preUserLists = {
     "Conditional Row",
     {
       level: rel.varb.type("number"),
-      type: rel.varb.string({ initValue: "if", dbInitValue: "if" }),
+      type: rel.varb.string({ initValue: "if" }),
       // if
       left: rel.varb.type("numObj"),
-      operator: rel.varb.string({ initValue: "===", dbInitValue: "===" }),
+      operator: rel.varb.string({ initValue: "===" }),
       rightList: rel.varb.type("stringArray"),
       rightValue: rel.varb.type("numObj"),
       // then

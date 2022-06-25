@@ -3,7 +3,7 @@ import request from "supertest";
 import { config } from "../../client/src/App/Constants";
 import { apiQueriesShared } from "../../client/src/App/sharedWithServer/apiQueriesShared";
 import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
-import { NumObj } from "../../client/src/App/sharedWithServer/SectionsMeta/baseSections/baseValues/NumObj";
+import { numObj } from "../../client/src/App/sharedWithServer/SectionsMeta/baseSections/baseValues/NumObj";
 import { Id } from "../../client/src/App/sharedWithServer/SectionsMeta/baseSections/id";
 import { runApp } from "../../runApp";
 import { DbSectionsModel } from "../DbSectionsModel";
@@ -15,12 +15,12 @@ import { SectionQueryTester } from "./test/SectionQueryTester";
 const sectionName = "property";
 const originalValues = {
   title: "Original title",
-  price: NumObj.init(100000),
+  price: numObj(100000),
 } as const;
 
 const updatedValues = {
   title: "Updated title",
-  price: NumObj.init(500000),
+  price: numObj(500000),
 } as const;
 
 type TestReqs = {
@@ -88,8 +88,9 @@ describe(testedRoute, () => {
     const updatedSection = updatedDoc?.rawSections.property.find(
       ({ dbId }) => dbId === reqs.updateSection.body.sectionPack.dbId
     );
+
     expect(updatedSection?.dbVarbs.title).toBe(updatedValues.title);
-    expect(updatedSection?.dbVarbs.price).toEqual(updatedValues.price.dbNumObj);
+    expect(updatedSection?.dbVarbs.price).toEqual(updatedValues.price);
   });
   it("should return 404 if there is not an entry in the db with the sectionPack's dbId", async () => {
     reqs.updateSection.body.sectionPack.dbId = Id.make();

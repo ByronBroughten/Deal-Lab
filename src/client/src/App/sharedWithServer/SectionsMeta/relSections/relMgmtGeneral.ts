@@ -14,7 +14,6 @@ function makeMgmtPreVarbs<SN extends "mgmt", R extends RelVarbs<"mgmt">>(
     ...rel.varbs.savableSection,
     [rentCut.switch]: rel.varb.string({
       initValue: "percent",
-      dbInitValue: "percent",
     }),
     [rentCut.percent]: rel.varb.percentObj("Rent cut", {
       initNumber: 5,
@@ -31,7 +30,6 @@ function makeMgmtPreVarbs<SN extends "mgmt", R extends RelVarbs<"mgmt">>(
     // SectionsMeta is the highest level.
     [rentCutDollars.switch]: rel.varb.string({
       initValue: "monthly",
-      dbInitValue: "monthly",
     }),
     [rentCutDollars.monthly]: rel.varb.moneyMonth("Rent cut", {
       initNumber: 0,

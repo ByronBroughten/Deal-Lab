@@ -1,6 +1,6 @@
 import { pick } from "lodash";
 import { isSectionPack } from "../SectionPack/SectionPack";
-import { dbNumObj } from "../SectionsMeta/baseSections/baseValues/NumObj";
+import { numObj } from "../SectionsMeta/baseSections/baseValues/NumObj";
 import { Obj } from "../utils/Obj";
 import { PackBuilderSection } from "./PackBuilderSection";
 
@@ -8,7 +8,7 @@ describe("PackBuilderSection", () => {
   const dbVarbs = {
     property: {
       title: "String",
-      price: dbNumObj(200000),
+      price: numObj(200000),
       taxesOngoingSwitch: "yearly",
     },
     upfrontCostList: {

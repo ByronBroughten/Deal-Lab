@@ -95,7 +95,7 @@ export class SectionMeta<SN extends SimpleSectionName> {
     const defaultDbVarbs: DbVarbs = {};
     const varbMetasCore = this.varbMetas.getCore();
     for (const [varbName, varbMeta] of Obj.entries(varbMetasCore)) {
-      defaultDbVarbs[varbName] = varbMeta.get("dbInitValue");
+      defaultDbVarbs[varbName] = varbMeta.get("initValue");
     }
     return defaultDbVarbs;
   }

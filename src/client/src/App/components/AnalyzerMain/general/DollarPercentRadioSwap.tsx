@@ -41,8 +41,6 @@ export default function DollarPercentRadioSwap({
     );
   }
   const radio = radios[switchValue];
-  const dollarsValue = dollarsVarb.value("numObj");
-  const percentValue = percentVarb.value("numObj");
   return (
     <Styled className={`DualPercentRadioSwap-root ${className ?? ""}`}>
       <FormControl component="fieldset" className="radio-part">
@@ -73,7 +71,7 @@ export default function DollarPercentRadioSwap({
               label={title}
               feVarbInfo={percentVarb.feVarbInfo}
               endAdornment={`${percentAdornment} ${
-                dollarsValue.number === "?"
+                dollarsVarb.numberOrQuestionMark === "?"
                   ? ""
                   : ` (${dollarsVarb.displayVarb()})`
               }`}
@@ -87,7 +85,7 @@ export default function DollarPercentRadioSwap({
               label={title}
               feVarbInfo={dollarsVarb.feVarbInfo}
               endAdornment={`${
-                percentValue.number === "?"
+                percentVarb.numberOrQuestionMark === "?"
                   ? ""
                   : ` (${percentVarb.displayVarb()})`
               }`}

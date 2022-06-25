@@ -87,20 +87,16 @@ function initRawVarb<SN extends SectionName>({
 }
 function dbToFeValue(
   varbNames: VarbNames<SectionName>,
-  proposedDbValue: DbValue | undefined
+  proposedDbValue: StateValue | undefined
 ) {
-  const dbValue = getValidDbValue(varbNames, proposedDbValue);
-  const valueMeta = sectionsMeta.value(varbNames);
-  const value = (valueMeta.rawToState as (_: DbValue) => StateValue)(dbValue);
-  return value;
+  const dbValue = getValidValue(varbNames, proposedDbValue);
+  return dbValue;
 }
-function getValidDbValue(
+function getValidValue(
   varbNames: VarbNames<SectionName>,
-  dbValue: DbValue | undefined
-): DbValue {
+  dbValue: StateValue | undefined
+): StateValue {
   const valueMeta = sectionsMeta.value(varbNames);
   const varbMeta = sectionsMeta.varb(varbNames);
-  // for now, the correct dbInitValue lies on varbMeta
-  // not valueMeta
-  return valueMeta.isRaw(dbValue) ? dbValue : (varbMeta.dbInitValue as DbValue);
+  return valueMeta.is(dbValue) ? dbValue : varbMeta.initValue;
 }

@@ -1,4 +1,4 @@
-import { dbNumObj } from "../SectionsMeta/baseSections/baseValues/NumObj";
+import { numObj } from "../SectionsMeta/baseSections/baseValues/NumObj";
 import { ChildName } from "../SectionsMeta/relSectionTypes/ChildTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
@@ -48,7 +48,7 @@ describe("SetterSection", () => {
     const childCountDifference = numChildrenNext - preChildCounts.childIds;
 
     const packVarbs = {
-      price: dbNumObj(257801),
+      price: numObj(257801),
       title: "New Title",
     } as const;
 

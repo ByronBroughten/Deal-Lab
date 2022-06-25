@@ -106,7 +106,7 @@ export class GetterVarbs<SN extends SectionName> extends GetterSectionBase<SN> {
   }
   get dbVarbs(): DbVarbs {
     return this.varbNames.reduce((dbVarbs, varbName) => {
-      dbVarbs[varbName] = this.one(varbName).toDbValue();
+      dbVarbs[varbName] = this.one(varbName).value();
       return dbVarbs;
     }, {} as DbVarbs);
   }

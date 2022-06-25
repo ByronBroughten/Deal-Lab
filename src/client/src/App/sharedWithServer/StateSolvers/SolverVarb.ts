@@ -215,9 +215,8 @@ export class SolverVarb<
     entityId,
     ...inEntityVarbInfo
   }: InEntityVarbInfo & { entityId: string }): void {
-    const value = this.get.value("numObj");
     this.updaterVarb.update({
-      value: value.removeEntity(entityId),
+      value: this.get.numObj.removeEntity(entityId),
     });
     if (this.getterSections.hasSectionMixed(inEntityVarbInfo)) {
       const inEntityVarb = this.solverSections.varbByMixed(inEntityVarbInfo);
@@ -225,9 +224,8 @@ export class SolverVarb<
     }
   }
   private addInEntity(inEntity: InEntity): void {
-    const value = this.get.value("numObj");
     this.updaterVarb.update({
-      value: value.addEntity(inEntity),
+      value: this.get.numObj.addEntity(inEntity),
     });
     if (this.inEntitySectionExists(inEntity)) {
       const inEntityVarb = this.solverSections.varbByMixed(inEntity);

@@ -11,10 +11,8 @@ export default function FinancingInfo({ feId }: { feId: string }) {
     sectionName: "financing",
     feId,
   });
-  const downPaymentDollars = financing.value(
-    "downPaymentDollars",
-    "numObj"
-  ).number;
+  const downPaymentDollars =
+    financing.varb("downPaymentDollars").numberOrQuestionMark;
   const downPaymentIsPercentable = ![0, "?"].includes(downPaymentDollars);
   const loanIds = financing.childFeIds("loan");
   const { isAtLeastOne, areMultiple } = useHowMany(loanIds);

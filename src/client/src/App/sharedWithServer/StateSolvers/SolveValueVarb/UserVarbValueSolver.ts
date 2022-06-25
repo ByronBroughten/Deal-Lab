@@ -1,6 +1,7 @@
 import { NumObj } from "../../SectionsMeta/baseSections/baseValues/NumObj";
 import { GetterSectionBase } from "../../StateGetters/Bases/GetterSectionBase";
 import { GetterSection } from "../../StateGetters/GetterSection";
+import { GetterVarb } from "../../StateGetters/GetterVarb";
 
 type LevelsThatPass = Record<number, boolean>;
 export class UserVarbValueSolver extends GetterSectionBase<"userVarbItem"> {
@@ -18,16 +19,24 @@ export class UserVarbValueSolver extends GetterSectionBase<"userVarbItem"> {
     const rows = this.getterSection.children("conditionalRow");
     const levelsThatPass: LevelsThatPass = {};
     for (const row of rows) {
+      const left = row.varb("left");
+      const rightValue = row.varb("rightValue");
+
       const vals = row.varbs.values({
         type: "string",
         level: "number",
-        left: "numObj",
         operator: "string",
         rightList: "stringArray",
-        rightValue: "numObj",
         then: "numObj",
       });
-      const result = this.checkRow(vals, levelsThatPass);
+      const result = this.checkRow(
+        {
+          ...vals,
+          left,
+          rightValue,
+        },
+        levelsThatPass
+      );
       if (result) return result;
     }
     throw new Error(
@@ -46,10 +55,10 @@ export class UserVarbValueSolver extends GetterSectionBase<"userVarbItem"> {
     }: {
       type: string;
       level: number;
-      left: NumObj;
+      left: GetterVarb<"conditionalRow">;
       operator: string;
       rightList: string[];
-      rightValue: NumObj;
+      rightValue: GetterVarb<"conditionalRow">;
       then: NumObj;
     },
     levelsThatPass: LevelsThatPass
@@ -81,10 +90,10 @@ export class UserVarbValueSolver extends GetterSectionBase<"userVarbItem"> {
       rightValue,
     }: {
       level: number;
-      left: NumObj;
+      left: GetterVarb<"conditionalRow">;
       operator: string;
       rightList: string[];
-      rightValue: NumObj;
+      rightValue: GetterVarb<"conditionalRow">;
     }
   ) {
     for (const num in levelsThatPass) {
@@ -127,19 +136,21 @@ const logicOperators = [...valueOperators, ...listOperators] as const;
 export type LogicOperator = typeof logicOperators[number];
 
 function testValue(
-  leftSide: NumObj,
+  leftSide: GetterVarb<"conditionalRow">,
   operator: ValueOperator,
-  rightSide: NumObj
+  rightSide: GetterVarb<"conditionalRow">
 ) {
   function getTestString() {
-    const { number: leftNumber } = leftSide;
-    const { number: rightNumber } = rightSide;
+    const { numberOrQuestionMark: leftNum } = leftSide;
+    const { numberOrQuestionMark: rightNum } = rightSide;
 
-    if ([leftNumber, rightNumber].some((n) => typeof n === "number"))
-      return `return ${leftNumber}${operator}${rightNumber}`;
+    if ([leftNum, rightNum].some((n) => typeof n === "number"))
+      return `return ${leftNum}${operator}${rightNum}`;
 
     if (["===", "!=="].includes(operator))
-      return `return "${leftSide.editorText}"${operator}"${rightSide.editorText}"`;
+      return `return "${leftSide.value("numObj").editorText}"${operator}"${
+        rightSide.value("numObj").editorText
+      }"`;
   }
 
   const testString = getTestString();
@@ -147,13 +158,14 @@ function testValue(
   else return false;
 }
 function testList(
-  leftSide: NumObj,
+  leftSide: GetterVarb<"conditionalRow">,
   operator: ListOperator,
   rightSide: string[]
 ) {
   function getTestString() {
-    if (typeof leftSide.number === "number") return `${leftSide.number}`;
-    else return leftSide.editorText;
+    if (typeof leftSide.numberOrQuestionMark === "number")
+      return `${leftSide.numberValue}`;
+    else return leftSide.value("numObj").editorText;
   }
   const testString = getTestString();
   const includes = rightSide.includes(testString);

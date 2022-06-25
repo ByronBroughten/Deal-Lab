@@ -183,7 +183,6 @@ export const relVarbs = {
       name: relVarb.stringOrLoaded(sectionName),
       valueSwitch: relVarb.string({
         initValue: "labeledEquation",
-        dbInitValue: "labeledEquation",
       }),
       ...relVarbs.entityInfo(),
       editorValue: relVarb.calcVarb("", { startAdornment: "$" }),
@@ -234,7 +233,6 @@ export const relVarbs = {
       name: relVarb.stringOrLoaded(sectionName),
       valueSwitch: relVarb.string({
         initValue: "labeledEquation",
-        dbInitValue: "labeledEquation",
       }),
 
       ...relVarbs.entityInfo(),
@@ -254,7 +252,6 @@ export const relVarbs = {
       ),
       [ongoingValueNames.switch]: relVarb.string({
         initValue: "yearly",
-        dbInitValue: "yearly",
       }),
       // So... that's the editorValue, is that right?
 
@@ -338,7 +335,6 @@ export const relVarbs = {
       ),
       defaultValueSwitch: relVarb.string({
         initValue: "labeledEquation",
-        dbInitValue: "labeledEquation",
       }),
     } as R;
     return r;
@@ -350,11 +346,9 @@ export const relVarbs = {
       ...this.savableSection,
       defaultValueSwitch: relVarb.string({
         initValue: "labeledEquation",
-        dbInitValue: "labeledEquation",
       }),
       defaultOngoingSwitch: relVarb.string({
         initValue: "monthly",
-        dbInitValue: "monthly",
       }),
       ...relVarbs.ongoingSumNums(
         "total",

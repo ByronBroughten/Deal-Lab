@@ -4,10 +4,7 @@ import {
   InEntityVarbInfo,
   OutEntity,
 } from "../SectionsMeta/baseSections/baseValues/entities";
-import {
-  NumObj,
-  NumObjNumber,
-} from "../SectionsMeta/baseSections/baseValues/NumObj";
+import { NumberOrQ } from "../SectionsMeta/baseSections/baseValues/NumObj";
 import {
   Adornments,
   StateValueAnyKey,
@@ -22,12 +19,9 @@ import {
   VarbNames,
 } from "../SectionsMeta/relSections/rel/relVarbInfoTypes";
 import { UniqueIdMixedVarbInfo } from "../SectionsMeta/relSections/rel/uniqueIdInfo";
-import {
-  DbValue,
-  ValueTypeName,
-} from "../SectionsMeta/relSections/rel/valueMetaTypes";
+import { ValueTypeName } from "../SectionsMeta/relSections/rel/valueMetaTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
-import { cloneValue, InUpdatePack, VarbMeta } from "../SectionsMeta/VarbMeta";
+import { InUpdatePack, VarbMeta } from "../SectionsMeta/VarbMeta";
 import { RawFeVarb } from "../StateSections/StateSectionsTypes";
 import { mathS, NotANumberError } from "../utils/math";
 import { GetterVarbBase } from "./Bases/GetterVarbBase";
@@ -35,6 +29,8 @@ import { GetterSection } from "./GetterSection";
 import { GetterSections } from "./GetterSections";
 import { GetterVarbNumObj } from "./GetterVarbNumObj";
 import { GetterVarbs } from "./GetterVarbs";
+
+class ValueTypeError extends Error {}
 
 export class GetterVarb<
   SN extends SectionName<"hasVarb">
@@ -90,7 +86,7 @@ export class GetterVarb<
       }
     }
   }
-  get numberOrQuestionMark(): NumObjNumber {
+  get numberOrQuestionMark(): NumberOrQ {
     try {
       return this.numberValue;
     } catch (ex) {
@@ -124,13 +120,22 @@ export class GetterVarb<
   get varbId() {
     return GetterVarb.feVarbInfoToVarbId(this.feVarbInfo);
   }
+  hasValueType<VT extends ValueTypeName>(valueType: VT): boolean {
+    try {
+      this.value(valueType);
+      return true;
+    } catch (ex) {
+      if (ex instanceof ValueTypeError) return false;
+      else throw ex;
+    }
+  }
   value<VT extends ValueTypeName | "any" = "any">(
     valueType?: VT
   ): ValueTypesPlusAny[VT] {
     const { value } = this.raw;
     if (valueSchemasPlusAny[valueType ?? "any"].is(value))
-      return cloneValue(value) as ValueTypesPlusAny[VT];
-    throw new Error(`Value not of type ${valueType}`);
+      return cloneDeep(value) as ValueTypesPlusAny[VT];
+    throw new ValueTypeError(`Value not of type ${valueType}`);
   }
 
   get displayName(): string {
@@ -140,9 +145,9 @@ export class GetterVarb<
     return displayNameVarb.value("string");
   }
   get displayValue(): string {
-    const value = this.value();
-    if (value instanceof NumObj) return `${value.number}`;
-    else return `${value}`;
+    if (this.hasValueType("numObj")) {
+      return `${this.numberOrQuestionMark}`;
+    } else return `${this.value()}`;
   }
   displayVarb({ startAdornment, endAdornment }: Partial<Adornments> = {}) {
     return `${startAdornment ?? this.meta.startAdornment}${this.displayValue}${
@@ -157,13 +162,6 @@ export class GetterVarb<
     valueType?: VT
   ): ValueTypesPlusAny[VT] {
     return this.localVarb(varbName).value(valueType);
-  }
-  toDbValue(): DbValue {
-    const value = this.value("any");
-    if (value instanceof NumObj) {
-      const dbValue = value.dbNumObj;
-      return dbValue;
-    } else return value;
   }
   get updateFnName() {
     return this.inUpdatePack.updateFnName;

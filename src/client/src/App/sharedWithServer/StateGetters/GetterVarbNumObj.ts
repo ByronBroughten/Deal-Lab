@@ -3,11 +3,12 @@ import { evaluate } from "mathjs";
 import { InEntity } from "../SectionsMeta/baseSections/baseValues/entities";
 import {
   EntitiesAndEditorText,
+  NumberOrQ,
   NumObj,
-  NumObjNumber,
 } from "../SectionsMeta/baseSections/baseValues/NumObj";
 import { isNumObjUpdateFnName } from "../SectionsMeta/baseSections/baseValues/updateFnNames";
 import { SectionName } from "../SectionsMeta/SectionName";
+import { Arr } from "../utils/Arr";
 import { arithmeticOperatorsArr, mathS } from "../utils/math";
 import { Str } from "../utils/Str";
 import { GetterVarbBase } from "./Bases/GetterVarbBase";
@@ -30,6 +31,16 @@ export class GetterVarbNumObj<
   get value(): NumObj {
     return this.get.value("numObj");
   }
+  removeEntity(entityId: string): NumObj {
+    const entities = Arr.findAndRmClone(this.value.entities, (entity) => {
+      return entity.entityId === entityId;
+    });
+    return { ...this.value, entities };
+  }
+  addEntity(entity: InEntity): NumObj {
+    const entities = [...this.value.entities, entity];
+    return { ...this.value, entities };
+  }
   get editorTextStatus() {
     if (["", "-"].includes(this.value.editorText as any)) return "empty";
     if (Str.isRationalNumber(this.value.editorText)) return "number";
@@ -51,10 +62,10 @@ export class GetterVarbNumObj<
     }
     return solvableText;
   }
-  private getSolvableNumber(inEntity: InEntity): NumObjNumber {
+  private getSolvableNumber(inEntity: InEntity): NumberOrQ {
     if (this.get.sections.hasSectionMixed(inEntity)) {
       const varb = this.get.sections.varbByMixed(inEntity);
-      return varb.value("numObj").number;
+      return varb.numberOrQuestionMark;
     } else return "?";
   }
   solveTextToNumStringNext(): string {
@@ -64,7 +75,7 @@ export class GetterVarbNumObj<
   solveTextToNumString(solvableText: string): string {
     return `${this.solveText(solvableText)}`;
   }
-  solveText(text: string): NumObjNumber {
+  solveText(text: string): NumberOrQ {
     const { updateFnName } = this.get;
     const { unit } = this.get.meta;
     if (!isNumObjUpdateFnName(updateFnName)) {

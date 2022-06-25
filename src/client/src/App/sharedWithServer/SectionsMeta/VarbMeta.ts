@@ -2,8 +2,6 @@ import { cloneDeep, pick } from "lodash";
 import { NumObjUnit } from "../StateGetters/GetterVarbNumObj";
 import { SimpleSectionName } from "./baseSections";
 import { valueMeta } from "./baseSections/baseValues";
-import { NumObj } from "./baseSections/baseValues/NumObj";
-import { StateValue } from "./baseSections/baseValues/StateValueTypes";
 import {
   InRelVarbInfo,
   OutRelVarbInfo,
@@ -77,14 +75,6 @@ export interface VarbMetaProps {
   outUpdatePacks: OutUpdatePack[];
 }
 
-export function cloneValue(value: StateValue): StateValue {
-  return value instanceof NumObj
-    ? value.clone()
-    : Array.isArray(value)
-    ? [...value]
-    : value;
-}
-
 export type VarbMetaCore = RelVarb & VarbMetaProps;
 export class VarbMeta {
   constructor(readonly core: VarbMetaCore) {}
@@ -124,10 +114,7 @@ export class VarbMeta {
     return this.core.displayName;
   }
   get initValue() {
-    return cloneValue(this.core.initValue);
-  }
-  get dbInitValue() {
-    return cloneDeep(this.core.dbInitValue);
+    return cloneDeep(this.core.initValue);
   }
   get varbName() {
     return this.core.varbName;

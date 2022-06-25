@@ -1,11 +1,11 @@
 import { percentToDecimal } from "../../../utils/math";
 import { Obj } from "../../../utils/Obj";
-import { NumObjNumber } from "./NumObj";
+import { NumberOrQ } from "./NumObj";
 
 export type Calculate = (props: any) => string;
 
 type LRSides = { leftSide: number; rightSide: number };
-export type CalcProp = NumObjNumber;
+export type CalcProp = NumberOrQ;
 export type NumberProps = { [name: string]: CalcProp | CalcProp[] };
 
 type NumProp = { num: CalcProp };

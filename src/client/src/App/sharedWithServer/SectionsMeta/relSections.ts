@@ -135,7 +135,7 @@ export function makeRelSections() {
       userName: rel.varb.string({ displayName: "Name" }),
       apiAccessStatus: relVarb.string({
         displayName: "Api Access Status",
-        dbInitValue: "basicStorage" as ApiAccessStatus,
+        initValue: "basicStorage" as ApiAccessStatus,
       }),
     }),
     ...relSection.base("serverOnlyUser", "User", {

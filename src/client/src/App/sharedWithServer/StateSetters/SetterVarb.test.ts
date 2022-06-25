@@ -1,10 +1,10 @@
-import { NumObj } from "../SectionsMeta/baseSections/baseValues/NumObj";
+import { numObj } from "../SectionsMeta/baseSections/baseValues/NumObj";
 import { SetterTesterVarb } from "./TestUtils/SetterTesterVarb";
 
 describe("SetterVarb", () => {
   const namesAndValues = [
     ["property", ["title", "New Title"]],
-    ["property", ["price", NumObj.init(250000)]],
+    ["property", ["price", numObj(250000)]],
     ["unit", ["rent"]],
   ] as const;
 
@@ -31,10 +31,10 @@ describe("SetterVarb", () => {
     const preFinalNum = preFinal.numberOrZero;
 
     const amountToAdd = 10000;
-    const nextValue = NumObj.init(preNum + amountToAdd);
+    const nextValue = numObj(preNum + amountToAdd);
     tester.setter.updateValueDirectly(nextValue);
 
-    const postNum = tester.get.value("numObj").number;
+    const postNum = tester.get.numberOrQuestionMark;
     const postFinal = tester.get.sections
       .oneAndOnly("deal")
       .varb("totalInvestment");

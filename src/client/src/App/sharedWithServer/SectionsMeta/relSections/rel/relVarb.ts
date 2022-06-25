@@ -39,8 +39,7 @@ export const relVarb = {
     return {
       type,
       updateFnName: valueSchema.updateFnNames[0],
-      initValue: valueSchema.defaultInit(),
-      dbInitValue: valueSchema.dbInitValue,
+      initValue: valueSchema.initDefault(),
       ...this.common(partial),
       ...(type === "numObj" && { unit: "money" }),
       ...partial,

@@ -1,6 +1,6 @@
 import { round } from "lodash";
 import { evaluate } from "mathjs";
-import { NumObjNumber } from "../../SectionsMeta/baseSections/baseValues/NumObj";
+import { NumberOrQ } from "../../SectionsMeta/baseSections/baseValues/NumObj";
 import { NumObjUpdateFnName } from "../../SectionsMeta/baseSections/baseValues/updateFnNames";
 import { arithmeticOperatorsArr, mathS } from "../../utils/math";
 
@@ -23,7 +23,7 @@ export function solveText(
   text: string,
   unit: NumObjUnit,
   updateFnName: NumObjUpdateFnName
-): NumObjNumber {
+): NumberOrQ {
   // the editor should handle when someone validly types left to right
   if (text[text.length - 1] === ".")
     // if there's a dot at the end, they could be about to enter a number

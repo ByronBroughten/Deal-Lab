@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { zDbValue } from "../SectionsMeta/baseSections/baseValues";
+import { zValue } from "../SectionsMeta/baseSections/baseValues";
 import { DbValue } from "../SectionsMeta/relSections/rel/valueMetaTypes";
 import {
   ChildIdArrsWide,
@@ -32,7 +32,7 @@ export type RawSection<SN extends SectionName = SectionName> =
 
 const zRawSectionFrame: Record<keyof OneRawSection, any> = {
   dbId: zodSchema.nanoId,
-  dbVarbs: z.record(zDbValue),
+  dbVarbs: z.record(zValue),
   childDbIds: z.record(z.array(zodSchema.string)),
 };
 

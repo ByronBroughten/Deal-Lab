@@ -9,13 +9,15 @@ import {
 type Props = { varbInfo: VarbInfo; level: number };
 export function DealDetailRowVarbFound({ varbInfo, level }: Props) {
   const varb = useSetterVarb(varbInfo);
-  const { solvableText, number } = varb.value("numObj");
+  const { solvableText } = varb.value("numObj");
   const props = {
     varbInfo,
     level,
     displayName: varb.get.displayName,
     displayVarb: varb.get.displayVarb(),
-    ...(solvableText === `${number}` ? {} : { solvableText }),
+    ...(solvableText === `${varb.get.numberOrQuestionMark}`
+      ? {}
+      : { solvableText }),
   };
   const { hasInVarbs } = varb;
   return (

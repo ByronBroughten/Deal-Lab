@@ -91,8 +91,7 @@ export class EditorUpdaterVarb<
   ): NumObj {
     const solvableText =
       this.numObjSolver.solvableTextFromTextAndEntities(textAndEntities);
-    const numString = this.numObjSolver.solveTextToNumString(solvableText);
-    return new NumObj({ ...textAndEntities, solvableText, numString });
+    return { ...textAndEntities, solvableText };
   }
 }
 

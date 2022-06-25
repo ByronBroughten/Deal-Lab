@@ -1,4 +1,4 @@
-import { relAdorn, relProps, relUpdateSwitch, relValue } from "./rel/relMisc";
+import { relAdorn, relProps, relUpdateSwitch } from "./rel/relMisc";
 import { relSection } from "./rel/relSection";
 import { relVarb } from "./rel/relVarb";
 import { relVarbInfo } from "./rel/relVarbInfo";
@@ -6,7 +6,6 @@ import { relVarbs } from "./rel/relVarbs";
 
 export const rel = {
   adorn: relAdorn,
-  value: relValue,
   varbInfo: relVarbInfo,
   props: relProps,
   varb: relVarb,

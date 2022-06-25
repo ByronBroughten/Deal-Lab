@@ -12,14 +12,15 @@ export default function VacancyRate({ feId }: Props) {
   const dollarsVarb = mgmt.varb("vacancyLossDollarsMonthly");
 
   const { endAdornment } = percentVarb.meta;
-  const dollarsValue = dollarsVarb.value("numObj");
   return (
     <NumObjEditorNext
       className="VacancyRate-root"
       label="Vacancy Rate"
       feVarbInfo={percentVarb.feVarbInfo}
       endAdornment={`${endAdornment} ${
-        dollarsValue.number === "?" ? "" : `(${dollarsVarb.displayVarb()})`
+        dollarsVarb.numberOrQuestionMark === "?"
+          ? ""
+          : `(${dollarsVarb.displayVarb()})`
       }`}
     />
   );

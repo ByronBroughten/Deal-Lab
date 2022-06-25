@@ -1,5 +1,3 @@
-import { valueMeta } from "../../baseSections/baseValues";
-import { NumObj } from "../../baseSections/baseValues/NumObj";
 import { RelativeIds } from "../../baseSections/id";
 import { switchNames } from "../../baseSections/switchNames";
 import { BaseName } from "../../baseSectionTypes";
@@ -134,12 +132,5 @@ export const relUpdateSwitch = {
         rightSide,
       },
     };
-  },
-};
-
-export const relValue = {
-  numObj(value?: number | string): NumObj {
-    const strValue = `${value ?? ""}`;
-    return valueMeta["numObj"].defaultInit({ editorText: strValue });
   },
 };
