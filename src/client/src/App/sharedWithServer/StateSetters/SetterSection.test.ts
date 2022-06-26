@@ -24,12 +24,13 @@ describe("SetterSection", () => {
   }
   it("should remove its own section", () => {
     runSectionNames(({ tester }) => {
-      const { parent, feInfo, sectionName } = tester;
-      const preCounts = parent.childCounts(sectionName);
+      const { parent, feInfo } = tester;
+      const childName = parent.get.sectionChildName(feInfo);
+      const preCounts = parent.childCounts(childName);
       tester.setter.removeSelf();
-      const postCounts = parent.childCounts(sectionName);
+      const postCounts = parent.childCounts(childName);
 
-      expect(parent.get.hasChild(feInfo as any)).toBe(false);
+      expect(parent.get.sectionIsChild(feInfo)).toBe(false);
       expect(postCounts.childIds).toBe(preCounts.childIds - 1);
       expect(postCounts.childSections).toBe(preCounts.childSections - 1);
     });
@@ -37,7 +38,6 @@ describe("SetterSection", () => {
   it("should load a sectionPack", () => {
     const sectionName = "property";
     const tester = SetterTesterSection.init(sectionName);
-    const mainBuilder = PackBuilderSection.initAsMain();
 
     const childName = "unit";
     const numChildrenInit = tester.get.childFeIds(childName);
@@ -52,10 +52,10 @@ describe("SetterSection", () => {
       title: "New Title",
     } as const;
 
-    const packBuilder = mainBuilder.addAndGetDescendant(
-      ["deal", "propertyGeneral", "property"],
-      { dbVarbs: packVarbs }
-    );
+    const packBuilder = PackBuilderSection.initAsOmniChild("property", {
+      dbVarbs: packVarbs,
+    });
+
     for (let i = 0; i < numChildrenNext; i++) {
       packBuilder.addChild(childName);
     }
@@ -127,7 +127,8 @@ describe("SetterSection", () => {
     it("should remove a child from state", () => {
       runWithNames(({ tester, childName }) => {
         tester.setter.addChild(childName);
-        const { feInfo: childInfo } = tester.get.youngestChild(childName);
+        const { feId: childId } = tester.get.youngestChild(childName);
+        const childInfo = { childName, feId: childId } as const;
         expect(tester.get.hasChild(childInfo)).toBe(true);
 
         const preCounts = tester.childCounts(childName);

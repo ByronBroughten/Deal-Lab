@@ -16,21 +16,24 @@ export class GetterSectionBase<
     super(props);
     this.feId = props.feId;
     const { sections } = props.sectionsShare;
-    if (!sections.hasSection(this.feSectionInfo)) {
+    if (!sections.hasSection(this.feInfo)) {
       throw new Error(
         `No section with sectionName ${this.sectionName} and feId ${this.feId}`
       );
     }
   }
-  get feSectionInfo(): FeSectionInfo<SN> {
+  get feInfo(): FeSectionInfo<SN> {
     return {
       sectionName: this.sectionName,
       feId: this.feId,
     };
   }
+  get feSectionInfo(): FeSectionInfo<SN> {
+    return this.feInfo;
+  }
   get getterSectionProps(): GetterSectionProps<SN> {
     return {
-      ...this.feSectionInfo,
+      ...this.feInfo,
       sectionsShare: this.sectionsShare,
     };
   }

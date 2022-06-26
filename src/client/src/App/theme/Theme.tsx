@@ -1,7 +1,6 @@
 import { darken, lighten, transparentize } from "polished";
 import React from "react";
 import { ThemeProvider } from "styled-components";
-import { FeInfo } from "../sharedWithServer/SectionsMeta/Info";
 import { Obj } from "../sharedWithServer/utils/Obj";
 
 const color = {
@@ -92,9 +91,7 @@ function themeSection({ main, ...rest }: SectionThemeBase) {
 }
 
 export type ThemeName = keyof typeof themeSections;
-export type ThemeFeInfo = FeInfo & {
-  sectionName: ThemeName;
-};
+
 function isThemeSectionName(str: string): str is ThemeName {
   return Obj.keys(themeSections).includes(str as any);
 }

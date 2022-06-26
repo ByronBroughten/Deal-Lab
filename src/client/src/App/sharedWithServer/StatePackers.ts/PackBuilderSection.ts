@@ -1,20 +1,17 @@
-import { SectionArrPack, SectionPack } from "../SectionPack/SectionPack";
+import { ChildArrPack, SectionPack } from "../SectionPack/SectionPack";
 import { FeSectionInfo } from "../SectionsMeta/Info";
 import {
   ChildName,
-  DescendantName,
+  ChildType,
 } from "../SectionsMeta/relSectionTypes/ChildTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { GetterSections } from "../StateGetters/GetterSections";
 import { UpdaterSectionBase } from "../StateUpdaters/bases/updaterSectionBase";
 import {
   AddChildOptions,
-  AddDescendantOptions,
-  DescendantList,
   UpdaterSection,
 } from "../StateUpdaters/UpdaterSection";
-import { Arr } from "../utils/Arr";
-import { PackLoaderSection } from "./PackLoaderSection";
+import { ChildPackInfo, PackLoaderSection } from "./PackLoaderSection";
 import { PackMakerSection } from "./PackMakerSection";
 
 export class PackBuilderSection<
@@ -69,14 +66,6 @@ export class PackBuilderSection<
     // it should probably start with root
     return this.maker.makeSectionPack();
   }
-  addAndGetDescendant<DN extends DescendantName<SN>>(
-    descendantList: DescendantList<SN, DN>,
-    options?: AddDescendantOptions<SN, DN>
-  ): PackBuilderSection<DN> {
-    this.updater.addDescendant(descendantList, options);
-    const descendantName = Arr.lastOrThrow(descendantList) as DN;
-    return this.youngestPackBuilder(descendantName);
-  }
   addAndGetChild<CN extends ChildName<SN>>(
     childName: CN,
     options?: AddChildOptions<SN, CN>
@@ -90,25 +79,33 @@ export class PackBuilderSection<
   ): void {
     this.updater.addChild(childName, options);
   }
-  loadAndGetChild<CN extends ChildName<SN>>(
-    childPack: SectionPack<CN>
-  ): PackBuilderSection<CN> {
-    this.loadChild(childPack);
-    return this.youngestPackBuilder(childPack.sectionName);
+  loadAndGetChild<CN extends ChildName<SN>, CT extends ChildType<SN, CN>>(
+    childPackInfo: ChildPackInfo<SN, CN, CT>
+  ): PackBuilderSection<CT> {
+    this.loadChild(childPackInfo);
+    const { sectionName } = childPackInfo.sectionPack;
+    return this.youngestPackBuilder(sectionName);
   }
-  loadChild<CN extends ChildName<SN>>(childPack: SectionPack<CN>): void {
-    this.loader.loadChildSectionPack(childPack);
+  loadChild<CN extends ChildName<SN>, CT extends ChildType<SN, CN>>(
+    childPackInfo: ChildPackInfo<SN, CN, CT>
+  ): void {
+    this.loader.loadChildSectionPack(childPackInfo);
   }
-  loadAndGetChildren<CN extends ChildName<SN>>(
-    childArrPack: SectionArrPack<CN>
-  ): PackBuilderSection<CN>[] {
-    const children: PackBuilderSection<CN>[] = [];
-    for (const pack of childArrPack.sectionPacks) {
-      children.push(this.loadAndGetChild(pack));
+  loadAndGetChildren<CN extends ChildName<SN>, CT extends ChildType<SN, CN>>({
+    childName,
+    sectionPacks,
+  }: ChildArrPack<SN, CN, CT>): PackBuilderSection<CT>[] {
+    const children: PackBuilderSection<CT>[] = [];
+    for (const sectionPack of sectionPacks) {
+      const child = this.loadAndGetChild({
+        childName,
+        sectionPack,
+      });
+      children.push(child);
     }
     return children;
   }
-  loadChildren<CN extends ChildName<SN>>(childArrPack: SectionArrPack<CN>) {
+  loadChildren<CN extends ChildName<SN>>(childArrPack: ChildArrPack<SN, CN>) {
     this.loader.loadChildSectionPackArr(childArrPack);
   }
   loadSelf(sectionPack: SectionPack<SN>) {

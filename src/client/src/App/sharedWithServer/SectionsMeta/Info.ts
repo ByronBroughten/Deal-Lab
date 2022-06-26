@@ -1,7 +1,6 @@
 import { InEntityVarbInfo } from "./baseSections/baseValues/entities";
 import { StateValue } from "./baseSections/baseValues/StateValueTypes";
 import { Id } from "./baseSections/id";
-import { BaseName } from "./baseSectionTypes";
 import {
   DbNameInfo,
   DbUserDefInfo,
@@ -16,9 +15,8 @@ import {
   SpecificSectionInfo,
 } from "./relSections/rel/relVarbInfoTypes";
 import {
-  ChildName,
-  DescendantName,
-  SelfOrDescendantName,
+  DescendantType,
+  SelfOrDescendantType,
 } from "./relSectionTypes/ChildTypes";
 import { ParentName, ParentNameSafe } from "./relSectionTypes/ParentTypes";
 import { FeSectionNameType, SectionName, sectionNameS } from "./SectionName";
@@ -31,18 +29,19 @@ export interface FeSectionInfo<SN extends SectionName = SectionName> {
   sectionName: SN;
   feId: string;
 }
-export interface FeChildInfo<SN extends SectionName = SectionName<"hasChild">> {
-  sectionName: ChildName<SN>;
-  feId: string;
+export interface SectionArrInfo<SN extends SectionName> {
+  sectionName: SN;
+  feIds: string;
 }
+
 export interface FeDescendantInfo<
   SN extends SectionName = SectionName<"hasChild">
 > {
-  sectionName: DescendantName<SN>;
+  sectionName: DescendantType<SN>;
   feId: string;
 }
 export interface FeSelfOrDescendantInfo<SN extends SectionName> {
-  sectionName: SelfOrDescendantName<SN>;
+  sectionName: SelfOrDescendantType<SN>;
   feId: string;
 }
 export interface FeParentInfo<SN extends SectionName> {
@@ -71,9 +70,6 @@ export type VarbStringInfo = {
   idType: string;
 };
 
-export type FeInfo<T extends FeSectionNameType = "all"> = FeNameInfo<
-  SectionName<T>
->;
 export type DbInfo<T extends FeSectionNameType = "all"> = DbNameInfo<
   SectionName<T>
 >;
@@ -149,7 +145,7 @@ export const InfoS = {
     fe<T extends FeSectionNameType = "all">(
       value: any,
       type?: T
-    ): value is FeInfo<T> {
+    ): value is FeNameInfo<SectionName<T>> {
       return (
         value.idType === "feId" &&
         typeof value.id === "string" &&
@@ -203,16 +199,6 @@ export const InfoS = {
     if (sectionName === "main")
       throw new Error("varbInfo must be for sections that contain varbs");
     else return { ...info, sectionName, varbName } as MakeVarbInfo<I>;
-  },
-  feVarb<I extends FeInfo>(
-    varbName: string,
-    feInfo: I
-  ): FeVarbInfo<Extract<I["sectionName"], BaseName<"hasVarb">>> {
-    if (sectionNameS.is(feInfo.sectionName, "hasVarb"))
-      return { ...feInfo, varbName } as any as FeVarbInfo<
-        Extract<I["sectionName"], BaseName<"hasVarb">>
-      >;
-    else throw new Error("section must contain at least one varb");
   },
   feVarbMaker(feInfo: FeNameInfo): (varbName: string) => FeVarbInfo {
     const { sectionName } = feInfo;

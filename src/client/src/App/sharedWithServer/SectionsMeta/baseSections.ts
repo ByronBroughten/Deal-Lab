@@ -49,11 +49,8 @@ export const baseSections = {
       {
         _typeUniformity: "string",
       } as const,
-      {
-        alwaysOne: true,
-      }
+      { alwaysOne: true }
     ),
-
     omniParent: base.section.container,
     table: base.section.schema({ titleFilter: "string" } as const),
     propertyTableStore: base.section.container,

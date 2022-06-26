@@ -2,8 +2,7 @@ import { SectionPack } from "../SectionPack/SectionPack";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
 
 export function makeDefaultLoanPack(): SectionPack<"loan"> {
-  const main = PackBuilderSection.initAsMain();
-  const loan = main.addAndGetDescendant(["deal", "financing", "loan"], {
+  const loan = PackBuilderSection.initAsOmniChild("loan", {
     dbVarbs: {
       loanAmountBaseUnitSwitch: "percent",
       interestRatePercentOngoingSwitch: "yearly",

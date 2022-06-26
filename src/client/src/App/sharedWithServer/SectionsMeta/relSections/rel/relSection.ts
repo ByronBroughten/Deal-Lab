@@ -11,7 +11,11 @@ export type RelPropName = keyof GeneralRelSection;
 export type GeneralRelSection = {
   relVarbs: GeneralRelVarbs;
   childNames: readonly SimpleSectionName[];
-
+  children: {
+    [key: string]: {
+      sectionName: SimpleSectionName;
+    };
+  };
   displayName: string;
   tableIndexName: BaseName | null;
 
@@ -49,6 +53,7 @@ type DefaultRelSection<
   displayName: D;
   relVarbs: RVS;
   childNames: readonly [];
+  children: {};
 
   tableStoreName: null;
   tableIndexName: null;
@@ -80,11 +85,11 @@ export const relSection = {
       displayName,
       relVarbs,
       childNames: [],
+      children: {},
       fullIndexName: null,
       rowIndexName: null,
       arrStoreName: null,
       tableIndexName: null,
-
       tableStoreName: null,
     };
   },
@@ -130,7 +135,7 @@ export const relSection = {
       relVarbs.singleTimeList(sectionName),
       {
         ...((options ?? {}) as O),
-        childNames: ["singleTimeItem"] as const,
+        children: { singleTimeItem: { sectionName: "singleTimeItem" } },
       }
     );
   },
@@ -145,7 +150,7 @@ export const relSection = {
       relVarbs.ongoingList(sectionName),
       {
         ...((options ?? {}) as O),
-        childNames: ["ongoingItem"] as const,
+        children: { ongoingItem: { sectionName: "ongoingItem" } },
       }
     );
   },
@@ -158,8 +163,8 @@ export const relSection = {
       "Output List",
       { title: relVarb.string() } as RelVarbs<SN>,
       {
-        childNames: ["output"] as const,
         ...((options ?? {}) as O),
+        children: { output: { sectionName: "output" } },
       }
     );
   },
@@ -174,9 +179,7 @@ export const relSection = {
         title: relVarb.string(),
         compareToggle: relVarb.type("boolean"),
       } as RelVarbs<S>,
-      {
-        childNames: ["cell"] as const,
-      }
+      { children: { cell: { sectionName: "cell" } } }
     );
   },
 };

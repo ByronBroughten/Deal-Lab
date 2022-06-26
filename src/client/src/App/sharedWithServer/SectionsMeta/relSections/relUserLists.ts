@@ -8,7 +8,7 @@ function userVarbList<
   SN extends "userVarbList" | "internalVarbList" | "varbList",
   O extends StrictOmit<
     RelSectionOptions<"userVarbList">,
-    "childNames" | "relVarbs"
+    "children" | "relVarbs"
   > = {}
 >(sectionName: SN, options?: O) {
   return relSection.base(
@@ -22,7 +22,7 @@ function userVarbList<
     } as RelVarbs<SN>,
     {
       ...((options ?? {}) as O),
-      childNames: ["userVarbItem"] as const,
+      children: { userVarbItem: { sectionName: "userVarbItem" } },
     }
   );
 }
@@ -78,9 +78,7 @@ export const preUserLists = {
         },
       }),
     },
-    {
-      childNames: ["conditionalRow"] as const,
-    }
+    { children: { conditionalRow: { sectionName: "conditionalRow" } } }
   ),
 
   ...relSection.base(

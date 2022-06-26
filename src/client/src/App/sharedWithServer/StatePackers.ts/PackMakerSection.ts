@@ -1,7 +1,11 @@
 import { OneRawSection, RawSections } from "../SectionPack/RawSection";
 import { SectionPack } from "../SectionPack/SectionPack";
 import { FeSectionInfo } from "../SectionsMeta/Info";
-import { ChildName } from "../SectionsMeta/relSectionTypes/ChildTypes";
+import {
+  ChildName,
+  ChildType,
+  FeChildInfo,
+} from "../SectionsMeta/relSectionTypes/ChildTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { GetterSectionBase } from "../StateGetters/Bases/GetterSectionBase";
 import { GetterSection } from "../StateGetters/GetterSection";
@@ -22,19 +26,25 @@ export class PackMakerSection<
       rawSections: this.rawDescendantSections(),
     };
   }
-  makeChildSectionPackArrs<CN extends ChildName<SN>>(
+  makeChildTypePackArrs<CN extends ChildName<SN>>(
     childNames: CN[]
-  ): FeSectionPackArrs<CN> {
-    return childNames.reduce((spArrs, sectionName) => {
-      spArrs[sectionName] = this.makeChildSectionPackArr(sectionName);
+  ): FeSectionPackArrs<ChildType<SN, CN>> {
+    return childNames.reduce((spArrs, childName) => {
+      const sectionName = this.get.meta.childType(childName);
+      (spArrs[sectionName] as any) = this.makeChildSectionPackArr(childName);
       return spArrs;
-    }, {} as FeSectionPackArrs<CN>);
+    }, {} as FeSectionPackArrs<ChildType<SN, CN>>);
   }
   makeChildSectionPackArr<CN extends ChildName<SN>>(
     childName: CN
-  ): SectionPack<CN>[] {
-    const childInfos = this.get.childInfos(childName);
-    return childInfos.map((feInfo) => this.makeChildSectionPack(feInfo));
+  ): SectionPack<ChildType<SN, CN>>[] {
+    const feIds = this.get.childFeIds(childName);
+    return feIds.map((feId) =>
+      this.makeChildSectionPack({
+        childName,
+        feId,
+      })
+    );
   }
   makeSiblingSectionPackArr(): SectionPack<SN>[] {
     const { siblingFeInfos } = this.get;
@@ -52,8 +62,9 @@ export class PackMakerSection<
     });
   }
   makeChildSectionPack<CN extends ChildName<SN>>(
-    feInfo: FeSectionInfo<CN>
-  ): SectionPack<CN> {
+    childInfo: FeChildInfo<SN, CN>
+  ): SectionPack<ChildType<SN, CN>> {
+    const feInfo = this.get.childToFeInfo(childInfo);
     const childPackMaker = this.sectionPackMaker(feInfo);
     return childPackMaker.makeSectionPack();
   }

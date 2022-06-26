@@ -1,6 +1,12 @@
-import { pick } from "lodash";
-import { SectionArrPack, SectionPack } from "../SectionPack/SectionPack";
-import { ChildName } from "../SectionsMeta/relSectionTypes/ChildTypes";
+import {
+  ChildArrPack,
+  ChildSectionPack,
+  SectionPack,
+} from "../SectionPack/SectionPack";
+import {
+  ChildName,
+  ChildType,
+} from "../SectionsMeta/relSectionTypes/ChildTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
 import {
   GetterSectionBase,
@@ -32,31 +38,35 @@ export class PackLoaderSection<
     selfPackLoader.updateSelfWithSectionPack();
   }
   loadChildPackArrs(childPackArrs: ChildSectionPackArrs<SN>): void {
-    for (const [sectionName, sectionPacks] of Obj.entries(childPackArrs)) {
+    for (const [childName, sectionPacks] of Obj.entries(childPackArrs)) {
       this.loadChildSectionPackArr({
-        sectionName,
-        sectionPacks: sectionPacks as SectionPack<typeof sectionName>[],
+        childName,
+        sectionPacks,
       });
     }
   }
   loadChildSectionPackArr<CN extends ChildName<SN>>({
-    sectionName,
+    childName,
     sectionPacks,
-  }: SectionArrPack<CN>): void {
-    this.update.removeChildren(sectionName);
-    for (const childPack of sectionPacks) {
-      this.loadChildSectionPack(childPack);
+  }: ChildArrPack<SN, CN>): void {
+    this.update.removeChildren(childName);
+    for (const sectionPack of sectionPacks) {
+      this.loadChildSectionPack({
+        childName,
+        sectionPack,
+      });
     }
   }
-  loadChildSectionPack<CN extends ChildName<SN>>(
-    sectionPack: SectionPack<CN>,
+  loadChildSectionPack<CN extends ChildName<SN>, CT extends ChildType<SN, CN>>(
+    { childName, sectionPack }: ChildPackInfo<SN, CN, CT>,
     options: { idx?: number } = {}
   ): void {
     const childPackLoader = new ChildPackLoader({
       ...this.getterSectionProps,
       sectionPack: sectionPack as any as SectionPack,
       childDbInfo: {
-        ...pick(sectionPack, ["sectionName", "dbId"]),
+        childName,
+        dbId: sectionPack.dbId,
         ...options,
       },
     });
@@ -65,5 +75,14 @@ export class PackLoaderSection<
 }
 
 export type ChildSectionPackArrs<SN extends SectionName> = {
-  [CN in ChildName<SN>]: SectionPack<CN>[];
+  [CN in ChildName<SN>]: ChildSectionPack<SN, CN>[];
+};
+
+export type ChildPackInfo<
+  SN extends SectionName,
+  CN extends ChildName<SN> = ChildName<SN>,
+  CT extends ChildType<SN, CN> = ChildType<SN, CN>
+> = {
+  childName: CN;
+  sectionPack: SectionPack<CT>;
 };

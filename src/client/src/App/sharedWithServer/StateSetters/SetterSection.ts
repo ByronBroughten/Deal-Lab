@@ -3,7 +3,11 @@ import { SectionPack } from "../SectionPack/SectionPack";
 import { SwitchEndingKey } from "../SectionsMeta/baseSections/switchNames";
 import { VarbValues } from "../SectionsMeta/baseSectionTypes";
 import { FeSectionInfo, VarbInfo } from "../SectionsMeta/Info";
-import { ChildName } from "../SectionsMeta/relSectionTypes/ChildTypes";
+import {
+  ChildName,
+  ChildType,
+  FeChildInfo,
+} from "../SectionsMeta/relSectionTypes/ChildTypes";
 import { ParentNameSafe } from "../SectionsMeta/relSectionTypes/ParentTypes";
 import { SectionMeta } from "../SectionsMeta/SectionMeta";
 import { SectionName } from "../SectionsMeta/SectionName";
@@ -81,13 +85,13 @@ export class SetterSection<
   addAndGetChild<CN extends ChildName<SN>>(
     childName: CN,
     options?: AddChildOptions<CN>
-  ): SetterSection<CN> {
+  ): SetterSection<ChildType<SN, CN>> {
     this.addChild(childName, options);
     const { feInfo } = this.get.youngestChild(childName);
     return this.setterSection(feInfo);
   }
-  removeChild<CN extends ChildName<SN>>(feInfo: FeSectionInfo<CN>): void {
-    this.solver.removeChildAndSolve(feInfo);
+  removeChild(childInfo: FeChildInfo<SN>): void {
+    this.solver.removeChildAndSolve(childInfo);
     this.setSections();
   }
   removeChildren(childName: ChildName<SN>): void {

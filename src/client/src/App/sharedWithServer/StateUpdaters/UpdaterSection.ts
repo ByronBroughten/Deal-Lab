@@ -1,12 +1,15 @@
 import { DbVarbs } from "../SectionPack/RawSection";
 import { SimpleSectionName } from "../SectionsMeta/baseSections";
 import { VarbValues } from "../SectionsMeta/baseSectionTypes";
-import { FeChildInfo, FeSectionInfo } from "../SectionsMeta/Info";
+import { FeSectionInfo } from "../SectionsMeta/Info";
 import {
+  ChildArrInfo,
   ChildIdArrsNarrow,
   ChildName,
-  DescendantName,
-  NewChildInfo,
+  ChildType,
+  CreateChildInfo,
+  DescendantType,
+  FeChildInfo,
 } from "../SectionsMeta/relSectionTypes/ChildTypes";
 import { ParentNameSafe } from "../SectionsMeta/relSectionTypes/ParentTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
@@ -48,7 +51,12 @@ export class UpdaterSection<
   }
   removeSelf(): void {
     this.removeAllChildren();
-    this.parent.removeChildFeId(this.feSectionInfo as any);
+    const { parent } = this;
+    const childName = parent.get.sectionChildName(this.feInfo);
+    parent.removeChildFeId({
+      childName,
+      feId: this.feId,
+    });
     this.updaterList.removeByFeId(this.feId);
   }
   removeAllChildren() {
@@ -59,51 +67,36 @@ export class UpdaterSection<
   removeChildren(childName: ChildName<SN>): void {
     const childIds = this.get.childFeIds(childName);
     for (const feId of childIds) {
-      this.removeChild({ sectionName: childName, feId });
+      this.removeChild({ childName, feId });
     }
   }
-  removeChild(info: FeChildInfo<SN>): void {
-    const childRemover = this.updaterSection(info);
-    childRemover.removeSelf();
+  removeChild(childInfo: FeChildInfo<SN>): void {
+    this.child(childInfo).removeSelf();
+  }
+  child<CN extends ChildName<SN>>(
+    childInfo: FeChildInfo<SN, CN>
+  ): UpdaterSection<ChildType<SN, CN>> {
+    const feInfo = this.get.childInfoToFe(childInfo);
+    return this.updaterSection(feInfo);
   }
   addChild<CN extends ChildName<SN>>(
     childName: CN,
     { idx, ...rest }: AddChildOptions<SN> = {}
   ): void {
+    const sectionName = this.get.meta.childType(childName);
     const section = StateSections.initRawSection({
-      sectionName: childName,
+      sectionName,
       ...rest,
     });
-
-    const childList = this.updaterList.updaterList(childName);
-    if (typeof idx === "undefined") {
+    const childList = this.updaterList.updaterList(sectionName);
+    if (idx === undefined) {
       childList.push(section);
     } else {
       childList.insert({ section, idx });
     }
 
-    const { feSectionInfo } = childList.get.last;
-    this.addChildFeId(feSectionInfo);
-  }
-  addAndGetChild<CN>() {}
-  addDescendant<DN extends DescendantName<SN>>(
-    descendantPath: DescendantList<SN, DN>,
-    options: AddDescendantOptions<SN, DN> = {}
-  ): void {
-    let feInfo = this.get.feSectionInfo as FeSectionInfo;
-    for (let i = 0; i < descendantPath.length; i++) {
-      const getter = this.get.getterSection(feInfo);
-      const childName = descendantPath[i];
-      if (getter.isChildNameOrThrow(childName)) {
-        const updater = this.updaterSection(feInfo);
-        const o = i === descendantPath.length - 1 ? options : {};
-        updater.addChild(childName, o);
-      }
-      feInfo = {
-        sectionName: childName,
-        feId: this.getterSections.newestEntry(childName).feId,
-      };
-    }
+    const { feId } = childList.get.last;
+    this.addChildFeId({ childName, feId });
   }
   updateValuesDirectly(values: VarbValues): void {
     for (const varbName of Obj.keys(values)) {
@@ -111,19 +104,19 @@ export class UpdaterSection<
       varb.updateValueDirectly(values[varbName]);
     }
   }
-  private addChildFeId(childInfo: NewChildInfo<SN>): void {
-    const { sectionName, feId, idx } = childInfo;
-    const feIds = this.get.childFeIds(sectionName);
+  private addChildFeId(childInfo: CreateChildInfo<SN>): void {
+    const { childName, feId, idx } = childInfo;
+    const feIds = this.get.childFeIds(childName);
     let nextIds: string[];
     if (typeof idx === "undefined") nextIds = [...feIds, feId];
     else nextIds = Arr.insert(feIds, feId, idx);
-    this.updateChildFeIds({ sectionName, feIds: nextIds });
+    this.updateChildFeIds({ childName, feIds: nextIds });
   }
-  private removeChildFeId(childInfo: FeSectionInfo<ChildName<SN>>): void {
-    const { sectionName, feId } = childInfo;
-    const feIds = this.get.childFeIds(sectionName);
+  private removeChildFeId(childInfo: FeChildInfo<SN>): void {
+    const { childName, feId } = childInfo;
+    const feIds = this.get.childFeIds(childName);
     const nextIds = Arr.rmFirstMatchCloneOrThrow(feIds, feId);
-    this.updateChildFeIds({ sectionName, feIds: nextIds });
+    this.updateChildFeIds({ childName, feIds: nextIds });
   }
   private updaterSection<S extends SectionName>(
     feInfo: FeSectionInfo<S>
@@ -147,17 +140,11 @@ export class UpdaterSection<
       ...nextBaseProps,
     });
   }
-  updateChildFeIds({
-    sectionName,
-    feIds,
-  }: {
-    sectionName: ChildName<SN>;
-    feIds: string[];
-  }): void {
+  updateChildFeIds({ childName, feIds }: ChildArrInfo<SN>): void {
     this.updateProps({
       childFeIds: {
         ...(this.get.allChildFeIds as any),
-        [sectionName]: feIds,
+        [childName]: feIds,
       },
     });
   }
@@ -195,8 +182,8 @@ interface AddSectionPropsNext<SN extends SimpleSectionName = SimpleSectionName>
 
 export type DescendantList<
   SN extends SectionName,
-  DN extends DescendantName<SN> = DescendantName<SN>
-> = readonly [...DescendantName<SN>[], DN];
+  DN extends DescendantType<SN> = DescendantType<SN>
+> = readonly [...DescendantType<SN>[], DN];
 
 export type AddChildOptions<
   SN extends SectionName,
@@ -205,7 +192,7 @@ export type AddChildOptions<
 
 export type AddDescendantOptions<
   SN extends SectionName,
-  DN extends DescendantName<SN> = DescendantName<SN>
+  DN extends DescendantType<SN> = DescendantType<SN>
 > = StrictOmit<AddSectionPropsNext<DN>, OmitProps>;
 
 type OmitProps = "sectionName" | "childFeIds";

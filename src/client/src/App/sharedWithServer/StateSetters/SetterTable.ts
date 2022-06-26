@@ -18,13 +18,13 @@ export class SetterTableNext extends SetterSectionBase<"table"> {
   }
   column(feId: string): GetterSection<"column"> {
     return this.get.child({
-      sectionName: "column",
+      childName: "column",
       feId,
     });
   }
   hasColumn(feId: string): boolean {
     return this.get.hasChild({
-      sectionName: "column",
+      childName: "column",
       feId,
     });
   }
@@ -36,7 +36,7 @@ export class SetterTableNext extends SetterSectionBase<"table"> {
   }
   hasRowByDbId(dbId: string): boolean {
     return this.get.hasChildByDbInfo({
-      sectionName: "tableRow",
+      childName: "tableRow",
       dbId,
     });
   }
@@ -65,7 +65,7 @@ export class SetterTableNext extends SetterSectionBase<"table"> {
   }
   removeColumn(feId: string): void {
     this.setter.removeChild({
-      sectionName: "column",
+      childName: "column",
       feId,
     });
   }
@@ -76,7 +76,7 @@ export class SetterTableNext extends SetterSectionBase<"table"> {
     const sortedIds = this.getSortedRowIds(colIdOrTitle);
     if (reverse) sortedIds.reverse();
     this.updater.updateChildFeIds({
-      sectionName: "tableRow",
+      childName: "tableRow",
       feIds: sortedIds,
     });
   }

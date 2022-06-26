@@ -113,7 +113,10 @@ export class SolverSections extends SolverSectionsBase {
       ...sections.rawSectionList("root")[0],
       sectionsShare: { sections },
     });
-    solver.loadChildPackAndSolve(sectionPack);
+    solver.loadChildPackAndSolve({
+      childName: "main",
+      sectionPack,
+    });
     return solver.sectionsShare.sections;
   }
 }

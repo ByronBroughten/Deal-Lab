@@ -5,8 +5,14 @@ import { makeDefaultUser } from "./makeDefaultUser";
 
 export function makeDefaultMainPack(): SectionPack<"main"> {
   const main = PackBuilderSection.initAsMain();
-  main.loadChild(makeDefaultDealPack());
-  main.loadChild(makeDefaultUser());
+  main.loadChild({
+    childName: "deal",
+    sectionPack: makeDefaultDealPack(),
+  });
+  main.loadChild({
+    childName: "user",
+    sectionPack: makeDefaultUser(),
+  });
 
   const tableStoreNames = [
     "propertyTableStore",

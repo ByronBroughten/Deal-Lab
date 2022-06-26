@@ -1,15 +1,13 @@
-import { StrictOmit } from "../../utils/types";
 import { switchNames } from "../baseSections/switchNames";
 import { rel } from "./rel";
-import { relSection, RelSectionOptions } from "./rel/relSection";
+import { relSection } from "./rel/relSection";
 import { RelVarbs } from "./rel/relVarbs";
 
 const rentCut = switchNames("rentCut", "dollarsPercent");
 const rentCutDollars = switchNames(rentCut.dollars, "ongoing");
 
-function makeMgmtPreVarbs<SN extends "mgmt", R extends RelVarbs<"mgmt">>(
-  sectionName: SN
-): R {
+function makeMgmtPreVarbs<R extends RelVarbs<"mgmt">>(): R {
+  const sectionName = "mgmt";
   return {
     ...rel.varbs.savableSection,
     [rentCut.switch]: rel.varb.string({
@@ -84,42 +82,23 @@ function makeMgmtPreVarbs<SN extends "mgmt", R extends RelVarbs<"mgmt">>(
   } as R;
 }
 
-function mgmtSection<
-  SN extends "mgmt",
-  O extends StrictOmit<
-    RelSectionOptions<"mgmt">,
-    "childNames" | "relVarbs"
-  > = {}
->(sectionName: SN, options?: O) {
-  return relSection.base(
-    sectionName,
-    "Management",
-    makeMgmtPreVarbs(sectionName) as RelVarbs<SN>,
-    {
-      ...((options ?? {}) as O),
-      childNames: [
-        "upfrontCostList",
-        "ongoingCostList",
-        "internalVarbList",
-      ] as const,
-    }
-  );
-}
-
 export const preMgmtGeneral = {
   ...relSection.base(
     "mgmtGeneral",
     "Management",
     {
-      ...rel.varbs.sumSection("mgmt", { ...makeMgmtPreVarbs("mgmt") }),
-      ...rel.varbs.sectionStrings("mgmt", { ...makeMgmtPreVarbs("mgmt") }, [
-        "title",
-      ]),
+      ...rel.varbs.sumSection("mgmt", { ...makeMgmtPreVarbs() }),
+      ...rel.varbs.sectionStrings("mgmt", { ...makeMgmtPreVarbs() }, ["title"]),
     },
-    { childNames: ["mgmt"] as const }
+    { children: { mgmt: { sectionName: "mgmt" } } }
   ),
-  ...mgmtSection("mgmt", {
+  ...relSection.base("mgmt", "Management", makeMgmtPreVarbs(), {
     tableStoreName: "mgmtTableStore",
     rowIndexName: "mgmt",
-  } as const),
+    children: {
+      upfrontCostList: { sectionName: "upfrontCostList" },
+      ongoingCostList: { sectionName: "ongoingCostList" },
+      internalVarbList: { sectionName: "internalVarbList" },
+    },
+  }),
 };

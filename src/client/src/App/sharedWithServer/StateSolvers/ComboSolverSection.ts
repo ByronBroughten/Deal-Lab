@@ -34,18 +34,23 @@ export class ComboSolverSection<
     this.remover.removeChildrenGroupsAndExtractVarbIds(childNames);
 
     for (const childName of childNames) {
-      for (const childPack of (childPackArrs as ChildSectionPackArrs<SN>)[
+      for (const sectionPack of (childPackArrs as ChildSectionPackArrs<SN>)[
         childName
       ]) {
-        this.adder.loadChildAndCollectVarbIds(childPack);
+        this.adder.loadChildAndCollectVarbIds({
+          childName,
+          sectionPack,
+        });
       }
     }
     this.adder.finalizeVarbsAndExtractIds();
   }
   resetToDefaultAndExtractIds(): void {
-    const { feId, idx, sectionName, dbId } = this.get;
+    const { feInfo, feId, idx, dbId } = this.get;
     const { parent } = this.adder;
+    const childName = parent.get.sectionChildName(feInfo);
+
     this.remover.removeSelfAndExtractVarbIds();
-    parent.addChildAndFinalize(sectionName as any, { feId, idx, dbId });
+    parent.addChildAndFinalize(childName, { feId, idx, dbId });
   }
 }

@@ -1,12 +1,17 @@
-import { SectionPack } from "../SectionPack/SectionPack";
 import { FeSectionInfo } from "../SectionsMeta/Info";
-import { ChildName } from "../SectionsMeta/relSectionTypes/ChildTypes";
+import {
+  ChildName,
+  ChildType,
+} from "../SectionsMeta/relSectionTypes/ChildTypes";
 import { ParentNameSafe } from "../SectionsMeta/relSectionTypes/ParentTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { GetterSection } from "../StateGetters/GetterSection";
 import { GetterVarb } from "../StateGetters/GetterVarb";
-import { PackLoaderSection } from "../StatePackers.ts/PackLoaderSection";
-import { DefaultOrNewChildAdder } from "../StateUpdaters/DefaultOrNewDescendantAdder";
+import {
+  ChildPackInfo,
+  PackLoaderSection,
+} from "../StatePackers.ts/PackLoaderSection";
+import { DefaultFamilyAdder } from "../StateUpdaters/DefaultFamilyAdder";
 import { AddChildOptions } from "../StateUpdaters/UpdaterSection";
 import {
   SolverSectionBase,
@@ -44,7 +49,7 @@ export class AddSolverSection<
     return this.addSolveShare.addedVarbIds;
   }
   private get defaultAdder() {
-    return new DefaultOrNewChildAdder(this.getterSectionProps);
+    return new DefaultFamilyAdder(this.getterSectionProps);
   }
   addSolverSection<S extends SectionName>(
     feInfo: FeSectionInfo<S>
@@ -59,16 +64,18 @@ export class AddSolverSection<
     const { parentInfoSafe } = this.get;
     return this.addSolverSection(parentInfoSafe);
   }
-  youngestChild<CN extends ChildName<SN>>(childName: CN): AddSolverSection<CN> {
+  youngestChild<CN extends ChildName<SN>>(
+    childName: CN
+  ): AddSolverSection<ChildType<SN, CN>> {
     const { feInfo } = this.get.youngestChild(childName);
     return this.addSolverSection(feInfo);
   }
 
   loadChildAndCollectVarbIds<CN extends ChildName<SN>>(
-    sectionPack: SectionPack<CN>
+    packInfo: ChildPackInfo<SN, CN>
   ): void {
-    this.loader.loadChildSectionPack(sectionPack);
-    const child = this.youngestChild(sectionPack.sectionName);
+    this.loader.loadChildSectionPack(packInfo);
+    const child = this.youngestChild(packInfo.childName);
     child.collectNestedVarbIds();
   }
   addChildAndFinalize<CN extends ChildName<SN>>(

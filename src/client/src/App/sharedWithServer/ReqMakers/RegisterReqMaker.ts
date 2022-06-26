@@ -65,8 +65,6 @@ export class RegisterReqMaker extends GetterSectionBase<"register"> {
       ...getterSectionsProps,
       ...main.feInfo,
     });
-    return mainPackMaker.makeChildSectionPackArrs(
-      sectionNameS.arrs.feGuestAccess
-    );
+    return mainPackMaker.makeChildTypePackArrs(sectionNameS.arrs.feGuestAccess);
   }
 }

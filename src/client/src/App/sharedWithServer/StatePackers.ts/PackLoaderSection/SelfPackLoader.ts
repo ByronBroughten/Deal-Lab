@@ -1,9 +1,9 @@
 import { OneRawSection } from "../../SectionPack/RawSection";
 import { SectionPack } from "../../SectionPack/SectionPack";
-import { DbSectionInfo } from "../../SectionsMeta/DbSectionInfo";
 import {
   ChildIdArrsWide,
   ChildName,
+  DbChildInfo,
 } from "../../SectionsMeta/relSectionTypes/ChildTypes";
 import { SectionName, sectionNameS } from "../../SectionsMeta/SectionName";
 import {
@@ -52,7 +52,7 @@ export class SelfPackLoader<
       for (const childName of Obj.keys(childDbIds as ChildIdArrsWide<SN>)) {
         for (const dbId of childDbIds[childName]) {
           const childPackLoader = this.childPackLoader({
-            sectionName: childName,
+            childName,
             dbId,
           });
           childPackLoader.loadChild();
@@ -61,12 +61,12 @@ export class SelfPackLoader<
     }
   }
   childPackLoader<CN extends ChildName<SN>>(
-    childDbInfo: DbSectionInfo<CN>
+    childDbInfo: DbChildInfo<SN, CN>
   ): ChildPackLoader<SN, CN> {
     return new ChildPackLoader({
       ...this.getterSectionProps,
       sectionPack: this.sectionPack as any as SectionPack,
-      childDbInfo: childDbInfo,
+      childDbInfo,
     });
   }
 }

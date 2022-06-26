@@ -6,14 +6,12 @@ import {
 } from "../../utils/types";
 import { SimpleSectionName, simpleSectionNames } from "../baseSections";
 import { BaseName } from "../baseSectionTypes";
-import { relSections } from "../relSections";
 import { FeNameInfo } from "../relSections/rel/relVarbInfoTypes";
-import { ChildOrNull } from "./ChildTypes";
+import { ChildTypeOrNull, sectionToChildTypes } from "./ChildTypes";
 
 type ParentToChildOrNullMap<CN extends SimpleSectionName> = {
-  [SN in SimpleSectionName]: ChildOrNull<SN, CN>;
+  [S in SimpleSectionName]: ChildTypeOrNull<S, CN>;
 };
-
 type ParentNameOrNever<SN extends SimpleSectionName> = keyof SubType<
   ParentToChildOrNullMap<SN>,
   SN
@@ -48,8 +46,8 @@ export function makeSectionToParentArrs(): SectionToParentNameArrs {
   }, {} as SectionNameArrs);
 
   return simpleSectionNames.reduce((parentNameArrs, sectionName) => {
-    for (const childName of relSections[sectionName].childNames) {
-      parentNameArrs[childName].push(sectionName);
+    for (const childType of sectionToChildTypes[sectionName]) {
+      parentNameArrs[childType].push(sectionName);
     }
     return parentNameArrs;
   }, emptyArrs) as SectionToParentNameArrs;

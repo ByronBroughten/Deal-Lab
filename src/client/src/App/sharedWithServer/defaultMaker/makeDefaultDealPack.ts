@@ -11,13 +11,22 @@ export function makeDefaultDealPack(): SectionPack<"deal"> {
   childNames.forEach((childName) => {
     deal.addChild(childName);
   });
-  deal.loadChild(makeDefaultOutputList());
+  deal.loadChild({
+    childName: "dealOutputList",
+    sectionPack: makeDefaultOutputList(),
+  });
 
   const propertyGeneral = deal.addAndGetChild("propertyGeneral");
-  propertyGeneral.loadChild(makeDefaultPropertyPack());
+  propertyGeneral.loadChild({
+    childName: "property",
+    sectionPack: makeDefaultPropertyPack(),
+  });
 
   const mgmtGeneral = deal.addAndGetChild("mgmtGeneral");
-  mgmtGeneral.loadChild(makeDefaultMgmtPack());
+  mgmtGeneral.loadChild({
+    childName: "mgmt",
+    sectionPack: makeDefaultMgmtPack(),
+  });
 
   return deal.makeSectionPack();
 }

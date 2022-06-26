@@ -3,7 +3,7 @@ import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
 
 export function makeDefaultMgmtPack(): SectionPack<"mgmt"> {
   const main = PackBuilderSection.initAsMain();
-  const mgmt = main.addAndGetDescendant(["deal", "mgmtGeneral", "mgmt"], {
+  const mgmt = PackBuilderSection.initAsOmniChild("mgmt", {
     dbVarbs: {
       rentCutUnitSwitch: "percent",
       rentCutDollarsOngoingSwitch: "monthly",

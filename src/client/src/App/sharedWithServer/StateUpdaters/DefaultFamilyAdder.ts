@@ -7,24 +7,32 @@ import { PackLoaderSection } from "../StatePackers.ts/PackLoaderSection";
 import { UpdaterSectionBase } from "./bases/updaterSectionBase";
 import { AddChildOptions, UpdaterSection } from "./UpdaterSection";
 
-export class DefaultOrNewChildAdder<
+export class DefaultFamilyAdder<
   SN extends SectionName
 > extends UpdaterSectionBase<SN> {
-  private updater = new UpdaterSection(this.getterSectionProps);
-  private loader = new PackLoaderSection(this.getterSectionProps);
+  get updater(): UpdaterSection<SN> {
+    return new UpdaterSection(this.getterSectionProps);
+  }
+  get loader(): PackLoaderSection<SN> {
+    return new PackLoaderSection(this.getterSectionProps);
+  }
   addChild<CN extends ChildName<SN>>(
     childName: CN,
     options?: AddChildOptions<CN>
   ): void {
-    if (defaultMaker.has(childName)) {
-      const sectionPack = defaultMaker.makeSectionPack(childName);
-      this.loader.loadChildSectionPack(sectionPack);
+    const sectionName = this.get.meta.childType(childName);
+    if (defaultMaker.has(sectionName)) {
+      const sectionPack = defaultMaker.makeSectionPack(sectionName);
+      this.loader.loadChildSectionPack({
+        childName,
+        sectionPack,
+      });
     } else {
       this.updater.addChild(childName, options);
     }
   }
-  private get parent(): DefaultOrNewChildAdder<ParentNameSafe<SN>> {
-    const { parentInfoSafe } = this.updater.get;
+  private get parent(): DefaultFamilyAdder<ParentNameSafe<SN>> {
+    const { parentInfoSafe } = this.get;
     return this.newAdder(parentInfoSafe);
   }
   addSibling(options?: AddChildOptions<SN>): void {
@@ -32,8 +40,8 @@ export class DefaultOrNewChildAdder<
   }
   newAdder<SN extends SectionName>(
     feInfo: FeSectionInfo<SN>
-  ): DefaultOrNewChildAdder<SN> {
-    return new DefaultOrNewChildAdder({
+  ): DefaultFamilyAdder<SN> {
+    return new DefaultFamilyAdder({
       ...feInfo,
       sectionsShare: this.sectionsShare,
     });

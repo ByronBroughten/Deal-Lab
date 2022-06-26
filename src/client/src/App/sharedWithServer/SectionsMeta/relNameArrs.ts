@@ -10,7 +10,6 @@ import { baseNameArrs } from "./baseSectionTypes/baseNameArrs";
 import { hasStoreNameArrs, storeNameArrs } from "./relNameArrs/storeArrs";
 import { tableStoreNameArrs } from "./relNameArrs/tableStoreArrs";
 import { relSections } from "./relSections";
-import { GeneralRelSection } from "./relSections/rel/relSection";
 import { HasChildSectionName } from "./relSectionTypes/ChildTypes";
 import {
   HasOneParentSectionName,
@@ -32,10 +31,8 @@ function makeRelNameArrs<
   return {
     ...arrs,
     hasChild: simpleSectionNames.filter((sectionName) => {
-      return (
-        (relSections[sectionName] as GeneralRelSection).childNames.length > 0
-      );
-    }) as HasChildSectionName<SC>[],
+      return Obj.keys(relSections[sectionName].children).length > 0;
+    }) as HasChildSectionName[],
     ...tableStoreNameArrs,
     hasParent: Obj.keys(sectionToParentArrs).filter((sectionName) => {
       return (sectionToParentArrs[sectionName] as any as string[]).length > 0;

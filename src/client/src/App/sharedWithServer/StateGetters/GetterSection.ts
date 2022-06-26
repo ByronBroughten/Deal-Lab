@@ -27,7 +27,10 @@ import { ValueTypeName } from "../SectionsMeta/relSections/rel/valueMetaTypes";
 import {
   ChildIdArrsWide,
   ChildName,
+  ChildType,
+  DbChildInfo,
   DescendantIds,
+  FeChildInfo,
   GeneralChildIdArrs,
   SelfAndDescendantIds,
 } from "../SectionsMeta/relSectionTypes/ChildTypes";
@@ -49,6 +52,16 @@ import { GetterList } from "./GetterList";
 import { GetterSections } from "./GetterSections";
 import { GetterVarb } from "./GetterVarb";
 import { GetterVarbs } from "./GetterVarbs";
+
+type GetterChildByType<
+  SN extends SectionName,
+  CT extends ChildType<SN>
+> = GetterSection<CT>;
+
+type GetterChild<
+  SN extends SectionName,
+  CN extends ChildName<SN>
+> = GetterSection<ChildType<SN>>;
 
 export class GetterSection<
   SN extends SectionName = SectionName
@@ -171,21 +184,31 @@ export class GetterSection<
   onlyCousin<SN extends SectionName>(sectionName: SN): GetterSection<SN> {
     return this.parent.onlyChild(sectionName as any);
   }
-  children<CN extends ChildName<SN>>(childName: CN): GetterSection<CN>[] {
+  children<CN extends ChildName<SN>>(
+    childName: CN
+  ): GetterSection<ChildType<SN, CN>>[] {
     const childIds = this.childFeIds(childName);
     return childIds.map((feId) =>
-      this.getterSection({ sectionName: childName, feId })
-    );
+      this.getterSection({
+        sectionName: this.meta.childType(childName),
+        feId,
+      })
+    ) as any;
   }
-  childList<CN extends ChildName<SN>>(childName: CN): GetterList<CN> {
-    return this.getterSections.list(childName);
+  childList<CN extends ChildName<SN>>(
+    childName: CN
+  ): GetterList<ChildType<SN, CN>> {
+    const childType = this.meta.childType(childName);
+    return this.getterSections.list(childType) as any;
   }
   childrenOldToYoung<CN extends ChildName<SN>>(
     childName: CN
-  ): GetterSection<CN>[] {
+  ): GetterSection<ChildType<SN, CN>>[] {
     return this.childList(childName).filterByFeIds(this.childFeIds(childName));
   }
-  onlyChild<CN extends ChildName<SN>>(childName: CN): GetterSection<CN> {
+  onlyChild<CN extends ChildName<SN>>(
+    childName: CN
+  ): GetterSection<ChildType<SN, CN>> {
     const children = this.children(childName);
     if (children.length !== 1) {
       throw new Error(
@@ -197,23 +220,59 @@ export class GetterSection<
   onlyChildFeId<CN extends ChildName<SN>>(childName: CN): string {
     return this.onlyChild(childName).feId;
   }
+  sectionIsChild<CT extends ChildType<SN>>(
+    feInfo: FeSectionInfo
+  ): feInfo is FeSectionInfo<CT> {
+    const { sectionName, feId } = feInfo;
+    if (this.meta.isChildType(sectionName)) {
+      const childIds = this.childIdsOfType(sectionName);
+      return childIds.includes(feId);
+    } else return false;
+  }
+  sectionChildName(feInfo: FeSectionInfo) {
+    if (this.sectionIsChild(feInfo)) {
+      const { sectionName, feId } = feInfo;
+      const childNames = this.meta.childTypeNames(sectionName);
+      for (const childName of childNames) {
+        const feIds = this.childFeIds(childName);
+        if (feIds.includes(feId)) return childName;
+      }
+    }
+    const { sectionName, feId } = feInfo;
+    throw new Error(`Child at ${sectionName}.${feId} was not found.`);
+  }
   hasChild<CN extends ChildName<SN>>({
-    sectionName,
+    childName,
     feId,
-  }: FeSectionInfo<CN>): boolean {
-    return this.childFeIds(sectionName).includes(feId);
+  }: FeChildInfo<SN, CN>): boolean {
+    return this.childFeIds(childName).includes(feId);
   }
   hasChildByDbInfo<CN extends ChildName<SN>>({
-    sectionName,
+    childName,
     dbId,
-  }: DbSectionInfo<CN>): boolean {
-    return this.childList(sectionName).hasByMixed({ idType: "dbId", id: dbId });
+  }: DbChildInfo<SN, CN>): boolean {
+    return this.childList(childName).hasByMixed({ idType: "dbId", id: dbId });
   }
-  child<CN extends ChildName<SN>>({
-    sectionName,
-    feId,
-  }: FeSectionInfo<CN>): GetterSection<CN> {
-    return this.childList(sectionName).getByFeId(feId);
+  childToFeInfo<CN extends ChildName<SN>>({
+    childName,
+    ...rest
+  }: FeChildInfo<SN, CN>): FeSectionInfo<ChildType<SN, CN>> {
+    const sectionName = this.meta.childType(childName);
+    return { sectionName, ...rest };
+  }
+  child<
+    CN extends ChildName<SN>,
+    CT extends ChildType<SN, CN> = ChildType<SN, CN>
+  >(childInfo: FeChildInfo<SN, CN>): GetterSection<CT> {
+    const feInfo = this.childToFeInfo(childInfo) as FeSectionInfo<CT>;
+    return this.getterSection(feInfo);
+  }
+  childInfoToFe<
+    CN extends ChildName<SN>,
+    CT extends ChildType<SN, CN> = ChildType<SN, CN>
+  >({ childName, feId }: FeChildInfo<SN, CN>): FeSectionInfo<CT> {
+    const sectionName = this.meta.childType(childName) as CT;
+    return { sectionName, feId };
   }
   varb(varbName: string): GetterVarb<SN> {
     return this.varbs.one(varbName);
@@ -310,6 +369,12 @@ export class GetterSection<
   get allChildFeIds(): ChildIdArrsWide<SN> {
     return this.raw.childFeIds as GeneralChildIdArrs as ChildIdArrsWide<SN>;
   }
+  childIdsOfType<CT extends ChildType<SN>>(sectionName: CT): string[] {
+    const childNames = this.meta.childTypeNames(sectionName);
+    return childNames.reduce((ids, childName) => {
+      return [...ids, ...this.childFeIds(childName)];
+    }, [] as string[]);
+  }
   childFeIds<CN extends ChildName<SN>>(childName: CN): string[] {
     const ids = this.allChildFeIds[childName];
     if (ids) return ids;
@@ -321,11 +386,12 @@ export class GetterSection<
   get allChildDbIds(): ChildIdArrsWide<SN> {
     const { allChildFeIds } = this;
     return Obj.entries(allChildFeIds).reduce(
-      (childDbIds, [sectionName, idArr]) => {
+      (childDbIds, [childName, idArr]) => {
+        const sectionName = this.meta.childType(childName);
         const dbIds = idArr.map(
           (feId) => this.getterSections.section({ sectionName, feId }).dbId
         );
-        childDbIds[sectionName] = dbIds;
+        childDbIds[childName] = dbIds;
         return childDbIds;
       },
       {} as ChildIdArrsWide<SN>
@@ -350,21 +416,30 @@ export class GetterSection<
               descendantIds[childName].push(feId);
             }
           });
-          queue.push(...section.childInfos(childName));
+          queue.push(...section.childTypeInfos(childName));
         }
       }
     }
     return descendantIds as any;
   }
-  childInfos<CN extends ChildName<SN>>(childName: CN): FeSectionInfo<CN>[] {
+  childTypeInfos<
+    CN extends ChildName<SN>,
+    CT extends ChildType<SN, CN> = ChildType<SN, CN>
+  >(childName: CN): FeSectionInfo<CT>[] {
     const childFeIds = this.childFeIds(childName);
-    return childFeIds.map((feId) => ({
-      sectionName: childName,
-      feId,
-    }));
+    const sectionName = this.meta.childType(childName);
+    return childFeIds.map(
+      (feId) =>
+        ({
+          sectionName,
+          feId,
+        } as FeSectionInfo<CT>)
+    );
   }
-
-  youngestChild<CN extends ChildName<SN>>(childName: CN): GetterSection<CN> {
+  youngestChild<
+    CN extends ChildName<SN>
+    // CT extends ChildType<SN, CT>
+  >(childName: CN): GetterSection<ChildType<SN, CN>> {
     const children = this.childrenOldToYoung(childName);
     return Arr.lastOrThrow(children);
   }
@@ -382,7 +457,7 @@ export class GetterSection<
       });
 
       for (const parent of parentList.arr) {
-        if (parent.hasChild(this.feInfo as any)) {
+        if (parent.sectionIsChild(this.feInfo)) {
           return parent as any;
         }
       }

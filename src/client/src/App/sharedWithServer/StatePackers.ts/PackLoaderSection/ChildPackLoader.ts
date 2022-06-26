@@ -1,10 +1,10 @@
 import { pick } from "lodash";
 import { OneRawSection } from "../../SectionPack/RawSection";
 import { SectionPack } from "../../SectionPack/SectionPack";
-import { DbSectionInfo } from "../../SectionsMeta/DbSectionInfo";
 import {
-  ChildIdArrsWide,
   ChildName,
+  ChildType,
+  DbChildInfo,
 } from "../../SectionsMeta/relSectionTypes/ChildTypes";
 import { SectionName } from "../../SectionsMeta/SectionName";
 import {
@@ -18,17 +18,18 @@ import { Obj } from "../../utils/Obj";
 interface ChildPackLoaderProps<SN extends SectionName, CN extends ChildName<SN>>
   extends GetterSectionProps<SN> {
   sectionPack: SectionPack;
-  childDbInfo: DbSectionInfo<CN>;
+  childDbInfo: DbChildInfo<SN, CN>;
 }
 
 export class ChildPackLoader<
   SN extends SectionName,
-  CN extends ChildName<SN>
+  CN extends ChildName<SN>,
+  CT extends ChildType<SN, CN> = ChildType<SN, CN>
 > extends GetterSectionBase<SN> {
   sectionPack: SectionPack;
-  childDbInfo: DbSectionInfo<CN> & { idx?: number };
+  childDbInfo: DbChildInfo<SN, CN> & { idx?: number };
   updaterSection: UpdaterSection<SN>;
-  getterSection: GetterSection<SN>;
+  get: GetterSection<SN>;
   constructor({
     sectionPack,
     childDbInfo,
@@ -38,22 +39,25 @@ export class ChildPackLoader<
     this.sectionPack = sectionPack;
     this.childDbInfo = childDbInfo;
     this.updaterSection = new UpdaterSection(props);
-    this.getterSection = new GetterSection(props);
+    this.get = new GetterSection(props);
   }
-  get childName() {
-    return this.childDbInfo.sectionName;
+  get childName(): CN {
+    return this.childDbInfo.childName;
   }
-  get childRawSectionList(): OneRawSection<CN>[] {
-    return this.sectionPack.rawSections[this.childName] as OneRawSection<CN>[];
+  get childType(): CT {
+    return this.get.meta.childType(this.childName) as CT;
   }
-  get childRawSection(): OneRawSection<CN> {
+  get childRawSectionList(): OneRawSection<CT>[] {
+    return this.sectionPack.rawSections[this.childType] as OneRawSection<CT>[];
+  }
+  get childRawSection(): OneRawSection<CT> {
     const rawSection = this.childRawSectionList.find(
       ({ dbId }) => dbId === this.childDbInfo.dbId
     );
     if (rawSection) return rawSection;
     else
       throw new Error(
-        `No rawSection found with name ${this.childName} and dbId ${this.childDbInfo.dbId}`
+        `No rawSection found with childType ${this.childType} and dbId ${this.childDbInfo.dbId}`
       );
   }
   loadChild() {
@@ -61,18 +65,18 @@ export class ChildPackLoader<
       ...pick(this.childRawSection, ["dbId", "dbVarbs"]),
       idx: this.childDbInfo.idx,
     });
-    const { feId } = this.getterSection.youngestChild(this.childName);
+    const { feId } = this.get.youngestChild(this.childName);
     this.loadChildChildren(feId);
   }
   private loadChildChildren(childFeId: string) {
     const { childDbIds } = this.childRawSection;
-    for (const childName of Obj.keys(childDbIds as ChildIdArrsWide<CN>)) {
-      for (const dbId of childDbIds[childName]) {
+    for (const childName of Obj.keys(childDbIds)) {
+      for (const dbId of childDbIds[childName as keyof typeof childDbIds]) {
         const childPackLoader = this.childPackLoader({
           childFeId,
-          childChildDbInfo: {
+          childDbInfo: {
             dbId,
-            sectionName: childName,
+            childName,
           },
         });
         childPackLoader.loadChild();
@@ -81,20 +85,20 @@ export class ChildPackLoader<
   }
   childPackLoader({
     childFeId,
-    childChildDbInfo,
+    childDbInfo,
   }: {
     childFeId: string;
-    childChildDbInfo: {
+    childDbInfo: {
       dbId: string;
-      sectionName: SectionName;
+      childName: string;
     };
   }) {
     return new ChildPackLoader({
-      sectionName: this.childName,
+      sectionName: this.childType,
       feId: childFeId,
       sectionsShare: this.sectionsShare,
       sectionPack: this.sectionPack,
-      childDbInfo: childChildDbInfo as any,
+      childDbInfo: childDbInfo as any,
     });
   }
 }

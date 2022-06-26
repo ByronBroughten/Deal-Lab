@@ -2,11 +2,18 @@ import { SectionPack } from "../SectionPack/SectionPack";
 import { Id } from "../SectionsMeta/baseSections/id";
 import { VarbValues } from "../SectionsMeta/baseSectionTypes";
 import { FeSectionInfo } from "../SectionsMeta/Info";
-import { ChildName } from "../SectionsMeta/relSectionTypes/ChildTypes";
+import {
+  ChildName,
+  ChildType,
+  FeChildInfo,
+} from "../SectionsMeta/relSectionTypes/ChildTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { GetterSectionProps } from "../StateGetters/Bases/GetterSectionBase";
 import { GetterSection } from "../StateGetters/GetterSection";
-import { ChildSectionPackArrs } from "../StatePackers.ts/PackLoaderSection";
+import {
+  ChildPackInfo,
+  ChildSectionPackArrs,
+} from "../StatePackers.ts/PackLoaderSection";
 import {
   AddChildOptions,
   UpdaterSection,
@@ -64,7 +71,9 @@ export class SolverSection<
       ...feInfo,
     });
   }
-  youngestChild<CN extends ChildName<SN>>(childName: CN): SolverSection<CN> {
+  youngestChild<CN extends ChildName<SN>>(
+    childName: CN
+  ): SolverSection<ChildType<SN, CN>> {
     const { feInfo } = this.get.youngestChild(childName);
     return this.solverSection(feInfo);
   }
@@ -86,15 +95,22 @@ export class SolverSection<
     this.remover.removeChildrenAndExtractVarbIds(childName);
     this.solve();
   }
+  child<CN extends ChildName<SN>>(
+    childInfo: FeChildInfo<SN, CN>
+  ): SolverSection<ChildType<SN, CN>> {
+    const feInfo = this.get.childInfoToFe(childInfo);
+    return this.solverSection(feInfo);
+  }
   removeChildAndSolve<CN extends ChildName<SN>>(
-    feInfo: FeSectionInfo<CN>
+    childInfo: FeChildInfo<SN, CN>
   ): void {
-    if (this.get.hasChild(feInfo)) {
-      const child = this.solverSection(feInfo);
+    if (this.get.hasChild(childInfo)) {
+      const child = this.child(childInfo);
       child.removeSelfAndSolve();
     } else {
+      const { childName, feId } = childInfo;
       throw new Error(
-        `Section ${this.get.sectionName}.${this.get.feId} does not have child ${feInfo.sectionName}.${feInfo.feId}.`
+        `Section ${this.get.sectionName}.${this.get.feId} does not have child ${childName}.${feId}.`
       );
     }
   }
@@ -120,15 +136,13 @@ export class SolverSection<
     this.adder.addChildAndFinalize(childName, options);
     this.solve();
   }
-  loadChildPackAndSolve<CN extends ChildName<SN>>(childPack: SectionPack<CN>) {
-    const { sectionName } = childPack;
-    this.updater.addChild(sectionName);
-    const child = this.youngestChild(sectionName);
-    child.loadSelfSectionPackAndSolve(childPack);
-
-    // this.adder.loadChildAndCollectVarbIds(childPack);
-    // this.adder.finalizeVarbsAndExtractIds();
-    // this.solve();
+  loadChildPackAndSolve<CN extends ChildName<SN>>(
+    childPackInfo: ChildPackInfo<SN, CN>
+  ) {
+    const { childName, sectionPack } = childPackInfo;
+    this.updater.addChild(childName);
+    const child = this.youngestChild(childName);
+    child.loadSelfSectionPackAndSolve(sectionPack);
   }
   loadChildPackArrsAndSolve(
     childPackArrs: Partial<ChildSectionPackArrs<SN>>

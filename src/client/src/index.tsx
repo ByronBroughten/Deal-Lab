@@ -31,12 +31,11 @@ const testRelProperty = {
 //   - As things stand, I can't query a child without first querying its parent;
 //     The problem gets worse the deeper the child is nested.
 //     This problem goes away if the object in the shape in which it theoretically exists.
-//   - It's not difficult to validate
 //   - The easiest way to go about it would be to convert the hierarchical sectionPack
 //     into the present sectionPack, which would be pretty simple.
 
 // Cons:
-//   - I will have to redesign the mongoose hierarchy.
+//   - I will have to redo how the mongoose schema is made.
 //   - The benefits of doing this are only theoretical right now
 //   - The current setup makes it easier to specifically target section values
 

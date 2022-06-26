@@ -2,6 +2,7 @@
 import { isEqual, pick } from "lodash";
 import { entryKeysWithPropOfType } from "./Obj/entryKeysWithProp";
 import { merge, spread } from "./Obj/merge";
+import { PropKeysOfValue } from "./Obj/SubType";
 import {
   forSureEntries,
   NextObjEntries,
@@ -102,6 +103,13 @@ export const Obj = {
       propObj[key] = obj[key][propName] as O[typeof key][P];
       return propObj;
     }, {} as { [Prop in keyof O]: O[Prop][P] });
+  },
+  propKeysOfValue<O extends object, V extends O[keyof O]>(
+    obj: O,
+    value: V
+  ): PropKeysOfValue<O, V> {
+    const keys = this.keys(obj).filter((key) => obj[key] === value);
+    return keys as any as PropKeysOfValue<O, V>;
   },
   entryKeysWithProp<
     O extends object,

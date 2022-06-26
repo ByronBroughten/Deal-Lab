@@ -1,12 +1,8 @@
-import { ContextName } from "../baseSections";
 import { BaseName } from "../baseSectionTypes";
-import { RelSections } from "../relSections";
+import { ChildName } from "./ChildTypes";
 
-type PreUserLists = {
-  [Prop in BaseName<"userList", ContextName>]: RelSections[Prop];
-};
 type UserListItemTypes = {
-  [Prop in BaseName<"userList">]: PreUserLists[Prop]["childNames"][number];
+  [SN in BaseName<"userList">]: ChildName<SN>;
 };
 export type UserItemSectionName = UserListItemTypes[BaseName<"userList">];
 export const userListItemTypes: UserListItemTypes = {

@@ -2,20 +2,17 @@ import { SectionPack } from "../SectionPack/SectionPack";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
 
 export function makeDefaultPropertyPack(): SectionPack<"property"> {
-  const main = PackBuilderSection.initAsMain();
-  const property = main.addAndGetDescendant(
-    ["deal", "propertyGeneral", "property"] as const,
-    {
-      dbVarbs: {
-        taxesOngoingSwitch: "yearly",
-        homeInsOngoingSwitch: "yearly",
-        ongoingExpensesOngoingSwitch: "yearly",
-        targetRentOngoingSwitch: "monthly",
-        miscOngoingRevenueOngoingSwitch: "monthly",
-        ongoingRevenueOngoingSwitch: "monthly",
-      },
-    }
-  );
+  const property = PackBuilderSection.initAsOmniChild("property", {
+    dbVarbs: {
+      taxesOngoingSwitch: "yearly",
+      homeInsOngoingSwitch: "yearly",
+      ongoingExpensesOngoingSwitch: "yearly",
+      targetRentOngoingSwitch: "monthly",
+      miscOngoingRevenueOngoingSwitch: "monthly",
+      ongoingRevenueOngoingSwitch: "monthly",
+    },
+  });
+
   property.addChild("ongoingCostList", {
     dbVarbs: {
       title: "Utilities",

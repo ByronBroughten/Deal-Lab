@@ -27,10 +27,10 @@ export class VariableGetterSections extends GetterSectionsBase {
   }
   private userVarbOptions(): VariableOption[] {
     const { main } = this.getterSections;
-    const sectionName = "userVarbList";
+    const childName = "userVarbList";
     const varbListFeIds = main.childFeIds("userVarbList");
     return varbListFeIds.reduce((options, feId) => {
-      const listSection = main.child({ sectionName, feId });
+      const listSection = main.child({ childName, feId });
       const userVarbItems = listSection.children("userVarbItem");
       const collectionName = listSection.value("title", "string");
       return options.concat(

@@ -6,6 +6,7 @@ import { SetterTableNext } from "../../sharedWithServer/StateSetters/SetterTable
 import { IndexSectionQuerierProps } from "../QueriersRelative/Bases.ts/IndexSectionQuerierBase";
 import { IndexListQuerier } from "../QueriersRelative/IndexListQuerier";
 import { IndexSectionQuerier } from "../QueriersRelative/IndexSectionQuerier";
+import { GetterSection } from "./../../sharedWithServer/StateGetters/GetterSection";
 import { SectionActorBase } from "./SectionActorBase";
 
 export class MainSectionActorNext<
@@ -40,7 +41,10 @@ export class MainSectionActorNext<
   get table(): SetterTableNext {
     const { main } = this.getterSections;
     const { tableStoreName } = this.get.meta;
-    const tableStore = main.onlyChild(tableStoreName);
+    const tableStore = main.onlyChild(tableStoreName) as any as GetterSection<
+      SectionName<"tableStore">
+    >;
+
     return new SetterTableNext({
       ...this.sectionActorBaseProps,
       ...tableStore.onlyChild("table").feInfo,

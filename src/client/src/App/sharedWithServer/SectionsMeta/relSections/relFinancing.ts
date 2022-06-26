@@ -1,13 +1,13 @@
-import { StrictOmit } from "../../utils/types";
 import { loanVarbsNotInFinancing } from "../baseSections";
 import { numObj } from "../baseSections/baseValues/NumObj";
 import { switchNames } from "../baseSections/switchNames";
 import { rel } from "./rel";
-import { relSection, RelSectionOptions } from "./rel/relSection";
+import { relSection } from "./rel/relSection";
 import { RelVarbs } from "./rel/relVarbs";
 
 const loanAmountBase = switchNames("loanAmountBase", "dollarsPercent");
-function loanRelVarbs(sectionName: "loan"): RelVarbs<"loan"> {
+function loanRelVarbs<R extends RelVarbs<"loan">>(): R {
+  const sectionName = "loan";
   return {
     ...rel.varbs.savableSection,
     [loanAmountBase.switch]: rel.varb.string({
@@ -121,29 +121,7 @@ function loanRelVarbs(sectionName: "loan"): RelVarbs<"loan"> {
       },
       { shared: { startAdornment: "$" } }
     ),
-  } as RelVarbs<"loan">;
-}
-
-function loanSection<
-  SN extends "loan",
-  O extends StrictOmit<
-    RelSectionOptions<"loan">,
-    "childNames" | "relVarbs"
-  > = {}
->(sectionName: SN, options?: O) {
-  return relSection.base(
-    sectionName,
-    "Loan",
-    loanRelVarbs(sectionName) as RelVarbs<SN>,
-    {
-      ...((options ?? {}) as O),
-      childNames: [
-        "closingCostList",
-        "wrappedInLoanList",
-        "internalVarbList",
-      ] as const,
-    }
-  );
+  } as R;
 }
 
 const financingRelVarbs: RelVarbs<"financing"> = {
@@ -178,22 +156,23 @@ const financingRelVarbs: RelVarbs<"financing"> = {
     ]),
     { shared: { startAdornment: "$" }, switchInit: "monthly" }
   ),
-  ...rel.varbs.sumSection(
-    "loan",
-    loanRelVarbs("loan"),
-    loanVarbsNotInFinancing
-  ),
-  ...rel.varbs.sectionStrings("loan", loanRelVarbs("loan"), ["title"]),
+  ...rel.varbs.sumSection("loan", loanRelVarbs(), loanVarbsNotInFinancing),
+  ...rel.varbs.sectionStrings("loan", loanRelVarbs(), ["title"]),
 };
 
 export const relFinancing = {
   ...relSection.base("financing", "Financing", financingRelVarbs, {
-    childNames: ["loan"] as const,
+    children: { loan: { sectionName: "loan" } },
   }),
-  ...loanSection("loan", {
+  ...relSection.base("loan", "Loan", loanRelVarbs(), {
     tableStoreName: "loanTableStore",
     rowIndexName: "loan",
-  } as const),
+    children: {
+      closingCostList: { sectionName: "closingCostList" },
+      wrappedInLoanList: { sectionName: "wrappedInLoanList" },
+      internalVarbList: { sectionName: "internalVarbList" },
+    },
+  }),
   ...rel.section.singleTimeList("closingCostList", "Closing Costs", {
     fullIndexName: "singleTimeList",
   }),

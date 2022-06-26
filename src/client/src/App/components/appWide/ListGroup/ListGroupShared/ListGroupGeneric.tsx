@@ -14,6 +14,16 @@ import useHowMany from "../../customHooks/useHowMany";
 import PlusBtn from "../../PlusBtn";
 import { ListGroupTotal } from "./ListGroupGeneric/ListGroupTotal";
 
+// Hmmm.
+
+// childName of a parent that is of a particular childType
+
+// The best way to solve this is: make all the itemNames for the lists
+// be named "listItem"
+// get rid of the "itemName" requirement
+// get rid of sectionName
+// add childName, which is one of the childNames of the parents' list types
+
 type Props<SN extends SectionName<"allList"> = SectionName<"allList">> = {
   themeName: ThemeName;
   parentInfo: FeParentInfo<SN>;

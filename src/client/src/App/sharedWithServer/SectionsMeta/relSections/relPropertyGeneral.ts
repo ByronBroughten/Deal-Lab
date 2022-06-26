@@ -1,11 +1,9 @@
-import { StrictOmit } from "../../utils/types";
 import { rel } from "./rel";
-import { relSection, RelSectionOptions } from "./rel/relSection";
+import { relSection } from "./rel/relSection";
 import { RelVarbs } from "./rel/relVarbs";
 
-function propertyRelVarbs<SN extends "property", R extends RelVarbs<SN>>(
-  sectionName: SN
-): R {
+function propertyRelVarbs<R extends RelVarbs<"property">>(): R {
+  const sectionName = "property";
   return {
     ...rel.varbs.savableSection,
     price: rel.varb.moneyObj("Price"),
@@ -55,48 +53,28 @@ function propertyRelVarbs<SN extends "property", R extends RelVarbs<SN>>(
   } as R;
 }
 
-function propertySection<
-  SN extends "property",
-  O extends StrictOmit<
-    RelSectionOptions<"property">,
-    "childNames" | "relVarbs"
-  > = {}
->(sectionName: SN, options?: O) {
-  return relSection.base(
-    sectionName,
-    "Property",
-    propertyRelVarbs(sectionName),
-    {
-      ...((options ?? {}) as O),
-      childNames: [
-        "upfrontCostList",
-        "upfrontRevenueList",
-        "ongoingCostList",
-        "ongoingRevenueList",
-        "unit",
-        "varbList",
-      ] as const,
-    }
-  );
-}
 export const relPropertyGeneral = {
   ...relSection.base(
     "propertyGeneral",
     "Property",
     {
-      ...rel.varbs.sumSection("property", propertyRelVarbs("property")),
-      ...rel.varbs.sectionStrings("property", propertyRelVarbs("property"), [
-        "title",
-      ]),
+      ...rel.varbs.sumSection("property", propertyRelVarbs()),
+      ...rel.varbs.sectionStrings("property", propertyRelVarbs(), ["title"]),
     },
-    {
-      childNames: ["property"] as const,
-    }
+    { children: { property: { sectionName: "property" } } }
   ),
-  ...propertySection("property", {
+  ...relSection.base("property", "Property", propertyRelVarbs(), {
+    children: {
+      upfrontCostList: { sectionName: "upfrontCostList" },
+      upfrontRevenueList: { sectionName: "upfrontRevenueList" },
+      ongoingCostList: { sectionName: "ongoingCostList" },
+      ongoingRevenueList: { sectionName: "ongoingRevenueList" },
+      unit: { sectionName: "unit" },
+      varbList: { sectionName: "varbList" },
+    },
     tableStoreName: "propertyTableStore",
     rowIndexName: "property",
-  } as const),
+  }),
   ...relSection.base("unit", "Unit", {
     one: rel.varb.numObj("Unit", {
       updateFnName: "one",

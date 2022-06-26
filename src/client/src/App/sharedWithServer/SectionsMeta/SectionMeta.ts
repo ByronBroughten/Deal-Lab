@@ -6,12 +6,19 @@ import {
   ChildIdArrsNarrow,
   ChildIdArrsWide,
   ChildName,
+  ChildNamesToTypes,
+  ChildType,
+  ChildTypeName,
+  ChildTypesToNames,
+  sectionChildNamesToType,
+  sectionChildTypesToNames,
 } from "./relSectionTypes/ChildTypes";
 import {
   CorePropName,
   sectionMetasCore,
   SectionsMetaCore,
 } from "./sectionMetasCore";
+import { SectionName } from "./SectionName";
 import { VarbMetas } from "./VarbMetas";
 
 type SectionMetaExtra = {
@@ -68,8 +75,31 @@ export class SectionMeta<SN extends SimpleSectionName> {
     return this.prop("parentNames");
   }
   get childNames(): ChildName<SN>[] {
-    return this.prop("childNames") as string[] as ChildName<SN>[];
+    return Obj.keys(this.prop("children")) as string[] as ChildName<SN>[];
   }
+  get childNamesToTypes(): ChildNamesToTypes<SN> {
+    return sectionChildNamesToType[this.sectionName] as {
+      [key: string]: string;
+    } as ChildNamesToTypes<SN>;
+  }
+  isChildType(sectionName: SectionName): sectionName is ChildType<SN> {
+    return this.childTypes.includes(sectionName as any);
+  }
+  get childTypes(): ChildType<SN>[] {
+    return Obj.keys(this.childTypesToNames) as ChildType<SN>[];
+  }
+  childType<CN extends ChildName<SN>>(childName: CN): ChildType<SN, CN> {
+    return this.childNamesToTypes[childName];
+  }
+  childTypeNames<CT extends ChildType<SN>>(
+    childType: CT
+  ): ChildTypeName<SN, CT>[] {
+    return this.childTypesToNames[childType] as ChildTypeName<SN, CT>[];
+  }
+  private get childTypesToNames(): ChildTypesToNames<SN> {
+    return sectionChildTypesToNames[this.sectionName] as any;
+  }
+
   get alwaysOne(): boolean {
     return this.prop("alwaysOne");
   }

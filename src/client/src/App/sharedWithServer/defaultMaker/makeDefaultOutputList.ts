@@ -17,8 +17,7 @@ export const defaultDealOutputInfos = outputNames.map((varbName) => {
 });
 
 export function makeDefaultOutputList(): SectionPack<"dealOutputList"> {
-  const main = PackBuilderSection.initAsMain();
-  const outputList = main.addAndGetDescendant(["deal", "dealOutputList"]);
+  const outputList = PackBuilderSection.initAsOmniChild("dealOutputList");
   for (const outputVarbInfo of defaultDealOutputInfos) {
     outputList.addChild("output", {
       dbVarbs: outputVarbInfo,

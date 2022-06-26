@@ -1,5 +1,9 @@
 import { z } from "zod";
 import {
+  ChildName,
+  ChildType,
+} from "../SectionsMeta/relSectionTypes/ChildTypes";
+import {
   SectionName,
   sectionNameS,
   SectionNameType,
@@ -12,6 +16,11 @@ export type SectionPack<SN extends SectionName = SectionName> = {
   dbId: string;
   rawSections: RawSections<SN>;
 };
+export type ChildSectionPack<
+  SN extends SectionName,
+  CN extends ChildName<SN>,
+  CT extends ChildType<SN, CN> = ChildType<SN, CN>
+> = SectionPack<CT>;
 
 export type SectionPackArrs<ST extends SectionNameType> = {
   [SN in SectionName<ST>]: SectionPack<SN>[];
@@ -20,6 +29,14 @@ export type SectionPackArrs<ST extends SectionNameType> = {
 export type SectionArrPack<SN extends SectionName> = {
   sectionName: SN;
   sectionPacks: SectionPack<SN>[];
+};
+export type ChildArrPack<
+  SN extends SectionName,
+  CN extends ChildName<SN> = ChildName<SN>,
+  CT extends ChildType<SN, CN> = ChildType<SN, CN>
+> = {
+  childName: CN;
+  sectionPacks: SectionPack<CT>[];
 };
 
 export type ServerSectionPack<

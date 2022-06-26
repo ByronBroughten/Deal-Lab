@@ -1,6 +1,10 @@
 import { Arr } from "../utils/Arr";
-import { ApiAccessStatus, SimpleSectionName } from "./baseSections";
-import { baseNameArrs } from "./baseSectionTypes/baseNameArrs";
+import { StrictExclude } from "../utils/types";
+import {
+  ApiAccessStatus,
+  SimpleSectionName,
+  simpleSectionNames,
+} from "./baseSections";
 import { rel } from "./relSections/rel";
 import { GeneralRelSection, relSection } from "./relSections/rel/relSection";
 import { relVarb } from "./relSections/rel/relVarb";
@@ -11,13 +15,33 @@ import { preMgmtGeneral } from "./relSections/relMgmtGeneral";
 import { relPropertyGeneral } from "./relSections/relPropertyGeneral";
 import { preUserLists } from "./relSections/relUserLists";
 
+type OmniParentChildren = {
+  [SN in StrictExclude<SimpleSectionName, "root" | "omniParent">]: {
+    sectionName: SN;
+  };
+};
+const omniParentChildren = Arr.excludeStrict(simpleSectionNames, [
+  "root",
+  "omniParent",
+]).reduce((omniNames, sectionName) => {
+  (omniNames as any)[sectionName] = {
+    sectionName,
+  } as OmniParentChildren[typeof sectionName];
+  return omniNames;
+}, {} as OmniParentChildren);
+
 export function makeRelSections() {
   return {
     ...rel.section.base(
       "root",
       "Root",
       { _typeUniformity: rel.varb.string() },
-      { childNames: ["omniParent", "main"] as const }
+      {
+        children: {
+          omniParent: { sectionName: "omniParent" },
+          main: { sectionName: "main" },
+        },
+      }
     ),
     ...relSection.base(
       "omniParent",
@@ -25,12 +49,7 @@ export function makeRelSections() {
       {
         _typeUniformity: rel.varb.string(),
       } as RelVarbs<"main">,
-      {
-        childNames: Arr.exclude(baseNameArrs.fe.all, [
-          "root",
-          "omniParent",
-        ] as const),
-      }
+      { children: omniParentChildren }
     ),
     ...relSection.base(
       "main",
@@ -39,29 +58,29 @@ export function makeRelSections() {
         _typeUniformity: rel.varb.string(),
       } as RelVarbs<"main">,
       {
-        childNames: [
-          "user",
-          "serverOnlyUser",
-          "login",
-          "register",
+        children: {
+          user: { sectionName: "user" },
+          serverOnlyUser: { sectionName: "serverOnlyUser" },
+          login: { sectionName: "login" },
+          register: { sectionName: "register" },
 
-          "deal",
+          deal: { sectionName: "deal" },
 
-          "propertyTableStore",
-          "loanTableStore",
-          "mgmtTableStore",
-          "dealTableStore",
+          propertyTableStore: { sectionName: "propertyTableStore" },
+          loanTableStore: { sectionName: "loanTableStore" },
+          mgmtTableStore: { sectionName: "mgmtTableStore" },
+          dealTableStore: { sectionName: "dealTableStore" },
 
-          "userVarbList",
-          "userSingleList",
-          "userOngoingList",
-          "userOutputList",
+          userVarbList: { sectionName: "userVarbList" },
+          userSingleList: { sectionName: "userSingleList" },
+          userOngoingList: { sectionName: "userOngoingList" },
+          userOutputList: { sectionName: "userOutputList" },
 
-          "varbList",
-          "singleTimeList",
-          "ongoingList",
-          "outputList",
-        ] as const,
+          varbList: { sectionName: "varbList" },
+          singleTimeList: { sectionName: "singleTimeList" },
+          ongoingList: { sectionName: "ongoingList" },
+          outputList: { sectionName: "outputList" },
+        },
       }
     ),
 
@@ -70,32 +89,35 @@ export function makeRelSections() {
       "Table",
       { titleFilter: relVarb.string() } as RelVarbs<"table">,
       {
-        childNames: ["column", "tableRow"] as const,
+        children: {
+          column: { sectionName: "column" },
+          tableRow: { sectionName: "tableRow" },
+        },
       }
     ),
     ...relSection.base(
       "propertyTableStore",
       "Property Table Store",
       { _typeUniformity: rel.varb.string() },
-      { childNames: ["table"] } as const
+      { children: { table: { sectionName: "table" } } } as const
     ),
     ...relSection.base(
       "loanTableStore",
       "Loan Table Store",
       { _typeUniformity: rel.varb.string() },
-      { childNames: ["table"] } as const
+      { children: { table: { sectionName: "table" } } } as const
     ),
     ...relSection.base(
       "mgmtTableStore",
       "Mgmt Table Store",
       { _typeUniformity: rel.varb.string() },
-      { childNames: ["table"] } as const
+      { children: { table: { sectionName: "table" } } } as const
     ),
     ...relSection.base(
       "dealTableStore",
       "Deal Table Store",
       { _typeUniformity: rel.varb.string() },
-      { childNames: ["table"] } as const
+      { children: { table: { sectionName: "table" } } } as const
     ),
     ...relSection.base(
       "outputList",
@@ -103,9 +125,8 @@ export function makeRelSections() {
       {
         title: rel.varb.string(),
       },
-      { childNames: ["output"] as const }
+      { children: { output: { sectionName: "output" } } } as const
     ),
-
     ...relSection.outputList("dealOutputList", {
       fullIndexName: "outputList",
     }),
@@ -122,7 +143,6 @@ export function makeRelSections() {
       ...rel.varbs.varbInfo(),
       value: rel.varb.numObj("cell"),
     }),
-
     // singleTimeItem and ongoingItem are for additiveLists
     ...relSection.base(
       "singleTimeItem",

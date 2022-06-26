@@ -6,8 +6,8 @@ import {
   VarbNames,
 } from "./SectionsMeta/relSections/rel/relVarbInfoTypes";
 import {
-  DescendantName,
-  SelfOrDescendantName,
+  DescendantType,
+  SelfOrDescendantType,
 } from "./SectionsMeta/relSectionTypes/ChildTypes";
 import { SectionMeta } from "./SectionsMeta/SectionMeta";
 import { SectionName, sectionNameS } from "./SectionsMeta/SectionName";
@@ -61,17 +61,17 @@ export class SectionsMeta {
   }
   selfAndDescendantNames<SN extends SectionName>(
     sectionName: SN
-  ): SelfOrDescendantName<SN>[] {
-    const selfAndDescendantNames: SelfOrDescendantName<SN>[] = [];
-    const queue: SelfOrDescendantName<SN>[] = [sectionName];
+  ): SelfOrDescendantType<SN>[] {
+    const selfAndDescendantNames: SelfOrDescendantType<SN>[] = [];
+    const queue: SelfOrDescendantType<SN>[] = [sectionName];
     while (queue.length > 0) {
       const queueLength = queue.length;
       for (let i = 0; i < queueLength; i++) {
-        const descendantName = queue.shift() as DescendantName<SN>;
+        const descendantName = queue.shift() as DescendantType<SN>;
         selfAndDescendantNames.push(descendantName);
 
         const { childNames } = this.section(descendantName);
-        queue.push(...(childNames as DescendantName<SN>[]));
+        queue.push(...(childNames as DescendantType<SN>[]));
       }
     }
     return selfAndDescendantNames;

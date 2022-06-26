@@ -20,11 +20,9 @@ describe("PackBuilderSection", () => {
   } as const;
 
   it("should make a sectionPack with the added values and children", () => {
-    const main = PackBuilderSection.initAsMain();
-    const property = main.addAndGetDescendant(
-      ["deal", "propertyGeneral", "property"] as const,
-      { dbVarbs: dbVarbs.property }
-    );
+    const property = PackBuilderSection.initAsOmniChild("property", {
+      dbVarbs: dbVarbs.property,
+    });
     property.addChild("upfrontCostList", { dbVarbs: dbVarbs.upfrontCostList });
     property.addChild("ongoingCostList", { dbVarbs: dbVarbs.ongoingCostList });
 

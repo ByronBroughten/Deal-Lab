@@ -1,5 +1,9 @@
 import { FeSectionInfo, VarbInfo } from "../SectionsMeta/Info";
-import { ChildName } from "../SectionsMeta/relSectionTypes/ChildTypes";
+import {
+  ChildName,
+  ChildType,
+  FeChildInfo,
+} from "../SectionsMeta/relSectionTypes/ChildTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { GetterSection } from "../StateGetters/GetterSection";
 import { OutVarbGetterSection } from "../StateInOutVarbs/OutVarbGetterSection";
@@ -124,11 +128,15 @@ export class RemoveSolverSection<
     this.prepAndRemoveChildren(childName);
     this.extractVarbIdsToSolveFor();
   }
-  private prepAndRemoveChildren(sectionName: ChildName<SN>): void {
-    const childIds = this.get.childFeIds(sectionName);
+  child(childInfo: FeChildInfo<SN>): RemoveSolverSection<ChildType<SN>> {
+    const feInfo = this.get.childInfoToFe(childInfo);
+    return this.removeSolverSection(feInfo);
+  }
+  private prepAndRemoveChildren(childName: ChildName<SN>): void {
+    const childIds = this.get.childFeIds(childName);
     for (const feId of childIds) {
-      const child = this.removeSolverSection({
-        sectionName,
+      const child = this.child({
+        childName,
         feId,
       });
       child.prepAndRemoveSelf();
