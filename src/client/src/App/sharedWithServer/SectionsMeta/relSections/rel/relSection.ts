@@ -16,7 +16,7 @@ export type GeneralRelSection = {
   displayName: string;
   relVarbs: GeneralRelVarbs;
 
-  listItem: string | null;
+  varbListItem: string | null;
 
   children: { [key: string]: GeneralRelChild };
   tableIndexName: BaseName | null;
@@ -47,7 +47,7 @@ function makeDefault<O extends StrictPick<GeneralRelSection, OptionsKeys>>(
 
 const defaultProps = makeDefault({
   children: {},
-  listItem: null,
+  varbListItem: null,
   fullIndexName: null,
   rowIndexName: null,
   arrStoreName: null,

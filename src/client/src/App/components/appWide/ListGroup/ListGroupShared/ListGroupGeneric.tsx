@@ -3,7 +3,6 @@ import { MdOutlinePlaylistAdd } from "react-icons/md";
 import styled, { css } from "styled-components";
 import { FeSectionInfo } from "../../../../sharedWithServer/SectionsMeta/Info";
 import {
-  ChildName,
   ChildType,
   ChildTypeName,
 } from "../../../../sharedWithServer/SectionsMeta/relSectionTypes/ChildTypes";
@@ -43,7 +42,6 @@ type Props<
   themeName: ThemeName;
   parentInfo: FeSectionInfo<PN>;
   listChildName: ChildTypeName<PN, "varbListAllowed">;
-  itemName: ChildName<SN>;
   makeListNode: ({
     feInfo,
     themeName,
@@ -74,7 +72,7 @@ export function ListGroupGeneric({
   const lists = parent.get.children(listChildName);
 
   const numListsWithItems = lists.reduce<number>((num, list) => {
-    const childIds = list.childFeIds(itemName);
+    const childIds = list.childFeIds(list.meta.varbListItem);
     if (childIds.length > 0) num++;
     return num;
   }, 0);

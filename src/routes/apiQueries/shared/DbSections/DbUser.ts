@@ -184,7 +184,7 @@ export class DbUser extends GetterSectionsBase {
     const omniParent = PackBuilderSection.initAsOmniParent();
     const tableStore = omniParent.addAndGetChild(
       sectionName
-    ) as any as PackBuilderSection<SN>;
+    ) as PackBuilderSection<any> as PackBuilderSection<SN>;
 
     const sourceName = tableStore.sectionMeta
       .tableSourceName as SectionName<"tableSource">;

@@ -22,7 +22,6 @@ type Props<
   CN extends ChildName<SN>
 > = {
   feInfo: FeSectionInfo<SN>;
-  itemName: CN;
   makeItemNode: (item: GetterSection<CN>) => ReactNode;
   themeName: ThemeName;
   contentTitle: string;
@@ -36,7 +35,6 @@ export function VarbListGeneric<
   CN extends ChildName<SN>
 >({
   feInfo,
-  itemName,
   makeItemNode,
   themeName,
   contentTitle,
@@ -53,6 +51,8 @@ export function VarbListGeneric<
 
   const { trackWidthToggleView, ...titleRowProps } = useOpenWidth();
   const { viewIsOpen } = titleRowProps;
+
+  const itemName = list.meta.varbListItem as ChildName<SN>;
 
   const addItem = () => {
     const defaultValueSwitch = list.varb("defaultValueSwitch").value("string");

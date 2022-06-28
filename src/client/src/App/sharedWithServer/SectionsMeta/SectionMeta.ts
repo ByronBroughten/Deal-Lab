@@ -37,7 +37,7 @@ type CoreProp<
 type CorePropNoNull<
   SN extends SimpleSectionName,
   PN extends CorePropName
-> = Exclude<CoreProp<SN, PN>, null>;
+> = Exclude<SectionsMetaCore[SN][PN], null>;
 
 export class SectionMeta<SN extends SimpleSectionName> {
   constructor(readonly props: SectionMetaProps<SN>) {}
@@ -58,6 +58,9 @@ export class SectionMeta<SN extends SimpleSectionName> {
   }
   get displayName(): string {
     return this.prop("displayName");
+  }
+  get varbListItem(): CoreProp<SN, "varbListItem"> {
+    return this.prop("varbListItem");
   }
   propNoNull<PN extends CorePropName>(propName: PN): CorePropNoNull<SN, PN> {
     const prop = this.core[propName];

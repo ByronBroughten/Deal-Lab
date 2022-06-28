@@ -64,10 +64,10 @@ export class PackBuilderSection<
     return this.maker.makeSectionPack();
   }
   // I shouldn't need to add the childName
-  addAndGetChild<CN extends ChildName<SN>, CT extends ChildType<SN, CN>>(
+  addAndGetChild<CN extends ChildName<SN>>(
     childName: CN,
-    options?: AddChildOptions<SN, CN, CT>
-  ): PackBuilderSection<CT> {
+    options?: AddChildOptions<SN, CN>
+  ): PackBuilderSection<ChildType<SN, CN>> {
     this.addChild(childName, options);
     return this.youngestChild(childName);
   }

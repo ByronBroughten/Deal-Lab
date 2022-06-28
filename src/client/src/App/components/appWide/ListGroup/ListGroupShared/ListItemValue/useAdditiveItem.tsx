@@ -16,7 +16,7 @@ function isValueSwitchValue(value: any): value is ValueSwitchValue {
 }
 
 export const valueSwitches: Record<
-  SectionName<"userListItem">,
+  SectionName<"varbListItem">,
   ValueSwitchValue[]
 > = {
   singleTimeItem: ["loadedVarb", "labeledEquation"],
@@ -37,7 +37,7 @@ function nextSwitchValue(
 
 function useOngoingOrSingleItem(
   feInfo: FeSectionInfo,
-  itemType: SectionName<"userListItem">
+  itemType: SectionName<"varbListItem">
 ) {
   const section = useGetterSection(feInfo);
   return {
@@ -50,7 +50,7 @@ function useOngoingOrSingleItem(
 }
 export function useAdditiveItem(
   feInfo: FeSectionInfo,
-  itemType: SectionName<"userListItem">
+  itemType: SectionName<"varbListItem">
 ) {
   const section = useSetterSection(feInfo);
   const valueSwitchVarb = section.varb("valueSwitch");

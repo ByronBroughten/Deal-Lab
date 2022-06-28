@@ -9,12 +9,12 @@ import { HasChildSectionName } from "./relSectionTypes/ChildTypes";
 export const relNameArrs = {
   ...hasStoreNameArrs,
   ...storeNameArrs,
+
   hasChild: simpleSectionNames.filter((sectionName) => {
     return Obj.keys(relSections[sectionName].children).length > 0;
   }) as HasChildSectionName[],
   ...tableStoreNameArrs,
-
-  userListItem: Arr.extractStrict(simpleSectionNames, [
+  varbListItem: Arr.extractStrict(simpleSectionNames, [
     "singleTimeItem",
     "ongoingItem",
     "userVarbItem",

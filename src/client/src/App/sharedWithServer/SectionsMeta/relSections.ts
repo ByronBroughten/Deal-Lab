@@ -137,6 +137,7 @@ export function makeRelSections() {
     output: relSection("Output", relVarbsS.varbInfo()),
     singleTimeList: relSection("List", relVarbsS.singleTimeList(), {
       fullIndexName: "singleTimeList",
+      varbListItem: "singleTimeItem",
       children: {
         singleTimeItem: relChild("singleTimeItem"),
       },
@@ -144,6 +145,7 @@ export function makeRelSections() {
     singleTimeItem: relSection("List Item", relVarbsS.singleTimeItem()),
     ongoingList: relSection("List", relVarbsS.ongoingList(), {
       fullIndexName: "ongoingList",
+      varbListItem: "ongoingItem",
       children: {
         ongoingItem: relChild("ongoingItem", {
           isListItem: true,
@@ -159,7 +161,11 @@ export function makeRelSections() {
           initValue: "labeledEquation",
         } as const),
       },
-      { children: { userVarbItem: { sectionName: "userVarbItem" } } }
+      {
+        fullIndexName: "userVarbList",
+        varbListItem: "ongoingItem",
+        children: { userVarbItem: { sectionName: "userVarbItem" } },
+      }
     ),
     userVarbItem: relSection("User Variable", userVarbItemVarbs, {
       children: { conditionalRow: relChild("conditionalRow") },
