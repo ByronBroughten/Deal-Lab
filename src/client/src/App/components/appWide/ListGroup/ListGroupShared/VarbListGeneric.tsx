@@ -17,7 +17,10 @@ import { ListMenu } from "./ListMenu";
 import { VarbListTable } from "./VarbListGeneric/VarbListTable";
 import { VarbListTotal } from "./VarbListGeneric/VarbListTotal";
 
-type Props<SN extends SectionName<"allList">, CN extends ChildName<SN>> = {
+type Props<
+  SN extends SectionName<"varbListAllowed">,
+  CN extends ChildName<SN>
+> = {
   feInfo: FeSectionInfo<SN>;
   itemName: CN;
   makeItemNode: (item: GetterSection<CN>) => ReactNode;
@@ -29,7 +32,7 @@ type Props<SN extends SectionName<"allList">, CN extends ChildName<SN>> = {
 };
 
 export function VarbListGeneric<
-  SN extends SectionName<"allList">,
+  SN extends SectionName<"varbListAllowed">,
   CN extends ChildName<SN>
 >({
   feInfo,

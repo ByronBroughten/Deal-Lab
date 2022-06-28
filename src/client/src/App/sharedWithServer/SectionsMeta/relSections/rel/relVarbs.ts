@@ -8,7 +8,7 @@ import {
   SectionVarbNameByType,
 } from "../../baseSectionTypes";
 import { relProps } from "./relMisc";
-import { relVarb } from "./relVarb";
+import { relVarbS } from "./relVarb";
 import { relVarbInfo } from "./relVarbInfo";
 import {
   MonthlyYearlySwitchOptions,
@@ -28,21 +28,18 @@ import {
 
 export type GeneralRelVarbs = Record<string, RelVarb>;
 export type RelVarbs<SN extends SimpleSectionName> = Record<
-  SectionVarbName<"fe", SN>,
+  SectionVarbName<SN>,
   RelVarb
 >;
 
 type RelVarbsByType<SN extends SimpleSectionName, VLN extends ValueName> = Pick<
   RelVarbs<SN>,
-  SectionVarbNameByType<"fe", SN, VLN>
+  SectionVarbNameByType<SN, VLN>
 >;
 
-function isRelVarbOfType<
-  SN extends BaseName<"hasVarb", "fe">,
-  VLN extends ValueName
->(
+function isRelVarbOfType<SN extends BaseName<"hasVarb">, VLN extends ValueName>(
   sectionName: SN,
-  varbName: SectionVarbName<"fe", SN>,
+  varbName: SectionVarbName<SN>,
   valueName: VLN,
   _value: any
 ): _value is RelVarbByType[VLN] {
@@ -53,7 +50,7 @@ function isRelVarbOfType<
 }
 
 function filterRelVarbsByType<
-  SN extends BaseName<"hasVarb", "fe">,
+  SN extends BaseName<"hasVarb">,
   VLN extends ValueName
 >(
   sectionName: SN,
@@ -72,7 +69,7 @@ export type StringPreVarbsFromNames<VN extends readonly string[]> = Record<
   VN[number],
   RelVarbByType["string"]
 >;
-export const relVarbs = {
+export const relVarbsS = {
   strings<VN extends readonly string[]>(
     varbNames: VN
   ): StringPreVarbsFromNames<VN> {
@@ -80,7 +77,7 @@ export const relVarbs = {
       (relVarbs, varbName): Partial<StringPreVarbsFromNames<VN>> => {
         return {
           ...relVarbs,
-          [varbName]: relVarb.string(),
+          [varbName]: relVarbS.string(),
         };
       },
       {} as Partial<StringPreVarbsFromNames<VN>>
@@ -88,7 +85,11 @@ export const relVarbs = {
   },
   get savableSection() {
     return {
-      ...this.strings(["title", "dateTimeFirstSaved", "dateTimeLastSaved"]),
+      ...this.strings([
+        "title",
+        "dateTimeFirstSaved",
+        "dateTimeLastSaved",
+      ] as const),
     };
   },
   ongoingPureCalc,
@@ -150,7 +151,7 @@ export const relVarbs = {
     for (const [varbName, pVarb] of Obj.entriesFull(numObjPreVarbs)) {
       if (isInToReturn(varbName) && typeof varbName === "string") {
         const { displayName, startAdornment, endAdornment } = pVarb;
-        ssPreVarbs[varbName] = relVarb.sumNums(
+        ssPreVarbs[varbName] = relVarbS.sumNums(
           displayName,
           [{ sectionName, varbName, id: "children", idType: "relative" }],
           { startAdornment, endAdornment }
@@ -167,7 +168,7 @@ export const relVarbs = {
   entityInfo() {
     return {
       ...this.varbInfo(),
-      entityId: relVarb.string(),
+      entityId: relVarbS.string(),
     } as {
       sectionName: StringPreVarb;
       varbName: StringPreVarb;
@@ -180,13 +181,13 @@ export const relVarbs = {
     const sectionName = "singleTimeItem";
     const valueSwitchProp = relVarbInfo.local(sectionName, "valueSwitch");
     const r: R = {
-      name: relVarb.stringOrLoaded(sectionName),
-      valueSwitch: relVarb.string({
+      name: relVarbS.stringOrLoaded(sectionName),
+      valueSwitch: relVarbS.string({
         initValue: "labeledEquation",
       }),
-      ...relVarbs.entityInfo(),
-      editorValue: relVarb.calcVarb("", { startAdornment: "$" }),
-      value: relVarb.numObj(relVarbInfo.local(sectionName, "name"), {
+      ...relVarbsS.entityInfo(),
+      editorValue: relVarbS.calcVarb("", { startAdornment: "$" }),
+      value: relVarbS.numObj(relVarbInfo.local(sectionName, "name"), {
         updateFnName: "editorValue",
         updateFnProps: {
           proxyValue: relVarbInfo.local(sectionName, "editorValue"),
@@ -230,32 +231,32 @@ export const relVarbs = {
     );
     const valueSwitchProp = relVarbInfo.local(sectionName, "valueSwitch");
     const r: R = {
-      name: relVarb.stringOrLoaded(sectionName),
-      valueSwitch: relVarb.string({
+      name: relVarbS.stringOrLoaded(sectionName),
+      valueSwitch: relVarbS.string({
         initValue: "labeledEquation",
       }),
 
-      ...relVarbs.entityInfo(),
-      costToReplace: relVarb.calcVarb("Replacement cost", {
+      ...relVarbsS.entityInfo(),
+      costToReplace: relVarbS.calcVarb("Replacement cost", {
         startAdornment: "$",
       }),
 
-      editorValue: relVarb.calcVarb("", {
+      editorValue: relVarbS.calcVarb("", {
         startAdornment: "$",
         endAdornment: "provide adornment to editor",
       }),
-      ...relVarbs.monthsYearsInput(
+      ...relVarbsS.monthsYearsInput(
         "lifespan",
         "Average lifespan",
         sectionName,
         { switchInit: "years" }
       ),
-      [ongoingValueNames.switch]: relVarb.string({
+      [ongoingValueNames.switch]: relVarbS.string({
         initValue: "yearly",
       }),
       // So... that's the editorValue, is that right?
 
-      [ongoingValueNames.monthly]: relVarb.moneyMonth("Monthly amount", {
+      [ongoingValueNames.monthly]: relVarbS.moneyMonth("Monthly amount", {
         ...defaultValueUpdatePack,
         inUpdateSwitchProps: [
           {
@@ -287,7 +288,7 @@ export const relVarbs = {
           },
         ],
       }),
-      [ongoingValueNames.yearly]: relVarb.moneyYear("Annual amount", {
+      [ongoingValueNames.yearly]: relVarbS.moneyYear("Annual amount", {
         ...defaultValueUpdatePack,
         inUpdateSwitchProps: [
           {
@@ -322,41 +323,34 @@ export const relVarbs = {
     } as R;
     return r;
   },
-  singleTimeList<
-    S extends BaseName<"singleTimeListType">,
-    R extends RelVarbs<S>
-  >(sectionName: S): R {
-    const r: R = {
+  singleTimeList() {
+    return {
       ...this.savableSection,
-      total: relVarb.sumNums(
-        relVarbInfo.local(sectionName, "title"),
+      total: relVarbS.sumNums(
+        relVarbInfo.local("singleTimeList", "title"),
         [relVarbInfo.relative("singleTimeItem", "value", "children")],
         { startAdornment: "$" }
       ),
-      defaultValueSwitch: relVarb.string({
+      defaultValueSwitch: relVarbS.string({
         initValue: "labeledEquation",
       }),
-    } as R;
-    return r;
+    } as RelVarbs<"singleTimeList">;
   },
-  ongoingList<S extends BaseName<"ongoingListType">, R extends RelVarbs<S>>(
-    sectionName: S
-  ) {
-    const r: R = {
+  ongoingList(): RelVarbs<"ongoingList"> {
+    return {
       ...this.savableSection,
-      defaultValueSwitch: relVarb.string({
+      defaultValueSwitch: relVarbS.string({
         initValue: "labeledEquation",
       }),
-      defaultOngoingSwitch: relVarb.string({
+      defaultOngoingSwitch: relVarbS.string({
         initValue: "monthly",
       }),
-      ...relVarbs.ongoingSumNums(
+      ...relVarbsS.ongoingSumNums(
         "total",
-        relVarbInfo.local(sectionName, "title"),
+        relVarbInfo.local("ongoingList", "title"),
         [relVarbInfo.relative("ongoingItem", "value", "children")],
         { switchInit: "monthly", shared: { startAdornment: "$" } }
       ),
-    } as R;
-    return r;
+    };
   },
 };

@@ -1,25 +1,20 @@
 import { FeParentInfo } from "../../../sharedWithServer/SectionsMeta/Info";
-import { ChildName } from "../../../sharedWithServer/SectionsMeta/relSectionTypes/ChildTypes";
-import { SectionName } from "../../../sharedWithServer/SectionsMeta/SectionName";
 import { ThemeName } from "../../../theme/Theme";
 import { VarbListOngoing } from "../VarbLists/VarbListOngoing";
 import { useGetterSection } from "./../../../sharedWithServer/stateClassHooks/useGetterSection";
 import {
   ListGroupGeneric,
-  MakeListNodeProps
+  MakeListNodeProps,
 } from "./ListGroupShared/ListGroupGeneric";
 
-type Props<SN extends SectionName<"ongoingListType"> = SectionName<"ongoingListType">> =
-  {
-    parentInfo: FeParentInfo<SN>;
-    sectionName: SN;
-    itemName: ChildName<SN>;
-    titleText: string;
-    themeName: ThemeName;
-    totalVarbNameBase: string;
-    className?: string;
-  };
-export function ListGroupOngoing<SN extends SectionName<"ongoingListType">>({
+type Props = {
+  parentInfo: FeParentInfo<"ongoingList">;
+  titleText: string;
+  themeName: ThemeName;
+  totalVarbNameBase: string;
+  className?: string;
+};
+export function ListGroupOngoing<SN extends "ongoingList">({
   totalVarbNameBase,
   ...props
 }: Props<SN>) {

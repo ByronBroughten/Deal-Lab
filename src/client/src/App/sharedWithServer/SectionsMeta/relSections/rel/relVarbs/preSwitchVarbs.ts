@@ -3,7 +3,7 @@ import {
   LeftRightPropCalculations,
 } from "../../../baseSections/baseValues/calculations";
 import { BaseName } from "../../../baseSectionTypes";
-import { PreNumObjOptions, relVarb } from "../relVarb";
+import { PreNumObjOptions, relVarbS } from "../relVarb";
 import { InRelVarbInfo } from "../relVarbInfoTypes";
 import {
   DisplayName,
@@ -83,7 +83,7 @@ export function simpleSwitch<
     },
   } as const;
   return {
-    [sectionName1]: relVarb.leftRightPropFn(
+    [sectionName1]: relVarbS.leftRightPropFn(
       displayName1,
       updateFnName1,
       leftRight1,
@@ -94,7 +94,7 @@ export function simpleSwitch<
         ...options1,
       }
     ),
-    [sectionName2]: relVarb.leftRightPropFn(
+    [sectionName2]: relVarbS.leftRightPropFn(
       displayName2,
       updateFnName2,
       leftRight2,
@@ -105,7 +105,7 @@ export function simpleSwitch<
         ...options2,
       }
     ),
-    [switchVarbName]: relVarb.type("string", {
+    [switchVarbName]: relVarbS.type("string", {
       initValue: switchValue1,
     }),
   } as DualSwitch<One, Two, Switch>;
@@ -125,7 +125,7 @@ export function switchInput(
   for (const option of switchOptions) {
     const { switchValue } = option;
 
-    numObjPreVarbs[varbNames[switchValue]] = relVarb.switch(
+    numObjPreVarbs[varbNames[switchValue]] = relVarbS.switch(
       displayName,
       option.updateFnName,
       option.updateFnProps,
@@ -147,7 +147,7 @@ export function switchInput(
   }
   return {
     ...numObjPreVarbs,
-    [varbNames.switch]: relVarb.type("string", {
+    [varbNames.switch]: relVarbS.type("string", {
       initValue: switchInitValue,
     }),
   };

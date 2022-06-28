@@ -1,8 +1,7 @@
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
 
 export function makeDefaultUser() {
-  const main = PackBuilderSection.initAsMain();
-  const user = main.addAndGetChild("user", {
+  const user = PackBuilderSection.initAsOmniChild("user", {
     dbVarbs: {
       email: "",
       userName: "Guest",

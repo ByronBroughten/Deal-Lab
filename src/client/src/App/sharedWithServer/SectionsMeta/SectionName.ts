@@ -1,18 +1,17 @@
 import { StringTypeChecker } from "../../utils/StringTypeChecker";
 import { ContextName, sectionContext, SimpleSectionName } from "./baseSections";
-import { SectionVarbName } from "./baseSectionTypes";
 import { baseNameArrs, BaseNameArrs } from "./baseSectionTypes/baseNameArrs";
 import { relNameArrs, RelNameArrs } from "./relNameArrs";
 
 type NameArrs = {
-  [SC in ContextName]: BaseNameArrs[SC] & RelNameArrs[SC];
+  [SC in ContextName]: BaseNameArrs[SC] & RelNameArrs;
 };
 function makeNameArrs(): NameArrs {
   const partial = sectionContext.makeBlankContextObj();
   for (const contextName of sectionContext.names) {
     const nameArr = {
       ...baseNameArrs[contextName],
-      ...relNameArrs[contextName],
+      ...relNameArrs,
     } as NameArrs[typeof contextName];
     partial[contextName] = nameArr;
   }
@@ -25,13 +24,6 @@ export type FeSectionNameType = SectionNameType;
 
 export type SectionName<T extends SectionNameType = "all"> =
   NameArrs["fe"][T][number & keyof NameArrs["fe"][T]];
-
-export type AlwaysOneVarbFinder<
-  S extends SectionName<"alwaysOne"> = SectionName<"alwaysOne">
-> = {
-  sectionName: S;
-  varbName: SectionVarbName<"fe", S>;
-};
 
 export const sectionNameS = new StringTypeChecker(makeNameArrs().fe);
 

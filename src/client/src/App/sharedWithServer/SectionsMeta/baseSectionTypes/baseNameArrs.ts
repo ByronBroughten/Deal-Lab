@@ -1,25 +1,23 @@
 import { Arr } from "../../utils/Arr";
 import { Obj } from "../../utils/Obj";
-import { NeversToNull, SubType } from "../../utils/types";
-import { ToArrObj } from "../../utils/types/objectTypes";
+import { SubType } from "../../utils/types";
 import {
   BaseSections,
   baseSections,
   ContextName,
   sectionContext,
   SimpleSectionName,
-  simpleSectionNames
+  simpleSectionNames,
 } from "../baseSections";
-import { base } from "../baseSections/base";
 import { GeneralBaseSection } from "../baseSections/baseSection";
-import { switchName, SwitchName } from "../baseSections/baseSwitchNames";
+import { baseSectionVarbs } from "./baseSectionVarbs";
 import {
   dbStoreNames,
   feGuestAccessNames,
   fullLoadOnLoginNames,
   loadOnLoginNames,
   loadOnLoginNamesNext,
-  tableLoadOnLoginNames
+  tableLoadOnLoginNames,
 } from "./dbStoreNames";
 
 type HasVarbSectionName<
@@ -28,71 +26,6 @@ type HasVarbSectionName<
     { varbSchemas: { [K in any]: never } }
   >
 > = Exclude<keyof BaseSections["fe"], NoVarbSectionName>;
-
-const feBaseSectionVarbs = Obj.toNestedPropertyObj(
-  baseSections.fe,
-  "varbSchemas"
-);
-export type FeBaseSectionVarbs = typeof feBaseSectionVarbs;
-type SectionSwitchName<
-  SN extends SimpleSectionName,
-  SVS = FeBaseSectionVarbs[SN]
-> = SVS[keyof SVS]["switchName" & keyof SVS[keyof SVS]];
-
-type SectionSwitchNames<SW extends SwitchName = SwitchName> = NeversToNull<{
-  [Prop in SimpleSectionName]: Extract<SectionSwitchName<Prop>, SW>;
-}>;
-
-type SwitchBaseName<SW extends SwitchName = SwitchName> = keyof SubType<
-  SectionSwitchNames<SW>,
-  SW
->;
-
-type SwitchSectionNames = {
-  [SW in SwitchName]: SwitchBaseName<SW>;
-};
-
-type BaseNameSwitchArrs = ToArrObj<SectionSwitchNames>;
-function makeBaseNameSwitchArrs(feBaseSectionVarbs: FeBaseSectionVarbs) {
-  return Obj.keys(feBaseSectionVarbs).reduce(
-    (sectionSwitchNameArrs, sectionName) => {
-      const switchNameSet: Set<SwitchName | null> = new Set();
-
-      const sectionVarbs = feBaseSectionVarbs[sectionName];
-
-      type Test = typeof sectionVarbs;
-      for (const varbName of Obj.keys(sectionVarbs)) {
-        // For type safety, I would need a general version of FeBaseSectionVarbs.
-        const varbs = sectionVarbs[varbName] as any;
-        switchNameSet.add(varbs.switchName);
-      }
-
-      sectionSwitchNameArrs[sectionName] = [...switchNameSet];
-    },
-    {} as any
-  ) as BaseNameSwitchArrs;
-}
-
-type SwitchSectionNameArrs = ToArrObj<SwitchSectionNames>;
-function finalizeSwitchSectionNameArrs(baseNameSwitchArrs: BaseNameSwitchArrs) {
-  return switchName.nameArr.reduce((switchSectionNameArrs, switchName) => {
-    const sectionNames: any[] = [];
-
-    for (const sectionName of Obj.keys(baseNameSwitchArrs)) {
-      if ((baseNameSwitchArrs[sectionName] as any[]).includes(switchName)) {
-        sectionNames.push(sectionName as any);
-      }
-    }
-
-    switchSectionNameArrs[switchName] = sectionNames;
-  }, {} as any) as SwitchSectionNameArrs;
-}
-function makeSwitchSectionNameArrs(
-  feBaseSectionVarbs: FeBaseSectionVarbs
-): SwitchSectionNameArrs {
-  const baseNameSwitchArrs = makeBaseNameSwitchArrs(feBaseSectionVarbs);
-  return finalizeSwitchSectionNameArrs(baseNameSwitchArrs);
-}
 
 function makeSingleSectionNameArrs<
   SC extends ContextName,
@@ -117,7 +50,10 @@ function makeBaseNameArrsForContext<SC extends ContextName>(
     ...makeSingleSectionNameArrs(sectionContext),
     dbStoreNext: dbStoreNames,
     all: simpleSectionNames as SimpleSectionName[],
-    notRootNorOmni: Arr.excludeStrict(simpleSectionNames, ["root", "omniParent"] as const),
+    notRootNorOmni: Arr.excludeStrict(simpleSectionNames, [
+      "root",
+      "omniParent",
+    ] as const),
 
     // booleans
     loadOnLogin: loadOnLoginNames,
@@ -137,35 +73,15 @@ function makeBaseNameArrsForContext<SC extends ContextName>(
       "uniqueDbId",
       true as true
     ),
-    protected: Obj.entryKeysWithPropValue(
-      baseSections.fe,
-      "protected",
-      true as true
-    ),
-
-    // sectionShape
-    // filtering by shape may often be better to do by children and varbNames
-    // rather than just varbName, so probably best at a higher level
-    rowIndex: Obj.filterKeysForEntryShape(
-      baseSectionsOfContext,
-      base.section.rowIndex
-    ),
 
     // varbShape
     // In some cases it might be safer to go by whether they have the same children
     // in which cases they would be derived at a higher level
     singleTimeListType: Obj.filterKeysForEntryShape(
-      feBaseSectionVarbs,
-      feBaseSectionVarbs.userSingleList
+      baseSectionVarbs,
+      baseSectionVarbs.singleTimeList
     ),
-    ongoingListType: Obj.filterKeysForEntryShape(
-      feBaseSectionVarbs,
-      feBaseSectionVarbs.userOngoingList
-    ),
-    outputListType: Obj.filterKeysForEntryShape(
-      feBaseSectionVarbs,
-      feBaseSectionVarbs.userOutputList
-    ),
+
     hasVarb: Obj.keys(baseSectionsOfContext).filter((sectionName) => {
       const varbNames = Object.keys(
         (baseSectionsOfContext[sectionName] as any as GeneralBaseSection)
@@ -173,43 +89,26 @@ function makeBaseNameArrsForContext<SC extends ContextName>(
       );
       return varbNames.length > 0;
     }) as HasVarbSectionName[],
-    get hasNoVarbs() {
-      return Arr.exclude(this.all, this.hasVarb);
-    },
     hasGlobalVarbs: Obj.entryKeysWithPropValue(
       baseSectionsOfContext,
       "hasGlobalVarbs",
       true as true
     ),
 
-    // extracted
-    get userList() {
-      return Arr.extract(this.all, [
-        "userSingleList",
-        "userOngoingList",
-        "userVarbList",
-      ] as const);
-    },
     get additiveList() {
-      return Arr.extract(this.userList, [
-        "userSingleList",
-        "userOngoingList",
-      ] as const);
-    },
-    get notAlwaysOne() {
-      return Arr.exclude(this.all, this.alwaysOne);
+      return ["singleTimeList", "ongoingList"] as const;
     },
     get alwaysOneHasVarb() {
       return Arr.extract(this.hasVarb, this.alwaysOne);
     },
-    // combo
-    get allList() {
-      return [
-        ...this.singleTimeListType,
-        ...this.ongoingListType,
+    get varbListAllowed() {
+      return Arr.extractStrict(this.all, [
+        "singleTimeList",
+        "ongoingList",
         "userVarbList",
-      ] as const;
+      ] as const);
     },
+    // combo
   };
 }
 
@@ -231,5 +130,4 @@ const testBaseNameArrs = (_: GeneralBaseNameArrs) => undefined;
 testBaseNameArrs(baseNameArrs);
 
 export type BaseNameArrs = typeof baseNameArrs;
-export type BaseNameSelector<SC extends ContextName = "fe"> =
-  keyof BaseNameArrs[SC];
+export type BaseNameSelector = keyof BaseNameArrs["fe"];

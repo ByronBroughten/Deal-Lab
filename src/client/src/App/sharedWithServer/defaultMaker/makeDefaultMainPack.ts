@@ -4,7 +4,7 @@ import { makeDefaultDealPack } from "./makeDefaultDealPack";
 import { makeDefaultUser } from "./makeDefaultUser";
 
 export function makeDefaultMainPack(): SectionPack<"main"> {
-  const main = PackBuilderSection.initAsMain();
+  const main = PackBuilderSection.initAsOmniChild("main");
   main.loadChild({
     childName: "deal",
     sectionPack: makeDefaultDealPack(),

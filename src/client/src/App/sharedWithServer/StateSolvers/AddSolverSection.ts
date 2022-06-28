@@ -80,7 +80,7 @@ export class AddSolverSection<
   }
   addChildAndFinalize<CN extends ChildName<SN>>(
     childName: ChildName<SN>,
-    options?: AddChildOptions<CN>
+    options?: AddChildOptions<SN, CN>
   ): void {
     this.defaultAdder.addChild(childName, options);
     const child = this.youngestChild(childName);

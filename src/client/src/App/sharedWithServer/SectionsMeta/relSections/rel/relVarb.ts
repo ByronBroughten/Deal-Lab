@@ -20,7 +20,7 @@ import {
 
 export type PreNumObjOptions = Partial<NumObjRelVarb & { initNumber: number }>;
 export type LeftRightVarbInfos = [InRelVarbInfo, InRelVarbInfo];
-export const relVarb = {
+export const relVarbS = {
   common(commonProps: Partial<CommonRelVarb> = {}): CommonRelVarb {
     return {
       displayName: "",

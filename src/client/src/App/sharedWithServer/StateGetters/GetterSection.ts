@@ -195,16 +195,17 @@ export class GetterSection<
       })
     ) as any;
   }
-  childList<CN extends ChildName<SN>>(
+  childList<CN extends ChildName<SN>, CT extends ChildType<SN, CN>>(
     childName: CN
-  ): GetterList<ChildType<SN, CN>> {
+  ): GetterList<CT> {
     const childType = this.meta.childType(childName);
     return this.getterSections.list(childType) as any;
   }
-  childrenOldToYoung<CN extends ChildName<SN>>(
+  childrenOldToYoung<CN extends ChildName<SN>, CT extends ChildType<SN, CN>>(
     childName: CN
-  ): GetterSection<ChildType<SN, CN>>[] {
-    return this.childList(childName).filterByFeIds(this.childFeIds(childName));
+  ): GetterSection<CT>[] {
+    const feIds = this.childFeIds(childName);
+    return (this.childList(childName) as GetterList<CT>).filterByFeIds(feIds);
   }
   onlyChild<CN extends ChildName<SN>>(
     childName: CN
@@ -436,11 +437,10 @@ export class GetterSection<
         } as FeSectionInfo<CT>)
     );
   }
-  youngestChild<
-    CN extends ChildName<SN>
-    // CT extends ChildType<SN, CT>
-  >(childName: CN): GetterSection<ChildType<SN, CN>> {
-    const children = this.childrenOldToYoung(childName);
+  youngestChild<CN extends ChildName<SN>, CT extends ChildType<SN, CN>>(
+    childName: CN
+  ): GetterSection<CT> {
+    const children = this.childrenOldToYoung(childName) as GetterSection<CT>[];
     return Arr.lastOrThrow(children);
   }
   isChildNameOrThrow(childName: any): childName is ChildName<SN> {

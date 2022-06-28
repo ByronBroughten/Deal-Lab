@@ -1,7 +1,12 @@
 import { omit } from "lodash";
 import { Obj } from "../utils/Obj";
 import { base } from "./baseSections/base";
-import { GeneralBaseSection } from "./baseSections/baseSection";
+import {
+  baseSection,
+  baseSectionS,
+  GeneralBaseSection,
+} from "./baseSections/baseSection";
+import { baseVarbs } from "./baseSections/baseVarbs";
 import { switchEndings } from "./baseSections/switchNames";
 
 export const loanVarbsNotInFinancing = [
@@ -44,24 +49,25 @@ export function extractSectionContext<SCB extends SectionContextOrBoth>(
 export type BaseSections = typeof baseSections;
 export const baseSections = {
   fe: {
-    root: base.section.container,
-    main: base.section.schema(
+    root: baseSectionS.container,
+    main: baseSection(
       {
         _typeUniformity: "string",
       } as const,
       { alwaysOne: true }
     ),
-    omniParent: base.section.container,
-    table: base.section.schema({ titleFilter: "string" } as const),
-    propertyTableStore: base.section.container,
-    loanTableStore: base.section.container,
-    mgmtTableStore: base.section.container,
-    dealTableStore: base.section.container,
-    tableRow: base.section.schema(base.varbs.tableRow, { uniqueDbId: true }),
-    column: base.section.schema(base.varbs.varbInfo),
-    cell: base.section.schema({ ...base.varbs.varbInfo, value: "numObj" }),
+    omniParent: baseSectionS.container,
+    table: baseSection({ titleFilter: "string" } as const),
+    propertyTableStore: baseSectionS.container,
+    loanTableStore: baseSectionS.container,
+    mgmtTableStore: baseSectionS.container,
+    dealTableStore: baseSectionS.container,
 
-    conditionalRow: base.section.schema({
+    tableRow: baseSection(base.varbs.tableRow, { uniqueDbId: true }),
+    column: baseSection(base.varbs.varbInfo),
+    cell: baseSection({ ...base.varbs.varbInfo, value: "numObj" }),
+
+    conditionalRow: baseSection({
       level: "number",
       type: "string",
       // if
@@ -73,19 +79,23 @@ export const baseSections = {
       then: "numObj",
     }),
 
-    singleTimeItem: base.section.schema({
+    singleTimeItem: baseSection({
       ...base.varbs.string(["name", "valueSwitch"] as const),
       ...base.varbs.numObj(["value", "editorValue"] as const),
       ...base.varbs.entityInfo,
     }),
-    ongoingItem: base.section.schema({
+    ongoingItem: baseSection({
       ...base.varbs.string(["name", "valueSwitch"] as const),
       ...base.varbs.numObj(["costToReplace", "editorValue"] as const),
       ...base.varbs.entityInfo,
       ...base.varbs.ongoing("value"),
       ...base.varbs.switch("lifespan", switchEndings.monthsYears),
     }),
-    userVarbItem: base.section.schema(
+    userVarbList: baseSection({
+      ...baseVarbs.savableSection,
+      defaultValueSwitch: "string",
+    }),
+    userVarbItem: baseSection(
       {
         ...base.varbs.string([
           "name",
@@ -97,61 +107,38 @@ export const baseSections = {
       },
       { uniqueDbId: true }
     ),
-    // these solve.
-    upfrontCostList: base.section.singleTimeListSolves,
-    upfrontRevenueList: base.section.singleTimeListSolves,
-    ongoingCostList: base.section.ongoingListSolves,
-    ongoingRevenueList: base.section.ongoingListSolves,
-    userSingleList: base.section.schema(
-      base.varbs.singleTimeList,
-      base.options.userList
-    ),
-    userOngoingList: base.section.schema(
-      base.varbs.ongoingList,
-      base.options.userList
-    ),
-    userVarbList: base.section.varbList(base.options.userList),
-    internalVarbList: base.section.varbList(),
-
-    outputList: base.section.schema(
+    outputList: baseSection(
       { title: "string" },
       base.options.alwaysOneFromStart
     ),
-    varbList: base.section.varbList(base.options.userList),
-    singleTimeList: base.section.schema(
+    singleTimeList: baseSection(
       base.varbs.singleTimeList,
       base.options.userList
     ),
-    ongoingList: base.section.schema(
-      base.varbs.ongoingList,
-      base.options.userList
-    ),
-    login: base.section.schema(
+    ongoingList: baseSection(base.varbs.ongoingList, base.options.userList),
+    login: baseSection(
       base.varbs.string(["email", "password"] as const),
       base.options.alwaysOneFromStart
     ),
-    register: base.section.schema(
+    register: baseSection(
       base.varbs.string(["email", "password", "userName"] as const),
       base.options.alwaysOneFromStart
     ),
-    property: base.section.schema(base.varbs.property),
-    unit: base.section.schema({
+    property: baseSection(base.varbs.property),
+    unit: baseSection({
       one: "numObj",
       numBedrooms: "numObj",
       ...base.varbs.ongoing("targetRent"),
     }),
-    propertyGeneral: base.section.schema(
+    propertyGeneral: baseSection(
       omit(base.varbs.property, Obj.keys(base.varbs.savableSection)),
       {
         ...base.options.alwaysOneFromStart,
         hasGlobalVarbs: true,
       }
     ),
-
-    loan: base.section.schema(base.varbs.loan),
-    closingCostList: base.section.singleTimeListSolves,
-    wrappedInLoanList: base.section.singleTimeListSolves,
-    financing: base.section.schema(
+    loan: baseSection(base.varbs.loan),
+    financing: baseSection(
       {
         ...omit(base.varbs.loan, loanVarbsNotInFinancing),
         ...base.varbs.numObj([
@@ -166,12 +153,12 @@ export const baseSections = {
       }
     ),
 
-    mgmt: base.section.schema(base.varbs.mgmt, { makeOneOnStartup: true }),
-    mgmtGeneral: base.section.schema(omit(base.varbs.mgmt, ["title"]), {
+    mgmt: baseSection(base.varbs.mgmt, { makeOneOnStartup: true }),
+    mgmtGeneral: baseSection(omit(base.varbs.mgmt, ["title"]), {
       ...base.options.alwaysOneFromStart,
       hasGlobalVarbs: true,
     }),
-    deal: base.section.schema(
+    deal: baseSection(
       {
         title: "string",
         ...base.varbs.numObj([
@@ -187,20 +174,12 @@ export const baseSections = {
       },
       base.options.alwaysOneFromStart
     ),
-    dealOutputList: base.section.schema(
-      { title: "string" },
-      base.options.alwaysOneFromStart
-    ),
-    userOutputList: base.section.schema(
-      { title: "string" },
-      { uniqueDbId: true }
-    ),
-    output: base.section.schema(base.varbs.varbInfo, {}),
+    output: baseSection(base.varbs.varbInfo, {}),
 
-    user: base.section.schema(base.varbs.feUser, {
+    user: baseSection(base.varbs.feUser, {
       ...base.options.alwaysOneFromStart,
     }),
-    serverOnlyUser: base.section.schema({
+    serverOnlyUser: baseSection({
       ...base.varbs.string(["encryptedPassword", "emailAsSubmitted"] as const),
     }),
   },

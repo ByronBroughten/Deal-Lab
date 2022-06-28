@@ -8,7 +8,7 @@ import {
 
 export default function DealDetails({ feId }: { feId: string }) {
   const outputList = useGetterSection({
-    sectionName: "dealOutputList",
+    sectionName: "outputList",
     feId,
   });
 

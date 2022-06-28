@@ -18,7 +18,7 @@ export class DefaultFamilyAdder<
   }
   addChild<CN extends ChildName<SN>>(
     childName: CN,
-    options?: AddChildOptions<CN>
+    options?: AddChildOptions<SN, CN>
   ): void {
     const sectionName = this.get.meta.childType(childName);
     if (defaultMaker.has(sectionName)) {

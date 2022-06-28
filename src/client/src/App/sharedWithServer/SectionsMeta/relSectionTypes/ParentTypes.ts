@@ -1,12 +1,5 @@
-import {
-  IsUnion,
-  NeversToSomething,
-  RemoveNotStrings,
-  SubType,
-} from "../../utils/types";
+import { NeversToSomething, SubType } from "../../utils/types";
 import { SimpleSectionName, simpleSectionNames } from "../baseSections";
-import { BaseName } from "../baseSectionTypes";
-import { FeNameInfo } from "../relSections/rel/relVarbInfoTypes";
 import { ChildTypeOrNull, sectionToChildTypes } from "./ChildTypes";
 
 type ParentToChildOrNullMap<CN extends SimpleSectionName> = {
@@ -26,17 +19,9 @@ function _testParentNameOrNever() {
 type SectionToParentsOrNever = {
   [SN in SimpleSectionName]: ParentNameOrNever<SN>;
 };
-
-// this is for consistency in sectionMeta
 export type SectionToParentNameArrs = {
   [SN in keyof SectionToParentsOrNever]: SectionToParentsOrNever[SN][];
 };
-
-type SectionToParents = RemoveNotStrings<SectionToParentsOrNever>;
-type SectionToParentOrNos = NeversToSomething<
-  SectionToParentsOrNever,
-  "no parent"
->;
 
 type SectionNameArrs = Record<SimpleSectionName, SimpleSectionName[]>;
 export function makeSectionToParentArrs(): SectionToParentNameArrs {
@@ -53,10 +38,12 @@ export function makeSectionToParentArrs(): SectionToParentNameArrs {
   }, emptyArrs) as SectionToParentNameArrs;
 }
 export const sectionParentNames = makeSectionToParentArrs();
-export type HasParentSectionName = keyof SectionToParents;
 
+type SectionToParentOrNos = NeversToSomething<
+  SectionToParentsOrNever,
+  "no parent"
+>;
 export type ParentName<SN extends SimpleSectionName> = SectionToParentOrNos[SN];
-
 export type ParentNameSafe<SN extends SimpleSectionName> = Exclude<
   ParentName<SN>,
   "no parent"
@@ -71,22 +58,3 @@ function _testParentName() {
   type NoParent = ParentName<"root">;
   const _case3: NoParent = "no parent";
 }
-
-export type ParentFeInfo<SN extends SimpleSectionName> = FeNameInfo<
-  ParentName<SN>
->;
-
-type SectionToOneParentOrNull = {
-  [SN in keyof SectionToParents]: IsUnion<
-    SectionToParentsOrNever[SN]
-  > extends true
-    ? null
-    : SectionToParentsOrNever[SN] extends BaseName<"notAlwaysOne">
-    ? null
-    : SectionToParentsOrNever[SN];
-};
-type SectionToAlwaysOneParent = SubType<SectionToOneParentOrNull, string>;
-export type HasOneParentSectionName = keyof SectionToAlwaysOneParent;
-
-export type IsSingleParentName =
-  SectionToAlwaysOneParent[HasOneParentSectionName];

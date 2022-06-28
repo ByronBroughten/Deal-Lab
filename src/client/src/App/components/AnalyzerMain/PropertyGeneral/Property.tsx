@@ -28,7 +28,7 @@ export default function Property({ feId }: { feId: string }) {
         </div>
         <ListGroupOngoing
           parentInfo={feInfo}
-          sectionName="ongoingCostList"
+          childName="ongoingCostList"
           itemName="ongoingItem"
           totalVarbNameBase="ongoingExpenses"
           titleText="Ongoing Costs"
@@ -36,7 +36,7 @@ export default function Property({ feId }: { feId: string }) {
         />
         <ListGroupSingleTime
           parentInfo={feInfo}
-          sectionName="upfrontCostList"
+          childName="upfrontCostList"
           itemName="singleTimeItem"
           totalVarbName="upfrontExpenses"
           titleText="Upfront Costs"

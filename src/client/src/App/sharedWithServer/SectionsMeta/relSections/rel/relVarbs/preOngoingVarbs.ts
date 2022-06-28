@@ -9,10 +9,10 @@ import {
   SwitchRecord,
 } from "../../../baseSections/switchNames";
 import { BaseName } from "../../../baseSectionTypes";
-import { PreNumObjOptions, relVarb } from "../relVarb";
+import { PreNumObjOptions, relVarbS } from "../relVarb";
 import { relVarbInfo } from "../relVarbInfo";
 import { InRelVarbInfo } from "../relVarbInfoTypes";
-import { relVarbs } from "../relVarbs";
+import { relVarbsS } from "../relVarbs";
 import { DisplayName, StringPreVarb, UpdateFnProps } from "../relVarbTypes";
 
 type SwitchPreVarbs<
@@ -113,7 +113,7 @@ export function monthsYearsInput<Base extends string>(
   { switchInit = "months", ...options }: MonthsYearsSwitchOptions = {}
 ): SwitchPreVarbs<Base, "monthsYears"> {
   const varbNames = switchNames(baseVarbName, "monthsYears");
-  return relVarbs.switchInput(
+  return relVarbsS.switchInput(
     varbNames,
     displayName,
     sectionName,
@@ -155,7 +155,7 @@ export function ongoingInput<Base extends string>(
   { switchInit = "monthly", ...options }: MonthlyYearlySwitchOptions = {}
 ): SwitchPreVarbs<Base, "ongoing"> {
   const varbNames = switchNames(baseVarbName, "ongoing");
-  return relVarbs.switchInput(
+  return relVarbsS.switchInput(
     varbNames,
     displayName,
     sectionName,
@@ -202,17 +202,17 @@ export function ongoingPercentToPortion<Base extends string>(
   const varbNames = switchNames(baseVarbName, "ongoing");
   const baseVarbNames = switchNames(baseBaseName, "ongoing");
   return {
-    [varbNames.switch]: relVarb.string({
+    [varbNames.switch]: relVarbS.string({
       initValue: "monthly",
     }),
-    [varbNames.monthly]: relVarb.moneyMonth(displayName, {
+    [varbNames.monthly]: relVarbS.moneyMonth(displayName, {
       updateFnName: "percentToPortion",
       updateFnProps: {
         base: relVarbInfo.static(baseSectionName, baseVarbNames.monthly),
         percentOfBase: relVarbInfo.local(sectionName, percentName),
       },
     }),
-    [varbNames.yearly]: relVarb.moneyYear(displayName, {
+    [varbNames.yearly]: relVarbS.moneyYear(displayName, {
       updateFnName: "percentToPortion",
       updateFnProps: {
         base: relVarbInfo.static(baseSectionName, baseVarbNames.yearly),
@@ -235,14 +235,14 @@ export function ongoingPureCalc<Base extends string>(
   );
   const { switchInit } = options;
   return {
-    [varbNames.monthly]: relVarb.type("numObj", {
+    [varbNames.monthly]: relVarbS.type("numObj", {
       displayName,
       endAdornment: "/month",
       ...updatePacks.monthly,
       ...options.monthly,
       ...options.shared,
     }),
-    [varbNames.yearly]: relVarb.type("numObj", {
+    [varbNames.yearly]: relVarbS.type("numObj", {
       displayName,
       endAdornment: "/year",
       ...updatePacks.yearly,
@@ -250,7 +250,7 @@ export function ongoingPureCalc<Base extends string>(
       ...options.shared,
     }),
     ...(switchInit && {
-      [varbNames.switch]: relVarb.string({
+      [varbNames.switch]: relVarbS.string({
         initValue: switchInit,
       }),
     }),
@@ -273,7 +273,7 @@ export function ongoingSumNums<Base extends string>(
       updateFnProps: props.yearly,
     },
   } as const;
-  return relVarbs.ongoingPureCalc(
+  return relVarbsS.ongoingPureCalc(
     varbNameBase,
     displayName,
     updateFnPacks,

@@ -1,13 +1,12 @@
 import { omit } from "lodash";
 import { Obj } from "../../utils/Obj";
-import { baseVarbs, BaseVarbSchemas } from "./baseVarbs";
+import { BaseVarbSchemas } from "./baseVarbs";
 
 export type BasePropName = keyof GeneralBaseSection;
 export type GeneralBaseSection = {
   alwaysOne: boolean;
   makeOneOnStartup: boolean;
   varbSchemas: BaseVarbSchemas;
-  solvesForFinal: boolean;
   hasGlobalVarbs: boolean;
   uniqueDbId: boolean;
   placeholder: boolean;
@@ -30,7 +29,6 @@ export const baseOptions = {
   fallback: {
     alwaysOne: false,
     makeOneOnStartup: false,
-    solvesForFinal: false,
     hasGlobalVarbs: false,
     uniqueDbId: false,
     placeholder: false,
@@ -43,46 +41,21 @@ type ReturnSchema<V extends BaseVarbSchemas, O extends BaseSectionOptions> = {
 } & Omit<FallbackSchema, keyof O> &
   O;
 
-export const baseSection = {
-  schema<V extends BaseVarbSchemas, O extends BaseSectionOptions = {}>(
-    varbSchemas: V,
-    options?: O
-  ): ReturnSchema<V, O> {
-    return {
-      varbSchemas,
-      ...omit(baseOptions.fallback, Obj.keys(options ?? {})),
-      ...options,
-    } as ReturnSchema<V, O>;
-  },
+export function baseSection<
+  V extends BaseVarbSchemas,
+  O extends BaseSectionOptions = {}
+>(varbSchemas: V, options?: O): ReturnSchema<V, O> {
+  return {
+    varbSchemas,
+    ...omit(baseOptions.fallback, Obj.keys(options ?? {})),
+    ...options,
+  } as ReturnSchema<V, O>;
+}
+
+export const baseSectionS = {
   get container() {
-    return this.schema({
+    return baseSection({
       _typeUniformity: "string",
     } as const);
-  },
-  get singleTimeListSolves() {
-    return this.schema(baseVarbs.singleTimeList, { solvesForFinal: true });
-  },
-  get ongoingListSolves() {
-    return this.schema(baseVarbs.ongoingList, { solvesForFinal: true });
-  },
-  get table() {
-    return this.schema(baseVarbs.table, {
-      ...baseOptions.alwaysOneFromStart,
-    });
-  },
-  varbList<O extends BaseSectionOptions = {}>(options?: O) {
-    return this.schema(
-      {
-        ...baseVarbs.savableSection,
-        defaultValueSwitch: "string",
-      },
-      (options ?? {}) as O
-    );
-  },
-  get rowIndex() {
-    return this.schema(baseVarbs.tableRow);
-  },
-  get propertyBase() {
-    return this.schema(baseVarbs.property);
   },
 };

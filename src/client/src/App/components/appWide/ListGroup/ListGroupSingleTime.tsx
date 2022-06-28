@@ -1,5 +1,4 @@
 import { FeParentInfo } from "../../../sharedWithServer/SectionsMeta/Info";
-import { ChildName } from "../../../sharedWithServer/SectionsMeta/relSectionTypes/ChildTypes";
 import { SectionName } from "../../../sharedWithServer/SectionsMeta/SectionName";
 import { ThemeName } from "../../../theme/Theme";
 import {
@@ -8,20 +7,16 @@ import {
 } from "./ListGroupShared/ListGroupGeneric";
 import { VarbListSingleTime } from "./ListGroupSingleTime/VarbListSingleTime";
 
-type Props<
-  SN extends SectionName<"singleTimeListType"> = SectionName<"singleTimeListType">
-> = {
-  parentInfo: FeParentInfo<SN>;
-  sectionName: SN;
-  itemName: ChildName<SN>;
+type Props = {
+  parentInfo: FeParentInfo<"singleTimeList">;
   titleText: string;
   themeName: ThemeName;
   totalVarbName: string;
   className?: string;
 };
-export function ListGroupSingleTime<
-  SN extends SectionName<"singleTimeListType">
->(props: Props<SN>) {
+export function ListGroupSingleTime<SN extends SectionName<"singleTimeList">>(
+  props: Props
+) {
   return (
     <ListGroupGeneric
       {...{

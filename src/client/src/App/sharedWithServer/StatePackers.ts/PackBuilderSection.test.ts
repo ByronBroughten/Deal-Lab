@@ -5,12 +5,7 @@ import { Obj } from "../utils/Obj";
 import { PackBuilderSection } from "./PackBuilderSection";
 
 describe("PackBuilderSection", () => {
-  const dbVarbs = {
-    property: {
-      title: "String",
-      price: numObj(200000),
-      taxesOngoingSwitch: "yearly",
-    },
+  const childVarbs = {
     upfrontCostList: {
       title: "Repairs",
     },
@@ -19,21 +14,35 @@ describe("PackBuilderSection", () => {
     },
   } as const;
 
+  const propertyVarbs = {
+    title: "String",
+    price: numObj(200000),
+    taxesOngoingSwitch: "yearly",
+  };
+
   it("should make a sectionPack with the added values and children", () => {
     const property = PackBuilderSection.initAsOmniChild("property", {
-      dbVarbs: dbVarbs.property,
+      dbVarbs: propertyVarbs,
     });
-    property.addChild("upfrontCostList", { dbVarbs: dbVarbs.upfrontCostList });
-    property.addChild("ongoingCostList", { dbVarbs: dbVarbs.ongoingCostList });
+
+    const childNames = Obj.keys(childVarbs);
+    for (const childName of childNames) {
+      property.addChild(childName, { dbVarbs: childVarbs[childName] });
+    }
 
     const sectionPack = property.makeSectionPack();
     expect(isSectionPack(sectionPack)).toBe(true);
 
     const { rawSections } = sectionPack;
 
-    for (const sectionName of Obj.keys(dbVarbs)) {
-      const sectionPackVarbs = rawSections[sectionName][0].dbVarbs;
-      const sectionVarbs = dbVarbs[sectionName];
+    const spPropertyVarbs = rawSections["property"][0].dbVarbs;
+    const propertyKeys = Obj.keys(propertyVarbs);
+    expect(pick(propertyVarbs, propertyKeys)).toEqual(spPropertyVarbs);
+
+    for (const childName of childNames) {
+      const childType = property.get.meta.childType(childName);
+      const sectionPackVarbs = rawSections[childType][0].dbVarbs;
+      const sectionVarbs = childVarbs[childName];
       expect(pick(sectionPackVarbs, Obj.keys(sectionVarbs))).toEqual(
         sectionVarbs
       );

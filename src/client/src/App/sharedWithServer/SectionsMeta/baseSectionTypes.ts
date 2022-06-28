@@ -1,65 +1,35 @@
 import { SubType } from "../utils/types";
-import {
-  BaseSections,
-  baseSections,
-  ContextName,
-  SimpleSectionName
-} from "./baseSections";
+import { BaseSections, ContextName, SimpleSectionName } from "./baseSections";
 import { StateValue } from "./baseSections/baseValues/StateValueTypes";
 import { ValueName } from "./baseSections/baseVarb";
 import {
   baseNameArrs,
   BaseNameArrs,
-  BaseNameSelector
+  BaseNameSelector,
 } from "./baseSectionTypes/baseNameArrs";
-import { SpecificSectionInfo } from "./relSections/rel/relVarbInfoTypes";
 
 export type VarbValues = { [varbName: string]: StateValue };
 
 export type BaseName<
-  ST extends BaseNameSelector<SC> = "all",
+  ST extends BaseNameSelector = "all",
   SC extends ContextName = "fe",
   NameArrs = BaseNameArrs[SC][ST]
 > = NameArrs[number & keyof NameArrs];
 
-export type AlwaysOneFinder<S extends BaseName> = Extract<
-  S,
-  BaseName<"alwaysOne">
->;
-
-//
-export type SectionFinder<S extends SimpleSectionName = SimpleSectionName> =
-  | SpecificSectionInfo<S>
-  | AlwaysOneFinder<S>;
-
 type BaseSectionVarbs<
-  SC extends ContextName,
   SN extends SimpleSectionName,
-  BaseSection = BaseSections[SC][SN]
+  BaseSection = BaseSections["fe"][SN]
 > = BaseSection["varbSchemas" & keyof BaseSection];
 
-export type SectionVarbName<
-  SC extends ContextName,
-  SN extends SimpleSectionName
-> = keyof BaseSectionVarbs<SC, SN>;
+export type SectionVarbName<SN extends SimpleSectionName> =
+  keyof BaseSectionVarbs<SN>;
 
 export type SectionVarbNameByType<
-  SC extends ContextName,
   SN extends SimpleSectionName,
   VLN extends ValueName
-> = keyof SubType<BaseSectionVarbs<SC, SN>, VLN>;
+> = keyof SubType<BaseSectionVarbs<SN>, VLN>;
 
-//
-export type BaseSectionsDb = typeof baseSections.db;
-
-export function listNameToStoreName(sectionName: BaseName<"allList">) {
-  if (isBaseName(sectionName, "singleTimeListType")) return "userSingleList";
-  if (isBaseName(sectionName, "ongoingListType")) return "userOngoingList";
-  else if (sectionName === "userVarbList") return "userVarbList";
-  else throw new Error("A list sectionName was not provided");
-}
-
-export function isBaseName<T extends BaseNameSelector = "all">(
+function isBaseName<T extends BaseNameSelector = "all">(
   value: any,
   type?: T
 ): value is BaseName<T> {

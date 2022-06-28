@@ -1,6 +1,7 @@
 import { switchNames } from "../baseSections/switchNames";
 import { rel } from "./rel";
-import { relSection } from "./rel/relSection";
+import { relChild, relChildren } from "./rel/relChild";
+import { relSectionS } from "./rel/relSection";
 import { RelVarbs } from "./rel/relVarbs";
 
 const rentCut = switchNames("rentCut", "dollarsPercent");
@@ -64,14 +65,14 @@ function makeMgmtPreVarbs<R extends RelVarbs<"mgmt">>(): R {
     ),
     upfrontExpenses: rel.varb.sumNums(
       "Upfront expenses",
-      [rel.varbInfo.relative("upfrontCostList", "total", "children")],
+      [rel.varbInfo.relative("singleTimeList", "total", "children")],
       { startAdornment: "$" }
     ),
     ...rel.varbs.ongoingSumNums(
       "ongoingExpenses",
       "Ongoing mangement expenses",
       [
-        rel.varbInfo.relative("ongoingCostList", "total", "children"),
+        rel.varbInfo.relative("ongoingList", "total", "children"),
         ...rel.varbInfo.locals(sectionName, [
           "vacancyLossDollars",
           "rentCutDollars",
@@ -83,22 +84,21 @@ function makeMgmtPreVarbs<R extends RelVarbs<"mgmt">>(): R {
 }
 
 export const preMgmtGeneral = {
-  ...relSection.base(
+  ...relSectionS.base(
     "mgmtGeneral",
     "Management",
     {
       ...rel.varbs.sumSection("mgmt", { ...makeMgmtPreVarbs() }),
       ...rel.varbs.sectionStrings("mgmt", { ...makeMgmtPreVarbs() }, ["title"]),
     },
-    { children: { mgmt: { sectionName: "mgmt" } } }
+    { children: { mgmt: relChild("mgmt") } }
   ),
-  ...relSection.base("mgmt", "Management", makeMgmtPreVarbs(), {
+  ...relSectionS.base("mgmt", "Management", makeMgmtPreVarbs(), {
     tableStoreName: "mgmtTableStore",
     rowIndexName: "mgmt",
-    children: {
-      upfrontCostList: { sectionName: "upfrontCostList" },
-      ongoingCostList: { sectionName: "ongoingCostList" },
-      internalVarbList: { sectionName: "internalVarbList" },
-    },
+    children: relChildren({
+      upfrontCostList: ["singleTimeList"],
+      ongoingCostList: ["ongoingList"],
+    }),
   }),
 };

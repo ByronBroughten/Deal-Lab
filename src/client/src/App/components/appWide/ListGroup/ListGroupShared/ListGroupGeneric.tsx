@@ -1,11 +1,13 @@
 import { ReactNode } from "react";
 import { MdOutlinePlaylistAdd } from "react-icons/md";
 import styled, { css } from "styled-components";
+import { FeSectionInfo } from "../../../../sharedWithServer/SectionsMeta/Info";
 import {
-  FeParentInfo,
-  FeSectionInfo,
-} from "../../../../sharedWithServer/SectionsMeta/Info";
-import { ChildName } from "../../../../sharedWithServer/SectionsMeta/relSectionTypes/ChildTypes";
+  ChildName,
+  ChildType,
+  ChildTypeName,
+} from "../../../../sharedWithServer/SectionsMeta/relSectionTypes/ChildTypes";
+import { ParentName } from "../../../../sharedWithServer/SectionsMeta/relSectionTypes/ParentTypes";
 import { SectionName } from "../../../../sharedWithServer/SectionsMeta/SectionName";
 import { useSetterSection } from "../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import ccs from "../../../../theme/cssChunks";
@@ -14,32 +16,45 @@ import useHowMany from "../../customHooks/useHowMany";
 import PlusBtn from "../../PlusBtn";
 import { ListGroupTotal } from "./ListGroupGeneric/ListGroupTotal";
 
-// Hmmm.
-
-// childName of a parent that is of a particular childType
-
 // The best way to solve this is: make all the itemNames for the lists
-// be named "listItem"
-// get rid of the "itemName" requirement
-// get rid of sectionName
-// add childName, which is one of the childNames of the parents' list types
+// be named "listItem", or add a "listItem" boolean
+// I probably want to go the boolean route. I don't want
+// childNames to be for anything other than differentiating sectionsw
 
-type Props<SN extends SectionName<"allList"> = SectionName<"allList">> = {
+// the childName will be of the general listType
+// I'll get the child
+// then I'll get its children with childNames that have "isListItem: true"
+
+// this is getting complicated
+
+// SN extends HasChild<"varbListAllowed">
+// childName: ChildTypeName<SN, SectionName<"varbListAllowed">>
+
+type Props<
+  PN extends ParentName<SectionName<"varbListAllowed">> = ParentName<
+    SectionName<"varbListAllowed">
+  >,
+  CN extends ChildTypeName<PN, "varbListAllowed"> = ChildTypeName<
+    PN,
+    "varbListAllowed"
+  >,
+  SN extends ChildType<PN, CN> = ChildType<PN, CN>
+> = {
   themeName: ThemeName;
-  parentInfo: FeParentInfo<SN>;
-  sectionName: SN;
+  parentInfo: FeSectionInfo<PN>;
+  listChildName: ChildTypeName<PN, "varbListAllowed">;
   itemName: ChildName<SN>;
   makeListNode: ({
     feInfo,
     themeName,
     key,
-  }: MakeListNodeProps<SN>) => ReactNode;
+  }: MakeListNodeProps<SN & SectionName<"varbListAllowed">>) => ReactNode;
   titleText: string;
   totalVarbName?: string;
   className?: string;
 };
 
-export type MakeListNodeProps<SN extends SectionName<"allList">> = {
+export type MakeListNodeProps<SN extends SectionName<"varbListAllowed">> = {
   feInfo: FeSectionInfo<SN>;
   themeName: ThemeName;
   className?: string;
@@ -49,15 +64,14 @@ export type MakeListNodeProps<SN extends SectionName<"allList">> = {
 export function ListGroupGeneric({
   themeName,
   parentInfo,
-  sectionName,
-  itemName,
+  listChildName,
   makeListNode,
   titleText,
   totalVarbName,
   className,
 }: Props) {
   const parent = useSetterSection(parentInfo);
-  const lists = parent.get.children(sectionName);
+  const lists = parent.get.children(listChildName);
 
   const numListsWithItems = lists.reduce<number>((num, list) => {
     const childIds = list.childFeIds(itemName);
@@ -98,7 +112,7 @@ export function ListGroupGeneric({
           })}
           <PlusBtn
             className="ListGroup-addListBtn ListGroup-list"
-            onClick={() => parent.addChild(sectionName)}
+            onClick={() => parent.addChild(listChildName)}
           >
             <MdOutlinePlaylistAdd className="ListGroup-addListBtnIcon" />
           </PlusBtn>

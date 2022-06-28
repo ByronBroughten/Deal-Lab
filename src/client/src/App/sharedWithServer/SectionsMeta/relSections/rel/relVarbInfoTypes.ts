@@ -38,16 +38,14 @@ export type MultiSectionInfo<SN extends SimpleSectionName = SimpleSectionName> =
   RandomStringIdNameInfo<SN> | RelSectionInfo<SN>;
 
 export type DbUserDefInfo<
-  S extends BaseName<"uniqueDbId"> | BaseName<"rowIndex"> =
-    | BaseName<"uniqueDbId">
-    | BaseName<"rowIndex">
+  S extends BaseName<"uniqueDbId"> = BaseName<"uniqueDbId">
 > = DbNameInfo<S>;
 
 export type SpecificSectionInfo<
   S extends SimpleSectionName = SimpleSectionName
 > =
   | FeNameInfo<S>
-  | DbUserDefInfo<Extract<S, BaseName<"uniqueDbId"> | BaseName<"rowIndex">>>
+  | DbUserDefInfo<Extract<S, BaseName<"uniqueDbId">>>
   | RelInfoStatic<Extract<S, BaseName<"alwaysOne">>>;
 
 export type SpecificSectionsInfo<

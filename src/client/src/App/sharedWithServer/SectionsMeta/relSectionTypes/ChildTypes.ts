@@ -3,6 +3,8 @@ import { PropKeysOfValue } from "../../utils/Obj/SubType";
 import { RemoveNotStrings, StrictOmit } from "../../utils/types";
 import { MergeUnionObj } from "../../utils/types/mergeUnionObj";
 import { SimpleSectionName, simpleSectionNames } from "../baseSections";
+import { BaseName } from "../baseSectionTypes";
+import { BaseNameSelector } from "../baseSectionTypes/baseNameArrs";
 import { RelSections } from "../relSections";
 import { GeneralRelSection } from "../relSections/rel/relSection";
 import { relSections } from "./../relSections";
@@ -60,8 +62,8 @@ export type ChildTypesToNames<SN extends SimpleSectionName> = {
 
 export type ChildTypeName<
   SN extends SimpleSectionName,
-  CT extends ChildType<SN>
-> = PropKeysOfValue<ChildNamesToTypes<SN>, CT>;
+  ST extends BaseNameSelector
+> = PropKeysOfValue<ChildNamesToTypes<SN>, BaseName<ST> & ChildType<SN>>;
 
 type SectionChildNamesToType = {
   [SN in SimpleSectionName]: ChildNamesToTypes<SN>;

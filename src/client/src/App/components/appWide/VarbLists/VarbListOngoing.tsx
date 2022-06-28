@@ -1,15 +1,13 @@
 import { FeSectionInfo } from "../../../sharedWithServer/SectionsMeta/Info";
-import { SectionName } from "../../../sharedWithServer/SectionsMeta/SectionName";
 import { useSetterSection } from "../../../sharedWithServer/stateClassHooks/useSetterSection";
 import { ThemeName } from "../../../theme/Theme";
 import { VarbListGeneric } from "../ListGroup/ListGroupShared/VarbListGeneric";
 import { OngoingListItem } from "./VarbListOngoing/OngoingListItem";
 
-type Props<SN extends SectionName<"ongoingListType"> = SectionName<"ongoingListType">> =
-  {
-    feInfo: FeSectionInfo<SN>;
-    themeName: ThemeName;
-  };
+type Props<SN extends "ongoingList"> = {
+  feInfo: FeSectionInfo<SN>;
+  themeName: ThemeName;
+};
 export function VarbListOngoing(props: Props) {
   const itemName = "ongoingItem";
   const list = useSetterSection(props.feInfo);

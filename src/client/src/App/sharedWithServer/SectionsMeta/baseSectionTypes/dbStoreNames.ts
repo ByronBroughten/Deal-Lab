@@ -2,39 +2,6 @@ import { Arr } from "../../utils/Arr";
 import { Obj } from "../../utils/Obj";
 import { SimpleSectionName, simpleSectionNames } from "../baseSections";
 
-const fullIndexStore = {
-  children: ["outputList", "varbList", "singleTimeList", "ongoingList"],
-};
-
-const dbStoreSectionTypes = [
-  "main",
-  "user",
-
-  "property",
-  "loan",
-  "mgmt",
-  "deal",
-
-  "outputList",
-  "varbList",
-  "singleTimeList",
-  "ongoingList",
-
-  "table",
-] as const;
-
-// I like this, because it decouples sectionNames from
-// dbStoreNames.
-
-// I like the idea of doing this with children in the front-end state, too
-// and I like the idea of those childNames being decoupled from these
-// dbStoreNames.
-
-// The decoupling is good.
-
-// How would I go about implementing this?
-// first, I would try to implement it just for the main sections
-
 // 1. edit the mongoose schema to add these storeNames.
 // 2. add "mainStoreName" to the relSection of each of the sectionTypes
 // 3. make addSection share code with updateSection
@@ -85,6 +52,7 @@ const dbStoreSchema = {
 //
 export const dbStoreNamesNext = Obj.keys(dbStoreSchema);
 
+// these should be children of parent, now, rather than simpleSectionNames
 export const dbStoreNames = Arr.extractStrict(simpleSectionNames, [
   "user",
 
@@ -94,7 +62,7 @@ export const dbStoreNames = Arr.extractStrict(simpleSectionNames, [
   "loan",
 
   "outputList",
-  "varbList",
+  "userVarbList",
   "singleTimeList",
   "ongoingList",
 ] as const);
@@ -109,7 +77,7 @@ export const feGuestAccessNames = Arr.extract(dbStoreNames, [
   // children of main that users should be able to play with and save
   // before making an account.
   "outputList",
-  "varbList",
+  "userVarbList",
   "singleTimeList",
   "ongoingList",
 ] as const);
@@ -118,7 +86,7 @@ export const loadOnLoginNamesNext = [
   // grabbed right out of the db
   "user",
   "outputList",
-  "varbList",
+  "userVarbList",
   "singleTimeList",
   "ongoingList",
 
@@ -132,7 +100,7 @@ export const loadOnLoginNamesNext = [
 export const fullLoadOnLoginNames = Arr.extract(loadOnLoginNamesNext, [
   "user",
   "outputList",
-  "varbList",
+  "userVarbList",
   "singleTimeList",
   "ongoingList",
 ] as const);

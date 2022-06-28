@@ -1,8 +1,9 @@
 import { rel } from "./rel";
+import { relChild, relChildren } from "./rel/relChild";
 import { relSection } from "./rel/relSection";
 import { RelVarbs } from "./rel/relVarbs";
 
-function propertyRelVarbs<R extends RelVarbs<"property">>(): R {
+function makePropertyRelVarbs<R extends RelVarbs<"property">>(): R {
   const sectionName = "property";
   return {
     ...rel.varbs.savableSection,
@@ -17,17 +18,19 @@ function propertyRelVarbs<R extends RelVarbs<"property">>(): R {
     numUnits: rel.varb.sumChildVarb("Unit count", "unit", "one"),
     numBedrooms: rel.varb.sumChildVarb("Bedroom count", "unit", "numBedrooms"),
     // upfront
+
+    // these
     upfrontExpenses: rel.varb.sumMoney("Upfront expenses", [
-      rel.varbInfo.children("upfrontCostList", "total"),
+      rel.varbInfo.children("singleTimeList", "total"),
     ]),
     upfrontRevenue: rel.varb.sumMoney("Upfront revenues", [
-      rel.varbInfo.children("upfrontRevenueList", "total"),
+      rel.varbInfo.children("singleTimeList", "total"),
     ]),
     // ongoing
     ...rel.varbs.ongoingSumNums(
       "ongoingExpenses",
       "Ongoing property expenses",
-      [rel.varbInfo.children("ongoingCostList", "total")],
+      [rel.varbInfo.children("ongoingList", "total")],
       { switchInit: "monthly", shared: { startAdornment: "$" } }
     ),
 
@@ -41,7 +44,7 @@ function propertyRelVarbs<R extends RelVarbs<"property">>(): R {
     ...rel.varbs.ongoingSumNums(
       "miscOngoingRevenue",
       "Revenue besides rent",
-      [rel.varbInfo.children("ongoingRevenueList", "total")],
+      [rel.varbInfo.children("ongoingList", "total")],
       { switchInit: "monthly", shared: { startAdornment: "$" } }
     ),
     ...rel.varbs.ongoingSumNums(
@@ -54,28 +57,30 @@ function propertyRelVarbs<R extends RelVarbs<"property">>(): R {
 }
 
 export const relPropertyGeneral = {
-  ...relSection.base(
-    "propertyGeneral",
+  propertyGeneral: relSection(
     "Property",
     {
-      ...rel.varbs.sumSection("property", propertyRelVarbs()),
-      ...rel.varbs.sectionStrings("property", propertyRelVarbs(), ["title"]),
+      ...rel.varbs.sumSection("property", makePropertyRelVarbs()),
+      ...rel.varbs.sectionStrings("property", makePropertyRelVarbs(), [
+        "title",
+      ]),
     },
-    { children: { property: { sectionName: "property" } } }
+    {
+      children: { property: relChild("property") },
+    }
   ),
-  ...relSection.base("property", "Property", propertyRelVarbs(), {
-    children: {
-      upfrontCostList: { sectionName: "upfrontCostList" },
-      upfrontRevenueList: { sectionName: "upfrontRevenueList" },
-      ongoingCostList: { sectionName: "ongoingCostList" },
-      ongoingRevenueList: { sectionName: "ongoingRevenueList" },
-      unit: { sectionName: "unit" },
-      varbList: { sectionName: "varbList" },
-    },
+  property: relSection("Property", makePropertyRelVarbs(), {
+    children: relChildren({
+      upfrontCostList: ["singleTimeList"],
+      upfrontRevenueList: ["singleTimeList"],
+      ongoingCostList: ["ongoingList"],
+      ongoingRevenueList: ["ongoingList"],
+      unit: ["unit"],
+    }),
     tableStoreName: "propertyTableStore",
     rowIndexName: "property",
   }),
-  ...relSection.base("unit", "Unit", {
+  unit: relSection("Unit", {
     one: rel.varb.numObj("Unit", {
       updateFnName: "one",
       initNumber: 1,

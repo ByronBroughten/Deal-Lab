@@ -185,10 +185,11 @@ export type DescendantList<
   DN extends DescendantType<SN> = DescendantType<SN>
 > = readonly [...DescendantType<SN>[], DN];
 
-export type AddChildOptions<
+export interface AddChildOptions<
   SN extends SectionName,
-  CN extends ChildName<SN> = ChildName<SN>
-> = StrictOmit<AddSectionPropsNext<CN>, OmitProps>;
+  CN extends ChildName<SN> = ChildName<SN>,
+  CT extends ChildType<SN, CN> = ChildType<SN, CN>
+> extends StrictOmit<AddSectionPropsNext<CT>, OmitProps> {}
 
 export type AddDescendantOptions<
   SN extends SectionName,

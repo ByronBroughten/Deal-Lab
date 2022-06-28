@@ -8,16 +8,13 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-const testRelProperty = {
-  children: {
-    upfrontCostList: {
-      sectionType: "singleTimeList",
-    },
-    ongoingCostList: {
-      sectionType: "ongoingList",
-    },
-  },
-};
+// You absolutely have to change the relInfo stuff
+// as things are, children will pull from both revenue and cost lists
+// also closingCosts and wrapped in loan will be mixed together
+// loan relVarb "loanAmountDollarsTotal" needs to be fixed
+
+// Fix VariableGetterSections. You'll probably want to use
+// child booleans
 
 // Make Queryable SectionPacks
 // Now that sectionPacks are just for transferring data,

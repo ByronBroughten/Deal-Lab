@@ -5,9 +5,8 @@ import { makeDefaultOutputList } from "./makeDefaultOutputList";
 import { makeDefaultPropertyPack } from "./makeDefaultPropertyPack";
 
 export function makeDefaultDealPack(): SectionPack<"deal"> {
-  const childNames = ["financing", "internalVarbList"] as const;
-  const main = PackBuilderSection.initAsMain();
-  const deal = main.addAndGetChild("deal");
+  const childNames = ["financing"] as const;
+  const deal = PackBuilderSection.initAsOmniChild("deal");
   childNames.forEach((childName) => {
     deal.addChild(childName);
   });

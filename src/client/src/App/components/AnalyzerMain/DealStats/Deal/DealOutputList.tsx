@@ -7,7 +7,7 @@ import { LabeledVarbOutput } from "../../../appWide/LabeledVarbOutput";
 
 export default function DealOutputList({ feId }: { feId: string }) {
   const outPutList = useSetterSection({
-    sectionName: "dealOutputList",
+    sectionName: "outputList",
     feId,
   });
 

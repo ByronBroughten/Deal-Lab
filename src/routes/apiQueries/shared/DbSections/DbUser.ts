@@ -20,8 +20,6 @@ import {
 } from "../../../../client/src/App/sharedWithServer/StateGetters/Bases/GetterSectionsBase";
 import { GetterSection } from "../../../../client/src/App/sharedWithServer/StateGetters/GetterSection";
 import { PackBuilderSection } from "../../../../client/src/App/sharedWithServer/StatePackers.ts/PackBuilderSection";
-import { PackLoaderSection } from "../../../../client/src/App/sharedWithServer/StatePackers.ts/PackLoaderSection";
-import { UpdaterSection } from "../../../../client/src/App/sharedWithServer/StateUpdaters/UpdaterSection";
 import { HandledResStatusError } from "../../../../resErrorUtils";
 import { DbSectionsProps } from "./Bases/DbSectionsBase";
 import { DbSections } from "./DbSections";
@@ -58,13 +56,15 @@ export class DbUser extends GetterSectionsBase {
   }
   private static init(props: DbSectionsProps) {
     const dbSections = new DbSections(props);
-    const userPack = dbSections.onlySectionPack("user");
-    const serverUserPack = dbSections.onlySectionPack("serverOnlyUser");
-    const omniLoader = new PackLoaderSection(
-      UpdaterSection.initOmniParentProps()
-    );
-    omniLoader.loadChildSectionPack(userPack);
-    omniLoader.loadChildSectionPack(serverUserPack);
+    const omniLoader = PackBuilderSection.initAsOmniParent();
+    omniLoader.loadChild({
+      childName: "user",
+      sectionPack: dbSections.onlySectionPack("user"),
+    });
+    omniLoader.loadChild({
+      childName: "serverOnlyUser",
+      sectionPack: dbSections.onlySectionPack("serverOnlyUser"),
+    });
     return new DbUser({
       ...omniLoader.getterSectionsProps,
       dbSections,
@@ -182,14 +182,20 @@ export class DbUser extends GetterSectionsBase {
     sectionName: SN
   ): SectionPack<SN>[] {
     const omniParent = PackBuilderSection.initAsOmniParent();
-    const tableStore = omniParent.addAndGetChild(sectionName);
+    const tableStore = omniParent.addAndGetChild(
+      sectionName
+    ) as any as PackBuilderSection<SN>;
 
-    const sourceName = tableStore.sectionMeta.tableSourceName;
+    const sourceName = tableStore.sectionMeta
+      .tableSourceName as SectionName<"tableSource">;
     const tablePack = defaultMaker.makeMainTablePack[sourceName]();
-    const defaultTable = tableStore.loadAndGetChild(tablePack);
+    const defaultTable = tableStore.loadAndGetChild({
+      childName: "table",
+      sectionPack: tablePack,
+    });
 
     const sources = omniParent.loadAndGetChildren({
-      sectionName: sourceName,
+      childName: sourceName,
       sectionPacks: this.dbSections.sectionPackArr(sourceName),
     });
 

@@ -3,9 +3,9 @@ import { FeSectionInfo } from "../SectionsMeta/Info";
 import {
   ChildName,
   ChildType,
+  FeChildInfo,
 } from "../SectionsMeta/relSectionTypes/ChildTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
-import { GetterSections } from "../StateGetters/GetterSections";
 import { UpdaterSectionBase } from "../StateUpdaters/bases/updaterSectionBase";
 import {
   AddChildOptions,
@@ -14,34 +14,30 @@ import {
 import { ChildPackInfo, PackLoaderSection } from "./PackLoaderSection";
 import { PackMakerSection } from "./PackMakerSection";
 
+type ChildPackBuilder<
+  SN extends SectionName,
+  CN extends ChildName<SN>
+> = PackBuilderSection<ChildType<SN, CN>>;
+
 export class PackBuilderSection<
   SN extends SectionName
 > extends UpdaterSectionBase<SN> {
   static initAsOmniParent() {
     return new PackBuilderSection(UpdaterSection.initOmniParentProps());
   }
-  static initAsMain() {
-    return new PackBuilderSection(UpdaterSection.initMainProps());
-  }
-  static initAsRoot() {
-    return new PackBuilderSection(UpdaterSection.initRootProps());
-  }
-  static initAsOmniChild<SN extends SectionName<"notRootNorOmni">>(
-    sectionName: SN,
-    options?: AddChildOptions<SN>
-  ): PackBuilderSection<SN> {
+  static initAsOmniChild<CN extends ChildName<"omniParent">>(
+    childName: CN,
+    options?: AddChildOptions<"omniParent", CN>
+  ): PackBuilderSection<ChildType<"omniParent", CN>> {
     const builder = this.initAsOmniParent();
-    return builder.addAndGetChild(sectionName, options);
+    return builder.addAndGetChild(childName, options);
   }
-  static initSectionPack<SN extends SectionName<"notRootNorOmni">>(
-    sectionName: SN,
-    options?: AddChildOptions<SN>
-  ): SectionPack<SN> {
-    const section = this.initAsOmniChild(sectionName, options);
+  static initSectionPack<CN extends ChildName<"omniParent">>(
+    childName: CN,
+    options?: AddChildOptions<"omniParent", CN>
+  ): SectionPack<ChildType<"omniParent", CN>> {
+    const section = this.initAsOmniChild(childName, options);
     return section.makeSectionPack();
-  }
-  private get getterSections() {
-    return new GetterSections(this.getterSectionsProps);
   }
   get updater(): UpdaterSection<SN> {
     return new UpdaterSection(this.getterSectionProps);
@@ -53,25 +49,27 @@ export class PackBuilderSection<
     return new PackMakerSection(this.getterSectionProps);
   }
   children<CN extends ChildName<SN>>(
-    sectionName: CN
-  ): PackBuilderSection<CN>[] {
-    return this.get.childFeIds(sectionName).map((feId) =>
-      this.packBuilderSection({
-        sectionName,
-        feId,
-      })
-    );
+    childName: CN
+  ): PackBuilderSection<ChildType<SN, CN>>[] {
+    return this.get
+      .childFeIds(childName)
+      .map((feId) => this.child({ childName, feId }));
+  }
+  child<CN extends ChildName<SN>>(
+    childInfo: FeChildInfo<SN, CN>
+  ): PackBuilderSection<ChildType<SN, CN>> {
+    return this.packBuilderSection(this.get.childToFeInfo(childInfo));
   }
   makeSectionPack(): SectionPack<SN> {
-    // it should probably start with root
     return this.maker.makeSectionPack();
   }
-  addAndGetChild<CN extends ChildName<SN>>(
+  // I shouldn't need to add the childName
+  addAndGetChild<CN extends ChildName<SN>, CT extends ChildType<SN, CN>>(
     childName: CN,
-    options?: AddChildOptions<SN, CN>
-  ): PackBuilderSection<CN> {
+    options?: AddChildOptions<SN, CN, CT>
+  ): PackBuilderSection<CT> {
     this.addChild(childName, options);
-    return this.youngestPackBuilder(childName);
+    return this.youngestChild(childName);
   }
   addChild<CN extends ChildName<SN>>(
     childName: CN,
@@ -83,8 +81,7 @@ export class PackBuilderSection<
     childPackInfo: ChildPackInfo<SN, CN, CT>
   ): PackBuilderSection<CT> {
     this.loadChild(childPackInfo);
-    const { sectionName } = childPackInfo.sectionPack;
-    return this.youngestPackBuilder(sectionName);
+    return this.youngestChild(childPackInfo.childName);
   }
   loadChild<CN extends ChildName<SN>, CT extends ChildType<SN, CN>>(
     childPackInfo: ChildPackInfo<SN, CN, CT>
@@ -119,10 +116,10 @@ export class PackBuilderSection<
       sectionsShare: this.sectionsShare,
     });
   }
-  private youngestPackBuilder<S extends SectionName>(
-    sectionName: S
-  ): PackBuilderSection<S> {
-    const { feInfo } = this.getterSections.newestEntry(sectionName);
-    return this.packBuilderSection(feInfo);
+  private youngestChild<
+    CN extends ChildName<SN>,
+    CT extends ChildType<SN, CN> = ChildType<SN, CN>
+  >(childName: CN): PackBuilderSection<CT> {
+    return this.packBuilderSection(this.get.youngestChild(childName));
   }
 }

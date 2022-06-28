@@ -1,216 +1,242 @@
-import { Arr } from "../utils/Arr";
-import { StrictExclude } from "../utils/types";
-import {
-  ApiAccessStatus,
-  SimpleSectionName,
-  simpleSectionNames,
-} from "./baseSections";
+import { ApiAccessStatus, SimpleSectionName } from "./baseSections";
 import { rel } from "./relSections/rel";
-import { GeneralRelSection, relSection } from "./relSections/rel/relSection";
-import { relVarb } from "./relSections/rel/relVarb";
-import { RelVarbs } from "./relSections/rel/relVarbs";
-import { relDealStuff } from "./relSections/relDealStuff";
-import { relFinancing } from "./relSections/relFinancing";
+import { relChild, relChildren } from "./relSections/rel/relChild";
+import {
+  GeneralRelSection,
+  GenericRelSection,
+  relSection,
+  relSectionS,
+} from "./relSections/rel/relSection";
+import { relVarbS } from "./relSections/rel/relVarb";
+import { relVarbsS } from "./relSections/rel/relVarbs";
+import { dealRelVarbs } from "./relSections/relDealStuff";
+import { financingRelVarbs, loanRelVarbs } from "./relSections/relFinancing";
 import { preMgmtGeneral } from "./relSections/relMgmtGeneral";
+import { relOmniParentChildren } from "./relSections/relOmniParent";
 import { relPropertyGeneral } from "./relSections/relPropertyGeneral";
-import { preUserLists } from "./relSections/relUserLists";
+import { userVarbItemVarbs } from "./relSections/relUserLists";
 
-type OmniParentChildren = {
-  [SN in StrictExclude<SimpleSectionName, "root" | "omniParent">]: {
-    sectionName: SN;
-  };
+// Two objectives
+// Specify that the four lists are lists
+// Specify what their list items are
+
+// I can do this either by calling each of their only child, "listItem"
+// This would be the simplest solution
+// I change the childNames and I use the childNames
+
+// Or I can give them a relParameter called "listItem" that specifies
+// the name of their child that is a listItem
+// This would be the most de-coupley solution
+// I would have to make the "listItem" parameter getable from sectionMeta
+// For type safety, eventually I would want  to specify that the parameter points
+// to the child's name (even though for now there is only one child)
+
+// this isn't too bad.
+
+type GenericRelSections = {
+  [SN in SimpleSectionName]: GenericRelSection<SN>;
 };
-const omniParentChildren = Arr.excludeStrict(simpleSectionNames, [
-  "root",
-  "omniParent",
-]).reduce((omniNames, sectionName) => {
-  (omniNames as any)[sectionName] = {
-    sectionName,
-  } as OmniParentChildren[typeof sectionName];
-  return omniNames;
-}, {} as OmniParentChildren);
+
+function relSectionsFilter<RS extends GenericRelSections>(relSections: RS): RS {
+  return relSections;
+}
 
 export function makeRelSections() {
-  return {
-    ...rel.section.base(
-      "root",
+  return relSectionsFilter({
+    root: relSection(
       "Root",
-      { _typeUniformity: rel.varb.string() },
+      { _typeUniformity: relVarbS.string() },
       {
-        children: {
-          omniParent: { sectionName: "omniParent" },
-          main: { sectionName: "main" },
-        },
+        children: relChildren({
+          omniParent: ["omniParent"],
+          main: ["main"],
+        }),
       }
     ),
-    ...relSection.base(
-      "omniParent",
-      "Parent of All",
-      {
-        _typeUniformity: rel.varb.string(),
-      } as RelVarbs<"main">,
-      { children: omniParentChildren }
+    omniParent: relSection(
+      "Parent of all",
+      { _typeUniformity: relVarbS.string() },
+      { children: relOmniParentChildren }
     ),
-    ...relSection.base(
+    main: relSection(
       "main",
-      "Main",
+      { _typeUniformity: relVarbS.string() },
       {
-        _typeUniformity: rel.varb.string(),
-      } as RelVarbs<"main">,
-      {
-        children: {
-          user: { sectionName: "user" },
-          serverOnlyUser: { sectionName: "serverOnlyUser" },
-          login: { sectionName: "login" },
-          register: { sectionName: "register" },
-
-          deal: { sectionName: "deal" },
-
-          propertyTableStore: { sectionName: "propertyTableStore" },
-          loanTableStore: { sectionName: "loanTableStore" },
-          mgmtTableStore: { sectionName: "mgmtTableStore" },
-          dealTableStore: { sectionName: "dealTableStore" },
-
-          userVarbList: { sectionName: "userVarbList" },
-          userSingleList: { sectionName: "userSingleList" },
-          userOngoingList: { sectionName: "userOngoingList" },
-          userOutputList: { sectionName: "userOutputList" },
-
-          varbList: { sectionName: "varbList" },
-          singleTimeList: { sectionName: "singleTimeList" },
-          ongoingList: { sectionName: "ongoingList" },
-          outputList: { sectionName: "outputList" },
-        },
+        children: relChildren({
+          user: ["user"],
+          serverOnlyUser: ["serverOnlyUser"],
+          login: ["login"],
+          register: ["register"],
+          deal: ["deal"],
+          propertyTableStore: ["propertyTableStore"],
+          loanTableStore: ["loanTableStore"],
+          mgmtTableStore: ["mgmtTableStore"],
+          dealTableStore: ["dealTableStore"],
+          userVarbList: ["userVarbList"],
+          userOutputList: ["outputList"],
+          userSingleList: ["singleTimeList"],
+          userOngoingList: ["ongoingList"],
+          singleTimeList: ["singleTimeList"],
+          ongoingList: ["ongoingList"],
+          outputList: ["outputList"],
+        }),
       }
     ),
 
-    ...rel.section.base(
-      "table",
-      "Table",
-      { titleFilter: relVarb.string() } as RelVarbs<"table">,
-      {
-        children: {
-          column: { sectionName: "column" },
-          tableRow: { sectionName: "tableRow" },
-        },
-      }
-    ),
-    ...relSection.base(
-      "propertyTableStore",
-      "Property Table Store",
-      { _typeUniformity: rel.varb.string() },
-      { children: { table: { sectionName: "table" } } } as const
-    ),
-    ...relSection.base(
-      "loanTableStore",
-      "Loan Table Store",
-      { _typeUniformity: rel.varb.string() },
-      { children: { table: { sectionName: "table" } } } as const
-    ),
-    ...relSection.base(
-      "mgmtTableStore",
-      "Mgmt Table Store",
-      { _typeUniformity: rel.varb.string() },
-      { children: { table: { sectionName: "table" } } } as const
-    ),
-    ...relSection.base(
-      "dealTableStore",
-      "Deal Table Store",
-      { _typeUniformity: rel.varb.string() },
-      { children: { table: { sectionName: "table" } } } as const
-    ),
-    ...relSection.base(
-      "outputList",
-      "Output List",
-      {
-        title: rel.varb.string(),
-      },
-      { children: { output: { sectionName: "output" } } } as const
-    ),
-    ...relSection.outputList("dealOutputList", {
-      fullIndexName: "outputList",
-    }),
-    ...relSection.outputList("userOutputList", {
-      arrStoreName: "outputList",
-    }),
-
-    // these are for tables
-    ...relSection.rowIndex("tableRow", "Row"),
-    ...relSection.base("column", "Column", {
-      ...rel.varbs.varbInfo(),
-    }),
-    ...relSection.base("cell", "Cell", {
-      ...rel.varbs.varbInfo(),
-      value: rel.varb.numObj("cell"),
-    }),
-    // singleTimeItem and ongoingItem are for additiveLists
-    ...relSection.base(
-      "singleTimeItem",
-      "List Item",
-      rel.varbs.singleTimeItem()
-    ),
-    ...relSection.base("ongoingItem", "List Item", rel.varbs.ongoingItem()),
-    ...relSection.base("user", "User", {
-      email: rel.varb.string({ displayName: "Email" }),
-      userName: rel.varb.string({ displayName: "Name" }),
-      apiAccessStatus: relVarb.string({
+    user: relSection("User", {
+      email: relVarbS.string({ displayName: "Email" }),
+      userName: relVarbS.string({ displayName: "Name" }),
+      apiAccessStatus: relVarbS.string({
         displayName: "Api Access Status",
         initValue: "basicStorage" as ApiAccessStatus,
       }),
     }),
-    ...relSection.base("serverOnlyUser", "User", {
-      encryptedPassword: rel.varb.string(),
-      emailAsSubmitted: rel.varb.string(),
+    serverOnlyUser: relSection("serverOnlyUser", {
+      encryptedPassword: relVarbS.string(),
+      emailAsSubmitted: relVarbS.string(),
     }),
-    ...relSection.base("login", "Login Form", {
-      email: rel.varb.string({ displayName: "Email" }),
-      password: rel.varb.string({ displayName: "Password" }),
+    login: relSection("login", {
+      email: relVarbS.string({ displayName: "Email" }),
+      password: relVarbS.string({ displayName: "Password" }),
     }),
-    ...relSection.base("register", "Register Form", {
-      email: rel.varb.string({ displayName: "Email" }),
-      userName: rel.varb.string({ displayName: "Name" }),
-      password: rel.varb.string({ displayName: "Password" }),
-    }),
-
-    // these are shared between property and mgmt
-    ...rel.section.singleTimeList("upfrontCostList", "Upfront Costs", {
-      fullIndexName: "singleTimeList",
-    }),
-    ...rel.section.singleTimeList("upfrontRevenueList", "Upfront Revenue", {
-      fullIndexName: "singleTimeList",
-    }),
-    ...rel.section.ongoingList("ongoingCostList", "Ongoing Costs", {
-      fullIndexName: "ongoingList",
-    }),
-    ...rel.section.ongoingList("ongoingRevenueList", "Ongoing Revenue", {
-      fullIndexName: "ongoingList",
-    }),
-    ...rel.section.ongoingList("ongoingCostList", "Ongoing Costs", {
-      fullIndexName: "ongoingList",
+    register: relSection("Register Form", {
+      email: relVarbS.string({ displayName: "Email" }),
+      userName: relVarbS.string({ displayName: "Name" }),
+      password: relVarbS.string({ displayName: "Password" }),
     }),
 
-    ...rel.section.ongoingList("ongoingList", "Ongoing Costs", {
-      fullIndexName: "ongoingList",
+    table: relSection(
+      "Table",
+      { titleFilter: relVarbS.string() },
+      {
+        children: relChildren({
+          column: ["column"],
+          tableRow: ["tableRow"],
+        }),
+      }
+    ),
+    tableRow: relSection(
+      "Row",
+      {
+        title: relVarbS.string(),
+        compareToggle: relVarbS.type("boolean"),
+      },
+      { children: { cell: relChild("cell") } }
+    ),
+    column: relSection("Column", relVarbsS.varbInfo()),
+    ...relSectionS.base("cell", "Cell", {
+      ...rel.varbs.varbInfo(),
+      value: relVarbS.numObj("Table cell value"),
     }),
-    ...rel.section.singleTimeList("singleTimeList", "Upfront Revenue", {
+
+    outputList: relSection(
+      "Output List",
+      { title: relVarbS.string() },
+      { children: { output: relChild("output") } }
+    ),
+    output: relSection("Output", relVarbsS.varbInfo()),
+    singleTimeList: relSection("List", relVarbsS.singleTimeList(), {
       fullIndexName: "singleTimeList",
+      children: {
+        singleTimeItem: relChild("singleTimeItem"),
+      },
     }),
+    singleTimeItem: relSection("List Item", relVarbsS.singleTimeItem()),
+    ongoingList: relSection("List", relVarbsS.ongoingList(), {
+      fullIndexName: "ongoingList",
+      children: {
+        ongoingItem: relChild("ongoingItem", {
+          isListItem: true,
+        }),
+      },
+    }),
+    ongoingItem: relSection("List Item", relVarbsS.ongoingItem()),
+    userVarbList: relSection(
+      "Variable List",
+      {
+        ...relVarbsS.savableSection,
+        defaultValueSwitch: relVarbS.string({
+          initValue: "labeledEquation",
+        } as const),
+      },
+      { children: { userVarbItem: { sectionName: "userVarbItem" } } }
+    ),
+    userVarbItem: relSection("User Variable", userVarbItemVarbs, {
+      children: { conditionalRow: relChild("conditionalRow") },
+    }),
+    conditionalRow: relSection("Conditional Row", {
+      level: rel.varb.type("number"),
+      type: rel.varb.string({ initValue: "if" }),
+      // if
+      left: rel.varb.type("numObj"),
+      operator: rel.varb.string({ initValue: "===" }),
+      rightList: rel.varb.type("stringArray"),
+      rightValue: rel.varb.type("numObj"),
+      // then
+      then: rel.varb.type("numObj"),
+    }),
+    //     { type: "if", level: 0 },
+    //     { type: "then", level: 0 },
+    //     { type: "or else", level: 0 },
+
+    deal: relSection("deal", dealRelVarbs(), {
+      tableStoreName: "dealTableStore",
+      rowIndexName: "deal",
+      children: relChildren({
+        propertyGeneral: ["propertyGeneral"],
+        financing: ["financing"],
+        mgmtGeneral: ["mgmtGeneral"],
+        dealOutputList: ["outputList"],
+      }),
+    }),
+    financing: relSection("Financing", financingRelVarbs, {
+      children: { loan: relChild("loan") },
+    }),
+    loan: relSection("Loan", loanRelVarbs(), {
+      tableStoreName: "loanTableStore",
+      rowIndexName: "loan",
+      children: relChildren({
+        closingCostList: ["singleTimeList"],
+        wrappedInLoanList: ["singleTimeList"],
+      }),
+    }),
+    ...relSectionS.base(
+      "propertyTableStore",
+      "Property Table Store",
+      { _typeUniformity: relVarbS.string() },
+      { children: { table: relChild("table") } }
+    ),
+    ...relSectionS.base(
+      "loanTableStore",
+      "Loan Table Store",
+      { _typeUniformity: relVarbS.string() },
+      { children: { table: relChild("table") } } as const
+    ),
+    ...relSectionS.base(
+      "mgmtTableStore",
+      "Mgmt Table Store",
+      { _typeUniformity: relVarbS.string() },
+      { children: { table: relChild("table") } } as const
+    ),
+    ...relSectionS.base(
+      "dealTableStore",
+      "Deal Table Store",
+      { _typeUniformity: relVarbS.string() },
+      { children: { table: relChild("table") } } as const
+    ),
 
     // savable sections and their children
-    ...preUserLists,
     ...relPropertyGeneral,
-    ...relFinancing,
     ...preMgmtGeneral,
-    ...relDealStuff,
-  } as const;
+  });
 }
 
-export type RelSections = ReturnType<typeof makeRelSections>;
+export const relSections = makeRelSections();
+export type RelSections = typeof relSections;
 type GeneralRelSections = {
   [SN in SimpleSectionName]: GeneralRelSection;
 };
 
-export const relSections = makeRelSections();
 const _testRelSections = <RS extends GeneralRelSections>(_: RS): void =>
   undefined;
 _testRelSections(relSections);

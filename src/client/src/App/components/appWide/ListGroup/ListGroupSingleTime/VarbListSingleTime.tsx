@@ -1,16 +1,14 @@
-import { FeInfoByType } from "../../../../sharedWithServer/SectionsMeta/Info";
-import { SectionName } from "../../../../sharedWithServer/SectionsMeta/SectionName";
+import { FeParentInfo } from "../../../../sharedWithServer/SectionsMeta/Info";
 import { ThemeName } from "../../../../theme/Theme";
 import { VarbListGeneric } from "../ListGroupShared/VarbListGeneric";
 import { ListItemSingleTime } from "./VarbListSingleTime/ListItemSingleTime";
 
-type Props<SN extends SectionName<"singleTimeListType">> = {
+type Props = {
   themeName: ThemeName;
-  feInfo: FeInfoByType<SN>;
+  parentInfo: FeParentInfo<"singleTimeList">;
+  childName: string;
 };
-export function VarbListSingleTime<SN extends SectionName<"singleTimeListType">>(
-  props: Props<SN>
-) {
+export function VarbListSingleTime(props: Props) {
   // whose responsibility is the key?
   return (
     <VarbListGeneric

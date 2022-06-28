@@ -63,8 +63,9 @@ export class SetterSection<
     });
   }
   child<CN extends ChildName<SN>>(
-    feInfo: FeSectionInfo<CN>
-  ): SetterSection<CN> {
+    childInfo: FeChildInfo<SN, CN>
+  ): SetterSection<ChildType<SN, CN>> {
+    const feInfo = this.get.childToFeInfo(childInfo);
     return this.setterSection(feInfo);
   }
   loadSelfSectionPack(sectionPack: SectionPack<SN>): void {
@@ -77,14 +78,14 @@ export class SetterSection<
   }
   addChild<CN extends ChildName<SN>>(
     childName: CN,
-    options?: AddChildOptions<CN>
+    options?: AddChildOptions<SN, CN>
   ): void {
     this.solver.addChildAndSolve(childName, options);
     this.setSections();
   }
   addAndGetChild<CN extends ChildName<SN>>(
     childName: CN,
-    options?: AddChildOptions<CN>
+    options?: AddChildOptions<SN, CN>
   ): SetterSection<ChildType<SN, CN>> {
     this.addChild(childName, options);
     const { feInfo } = this.get.youngestChild(childName);

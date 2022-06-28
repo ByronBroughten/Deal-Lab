@@ -1,9 +1,8 @@
 import { rel } from "./rel";
-import { relSection } from "./rel/relSection";
 import { LeftRightVarbInfos } from "./rel/relVarb";
 import { RelVarbs } from "./rel/relVarbs";
 
-function dealRelVarbs<R extends RelVarbs<"deal">>(): R {
+export function dealRelVarbs(): RelVarbs<"deal"> {
   return {
     ...rel.varbs.savableSection,
     totalInvestment: rel.varb.leftRightPropFn(
@@ -97,21 +96,5 @@ function dealRelVarbs<R extends RelVarbs<"deal">>(): R {
       [rel.varbInfo.children("propertyGeneral", "ongoingRevenue")],
       { shared: { startAdornment: "$" }, switchInit: "monthly" }
     ),
-  } as R;
+  } as RelVarbs<"deal">;
 }
-
-export const relDealStuff = {
-  ...relSection.base("output", "Output", rel.varbs.varbInfo()),
-  ...relSection.base("deal", "Deal", dealRelVarbs(), {
-    tableStoreName: "dealTableStore",
-    rowIndexName: "deal",
-    arrStoreName: "deal",
-    children: {
-      propertyGeneral: { sectionName: "propertyGeneral" },
-      financing: { sectionName: "financing" },
-      mgmtGeneral: { sectionName: "mgmtGeneral" },
-      dealOutputList: { sectionName: "dealOutputList" },
-      internalVarbList: { sectionName: "internalVarbList" },
-    },
-  }),
-} as const;
