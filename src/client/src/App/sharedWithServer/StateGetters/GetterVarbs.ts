@@ -1,14 +1,14 @@
 import { DbVarbs } from "../SectionPack/RawSection";
-import { InEntityVarbInfo } from "../SectionsMeta/baseSections/baseValues/entities";
-import {
-  StateValueAnyKey,
-  ValueTypesPlusAny,
-} from "../SectionsMeta/baseSections/StateVarbTypes";
-import { InfoS, VarbInfo, VarbStringInfo } from "../SectionsMeta/Info";
 import {
   MultiFindByFocalVarbInfo,
   MultiVarbInfo,
-} from "../SectionsMeta/relSections/rel/relVarbInfoTypes";
+} from "../SectionsMeta/baseSectionsDerived/baseVarbInfo";
+import { InEntityVarbInfo } from "../SectionsMeta/baseSectionsUtils/baseValues/entities";
+import {
+  StateValueAnyKey,
+  ValueTypesPlusAny,
+} from "../SectionsMeta/baseSectionsUtils/StateVarbTypes";
+import { InfoS, VarbInfo, VarbStringInfo } from "../SectionsMeta/Info";
 import {
   SectionName,
   sectionNameS,

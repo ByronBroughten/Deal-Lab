@@ -1,6 +1,6 @@
 import { Obj } from "../utils/Obj";
 import { SimpleSectionName } from "./baseSections";
-import { GeneralRelVarbs } from "./relSections/rel/relVarbs";
+import { GeneralRelVarbs } from "./relSectionsUtils/relVarbs";
 import { VarbMeta, VarbMetaCore } from "./VarbMeta";
 
 type VarbMetasCore = { [key: string]: VarbMeta };

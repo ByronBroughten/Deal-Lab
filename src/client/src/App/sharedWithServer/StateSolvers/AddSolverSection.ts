@@ -1,9 +1,9 @@
-import { FeSectionInfo } from "../SectionsMeta/Info";
 import {
   ChildName,
   ChildType,
-} from "../SectionsMeta/relSectionTypes/ChildTypes";
-import { ParentNameSafe } from "../SectionsMeta/relSectionTypes/ParentTypes";
+} from "../SectionsMeta/childSectionsDerived/ChildTypes";
+import { ParentNameSafe } from "../SectionsMeta/childSectionsDerived/ParentTypes";
+import { FeSectionInfo } from "../SectionsMeta/Info";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { GetterSection } from "../StateGetters/GetterSection";
 import { GetterVarb } from "../StateGetters/GetterVarb";

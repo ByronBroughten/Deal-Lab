@@ -1,5 +1,5 @@
+import { RelVarbInfo } from "../SectionsMeta/baseSectionsDerived/baseVarbInfo";
 import { VarbInfo } from "../SectionsMeta/Info";
-import { RelVarbInfo } from "../SectionsMeta/relSections/rel/relVarbInfoTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
 import {
   OutDefaultPack,

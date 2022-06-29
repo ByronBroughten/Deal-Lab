@@ -1,6 +1,6 @@
 import { pick } from "lodash";
 import { isSectionPack } from "../SectionPack/SectionPack";
-import { numObj } from "../SectionsMeta/baseSections/baseValues/NumObj";
+import { numObj } from "../SectionsMeta/baseSectionsUtils/baseValues/NumObj";
 import { Obj } from "../utils/Obj";
 import { PackBuilderSection } from "./PackBuilderSection";
 

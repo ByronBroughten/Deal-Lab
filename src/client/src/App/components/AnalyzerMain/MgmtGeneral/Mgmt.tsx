@@ -31,9 +31,8 @@ export default function Mgmt({ feId }: { feId: string }) {
           themeName="mgmt"
         />
         <ListGroupSingleTime
-          parentInfo={feInfo}
-          sectionName="upfrontCostList"
-          itemName="singleTimeItem"
+          listParentInfo={feInfo}
+          listAsChildName="upfrontCostList"
           totalVarbName="upfrontExpenses"
           titleText="Upfront Costs"
           themeName="mgmt"

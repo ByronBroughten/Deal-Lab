@@ -1,5 +1,5 @@
 import { pick } from "lodash";
-import { Id } from "../SectionsMeta/baseSections/id";
+import { Id } from "../SectionsMeta/baseSectionsUtils/id";
 import { FeSectionInfo, VarbInfo } from "../SectionsMeta/Info";
 import { SectionName, sectionNameS } from "../SectionsMeta/SectionName";
 import { Arr } from "../utils/Arr";

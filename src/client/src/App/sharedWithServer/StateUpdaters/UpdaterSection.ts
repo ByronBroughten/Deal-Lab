@@ -1,7 +1,6 @@
 import { DbVarbs } from "../SectionPack/RawSection";
 import { SimpleSectionName } from "../SectionsMeta/baseSections";
-import { VarbValues } from "../SectionsMeta/baseSectionTypes";
-import { FeSectionInfo } from "../SectionsMeta/Info";
+import { VarbValues } from "../SectionsMeta/baseSectionsDerived/baseSectionTypes";
 import {
   ChildArrInfo,
   ChildIdArrsNarrow,
@@ -10,8 +9,9 @@ import {
   CreateChildInfo,
   DescendantType,
   FeChildInfo,
-} from "../SectionsMeta/relSectionTypes/ChildTypes";
-import { ParentNameSafe } from "../SectionsMeta/relSectionTypes/ParentTypes";
+} from "../SectionsMeta/childSectionsDerived/ChildTypes";
+import { ParentNameSafe } from "../SectionsMeta/childSectionsDerived/ParentTypes";
+import { FeSectionInfo } from "../SectionsMeta/Info";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { GetterSectionProps } from "../StateGetters/Bases/GetterSectionBase";
 import { InitRawFeSectionProps } from "../StateSections/initRawSection";

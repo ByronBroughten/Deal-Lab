@@ -1,25 +1,25 @@
 import { cloneDeep } from "lodash";
 import {
+  FeVarbInfo,
+  LocalRelVarbInfo,
+  MultiVarbInfo,
+  VarbNames,
+} from "../SectionsMeta/baseSectionsDerived/baseVarbInfo";
+import {
   InEntity,
   InEntityVarbInfo,
   OutEntity,
-} from "../SectionsMeta/baseSections/baseValues/entities";
-import { NumberOrQ } from "../SectionsMeta/baseSections/baseValues/NumObj";
+} from "../SectionsMeta/baseSectionsUtils/baseValues/entities";
+import { NumberOrQ } from "../SectionsMeta/baseSectionsUtils/baseValues/NumObj";
 import {
   Adornments,
   StateValueAnyKey,
   valueSchemasPlusAny,
   ValueTypesPlusAny,
-} from "../SectionsMeta/baseSections/StateVarbTypes";
+} from "../SectionsMeta/baseSectionsUtils/StateVarbTypes";
 import { InfoS, VarbInfo } from "../SectionsMeta/Info";
-import {
-  FeVarbInfo,
-  LocalRelVarbInfo,
-  MultiVarbInfo,
-  VarbNames,
-} from "../SectionsMeta/relSections/rel/relVarbInfoTypes";
-import { UniqueIdMixedVarbInfo } from "../SectionsMeta/relSections/rel/uniqueIdInfo";
-import { ValueTypeName } from "../SectionsMeta/relSections/rel/valueMetaTypes";
+import { UniqueIdMixedVarbInfo } from "../SectionsMeta/relSectionsUtils/rel/uniqueIdInfo";
+import { ValueTypeName } from "../SectionsMeta/relSectionsUtils/rel/valueMetaTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { InUpdatePack, VarbMeta } from "../SectionsMeta/VarbMeta";
 import { RawFeVarb } from "../StateSections/StateSectionsTypes";

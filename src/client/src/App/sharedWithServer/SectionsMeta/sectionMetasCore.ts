@@ -4,7 +4,10 @@ import {
   SimpleSectionName,
   simpleSectionNames,
 } from "./baseSections";
-import { BasePropName, GeneralBaseSection } from "./baseSections/baseSection";
+import {
+  BasePropName,
+  GeneralBaseSection,
+} from "./baseSectionsUtils/baseSection";
 import {
   GeneralGeneratedSection,
   generatedSections,
@@ -12,7 +15,7 @@ import {
   GenPropName,
 } from "./generatedSections";
 import { relSections, RelSections } from "./relSections";
-import { GeneralRelSection, RelPropName } from "./relSections/rel/relSection";
+import { GeneralRelSection, RelPropName } from "./relSectionsUtils/relSection";
 
 type SectionMetasCoreGeneral = {
   [SN in SimpleSectionName]: GeneralRelSection &

@@ -1,7 +1,7 @@
 import { round } from "lodash";
 import { evaluate } from "mathjs";
-import { NumberOrQ } from "../../SectionsMeta/baseSections/baseValues/NumObj";
-import { NumObjUpdateFnName } from "../../SectionsMeta/baseSections/baseValues/updateFnNames";
+import { NumberOrQ } from "../../SectionsMeta/baseSectionsUtils/baseValues/NumObj";
+import { NumObjUpdateFnName } from "../../SectionsMeta/baseSectionsUtils/baseValues/updateFnNames";
 import { arithmeticOperatorsArr, mathS } from "../../utils/math";
 
 export const numObjUnits = {

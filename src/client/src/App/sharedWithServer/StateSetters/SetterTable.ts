@@ -1,6 +1,6 @@
 import { isEqual } from "lodash";
 import { DbVarbs } from "../SectionPack/RawSection";
-import { InEntityVarbInfo } from "../SectionsMeta/baseSections/baseValues/entities";
+import { InEntityVarbInfo } from "../SectionsMeta/baseSectionsUtils/baseValues/entities";
 import { GetterSection } from "../StateGetters/GetterSection";
 import { UpdaterSection } from "../StateUpdaters/UpdaterSection";
 import { Str } from "../utils/Str";

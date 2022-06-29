@@ -1,7 +1,7 @@
 import { defaultMaker } from "../defaultMaker/defaultMaker";
 import { SectionPack } from "../SectionPack/SectionPack";
+import { SpecificVarbInfo } from "../SectionsMeta/baseSectionsDerived/baseVarbInfo";
 import { VarbInfo } from "../SectionsMeta/Info";
-import { SpecificVarbInfo } from "../SectionsMeta/relSections/rel/relVarbInfoTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { GetterSections } from "../StateGetters/GetterSections";
 import { GetterVarb } from "../StateGetters/GetterVarb";

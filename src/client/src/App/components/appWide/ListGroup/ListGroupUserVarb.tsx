@@ -1,5 +1,5 @@
+import { ChildName } from "../../../sharedWithServer/SectionsMeta/childSectionsDerived/ChildTypes";
 import { FeParentInfo } from "../../../sharedWithServer/SectionsMeta/Info";
-import { ChildName } from "../../../sharedWithServer/SectionsMeta/relSectionTypes/ChildTypes";
 import { SectionName } from "../../../sharedWithServer/SectionsMeta/SectionName";
 import { ThemeName } from "../../../theme/Theme";
 import { VarbListUserVarbs } from "../VarbLists/VarbListUserVarbs";

@@ -1,5 +1,5 @@
 import { SectionPack, ServerSectionPack } from "../SectionPack/SectionPack";
-import { DbSectionName } from "../SectionsMeta/relNameArrs/storeArrs";
+import { DbSectionName } from "../SectionsMeta/relSectionsDerived/relNameArrs/storeArrs";
 import { SectionName } from "../SectionsMeta/SectionName";
 
 export const makeReq = <B extends QueryObj>(body: B): MakeReq<B> => ({ body });

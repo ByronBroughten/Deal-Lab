@@ -4,7 +4,7 @@ import {
   ChildIdArrsWide,
   ChildName,
   DbChildInfo,
-} from "../../SectionsMeta/relSectionTypes/ChildTypes";
+} from "../../SectionsMeta/childSectionsDerived/ChildTypes";
 import { SectionName, sectionNameS } from "../../SectionsMeta/SectionName";
 import {
   GetterSectionBase,

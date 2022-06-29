@@ -1,4 +1,4 @@
-import { ongoingStuff } from "../../../../sharedWithServer/SectionsMeta/baseSections/switchNames";
+import { ongoingStuff } from "../../../../sharedWithServer/SectionsMeta/baseSectionsUtils/switchNames";
 import { useSetterSection } from "../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import LabeledEquation from "../../ListGroup/ListGroupShared/ListItemValue/LabeledEquation";
 import LabeledSpanOverCost from "../../ListGroup/ListGroupShared/ListItemValue/LabeledSpanOverCost";

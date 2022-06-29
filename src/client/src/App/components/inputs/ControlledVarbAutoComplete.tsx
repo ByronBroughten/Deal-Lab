@@ -1,6 +1,6 @@
 import { isEqual } from "lodash";
 import React from "react";
-import { InEntityVarbInfo } from "../../sharedWithServer/SectionsMeta/baseSections/baseValues/entities";
+import { InEntityVarbInfo } from "../../sharedWithServer/SectionsMeta/baseSectionsUtils/baseValues/entities";
 import { VarbStringInfo } from "../../sharedWithServer/SectionsMeta/Info";
 import { useVariableSections } from "../../sharedWithServer/stateClassHooks/useVariableOptions";
 import { VariableOption } from "../../sharedWithServer/StateEntityGetters/VariableGetterSections";

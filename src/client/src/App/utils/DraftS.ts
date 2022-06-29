@@ -6,7 +6,7 @@ import {
   RawDraftEntityRange,
   SelectionState,
 } from "draft-js";
-import { EntityMapData } from "../sharedWithServer/SectionsMeta/baseSections/baseValues/entities";
+import { EntityMapData } from "../sharedWithServer/SectionsMeta/baseSectionsUtils/baseValues/entities";
 import { Arr } from "../sharedWithServer/utils/Arr";
 
 export type EntityMap = Record<

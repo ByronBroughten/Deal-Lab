@@ -1,14 +1,14 @@
 import { Obj } from "../utils/Obj";
 import { SimpleSectionName, simpleSectionNames } from "./baseSections";
-import { tableSourceParams } from "./relNameArrs/tableStoreArrs";
 import {
   sectionChildNamesToType,
   sectionChildTypesToNames,
-} from "./relSectionTypes/ChildTypes";
+} from "./childSectionsDerived/ChildTypes";
 import {
   sectionParentNames,
   SectionToParentNameArrs,
-} from "./relSectionTypes/ParentTypes";
+} from "./childSectionsDerived/ParentTypes";
+import { tableSourceParams } from "./relSectionsDerived/relNameArrs/tableStoreArrs";
 
 export const allNull = simpleSectionNames.reduce((allNull, sectionName) => {
   allNull[sectionName] = null;

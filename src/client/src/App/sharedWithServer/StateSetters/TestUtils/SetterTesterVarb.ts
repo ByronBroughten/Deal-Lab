@@ -1,4 +1,4 @@
-import { VarbNames } from "../../SectionsMeta/relSections/rel/relVarbInfoTypes";
+import { VarbNames } from "../../SectionsMeta/baseSectionsDerived/baseVarbInfo";
 import { SectionName } from "../../SectionsMeta/SectionName";
 import { GetterVarb } from "../../StateGetters/GetterVarb";
 import { SetterVarb } from "../SetterVarb";

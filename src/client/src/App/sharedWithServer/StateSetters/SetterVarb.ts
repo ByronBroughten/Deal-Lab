@@ -2,10 +2,10 @@ import { ContentState, EditorState } from "draft-js";
 import {
   InEntityVarbInfo,
   InVarbInfo,
-} from "../SectionsMeta/baseSections/baseValues/entities";
-import { StateValue } from "../SectionsMeta/baseSections/baseValues/StateValueTypes";
-import { ValueTypesPlusAny } from "../SectionsMeta/baseSections/StateVarbTypes";
-import { ValueTypeName } from "../SectionsMeta/relSections/rel/valueMetaTypes";
+} from "../SectionsMeta/baseSectionsUtils/baseValues/entities";
+import { StateValue } from "../SectionsMeta/baseSectionsUtils/baseValues/StateValueTypes";
+import { ValueTypesPlusAny } from "../SectionsMeta/baseSectionsUtils/StateVarbTypes";
+import { ValueTypeName } from "../SectionsMeta/relSectionsUtils/rel/valueMetaTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { VarbMeta } from "../SectionsMeta/VarbMeta";
 import { GetterSections } from "../StateGetters/GetterSections";

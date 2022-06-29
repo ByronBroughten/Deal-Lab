@@ -1,13 +1,13 @@
 import { omit } from "lodash";
 import { Obj } from "../utils/Obj";
-import { base } from "./baseSections/base";
+import { base } from "./baseSectionsUtils/base";
 import {
   baseSection,
   baseSectionS,
   GeneralBaseSection,
-} from "./baseSections/baseSection";
-import { baseVarbs } from "./baseSections/baseVarbs";
-import { switchEndings } from "./baseSections/switchNames";
+} from "./baseSectionsUtils/baseSection";
+import { baseVarbs } from "./baseSectionsUtils/baseVarbs";
+import { switchEndings } from "./baseSectionsUtils/switchNames";
 
 export const loanVarbsNotInFinancing = [
   "interestRatePercentMonthly",

@@ -6,7 +6,7 @@ import {
 import {
   ChildName,
   ChildType,
-} from "../SectionsMeta/relSectionTypes/ChildTypes";
+} from "../SectionsMeta/childSectionsDerived/ChildTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
 import {
   GetterSectionBase,

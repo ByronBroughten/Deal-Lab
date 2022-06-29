@@ -3,7 +3,7 @@ import {
   SectionPackArrReq,
 } from "../../sharedWithServer/apiQueriesShared/makeReqAndRes";
 import { SectionPack } from "../../sharedWithServer/SectionPack/SectionPack";
-import { DbSectionName } from "../../sharedWithServer/SectionsMeta/relNameArrs/storeArrs";
+import { DbSectionName } from "../../sharedWithServer/SectionsMeta/relSectionsDerived/relNameArrs/storeArrs";
 import { ApiQuerierBase, ApiQuerierBaseProps } from "./Bases/ApiQuerierBase";
 
 interface SectionArrQuerierProps<SN extends DbSectionName<"arrStore">>

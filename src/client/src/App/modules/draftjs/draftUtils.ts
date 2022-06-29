@@ -4,7 +4,7 @@ import {
   EditorState,
   RawDraftContentState,
 } from "draft-js";
-import { NumObj } from "../../sharedWithServer/SectionsMeta/baseSections/baseValues/NumObj";
+import { NumObj } from "../../sharedWithServer/SectionsMeta/baseSectionsUtils/baseValues/NumObj";
 import { RawEditorState } from "../../utils/DraftS";
 
 export default function getNewRawContent() {

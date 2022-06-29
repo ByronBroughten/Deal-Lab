@@ -10,13 +10,13 @@ import {
   numObjToRawContent,
 } from "../../modules/draftjs/draftUtils";
 import { EntityMap, EntityRanges, RawEditorState } from "../../utils/DraftS";
-import { InEntities } from "../SectionsMeta/baseSections/baseValues/entities";
+import { InEntities } from "../SectionsMeta/baseSectionsUtils/baseValues/entities";
 import {
   EntitiesAndEditorText,
   NumObj,
-} from "../SectionsMeta/baseSections/baseValues/NumObj";
-import { isEditorUpdateFnName } from "../SectionsMeta/baseSections/baseValues/StateValueTypes";
-import { EditorValueTypeName } from "../SectionsMeta/relSections/rel/valueMetaTypes";
+} from "../SectionsMeta/baseSectionsUtils/baseValues/NumObj";
+import { isEditorUpdateFnName } from "../SectionsMeta/baseSectionsUtils/baseValues/StateValueTypes";
+import { EditorValueTypeName } from "../SectionsMeta/relSectionsUtils/rel/valueMetaTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { GetterVarbBase } from "../StateGetters/Bases/GetterVarbBase";
 import { GetterVarb } from "../StateGetters/GetterVarb";

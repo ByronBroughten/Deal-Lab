@@ -2,7 +2,7 @@ import { z } from "zod";
 import {
   ChildName,
   ChildType,
-} from "../SectionsMeta/relSectionTypes/ChildTypes";
+} from "../SectionsMeta/childSectionsDerived/ChildTypes";
 import {
   SectionName,
   sectionNameS,

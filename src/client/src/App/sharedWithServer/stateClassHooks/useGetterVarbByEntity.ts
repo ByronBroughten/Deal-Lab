@@ -1,4 +1,4 @@
-import { InEntityVarbInfo } from "../SectionsMeta/baseSections/baseValues/entities";
+import { InEntityVarbInfo } from "../SectionsMeta/baseSectionsUtils/baseValues/entities";
 import { GetterSections } from "../StateGetters/GetterSections";
 import { useSectionsContext } from "./useSections";
 

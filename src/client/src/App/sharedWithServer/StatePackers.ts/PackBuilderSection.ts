@@ -1,10 +1,10 @@
 import { ChildArrPack, SectionPack } from "../SectionPack/SectionPack";
-import { FeSectionInfo } from "../SectionsMeta/Info";
 import {
   ChildName,
   ChildType,
   FeChildInfo,
-} from "../SectionsMeta/relSectionTypes/ChildTypes";
+} from "../SectionsMeta/childSectionsDerived/ChildTypes";
+import { FeSectionInfo } from "../SectionsMeta/Info";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { UpdaterSectionBase } from "../StateUpdaters/bases/updaterSectionBase";
 import {

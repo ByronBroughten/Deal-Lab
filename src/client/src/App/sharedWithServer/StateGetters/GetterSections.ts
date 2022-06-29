@@ -1,12 +1,12 @@
 import { sectionsMeta, SectionsMeta } from "../SectionsMeta";
 import { SimpleSectionName } from "../SectionsMeta/baseSections";
-import { NumObj } from "../SectionsMeta/baseSections/baseValues/NumObj";
-import { DbSectionInfo } from "../SectionsMeta/DbSectionInfo";
-import { FeSectionInfo, VarbInfo } from "../SectionsMeta/Info";
 import {
   SpecificSectionInfo,
   SpecificVarbInfo,
-} from "../SectionsMeta/relSections/rel/relVarbInfoTypes";
+} from "../SectionsMeta/baseSectionsDerived/baseVarbInfo";
+import { NumObj } from "../SectionsMeta/baseSectionsUtils/baseValues/NumObj";
+import { DbSectionInfo } from "../SectionsMeta/baseSectionsUtils/DbSectionInfo";
+import { FeSectionInfo, VarbInfo } from "../SectionsMeta/Info";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { GetterSectionsBase } from "./Bases/GetterSectionsBase";
 import { GetterList } from "./GetterList";

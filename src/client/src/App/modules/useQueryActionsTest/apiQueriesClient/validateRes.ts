@@ -7,8 +7,8 @@ import {
   SectionPackRes,
 } from "../../../sharedWithServer/apiQueriesShared/makeReqAndRes";
 import { isSectionPack } from "../../../sharedWithServer/SectionPack/SectionPack";
-import { Id } from "../../../sharedWithServer/SectionsMeta/baseSections/id";
-import { savableNameS } from "../../../sharedWithServer/SectionsMeta/relNameArrs/storeArrs";
+import { Id } from "../../../sharedWithServer/SectionsMeta/baseSectionsUtils/id";
+import { savableNameS } from "../../../sharedWithServer/SectionsMeta/relSectionsDerived/relNameArrs/storeArrs";
 import { Obj } from "../../../sharedWithServer/utils/Obj";
 
 export function validateDbIdRes(res: AxiosResponse<unknown>): DbIdRes {

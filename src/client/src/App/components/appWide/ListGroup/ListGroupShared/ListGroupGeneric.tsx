@@ -1,14 +1,18 @@
 import { ReactNode } from "react";
 import { MdOutlinePlaylistAdd } from "react-icons/md";
 import styled, { css } from "styled-components";
-import { FeSectionInfo } from "../../../../sharedWithServer/SectionsMeta/Info";
 import {
+  ChildName,
   ChildType,
   ChildTypeName,
-} from "../../../../sharedWithServer/SectionsMeta/relSectionTypes/ChildTypes";
-import { ParentName } from "../../../../sharedWithServer/SectionsMeta/relSectionTypes/ParentTypes";
-import { SectionName } from "../../../../sharedWithServer/SectionsMeta/SectionName";
+} from "../../../../sharedWithServer/SectionsMeta/childSectionsDerived/ChildTypes";
+import { FeSectionInfo } from "../../../../sharedWithServer/SectionsMeta/Info";
+import {
+  ParentOfTypeName,
+  SectionName,
+} from "../../../../sharedWithServer/SectionsMeta/SectionName";
 import { useSetterSection } from "../../../../sharedWithServer/stateClassHooks/useSetterSection";
+import { GetterSection } from "../../../../sharedWithServer/StateGetters/GetterSection";
 import ccs from "../../../../theme/cssChunks";
 import theme, { ThemeName } from "../../../../theme/Theme";
 import useHowMany from "../../customHooks/useHowMany";
@@ -29,24 +33,27 @@ import { ListGroupTotal } from "./ListGroupGeneric/ListGroupTotal";
 // SN extends HasChild<"varbListAllowed">
 // childName: ChildTypeName<SN, SectionName<"varbListAllowed">>
 
+type ListParentName = ParentOfTypeName<"varbListAllowed">;
+
+// ChildTypeName should produce the names of the children that
+// are of the entered sectionType
+type Test2 = ChildTypeName<ListParentName, "varbListAllowed">;
+// instead, it's producing SectionName<"varbListAllowed">
+
 type Props<
-  PN extends ParentName<SectionName<"varbListAllowed">> = ParentName<
-    SectionName<"varbListAllowed">
-  >,
-  CN extends ChildTypeName<PN, "varbListAllowed"> = ChildTypeName<
-    PN,
-    "varbListAllowed"
-  >,
-  SN extends ChildType<PN, CN> = ChildType<PN, CN>
+  SN extends ListParentName,
+  CN extends ChildTypeName<SN, "varbListAllowed">
 > = {
   themeName: ThemeName;
-  parentInfo: FeSectionInfo<PN>;
-  listChildName: ChildTypeName<PN, "varbListAllowed">;
+  listParentInfo: FeSectionInfo<SN>;
+  listChildName: CN;
   makeListNode: ({
     feInfo,
     themeName,
     key,
-  }: MakeListNodeProps<SN & SectionName<"varbListAllowed">>) => ReactNode;
+  }: MakeListNodeProps<
+    ChildType<SN, CN> & SectionName<"varbListAllowed">
+  >) => ReactNode;
   titleText: string;
   totalVarbName?: string;
   className?: string;
@@ -59,20 +66,26 @@ export type MakeListNodeProps<SN extends SectionName<"varbListAllowed">> = {
   key: string;
 };
 
-export function ListGroupGeneric({
+export function ListGroupGeneric<
+  SN extends ListParentName,
+  CN extends ChildTypeName<SN, "varbListAllowed">
+>({
   themeName,
-  parentInfo,
+  listParentInfo,
   listChildName,
   makeListNode,
   titleText,
   totalVarbName,
   className,
-}: Props) {
-  const parent = useSetterSection(parentInfo);
-  const lists = parent.get.children(listChildName);
+}: Props<SN, CN>) {
+  const parent = useSetterSection(listParentInfo);
+  const lists = parent.get.children(
+    listChildName
+  ) as GetterSection<any>[] as GetterSection<ChildType<SN, CN>>[];
 
   const numListsWithItems = lists.reduce<number>((num, list) => {
-    const childIds = list.childFeIds(list.meta.varbListItem);
+    const itemName = list.meta.varbListItem as ChildName<ChildType<SN, CN>>;
+    const childIds = list.childFeIds(itemName);
     if (childIds.length > 0) num++;
     return num;
   }, 0);

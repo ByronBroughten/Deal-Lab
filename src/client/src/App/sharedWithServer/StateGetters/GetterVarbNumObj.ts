@@ -1,12 +1,12 @@
 import { round } from "lodash";
 import { evaluate } from "mathjs";
-import { InEntity } from "../SectionsMeta/baseSections/baseValues/entities";
+import { InEntity } from "../SectionsMeta/baseSectionsUtils/baseValues/entities";
 import {
   EntitiesAndEditorText,
   NumberOrQ,
   NumObj,
-} from "../SectionsMeta/baseSections/baseValues/NumObj";
-import { isNumObjUpdateFnName } from "../SectionsMeta/baseSections/baseValues/updateFnNames";
+} from "../SectionsMeta/baseSectionsUtils/baseValues/NumObj";
+import { isNumObjUpdateFnName } from "../SectionsMeta/baseSectionsUtils/baseValues/updateFnNames";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { Arr } from "../utils/Arr";
 import { arithmeticOperatorsArr, mathS } from "../utils/math";

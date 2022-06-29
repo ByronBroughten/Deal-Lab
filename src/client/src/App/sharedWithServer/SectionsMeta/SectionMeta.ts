@@ -1,7 +1,6 @@
 import { DbVarbs } from "../SectionPack/RawSection";
 import { Obj } from "../utils/Obj";
 import { SimpleSectionName } from "./baseSections";
-import { relSections } from "./relSections";
 import {
   ChildIdArrsNarrow,
   ChildIdArrsWide,
@@ -12,7 +11,9 @@ import {
   ChildTypesToNames,
   sectionChildNamesToType,
   sectionChildTypesToNames,
-} from "./relSectionTypes/ChildTypes";
+  sectionToChildNames,
+} from "./childSectionsDerived/ChildTypes";
+import { relSections } from "./relSections";
 import {
   CorePropName,
   sectionMetasCore,
@@ -78,12 +79,12 @@ export class SectionMeta<SN extends SimpleSectionName> {
     return this.prop("parentNames");
   }
   get childNames(): ChildName<SN>[] {
-    return Obj.keys(this.prop("children")) as string[] as ChildName<SN>[];
+    return sectionToChildNames[this.sectionName] as ChildName<SN>[];
   }
   get childNamesToTypes(): ChildNamesToTypes<SN> {
-    return sectionChildNamesToType[this.sectionName] as {
-      [key: string]: string;
-    } as ChildNamesToTypes<SN>;
+    return sectionChildNamesToType[
+      this.sectionName
+    ] as any as ChildNamesToTypes<SN>;
   }
   isChildType(sectionName: SectionName): sectionName is ChildType<SN> {
     return this.childTypes.includes(sectionName as any);

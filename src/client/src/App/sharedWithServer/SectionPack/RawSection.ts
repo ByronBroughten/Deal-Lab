@@ -1,11 +1,11 @@
 import { z } from "zod";
-import { zValue } from "../SectionsMeta/baseSections/baseValues";
-import { DbValue } from "../SectionsMeta/relSections/rel/valueMetaTypes";
+import { zValue } from "../SectionsMeta/baseSectionsUtils/baseValues";
 import {
   ChildIdArrsWide,
   GeneralChildIdArrs,
   SelfOrDescendantType,
-} from "../SectionsMeta/relSectionTypes/ChildTypes";
+} from "../SectionsMeta/childSectionsDerived/ChildTypes";
+import { DbValue } from "../SectionsMeta/relSectionsUtils/rel/valueMetaTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { zodSchema } from "../utils/zod";
 export type DbVarbs = {

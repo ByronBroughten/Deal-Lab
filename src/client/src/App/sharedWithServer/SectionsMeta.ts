@@ -1,14 +1,14 @@
 import { pick } from "lodash";
 import { sectionContext, SimpleSectionName } from "./SectionsMeta/baseSections";
-import { RelativeIds } from "./SectionsMeta/baseSections/id";
 import {
   OutRelVarbInfo,
   VarbNames,
-} from "./SectionsMeta/relSections/rel/relVarbInfoTypes";
+} from "./SectionsMeta/baseSectionsDerived/baseVarbInfo";
+import { RelativeIds } from "./SectionsMeta/baseSectionsUtils/relativeIdInfo";
 import {
   DescendantType,
   SelfOrDescendantType,
-} from "./SectionsMeta/relSectionTypes/ChildTypes";
+} from "./SectionsMeta/childSectionsDerived/ChildTypes";
 import { SectionMeta } from "./SectionsMeta/SectionMeta";
 import { SectionName, sectionNameS } from "./SectionsMeta/SectionName";
 import {

@@ -1,12 +1,12 @@
 import { pick } from "lodash";
 import { DbVarbs } from "../SectionPack/RawSection";
 import { sectionsMeta } from "../SectionsMeta";
-import { StateValue } from "../SectionsMeta/baseSections/baseValues/StateValueTypes";
-import { Id } from "../SectionsMeta/baseSections/id";
+import { VarbNames } from "../SectionsMeta/baseSectionsDerived/baseVarbInfo";
+import { StateValue } from "../SectionsMeta/baseSectionsUtils/baseValues/StateValueTypes";
+import { Id } from "../SectionsMeta/baseSectionsUtils/id";
+import { ChildIdArrsNarrow } from "../SectionsMeta/childSectionsDerived/ChildTypes";
 import { FeSectionInfo, VarbInfo } from "../SectionsMeta/Info";
-import { VarbNames } from "../SectionsMeta/relSections/rel/relVarbInfoTypes";
-import { DbValue } from "../SectionsMeta/relSections/rel/valueMetaTypes";
-import { ChildIdArrsNarrow } from "../SectionsMeta/relSectionTypes/ChildTypes";
+import { DbValue } from "../SectionsMeta/relSectionsUtils/rel/valueMetaTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { StrictPick, StrictPickPartial } from "../utils/types";
 import { RawFeSection, RawFeVarb, RawFeVarbs } from "./StateSectionsTypes";

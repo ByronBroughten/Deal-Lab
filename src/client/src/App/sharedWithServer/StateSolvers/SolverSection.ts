@@ -1,12 +1,12 @@
 import { SectionPack } from "../SectionPack/SectionPack";
-import { Id } from "../SectionsMeta/baseSections/id";
-import { VarbValues } from "../SectionsMeta/baseSectionTypes";
-import { FeSectionInfo } from "../SectionsMeta/Info";
+import { VarbValues } from "../SectionsMeta/baseSectionsDerived/baseSectionTypes";
+import { Id } from "../SectionsMeta/baseSectionsUtils/id";
 import {
   ChildName,
   ChildType,
   FeChildInfo,
-} from "../SectionsMeta/relSectionTypes/ChildTypes";
+} from "../SectionsMeta/childSectionsDerived/ChildTypes";
+import { FeSectionInfo } from "../SectionsMeta/Info";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { GetterSectionProps } from "../StateGetters/Bases/GetterSectionBase";
 import { GetterSection } from "../StateGetters/GetterSection";

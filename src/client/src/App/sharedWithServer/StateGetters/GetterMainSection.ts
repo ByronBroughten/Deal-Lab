@@ -1,5 +1,5 @@
-import { InEntityVarbInfo } from "../SectionsMeta/baseSections/baseValues/entities";
-import { FeVarbInfo } from "../SectionsMeta/relSections/rel/relVarbInfoTypes";
+import { FeVarbInfo } from "../SectionsMeta/baseSectionsDerived/baseVarbInfo";
+import { InEntityVarbInfo } from "../SectionsMeta/baseSectionsUtils/baseValues/entities";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { GetterSection } from "./GetterSection";
 

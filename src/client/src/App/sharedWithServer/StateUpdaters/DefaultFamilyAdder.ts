@@ -1,7 +1,7 @@
 import { defaultMaker } from "../defaultMaker/defaultMaker";
+import { ChildName } from "../SectionsMeta/childSectionsDerived/ChildTypes";
+import { ParentNameSafe } from "../SectionsMeta/childSectionsDerived/ParentTypes";
 import { FeSectionInfo } from "../SectionsMeta/Info";
-import { ChildName } from "../SectionsMeta/relSectionTypes/ChildTypes";
-import { ParentNameSafe } from "../SectionsMeta/relSectionTypes/ParentTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { PackLoaderSection } from "../StatePackers.ts/PackLoaderSection";
 import { UpdaterSectionBase } from "./bases/updaterSectionBase";

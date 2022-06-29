@@ -1,4 +1,4 @@
-import { SpecificIdInfo } from "../SectionsMeta/baseSections/id";
+import { SpecificIdInfo } from "../SectionsMeta/baseSectionsUtils/relativeIdInfo";
 import { SectionName } from "../SectionsMeta/SectionName";
 import {
   RawFeSection,

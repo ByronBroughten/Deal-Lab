@@ -1,14 +1,14 @@
-import calculations, {
-  isCalculationName,
-  NumberProps,
-} from "../SectionsMeta/baseSections/baseValues/calculations";
-import { NumObj } from "../SectionsMeta/baseSections/baseValues/NumObj";
-import { InfoS } from "../SectionsMeta/Info";
 import {
   DbVarbInfo,
   RelVarbInfo,
-} from "../SectionsMeta/relSections/rel/relVarbInfoTypes";
-import { UpdateFnProps } from "../SectionsMeta/relSections/rel/relVarbTypes";
+} from "../SectionsMeta/baseSectionsDerived/baseVarbInfo";
+import calculations, {
+  isCalculationName,
+  NumberProps,
+} from "../SectionsMeta/baseSectionsUtils/baseValues/calculations";
+import { NumObj } from "../SectionsMeta/baseSectionsUtils/baseValues/NumObj";
+import { InfoS } from "../SectionsMeta/Info";
+import { UpdateFnProps } from "../SectionsMeta/relSectionsUtils/rel/relVarbTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { GetterSectionProps } from "../StateGetters/Bases/GetterSectionBase";
 import { GetterVarbBase } from "../StateGetters/Bases/GetterVarbBase";

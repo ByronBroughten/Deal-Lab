@@ -1,16 +1,16 @@
 import {
+  InRelVarbInfo,
+  MultiVarbInfo,
+} from "../SectionsMeta/baseSectionsDerived/baseVarbInfo";
+import {
   entityS,
   InEntity,
   InEntityVarbInfo,
   InVarbInfo,
   OutEntity,
-} from "../SectionsMeta/baseSections/baseValues/entities";
-import { StateValue } from "../SectionsMeta/baseSections/baseValues/StateValueTypes";
-import { Id } from "../SectionsMeta/baseSections/id";
-import {
-  InRelVarbInfo,
-  MultiVarbInfo,
-} from "../SectionsMeta/relSections/rel/relVarbInfoTypes";
+} from "../SectionsMeta/baseSectionsUtils/baseValues/entities";
+import { StateValue } from "../SectionsMeta/baseSectionsUtils/baseValues/StateValueTypes";
+import { Id } from "../SectionsMeta/baseSectionsUtils/id";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { GetterSections } from "../StateGetters/GetterSections";
 import { GetterVarb } from "../StateGetters/GetterVarb";

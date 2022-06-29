@@ -1,29 +1,16 @@
-import { SwitchTargetKey } from "../SectionsMeta/baseSections/baseSwitchNames";
-import { ValueTypesPlusAny } from "../SectionsMeta/baseSections/StateVarbTypes";
+import { FeMixedInfo } from "../SectionsMeta/baseSectionsDerived/baseSectionInfo";
 import {
-  SwitchEndingKey,
-  switchNames,
-} from "../SectionsMeta/baseSections/switchNames";
-import { DbSectionInfo } from "../SectionsMeta/DbSectionInfo";
-import {
-  FeParentInfo,
-  FeParentInfoSafe,
-  FeSectionInfo,
-  InfoS,
-  noParentWarning,
-  VarbInfo,
-} from "../SectionsMeta/Info";
-import {
-  FeNameInfo,
   MultiFindByFocalInfo,
   MultiSectionInfo,
   RelSectionInfo,
-} from "../SectionsMeta/relSections/rel/relVarbInfoTypes";
+} from "../SectionsMeta/baseSectionsDerived/baseVarbInfo";
+import { SwitchTargetKey } from "../SectionsMeta/baseSectionsUtils/baseSwitchNames";
+import { DbSectionInfo } from "../SectionsMeta/baseSectionsUtils/DbSectionInfo";
+import { ValueTypesPlusAny } from "../SectionsMeta/baseSectionsUtils/StateVarbTypes";
 import {
-  UniqueIdMixedInfo,
-  UniqueIdType,
-} from "../SectionsMeta/relSections/rel/uniqueIdInfo";
-import { ValueTypeName } from "../SectionsMeta/relSections/rel/valueMetaTypes";
+  SwitchEndingKey,
+  switchNames,
+} from "../SectionsMeta/baseSectionsUtils/switchNames";
 import {
   ChildIdArrsWide,
   ChildName,
@@ -33,11 +20,24 @@ import {
   FeChildInfo,
   GeneralChildIdArrs,
   SelfAndDescendantIds,
-} from "../SectionsMeta/relSectionTypes/ChildTypes";
+} from "../SectionsMeta/childSectionsDerived/ChildTypes";
 import {
   ParentName,
   ParentNameSafe,
-} from "../SectionsMeta/relSectionTypes/ParentTypes";
+} from "../SectionsMeta/childSectionsDerived/ParentTypes";
+import {
+  FeParentInfo,
+  FeParentInfoSafe,
+  FeSectionInfo,
+  InfoS,
+  noParentWarning,
+  VarbInfo,
+} from "../SectionsMeta/Info";
+import {
+  UniqueIdMixedInfo,
+  UniqueIdType,
+} from "../SectionsMeta/relSectionsUtils/rel/uniqueIdInfo";
+import { ValueTypeName } from "../SectionsMeta/relSectionsUtils/rel/valueMetaTypes";
 import { SectionMeta } from "../SectionsMeta/SectionMeta";
 import {
   SectionName,
@@ -52,16 +52,6 @@ import { GetterList } from "./GetterList";
 import { GetterSections } from "./GetterSections";
 import { GetterVarb } from "./GetterVarb";
 import { GetterVarbs } from "./GetterVarbs";
-
-type GetterChildByType<
-  SN extends SectionName,
-  CT extends ChildType<SN>
-> = GetterSection<CT>;
-
-type GetterChild<
-  SN extends SectionName,
-  CN extends ChildName<SN>
-> = GetterSection<ChildType<SN>>;
 
 export class GetterSection<
   SN extends SectionName = SectionName
@@ -164,7 +154,7 @@ export class GetterSection<
       sectionName: this.sectionName,
     };
   }
-  get feInfoMixed(): FeNameInfo<SN> {
+  get feInfoMixed(): FeMixedInfo<SN> {
     return {
       id: this.feId,
       idType: "feId",

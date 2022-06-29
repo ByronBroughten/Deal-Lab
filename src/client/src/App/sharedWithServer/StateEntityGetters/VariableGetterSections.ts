@@ -1,6 +1,6 @@
 import { sectionsMeta } from "../SectionsMeta";
-import { switchVarbNames } from "../SectionsMeta/baseSections/baseSwitchNames";
-import { InEntityVarbInfo } from "../SectionsMeta/baseSections/baseValues/entities";
+import { switchVarbNames } from "../SectionsMeta/baseSectionsUtils/baseSwitchNames";
+import { InEntityVarbInfo } from "../SectionsMeta/baseSectionsUtils/baseValues/entities";
 import { SectionName, sectionNameS } from "../SectionsMeta/SectionName";
 import { GetterSectionsBase } from "../StateGetters/Bases/GetterSectionsBase";
 import { GetterSections } from "../StateGetters/GetterSections";

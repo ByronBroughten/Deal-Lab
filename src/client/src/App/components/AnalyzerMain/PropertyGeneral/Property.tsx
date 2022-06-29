@@ -35,9 +35,8 @@ export default function Property({ feId }: { feId: string }) {
           themeName="property"
         />
         <ListGroupSingleTime
-          parentInfo={feInfo}
-          childName="upfrontCostList"
-          itemName="singleTimeItem"
+          listParentInfo={feInfo}
+          listAsChildName="upfrontCostList"
           totalVarbName="upfrontExpenses"
           titleText="Upfront Costs"
           themeName="property"

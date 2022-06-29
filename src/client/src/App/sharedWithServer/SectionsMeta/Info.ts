@@ -1,11 +1,10 @@
-import { InEntityVarbInfo } from "./baseSections/baseValues/entities";
-import { StateValue } from "./baseSections/baseValues/StateValueTypes";
-import { Id } from "./baseSections/id";
 import {
-  DbNameInfo,
+  DbMixedInfo,
+  FeMixedInfo,
+} from "./baseSectionsDerived/baseSectionInfo";
+import {
   DbUserDefInfo,
   DbUserDefVarbInfo,
-  FeNameInfo,
   FeVarbInfo,
   MultiFindByFocalInfo,
   MultiSectionInfo,
@@ -13,18 +12,26 @@ import {
   RelInfoStatic,
   RelVarbInfoStatic,
   SpecificSectionInfo,
-} from "./relSections/rel/relVarbInfoTypes";
+} from "./baseSectionsDerived/baseVarbInfo";
+import { InEntityVarbInfo } from "./baseSectionsUtils/baseValues/entities";
+import { StateValue } from "./baseSectionsUtils/baseValues/StateValueTypes";
+import { Id } from "./baseSectionsUtils/id";
 import {
   DescendantType,
   SelfOrDescendantType,
-} from "./relSectionTypes/ChildTypes";
-import { ParentName, ParentNameSafe } from "./relSectionTypes/ParentTypes";
-import { FeSectionNameType, SectionName, sectionNameS } from "./SectionName";
+} from "./childSectionsDerived/ChildTypes";
+import { ParentName, ParentNameSafe } from "./childSectionsDerived/ParentTypes";
+import { SectionName, sectionNameS, SectionNameType } from "./SectionName";
 
-export interface FeInfoByType<T extends FeSectionNameType = "all"> {
+export interface FeInfoByType<T extends SectionNameType = "all"> {
   sectionName: SectionName<T>;
   feId: string;
 }
+export type DbInfoByType<ST extends SectionNameType = "all"> = {
+  sectionName: SectionName<ST>;
+  dbId: string;
+};
+
 export interface FeSectionInfo<SN extends SectionName = SectionName> {
   sectionName: SN;
   feId: string;
@@ -70,7 +77,7 @@ export type VarbStringInfo = {
   idType: string;
 };
 
-export type DbInfo<T extends FeSectionNameType = "all"> = DbNameInfo<
+export type DbInfo<T extends SectionNameType = "all"> = DbMixedInfo<
   SectionName<T>
 >;
 
@@ -132,7 +139,7 @@ export const InfoS = {
       const { id, idType } = info;
       return ["feId"].includes(idType as any) || id === "static";
     },
-    db<T extends FeSectionNameType = "all">(
+    db<T extends SectionNameType = "all">(
       value: any,
       type?: T
     ): value is DbInfo<T> {
@@ -142,10 +149,10 @@ export const InfoS = {
         sectionNameS.is(value.sectionName, type)
       );
     },
-    fe<T extends FeSectionNameType = "all">(
+    fe<T extends SectionNameType = "all">(
       value: any,
       type?: T
-    ): value is FeNameInfo<SectionName<T>> {
+    ): value is FeMixedInfo<SectionName<T>> {
       return (
         value.idType === "feId" &&
         typeof value.id === "string" &&
@@ -156,19 +163,19 @@ export const InfoS = {
       return typeof value.varbName === "string" && this.fe(value, "hasVarb");
     },
     feName<S extends SectionName>(
-      feInfo: FeNameInfo,
+      feInfo: FeMixedInfo,
       sectionName: S
-    ): feInfo is FeNameInfo<S> {
+    ): feInfo is FeMixedInfo<S> {
       return feInfo.sectionName === sectionName;
     },
   },
-  fe<S extends SectionName>(sectionName: S, id: string): FeNameInfo<S> {
+  fe<S extends SectionName>(sectionName: S, id: string): FeMixedInfo<S> {
     return { sectionName, id, idType: "feId" };
   },
   feToMixed<SN extends SectionName>({
     sectionName,
     feId,
-  }: FeSectionInfo<SN>): FeNameInfo<SN> {
+  }: FeSectionInfo<SN>): FeMixedInfo<SN> {
     return {
       sectionName,
       id: feId,
@@ -184,7 +191,7 @@ export const InfoS = {
       ...this.feToMixed(rest),
     };
   },
-  db<S extends SectionName>(sectionName: S, dbId: string): DbNameInfo<S> {
+  db<S extends SectionName>(sectionName: S, dbId: string): DbMixedInfo<S> {
     return {
       sectionName,
       id: dbId,
@@ -200,7 +207,7 @@ export const InfoS = {
       throw new Error("varbInfo must be for sections that contain varbs");
     else return { ...info, sectionName, varbName } as MakeVarbInfo<I>;
   },
-  feVarbMaker(feInfo: FeNameInfo): (varbName: string) => FeVarbInfo {
+  feVarbMaker(feInfo: FeMixedInfo): (varbName: string) => FeVarbInfo {
     const { sectionName } = feInfo;
     if (sectionNameS.is(sectionName, "hasVarb"))
       return (varbName) => ({ ...feInfo, sectionName, varbName });
