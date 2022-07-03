@@ -1,18 +1,13 @@
 import { Arr } from "../../utils/Arr";
-import { Obj } from "../../utils/Obj";
 import { simpleSectionNames } from "../baseSections";
-import { HasChildSectionName } from "../childSectionsDerived/ChildTypes";
-import { relSections } from "../relSections";
+import { hasChildSectionNames } from "../childSectionsDerived/ChildName";
 import { hasStoreNameArrs, storeNameArrs } from "./relNameArrs/storeArrs";
 import { tableStoreNameArrs } from "./relNameArrs/tableStoreArrs";
 
 export const relNameArrs = {
   ...hasStoreNameArrs,
   ...storeNameArrs,
-
-  hasChild: simpleSectionNames.filter((sectionName) => {
-    return Obj.keys(relSections[sectionName].children).length > 0;
-  }) as HasChildSectionName[],
+  hasChild: hasChildSectionNames,
   ...tableStoreNameArrs,
   varbListItem: Arr.extractStrict(simpleSectionNames, [
     "singleTimeItem",

@@ -1,8 +1,6 @@
 import { z } from "zod";
-import {
-  ChildName,
-  ChildType,
-} from "../SectionsMeta/childSectionsDerived/ChildTypes";
+import { ChildName } from "../SectionsMeta/childSectionsDerived/ChildName";
+import { ChildSectionName } from "../SectionsMeta/childSectionsDerived/ChildSectionName";
 import {
   SectionName,
   sectionNameS,
@@ -19,7 +17,7 @@ export type SectionPack<SN extends SectionName = SectionName> = {
 export type ChildSectionPack<
   SN extends SectionName,
   CN extends ChildName<SN>,
-  CT extends ChildType<SN, CN> = ChildType<SN, CN>
+  CT extends ChildSectionName<SN, CN> = ChildSectionName<SN, CN>
 > = SectionPack<CT>;
 
 export type SectionPackArrs<ST extends SectionNameType> = {
@@ -33,7 +31,7 @@ export type SectionArrPack<SN extends SectionName> = {
 export type ChildArrPack<
   SN extends SectionName,
   CN extends ChildName<SN> = ChildName<SN>,
-  CT extends ChildType<SN, CN> = ChildType<SN, CN>
+  CT extends ChildSectionName<SN, CN> = ChildSectionName<SN, CN>
 > = {
   childName: CN;
   sectionPacks: SectionPack<CT>[];

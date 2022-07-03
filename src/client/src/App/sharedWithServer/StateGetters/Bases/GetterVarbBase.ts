@@ -1,3 +1,4 @@
+import { isValidVarbNames } from "../../SectionsMeta/baseSectionsDerived/baseVarbInfo";
 import { SectionName } from "../../SectionsMeta/SectionName";
 import { GetterSectionBase, GetterSectionProps } from "./GetterSectionBase";
 
@@ -12,6 +13,10 @@ export class GetterVarbBase<
   constructor({ varbName, ...props }: GetterVarbProps<SN>) {
     super(props);
     this.varbName = varbName;
+    const { sectionName } = props;
+    if (!isValidVarbNames({ sectionName, varbName })) {
+      throw new Error(`"${varbName}" is not a varbName of "${sectionName}"`);
+    }
   }
   get feVarbInfo() {
     return {

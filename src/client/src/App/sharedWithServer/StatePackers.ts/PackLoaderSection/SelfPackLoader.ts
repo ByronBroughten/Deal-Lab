@@ -4,7 +4,7 @@ import {
   ChildIdArrsWide,
   ChildName,
   DbChildInfo,
-} from "../../SectionsMeta/childSectionsDerived/ChildTypes";
+} from "../../SectionsMeta/childSectionsDerived/ChildName";
 import { SectionName, sectionNameS } from "../../SectionsMeta/SectionName";
 import {
   GetterSectionBase,
@@ -31,7 +31,7 @@ export class SelfPackLoader<
   get headRawSection(): OneRawSection<SN> {
     return this.sectionPack.rawSections[this.sectionName][0];
   }
-  updateSelfWithSectionPack() {
+  updateSelfWithSectionPack(): void {
     const { dbId, dbVarbs } = this.headRawSection;
     this.updaterSection.updateProps({
       dbId,

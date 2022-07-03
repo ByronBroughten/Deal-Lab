@@ -160,7 +160,7 @@ export const baseSections = {
     }),
     deal: baseSection(
       {
-        title: "string",
+        ...base.varbs.savableSection,
         ...base.varbs.numObj([
           "upfrontExpensesSum",
           "upfrontExpenses",

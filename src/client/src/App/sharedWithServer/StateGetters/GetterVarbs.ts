@@ -95,12 +95,11 @@ export class GetterVarbs<SN extends SectionName> extends GetterSectionBase<SN> {
     const section = this.getterSection.sectionByFocalMixed(mixedInfo);
     return section.varb(varbName);
   }
-  // it can remove the last entry just fine.
-  // It's just having trouble removing the rest.
   varbsByFocalMixed<S extends SectionName<"hasVarb">>({
     varbName,
     ...mixedInfo
   }: MultiVarbInfo<S>): GetterVarb<S>[] {
+    const { id, sectionName } = mixedInfo;
     const sections = this.getterSection.sectionsByFocalMixed(mixedInfo);
     return sections.map((section) => section.varb(varbName));
   }

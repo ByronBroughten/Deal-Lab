@@ -1,7 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 import { RawSection } from "../client/src/App/sharedWithServer/SectionPack/RawSection";
 import { SectionPack } from "../client/src/App/sharedWithServer/SectionPack/SectionPack";
-import { SelfOrDescendantType } from "../client/src/App/sharedWithServer/SectionsMeta/relSectionTypes/ChildTypes";
+import { SelfOrDescendantSectionName } from "../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DescendantSectionName";
 import { monSchemas } from "../client/src/App/sharedWithServer/utils/mongoose";
 import { ServerSectionName, serverSectionS } from "./ServerSectionName";
 
@@ -56,13 +56,13 @@ export const modelPath = {
   },
   firstSectionPackSection<PN extends ServerSectionName>(
     packName: PN,
-    sectionName: SelfOrDescendantType<PN, "db">
+    sectionName: SelfOrDescendantSectionName<PN>
   ) {
     return `${this.firstSectionPack(packName)}.rawSections.${sectionName}.0`;
   },
   firstSectionPackSectionVarb<PN extends ServerSectionName>(
     packName: PN,
-    sectionName: SelfOrDescendantType<PN, "db">,
+    sectionName: SelfOrDescendantSectionName<PN>,
     varbName: string
   ) {
     return `${this.firstSectionPackSection(

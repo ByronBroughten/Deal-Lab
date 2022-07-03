@@ -3,9 +3,9 @@ import { OneRawSection } from "../../SectionPack/RawSection";
 import { SectionPack } from "../../SectionPack/SectionPack";
 import {
   ChildName,
-  ChildType,
   DbChildInfo,
-} from "../../SectionsMeta/childSectionsDerived/ChildTypes";
+} from "../../SectionsMeta/childSectionsDerived/ChildName";
+import { ChildSectionName } from "../../SectionsMeta/childSectionsDerived/ChildSectionName";
 import { SectionName } from "../../SectionsMeta/SectionName";
 import {
   GetterSectionBase,
@@ -24,7 +24,7 @@ interface ChildPackLoaderProps<SN extends SectionName, CN extends ChildName<SN>>
 export class ChildPackLoader<
   SN extends SectionName,
   CN extends ChildName<SN>,
-  CT extends ChildType<SN, CN> = ChildType<SN, CN>
+  CT extends ChildSectionName<SN, CN> = ChildSectionName<SN, CN>
 > extends GetterSectionBase<SN> {
   sectionPack: SectionPack;
   childDbInfo: DbChildInfo<SN, CN> & { idx?: number };

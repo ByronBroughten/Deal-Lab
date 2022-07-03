@@ -3,10 +3,8 @@ import {
   ChildSectionPack,
   SectionPack,
 } from "../SectionPack/SectionPack";
-import {
-  ChildName,
-  ChildType,
-} from "../SectionsMeta/childSectionsDerived/ChildTypes";
+import { ChildName } from "../SectionsMeta/childSectionsDerived/ChildName";
+import { ChildSectionName } from "../SectionsMeta/childSectionsDerived/ChildSectionName";
 import { SectionName } from "../SectionsMeta/SectionName";
 import {
   GetterSectionBase,
@@ -57,7 +55,10 @@ export class PackLoaderSection<
       });
     }
   }
-  loadChildSectionPack<CN extends ChildName<SN>, CT extends ChildType<SN, CN>>(
+  loadChildSectionPack<
+    CN extends ChildName<SN>,
+    CT extends ChildSectionName<SN, CN>
+  >(
     { childName, sectionPack }: ChildPackInfo<SN, CN, CT>,
     options: { idx?: number } = {}
   ): void {
@@ -81,7 +82,7 @@ export type ChildSectionPackArrs<SN extends SectionName> = {
 export type ChildPackInfo<
   SN extends SectionName,
   CN extends ChildName<SN> = ChildName<SN>,
-  CT extends ChildType<SN, CN> = ChildType<SN, CN>
+  CT extends ChildSectionName<SN, CN> = ChildSectionName<SN, CN>
 > = {
   childName: CN;
   sectionPack: SectionPack<CT>;

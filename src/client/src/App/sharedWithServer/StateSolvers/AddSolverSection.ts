@@ -1,8 +1,6 @@
-import {
-  ChildName,
-  ChildType,
-} from "../SectionsMeta/childSectionsDerived/ChildTypes";
-import { ParentNameSafe } from "../SectionsMeta/childSectionsDerived/ParentTypes";
+import { ChildName } from "../SectionsMeta/childSectionsDerived/ChildName";
+import { ChildSectionName } from "../SectionsMeta/childSectionsDerived/ChildSectionName";
+import { ParentNameSafe } from "../SectionsMeta/childSectionsDerived/ParentName";
 import { FeSectionInfo } from "../SectionsMeta/Info";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { GetterSection } from "../StateGetters/GetterSection";
@@ -66,7 +64,7 @@ export class AddSolverSection<
   }
   youngestChild<CN extends ChildName<SN>>(
     childName: CN
-  ): AddSolverSection<ChildType<SN, CN>> {
+  ): AddSolverSection<ChildSectionName<SN, CN>> {
     const { feInfo } = this.get.youngestChild(childName);
     return this.addSolverSection(feInfo);
   }

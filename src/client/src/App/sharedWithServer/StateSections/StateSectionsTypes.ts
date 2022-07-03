@@ -1,6 +1,6 @@
 import { OutEntity } from "../SectionsMeta/baseSectionsUtils/baseValues/entities";
 import { StateValue } from "../SectionsMeta/baseSectionsUtils/baseValues/StateValueTypes";
-import { ChildIdArrsNarrow } from "../SectionsMeta/childSectionsDerived/ChildTypes";
+import { ChildIdArrsNarrow } from "../SectionsMeta/childSectionsDerived/ChildName";
 import { SectionName } from "../SectionsMeta/SectionName";
 
 export class SectionNotFoundError extends Error {}

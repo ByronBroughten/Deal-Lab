@@ -1,16 +1,17 @@
-import { FeSectionInfo } from "../../../sharedWithServer/SectionsMeta/Info";
 import { useSetterSection } from "../../../sharedWithServer/stateClassHooks/useSetterSection";
 import { ThemeName } from "../../../theme/Theme";
 import { VarbListGeneric } from "../ListGroup/ListGroupShared/VarbListGeneric";
 import { OngoingListItem } from "./VarbListOngoing/OngoingListItem";
 
-type Props<SN extends "ongoingList"> = {
-  feInfo: FeSectionInfo<SN>;
+type Props = {
+  feId: string;
   themeName: ThemeName;
+  className?: string;
 };
-export function VarbListOngoing(props: Props) {
+export function VarbListOngoing({ feId, ...rest }: Props) {
+  const feInfo = { sectionName: "ongoingList", feId } as const;
   const itemName = "ongoingItem";
-  const list = useSetterSection(props.feInfo);
+  const list = useSetterSection(feInfo);
   const totalVarbName = list.get.switchVarbName("total", "ongoing");
   const defaultOngoingSwitch = list
     .varb("defaultOngoingSwitch")
@@ -18,7 +19,8 @@ export function VarbListOngoing(props: Props) {
   return (
     <VarbListGeneric
       {...{
-        ...props,
+        ...rest,
+        feInfo,
         itemName,
         totalVarbName,
         contentTitle: "Cost",

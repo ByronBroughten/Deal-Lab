@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import { ServerSectionPack } from "../../client/src/App/sharedWithServer/SectionPack/SectionPack";
-import { DbSectionName } from "../../client/src/App/sharedWithServer/SectionsMeta/relNameArrs/storeArrs";
+import { DbSectionName } from "../../client/src/App/sharedWithServer/SectionsMeta/relSectionsDerived/relNameArrs/storeArrs";
 import authWare from "../../middleware/authWare";
 import { findOneAndUpdate } from "./shared/findAndUpdate";
 import { sendSuccess } from "./shared/sendSuccess";

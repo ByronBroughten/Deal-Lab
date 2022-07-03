@@ -4,7 +4,7 @@ import { sectionsMeta } from "../SectionsMeta";
 import { VarbNames } from "../SectionsMeta/baseSectionsDerived/baseVarbInfo";
 import { StateValue } from "../SectionsMeta/baseSectionsUtils/baseValues/StateValueTypes";
 import { Id } from "../SectionsMeta/baseSectionsUtils/id";
-import { ChildIdArrsNarrow } from "../SectionsMeta/childSectionsDerived/ChildTypes";
+import { ChildIdArrsNarrow } from "../SectionsMeta/childSectionsDerived/ChildName";
 import { FeSectionInfo, VarbInfo } from "../SectionsMeta/Info";
 import { DbValue } from "../SectionsMeta/relSectionsUtils/rel/valueMetaTypes";
 import { SectionName } from "../SectionsMeta/SectionName";

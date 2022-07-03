@@ -1,19 +1,20 @@
-import { FeInfoByType } from "../../../sharedWithServer/SectionsMeta/Info";
 import { ThemeName } from "../../../theme/Theme";
 import { VarbListGeneric } from "../ListGroup/ListGroupShared/VarbListGeneric";
 import { UserVarbItem } from "./VarbListUserVarbs/UserVarbItem";
 
 type Props = {
-  feInfo: FeInfoByType<"userVarbList">;
+  feId: string;
   themeName: ThemeName;
+  className?: string;
 };
 
-export function VarbListUserVarbs(props: Props) {
+export function VarbListUserVarbs({ feId, ...rest }: Props) {
+  const feInfo = { sectionName: "userVarbList", feId } as const;
   return (
     <VarbListGeneric
       {...{
-        ...props,
-        itemName: "userVarbItem",
+        ...rest,
+        feInfo,
         contentTitle: "Value",
         makeItemNode: ({ feId }) => <UserVarbItem {...{ feId, key: feId }} />,
       }}

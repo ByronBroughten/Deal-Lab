@@ -24,6 +24,12 @@ function relSectionsFilter<RS extends GenericRelSections>(relSections: RS): RS {
   return relSections;
 }
 
+const savableSectionStringVarbNames = [
+  "title",
+  "dateTimeFirstSaved",
+  "dateTimeLastSaved",
+] as const;
+
 export function makeRelSections() {
   return relSectionsFilter({
     root: relSection("Root", { _typeUniformity: relVarbS.string() }),
@@ -32,14 +38,20 @@ export function makeRelSections() {
     }),
     main: relSection("main", { _typeUniformity: relVarbS.string() }),
 
-    user: relSection("User", {
-      email: relVarbS.string({ displayName: "Email" }),
-      userName: relVarbS.string({ displayName: "Name" }),
-      apiAccessStatus: relVarbS.string({
-        displayName: "Api Access Status",
-        initValue: "basicStorage" as ApiAccessStatus,
-      }),
-    }),
+    user: relSection(
+      "User",
+      {
+        email: relVarbS.string({ displayName: "Email" }),
+        userName: relVarbS.string({ displayName: "Name" }),
+        apiAccessStatus: relVarbS.string({
+          displayName: "Api Access Status",
+          initValue: "basicStorage" as ApiAccessStatus,
+        }),
+      },
+      {
+        arrStoreName: "user",
+      }
+    ),
     serverOnlyUser: relSection("serverOnlyUser", {
       encryptedPassword: relVarbS.string(),
       emailAsSubmitted: relVarbS.string(),
@@ -115,7 +127,11 @@ export function makeRelSections() {
     }),
     propertyGeneral: relSection("Property", {
       ...rel.varbs.sumSection("property", propertyRelVarbs()),
-      ...rel.varbs.sectionStrings("property", propertyRelVarbs(), ["title"]),
+      ...rel.varbs.sectionStrings(
+        "property",
+        propertyRelVarbs(),
+        savableSectionStringVarbNames
+      ),
     }),
     property: relSection("Property", propertyRelVarbs(), {
       tableStoreName: "propertyTableStore",
@@ -131,7 +147,11 @@ export function makeRelSections() {
     } as RelVarbs<"unit">),
     mgmtGeneral: relSection("Management", {
       ...rel.varbs.sumSection("mgmt", { ...mgmtRelVarbs() }),
-      ...rel.varbs.sectionStrings("mgmt", { ...mgmtRelVarbs() }, ["title"]),
+      ...rel.varbs.sectionStrings(
+        "mgmt",
+        { ...mgmtRelVarbs() },
+        savableSectionStringVarbNames
+      ),
     }),
     mgmt: relSection("Management", mgmtRelVarbs(), {
       tableStoreName: "mgmtTableStore",

@@ -67,7 +67,12 @@ export class StateSections {
     varbName,
     ...rest
   }: VarbInfo<SN>): RawFeVarb<SN> {
-    return this.rawSection(rest).varbs[varbName];
+    const rawVarb = this.rawSection(rest).varbs[varbName];
+    if (rawVarb === undefined) {
+      const { sectionName, feId } = rest;
+      throw new Error(`There is no varb at ${sectionName}.${feId}.${varbName}`);
+    }
+    return rawVarb;
   }
   updateSectionLists(lists: Partial<RawFeSections>): StateSections {
     return new StateSections({

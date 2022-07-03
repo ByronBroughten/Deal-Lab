@@ -17,10 +17,10 @@ import { InEntityVarbInfo } from "./baseSectionsUtils/baseValues/entities";
 import { StateValue } from "./baseSectionsUtils/baseValues/StateValueTypes";
 import { Id } from "./baseSectionsUtils/id";
 import {
-  DescendantType,
-  SelfOrDescendantType,
-} from "./childSectionsDerived/ChildTypes";
-import { ParentName, ParentNameSafe } from "./childSectionsDerived/ParentTypes";
+  DescendantSectionName,
+  SelfOrDescendantSectionName,
+} from "./childSectionsDerived/DescendantSectionName";
+import { ParentName, ParentNameSafe } from "./childSectionsDerived/ParentName";
 import { SectionName, sectionNameS, SectionNameType } from "./SectionName";
 
 export interface FeInfoByType<T extends SectionNameType = "all"> {
@@ -44,11 +44,11 @@ export interface SectionArrInfo<SN extends SectionName> {
 export interface FeDescendantInfo<
   SN extends SectionName = SectionName<"hasChild">
 > {
-  sectionName: DescendantType<SN>;
+  sectionName: DescendantSectionName<SN>;
   feId: string;
 }
 export interface FeSelfOrDescendantInfo<SN extends SectionName> {
-  sectionName: SelfOrDescendantType<SN>;
+  sectionName: SelfOrDescendantSectionName<SN>;
   feId: string;
 }
 export interface FeParentInfo<SN extends SectionName> {

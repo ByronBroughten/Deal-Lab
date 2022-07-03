@@ -1,8 +1,8 @@
 import {
   ChildName,
-  ChildType,
   FeChildInfo,
-} from "../SectionsMeta/childSectionsDerived/ChildTypes";
+} from "../SectionsMeta/childSectionsDerived/ChildName";
+import { ChildSectionName } from "../SectionsMeta/childSectionsDerived/ChildSectionName";
 import { FeSectionInfo, VarbInfo } from "../SectionsMeta/Info";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { GetterSection } from "../StateGetters/GetterSection";
@@ -128,7 +128,7 @@ export class RemoveSolverSection<
     this.prepAndRemoveChildren(childName);
     this.extractVarbIdsToSolveFor();
   }
-  child(childInfo: FeChildInfo<SN>): RemoveSolverSection<ChildType<SN>> {
+  child(childInfo: FeChildInfo<SN>): RemoveSolverSection<ChildSectionName<SN>> {
     const feInfo = this.get.childInfoToFe(childInfo);
     return this.removeSolverSection(feInfo);
   }

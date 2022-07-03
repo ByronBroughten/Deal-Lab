@@ -1,13 +1,17 @@
 import { NeversToSomething, SubType } from "../../utils/types";
 import { SimpleSectionName, simpleSectionNames } from "../baseSections";
-import { ChildTypeOrNull, sectionToChildTypes } from "./ChildTypes";
+import { noParentWarning } from "../Info";
+import {
+  childrenSectionNames,
+  ChildSectionNameOrNull,
+} from "./ChildSectionName";
 
 // listParent
 // the name of a section that is the parent of singleTimeList
 // the name of a section that is the parent of allList
 
 type ParentToChildOrNullMap<CN extends SimpleSectionName> = {
-  [S in SimpleSectionName]: ChildTypeOrNull<S, CN>;
+  [S in SimpleSectionName]: ChildSectionNameOrNull<S, CN>;
 };
 type ParentNameOrNever<SN extends SimpleSectionName> = keyof SubType<
   ParentToChildOrNullMap<SN>,
@@ -20,11 +24,11 @@ function _testParentNameOrNever() {
   const _case3: CellParent = "propertyGeneral";
 }
 
-type SectionToParentsOrNever = {
+type SectionToParentOrNever = {
   [SN in SimpleSectionName]: ParentNameOrNever<SN>;
 };
 export type SectionToParentNameArrs = {
-  [SN in keyof SectionToParentsOrNever]: SectionToParentsOrNever[SN][];
+  [SN in keyof SectionToParentOrNever]: SectionToParentOrNever[SN][];
 };
 
 type SectionNameArrs = Record<SimpleSectionName, SimpleSectionName[]>;
@@ -35,7 +39,7 @@ export function makeSectionToParentArrs(): SectionToParentNameArrs {
   }, {} as SectionNameArrs);
 
   return simpleSectionNames.reduce((parentNameArrs, sectionName) => {
-    for (const childType of sectionToChildTypes[sectionName]) {
+    for (const childType of childrenSectionNames[sectionName]) {
       parentNameArrs[childType].push(sectionName);
     }
     return parentNameArrs;
@@ -44,13 +48,13 @@ export function makeSectionToParentArrs(): SectionToParentNameArrs {
 export const sectionParentNames = makeSectionToParentArrs();
 
 type SectionToParentOrNos = NeversToSomething<
-  SectionToParentsOrNever,
-  "no parent"
+  SectionToParentOrNever,
+  typeof noParentWarning
 >;
 export type ParentName<SN extends SimpleSectionName> = SectionToParentOrNos[SN];
 export type ParentNameSafe<SN extends SimpleSectionName> = Exclude<
   ParentName<SN>,
-  "no parent"
+  typeof noParentWarning
 >;
 
 function _testParentName() {

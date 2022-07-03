@@ -1,5 +1,5 @@
 import mongoose, { Document } from "mongoose";
-import { SelfOrDescendantType } from "../../../../client/src/App/sharedWithServer/SectionsMeta/relSectionTypes/ChildTypes";
+import { SelfOrDescendantSectionName } from "../../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DescendantSectionName";
 import { ResStatusError } from "../../../../resErrorUtils";
 import { DbSectionsModelCore } from "../../../DbSectionsModel";
 import { ServerSectionName } from "../../../ServerSectionName";
@@ -18,7 +18,7 @@ export interface DbSectionsRaw extends DbSectionsModelCore, Document<any, any> {
 
 interface FirstRawSectionProps<SN extends ServerSectionName> {
   sectionName: SN;
-  selfOrDescendantName: SelfOrDescendantType<SN>;
+  selfOrDescendantName: SelfOrDescendantSectionName<SN>;
 }
 
 interface FirstRawVarbProps<SN extends ServerSectionName>

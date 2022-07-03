@@ -1,20 +1,19 @@
-import { FeParentInfo } from "../../../../sharedWithServer/SectionsMeta/Info";
 import { ThemeName } from "../../../../theme/Theme";
 import { VarbListGeneric } from "../ListGroupShared/VarbListGeneric";
 import { ListItemSingleTime } from "./VarbListSingleTime/ListItemSingleTime";
 
 type Props = {
   themeName: ThemeName;
-  parentInfo: FeParentInfo<"singleTimeList">;
-  childName: string;
+  feId: string;
+  className?: string;
 };
-export function VarbListSingleTime(props: Props) {
-  // whose responsibility is the key?
+export function VarbListSingleTime({ feId, ...rest }: Props) {
+  const feInfo = { sectionName: "singleTimeList", feId } as const;
   return (
     <VarbListGeneric
       {...{
-        ...props,
-        itemName: "singleTimeItem",
+        ...rest,
+        feInfo,
         contentTitle: "Cost",
         totalVarbName: "total",
         makeItemNode: ({ feId }) => (

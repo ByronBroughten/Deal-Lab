@@ -32,17 +32,15 @@ export default function Loan({ feId }: { feId: string }) {
             </div>
           </div>
           <ListGroupSingleTime
-            parentInfo={feInfo}
-            sectionName="closingCostList"
-            itemName="singleTimeItem"
+            listParentInfo={feInfo}
+            listAsChildName="closingCostList"
             totalVarbName="closingCosts"
             titleText="Loan Fees"
             themeName="loan"
           />
           <ListGroupSingleTime
-            parentInfo={feInfo}
-            sectionName="wrappedInLoanList"
-            itemName="singleTimeItem"
+            listParentInfo={feInfo}
+            listAsChildName="wrappedInLoanList"
             totalVarbName="wrappedInLoan"
             titleText="Wrapped in loan"
             themeName="loan"

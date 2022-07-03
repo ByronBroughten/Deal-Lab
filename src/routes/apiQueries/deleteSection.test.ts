@@ -3,7 +3,7 @@ import request from "supertest";
 import { config } from "../../client/src/App/Constants";
 import { apiQueriesShared } from "../../client/src/App/sharedWithServer/apiQueriesShared";
 import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
-import { Id } from "../../client/src/App/sharedWithServer/SectionsMeta/baseSections/id";
+import { Id } from "../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsUtils/id";
 import { runApp } from "../../runApp";
 import { DbSectionsModel } from "../DbSectionsModel";
 import { DbUser } from "./shared/DbSections/DbUser";

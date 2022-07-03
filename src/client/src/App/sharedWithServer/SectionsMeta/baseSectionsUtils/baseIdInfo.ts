@@ -3,21 +3,16 @@ export interface GeneralIdInfo {
   idType: string;
 }
 
-export type BaseIdType = "dbId" | "feId";
-interface BaseIdInfo extends GeneralIdInfo {
-  idType: BaseIdType;
+export type NanoIdType = "dbId" | "feId";
+export interface NanoIdInfo extends GeneralIdInfo {
+  idType: NanoIdType;
 }
 
-export interface DbIdInfo extends BaseIdInfo {
+export interface DbIdInfo extends NanoIdInfo {
   id: string;
   idType: "dbId";
 }
-export interface FeIdInfo extends BaseIdInfo {
+export interface FeIdInfo extends NanoIdInfo {
   id: string;
   idType: "feId";
-}
-
-export interface NanoIdInfo {
-  id: string;
-  idType: BaseIdType;
 }

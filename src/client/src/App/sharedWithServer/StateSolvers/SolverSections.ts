@@ -1,3 +1,4 @@
+import { pick } from "lodash";
 import { defaultMaker } from "../defaultMaker/defaultMaker";
 import { SectionPack } from "../SectionPack/SectionPack";
 import { SpecificVarbInfo } from "../SectionsMeta/baseSectionsDerived/baseVarbInfo";
@@ -109,8 +110,9 @@ export class SolverSections extends SolverSectionsBase {
     sectionPack: SectionPack<"main">
   ): StateSections {
     const sections = StateSections.initWithRoot();
+    const rootSection = sections.rawSectionList("root")[0];
     const solver = SolverSection.init({
-      ...sections.rawSectionList("root")[0],
+      ...pick(rootSection, ["sectionName", "feId"]),
       sectionsShare: { sections },
     });
     solver.loadChildPackAndSolve({

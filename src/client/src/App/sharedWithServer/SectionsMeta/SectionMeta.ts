@@ -5,14 +5,15 @@ import {
   ChildIdArrsNarrow,
   ChildIdArrsWide,
   ChildName,
-  ChildNamesToTypes,
-  ChildType,
-  ChildTypeName,
-  ChildTypesToNames,
-  sectionChildNamesToType,
-  sectionChildTypesToNames,
   sectionToChildNames,
-} from "./childSectionsDerived/ChildTypes";
+} from "./childSectionsDerived/ChildName";
+import {
+  childrenSectionNames,
+  ChildSectionName,
+  ChildSectionNameName,
+  childSectionNameNames,
+  childToSectionNames,
+} from "./childSectionsDerived/ChildSectionName";
 import { relSections } from "./relSections";
 import {
   CorePropName,
@@ -81,29 +82,27 @@ export class SectionMeta<SN extends SimpleSectionName> {
   get childNames(): ChildName<SN>[] {
     return sectionToChildNames[this.sectionName] as ChildName<SN>[];
   }
-  get childNamesToTypes(): ChildNamesToTypes<SN> {
-    return sectionChildNamesToType[
-      this.sectionName
-    ] as any as ChildNamesToTypes<SN>;
-  }
-  isChildType(sectionName: SectionName): sectionName is ChildType<SN> {
+  isChildType(sectionName: SectionName): sectionName is ChildSectionName<SN> {
     return this.childTypes.includes(sectionName as any);
   }
-  get childTypes(): ChildType<SN>[] {
-    return Obj.keys(this.childTypesToNames) as ChildType<SN>[];
+  get childTypes(): ChildSectionName<SN>[] {
+    return childrenSectionNames[this.sectionName] as ChildSectionName<SN>[];
   }
-  childType<CN extends ChildName<SN>>(childName: CN): ChildType<SN, CN> {
-    return this.childNamesToTypes[childName];
+  childType<CN extends ChildName<SN>>(childName: CN): ChildSectionName<SN, CN> {
+    const names = childToSectionNames[this.sectionName] as {
+      [key: string]: string;
+    };
+    return names[childName] as ChildSectionName<SN, CN>;
   }
-  childTypeNames<CT extends ChildType<SN>>(
-    childType: CT
-  ): ChildTypeName<SN, CT>[] {
-    return this.childTypesToNames[childType] as ChildTypeName<SN, CT>[];
+  childTypeNames<CT extends ChildSectionName<SN>>(
+    childSectionName: CT
+  ): ChildSectionNameName<SN, CT>[] {
+    const test = childSectionNameNames[this.sectionName] as {
+      [key: string]: string[];
+    };
+    const test2 = test[childSectionName as string];
+    return test2 as any[] as ChildSectionNameName<SN, CT>[];
   }
-  private get childTypesToNames(): ChildTypesToNames<SN> {
-    return sectionChildTypesToNames[this.sectionName] as any;
-  }
-
   get alwaysOne(): boolean {
     return this.prop("alwaysOne");
   }

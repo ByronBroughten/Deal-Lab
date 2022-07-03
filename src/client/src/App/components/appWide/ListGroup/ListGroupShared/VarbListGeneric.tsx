@@ -3,11 +3,10 @@ import { IoEllipsisVertical } from "react-icons/io5";
 import styled, { css } from "styled-components";
 import useToggleView from "../../../../modules/customHooks/useToggleView";
 import { DbVarbs } from "../../../../sharedWithServer/SectionPack/RawSection";
-import { ChildName } from "../../../../sharedWithServer/SectionsMeta/childSectionsDerived/ChildTypes";
+import { ChildName } from "../../../../sharedWithServer/SectionsMeta/childSectionsDerived/ChildName";
 import { FeSectionInfo } from "../../../../sharedWithServer/SectionsMeta/Info";
 import { SectionName } from "../../../../sharedWithServer/SectionsMeta/SectionName";
 import { useSetterSection } from "../../../../sharedWithServer/stateClassHooks/useSetterSection";
-import { GetterSection } from "../../../../sharedWithServer/StateGetters/GetterSection";
 import ccs from "../../../../theme/cssChunks";
 import theme, { ThemeName } from "../../../../theme/Theme";
 import PlainIconBtn from "../../../general/PlainIconBtn";
@@ -17,12 +16,10 @@ import { ListMenu } from "./ListMenu";
 import { VarbListTable } from "./VarbListGeneric/VarbListTable";
 import { VarbListTotal } from "./VarbListGeneric/VarbListTotal";
 
-type Props<
-  SN extends SectionName<"varbListAllowed">,
-  CN extends ChildName<SN>
-> = {
+type VarbListAllowed = SectionName<"varbListAllowed">;
+type Props<SN extends VarbListAllowed> = {
   feInfo: FeSectionInfo<SN>;
-  makeItemNode: (item: GetterSection<CN>) => ReactNode;
+  makeItemNode: (props: { feId: string }) => ReactNode;
   themeName: ThemeName;
   contentTitle: string;
   totalVarbName?: string;
@@ -30,10 +27,7 @@ type Props<
   childDbVarbs?: DbVarbs;
 };
 
-export function VarbListGeneric<
-  SN extends SectionName<"varbListAllowed">,
-  CN extends ChildName<SN>
->({
+export function VarbListGeneric<SN extends VarbListAllowed>({
   feInfo,
   makeItemNode,
   themeName,
@@ -41,7 +35,7 @@ export function VarbListGeneric<
   totalVarbName,
   className,
   childDbVarbs,
-}: Props<SN, CN>) {
+}: Props<SN>) {
   const list = useSetterSection(feInfo);
   const titleVarb = list.varb("title");
   const { listMenuIsOpen, toggleListMenu } = useToggleView({

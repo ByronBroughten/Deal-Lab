@@ -1,5 +1,5 @@
 import { numObj } from "../SectionsMeta/baseSectionsUtils/baseValues/NumObj";
-import { ChildName } from "../SectionsMeta/childSectionsDerived/ChildTypes";
+import { ChildName } from "../SectionsMeta/childSectionsDerived/ChildName";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
 import { SetterTesterSection } from "./TestUtils/SetterTesterSection";

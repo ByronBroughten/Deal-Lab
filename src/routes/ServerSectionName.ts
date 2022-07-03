@@ -5,7 +5,7 @@ import {
 import {
   DbSectionName,
   savableNameS,
-} from "../client/src/App/sharedWithServer/SectionsMeta/relNameArrs/storeArrs";
+} from "../client/src/App/sharedWithServer/SectionsMeta/relSectionsDerived/relNameArrs/storeArrs";
 import { Arr } from "../client/src/App/sharedWithServer/utils/Arr";
 import { StrictExtract } from "../client/src/App/sharedWithServer/utils/types";
 import { StringTypeChecker } from "../client/src/App/utils/StringTypeChecker";

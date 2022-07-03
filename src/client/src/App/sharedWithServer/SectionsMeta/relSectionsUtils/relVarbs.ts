@@ -113,7 +113,7 @@ export const relVarbsS = {
   sectionStrings<
     SN extends BaseName<"hasVarb", "fe">,
     PV extends RelVarbs<SN>,
-    ToSkip extends (keyof PV)[] = []
+    ToSkip extends readonly (keyof PV)[] = []
   >(sectionName: SN, relVarbs: PV, toSkip?: ToSkip) {
     type ToReturn = Omit<RelVarbsByType<SN, "string">, keyof ToSkip>;
     function isInToReturn(value: any): value is keyof ToReturn {

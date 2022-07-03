@@ -6,7 +6,7 @@ import {
 } from "../../utils/types";
 import { SimpleSectionName } from "../baseSections";
 import { BaseName } from "../baseSectionsDerived/baseSectionTypes";
-import { ChildName } from "../childSectionsDerived/ChildTypes";
+import { ChildName } from "../childSectionsDerived/ChildName";
 import { SimpleDbStoreName } from "../childSectionsDerived/dbStoreNames";
 import { GeneralRelVarbs, RelVarbs } from "./relVarbs";
 
@@ -77,7 +77,6 @@ function makeDefault<O extends StrictPick<GeneralRelSection, OptionsKeys>>(
 }
 
 const defaultProps = makeDefault({
-  children: {},
   varbListItem: null,
   fullIndexName: null,
   rowIndexName: null,

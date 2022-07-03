@@ -4,10 +4,10 @@ import { VarbValues } from "../SectionsMeta/baseSectionsDerived/baseSectionTypes
 import { SwitchEndingKey } from "../SectionsMeta/baseSectionsUtils/switchNames";
 import {
   ChildName,
-  ChildType,
   FeChildInfo,
-} from "../SectionsMeta/childSectionsDerived/ChildTypes";
-import { ParentNameSafe } from "../SectionsMeta/childSectionsDerived/ParentTypes";
+} from "../SectionsMeta/childSectionsDerived/ChildName";
+import { ChildSectionName } from "../SectionsMeta/childSectionsDerived/ChildSectionName";
+import { ParentNameSafe } from "../SectionsMeta/childSectionsDerived/ParentName";
 import { FeSectionInfo, VarbInfo } from "../SectionsMeta/Info";
 import { SectionMeta } from "../SectionsMeta/SectionMeta";
 import { SectionName } from "../SectionsMeta/SectionName";
@@ -64,7 +64,7 @@ export class SetterSection<
   }
   child<CN extends ChildName<SN>>(
     childInfo: FeChildInfo<SN, CN>
-  ): SetterSection<ChildType<SN, CN>> {
+  ): SetterSection<ChildSectionName<SN, CN>> {
     const feInfo = this.get.childToFeInfo(childInfo);
     return this.setterSection(feInfo);
   }
@@ -86,7 +86,7 @@ export class SetterSection<
   addAndGetChild<CN extends ChildName<SN>>(
     childName: CN,
     options?: AddChildOptions<SN, CN>
-  ): SetterSection<ChildType<SN, CN>> {
+  ): SetterSection<ChildSectionName<SN, CN>> {
     this.addChild(childName, options);
     const { feInfo } = this.get.youngestChild(childName);
     return this.setterSection(feInfo);

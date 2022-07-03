@@ -1,16 +1,14 @@
-import { ChildTypeName } from "../../../sharedWithServer/SectionsMeta/childSectionsDerived/ChildTypes";
+import { ChildSectionNameName } from "../../../sharedWithServer/SectionsMeta/childSectionsDerived/ChildSectionName";
 import { FeSectionInfo } from "../../../sharedWithServer/SectionsMeta/Info";
 import { ParentOfTypeName } from "../../../sharedWithServer/SectionsMeta/SectionName";
 import { ThemeName } from "../../../theme/Theme";
-import {
-  ListGroupGeneric,
-  MakeListNodeProps,
-} from "./ListGroupShared/ListGroupGeneric";
+import { ListGroupGeneric } from "./ListGroupShared/ListGroupGeneric";
 import { VarbListSingleTime } from "./ListGroupSingleTime/VarbListSingleTime";
+
 type ListParentName = ParentOfTypeName<"singleTimeList">;
 type Props<SN extends ListParentName> = {
   listParentInfo: FeSectionInfo<SN>;
-  listAsChildName: ChildTypeName<SN, "singleTimeList">;
+  listAsChildName: ChildSectionNameName<SN, "singleTimeList">;
   titleText: string;
   themeName: ThemeName;
   totalVarbName: string;
@@ -23,9 +21,7 @@ export function ListGroupSingleTime<SN extends ListParentName>(
     <ListGroupGeneric
       {...{
         ...props,
-        makeListNode: (nodeProps) => (
-          <VarbListSingleTime {...(nodeProps as MakeListNodeProps<SN>)} />
-        ),
+        makeListNode: (nodeProps) => <VarbListSingleTime {...nodeProps} />,
       }}
     />
   );

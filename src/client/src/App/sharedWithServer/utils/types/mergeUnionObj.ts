@@ -16,7 +16,7 @@ export type MergeUnionObj<T extends object> = Merge<
   { [k in CommonKeys<T>]: PickTypeOf<T, k> },
   { [k in NonCommonKeys<T>]?: PickTypeOf<T, k> }
 >;
-export type MergeUnionObjNonNullable<O extends object> = {
+export type MergeUnionObjFull<O extends object> = {
   [K in AllKeys<O>]: NonNullable<PickType<ExcludeEmpty<O>, K>>;
 };
 

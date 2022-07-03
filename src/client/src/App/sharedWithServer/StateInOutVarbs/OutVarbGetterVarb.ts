@@ -21,7 +21,9 @@ export class OutVarbGetterVarb<
     super(props);
     this.outVarbInfoStore = [];
   }
-  get = new GetterVarb(this.getterVarbProps);
+  get get() {
+    return new GetterVarb(this.getterVarbProps);
+  }
   private getterSections = new GetterSections(this.getterSectionsProps);
   get outVarbInfos() {
     this.gatherOutVarbInfos();
@@ -43,12 +45,35 @@ export class OutVarbGetterVarb<
     });
     this.outVarbInfoStore.push(...feOutEntities);
   }
-  private gatherOutRelatives() {
+
+  get outUpdatePacks() {
     const { outUpdatePacks } = this.get.meta;
-    for (const outUpdatePack of outUpdatePacks) {
+    return outUpdatePacks.filter(({ relTargetVarbInfo }) => {
+      const { id, sectionName } = relTargetVarbInfo;
+
+      if (id === "parent") {
+        if (sectionName === this.get.section.parentName) return true;
+        else return false;
+      }
+      if (id === "local") return true;
+      if (id === "all" || id === "static") return true;
+      // phasing out
+
+      throw new Error(`id "${id}" is not accounted for here.`);
+    });
+  }
+  private gatherOutRelatives() {
+    for (const outUpdatePack of this.outUpdatePacks) {
       if (VarbMeta.isSwitchOutPack(outUpdatePack)) {
         this.gatherFromSwitchUpdatePack(outUpdatePack);
       } else {
+        // 1: If something tries update a parentVarb
+        // but doesn't have a parent with that varb
+        // throw an error
+
+        // 2: Figure out why the outUpdatePacks are trying
+        // to reference all possible parents.
+
         this.gatherFromDefaultUpdatePack(outUpdatePack);
       }
     }

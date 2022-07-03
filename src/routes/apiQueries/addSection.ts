@@ -41,6 +41,7 @@ async function checkThatSectionPackIsNotThere<
   SN extends SectionName<"dbStoreNext">
 >(props: DbSectionInitByIdProps<SN>): Promise<true> {
   const { sectionName, dbId } = props;
+
   try {
     const querier = await DbSectionsQuerier.initByUserId(props.userId);
     await querier.getSectionPack(props);

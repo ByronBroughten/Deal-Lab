@@ -27,9 +27,8 @@ export default function Property({ feId }: { feId: string }) {
           </div>
         </div>
         <ListGroupOngoing
-          parentInfo={feInfo}
-          childName="ongoingCostList"
-          itemName="ongoingItem"
+          listParentInfo={feInfo}
+          listAsChildName="ongoingCostList"
           totalVarbNameBase="ongoingExpenses"
           titleText="Ongoing Costs"
           themeName="property"

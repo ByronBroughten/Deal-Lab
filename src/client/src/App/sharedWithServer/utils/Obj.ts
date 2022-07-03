@@ -109,7 +109,7 @@ export const Obj = {
     value: V
   ): PropKeysOfValue<O, V> {
     const keys = this.keys(obj).filter((key) => obj[key] === value);
-    return keys as any as PropKeysOfValue<O, V>;
+    return keys as PropKeysOfValue<O, V>;
   },
   entryKeysWithProp<
     O extends object,

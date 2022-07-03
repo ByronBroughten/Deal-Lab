@@ -3,9 +3,9 @@ import { VarbValues } from "../SectionsMeta/baseSectionsDerived/baseSectionTypes
 import { Id } from "../SectionsMeta/baseSectionsUtils/id";
 import {
   ChildName,
-  ChildType,
   FeChildInfo,
-} from "../SectionsMeta/childSectionsDerived/ChildTypes";
+} from "../SectionsMeta/childSectionsDerived/ChildName";
+import { ChildSectionName } from "../SectionsMeta/childSectionsDerived/ChildSectionName";
 import { FeSectionInfo } from "../SectionsMeta/Info";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { GetterSectionProps } from "../StateGetters/Bases/GetterSectionBase";
@@ -46,7 +46,9 @@ export class SolverSection<
     }
     return new SolverSection(props as SolverSectionProps<S>);
   }
-  get = new GetterSection(this.getterSectionProps);
+  get get() {
+    return new GetterSection(this.getterSectionProps);
+  }
   private solverSections = new SolverSections(this.solverSectionsProps);
   private get updater() {
     return new UpdaterSection(this.getterSectionProps);
@@ -73,7 +75,7 @@ export class SolverSection<
   }
   youngestChild<CN extends ChildName<SN>>(
     childName: CN
-  ): SolverSection<ChildType<SN, CN>> {
+  ): SolverSection<ChildSectionName<SN, CN>> {
     const { feInfo } = this.get.youngestChild(childName);
     return this.solverSection(feInfo);
   }
@@ -97,7 +99,7 @@ export class SolverSection<
   }
   child<CN extends ChildName<SN>>(
     childInfo: FeChildInfo<SN, CN>
-  ): SolverSection<ChildType<SN, CN>> {
+  ): SolverSection<ChildSectionName<SN, CN>> {
     const feInfo = this.get.childInfoToFe(childInfo);
     return this.solverSection(feInfo);
   }
@@ -143,6 +145,13 @@ export class SolverSection<
     this.updater.addChild(childName);
     const child = this.youngestChild(childName);
     child.loadSelfSectionPackAndSolve(sectionPack);
+
+    // while it's adding main, it jumbles loan varbs
+    // into a property section...
+
+    // I ought to set up something
+    // in solverSections that verifies that
+    // all the varbInfos being entered are valid.
   }
   loadChildPackArrsAndSolve(
     childPackArrs: Partial<ChildSectionPackArrs<SN>>

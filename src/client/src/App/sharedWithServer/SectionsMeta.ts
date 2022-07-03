@@ -6,9 +6,9 @@ import {
 } from "./SectionsMeta/baseSectionsDerived/baseVarbInfo";
 import { RelativeIds } from "./SectionsMeta/baseSectionsUtils/relativeIdInfo";
 import {
-  DescendantType,
-  SelfOrDescendantType,
-} from "./SectionsMeta/childSectionsDerived/ChildTypes";
+  DescendantSectionName,
+  SelfOrDescendantSectionName,
+} from "./SectionsMeta/childSectionsDerived/DescendantSectionName";
 import { SectionMeta } from "./SectionsMeta/SectionMeta";
 import { SectionName, sectionNameS } from "./SectionsMeta/SectionName";
 import {
@@ -61,17 +61,17 @@ export class SectionsMeta {
   }
   selfAndDescendantNames<SN extends SectionName>(
     sectionName: SN
-  ): SelfOrDescendantType<SN>[] {
-    const selfAndDescendantNames: SelfOrDescendantType<SN>[] = [];
-    const queue: SelfOrDescendantType<SN>[] = [sectionName];
+  ): SelfOrDescendantSectionName<SN>[] {
+    const selfAndDescendantNames: SelfOrDescendantSectionName<SN>[] = [];
+    const queue: SelfOrDescendantSectionName<SN>[] = [sectionName];
     while (queue.length > 0) {
       const queueLength = queue.length;
       for (let i = 0; i < queueLength; i++) {
-        const descendantName = queue.shift() as DescendantType<SN>;
+        const descendantName = queue.shift() as DescendantSectionName<SN>;
         selfAndDescendantNames.push(descendantName);
 
         const { childNames } = this.section(descendantName);
-        queue.push(...(childNames as DescendantType<SN>[]));
+        queue.push(...(childNames as DescendantSectionName<SN>[]));
       }
     }
     return selfAndDescendantNames;

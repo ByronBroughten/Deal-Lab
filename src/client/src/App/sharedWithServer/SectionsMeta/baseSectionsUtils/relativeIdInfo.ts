@@ -18,6 +18,10 @@ export interface RelIdInfo extends GeneralIdInfo {
   id: Relative;
   idType: "relative";
 }
+export interface RelChildrenIdInfo {
+  id: "children",
+  idType: "relative"
+}
 export type SpecificIdInfo =
   | NanoIdInfo
   | {

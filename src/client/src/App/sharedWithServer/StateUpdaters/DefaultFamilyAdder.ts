@@ -1,6 +1,6 @@
 import { defaultMaker } from "../defaultMaker/defaultMaker";
-import { ChildName } from "../SectionsMeta/childSectionsDerived/ChildTypes";
-import { ParentNameSafe } from "../SectionsMeta/childSectionsDerived/ParentTypes";
+import { ChildName } from "../SectionsMeta/childSectionsDerived/ChildName";
+import { ParentNameSafe } from "../SectionsMeta/childSectionsDerived/ParentName";
 import { FeSectionInfo } from "../SectionsMeta/Info";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { PackLoaderSection } from "../StatePackers.ts/PackLoaderSection";

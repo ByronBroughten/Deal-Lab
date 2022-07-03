@@ -9,7 +9,7 @@ import {
 } from "../../../../client/src/App/sharedWithServer/apiQueriesShared/register";
 import { defaultMaker } from "../../../../client/src/App/sharedWithServer/defaultMaker/defaultMaker";
 import { SectionPack } from "../../../../client/src/App/sharedWithServer/SectionPack/SectionPack";
-import { SafeDbVarbs } from "../../../../client/src/App/sharedWithServer/SectionsMeta/relSections/rel/valueMetaTypes";
+import { SafeDbVarbs } from "../../../../client/src/App/sharedWithServer/SectionsMeta/relSectionsUtils/rel/valueMetaTypes";
 import {
   SectionName,
   sectionNameS,
@@ -144,18 +144,6 @@ export class DbUser extends GetterSectionsBase {
       });
     }
   }
-  // // grabbed right out of the db
-  // "user",
-  // "outputList",
-  // "varbList",
-  // "singleTimeList",
-  // "ongoingList",
-
-  // // whipped up from their corresponding stores
-  // "propertyTableStore",
-  // "dealTableStore",
-  // "loanTableStore",
-  // "mgmtTableStore",
   makeLoginUser(): LoginUser {
     return {
       ...this.getFullLoginArrs(),
@@ -191,8 +179,8 @@ export class DbUser extends GetterSectionsBase {
     const tablePack = defaultMaker.makeMainTablePack[sourceName]();
     const defaultTable = tableStore.loadAndGetChild({
       childName: "table",
-      sectionPack: tablePack,
-    });
+      sectionPack: tablePack as any,
+    }) as PackBuilderSection<any> as PackBuilderSection<"table">;
 
     const sources = omniParent.loadAndGetChildren({
       childName: sourceName,

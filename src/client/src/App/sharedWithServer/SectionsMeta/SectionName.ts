@@ -1,30 +1,26 @@
 import { StringTypeChecker } from "../../utils/StringTypeChecker";
-import { ContextName, sectionContext, SimpleSectionName } from "./baseSections";
+import { PropKeyOfValue } from "../utils/Obj/SubType";
+import { SimpleSectionName } from "./baseSections";
 import { baseNameArrs, BaseNameArrs } from "./baseSectionsDerived/baseNameArrs";
-import { ParentName } from "./childSectionsDerived/ParentTypes";
+import { ChildName } from "./childSectionsDerived/ChildName";
+import { ChildToSectionName } from "./childSectionsDerived/ChildSectionName";
+import { ParentName } from "./childSectionsDerived/ParentName";
 import { relNameArrs, RelNameArrs } from "./relSectionsDerived/relNameArrs";
 
-type NameArrs = {
-  [SC in ContextName]: BaseNameArrs[SC] & RelNameArrs;
-};
+type NameArrs = BaseNameArrs["fe"] & RelNameArrs;
 function makeNameArrs(): NameArrs {
-  const partial = sectionContext.makeBlankContextObj();
-  for (const contextName of sectionContext.names) {
-    const nameArr = {
-      ...baseNameArrs[contextName],
-      ...relNameArrs,
-    } as NameArrs[typeof contextName];
-    partial[contextName] = nameArr;
-  }
-  return partial as NameArrs;
+  return {
+    ...baseNameArrs["fe"],
+    ...relNameArrs,
+  };
 }
 
-export type SectionNameType = keyof NameArrs["fe"];
+export type SectionNameType = keyof NameArrs;
 
 export type SectionName<T extends SectionNameType = "all"> =
-  NameArrs["fe"][T][number & keyof NameArrs["fe"][T]];
+  NameArrs[T][number & keyof NameArrs[T]];
 
-export const sectionNameS = new StringTypeChecker(makeNameArrs().fe);
+export const sectionNameS = new StringTypeChecker(makeNameArrs());
 
 type GeneralNameArrs = Record<SectionNameType, readonly SimpleSectionName[]>;
 const _testNameArrs = <T extends GeneralNameArrs>(_: T) => undefined;
@@ -33,3 +29,18 @@ _testNameArrs(sectionNameS.arrs);
 export type ParentOfTypeName<T extends SectionNameType = "all"> = ParentName<
   SectionName<T>
 >;
+
+export type ChildNameOfType<
+  SN extends SimpleSectionName,
+  ST extends SectionNameType
+> = PropKeyOfValue<
+  ChildToSectionName[SN],
+  ChildToSectionName[SN][keyof ChildToSectionName[SN]] & SectionName<ST>
+> &
+  ChildName<SN>;
+
+function _testChildNameOfType<
+  SN extends "property" | "mgmt",
+  CN extends ChildNameOfType<SN, "additiveList">
+>(sn: SN, cn: CN) {}
+_testChildNameOfType("property", "ongoingCostList");

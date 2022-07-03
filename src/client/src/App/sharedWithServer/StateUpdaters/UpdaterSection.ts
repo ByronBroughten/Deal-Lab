@@ -5,12 +5,12 @@ import {
   ChildArrInfo,
   ChildIdArrsNarrow,
   ChildName,
-  ChildType,
   CreateChildInfo,
-  DescendantType,
   FeChildInfo,
-} from "../SectionsMeta/childSectionsDerived/ChildTypes";
-import { ParentNameSafe } from "../SectionsMeta/childSectionsDerived/ParentTypes";
+} from "../SectionsMeta/childSectionsDerived/ChildName";
+import { ChildSectionName } from "../SectionsMeta/childSectionsDerived/ChildSectionName";
+import { DescendantSectionName } from "../SectionsMeta/childSectionsDerived/DescendantSectionName";
+import { ParentNameSafe } from "../SectionsMeta/childSectionsDerived/ParentName";
 import { FeSectionInfo } from "../SectionsMeta/Info";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { GetterSectionProps } from "../StateGetters/Bases/GetterSectionBase";
@@ -75,7 +75,7 @@ export class UpdaterSection<
   }
   child<CN extends ChildName<SN>>(
     childInfo: FeChildInfo<SN, CN>
-  ): UpdaterSection<ChildType<SN, CN>> {
+  ): UpdaterSection<ChildSectionName<SN, CN>> {
     const feInfo = this.get.childInfoToFe(childInfo);
     return this.updaterSection(feInfo);
   }
@@ -182,18 +182,18 @@ interface AddSectionPropsNext<SN extends SimpleSectionName = SimpleSectionName>
 
 export type DescendantList<
   SN extends SectionName,
-  DN extends DescendantType<SN> = DescendantType<SN>
-> = readonly [...DescendantType<SN>[], DN];
+  DN extends DescendantSectionName<SN> = DescendantSectionName<SN>
+> = readonly [...DescendantSectionName<SN>[], DN];
 
 export interface AddChildOptions<
   SN extends SectionName,
   CN extends ChildName<SN> = ChildName<SN>,
-  CT extends ChildType<SN, CN> = ChildType<SN, CN>
+  CT extends ChildSectionName<SN, CN> = ChildSectionName<SN, CN>
 > extends StrictOmit<AddSectionPropsNext<CT>, OmitProps> {}
 
 export type AddDescendantOptions<
   SN extends SectionName,
-  DN extends DescendantType<SN> = DescendantType<SN>
+  DN extends DescendantSectionName<SN> = DescendantSectionName<SN>
 > = StrictOmit<AddSectionPropsNext<DN>, OmitProps>;
 
 type OmitProps = "sectionName" | "childFeIds";

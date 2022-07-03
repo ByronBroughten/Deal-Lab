@@ -1,13 +1,9 @@
 import { Obj } from "../utils/Obj";
 import { SimpleSectionName, simpleSectionNames } from "./baseSections";
 import {
-  sectionChildNamesToType,
-  sectionChildTypesToNames,
-} from "./childSectionsDerived/ChildTypes";
-import {
   sectionParentNames,
   SectionToParentNameArrs,
-} from "./childSectionsDerived/ParentTypes";
+} from "./childSectionsDerived/ParentName";
 import { tableSourceParams } from "./relSectionsDerived/relNameArrs/tableStoreArrs";
 
 export const allNull = simpleSectionNames.reduce((allNull, sectionName) => {
@@ -17,11 +13,6 @@ export const allNull = simpleSectionNames.reduce((allNull, sectionName) => {
 
 export const allTableSourceParams = Obj.merge(allNull, tableSourceParams);
 type AllTableSourceParams = typeof allTableSourceParams;
-
-const sectionsMetaProps = {
-  sectionChildNamesToType,
-  sectionChildTypesToNames,
-} as const;
 
 export type GeneralGeneratedSection = {
   tableSourceName: string | null;

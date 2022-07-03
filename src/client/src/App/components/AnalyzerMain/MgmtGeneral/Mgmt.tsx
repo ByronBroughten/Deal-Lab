@@ -23,10 +23,9 @@ export default function Mgmt({ feId }: { feId: string }) {
           </div>
         </div>
         <ListGroupOngoing
-          parentInfo={feInfo}
-          sectionName="ongoingCostList"
+          listParentInfo={feInfo}
+          listAsChildName="ongoingCostList"
           titleText="Ongoing Costs"
-          itemName="ongoingItem"
           totalVarbNameBase="ongoingExpenses"
           themeName="mgmt"
         />

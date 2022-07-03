@@ -1,5 +1,5 @@
-import { ChildName } from "../../SectionsMeta/childSectionsDerived/ChildTypes";
-import { ParentNameSafe } from "../../SectionsMeta/childSectionsDerived/ParentTypes";
+import { ChildName } from "../../SectionsMeta/childSectionsDerived/ChildName";
+import { ParentNameSafe } from "../../SectionsMeta/childSectionsDerived/ParentName";
 import { VarbInfo } from "../../SectionsMeta/Info";
 import { SectionName } from "../../SectionsMeta/SectionName";
 import { SectionsShare } from "../../StateGetters/Bases/GetterSectionsBase";
