@@ -5,13 +5,14 @@ import {
 import {
   DbUserDefInfo,
   DbUserDefVarbInfo,
-  FeVarbInfo,
+  FeVarbInfoMixed,
   MultiFindByFocalInfo,
   MultiSectionInfo,
   MultiVarbInfo,
   RelInfoStatic,
   RelVarbInfoStatic,
   SpecificSectionInfo,
+  VarbProp,
 } from "./baseSectionsDerived/baseVarbInfo";
 import { InEntityVarbInfo } from "./baseSectionsUtils/baseValues/entities";
 import { StateValue } from "./baseSectionsUtils/baseValues/StateValueTypes";
@@ -61,9 +62,8 @@ export interface FeParentInfoSafe<SN extends SectionName> {
 }
 
 export interface VarbInfo<SN extends SectionName = SectionName<"hasVarb">>
-  extends FeSectionInfo<SN> {
-  varbName: string;
-}
+  extends FeSectionInfo<SN>,
+    VarbProp {}
 
 export interface VarbValueInfo<SN extends SectionName = SectionName<"hasVarb">>
   extends VarbInfo<SN> {
@@ -159,7 +159,7 @@ export const InfoS = {
         sectionNameS.is(value.sectionName, type)
       );
     },
-    feVarb(value: any): value is FeVarbInfo {
+    feVarb(value: any): value is FeVarbInfoMixed {
       return typeof value.varbName === "string" && this.fe(value, "hasVarb");
     },
     feName<S extends SectionName>(
@@ -185,7 +185,7 @@ export const InfoS = {
   feToMixedVarb<SN extends SectionName>({
     varbName,
     ...rest
-  }: VarbInfo<SN>): FeVarbInfo<SN> {
+  }: VarbInfo<SN>): FeVarbInfoMixed<SN> {
     return {
       varbName,
       ...this.feToMixed(rest),
@@ -207,7 +207,7 @@ export const InfoS = {
       throw new Error("varbInfo must be for sections that contain varbs");
     else return { ...info, sectionName, varbName } as MakeVarbInfo<I>;
   },
-  feVarbMaker(feInfo: FeMixedInfo): (varbName: string) => FeVarbInfo {
+  feVarbMaker(feInfo: FeMixedInfo): (varbName: string) => FeVarbInfoMixed {
     const { sectionName } = feInfo;
     if (sectionNameS.is(sectionName, "hasVarb"))
       return (varbName) => ({ ...feInfo, sectionName, varbName });

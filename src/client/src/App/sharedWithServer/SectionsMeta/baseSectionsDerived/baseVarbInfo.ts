@@ -40,32 +40,32 @@ export type MultiFindByFocalInfo<
 > = RandomStringInfoMixed<S> | RelFindByFocalInfo<S>;
 
 // varbInfo
-export type VarbParam = { varbName: string };
+export type VarbProp = { varbName: string };
 
 export type SpecificVarbInfo<
   S extends BaseName<"hasVarb"> = BaseName<"hasVarb">
 > = SpecificSectionInfo<S> & { varbName: string };
 
-export interface FeVarbInfo<SN extends BaseName = BaseName<"hasVarb">>
+export interface FeVarbInfoMixed<SN extends BaseName = BaseName<"hasVarb">>
   extends FeMixedInfo<SN>,
-    VarbParam {}
+    VarbProp {}
 export interface DbVarbInfo<S extends BaseName<"hasVarb"> = BaseName<"hasVarb">>
   extends DbMixedInfo<S>,
-    VarbParam {}
+    VarbProp {}
 export interface RelVarbInfo<
   S extends BaseName<"hasVarb"> = BaseName<"hasVarb">
 > extends RelSectionInfo<S>,
-    VarbParam {}
+    VarbProp {}
 
 export type DbUserDefVarbInfo<
   S extends BaseName<"uniqueDbId"> = BaseName<"uniqueDbId">
-> = DbUserDefInfo<S> & VarbParam;
+> = DbUserDefInfo<S> & VarbProp;
 
 export type MultiVarbInfo<S extends BaseName<"hasVarb"> = BaseName<"hasVarb">> =
-  MultiSectionInfo<S> & VarbParam;
+  MultiSectionInfo<S> & VarbProp;
 export type MultiFindByFocalVarbInfo<
   S extends BaseName<"hasVarb"> = BaseName<"hasVarb">
-> = MultiFindByFocalInfo<S> & VarbParam;
+> = MultiFindByFocalInfo<S> & VarbProp;
 
 export type VarbNames<SN extends SimpleSectionName = SimpleSectionName> = {
   varbName: string;
@@ -97,7 +97,7 @@ export interface RelInfoAll<S extends BaseName> extends RelSectionInfo<S> {
 export interface RelVarbInfoStatic<
   S extends BaseName<"alwaysOneHasVarb"> = BaseName<"alwaysOneHasVarb">
 > extends RelInfoStatic<S>,
-    VarbParam {}
+    VarbProp {}
 
 interface RelFindByFocalInfo<S extends SimpleSectionName = SimpleSectionName>
   extends RelSectionInfo<S> {
@@ -107,7 +107,7 @@ interface RelFindByFocalInfo<S extends SimpleSectionName = SimpleSectionName>
 export interface RelFindByFocalVarbInfo<
   S extends BaseName<"hasVarb"> = BaseName<"hasVarb">
 > extends RelFindByFocalInfo<S>,
-    VarbParam {}
+    VarbProp {}
 
 export interface OutRelVarbInfo extends RelVarbInfo {
   id: RelativeIds["outVarb"];

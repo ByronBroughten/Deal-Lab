@@ -4,7 +4,7 @@ import { reqMonNumber, reqMonString } from "../../../utils/mongoose";
 import { zNumber, zString } from "../../../utils/zod";
 import {
   DbUserDefVarbInfo,
-  FeVarbInfo,
+  FeVarbInfoMixed,
   RelInfoStatic,
   RelVarbInfoStatic,
   zDbVarbInfo,
@@ -12,10 +12,10 @@ import {
 } from "../../baseSectionsDerived/baseVarbInfo";
 import { Id } from "../id";
 
-export type OutEntity = FeVarbInfo & { entityId: string };
+export type OutEntity = FeVarbInfoMixed & { entityId: string };
 export type InEntityVarbInfo = DbUserDefVarbInfo | RelVarbInfoStatic;
 export type InEntityInfo = DbUserDefVarbInfo | RelInfoStatic;
-export type InVarbInfo = InEntity | FeVarbInfo;
+export type InVarbInfo = InEntity | FeVarbInfoMixed;
 
 type Test<T extends { [key: string]: string }> = T;
 
@@ -51,7 +51,7 @@ export const entityS = {
       ...entityInfo,
     } as const;
   },
-  outEntity(feVarbInfo: FeVarbInfo, inEntity: InEntity): OutEntity {
+  outEntity(feVarbInfo: FeVarbInfoMixed, inEntity: InEntity): OutEntity {
     return {
       ...feVarbInfo,
       ...pick(inEntity, ["entityId"]),

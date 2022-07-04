@@ -1,6 +1,6 @@
 import { cloneDeep } from "lodash";
 import {
-  FeVarbInfo,
+  FeVarbInfoMixed,
   LocalRelVarbInfo,
   MultiVarbInfo,
   VarbNames,
@@ -98,7 +98,7 @@ export class GetterVarb<
     }
   }
 
-  get feVarbInfoMixed(): FeVarbInfo<SN> {
+  get feVarbInfoMixed(): FeVarbInfoMixed<SN> {
     return InfoS.feToMixedVarb(this.feVarbInfo);
   }
   get raw(): RawFeVarb<SN> {
