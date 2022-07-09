@@ -5,6 +5,7 @@ import {
   EntitiesAndEditorText,
   NumberOrQ,
   NumObj,
+  numObjUnits,
 } from "../SectionsMeta/baseSectionsUtils/baseValues/NumObj";
 import { isNumObjUpdateFnName } from "../SectionsMeta/baseSectionsUtils/baseValues/updateFnNames";
 import { SectionName } from "../SectionsMeta/SectionName";
@@ -13,14 +14,6 @@ import { arithmeticOperatorsArr, mathS } from "../utils/math";
 import { Str } from "../utils/Str";
 import { GetterVarbBase } from "./Bases/GetterVarbBase";
 import { GetterVarb } from "./GetterVarb";
-
-export const numObjUnits = {
-  percent: { roundTo: 2 },
-  decimal: { roundTo: 4 },
-  money: { roundTo: 2, roundWithZeros: true },
-} as const;
-
-export type NumObjUnit = keyof typeof numObjUnits;
 
 export class GetterVarbNumObj<
   SN extends SectionName
@@ -96,8 +89,6 @@ export class GetterVarbNumObj<
       text = text.substring(0, text.length - 1);
 
     try {
-      // this might be too complicated to untangle.
-
       let num = evaluate(text);
       if (mathS.isRationalNumber(num)) {
         num = this.doFinishingTouches(num);

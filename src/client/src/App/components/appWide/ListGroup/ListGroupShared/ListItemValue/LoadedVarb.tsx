@@ -10,7 +10,7 @@ export default function LoadedVarb({ feVarbInfo }: { feVarbInfo: VarbInfo }) {
     varb.loadValueFromVarb(varbInfo);
   }
   const section = useGetterSection(feVarbInfo);
-  const selectedVarbInfo = section.varbs.varbInfoStringValues;
+  const selectedVarbInfo = section.value("varbInfo", "inEntityVarbInfo");
   return (
     <>
       <td className="AdditiveItem-nameCell">

@@ -1,7 +1,6 @@
 import { pick } from "lodash";
 import { sectionContext, SimpleSectionName } from "./SectionsMeta/baseSections";
 import { VarbNames } from "./SectionsMeta/baseSectionsDerived/baseVarbInfo";
-import { RelativeIds } from "./SectionsMeta/baseSectionsUtils/relativeIdInfo";
 import {
   DescendantSectionName,
   SelfOrDescendantSectionName,
@@ -50,10 +49,7 @@ export class SectionsMeta {
   varb<VNS extends VarbNames>(varbNames: VNS): VarbMeta {
     const { sectionName, varbName } = varbNames;
     const varbMetas = this.varbs(sectionName);
-    const varbMeta = varbMetas.get(varbName);
-    if (!varbMeta) {
-      throw new Error(`No varbMeta at ${sectionName}.${varbName}`);
-    } else return varbMeta;
+    return varbMetas.get(varbName);
   }
   value<VNS extends VarbNames>(varbNames: VNS) {
     return this.varb(varbNames).value;
@@ -77,26 +73,6 @@ export class SectionsMeta {
       }
     }
     return selfAndDescendantNames;
-  }
-  private inToOutRelative<SN extends SimpleSectionName>(
-    focalSectionName: SN,
-    inRelative: RelativeIds["inVarb"]
-  ): RelativeIds["outVarb"] {
-    // if something has a parent.
-    // this isn't going to be so easy.
-    // It would probably be
-
-    const focalSectionMeta = this.section(focalSectionName);
-    if (inRelative === "local") return "local";
-    else if (inRelative === "children") return "parent";
-    else if (inRelative === "static") {
-      if (focalSectionMeta.alwaysOne) return "static";
-      else return "all";
-    } else if (inRelative === "all") {
-      if (focalSectionMeta.alwaysOne) return "static";
-      // only static variables should have inRelatives of "all"
-    }
-    throw new Error(`Relative '${inRelative}' is not valid.`);
   }
   makeOutUpdatePack(
     relTargetVarbInfo: RelOutVarbInfo,

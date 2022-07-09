@@ -1,7 +1,7 @@
 import { SimpleSectionName } from "../baseSections";
 import { VarbNames } from "../baseSectionsDerived/baseVarbInfo";
 import { childToSectionNames } from "./ChildSectionName";
-import { ParentName, StepSiblingName } from "./ParentName";
+import { ParentName } from "./ParentName";
 import {
   RelChildrenVarbInfo,
   RelLocalVarbInfo,
@@ -45,10 +45,11 @@ export function inVarbInfoToOutSectionName({
         SimpleSectionName
       >;
       const sn = cnsToSn[inVarbInfo.childName];
-      if (sn === undefined)
+      if (sn === undefined) {
         throw new Error(
           `"${inVarbInfo.childName}" is not a child of "${sectionNameWithInVarb}"`
         );
+      }
       return sn;
     }
     case "pibling": {
@@ -69,8 +70,12 @@ export function relInToOutVarbInfo({
   inVarbInfo,
 }: InToOutVarbInfoProps): RelOutVarbInfo {
   switch (inVarbInfo.infoType) {
-    case "local":
-      return inVarbInfo;
+    case "local": {
+      return {
+        ...inVarbInfo,
+        varbName,
+      };
+    }
     case "children": {
       const relParentInfo: RelParentVarbInfo = {
         infoType: "parent",
@@ -84,7 +89,7 @@ export function relInToOutVarbInfo({
       const relStepSiblingOfChildInfo: RelStepSiblingOfChildVarbInfo = {
         infoType: "stepSiblingOfHasChildName",
         selfChildName: inVarbInfo.stepSiblingName,
-        stepSiblingSectionName: sectionName as StepSiblingName,
+        stepSiblingSectionName: sectionName,
         varbName: varbName,
         expectedCount: "multiple",
       };

@@ -70,10 +70,11 @@ export function mgmtRelVarbs<R extends RelVarbs<"mgmt">>(): R {
       "vacancyLossDollars",
       "Vacancy rent lost",
       (baseVarbName) => {
-        return relVarbInfoS.stepSibling(
+        return relVarbInfoS.pibling(
           "propertyGeneral",
           "propertyGeneral",
-          baseVarbName
+          baseVarbName,
+          { expectedCount: "onlyOne" }
         );
       },
       "targetRent",

@@ -1,10 +1,11 @@
 import { pick } from "lodash";
+import { Schema } from "mongoose";
 import { z } from "zod";
 import { zNumber, zS, zString } from "../../../utils/zod";
 import { SimpleSectionName } from "../../baseSections";
 import { zSectionNameProp } from "../../baseSectionsDerived/baseSectionInfo";
 import {
-  DbSectionVarbInfoMixed,
+  DbVarbInfoMixed,
   FeVarbInfoMixed,
   GlobalVarbInfo,
 } from "../../baseSectionsDerived/baseVarbInfo";
@@ -12,7 +13,7 @@ import { Id } from "../id";
 
 export type OutEntity = FeVarbInfoMixed & { entityId: string };
 
-type DbInEntityInfo = DbSectionVarbInfoMixed<SimpleSectionName, "onlyOne">;
+type DbInEntityInfo = DbVarbInfoMixed<SimpleSectionName, "onlyOne">;
 type GlobalInEntityInfo = GlobalVarbInfo<SimpleSectionName, "onlyOne">;
 
 export type InEntityVarbInfo = DbInEntityInfo | GlobalInEntityInfo;
@@ -42,7 +43,7 @@ const zInEntityBase = z.object({
 
 const zDbInEntity = zInEntityBase.merge(zDbInEntityInfo);
 const zImmutableRelInEntity = zInEntityBase.merge(zGlobalInEntityInfo);
-const zInEntity = z.union([zDbInEntity, zImmutableRelInEntity]);
+export const zInEntity = z.union([zDbInEntity, zImmutableRelInEntity]);
 export const zInEntities = z.array(zInEntity);
 type InEntityBase = z.infer<typeof zInEntityBase>;
 interface DbInEntity extends InEntityBase, DbInEntityInfo {}
@@ -51,6 +52,14 @@ export type InEntity = DbInEntity | GlobalInEntity;
 export type InEntities = InEntity[];
 // As things stand, I can't infer much from the zod schemas because
 // there isn't a convenient way to make their sectionName enforce SectionName
+
+export const mInEntities = {
+  type: Schema.Types.Mixed,
+  required: true,
+  validate: {
+    validator: (v: any) => zInEntities.safeParse(v).success,
+  },
+};
 
 export const entityS = {
   inEntity(

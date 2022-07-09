@@ -1,6 +1,5 @@
 import { Obj } from "../../utils/Obj";
 import { SimpleSectionName } from "../baseSections";
-import { FeVarbInfoMixed } from "../baseSectionsDerived/baseVarbInfo";
 import { ChildName } from "./ChildName";
 import {
   RelChildrenVarbInfo,
@@ -44,16 +43,10 @@ export const relVarbInfosS = {
       return namedChildren;
     }, {} as Record<string, RelChildrenVarbInfo<SN, CN>>);
   },
-  localVarbInfoMixed<SN extends SimpleSectionName>(): RelLocalVarbInfos<
-    SN,
-    keyof FeVarbInfoMixed<SN>
+  localEntityInfo(): RelLocalVarbInfos<
+    SimpleSectionName,
+    "entityId" | "varbInfo"
   > {
-    return this.localByVarbName([
-      "sectionName",
-      "varbName",
-      "infoType",
-      "id",
-      "expectedCount",
-    ]);
+    return this.localByVarbName(["entityId", "varbInfo"]);
   },
 };

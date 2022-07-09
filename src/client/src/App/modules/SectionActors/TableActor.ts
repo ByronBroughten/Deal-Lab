@@ -10,18 +10,15 @@ import { SectionActorBase, SectionActorBaseProps } from "./SectionActorBase";
 
 class GetterColumn extends GetterSection<"column"> {
   get displayNameOrNotFound(): string {
-    const { varbInfoValues } = this.varbs;
-    if (this.sections.hasSectionMixed(varbInfoValues)) {
-      const varb = this.sections.varbByMixed(varbInfoValues);
+    const varbInfo = this.varbInfoValue();
+    if (this.sections.hasSectionMixed(varbInfo)) {
+      const varb = this.sections.varbByMixed(varbInfo);
       return varb.displayName;
     } else {
       return "Variable not found";
     }
   }
 }
-
-// table actor and tableStoreActor will be very similar
-// TableStoreActor
 
 interface TableActorProps
   extends StrictOmit<SectionActorBaseProps<"table">, "sectionName"> {

@@ -1,6 +1,6 @@
 import { Obj } from "../../../utils/Obj";
 import { ValueTypes } from "../../relSectionsUtils/rel/valueMetaTypes";
-import { valueMeta } from "../valueMeta";
+import { valueMeta } from "../../relSectionsUtils/valueMeta";
 
 const editorUpdateNames = ["calcVarbs", "string", "stringArray"] as const;
 type EditorUpdateName = typeof editorUpdateNames[number];

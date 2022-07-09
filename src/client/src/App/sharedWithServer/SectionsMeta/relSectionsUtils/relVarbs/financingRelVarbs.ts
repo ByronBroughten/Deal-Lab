@@ -8,7 +8,6 @@ import { RelVarbs, relVarbsS } from "../relVarbs";
 
 const loanAmountBase = switchNames("loanAmountBase", "dollarsPercent");
 export function loanRelVarbs<R extends RelVarbs<"loan">>(): R {
-  const sectionName = "loan";
   return {
     ...relVarbsS.savableSection,
     [loanAmountBase.switch]: rel.varb.string({
@@ -32,12 +31,9 @@ export function loanRelVarbs<R extends RelVarbs<"loan">>(): R {
       inUpdateSwitchProps: [
         rel.updateSwitch.percentToDecimalTimesBase(
           "loanAmountBase",
-          relVarbInfoS.stepSibling(
-            "propertyGeneral",
-            "propertyGeneral",
-            "price",
-            { expectedCount: "onlyOne" }
-          )
+          relVarbInfoS.pibling("propertyGeneral", "propertyGeneral", "price", {
+            expectedCount: "onlyOne",
+          })
         ),
       ],
       startAdornment: "$",
@@ -69,10 +65,10 @@ export function loanRelVarbs<R extends RelVarbs<"loan">>(): R {
       initNumber: 0,
     }),
     closingCosts: rel.varb.sumMoney("Closing costs", [
-      relVarbInfoS.children("singleTimeList", "total"),
+      relVarbInfoS.children("closingCostList", "total"),
     ]),
     wrappedInLoan: rel.varb.sumMoney("Wrapped into loan", [
-      relVarbInfoS.children("singleTimeList", "total"),
+      relVarbInfoS.children("wrappedInLoanList", "total"),
     ]),
 
     ...relVarbsS.ongoingPureCalc(
@@ -136,11 +132,7 @@ export const financingRelVarbs: RelVarbs<"financing"> = {
     [
       ...relVarbInfosS.local(["pi", "mortgageIns"]),
       relVarbInfoS.stepSibling("propertyGeneral", "propertyGeneral", "taxes"),
-      relVarbInfoS.stepSibling(
-        "propertyGeneral",
-        "propertyGeneral",
-        "mortgageIns"
-      ),
+      relVarbInfoS.stepSibling("propertyGeneral", "propertyGeneral", "homeIns"),
     ],
     { shared: { startAdornment: "$" }, switchInit: "monthly" }
   ),

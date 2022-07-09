@@ -98,9 +98,9 @@ export class MainSectionActor<
     row.clearCells();
     const { columns } = table;
     for (const col of columns) {
-      const { varbInfoValues } = col.varbs;
-      const varbInfo = this.get.inEntityInfoToFeInfo(varbInfoValues);
-      row.addCell(varbInfo);
+      const varbInfo = col.value("varbInfo", "inEntityVarbInfo");
+      if (!varbInfo) throw new Error("varbInfo not initialized");
+      row.addCell(varbInfo, col.dbId);
     }
   }
   private addRow(): void {

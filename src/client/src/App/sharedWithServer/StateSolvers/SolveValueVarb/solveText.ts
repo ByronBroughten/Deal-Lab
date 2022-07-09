@@ -1,23 +1,12 @@
 import { round } from "lodash";
 import { evaluate } from "mathjs";
-import { NumberOrQ } from "../../SectionsMeta/baseSectionsUtils/baseValues/NumObj";
+import {
+  NumberOrQ,
+  NumObjUnit,
+  numObjUnits,
+} from "../../SectionsMeta/baseSectionsUtils/baseValues/NumObj";
 import { NumObjUpdateFnName } from "../../SectionsMeta/baseSectionsUtils/baseValues/updateFnNames";
 import { arithmeticOperatorsArr, mathS } from "../../utils/math";
-
-export const numObjUnits = {
-  percent: {
-    roundTo: 2,
-  },
-  decimal: {
-    roundTo: 4,
-  },
-  money: {
-    roundTo: 2,
-    roundWithZeros: true,
-  },
-} as const;
-
-export type NumObjUnit = keyof typeof numObjUnits;
 
 export function solveText(
   text: string,

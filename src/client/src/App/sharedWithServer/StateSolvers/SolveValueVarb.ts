@@ -1,8 +1,9 @@
-import { DbSectionVarbInfoMixed } from "../SectionsMeta/baseSectionsDerived/baseVarbInfo";
+import { DbVarbInfoMixed } from "../SectionsMeta/baseSectionsDerived/baseVarbInfo";
 import calculations, {
   isCalculationName,
   NumberProps,
 } from "../SectionsMeta/baseSectionsUtils/baseValues/calculations";
+import { InEntityVarbInfoValue } from "../SectionsMeta/baseSectionsUtils/baseValues/InEntityVarbInfoValue";
 import { NumObj } from "../SectionsMeta/baseSectionsUtils/baseValues/NumObj";
 import { RelVarbInfo } from "../SectionsMeta/childSectionsDerived/RelVarbInfo";
 import { UpdateFnProps } from "../SectionsMeta/relSectionsUtils/rel/relVarbTypes";
@@ -42,6 +43,9 @@ export class SolveValueVarb<
   private updateFns = {
     string: (): string => {
       return this.getterVarb.value("string");
+    },
+    inEntityVarbInfo: (): InEntityVarbInfoValue => {
+      return this.getterVarb.value("inEntityVarbInfo");
     },
     editorValue: (): NumObj => {
       const value = this.getterVarb.value("numObj");
@@ -85,25 +89,25 @@ export class SolveValueVarb<
       } else throw new Error("section must contain at least one varb");
     },
     loadedString: (): string => {
-      const { varbInfoValues } = this.getterVarbs;
-      if (this.getterSections.hasSectionMixed(varbInfoValues)) {
-        const varb = this.getterSections.varbByMixed(varbInfoValues);
+      const varbInfo = this.getterSection.varbInfoValue();
+      if (this.getterSections.hasSectionMixed(varbInfo)) {
+        const varb = this.getterSections.varbByMixed(varbInfo);
         return varb.displayName;
       } else return "Variable not found.";
     },
   };
-  solveValue(): NumObj | string {
+  solveValue(): NumObj | string | InEntityVarbInfoValue {
     const { updateFnName } = this.getterVarb;
     if (isCalculationName(updateFnName)) return this.updateFns.calculation();
     if (this.isInUpdateFns(updateFnName)) return this.updateFns[updateFnName]();
     else throw new Error(`updateFnName ${updateFnName} not found.`);
   }
   private loadNextTexts(): { editorText: string; solvableText: string } {
-    const loadingVarbInfo = this.getterVarbs.varbInfoStringValues;
-    if (
-      isInEntityVarb(loadingVarbInfo) &&
-      this.getterList.hasByMixed(loadingVarbInfo)
-    ) {
+    const loadingVarbInfo = this.getterSection.value(
+      "varbInfo",
+      "inEntityVarbInfo"
+    );
+    if (loadingVarbInfo && this.getterList.hasByMixed(loadingVarbInfo)) {
       const varb = this.getterSections.varbByMixed(loadingVarbInfo);
       return {
         solvableText: varb.value("numObj").solvableText,
@@ -173,4 +177,4 @@ export class SolveValueVarb<
 
 export type FailedVarbs = FailedVarb[];
 type FailedVarb = { errorMessage: string } & UpdateVarbInfo;
-type UpdateVarbInfo = RelVarbInfo | DbSectionVarbInfoMixed;
+type UpdateVarbInfo = RelVarbInfo | DbVarbInfoMixed;

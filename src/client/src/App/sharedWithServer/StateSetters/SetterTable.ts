@@ -1,4 +1,3 @@
-import { isEqual } from "lodash";
 import { DbVarbs } from "../SectionPack/RawSection";
 import { InEntityVarbInfo } from "../SectionsMeta/baseSectionsUtils/baseValues/entities";
 import { GetterSection } from "../StateGetters/GetterSection";
@@ -122,10 +121,8 @@ export class SetterTableNext extends SetterSectionBase<"table"> {
   private cellValueByColumn({ rowId, columnId }: RowColumnIds): string {
     const column = this.column(columnId);
     const cells = this.row(rowId).get.children("cell");
-    const colInfoValues = column.varbs.varbInfoValues;
     const cell = cells.find((cell) => {
-      const cellInfoValues = cell.varbs.varbInfoValues;
-      if (isEqual(colInfoValues, cellInfoValues)) return true;
+      if (cell.dbId === column.dbId) return true;
     });
     if (cell) return cell.varb("value").displayValue;
     else return "";

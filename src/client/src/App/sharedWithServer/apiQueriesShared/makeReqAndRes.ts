@@ -23,8 +23,6 @@ export type DbSectionPackInfoNext = {
   dbId: string;
 };
 
-type Test = SectionName<"arrStore">;
-
 export type SectionPackReq = MakeReq<{ sectionPack: ServerSectionPack }>;
 export type SectionPackArrReq<
   SN extends SectionName<"arrStore"> = SectionName<"arrStore">

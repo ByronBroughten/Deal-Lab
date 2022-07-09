@@ -1,22 +1,17 @@
 import styled from "styled-components";
 import { InEntityVarbInfo } from "../../sharedWithServer/SectionsMeta/baseSectionsUtils/baseValues/entities";
 import { useGetterVarbByEntity } from "../../sharedWithServer/stateClassHooks/useGetterVarbByEntity";
-import { GetterVarb } from "../../sharedWithServer/StateGetters/GetterVarb";
 import theme from "../../theme/Theme";
 
-type LabeledVarbProps = {
+interface LabeledVarbNotFoundProps {
   className?: string;
-  entityVarbInfo: InEntityVarbInfo;
   onXBtnClick?: () => void;
-};
-export function LabeledVarbNotFound({
-  entityVarbInfo,
-  ...rest
-}: LabeledVarbProps) {
+}
+export function LabeledVarbNotFound({ ...rest }: LabeledVarbNotFoundProps) {
   return (
     <StyledLabeledVarb
       {...{
-        entityVarbInfo,
+        labelId: "variable not found",
         labelText: "Variable not found",
         displayVarb: "?",
         ...rest,
@@ -25,32 +20,35 @@ export function LabeledVarbNotFound({
   );
 }
 
+interface LabeledVarbProps extends LabeledVarbNotFoundProps {
+  entityVarbInfo: InEntityVarbInfo;
+}
 export function LabeledVarbNext({ entityVarbInfo, ...rest }: LabeledVarbProps) {
   // make useGetterVarbMixed
   const varb = useGetterVarbByEntity(entityVarbInfo);
   return (
     <StyledLabeledVarb
       {...{
-        entityVarbInfo,
         labelText: varb.displayName,
         displayVarb: varb.displayVarb(),
+        labelId: varb.feId,
         ...rest,
       }}
     />
   );
 }
 
-interface StyledLabeledVarbProps extends LabeledVarbProps {
+interface StyledLabeledVarbProps extends LabeledVarbNotFoundProps {
   labelText: string;
   displayVarb: string;
+  labelId: string;
 }
 function StyledLabeledVarb({
+  labelId,
   className,
-  entityVarbInfo,
   labelText,
   displayVarb,
 }: StyledLabeledVarbProps) {
-  const labelId = GetterVarb.mixedVarbInfoToMixedVarbId(entityVarbInfo);
   return (
     <Styled className={`LabeledVarb-root ${className ?? ""}`}>
       <div className="LabeledVarb-labelPositioner">

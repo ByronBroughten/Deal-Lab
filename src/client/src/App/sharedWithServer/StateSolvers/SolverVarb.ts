@@ -12,7 +12,6 @@ import { RelInVarbInfo } from "../SectionsMeta/childSectionsDerived/RelInOutVarb
 import { SectionName } from "../SectionsMeta/SectionName";
 import { GetterSections } from "../StateGetters/GetterSections";
 import { GetterVarb } from "../StateGetters/GetterVarb";
-import { GetterVarbs } from "../StateGetters/GetterVarbs";
 import { OutVarbGetterVarb } from "../StateInOutVarbs/OutVarbGetterVarb";
 import { UpdaterVarb } from "../StateUpdaters/UpdaterVarb";
 import { StrictOmit } from "../utils/types";
@@ -38,9 +37,6 @@ export class SolverVarb<
   outVarbGetter = new OutVarbGetterVarb(this.getterVarbBase.getterVarbProps);
   private getterSections = new GetterSections(
     this.getterSectionsBase.getterSectionsProps
-  );
-  private getterVarbs = new GetterVarbs(
-    this.getterSectionBase.getterSectionProps
   );
   private updaterVarb = new UpdaterVarb(this.getterVarbBase.getterVarbProps);
   private valueSolver = new SolveValueVarb(this.getterVarbBase.getterVarbProps);
@@ -70,20 +66,22 @@ export class SolverVarb<
     this.updateConnectedVarbs();
   }
 
-  loadValueFromVarb(varbInfo: InEntityVarbInfo) {
-    const entityId = this.getterVarbs.one("entityId").value("string");
-    const { varbInfoValues } = this.getterVarbs;
-    this.removeInEntity({ ...varbInfoValues, entityId });
-    const nextValues = {
-      ...varbInfo,
-      entityId: Id.make(),
-    };
+  loadValueFromVarb(nextVarbInfo: InEntityVarbInfo) {
+    const entityId = this.get.section.value("entityId", "string");
+    const varbInfoValue = this.get.section.varbInfoValue();
+    this.removeInEntity({ ...varbInfoValue, entityId });
+
+    const nextEntityId = Id.make();
     this.addInEntity({
-      ...nextValues,
+      entityId: nextEntityId,
+      ...nextVarbInfo,
       length: 0, // length and offset are arbitrary
       offset: 0, // just borrowing functionality from editor entities
     });
-    this.solverSection.updateValuesAndSolve(nextValues);
+    this.solverSection.updateValuesAndSolve({
+      varbInfo: nextVarbInfo,
+      entityId: nextEntityId,
+    });
   }
 
   updateConnectedVarbs(): void {

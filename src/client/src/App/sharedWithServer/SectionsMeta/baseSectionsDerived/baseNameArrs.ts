@@ -68,11 +68,6 @@ function makeBaseNameArrsForContext<SC extends ContextName>(
     tableLoadOnLogin: tableLoadOnLoginNames,
 
     feGuestAccess: feGuestAccessNames,
-    alwaysOne: Obj.entryKeysWithPropValue(
-      baseSectionsOfContext,
-      "alwaysOne",
-      true as true
-    ),
     uniqueDbId: Obj.entryKeysWithPropValue(
       baseSectionsOfContext,
       "uniqueDbId",
@@ -99,12 +94,8 @@ function makeBaseNameArrsForContext<SC extends ContextName>(
       "hasGlobalVarbs",
       true as true
     ),
-
     get additiveList() {
       return ["singleTimeList", "ongoingList"] as const;
-    },
-    get alwaysOneHasVarb() {
-      return Arr.extract(this.hasVarb, this.alwaysOne);
     },
     get varbListAllowed() {
       return Arr.extractStrict(this.all, [

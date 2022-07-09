@@ -1,3 +1,4 @@
+import { NumObjUnit } from "../../baseSectionsUtils/baseValues/NumObj";
 import {
   RelInVarbInfo,
   RelSingleInVarbInfo,
@@ -32,7 +33,7 @@ export type CommonRelVarb = {
 };
 type UniqueTypeProps = {
   numObj: {
-    unit: keyof ValueSchemas["numObj"]["units"];
+    unit: NumObjUnit;
   };
 };
 type ValueSpecificProps = {

@@ -1,6 +1,7 @@
 import { sectionsMeta } from "../SectionsMeta";
 import { switchVarbNames } from "../SectionsMeta/baseSectionsUtils/baseSwitchNames";
 import { InEntityVarbInfo } from "../SectionsMeta/baseSectionsUtils/baseValues/entities";
+import { mixedInfoS } from "../SectionsMeta/childSectionsDerived/MixedSectionInfo";
 import { SectionName, sectionNameS } from "../SectionsMeta/SectionName";
 import { GetterSectionsBase } from "../StateGetters/Bases/GetterSectionsBase";
 import { GetterSections } from "../StateGetters/GetterSections";
@@ -20,7 +21,7 @@ export class VariableGetterSections extends GetterSectionsBase {
   getterSections = new GetterSections(this.getterSectionsProps);
   variableOptions(): VariableOption[] {
     return [
-      ...this.initStaticVarbOptions(),
+      ...this.initGlobalVarbOptions(),
       ...this.userVarbOptions(),
       ...this.userListTotalOptions(),
     ];
@@ -39,7 +40,7 @@ export class VariableGetterSections extends GetterSectionsBase {
             displayName: item.varb("name").value("string"),
             collectionName,
             varbInfo: {
-              ...item.uniqueIdInfoMixed("dbId"),
+              ...item.dbInfoMixed("onlyOne"),
               varbName: "value",
             },
           };
@@ -70,7 +71,7 @@ export class VariableGetterSections extends GetterSectionsBase {
             const varbName = ongoingNames[key];
             const varb = list.varb(varbName);
             options.push({
-              varbInfo: varb.uniqueIdVarbInfoMixed("dbId"),
+              varbInfo: varb.dbVarbInfoMixed("onlyOne"),
               displayName,
               collectionName,
             });
@@ -78,7 +79,7 @@ export class VariableGetterSections extends GetterSectionsBase {
         } else {
           const varb = list.varb("total");
           options.push({
-            varbInfo: varb.uniqueIdVarbInfoMixed("dbId"),
+            varbInfo: varb.dbVarbInfoMixed("onlyOne"),
             displayName,
             collectionName,
           });
@@ -87,7 +88,7 @@ export class VariableGetterSections extends GetterSectionsBase {
     }
     return options;
   }
-  private initStaticVarbOptions(): VariableOption[] {
+  private initGlobalVarbOptions(): VariableOption[] {
     const sectionNames = sectionNameS.arrs.all;
     return sectionNames.reduce((options, sectionName) => {
       const sectionMeta = sectionsMeta.section(sectionName);
@@ -95,13 +96,13 @@ export class VariableGetterSections extends GetterSectionsBase {
       if (sectionNameS.is(sectionName, "hasGlobalVarbs"))
         options = options.concat(
           varbNames
-            .map((varbName) => this.initStaticVarbOption(sectionName, varbName))
+            .map((varbName) => this.initGlobalVarbOption(sectionName, varbName))
             .filter((val) => val.displayName !== "")
         );
       return options;
     }, [] as VariableOption[]);
   }
-  private initStaticVarbOption(
+  private initGlobalVarbOption(
     sectionName: SectionName<"hasGlobalVarbs">,
     varbName: string
   ): VariableOption {
@@ -110,13 +111,10 @@ export class VariableGetterSections extends GetterSectionsBase {
       varbName,
     });
     const sectionMeta = sectionsMeta.section(sectionName);
-
     return {
       varbInfo: {
-        sectionName,
+        ...mixedInfoS.makeGlobalSection(sectionName),
         varbName,
-        id: "static",
-        infoType: "relative",
       },
       collectionName: sectionMeta.displayName,
       displayName: varbMeta.displayName as string,

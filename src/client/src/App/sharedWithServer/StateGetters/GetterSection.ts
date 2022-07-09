@@ -1,7 +1,11 @@
-import { FeMixedInfo } from "../SectionsMeta/baseSectionsDerived/baseSectionInfo";
-import {} from "../SectionsMeta/baseSectionsDerived/baseVarbInfo";
+import {
+  DbSectionInfoMixed,
+  FeSectionInfoMixed,
+} from "../SectionsMeta/baseSectionsDerived/baseVarbInfo";
 import { SwitchTargetKey } from "../SectionsMeta/baseSectionsUtils/baseSwitchNames";
+import { InEntityVarbInfo } from "../SectionsMeta/baseSectionsUtils/baseValues/entities";
 import { DbSectionInfo } from "../SectionsMeta/baseSectionsUtils/DbSectionInfo";
+import { ExpectedCount } from "../SectionsMeta/baseSectionsUtils/NanoIdInfo";
 import { ValueTypesPlusAny } from "../SectionsMeta/baseSectionsUtils/StateVarbTypes";
 import {
   SwitchEndingKey,
@@ -20,6 +24,7 @@ import {
   SelfAndDescendantIds,
 } from "../SectionsMeta/childSectionsDerived/DescendantSectionName";
 import {
+  mixedInfoS,
   SectionInfoMixedFocal,
   VarbInfoMixedFocal,
 } from "../SectionsMeta/childSectionsDerived/MixedSectionInfo";
@@ -37,10 +42,6 @@ import {
   noParentWarning,
   VarbInfo,
 } from "../SectionsMeta/Info";
-import {
-  UniqueIdMixedInfo,
-  UniqueIdType,
-} from "../SectionsMeta/relSectionsUtils/rel/uniqueIdInfo";
 import { ValueTypeName } from "../SectionsMeta/relSectionsUtils/rel/valueMetaTypes";
 import { SectionMeta } from "../SectionsMeta/SectionMeta";
 import {
@@ -138,10 +139,11 @@ export class GetterSection<
         );
         if (sectionName === stepSiblingSectionName) {
           return this.stepSiblings(stepSiblingName as StepSiblingName<SN>);
-        } else
+        } else {
           throw new Error(
             `sectionName ${sectionName} does not equal stepSiblingSectionName ${stepSiblingSectionName}`
           );
+        }
       }
       case "pibling": {
         const { piblingName, piblingSectionName } = info;
@@ -238,13 +240,13 @@ export class GetterSection<
       sectionName: this.sectionName,
     };
   }
-  get feInfoMixed(): FeMixedInfo<SN> {
-    return {
-      infoType: "feId",
-      id: this.feId,
-      sectionName: this.sectionName,
-      expectedCount: "onlyOne",
-    };
+  dbInfoMixed<EC extends ExpectedCount>(
+    expectedCount: EC
+  ): DbSectionInfoMixed<SN, EC> {
+    return mixedInfoS.makeDb(this.sectionName, this.dbId, expectedCount);
+  }
+  get feInfoMixed(): FeSectionInfoMixed<SN> {
+    return mixedInfoS.makeFe(this.sectionName, this.feId);
   }
   get selfChildName(): ChildName<ParentNameSafe<SN>> {
     const { allChildFeIds } = this.parent;
@@ -368,6 +370,11 @@ export class GetterSection<
   varbInfo(varbName: string): VarbInfo<SN> {
     return this.varb(varbName).feVarbInfo;
   }
+  varbInfoValue(): InEntityVarbInfo {
+    const value = this.value("varbInfo", "inEntityVarbInfo");
+    if (!value) throw new Error("inEntityVarbInfo value is not initialized");
+    return value;
+  }
   switchValue<SK extends SwitchEndingKey>(
     varbNameBase: string,
     switchEnding: SK
@@ -400,18 +407,6 @@ export class GetterSection<
   ): GetterVarb<SN> {
     const varbName = this.switchVarbName(varbNameBase, switchEnding);
     return this.varb(varbName);
-  }
-  uniqueId<T extends UniqueIdType>(infoType: T): string {
-    return this[infoType];
-  }
-  uniqueIdInfoMixed<T extends UniqueIdType>(
-    infoType: T
-  ): UniqueIdMixedInfo<T, SN> {
-    return {
-      sectionName: this.sectionName,
-      id: this.uniqueId(infoType),
-      infoType,
-    };
   }
   value<VT extends ValueTypeName | "any" = "any">(
     varbName: string,

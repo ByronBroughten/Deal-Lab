@@ -92,24 +92,21 @@ export class SectionMeta<SN extends SimpleSectionName> {
     const names = childToSectionNames[this.sectionName] as {
       [key: string]: string;
     };
-    if (!names)
+    if (!names || !names[childName]) {
       throw new Error(
         `childName "${childName}" did not yield a childType from parent of type ${this.sectionName}`
       );
-
+    }
     return names[childName] as ChildSectionName<SN, CN>;
   }
-  childTypeNames<CT extends ChildSectionName<SN>>(
+  childTypeNames<CT extends SimpleSectionName>(
     childSectionName: CT
   ): ChildSectionNameName<SN, CT>[] {
-    const test = childSectionNameNames[this.sectionName] as {
+    const csnsToCns = childSectionNameNames[this.sectionName] as {
       [key: string]: string[];
     };
-    const test2 = test[childSectionName as string];
-    return test2 as any[] as ChildSectionNameName<SN, CT>[];
-  }
-  get alwaysOne(): boolean {
-    return this.prop("alwaysOne");
+    const childNames = csnsToCns[childSectionName] ?? [];
+    return childNames as ChildSectionNameName<SN, CT>[];
   }
   get varbMetas(): VarbMetas {
     return this.props.varbMetas;

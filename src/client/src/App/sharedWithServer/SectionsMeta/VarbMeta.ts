@@ -1,7 +1,6 @@
 import { cloneDeep, pick } from "lodash";
-import { NumObjUnit } from "../StateGetters/GetterVarbNumObj";
 import { SimpleSectionName } from "./baseSections";
-import { valueMeta } from "./baseSectionsUtils/valueMeta";
+import { NumObjUnit } from "./baseSectionsUtils/baseValues/NumObj";
 import {
   RelInVarbInfo,
   RelOutVarbInfo,
@@ -14,6 +13,7 @@ import {
   UpdateSwitchProp,
 } from "./relSectionsUtils/rel/relVarbTypes";
 import { UpdateFnName } from "./relSectionsUtils/rel/valueMetaTypes";
+import { valueMeta } from "./relSectionsUtils/valueMeta";
 
 type InBaseUpdatePack = {
   updateFnName: UpdateFnName;

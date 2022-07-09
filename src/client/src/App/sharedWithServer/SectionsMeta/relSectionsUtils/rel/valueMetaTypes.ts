@@ -1,7 +1,7 @@
 import { StrictExtract } from "../../../utils/types";
 import { BaseSections, SimpleSectionName } from "../../baseSections";
 import { StateValue } from "../../baseSectionsUtils/baseValues/StateValueTypes";
-import { valueMeta } from "../../baseSectionsUtils/valueMeta";
+import { valueMeta } from "../valueMeta";
 
 export type ValueSchemas = typeof valueMeta;
 export type ValueTypes = {

@@ -1,4 +1,6 @@
 import { SectionPack } from "../SectionPack/SectionPack";
+import { InEntityVarbInfoValue } from "../SectionsMeta/baseSectionsUtils/baseValues/InEntityVarbInfoValue";
+import { mixedInfoS } from "../SectionsMeta/childSectionsDerived/MixedSectionInfo";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
 
 export const outputNames = [
@@ -7,20 +9,22 @@ export const outputNames = [
   "roiYearly",
 ] as const;
 
-export const defaultDealOutputInfos = outputNames.map((varbName) => {
-  return {
-    id: "static",
-    infoType: "relative",
-    sectionName: "deal",
-    varbName,
-  } as const;
-});
+const defaultDealOutputInfos: InEntityVarbInfoValue[] = outputNames.map(
+  (varbName) => {
+    return {
+      ...mixedInfoS.makeGlobalSection("deal", "onlyOne"),
+      varbName,
+    } as const;
+  }
+);
 
 export function makeDefaultOutputList(): SectionPack<"outputList"> {
   const outputList = PackBuilderSection.initAsOmniChild("outputList");
   for (const outputVarbInfo of defaultDealOutputInfos) {
     outputList.addChild("output", {
-      dbVarbs: outputVarbInfo,
+      dbVarbs: {
+        varbInfo: outputVarbInfo,
+      },
     });
   }
   return outputList.makeSectionPack();

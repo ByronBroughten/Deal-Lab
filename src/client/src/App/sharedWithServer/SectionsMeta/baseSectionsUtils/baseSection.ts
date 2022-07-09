@@ -4,7 +4,6 @@ import { BaseVarbSchemas } from "./baseVarbs";
 
 export type BasePropName = keyof GeneralBaseSection;
 export type GeneralBaseSection = {
-  alwaysOne: boolean;
   makeOneOnStartup: boolean;
   varbSchemas: BaseVarbSchemas;
   hasGlobalVarbs: boolean;
@@ -15,7 +14,6 @@ export type GeneralBaseSection = {
 type BaseSectionOptions = Partial<GeneralBaseSection>;
 export const baseOptions = {
   alwaysOneFromStart: {
-    alwaysOne: true,
     makeOneOnStartup: true,
   },
   get defaultSection() {
@@ -27,7 +25,6 @@ export const baseOptions = {
     uniqueDbId: true,
   },
   fallback: {
-    alwaysOne: false,
     makeOneOnStartup: false,
     hasGlobalVarbs: false,
     uniqueDbId: false,

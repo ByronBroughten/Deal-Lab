@@ -1,9 +1,19 @@
 import { z } from "zod";
-import { numObjUnits } from "../../StateSolvers/SolveValueVarb/solveText";
 import { reqMonNumber, reqMonString } from "../../utils/mongoose";
-import { isNumObj, mDbNumObj, NumObj, zNumObj } from "./baseValues/NumObj";
-import { numObjUpdateFnNames } from "./baseValues/updateFnNames";
-import { ValueName } from "./baseVarb";
+import {
+  InEntityVarbInfoValue,
+  isInEntityVarbInfoValue,
+  mInEntityVarbInfoValue,
+  zInEntityVarbInfoValue,
+} from "../baseSectionsUtils/baseValues/InEntityVarbInfoValue";
+import {
+  isNumObj,
+  mDbNumObj,
+  NumObj,
+  zNumObj,
+} from "../baseSectionsUtils/baseValues/NumObj";
+import { numObjUpdateFnNames } from "../baseSectionsUtils/baseValues/updateFnNames";
+import { ValueName } from "../baseSectionsUtils/baseVarb";
 
 export const valueMeta = {
   number: {
@@ -49,7 +59,13 @@ export const valueMeta = {
     }),
     zod: zNumObj,
     mon: mDbNumObj,
-    units: numObjUnits,
+  },
+  inEntityVarbInfo: {
+    is: isInEntityVarbInfoValue,
+    updateFnNames: ["inEntityVarbInfo"],
+    initDefault: () => null as InEntityVarbInfoValue,
+    zod: zInEntityVarbInfoValue,
+    mon: mInEntityVarbInfoValue,
   },
 } as const;
 

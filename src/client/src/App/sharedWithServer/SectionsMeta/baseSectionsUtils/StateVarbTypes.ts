@@ -1,6 +1,6 @@
 import { ValueTypes } from "../relSectionsUtils/rel/valueMetaTypes";
+import { valueMeta } from "../relSectionsUtils/valueMeta";
 import { StateValue } from "./baseValues/StateValueTypes";
-import { valueMeta } from "./valueMeta";
 
 export type Adornments = {
   startAdornment: string;

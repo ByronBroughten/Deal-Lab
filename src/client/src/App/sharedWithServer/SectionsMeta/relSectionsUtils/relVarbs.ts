@@ -20,12 +20,7 @@ import {
   ongoingSumNums,
 } from "./rel/relVarbs/preOngoingVarbs";
 import { simpleSwitch, switchInput } from "./rel/relVarbs/preSwitchVarbs";
-import {
-  DisplayName,
-  RelVarb,
-  RelVarbByType,
-  StringRelVarb,
-} from "./rel/relVarbTypes";
+import { DisplayName, RelVarb, RelVarbByType } from "./rel/relVarbTypes";
 
 export type GeneralRelVarbs = Record<string, RelVarb>;
 export type RelVarbs<SN extends SimpleSectionName> = Record<
@@ -160,21 +155,13 @@ export const relVarbsS = {
     }
     return ssPreVarbs as ToReturn;
   },
-  varbInfo(): StringPreVarbsFromNames<
-    ["sectionName" | "varbName" | "id" | "infoType"]
-  > {
-    return this.strings(["sectionName", "varbName", "id", "infoType"] as const);
+  varbInfo() {
+    return { varbInfo: relVarbS.type("inEntityVarbInfo") } as const;
   },
   entityInfo() {
     return {
       ...this.varbInfo(),
       entityId: relVarbS.string(),
-    } as {
-      sectionName: StringRelVarb;
-      varbName: StringRelVarb;
-      id: StringRelVarb;
-      infoType: StringRelVarb;
-      entityId: StringRelVarb;
     };
   },
   singleTimeItem<R extends RelVarbs<"singleTimeItem">>(): R {
@@ -199,7 +186,7 @@ export const relVarbsS = {
             switchValue: "loadedVarb",
             updateFnName: "loadedNumObj",
             updateFnProps: {
-              ...relVarbInfosS.localVarbInfoMixed(),
+              ...relVarbInfosS.localEntityInfo(),
               valueSwitch: valueSwitchProp,
             },
           },
@@ -262,7 +249,7 @@ export const relVarbsS = {
             updateFnName: "loadedNumObj",
             updateFnProps: {
               valueSwitch: valueSwitchProp,
-              ...relVarbInfosS.localVarbInfoMixed(),
+              ...relVarbInfosS.localEntityInfo(),
             },
           },
           {
@@ -294,7 +281,7 @@ export const relVarbsS = {
             updateFnName: "loadedNumObj",
             updateFnProps: {
               valueSwitch: valueSwitchProp,
-              ...relVarbInfosS.localVarbInfoMixed(),
+              ...relVarbInfosS.localEntityInfo(),
             },
           },
           {

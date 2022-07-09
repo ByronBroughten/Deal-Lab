@@ -1,5 +1,4 @@
-import { VarbInfoMixed } from "../SectionsMeta/childSectionsDerived/MixedSectionInfo";
-import { FeCellValueInfo } from "../StateGetters/GetterMainSection";
+import { InEntityVarbInfo } from "../SectionsMeta/baseSectionsUtils/baseValues/entities";
 import { StrictOmit } from "../utils/types";
 import {
   SetterSectionBase,
@@ -28,14 +27,13 @@ export class SetterTableRow extends SetterSectionBase<"tableRow"> {
   clearCells(): void {
     this.setter.removeChildren("cell");
   }
-  addCell(cellValueInfo: FeCellValueInfo): void {
-    const value = this.get.sections.numObjOrNotFoundByMixedAssertOne(
-      cellValueInfo as VarbInfoMixed
-    );
-
+  addCell(cellValueInfo: InEntityVarbInfo, colDbId: string): void {
+    const value =
+      this.get.sections.numObjOrNotFoundByMixedAssertOne(cellValueInfo);
     this.setter.addChild("cell", {
+      dbId: colDbId,
       dbVarbs: {
-        ...cellValueInfo,
+        varbInfo: cellValueInfo,
         value,
       },
     });

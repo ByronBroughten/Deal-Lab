@@ -1,7 +1,7 @@
 import { omit } from "lodash";
 import { Obj } from "../utils/Obj";
-import { base } from "./baseSectionsUtils/base";
 import {
+  baseOptions,
   baseSection,
   baseSectionS,
   GeneralBaseSection,
@@ -50,12 +50,9 @@ export type BaseSections = typeof baseSections;
 export const baseSections = {
   fe: {
     root: baseSectionS.container,
-    main: baseSection(
-      {
-        _typeUniformity: "string",
-      } as const,
-      { alwaysOne: true }
-    ),
+    main: baseSection({
+      _typeUniformity: "string",
+    } as const),
     omniParent: baseSectionS.container,
     table: baseSection({ titleFilter: "string" } as const),
     propertyTableStore: baseSectionS.container,
@@ -63,10 +60,14 @@ export const baseSections = {
     mgmtTableStore: baseSectionS.container,
     dealTableStore: baseSectionS.container,
 
-    tableRow: baseSection(base.varbs.tableRow, { uniqueDbId: true }),
-    column: baseSection(base.varbs.varbInfo),
-    cell: baseSection({ ...base.varbs.varbInfo, value: "numObj" }),
-
+    tableRow: baseSection(baseVarbs.tableRow, { uniqueDbId: true }),
+    column: baseSection({
+      varbInfo: "inEntityVarbInfo",
+    }),
+    cell: baseSection({
+      varbInfo: "inEntityVarbInfo",
+      value: "numObj",
+    }),
     conditionalRow: baseSection({
       level: "number",
       type: "string",
@@ -80,16 +81,16 @@ export const baseSections = {
     }),
 
     singleTimeItem: baseSection({
-      ...base.varbs.string(["name", "valueSwitch"] as const),
-      ...base.varbs.numObj(["value", "editorValue"] as const),
-      ...base.varbs.entityInfo,
+      ...baseVarbs.string(["name", "valueSwitch"] as const),
+      ...baseVarbs.numObj(["value", "editorValue"] as const),
+      ...baseVarbs.entityInfo,
     }),
     ongoingItem: baseSection({
-      ...base.varbs.string(["name", "valueSwitch"] as const),
-      ...base.varbs.numObj(["costToReplace", "editorValue"] as const),
-      ...base.varbs.entityInfo,
-      ...base.varbs.ongoing("value"),
-      ...base.varbs.switch("lifespan", switchEndings.monthsYears),
+      ...baseVarbs.string(["name", "valueSwitch"] as const),
+      ...baseVarbs.numObj(["costToReplace", "editorValue"] as const),
+      ...baseVarbs.entityInfo,
+      ...baseVarbs.ongoing("value"),
+      ...baseVarbs.switch("lifespan", switchEndings.monthsYears),
     }),
     userVarbList: baseSection({
       ...baseVarbs.savableSection,
@@ -97,90 +98,92 @@ export const baseSections = {
     }),
     userVarbItem: baseSection(
       {
-        ...base.varbs.string([
+        ...baseVarbs.string([
           "name",
           "startAdornment",
           "endAdornment",
           "valueSwitch",
         ] as const),
-        ...base.varbs.numObj(["editorValue", "value"] as const),
+        ...baseVarbs.numObj(["editorValue", "value"] as const),
       },
       { uniqueDbId: true }
     ),
     outputList: baseSection(
       { title: "string" },
-      base.options.alwaysOneFromStart
+      baseOptions.alwaysOneFromStart
     ),
-    singleTimeList: baseSection(
-      base.varbs.singleTimeList,
-      base.options.userList
-    ),
-    ongoingList: baseSection(base.varbs.ongoingList, base.options.userList),
+    singleTimeList: baseSection(baseVarbs.singleTimeList, baseOptions.userList),
+    ongoingList: baseSection(baseVarbs.ongoingList, baseOptions.userList),
     login: baseSection(
-      base.varbs.string(["email", "password"] as const),
-      base.options.alwaysOneFromStart
+      baseVarbs.string(["email", "password"] as const),
+      baseOptions.alwaysOneFromStart
     ),
     register: baseSection(
-      base.varbs.string(["email", "password", "userName"] as const),
-      base.options.alwaysOneFromStart
+      baseVarbs.string(["email", "password", "userName"] as const),
+      baseOptions.alwaysOneFromStart
     ),
-    property: baseSection(base.varbs.property),
+    property: baseSection(baseVarbs.property),
     unit: baseSection({
       one: "numObj",
       numBedrooms: "numObj",
-      ...base.varbs.ongoing("targetRent"),
+      ...baseVarbs.ongoing("targetRent"),
     }),
     propertyGeneral: baseSection(
-      omit(base.varbs.property, Obj.keys(base.varbs.savableSection)),
+      omit(baseVarbs.property, Obj.keys(baseVarbs.savableSection)),
       {
-        ...base.options.alwaysOneFromStart,
+        ...baseOptions.alwaysOneFromStart,
         hasGlobalVarbs: true,
       }
     ),
-    loan: baseSection(base.varbs.loan),
+    loan: baseSection(baseVarbs.loan),
     financing: baseSection(
       {
-        ...omit(base.varbs.loan, loanVarbsNotInFinancing),
-        ...base.varbs.numObj([
+        ...omit(baseVarbs.loan, loanVarbsNotInFinancing),
+        ...baseVarbs.numObj([
           "downPaymentDollars",
           "downPaymentPercent",
         ] as const),
-        ...base.varbs.ongoing("piti"),
+        ...baseVarbs.ongoing("piti"),
       },
       {
-        ...base.options.alwaysOneFromStart,
+        ...baseOptions.alwaysOneFromStart,
         hasGlobalVarbs: true,
       }
     ),
 
-    mgmt: baseSection(base.varbs.mgmt, { makeOneOnStartup: true }),
-    mgmtGeneral: baseSection(omit(base.varbs.mgmt, ["title"]), {
-      ...base.options.alwaysOneFromStart,
+    mgmt: baseSection(baseVarbs.mgmt, { makeOneOnStartup: true }),
+    mgmtGeneral: baseSection(omit(baseVarbs.mgmt, ["title"]), {
+      ...baseOptions.alwaysOneFromStart,
       hasGlobalVarbs: true,
     }),
     deal: baseSection(
       {
-        ...base.varbs.savableSection,
-        ...base.varbs.numObj([
+        ...baseVarbs.savableSection,
+        ...baseVarbs.numObj([
           "upfrontExpensesSum",
           "upfrontExpenses",
           "upfrontRevenue",
           "totalInvestment",
         ] as const),
-        ...base.varbs.ongoing("expenses"),
-        ...base.varbs.ongoing("revenue"),
-        ...base.varbs.ongoing("cashFlow"),
-        ...base.varbs.ongoing("roi"),
+        ...baseVarbs.ongoing("expenses"),
+        ...baseVarbs.ongoing("revenue"),
+        ...baseVarbs.ongoing("cashFlow"),
+        ...baseVarbs.ongoing("roi"),
       },
-      base.options.alwaysOneFromStart
+      {
+        ...baseOptions.alwaysOneFromStart,
+        hasGlobalVarbs: true,
+      }
     ),
-    output: baseSection(base.varbs.varbInfo, {}),
+    output: baseSection({
+      varbInfo: "inEntityVarbInfo",
+    }),
 
-    user: baseSection(base.varbs.feUser, {
-      ...base.options.alwaysOneFromStart,
+    user: baseSection(baseVarbs.feUser, {
+      ...baseOptions.alwaysOneFromStart,
     }),
     serverOnlyUser: baseSection({
-      ...base.varbs.string(["encryptedPassword", "emailAsSubmitted"] as const),
+      ...baseVarbs.string(["encryptedPassword", "emailAsSubmitted"] as const),
     }),
   },
   get db() {
@@ -190,6 +193,9 @@ export const baseSections = {
 
 export const simpleSectionNames = Obj.keys(baseSections.fe);
 export type SimpleSectionName = typeof simpleSectionNames[number];
+export function isSectionName(value: any): value is SimpleSectionName {
+  return simpleSectionNames.includes(value);
+}
 
 export const allNull = simpleSectionNames.reduce((allNull, sectionName) => {
   allNull[sectionName] = null;

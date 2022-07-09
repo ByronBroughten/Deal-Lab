@@ -28,6 +28,16 @@ export const mixedInfoS = {
       id: feId,
     };
   },
+  makeGlobalSection<
+    SN extends SimpleSectionName,
+    EC extends ExpectedCount = "onlyOne"
+  >(sectionName: SN, expectedCount?: EC): GlobalSectionInfo<SN, EC> {
+    return {
+      infoType: "globalSection",
+      sectionName,
+      expectedCount: (expectedCount ?? "onlyOne") as EC,
+    };
+  },
   makeFeVarb<SN extends SimpleSectionName>(
     sectionName: SN,
     feId: string,
@@ -38,16 +48,16 @@ export const mixedInfoS = {
       varbName,
     };
   },
-  makeDb<S extends SimpleSectionName>(
+  makeDb<S extends SimpleSectionName, EC extends ExpectedCount = "multiple">(
     sectionName: S,
     dbId: string,
-    expectedCount: ExpectedCount = "multiple"
-  ): DbSectionInfoMixed<S> {
+    expectedCount: EC
+  ): DbSectionInfoMixed<S, EC> {
     return {
       sectionName,
       id: dbId,
       infoType: "dbId",
-      expectedCount,
+      expectedCount: expectedCount ?? "multiple",
     };
   },
   get mixedInfoTypes(): MixedInfoType[] {

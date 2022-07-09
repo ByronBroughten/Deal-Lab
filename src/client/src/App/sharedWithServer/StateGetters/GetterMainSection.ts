@@ -13,12 +13,4 @@ export class GetterMainSection<
   get indexName(): SectionName<"rowIndexNext"> {
     return this.meta.rowIndexName;
   }
-  inEntityInfoToFeInfo(varbInfo: InEntityVarbInfo): FeCellValueInfo {
-    if (varbInfo.sectionName === this.indexName) {
-      return {
-        ...this.feInfoMixed,
-        varbName: varbInfo.varbName,
-      } as FeVarbInfoMixed<SectionName<"hasRowIndex">>;
-    } else return varbInfo;
-  }
 }

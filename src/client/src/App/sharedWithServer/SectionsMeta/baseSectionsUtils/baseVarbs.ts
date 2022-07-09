@@ -142,12 +142,9 @@ export const baseVarbs = {
       defaultOngoingSwitch: "string",
     } as const;
   },
-  get varbInfo() {
-    return this.string(["id", "infoType", "sectionName", "varbName"] as const);
-  },
   get entityInfo() {
     return {
-      ...this.varbInfo,
+      varbInfo: "inEntityVarbInfo",
       entityId: "string",
     } as const;
   },

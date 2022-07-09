@@ -8,7 +8,7 @@ import { DbSectionsModel } from "../DbSectionsModel";
 import { DbUser } from "./shared/DbSections/DbUser";
 import { createTestUserModelNext } from "./test/createTestUserModelNext";
 
-const sectionName = "deal";
+const sectionName = "user";
 function makeReq(): SectionPackArrReq<typeof sectionName> {
   const reqMaker = SectionArrReqMaker.init(sectionName);
   return reqMaker.makeReq();

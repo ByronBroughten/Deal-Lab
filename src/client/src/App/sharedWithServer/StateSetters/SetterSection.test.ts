@@ -118,7 +118,7 @@ describe("SetterSection", () => {
         const child = setter.addAndGetChild(childName);
 
         expect(preChildIds).not.toContain(child.get.feId);
-        expect(child.get.sectionName).toBe(childName);
+        expect(child.get.selfChildName).toBe(childName);
 
         const postChildIds = tester.get.childFeIds(childName);
         expect(postChildIds).toContain(child.get.feId);

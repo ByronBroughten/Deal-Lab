@@ -19,7 +19,9 @@ export class VarbMetas {
     return { ...this.core };
   }
   get(varbName: keyof VarbMetasCore) {
-    return this.core[varbName];
+    const varbMeta = this.core[varbName];
+    if (varbMeta) return varbMeta;
+    else throw new Error(`No varbMeta at ${this.core.sectionName}.${varbName}`);
   }
   update(varbName: keyof VarbMetasCore, next: VarbMetaCore) {
     return new VarbMetas({

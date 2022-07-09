@@ -1,14 +1,15 @@
 import { cloneDeep } from "lodash";
 import {
+  DbVarbInfoMixed,
   FeVarbInfoMixed,
   VarbNames,
 } from "../SectionsMeta/baseSectionsDerived/baseVarbInfo";
 import {
   InEntity,
-  InEntityVarbInfo,
   OutEntity,
 } from "../SectionsMeta/baseSectionsUtils/baseValues/entities";
 import { NumberOrQ } from "../SectionsMeta/baseSectionsUtils/baseValues/NumObj";
+import { ExpectedCount } from "../SectionsMeta/baseSectionsUtils/NanoIdInfo";
 import {
   Adornments,
   StateValueAnyKey,
@@ -21,7 +22,6 @@ import {
 } from "../SectionsMeta/childSectionsDerived/MixedSectionInfo";
 import { RelLocalInfo } from "../SectionsMeta/childSectionsDerived/RelInfo";
 import { InfoS, VarbInfo } from "../SectionsMeta/Info";
-import { UniqueIdMixedVarbInfo } from "../SectionsMeta/relSectionsUtils/rel/uniqueIdInfo";
 import { ValueTypeName } from "../SectionsMeta/relSectionsUtils/rel/valueMetaTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { InUpdatePack, VarbMeta } from "../SectionsMeta/VarbMeta";
@@ -65,13 +65,13 @@ export class GetterVarb<
   }
   get inEntities(): InEntity[] {
     const val = this.value("any");
-    if (typeof val === "object" && "entities" in val) {
+    if (val && typeof val === "object" && "entities" in val) {
       return cloneDeep(val.entities);
     } else return [];
   }
   get numberValue(): number {
     const val = this.value("any");
-    if (typeof val === "object" && "solvableText" in val) {
+    if (val && typeof val === "object" && "solvableText" in val) {
       const numString = this.numObj.solveTextToNumStringNext();
       return mathS.parseFloatStrict(numString);
     } else {
@@ -104,18 +104,18 @@ export class GetterVarb<
     const { sectionName, feId, varbName } = this.feVarbInfo;
     return mixedInfoS.makeFeVarb(sectionName, feId, varbName);
   }
+  dbVarbInfoMixed<EC extends ExpectedCount>(
+    expectedCount: EC
+  ): DbVarbInfoMixed<SN, EC> {
+    return {
+      ...this.section.dbInfoMixed(expectedCount),
+      varbName: this.varbName,
+    };
+  }
   get raw(): RawFeVarb<SN> {
     return this.sectionsShare.sections.rawVarb({
       ...this.feVarbInfo,
     });
-  }
-  uniqueIdVarbInfoMixed<T extends "feId" | "dbId">(
-    infoType: T
-  ): UniqueIdMixedVarbInfo<T, SN> {
-    return {
-      ...this.getterSection.uniqueIdInfoMixed(infoType),
-      varbName: this.varbName,
-    };
   }
   get dbId() {
     return this.getterSection.dbId;
@@ -238,11 +238,6 @@ export class GetterVarb<
   }: VarbNames<S>): GetterVarb<S> {
     const anscestor = this.getterSection.nearestAnscestor(sectionName);
     return anscestor.varb(varbName);
-  }
-
-  static mixedVarbInfoToMixedVarbId(info: InEntityVarbInfo): string {
-    const { sectionName, infoType, id, varbName } = info;
-    return [sectionName, infoType, id, varbName].join(".");
   }
   static feVarbInfoToVarbId(info: VarbInfo): string {
     const { sectionName, varbName, feId } = info;

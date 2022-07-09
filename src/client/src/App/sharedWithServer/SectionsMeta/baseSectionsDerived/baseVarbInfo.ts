@@ -29,7 +29,7 @@ export interface DbSectionInfoMixed<
     SectionNameProp<SN> {
   expectedCount: EC;
 }
-export interface DbSectionVarbInfoMixed<
+export interface DbVarbInfoMixed<
   SN extends SimpleSectionName = SimpleSectionName,
   EC extends ExpectedCount = ExpectedCount
 > extends DbSectionInfoMixed<SN, EC>,
@@ -47,6 +47,9 @@ export interface FeVarbInfoMixed<
     VarbProp {}
 
 export type VarbProp = { varbName: string };
+export function isVarbName(value: any): value is string {
+  return typeof value === "string";
+}
 
 export interface VarbNames<SN extends SimpleSectionName = SimpleSectionName>
   extends SectionNameProp<SN>,

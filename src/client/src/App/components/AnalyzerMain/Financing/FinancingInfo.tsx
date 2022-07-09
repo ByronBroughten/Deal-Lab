@@ -19,7 +19,7 @@ export default function FinancingInfo({ feId }: { feId: string }) {
   return (
     <Styled className="FinancingInfo-root">
       <LabeledOutputRowSimple>
-        {isAtLeastOne && (
+        {
           <>
             <LabeledVarbSimpleNext
               themeName="loan"
@@ -35,7 +35,7 @@ export default function FinancingInfo({ feId }: { feId: string }) {
               feVarbInfo={financing.varbInfo("pitiMonthly")}
             />
           </>
-        )}
+        }
         {areMultiple && (
           <LabeledVarbSimpleNext
             themeName="loan"

@@ -37,7 +37,7 @@ describe("PackBuilderSection", () => {
 
     const spPropertyVarbs = rawSections["property"][0].dbVarbs;
     const propertyKeys = Obj.keys(propertyVarbs);
-    expect(pick(propertyVarbs, propertyKeys)).toEqual(spPropertyVarbs);
+    expect(propertyVarbs).toEqual(pick(spPropertyVarbs, propertyKeys));
 
     for (const childName of childNames) {
       const childType = property.get.meta.childType(childName);

@@ -1,10 +1,9 @@
 import { DbVarbs } from "../SectionPack/RawSection";
-import { InEntityVarbInfo } from "../SectionsMeta/baseSectionsUtils/baseValues/entities";
 import {
   StateValueAnyKey,
   ValueTypesPlusAny,
 } from "../SectionsMeta/baseSectionsUtils/StateVarbTypes";
-import { InfoS, VarbInfo, VarbStringInfo } from "../SectionsMeta/Info";
+import { VarbInfo, VarbStringInfo } from "../SectionsMeta/Info";
 import {
   SectionName,
   sectionNameS,
@@ -78,13 +77,6 @@ export class GetterVarbs<SN extends SectionName> extends GetterSectionBase<SN> {
       id: "string",
       infoType: "string",
     });
-  }
-  get varbInfoValues(): InEntityVarbInfo {
-    const values = this.varbInfoStringValues;
-    if (!InfoS.is.inEntityVarb(values)) {
-      throw new Error(`"values" should be an inEntityVarbInfo`);
-    }
-    return values;
   }
   get dbVarbs(): DbVarbs {
     return this.varbNames.reduce((dbVarbs, varbName) => {
