@@ -60,7 +60,7 @@ describe("SetterVarb", () => {
   //     entityS.inEntity(
   //       {
   //         id: "static",
-  //         idType: "relative",
+  //         infoType: "relative",
   //         sectionName: "propertyGeneral",
   //         varbName: varbName,
   //       },

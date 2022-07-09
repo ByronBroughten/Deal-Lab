@@ -1,6 +1,7 @@
 import { NeversToSomething, SubType } from "../../utils/types";
 import { SimpleSectionName, simpleSectionNames } from "../baseSections";
 import { noParentWarning } from "../Info";
+import { ChildName } from "./ChildName";
 import {
   childrenSectionNames,
   ChildSectionNameOrNull,
@@ -51,11 +52,17 @@ type SectionToParentOrNos = NeversToSomething<
   SectionToParentOrNever,
   typeof noParentWarning
 >;
-export type ParentName<SN extends SimpleSectionName> = SectionToParentOrNos[SN];
+export type ParentName<SN extends SimpleSectionName = SimpleSectionName> =
+  SectionToParentOrNos[SN];
 export type ParentNameSafe<SN extends SimpleSectionName> = Exclude<
   ParentName<SN>,
   typeof noParentWarning
 >;
+
+export type StepSiblingName<SN extends SimpleSectionName = SimpleSectionName> =
+  ChildName<ParentNameSafe<SN>>;
+export type PiblingName<SN extends SimpleSectionName = SimpleSectionName> =
+  StepSiblingName<ParentNameSafe<SN>>;
 
 function _testParentName() {
   type OneParent = ParentName<"property">;

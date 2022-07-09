@@ -126,8 +126,8 @@ export function makeRelSections() {
       rowIndexName: "loan",
     }),
     propertyGeneral: relSection("Property", {
-      ...rel.varbs.sumSection("property", propertyRelVarbs()),
-      ...rel.varbs.sectionStrings(
+      ...relVarbsS.sumSection("property", propertyRelVarbs()),
+      ...relVarbsS.sectionStrings(
         "property",
         propertyRelVarbs(),
         savableSectionStringVarbNames
@@ -143,11 +143,11 @@ export function makeRelSections() {
         initNumber: 1,
       }),
       numBedrooms: rel.varb.calcVarb("BRs"),
-      ...rel.varbs.timeMoney("targetRent", "Rent", "unit"),
+      ...relVarbsS.timeMoneyInput("targetRent", "Rent"),
     } as RelVarbs<"unit">),
     mgmtGeneral: relSection("Management", {
-      ...rel.varbs.sumSection("mgmt", { ...mgmtRelVarbs() }),
-      ...rel.varbs.sectionStrings(
+      ...relVarbsS.sumSection("mgmt", { ...mgmtRelVarbs() }),
+      ...relVarbsS.sectionStrings(
         "mgmt",
         { ...mgmtRelVarbs() },
         savableSectionStringVarbNames

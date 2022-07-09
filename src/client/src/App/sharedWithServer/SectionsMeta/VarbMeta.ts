@@ -1,12 +1,13 @@
 import { cloneDeep, pick } from "lodash";
 import { NumObjUnit } from "../StateGetters/GetterVarbNumObj";
 import { SimpleSectionName } from "./baseSections";
+import { valueMeta } from "./baseSectionsUtils/valueMeta";
 import {
-  InRelVarbInfo,
-  OutRelVarbInfo,
-} from "./baseSectionsDerived/baseVarbInfo";
-import { valueMeta } from "./baseSectionsUtils/baseValues";
+  RelInVarbInfo,
+  RelOutVarbInfo,
+} from "./childSectionsDerived/RelInOutVarbInfo";
 import {
+  DisplayName,
   RelVarb,
   SwitchUpdateInfo,
   UpdateFnProps,
@@ -14,10 +15,10 @@ import {
 } from "./relSectionsUtils/rel/relVarbTypes";
 import { UpdateFnName } from "./relSectionsUtils/rel/valueMetaTypes";
 
-export type InBaseUpdatePack = {
+type InBaseUpdatePack = {
   updateFnName: UpdateFnName;
   updateFnProps: UpdateFnProps;
-  inUpdateInfos: InRelVarbInfo[];
+  inUpdateInfos: RelInVarbInfo[];
 };
 type InDefaultUpdatePack = InBaseUpdatePack & {
   inverseSwitches: SwitchUpdateInfo[];
@@ -34,7 +35,7 @@ export function isSwitchInPack(pack: InUpdatePack): pack is InSwitchUpdatePack {
 type InSwitchUpdatePack = InBaseUpdatePack & SwitchUpdateInfo;
 export type InUpdatePack = InBaseUpdatePack | InSwitchUpdatePack;
 
-type OutBaseUpdatePack = { relTargetVarbInfo: OutRelVarbInfo };
+type OutBaseUpdatePack = { relTargetVarbInfo: RelOutVarbInfo };
 export type OutSwitchPack = OutBaseUpdatePack & SwitchUpdateInfo;
 export type OutDefaultPack = OutBaseUpdatePack & {
   inverseSwitches: SwitchUpdateInfo[];
@@ -47,16 +48,18 @@ export function isSwitchOutPack(pack: OutUpdatePack): pack is OutSwitchPack {
 }
 export type OutUpdatePack = OutSwitchPack | OutDefaultPack;
 
-function fnPropsToInVarbInfos(updateFnProps: UpdateFnProps): InRelVarbInfo[] {
+function fnPropsToInVarbInfos(updateFnProps: UpdateFnProps): RelInVarbInfo[] {
   const infos = Object.values(updateFnProps);
-  let nextInfos: InRelVarbInfo[] = [];
+  let nextInfos: RelInVarbInfo[] = [];
   for (const info of infos) {
     if (Array.isArray(info)) nextInfos = nextInfos.concat(info);
     else nextInfos.push(info);
   }
   return nextInfos;
 }
-function inSwitchPropsToInfos(inSwitchProps: UpdateSwitchProp[]) {
+function inSwitchPropsToInfos(
+  inSwitchProps: UpdateSwitchProp[]
+): InSwitchUpdatePack[] {
   const inSwitchInfos: InSwitchUpdatePack[] = [];
   for (const prop of inSwitchProps) {
     inSwitchInfos.push({
@@ -70,7 +73,7 @@ function inSwitchPropsToInfos(inSwitchProps: UpdateSwitchProp[]) {
 export interface VarbMetaProps {
   varbName: string;
   sectionName: SimpleSectionName;
-  inDefaultInfos: InRelVarbInfo[];
+  inDefaultInfos: RelInVarbInfo[];
   InSwitchUpdatePacks: InSwitchUpdatePack[];
   outUpdatePacks: OutUpdatePack[];
 }
@@ -110,7 +113,7 @@ export class VarbMeta {
   get endAdornment() {
     return this.core.endAdornment ?? "";
   }
-  get displayName() {
+  get displayName(): DisplayName {
     return this.core.displayName;
   }
   get initValue() {

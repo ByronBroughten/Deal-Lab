@@ -116,7 +116,7 @@ export class VariableGetterSections extends GetterSectionsBase {
         sectionName,
         varbName,
         id: "static",
-        idType: "relative",
+        infoType: "relative",
       },
       collectionName: sectionMeta.displayName,
       displayName: varbMeta.displayName as string,

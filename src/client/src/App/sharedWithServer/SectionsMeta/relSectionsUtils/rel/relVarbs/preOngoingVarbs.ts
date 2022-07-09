@@ -1,7 +1,6 @@
 import { omit } from "lodash";
 import { Obj } from "../../../../utils/Obj";
 import { BaseName } from "../../../baseSectionsDerived/baseSectionTypes";
-import { InRelVarbInfo } from "../../../baseSectionsDerived/baseVarbInfo";
 import { NumObjUpdateFnName } from "../../../baseSectionsUtils/baseValues/updateFnNames";
 import {
   SwitchEndingKey,
@@ -10,17 +9,18 @@ import {
   switchNames,
   SwitchRecord,
 } from "../../../baseSectionsUtils/switchNames";
+import { RelInVarbInfo } from "../../../childSectionsDerived/RelInOutVarbInfo";
+import { relVarbInfoS } from "../../../childSectionsDerived/RelVarbInfo";
 import { relVarbsS } from "../../relVarbs";
 import { PreNumObjOptions, relVarbS } from "../relVarb";
-import { relVarbInfo } from "../relVarbInfo";
-import { DisplayName, StringPreVarb, UpdateFnProps } from "../relVarbTypes";
+import { DisplayName, StringRelVarb, UpdateFnProps } from "../relVarbTypes";
 
 type SwitchPreVarbs<
   Base extends string,
   Key extends SwitchEndingKey
-> = SwitchRecord<Base, Pick<SwitchEndings[Key], "switch">, StringPreVarb> &
+> = SwitchRecord<Base, Pick<SwitchEndings[Key], "switch">, StringRelVarb> &
   // @ts-ignore
-  SwitchRecord<Base, Omit<SwitchEndings[Key], "switch">, StringPreVarb>;
+  SwitchRecord<Base, Omit<SwitchEndings[Key], "switch">, StringRelVarb>;
 
 export const ongoingVarbSpanEndings = omit(switchEndings.ongoing, ["switch"]);
 const ongoingSpans = Obj.keys(ongoingVarbSpanEndings);
@@ -42,7 +42,7 @@ type MonthsYearsSwitchOptions = MonthsYearsOptions & {
   switchInit?: "months" | "years";
 };
 
-function concatVarbName(info: InRelVarbInfo, toConcat: string) {
+function concatVarbName(info: RelInVarbInfo, toConcat: string) {
   return { ...info, varbName: info.varbName + toConcat };
 }
 
@@ -98,7 +98,7 @@ function getOngoingUpdatePacks<Base extends string>(
       updatePacks[spanly] = {
         updateFnName: defaultUpdateFnNames[spanly],
         updateFnProps: {
-          nums: [relVarbInfo.relative(packOrName, varbNames.yearly, "local")],
+          nums: [relVarbInfoS.local(varbNames.yearly)],
         },
       };
     else updatePacks[spanly] = packOrName;
@@ -109,20 +109,18 @@ function getOngoingUpdatePacks<Base extends string>(
 export function monthsYearsInput<Base extends string>(
   baseVarbName: Base,
   displayName: DisplayName,
-  sectionName: BaseName<"hasVarb">,
   { switchInit = "months", ...options }: MonthsYearsSwitchOptions = {}
 ): SwitchPreVarbs<Base, "monthsYears"> {
   const varbNames = switchNames(baseVarbName, "monthsYears");
   return relVarbsS.switchInput(
     varbNames,
     displayName,
-    sectionName,
     [
       {
         nameExtension: "Months",
         updateFnName: "yearsToMonths",
         updateFnProps: {
-          num: relVarbInfo.relative(sectionName, varbNames.years, "local"),
+          num: relVarbInfoS.local(varbNames.years),
         },
         switchValue: "months",
         options: {
@@ -135,7 +133,7 @@ export function monthsYearsInput<Base extends string>(
         nameExtension: "Years",
         updateFnName: "monthsToYears",
         updateFnProps: {
-          num: relVarbInfo.relative(sectionName, varbNames.months, "local"),
+          num: relVarbInfoS.local(varbNames.months),
         },
         switchValue: "years",
         options: {
@@ -151,20 +149,18 @@ export function monthsYearsInput<Base extends string>(
 export function ongoingInput<Base extends string>(
   baseVarbName: Base,
   displayName: DisplayName,
-  sectionName: BaseName<"hasVarb">,
   { switchInit = "monthly", ...options }: MonthlyYearlySwitchOptions = {}
 ): SwitchPreVarbs<Base, "ongoing"> {
   const varbNames = switchNames(baseVarbName, "ongoing");
   return relVarbsS.switchInput(
     varbNames,
     displayName,
-    sectionName,
     [
       {
         nameExtension: ongoingVarbSpanEndings.monthly,
         updateFnName: "yearlyToMonthly",
         updateFnProps: {
-          num: relVarbInfo.local(sectionName, varbNames.yearly),
+          num: relVarbInfoS.local(varbNames.yearly),
         },
         switchValue: "monthly",
         options: {
@@ -177,7 +173,7 @@ export function ongoingInput<Base extends string>(
         nameExtension: ongoingVarbSpanEndings.yearly,
         updateFnName: "monthlyToYearly",
         updateFnProps: {
-          num: relVarbInfo.relative(sectionName, varbNames.monthly, "local"),
+          num: relVarbInfoS.local(varbNames.monthly),
         },
         switchValue: "yearly",
         options: {
@@ -194,8 +190,7 @@ export function ongoingInput<Base extends string>(
 export function ongoingPercentToPortion<Base extends string>(
   baseVarbName: Base,
   displayName: DisplayName,
-  sectionName: BaseName<"hasVarb">,
-  baseSectionName: BaseName<"alwaysOneHasVarb">,
+  makeBaseVarbInfo: (baseVarbName: string) => RelInVarbInfo,
   baseBaseName: string,
   percentName: string
 ): SwitchPreVarbs<Base, "ongoing"> {
@@ -208,15 +203,15 @@ export function ongoingPercentToPortion<Base extends string>(
     [varbNames.monthly]: relVarbS.moneyMonth(displayName, {
       updateFnName: "percentToPortion",
       updateFnProps: {
-        base: relVarbInfo.static(baseSectionName, baseVarbNames.monthly),
-        percentOfBase: relVarbInfo.local(sectionName, percentName),
+        base: makeBaseVarbInfo(baseVarbNames.monthly),
+        percentOfBase: relVarbInfoS.local(percentName),
       },
     }),
     [varbNames.yearly]: relVarbS.moneyYear(displayName, {
       updateFnName: "percentToPortion",
       updateFnProps: {
-        base: relVarbInfo.static(baseSectionName, baseVarbNames.yearly),
-        percentOfBase: relVarbInfo.local(sectionName, percentName),
+        base: makeBaseVarbInfo(baseVarbNames.yearly),
+        percentOfBase: relVarbInfoS.local(percentName),
       },
     }),
   };
@@ -259,7 +254,7 @@ export function ongoingPureCalc<Base extends string>(
 export function ongoingSumNums<Base extends string>(
   varbNameBase: Base,
   displayName: DisplayName,
-  updateFnArrProp: InRelVarbInfo[],
+  updateFnArrProp: RelInVarbInfo[],
   options: MonthlyYearlySwitchOptions = {}
 ): SwitchPreVarbs<Base, "ongoing"> {
   const props = getMonthlyYearlyProps({ nums: updateFnArrProp });

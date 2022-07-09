@@ -1,14 +1,15 @@
 import { BaseName } from "../../../baseSectionsDerived/baseSectionTypes";
-import { InRelVarbInfo } from "../../../baseSectionsDerived/baseVarbInfo";
 import {
   CalculationName,
   LeftRightPropCalculations,
 } from "../../../baseSectionsUtils/baseValues/calculations";
+import { RelInVarbInfo } from "../../../childSectionsDerived/RelInOutVarbInfo";
+import { relVarbInfoS } from "../../../childSectionsDerived/RelVarbInfo";
 import { PreNumObjOptions, relVarbS } from "../relVarb";
 import {
   DisplayName,
   NumObjRelVarb,
-  StringPreVarb,
+  StringRelVarb,
   UpdateFnProps,
 } from "../relVarbTypes";
 
@@ -16,7 +17,7 @@ type SwitchProps<T extends BaseName> = [
   sectionName: T,
   displayName: DisplayName,
   updateFnName: LeftRightPropCalculations,
-  leftRight: [InRelVarbInfo, InRelVarbInfo],
+  leftRight: [RelInVarbInfo, RelInVarbInfo],
   switchValue: string,
   options?: PreNumObjOptions
 ];
@@ -34,7 +35,7 @@ type SwitchOptionProps = {
   options?: PreNumObjOptions;
 };
 export type SwitchInputs = {
-  [inputName: string]: NumObjRelVarb | StringPreVarb;
+  [inputName: string]: NumObjRelVarb | StringRelVarb;
 };
 
 type DualSwitch<
@@ -43,7 +44,7 @@ type DualSwitch<
   Switch extends string
 > = Record<One, NumObjRelVarb> &
   Record<Two, NumObjRelVarb> &
-  Record<Switch, StringPreVarb>;
+  Record<Switch, StringRelVarb>;
 
 export function simpleSwitch<
   One extends BaseName,
@@ -75,12 +76,7 @@ export function simpleSwitch<
   const userInputSwitch = {
     updateFnName: "calcVarbs",
     updateFnProps: {},
-    switchInfo: {
-      sectionName: switchSectionName,
-      varbName: switchVarbName,
-      id: "local",
-      idType: "relative",
-    },
+    switchInfo: relVarbInfoS.local(switchVarbName),
   } as const;
   return {
     [sectionName1]: relVarbS.leftRightPropFn(
@@ -113,9 +109,7 @@ export function simpleSwitch<
 
 export function switchInput(
   varbNames: SwitchVarbNames,
-
   displayName: DisplayName,
-  sectionName: BaseName<"hasVarb">,
   switchOptions: SwitchOptionProps[],
   switchInitValue: string,
   shared?: PreNumObjOptions
@@ -131,12 +125,7 @@ export function switchInput(
       option.updateFnProps,
       [
         {
-          switchInfo: {
-            sectionName,
-            varbName: varbNames.switch,
-            id: "local",
-            idType: "relative",
-          },
+          switchInfo: relVarbInfoS.local(varbNames.switch),
           switchValue: option.switchValue,
           updateFnName: "calcVarbs",
           updateFnProps: {},

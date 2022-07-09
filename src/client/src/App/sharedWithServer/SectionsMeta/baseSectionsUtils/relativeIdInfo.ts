@@ -1,4 +1,4 @@
-import { GeneralIdInfo, NanoIdInfo } from "./baseIdInfo";
+import { GeneralIdInfo, NanoIdInfo } from "./NanoIdInfo";
 
 export type RelativeIds = {
   inVarb: "children" | "local" | "static" | "all";
@@ -16,15 +16,15 @@ export type Relative<T extends RelType = RelType> = RelativeIds[T];
 
 export interface RelIdInfo extends GeneralIdInfo {
   id: Relative;
-  idType: "relative";
+  infoType: "relative";
 }
 export interface RelChildrenIdInfo {
-  id: "children",
-  idType: "relative"
+  id: "children";
+  infoType: "relative";
 }
 export type SpecificIdInfo =
   | NanoIdInfo
   | {
       id: "static";
-      idType: "relative";
+      infoType: "relative";
     };

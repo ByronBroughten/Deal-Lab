@@ -6,7 +6,7 @@ import {
   sectionNameS,
   SectionNameType,
 } from "../SectionsMeta/SectionName";
-import { zodSchema } from "../utils/zod";
+import { zS } from "../utils/zod";
 import { RawSections, zRawSections } from "./RawSection";
 
 export type SectionPack<SN extends SectionName = SectionName> = {
@@ -42,8 +42,8 @@ export type ServerSectionPack<
 > = SectionPack<SN>;
 
 const zRawSectionPackFrame: Record<keyof SectionPack, any> = {
-  sectionName: zodSchema.string,
-  dbId: zodSchema.nanoId,
+  sectionName: zS.string,
+  dbId: zS.nanoId,
   rawSections: zRawSections,
 };
 export const zRawSectionPack = z.object(zRawSectionPackFrame);

@@ -1,4 +1,8 @@
 export type StrictOmit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
+export type DistributiveOmit<T, K extends keyof T> = T extends any
+  ? Omit<T, K>
+  : never;
+
 export type StrictPick<T, K extends keyof T> = Pick<T, K>;
 export type StrictPickPartial<T, K extends keyof T> = Partial<Pick<T, K>>;
 export type StrictOmitPartial<T, K extends keyof T> = Partial<Omit<T, K>>;

@@ -1,8 +1,9 @@
-import { SpecificIdInfo } from "../SectionsMeta/baseSectionsUtils/relativeIdInfo";
+import { IdInfoMultiMixed } from "../SectionsMeta/childSectionsDerived/MixedSectionInfo";
 import { SectionName } from "../SectionsMeta/SectionName";
 import {
   RawFeSection,
   SectionNotFoundError,
+  TooManySectionsFoundError,
 } from "../StateSections/StateSectionsTypes";
 import { Arr } from "../utils/Arr";
 import { GetterListBase } from "./Bases/GetterListBase";
@@ -20,6 +21,9 @@ export class GetterList<SN extends SectionName> extends GetterListBase<SN> {
     }
     return this.last;
   }
+  private get getterSectionArr() {
+    return this.stateList.map(({ feId }) => this.getterSection(feId));
+  }
   get last(): GetterSection<SN> {
     const stateSection = Arr.lastOrThrow(this.stateList);
     return this.getterSection(stateSection.feId);
@@ -32,13 +36,8 @@ export class GetterList<SN extends SectionName> extends GetterListBase<SN> {
   }
   idx(feId: string): number {
     const idx = this.stateList.findIndex((section) => section.feId === feId);
-    if (idx < 0) throw this.sectionNotFoundError(feId);
+    if (idx < 0) throw this.sectionNotFoundError("feId");
     return idx;
-  }
-  sectionNotFoundError(id: string): SectionNotFoundError {
-    return new SectionNotFoundError(
-      `No section with sectionName ${this.sectionName} and id ${id}`
-    );
   }
   private getterSection(feId: string): GetterSection<SN> {
     return new GetterSection({
@@ -47,9 +46,12 @@ export class GetterList<SN extends SectionName> extends GetterListBase<SN> {
       sectionsShare: this.sectionsShare,
     });
   }
+  get allGetterSections(): GetterSection<SN>[] {
+    return this.stateList.map(({ feId }) => this.getterSection(feId));
+  }
   getByFeId(feId: string): GetterSection<SN> {
     const section = this.stateList.find((section) => section.feId === feId);
-    if (!section) throw this.sectionNotFoundError(feId);
+    if (!section) throw this.sectionNotFoundError("feId");
     return this.getterSection(feId);
   }
   hasByFeId(feId: string): boolean {
@@ -68,35 +70,53 @@ export class GetterList<SN extends SectionName> extends GetterListBase<SN> {
     return rawSections.map(({ feId }) => this.getterSection(feId));
   }
   getByDbId(dbId: string): GetterSection<SN> {
-    const section = this.stateList.find((section) => section.dbId === dbId);
-    if (!section) throw this.sectionNotFoundError(dbId);
-    return this.getterSection(section.feId);
+    const sections = this.sectionsByDbId(dbId);
+    this.exactlyOneOrThrow(sections, "dbId");
+    return sections[0];
   }
-  getSpecific({ id, idType }: SpecificIdInfo): GetterSection<SN> {
-    switch (idType) {
+  hasByDbId(dbId: string): boolean {
+    return this.sectionsByDbId(dbId).length > 0;
+  }
+  sectionsByDbId(dbId: string): GetterSection<SN>[] {
+    return this.getterSectionArr.filter((section) => section.dbId === dbId);
+  }
+  getOneByMixed(info: IdInfoMultiMixed): GetterSection<SN> {
+    const sections = this.getMultiByMixed(info);
+    this.exactlyOneOrThrow(sections, info.infoType);
+    return sections[0];
+  }
+  getMultiByMixed(info: IdInfoMultiMixed) {
+    const sections = this.allSectionsByMixed(info);
+    if (info.expectedCount === "onlyOne") {
+      this.exactlyOneOrThrow(sections, info.infoType);
+    }
+    return sections;
+  }
+  hasByMixed(idInfo: IdInfoMultiMixed): boolean {
+    return this.allSectionsByMixed(idInfo).length > 0;
+  }
+  private allSectionsByMixed(info: IdInfoMultiMixed): GetterSection<SN>[] {
+    switch (info.infoType) {
+      case "globalSection":
+        return this.allGetterSections;
       case "feId":
-        return this.getByFeId(id);
+        return [this.getByFeId(info.id)];
       case "dbId":
-        return this.getByDbId(id);
-      case "relative": {
-        if (id !== "static")
-          throw new Error(
-            "If idType is relative, findSpecific expects id to be static."
-          );
-        return this.last;
-      }
-      default: {
-        throw new Error(`invalid idType: ${idType}`);
-      }
+        return this.sectionsByDbId(info.id);
     }
   }
-  hasByMixed(idInfo: SpecificIdInfo): boolean {
-    try {
-      this.getSpecific(idInfo);
-      return true;
-    } catch (error) {
-      if (error instanceof SectionNotFoundError) return false;
-      else throw error;
-    }
+  exactlyOneOrThrow(arr: any[], infoType: string) {
+    if (arr.length > 1) throw this.tooManySectionsFound(infoType);
+    else if (arr.length < 1) throw this.sectionNotFoundError(infoType);
+  }
+  tooManySectionsFound(infoType: string): TooManySectionsFoundError {
+    return new TooManySectionsFoundError(
+      `Too many sections found using infoType ${infoType}`
+    );
+  }
+  sectionNotFoundError(infoType: string): SectionNotFoundError {
+    return new SectionNotFoundError(
+      `No section found using infoType ${infoType}`
+    );
   }
 }

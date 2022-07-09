@@ -1,7 +1,7 @@
 import { pick } from "lodash";
 import { defaultMaker } from "../defaultMaker/defaultMaker";
 import { SectionPack } from "../SectionPack/SectionPack";
-import { SpecificVarbInfo } from "../SectionsMeta/baseSectionsDerived/baseVarbInfo";
+import { VarbInfoMixed } from "../SectionsMeta/childSectionsDerived/MixedSectionInfo";
 import { VarbInfo } from "../SectionsMeta/Info";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { GetterSections } from "../StateGetters/GetterSections";
@@ -21,7 +21,7 @@ export class SolverSections extends SolverSectionsBase {
     this.getterSectionsBase.getterSectionsProps
   );
   varbByMixed<SN extends SectionName<"hasVarb">>(
-    mixedInfo: SpecificVarbInfo<SN>
+    mixedInfo: VarbInfoMixed<SN>
   ): SolverVarb<SN> {
     const varb = this.getterSections.varbByMixed(mixedInfo);
     return this.solverVarb(varb.feVarbInfo);

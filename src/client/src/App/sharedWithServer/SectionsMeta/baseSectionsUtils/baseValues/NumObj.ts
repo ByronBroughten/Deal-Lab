@@ -2,7 +2,7 @@ import { Schema } from "mongoose";
 import { z } from "zod";
 import { reqMonString } from "../../../utils/mongoose";
 import { StrictPick } from "../../../utils/types";
-import { InEntities, InEntity, mEntityFrame, zInEntities } from "./entities";
+import { InEntities, InEntity, zInEntities } from "./entities";
 
 export type NumObj = {
   editorText: string;
@@ -16,7 +16,13 @@ export const zNumObj = z.object({
 } as { [K in keyof NumObj]: any });
 export const mDbNumObj: { [key in keyof NumObj]: any } = {
   editorText: reqMonString,
-  entities: [new Schema(mEntityFrame)],
+  entities: {
+    type: Schema.Types.Mixed,
+    required: true,
+    validate: {
+      validator: (v: any) => zInEntities.safeParse(v).success,
+    },
+  },
   solvableText: reqMonString,
 };
 export function isNumObj(value: any): value is NumObj {

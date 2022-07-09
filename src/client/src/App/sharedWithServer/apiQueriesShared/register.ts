@@ -2,7 +2,7 @@ import { z } from "zod";
 import { SectionPack, zRawSectionPackArr } from "../SectionPack/SectionPack";
 import { SectionName, sectionNameS } from "../SectionsMeta/SectionName";
 import { dbLimits } from "../utils/dbLimts";
-import { validationMessage, zodSchema } from "../utils/zod";
+import { validationMessage, zS } from "../utils/zod";
 import { NextRes } from "./apiQueriesSharedTypes";
 
 export type RegisterQueryObjects = {
@@ -43,7 +43,7 @@ export function isRegisterFormData(value: any): value is RegisterFormData {
 }
 
 export const zRegisterFormData = z.object({
-  email: zodSchema.string.email(),
+  email: zS.string.email(),
   userName: z
     .string()
     .min(3, validationMessage.min(3))

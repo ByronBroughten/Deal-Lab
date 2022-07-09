@@ -1,36 +1,39 @@
+import { relVarbInfoS } from "../../childSectionsDerived/RelVarbInfo";
+import { relVarbInfosS } from "../../childSectionsDerived/RelVarbInfos";
 import { rel } from "../rel";
+import { relAdorn } from "../rel/relAdorn";
 import { LeftRightVarbInfos } from "../rel/relVarb";
-import { RelVarbs } from "../relVarbs";
+import { RelVarbs, relVarbsS } from "../relVarbs";
 
 export function dealRelVarbs(): RelVarbs<"deal"> {
   return {
-    ...rel.varbs.savableSection,
+    ...relVarbsS.savableSection,
     totalInvestment: rel.varb.leftRightPropFn(
       "Upfront investment",
       "simpleSubtract",
-      rel.varbInfo.specifiers("local", [
-        ["deal", "upfrontExpenses"],
-        ["deal", "upfrontRevenue"],
+      relVarbInfosS.local([
+        "upfrontExpenses",
+        "upfrontRevenue",
       ]) as LeftRightVarbInfos,
       { startAdornment: "$" }
     ),
     cashFlowMonthly: rel.varb.leftRightPropFn(
       "Monthly cash flow",
       "simpleSubtract",
-      rel.varbInfo.specifiers("local", [
-        ["deal", "revenueMonthly"],
-        ["deal", "expensesMonthly"],
+      relVarbInfosS.local([
+        "revenueMonthly",
+        "expensesMonthly",
       ]) as LeftRightVarbInfos,
-      rel.adorn.moneyMonth
+      relAdorn.moneyMonth
     ),
     cashFlowYearly: rel.varb.leftRightPropFn(
       "Annual cash flow",
       "simpleSubtract",
-      rel.varbInfo.specifiers("local", [
-        ["deal", "revenueYearly"],
-        ["deal", "expensesYearly"],
+      relVarbInfosS.local([
+        "revenueYearly",
+        "expensesYearly",
       ]) as LeftRightVarbInfos,
-      rel.adorn.moneyYear
+      relAdorn.moneyYear
     ),
     cashFlowOngoingSwitch: rel.varb.string({
       initValue: "yearly",
@@ -38,18 +41,18 @@ export function dealRelVarbs(): RelVarbs<"deal"> {
     roiMonthly: rel.varb.leftRightPropFn(
       "Monthly ROI",
       "divideToPercent",
-      rel.varbInfo.specifiers("local", [
-        ["deal", "cashFlowMonthly"],
-        ["deal", "totalInvestment"],
+      relVarbInfosS.local([
+        "cashFlowMonthly",
+        "totalInvestment",
       ]) as LeftRightVarbInfos,
       { endAdornment: "%", unit: "percent" }
     ),
     roiYearly: rel.varb.leftRightPropFn(
       "Annual ROI",
       "divideToPercent",
-      rel.varbInfo.specifiers("local", [
-        ["deal", "cashFlowYearly"],
-        ["deal", "totalInvestment"],
+      relVarbInfosS.local([
+        "cashFlowYearly",
+        "totalInvestment",
       ]) as LeftRightVarbInfos,
       { endAdornment: "%", unit: "percent" }
     ),
@@ -58,42 +61,40 @@ export function dealRelVarbs(): RelVarbs<"deal"> {
     }),
     upfrontExpensesSum: rel.varb.sumNums(
       "Sum of upfront expenses",
-      rel.varbInfo.specifiers("children", [
-        ["propertyGeneral", "upfrontExpenses"],
-        ["mgmtGeneral", "upfrontExpenses"],
-        ["financing", "downPaymentDollars"],
-        ["financing", "closingCosts"],
-        ["financing", "mortInsUpfront"],
-      ]),
+      [
+        relVarbInfoS.children("propertyGeneral", "upfrontExpenses"),
+        relVarbInfoS.children("mgmtGeneral", "upfrontExpenses"),
+        ...relVarbInfosS.children("financing", [
+          "downPaymentDollars",
+          "closingCosts",
+          "mortInsUpfront",
+        ]),
+      ],
       { startAdornment: "$" }
     ),
     upfrontExpenses: rel.varb.leftRightPropFn(
       "Total upfront expenses",
       "simpleSubtract",
       [
-        rel.varbInfo.local("deal", "upfrontExpensesSum"),
-        rel.varbInfo.children("financing", "wrappedInLoan"),
+        relVarbInfoS.local("upfrontExpensesSum"),
+        relVarbInfoS.children("financing", "wrappedInLoan"),
       ] as LeftRightVarbInfos,
       { startAdornment: "$" }
     ),
     upfrontRevenue: rel.varb.sumNums(
       "Upfront revenue",
-      [rel.varbInfo.relative("propertyGeneral", "upfrontRevenue", "children")],
+      [relVarbInfoS.children("propertyGeneral", "upfrontRevenue")],
       { startAdornment: "$" }
     ),
-    ...rel.varbs.ongoingSumNums(
-      "expenses",
-      "Ongoing expenses",
-      rel.varbInfo.specifiers("children", [
-        ["propertyGeneral", "ongoingExpenses"],
-        ["mgmtGeneral", "ongoingExpenses"],
-        ["financing", "piti"],
-      ])
-    ),
-    ...rel.varbs.ongoingSumNums(
+    ...relVarbsS.ongoingSumNums("expenses", "Ongoing expenses", [
+      relVarbInfoS.children("propertyGeneral", "ongoingExpenses"),
+      relVarbInfoS.children("mgmtGeneral", "ongoingExpenses"),
+      relVarbInfoS.children("financing", "piti"),
+    ]),
+    ...relVarbsS.ongoingSumNums(
       "revenue",
       "Ongoing revenue",
-      [rel.varbInfo.children("propertyGeneral", "ongoingRevenue")],
+      [relVarbInfoS.children("propertyGeneral", "ongoingRevenue")],
       { shared: { startAdornment: "$" }, switchInit: "monthly" }
     ),
   } as RelVarbs<"deal">;

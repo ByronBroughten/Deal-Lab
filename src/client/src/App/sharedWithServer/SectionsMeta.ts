@@ -1,14 +1,16 @@
 import { pick } from "lodash";
 import { sectionContext, SimpleSectionName } from "./SectionsMeta/baseSections";
-import {
-  OutRelVarbInfo,
-  VarbNames,
-} from "./SectionsMeta/baseSectionsDerived/baseVarbInfo";
+import { VarbNames } from "./SectionsMeta/baseSectionsDerived/baseVarbInfo";
 import { RelativeIds } from "./SectionsMeta/baseSectionsUtils/relativeIdInfo";
 import {
   DescendantSectionName,
   SelfOrDescendantSectionName,
 } from "./SectionsMeta/childSectionsDerived/DescendantSectionName";
+import {
+  inVarbInfoToOutSectionName,
+  relInToOutVarbInfo,
+  RelOutVarbInfo,
+} from "./SectionsMeta/childSectionsDerived/RelInOutVarbInfo";
 import { SectionMeta } from "./SectionsMeta/SectionMeta";
 import { SectionName, sectionNameS } from "./SectionsMeta/SectionName";
 import {
@@ -80,6 +82,10 @@ export class SectionsMeta {
     focalSectionName: SN,
     inRelative: RelativeIds["inVarb"]
   ): RelativeIds["outVarb"] {
+    // if something has a parent.
+    // this isn't going to be so easy.
+    // It would probably be
+
     const focalSectionMeta = this.section(focalSectionName);
     if (inRelative === "local") return "local";
     else if (inRelative === "children") return "parent";
@@ -93,7 +99,7 @@ export class SectionsMeta {
     throw new Error(`Relative '${inRelative}' is not valid.`);
   }
   makeOutUpdatePack(
-    relTargetVarbInfo: OutRelVarbInfo,
+    relTargetVarbInfo: RelOutVarbInfo,
     inUpdatePack: InUpdatePack
   ): OutUpdatePack {
     if (isDefaultInPack(inUpdatePack)) {
@@ -114,20 +120,17 @@ export class SectionsMeta {
     inUpdatePack: InUpdatePack
   ): void {
     const { inUpdateInfos } = inUpdatePack;
-    for (const info of inUpdateInfos) {
-      const { sectionName, varbName, id } = info;
-
-      // the issue may be that there is no such thing as a permanet
-      // outUpdatePack when a section can have two parents.
-      const outUpdatePack = this.makeOutUpdatePack(
-        {
-          ...targetNames,
-          id: this.inToOutRelative(targetNames.sectionName, id),
-          idType: "relative",
-        },
-        inUpdatePack
-      );
-
+    for (const inVarbInfo of inUpdateInfos) {
+      const outInfo = relInToOutVarbInfo({
+        namesOfVarbWithInVarb: targetNames,
+        inVarbInfo,
+      });
+      const outUpdatePack = this.makeOutUpdatePack(outInfo, inUpdatePack);
+      const { varbName } = inVarbInfo;
+      const sectionName = inVarbInfoToOutSectionName({
+        sectionNameWithInVarb: targetNames.sectionName,
+        inVarbInfo,
+      });
       const inVarbMeta = this.varb({ sectionName, varbName });
       const varbMetas = this.varbs(sectionName);
       const sectionMeta = this.section(sectionName);

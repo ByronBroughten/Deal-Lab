@@ -2,7 +2,7 @@ import { z } from "zod";
 import { config } from "../../Constants";
 import { SectionPack, zRawSectionPack } from "../SectionPack/SectionPack";
 import { SectionName, sectionNameS } from "../SectionsMeta/SectionName";
-import { zodSchema } from "../utils/zod";
+import { zS } from "../utils/zod";
 import { zRegisterFormData } from "./register";
 
 export type LoginQueryObjects = {
@@ -27,7 +27,7 @@ export function isLoginUserNext(value: any): value is LoginUser {
 function makeZLoginUserSchema() {
   return z.object(
     sectionNameS.arrs.loadOnLogin.reduce((partial, sectionName) => {
-      partial[sectionName] = zodSchema.array(zRawSectionPack);
+      partial[sectionName] = zS.array(zRawSectionPack);
       return partial;
     }, {} as Partial<Record<keyof LoginUser, any>>) as Record<
       keyof LoginUser,

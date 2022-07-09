@@ -8,7 +8,7 @@ export interface UniqueIdMixedInfo<
 > {
   sectionName: SN;
   id: string;
-  idType: IDT;
+  infoType: IDT;
 }
 export interface UniqueIdMixedVarbInfo<
   IDT extends UniqueIdType = UniqueIdType,

@@ -1,41 +1,96 @@
 import { SimpleSectionName } from "../baseSections";
-import { SectionNameProp } from "../baseSectionsDerived/baseSectionInfo";
-import { GeneralIdInfo } from "../baseSectionsUtils/baseIdInfo";
+import { ExpectedCount, GeneralInfo } from "../baseSectionsUtils/NanoIdInfo";
 import { ChildName } from "./ChildName";
-import { ParentName } from "./ParentName";
+import { ParentName, PiblingName, StepSiblingName } from "./ParentName";
 
-export interface RelChildrenInfo<
-  SN extends SimpleSectionName = SimpleSectionName,
-  CN extends ChildName<SN> = ChildName<SN>
-> extends GeneralIdInfo,
-    SectionNameProp<SN> {
-  idType: "children";
-  id: CN;
+export type RelInfoType =
+  | "local" // local
+  | "parent"
+  | "stepSibling" // stepSiblingIfOfChildName
+  | "pibling" // niblingIfOfHasChildName
+  // "nibling" — nibling might be hard
+  | "children" // parent
+  | "stepSiblingOfHasChildName"
+  | "niblingIfOfHasChildName";
+
+type RelInfoTypeTest<T extends RelSectionInfo["infoType"]> = T;
+type _TestRelInfoType = RelInfoTypeTest<RelInfoType>;
+
+export type RelSectionInfo =
+  | RelLocalInfo
+  | RelParentInfo
+  | RelChildrenInfo
+  | RelStepSiblingInfo
+  | RelPiblingInfo
+  | RelStepSiblingOfChildInfo
+  | RelNiblingOfChildInfo;
+
+type RelSectionInfoTest<T extends RelInfoType> = T;
+type _TestRelSectionInfo = RelSectionInfoTest<RelSectionInfo["infoType"]>;
+
+interface RelInfo<OO extends ExpectedCount> extends GeneralInfo {
+  infoType: RelInfoType;
+  expectedCount: OO;
 }
 
+export interface RelLocalInfo extends RelInfo<"onlyOne"> {
+  infoType: "local";
+}
 export interface RelParentInfo<
   SN extends SimpleSectionName = SimpleSectionName,
   PN extends ParentName<SN> = ParentName<SN>
-> extends GeneralIdInfo,
-    SectionNameProp<SN> {
-  idType: "parent";
-  id: PN;
+> extends RelInfo<"onlyOne"> {
+  infoType: "parent";
+  parentName: PN;
+}
+export interface RelChildrenInfo<
+  SN extends SimpleSectionName = SimpleSectionName,
+  CN extends ChildName<SN> = ChildName<SN>,
+  OO extends ExpectedCount = ExpectedCount
+> extends RelInfo<OO> {
+  infoType: "children";
+  childName: CN;
+}
+export interface RelStepSiblingInfo<
+  SN extends SimpleSectionName = SimpleSectionName,
+  SSN extends StepSiblingName<SN> = StepSiblingName<SN>,
+  SSSN extends SimpleSectionName = SimpleSectionName,
+  OO extends ExpectedCount = ExpectedCount
+> extends RelInfo<OO> {
+  infoType: "stepSibling";
+  stepSiblingName: SSN;
+  stepSiblingSectionName: SSSN;
+}
+export interface RelPiblingInfo<
+  SN extends SimpleSectionName = SimpleSectionName,
+  PN extends PiblingName<SN> = PiblingName<SN>,
+  PSN extends SimpleSectionName = SimpleSectionName,
+  OO extends ExpectedCount = ExpectedCount
+> extends RelInfo<OO> {
+  infoType: "pibling";
+  piblingName: PN;
+  piblingSectionName: PSN;
 }
 
-// depreciated.
-export interface RelAllInfo<
-  SN extends SimpleSectionName = SimpleSectionName,
-  AN extends SimpleSectionName = SimpleSectionName
-> extends GeneralIdInfo,
-    SectionNameProp<SN> {
-  idType: "all";
-  id: AN;
+export interface RelStepSiblingOfChildInfo<
+  SSN extends SimpleSectionName = SimpleSectionName,
+  CN extends ChildName = ChildName,
+  OO extends ExpectedCount = ExpectedCount
+> extends RelInfo<OO> {
+  infoType: "stepSiblingOfHasChildName";
+  stepSiblingSectionName: SSN;
+  selfChildName: CN;
 }
-export interface RelStaticInfo<
-  SN extends SimpleSectionName = SimpleSectionName,
-  STN extends SimpleSectionName = SimpleSectionName
-> extends GeneralIdInfo,
-    SectionNameProp<SN> {
-  idType: "static";
-  id: STN;
+export interface RelNiblingOfChildInfo<
+  NSN extends SimpleSectionName = SimpleSectionName,
+  CN extends ChildName = ChildName,
+  OO extends ExpectedCount = ExpectedCount
+> extends RelInfo<OO> {
+  // if it's childName is a match
+  // It looks through all its step siblings' children
+  // if it finds children that are of the right sectionName
+  // it adds its outUpdateInfo to those
+  infoType: "niblingIfOfHasChildName";
+  selfChildName: CN;
+  niblingSectionName: NSN;
 }

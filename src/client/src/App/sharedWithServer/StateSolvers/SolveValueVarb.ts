@@ -1,18 +1,16 @@
-import {
-  DbVarbInfo,
-  RelVarbInfo,
-} from "../SectionsMeta/baseSectionsDerived/baseVarbInfo";
+import { DbSectionVarbInfoMixed } from "../SectionsMeta/baseSectionsDerived/baseVarbInfo";
 import calculations, {
   isCalculationName,
   NumberProps,
 } from "../SectionsMeta/baseSectionsUtils/baseValues/calculations";
 import { NumObj } from "../SectionsMeta/baseSectionsUtils/baseValues/NumObj";
-import { InfoS } from "../SectionsMeta/Info";
+import { RelVarbInfo } from "../SectionsMeta/childSectionsDerived/RelVarbInfo";
 import { UpdateFnProps } from "../SectionsMeta/relSectionsUtils/rel/relVarbTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { GetterSectionProps } from "../StateGetters/Bases/GetterSectionBase";
 import { GetterVarbBase } from "../StateGetters/Bases/GetterVarbBase";
 import { GetterList } from "../StateGetters/GetterList";
+import { GetterSection } from "../StateGetters/GetterSection";
 import { GetterSections } from "../StateGetters/GetterSections";
 import { GetterVarb } from "../StateGetters/GetterVarb";
 import { GetterVarbNumObj } from "../StateGetters/GetterVarbNumObj";
@@ -24,6 +22,9 @@ export class SolveValueVarb<
 > extends GetterVarbBase<SN> {
   private get getterSections() {
     return new GetterSections(this.getterSectionsProps);
+  }
+  get getterSection(): GetterSection<SN> {
+    return new GetterSection(this.getterSectionProps);
   }
   private get getterList() {
     return new GetterList(this.getterListProps);
@@ -100,7 +101,7 @@ export class SolveValueVarb<
   private loadNextTexts(): { editorText: string; solvableText: string } {
     const loadingVarbInfo = this.getterVarbs.varbInfoStringValues;
     if (
-      InfoS.is.inEntityVarb(loadingVarbInfo) &&
+      isInEntityVarb(loadingVarbInfo) &&
       this.getterList.hasByMixed(loadingVarbInfo)
     ) {
       const varb = this.getterSections.varbByMixed(loadingVarbInfo);
@@ -149,7 +150,7 @@ export class SolveValueVarb<
       if (Array.isArray(propOrArr)) numberVarbs[propName] = [];
       else propOrArr = [propOrArr];
       for (const relInfo of propOrArr) {
-        const inVarbs = this.getterVarbs.varbsByFocalMixed(relInfo);
+        const inVarbs = this.getterSection.varbsByFocalMixed(relInfo);
         for (const inVarb of inVarbs) {
           if (inVarb.hasValueType("numObj")) {
             const num = inVarb.numberOrQuestionMark;
@@ -172,4 +173,4 @@ export class SolveValueVarb<
 
 export type FailedVarbs = FailedVarb[];
 type FailedVarb = { errorMessage: string } & UpdateVarbInfo;
-type UpdateVarbInfo = RelVarbInfo | DbVarbInfo;
+type UpdateVarbInfo = RelVarbInfo | DbSectionVarbInfoMixed;

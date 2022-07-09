@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { zValue } from "../SectionsMeta/baseSectionsUtils/baseValues";
+import { zValue } from "../SectionsMeta/baseSectionsUtils/valueMeta";
 import {
   ChildIdArrsWide,
   GeneralChildIdArrs,
@@ -7,7 +7,7 @@ import {
 import { SelfOrDescendantSectionName } from "../SectionsMeta/childSectionsDerived/DescendantSectionName";
 import { DbValue } from "../SectionsMeta/relSectionsUtils/rel/valueMetaTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
-import { zodSchema } from "../utils/zod";
+import { zS } from "../utils/zod";
 export type DbVarbs = {
   [varbName: string]: DbValue;
 };
@@ -31,9 +31,9 @@ export type RawSection<SN extends SectionName = SectionName> =
   RawSections<SN>[SelfOrDescendantSectionName<SN>][number];
 
 const zRawSectionFrame: Record<keyof OneRawSection, any> = {
-  dbId: zodSchema.nanoId,
+  dbId: zS.nanoId,
   dbVarbs: z.record(zValue),
-  childDbIds: z.record(z.array(zodSchema.string)),
+  childDbIds: z.record(z.array(zS.string)),
 };
 
 const zRawSection = z.object(zRawSectionFrame);

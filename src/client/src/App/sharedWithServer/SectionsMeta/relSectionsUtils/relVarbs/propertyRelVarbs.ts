@@ -1,16 +1,17 @@
+import { relVarbInfoS } from "../../childSectionsDerived/RelVarbInfo";
+import { relVarbInfosS } from "../../childSectionsDerived/RelVarbInfos";
 import { rel } from "../rel";
-import { RelVarbs } from "../relVarbs";
+import { RelVarbs, relVarbsS } from "../relVarbs";
 
 export function propertyRelVarbs<R extends RelVarbs<"property">>(): R {
-  const sectionName = "property";
   return {
-    ...rel.varbs.savableSection,
+    ...relVarbsS.savableSection,
     price: rel.varb.moneyObj("Price"),
     sqft: rel.varb.calcVarb("Square feet"),
-    ...rel.varbs.timeMoney("taxes", "Taxes", sectionName, {
+    ...relVarbsS.timeMoneyInput("taxes", "Taxes", {
       switchInit: "yearly",
     }),
-    ...rel.varbs.timeMoney("homeIns", "Home insurance", sectionName, {
+    ...relVarbsS.timeMoneyInput("homeIns", "Home insurance", {
       switchInit: "yearly",
     }),
     numUnits: rel.varb.sumChildVarb("Unit count", "unit", "one"),
@@ -19,36 +20,36 @@ export function propertyRelVarbs<R extends RelVarbs<"property">>(): R {
 
     // these
     upfrontExpenses: rel.varb.sumMoney("Upfront expenses", [
-      rel.varbInfo.children("singleTimeList", "total"),
+      relVarbInfoS.children("upfrontCostList", "total"),
     ]),
     upfrontRevenue: rel.varb.sumMoney("Upfront revenues", [
-      rel.varbInfo.children("singleTimeList", "total"),
+      relVarbInfoS.children("upfrontRevenueList", "total"),
     ]),
     // ongoing
-    ...rel.varbs.ongoingSumNums(
+    ...relVarbsS.ongoingSumNums(
       "ongoingExpenses",
       "Ongoing property expenses",
-      [rel.varbInfo.children("ongoingList", "total")],
+      [relVarbInfoS.children("ongoingCostList", "total")],
       { switchInit: "monthly", shared: { startAdornment: "$" } }
     ),
 
     // ongoing revenue
-    ...rel.varbs.ongoingSumNums(
+    ...relVarbsS.ongoingSumNums(
       "targetRent",
       "Total rent",
-      [rel.varbInfo.children("unit", "targetRent")],
+      [relVarbInfoS.children("unit", "targetRent")],
       { switchInit: "monthly", shared: { startAdornment: "$" } }
     ),
-    ...rel.varbs.ongoingSumNums(
+    ...relVarbsS.ongoingSumNums(
       "miscOngoingRevenue",
       "Revenue besides rent",
-      [rel.varbInfo.children("ongoingList", "total")],
+      [relVarbInfoS.children("ongoingRevenueList", "total")],
       { switchInit: "monthly", shared: { startAdornment: "$" } }
     ),
-    ...rel.varbs.ongoingSumNums(
+    ...relVarbsS.ongoingSumNums(
       "ongoingRevenue",
       "Ongoing property revenue",
-      rel.varbInfo.locals(sectionName, ["targetRent", "miscOngoingRevenue"]),
+      relVarbInfosS.local(["targetRent", "miscOngoingRevenue"]),
       { switchInit: "monthly", shared: { startAdornment: "$" } }
     ),
   } as R;

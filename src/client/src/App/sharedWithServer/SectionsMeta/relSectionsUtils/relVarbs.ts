@@ -7,9 +7,10 @@ import {
 } from "../baseSectionsDerived/baseSectionTypes";
 import { ValueName } from "../baseSectionsUtils/baseVarb";
 import { switchNames } from "../baseSectionsUtils/switchNames";
-import { relProps } from "./rel/relMisc";
+import { ChildName } from "../childSectionsDerived/ChildName";
+import { relVarbInfoS } from "../childSectionsDerived/RelVarbInfo";
+import { relVarbInfosS } from "../childSectionsDerived/RelVarbInfos";
 import { relVarbS } from "./rel/relVarb";
-import { relVarbInfo } from "./rel/relVarbInfo";
 import {
   MonthlyYearlySwitchOptions,
   monthsYearsInput,
@@ -23,7 +24,7 @@ import {
   DisplayName,
   RelVarb,
   RelVarbByType,
-  StringPreVarb,
+  StringRelVarb,
 } from "./rel/relVarbTypes";
 
 export type GeneralRelVarbs = Record<string, RelVarb>;
@@ -99,13 +100,12 @@ export const relVarbsS = {
   monthsYearsInput,
   switch: simpleSwitch,
   switchInput,
-  timeMoney(
+  timeMoneyInput(
     varbNameBase: string,
     displayName: DisplayName,
-    sectionName: BaseName<"hasVarb">,
     options: MonthlyYearlySwitchOptions = {}
   ) {
-    return this.ongoingInput(varbNameBase, displayName, sectionName, {
+    return this.ongoingInput(varbNameBase, displayName, {
       ...options,
       shared: { ...options.shared, startAdornment: "$" },
     });
@@ -133,11 +133,11 @@ export const relVarbsS = {
     return ssPreVarbs as ToReturn;
   },
   sumSection<
-    S extends BaseName<"hasVarb">,
-    PV extends RelVarbs<S>,
-    ToSkip extends readonly (keyof PV)[] = []
-  >(sectionName: S, relVarbs: PV, toSkip?: ToSkip) {
-    type ToReturn = Omit<RelVarbsByType<S, "numObj">, keyof ToSkip>;
+    SN extends BaseName<"hasVarb"> & ChildName,
+    RV extends RelVarbs<SN>,
+    ToSkip extends readonly (keyof RV)[] = []
+  >(sectionName: SN, relVarbs: RV, toSkip?: ToSkip) {
+    type ToReturn = Omit<RelVarbsByType<SN, "numObj">, keyof ToSkip>;
     function isInToReturn(value: any): value is keyof ToReturn {
       return value in relVarbs && !toSkip?.includes(value);
     }
@@ -153,7 +153,7 @@ export const relVarbsS = {
         const { displayName, startAdornment, endAdornment } = pVarb;
         ssPreVarbs[varbName] = relVarbS.sumNums(
           displayName,
-          [{ sectionName, varbName, id: "children", idType: "relative" }],
+          [relVarbInfoS.children(sectionName, varbName)],
           { startAdornment, endAdornment }
         );
       }
@@ -161,25 +161,25 @@ export const relVarbsS = {
     return ssPreVarbs as ToReturn;
   },
   varbInfo(): StringPreVarbsFromNames<
-    ["sectionName" | "varbName" | "id" | "idType"]
+    ["sectionName" | "varbName" | "id" | "infoType"]
   > {
-    return this.strings(["sectionName", "varbName", "id", "idType"] as const);
+    return this.strings(["sectionName", "varbName", "id", "infoType"] as const);
   },
   entityInfo() {
     return {
       ...this.varbInfo(),
       entityId: relVarbS.string(),
     } as {
-      sectionName: StringPreVarb;
-      varbName: StringPreVarb;
-      id: StringPreVarb;
-      idType: StringPreVarb;
-      entityId: StringPreVarb;
+      sectionName: StringRelVarb;
+      varbName: StringRelVarb;
+      id: StringRelVarb;
+      infoType: StringRelVarb;
+      entityId: StringRelVarb;
     };
   },
   singleTimeItem<R extends RelVarbs<"singleTimeItem">>(): R {
     const sectionName = "singleTimeItem";
-    const valueSwitchProp = relVarbInfo.local(sectionName, "valueSwitch");
+    const valueSwitchProp = relVarbInfoS.local("valueSwitch");
     const r: R = {
       name: relVarbS.stringOrLoaded(sectionName),
       valueSwitch: relVarbS.string({
@@ -187,24 +187,19 @@ export const relVarbsS = {
       }),
       ...relVarbsS.entityInfo(),
       editorValue: relVarbS.calcVarb("", { startAdornment: "$" }),
-      value: relVarbS.numObj(relVarbInfo.local(sectionName, "name"), {
+      value: relVarbS.numObj(relVarbInfoS.local("name"), {
         updateFnName: "editorValue",
         updateFnProps: {
-          proxyValue: relVarbInfo.local(sectionName, "editorValue"),
+          proxyValue: relVarbInfoS.local("editorValue"),
           valueSwitch: valueSwitchProp,
         },
         inUpdateSwitchProps: [
           {
-            switchInfo: {
-              sectionName,
-              varbName: "valueSwitch",
-              id: "local",
-              idType: "relative",
-            },
+            switchInfo: relVarbInfoS.local("valueSwitch"),
             switchValue: "loadedVarb",
             updateFnName: "loadedNumObj",
             updateFnProps: {
-              ...relProps.loadedVarb(sectionName),
+              ...relVarbInfosS.localVarbInfoMixed(),
               valueSwitch: valueSwitchProp,
             },
           },
@@ -220,16 +215,13 @@ export const relVarbsS = {
 
     const defaultValueUpdatePack = {
       updateFnName: "editorValue",
-      updateFnProps: relProps.locals("ongoingItem", [
+      updateFnProps: relVarbInfosS.localByVarbName([
         "editorValue",
         "valueSwitch",
       ]),
     } as const;
-    const ongoingSwitchInfo = relVarbInfo.local(
-      sectionName,
-      ongoingValueNames.switch
-    );
-    const valueSwitchProp = relVarbInfo.local(sectionName, "valueSwitch");
+    const ongoingSwitchInfo = relVarbInfoS.local(ongoingValueNames.switch);
+    const valueSwitchProp = relVarbInfoS.local("valueSwitch");
     const r: R = {
       name: relVarbS.stringOrLoaded(sectionName),
       valueSwitch: relVarbS.string({
@@ -245,12 +237,9 @@ export const relVarbsS = {
         startAdornment: "$",
         endAdornment: "provide adornment to editor",
       }),
-      ...relVarbsS.monthsYearsInput(
-        "lifespan",
-        "Average lifespan",
-        sectionName,
-        { switchInit: "years" }
-      ),
+      ...relVarbsS.monthsYearsInput("lifespan", "Average lifespan", {
+        switchInit: "years",
+      }),
       [ongoingValueNames.switch]: relVarbS.string({
         initValue: "yearly",
       }),
@@ -264,26 +253,26 @@ export const relVarbsS = {
             switchValue: "yearly",
             updateFnName: "yearlyToMonthly",
             updateFnProps: {
-              num: relVarbInfo.local(sectionName, ongoingValueNames.yearly),
+              num: relVarbInfoS.local(ongoingValueNames.yearly),
             },
           },
           {
-            switchInfo: relVarbInfo.local(sectionName, "valueSwitch"),
+            switchInfo: relVarbInfoS.local("valueSwitch"),
             switchValue: "loadedVarb",
             updateFnName: "loadedNumObj",
             updateFnProps: {
               valueSwitch: valueSwitchProp,
-              ...relProps.loadedVarb(sectionName),
+              ...relVarbInfosS.localVarbInfoMixed(),
             },
           },
           {
-            switchInfo: relVarbInfo.local(sectionName, "valueSwitch"),
+            switchInfo: relVarbInfoS.local("valueSwitch"),
             switchValue: "labeledSpanOverCost",
             updateFnName: "simpleDivide",
             updateFnProps: {
               valueSwitch: valueSwitchProp,
-              leftSide: relVarbInfo.local(sectionName, "costToReplace"),
-              rightSide: relVarbInfo.local(sectionName, "lifespanMonths"),
+              leftSide: relVarbInfoS.local("costToReplace"),
+              rightSide: relVarbInfoS.local("lifespanMonths"),
             },
           },
         ],
@@ -296,26 +285,26 @@ export const relVarbsS = {
             switchValue: "monthly",
             updateFnName: "monthlyToYearly",
             updateFnProps: {
-              num: relVarbInfo.local(sectionName, ongoingValueNames.monthly),
+              num: relVarbInfoS.local(ongoingValueNames.monthly),
             },
           },
           {
-            switchInfo: relVarbInfo.local(sectionName, "valueSwitch"),
+            switchInfo: relVarbInfoS.local("valueSwitch"),
             switchValue: "loadedVarb",
             updateFnName: "loadedNumObj",
             updateFnProps: {
               valueSwitch: valueSwitchProp,
-              ...relProps.loadedVarb(sectionName),
+              ...relVarbInfosS.localVarbInfoMixed(),
             },
           },
           {
-            switchInfo: relVarbInfo.local(sectionName, "valueSwitch"),
+            switchInfo: relVarbInfoS.local("valueSwitch"),
             switchValue: "labeledSpanOverCost",
             updateFnName: "simpleDivide",
             updateFnProps: {
               valueSwitch: valueSwitchProp,
-              leftSide: relVarbInfo.local(sectionName, "costToReplace"),
-              rightSide: relVarbInfo.local(sectionName, "lifespanYears"),
+              leftSide: relVarbInfoS.local("costToReplace"),
+              rightSide: relVarbInfoS.local("lifespanYears"),
             },
           },
         ],
@@ -327,8 +316,8 @@ export const relVarbsS = {
     return {
       ...this.savableSection,
       total: relVarbS.sumNums(
-        relVarbInfo.local("singleTimeList", "title"),
-        [relVarbInfo.relative("singleTimeItem", "value", "children")],
+        relVarbInfoS.local("title"),
+        [relVarbInfoS.children("singleTimeItem", "value")],
         { startAdornment: "$" }
       ),
       defaultValueSwitch: relVarbS.string({
@@ -347,8 +336,8 @@ export const relVarbsS = {
       }),
       ...relVarbsS.ongoingSumNums(
         "total",
-        relVarbInfo.local("ongoingList", "title"),
-        [relVarbInfo.relative("ongoingItem", "value", "children")],
+        relVarbInfoS.local("title"),
+        [relVarbInfoS.children("ongoingItem", "value")],
         { switchInit: "monthly", shared: { startAdornment: "$" } }
       ),
     };

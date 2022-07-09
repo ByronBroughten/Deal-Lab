@@ -1,8 +1,4 @@
 import {
-  InRelVarbInfo,
-  MultiVarbInfo,
-} from "../SectionsMeta/baseSectionsDerived/baseVarbInfo";
-import {
   entityS,
   InEntity,
   InEntityVarbInfo,
@@ -11,6 +7,8 @@ import {
 } from "../SectionsMeta/baseSectionsUtils/baseValues/entities";
 import { StateValue } from "../SectionsMeta/baseSectionsUtils/baseValues/StateValueTypes";
 import { Id } from "../SectionsMeta/baseSectionsUtils/id";
+import { VarbInfoMixed } from "../SectionsMeta/childSectionsDerived/MixedSectionInfo";
+import { RelInVarbInfo } from "../SectionsMeta/childSectionsDerived/RelInOutVarbInfo";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { GetterSections } from "../StateGetters/GetterSections";
 import { GetterVarb } from "../StateGetters/GetterVarb";
@@ -203,11 +201,11 @@ export class SolverVarb<
   }
   private inRelToFeMixedInfos(): InVarbInfo[] {
     return this.inRelativeInfos.reduce((inFeInfos, inRelInfo) => {
-      const varbs = this.getterVarbs.varbsByFocalMixed(inRelInfo);
+      const varbs = this.get.varbsByFocalMixed(inRelInfo);
       return inFeInfos.concat(varbs.map((varb) => varb.feVarbInfoMixed));
     }, [] as InVarbInfo[]);
   }
-  private get inRelativeInfos(): InRelVarbInfo[] {
+  private get inRelativeInfos(): RelInVarbInfo[] {
     return this.get.inUpdatePack.inUpdateInfos;
   }
 
@@ -237,10 +235,9 @@ export class SolverVarb<
 export function varbNotFoundMixed({
   varbName,
   sectionName,
-  idType,
-  id,
-}: MultiVarbInfo) {
+  infoType,
+}: VarbInfoMixed) {
   return new Error(
-    `There is no varb at ${sectionName}.${id}.${varbName} with idType ${idType}.`
+    `There is no varb at ${sectionName}.${varbName} with infoType ${infoType}.`
   );
 }

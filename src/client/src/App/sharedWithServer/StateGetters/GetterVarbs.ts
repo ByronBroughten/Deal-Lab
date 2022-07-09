@@ -1,8 +1,4 @@
 import { DbVarbs } from "../SectionPack/RawSection";
-import {
-  MultiFindByFocalVarbInfo,
-  MultiVarbInfo,
-} from "../SectionsMeta/baseSectionsDerived/baseVarbInfo";
 import { InEntityVarbInfo } from "../SectionsMeta/baseSectionsUtils/baseValues/entities";
 import {
   StateValueAnyKey,
@@ -23,7 +19,9 @@ import { GetterSections } from "./GetterSections";
 import { GetterVarb } from "./GetterVarb";
 
 export class GetterVarbs<SN extends SectionName> extends GetterSectionBase<SN> {
-  private getterSection = new GetterSection(this.getterSectionProps);
+  get section() {
+    return new GetterSection(this.getterSectionProps);
+  }
   private get stateVarbs(): RawFeVarbs<SN> {
     return this.sectionsShare.sections.rawSection(this.feSectionInfo).varbs;
   }
@@ -31,7 +29,7 @@ export class GetterVarbs<SN extends SectionName> extends GetterSectionBase<SN> {
     return new GetterSections(this.getterSectionsProps);
   }
   get meta(): VarbMetas {
-    return this.getterSection.meta.varbMetas;
+    return this.section.meta.varbMetas;
   }
   get feVarbInfos(): VarbInfo<SN>[] {
     const { feSectionInfo } = this;
@@ -78,7 +76,7 @@ export class GetterVarbs<SN extends SectionName> extends GetterSectionBase<SN> {
       sectionName: "string",
       varbName: "string",
       id: "string",
-      idType: "string",
+      infoType: "string",
     });
   }
   get varbInfoValues(): InEntityVarbInfo {
@@ -87,21 +85,6 @@ export class GetterVarbs<SN extends SectionName> extends GetterSectionBase<SN> {
       throw new Error(`"values" should be an inEntityVarbInfo`);
     }
     return values;
-  }
-  varbByFocalMixed<S extends SectionName<"hasVarb">>({
-    varbName,
-    ...mixedInfo
-  }: MultiFindByFocalVarbInfo<S>): GetterVarb<S> {
-    const section = this.getterSection.sectionByFocalMixed(mixedInfo);
-    return section.varb(varbName);
-  }
-  varbsByFocalMixed<S extends SectionName<"hasVarb">>({
-    varbName,
-    ...mixedInfo
-  }: MultiVarbInfo<S>): GetterVarb<S>[] {
-    const { id, sectionName } = mixedInfo;
-    const sections = this.getterSection.sectionsByFocalMixed(mixedInfo);
-    return sections.map((section) => section.varb(varbName));
   }
   get dbVarbs(): DbVarbs {
     return this.varbNames.reduce((dbVarbs, varbName) => {

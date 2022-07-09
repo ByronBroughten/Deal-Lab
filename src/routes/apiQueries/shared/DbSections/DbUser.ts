@@ -198,9 +198,7 @@ export class DbUser extends GetterSectionsBase {
           dbId,
           dbVarbs: { title },
         });
-        const varb = source.get.varbs.varbByFocalMixed(
-          column.varbs.varbInfoValues
-        );
+        const varb = source.get.varbByFocalMixed(column.varbs.varbInfoValues);
       }
     }
     return [tableStore.makeSectionPack()];
@@ -254,7 +252,7 @@ export class DbUser extends GetterSectionsBase {
   //     rowEntry,
   //     cellArr,
   //     "cell",
-  //     InfoS.db(indexName, dbId)
+  //     MixedInfoS.makeDb(indexName, dbId, "onlyOne")
   //   );
   //   return rowEntry;
   // }

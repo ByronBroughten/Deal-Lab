@@ -1,25 +1,26 @@
-import { BaseName } from "../../baseSectionsDerived/baseSectionTypes";
-import { InRelVarbInfo } from "../../baseSectionsDerived/baseVarbInfo";
-import { valueMeta } from "../../baseSectionsUtils/baseValues";
+import { SimpleSectionName } from "../../baseSections";
 import {
   CalculationName,
   LeftRightPropCalculations,
   SinglePropCalculations,
 } from "../../baseSectionsUtils/baseValues/calculations";
-import { relProps } from "./relMisc";
-import { relVarbInfo } from "./relVarbInfo";
+import { valueMeta } from "../../baseSectionsUtils/valueMeta";
+import { ChildName } from "../../childSectionsDerived/ChildName";
+import { RelInVarbInfo } from "../../childSectionsDerived/RelInOutVarbInfo";
+import { relVarbInfoS } from "../../childSectionsDerived/RelVarbInfo";
+import { relVarbInfosS } from "../../childSectionsDerived/RelVarbInfos";
 import {
   CommonRelVarb,
   DisplayName,
   NumObjRelVarb,
   RelVarbByType,
-  StringPreVarb,
+  StringRelVarb,
   UpdateFnProps,
   UpdateSwitches,
 } from "./relVarbTypes";
 
 export type PreNumObjOptions = Partial<NumObjRelVarb & { initNumber: number }>;
-export type LeftRightVarbInfos = [InRelVarbInfo, InRelVarbInfo];
+export type LeftRightVarbInfos = [RelInVarbInfo, RelInVarbInfo];
 export const relVarbS = {
   common(commonProps: Partial<CommonRelVarb> = {}): CommonRelVarb {
     return {
@@ -45,26 +46,21 @@ export const relVarbS = {
       ...partial,
     } as RelVarbByType[T];
   },
-  string(partial: Partial<StringPreVarb> = {}) {
+  string(partial: Partial<StringRelVarb> = {}) {
     return this.type("string", partial);
   },
   stringOrLoaded(
-    sectionName: BaseName<"hasVarb">,
-    partial: Partial<StringPreVarb> = {}
-  ): StringPreVarb {
+    sectionName: SimpleSectionName,
+    partial: Partial<StringRelVarb> = {}
+  ): StringRelVarb {
     return {
       ...this.string({
         inUpdateSwitchProps: [
           {
-            switchInfo: {
-              sectionName,
-              varbName: "valueSwitch",
-              id: "local",
-              idType: "relative",
-            },
+            switchInfo: relVarbInfoS.local("valueSwitch"),
             switchValue: "loadedVarb",
             updateFnName: "loadedString",
-            updateFnProps: relProps.loadedVarb(sectionName),
+            updateFnProps: relVarbInfosS.localVarbInfoMixed(),
           },
         ],
       }),
@@ -126,7 +122,7 @@ export const relVarbS = {
   },
   sumNums(
     displayName: DisplayName,
-    nums: InRelVarbInfo[],
+    nums: RelInVarbInfo[],
     options?: PreNumObjOptions
   ): NumObjRelVarb {
     return this.type("numObj", {
@@ -138,7 +134,7 @@ export const relVarbS = {
   },
   sumMoney(
     displayName: DisplayName,
-    nums: InRelVarbInfo[],
+    nums: RelInVarbInfo[],
     options?: PreNumObjOptions
   ): NumObjRelVarb {
     return this.sumNums(displayName, nums, {
@@ -147,32 +143,18 @@ export const relVarbS = {
       startAdornment: "$",
     });
   },
-  sumChildVarb(
+  sumChildVarb<SN extends SimpleSectionName>(
     displayName: DisplayName,
-    sectionName: BaseName<"hasVarb">,
+    childName: ChildName<SN>,
     varbName: string
   ) {
     return this.sumNums(displayName, [
-      { sectionName, varbName, id: "children", idType: "relative" },
+      relVarbInfoS.children(childName, varbName),
     ]);
-  },
-  sumLocalMoney(
-    displayName: DisplayName,
-    localVarbNames: string[],
-    sectionName: BaseName<"hasVarb">
-  ) {
-    const varbsToSum = relVarbInfo.localsByVarbName(
-      sectionName,
-      localVarbNames
-    );
-    return this.sumNums(displayName, varbsToSum, {
-      unit: "money",
-      startAdornment: "$",
-    });
   },
   percentToPortion(
     displayName: DisplayName,
-    updateFnProps: { base: InRelVarbInfo; percentOfBase: InRelVarbInfo },
+    updateFnProps: { base: RelInVarbInfo; percentOfBase: RelInVarbInfo },
     options?: PreNumObjOptions
   ): NumObjRelVarb {
     return this.calcVarb(displayName, {
@@ -184,7 +166,7 @@ export const relVarbS = {
   singlePropFn(
     displayName: DisplayName,
     updateFnName: SinglePropCalculations,
-    num: InRelVarbInfo,
+    num: RelInVarbInfo,
     options?: PreNumObjOptions
   ): NumObjRelVarb {
     return this.type("numObj", {

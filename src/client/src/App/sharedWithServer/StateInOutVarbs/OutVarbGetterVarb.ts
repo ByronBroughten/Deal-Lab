@@ -1,4 +1,4 @@
-import { RelVarbInfo } from "../SectionsMeta/baseSectionsDerived/baseVarbInfo";
+import { RelVarbInfo } from "../SectionsMeta/childSectionsDerived/RelVarbInfo";
 import { VarbInfo } from "../SectionsMeta/Info";
 import { SectionName } from "../SectionsMeta/SectionName";
 import {
@@ -46,24 +46,27 @@ export class OutVarbGetterVarb<
     this.outVarbInfoStore.push(...feOutEntities);
   }
 
-  get outUpdatePacks() {
+  get filteredOutUpdatePacks() {
     const { outUpdatePacks } = this.get.meta;
-    return outUpdatePacks.filter(({ relTargetVarbInfo }) => {
-      const { id, sectionName } = relTargetVarbInfo;
-
-      if (id === "parent") {
-        if (sectionName === this.get.section.parentName) return true;
-        else return false;
+    return outUpdatePacks.filter(({ relTargetVarbInfo: info }) => {
+      switch (info.infoType) {
+        case "parent": {
+          return info.parentName === this.get.section.parentName;
+        }
+        case "local": {
+          return true;
+        }
+        case "niblingIfOfHasChildName": {
+          return info.selfChildName === this.get.section.selfChildName;
+        }
+        case "stepSiblingOfHasChildName": {
+          return info.selfChildName === this.get.section.selfChildName;
+        }
       }
-      if (id === "local") return true;
-      if (id === "all" || id === "static") return true;
-      // phasing out
-
-      throw new Error(`id "${id}" is not accounted for here.`);
     });
   }
   private gatherOutRelatives() {
-    for (const outUpdatePack of this.outUpdatePacks) {
+    for (const outUpdatePack of this.filteredOutUpdatePacks) {
       if (VarbMeta.isSwitchOutPack(outUpdatePack)) {
         this.gatherFromSwitchUpdatePack(outUpdatePack);
       } else {
@@ -83,7 +86,9 @@ export class OutVarbGetterVarb<
     switchInfo,
     switchValue,
   }: OutSwitchPack) {
-    const targetVarbInfos = this.relativesToFeVarbInfos(relTargetVarbInfo);
+    const targetVarbInfos = this.relativesToFeVarbInfos(
+      relTargetVarbInfo as RelVarbInfo
+    );
     for (const targetInfo of targetVarbInfos) {
       const targetVarb = this.get.getterVarb(targetInfo);
       if (targetVarb.switchIsActive(switchInfo, switchValue))
@@ -94,7 +99,9 @@ export class OutVarbGetterVarb<
     relTargetVarbInfo,
     inverseSwitches,
   }: OutDefaultPack) {
-    const targetVarbInfos = this.relativesToFeVarbInfos(relTargetVarbInfo);
+    const targetVarbInfos = this.relativesToFeVarbInfos(
+      relTargetVarbInfo as RelVarbInfo
+    );
     for (const targetInfo of targetVarbInfos) {
       const targetVarb = this.get.getterVarb(targetInfo);
       let gatherTargetVarb = true;
@@ -109,9 +116,7 @@ export class OutVarbGetterVarb<
       }
     }
   }
-  private relativesToFeVarbInfos<SN extends SectionName<"hasVarb">>(
-    relVarbInfo: RelVarbInfo<SN>
-  ): VarbInfo<SN>[] {
+  private relativesToFeVarbInfos(relVarbInfo: RelVarbInfo): VarbInfo[] {
     const varbs = this.get.varbsByFocalMixed(relVarbInfo);
     const feVarbInfos = varbs.map((varb) => varb.feVarbInfo);
     return feVarbInfos;

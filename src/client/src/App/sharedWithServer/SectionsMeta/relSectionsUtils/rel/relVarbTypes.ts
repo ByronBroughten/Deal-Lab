@@ -1,8 +1,8 @@
 import {
-  InRelVarbInfo,
-  LocalRelVarbInfo,
-  RelFindByFocalVarbInfo,
-} from "../../baseSectionsDerived/baseVarbInfo";
+  RelInVarbInfo,
+  RelSingleInVarbInfo,
+} from "../../childSectionsDerived/RelInOutVarbInfo";
+import { RelLocalVarbInfo } from "../../childSectionsDerived/RelVarbInfo";
 import {
   UpdateFnName,
   ValueSchemas,
@@ -11,10 +11,10 @@ import {
 } from "./valueMetaTypes";
 
 export type UpdateFnProps = {
-  [kwargName: string]: InRelVarbInfo | InRelVarbInfo[];
+  [kwargName: string]: RelInVarbInfo | RelInVarbInfo[];
 };
 export type SwitchUpdateInfo = {
-  switchInfo: LocalRelVarbInfo;
+  switchInfo: RelLocalVarbInfo;
   switchValue: string;
 };
 export type UpdateSwitchProp = SwitchUpdateInfo & {
@@ -22,7 +22,7 @@ export type UpdateSwitchProp = SwitchUpdateInfo & {
   updateFnProps: UpdateFnProps;
 };
 export type UpdateSwitches = UpdateSwitchProp[];
-export type DisplayName = string | RelFindByFocalVarbInfo;
+export type DisplayName = string | RelSingleInVarbInfo;
 export type CommonRelVarb = {
   updateFnProps: UpdateFnProps;
   inUpdateSwitchProps: UpdateSwitches;
@@ -46,5 +46,6 @@ export type RelVarbByType = {
     ValueSpecificProps[Prop] & { type: Prop };
 };
 export type RelVarb<T extends ValueTypeName = ValueTypeName> = RelVarbByType[T];
+
 export type NumObjRelVarb = RelVarbByType["numObj"];
-export type StringPreVarb = RelVarbByType["string"];
+export type StringRelVarb = RelVarbByType["string"];

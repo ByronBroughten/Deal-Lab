@@ -28,7 +28,7 @@ export function makeMainTablePackMakers(): TablePackMakers {
         table.addChild("column", {
           dbVarbs: {
             id: "local",
-            idType: "relative",
+            infoType: "relative",
             sectionName,
             varbName,
           },

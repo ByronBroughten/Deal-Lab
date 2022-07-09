@@ -143,7 +143,7 @@ export const baseVarbs = {
     } as const;
   },
   get varbInfo() {
-    return this.string(["id", "idType", "sectionName", "varbName"] as const);
+    return this.string(["id", "infoType", "sectionName", "varbName"] as const);
   },
   get entityInfo() {
     return {

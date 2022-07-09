@@ -1,9 +1,5 @@
 import { FeMixedInfo } from "../SectionsMeta/baseSectionsDerived/baseSectionInfo";
-import {
-  MultiFindByFocalInfo,
-  MultiSectionInfo,
-  RelSectionInfo,
-} from "../SectionsMeta/baseSectionsDerived/baseVarbInfo";
+import {} from "../SectionsMeta/baseSectionsDerived/baseVarbInfo";
 import { SwitchTargetKey } from "../SectionsMeta/baseSectionsUtils/baseSwitchNames";
 import { DbSectionInfo } from "../SectionsMeta/baseSectionsUtils/DbSectionInfo";
 import { ValueTypesPlusAny } from "../SectionsMeta/baseSectionsUtils/StateVarbTypes";
@@ -24,14 +20,20 @@ import {
   SelfAndDescendantIds,
 } from "../SectionsMeta/childSectionsDerived/DescendantSectionName";
 import {
+  SectionInfoMixedFocal,
+  VarbInfoMixedFocal,
+} from "../SectionsMeta/childSectionsDerived/MixedSectionInfo";
+import {
   ParentName,
   ParentNameSafe,
+  PiblingName,
+  StepSiblingName,
 } from "../SectionsMeta/childSectionsDerived/ParentName";
+import { RelSectionInfo } from "../SectionsMeta/childSectionsDerived/RelInfo";
 import {
   FeParentInfo,
   FeParentInfoSafe,
   FeSectionInfo,
-  InfoS,
   noParentWarning,
   VarbInfo,
 } from "../SectionsMeta/Info";
@@ -58,9 +60,11 @@ import { GetterVarbs } from "./GetterVarbs";
 export class GetterSection<
   SN extends SectionName = SectionName
 > extends GetterSectionBase<SN> {
-  private getterSections = new GetterSections(this.getterSectionsProps);
   get sections() {
-    return this.getterSections;
+    return new GetterSections(this.getterSectionsProps);
+  }
+  get list() {
+    return new GetterList(this.getterListProps);
   }
   get raw(): RawFeSection<SN> {
     return this.sectionsShare.sections.rawSection(this.feInfo);
@@ -78,74 +82,149 @@ export class GetterSection<
   ): this is GetterSection<SectionName<ST>> {
     return sectionNameS.is(this.sectionName, sectionNameType);
   }
-  sectionByFocalMixed<S extends SectionName>(info: MultiFindByFocalInfo<S>) {
-    if (InfoS.is.specific(info)) {
-      return this.getterSections.sectionByMixed(info);
-    } else return this.sectionByRelative(info as RelSectionInfo<S>);
+  varbByFocalMixed({ varbName, ...mixedInfo }: VarbInfoMixedFocal): GetterVarb {
+    const section = this.sectionByFocalMixed(mixedInfo);
+    return section.varb(varbName);
   }
-  sectionByRelative<S extends SectionName>(
-    info: RelSectionInfo<S>
-  ): GetterSection<S> {
-    switch (info.id) {
-      case "local": {
-        if (this.thisHasSectionName(info.sectionName)) return this;
-        else {
-          throw new Error("Local section did not match the focal section.");
-        }
+  varbsByFocalMixed({
+    varbName,
+    ...mixedInfo
+  }: VarbInfoMixedFocal): GetterVarb[] {
+    const sections = this.sectionsByFocalMixed(mixedInfo);
+    return sections.map((section) => section.varb(varbName));
+  }
+  sectionByFocalMixed(info: SectionInfoMixedFocal) {
+    const sections = this.sectionsByFocalMixed(info);
+    this.list.exactlyOneOrThrow(sections, info.infoType);
+    return sections[0];
+  }
+  sectionsByFocalMixed(info: SectionInfoMixedFocal): GetterSection[] {
+    switch (info.infoType) {
+      case "feId":
+      case "dbId":
+      case "globalSection": {
+        return this.sections.sectionsByMixed(info);
       }
-      // Parent can be one or none. For that reason,
-      // it might better belong in the array category
-      case "parent": {
-        return this.parent as any as GetterSection<S>;
-      }
-      default:
-        throw new Error("Exhausted MultiFindByFocalInfo options.");
     }
+    return this.sectionsByRelative(info);
   }
-  sectionsByFocalMixed<S extends SectionName>(
-    info: MultiSectionInfo<S>
-  ): GetterSection<S>[] {
-    if (InfoS.is.specific(info)) {
-      const section = this.getterSections.sectionByMixed(info);
-      return [section];
-    } else if (InfoS.is.singleMulti(info)) {
-      const section = this.sectionByFocalMixed(info);
-      return [section];
-    } else {
-      return this.sectionsByRelative(info as any);
+  sectionsByRelative(info: RelSectionInfo): GetterSection[] {
+    const sections = this.allSectionsByRelative(info);
+    if (info.expectedCount === "onlyOne") {
+      this.list.exactlyOneOrThrow(sections, info.infoType);
     }
+    return sections;
   }
-  sectionsByRelative<S extends SectionName>(
-    info: RelSectionInfo<S>
-  ): GetterSection<S>[] {
-    const { sectionName } = info;
-    switch (info.id) {
-      case "all": {
-        return this.getterSections.list(sectionName).arr;
-      }
+  private allSectionsByRelative(info: RelSectionInfo): GetterSection<any>[] {
+    switch (info.infoType) {
+      case "local":
+        return [this];
+      case "parent":
+        return [this.parent];
       case "children": {
-        if (this.meta.isChildName(sectionName)) {
-          return this.children(sectionName) as any as GetterSection<S>[];
-        }
-        // perfect. ok. this is where the child relSection
-        // must change to childName rather than sectionName.
-        else
+        const { childName } = info;
+        if (this.meta.isChildName(childName)) {
+          return this.children(childName);
+        } else {
           throw new Error(
-            `"${sectionName}" is not a child of "${this.sectionName}"`
+            `"${childName}" is not a child of "${this.sectionName}"`
+          );
+        }
+      }
+      case "stepSibling": {
+        const { stepSiblingName, stepSiblingSectionName } = info;
+        const sectionName = this.parent.meta.childType(
+          stepSiblingName as ChildName<any>
+        );
+        if (sectionName === stepSiblingSectionName) {
+          return this.stepSiblings(stepSiblingName as StepSiblingName<SN>);
+        } else
+          throw new Error(
+            `sectionName ${sectionName} does not equal stepSiblingSectionName ${stepSiblingSectionName}`
           );
       }
-      default:
-        throw new Error("Exhausted MultiSectionInfo options.");
+      case "pibling": {
+        const { piblingName, piblingSectionName } = info;
+        const sectionName = this.parent.parent.meta.childType(
+          piblingName as ChildName<any>
+        );
+        if (sectionName === piblingSectionName) {
+          return this.parent.stepSiblings(piblingName as PiblingName<SN>);
+        } else
+          throw new Error(
+            `sectionName ${sectionName} does not equal piblingSectionName ${piblingSectionName}`
+          );
+      }
+      case "stepSiblingOfHasChildName": {
+        const { selfChildName, stepSiblingSectionName } = info;
+        if (this.selfChildName === selfChildName) {
+          return this.parent.childrenOfType(
+            stepSiblingSectionName as ChildSectionName<any>
+          );
+        } else
+          throw new Error(
+            `selfChildName ${selfChildName} does not match this.selfChildName ${this.selfChildName}`
+          );
+      }
+      case "niblingIfOfHasChildName": {
+        const { niblingSectionName, selfChildName } = info;
+        if (this.selfChildName === selfChildName) {
+          return this.allStepSiblings.reduce((niblingsOfType, stepSibling) => {
+            const nOfType = stepSibling.childrenOfType(
+              niblingSectionName
+            ) as GetterSection<any>[];
+            return niblingsOfType.concat(nOfType);
+          }, [] as GetterSection<any>[]);
+        } else
+          throw new Error(
+            `selfChildName ${selfChildName} does not match this.selfChildName ${this.selfChildName}`
+          );
+      }
     }
   }
+  childrenOfType<CSN extends ChildSectionName<SN>>(
+    childSectionName: CSN
+  ): GetterSection<CSN>[] {
+    const childIds = this.childIdsOfType(childSectionName);
+    return childIds.map((feId) =>
+      this.getterSection({
+        feId,
+        sectionName: childSectionName,
+      })
+    );
+  }
+  stepSiblings(stepSiblingName: StepSiblingName<SN>): GetterSection<any>[] {
+    const sectionName = this.parent.meta.childType(stepSiblingName);
+    return this.allStepSiblingIds[stepSiblingName].map((feId) =>
+      this.getterSection({
+        feId,
+        sectionName,
+      })
+    );
+  }
+  get allStepSiblingIds(): Record<StepSiblingName<SN>, string[]> {
+    return this.parent.allChildFeIds;
+  }
+  get allStepSiblings(): GetterSection<any>[] {
+    return this.allStepSiblingInfos.map((info) => this.getterSection(info));
+  }
+  get allStepSiblingInfos(): FeSectionInfo<any>[] {
+    const { allStepSiblingIds } = this;
+    return Obj.keys(allStepSiblingIds).reduce((infos, stepSiblingName) => {
+      const sectionName = this.parent.meta.childType(stepSiblingName);
+      const feIds = allStepSiblingIds[stepSiblingName];
+      return infos.concat(feIds.map((feId) => ({ sectionName, feId })));
+    }, [] as FeSectionInfo<any>[]);
+  }
+
   get meta(): SectionMeta<SN> {
-    return this.getterSections.meta.section(this.sectionName);
+    return this.sections.meta.section(this.sectionName);
   }
   get dbId(): string {
     return this.raw.dbId;
   }
   get idx() {
-    return this.getterSections.list(this.sectionName).idx(this.feId);
+    return this.sections.list(this.sectionName).idx(this.feId);
   }
   get feInfo(): FeSectionInfo<SN> {
     return {
@@ -161,13 +240,23 @@ export class GetterSection<
   }
   get feInfoMixed(): FeMixedInfo<SN> {
     return {
+      infoType: "feId",
       id: this.feId,
-      idType: "feId",
       sectionName: this.sectionName,
+      expectedCount: "onlyOne",
     };
   }
+  get selfChildName(): ChildName<ParentNameSafe<SN>> {
+    const { allChildFeIds } = this.parent;
+    for (const childName of Obj.keys(allChildFeIds)) {
+      if (allChildFeIds[childName].includes(this.feId)) {
+        return childName;
+      }
+    }
+    throw new Error("this.feId was not found in this.parent.allChildFeIds");
+  }
   get siblingFeInfos(): FeSectionInfo<SN>[] {
-    const siblingIds = this.parent.childFeIds(this.sectionName as any);
+    const siblingIds = this.parent.childFeIds(this.selfChildName);
     return siblingIds.map((feId) => ({
       sectionName: this.sectionName,
       feId,
@@ -194,7 +283,7 @@ export class GetterSection<
     childName: CN
   ): GetterList<CT> {
     const childType = this.meta.childType(childName);
-    return this.getterSections.list(childType) as any;
+    return this.sections.list(childType) as any;
   }
   childrenOldToYoung<
     CN extends ChildName<SN>,
@@ -248,7 +337,9 @@ export class GetterSection<
     childName,
     dbId,
   }: DbChildInfo<SN, CN>): boolean {
-    return this.childList(childName).hasByMixed({ idType: "dbId", id: dbId });
+    const child = this.children(childName).find((child) => child.dbId === dbId);
+    if (child) return true;
+    else return false;
   }
   childToFeInfo<CN extends ChildName<SN>>({
     childName,
@@ -310,16 +401,16 @@ export class GetterSection<
     const varbName = this.switchVarbName(varbNameBase, switchEnding);
     return this.varb(varbName);
   }
-  uniqueId<T extends UniqueIdType>(idType: T): string {
-    return this[idType];
+  uniqueId<T extends UniqueIdType>(infoType: T): string {
+    return this[infoType];
   }
   uniqueIdInfoMixed<T extends UniqueIdType>(
-    idType: T
+    infoType: T
   ): UniqueIdMixedInfo<T, SN> {
     return {
       sectionName: this.sectionName,
-      id: this.uniqueId(idType),
-      idType,
+      id: this.uniqueId(infoType),
+      infoType,
     };
   }
   value<VT extends ValueTypeName | "any" = "any">(
@@ -362,6 +453,7 @@ export class GetterSection<
   get childNames(): ChildName<SN>[] {
     return this.meta.childNames;
   }
+
   get allChildFeIds(): ChildIdArrsWide<SN> {
     return this.raw.childFeIds as GeneralChildIdArrs as ChildIdArrsWide<SN>;
   }
@@ -385,7 +477,7 @@ export class GetterSection<
       (childDbIds, [childName, idArr]) => {
         const sectionName = this.meta.childType(childName);
         const dbIds = idArr.map(
-          (feId) => this.getterSections.section({ sectionName, feId }).dbId
+          (feId) => this.sections.section({ sectionName, feId }).dbId
         );
         childDbIds[childName] = dbIds;
         return childDbIds;

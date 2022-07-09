@@ -10,7 +10,7 @@ export const outputNames = [
 export const defaultDealOutputInfos = outputNames.map((varbName) => {
   return {
     id: "static",
-    idType: "relative",
+    infoType: "relative",
     sectionName: "deal",
     varbName,
   } as const;

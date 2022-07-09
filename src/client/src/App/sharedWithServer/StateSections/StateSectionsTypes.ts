@@ -4,6 +4,7 @@ import { ChildIdArrsNarrow } from "../SectionsMeta/childSectionsDerived/ChildNam
 import { SectionName } from "../SectionsMeta/SectionName";
 
 export class SectionNotFoundError extends Error {}
+export class TooManySectionsFoundError extends Error {}
 
 export type RawFeVarb<SN extends SectionName> = {
   value: StateValue;

@@ -27,7 +27,7 @@ export function zValidate(value: any, zSchema: z.ZodTypeAny): boolean {
   }
 }
 
-export const zodSchema = {
+export const zS = {
   nanoId: zNanoId,
   string: zString,
   number: zNumber,

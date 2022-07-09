@@ -92,6 +92,11 @@ export class SectionMeta<SN extends SimpleSectionName> {
     const names = childToSectionNames[this.sectionName] as {
       [key: string]: string;
     };
+    if (!names)
+      throw new Error(
+        `childName "${childName}" did not yield a childType from parent of type ${this.sectionName}`
+      );
+
     return names[childName] as ChildSectionName<SN, CN>;
   }
   childTypeNames<CT extends ChildSectionName<SN>>(

@@ -1,14 +1,15 @@
 import { switchNames } from "../../baseSectionsUtils/switchNames";
+import { relVarbInfoS } from "../../childSectionsDerived/RelVarbInfo";
+import { relVarbInfosS } from "../../childSectionsDerived/RelVarbInfos";
 import { rel } from "../rel";
-import { RelVarbs } from "../relVarbs";
+import { RelVarbs, relVarbsS } from "../relVarbs";
 
 const rentCut = switchNames("rentCut", "dollarsPercent");
 const rentCutDollars = switchNames(rentCut.dollars, "ongoing");
 
 export function mgmtRelVarbs<R extends RelVarbs<"mgmt">>(): R {
-  const sectionName = "mgmt";
   return {
-    ...rel.varbs.savableSection,
+    ...relVarbsS.savableSection,
     [rentCut.switch]: rel.varb.string({
       initValue: "percent",
     }),
@@ -16,11 +17,15 @@ export function mgmtRelVarbs<R extends RelVarbs<"mgmt">>(): R {
       initNumber: 5,
       inUpdateSwitchProps: [
         rel.updateSwitch.divideToPercent(
-          sectionName,
           rentCut.switch,
           "dollars",
-          rel.varbInfo.local(sectionName, rentCutDollars.monthly),
-          rel.varbInfo.static("propertyGeneral", "targetRentMonthly")
+          relVarbInfoS.local(rentCutDollars.monthly),
+          relVarbInfoS.pibling(
+            "propertyGeneral",
+            "propertyGeneral",
+            "targetRentMonthly",
+            { expectedCount: "onlyOne" }
+          )
         ),
       ],
     }),
@@ -32,49 +37,59 @@ export function mgmtRelVarbs<R extends RelVarbs<"mgmt">>(): R {
       initNumber: 0,
       inUpdateSwitchProps: [
         rel.updateSwitch.percentToDecimalTimesBase(
-          sectionName,
           "rentCut",
-          rel.varbInfo.static("propertyGeneral", "targetRentMonthly")
+          relVarbInfoS.pibling(
+            "propertyGeneral",
+            "propertyGeneral",
+            "targetRentMonthly",
+            { expectedCount: "onlyOne" }
+          )
         ),
-        rel.updateSwitch.yearlyToMonthly(sectionName, "rentCutDollars"),
+        rel.updateSwitch.yearlyToMonthly("rentCutDollars"),
       ],
     }),
     [rentCutDollars.yearly]: rel.varb.moneyYear("Rent cut", {
       inUpdateSwitchProps: [
         rel.updateSwitch.percentToDecimalTimesBase(
-          sectionName,
           "rentCut",
-          rel.varbInfo.static("propertyGeneral", "targetRentYearly")
+          relVarbInfoS.pibling(
+            "propertyGeneral",
+            "propertyGeneral",
+            "targetRentYearly",
+            { expectedCount: "onlyOne" }
+          )
         ),
-        rel.updateSwitch.monthlyToYearly(sectionName, "rentCutDollars"),
+        rel.updateSwitch.monthlyToYearly("rentCutDollars"),
       ],
     }),
     vacancyRatePercent: rel.varb.percentObj("Vacancy Rate", {
       initNumber: 5,
       endAdornment: "%",
     }),
-    ...rel.varbs.ongoingPercentToPortion(
+    ...relVarbsS.ongoingPercentToPortion(
       "vacancyLossDollars",
       "Vacancy rent lost",
-      sectionName,
-      "propertyGeneral",
+      (baseVarbName) => {
+        return relVarbInfoS.stepSibling(
+          "propertyGeneral",
+          "propertyGeneral",
+          baseVarbName
+        );
+      },
       "targetRent",
       "vacancyRatePercent"
     ),
     upfrontExpenses: rel.varb.sumNums(
       "Upfront expenses",
-      [rel.varbInfo.relative("singleTimeList", "total", "children")],
+      [relVarbInfoS.children("upfrontCostList", "total")],
       { startAdornment: "$" }
     ),
-    ...rel.varbs.ongoingSumNums(
+    ...relVarbsS.ongoingSumNums(
       "ongoingExpenses",
       "Ongoing mangement expenses",
       [
-        rel.varbInfo.relative("ongoingList", "total", "children"),
-        ...rel.varbInfo.locals(sectionName, [
-          "vacancyLossDollars",
-          "rentCutDollars",
-        ]),
+        relVarbInfoS.children("ongoingCostList", "total"),
+        ...relVarbInfosS.local(["vacancyLossDollars", "rentCutDollars"]),
       ],
       { switchInit: "monthly", shared: { startAdornment: "$" } }
     ),
