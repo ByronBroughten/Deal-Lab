@@ -108,7 +108,7 @@ function getOngoingUpdatePacks<Base extends string>(
 
 export function monthsYearsInput<Base extends string>(
   baseVarbName: Base,
-  displayName: DisplayName,
+  displayName: string,
   { switchInit = "months", ...options }: MonthsYearsSwitchOptions = {}
 ): SwitchPreVarbs<Base, "monthsYears"> {
   const varbNames = switchNames(baseVarbName, "monthsYears");
@@ -148,7 +148,7 @@ export function monthsYearsInput<Base extends string>(
 }
 export function ongoingInput<Base extends string>(
   baseVarbName: Base,
-  displayName: DisplayName,
+  displayName: string,
   { switchInit = "monthly", ...options }: MonthlyYearlySwitchOptions = {}
 ): SwitchPreVarbs<Base, "ongoing"> {
   const varbNames = switchNames(baseVarbName, "ongoing");
@@ -204,7 +204,7 @@ export function ongoingPercentToPortion<Base extends string>(
   const varbNames = switchNames(baseVarbName, "ongoing");
   const baseVarbNames = switchNames(baseBaseName, "ongoing");
   return {
-    [varbNames.switch]: relVarbS.string({
+    [varbNames.switch]: relVarb("string", {
       initValue: "monthly",
     }),
     [varbNames.monthly]: relVarbS.moneyMonth(displayName, {
@@ -252,7 +252,7 @@ export function ongoingPureCalc<Base extends string>(
       ...options.shared,
     }),
     ...(switchInit && {
-      [varbNames.switch]: relVarbS.string({
+      [varbNames.switch]: relVarb("string", {
         initValue: switchInit,
       }),
     }),

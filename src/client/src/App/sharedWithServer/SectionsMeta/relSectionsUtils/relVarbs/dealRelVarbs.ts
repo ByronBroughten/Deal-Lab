@@ -2,7 +2,7 @@ import { relVarbInfoS } from "../../childSectionsDerived/RelVarbInfo";
 import { relVarbInfosS } from "../../childSectionsDerived/RelVarbInfos";
 import { rel } from "../rel";
 import { relAdorn } from "../rel/relAdorn";
-import { LeftRightVarbInfos } from "../rel/relVarb";
+import { LeftRightVarbInfos, relVarb, relVarbS } from "../rel/relVarb";
 import { RelVarbs, relVarbsS } from "../relVarbs";
 
 export function dealRelVarbs(): RelVarbs<"deal"> {
@@ -35,7 +35,7 @@ export function dealRelVarbs(): RelVarbs<"deal"> {
       ]) as LeftRightVarbInfos,
       relAdorn.moneyYear
     ),
-    cashFlowOngoingSwitch: rel.varb.string({
+    cashFlowOngoingSwitch: relVarb("string", {
       initValue: "yearly",
     }),
     roiMonthly: rel.varb.leftRightPropFn(
@@ -56,10 +56,10 @@ export function dealRelVarbs(): RelVarbs<"deal"> {
       ]) as LeftRightVarbInfos,
       { endAdornment: "%", unit: "percent" }
     ),
-    roiOngoingSwitch: rel.varb.string({
+    roiOngoingSwitch: relVarb("string", {
       initValue: "yearly",
     }),
-    upfrontExpensesSum: rel.varb.sumNums(
+    upfrontExpensesSum: relVarbS.sumNums(
       "Sum of upfront expenses",
       [
         relVarbInfoS.children("propertyGeneral", "upfrontExpenses"),

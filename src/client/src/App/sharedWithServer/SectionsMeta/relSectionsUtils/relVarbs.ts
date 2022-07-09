@@ -20,7 +20,7 @@ import {
   ongoingSumNums,
 } from "./rel/relVarbs/preOngoingVarbs";
 import { simpleSwitch, switchInput } from "./rel/relVarbs/preSwitchVarbs";
-import { DisplayName, RelVarb, RelVarbByType } from "./rel/relVarbTypes";
+import { RelVarb, RelVarbByType } from "./rel/relVarbTypes";
 
 export type GeneralRelVarbs = Record<string, RelVarb>;
 export type RelVarbs<SN extends SimpleSectionName> = Record<
@@ -73,7 +73,7 @@ export const relVarbsS = {
       (relVarbs, varbName): Partial<StringPreVarbsFromNames<VN>> => {
         return {
           ...relVarbs,
-          [varbName]: relVarbS.string(),
+          [varbName]: relVarb("string"),
         };
       },
       {} as Partial<StringPreVarbsFromNames<VN>>
@@ -97,7 +97,7 @@ export const relVarbsS = {
   switchInput,
   timeMoneyInput(
     varbNameBase: string,
-    displayName: DisplayName,
+    displayName: string,
     options: MonthlyYearlySwitchOptions = {}
   ) {
     return this.ongoingInput(varbNameBase, displayName, {
@@ -161,7 +161,7 @@ export const relVarbsS = {
   entityInfo() {
     return {
       ...this.varbInfo(),
-      entityId: relVarbS.string(),
+      entityId: relVarb("string"),
     };
   },
   singleTimeItem<R extends RelVarbs<"singleTimeItem">>(): R {
@@ -169,7 +169,7 @@ export const relVarbsS = {
     const valueSwitchProp = relVarbInfoS.local("valueSwitch");
     const r: R = {
       name: relVarbS.stringOrLoaded(sectionName),
-      valueSwitch: relVarbS.string({
+      valueSwitch: relVarb("string", {
         initValue: "labeledEquation",
       }),
       ...relVarbsS.entityInfo(),
@@ -211,7 +211,7 @@ export const relVarbsS = {
     const valueSwitchProp = relVarbInfoS.local("valueSwitch");
     const r: R = {
       name: relVarbS.stringOrLoaded(sectionName),
-      valueSwitch: relVarbS.string({
+      valueSwitch: relVarb("string", {
         initValue: "labeledEquation",
       }),
 
@@ -227,7 +227,7 @@ export const relVarbsS = {
       ...relVarbsS.monthsYearsInput("lifespan", "Average lifespan", {
         switchInit: "years",
       }),
-      [ongoingValueNames.switch]: relVarbS.string({
+      [ongoingValueNames.switch]: relVarb("string", {
         initValue: "yearly",
       }),
       // So... that's the editorValue, is that right?
@@ -307,7 +307,7 @@ export const relVarbsS = {
         [relVarbInfoS.children("singleTimeItem", "value")],
         { startAdornment: "$" }
       ),
-      defaultValueSwitch: relVarbS.string({
+      defaultValueSwitch: relVarb("string", {
         initValue: "labeledEquation",
       }),
     } as RelVarbs<"singleTimeList">;
@@ -315,10 +315,10 @@ export const relVarbsS = {
   ongoingList(): RelVarbs<"ongoingList"> {
     return {
       ...this.savableSection,
-      defaultValueSwitch: relVarbS.string({
+      defaultValueSwitch: relVarb("string", {
         initValue: "labeledEquation",
       }),
-      defaultOngoingSwitch: relVarbS.string({
+      defaultOngoingSwitch: relVarb("string", {
         initValue: "monthly",
       }),
       ...relVarbsS.ongoingSumNums(

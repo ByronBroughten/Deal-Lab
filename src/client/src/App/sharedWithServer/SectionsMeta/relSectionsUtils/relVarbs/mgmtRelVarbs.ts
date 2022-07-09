@@ -2,6 +2,7 @@ import { switchNames } from "../../baseSectionsUtils/switchNames";
 import { relVarbInfoS } from "../../childSectionsDerived/RelVarbInfo";
 import { relVarbInfosS } from "../../childSectionsDerived/RelVarbInfos";
 import { rel } from "../rel";
+import { relVarb, relVarbS } from "../rel/relVarb";
 import { RelVarbs, relVarbsS } from "../relVarbs";
 
 const rentCut = switchNames("rentCut", "dollarsPercent");
@@ -10,10 +11,10 @@ const rentCutDollars = switchNames(rentCut.dollars, "ongoing");
 export function mgmtRelVarbs<R extends RelVarbs<"mgmt">>(): R {
   return {
     ...relVarbsS.savableSection,
-    [rentCut.switch]: rel.varb.string({
+    [rentCut.switch]: relVarb("string", {
       initValue: "percent",
     }),
-    [rentCut.percent]: rel.varb.percentObj("Rent cut", {
+    [rentCut.percent]: relVarbS.percentObj("Rent cut", {
       initNumber: 5,
       inUpdateSwitchProps: [
         rel.updateSwitch.divideToPercent(
@@ -30,10 +31,10 @@ export function mgmtRelVarbs<R extends RelVarbs<"mgmt">>(): R {
       ],
     }),
     // SectionsMeta is the highest level.
-    [rentCutDollars.switch]: rel.varb.string({
+    [rentCutDollars.switch]: relVarb("string", {
       initValue: "monthly",
     }),
-    [rentCutDollars.monthly]: rel.varb.moneyMonth("Rent cut", {
+    [rentCutDollars.monthly]: relVarbS.moneyMonth("Rent cut", {
       initNumber: 0,
       inUpdateSwitchProps: [
         rel.updateSwitch.percentToDecimalTimesBase(
@@ -48,7 +49,7 @@ export function mgmtRelVarbs<R extends RelVarbs<"mgmt">>(): R {
         rel.updateSwitch.yearlyToMonthly("rentCutDollars"),
       ],
     }),
-    [rentCutDollars.yearly]: rel.varb.moneyYear("Rent cut", {
+    [rentCutDollars.yearly]: relVarbS.moneyYear("Rent cut", {
       inUpdateSwitchProps: [
         rel.updateSwitch.percentToDecimalTimesBase(
           "rentCut",
@@ -62,7 +63,7 @@ export function mgmtRelVarbs<R extends RelVarbs<"mgmt">>(): R {
         rel.updateSwitch.monthlyToYearly("rentCutDollars"),
       ],
     }),
-    vacancyRatePercent: rel.varb.percentObj("Vacancy Rate", {
+    vacancyRatePercent: relVarbS.percentObj("Vacancy Rate", {
       initNumber: 5,
       endAdornment: "%",
     }),
@@ -80,7 +81,7 @@ export function mgmtRelVarbs<R extends RelVarbs<"mgmt">>(): R {
       "targetRent",
       "vacancyRatePercent"
     ),
-    upfrontExpenses: rel.varb.sumNums(
+    upfrontExpenses: relVarbS.sumNums(
       "Upfront expenses",
       [relVarbInfoS.children("upfrontCostList", "total")],
       { startAdornment: "$" }

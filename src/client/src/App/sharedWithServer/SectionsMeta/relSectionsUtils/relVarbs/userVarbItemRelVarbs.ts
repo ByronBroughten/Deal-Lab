@@ -1,13 +1,13 @@
 import { numObj } from "../../baseSectionsUtils/baseValues/NumObj";
 import { relVarbInfoS } from "../../childSectionsDerived/RelVarbInfo";
 import { relVarbInfosS } from "../../childSectionsDerived/RelVarbInfos";
-import { relVarb, relVarbS } from "../rel/relVarb";
+import { relVarb } from "../rel/relVarb";
 
 export const userVarbItemRelVarbs = {
-  name: relVarbS.string(),
-  startAdornment: relVarbS.string(),
-  endAdornment: relVarbS.string(),
-  valueSwitch: relVarbS.string({
+  name: relVarb("string"),
+  startAdornment: relVarb("string"),
+  endAdornment: relVarb("string"),
+  valueSwitch: relVarb("string", {
     initValue: "labeledEquation",
   }),
   editorValue: relVarb("numObj"),

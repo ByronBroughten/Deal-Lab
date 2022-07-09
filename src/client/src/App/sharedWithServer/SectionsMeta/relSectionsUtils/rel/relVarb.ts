@@ -47,29 +47,12 @@ export function relVarb<T extends keyof RelVarbByType>(
 export type PreNumObjOptions = Partial<NumObjRelVarb & { initNumber: number }>;
 export type LeftRightVarbInfos = [RelInVarbInfo, RelInVarbInfo];
 export const relVarbS = {
-  type<T extends keyof RelVarbByType>(
-    type: T,
-    partial: Partial<RelVarbByType[T]> = {}
-  ): RelVarbByType[T] {
-    const valueSchema = valueMeta[type];
-    return {
-      type,
-      updateFnName: valueSchema.updateFnNames[0],
-      initValue: valueSchema.initDefault(),
-      ...this.common(partial),
-      ...(type === "numObj" && { unit: "money" }),
-      ...partial,
-    } as RelVarbByType[T];
-  },
-  string(partial: Partial<StringRelVarb> = {}) {
-    return this.type("string", partial);
-  },
   stringOrLoaded(
     sectionName: SimpleSectionName,
     partial: Partial<StringRelVarb> = {}
   ): StringRelVarb {
     return {
-      ...this.string({
+      ...relVarb("string", {
         inUpdateSwitchProps: [
           {
             switchInfo: relVarbInfoS.local("valueSwitch"),
@@ -86,7 +69,7 @@ export const relVarbS = {
     displayName: DisplayName,
     { initNumber, ...partial }: Partial<PreNumObjOptions> = {}
   ): NumObjRelVarb {
-    return this.type("numObj", {
+    return relVarb("numObj", {
       displayName,
       ...partial,
     });
@@ -140,7 +123,7 @@ export const relVarbS = {
     nums: RelInVarbInfo[],
     options?: PreNumObjOptions
   ): NumObjRelVarb {
-    return this.type("numObj", {
+    return relVarb("numObj", {
       displayName,
       updateFnName: "sumNums",
       updateFnProps: { nums },
@@ -184,7 +167,7 @@ export const relVarbS = {
     num: RelInVarbInfo,
     options?: PreNumObjOptions
   ): NumObjRelVarb {
-    return this.type("numObj", {
+    return relVarb("numObj", {
       displayName,
       updateFnName,
       updateFnProps: { num },
@@ -192,13 +175,13 @@ export const relVarbS = {
     });
   },
   switch(
-    displayName: DisplayName,
+    displayName: string,
     updateFnName: CalculationName,
     updateFnProps: UpdateFnProps,
     inUpdateSwitchProps: UpdateSwitches,
     options?: PreNumObjOptions
   ): NumObjRelVarb {
-    return this.type("numObj", {
+    return relVarb("numObj", {
       displayName,
       updateFnName,
       updateFnProps,
@@ -212,7 +195,7 @@ export const relVarbS = {
     leftRight: LeftRightVarbInfos,
     options?: PreNumObjOptions
   ): NumObjRelVarb {
-    return this.type("numObj", {
+    return relVarb("numObj", {
       displayName,
       updateFnName,
       updateFnProps: { leftSide: leftRight[0], rightSide: leftRight[1] },

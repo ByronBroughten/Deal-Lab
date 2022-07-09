@@ -22,6 +22,10 @@ export const ongoingStuff = {
   },
 };
 
+class 
+
+
+
 type NamePlusEndings<
   Base extends string,
   Endings extends Record<string, string>

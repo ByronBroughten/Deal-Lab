@@ -4,13 +4,14 @@ import { switchNames } from "../../baseSectionsUtils/switchNames";
 import { relVarbInfoS } from "../../childSectionsDerived/RelVarbInfo";
 import { relVarbInfosS } from "../../childSectionsDerived/RelVarbInfos";
 import { rel } from "../rel";
+import { relVarb } from "../rel/relVarb";
 import { RelVarbs, relVarbsS } from "../relVarbs";
 
 const loanAmountBase = switchNames("loanAmountBase", "dollarsPercent");
 export function loanRelVarbs<R extends RelVarbs<"loan">>(): R {
   return {
     ...relVarbsS.savableSection,
-    [loanAmountBase.switch]: rel.varb.string({
+    [loanAmountBase.switch]: relVarb("string", {
       initValue: "percent",
     }),
     [loanAmountBase.percent]: rel.varb.calcVarb("Base loan amount", {

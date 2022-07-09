@@ -31,18 +31,18 @@ const savableSectionStringVarbNames = [
 
 export function makeRelSections() {
   return relSectionsFilter({
-    root: relSection("Root", { _typeUniformity: relVarbS.string() }),
+    root: relSection("Root", { _typeUniformity: relVarb("string") }),
     omniParent: relSection("Parent of all", {
-      _typeUniformity: relVarbS.string(),
+      _typeUniformity: relVarb("string"),
     }),
-    main: relSection("main", { _typeUniformity: relVarbS.string() }),
+    main: relSection("main", { _typeUniformity: relVarb("string") }),
 
     user: relSection(
       "User",
       {
-        email: relVarbS.string({ displayName: "Email" }),
-        userName: relVarbS.string({ displayName: "Name" }),
-        apiAccessStatus: relVarbS.string({
+        email: relVarb("string", { displayName: "Email" }),
+        userName: relVarb("string", { displayName: "Name" }),
+        apiAccessStatus: relVarb("string", {
           displayName: "Api Access Status",
           initValue: "basicStorage" as ApiAccessStatus,
         }),
@@ -52,21 +52,21 @@ export function makeRelSections() {
       }
     ),
     serverOnlyUser: relSection("serverOnlyUser", {
-      encryptedPassword: relVarbS.string(),
-      emailAsSubmitted: relVarbS.string(),
+      encryptedPassword: relVarb("string"),
+      emailAsSubmitted: relVarb("string"),
     }),
     login: relSection("login", {
-      email: relVarbS.string({ displayName: "Email" }),
-      password: relVarbS.string({ displayName: "Password" }),
+      email: relVarb("string", { displayName: "Email" }),
+      password: relVarb("string", { displayName: "Password" }),
     }),
     register: relSection("Register Form", {
-      email: relVarbS.string({ displayName: "Email" }),
-      userName: relVarbS.string({ displayName: "Name" }),
-      password: relVarbS.string({ displayName: "Password" }),
+      email: relVarb("string", { displayName: "Email" }),
+      userName: relVarb("string", { displayName: "Name" }),
+      password: relVarb("string", { displayName: "Password" }),
     }),
-    table: relSection("Table", { titleFilter: relVarbS.string() }),
+    table: relSection("Table", { titleFilter: relVarb("string") }),
     tableRow: relSection("Row", {
-      title: relVarbS.string(),
+      title: relVarb("string"),
       compareToggle: relVarb("boolean"),
     }),
     column: relSection("Column", relVarbsS.varbInfo()),
@@ -74,7 +74,7 @@ export function makeRelSections() {
       ...relVarbsS.varbInfo(),
       value: relVarbS.numObj("Table cell value"),
     }),
-    outputList: relSection("Output List", { title: relVarbS.string() }),
+    outputList: relSection("Output List", { title: relVarb("string") }),
     output: relSection("Output", relVarbsS.varbInfo()),
     singleTimeList: relSection("List", relVarbsS.singleTimeList(), {
       fullIndexName: "singleTimeList",
@@ -90,7 +90,7 @@ export function makeRelSections() {
       "Variable List",
       {
         ...relVarbsS.savableSection,
-        defaultValueSwitch: relVarbS.string({
+        defaultValueSwitch: relVarb("string", {
           initValue: "labeledEquation",
         } as const),
       },
@@ -105,7 +105,7 @@ export function makeRelSections() {
       type: relVarb("string", { initValue: "if" }),
       // if
       left: relVarb("numObj"),
-      operator: relVarbS.string({ initValue: "===" }),
+      operator: relVarb("string", { initValue: "===" }),
       rightList: relVarb("stringArray"),
       rightValue: relVarb("numObj"),
       // then
@@ -158,16 +158,16 @@ export function makeRelSections() {
     }),
 
     propertyTableStore: relSection("Property Table Store", {
-      _typeUniformity: relVarbS.string(),
+      _typeUniformity: relVarb("string"),
     }),
     loanTableStore: relSection("Loan Table Store", {
-      _typeUniformity: relVarbS.string(),
+      _typeUniformity: relVarb("string"),
     }),
     mgmtTableStore: relSection("Management Table Store", {
-      _typeUniformity: relVarbS.string(),
+      _typeUniformity: relVarb("string"),
     }),
     dealTableStore: relSection("Deal Table Store", {
-      _typeUniformity: relVarbS.string(),
+      _typeUniformity: relVarb("string"),
     }),
   });
 }

@@ -109,7 +109,7 @@ export function simpleSwitch<
 
 export function switchInput(
   varbNames: SwitchVarbNames,
-  displayName: DisplayName,
+  displayName: string,
   switchOptions: SwitchOptionProps[],
   switchInitValue: string,
   shared?: PreNumObjOptions
