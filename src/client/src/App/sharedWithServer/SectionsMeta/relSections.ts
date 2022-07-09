@@ -1,6 +1,5 @@
 import { ApiAccessStatus, SimpleSectionName } from "./baseSections";
-import { rel } from "./relSectionsUtils/rel";
-import { relVarbS } from "./relSectionsUtils/rel/relVarb";
+import { relVarb, relVarbS } from "./relSectionsUtils/rel/relVarb";
 import {
   GeneralRelSection,
   GenericRelSection,
@@ -68,7 +67,7 @@ export function makeRelSections() {
     table: relSection("Table", { titleFilter: relVarbS.string() }),
     tableRow: relSection("Row", {
       title: relVarbS.string(),
-      compareToggle: relVarbS.type("boolean"),
+      compareToggle: relVarb("boolean"),
     }),
     column: relSection("Column", relVarbsS.varbInfo()),
     cell: relSection("Cell", {
@@ -102,15 +101,15 @@ export function makeRelSections() {
     ),
     userVarbItem: relSection("User Variable", userVarbItemRelVarbs),
     conditionalRow: relSection("Conditional Row", {
-      level: rel.varb.type("number"),
-      type: rel.varb.string({ initValue: "if" }),
+      level: relVarb("number"),
+      type: relVarb("string", { initValue: "if" }),
       // if
-      left: rel.varb.type("numObj"),
-      operator: rel.varb.string({ initValue: "===" }),
-      rightList: rel.varb.type("stringArray"),
-      rightValue: rel.varb.type("numObj"),
+      left: relVarb("numObj"),
+      operator: relVarbS.string({ initValue: "===" }),
+      rightList: relVarb("stringArray"),
+      rightValue: relVarb("numObj"),
       // then
-      then: rel.varb.type("numObj"),
+      then: relVarb("numObj"),
     }),
     //     { type: "if", level: 0 },
     //     { type: "then", level: 0 },
@@ -138,11 +137,11 @@ export function makeRelSections() {
       rowIndexName: "property",
     }),
     unit: relSection("Unit", {
-      one: rel.varb.numObj("Unit", {
+      one: relVarbS.numObj("Unit", {
         updateFnName: "one",
         initNumber: 1,
       }),
-      numBedrooms: rel.varb.calcVarb("BRs"),
+      numBedrooms: relVarbS.calcVarb("BRs"),
       ...relVarbsS.timeMoneyInput("targetRent", "Rent"),
     } as RelVarbs<"unit">),
     mgmtGeneral: relSection("Management", {

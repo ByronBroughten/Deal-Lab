@@ -1,7 +1,7 @@
 import { numObj } from "../../baseSectionsUtils/baseValues/NumObj";
 import { relVarbInfoS } from "../../childSectionsDerived/RelVarbInfo";
 import { relVarbInfosS } from "../../childSectionsDerived/RelVarbInfos";
-import { relVarbS } from "../rel/relVarb";
+import { relVarb, relVarbS } from "../rel/relVarb";
 
 export const userVarbItemRelVarbs = {
   name: relVarbS.string(),
@@ -10,8 +10,8 @@ export const userVarbItemRelVarbs = {
   valueSwitch: relVarbS.string({
     initValue: "labeledEquation",
   }),
-  editorValue: relVarbS.type("numObj"),
-  value: relVarbS.type("numObj", {
+  editorValue: relVarb("numObj"),
+  value: relVarb("numObj", {
     displayName: relVarbInfoS.local("name"),
     updateFnName: "userVarb",
     initValue: numObj(0),

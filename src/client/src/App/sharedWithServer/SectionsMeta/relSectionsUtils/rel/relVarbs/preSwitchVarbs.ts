@@ -5,7 +5,7 @@ import {
 } from "../../../baseSectionsUtils/baseValues/calculations";
 import { RelInVarbInfo } from "../../../childSectionsDerived/RelInOutVarbInfo";
 import { relVarbInfoS } from "../../../childSectionsDerived/RelVarbInfo";
-import { PreNumObjOptions, relVarbS } from "../relVarb";
+import { PreNumObjOptions, relVarb, relVarbS } from "../relVarb";
 import {
   DisplayName,
   NumObjRelVarb,
@@ -101,7 +101,7 @@ export function simpleSwitch<
         ...options2,
       }
     ),
-    [switchVarbName]: relVarbS.type("string", {
+    [switchVarbName]: relVarb("string", {
       initValue: switchValue1,
     }),
   } as DualSwitch<One, Two, Switch>;
@@ -136,7 +136,7 @@ export function switchInput(
   }
   return {
     ...numObjPreVarbs,
-    [varbNames.switch]: relVarbS.type("string", {
+    [varbNames.switch]: relVarb("string", {
       initValue: switchInitValue,
     }),
   };

@@ -10,7 +10,7 @@ import { switchNames } from "../baseSectionsUtils/switchNames";
 import { ChildName } from "../childSectionsDerived/ChildName";
 import { relVarbInfoS } from "../childSectionsDerived/RelVarbInfo";
 import { relVarbInfosS } from "../childSectionsDerived/RelVarbInfos";
-import { relVarbS } from "./rel/relVarb";
+import { relVarb, relVarbS } from "./rel/relVarb";
 import {
   MonthlyYearlySwitchOptions,
   monthsYearsInput,
@@ -156,7 +156,7 @@ export const relVarbsS = {
     return ssPreVarbs as ToReturn;
   },
   varbInfo() {
-    return { varbInfo: relVarbS.type("inEntityVarbInfo") } as const;
+    return { varbInfo: relVarb("inEntityVarbInfo") } as const;
   },
   entityInfo() {
     return {

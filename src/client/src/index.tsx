@@ -8,8 +8,6 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-// this.setter.addChild("cell")
-
 // Fix VariableGetterSections. You'll probably want to use
 // child booleans
 

@@ -19,19 +19,34 @@ import {
   UpdateSwitches,
 } from "./relVarbTypes";
 
+const makeDefaultCommon = <T extends CommonRelVarb>(common: T): CommonRelVarb =>
+  common;
+const defaultCommon = makeDefaultCommon({
+  displayName: "",
+  updateFnProps: {},
+  inUpdateSwitchProps: [],
+  startAdornment: "",
+  endAdornment: "",
+});
+
+export function relVarb<T extends keyof RelVarbByType>(
+  type: T,
+  partial: Partial<RelVarbByType[T]> = {}
+): RelVarbByType[T] {
+  const valueSchema = valueMeta[type];
+  return {
+    type,
+    updateFnName: valueSchema.updateFnNames[0],
+    initValue: valueSchema.initDefault(),
+    ...defaultCommon,
+    ...partial,
+    ...(type === "numObj" && { unit: "money" }),
+  } as RelVarbByType[T];
+}
+
 export type PreNumObjOptions = Partial<NumObjRelVarb & { initNumber: number }>;
 export type LeftRightVarbInfos = [RelInVarbInfo, RelInVarbInfo];
 export const relVarbS = {
-  common(commonProps: Partial<CommonRelVarb> = {}): CommonRelVarb {
-    return {
-      displayName: "",
-      updateFnProps: {},
-      inUpdateSwitchProps: [],
-      startAdornment: "",
-      endAdornment: "",
-      ...commonProps,
-    };
-  },
   type<T extends keyof RelVarbByType>(
     type: T,
     partial: Partial<RelVarbByType[T]> = {}

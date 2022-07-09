@@ -12,7 +12,7 @@ import {
 import { RelInVarbInfo } from "../../../childSectionsDerived/RelInOutVarbInfo";
 import { relVarbInfoS } from "../../../childSectionsDerived/RelVarbInfo";
 import { relVarbsS } from "../../relVarbs";
-import { PreNumObjOptions, relVarbS } from "../relVarb";
+import { PreNumObjOptions, relVarb, relVarbS } from "../relVarb";
 import { DisplayName, StringRelVarb, UpdateFnProps } from "../relVarbTypes";
 
 type SwitchPreVarbs<
@@ -155,6 +155,13 @@ export function ongoingInput<Base extends string>(
   return relVarbsS.switchInput(
     varbNames,
     displayName,
+    // how to handle the displayName for switch varbs?
+    // the easy way is to disable their ability to have non-string
+    // displayNames. That's easy insofar as I'm not depending
+    // on other displayNames for these.
+
+    // otherwise, I would have to edit the "displayName" funciton
+    // to act differently for switchVarbs.
     [
       {
         nameExtension: ongoingVarbSpanEndings.monthly,
@@ -230,14 +237,14 @@ export function ongoingPureCalc<Base extends string>(
   );
   const { switchInit } = options;
   return {
-    [varbNames.monthly]: relVarbS.type("numObj", {
+    [varbNames.monthly]: relVarb("numObj", {
       displayName,
       endAdornment: "/month",
       ...updatePacks.monthly,
       ...options.monthly,
       ...options.shared,
     }),
-    [varbNames.yearly]: relVarbS.type("numObj", {
+    [varbNames.yearly]: relVarb("numObj", {
       displayName,
       endAdornment: "/year",
       ...updatePacks.yearly,
