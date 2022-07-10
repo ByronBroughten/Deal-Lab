@@ -7,7 +7,6 @@ import {
   GeneralBaseSection,
 } from "./baseSectionsUtils/baseSection";
 import { baseVarbs } from "./baseSectionsUtils/baseVarbs";
-import { switchEndings } from "./baseSectionsUtils/switchNames";
 
 export const loanVarbsNotInFinancing = [
   "interestRatePercentMonthly",
@@ -90,7 +89,7 @@ export const baseSections = {
       ...baseVarbs.numObj(["costToReplace", "editorValue"] as const),
       ...baseVarbs.entityInfo,
       ...baseVarbs.ongoing("value"),
-      ...baseVarbs.switch("lifespan", switchEndings.monthsYears),
+      ...baseVarbs.switch("lifespan", "monthsYears"),
     }),
     userVarbList: baseSection({
       ...baseVarbs.savableSection,

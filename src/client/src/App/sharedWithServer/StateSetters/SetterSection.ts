@@ -1,7 +1,7 @@
 import { pick } from "lodash";
 import { SectionPack } from "../SectionPack/SectionPack";
 import { VarbValues } from "../SectionsMeta/baseSectionsDerived/baseSectionTypes";
-import { SwitchEndingKey } from "../SectionsMeta/baseSectionsUtils/switchNames";
+import { SwitchEndingKey } from "../SectionsMeta/baseSectionsUtils/RelSwitchVarb";
 import {
   ChildName,
   FeChildInfo,

@@ -6,7 +6,7 @@ import {
   SectionVarbNameByType,
 } from "../baseSectionsDerived/baseSectionTypes";
 import { ValueName } from "../baseSectionsUtils/baseVarb";
-import { switchNames } from "../baseSectionsUtils/switchNames";
+import { switchNames } from "../baseSectionsUtils/RelSwitchVarb";
 import { ChildName } from "../childSectionsDerived/ChildName";
 import { relVarbInfoS } from "../childSectionsDerived/RelVarbInfo";
 import { relVarbInfosS } from "../childSectionsDerived/RelVarbInfos";
@@ -18,8 +18,9 @@ import {
   ongoingPercentToPortion,
   ongoingPureCalc,
   ongoingSumNums,
-} from "./rel/relVarbs/preOngoingVarbs";
-import { simpleSwitch, switchInput } from "./rel/relVarbs/preSwitchVarbs";
+  SwitchRelVarbs,
+} from "./rel/relVarbs/relOngoingVarbs";
+import { switchInput } from "./rel/relVarbs/relSwitchVarbs";
 import { RelVarb, RelVarbByType } from "./rel/relVarbTypes";
 
 export type GeneralRelVarbs = Record<string, RelVarb>;
@@ -93,13 +94,12 @@ export const relVarbsS = {
   ongoingSumNums,
   ongoingInput,
   monthsYearsInput,
-  switch: simpleSwitch,
   switchInput,
-  timeMoneyInput(
-    varbNameBase: string,
+  timeMoneyInput<Base extends string>(
+    varbNameBase: Base,
     displayName: string,
     options: MonthlyYearlySwitchOptions = {}
-  ) {
+  ): SwitchRelVarbs<Base, "ongoing"> {
     return this.ongoingInput(varbNameBase, displayName, {
       ...options,
       shared: { ...options.shared, startAdornment: "$" },
@@ -196,7 +196,7 @@ export const relVarbsS = {
     } as R;
     return r;
   },
-  ongoingItem<R extends RelVarbs<"ongoingItem">>(): R {
+  ongoingItem(): RelVarbs<"ongoingItem"> {
     const sectionName = "ongoingItem";
     const ongoingValueNames = switchNames("value", "ongoing");
 
@@ -209,7 +209,7 @@ export const relVarbsS = {
     } as const;
     const ongoingSwitchInfo = relVarbInfoS.local(ongoingValueNames.switch);
     const valueSwitchProp = relVarbInfoS.local("valueSwitch");
-    const r: R = {
+    return {
       name: relVarbS.stringOrLoaded(sectionName),
       valueSwitch: relVarb("string", {
         initValue: "labeledEquation",
@@ -296,10 +296,9 @@ export const relVarbsS = {
           },
         ],
       }),
-    } as R;
-    return r;
+    };
   },
-  singleTimeList() {
+  singleTimeList(): RelVarbs<"singleTimeList"> {
     return {
       ...this.savableSection,
       total: relVarbS.sumNums(
@@ -310,7 +309,7 @@ export const relVarbsS = {
       defaultValueSwitch: relVarb("string", {
         initValue: "labeledEquation",
       }),
-    } as RelVarbs<"singleTimeList">;
+    };
   },
   ongoingList(): RelVarbs<"ongoingList"> {
     return {

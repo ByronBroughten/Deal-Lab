@@ -8,8 +8,11 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-// Fix VariableGetterSections. You'll probably want to use
-// child booleans
+// 1. displayNameEnding
+// 2. switchDisplayEnding
+// 3. manually apply the ending for switchVarbs where needed (varb options, etc)
+// 4. fullDisplayName
+// 5. contextDisplayName
 
 // Make Queryable SectionPacks
 // Now that sectionPacks are just for transferring data,

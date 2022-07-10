@@ -1,6 +1,6 @@
 import { sectionsMeta } from "../SectionsMeta";
-import { switchVarbNames } from "../SectionsMeta/baseSectionsUtils/baseSwitchNames";
 import { InEntityVarbInfo } from "../SectionsMeta/baseSectionsUtils/baseValues/entities";
+import { switchNames } from "../SectionsMeta/baseSectionsUtils/RelSwitchVarb";
 import { mixedInfoS } from "../SectionsMeta/childSectionsDerived/MixedSectionInfo";
 import { SectionName, sectionNameS } from "../SectionsMeta/SectionName";
 import { GetterSectionsBase } from "../StateGetters/Bases/GetterSectionsBase";
@@ -65,7 +65,7 @@ export class VariableGetterSections extends GetterSectionsBase {
       for (const list of lists) {
         const displayName = list.value("title", "string");
         if (sectionName === "ongoingList") {
-          const ongoingNames = switchVarbNames("total", "ongoing");
+          const ongoingNames = switchNames("total", "ongoing");
           for (const key of Obj.keys(ongoingNames)) {
             if (key === "switch") continue;
             const varbName = ongoingNames[key];

@@ -1,4 +1,4 @@
-import { switchNames } from "../../baseSectionsUtils/switchNames";
+import { switchNames } from "../../baseSectionsUtils/RelSwitchVarb";
 import { relVarbInfoS } from "../../childSectionsDerived/RelVarbInfo";
 import { relVarbInfosS } from "../../childSectionsDerived/RelVarbInfos";
 import { rel } from "../rel";

@@ -1,4 +1,4 @@
-import { ongoingStuff } from "../../../../sharedWithServer/SectionsMeta/baseSectionsUtils/switchNames";
+import { ongoingVarb } from "../../../../sharedWithServer/SectionsMeta/baseSectionsUtils/RelSwitchVarb";
 import { useSetterSection } from "../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import LabeledEquation from "../../ListGroup/ListGroupShared/ListItemValue/LabeledEquation";
 import LabeledSpanOverCost from "../../ListGroup/ListGroupShared/ListItemValue/LabeledSpanOverCost";
@@ -11,7 +11,7 @@ export function OngoingListItem({ feId }: { feId: string }) {
   const valueVarbName = listItem.get.switchVarbName("value", "ongoing");
 
   const switchValue = listItem.get.switchValue("value", "ongoing");
-  const { endAdornment } = ongoingStuff[switchValue];
+  const { endAdornment } = ongoingVarb.target(switchValue);
 
   return (
     <VarbListItemGeneric

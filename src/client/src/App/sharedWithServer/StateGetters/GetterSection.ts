@@ -6,11 +6,11 @@ import { SwitchTargetKey } from "../SectionsMeta/baseSectionsUtils/baseSwitchNam
 import { InEntityVarbInfo } from "../SectionsMeta/baseSectionsUtils/baseValues/entities";
 import { DbSectionInfo } from "../SectionsMeta/baseSectionsUtils/DbSectionInfo";
 import { ExpectedCount } from "../SectionsMeta/baseSectionsUtils/NanoIdInfo";
-import { ValueTypesPlusAny } from "../SectionsMeta/baseSectionsUtils/StateVarbTypes";
 import {
   SwitchEndingKey,
   switchNames,
-} from "../SectionsMeta/baseSectionsUtils/switchNames";
+} from "../SectionsMeta/baseSectionsUtils/RelSwitchVarb";
+import { ValueTypesPlusAny } from "../SectionsMeta/baseSectionsUtils/StateVarbTypes";
 import {
   ChildIdArrsWide,
   ChildName,

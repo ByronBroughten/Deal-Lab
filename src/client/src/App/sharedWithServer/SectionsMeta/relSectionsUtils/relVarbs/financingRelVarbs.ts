@@ -1,6 +1,6 @@
 import { loanVarbsNotInFinancing } from "../../baseSections";
 import { numObj } from "../../baseSectionsUtils/baseValues/NumObj";
-import { switchNames } from "../../baseSectionsUtils/switchNames";
+import { switchNames } from "../../baseSectionsUtils/RelSwitchVarb";
 import { relVarbInfoS } from "../../childSectionsDerived/RelVarbInfo";
 import { relVarbInfosS } from "../../childSectionsDerived/RelVarbInfos";
 import { rel } from "../rel";
@@ -8,7 +8,7 @@ import { relVarb } from "../rel/relVarb";
 import { RelVarbs, relVarbsS } from "../relVarbs";
 
 const loanAmountBase = switchNames("loanAmountBase", "dollarsPercent");
-export function loanRelVarbs<R extends RelVarbs<"loan">>(): R {
+export function loanRelVarbs(): RelVarbs<"loan"> {
   return {
     ...relVarbsS.savableSection,
     [loanAmountBase.switch]: relVarb("string", {
@@ -103,7 +103,7 @@ export function loanRelVarbs<R extends RelVarbs<"loan">>(): R {
       },
       { shared: { startAdornment: "$" } }
     ),
-  } as R;
+  };
 }
 
 export const financingRelVarbs: RelVarbs<"financing"> = {

@@ -1,14 +1,13 @@
 import { omit } from "lodash";
-import { GeneralBaseVarb, ValueName } from "./baseVarb";
+import { ValueName } from "./baseVarb";
 import {
   BaseOngoingVarb,
   BaseSwitchVarb,
-  switchEndings,
-  SwitchEndingsBase,
+  relSwitchVarbs,
+  SwitchEndingKey,
+  SwitchEndings,
   SwitchRecord,
-} from "./switchNames";
-
-type GeneralBaseVarbs = { [varbName: string]: GeneralBaseVarb };
+} from "./RelSwitchVarb";
 
 export type BaseVarbSchemas = { [varbName: string]: ValueName };
 type TypeRecord<T extends readonly string[], V extends ValueName> = {
@@ -31,30 +30,31 @@ export const baseVarbs = {
   numObj<T extends readonly string[]>(keys: T): TypeRecord<T, "numObj"> {
     return this.type(keys, "numObj");
   },
-  switch<Base extends string, Endings extends SwitchEndingsBase>(
+  switch<Base extends string, SWN extends SwitchEndingKey>(
     baseName: Base,
-    endings: Endings
-  ) {
-    type NumObjEndings = Omit<Endings, "switch">;
-    const numObjEndings = omit(endings, ["switch"]);
-    const numObjSchemas: Partial<SwitchRecord<Base, NumObjEndings, "numObj">> =
-      {};
-    for (const ending of Object.values(numObjEndings)) {
+    switchName: SWN
+  ): BaseSwitchVarb<Base, SwitchEndings[SWN]> {
+    const { targetEndings, switchEnding } = relSwitchVarbs[switchName];
+    type NumObjEndings = Omit<SwitchEndings[SWN], "switch">;
+    const numObjSchemas: Partial<
+      SwitchRecord<Base, SwitchEndings[SWN], "numObj">
+    > = {};
+    for (const ending of Object.values(targetEndings)) {
       numObjSchemas[
         `${baseName}${ending}` as keyof SwitchRecord<
           Base,
-          NumObjEndings,
+          SwitchEndings[SWN],
           "numObj"
         >
       ] = "numObj";
     }
     return {
-      [`${baseName}${endings.switch}`]: "string",
+      [`${baseName}${switchEnding}`]: "string",
       ...numObjSchemas,
-    } as BaseSwitchVarb<Base, Endings>;
+    } as BaseSwitchVarb<Base, SwitchEndings[SWN]>;
   },
   ongoing<Base extends string>(baseName: Base): BaseOngoingVarb<Base> {
-    return this.switch(baseName, switchEndings.ongoing);
+    return this.switch(baseName, "ongoing");
   },
   get savableSection() {
     return {
@@ -92,8 +92,8 @@ export const baseVarbs = {
         "wrappedInLoan",
       ] as const),
       ...this.ongoing("interestRatePercent"),
-      ...this.switch("loanAmountBase", switchEndings.dollarsPercent),
-      ...this.switch("loanTerm", switchEndings.monthsYears),
+      ...this.switch("loanAmountBase", "dollarsPercent"),
+      ...this.switch("loanTerm", "monthsYears"),
       ...this.ongoing("pi"),
       ...this.ongoing("mortgageIns"),
     } as const;
@@ -104,10 +104,7 @@ export const baseVarbs = {
       ...this.numObj(["vacancyRatePercent", "upfrontExpenses"] as const),
       ...this.ongoing("ongoingExpenses"),
       ...this.ongoing("vacancyLossDollars"),
-      ...this.switch(
-        "rentCut",
-        omit(switchEndings.dollarsPercent, ["dollars"])
-      ),
+      ...omit(this.switch("rentCut", "dollarsPercent"), ["rentCutDollars"]),
       ...this.ongoing("rentCutDollars"),
     } as const;
   },
