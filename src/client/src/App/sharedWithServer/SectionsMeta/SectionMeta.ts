@@ -52,11 +52,11 @@ export class SectionMeta<SN extends SimpleSectionName> {
   get rowIndexName(): CorePropNoNull<SN, "rowIndexName"> {
     return this.propNoNull("rowIndexName");
   }
-  get tableSourceName(): CorePropNoNull<SN, "tableSourceName"> {
-    return this.propNoNull("tableSourceName");
-  }
   get tableStoreName(): CorePropNoNull<SN, "tableStoreName"> {
     return this.propNoNull("tableStoreName");
+  }
+  get feTableStoreName(): CorePropNoNull<SN, "feTableStoreName"> {
+    return this.propNoNull("feTableStoreName");
   }
   get displayName(): string {
     return this.prop("displayName");

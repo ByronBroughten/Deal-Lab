@@ -1,6 +1,7 @@
 import { Arr } from "../../utils/Arr";
 import { Obj } from "../../utils/Obj";
 import { SimpleSectionName, simpleSectionNames } from "../baseSections";
+import { childSections } from "../childSections";
 
 // 1. edit the mongoose schema to add these storeNames.
 // 2. add "mainStoreName" to the relSection of each of the sectionTypes
@@ -8,49 +9,8 @@ import { SimpleSectionName, simpleSectionNames } from "../baseSections";
 // 4. make new ordinary CRUD functions on the serverSide
 // 5. make their req require both the storeName and the corresponding sectionPack
 
-const dbStoreSchema = {
-  dealMain: {
-    sectionType: "deal",
-    loadToMain: true,
-    onlyOne: false,
-    tableSoruce: null,
-  },
-  loanMain: {
-    sectionType: "loan",
-    loadToMain: true,
-    onlyOne: false,
-    tableSource: null,
-  },
-  mgmtMain: {
-    sectionType: "mgmt",
-    loadToMain: true,
-    onlyOne: false,
-    tableSource: null,
-  },
-  propertyMain: {
-    sectionType: "property",
-    loadToMain: true,
-    onlyOne: false,
-    tableSource: null,
-  },
-  // userMain: {
-  //   sectionType: "user",
-  //   loadToMain: true,
-  //   onlyOne: true,
-  //   tableSource: null
-  // },
-  // propertyTableMain: {
-  //   sectionType: "table",
-  //   tableSource: "propertyMain",
-  //   loadToMain: true,
-  //   onlyOne: true,
-  // },
-} as const;
-
-// dbSectionsRaw will have these now, too.
-// that complicates things.
-//
-export const dbStoreNamesNext = Obj.keys(dbStoreSchema);
+const dbStoreNamesNext = Obj.keys(childSections.dbStore);
+export type DbStoreNameNext = typeof dbStoreNamesNext[number];
 
 // these should be children of parent, now, rather than simpleSectionNames
 export const dbStoreNames = Arr.extractStrict(simpleSectionNames, [
@@ -82,32 +42,6 @@ export const feGuestAccessNames = Arr.extract(dbStoreNames, [
   "ongoingList",
 ] as const);
 
-export const loadOnLoginNamesNext = [
-  // grabbed right out of the db
-  "user",
-  "outputList",
-  "userVarbList",
-  "singleTimeList",
-  "ongoingList",
-
-  // whipped up from their corresponding stores
-  "propertyTableStore",
-  "dealTableStore",
-  "loanTableStore",
-  "mgmtTableStore",
-] as const;
-
-export const fullLoadOnLoginNames = Arr.extract(loadOnLoginNamesNext, [
-  "user",
-  "outputList",
-  "userVarbList",
-  "singleTimeList",
-  "ongoingList",
+export const loadOnLoginNames = Arr.extractStrict(simpleSectionNames, [
+  "feStore",
 ] as const);
-export const tableLoadOnLoginNames = Arr.extractStrict(loadOnLoginNamesNext, [
-  "propertyTableStore",
-  "dealTableStore",
-  "loanTableStore",
-  "mgmtTableStore",
-] as const);
-export const loadOnLoginNames = loadOnLoginNamesNext;

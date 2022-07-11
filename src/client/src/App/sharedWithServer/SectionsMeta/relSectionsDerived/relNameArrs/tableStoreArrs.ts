@@ -4,17 +4,14 @@ import { getRelParams } from "./getRelParams";
 
 const tableSourceNames = Obj.entryKeysWithPropOfType(
   relSections,
-  "tableStoreName",
+  "feTableStoreName",
   "string"
 );
 
-const tableStoreParams = getRelParams(tableSourceNames, "tableStoreName");
+const tableStoreParams = getRelParams(tableSourceNames, "feTableStoreName");
 export const tableSourceParams = Obj.swapKeysAndValues(tableStoreParams);
-
-const tableStoreNames = Obj.values(tableStoreParams);
+const tableStoreNamesNext = Obj.values(tableStoreParams);
 export const tableStoreNameArrs = {
   tableSource: tableSourceNames,
-  tableStore: tableStoreNames,
+  tableStore: tableStoreNamesNext,
 };
-
-// what I want is allTableSourceParams

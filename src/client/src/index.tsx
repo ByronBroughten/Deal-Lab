@@ -14,78 +14,24 @@ AppRegistry.runApplication("App", {
 // 4. fullDisplayName
 // 5. contextDisplayName
 
-// Make Queryable SectionPacks
-// Now that sectionPacks are just for transferring data,
-// I could make new ones that are hierarchical, which I think
-// would allow me to query them in the database in the same
-// way as in the state. And it would simplify the
-// child/rawSection relationship
+// make output work like loadedVarbs, so that it actually harbors the value
+// of its varb, which is then saved. It also harbors the varb's "name", too.
+// It is a "virtualVarb", as can perhaps be anything with a "name" and a "value"
+// In that case, its displayName comes from its name
 
-// SectionPacks stay the same—the db structure changes.
-// Pros:
-//   - As things stand, I can't query a child without first querying its parent;
-//     The problem gets worse the deeper the child is nested.
-//     This problem goes away if the object in the shape in which it theoretically exists.
-//   - The easiest way to go about it would be to convert the hierarchical sectionPack
-//     into the present sectionPack, which would be pretty simple.
-
-// Cons:
-//   - I will have to redo how the mongoose schema is made.
-//   - The benefits of doing this are only theoretical right now
-//   - The current setup makes it easier to specifically target section values
-
-// Try decoupling childName from sectionType
-// Would I do this before or after changing the sectionPack?
-// probably after. The new sectionPacks will be less unweildy in that regard.
-
-// Create tables on startup from the source of truth (saved properties, ect) and keep them synced on the front-end.
-// When loading a deal, delete its internal userVarblist
-// As for the custom varbs, each property, deal, ect, can have "varbList" children.
-// When saving them, the varbs referenced by or attached to the section are saved with it.
-
-// get rid of all duplicate sectionNames (for the lists, etc)
-// - you will need to add sections to differentiate the
-// - ones with the same names
-
-// Start by just saving main and then just loading main without the tables.
-// What if I start by not even loading main at all.
-// Then just load the tables.
-
-// make main db savable
-// get the main sectionPack from the db (there should only be one).
-// make a sectionPackBuilder
-// for each child in main, if it is a sectionName
-// add its dbInfo (plus feId) to an array
-// use the dbInfos to try to get all of them from the db
-// go through the array with the children, and if the dbInfo was found
-// load it
-// I can probably query all the children of each section at a time, at least;
-// I'll try doing individual queries first, though.
-
-// for all the dbSections that are found,
-//  use omniParent to make a sectionPack loader to replace each section that has the same dbInfo
-// make that sectionPack and send it
-
-// get rid of indexName
-
-// write the load code that checks the db for children with the same
-// dbId to update
-
-// - think about implementing rel parent such that the sectionName is negotiable
+// Core Features
+// * Load  "deal" with updates
+// * Load "property", etc, with updates
+// * Load "singleTimeList", etc, with updates
+// * Implement payments!
 
 // Write Tests
 // - the rest of sectionSetter and varbSetter tests
 // - the actor tests
 
-// Core Features
-// * Load "main" with updates
-// * Load  "deal" with updates
-// * Load "property", etc, with updates
-// * Load "singleTimeList", etc, with updates
-
 // To make sure the userVarbs come from the right place:
-// 1. Make the relative varbs be not static, but local or children
-// 2. Make the userVarbs all be from main.userVarb
+// When implementing userVarbs, make them draw from feStore ones
+// those may be the only ones.
 
 // I'll need to make the list groups be sections
 // I'll need to make propertyGeneral access the total

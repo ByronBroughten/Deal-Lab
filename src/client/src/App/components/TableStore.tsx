@@ -1,8 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { useTableStoreActor } from "../modules/sectionActorHooks/useTableStoreActor";
+import { useTableActor } from "../modules/sectionActorHooks/useTableActor";
 import { auth } from "../modules/services/authService";
-import { FeSectionInfo } from "../sharedWithServer/SectionsMeta/Info";
 import { SectionName } from "../sharedWithServer/SectionsMeta/SectionName";
 import { VariableOption } from "../sharedWithServer/StateEntityGetters/VariableGetterSections";
 import theme from "../theme/Theme";
@@ -12,11 +11,13 @@ import VarbAutoComplete from "./inputs/VarbAutoComplete";
 import ColumnHeader from "./TableStore/ColumnHeader";
 import IndexRow from "./TableStore/IndexRow";
 
-export function TableStore<SN extends SectionName<"tableStore">>(
-  feInfo: FeSectionInfo<SN>
-) {
-  const tableStore = useTableStoreActor(feInfo);
-  const table = tableStore.tableActor;
+interface Props {
+  feId: string;
+  tableSourceName: SectionName<"tableSource">;
+}
+
+export function TableStore({ tableSourceName, feId }: Props) {
+  const table = useTableActor(feId);
   const { filteredRows } = table;
   const { isAtLeastOne, areNone } = useHowMany(filteredRows);
   return (
@@ -77,11 +78,7 @@ export function TableStore<SN extends SectionName<"tableStore">>(
             </thead>
             <tbody>
               {filteredRows.map(({ feId }) => {
-                return (
-                  <IndexRow
-                    {...{ feId, indexName: tableStore.tableSourceName }}
-                  />
-                );
+                return <IndexRow {...{ feId, indexName: tableSourceName }} />;
               })}
             </tbody>
           </table>

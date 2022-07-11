@@ -15,11 +15,9 @@ export const allTableSourceParams = Obj.merge(allNull, tableSourceParams);
 type AllTableSourceParams = typeof allTableSourceParams;
 
 export type GeneralGeneratedSection = {
-  tableSourceName: string | null;
   parentNames: string[];
 };
 type GeneratedSection<SN extends SimpleSectionName> = {
-  tableSourceName: AllTableSourceParams[SN];
   parentNames: SectionToParentNameArrs[SN];
 };
 export type GenPropName = keyof GeneratedSection<SimpleSectionName>;
@@ -34,7 +32,6 @@ export type GeneratedSections = {
 export const generatedSections = simpleSectionNames.reduce(
   (generatedSections, sectionName) => {
     generatedSections[sectionName] = {
-      tableSourceName: allTableSourceParams[sectionName],
       parentNames: sectionParentNames[sectionName],
     };
     return generatedSections;

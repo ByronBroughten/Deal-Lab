@@ -1,18 +1,18 @@
 import { SectionPack } from "../SectionPack/SectionPack";
-import { SectionName } from "../SectionsMeta/SectionName";
+import { FeStoreTableName } from "../SectionsMeta/relChildSections";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
 import { Obj } from "../utils/Obj";
 import { outputNames } from "./makeDefaultOutputList";
 
 type TablePackMakers = {
-  [SN in SectionName<"tableSource">]: () => SectionPack<"table">;
+  [CN in FeStoreTableName]: () => SectionPack<"table">;
 };
-export function makeMainTablePackMakers(): TablePackMakers {
+export function makeDefaultFeStoreTables(): TablePackMakers {
   const columnVarbnames = {
-    deal: outputNames,
-    property: ["price", "numBedrooms", "targetRentMonthly"],
-    loan: ["interestRatePercentMonthly", "loanTermYears"],
-    mgmt: [
+    dealTable: outputNames,
+    propertyTable: ["price", "numBedrooms", "targetRentMonthly"],
+    loanTable: ["interestRatePercentMonthly", "loanTermYears"],
+    mgmtTable: [
       "vacancyRatePercent",
       "rentCutPercent",
       "ongoingExpensesMonthly",

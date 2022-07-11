@@ -7,13 +7,11 @@ import {
   RegisterFormData,
   RegisterReqBody,
 } from "../../../../client/src/App/sharedWithServer/apiQueriesShared/register";
-import { defaultMaker } from "../../../../client/src/App/sharedWithServer/defaultMaker/defaultMaker";
-import { SectionPack } from "../../../../client/src/App/sharedWithServer/SectionPack/SectionPack";
-import { SafeDbVarbs } from "../../../../client/src/App/sharedWithServer/SectionsMeta/relSectionsUtils/rel/valueMetaTypes";
 import {
-  SectionName,
-  sectionNameS,
-} from "../../../../client/src/App/sharedWithServer/SectionsMeta/SectionName";
+  isFeStoreChildName,
+  relChildSections,
+} from "../../../../client/src/App/sharedWithServer/SectionsMeta/relChildSections";
+import { SafeDbVarbs } from "../../../../client/src/App/sharedWithServer/SectionsMeta/relSectionsUtils/rel/valueMetaTypes";
 import {
   GetterSectionsBase,
   GetterSectionsProps,
@@ -31,13 +29,6 @@ import { userPrepS } from "./DbUser/userPrepS";
 interface DbUserProps extends GetterSectionsProps {
   dbSections: DbSections;
 }
-
-type FullLoginArrs = {
-  [SN in SectionName<"fullLoadOnLogin">]: SectionPack<SN>[];
-};
-type TableLoginArrs = {
-  [SN in SectionName<"tableLoadOnLogin">]: SectionPack<SN>[];
-};
 
 export class DbUser extends GetterSectionsBase {
   dbSections: DbSections;
@@ -145,64 +136,45 @@ export class DbUser extends GetterSectionsBase {
     }
   }
   makeLoginUser(): LoginUser {
-    return {
-      ...this.getFullLoginArrs(),
-      ...this.makeTableLoginArrs(),
-    };
-  }
-  getFullLoginArrs(): FullLoginArrs {
-    return sectionNameS.arrs.fullLoadOnLogin.reduce((fullArrs, sectionName) => {
-      (fullArrs as any)[sectionName] =
-        this.dbSections.sectionPackArr(sectionName);
-      return fullArrs;
-    }, {} as FullLoginArrs);
-  }
-  makeTableLoginArrs(): TableLoginArrs {
-    return sectionNameS.arrs.tableLoadOnLogin.reduce(
-      (tableArrs, sectionName) => {
-        (tableArrs as any)[sectionName] = this.makeTablePackArr(sectionName);
-        return tableArrs;
-      },
-      {} as TableLoginArrs
-    );
-  }
-  makeTablePackArr<SN extends SectionName<"tableLoadOnLogin">>(
-    sectionName: SN
-  ): SectionPack<SN>[] {
     const omniParent = PackBuilderSection.initAsOmniParent();
-    const tableStore = omniParent.addAndGetChild(
-      sectionName
-    ) as PackBuilderSection<any> as PackBuilderSection<SN>;
-
-    const sourceName = tableStore.sectionMeta
-      .tableSourceName as SectionName<"tableSource">;
-    const tablePack = defaultMaker.makeMainTablePack[sourceName]();
-    const defaultTable = tableStore.loadAndGetChild({
-      childName: "table",
-      sectionPack: tablePack as any,
-    }) as PackBuilderSection<any> as PackBuilderSection<"table">;
-
-    const sources = omniParent.loadAndGetChildren({
-      childName: sourceName,
-      sectionPacks: this.dbSections.sectionPackArr(sourceName),
-    });
-
-    // You need to create "TableUpdater" and use it in
-    // both this and SetterTable.
-    const columns = defaultTable.get.children("column");
-    for (const source of sources) {
-      for (const column of columns) {
-        const title = source.get.value("title", "string");
-        const { dbId } = source.get;
-        defaultTable.addAndGetChild("tableRow", {
-          dbId,
-          dbVarbs: { title },
+    const feStore = PackBuilderSection.initAsOmniChild("feStore");
+    for (const feStoreChildName of feStore.get.childNames) {
+      if (isFeStoreChildName(feStoreChildName)) {
+        const table = feStore.onlyChild(feStoreChildName);
+        const { tableRowDbSource } = relChildSections.feStore[feStoreChildName];
+        const dbSourceSn = this.sectionsMeta
+          .section("dbStore")
+          .childType(tableRowDbSource);
+        const dbSources = omniParent.loadAndGetChildren({
+          childName: dbSourceSn,
+          sectionPacks: this.dbSections.sectionPackArr(dbSourceSN),
         });
-        const varb = source.get.varbByFocalMixed(column.varbInfoValue());
+        const columns = table.get.children("column");
+        for (const source of dbSources) {
+          for (const column of columns) {
+            const title = source.get.value("title", "string");
+            const { dbId } = source.get;
+            table.addAndGetChild("tableRow", {
+              dbId,
+              dbVarbs: { title },
+            });
+            const varb = source.get.varbByFocalMixed(column.varbInfoValue());
+          }
+        }
+      } else {
+        const test = feStoreChildName;
+        feStore.loadChildren({
+          childName: feStoreChildName,
+          sectionPacks: this.dbSections.sectionPackArr(feStoreChildName),
+        });
       }
     }
-    return [tableStore.makeSectionPack()];
+
+    return {
+      feStore: [feStore.makeSectionPack()],
+    };
   }
+
   // makeNewTableRows(sectionName: SectionName<"rowIndex">) {
   //   const tableName = rowIndexToTableName[sectionName];
   //   const tableSectionPack = this.firstSectionPack(tableName);

@@ -29,10 +29,7 @@ function makeZLoginUserSchema() {
     sectionNameS.arrs.loadOnLogin.reduce((partial, sectionName) => {
       partial[sectionName] = zS.array(zRawSectionPack);
       return partial;
-    }, {} as Partial<Record<keyof LoginUser, any>>) as Record<
-      keyof LoginUser,
-      any
-    >
+    }, {} as Record<keyof LoginUser, any>) as Record<keyof LoginUser, any>
   );
 }
 

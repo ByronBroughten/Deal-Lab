@@ -1,6 +1,5 @@
 import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
 import { GetterMainSection } from "../../sharedWithServer/StateGetters/GetterMainSection";
-import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
 import { GetterSections } from "../../sharedWithServer/StateGetters/GetterSections";
 import { SetterSection } from "../../sharedWithServer/StateSetters/SetterSection";
 import { SetterTableNext } from "../../sharedWithServer/StateSetters/SetterTable";
@@ -40,14 +39,11 @@ export class MainSectionActor<
   }
   get table(): SetterTableNext {
     const { main } = this.getterSections;
-    const { tableStoreName } = this.get.meta;
-    const tableStore = main.onlyChild(tableStoreName) as any as GetterSection<
-      SectionName<"tableStore">
-    >;
-
+    const feStore = main.onlyChild("feStore");
+    const { feTableStoreName } = this.get.meta;
     return new SetterTableNext({
       ...this.sectionActorBaseProps,
-      ...tableStore.onlyChild("table").feInfo,
+      ...feStore.onlyChild(feTableStoreName).feInfo,
     });
   }
   newDateTime(): string {

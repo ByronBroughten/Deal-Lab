@@ -10,23 +10,33 @@ import theme from "./App/theme/Theme";
 
 export function Main() {
   const main = useSetterSection();
+  const feStore = main.get.onlyChild("feStore");
   const logout = () => {
     auth.removeToken();
     main.resetToDefault();
   };
   const activeDealId = main.get.onlyChild("deal").feId;
-  const tableStoreInfo = main.get.onlyChild("dealTableStore").feInfo;
   return (
     <Styled className="App-root">
       <NavBar
         {...{
-          feInfo: main.get.onlyChild("user").feInfo,
+          feInfo: feStore.onlyChild("user").feInfo,
           logout,
         }}
       />
       <div className="NavSpaceDiv-root"></div>
       <Routes>
-        <Route path="/deals" element={<TableStore {...tableStoreInfo} />} />
+        <Route
+          path="/deals"
+          element={
+            <TableStore
+              {...{
+                tableSourceName: "deal",
+                feId: feStore.onlyChild("dealTable").feId,
+              }}
+            />
+          }
+        />
         {/* <Route path="/variables" element={<UserVarbsManager/>} /> */}
         {/* <Route path="/lists" element={<UserListsManager/>} /> */}
         <Route path="/not-found" element={<NotFound />} />

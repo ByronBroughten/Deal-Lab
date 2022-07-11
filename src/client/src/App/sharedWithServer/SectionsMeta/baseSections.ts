@@ -52,12 +52,14 @@ export const baseSections = {
     main: baseSection({
       _typeUniformity: "string",
     } as const),
+    feStore: baseSection({
+      _typeUniformity: "string",
+    } as const),
+    dbStore: baseSection({
+      _typeUniformity: "string",
+    } as const),
     omniParent: baseSectionS.container,
     table: baseSection({ titleFilter: "string" } as const),
-    propertyTableStore: baseSectionS.container,
-    loanTableStore: baseSectionS.container,
-    mgmtTableStore: baseSectionS.container,
-    dealTableStore: baseSectionS.container,
 
     tableRow: baseSection(baseVarbs.tableRow, { uniqueDbId: true }),
     column: baseSection({

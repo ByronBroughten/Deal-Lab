@@ -7,6 +7,7 @@ import {
 import { SimpleSectionName } from "../baseSections";
 import { BaseName } from "../baseSectionsDerived/baseSectionTypes";
 import { ChildName } from "../childSectionsDerived/ChildName";
+import { ChildSectionNameName } from "../childSectionsDerived/ChildSectionName";
 import { SimpleDbStoreName } from "../childSectionsDerived/dbStoreNames";
 import { GeneralRelVarbs, RelVarbs } from "./relVarbs";
 
@@ -41,7 +42,6 @@ export type RelSection<
 >;
 
 export type RelPropName = keyof GeneralRelSection;
-
 export type GeneralRelSection = {
   displayName: string;
   relVarbs: GeneralRelVarbs;
@@ -49,11 +49,13 @@ export type GeneralRelSection = {
   varbListItem: string | null;
   tableIndexName: BaseName | null;
   tableStoreName: BaseName | null;
+  feTableStoreName: ChildSectionNameName<"feStore", "table"> | null;
 
   fullIndexName: SimpleDbStoreName | null;
   rowIndexName: SimpleDbStoreName | null;
   arrStoreName: SimpleDbStoreName | null;
 };
+
 export type GenericRelSection<SN extends SimpleSectionName> = Merge<
   GeneralRelSection,
   {
@@ -83,5 +85,6 @@ const defaultProps = makeDefault({
   arrStoreName: null,
   tableIndexName: null,
   tableStoreName: null,
+  feTableStoreName: null,
 });
 type DefaultProps = typeof defaultProps;

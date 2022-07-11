@@ -36,6 +36,7 @@ function _test() {
 
 export type GeneralChildSection = {
   sectionName: SimpleSectionName;
+  // dbStoreForTableRow:
 };
 
 const defaultProps = makeDefault({});

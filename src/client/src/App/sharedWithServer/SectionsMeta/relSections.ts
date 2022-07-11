@@ -36,7 +36,8 @@ export function makeRelSections() {
       _typeUniformity: relVarb("string"),
     }),
     main: relSection("main", { _typeUniformity: relVarb("string") }),
-
+    feStore: relSection("feStore", { _typeUniformity: relVarb("string") }),
+    dbStore: relSection("dbStore", { _typeUniformity: relVarb("string") }),
     user: relSection(
       "User",
       {
@@ -116,12 +117,12 @@ export function makeRelSections() {
     //     { type: "or else", level: 0 },
 
     deal: relSection("deal", dealRelVarbs(), {
-      tableStoreName: "dealTableStore",
+      feTableStoreName: "dealTable",
       rowIndexName: "deal",
     } as const),
     financing: relSection("Financing", financingRelVarbs),
     loan: relSection("Loan", loanRelVarbs(), {
-      tableStoreName: "loanTableStore",
+      feTableStoreName: "loanTable",
       rowIndexName: "loan",
     }),
     propertyGeneral: relSection("Property", {
@@ -133,7 +134,7 @@ export function makeRelSections() {
       ),
     }),
     property: relSection("Property", propertyRelVarbs(), {
-      tableStoreName: "propertyTableStore",
+      feTableStoreName: "propertyTable",
       rowIndexName: "property",
     }),
     unit: relSection("Unit", {
@@ -153,21 +154,8 @@ export function makeRelSections() {
       ),
     }),
     mgmt: relSection("Management", mgmtRelVarbs(), {
-      tableStoreName: "mgmtTableStore",
+      feTableStoreName: "mgmtTable",
       rowIndexName: "mgmt",
-    }),
-
-    propertyTableStore: relSection("Property Table Store", {
-      _typeUniformity: relVarb("string"),
-    }),
-    loanTableStore: relSection("Loan Table Store", {
-      _typeUniformity: relVarb("string"),
-    }),
-    mgmtTableStore: relSection("Management Table Store", {
-      _typeUniformity: relVarb("string"),
-    }),
-    dealTableStore: relSection("Deal Table Store", {
-      _typeUniformity: relVarb("string"),
     }),
   });
 }

@@ -7,8 +7,8 @@ import { tableStoreNameArrs } from "./relNameArrs/tableStoreArrs";
 export const relNameArrs = {
   ...hasStoreNameArrs,
   ...storeNameArrs,
-  hasChild: hasChildSectionNames,
   ...tableStoreNameArrs,
+  hasChild: hasChildSectionNames,
   varbListItem: Arr.extractStrict(simpleSectionNames, [
     "singleTimeItem",
     "ongoingItem",

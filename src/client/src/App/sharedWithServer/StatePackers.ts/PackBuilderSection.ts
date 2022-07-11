@@ -55,6 +55,11 @@ export class PackBuilderSection<
   ): PackBuilderSection<ChildSectionName<SN, CN>> {
     return this.packBuilderSection(this.get.childToFeInfo(childInfo));
   }
+  onlyChild<CN extends ChildName<SN>>(
+    childName: CN
+  ): PackBuilderSection<ChildSectionName<SN, CN>> {
+    return this.packBuilderSection(this.get.onlyChild(childName).feInfo);
+  }
   makeSectionPack(): SectionPack<SN> {
     return this.maker.makeSectionPack();
   }

@@ -13,10 +13,7 @@ import { GeneralBaseSection } from "../baseSectionsUtils/baseSection";
 import {
   dbStoreNames,
   feGuestAccessNames,
-  fullLoadOnLoginNames,
   loadOnLoginNames,
-  loadOnLoginNamesNext,
-  tableLoadOnLoginNames,
 } from "../childSectionsDerived/dbStoreNames";
 
 const baseSectionVarbs = Obj.toNestedPropertyObj(
@@ -62,11 +59,6 @@ function makeBaseNameArrsForContext<SC extends ContextName>(
 
     // booleans
     loadOnLogin: loadOnLoginNames,
-    loadOnLoginNext: loadOnLoginNamesNext,
-
-    fullLoadOnLogin: fullLoadOnLoginNames,
-    tableLoadOnLogin: tableLoadOnLoginNames,
-
     feGuestAccess: feGuestAccessNames,
     uniqueDbId: Obj.entryKeysWithPropValue(
       baseSectionsOfContext,

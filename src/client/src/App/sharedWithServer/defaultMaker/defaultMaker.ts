@@ -1,11 +1,11 @@
 import { SectionPack } from "../SectionPack/SectionPack";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { makeDefaultDealPack } from "./makeDefaultDealPack";
+import { makeDefaultFeStorePack } from "./makeDefaultFeStore";
 import { makeDefaultLoanPack } from "./makeDefaultLoanPack";
 import { makeDefaultMainPack } from "./makeDefaultMainPack";
 import { makeDefaultMgmtPack } from "./makeDefaultMgmtPack";
 import { makeDefaultPropertyPack } from "./makeDefaultPropertyPack";
-import { makeMainTablePackMakers } from "./makeMainTablePackMakers";
 
 type FunctionsMakeDefault<SN extends SectionName> = {
   [S in SN]: () => SectionPack<S>;
@@ -18,7 +18,6 @@ class DefaultSectionPackMaker<SN extends SectionName> {
   makeSectionPack<S extends SN>(sectionName: S): SectionPack<S> {
     return this.makeDefaults[sectionName]();
   }
-  makeMainTablePack = makeMainTablePackMakers();
 }
 
 export const defaultMaker = new DefaultSectionPackMaker({
@@ -27,4 +26,5 @@ export const defaultMaker = new DefaultSectionPackMaker({
   loan: makeDefaultLoanPack,
   deal: makeDefaultDealPack,
   main: makeDefaultMainPack,
+  feStore: makeDefaultFeStorePack,
 } as const);

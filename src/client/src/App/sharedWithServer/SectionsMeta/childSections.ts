@@ -35,15 +35,12 @@ export const childSections = checkChildSections({
   }),
   omniParent: relOmniParentChildren,
   main: childrenSections({
-    user: ["user"],
-    serverOnlyUser: ["serverOnlyUser"],
+    // main includes everything that is visible to the user on the front-end.
     login: ["login"],
     register: ["register"],
+    updateUser: ["user"],
     deal: ["deal"],
-    propertyTableStore: ["propertyTableStore"],
-    loanTableStore: ["loanTableStore"],
-    mgmtTableStore: ["mgmtTableStore"],
-    dealTableStore: ["dealTableStore"],
+    feStore: ["feStore"],
     userVarbList: ["userVarbList"],
     userOutputList: ["outputList"],
     userSingleList: ["singleTimeList"],
@@ -51,6 +48,31 @@ export const childSections = checkChildSections({
     singleTimeList: ["singleTimeList"],
     ongoingList: ["ongoingList"],
     outputList: ["outputList"],
+  }),
+  dbStore: childrenSections({
+    user: ["user"],
+    serverOnlyUser: ["serverOnlyUser"],
+    propertyMain: ["property"],
+    loanMain: ["loan"],
+    mgmtMain: ["mgmt"],
+    dealMain: ["deal"],
+    outputListMain: ["outputList"],
+    userVarbListMain: ["userVarbList"],
+    singleTimeListMain: ["singleTimeList"],
+    ongoingListMain: ["ongoingList"],
+  }),
+  feStore: childrenSections({
+    // feStore includes everything that has a corresponding child in dbStore
+    // and that has any intermediary sections used to edit and add to them.
+    user: ["user"],
+    propertyTable: ["table"],
+    loanTable: ["table"],
+    mgmtTable: ["table"],
+    dealTable: ["table"],
+    outputListMain: ["outputList"],
+    userVarbListMain: ["userVarbList"],
+    singleTimeListMain: ["singleTimeList"],
+    ongoingListMain: ["ongoingList"],
   }),
   table: childrenSections({
     column: ["column"],
@@ -72,6 +94,7 @@ export const childSections = checkChildSections({
     mgmtGeneral: ["mgmtGeneral"],
     dealOutputList: ["outputList"],
   }),
+
   financing: { loan: childSection("loan") },
   loan: childrenSections({
     closingCostList: ["singleTimeList"],
@@ -90,10 +113,6 @@ export const childSections = checkChildSections({
     upfrontCostList: ["singleTimeList"],
     ongoingCostList: ["ongoingList"],
   }),
-  propertyTableStore: { table: childSection("table") },
-  loanTableStore: { table: childSection("table") },
-  mgmtTableStore: { table: childSection("table") },
-  dealTableStore: { table: childSection("table") },
 });
 
 // base and relSections for that matter?
