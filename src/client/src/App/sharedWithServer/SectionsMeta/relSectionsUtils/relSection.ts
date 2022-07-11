@@ -49,7 +49,11 @@ export type GeneralRelSection = {
   varbListItem: string | null;
   tableIndexName: BaseName | null;
   tableStoreName: BaseName | null;
-  feTableStoreName: ChildSectionNameName<"feStore", "table"> | null;
+
+  feTableIndexStoreName: ChildSectionNameName<"feStore", "table"> | null;
+  feFullIndexStoreName: ChildName<"feStore"> | null;
+  dbIndexStoreName: ChildName<"dbStore"> | null;
+  dbArrStoreName: ChildName<"dbStore"> | null;
 
   fullIndexName: SimpleDbStoreName | null;
   rowIndexName: SimpleDbStoreName | null;
@@ -59,6 +63,7 @@ export type GeneralRelSection = {
 export type GenericRelSection<SN extends SimpleSectionName> = Merge<
   GeneralRelSection,
   {
+    // feFullIndexStoreName: ChildSectionNameName<"feStore", SN> | null;
     relVarbs: RelVarbs<SN>;
     varbListItem: ChildName<SN> | null;
   }
@@ -85,6 +90,10 @@ const defaultProps = makeDefault({
   arrStoreName: null,
   tableIndexName: null,
   tableStoreName: null,
-  feTableStoreName: null,
+
+  feTableIndexStoreName: null,
+  feFullIndexStoreName: null,
+  dbIndexStoreName: null,
+  dbArrStoreName: null,
 });
 type DefaultProps = typeof defaultProps;

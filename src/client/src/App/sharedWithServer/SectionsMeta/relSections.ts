@@ -75,16 +75,25 @@ export function makeRelSections() {
       ...relVarbsS.varbInfo(),
       value: relVarbS.numObj("Table cell value"),
     }),
-    outputList: relSection("Output List", { title: relVarb("string") }),
+    outputList: relSection(
+      "Output List",
+      { title: relVarb("string") },
+      {
+        feFullIndexStoreName: "outputListMain",
+        fullIndexName: "outputList",
+      }
+    ),
     output: relSection("Output", relVarbsS.varbInfo()),
     singleTimeList: relSection("List", relVarbsS.singleTimeList(), {
       fullIndexName: "singleTimeList",
       varbListItem: "singleTimeItem",
+      feFullIndexStoreName: "singleTimeListMain",
     }),
     singleTimeItem: relSection("List Item", relVarbsS.singleTimeItem()),
     ongoingList: relSection("List", relVarbsS.ongoingList(), {
       fullIndexName: "ongoingList",
       varbListItem: "ongoingItem",
+      feFullIndexStoreName: "ongoingListMain",
     }),
     ongoingItem: relSection("List Item", relVarbsS.ongoingItem()),
     userVarbList: relSection(
@@ -96,6 +105,7 @@ export function makeRelSections() {
         } as const),
       },
       {
+        feFullIndexStoreName: "userVarbListMain",
         fullIndexName: "userVarbList",
         varbListItem: "userVarbItem",
       }
@@ -117,13 +127,11 @@ export function makeRelSections() {
     //     { type: "or else", level: 0 },
 
     deal: relSection("deal", dealRelVarbs(), {
-      feTableStoreName: "dealTable",
-      rowIndexName: "deal",
+      feTableIndexStoreName: "dealTable",
     } as const),
     financing: relSection("Financing", financingRelVarbs),
     loan: relSection("Loan", loanRelVarbs(), {
-      feTableStoreName: "loanTable",
-      rowIndexName: "loan",
+      feTableIndexStoreName: "loanTable",
     }),
     propertyGeneral: relSection("Property", {
       ...relVarbsS.sumSection("property", propertyRelVarbs()),
@@ -134,8 +142,7 @@ export function makeRelSections() {
       ),
     }),
     property: relSection("Property", propertyRelVarbs(), {
-      feTableStoreName: "propertyTable",
-      rowIndexName: "property",
+      feTableIndexStoreName: "propertyTable",
     }),
     unit: relSection("Unit", {
       one: relVarbS.numObj("Unit", {
@@ -154,8 +161,7 @@ export function makeRelSections() {
       ),
     }),
     mgmt: relSection("Management", mgmtRelVarbs(), {
-      feTableStoreName: "mgmtTable",
-      rowIndexName: "mgmt",
+      feTableIndexStoreName: "mgmtTable",
     }),
   });
 }

@@ -9,12 +9,12 @@ import { getRelParams } from "./getRelParams";
 export const hasStoreNameArrs = {
   hasRowIndex: Obj.entryKeysWithPropOfType(
     relSections,
-    "rowIndexName",
+    "feTableIndexStoreName",
     "string"
   ),
   hasFullIndex: Obj.entryKeysWithPropOfType(
     relSections,
-    "fullIndexName",
+    "feFullIndexStoreName",
     "string"
   ),
   hasArrStore: Obj.entryKeysWithPropOfType(
@@ -28,6 +28,9 @@ export const hasStoreNameArrs = {
 } as const;
 
 const hasToStoreNames = {
+  // these are dbStore names.
+  // I can combine these into one I think.
+
   rowIndexNext: getRelParams(hasStoreNameArrs.hasRowIndex, "rowIndexName"),
   fullIndex: getRelParams(hasStoreNameArrs.hasFullIndex, "fullIndexName"),
   arrStore: getRelParams(hasStoreNameArrs.hasArrStore, "arrStoreName"),

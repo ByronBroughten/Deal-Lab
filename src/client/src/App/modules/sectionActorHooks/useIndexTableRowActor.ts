@@ -8,6 +8,10 @@ export type UseIndexTableRowActorProps = {
   feId: string;
   indexName: SectionName<"rowIndexNext">;
 };
+
+// the indexActor is capable of deleting itself
+// or deleting
+
 export function useIndexTableRowActor(
   indexInfo: UseIndexTableRowActorProps
 ): IndexTableRowActor {

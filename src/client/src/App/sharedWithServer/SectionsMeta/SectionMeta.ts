@@ -55,8 +55,8 @@ export class SectionMeta<SN extends SimpleSectionName> {
   get tableStoreName(): CorePropNoNull<SN, "tableStoreName"> {
     return this.propNoNull("tableStoreName");
   }
-  get feTableStoreName(): CorePropNoNull<SN, "feTableStoreName"> {
-    return this.propNoNull("feTableStoreName");
+  get feTableIndexStoreName(): CorePropNoNull<SN, "feTableIndexStoreName"> {
+    return this.propNoNull("feTableIndexStoreName");
   }
   get displayName(): string {
     return this.prop("displayName");

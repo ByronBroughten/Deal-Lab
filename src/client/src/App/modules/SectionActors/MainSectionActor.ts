@@ -40,10 +40,10 @@ export class MainSectionActor<
   get table(): SetterTableNext {
     const { main } = this.getterSections;
     const feStore = main.onlyChild("feStore");
-    const { feTableStoreName } = this.get.meta;
+    const { feTableIndexStoreName } = this.get.meta;
     return new SetterTableNext({
       ...this.sectionActorBaseProps,
-      ...feStore.onlyChild(feTableStoreName).feInfo,
+      ...feStore.onlyChild(feTableIndexStoreName).feInfo,
     });
   }
   newDateTime(): string {

@@ -9,8 +9,4 @@ export type FeCellValueInfo =
 
 export class GetterMainSection<
   SN extends SectionName<"hasRowIndex"> = SectionName<"hasRowIndex">
-> extends GetterSection<SN> {
-  get indexName(): SectionName<"rowIndexNext"> {
-    return this.meta.rowIndexName;
-  }
-}
+> extends GetterSection<SN> {}
