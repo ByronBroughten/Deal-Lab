@@ -8,7 +8,6 @@ import { SimpleSectionName } from "../baseSections";
 import { BaseName } from "../baseSectionsDerived/baseSectionTypes";
 import { ChildName } from "../childSectionsDerived/ChildName";
 import { ChildSectionNameName } from "../childSectionsDerived/ChildSectionName";
-import { SimpleDbStoreName } from "../childSectionsDerived/dbStoreNames";
 import { GeneralRelVarbs, RelVarbs } from "./relVarbs";
 
 export function relSection<
@@ -54,10 +53,6 @@ export type GeneralRelSection = {
   feFullIndexStoreName: ChildName<"feStore"> | null;
   dbIndexStoreName: ChildName<"dbStore"> | null;
   dbArrStoreName: ChildName<"dbStore"> | null;
-
-  fullIndexName: SimpleDbStoreName | null;
-  rowIndexName: SimpleDbStoreName | null;
-  arrStoreName: SimpleDbStoreName | null;
 };
 
 export type GenericRelSection<SN extends SimpleSectionName> = Merge<
@@ -85,9 +80,6 @@ function makeDefault<O extends StrictPick<GeneralRelSection, OptionsKeys>>(
 
 const defaultProps = makeDefault({
   varbListItem: null,
-  fullIndexName: null,
-  rowIndexName: null,
-  arrStoreName: null,
   tableIndexName: null,
   tableStoreName: null,
 

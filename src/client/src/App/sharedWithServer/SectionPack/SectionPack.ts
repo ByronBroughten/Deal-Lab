@@ -2,6 +2,10 @@ import { z } from "zod";
 import { ChildName } from "../SectionsMeta/childSectionsDerived/ChildName";
 import { ChildSectionName } from "../SectionsMeta/childSectionsDerived/ChildSectionName";
 import {
+  DbSectionName,
+  DbStoreName,
+} from "../SectionsMeta/childSectionsDerived/dbStoreNames";
+import {
   SectionName,
   sectionNameS,
   SectionNameType,
@@ -37,9 +41,10 @@ export type ChildArrPack<
   sectionPacks: SectionPack<CT>[];
 };
 
-export type ServerSectionPack<
-  SN extends SectionName<"dbStoreNext"> = SectionName<"dbStoreNext">
-> = SectionPack<SN>;
+export interface DbPack<CN extends DbStoreName = DbStoreName> {
+  dbStoreName: CN;
+  sectionPack: SectionPack<DbSectionName<CN>>;
+}
 
 const zRawSectionPackFrame: Record<keyof SectionPack, any> = {
   sectionName: zS.string,

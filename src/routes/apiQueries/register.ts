@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import mongoose from "mongoose";
-import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
+import { QueryReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import { makeReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/makeReqAndRes";
 import {
   areGuestAccessSectionsNext,
@@ -22,7 +22,10 @@ async function registerServerSide(req: Request, res: Response) {
   dbUser.sendLogin(res);
 }
 
-function validateRegisterReq(req: Request, res: Response): NextReq<"register"> {
+function validateRegisterReq(
+  req: Request,
+  res: Response
+): QueryReq<"register"> {
   const { registerFormData, guestAccessSections } = req.body;
   if (!isRegisterFormData(registerFormData)) {
     throw handleResAndMakeError(

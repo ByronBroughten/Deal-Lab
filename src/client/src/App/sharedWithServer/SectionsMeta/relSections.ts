@@ -48,9 +48,7 @@ export function makeRelSections() {
           initValue: "basicStorage" as ApiAccessStatus,
         }),
       },
-      {
-        arrStoreName: "user",
-      }
+      { dbIndexStoreName: "user" }
     ),
     serverOnlyUser: relSection("serverOnlyUser", {
       encryptedPassword: relVarb("string"),
@@ -80,20 +78,20 @@ export function makeRelSections() {
       { title: relVarb("string") },
       {
         feFullIndexStoreName: "outputListMain",
-        fullIndexName: "outputList",
+        dbIndexStoreName: "outputListMain",
       }
     ),
     output: relSection("Output", relVarbsS.varbInfo()),
     singleTimeList: relSection("List", relVarbsS.singleTimeList(), {
-      fullIndexName: "singleTimeList",
       varbListItem: "singleTimeItem",
       feFullIndexStoreName: "singleTimeListMain",
+      dbIndexStoreName: "singleTimeListMain",
     }),
     singleTimeItem: relSection("List Item", relVarbsS.singleTimeItem()),
     ongoingList: relSection("List", relVarbsS.ongoingList(), {
-      fullIndexName: "ongoingList",
       varbListItem: "ongoingItem",
       feFullIndexStoreName: "ongoingListMain",
+      dbIndexStoreName: "ongoingListMain",
     }),
     ongoingItem: relSection("List Item", relVarbsS.ongoingItem()),
     userVarbList: relSection(
@@ -106,7 +104,7 @@ export function makeRelSections() {
       },
       {
         feFullIndexStoreName: "userVarbListMain",
-        fullIndexName: "userVarbList",
+        dbIndexStoreName: "userVarbListMain",
         varbListItem: "userVarbItem",
       }
     ),
@@ -128,10 +126,12 @@ export function makeRelSections() {
 
     deal: relSection("deal", dealRelVarbs(), {
       feTableIndexStoreName: "dealTable",
+      dbIndexStoreName: "dealMain",
     } as const),
     financing: relSection("Financing", financingRelVarbs),
     loan: relSection("Loan", loanRelVarbs(), {
       feTableIndexStoreName: "loanTable",
+      dbIndexStoreName: "loanMain",
     }),
     propertyGeneral: relSection("Property", {
       ...relVarbsS.sumSection("property", propertyRelVarbs()),
@@ -143,6 +143,7 @@ export function makeRelSections() {
     }),
     property: relSection("Property", propertyRelVarbs(), {
       feTableIndexStoreName: "propertyTable",
+      dbIndexStoreName: "propertyMain",
     }),
     unit: relSection("Unit", {
       one: relVarbS.numObj("Unit", {
@@ -162,6 +163,7 @@ export function makeRelSections() {
     }),
     mgmt: relSection("Management", mgmtRelVarbs(), {
       feTableIndexStoreName: "mgmtTable",
+      dbIndexStoreName: "mgmtMain",
     }),
   });
 }

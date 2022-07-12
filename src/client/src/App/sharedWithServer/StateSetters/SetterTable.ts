@@ -7,7 +7,7 @@ import { SetterSectionBase } from "./SetterBases/SetterSectionBase";
 import { SetterSection } from "./SetterSection";
 import { SetterTableRow } from "./SetterTableRow";
 
-export class SetterTableNext extends SetterSectionBase<"table"> {
+export class SetterTable extends SetterSectionBase<"table"> {
   setter = new SetterSection(this.setterSectionProps);
   get get(): GetterSection<"table"> {
     return this.setter.get;
@@ -55,6 +55,13 @@ export class SetterTableNext extends SetterSectionBase<"table"> {
       dbVarbs: {
         title,
       },
+    });
+  }
+  removeRow(dbId: string): void {
+    const { feId } = this.rowByDbId(dbId).get;
+    this.setter.removeChild({
+      childName: "tableRow",
+      feId,
     });
   }
   addColumn(entityInfo: InEntityVarbInfo): void {

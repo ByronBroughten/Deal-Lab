@@ -1,7 +1,9 @@
-import { SectionPack } from "../../../../client/src/App/sharedWithServer/SectionPack/SectionPack";
-import { DbSectionInfo } from "../../../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsUtils/DbSectionInfo";
 import { DbSectionsModel } from "../../../DbSectionsModel";
-import { ServerSectionName } from "../../../ServerSectionName";
+import {
+  ServerSectionPack,
+  ServerStoreInfo,
+  ServerStoreName,
+} from "../../../ServerStoreName";
 import { DbSectionsQuerierBase } from "./Bases/DbSectionsQuerierBase";
 import { DbSections } from "./DbSections";
 import {
@@ -36,9 +38,10 @@ export class DbSectionsQuerier extends DbSectionsQuerierBase {
   async exists(): Promise<boolean> {
     return await DbSectionsModel.exists(this.userFilter);
   }
-  async getSectionPack<SN extends ServerSectionName>(
-    dbInfo: DbSectionInfo<SN>
-  ): Promise<SectionPack<SN>> {
+  async getSectionPack<CN extends ServerStoreName>(
+    dbInfo: ServerStoreInfo<CN>
+  ): Promise<ServerSectionPack<CN>> {
+    // It would be cool to query one pack directly, but it didn't work:
     // const users = await DbSectionsModel.aggregate([{ $match: this.userFilter }]);
     // const userDocs = await DbSectionsModel.aggregate([
     //   { $match: this.userFilter },

@@ -1,6 +1,11 @@
-import { SectionPack, ServerSectionPack } from "../SectionPack/SectionPack";
-import { DbSectionName } from "../SectionsMeta/relSectionsDerived/relNameArrs/storeArrs";
-import { SectionName } from "../SectionsMeta/SectionName";
+import { DbPack, SectionPack } from "../SectionPack/SectionPack";
+import {
+  DbSectionName,
+  DbStoreInfo,
+  DbStoreName,
+  DbStoreNameProp,
+} from "../SectionsMeta/childSectionsDerived/dbStoreNames";
+import { RegisterReqBody } from "./register";
 
 export const makeReq = <B extends QueryObj>(body: B): MakeReq<B> => ({ body });
 type MakeReq<B extends QueryObj> = {
@@ -14,30 +19,28 @@ export type MakeRes<Data extends QueryObj> = {
 };
 type QueryObj = { [key: string]: any };
 
-export type DbSectionPackInfo = {
-  sectionName: DbSectionName;
-  dbId: string;
-};
-export type DbSectionPackInfoNext = {
-  sectionName: DbSectionName<"indexStore">;
-  dbId: string;
-};
-
-export type SectionPackReq = MakeReq<{ sectionPack: ServerSectionPack }>;
-export type SectionPackArrReq<
-  SN extends SectionName<"arrStore"> = SectionName<"arrStore">
-> = MakeReq<{
-  sectionPackArr: SectionPack<SN>[];
-  sectionName: SN;
+export type DbPackInfoReq<CN extends DbStoreName = DbStoreName> = MakeReq<
+  DbStoreInfo<CN>
+>;
+export type SectionPackReq<CN extends DbStoreName = DbStoreName> = MakeReq<
+  DbPack<CN>
+>;
+export type SectionPackArrReq<CN extends DbStoreName = DbStoreName> = MakeReq<{
+  dbStoreName: CN;
+  sectionPackArr: SectionPack<DbSectionName<CN>>[];
 }>;
-export type TableSourcePackReq = MakeReq<{
-  sourceSectionPack: ServerSectionPack;
-  rowSectionPack: ServerSectionPack;
+export type RegisterReq = MakeReq<RegisterReqBody>;
+export type PaymentMethodIdReq = MakeReq<{
+  paymentMethodId: string;
 }>;
 
-export type DbSectionPackInfoReq = MakeReq<DbSectionPackInfo>;
-export type SectionPackRes = MakeRes<{
-  sectionPack: ServerSectionPack;
+export type SuccessRes = MakeRes<{
+  success: boolean;
+}>;
+export type SectionPackRes<CN extends DbStoreName = DbStoreName> = MakeRes<{
+  sectionPack: SectionPack<DbSectionName<CN>>;
 }>;
 export type DbIdRes = MakeRes<{ dbId: string }>;
-export type DbStoreNameRes = MakeRes<{ sectionName: DbSectionName }>;
+export type DbStoreNameRes<CN extends DbStoreName = DbStoreName> = MakeRes<
+  DbStoreNameProp<CN>
+>;

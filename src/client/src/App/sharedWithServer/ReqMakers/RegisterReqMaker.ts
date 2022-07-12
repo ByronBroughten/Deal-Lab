@@ -1,4 +1,4 @@
-import { NextReq } from "../apiQueriesShared/apiQueriesSharedTypes";
+import { QueryReq } from "../apiQueriesShared/apiQueriesSharedTypes";
 import { makeReq } from "../apiQueriesShared/makeReqAndRes";
 import { sectionNameS } from "../SectionsMeta/SectionName";
 import {
@@ -56,7 +56,7 @@ export class RegisterReqMaker extends GetterSectionBase<"register"> {
       guestAccessSections: this.guestAccessSectionPacks,
     };
   }
-  makeReq(): NextReq<"register"> {
+  makeReq(): QueryReq<"register"> {
     return makeReq(this.reqBody);
   }
   private get guestAccessSectionPacks(): GuestAccessSectionPackArrs {

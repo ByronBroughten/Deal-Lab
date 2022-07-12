@@ -3,10 +3,15 @@ import { RawSection } from "../client/src/App/sharedWithServer/SectionPack/RawSe
 import { SectionPack } from "../client/src/App/sharedWithServer/SectionPack/SectionPack";
 import { SelfOrDescendantSectionName } from "../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DescendantSectionName";
 import { monSchemas } from "../client/src/App/sharedWithServer/utils/mongoose";
-import { ServerSectionName, serverSectionS } from "./ServerSectionName";
+import {
+  ServerSectionName,
+  serverSectionNames,
+  ServerSectionPack,
+  ServerStoreName,
+} from "./ServerStoreName";
 
 export type DbSectionsModelCore = {
-  [SN in ServerSectionName]: SectionPack<SN>[];
+  [CN in ServerStoreName]: ServerSectionPack<CN>[];
 } & { _id: mongoose.Types.ObjectId };
 
 export const DbSectionsModel = mongoose.model<DbSectionsModelCore>(
@@ -14,12 +19,12 @@ export const DbSectionsModel = mongoose.model<DbSectionsModelCore>(
   makeMongooseUserSchema()
 );
 
-function makeMongooseUserSchema(): Schema<Record<ServerSectionName, any>> {
-  const partial: Partial<Record<ServerSectionName, any>> = {};
-  for (const sectionName of serverSectionS.arrs.all) {
+function makeMongooseUserSchema(): Schema<Record<ServerStoreName, any>> {
+  const partial: Partial<Record<ServerStoreName, any>> = {};
+  for (const sectionName of serverSectionNames) {
     partial[sectionName] = [makeMongooseSectionPack()];
   }
-  const frame = partial as Record<ServerSectionName, any>;
+  const frame = partial as Record<ServerStoreName, any>;
   return new Schema(frame);
 }
 
@@ -51,18 +56,18 @@ export function makeMongooseSection() {
 }
 
 export const modelPath = {
-  firstSectionPack(packName: ServerSectionName) {
+  firstSectionPack(packName: ServerStoreName) {
     return `${packName}.0`;
   },
-  firstSectionPackSection<PN extends ServerSectionName>(
-    packName: PN,
-    sectionName: SelfOrDescendantSectionName<PN>
+  firstSectionPackSection<CN extends ServerStoreName>(
+    packName: CN,
+    sectionName: SelfOrDescendantSectionName<ServerSectionName<CN>>
   ) {
     return `${this.firstSectionPack(packName)}.rawSections.${sectionName}.0`;
   },
-  firstSectionPackSectionVarb<PN extends ServerSectionName>(
-    packName: PN,
-    sectionName: SelfOrDescendantSectionName<PN>,
+  firstSectionPackSectionVarb<CN extends ServerStoreName>(
+    packName: CN,
+    sectionName: SelfOrDescendantSectionName<ServerSectionName<CN>>,
     varbName: string
   ) {
     return `${this.firstSectionPackSection(

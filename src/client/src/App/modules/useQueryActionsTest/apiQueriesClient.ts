@@ -6,7 +6,7 @@ import {
 } from "../../sharedWithServer/apiQueriesShared";
 import {
   ApiQueryName,
-  NextRes,
+  QueryRes,
 } from "../../sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import {
   isLoginHeaders,
@@ -33,7 +33,7 @@ function makeApiQueries(): ApiQueries {
       // The only other thing I need is
       // the createReq function
       // And I already have that
-      validateRes(res: AxiosResponse<unknown>): NextRes<"register"> {
+      validateRes(res: AxiosResponse<unknown>): QueryRes<"register"> {
         if (res && isLoginUserNext(res.data) && isLoginHeaders(res.headers)) {
           return {
             data: res.data,
@@ -44,7 +44,7 @@ function makeApiQueries(): ApiQueries {
     },
     login: {
       doingWhat: "logging in",
-      validateRes(res: AxiosResponse<unknown>): NextRes<"login"> {
+      validateRes(res: AxiosResponse<unknown>): QueryRes<"login"> {
         if (res && isLoginUserNext(res.data) && isLoginHeaders(res.headers)) {
           return {
             data: res.data,
@@ -85,7 +85,7 @@ function makeApiQueries(): ApiQueries {
     },
     upgradeUserToPro: {
       doingWhat: "upgrading to pro",
-      validateRes(res: AxiosResponse<unknown>): NextRes<"upgradeUserToPro"> {
+      validateRes(res: AxiosResponse<unknown>): QueryRes<"upgradeUserToPro"> {
         const { data } = res;
         if (Obj.isAnyIfIsObj(data)) {
           const { success } = data;
@@ -114,26 +114,28 @@ type AllApiQueryProps = {
 interface MakeApiQueryProps<QN extends ApiQueryName> {
   queryName: QN;
   doingWhat: string;
-  validateRes: (res: AxiosResponse<unknown>) => NextRes<QN>;
+  validateRes: (res: AxiosResponse<unknown>) => QueryRes<QN>;
 }
 function makeApiQuery<QN extends ApiQueryName>({
   queryName,
   doingWhat,
   validateRes,
 }: MakeApiQueryProps<QN>): ApiQuery<QN> {
-  return async function apiQuery(reqObj) {
+  return async function apiQuery(req: any) {
     const res = await https.post(
       doingWhat,
       apiQueriesShared[queryName].pathFull,
-      reqObj.body
+      req.body
     );
     if (!res) throw makeResValidationQueryError();
     return validateRes(res);
-  };
+  } as ApiQuery<QN>;
 }
 
 async function _testApiQueries() {
-  const _test: NextRes<"getSection"> = await apiQueries.getSection({
-    body: { sectionName: "deal", dbId: "string" },
-  });
+  const _test: QueryRes<"upgradeUserToPro"> = await apiQueries.upgradeUserToPro(
+    {
+      body: { paymentMethodId: "test" },
+    }
+  );
 }

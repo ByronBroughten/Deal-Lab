@@ -2,7 +2,7 @@ import mongoose, { Document } from "mongoose";
 import { SelfOrDescendantSectionName } from "../../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DescendantSectionName";
 import { ResStatusError } from "../../../../resErrorUtils";
 import { DbSectionsModelCore } from "../../../DbSectionsModel";
-import { ServerSectionName } from "../../../ServerSectionName";
+import { ServerSectionName, ServerStoreName } from "../../../ServerStoreName";
 
 export const queryOptions = {
   new: true,
@@ -16,27 +16,27 @@ export interface DbSectionsRaw extends DbSectionsModelCore, Document<any, any> {
   _id: mongoose.Types.ObjectId;
 }
 
-interface FirstRawSectionProps<SN extends ServerSectionName> {
-  sectionName: SN;
-  selfOrDescendantName: SelfOrDescendantSectionName<SN>;
+interface FirstRawSectionProps<CN extends ServerStoreName> {
+  dbStoreName: CN;
+  selfOrDescendantName: SelfOrDescendantSectionName<ServerSectionName<CN>>;
 }
 
-interface FirstRawVarbProps<SN extends ServerSectionName>
+interface FirstRawVarbProps<SN extends ServerStoreName>
   extends FirstRawSectionProps<SN> {
   varbName: string;
 }
 
 const dbSectionsPaths = {
-  first(sectionName: ServerSectionName) {
-    return `${sectionName}.0`;
+  first(dbStoreName: ServerStoreName) {
+    return `${dbStoreName}.0`;
   },
-  firstRawSection<SN extends ServerSectionName>({
-    sectionName,
+  firstRawSection<SN extends ServerStoreName>({
+    dbStoreName,
     selfOrDescendantName,
   }: FirstRawSectionProps<SN>) {
-    return `${this.first(sectionName)}.rawSections.${selfOrDescendantName}.0`;
+    return `${this.first(dbStoreName)}.rawSections.${selfOrDescendantName}.0`;
   },
-  firstRawVarb<SN extends ServerSectionName>({
+  firstRawVarb<SN extends ServerStoreName>({
     varbName,
     ...props
   }: FirstRawVarbProps<SN>) {
@@ -50,7 +50,7 @@ export const dbSectionsFilters = {
   },
   email(email: string) {
     const path = dbSectionsPaths.firstRawVarb({
-      sectionName: "user",
+      dbStoreName: "user",
       selfOrDescendantName: "user",
       varbName: "email",
     });

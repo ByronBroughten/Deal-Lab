@@ -1,30 +1,41 @@
-import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
+import {
+  isFeStoreTableName,
+  relChildSections,
+} from "../../sharedWithServer/SectionsMeta/relChildSections";
+import { DbStoreNameByType } from "../../sharedWithServer/SectionsMeta/relSectionsDerived/relNameArrs/dbStoreNameArrs";
 import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
 import { SetterSection } from "../../sharedWithServer/StateSetters/SetterSection";
 import { StrictOmit } from "../../sharedWithServer/utils/types";
 import { SectionQuerier } from "../QueriersBasic/SectionQuerier";
 import { SectionActorBase, SectionActorBaseProps } from "./SectionActorBase";
 
-interface IndexTableRowActorProps
-  extends StrictOmit<SectionActorBaseProps<"tableRow">, "sectionName"> {
-  indexName: SectionName<"rowIndexNext">;
-}
+export interface IndexTableRowActorProps
+  extends StrictOmit<SectionActorBaseProps<"tableRow">, "sectionName"> {}
+
 export class IndexTableRowActor extends SectionActorBase<"tableRow"> {
-  indexName: SectionName<"rowIndexNext">;
-  constructor({ indexName, ...props }: IndexTableRowActorProps) {
+  dbStoreName: DbStoreNameByType<"tableRowDbSource">;
+  constructor(props: IndexTableRowActorProps) {
     super({
       sectionName: "tableRow",
       ...props,
     });
-    this.indexName = indexName;
+    this.dbStoreName = this.initDbStoreName();
   }
-  get = new GetterSection(this.sectionActorBaseProps);
+  get get() {
+    return new GetterSection(this.sectionActorBaseProps);
+  }
   get setter() {
     return new SetterSection(this.sectionActorBaseProps);
   }
+  private initDbStoreName(): DbStoreNameByType<"tableRowDbSource"> {
+    const parentSelfChildName = this.get.parent.selfChildName;
+    if (isFeStoreTableName(parentSelfChildName)) {
+      return relChildSections.feStore[parentSelfChildName].tableRowDbSource;
+    } else throw new Error("This row doesn't have the right parent.");
+  }
   get indexQuerier() {
     return new SectionQuerier({
-      sectionName: this.indexName,
+      dbStoreName: this.dbStoreName,
       apiQueries: this.apiQueries,
     });
   }

@@ -7,8 +7,9 @@ import {
   RegisterFormData,
   RegisterReqBody,
 } from "../../../../client/src/App/sharedWithServer/apiQueriesShared/register";
+import { defaultMaker } from "../../../../client/src/App/sharedWithServer/defaultMaker/defaultMaker";
 import {
-  isFeStoreChildName,
+  isFeStoreTableName,
   relChildSections,
 } from "../../../../client/src/App/sharedWithServer/SectionsMeta/relChildSections";
 import { SafeDbVarbs } from "../../../../client/src/App/sharedWithServer/SectionsMeta/relSectionsUtils/rel/valueMetaTypes";
@@ -138,16 +139,18 @@ export class DbUser extends GetterSectionsBase {
   makeLoginUser(): LoginUser {
     const omniParent = PackBuilderSection.initAsOmniParent();
     const feStore = PackBuilderSection.initAsOmniChild("feStore");
+    feStore.loadSelf(defaultMaker.makeSectionPack("feStore"));
     for (const feStoreChildName of feStore.get.childNames) {
-      if (isFeStoreChildName(feStoreChildName)) {
+      if (isFeStoreTableName(feStoreChildName)) {
         const table = feStore.onlyChild(feStoreChildName);
         const { tableRowDbSource } = relChildSections.feStore[feStoreChildName];
         const dbSourceSn = this.sectionsMeta
           .section("dbStore")
           .childType(tableRowDbSource);
+        const { dbIndexStoreName } = this.sectionsMeta.section(dbSourceSn);
         const dbSources = omniParent.loadAndGetChildren({
           childName: dbSourceSn,
-          sectionPacks: this.dbSections.sectionPackArr(dbSourceSN),
+          sectionPacks: this.dbSections.sectionPackArr(dbIndexStoreName),
         });
         const columns = table.get.children("column");
         for (const source of dbSources) {
@@ -162,7 +165,6 @@ export class DbUser extends GetterSectionsBase {
           }
         }
       } else {
-        const test = feStoreChildName;
         feStore.loadChildren({
           childName: feStoreChildName,
           sectionPacks: this.dbSections.sectionPackArr(feStoreChildName),

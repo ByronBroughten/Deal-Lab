@@ -28,14 +28,7 @@ export function Main() {
       <Routes>
         <Route
           path="/deals"
-          element={
-            <TableStore
-              {...{
-                tableSourceName: "deal",
-                feId: feStore.onlyChild("dealTable").feId,
-              }}
-            />
-          }
+          element={<TableStore feId={feStore.onlyChild("dealTable").feId} />}
         />
         {/* <Route path="/variables" element={<UserVarbsManager/>} /> */}
         {/* <Route path="/lists" element={<UserListsManager/>} /> */}

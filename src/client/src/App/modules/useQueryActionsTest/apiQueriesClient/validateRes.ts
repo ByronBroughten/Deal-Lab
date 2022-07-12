@@ -1,5 +1,4 @@
 import { AxiosResponse } from "axios";
-import { QueryError } from "../../../sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import {
   DbIdRes,
   DbStoreNameRes,
@@ -8,7 +7,7 @@ import {
 } from "../../../sharedWithServer/apiQueriesShared/makeReqAndRes";
 import { isSectionPack } from "../../../sharedWithServer/SectionPack/SectionPack";
 import { Id } from "../../../sharedWithServer/SectionsMeta/baseSectionsUtils/id";
-import { savableNameS } from "../../../sharedWithServer/SectionsMeta/relSectionsDerived/relNameArrs/storeArrs";
+import { dbStoreNameS } from "../../../sharedWithServer/SectionsMeta/relSectionsDerived/relNameArrs/dbStoreNameArrs";
 import { Obj } from "../../../sharedWithServer/utils/Obj";
 
 export function validateDbIdRes(res: AxiosResponse<unknown>): DbIdRes {
@@ -24,8 +23,8 @@ export function validateDbStoreNameRes(
 ): DbStoreNameRes {
   const { data } = res;
   if (Obj.isAnyIfIsObj(data)) {
-    const { sectionName } = data;
-    if (savableNameS.is(sectionName)) return makeRes({ sectionName });
+    const { dbStoreName } = data;
+    if (dbStoreNameS.is(dbStoreName)) return makeRes({ dbStoreName });
   }
   throw makeResValidationQueryError();
 }
@@ -35,13 +34,13 @@ export function validateServerSectionPackRes(
   const { data } = res;
   if (Obj.isAnyIfIsObj(data)) {
     const { sectionPack } = data;
-    if (isSectionPack(sectionPack, "dbStoreNext")) {
-      return makeRes({ sectionPack });
+    if (isSectionPack(sectionPack)) {
+      return makeRes({ sectionPack }) as SectionPackRes;
     }
   }
   throw makeResValidationQueryError();
 }
 
 export function makeResValidationQueryError() {
-  return new QueryError("Response failed validation.");
+  return new Error("Response failed validation.");
 }

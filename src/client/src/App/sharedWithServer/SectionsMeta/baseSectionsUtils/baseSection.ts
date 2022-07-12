@@ -7,7 +7,6 @@ export type GeneralBaseSection = {
   makeOneOnStartup: boolean;
   varbSchemas: BaseVarbSchemas;
   hasGlobalVarbs: boolean;
-  uniqueDbId: boolean;
   placeholder: boolean;
 };
 
@@ -21,13 +20,9 @@ export const baseOptions = {
       ...this.alwaysOneFromStart,
     };
   },
-  userList: {
-    uniqueDbId: true,
-  },
   fallback: {
     makeOneOnStartup: false,
     hasGlobalVarbs: false,
-    uniqueDbId: false,
     placeholder: false,
   },
 } as const;

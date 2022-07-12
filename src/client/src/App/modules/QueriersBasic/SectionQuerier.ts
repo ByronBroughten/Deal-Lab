@@ -1,40 +1,57 @@
-import { makeReq } from "../../sharedWithServer/apiQueriesShared/makeReqAndRes";
-import { ServerSectionPack } from "../../sharedWithServer/SectionPack/SectionPack";
-import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
+import {
+  makeReq,
+  SectionPackReq,
+} from "../../sharedWithServer/apiQueriesShared/makeReqAndRes";
+import { SectionPack } from "../../sharedWithServer/SectionPack/SectionPack";
+import { ChildName } from "../../sharedWithServer/SectionsMeta/childSectionsDerived/ChildName";
+import {
+  DbSectionName,
+  DbStoreName,
+} from "../../sharedWithServer/SectionsMeta/childSectionsDerived/dbStoreNames";
 import { ApiQuerierBase, ApiQuerierBaseProps } from "./Bases/ApiQuerierBase";
 
-interface SectionQuerierProps extends ApiQuerierBaseProps {
-  sectionName: SectionName<"dbStoreNext">;
+export interface SectionQuerierProps<CN extends ChildName<"dbStore">>
+  extends ApiQuerierBaseProps {
+  dbStoreName: CN;
 }
 
-export class SectionQuerier extends ApiQuerierBase {
-  readonly sectionName: SectionName<"dbStoreNext">;
-  constructor({ sectionName, ...rest }: SectionQuerierProps) {
+export class SectionQuerier<CN extends DbStoreName> extends ApiQuerierBase {
+  readonly dbStoreName: CN;
+  constructor({ dbStoreName, ...rest }: SectionQuerierProps<CN>) {
     super(rest);
-    this.sectionName = sectionName;
+    this.dbStoreName = dbStoreName;
   }
 
-  async add(sectionPack: ServerSectionPack): Promise<string> {
-    const req = makeReq({ sectionPack });
+  makeDbPackReq(
+    sectionPack: SectionPack<DbSectionName<CN>>
+  ): SectionPackReq<CN> {
+    return makeReq({
+      dbStoreName: this.dbStoreName,
+      sectionPack,
+    });
+  }
+
+  async add(sectionPack: SectionPack<DbSectionName<CN>>): Promise<string> {
+    const req = this.makeDbPackReq(sectionPack);
     const res = await this.apiQueries.addSection(req);
     return res.data.dbId;
   }
-  async update(sectionPack: ServerSectionPack): Promise<string> {
-    const req = makeReq({ sectionPack });
+  async update(sectionPack: SectionPack<DbSectionName<CN>>): Promise<string> {
+    const req = this.makeDbPackReq(sectionPack);
     const res = await this.apiQueries.updateSection(req);
     return res.data.dbId;
   }
-  async get(dbId: string): Promise<ServerSectionPack> {
+  async get(dbId: string): Promise<SectionPack<DbSectionName<CN>>> {
     const req = makeReq({
-      sectionName: this.sectionName,
+      dbStoreName: this.dbStoreName,
       dbId,
     } as const);
     const res = await this.apiQueries.getSection(req);
-    return res.data.sectionPack;
+    return res.data.sectionPack as SectionPack<any>;
   }
   async delete(dbId: string): Promise<string> {
     const req = makeReq({
-      sectionName: this.sectionName,
+      dbStoreName: this.dbStoreName,
       dbId,
     } as const);
     const res = await this.apiQueries.deleteSection(req);

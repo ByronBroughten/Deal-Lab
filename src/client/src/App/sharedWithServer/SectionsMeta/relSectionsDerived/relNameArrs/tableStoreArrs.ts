@@ -13,8 +13,6 @@ const tableStoreParams = getRelParams(
   "feTableIndexStoreName"
 );
 export const tableSourceParams = Obj.swapKeysAndValues(tableStoreParams);
-const tableStoreNamesNext = Obj.values(tableStoreParams);
 export const tableStoreNameArrs = {
   tableSource: tableSourceNames,
-  tableStore: tableStoreNamesNext,
 };

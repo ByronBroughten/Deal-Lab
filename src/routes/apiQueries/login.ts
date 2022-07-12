@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
+import { QueryReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import {
   isLoginFormData,
   LoginFormData,
@@ -20,7 +20,7 @@ async function loginServerSide(req: Request, res: Response) {
   dbUser.sendLogin(res);
 }
 
-function validateLoginReq(req: Request, res: Response): NextReq<"login"> {
+function validateLoginReq(req: Request, res: Response): QueryReq<"login"> {
   return { body: validateLoginFormData(req.body, res) };
 }
 

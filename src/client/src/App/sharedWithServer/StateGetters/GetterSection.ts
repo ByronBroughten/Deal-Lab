@@ -300,7 +300,7 @@ export class GetterSection<
     const children = this.children(childName);
     if (children.length !== 1) {
       throw new Error(
-        `There is not exactly one section with sectionName ${this.sectionName}.`
+        `There is not exactly one section at ${this.sectionName}.${this.feId}.${childName}.`
       );
     }
     return children[0];

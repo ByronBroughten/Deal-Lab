@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
-import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
+import { QueryReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import authWare from "../../middleware/authWare";
 import { DbSectionsQuerier } from "./shared/DbSections/DbSectionsQuerier";
+import { LoggedIn } from "./shared/LoggedInUser";
 import { sendSuccess } from "./shared/sendSuccess";
 import { validateDbSectionInfoReq } from "./shared/validateDbSectionInfoReq";
-import { LoggedIn } from "./shared/validateLoggedInUser";
 
 export const getSectionWare = [authWare, getSectionServerSide] as const;
 
@@ -22,6 +22,6 @@ async function getSectionServerSide(req: Request, res: Response) {
 function validateGetSectionReq(
   req: Request,
   res: Response
-): LoggedIn<NextReq<"getSection">> {
+): LoggedIn<QueryReq<"getSection">> {
   return validateDbSectionInfoReq(req, res);
 }

@@ -1,4 +1,4 @@
-import { NextReq } from "../../sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
+import { QueryReq } from "../../sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import { makeReq } from "../../sharedWithServer/apiQueriesShared/makeReqAndRes";
 import { GetterVarbs } from "../../sharedWithServer/StateGetters/GetterVarbs";
 import { SetterSection } from "../../sharedWithServer/StateSetters/SetterSection";
@@ -32,7 +32,7 @@ export class LoginActor extends SectionActorBase<"login"> {
   get loginSetter() {
     return new LoginSetter(this.sectionActorBaseProps);
   }
-  get loginReq(): NextReq<"login"> {
+  get loginReq(): QueryReq<"login"> {
     return makeReq(
       this.varbs.values({
         email: "string",

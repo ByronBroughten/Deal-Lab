@@ -1,15 +1,19 @@
 import { makeReq, SectionPackArrReq } from "../apiQueriesShared/makeReqAndRes";
+import { DbSectionNameName } from "../SectionsMeta/childSectionsDerived/dbStoreNames";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { GetterSectionBase } from "../StateGetters/Bases/GetterSectionBase";
 import { PackMakerSection } from "../StatePackers.ts/PackMakerSection";
 import { SolverSections } from "../StateSolvers/SolverSections";
 
-// this may assume that everything that has an arrStore itself has the
-// same name as the arrStore.
 export class SectionArrReqMaker<
-  SN extends SectionName<"arrStore">
+  SN extends SectionName<"hasFullIndex"> | "user"
 > extends GetterSectionBase<SN> {
-  static init<SN extends SectionName<"arrStore">>(sectionName: SN) {
+  get dbStoreName() {
+    return this.sectionMeta.dbIndexStoreName;
+  }
+  static init<SN extends SectionName<"hasFullIndex"> | "user">(
+    sectionName: SN
+  ) {
     const sections = SolverSections.initSectionsFromDefaultMain();
     const section = sections.onlyOneRawSection(sectionName);
     return new SectionArrReqMaker({
@@ -20,10 +24,10 @@ export class SectionArrReqMaker<
   get packMaker() {
     return new PackMakerSection(this.getterSectionProps);
   }
-  makeReq(): SectionPackArrReq<SN> {
+  makeReq(): SectionPackArrReq<DbSectionNameName<SN>> {
     return makeReq({
-      sectionName: this.sectionName,
+      dbStoreName: this.dbStoreName,
       sectionPackArr: [this.packMaker.makeSectionPack()],
-    });
+    }) as SectionPackArrReq<DbSectionNameName<SN>>;
   }
 }

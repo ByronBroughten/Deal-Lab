@@ -1,29 +1,36 @@
+import { SectionPack } from "../../sharedWithServer/SectionPack/SectionPack";
+import { DbSectionNameName } from "../../sharedWithServer/SectionsMeta/childSectionsDerived/dbStoreNames";
 import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
-import { GetterMainSection } from "../../sharedWithServer/StateGetters/GetterMainSection";
+import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
 import { GetterSections } from "../../sharedWithServer/StateGetters/GetterSections";
+import { PackMakerSection } from "../../sharedWithServer/StatePackers.ts/PackMakerSection";
 import { SetterSection } from "../../sharedWithServer/StateSetters/SetterSection";
-import { SetterTableNext } from "../../sharedWithServer/StateSetters/SetterTable";
-import { IndexSectionQuerierProps } from "../QueriersRelative/Bases.ts/IndexSectionQuerierBase";
-import { IndexListQuerier } from "../QueriersRelative/IndexListQuerier";
-import { IndexSectionQuerier } from "../QueriersRelative/IndexSectionQuerier";
+import { SetterTable } from "../../sharedWithServer/StateSetters/SetterTable";
+import {
+  SectionQuerier,
+  SectionQuerierProps,
+} from "../QueriersBasic/SectionQuerier";
 import { SectionActorBase } from "./SectionActorBase";
 
 export class MainSectionActor<
   SN extends SectionName<"tableSource">
 > extends SectionActorBase<SN> {
-  get = new GetterMainSection(this.sectionActorBaseProps);
-  private get indexQuerierProps(): IndexSectionQuerierProps<SN> {
+  private get sectionQuerierProps(): SectionQuerierProps<
+    DbSectionNameName<SN>
+  > {
     return {
-      ...this.sectionActorBaseProps,
       apiQueries: this.apiQueries,
-      indexName: this.get.sectionName,
+      dbStoreName: this.get.meta.dbIndexStoreName as DbSectionNameName<SN>,
     };
   }
-  private get indexListQuerier() {
-    return new IndexListQuerier(this.indexQuerierProps);
+  get get() {
+    return new GetterSection(this.sectionActorBaseProps);
   }
-  private get indexSectionQuerier() {
-    return new IndexSectionQuerier(this.indexQuerierProps);
+  get querier() {
+    return new SectionQuerier(this.sectionQuerierProps);
+  }
+  get packMaker() {
+    return new PackMakerSection(this.sectionActorBaseProps);
   }
   get isSaved(): boolean {
     return this.table.hasRowByDbId(this.dbId);
@@ -37,11 +44,11 @@ export class MainSectionActor<
   get dbId(): string {
     return this.get.dbId;
   }
-  get table(): SetterTableNext {
+  get table(): SetterTable {
     const { main } = this.getterSections;
     const feStore = main.onlyChild("feStore");
     const { feTableIndexStoreName } = this.get.meta;
-    return new SetterTableNext({
+    return new SetterTable({
       ...this.sectionActorBaseProps,
       ...feStore.onlyChild(feTableIndexStoreName).feInfo,
     });
@@ -65,8 +72,11 @@ export class MainSectionActor<
       dateTimeFirstSaved: dateTime,
       dateTimeLastSaved: dateTime,
     });
-    this.setter.tryAndRevertIfFail(() =>
-      this.indexSectionQuerier.saveNewToIndex()
+    this.setter.tryAndRevertIfFail(
+      async () =>
+        await this.querier.add(
+          this.packMaker.makeSectionPack() as SectionPack<any>
+        )
     );
   }
   async saveUpdates(): Promise<void> {
@@ -74,16 +84,22 @@ export class MainSectionActor<
     this.setter.updateValues({
       dateTimeLastSaved: this.newDateTime(),
     });
-    this.setter.tryAndRevertIfFail(() =>
-      this.indexSectionQuerier.updateIndex()
+    this.setter.tryAndRevertIfFail(
+      async () =>
+        await this.querier.update(
+          this.packMaker.makeSectionPack() as SectionPack<any>
+        )
     );
   }
   async loadFromIndex(dbId: string): Promise<void> {
-    const sectionPack = await this.indexListQuerier.retriveFromIndex(dbId);
+    const sectionPack = (await this.querier.get(dbId)) as SectionPack<SN>;
     this.setter.loadSelfSectionPack(sectionPack);
   }
   async deleteFromIndex() {
-    await this.indexListQuerier.deleteFromIndex(this.dbId);
+    this.table.removeRow(this.dbId);
+    this.setter.tryAndRevertIfFail(
+      async () => await this.querier.delete(this.dbId)
+    );
   }
   private updateRow(): void {
     // for greater efficiency, most of this could be done at the solver
@@ -99,6 +115,7 @@ export class MainSectionActor<
       row.addCell(varbInfo, col.dbId);
     }
   }
+
   private addRow(): void {
     const { table, dbId } = this;
     table.addRow({

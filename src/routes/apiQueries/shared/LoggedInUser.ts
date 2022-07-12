@@ -1,13 +1,10 @@
-import { Response } from "express";
 import {
   ApiQueryName,
-  NextReq,
+  QueryReq,
 } from "../../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
-import { ResHandledError } from "../../../resErrorUtils";
+import { ResStatusError } from "../../../resErrorUtils";
 
-export type UserAuthedReq<QN extends ApiQueryName> = LoggedIn<
-  NextReq<"upgradeUserToPro">
->;
+export type UserAuthedReq<QN extends ApiQueryName> = LoggedIn<QueryReq<QN>>;
 export type LoggedIn<T extends any> = T & LoggedInReq;
 export type LoggedInUser = { _id: string };
 type LoggedInReq = {
@@ -16,11 +13,14 @@ type LoggedInReq = {
   };
 };
 
-export function validateLoggedInUser(value: any, res: Response): LoggedInUser {
+export function validateLoggedInUser(value: any): LoggedInUser {
   if (isLoggedInUser(value)) return value;
   else {
-    res.status(400).send("You are not logged in.");
-    throw new ResHandledError("handled in validateLoggedInUser");
+    throw new ResStatusError({
+      errorMessage: "Made request without being logged in.",
+      resMessage: "You are not logged in.",
+      status: 400,
+    });
   }
 }
 

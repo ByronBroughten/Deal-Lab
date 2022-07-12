@@ -1,7 +1,7 @@
 import request from "supertest";
 import { config } from "../../client/src/App/Constants";
 import { apiQueriesShared } from "../../client/src/App/sharedWithServer/apiQueriesShared";
-import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
+import { QueryReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import { makeReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/makeReqAndRes";
 import { RegisterReqMaker } from "../../client/src/App/sharedWithServer/ReqMakers/RegisterReqMaker";
 import { runApp } from "../../runApp";
@@ -27,7 +27,7 @@ function makeReqStuff() {
 
 describe(testedRoute, () => {
   let server: ReturnType<typeof runApp>;
-  let reqObj: NextReq<"login">;
+  let reqObj: QueryReq<"login">;
   let userId: string;
 
   beforeEach(async () => {

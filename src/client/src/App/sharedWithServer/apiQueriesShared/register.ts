@@ -3,13 +3,13 @@ import { SectionPack, zRawSectionPackArr } from "../SectionPack/SectionPack";
 import { SectionName, sectionNameS } from "../SectionsMeta/SectionName";
 import { dbLimits } from "../utils/dbLimts";
 import { validationMessage, zS } from "../utils/zod";
-import { NextRes } from "./apiQueriesSharedTypes";
+import { QueryRes } from "./apiQueriesSharedTypes";
 
 export type RegisterQueryObjects = {
   req: {
     body: RegisterReqBody;
   };
-  res: NextRes<"login">;
+  res: QueryRes<"login">;
 };
 export type RegisterReqBody = {
   registerFormData: RegisterFormData;

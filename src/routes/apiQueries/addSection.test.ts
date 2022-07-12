@@ -2,7 +2,7 @@ import { Server } from "http";
 import request from "supertest";
 import { config } from "../../client/src/App/Constants";
 import { apiQueriesShared } from "../../client/src/App/sharedWithServer/apiQueriesShared";
-import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
+import { QueryReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import { Arr } from "../../client/src/App/sharedWithServer/utils/Arr";
 import { runApp } from "../../runApp";
 import { DbSectionsModel } from "../DbSectionsModel";
@@ -11,18 +11,15 @@ import { getUserByIdNoRes } from "./shared/getUserDbSectionsById";
 import { createTestUserModelNext } from "./test/createTestUserModelNext";
 import { SectionQueryTester } from "./test/SectionQueryTester";
 
-function makeAddSectionReq(): NextReq<"addSection"> {
+function makeAddSectionReq(): QueryReq<"addSection"> {
   const sectionName = "property";
-  const tester = SectionQueryTester.init({
-    sectionName,
-    indexName: "property",
-  });
-  return tester.makeSectionPackReq();
+  const tester = SectionQueryTester.init({ sectionName });
+  return tester.makeSectionPackReq() as QueryReq<"addSection">;
 }
 
 const apiRoute = apiQueriesShared.addSection.pathRoute;
 describe(apiRoute, () => {
-  let req: NextReq<"addSection">;
+  let req: QueryReq<"addSection">;
   let server: Server;
   let userId: string;
   let token: string;
@@ -55,8 +52,8 @@ describe(apiRoute, () => {
     await testStatus(200);
     const postDoc = await getUserByIdNoRes(userId);
 
-    expect(postDoc.property.length).toBe(preDoc.property.length + 1);
-    expect(Arr.lastOrThrow(postDoc.property).dbId).toBe(
+    expect(postDoc.propertyMain.length).toBe(preDoc.propertyMain.length + 1);
+    expect(Arr.lastOrThrow(postDoc.propertyMain).dbId).toBe(
       req.body.sectionPack.dbId
     );
   });

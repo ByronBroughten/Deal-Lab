@@ -1,4 +1,4 @@
-import { NextReq } from "../../sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
+import { QueryReq } from "../../sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import { RegisterReqMaker } from "../../sharedWithServer/ReqMakers/RegisterReqMaker";
 import { SetterSection } from "../../sharedWithServer/StateSetters/SetterSection";
 import { SetterVarb } from "../../sharedWithServer/StateSetters/SetterVarb";
@@ -27,7 +27,7 @@ export class RegisterActor extends SectionActorBase<"register"> {
       varbName,
     });
   }
-  get registerReq(): NextReq<"register"> {
+  get registerReq(): QueryReq<"register"> {
     return this.reqMaker.makeReq();
   }
   get section() {

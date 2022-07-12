@@ -10,11 +10,6 @@ import {
   simpleSectionNames,
 } from "../baseSections";
 import { GeneralBaseSection } from "../baseSectionsUtils/baseSection";
-import {
-  dbStoreNames,
-  feGuestAccessNames,
-  loadOnLoginNames,
-} from "../childSectionsDerived/dbStoreNames";
 
 const baseSectionVarbs = Obj.toNestedPropertyObj(
   baseSections.fe,
@@ -50,30 +45,15 @@ function makeBaseNameArrsForContext<SC extends ContextName>(
 
   return {
     ...makeSingleSectionNameArrs(sectionContext),
-    dbStoreNext: dbStoreNames,
     all: simpleSectionNames as SimpleSectionName[],
     notRootNorOmni: Arr.excludeStrict(simpleSectionNames, [
       "root",
       "omniParent",
     ] as const),
 
-    // booleans
-    loadOnLogin: loadOnLoginNames,
-    feGuestAccess: feGuestAccessNames,
-    uniqueDbId: Obj.entryKeysWithPropValue(
-      baseSectionsOfContext,
-      "uniqueDbId",
-      true as true
-    ),
-
     // varbShape
     // In some cases it might be safer to go by whether they have the same children
     // in which cases they would be derived at a higher level
-    singleTimeListType: Obj.filterKeysForEntryShape(
-      baseSectionVarbs,
-      baseSectionVarbs.singleTimeList
-    ),
-
     hasVarb: Obj.keys(baseSectionsOfContext).filter((sectionName) => {
       const varbNames = Object.keys(
         (baseSectionsOfContext[sectionName] as any as GeneralBaseSection)
@@ -87,16 +67,18 @@ function makeBaseNameArrsForContext<SC extends ContextName>(
       true as true
     ),
     get additiveList() {
-      return ["singleTimeList", "ongoingList"] as const;
+      return Arr.extractStrict(simpleSectionNames, [
+        "singleTimeList",
+        "ongoingList",
+      ] as const);
     },
     get varbListAllowed() {
-      return Arr.extractStrict(this.all, [
+      return Arr.extractStrict(simpleSectionNames, [
         "singleTimeList",
         "ongoingList",
         "userVarbList",
       ] as const);
     },
-    // combo
   };
 }
 

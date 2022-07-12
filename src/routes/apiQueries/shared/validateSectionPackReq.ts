@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Request } from "express";
 import {
   SectionPackArrReq,
   SectionPackReq,
@@ -6,64 +6,74 @@ import {
 import {
   isSectionPack,
   SectionPack,
-  ServerSectionPack,
 } from "../../../client/src/App/sharedWithServer/SectionPack/SectionPack";
-import { SectionName } from "../../../client/src/App/sharedWithServer/SectionsMeta/SectionName";
+import { sectionsMeta } from "../../../client/src/App/sharedWithServer/SectionsMeta";
+import {
+  DbSectionName,
+  DbStoreName,
+} from "../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/dbStoreNames";
+import { LoggedIn, validateLoggedInUser } from "./LoggedInUser";
 import { validateDbStoreName } from "./validateDbSectionInfoReq";
-import { LoggedIn, validateLoggedInUser } from "./validateLoggedInUser";
 
 export function validateSectionPackArrReq(
-  req: Request,
-  res: Response
-): LoggedIn<SectionPackArrReq> {
-  const { sectionPackArr, user, sectionName } = req.body;
+  req: Request
+): LoggedIn<SectionPackArrReq<DbStoreName>> {
+  const { sectionPackArr, user, dbStoreName } = req.body;
   return {
     body: {
-      user: validateLoggedInUser(user, res),
-      sectionName: validateDbStoreName(sectionName, res, "arrStore"),
+      user: validateLoggedInUser(user),
+      dbStoreName: validateDbStoreName(dbStoreName),
       sectionPackArr: validateServerSectionPackArr({
+        dbStoreName,
         value: sectionPackArr,
-        sectionName,
-        res,
       }),
     },
   };
 }
 
-export function validateSectionPackReq(
-  req: Request,
-  res: Response
-): LoggedIn<SectionPackReq> {
-  const { user, sectionPack } = req.body;
+export function validateSectionPackReq(req: Request): LoggedIn<SectionPackReq> {
+  const { user, sectionPack, dbStoreName } = req.body;
   return {
     body: {
-      user: validateLoggedInUser(user, res),
-      sectionPack: validateServerSectionPack(sectionPack),
+      user: validateLoggedInUser(user),
+      dbStoreName: validateDbStoreName(dbStoreName),
+      sectionPack: validateServerSectionPack(sectionPack, dbStoreName),
     },
   };
 }
 
-type ValidateServerSectionPackArrProps = {
+type ValidateServerSectionPackArrProps<CN extends DbStoreName> = {
   value: any;
-  res: Response;
-  sectionName: SectionName<"arrStore">;
+  dbStoreName: CN;
 };
-function validateServerSectionPackArr({
+function validateServerSectionPackArr<CN extends DbStoreName>({
   value,
-  res,
-  sectionName,
-}: ValidateServerSectionPackArrProps): SectionPack<SectionName<"arrStore">>[] {
+  dbStoreName,
+}: ValidateServerSectionPackArrProps<CN>): SectionPack<DbSectionName<CN>>[] {
   if (
     Array.isArray(value) &&
-    value.every(
-      (v) => isSectionPack(v, "dbStoreNext") && v.sectionName === sectionName
-    )
+    value.every((v) => isDbStoreSectionPack(v, dbStoreName))
   ) {
-    return value as SectionPack<SectionName<"arrStore">>[];
-  } else throw new Error("Payload is not a valid server section array.");
+    return value;
+  } else {
+    throw new Error("Payload is not a valid server section array.");
+  }
 }
 
-function validateServerSectionPack(value: any): ServerSectionPack {
-  if (isSectionPack(value, "dbStoreNext")) return value;
+function validateServerSectionPack<CN extends DbStoreName>(
+  value: any,
+  dbStoreName: CN
+): SectionPack<DbSectionName<CN>> {
+  if (isDbStoreSectionPack(value, dbStoreName)) return value;
   throw new Error("Payload is not a valid server sectionPack");
+}
+
+function isDbStoreSectionPack<CN extends DbStoreName>(
+  value: any,
+  dbStoreName: CN
+): value is SectionPack<DbSectionName<CN>> {
+  return (
+    isSectionPack(value) &&
+    value.sectionName === sectionsMeta.section("dbStore").childType(dbStoreName)
+  );
 }

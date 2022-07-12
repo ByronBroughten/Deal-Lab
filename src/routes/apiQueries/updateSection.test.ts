@@ -2,7 +2,7 @@ import { Server } from "http";
 import request from "supertest";
 import { config } from "../../client/src/App/Constants";
 import { apiQueriesShared } from "../../client/src/App/sharedWithServer/apiQueriesShared";
-import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
+import { QueryReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import { numObj } from "../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsUtils/baseValues/NumObj";
 import { Id } from "../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsUtils/id";
 import { runApp } from "../../runApp";
@@ -24,14 +24,11 @@ const updatedValues = {
 } as const;
 
 type TestReqs = {
-  addSection: NextReq<"addSection">;
-  updateSection: NextReq<"updateSection">;
+  addSection: QueryReq<"addSection">;
+  updateSection: QueryReq<"updateSection">;
 };
 function makeReqs(): TestReqs {
-  const tester = SectionQueryTester.init({
-    sectionName,
-    indexName: "property",
-  });
+  const tester = SectionQueryTester.init({ sectionName });
   const { updater } = tester;
   updater.updateValuesDirectly(originalValues);
   const originalSection = tester.makeSectionPackReq();
@@ -41,7 +38,7 @@ function makeReqs(): TestReqs {
   return {
     addSection: originalSection,
     updateSection: updatedSection,
-  };
+  } as TestReqs;
 }
 
 const testedRoute = apiQueriesShared.updateSection.pathRoute;
@@ -82,7 +79,7 @@ describe(testedRoute, () => {
   it("should return 200 and update a section if happy path", async () => {
     await testStatus(200);
     const postDoc = await getUserByIdNoRes(userId);
-    const updatedDoc = postDoc.property.find(
+    const updatedDoc = postDoc.propertyMain.find(
       ({ dbId }) => dbId === reqs.updateSection.body.sectionPack.dbId
     );
     const updatedSection = updatedDoc?.rawSections.property.find(

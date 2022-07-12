@@ -1,8 +1,6 @@
 import { Obj } from "../../../utils/Obj";
-import {
-  dbStoreNames,
-  SimpleDbStoreName,
-} from "../../childSectionsDerived/dbStoreNames";
+import { dbStoreNames } from "../../childSectionsDerived/dbStoreNames";
+import { tableRowDbSources } from "../../relChildSections";
 import { relSections } from "../../relSections";
 import { getRelParams } from "./getRelParams";
 
@@ -17,52 +15,47 @@ export const hasStoreNameArrs = {
     "feFullIndexStoreName",
     "string"
   ),
-  hasArrStore: Obj.entryKeysWithPropOfType(
-    relSections,
-    "arrStoreName",
-    "string"
-  ),
   get hasIndexStore() {
     return [...this.hasRowIndex, ...this.hasFullIndex] as const;
   },
 } as const;
 
 const hasToStoreNames = {
-  // these are dbStore names.
-  // I can combine these into one I think.
-
-  rowIndexNext: getRelParams(hasStoreNameArrs.hasRowIndex, "rowIndexName"),
-  fullIndex: getRelParams(hasStoreNameArrs.hasFullIndex, "fullIndexName"),
-  arrStore: getRelParams(hasStoreNameArrs.hasArrStore, "arrStoreName"),
+  tableIndex: getRelParams(
+    hasStoreNameArrs.hasRowIndex,
+    "feTableIndexStoreName"
+  ),
+  fullIndex: getRelParams(
+    hasStoreNameArrs.hasFullIndex,
+    "feFullIndexStoreName"
+  ),
   get indexStore() {
     return {
-      ...this.rowIndexNext,
+      ...this.tableIndex,
       ...this.fullIndex,
     } as const;
   },
 } as const;
 
-export const storeNameArrs = makeNestedValueArrs(hasToStoreNames);
-type StoreNameArrs = typeof storeNameArrs;
-interface StoreNameArrsPlusAll extends StoreNameArrs {
-  all: readonly SimpleDbStoreName[];
-}
+const indexStoreNames = makeNestedValueArrs(hasToStoreNames);
 
-export type SavableSectionType = keyof StoreNameArrsPlusAll;
-export type DbSectionName<SN extends SavableSectionType = "all"> =
-  StoreNameArrsPlusAll[SN][number];
+export type DbStoreType = keyof StoreNameArrs;
+export type DbStoreNameByType<SN extends DbStoreType = "all"> =
+  StoreNameArrs[SN][number];
 
-const storeNameArrsPlusAll: StoreNameArrsPlusAll = {
-  ...storeNameArrs,
+const dbStoreNameArrs = {
+  ...indexStoreNames,
+  tableRowDbSource: tableRowDbSources,
   all: dbStoreNames,
-};
+} as const;
+type StoreNameArrs = typeof dbStoreNameArrs;
 
-export const savableNameS = {
-  arrs: storeNameArrsPlusAll,
-  is<T extends SavableSectionType = "all">(
+export const dbStoreNameS = {
+  arrs: dbStoreNameArrs,
+  is<T extends DbStoreType = "all">(
     value: any,
     type?: T
-  ): value is DbSectionName<T> {
+  ): value is DbStoreNameByType<T> {
     return (this.arrs[(type ?? "all") as T] as any).includes(value);
   },
 } as const;

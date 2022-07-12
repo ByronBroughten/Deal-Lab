@@ -1,22 +1,59 @@
 import urljoin from "url-join";
 import { config } from "../Constants";
 import { makeResValidationQueryError } from "../modules/useQueryActionsTest/apiQueriesClient/validateRes";
+import { ApiQueryName } from "./apiQueriesShared/apiQueriesSharedTypes";
 import {
-  ApiQueryName,
-  NextReq,
-  NextRes,
-} from "./apiQueriesShared/apiQueriesSharedTypes";
-import { isLoginHeaders, isLoginUserNext } from "./apiQueriesShared/login";
+  isLoginHeaders,
+  isLoginUserNext,
+  LoginQueryObjects,
+} from "./apiQueriesShared/login";
+import {
+  DbIdRes,
+  DbPackInfoReq,
+  DbStoreNameRes,
+  PaymentMethodIdReq,
+  RegisterReq,
+  SectionPackArrReq,
+  SectionPackReq,
+  SectionPackRes,
+  SuccessRes,
+} from "./apiQueriesShared/makeReqAndRes";
+import { DbStoreName } from "./SectionsMeta/childSectionsDerived/dbStoreNames";
 
 export type ApiQueries = {
-  [QN in ApiQueryName]: ApiQuery<QN>;
+  addSection: AddUpdateSectionQuery;
+  updateSection: AddUpdateSectionQuery;
+  getSection: GetSectionQuery;
+  deleteSection: DeleteSectionQuery;
+  replaceSectionArr: ReplaceSectionArrQuery;
+  register: (req: RegisterReq) => Promise<LoginQueryObjects["res"]>;
+  login: (req: LoginQueryObjects["req"]) => Promise<LoginQueryObjects["res"]>;
+  upgradeUserToPro: (req: PaymentMethodIdReq) => Promise<SuccessRes>;
 };
-export type ApiQuery<QN extends ApiQueryName> = (
-  reqObj: NextReq<QN>
-) => Promise<NextRes<QN>>;
+type ApiQueriesTest<
+  T extends Record<ApiQueryName, (req: any) => Promise<any>>
+> = T;
+type _Test = ApiQueriesTest<ApiQueries>;
+
+type AddUpdateSectionQuery = <CN extends DbStoreName>(
+  req: SectionPackReq<CN>
+) => Promise<DbIdRes>;
+
+type GetSectionQuery = <CN extends DbStoreName>(
+  req: DbPackInfoReq<CN>
+) => Promise<SectionPackRes<CN>>;
+
+type DeleteSectionQuery = <CN extends DbStoreName>(
+  req: DbPackInfoReq<CN>
+) => Promise<DbIdRes>;
+
+type ReplaceSectionArrQuery = <CN extends DbStoreName>(
+  req: SectionPackArrReq<CN>
+) => Promise<DbStoreNameRes<CN>>;
+
+export type ApiQuery<QN extends ApiQueryName> = ApiQueries[QN];
 
 const apiPaths = makeApiPaths();
-
 class ApiQueryShared<QN extends ApiQueryName> {
   constructor(readonly queryName: QN) {}
   get pathBit() {
@@ -33,8 +70,10 @@ class ApiQueryShared<QN extends ApiQueryName> {
   }
 }
 
+type ApiQueriesShared = {
+  [QN in ApiQueryName]: ApiQueryShared<QN>;
+};
 export const apiQueriesShared = makeApiQueriesShared();
-
 function makeApiQueriesShared() {
   return config.apiQueryNames.reduce((partial, queryName) => {
     (partial[queryName] as any) = new ApiQueryShared(queryName);
@@ -42,12 +81,8 @@ function makeApiQueriesShared() {
   }, {} as ApiQueriesShared);
 }
 
-type ApiQueriesShared = {
-  [QN in ApiQueryName]: ApiQueryShared<QN>;
-};
-
 export const resValidators = {
-  register: (res: any): NextRes<"register"> => {
+  register: (res: any): LoginQueryObjects["res"] => {
     if (res && isLoginUserNext(res.data) && isLoginHeaders(res.headers)) {
       return {
         data: res.data,

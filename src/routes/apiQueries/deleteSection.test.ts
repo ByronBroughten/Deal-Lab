@@ -2,7 +2,7 @@ import { Server } from "http";
 import request from "supertest";
 import { config } from "../../client/src/App/Constants";
 import { apiQueriesShared } from "../../client/src/App/sharedWithServer/apiQueriesShared";
-import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
+import { QueryReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import { Id } from "../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsUtils/id";
 import { runApp } from "../../runApp";
 import { DbSectionsModel } from "../DbSectionsModel";
@@ -11,18 +11,15 @@ import { createTestUserModelNext } from "./test/createTestUserModelNext";
 import { SectionQueryTester } from "./test/SectionQueryTester";
 
 type TestReqs = {
-  addSection: NextReq<"addSection">;
-  deleteSection: NextReq<"deleteSection">;
+  addSection: QueryReq<"addSection">;
+  deleteSection: QueryReq<"deleteSection">;
 };
 
 function makeReqs(): TestReqs {
   const sectionName = "property";
-  const tester = SectionQueryTester.init({
-    sectionName,
-    indexName: "property",
-  });
+  const tester = SectionQueryTester.init({ sectionName });
   return {
-    addSection: tester.makeSectionPackReq(),
+    addSection: tester.makeSectionPackReq() as QueryReq<"addSection">,
     deleteSection: tester.makeDbInfoReq(),
   };
 }

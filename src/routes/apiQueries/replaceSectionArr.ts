@@ -11,7 +11,7 @@ async function replaceSectionArrServerSide(req: Request, res: Response) {
   const {
     user: { _id: userId },
     ...rest
-  } = validateSectionPackArrReq(req, res).body;
+  } = validateSectionPackArrReq(req).body;
 
   await findUserByIdAndUpdate({
     res,
@@ -21,17 +21,17 @@ async function replaceSectionArrServerSide(req: Request, res: Response) {
 
   sendSuccess(res, "replaceSectionArr", {
     data: {
-      sectionName: rest.sectionName,
+      dbStoreName: rest.dbStoreName,
     },
   });
 }
 
 function makeSetSectionArrParameters({
-  sectionName,
+  dbStoreName,
   sectionPackArr,
 }: SectionPackArrReq["body"]) {
   return {
-    operation: { $set: { [`${sectionName}`]: sectionPackArr } },
+    operation: { $set: { [`${dbStoreName}`]: sectionPackArr } },
     options: {
       new: true,
       lean: true,

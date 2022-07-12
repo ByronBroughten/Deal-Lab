@@ -61,7 +61,7 @@ export const baseSections = {
     omniParent: baseSectionS.container,
     table: baseSection({ titleFilter: "string" } as const),
 
-    tableRow: baseSection(baseVarbs.tableRow, { uniqueDbId: true }),
+    tableRow: baseSection(baseVarbs.tableRow),
     column: baseSection({
       varbInfo: "inEntityVarbInfo",
     }),
@@ -97,24 +97,21 @@ export const baseSections = {
       ...baseVarbs.savableSection,
       defaultValueSwitch: "string",
     }),
-    userVarbItem: baseSection(
-      {
-        ...baseVarbs.string([
-          "name",
-          "startAdornment",
-          "endAdornment",
-          "valueSwitch",
-        ] as const),
-        ...baseVarbs.numObj(["editorValue", "value"] as const),
-      },
-      { uniqueDbId: true }
-    ),
+    userVarbItem: baseSection({
+      ...baseVarbs.string([
+        "name",
+        "startAdornment",
+        "endAdornment",
+        "valueSwitch",
+      ] as const),
+      ...baseVarbs.numObj(["editorValue", "value"] as const),
+    }),
     outputList: baseSection(
       { title: "string" },
       baseOptions.alwaysOneFromStart
     ),
-    singleTimeList: baseSection(baseVarbs.singleTimeList, baseOptions.userList),
-    ongoingList: baseSection(baseVarbs.ongoingList, baseOptions.userList),
+    singleTimeList: baseSection(baseVarbs.singleTimeList),
+    ongoingList: baseSection(baseVarbs.ongoingList),
     login: baseSection(
       baseVarbs.string(["email", "password"] as const),
       baseOptions.alwaysOneFromStart

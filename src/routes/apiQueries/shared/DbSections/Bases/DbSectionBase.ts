@@ -1,16 +1,14 @@
 import { DbSectionInfo } from "../../../../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsUtils/DbSectionInfo";
-import { ServerSectionName } from "../../../../ServerSectionName";
+import { ServerStoreName } from "../../../../ServerStoreName";
 import { DbSectionsBase, DbSectionsProps } from "./DbSectionsBase";
 
-export interface DbSectionProps<SN extends ServerSectionName>
+export interface DbSectionProps<SN extends ServerStoreName>
   extends DbSectionsProps {
   sectionName: SN;
   dbId: string;
 }
 
-export class DbSectionBase<
-  SN extends ServerSectionName
-> extends DbSectionsBase {
+export class DbSectionBase<SN extends ServerStoreName> extends DbSectionsBase {
   readonly sectionName: SN;
   readonly dbId: string;
   constructor({ sectionName, dbId, ...rest }: DbSectionProps<SN>) {

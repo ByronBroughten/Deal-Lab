@@ -1,3 +1,4 @@
+import { Arr } from "../utils/Arr";
 import { Merge } from "../utils/Obj/merge";
 import { SimpleSectionName, simpleSectionNames } from "./baseSections";
 import {
@@ -5,10 +6,19 @@ import {
   sectionToChildNames,
 } from "./childSectionsDerived/ChildName";
 import { ChildSectionNameName } from "./childSectionsDerived/ChildSectionName";
+import { dbStoreNames } from "./childSectionsDerived/dbStoreNames";
+
+export const tableRowDbSources = Arr.extractStrict(dbStoreNames, [
+  "mgmtMain",
+  "loanMain",
+  "propertyMain",
+  "dealMain",
+] as const);
+type TableRowDbSource = typeof tableRowDbSources[number];
 
 type GeneralRelChild = {
   feTableRowStore: ChildSectionNameName<"feStore", "table"> | null;
-  tableRowDbSource: ChildName<"dbStore"> | null;
+  tableRowDbSource: TableRowDbSource | null;
 };
 type GenericRelChildren<SN extends SimpleSectionName> = {
   [CN in ChildName<SN>]: GeneralRelChild;
@@ -81,7 +91,7 @@ export const feStoreTableNames: ChildSectionNameName<"feStore", "table">[] = [
   "dealTable",
 ];
 export type FeStoreTableName = typeof feStoreTableNames[number];
-export function isFeStoreChildName(value: any): value is FeStoreTableName {
+export function isFeStoreTableName(value: any): value is FeStoreTableName {
   return feStoreTableNames.includes(value);
 }
 

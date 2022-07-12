@@ -1,9 +1,10 @@
 import mongoose from "mongoose";
 import { GuestAccessSectionPackArrs } from "../../../../../client/src/App/sharedWithServer/apiQueriesShared/register";
 import { SectionPack } from "../../../../../client/src/App/sharedWithServer/SectionPack/SectionPack";
-import { sectionNameS } from "../../../../../client/src/App/sharedWithServer/SectionsMeta/SectionName";
+import { DbSectionName } from "../../../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/dbStoreNames";
+import { dbStoreNameS } from "../../../../../client/src/App/sharedWithServer/SectionsMeta/relSectionsDerived/relNameArrs/dbStoreNameArrs";
 import { Arr } from "../../../../../client/src/App/sharedWithServer/utils/Arr";
-import { serverSectionNames } from "../../../../ServerSectionName";
+import { serverSectionNames } from "../../../../ServerStoreName";
 
 export type PreppedEmails = {
   emailAsSubmitted: string;
@@ -21,7 +22,7 @@ export type UserSectionPackArrs = {
 
 const initFullNames = [
   ...userSectionNames,
-  ...sectionNameS.arrs.feGuestAccess,
+  ...dbStoreNameS.arrs.fullIndex,
 ] as const;
 
 export const initEmptyNames = Arr.excludeStrict(
@@ -30,7 +31,7 @@ export const initEmptyNames = Arr.excludeStrict(
 );
 type InitEmptyName = typeof initEmptyNames[number];
 export type InitEmptyPackArrs = {
-  [SN in InitEmptyName]: SectionPack<SN>[];
+  [CN in InitEmptyName]: SectionPack<DbSectionName<CN>>[];
 };
 
 export interface MakeDbUserProps

@@ -4,11 +4,8 @@ import { config } from "../../client/src/App/Constants";
 import authWare from "../../middleware/authWare";
 import { handleResAndMakeError } from "../../resErrorUtils";
 import { findUserByIdAndUpdate } from "./shared/findAndUpdate";
+import { UserAuthedReq, validateLoggedInUser } from "./shared/LoggedInUser";
 import { sendSuccess } from "./shared/sendSuccess";
-import {
-  UserAuthedReq,
-  validateLoggedInUser,
-} from "./shared/validateLoggedInUser";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET as string, {
   apiVersion: "2020-08-27",
@@ -20,7 +17,7 @@ export const upgradeUserToProWare = [
 ] as const;
 
 async function upgradeUserToProServerSide(req: Request, res: Response) {
-  const { paymentMethodId, user } = validateUpgradeUserToProReq(req, res).body;
+  const { paymentMethodId, user } = validateUpgradeUserToProReq(req).body;
   makePayment({ paymentMethodId, res });
   doUpgradeUserToPro({ userId: user._id, res });
   sendSuccess(res, "upgradeUserToPro", { data: { success: true } });
@@ -71,19 +68,18 @@ async function makePayment({ paymentMethodId, res }: MakePaymentProps) {
 }
 
 function validateUpgradeUserToProReq(
-  req: Request,
-  res: Response
+  req: Request
 ): UserAuthedReq<"upgradeUserToPro"> {
   const { user, paymentMethodId } = req.body;
   return {
     body: {
-      paymentMethodId: validatePaymentMethodId(paymentMethodId, res),
-      user: validateLoggedInUser(user, res),
+      paymentMethodId: validatePaymentMethodId(paymentMethodId),
+      user: validateLoggedInUser(user),
     },
   };
 }
 
-function validatePaymentMethodId(value: any, res: Response): string {
+function validatePaymentMethodId(value: any): string {
   if (typeof value === "string") return value;
-  throw handleResAndMakeError(res, 500, "Failed to validate paymentMethodId.");
+  throw new Error("Failed to validate paymentMethodId.");
 }

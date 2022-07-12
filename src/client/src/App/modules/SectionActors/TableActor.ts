@@ -4,7 +4,7 @@ import { InEntityVarbInfo } from "../../sharedWithServer/SectionsMeta/baseSectio
 import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
 import { PackMakerSection } from "../../sharedWithServer/StatePackers.ts/PackMakerSection";
 import { SetterSection } from "../../sharedWithServer/StateSetters/SetterSection";
-import { SetterTableNext } from "../../sharedWithServer/StateSetters/SetterTable";
+import { SetterTable } from "../../sharedWithServer/StateSetters/SetterTable";
 import { StrictOmit } from "../../sharedWithServer/utils/types";
 import { SectionActorBase, SectionActorBaseProps } from "./SectionActorBase";
 
@@ -33,18 +33,12 @@ export class TableActor extends SectionActorBase<"table"> {
     });
     this.sendTable = sendTable;
   }
-  // should table have sendTable?
-
-  get = new GetterSection(this.sectionActorBaseProps);
-  tableState = new SetterTableNext(this.sectionActorBaseProps);
-  // get querier() {
-  //   return new SectionQuerier(this.sectionActorBaseProps);
-  // }
-  // private async sendTable(): Promise<void> {
-  //   this.querier.update(
-  //     this.packMaker.makeSectionPack() as any as ServerSectionPack
-  //   );
-  // }
+  get get(): GetterSection<"table"> {
+    return new GetterSection(this.sectionActorBaseProps);
+  }
+  get tableState(): SetterTable {
+    return new SetterTable(this.sectionActorBaseProps);
+  }
   get setter() {
     return new SetterSection(this.sectionActorBaseProps);
   }

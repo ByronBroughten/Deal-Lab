@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useTableActor } from "../modules/sectionActorHooks/useTableActor";
 import { auth } from "../modules/services/authService";
-import { SectionName } from "../sharedWithServer/SectionsMeta/SectionName";
+import { isFeStoreTableName } from "../sharedWithServer/SectionsMeta/relChildSections";
 import { VariableOption } from "../sharedWithServer/StateEntityGetters/VariableGetterSections";
 import theme from "../theme/Theme";
 import useHowMany from "./appWide/customHooks/useHowMany";
@@ -13,13 +13,16 @@ import IndexRow from "./TableStore/IndexRow";
 
 interface Props {
   feId: string;
-  tableSourceName: SectionName<"tableSource">;
 }
 
-export function TableStore({ tableSourceName, feId }: Props) {
+export function TableStore({ feId }: Props) {
   const table = useTableActor(feId);
+  if (!isFeStoreTableName(table.get.selfChildName)) {
+    throw new Error("TableStore is only fore feStore tables");
+  }
   const { filteredRows } = table;
   const { isAtLeastOne, areNone } = useHowMany(filteredRows);
+
   return (
     <Styled className="TableStore-root">
       {!auth.isLoggedIn && (
@@ -78,7 +81,7 @@ export function TableStore({ tableSourceName, feId }: Props) {
             </thead>
             <tbody>
               {filteredRows.map(({ feId }) => {
-                return <IndexRow {...{ feId, indexName: tableSourceName }} />;
+                return <IndexRow {...{ feId }} />;
               })}
             </tbody>
           </table>

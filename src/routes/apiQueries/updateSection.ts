@@ -1,53 +1,52 @@
 import { Request, Response } from "express";
-import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
-import { ServerSectionPack } from "../../client/src/App/sharedWithServer/SectionPack/SectionPack";
-import { DbSectionName } from "../../client/src/App/sharedWithServer/SectionsMeta/relSectionsDerived/relNameArrs/storeArrs";
+import { DbPack } from "../../client/src/App/sharedWithServer/SectionPack/SectionPack";
+import { DbStoreName } from "../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/dbStoreNames";
 import authWare from "../../middleware/authWare";
 import { findOneAndUpdate } from "./shared/findAndUpdate";
 import { sendSuccess } from "./shared/sendSuccess";
-import { LoggedIn } from "./shared/validateLoggedInUser";
 import { validateSectionPackReq } from "./shared/validateSectionPackReq";
 
 export const updateSectionWare = [authWare, updateSectionSeverSide] as const;
 
 async function updateSectionSeverSide(req: Request, res: Response) {
   const {
+    dbStoreName,
     sectionPack,
     user: { _id: userId },
-  } = validateUpdateSectionReq(req, res).body;
+  } = validateSectionPackReq(req).body;
 
   await findOneAndUpdate({
     res,
-    filter: makeUpdateSectionFilter({ userId, ...sectionPack }),
-    queryParameters: makeSetParameters(sectionPack),
+    filter: makeUpdateSectionFilter({
+      dbStoreName,
+      dbId: sectionPack.dbId,
+      userId,
+    }),
+    queryParameters: makeSetParameters({
+      dbStoreName,
+      sectionPack,
+    }),
   });
   sendSuccess(res, "updateSection", { data: { dbId: sectionPack.dbId } });
 }
 
-function validateUpdateSectionReq(
-  req: Request,
-  res: Response
-): LoggedIn<NextReq<"updateSection">> {
-  return validateSectionPackReq(req, res);
-}
-
 type MakeUpdateSectionFilterProps = {
   userId: string;
-  sectionName: DbSectionName;
+  dbStoreName: DbStoreName;
   dbId: string;
 };
 function makeUpdateSectionFilter({
   userId,
-  sectionName,
+  dbStoreName,
   dbId,
 }: MakeUpdateSectionFilterProps) {
-  return { _id: userId, [`${sectionName}.dbId`]: dbId };
+  return { _id: userId, [`${dbStoreName}.dbId`]: dbId };
 }
 
-function makeSetParameters(serverSectionPack: ServerSectionPack) {
-  const { sectionName } = serverSectionPack;
+function makeSetParameters(dbPack: DbPack) {
+  const { dbStoreName, sectionPack } = dbPack;
   return {
-    operation: { $set: { [`${sectionName}.$`]: serverSectionPack } },
+    operation: { $set: { [`${dbStoreName}.$`]: sectionPack } },
     options: {
       new: true,
       lean: true,

@@ -1,52 +1,49 @@
 import { Request, Response } from "express";
-import { NextReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
-import { ServerSectionPack } from "../../client/src/App/sharedWithServer/SectionPack/SectionPack";
-import { SectionName } from "../../client/src/App/sharedWithServer/SectionsMeta/SectionName";
+import { DbPack } from "../../client/src/App/sharedWithServer/SectionPack/SectionPack";
+import {
+  DbStoreInfo,
+  DbStoreName,
+} from "../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/dbStoreNames";
 import authWare from "../../middleware/authWare";
 import { ResStatusError } from "../../resErrorUtils";
-import { DbSectionInitByIdProps } from "./shared/DbSections/DbSection";
 import { DbSectionsQuerier } from "./shared/DbSections/DbSectionsQuerier";
 import { SectionPackNotFoundError } from "./shared/DbSections/DbSectionsQuerierTypes";
 import { findUserByIdAndUpdate } from "./shared/findAndUpdate";
 import { sendSuccess } from "./shared/sendSuccess";
-import { LoggedIn } from "./shared/validateLoggedInUser";
 import { validateSectionPackReq } from "./shared/validateSectionPackReq";
 
 export const addSectionWare = [authWare, addSectionServerSide] as const;
 async function addSectionServerSide(req: Request, res: Response) {
   const {
+    dbStoreName,
     sectionPack,
     user: { _id: userId },
-  } = validateAddSectionReq(req, res).body;
+  } = validateSectionPackReq(req).body;
   await checkThatSectionPackIsNotThere({
-    ...sectionPack,
+    dbStoreName,
+    dbId: sectionPack.dbId,
     userId,
   });
   await findUserByIdAndUpdate({
     res,
     userId,
-    queryParameters: makePushParameters(sectionPack),
+    queryParameters: makePushParameters({
+      dbStoreName,
+      sectionPack,
+    }),
   });
   sendSuccess(res, "addSection", { data: { dbId: sectionPack.dbId } });
 }
 
-function validateAddSectionReq(
-  req: Request,
-  res: Response
-): LoggedIn<NextReq<"addSection">> {
-  return validateSectionPackReq(req, res);
-}
-
-async function checkThatSectionPackIsNotThere<
-  SN extends SectionName<"dbStoreNext">
->(props: DbSectionInitByIdProps<SN>): Promise<true> {
-  const { sectionName, dbId } = props;
-
+async function checkThatSectionPackIsNotThere<CN extends DbStoreName>(
+  props: DbSectionInitByIdProps<CN>
+): Promise<true> {
+  const { dbStoreName, dbId } = props;
   try {
     const querier = await DbSectionsQuerier.initByUserId(props.userId);
     await querier.getSectionPack(props);
     throw new ResStatusError({
-      errorMessage: `An entry at ${sectionName}.${dbId} already exists.`,
+      errorMessage: `An entry at ${dbStoreName}.${dbId} already exists.`,
       resMessage: "The sent payload has already been saved.",
       status: 500,
     });
@@ -59,10 +56,10 @@ async function checkThatSectionPackIsNotThere<
   }
 }
 
-function makePushParameters(serverSectionPack: ServerSectionPack) {
-  const { sectionName } = serverSectionPack;
+function makePushParameters(dbPack: DbPack) {
+  const { dbStoreName, sectionPack } = dbPack;
   return {
-    operation: { $push: { [sectionName]: serverSectionPack } },
+    operation: { $push: { [dbStoreName]: sectionPack } },
     options: {
       new: true,
       lean: true,
@@ -72,4 +69,9 @@ function makePushParameters(serverSectionPack: ServerSectionPack) {
       upsert: true,
     },
   };
+}
+
+interface DbSectionInitByIdProps<CN extends DbStoreName>
+  extends DbStoreInfo<CN> {
+  userId: string;
 }
