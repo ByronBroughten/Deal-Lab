@@ -22,12 +22,16 @@ export type UpdateSwitchProp = SwitchUpdateInfo & {
   updateFnName: UpdateFnName;
   updateFnProps: UpdateFnProps;
 };
+
 export type UpdateSwitches = UpdateSwitchProp[];
 export type DisplayName = string | RelSingleInVarbInfo;
 export type CommonRelVarb = {
   updateFnProps: UpdateFnProps;
   inUpdateSwitchProps: UpdateSwitches;
+
   displayName: DisplayName;
+  displayNameEnd: string;
+
   startAdornment: string;
   endAdornment: string;
 };

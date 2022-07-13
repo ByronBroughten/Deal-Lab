@@ -1,26 +1,9 @@
 import { switchNames } from "../../baseSectionsUtils/RelSwitchVarb";
 import { RelInVarbInfo } from "../../childSectionsDerived/RelInOutVarbInfo";
-import {
-  RelLocalVarbInfo,
-  relVarbInfoS,
-} from "../../childSectionsDerived/RelVarbInfo";
-import { UpdateFnProps, UpdateSwitchProp } from "./relVarbTypes";
-import { UpdateFnName } from "./valueMetaTypes";
+import { relVarbInfoS } from "../../childSectionsDerived/RelVarbInfo";
+import { UpdateSwitchProp } from "./relVarbTypes";
 
 export const relUpdateSwitch = {
-  base(
-    switchInfo: RelLocalVarbInfo,
-    switchValue: string,
-    updateFnName: UpdateFnName,
-    updateFnProps: UpdateFnProps = {}
-  ): UpdateSwitchProp {
-    return {
-      switchInfo,
-      switchValue,
-      updateFnName,
-      updateFnProps,
-    };
-  },
   yearlyToMonthly<Base extends string>(baseVarbName: Base): UpdateSwitchProp {
     const varbNames = switchNames(baseVarbName, "ongoing");
     return {

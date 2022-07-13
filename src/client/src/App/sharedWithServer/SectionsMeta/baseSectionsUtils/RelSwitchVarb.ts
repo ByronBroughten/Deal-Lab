@@ -31,7 +31,7 @@ function makeDefaultTargetCore<DC extends TargetCoreGeneral>(dc: DC): DC {
 }
 const defaultTargetCore = makeDefaultTargetCore({
   varbNameEnding: "",
-  displayNameEnding: "",
+  displayNameEnd: "",
   startAdornment: "",
   endAdornment: "",
 } as const);
@@ -51,12 +51,12 @@ export const ongoingVarb = new RelSwitchVarb({
     monthly: targetCore({
       endAdornment: "/month",
       varbNameEnding: "Monthly",
-      displayNameEnding: " Monthly",
+      displayNameEnd: " Monthly",
     } as const),
     yearly: targetCore({
       endAdornment: "/year",
       varbNameEnding: "Yearly",
-      displayNameEnding: " Yearly",
+      displayNameEnd: " Yearly",
     } as const),
   },
   switch: {
@@ -68,7 +68,7 @@ export type TargetCoreGeneral = {
   startAdornment: string;
   endAdornment: string;
   varbNameEnding: string;
-  displayNameEnding: string;
+  displayNameEnd: string;
 };
 
 type GeneralRelSwitchCore = {
@@ -93,12 +93,12 @@ export const relSwitchVarbs = {
       percent: targetCore({
         endAdornment: "%",
         varbNameEnding: "Percent",
-        displayNameEnding: " Percent",
+        displayNameEnd: " Percent",
       } as const),
       dollars: targetCore({
         startAdornment: "$",
         varbNameEnding: "Dollars",
-        displayNameEnding: " Dollars",
+        displayNameEnd: " Dollars",
       }),
     },
     switch: {
@@ -110,12 +110,12 @@ export const relSwitchVarbs = {
       months: targetCore({
         endAdornment: "months",
         varbNameEnding: "Months",
-        displayNameEnding: " Months",
+        displayNameEnd: " Months",
       }),
       years: targetCore({
         endAdornment: "years",
         varbNameEnding: "Years",
-        displayNameEnding: " Years",
+        displayNameEnd: " Years",
       }),
     },
     switch: {

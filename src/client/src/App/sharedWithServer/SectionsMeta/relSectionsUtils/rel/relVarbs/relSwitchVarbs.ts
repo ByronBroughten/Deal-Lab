@@ -6,7 +6,7 @@ import {
   TargetCoreGeneral,
 } from "../../../baseSectionsUtils/RelSwitchVarb";
 import { relVarbInfoS } from "../../../childSectionsDerived/RelVarbInfo";
-import { PreNumObjOptions, relVarb, relVarbS } from "../relVarb";
+import { RelNumObjOptions, relVarb } from "../relVarb";
 import { NumObjRelVarb, StringRelVarb, UpdateFnProps } from "../relVarbTypes";
 
 type GeneralSwitchVarbNames = {
@@ -18,7 +18,7 @@ type SwitchOptionProps = {
   updateFnName: CalculationName;
   updateFnProps: UpdateFnProps;
   switchValue: string;
-  options?: PreNumObjOptions;
+  options?: RelNumObjOptions;
 };
 export type SwitchInputs = {
   [inputName: string]: NumObjRelVarb | StringRelVarb;
@@ -30,7 +30,7 @@ export function switchInput<SWK extends SwitchEndingKey>(
   displayName: string,
   switchOptions: SwitchOptionProps[],
   switchInitValue: string,
-  shared?: PreNumObjOptions
+  shared?: RelNumObjOptions
 ): SwitchInputs {
   const varbNames = switchNames(
     baseVarbName,
@@ -47,11 +47,12 @@ export function switchInput<SWK extends SwitchEndingKey>(
       switchVarb.targets as Record<string, TargetCoreGeneral>
     )[switchValue];
 
-    numObjRelVarbs[varbNames[switchValue]] = relVarbS.switch(
+    numObjRelVarbs[varbNames[switchValue]] = relVarb("numObj", {
       displayName,
-      option.updateFnName,
-      option.updateFnProps,
-      [
+      displayNameEnd: targetCore.displayNameEnd,
+      updateFnName: option.updateFnName,
+      updateFnProps: option.updateFnProps,
+      inUpdateSwitchProps: [
         {
           switchInfo: relVarbInfoS.local(varbNames.switch),
           switchValue: option.switchValue,
@@ -59,8 +60,9 @@ export function switchInput<SWK extends SwitchEndingKey>(
           updateFnProps: {},
         },
       ],
-      { ...option.options, ...shared }
-    );
+      ...option.options,
+      ...shared,
+    });
   }
   return {
     ...numObjRelVarbs,

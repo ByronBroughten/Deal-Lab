@@ -8,13 +8,8 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-// After tests pass, change "userNext" to "user"
-
-// 1. displayNameEnding
-// 2. switchDisplayEnding
-// 3. manually apply the ending for switchVarbs where needed (varb options, etc)
-// 4. fullDisplayName
-// 5. contextDisplayName
+// - fullDisplayName
+// - displayNameEnd
 
 // PackBuilderSection doesn't make or init stuff with defaults.
 // I could make DefaultBuilderSection.

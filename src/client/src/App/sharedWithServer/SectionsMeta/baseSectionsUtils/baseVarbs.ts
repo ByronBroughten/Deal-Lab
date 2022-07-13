@@ -14,22 +14,17 @@ type TypeRecord<T extends readonly string[], V extends ValueName> = {
   [Prop in T[number]]: V;
 };
 
-export const baseVarbs = {
-  type<T extends readonly string[], V extends ValueName>(
-    keys: T,
-    vt: V
-  ): TypeRecord<T, V> {
-    return keys.reduce((schemas, key) => {
-      schemas[key as T[number]] = vt;
-      return schemas;
-    }, {} as Partial<TypeRecord<T, V>>) as TypeRecord<T, V>;
-  },
-  string<T extends readonly string[]>(keys: T): TypeRecord<T, "string"> {
-    return this.type(keys, "string");
-  },
-  numObj<T extends readonly string[]>(keys: T): TypeRecord<T, "numObj"> {
-    return this.type(keys, "numObj");
-  },
+export function baseVarbs<V extends ValueName, T extends readonly string[]>(
+  vt: V,
+  keys: T
+): TypeRecord<T, V> {
+  return keys.reduce((schemas, key) => {
+    schemas[key as T[number]] = vt;
+    return schemas;
+  }, {} as Partial<TypeRecord<T, V>>) as TypeRecord<T, V>;
+}
+
+export const baseVarbsS = {
   switch<Base extends string, SWN extends SwitchEndingKey>(
     baseName: Base,
     switchName: SWN
@@ -66,7 +61,7 @@ export const baseVarbs = {
   get property() {
     return {
       ...this.savableSection,
-      ...this.numObj([
+      ...baseVarbs("numObj", [
         "price",
         "sqft",
         "numUnits",
@@ -85,7 +80,7 @@ export const baseVarbs = {
   get loan() {
     return {
       ...this.savableSection,
-      ...this.numObj([
+      ...baseVarbs("numObj", [
         "loanAmountDollarsTotal",
         "mortInsUpfront",
         "closingCosts",
@@ -101,7 +96,10 @@ export const baseVarbs = {
   get mgmt() {
     return {
       ...this.savableSection,
-      ...this.numObj(["vacancyRatePercent", "upfrontExpenses"] as const),
+      ...baseVarbs("numObj", [
+        "vacancyRatePercent",
+        "upfrontExpenses",
+      ] as const),
       ...this.ongoing("ongoingExpenses"),
       ...this.ongoing("vacancyLossDollars"),
       ...omit(this.switch("rentCut", "dollarsPercent"), ["rentCutDollars"]),
@@ -122,7 +120,11 @@ export const baseVarbs = {
     compareToggle: "boolean",
   },
   get feUser() {
-    return this.string(["email", "userName", "apiAccessStatus"] as const);
+    return baseVarbs("string", [
+      "email",
+      "userName",
+      "apiAccessStatus",
+    ] as const);
   },
   get singleTimeList() {
     return {

@@ -1,28 +1,28 @@
 import { relVarbInfoS } from "../../childSectionsDerived/RelVarbInfo";
 import { relVarbInfosS } from "../../childSectionsDerived/RelVarbInfos";
-import { rel } from "../rel";
+import { relVarbS } from "../rel/relVarb";
 import { RelVarbs, relVarbsS } from "../relVarbs";
 
 export function propertyRelVarbs<R extends RelVarbs<"property">>(): R {
   return {
     ...relVarbsS.savableSection,
-    price: rel.varb.moneyObj("Price"),
-    sqft: rel.varb.calcVarb("Square feet"),
+    price: relVarbS.moneyObj("Price"),
+    sqft: relVarbS.calcVarb("Square feet"),
     ...relVarbsS.timeMoneyInput("taxes", "Taxes", {
       switchInit: "yearly",
     }),
     ...relVarbsS.timeMoneyInput("homeIns", "Home insurance", {
       switchInit: "yearly",
     }),
-    numUnits: rel.varb.sumChildVarb("Unit count", "unit", "one"),
-    numBedrooms: rel.varb.sumChildVarb("Bedroom count", "unit", "numBedrooms"),
+    numUnits: relVarbS.sumChildVarb("Unit count", "unit", "one"),
+    numBedrooms: relVarbS.sumChildVarb("Bedroom count", "unit", "numBedrooms"),
     // upfront
 
     // these
-    upfrontExpenses: rel.varb.sumMoney("Upfront expenses", [
+    upfrontExpenses: relVarbS.sumMoney("Upfront expenses", [
       relVarbInfoS.children("upfrontCostList", "total"),
     ]),
-    upfrontRevenue: rel.varb.sumMoney("Upfront revenues", [
+    upfrontRevenue: relVarbS.sumMoney("Upfront revenues", [
       relVarbInfoS.children("upfrontRevenueList", "total"),
     ]),
     // ongoing

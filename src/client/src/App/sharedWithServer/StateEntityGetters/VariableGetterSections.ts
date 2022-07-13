@@ -93,12 +93,17 @@ export class VariableGetterSections extends GetterSectionsBase {
     return sectionNames.reduce((options, sectionName) => {
       const sectionMeta = sectionsMeta.section(sectionName);
       const { varbNames } = sectionMeta;
-      if (sectionNameS.is(sectionName, "hasGlobalVarbs"))
+      if (sectionNameS.is(sectionName, "hasGlobalVarbs")) {
+        const varbMetas = varbNames
+          .map((varbName) => this.sectionsMeta.varb({ sectionName, varbName }))
+          .filter((varbMeta) => varbMeta.value);
+
         options = options.concat(
           varbNames
             .map((varbName) => this.initGlobalVarbOption(sectionName, varbName))
             .filter((val) => val.displayName !== "")
         );
+      }
       return options;
     }, [] as VariableOption[]);
   }
@@ -111,6 +116,10 @@ export class VariableGetterSections extends GetterSectionsBase {
       varbName,
     });
     const sectionMeta = sectionsMeta.section(sectionName);
+
+    // This is where the change should be.
+    // This is kind of messy.
+
     return {
       varbInfo: {
         ...mixedInfoS.makeGlobalSection(sectionName),

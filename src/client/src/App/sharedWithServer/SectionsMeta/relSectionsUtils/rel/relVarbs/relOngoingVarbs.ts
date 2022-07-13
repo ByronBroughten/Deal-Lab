@@ -11,7 +11,7 @@ import {
 import { RelInVarbInfo } from "../../../childSectionsDerived/RelInOutVarbInfo";
 import { relVarbInfoS } from "../../../childSectionsDerived/RelVarbInfo";
 import { relVarbsS } from "../../relVarbs";
-import { PreNumObjOptions, relVarb, relVarbS } from "../relVarb";
+import { RelNumObjOptions, relVarb, relVarbS } from "../relVarb";
 import { DisplayName, StringRelVarb, UpdateFnProps } from "../relVarbTypes";
 
 export type SwitchRelVarbs<
@@ -25,16 +25,16 @@ const ongoingVarbSpanEndings = ongoingVarb.targetEndings;
 const ongoingSpans = ongoingVarb.targetKeys;
 
 export type MonthlyYearlySwitchOptions = {
-  monthly?: PreNumObjOptions;
-  yearly?: PreNumObjOptions;
-  shared?: PreNumObjOptions;
+  monthly?: RelNumObjOptions;
+  yearly?: RelNumObjOptions;
+  shared?: RelNumObjOptions;
   switchInit?: "monthly" | "yearly";
 };
 
 type MonthsYearsOptions = {
-  months?: PreNumObjOptions;
-  years?: PreNumObjOptions;
-  shared?: PreNumObjOptions;
+  months?: RelNumObjOptions;
+  years?: RelNumObjOptions;
+  shared?: RelNumObjOptions;
 };
 type MonthsYearsSwitchOptions = MonthsYearsOptions & {
   switchInit?: "months" | "years";

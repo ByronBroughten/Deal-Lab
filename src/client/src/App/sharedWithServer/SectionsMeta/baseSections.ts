@@ -6,7 +6,7 @@ import {
   baseSectionS,
   GeneralBaseSection,
 } from "./baseSectionsUtils/baseSection";
-import { baseVarbs } from "./baseSectionsUtils/baseVarbs";
+import { baseVarbs, baseVarbsS } from "./baseSectionsUtils/baseVarbs";
 
 export const loanVarbsNotInFinancing = [
   "interestRatePercentMonthly",
@@ -61,7 +61,7 @@ export const baseSections = {
     omniParent: baseSectionS.container,
     table: baseSection({ titleFilter: "string" } as const),
 
-    tableRow: baseSection(baseVarbs.tableRow),
+    tableRow: baseSection(baseVarbsS.tableRow),
     column: baseSection({
       varbInfo: "inEntityVarbInfo",
     }),
@@ -82,66 +82,66 @@ export const baseSections = {
     }),
 
     singleTimeItem: baseSection({
-      ...baseVarbs.string(["name", "valueSwitch"] as const),
-      ...baseVarbs.numObj(["value", "editorValue"] as const),
-      ...baseVarbs.entityInfo,
+      ...baseVarbs("string", ["name", "valueSwitch"] as const),
+      ...baseVarbs("numObj", ["value", "editorValue"] as const),
+      ...baseVarbsS.entityInfo,
     }),
     ongoingItem: baseSection({
-      ...baseVarbs.string(["name", "valueSwitch"] as const),
-      ...baseVarbs.numObj(["costToReplace", "editorValue"] as const),
-      ...baseVarbs.entityInfo,
-      ...baseVarbs.ongoing("value"),
-      ...baseVarbs.switch("lifespan", "monthsYears"),
+      ...baseVarbs("string", ["name", "valueSwitch"] as const),
+      ...baseVarbs("numObj", ["costToReplace", "editorValue"] as const),
+      ...baseVarbsS.entityInfo,
+      ...baseVarbsS.ongoing("value"),
+      ...baseVarbsS.switch("lifespan", "monthsYears"),
     }),
     userVarbList: baseSection({
-      ...baseVarbs.savableSection,
+      ...baseVarbsS.savableSection,
       defaultValueSwitch: "string",
     }),
     userVarbItem: baseSection({
-      ...baseVarbs.string([
+      ...baseVarbs("string", [
         "name",
         "startAdornment",
         "endAdornment",
         "valueSwitch",
       ] as const),
-      ...baseVarbs.numObj(["editorValue", "value"] as const),
+      ...baseVarbs("numObj", ["editorValue", "value"] as const),
     }),
     outputList: baseSection(
       { title: "string" },
       baseOptions.alwaysOneFromStart
     ),
-    singleTimeList: baseSection(baseVarbs.singleTimeList),
-    ongoingList: baseSection(baseVarbs.ongoingList),
+    singleTimeList: baseSection(baseVarbsS.singleTimeList),
+    ongoingList: baseSection(baseVarbsS.ongoingList),
     login: baseSection(
-      baseVarbs.string(["email", "password"] as const),
+      baseVarbs("string", ["email", "password"] as const),
       baseOptions.alwaysOneFromStart
     ),
     register: baseSection(
-      baseVarbs.string(["email", "password", "userName"] as const),
+      baseVarbs("string", ["email", "password", "userName"] as const),
       baseOptions.alwaysOneFromStart
     ),
-    property: baseSection(baseVarbs.property),
+    property: baseSection(baseVarbsS.property),
     unit: baseSection({
       one: "numObj",
       numBedrooms: "numObj",
-      ...baseVarbs.ongoing("targetRent"),
+      ...baseVarbsS.ongoing("targetRent"),
     }),
     propertyGeneral: baseSection(
-      omit(baseVarbs.property, Obj.keys(baseVarbs.savableSection)),
+      omit(baseVarbsS.property, Obj.keys(baseVarbsS.savableSection)),
       {
         ...baseOptions.alwaysOneFromStart,
         hasGlobalVarbs: true,
       }
     ),
-    loan: baseSection(baseVarbs.loan),
+    loan: baseSection(baseVarbsS.loan),
     financing: baseSection(
       {
-        ...omit(baseVarbs.loan, loanVarbsNotInFinancing),
-        ...baseVarbs.numObj([
+        ...omit(baseVarbsS.loan, loanVarbsNotInFinancing),
+        ...baseVarbs("numObj", [
           "downPaymentDollars",
           "downPaymentPercent",
         ] as const),
-        ...baseVarbs.ongoing("piti"),
+        ...baseVarbsS.ongoing("piti"),
       },
       {
         ...baseOptions.alwaysOneFromStart,
@@ -149,24 +149,24 @@ export const baseSections = {
       }
     ),
 
-    mgmt: baseSection(baseVarbs.mgmt, { makeOneOnStartup: true }),
-    mgmtGeneral: baseSection(omit(baseVarbs.mgmt, ["title"]), {
+    mgmt: baseSection(baseVarbsS.mgmt, { makeOneOnStartup: true }),
+    mgmtGeneral: baseSection(omit(baseVarbsS.mgmt, ["title"]), {
       ...baseOptions.alwaysOneFromStart,
       hasGlobalVarbs: true,
     }),
     deal: baseSection(
       {
-        ...baseVarbs.savableSection,
-        ...baseVarbs.numObj([
+        ...baseVarbsS.savableSection,
+        ...baseVarbs("numObj", [
           "upfrontExpensesSum",
           "upfrontExpenses",
           "upfrontRevenue",
           "totalInvestment",
         ] as const),
-        ...baseVarbs.ongoing("expenses"),
-        ...baseVarbs.ongoing("revenue"),
-        ...baseVarbs.ongoing("cashFlow"),
-        ...baseVarbs.ongoing("roi"),
+        ...baseVarbsS.ongoing("expenses"),
+        ...baseVarbsS.ongoing("revenue"),
+        ...baseVarbsS.ongoing("cashFlow"),
+        ...baseVarbsS.ongoing("roi"),
       },
       {
         ...baseOptions.alwaysOneFromStart,
@@ -177,11 +177,14 @@ export const baseSections = {
       varbInfo: "inEntityVarbInfo",
     }),
 
-    user: baseSection(baseVarbs.feUser, {
+    user: baseSection(baseVarbsS.feUser, {
       ...baseOptions.alwaysOneFromStart,
     }),
     serverOnlyUser: baseSection({
-      ...baseVarbs.string(["encryptedPassword", "emailAsSubmitted"] as const),
+      ...baseVarbs("string", [
+        "encryptedPassword",
+        "emailAsSubmitted",
+      ] as const),
     }),
   },
   get db() {

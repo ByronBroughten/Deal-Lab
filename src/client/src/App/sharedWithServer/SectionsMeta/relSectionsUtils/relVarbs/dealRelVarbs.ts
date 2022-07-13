@@ -1,6 +1,5 @@
 import { relVarbInfoS } from "../../childSectionsDerived/RelVarbInfo";
 import { relVarbInfosS } from "../../childSectionsDerived/RelVarbInfos";
-import { rel } from "../rel";
 import { relAdorn } from "../rel/relAdorn";
 import { LeftRightVarbInfos, relVarb, relVarbS } from "../rel/relVarb";
 import { RelVarbs, relVarbsS } from "../relVarbs";
@@ -8,7 +7,7 @@ import { RelVarbs, relVarbsS } from "../relVarbs";
 export function dealRelVarbs(): RelVarbs<"deal"> {
   return {
     ...relVarbsS.savableSection,
-    totalInvestment: rel.varb.leftRightPropFn(
+    totalInvestment: relVarbS.leftRightPropFn(
       "Upfront investment",
       "simpleSubtract",
       relVarbInfosS.local([
@@ -17,7 +16,7 @@ export function dealRelVarbs(): RelVarbs<"deal"> {
       ]) as LeftRightVarbInfos,
       { startAdornment: "$" }
     ),
-    cashFlowMonthly: rel.varb.leftRightPropFn(
+    cashFlowMonthly: relVarbS.leftRightPropFn(
       "Monthly cash flow",
       "simpleSubtract",
       relVarbInfosS.local([
@@ -26,7 +25,7 @@ export function dealRelVarbs(): RelVarbs<"deal"> {
       ]) as LeftRightVarbInfos,
       relAdorn.moneyMonth
     ),
-    cashFlowYearly: rel.varb.leftRightPropFn(
+    cashFlowYearly: relVarbS.leftRightPropFn(
       "Annual cash flow",
       "simpleSubtract",
       relVarbInfosS.local([
@@ -38,7 +37,7 @@ export function dealRelVarbs(): RelVarbs<"deal"> {
     cashFlowOngoingSwitch: relVarb("string", {
       initValue: "yearly",
     }),
-    roiMonthly: rel.varb.leftRightPropFn(
+    roiMonthly: relVarbS.leftRightPropFn(
       "Monthly ROI",
       "divideToPercent",
       relVarbInfosS.local([
@@ -47,7 +46,7 @@ export function dealRelVarbs(): RelVarbs<"deal"> {
       ]) as LeftRightVarbInfos,
       { endAdornment: "%", unit: "percent" }
     ),
-    roiYearly: rel.varb.leftRightPropFn(
+    roiYearly: relVarbS.leftRightPropFn(
       "Annual ROI",
       "divideToPercent",
       relVarbInfosS.local([
@@ -72,7 +71,7 @@ export function dealRelVarbs(): RelVarbs<"deal"> {
       ],
       { startAdornment: "$" }
     ),
-    upfrontExpenses: rel.varb.leftRightPropFn(
+    upfrontExpenses: relVarbS.leftRightPropFn(
       "Total upfront expenses",
       "simpleSubtract",
       [
@@ -81,7 +80,7 @@ export function dealRelVarbs(): RelVarbs<"deal"> {
       ] as LeftRightVarbInfos,
       { startAdornment: "$" }
     ),
-    upfrontRevenue: rel.varb.sumNums(
+    upfrontRevenue: relVarbS.sumNums(
       "Upfront revenue",
       [relVarbInfoS.children("propertyGeneral", "upfrontRevenue")],
       { startAdornment: "$" }

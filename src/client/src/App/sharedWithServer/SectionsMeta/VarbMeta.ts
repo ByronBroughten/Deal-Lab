@@ -92,7 +92,7 @@ export class VarbMeta {
     return this.value.is(value);
   }
   get value() {
-    return valueMeta[this.type];
+    return valueMeta[this.valueType];
   }
   get<PN extends keyof VarbMetaCore>(propName: PN) {
     return this.core[propName];
@@ -116,6 +116,9 @@ export class VarbMeta {
   get displayName(): DisplayName {
     return this.core.displayName;
   }
+  get displayNameEnd(): string {
+    return this.core.displayNameEnd;
+  }
   get initValue() {
     return cloneDeep(this.core.initValue);
   }
@@ -125,7 +128,7 @@ export class VarbMeta {
   get sectionName() {
     return this.core.sectionName;
   }
-  get type() {
+  get valueType() {
     return this.core.type;
   }
   get defaultUpdateFnProps() {

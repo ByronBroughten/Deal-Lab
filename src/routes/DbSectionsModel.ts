@@ -7,7 +7,7 @@ import {
   ServerSectionName,
   serverSectionNames,
   ServerSectionPack,
-  ServerStoreName,
+  ServerStoreName
 } from "./ServerStoreName";
 
 export type DbSectionsModelCore = {
@@ -15,7 +15,7 @@ export type DbSectionsModelCore = {
 } & { _id: mongoose.Types.ObjectId };
 
 export const DbSectionsModel = mongoose.model<DbSectionsModelCore>(
-  "userNext",
+  "user",
   makeMongooseUserSchema()
 );
 

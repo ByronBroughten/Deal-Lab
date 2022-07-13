@@ -147,6 +147,9 @@ export class GetterVarb<
     const displayNameVarb = this.section.varbByFocalMixed(displayName);
     return displayNameVarb.value("string");
   }
+  get fullDisplayName(): string {
+    return this.displayName + this.meta.displayNameEnd;
+  }
   get displayValue(): string {
     if (this.hasValueType("numObj")) {
       return `${this.numberOrQuestionMark}`;

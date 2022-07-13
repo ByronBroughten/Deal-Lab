@@ -1,7 +1,7 @@
 import { switchNames } from "../../baseSectionsUtils/RelSwitchVarb";
 import { relVarbInfoS } from "../../childSectionsDerived/RelVarbInfo";
 import { relVarbInfosS } from "../../childSectionsDerived/RelVarbInfos";
-import { rel } from "../rel";
+import { relUpdateSwitch } from "../rel/relUpdateSwitch";
 import { relVarb, relVarbS } from "../rel/relVarb";
 import { RelVarbs, relVarbsS } from "../relVarbs";
 
@@ -17,7 +17,7 @@ export function mgmtRelVarbs<R extends RelVarbs<"mgmt">>(): R {
     [rentCut.percent]: relVarbS.percentObj("Rent cut", {
       initNumber: 5,
       inUpdateSwitchProps: [
-        rel.updateSwitch.divideToPercent(
+        relUpdateSwitch.divideToPercent(
           rentCut.switch,
           "dollars",
           relVarbInfoS.local(rentCutDollars.monthly),
@@ -37,7 +37,7 @@ export function mgmtRelVarbs<R extends RelVarbs<"mgmt">>(): R {
     [rentCutDollars.monthly]: relVarbS.moneyMonth("Rent cut", {
       initNumber: 0,
       inUpdateSwitchProps: [
-        rel.updateSwitch.percentToDecimalTimesBase(
+        relUpdateSwitch.percentToDecimalTimesBase(
           "rentCut",
           relVarbInfoS.pibling(
             "propertyGeneral",
@@ -46,12 +46,12 @@ export function mgmtRelVarbs<R extends RelVarbs<"mgmt">>(): R {
             { expectedCount: "onlyOne" }
           )
         ),
-        rel.updateSwitch.yearlyToMonthly("rentCutDollars"),
+        relUpdateSwitch.yearlyToMonthly("rentCutDollars"),
       ],
     }),
     [rentCutDollars.yearly]: relVarbS.moneyYear("Rent cut", {
       inUpdateSwitchProps: [
-        rel.updateSwitch.percentToDecimalTimesBase(
+        relUpdateSwitch.percentToDecimalTimesBase(
           "rentCut",
           relVarbInfoS.pibling(
             "propertyGeneral",
@@ -60,7 +60,7 @@ export function mgmtRelVarbs<R extends RelVarbs<"mgmt">>(): R {
             { expectedCount: "onlyOne" }
           )
         ),
-        rel.updateSwitch.monthlyToYearly("rentCutDollars"),
+        relUpdateSwitch.monthlyToYearly("rentCutDollars"),
       ],
     }),
     vacancyRatePercent: relVarbS.percentObj("Vacancy Rate", {

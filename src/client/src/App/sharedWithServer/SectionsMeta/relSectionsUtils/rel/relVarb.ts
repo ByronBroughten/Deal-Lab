@@ -1,6 +1,5 @@
 import { SimpleSectionName } from "../../baseSections";
 import {
-  CalculationName,
   LeftRightPropCalculations,
   SinglePropCalculations,
 } from "../../baseSectionsUtils/baseValues/calculations";
@@ -15,16 +14,17 @@ import {
   NumObjRelVarb,
   RelVarbByType,
   StringRelVarb,
-  UpdateFnProps,
-  UpdateSwitches,
 } from "./relVarbTypes";
 
 const makeDefaultCommon = <T extends CommonRelVarb>(common: T): CommonRelVarb =>
   common;
 const defaultCommon = makeDefaultCommon({
   displayName: "",
+  displayNameEnd: "",
+
   updateFnProps: {},
   inUpdateSwitchProps: [],
+
   startAdornment: "",
   endAdornment: "",
 });
@@ -44,13 +44,10 @@ export function relVarb<T extends keyof RelVarbByType>(
   } as RelVarbByType[T];
 }
 
-export type PreNumObjOptions = Partial<NumObjRelVarb & { initNumber: number }>;
+export type RelNumObjOptions = Partial<NumObjRelVarb & { initNumber: number }>;
 export type LeftRightVarbInfos = [RelInVarbInfo, RelInVarbInfo];
 export const relVarbS = {
-  stringOrLoaded(
-    sectionName: SimpleSectionName,
-    partial: Partial<StringRelVarb> = {}
-  ): StringRelVarb {
+  stringOrLoaded(partial: Partial<StringRelVarb> = {}): StringRelVarb {
     return {
       ...relVarb("string", {
         inUpdateSwitchProps: [
@@ -67,7 +64,7 @@ export const relVarbS = {
   },
   numObj(
     displayName: DisplayName,
-    { initNumber, ...partial }: Partial<PreNumObjOptions> = {}
+    { initNumber, ...partial }: Partial<RelNumObjOptions> = {}
   ): NumObjRelVarb {
     return relVarb("numObj", {
       displayName,
@@ -76,18 +73,18 @@ export const relVarbS = {
   },
   calcVarb(
     displayName: DisplayName,
-    options?: PreNumObjOptions
+    options?: RelNumObjOptions
   ): NumObjRelVarb {
-    return this.numObj(displayName, {
+    return baseVarbs("numObj", displayName, {
       ...options,
       updateFnName: "calcVarbs",
     });
   },
-  calcVarbBlank(options?: PreNumObjOptions): NumObjRelVarb {
+  calcVarbBlank(options?: RelNumObjOptions): NumObjRelVarb {
     return this.calcVarb("", options);
   },
-  moneyObj(displayName: DisplayName, partial: Partial<PreNumObjOptions> = {}) {
-    return this.numObj(displayName, {
+  moneyObj(displayName: DisplayName, partial: Partial<RelNumObjOptions> = {}) {
+    return baseVarbs("numObj", displayName, {
       ...partial,
       unit: "money",
       startAdornment: "$",
@@ -95,14 +92,14 @@ export const relVarbS = {
   },
   moneyMonth(
     displayName: DisplayName,
-    partial: Partial<PreNumObjOptions> = {}
+    partial: Partial<RelNumObjOptions> = {}
   ) {
     return this.moneyObj(displayName, {
       ...partial,
       endAdornment: "/month",
     });
   },
-  moneyYear(displayName: DisplayName, partial: Partial<PreNumObjOptions> = {}) {
+  moneyYear(displayName: DisplayName, partial: Partial<RelNumObjOptions> = {}) {
     return this.moneyObj(displayName, {
       ...partial,
       endAdornment: "/year",
@@ -110,9 +107,9 @@ export const relVarbS = {
   },
   percentObj(
     displayName: DisplayName,
-    partial: Partial<PreNumObjOptions> = {}
+    partial: Partial<RelNumObjOptions> = {}
   ): RelVarbByType["numObj"] {
-    return this.numObj(displayName, {
+    return baseVarbs("numObj", displayName, {
       ...partial,
       unit: "percent",
       endAdornment: "%",
@@ -121,7 +118,7 @@ export const relVarbS = {
   sumNums(
     displayName: DisplayName,
     nums: RelInVarbInfo[],
-    options?: PreNumObjOptions
+    options?: RelNumObjOptions
   ): NumObjRelVarb {
     return relVarb("numObj", {
       displayName,
@@ -133,7 +130,7 @@ export const relVarbS = {
   sumMoney(
     displayName: DisplayName,
     nums: RelInVarbInfo[],
-    options?: PreNumObjOptions
+    options?: RelNumObjOptions
   ): NumObjRelVarb {
     return this.sumNums(displayName, nums, {
       ...options,
@@ -153,7 +150,7 @@ export const relVarbS = {
   percentToPortion(
     displayName: DisplayName,
     updateFnProps: { base: RelInVarbInfo; percentOfBase: RelInVarbInfo },
-    options?: PreNumObjOptions
+    options?: RelNumObjOptions
   ): NumObjRelVarb {
     return this.calcVarb(displayName, {
       updateFnName: "percentToPortion",
@@ -165,7 +162,7 @@ export const relVarbS = {
     displayName: DisplayName,
     updateFnName: SinglePropCalculations,
     num: RelInVarbInfo,
-    options?: PreNumObjOptions
+    options?: RelNumObjOptions
   ): NumObjRelVarb {
     return relVarb("numObj", {
       displayName,
@@ -174,26 +171,11 @@ export const relVarbS = {
       ...options,
     });
   },
-  switch(
-    displayName: string,
-    updateFnName: CalculationName,
-    updateFnProps: UpdateFnProps,
-    inUpdateSwitchProps: UpdateSwitches,
-    options?: PreNumObjOptions
-  ): NumObjRelVarb {
-    return relVarb("numObj", {
-      displayName,
-      updateFnName,
-      updateFnProps,
-      inUpdateSwitchProps,
-      ...options,
-    });
-  },
   leftRightPropFn(
     displayName: DisplayName,
     updateFnName: LeftRightPropCalculations,
     leftRight: LeftRightVarbInfos,
-    options?: PreNumObjOptions
+    options?: RelNumObjOptions
   ): NumObjRelVarb {
     return relVarb("numObj", {
       displayName,

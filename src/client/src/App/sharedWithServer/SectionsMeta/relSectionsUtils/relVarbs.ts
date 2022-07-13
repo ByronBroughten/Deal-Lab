@@ -168,7 +168,7 @@ export const relVarbsS = {
     const sectionName = "singleTimeItem";
     const valueSwitchProp = relVarbInfoS.local("valueSwitch");
     const r: R = {
-      name: relVarbS.stringOrLoaded(sectionName),
+      name: relVarbS.stringOrLoaded(),
       valueSwitch: relVarb("string", {
         initValue: "labeledEquation",
       }),
@@ -210,7 +210,7 @@ export const relVarbsS = {
     const ongoingSwitchInfo = relVarbInfoS.local(ongoingValueNames.switch);
     const valueSwitchProp = relVarbInfoS.local("valueSwitch");
     return {
-      name: relVarbS.stringOrLoaded(sectionName),
+      name: relVarbS.stringOrLoaded(),
       valueSwitch: relVarb("string", {
         initValue: "labeledEquation",
       }),
