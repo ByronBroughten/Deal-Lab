@@ -49,7 +49,6 @@ export function switchInput<SWK extends SwitchEndingKey>(
 
     numObjRelVarbs[varbNames[switchValue]] = relVarb("numObj", {
       displayName,
-      displayNameEnd: targetCore.displayNameEnd,
       updateFnName: option.updateFnName,
       updateFnProps: option.updateFnProps,
       inUpdateSwitchProps: [
@@ -62,6 +61,7 @@ export function switchInput<SWK extends SwitchEndingKey>(
       ],
       ...option.options,
       ...shared,
+      displayNameEnd: targetCore.displayNameEnd,
     });
   }
   return {

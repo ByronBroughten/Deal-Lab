@@ -148,7 +148,8 @@ export class GetterVarb<
     return displayNameVarb.value("string");
   }
   get fullDisplayName(): string {
-    return this.displayName + this.meta.displayNameEnd;
+    const { displayNameEnd } = this.meta;
+    return this.displayName + displayNameEnd;
   }
   get displayValue(): string {
     if (this.hasValueType("numObj")) {

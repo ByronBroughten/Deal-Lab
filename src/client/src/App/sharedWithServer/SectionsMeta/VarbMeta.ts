@@ -76,7 +76,7 @@ function inSwitchPropsToInfos(
   return inSwitchInfos;
 }
 
-export interface VarbMetaProps<SN extends SimpleSectionName> {
+interface VarbMetaProps<SN extends SimpleSectionName> {
   varbName: string;
   sectionName: SN;
   inDefaultInfos: RelInVarbInfo[];

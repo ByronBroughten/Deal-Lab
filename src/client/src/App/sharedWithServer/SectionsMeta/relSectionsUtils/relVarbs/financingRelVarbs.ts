@@ -14,7 +14,7 @@ export function loanRelVarbs(): RelVarbs<"loan"> {
     [loanAmountBase.switch]: relVarb("string", {
       initValue: "percent",
     }),
-    [loanAmountBase.percent]: relVarbS.calcVarb("Base loan amount", {
+    [loanAmountBase.percent]: relVarbS.calcVarb("Base loan", {
       initNumber: 5,
       inUpdateSwitchProps: [
         relUpdateSwitch.divideToPercent(
@@ -26,9 +26,10 @@ export function loanRelVarbs(): RelVarbs<"loan"> {
           })
         ),
       ],
+      displayNameEnd: " percent",
       endAdornment: "%",
     }),
-    [loanAmountBase.dollars]: relVarbS.calcVarb("Base loan amount", {
+    [loanAmountBase.dollars]: relVarbS.calcVarb("Base loan dollars", {
       inUpdateSwitchProps: [
         relUpdateSwitch.percentToDecimalTimesBase(
           "loanAmountBase",
@@ -37,6 +38,7 @@ export function loanRelVarbs(): RelVarbs<"loan"> {
           })
         ),
       ],
+      displayNameEnd: " dollars",
       startAdornment: "$",
     }),
     loanAmountDollarsTotal: relVarbS.sumMoney("Loan amount", [
@@ -114,7 +116,7 @@ export const financingRelVarbs: RelVarbs<"financing"> = {
       relVarbInfoS.stepSibling("propertyGeneral", "propertyGeneral", "price"),
       relVarbInfoS.local("loanAmountBaseDollars"),
     ],
-    { startAdornment: "$" }
+    { startAdornment: "$", displayNameEnd: " dollars" }
     // this should respond to propertyGeneral's price change and be 0
     // but it's not.
   ),
@@ -125,7 +127,7 @@ export const financingRelVarbs: RelVarbs<"financing"> = {
       relVarbInfoS.local("downPaymentDollars"),
       relVarbInfoS.stepSibling("propertyGeneral", "propertyGeneral", "price"),
     ],
-    { endAdornment: "%" }
+    { endAdornment: "%", displayNameEnd: "percent" }
   ),
   ...relVarbsS.ongoingSumNums(
     "piti",

@@ -29,6 +29,7 @@ export function mgmtRelVarbs<R extends RelVarbs<"mgmt">>(): R {
           )
         ),
       ],
+      displayNameEnd: " percent",
     }),
     // SectionsMeta is the highest level.
     [rentCutDollars.switch]: relVarb("string", {
@@ -48,6 +49,7 @@ export function mgmtRelVarbs<R extends RelVarbs<"mgmt">>(): R {
         ),
         relUpdateSwitch.yearlyToMonthly("rentCutDollars"),
       ],
+      displayNameEnd: " dollars monthly",
     }),
     [rentCutDollars.yearly]: relVarbS.moneyYear("Rent cut", {
       inUpdateSwitchProps: [
@@ -62,6 +64,7 @@ export function mgmtRelVarbs<R extends RelVarbs<"mgmt">>(): R {
         ),
         relUpdateSwitch.monthlyToYearly("rentCutDollars"),
       ],
+      displayNameEnd: " dollars yearly",
     }),
     vacancyRatePercent: relVarbS.percentObj("Vacancy Rate", {
       initNumber: 5,

@@ -1,5 +1,7 @@
+import { pick } from "lodash";
 import { Obj } from "../../utils/Obj";
 import { Merge } from "../../utils/Obj/merge";
+import { StrictPick } from "../../utils/types";
 
 // for all the types, I might want to make the core separate again.
 class RelSwitchVarb<C extends GeneralRelSwitchCore> {
@@ -9,6 +11,18 @@ class RelSwitchVarb<C extends GeneralRelSwitchCore> {
   }
   target<T extends keyof C["targets"]>(targetName: T): C["targets"][T] {
     return this.targets[targetName];
+  }
+  targetOptions<T extends keyof C["targets"]>(
+    targetName: T
+  ): StrictPick<
+    C["targets"][T],
+    "endAdornment" | "displayNameEnd" | "startAdornment"
+  > {
+    return pick(this.target(targetName), [
+      "endAdornment",
+      "displayNameEnd",
+      "startAdornment",
+    ]);
   }
   get targetEndings(): {
     [T in keyof C["targets"]]: C["targets"][T]["varbNameEnding"];
@@ -51,12 +65,12 @@ export const ongoingVarb = new RelSwitchVarb({
     monthly: targetCore({
       endAdornment: "/month",
       varbNameEnding: "Monthly",
-      displayNameEnd: " Monthly",
+      displayNameEnd: " monthly",
     } as const),
     yearly: targetCore({
       endAdornment: "/year",
       varbNameEnding: "Yearly",
-      displayNameEnd: " Yearly",
+      displayNameEnd: " yearly",
     } as const),
   },
   switch: {
@@ -93,12 +107,12 @@ export const relSwitchVarbs = {
       percent: targetCore({
         endAdornment: "%",
         varbNameEnding: "Percent",
-        displayNameEnd: " Percent",
+        displayNameEnd: " percent",
       } as const),
       dollars: targetCore({
         startAdornment: "$",
         varbNameEnding: "Dollars",
-        displayNameEnd: " Dollars",
+        displayNameEnd: " dollars",
       }),
     },
     switch: {
@@ -110,12 +124,12 @@ export const relSwitchVarbs = {
       months: targetCore({
         endAdornment: "months",
         varbNameEnding: "Months",
-        displayNameEnd: " Months",
+        displayNameEnd: " months",
       }),
       years: targetCore({
         endAdornment: "years",
         varbNameEnding: "Years",
-        displayNameEnd: " Years",
+        displayNameEnd: " years",
       }),
     },
     switch: {

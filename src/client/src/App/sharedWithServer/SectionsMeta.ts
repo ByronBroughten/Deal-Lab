@@ -113,7 +113,7 @@ export class SectionsMeta {
         );
     }
   }
-  initOutUpdatePacks() {
+  private initOutUpdatePacks() {
     for (const [sectionName, sectionMeta] of Obj.entriesFull(this.core)) {
       if (!sectionNameS.is(sectionName, "hasVarb")) continue;
       for (const [varbName, varbMeta] of Obj.entriesFull(

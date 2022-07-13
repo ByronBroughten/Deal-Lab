@@ -228,14 +228,14 @@ export function ongoingPureCalc<Base extends string>(
   return {
     [varbNames.monthly]: relVarb("numObj", {
       displayName,
-      endAdornment: "/month",
+      ...ongoingVarb.targetOptions("monthly"),
       ...updatePacks.monthly,
       ...options.monthly,
       ...options.shared,
     }),
     [varbNames.yearly]: relVarb("numObj", {
       displayName,
-      endAdornment: "/year",
+      ...ongoingVarb.targetOptions("yearly"),
       ...updatePacks.yearly,
       ...options.yearly,
       ...options.shared,

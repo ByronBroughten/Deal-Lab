@@ -145,11 +145,12 @@ export const relVarbsS = {
     );
     for (const [varbName, pVarb] of Obj.entriesFull(numObjPreVarbs)) {
       if (isInToReturn(varbName) && typeof varbName === "string") {
-        const { displayName, startAdornment, endAdornment } = pVarb;
+        const { displayName, startAdornment, endAdornment, displayNameEnd } =
+          pVarb;
         ssPreVarbs[varbName] = relVarbS.sumNums(
           displayName,
           [relVarbInfoS.children(sectionName, varbName)],
-          { startAdornment, endAdornment }
+          { startAdornment, endAdornment, displayNameEnd }
         );
       }
     }
