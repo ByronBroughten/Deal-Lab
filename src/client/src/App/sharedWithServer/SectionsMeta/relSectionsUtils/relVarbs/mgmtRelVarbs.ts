@@ -91,7 +91,7 @@ export function mgmtRelVarbs<R extends RelVarbs<"mgmt">>(): R {
     ),
     ...relVarbsS.ongoingSumNums(
       "ongoingExpenses",
-      "Ongoing mangement expenses",
+      "Ongoing expenses",
       [
         relVarbInfoS.children("ongoingCostList", "total"),
         ...relVarbInfosS.local(["vacancyLossDollars", "rentCutDollars"]),

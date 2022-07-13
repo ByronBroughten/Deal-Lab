@@ -28,7 +28,7 @@ export function propertyRelVarbs<R extends RelVarbs<"property">>(): R {
     // ongoing
     ...relVarbsS.ongoingSumNums(
       "ongoingExpenses",
-      "Property expenses",
+      "Ongoing expenses",
       [relVarbInfoS.children("ongoingCostList", "total")],
       { switchInit: "monthly", shared: { startAdornment: "$" } }
     ),

@@ -124,7 +124,7 @@ export function makeRelSections() {
     //     { type: "then", level: 0 },
     //     { type: "or else", level: 0 },
 
-    deal: relSection("deal", dealRelVarbs(), {
+    deal: relSection("Deal", dealRelVarbs(), {
       feTableIndexStoreName: "dealTable",
       dbIndexStoreName: "dealMain",
     } as const),

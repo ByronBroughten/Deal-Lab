@@ -202,6 +202,7 @@ export function ongoingPercentToPortion<Base extends string>(
         base: makeBaseVarbInfo(baseVarbNames.monthly),
         percentOfBase: relVarbInfoS.local(percentName),
       },
+      displayNameEnd: " monthly",
     }),
     [varbNames.yearly]: relVarbS.moneyYear(displayName, {
       updateFnName: "percentToPortion",
@@ -209,6 +210,7 @@ export function ongoingPercentToPortion<Base extends string>(
         base: makeBaseVarbInfo(baseVarbNames.yearly),
         percentOfBase: relVarbInfoS.local(percentName),
       },
+      displayNameEnd: " yearly",
     }),
   };
 }

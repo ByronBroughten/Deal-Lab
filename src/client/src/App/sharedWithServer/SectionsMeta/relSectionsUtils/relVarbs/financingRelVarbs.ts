@@ -76,7 +76,7 @@ export function loanRelVarbs(): RelVarbs<"loan"> {
 
     ...relVarbsS.ongoingPureCalc(
       "pi",
-      "Principal plus interest payments",
+      "Principal + interest",
       {
         monthly: {
           updateFnName: "piMonthly",

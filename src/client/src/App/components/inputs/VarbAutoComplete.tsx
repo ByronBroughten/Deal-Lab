@@ -39,9 +39,9 @@ const StyledPopper = styled(Popper)`
     li.MuiAutocomplete-option {
       padding: ${theme.s2};
       padding-left: calc(${theme.s4} + ${theme.s2});
-      width: 210px;
+      width: 300px;
       line-height: 1rem;
-      min-height: 30px;
+      min-height: 25px;
       :not(:first-child) {
         border-top: 1px solid ${theme["gray-400"]};
       }
