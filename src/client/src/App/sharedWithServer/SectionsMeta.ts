@@ -10,7 +10,7 @@ import {
   relInToOutVarbInfo,
   RelOutVarbInfo,
 } from "./SectionsMeta/childSectionsDerived/RelInOutVarbInfo";
-import { SectionMeta } from "./SectionsMeta/SectionMeta";
+import { SectionMeta, VarbMetas } from "./SectionsMeta/SectionMeta";
 import { SectionName, sectionNameS } from "./SectionsMeta/SectionName";
 import {
   InUpdatePack,
@@ -19,7 +19,6 @@ import {
   OutUpdatePack,
   VarbMeta,
 } from "./SectionsMeta/VarbMeta";
-import { VarbMetas } from "./SectionsMeta/VarbMetas";
 import { Obj } from "./utils/Obj";
 
 type SectionMetasCore = {
@@ -43,19 +42,15 @@ export class SectionsMeta {
     const sectionMeta = this.core[sectionName];
     return sectionMeta as SectionMeta<SectionName> as any;
   }
-  varbs<SN extends SimpleSectionName>(sectionName: SN): VarbMetas {
+  varbs<SN extends SimpleSectionName>(sectionName: SN): VarbMetas<SN> {
     return this.get(sectionName).varbMetas;
   }
-  varb<VNS extends VarbNames>(varbNames: VNS): VarbMeta {
+  varb<VNS extends VarbNames>(varbNames: VNS): VarbMeta<VNS["sectionName"]> {
     const { sectionName, varbName } = varbNames;
-    const varbMetas = this.varbs(sectionName);
-    return varbMetas.get(varbName);
+    return this.section(sectionName).varb(varbName);
   }
   value<VNS extends VarbNames>(varbNames: VNS) {
     return this.varb(varbNames).value;
-  }
-  varbNames<SN extends SimpleSectionName>(sectionName: SN): string[] {
-    return this.varbs(sectionName).varbNames;
   }
   selfAndDescendantNames<SN extends SectionName>(
     sectionName: SN
@@ -108,21 +103,21 @@ export class SectionsMeta {
         inVarbInfo,
       });
       const inVarbMeta = this.varb({ sectionName, varbName });
-      const varbMetas = this.varbs(sectionName);
       const sectionMeta = this.section(sectionName);
-      this.core[sectionName] = sectionMeta.depreciatingUpdateVarbMetas(
-        varbMetas.update(varbName, {
-          ...inVarbMeta.core,
-          outUpdatePacks: inVarbMeta.outUpdatePacks.concat([outUpdatePack]),
-        })
-      ) as any;
+      (this.core[sectionName] as SectionMeta<any>) =
+        sectionMeta.depreciatingUpdateVarbMeta(
+          new VarbMeta({
+            ...inVarbMeta.core,
+            outUpdatePacks: inVarbMeta.outUpdatePacks.concat([outUpdatePack]),
+          })
+        );
     }
   }
   initOutUpdatePacks() {
     for (const [sectionName, sectionMeta] of Obj.entriesFull(this.core)) {
       if (!sectionNameS.is(sectionName, "hasVarb")) continue;
       for (const [varbName, varbMeta] of Obj.entriesFull(
-        (sectionMeta as SectionMeta<SectionName>).varbMetas.getCore()
+        (sectionMeta as SectionMeta<SectionName>).varbMetas
       )) {
         for (const inUpdatePack of varbMeta.inUpdatePacks) {
           this.inUpdatePackToOuts(

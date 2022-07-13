@@ -1,15 +1,11 @@
 import { NumObjUnit } from "../../baseSectionsUtils/baseValues/NumObj";
+import { ValueName } from "../../baseSectionsUtils/baseVarb";
 import {
   RelInVarbInfo,
   RelSingleInVarbInfo,
 } from "../../childSectionsDerived/RelInOutVarbInfo";
 import { RelLocalVarbInfo } from "../../childSectionsDerived/RelVarbInfo";
-import {
-  UpdateFnName,
-  ValueSchemas,
-  ValueTypeName,
-  ValueTypes,
-} from "./valueMetaTypes";
+import { UpdateFnName, ValueSchemas, ValueTypes } from "./valueMetaTypes";
 
 export type UpdateFnProps = {
   [kwargName: string]: RelInVarbInfo | RelInVarbInfo[];
@@ -41,16 +37,16 @@ type UniqueTypeProps = {
   };
 };
 type ValueSpecificProps = {
-  [Prop in ValueTypeName]: {
+  [Prop in ValueName]: {
     updateFnName: ValueSchemas[Prop]["updateFnNames"][number];
     initValue: ValueTypes[Prop];
   };
 } & UniqueTypeProps;
 export type RelVarbByType = {
-  [Prop in ValueTypeName]: CommonRelVarb &
+  [Prop in ValueName]: CommonRelVarb &
     ValueSpecificProps[Prop] & { type: Prop };
 };
-export type RelVarb<T extends ValueTypeName = ValueTypeName> = RelVarbByType[T];
+export type RelVarb<T extends ValueName = ValueName> = RelVarbByType[T];
 
 export type NumObjRelVarb = RelVarbByType["numObj"];
 export type StringRelVarb = RelVarbByType["string"];

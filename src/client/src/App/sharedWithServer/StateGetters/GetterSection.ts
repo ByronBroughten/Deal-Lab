@@ -4,6 +4,7 @@ import {
 } from "../SectionsMeta/baseSectionsDerived/baseVarbInfo";
 import { SwitchTargetKey } from "../SectionsMeta/baseSectionsUtils/baseSwitchNames";
 import { InEntityVarbInfo } from "../SectionsMeta/baseSectionsUtils/baseValues/entities";
+import { ValueName } from "../SectionsMeta/baseSectionsUtils/baseVarb";
 import { DbSectionInfo } from "../SectionsMeta/baseSectionsUtils/DbSectionInfo";
 import { ExpectedCount } from "../SectionsMeta/baseSectionsUtils/NanoIdInfo";
 import {
@@ -42,7 +43,6 @@ import {
   noParentWarning,
   VarbInfo,
 } from "../SectionsMeta/Info";
-import { ValueTypeName } from "../SectionsMeta/relSectionsUtils/rel/valueMetaTypes";
 import { SectionMeta } from "../SectionsMeta/SectionMeta";
 import {
   SectionName,
@@ -408,7 +408,7 @@ export class GetterSection<
     const varbName = this.switchVarbName(varbNameBase, switchEnding);
     return this.varb(varbName);
   }
-  value<VT extends ValueTypeName | "any" = "any">(
+  value<VT extends ValueName | "any" = "any">(
     varbName: string,
     valueType?: VT
   ): ValueTypesPlusAny[VT] {

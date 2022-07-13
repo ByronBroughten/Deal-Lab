@@ -1,16 +1,15 @@
 import { StrictExtract } from "../../../utils/types";
 import { BaseSections, SimpleSectionName } from "../../baseSections";
 import { StateValue } from "../../baseSectionsUtils/baseValues/StateValueTypes";
+import { ValueName } from "../../baseSectionsUtils/baseVarb";
 import { valueMeta } from "../valueMeta";
 
 export type ValueSchemas = typeof valueMeta;
 export type ValueTypes = {
-  [Prop in keyof ValueSchemas]: ReturnType<ValueSchemas[Prop]["initDefault"]>;
+  [Prop in ValueName]: ReturnType<ValueSchemas[Prop]["initDefault"]>;
 };
-export type ValueTypeName = keyof ValueTypes;
-
 export type EditorValueTypeName = StrictExtract<
-  ValueTypeName,
+  ValueName,
   "string" | "numObj" | "stringArray"
 >;
 

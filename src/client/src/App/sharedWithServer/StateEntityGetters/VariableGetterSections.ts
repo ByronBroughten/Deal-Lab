@@ -94,39 +94,35 @@ export class VariableGetterSections extends GetterSectionsBase {
       const sectionMeta = sectionsMeta.section(sectionName);
       const { varbNames } = sectionMeta;
       if (sectionNameS.is(sectionName, "hasGlobalVarbs")) {
-        const varbMetas = varbNames
+        const moreOptions = varbNames
           .map((varbName) => this.sectionsMeta.varb({ sectionName, varbName }))
-          .filter((varbMeta) => varbMeta.value);
+          .filter((varbMeta) => varbMeta.valueName === "numObj")
+          .map((varbMeta) =>
+            this.initGlobalVarbOption(varbMeta.sectionVarbNames)
+          );
 
-        options = options.concat(
-          varbNames
-            .map((varbName) => this.initGlobalVarbOption(sectionName, varbName))
-            .filter((val) => val.displayName !== "")
-        );
+        options = options.concat(moreOptions);
       }
       return options;
     }, [] as VariableOption[]);
   }
-  private initGlobalVarbOption(
-    sectionName: SectionName<"hasGlobalVarbs">,
-    varbName: string
-  ): VariableOption {
-    const varbMeta = sectionsMeta.varb({
-      sectionName,
-      varbName,
-    });
-    const sectionMeta = sectionsMeta.section(sectionName);
-
-    // This is where the change should be.
-    // This is kind of messy.
-
+  private initGlobalVarbOption({
+    sectionName,
+    varbName,
+  }: InitGlobalVarbOptionProps): VariableOption {
+    const section = this.getterSections.oneAndOnly(sectionName);
+    const varb = section.varb(varbName);
     return {
       varbInfo: {
         ...mixedInfoS.makeGlobalSection(sectionName),
         varbName,
       },
-      collectionName: sectionMeta.displayName,
-      displayName: varbMeta.displayName as string,
+      collectionName: section.meta.displayName,
+      displayName: varb.fullDisplayName,
     };
   }
 }
+type InitGlobalVarbOptionProps = {
+  sectionName: SectionName<"hasGlobalVarbs">;
+  varbName: string;
+};

@@ -21,13 +21,16 @@ import {
   SectionsMetaCore,
 } from "./sectionMetasCore";
 import { SectionName } from "./SectionName";
-import { VarbMetas } from "./VarbMetas";
+import { VarbMeta } from "./VarbMeta";
 
-type SectionMetaExtra = {
-  varbMetas: VarbMetas;
+export type VarbMetas<SN extends SimpleSectionName> = {
+  [varbName: string]: VarbMeta<SN>;
+};
+type SectionMetaExtra<SN extends SimpleSectionName> = {
+  varbMetas: VarbMetas<SN>;
 };
 export interface SectionMetaProps<SN extends SimpleSectionName>
-  extends SectionMetaExtra {
+  extends SectionMetaExtra<SN> {
   sectionName: SN;
 }
 
@@ -63,6 +66,9 @@ export class SectionMeta<SN extends SimpleSectionName> {
   }
   get varbListItem(): CoreProp<SN, "varbListItem"> {
     return this.prop("varbListItem");
+  }
+  varb(varbName: string): VarbMeta<SN> {
+    return this.varbMetas[varbName];
   }
   propNoNull<PN extends CorePropName>(propName: PN): CorePropNoNull<SN, PN> {
     const prop = this.core[propName];
@@ -108,11 +114,11 @@ export class SectionMeta<SN extends SimpleSectionName> {
     const childNames = csnsToCns[childSectionName] ?? [];
     return childNames as ChildSectionNameName<SN, CT>[];
   }
-  get varbMetas(): VarbMetas {
+  get varbMetas(): VarbMetas<SN> {
     return this.props.varbMetas;
   }
   get varbNames(): string[] {
-    return this.varbMetas.varbNames;
+    return Obj.keys(this.varbMetas);
   }
   isChildName(value: any): value is ChildName<SN> {
     return (this.childNames as string[]).includes(value);
@@ -128,22 +134,30 @@ export class SectionMeta<SN extends SimpleSectionName> {
   }
   defaultDbVarbs(): DbVarbs {
     const defaultDbVarbs: DbVarbs = {};
-    const varbMetasCore = this.varbMetas.getCore();
-    for (const [varbName, varbMeta] of Obj.entries(varbMetasCore)) {
-      defaultDbVarbs[varbName] = varbMeta.get("initValue");
+    for (const [varbName, varbMeta] of Obj.entries(this.varbMetas)) {
+      defaultDbVarbs[varbName] = varbMeta.initValue;
     }
     return defaultDbVarbs;
   }
-  depreciatingUpdateVarbMetas(nextVarbMetas: VarbMetas) {
-    const nextCore = { ...this.props };
-    nextCore.varbMetas = nextVarbMetas;
-    return new SectionMeta(nextCore);
+  depreciatingUpdateVarbMeta(varbMeta: VarbMeta<SN>) {
+    return new SectionMeta({
+      ...this.props,
+      varbMetas: {
+        ...this.props.varbMetas,
+        [varbMeta.varbName]: varbMeta,
+      },
+    });
   }
   static init<SN extends SimpleSectionName>(sectionName: SN): SectionMeta<SN> {
     const { relVarbs } = relSections[sectionName];
+    const varbMetas = Obj.keys(relVarbs).reduce((vMetas, varbName) => {
+      vMetas[varbName] = VarbMeta.init({ sectionName, varbName });
+      return vMetas;
+    }, {} as VarbMetas<SN>);
+
     return new SectionMeta({
       sectionName,
-      varbMetas: VarbMetas.initFromRelVarbs(relVarbs, sectionName),
+      varbMetas,
     });
   }
 }

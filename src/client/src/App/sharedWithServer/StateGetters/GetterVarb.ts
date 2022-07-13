@@ -9,6 +9,7 @@ import {
   OutEntity,
 } from "../SectionsMeta/baseSectionsUtils/baseValues/entities";
 import { NumberOrQ } from "../SectionsMeta/baseSectionsUtils/baseValues/NumObj";
+import { ValueName } from "../SectionsMeta/baseSectionsUtils/baseVarb";
 import { ExpectedCount } from "../SectionsMeta/baseSectionsUtils/NanoIdInfo";
 import {
   Adornments,
@@ -22,7 +23,6 @@ import {
 } from "../SectionsMeta/childSectionsDerived/MixedSectionInfo";
 import { RelLocalInfo } from "../SectionsMeta/childSectionsDerived/RelInfo";
 import { InfoS, VarbInfo } from "../SectionsMeta/Info";
-import { ValueTypeName } from "../SectionsMeta/relSectionsUtils/rel/valueMetaTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { InUpdatePack, VarbMeta } from "../SectionsMeta/VarbMeta";
 import { RawFeVarb } from "../StateSections/StateSectionsTypes";
@@ -51,8 +51,8 @@ export class GetterVarb<
   get sections() {
     return new GetterSections(this.getterSectionsProps);
   }
-  get meta(): VarbMeta {
-    return this.sectionMeta.varbMetas.get(this.varbName);
+  get meta(): VarbMeta<SN> {
+    return this.sectionMeta.varb(this.varbName);
   }
   get feVarbInfo(): VarbInfo<SN> {
     return {
@@ -123,22 +123,22 @@ export class GetterVarb<
   get varbId() {
     return GetterVarb.feVarbInfoToVarbId(this.feVarbInfo);
   }
-  hasValueType<VT extends ValueTypeName>(valueType: VT): boolean {
+  hasValueType<VT extends ValueName>(valueName: VT): boolean {
     try {
-      this.value(valueType);
+      this.value(valueName);
       return true;
     } catch (ex) {
       if (ex instanceof ValueTypeError) return false;
       else throw ex;
     }
   }
-  value<VT extends ValueTypeName | "any" = "any">(
-    valueType?: VT
+  value<VT extends ValueName | "any" = "any">(
+    valueName?: VT
   ): ValueTypesPlusAny[VT] {
     const { value } = this.raw;
-    if (valueSchemasPlusAny[valueType ?? "any"].is(value))
+    if (valueSchemasPlusAny[valueName ?? "any"].is(value))
       return cloneDeep(value) as ValueTypesPlusAny[VT];
-    throw new ValueTypeError(`Value not of type ${valueType}`);
+    throw new ValueTypeError(`Value not of type ${valueName}`);
   }
 
   get displayName(): string {
@@ -163,11 +163,11 @@ export class GetterVarb<
   localVarb(varbName: string) {
     return this.getterVarbs.one(varbName);
   }
-  localValue<VT extends ValueTypeName>(
+  localValue<VT extends ValueName>(
     varbName: string,
-    valueType?: VT
+    valueName?: VT
   ): ValueTypesPlusAny[VT] {
-    return this.localVarb(varbName).value(valueType);
+    return this.localVarb(varbName).value(valueName);
   }
   get updateFnName() {
     return this.inUpdatePack.updateFnName;
@@ -227,11 +227,11 @@ export class GetterVarb<
   varbsByFocalMixed(multiVarbInfo: VarbInfoMixedFocal): GetterVarb[] {
     return this.section.varbsByFocalMixed(multiVarbInfo);
   }
-  inputProps(valueType?: StateValueAnyKey) {
+  inputProps(valueName?: StateValueAnyKey) {
     return {
       id: this.varbName,
       name: this.varbName,
-      value: this.value(valueType),
+      value: this.value(valueName),
       label: this.displayName,
     };
   }

@@ -4,8 +4,8 @@ import {
   InVarbInfo,
 } from "../SectionsMeta/baseSectionsUtils/baseValues/entities";
 import { StateValue } from "../SectionsMeta/baseSectionsUtils/baseValues/StateValueTypes";
+import { ValueName } from "../SectionsMeta/baseSectionsUtils/baseVarb";
 import { ValueTypesPlusAny } from "../SectionsMeta/baseSectionsUtils/StateVarbTypes";
-import { ValueTypeName } from "../SectionsMeta/relSectionsUtils/rel/valueMetaTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { VarbMeta } from "../SectionsMeta/VarbMeta";
 import { GetterSections } from "../StateGetters/GetterSections";
@@ -27,15 +27,15 @@ export class SetterVarb<
   get get(): GetterVarb<SN> {
     return this.getterVarb;
   }
-  get meta(): VarbMeta {
+  get meta(): VarbMeta<SN> {
     return this.get.meta;
   }
   get sections() {
     return new GetterSections(this.getterVarbBase.getterSectionsProps);
   }
-  inputProps(valueType?: ValueTypeName) {
+  inputProps(valueName?: ValueName) {
     return {
-      ...this.get.inputProps(valueType),
+      ...this.get.inputProps(valueName),
       onChange: this.makeChangeHandler(),
     };
   }
@@ -69,10 +69,8 @@ export class SetterVarb<
   get manualUpdateEditorToggle(): boolean | undefined {
     return this.updaterVarb.manualUpdateEditorToggle;
   }
-  value<VT extends ValueTypeName | "any">(
-    valueType: VT
-  ): ValueTypesPlusAny[VT] {
-    return this.getterVarb.value(valueType);
+  value<VT extends ValueName | "any">(valueName: VT): ValueTypesPlusAny[VT] {
+    return this.getterVarb.value(valueName);
   }
   get hasInVarbs(): boolean {
     return this.solverVarb.hasInVarbs;

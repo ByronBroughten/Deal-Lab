@@ -1,10 +1,14 @@
 import { cloneDeep, pick } from "lodash";
+import { sectionsMeta } from "../SectionsMeta";
 import { SimpleSectionName } from "./baseSections";
+import { VarbNames } from "./baseSectionsDerived/baseVarbInfo";
 import { NumObjUnit } from "./baseSectionsUtils/baseValues/NumObj";
+import { ValueName } from "./baseSectionsUtils/baseVarb";
 import {
   RelInVarbInfo,
   RelOutVarbInfo,
 } from "./childSectionsDerived/RelInOutVarbInfo";
+import { relSections } from "./relSections";
 import {
   DisplayName,
   RelVarb,
@@ -13,7 +17,9 @@ import {
   UpdateSwitchProp,
 } from "./relSectionsUtils/rel/relVarbTypes";
 import { UpdateFnName } from "./relSectionsUtils/rel/valueMetaTypes";
+import { GeneralRelVarbs } from "./relSectionsUtils/relVarbs";
 import { valueMeta } from "./relSectionsUtils/valueMeta";
+import { SectionMeta } from "./SectionMeta";
 
 type InBaseUpdatePack = {
   updateFnName: UpdateFnName;
@@ -70,17 +76,18 @@ function inSwitchPropsToInfos(
   return inSwitchInfos;
 }
 
-export interface VarbMetaProps {
+export interface VarbMetaProps<SN extends SimpleSectionName> {
   varbName: string;
-  sectionName: SimpleSectionName;
+  sectionName: SN;
   inDefaultInfos: RelInVarbInfo[];
   InSwitchUpdatePacks: InSwitchUpdatePack[];
   outUpdatePacks: OutUpdatePack[];
 }
 
-export type VarbMetaCore = RelVarb & VarbMetaProps;
-export class VarbMeta {
-  constructor(readonly core: VarbMetaCore) {}
+export type VarbMetaCore<SN extends SimpleSectionName> = RelVarb &
+  VarbMetaProps<SN>;
+export class VarbMeta<SN extends SimpleSectionName> {
+  constructor(readonly core: VarbMetaCore<SN>) {}
   validateVarbValue(value: any): true {
     if (this.isVarbValueType(value)) return true;
     else
@@ -91,11 +98,11 @@ export class VarbMeta {
   isVarbValueType(value: any): boolean {
     return this.value.is(value);
   }
-  get value() {
-    return valueMeta[this.valueType];
+  get sectionMeta(): SectionMeta<any> {
+    return sectionsMeta.section(this.sectionName);
   }
-  get<PN extends keyof VarbMetaCore>(propName: PN) {
-    return this.core[propName];
+  get value() {
+    return valueMeta[this.valueName];
   }
   get raw() {
     return { ...this.core };
@@ -122,13 +129,19 @@ export class VarbMeta {
   get initValue() {
     return cloneDeep(this.core.initValue);
   }
-  get varbName() {
+  get varbName(): string {
     return this.core.varbName;
   }
-  get sectionName() {
+  get sectionName(): SN {
     return this.core.sectionName;
   }
-  get valueType() {
+  get sectionVarbNames(): VarbNames<SN> {
+    return {
+      sectionName: this.sectionName,
+      varbName: this.varbName,
+    };
+  }
+  get valueName(): ValueName {
     return this.core.type;
   }
   get defaultUpdateFnProps() {
@@ -173,19 +186,19 @@ export class VarbMeta {
   static isDefaultInPack(pack: InUpdatePack): pack is InDefaultUpdatePack {
     return "inverseSwitches" in pack;
   }
-
-  static initCore(
-    relVarb: RelVarb,
-    sectionName: SimpleSectionName,
-    varbName: string
-  ): VarbMetaCore {
-    return {
+  static init<SN extends SimpleSectionName>({
+    sectionName,
+    varbName,
+  }: VarbNames<SN>): VarbMeta<SN> {
+    const relVarbs = relSections[sectionName].relVarbs as GeneralRelVarbs;
+    const relVarb = relVarbs[varbName];
+    return new VarbMeta({
       ...relVarb,
       sectionName,
       varbName,
       inDefaultInfos: fnPropsToInVarbInfos(relVarb.updateFnProps),
       InSwitchUpdatePacks: inSwitchPropsToInfos(relVarb.inUpdateSwitchProps),
       outUpdatePacks: [], // static after initialization
-    };
+    });
   }
 }

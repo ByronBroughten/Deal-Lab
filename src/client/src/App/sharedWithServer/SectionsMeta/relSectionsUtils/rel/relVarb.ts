@@ -75,7 +75,7 @@ export const relVarbS = {
     displayName: DisplayName,
     options?: RelNumObjOptions
   ): NumObjRelVarb {
-    return baseVarbs("numObj", displayName, {
+    return this.numObj(displayName, {
       ...options,
       updateFnName: "calcVarbs",
     });
@@ -84,7 +84,7 @@ export const relVarbS = {
     return this.calcVarb("", options);
   },
   moneyObj(displayName: DisplayName, partial: Partial<RelNumObjOptions> = {}) {
-    return baseVarbs("numObj", displayName, {
+    return this.numObj(displayName, {
       ...partial,
       unit: "money",
       startAdornment: "$",
@@ -109,7 +109,7 @@ export const relVarbS = {
     displayName: DisplayName,
     partial: Partial<RelNumObjOptions> = {}
   ): RelVarbByType["numObj"] {
-    return baseVarbs("numObj", displayName, {
+    return this.numObj(displayName, {
       ...partial,
       unit: "percent",
       endAdornment: "%",

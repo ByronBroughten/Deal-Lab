@@ -9,7 +9,6 @@ import {
   sectionNameS,
   SectionNameType,
 } from "../SectionsMeta/SectionName";
-import { VarbMetas } from "../SectionsMeta/VarbMetas";
 import { RawFeVarbs } from "../StateSections/StateSectionsTypes";
 import { Obj } from "../utils/Obj";
 import { GetterSectionBase } from "./Bases/GetterSectionBase";
@@ -26,9 +25,6 @@ export class GetterVarbs<SN extends SectionName> extends GetterSectionBase<SN> {
   }
   get sections(): GetterSections {
     return new GetterSections(this.getterSectionsProps);
-  }
-  get meta(): VarbMetas {
-    return this.section.meta.varbMetas;
   }
   get feVarbInfos(): VarbInfo<SN>[] {
     const { feSectionInfo } = this;
