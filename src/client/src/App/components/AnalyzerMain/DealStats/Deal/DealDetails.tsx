@@ -13,7 +13,7 @@ export default function DealDetails({ feId }: { feId: string }) {
   });
 
   const outputs = outputList.children("output");
-  const mixedInfos = outputs.map((output) => output.varbInfoValue());
+  const mixedInfos = outputs.map((output) => output.inEntityValueInfo());
   const { sections } = outputList;
 
   const level = 0;

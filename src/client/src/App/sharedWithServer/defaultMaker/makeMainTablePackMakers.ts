@@ -1,4 +1,6 @@
 import { SectionPack } from "../SectionPack/SectionPack";
+import { InEntityValueInfo } from "../SectionsMeta/baseSectionsUtils/baseValues/InEntityVarbInfoValue";
+import { Id } from "../SectionsMeta/baseSectionsUtils/id";
 import { FeStoreTableName } from "../SectionsMeta/relChildSections";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
 import { Obj } from "../utils/Obj";
@@ -9,28 +11,44 @@ type TablePackMakers = {
 };
 export function makeDefaultFeStoreTables(): TablePackMakers {
   const columnVarbnames = {
-    dealTable: outputNames,
-    propertyTable: ["price", "numBedrooms", "targetRentMonthly"],
-    loanTable: ["interestRatePercentMonthly", "loanTermYears"],
-    mgmtTable: [
-      "vacancyRatePercent",
-      "rentCutPercent",
-      "ongoingExpensesMonthly",
-      "upfrontExpensesMonthly",
-    ],
+    dealTable: {
+      sectionName: "deal",
+      varbNames: outputNames,
+    },
+    propertyTable: {
+      sectionName: "property",
+      varbNames: ["price", "numBedrooms", "targetRentMonthly"],
+    },
+    loanTable: {
+      sectionName: "loan",
+      varbNames: ["interestRatePercentMonthly", "loanTermYears"],
+    },
+    mgmtTable: {
+      sectionName: "mgmt",
+      varbNames: [
+        "vacancyRatePercent",
+        "rentCutPercent",
+        "ongoingExpensesMonthly",
+        "upfrontExpensesMonthly",
+      ],
+    },
   } as const;
 
-  return Obj.keys(columnVarbnames).reduce((packMakers, sectionName) => {
-    packMakers[sectionName] = (): SectionPack<"table"> => {
+  return Obj.keys(columnVarbnames).reduce((packMakers, tableName) => {
+    packMakers[tableName] = (): SectionPack<"table"> => {
       const parent = PackBuilderSection.initAsOmniParent();
       const table = parent.addAndGetChild("table");
-      for (const varbName of columnVarbnames[sectionName]) {
+      const { sectionName, varbNames } = columnVarbnames[tableName];
+      for (const varbName of varbNames) {
         table.addChild("column", {
           dbVarbs: {
-            id: "local",
-            infoType: "relative",
-            sectionName,
-            varbName,
+            varbInfo: {
+              infoType: "globalSection",
+              expectedCount: "onlyOne",
+              sectionName,
+              varbName,
+              entityId: Id.make(),
+            } as InEntityValueInfo,
           },
         });
       }

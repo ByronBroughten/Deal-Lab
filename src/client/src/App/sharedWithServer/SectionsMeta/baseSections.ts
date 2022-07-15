@@ -30,7 +30,6 @@ export const baseSections = {
   } as const),
   omniParent: baseSectionS.container,
   table: baseSection({ titleFilter: "string" } as const),
-
   tableRow: baseSection(baseVarbsS.tableRow),
   column: baseSection({
     varbInfo: "inEntityVarbInfo",
@@ -54,51 +53,21 @@ export const baseSections = {
   singleTimeItem: baseSection({
     ...baseVarbs("string", ["name", "valueSwitch"] as const),
     ...baseVarbs("numObj", ["value", "editorValue"] as const),
-    ...baseVarbsS.entityInfo,
+    varbInfo: "inEntityVarbInfo",
   }),
   // the important thing is "name" and "value"
   ongoingItem: baseSection({
     ...baseVarbs("string", ["name", "valueSwitch"] as const),
     ...baseVarbs("numObj", ["costToReplace", "editorValue"] as const),
-    ...baseVarbsS.entityInfo,
     ...baseVarbsS.ongoing("value"),
     ...baseVarbsS.switch("lifespan", "monthsYears"),
+    varbInfo: "inEntityVarbInfo",
   }),
   userVarbList: baseSection({
     ...baseVarbsS.savableSection,
     defaultValueSwitch: "string",
   }),
   userVarbItem: baseSection({
-    // ok.
-
-    // displayName is a variable.
-    // if it is drawn upon from
-
-    // this varb has a changable displayName
-    // for the output to use this virtual varb's displayName
-    // as its displayName
-    // one of its varbs will need to update whenever
-    // this name variable updates.
-
-    // specifically, its displayName variable will need to update
-    // whenever this one's does.
-    // an inEntity will be needed then, if not on that varb's name value
-    // then on that varb's varbInfo, which would then do an empty update
-    // and prompt the displayName variable to update.
-
-    // that means that some value that currently doesn't have inEntities needs
-    // to have inEntities.
-    // maybe all of them do.
-
-    // 1. Make varbInfo have inEntities and do empty updates
-
-    // 2 Make a new kind of string
-    //   that has inEntities and use those for these virtualVarb values.
-    //   It would have the varbInfo as a relVarb, and whenever the varbInfo
-    //   changes, it removes current inEntities of entityId and adds new ones
-    //   as needed for its virtual varb constituents, given it
-    //   gets the varbInfo of a virtual varb.
-
     ...baseVarbs("string", [
       "name",
       "startAdornment",
@@ -173,12 +142,10 @@ export const baseSections = {
   ),
   output: baseSection({
     value: "numObj",
-    displayName: "string",
-    displayNameEnd: "string",
+    displayName: "stringObj",
+    displayNameEnd: "stringObj",
     varbInfo: "inEntityVarbInfo",
-    entityId: "string",
   }),
-
   user: baseSection(baseVarbsS.feUser, {
     ...baseOptions.alwaysOneFromStart,
   }),

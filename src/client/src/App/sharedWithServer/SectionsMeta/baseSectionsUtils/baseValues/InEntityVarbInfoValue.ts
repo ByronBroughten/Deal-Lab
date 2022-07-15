@@ -1,13 +1,19 @@
 import { Schema } from "mongoose";
 import { z } from "zod";
 import { Obj } from "../../../utils/Obj";
+import { zS } from "../../../utils/zod";
 import { isSectionName } from "../../baseSections";
 import { isVarbName } from "../../baseSectionsDerived/baseVarbInfo";
 import { Id } from "../id";
-import { InEntityVarbInfo, zInEntity } from "./entities";
+import { InEntityVarbInfo, zInEntityVarbInfo } from "./entities";
 
-export type InEntityVarbInfoValue = InEntityVarbInfo | null;
-export const zInEntityVarbInfoValue = z.union([z.null(), zInEntity]);
+export type InEntityValueInfo = InEntityVarbInfo & { entityId: string };
+const zInEntityValueInfo = zInEntityVarbInfo.and(
+  z.object({ entityId: zS.nanoId })
+);
+
+export type InEntityVarbInfoValue = InEntityValueInfo | null;
+export const zInEntityVarbInfoValue = z.union([z.null(), zInEntityValueInfo]);
 export const mInEntityVarbInfoValue = {
   type: Schema.Types.Mixed,
   required: true,
@@ -30,7 +36,8 @@ function isInEntityVarbInfoShared(value: any): boolean {
     Obj.isAnyIfIsObj(info) &&
     info.expectedCount === "onlyOne" &&
     isVarbName(info.varbName) &&
-    isSectionName(info.sectionName)
+    isSectionName(info.sectionName) &&
+    Id.is(value.entityId)
   );
 }
 function isInEntityVarbInfoSpecific(value: any): boolean {

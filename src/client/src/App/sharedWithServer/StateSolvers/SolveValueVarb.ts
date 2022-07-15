@@ -84,14 +84,14 @@ export class SolveValueVarb<
       } else throw new Error("section must contain at least one varb");
     },
     loadedDisplayName: (): string => {
-      const varbInfo = this.getterSection.varbInfoValue();
+      const varbInfo = this.getterSection.inEntityValueInfo();
       if (this.getterSections.hasSectionMixed(varbInfo)) {
         const varb = this.getterSections.varbByMixed(varbInfo);
         return varb.displayName;
       } else return "Variable not found.";
     },
     loadedDisplayNameEnd: (): string => {
-      const varbInfo = this.getterSection.varbInfoValue();
+      const varbInfo = this.getterSection.inEntityValueInfo();
       if (this.getterSections.hasSectionMixed(varbInfo)) {
         const varb = this.getterSections.varbByMixed(varbInfo);
         return varb.displayNameEnd;

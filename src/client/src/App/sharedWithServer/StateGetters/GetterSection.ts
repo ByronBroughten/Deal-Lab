@@ -3,7 +3,7 @@ import {
   FeSectionInfoMixed,
 } from "../SectionsMeta/baseSectionsDerived/baseVarbInfo";
 import { SwitchTargetKey } from "../SectionsMeta/baseSectionsUtils/baseSwitchNames";
-import { InEntityVarbInfo } from "../SectionsMeta/baseSectionsUtils/baseValues/entities";
+import { InEntityValueInfo } from "../SectionsMeta/baseSectionsUtils/baseValues/InEntityVarbInfoValue";
 import { ValueName } from "../SectionsMeta/baseSectionsUtils/baseVarb";
 import { DbSectionInfo } from "../SectionsMeta/baseSectionsUtils/DbSectionInfo";
 import { ExpectedCount } from "../SectionsMeta/baseSectionsUtils/NanoIdInfo";
@@ -370,7 +370,7 @@ export class GetterSection<
   varbInfo(varbName: string): VarbInfo<SN> {
     return this.varb(varbName).feVarbInfo;
   }
-  varbInfoValue(): InEntityVarbInfo {
+  inEntityValueInfo(): InEntityValueInfo {
     const value = this.value("varbInfo", "inEntityVarbInfo");
     if (!value) throw new Error("inEntityVarbInfo value is not initialized");
     return value;

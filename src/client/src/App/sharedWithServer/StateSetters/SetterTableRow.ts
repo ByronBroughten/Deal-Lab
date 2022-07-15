@@ -1,4 +1,4 @@
-import { InEntityVarbInfo } from "../SectionsMeta/baseSectionsUtils/baseValues/entities";
+import { InEntityValueInfo } from "../SectionsMeta/baseSectionsUtils/baseValues/InEntityVarbInfoValue";
 import { StrictOmit } from "../utils/types";
 import {
   SetterSectionBase,
@@ -27,7 +27,7 @@ export class SetterTableRow extends SetterSectionBase<"tableRow"> {
   clearCells(): void {
     this.setter.removeChildren("cell");
   }
-  addCell(cellValueInfo: InEntityVarbInfo, colDbId: string): void {
+  addCell(cellValueInfo: InEntityValueInfo, colDbId: string): void {
     const value =
       this.get.sections.numObjOrNotFoundByMixedAssertOne(cellValueInfo);
     this.setter.addChild("cell", {

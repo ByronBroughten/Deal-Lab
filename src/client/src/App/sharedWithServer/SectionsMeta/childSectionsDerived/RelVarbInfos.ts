@@ -43,10 +43,4 @@ export const relVarbInfosS = {
       return namedChildren;
     }, {} as Record<string, RelChildrenVarbInfo<SN, CN>>);
   },
-  localEntityInfo(): RelLocalVarbInfos<
-    SimpleSectionName,
-    "entityId" | "varbInfo"
-  > {
-    return this.localByVarbName(["entityId", "varbInfo"]);
-  },
 };

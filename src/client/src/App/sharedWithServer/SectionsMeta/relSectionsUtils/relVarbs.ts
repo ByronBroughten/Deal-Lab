@@ -156,16 +156,6 @@ export const relVarbsS = {
     }
     return ssPreVarbs as ToReturn;
   },
-  varbInfoProp() {
-    return { varbInfo: relVarb("inEntityVarbInfo") } as const;
-  },
-  entityInfo() {
-    return {
-      ...this.varbInfoProp(),
-      entityId: relVarb("string"),
-    };
-  },
-
   singleTimeItem(): RelVarbs<"singleTimeItem"> {
     const valueSwitchProp = relVarbInfoS.local("valueSwitch");
     return {
@@ -174,7 +164,7 @@ export const relVarbsS = {
       valueSwitch: relVarb("string", {
         initValue: "labeledEquation",
       }),
-      ...relVarbsS.entityInfo(),
+      varbInfo: relVarb("inEntityVarbInfo"),
       editorValue: relVarbS.calcVarb("", { startAdornment: "$" }),
       value: relVarbS.numObj(relVarbInfoS.local("name"), {
         updateFnName: "editorValue",
@@ -188,7 +178,7 @@ export const relVarbsS = {
             switchValue: "loadedVarb",
             updateFnName: "loadedNumObj",
             updateFnProps: {
-              ...relVarbInfosS.localEntityInfo(),
+              varbInfo: relVarbInfoS.local("varbInfo"),
               valueSwitch: valueSwitchProp,
             },
           },
@@ -198,9 +188,7 @@ export const relVarbsS = {
     };
   },
   ongoingItem(): RelVarbs<"ongoingItem"> {
-    const sectionName = "ongoingItem";
     const ongoingValueNames = switchNames("value", "ongoing");
-
     const defaultValueUpdatePack = {
       updateFnName: "editorValue",
       updateFnProps: relVarbInfosS.localByVarbName([
@@ -215,8 +203,7 @@ export const relVarbsS = {
       valueSwitch: relVarb("string", {
         initValue: "labeledEquation",
       }),
-
-      ...relVarbsS.entityInfo(),
+      varbInfo: relVarb("inEntityVarbInfo"),
       costToReplace: relVarbS.calcVarb("Replacement cost", {
         startAdornment: "$",
       }),
@@ -250,7 +237,7 @@ export const relVarbsS = {
             updateFnName: "loadedNumObj",
             updateFnProps: {
               valueSwitch: valueSwitchProp,
-              ...relVarbInfosS.localEntityInfo(),
+              varbInfo: relVarbInfoS.local("varbInfo"),
             },
           },
           {
@@ -282,7 +269,7 @@ export const relVarbsS = {
             updateFnName: "loadedNumObj",
             updateFnProps: {
               valueSwitch: valueSwitchProp,
-              ...relVarbInfosS.localEntityInfo(),
+              varbInfo: relVarbInfoS.local("varbInfo"),
             },
           },
           {

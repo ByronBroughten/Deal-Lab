@@ -8,6 +8,14 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
+// Sections I need to get right before release (savable sections):
+// dbStore
+// singleTimeList
+// singleTimeItem
+// ongoingList
+// ongoingItem
+// property, unit, loan, mgmt, deal, outputList, output, user, serverOnlyUser
+
 // - Make an entityString valueType, and use it for virtualVarbs that can load
 //   their values from other virtual varbs.
 // - Make a function for gathering props in SolveValueVarb

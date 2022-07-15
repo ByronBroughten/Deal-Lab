@@ -67,20 +67,17 @@ export class SolverVarb<
   }
 
   loadValueFromVarb(nextVarbInfo: InEntityVarbInfo) {
-    const entityId = this.get.section.value("entityId", "string");
-    const varbInfoValue = this.get.section.varbInfoValue();
-    this.removeInEntity({ ...varbInfoValue, entityId });
+    const varbInfoValue = this.get.section.inEntityValueInfo();
+    this.removeInEntity(varbInfoValue);
 
-    const nextEntityId = Id.make();
+    const nextValue = { ...nextVarbInfo, entityId: Id.make() };
     this.addInEntity({
-      entityId: nextEntityId,
-      ...nextVarbInfo,
+      ...nextValue,
       length: 0, // length and offset are arbitrary
       offset: 0, // just borrowing functionality from editor entities
     });
     this.solverSection.updateValuesAndSolve({
-      varbInfo: nextVarbInfo,
-      entityId: nextEntityId,
+      varbInfo: nextValue,
     });
   }
 

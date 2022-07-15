@@ -4,13 +4,13 @@ import { relVarb, relVarbS } from "./relSectionsUtils/rel/relVarb";
 import {
   GeneralRelSection,
   GenericRelSection,
-  relSection,
+  relSection
 } from "./relSectionsUtils/relSection";
 import { RelVarbs, relVarbsS } from "./relSectionsUtils/relVarbs";
 import { dealRelVarbs } from "./relSectionsUtils/relVarbs/dealRelVarbs";
 import {
   financingRelVarbs,
-  loanRelVarbs,
+  loanRelVarbs
 } from "./relSectionsUtils/relVarbs/financingRelVarbs";
 import { mgmtRelVarbs } from "./relSectionsUtils/relVarbs/mgmtRelVarbs";
 import { propertyRelVarbs } from "./relSectionsUtils/relVarbs/propertyRelVarbs";
@@ -75,9 +75,9 @@ export function makeRelSections() {
       title: relVarb("string"),
       compareToggle: relVarb("boolean"),
     }),
-    column: relSection("Column", relVarbsS.varbInfoProp()),
+    column: relSection("Column", { varbInfo: relVarb("inEntityVarbInfo") }),
     cell: relSection("Cell", {
-      ...relVarbsS.varbInfoProp(),
+      varbInfo: relVarb("inEntityVarbInfo"),
       value: relVarbS.numObj("Table cell value"),
     }),
     outputList: relSection(
@@ -108,7 +108,6 @@ export function makeRelSections() {
           varbInfo: relVarbInfoS.local("varbInfo"),
         },
       }),
-      entityId: relVarb("string"),
     }),
     singleTimeList: relSection("List", relVarbsS.singleTimeList(), {
       varbListItem: "singleTimeItem",

@@ -161,7 +161,9 @@ export class DbUser extends GetterSectionsBase {
               dbId,
               dbVarbs: { title },
             });
-            const varb = source.get.varbByFocalMixed(column.varbInfoValue());
+            const varb = source.get.varbByFocalMixed(
+              column.inEntityValueInfo()
+            );
           }
         }
       } else {

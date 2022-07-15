@@ -6,7 +6,6 @@ import {
 import { ChildName } from "../../childSectionsDerived/ChildName";
 import { RelInVarbInfo } from "../../childSectionsDerived/RelInOutVarbInfo";
 import { relVarbInfoS } from "../../childSectionsDerived/RelVarbInfo";
-import { relVarbInfosS } from "../../childSectionsDerived/RelVarbInfos";
 import { valueMeta } from "../valueMeta";
 import {
   CommonRelVarb,
@@ -57,7 +56,9 @@ export const relVarbS = {
             switchInfo: relVarbInfoS.local("valueSwitch"),
             switchValue: "loadedVarb",
             updateFnName: "loadedDisplayName",
-            updateFnProps: relVarbInfosS.localEntityInfo(),
+            updateFnProps: {
+              varbInfo: relVarbInfoS.local("varbInfo"),
+            },
           },
         ],
       }),

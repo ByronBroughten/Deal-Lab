@@ -7,17 +7,14 @@ import { zSectionNameProp } from "../../baseSectionsDerived/baseSectionInfo";
 import {
   DbVarbInfoMixed,
   FeVarbInfoMixed,
-  GlobalVarbInfo,
+  GlobalVarbInfo
 } from "../../baseSectionsDerived/baseVarbInfo";
 import { Id } from "../id";
 
 export type OutEntity = FeVarbInfoMixed & { entityId: string };
 
-type DbInEntityInfo = DbVarbInfoMixed<SimpleSectionName, "onlyOne">;
-type GlobalInEntityInfo = GlobalVarbInfo<SimpleSectionName, "onlyOne">;
-
-export type InEntityVarbInfo = DbInEntityInfo | GlobalInEntityInfo;
-
+export interface DbInEntityInfo
+  extends DbVarbInfoMixed<SimpleSectionName, "onlyOne"> {}
 const zDbInEntityInfo = z.object({
   ...zSectionNameProp.shape,
   infoType: z.literal("dbId" as DbInEntityInfo["infoType"]),
@@ -25,12 +22,21 @@ const zDbInEntityInfo = z.object({
   id: zS.nanoId,
   varbName: zS.string,
 } as Record<keyof DbInEntityInfo, any>);
+
+export interface GlobalInEntityInfo
+  extends GlobalVarbInfo<SimpleSectionName, "onlyOne"> {}
 const zGlobalInEntityInfo = z.object({
   ...zSectionNameProp.shape,
   infoType: z.literal("globalSection" as GlobalInEntityInfo["infoType"]),
   expectedCount: z.literal("onlyOne" as GlobalInEntityInfo["expectedCount"]),
   varbName: zS.string,
 } as Record<keyof GlobalInEntityInfo, any>);
+
+export type InEntityVarbInfo = DbInEntityInfo | GlobalInEntityInfo;
+export const zInEntityVarbInfo = z.union([
+  zDbInEntityInfo,
+  zGlobalInEntityInfo,
+]);
 
 // this should probably be moved to SolverVarb or something
 export type InVarbInfo = InEntity | FeVarbInfoMixed;
@@ -42,8 +48,8 @@ const zInEntityBase = z.object({
 });
 
 const zDbInEntity = zInEntityBase.merge(zDbInEntityInfo);
-const zImmutableRelInEntity = zInEntityBase.merge(zGlobalInEntityInfo);
-export const zInEntity = z.union([zDbInEntity, zImmutableRelInEntity]);
+const zGlobalInEntity = zInEntityBase.merge(zGlobalInEntityInfo);
+export const zInEntity = z.union([zDbInEntity, zGlobalInEntity]);
 export const zInEntities = z.array(zInEntity);
 type InEntityBase = z.infer<typeof zInEntityBase>;
 interface DbInEntity extends InEntityBase, DbInEntityInfo {}

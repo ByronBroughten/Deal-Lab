@@ -1,5 +1,6 @@
 import { SectionPack } from "../SectionPack/SectionPack";
-import { InEntityVarbInfoValue } from "../SectionsMeta/baseSectionsUtils/baseValues/InEntityVarbInfoValue";
+import { InEntityValueInfo } from "../SectionsMeta/baseSectionsUtils/baseValues/InEntityVarbInfoValue";
+import { Id } from "../SectionsMeta/baseSectionsUtils/id";
 import { mixedInfoS } from "../SectionsMeta/childSectionsDerived/MixedSectionInfo";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
 
@@ -9,11 +10,12 @@ export const outputNames = [
   "roiYearly",
 ] as const;
 
-const defaultDealOutputInfos: InEntityVarbInfoValue[] = outputNames.map(
+const defaultDealOutputInfos: InEntityValueInfo[] = outputNames.map(
   (varbName) => {
     return {
       ...mixedInfoS.makeGlobalSection("deal", "onlyOne"),
       varbName,
+      entityId: Id.make(),
     } as const;
   }
 );

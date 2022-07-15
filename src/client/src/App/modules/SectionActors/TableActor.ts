@@ -10,7 +10,7 @@ import { SectionActorBase, SectionActorBaseProps } from "./SectionActorBase";
 
 class GetterColumn extends GetterSection<"column"> {
   get displayNameOrNotFound(): string {
-    const varbInfo = this.varbInfoValue();
+    const varbInfo = this.inEntityValueInfo();
     if (this.sections.hasSectionMixed(varbInfo)) {
       const varb = this.sections.varbByMixed(varbInfo);
       return varb.displayName;

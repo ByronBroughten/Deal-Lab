@@ -14,7 +14,6 @@ export function makeDefaultDealPack(): SectionPack<"deal"> {
     childName: "dealOutputList",
     sectionPack: makeDefaultOutputList(),
   });
-
   const propertyGeneral = deal.addAndGetChild("propertyGeneral");
   propertyGeneral.loadChild({
     childName: "property",
