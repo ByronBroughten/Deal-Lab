@@ -27,7 +27,6 @@ AppRegistry.runApplication("App", {
 // - Make an entityString valueType, and use it for virtualVarbs that can load
 //   their values from other virtual varbs.
 // - Make a function for gathering props in SolveValueVarb
-// - Change some varbNames "name" to "displayName".
 // - Settle on final names for sections in general.
 
 // when variables give their displayName, displayNameEnd, etc, I can check

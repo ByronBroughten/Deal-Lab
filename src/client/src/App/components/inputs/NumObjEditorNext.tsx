@@ -3,7 +3,7 @@ import React from "react";
 import styled from "styled-components";
 import { useOnOutsideClickEffect } from "../../modules/customHooks/useOnOutsideClickRef";
 import useToggleView from "../../modules/customHooks/useToggleView";
-import { VarbInfo } from "../../sharedWithServer/SectionsMeta/Info";
+import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/Info";
 import theme from "../../theme/Theme";
 import MaterialDraftEditor from "./MaterialDraftEditor";
 import NumObjVarbSelector from "./NumObjEditor/NumObjVarbSelector";
@@ -18,7 +18,7 @@ const numericRegEx = /^[0-9.-]*$/;
 const calculationRegEx = /[\d.*/+()-]/;
 
 type Props = PropAdornments & {
-  feVarbInfo: VarbInfo;
+  feVarbInfo: FeVarbInfo;
   className?: string;
   label?: any;
   labeled?: boolean;

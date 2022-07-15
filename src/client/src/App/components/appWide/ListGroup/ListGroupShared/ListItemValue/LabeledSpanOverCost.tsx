@@ -15,7 +15,9 @@ export default function LabeledSpanOverCost({ valueVarbName, feInfo }: Props) {
   return (
     <>
       <td className="AdditiveItem-nameCell">
-        <MaterialStringEditorNext feVarbInfo={section.varbInfo("name")} />
+        <MaterialStringEditorNext
+          feVarbInfo={section.varbInfo("displayName")}
+        />
       </td>
       <Styled className="AdditiveItem-contentCell">
         <div className="AdditiveItem-contentCellDiv">

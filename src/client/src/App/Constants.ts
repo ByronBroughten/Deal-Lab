@@ -1,10 +1,10 @@
 const dev = {
-  name: "Analyzer Client — Development",
+  appName: "Analyzer Client — Development",
   endpoint: "http://localhost:5000",
 };
 
 const prod = {
-  name: "Analyzer Client — Production",
+  appName: "Analyzer Client — Production",
   endpoint: "https://www.dealanalyzer.app",
 };
 
@@ -12,7 +12,7 @@ const baseEnvStuff = process.env.NODE_ENV === "development" ? dev : prod;
 const apiPathBit = "/api";
 
 export const config = {
-  name: baseEnvStuff.name,
+  name: baseEnvStuff.appName,
   apiPathBit: apiPathBit,
   apiPathFull: `${baseEnvStuff.endpoint}${apiPathBit}`,
   costInCents: {

@@ -6,7 +6,7 @@ import {
   SectionInfoMixed,
   VarbInfoMixed,
 } from "../SectionsMeta/childSectionsDerived/MixedSectionInfo";
-import { FeSectionInfo, VarbInfo } from "../SectionsMeta/Info";
+import { FeSectionInfo, FeVarbInfo } from "../SectionsMeta/Info";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { GetterSectionsBase } from "./Bases/GetterSectionsBase";
 import { GetterList } from "./GetterList";
@@ -64,7 +64,7 @@ export class GetterSections extends GetterSectionsBase {
   varb<SN extends SectionName>({
     varbName,
     ...info
-  }: VarbInfo<SN>): GetterVarb<SN> {
+  }: FeVarbInfo<SN>): GetterVarb<SN> {
     return this.varbs(info).one(varbName);
   }
   sectionsByMixed<SN extends SimpleSectionName>({

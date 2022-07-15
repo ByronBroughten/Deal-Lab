@@ -1,13 +1,13 @@
 import { EditorState } from "draft-js";
 import React, { useEffect, useState } from "react";
-import { VarbInfo } from "../../sharedWithServer/SectionsMeta/Info";
+import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/Info";
 import { useGetterVarb } from "../../sharedWithServer/stateClassHooks/useGetterVarb";
 import { useSetterVarb } from "../../sharedWithServer/stateClassHooks/useSetterVarb";
 import { CreateEditorProps } from "../../sharedWithServer/StateSetters/EditorUpdaterVarb";
 import { SetterVarb } from "../../sharedWithServer/StateSetters/SetterVarb";
 import useOnChange from "./useOnChange";
 
-interface UseDraftInputProps extends VarbInfo, CreateEditorProps {}
+interface UseDraftInputProps extends FeVarbInfo, CreateEditorProps {}
 export function useDraftInputNext(props: UseDraftInputProps) {
   const setterVarb = useSetterVarb(props);
   const [editorState, setEditorState] = useState<EditorState>(() =>

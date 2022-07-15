@@ -1,16 +1,16 @@
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import styled, { css } from "styled-components";
-import { VarbInfo } from "../../sharedWithServer/SectionsMeta/Info";
+import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/Info";
 import { useGetterSections } from "../../sharedWithServer/stateClassHooks/useGetterSections";
 import { GetterVarb } from "../../sharedWithServer/StateGetters/GetterVarb";
 import theme, { ThemeName } from "../../theme/Theme";
 import PlainBtn from "../general/PlainBtn";
 
 type UseLabeledOutputProps = {
-  feVarbInfo?: VarbInfo;
+  feVarbInfo?: FeVarbInfo;
   displayVarb?: string;
   displayLabel?: string;
-  parenthInfo?: VarbInfo | string;
+  parenthInfo?: FeVarbInfo | string;
 };
 function useLabeledOutput({
   feVarbInfo,
@@ -42,7 +42,7 @@ function useLabeledOutput({
 }
 
 type LabeledVarbProps = UseLabeledOutputProps & {
-  feVarbInfo: VarbInfo;
+  feVarbInfo: FeVarbInfo;
   onXBtnClick?: () => void;
   className?: string;
   themeName?: ThemeName;

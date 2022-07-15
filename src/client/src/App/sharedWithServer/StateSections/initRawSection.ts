@@ -5,7 +5,7 @@ import { VarbNames } from "../SectionsMeta/baseSectionsDerived/baseVarbInfo";
 import { StateValue } from "../SectionsMeta/baseSectionsUtils/baseValues/StateValueTypes";
 import { Id } from "../SectionsMeta/baseSectionsUtils/id";
 import { ChildIdArrsNarrow } from "../SectionsMeta/childSectionsDerived/ChildName";
-import { FeSectionInfo, VarbInfo } from "../SectionsMeta/Info";
+import { FeSectionInfo, FeVarbInfo } from "../SectionsMeta/Info";
 import { DbValue } from "../SectionsMeta/relSectionsUtils/rel/valueMetaTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { StrictPick, StrictPickPartial } from "../utils/types";
@@ -72,7 +72,7 @@ export function initRawVarbs<SN extends SectionName>({
   }, {} as RawFeVarbs<SN>);
 }
 
-interface InitRawVarbProps<SN extends SectionName> extends VarbInfo<SN> {
+interface InitRawVarbProps<SN extends SectionName> extends FeVarbInfo<SN> {
   dbVarb?: DbValue;
 }
 function initRawVarb<SN extends SectionName>({

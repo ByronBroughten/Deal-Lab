@@ -2,11 +2,11 @@ import { cloneDeep } from "lodash";
 import {
   DbVarbInfoMixed,
   FeVarbInfoMixed,
-  VarbNames
+  VarbNames,
 } from "../SectionsMeta/baseSectionsDerived/baseVarbInfo";
 import {
   InEntity,
-  OutEntity
+  OutEntity,
 } from "../SectionsMeta/baseSectionsUtils/baseValues/entities";
 import { NumberOrQ } from "../SectionsMeta/baseSectionsUtils/baseValues/NumObj";
 import { ValueName } from "../SectionsMeta/baseSectionsUtils/baseVarb";
@@ -15,14 +15,14 @@ import {
   Adornments,
   StateValueAnyKey,
   valueSchemasPlusAny,
-  ValueTypesPlusAny
+  ValueTypesPlusAny,
 } from "../SectionsMeta/baseSectionsUtils/StateVarbTypes";
 import {
   mixedInfoS,
-  VarbInfoMixedFocal
+  VarbInfoMixedFocal,
 } from "../SectionsMeta/childSectionsDerived/MixedSectionInfo";
 import { RelLocalInfo } from "../SectionsMeta/childSectionsDerived/RelInfo";
-import { InfoS, VarbInfo } from "../SectionsMeta/Info";
+import { FeVarbInfo, InfoS } from "../SectionsMeta/Info";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { InUpdatePack, VarbMeta } from "../SectionsMeta/VarbMeta";
 import { RawFeVarb } from "../StateSections/StateSectionsTypes";
@@ -54,7 +54,7 @@ export class GetterVarb<
   get meta(): VarbMeta<SN> {
     return this.sectionMeta.varb(this.varbName);
   }
-  get feVarbInfo(): VarbInfo<SN> {
+  get feVarbInfo(): FeVarbInfo<SN> {
     return {
       ...this.feSectionInfo,
       varbName: this.varbName,
@@ -224,7 +224,7 @@ export class GetterVarb<
       .value("string");
     return switchValue === actualSwitchValue;
   }
-  getterVarb<S extends SectionName>(varbInfo: VarbInfo<S>): GetterVarb<S> {
+  getterVarb<S extends SectionName>(varbInfo: FeVarbInfo<S>): GetterVarb<S> {
     return new GetterVarb({
       ...varbInfo,
       sectionsShare: this.sectionsShare,
@@ -248,16 +248,16 @@ export class GetterVarb<
     const anscestor = this.getterSection.nearestAnscestor(sectionName);
     return anscestor.varb(varbName);
   }
-  static feVarbInfoToVarbId(info: VarbInfo): string {
+  static feVarbInfoToVarbId(info: FeVarbInfo): string {
     const { sectionName, varbName, feId } = info;
     return [sectionName, varbName, feId].join(".");
   }
-  static varbInfosToVarbIds(varbInfos: VarbInfo[]): string[] {
+  static varbInfosToVarbIds(varbInfos: FeVarbInfo[]): string[] {
     return varbInfos.map((varbInfo) => {
       return GetterVarb.feVarbInfoToVarbId(varbInfo);
     });
   }
-  static varbIdToVarbInfo(varbId: string): VarbInfo {
+  static varbIdToVarbInfo(varbId: string): FeVarbInfo {
     const [sectionName, varbName, feId] = varbId.split(".") as [
       SectionName,
       string,

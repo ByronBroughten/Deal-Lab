@@ -159,14 +159,14 @@ export const relVarbsS = {
   singleTimeItem(): RelVarbs<"singleTimeItem"> {
     const valueSwitchProp = relVarbInfoS.local("valueSwitch");
     return {
-      name: relVarbS.stringOrLoaded(),
+      displayName: relVarbS.stringOrLoaded(),
 
       valueSwitch: relVarb("string", {
         initValue: "labeledEquation",
       }),
       varbInfo: relVarb("inEntityVarbInfo"),
       editorValue: relVarbS.calcVarb("", { startAdornment: "$" }),
-      value: relVarbS.numObj(relVarbInfoS.local("name"), {
+      value: relVarbS.numObj(relVarbInfoS.local("displayName"), {
         updateFnName: "editorValue",
         updateFnProps: {
           proxyValue: relVarbInfoS.local("editorValue"),
@@ -199,7 +199,7 @@ export const relVarbsS = {
     const ongoingSwitchInfo = relVarbInfoS.local(ongoingValueNames.switch);
     const valueSwitchProp = relVarbInfoS.local("valueSwitch");
     return {
-      name: relVarbS.stringOrLoaded(),
+      displayName: relVarbS.stringOrLoaded(),
       valueSwitch: relVarb("string", {
         initValue: "labeledEquation",
       }),

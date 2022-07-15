@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { VarbInfo } from "../../../../../sharedWithServer/SectionsMeta/Info";
+import { FeVarbInfo } from "../../../../../sharedWithServer/SectionsMeta/Info";
 import { useSetterVarb } from "../../../../../sharedWithServer/stateClassHooks/useSetterVarb";
 import {
   DealDetailRowVarbFound,
@@ -10,7 +10,7 @@ export function DealDetailRowsNext({
   varbInfo,
   level,
 }: {
-  varbInfo: VarbInfo;
+  varbInfo: FeVarbInfo;
   level: number;
 }) {
   level = level + 1;

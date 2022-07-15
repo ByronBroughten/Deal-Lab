@@ -3,7 +3,7 @@ import {
   StateValueAnyKey,
   ValueTypesPlusAny,
 } from "../SectionsMeta/baseSectionsUtils/StateVarbTypes";
-import { VarbInfo, VarbStringInfo } from "../SectionsMeta/Info";
+import { FeVarbInfo, VarbStringInfo } from "../SectionsMeta/Info";
 import {
   SectionName,
   sectionNameS,
@@ -26,14 +26,14 @@ export class GetterVarbs<SN extends SectionName> extends GetterSectionBase<SN> {
   get sections(): GetterSections {
     return new GetterSections(this.getterSectionsProps);
   }
-  get feVarbInfos(): VarbInfo<SN>[] {
+  get feVarbInfos(): FeVarbInfo<SN>[] {
     const { feSectionInfo } = this;
     return Object.keys(this.stateVarbs).map(
       (varbName) =>
         ({
           ...feSectionInfo,
           varbName,
-        } as VarbInfo<SN>)
+        } as FeVarbInfo<SN>)
     );
   }
   get varbNames(): string[] {

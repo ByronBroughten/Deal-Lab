@@ -11,7 +11,7 @@ import {
 } from "../SectionsMeta/childSectionsDerived/ChildName";
 import { ChildSectionName } from "../SectionsMeta/childSectionsDerived/ChildSectionName";
 import { ParentNameSafe } from "../SectionsMeta/childSectionsDerived/ParentName";
-import { FeSectionInfo, VarbInfo } from "../SectionsMeta/Info";
+import { FeSectionInfo, FeVarbInfo } from "../SectionsMeta/Info";
 import { SectionMeta } from "../SectionsMeta/SectionMeta";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { SectionOption } from "../StateEntityGetters/VariableGetterSections";
@@ -124,13 +124,13 @@ export class SetterSection<
       varbName,
     });
   }
-  varbInfo(varbName: SectionVarbName<SN>): VarbInfo<SN> {
+  varbInfo(varbName: SectionVarbName<SN>): FeVarbInfo<SN> {
     return this.get.varbInfo(varbName);
   }
   switchVarbInfo(
     varbNameBase: string,
     switchEnding: SwitchEndingKey
-  ): VarbInfo<SN> {
+  ): FeVarbInfo<SN> {
     return this.get.switchVarbInfo(varbNameBase, switchEnding);
   }
   switchVarb(

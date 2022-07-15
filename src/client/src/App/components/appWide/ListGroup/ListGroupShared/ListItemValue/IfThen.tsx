@@ -11,7 +11,7 @@ export default function IfThen({ feId }: Props) {
         <MaterialStringEditorNext
           feVarbInfo={{
             sectionName: "userVarbItem",
-            varbName: "name",
+            varbName: "displayName",
             feId,
           }}
         />

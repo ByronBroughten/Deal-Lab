@@ -1,5 +1,5 @@
 import { RelVarbInfo } from "../SectionsMeta/childSectionsDerived/RelVarbInfo";
-import { VarbInfo } from "../SectionsMeta/Info";
+import { FeVarbInfo } from "../SectionsMeta/Info";
 import { SectionName } from "../SectionsMeta/SectionName";
 import {
   OutDefaultPack,
@@ -16,7 +16,7 @@ import { GetterVarb } from "../StateGetters/GetterVarb";
 export class OutVarbGetterVarb<
   SN extends SectionName<"hasVarb"> = SectionName<"hasVarb">
 > extends GetterVarbBase<SN> {
-  private outVarbInfoStore: VarbInfo[];
+  private outVarbInfoStore: FeVarbInfo[];
   constructor(props: GetterVarbProps<SN>) {
     super(props);
     this.outVarbInfoStore = [];
@@ -116,7 +116,7 @@ export class OutVarbGetterVarb<
       }
     }
   }
-  private relativesToFeVarbInfos(relVarbInfo: RelVarbInfo): VarbInfo[] {
+  private relativesToFeVarbInfos(relVarbInfo: RelVarbInfo): FeVarbInfo[] {
     const varbs = this.get.varbsByFocalMixed(relVarbInfo);
     const feVarbInfos = varbs.map((varb) => varb.feVarbInfo);
     return feVarbInfos;

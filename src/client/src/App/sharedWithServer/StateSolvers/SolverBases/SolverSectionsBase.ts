@@ -1,4 +1,4 @@
-import { VarbInfo } from "../../SectionsMeta/Info";
+import { FeVarbInfo } from "../../SectionsMeta/Info";
 import {
   GetterSectionsBase,
   GetterSectionsProps,
@@ -32,7 +32,7 @@ export class SolverSectionsBase {
   get varbIdsToSolveFor(): Set<string> {
     return this.solveShare.varbIdsToSolveFor;
   }
-  addVarbInfosToSolveFor(...varbInfos: VarbInfo[]): void {
+  addVarbInfosToSolveFor(...varbInfos: FeVarbInfo[]): void {
     const varbIds = GetterVarb.varbInfosToVarbIds(varbInfos);
     this.addVarbIdsToSolveFor(...varbIds);
   }

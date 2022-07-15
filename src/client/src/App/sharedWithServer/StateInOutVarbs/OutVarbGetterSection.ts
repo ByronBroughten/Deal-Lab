@@ -1,4 +1,4 @@
-import { VarbInfo } from "../SectionsMeta/Info";
+import { FeVarbInfo } from "../SectionsMeta/Info";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { GetterSectionBase } from "../StateGetters/Bases/GetterSectionBase";
 import { GetterSection } from "../StateGetters/GetterSection";
@@ -12,8 +12,8 @@ export class OutVarbGetterSection<
   get selfAndDescendantOutVarbIds(): string[] {
     return GetterVarb.varbInfosToVarbIds(this.selfAndDescendantOutVarbInfos);
   }
-  get selfAndDescendantOutVarbInfos(): VarbInfo[] {
-    const outVarbInfos: VarbInfo[] = [];
+  get selfAndDescendantOutVarbInfos(): FeVarbInfo[] {
+    const outVarbInfos: FeVarbInfo[] = [];
     const { selfAndDescendantVarbInfos } = this.get;
     for (const varbInfo of selfAndDescendantVarbInfos) {
       const outVarbGetter = this.outVarbGetter(varbInfo);
@@ -22,7 +22,7 @@ export class OutVarbGetterSection<
     return outVarbInfos;
   }
   outVarbGetter<S extends SectionName>(
-    varbInfo: VarbInfo<S>
+    varbInfo: FeVarbInfo<S>
   ): OutVarbGetterVarb<S> {
     return new OutVarbGetterVarb({
       ...this.getterSectionsProps,

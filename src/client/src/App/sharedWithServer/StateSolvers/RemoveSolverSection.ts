@@ -3,7 +3,7 @@ import {
   FeChildInfo,
 } from "../SectionsMeta/childSectionsDerived/ChildName";
 import { ChildSectionName } from "../SectionsMeta/childSectionsDerived/ChildSectionName";
-import { FeSectionInfo, VarbInfo } from "../SectionsMeta/Info";
+import { FeSectionInfo, FeVarbInfo } from "../SectionsMeta/Info";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { GetterSection } from "../StateGetters/GetterSection";
 import { OutVarbGetterSection } from "../StateInOutVarbs/OutVarbGetterSection";
@@ -53,7 +53,7 @@ export class RemoveSolverSection<
     return this.removeSolveShare.outVarbIdsOfRemoved;
   }
   inOut = new OutVarbGetterSection(this.getterSectionProps);
-  solverVarb(varbInfo: VarbInfo): SolverVarb {
+  solverVarb(varbInfo: FeVarbInfo): SolverVarb {
     return new SolverVarb({
       ...this.solverSectionsProps,
       ...varbInfo,

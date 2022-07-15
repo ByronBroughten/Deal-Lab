@@ -4,7 +4,7 @@ import { relVarbInfosS } from "../../childSectionsDerived/RelVarbInfos";
 import { relVarb } from "../rel/relVarb";
 
 export const userVarbItemRelVarbs = {
-  name: relVarb("string"),
+  displayName: relVarb("string"),
   startAdornment: relVarb("string"),
   endAdornment: relVarb("string"),
   valueSwitch: relVarb("string", {
@@ -12,7 +12,7 @@ export const userVarbItemRelVarbs = {
   }),
   editorValue: relVarb("numObj"),
   value: relVarb("numObj", {
-    displayName: relVarbInfoS.local("name"),
+    displayName: relVarbInfoS.local("displayName"),
     updateFnName: "userVarb",
     initValue: numObj(0),
     updateFnProps: {

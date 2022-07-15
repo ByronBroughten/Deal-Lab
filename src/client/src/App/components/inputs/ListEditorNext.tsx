@@ -6,7 +6,7 @@ import styled from "styled-components/macro";
 import useOnOutsideClickRef from "../../modules/customHooks/useOnOutsideClickRef";
 import { getEntityStrategy } from "../../modules/draftjs/getEntityStrategies";
 import { insertEntity } from "../../modules/draftjs/insert";
-import { VarbInfo } from "../../sharedWithServer/SectionsMeta/Info";
+import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/Info";
 import ErrorMessage from "../appWide/ErrorMessage";
 import ItemOrCommaSpan, {
   CommaSpan,
@@ -58,7 +58,7 @@ export function ListEditorNext({
   feVarbInfo,
   ...rest
 }: {
-  feVarbInfo: VarbInfo;
+  feVarbInfo: FeVarbInfo;
   className?: string;
 }) {
   const { onChange, editorState } = useDraftInputNext({

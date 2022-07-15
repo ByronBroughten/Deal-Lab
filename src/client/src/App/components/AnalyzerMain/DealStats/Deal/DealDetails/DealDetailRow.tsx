@@ -1,4 +1,4 @@
-import { VarbInfo } from "../../../../../sharedWithServer/SectionsMeta/Info";
+import { FeVarbInfo } from "../../../../../sharedWithServer/SectionsMeta/Info";
 import { useGetterVarb } from "../../../../../sharedWithServer/stateClassHooks/useGetterVarb";
 import { useSetterVarb } from "../../../../../sharedWithServer/stateClassHooks/useSetterVarb";
 import {
@@ -6,7 +6,7 @@ import {
   DealDetailRowEndPoint,
 } from "./DealDetailRowStyled";
 
-type Props = { varbInfo: VarbInfo; level: number };
+type Props = { varbInfo: FeVarbInfo; level: number };
 export function DealDetailRowVarbFound({ varbInfo, level }: Props) {
   const varb = useSetterVarb(varbInfo);
   const { solvableText } = varb.value("numObj");
@@ -30,7 +30,7 @@ export function DealDetailRowVarbFound({ varbInfo, level }: Props) {
 
 interface DealDetailRowVarbNotFoundProps {
   entityId: string;
-  varbInfo: VarbInfo;
+  varbInfo: FeVarbInfo;
   level: number;
 }
 export function DealDetailRowVarbNotFound({

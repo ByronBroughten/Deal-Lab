@@ -1,5 +1,5 @@
 import { SimpleSectionName } from "./baseSections";
-import { VarbProp } from "./baseSectionsDerived/baseVarbInfo";
+import { VarbProp, VarbPropNext } from "./baseSectionsDerived/baseVarbInfo";
 import { StateValue } from "./baseSectionsUtils/baseValues/StateValueTypes";
 import { Id } from "./baseSectionsUtils/id";
 import {
@@ -48,12 +48,16 @@ export interface FeParentInfoSafe<SN extends SectionName> {
   feId: string;
 }
 
-export interface VarbInfo<SN extends SectionName = SectionName<"hasVarb">>
+export interface FeVarbInfo<SN extends SectionName = SectionName<"hasVarb">>
   extends FeSectionInfo<SN>,
     VarbProp {}
 
+export interface FeVarbInfoNext<SN extends SimpleSectionName>
+  extends FeSectionInfo<SN>,
+    VarbPropNext<SN> {}
+
 export interface VarbValueInfo<SN extends SectionName = SectionName<"hasVarb">>
-  extends VarbInfo<SN> {
+  extends FeVarbInfo<SN> {
   value: StateValue;
 }
 
@@ -67,7 +71,7 @@ export type VarbStringInfo = {
 export const noParentWarning = "no parent";
 
 export const InfoS = {
-  isFeVarbInfo(value: any): value is VarbInfo {
+  isFeVarbInfo(value: any): value is FeVarbInfo {
     return (
       Id.is(value.feId) &&
       sectionNameS.is(value.sectionName) &&

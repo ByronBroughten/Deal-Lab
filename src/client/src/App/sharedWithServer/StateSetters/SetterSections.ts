@@ -3,7 +3,7 @@ import {
   StateValue,
 } from "../SectionsMeta/baseSectionsUtils/baseValues/StateValueTypes";
 import { DbSectionInfo } from "../SectionsMeta/baseSectionsUtils/DbSectionInfo";
-import { FeSectionInfo, VarbInfo } from "../SectionsMeta/Info";
+import { FeSectionInfo, FeVarbInfo } from "../SectionsMeta/Info";
 import { SectionName } from "../SectionsMeta/SectionName";
 import {
   VariableGetterSections,
@@ -37,7 +37,7 @@ export class SetterSections extends SetterSectionsBase {
   ): SetterSection<SN> {
     return this.section(this.get.sectionByDbInfo(dbInfo).feInfo);
   }
-  varb<SN extends SectionName>(varbInfo: VarbInfo<SN>): SetterVarb<SN> {
+  varb<SN extends SectionName>(varbInfo: FeVarbInfo<SN>): SetterVarb<SN> {
     return new SetterVarb({
       ...this.setterSectionsProps,
       ...varbInfo,

@@ -2,7 +2,7 @@ import { pick } from "lodash";
 import { defaultMaker } from "../defaultMaker/defaultMaker";
 import { SectionPack } from "../SectionPack/SectionPack";
 import { VarbInfoMixed } from "../SectionsMeta/childSectionsDerived/MixedSectionInfo";
-import { VarbInfo } from "../SectionsMeta/Info";
+import { FeVarbInfo } from "../SectionsMeta/Info";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { GetterSections } from "../StateGetters/GetterSections";
 import { GetterVarb } from "../StateGetters/GetterVarb";
@@ -40,7 +40,7 @@ export class SolverSections extends SolverSectionsBase {
   }
   // how did I use a switch to differentiate those before?
   // or
-  private gatherAndSortInfosToSolve(): VarbInfo[] {
+  private gatherAndSortInfosToSolve(): FeVarbInfo[] {
     const outVarbMap = this.getOutVarbMap();
     const { edges, loneVarbs } = this.getDagEdgesAndLoneVarbs(outVarbMap);
     let orderedVarbIds = tsort(edges); // tsort must have found a circularity issue
@@ -96,7 +96,7 @@ export class SolverSections extends SolverSectionsBase {
     const feVarbInfo = GetterVarb.varbIdToVarbInfo(varbId);
     return this.solverVarb(feVarbInfo);
   }
-  solverVarb<S extends SectionName>(feVarbInfo: VarbInfo<S>): SolverVarb<S> {
+  solverVarb<S extends SectionName>(feVarbInfo: FeVarbInfo<S>): SolverVarb<S> {
     return new SolverVarb({
       ...this.solverSectionsProps,
       ...feVarbInfo,

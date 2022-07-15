@@ -141,4 +141,15 @@ export const baseVarbsS = {
       defaultOngoingSwitch: "string",
     } as const;
   },
+  get listItem() {
+    return {
+      displayName: "stringObj",
+    } as const;
+  },
+  get singleVirtualVarb() {
+    return {
+      ...this.listItem,
+      value: "numObj",
+    } as const;
+  },
 } as const;

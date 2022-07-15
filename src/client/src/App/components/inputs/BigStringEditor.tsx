@@ -1,12 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-import { VarbInfo } from "../../sharedWithServer/SectionsMeta/Info";
+import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/Info";
 import { ThemeName } from "../../theme/Theme";
 import MaterialDraftEditor from "./MaterialDraftEditor";
 import { useDraftInputNext } from "./useDraftInputNext";
 
 interface Props {
-  feVarbInfo: VarbInfo;
+  feVarbInfo: FeVarbInfo;
   className?: string;
   label?: any;
   themeName?: ThemeName;

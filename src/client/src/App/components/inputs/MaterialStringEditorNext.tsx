@@ -1,10 +1,10 @@
 import React from "react";
-import { VarbInfo } from "../../sharedWithServer/SectionsMeta/Info";
+import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/Info";
 import MaterialDraftEditor from "./MaterialDraftEditor";
 import { useDraftInputNext } from "./useDraftInputNext";
 
 export interface StringEditorProps {
-  feVarbInfo: VarbInfo;
+  feVarbInfo: FeVarbInfo;
   className?: string;
   label?: string;
 }

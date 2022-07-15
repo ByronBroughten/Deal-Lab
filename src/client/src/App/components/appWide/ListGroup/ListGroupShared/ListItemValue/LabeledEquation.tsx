@@ -9,7 +9,7 @@ export default function LabeledEquation({ feInfo, endAdornment }: Props) {
   return (
     <>
       <td className="AdditiveItem-nameCell">
-        <MaterialStringEditorNext feVarbInfo={section.varbInfo("name")} />
+        <MaterialStringEditorNext feVarbInfo={section.varbInfo("displayName")} />
       </td>
       <td className="AdditiveItem-contentCell">
         <div className="AdditiveItem-contentCellDiv">

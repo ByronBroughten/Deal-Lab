@@ -1,6 +1,6 @@
 import { ChildName } from "../../SectionsMeta/childSectionsDerived/ChildName";
 import { ParentNameSafe } from "../../SectionsMeta/childSectionsDerived/ParentName";
-import { VarbInfo } from "../../SectionsMeta/Info";
+import { FeVarbInfo } from "../../SectionsMeta/Info";
 import { SectionName } from "../../SectionsMeta/SectionName";
 import { SectionsShare } from "../../StateGetters/Bases/GetterSectionsBase";
 import { GetterList } from "../../StateGetters/GetterList";
@@ -73,7 +73,7 @@ export class SetterTesterSection<
     return { sectionsShare: { sections: this.state.sections } };
   }
   getterVarbFromState<SN extends SectionName>(
-    feInfo: VarbInfo<SN>
+    feInfo: FeVarbInfo<SN>
   ): GetterVarb<SN> {
     return new GetterVarb({
       ...feInfo,

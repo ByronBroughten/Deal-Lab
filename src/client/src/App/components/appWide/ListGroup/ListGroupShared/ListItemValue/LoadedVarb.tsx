@@ -1,10 +1,10 @@
-import { VarbInfo } from "../../../../../sharedWithServer/SectionsMeta/Info";
+import { FeVarbInfo } from "../../../../../sharedWithServer/SectionsMeta/Info";
 import { useGetterSection } from "../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { useSetterVarb } from "../../../../../sharedWithServer/stateClassHooks/useSetterVarb";
 import { VariableOption } from "../../../../../sharedWithServer/StateEntityGetters/VariableGetterSections";
 import { ControlledVarbAutoComplete } from "../../../../inputs/ControlledVarbAutoComplete";
 
-export default function LoadedVarb({ feVarbInfo }: { feVarbInfo: VarbInfo }) {
+export default function LoadedVarb({ feVarbInfo }: { feVarbInfo: FeVarbInfo }) {
   const varb = useSetterVarb(feVarbInfo);
   function onSelect({ varbInfo }: VariableOption) {
     varb.loadValueFromVarb(varbInfo);

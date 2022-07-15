@@ -1,7 +1,7 @@
 import { SectionVarbName } from "../SectionsMeta/baseSectionsDerived/baseSectionTypes";
 import {
   DbSectionInfoMixed,
-  FeSectionInfoMixed
+  FeSectionInfoMixed,
 } from "../SectionsMeta/baseSectionsDerived/baseVarbInfo";
 import { SwitchTargetKey } from "../SectionsMeta/baseSectionsUtils/baseSwitchNames";
 import { InEntityValueInfo } from "../SectionsMeta/baseSectionsUtils/baseValues/InEntityVarbInfoValue";
@@ -10,7 +10,7 @@ import { DbSectionInfo } from "../SectionsMeta/baseSectionsUtils/DbSectionInfo";
 import { ExpectedCount } from "../SectionsMeta/baseSectionsUtils/NanoIdInfo";
 import {
   SwitchEndingKey,
-  switchNames
+  switchNames,
 } from "../SectionsMeta/baseSectionsUtils/RelSwitchVarb";
 import { ValueTypesPlusAny } from "../SectionsMeta/baseSectionsUtils/StateVarbTypes";
 import {
@@ -18,37 +18,37 @@ import {
   ChildName,
   DbChildInfo,
   FeChildInfo,
-  GeneralChildIdArrs
+  GeneralChildIdArrs,
 } from "../SectionsMeta/childSectionsDerived/ChildName";
 import { ChildSectionName } from "../SectionsMeta/childSectionsDerived/ChildSectionName";
 import {
   DescendantIds,
-  SelfAndDescendantIds
+  SelfAndDescendantIds,
 } from "../SectionsMeta/childSectionsDerived/DescendantSectionName";
 import {
   mixedInfoS,
   SectionInfoMixedFocal,
-  VarbInfoMixedFocal
+  VarbInfoMixedFocal,
 } from "../SectionsMeta/childSectionsDerived/MixedSectionInfo";
 import {
   ParentName,
   ParentNameSafe,
   PiblingName,
-  StepSiblingName
+  StepSiblingName,
 } from "../SectionsMeta/childSectionsDerived/ParentName";
 import { RelSectionInfo } from "../SectionsMeta/childSectionsDerived/RelInfo";
 import {
   FeParentInfo,
   FeParentInfoSafe,
   FeSectionInfo,
+  FeVarbInfo,
   noParentWarning,
-  VarbInfo
 } from "../SectionsMeta/Info";
 import { SectionMeta } from "../SectionsMeta/SectionMeta";
 import {
   SectionName,
   sectionNameS,
-  SectionNameType
+  SectionNameType,
 } from "../SectionsMeta/SectionName";
 import { RawFeSection } from "../StateSections/StateSectionsTypes";
 import { Arr } from "../utils/Arr";
@@ -368,7 +368,7 @@ export class GetterSection<
   varb(varbName: string): GetterVarb<SN> {
     return this.varbs.one(varbName);
   }
-  varbInfo(varbName: SectionVarbName<SN>): VarbInfo<SN> {
+  varbInfo(varbName: SectionVarbName<SN>): FeVarbInfo<SN> {
     return this.varb(varbName as string).feVarbInfo;
   }
   inEntityValueInfo(): InEntityValueInfo {
@@ -398,8 +398,11 @@ export class GetterSection<
   switchVarbInfo(
     varbNameBase: string,
     switchEnding: SwitchEndingKey
-  ): VarbInfo<SN> {
-    const varbName = this.switchVarbName(varbNameBase, switchEnding) as SectionVarbName<SN>;
+  ): FeVarbInfo<SN> {
+    const varbName = this.switchVarbName(
+      varbNameBase,
+      switchEnding
+    ) as SectionVarbName<SN>;
     return this.varbInfo(varbName);
   }
   switchVarb(
@@ -418,12 +421,12 @@ export class GetterSection<
   get selfAndDescendantVarbIds(): string[] {
     return GetterVarb.varbInfosToVarbIds(this.selfAndDescendantVarbInfos);
   }
-  get selfAndDescendantVarbInfos(): VarbInfo[] {
+  get selfAndDescendantVarbInfos(): FeVarbInfo[] {
     const sectionInfos = this.selfAndDescendantSectionInfos;
     return sectionInfos.reduce((feVarbInfos, sectionInfo) => {
       const section = this.getterSection(sectionInfo);
       return feVarbInfos.concat(...section.varbs.feVarbInfos);
-    }, [] as VarbInfo[]);
+    }, [] as FeVarbInfo[]);
   }
   get selfAndDescendantSectionInfos(): FeSectionInfo[] {
     const feIds = this.selfAndDescendantFeIds;

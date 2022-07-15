@@ -1,6 +1,6 @@
 import { pick } from "lodash";
 import { Id } from "../SectionsMeta/baseSectionsUtils/id";
-import { FeSectionInfo, VarbInfo } from "../SectionsMeta/Info";
+import { FeSectionInfo, FeVarbInfo } from "../SectionsMeta/Info";
 import { SectionName, sectionNameS } from "../SectionsMeta/SectionName";
 import { Arr } from "../utils/Arr";
 import { Obj } from "../utils/Obj";
@@ -14,7 +14,7 @@ import {
 } from "./StateSectionsTypes";
 
 type UpdateVarbProps<SN extends SectionName> = {
-  feVarbInfo: VarbInfo<SN>;
+  feVarbInfo: FeVarbInfo<SN>;
   rawVarb: RawFeVarb<SN>;
 };
 
@@ -66,7 +66,7 @@ export class StateSections {
   rawVarb<SN extends SectionName>({
     varbName,
     ...rest
-  }: VarbInfo<SN>): RawFeVarb<SN> {
+  }: FeVarbInfo<SN>): RawFeVarb<SN> {
     const rawVarb = this.rawSection(rest).varbs[varbName];
     if (rawVarb === undefined) {
       const { sectionName, feId } = rest;
