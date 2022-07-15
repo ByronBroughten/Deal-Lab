@@ -4,13 +4,13 @@ import { relVarb, relVarbS } from "./relSectionsUtils/rel/relVarb";
 import {
   GeneralRelSection,
   GenericRelSection,
-  relSection
+  relSection,
 } from "./relSectionsUtils/relSection";
 import { RelVarbs, relVarbsS } from "./relSectionsUtils/relVarbs";
 import { dealRelVarbs } from "./relSectionsUtils/relVarbs/dealRelVarbs";
 import {
   financingRelVarbs,
-  loanRelVarbs
+  loanRelVarbs,
 } from "./relSectionsUtils/relVarbs/financingRelVarbs";
 import { mgmtRelVarbs } from "./relSectionsUtils/relVarbs/mgmtRelVarbs";
 import { propertyRelVarbs } from "./relSectionsUtils/relVarbs/propertyRelVarbs";
@@ -80,14 +80,10 @@ export function makeRelSections() {
       varbInfo: relVarb("inEntityVarbInfo"),
       value: relVarbS.numObj("Table cell value"),
     }),
-    outputList: relSection(
-      "Output List",
-      { title: relVarb("string") },
-      {
-        feFullIndexStoreName: "outputListMain",
-        dbIndexStoreName: "outputListMain",
-      }
-    ),
+    outputList: relSection("Output List", relVarbsS.savableSection, {
+      feFullIndexStoreName: "outputListMain",
+      dbIndexStoreName: "outputListMain",
+    }),
     output: relSection("Output", {
       value: relVarb("numObj", {
         updateFnName: "loadedNumObj",

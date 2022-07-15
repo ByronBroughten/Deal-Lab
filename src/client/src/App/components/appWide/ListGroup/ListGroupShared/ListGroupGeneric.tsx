@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import { MdOutlinePlaylistAdd } from "react-icons/md";
 import styled, { css } from "styled-components";
+import { SectionVarbName } from "../../../../sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionTypes";
 import { ChildName } from "../../../../sharedWithServer/SectionsMeta/childSectionsDerived/ChildName";
 import { ChildSectionName } from "../../../../sharedWithServer/SectionsMeta/childSectionsDerived/ChildSectionName";
 import { FeSectionInfo } from "../../../../sharedWithServer/SectionsMeta/Info";
@@ -19,16 +20,13 @@ import { ListGroupTotal } from "./ListGroupGeneric/ListGroupTotal";
 
 type ListParentName = ParentOfTypeName<"varbListAllowed">;
 
-export type ListGroupGenericProps<
-  SN extends ListParentName,
-  CN extends ChildName<SN>
-> = {
+export type ListGroupGenericProps<SN extends ListParentName> = {
   listParentInfo: FeSectionInfo<SN>;
   listAsChildName: ChildName<SN>;
   themeName: ThemeName;
   makeListNode: (props: MakeListNodeProps) => ReactNode;
   titleText: string;
-  totalVarbName?: string;
+  totalVarbName?: SectionVarbName<SN>;
   className?: string;
 };
 
@@ -50,7 +48,7 @@ export function ListGroupGeneric<
   titleText,
   totalVarbName,
   className,
-}: ListGroupGenericProps<SN, CN>) {
+}: ListGroupGenericProps<SN>) {
   const parent = useSetterSection(listParentInfo);
   const lists = parent.get.children(
     listAsChildName

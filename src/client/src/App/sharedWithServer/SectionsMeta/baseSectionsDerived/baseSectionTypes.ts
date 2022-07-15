@@ -19,6 +19,8 @@ type BaseSectionVarbs<
 export type SectionVarbName<SN extends SimpleSectionName> =
   keyof BaseSectionVarbs<SN>;
 
+type Test = SectionVarbName<"property" | "loan">;
+
 export type SectionVarbNameByType<
   SN extends SimpleSectionName,
   VLN extends ValueName

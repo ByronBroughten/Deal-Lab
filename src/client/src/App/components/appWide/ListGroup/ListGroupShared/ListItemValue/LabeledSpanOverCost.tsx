@@ -5,12 +5,13 @@ import theme from "../../../../../theme/Theme";
 import { MaterialStringEditorNext } from "../../../../inputs/MaterialStringEditorNext";
 import { NumObjEditorNext } from "../../../../inputs/NumObjEditorNext";
 
-type Props = { feInfo: FeSectionInfo; valueVarbName: string };
+type Props = { feInfo: FeSectionInfo<"ongoingItem">; valueVarbName: string };
 
 export default function LabeledSpanOverCost({ valueVarbName, feInfo }: Props) {
   const section = useGetterSection(feInfo);
   const valueVarb = section.varb(valueVarbName);
-  const lifespanName = section.switchVarb("lifespan", "monthsYears").varbName;
+  const lifespanName = section.switchVarb("lifespan", "monthsYears")
+    .varbName as "lifespanMonths" | "lifespanYears";
   return (
     <>
       <td className="AdditiveItem-nameCell">

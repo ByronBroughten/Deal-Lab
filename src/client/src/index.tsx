@@ -9,12 +9,20 @@ AppRegistry.runApplication("App", {
 });
 
 // Sections I need to get right before release (savable sections):
-// dbStore
-// singleTimeList
+// dbStore*
+// singleTimeList*
+// ongoingList*
 // singleTimeItem
-// ongoingList
 // ongoingItem
-// property, unit, loan, mgmt, deal, outputList, output, user, serverOnlyUser
+// property
+// unit
+// loan
+// mgmt
+// deal
+// outputList
+// output
+// user
+// serverOnlyUser
 
 // - Make an entityString valueType, and use it for virtualVarbs that can load
 //   their values from other virtual varbs.

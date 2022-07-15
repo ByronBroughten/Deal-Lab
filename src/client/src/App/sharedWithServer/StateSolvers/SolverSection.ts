@@ -1,5 +1,8 @@
 import { SectionPack } from "../SectionPack/SectionPack";
-import { VarbValues } from "../SectionsMeta/baseSectionsDerived/baseSectionTypes";
+import {
+  SectionVarbName,
+  VarbValues,
+} from "../SectionsMeta/baseSectionsDerived/baseSectionTypes";
 import { Id } from "../SectionsMeta/baseSectionsUtils/id";
 import {
   ChildName,
@@ -84,7 +87,7 @@ export class SolverSection<
   }
   updateValuesAndSolve(values: VarbValues): void {
     this.updater.updateValuesDirectly(values);
-    const varbNames = Obj.keys(values) as string[];
+    const varbNames = Obj.keys(values) as SectionVarbName<SN>[];
     const varbInfos = varbNames.map((varbName) => this.get.varbInfo(varbName));
     this.addVarbInfosToSolveFor(...varbInfos);
     this.solve();

@@ -1,6 +1,9 @@
 import { pick } from "lodash";
 import { SectionPack } from "../SectionPack/SectionPack";
-import { VarbValues } from "../SectionsMeta/baseSectionsDerived/baseSectionTypes";
+import {
+  SectionVarbName,
+  VarbValues,
+} from "../SectionsMeta/baseSectionsDerived/baseSectionTypes";
 import { SwitchEndingKey } from "../SectionsMeta/baseSectionsUtils/RelSwitchVarb";
 import {
   ChildName,
@@ -121,7 +124,7 @@ export class SetterSection<
       varbName,
     });
   }
-  varbInfo(varbName: string): VarbInfo<SN> {
+  varbInfo(varbName: SectionVarbName<SN>): VarbInfo<SN> {
     return this.get.varbInfo(varbName);
   }
   switchVarbInfo(

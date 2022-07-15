@@ -1,3 +1,4 @@
+import { SectionVarbName } from "../../../sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionTypes";
 import { ChildSectionNameName } from "../../../sharedWithServer/SectionsMeta/childSectionsDerived/ChildSectionName";
 import { FeSectionInfo } from "../../../sharedWithServer/SectionsMeta/Info";
 import { ParentOfTypeName } from "../../../sharedWithServer/SectionsMeta/SectionName";
@@ -11,7 +12,7 @@ type Props<SN extends ListParentName> = {
   listAsChildName: ChildSectionNameName<SN, "singleTimeList">;
   titleText: string;
   themeName: ThemeName;
-  totalVarbName: string;
+  totalVarbName: SectionVarbName<SN>;
   className?: string;
 };
 export function ListGroupSingleTime<SN extends ListParentName>(

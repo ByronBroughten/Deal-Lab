@@ -4,7 +4,7 @@ import {
   baseOptions,
   baseSection,
   baseSectionS,
-  GeneralBaseSection,
+  GeneralBaseSection
 } from "./baseSectionsUtils/baseSection";
 import { baseVarbs, baseVarbsS } from "./baseSectionsUtils/baseVarbs";
 
@@ -49,11 +49,52 @@ export const baseSections = {
     // then
     then: "numObj",
   }),
+  // I could change "name" to "itemName" in both of them.
 
+  // These two listItems could easily be capable of being virtualVarbs
+  // That's easy.
+
+  // Should they be able to draw from virtualVarbs?
+  // Well, they already can. They have the varbInfo.
+
+  // They need their "name" to appropriately update.
+
+  // "name" needs to be a stringObj.
+  // let's change it to "itemName" and make it a stringObj
+  // so that it can update in response to the virtual varb updating.
+  // I'll need to create and use a stringObj editor.
+  // do I need the name ending?
+  // I guess so.
+  // That would be called itemNameEnding
+  // Or I can call it displayNameEnding.
+  // It doesn't really matter.
+
+  // what about value?
+  // That could be itemValue
+  // I can just leave it as value
+  // I'll just leave it as value.
+  // I really don't like the name "varbInfo"
+
+  // Ok. name is probably fine.
+  // But then I would use nameEnding.
+
+  // In those cases I almost might as well use displayName
+  // and displayNameEnd
+
+  // the list titles could also be switched to displayName.
+  // they might as well.
+
+  // this is how we do.
   singleTimeItem: baseSection({
-    ...baseVarbs("string", ["name", "valueSwitch"] as const),
-    ...baseVarbs("numObj", ["value", "editorValue"] as const),
+    name: "stringObj",
+
     varbInfo: "inEntityVarbInfo",
+    // valueEntityInfo: "inEntityVarbInfo",
+
+    // displayNameEnd: "stringObj",
+
+    valueSwitch: "string",
+    ...baseVarbs("numObj", ["value", "editorValue"] as const),
   }),
   // the important thing is "name" and "value"
   ongoingItem: baseSection({
@@ -76,7 +117,10 @@ export const baseSections = {
     ] as const),
     ...baseVarbs("numObj", ["editorValue", "value"] as const),
   }),
-  outputList: baseSection({ title: "string" }, baseOptions.alwaysOneFromStart),
+  outputList: baseSection(
+    baseVarbsS.savableSection,
+    baseOptions.alwaysOneFromStart
+  ),
   singleTimeList: baseSection(baseVarbsS.singleTimeList),
   ongoingList: baseSection(baseVarbsS.ongoingList),
   login: baseSection(

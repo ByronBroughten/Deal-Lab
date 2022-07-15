@@ -1,3 +1,4 @@
+import { SectionVarbName } from "../../../sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionTypes";
 import { ChildSectionNameName } from "../../../sharedWithServer/SectionsMeta/childSectionsDerived/ChildSectionName";
 import { FeSectionInfo } from "../../../sharedWithServer/SectionsMeta/Info";
 import { ParentOfTypeName } from "../../../sharedWithServer/SectionsMeta/SectionName";
@@ -24,7 +25,10 @@ export function ListGroupOngoing<SN extends ListParentName>({
     <ListGroupGeneric
       {...{
         ...props,
-        totalVarbName: parent.switchVarbName(totalVarbNameBase, "ongoing"),
+        totalVarbName: parent.switchVarbName(
+          totalVarbNameBase,
+          "ongoing"
+        ) as SectionVarbName<SN>,
         makeListNode: (nodeProps) => <VarbListOngoing {...nodeProps} />,
       }}
     />
