@@ -8,20 +8,28 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-// - fullDisplayName
-// - displayNameEnd
+// - Make an entityString valueType, and use it for virtualVarbs that can load
+//   their values from other virtual varbs.
+// - Make a function for gathering props in SolveValueVarb
+// - Change some varbNames "name" to "displayName".
+// - Settle on final names for sections in general.
 
-// PackBuilderSection doesn't make or init stuff with defaults.
-// I could make DefaultBuilderSection.
+// when variables give their displayName, displayNameEnd, etc, I can check
+// if it's a virtualVarbValue, and if so, access those in a different way.
 
 // make output work like loadedVarbs, so that it actually harbors the value
-// of its varb, which is then saved. It also harbors the varb's "name", too.
-// It is a "virtualVarb", as can perhaps be anything with a "name" and a "value"
-// In that case, its displayName comes from its name
+// of its varb. It also harbors the varb's displayName, too, and its inEntityInfo.
+// its displayName also comes from its
+
+// The point of virtual varbs is the ability to select them in varb selectors.
+// I want to be able to select those output values as variables without saving
+// the user variables from which they're derived.
 
 // Core Features
-// * Load  "deal" with updates
-// * Load "property", etc, with updates
+// * Load  "deal" with updates and be able to select
+// outputs as variables.
+
+// * Load "property" with updates
 // * Load "singleTimeList", etc, with updates
 // * Implement payments!
 
@@ -30,7 +38,7 @@ AppRegistry.runApplication("App", {
 // - the actor tests
 
 // To make sure the userVarbs come from the right place:
-// When implementing userVarbs, make them draw from feStore ones
+// When implementing userVarbs, make them draw from feStore userVarbList
 // those may be the only ones.
 
 // I'll need to make the list groups be sections

@@ -2,7 +2,12 @@ import { Obj } from "../../../utils/Obj";
 import { ValueTypes } from "../../relSectionsUtils/rel/valueMetaTypes";
 import { valueMeta } from "../../relSectionsUtils/valueMeta";
 
-const editorUpdateNames = ["calcVarbs", "string", "stringArray"] as const;
+const editorUpdateNames = [
+  "calcVarbs",
+  "string",
+  "stringArray",
+  "updateByEditor",
+] as const;
 type EditorUpdateName = typeof editorUpdateNames[number];
 export function isEditorUpdateFnName(value: string): value is EditorUpdateName {
   return editorUpdateNames.includes(value as any);

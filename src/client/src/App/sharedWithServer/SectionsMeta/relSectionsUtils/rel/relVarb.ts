@@ -19,6 +19,8 @@ import {
 const makeDefaultCommon = <T extends CommonRelVarb>(common: T): CommonRelVarb =>
   common;
 const defaultCommon = makeDefaultCommon({
+  virtualVarb: null,
+
   displayName: "",
   displayNameEnd: "",
 
@@ -54,7 +56,7 @@ export const relVarbS = {
           {
             switchInfo: relVarbInfoS.local("valueSwitch"),
             switchValue: "loadedVarb",
-            updateFnName: "loadedString",
+            updateFnName: "loadedDisplayName",
             updateFnProps: relVarbInfosS.localEntityInfo(),
           },
         ],

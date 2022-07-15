@@ -15,7 +15,6 @@ import { GetterSection } from "../StateGetters/GetterSection";
 import { GetterSections } from "../StateGetters/GetterSections";
 import { GetterVarb } from "../StateGetters/GetterVarb";
 import { GetterVarbNumObj } from "../StateGetters/GetterVarbNumObj";
-import { GetterVarbs } from "../StateGetters/GetterVarbs";
 import { UserVarbValueSolver } from "./SolveValueVarb/UserVarbValueSolver";
 
 export class SolveValueVarb<
@@ -30,13 +29,9 @@ export class SolveValueVarb<
   private get getterList() {
     return new GetterList(this.getterListProps);
   }
-  private get getterVarbs() {
-    return new GetterVarbs(this.getterSectionProps);
-  }
   private get getterVarb() {
     return new GetterVarb(this.getterVarbProps);
   }
-
   private get numObjSolver() {
     return new GetterVarbNumObj(this.getterVarbProps);
   }
@@ -88,11 +83,18 @@ export class SolveValueVarb<
         return userVarbSolver.getUserVarbValue();
       } else throw new Error("section must contain at least one varb");
     },
-    loadedString: (): string => {
+    loadedDisplayName: (): string => {
       const varbInfo = this.getterSection.varbInfoValue();
       if (this.getterSections.hasSectionMixed(varbInfo)) {
         const varb = this.getterSections.varbByMixed(varbInfo);
         return varb.displayName;
+      } else return "Variable not found.";
+    },
+    loadedDisplayNameEnd: (): string => {
+      const varbInfo = this.getterSection.varbInfoValue();
+      if (this.getterSections.hasSectionMixed(varbInfo)) {
+        const varb = this.getterSections.varbByMixed(varbInfo);
+        return varb.displayNameEnd;
       } else return "Variable not found.";
     },
   };

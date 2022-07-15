@@ -1,5 +1,8 @@
 import { pick } from "lodash";
-import { sectionContext, SimpleSectionName } from "./SectionsMeta/baseSections";
+import {
+  SimpleSectionName,
+  simpleSectionNames,
+} from "./SectionsMeta/baseSections";
 import { VarbNames } from "./SectionsMeta/baseSectionsDerived/baseVarbInfo";
 import {
   DescendantSectionName,
@@ -52,7 +55,7 @@ export class SectionsMeta {
   value<VNS extends VarbNames>(varbNames: VNS) {
     return this.varb(varbNames).value;
   }
-  selfAndDescendantNames<SN extends SectionName>(
+  selfAndDescendantNames<SN extends SimpleSectionName>(
     sectionName: SN
   ): SelfOrDescendantSectionName<SN>[] {
     const selfAndDescendantNames: SelfOrDescendantSectionName<SN>[] = [];
@@ -120,18 +123,14 @@ export class SectionsMeta {
         (sectionMeta as SectionMeta<SectionName>).varbMetas
       )) {
         for (const inUpdatePack of varbMeta.inUpdatePacks) {
-          this.inUpdatePackToOuts(
-            { sectionName, varbName, sectionContext } as any,
-            inUpdatePack
-          );
+          this.inUpdatePackToOuts({ sectionName, varbName }, inUpdatePack);
         }
       }
     }
   }
 
   private static initCore(): SectionMetasCore {
-    const sectionNames = sectionNameS.arrs.all;
-    return sectionNames.reduce((core, sectionName) => {
+    return simpleSectionNames.reduce((core, sectionName) => {
       (core[sectionName] as SectionMeta<typeof sectionName>) =
         SectionMeta.init(sectionName);
       return core;

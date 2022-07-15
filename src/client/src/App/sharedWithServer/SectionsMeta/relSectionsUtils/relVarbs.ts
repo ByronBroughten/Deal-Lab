@@ -40,7 +40,7 @@ function isRelVarbOfType<SN extends BaseName<"hasVarb">, VLN extends ValueName>(
   valueName: VLN,
   _value: any
 ): _value is RelVarbByType[VLN] {
-  const schema = baseSections["fe"][sectionName];
+  const schema = baseSections[sectionName];
   const varbType =
     schema.varbSchemas[varbName as keyof typeof schema.varbSchemas];
   return varbType === valueName;
@@ -106,7 +106,7 @@ export const relVarbsS = {
     });
   },
   sectionStrings<
-    SN extends BaseName<"hasVarb", "fe">,
+    SN extends BaseName<"hasVarb">,
     PV extends RelVarbs<SN>,
     ToSkip extends readonly (keyof PV)[] = []
   >(sectionName: SN, relVarbs: PV, toSkip?: ToSkip) {
@@ -156,20 +156,21 @@ export const relVarbsS = {
     }
     return ssPreVarbs as ToReturn;
   },
-  varbInfo() {
+  varbInfoProp() {
     return { varbInfo: relVarb("inEntityVarbInfo") } as const;
   },
   entityInfo() {
     return {
-      ...this.varbInfo(),
+      ...this.varbInfoProp(),
       entityId: relVarb("string"),
     };
   },
-  singleTimeItem<R extends RelVarbs<"singleTimeItem">>(): R {
-    const sectionName = "singleTimeItem";
+
+  singleTimeItem(): RelVarbs<"singleTimeItem"> {
     const valueSwitchProp = relVarbInfoS.local("valueSwitch");
-    const r: R = {
+    return {
       name: relVarbS.stringOrLoaded(),
+
       valueSwitch: relVarb("string", {
         initValue: "labeledEquation",
       }),
@@ -194,8 +195,7 @@ export const relVarbsS = {
         ],
         startAdornment: "$",
       }),
-    } as R;
-    return r;
+    };
   },
   ongoingItem(): RelVarbs<"ongoingItem"> {
     const sectionName = "ongoingItem";

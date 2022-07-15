@@ -4,65 +4,47 @@ import { SubType } from "../../utils/types";
 import {
   BaseSections,
   baseSections,
-  ContextName,
-  sectionContext,
   SimpleSectionName,
   simpleSectionNames,
 } from "../baseSections";
 import { GeneralBaseSection } from "../baseSectionsUtils/baseSection";
 
-const baseSectionVarbs = Obj.toNestedPropertyObj(
-  baseSections.fe,
-  "varbSchemas"
-);
+const baseSectionVarbs = Obj.toNestedPropertyObj(baseSections, "varbSchemas");
 export type BaseSectionVarbs = typeof baseSectionVarbs;
 
 type HasVarbSectionName<
   NoVarbSectionName = keyof SubType<
-    BaseSections["fe"],
+    BaseSections,
     { varbSchemas: { [K in any]: never } }
   >
-> = Exclude<keyof BaseSections["fe"], NoVarbSectionName>;
+> = Exclude<keyof BaseSections, NoVarbSectionName>;
 
-function makeSingleSectionNameArrs<
-  SC extends ContextName,
-  SnArrs = {
-    [Prop in keyof BaseSections[SC]]: readonly Prop[];
-  }
->(context: SC): SnArrs {
-  return Obj.keys(baseSections[context]).reduce((snArrs, sectionName) => {
-    snArrs[sectionName as keyof SnArrs] = [
-      sectionName,
-    ] as any as SnArrs[keyof SnArrs];
+type SnArrs = {
+  [SN in keyof BaseSections]: SN[];
+};
+function makeSingleSectionNameArrs(): SnArrs {
+  return Obj.keys(baseSections).reduce((snArrs, sectionName) => {
+    (snArrs as any)[sectionName] = [sectionName];
     return snArrs;
   }, {} as SnArrs);
 }
 
-function makeBaseNameArrsForContext<SC extends ContextName>(
-  sectionContext: SC
-) {
-  const baseSectionsOfContext = baseSections[sectionContext];
-
+function makeBaseNameArrs() {
   return {
-    ...makeSingleSectionNameArrs(sectionContext),
+    ...makeSingleSectionNameArrs(),
     all: simpleSectionNames as SimpleSectionName[],
     notRootNorOmni: Arr.excludeStrict(simpleSectionNames, [
       "root",
       "omniParent",
     ] as const),
-
-    // varbShape
-    // In some cases it might be safer to go by whether they have the same children
-    // in which cases they would be derived at a higher level
-    hasVarb: Obj.keys(baseSectionsOfContext).filter((sectionName) => {
+    hasVarb: Obj.keys(baseSections).filter((sectionName) => {
       const varbNames = Object.keys(
-        (baseSectionsOfContext[sectionName] as any as GeneralBaseSection)
-          .varbSchemas
+        (baseSections[sectionName] as any as GeneralBaseSection).varbSchemas
       );
       return varbNames.length > 0;
     }) as HasVarbSectionName[],
     hasGlobalVarbs: Obj.entryKeysWithPropValue(
-      baseSectionsOfContext,
+      baseSections,
       "hasGlobalVarbs",
       true as true
     ),
@@ -82,17 +64,7 @@ function makeBaseNameArrsForContext<SC extends ContextName>(
   };
 }
 
-function makeBaseNameArrs() {
-  return sectionContext.typeCheckContextObj({
-    fe: makeBaseNameArrsForContext("fe"),
-    db: makeBaseNameArrsForContext("db"),
-  });
-}
-
-type GeneralBaseNameArrs = {
-  fe: Record<string, readonly (keyof BaseSections["fe"])[]>;
-  db: Record<string, readonly (keyof BaseSections["db"])[]>;
-};
+type GeneralBaseNameArrs = Record<string, readonly (keyof BaseSections)[]>;
 
 export const baseNameArrs = makeBaseNameArrs();
 
@@ -100,4 +72,4 @@ const testBaseNameArrs = (_: GeneralBaseNameArrs) => undefined;
 testBaseNameArrs(baseNameArrs);
 
 export type BaseNameArrs = typeof baseNameArrs;
-export type BaseNameSelector = keyof BaseNameArrs["fe"];
+export type BaseNameSelector = keyof BaseNameArrs;

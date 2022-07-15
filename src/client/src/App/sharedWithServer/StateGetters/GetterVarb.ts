@@ -2,11 +2,11 @@ import { cloneDeep } from "lodash";
 import {
   DbVarbInfoMixed,
   FeVarbInfoMixed,
-  VarbNames,
+  VarbNames
 } from "../SectionsMeta/baseSectionsDerived/baseVarbInfo";
 import {
   InEntity,
-  OutEntity,
+  OutEntity
 } from "../SectionsMeta/baseSectionsUtils/baseValues/entities";
 import { NumberOrQ } from "../SectionsMeta/baseSectionsUtils/baseValues/NumObj";
 import { ValueName } from "../SectionsMeta/baseSectionsUtils/baseVarb";
@@ -15,11 +15,11 @@ import {
   Adornments,
   StateValueAnyKey,
   valueSchemasPlusAny,
-  ValueTypesPlusAny,
+  ValueTypesPlusAny
 } from "../SectionsMeta/baseSectionsUtils/StateVarbTypes";
 import {
   mixedInfoS,
-  VarbInfoMixedFocal,
+  VarbInfoMixedFocal
 } from "../SectionsMeta/childSectionsDerived/MixedSectionInfo";
 import { RelLocalInfo } from "../SectionsMeta/childSectionsDerived/RelInfo";
 import { InfoS, VarbInfo } from "../SectionsMeta/Info";
@@ -140,7 +140,9 @@ export class GetterVarb<
       return cloneDeep(value) as ValueTypesPlusAny[VT];
     throw new ValueTypeError(`Value not of type ${valueName}`);
   }
-
+  get valueName(): ValueName {
+    return this.meta.valueName;
+  }
   get displayName(): string {
     const { displayName } = this.meta;
     if (typeof displayName === "string") return displayName;
@@ -150,6 +152,9 @@ export class GetterVarb<
   get fullDisplayName(): string {
     const { displayNameEnd } = this.meta;
     return this.displayName + displayNameEnd;
+  }
+  get displayNameEnd(): string {
+    return this.meta.displayNameEnd;
   }
   get displayValue(): string {
     if (this.hasValueType("numObj")) {

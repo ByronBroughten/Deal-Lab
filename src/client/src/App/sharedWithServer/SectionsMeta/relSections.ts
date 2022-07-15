@@ -1,4 +1,5 @@
 import { ApiAccessStatus, SimpleSectionName } from "./baseSections";
+import { relVarbInfoS } from "./childSectionsDerived/RelVarbInfo";
 import { relVarb, relVarbS } from "./relSectionsUtils/rel/relVarb";
 import {
   GeneralRelSection,
@@ -54,6 +55,12 @@ export function makeRelSections() {
       encryptedPassword: relVarb("string"),
       emailAsSubmitted: relVarb("string"),
     }),
+    // there can only be one virtualVarb per section, right?
+    // well. Not necessarily.
+    // For now, yes.
+
+    // Ooh, what about this api:
+    // "virtualVarbs": [{ name: "displayName", value: "value" }]
     login: relSection("login", {
       email: relVarb("string", { displayName: "Email" }),
       password: relVarb("string", { displayName: "Password" }),
@@ -68,9 +75,9 @@ export function makeRelSections() {
       title: relVarb("string"),
       compareToggle: relVarb("boolean"),
     }),
-    column: relSection("Column", relVarbsS.varbInfo()),
+    column: relSection("Column", relVarbsS.varbInfoProp()),
     cell: relSection("Cell", {
-      ...relVarbsS.varbInfo(),
+      ...relVarbsS.varbInfoProp(),
       value: relVarbS.numObj("Table cell value"),
     }),
     outputList: relSection(
@@ -81,7 +88,28 @@ export function makeRelSections() {
         dbIndexStoreName: "outputListMain",
       }
     ),
-    output: relSection("Output", relVarbsS.varbInfo()),
+    output: relSection("Output", {
+      value: relVarb("numObj", {
+        updateFnName: "loadedNumObj",
+        updateFnProps: {
+          varbInfo: relVarbInfoS.local("varbInfo"),
+        },
+      }),
+      varbInfo: relVarb("inEntityVarbInfo"),
+      displayName: relVarb("string", {
+        updateFnName: "loadedDisplayName",
+        updateFnProps: {
+          varbInfo: relVarbInfoS.local("varbInfo"),
+        },
+      }),
+      displayNameEnd: relVarb("string", {
+        updateFnName: "loadedDisplayNameEnd",
+        updateFnProps: {
+          varbInfo: relVarbInfoS.local("varbInfo"),
+        },
+      }),
+      entityId: relVarb("string"),
+    }),
     singleTimeList: relSection("List", relVarbsS.singleTimeList(), {
       varbListItem: "singleTimeItem",
       feFullIndexStoreName: "singleTimeListMain",

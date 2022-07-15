@@ -24,14 +24,14 @@ type SectionMetasCoreGeneral = {
 };
 export type SectionsMetaCore = {
   [SN in SimpleSectionName]: RelSections[SN] &
-    BaseSections["fe"][SN] &
+    BaseSections[SN] &
     GeneratedSections[SN];
 };
 export const sectionMetasCore = simpleSectionNames.reduce(
   (core, sectionName) => {
     (core as SectionMetasCoreGeneral)[sectionName] = {
       ...relSections[sectionName],
-      ...baseSections["fe"][sectionName],
+      ...baseSections[sectionName],
       ...generatedSections[sectionName],
     };
     return core;

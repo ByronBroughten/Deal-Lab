@@ -12,6 +12,12 @@ import {
   NumObj,
   zNumObj,
 } from "../baseSectionsUtils/baseValues/NumObj";
+import {
+  initDefaultStringObj,
+  isStringObj,
+  mStringObj,
+  zStringObj,
+} from "../baseSectionsUtils/baseValues/StringObj";
 import { numObjUpdateFnNames } from "../baseSectionsUtils/baseValues/updateFnNames";
 import { ValueName } from "../baseSectionsUtils/baseVarb";
 
@@ -32,10 +38,17 @@ export const valueMeta = {
   },
   string: {
     is: (v: any): v is string => typeof v === "string",
-    updateFnNames: ["string", "loadedString"],
+    updateFnNames: ["string", "loadedDisplayName", "loadedDisplayNameEnd"],
     initDefault: () => "",
     zod: z.string(),
     mon: reqMonString,
+  },
+  stringObj: {
+    is: isStringObj,
+    updateFnNames: ["updateByEditor"],
+    initDefault: initDefaultStringObj,
+    zod: zStringObj,
+    mon: mStringObj,
   },
   stringArray: {
     is: (v: any): v is string[] =>

@@ -68,7 +68,11 @@ export class SectionMeta<SN extends SimpleSectionName> {
     return this.prop("varbListItem");
   }
   varb(varbName: string): VarbMeta<SN> {
-    return this.varbMetas[varbName];
+    const varbMeta = this.varbMetas[varbName];
+    if (varbMeta === undefined) {
+      throw new Error(`No varbMeta at ${this.sectionName}.${varbName}`);
+    }
+    return varbMeta;
   }
   propNoNull<PN extends CorePropName>(propName: PN): CorePropNoNull<SN, PN> {
     const prop = this.core[propName];

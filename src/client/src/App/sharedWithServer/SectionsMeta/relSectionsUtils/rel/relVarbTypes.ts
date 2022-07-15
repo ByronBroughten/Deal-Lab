@@ -22,6 +22,12 @@ export type UpdateSwitchProp = SwitchUpdateInfo & {
 export type UpdateSwitches = UpdateSwitchProp[];
 export type DisplayName = string | RelSingleInVarbInfo;
 export type CommonRelVarb = {
+  virtualVarb: {
+    value: string;
+    displayName: string;
+    displayNameEnd: string;
+  } | null;
+
   updateFnProps: UpdateFnProps;
   inUpdateSwitchProps: UpdateSwitches;
 

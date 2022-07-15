@@ -56,9 +56,7 @@ export interface VarbNames<SN extends SimpleSectionName = SimpleSectionName>
     VarbProp {}
 
 export function isValidVarbNames({ sectionName, varbName }: VarbNames) {
-  const varbNames = Obj.keys(
-    baseSections.fe[sectionName].varbSchemas
-  ) as string[];
+  const varbNames = Obj.keys(baseSections[sectionName].varbSchemas) as string[];
   if (varbNames.includes(varbName)) return true;
   else return false;
 }

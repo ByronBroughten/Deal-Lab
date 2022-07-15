@@ -16,6 +16,7 @@ import {
   NumObj,
 } from "../SectionsMeta/baseSectionsUtils/baseValues/NumObj";
 import { isEditorUpdateFnName } from "../SectionsMeta/baseSectionsUtils/baseValues/StateValueTypes";
+import { StringObj } from "../SectionsMeta/baseSectionsUtils/baseValues/StringObj";
 import { EditorValueTypeName } from "../SectionsMeta/relSectionsUtils/rel/valueMetaTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { GetterVarbBase } from "../StateGetters/Bases/GetterVarbBase";
@@ -73,39 +74,44 @@ export class EditorUpdaterVarb<
   }
   private valueFromContentState(
     contentState: ContentState
-  ): string | string[] | NumObj {
+  ): string | string[] | NumObj | StringObj {
     const { updateFnName } = this.getterVarb;
     if (!isEditorUpdateFnName(updateFnName)) {
-      throw new Error(`${updateFnName} is not an editor updateFnName`);
+      throw new Error(`"${updateFnName}" is not an editor updateFnName.`);
     }
-    if (updateFnName === "calcVarbs") {
-      return this.numObjFromContent(contentState);
-    } else return updateEditorByBasicType[updateFnName](contentState);
+    const { valueName } = this.getterVarb;
+    if (valueName in this.valueFromEditorFns) {
+      return this.valueFromEditorFns[
+        valueName as keyof typeof this.valueFromEditorFns
+      ](contentState);
+    } else
+      throw new Error(`value of type "${valueName}" cannot update via editor.`);
   }
-  private numObjFromContent(contentState: ContentState): NumObj {
-    const textAndEntities = textAndEntitiesFromContentState(contentState);
-    return this.numObjFromTextAndEntities(textAndEntities);
-  }
-  private numObjFromTextAndEntities(
-    textAndEntities: EntitiesAndEditorText
-  ): NumObj {
-    const solvableText =
-      this.numObjSolver.solvableTextFromTextAndEntities(textAndEntities);
-    return { ...textAndEntities, solvableText };
-  }
+  valueFromEditorFns = {
+    numObj: (contentState: ContentState): NumObj => {
+      const textAndEntities = textAndEntitiesFromContentState(contentState);
+      const solvableText =
+        this.numObjSolver.solvableTextFromTextAndEntities(textAndEntities);
+      return { ...textAndEntities, solvableText };
+    },
+    stringObj(contentState: ContentState): StringObj {
+      const textAndEntities = textAndEntitiesFromContentState(contentState);
+      return {
+        text: textAndEntities.editorText,
+        entities: textAndEntities.entities,
+      };
+    },
+    string(contentState: ContentState): string {
+      return draftUtils.contentStateToText(contentState);
+    },
+    stringArray(contentState: ContentState): string[] {
+      const text = this.string(contentState);
+      const arr = text.split(",");
+      if (arr.length > 0 && Arr.lastOrThrow(arr) === "") arr.pop();
+      return arr;
+    },
+  };
 }
-
-const updateEditorByBasicType = {
-  string(contentState: ContentState): string {
-    return draftUtils.contentStateToText(contentState);
-  },
-  stringArray(contentState: ContentState): string[] {
-    const text = this.string(contentState);
-    const arr = text.split(",");
-    if (arr.length > 0 && Arr.lastOrThrow(arr) === "") arr.pop();
-    return arr;
-  },
-};
 
 function textAndEntitiesFromContentState(
   contentState: ContentState

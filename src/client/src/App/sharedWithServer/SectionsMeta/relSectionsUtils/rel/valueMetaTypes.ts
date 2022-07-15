@@ -24,7 +24,7 @@ export type SchemaVarbsToDbValues<T extends Record<string, keyof ValueTypes>> =
   };
 
 export type SafeDbVarbs<SN extends SimpleSectionName> = SchemaVarbsToDbValues<
-  BaseSections["fe"][SN]["varbSchemas"]
+  BaseSections[SN]["varbSchemas"]
 >;
 
 export type UpdateFnName =

@@ -7,6 +7,7 @@ const valueNames = [
   "boolean",
   "string",
   "stringArray",
+  "stringObj",
   "numObj",
   "inEntityVarbInfo",
 ] as const;

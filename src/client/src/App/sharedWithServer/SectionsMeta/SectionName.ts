@@ -7,10 +7,10 @@ import { ChildToSectionName } from "./childSectionsDerived/ChildSectionName";
 import { ParentName } from "./childSectionsDerived/ParentName";
 import { relNameArrs, RelNameArrs } from "./relSectionsDerived/relNameArrs";
 
-type NameArrs = BaseNameArrs["fe"] & RelNameArrs;
+type NameArrs = BaseNameArrs & RelNameArrs;
 function makeNameArrs(): NameArrs {
   return {
-    ...baseNameArrs["fe"],
+    ...baseNameArrs,
     ...relNameArrs,
   };
 }
