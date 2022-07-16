@@ -7,7 +7,10 @@ export function LabeledVarbOutput({ feId }: { feId: string }) {
     feId,
   });
 
-  const entityVarbInfo = output.get.value("varbInfo", "inEntityVarbInfo");
+  const entityVarbInfo = output.get.value(
+    "valueEntityInfo",
+    "inEntityVarbInfo"
+  );
   if (entityVarbInfo === null) throw new Error("Value not initialized");
 
   const props = {

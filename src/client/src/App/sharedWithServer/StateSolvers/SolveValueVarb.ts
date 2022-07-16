@@ -15,6 +15,8 @@ import { GetterSection } from "../StateGetters/GetterSection";
 import { GetterSections } from "../StateGetters/GetterSections";
 import { GetterVarb } from "../StateGetters/GetterVarb";
 import { GetterVarbNumObj } from "../StateGetters/GetterVarbNumObj";
+import { StateValue } from "./../SectionsMeta/baseSectionsUtils/baseValues/StateValueTypes";
+import { StringObj } from "./../SectionsMeta/baseSectionsUtils/baseValues/StringObj";
 import { UserVarbValueSolver } from "./SolveValueVarb/UserVarbValueSolver";
 
 export class SolveValueVarb<
@@ -36,8 +38,14 @@ export class SolveValueVarb<
     return new GetterVarbNumObj(this.getterVarbProps);
   }
   private updateFns = {
+    updateByEditorOnly: (): StateValue => {
+      return this.getterVarb.value();
+    },
     string: (): string => {
       return this.getterVarb.value("string");
+    },
+    stringObj: (): StringObj => {
+      return this.getterVarb.value("stringObj");
     },
     inEntityVarbInfo: (): InEntityVarbInfoValue => {
       return this.getterVarb.value("inEntityVarbInfo");
@@ -98,7 +106,7 @@ export class SolveValueVarb<
       } else return "Variable not found.";
     },
   };
-  solveValue(): NumObj | string | InEntityVarbInfoValue {
+  solveValue(): StateValue {
     const { updateFnName } = this.getterVarb;
     if (isCalculationName(updateFnName)) return this.updateFns.calculation();
     if (this.isInUpdateFns(updateFnName)) return this.updateFns[updateFnName]();
@@ -106,7 +114,7 @@ export class SolveValueVarb<
   }
   private loadNextTexts(): { editorText: string; solvableText: string } {
     const loadingVarbInfo = this.getterSection.value(
-      "varbInfo",
+      "valueEntityInfo",
       "inEntityVarbInfo"
     );
     if (loadingVarbInfo && this.getterList.hasByMixed(loadingVarbInfo)) {

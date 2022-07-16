@@ -118,4 +118,9 @@ export const baseVarbsS = {
       value: "numObj",
     } as const;
   },
+  get loadableVarb() {
+    return {
+      valueEntityInfo: "inEntityVarbInfo",
+    } as const;
+  },
 } as const;

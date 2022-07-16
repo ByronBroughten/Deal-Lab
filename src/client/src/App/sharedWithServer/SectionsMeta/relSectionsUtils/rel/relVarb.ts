@@ -57,7 +57,7 @@ export const relVarbS = {
             switchValue: "loadedVarb",
             updateFnName: "loadedDisplayName",
             updateFnProps: {
-              varbInfo: relVarbInfoS.local("varbInfo"),
+              varbInfo: relVarbInfoS.local("valueEntityInfo"),
             },
           },
         ],

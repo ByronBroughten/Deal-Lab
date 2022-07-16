@@ -34,10 +34,10 @@ export const baseSections = {
     compareToggle: "boolean",
   }),
   column: baseSection({
-    varbInfo: "inEntityVarbInfo",
+    valueEntityInfo: "inEntityVarbInfo",
   }),
   cell: baseSection({
-    varbInfo: "inEntityVarbInfo",
+    valueEntityInfo: "inEntityVarbInfo",
     value: "numObj",
   }),
   conditionalRow: baseSection({
@@ -83,24 +83,37 @@ export const baseSections = {
   }),
   output: baseSection({
     ...baseVarbsS.singleVirtualVarb,
-    displayNameEnd: "stringObj",
-    varbInfo: "inEntityVarbInfo",
+    ...baseVarbsS.loadableVarb,
   }),
   singleTimeItem: baseSection({
-    // valueEntityInfo: "inEntityVarbInfo",
-    // displayNameEnd: "stringObj",
     ...baseVarbsS.singleVirtualVarb,
-    varbInfo: "inEntityVarbInfo",
+    ...baseVarbsS.loadableVarb,
     valueSwitch: "string",
     editorValue: "numObj",
   }),
   ongoingItem: baseSection({
+    // I think for ongoingItem, I actually want one value
+    // when I load a varb, the value needs to be the same
+    // regardless of whether the switch is flipped to monthly or yearly
+
+    // Actually, maybe nevermind. That is being achieved.
+
+    // If there were one value, then the valueSwitch would control...
+    // No, wait. There would still need to be multiple totals. Right?
+
+    // No, there would just need to be one total. And the way that
+    // its value switch is flipped in relation to each child would determine
+    // how the child is processed.
+
+    // the updateFunction would have the same inVarbs either way
+    // the summation would be a bit more complicated.
+
     ...baseVarbsS.listItem,
+    ...baseVarbsS.loadableVarb,
     ...baseVarbs("string", ["valueSwitch"] as const),
     ...baseVarbs("numObj", ["costToReplace", "editorValue"] as const),
     ...baseVarbsS.ongoing("value"),
     ...baseVarbsS.switch("lifespan", "monthsYears"),
-    varbInfo: "inEntityVarbInfo",
   }),
 
   login: baseSection(baseVarbs("string", ["email", "password"] as const)),

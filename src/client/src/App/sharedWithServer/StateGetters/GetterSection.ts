@@ -372,7 +372,7 @@ export class GetterSection<
     return this.varb(varbName as string).feVarbInfo;
   }
   inEntityValueInfo(): InEntityValueInfo {
-    const value = this.value("varbInfo", "inEntityVarbInfo");
+    const value = this.value("valueEntityInfo", "inEntityVarbInfo");
     if (!value) throw new Error("inEntityVarbInfo value is not initialized");
     return value;
   }

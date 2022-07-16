@@ -45,7 +45,7 @@ export const valueMeta = {
   },
   stringObj: {
     is: isStringObj,
-    updateFnNames: ["updateByEditor"],
+    updateFnNames: ["stringObj", "updateByEditorOnly"],
     initDefault: initDefaultStringObj,
     zod: zStringObj,
     mon: mStringObj,

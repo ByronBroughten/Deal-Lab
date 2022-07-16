@@ -75,9 +75,11 @@ export function makeRelSections() {
       displayName: relVarb("string"),
       compareToggle: relVarb("boolean"),
     }),
-    column: relSection("Column", { varbInfo: relVarb("inEntityVarbInfo") }),
+    column: relSection("Column", {
+      valueEntityInfo: relVarb("inEntityVarbInfo"),
+    }),
     cell: relSection("Cell", {
-      varbInfo: relVarb("inEntityVarbInfo"),
+      valueEntityInfo: relVarb("inEntityVarbInfo"),
       value: relVarbS.numObj("Table cell value"),
     }),
     outputList: relSection("Output List", relVarbsS.savableSection, {
@@ -88,20 +90,20 @@ export function makeRelSections() {
       value: relVarb("numObj", {
         updateFnName: "loadedNumObj",
         updateFnProps: {
-          varbInfo: relVarbInfoS.local("varbInfo"),
+          varbInfo: relVarbInfoS.local("valueEntityInfo"),
         },
       }),
-      varbInfo: relVarb("inEntityVarbInfo"),
+      valueEntityInfo: relVarb("inEntityVarbInfo"),
       displayName: relVarb("string", {
         updateFnName: "loadedDisplayName",
         updateFnProps: {
-          varbInfo: relVarbInfoS.local("varbInfo"),
+          varbInfo: relVarbInfoS.local("valueEntityInfo"),
         },
       }),
       displayNameEnd: relVarb("string", {
         updateFnName: "loadedDisplayNameEnd",
         updateFnProps: {
-          varbInfo: relVarbInfoS.local("varbInfo"),
+          varbInfo: relVarbInfoS.local("valueEntityInfo"),
         },
       }),
     }),

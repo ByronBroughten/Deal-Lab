@@ -6,7 +6,8 @@ const editorUpdateNames = [
   "calcVarbs",
   "string",
   "stringArray",
-  "updateByEditor",
+  "stringObj",
+  "updateByEditorOnly",
 ] as const;
 type EditorUpdateName = typeof editorUpdateNames[number];
 export function isEditorUpdateFnName(value: string): value is EditorUpdateName {

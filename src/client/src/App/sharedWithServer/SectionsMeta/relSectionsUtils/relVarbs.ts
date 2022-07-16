@@ -185,7 +185,7 @@ export const relVarbsS = {
             switchValue: "loadedVarb",
             updateFnName: "loadedNumObj",
             updateFnProps: {
-              varbInfo: relVarbInfoS.local("varbInfo"),
+              varbInfo: relVarbInfoS.local("valueEntityInfo"),
               valueSwitch: valueSwitchProp,
             },
           },
@@ -195,7 +195,7 @@ export const relVarbsS = {
       valueSwitch: relVarb("string", {
         initValue: "labeledEquation",
       }),
-      varbInfo: relVarb("inEntityVarbInfo"),
+      valueEntityInfo: relVarb("inEntityVarbInfo"),
       editorValue: relVarbS.calcVarb("", { startAdornment: "$" }),
     };
   },
@@ -227,7 +227,7 @@ export const relVarbsS = {
       valueSwitch: relVarb("string", {
         initValue: "labeledEquation",
       }),
-      varbInfo: relVarb("inEntityVarbInfo"),
+      valueEntityInfo: relVarb("inEntityVarbInfo"),
       costToReplace: relVarbS.calcVarb("Replacement cost", {
         startAdornment: "$",
       }),
@@ -261,7 +261,7 @@ export const relVarbsS = {
             updateFnName: "loadedNumObj",
             updateFnProps: {
               valueSwitch: valueSwitchProp,
-              varbInfo: relVarbInfoS.local("varbInfo"),
+              varbInfo: relVarbInfoS.local("valueEntityInfo"),
             },
           },
           {
@@ -293,7 +293,7 @@ export const relVarbsS = {
             updateFnName: "loadedNumObj",
             updateFnProps: {
               valueSwitch: valueSwitchProp,
-              varbInfo: relVarbInfoS.local("varbInfo"),
+              varbInfo: relVarbInfoS.local("valueEntityInfo"),
             },
           },
           {
