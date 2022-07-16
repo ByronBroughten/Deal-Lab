@@ -53,7 +53,7 @@ export const baseVarbsS = {
   },
   get savableSection() {
     return {
-      title: "string",
+      displayName: "string",
       dateTimeFirstSaved: "string",
       dateTimeLastSaved: "string",
     } as const;
@@ -106,44 +106,10 @@ export const baseVarbsS = {
       ...this.ongoing("rentCutDollars"),
     } as const;
   },
-  get deal() {
-    return {
-      ...this.savableSection,
-    } as const;
-  },
-  table: {
-    titleFilter: "string",
-    rowIds: "stringArray",
-  },
-  tableRow: {
-    title: "string",
-    compareToggle: "boolean",
-  },
-  get feUser() {
-    return baseVarbs("string", [
-      "email",
-      "userName",
-      "apiAccessStatus",
-    ] as const);
-  },
-  get singleTimeList() {
-    return {
-      ...this.savableSection,
-      total: "numObj",
-      defaultValueSwitch: "string",
-    } as const;
-  },
-  get ongoingList() {
-    return {
-      ...this.savableSection,
-      ...this.ongoing("total"),
-      defaultValueSwitch: "string",
-      defaultOngoingSwitch: "string",
-    } as const;
-  },
   get listItem() {
     return {
       displayName: "stringObj",
+      displayNameEnd: "stringObj",
     } as const;
   },
   get singleVirtualVarb() {

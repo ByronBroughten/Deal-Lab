@@ -1,15 +1,8 @@
-import React from "react";
 import { Box } from "@material-ui/core";
+import React from "react";
 import styled from "styled-components";
 import useToggleView from "../../modules/customHooks/useToggleView";
 import theme from "../../theme/Theme";
-
-type Props = {
-  [key: string]: any;
-  title?: string;
-  leftSide?: any;
-  rightSide?: any;
-};
 
 export function useOpenWidth() {
   const [width, setWidth] = React.useState<string | null>(null);
@@ -33,8 +26,14 @@ export function useOpenWidth() {
   return { style: { width }, viewIsOpen, ref, trackWidthToggleView };
 }
 
+type Props = {
+  [key: string]: any;
+  displayName?: string;
+  leftSide?: any;
+  rightSide?: any;
+};
 export default React.forwardRef(
-  ({ title, leftSide, rightSide, className, ...rest }: Props, ref) => (
+  ({ displayName, leftSide, rightSide, className, ...rest }: Props, ref) => (
     <Styled
       className={"section-title-row " + className}
       ref={ref as any}

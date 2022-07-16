@@ -1,5 +1,5 @@
 import { useGetterSection } from "../../../../../sharedWithServer/stateClassHooks/useGetterSection";
-import { NumObjEditorNext } from "../../../../inputs/NumObjEditorNext";
+import { NumObjEntityEditor } from "../../../../inputs/NumObjEntityEditor";
 
 type Props = { feId: string };
 export default function VacancyRate({ feId }: Props) {
@@ -13,7 +13,7 @@ export default function VacancyRate({ feId }: Props) {
 
   const { endAdornment } = percentVarb.meta;
   return (
-    <NumObjEditorNext
+    <NumObjEntityEditor
       className="VacancyRate-root"
       label="Vacancy Rate"
       feVarbInfo={percentVarb.feVarbInfo}

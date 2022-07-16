@@ -83,7 +83,7 @@ export const relVarbsS = {
   get savableSection() {
     return {
       ...this.strings([
-        "title",
+        "displayName",
         "dateTimeFirstSaved",
         "dateTimeLastSaved",
       ] as const),
@@ -156,16 +156,23 @@ export const relVarbsS = {
     }
     return ssPreVarbs as ToReturn;
   },
+  get listItem() {
+    return {
+      // displayName: relVarbS.stringOrLoaded(),
+      displayName: relVarb("stringObj"),
+      displayNameEnd: relVarb("stringObj"),
+    } as const;
+  },
+  get singleVirtualVarb() {
+    return {
+      ...this.listItem,
+      value: relVarb("numObj"),
+    };
+  },
   singleTimeItem(): RelVarbs<"singleTimeItem"> {
     const valueSwitchProp = relVarbInfoS.local("valueSwitch");
     return {
-      displayName: relVarbS.stringOrLoaded(),
-
-      valueSwitch: relVarb("string", {
-        initValue: "labeledEquation",
-      }),
-      varbInfo: relVarb("inEntityVarbInfo"),
-      editorValue: relVarbS.calcVarb("", { startAdornment: "$" }),
+      ...this.listItem,
       value: relVarbS.numObj(relVarbInfoS.local("displayName"), {
         updateFnName: "editorValue",
         updateFnProps: {
@@ -185,6 +192,11 @@ export const relVarbsS = {
         ],
         startAdornment: "$",
       }),
+      valueSwitch: relVarb("string", {
+        initValue: "labeledEquation",
+      }),
+      varbInfo: relVarb("inEntityVarbInfo"),
+      editorValue: relVarbS.calcVarb("", { startAdornment: "$" }),
     };
   },
   ongoingItem(): RelVarbs<"ongoingItem"> {
@@ -199,7 +211,19 @@ export const relVarbsS = {
     const ongoingSwitchInfo = relVarbInfoS.local(ongoingValueNames.switch);
     const valueSwitchProp = relVarbInfoS.local("valueSwitch");
     return {
-      displayName: relVarbS.stringOrLoaded(),
+      ...this.listItem,
+      // Hmm. Ok, so this displayName value was going to be loadable.
+
+      // loading a varbInfo gives the displayName an inEntity
+      // based on the displayName of the loaded varbInfo (which may derive
+      // from a virtual varb, in which case I have to get that virtualVarb's
+      // displayName entity.
+      // For right now, I can actually do away with loadedVarbs
+      // Anyways, when an entity is not present, this varb copies
+      // the one it is linked to, or maintains a static displayName
+
+      // hmmm, interesting.
+
       valueSwitch: relVarb("string", {
         initValue: "labeledEquation",
       }),
@@ -290,7 +314,7 @@ export const relVarbsS = {
     return {
       ...this.savableSection,
       total: relVarbS.sumNums(
-        relVarbInfoS.local("title"),
+        relVarbInfoS.local("displayName"),
         [relVarbInfoS.children("singleTimeItem", "value")],
         { startAdornment: "$" }
       ),
@@ -310,7 +334,7 @@ export const relVarbsS = {
       }),
       ...relVarbsS.ongoingSumNums(
         "total",
-        relVarbInfoS.local("title"),
+        relVarbInfoS.local("displayName"),
         [relVarbInfoS.children("ongoingItem", "value")],
         { switchInit: "monthly", shared: { startAdornment: "$" } }
       ),

@@ -4,7 +4,7 @@ import { useSetterSection } from "../../../../../../../sharedWithServer/stateCla
 import { useSetterSections } from "../../../../../../../sharedWithServer/stateClassHooks/useSetterSections";
 import theme from "../../../../../../../theme/Theme";
 import MaterialSelect from "../../../../../../inputs/MaterialSelect";
-import { NumObjEditorNext } from "../../../../../../inputs/NumObjEditorNext";
+import { NumObjEntityEditor } from "../../../../../../inputs/NumObjEntityEditor";
 import PlusBtn from "../../../../../PlusBtn";
 import {
   IfOptions,
@@ -46,7 +46,7 @@ export default function LogicRow({ feId, idx = "" }: Props) {
 
       {["if", "or if"].includes(type) && <IfLogic rowId={row.get.feId} />}
       {["then", "or else"].includes(type) && (
-        <NumObjEditorNext
+        <NumObjEntityEditor
           feVarbInfo={row.varbInfo("then")}
           className={"then-content"}
           labeled={false}

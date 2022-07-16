@@ -1,7 +1,7 @@
 import { FeInfoByType } from "../../../../../sharedWithServer/SectionsMeta/Info";
 import { useGetterSection } from "../../../../../sharedWithServer/stateClassHooks/useGetterSection";
-import { MaterialStringEditorNext } from "../../../../inputs/MaterialStringEditorNext";
-import { NumObjEditorNext } from "../../../../inputs/NumObjEditorNext";
+import { MaterialStringEditor } from "../../../../inputs/MaterialStringEditor";
+import { NumObjEntityEditor } from "../../../../inputs/NumObjEntityEditor";
 
 type Props = { feInfo: FeInfoByType<"varbListItem">; endAdornment?: string };
 export default function LabeledEquation({ feInfo, endAdornment }: Props) {
@@ -9,11 +9,14 @@ export default function LabeledEquation({ feInfo, endAdornment }: Props) {
   return (
     <>
       <td className="AdditiveItem-nameCell">
-        <MaterialStringEditorNext feVarbInfo={section.varbInfo("displayName")} />
+        <MaterialStringEditor
+          feVarbInfo={section.varbInfo("displayName")}
+          valueType="stringObj"
+        />
       </td>
       <td className="AdditiveItem-contentCell">
         <div className="AdditiveItem-contentCellDiv">
-          <NumObjEditorNext
+          <NumObjEntityEditor
             feVarbInfo={section.varbInfo("editorValue")}
             className="cost"
             labeled={false}

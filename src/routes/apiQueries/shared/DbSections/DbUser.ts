@@ -155,11 +155,11 @@ export class DbUser extends GetterSectionsBase {
         const columns = table.get.children("column");
         for (const source of dbSources) {
           for (const column of columns) {
-            const title = source.get.value("title", "string");
+            const displayName = source.get.value("displayName", "string");
             const { dbId } = source.get;
             table.addAndGetChild("tableRow", {
               dbId,
-              dbVarbs: { title },
+              dbVarbs: { displayName },
             });
             const varb = source.get.varbByFocalMixed(
               column.inEntityValueInfo()

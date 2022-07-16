@@ -37,7 +37,7 @@ export function VarbListGeneric<SN extends VarbListAllowed>({
   childDbVarbs,
 }: Props<SN>) {
   const list = useSetterSection(feInfo);
-  const titleVarb = list.varb("title");
+  const titleVarb = list.varb("displayName");
   const { listMenuIsOpen, toggleListMenu } = useToggleView({
     initValue: false,
     viewWhat: "listMenu",

@@ -2,8 +2,8 @@ import styled from "styled-components";
 import { FeSectionInfo } from "../../../../../sharedWithServer/SectionsMeta/Info";
 import { useGetterSection } from "../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import theme from "../../../../../theme/Theme";
-import { MaterialStringEditorNext } from "../../../../inputs/MaterialStringEditorNext";
-import { NumObjEditorNext } from "../../../../inputs/NumObjEditorNext";
+import { MaterialStringEditor } from "../../../../inputs/MaterialStringEditor";
+import { NumObjEntityEditor } from "../../../../inputs/NumObjEntityEditor";
 
 type Props = { feInfo: FeSectionInfo<"ongoingItem">; valueVarbName: string };
 
@@ -15,18 +15,19 @@ export default function LabeledSpanOverCost({ valueVarbName, feInfo }: Props) {
   return (
     <>
       <td className="AdditiveItem-nameCell">
-        <MaterialStringEditorNext
+        <MaterialStringEditor
           feVarbInfo={section.varbInfo("displayName")}
+          valueType="stringObj"
         />
       </td>
       <Styled className="AdditiveItem-contentCell">
         <div className="AdditiveItem-contentCellDiv">
-          <NumObjEditorNext
+          <NumObjEntityEditor
             feVarbInfo={section.varbInfo("costToReplace")}
             labeled={false}
           />
           <span className="LabeledSpanOverCost-over">/</span>
-          <NumObjEditorNext
+          <NumObjEntityEditor
             feVarbInfo={section.varbInfo(lifespanName)}
             className="lifespan"
             labeled={false}

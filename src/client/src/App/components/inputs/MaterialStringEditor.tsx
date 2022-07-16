@@ -6,16 +6,19 @@ import { useDraftInputNext } from "./useDraftInputNext";
 export interface StringEditorProps {
   feVarbInfo: FeVarbInfo;
   className?: string;
+  valueType?: "string" | "stringObj";
   label?: string;
 }
-export function MaterialStringEditorNext({
+
+export function MaterialStringEditor({
   feVarbInfo,
   className = "",
+  valueType = "string",
   label,
 }: StringEditorProps) {
   let { editorState, onChange, varb } = useDraftInputNext({
     ...feVarbInfo,
-    valueType: "string",
+    valueType,
   });
   return (
     <MaterialDraftEditor

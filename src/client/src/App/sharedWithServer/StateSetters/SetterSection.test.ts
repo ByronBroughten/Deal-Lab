@@ -49,7 +49,7 @@ describe("SetterSection", () => {
 
     const packVarbs = {
       price: numObj(257801),
-      title: "New Title",
+      displayName: "New Title",
     } as const;
 
     const packBuilder = PackBuilderSection.initAsOmniChild("property", {
@@ -72,7 +72,7 @@ describe("SetterSection", () => {
     expect(postChildCounts.childSections).toBe(
       preChildCounts.childSections + childCountDifference
     );
-    expect(getter.value("title")).toBe(packVarbs["title"]);
+    expect(getter.value("displayName")).toBe(packVarbs["displayName"]);
     expect(getter.value("price", "numObj").editorText).toBe(
       packVarbs.price.editorText
     );

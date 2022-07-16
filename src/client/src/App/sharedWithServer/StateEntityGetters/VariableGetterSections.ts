@@ -33,7 +33,7 @@ export class VariableGetterSections extends GetterSectionsBase {
     return varbListFeIds.reduce((options, feId) => {
       const listSection = main.child({ childName, feId });
       const userVarbItems = listSection.children("userVarbItem");
-      const collectionName = listSection.value("title", "string");
+      const collectionName = listSection.value("displayName", "string");
       return options.concat(
         userVarbItems.map((item) => {
           return {
@@ -63,7 +63,7 @@ export class VariableGetterSections extends GetterSectionsBase {
       const { main } = this.getterSections;
       const lists = main.children(sectionName);
       for (const list of lists) {
-        const displayName = list.value("title", "string");
+        const displayName = list.value("displayName", "string");
         if (sectionName === "ongoingList") {
           const ongoingNames = switchNames("total", "ongoing");
           for (const key of Obj.keys(ongoingNames)) {

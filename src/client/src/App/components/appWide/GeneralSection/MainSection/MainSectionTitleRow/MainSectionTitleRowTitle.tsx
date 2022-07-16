@@ -6,7 +6,7 @@ export function MainSectionTitleRowTitleNext({ feInfo }: Props) {
   return (
     <BigStringEditor
       {...{
-        feVarbInfo: { ...feInfo, varbName: "title" },
+        feVarbInfo: { ...feInfo, varbName: "displayName" },
         label: "Title",
         className: "MainSectionTitleRow-title",
       }}

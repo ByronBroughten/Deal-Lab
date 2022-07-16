@@ -1,11 +1,12 @@
 // make TableActor
 
+import { SectionVarbName } from "../../sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionTypes";
 import { InEntityVarbInfo } from "../../sharedWithServer/SectionsMeta/baseSectionsUtils/baseValues/entities";
 import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
 import { PackMakerSection } from "../../sharedWithServer/StatePackers.ts/PackMakerSection";
 import { SetterSection } from "../../sharedWithServer/StateSetters/SetterSection";
 import { SetterTable } from "../../sharedWithServer/StateSetters/SetterTable";
-import { StrictOmit } from "../../sharedWithServer/utils/types";
+import { StrictExtract, StrictOmit } from "../../sharedWithServer/utils/types";
 import { SectionActorBase, SectionActorBaseProps } from "./SectionActorBase";
 
 class GetterColumn extends GetterSection<"column"> {
@@ -56,13 +57,15 @@ export class TableActor extends SectionActorBase<"table"> {
   get filteredRows() {
     const titleFilter = this.get.value("titleFilter", "string");
     return this.rows.filter((row) => {
-      return row.value("title", "string").includes(titleFilter);
+      return row.value("displayName", "string").includes(titleFilter);
     });
   }
   // do I need to save the order of the sorted table rows?
   // I guess I might as well
   async sortRows(
-    colIdOrTitle: string | "title",
+    colIdOrTitle:
+      | string
+      | StrictExtract<SectionVarbName<"tableRow">, "displayName">,
     options: { reverse?: boolean } = {}
   ) {
     this.tableState.sortTableRowIdsByColumn(colIdOrTitle, options);

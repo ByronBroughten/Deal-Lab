@@ -5,7 +5,7 @@ import { useSetterSections } from "../../../../../../../../sharedWithServer/stat
 import { listOperators } from "../../../../../../../../sharedWithServer/StateSolvers/SolveValueVarb/UserVarbValueSolver";
 import { ListEditorNext } from "../../../../../../../inputs/ListEditorNext";
 import MaterialSelect from "../../../../../../../inputs/MaterialSelect";
-import { NumObjEditorNext } from "../../../../../../../inputs/NumObjEditorNext";
+import { NumObjEntityEditor } from "../../../../../../../inputs/NumObjEntityEditor";
 import LogicOperators from "../../../../../../LogicOperators";
 
 export default function IfLogic({ rowId }: { rowId: string }) {
@@ -34,7 +34,7 @@ export default function IfLogic({ rowId }: { rowId: string }) {
 
   return (
     <Styled>
-      <NumObjEditorNext
+      <NumObjEntityEditor
         feVarbInfo={row.varbInfo("left")}
         className="logic-left"
         bypassNumeric={true}
@@ -56,7 +56,7 @@ export default function IfLogic({ rowId }: { rowId: string }) {
         />
       )}
       {logicType === "valueLogic" && (
-        <NumObjEditorNext
+        <NumObjEntityEditor
           className="logic-right"
           feVarbInfo={row.varbInfo("rightValue")}
           labeled={false}

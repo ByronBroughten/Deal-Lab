@@ -2,13 +2,13 @@ import React from "react";
 import LoadIndexSectionBtn from "./IndexSectionList/LoadIndexSectionBtn";
 
 type Props = {
-  title: string;
+  displayName: string;
   onClick: () => void;
 };
-export default function RowIndexListRow({ title, onClick }: Props) {
+export default function RowIndexListRow({ displayName, onClick }: Props) {
   return (
     <div className="RowIndexRows-entry">
-      <LoadIndexSectionBtn {...{ text: title, onClick }} />
+      <LoadIndexSectionBtn {...{ text: displayName, onClick }} />
     </div>
   );
 }

@@ -6,7 +6,7 @@ import { isFeStoreTableName } from "../sharedWithServer/SectionsMeta/relChildSec
 import { VariableOption } from "../sharedWithServer/StateEntityGetters/VariableGetterSections";
 import theme from "../theme/Theme";
 import useHowMany from "./appWide/customHooks/useHowMany";
-import { MaterialStringEditorNext } from "./inputs/MaterialStringEditorNext";
+import { MaterialStringEditor } from "./inputs/MaterialStringEditor";
 import VarbAutoComplete from "./inputs/VarbAutoComplete";
 import ColumnHeader from "./TableStore/ColumnHeader";
 import IndexRow from "./TableStore/IndexRow";
@@ -40,7 +40,7 @@ export function TableStore({ feId }: Props) {
               {"Deals"}
             </h5>
             <div className="TableStore-controlRow">
-              <MaterialStringEditorNext
+              <MaterialStringEditor
                 label="Filter by title"
                 className="TableStore-filterEditor TableStore-controlRowItem"
                 feVarbInfo={table.get.varbInfo("titleFilter")}
@@ -58,9 +58,9 @@ export function TableStore({ feId }: Props) {
                 <ColumnHeader
                   {...{
                     displayName: "Title",
-                    sortRowsAZ: () => table.sortRows("title"),
+                    sortRowsAZ: () => table.sortRows("displayName"),
                     sortRowsZA: () =>
-                      table.sortRows("title", { reverse: true }),
+                      table.sortRows("displayName", { reverse: true }),
                   }}
                 />
                 {table.columns.map((col) => {

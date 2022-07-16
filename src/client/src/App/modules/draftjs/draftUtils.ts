@@ -39,7 +39,7 @@ export const draftUtils = {
   contentStateToRaw(contentState: ContentState): RawDraftContentState {
     return convertToRaw(contentState);
   },
-  contentStateToText(contentState: ContentState): string {
+  contentStateText(contentState: ContentState): string {
     const raw = convertToRaw(contentState);
     return textFromRaw(raw);
   },

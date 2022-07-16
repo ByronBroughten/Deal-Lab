@@ -2,9 +2,10 @@ import { numObj } from "../../baseSectionsUtils/baseValues/NumObj";
 import { relVarbInfoS } from "../../childSectionsDerived/RelVarbInfo";
 import { relVarbInfosS } from "../../childSectionsDerived/RelVarbInfos";
 import { relVarb } from "../rel/relVarb";
+import { RelVarbs, relVarbsS } from "../relVarbs";
 
-export const userVarbItemRelVarbs = {
-  displayName: relVarb("string"),
+export const userVarbItemRelVarbs: RelVarbs<"userVarbItem"> = {
+  ...relVarbsS.listItem,
   startAdornment: relVarb("string"),
   endAdornment: relVarb("string"),
   valueSwitch: relVarb("string", {

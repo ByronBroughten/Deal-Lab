@@ -3,7 +3,7 @@ import { SetterTesterVarb } from "./TestUtils/SetterTesterVarb";
 
 describe("SetterVarb", () => {
   const namesAndValues = [
-    ["property", ["title", "New Title"]],
+    ["property", ["displayName", "New Title"]],
     ["property", ["price", numObj(250000)]],
     ["unit", ["rent"]],
   ] as const;
@@ -11,7 +11,7 @@ describe("SetterVarb", () => {
   it("should directly update the value", () => {
     const tester = SetterTesterVarb.init({
       sectionName: "property",
-      varbName: "title",
+      varbName: "displayName",
     });
     const nextValue = "New Title";
     tester.setter.updateValueDirectly(nextValue);

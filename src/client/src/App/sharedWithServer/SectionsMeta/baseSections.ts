@@ -1,7 +1,6 @@
 import { omit } from "lodash";
 import { Obj } from "../utils/Obj";
 import {
-  baseOptions,
   baseSection,
   baseSectionS,
   GeneralBaseSection,
@@ -13,7 +12,7 @@ export const loanVarbsNotInFinancing = [
   "interestRatePercentYearly",
   "loanTermMonths",
   "loanTermYears",
-  "title",
+  "displayName",
 ] as const;
 
 export type BaseSections = typeof baseSections;
@@ -30,7 +29,10 @@ export const baseSections = {
   } as const),
   omniParent: baseSectionS.container,
   table: baseSection({ titleFilter: "string" } as const),
-  tableRow: baseSection(baseVarbsS.tableRow),
+  tableRow: baseSection({
+    displayName: "string",
+    compareToggle: "boolean",
+  }),
   column: baseSection({
     varbInfo: "inEntityVarbInfo",
   }),
@@ -49,23 +51,25 @@ export const baseSections = {
     // then
     then: "numObj",
   }),
-
-  // make "title" be "displayName" for all savableSection
-  // search for "title"
-  singleTimeList: baseSection(baseVarbsS.singleTimeList),
-  ongoingList: baseSection(baseVarbsS.ongoingList),
+  singleTimeList: baseSection({
+    ...baseVarbsS.savableSection,
+    total: "numObj",
+    defaultValueSwitch: "string",
+  }),
+  ongoingList: baseSection({
+    ...baseVarbsS.savableSection,
+    ...baseVarbsS.ongoing("total"),
+    defaultValueSwitch: "string",
+    defaultOngoingSwitch: "string",
+  }),
   userVarbList: baseSection({
     ...baseVarbsS.savableSection,
     defaultValueSwitch: "string",
   }),
-  outputList: baseSection(
-    baseVarbsS.savableSection,
-    baseOptions.alwaysOneFromStart
-  ),
+  outputList: baseSection(baseVarbsS.savableSection),
 
-  // change name to displayName for all these at the same time
   // create baseVarbsS.listItem: {
-  // displayName, displayNameEnd, value, valueEntityInfo
+  // displayName, displayNameEnd, valueEntityInfo
   // }
 
   userVarbItem: baseSection({
@@ -99,13 +103,9 @@ export const baseSections = {
     varbInfo: "inEntityVarbInfo",
   }),
 
-  login: baseSection(
-    baseVarbs("string", ["email", "password"] as const),
-    baseOptions.alwaysOneFromStart
-  ),
+  login: baseSection(baseVarbs("string", ["email", "password"] as const)),
   register: baseSection(
-    baseVarbs("string", ["email", "password", "userName"] as const),
-    baseOptions.alwaysOneFromStart
+    baseVarbs("string", ["email", "password", "userName"] as const)
   ),
   property: baseSection(baseVarbsS.property),
   unit: baseSection({
@@ -116,7 +116,6 @@ export const baseSections = {
   propertyGeneral: baseSection(
     omit(baseVarbsS.property, Obj.keys(baseVarbsS.savableSection)),
     {
-      ...baseOptions.alwaysOneFromStart,
       hasGlobalVarbs: true,
     }
   ),
@@ -131,14 +130,11 @@ export const baseSections = {
       ...baseVarbsS.ongoing("piti"),
     },
     {
-      ...baseOptions.alwaysOneFromStart,
       hasGlobalVarbs: true,
     }
   ),
-
-  mgmt: baseSection(baseVarbsS.mgmt, { makeOneOnStartup: true }),
-  mgmtGeneral: baseSection(omit(baseVarbsS.mgmt, ["title"]), {
-    ...baseOptions.alwaysOneFromStart,
+  mgmt: baseSection(baseVarbsS.mgmt),
+  mgmtGeneral: baseSection(omit(baseVarbsS.mgmt, ["displayName"]), {
     hasGlobalVarbs: true,
   }),
   deal: baseSection(
@@ -156,16 +152,15 @@ export const baseSections = {
       ...baseVarbsS.ongoing("roi"),
     },
     {
-      ...baseOptions.alwaysOneFromStart,
       hasGlobalVarbs: true,
     }
   ),
-  user: baseSection(baseVarbsS.feUser, {
-    ...baseOptions.alwaysOneFromStart,
-  }),
-  serverOnlyUser: baseSection({
-    ...baseVarbs("string", ["encryptedPassword", "emailAsSubmitted"] as const),
-  }),
+  user: baseSection(
+    baseVarbs("string", ["email", "userName", "apiAccessStatus"] as const)
+  ),
+  serverOnlyUser: baseSection(
+    baseVarbs("string", ["encryptedPassword", "emailAsSubmitted"] as const)
+  ),
 } as const;
 
 export const simpleSectionNames = Obj.keys(baseSections);

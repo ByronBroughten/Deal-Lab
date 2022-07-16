@@ -49,11 +49,11 @@ export class SetterTable extends SetterSectionBase<"table"> {
   get columns(): GetterSection<"column">[] {
     return this.get.children("column");
   }
-  addRow({ title, dbId }: { title: string; dbId: string }): void {
+  addRow({ displayName, dbId }: { displayName: string; dbId: string }): void {
     this.setter.addChild("tableRow", {
       dbId,
       dbVarbs: {
-        title,
+        displayName,
       },
     });
   }
@@ -76,7 +76,7 @@ export class SetterTable extends SetterSectionBase<"table"> {
     });
   }
   sortTableRowIdsByColumn(
-    colIdOrTitle: string | "title",
+    colIdOrTitle: string | "displayName",
     { reverse = false }: { reverse?: boolean } = {}
   ) {
     const sortedIds = this.getSortedRowIds(colIdOrTitle);
@@ -87,10 +87,10 @@ export class SetterTable extends SetterSectionBase<"table"> {
     });
   }
   alphabeticalGetterRows() {
-    const feIds = this.getSortedRowIds("title");
+    const feIds = this.getSortedRowIds("displayName");
     return feIds.map((feId) => this.row(feId));
   }
-  getSortedRowIds(colIdOrTitle: string | "title"): string[] {
+  getSortedRowIds(colIdOrTitle: string | "displayName"): string[] {
     const rowsWithCellValues = this.getRowsWithCellValues(colIdOrTitle);
     const sorted = rowsWithCellValues.sort((r1, r2) =>
       Str.compareAlphanumerically(r1.cellValue, r2.cellValue)
@@ -98,14 +98,15 @@ export class SetterTable extends SetterSectionBase<"table"> {
     return sorted.map(({ rowId }) => rowId);
   }
   private getRowsWithCellValues(
-    colIdOrTitle: string | "title"
+    colIdOrTitle: string | "displayName"
   ): RowIdCellValue[] {
-    if (colIdOrTitle === "title") return this.getRowsWithTitleCellValues();
+    if (colIdOrTitle === "displayName")
+      return this.getRowsWithTitleCellValues();
     else if (this.hasColumn(colIdOrTitle))
       return this.getRowsWithColCellValues(colIdOrTitle);
     else {
       throw new Error(
-        `colIdOrTitle should be "title" or a child columnId, but is neither: ${colIdOrTitle}`
+        `colIdOrTitle should be "displayName" or a child columnId, but is neither: ${colIdOrTitle}`
       );
     }
   }
@@ -113,7 +114,7 @@ export class SetterTable extends SetterSectionBase<"table"> {
     const rows = this.get.children("tableRow");
     return rows.map((row) => ({
       rowId: row.feId,
-      cellValue: row.value("title", "string"),
+      cellValue: row.value("displayName", "string"),
     }));
   }
   private getRowsWithColCellValues(columnId: string): RowIdCellValue[] {

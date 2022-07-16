@@ -1,4 +1,3 @@
-import { StrictExtract } from "../../../utils/types";
 import { BaseSections, SimpleSectionName } from "../../baseSections";
 import { StateValue } from "../../baseSectionsUtils/baseValues/StateValueTypes";
 import { ValueName } from "../../baseSectionsUtils/baseVarb";
@@ -8,10 +7,6 @@ export type ValueSchemas = typeof valueMeta;
 export type ValueTypes = {
   [Prop in ValueName]: ReturnType<ValueSchemas[Prop]["initDefault"]>;
 };
-export type EditorValueTypeName = StrictExtract<
-  ValueName,
-  "string" | "numObj" | "stringArray"
->;
 
 export type DbValue = StateValue;
 

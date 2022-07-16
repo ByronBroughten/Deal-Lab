@@ -25,7 +25,7 @@ function relSectionsFilter<RS extends GenericRelSections>(relSections: RS): RS {
 }
 
 const savableSectionStringVarbNames = [
-  "title",
+  "displayName",
   "dateTimeFirstSaved",
   "dateTimeLastSaved",
 ] as const;
@@ -72,7 +72,7 @@ export function makeRelSections() {
     }),
     table: relSection("Table", { titleFilter: relVarb("string") }),
     tableRow: relSection("Row", {
-      title: relVarb("string"),
+      displayName: relVarb("string"),
       compareToggle: relVarb("boolean"),
     }),
     column: relSection("Column", { varbInfo: relVarb("inEntityVarbInfo") }),

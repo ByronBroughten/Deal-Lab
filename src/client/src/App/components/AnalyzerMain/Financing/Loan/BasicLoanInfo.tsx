@@ -4,7 +4,7 @@ import { useGetterSection } from "../../../../sharedWithServer/stateClassHooks/u
 import theme from "../../../../theme/Theme";
 import BasicSectionInfo from "../../../appWide/GeneralSection/MainSection/MainSectionBody/BasicSectionInfo";
 import StandardLabel from "../../../general/StandardLabel";
-import { NumObjEditorNext } from "../../../inputs/NumObjEditorNext";
+import { NumObjEntityEditor } from "../../../inputs/NumObjEntityEditor";
 import DollarPercentRadioSwap from "../../general/DollarPercentRadioSwap";
 
 type Props = { feId: string; className?: string };
@@ -40,10 +40,10 @@ export default function BasicLoanInfo({ feId, className }: Props) {
           <div className="BasicSectionInfo-subSection">
             <div className="BasicSectionInfo-subSection-viewable">
               <div className="BasicSectionInfo-dualEditors BasicSectionInfo-editorBlock">
-                <NumObjEditorNext
+                <NumObjEntityEditor
                   feVarbInfo={loan.varbInfo("interestRatePercentYearly")}
                 />
-                <NumObjEditorNext
+                <NumObjEntityEditor
                   feVarbInfo={loan.varbInfo("loanTermYears")}
                   label="Loan term"
                   className="BasicSectionInfo-numObjEditor secondEditor"
@@ -58,11 +58,11 @@ export default function BasicLoanInfo({ feId, className }: Props) {
                   Mortgage Insurance
                 </StandardLabel>
                 <div className="BasicSectionInfo-dualEditors">
-                  <NumObjEditorNext
+                  <NumObjEntityEditor
                     feVarbInfo={loan.varbInfo("mortInsUpfront")}
                     label="Upfront"
                   />
-                  <NumObjEditorNext
+                  <NumObjEntityEditor
                     feVarbInfo={loan.varbInfo("mortgageInsYearly")}
                     label="Ongoing"
                     className="BasicSectionInfo-numObjEditor secondEditor"

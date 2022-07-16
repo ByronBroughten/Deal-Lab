@@ -6,7 +6,7 @@ import TrashBtn from "../general/TrashBtn";
 
 export default function IndexRow(props: UseIndexTableRowActorProps) {
   const indexRow = useIndexTableRowActor(props);
-  const title = indexRow.get.value("title", "string");
+  const title = indexRow.get.value("displayName", "string");
   return (
     <tr className="TableStore-tableRow">
       <td className="TableStore-tableCell">{title}</td>

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useSetterSection } from "../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import theme from "../../../../theme/Theme";
 import BasicSectionInfo from "../../../appWide/GeneralSection/MainSection/MainSectionBody/BasicSectionInfo";
-import { NumObjEditorNext } from "../../../inputs/NumObjEditorNext";
+import { NumObjEntityEditor } from "../../../inputs/NumObjEntityEditor";
 import { UnitList } from "./UnitList";
 
 type Props = { feId: string; className?: string };
@@ -23,7 +23,7 @@ export default function BasicPropertyInfo({ feId, className }: Props) {
           <div className="BasicSectionInfo-subSection">
             <div className="BasicSectionInfo-subSection-viewable">
               {varbNames.map((varbName) => (
-                <NumObjEditorNext
+                <NumObjEntityEditor
                   key={varbName}
                   feVarbInfo={property.varbInfo(varbName)}
                 />

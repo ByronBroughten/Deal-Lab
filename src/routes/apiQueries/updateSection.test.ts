@@ -14,12 +14,12 @@ import { SectionQueryTester } from "./test/SectionQueryTester";
 
 const sectionName = "property";
 const originalValues = {
-  title: "Original title",
+  displayName: "Original displayName",
   price: numObj(100000),
 } as const;
 
 const updatedValues = {
-  title: "Updated title",
+  displayName: "Updated displayName",
   price: numObj(500000),
 } as const;
 
@@ -86,7 +86,7 @@ describe(testedRoute, () => {
       ({ dbId }) => dbId === reqs.updateSection.body.sectionPack.dbId
     );
 
-    expect(updatedSection?.dbVarbs.title).toBe(updatedValues.title);
+    expect(updatedSection?.dbVarbs.displayName).toBe(updatedValues.displayName);
     expect(updatedSection?.dbVarbs.price).toEqual(updatedValues.price);
   });
   it("should return 404 if there is not an entry in the db with the sectionPack's dbId", async () => {

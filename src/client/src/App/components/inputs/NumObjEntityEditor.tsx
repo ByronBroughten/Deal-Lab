@@ -9,7 +9,7 @@ import MaterialDraftEditor from "./MaterialDraftEditor";
 import NumObjVarbSelector from "./NumObjEditor/NumObjVarbSelector";
 import {
   PropAdornments,
-  useGetAdornments,
+  useGetAdornments
 } from "./NumObjEditor/useGetAdornments";
 import { varSpanDecorator } from "./shared/VarSpanNext";
 import { useDraftInputNext } from "./useDraftInputNext";
@@ -25,7 +25,7 @@ type Props = PropAdornments & {
   bypassNumeric?: boolean;
 };
 
-export function NumObjEditorNext({
+export function NumObjEntityEditor({
   feVarbInfo,
   className,
   labeled = true,

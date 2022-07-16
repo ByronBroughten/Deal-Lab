@@ -4,7 +4,7 @@ import { useSetterSection } from "../../../../../sharedWithServer/stateClassHook
 import ccs from "../../../../../theme/cssChunks";
 import theme from "../../../../../theme/Theme";
 import XBtn from "../../../../appWide/Xbtn";
-import { NumObjEditorNext } from "../../../../inputs/NumObjEditorNext";
+import { NumObjEntityEditor } from "../../../../inputs/NumObjEntityEditor";
 
 type Props = { feId: string; unitNumber: number };
 export function UnitItemNext({ feId, unitNumber }: Props) {
@@ -16,11 +16,11 @@ export function UnitItemNext({ feId, unitNumber }: Props) {
           <h6 className="title-text">Unit {unitNumber}</h6>
           <XBtn className="UnitItem-xBtn" onClick={() => unit.removeSelf()} />
         </div>
-        <NumObjEditorNext
+        <NumObjEntityEditor
           className="brs"
           feVarbInfo={unit.varbInfo("numBedrooms")}
         />
-        <NumObjEditorNext
+        <NumObjEntityEditor
           className="target-rent"
           feVarbInfo={unit.switchVarbInfo("targetRent", "ongoing")}
         />

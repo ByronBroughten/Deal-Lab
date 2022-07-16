@@ -4,26 +4,14 @@ import { BaseVarbSchemas } from "./baseVarbs";
 
 export type BasePropName = keyof GeneralBaseSection;
 export type GeneralBaseSection = {
-  makeOneOnStartup: boolean;
   varbSchemas: BaseVarbSchemas;
   hasGlobalVarbs: boolean;
-  placeholder: boolean;
 };
 
 type BaseSectionOptions = Partial<GeneralBaseSection>;
 export const baseOptions = {
-  alwaysOneFromStart: {
-    makeOneOnStartup: true,
-  },
-  get defaultSection() {
-    return {
-      ...this.alwaysOneFromStart,
-    };
-  },
   fallback: {
-    makeOneOnStartup: false,
     hasGlobalVarbs: false,
-    placeholder: false,
   },
 } as const;
 

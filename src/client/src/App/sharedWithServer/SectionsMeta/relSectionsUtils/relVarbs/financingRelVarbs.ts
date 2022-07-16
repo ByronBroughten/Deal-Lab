@@ -140,5 +140,5 @@ export const financingRelVarbs: RelVarbs<"financing"> = {
     { shared: { startAdornment: "$" }, switchInit: "monthly" }
   ),
   ...relVarbsS.sumSection("loan", loanRelVarbs(), loanVarbsNotInFinancing),
-  ...relVarbsS.sectionStrings("loan", loanRelVarbs(), ["title"]),
+  ...relVarbsS.sectionStrings("loan", loanRelVarbs(), loanVarbsNotInFinancing),
 };

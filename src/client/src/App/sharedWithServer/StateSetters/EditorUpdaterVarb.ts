@@ -17,18 +17,22 @@ import {
 } from "../SectionsMeta/baseSectionsUtils/baseValues/NumObj";
 import { isEditorUpdateFnName } from "../SectionsMeta/baseSectionsUtils/baseValues/StateValueTypes";
 import { StringObj } from "../SectionsMeta/baseSectionsUtils/baseValues/StringObj";
-import { EditorValueTypeName } from "../SectionsMeta/relSectionsUtils/rel/valueMetaTypes";
+import { ValueName } from "../SectionsMeta/baseSectionsUtils/baseVarb";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { GetterVarbBase } from "../StateGetters/Bases/GetterVarbBase";
 import { GetterVarb } from "../StateGetters/GetterVarb";
 import { GetterVarbNumObj } from "../StateGetters/GetterVarbNumObj";
 import { UpdaterVarb } from "../StateUpdaters/UpdaterVarb";
 import { Arr } from "../utils/Arr";
+import { StrictExtract } from "../utils/types";
 
+type EditorValueTypeName = StrictExtract<
+  ValueName,
+  "string" | "numObj" | "stringArray" | "stringObj"
+>;
 type ContentCreators = {
   [EN in EditorValueTypeName]: () => ContentState;
 };
-
 export type CreateEditorProps = {
   valueType: EditorValueTypeName;
   compositeDecorator?: CompositeDecorator;
@@ -54,6 +58,11 @@ export class EditorUpdaterVarb<
       numObj: () => {
         return Draft.convertFromRaw(
           numObjToRawContent(this.getterVarb.value("numObj"))
+        );
+      },
+      stringObj: () => {
+        return ContentState.createFromText(
+          this.getterVarb.value("stringObj").text
         );
       },
       stringArray: () => {
@@ -94,15 +103,14 @@ export class EditorUpdaterVarb<
         this.numObjSolver.solvableTextFromTextAndEntities(textAndEntities);
       return { ...textAndEntities, solvableText };
     },
-    stringObj(contentState: ContentState): StringObj {
-      const textAndEntities = textAndEntitiesFromContentState(contentState);
+    stringObj: (contentState: ContentState): StringObj => {
       return {
-        text: textAndEntities.editorText,
-        entities: textAndEntities.entities,
+        ...this.getterVarb.value("stringObj"),
+        text: draftUtils.contentStateText(contentState),
       };
     },
     string(contentState: ContentState): string {
-      return draftUtils.contentStateToText(contentState);
+      return draftUtils.contentStateText(contentState);
     },
     stringArray(contentState: ContentState): string[] {
       const text = this.string(contentState);

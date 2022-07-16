@@ -119,7 +119,7 @@ export class MainSectionActor<
   private addRow(): void {
     const { table, dbId } = this;
     table.addRow({
-      title: this.get.value("title", "string"),
+      displayName: this.get.value("displayName", "stringObj").text,
       dbId,
     });
     this.updateRow();

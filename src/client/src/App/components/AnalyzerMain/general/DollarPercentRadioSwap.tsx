@@ -5,7 +5,7 @@ import { useHandleChange } from "../../../sharedWithServer/stateClassHooks/useHa
 import { useSetterSection } from "../../../sharedWithServer/stateClassHooks/useSetterSection";
 import DualInputsRadioSwap from "../../general/DualInputsRadioSwap";
 import Radio from "../../general/Radio";
-import { NumObjEditorNext } from "../../inputs/NumObjEditorNext";
+import { NumObjEntityEditor } from "../../inputs/NumObjEntityEditor";
 
 type Props = {
   feInfo: FeSectionInfo;
@@ -66,7 +66,7 @@ export default function DollarPercentRadioSwap({
       <FormControl component="fieldset" className="labeled-input-group-part">
         {radio === "%" && (
           <div className="swappable-editors">
-            <NumObjEditorNext
+            <NumObjEntityEditor
               className="percent-down"
               label={title}
               feVarbInfo={percentVarb.feVarbInfo}
@@ -80,7 +80,7 @@ export default function DollarPercentRadioSwap({
         )}
         {radio === "$" && (
           <div className="swappable-editors">
-            <NumObjEditorNext
+            <NumObjEntityEditor
               className="dollars-down"
               label={title}
               feVarbInfo={dollarsVarb.feVarbInfo}

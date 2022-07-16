@@ -16,13 +16,17 @@ export class SetterTableRow extends SetterSectionBase<"tableRow"> {
       sectionName: "tableRow",
     });
   }
-  private setter = new SetterSection(this.setterSectionProps);
-  get = this.setter.get;
+  private get setter() {
+    return new SetterSection(this.setterSectionProps);
+  }
+  get get() {
+    return this.setter.get;
+  }
   get dbId(): string {
     return this.get.dbId;
   }
-  get title(): string {
-    return this.get.value("title", "string");
+  get displayName(): string {
+    return this.get.value("displayName", "string");
   }
   clearCells(): void {
     this.setter.removeChildren("cell");

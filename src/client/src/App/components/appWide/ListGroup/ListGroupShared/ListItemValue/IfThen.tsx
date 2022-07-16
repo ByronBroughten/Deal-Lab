@@ -1,5 +1,5 @@
 import useToggleView from "../../../../../modules/customHooks/useToggleView";
-import { MaterialStringEditorNext } from "../../../../inputs/MaterialStringEditorNext";
+import { MaterialStringEditor } from "../../../../inputs/MaterialStringEditor";
 import IfThenContent from "./IfThen/IfThenContent";
 
 type Props = { feId: string };
@@ -8,12 +8,13 @@ export default function IfThen({ feId }: Props) {
   return (
     <>
       <td className="AdditiveItem-nameCell">
-        <MaterialStringEditorNext
+        <MaterialStringEditor
           feVarbInfo={{
             sectionName: "userVarbItem",
             varbName: "displayName",
             feId,
           }}
+          valueType="stringObj"
         />
       </td>
       <td className="AdditiveItem-contentCell">
