@@ -90,7 +90,7 @@ export function mgmtRelVarbs<R extends RelVarbs<"mgmt">>(): R {
       { startAdornment: "$" }
     ),
     ...relVarbsS.ongoingSumNums(
-      "ongoingExpenses",
+      "expenses",
       "Ongoing expenses",
       [
         relVarbInfoS.children("ongoingCostList", "total"),

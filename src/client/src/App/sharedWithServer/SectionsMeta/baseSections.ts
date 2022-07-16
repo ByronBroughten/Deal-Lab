@@ -13,6 +13,7 @@ export const loanVarbsNotInFinancing = [
   "loanTermMonths",
   "loanTermYears",
   "displayName",
+  "piCalculationName",
 ] as const;
 
 export type BaseSections = typeof baseSections;
@@ -67,11 +68,6 @@ export const baseSections = {
     defaultValueSwitch: "string",
   }),
   outputList: baseSection(baseVarbsS.savableSection),
-
-  // create baseVarbsS.listItem: {
-  // displayName, displayNameEnd, valueEntityInfo
-  // }
-
   userVarbItem: baseSection({
     ...baseVarbsS.singleVirtualVarb,
     ...baseVarbs("string", [
@@ -92,22 +88,6 @@ export const baseSections = {
     editorValue: "numObj",
   }),
   ongoingItem: baseSection({
-    // I think for ongoingItem, I actually want one value
-    // when I load a varb, the value needs to be the same
-    // regardless of whether the switch is flipped to monthly or yearly
-
-    // Actually, maybe nevermind. That is being achieved.
-
-    // If there were one value, then the valueSwitch would control...
-    // No, wait. There would still need to be multiple totals. Right?
-
-    // No, there would just need to be one total. And the way that
-    // its value switch is flipped in relation to each child would determine
-    // how the child is processed.
-
-    // the updateFunction would have the same inVarbs either way
-    // the summation would be a bit more complicated.
-
     ...baseVarbsS.listItem,
     ...baseVarbsS.loadableVarb,
     ...baseVarbs("string", ["valueSwitch"] as const),
@@ -115,7 +95,6 @@ export const baseSections = {
     ...baseVarbsS.ongoing("value"),
     ...baseVarbsS.switch("lifespan", "monthsYears"),
   }),
-
   login: baseSection(baseVarbs("string", ["email", "password"] as const)),
   register: baseSection(
     baseVarbs("string", ["email", "password", "userName"] as const)

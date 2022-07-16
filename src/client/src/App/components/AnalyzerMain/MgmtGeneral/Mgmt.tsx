@@ -26,7 +26,7 @@ export default function Mgmt({ feId }: { feId: string }) {
           listParentInfo={feInfo}
           listAsChildName="ongoingCostList"
           titleText="Ongoing Costs"
-          totalVarbNameBase="ongoingExpenses"
+          totalVarbNameBase="expenses"
           themeName="mgmt"
         />
         <ListGroupSingleTime

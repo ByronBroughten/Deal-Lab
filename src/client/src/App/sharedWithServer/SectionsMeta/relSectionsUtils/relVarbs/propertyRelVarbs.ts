@@ -3,7 +3,7 @@ import { relVarbInfosS } from "../../childSectionsDerived/RelVarbInfos";
 import { relVarbS } from "../rel/relVarb";
 import { RelVarbs, relVarbsS } from "../relVarbs";
 
-export function propertyRelVarbs<R extends RelVarbs<"property">>(): R {
+export function propertyRelVarbs(): RelVarbs<"property"> {
   return {
     ...relVarbsS.savableSection,
     price: relVarbS.moneyObj("Price"),
@@ -16,18 +16,16 @@ export function propertyRelVarbs<R extends RelVarbs<"property">>(): R {
     }),
     numUnits: relVarbS.sumChildVarb("Unit count", "unit", "one"),
     numBedrooms: relVarbS.sumChildVarb("Bedroom count", "unit", "numBedrooms"),
-    // upfront
 
-    // these
     upfrontExpenses: relVarbS.sumMoney("Upfront expenses", [
       relVarbInfoS.children("upfrontCostList", "total"),
     ]),
     upfrontRevenue: relVarbS.sumMoney("Upfront revenues", [
       relVarbInfoS.children("upfrontRevenueList", "total"),
     ]),
-    // ongoing
+
     ...relVarbsS.ongoingSumNums(
-      "ongoingExpenses",
+      "expenses",
       "Ongoing expenses",
       [relVarbInfoS.children("ongoingCostList", "total")],
       { switchInit: "monthly", shared: { startAdornment: "$" } }
@@ -41,16 +39,16 @@ export function propertyRelVarbs<R extends RelVarbs<"property">>(): R {
       { switchInit: "monthly", shared: { startAdornment: "$" } }
     ),
     ...relVarbsS.ongoingSumNums(
-      "miscOngoingRevenue",
+      "miscRevenue",
       "Revenue besides rent",
       [relVarbInfoS.children("ongoingRevenueList", "total")],
       { switchInit: "monthly", shared: { startAdornment: "$" } }
     ),
     ...relVarbsS.ongoingSumNums(
-      "ongoingRevenue",
+      "revenue",
       "Property revenue",
-      relVarbInfosS.local(["targetRent", "miscOngoingRevenue"]),
+      relVarbInfosS.local(["targetRent", "miscRevenue"]),
       { switchInit: "monthly", shared: { startAdornment: "$" } }
     ),
-  } as R;
+  };
 }

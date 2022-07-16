@@ -4,7 +4,11 @@ import { isStringRationalNumber } from "./Str";
 export class NotANumberError extends Error {}
 
 export const mathS = {
+  yearlyToMonthly,
+  yearsToMonths,
   decimalToPercent,
+  percentToDecimal,
+  isNumber,
   parseFloatStrict(str: string): number {
     const parsed = parseFloat(str);
     if (isNaN(parsed) || `${parsed}` !== str) {
@@ -20,6 +24,19 @@ export const mathS = {
   },
 } as const;
 
+export function yearlyToMonthly(yearly: number): number {
+  // monthly payments are 1/12th of a yearly payment.
+  return yearly / 12;
+}
+export function yearsToMonths(years: number): number {
+  // one year is 12 months
+  return years * 12;
+}
+
+export function isNumber(v: any): v is number {
+  return typeof v === "number";
+}
+
 export const arithmeticOperatorsArr = ["*", "/", "+", "-"];
 
 export function decimalToPercent(decimal: number) {
@@ -27,9 +44,9 @@ export function decimalToPercent(decimal: number) {
   return percent;
 }
 
-export const percentToDecimal = (percent: number) => {
+export function percentToDecimal(percent: number) {
   return percent / 100;
-};
+}
 
 export const percentToPortion = ({
   base,

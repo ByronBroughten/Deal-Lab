@@ -29,7 +29,7 @@ export default function Property({ feId }: { feId: string }) {
         <ListGroupOngoing
           listParentInfo={feInfo}
           listAsChildName="ongoingCostList"
-          totalVarbNameBase="ongoingExpenses"
+          totalVarbNameBase="expenses"
           titleText="Ongoing Costs"
           themeName="property"
         />

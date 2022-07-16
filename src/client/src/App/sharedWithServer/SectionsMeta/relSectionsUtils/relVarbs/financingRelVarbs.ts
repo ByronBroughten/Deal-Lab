@@ -1,8 +1,10 @@
 import { loanVarbsNotInFinancing } from "../../baseSections";
+import { PiCalculationName } from "../../baseSectionsUtils/baseValues/calculations/piCalculations";
 import { numObj } from "../../baseSectionsUtils/baseValues/NumObj";
 import { switchNames } from "../../baseSectionsUtils/RelSwitchVarb";
 import { relVarbInfoS } from "../../childSectionsDerived/RelVarbInfo";
 import { relVarbInfosS } from "../../childSectionsDerived/RelVarbInfos";
+import { relCheckUpdateProps } from "../rel/relUpdateFnProps";
 import { relUpdateSwitch } from "../rel/relUpdateSwitch";
 import { relVarb, relVarbS } from "../rel/relVarb";
 import { RelVarbs, relVarbsS } from "../relVarbs";
@@ -73,34 +75,35 @@ export function loanRelVarbs(): RelVarbs<"loan"> {
     wrappedInLoan: relVarbS.sumMoney("Wrapped into loan", [
       relVarbInfoS.children("wrappedInLoanList", "total"),
     ]),
-
+    piCalculationName: relVarb("string", {
+      initValue: "piFixedStandard" as PiCalculationName,
+    }),
     ...relVarbsS.ongoingPureCalc(
       "pi",
       "Principal + interest",
       {
         monthly: {
           updateFnName: "piMonthly",
-          updateFnProps: {
-            loanAmountDollarsTotal: relVarbInfoS.local(
-              "loanAmountDollarsTotal"
-            ),
-            loanTermMonths: relVarbInfoS.local("loanTermMonths"),
-            interestRatePercentMonthly: relVarbInfoS.local(
-              "interestRatePercentMonthly"
-            ),
-          },
+          updateFnProps: relCheckUpdateProps.piMonthly(
+            relVarbInfosS.localByVarbName([
+              "piCalculationName",
+              "loanAmountDollarsTotal",
+              "loanTermMonths",
+              "interestRatePercentMonthly",
+              "interestRatePercentYearly",
+            ])
+          ),
         },
         yearly: {
           updateFnName: "piYearly",
-          updateFnProps: {
-            loanAmountDollarsTotal: relVarbInfoS.local(
-              "loanAmountDollarsTotal"
-            ),
-            loanTermYears: relVarbInfoS.local("loanTermYears"),
-            interestRatePercentYearly: relVarbInfoS.local(
-              "interestRatePercentYearly"
-            ),
-          },
+          updateFnProps: relCheckUpdateProps.piYearly(
+            relVarbInfosS.localByVarbName([
+              "piCalculationName",
+              "loanAmountDollarsTotal",
+              "loanTermYears",
+              "interestRatePercentYearly",
+            ])
+          ),
         },
       },
       { shared: { startAdornment: "$" } }

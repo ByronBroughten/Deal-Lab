@@ -71,10 +71,12 @@ export const baseVarbsS = {
       ] as const),
       ...this.ongoing("taxes"),
       ...this.ongoing("homeIns"),
-      ...this.ongoing("ongoingExpenses"),
       ...this.ongoing("targetRent"),
-      ...this.ongoing("miscOngoingRevenue"),
-      ...this.ongoing("ongoingRevenue"),
+
+      // these three could be expenses, miscRevenue, and revenue
+      ...this.ongoing("expenses"),
+      ...this.ongoing("miscRevenue"),
+      ...this.ongoing("revenue"),
     } as const;
   },
   get loan() {
@@ -89,6 +91,7 @@ export const baseVarbsS = {
       ...this.ongoing("interestRatePercent"),
       ...this.switch("loanAmountBase", "dollarsPercent"),
       ...this.switch("loanTerm", "monthsYears"),
+      piCalculationName: "string",
       ...this.ongoing("pi"),
       ...this.ongoing("mortgageIns"),
     } as const;
@@ -100,7 +103,7 @@ export const baseVarbsS = {
         "vacancyRatePercent",
         "upfrontExpenses",
       ] as const),
-      ...this.ongoing("ongoingExpenses"),
+      ...this.ongoing("expenses"),
       ...this.ongoing("vacancyLossDollars"),
       ...omit(this.switch("rentCut", "dollarsPercent"), ["rentCutDollars"]),
       ...this.ongoing("rentCutDollars"),

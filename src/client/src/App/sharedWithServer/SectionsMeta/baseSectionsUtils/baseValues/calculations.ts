@@ -1,5 +1,9 @@
 import { percentToDecimal } from "../../../utils/math";
 import { Obj } from "../../../utils/Obj";
+import {
+  calculatePiMonthly,
+  calculatePiYearly,
+} from "./calculations/piCalculations";
 import { NumberOrQ } from "./NumObj";
 
 export type Calculate = (props: any) => string;
@@ -91,46 +95,8 @@ const calculations = {
     base: number;
     portionOfBase: number;
   }) => `${portionOfBase} / ${base}`,
-  piMonthly: ({
-    loanAmountDollarsTotal,
-    interestRatePercentMonthly,
-    loanTermMonths,
-  }: {
-    loanAmountDollarsTotal: CalcProp;
-    interestRatePercentMonthly: CalcProp;
-    loanTermMonths: CalcProp;
-  }) => {
-    const L = loanAmountDollarsTotal;
-    const r =
-      typeof interestRatePercentMonthly === "number"
-        ? percentToDecimal(interestRatePercentMonthly)
-        : interestRatePercentMonthly;
-    const n = loanTermMonths;
-
-    // mathjs uses ^ to exponentiate instead of javascript's "**"
-    const piMonthly = `${L} * ((${r} * (1 + ${r}) ^ ${n}) / ((1 + ${r}) ^ ${n} - 1))`;
-    return piMonthly;
-  },
-  piYearly({
-    // assumes monthly loan payments
-    loanAmountDollarsTotal,
-    interestRatePercentYearly,
-    loanTermYears,
-  }: {
-    loanAmountDollarsTotal: CalcProp;
-    interestRatePercentYearly: CalcProp;
-    loanTermYears: CalcProp;
-  }) {
-    return `12 * (${this.piMonthly({
-      loanAmountDollarsTotal,
-      interestRatePercentMonthly:
-        typeof interestRatePercentYearly === "number"
-          ? interestRatePercentYearly / 12
-          : interestRatePercentYearly,
-      loanTermMonths:
-        typeof loanTermYears === "number" ? loanTermYears * 12 : loanTermYears,
-    })})`;
-  },
+  piMonthly: calculatePiMonthly,
+  piYearly: calculatePiYearly,
 } as const;
 
 export const calculationNames = Obj.keys(calculations);

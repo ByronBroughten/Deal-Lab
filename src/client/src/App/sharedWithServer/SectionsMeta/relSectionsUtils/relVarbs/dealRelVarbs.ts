@@ -86,14 +86,14 @@ export function dealRelVarbs(): RelVarbs<"deal"> {
       { startAdornment: "$" }
     ),
     ...relVarbsS.ongoingSumNums("expenses", "Ongoing expenses", [
-      relVarbInfoS.children("propertyGeneral", "ongoingExpenses"),
-      relVarbInfoS.children("mgmtGeneral", "ongoingExpenses"),
+      relVarbInfoS.children("propertyGeneral", "expenses"),
+      relVarbInfoS.children("mgmtGeneral", "expenses"),
       relVarbInfoS.children("financing", "piti"),
     ]),
     ...relVarbsS.ongoingSumNums(
       "revenue",
       "Revenue",
-      [relVarbInfoS.children("propertyGeneral", "ongoingRevenue")],
+      [relVarbInfoS.children("propertyGeneral", "revenue")],
       { shared: { startAdornment: "$" }, switchInit: "monthly" }
     ),
   } as RelVarbs<"deal">;
