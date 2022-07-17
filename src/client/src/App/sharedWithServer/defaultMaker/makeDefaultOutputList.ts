@@ -23,7 +23,7 @@ const defaultDealOutputInfos: InEntityValueInfo[] = outputNames.map(
 export function makeDefaultOutputList(): SectionPack<"outputList"> {
   const outputList = PackBuilderSection.initAsOmniChild("outputList");
   for (const outputVarbInfo of defaultDealOutputInfos) {
-    outputList.addChild("output", {
+    outputList.addChild("outputItem", {
       dbVarbs: { valueEntityInfo: outputVarbInfo },
     });
   }

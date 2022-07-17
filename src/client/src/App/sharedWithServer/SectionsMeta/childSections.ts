@@ -35,6 +35,8 @@ export const childSections = checkChildSections({
   }),
   omniParent: relOmniParentChildren,
   main: childrenSections({
+    // should be loginForm, registerForm
+
     // main includes everything that is visible to the user on the front-end.
     login: ["login"],
     register: ["register"],
@@ -79,7 +81,7 @@ export const childSections = checkChildSections({
     tableRow: ["tableRow"],
   }),
   tableRow: { cell: childSection("cell") },
-  outputList: { output: childSection("output") },
+  outputList: { outputItem: childSection("outputItem") },
   singleTimeList: { singleTimeItem: childSection("singleTimeItem") },
   ongoingList: {
     ongoingItem: childSection("ongoingItem", {
@@ -94,7 +96,6 @@ export const childSections = checkChildSections({
     mgmtGeneral: ["mgmtGeneral"],
     dealOutputList: ["outputList"],
   }),
-
   financing: { loan: childSection("loan") },
   loan: childrenSections({
     closingCostList: ["singleTimeList"],

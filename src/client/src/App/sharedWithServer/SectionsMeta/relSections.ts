@@ -86,7 +86,7 @@ export function makeRelSections() {
       feFullIndexStoreName: "outputListMain",
       dbIndexStoreName: "outputListMain",
     }),
-    output: relSection("Output", {
+    outputItem: relSection("Output", {
       value: relVarb("numObj", {
         updateFnName: "loadedNumObj",
         updateFnProps: {

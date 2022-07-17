@@ -2,12 +2,12 @@ import { useSetterSection } from "../../sharedWithServer/stateClassHooks/useSett
 import { LabeledVarbNext, LabeledVarbNotFound } from "./LabeledVarb";
 
 export function LabeledVarbOutput({ feId }: { feId: string }) {
-  const output = useSetterSection({
-    sectionName: "output",
+  const outputItem = useSetterSection({
+    sectionName: "outputItem",
     feId,
   });
 
-  const entityVarbInfo = output.get.value(
+  const entityVarbInfo = outputItem.get.value(
     "valueEntityInfo",
     "inEntityVarbInfo"
   );
@@ -15,10 +15,10 @@ export function LabeledVarbOutput({ feId }: { feId: string }) {
 
   const props = {
     entityVarbInfo,
-    onXBtnClick: () => output.removeSelf(),
+    onXBtnClick: () => outputItem.removeSelf(),
   } as const;
 
-  return output.allSections.hasSectionMixed(entityVarbInfo) ? (
+  return outputItem.allSections.hasSectionMixed(entityVarbInfo) ? (
     <LabeledVarbNext {...props} />
   ) : (
     <LabeledVarbNotFound {...props} />

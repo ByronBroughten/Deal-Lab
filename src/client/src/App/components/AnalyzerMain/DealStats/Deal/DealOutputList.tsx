@@ -12,14 +12,14 @@ export default function DealOutputList({ feId }: { feId: string }) {
   });
 
   const onSelectNext = ({ varbInfo }: VariableOption) =>
-    outPutList.addChild("output", {
+    outPutList.addChild("outputItem", {
       dbVarbs: varbInfo as any as Record<string, string>,
     });
 
   return (
     <Styled className="BasicAnalysis-root">
       <LabeledOutputRow>
-        {outPutList.childFeIds("output").map((outputId) => (
+        {outPutList.childFeIds("outputItem").map((outputId) => (
           <LabeledVarbOutput key={outputId} feId={outputId} />
         ))}
       </LabeledOutputRow>

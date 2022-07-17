@@ -77,7 +77,7 @@ export const baseSections = {
     ] as const),
     ...baseVarbs("numObj", ["editorValue"] as const),
   }),
-  output: baseSection({
+  outputItem: baseSection({
     ...baseVarbsS.singleVirtualVarb,
     ...baseVarbsS.loadableVarb,
   }),
@@ -126,14 +126,16 @@ export const baseSections = {
     }
   ),
   mgmt: baseSection(baseVarbsS.mgmt),
-  mgmtGeneral: baseSection(omit(baseVarbsS.mgmt, ["displayName"]), {
-    hasGlobalVarbs: true,
-  }),
+  get mgmtGeneral() {
+    return baseSection(omit(this.mgmt.varbSchemas, ["displayName"]), {
+      hasGlobalVarbs: true,
+    });
+  },
   deal: baseSection(
     {
       ...baseVarbsS.savableSection,
       ...baseVarbs("numObj", [
-        "upfrontExpensesSum",
+        "upfrontExpensesBaseSum",
         "upfrontExpenses",
         "upfrontRevenue",
         "totalInvestment",
@@ -143,9 +145,7 @@ export const baseSections = {
       ...baseVarbsS.ongoing("cashFlow"),
       ...baseVarbsS.ongoing("roi"),
     },
-    {
-      hasGlobalVarbs: true,
-    }
+    { hasGlobalVarbs: true }
   ),
   user: baseSection(
     baseVarbs("string", ["email", "userName", "apiAccessStatus"] as const)

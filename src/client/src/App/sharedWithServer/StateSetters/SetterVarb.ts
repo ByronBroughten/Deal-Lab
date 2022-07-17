@@ -79,7 +79,3 @@ export class SetterVarb<
     return this.solverVarb.inVarbInfos;
   }
 }
-
-// SetterVarb
-// makeChangeHandler, updateValueDirectly, loadValueFromVarb
-// updateValueFromEditor, createEditor
