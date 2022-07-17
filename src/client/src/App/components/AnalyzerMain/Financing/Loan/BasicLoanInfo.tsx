@@ -6,6 +6,7 @@ import BasicSectionInfo from "../../../appWide/GeneralSection/MainSection/MainSe
 import StandardLabel from "../../../general/StandardLabel";
 import { NumObjEntityEditor } from "../../../inputs/NumObjEntityEditor";
 import DollarPercentRadioSwap from "../../general/DollarPercentRadioSwap";
+import { PiCalculationControl } from "./PiCalculationControl";
 
 type Props = { feId: string; className?: string };
 export default function BasicLoanInfo({ feId, className }: Props) {
@@ -25,9 +26,9 @@ export default function BasicLoanInfo({ feId, className }: Props) {
               <DollarPercentRadioSwap
                 {...{
                   names: {
-                    percent: "loanAmountBasePercent",
-                    dollars: "loanAmountBaseDollars",
-                    switch: "loanAmountBaseUnitSwitch",
+                    percent: "loanBasePercent",
+                    dollars: "loanBaseDollars",
+                    switch: "loanBaseUnitSwitch",
                   },
                   feInfo: loan.feInfo,
                   title: "Base loan amount",
@@ -49,6 +50,7 @@ export default function BasicLoanInfo({ feId, className }: Props) {
                   className="BasicSectionInfo-numObjEditor secondEditor"
                 />
               </div>
+              <PiCalculationControl {...{ feId }} />
             </div>
           </div>
           <div className="BasicSectionInfo-subSection">

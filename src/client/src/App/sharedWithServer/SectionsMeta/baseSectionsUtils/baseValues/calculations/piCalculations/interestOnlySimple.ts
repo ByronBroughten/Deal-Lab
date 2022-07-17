@@ -2,14 +2,14 @@ import { CalcProp } from "../../calculations";
 
 type InterestOnlyPaymentsYearlyProps = {
   interestRateDecimalYearly: CalcProp;
-  loanAmountDollarsTotal: CalcProp;
+  loanTotalDollars: CalcProp;
 };
 
 export function interestOnlySimpleYearly({
   interestRateDecimalYearly,
-  loanAmountDollarsTotal,
+  loanTotalDollars,
 }: InterestOnlyPaymentsYearlyProps): string {
-  return `${interestRateDecimalYearly} * ${loanAmountDollarsTotal}`;
+  return `${interestRateDecimalYearly} * ${loanTotalDollars}`;
 }
 
 export function interestOnlySimpleMonthly(

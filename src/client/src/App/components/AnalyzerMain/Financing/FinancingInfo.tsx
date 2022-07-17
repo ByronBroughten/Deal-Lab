@@ -39,7 +39,7 @@ export default function FinancingInfo({ feId }: { feId: string }) {
         {areMultiple && (
           <LabeledVarbSimpleNext
             themeName="loan"
-            feVarbInfo={financing.varbInfo("loanAmountDollarsTotal")}
+            feVarbInfo={financing.varbInfo("loanTotalDollars")}
           />
         )}
       </LabeledOutputRowSimple>

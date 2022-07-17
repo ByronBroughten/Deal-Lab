@@ -29,7 +29,7 @@ const piCalculations = {
 
 interface CalculatePiGeneralProps {
   piCalculationName: PiCalculationName;
-  loanAmountDollarsTotal: CalcProp;
+  loanTotalDollars: CalcProp;
 }
 export interface CalculatePiMonthlyProps extends CalculatePiGeneralProps {
   interestRatePercentMonthly: CalcProp;

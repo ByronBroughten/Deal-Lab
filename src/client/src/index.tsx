@@ -13,15 +13,14 @@ AppRegistry.runApplication("App", {
 // singleTimeList*
 // ongoingList*
 // singleTimeItem*
-// ongoingItem - make it have one value, I think
-// ah, that makes it difficult to select it as a varb, though
+// ongoingItem - double-check
 
 // outputList*
 // output - rename to outputItem
 
 // property*
 // unit - is it ok that "one" is a numObj?
-// loan - loan needs "interest only" switch
+// loan*
 // mgmt
 // deal
 

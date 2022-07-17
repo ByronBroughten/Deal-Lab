@@ -3,32 +3,32 @@ import { CalcProp } from "../calculations";
 import { calcPropMath } from "./calcPropS";
 
 interface PiYearlyFullProps extends PiYearlyCalcProps {
-  loanAmountDollarsTotal: CalcProp;
+  loanTotalDollars: CalcProp;
 }
 
 export function piFixedStandardYearly({
   // the yearly total assumes that payments are made monthly
-  loanAmountDollarsTotal,
+  loanTotalDollars,
   ...yearlyCalcProps
 }: PiYearlyFullProps) {
   const monthlyCalcProps = yearlyToMonthlyCalcProps(yearlyCalcProps);
   return `12 * (${piFixedStandardMonthly({
-    loanAmountDollarsTotal,
+    loanTotalDollars,
     ...monthlyCalcProps,
   })})`;
 }
 
 type PiMonthlyFullProps = {
-  loanAmountDollarsTotal: CalcProp;
+  loanTotalDollars: CalcProp;
   interestRateDecimalMonthly: CalcProp;
   loanTermMonths: CalcProp;
 };
 export function piFixedStandardMonthly({
-  loanAmountDollarsTotal,
+  loanTotalDollars,
   interestRateDecimalMonthly,
   loanTermMonths,
 }: PiMonthlyFullProps): string {
-  const L = loanAmountDollarsTotal;
+  const L = loanTotalDollars;
   const r = interestRateDecimalMonthly;
   const n = loanTermMonths;
 
