@@ -85,8 +85,7 @@ export class SolverVarb<
     const infoVarb = this.localSolverVarb("valueEntityInfo");
 
     infoVarb.updaterVarb.updateValueByEditor(entityInfo);
-    infoVarb.updateConnectedEntities();
-
+    infoVarb.updateConnectedVarbs();
     this.addInEntity({
       ...entityInfo,
       length: 0, // length and offset are arbitrary
