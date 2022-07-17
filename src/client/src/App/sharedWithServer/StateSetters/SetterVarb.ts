@@ -19,11 +19,15 @@ export class SetterVarb<
   SN extends SectionName = SectionName
 > extends SetterVarbBase<SN> {
   private solverVarb = SolverVarb.init(this.getterVarbBase.getterVarbProps);
-  private updaterVarb = new UpdaterVarb(this.getterVarbBase.getterVarbProps);
-  private getterVarb = new GetterVarb(this.getterVarbBase.getterVarbProps);
-  private editorUpdater = new EditorUpdaterVarb(
-    this.getterVarbBase.getterVarbProps
-  );
+  private get updaterVarb() {
+    return new UpdaterVarb(this.getterVarbBase.getterVarbProps);
+  }
+  private get getterVarb() {
+    return new GetterVarb(this.getterVarbBase.getterVarbProps);
+  }
+  private get editorUpdater() {
+    return new EditorUpdaterVarb(this.getterVarbBase.getterVarbProps);
+  }
   get get(): GetterVarb<SN> {
     return this.getterVarb;
   }
@@ -57,10 +61,8 @@ export class SetterVarb<
     this.setSections();
   }
   updateValueFromEditor(contentState: ContentState): void {
-    this.editorUpdater.update(contentState);
-    // solving the varb that was updated messes with the editor cursor
-    // due to manualUpdateEditorToggle, so best to only solve connected varbs
-    this.solverVarb.updateConnectedVarbs();
+    const value = this.editorUpdater.valueFromContentState(contentState);
+    this.solverVarb.editorUpdateAndSolve(value);
     this.setSections();
   }
   createEditor(props: CreateEditorProps): EditorState {

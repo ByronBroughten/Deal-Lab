@@ -3,6 +3,7 @@ import calculations, {
   isCalculationName,
   NumberProps,
 } from "../SectionsMeta/baseSectionsUtils/baseValues/calculations";
+import { InEntities } from "../SectionsMeta/baseSectionsUtils/baseValues/entities";
 import { InEntityVarbInfoValue } from "../SectionsMeta/baseSectionsUtils/baseValues/InEntityVarbInfoValue";
 import { NumObj } from "../SectionsMeta/baseSectionsUtils/baseValues/NumObj";
 import { RelVarbInfo } from "../SectionsMeta/childSectionsDerived/RelVarbInfo";
@@ -15,9 +16,28 @@ import { GetterSection } from "../StateGetters/GetterSection";
 import { GetterSections } from "../StateGetters/GetterSections";
 import { GetterVarb } from "../StateGetters/GetterVarb";
 import { GetterVarbNumObj } from "../StateGetters/GetterVarbNumObj";
+import { Arr } from "../utils/Arr";
 import { StateValue } from "./../SectionsMeta/baseSectionsUtils/baseValues/StateValueTypes";
 import { StringObj } from "./../SectionsMeta/baseSectionsUtils/baseValues/StringObj";
 import { UserVarbValueSolver } from "./SolveValueVarb/UserVarbValueSolver";
+
+// Ok. Here's the thing.
+// Previously, I was treating the values as isolated.
+// Now, though, updating varbInfo needs to affect the entities of others.
+
+// I tried one solution that maintains a semblance of the separation
+
+// Except what I think that solution lacks is that it doesn't
+// update outEntities for the new inEntities.
+
+// It used to be the case that any change to something with entities
+// triggered a response for outEntities.
+
+// I like that. That allows for value updates to happen in relative isolation
+// And then something aware of the greater system makes those updates
+
+// I thought I used to have something like that.
+// Do I not?
 
 export class SolveValueVarb<
   SN extends SectionName<"hasVarb">
@@ -48,6 +68,8 @@ export class SolveValueVarb<
       return this.getterVarb.value("stringObj");
     },
     inEntityVarbInfo: (): InEntityVarbInfoValue => {
+      // when this changes.
+
       return this.getterVarb.value("inEntityVarbInfo");
     },
     editorValue: (): NumObj => {
@@ -59,11 +81,9 @@ export class SolveValueVarb<
       return { ...value, solvableText };
     },
     loadedNumObj: (): NumObj => {
-      const current = this.getterVarb.value("numObj");
-      const nextTexts = this.loadNextTexts();
       return {
-        ...nextTexts,
-        entities: current.entities,
+        ...this.loadNextTexts(),
+        entities: this.loadNextEntities(),
       };
     },
     calcVarbs: (): NumObj => {
@@ -111,6 +131,25 @@ export class SolveValueVarb<
     if (isCalculationName(updateFnName)) return this.updateFns.calculation();
     if (this.isInUpdateFns(updateFnName)) return this.updateFns[updateFnName]();
     else throw new Error(`updateFnName ${updateFnName} not found.`);
+  }
+  private loadNextEntities(): InEntities {
+    const varb = this.getterVarb;
+    let nextEntities = [...varb.inEntities];
+    const entityInfo = varb.localValue("valueEntityInfo", "inEntityVarbInfo");
+    if (
+      entityInfo &&
+      !Arr.has(
+        nextEntities,
+        ({ entityId }) => entityId === entityInfo?.entityId
+      )
+    ) {
+      nextEntities.push({
+        ...entityInfo,
+        length: 0,
+        offset: 0,
+      });
+    }
+    return nextEntities;
   }
   private loadNextTexts(): { editorText: string; solvableText: string } {
     const loadingVarbInfo = this.getterSection.value(

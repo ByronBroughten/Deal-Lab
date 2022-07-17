@@ -75,13 +75,7 @@ export class EditorUpdaterVarb<
     const content = contentCreators[valueType]();
     return EditorState.createWithContent(content, compositeDecorator);
   }
-  update(contentState: ContentState): void {
-    const nextValue = this.valueFromContentState(contentState);
-    this.updaterVarb.update({
-      value: nextValue,
-    });
-  }
-  private valueFromContentState(
+  valueFromContentState(
     contentState: ContentState
   ): string | string[] | NumObj | StringObj {
     const { updateFnName } = this.getterVarb;

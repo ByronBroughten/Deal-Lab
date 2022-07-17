@@ -1,6 +1,6 @@
 import React from "react";
 import LabeledEquation from "../../ListGroupShared/ListItemValue/LabeledEquation";
-import LoadedVarb from "../../ListGroupShared/ListItemValue/LoadedVarb";
+import { LoadedVarbEditor } from "../../ListGroupShared/ListItemValue/LoadedVarbEditor";
 import { VarbListItemGeneric } from "../../ListGroupShared/VarbListItemGeneric";
 
 export function ListItemSingleTime({ feId }: { feId: string }) {
@@ -12,7 +12,7 @@ export function ListItemSingleTime({ feId }: { feId: string }) {
         switchOptions: {
           labeledEquation: () => <LabeledEquation {...{ feInfo, key: feId }} />,
           loadedVarb: () => (
-            <LoadedVarb
+            <LoadedVarbEditor
               feVarbInfo={{ varbName: "value", ...feInfo }}
               key={feId}
             />

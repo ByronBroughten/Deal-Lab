@@ -2,7 +2,7 @@ import { ongoingVarb } from "../../../../sharedWithServer/SectionsMeta/baseSecti
 import { useSetterSection } from "../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import LabeledEquation from "../../ListGroup/ListGroupShared/ListItemValue/LabeledEquation";
 import LabeledSpanOverCost from "../../ListGroup/ListGroupShared/ListItemValue/LabeledSpanOverCost";
-import LoadedVarb from "../../ListGroup/ListGroupShared/ListItemValue/LoadedVarb";
+import { LoadedVarbEditor } from "../../ListGroup/ListGroupShared/ListItemValue/LoadedVarbEditor";
 import { VarbListItemGeneric } from "../../ListGroup/ListGroupShared/VarbListItemGeneric";
 
 export function OngoingListItem({ feId }: { feId: string }) {
@@ -25,7 +25,9 @@ export function OngoingListItem({ feId }: { feId: string }) {
             <LabeledSpanOverCost {...{ valueVarbName, feInfo }} />
           ),
           loadedVarb: () => (
-            <LoadedVarb feVarbInfo={{ varbName: valueVarbName, ...feInfo }} />
+            <LoadedVarbEditor
+              feVarbInfo={{ varbName: valueVarbName, ...feInfo }}
+            />
           ),
         },
       }}

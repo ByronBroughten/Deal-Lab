@@ -16,7 +16,6 @@ import { OutVarbGetterVarb } from "../StateInOutVarbs/OutVarbGetterVarb";
 import { UpdaterVarb } from "../StateUpdaters/UpdaterVarb";
 import { StrictOmit } from "../utils/types";
 import { SolverVarbBase, SolverVarbProps } from "./SolverBases/SolverVarbBase";
-import { SolverSection } from "./SolverSection";
 import { SolverSections } from "./SolverSections";
 import { SolveValueVarb } from "./SolveValueVarb";
 
@@ -45,12 +44,10 @@ export class SolverVarb<
   get updaterVarb() {
     return new UpdaterVarb(this.getterVarbBase.getterVarbProps);
   }
-
-  private valueSolver = new SolveValueVarb(this.getterVarbBase.getterVarbProps);
-  private solverSections = new SolverSections(this.solverSectionsProps);
-  private get solverSection(): SolverSection<SN> {
-    return new SolverSection(this.solverVarbProps);
+  private get valueSolver() {
+    return new SolveValueVarb(this.getterVarbBase.getterVarbProps);
   }
+  private solverSections = new SolverSections(this.solverSectionsProps);
 
   localSolverVarb(varbName: string): SolverVarb<SN> {
     return new SolverVarb({
@@ -68,24 +65,40 @@ export class SolverVarb<
         varbIdsToSolveFor: new Set(),
       },
     });
-  } // I definitely need editorUpdateAndSolve
+  }
   calculateAndUpdateValue() {
     const newValue = this.valueSolver.solveValue();
-    this.updaterVarb.updateValueDirectly(newValue);
+    this.updateValueDirectly(newValue);
   }
   directUpdateAndSolve(value: StateValue): void {
-    this.updaterVarb.updateValueDirectly(value);
+    this.updateValueDirectly(value);
     this.addVarbIdsToSolveFor(this.get.varbId);
-    this.updateConnectedVarbs();
+    this.solveOutVarbs();
   }
-
+  editorUpdateAndSolve(newValue: StateValue): void {
+    // solving the varb that was updated messes with the editor cursor
+    // due to manualUpdateEditorToggle, so best to only solve connected varbs
+    this.updateValueByEditor(newValue);
+    this.solveOutVarbs();
+  }
+  private updateValueDirectly(newValue: StateValue): void {
+    this.updaterVarb.updateValueDirectly(newValue);
+    this.updateConnectedEntities();
+  }
+  private updateValueByEditor(newValue: StateValue): void {
+    this.updaterVarb.updateValueByEditor(newValue);
+    this.updateConnectedEntities();
+  }
   loadValueFromVarb(varbInfo: InEntityVarbInfo) {
     this.unloadPreviousVarb();
     const entityInfo = { ...varbInfo, entityId: Id.make() };
     const infoVarb = this.localSolverVarb("valueEntityInfo");
 
     infoVarb.updaterVarb.updateValueByEditor(entityInfo);
-    infoVarb.updateConnectedVarbs();
+
+    this.updateConnectedEntities();
+    this.solveOutVarbs();
+
     this.addInEntity({
       ...entityInfo,
       length: 0, // length and offset are arbitrary
@@ -105,11 +118,11 @@ export class SolverVarb<
   updateConnectedVarbs(): void {
     this.updateConnectedEntities();
     this.solveOutVarbs();
-    this.initialEntities = [...this.get.inEntities];
   }
   private updateConnectedEntities() {
     this.removeObsoleteOutEntities();
     this.addNewOutEntitites();
+    this.initialEntities = [...this.get.inEntities];
   }
   addOutEntitiesOfInEntities() {
     const { inEntities } = this.get;

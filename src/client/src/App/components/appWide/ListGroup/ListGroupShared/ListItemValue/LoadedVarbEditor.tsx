@@ -3,7 +3,7 @@ import { useSetterVarb } from "../../../../../sharedWithServer/stateClassHooks/u
 import { VariableOption } from "../../../../../sharedWithServer/StateEntityGetters/VariableGetterSections";
 import { ControlledVarbAutoComplete } from "../../../../inputs/ControlledVarbAutoComplete";
 
-export default function LoadedVarb({ feVarbInfo }: { feVarbInfo: FeVarbInfo }) {
+export function LoadedVarbEditor({ feVarbInfo }: { feVarbInfo: FeVarbInfo }) {
   // valueVarb
   const varb = useSetterVarb(feVarbInfo);
 

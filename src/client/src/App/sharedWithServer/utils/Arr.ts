@@ -108,6 +108,11 @@ export const Arr = {
     nextArr.pop();
     return nextArr;
   },
+  has<T>(arr: T[], fn: (value: T) => boolean) {
+    const value = arr.find(fn);
+    if (value === undefined) return false;
+    else return true;
+  },
   findIn<T>(arr: T[], fn: (value: T) => boolean): T | undefined {
     const idx = arr.findIndex(fn);
     if (idx === -1) return undefined;

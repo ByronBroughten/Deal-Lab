@@ -144,7 +144,7 @@ export class SolverSection<
   }
   loadChildPackAndSolve<CN extends ChildName<SN>>(
     childPackInfo: ChildPackInfo<SN, CN>
-  ) {
+  ): void {
     const { childName, sectionPack } = childPackInfo;
     this.updater.addChild(childName);
     const child = this.youngestChild(childName);
