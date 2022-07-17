@@ -89,6 +89,7 @@ export class SolverSection<
     this.updater.updateValuesDirectly(values);
     const varbNames = Obj.keys(values) as SectionVarbName<SN>[];
     const varbInfos = varbNames.map((varbName) => this.get.varbInfo(varbName));
+
     this.addVarbInfosToSolveFor(...varbInfos);
     this.solve();
   }

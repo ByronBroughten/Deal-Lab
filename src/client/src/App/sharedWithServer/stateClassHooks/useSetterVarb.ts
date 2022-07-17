@@ -1,5 +1,3 @@
-import { useMemo } from "react";
-import { useUpdateSetterSections } from "../../modules/sectionActorHooks/useUpdateSetterSections";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { GetterVarbProps } from "../StateGetters/Bases/GetterVarbBase";
 import { SetterVarb } from "../StateSetters/SetterVarb";
@@ -13,12 +11,9 @@ export function useSetterVarb<SN extends SectionName>(
   varbInfo: UseSetterVarbProps<SN>
 ): SetterVarb<SN> {
   const moreProps = useSetterSectionsProps();
-  const setterVarb = useMemo(() => {
-    return new SetterVarb({
-      ...varbInfo,
-      ...moreProps,
-    });
-  }, [JSON.stringify(varbInfo)]);
-  useUpdateSetterSections(setterVarb);
+  const setterVarb = new SetterVarb({
+    ...varbInfo,
+    ...moreProps,
+  });
   return setterVarb;
 }

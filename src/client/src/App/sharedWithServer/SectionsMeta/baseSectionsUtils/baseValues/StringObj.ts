@@ -17,6 +17,13 @@ export function isStringObj(value: any): value is StringObj {
   );
 }
 
+export function stringObj(text: string): StringObj {
+  return {
+    text,
+    entities: [],
+  };
+}
+
 export const initDefaultStringObj = ({
   text = "",
   entities = [],

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/Info";
 import { ThemeName } from "../../theme/Theme";
 import MaterialDraftEditor from "./MaterialDraftEditor";
-import { useDraftInputNext } from "./useDraftInputNext";
+import { useDraftInput } from "./useDraftInput";
 
 interface Props {
   feVarbInfo: FeVarbInfo;
@@ -20,7 +20,7 @@ export function BigStringEditor({
   label,
   placeholder,
 }: Props) {
-  const { onChange, varb, editorState } = useDraftInputNext({
+  const { onChange, varb, editorState } = useDraftInput({
     ...feVarbInfo,
     valueType: "string",
   });

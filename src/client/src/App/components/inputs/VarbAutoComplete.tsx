@@ -1,5 +1,6 @@
 import { Popper, TextField } from "@material-ui/core";
 import { Autocomplete } from "@material-ui/lab";
+import { isEqual } from "lodash";
 import React from "react";
 import styled from "styled-components";
 import useToggle from "../../modules/customHooks/useToggle";
@@ -100,6 +101,9 @@ const VarbAutoComplete = React.forwardRef(
           PopperComponent={(props: PopperProps) => (
             <PopperCustom {...props} ref={ref} />
           )}
+          getOptionSelected={(option, value) => {
+            return isEqual(option, value);
+          }}
           key={`${keyBool}`}
           id="VarbAutoComplete-autoComplete"
           onInputChange={(_, newInputValue) => setInputValue(newInputValue)}

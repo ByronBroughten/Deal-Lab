@@ -118,7 +118,7 @@ export class VariableGetterSections extends GetterSectionsBase {
         varbName,
       },
       collectionName: section.meta.displayName,
-      displayName: varb.fullDisplayName,
+      displayName: varb.displayNameFull,
     };
   }
 }

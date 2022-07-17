@@ -12,7 +12,7 @@ import ItemOrCommaSpan, {
   CommaSpan,
   ItemSpan,
 } from "./ListEditor/ItemOrCommaSpan";
-import { useDraftInputNext } from "./useDraftInputNext";
+import { useDraftInput } from "./useDraftInput";
 
 export const inputHeight = css`
   height: calc(1.5em + 0.5rem + 2px);
@@ -61,7 +61,7 @@ export function ListEditorNext({
   feVarbInfo: FeVarbInfo;
   className?: string;
 }) {
-  const { onChange, editorState } = useDraftInputNext({
+  const { onChange, editorState } = useDraftInput({
     ...feVarbInfo,
     valueType: "stringArray",
     compositeDecorator,

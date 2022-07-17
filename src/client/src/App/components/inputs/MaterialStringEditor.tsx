@@ -1,7 +1,7 @@
 import React from "react";
 import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/Info";
 import MaterialDraftEditor from "./MaterialDraftEditor";
-import { useDraftInputNext } from "./useDraftInputNext";
+import { useDraftInput } from "./useDraftInput";
 
 export interface StringEditorProps {
   feVarbInfo: FeVarbInfo;
@@ -16,7 +16,7 @@ export function MaterialStringEditor({
   valueType = "string",
   label,
 }: StringEditorProps) {
-  let { editorState, onChange, varb } = useDraftInputNext({
+  let { editorState, onChange, varb } = useDraftInput({
     ...feVarbInfo,
     valueType,
   });

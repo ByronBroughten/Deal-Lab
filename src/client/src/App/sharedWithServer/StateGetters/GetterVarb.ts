@@ -75,7 +75,7 @@ export class GetterVarb<
       const numString = this.numObj.solveTextToNumStringNext();
       return mathS.parseFloatStrict(numString);
     } else {
-      return mathS.parseFloatStrict(`${this.value("any")}`);
+      return mathS.parseFloatStrict(`${val}`);
     }
   }
   get numberOrZero(): number {
@@ -149,7 +149,7 @@ export class GetterVarb<
     const displayNameVarb = this.section.varbByFocalMixed(displayName);
     return displayNameVarb.value("string");
   }
-  get fullDisplayName(): string {
+  get displayNameFull(): string {
     const { displayNameEnd } = this.meta;
     return this.displayName + displayNameEnd;
   }

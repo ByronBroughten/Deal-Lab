@@ -29,21 +29,34 @@ export class SolverVarb<
   SN extends SectionName<"hasVarb"> = SectionName<"hasVarb">
 > extends SolverVarbBase<SN> {
   private initialEntities: InEntity[];
-  private get = new GetterVarb(this.getterVarbBase.getterVarbProps);
   constructor(props: SolverVarbProps<SN>) {
     super(props);
     this.initialEntities = [...this.get.inEntities];
   }
-  outVarbGetter = new OutVarbGetterVarb(this.getterVarbBase.getterVarbProps);
-  private getterSections = new GetterSections(
-    this.getterSectionsBase.getterSectionsProps
-  );
-  private updaterVarb = new UpdaterVarb(this.getterVarbBase.getterVarbProps);
-  private valueSolver = new SolveValueVarb(this.getterVarbBase.getterVarbProps);
+  get get() {
+    return new GetterVarb(this.getterVarbBase.getterVarbProps);
+  }
+  get outVarbGetter() {
+    return new OutVarbGetterVarb(this.getterVarbBase.getterVarbProps);
+  }
+  get getterSections() {
+    return new GetterSections(this.getterSectionsBase.getterSectionsProps);
+  }
+  get updaterVarb() {
+    return new UpdaterVarb(this.getterVarbBase.getterVarbProps);
+  }
 
+  private valueSolver = new SolveValueVarb(this.getterVarbBase.getterVarbProps);
   private solverSections = new SolverSections(this.solverSectionsProps);
   private get solverSection(): SolverSection<SN> {
     return new SolverSection(this.solverVarbProps);
+  }
+
+  localSolverVarb(varbName: string): SolverVarb<SN> {
+    return new SolverVarb({
+      ...this.solverSectionProps,
+      varbName,
+    });
   }
 
   static init<SN extends SectionName>(
@@ -68,14 +81,16 @@ export class SolverVarb<
 
   loadValueFromVarb(varbInfo: InEntityVarbInfo) {
     this.unloadPreviousVarb();
-    const nextValue = { ...varbInfo, entityId: Id.make() };
+    const entityInfo = { ...varbInfo, entityId: Id.make() };
+    const infoVarb = this.localSolverVarb("valueEntityInfo");
+
+    infoVarb.updaterVarb.updateValueByEditor(entityInfo);
+    infoVarb.updateConnectedEntities();
+
     this.addInEntity({
-      ...nextValue,
+      ...entityInfo,
       length: 0, // length and offset are arbitrary
       offset: 0, // just borrowing functionality from editor entities
-    });
-    this.solverSection.updateValuesAndSolve({
-      valueEntityInfo: nextValue,
     });
   }
   private unloadPreviousVarb() {

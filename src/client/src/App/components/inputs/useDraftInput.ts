@@ -8,7 +8,7 @@ import { SetterVarb } from "../../sharedWithServer/StateSetters/SetterVarb";
 import useOnChange from "./useOnChange";
 
 interface UseDraftInputProps extends FeVarbInfo, CreateEditorProps {}
-export function useDraftInputNext(props: UseDraftInputProps) {
+export function useDraftInput(props: UseDraftInputProps) {
   const setterVarb = useSetterVarb(props);
   const [editorState, setEditorState] = useState<EditorState>(() =>
     setterVarb.createEditor(props)

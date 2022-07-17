@@ -9,10 +9,10 @@ import MaterialDraftEditor from "./MaterialDraftEditor";
 import NumObjVarbSelector from "./NumObjEditor/NumObjVarbSelector";
 import {
   PropAdornments,
-  useGetAdornments
+  useGetAdornments,
 } from "./NumObjEditor/useGetAdornments";
 import { varSpanDecorator } from "./shared/VarSpanNext";
-import { useDraftInputNext } from "./useDraftInputNext";
+import { useDraftInput } from "./useDraftInput";
 
 const numericRegEx = /^[0-9.-]*$/;
 const calculationRegEx = /[\d.*/+()-]/;
@@ -32,13 +32,11 @@ export function NumObjEntityEditor({
   bypassNumeric = false,
   ...props
 }: Props) {
-  let { editorState, varb, onChange } = useDraftInputNext({
+  let { editorState, varb, onChange } = useDraftInput({
     ...feVarbInfo,
     valueType: "numObj",
     compositeDecorator: varSpanDecorator,
   });
-
-  const value = varb.value("numObj");
 
   const isCalcMode = true;
   const handleBeforeInput = (char: string): "handled" | "not-handled" => {

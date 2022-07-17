@@ -63,7 +63,7 @@ export class SolveValueVarb<
       const nextTexts = this.loadNextTexts();
       return {
         ...nextTexts,
-        entities: current.entities.filter((entity) => entity.length === 0),
+        entities: current.entities,
       };
     },
     calcVarbs: (): NumObj => {
@@ -95,7 +95,7 @@ export class SolveValueVarb<
       const varbInfo = this.getterSection.inEntityValueInfo();
       if (this.getterSections.hasSectionMixed(varbInfo)) {
         const varb = this.getterSections.varbByMixed(varbInfo);
-        return varb.displayName;
+        return varb.displayNameFull;
       } else return "Variable not found.";
     },
     loadedDisplayNameEnd: (): string => {
@@ -121,6 +121,9 @@ export class SolveValueVarb<
       const varb = this.getterSections.varbByMixed(loadingVarbInfo);
       return {
         solvableText: varb.value("numObj").solvableText,
+        // the editorText is the present numberValue.
+
+        // that is the issue.
         editorText:
           varb.numberOrQuestionMark === "?" ? "" : `${varb.numberValue}`,
       };

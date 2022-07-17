@@ -189,6 +189,8 @@ export const relVarbsS = {
               valueSwitch: valueSwitchProp,
             },
           },
+          // the total is updating right away.
+          // and the total must update based on
         ],
         startAdornment: "$",
       }),
@@ -212,12 +214,18 @@ export const relVarbsS = {
     const valueSwitchProp = relVarbInfoS.local("valueSwitch");
     return {
       ...this.listItem,
-      // Hmm. Ok, so this displayName value was going to be loadable.
-
       // loading a varbInfo gives the displayName an inEntity
-      // based on the displayName of the loaded varbInfo (which may derive
-      // from a virtual varb, in which case I have to get that virtualVarb's
-      // displayName entity.
+      // or it just changes the displayName to a static displayName
+
+      // basic loaded value
+      // load the varbInfo
+      // give value an entity
+
+      // What happens is that the item's value
+      // isn't updating in time
+
+      // I know I solved this once before.
+
       // For right now, I can actually do away with loadedVarbs
       // Anyways, when an entity is not present, this varb copies
       // the one it is linked to, or maintains a static displayName
