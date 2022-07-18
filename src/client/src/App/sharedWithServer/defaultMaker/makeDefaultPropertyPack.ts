@@ -15,7 +15,7 @@ export function makeDefaultPropertyPack(): SectionPack<"property"> {
 
   property.addChild("ongoingCostList", {
     dbVarbs: {
-      title: "Utilities",
+      displayName: "Utilities",
       totalOngoingSwitch: "monthly",
       defaultValueSwitch: "labeledEquation",
       defaultOngoingSwitch: "monthly",
@@ -23,14 +23,14 @@ export function makeDefaultPropertyPack(): SectionPack<"property"> {
   });
   property.addChild("ongoingCostList", {
     dbVarbs: {
-      title: "CapEx",
+      displayName: "CapEx",
       totalOngoingSwitch: "yearly",
       defaultValueSwitch: "labeledSpanOverCost",
       defaultOngoingSwitch: "yearly",
     },
   });
   property.addChild("upfrontCostList", {
-    dbVarbs: { title: "Repairs" },
+    dbVarbs: { displayName: "Repairs" },
   });
 
   return property.makeSectionPack();

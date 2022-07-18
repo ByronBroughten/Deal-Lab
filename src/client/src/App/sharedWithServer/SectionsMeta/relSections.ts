@@ -76,10 +76,10 @@ export function makeRelSections() {
       compareToggle: relVarb("boolean"),
     }),
     column: relSection("Column", {
-      valueEntityInfo: relVarb("inEntityInfoValue"),
+      valueEntityInfo: relVarb("inEntityInfo"),
     }),
     cell: relSection("Cell", {
-      valueEntityInfo: relVarb("inEntityInfoValue"),
+      valueEntityInfo: relVarb("inEntityInfo"),
       value: relVarbS.numObj("Table cell value"),
     }),
     outputList: relSection("Output List", relVarbsS.savableSection, {
@@ -113,7 +113,7 @@ export function makeRelSections() {
 
     outputItem: relSection("Output", {
       ...relVarbsS.basicVirtualVarb,
-      valueEntityInfo: relVarb("inEntityInfoValue"),
+      valueEntityInfo: relVarb("inEntityInfo"),
       value: relVarb("numObj", {
         updateFnName: "loadedNumObj",
         updateFnProps: {

@@ -186,7 +186,7 @@ export const relVarbsS = {
   },
   get listItemVirtualVarb() {
     return {
-      valueEntityInfo: relVarb("inEntityInfoValue"),
+      valueEntityInfo: relVarb("inEntityInfo"),
       displayNameEditor: relVarbS.displayNameEditor,
       displayName: relVarb("stringObj", {
         updateFnName: "loadLocalString",

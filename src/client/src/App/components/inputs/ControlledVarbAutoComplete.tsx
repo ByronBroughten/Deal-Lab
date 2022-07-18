@@ -1,12 +1,12 @@
-import { isEqual } from "lodash";
+import { isEqual, omit } from "lodash";
 import React from "react";
-import { InEntityVarbInfoValue } from "../../sharedWithServer/SectionsMeta/baseSectionsUtils/baseValues/InEntityVarbInfoValue";
+import { InEntityInfoValue } from "../../sharedWithServer/SectionsMeta/baseSectionsUtils/baseValues/InEntityInfoValue";
 import { useVariableSections } from "../../sharedWithServer/stateClassHooks/useVariableOptions";
 import { VariableOption } from "../../sharedWithServer/StateEntityGetters/VariableGetterSections";
 import VarbAutoComplete from "./VarbAutoComplete";
 
 type Props = {
-  selectedVarbInfo: InEntityVarbInfoValue;
+  selectedVarbInfo: InEntityInfoValue;
   onSelect: (value: VariableOption) => void;
 };
 export function ControlledVarbAutoComplete({
@@ -16,7 +16,10 @@ export function ControlledVarbAutoComplete({
   const variableSections = useVariableSections();
   const options = variableSections.variableOptions();
   const value = React.useMemo(() => {
-    return options.find((option) => isEqual(option.varbInfo, selectedVarbInfo));
+    const toFind = selectedVarbInfo
+      ? omit(selectedVarbInfo, ["entityId"])
+      : null;
+    return options.find((option) => isEqual(option.varbInfo, toFind));
   }, [selectedVarbInfo, options]);
   return (
     <VarbAutoComplete {...{ value, options, clearOnBlur: false, ...props }} />

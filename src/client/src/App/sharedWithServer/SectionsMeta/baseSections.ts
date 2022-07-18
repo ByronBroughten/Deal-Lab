@@ -35,10 +35,10 @@ export const baseSections = {
     compareToggle: "boolean",
   }),
   column: baseSection({
-    valueEntityInfo: "inEntityInfoValue",
+    valueEntityInfo: "inEntityInfo",
   }),
   cell: baseSection({
-    valueEntityInfo: "inEntityInfoValue",
+    valueEntityInfo: "inEntityInfo",
     value: "numObj",
   }),
   conditionalRow: baseSection({

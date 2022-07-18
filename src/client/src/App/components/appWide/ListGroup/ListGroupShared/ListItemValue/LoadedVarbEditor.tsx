@@ -1,4 +1,4 @@
-import { inEntityInfoValue } from "../../../../../sharedWithServer/SectionsMeta/baseSectionsUtils/baseValues/InEntityVarbInfoValue";
+import { inEntityInfo } from "../../../../../sharedWithServer/SectionsMeta/baseSectionsUtils/baseValues/InEntityInfoValue";
 import { FeSectionInfo } from "../../../../../sharedWithServer/SectionsMeta/Info";
 import { useSetterSection } from "../../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import { VariableOption } from "../../../../../sharedWithServer/StateEntityGetters/VariableGetterSections";
@@ -12,9 +12,9 @@ export function LoadedVarbEditor({ feInfo, valueVarbName }: Props) {
   const section = useSetterSection(feInfo);
   const infoVarb = section.varb("valueEntityInfo");
   function onSelect({ varbInfo }: VariableOption) {
-    infoVarb.updateValueDirectly(inEntityInfoValue(varbInfo));
+    infoVarb.updateValueDirectly(inEntityInfo(varbInfo));
   }
-  const selectedVarbInfo = infoVarb.value("inEntityInfoValue");
+  const selectedVarbInfo = infoVarb.value("inEntityInfo");
   const valueVarb = section.varb(valueVarbName);
   return (
     <>

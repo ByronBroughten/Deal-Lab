@@ -4,7 +4,7 @@ import {
   FeSectionInfoMixed,
 } from "../SectionsMeta/baseSectionsDerived/baseVarbInfo";
 import { SwitchTargetKey } from "../SectionsMeta/baseSectionsUtils/baseSwitchNames";
-import { InEntityInfoValue } from "../SectionsMeta/baseSectionsUtils/baseValues/InEntityVarbInfoValue";
+import { InEntityInfo } from "../SectionsMeta/baseSectionsUtils/baseValues/InEntityInfoValue";
 import { ValueName } from "../SectionsMeta/baseSectionsUtils/baseVarb";
 import { DbSectionInfo } from "../SectionsMeta/baseSectionsUtils/DbSectionInfo";
 import { ExpectedCount } from "../SectionsMeta/baseSectionsUtils/NanoIdInfo";
@@ -387,9 +387,9 @@ export class GetterSection<
   get virtualVarb(): GetterVirtualVarb<SN> {
     return new GetterVirtualVarb(this.getterSectionProps);
   }
-  inEntityValueInfo(): InEntityInfoValue {
-    const value = this.value("valueEntityInfo", "inEntityInfoValue");
-    if (!value) throw new Error("inEntityInfoValue value is not initialized");
+  inEntityValueInfo(): InEntityInfo {
+    const value = this.value("valueEntityInfo", "inEntityInfo");
+    if (!value) throw new Error("inEntityInfo value is not initialized");
     return value;
   }
   switchValue<SK extends SwitchEndingKey>(

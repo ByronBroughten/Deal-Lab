@@ -12,7 +12,7 @@ export function makeDefaultLoanPack(): SectionPack<"loan"> {
   });
   loan.addChild("closingCostList", {
     dbVarbs: {
-      title: "Closing Costs",
+      displayName: "Closing Costs",
       defaultValueSwitch: "labeledEquation",
     },
   });

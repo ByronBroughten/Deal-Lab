@@ -7,21 +7,19 @@ import { isVarbName } from "../../baseSectionsDerived/baseVarbInfo";
 import { Id } from "../id";
 import { InEntityVarbInfo, zInEntityVarbInfo } from "./entities";
 
-export type InEntityInfoValue = InEntityVarbInfo & { entityId: string };
+export type InEntityInfo = InEntityVarbInfo & { entityId: string };
 const zInEntityValueInfo = zInEntityVarbInfo.and(
   z.object({ entityId: zS.nanoId })
 );
 
-export function inEntityInfoValue(
-  varbInfo: InEntityVarbInfo
-): InEntityInfoValue {
+export function inEntityInfo(varbInfo: InEntityVarbInfo): InEntityInfo {
   return {
     ...varbInfo,
     entityId: Id.make(),
   };
 }
 
-export type InEntityVarbInfoValue = InEntityInfoValue | null;
+export type InEntityInfoValue = InEntityInfo | null;
 export const zInEntityVarbInfoValue = z.union([z.null(), zInEntityValueInfo]);
 export const mInEntityVarbInfoValue = {
   type: Schema.Types.Mixed,
@@ -33,7 +31,7 @@ export const mInEntityVarbInfoValue = {
 
 export function isInEntityVarbInfoValue(
   value: any
-): value is InEntityVarbInfoValue {
+): value is InEntityInfoValue {
   return (
     value === null ||
     (isInEntityVarbInfoShared(value) && isInEntityVarbInfoSpecific(value))

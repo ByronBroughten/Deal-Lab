@@ -1,11 +1,11 @@
 import { z } from "zod";
 import { reqMonNumber, reqMonString } from "../../utils/mongoose";
 import {
-  InEntityVarbInfoValue,
+  InEntityInfoValue,
   isInEntityVarbInfoValue,
   mInEntityVarbInfoValue,
   zInEntityVarbInfoValue,
-} from "../baseSectionsUtils/baseValues/InEntityVarbInfoValue";
+} from "../baseSectionsUtils/baseValues/InEntityInfoValue";
 import {
   isNumObj,
   mDbNumObj,
@@ -82,10 +82,10 @@ export const valueMeta = {
     zod: zNumObj,
     mon: mDbNumObj,
   },
-  inEntityInfoValue: {
+  inEntityInfo: {
     is: isInEntityVarbInfoValue,
-    updateFnNames: ["inEntityInfoValue"],
-    initDefault: () => null as InEntityVarbInfoValue,
+    updateFnNames: ["inEntityInfo"],
+    initDefault: () => null as InEntityInfoValue,
     zod: zInEntityVarbInfoValue,
     mon: mInEntityVarbInfoValue,
   },

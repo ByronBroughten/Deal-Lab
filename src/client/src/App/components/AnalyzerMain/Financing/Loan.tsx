@@ -35,7 +35,7 @@ export default function Loan({ feId }: { feId: string }) {
             listParentInfo={feInfo}
             listAsChildName="closingCostList"
             totalVarbName="closingCosts"
-            titleText="Loan Fees"
+            titleText="Upfront Costs"
             themeName="loan"
           />
           <ListGroupSingleTime

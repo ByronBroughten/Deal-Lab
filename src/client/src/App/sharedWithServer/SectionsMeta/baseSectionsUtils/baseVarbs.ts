@@ -125,7 +125,7 @@ export const baseVarbsS = {
   },
   get loadableVarb() {
     return {
-      valueEntityInfo: "inEntityInfoValue",
+      valueEntityInfo: "inEntityInfo",
     } as const;
   },
 } as const;

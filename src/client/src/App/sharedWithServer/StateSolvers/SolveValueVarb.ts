@@ -9,9 +9,9 @@ import {
   InEntity,
 } from "../SectionsMeta/baseSectionsUtils/baseValues/entities";
 import {
+  InEntityInfo,
   InEntityInfoValue,
-  InEntityVarbInfoValue,
-} from "../SectionsMeta/baseSectionsUtils/baseValues/InEntityVarbInfoValue";
+} from "../SectionsMeta/baseSectionsUtils/baseValues/InEntityInfoValue";
 import { NumObj } from "../SectionsMeta/baseSectionsUtils/baseValues/NumObj";
 import { RelInVarbInfo } from "../SectionsMeta/childSectionsDerived/RelInOutVarbInfo";
 import { RelVarbInfo } from "../SectionsMeta/childSectionsDerived/RelVarbInfo";
@@ -85,10 +85,10 @@ export class SolveValueVarb<
       );
       return stringObj(varb.value("string"));
     },
-    inEntityInfoValue: (): InEntityVarbInfoValue => {
+    inEntityInfo: (): InEntityInfoValue => {
       // when this changes.
 
-      return this.getterVarb.value("inEntityInfoValue");
+      return this.getterVarb.value("inEntityInfo");
     },
     loadEditorSolvableText: (): NumObj => {
       const value = this.getterVarb.value("numObj");
@@ -154,7 +154,7 @@ export class SolveValueVarb<
   ): StringObj {
     const entityInfo = this.getterSection.value(
       "valueEntityInfo",
-      "inEntityInfoValue"
+      "inEntityInfo"
     );
     if (!entityInfo) {
       return stringObj("");
@@ -183,7 +183,7 @@ export class SolveValueVarb<
     function removeEntityOfSource() {
       Arr.findAndRmMutate(nextEntities, entityIsOfSource);
     }
-    function pushEntityOfSource(entityInfo: InEntityInfoValue) {
+    function pushEntityOfSource(entityInfo: InEntityInfo) {
       nextEntities.push({
         ...entityInfo,
         entitySource: infoVarb.varbId,
@@ -192,7 +192,7 @@ export class SolveValueVarb<
       });
     }
 
-    const entityInfo = infoVarb.value("inEntityInfoValue");
+    const entityInfo = infoVarb.value("inEntityInfo");
     const entityOfSource = nextEntities.find(entityIsOfSource);
     if (entityInfo) {
       if (!entityOfSource) {
@@ -213,7 +213,7 @@ export class SolveValueVarb<
   private loadNextTexts(): { editorText: string; solvableText: string } {
     const loadingVarbInfo = this.getterSection.value(
       "valueEntityInfo",
-      "inEntityInfoValue"
+      "inEntityInfo"
     );
     if (loadingVarbInfo && this.getterList.hasByMixed(loadingVarbInfo)) {
       const varb = this.getterSections.varbByMixed(loadingVarbInfo);
