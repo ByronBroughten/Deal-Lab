@@ -156,27 +156,107 @@ export const relVarbsS = {
     }
     return ssPreVarbs as ToReturn;
   },
-  get listItem() {
+  get basicVirtualVarb() {
     return {
-      // displayName: relVarbS.stringOrLoaded(),
-      displayName: relVarb("stringObj"),
-      displayNameEnd: relVarb("stringObj"),
+      displayName: relVarb("stringObj", {
+        updateFnName: "loadDisplayName",
+        updateFnProps: {
+          varbInfo: relVarbInfoS.local("valueEntityInfo"),
+        },
+      }),
+      displayNameEnd: relVarb("stringObj", {
+        updateFnName: "loadDisplayNameEnd",
+        updateFnProps: {
+          varbInfo: relVarbInfoS.local("valueEntityInfo"),
+        },
+      }),
+      startAdornment: relVarb("stringObj", {
+        updateFnName: "loadStartAdornment",
+        updateFnProps: {
+          varbInfo: relVarbInfoS.local("valueEntityInfo"),
+        },
+      }),
+      endAdornment: relVarb("stringObj", {
+        updateFnName: "loadEndAdornment",
+        updateFnProps: {
+          varbInfo: relVarbInfoS.local("valueEntityInfo"),
+        },
+      }),
     } as const;
   },
-  get singleVirtualVarb() {
+  get listItemVirtualVarb() {
     return {
-      ...this.listItem,
-      value: relVarb("numObj"),
-    };
+      valueEntityInfo: relVarb("inEntityInfoValue"),
+      displayNameEditor: relVarbS.displayNameEditor,
+      displayName: relVarb("stringObj", {
+        updateFnName: "loadLocalString",
+        updateFnProps: {
+          loadLocalString: relVarbInfoS.local("displayNameEditor"),
+        },
+        inUpdateSwitchProps: [
+          {
+            switchInfo: relVarbInfoS.local("valueSwitch"),
+            switchValue: "loadedVarb",
+            updateFnName: "loadDisplayName",
+            updateFnProps: relVarbInfosS.localByVarbName([
+              "valueSwitch",
+              "valueEntityInfo",
+            ]),
+          },
+        ],
+      }),
+      displayNameEnd: relVarb("stringObj", {
+        updateFnName: "emptyStringObj",
+        inUpdateSwitchProps: [
+          {
+            switchInfo: relVarbInfoS.local("valueSwitch"),
+            switchValue: "loadedVarb",
+            updateFnName: "loadDisplayNameEnd",
+            updateFnProps: relVarbInfosS.localByVarbName([
+              "valueSwitch",
+              "valueEntityInfo",
+            ]),
+          },
+        ],
+      }),
+      startAdornment: relVarb("stringObj", {
+        updateFnName: "emptyStringObj",
+        inUpdateSwitchProps: [
+          {
+            switchInfo: relVarbInfoS.local("valueSwitch"),
+            switchValue: "loadedVarb",
+            updateFnName: "loadStartAdornment",
+            updateFnProps: relVarbInfosS.localByVarbName([
+              "valueSwitch",
+              "valueEntityInfo",
+            ]),
+          },
+        ],
+      }),
+      endAdornment: relVarb("stringObj", {
+        updateFnName: "emptyStringObj",
+        inUpdateSwitchProps: [
+          {
+            switchInfo: relVarbInfoS.local("valueSwitch"),
+            switchValue: "loadedVarb",
+            updateFnName: "loadEndAdornment",
+            updateFnProps: relVarbInfosS.localByVarbName([
+              "valueSwitch",
+              "valueEntityInfo",
+            ]),
+          },
+        ],
+      }),
+    } as const;
   },
   singleTimeItem(): RelVarbs<"singleTimeItem"> {
     const valueSwitchProp = relVarbInfoS.local("valueSwitch");
     return {
-      ...this.listItem,
+      ...this.listItemVirtualVarb,
       value: relVarbS.numObj(relVarbInfoS.local("displayName"), {
-        updateFnName: "editorValue",
+        updateFnName: "loadEditorSolvableText",
         updateFnProps: {
-          proxyValue: relVarbInfoS.local("editorValue"),
+          proxyValue: relVarbInfoS.local("numObjEditor"),
           valueSwitch: valueSwitchProp,
         },
         inUpdateSwitchProps: [
@@ -197,50 +277,29 @@ export const relVarbsS = {
       valueSwitch: relVarb("string", {
         initValue: "labeledEquation",
       }),
-      valueEntityInfo: relVarb("inEntityVarbInfo"),
-      editorValue: relVarbS.calcVarb("", { startAdornment: "$" }),
+      numObjEditor: relVarbS.calcVarb("", { startAdornment: "$" }),
     };
   },
   ongoingItem(): RelVarbs<"ongoingItem"> {
     const ongoingValueNames = switchNames("value", "ongoing");
     const defaultValueUpdatePack = {
-      updateFnName: "editorValue",
+      updateFnName: "loadEditorSolvableText",
       updateFnProps: relVarbInfosS.localByVarbName([
-        "editorValue",
+        "numObjEditor",
         "valueSwitch",
       ]),
     } as const;
     const ongoingSwitchInfo = relVarbInfoS.local(ongoingValueNames.switch);
     const valueSwitchProp = relVarbInfoS.local("valueSwitch");
     return {
-      ...this.listItem,
-      // loading a varbInfo gives the displayName an inEntity
-      // or it just changes the displayName to a static displayName
-
-      // basic loaded value
-      // load the varbInfo
-      // give value an entity
-
-      // What happens is that the item's value
-      // isn't updating in time
-
-      // I know I solved this once before.
-
-      // For right now, I can actually do away with loadedVarbs
-      // Anyways, when an entity is not present, this varb copies
-      // the one it is linked to, or maintains a static displayName
-
-      // hmmm, interesting.
-
+      ...this.listItemVirtualVarb,
       valueSwitch: relVarb("string", {
         initValue: "labeledEquation",
       }),
-      valueEntityInfo: relVarb("inEntityVarbInfo"),
       costToReplace: relVarbS.calcVarb("Replacement cost", {
         startAdornment: "$",
       }),
-
-      editorValue: relVarbS.calcVarb("", {
+      numObjEditor: relVarbS.calcVarb("", {
         startAdornment: "$",
         endAdornment: "provide adornment to editor",
       }),
@@ -250,7 +309,7 @@ export const relVarbsS = {
       [ongoingValueNames.switch]: relVarb("string", {
         initValue: "yearly",
       }),
-      // So... that's the editorValue, is that right?
+      // So... that's the numObjEditor, is that right?
 
       [ongoingValueNames.monthly]: relVarbS.moneyMonth("Monthly amount", {
         ...defaultValueUpdatePack,

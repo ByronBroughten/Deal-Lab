@@ -21,7 +21,7 @@ export const numObjUpdateFnNames = [
   ...calcNumObjFnNames,
   "userVarb",
   "loadedNumObj",
-  "editorValue",
+  "loadEditorSolvableText",
 ] as const;
 export type NumObjUpdateFnName = typeof numObjUpdateFnNames[number];
 export function isNumObjUpdateFnName(value: any): value is NumObjUpdateFnName {

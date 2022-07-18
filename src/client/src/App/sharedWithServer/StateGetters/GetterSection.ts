@@ -4,7 +4,7 @@ import {
   FeSectionInfoMixed,
 } from "../SectionsMeta/baseSectionsDerived/baseVarbInfo";
 import { SwitchTargetKey } from "../SectionsMeta/baseSectionsUtils/baseSwitchNames";
-import { InEntityValueInfo } from "../SectionsMeta/baseSectionsUtils/baseValues/InEntityVarbInfoValue";
+import { InEntityInfoValue } from "../SectionsMeta/baseSectionsUtils/baseValues/InEntityVarbInfoValue";
 import { ValueName } from "../SectionsMeta/baseSectionsUtils/baseVarb";
 import { DbSectionInfo } from "../SectionsMeta/baseSectionsUtils/DbSectionInfo";
 import { ExpectedCount } from "../SectionsMeta/baseSectionsUtils/NanoIdInfo";
@@ -44,6 +44,10 @@ import {
   FeVarbInfo,
   noParentWarning,
 } from "../SectionsMeta/Info";
+import {
+  SectionValuesReq,
+  SectionValuesRes,
+} from "../SectionsMeta/relSectionsUtils/rel/valueMetaTypes";
 import { SectionMeta } from "../SectionsMeta/SectionMeta";
 import {
   SectionName,
@@ -58,6 +62,7 @@ import { GetterList } from "./GetterList";
 import { GetterSections } from "./GetterSections";
 import { GetterVarb } from "./GetterVarb";
 import { GetterVarbs } from "./GetterVarbs";
+import { GetterVirtualVarb } from "./GetterVirtualVarb";
 
 export class GetterSection<
   SN extends SectionName = SectionName
@@ -371,9 +376,20 @@ export class GetterSection<
   varbInfo(varbName: SectionVarbName<SN>): FeVarbInfo<SN> {
     return this.varb(varbName as string).feVarbInfo;
   }
-  inEntityValueInfo(): InEntityValueInfo {
-    const value = this.value("valueEntityInfo", "inEntityVarbInfo");
-    if (!value) throw new Error("inEntityVarbInfo value is not initialized");
+  values<VNS extends SectionValuesReq>(
+    varbToValuesNames: VNS
+  ): SectionValuesRes<VNS> {
+    return Obj.keys(varbToValuesNames).reduce((values, varbName) => {
+      values[varbName] = this.value(varbName, varbToValuesNames[varbName]);
+      return values;
+    }, {} as SectionValuesRes<VNS>);
+  }
+  get virtualVarb(): GetterVirtualVarb<SN> {
+    return new GetterVirtualVarb(this.getterSectionProps);
+  }
+  inEntityValueInfo(): InEntityInfoValue {
+    const value = this.value("valueEntityInfo", "inEntityInfoValue");
+    if (!value) throw new Error("inEntityInfoValue value is not initialized");
     return value;
   }
   switchValue<SK extends SwitchEndingKey>(

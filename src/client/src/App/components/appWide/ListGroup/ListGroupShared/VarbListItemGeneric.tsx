@@ -12,8 +12,8 @@ interface Props {
   className?: string;
 }
 export function VarbListItemGeneric({ feInfo, switchOptions, ...rest }: Props) {
-  const listItem = useSetterSection(feInfo);
-  const switchVarb = listItem.varb("valueSwitch");
+  const virtualVarb = useSetterSection(feInfo);
+  const switchVarb = virtualVarb.varb("valueSwitch");
   const switchValue = switchVarb.value("string");
   const switchValues = Object.keys(switchOptions);
   if (!switchValues.includes(switchValue)) {
@@ -34,7 +34,7 @@ export function VarbListItemGeneric({ feInfo, switchOptions, ...rest }: Props) {
       <td className="AdditiveItem-buttonCell AdditiveList-buttonCell">
         <XBtn
           className="AdditiveItem-xBtn"
-          onClick={() => listItem.removeSelf()}
+          onClick={() => virtualVarb.removeSelf()}
         />
       </td>
     </Styled>

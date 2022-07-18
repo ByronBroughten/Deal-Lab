@@ -12,7 +12,7 @@ export class UserVarbValueSolver extends GetterSectionBase<"userVarbItem"> {
       | "ifThen";
 
     if (varbType === "labeledEquation")
-      return this.getterSection.value("editorValue", "numObj");
+      return this.getterSection.value("numObjEditor", "numObj");
     else return this.conditionalUserVarbValue();
   }
   conditionalUserVarbValue(): NumObj {

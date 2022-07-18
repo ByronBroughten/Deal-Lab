@@ -156,6 +156,12 @@ export class GetterVarb<
   get displayNameEnd(): string {
     return this.meta.displayNameEnd;
   }
+  get startAdornment(): string {
+    return this.meta.startAdornment;
+  }
+  get endAdornment(): string {
+    return this.meta.endAdornment;
+  }
   get displayValue(): string {
     if (this.hasValueType("numObj")) {
       return `${this.numberOrQuestionMark}`;

@@ -99,9 +99,12 @@ export const Arr = {
   },
   findAndRmClone<T>(arr: T[], fn: (value: T) => boolean): T[] {
     const nextArr = [...arr];
-    const idx = nextArr.findIndex(fn);
-    if (idx !== -1) nextArr.splice(idx, 1);
+    this.findAndRmMutate(arr, fn);
     return nextArr;
+  },
+  findAndRmMutate<T>(arr: T[], fn: (value: T) => boolean) {
+    const idx = arr.findIndex(fn);
+    if (idx !== -1) arr.splice(idx, 1);
   },
   removeLastClone<T>(arr: T[]): T[] {
     const nextArr = [...arr];

@@ -89,8 +89,34 @@ export class SolverVarb<
     this.updaterVarb.updateValueByEditor(newValue);
     this.updateConnectedEntities();
   }
+
+  // The way to handle this:
+  // Make the other varb updates depend on the varbInfo updating.
+  // updateValueDirectly(varbInfo)
+  // the rest should take care of itself.
+
+  // I don't think I need to unload the previous varb
+  // the other varbs should have their entities removed.
+
+  // ok, the tricky part is getting rid of the previous entity
+
+  // 1. Get rid of whichever entity is at 0, 0.
+  //    Assumes there is only one unseen entity
+
+  // 4. Add a property to entity, called "entitySource", which is
+  //    a string. entitySource may just say "editor", or the varbId of a loaded
+  //    varb
+
+  // 5. Make the entityId of those entities be a varbId.
+  //    The entityId is just a way of differentiating entities.
+
+  //    The entityId differentiates between entities
+  //    using a varbId as an entityId comes with two costs:
+  //  1. there are two different types of string that may be an entityId
+  //  2. entityId then serves to differentiate between entities
+  //     as well as to locate the varb from where the entity came.
+
   loadValueFromVarb(varbInfo: InEntityVarbInfo) {
-    this.unloadPreviousVarb();
     const entityInfo = { ...varbInfo, entityId: Id.make() };
     const infoVarb = this.localSolverVarb("valueEntityInfo");
 
@@ -101,18 +127,10 @@ export class SolverVarb<
 
     this.addInEntity({
       ...entityInfo,
+      entitySource: infoVarb.get.varbId,
       length: 0, // length and offset are arbitrary
       offset: 0, // just borrowing functionality from editor entities
     });
-  }
-  private unloadPreviousVarb() {
-    const varbInfoValue = this.get.localValue(
-      "valueEntityInfo",
-      "inEntityVarbInfo"
-    );
-    if (varbInfoValue) {
-      this.removeInEntity(varbInfoValue);
-    }
   }
 
   updateConnectedVarbs(): void {
@@ -240,13 +258,13 @@ export class SolverVarb<
 
   private removeInEntity({
     entityId,
-    ...inEntityVarbInfo
+    ...inEntityInfoValue
   }: InEntityVarbInfo & { entityId: string }): void {
     this.updaterVarb.update({
       value: this.get.numObj.removeEntity(entityId),
     });
-    if (this.getterSections.hasSectionMixed(inEntityVarbInfo)) {
-      const inEntityVarb = this.solverSections.varbByMixed(inEntityVarbInfo);
+    if (this.getterSections.hasSectionMixed(inEntityInfoValue)) {
+      const inEntityVarb = this.solverSections.varbByMixed(inEntityInfoValue);
       inEntityVarb.removeOutEntity(entityId);
     }
   }

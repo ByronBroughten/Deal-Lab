@@ -7,7 +7,7 @@ import { zSectionNameProp } from "../../baseSectionsDerived/baseSectionInfo";
 import {
   DbVarbInfoMixed,
   FeVarbInfoMixed,
-  GlobalVarbInfo
+  GlobalVarbInfo,
 } from "../../baseSectionsDerived/baseVarbInfo";
 import { Id } from "../id";
 
@@ -42,7 +42,10 @@ export const zInEntityVarbInfo = z.union([
 export type InVarbInfo = InEntity | FeVarbInfoMixed;
 
 const zInEntityBase = z.object({
+  // things depend on a new entityId being created every time
+  // a new entity is created
   entityId: zString,
+  entitySource: zString,
   length: zNumber,
   offset: zNumber,
 });
@@ -70,7 +73,7 @@ export const mInEntities = {
 export const entityS = {
   inEntity(
     varbInfo: InEntityVarbInfo,
-    entityInfo: { offset: number; length: number }
+    entityInfo: { offset: number; length: number; entitySource: string }
   ): InEntity {
     return {
       entityId: Id.make(),

@@ -110,7 +110,7 @@ export class MainSectionActor<
     row.clearCells();
     const { columns } = table;
     for (const col of columns) {
-      const varbInfo = col.value("valueEntityInfo", "inEntityVarbInfo");
+      const varbInfo = col.value("valueEntityInfo", "inEntityInfoValue");
       if (!varbInfo) throw new Error("varbInfo not initialized");
       row.addCell(varbInfo, col.dbId);
     }

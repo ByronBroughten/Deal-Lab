@@ -38,14 +38,23 @@ export const valueMeta = {
   },
   string: {
     is: (v: any): v is string => typeof v === "string",
-    updateFnNames: ["string", "loadedDisplayName", "loadedDisplayNameEnd"],
+    updateFnNames: ["string", "updateByEditorOnly", "displayNameFullVirtual"],
     initDefault: () => "",
     zod: z.string(),
     mon: reqMonString,
   },
   stringObj: {
     is: isStringObj,
-    updateFnNames: ["stringObj", "updateByEditorOnly"],
+    updateFnNames: [
+      "stringObj",
+      "loadLocalString",
+      "updateByEditorOnly",
+      "loadDisplayName",
+      "loadDisplayNameEnd",
+      "loadStartAdornment",
+      "loadEndAdornment",
+      "emptyStringObj",
+    ],
     initDefault: initDefaultStringObj,
     zod: zStringObj,
     mon: mStringObj,
@@ -73,9 +82,9 @@ export const valueMeta = {
     zod: zNumObj,
     mon: mDbNumObj,
   },
-  inEntityVarbInfo: {
+  inEntityInfoValue: {
     is: isInEntityVarbInfoValue,
-    updateFnNames: ["inEntityVarbInfo"],
+    updateFnNames: ["inEntityInfoValue"],
     initDefault: () => null as InEntityVarbInfoValue,
     zod: zInEntityVarbInfoValue,
     mon: mInEntityVarbInfoValue,

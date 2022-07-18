@@ -5,19 +5,17 @@ import { relVarb } from "../rel/relVarb";
 import { RelVarbs, relVarbsS } from "../relVarbs";
 
 export const userVarbItemRelVarbs: RelVarbs<"userVarbItem"> = {
-  ...relVarbsS.listItem,
-  startAdornment: relVarb("string"),
-  endAdornment: relVarb("string"),
+  ...relVarbsS.listItemVirtualVarb,
   valueSwitch: relVarb("string", {
     initValue: "labeledEquation",
   }),
-  editorValue: relVarb("numObj"),
+  numObjEditor: relVarb("numObj"),
   value: relVarb("numObj", {
     displayName: relVarbInfoS.local("displayName"),
     updateFnName: "userVarb",
     initValue: numObj(0),
     updateFnProps: {
-      ...relVarbInfosS.localByVarbName(["valueSwitch", "editorValue"]),
+      ...relVarbInfosS.localByVarbName(["valueSwitch", "numObjEditor"]),
       ...relVarbInfosS.namedChildren("conditionalRow", {
         rowLevel: "level",
         rowType: "type",

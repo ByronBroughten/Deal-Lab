@@ -35,10 +35,10 @@ export const baseSections = {
     compareToggle: "boolean",
   }),
   column: baseSection({
-    valueEntityInfo: "inEntityVarbInfo",
+    valueEntityInfo: "inEntityInfoValue",
   }),
   cell: baseSection({
-    valueEntityInfo: "inEntityVarbInfo",
+    valueEntityInfo: "inEntityInfoValue",
     value: "numObj",
   }),
   conditionalRow: baseSection({
@@ -68,33 +68,40 @@ export const baseSections = {
     defaultValueSwitch: "string",
   }),
   outputList: baseSection(baseVarbsS.savableSection),
-  userVarbItem: baseSection({
-    ...baseVarbsS.singleVirtualVarb,
-    ...baseVarbs("string", [
-      "startAdornment",
-      "endAdornment",
-      "valueSwitch",
-    ] as const),
-    ...baseVarbs("numObj", ["editorValue"] as const),
-  }),
-  outputItem: baseSection({
-    ...baseVarbsS.singleVirtualVarb,
-    ...baseVarbsS.loadableVarb,
-  }),
+
   singleTimeItem: baseSection({
-    ...baseVarbsS.singleVirtualVarb,
+    ...baseVarbsS.singleValueVirtualVarb,
     ...baseVarbsS.loadableVarb,
     valueSwitch: "string",
-    editorValue: "numObj",
+    displayNameEditor: "string",
+    numObjEditor: "numObj",
   }),
+
+  // when "loadedVarb" is in effect, those editors will
+  // update based on displayName + displayNameEnd, "virtualDisplayNameFull"
+
+  // when "loadedVarb" is not in effect, that field is then editable
+  // and I think "displayName" then updates based on it.
+
   ongoingItem: baseSection({
-    ...baseVarbsS.listItem,
+    ...baseVarbsS.virtualVarb,
     ...baseVarbsS.loadableVarb,
-    ...baseVarbs("string", ["valueSwitch"] as const),
-    ...baseVarbs("numObj", ["costToReplace", "editorValue"] as const),
+    ...baseVarbs("string", ["valueSwitch", "displayNameEditor"] as const),
+    ...baseVarbs("numObj", ["costToReplace", "numObjEditor"] as const),
     ...baseVarbsS.ongoing("value"),
     ...baseVarbsS.switch("lifespan", "monthsYears"),
   }),
+  outputItem: baseSection({
+    ...baseVarbsS.singleValueVirtualVarb,
+    ...baseVarbsS.loadableVarb,
+  }),
+  userVarbItem: baseSection({
+    ...baseVarbsS.singleValueVirtualVarb,
+    ...baseVarbsS.loadableVarb,
+    ...baseVarbs("string", ["valueSwitch", "displayNameEditor"] as const),
+    ...baseVarbs("numObj", ["numObjEditor"] as const),
+  }),
+
   login: baseSection(baseVarbs("string", ["email", "password"] as const)),
   register: baseSection(
     baseVarbs("string", ["email", "password", "userName"] as const)

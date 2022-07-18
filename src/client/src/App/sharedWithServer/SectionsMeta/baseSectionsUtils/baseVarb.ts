@@ -9,7 +9,7 @@ const valueNames = [
   "stringArray",
   "stringObj",
   "numObj",
-  "inEntityVarbInfo",
+  "inEntityInfoValue",
 ] as const;
 export type ValueName = typeof valueNames[number];
 

@@ -8,18 +8,13 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-// ongoingItem - Fine, except loadedVarb isn't working right (displayName, updates one step behind, etc)
+// - get loadedVarb to work right
+// for this, I just need to fix the way I'm loading things
 
 // unit - is it ok that "one" is a numObj? Yeah, it probably doesn't matter.
 // it would be slightly more appropriate if I used a regular number
-// and created an updateFn for such.
-
-// - get loadedVarb to work right
-// - make outputItem work like loadedVarbs, so that it actually harbors the value
-// and displayName of its varb. It also harbors the varb's displayName, too, and its inEntityInfo.
-
-// Do I need that now? I guess I do.
-// I don't have to worry just yet about the loadedVarb being a virtual varb, though.
+// I think I will use a regular number
+// I don't need to make an editor for it.
 
 // Core Features
 // * Load "property" with updates

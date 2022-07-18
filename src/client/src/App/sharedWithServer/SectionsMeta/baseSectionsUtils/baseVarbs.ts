@@ -109,21 +109,23 @@ export const baseVarbsS = {
       ...this.ongoing("rentCutDollars"),
     } as const;
   },
-  get listItem() {
+  get virtualVarb() {
     return {
       displayName: "stringObj",
       displayNameEnd: "stringObj",
+      startAdornment: "stringObj",
+      endAdornment: "stringObj",
     } as const;
   },
-  get singleVirtualVarb() {
+  get singleValueVirtualVarb() {
     return {
-      ...this.listItem,
+      ...this.virtualVarb,
       value: "numObj",
     } as const;
   },
   get loadableVarb() {
     return {
-      valueEntityInfo: "inEntityVarbInfo",
+      valueEntityInfo: "inEntityInfoValue",
     } as const;
   },
 } as const;

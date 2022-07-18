@@ -141,6 +141,7 @@ function entitiesFromMapAndRanges(
       {
         ...data,
         ...pick(entityRange, ["offset", "length"]),
+        entitySource: "editor",
       },
     ]);
   }, [] as InEntities);

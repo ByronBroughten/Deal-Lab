@@ -13,8 +13,7 @@ export function ListItemSingleTime({ feId }: { feId: string }) {
           labeledEquation: () => <LabeledEquation {...{ feInfo, key: feId }} />,
           loadedVarb: () => (
             <LoadedVarbEditor
-              feVarbInfo={{ varbName: "value", ...feInfo }}
-              key={feId}
+              {...{ valueVarbName: "value", feInfo, key: feId }}
             />
           ),
         },

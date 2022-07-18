@@ -5,7 +5,11 @@ import {
   RelSingleInVarbInfo,
 } from "../../childSectionsDerived/RelInOutVarbInfo";
 import { RelLocalVarbInfo } from "../../childSectionsDerived/RelVarbInfo";
-import { UpdateFnName, ValueSchemas, ValueTypes } from "./valueMetaTypes";
+import {
+  UpdateFnName,
+  ValueNamesToTypes,
+  ValueSchemas,
+} from "./valueMetaTypes";
 
 export type UpdateFnProps = {
   [kwargName: string]: RelInVarbInfo | RelInVarbInfo[];
@@ -45,7 +49,7 @@ type UniqueTypeProps = {
 type ValueSpecificProps = {
   [Prop in ValueName]: {
     updateFnName: ValueSchemas[Prop]["updateFnNames"][number];
-    initValue: ValueTypes[Prop];
+    initValue: ValueNamesToTypes[Prop];
   };
 } & UniqueTypeProps;
 export type RelVarbByType = {

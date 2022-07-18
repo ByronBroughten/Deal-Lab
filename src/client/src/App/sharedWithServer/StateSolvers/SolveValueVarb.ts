@@ -1,11 +1,19 @@
 import { DbVarbInfoMixed } from "../SectionsMeta/baseSectionsDerived/baseVarbInfo";
+import { VirtualVarbName } from "../SectionsMeta/baseSectionsDerived/baseVarbNames";
 import calculations, {
   isCalculationName,
   NumberProps,
 } from "../SectionsMeta/baseSectionsUtils/baseValues/calculations";
-import { InEntities } from "../SectionsMeta/baseSectionsUtils/baseValues/entities";
-import { InEntityVarbInfoValue } from "../SectionsMeta/baseSectionsUtils/baseValues/InEntityVarbInfoValue";
+import {
+  InEntities,
+  InEntity,
+} from "../SectionsMeta/baseSectionsUtils/baseValues/entities";
+import {
+  InEntityInfoValue,
+  InEntityVarbInfoValue,
+} from "../SectionsMeta/baseSectionsUtils/baseValues/InEntityVarbInfoValue";
 import { NumObj } from "../SectionsMeta/baseSectionsUtils/baseValues/NumObj";
+import { RelInVarbInfo } from "../SectionsMeta/childSectionsDerived/RelInOutVarbInfo";
 import { RelVarbInfo } from "../SectionsMeta/childSectionsDerived/RelVarbInfo";
 import { UpdateFnProps } from "../SectionsMeta/relSectionsUtils/rel/relVarbTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
@@ -18,7 +26,10 @@ import { GetterVarb } from "../StateGetters/GetterVarb";
 import { GetterVarbNumObj } from "../StateGetters/GetterVarbNumObj";
 import { Arr } from "../utils/Arr";
 import { StateValue } from "./../SectionsMeta/baseSectionsUtils/baseValues/StateValueTypes";
-import { StringObj } from "./../SectionsMeta/baseSectionsUtils/baseValues/StringObj";
+import {
+  stringObj,
+  StringObj,
+} from "./../SectionsMeta/baseSectionsUtils/baseValues/StringObj";
 import { UserVarbValueSolver } from "./SolveValueVarb/UserVarbValueSolver";
 
 // Ok. Here's the thing.
@@ -67,15 +78,22 @@ export class SolveValueVarb<
     stringObj: (): StringObj => {
       return this.getterVarb.value("stringObj");
     },
-    inEntityVarbInfo: (): InEntityVarbInfoValue => {
+    loadLocalString: (): StringObj => {
+      const { updateFnProps } = this.getterVarb;
+      const varb = this.getterSection.varbByFocalMixed(
+        updateFnProps.loadLocalString as RelInVarbInfo
+      );
+      return stringObj(varb.value("string"));
+    },
+    inEntityInfoValue: (): InEntityVarbInfoValue => {
       // when this changes.
 
-      return this.getterVarb.value("inEntityVarbInfo");
+      return this.getterVarb.value("inEntityInfoValue");
     },
-    editorValue: (): NumObj => {
+    loadEditorSolvableText: (): NumObj => {
       const value = this.getterVarb.value("numObj");
       const { solvableText } = this.getterVarb.localValue(
-        "editorValue",
+        "numObjEditor",
         "numObj"
       );
       return { ...value, solvableText };
@@ -111,21 +129,43 @@ export class SolveValueVarb<
         return userVarbSolver.getUserVarbValue();
       } else throw new Error("section must contain at least one varb");
     },
-    loadedDisplayName: (): string => {
-      const varbInfo = this.getterSection.inEntityValueInfo();
-      if (this.getterSections.hasSectionMixed(varbInfo)) {
-        const varb = this.getterSections.varbByMixed(varbInfo);
-        return varb.displayNameFull;
-      } else return "Variable not found.";
+    emptyStringObj: (): StringObj => {
+      return stringObj("");
     },
-    loadedDisplayNameEnd: (): string => {
-      const varbInfo = this.getterSection.inEntityValueInfo();
-      if (this.getterSections.hasSectionMixed(varbInfo)) {
-        const varb = this.getterSections.varbByMixed(varbInfo);
-        return varb.displayNameEnd;
-      } else return "Variable not found.";
+    displayNameFullVirtual: (): string => {
+      return this.getterSection.virtualVarb.displayNameFull;
+    },
+    loadDisplayName: (): StringObj => {
+      return this.valueEntityVarbProp("displayName", "Variable not found");
+    },
+    loadDisplayNameEnd: (): StringObj => {
+      return this.valueEntityVarbProp("displayNameEnd", "");
+    },
+    loadStartAdornment: (): StringObj => {
+      return this.valueEntityVarbProp("startAdornment", "");
+    },
+    loadEndAdornment: (): StringObj => {
+      return this.valueEntityVarbProp("endAdornment", "");
     },
   };
+  private valueEntityVarbProp(
+    varbPropName: VirtualVarbName,
+    notFoundString: string
+  ): StringObj {
+    const entityInfo = this.getterSection.value(
+      "valueEntityInfo",
+      "inEntityInfoValue"
+    );
+    if (!entityInfo) {
+      return stringObj("");
+    }
+    if (this.getterSections.hasSectionMixed(entityInfo)) {
+      const varb = this.getterSections.varbByMixed(entityInfo);
+      return stringObj(varb[varbPropName]);
+    } else {
+      return stringObj(notFoundString);
+    }
+  }
   solveValue(): StateValue {
     const { updateFnName } = this.getterVarb;
     if (isCalculationName(updateFnName)) return this.updateFns.calculation();
@@ -135,26 +175,45 @@ export class SolveValueVarb<
   private loadNextEntities(): InEntities {
     const varb = this.getterVarb;
     let nextEntities = [...varb.inEntities];
-    const entityInfo = varb.localValue("valueEntityInfo", "inEntityVarbInfo");
-    if (
-      entityInfo &&
-      !Arr.has(
-        nextEntities,
-        ({ entityId }) => entityId === entityInfo?.entityId
-      )
-    ) {
+
+    const infoVarb = varb.localVarb("valueEntityInfo");
+    function entityIsOfSource({ entitySource }: InEntity) {
+      return entitySource === infoVarb.varbId;
+    }
+    function removeEntityOfSource() {
+      Arr.findAndRmMutate(nextEntities, entityIsOfSource);
+    }
+    function pushEntityOfSource(entityInfo: InEntityInfoValue) {
       nextEntities.push({
         ...entityInfo,
+        entitySource: infoVarb.varbId,
         length: 0,
         offset: 0,
       });
+    }
+
+    const entityInfo = infoVarb.value("inEntityInfoValue");
+    const entityOfSource = nextEntities.find(entityIsOfSource);
+    if (entityInfo) {
+      if (!entityOfSource) {
+        pushEntityOfSource(entityInfo);
+      } else {
+        const entityIsUpToDate =
+          entityOfSource.entityId === entityInfo.entityId;
+        if (!entityIsUpToDate) {
+          removeEntityOfSource();
+          pushEntityOfSource(entityInfo);
+        }
+      }
+    } else if (!entityInfo && entityOfSource) {
+      removeEntityOfSource();
     }
     return nextEntities;
   }
   private loadNextTexts(): { editorText: string; solvableText: string } {
     const loadingVarbInfo = this.getterSection.value(
       "valueEntityInfo",
-      "inEntityVarbInfo"
+      "inEntityInfoValue"
     );
     if (loadingVarbInfo && this.getterList.hasByMixed(loadingVarbInfo)) {
       const varb = this.getterSections.varbByMixed(loadingVarbInfo);

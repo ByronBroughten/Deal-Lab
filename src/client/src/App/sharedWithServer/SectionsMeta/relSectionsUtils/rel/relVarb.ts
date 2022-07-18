@@ -6,13 +6,13 @@ import {
 import { ChildName } from "../../childSectionsDerived/ChildName";
 import { RelInVarbInfo } from "../../childSectionsDerived/RelInOutVarbInfo";
 import { relVarbInfoS } from "../../childSectionsDerived/RelVarbInfo";
+import { relVarbInfosS } from "../../childSectionsDerived/RelVarbInfos";
 import { valueMeta } from "../valueMeta";
 import {
   CommonRelVarb,
   DisplayName,
   NumObjRelVarb,
   RelVarbByType,
-  StringRelVarb,
 } from "./relVarbTypes";
 
 const makeDefaultCommon = <T extends CommonRelVarb>(common: T): CommonRelVarb =>
@@ -48,23 +48,6 @@ export function relVarb<T extends keyof RelVarbByType>(
 export type RelNumObjOptions = Partial<NumObjRelVarb & { initNumber: number }>;
 export type LeftRightVarbInfos = [RelInVarbInfo, RelInVarbInfo];
 export const relVarbS = {
-  stringOrLoaded(partial: Partial<StringRelVarb> = {}): StringRelVarb {
-    return {
-      ...relVarb("string", {
-        inUpdateSwitchProps: [
-          {
-            switchInfo: relVarbInfoS.local("valueSwitch"),
-            switchValue: "loadedVarb",
-            updateFnName: "loadedDisplayName",
-            updateFnProps: {
-              varbInfo: relVarbInfoS.local("valueEntityInfo"),
-            },
-          },
-        ],
-      }),
-      ...partial,
-    };
-  },
   numObj(
     displayName: DisplayName,
     { initNumber, ...partial }: Partial<RelNumObjOptions> = {}
@@ -72,6 +55,23 @@ export const relVarbS = {
     return relVarb("numObj", {
       displayName,
       ...partial,
+    });
+  },
+  get displayNameEditor() {
+    return relVarb("string", {
+      updateFnName: "updateByEditorOnly",
+      updateFnProps: {},
+      inUpdateSwitchProps: [
+        {
+          switchInfo: relVarbInfoS.local("valueSwitch"),
+          switchValue: "loadedVarb",
+          updateFnName: "displayNameFullVirtual",
+          updateFnProps: relVarbInfosS.localByVarbName([
+            "displayName",
+            "displayNameEnd",
+          ]),
+        },
+      ],
     });
   },
   calcVarb(

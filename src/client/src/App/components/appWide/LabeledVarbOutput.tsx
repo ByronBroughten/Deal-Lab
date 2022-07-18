@@ -1,5 +1,5 @@
 import { useSetterSection } from "../../sharedWithServer/stateClassHooks/useSetterSection";
-import { LoadedVarb, LoadedVarbNotFound } from "./LoadedVarb";
+import { LoadedVarb } from "./LoadedVarb";
 
 export function LabeledVarbOutput({ feId }: { feId: string }) {
   const outputItem = useSetterSection({
@@ -9,7 +9,7 @@ export function LabeledVarbOutput({ feId }: { feId: string }) {
 
   const entityVarbInfo = outputItem.get.value(
     "valueEntityInfo",
-    "inEntityVarbInfo"
+    "inEntityInfoValue"
   );
   if (entityVarbInfo === null) throw new Error("Value not initialized");
 
@@ -18,9 +18,10 @@ export function LabeledVarbOutput({ feId }: { feId: string }) {
     onXBtnClick: () => outputItem.removeSelf(),
   } as const;
 
-  return outputItem.allSections.hasSectionMixed(entityVarbInfo) ? (
-    <LoadedVarb {...props} />
-  ) : (
-    <LoadedVarbNotFound {...props} />
-  );
+  return <LoadedVarb {...props} />;
+  // outputItem.allSections.hasSectionMixed(entityVarbInfo) ? (
+  //   <LoadedVarb {...props} />
+  // ) : (
+  //   <LoadedVarbNotFound {...props} />
+  // );
 }

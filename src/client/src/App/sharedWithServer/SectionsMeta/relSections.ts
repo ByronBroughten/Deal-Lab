@@ -76,49 +76,26 @@ export function makeRelSections() {
       compareToggle: relVarb("boolean"),
     }),
     column: relSection("Column", {
-      valueEntityInfo: relVarb("inEntityVarbInfo"),
+      valueEntityInfo: relVarb("inEntityInfoValue"),
     }),
     cell: relSection("Cell", {
-      valueEntityInfo: relVarb("inEntityVarbInfo"),
+      valueEntityInfo: relVarb("inEntityInfoValue"),
       value: relVarbS.numObj("Table cell value"),
     }),
     outputList: relSection("Output List", relVarbsS.savableSection, {
       feFullIndexStoreName: "outputListMain",
       dbIndexStoreName: "outputListMain",
     }),
-    outputItem: relSection("Output", {
-      value: relVarb("numObj", {
-        updateFnName: "loadedNumObj",
-        updateFnProps: {
-          varbInfo: relVarbInfoS.local("valueEntityInfo"),
-        },
-      }),
-      valueEntityInfo: relVarb("inEntityVarbInfo"),
-      displayName: relVarb("string", {
-        updateFnName: "loadedDisplayName",
-        updateFnProps: {
-          varbInfo: relVarbInfoS.local("valueEntityInfo"),
-        },
-      }),
-      displayNameEnd: relVarb("string", {
-        updateFnName: "loadedDisplayNameEnd",
-        updateFnProps: {
-          varbInfo: relVarbInfoS.local("valueEntityInfo"),
-        },
-      }),
-    }),
     singleTimeList: relSection("List", relVarbsS.singleTimeList(), {
       varbListItem: "singleTimeItem",
       feFullIndexStoreName: "singleTimeListMain",
       dbIndexStoreName: "singleTimeListMain",
     }),
-    singleTimeItem: relSection("List Item", relVarbsS.singleTimeItem()),
     ongoingList: relSection("List", relVarbsS.ongoingList(), {
       varbListItem: "ongoingItem",
       feFullIndexStoreName: "ongoingListMain",
       dbIndexStoreName: "ongoingListMain",
     }),
-    ongoingItem: relSection("List Item", relVarbsS.ongoingItem()),
     userVarbList: relSection(
       "Variable List",
       {
@@ -133,6 +110,19 @@ export function makeRelSections() {
         varbListItem: "userVarbItem",
       }
     ),
+
+    outputItem: relSection("Output", {
+      ...relVarbsS.basicVirtualVarb,
+      valueEntityInfo: relVarb("inEntityInfoValue"),
+      value: relVarb("numObj", {
+        updateFnName: "loadedNumObj",
+        updateFnProps: {
+          varbInfo: relVarbInfoS.local("valueEntityInfo"),
+        },
+      }),
+    }),
+    singleTimeItem: relSection("List Item", relVarbsS.singleTimeItem()),
+    ongoingItem: relSection("List Item", relVarbsS.ongoingItem()),
     userVarbItem: relSection("User Variable", userVarbItemRelVarbs),
     conditionalRow: relSection("Conditional Row", {
       level: relVarb("number"),

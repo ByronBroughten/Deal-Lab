@@ -1,5 +1,5 @@
 import { SectionPack } from "../SectionPack/SectionPack";
-import { InEntityValueInfo } from "../SectionsMeta/baseSectionsUtils/baseValues/InEntityVarbInfoValue";
+import { InEntityInfoValue } from "../SectionsMeta/baseSectionsUtils/baseValues/InEntityVarbInfoValue";
 import { Id } from "../SectionsMeta/baseSectionsUtils/id";
 import { FeStoreTableName } from "../SectionsMeta/relChildSections";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
@@ -48,7 +48,7 @@ export function makeDefaultFeStoreTables(): TablePackMakers {
               sectionName,
               varbName,
               entityId: Id.make(),
-            } as InEntityValueInfo,
+            } as InEntityInfoValue,
           },
         });
       }

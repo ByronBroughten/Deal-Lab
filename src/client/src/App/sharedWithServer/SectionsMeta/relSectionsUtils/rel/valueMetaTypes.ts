@@ -4,19 +4,29 @@ import { ValueName } from "../../baseSectionsUtils/baseVarb";
 import { valueMeta } from "../valueMeta";
 
 export type ValueSchemas = typeof valueMeta;
-export type ValueTypes = {
-  [Prop in ValueName]: ReturnType<ValueSchemas[Prop]["initDefault"]>;
+export type ValueNamesToTypes = {
+  [VN in ValueName]: ReturnType<ValueSchemas[VN]["initDefault"]>;
+};
+
+export type SectionValuesReq = {
+  [varbName: string]: ValueName;
+};
+export type SectionValuesRes<VNS extends SectionValuesReq> = {
+  [VN in keyof VNS]: ValueNamesToTypes[VNS[VN]];
 };
 
 export type DbValue = StateValue;
 
-export type SchemaVarbsToValues<T extends Record<string, keyof ValueTypes>> = {
-  [Prop in keyof T]: ValueTypes[T[Prop]];
+export type SchemaVarbsToValues<
+  T extends Record<string, keyof ValueNamesToTypes>
+> = {
+  [Prop in keyof T]: ValueNamesToTypes[T[Prop]];
 };
-export type SchemaVarbsToDbValues<T extends Record<string, keyof ValueTypes>> =
-  {
-    [Prop in keyof T]: ValueTypes[T[Prop]];
-  };
+export type SchemaVarbsToDbValues<
+  T extends Record<string, keyof ValueNamesToTypes>
+> = {
+  [Prop in keyof T]: ValueNamesToTypes[T[Prop]];
+};
 
 export type SafeDbVarbs<SN extends SimpleSectionName> = SchemaVarbsToDbValues<
   BaseSections[SN]["varbSchemas"]

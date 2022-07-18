@@ -10,14 +10,13 @@ export default function LabeledEquation({ feInfo, endAdornment }: Props) {
     <>
       <td className="AdditiveItem-nameCell">
         <MaterialStringEditor
-          feVarbInfo={section.varbInfo("displayName")}
-          valueType="stringObj"
+          feVarbInfo={section.varbInfo("displayNameEditor")}
         />
       </td>
       <td className="AdditiveItem-contentCell">
         <div className="AdditiveItem-contentCellDiv">
           <NumObjEntityEditor
-            feVarbInfo={section.varbInfo("editorValue")}
+            feVarbInfo={section.varbInfo("numObjEditor")}
             className="cost"
             labeled={false}
             endAdornment={endAdornment}

@@ -7,12 +7,21 @@ import { isVarbName } from "../../baseSectionsDerived/baseVarbInfo";
 import { Id } from "../id";
 import { InEntityVarbInfo, zInEntityVarbInfo } from "./entities";
 
-export type InEntityValueInfo = InEntityVarbInfo & { entityId: string };
+export type InEntityInfoValue = InEntityVarbInfo & { entityId: string };
 const zInEntityValueInfo = zInEntityVarbInfo.and(
   z.object({ entityId: zS.nanoId })
 );
 
-export type InEntityVarbInfoValue = InEntityValueInfo | null;
+export function inEntityInfoValue(
+  varbInfo: InEntityVarbInfo
+): InEntityInfoValue {
+  return {
+    ...varbInfo,
+    entityId: Id.make(),
+  };
+}
+
+export type InEntityVarbInfoValue = InEntityInfoValue | null;
 export const zInEntityVarbInfoValue = z.union([z.null(), zInEntityValueInfo]);
 export const mInEntityVarbInfoValue = {
   type: Schema.Types.Mixed,
