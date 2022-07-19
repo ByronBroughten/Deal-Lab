@@ -80,7 +80,7 @@ export function makeRelSections() {
     }),
     cell: relSection("Cell", {
       valueEntityInfo: relVarb("inEntityInfo"),
-      value: relVarbS.numObj("Table cell value"),
+      displayVarb: relVarb("string"),
     }),
     outputList: relSection("Output List", relVarbsS.savableSection, {
       feFullIndexStoreName: "outputListMain",

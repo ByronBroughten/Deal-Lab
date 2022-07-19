@@ -1,6 +1,5 @@
 import { SectionPack } from "../SectionPack/SectionPack";
-import { InEntityInfo } from "../SectionsMeta/baseSectionsUtils/baseValues/InEntityInfoValue";
-import { Id } from "../SectionsMeta/baseSectionsUtils/id";
+import { inEntityInfo } from "../SectionsMeta/baseSectionsUtils/baseValues/InEntityInfoValue";
 import { FeStoreTableName } from "../SectionsMeta/relChildSections";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
 import { Obj } from "../utils/Obj";
@@ -42,13 +41,12 @@ export function makeDefaultFeStoreTables(): TablePackMakers {
       for (const varbName of varbNames) {
         table.addChild("column", {
           dbVarbs: {
-            valueEntityInfo: {
+            valueEntityInfo: inEntityInfo({
               infoType: "globalSection",
               expectedCount: "onlyOne",
               sectionName,
               varbName,
-              entityId: Id.make(),
-            } as InEntityInfo,
+            }),
           },
         });
       }

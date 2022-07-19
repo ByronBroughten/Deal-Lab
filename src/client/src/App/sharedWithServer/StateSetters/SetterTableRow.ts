@@ -32,13 +32,13 @@ export class SetterTableRow extends SetterSectionBase<"tableRow"> {
     this.setter.removeChildren("cell");
   }
   addCell(cellValueInfo: InEntityInfo, colDbId: string): void {
-    const value =
+    const displayVarb =
       this.get.sections.numObjOrNotFoundByMixedAssertOne(cellValueInfo);
     this.setter.addChild("cell", {
       dbId: colDbId,
       dbVarbs: {
-        varbInfo: cellValueInfo,
-        value,
+        valueEntityInfo: cellValueInfo,
+        displayVarb,
       },
     });
   }

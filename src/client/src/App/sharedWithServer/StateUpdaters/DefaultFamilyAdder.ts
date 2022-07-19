@@ -35,9 +35,6 @@ export class DefaultFamilyAdder<
     const { parentInfoSafe } = this.get;
     return this.newAdder(parentInfoSafe);
   }
-  addSibling(options?: AddChildOptions<SN>): void {
-    this.parent.addChild(this.sectionName as any, options);
-  }
   newAdder<SN extends SectionName>(
     feInfo: FeSectionInfo<SN>
   ): DefaultFamilyAdder<SN> {

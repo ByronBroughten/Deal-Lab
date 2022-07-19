@@ -47,7 +47,7 @@ import {
 import {
   SectionValuesReq,
   SectionValuesRes,
-} from "../SectionsMeta/relSectionsUtils/rel/valueMetaTypes";
+} from "../SectionsMeta/relSectionsUtils/valueMetaTypes";
 import { SectionMeta } from "../SectionsMeta/SectionMeta";
 import {
   SectionName,

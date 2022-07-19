@@ -9,7 +9,7 @@ import {
   UpdateFnName,
   ValueNamesToTypes,
   ValueSchemas,
-} from "./valueMetaTypes";
+} from "../valueMetaTypes";
 
 export type UpdateFnProps = {
   [kwargName: string]: RelInVarbInfo | RelInVarbInfo[];

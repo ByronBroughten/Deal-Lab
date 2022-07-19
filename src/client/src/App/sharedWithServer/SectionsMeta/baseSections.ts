@@ -40,7 +40,7 @@ export const baseSections = {
   }),
   cell: baseSection({
     valueEntityInfo: "inEntityInfo",
-    value: "numObj",
+    displayVarb: "string",
   }),
   conditionalRow: baseSection({
     level: "number",

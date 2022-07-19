@@ -1,3 +1,4 @@
+import { SectionValues } from "../../../sharedWithServer/SectionsMeta/relSectionsUtils/valueMetaTypes";
 import { OneRawSection } from "../../SectionPack/RawSection";
 import { SectionPack } from "../../SectionPack/SectionPack";
 import {
@@ -14,6 +15,8 @@ import { StateSections } from "../../StateSections/StateSections";
 import { UpdaterSection } from "../../StateUpdaters/UpdaterSection";
 import { Obj } from "../../utils/Obj";
 import { ChildPackLoader } from "./ChildPackLoader";
+
+// src\client\src\App\sharedWithServer\SectionsMeta\relSectionsUtils\valueMetaTypes.ts"
 
 interface SelfPackLoaderSectionProps<SN extends SectionName>
   extends GetterSectionProps<SN> {
@@ -36,7 +39,7 @@ export class SelfPackLoader<
     this.updaterSection.updateProps({
       dbId,
       varbs: StateSections.initRawVarbs({
-        dbVarbs,
+        dbVarbs: dbVarbs as Partial<SectionValues<SN>>,
         ...this.feSectionInfo,
       }),
     });

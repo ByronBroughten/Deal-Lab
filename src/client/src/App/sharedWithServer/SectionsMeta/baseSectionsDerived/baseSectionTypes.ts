@@ -11,15 +11,11 @@ export type BaseName<
   NameArrs = BaseNameArrs[ST]
 > = NameArrs[number & keyof NameArrs];
 
-type BaseSectionVarbs<
-  SN extends SimpleSectionName,
-  BaseSection = BaseSections[SN]
-> = BaseSection["varbSchemas" & keyof BaseSection];
+export type BaseSectionVarbs<SN extends SimpleSectionName> =
+  BaseSections[SN]["varbSchemas"];
 
 export type SectionVarbName<SN extends SimpleSectionName> =
   keyof BaseSectionVarbs<SN>;
-
-type Test = SectionVarbName<"property" | "loan">;
 
 export type SectionVarbNameByType<
   SN extends SimpleSectionName,

@@ -1,23 +1,26 @@
 import { pick } from "lodash";
-import { DbVarbs } from "../SectionPack/RawSection";
 import { sectionsMeta } from "../SectionsMeta";
+import { SimpleSectionName } from "../SectionsMeta/baseSections";
 import { VarbNames } from "../SectionsMeta/baseSectionsDerived/baseVarbInfo";
 import { StateValue } from "../SectionsMeta/baseSectionsUtils/baseValues/StateValueTypes";
 import { Id } from "../SectionsMeta/baseSectionsUtils/id";
 import { ChildIdArrsNarrow } from "../SectionsMeta/childSectionsDerived/ChildName";
 import { FeSectionInfo, FeVarbInfo } from "../SectionsMeta/Info";
-import { DbValue } from "../SectionsMeta/relSectionsUtils/rel/valueMetaTypes";
+import {
+  DbValue,
+  SectionValues,
+} from "../SectionsMeta/relSectionsUtils/valueMetaTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { StrictPick, StrictPickPartial } from "../utils/types";
 import { RawFeSection, RawFeVarb, RawFeVarbs } from "./StateSectionsTypes";
 
-type InitVarbs = Partial<DbVarbs>;
+type InitVarbs<SN extends SimpleSectionName> = Partial<SectionValues<SN>>;
 
 type InitChildIdArrs<SN extends SectionName> = Partial<ChildIdArrsNarrow<SN>>;
 export interface InitRawFeSectionProps<SN extends SectionName>
   extends StrictPick<RawFeSection<SN>, "sectionName">,
     StrictPickPartial<RawFeSection<SN>, "feId" | "dbId"> {
-  dbVarbs?: InitVarbs;
+  dbVarbs?: InitVarbs<SN>;
   childFeIds?: InitChildIdArrs<SN>;
 }
 
@@ -54,7 +57,7 @@ function initChildFeIds<SN extends SectionName>(
 }
 
 interface InitRawVarbsProps<SN extends SectionName> extends FeSectionInfo<SN> {
-  dbVarbs: InitVarbs;
+  dbVarbs: InitVarbs<SN>;
 }
 
 export function initRawVarbs<SN extends SectionName>({
@@ -66,7 +69,7 @@ export function initRawVarbs<SN extends SectionName>({
   return varbNames.reduce((varbs, varbName) => {
     varbs[varbName] = initRawVarb({
       ...feSectionInfo,
-      ...(varbName in dbVarbs ? { dbVarb: dbVarbs[varbName] } : {}),
+      ...(varbName in dbVarbs ? { dbVarb: (dbVarbs as any)[varbName] } : {}),
       varbName,
     });
     return varbs;

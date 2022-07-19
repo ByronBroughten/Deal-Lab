@@ -12,7 +12,7 @@ import {
   isFeStoreTableName,
   relChildSections,
 } from "../../../../client/src/App/sharedWithServer/SectionsMeta/relChildSections";
-import { SafeDbVarbs } from "../../../../client/src/App/sharedWithServer/SectionsMeta/relSectionsUtils/rel/valueMetaTypes";
+import { SectionValues } from "../../../../client/src/App/sharedWithServer/SectionsMeta/relSectionsUtils/valueMetaTypes";
 import {
   GetterSectionsBase,
   GetterSectionsProps,
@@ -252,8 +252,8 @@ export interface UserSections {
   serverOnlyUser: ServerOnlyUser;
 }
 
-type SharedUser = SafeDbVarbs<"user">;
-type ServerOnlyUser = SafeDbVarbs<"serverOnlyUser">;
+type SharedUser = SectionValues<"user">;
+type ServerOnlyUser = SectionValues<"serverOnlyUser">;
 
 interface CreateUserProps extends RegisterReqBody {
   _id?: mongoose.Types.ObjectId;

@@ -9,9 +9,6 @@ import {
 } from "../baseSections";
 import { GeneralBaseSection } from "../baseSectionsUtils/baseSection";
 
-const baseSectionVarbs = Obj.toNestedPropertyObj(baseSections, "varbSchemas");
-export type BaseSectionVarbs = typeof baseSectionVarbs;
-
 type HasVarbSectionName<
   NoVarbSectionName = keyof SubType<
     BaseSections,

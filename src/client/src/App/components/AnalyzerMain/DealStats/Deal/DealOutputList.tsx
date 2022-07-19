@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { inEntityInfo } from "../../../../sharedWithServer/SectionsMeta/baseSectionsUtils/baseValues/InEntityInfoValue";
 import { useSetterSection } from "../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import { VariableOption } from "../../../../sharedWithServer/StateEntityGetters/VariableGetterSections";
 import theme from "../../../../theme/Theme";
@@ -13,7 +14,7 @@ export default function DealOutputList({ feId }: { feId: string }) {
 
   const onSelectNext = ({ varbInfo }: VariableOption) =>
     outPutList.addChild("outputItem", {
-      dbVarbs: varbInfo as any as Record<string, string>,
+      dbVarbs: { valueEntityInfo: inEntityInfo(varbInfo) },
     });
 
   return (

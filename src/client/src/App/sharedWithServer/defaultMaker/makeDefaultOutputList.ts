@@ -1,6 +1,6 @@
 import { SectionPack } from "../SectionPack/SectionPack";
 import { InEntityVarbInfo } from "../SectionsMeta/baseSectionsUtils/baseValues/entities";
-import { Id } from "../SectionsMeta/baseSectionsUtils/id";
+import { inEntityInfo } from "../SectionsMeta/baseSectionsUtils/baseValues/InEntityInfoValue";
 import { mixedInfoS } from "../SectionsMeta/childSectionsDerived/MixedSectionInfo";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
 
@@ -23,7 +23,7 @@ export function makeDefaultOutputList(): SectionPack<"outputList"> {
   const outputList = PackBuilderSection.initAsOmniChild("outputList");
   for (const outputVarbInfo of defaultDealOutputInfos) {
     outputList.addChild("outputItem", {
-      dbVarbs: { valueEntityInfo: { ...outputVarbInfo, entityId: Id.make() } },
+      dbVarbs: { valueEntityInfo: inEntityInfo(outputVarbInfo) },
     });
   }
   return outputList.makeSectionPack();

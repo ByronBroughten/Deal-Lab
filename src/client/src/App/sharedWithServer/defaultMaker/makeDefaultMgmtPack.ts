@@ -7,7 +7,7 @@ export function makeDefaultMgmtPack(): SectionPack<"mgmt"> {
       rentCutUnitSwitch: "percent",
       rentCutDollarsOngoingSwitch: "monthly",
       vacancyLossDollarsOngoingSwitch: "monthly",
-      ongoingExpensesOngoingSwitch: "monthly",
+      expensesOngoingSwitch: "monthly",
     },
   });
   return mgmt.makeSectionPack();

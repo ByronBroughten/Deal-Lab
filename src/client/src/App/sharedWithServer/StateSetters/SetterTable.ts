@@ -132,7 +132,7 @@ export class SetterTable extends SetterSectionBase<"table"> {
     const cell = cells.find((cell) => {
       if (cell.dbId === column.dbId) return true;
     });
-    if (cell) return cell.varb("value").displayValue;
+    if (cell) return cell.value("displayVarb", "string");
     else return "";
   }
 }

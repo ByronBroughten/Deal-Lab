@@ -11,7 +11,7 @@ export default function IndexRow(props: UseIndexTableRowActorProps) {
     <tr className="TableStore-tableRow">
       <td className="TableStore-tableCell">{title}</td>
       {indexRow.cells.map((cell) => {
-        const value = cell.varb("value").displayVarb();
+        const value = cell.value("displayVarb", "string");
         return <td className="TableStore-tableCell">{value}</td>;
       })}
       <td className="TableStore-tableCell">

@@ -1,5 +1,5 @@
-import { ValueNamesToTypes } from "../relSectionsUtils/rel/valueMetaTypes";
 import { valueMeta } from "../relSectionsUtils/valueMeta";
+import { ValueNamesToTypes } from "../relSectionsUtils/valueMetaTypes";
 import { StateValue } from "./baseValues/StateValueTypes";
 
 export type Adornments = {

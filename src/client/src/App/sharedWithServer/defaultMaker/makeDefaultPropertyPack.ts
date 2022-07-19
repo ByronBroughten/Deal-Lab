@@ -6,10 +6,10 @@ export function makeDefaultPropertyPack(): SectionPack<"property"> {
     dbVarbs: {
       taxesOngoingSwitch: "yearly",
       homeInsOngoingSwitch: "yearly",
-      ongoingExpensesOngoingSwitch: "yearly",
+      expensesOngoingSwitch: "yearly",
       targetRentOngoingSwitch: "monthly",
-      miscOngoingRevenueOngoingSwitch: "monthly",
-      ongoingRevenueOngoingSwitch: "monthly",
+      miscRevenueOngoingSwitch: "monthly",
+      revenueOngoingSwitch: "monthly",
     },
   });
 

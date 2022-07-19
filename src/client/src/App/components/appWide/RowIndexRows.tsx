@@ -24,7 +24,11 @@ export function RowIndexRows({ feInfo, className }: Props) {
       {isAtLeastOne &&
         rows.map(({ dbId, displayName }) => (
           <RowIndexListRow
-            {...{ displayName, onClick: () => section.loadFromIndex(dbId) }}
+            {...{
+              displayName,
+              onClick: () => section.loadFromIndex(dbId),
+              key: dbId,
+            }}
           />
         ))}
       {!isAtLeastOne && (

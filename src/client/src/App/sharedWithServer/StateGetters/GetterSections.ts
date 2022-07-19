@@ -1,6 +1,5 @@
 import { sectionsMeta, SectionsMeta } from "../SectionsMeta";
 import { SimpleSectionName } from "../SectionsMeta/baseSections";
-import { NumObj } from "../SectionsMeta/baseSectionsUtils/baseValues/NumObj";
 import { DbSectionInfo } from "../SectionsMeta/baseSectionsUtils/DbSectionInfo";
 import {
   SectionInfoMixed,
@@ -93,9 +92,9 @@ export class GetterSections extends GetterSectionsBase {
   }
   numObjOrNotFoundByMixedAssertOne<SN extends SectionName>(
     info: VarbInfoMixed<SN>
-  ): NumObj | "Not Found" {
+  ): string {
     if (this.hasSectionMixed(info)) {
-      return this.varbByMixed(info).value("numObj");
+      return this.varbByMixed(info).displayVarb();
     } else return "Not Found";
   }
   hasSection({ sectionName, feId }: FeSectionInfo): boolean {

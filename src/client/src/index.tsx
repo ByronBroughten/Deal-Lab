@@ -8,6 +8,8 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
+// sectionPack variable names?
+
 // Core Features
 // * Load "property" with updates
 // * Load  "deal" with updates

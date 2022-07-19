@@ -136,7 +136,7 @@ export class SolverSection<
     this.solve();
   }
   addChildAndSolve<CN extends ChildName<SN>>(
-    childName: ChildName<SN>,
+    childName: CN,
     options?: AddChildOptions<SN, CN>
   ): void {
     this.adder.addChildAndFinalize(childName, options);

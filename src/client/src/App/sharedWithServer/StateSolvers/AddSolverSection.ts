@@ -77,7 +77,7 @@ export class AddSolverSection<
     child.collectNestedVarbIds();
   }
   addChildAndFinalize<CN extends ChildName<SN>>(
-    childName: ChildName<SN>,
+    childName: CN,
     options?: AddChildOptions<SN, CN>
   ): void {
     this.defaultAdder.addChild(childName, options);

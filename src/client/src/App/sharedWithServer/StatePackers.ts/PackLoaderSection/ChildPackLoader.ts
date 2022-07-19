@@ -12,7 +12,10 @@ import {
   GetterSectionProps,
 } from "../../StateGetters/Bases/GetterSectionBase";
 import { GetterSection } from "../../StateGetters/GetterSection";
-import { UpdaterSection } from "../../StateUpdaters/UpdaterSection";
+import {
+  AddChildOptions,
+  UpdaterSection,
+} from "../../StateUpdaters/UpdaterSection";
 import { Obj } from "../../utils/Obj";
 
 interface ChildPackLoaderProps<SN extends SectionName, CN extends ChildName<SN>>
@@ -64,7 +67,7 @@ export class ChildPackLoader<
     this.updaterSection.addChild(this.childName, {
       ...pick(this.childRawSection, ["dbId", "dbVarbs"]),
       idx: this.childDbInfo.idx,
-    });
+    } as AddChildOptions<any>);
     const { feId } = this.get.youngestChild(this.childName);
     this.loadChildChildren(feId);
   }

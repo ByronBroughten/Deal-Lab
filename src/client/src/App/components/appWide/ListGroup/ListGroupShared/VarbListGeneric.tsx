@@ -5,7 +5,11 @@ import useToggleView from "../../../../modules/customHooks/useToggleView";
 import { DbVarbs } from "../../../../sharedWithServer/SectionPack/RawSection";
 import { ChildName } from "../../../../sharedWithServer/SectionsMeta/childSectionsDerived/ChildName";
 import { FeSectionInfo } from "../../../../sharedWithServer/SectionsMeta/Info";
-import { SectionName } from "../../../../sharedWithServer/SectionsMeta/SectionName";
+import { SectionValues } from "../../../../sharedWithServer/SectionsMeta/relSectionsUtils/valueMetaTypes";
+import {
+  SectionName,
+  SectionValuesByType,
+} from "../../../../sharedWithServer/SectionsMeta/SectionName";
 import { useSetterSection } from "../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import ccs from "../../../../theme/cssChunks";
 import theme, { ThemeName } from "../../../../theme/Theme";
@@ -54,7 +58,7 @@ export function VarbListGeneric<SN extends VarbListAllowed>({
       dbVarbs: {
         valueSwitch: defaultValueSwitch,
         ...childDbVarbs,
-      },
+      } as SectionValuesByType<"varbListItem"> as SectionValues<any>,
     });
   };
 

@@ -1,4 +1,3 @@
-import { DbVarbs } from "../SectionPack/RawSection";
 import { SimpleSectionName } from "../SectionsMeta/baseSections";
 import { VarbValues } from "../SectionsMeta/baseSectionsDerived/baseSectionTypes";
 import {
@@ -12,6 +11,7 @@ import { ChildSectionName } from "../SectionsMeta/childSectionsDerived/ChildSect
 import { DescendantSectionName } from "../SectionsMeta/childSectionsDerived/DescendantSectionName";
 import { ParentNameSafe } from "../SectionsMeta/childSectionsDerived/ParentName";
 import { FeSectionInfo } from "../SectionsMeta/Info";
+import { SectionValues } from "../SectionsMeta/relSectionsUtils/valueMetaTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { GetterSectionProps } from "../StateGetters/Bases/GetterSectionBase";
 import { InitRawFeSectionProps } from "../StateSections/initRawSection";
@@ -81,13 +81,13 @@ export class UpdaterSection<
   }
   addChild<CN extends ChildName<SN>>(
     childName: CN,
-    { idx, ...rest }: AddChildOptions<SN> = {}
+    { idx, ...rest }: AddChildOptions<SN, CN> = {}
   ): void {
     const sectionName = this.get.meta.childType(childName);
     const section = StateSections.initRawSection({
       sectionName,
       ...rest,
-    });
+    } as InitRawFeSectionProps<any>);
     const childList = this.updaterList.updaterList(sectionName);
     if (idx === undefined) {
       childList.push(section);
@@ -126,7 +126,7 @@ export class UpdaterSection<
       sectionsShare: this.sectionsShare,
     });
   }
-  updateVarbsFromDb(dbVarbs: DbVarbs): void {
+  updateVarbsFromDb(dbVarbs: Partial<SectionValues<SN>>): void {
     this.updateProps({
       varbs: StateSections.initRawVarbs({
         dbVarbs,

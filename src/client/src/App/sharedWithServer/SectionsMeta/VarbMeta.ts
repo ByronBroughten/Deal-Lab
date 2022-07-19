@@ -16,9 +16,9 @@ import {
   UpdateFnProps,
   UpdateSwitchProp,
 } from "./relSectionsUtils/rel/relVarbTypes";
-import { UpdateFnName } from "./relSectionsUtils/rel/valueMetaTypes";
 import { GeneralRelVarbs } from "./relSectionsUtils/relVarbs";
 import { valueMeta } from "./relSectionsUtils/valueMeta";
+import { UpdateFnName } from "./relSectionsUtils/valueMetaTypes";
 import { SectionMeta } from "./SectionMeta";
 
 type InBaseUpdatePack = {

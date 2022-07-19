@@ -6,6 +6,7 @@ import { ChildName } from "./childSectionsDerived/ChildName";
 import { ChildToSectionName } from "./childSectionsDerived/ChildSectionName";
 import { ParentName } from "./childSectionsDerived/ParentName";
 import { relNameArrs, RelNameArrs } from "./relSectionsDerived/relNameArrs";
+import { SectionValues } from "./relSectionsUtils/valueMetaTypes";
 
 type NameArrs = BaseNameArrs & RelNameArrs;
 function makeNameArrs(): NameArrs {
@@ -19,6 +20,10 @@ export type SectionNameType = keyof NameArrs;
 
 export type SectionName<T extends SectionNameType = "all"> =
   NameArrs[T][number & keyof NameArrs[T]];
+
+export type SectionValuesByType<ST extends SectionNameType> = SectionValues<
+  SectionName<ST>
+>;
 
 export const sectionNameS = new StringTypeChecker(makeNameArrs());
 

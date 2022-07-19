@@ -1,6 +1,6 @@
 import { Obj } from "../../../utils/Obj";
-import { ValueNamesToTypes } from "../../relSectionsUtils/rel/valueMetaTypes";
 import { valueMeta } from "../../relSectionsUtils/valueMeta";
+import { ValueNamesToTypes } from "../../relSectionsUtils/valueMetaTypes";
 
 const editorUpdateNames = [
   "calcVarbs",
