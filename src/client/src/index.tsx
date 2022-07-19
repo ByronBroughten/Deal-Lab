@@ -14,7 +14,11 @@ AppRegistry.runApplication("App", {
 // "make a copy"
 // "copy and save" (new dbId, adds "copy" to title, saves)
 
-// I will need the menu to be in the top right
+// I will need the menu to be in the top right, in a separate block
+// Will the menu push things to the right when it opens?
+// I suppose so.
+// Save menu
+
 // it can be like gmail and google keep's menu
 
 // sectionPack variable names?

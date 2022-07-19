@@ -137,7 +137,6 @@ export class DbUser extends GetterSectionsBase {
     }
   }
   makeLoginUser(): LoginUser {
-    const omniParent = PackBuilderSection.initAsOmniParent();
     const feStore = PackBuilderSection.initAsOmniChild("feStore");
     feStore.loadSelf(defaultMaker.makeSectionPack("feStore"));
     for (const feStoreChildName of feStore.get.childNames) {
@@ -148,22 +147,27 @@ export class DbUser extends GetterSectionsBase {
           .section("dbStore")
           .childType(tableRowDbSource);
         const { dbIndexStoreName } = this.sectionsMeta.section(dbSourceSn);
-        const dbSources = omniParent.loadAndGetChildren({
-          childName: dbSourceSn,
-          sectionPacks: this.dbSections.sectionPackArr(dbIndexStoreName),
-        });
+
+        const sourcePacks = this.dbSections.sectionPackArr(dbIndexStoreName);
         const columns = table.get.children("column");
-        for (const source of dbSources) {
+        for (const sourcePack of sourcePacks) {
+          const source = PackBuilderSection.loadAsOmniChild(sourcePack);
+          const displayName = source.get.value("displayName", "string");
+          const row = table.addAndGetChild("tableRow", {
+            dbId: source.get.dbId,
+            dbVarbs: { displayName },
+          });
           for (const column of columns) {
-            const displayName = source.get.value("displayName", "string");
-            const { dbId } = source.get;
-            table.addAndGetChild("tableRow", {
-              dbId,
-              dbVarbs: { displayName },
-            });
             const varb = source.get.varbByFocalMixed(
               column.valueInEntityInfo()
             );
+            row.addChild("cell", {
+              dbId: column.dbId,
+              dbVarbs: {
+                displayVarb: varb.displayVarb(),
+                valueEntityInfo: column.valueInEntityInfo(),
+              },
+            });
           }
         }
       } else {

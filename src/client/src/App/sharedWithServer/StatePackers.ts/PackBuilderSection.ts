@@ -20,6 +20,15 @@ export class PackBuilderSection<
   static initAsOmniParent() {
     return new PackBuilderSection(UpdaterSection.initOmniParentProps());
   }
+  static loadAsOmniChild<SN extends ChildSectionName<"omniParent">>(
+    sectionPack: SectionPack<SN>
+  ): PackBuilderSection<SN> {
+    const builder = this.initAsOmniChild(
+      sectionPack.sectionName
+    ) as PackBuilderSection<SN>;
+    builder.loadSelf(sectionPack);
+    return builder;
+  }
   static initAsOmniChild<CN extends ChildName<"omniParent">>(
     childName: CN,
     options?: AddChildOptions<"omniParent", CN>

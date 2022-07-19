@@ -40,6 +40,8 @@ export function makeDefaultFeStoreTables(): TablePackMakers {
       const { sectionName, varbNames } = columnVarbnames[tableName];
       for (const varbName of varbNames) {
         table.addChild("column", {
+          // doy.
+          // ok.
           dbVarbs: {
             valueEntityInfo: inEntityInfo({
               infoType: "globalSection",
