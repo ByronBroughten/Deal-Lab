@@ -14,7 +14,7 @@ export default function DealDetails({ feId }: { feId: string }) {
 
   const outputs = outputList.children("outputItem");
   const mixedInfos = outputs.map((outputItem) =>
-    outputItem.inEntityValueInfo()
+    outputItem.valueInEntityInfo()
   );
   const { sections } = outputList;
 

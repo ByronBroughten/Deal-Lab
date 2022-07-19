@@ -31,7 +31,7 @@ export const valueMeta = {
   },
   boolean: {
     is: (v: any): v is boolean => typeof v === "boolean",
-    updateFnNames: ["boolean"],
+    updateFnNames: ["updateByEditorOnly"],
     initDefault: () => true,
     zod: z.boolean(),
     mon: { type: Boolean, required: true },

@@ -58,27 +58,6 @@ export const baseVarbsS = {
       dateTimeLastSaved: "string",
     } as const;
   },
-  get property() {
-    return {
-      ...this.savableSection,
-      ...baseVarbs("numObj", [
-        "price",
-        "sqft",
-        "numUnits",
-        "numBedrooms",
-        "upfrontExpenses",
-        "upfrontRevenue",
-      ] as const),
-      ...this.ongoing("taxes"),
-      ...this.ongoing("homeIns"),
-      ...this.ongoing("targetRent"),
-
-      // these three could be expenses, miscRevenue, and revenue
-      ...this.ongoing("expenses"),
-      ...this.ongoing("miscRevenue"),
-      ...this.ongoing("revenue"),
-    } as const;
-  },
   get loan() {
     return {
       ...this.savableSection,

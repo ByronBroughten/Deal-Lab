@@ -129,7 +129,9 @@ export default function PaymentForm() {
               </View>
               <FlatList
                 style={styles.list}
-                renderItem={({ item }) => <Bullet text={item} />}
+                renderItem={({ item, index }) => (
+                  <Bullet text={item} key={index} />
+                )}
                 data={[
                   "Save as many deals, properties, loans, and management scenarios as you want",
                   "Sort and compare saved deals with the Compare Deals table",

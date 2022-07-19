@@ -29,6 +29,7 @@ export const baseSections = {
     _typeUniformity: "string",
   } as const),
   omniParent: baseSectionS.container,
+  // maybe rename to compareTable and compareTableRow
   table: baseSection({ titleFilter: "string" } as const),
   tableRow: baseSection({
     displayName: "string",
@@ -106,18 +107,36 @@ export const baseSections = {
   register: baseSection(
     baseVarbs("string", ["email", "password", "userName"] as const)
   ),
-  property: baseSection(baseVarbsS.property),
+  property: baseSection({
+    ...baseVarbsS.savableSection,
+    ...baseVarbs("numObj", [
+      "price",
+      "sqft",
+      "numUnits",
+      "numBedrooms",
+      "upfrontExpenses",
+      "upfrontRevenue",
+    ] as const),
+    ...baseVarbsS.ongoing("taxes"),
+    ...baseVarbsS.ongoing("homeIns"),
+    ...baseVarbsS.ongoing("targetRent"),
+    ...baseVarbsS.ongoing("expenses"),
+    ...baseVarbsS.ongoing("miscRevenue"),
+    ...baseVarbsS.ongoing("revenue"),
+  }),
   unit: baseSection({
     one: "numObj",
     numBedrooms: "numObj",
     ...baseVarbsS.ongoing("targetRent"),
   }),
-  propertyGeneral: baseSection(
-    omit(baseVarbsS.property, Obj.keys(baseVarbsS.savableSection)),
-    {
-      hasGlobalVarbs: true,
-    }
-  ),
+  get propertyGeneral() {
+    return baseSection(
+      omit(this.property.varbSchemas, Obj.keys(baseVarbsS.savableSection)),
+      {
+        hasGlobalVarbs: true,
+      }
+    );
+  },
   loan: baseSection(baseVarbsS.loan),
   financing: baseSection(
     {

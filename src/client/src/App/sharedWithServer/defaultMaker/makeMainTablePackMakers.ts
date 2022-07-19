@@ -42,7 +42,7 @@ export function makeDefaultFeStoreTables(): TablePackMakers {
       for (const varbName of varbNames) {
         table.addChild("column", {
           dbVarbs: {
-            varbInfo: {
+            valueEntityInfo: {
               infoType: "globalSection",
               expectedCount: "onlyOne",
               sectionName,

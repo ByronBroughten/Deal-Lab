@@ -387,7 +387,7 @@ export class GetterSection<
   get virtualVarb(): GetterVirtualVarb<SN> {
     return new GetterVirtualVarb(this.getterSectionProps);
   }
-  inEntityValueInfo(): InEntityInfo {
+  valueInEntityInfo(): InEntityInfo {
     const value = this.value("valueEntityInfo", "inEntityInfo");
     if (!value) throw new Error("inEntityInfo value is not initialized");
     return value;

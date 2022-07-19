@@ -110,16 +110,15 @@ export class MainSectionActor<
     row.clearCells();
     const { columns } = table;
     for (const col of columns) {
-      const varbInfo = col.value("valueEntityInfo", "inEntityInfo");
-      if (!varbInfo) throw new Error("varbInfo not initialized");
-      row.addCell(varbInfo, col.dbId);
+      const entityInfo = col.valueInEntityInfo();
+      row.addCell(entityInfo, col.dbId);
     }
   }
 
   private addRow(): void {
     const { table, dbId } = this;
     table.addRow({
-      displayName: this.get.value("displayName", "stringObj").text,
+      displayName: this.get.value("displayName", "string"),
       dbId,
     });
     this.updateRow();

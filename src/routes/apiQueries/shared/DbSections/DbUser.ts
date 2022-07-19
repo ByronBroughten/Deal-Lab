@@ -162,7 +162,7 @@ export class DbUser extends GetterSectionsBase {
               dbVarbs: { displayName },
             });
             const varb = source.get.varbByFocalMixed(
-              column.inEntityValueInfo()
+              column.valueInEntityInfo()
             );
           }
         }

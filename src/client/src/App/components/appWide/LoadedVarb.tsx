@@ -26,7 +26,7 @@ interface LabeledVarbProps extends LabeledVarbNotFoundProps {
 export function LoadedVarb({ feInfo, ...rest }: LabeledVarbProps) {
   const section = useGetterSection(feInfo);
   const { virtualVarb } = section;
-  const { entityId } = section.inEntityValueInfo();
+  const { entityId } = section.valueInEntityInfo();
   return (
     <StyledLoadedVarb
       {...{

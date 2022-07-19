@@ -7,14 +7,6 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-// unit - is it ok that "one" is a numObj? Yeah, it probably doesn't matter.
-// it would be slightly more appropriate if I used a regular number
-// I think I will use a regular number
-// I don't need to make an editor for it.
-
-// The tricky bit with this is that I'd have to create a new update
-// function for summing regular numbers.
-// It wouldn't be so hard, but it's not for any good reason, really, either.
 
 // Core Features
 // * Load "property" with updates
