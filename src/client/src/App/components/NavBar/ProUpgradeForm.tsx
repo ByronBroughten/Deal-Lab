@@ -1,7 +1,6 @@
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import React from "react";
-import styled from "styled-components";
 import PaymentForm from "./ProUpgradeForm/PaymentForm";
 
 const PUBLIC_KEY =
@@ -16,8 +15,3 @@ export function ProUpgradeForm() {
     </Elements>
   );
 }
-
-// 4242 4242 4242 4242 04/24 292 55103
-// zip? 29872
-
-const Styled = styled.div``;

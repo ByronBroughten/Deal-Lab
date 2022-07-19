@@ -36,7 +36,7 @@ export const MainSectionTitleStyled = styled.div<{
   z-index: 1;
   display: flex;
   justify-content: space-between;
-  color: ${theme["gray-800"]};
+  color: ${theme.softDark};
   background-color: ${({ themeName }) => theme[themeName].main};
   height: 32px;
   align-items: center;
@@ -50,6 +50,6 @@ export const MainSectionTitleStyled = styled.div<{
     padding: 0 ${theme.s4};
     line-height: 1rem;
     margin: 0;
-    font-size: 1.2rem;
+    font-size: ${theme.f3};
   }
 `;

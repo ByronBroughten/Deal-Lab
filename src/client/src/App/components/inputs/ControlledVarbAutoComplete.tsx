@@ -15,12 +15,14 @@ export function ControlledVarbAutoComplete({
 }: Props) {
   const variableSections = useVariableSections();
   const options = variableSections.variableOptions();
-  const value = React.useMemo(() => {
-    const toFind = selectedVarbInfo
-      ? omit(selectedVarbInfo, ["entityId"])
-      : null;
-    return options.find((option) => isEqual(option.varbInfo, toFind));
-  }, [selectedVarbInfo, options]);
+  const value =
+    React.useMemo(() => {
+      const toFind = selectedVarbInfo
+        ? omit(selectedVarbInfo, ["entityId"])
+        : null;
+      return options.find((option) => isEqual(option.varbInfo, toFind));
+    }, [selectedVarbInfo, options]) ?? null;
+  // returns null because, "The nature of the state is determined during the first render, it's considered controlled if the value is not `undefined`"
   return (
     <VarbAutoComplete {...{ value, options, clearOnBlur: false, ...props }} />
   );

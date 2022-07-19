@@ -32,24 +32,6 @@ import {
 } from "./../SectionsMeta/baseSectionsUtils/baseValues/StringObj";
 import { UserVarbValueSolver } from "./SolveValueVarb/UserVarbValueSolver";
 
-// Ok. Here's the thing.
-// Previously, I was treating the values as isolated.
-// Now, though, updating varbInfo needs to affect the entities of others.
-
-// I tried one solution that maintains a semblance of the separation
-
-// Except what I think that solution lacks is that it doesn't
-// update outEntities for the new inEntities.
-
-// It used to be the case that any change to something with entities
-// triggered a response for outEntities.
-
-// I like that. That allows for value updates to happen in relative isolation
-// And then something aware of the greater system makes those updates
-
-// I thought I used to have something like that.
-// Do I not?
-
 export class SolveValueVarb<
   SN extends SectionName<"hasVarb">
 > extends GetterVarbBase<SN> {
@@ -86,8 +68,6 @@ export class SolveValueVarb<
       return stringObj(varb.value("string"));
     },
     inEntityInfo: (): InEntityInfoValue => {
-      // when this changes.
-
       return this.getterVarb.value("inEntityInfo");
     },
     loadEditorSolvableText: (): NumObj => {

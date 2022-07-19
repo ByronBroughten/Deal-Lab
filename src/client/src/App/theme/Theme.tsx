@@ -213,6 +213,7 @@ const theme = {
   ...themeSections,
   light: color["gray-100"],
   dark: color["gray-900"],
+  softDark: color["gray-800"],
   transparentGray: transparentize(0.8, color["gray-400"]),
   transparentGrayBorder: transparentize(0.75, color["gray-800"]),
   placeholderGray: color["gray-600"] + "e0",
@@ -228,6 +229,11 @@ const theme = {
   br0: "0.1rem",
   br1: "0.2rem",
   brMaterialEditor: "4px",
+
+  // font size
+  f1: "1rem",
+  f2: "1.1rem",
+  f3: "1.2rem",
 
   // field calculation template
   /* height: calc(1.5em + 0.5rem + 2px); */
