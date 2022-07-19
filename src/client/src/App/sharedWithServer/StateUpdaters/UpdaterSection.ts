@@ -173,7 +173,7 @@ export class UpdaterSection<
   }
 }
 
-interface AddSectionPropsNext<SN extends SimpleSectionName = SimpleSectionName>
+interface AddSectionProps<SN extends SimpleSectionName = SimpleSectionName>
   extends InitRawFeSectionProps<SN> {
   sectionName: SN;
   childFeIds?: ChildIdArrsNarrow<SN>;
@@ -189,11 +189,11 @@ export interface AddChildOptions<
   SN extends SectionName,
   CN extends ChildName<SN> = ChildName<SN>,
   CT extends ChildSectionName<SN, CN> = ChildSectionName<SN, CN>
-> extends StrictOmit<AddSectionPropsNext<CT>, OmitProps> {}
+> extends StrictOmit<AddSectionProps<CT>, OmitProps> {}
 
 export type AddDescendantOptions<
   SN extends SectionName,
   DN extends DescendantSectionName<SN> = DescendantSectionName<SN>
-> = StrictOmit<AddSectionPropsNext<DN>, OmitProps>;
+> = StrictOmit<AddSectionProps<DN>, OmitProps>;
 
 type OmitProps = "sectionName" | "childFeIds";

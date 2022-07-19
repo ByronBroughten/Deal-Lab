@@ -12,6 +12,7 @@ import { StrictPick, StrictPickPartial } from "../utils/types";
 import { RawFeSection, RawFeVarb, RawFeVarbs } from "./StateSectionsTypes";
 
 type InitVarbs = Partial<DbVarbs>;
+
 type InitChildIdArrs<SN extends SectionName> = Partial<ChildIdArrsNarrow<SN>>;
 export interface InitRawFeSectionProps<SN extends SectionName>
   extends StrictPick<RawFeSection<SN>, "sectionName">,

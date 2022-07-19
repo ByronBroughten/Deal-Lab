@@ -28,6 +28,14 @@ export type SchemaVarbsToDbValues<
   [Prop in keyof T]: ValueNamesToTypes[T[Prop]];
 };
 
+type SectionVarbSchemas<SN extends SimpleSectionName> =
+  BaseSections[SN]["varbSchemas"];
+
+export type SectionValues<SN extends SimpleSectionName> = {
+  [VN in keyof SectionVarbSchemas<SN>]: ValueNamesToTypes[SectionVarbSchemas<SN>[VN] &
+    keyof ValueNamesToTypes];
+};
+
 export type SafeDbVarbs<SN extends SimpleSectionName> = SchemaVarbsToDbValues<
   BaseSections[SN]["varbSchemas"]
 >;
