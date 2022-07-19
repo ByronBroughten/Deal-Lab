@@ -41,17 +41,7 @@ export class SetterSectionsBase {
   get initialSections() {
     return this.initialSectionsShare.sections;
   }
-  updateSetterProps({ sections, setSections }: SectionsAndSetSections): void {
-    this.getterSectionsBase.updateSections(sections);
-    this.initialSectionsShare.sections = sections;
-    this.setSectionsShare.setSections = setSections;
-  }
-  setSections(): void {
-    this.setSectionsShare.setSections(
-      () => this.getterSectionsBase.sectionsShare.sections
-    );
-  }
-  revertSections(): void {
+  private revertSections(): void {
     this.setSectionsShare.setSections(() => this.initialSections);
   }
   async tryAndRevertIfFail<FN extends () => any>(
@@ -63,6 +53,17 @@ export class SetterSectionsBase {
       this.revertSections();
       throw err;
     }
+  }
+
+  updateSetterProps({ sections, setSections }: SectionsAndSetSections): void {
+    this.getterSectionsBase.updateSections(sections);
+    this.initialSectionsShare.sections = sections;
+    this.setSectionsShare.setSections = setSections;
+  }
+  setSections(): void {
+    this.setSectionsShare.setSections(
+      () => this.getterSectionsBase.sectionsShare.sections
+    );
   }
   get setterSectionsProps(): SetterSectionsProps {
     return {

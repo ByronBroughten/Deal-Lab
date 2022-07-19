@@ -8,7 +8,7 @@ export default function MainSectionTitleSaveBtn({ onClick }: Props) {
     onClick,
     className: "MainSectionTitleRow-flexUnit",
     ...(auth.isLoggedIn
-      ? { title: "Save New" }
+      ? { title: "Copy and save" }
       : { title: "Login to save", disabled: true }),
   };
   return (

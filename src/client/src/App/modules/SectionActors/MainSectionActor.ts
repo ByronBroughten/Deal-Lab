@@ -65,8 +65,17 @@ export class MainSectionActor<
   resetToDefault(): void {
     this.setter.resetToDefault();
   }
+  async makeACopy() {
+    this.setter.resetDbId();
+    const titleVarb = this.setter.varb("displayName");
+    titleVarb.updateValueDirectly("Copy of " + titleVarb.value("string"));
+  }
+  async copyAndSave() {
+    this.makeACopy();
+    this.saveNew();
+  }
   async saveNew(): Promise<void> {
-    this.addRow();
+    this.addStoreRow();
     const dateTime = this.newDateTime();
     this.setter.updateValues({
       dateTimeFirstSaved: dateTime,
@@ -113,10 +122,14 @@ export class MainSectionActor<
       const entityInfo = col.valueInEntityInfo();
       row.addCell(entityInfo, col.dbId);
     }
-  }
+  } // good enough, I guess.
 
-  private addRow(): void {
+  private addStoreRow(): void {
     const { table, dbId } = this;
+    const rowIds = table.get.childDbIds("tableRow");
+    if (rowIds.includes(dbId)) {
+      throw new Error("Trying to save a new section that is already saved.");
+    }
     table.addRow({
       displayName: this.get.value("displayName", "string"),
       dbId,

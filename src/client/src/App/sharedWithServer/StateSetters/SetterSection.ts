@@ -4,6 +4,7 @@ import {
   SectionVarbName,
   VarbValues,
 } from "../SectionsMeta/baseSectionsDerived/baseSectionTypes";
+import { Id } from "../SectionsMeta/baseSectionsUtils/id";
 import { SwitchEndingKey } from "../SectionsMeta/baseSectionsUtils/RelSwitchVarb";
 import {
   ChildName,
@@ -16,11 +17,13 @@ import { SectionMeta } from "../SectionsMeta/SectionMeta";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { SectionOption } from "../StateEntityGetters/VariableGetterSections";
 import { GetterSection } from "../StateGetters/GetterSection";
-import { GetterSections } from "../StateGetters/GetterSections";
 import { GetterVarb } from "../StateGetters/GetterVarb";
 import { ChildSectionPackArrs } from "../StatePackers.ts/PackLoaderSection";
 import { SolverSection } from "../StateSolvers/SolverSection";
-import { AddChildOptions } from "../StateUpdaters/UpdaterSection";
+import {
+  AddChildOptions,
+  UpdaterSection,
+} from "../StateUpdaters/UpdaterSection";
 import { SetterSectionBase } from "./SetterBases/SetterSectionBase";
 import { SetterSections } from "./SetterSections";
 import { SetterVarb } from "./SetterVarb";
@@ -28,8 +31,12 @@ import { SetterVarb } from "./SetterVarb";
 export class SetterSection<
   SN extends SectionName
 > extends SetterSectionBase<SN> {
-  get = new GetterSection(this.getterSectionBase.getterSectionProps);
-  allSections = new GetterSections(this.getterSectionBase.getterSectionsProps);
+  get get(): GetterSection<SN> {
+    return new GetterSection(this.getterSectionBase.getterSectionProps);
+  }
+  get update(): UpdaterSection<SN> {
+    return new UpdaterSection(this.getterSectionBase.getterSectionProps);
+  }
   private solver = SolverSection.init(
     this.getterSectionBase.getterSectionProps
   );
@@ -38,6 +45,12 @@ export class SetterSection<
   }
   get sections(): SetterSections {
     return new SetterSections(this.setterSectionsProps);
+  }
+  resetDbId(): void {
+    this.update.updateProps({
+      dbId: Id.make(),
+    });
+    this.setSections();
   }
   setterSection<S extends SectionName>(
     feInfo: FeSectionInfo<S>

@@ -8,6 +8,15 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
+// I need:
+// "save new" (saves with current dbId)
+// "save updates"(when already saved, saves with current dbId)
+// "make a copy"
+// "copy and save" (new dbId, adds "copy" to title, saves)
+
+// I will need the menu to be in the top right
+// it can be like gmail and google keep's menu
+
 // sectionPack variable names?
 
 // Core Features

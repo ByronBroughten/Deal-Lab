@@ -21,7 +21,6 @@ export class SectionQuerier<CN extends DbStoreName> extends ApiQuerierBase {
     super(rest);
     this.dbStoreName = dbStoreName;
   }
-
   makeDbPackReq(
     sectionPack: SectionPack<DbSectionName<CN>>
   ): SectionPackReq<CN> {
@@ -30,7 +29,6 @@ export class SectionQuerier<CN extends DbStoreName> extends ApiQuerierBase {
       sectionPack,
     });
   }
-
   async add(sectionPack: SectionPack<DbSectionName<CN>>): Promise<string> {
     const req = this.makeDbPackReq(sectionPack);
     const res = await this.apiQueries.addSection(req);

@@ -486,6 +486,9 @@ export class GetterSection<
         `"${childName}" is not a possible child section for ${this.sectionName}`
       );
   }
+  childDbIds<CN extends ChildName<SN>>(childName: CN): string[] {
+    return this.children(childName).map(({ dbId }) => dbId);
+  }
   get allChildDbIds(): ChildIdArrsWide<SN> {
     const { allChildFeIds } = this;
     return Obj.entries(allChildFeIds).reduce(

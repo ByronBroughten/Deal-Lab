@@ -52,7 +52,9 @@ export function MainSectionTitleRow({
                   <BiReset />
                 </IconBtn>
               </BtnTooltip>
-              <MainSectionTitleSaveBtn onClick={() => mainSection.saveNew()} />
+              <MainSectionTitleSaveBtn
+                onClick={() => mainSection.copyAndSave()}
+              />
               {mainSection.isSaved && (
                 <>
                   <BtnTooltip
