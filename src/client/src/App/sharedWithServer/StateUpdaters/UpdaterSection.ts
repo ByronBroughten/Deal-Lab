@@ -1,5 +1,6 @@
 import { SimpleSectionName } from "../SectionsMeta/baseSections";
 import { VarbValues } from "../SectionsMeta/baseSectionsDerived/baseSectionTypes";
+import { Id } from "../SectionsMeta/baseSectionsUtils/id";
 import {
   ChildArrInfo,
   ChildIdArrsNarrow,
@@ -134,7 +135,15 @@ export class UpdaterSection<
       }),
     });
   }
-  updateProps(nextBaseProps: Partial<UpdateableRawFeSection<SN>>): void {
+  newDbId(): void {
+    this.updateDbId(Id.make());
+  }
+  updateDbId(dbId: string): void {
+    this.updateProps({ dbId });
+  }
+  private updateProps(
+    nextBaseProps: Partial<UpdateableRawFeSection<SN>>
+  ): void {
     this.updaterList.replace({
       ...this.get.raw,
       ...nextBaseProps,

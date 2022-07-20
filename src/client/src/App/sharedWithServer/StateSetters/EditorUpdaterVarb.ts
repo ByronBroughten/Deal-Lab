@@ -18,6 +18,7 @@ import {
 import { isEditorUpdateFnName } from "../SectionsMeta/baseSectionsUtils/baseValues/StateValueTypes";
 import { StringObj } from "../SectionsMeta/baseSectionsUtils/baseValues/StringObj";
 import { ValueName } from "../SectionsMeta/baseSectionsUtils/baseVarb";
+import { ValueNamesToTypes } from "../SectionsMeta/relSectionsUtils/valueMetaTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { GetterVarbBase } from "../StateGetters/Bases/GetterVarbBase";
 import { GetterVarb } from "../StateGetters/GetterVarb";
@@ -26,15 +27,17 @@ import { UpdaterVarb } from "../StateUpdaters/UpdaterVarb";
 import { Arr } from "../utils/Arr";
 import { StrictExtract } from "../utils/types";
 
-type EditorValueTypeName = StrictExtract<
+type EditorValueName = StrictExtract<
   ValueName,
   "string" | "numObj" | "stringArray" | "stringObj"
 >;
+export type EditorValue = ValueNamesToTypes[EditorValueName];
+
 type ContentCreators = {
-  [EN in EditorValueTypeName]: () => ContentState;
+  [EN in EditorValueName]: () => ContentState;
 };
 export type CreateEditorProps = {
-  valueType: EditorValueTypeName;
+  valueType: EditorValueName;
   compositeDecorator?: CompositeDecorator;
 };
 export class EditorUpdaterVarb<

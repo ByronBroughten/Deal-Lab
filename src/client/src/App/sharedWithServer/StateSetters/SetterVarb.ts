@@ -12,7 +12,11 @@ import { GetterSections } from "../StateGetters/GetterSections";
 import { GetterVarb } from "../StateGetters/GetterVarb";
 import { SolverVarb } from "../StateSolvers/SolverVarb";
 import { UpdaterVarb } from "./../StateUpdaters/UpdaterVarb";
-import { CreateEditorProps, EditorUpdaterVarb } from "./EditorUpdaterVarb";
+import {
+  CreateEditorProps,
+  EditorUpdaterVarb,
+  EditorValue,
+} from "./EditorUpdaterVarb";
 import { SetterVarbBase } from "./SetterBases/SetterVarbBase";
 
 export class SetterVarb<
@@ -64,6 +68,9 @@ export class SetterVarb<
     const value = this.editorUpdater.valueFromContentState(contentState);
     this.solverVarb.editorUpdateAndSolve(value);
     this.setSections();
+  }
+  valueFromContentState(contentState: ContentState): EditorValue {
+    return this.editorUpdater.valueFromContentState(contentState);
   }
   createEditor(props: CreateEditorProps): EditorState {
     return this.editorUpdater.createEditor(props);

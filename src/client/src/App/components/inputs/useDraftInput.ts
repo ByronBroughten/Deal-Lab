@@ -1,4 +1,5 @@
 import { EditorState } from "draft-js";
+import { isEqual } from "lodash";
 import React, { useEffect, useState } from "react";
 import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/Info";
 import { useGetterVarb } from "../../sharedWithServer/stateClassHooks/useGetterVarb";
@@ -13,15 +14,19 @@ export function useDraftInput(props: UseDraftInputProps) {
   const [editorState, setEditorState] = useState<EditorState>(() =>
     setterVarb.createEditor(props)
   );
-  useManualUpdateIfTriggered({
-    ...props,
-    setterVarb,
-    setEditorState,
-  });
+
   useUpdateValueFromEditor({
     setterVarb,
     editorState,
   });
+
+  useUpdateEditorFromValue({
+    ...props,
+    editorState,
+    setEditorState,
+    setterVarb,
+  });
+
   const onChange = useOnChange({
     editorState,
     setEditorState,
@@ -33,6 +38,32 @@ export function useDraftInput(props: UseDraftInputProps) {
     editorState,
     onChange,
   };
+}
+
+interface UseUpdateEditorFromValueProps extends CreateEditorProps {
+  editorState: EditorState;
+  setterVarb: SetterVarb;
+  setEditorState: React.Dispatch<React.SetStateAction<EditorState>>;
+}
+function useUpdateEditorFromValue({
+  editorState,
+  setterVarb,
+  setEditorState,
+  ...rest
+}: UseUpdateEditorFromValueProps) {
+  const contentState = editorState.getCurrentContent();
+  let contentIsUpdated = false;
+  useEffect(() => {
+    contentIsUpdated = true;
+  }, [contentState]);
+
+  const value = setterVarb.get.value();
+  const valueFromEditor = setterVarb.valueFromContentState(contentState);
+  useEffect(() => {
+    if (!contentIsUpdated && !isEqual(value, valueFromEditor)) {
+      setEditorState(setterVarb.createEditor(rest));
+    }
+  }, [contentIsUpdated, value, valueFromEditor, contentState]);
 }
 
 type UseUpdateValueFromEditorProps = {
@@ -71,20 +102,3 @@ function useManualUpdateIfTriggered({
     }
   }, [setterVarb.manualUpdateEditorToggle]);
 }
-
-// function useManualUpdateIfTriggered({
-//   setterVarb,
-//   setEditorState,
-//   ...rest
-// }: ManualUpdateIfTriggeredProps): void {
-//   const { manualUpdateEditorToggle } = setterVarb;
-//   const editorToggleRef = React.useRef(setterVarb.manualUpdateEditorToggle);
-//   useEffect(() => {
-//     if (
-//       ![undefined, editorToggleRef.current].includes(manualUpdateEditorToggle)
-//     ) {
-//       setEditorState(setterVarb.createEditor(rest));
-//       editorToggleRef.current = manualUpdateEditorToggle;
-//     }
-//   }, [manualUpdateEditorToggle, editorToggleRef, setterVarb, setEditorState]);
-// }

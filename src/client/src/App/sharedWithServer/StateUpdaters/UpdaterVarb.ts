@@ -24,6 +24,17 @@ export class UpdaterVarb<
   updateValueByEditor(value: StateValue): void {
     this.updateValue(value);
   }
+  // those varbs are updating directly.
+  // and then they're updating directly again.
+  // so then they end up with the same editor toggle.
+  // is that right?
+
+  // basically, the editor needs to know when an update
+  // has occured. It can't know, though, that the update
+  // came from the editor.
+  // Ok, wait. Maybe when the editor updates the value
+  // I save the edit
+
   updateValueDirectly(value: StateValue): void {
     this.updateValue(value);
     this.triggerEditorUpdate();

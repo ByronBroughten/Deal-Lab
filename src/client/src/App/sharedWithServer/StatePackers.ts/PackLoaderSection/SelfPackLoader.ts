@@ -1,4 +1,3 @@
-import { SectionValues } from "../../../sharedWithServer/SectionsMeta/relSectionsUtils/valueMetaTypes";
 import { OneRawSection } from "../../SectionPack/RawSection";
 import { SectionPack } from "../../SectionPack/SectionPack";
 import {
@@ -11,7 +10,6 @@ import {
   GetterSectionBase,
   GetterSectionProps,
 } from "../../StateGetters/Bases/GetterSectionBase";
-import { StateSections } from "../../StateSections/StateSections";
 import { UpdaterSection } from "../../StateUpdaters/UpdaterSection";
 import { Obj } from "../../utils/Obj";
 import { ChildPackLoader } from "./ChildPackLoader";
@@ -36,13 +34,8 @@ export class SelfPackLoader<
   }
   updateSelfWithSectionPack(): void {
     const { dbId, dbVarbs } = this.headRawSection;
-    this.updaterSection.updateProps({
-      dbId,
-      varbs: StateSections.initRawVarbs({
-        dbVarbs: dbVarbs as Partial<SectionValues<SN>>,
-        ...this.feSectionInfo,
-      }),
-    });
+    this.updaterSection.updateDbId(dbId);
+    this.updaterSection.updateValuesDirectly(dbVarbs);
     this.updaterSection.removeAllChildren();
     this.addSectionPackChildren();
   }

@@ -4,7 +4,6 @@ import {
   SectionVarbName,
   VarbValues,
 } from "../SectionsMeta/baseSectionsDerived/baseSectionTypes";
-import { Id } from "../SectionsMeta/baseSectionsUtils/id";
 import { SwitchEndingKey } from "../SectionsMeta/baseSectionsUtils/RelSwitchVarb";
 import {
   ChildName,
@@ -47,9 +46,7 @@ export class SetterSection<
     return new SetterSections(this.setterSectionsProps);
   }
   resetDbId(): void {
-    this.update.updateProps({
-      dbId: Id.make(),
-    });
+    this.update.newDbId();
     this.setSections();
   }
   setterSection<S extends SectionName>(

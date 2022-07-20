@@ -3,7 +3,6 @@ import {
   SectionVarbName,
   VarbValues,
 } from "../SectionsMeta/baseSectionsDerived/baseSectionTypes";
-import { Id } from "../SectionsMeta/baseSectionsUtils/id";
 import {
   ChildName,
   FeChildInfo,
@@ -126,9 +125,7 @@ export class SolverSection<
   }
   replaceWithDefaultAndSolve(): void {
     this.combo.resetToDefaultAndExtractIds();
-    this.updater.updateProps({
-      dbId: Id.make(),
-    });
+    this.updater.newDbId();
     this.solve();
   }
   loadSelfSectionPackAndSolve(sectionPack: SectionPack<SN>): void {
