@@ -1,3 +1,4 @@
+import { DbStoreName } from "../../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/dbStoreNames";
 import { DbSectionsModel } from "../../../DbSectionsModel";
 import {
   ServerSectionPack,
@@ -48,9 +49,16 @@ export class DbSectionsQuerier extends DbSectionsQuerierBase {
     //   { $unwind: `$${sectionName}` },
     //   // { $match: { [`${sectionName}.${dbId}`]: dbId } },
     // ]);
-    const dbSectionsRaw = await this.getDbSectionsRaw();
-    const dbSections = new DbSections({ dbSectionsRaw });
+    const dbSections = await this.dbSections();
     return dbSections.sectionPack(dbInfo);
+  }
+  async storeSectionCount(dbStoreName: DbStoreName): Promise<number> {
+    const dbSections = await this.dbSections();
+    return dbSections.sectionPackArr(dbStoreName).length;
+  }
+  private async dbSections(): Promise<DbSections> {
+    const dbSectionsRaw = await this.getDbSectionsRaw();
+    return new DbSections({ dbSectionsRaw });
   }
   async getDbSectionsRaw(): Promise<DbSectionsRaw> {
     const dbSectionsRaw = await DbSectionsModel.findOne(

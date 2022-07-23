@@ -1,4 +1,4 @@
-import { ApiAccessStatus, SimpleSectionName } from "./baseSections";
+import { ApiStorageAuth, SimpleSectionName } from "./baseSections";
 import { relVarbInfoS } from "./childSectionsDerived/RelVarbInfo";
 import { relVarb, relVarbS } from "./relSectionsUtils/rel/relVarb";
 import {
@@ -46,7 +46,7 @@ export function makeRelSections() {
         userName: relVarb("string", { displayName: "Name" }),
         apiStorageAuth: relVarb("string", {
           displayName: "Api Access Status",
-          initValue: "basicStorage" as ApiAccessStatus,
+          initValue: "basicStorage" as ApiStorageAuth,
         }),
       },
       { dbIndexStoreName: "user" }

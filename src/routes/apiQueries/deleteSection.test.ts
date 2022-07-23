@@ -6,7 +6,7 @@ import { QueryReq } from "../../client/src/App/sharedWithServer/apiQueriesShared
 import { Id } from "../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsUtils/id";
 import { runApp } from "../../runApp";
 import { DbSectionsModel } from "../DbSectionsModel";
-import { createTestUserModelNext } from "./test/createTestUserModelNext";
+import { createTestUserModel } from "./test/createTestUserModel";
 import { SectionQueryTester } from "./test/SectionQueryTester";
 
 type TestReqs = {
@@ -32,8 +32,8 @@ describe(testedRoute, () => {
 
   beforeEach(async () => {
     server = runApp();
-    const dbUser = await createTestUserModelNext(testedRoute);
-    token = dbUser.createTestUserModel();
+    const dbUser = await createTestUserModel(testedRoute);
+    token = dbUser.createUserAuthToken();
     reqs = makeReqs();
     userId = dbUser.userId;
   });

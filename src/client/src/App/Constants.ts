@@ -18,6 +18,7 @@ export const config = {
   costInCents: {
     upgradeUserToPro: 1000,
   },
+  basicStorageLimit: 2,
   apiQueryNames: [
     "register",
     "login",

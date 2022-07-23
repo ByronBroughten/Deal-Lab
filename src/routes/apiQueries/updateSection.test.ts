@@ -8,7 +8,7 @@ import { Id } from "../../client/src/App/sharedWithServer/SectionsMeta/baseSecti
 import { runApp } from "../../runApp";
 import { DbSectionsModel } from "../DbSectionsModel";
 import { getUserByIdNoRes } from "./shared/getUserDbSectionsById";
-import { createTestUserModelNext } from "./test/createTestUserModelNext";
+import { createTestUserModel } from "./test/createTestUserModel";
 import { SectionQueryTester } from "./test/SectionQueryTester";
 
 const sectionName = "property";
@@ -50,8 +50,8 @@ describe(testedRoute, () => {
   beforeEach(async () => {
     reqs = makeReqs();
     server = runApp();
-    const dbUser = await createTestUserModelNext(testedRoute);
-    token = dbUser.createTestUserModel();
+    const dbUser = await createTestUserModel(testedRoute);
+    token = dbUser.createUserAuthToken();
     userId = dbUser.userId;
   });
 

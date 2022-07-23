@@ -3,18 +3,17 @@ import {
   QueryReq,
 } from "../../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import { ResStatusError } from "../../../resErrorUtils";
+import { isUserJwt, UserJwt } from "./DbSections/DbUser/userAuthToken";
 
 export type UserAuthedReq<QN extends ApiQueryName> = LoggedIn<QueryReq<QN>>;
 export type LoggedIn<T extends any> = T & LoggedInReq;
-export type LoggedInUser = { _id: string };
 type LoggedInReq = {
   body: {
-    user: LoggedInUser;
+    userJwt: UserJwt;
   };
 };
-
-export function validateLoggedInUser(value: any): LoggedInUser {
-  if (isLoggedInUser(value)) return value;
+export function validateUserJwt(value: any): UserJwt {
+  if (isUserJwt(value)) return value;
   else {
     throw new ResStatusError({
       errorMessage: "Made request without being logged in.",
@@ -22,9 +21,4 @@ export function validateLoggedInUser(value: any): LoggedInUser {
       status: 400,
     });
   }
-}
-
-function isLoggedInUser(value: any): value is LoggedInUser {
-  if (typeof value === "object" && typeof value._id === "string") return true;
-  else return false;
 }

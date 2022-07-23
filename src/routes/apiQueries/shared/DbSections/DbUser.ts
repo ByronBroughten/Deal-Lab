@@ -9,7 +9,7 @@ import {
 } from "../../../../client/src/App/sharedWithServer/apiQueriesShared/register";
 import { defaultMaker } from "../../../../client/src/App/sharedWithServer/defaultMaker/defaultMaker";
 import {
-  ApiAccessStatus,
+  ApiStorageAuth,
   isApiAccessStatus,
 } from "../../../../client/src/App/sharedWithServer/SectionsMeta/baseSections";
 import {
@@ -30,7 +30,7 @@ import { DbSectionsQuerier } from "./DbSectionsQuerier";
 import { DbSectionsRaw } from "./DbSectionsQuerierTypes";
 import {
   checkUserAuthToken,
-  createTestUserModel,
+  createUserAuthToken,
 } from "./DbUser/userAuthToken";
 import { userPrepS } from "./DbUser/userPrepS";
 
@@ -69,6 +69,7 @@ export class DbUser extends GetterSectionsBase {
       dbSections,
     });
   }
+
   static async createAndSaveNew({
     registerFormData,
     guestAccessSections,
@@ -126,7 +127,7 @@ export class DbUser extends GetterSectionsBase {
       ...this.getterSectionsProps,
     });
   }
-  get apiStorageAuth(): ApiAccessStatus {
+  get apiStorageAuth(): ApiStorageAuth {
     const apiStorageAuth = this.get.value("apiStorageAuth");
     if (!isApiAccessStatus(apiStorageAuth)) {
       throw new Error(`Invalid apiStorageAuth of ${apiStorageAuth}`);
@@ -195,73 +196,19 @@ export class DbUser extends GetterSectionsBase {
       feStore: [feStore.makeSectionPack()],
     };
   }
-
-  // makeNewTableRows(sectionName: SectionName<"rowIndex">) {
-  //   const tableName = rowIndexToTableName[sectionName];
-  //   const tableSectionPack = this.firstSectionPack(tableName);
-
-  //   const { rowSourceName } = sectionsMeta.section(tableName).core;
-  //   const tableColumnSections = tableSectionPack.rawSectionArr("column");
-  //   const rowSourceArr = this.sectionPackArr(rowSourceName);
-
-  //   const indexRows: SectionPack< SectionName<"rowIndex">>[] = [];
-  //   for (const sourceSectionPack of rowSourceArr) {
-  //     indexRows.push(
-  //       this.toRowIndexEntry(rowSourceName, sourceSectionPack, tableColumnSections)
-  //     );
-  //   }
-  // }
-  // toRowIndexEntry<SN extends SectionName<"rowIndex">>(
-  //   indexName: SN,
-  //   sourceSectionPack: SectionPackDb<SN>,
-  //   tableColumns: OneRawSection<"db", "column">[]
-  // ): SectionPack< SN> {
-  //   // for now, there is very little type safety for dbEntry
-
-  //   const sourceSection = sourceSectionPack.headSection()
-
-  //   // const columns = this.sectionArr(tableEntry, "column");
-  //   const cellArr = tableColumns.reduce((cells, col) => {
-
-  //     const info = col.dbVarbs as InEntityVarbInfo;
-
-  //     const value = this.value(fullEntry, info);
-  //     cells.push({
-  //       dbId: col.dbId,
-  //       childDbIds: {},
-  //       dbVarbs: { ...info, value }
-  //     })
-  //     return cells;
-  //   }, [] as RawSection<"fe", "column">[]);
-
-  //   const { dbId } = fullEntry;
-
-  //   let rowEntry = this.initEntry(
-  //     indexName,
-  //     { title: sourceSection.dbVarbs.title },
-  //     { dbId }
-  //   );
-  //   rowEntry = this.addLikeChildren(
-  //     rowEntry,
-  //     cellArr,
-  //     "cell",
-  //     MixedInfoS.makeDb(indexName, dbId, "onlyOne")
-  //   );
-  //   return rowEntry;
-  // }
   sendLogin(res: Response) {
     const loggedInUser = this.makeLoginUser();
-    const token = this.createTestUserModel();
+    const token = this.createUserAuthToken();
     res
       .header(constants.tokenKey.apiUserAuth, token)
       .status(200)
       .send(loggedInUser);
   }
-  createTestUserModel() {
-    return DbUser.createTestUserModel(this.userId);
+  createUserAuthToken() {
+    return DbUser.createUserAuthToken(this.userId);
   }
   static checkUserAuthToken = checkUserAuthToken;
-  static createTestUserModel = createTestUserModel;
+  static createUserAuthToken = createUserAuthToken;
 }
 
 export interface UserSections {

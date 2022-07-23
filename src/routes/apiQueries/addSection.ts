@@ -1,25 +1,31 @@
 import { Request, Response } from "express";
+import { constants } from "../../client/src/App/Constants";
 import { DbPack } from "../../client/src/App/sharedWithServer/SectionPack/SectionPack";
+import { ApiStorageAuth } from "../../client/src/App/sharedWithServer/SectionsMeta/baseSections";
 import {
   DbStoreInfo,
   DbStoreName,
 } from "../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/dbStoreNames";
-import authWare from "../../middleware/authWare";
+import { userAuthWare } from "../../middleware/authWare";
 import { ResStatusError } from "../../resErrorUtils";
 import { DbSectionsQuerier } from "./shared/DbSections/DbSectionsQuerier";
 import { SectionPackNotFoundError } from "./shared/DbSections/DbSectionsQuerierTypes";
-import { DbUser } from "./shared/DbSections/DbUser";
 import { findUserByIdAndUpdate } from "./shared/findAndUpdate";
 import { sendSuccess } from "./shared/sendSuccess";
 import { validateSectionPackReq } from "./shared/validateSectionPackReq";
 
-export const addSectionWare = [authWare, addSectionServerSide] as const;
+export const addSectionWare = [userAuthWare, addSectionServerSide] as const;
 async function addSectionServerSide(req: Request, res: Response) {
   const {
     dbStoreName,
     sectionPack,
-    user: { _id: userId },
+    userJwt: { userId },
   } = validateSectionPackReq(req).body;
+  // await validateAuth({
+  //   userId,
+  //   dbStoreName,
+  //   apiStorageAuth,
+  // });
   await checkThatSectionPackIsNotThere({
     dbStoreName,
     dbId: sectionPack.dbId,
@@ -36,26 +42,34 @@ async function addSectionServerSide(req: Request, res: Response) {
   sendSuccess(res, "addSection", { data: { dbId: sectionPack.dbId } });
 }
 
-// I see. The benefit of sending this in a token is that I don't have
-// to do an extra db query before every storage-related operation.
-// That would be nice.
-
-// But then I have to rewrite some tests.
-
-// check for basicStorage auth for most section operations
-
-// check for fullStorage auth for just addSection
-
-async function hasBasicStorageAuth(userId: string) {
-  const { apiStorageAuth } = await DbUser.queryByUserId(userId);
-  if (["basicStorage", "fullStorage"].includes(apiStorageAuth)) {
-    return true;
-  } else return false;
-}
-async function hasFullStorageAuth(userId: string) {
-  const { apiStorageAuth } = await DbUser.queryByUserId(userId);
-  if (apiStorageAuth === "fullStorage") return true;
-  else return false;
+type ValidateAuthProps = {
+  apiStorageAuth: ApiStorageAuth;
+  dbStoreName: DbStoreName;
+  userId: string;
+};
+async function validateAuth({
+  apiStorageAuth,
+  dbStoreName,
+  userId,
+}: ValidateAuthProps): Promise<boolean> {
+  switch (apiStorageAuth) {
+    case "readonly":
+      throw new Error("Tried to save a section with readonly auth.");
+    case "basicStorage": {
+      const { basicStorageLimit } = constants;
+      const querier = await DbSectionsQuerier.initByUserId(userId);
+      const count = await querier.storeSectionCount(dbStoreName);
+      if (count < basicStorageLimit) return true;
+      else
+        throw new ResStatusError({
+          errorMessage: `To save more than ${basicStorageLimit} of anything, you must have a Pro account.`,
+          resMessage: `To save more than ${basicStorageLimit} of anything, you must have a Pro account.`,
+          status: 400,
+        });
+    }
+    case "fullStorage":
+      return true;
+  }
 }
 async function checkThatSectionPackIsNotThere<CN extends DbStoreName>(
   props: DbSectionInitByIdProps<CN>

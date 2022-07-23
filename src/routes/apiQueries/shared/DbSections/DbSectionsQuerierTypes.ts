@@ -46,7 +46,7 @@ const dbSectionsPaths = {
 
 export const dbSectionsFilters = {
   userId(userId: string) {
-    return { _id: userId };
+    return { _id: userId } as const;
   },
   email(email: string) {
     const path = dbSectionsPaths.firstRawVarb({
@@ -54,6 +54,6 @@ export const dbSectionsFilters = {
       selfOrDescendantName: "user",
       varbName: "email",
     });
-    return { [path]: email };
+    return { [path]: email } as const;
   },
 };

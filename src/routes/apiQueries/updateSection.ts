@@ -1,18 +1,21 @@
 import { Request, Response } from "express";
 import { DbPack } from "../../client/src/App/sharedWithServer/SectionPack/SectionPack";
 import { DbStoreName } from "../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/dbStoreNames";
-import authWare from "../../middleware/authWare";
+import { userAuthWare } from "../../middleware/authWare";
 import { findOneAndUpdate } from "./shared/findAndUpdate";
 import { sendSuccess } from "./shared/sendSuccess";
 import { validateSectionPackReq } from "./shared/validateSectionPackReq";
 
-export const updateSectionWare = [authWare, updateSectionSeverSide] as const;
+export const updateSectionWare = [
+  userAuthWare,
+  updateSectionSeverSide,
+] as const;
 
 async function updateSectionSeverSide(req: Request, res: Response) {
   const {
     dbStoreName,
     sectionPack,
-    user: { _id: userId },
+    userJwt: { userId },
   } = validateSectionPackReq(req).body;
 
   await findOneAndUpdate({

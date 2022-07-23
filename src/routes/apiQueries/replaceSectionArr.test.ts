@@ -5,7 +5,7 @@ import { SectionPackArrReq } from "../../client/src/App/sharedWithServer/apiQuer
 import { SectionArrReqMaker } from "../../client/src/App/sharedWithServer/ReqMakers/SectionArrReqMaker";
 import { runApp } from "../../runApp";
 import { DbSectionsModel } from "../DbSectionsModel";
-import { createTestUserModelNext } from "./test/createTestUserModelNext";
+import { createTestUserModel } from "./test/createTestUserModel";
 
 const sectionName = "user";
 function makeReq(): SectionPackArrReq<typeof sectionName> {
@@ -22,8 +22,8 @@ describe(testedRoute, () => {
 
   beforeEach(async () => {
     server = runApp();
-    const dbUser = await createTestUserModelNext(testedRoute);
-    token = dbUser.createTestUserModel();
+    const dbUser = await createTestUserModel(testedRoute);
+    token = dbUser.createUserAuthToken();
     req = makeReq();
     userId = dbUser.userId;
   });

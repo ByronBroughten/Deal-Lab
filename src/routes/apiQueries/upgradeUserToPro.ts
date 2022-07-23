@@ -1,25 +1,28 @@
 import { Request, Response } from "express";
 import Stripe from "stripe";
 import { config } from "../../client/src/App/Constants";
-import authWare from "../../middleware/authWare";
+import { userAuthWare } from "../../middleware/authWare";
 import { handleResAndMakeError } from "../../resErrorUtils";
 import { findUserByIdAndUpdate } from "./shared/findAndUpdate";
-import { UserAuthedReq, validateLoggedInUser } from "./shared/LoggedInUser";
 import { sendSuccess } from "./shared/sendSuccess";
+import { UserAuthedReq, validateUserJwt } from "./shared/UserAuthedReq";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET as string, {
   apiVersion: "2020-08-27",
 });
 
 export const upgradeUserToProWare = [
-  authWare,
+  userAuthWare,
   upgradeUserToProServerSide,
 ] as const;
 
 async function upgradeUserToProServerSide(req: Request, res: Response) {
-  const { paymentMethodId, user } = validateUpgradeUserToProReq(req).body;
+  const {
+    paymentMethodId,
+    userJwt: { userId },
+  } = validateUpgradeUserToProReq(req).body;
   makePayment({ paymentMethodId, res });
-  doUpgradeUserToPro({ userId: user._id, res });
+  doUpgradeUserToPro({ userId, res });
   sendSuccess(res, "upgradeUserToPro", { data: { success: true } });
 }
 
@@ -70,11 +73,13 @@ async function makePayment({ paymentMethodId, res }: MakePaymentProps) {
 function validateUpgradeUserToProReq(
   req: Request
 ): UserAuthedReq<"upgradeUserToPro"> {
-  const { user, paymentMethodId } = req.body;
+  const { userJwt, paymentMethodId } = (
+    req as UserAuthedReq<"upgradeUserToPro">
+  ).body;
   return {
     body: {
       paymentMethodId: validatePaymentMethodId(paymentMethodId),
-      user: validateLoggedInUser(user),
+      userJwt: validateUserJwt(userJwt),
     },
   };
 }

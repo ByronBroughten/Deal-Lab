@@ -3,9 +3,9 @@ import jwt from "jsonwebtoken";
 import { isObject } from "lodash";
 import { ResStatusError } from "../../../../../resErrorUtils";
 
-export type UserJwt = { _id: string };
-export function createTestUserModel(userId: string) {
-  const userJwt: UserJwt = { _id: userId };
+export type UserJwt = { userId: string };
+export function createUserAuthToken(userId: string) {
+  const userJwt: UserJwt = { userId };
   const privateKey: string = config.get("jwtPrivateKey");
   try {
     return jwt.sign(userJwt, privateKey);
@@ -15,7 +15,14 @@ export function createTestUserModel(userId: string) {
     );
   }
 }
-
+function hasTokenProps(value: any) {
+  return (
+    "userId" in value &&
+    "iat" in value &&
+    typeof value.userId === "string" &&
+    typeof value.iat === "number"
+  );
+}
 export function checkUserAuthToken(token: any): UserJwt {
   const decoded = jwt.verify(token, config.get("jwtPrivateKey"));
   if (isUserJwt(decoded)) return decoded;
@@ -26,16 +33,8 @@ export function checkUserAuthToken(token: any): UserJwt {
       status: 401,
     });
 }
-function isUserJwt(value: any): value is UserJwt {
+export function isUserJwt(value: any): value is UserJwt {
   return (
     isObject(value) && Object.keys(value).length === 2 && hasTokenProps(value)
-  );
-}
-function hasTokenProps(value: any) {
-  return (
-    "_id" in value &&
-    "iat" in value &&
-    typeof value._id === "string" &&
-    typeof value.iat === "number"
   );
 }

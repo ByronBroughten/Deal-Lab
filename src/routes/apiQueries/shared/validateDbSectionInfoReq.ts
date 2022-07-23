@@ -7,18 +7,18 @@ import {
   DbStoreType,
 } from "../../../client/src/App/sharedWithServer/SectionsMeta/relSectionsDerived/relNameArrs/dbStoreNameArrs";
 import { ResHandledError } from "../../../resErrorUtils";
-import { LoggedIn, validateLoggedInUser } from "./LoggedInUser";
+import { LoggedIn, validateUserJwt } from "./UserAuthedReq";
 
 export function validateDbSectionInfoReq(
   req: Request,
   res: Response
 ): LoggedIn<DbPackInfoReq> {
-  const { user, dbId, dbStoreName } = (req as LoggedIn<DbPackInfoReq>).body;
+  const { userJwt, dbId, dbStoreName } = (req as LoggedIn<DbPackInfoReq>).body;
   return {
     body: {
       dbId: validateDbId(dbId, res),
       dbStoreName: validateDbStoreName(dbStoreName),
-      user: validateLoggedInUser(user),
+      userJwt: validateUserJwt(userJwt),
     },
   };
 }

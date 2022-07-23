@@ -1,15 +1,18 @@
 import { Request, Response } from "express";
 import { SectionPackArrReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/makeReqAndRes";
-import authWare from "../../middleware/authWare";
+import { userAuthWare } from "../../middleware/authWare";
 import { findUserByIdAndUpdate } from "./shared/findAndUpdate";
 import { sendSuccess } from "./shared/sendSuccess";
 import { validateSectionPackArrReq } from "./shared/validateSectionPackReq";
 
-export const replaceSectionArrWare = [authWare, replaceSectionArrServerSide];
+export const replaceSectionArrWare = [
+  userAuthWare,
+  replaceSectionArrServerSide,
+];
 
 async function replaceSectionArrServerSide(req: Request, res: Response) {
   const {
-    user: { _id: userId },
+    userJwt: { userId },
     ...rest
   } = validateSectionPackArrReq(req).body;
 

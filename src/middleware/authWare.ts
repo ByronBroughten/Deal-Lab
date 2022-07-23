@@ -1,8 +1,9 @@
 import express from "express";
 import { config } from "../client/src/App/Constants";
 import { DbUser } from "../routes/apiQueries/shared/DbSections/DbUser";
+import { UserAuthedReq } from "../routes/apiQueries/shared/UserAuthedReq";
 
-export default function authWare(
+export function userAuthWare(
   req: express.Request,
   res: express.Response,
   next: express.NextFunction
@@ -10,6 +11,6 @@ export default function authWare(
   const token = req.header(config.tokenKey.apiUserAuth);
   if (!token) return res.status(401).send("Access denied. No token provided.");
   const decoded = DbUser.checkUserAuthToken(token);
-  req.body.user = decoded;
+  (req as UserAuthedReq<any>).body.userJwt = decoded;
   next();
 }
