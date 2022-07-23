@@ -192,10 +192,10 @@ export const allNull = simpleSectionNames.reduce((allNull, sectionName) => {
   return allNull;
 }, {} as Record<SimpleSectionName, null>);
 
-const apiAccessStatuses = ["readonly", "basicStorage", "fullStorage"] as const;
-export type ApiStorageAuth = typeof apiAccessStatuses[number];
-export function isApiAccessStatus(value: any): value is ApiStorageAuth {
-  return apiAccessStatuses.includes(value);
+const apiStorageAuths = ["readonly", "basicStorage", "fullStorage"] as const;
+export type ApiStorageAuth = typeof apiStorageAuths[number];
+export function isApiStorageAuth(value: any): value is ApiStorageAuth {
+  return apiStorageAuths.includes(value);
 }
 
 type FeSectionName = keyof BaseSections;

@@ -10,7 +10,7 @@ import {
 import { defaultMaker } from "../../../../client/src/App/sharedWithServer/defaultMaker/defaultMaker";
 import {
   ApiStorageAuth,
-  isApiAccessStatus,
+  isApiStorageAuth,
 } from "../../../../client/src/App/sharedWithServer/SectionsMeta/baseSections";
 import {
   isFeStoreTableName,
@@ -129,7 +129,7 @@ export class DbUser extends GetterSectionsBase {
   }
   get apiStorageAuth(): ApiStorageAuth {
     const apiStorageAuth = this.get.value("apiStorageAuth");
-    if (!isApiAccessStatus(apiStorageAuth)) {
+    if (!isApiStorageAuth(apiStorageAuth)) {
       throw new Error(`Invalid apiStorageAuth of ${apiStorageAuth}`);
     }
     return apiStorageAuth;
@@ -205,10 +205,12 @@ export class DbUser extends GetterSectionsBase {
       .send(loggedInUser);
   }
   createUserAuthToken() {
-    return DbUser.createUserAuthToken(this.userId);
+    return createUserAuthToken({
+      userId: this.userId,
+      apiStorageAuth: this.apiStorageAuth,
+    });
   }
   static checkUserAuthToken = checkUserAuthToken;
-  static createUserAuthToken = createUserAuthToken;
 }
 
 export interface UserSections {

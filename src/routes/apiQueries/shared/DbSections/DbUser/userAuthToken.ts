@@ -1,26 +1,33 @@
 import config from "config";
 import jwt from "jsonwebtoken";
 import { isObject } from "lodash";
+import {
+  ApiStorageAuth,
+  isApiStorageAuth,
+} from "../../../../../client/src/App/sharedWithServer/SectionsMeta/baseSections";
 import { ResStatusError } from "../../../../../resErrorUtils";
 
-export type UserJwt = { userId: string };
-export function createUserAuthToken(userId: string) {
-  const userJwt: UserJwt = { userId };
+export type UserJwt = { userId: string; apiStorageAuth: ApiStorageAuth };
+export function createUserAuthToken(userJwt: UserJwt) {
   const privateKey: string = config.get("jwtPrivateKey");
   try {
     return jwt.sign(userJwt, privateKey);
   } catch (err) {
     throw new Error(
-      `JWT failed to be made with userId ${userId} and private key ${privateKey}.`
+      `JWT failed to be made with userJwt ${JSON.stringify(
+        userJwt
+      )} and private key ${privateKey}.`
     );
   }
 }
 function hasTokenProps(value: any) {
   return (
     "userId" in value &&
+    "apiStorageAuth" in value &&
     "iat" in value &&
     typeof value.userId === "string" &&
-    typeof value.iat === "number"
+    typeof value.iat === "number" &&
+    isApiStorageAuth(value.apiStorageAuth)
   );
 }
 export function checkUserAuthToken(token: any): UserJwt {
@@ -35,6 +42,6 @@ export function checkUserAuthToken(token: any): UserJwt {
 }
 export function isUserJwt(value: any): value is UserJwt {
   return (
-    isObject(value) && Object.keys(value).length === 2 && hasTokenProps(value)
+    isObject(value) && Object.keys(value).length === 3 && hasTokenProps(value)
   );
 }
