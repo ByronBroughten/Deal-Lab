@@ -119,7 +119,7 @@ export class PackBuilderSection<
     this.loader.loadChildSectionPackArr(childArrPack);
   }
   loadSelf(sectionPack: SectionPack<SN>) {
-    this.loader.updateSelfWithSectionPack(sectionPack);
+    this.loader.loadSelfSectionPack(sectionPack);
   }
   packBuilderSection<S extends SectionName>(
     feInfo: FeSectionInfo<S>

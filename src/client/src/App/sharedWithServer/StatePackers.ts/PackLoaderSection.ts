@@ -3,8 +3,10 @@ import {
   ChildSectionPack,
   SectionPack,
 } from "../SectionPack/SectionPack";
+import { SimpleSectionName } from "../SectionsMeta/baseSections";
 import { ChildName } from "../SectionsMeta/childSectionsDerived/ChildName";
 import { ChildSectionName } from "../SectionsMeta/childSectionsDerived/ChildSectionName";
+import { FeSectionInfo } from "../SectionsMeta/Info";
 import { SectionName } from "../SectionsMeta/SectionName";
 import {
   GetterSectionBase,
@@ -28,12 +30,26 @@ export class PackLoaderSection<
   get get(): GetterSection<SN> {
     return new GetterSection(this.getterSectionProps);
   }
-  updateSelfWithSectionPack(sectionPack: SectionPack<SN>): void {
+  youngestChild<CN extends ChildName<SN>>(
+    childName: ChildName<SN>
+  ): PackLoaderSection<ChildSectionName<SN, CN>> {
+    const { feInfo } = this.get.youngestChild(childName);
+    return this.packLoaderSection(feInfo) as PackLoaderSection<any>;
+  }
+  packLoaderSection<S extends SimpleSectionName>(
+    feInfo: FeSectionInfo<S>
+  ): PackLoaderSection<S> {
+    return new PackLoaderSection({
+      ...this.getterSectionsProps,
+      ...feInfo,
+    });
+  }
+  loadSelfSectionPack(sectionPack: SectionPack<SN>): void {
     const selfPackLoader = new SelfPackLoader({
       ...this.getterSectionProps,
       sectionPack,
     });
-    selfPackLoader.updateSelfWithSectionPack();
+    selfPackLoader.loadSelfSectionPack();
   }
   loadChildPackArrs(childPackArrs: ChildSectionPackArrs<SN>): void {
     for (const [childName, sectionPacks] of Obj.entries(childPackArrs)) {

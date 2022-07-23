@@ -8,11 +8,38 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-// I need:
-// "save new" (saves with current dbId)
-// "save updates"(when already saved, saves with current dbId)
-// "make a copy"
-// "copy and save" (new dbId, adds "copy" to title, saves)
+// "Save Menu" in the top right with an arrow to the side or down
+// Click a dropdown list
+// Each list item has an icon to the left and a word to the right.
+// Like with the top dropdowns:
+// - It is relatively positioned
+// - Clicking outside of it closes it
+
+// Load Deal with updated property, loan, mgmt
+// - for each child of loaded section, check whether there is a mainStore
+//   If there is, check whether any of the dbIds match
+//   If they do, load em
+//   Do this for all descendants, in order
+
+// - Disable "Compare Deals" button unless user is pro
+// - Hide Compare Deals table unless user is pro
+
+// - Disable saving when there are more than two properties, unless
+//   user is pro (front end)
+
+// - Disable saving when there are more than two properties, unless
+//   user is pro (back end)
+
+// All I need for now:
+
+// "reset to default"
+// "load"
+// "save new" (when not saved, saves with current dbId)
+
+// "make a copy" (when saved, adds "copy" to title, saves)
+// "copy and save" (when saved; new dbId, adds "copy" to title, saves)
+// "save updates"(when saved, saves with current dbId)
+// "delete" (when saved, makes it no longer saved)
 
 // I will need the menu to be in the top right, in a separate block
 // Will the menu push things to the right when it opens?

@@ -62,9 +62,6 @@ export class MainSectionActor<
   replaceWithDefault(): void {
     this.setter.replaceWithDefault();
   }
-  resetToDefault(): void {
-    this.setter.resetToDefault();
-  }
   async makeACopy() {
     this.setter.resetDbId();
     const titleVarb = this.setter.varb("displayName");

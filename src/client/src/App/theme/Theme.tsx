@@ -214,6 +214,8 @@ const theme = {
   light: color["gray-100"],
   dark: color["gray-900"],
   softDark: color["gray-800"],
+  transparentGrayDark: transparentize(0.8, color["gray-600"]),
+  transparentGrayLight: transparentize(0.75, color["gray-300"]),
   transparentGray: transparentize(0.8, color["gray-400"]),
   transparentGrayBorder: transparentize(0.75, color["gray-800"]),
   placeholderGray: color["gray-600"] + "e0",

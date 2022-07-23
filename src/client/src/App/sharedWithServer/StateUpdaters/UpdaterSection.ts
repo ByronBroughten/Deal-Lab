@@ -119,14 +119,6 @@ export class UpdaterSection<
     const nextIds = Arr.rmFirstMatchCloneOrThrow(feIds, feId);
     this.updateChildFeIds({ childName, feIds: nextIds });
   }
-  private updaterSection<S extends SectionName>(
-    feInfo: FeSectionInfo<S>
-  ): UpdaterSection<S> {
-    return new UpdaterSection({
-      ...feInfo,
-      sectionsShare: this.sectionsShare,
-    });
-  }
   updateVarbsFromDb(dbVarbs: Partial<SectionValues<SN>>): void {
     this.updateProps({
       varbs: StateSections.initRawVarbs({
@@ -170,6 +162,14 @@ export class UpdaterSection<
       ...rootRaw,
       sectionsShare: { sections },
     };
+  }
+  updaterSection<S extends SimpleSectionName>(
+    feInfo: FeSectionInfo<S>
+  ): UpdaterSection<S> {
+    return new UpdaterSection({
+      ...feInfo,
+      ...this.getterSectionsProps,
+    });
   }
   static initOmniParentProps(): GetterSectionProps<"omniParent"> {
     const root = this.initRootUpdater();

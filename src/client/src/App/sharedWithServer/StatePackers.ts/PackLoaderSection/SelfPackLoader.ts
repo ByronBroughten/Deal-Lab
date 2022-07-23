@@ -32,7 +32,7 @@ export class SelfPackLoader<
   get headRawSection(): OneRawSection<SN> {
     return this.sectionPack.rawSections[this.sectionName][0];
   }
-  updateSelfWithSectionPack(): void {
+  loadSelfSectionPack(): void {
     const { dbId, dbVarbs } = this.headRawSection;
     this.updaterSection.updateDbId(dbId);
     this.updaterSection.updateValuesDirectly(dbVarbs);

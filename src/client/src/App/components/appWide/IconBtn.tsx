@@ -1,8 +1,8 @@
 import { Button } from "@material-ui/core";
-import { StandardBtnProps } from "../general/StandardProps";
-import styled from "styled-components";
 import { rem } from "polished";
+import styled from "styled-components";
 import theme from "../../theme/Theme";
+import { StandardBtnProps } from "../general/StandardProps";
 
 export function IconBtn(props: StandardBtnProps) {
   return <Styled {...props} />;
@@ -13,4 +13,5 @@ const Styled = styled(Button)`
   color: ${theme["gray-800"]};
   border-radius: 50%;
   padding: ${theme.s2};
+  line-height: 1rem;
 `;

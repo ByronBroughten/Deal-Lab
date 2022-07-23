@@ -23,7 +23,7 @@ export class ComboSolverSection<
   }
   loadSelfSectionPackAndExtractIds(sectionPack: SectionPack<SN>): void {
     this.remover.prepForRemoveAndExtractVarbIds();
-    this.loader.updateSelfWithSectionPack(sectionPack);
+    this.loader.loadSelfSectionPack(sectionPack);
     this.adder.finalizeAddAndExtractVarbIds();
   }
   loadChildPackArrsAndExtractIds(
@@ -49,7 +49,6 @@ export class ComboSolverSection<
     const { feInfo, feId, idx, dbId } = this.get;
     const { parent } = this.adder;
     const childName = parent.get.sectionChildName(feInfo);
-
     this.remover.removeSelfAndExtractVarbIds();
     parent.addChildAndFinalize(childName, { feId, idx, dbId });
   }

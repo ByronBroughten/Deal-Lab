@@ -1,4 +1,6 @@
 import { defaultMaker } from "../defaultMaker/defaultMaker";
+import { SectionPack } from "../SectionPack/SectionPack";
+import { VarbValues } from "../SectionsMeta/baseSectionsDerived/baseSectionTypes";
 import { ChildName } from "../SectionsMeta/childSectionsDerived/ChildName";
 import { ParentNameSafe } from "../SectionsMeta/childSectionsDerived/ParentName";
 import { FeSectionInfo } from "../SectionsMeta/Info";
@@ -18,17 +20,18 @@ export class DefaultFamilyAdder<
   }
   addChild<CN extends ChildName<SN>>(
     childName: CN,
-    options?: AddChildOptions<SN, CN>
+    { dbVarbs, ...rest }: AddChildOptions<SN, CN> = {}
   ): void {
-    const sectionName = this.get.meta.childType(childName);
+    this.updater.addChild(childName, rest);
+    const { sectionName, feInfo } = this.get.youngestChild(childName);
     if (defaultMaker.has(sectionName)) {
       const sectionPack = defaultMaker.makeSectionPack(sectionName);
-      this.loader.loadChildSectionPack({
-        childName,
-        sectionPack,
-      });
-    } else {
-      this.updater.addChild(childName, options);
+      const childLoader = this.loader.packLoaderSection(feInfo);
+      childLoader.loadSelfSectionPack(sectionPack as SectionPack<any>);
+    }
+    if (dbVarbs) {
+      const childUpdater = this.updater.updaterSection(feInfo);
+      childUpdater.updateValuesDirectly(dbVarbs as VarbValues);
     }
   }
   private get parent(): DefaultFamilyAdder<ParentNameSafe<SN>> {

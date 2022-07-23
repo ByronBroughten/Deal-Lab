@@ -12,12 +12,12 @@ type Props = {
   pluralName: string;
   disabled: boolean;
   className?: string;
-  droptop?: boolean;
+  dropTop?: boolean;
 };
 
 export default function RowIndexSectionList({
   feInfo,
-  droptop = false,
+  dropTop = false,
   className,
   pluralName,
 }: Props) {
@@ -32,7 +32,7 @@ export default function RowIndexSectionList({
         sectionName: themeSectionNameOrDefault(sectionName),
         className: `RowIndexSectionList-root ${className}`,
         $active: dropped,
-        $droptop: droptop,
+        $dropTop: dropTop,
         ref: listRef,
       }}
     >
@@ -49,7 +49,7 @@ export default function RowIndexSectionList({
               onClick: toggleDropped,
             },
             tooltipProps: {
-              title: dropped ? "" : `Saved ${pluralName}`,
+              title: dropped ? "" : `Load`,
             },
           },
           loggedOut: {
@@ -57,7 +57,7 @@ export default function RowIndexSectionList({
               disabled: true,
             },
             tooltipProps: {
-              title: `Login to access saved ${pluralName}`,
+              title: `Login to load saved ${pluralName}`,
             },
           },
         }}
@@ -70,21 +70,12 @@ export default function RowIndexSectionList({
 const Styled = styled.div<{
   sectionName: ThemeName;
   $active: boolean;
-  $droptop: boolean;
+  $dropTop: boolean;
 }>`
   position: relative;
   display: inline-block;
 
-  .RowIndexSectionList-listIcon {
-  }
-
   .RowIndexSectionList-loadBtn {
-    /* :hover {
-      color: ${theme.light};
-      background-color: ${theme["gray-600"]};
-      border: 3px solid ${({ sectionName }) => theme[sectionName].dark};
-    } */
-
     ${({ $active, sectionName }) =>
       $active &&
       css`
@@ -95,8 +86,8 @@ const Styled = styled.div<{
   }
 
   .RowIndexRows-root {
-    ${({ $droptop }) =>
-      $droptop &&
+    ${({ $dropTop }) =>
+      $dropTop &&
       css`
         bottom: 37px;
       `}

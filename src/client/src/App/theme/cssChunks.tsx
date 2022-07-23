@@ -8,17 +8,26 @@ const ccs = {
         background-color: ${theme.transparentGray};
         border: 1px solid ${theme.transparentGrayBorder};
       `,
+      darkNeutral: css`
+        background-color: ${theme["gray-600"]};
+        border: 1px solid ${theme.transparentGrayLight};
+      `,
     },
     button: {
-      get lightNeutral() {
+      lightNeutral(active: boolean) {
         return css`
-          ${ccs.coloring.section.lightNeutral}
           color: ${theme.dark};
-          :hover,
-          :focus {
-            background-color: ${theme["gray-600"]};
-            color: ${theme["gray-300"]};
-          }
+          ${ccs.coloring.section.lightNeutral};
+          ${active &&
+          css`
+            ${ccs.coloring.section.darkNeutral};
+            color: ${theme.light};
+            :hover,
+            :focus {
+              ${ccs.coloring.section.darkNeutral};
+              color: ${theme.light};
+            }
+          `}
         `;
       },
       varbSelector: css`
