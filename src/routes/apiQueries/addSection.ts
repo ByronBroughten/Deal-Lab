@@ -8,6 +8,7 @@ import authWare from "../../middleware/authWare";
 import { ResStatusError } from "../../resErrorUtils";
 import { DbSectionsQuerier } from "./shared/DbSections/DbSectionsQuerier";
 import { SectionPackNotFoundError } from "./shared/DbSections/DbSectionsQuerierTypes";
+import { DbUser } from "./shared/DbSections/DbUser";
 import { findUserByIdAndUpdate } from "./shared/findAndUpdate";
 import { sendSuccess } from "./shared/sendSuccess";
 import { validateSectionPackReq } from "./shared/validateSectionPackReq";
@@ -35,6 +36,27 @@ async function addSectionServerSide(req: Request, res: Response) {
   sendSuccess(res, "addSection", { data: { dbId: sectionPack.dbId } });
 }
 
+// I see. The benefit of sending this in a token is that I don't have
+// to do an extra db query before every storage-related operation.
+// That would be nice.
+
+// But then I have to rewrite some tests.
+
+// check for basicStorage auth for most section operations
+
+// check for fullStorage auth for just addSection
+
+async function hasBasicStorageAuth(userId: string) {
+  const { apiStorageAuth } = await DbUser.queryByUserId(userId);
+  if (["basicStorage", "fullStorage"].includes(apiStorageAuth)) {
+    return true;
+  } else return false;
+}
+async function hasFullStorageAuth(userId: string) {
+  const { apiStorageAuth } = await DbUser.queryByUserId(userId);
+  if (apiStorageAuth === "fullStorage") return true;
+  else return false;
+}
 async function checkThatSectionPackIsNotThere<CN extends DbStoreName>(
   props: DbSectionInitByIdProps<CN>
 ): Promise<true> {

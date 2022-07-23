@@ -6,7 +6,6 @@ import { QueryReq } from "../../client/src/App/sharedWithServer/apiQueriesShared
 import { Arr } from "../../client/src/App/sharedWithServer/utils/Arr";
 import { runApp } from "../../runApp";
 import { DbSectionsModel } from "../DbSectionsModel";
-import { DbUser } from "./shared/DbSections/DbUser";
 import { getUserByIdNoRes } from "./shared/getUserDbSectionsById";
 import { createTestUserModelNext } from "./test/createTestUserModelNext";
 import { SectionQueryTester } from "./test/SectionQueryTester";
@@ -17,8 +16,8 @@ function makeAddSectionReq(): QueryReq<"addSection"> {
   return tester.makeSectionPackReq() as QueryReq<"addSection">;
 }
 
-const apiRoute = apiQueriesShared.addSection.pathRoute;
-describe(apiRoute, () => {
+const testedRoute = apiQueriesShared.addSection.pathRoute;
+describe(testedRoute, () => {
   let req: QueryReq<"addSection">;
   let server: Server;
   let userId: string;
@@ -26,9 +25,10 @@ describe(apiRoute, () => {
 
   beforeEach(async () => {
     server = runApp();
-    userId = await createTestUserModelNext(apiRoute);
-    token = DbUser.makeUserAuthToken(userId);
+    const dbUser = await createTestUserModelNext(testedRoute);
+    token = dbUser.createTestUserModel();
     req = makeAddSectionReq();
+    userId = dbUser.userId;
   });
 
   afterEach(async () => {
@@ -38,7 +38,7 @@ describe(apiRoute, () => {
 
   const exec = async () =>
     await request(server)
-      .post(apiRoute)
+      .post(testedRoute)
       .set(config.tokenKey.apiUserAuth, token)
       .send(req.body);
 

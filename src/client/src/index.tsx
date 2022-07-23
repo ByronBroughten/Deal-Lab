@@ -8,12 +8,14 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-// "Save Menu" in the top right with an arrow to the side or down
-// Click a dropdown list
-// Each list item has an icon to the left and a word to the right.
-// Like with the top dropdowns:
-// - It is relatively positioned
-// - Clicking outside of it closes it
+// Properties menu
+// List the properties
+
+// List the properties
+// You can use the same dropdown, or you can use Autocomplete
+
+// You will probably want Autocomplete. You want to be able
+// to search for the properties.
 
 // Load Deal with updated property, loan, mgmt
 // - for each child of loaded section, check whether there is a mainStore

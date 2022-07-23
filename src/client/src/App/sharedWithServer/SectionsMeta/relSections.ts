@@ -44,7 +44,7 @@ export function makeRelSections() {
       {
         email: relVarb("string", { displayName: "Email" }),
         userName: relVarb("string", { displayName: "Name" }),
-        apiAccessStatus: relVarb("string", {
+        apiStorageAuth: relVarb("string", {
           displayName: "Api Access Status",
           initValue: "basicStorage" as ApiAccessStatus,
         }),

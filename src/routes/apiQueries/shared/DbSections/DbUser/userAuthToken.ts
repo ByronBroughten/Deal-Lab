@@ -4,7 +4,7 @@ import { isObject } from "lodash";
 import { ResStatusError } from "../../../../../resErrorUtils";
 
 export type UserJwt = { _id: string };
-export function makeUserAuthToken(userId: string) {
+export function createTestUserModel(userId: string) {
   const userJwt: UserJwt = { _id: userId };
   const privateKey: string = config.get("jwtPrivateKey");
   try {
@@ -19,17 +19,16 @@ export function makeUserAuthToken(userId: string) {
 export function checkUserAuthToken(token: any): UserJwt {
   const decoded = jwt.verify(token, config.get("jwtPrivateKey"));
   if (isUserJwt(decoded)) return decoded;
-  else throw new ResStatusError({
-    errorMessage: "Access denied. Invalid token provided.",
-    resMessage: "You are not logged in.",
-    status: 401
-  })
+  else
+    throw new ResStatusError({
+      errorMessage: "Access denied. Invalid token provided.",
+      resMessage: "You are not logged in.",
+      status: 401,
+    });
 }
 function isUserJwt(value: any): value is UserJwt {
   return (
-    isObject(value) &&
-    Object.keys(value).length === 2 &&
-    hasTokenProps(value)
+    isObject(value) && Object.keys(value).length === 2 && hasTokenProps(value)
   );
 }
 function hasTokenProps(value: any) {

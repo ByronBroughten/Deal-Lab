@@ -6,7 +6,6 @@ import { QueryReq } from "../../client/src/App/sharedWithServer/apiQueriesShared
 import { Id } from "../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsUtils/id";
 import { runApp } from "../../runApp";
 import { DbSectionsModel } from "../DbSectionsModel";
-import { DbUser } from "./shared/DbSections/DbUser";
 import { createTestUserModelNext } from "./test/createTestUserModelNext";
 import { SectionQueryTester } from "./test/SectionQueryTester";
 
@@ -24,8 +23,8 @@ function makeReqs(): TestReqs {
   };
 }
 
-const testedApiRoute = apiQueriesShared.deleteSection.pathRoute;
-describe(testedApiRoute, () => {
+const testedRoute = apiQueriesShared.deleteSection.pathRoute;
+describe(testedRoute, () => {
   let reqs: TestReqs;
   let server: Server;
   let userId: string;
@@ -33,9 +32,10 @@ describe(testedApiRoute, () => {
 
   beforeEach(async () => {
     server = runApp();
-    userId = await createTestUserModelNext(testedApiRoute);
-    token = DbUser.makeUserAuthToken(userId);
+    const dbUser = await createTestUserModelNext(testedRoute);
+    token = dbUser.createTestUserModel();
     reqs = makeReqs();
+    userId = dbUser.userId;
   });
 
   afterEach(async () => {
@@ -50,7 +50,7 @@ describe(testedApiRoute, () => {
       .send(reqs.addSection.body);
 
     return await request(server)
-      .post(testedApiRoute)
+      .post(testedRoute)
       .set(config.tokenKey.apiUserAuth, token)
       .send(reqs.deleteSection.body);
   };

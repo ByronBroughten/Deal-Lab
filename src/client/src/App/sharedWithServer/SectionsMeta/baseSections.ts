@@ -174,7 +174,7 @@ export const baseSections = {
     { hasGlobalVarbs: true }
   ),
   user: baseSection(
-    baseVarbs("string", ["email", "userName", "apiAccessStatus"] as const)
+    baseVarbs("string", ["email", "userName", "apiStorageAuth"] as const)
   ),
   serverOnlyUser: baseSection(
     baseVarbs("string", ["encryptedPassword", "emailAsSubmitted"] as const)
@@ -192,7 +192,11 @@ export const allNull = simpleSectionNames.reduce((allNull, sectionName) => {
   return allNull;
 }, {} as Record<SimpleSectionName, null>);
 
-export type ApiAccessStatus = "readonly" | "basicStorage" | "fullStorage";
+const apiAccessStatuses = ["readonly", "basicStorage", "fullStorage"] as const;
+export type ApiAccessStatus = typeof apiAccessStatuses[number];
+export function isApiAccessStatus(value: any): value is ApiAccessStatus {
+  return apiAccessStatuses.includes(value);
+}
 
 type FeSectionName = keyof BaseSections;
 export type BaseSectionsGeneral = Record<FeSectionName, GeneralBaseSection>;

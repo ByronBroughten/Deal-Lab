@@ -9,6 +9,10 @@ import {
 } from "../../../../client/src/App/sharedWithServer/apiQueriesShared/register";
 import { defaultMaker } from "../../../../client/src/App/sharedWithServer/defaultMaker/defaultMaker";
 import {
+  ApiAccessStatus,
+  isApiAccessStatus,
+} from "../../../../client/src/App/sharedWithServer/SectionsMeta/baseSections";
+import {
   isFeStoreTableName,
   relChildSections,
 } from "../../../../client/src/App/sharedWithServer/SectionsMeta/relChildSections";
@@ -24,7 +28,10 @@ import { DbSectionsProps } from "./Bases/DbSectionsBase";
 import { DbSections } from "./DbSections";
 import { DbSectionsQuerier } from "./DbSectionsQuerier";
 import { DbSectionsRaw } from "./DbSectionsQuerierTypes";
-import { checkUserAuthToken, makeUserAuthToken } from "./DbUser/userAuthToken";
+import {
+  checkUserAuthToken,
+  createTestUserModel,
+} from "./DbUser/userAuthToken";
 import { userPrepS } from "./DbUser/userPrepS";
 
 interface DbUserProps extends GetterSectionsProps {
@@ -80,7 +87,6 @@ export class DbUser extends GetterSectionsBase {
     const userId = await this.createAndSaveNew(props);
     return DbUser.queryByUserId(userId);
   }
-
   static async initUserSections(
     registerFormData: RegisterFormData
   ): Promise<UserSections> {
@@ -92,7 +98,7 @@ export class DbUser extends GetterSectionsBase {
       user: {
         userName: registerFormData.userName,
         email,
-        apiAccessStatus: "basicStorage",
+        apiStorageAuth: "basicStorage",
       },
       serverOnlyUser: {
         emailAsSubmitted,
@@ -119,6 +125,13 @@ export class DbUser extends GetterSectionsBase {
       ...this.stateSections.onlyOneRawSection("user"),
       ...this.getterSectionsProps,
     });
+  }
+  get apiStorageAuth(): ApiAccessStatus {
+    const apiStorageAuth = this.get.value("apiStorageAuth");
+    if (!isApiAccessStatus(apiStorageAuth)) {
+      throw new Error(`Invalid apiStorageAuth of ${apiStorageAuth}`);
+    }
+    return apiStorageAuth;
   }
   get serverOnlyUser(): GetterSection<"serverOnlyUser"> {
     return this.get.onlyCousin("serverOnlyUser");
@@ -238,17 +251,17 @@ export class DbUser extends GetterSectionsBase {
   // }
   sendLogin(res: Response) {
     const loggedInUser = this.makeLoginUser();
-    const token = this.makeUserAuthToken();
+    const token = this.createTestUserModel();
     res
       .header(constants.tokenKey.apiUserAuth, token)
       .status(200)
       .send(loggedInUser);
   }
-  makeUserAuthToken() {
-    return DbUser.makeUserAuthToken(this.userId);
+  createTestUserModel() {
+    return DbUser.createTestUserModel(this.userId);
   }
   static checkUserAuthToken = checkUserAuthToken;
-  static makeUserAuthToken = makeUserAuthToken;
+  static createTestUserModel = createTestUserModel;
 }
 
 export interface UserSections {

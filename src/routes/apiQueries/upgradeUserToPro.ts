@@ -32,7 +32,7 @@ async function doUpgradeUserToPro({ userId, res }: DoUpgradeUserToProProps) {
     queryParameters: makeUpdateUserToProQueryParameters(),
   });
   const isProUser =
-    userDoc.user[0].rawSections.user[0].dbVarbs.apiAccessStatus === "proUser";
+    userDoc.user[0].rawSections.user[0].dbVarbs.apiStorageAuth === "proUser";
   if (!isProUser)
     throw handleResAndMakeError(
       res,
@@ -44,7 +44,7 @@ async function doUpgradeUserToPro({ userId, res }: DoUpgradeUserToProProps) {
 function makeUpdateUserToProQueryParameters() {
   return {
     operation: {
-      $set: { "user.0.apiAccessStatus": "proUser" },
+      $set: { "user.0.apiStorageAuth": "proUser" },
     },
     options: {
       new: true,

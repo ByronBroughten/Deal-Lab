@@ -5,7 +5,7 @@ export function makeDefaultUser() {
     dbVarbs: {
       email: "",
       userName: "Guest",
-      apiAccessStatus: "readonly",
+      apiStorageAuth: "readonly",
     },
   });
   return user.makeSectionPack();
