@@ -19,7 +19,6 @@ async function updateSectionSeverSide(req: Request, res: Response) {
   } = validateSectionPackReq(req).body;
 
   await findOneAndUpdate({
-    res,
     filter: makeUpdateSectionFilter({
       dbStoreName,
       dbId: sectionPack.dbId,

@@ -17,15 +17,12 @@ async function replaceSectionArrServerSide(req: Request, res: Response) {
   } = validateSectionPackArrReq(req).body;
 
   await findUserByIdAndUpdate({
-    res,
     userId,
     queryParameters: makeSetSectionArrParameters(rest),
   });
 
   sendSuccess(res, "replaceSectionArr", {
-    data: {
-      dbStoreName: rest.dbStoreName,
-    },
+    data: { dbStoreName: rest.dbStoreName },
   });
 }
 

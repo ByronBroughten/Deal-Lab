@@ -1,4 +1,3 @@
-import { Request } from "express";
 import {
   SectionPackArrReq,
   SectionPackReq,
@@ -12,15 +11,15 @@ import {
   DbSectionName,
   DbStoreName,
 } from "../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/dbStoreNames";
-import { LoggedIn, validateUserJwt } from "./UserAuthedReq";
+import { LoggedIn, UserAuthedReq } from "./UserAuthedReq";
 import { validateDbStoreName } from "./validateDbSectionInfoReq";
 
 type PackArrReq = LoggedIn<SectionPackArrReq<DbStoreName>>;
-export function validateSectionPackArrReq(req: Request): PackArrReq {
+export function validateSectionPackArrReq(req: UserAuthedReq<any>): PackArrReq {
   const { sectionPackArr, userJwt, dbStoreName } = (req as PackArrReq).body;
   return {
     body: {
-      userJwt: validateUserJwt(userJwt),
+      userJwt,
       dbStoreName: validateDbStoreName(dbStoreName),
       sectionPackArr: validateServerSectionPackArr({
         dbStoreName,
@@ -31,11 +30,11 @@ export function validateSectionPackArrReq(req: Request): PackArrReq {
 }
 
 type PackReq = LoggedIn<SectionPackReq>;
-export function validateSectionPackReq(req: Request): PackReq {
+export function validateSectionPackReq(req: UserAuthedReq<any>): PackReq {
   const { userJwt, sectionPack, dbStoreName } = (req as PackReq).body;
   return {
     body: {
-      userJwt: validateUserJwt(userJwt),
+      userJwt,
       dbStoreName: validateDbStoreName(dbStoreName),
       sectionPack: validateServerSectionPack(sectionPack, dbStoreName),
     },

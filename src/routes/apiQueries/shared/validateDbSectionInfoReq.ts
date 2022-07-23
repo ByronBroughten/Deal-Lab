@@ -1,4 +1,3 @@
-import { Request, Response } from "express";
 import { DbPackInfoReq } from "../../../client/src/App/sharedWithServer/apiQueriesShared/makeReqAndRes";
 import { Id } from "../../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsUtils/id";
 import {
@@ -6,28 +5,25 @@ import {
   dbStoreNameS,
   DbStoreType,
 } from "../../../client/src/App/sharedWithServer/SectionsMeta/relSectionsDerived/relNameArrs/dbStoreNameArrs";
-import { ResHandledError } from "../../../resErrorUtils";
-import { LoggedIn, validateUserJwt } from "./UserAuthedReq";
+import { LoggedIn, UserAuthedReq } from "./UserAuthedReq";
 
 export function validateDbSectionInfoReq(
-  req: Request,
-  res: Response
+  req: UserAuthedReq<any>
 ): LoggedIn<DbPackInfoReq> {
   const { userJwt, dbId, dbStoreName } = (req as LoggedIn<DbPackInfoReq>).body;
   return {
     body: {
-      dbId: validateDbId(dbId, res),
+      userJwt: userJwt,
+      dbId: validateDbId(dbId),
       dbStoreName: validateDbStoreName(dbStoreName),
-      userJwt: validateUserJwt(userJwt),
     },
   };
 }
 
-function validateDbId(value: any, res: Response): string {
+function validateDbId(value: any): string {
   if (Id.is(value)) return value;
   else {
-    res.status(500).send("The received dbId is not valid.");
-    throw new ResHandledError("Handled in validateRawSectionPack");
+    throw new Error("The received dbId is not valid.");
   }
 }
 

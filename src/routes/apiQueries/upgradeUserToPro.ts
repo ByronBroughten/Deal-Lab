@@ -1,11 +1,12 @@
 import { Request, Response } from "express";
 import Stripe from "stripe";
 import { config } from "../../client/src/App/Constants";
+import { ApiStorageAuth } from "../../client/src/App/sharedWithServer/SectionsMeta/baseSections";
 import { userAuthWare } from "../../middleware/authWare";
-import { handleResAndMakeError } from "../../resErrorUtils";
+import { ResStatusError } from "../../resErrorUtils";
 import { findUserByIdAndUpdate } from "./shared/findAndUpdate";
 import { sendSuccess } from "./shared/sendSuccess";
-import { UserAuthedReq, validateUserJwt } from "./shared/UserAuthedReq";
+import { UserAuthedReq } from "./shared/UserAuthedReq";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET as string, {
   apiVersion: "2020-08-27",
@@ -29,19 +30,21 @@ async function upgradeUserToProServerSide(req: Request, res: Response) {
 type DoUpgradeUserToProProps = { userId: string; res: Response };
 async function doUpgradeUserToPro({ userId, res }: DoUpgradeUserToProProps) {
   const userDoc = await findUserByIdAndUpdate({
-    res,
     userId,
     doWhat: "upgrade user to pro",
     queryParameters: makeUpdateUserToProQueryParameters(),
   });
   const isProUser =
-    userDoc.user[0].rawSections.user[0].dbVarbs.apiStorageAuth === "proUser";
-  if (!isProUser)
-    throw handleResAndMakeError(
-      res,
-      400,
-      "Failed to upgrade to pro user. Please contact customer support."
-    );
+    userDoc.user[0].rawSections.user[0].dbVarbs.apiStorageAuth ===
+    ("fullStorage" as ApiStorageAuth);
+  if (!isProUser) {
+    throw new ResStatusError({
+      resMessage:
+        "Failed to upgrade to pro user. Please contact customer support.",
+      errorMessage: "Upgrade to pro failed",
+      status: 400,
+    });
+  }
 }
 
 function makeUpdateUserToProQueryParameters() {
@@ -71,7 +74,7 @@ async function makePayment({ paymentMethodId, res }: MakePaymentProps) {
 }
 
 function validateUpgradeUserToProReq(
-  req: Request
+  req: UserAuthedReq<any>
 ): UserAuthedReq<"upgradeUserToPro"> {
   const { userJwt, paymentMethodId } = (
     req as UserAuthedReq<"upgradeUserToPro">
@@ -79,7 +82,7 @@ function validateUpgradeUserToProReq(
   return {
     body: {
       paymentMethodId: validatePaymentMethodId(paymentMethodId),
-      userJwt: validateUserJwt(userJwt),
+      userJwt: userJwt,
     },
   };
 }

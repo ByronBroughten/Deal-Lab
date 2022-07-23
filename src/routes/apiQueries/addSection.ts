@@ -19,20 +19,19 @@ async function addSectionServerSide(req: Request, res: Response) {
   const {
     dbStoreName,
     sectionPack,
-    userJwt: { userId },
+    userJwt: { userId, apiStorageAuth },
   } = validateSectionPackReq(req).body;
-  // await validateAuth({
-  //   userId,
-  //   dbStoreName,
-  //   apiStorageAuth,
-  // });
+  await validateAuth({
+    userId,
+    dbStoreName,
+    apiStorageAuth,
+  });
   await checkThatSectionPackIsNotThere({
     dbStoreName,
     dbId: sectionPack.dbId,
     userId,
   });
   await findUserByIdAndUpdate({
-    res,
     userId,
     queryParameters: makePushParameters({
       dbStoreName,
