@@ -17,7 +17,7 @@ type Props = {
 };
 
 export function LoggedInOrOutIconBtn({ loggedIn, loggedOut, shared }: Props) {
-  return auth.isLoggedIn ? (
+  return auth.isToken ? (
     <BtnTooltip
       {...{ title: "", ...loggedIn.tooltipProps, ...shared.tooltipProps }}
     >

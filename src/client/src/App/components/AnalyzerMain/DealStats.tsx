@@ -46,19 +46,19 @@ export default function DealStats({ className, feId }: Props) {
             )}
           </MainSectionTitleBtn>
           {/* // disable the link */}
-          {auth.isLoggedIn && (
+          {auth.isToken && (
             <Link className="GeneralSectionTitle-dealsLink" to="/deals">
               <MainSectionTitleBtn
                 themeName="deal"
                 className="GeneralSectionTitle-child"
-                // disabled={!auth.isLoggedIn}
+                // disabled={!auth.isToken}
               >
                 {"Compare Deals"}
                 <MdCompareArrows className="GeneralSectionTitle-compareIcon" />
               </MainSectionTitleBtn>
             </Link>
           )}
-          {!auth.isLoggedIn && (
+          {!auth.isToken && (
             <StandardToolTip
               className="GeneralSectionTitle-toolTip"
               title="Login to compare saved deals"

@@ -2,8 +2,8 @@ import React from "react";
 import { FeSectionInfo } from "../../sharedWithServer/SectionsMeta/Info";
 import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
 import { useSetterSectionsProps } from "../../sharedWithServer/stateClassHooks/useSetterSectionsProps";
+import { apiQueries } from "../apiQueriesClient";
 import { MainSectionActor } from "../SectionActors/MainSectionActor";
-import { apiQueries } from "../useQueryActionsTest/apiQueriesClient";
 import { useUpdateSetterSections } from "./useUpdateSetterSections";
 
 export function useMainSectionActor<SN extends SectionName<"tableSource">>(

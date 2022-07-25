@@ -34,7 +34,7 @@ export function MainSectionTitleRow({
     viewWhat: "btnMenu",
   });
   const { displayName } = mainSection.get.meta;
-  const isGuest = !auth.isLoggedIn;
+  const isGuest = !auth.isToken;
   return (
     <Styled
       className="MainSectionTitleRow-root"

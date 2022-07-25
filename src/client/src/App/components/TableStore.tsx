@@ -25,15 +25,15 @@ export function TableStore({ feId }: Props) {
 
   return (
     <Styled className="TableStore-root">
-      {!auth.isLoggedIn && (
+      {!auth.isToken && (
         <div className="TableStore-notLoggedIn">
           To view saved analyses, create an account or login.
         </div>
       )}
-      {auth.isLoggedIn && areNone && (
+      {auth.isToken && areNone && (
         <div className="TableStore-areNone">None</div>
       )}
-      {auth.isLoggedIn && isAtLeastOne && (
+      {auth.isToken && isAtLeastOne && (
         <div className="TableStore-viewable">
           <div className="TableStore-titleRow">
             <h5 className="TableStore-title TableStore-controlRowItem">

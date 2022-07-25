@@ -4,8 +4,7 @@ import React from "react";
 import { BsArrowUpCircle, BsFillHouseDoorFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { auth } from "../modules/services/authService";
-import { useGetterSection } from "../sharedWithServer/stateClassHooks/useGetterSection";
+import { useFeUser } from "../modules/sectionActorHooks/useFeUser";
 import theme from "../theme/Theme";
 import { LoginForm } from "./NavBar/LoginForm";
 import NavBtn from "./NavBar/NavBtn";
@@ -15,12 +14,7 @@ import { RegisterForm } from "./NavBar/RegisterForm";
 import { UpgradeUserToProPanel } from "./NavBar/UpgradeUserToProPanel";
 
 export default function NavBar(props: NavUserMenuProps) {
-  const user = useGetterSection({
-    sectionName: "user",
-    feId: props.feId,
-  });
-  const storageAuth = user.value("apiStorageAuth", "string");
-  const isPro = storageAuth === "fullStorage";
+  const { isPro, isLoggedIn, isGuest } = useFeUser();
   return (
     <Styled className="NavBar-root">
       <Toolbar disableGutters={true}>
@@ -41,7 +35,7 @@ export default function NavBar(props: NavUserMenuProps) {
           </NavBtn> */}
         </div>
         <div className="NavBar-rightSide">
-          {!auth.isLoggedIn && (
+          {isGuest && (
             <>
               <NavDropDown btnText="Create Account">
                 <RegisterForm />
@@ -51,7 +45,7 @@ export default function NavBar(props: NavUserMenuProps) {
               </NavDropDown>
             </>
           )}
-          {auth.isLoggedIn && !isPro && (
+          {isLoggedIn && !isPro && (
             <NavDropDown
               className="NavBar-getProBtn"
               btnText={

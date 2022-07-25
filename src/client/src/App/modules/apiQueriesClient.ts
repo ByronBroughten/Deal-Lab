@@ -3,25 +3,25 @@ import {
   ApiQueries,
   apiQueriesShared,
   ApiQuery,
-} from "../../sharedWithServer/apiQueriesShared";
+} from "../sharedWithServer/apiQueriesShared";
 import {
   ApiQueryName,
   QueryRes,
-} from "../../sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
+} from "../sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import {
   isLoginHeaders,
   isLoginUserNext,
-} from "../../sharedWithServer/apiQueriesShared/login";
-import { makeRes } from "../../sharedWithServer/apiQueriesShared/makeReqAndRes";
-import { Obj } from "../../sharedWithServer/utils/Obj";
-import { StrictOmit } from "../../sharedWithServer/utils/types";
-import https from "../services/httpService";
+} from "../sharedWithServer/apiQueriesShared/login";
+import { makeRes } from "../sharedWithServer/apiQueriesShared/makeReqAndRes";
+import { Obj } from "../sharedWithServer/utils/Obj";
+import { StrictOmit } from "../sharedWithServer/utils/types";
 import {
   makeResValidationQueryError,
   validateDbIdRes,
   validateDbStoreNameRes,
   validateServerSectionPackRes,
 } from "./apiQueriesClient/validateRes";
+import https from "./services/httpService";
 
 // these are what I need to replace.
 export const apiQueries = makeApiQueries();

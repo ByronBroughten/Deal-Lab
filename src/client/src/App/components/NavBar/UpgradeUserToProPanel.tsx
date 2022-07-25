@@ -3,7 +3,7 @@ import React from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import styled from "styled-components";
 import { constants } from "../../Constants";
-import { apiQueries } from "../../modules/useQueryActionsTest/apiQueriesClient";
+import { apiQueries } from "../../modules/apiQueriesClient";
 import { makeReq } from "../../sharedWithServer/apiQueriesShared/makeReqAndRes";
 import theme from "../../theme/Theme";
 
@@ -48,10 +48,10 @@ const styles = StyleSheet.create({
 });
 
 async function goToPaymentPage(): Promise<void> {
+  const sub = constants.subscriptions.find((sub) => sub.product === "proUser");
+  if (!sub) throw new Error(`No subscription with proUser product`);
   const res = await apiQueries.upgradeUserToPro(
-    makeReq({
-      priceId: constants.upgradeUserToPro.priceId,
-    })
+    makeReq({ priceId: sub.priceId })
   );
   const { sessionUrl } = res.data;
   window.location.replace(sessionUrl);

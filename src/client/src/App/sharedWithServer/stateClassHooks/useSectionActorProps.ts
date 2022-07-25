@@ -1,5 +1,5 @@
+import { apiQueries } from "../../modules/apiQueriesClient";
 import { ApiQuerierBaseProps } from "../../modules/QueriersBasic/Bases/ApiQuerierBase";
-import { apiQueries } from "../../modules/useQueryActionsTest/apiQueriesClient";
 import { SetterSectionsProps } from "../StateSetters/SetterBases/SetterSectionsBase";
 import { useSetterSectionsProps } from "./useSetterSectionsProps";
 

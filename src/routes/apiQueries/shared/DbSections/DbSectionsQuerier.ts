@@ -14,27 +14,29 @@ import {
   UserNotFoundError,
 } from "./DbSectionsQuerierTypes";
 
+type DbSectionsIdentifier = "email" | "customerId" | "userId";
+
 const filter = dbSectionsFilters;
 export class DbSectionsQuerier extends DbSectionsQuerierBase {
-  static async initByEmail(email: string): Promise<DbSectionsQuerier> {
-    const querier = new DbSectionsQuerier({ userFilter: filter.email(email) });
-    if (await querier.exists()) return querier;
-    else
-      throw new UserNotFoundError({
-        errorMessage: "Invalid email.",
-        resMessage: "That email address didn't work.",
-        status: 400,
-      });
-  }
-  static async existsByEmail(email: string): Promise<boolean> {
-    return await DbSectionsModel.exists(filter.email(email));
-  }
-  static async initByUserId(userId: string): Promise<DbSectionsQuerier> {
+  static async init(identifier: string, identifierType: DbSectionsIdentifier) {
     const querier = new DbSectionsQuerier({
-      userFilter: filter.userId(userId),
+      userFilter: filter[identifierType](identifier),
     });
     if (await querier.exists()) return querier;
     else throw this.userNotFoundError();
+  }
+  static async initByEmail(email: string): Promise<DbSectionsQuerier> {
+    try {
+      return this.init(email, "email");
+    } catch (ex) {
+      if (ex instanceof UserNotFoundError) {
+        throw new UserNotFoundError({
+          errorMessage: "Invalid email.",
+          resMessage: "That email address didn't work.",
+          status: 400,
+        });
+      } else throw ex;
+    }
   }
   async exists(): Promise<boolean> {
     return await DbSectionsModel.exists(this.userFilter);

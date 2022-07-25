@@ -1,6 +1,6 @@
 import urljoin from "url-join";
 import { config } from "../Constants";
-import { makeResValidationQueryError } from "../modules/useQueryActionsTest/apiQueriesClient/validateRes";
+import { makeResValidationQueryError } from "../modules/apiQueriesClient/validateRes";
 import { ApiQueryName } from "./apiQueriesShared/apiQueriesSharedTypes";
 import {
   isLoginHeaders,

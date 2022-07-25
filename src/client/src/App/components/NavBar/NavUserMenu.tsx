@@ -31,7 +31,7 @@ export function NavUserMenu({ feId, logout }: NavUserMenuProps) {
   const userName = user.value("userName", "string");
   return (
     <Styled ref={closeIfClickOutsideRef}>
-      {auth.isLoggedIn && (
+      {auth.isToken && (
         // this is guarded by auth just temporarily
         <NavBtn
           className="NavUserMenu-navBtn"
@@ -52,7 +52,7 @@ export function NavUserMenu({ feId, logout }: NavUserMenuProps) {
           <BtnDiv>
             <Button href="/lists">{`${preceding} Lists`}</Button>
           </BtnDiv> */}
-          {auth.isLoggedIn && (
+          {auth.isToken && (
             <>
               <BtnDiv>
                 <Button onClick={logout}>Logout</Button>

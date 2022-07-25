@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { config, constants } from "../../client/src/App/Constants";
+import { constants } from "../../client/src/App/Constants";
 import { ApiStorageAuth } from "../../client/src/App/sharedWithServer/SectionsMeta/baseSections";
 import { userAuthWare } from "../../middleware/authWare";
 import { ResStatusError } from "../../resErrorUtils";
@@ -20,17 +20,17 @@ async function upgradeUserToPro(req: Request, res: Response) {
   const { customerId, email } = dbUser;
   const stripe = getStripe();
   const session = await stripe.checkout.sessions.create({
+    mode: "subscription",
+    success_url: constants.frontEndUrlBase,
+    cancel_url: constants.frontEndUrlBase,
+    customer_email: email,
+    ...(customerId ? { customer: customerId } : {}),
     line_items: [
       {
         price: priceId,
         quantity: 1,
       },
     ],
-    mode: "subscription",
-    success_url: constants.frontEndUrlBase,
-    cancel_url: constants.frontEndUrlBase,
-    customer_email: email,
-    ...(customerId ? { customer: customerId } : {}),
   });
 
   const sessionUrl = validateSessionUrl(session.url);
@@ -94,16 +94,4 @@ async function doUpgradeUserToPro({ userId }: DoUpgradeUserToProProps) {
       status: 400,
     });
   }
-}
-
-type MakePaymentProps = { paymentMethodId: string };
-async function makePayment({ paymentMethodId }: MakePaymentProps) {
-  const stripe = getStripe();
-  const payment = await stripe.paymentIntents.create({
-    payment_method: paymentMethodId,
-    amount: config.upgradeUserToPro.costInCents,
-    currency: "USD",
-    description: "Pro Subscription",
-    confirm: true,
-  });
 }

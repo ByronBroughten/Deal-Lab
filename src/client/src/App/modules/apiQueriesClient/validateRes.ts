@@ -4,11 +4,11 @@ import {
   DbStoreNameRes,
   makeRes,
   SectionPackRes,
-} from "../../../sharedWithServer/apiQueriesShared/makeReqAndRes";
-import { isSectionPack } from "../../../sharedWithServer/SectionPack/SectionPack";
-import { Id } from "../../../sharedWithServer/SectionsMeta/baseSectionsUtils/id";
-import { dbStoreNameS } from "../../../sharedWithServer/SectionsMeta/relSectionsDerived/relNameArrs/dbStoreNameArrs";
-import { Obj } from "../../../sharedWithServer/utils/Obj";
+} from "../../sharedWithServer/apiQueriesShared/makeReqAndRes";
+import { isSectionPack } from "../../sharedWithServer/SectionPack/SectionPack";
+import { Id } from "../../sharedWithServer/SectionsMeta/baseSectionsUtils/id";
+import { dbStoreNameS } from "../../sharedWithServer/SectionsMeta/relSectionsDerived/relNameArrs/dbStoreNameArrs";
+import { Obj } from "../../sharedWithServer/utils/Obj";
 
 export function validateDbIdRes(res: AxiosResponse<unknown>): DbIdRes {
   const { data } = res;

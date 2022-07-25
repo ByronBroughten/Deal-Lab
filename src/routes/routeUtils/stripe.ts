@@ -23,3 +23,15 @@ export function getStripeEvent(req: Request): Stripe.Event {
     throw new Error(`Stripe Webhook Error: ${getErrorMessage(ex)}`);
   }
 }
+
+type MakePaymentProps = { paymentMethodId: string; costInCents: number };
+async function makePayment({ paymentMethodId, costInCents }: MakePaymentProps) {
+  const stripe = getStripe();
+  const payment = await stripe.paymentIntents.create({
+    payment_method: paymentMethodId,
+    amount: costInCents,
+    currency: "USD",
+    description: "Pro Subscription",
+    confirm: true,
+  });
+}

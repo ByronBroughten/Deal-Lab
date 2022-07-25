@@ -7,7 +7,7 @@ export default function MainSectionTitleSaveBtn({ onClick }: Props) {
   const props = {
     onClick,
     className: "MainSectionTitleRow-flexUnit",
-    ...(auth.isLoggedIn
+    ...(auth.isToken
       ? { title: "Save" }
       : { title: "Login to save", disabled: true }),
   };

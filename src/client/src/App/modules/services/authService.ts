@@ -11,7 +11,7 @@ export const auth = {
   removeToken(): void {
     localStorage.removeItem(constants.tokenKey.apiUserAuth);
   },
-  get isLoggedIn(): boolean {
+  get isToken(): boolean {
     const token = this.getToken();
     return !!token;
   },

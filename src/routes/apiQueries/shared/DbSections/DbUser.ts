@@ -110,8 +110,9 @@ export class DbUser extends GetterSectionsBase {
       },
     };
   }
+
   static async queryByUserId(userId: string): Promise<DbUser> {
-    const querier = await DbSectionsQuerier.initByUserId(userId);
+    const querier = await DbSectionsQuerier.init(userId, "userId");
     return DbUser.init({
       dbSectionsRaw: await querier.getDbSectionsRaw(),
     });
@@ -122,6 +123,13 @@ export class DbUser extends GetterSectionsBase {
       dbSectionsRaw: await querier.getDbSectionsRaw(),
     });
   }
+  static async queryByCustomerId(customerId: string): Promise<DbUser> {
+    const querier = await DbSectionsQuerier.init(customerId, "customerId");
+    return DbUser.init({
+      dbSectionsRaw: await querier.getDbSectionsRaw(),
+    });
+  }
+
   get get(): GetterSection<"user"> {
     return new GetterSection({
       ...this.stateSections.onlyOneRawSection("user"),

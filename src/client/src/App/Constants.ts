@@ -19,15 +19,14 @@ export const config = {
   frontEndUrlBase: baseEnvStuff.frontEndUrlBase,
   apiPathBit: apiPathBit,
   apiPathFull: `${baseEnvStuff.endpoint}${apiPathBit}`,
-  products: {},
-  upgradeUserToPro: {
-    costInCents: 1000,
-    priceId: "price_1LOqZQBcSOBChcCBoh0Taacn",
-  },
-  costInCents: {
-    // this needs to match the charge amount in stripe for the product.
-    upgradeUserToPro: 1000,
-  },
+  subscriptions: [
+    {
+      priceId: "price_1LOqZQBcSOBChcCBoh0Taacn",
+      costInCents: 1000,
+      billed: "monthly",
+      product: "proUser",
+    },
+  ],
   basicStorageLimit: 2,
   apiQueryNames: [
     // "updateLogin",
