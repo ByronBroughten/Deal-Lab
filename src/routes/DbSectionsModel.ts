@@ -1,13 +1,15 @@
 import mongoose, { Schema } from "mongoose";
 import { RawSection } from "../client/src/App/sharedWithServer/SectionPack/RawSection";
 import { SectionPack } from "../client/src/App/sharedWithServer/SectionPack/SectionPack";
+import { SectionVarbName } from "../client/src/App/sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionTypes";
 import { SelfOrDescendantSectionName } from "../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DescendantSectionName";
+import { VarbValue } from "../client/src/App/sharedWithServer/SectionsMeta/relSectionsUtils/valueMetaTypes";
 import { monSchemas } from "../client/src/App/sharedWithServer/utils/mongoose";
 import {
   ServerSectionName,
   serverSectionNames,
   ServerSectionPack,
-  ServerStoreName
+  ServerStoreName,
 } from "./ServerStoreName";
 
 export type DbSectionsModelCore = {
@@ -56,23 +58,65 @@ export function makeMongooseSection() {
 }
 
 export const modelPath = {
-  firstSectionPack(packName: ServerStoreName) {
-    return `${packName}.0`;
+  firstSectionPack(storeName: ServerStoreName) {
+    return `${storeName}.0`;
   },
   firstSectionPackSection<CN extends ServerStoreName>(
-    packName: CN,
+    storeName: CN,
     sectionName: SelfOrDescendantSectionName<ServerSectionName<CN>>
   ) {
-    return `${this.firstSectionPack(packName)}.rawSections.${sectionName}.0`;
+    return `${this.firstSectionPack(storeName)}.rawSections.${sectionName}.0`;
   },
-  firstSectionPackSectionVarb<CN extends ServerStoreName>(
-    packName: CN,
-    sectionName: SelfOrDescendantSectionName<ServerSectionName<CN>>,
-    varbName: string
-  ) {
+  firstSectionVarb<
+    CN extends ServerStoreName,
+    SN extends SelfOrDescendantSectionName<ServerSectionName<CN>>
+  >({ storeName, sectionName, varbName }: FirstSectionVarbPathProps<CN, SN>) {
     return `${this.firstSectionPackSection(
-      packName,
+      storeName,
       sectionName
     )}.dbVarbs.${varbName}`;
+  },
+};
+
+type FirstSectionVarbPathProps<
+  CN extends ServerStoreName,
+  SN extends SelfOrDescendantSectionName<ServerSectionName<CN>>
+> = {
+  storeName: CN;
+  sectionName: SN;
+  varbName: SectionVarbName<SN>;
+};
+
+interface UpdateVarbProps<
+  CN extends ServerStoreName,
+  SN extends SelfOrDescendantSectionName<ServerSectionName<CN>>,
+  VN extends SectionVarbName<SN>
+> extends FirstSectionVarbPathProps<CN, SN> {
+  varbName: VN;
+  value: VarbValue<SN, VN>;
+}
+
+export const queryParameters = {
+  updateVarb: <
+    CN extends ServerStoreName,
+    SN extends SelfOrDescendantSectionName<ServerSectionName<CN>>,
+    VN extends SectionVarbName<SN>
+  >({
+    value,
+    ...props
+  }: UpdateVarbProps<CN, SN, VN>) => {
+    const path = modelPath.firstSectionVarb(props);
+    return {
+      operation: {
+        $set: { [path]: value },
+      },
+      options: {
+        new: true,
+        lean: true,
+        useFindAndModify: false,
+        strict: false,
+        // runValidators: true,
+      },
+    };
   },
 };

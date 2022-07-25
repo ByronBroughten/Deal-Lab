@@ -51,16 +51,14 @@ export function makeRelSections() {
       },
       { dbIndexStoreName: "user" }
     ),
-    serverOnlyUser: relSection("serverOnlyUser", {
-      encryptedPassword: relVarb("string"),
-      emailAsSubmitted: relVarb("string"),
-    }),
-    // there can only be one virtualVarb per section, right?
-    // well. Not necessarily.
-    // For now, yes.
-
-    // Ooh, what about this api:
-    // "virtualVarbs": [{ name: "displayName", value: "value" }]
+    serverOnlyUser: relSection(
+      "serverOnlyUser",
+      relVarbsS.strings([
+        "encryptedPassword",
+        "emailAsSubmitted",
+        "customerId",
+      ] as const)
+    ),
     login: relSection("login", {
       email: relVarb("string", { displayName: "Email" }),
       password: relVarb("string", { displayName: "Password" }),

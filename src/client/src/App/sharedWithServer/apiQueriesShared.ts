@@ -11,12 +11,12 @@ import {
   DbIdRes,
   DbPackInfoReq,
   DbStoreNameRes,
-  PaymentMethodIdReq,
   RegisterReq,
   SectionPackArrReq,
   SectionPackReq,
   SectionPackRes,
-  SuccessRes,
+  UpgradeUserToProReq,
+  UrlRes,
 } from "./apiQueriesShared/makeReqAndRes";
 import { DbStoreName } from "./SectionsMeta/childSectionsDerived/dbStoreNames";
 
@@ -28,7 +28,7 @@ export type ApiQueries = {
   replaceSectionArr: ReplaceSectionArrQuery;
   register: (req: RegisterReq) => Promise<LoginQueryObjects["res"]>;
   login: (req: LoginQueryObjects["req"]) => Promise<LoginQueryObjects["res"]>;
-  upgradeUserToPro: (req: PaymentMethodIdReq) => Promise<SuccessRes>;
+  upgradeUserToPro: (req: UpgradeUserToProReq) => Promise<UrlRes>;
 };
 type ApiQueriesTest<
   T extends Record<ApiQueryName, (req: any) => Promise<any>>

@@ -5,15 +5,22 @@ import { BsArrowUpCircle, BsFillHouseDoorFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { auth } from "../modules/services/authService";
+import { useGetterSection } from "../sharedWithServer/stateClassHooks/useGetterSection";
 import theme from "../theme/Theme";
 import { LoginForm } from "./NavBar/LoginForm";
 import NavBtn from "./NavBar/NavBtn";
 import NavDropDown from "./NavBar/NavDropDown";
 import { NavUserMenu, NavUserMenuProps } from "./NavBar/NavUserMenu";
-import { ProUpgradeForm } from "./NavBar/ProUpgradeForm";
 import { RegisterForm } from "./NavBar/RegisterForm";
+import { UpgradeUserToProPanel } from "./NavBar/UpgradeUserToProPanel";
 
 export default function NavBar(props: NavUserMenuProps) {
+  const user = useGetterSection({
+    sectionName: "user",
+    feId: props.feId,
+  });
+  const storageAuth = user.value("apiStorageAuth", "string");
+  const isPro = storageAuth === "fullStorage";
   return (
     <Styled className="NavBar-root">
       <Toolbar disableGutters={true}>
@@ -44,7 +51,7 @@ export default function NavBar(props: NavUserMenuProps) {
               </NavDropDown>
             </>
           )}
-          {auth.isLoggedIn && (
+          {auth.isLoggedIn && !isPro && (
             <NavDropDown
               className="NavBar-getProBtn"
               btnText={
@@ -54,9 +61,7 @@ export default function NavBar(props: NavUserMenuProps) {
                 </>
               }
             >
-              {/* <StyledDropdownForm className="DropdownForm-comingSoon"> */}
-              <ProUpgradeForm />
-              {/* </StyledDropdownForm> */}
+              <UpgradeUserToProPanel />
             </NavDropDown>
           )}
           <NavUserMenu {...props} />

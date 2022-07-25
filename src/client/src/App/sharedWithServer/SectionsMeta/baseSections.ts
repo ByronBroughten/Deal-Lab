@@ -173,11 +173,17 @@ export const baseSections = {
     },
     { hasGlobalVarbs: true }
   ),
+  // is that in serverOnlyUser?
+  // I don't see a reason to have customerId on the client side.
   user: baseSection(
     baseVarbs("string", ["email", "userName", "apiStorageAuth"] as const)
   ),
   serverOnlyUser: baseSection(
-    baseVarbs("string", ["encryptedPassword", "emailAsSubmitted"] as const)
+    baseVarbs("string", [
+      "encryptedPassword",
+      "emailAsSubmitted",
+      "customerId",
+    ] as const)
   ),
 } as const;
 

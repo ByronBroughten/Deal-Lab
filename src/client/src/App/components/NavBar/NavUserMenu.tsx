@@ -5,7 +5,6 @@ import styled from "styled-components";
 import useOnOutsideClickRef from "../../modules/customHooks/useOnOutsideClickRef";
 import useToggleView from "../../modules/customHooks/useToggleView";
 import { auth } from "../../modules/services/authService";
-import { FeSectionInfo } from "../../sharedWithServer/SectionsMeta/Info";
 import { useGetterSection } from "../../sharedWithServer/stateClassHooks/useGetterSection";
 import theme from "../../theme/Theme";
 import { StandardProps } from "../general/StandardProps";
@@ -16,11 +15,14 @@ function BtnDiv({ children, className }: StandardProps) {
 }
 
 export type NavUserMenuProps = {
+  feId: string;
   logout: () => void;
-  feInfo: FeSectionInfo<"user">;
 };
-export function NavUserMenu({ feInfo, logout }: NavUserMenuProps) {
-  const user = useGetterSection(feInfo);
+export function NavUserMenu({ feId, logout }: NavUserMenuProps) {
+  const user = useGetterSection({
+    sectionName: "user",
+    feId,
+  });
 
   const { viewIsOpen, toggleView, openView, closeView } = useToggleView({
     initValue: false,

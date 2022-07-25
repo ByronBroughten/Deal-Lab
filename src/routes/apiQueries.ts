@@ -5,15 +5,16 @@ import { Obj } from "../client/src/App/sharedWithServer/utils/Obj";
 import { addSectionWare } from "./apiQueries/addSection";
 import { deleteSectionWare } from "./apiQueries/deleteSection";
 import { getSectionWare } from "./apiQueries/getSection";
-import { nextLoginWare } from "./apiQueries/login";
+import { loginWare } from "./apiQueries/login";
 import { nextRegisterWare } from "./apiQueries/register";
 import { replaceSectionArrWare } from "./apiQueries/replaceSectionArr";
+import { stripeWebhookWare } from "./apiQueries/stripeWebhooks";
 import { updateSectionWare } from "./apiQueries/updateSection";
 import { upgradeUserToProWare } from "./apiQueries/upgradeUserToPro";
 
 const endpointWare: Record<ApiQueryName, any> = {
   register: nextRegisterWare,
-  login: nextLoginWare,
+  login: loginWare,
   addSection: addSectionWare,
   updateSection: updateSectionWare,
   getSection: getSectionWare,
@@ -26,6 +27,14 @@ const apiQueriesServer = express.Router();
 
 for (const [queryName, ware] of Obj.entries(endpointWare)) {
   apiQueriesServer.post(apiQueriesShared[queryName].pathBit, ...ware);
+}
+
+const webhookWare = {
+  stripe: stripeWebhookWare,
+} as const;
+
+for (const [webhookName, ware] of Obj.entries(webhookWare)) {
+  apiQueriesServer.post(`/webhook/${webhookName}`, ...ware);
 }
 
 export default apiQueriesServer;

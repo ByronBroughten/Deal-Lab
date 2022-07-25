@@ -8,7 +8,7 @@ import {
 import { RegisterReqBody } from "./register";
 
 export const makeReq = <B extends QueryObj>(body: B): MakeReq<B> => ({ body });
-type MakeReq<B extends QueryObj> = {
+export type MakeReq<B extends QueryObj> = {
   body: B;
 };
 export const makeRes = <Data extends QueryObj>(data: Data): MakeRes<Data> => ({
@@ -30,10 +30,12 @@ export type SectionPackArrReq<CN extends DbStoreName = DbStoreName> = MakeReq<{
   sectionPackArr: SectionPack<DbSectionName<CN>>[];
 }>;
 export type RegisterReq = MakeReq<RegisterReqBody>;
-export type PaymentMethodIdReq = MakeReq<{
+export type UpgradeUserToProReq = MakeReq<{ priceId: string }>;
+type PaymentMethodIdReq = MakeReq<{
   paymentMethodId: string;
 }>;
 
+export type UrlRes = MakeRes<{ sessionUrl: string }>;
 export type SuccessRes = MakeRes<{
   success: boolean;
 }>;

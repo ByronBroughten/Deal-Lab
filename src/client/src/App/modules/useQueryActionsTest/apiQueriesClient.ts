@@ -86,10 +86,10 @@ function makeApiQueries(): ApiQueries {
     upgradeUserToPro: {
       doingWhat: "upgrading to pro",
       validateRes(res: AxiosResponse<unknown>): QueryRes<"upgradeUserToPro"> {
-        const { data } = res;
+        const { data } = res as QueryRes<"upgradeUserToPro">;
         if (Obj.isAnyIfIsObj(data)) {
-          const { success } = data;
-          if (success === true) return makeRes({ success });
+          const { sessionUrl } = data;
+          if (typeof sessionUrl === "string") return makeRes({ sessionUrl });
         }
         throw makeResValidationQueryError();
       },
@@ -134,8 +134,6 @@ function makeApiQuery<QN extends ApiQueryName>({
 
 async function _testApiQueries() {
   const _test: QueryRes<"upgradeUserToPro"> = await apiQueries.upgradeUserToPro(
-    {
-      body: { paymentMethodId: "test" },
-    }
+    { body: { priceId: "test" } }
   );
 }

@@ -20,7 +20,7 @@ export function Main() {
     <Styled className="App-root">
       <NavBar
         {...{
-          feInfo: feStore.onlyChild("user").feInfo,
+          feId: feStore.onlyChild("user").feId,
           logout,
         }}
       />
@@ -34,6 +34,10 @@ export function Main() {
         {/* <Route path="/lists" element={<UserListsManager/>} /> */}
         <Route path="/not-found" element={<NotFound />} />
         <Route path="/" element={<ActiveDeal feId={activeDealId} />} />
+        <Route
+          path="/updateLogin"
+          element={<ActiveDeal feId={activeDealId} updateLogin={true} />}
+        />
         {/* <Route path="/" element={<Navigate replace to="/analyzer" />} /> */}
         <Route path="*" element={<NotFound />} />
       </Routes>

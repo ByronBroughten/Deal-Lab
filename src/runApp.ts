@@ -7,9 +7,9 @@ import helmet from "helmet";
 import morgan from "morgan";
 import { errorBackstop } from "./middleware/errorBackstop";
 import checkConfig from "./startup/config";
-import routes from "./startup/routes";
 import setupLogger, { logger } from "./startup/setupLogger";
 import startDb from "./startup/startDb";
+import { useRoutes } from "./startup/useRoutes";
 
 export function runApp() {
   checkConfig();
@@ -34,7 +34,7 @@ export function runApp() {
     debug("Morgan enabled...");
   }
 
-  routes(app);
+  useRoutes(app);
   app.use(errorBackstop);
   if (process.env.NODE_ENV === "production") {
     app.get("*", function (req, res) {

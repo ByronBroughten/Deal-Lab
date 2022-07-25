@@ -1,22 +1,11 @@
 import { Button } from "@material-ui/core";
-import {
-  CardElement,
-  CardElementProps,
-  useElements,
-  useStripe,
-} from "@stripe/react-stripe-js";
-import axios from "axios";
 import React from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import styled from "styled-components";
-import { constants } from "../../../Constants";
-import { apiQueries } from "../../../modules/useQueryActionsTest/apiQueriesClient";
-import { makeReq } from "../../../sharedWithServer/apiQueriesShared/makeReqAndRes";
-import theme from "../../../theme/Theme";
-
-// Test card:
-// 4242 4242 4242 4242 04/24 292 55103
-// zip? 29872
+import { constants } from "../../Constants";
+import { apiQueries } from "../../modules/useQueryActionsTest/apiQueriesClient";
+import { makeReq } from "../../sharedWithServer/apiQueriesShared/makeReqAndRes";
+import theme from "../../theme/Theme";
 
 const styles = StyleSheet.create({
   banner: {},
@@ -58,57 +47,6 @@ const styles = StyleSheet.create({
   normalText: { fontSize: 16 },
 });
 
-const CARD_OPTIONS: CardElementProps["options"] = {
-  iconStyle: "solid",
-  style: {
-    base: {
-      iconColor: theme.loan.main,
-      color: theme.softDark,
-      fontWeight: 500,
-      fontFamily: "Roboto, OpenSans, Segoe UI, sans-serif",
-      fontSize: "16px",
-      fontSmoothing: "antialiased",
-      ":-webkit-autofill": { color: "#fce883" },
-      "::placeholder": { color: theme.loan.main }, // "#87bbfd"
-    },
-    invalid: {
-      iconColor: theme.danger, // "#ffc7ee",
-      color: theme.danger, // "#ffc7ee",
-    },
-  },
-};
-
-function useMakeStripePayment() {
-  const [success, setSuccess] = React.useState(false);
-  const stripe = useStripe();
-  const elements = useElements();
-  const cardElement = elements?.getElement(CardElement);
-  return async () => {
-    if (stripe && cardElement) {
-      const { error, paymentMethod } = await stripe.createPaymentMethod({
-        type: "card",
-        card: cardElement,
-      });
-
-      if (!error && paymentMethod) {
-        try {
-          const response = await axios.post("https://localhost:4000/payment", {
-            paymentMethodId: paymentMethod.id,
-          });
-          if (response.data.success) {
-            console.log("Successful payment");
-            setSuccess(true);
-          }
-        } catch (error) {
-          console.log("Error", error);
-        }
-      } else {
-        if (error) console.log(error.message);
-      }
-    }
-  };
-}
-
 async function goToPaymentPage(): Promise<void> {
   const res = await apiQueries.upgradeUserToPro(
     makeReq({
@@ -119,49 +57,41 @@ async function goToPaymentPage(): Promise<void> {
   window.location.replace(sessionUrl);
 }
 
-export default function PaymentForm() {
-  const [success, setSuccess] = React.useState(false);
+export function UpgradeUserToProPanel() {
   return (
     <Styled>
-      {!success && (
-        <div>
-          <View style={styles.pitch}>
-            <View style={styles.banner}>
-              <Text style={styles.upgradeToProTitle}>Upgrade to Pro</Text>
+      <div>
+        <View style={styles.pitch}>
+          <View style={styles.banner}>
+            <Text style={styles.upgradeToProTitle}>Upgrade to Pro</Text>
+          </View>
+          <View>
+            <View style={styles.subSectionSpace}>
+              <Text style={styles.normalText}>
+                <Text style={styles.boldText}>Benefits</Text>
+              </Text>
             </View>
-            <View>
-              <View style={styles.subSectionSpace}>
-                <Text style={styles.normalText}>
-                  <Text style={styles.boldText}>Benefits</Text>
-                </Text>
-              </View>
-              <FlatList
-                style={styles.list}
-                renderItem={({ item, index }) => (
-                  <Bullet text={item} key={`${index}`} />
-                )}
-                data={[
-                  "Save as many deals, properties, loans, and management scenarios as you want",
-                  "Sort and compare saved deals with the Compare Deals table",
-                ]}
-              />
-              <View style={styles.subSectionSpace}>
-                <Text style={styles.normalText}>
-                  <Text style={styles.boldText}>Cost</Text> $10 per month
-                </Text>
-              </View>
+            <FlatList
+              style={styles.list}
+              renderItem={({ item, index }) => (
+                <Bullet text={item} key={`${index}`} />
+              )}
+              data={[
+                "Save as many deals, properties, loans, and management scenarios as you want",
+                "Sort and compare saved deals with the Compare Deals table",
+              ]}
+            />
+            <View style={styles.subSectionSpace}>
+              <Text style={styles.normalText}>
+                <Text style={styles.boldText}>Cost</Text> $10 per month
+              </Text>
             </View>
           </View>
-          <Button className="PaymentForm-payBtn" onClick={goToPaymentPage}>
-            Go to Payment Page
-          </Button>
-        </div>
-      )}
-      {success && (
-        <div>
-          <h2>You upgraded to Pro. Analyze away.</h2>
-        </div>
-      )}
+        </View>
+        <Button className="PaymentForm-payBtn" onClick={goToPaymentPage}>
+          Go to Payment Page
+        </Button>
+      </div>
     </Styled>
   );
 }

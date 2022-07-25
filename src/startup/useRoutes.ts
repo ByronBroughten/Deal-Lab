@@ -3,7 +3,7 @@ import express from "express";
 import { constants } from "../client/src/App/Constants";
 import apiQueriesServer from "../routes/apiQueries";
 
-export default function routes(app: express.Application) {
+export function useRoutes(app: express.Application) {
   app.use(
     cors({
       origin: [

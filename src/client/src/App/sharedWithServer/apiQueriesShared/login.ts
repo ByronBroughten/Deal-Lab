@@ -1,9 +1,17 @@
 import { z } from "zod";
 import { config } from "../../Constants";
 import { SectionPack, zRawSectionPack } from "../SectionPack/SectionPack";
+import { ApiStorageAuth } from "../SectionsMeta/baseSections";
 import { SectionName, sectionNameS } from "../SectionsMeta/SectionName";
 import { zS } from "../utils/zod";
+import { MakeReq, MakeRes } from "./makeReqAndRes";
 import { zRegisterFormData } from "./register";
+
+export type UpdateUserAuthReq = MakeReq<{}>;
+export type UpdateUserAuthRes = MakeRes<{
+  apiStorageAuth: ApiStorageAuth;
+  headers: LoginHeaders;
+}>;
 
 export type LoginQueryObjects = {
   req: {

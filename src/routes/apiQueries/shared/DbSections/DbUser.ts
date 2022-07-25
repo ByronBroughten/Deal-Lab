@@ -106,6 +106,7 @@ export class DbUser extends GetterSectionsBase {
         encryptedPassword: await userPrepS.encryptPassword(
           registerFormData.password
         ),
+        customerId: "",
       },
     };
   }
@@ -126,6 +127,12 @@ export class DbUser extends GetterSectionsBase {
       ...this.stateSections.onlyOneRawSection("user"),
       ...this.getterSectionsProps,
     });
+  }
+  get email(): string {
+    return this.get.value("email", "string");
+  }
+  get customerId(): string {
+    return this.serverOnlyUser.value("customerId", "string");
   }
   get apiStorageAuth(): ApiStorageAuth {
     const apiStorageAuth = this.get.value("apiStorageAuth");

@@ -8,9 +8,9 @@ import { ResHandledError } from "../../resErrorUtils";
 import { DbUser } from "./shared/DbSections/DbUser";
 import { userPrepS } from "./shared/DbSections/DbUser/userPrepS";
 
-export const nextLoginWare = [loginServerSide] as const;
+export const loginWare = [login] as const;
 
-async function loginServerSide(req: Request, res: Response) {
+async function login(req: Request, res: Response) {
   const reqObj = validateLoginReq(req, res);
 
   const { email: rawEmail, password } = reqObj.body;
