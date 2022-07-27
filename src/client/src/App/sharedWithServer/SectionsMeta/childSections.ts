@@ -35,8 +35,6 @@ export const childSections = checkChildSections({
   }),
   omniParent: relOmniParentChildren,
   main: childrenSections({
-    // should be loginForm, registerForm
-
     // main includes everything that is visible to the user on the front-end.
     login: ["login"],
     register: ["register"],
@@ -52,6 +50,8 @@ export const childSections = checkChildSections({
     outputList: ["outputList"],
   }),
   dbStore: childrenSections({
+    stripeInfo: ["stripeInfo"],
+    stripeSubscription: ["stripeSubscription"],
     user: ["user"],
     serverOnlyUser: ["serverOnlyUser"],
     propertyMain: ["property"],
@@ -66,6 +66,8 @@ export const childSections = checkChildSections({
   feStore: childrenSections({
     // feStore includes everything that has a corresponding child in dbStore
     // and that has any intermediary sections used to edit and add to them.
+    stripeInfo: ["stripeInfo"],
+    stripeSubscription: ["stripeSubscription"],
     user: ["user"],
     propertyTable: ["table"],
     loanTable: ["table"],

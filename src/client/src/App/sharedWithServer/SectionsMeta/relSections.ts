@@ -53,17 +53,22 @@ export function makeRelSections() {
     ),
     serverOnlyUser: relSection(
       "serverOnlyUser",
-      relVarbsS.strings([
-        "encryptedPassword",
-        "emailAsSubmitted",
-        "customerId",
-      ] as const)
+      relVarbsS.strings(["encryptedPassword", "emailAsSubmitted"] as const)
     ),
-    login: relSection("login", {
+    stripeInfo: relSection("Stripe info", {
+      customerId: relVarb("string"),
+    }),
+    stripeSubscription: relSection("Subscription", {
+      subId: relVarb("string"),
+      subStatus: relVarb("string"),
+      priceIds: relVarb("stringArray"),
+      currentPeriodEnd: relVarb("number"),
+    }),
+    login: relSection("Login form", {
       email: relVarb("string", { displayName: "Email" }),
       password: relVarb("string", { displayName: "Password" }),
     }),
-    register: relSection("Register Form", {
+    register: relSection("Register form", {
       email: relVarb("string", { displayName: "Email" }),
       userName: relVarb("string", { displayName: "Name" }),
       password: relVarb("string", { displayName: "Password" }),

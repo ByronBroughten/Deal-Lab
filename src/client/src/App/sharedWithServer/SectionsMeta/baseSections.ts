@@ -7,6 +7,26 @@ import {
 } from "./baseSectionsUtils/baseSection";
 import { baseVarbs, baseVarbsS } from "./baseSectionsUtils/baseVarbs";
 
+// If I wanted to break everything up
+
+// each subscription has priceIds
+// each priceId has items
+
+// the tricky part is that unlike for the other sections
+//  the source of truth is the db, not the fe.
+
+// serverOnlyUser is the source of truth.
+// serverOnlyUser stores the subscriptionId, priceIds, and active status
+// when loading, user gets more basic variables for displaying, etc.
+
+//
+
+// for each item, there is a parameter on the fe
+// - The fe parameter can be hacked
+// - not a big deal unless actual data storage is involved
+
+// for some, there is also a parameter on the jwt
+
 export const loanVarbsNotInFinancing = [
   "interestRatePercentMonthly",
   "interestRatePercentYearly",
@@ -173,17 +193,27 @@ export const baseSections = {
     },
     { hasGlobalVarbs: true }
   ),
-  // is that in serverOnlyUser?
-  // I don't see a reason to have customerId on the client side.
+  stripeInfo: baseSection({
+    customerId: "string",
+  } as const),
+  stripeSubscription: baseSection({
+    subId: "string",
+    subStatus: "string",
+    priceIds: "stringArray",
+    currentPeriodEnd: "number",
+  }),
   user: baseSection(
-    baseVarbs("string", ["email", "userName", "apiStorageAuth"] as const)
-  ),
-  serverOnlyUser: baseSection(
     baseVarbs("string", [
-      "encryptedPassword",
-      "emailAsSubmitted",
-      "customerId",
+      "email",
+      "userName",
+      "apiStorageAuth",
+      //
     ] as const)
+  ),
+  // stripe
+
+  serverOnlyUser: baseSection(
+    baseVarbs("string", ["encryptedPassword", "emailAsSubmitted"] as const)
   ),
 } as const;
 

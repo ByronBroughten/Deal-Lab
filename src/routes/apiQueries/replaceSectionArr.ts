@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
-import { SectionPackArrReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/makeReqAndRes";
 import { userAuthWare } from "../../middleware/authWare";
-import { findUserByIdAndUpdate } from "./shared/findAndUpdate";
+import { DbSectionsQuerier } from "./shared/DbSections/DbSectionsQuerier";
 import { sendSuccess } from "./shared/sendSuccess";
 import { validateSectionPackArrReq } from "./shared/validateSectionPackReq";
 
@@ -13,31 +12,16 @@ export const replaceSectionArrWare = [
 async function replaceSectionArrServerSide(req: Request, res: Response) {
   const {
     userJwt: { userId },
-    ...rest
+    dbStoreName,
+    sectionPackArr,
   } = validateSectionPackArrReq(req).body;
 
-  await findUserByIdAndUpdate({
-    userId,
-    queryParameters: makeSetSectionArrParameters(rest),
+  const querier = await DbSectionsQuerier.init(userId, "userId");
+  await querier.setSectionPackArr({
+    storeName: dbStoreName,
+    sectionPackArr,
   });
-
   sendSuccess(res, "replaceSectionArr", {
-    data: { dbStoreName: rest.dbStoreName },
+    data: { dbStoreName },
   });
-}
-
-function makeSetSectionArrParameters({
-  dbStoreName,
-  sectionPackArr,
-}: SectionPackArrReq["body"]) {
-  return {
-    operation: { $set: { [`${dbStoreName}`]: sectionPackArr } },
-    options: {
-      new: true,
-      lean: true,
-      useFindAndModify: false,
-      // runValidators: true,
-      strict: false,
-    },
-  };
 }

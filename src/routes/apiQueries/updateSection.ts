@@ -45,6 +45,20 @@ function makeUpdateSectionFilter({
   return { _id: userId, [`${dbStoreName}.dbId`]: dbId };
 }
 
+// type MakeUpdateSectionByValueFilter = {
+//   userId: string;
+//   dbStoreName: DbStoreName;
+//   sectionName: SimpleSectionName;
+// };
+// function makeUpdateSectionByValueFilter({
+// }) {
+//   return {}
+// }
+// filters:
+// "dbStoreName.rawSection."
+// "dbStoreName.rawSections.sectionName: "
+// "dbStoreName.rawSections.sectionName.dbVarbs.subId"
+
 function makeSetParameters(dbPack: DbPack) {
   const { dbStoreName, sectionPack } = dbPack;
   return {

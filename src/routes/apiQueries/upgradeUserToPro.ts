@@ -19,9 +19,11 @@ async function upgradeUserToPro(req: Request, res: Response) {
   const dbUser = await DbUser.queryByUserId(userId);
   const { customerId, email } = dbUser;
   const stripe = getStripe();
+
   const session = await stripe.checkout.sessions.create({
     mode: "subscription",
-    success_url: constants.frontEndUrlBase,
+    success_url:
+      constants.frontEndUrlBase + constants.subscriptionSuccessUrlEnd,
     cancel_url: constants.frontEndUrlBase,
     customer_email: email,
     ...(customerId ? { customer: customerId } : {}),

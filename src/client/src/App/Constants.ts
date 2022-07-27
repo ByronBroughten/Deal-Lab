@@ -19,6 +19,7 @@ export const config = {
   frontEndUrlBase: baseEnvStuff.frontEndUrlBase,
   apiPathBit: apiPathBit,
   apiPathFull: `${baseEnvStuff.endpoint}${apiPathBit}`,
+  subscriptionSuccessUrlEnd: "/stripe-subscription-success",
   subscriptions: [
     {
       priceId: "price_1LOqZQBcSOBChcCBoh0Taacn",

@@ -20,8 +20,8 @@ export const dbSectionsFilters = {
   },
   customerId(customerId: string) {
     const path = modelPath.firstSectionVarb({
-      storeName: "serverOnlyUser",
-      sectionName: "serverOnlyUser",
+      storeName: "stripeInfo",
+      sectionName: "stripeInfo" as "stripeInfo",
       varbName: "customerId",
     });
     return { [path]: customerId };

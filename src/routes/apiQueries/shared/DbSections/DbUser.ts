@@ -3,10 +3,7 @@ import { Response } from "express";
 import mongoose from "mongoose";
 import { constants } from "../../../../client/src/App/Constants";
 import { LoginUser } from "../../../../client/src/App/sharedWithServer/apiQueriesShared/login";
-import {
-  RegisterFormData,
-  RegisterReqBody,
-} from "../../../../client/src/App/sharedWithServer/apiQueriesShared/register";
+import { RegisterReqBody } from "../../../../client/src/App/sharedWithServer/apiQueriesShared/register";
 import { defaultMaker } from "../../../../client/src/App/sharedWithServer/defaultMaker/defaultMaker";
 import {
   ApiStorageAuth,
@@ -88,29 +85,6 @@ export class DbUser extends GetterSectionsBase {
     const userId = await this.createAndSaveNew(props);
     return DbUser.queryByUserId(userId);
   }
-  static async initUserSections(
-    registerFormData: RegisterFormData
-  ): Promise<UserSections> {
-    const { email, emailAsSubmitted } = userPrepS.processEmail(
-      registerFormData.email
-    );
-    await userPrepS.checkThatEmailIsUnique(email);
-    return {
-      user: {
-        userName: registerFormData.userName,
-        email,
-        apiStorageAuth: "basicStorage",
-      },
-      serverOnlyUser: {
-        emailAsSubmitted,
-        encryptedPassword: await userPrepS.encryptPassword(
-          registerFormData.password
-        ),
-        customerId: "",
-      },
-    };
-  }
-
   static async queryByUserId(userId: string): Promise<DbUser> {
     const querier = await DbSectionsQuerier.init(userId, "userId");
     return DbUser.init({
@@ -140,7 +114,8 @@ export class DbUser extends GetterSectionsBase {
     return this.get.value("email", "string");
   }
   get customerId(): string {
-    return this.serverOnlyUser.value("customerId", "string");
+    const stripeInfo = this.get.onlyCousin("stripeInfo");
+    return stripeInfo.value("customerId", "string");
   }
   get apiStorageAuth(): ApiStorageAuth {
     const apiStorageAuth = this.get.value("apiStorageAuth");
@@ -231,6 +206,7 @@ export class DbUser extends GetterSectionsBase {
 export interface UserSections {
   user: SharedUser;
   serverOnlyUser: ServerOnlyUser;
+  stripeInfo: SectionValues<"stripeInfo">;
 }
 
 type SharedUser = SectionValues<"user">;

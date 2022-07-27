@@ -1,8 +1,10 @@
 import { Request, Response } from "express";
-import { ApiStorageAuth } from "../../client/src/App/sharedWithServer/SectionsMeta/baseSections";
-import { stripeS } from "../../client/src/App/sharedWithServer/utils/stripe";
+import Stripe from "stripe";
+import { SectionValues } from "../../client/src/App/sharedWithServer/SectionsMeta/relSectionsUtils/valueMetaTypes";
+import { PackBuilderSection } from "../../client/src/App/sharedWithServer/StatePackers.ts/PackBuilderSection";
 import { queryParameters } from "../DbSectionsModel";
 import { getStripeEvent } from "../routeUtils/stripe";
+import { DbSectionsQuerier } from "./shared/DbSections/DbSectionsQuerier";
 import { DbUser } from "./shared/DbSections/DbUser";
 import { findUserByIdAndUpdate } from "./shared/findAndUpdate";
 
@@ -17,52 +19,50 @@ async function stripeWebhook(req: Request, res: Response) {
       const dbUser = await DbUser.queryByEmail(customer.email);
       await findUserByIdAndUpdate({
         userId: dbUser.userId,
-        doWhat: "add customer id",
+        doWhat: "set stripe customer id",
         queryParameters: queryParameters.updateVarb({
-          storeName: "serverOnlyUser",
-          sectionName: "serverOnlyUser",
+          storeName: "stripeInfo",
+          sectionName: "stripeInfo" as "stripeInfo",
           varbName: "customerId",
           value: customer.id,
         }),
       });
     }
     // subsicription object api: https://stripe.com/docs/api/subscriptions/object
-
-    case "customer.subscription.updated": {
-      const subscription = event.data.object as any;
-      if (stripeS.isActiveSubStatus(subscription.status)) {
-        const dbUser = await DbUser.queryByCustomerId(subscription.customer);
-        if (dbUser.apiStorageAuth !== "fullStorage") {
-          await findUserByIdAndUpdate({
-            userId: dbUser.userId,
-            doWhat: "upgrade user to pro",
-            queryParameters: queryParameters.updateVarb({
-              storeName: "user",
-              sectionName: "user",
-              varbName: "apiStorageAuth",
-              value: "fullStorage" as ApiStorageAuth,
-            }),
-          });
-        }
-      }
-    }
+    case "customer.subscription.updated":
     case "customer.subscription.deleted": {
-      const subscription = event.data.object as any;
-      if (stripeS.isInactiveSubStatus(subscription.status)) {
-        const dbUser = await DbUser.queryByCustomerId(subscription.customer);
-        if (dbUser.apiStorageAuth !== "basicStorage") {
-          await findUserByIdAndUpdate({
-            userId: dbUser.userId,
-            doWhat: "downgrade user from pro",
-            queryParameters: queryParameters.updateVarb({
-              storeName: "user",
-              sectionName: "user",
-              varbName: "apiStorageAuth",
-              value: "basicStorage",
-            }),
-          });
+      const subscription = event.data.object as Stripe.Subscription;
+      const subId = subscription.id;
+      const subValues: SectionValues<"stripeSubscription"> = {
+        subId: subId,
+        subStatus: subscription.status,
+        currentPeriodEnd: subscription.current_period_end,
+        priceIds: subscription.items.data.map((item) => item.price.id),
+      };
+
+      const updatedSub = PackBuilderSection.initAsOmniChild(
+        "stripeSubscription",
+        {
+          dbVarbs: subValues,
         }
-      }
+      );
+      const updatedPack = updatedSub.makeSectionPack();
+
+      const customerId = subscription.customer as string;
+      const querier = await DbSectionsQuerier.init(customerId, "customerId");
+      const subPacks = await querier.getSectionPackArr("stripeSubscription");
+
+      const currentIdx = subPacks.findIndex(
+        (sub) => sub.rawSections.stripeSubscription[0].dbVarbs.subId === subId
+      );
+
+      if (currentIdx === -1) subPacks.push(updatedPack);
+      else subPacks[currentIdx] = updatedPack;
+
+      await querier.setSectionPackArr({
+        storeName: "stripeSubscription",
+        sectionPackArr: subPacks,
+      });
     }
   }
 }

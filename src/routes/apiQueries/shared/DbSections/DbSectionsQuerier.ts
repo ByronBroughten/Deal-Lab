@@ -1,4 +1,6 @@
+import { QueryOptions } from "mongoose";
 import { DbStoreName } from "../../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/dbStoreNames";
+import { ResStatusError } from "../../../../resErrorUtils";
 import { DbSectionsModel } from "../../../DbSectionsModel";
 import {
   ServerSectionPack,
@@ -15,7 +17,6 @@ import {
 } from "./DbSectionsQuerierTypes";
 
 type DbSectionsIdentifier = "email" | "customerId" | "userId";
-
 const filter = dbSectionsFilters;
 export class DbSectionsQuerier extends DbSectionsQuerierBase {
   static async init(identifier: string, identifierType: DbSectionsIdentifier) {
@@ -38,12 +39,30 @@ export class DbSectionsQuerier extends DbSectionsQuerierBase {
       } else throw ex;
     }
   }
+  static async existsByEmail(email: string): Promise<boolean> {
+    try {
+      await this.initByEmail(email);
+      return true;
+    } catch (ex) {
+      if (ex instanceof UserNotFoundError) return false;
+      else throw ex;
+    }
+  }
+
   async exists(): Promise<boolean> {
     return await DbSectionsModel.exists(this.userFilter);
+  }
+  async hasSectionPack<CN extends ServerStoreName>(
+    dbInfo: ServerStoreInfo<CN>
+  ): Promise<boolean> {
+    const dbSections = await this.dbSections();
+    return dbSections.hasSection(dbInfo);
   }
   async getSectionPack<CN extends ServerStoreName>(
     dbInfo: ServerStoreInfo<CN>
   ): Promise<ServerSectionPack<CN>> {
+    const dbSections = await this.dbSections();
+    return dbSections.sectionPack(dbInfo);
     // It would be cool to query one pack directly, but it didn't work:
     // const users = await DbSectionsModel.aggregate([{ $match: this.userFilter }]);
     // const userDocs = await DbSectionsModel.aggregate([
@@ -51,17 +70,53 @@ export class DbSectionsQuerier extends DbSectionsQuerierBase {
     //   { $unwind: `$${sectionName}` },
     //   // { $match: { [`${sectionName}.${dbId}`]: dbId } },
     // ]);
+  }
+  async setSectionPackArr<CN extends ServerStoreName>({
+    storeName,
+    sectionPackArr,
+  }: SetSectionPackArrProps<CN>): Promise<void> {
+    await this.update({
+      operation: { $set: { [`${storeName}`]: sectionPackArr } },
+      options: {
+        new: true,
+        lean: true,
+        useFindAndModify: false,
+        // runValidators: true,
+        strict: false,
+      },
+    });
+  }
+  async update({ operation, options, doWhat }: UpdateProps) {
+    const result = await DbSectionsModel.findOneAndUpdate(
+      this.userFilter,
+      operation,
+      options
+    );
+    if (result) return result;
+    else {
+      throw new ResStatusError({
+        resMessage: `Failed to ${doWhat}.`,
+        errorMessage: `Failed to ${doWhat}.`,
+        status: 404,
+      });
+    }
+  }
+
+  async getSectionPackArr<DSN extends ServerStoreName>(
+    dbStoreName: DSN
+  ): Promise<ServerSectionPack<DSN>[]> {
     const dbSections = await this.dbSections();
-    return dbSections.sectionPack(dbInfo);
+    return dbSections.sectionPackArr(dbStoreName);
   }
   async storeSectionCount(dbStoreName: DbStoreName): Promise<number> {
-    const dbSections = await this.dbSections();
-    return dbSections.sectionPackArr(dbStoreName).length;
+    const arr = await this.getSectionPackArr(dbStoreName);
+    return arr.length;
   }
   private async dbSections(): Promise<DbSections> {
     const dbSectionsRaw = await this.getDbSectionsRaw();
     return new DbSections({ dbSectionsRaw });
   }
+
   async getDbSectionsRaw(): Promise<DbSectionsRaw> {
     const dbSectionsRaw = await DbSectionsModel.findOne(
       this.userFilter,
@@ -81,4 +136,18 @@ export class DbSectionsQuerier extends DbSectionsQuerierBase {
   private userNotFoundError(): UserNotFoundError {
     return DbSectionsQuerier.userNotFoundError();
   }
+}
+
+type SetSectionPackArrProps<CN extends ServerStoreName> = {
+  storeName: CN;
+  sectionPackArr: ServerSectionPack<CN>[];
+};
+
+interface UpdateProps extends QueryParameters {
+  doWhat?: string;
+}
+
+interface QueryParameters {
+  operation: any;
+  options: QueryOptions;
 }

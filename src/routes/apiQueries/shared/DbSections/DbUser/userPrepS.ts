@@ -63,6 +63,13 @@ export const userPrepS = {
           },
         }),
       ],
+      stripeInfo: [
+        PackBuilderSection.initSectionPack("stripeInfo", {
+          dbVarbs: {
+            customerId: "",
+          },
+        }),
+      ],
     };
   },
   makeDbSectionsRaw({

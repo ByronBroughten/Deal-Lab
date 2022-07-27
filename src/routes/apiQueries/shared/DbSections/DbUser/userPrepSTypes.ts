@@ -14,6 +14,7 @@ export type PreppedEmails = {
 const userSectionNames = Arr.extractStrict(serverSectionNames, [
   "user",
   "serverOnlyUser",
+  "stripeInfo",
 ] as const);
 type UserSectionName = typeof userSectionNames[number];
 export type UserSectionPackArrs = {

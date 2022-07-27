@@ -11,6 +11,13 @@ AppRegistry.runApplication("App", {
 // Properties menu
 // List the properties
 
+// rename "user" section to "userInfo"
+// same with serverUser
+
+// tailor which dbSections can be accessed by which
+// routes. You don't want subscriptions to be editable
+// by the section functions, ect.
+
 // List the properties
 // You can use the same dropdown, or you can use Autocomplete
 

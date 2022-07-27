@@ -4,6 +4,7 @@ import { ActiveDeal } from "./App/components/ActiveDeal";
 import NotFound from "./App/components/general/NotFound";
 import NavBar from "./App/components/NavBar";
 import { TableStore } from "./App/components/TableStore";
+import { constants } from "./App/Constants";
 import { auth } from "./App/modules/services/authService";
 import { useSetterSection } from "./App/sharedWithServer/stateClassHooks/useSetterSection";
 import theme from "./App/theme/Theme";
@@ -30,6 +31,7 @@ export function Main() {
           path="/deals"
           element={<TableStore feId={feStore.onlyChild("dealTable").feId} />}
         />
+        <Route path={constants.subscriptionSuccessUrlEnd} />
         {/* <Route path="/variables" element={<UserVarbsManager/>} /> */}
         {/* <Route path="/lists" element={<UserListsManager/>} /> */}
         <Route path="/not-found" element={<NotFound />} />

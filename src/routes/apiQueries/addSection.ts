@@ -56,7 +56,7 @@ async function validateAuth({
       throw new Error("Tried to save a section with readonly auth.");
     case "basicStorage": {
       const { basicStorageLimit } = constants;
-      const querier = await DbSectionsQuerier.initByUserId(userId);
+      const querier = await DbSectionsQuerier.init(userId, "userId");
       const count = await querier.storeSectionCount(dbStoreName);
       if (count < basicStorageLimit) return true;
       else
@@ -73,9 +73,9 @@ async function validateAuth({
 async function checkThatSectionPackIsNotThere<CN extends DbStoreName>(
   props: DbSectionInitByIdProps<CN>
 ): Promise<true> {
-  const { dbStoreName, dbId } = props;
+  const { dbStoreName, dbId, userId } = props;
   try {
-    const querier = await DbSectionsQuerier.initByUserId(props.userId);
+    const querier = await DbSectionsQuerier.init(userId, "userId");
     await querier.getSectionPack(props);
     throw new ResStatusError({
       errorMessage: `An entry at ${dbStoreName}.${dbId} already exists.`,

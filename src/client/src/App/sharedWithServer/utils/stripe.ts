@@ -1,7 +1,8 @@
+import { Stripe } from "stripe";
 import { Arr } from "./Arr";
 
-export type StripeSubStatus = typeof stripeSubStatuses[number];
-const stripeSubStatuses = [
+export type StripeSubStatus = Stripe.Subscription.Status;
+const stripeSubStatuses: StripeSubStatus[] = [
   "trialing",
   "active",
   "past_due",
@@ -9,7 +10,7 @@ const stripeSubStatuses = [
   "incomplete_expired",
   "unpaid",
   "canceled",
-] as const;
+];
 
 export type StripeActiveSubStatus = typeof activeStatuses[number];
 const activeStatuses = Arr.extractStrict(stripeSubStatuses, [

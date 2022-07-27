@@ -18,7 +18,7 @@ export class FeUser extends GetterSectionBase<"user"> {
     return new GetterSection(this.getterSectionProps);
   }
   get isPro(): boolean {
-    const storageAuth = this.get.value("fullStrage", "string");
+    const storageAuth = this.get.value("apiStorageAuth", "string");
     return storageAuth === "fullStorage";
   }
   get isLoggedIn() {

@@ -65,7 +65,7 @@ export class DbSections extends DbSectionsBase {
   static async initById({
     userId,
   }: DbSectionsInitByIdProps): Promise<DbSections> {
-    const querier = await DbSectionsQuerier.initByUserId(userId);
+    const querier = await DbSectionsQuerier.init(userId, "userId");
     return new DbSections({
       dbSectionsRaw: await querier.getDbSectionsRaw(),
     });
