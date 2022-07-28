@@ -1,7 +1,10 @@
 import { SectionPack } from "../SectionPack/SectionPack";
 import { feStoreTableNames } from "../SectionsMeta/relChildSections";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
-import { makeDefaultUser } from "./makeDefaultUser";
+import {
+  makeDefaultSubscriptionInfo,
+  makeDefaultUser,
+} from "./makeDefaultUser";
 import { makeDefaultFeStoreTables } from "./makeMainTablePackMakers";
 
 export function makeDefaultFeStorePack(): SectionPack<"feStore"> {
@@ -9,6 +12,10 @@ export function makeDefaultFeStorePack(): SectionPack<"feStore"> {
   feStore.loadChild({
     childName: "user",
     sectionPack: makeDefaultUser(),
+  });
+  feStore.loadChild({
+    childName: "subscriptionInfo",
+    sectionPack: makeDefaultSubscriptionInfo(),
   });
   const defaultTablePacks = makeDefaultFeStoreTables();
   for (const tableName of feStoreTableNames) {

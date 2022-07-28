@@ -1,3 +1,4 @@
+import { UserOrGuestPlan } from "../../sharedWithServer/SectionsMeta/baseSections";
 import {
   GetterSectionBase,
   GetterSectionProps,
@@ -6,20 +7,21 @@ import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection
 import { StrictOmit } from "../../sharedWithServer/utils/types";
 import { auth } from "../services/authService";
 
-type FeUserProps = StrictOmit<GetterSectionProps<"user">, "sectionName">;
-export class FeUser extends GetterSectionBase<"user"> {
+type FeUserProps = StrictOmit<GetterSectionProps<"feStore">, "sectionName">;
+export class FeUser extends GetterSectionBase<"feStore"> {
   constructor(props: FeUserProps) {
     super({
       ...props,
-      sectionName: "user",
+      sectionName: "feStore",
     });
   }
-  get get(): GetterSection<"user"> {
+  get get(): GetterSection<"feStore"> {
     return new GetterSection(this.getterSectionProps);
   }
   get isPro(): boolean {
-    const storageAuth = this.get.value("apiStorageAuth", "string");
-    return storageAuth === "fullStorage";
+    const subscription = this.get.onlyChild("subscriptionInfo");
+    const plan = subscription.value("plan", "string") as UserOrGuestPlan;
+    return plan === "fullPlan";
   }
   get isLoggedIn() {
     return auth.isToken;

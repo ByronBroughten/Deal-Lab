@@ -8,6 +8,27 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
+// 1. How will the jwt reflect provision of the subscription?
+//    There are essentially two things at play here
+//    - The "full" section storage limit is in effect.
+//    - The tables are turned on.
+// The JWT just needs a storageLimit prop ("full" or "basic")
+// - checked in addSection
+
+// And a "compareTableAccess" prop ("none", "all")
+// - checked when logging in, determines whether tables are loaded
+
+// storageLimit: "full" | "basic"
+// compareTableAccess: "none" | "all"
+// subPeriodEnd: number
+
+// Make compareTable have a second set of rows
+
+// The JWT also needs the subscription expiration date.
+
+// This JWT is created if an activey subscription with an appropriate
+// price id is found.
+
 // Properties menu
 // List the properties
 

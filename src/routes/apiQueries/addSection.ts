@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { constants } from "../../client/src/App/Constants";
 import { DbPack } from "../../client/src/App/sharedWithServer/SectionPack/SectionPack";
-import { ApiStorageAuth } from "../../client/src/App/sharedWithServer/SectionsMeta/baseSections";
+import { UserPlan } from "../../client/src/App/sharedWithServer/SectionsMeta/baseSections";
 import {
   DbStoreInfo,
   DbStoreName,
@@ -19,12 +19,12 @@ async function addSectionServerSide(req: Request, res: Response) {
   const {
     dbStoreName,
     sectionPack,
-    userJwt: { userId, apiStorageAuth },
+    userJwt: { userId, subscriptionPlan },
   } = validateSectionPackReq(req).body;
   await validateAuth({
     userId,
     dbStoreName,
-    apiStorageAuth,
+    subscriptionPlan,
   });
   await checkThatSectionPackIsNotThere({
     dbStoreName,
@@ -42,19 +42,17 @@ async function addSectionServerSide(req: Request, res: Response) {
 }
 
 type ValidateAuthProps = {
-  apiStorageAuth: ApiStorageAuth;
+  subscriptionPlan: UserPlan;
   dbStoreName: DbStoreName;
   userId: string;
 };
 async function validateAuth({
-  apiStorageAuth,
+  subscriptionPlan,
   dbStoreName,
   userId,
 }: ValidateAuthProps): Promise<boolean> {
-  switch (apiStorageAuth) {
-    case "readonly":
-      throw new Error("Tried to save a section with readonly auth.");
-    case "basicStorage": {
+  switch (subscriptionPlan) {
+    case "basicPlan": {
       const { basicStorageLimit } = constants;
       const querier = await DbSectionsQuerier.init(userId, "userId");
       const count = await querier.storeSectionCount(dbStoreName);
@@ -66,7 +64,7 @@ async function validateAuth({
           status: 400,
         });
     }
-    case "fullStorage":
+    case "fullPlan":
       return true;
   }
 }

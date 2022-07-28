@@ -19,12 +19,7 @@ export function Main() {
   const activeDealId = main.get.onlyChild("deal").feId;
   return (
     <Styled className="App-root">
-      <NavBar
-        {...{
-          feId: feStore.onlyChild("user").feId,
-          logout,
-        }}
-      />
+      <NavBar {...{ logout }} />
       <div className="NavSpaceDiv-root"></div>
       <Routes>
         <Route

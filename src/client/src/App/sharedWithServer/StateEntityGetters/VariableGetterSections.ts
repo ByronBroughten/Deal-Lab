@@ -28,10 +28,11 @@ export class VariableGetterSections extends GetterSectionsBase {
   }
   private userVarbOptions(): VariableOption[] {
     const { main } = this.getterSections;
-    const childName = "userVarbList";
-    const varbListFeIds = main.childFeIds("userVarbList");
+    const feStore = main.onlyChild("feStore");
+    const childName = "userVarbListMain";
+    const varbListFeIds = feStore.childFeIds(childName);
     return varbListFeIds.reduce((options, feId) => {
-      const listSection = main.child({ childName, feId });
+      const listSection = feStore.child({ childName, feId });
       const userVarbItems = listSection.children("userVarbItem");
       const collectionName = listSection.value("displayName", "string");
       return options.concat(
@@ -50,18 +51,23 @@ export class VariableGetterSections extends GetterSectionsBase {
   }
 
   private userListTotalOptions(): VariableOption[] {
-    const sectionToCollectionName: Record<
-      SectionName<"additiveList">,
-      string
-    > = {
-      ongoingList: "Ongoing cost totals",
-      singleTimeList: "One time cost totals",
+    const totalNames: Record<SectionName<"additiveList">, any> = {
+      ongoingList: {
+        collectionName: "Ongoing cost totals",
+        feUserStoreName: "ongoingListMain",
+      },
+      singleTimeList: {
+        collectionName: "One time cost totals",
+        feUserStoreName: "singleTimeListMain",
+      },
     };
     const options: VariableOption[] = [];
-    for (const sectionName of sectionNameS.arrs.additiveList) {
-      const collectionName = sectionToCollectionName[sectionName];
+    for (const sectionName of Obj.keys(totalNames)) {
+      const names = totalNames[sectionName];
+      const { collectionName, feUserStoreName } = names;
       const { main } = this.getterSections;
-      const lists = main.children(sectionName);
+      const feStore = main.onlyChild("feStore");
+      const lists = feStore.children(feUserStoreName);
       for (const list of lists) {
         const displayName = list.value("displayName", "string");
         if (sectionName === "ongoingList") {

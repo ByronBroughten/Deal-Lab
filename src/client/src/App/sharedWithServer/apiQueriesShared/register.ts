@@ -1,6 +1,10 @@
 import { z } from "zod";
-import { SectionPack, zRawSectionPackArr } from "../SectionPack/SectionPack";
-import { SectionName, sectionNameS } from "../SectionsMeta/SectionName";
+import {
+  ChildSectionPack,
+  zRawSectionPackArr,
+} from "../SectionPack/SectionPack";
+import { sectionsMeta } from "../SectionsMeta";
+import { Arr } from "../utils/Arr";
 import { dbLimits } from "../utils/dbLimts";
 import { validationMessage, zS } from "../utils/zod";
 import { QueryRes } from "./apiQueriesSharedTypes";
@@ -16,10 +20,19 @@ export type RegisterReqBody = {
   guestAccessSections: GuestAccessSectionPackArrs;
 };
 
+const feStoreChildNames = sectionsMeta.section("feStore").childNames;
+export const guestAccessNames = Arr.extractStrict(feStoreChildNames, [
+  "ongoingListMain",
+  "outputListMain",
+  "singleTimeListMain",
+  "userVarbListMain",
+] as const);
+type GuestAccessName = typeof guestAccessNames[number];
+
 export type GuestAccessSectionPackArrs = {
-  [SN in SectionName<"feGuestAccess">]: SectionPack<SN>[];
+  [CN in GuestAccessName]: ChildSectionPack<"feStore", CN>[];
 };
-export function areGuestAccessSectionsNext(
+export function areGuestAccessSections(
   value: any
 ): value is GuestAccessSectionPackArrs {
   const zGuestAccessSections = makeZGuestAccessSectionsNext();
@@ -27,13 +40,13 @@ export function areGuestAccessSectionsNext(
   return true;
 }
 function makeZGuestAccessSectionsNext() {
-  const feGuestAccessStoreNames = sectionNameS.arrs.feGuestAccess;
+  const feGuestAccessStoreNames = guestAccessNames;
   const schemaFrame = feGuestAccessStoreNames.reduce(
-    (feGuestAccessSections, sectionName) => {
-      feGuestAccessSections[sectionName] = zRawSectionPackArr;
+    (feGuestAccessSections, childName) => {
+      feGuestAccessSections[childName] = zRawSectionPackArr;
       return feGuestAccessSections;
     },
-    {} as Record<SectionName<"feGuestAccess">, any>
+    {} as Record<GuestAccessName, any>
   );
   return z.object(schemaFrame);
 }

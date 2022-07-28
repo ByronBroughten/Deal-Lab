@@ -1,5 +1,6 @@
 import { OneRawSection, RawSections } from "../SectionPack/RawSection";
-import { SectionPack } from "../SectionPack/SectionPack";
+import { ChildSectionPack, SectionPack } from "../SectionPack/SectionPack";
+import { SimpleSectionName } from "../SectionsMeta/baseSections";
 import {
   ChildName,
   FeChildInfo,
@@ -11,8 +12,11 @@ import { GetterSectionBase } from "../StateGetters/Bases/GetterSectionBase";
 import { GetterSection } from "../StateGetters/GetterSection";
 import { Obj } from "../utils/Obj";
 
-type FeSectionPackArrs<SN extends SectionName> = {
-  [S in SN]: SectionPack<S>[];
+type FeSectionPackArrs<
+  SN extends SimpleSectionName,
+  CN extends ChildName<SN>
+> = {
+  [C in CN]: ChildSectionPack<SN, C>[];
 };
 
 export class PackMakerSection<
@@ -28,12 +32,11 @@ export class PackMakerSection<
   }
   makeChildTypePackArrs<CN extends ChildName<SN>>(
     childNames: CN[]
-  ): FeSectionPackArrs<ChildSectionName<SN, CN>> {
+  ): FeSectionPackArrs<SN, CN> {
     return childNames.reduce((spArrs, childName) => {
-      const sectionName = this.get.meta.childType(childName);
-      (spArrs[sectionName] as any) = this.makeChildSectionPackArr(childName);
+      (spArrs[childName] as any) = this.makeChildSectionPackArr(childName);
       return spArrs;
-    }, {} as FeSectionPackArrs<ChildSectionName<SN, CN>>);
+    }, {} as FeSectionPackArrs<SN, CN>);
   }
   makeChildSectionPackArr<CN extends ChildName<SN>>(
     childName: CN

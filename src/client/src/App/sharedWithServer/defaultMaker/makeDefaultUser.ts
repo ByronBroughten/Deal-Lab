@@ -5,8 +5,20 @@ export function makeDefaultUser() {
     dbVarbs: {
       email: "",
       userName: "Guest",
-      apiStorageAuth: "readonly",
     },
   });
   return user.makeSectionPack();
+}
+
+export function makeDefaultSubscriptionInfo() {
+  const subscriptionInfo = PackBuilderSection.initAsOmniChild(
+    "subscriptionInfo",
+    {
+      dbVarbs: {
+        plan: "guestPlan",
+        planExp: 0,
+      },
+    }
+  );
+  return subscriptionInfo.makeSectionPack();
 }

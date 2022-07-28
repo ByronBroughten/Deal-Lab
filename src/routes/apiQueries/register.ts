@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import { QueryReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import { makeReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/makeReqAndRes";
 import {
-  areGuestAccessSectionsNext,
+  areGuestAccessSections,
   isRegisterFormData,
 } from "../../client/src/App/sharedWithServer/apiQueriesShared/register";
 import { makeMongooseObjectId } from "../../client/src/App/sharedWithServer/utils/mongoose";
@@ -34,7 +34,7 @@ function validateRegisterReq(
       "Register form data failed validation"
     );
   }
-  if (!areGuestAccessSectionsNext(guestAccessSections)) {
+  if (!areGuestAccessSections(guestAccessSections)) {
     throw handleResAndMakeError(res, 500, "Invalid guest access sections.");
   }
   return makeReq({

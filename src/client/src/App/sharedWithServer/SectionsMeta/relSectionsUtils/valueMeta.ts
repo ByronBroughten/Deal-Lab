@@ -24,7 +24,7 @@ import { ValueName } from "../baseSectionsUtils/baseVarb";
 export const valueMeta = {
   number: {
     is: (v: any): v is number => typeof v === "number",
-    updateFnNames: ["number"],
+    updateFnNames: ["updateByEditorOnly", "number"],
     initDefault: () => 0,
     zod: z.number(),
     mon: reqMonNumber,

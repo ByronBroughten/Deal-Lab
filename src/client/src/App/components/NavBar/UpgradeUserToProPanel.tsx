@@ -48,8 +48,8 @@ const styles = StyleSheet.create({
 });
 
 async function goToPaymentPage(): Promise<void> {
-  const sub = constants.subscriptions.find((sub) => sub.product === "proUser");
-  if (!sub) throw new Error(`No subscription with proUser product`);
+  const sub = constants.subscriptions.find((sub) => sub.product === "proPlan");
+  if (!sub) throw new Error(`No subscription with proPlan product`);
   const res = await apiQueries.upgradeUserToPro(
     makeReq({ priceId: sub.priceId })
   );
@@ -77,8 +77,8 @@ export function UpgradeUserToProPanel() {
                 <Bullet text={item} key={`${index}`} />
               )}
               data={[
-                "Save as many deals, properties, loans, and management scenarios as you want",
-                "Sort and compare saved deals with the Compare Deals table",
+                `Save up to ${constants.plans.pro.sectionSaveLimit} unique deals, properties, loans, and management scenarios`,
+                "Easily compare saved deals with the Compare Deals table",
               ]}
             />
             <View style={styles.subSectionSpace}>

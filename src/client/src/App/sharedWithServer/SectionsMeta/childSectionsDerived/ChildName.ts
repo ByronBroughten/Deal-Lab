@@ -21,6 +21,7 @@ export const hasChildSectionNames = simpleSectionNames.filter((sectionName) => {
 type SectionToChildNameArrs = {
   [SN in SimpleSectionName]: ChildName<SN>[];
 };
+
 export const sectionToChildNames = simpleSectionNames.reduce(
   (arrs, sectionName) => {
     arrs[sectionName] = Obj.keys(childSections[sectionName]);
@@ -28,6 +29,11 @@ export const sectionToChildNames = simpleSectionNames.reduce(
   },
   {} as SectionToChildNameArrs
 );
+export function getChildNames<SN extends SimpleSectionName>(
+  sectionName: SN
+): ChildName<SN>[] {
+  return sectionToChildNames[sectionName] as ChildName<SN>[];
+}
 
 export type GeneralChildIdArrs = {
   [key: string]: string[];

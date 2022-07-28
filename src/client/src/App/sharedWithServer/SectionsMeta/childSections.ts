@@ -27,6 +27,9 @@ function checkChildSections<CS extends GenericChildSections>(
   return childSections;
 }
 
+// the current deal might be added to user.
+//
+
 export const childSections = checkChildSections({
   ...defaults,
   root: childrenSections({
@@ -35,19 +38,26 @@ export const childSections = checkChildSections({
   }),
   omniParent: relOmniParentChildren,
   main: childrenSections({
-    // main includes everything that is visible to the user on the front-end.
     login: ["login"],
     register: ["register"],
-    updateUser: ["user"],
     deal: ["deal"],
     feStore: ["feStore"],
-    userVarbList: ["userVarbList"],
-    userOutputList: ["outputList"],
-    userSingleList: ["singleTimeList"],
-    userOngoingList: ["ongoingList"],
-    singleTimeList: ["singleTimeList"],
-    ongoingList: ["ongoingList"],
-    outputList: ["outputList"],
+    updateUserInfo: ["user"],
+  }),
+  feStore: childrenSections({
+    // feStore includes everything that has a corresponding child in dbStore
+    // and that has any intermediary sections used to edit and add to them.
+    stripeInfo: ["stripeInfo"],
+    subscriptionInfo: ["subscriptionInfo"],
+    user: ["user"],
+    propertyTable: ["table"],
+    loanTable: ["table"],
+    mgmtTable: ["table"],
+    dealTable: ["table"],
+    outputListMain: ["outputList"],
+    userVarbListMain: ["userVarbList"],
+    singleTimeListMain: ["singleTimeList"],
+    ongoingListMain: ["ongoingList"],
   }),
   dbStore: childrenSections({
     stripeInfo: ["stripeInfo"],
@@ -58,21 +68,6 @@ export const childSections = checkChildSections({
     loanMain: ["loan"],
     mgmtMain: ["mgmt"],
     dealMain: ["deal"],
-    outputListMain: ["outputList"],
-    userVarbListMain: ["userVarbList"],
-    singleTimeListMain: ["singleTimeList"],
-    ongoingListMain: ["ongoingList"],
-  }),
-  feStore: childrenSections({
-    // feStore includes everything that has a corresponding child in dbStore
-    // and that has any intermediary sections used to edit and add to them.
-    stripeInfo: ["stripeInfo"],
-    stripeSubscription: ["stripeSubscription"],
-    user: ["user"],
-    propertyTable: ["table"],
-    loanTable: ["table"],
-    mgmtTable: ["table"],
-    dealTable: ["table"],
     outputListMain: ["outputList"],
     userVarbListMain: ["userVarbList"],
     singleTimeListMain: ["singleTimeList"],

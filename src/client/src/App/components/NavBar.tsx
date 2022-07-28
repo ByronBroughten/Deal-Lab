@@ -9,12 +9,15 @@ import theme from "../theme/Theme";
 import { LoginForm } from "./NavBar/LoginForm";
 import NavBtn from "./NavBar/NavBtn";
 import NavDropDown from "./NavBar/NavDropDown";
-import { NavUserMenu, NavUserMenuProps } from "./NavBar/NavUserMenu";
+import { NavUserMenu } from "./NavBar/NavUserMenu";
 import { RegisterForm } from "./NavBar/RegisterForm";
 import { UpgradeUserToProPanel } from "./NavBar/UpgradeUserToProPanel";
 
-export default function NavBar(props: NavUserMenuProps) {
-  const { isPro, isLoggedIn, isGuest } = useFeUser();
+type NavBarProps = { logout: () => void };
+export default function NavBar(props: NavBarProps) {
+  const feUser = useFeUser();
+  const { isPro, isLoggedIn, isGuest } = feUser;
+  const user = feUser.get.onlyChild("user");
   return (
     <Styled className="NavBar-root">
       <Toolbar disableGutters={true}>
@@ -58,7 +61,7 @@ export default function NavBar(props: NavUserMenuProps) {
               <UpgradeUserToProPanel />
             </NavDropDown>
           )}
-          <NavUserMenu {...props} />
+          <NavUserMenu {...{ ...props, feId: user.feId }} />
         </div>
       </Toolbar>
     </Styled>

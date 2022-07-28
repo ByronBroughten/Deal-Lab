@@ -2,13 +2,21 @@ import config from "config";
 import jwt from "jsonwebtoken";
 import { isObject } from "lodash";
 import {
-  ApiStorageAuth,
-  isApiStorageAuth,
+  isUserPlan,
+  UserPlan,
 } from "../../../../../client/src/App/sharedWithServer/SectionsMeta/baseSections";
+import { StrictOmit } from "../../../../../client/src/App/sharedWithServer/utils/types";
 import { ResStatusError } from "../../../../../resErrorUtils";
 
-export type UserJwt = { userId: string; apiStorageAuth: ApiStorageAuth };
-export function createUserAuthToken(userJwt: UserJwt) {
+export interface UserJwt {
+  userId: string;
+  subscriptionPlan: UserPlan;
+  planExp: number;
+  iat: number;
+}
+
+export type UserJwtProps = StrictOmit<UserJwt, "iat">;
+export function createUserAuthToken(userJwt: UserJwtProps): string {
   const privateKey: string = config.get("jwtPrivateKey");
   try {
     return jwt.sign(userJwt, privateKey);
@@ -20,14 +28,23 @@ export function createUserAuthToken(userJwt: UserJwt) {
     );
   }
 }
+
+export function isUserJwt(value: any): value is UserJwt {
+  return (
+    isObject(value) && Object.keys(value).length === 4 && hasTokenProps(value)
+  );
+}
+
 function hasTokenProps(value: any) {
   return (
     "userId" in value &&
-    "apiStorageAuth" in value &&
+    "subscriptionPlan" in value &&
+    "planExp" in value &&
     "iat" in value &&
     typeof value.userId === "string" &&
     typeof value.iat === "number" &&
-    isApiStorageAuth(value.apiStorageAuth)
+    typeof value.planExp === "number" &&
+    isUserPlan(value.subscriptionPlan)
   );
 }
 export function checkUserAuthToken(token: any): UserJwt {
@@ -39,9 +56,4 @@ export function checkUserAuthToken(token: any): UserJwt {
       resMessage: "You are not logged in.",
       status: 401,
     });
-}
-export function isUserJwt(value: any): value is UserJwt {
-  return (
-    isObject(value) && Object.keys(value).length === 3 && hasTokenProps(value)
-  );
 }

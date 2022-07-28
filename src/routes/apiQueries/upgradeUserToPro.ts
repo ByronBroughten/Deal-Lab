@@ -1,12 +1,9 @@
 import { Request, Response } from "express";
 import { constants } from "../../client/src/App/Constants";
-import { ApiStorageAuth } from "../../client/src/App/sharedWithServer/SectionsMeta/baseSections";
 import { userAuthWare } from "../../middleware/authWare";
 import { ResStatusError } from "../../resErrorUtils";
-import { queryParameters } from "../DbSectionsModel";
 import { getStripe } from "../routeUtils/stripe";
 import { DbUser } from "./shared/DbSections/DbUser";
-import { findUserByIdAndUpdate } from "./shared/findAndUpdate";
 import { sendSuccess } from "./shared/sendSuccess";
 import { UserAuthedReq } from "./shared/UserAuthedReq";
 
@@ -16,10 +13,13 @@ async function upgradeUserToPro(req: Request, res: Response) {
     userJwt: { userId },
     priceId,
   } = validateUpgradeUserToProReq(req).body;
+
   const dbUser = await DbUser.queryByUserId(userId);
   const { customerId, email } = dbUser;
-  const stripe = getStripe();
 
+  // should this be implemented?: checkIfAlreadySubscribed(userId);
+
+  const stripe = getStripe();
   const session = await stripe.checkout.sessions.create({
     mode: "subscription",
     success_url:
@@ -37,9 +37,6 @@ async function upgradeUserToPro(req: Request, res: Response) {
 
   const sessionUrl = validateSessionUrl(session.url);
   sendSuccess(res, "upgradeUserToPro", { data: { sessionUrl } });
-  // checkIfAlreadySubscribed(userId);
-  // makePayment({ paymentMethodId });
-  // doUpgradeUserToPro({ userId });
 }
 function validateUpgradeUserToProReq(
   req: UserAuthedReq<any>
@@ -64,36 +61,6 @@ function validateSessionUrl(url: any): string {
       resMessage:
         "There was an error connecting to the payment provider. Please try again later, or contact the support email at the bottom of the screen.",
       status: 404,
-    });
-  }
-}
-
-async function checkIfAlreadySubscribed(userId: string) {
-  const dbUser = await DbUser.queryByUserId(userId);
-}
-
-type DoUpgradeUserToProProps = { userId: string };
-async function doUpgradeUserToPro({ userId }: DoUpgradeUserToProProps) {
-  await findUserByIdAndUpdate({
-    userId,
-    doWhat: "upgrade user to pro",
-    queryParameters: queryParameters.updateVarb({
-      storeName: "user",
-      sectionName: "user",
-      varbName: "apiStorageAuth",
-      value: "fullStorage",
-    }),
-  });
-  const dbUser = await DbUser.queryByUserId(userId);
-  const storageAuth = dbUser.get.value("apiStorageAuth");
-
-  const isProUser = storageAuth === ("fullStorage" as ApiStorageAuth);
-  if (!isProUser) {
-    throw new ResStatusError({
-      resMessage:
-        "Failed to upgrade to pro user. Please contact customer support.",
-      errorMessage: "Failed to update user storageAuth to fullStorage",
-      status: 400,
     });
   }
 }

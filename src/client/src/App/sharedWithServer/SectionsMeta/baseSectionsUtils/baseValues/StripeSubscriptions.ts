@@ -1,7 +1,15 @@
 import { StripeSubStatus } from "../../../utils/stripe";
 
-// subscriptions could be a section with a stringArray of priceIds
+// Now, when someone logs in:
 
+// 2. How will the front-end state reflect provision?
+// The front-end can directly access subscriptions and
+// determine provisioning that way.
+
+// It will need a function that calls the database when
+// an active status subscription runs out.
+
+// subscriptions could be a section with a stringArray of priceIds
 // there can be an equivalent on the front-end.
 
 // dbStore would have stripeSubscriptions, as would feStore

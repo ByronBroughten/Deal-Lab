@@ -49,7 +49,6 @@ export const userPrepS = {
           dbVarbs: {
             userName: registerFormData.userName,
             email,
-            apiStorageAuth: "basicStorage",
           },
         }),
       ],

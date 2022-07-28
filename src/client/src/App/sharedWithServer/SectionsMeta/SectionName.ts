@@ -2,8 +2,11 @@ import { StringTypeChecker } from "../../utils/StringTypeChecker";
 import { PropKeyOfValue } from "../utils/Obj/SubType";
 import { SimpleSectionName } from "./baseSections";
 import { baseNameArrs, BaseNameArrs } from "./baseSectionsDerived/baseNameArrs";
-import { ChildName } from "./childSectionsDerived/ChildName";
-import { ChildToSectionName } from "./childSectionsDerived/ChildSectionName";
+import { ChildName, getChildNames } from "./childSectionsDerived/ChildName";
+import {
+  childToSectionName,
+  ChildToSectionName,
+} from "./childSectionsDerived/ChildSectionName";
 import { ParentName } from "./childSectionsDerived/ParentName";
 import { relNameArrs, RelNameArrs } from "./relSectionsDerived/relNameArrs";
 import { SectionValues } from "./relSectionsUtils/valueMetaTypes";
@@ -43,6 +46,21 @@ export type ChildNameOfType<
   ChildToSectionName[SN][keyof ChildToSectionName[SN]] & SectionName<ST>
 > &
   ChildName<SN>;
+
+export function childNamesOfType<
+  SN extends SimpleSectionName,
+  ST extends SectionNameType
+>(sectionName: SN, sectionType: ST): ChildNameOfType<SN, ST>[] {
+  const childNamesOfType: ChildNameOfType<SN, ST>[] = [];
+  const childNames = getChildNames(sectionName);
+  for (const childName of childNames) {
+    const childSn = childToSectionName(sectionName, childName);
+    if (sectionNameS.is(childSn, sectionType)) {
+      childNamesOfType.push(childSn as ChildNameOfType<SN, ST>);
+    }
+  }
+  return childNamesOfType;
+}
 
 function _testChildNameOfType<
   SN extends "property" | "mgmt",

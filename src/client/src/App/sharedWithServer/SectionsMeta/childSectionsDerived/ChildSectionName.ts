@@ -25,6 +25,21 @@ export const childToSectionNames = simpleSectionNames.reduce(
   {} as ChildToSectionName
 );
 
+export function childToSectionName<
+  SN extends SimpleSectionName,
+  CN extends ChildName<SN>
+>(sectionName: SN, childName: CN): ChildSectionName<SN, CN> {
+  const names = childToSectionNames[sectionName] as {
+    [key: string]: string;
+  };
+  if (!names || !names[childName]) {
+    throw new Error(
+      `childName "${childName}" did not yield a childType from parent of type ${sectionName}`
+    );
+  }
+  return names[childName] as ChildSectionName<SN, CN>;
+}
+
 type MergedChildNames<SN extends SimpleSectionName> = MergeUnionObjFull<
   ChildToSectionName[SN]
 >;

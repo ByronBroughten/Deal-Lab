@@ -202,16 +202,11 @@ export const baseSections = {
     priceIds: "stringArray",
     currentPeriodEnd: "number",
   }),
-  user: baseSection(
-    baseVarbs("string", [
-      "email",
-      "userName",
-      "apiStorageAuth",
-      //
-    ] as const)
-  ),
-  // stripe
-
+  user: baseSection(baseVarbs("string", ["email", "userName"] as const)),
+  subscriptionInfo: baseSection({
+    plan: "string",
+    planExp: "number",
+  }),
   serverOnlyUser: baseSection(
     baseVarbs("string", ["encryptedPassword", "emailAsSubmitted"] as const)
   ),
@@ -228,11 +223,14 @@ export const allNull = simpleSectionNames.reduce((allNull, sectionName) => {
   return allNull;
 }, {} as Record<SimpleSectionName, null>);
 
-const apiStorageAuths = ["readonly", "basicStorage", "fullStorage"] as const;
-export type ApiStorageAuth = typeof apiStorageAuths[number];
-export function isApiStorageAuth(value: any): value is ApiStorageAuth {
-  return apiStorageAuths.includes(value);
+const userPlans = ["basicPlan", "fullPlan"] as const;
+export type UserPlan = typeof userPlans[number];
+export function isUserPlan(value: any): value is UserPlan {
+  return userPlans.includes(value);
 }
+
+const userOrGuestPlans = [...userPlans, "guestPlan"] as const;
+export type UserOrGuestPlan = typeof userOrGuestPlans[number];
 
 type FeSectionName = keyof BaseSections;
 export type BaseSectionsGeneral = Record<FeSectionName, GeneralBaseSection>;

@@ -5,14 +5,14 @@ import {
   ChildIdArrsNarrow,
   ChildIdArrsWide,
   ChildName,
-  sectionToChildNames,
+  getChildNames,
 } from "./childSectionsDerived/ChildName";
 import {
   childrenSectionNames,
   ChildSectionName,
   ChildSectionNameName,
   childSectionNameNames,
-  childToSectionNames,
+  childToSectionName,
 } from "./childSectionsDerived/ChildSectionName";
 import { relSections } from "./relSections";
 import {
@@ -90,7 +90,7 @@ export class SectionMeta<SN extends SimpleSectionName> {
     return this.prop("parentNames");
   }
   get childNames(): ChildName<SN>[] {
-    return sectionToChildNames[this.sectionName] as ChildName<SN>[];
+    return getChildNames(this.sectionName);
   }
   isChildType(sectionName: SectionName): sectionName is ChildSectionName<SN> {
     return this.childTypes.includes(sectionName as any);
@@ -99,15 +99,7 @@ export class SectionMeta<SN extends SimpleSectionName> {
     return childrenSectionNames[this.sectionName] as ChildSectionName<SN>[];
   }
   childType<CN extends ChildName<SN>>(childName: CN): ChildSectionName<SN, CN> {
-    const names = childToSectionNames[this.sectionName] as {
-      [key: string]: string;
-    };
-    if (!names || !names[childName]) {
-      throw new Error(
-        `childName "${childName}" did not yield a childType from parent of type ${this.sectionName}`
-      );
-    }
-    return names[childName] as ChildSectionName<SN, CN>;
+    return childToSectionName(this.sectionName, childName);
   }
   childTypeNames<CT extends SimpleSectionName>(
     childSectionName: CT

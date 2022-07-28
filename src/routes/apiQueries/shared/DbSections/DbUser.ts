@@ -6,13 +6,14 @@ import { LoginUser } from "../../../../client/src/App/sharedWithServer/apiQuerie
 import { RegisterReqBody } from "../../../../client/src/App/sharedWithServer/apiQueriesShared/register";
 import { defaultMaker } from "../../../../client/src/App/sharedWithServer/defaultMaker/defaultMaker";
 import {
-  ApiStorageAuth,
-  isApiStorageAuth,
+  isUserPlan,
+  UserPlan,
 } from "../../../../client/src/App/sharedWithServer/SectionsMeta/baseSections";
 import {
   isFeStoreTableName,
   relChildSections,
 } from "../../../../client/src/App/sharedWithServer/SectionsMeta/relChildSections";
+import { dbStoreNameS } from "../../../../client/src/App/sharedWithServer/SectionsMeta/relSectionsDerived/relNameArrs/dbStoreNameArrs";
 import { SectionValues } from "../../../../client/src/App/sharedWithServer/SectionsMeta/relSectionsUtils/valueMetaTypes";
 import {
   GetterSectionsBase,
@@ -117,12 +118,12 @@ export class DbUser extends GetterSectionsBase {
     const stripeInfo = this.get.onlyCousin("stripeInfo");
     return stripeInfo.value("customerId", "string");
   }
-  get apiStorageAuth(): ApiStorageAuth {
-    const apiStorageAuth = this.get.value("apiStorageAuth");
-    if (!isApiStorageAuth(apiStorageAuth)) {
-      throw new Error(`Invalid apiStorageAuth of ${apiStorageAuth}`);
+  get userPlan(): UserPlan {
+    const userPlan = this.get.value("userPlan");
+    if (!isUserPlan(userPlan)) {
+      throw new Error(`Invalid userPlan of ${userPlan}`);
     }
-    return apiStorageAuth;
+    return userPlan;
   }
   get serverOnlyUser(): GetterSection<"serverOnlyUser"> {
     return this.get.onlyCousin("serverOnlyUser");
@@ -174,7 +175,7 @@ export class DbUser extends GetterSectionsBase {
             });
           }
         }
-      } else {
+      } else if (dbStoreNameS.is(feStoreChildName)) {
         feStore.loadChildren({
           childName: feStoreChildName,
           sectionPacks: this.dbSections.sectionPackArr(feStoreChildName),
@@ -194,10 +195,13 @@ export class DbUser extends GetterSectionsBase {
       .status(200)
       .send(loggedInUser);
   }
+
   createUserAuthToken() {
     return createUserAuthToken({
+      // I actually have to finish this out.
       userId: this.userId,
-      apiStorageAuth: this.apiStorageAuth,
+      subscriptionPlan: "basicPlan",
+      planExp: 0,
     });
   }
   static checkUserAuthToken = checkUserAuthToken;

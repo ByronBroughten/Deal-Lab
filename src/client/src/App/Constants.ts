@@ -19,13 +19,23 @@ export const config = {
   frontEndUrlBase: baseEnvStuff.frontEndUrlBase,
   apiPathBit: apiPathBit,
   apiPathFull: `${baseEnvStuff.endpoint}${apiPathBit}`,
+  plans: {
+    basic: {
+      sectionSaveLimit: 2,
+      canUseCompareTable: false,
+    },
+    pro: {
+      sectionSaveLimit: 1000,
+      canUseCompareTable: true,
+    },
+  },
   subscriptionSuccessUrlEnd: "/stripe-subscription-success",
   subscriptions: [
     {
       priceId: "price_1LOqZQBcSOBChcCBoh0Taacn",
       costInCents: 1000,
       billed: "monthly",
-      product: "proUser",
+      product: "proPlan",
     },
   ],
   basicStorageLimit: 2,

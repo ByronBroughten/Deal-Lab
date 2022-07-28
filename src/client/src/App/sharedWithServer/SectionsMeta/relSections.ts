@@ -1,4 +1,4 @@
-import { ApiStorageAuth, SimpleSectionName } from "./baseSections";
+import { SimpleSectionName, UserOrGuestPlan } from "./baseSections";
 import { relVarbInfoS } from "./childSectionsDerived/RelVarbInfo";
 import { relVarb, relVarbS } from "./relSectionsUtils/rel/relVarb";
 import {
@@ -44,13 +44,16 @@ export function makeRelSections() {
       {
         email: relVarb("string", { displayName: "Email" }),
         userName: relVarb("string", { displayName: "Name" }),
-        apiStorageAuth: relVarb("string", {
-          displayName: "Api Access Status",
-          initValue: "basicStorage" as ApiStorageAuth,
-        }),
       },
       { dbIndexStoreName: "user" }
     ),
+    subscriptionInfo: relSection("Subscription info", {
+      plan: relVarb("string", {
+        displayName: "Api Access Status",
+        initValue: "guestPlan" as UserOrGuestPlan,
+      }),
+      planExp: relVarb("number", { initValue: 0 }),
+    }),
     serverOnlyUser: relSection(
       "serverOnlyUser",
       relVarbsS.strings(["encryptedPassword", "emailAsSubmitted"] as const)

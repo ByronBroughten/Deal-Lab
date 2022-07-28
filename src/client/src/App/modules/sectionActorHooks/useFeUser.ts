@@ -4,9 +4,7 @@ import { FeUser } from "../SectionActors/FeUser";
 export function useFeUser(): FeUser {
   const props = useSectionsActorProps();
   const { sections } = props.sectionsShare;
-  const { childFeIds } = sections.onlyOneRawSection("feStore");
-  const feId = childFeIds.user[0];
-  if (!feId) throw new Error("No user in feStore");
+  const { feId } = sections.onlyOneRawSection("feStore");
   return new FeUser({
     ...props,
     feId,
