@@ -111,7 +111,20 @@ export const Arr = {
     nextArr.pop();
     return nextArr;
   },
-  has<T>(arr: T[], fn: (value: T) => boolean) {
+  findAll<T>(arr: readonly T[], fn: (value: T) => boolean): T[] {
+    const arrClone = [...arr];
+    const all: T[] = [];
+    while (true) {
+      const idx = arr.findIndex(fn);
+      if (idx >= 0) {
+        all.push(arr[idx]);
+        arrClone.splice(idx, 1);
+      } else {
+        return all;
+      }
+    }
+  },
+  has<T>(arr: T[], fn: (value: T) => boolean): boolean {
     const value = arr.find(fn);
     if (value === undefined) return false;
     else return true;

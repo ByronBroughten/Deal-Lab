@@ -8,10 +8,13 @@ import {
 import { StrictOmit } from "../../../../../client/src/App/sharedWithServer/utils/types";
 import { ResStatusError } from "../../../../../resErrorUtils";
 
-export interface UserJwt {
-  userId: string;
+export interface SubscriptionProps {
   subscriptionPlan: UserPlan;
   planExp: number;
+}
+
+export interface UserJwt extends SubscriptionProps {
+  userId: string;
   iat: number;
 }
 

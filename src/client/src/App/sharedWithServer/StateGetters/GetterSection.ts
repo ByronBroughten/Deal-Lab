@@ -45,6 +45,7 @@ import {
   noParentWarning,
 } from "../SectionsMeta/Info";
 import {
+  SectionValues,
   SectionValuesReq,
   SectionValuesRes,
 } from "../SectionsMeta/relSectionsUtils/valueMetaTypes";
@@ -375,6 +376,12 @@ export class GetterSection<
   }
   varbInfo(varbName: SectionVarbName<SN>): FeVarbInfo<SN> {
     return this.varb(varbName as string).feVarbInfo;
+  }
+  get allValues(): SectionValues<SN> {
+    return this.meta.varbNames.reduce((values, varbName) => {
+      (values[varbName as SectionVarbName<SN>] as any) = this.value(varbName);
+      return values;
+    }, {} as SectionValues<SN>);
   }
   values<VNS extends SectionValuesReq>(
     varbToValuesNames: VNS

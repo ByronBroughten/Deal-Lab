@@ -5,10 +5,7 @@ import { constants } from "../../../../client/src/App/Constants";
 import { LoginUser } from "../../../../client/src/App/sharedWithServer/apiQueriesShared/login";
 import { RegisterReqBody } from "../../../../client/src/App/sharedWithServer/apiQueriesShared/register";
 import { defaultMaker } from "../../../../client/src/App/sharedWithServer/defaultMaker/defaultMaker";
-import {
-  isUserPlan,
-  UserPlan,
-} from "../../../../client/src/App/sharedWithServer/SectionsMeta/baseSections";
+import { VarbValues } from "../../../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionTypes";
 import {
   isFeStoreTableName,
   relChildSections,
@@ -16,12 +13,16 @@ import {
 import { dbStoreNameS } from "../../../../client/src/App/sharedWithServer/SectionsMeta/relSectionsDerived/relNameArrs/dbStoreNameArrs";
 import { SectionValues } from "../../../../client/src/App/sharedWithServer/SectionsMeta/relSectionsUtils/valueMetaTypes";
 import {
-  GetterSectionsBase,
-  GetterSectionsProps,
-} from "../../../../client/src/App/sharedWithServer/StateGetters/Bases/GetterSectionsBase";
+  GetterSectionBase,
+  GetterSectionProps,
+} from "../../../../client/src/App/sharedWithServer/StateGetters/Bases/GetterSectionBase";
 import { GetterSection } from "../../../../client/src/App/sharedWithServer/StateGetters/GetterSection";
 import { PackBuilderSection } from "../../../../client/src/App/sharedWithServer/StatePackers.ts/PackBuilderSection";
+import { Arr } from "../../../../client/src/App/sharedWithServer/utils/Arr";
+import { getStandardNow } from "../../../../client/src/App/sharedWithServer/utils/date";
+import { stripeS } from "../../../../client/src/App/sharedWithServer/utils/stripe";
 import { HandledResStatusError } from "../../../../resErrorUtils";
+import { serverSectionNames } from "../../../ServerStoreName";
 import { DbSectionsProps } from "./Bases/DbSectionsBase";
 import { DbSections } from "./DbSections";
 import { DbSectionsQuerier } from "./DbSectionsQuerier";
@@ -29,15 +30,16 @@ import { DbSectionsRaw } from "./DbSectionsQuerierTypes";
 import {
   checkUserAuthToken,
   createUserAuthToken,
+  SubscriptionProps,
 } from "./DbUser/userAuthToken";
 import { userPrepS } from "./DbUser/userPrepS";
 
-interface DbUserProps extends GetterSectionsProps {
+interface DbUserProps extends GetterSectionProps<"dbStore"> {
   dbSections: DbSections;
 }
 
-export class DbUser extends GetterSectionsBase {
-  dbSections: DbSections;
+export class DbUser extends GetterSectionBase<"dbStore"> {
+  readonly dbSections: DbSections;
   constructor({ dbSections, ...rest }: DbUserProps) {
     super(rest);
     this.dbSections = dbSections;
@@ -53,17 +55,16 @@ export class DbUser extends GetterSectionsBase {
   }
   private static init(props: DbSectionsProps) {
     const dbSections = new DbSections(props);
-    const omniLoader = PackBuilderSection.initAsOmniParent();
-    omniLoader.loadChild({
-      childName: "user",
-      sectionPack: dbSections.onlySectionPack("user"),
-    });
-    omniLoader.loadChild({
-      childName: "serverOnlyUser",
-      sectionPack: dbSections.onlySectionPack("serverOnlyUser"),
-    });
+    const dbStore = PackBuilderSection.initAsOmniChild("dbStore");
+    for (const childName of serverSectionNames) {
+      const sectionPacks = dbSections.sectionPackArr(childName);
+      dbStore.loadChildren({
+        childName,
+        sectionPacks,
+      });
+    }
     return new DbUser({
-      ...omniLoader.getterSectionsProps,
+      ...dbStore.getterSectionProps,
       dbSections,
     });
   }
@@ -104,29 +105,58 @@ export class DbUser extends GetterSectionsBase {
       dbSectionsRaw: await querier.getDbSectionsRaw(),
     });
   }
-
-  get get(): GetterSection<"user"> {
-    return new GetterSection({
-      ...this.stateSections.onlyOneRawSection("user"),
-      ...this.getterSectionsProps,
-    });
+  get get(): GetterSection<"dbStore"> {
+    return new GetterSection(this.getterSectionProps);
+  }
+  get userInfo(): GetterSection<"user"> {
+    return this.get.onlyChild("user");
   }
   get email(): string {
-    return this.get.value("email", "string");
+    return this.userInfo.value("email", "string");
   }
   get customerId(): string {
-    const stripeInfo = this.get.onlyCousin("stripeInfo");
+    const stripeInfo = this.get.onlyChild("stripeInfo");
     return stripeInfo.value("customerId", "string");
   }
-  get userPlan(): UserPlan {
-    const userPlan = this.get.value("userPlan");
-    if (!isUserPlan(userPlan)) {
-      throw new Error(`Invalid userPlan of ${userPlan}`);
+  get subscriptionProps(): SubscriptionProps {
+    const subscriptions = this.get.children("stripeSubscription");
+    let subscriptionProps: SubscriptionProps = {
+      subscriptionPlan: "basicPlan",
+      planExp: 0,
+    };
+
+    const now = getStandardNow();
+    for (const sub of subscriptions) {
+      const values = sub.values({
+        subId: "string",
+        subStatus: "string",
+        priceIds: "stringArray",
+        currentPeriodEnd: "number",
+      });
+      const { priceIds, currentPeriodEnd } = values;
+      if (
+        stripeS.isActiveSubStatus(values.subStatus) &&
+        currentPeriodEnd > now &&
+        currentPeriodEnd > subscriptionProps.planExp
+      ) {
+        const actives = Arr.findAll(constants.subscriptions, (subConfig) => {
+          return priceIds.includes(subConfig.priceId);
+        });
+        const activePro = actives.find((active) => {
+          active.product === "proPlan";
+        });
+        if (activePro) {
+          subscriptionProps = {
+            subscriptionPlan: "fullPlan",
+            planExp: values.currentPeriodEnd,
+          };
+        }
+      }
     }
-    return userPlan;
+    return subscriptionProps;
   }
   get serverOnlyUser(): GetterSection<"serverOnlyUser"> {
-    return this.get.onlyCousin("serverOnlyUser");
+    return this.get.onlyChild("serverOnlyUser");
   }
   async validatePassword(attemptedPassword: string): Promise<void> {
     const encryptedPassword = this.serverOnlyUser.value(
@@ -180,9 +210,13 @@ export class DbUser extends GetterSectionsBase {
           childName: feStoreChildName,
           sectionPacks: this.dbSections.sectionPackArr(feStoreChildName),
         });
+      } else if (feStoreChildName === "subscriptionInfo") {
+        const subInfo = feStore.onlyChild("subscriptionInfo");
+        subInfo.updater.updateValuesDirectly(
+          this.subscriptionProps as any as VarbValues
+        );
       }
     }
-
     return {
       feStore: [feStore.makeSectionPack()],
     };
@@ -198,10 +232,8 @@ export class DbUser extends GetterSectionsBase {
 
   createUserAuthToken() {
     return createUserAuthToken({
-      // I actually have to finish this out.
       userId: this.userId,
-      subscriptionPlan: "basicPlan",
-      planExp: 0,
+      ...this.subscriptionProps,
     });
   }
   static checkUserAuthToken = checkUserAuthToken;
