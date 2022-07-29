@@ -1,7 +1,7 @@
 import React from "react";
 import { AiOutlineSave } from "react-icons/ai";
 import { BiCopy, BiReset } from "react-icons/bi";
-import { MdDelete } from "react-icons/md";
+import { MdDelete, MdOutlineSystemUpdateAlt } from "react-icons/md";
 import styled, { css } from "styled-components";
 import useToggleView from "../../../../modules/customHooks/useToggleView";
 import { useMainSectionActor } from "../../../../modules/sectionActorHooks/useMainSectionActor";
@@ -63,7 +63,7 @@ export function MainSectionTitleRow({
             <>
               <LabeledIconBtn
                 label="Save updates"
-                icon={<AiOutlineSave size="25" />}
+                icon={<MdOutlineSystemUpdateAlt size="25" />}
                 onClick={() => mainSection.saveUpdates()}
               />
               <LabeledIconBtn
