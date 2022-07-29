@@ -8,97 +8,47 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-// 1. How will the jwt reflect provision of the subscription?
-//    There are essentially two things at play here
-//    - The "full" section storage limit is in effect.
-//    - The tables are turned on.
-// The JWT just needs a storageLimit prop ("full" or "basic")
-// - checked in addSection
+// Ok. What do I have to do?
+// - Limit storage (addSection) if the user only has basic authorization
+// - Allow storage if the user has a full subscription
+// - Test those two things in addSection.test
+// - Make it so addSection only accepts certain sectionNames
+//   - Do this for updateSection, deleteSection, getSection, and replaceSectionArr
+// - Indicate on the front-end when saving is now allowed due to storage. Try an info dot.
 
-// And a "compareTableAccess" prop ("none", "all")
-// - checked when logging in, determines whether tables are loaded
+// - Test the payment portal route
 
-// storageLimit: "full" | "basic"
-// compareTableAccess: "none" | "all"
-// subPeriodEnd: number
+// - If someone is pro
+//   - remove the pro upgrade button
+//   - make their name have a yellow backdrop
 
-// Make compareTable have a second set of rows
+// - Make it attempt to update the Jwt if the Jwt is expired
+// - Make it succeed if a valid subscription is present in the db
+// - Make it fail if no such subscription exists in the db
 
-// The JWT also needs the subscription expiration date.
+// - Test the two Stripe webhooks.
+//   - Create my own webhook events that simulate the ones stripe would send
+//   - Use "generateTestHeaderString" to add a header that works
 
-// This JWT is created if an activey subscription with an appropriate
-// price id is found.
+// - Update the Properties menu. Just change the button
+// - If you feel like it, stick a filter on top of the menu
+//   - For this, you wouldn't even need persistent state.
+// - Add "load" to the left of each property name
 
-// Properties menu
-// List the properties
+// - Load Deal with updated property, loan, and mgmt
+//   - This is almost done. You just need a way to tell
+//   it which dbStores to use
+//   - You also need to create some kind of loop that says
+//     which sections to use as a focal point next (parents down to children)
 
-// rename "user" section to "userInfo"
-// same with serverUser
+// rename "user" section to "userInfo", or "publicUserInfo"
+// same with serverUser—privateUserInfo, maybe
 
-// tailor which dbSections can be accessed by which
-// routes. You don't want subscriptions to be editable
-// by the section functions, ect.
+// - Add basic Google Analytics
+// - Write a test to verify that the calculations work as expected
+// - Think about what to do about the little "Show Details" bugs
 
-// List the properties
-// You can use the same dropdown, or you can use Autocomplete
-
-// You will probably want Autocomplete. You want to be able
-// to search for the properties.
-
-// Load Deal with updated property, loan, mgmt
-// - for each child of loaded section, check whether there is a mainStore
-//   If there is, check whether any of the dbIds match
-//   If they do, load em
-//   Do this for all descendants, in order
-
-// - Disable "Compare Deals" button unless user is pro
-// - Hide Compare Deals table unless user is pro
-
-// - Disable saving when there are more than two properties, unless
-//   user is pro (front end)
-
-// - Disable saving when there are more than two properties, unless
-//   user is pro (back end)
-
-// All I need for now:
-
-// "reset to default"
-// "load"
-// "save new" (when not saved, saves with current dbId)
-
-// "make a copy" (when saved, adds "copy" to title, saves)
-// "copy and save" (when saved; new dbId, adds "copy" to title, saves)
-// "save updates"(when saved, saves with current dbId)
-// "delete" (when saved, makes it no longer saved)
-
-// I will need the menu to be in the top right, in a separate block
-// Will the menu push things to the right when it opens?
-// I suppose so.
-// Save menu
-
-// it can be like gmail and google keep's menu
-
-// sectionPack variable names?
-
-// Core Features
-// * Load "property" with updates
-// * Load  "deal" with updates
-// be able to select outputs as variables for the table.
-// * Implement payments!
-
-// Write Tests
-// - the rest of sectionSetter and varbSetter tests
-// - the actor tests
-// - tests to verify the calculations
-
-// Implement paying for Pro
-// Make the mainSectionLoadMenu use GenericAutoComplete
-// Upload to Heroku
-// Make a video demo/ad
-
-// Hide the save menus behind a click; label their buttons.
-// Always have "Save New"; also have "Save Updates", "Make Copy", "Saved Plural"
-
-// - Make a function for gathering props in SolveValueVarb(?)
+// - Upload to Heroku
+// - Make a video demo/ad
 
 reportWebVitals();

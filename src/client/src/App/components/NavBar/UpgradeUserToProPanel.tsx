@@ -78,7 +78,7 @@ export function UpgradeUserToProPanel() {
               )}
               data={[
                 `Save up to ${constants.plans.pro.sectionSaveLimit} unique deals, properties, loans, and management scenarios`,
-                "Easily compare saved deals with the Compare Deals table",
+                // "Easily compare saved deals with the Compare Deals table",
               ]}
             />
             <View style={styles.subSectionSpace}>

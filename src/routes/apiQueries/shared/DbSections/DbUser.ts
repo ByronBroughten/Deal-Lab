@@ -5,7 +5,6 @@ import { constants } from "../../../../client/src/App/Constants";
 import { LoginUser } from "../../../../client/src/App/sharedWithServer/apiQueriesShared/login";
 import { RegisterReqBody } from "../../../../client/src/App/sharedWithServer/apiQueriesShared/register";
 import { defaultMaker } from "../../../../client/src/App/sharedWithServer/defaultMaker/defaultMaker";
-import { VarbValues } from "../../../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionTypes";
 import {
   isFeStoreTableName,
   relChildSections,
@@ -211,10 +210,13 @@ export class DbUser extends GetterSectionBase<"dbStore"> {
           sectionPacks: this.dbSections.sectionPackArr(feStoreChildName),
         });
       } else if (feStoreChildName === "subscriptionInfo") {
+        const { subscriptionPlan, planExp } = this.subscriptionProps;
+        const subInfoValues: SectionValues<"subscriptionInfo"> = {
+          plan: subscriptionPlan,
+          planExp,
+        };
         const subInfo = feStore.onlyChild("subscriptionInfo");
-        subInfo.updater.updateValuesDirectly(
-          this.subscriptionProps as any as VarbValues
-        );
+        subInfo.updater.updateValuesDirectly(subInfoValues);
       }
     }
     return {

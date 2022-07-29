@@ -1,6 +1,4 @@
 import { CgDetailsLess, CgDetailsMore } from "react-icons/cg";
-import { MdCompareArrows } from "react-icons/md";
-import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 import useToggleView from "../../modules/customHooks/useToggleView";
 import { auth } from "../../modules/services/authService";
@@ -8,7 +6,6 @@ import theme from "../../theme/Theme";
 import MainSection from "../appWide/GeneralSection";
 import GeneralSectionTitle from "../appWide/GeneralSection/GeneralSectionTitle";
 import MainSectionTitleBtn from "../appWide/GeneralSection/GeneralSectionTitle/MainSectionTitleBtn";
-import StandardToolTip from "../appWide/StandardTooltip";
 import { Deal } from "./DealStats/Deal";
 
 type Props = { className?: string; feId: string };
@@ -46,35 +43,37 @@ export default function DealStats({ className, feId }: Props) {
             )}
           </MainSectionTitleBtn>
           {/* // disable the link */}
-          {auth.isToken && (
-            <Link className="GeneralSectionTitle-dealsLink" to="/deals">
-              <MainSectionTitleBtn
-                themeName="deal"
-                className="GeneralSectionTitle-child"
-                // disabled={!auth.isToken}
-              >
-                {"Compare Deals"}
-                <MdCompareArrows className="GeneralSectionTitle-compareIcon" />
-              </MainSectionTitleBtn>
-            </Link>
-          )}
-          {!auth.isToken && (
-            <StandardToolTip
-              className="GeneralSectionTitle-toolTip"
-              title="Login to compare saved deals"
-            >
-              <div className="GeneralSectionTitle-disabledBtnWrapper">
-                <MainSectionTitleBtn
-                  themeName="deal"
-                  className="GeneralSectionTitle-child GeneralSectionTitle-compareDealsBtn"
-                  disabled={true}
-                >
-                  {"Compare Deals"}
-                  <MdCompareArrows className="GeneralSectionTitle-compareIcon" />
-                </MainSectionTitleBtn>
-              </div>
-            </StandardToolTip>
-          )}
+          {
+            auth.isToken && null
+            // <Link className="GeneralSectionTitle-dealsLink" to="/deals">
+            //   <MainSectionTitleBtn
+            //     themeName="deal"
+            //     className="GeneralSectionTitle-child"
+            //     // disabled={!auth.isToken}
+            //   >
+            //     {"Compare Deals"}
+            //     <MdCompareArrows className="GeneralSectionTitle-compareIcon" />
+            //   </MainSectionTitleBtn>
+            // </Link>
+          }
+          {
+            !auth.isToken && null
+            // <StandardToolTip
+            //   className="GeneralSectionTitle-toolTip"
+            //   title="Login to compare saved deals"
+            // >
+            //   <div className="GeneralSectionTitle-disabledBtnWrapper">
+            //     <MainSectionTitleBtn
+            //       themeName="deal"
+            //       className="GeneralSectionTitle-child GeneralSectionTitle-compareDealsBtn"
+            //       disabled={true}
+            //     >
+            //       {"Compare Deals"}
+            //       <MdCompareArrows className="GeneralSectionTitle-compareIcon" />
+            //     </MainSectionTitleBtn>
+            //   </div>
+            // </StandardToolTip>
+          }
         </div>
       </GeneralSectionTitle>
       <Deal {...{ feId, detailsIsOpen }} />

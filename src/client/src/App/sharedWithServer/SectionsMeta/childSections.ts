@@ -76,6 +76,7 @@ export const childSections = checkChildSections({
   table: childrenSections({
     column: ["column"],
     tableRow: ["tableRow"],
+    compareRow: ["tableRow"],
   }),
   tableRow: { cell: childSection("cell") },
   outputList: { outputItem: childSection("outputItem") },
