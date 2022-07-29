@@ -54,7 +54,11 @@ const Styled = styled.div<{ sectionName: ThemeName }>`
   ${ccs.dropdown.scrollbar};
 
   .RowIndexSectionList-noneDiv {
-    padding: ${theme.s2};
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    height: 30px;
   }
 
   .RowIndexRows-trashBtn {

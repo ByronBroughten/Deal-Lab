@@ -41,16 +41,17 @@ export class SetterSectionsBase {
   get initialSections() {
     return this.initialSectionsShare.sections;
   }
-  private revertSections(): void {
-    this.setSectionsShare.setSections(() => this.initialSections);
-  }
   async tryAndRevertIfFail<FN extends () => any>(
     fn: FN
   ): Promise<ReturnType<FN>> {
+    const { initialSections } = this;
+    // initialSections must be extracted from this
+    // before the try block. Otherwise, this.initialSectionsShare
+    // might reset before the catch block for some reason.
     try {
-      return fn();
+      return await fn();
     } catch (err) {
-      this.revertSections();
+      this.setSectionsShare.setSections(() => initialSections);
       throw err;
     }
   }

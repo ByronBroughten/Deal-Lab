@@ -67,6 +67,11 @@ export function MainSectionTitleRow({
                 onClick={() => mainSection.saveUpdates()}
               />
               <LabeledIconBtn
+                label="Save as new"
+                icon={<AiOutlineSave size="25" />}
+                onClick={() => mainSection.saveAsNew()}
+              />
+              <LabeledIconBtn
                 label="Make a copy"
                 icon={<BiCopy size="28" />}
                 onClick={() => mainSection.makeACopy()}

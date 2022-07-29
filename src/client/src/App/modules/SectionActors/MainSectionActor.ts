@@ -15,6 +15,10 @@ import { SectionActorBase } from "./SectionActorBase";
 export class MainSectionActor<
   SN extends SectionName<"tableSource">
 > extends SectionActorBase<SN> {
+  setter = new SetterSection(this.sectionActorBaseProps);
+  // setter can't be a getter because its initial
+  // sections would get messed up
+
   private get sectionQuerierProps(): SectionQuerierProps<
     DbSectionNameName<SN>
   > {
@@ -35,9 +39,6 @@ export class MainSectionActor<
   get isSaved(): boolean {
     return this.table.hasRowByDbId(this.dbId);
   }
-  get setter(): SetterSection<SN> {
-    return new SetterSection(this.sectionActorBaseProps);
-  }
   get getterSections() {
     return new GetterSections(this.sectionActorBaseProps);
   }
@@ -48,6 +49,10 @@ export class MainSectionActor<
     const { main } = this.getterSections;
     const feStore = main.onlyChild("feStore");
     const { feTableIndexStoreName } = this.get.meta;
+
+    // setterTable is creating new initialSections
+    // I have to pass the initial sections
+    // as setterSectionProps
     return new SetterTable({
       ...this.sectionActorBaseProps,
       ...feStore.onlyChild(feTableIndexStoreName).feInfo,
@@ -66,6 +71,10 @@ export class MainSectionActor<
     this.setter.resetDbId();
     const titleVarb = this.setter.varb("displayName");
     titleVarb.updateValueDirectly("Copy of " + titleVarb.value("string"));
+  }
+  async saveAsNew() {
+    this.setter.resetDbId();
+    this.saveNew();
   }
   async copyAndSave() {
     this.makeACopy();
@@ -132,6 +141,7 @@ export class MainSectionActor<
       displayName: this.get.value("displayName", "string"),
       dbId,
     });
+    const test = "breakpoint";
     this.updateRow();
   }
 }
