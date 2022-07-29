@@ -4,13 +4,13 @@ import { ApiQueryName } from "../client/src/App/sharedWithServer/apiQueriesShare
 import { Obj } from "../client/src/App/sharedWithServer/utils/Obj";
 import { addSectionWare } from "./apiQueries/addSection";
 import { deleteSectionWare } from "./apiQueries/deleteSection";
+import { upgradeUserToProWare } from "./apiQueries/getProPaymentLink";
 import { getSectionWare } from "./apiQueries/getSection";
 import { loginWare } from "./apiQueries/login";
 import { nextRegisterWare } from "./apiQueries/register";
 import { replaceSectionArrWare } from "./apiQueries/replaceSectionArr";
 import { stripeWebhookWare } from "./apiQueries/stripeWebhooks";
 import { updateSectionWare } from "./apiQueries/updateSection";
-import { upgradeUserToProWare } from "./apiQueries/upgradeUserToPro";
 
 const endpointWare: Record<ApiQueryName, any> = {
   register: nextRegisterWare,
@@ -20,7 +20,7 @@ const endpointWare: Record<ApiQueryName, any> = {
   getSection: getSectionWare,
   deleteSection: deleteSectionWare,
   replaceSectionArr: replaceSectionArrWare,
-  upgradeUserToPro: upgradeUserToProWare,
+  getProPaymentLink: upgradeUserToProWare,
 } as const;
 
 const apiQueriesServer = express.Router();

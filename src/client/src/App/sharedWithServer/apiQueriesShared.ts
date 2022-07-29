@@ -28,7 +28,7 @@ export type ApiQueries = {
   replaceSectionArr: ReplaceSectionArrQuery;
   register: (req: RegisterReq) => Promise<LoginQueryObjects["res"]>;
   login: (req: LoginQueryObjects["req"]) => Promise<LoginQueryObjects["res"]>;
-  upgradeUserToPro: (req: UpgradeUserToProReq) => Promise<UrlRes>;
+  getProPaymentLink: (req: UpgradeUserToProReq) => Promise<UrlRes>;
 };
 type ApiQueriesTest<
   T extends Record<ApiQueryName, (req: any) => Promise<any>>

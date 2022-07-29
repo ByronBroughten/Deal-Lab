@@ -15,16 +15,20 @@ AppRegistry.runApplication("App", {
 // - Make it so addSection only accepts certain sectionNames
 //   - Do this for updateSection, deleteSection, getSection, and replaceSectionArr
 // - Indicate on the front-end when saving is now allowed due to storage. Try an info dot.
-
-// - Test the payment portal route
-
-// - If someone is pro
-//   - remove the pro upgrade button
-//   - make their name have a yellow backdrop
-
-// - Make it attempt to update the Jwt if the Jwt is expired
+// - If the Jwt is expired, make it attempt to update the Jwt
 // - Make it succeed if a valid subscription is present in the db
 // - Make it fail if no such subscription exists in the db
+
+// - Figure out which sections will be savable and add them as children to the db
+//   (even if for now they will be empty)
+
+// - Make a useEffect on the frontEnd that attempts to update the
+//   front-end subscriptionInfo if the planExp is out of date
+
+// - Test the payment url route
+
+// - If someone is pro
+//   - make their name have a yellow backdrop
 
 // - Test the two Stripe webhooks.
 //   - Create my own webhook events that simulate the ones stripe would send

@@ -9,9 +9,16 @@ interface Props {
   title: string;
   className?: string;
   dropTop?: boolean;
+  icon?: React.ReactNode;
 }
 
-export function DropdownList({ children, title, className, dropTop }: Props) {
+export function DropdownList({
+  children,
+  title,
+  className,
+  dropTop,
+  icon,
+}: Props) {
   const { toggleList, closeList, listIsOpen } = useToggleView({
     initValue: false,
     viewWhat: "list",
@@ -36,6 +43,7 @@ export function DropdownList({ children, title, className, dropTop }: Props) {
           isDropped: listIsOpen,
           toggleDropped: toggleList,
           title,
+          icon,
         }}
       />
 

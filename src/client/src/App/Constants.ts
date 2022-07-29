@@ -48,7 +48,7 @@ export const config = {
     "getSection",
     "deleteSection",
     "replaceSectionArr",
-    "upgradeUserToPro",
+    "getProPaymentLink",
   ],
   tokenKey: {
     sectionsState: "sections-state",

@@ -83,10 +83,10 @@ function makeApiQueries(): ApiQueries {
         return validateDbStoreNameRes;
       },
     },
-    upgradeUserToPro: {
-      doingWhat: "upgrading to pro",
-      validateRes(res: AxiosResponse<unknown>): QueryRes<"upgradeUserToPro"> {
-        const { data } = res as QueryRes<"upgradeUserToPro">;
+    getProPaymentLink: {
+      doingWhat: "going to the pro upgrade payment page",
+      validateRes(res: AxiosResponse<unknown>): QueryRes<"getProPaymentLink"> {
+        const { data } = res as QueryRes<"getProPaymentLink">;
         if (Obj.isAnyIfIsObj(data)) {
           const { sessionUrl } = data;
           if (typeof sessionUrl === "string") return makeRes({ sessionUrl });
@@ -133,7 +133,6 @@ function makeApiQuery<QN extends ApiQueryName>({
 }
 
 async function _testApiQueries() {
-  const _test: QueryRes<"upgradeUserToPro"> = await apiQueries.upgradeUserToPro(
-    { body: { priceId: "test" } }
-  );
+  const _test: QueryRes<"getProPaymentLink"> =
+    await apiQueries.getProPaymentLink({ body: { priceId: "test" } });
 }

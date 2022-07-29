@@ -7,8 +7,8 @@ import { DbUser } from "./shared/DbSections/DbUser";
 import { sendSuccess } from "./shared/sendSuccess";
 import { UserAuthedReq } from "./shared/UserAuthedReq";
 
-export const upgradeUserToProWare = [userAuthWare, upgradeUserToPro] as const;
-async function upgradeUserToPro(req: Request, res: Response) {
+export const upgradeUserToProWare = [userAuthWare, getProPaymentLink] as const;
+async function getProPaymentLink(req: Request, res: Response) {
   const {
     userJwt: { userId },
     priceId,
@@ -36,14 +36,14 @@ async function upgradeUserToPro(req: Request, res: Response) {
   });
 
   const sessionUrl = validateSessionUrl(session.url);
-  sendSuccess(res, "upgradeUserToPro", { data: { sessionUrl } });
+  sendSuccess(res, "getProPaymentLink", { data: { sessionUrl } });
 }
 function validateUpgradeUserToProReq(
   req: UserAuthedReq<any>
-): UserAuthedReq<"upgradeUserToPro"> {
-  const { userJwt, priceId } = (req as UserAuthedReq<"upgradeUserToPro">).body;
+): UserAuthedReq<"getProPaymentLink"> {
+  const { userJwt, priceId } = (req as UserAuthedReq<"getProPaymentLink">).body;
   if (typeof priceId !== "string") {
-    throw new Error("Failed upgradeUserToPro validation.");
+    throw new Error("Failed getProPaymentLink validation.");
   }
   return {
     body: {

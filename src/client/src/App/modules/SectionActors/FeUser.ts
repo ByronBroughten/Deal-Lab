@@ -18,10 +18,15 @@ export class FeUser extends GetterSectionBase<"feStore"> {
   get get(): GetterSection<"feStore"> {
     return new GetterSection(this.getterSectionProps);
   }
+  get userPlan(): UserOrGuestPlan {
+    const subInfo = this.get.onlyChild("subscriptionInfo");
+    return subInfo.value("plan", "string") as UserOrGuestPlan;
+  }
   get isPro(): boolean {
-    const subscription = this.get.onlyChild("subscriptionInfo");
-    const plan = subscription.value("plan", "string") as UserOrGuestPlan;
-    return plan === "fullPlan";
+    return this.userPlan === "fullPlan";
+  }
+  get isBasic(): boolean {
+    return this.userPlan === "basicPlan";
   }
   get isLoggedIn() {
     return auth.isToken;

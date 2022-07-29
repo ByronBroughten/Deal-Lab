@@ -1,11 +1,15 @@
 import { Button } from "@material-ui/core";
-import { AiOutlineMenu } from "react-icons/ai";
 import styled from "styled-components";
 import ccs from "../../theme/cssChunks";
 import theme from "../../theme/Theme";
 
-type Props = { title: string; isDropped: boolean; toggleDropped: () => void };
-export function DropdownBtn({ title, isDropped, toggleDropped }: Props) {
+type Props = {
+  title: string;
+  isDropped: boolean;
+  toggleDropped: () => void;
+  icon?: React.ReactNode;
+};
+export function DropdownBtn({ title, isDropped, toggleDropped, icon }: Props) {
   return (
     <Styled
       {...{
@@ -14,7 +18,7 @@ export function DropdownBtn({ title, isDropped, toggleDropped }: Props) {
       }}
     >
       <span>{title}</span>
-      <AiOutlineMenu className="DbDropdownBtn-menu" />
+      {icon && <span className="DbDropdownBtn-menu">{icon}</span>}
     </Styled>
   );
 }
@@ -26,6 +30,8 @@ const Styled = styled(Button)<{ $active: boolean }>`
   .DbDropdownBtn-menu {
     margin-left: ${theme.s2};
     font-size: 17px;
+    display: flex;
+    align-items: center;
   }
   .DropdownBtn-caret {
     margin-right: ${theme.s1};

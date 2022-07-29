@@ -5,7 +5,7 @@ import theme, { ThemeName, themeSectionNameOrDefault } from "../../theme/Theme";
 import { useMainSectionActor } from "./../../modules/sectionActorHooks/useMainSectionActor";
 import { FeInfoByType } from "./../../sharedWithServer/SectionsMeta/Info";
 import useHowMany from "./customHooks/useHowMany";
-import RowIndexListRow from "./RowIndexListRow";
+import { RowIndexListRow } from "./RowIndexListRow";
 
 type Props = {
   feInfo: FeInfoByType<"hasRowIndex">;
@@ -26,7 +26,8 @@ export function RowIndexRows({ feInfo, className }: Props) {
           <RowIndexListRow
             {...{
               displayName,
-              onClick: () => section.loadFromIndex(dbId),
+              load: () => section.loadFromIndex(dbId),
+              del: () => section.deleteFromIndex(dbId),
               key: dbId,
             }}
           />

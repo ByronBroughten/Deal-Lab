@@ -1,6 +1,6 @@
 import { Button } from "@material-ui/core";
 import React from "react";
-import { FlatList, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import styled from "styled-components";
 import { constants } from "../../Constants";
 import { apiQueries } from "../../modules/apiQueriesClient";
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
 async function goToPaymentPage(): Promise<void> {
   const sub = constants.subscriptions.find((sub) => sub.product === "proPlan");
   if (!sub) throw new Error(`No subscription with proPlan product`);
-  const res = await apiQueries.upgradeUserToPro(
+  const res = await apiQueries.getProPaymentLink(
     makeReq({ priceId: sub.priceId })
   );
   const { sessionUrl } = res.data;
@@ -67,11 +67,14 @@ export function UpgradeUserToProPanel() {
           </View>
           <View>
             <View style={styles.subSectionSpace}>
-              <Text style={styles.normalText}>
+              <Text
+                style={styles.normalText}
+              >{`For $10 per month, save as many as ${constants.plans.pro.sectionSaveLimit} unique properties, loans, management scenarios, and deals.`}</Text>
+              {/* <Text style={styles.normalText}>
                 <Text style={styles.boldText}>Benefits</Text>
-              </Text>
+              </Text> */}
             </View>
-            <FlatList
+            {/* <FlatList
               style={styles.list}
               renderItem={({ item, index }) => (
                 <Bullet text={item} key={`${index}`} />
@@ -85,7 +88,7 @@ export function UpgradeUserToProPanel() {
               <Text style={styles.normalText}>
                 <Text style={styles.boldText}>Cost</Text> $10 per month
               </Text>
-            </View>
+            </View> */}
           </View>
         </View>
         <Button className="PaymentForm-payBtn" onClick={goToPaymentPage}>

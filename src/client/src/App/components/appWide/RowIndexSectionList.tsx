@@ -1,10 +1,9 @@
+import { capitalize } from "lodash";
 import { FaList } from "react-icons/fa";
 import styled, { css } from "styled-components";
-import useOnOutsideClickRef from "../../modules/customHooks/useOnOutsideClickRef";
-import useToggle from "../../modules/customHooks/useToggle";
 import { FeInfoByType } from "../../sharedWithServer/SectionsMeta/Info";
-import theme, { ThemeName, themeSectionNameOrDefault } from "../../theme/Theme";
-import { LoggedInOrOutIconBtn } from "./LoggedInOrNotBtn";
+import theme, { ThemeName } from "../../theme/Theme";
+import { DropdownList } from "./DropdownList";
 import { RowIndexRows } from "./RowIndexRows";
 
 type Props = {
@@ -21,49 +20,17 @@ export default function RowIndexSectionList({
   className,
   pluralName,
 }: Props) {
-  const { value: dropped, toggle: toggleDropped, setOff } = useToggle();
-  const { sectionName } = feInfo;
-
-  const listRef = useOnOutsideClickRef(setOff);
-
   return (
-    <Styled
+    <DropdownList
       {...{
-        sectionName: themeSectionNameOrDefault(sectionName),
-        className: `RowIndexSectionList-root ${className}`,
-        $active: dropped,
-        $dropTop: dropTop,
-        ref: listRef,
+        className: "MainsectionTitleRow-dropdownList " + className ?? "",
+        title: `${capitalize(pluralName)}`,
+        dropTop,
+        icon: <FaList className="RowIndexSectionList-listIcon" />,
       }}
     >
-      <LoggedInOrOutIconBtn
-        {...{
-          shared: {
-            btnProps: {
-              children: <FaList className="RowIndexSectionList-listIcon" />,
-              className: "RowIndexSectionList-loadBtn",
-            },
-          },
-          loggedIn: {
-            btnProps: {
-              onClick: toggleDropped,
-            },
-            tooltipProps: {
-              title: dropped ? "" : `Load`,
-            },
-          },
-          loggedOut: {
-            btnProps: {
-              disabled: true,
-            },
-            tooltipProps: {
-              title: `Login to load saved ${pluralName}`,
-            },
-          },
-        }}
-      />
-      {dropped && <RowIndexRows feInfo={feInfo} />}
-    </Styled>
+      <RowIndexRows feInfo={feInfo} />
+    </DropdownList>
   );
 }
 

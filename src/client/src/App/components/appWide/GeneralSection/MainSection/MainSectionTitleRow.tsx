@@ -84,7 +84,7 @@ export function MainSectionTitleRow({
               <LabeledIconBtn
                 label="Delete from saved"
                 icon={<MdDelete size="24" />}
-                onClick={() => mainSection.deleteFromIndex()}
+                onClick={() => mainSection.deleteSelf()}
               />
             </>
           )}
@@ -96,17 +96,15 @@ export function MainSectionTitleRow({
         </DropdownList>
         <div className="MainSectionTitleRow-leftSide-btnsRow">
           {
-            <>
-              <RowIndexSectionList
-                {...{
-                  className: "MainSectionTitleRow-flexUnit",
-                  feInfo,
-                  pluralName,
-                  disabled: isGuest,
-                  dropTop,
-                }}
-              />
-            </>
+            <RowIndexSectionList
+              {...{
+                className: "MainSectionTitleRow-flexUnit",
+                feInfo,
+                pluralName,
+                disabled: isGuest,
+                dropTop,
+              }}
+            />
           }
         </div>
       </div>

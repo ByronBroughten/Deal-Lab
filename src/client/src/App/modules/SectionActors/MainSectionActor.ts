@@ -101,11 +101,12 @@ export class MainSectionActor<
     const sectionPack = (await this.querier.get(dbId)) as SectionPack<SN>;
     this.setter.loadSelfSectionPack(sectionPack);
   }
-  async deleteFromIndex() {
-    this.table.removeRow(this.dbId);
-    this.setter.tryAndRevertIfFail(
-      async () => await this.querier.delete(this.dbId)
-    );
+  async deleteSelf() {
+    this.deleteFromIndex(this.dbId);
+  }
+  async deleteFromIndex(dbId: string) {
+    this.table.removeRow(dbId);
+    this.setter.tryAndRevertIfFail(async () => await this.querier.delete(dbId));
   }
   private updateRow(): void {
     // for greater efficiency, most of this could be done at the solver

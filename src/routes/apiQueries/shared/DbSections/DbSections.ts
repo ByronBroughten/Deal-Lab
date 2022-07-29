@@ -28,7 +28,12 @@ export class DbSections extends DbSectionsBase {
   sectionPackArr<CN extends ServerStoreName>(
     dbStoreName: CN
   ): ServerSectionPack<CN>[] {
-    return this.dbSectionsRaw[dbStoreName] as ServerSectionPack<any>[];
+    const packArr = this.dbSectionsRaw[dbStoreName];
+    if (packArr) return packArr as ServerSectionPack<any>[];
+    else {
+      console.log(`No packArr exists with dbStoreName ${dbStoreName}`);
+      return [];
+    }
   }
   sectionPack<CN extends ServerStoreName>({
     dbStoreName,
