@@ -15,7 +15,7 @@ export type PreppedEmails = {
 
 const userInfoStoreName = Arr.extractStrict(dbStoreNames, [
   "publicUserInfo",
-  "serverOnlyUser",
+  "dbOnlyUserInfo",
   "stripeInfo",
 ] as const);
 type UserInfoStoreName = typeof userInfoStoreName[number];

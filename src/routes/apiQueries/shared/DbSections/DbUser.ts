@@ -164,11 +164,11 @@ export class DbUser extends GetterSectionBase<"dbStore"> {
     }
     return subscriptionProps;
   }
-  get serverOnlyUser(): GetterSection<"serverOnlyUser"> {
-    return this.get.onlyChild("serverOnlyUser");
+  get dbOnlyUserInfo(): GetterSection<"dbOnlyUserInfo"> {
+    return this.get.onlyChild("dbOnlyUserInfo");
   }
   async validatePassword(attemptedPassword: string): Promise<void> {
-    const encryptedPassword = this.serverOnlyUser.value(
+    const encryptedPassword = this.dbOnlyUserInfo.value(
       "encryptedPassword",
       "string"
     );

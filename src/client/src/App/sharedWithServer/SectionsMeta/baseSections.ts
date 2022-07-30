@@ -191,7 +191,7 @@ export const baseSections = {
   publicUserInfo: baseSection(
     baseVarbs("string", ["email", "userName"] as const)
   ),
-  serverOnlyUser: baseSection(
+  dbOnlyUserInfo: baseSection(
     baseVarbs("string", ["encryptedPassword", "emailAsSubmitted"] as const)
   ),
   stripeInfo: baseSection({

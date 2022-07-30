@@ -8,6 +8,8 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
+// - implement SuperTokens
+
 // - Test the pro stuff in addSection.test
 // - Test that addSection only accepts certain sectionNames
 // - Run that same test in update/delete/get
@@ -30,9 +32,6 @@ AppRegistry.runApplication("App", {
 //     it which dbStores to use
 //   - You also need to create some kind of loop that says
 //     which sections to use as a focal point next (parents down to children)
-
-// rename "user" section to "userInfo", or "publicUserInfo"
-// same with serverUser—privateUserInfo, maybe
 
 // - Add basic Google Analytics
 // - Write a test to verify that the calculations work as expected

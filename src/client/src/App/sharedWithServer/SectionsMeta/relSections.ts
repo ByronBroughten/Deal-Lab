@@ -54,8 +54,8 @@ export function makeRelSections() {
       }),
       planExp: relVarb("number", { initValue: 0 }),
     }),
-    serverOnlyUser: relSection(
-      "serverOnlyUser",
+    dbOnlyUserInfo: relSection(
+      "dbOnlyUserInfo",
       relVarbsS.strings(["encryptedPassword", "emailAsSubmitted"] as const)
     ),
     stripeInfo: relSection("Stripe info", {

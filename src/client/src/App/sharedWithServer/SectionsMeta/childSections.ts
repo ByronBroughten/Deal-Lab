@@ -63,7 +63,7 @@ export const childSections = checkChildSections({
     stripeInfo: ["stripeInfo"],
     stripeSubscription: ["stripeSubscription"],
     publicUserInfo: ["publicUserInfo"],
-    serverOnlyUser: ["serverOnlyUser"],
+    dbOnlyUserInfo: ["dbOnlyUserInfo"],
     propertyMain: ["property"],
     loanMain: ["loan"],
     mgmtMain: ["mgmt"],

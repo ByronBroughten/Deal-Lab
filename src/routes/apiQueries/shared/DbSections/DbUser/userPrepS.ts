@@ -52,8 +52,8 @@ export const userPrepS = {
           },
         }),
       ],
-      serverOnlyUser: [
-        PackBuilderSection.initSectionPack("serverOnlyUser", {
+      dbOnlyUserInfo: [
+        PackBuilderSection.initSectionPack("dbOnlyUserInfo", {
           dbVarbs: {
             emailAsSubmitted,
             encryptedPassword: await userPrepS.encryptPassword(
