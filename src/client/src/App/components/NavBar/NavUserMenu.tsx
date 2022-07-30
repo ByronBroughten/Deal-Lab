@@ -19,8 +19,8 @@ export type NavUserMenuProps = {
   logout: () => void;
 };
 export function NavUserMenu({ feId, logout }: NavUserMenuProps) {
-  const user = useGetterSection({
-    sectionName: "user",
+  const userInfo = useGetterSection({
+    sectionName: "publicUserInfo",
     feId,
   });
 
@@ -28,7 +28,7 @@ export function NavUserMenu({ feId, logout }: NavUserMenuProps) {
     initValue: false,
   });
   const closeIfClickOutsideRef = useOnOutsideClickRef(closeView);
-  const userName = user.value("userName", "string");
+  const userName = userInfo.value("userName", "string");
   return (
     <Styled ref={closeIfClickOutsideRef}>
       {auth.isToken && (

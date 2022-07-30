@@ -27,9 +27,6 @@ function checkChildSections<CS extends GenericChildSections>(
   return childSections;
 }
 
-// the current deal might be added to user.
-//
-
 export const childSections = checkChildSections({
   ...defaults,
   root: childrenSections({
@@ -42,14 +39,13 @@ export const childSections = checkChildSections({
     register: ["register"],
     deal: ["deal"],
     feStore: ["feStore"],
-    updateUserInfo: ["user"],
   }),
   feStore: childrenSections({
     // feStore includes everything that has a corresponding child in dbStore
     // and that has any intermediary sections used to edit and add to them.
     stripeInfo: ["stripeInfo"],
     subscriptionInfo: ["subscriptionInfo"],
-    user: ["user"],
+    publicUserInfo: ["publicUserInfo"],
     propertyMainTable: ["table"],
     loanMainTable: ["table"],
     mgmtMainTable: ["table"],
@@ -66,7 +62,7 @@ export const childSections = checkChildSections({
     dealMainTable: ["table"],
     stripeInfo: ["stripeInfo"],
     stripeSubscription: ["stripeSubscription"],
-    user: ["user"],
+    publicUserInfo: ["publicUserInfo"],
     serverOnlyUser: ["serverOnlyUser"],
     propertyMain: ["property"],
     loanMain: ["loan"],

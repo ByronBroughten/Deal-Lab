@@ -110,8 +110,8 @@ export class DbUser extends GetterSectionBase<"dbStore"> {
   get get(): GetterSection<"dbStore"> {
     return new GetterSection(this.getterSectionProps);
   }
-  get userInfo(): GetterSection<"user"> {
-    return this.get.onlyChild("user");
+  get userInfo(): GetterSection<"publicUserInfo"> {
+    return this.get.onlyChild("publicUserInfo");
   }
   get email(): string {
     return this.userInfo.value("email", "string");
@@ -250,15 +250,6 @@ export class DbUser extends GetterSectionBase<"dbStore"> {
   }
   static checkUserAuthToken = checkUserAuthToken;
 }
-
-export interface UserSections {
-  user: SharedUser;
-  serverOnlyUser: ServerOnlyUser;
-  stripeInfo: SectionValues<"stripeInfo">;
-}
-
-type SharedUser = SectionValues<"user">;
-type ServerOnlyUser = SectionValues<"serverOnlyUser">;
 
 interface CreateUserProps extends RegisterReqBody {
   _id?: mongoose.Types.ObjectId;

@@ -13,18 +13,18 @@ export type PreppedEmails = {
   email: string;
 };
 
-const userInitSectionNames = Arr.extractStrict(dbStoreNames, [
-  "user",
+const userInfoStoreName = Arr.extractStrict(dbStoreNames, [
+  "publicUserInfo",
   "serverOnlyUser",
   "stripeInfo",
 ] as const);
-type UserSectionName = typeof userInitSectionNames[number];
+type UserInfoStoreName = typeof userInfoStoreName[number];
 export type UserSectionPackArrs = {
-  [SN in UserSectionName]: SectionPack<SN>[];
+  [SN in UserInfoStoreName]: SectionPack<SN>[];
 };
 
 const initFullNames = [
-  ...userInitSectionNames,
+  ...userInfoStoreName,
   ...feStoreNameS.arrs.fullIndex,
 ] as const;
 

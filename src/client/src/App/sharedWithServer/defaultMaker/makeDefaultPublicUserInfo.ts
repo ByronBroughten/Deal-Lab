@@ -1,13 +1,13 @@
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
 
-export function makeDefaultUser() {
-  const user = PackBuilderSection.initAsOmniChild("user", {
+export function makeDefaultPublicUserInfo() {
+  const userInfo = PackBuilderSection.initAsOmniChild("publicUserInfo", {
     dbVarbs: {
       email: "",
       userName: "Guest",
     },
   });
-  return user.makeSectionPack();
+  return userInfo.makeSectionPack();
 }
 
 export function makeDefaultSubscriptionInfo() {

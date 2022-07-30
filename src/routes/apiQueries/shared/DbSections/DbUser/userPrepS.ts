@@ -44,8 +44,8 @@ export const userPrepS = {
     );
     await userPrepS.checkThatEmailIsUnique(email);
     return {
-      user: [
-        PackBuilderSection.initSectionPack("user", {
+      publicUserInfo: [
+        PackBuilderSection.initSectionPack("publicUserInfo", {
           dbVarbs: {
             userName: registerFormData.userName,
             email,

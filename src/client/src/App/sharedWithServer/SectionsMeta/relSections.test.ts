@@ -32,7 +32,7 @@ describe(`relSections`, () => {
       expect(relSectionsHash).toBe(relSections2Hash);
     });
     it("should produce a hash that is not equal", () => {
-      relSections2.user.displayName = null as any;
+      relSections2.publicUserInfo.displayName = null as any;
       relSections2Hash = hash(relSections2);
       expect(relSectionsHash).not.toBe(relSections2Hash);
     });

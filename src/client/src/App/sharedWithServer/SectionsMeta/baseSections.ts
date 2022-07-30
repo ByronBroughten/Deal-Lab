@@ -174,23 +174,29 @@ export const baseSections = {
     },
     { hasGlobalVarbs: true }
   ),
-  stripeInfo: baseSection({
-    customerId: "string",
-  } as const),
   stripeSubscription: baseSection({
     subId: "string",
     subStatus: "string",
     priceIds: "stringArray",
     currentPeriodEnd: "number",
   }),
-  user: baseSection(baseVarbs("string", ["email", "userName"] as const)),
   subscriptionInfo: baseSection({
     plan: "string",
     planExp: "number",
   }),
+
+  // publicUserInfo
+  // privateUserInfo
+
+  publicUserInfo: baseSection(
+    baseVarbs("string", ["email", "userName"] as const)
+  ),
   serverOnlyUser: baseSection(
     baseVarbs("string", ["encryptedPassword", "emailAsSubmitted"] as const)
   ),
+  stripeInfo: baseSection({
+    customerId: "string",
+  } as const),
 } as const;
 
 export const simpleSectionNames = Obj.keys(baseSections);

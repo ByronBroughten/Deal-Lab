@@ -28,8 +28,8 @@ export const dbSectionsFilters = {
   },
   email(email: string) {
     const path = modelPath.firstSectionVarb({
-      storeName: "user",
-      sectionName: "user",
+      storeName: "publicUserInfo",
+      sectionName: "publicUserInfo",
       varbName: "email",
     });
     return { [path]: email } as const;

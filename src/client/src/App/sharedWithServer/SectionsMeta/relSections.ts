@@ -39,13 +39,13 @@ export function makeRelSections() {
     main: relSection("main", { _typeUniformity: relVarb("string") }),
     feStore: relSection("feStore", { _typeUniformity: relVarb("string") }),
     dbStore: relSection("dbStore", { _typeUniformity: relVarb("string") }),
-    user: relSection(
+    publicUserInfo: relSection(
       "User",
       {
         email: relVarb("string", { displayName: "Email" }),
         userName: relVarb("string", { displayName: "Name" }),
       },
-      { dbIndexStoreName: "user" }
+      { dbIndexStoreName: "publicUserInfo" }
     ),
     subscriptionInfo: relSection("Subscription info", {
       plan: relVarb("string", {

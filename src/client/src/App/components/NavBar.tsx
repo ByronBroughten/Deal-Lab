@@ -16,8 +16,8 @@ import { UpgradeUserToProPanel } from "./NavBar/UpgradeUserToProPanel";
 type NavBarProps = { logout: () => void };
 export default function NavBar(props: NavBarProps) {
   const feUser = useFeUser();
-  const { isPro, isBasic, isGuest } = feUser;
-  const user = feUser.get.onlyChild("user");
+  const { isBasic, isGuest } = feUser;
+  const userInfo = feUser.get.onlyChild("publicUserInfo");
   return (
     <Styled className="NavBar-root">
       <Toolbar disableGutters={true}>
@@ -61,7 +61,7 @@ export default function NavBar(props: NavBarProps) {
               <UpgradeUserToProPanel />
             </NavDropDown>
           )}
-          <NavUserMenu {...{ ...props, feId: user.feId }} />
+          <NavUserMenu {...{ ...props, feId: userInfo.feId }} />
         </div>
       </Toolbar>
     </Styled>
