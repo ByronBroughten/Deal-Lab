@@ -6,7 +6,7 @@ import {
   sectionToChildNames,
 } from "./childSectionsDerived/ChildName";
 import { ChildSectionNameName } from "./childSectionsDerived/ChildSectionName";
-import { dbStoreNames } from "./childSectionsDerived/dbStoreNames";
+import { dbStoreNames } from "./childSectionsDerived/DbStoreName";
 
 export const tableRowDbSources = Arr.extractStrict(dbStoreNames, [
   "mgmtMain",

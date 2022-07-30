@@ -1,35 +1,34 @@
 import mongoose from "mongoose";
 import { GuestAccessSectionPackArrs } from "../../../../../client/src/App/sharedWithServer/apiQueriesShared/register";
-import { SectionPack } from "../../../../../client/src/App/sharedWithServer/SectionPack/SectionPack";
-import { DbSectionName } from "../../../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/dbStoreNames";
-import { dbStoreNameS } from "../../../../../client/src/App/sharedWithServer/SectionsMeta/relSectionsDerived/relNameArrs/dbStoreNameArrs";
+import {
+  DbSectionName,
+  dbStoreNames,
+} from "../../../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreName";
+import { SectionPack } from "../../../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/SectionPack";
+import { feStoreNameS } from "../../../../../client/src/App/sharedWithServer/SectionsMeta/relSectionsDerived/relNameArrs/feStoreNameArrs";
 import { Arr } from "../../../../../client/src/App/sharedWithServer/utils/Arr";
-import { serverSectionNames } from "../../../../ServerStoreName";
 
 export type PreppedEmails = {
   emailAsSubmitted: string;
   email: string;
 };
 
-const userSectionNames = Arr.extractStrict(serverSectionNames, [
+const userInitSectionNames = Arr.extractStrict(dbStoreNames, [
   "user",
   "serverOnlyUser",
   "stripeInfo",
 ] as const);
-type UserSectionName = typeof userSectionNames[number];
+type UserSectionName = typeof userInitSectionNames[number];
 export type UserSectionPackArrs = {
   [SN in UserSectionName]: SectionPack<SN>[];
 };
 
 const initFullNames = [
-  ...userSectionNames,
-  ...dbStoreNameS.arrs.fullIndex,
+  ...userInitSectionNames,
+  ...feStoreNameS.arrs.fullIndex,
 ] as const;
 
-export const initEmptyNames = Arr.excludeStrict(
-  serverSectionNames,
-  initFullNames
-);
+export const initEmptyNames = Arr.excludeStrict(dbStoreNames, initFullNames);
 type InitEmptyName = typeof initEmptyNames[number];
 export type InitEmptyPackArrs = {
   [CN in InitEmptyName]: SectionPack<DbSectionName<CN>>[];

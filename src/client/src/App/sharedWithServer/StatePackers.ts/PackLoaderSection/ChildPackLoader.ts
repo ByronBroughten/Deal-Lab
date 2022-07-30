@@ -1,11 +1,11 @@
 import { pick } from "lodash";
-import { OneRawSection } from "../../SectionPack/RawSection";
-import { SectionPack } from "../../SectionPack/SectionPack";
 import {
   ChildName,
   DbChildInfo,
 } from "../../SectionsMeta/childSectionsDerived/ChildName";
 import { ChildSectionName } from "../../SectionsMeta/childSectionsDerived/ChildSectionName";
+import { SectionPack } from "../../SectionsMeta/childSectionsDerived/SectionPack";
+import { OneRawSection } from "../../SectionsMeta/childSectionsDerived/SectionPack/RawSection";
 import { SectionName } from "../../SectionsMeta/SectionName";
 import {
   GetterSectionBase,

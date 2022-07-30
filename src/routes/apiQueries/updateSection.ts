@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { DbPack } from "../../client/src/App/sharedWithServer/SectionPack/SectionPack";
-import { DbStoreName } from "../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/dbStoreNames";
+import { DbPack } from "../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbSectionPack";
+import { SectionQueryName } from "../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreName";
 import { userAuthWare } from "../../middleware/authWare";
 import { findOneAndUpdate } from "./shared/findAndUpdate";
 import { sendSuccess } from "./shared/sendSuccess";
@@ -34,7 +34,7 @@ async function updateSectionSeverSide(req: Request, res: Response) {
 
 type MakeUpdateSectionFilterProps = {
   userId: string;
-  dbStoreName: DbStoreName;
+  dbStoreName: SectionQueryName;
   dbId: string;
 };
 function makeUpdateSectionFilter({
@@ -44,22 +44,7 @@ function makeUpdateSectionFilter({
 }: MakeUpdateSectionFilterProps) {
   return { _id: userId, [`${dbStoreName}.dbId`]: dbId };
 }
-
-// type MakeUpdateSectionByValueFilter = {
-//   userId: string;
-//   dbStoreName: DbStoreName;
-//   sectionName: SimpleSectionName;
-// };
-// function makeUpdateSectionByValueFilter({
-// }) {
-//   return {}
-// }
-// filters:
-// "dbStoreName.rawSection."
-// "dbStoreName.rawSections.sectionName: "
-// "dbStoreName.rawSections.sectionName.dbVarbs.subId"
-
-function makeSetParameters(dbPack: DbPack) {
+function makeSetParameters(dbPack: DbPack<any>) {
   const { dbStoreName, sectionPack } = dbPack;
   return {
     operation: { $set: { [`${dbStoreName}.$`]: sectionPack } },
@@ -72,3 +57,7 @@ function makeSetParameters(dbPack: DbPack) {
     },
   };
 }
+// filters:
+// "dbStoreName.rawSection."
+// "dbStoreName.rawSections.sectionName: "
+// "dbStoreName.rawSections.sectionName.dbVarbs.subId"

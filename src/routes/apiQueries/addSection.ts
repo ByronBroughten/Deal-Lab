@@ -1,11 +1,11 @@
 import { Request, Response } from "express";
 import { constants } from "../../client/src/App/Constants";
-import { DbPack } from "../../client/src/App/sharedWithServer/SectionPack/SectionPack";
 import { UserPlan } from "../../client/src/App/sharedWithServer/SectionsMeta/baseSections";
+import { DbPack } from "../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbSectionPack";
 import {
   DbStoreInfo,
-  DbStoreName,
-} from "../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/dbStoreNames";
+  SectionQueryName,
+} from "../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreName";
 import { userAuthWare } from "../../middleware/authWare";
 import { ResStatusError } from "../../resErrorUtils";
 import { DbSectionsQuerier } from "./shared/DbSections/DbSectionsQuerier";
@@ -43,7 +43,7 @@ async function addSectionServerSide(req: Request, res: Response) {
 
 type ValidateAuthProps = {
   subscriptionPlan: UserPlan;
-  dbStoreName: DbStoreName;
+  dbStoreName: SectionQueryName;
   userId: string;
 };
 async function validateAuth({
@@ -68,7 +68,7 @@ async function validateAuth({
       return true;
   }
 }
-async function checkThatSectionPackIsNotThere<CN extends DbStoreName>(
+async function checkThatSectionPackIsNotThere<CN extends SectionQueryName>(
   props: DbSectionInitByIdProps<CN>
 ): Promise<true> {
   const { dbStoreName, dbId, userId } = props;
@@ -89,7 +89,7 @@ async function checkThatSectionPackIsNotThere<CN extends DbStoreName>(
   }
 }
 
-function makePushParameters(dbPack: DbPack) {
+function makePushParameters(dbPack: DbPack<any>) {
   const { dbStoreName, sectionPack } = dbPack;
   return {
     operation: { $push: { [dbStoreName]: sectionPack } },
@@ -104,7 +104,7 @@ function makePushParameters(dbPack: DbPack) {
   };
 }
 
-interface DbSectionInitByIdProps<CN extends DbStoreName>
+interface DbSectionInitByIdProps<CN extends SectionQueryName>
   extends DbStoreInfo<CN> {
   userId: string;
 }

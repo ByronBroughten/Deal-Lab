@@ -1,7 +1,7 @@
 import { pick } from "lodash";
 import { defaultMaker } from "../defaultMaker/defaultMaker";
-import { SectionPack } from "../SectionPack/SectionPack";
 import { VarbInfoMixed } from "../SectionsMeta/childSectionsDerived/MixedSectionInfo";
+import { SectionPack } from "../SectionsMeta/childSectionsDerived/SectionPack";
 import { FeVarbInfo } from "../SectionsMeta/Info";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { GetterSections } from "../StateGetters/GetterSections";

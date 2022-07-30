@@ -1,19 +1,19 @@
 import { makeReq, SectionPackArrReq } from "../apiQueriesShared/makeReqAndRes";
-import { DbSectionNameName } from "../SectionsMeta/childSectionsDerived/dbStoreNames";
-import { SectionName } from "../SectionsMeta/SectionName";
+import {
+  DbSectionNameByType,
+  DbSectionNameName,
+} from "../SectionsMeta/childSectionsDerived/DbStoreName";
 import { GetterSectionBase } from "../StateGetters/Bases/GetterSectionBase";
 import { PackMakerSection } from "../StatePackers.ts/PackMakerSection";
 import { SolverSections } from "../StateSolvers/SolverSections";
 
 export class SectionArrReqMaker<
-  SN extends SectionName<"hasFullIndex"> | "user"
+  SN extends DbSectionNameByType<"arrQuery">
 > extends GetterSectionBase<SN> {
   get dbStoreName() {
     return this.sectionMeta.dbIndexStoreName;
   }
-  static init<SN extends SectionName<"hasFullIndex"> | "user">(
-    sectionName: SN
-  ) {
+  static init<SN extends DbSectionNameByType<"arrQuery">>(sectionName: SN) {
     const sections = SolverSections.initSectionsFromDefaultMain();
     const section = sections.onlyOneRawSection(sectionName);
     return new SectionArrReqMaker({

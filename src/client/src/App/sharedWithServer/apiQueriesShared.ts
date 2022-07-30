@@ -9,7 +9,7 @@ import {
 } from "./apiQueriesShared/login";
 import {
   DbIdRes,
-  DbPackInfoReq,
+  DbPackInfoSectionReq,
   DbStoreNameRes,
   RegisterReq,
   SectionPackArrReq,
@@ -18,7 +18,10 @@ import {
   UpgradeUserToProReq,
   UrlRes,
 } from "./apiQueriesShared/makeReqAndRes";
-import { DbStoreName } from "./SectionsMeta/childSectionsDerived/dbStoreNames";
+import {
+  DbStoreNameByType,
+  SectionQueryName,
+} from "./SectionsMeta/childSectionsDerived/DbStoreName";
 
 export type ApiQueries = {
   addSection: AddUpdateSectionQuery;
@@ -35,19 +38,19 @@ type ApiQueriesTest<
 > = T;
 type _Test = ApiQueriesTest<ApiQueries>;
 
-type AddUpdateSectionQuery = <CN extends DbStoreName>(
+type AddUpdateSectionQuery = <CN extends SectionQueryName>(
   req: SectionPackReq<CN>
 ) => Promise<DbIdRes>;
 
-type GetSectionQuery = <CN extends DbStoreName>(
-  req: DbPackInfoReq<CN>
+type GetSectionQuery = <CN extends SectionQueryName>(
+  req: DbPackInfoSectionReq<CN>
 ) => Promise<SectionPackRes<CN>>;
 
-type DeleteSectionQuery = <CN extends DbStoreName>(
-  req: DbPackInfoReq<CN>
+type DeleteSectionQuery = <CN extends SectionQueryName>(
+  req: DbPackInfoSectionReq<CN>
 ) => Promise<DbIdRes>;
 
-type ReplaceSectionArrQuery = <CN extends DbStoreName>(
+type ReplaceSectionArrQuery = <CN extends DbStoreNameByType<"arrQuery">>(
   req: SectionPackArrReq<CN>
 ) => Promise<DbStoreNameRes<CN>>;
 

@@ -1,11 +1,11 @@
 import { IndexSectionQuerierBase } from "../../../client/src/App/modules/QueriersBasic/Bases/IndexSectionQuerierBase";
 import { ApiQueries } from "../../../client/src/App/sharedWithServer/apiQueriesShared";
 import {
-  DbPackInfoReq,
+  DbPackInfoSectionReq,
   makeReq,
   SectionPackReq,
 } from "../../../client/src/App/sharedWithServer/apiQueriesShared/makeReqAndRes";
-import { DbSectionNameName } from "../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/dbStoreNames";
+import { DbSectionNameName } from "../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreName";
 import { SectionName } from "../../../client/src/App/sharedWithServer/SectionsMeta/SectionName";
 import { GetterListProps } from "../../../client/src/App/sharedWithServer/StateGetters/Bases/GetterListBase";
 import { GetterSectionProps } from "../../../client/src/App/sharedWithServer/StateGetters/Bases/GetterSectionBase";
@@ -64,7 +64,7 @@ export class SectionQueryTester<
       sectionPack: this.packMaker.makeSectionPack(),
     }) as SectionPackReq<DbSectionNameName<SN>>;
   }
-  makeDbInfoReq(): DbPackInfoReq<DbSectionNameName<SN>> {
+  makeDbInfoReq(): DbPackInfoSectionReq<DbSectionNameName<SN>> {
     return makeReq({
       dbStoreName: this.dbStoreName,
       dbId: this.get.dbId,

@@ -9,11 +9,17 @@ AppRegistry.runApplication("App", {
 });
 
 // Ok. What do I have to do?
-// - Limit storage (addSection) if the user only has basic authorization
+// - Implement a way to test a pro account.
+
+// - Implement a "pro-list", that makes some users pro
+//   no matter what, both to test out features and because
+//   it might be vaguely useful
 // - Allow storage if the user has a full subscription
+
 // - Test those two things in addSection.test
+
 // - Make it so addSection only accepts certain sectionNames
-//   - Do this for updateSection, deleteSection, getSection, and replaceSectionArr
+// - Do this for updateSection, deleteSection, getSection, and replaceSectionArr
 // - Indicate on the front-end when saving is now allowed due to storage. Try an info dot.
 // - If the Jwt is expired, make it attempt to update the Jwt
 // - Make it succeed if a valid subscription is present in the db

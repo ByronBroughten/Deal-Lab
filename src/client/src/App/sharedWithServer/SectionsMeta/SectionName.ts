@@ -8,6 +8,7 @@ import {
   ChildToSectionName,
 } from "./childSectionsDerived/ChildSectionName";
 import { ParentName } from "./childSectionsDerived/ParentName";
+import { isSectionPack, SectionPack } from "./childSectionsDerived/SectionPack";
 import { relNameArrs, RelNameArrs } from "./relSectionsDerived/relNameArrs";
 import { SectionValues } from "./relSectionsUtils/valueMetaTypes";
 
@@ -67,3 +68,18 @@ function _testChildNameOfType<
   CN extends ChildNameOfType<SN, "additiveList">
 >(sn: SN, cn: CN) {}
 _testChildNameOfType("property", "ongoingCostList");
+
+export type SectionPackByType<ST extends SectionNameType> = SectionPack<
+  SectionName<ST>
+>;
+export function isSectionPackByType<ST extends SectionNameType = "all">(
+  value: any,
+  sectionType?: ST
+): value is SectionPackByType<ST> {
+  if (
+    isSectionPack(value) &&
+    sectionNameS.is(value.sectionName, sectionType ?? "all")
+  ) {
+    return true;
+  } else return false;
+}

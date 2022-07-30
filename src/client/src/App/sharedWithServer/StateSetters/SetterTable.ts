@@ -1,5 +1,5 @@
-import { DbVarbs } from "../SectionPack/RawSection";
 import { InEntityVarbInfo } from "../SectionsMeta/baseSectionsUtils/baseValues/entities";
+import { DbVarbs } from "../SectionsMeta/childSectionsDerived/SectionPack/RawSection";
 import { GetterSection } from "../StateGetters/GetterSection";
 import { UpdaterSection } from "../StateUpdaters/UpdaterSection";
 import { Str } from "../utils/Str";

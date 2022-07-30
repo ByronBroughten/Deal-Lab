@@ -1,10 +1,13 @@
-import { DbPack, SectionPack } from "../SectionPack/SectionPack";
+import { DbPack } from "../SectionsMeta/childSectionsDerived/DbSectionPack";
 import {
+  AllQueryName,
   DbSectionName,
   DbStoreInfo,
-  DbStoreName,
   DbStoreNameProp,
-} from "../SectionsMeta/childSectionsDerived/dbStoreNames";
+  SectionArrQueryName,
+  SectionQueryName,
+} from "../SectionsMeta/childSectionsDerived/DbStoreName";
+import { SectionPack } from "../SectionsMeta/childSectionsDerived/SectionPack";
 import { RegisterReqBody } from "./register";
 
 export const makeReq = <B extends QueryObj>(body: B): MakeReq<B> => ({ body });
@@ -19,30 +22,29 @@ export type MakeRes<Data extends QueryObj> = {
 };
 type QueryObj = { [key: string]: any };
 
-export type DbPackInfoReq<CN extends DbStoreName = DbStoreName> = MakeReq<
-  DbStoreInfo<CN>
->;
-export type SectionPackReq<CN extends DbStoreName = DbStoreName> = MakeReq<
-  DbPack<CN>
->;
-export type SectionPackArrReq<CN extends DbStoreName = DbStoreName> = MakeReq<{
+export type DbPackInfoSectionReq<
+  CN extends SectionQueryName = SectionQueryName
+> = MakeReq<DbStoreInfo<CN>>;
+export type SectionPackReq<CN extends SectionQueryName = SectionQueryName> =
+  MakeReq<DbPack<CN>>;
+export type SectionPackArrReq<
+  CN extends SectionArrQueryName = SectionArrQueryName
+> = MakeReq<{
   dbStoreName: CN;
   sectionPackArr: SectionPack<DbSectionName<CN>>[];
 }>;
 export type RegisterReq = MakeReq<RegisterReqBody>;
 export type UpgradeUserToProReq = MakeReq<{ priceId: string }>;
-type PaymentMethodIdReq = MakeReq<{
-  paymentMethodId: string;
-}>;
 
 export type UrlRes = MakeRes<{ sessionUrl: string }>;
 export type SuccessRes = MakeRes<{
   success: boolean;
 }>;
-export type SectionPackRes<CN extends DbStoreName = DbStoreName> = MakeRes<{
-  sectionPack: SectionPack<DbSectionName<CN>>;
-}>;
+export type SectionPackRes<CN extends SectionQueryName = SectionQueryName> =
+  MakeRes<{
+    sectionPack: SectionPack<DbSectionName<CN>>;
+  }>;
 export type DbIdRes = MakeRes<{ dbId: string }>;
-export type DbStoreNameRes<CN extends DbStoreName = DbStoreName> = MakeRes<
+export type DbStoreNameRes<CN extends AllQueryName = AllQueryName> = MakeRes<
   DbStoreNameProp<CN>
 >;

@@ -1,5 +1,4 @@
 import { pick } from "lodash";
-import { SectionPack } from "../SectionPack/SectionPack";
 import {
   SectionVarbName,
   VarbValues,
@@ -11,6 +10,7 @@ import {
 } from "../SectionsMeta/childSectionsDerived/ChildName";
 import { ChildSectionName } from "../SectionsMeta/childSectionsDerived/ChildSectionName";
 import { ParentNameSafe } from "../SectionsMeta/childSectionsDerived/ParentName";
+import { SectionPack } from "../SectionsMeta/childSectionsDerived/SectionPack";
 import { FeSectionInfo, FeVarbInfo } from "../SectionsMeta/Info";
 import { SectionMeta } from "../SectionsMeta/SectionMeta";
 import { SectionName } from "../SectionsMeta/SectionName";

@@ -1,8 +1,8 @@
+import { DbSectionPack } from "../../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbSectionPack";
 import {
-  ServerSectionPack,
-  ServerStoreInfo,
-  ServerStoreName,
-} from "../../../ServerStoreName";
+  DbStoreInfo,
+  DbStoreName,
+} from "../../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreName";
 import { DbSectionsBase } from "./Bases/DbSectionsBase";
 import { DbSectionsQuerier } from "./DbSectionsQuerier";
 import { SectionPackNotFoundError } from "./DbSectionsQuerierTypes";
@@ -14,36 +14,32 @@ export interface DbSectionsInitByEmailProps {
   email: string;
 }
 export class DbSections extends DbSectionsBase {
-  onlySectionPack<CN extends ServerStoreName>(
-    dbStoreName: CN
-  ): ServerSectionPack<CN> {
+  onlySectionPack<CN extends DbStoreName>(dbStoreName: CN): DbSectionPack<CN> {
     const sectionPacks = this.dbSectionsRaw[dbStoreName];
     if (sectionPacks.length !== 1) {
       throw new Error(
         `There are ${sectionPacks.length} sectionPacks with sectionName ${dbStoreName}, but there should be exactly 1.`
       );
     }
-    return sectionPacks[0] as ServerSectionPack<any>;
+    return sectionPacks[0] as DbSectionPack<any>;
   }
-  sectionPackArr<CN extends ServerStoreName>(
-    dbStoreName: CN
-  ): ServerSectionPack<CN>[] {
+  sectionPackArr<CN extends DbStoreName>(dbStoreName: CN): DbSectionPack<CN>[] {
     const packArr = this.dbSectionsRaw[dbStoreName];
-    if (packArr) return packArr as ServerSectionPack<any>[];
+    if (packArr) return packArr as DbSectionPack<any>[];
     else {
       console.log(`No packArr exists with dbStoreName ${dbStoreName}`);
       return [];
     }
   }
-  sectionPack<CN extends ServerStoreName>({
+  sectionPack<CN extends DbStoreName>({
     dbStoreName,
     dbId,
-  }: ServerStoreInfo<CN>): ServerSectionPack<CN> {
+  }: DbStoreInfo<CN>): DbSectionPack<CN> {
     const dbPack = [...this.dbSectionsRaw[dbStoreName]].find(
       (dbPack) => dbPack.dbId === dbId
     );
     if (dbPack) {
-      return dbPack as ServerSectionPack<any>;
+      return dbPack as DbSectionPack<any>;
     } else {
       throw new SectionPackNotFoundError({
         errorMessage: `dbSectionPack not found at ${dbStoreName}.${dbId}`,
@@ -52,7 +48,7 @@ export class DbSections extends DbSectionsBase {
       });
     }
   }
-  hasSection({ dbStoreName, dbId }: ServerStoreInfo): boolean {
+  hasSection({ dbStoreName, dbId }: DbStoreInfo): boolean {
     const sectionPack = [...this.dbSectionsRaw[dbStoreName]].find(
       (section) => section.dbId === dbId
     );

@@ -1,15 +1,14 @@
 import { Arr } from "../../utils/Arr";
 import { SimpleSectionName, simpleSectionNames } from "../baseSections";
 import { hasChildSectionNames } from "../childSectionsDerived/ChildName";
-import { dbSectionNameGroups } from "../childSectionsDerived/dbStoreNames";
-import { hasStoreNameArrs } from "./relNameArrs/dbStoreNameArrs";
+import { hasStoreNameArrs } from "./relNameArrs/feStoreNameArrs";
 import { tableStoreNameArrs } from "./relNameArrs/tableStoreArrs";
 
 export const relNameArrs = {
   ...hasStoreNameArrs,
   ...tableStoreNameArrs,
-  ...dbSectionNameGroups,
   hasChild: hasChildSectionNames,
+  loadOnLogin: Arr.extractStrict(simpleSectionNames, ["feStore"] as const),
   varbListItem: Arr.extractStrict(simpleSectionNames, [
     "singleTimeItem",
     "ongoingItem",

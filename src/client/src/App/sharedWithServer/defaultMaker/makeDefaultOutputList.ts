@@ -1,7 +1,7 @@
-import { SectionPack } from "../SectionPack/SectionPack";
 import { InEntityVarbInfo } from "../SectionsMeta/baseSectionsUtils/baseValues/entities";
 import { inEntityInfo } from "../SectionsMeta/baseSectionsUtils/baseValues/InEntityInfoValue";
 import { mixedInfoS } from "../SectionsMeta/childSectionsDerived/MixedSectionInfo";
+import { SectionPack } from "../SectionsMeta/childSectionsDerived/SectionPack";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
 
 export const outputNames = [

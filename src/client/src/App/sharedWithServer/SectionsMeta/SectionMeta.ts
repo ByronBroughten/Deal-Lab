@@ -1,4 +1,3 @@
-import { DbVarbs } from "../SectionPack/RawSection";
 import { Obj } from "../utils/Obj";
 import { SimpleSectionName } from "./baseSections";
 import {
@@ -14,6 +13,7 @@ import {
   childSectionNameNames,
   childToSectionName,
 } from "./childSectionsDerived/ChildSectionName";
+import { DbVarbs } from "./childSectionsDerived/SectionPack/RawSection";
 import { relSections } from "./relSections";
 import {
   CorePropName,

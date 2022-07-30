@@ -1,8 +1,8 @@
-import { DbVarbs } from "../SectionPack/RawSection";
 import {
   StateValueAnyKey,
   ValueTypesPlusAny,
 } from "../SectionsMeta/baseSectionsUtils/StateVarbTypes";
+import { DbVarbs } from "../SectionsMeta/childSectionsDerived/SectionPack/RawSection";
 import { FeVarbInfo, VarbStringInfo } from "../SectionsMeta/Info";
 import {
   SectionName,

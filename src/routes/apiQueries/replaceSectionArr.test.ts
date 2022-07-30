@@ -5,17 +5,20 @@ import { SectionPackArrReq } from "../../client/src/App/sharedWithServer/apiQuer
 import { SectionArrReqMaker } from "../../client/src/App/sharedWithServer/ReqMakers/SectionArrReqMaker";
 import { runApp } from "../../runApp";
 import { DbSectionsModel } from "../DbSectionsModel";
+import { childToSectionName } from "./../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/ChildSectionName";
 import { createTestUserModel } from "./test/createTestUserModel";
 
-const sectionName = "user";
-function makeReq(): SectionPackArrReq<typeof sectionName> {
+const storeName = "singleTimeListMain";
+type StoreName = typeof storeName;
+const sectionName = childToSectionName("dbStore", storeName);
+function makeReq(): SectionPackArrReq<StoreName> {
   const reqMaker = SectionArrReqMaker.init(sectionName);
   return reqMaker.makeReq();
 }
 
 const testedRoute = apiQueriesShared.replaceSectionArr.pathRoute;
 describe(testedRoute, () => {
-  let req: SectionPackArrReq<typeof sectionName>;
+  let req: SectionPackArrReq<StoreName>;
   let server: any;
   let userId: string;
   let token: string;

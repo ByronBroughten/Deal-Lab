@@ -1,11 +1,15 @@
-import { OneRawSection, RawSections } from "../SectionPack/RawSection";
-import { ChildSectionPack, SectionPack } from "../SectionPack/SectionPack";
 import { SimpleSectionName } from "../SectionsMeta/baseSections";
 import {
   ChildName,
   FeChildInfo,
 } from "../SectionsMeta/childSectionsDerived/ChildName";
 import { ChildSectionName } from "../SectionsMeta/childSectionsDerived/ChildSectionName";
+import { ChildSectionPack } from "../SectionsMeta/childSectionsDerived/ChildSectionPack";
+import { SectionPack } from "../SectionsMeta/childSectionsDerived/SectionPack";
+import {
+  OneRawSection,
+  RawSections,
+} from "../SectionsMeta/childSectionsDerived/SectionPack/RawSection";
 import { FeSectionInfo } from "../SectionsMeta/Info";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { GetterSectionBase } from "../StateGetters/Bases/GetterSectionBase";

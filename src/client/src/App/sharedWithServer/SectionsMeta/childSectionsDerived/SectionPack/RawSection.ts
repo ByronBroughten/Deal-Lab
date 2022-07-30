@@ -1,13 +1,10 @@
 import { z } from "zod";
-import {
-  ChildIdArrsWide,
-  GeneralChildIdArrs,
-} from "../SectionsMeta/childSectionsDerived/ChildName";
-import { SelfOrDescendantSectionName } from "../SectionsMeta/childSectionsDerived/DescendantSectionName";
-import { zValue } from "../SectionsMeta/relSectionsUtils/valueMeta";
-import { DbValue } from "../SectionsMeta/relSectionsUtils/valueMetaTypes";
-import { SectionName } from "../SectionsMeta/SectionName";
-import { zS } from "../utils/zod";
+import { zS } from "../../../utils/zod";
+import { SimpleSectionName } from "../../baseSections";
+import { zValue } from "../../relSectionsUtils/valueMeta";
+import { DbValue } from "../../relSectionsUtils/valueMetaTypes";
+import { ChildIdArrsWide, GeneralChildIdArrs } from "../ChildName";
+import { SelfOrDescendantSectionName } from "../DescendantSectionName";
 
 export type DbVarbs = {
   [varbName: string]: DbValue;
@@ -20,15 +17,15 @@ export type GeneralRawSection = {
 export type GeneralRawSections = {
   [key: string]: GeneralRawSection[];
 };
-export type OneRawSection<SN extends SectionName = SectionName> = {
+export type OneRawSection<SN extends SimpleSectionName = SimpleSectionName> = {
   dbId: string;
   dbVarbs: DbVarbs;
   childDbIds: ChildIdArrsWide<SN>;
 };
-export type RawSections<SN extends SectionName> = {
+export type RawSections<SN extends SimpleSectionName> = {
   [DSN in SelfOrDescendantSectionName<SN>]: OneRawSection<DSN>[];
 };
-export type RawSection<SN extends SectionName = SectionName> =
+export type RawSection<SN extends SimpleSectionName = SimpleSectionName> =
   RawSections<SN>[SelfOrDescendantSectionName<SN>][number];
 
 const zRawSectionFrame: Record<keyof OneRawSection, any> = {

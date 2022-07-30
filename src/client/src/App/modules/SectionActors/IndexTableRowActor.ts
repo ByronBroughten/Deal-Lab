@@ -2,7 +2,7 @@ import {
   isFeStoreTableName,
   relChildSections,
 } from "../../sharedWithServer/SectionsMeta/relChildSections";
-import { DbStoreNameByType } from "../../sharedWithServer/SectionsMeta/relSectionsDerived/relNameArrs/dbStoreNameArrs";
+import { FeStoreNameByType } from "../../sharedWithServer/SectionsMeta/relSectionsDerived/relNameArrs/feStoreNameArrs";
 import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
 import { SetterSection } from "../../sharedWithServer/StateSetters/SetterSection";
 import { StrictOmit } from "../../sharedWithServer/utils/types";
@@ -13,7 +13,7 @@ export interface IndexTableRowActorProps
   extends StrictOmit<SectionActorBaseProps<"tableRow">, "sectionName"> {}
 
 export class IndexTableRowActor extends SectionActorBase<"tableRow"> {
-  dbStoreName: DbStoreNameByType<"tableRowDbSource">;
+  dbStoreName: FeStoreNameByType<"tableRowDbSource">;
   constructor(props: IndexTableRowActorProps) {
     super({
       sectionName: "tableRow",
@@ -27,7 +27,7 @@ export class IndexTableRowActor extends SectionActorBase<"tableRow"> {
   get setter() {
     return new SetterSection(this.sectionActorBaseProps);
   }
-  private initDbStoreName(): DbStoreNameByType<"tableRowDbSource"> {
+  private initDbStoreName(): FeStoreNameByType<"tableRowDbSource"> {
     const parentSelfChildName = this.get.parent.selfChildName;
     if (isFeStoreTableName(parentSelfChildName)) {
       return relChildSections.feStore[parentSelfChildName].tableRowDbSource;

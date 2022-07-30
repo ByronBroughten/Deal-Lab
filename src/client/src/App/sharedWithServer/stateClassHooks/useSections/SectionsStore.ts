@@ -2,7 +2,7 @@ import hash from "object-hash";
 import React from "react";
 import { config } from "../../../Constants";
 import { getStoredObj } from "../../../utils/localStorage";
-import { SectionPack } from "../../SectionPack/SectionPack";
+import { SectionPack } from "../../SectionsMeta/childSectionsDerived/SectionPack";
 import { relSections } from "../../SectionsMeta/relSections";
 import { GetterSections } from "../../StateGetters/GetterSections";
 import { PackMakerSection } from "../../StatePackers.ts/PackMakerSection";

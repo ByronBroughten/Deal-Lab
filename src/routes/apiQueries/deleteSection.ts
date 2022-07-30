@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { DbStoreInfo } from "../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/dbStoreNames";
+import { DbStoreInfo } from "../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreName";
 import { userAuthWare } from "../../middleware/authWare";
 import { findUserByIdAndUpdate } from "./shared/findAndUpdate";
 import { sendSuccess } from "./shared/sendSuccess";

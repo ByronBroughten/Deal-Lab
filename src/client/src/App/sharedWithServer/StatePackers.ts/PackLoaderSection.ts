@@ -1,11 +1,11 @@
-import {
-  ChildArrPack,
-  ChildSectionPack,
-  SectionPack,
-} from "../SectionPack/SectionPack";
 import { SimpleSectionName } from "../SectionsMeta/baseSections";
 import { ChildName } from "../SectionsMeta/childSectionsDerived/ChildName";
 import { ChildSectionName } from "../SectionsMeta/childSectionsDerived/ChildSectionName";
+import {
+  ChildArrPack,
+  ChildSectionPack,
+} from "../SectionsMeta/childSectionsDerived/ChildSectionPack";
+import { SectionPack } from "../SectionsMeta/childSectionsDerived/SectionPack";
 import { FeSectionInfo } from "../SectionsMeta/Info";
 import { SectionName } from "../SectionsMeta/SectionName";
 import {

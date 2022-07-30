@@ -1,5 +1,5 @@
-import { SectionPack } from "../SectionPack/SectionPack";
 import { inEntityInfo } from "../SectionsMeta/baseSectionsUtils/baseValues/InEntityInfoValue";
+import { SectionPack } from "../SectionsMeta/childSectionsDerived/SectionPack";
 import { FeStoreTableName } from "../SectionsMeta/relChildSections";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
 import { Obj } from "../utils/Obj";

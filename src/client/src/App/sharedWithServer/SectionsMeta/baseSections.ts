@@ -1,4 +1,5 @@
 import { omit } from "lodash";
+import { z } from "zod";
 import { Obj } from "../utils/Obj";
 import {
   baseSection,
@@ -6,26 +7,6 @@ import {
   GeneralBaseSection,
 } from "./baseSectionsUtils/baseSection";
 import { baseVarbs, baseVarbsS } from "./baseSectionsUtils/baseVarbs";
-
-// If I wanted to break everything up
-
-// each subscription has priceIds
-// each priceId has items
-
-// the tricky part is that unlike for the other sections
-//  the source of truth is the db, not the fe.
-
-// serverOnlyUser is the source of truth.
-// serverOnlyUser stores the subscriptionId, priceIds, and active status
-// when loading, user gets more basic variables for displaying, etc.
-
-//
-
-// for each item, there is a parameter on the fe
-// - The fe parameter can be hacked
-// - not a big deal unless actual data storage is involved
-
-// for some, there is also a parameter on the jwt
 
 export const loanVarbsNotInFinancing = [
   "interestRatePercentMonthly",
@@ -217,6 +198,9 @@ export type SimpleSectionName = typeof simpleSectionNames[number];
 export function isSectionName(value: any): value is SimpleSectionName {
   return simpleSectionNames.includes(value);
 }
+export const zSectionName = z
+  .string()
+  .refine((str) => isSectionName(str), "Not a valid sectionName");
 
 export const allNull = simpleSectionNames.reduce((allNull, sectionName) => {
   allNull[sectionName] = null;

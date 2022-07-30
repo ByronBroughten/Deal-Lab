@@ -1,19 +1,19 @@
 import mongoose, { Schema } from "mongoose";
-import { RawSection } from "../client/src/App/sharedWithServer/SectionPack/RawSection";
-import { SectionPack } from "../client/src/App/sharedWithServer/SectionPack/SectionPack";
 import { SectionVarbName } from "../client/src/App/sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionTypes";
+import { DbSectionPack } from "../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbSectionPack";
+import {
+  DbSectionName,
+  DbStoreName,
+  dbStoreNames,
+} from "../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreName";
 import { SelfOrDescendantSectionName } from "../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DescendantSectionName";
+import { SectionPack } from "../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/SectionPack";
+import { RawSection } from "../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/SectionPack/RawSection";
 import { VarbValue } from "../client/src/App/sharedWithServer/SectionsMeta/relSectionsUtils/valueMetaTypes";
 import { monSchemas } from "../client/src/App/sharedWithServer/utils/mongoose";
-import {
-  ServerSectionName,
-  serverSectionNames,
-  ServerSectionPack,
-  ServerStoreName,
-} from "./ServerStoreName";
 
 export type DbSectionsModelCore = {
-  [CN in ServerStoreName]: ServerSectionPack<CN>[];
+  [CN in DbStoreName]: DbSectionPack<CN>[];
 } & { _id: mongoose.Types.ObjectId };
 
 export const DbSectionsModel = mongoose.model<DbSectionsModelCore>(
@@ -21,12 +21,12 @@ export const DbSectionsModel = mongoose.model<DbSectionsModelCore>(
   makeMongooseUserSchema()
 );
 
-function makeMongooseUserSchema(): Schema<Record<ServerStoreName, any>> {
-  const partial: Partial<Record<ServerStoreName, any>> = {};
-  for (const sectionName of serverSectionNames) {
+function makeMongooseUserSchema(): Schema<Record<DbStoreName, any>> {
+  const partial: Partial<Record<DbStoreName, any>> = {};
+  for (const sectionName of dbStoreNames) {
     partial[sectionName] = [makeMongooseSectionPack()];
   }
-  const frame = partial as Record<ServerStoreName, any>;
+  const frame = partial as Record<DbStoreName, any>;
   return new Schema(frame);
 }
 
@@ -58,18 +58,18 @@ export function makeMongooseSection() {
 }
 
 export const modelPath = {
-  firstSectionPack(storeName: ServerStoreName) {
+  firstSectionPack(storeName: DbStoreName) {
     return `${storeName}.0`;
   },
-  firstSectionPackSection<CN extends ServerStoreName>(
+  firstSectionPackSection<CN extends DbStoreName>(
     storeName: CN,
-    sectionName: SelfOrDescendantSectionName<ServerSectionName<CN>>
+    sectionName: SelfOrDescendantSectionName<DbSectionName<CN>>
   ) {
     return `${this.firstSectionPack(storeName)}.rawSections.${sectionName}.0`;
   },
   firstSectionVarb<
-    CN extends ServerStoreName,
-    SN extends SelfOrDescendantSectionName<ServerSectionName<CN>>
+    CN extends DbStoreName,
+    SN extends SelfOrDescendantSectionName<DbSectionName<CN>>
   >({ storeName, sectionName, varbName }: FirstSectionVarbPathProps<CN, SN>) {
     return `${this.firstSectionPackSection(
       storeName,
@@ -79,8 +79,8 @@ export const modelPath = {
 };
 
 type FirstSectionVarbPathProps<
-  CN extends ServerStoreName,
-  SN extends SelfOrDescendantSectionName<ServerSectionName<CN>>
+  CN extends DbStoreName,
+  SN extends SelfOrDescendantSectionName<DbSectionName<CN>>
 > = {
   storeName: CN;
   sectionName: SN;
@@ -88,8 +88,8 @@ type FirstSectionVarbPathProps<
 };
 
 interface UpdateVarbProps<
-  CN extends ServerStoreName,
-  SN extends SelfOrDescendantSectionName<ServerSectionName<CN>>,
+  CN extends DbStoreName,
+  SN extends SelfOrDescendantSectionName<DbSectionName<CN>>,
   VN extends SectionVarbName<SN>
 > extends FirstSectionVarbPathProps<CN, SN> {
   varbName: VN;
@@ -98,8 +98,8 @@ interface UpdateVarbProps<
 
 export const queryParameters = {
   updateVarb: <
-    CN extends ServerStoreName,
-    SN extends SelfOrDescendantSectionName<ServerSectionName<CN>>,
+    CN extends DbStoreName,
+    SN extends SelfOrDescendantSectionName<DbSectionName<CN>>,
     VN extends SectionVarbName<SN>
   >({
     value,

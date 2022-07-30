@@ -1,12 +1,11 @@
 import { QueryOptions } from "mongoose";
-import { DbStoreName } from "../../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/dbStoreNames";
+import { DbSectionPack } from "../../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbSectionPack";
+import {
+  DbStoreInfo,
+  DbStoreName,
+} from "../../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreName";
 import { ResStatusError } from "../../../../resErrorUtils";
 import { DbSectionsModel } from "../../../DbSectionsModel";
-import {
-  ServerSectionPack,
-  ServerStoreInfo,
-  ServerStoreName,
-} from "../../../ServerStoreName";
 import { DbSectionsQuerierBase } from "./Bases/DbSectionsQuerierBase";
 import { DbSections } from "./DbSections";
 import {
@@ -52,15 +51,15 @@ export class DbSectionsQuerier extends DbSectionsQuerierBase {
   async exists(): Promise<boolean> {
     return await DbSectionsModel.exists(this.userFilter);
   }
-  async hasSectionPack<CN extends ServerStoreName>(
-    dbInfo: ServerStoreInfo<CN>
+  async hasSectionPack<CN extends DbStoreName>(
+    dbInfo: DbStoreInfo<CN>
   ): Promise<boolean> {
     const dbSections = await this.dbSections();
     return dbSections.hasSection(dbInfo);
   }
-  async getSectionPack<CN extends ServerStoreName>(
-    dbInfo: ServerStoreInfo<CN>
-  ): Promise<ServerSectionPack<CN>> {
+  async getSectionPack<CN extends DbStoreName>(
+    dbInfo: DbStoreInfo<CN>
+  ): Promise<DbSectionPack<CN>> {
     const dbSections = await this.dbSections();
     return dbSections.sectionPack(dbInfo);
     // It would be cool to query one pack directly, but it didn't work:
@@ -71,7 +70,7 @@ export class DbSectionsQuerier extends DbSectionsQuerierBase {
     //   // { $match: { [`${sectionName}.${dbId}`]: dbId } },
     // ]);
   }
-  async setSectionPackArr<CN extends ServerStoreName>({
+  async setSectionPackArr<CN extends DbStoreName>({
     storeName,
     sectionPackArr,
   }: SetSectionPackArrProps<CN>): Promise<void> {
@@ -102,9 +101,9 @@ export class DbSectionsQuerier extends DbSectionsQuerierBase {
     }
   }
 
-  async getSectionPackArr<DSN extends ServerStoreName>(
+  async getSectionPackArr<DSN extends DbStoreName>(
     dbStoreName: DSN
-  ): Promise<ServerSectionPack<DSN>[]> {
+  ): Promise<DbSectionPack<DSN>[]> {
     const dbSections = await this.dbSections();
     return dbSections.sectionPackArr(dbStoreName);
   }
@@ -138,9 +137,9 @@ export class DbSectionsQuerier extends DbSectionsQuerierBase {
   }
 }
 
-type SetSectionPackArrProps<CN extends ServerStoreName> = {
+type SetSectionPackArrProps<CN extends DbStoreName> = {
   storeName: CN;
-  sectionPackArr: ServerSectionPack<CN>[];
+  sectionPackArr: DbSectionPack<CN>[];
 };
 
 interface UpdateProps extends QueryParameters {

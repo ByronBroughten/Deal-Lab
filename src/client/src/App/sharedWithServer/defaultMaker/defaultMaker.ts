@@ -1,4 +1,4 @@
-import { SectionPack } from "../SectionPack/SectionPack";
+import { SectionPack } from "../SectionsMeta/childSectionsDerived/SectionPack";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { makeDefaultDealPack } from "./makeDefaultDealPack";
 import { makeDefaultFeStorePack } from "./makeDefaultFeStore";

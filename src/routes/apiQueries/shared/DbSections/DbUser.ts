@@ -6,10 +6,13 @@ import { LoginUser } from "../../../../client/src/App/sharedWithServer/apiQuerie
 import { RegisterReqBody } from "../../../../client/src/App/sharedWithServer/apiQueriesShared/register";
 import { defaultMaker } from "../../../../client/src/App/sharedWithServer/defaultMaker/defaultMaker";
 import {
+  dbStoreNameS,
+  dbStoreNames,
+} from "../../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreName";
+import {
   isFeStoreTableName,
   relChildSections,
 } from "../../../../client/src/App/sharedWithServer/SectionsMeta/relChildSections";
-import { dbStoreNameS } from "../../../../client/src/App/sharedWithServer/SectionsMeta/relSectionsDerived/relNameArrs/dbStoreNameArrs";
 import { SectionValues } from "../../../../client/src/App/sharedWithServer/SectionsMeta/relSectionsUtils/valueMetaTypes";
 import {
   GetterSectionBase,
@@ -21,7 +24,6 @@ import { Arr } from "../../../../client/src/App/sharedWithServer/utils/Arr";
 import { getStandardNow } from "../../../../client/src/App/sharedWithServer/utils/date";
 import { stripeS } from "../../../../client/src/App/sharedWithServer/utils/stripe";
 import { HandledResStatusError } from "../../../../resErrorUtils";
-import { serverSectionNames } from "../../../ServerStoreName";
 import { DbSectionsProps } from "./Bases/DbSectionsBase";
 import { DbSections } from "./DbSections";
 import { DbSectionsQuerier } from "./DbSectionsQuerier";
@@ -55,7 +57,7 @@ export class DbUser extends GetterSectionBase<"dbStore"> {
   private static init(props: DbSectionsProps) {
     const dbSections = new DbSections(props);
     const dbStore = PackBuilderSection.initAsOmniChild("dbStore");
-    for (const childName of serverSectionNames) {
+    for (const childName of dbStoreNames) {
       const sectionPacks = dbSections.sectionPackArr(childName);
       dbStore.loadChildren({
         childName,

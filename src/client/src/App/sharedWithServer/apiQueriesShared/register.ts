@@ -1,9 +1,7 @@
 import { z } from "zod";
-import {
-  ChildSectionPack,
-  zRawSectionPackArr,
-} from "../SectionPack/SectionPack";
 import { sectionsMeta } from "../SectionsMeta";
+import { ChildSectionPack } from "../SectionsMeta/childSectionsDerived/ChildSectionPack";
+import { zRawSectionPackArr } from "../SectionsMeta/childSectionsDerived/SectionPack";
 import { Arr } from "../utils/Arr";
 import { dbLimits } from "../utils/dbLimts";
 import { validationMessage, zS } from "../utils/zod";

@@ -17,9 +17,9 @@ import { Obj } from "../sharedWithServer/utils/Obj";
 import { StrictOmit } from "../sharedWithServer/utils/types";
 import {
   makeResValidationQueryError,
+  validateDbArrQueryNameRes,
   validateDbIdRes,
-  validateDbStoreNameRes,
-  validateServerSectionPackRes,
+  validateDbSectionPackRes,
 } from "./apiQueriesClient/validateRes";
 import https from "./services/httpService";
 
@@ -68,7 +68,7 @@ function makeApiQueries(): ApiQueries {
     getSection: {
       doingWhat: "getting a section",
       get validateRes() {
-        return validateServerSectionPackRes;
+        return validateDbSectionPackRes;
       },
     },
     deleteSection: {
@@ -80,7 +80,7 @@ function makeApiQueries(): ApiQueries {
     replaceSectionArr: {
       doingWhat: "replacing sections",
       get validateRes() {
-        return validateDbStoreNameRes;
+        return validateDbArrQueryNameRes;
       },
     },
     getProPaymentLink: {

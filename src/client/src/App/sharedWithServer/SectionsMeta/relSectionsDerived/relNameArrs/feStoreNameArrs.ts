@@ -1,5 +1,5 @@
 import { Obj } from "../../../utils/Obj";
-import { dbStoreNames } from "../../childSectionsDerived/dbStoreNames";
+import { getChildNames } from "../../childSectionsDerived/ChildName";
 import { tableRowDbSources } from "../../relChildSections";
 import { relSections } from "../../relSections";
 import { getRelParams } from "./getRelParams";
@@ -20,6 +20,7 @@ export const hasStoreNameArrs = {
   },
 } as const;
 
+// both of these pertain to feStoreNames
 const hasToStoreNames = {
   tableIndex: getRelParams(
     hasStoreNameArrs.hasRowIndex,
@@ -39,23 +40,23 @@ const hasToStoreNames = {
 
 const indexStoreNames = makeNestedValueArrs(hasToStoreNames);
 
-export type DbStoreType = keyof StoreNameArrs;
-export type DbStoreNameByType<SN extends DbStoreType = "all"> =
+export type FeStoreType = keyof StoreNameArrs;
+export type FeStoreNameByType<SN extends FeStoreType = "all"> =
   StoreNameArrs[SN][number];
 
-const dbStoreNameArrs = {
+const feStoreNameArrs = {
   ...indexStoreNames,
   tableRowDbSource: tableRowDbSources,
-  all: dbStoreNames,
+  all: getChildNames("feStore"),
 } as const;
-type StoreNameArrs = typeof dbStoreNameArrs;
+type StoreNameArrs = typeof feStoreNameArrs;
 
-export const dbStoreNameS = {
-  arrs: dbStoreNameArrs,
-  is<T extends DbStoreType = "all">(
+export const feStoreNameS = {
+  arrs: feStoreNameArrs,
+  is<T extends FeStoreType = "all">(
     value: any,
     type?: T
-  ): value is DbStoreNameByType<T> {
+  ): value is FeStoreNameByType<T> {
     return (this.arrs[(type ?? "all") as T] as any).includes(value);
   },
 } as const;

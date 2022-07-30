@@ -1,10 +1,10 @@
-import { OneRawSection } from "../../SectionPack/RawSection";
-import { SectionPack } from "../../SectionPack/SectionPack";
 import {
   ChildIdArrsWide,
   ChildName,
   DbChildInfo,
 } from "../../SectionsMeta/childSectionsDerived/ChildName";
+import { SectionPack } from "../../SectionsMeta/childSectionsDerived/SectionPack";
+import { OneRawSection } from "../../SectionsMeta/childSectionsDerived/SectionPack/RawSection";
 import { SectionName, sectionNameS } from "../../SectionsMeta/SectionName";
 import {
   GetterSectionBase,

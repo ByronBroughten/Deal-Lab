@@ -5,9 +5,12 @@ import {
   makeRes,
   SectionPackRes,
 } from "../../sharedWithServer/apiQueriesShared/makeReqAndRes";
-import { isSectionPack } from "../../sharedWithServer/SectionPack/SectionPack";
 import { Id } from "../../sharedWithServer/SectionsMeta/baseSectionsUtils/id";
-import { dbStoreNameS } from "../../sharedWithServer/SectionsMeta/relSectionsDerived/relNameArrs/dbStoreNameArrs";
+import {
+  DbStoreNameByType,
+  dbStoreNameS,
+} from "../../sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreName";
+import { isSectionPack } from "../../sharedWithServer/SectionsMeta/childSectionsDerived/SectionPack";
 import { Obj } from "../../sharedWithServer/utils/Obj";
 
 export function validateDbIdRes(res: AxiosResponse<unknown>): DbIdRes {
@@ -24,11 +27,25 @@ export function validateDbStoreNameRes(
   const { data } = res;
   if (Obj.isAnyIfIsObj(data)) {
     const { dbStoreName } = data;
-    if (dbStoreNameS.is(dbStoreName)) return makeRes({ dbStoreName });
+    if (dbStoreNameS.is(dbStoreName, "allQuery"))
+      return makeRes({ dbStoreName });
   }
   throw makeResValidationQueryError();
 }
-export function validateServerSectionPackRes(
+
+export function validateDbArrQueryNameRes(
+  res: AxiosResponse<unknown>
+): DbStoreNameRes<DbStoreNameByType<"arrQuery">> {
+  const { data } = res;
+  if (Obj.isAnyIfIsObj(data)) {
+    const { dbStoreName } = data;
+    if (dbStoreNameS.is(dbStoreName, "arrQuery"))
+      return makeRes({ dbStoreName });
+  }
+  throw makeResValidationQueryError();
+}
+
+export function validateDbSectionPackRes(
   res: AxiosResponse<unknown>
 ): SectionPackRes {
   const { data } = res;

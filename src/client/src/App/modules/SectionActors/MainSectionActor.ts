@@ -1,5 +1,5 @@
-import { SectionPack } from "../../sharedWithServer/SectionPack/SectionPack";
-import { DbSectionNameName } from "../../sharedWithServer/SectionsMeta/childSectionsDerived/dbStoreNames";
+import { DbSectionNameName } from "../../sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreName";
+import { SectionPack } from "../../sharedWithServer/SectionsMeta/childSectionsDerived/SectionPack";
 import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
 import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
 import { GetterSections } from "../../sharedWithServer/StateGetters/GetterSections";
