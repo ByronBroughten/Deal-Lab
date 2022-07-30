@@ -10,19 +10,19 @@ type TablePackMakers = {
 };
 export function makeDefaultFeStoreTables(): TablePackMakers {
   const columnVarbnames = {
-    dealTable: {
+    dealMainTable: {
       sectionName: "deal",
       varbNames: outputNames,
     },
-    propertyTable: {
+    propertyMainTable: {
       sectionName: "property",
       varbNames: ["price", "numBedrooms", "targetRentMonthly"],
     },
-    loanTable: {
+    loanMainTable: {
       sectionName: "loan",
       varbNames: ["interestRatePercentMonthly", "loanTermYears"],
     },
-    mgmtTable: {
+    mgmtMainTable: {
       sectionName: "mgmt",
       varbNames: [
         "vacancyRatePercent",

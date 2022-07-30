@@ -8,25 +8,16 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-// Ok. What do I have to do?
-// - Implement a way to test a pro account.
+// - Test the pro stuff in addSection.test
+// - Test that addSection only accepts certain sectionNames
+// - Run that same test in update/delete/get
 
-// - Implement a "pro-list", that makes some users pro
-//   no matter what, both to test out features and because
-//   it might be vaguely useful
-// - Allow storage if the user has a full subscription
-
-// - Test those two things in addSection.test
-
-// - Make it so addSection only accepts certain sectionNames
-// - Do this for updateSection, deleteSection, getSection, and replaceSectionArr
-// - Indicate on the front-end when saving is now allowed due to storage. Try an info dot.
-// - If the Jwt is expired, make it attempt to update the Jwt
+// - If the Jwt is expired in addSection, make it attempt to update the Jwt
 // - Make it succeed if a valid subscription is present in the db
 // - Make it fail if no such subscription exists in the db
 
-// - Figure out which sections will be savable and add them as children to the db
-//   (even if for now they will be empty)
+// If the front-end pro Jwt is expired, make it attempt to update it
+// with a useEffect
 
 // - Make a useEffect on the frontEnd that attempts to update the
 //   front-end subscriptionInfo if the planExp is out of date

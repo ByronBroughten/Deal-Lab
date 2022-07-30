@@ -85,10 +85,10 @@ function makeRelChildSections<RCS extends GenericRelChildSections>(
 }
 
 export const feStoreTableNames: ChildSectionNameName<"feStore", "table">[] = [
-  "propertyTable",
-  "loanTable",
-  "mgmtTable",
-  "dealTable",
+  "propertyMainTable",
+  "loanMainTable",
+  "mgmtMainTable",
+  "dealMainTable",
 ];
 export type FeStoreTableName = typeof feStoreTableNames[number];
 export function isFeStoreTableName(value: any): value is FeStoreTableName {
@@ -98,16 +98,16 @@ export function isFeStoreTableName(value: any): value is FeStoreTableName {
 export const relChildSections = makeRelChildSections({
   ...makeDefaultRelChildSections(),
   feStore: relChildren("feStore", {
-    dealTable: relChild({
+    dealMainTable: relChild({
       tableRowDbSource: "dealMain",
     }),
-    propertyTable: relChild({
+    propertyMainTable: relChild({
       tableRowDbSource: "propertyMain",
     }),
-    loanTable: relChild({
+    loanMainTable: relChild({
       tableRowDbSource: "loanMain",
     }),
-    mgmtTable: relChild({
+    mgmtMainTable: relChild({
       tableRowDbSource: "mgmtMain",
     }),
   }),

@@ -24,7 +24,9 @@ export function Main() {
       <Routes>
         <Route
           path="/deals"
-          element={<TableStore feId={feStore.onlyChild("dealTable").feId} />}
+          element={
+            <TableStore feId={feStore.onlyChild("dealMainTable").feId} />
+          }
         />
         <Route path={constants.subscriptionSuccessUrlEnd} />
         {/* <Route path="/variables" element={<UserVarbsManager/>} /> */}

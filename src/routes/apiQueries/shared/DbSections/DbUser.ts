@@ -24,6 +24,7 @@ import { Arr } from "../../../../client/src/App/sharedWithServer/utils/Arr";
 import { getStandardNow } from "../../../../client/src/App/sharedWithServer/utils/date";
 import { stripeS } from "../../../../client/src/App/sharedWithServer/utils/stripe";
 import { HandledResStatusError } from "../../../../resErrorUtils";
+import { isProEmail } from "../../../routeUtils/proList";
 import { DbSectionsProps } from "./Bases/DbSectionsBase";
 import { DbSections } from "./DbSections";
 import { DbSectionsQuerier } from "./DbSectionsQuerier";
@@ -120,6 +121,13 @@ export class DbUser extends GetterSectionBase<"dbStore"> {
     return stripeInfo.value("customerId", "string");
   }
   get subscriptionProps(): SubscriptionProps {
+    if (isProEmail(this.email)) {
+      return {
+        subscriptionPlan: "fullPlan",
+        planExp: 9999999999,
+      };
+    }
+
     const subscriptions = this.get.children("stripeSubscription");
     let subscriptionProps: SubscriptionProps = {
       subscriptionPlan: "basicPlan",

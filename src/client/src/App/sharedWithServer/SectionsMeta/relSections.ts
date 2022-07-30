@@ -146,12 +146,12 @@ export function makeRelSections() {
     //     { type: "or else", level: 0 },
 
     deal: relSection("Deal", dealRelVarbs(), {
-      feTableIndexStoreName: "dealTable",
+      feTableIndexStoreName: "dealMainTable",
       dbIndexStoreName: "dealMain",
     } as const),
     financing: relSection("Financing", financingRelVarbs),
     loan: relSection("Loan", loanRelVarbs(), {
-      feTableIndexStoreName: "loanTable",
+      feTableIndexStoreName: "loanMainTable",
       dbIndexStoreName: "loanMain",
     }),
     propertyGeneral: relSection("Property", {
@@ -163,7 +163,7 @@ export function makeRelSections() {
       ),
     }),
     property: relSection("Property", propertyRelVarbs(), {
-      feTableIndexStoreName: "propertyTable",
+      feTableIndexStoreName: "propertyMainTable",
       dbIndexStoreName: "propertyMain",
     }),
     unit: relSection("Unit", {
@@ -183,7 +183,7 @@ export function makeRelSections() {
       ),
     }),
     mgmt: relSection("Management", mgmtRelVarbs(), {
-      feTableIndexStoreName: "mgmtTable",
+      feTableIndexStoreName: "mgmtMainTable",
       dbIndexStoreName: "mgmtMain",
     }),
   });
