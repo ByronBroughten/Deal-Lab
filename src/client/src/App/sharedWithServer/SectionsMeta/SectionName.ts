@@ -1,5 +1,6 @@
 import { StringTypeChecker } from "../../utils/StringTypeChecker";
 import { PropKeyOfValue } from "../utils/Obj/SubType";
+import { StrictExtract } from "../utils/types";
 import { SimpleSectionName } from "./baseSections";
 import { baseNameArrs, BaseNameArrs } from "./baseSectionsDerived/baseNameArrs";
 import { ChildName, getChildNames } from "./childSectionsDerived/ChildName";
@@ -24,6 +25,12 @@ export type SectionNameType = keyof NameArrs;
 
 export type SectionName<T extends SectionNameType = "all"> =
   NameArrs[T][number & keyof NameArrs[T]];
+
+export type HasRowFeStore = StrictExtract<
+  SectionName<"hasRowIndex">,
+  "property" | "loan" | "mgmt" | "deal"
+>;
+// HasRowFeStore counteracts a but that makes no sense to me.
 
 export type SectionValuesByType<ST extends SectionNameType> = SectionValues<
   SectionName<ST>

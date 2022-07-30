@@ -16,9 +16,6 @@ AppRegistry.runApplication("App", {
 // - Make it succeed if a valid subscription is present in the db
 // - Make it fail if no such subscription exists in the db
 
-// If the front-end pro Jwt is expired, make it attempt to update it
-// with a useEffect
-
 // - Make a useEffect on the frontEnd that attempts to update the
 //   front-end subscriptionInfo if the planExp is out of date
 

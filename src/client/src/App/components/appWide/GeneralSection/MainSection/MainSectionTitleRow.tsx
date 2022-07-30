@@ -6,7 +6,7 @@ import styled, { css } from "styled-components";
 import useToggleView from "../../../../modules/customHooks/useToggleView";
 import { useMainSectionActor } from "../../../../modules/sectionActorHooks/useMainSectionActor";
 import { auth } from "../../../../modules/services/authService";
-import { SectionName } from "../../../../sharedWithServer/SectionsMeta/SectionName";
+import { HasRowFeStore } from "../../../../sharedWithServer/SectionsMeta/SectionName";
 import theme from "../../../../theme/Theme";
 import { DropdownList } from "../../DropdownList";
 import { LabeledIconBtn } from "../../LabeledIconBtn";
@@ -15,7 +15,7 @@ import XBtn from "../../Xbtn";
 import { MainSectionTitleRowTitleNext } from "./MainSectionTitleRow/MainSectionTitleRowTitle";
 
 type Props = {
-  sectionName: SectionName<"hasRowIndex">;
+  sectionName: HasRowFeStore;
   feId: string;
   pluralName: string;
   xBtn?: boolean;
