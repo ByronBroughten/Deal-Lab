@@ -12,7 +12,7 @@ import { DropdownList } from "../../DropdownList";
 import { LabeledIconBtn } from "../../LabeledIconBtn";
 import RowIndexSectionList from "../../RowIndexSectionList";
 import XBtn from "../../Xbtn";
-import { MainSectionTitleRowTitleNext } from "./MainSectionTitleRow/MainSectionTitleRowTitle";
+import { MainSectionTitleRowTitle } from "./MainSectionTitleRow/MainSectionTitleRowTitle";
 
 type Props = {
   sectionName: HasRowFeStore;
@@ -44,7 +44,7 @@ export function MainSectionTitleRow({
       }}
     >
       <div className="MainSectionTitleRow-leftSide">
-        <MainSectionTitleRowTitleNext feInfo={feInfo} />
+        <MainSectionTitleRowTitle feInfo={feInfo} />
         <DropdownList
           {...{
             className: "MainsectionTitleRow-dropdownList",

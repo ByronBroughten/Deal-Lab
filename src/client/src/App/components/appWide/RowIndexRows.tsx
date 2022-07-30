@@ -1,3 +1,4 @@
+import { TextField } from "@material-ui/core";
 import React from "react";
 import styled from "styled-components";
 import ccs from "../../theme/cssChunks";
@@ -12,6 +13,7 @@ type Props = {
   className?: string;
 };
 export function RowIndexRows({ feInfo, className }: Props) {
+  const [filter, setFilter] = React.useState("");
   const section = useMainSectionActor(feInfo);
   const rows = section.table.alphabeticalGetterRows();
   const { isAtLeastOne } = useHowMany(rows);
@@ -21,17 +23,33 @@ export function RowIndexRows({ feInfo, className }: Props) {
       tabIndex={0}
       sectionName={themeSectionNameOrDefault(feInfo.sectionName)}
     >
-      {isAtLeastOne &&
-        rows.map(({ dbId, displayName }) => (
-          <RowIndexListRow
+      {isAtLeastOne && (
+        <>
+          <TextField
             {...{
-              displayName,
-              load: () => section.loadFromIndex(dbId),
-              del: () => section.deleteFromIndex(dbId),
-              key: dbId,
+              className: "RowIndexRows-filter",
+              placeholder: "filter",
+              value: filter,
+              onChange: ({ currentTarget }) => {
+                setFilter(currentTarget.value);
+              },
             }}
           />
-        ))}
+          {rows.map(
+            ({ dbId, displayName }) =>
+              displayName.includes(filter) && (
+                <RowIndexListRow
+                  {...{
+                    displayName,
+                    load: () => section.loadFromIndex(dbId),
+                    del: () => section.deleteFromIndex(dbId),
+                    key: dbId,
+                  }}
+                />
+              )
+          )}
+        </>
+      )}
       {!isAtLeastOne && (
         <div className="RowIndexRows-entry">
           <div className="RowIndexSectionList-noneDiv">None</div>
@@ -52,6 +70,10 @@ const Styled = styled.div<{ sectionName: ThemeName }>`
   overflow-y: auto;
   overflow-x: hidden;
   ${ccs.dropdown.scrollbar};
+
+  .RowIndexRows-filter {
+    padding: 0 ${theme.s3} 0 ${theme.s3};
+  }
 
   .RowIndexSectionList-noneDiv {
     display: flex;
