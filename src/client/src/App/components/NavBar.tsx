@@ -6,11 +6,9 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { useFeUser } from "../modules/sectionActorHooks/useFeUser";
 import theme from "../theme/Theme";
-import { LoginForm } from "./NavBar/LoginForm";
 import NavBtn from "./NavBar/NavBtn";
 import NavDropDown from "./NavBar/NavDropDown";
 import { NavUserMenu } from "./NavBar/NavUserMenu";
-import { RegisterForm } from "./NavBar/RegisterForm";
 import { UpgradeUserToProPanel } from "./NavBar/UpgradeUserToProPanel";
 
 type NavBarProps = { logout: () => void };
@@ -22,7 +20,7 @@ export default function NavBar(props: NavBarProps) {
     <Styled className="NavBar-root">
       <Toolbar disableGutters={true}>
         <div className="NavBar-leftSide">
-          <Link className="NavBar-analyzerLink" to="/">
+          <Link className="NavBar-navBtnLink" to="/">
             <NavBtn className="NavBar-brandBtn">
               <BsFillHouseDoorFill className="NavBar-brandIcon" />
               <span className="NavBar-brandName">Ultimate Deal Analyzer</span>
@@ -40,12 +38,17 @@ export default function NavBar(props: NavBarProps) {
         <div className="NavBar-rightSide">
           {isGuest && (
             <>
-              <NavDropDown btnText="Create Account">
+              <Link className="NavBar-navBtnLink" to="/auth">
+                <NavBtn>
+                  <span>Sign In / Sign Up</span>
+                </NavBtn>
+              </Link>
+              {/* <NavDropDown btnText="Create Account">
                 <RegisterForm />
               </NavDropDown>
               <NavDropDown btnText="Login">
                 <LoginForm />
-              </NavDropDown>
+              </NavDropDown> */}
             </>
           )}
           {!isGuest && isBasic && (
@@ -96,7 +99,10 @@ const Styled = styled(AppBar)`
     margin-left: 8px;
   }
 
-  .NavBar-analyzerLink {
+  .NavBar-navBtnLink {
+  }
+
+  .NavBar-navBtnLink {
     display: inherit;
     align-items: inherit;
     height: inherit;

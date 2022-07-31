@@ -12,3 +12,15 @@ export function useGetterSection<SN extends SectionName = "main">(
     sectionsShare: { sections },
   });
 }
+
+export function useGetterSectionOnlyOne<SN extends SectionName>(
+  sectionName: SN
+): GetterSection<SN> {
+  const { sections } = useSectionsContext();
+  const { feId } = sections.onlyOneRawSection(sectionName);
+  return new GetterSection({
+    sectionsShare: { sections },
+    sectionName,
+    feId,
+  });
+}

@@ -1,11 +1,11 @@
 import { SimpleSectionName, simpleSectionNames } from "./baseSections";
 import {
   childrenSections,
-  GeneralChildrenSections,
+  GeneralChildrenSections
 } from "./childSectionsUtils/childrenSections";
 import {
   childSection,
-  GeneralChildSection,
+  GeneralChildSection
 } from "./childSectionsUtils/childSection";
 import { relOmniParentChildren } from "./childSectionsUtils/omniParentChildren";
 
@@ -34,6 +34,8 @@ export const childSections = checkChildSections({
     main: ["main"],
   }),
   omniParent: relOmniParentChildren,
+
+  // main is basically no longer required.
   main: childrenSections({
     login: ["login"],
     register: ["register"],
@@ -42,8 +44,8 @@ export const childSections = checkChildSections({
   }),
   feStore: childrenSections({
     // feStore includes everything that has a corresponding child in dbStore
-    // and that has any intermediary sections used to edit and add to them.
-    stripeInfo: ["stripeInfo"],
+    // or that has any intermediary sections used to edit and add to them.
+    authInfo: ["authInfo"],
     subscriptionInfo: ["subscriptionInfo"],
     publicUserInfo: ["publicUserInfo"],
     propertyMainTable: ["table"],

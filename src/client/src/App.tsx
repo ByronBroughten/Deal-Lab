@@ -5,8 +5,8 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Normalize } from "styled-normalize";
 import SuperTokens, { SuperTokensWrapper } from "supertokens-auth-react";
-import EmailPassword from "supertokens-auth-react/recipe/emailpassword";
 import Session from "supertokens-auth-react/recipe/session";
+import ThirdPartyEmailPassword from "supertokens-auth-react/recipe/thirdpartyemailpassword";
 import { constants } from "./App/Constants";
 import {
   SectionsContext,
@@ -17,13 +17,16 @@ import { Theme } from "./App/theme/Theme";
 import { Main } from "./Main";
 
 SuperTokens.init({
-  appInfo: {
-    // learn more about this on https://supertokens.com/docs/emailpassword/appinfo
-    appName: constants.appName,
-    apiDomain: constants.apiPathFull,
-    websiteDomain: constants.clientUrlBase,
-  },
-  recipeList: [EmailPassword.init(), Session.init()],
+  appInfo: constants.superTokensAppInfo,
+  recipeList: [
+    // EmailPassword.init(), Session.init()
+    ThirdPartyEmailPassword.init({
+      emailVerificationFeature: {
+        mode: "REQUIRED",
+      },
+    }),
+    Session.init(),
+  ],
 });
 
 const App: React.FC = () => {

@@ -2,6 +2,7 @@ import { SectionPack } from "../SectionsMeta/childSectionsDerived/SectionPack";
 import { feStoreTableNames } from "../SectionsMeta/relChildSections";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
 import {
+  makeDefaultAuthInfo,
   makeDefaultPublicUserInfo,
   makeDefaultSubscriptionInfo,
 } from "./makeDefaultPublicUserInfo";
@@ -12,6 +13,10 @@ export function makeDefaultFeStorePack(): SectionPack<"feStore"> {
   feStore.loadChild({
     childName: "publicUserInfo",
     sectionPack: makeDefaultPublicUserInfo(),
+  });
+  feStore.loadChild({
+    childName: "authInfo",
+    sectionPack: makeDefaultAuthInfo(),
   });
   feStore.loadChild({
     childName: "subscriptionInfo",

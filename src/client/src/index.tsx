@@ -10,6 +10,22 @@ AppRegistry.runApplication("App", {
 
 // - implement SuperTokens...
 
+// Ok. The new login works.
+// I can verify basic auth that way.
+// But I need to still implement the subscription-based login
+// And I must get the user's state.
+
+// On login, on the server, create a user in the db with the info
+// from the session. Use a variable called userId
+
+// After login, on the client, check for "session.isLoggedIn"
+// if it is logged in, but the state doesn't indicate that it is
+// logged in, call the server and get the logged in user,
+// and the subscription token
+
+// make another thing that logs out the user on the front-end
+// if session.loggedIn is false
+
 // - Test the pro stuff in addSection.test
 // - Test that addSection only accepts certain sectionNames
 // - Include the test in update/delete/get

@@ -5,8 +5,9 @@ import { MdDelete, MdOutlineSystemUpdateAlt } from "react-icons/md";
 import styled, { css } from "styled-components";
 import useToggleView from "../../../../modules/customHooks/useToggleView";
 import { useMainSectionActor } from "../../../../modules/sectionActorHooks/useMainSectionActor";
-import { auth } from "../../../../modules/services/authService";
+import { AuthStatus } from "../../../../sharedWithServer/SectionsMeta/baseSections";
 import { HasRowFeStore } from "../../../../sharedWithServer/SectionsMeta/SectionName";
+import { useGetterSectionOnlyOne } from "../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import theme from "../../../../theme/Theme";
 import { DropdownList } from "../../DropdownList";
 import { LabeledIconBtn } from "../../LabeledIconBtn";
@@ -29,12 +30,15 @@ export function MainSectionTitleRow({
   ...feInfo
 }: Props) {
   const mainSection = useMainSectionActor(feInfo);
+  const authInfo = useGetterSectionOnlyOne("authInfo");
+  const authStatus = authInfo.value("authStatus", "string") as AuthStatus;
+
   const { btnMenuIsOpen, toggleBtnMenu } = useToggleView({
     initValue: false,
     viewWhat: "btnMenu",
   });
   const { displayName } = mainSection.get.meta;
-  const isGuest = !auth.isToken;
+  const isGuest = authStatus === "guest";
   return (
     <Styled
       className="MainSectionTitleRow-root"
@@ -54,7 +58,8 @@ export function MainSectionTitleRow({
         >
           {!mainSection.isSaved && (
             <LabeledIconBtn
-              label="Save"
+              label={isGuest ? "Sign in to Save" : "Save"}
+              disabled={isGuest}
               icon={<AiOutlineSave size="25" />}
               onClick={() => mainSection.saveNew()}
             />
@@ -125,7 +130,7 @@ const Styled = styled.div<{ $btnMenuIsOpen: boolean; $dropTop: boolean }>`
   align-items: flex-start;
   justify-content: space-between;
   .LabeledIconBtn-root {
-    width: 220px;
+    width: 230px;
     height: 30px;
     border-top: 1px solid ${theme["gray-500"]};
     :first-child {

@@ -11,12 +11,14 @@ import { RowIndexListRow } from "./RowIndexListRow";
 type Props = {
   feInfo: FeInfoByType<"hasRowIndex">;
   className?: string;
+  noEntriesMessage: string;
 };
-export function RowIndexRows({ feInfo, className }: Props) {
+export function RowIndexRows({ feInfo, className, noEntriesMessage }: Props) {
   const [filter, setFilter] = React.useState("");
   const section = useMainSectionActor(feInfo);
   const rows = section.table.alphabeticalGetterRows();
   const { isAtLeastOne } = useHowMany(rows);
+
   return (
     <Styled
       className={`RowIndexRows-root ${className}`}
@@ -52,7 +54,7 @@ export function RowIndexRows({ feInfo, className }: Props) {
       )}
       {!isAtLeastOne && (
         <div className="RowIndexRows-entry">
-          <div className="RowIndexSectionList-noneDiv">None</div>
+          <div className="RowIndexSectionList-noneDiv">{noEntriesMessage}</div>
         </div>
       )}
     </Styled>
@@ -79,7 +81,7 @@ const Styled = styled.div<{ sectionName: ThemeName }>`
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 200px;
+    width: 250px;
     height: 30px;
   }
 

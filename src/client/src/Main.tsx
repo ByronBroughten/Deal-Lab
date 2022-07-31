@@ -1,23 +1,46 @@
+import React from "react";
 import * as reactRouterDom from "react-router-dom";
 import { Route, Routes } from "react-router-dom";
 import styled from "styled-components";
 import { getSuperTokensRoutesForReactRouterDom } from "supertokens-auth-react";
+import { signOut } from "supertokens-auth-react/recipe/emailpassword";
 import { ActiveDeal } from "./App/components/ActiveDeal";
 import NotFound from "./App/components/general/NotFound";
 import NavBar from "./App/components/NavBar";
 import { TableStore } from "./App/components/TableStore";
 import { constants } from "./App/Constants";
 import { auth } from "./App/modules/services/authService";
+import { useAuthStatus } from "./App/sharedWithServer/stateClassHooks/useAuthStatus";
 import { useSetterSection } from "./App/sharedWithServer/stateClassHooks/useSetterSection";
 import theme from "./App/theme/Theme";
 
 export function Main() {
   const main = useSetterSection();
   const feStore = main.get.onlyChild("feStore");
-  const logout = () => {
+  const authStatus = useAuthStatus();
+
+  async function stateToDefault() {
     auth.removeToken();
     main.resetToDefault();
-  };
+    window.location.href = "/";
+  }
+
+  async function logout() {
+    await signOut();
+    stateToDefault();
+  }
+
+  React.useEffect(() => {
+    async function syncStateWithSessionExpiration() {
+      if (!(await auth.sessionExists())) {
+        if (authStatus !== "guest") {
+          stateToDefault();
+        }
+      }
+    }
+    syncStateWithSessionExpiration();
+  });
+
   const activeDealId = main.get.onlyChild("deal").feId;
   return (
     <Styled className="App-root">

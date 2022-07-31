@@ -13,3 +13,16 @@ export function useSetterSection<SN extends SectionName = "main">(
     ...moreProps,
   });
 }
+
+export function useOnlyOneSetterSection<SN extends SectionName>(
+  sectionName: SN
+): SetterSection<SN> {
+  const props = useSetterSectionsProps();
+  const { sections } = props.sectionsShare;
+  const { feId } = sections.onlyOneRawSection(sectionName);
+  return new SetterSection({
+    ...props,
+    sectionName,
+    feId,
+  });
+}

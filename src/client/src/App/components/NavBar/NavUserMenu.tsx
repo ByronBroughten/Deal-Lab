@@ -5,6 +5,7 @@ import styled from "styled-components";
 import useOnOutsideClickRef from "../../modules/customHooks/useOnOutsideClickRef";
 import useToggleView from "../../modules/customHooks/useToggleView";
 import { auth } from "../../modules/services/authService";
+import { useAuthStatus } from "../../sharedWithServer/stateClassHooks/useAuthStatus";
 import { useGetterSection } from "../../sharedWithServer/stateClassHooks/useGetterSection";
 import theme from "../../theme/Theme";
 import { StandardProps } from "../general/StandardProps";
@@ -24,6 +25,7 @@ export function NavUserMenu({ feId, logout }: NavUserMenuProps) {
     feId,
   });
 
+  const authStatus = useAuthStatus();
   const { viewIsOpen, toggleView, openView, closeView } = useToggleView({
     initValue: false,
   });
@@ -52,7 +54,7 @@ export function NavUserMenu({ feId, logout }: NavUserMenuProps) {
           <BtnDiv>
             <Button href="/lists">{`${preceding} Lists`}</Button>
           </BtnDiv> */}
-          {auth.isToken && (
+          {authStatus === "user" && (
             <>
               <BtnDiv>
                 <Button onClick={logout}>Logout</Button>

@@ -184,13 +184,13 @@ export const baseSections = {
     plan: "string",
     planExp: "number",
   }),
-
-  // publicUserInfo
-  // privateUserInfo
-
+  authInfo: baseSection({
+    authStatus: "string",
+  }),
   publicUserInfo: baseSection(
     baseVarbs("string", ["email", "userName"] as const)
   ),
+  // I don't need emailAsSubmitted
   dbOnlyUserInfo: baseSection(
     baseVarbs("string", ["encryptedPassword", "emailAsSubmitted"] as const)
   ),
@@ -219,8 +219,8 @@ export function isUserPlan(value: any): value is UserPlan {
   return userPlans.includes(value);
 }
 
-const userOrGuestPlans = [...userPlans, "guestPlan"] as const;
-export type UserOrGuestPlan = typeof userOrGuestPlans[number];
+const authStatuses = ["guest", "user"] as const;
+export type AuthStatus = typeof authStatuses[number];
 
 type FeSectionName = keyof BaseSections;
 export type BaseSectionsGeneral = Record<FeSectionName, GeneralBaseSection>;

@@ -1,3 +1,4 @@
+import Session from "supertokens-auth-react/recipe/session";
 import { constants } from "../../Constants";
 
 const userAuthKey = constants.tokenKey.apiUserAuth;
@@ -18,6 +19,12 @@ export const auth = {
   get isToken(): boolean {
     const token = this.getToken();
     return !!token;
+  },
+  async sessionExists(): Promise<boolean> {
+    return Session.doesSessionExist();
+  },
+  getSuperUserId() {
+    return Session.getUserId();
   },
 };
 

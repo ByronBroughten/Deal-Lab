@@ -46,8 +46,11 @@ export class StateSections {
 
   onlyOneRawSection<SN extends SectionName>(sectionName: SN): RawFeSection<SN> {
     const sectionList = this.rawSectionList(sectionName);
-    if (sectionList.length !== 1) {
-      throw new Error(`There should only be one "${sectionName}" section.`);
+    const count = sectionList.length;
+    if (count !== 1) {
+      throw new Error(
+        `There be exactly one "${sectionName}" section, but there are ${count}.`
+      );
     }
     return sectionList[0];
   }

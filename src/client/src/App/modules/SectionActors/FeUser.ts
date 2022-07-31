@@ -1,8 +1,8 @@
 import Session from "supertokens-auth-react/recipe/session";
-import { UserOrGuestPlan } from "../../sharedWithServer/SectionsMeta/baseSections";
+import { UserPlan } from "../../sharedWithServer/SectionsMeta/baseSections";
 import {
   GetterSectionBase,
-  GetterSectionProps,
+  GetterSectionProps
 } from "../../sharedWithServer/StateGetters/Bases/GetterSectionBase";
 import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
 import { StrictOmit } from "../../sharedWithServer/utils/types";
@@ -19,9 +19,9 @@ export class FeUser extends GetterSectionBase<"feStore"> {
   get get(): GetterSection<"feStore"> {
     return new GetterSection(this.getterSectionProps);
   }
-  get userPlan(): UserOrGuestPlan {
+  get userPlan(): UserPlan {
     const subInfo = this.get.onlyChild("subscriptionInfo");
-    return subInfo.value("plan", "string") as UserOrGuestPlan;
+    return subInfo.value("plan", "string") as UserPlan;
   }
   get isPro(): boolean {
     return this.userPlan === "fullPlan";

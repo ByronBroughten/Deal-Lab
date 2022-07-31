@@ -1,8 +1,7 @@
 import { capitalize } from "lodash";
 import { FaList } from "react-icons/fa";
-import styled, { css } from "styled-components";
 import { FeInfoByType } from "../../sharedWithServer/SectionsMeta/Info";
-import theme, { ThemeName } from "../../theme/Theme";
+import { useAuthStatus } from "../../sharedWithServer/stateClassHooks/useAuthStatus";
 import { DropdownList } from "./DropdownList";
 import { RowIndexRows } from "./RowIndexRows";
 
@@ -20,6 +19,9 @@ export default function RowIndexSectionList({
   className,
   pluralName,
 }: Props) {
+  const authStatus = useAuthStatus();
+  const noEntriesMessage =
+    authStatus === "guest" ? `Sign in to load saved properties` : "None saved";
   return (
     <DropdownList
       {...{
@@ -29,34 +31,7 @@ export default function RowIndexSectionList({
         icon: <FaList className="RowIndexSectionList-listIcon" />,
       }}
     >
-      <RowIndexRows feInfo={feInfo} />
+      <RowIndexRows feInfo={feInfo} noEntriesMessage={noEntriesMessage} />
     </DropdownList>
   );
 }
-
-const Styled = styled.div<{
-  sectionName: ThemeName;
-  $active: boolean;
-  $dropTop: boolean;
-}>`
-  position: relative;
-  display: inline-block;
-
-  .RowIndexSectionList-loadBtn {
-    ${({ $active, sectionName }) =>
-      $active &&
-      css`
-        color: ${theme["gray-600"]};
-        /* background-color: ${theme["gray-600"]}; */
-        /* border: 3px solid ${theme[sectionName].dark}; */
-      `}
-  }
-
-  .RowIndexRows-root {
-    ${({ $dropTop }) =>
-      $dropTop &&
-      css`
-        bottom: 37px;
-      `}
-  }
-`;

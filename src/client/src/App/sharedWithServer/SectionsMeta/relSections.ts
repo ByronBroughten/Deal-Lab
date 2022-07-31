@@ -1,4 +1,4 @@
-import { SimpleSectionName, UserOrGuestPlan } from "./baseSections";
+import { SimpleSectionName, UserPlan } from "./baseSections";
 import { relVarbInfoS } from "./childSectionsDerived/RelVarbInfo";
 import { relVarb, relVarbS } from "./relSectionsUtils/rel/relVarb";
 import {
@@ -47,10 +47,15 @@ export function makeRelSections() {
       },
       { dbIndexStoreName: "publicUserInfo" }
     ),
+    authInfo: relSection("Auth info", {
+      authStatus: relVarb("string", {
+        initValue: "user",
+      }),
+    }),
     subscriptionInfo: relSection("Subscription info", {
       plan: relVarb("string", {
         displayName: "Api Access Status",
-        initValue: "guestPlan" as UserOrGuestPlan,
+        initValue: "basicPlan" as UserPlan,
       }),
       planExp: relVarb("number", { initValue: 0 }),
     }),

@@ -1,7 +1,7 @@
 import { Button } from "@material-ui/core";
 import { transparentize } from "polished";
 import React from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import theme from "../../theme/Theme";
 
 type Props = {
@@ -9,11 +9,22 @@ type Props = {
   icon: React.ReactNode;
   onClick: () => void;
   className?: string;
+  disabled?: boolean;
 };
-export function LabeledIconBtn({ label, icon, onClick, className }: Props) {
+export function LabeledIconBtn({
+  label,
+  icon,
+  onClick,
+  className,
+  disabled,
+}: Props) {
   return (
     <Styled
-      {...{ onClick, className: "LabeledIconBtn-root " + className ?? "" }}
+      {...{
+        onClick,
+        className: "LabeledIconBtn-root " + className ?? "",
+        disabled,
+      }}
     >
       <span className="LabeledIconBtn-iconSpan">{icon}</span>
       <span className="LabeledIconBtn-label">{label}</span>
@@ -42,4 +53,10 @@ const Styled = styled(Button)`
   :hover {
     background-color: ${theme["gray-500"]};
   }
+
+  /* ${({ disabled }) =>
+    disabled &&
+    css`
+      background-color: ${transparentize(0.13, theme.error.main)};
+    `} */
 `;

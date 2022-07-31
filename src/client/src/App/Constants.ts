@@ -50,6 +50,14 @@ export const config = {
     "replaceSectionArr",
     "getProPaymentLink",
   ],
+  get superTokensAppInfo() {
+    return {
+      // learn more about this on https://supertokens.com/docs/emailpassword/appinfo
+      appName: this.appName,
+      apiDomain: this.apiPathFull,
+      websiteDomain: this.clientUrlBase,
+    } as const;
+  },
   tokenKey: {
     sectionsState: "sections-state",
     sectionsConfigHash: "sections-config-hash",
