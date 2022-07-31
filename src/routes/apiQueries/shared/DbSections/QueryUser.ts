@@ -2,7 +2,7 @@ import { QueryOptions } from "mongoose";
 import { DbSectionPack } from "../../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbSectionPack";
 import {
   DbStoreInfo,
-  DbStoreName,
+  DbStoreName
 } from "../../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreName";
 import { ResStatusError } from "../../../../resErrorUtils";
 import { DbSectionsModel } from "../../../DbSectionsModel";
@@ -12,20 +12,20 @@ import {
   dbSectionsFilters,
   DbSectionsRaw,
   queryOptions,
-  UserNotFoundError,
+  UserNotFoundError
 } from "./DbSectionsQuerierTypes";
 
 type DbSectionsIdentifier = "email" | "customerId" | "userId";
 const filter = dbSectionsFilters;
-export class DbSectionsQuerier extends DbSectionsQuerierBase {
+export class QueryUser extends DbSectionsQuerierBase {
   static async init(identifier: string, identifierType: DbSectionsIdentifier) {
-    const querier = new DbSectionsQuerier({
+    const querier = new QueryUser({
       userFilter: filter[identifierType](identifier),
     });
     if (await querier.exists()) return querier;
     else throw this.userNotFoundError();
   }
-  static async initByEmail(email: string): Promise<DbSectionsQuerier> {
+  static async initByEmail(email: string): Promise<QueryUser> {
     try {
       return this.init(email, "email");
     } catch (ex) {
@@ -133,7 +133,7 @@ export class DbSectionsQuerier extends DbSectionsQuerierBase {
     });
   }
   private userNotFoundError(): UserNotFoundError {
-    return DbSectionsQuerier.userNotFoundError();
+    return QueryUser.userNotFoundError();
   }
 }
 

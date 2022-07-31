@@ -1,7 +1,11 @@
 import { Arr } from "../../utils/Arr";
 import { Obj } from "../../utils/Obj";
 import { childSections } from "../childSections";
-import { ChildSectionName, ChildSectionNameName } from "./ChildSectionName";
+import {
+  ChildSectionName,
+  ChildSectionNameName,
+  childToSectionName,
+} from "./ChildSectionName";
 
 export const dbStoreNames = Obj.keys(childSections.dbStore);
 export type DbStoreName = typeof dbStoreNames[number];
@@ -69,3 +73,32 @@ export type DbSectionNameByType<T extends DbStoreType> = ChildSectionName<
 export type SectionQueryName = DbStoreNameByType<"sectionQuery">;
 export type SectionArrQueryName = DbStoreNameByType<"arrQuery">;
 export type AllQueryName = DbStoreNameByType<"allQuery">;
+
+type MainSectionToStoreName = {
+  [DN in DbStoreNameByType<"mainIndex"> as DbSectionName<DN>]: DN;
+};
+
+const sectionToMainStoreNames = mainIndexStoreNames.reduce(
+  (result, storeName) => {
+    const sectionName = childToSectionName("dbStore", storeName);
+    (result[sectionName] as any) = storeName;
+    return result;
+  },
+  {} as MainSectionToStoreName
+);
+
+const mainStoreSectionNames: DbSectionNameByType<"mainIndex">[] = Obj.keys(
+  sectionToMainStoreNames
+);
+
+export function isMainStoreSectionName(
+  value: any
+): value is DbSectionNameByType<"mainIndex"> {
+  return mainStoreSectionNames.includes(value);
+}
+
+export function sectionToMainStoreName<
+  SN extends DbSectionNameByType<"mainIndex">
+>(sectionName: SN): MainSectionToStoreName[SN] {
+  return sectionToMainStoreNames[sectionName];
+}

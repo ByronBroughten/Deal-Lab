@@ -1,3 +1,4 @@
+import Session from "supertokens-auth-react/recipe/session";
 import { UserOrGuestPlan } from "../../sharedWithServer/SectionsMeta/baseSections";
 import {
   GetterSectionBase,
@@ -27,6 +28,9 @@ export class FeUser extends GetterSectionBase<"feStore"> {
   }
   get isBasic(): boolean {
     return this.userPlan === "basicPlan";
+  }
+  get isSuperLoggedIn() {
+    return Session.doesSessionExist();
   }
   get isLoggedIn() {
     return auth.isToken;

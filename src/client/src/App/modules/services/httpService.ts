@@ -1,5 +1,6 @@
 import axios, { AxiosResponse } from "axios"; // npm i axios
 import { toast } from "react-toastify";
+import Session from "supertokens-auth-react/recipe/session";
 import { constants } from "../../Constants";
 import { auth } from "./authService";
 import logger from "./logService";
@@ -14,6 +15,8 @@ axios.interceptors.request.use(function (config) {
 
   return config;
 });
+
+Session.addAxiosInterceptors(axios);
 
 function errorIsExpected(error: any) {
   return (

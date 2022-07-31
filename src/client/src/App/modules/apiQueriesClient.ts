@@ -2,25 +2,27 @@ import { AxiosResponse } from "axios";
 import {
   ApiQueries,
   apiQueriesShared,
-  ApiQuery,
+  ApiQuery
 } from "../sharedWithServer/apiQueriesShared";
 import {
   ApiQueryName,
-  QueryRes,
+  QueryRes
 } from "../sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import {
   isLoginHeaders,
-  isLoginUserNext,
+  isLoginUserNext
 } from "../sharedWithServer/apiQueriesShared/login";
 import { makeRes } from "../sharedWithServer/apiQueriesShared/makeReqAndRes";
 import { Obj } from "../sharedWithServer/utils/Obj";
 import { StrictOmit } from "../sharedWithServer/utils/types";
 import {
+  isDbIdData,
   makeResValidationQueryError,
   validateDbArrQueryNameRes,
   validateDbIdRes,
-  validateDbSectionPackRes,
+  validateDbSectionPackRes
 } from "./apiQueriesClient/validateRes";
+import { hasAuthHeadersProp } from "./services/authService";
 import https from "./services/httpService";
 
 // these are what I need to replace.
@@ -55,8 +57,17 @@ function makeApiQueries(): ApiQueries {
     },
     addSection: {
       doingWhat: "adding a section",
-      get validateRes() {
-        return validateDbIdRes;
+      validateRes(res: AxiosResponse<unknown>): QueryRes<"addSection"> {
+        if (res) {
+          const { headers, data } = res;
+          if (isDbIdData(data) && hasAuthHeadersProp(headers)) {
+            return {
+              data,
+              headers
+            }
+          }
+        }
+        throw makeResValidationQueryError();
       },
     },
     updateSection: {

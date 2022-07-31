@@ -1,3 +1,4 @@
+import { AddSectionRes } from "../../sharedWithServer/apiQueriesShared";
 import {
   makeReq,
   SectionPackReq,
@@ -31,10 +32,12 @@ export class SectionQuerier<
       sectionPack,
     });
   }
-  async add(sectionPack: SectionPack<DbSectionName<CN>>): Promise<string> {
+  async add(
+    sectionPack: SectionPack<DbSectionName<CN>>
+  ): Promise<AddSectionRes> {
     const req = this.makeDbPackReq(sectionPack);
     const res = await this.apiQueries.addSection(req);
-    return res.data.dbId;
+    return res;
   }
   async update(sectionPack: SectionPack<DbSectionName<CN>>): Promise<string> {
     const req = this.makeDbPackReq(sectionPack);

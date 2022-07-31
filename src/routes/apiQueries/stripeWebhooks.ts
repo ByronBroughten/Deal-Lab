@@ -4,8 +4,8 @@ import { SectionValues } from "../../client/src/App/sharedWithServer/SectionsMet
 import { PackBuilderSection } from "../../client/src/App/sharedWithServer/StatePackers.ts/PackBuilderSection";
 import { queryParameters } from "../DbSectionsModel";
 import { getStripeEvent } from "../routeUtils/stripe";
-import { DbSectionsQuerier } from "./shared/DbSections/DbSectionsQuerier";
 import { DbUser } from "./shared/DbSections/DbUser";
+import { QueryUser } from "./shared/DbSections/QueryUser";
 import { findUserByIdAndUpdate } from "./shared/findAndUpdate";
 
 export const stripeWebhookWare = [stripeWebhook];
@@ -49,7 +49,7 @@ async function stripeWebhook(req: Request, res: Response) {
       const updatedPack = updatedSub.makeSectionPack();
 
       const customerId = subscription.customer as string;
-      const querier = await DbSectionsQuerier.init(customerId, "customerId");
+      const querier = await QueryUser.init(customerId, "customerId");
       const subPacks = await querier.getSectionPackArr("stripeSubscription");
 
       const currentIdx = subPacks.findIndex(

@@ -17,7 +17,7 @@ type Props = {
 export function ActiveDeal({ className, feId, updateLogin }: Props) {
   React.useEffect(() => {
     if (updateLogin) {
-      window.location.replace(constants.frontEndUrlBase);
+      window.location.replace(constants.clientUrlBase);
     }
   });
   const deal = useGetterSection({

@@ -10,6 +10,7 @@ import {
   SectionQuerier,
   SectionQuerierProps,
 } from "../QueriersBasic/SectionQuerier";
+import { auth, AuthHeadersProp } from "../services/authService";
 import { SectionActorBase } from "./SectionActorBase";
 
 export class MainSectionActor<
@@ -87,12 +88,15 @@ export class MainSectionActor<
       dateTimeFirstSaved: dateTime,
       dateTimeLastSaved: dateTime,
     });
-    this.setter.tryAndRevertIfFail(
-      async () =>
-        await this.querier.add(
-          this.packMaker.makeSectionPack() as SectionPack<any>
-        )
-    );
+
+    let headers: AuthHeadersProp | null = null;
+    this.setter.tryAndRevertIfFail(async () => {
+      const res = await this.querier.add(
+        this.packMaker.makeSectionPack() as SectionPack<any>
+      );
+      headers = res.headers;
+    });
+    if (headers) auth.setTokenFromHeaders(headers);
   }
   async saveUpdates(): Promise<void> {
     this.updateRow();

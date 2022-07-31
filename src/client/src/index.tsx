@@ -8,30 +8,23 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-// - implement SuperTokens
+// - implement SuperTokens...
 
 // - Test the pro stuff in addSection.test
 // - Test that addSection only accepts certain sectionNames
-// - Run that same test in update/delete/get
+// - Include the test in update/delete/get
+
+// - Test getSection with loading a deal with updated property
 
 // - Test the payment url route
+// - Test that the header updates when appropriate in addSection
 
 // - Test the two Stripe webhooks.
 //   - Create my own webhook events that simulate the ones stripe would send
 //   - Use "generateTestHeaderString" to add a header that works
 
-// - If the Jwt is expired in addSection, make it attempt to update the Jwt
-// - Make it succeed if a valid subscription is present in the db
-// - Make it fail if no such subscription exists in the db
-
 // - Make a useEffect on the frontEnd that attempts to update the
-//   front-end subscriptionInfo if the planExp is out of date
-
-// - Load Deal with updated property, loan, and mgmt
-//   - This is almost done. You just need a way to tell
-//     it which dbStores to use
-//   - You also need to create some kind of loop that says
-//     which sections to use as a focal point next (parents down to children)
+//   front-end subscriptionInfo if the fullPlan planExp is out of date
 
 // - Add basic Google Analytics
 // - Write a test to verify that the calculations work as expected

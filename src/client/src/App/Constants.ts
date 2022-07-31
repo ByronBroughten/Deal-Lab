@@ -1,14 +1,14 @@
 const dev = {
-  appName: "Analyzer Client — Development",
+  appName: "Ultimate Deal Analyzer — Development",
   endpoint: "http://localhost:5000",
-  frontEndUrlBase: "http://localhost:3000",
+  clientUrlBase: "http://localhost:3000",
 };
 // do I need the front-end endpoint?
 
 const prod = {
-  appName: "Analyzer Client — Production",
+  appName: "Ultimate Deal Analyzer",
   endpoint: "https://www.dealanalyzer.app",
-  frontEndUrlBase: "https://www.dealanalyzer.app",
+  clientUrlBase: "https://www.dealanalyzer.app",
 };
 
 const baseEnvStuff = process.env.NODE_ENV === "development" ? dev : prod;
@@ -16,7 +16,7 @@ const apiPathBit = "/api";
 
 export const config = {
   appName: baseEnvStuff.appName,
-  frontEndUrlBase: baseEnvStuff.frontEndUrlBase,
+  clientUrlBase: baseEnvStuff.clientUrlBase,
   apiPathBit: apiPathBit,
   apiPathFull: `${baseEnvStuff.endpoint}${apiPathBit}`,
   plans: {

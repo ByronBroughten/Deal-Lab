@@ -4,8 +4,8 @@ import { PackBuilderSection } from "../../../../../client/src/App/sharedWithServ
 import { makeMongooseObjectId } from "../../../../../client/src/App/sharedWithServer/utils/mongoose";
 import { ResStatusError } from "../../../../../resErrorUtils";
 import { DbSectionsModel } from "../../../../DbSectionsModel";
-import { DbSectionsQuerier } from "../DbSectionsQuerier";
 import { DbSectionsRaw } from "../DbSectionsQuerierTypes";
+import { QueryUser } from "../QueryUser";
 import {
   initEmptyNames,
   InitEmptyPackArrs,
@@ -28,7 +28,7 @@ export const userPrepS = {
     };
   },
   async checkThatEmailIsUnique(email: string): Promise<void> {
-    if (await DbSectionsQuerier.existsByEmail(email)) {
+    if (await QueryUser.existsByEmail(email)) {
       throw new ResStatusError({
         errorMessage: `An account with the email ${email} already exists.`,
         resMessage: "An account with that email already exists",

@@ -1,3 +1,4 @@
+import { SimpleSectionName } from "../SectionsMeta/baseSections";
 import {
   ChildName,
   FeChildInfo,
@@ -7,6 +8,7 @@ import { ChildArrPack } from "../SectionsMeta/childSectionsDerived/ChildSectionP
 import { SectionPack } from "../SectionsMeta/childSectionsDerived/SectionPack";
 import { FeSectionInfo } from "../SectionsMeta/Info";
 import { SectionName } from "../SectionsMeta/SectionName";
+import { GetterSectionsBase } from "../StateGetters/Bases/GetterSectionsBase";
 import { UpdaterSectionBase } from "../StateUpdaters/bases/updaterSectionBase";
 import {
   AddChildOptions,
@@ -14,6 +16,17 @@ import {
 } from "../StateUpdaters/UpdaterSection";
 import { ChildPackInfo, PackLoaderSection } from "./PackLoaderSection";
 import { PackMakerSection } from "./PackMakerSection";
+
+export class PackBuilderSections extends GetterSectionsBase {
+  section<SN extends SimpleSectionName>(
+    feInfo: FeSectionInfo<SN>
+  ): PackBuilderSection<SN> {
+    return new PackBuilderSection({
+      ...this.getterSectionsProps,
+      ...feInfo,
+    });
+  }
+}
 
 export class PackBuilderSection<
   SN extends SectionName
@@ -43,6 +56,9 @@ export class PackBuilderSection<
   ): SectionPack<ChildSectionName<"omniParent", CN>> {
     const section = this.initAsOmniChild(childName, options);
     return section.makeSectionPack();
+  }
+  get sections(): PackBuilderSections {
+    return new PackBuilderSections(this.getterSectionsProps);
   }
   get updater(): UpdaterSection<SN> {
     return new UpdaterSection(this.getterSectionProps);

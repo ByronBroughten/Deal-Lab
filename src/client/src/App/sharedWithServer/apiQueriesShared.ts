@@ -1,12 +1,8 @@
 import urljoin from "url-join";
 import { config } from "../Constants";
-import { makeResValidationQueryError } from "../modules/apiQueriesClient/validateRes";
+import { AuthHeadersProp } from "../modules/services/authService";
 import { ApiQueryName } from "./apiQueriesShared/apiQueriesSharedTypes";
-import {
-  isLoginHeaders,
-  isLoginUserNext,
-  LoginQueryObjects,
-} from "./apiQueriesShared/login";
+import { LoginQueryObjects } from "./apiQueriesShared/login";
 import {
   DbIdRes,
   DbPackInfoSectionReq,
@@ -24,8 +20,8 @@ import {
 } from "./SectionsMeta/childSectionsDerived/DbStoreName";
 
 export type ApiQueries = {
-  addSection: AddUpdateSectionQuery;
-  updateSection: AddUpdateSectionQuery;
+  addSection: QueryAddSection;
+  updateSection: QueryUpdateSection;
   getSection: GetSectionQuery;
   deleteSection: DeleteSectionQuery;
   replaceSectionArr: ReplaceSectionArrQuery;
@@ -38,9 +34,17 @@ type ApiQueriesTest<
 > = T;
 type _Test = ApiQueriesTest<ApiQueries>;
 
-type AddUpdateSectionQuery = <CN extends SectionQueryName>(
+type QueryAddSection = <CN extends SectionQueryName>(
+  req: SectionPackReq<CN>
+) => Promise<AddSectionRes>;
+
+type QueryUpdateSection = <CN extends SectionQueryName>(
   req: SectionPackReq<CN>
 ) => Promise<DbIdRes>;
+
+export interface AddSectionRes extends DbIdRes {
+  headers: AuthHeadersProp;
+}
 
 type GetSectionQuery = <CN extends SectionQueryName>(
   req: DbPackInfoSectionReq<CN>
@@ -83,17 +87,6 @@ function makeApiQueriesShared() {
     return partial;
   }, {} as ApiQueriesShared);
 }
-
-export const resValidators = {
-  register: (res: any): LoginQueryObjects["res"] => {
-    if (res && isLoginUserNext(res.data) && isLoginHeaders(res.headers)) {
-      return {
-        data: res.data,
-        headers: res.headers,
-      };
-    } else throw makeResValidationQueryError();
-  },
-};
 
 function makeApiPaths() {
   return config.apiQueryNames.reduce((endpoints, queryName) => {

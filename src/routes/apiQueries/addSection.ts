@@ -1,21 +1,26 @@
 import { Request, Response } from "express";
 import { constants } from "../../client/src/App/Constants";
+import { AuthHeadersProp } from "../../client/src/App/modules/services/authService";
 import { UserPlan } from "../../client/src/App/sharedWithServer/SectionsMeta/baseSections";
 import { DbPack } from "../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbSectionPack";
 import {
   DbStoreInfo,
   SectionQueryName,
 } from "../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreName";
-import { userAuthWare } from "../../middleware/authWare";
+import { userAuthWare, userSubscriptionWare } from "../../middleware/authWare";
 import { ResStatusError } from "../../resErrorUtils";
-import { DbSectionsQuerier } from "./shared/DbSections/DbSectionsQuerier";
 import { SectionPackNotFoundError } from "./shared/DbSections/DbSectionsQuerierTypes";
+import { QueryUser } from "./shared/DbSections/QueryUser";
 import { findUserByIdAndUpdate } from "./shared/findAndUpdate";
 import { sendSuccess } from "./shared/sendSuccess";
 import { validateSectionPackReq } from "./shared/validateSectionPackReq";
 
-export const addSectionWare = [userAuthWare, addSectionServerSide] as const;
-async function addSectionServerSide(req: Request, res: Response) {
+export const addSectionWare = [
+  userAuthWare,
+  userSubscriptionWare,
+  addSection,
+] as const;
+async function addSection(req: Request, res: Response) {
   const {
     dbStoreName,
     sectionPack,
@@ -38,7 +43,10 @@ async function addSectionServerSide(req: Request, res: Response) {
       sectionPack,
     }),
   });
-  sendSuccess(res, "addSection", { data: { dbId: sectionPack.dbId } });
+  sendSuccess(res, "addSection", {
+    data: { dbId: sectionPack.dbId },
+    headers: req.headers as AuthHeadersProp,
+  });
 }
 
 type ValidateAuthProps = {
@@ -54,7 +62,7 @@ async function validateAuth({
   switch (subscriptionPlan) {
     case "basicPlan": {
       const { basicStorageLimit } = constants;
-      const querier = await DbSectionsQuerier.init(userId, "userId");
+      const querier = await QueryUser.init(userId, "userId");
       const count = await querier.storeSectionCount(dbStoreName);
       if (count < basicStorageLimit) return true;
       else
@@ -73,7 +81,7 @@ async function checkThatSectionPackIsNotThere<CN extends SectionQueryName>(
 ): Promise<true> {
   const { dbStoreName, dbId, userId } = props;
   try {
-    const querier = await DbSectionsQuerier.init(userId, "userId");
+    const querier = await QueryUser.init(userId, "userId");
     await querier.getSectionPack(props);
     throw new ResStatusError({
       errorMessage: `An entry at ${dbStoreName}.${dbId} already exists.`,

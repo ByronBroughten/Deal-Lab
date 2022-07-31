@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { userAuthWare } from "../../middleware/authWare";
-import { DbSectionsQuerier } from "./shared/DbSections/DbSectionsQuerier";
+import { QueryUser } from "./shared/DbSections/QueryUser";
 import { sendSuccess } from "./shared/sendSuccess";
 import { validateSectionPackArrReq } from "./shared/validateSectionPackReq";
 
@@ -16,7 +16,7 @@ async function replaceSectionArrServerSide(req: Request, res: Response) {
     sectionPackArr,
   } = validateSectionPackArrReq(req).body;
 
-  const querier = await DbSectionsQuerier.init(userId, "userId");
+  const querier = await QueryUser.init(userId, "userId");
   await querier.setSectionPackArr({
     storeName: dbStoreName,
     sectionPackArr,

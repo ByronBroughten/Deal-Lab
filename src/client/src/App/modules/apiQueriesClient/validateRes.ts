@@ -13,13 +13,20 @@ import {
 import { isSectionPack } from "../../sharedWithServer/SectionsMeta/childSectionsDerived/SectionPack";
 import { Obj } from "../../sharedWithServer/utils/Obj";
 
+type DbIdData = { dbId: string };
+export function isDbIdData(value: any): value is DbIdData {
+  if (Obj.isAnyIfIsObj(value)) {
+    const { dbId } = value;
+    if (Id.is(dbId)) return true;
+  }
+  return false;
+}
+
 export function validateDbIdRes(res: AxiosResponse<unknown>): DbIdRes {
   const { data } = res;
-  if (Obj.isAnyIfIsObj(data)) {
-    const { dbId } = data;
-    if (Id.is(dbId)) return makeRes({ dbId });
-  }
-  throw makeResValidationQueryError();
+  if (isDbIdData(data)) {
+    return makeRes({ dbId: data.dbId });
+  } else throw makeResValidationQueryError();
 }
 export function validateDbStoreNameRes(
   res: AxiosResponse<unknown>

@@ -27,7 +27,6 @@ import { HandledResStatusError } from "../../../../resErrorUtils";
 import { isProEmail } from "../../../routeUtils/proList";
 import { DbSectionsProps } from "./Bases/DbSectionsBase";
 import { DbSections } from "./DbSections";
-import { DbSectionsQuerier } from "./DbSectionsQuerier";
 import { DbSectionsRaw } from "./DbSectionsQuerierTypes";
 import {
   checkUserAuthToken,
@@ -35,6 +34,7 @@ import {
   SubscriptionProps,
 } from "./DbUser/userAuthToken";
 import { userPrepS } from "./DbUser/userPrepS";
+import { QueryUser } from "./QueryUser";
 
 interface DbUserProps extends GetterSectionProps<"dbStore"> {
   dbSections: DbSections;
@@ -90,19 +90,19 @@ export class DbUser extends GetterSectionBase<"dbStore"> {
     return DbUser.queryByUserId(userId);
   }
   static async queryByUserId(userId: string): Promise<DbUser> {
-    const querier = await DbSectionsQuerier.init(userId, "userId");
+    const querier = await QueryUser.init(userId, "userId");
     return DbUser.init({
       dbSectionsRaw: await querier.getDbSectionsRaw(),
     });
   }
   static async queryByEmail(email: string): Promise<DbUser> {
-    const querier = await DbSectionsQuerier.initByEmail(email);
+    const querier = await QueryUser.initByEmail(email);
     return DbUser.init({
       dbSectionsRaw: await querier.getDbSectionsRaw(),
     });
   }
   static async queryByCustomerId(customerId: string): Promise<DbUser> {
-    const querier = await DbSectionsQuerier.init(customerId, "customerId");
+    const querier = await QueryUser.init(customerId, "customerId");
     return DbUser.init({
       dbSectionsRaw: await querier.getDbSectionsRaw(),
     });
@@ -233,20 +233,24 @@ export class DbUser extends GetterSectionBase<"dbStore"> {
       feStore: [feStore.makeSectionPack()],
     };
   }
-  sendLogin(res: Response) {
-    const loggedInUser = this.makeLoginUser();
-    const token = this.createUserAuthToken();
-    res
-      .header(constants.tokenKey.apiUserAuth, token)
-      .status(200)
-      .send(loggedInUser);
-  }
-
   createUserAuthToken() {
     return createUserAuthToken({
       userId: this.userId,
       ...this.subscriptionProps,
     });
+  }
+  setResTokenHeader(res: Response): void {
+    const token = this.createUserAuthToken();
+    DbUser.setResTokenHeader(res, token);
+  }
+  static setResTokenHeader(res: Response, token: string): void {
+    res.header(constants.tokenKey.apiUserAuth, token);
+  }
+
+  sendLogin(res: Response) {
+    const loggedInUser = this.makeLoginUser();
+    this.setResTokenHeader(res);
+    res.status(200).send(loggedInUser);
   }
   static checkUserAuthToken = checkUserAuthToken;
 }

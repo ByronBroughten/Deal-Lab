@@ -1,5 +1,7 @@
+import * as reactRouterDom from "react-router-dom";
 import { Route, Routes } from "react-router-dom";
 import styled from "styled-components";
+import { getSuperTokensRoutesForReactRouterDom } from "supertokens-auth-react";
 import { ActiveDeal } from "./App/components/ActiveDeal";
 import NotFound from "./App/components/general/NotFound";
 import NavBar from "./App/components/NavBar";
@@ -28,6 +30,7 @@ export function Main() {
             <TableStore feId={feStore.onlyChild("dealMainTable").feId} />
           }
         />
+        {getSuperTokensRoutesForReactRouterDom(reactRouterDom)}
         <Route path={constants.subscriptionSuccessUrlEnd} />
         {/* <Route path="/variables" element={<UserVarbsManager/>} /> */}
         {/* <Route path="/lists" element={<UserListsManager/>} /> */}

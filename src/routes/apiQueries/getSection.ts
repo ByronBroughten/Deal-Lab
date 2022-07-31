@@ -1,8 +1,13 @@
 import { Request, Response } from "express";
-import { sectionsMeta } from "../../client/src/App/sharedWithServer/SectionsMeta";
+import {
+  isMainStoreSectionName,
+  sectionToMainStoreName,
+} from "../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreName";
+import { SectionPack } from "../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/SectionPack";
+import { FeSectionInfo } from "../../client/src/App/sharedWithServer/SectionsMeta/Info";
 import { PackBuilderSection } from "../../client/src/App/sharedWithServer/StatePackers.ts/PackBuilderSection";
 import { userAuthWare } from "../../middleware/authWare";
-import { DbSectionsQuerier } from "./shared/DbSections/DbSectionsQuerier";
+import { QueryUser } from "./shared/DbSections/QueryUser";
 import { sendSuccess } from "./shared/sendSuccess";
 import { validateDbSectionInfoReq } from "./shared/validateDbSectionInfoReq";
 
@@ -14,21 +19,31 @@ async function getSectionServerSide(req: Request, res: Response) {
     ...dbInfo
   } = validateDbSectionInfoReq(req).body;
 
-  const querier = await DbSectionsQuerier.init(userId, "userId");
+  const querier = await QueryUser.init(userId, "userId");
   const sectionPack = await querier.getSectionPack(dbInfo);
-  const section = PackBuilderSection.loadAsOmniChild(sectionPack);
-  const dbStoreMeta = sectionsMeta.section("dbStore");
-  const { childNames } = section.get;
-  for (const childName of childNames) {
-    const children = section.get.children(childName);
-    for (const child of children) {
-      const { sectionName, dbId } = child;
-      // the querier can have something like, "hasMainSection"
-      // and the produce the mainSection based on the sectionName
+  const headSection = PackBuilderSection.loadAsOmniChild(sectionPack);
+  const { sections } = headSection;
+  let sectionInfos: FeSectionInfo[] = [headSection.feInfo];
+  while (sectionInfos.length > 0) {
+    const nextInfos: FeSectionInfo[] = [];
+    for (const info of sectionInfos) {
+      const section = sections.section(info);
+      for (const childName of section.get.childNames) {
+        for (const child of section.children(childName)) {
+          const { sectionName, dbId } = child.get;
+          if (isMainStoreSectionName(sectionName)) {
+            const dbStoreName = sectionToMainStoreName(sectionName);
+            const childDbInfo = { dbStoreName, dbId };
+            if (await querier.hasSectionPack(childDbInfo)) {
+              const childPack = await querier.getSectionPack(childDbInfo);
+              child.loadSelf(childPack as any as SectionPack<any>);
+            }
+          }
+          nextInfos.push(child.feInfo);
+        }
+      }
     }
+    sectionInfos = nextInfos;
   }
-
-  // if one of the section's children
-
   sendSuccess(res, "getSection", { data: { sectionPack } });
 }
