@@ -2,7 +2,7 @@ import { AuthStatus, UserPlan } from "../SectionsMeta/baseSections";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
 
 export function makeDefaultPublicUserInfo() {
-  const userInfo = PackBuilderSection.initAsOmniChild("publicUserInfo", {
+  const userInfo = PackBuilderSection.initAsOmniChild("userInfo", {
     dbVarbs: {
       email: "",
       userName: "Guest",

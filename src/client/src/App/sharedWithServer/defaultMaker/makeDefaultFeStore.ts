@@ -11,7 +11,7 @@ import { makeDefaultFeStoreTables } from "./makeMainTablePackMakers";
 export function makeDefaultFeStorePack(): SectionPack<"feStore"> {
   const feStore = PackBuilderSection.initAsOmniChild("feStore");
   feStore.loadChild({
-    childName: "publicUserInfo",
+    childName: "userInfo",
     sectionPack: makeDefaultPublicUserInfo(),
   });
   feStore.loadChild({

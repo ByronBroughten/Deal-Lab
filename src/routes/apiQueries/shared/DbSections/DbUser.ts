@@ -33,7 +33,7 @@ import {
   createUserAuthToken,
   SubscriptionProps,
 } from "./DbUser/userAuthToken";
-import { userPrepS } from "./DbUser/userPrepS";
+import { SignUpData, userPrepS } from "./DbUser/userPrepS";
 import { QueryUser } from "./QueryUser";
 
 interface DbUserProps extends GetterSectionProps<"dbStore"> {
@@ -71,6 +71,9 @@ export class DbUser extends GetterSectionBase<"dbStore"> {
     });
   }
 
+  static async initializeUser(props: SignUpData) {
+    const userPackArrs = userPrepS.initUserSectionPackArrs(props);
+  }
   static async createAndSaveNew({
     registerFormData,
     guestAccessSections,
@@ -110,15 +113,15 @@ export class DbUser extends GetterSectionBase<"dbStore"> {
   get get(): GetterSection<"dbStore"> {
     return new GetterSection(this.getterSectionProps);
   }
-  get userInfo(): GetterSection<"publicUserInfo"> {
-    return this.get.onlyChild("publicUserInfo");
+  get userInfo(): GetterSection<"userInfo"> {
+    return this.get.onlyChild("userInfo");
   }
   get email(): string {
     return this.userInfo.value("email", "string");
   }
   get customerId(): string {
-    const stripeInfo = this.get.onlyChild("stripeInfo");
-    return stripeInfo.value("customerId", "string");
+    const stripeInfoPrivate = this.get.onlyChild("stripeInfoPrivate");
+    return stripeInfoPrivate.value("customerId", "string");
   }
   get subscriptionProps(): SubscriptionProps {
     if (isProEmail(this.email)) {

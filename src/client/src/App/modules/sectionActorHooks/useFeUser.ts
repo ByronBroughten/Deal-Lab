@@ -1,11 +1,11 @@
 import { useSectionsActorProps } from "../../sharedWithServer/stateClassHooks/useSectionActorProps";
-import { FeUser } from "../SectionActors/FeUser";
+import { FeUserActor } from "../SectionActors/FeUserActor";
 
-export function useFeUser(): FeUser {
+export function useFeUser(): FeUserActor {
   const props = useSectionsActorProps();
   const { sections } = props.sectionsShare;
   const { feId } = sections.onlyOneRawSection("feStore");
-  return new FeUser({
+  return new FeUserActor({
     ...props,
     feId,
   });

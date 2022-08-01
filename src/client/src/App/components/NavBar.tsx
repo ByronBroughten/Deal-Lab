@@ -15,7 +15,7 @@ type NavBarProps = { logout: () => void };
 export default function NavBar(props: NavBarProps) {
   const feUser = useFeUser();
   const { isBasic, isGuest } = feUser;
-  const userInfo = feUser.get.onlyChild("publicUserInfo");
+  const userInfo = feUser.get.onlyChild("userInfo");
   return (
     <Styled className="NavBar-root">
       <Toolbar disableGutters={true}>

@@ -5,9 +5,8 @@ import { MdDelete, MdOutlineSystemUpdateAlt } from "react-icons/md";
 import styled, { css } from "styled-components";
 import useToggleView from "../../../../modules/customHooks/useToggleView";
 import { useMainSectionActor } from "../../../../modules/sectionActorHooks/useMainSectionActor";
-import { AuthStatus } from "../../../../sharedWithServer/SectionsMeta/baseSections";
 import { HasRowFeStore } from "../../../../sharedWithServer/SectionsMeta/SectionName";
-import { useGetterSectionOnlyOne } from "../../../../sharedWithServer/stateClassHooks/useGetterSection";
+import { useAuthStatus } from "../../../../sharedWithServer/stateClassHooks/useAuthStatus";
 import theme from "../../../../theme/Theme";
 import { DropdownList } from "../../DropdownList";
 import { LabeledIconBtn } from "../../LabeledIconBtn";
@@ -23,15 +22,13 @@ type Props = {
   dropTop?: boolean;
 };
 export function MainSectionTitleRow({
-  // Table Entry Title Row
   pluralName,
   xBtn = false,
   dropTop = false,
   ...feInfo
 }: Props) {
   const mainSection = useMainSectionActor(feInfo);
-  const authInfo = useGetterSectionOnlyOne("authInfo");
-  const authStatus = authInfo.value("authStatus", "string") as AuthStatus;
+  const authStatus = useAuthStatus();
 
   const { btnMenuIsOpen, toggleBtnMenu } = useToggleView({
     initValue: false,

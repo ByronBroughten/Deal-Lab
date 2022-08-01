@@ -15,6 +15,9 @@ AppRegistry.runApplication("App", {
 // But I need to still implement the subscription-based login
 // And I must get the user's state.
 
+// Ok. Basically, check whether the user is logged in or not
+// Send the register req
+
 // On login, on the server, create a user in the db with the info
 // from the session. Use a variable called userId
 

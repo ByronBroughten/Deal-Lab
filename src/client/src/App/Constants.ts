@@ -39,6 +39,11 @@ export const config = {
     },
   ],
   basicStorageLimit: 2,
+  // before this will work...
+  // I must create a user in the db on register.
+
+  // actually, I can do that.
+
   apiQueryNames: [
     // "updateLogin",
     "register",

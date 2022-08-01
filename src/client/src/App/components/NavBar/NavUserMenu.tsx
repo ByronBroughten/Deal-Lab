@@ -21,7 +21,7 @@ export type NavUserMenuProps = {
 };
 export function NavUserMenu({ feId, logout }: NavUserMenuProps) {
   const userInfo = useGetterSection({
-    sectionName: "publicUserInfo",
+    sectionName: "userInfo",
     feId,
   });
 

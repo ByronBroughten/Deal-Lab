@@ -21,8 +21,8 @@ async function stripeWebhook(req: Request, res: Response) {
         userId: dbUser.userId,
         doWhat: "set stripe customer id",
         queryParameters: queryParameters.updateVarb({
-          storeName: "stripeInfo",
-          sectionName: "stripeInfo" as "stripeInfo",
+          storeName: "stripeInfoPrivate",
+          sectionName: "stripeInfoPrivate" as "stripeInfoPrivate",
           varbName: "customerId",
           value: customer.id,
         }),

@@ -22,7 +22,52 @@ supertokens.init({
   },
   appInfo: constants.superTokensAppInfo,
   recipeList: [
-    ThirdPartyEmailPassword.init({}),
+    ThirdPartyEmailPassword.init({
+      signUpFeature: {
+        formFields: [
+          {
+            id: "userName",
+          },
+        ],
+      },
+      override: {
+        apis: (original) => {
+          return {
+            ...original,
+            emailPasswordSignUpPOST: async function (input) {
+              if (!original.emailPasswordSignUpPOST) {
+                throw Error("This should't happen.");
+              }
+              const res = await original.emailPasswordSignUpPOST(input);
+              if (res.status === "OK") {
+                const { id, email, timeJoined } = res.user;
+                const { formFields } = input;
+                const nameField = formFields.find(
+                  (field) => field.id === "userName"
+                );
+
+                const userName =
+                  nameField && nameField.value ? nameField.value : "User";
+              }
+              return res;
+            },
+            thirdPartySignInUpPOST: async function (input) {
+              if (!original.thirdPartySignInUpPOST) {
+                throw Error("This should't happen.");
+              }
+              const res = await original.thirdPartySignInUpPOST(input);
+              if (res.status === "OK") {
+                if (res.createdNewUser) {
+                  const { id, email } = res.user;
+                  input.options;
+                }
+              }
+              return res;
+            },
+          };
+        },
+      },
+    }),
     Session.init(),
     // EmailPassword.init(), // initializes signin / sign up features
   ],

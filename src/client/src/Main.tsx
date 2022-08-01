@@ -31,6 +31,15 @@ export function Main() {
   }
 
   React.useEffect(() => {
+    async function syncStateWithSessionLogin() {
+      if (await auth.sessionExists()) {
+        if (authStatus === "guest") {
+        }
+      }
+    }
+  });
+
+  React.useEffect(() => {
     async function syncStateWithSessionExpiration() {
       if (!(await auth.sessionExists())) {
         if (authStatus !== "guest") {

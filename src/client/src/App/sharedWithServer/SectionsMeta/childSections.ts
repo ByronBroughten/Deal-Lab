@@ -1,11 +1,11 @@
 import { SimpleSectionName, simpleSectionNames } from "./baseSections";
 import {
   childrenSections,
-  GeneralChildrenSections
+  GeneralChildrenSections,
 } from "./childSectionsUtils/childrenSections";
 import {
   childSection,
-  GeneralChildSection
+  GeneralChildSection,
 } from "./childSectionsUtils/childSection";
 import { relOmniParentChildren } from "./childSectionsUtils/omniParentChildren";
 
@@ -47,7 +47,7 @@ export const childSections = checkChildSections({
     // or that has any intermediary sections used to edit and add to them.
     authInfo: ["authInfo"],
     subscriptionInfo: ["subscriptionInfo"],
-    publicUserInfo: ["publicUserInfo"],
+    userInfo: ["userInfo"],
     propertyMainTable: ["table"],
     loanMainTable: ["table"],
     mgmtMainTable: ["table"],
@@ -58,18 +58,24 @@ export const childSections = checkChildSections({
     ongoingListMain: ["ongoingList"],
   }),
   dbStore: childrenSections({
-    propertyMainTable: ["table"],
-    loanMainTable: ["table"],
-    mgmtMainTable: ["table"],
-    dealMainTable: ["table"],
-    stripeInfo: ["stripeInfo"],
-    stripeSubscription: ["stripeSubscription"],
-    publicUserInfo: ["publicUserInfo"],
+    authInfoPrivate: ["authInfoPrivate"],
+    userInfo: ["userInfo"],
+
     dbOnlyUserInfo: ["dbOnlyUserInfo"],
+
+    stripeInfoPrivate: ["stripeInfoPrivate"],
+    stripeSubscription: ["stripeSubscription"],
+
     propertyMain: ["property"],
     loanMain: ["loan"],
     mgmtMain: ["mgmt"],
     dealMain: ["deal"],
+
+    propertyMainTable: ["table"],
+    loanMainTable: ["table"],
+    mgmtMainTable: ["table"],
+    dealMainTable: ["table"],
+
     outputListMain: ["outputList"],
     userVarbListMain: ["userVarbList"],
     singleTimeListMain: ["singleTimeList"],

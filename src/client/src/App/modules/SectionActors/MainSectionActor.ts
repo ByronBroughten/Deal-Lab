@@ -31,7 +31,7 @@ export class MainSectionActor<
   get get() {
     return new GetterSection(this.sectionActorBaseProps);
   }
-  get querier() {
+  private get querier() {
     return new SectionQuerier(this.sectionQuerierProps);
   }
   get packMaker() {

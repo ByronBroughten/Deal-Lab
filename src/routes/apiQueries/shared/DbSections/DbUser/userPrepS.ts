@@ -9,6 +9,7 @@ import { QueryUser } from "../QueryUser";
 import {
   initEmptyNames,
   InitEmptyPackArrs,
+  InitialUserSectionPackArrs,
   MakeDbUserProps,
   PreppedEmails,
   UserSectionPackArrs,
@@ -36,6 +37,36 @@ export const userPrepS = {
       });
     }
   },
+  initUserSectionPackArrs({
+    userId,
+    email,
+    userName,
+    timeJoined,
+  }: SignUpData): InitialUserSectionPackArrs {
+    return {
+      userInfo: [
+        PackBuilderSection.initSectionPack("userInfo", {
+          dbVarbs: {
+            userName,
+            email,
+            timeJoined,
+          },
+        }),
+      ],
+      authInfoPrivate: [
+        PackBuilderSection.initSectionPack("authInfoPrivate", {
+          dbVarbs: { userId },
+        }),
+      ],
+      stripeInfoPrivate: [
+        PackBuilderSection.initSectionPack("stripeInfoPrivate", {
+          dbVarbs: {
+            customerId: "",
+          },
+        }),
+      ],
+    };
+  },
   async initUserSectionPacks(
     registerFormData: RegisterFormData
   ): Promise<UserSectionPackArrs> {
@@ -44,8 +75,8 @@ export const userPrepS = {
     );
     await userPrepS.checkThatEmailIsUnique(email);
     return {
-      publicUserInfo: [
-        PackBuilderSection.initSectionPack("publicUserInfo", {
+      userInfo: [
+        PackBuilderSection.initSectionPack("userInfo", {
           dbVarbs: {
             userName: registerFormData.userName,
             email,
@@ -62,8 +93,8 @@ export const userPrepS = {
           },
         }),
       ],
-      stripeInfo: [
-        PackBuilderSection.initSectionPack("stripeInfo", {
+      stripeInfoPrivate: [
+        PackBuilderSection.initSectionPack("stripeInfoPrivate", {
           dbVarbs: {
             customerId: "",
           },
@@ -86,4 +117,11 @@ export const userPrepS = {
       ...emptySectionArrs,
     });
   },
+};
+
+export type SignUpData = {
+  userId: string;
+  email: string;
+  userName: string;
+  timeJoined: number;
 };

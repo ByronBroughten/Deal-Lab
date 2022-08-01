@@ -184,19 +184,26 @@ export const baseSections = {
     plan: "string",
     planExp: "number",
   }),
+
   authInfo: baseSection({
     authStatus: "string",
   }),
-  publicUserInfo: baseSection(
-    baseVarbs("string", ["email", "userName"] as const)
-  ),
-  // I don't need emailAsSubmitted
+  authInfoPrivate: baseSection({
+    userId: "string",
+  }),
+
+  userInfo: baseSection({
+    ...baseVarbs("string", ["email", "userName"] as const),
+    timeJoined: "number",
+  }),
+  stripeInfoPrivate: baseSection({
+    customerId: "string",
+  } as const),
+
+  // This is getting deleted
   dbOnlyUserInfo: baseSection(
     baseVarbs("string", ["encryptedPassword", "emailAsSubmitted"] as const)
   ),
-  stripeInfo: baseSection({
-    customerId: "string",
-  } as const),
 } as const;
 
 export const simpleSectionNames = Obj.keys(baseSections);

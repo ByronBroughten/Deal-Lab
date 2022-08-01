@@ -21,6 +21,17 @@ SuperTokens.init({
   recipeList: [
     // EmailPassword.init(), Session.init()
     ThirdPartyEmailPassword.init({
+      signInAndUpFeature: {
+        signUpForm: {
+          formFields: [
+            {
+              id: "userName",
+              label: "Name",
+              placeholder: "What should we call you?",
+            },
+          ],
+        },
+      },
       emailVerificationFeature: {
         mode: "REQUIRED",
       },

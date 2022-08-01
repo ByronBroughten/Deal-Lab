@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import { GuestAccessSectionPackArrs } from "../../../../../client/src/App/sharedWithServer/apiQueriesShared/register";
 import {
   DbSectionName,
-  dbStoreNames,
+  dbStoreNames
 } from "../../../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreName";
 import { SectionPack } from "../../../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/SectionPack";
 import { feStoreNameS } from "../../../../../client/src/App/sharedWithServer/SectionsMeta/relSectionsDerived/relNameArrs/feStoreNameArrs";
@@ -14,13 +14,23 @@ export type PreppedEmails = {
 };
 
 const userInfoStoreName = Arr.extractStrict(dbStoreNames, [
-  "publicUserInfo",
+  "userInfo",
   "dbOnlyUserInfo",
-  "stripeInfo",
+  "stripeInfoPrivate",
 ] as const);
 type UserInfoStoreName = typeof userInfoStoreName[number];
 export type UserSectionPackArrs = {
   [SN in UserInfoStoreName]: SectionPack<SN>[];
+};
+
+const initialUserStoreNames = Arr.extractStrict(dbStoreNames, [
+  "authInfoPrivate",
+  "userInfo",
+  "stripeInfoPrivate",
+] as const);
+type InitialUserStoreName = typeof initialUserStoreNames[number];
+export type InitialUserSectionPackArrs = {
+  [SN in InitialUserStoreName]: SectionPack<SN>[];
 };
 
 const initFullNames = [

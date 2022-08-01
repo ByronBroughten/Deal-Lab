@@ -39,18 +39,22 @@ export function makeRelSections() {
     main: relSection("main", { _typeUniformity: relVarb("string") }),
     feStore: relSection("feStore", { _typeUniformity: relVarb("string") }),
     dbStore: relSection("dbStore", { _typeUniformity: relVarb("string") }),
-    publicUserInfo: relSection(
+    userInfo: relSection(
       "User",
       {
         email: relVarb("string", { displayName: "Email" }),
         userName: relVarb("string", { displayName: "Name" }),
+        timeJoined: relVarb("number", { displayName: "Time joined" }),
       },
-      { dbIndexStoreName: "publicUserInfo" }
+      { dbIndexStoreName: "userInfo" }
     ),
     authInfo: relSection("Auth info", {
       authStatus: relVarb("string", {
         initValue: "user",
       }),
+    }),
+    authInfoPrivate: relSection("Auth info private", {
+      userId: relVarb("string"),
     }),
     subscriptionInfo: relSection("Subscription info", {
       plan: relVarb("string", {
@@ -63,7 +67,7 @@ export function makeRelSections() {
       "dbOnlyUserInfo",
       relVarbsS.strings(["encryptedPassword", "emailAsSubmitted"] as const)
     ),
-    stripeInfo: relSection("Stripe info", {
+    stripeInfoPrivate: relSection("Stripe info", {
       customerId: relVarb("string"),
     }),
     stripeSubscription: relSection("Subscription", {
