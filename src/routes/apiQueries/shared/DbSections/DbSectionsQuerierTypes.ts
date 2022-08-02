@@ -10,6 +10,7 @@ export const queryOptions = {
 
 export class UserNotFoundError extends ResStatusError {}
 export class SectionPackNotFoundError extends ResStatusError {}
+
 export interface DbSectionsRaw extends DbSectionsModelCore, Document<any, any> {
   _id: mongoose.Types.ObjectId;
 }

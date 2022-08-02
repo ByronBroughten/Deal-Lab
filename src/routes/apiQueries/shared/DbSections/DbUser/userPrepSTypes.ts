@@ -1,8 +1,9 @@
 import mongoose from "mongoose";
 import { GuestAccessSectionPackArrs } from "../../../../../client/src/App/sharedWithServer/apiQueriesShared/register";
+import { DbSectionPack } from "../../../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbSectionPack";
 import {
   DbSectionName,
-  dbStoreNames
+  dbStoreNames,
 } from "../../../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreName";
 import { SectionPack } from "../../../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/SectionPack";
 import { feStoreNameS } from "../../../../../client/src/App/sharedWithServer/SectionsMeta/relSectionsDerived/relNameArrs/feStoreNameArrs";
@@ -32,6 +33,15 @@ type InitialUserStoreName = typeof initialUserStoreNames[number];
 export type InitialUserSectionPackArrs = {
   [SN in InitialUserStoreName]: SectionPack<SN>[];
 };
+export const initEmptyNamesNext = Arr.excludeStrict(
+  dbStoreNames,
+  initialUserStoreNames
+);
+type InitEmptyNameNext = typeof initEmptyNamesNext[number];
+type InitialEmptySectionPackArrs = {
+  [CN in InitEmptyNameNext]: DbSectionPack<CN>[];
+};
+export type MakeRawDbUserProps = {};
 
 const initFullNames = [
   ...userInfoStoreName,

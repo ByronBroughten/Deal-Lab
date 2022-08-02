@@ -6,72 +6,10 @@ import {
   middleware,
   SessionRequest,
 } from "supertokens-node/framework/express";
-import Session from "supertokens-node/recipe/session";
 import { verifySession } from "supertokens-node/recipe/session/framework/express";
-import ThirdPartyEmailPassword from "supertokens-node/recipe/thirdpartyemailpassword";
 import { constants } from "../client/src/App/Constants";
 import apiQueriesServer from "../routes/apiQueries";
-
-supertokens.init({
-  framework: "express",
-  supertokens: {
-    // try.supertokens.com is for demo purposes. Replace this with the address of your core instance (sign up on supertokens.com), or self host a core.
-    connectionURI:
-      "https://10c84041108411ed883e01b05b97929c-us-east-1.aws.supertokens.io:3573",
-    apiKey: "9Fb5Qj2YNNoAbIAHDlvVRyg4IVoZU0",
-  },
-  appInfo: constants.superTokensAppInfo,
-  recipeList: [
-    ThirdPartyEmailPassword.init({
-      signUpFeature: {
-        formFields: [
-          {
-            id: "userName",
-          },
-        ],
-      },
-      override: {
-        apis: (original) => {
-          return {
-            ...original,
-            emailPasswordSignUpPOST: async function (input) {
-              if (!original.emailPasswordSignUpPOST) {
-                throw Error("This should't happen.");
-              }
-              const res = await original.emailPasswordSignUpPOST(input);
-              if (res.status === "OK") {
-                const { id, email, timeJoined } = res.user;
-                const { formFields } = input;
-                const nameField = formFields.find(
-                  (field) => field.id === "userName"
-                );
-
-                const userName =
-                  nameField && nameField.value ? nameField.value : "User";
-              }
-              return res;
-            },
-            thirdPartySignInUpPOST: async function (input) {
-              if (!original.thirdPartySignInUpPOST) {
-                throw Error("This should't happen.");
-              }
-              const res = await original.thirdPartySignInUpPOST(input);
-              if (res.status === "OK") {
-                if (res.createdNewUser) {
-                  const { id, email } = res.user;
-                  input.options;
-                }
-              }
-              return res;
-            },
-          };
-        },
-      },
-    }),
-    Session.init(),
-    // EmailPassword.init(), // initializes signin / sign up features
-  ],
-});
+import { useSupertokensInit } from "./useSupertokensInit";
 
 export function useRoutes(app: express.Application) {
   app.use(express.json()); // parses body into a JSON object
@@ -93,11 +31,21 @@ export function useRoutes(app: express.Application) {
     })
   );
 
+  useSupertokensInit();
   app.use(middleware());
-  app.get("/sessioninfo", verifySession(), async (req: SessionRequest, res) => {
-    const session = req.session!;
-    const userId = session.getUserId();
-  });
+  app.post(
+    "/initializeUserData",
+    verifySession(),
+    async (req: SessionRequest, res) => {
+      const session = req.session!;
+      const userId = session.getUserId();
+      // Time to make a query.
+      // Send the fe shared data or whatever it is.
+
+      // Save each of those arrs to the database
+      // Then make the serverUser and send to the front-end.
+    }
+  );
 
   app.use(constants.apiPathBit, apiQueriesServer);
   app.use(errorHandler());

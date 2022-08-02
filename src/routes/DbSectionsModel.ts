@@ -12,9 +12,11 @@ import { RawSection } from "../client/src/App/sharedWithServer/SectionsMeta/chil
 import { VarbValue } from "../client/src/App/sharedWithServer/SectionsMeta/relSectionsUtils/valueMetaTypes";
 import { monSchemas } from "../client/src/App/sharedWithServer/utils/mongoose";
 
-export type DbSectionsModelCore = {
+export type DbSectionsModelCore = RawDbUser & { _id: mongoose.Types.ObjectId };
+
+export type RawDbUser = {
   [CN in DbStoreName]: DbSectionPack<CN>[];
-} & { _id: mongoose.Types.ObjectId };
+};
 
 export const DbSectionsModel = mongoose.model<DbSectionsModelCore>(
   "user",

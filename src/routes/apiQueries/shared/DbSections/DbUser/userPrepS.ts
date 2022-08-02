@@ -1,9 +1,10 @@
 import bcrypt from "bcrypt";
 import { RegisterFormData } from "../../../../../client/src/App/sharedWithServer/apiQueriesShared/register";
+import { dbStoreNames } from "../../../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreName";
 import { PackBuilderSection } from "../../../../../client/src/App/sharedWithServer/StatePackers.ts/PackBuilderSection";
 import { makeMongooseObjectId } from "../../../../../client/src/App/sharedWithServer/utils/mongoose";
 import { ResStatusError } from "../../../../../resErrorUtils";
-import { DbSectionsModel } from "../../../../DbSectionsModel";
+import { DbSectionsModel, RawDbUser } from "../../../../DbSectionsModel";
 import { DbSectionsRaw } from "../DbSectionsQuerierTypes";
 import { QueryUser } from "../QueryUser";
 import {
@@ -36,36 +37,6 @@ export const userPrepS = {
         status: 400,
       });
     }
-  },
-  initUserSectionPackArrs({
-    userId,
-    email,
-    userName,
-    timeJoined,
-  }: SignUpData): InitialUserSectionPackArrs {
-    return {
-      userInfo: [
-        PackBuilderSection.initSectionPack("userInfo", {
-          dbVarbs: {
-            userName,
-            email,
-            timeJoined,
-          },
-        }),
-      ],
-      authInfoPrivate: [
-        PackBuilderSection.initSectionPack("authInfoPrivate", {
-          dbVarbs: { userId },
-        }),
-      ],
-      stripeInfoPrivate: [
-        PackBuilderSection.initSectionPack("stripeInfoPrivate", {
-          dbVarbs: {
-            customerId: "",
-          },
-        }),
-      ],
-    };
   },
   async initUserSectionPacks(
     registerFormData: RegisterFormData
@@ -102,6 +73,54 @@ export const userPrepS = {
       ],
     };
   },
+  makeEmptyRawDbUser(): RawDbUser {
+    return dbStoreNames.reduce((rawDbUser, dbStoreName) => {
+      rawDbUser[dbStoreName] = [];
+      return rawDbUser;
+    }, {} as RawDbUser);
+  },
+  initRawDbUser(props: SignUpData): RawDbUser {
+    return {
+      ...this.makeEmptyRawDbUser(),
+      ...this.initUserSectionPackArrs(props),
+    };
+  },
+
+  async initUserInDb(props: SignUpData) {
+    const dbUserModel = new DbSectionsModel(this.initRawDbUser(props));
+    await dbUserModel.save();
+  },
+  initUserSectionPackArrs({
+    userId,
+    email,
+    userName,
+    timeJoined,
+  }: SignUpData): InitialUserSectionPackArrs {
+    return {
+      userInfo: [
+        PackBuilderSection.initSectionPack("userInfo", {
+          dbVarbs: {
+            userName,
+            email,
+            timeJoined,
+          },
+        }),
+      ],
+      authInfoPrivate: [
+        PackBuilderSection.initSectionPack("authInfoPrivate", {
+          dbVarbs: { userId },
+        }),
+      ],
+      stripeInfoPrivate: [
+        PackBuilderSection.initSectionPack("stripeInfoPrivate", {
+          dbVarbs: {
+            customerId: "",
+          },
+        }),
+      ],
+    };
+  },
+
   makeDbSectionsRaw({
     _id = makeMongooseObjectId(),
     ...sections
