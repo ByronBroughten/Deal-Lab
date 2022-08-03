@@ -7,16 +7,16 @@ import { RegisterReqBody } from "../../../../client/src/App/sharedWithServer/api
 import { defaultMaker } from "../../../../client/src/App/sharedWithServer/defaultMaker/defaultMaker";
 import {
   dbStoreNameS,
-  dbStoreNames,
+  dbStoreNames
 } from "../../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreName";
 import {
   isFeStoreTableName,
-  relChildSections,
+  relChildSections
 } from "../../../../client/src/App/sharedWithServer/SectionsMeta/relChildSections";
 import { SectionValues } from "../../../../client/src/App/sharedWithServer/SectionsMeta/relSectionsUtils/valueMetaTypes";
 import {
   GetterSectionBase,
-  GetterSectionProps,
+  GetterSectionProps
 } from "../../../../client/src/App/sharedWithServer/StateGetters/Bases/GetterSectionBase";
 import { GetterSection } from "../../../../client/src/App/sharedWithServer/StateGetters/GetterSection";
 import { PackBuilderSection } from "../../../../client/src/App/sharedWithServer/StatePackers.ts/PackBuilderSection";
@@ -27,20 +27,20 @@ import { HandledResStatusError } from "../../../../resErrorUtils";
 import { isProEmail } from "../../../routeUtils/proList";
 import { DbSectionsProps } from "./Bases/DbSectionsBase";
 import { DbSections } from "./DbSections";
-import { DbSectionsRaw } from "./DbSectionsQuerierTypes";
 import {
   checkUserAuthToken,
   createUserAuthToken,
-  SubscriptionProps,
-} from "./DbUser/userAuthToken";
-import { SignUpData, userPrepS } from "./DbUser/userPrepS";
+  SubscriptionProps
+} from "./LoadedDbUser/userAuthToken";
+import { SignUpData, userPrepS } from "./LoadedDbUser/userPrepS";
 import { QueryUser } from "./QueryUser";
+import { DbSectionsRaw, DbUserSpecifierType } from "./QueryUserTypes";
 
 interface DbUserProps extends GetterSectionProps<"dbStore"> {
   dbSections: DbSections;
 }
 
-export class DbUser extends GetterSectionBase<"dbStore"> {
+export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
   readonly dbSections: DbSections;
   constructor({ dbSections, ...rest }: DbUserProps) {
     super(rest);
@@ -65,7 +65,7 @@ export class DbUser extends GetterSectionBase<"dbStore"> {
         sectionPacks,
       });
     }
-    return new DbUser({
+    return new LoadedDbUser({
       ...dbStore.getterSectionProps,
       dbSections,
     });
@@ -88,25 +88,38 @@ export class DbUser extends GetterSectionBase<"dbStore"> {
     await dbSectionsRaw.save();
     return dbSectionsRaw._id.toHexString();
   }
-  static async createSaveGet(props: CreateUserProps): Promise<DbUser> {
-    const userId = await this.createAndSaveNew(props);
-    return DbUser.queryByUserId(userId);
+  static async createSaveGet(props: CreateUserProps): Promise<LoadedDbUser> {
+    const userId = await this.createAndSaveNew(props);    
+    return LoadedDbUser.getBy("userId", userId);;
   }
-  static async queryByUserId(userId: string): Promise<DbUser> {
+  static async getBy(specifierType: DbUserSpecifierType, specifier: string) {
+    const querier = await QueryUser.init(specifier, specifierType);
+    return LoadedDbUser.init({
+      dbSectionsRaw: await querier.getDbSectionsRaw(),
+    });
+  }
+
+  static async queryByUserId(userId: string): Promise<LoadedDbUser> {
     const querier = await QueryUser.init(userId, "userId");
-    return DbUser.init({
+    return LoadedDbUser.init({
       dbSectionsRaw: await querier.getDbSectionsRaw(),
     });
   }
-  static async queryByEmail(email: string): Promise<DbUser> {
+  static async queryByAuthId(authId: string): Promise<LoadedDbUser> {
+    const querier = await QueryUser.init(authId, "authId");
+    return LoadedDbUser.init({
+      dbSectionsRaw: await querier.getDbSectionsRaw(),
+    });
+  }
+  static async queryByEmail(email: string): Promise<LoadedDbUser> {
     const querier = await QueryUser.initByEmail(email);
-    return DbUser.init({
+    return LoadedDbUser.init({
       dbSectionsRaw: await querier.getDbSectionsRaw(),
     });
   }
-  static async queryByCustomerId(customerId: string): Promise<DbUser> {
+  static async queryByCustomerId(customerId: string): Promise<LoadedDbUser> {
     const querier = await QueryUser.init(customerId, "customerId");
-    return DbUser.init({
+    return LoadedDbUser.init({
       dbSectionsRaw: await querier.getDbSectionsRaw(),
     });
   }
@@ -244,7 +257,7 @@ export class DbUser extends GetterSectionBase<"dbStore"> {
   }
   setResTokenHeader(res: Response): void {
     const token = this.createUserAuthToken();
-    DbUser.setResTokenHeader(res, token);
+    LoadedDbUser.setResTokenHeader(res, token);
   }
   static setResTokenHeader(res: Response, token: string): void {
     res.header(constants.tokenKey.apiUserAuth, token);

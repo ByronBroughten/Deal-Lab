@@ -1,11 +1,11 @@
 import { Request, Response } from "express";
-import { userAuthWare } from "../../middleware/authWare";
+import { checkLoginWare } from "../../middleware/authWare";
 import { QueryUser } from "./shared/DbSections/QueryUser";
 import { sendSuccess } from "./shared/sendSuccess";
 import { validateSectionPackArrReq } from "./shared/validateSectionPackReq";
 
 export const replaceSectionArrWare = [
-  userAuthWare,
+  checkLoginWare,
   replaceSectionArrServerSide,
 ];
 

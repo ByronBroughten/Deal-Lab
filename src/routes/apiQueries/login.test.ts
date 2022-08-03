@@ -6,7 +6,7 @@ import { makeReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/
 import { RegisterReqMaker } from "../../client/src/App/sharedWithServer/ReqMakers/RegisterReqMaker";
 import { runApp } from "../../runApp";
 import { DbSectionsModel } from "../DbSectionsModel";
-import { DbUser } from "./shared/DbSections/DbUser";
+import { LoadedDbUser } from "./shared/DbSections/LoadedDbUser";
 
 const testedRoute = apiQueriesShared.login.pathRoute;
 function makeReqStuff() {
@@ -33,7 +33,7 @@ describe(testedRoute, () => {
   beforeEach(async () => {
     server = runApp();
     const { loginReq, registerBody } = makeReqStuff();
-    userId = await DbUser.createAndSaveNew(registerBody);
+    userId = await LoadedDbUser.createAndSaveNew(registerBody);
     reqObj = loginReq;
   });
 
@@ -69,6 +69,6 @@ describe(testedRoute, () => {
     const res = await exec();
     const token = res.headers[config.tokenKey.apiUserAuth];
     expect(token).not.toBeUndefined();
-    expect(() => DbUser.checkUserAuthToken(token)).not.toThrow();
+    expect(() => LoadedDbUser.checkUserAuthToken(token)).not.toThrow();
   });
 });

@@ -4,8 +4,8 @@ import {
   DbStoreName,
 } from "../../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreName";
 import { DbSectionsBase } from "./Bases/DbSectionsBase";
-import { SectionPackNotFoundError } from "./DbSectionsQuerierTypes";
 import { QueryUser } from "./QueryUser";
+import { SectionPackNotFoundError } from "./QueryUserTypes";
 
 export interface DbSectionsInitByIdProps {
   userId: string;

@@ -1,13 +1,13 @@
 import { Request, Response } from "express";
 import { DbPack } from "../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbSectionPack";
 import { SectionQueryName } from "../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreName";
-import { userAuthWare } from "../../middleware/authWare";
+import { checkLoginWare } from "../../middleware/authWare";
 import { findOneAndUpdate } from "./shared/findAndUpdate";
 import { sendSuccess } from "./shared/sendSuccess";
 import { validateSectionPackReq } from "./shared/validateSectionPackReq";
 
 export const updateSectionWare = [
-  userAuthWare,
+  checkLoginWare,
   updateSectionSeverSide,
 ] as const;
 

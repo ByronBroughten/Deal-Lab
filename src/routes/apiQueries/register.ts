@@ -8,14 +8,14 @@ import {
 } from "../../client/src/App/sharedWithServer/apiQueriesShared/register";
 import { makeMongooseObjectId } from "../../client/src/App/sharedWithServer/utils/mongoose";
 import { handleResAndMakeError } from "../../resErrorUtils";
-import { DbUser } from "./shared/DbSections/DbUser";
+import { LoadedDbUser } from "./shared/DbSections/LoadedDbUser";
 
 export const registerTestId = makeMongooseObjectId();
 export const nextRegisterWare = [registerServerSide] as const;
 
 async function registerServerSide(req: Request, res: Response) {
   const reqObj = validateRegisterReq(req, res);
-  const dbUser = await DbUser.createSaveGet({
+  const dbUser = await LoadedDbUser.createSaveGet({
     _id: makeRegisterId(),
     ...reqObj.body,
   });

@@ -2,25 +2,24 @@ import { QueryOptions } from "mongoose";
 import { DbSectionPack } from "../../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbSectionPack";
 import {
   DbStoreInfo,
-  DbStoreName
+  DbStoreName,
 } from "../../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreName";
 import { ResStatusError } from "../../../../resErrorUtils";
 import { DbSectionsModel } from "../../../DbSectionsModel";
 import { DbSectionsQuerierBase } from "./Bases/DbSectionsQuerierBase";
 import { DbSections } from "./DbSections";
 import {
-  dbSectionsFilters,
   DbSectionsRaw,
+  dbUserFilters,
+  DbUserSpecifierType,
   queryOptions,
-  UserNotFoundError
-} from "./DbSectionsQuerierTypes";
+  UserNotFoundError,
+} from "./QueryUserTypes";
 
-type DbSectionsIdentifier = "email" | "customerId" | "userId";
-const filter = dbSectionsFilters;
 export class QueryUser extends DbSectionsQuerierBase {
-  static async init(identifier: string, identifierType: DbSectionsIdentifier) {
+  static async init(identifier: string, identifierType: DbUserSpecifierType) {
     const querier = new QueryUser({
-      userFilter: filter[identifierType](identifier),
+      userFilter: dbUserFilters[identifierType](identifier),
     });
     if (await querier.exists()) return querier;
     else throw this.userNotFoundError();

@@ -45,7 +45,6 @@ export const config = {
   // actually, I can do that.
 
   apiQueryNames: [
-    // "updateLogin",
     "register",
     "login",
     "addSection",
@@ -54,6 +53,8 @@ export const config = {
     "deleteSection",
     "replaceSectionArr",
     "getProPaymentLink",
+    "getUserData",
+    // sends feGuestAccess sections and gets user data from the db
   ],
   get superTokensAppInfo() {
     return {

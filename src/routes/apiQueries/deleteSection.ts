@@ -1,12 +1,12 @@
 import { Request, Response } from "express";
 import { DbStoreInfo } from "../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreName";
-import { userAuthWare } from "../../middleware/authWare";
+import { checkLoginWare } from "../../middleware/authWare";
 import { findUserByIdAndUpdate } from "./shared/findAndUpdate";
 import { sendSuccess } from "./shared/sendSuccess";
 import { validateDbSectionInfoReq } from "./shared/validateDbSectionInfoReq";
 
 export const deleteSectionWare = [
-  userAuthWare,
+  checkLoginWare,
   deleteSectionServerSide,
 ] as const;
 

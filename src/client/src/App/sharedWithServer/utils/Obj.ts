@@ -66,7 +66,7 @@ export const Obj = {
       return obj;
     } else throw new Error(`Prop "${key}" is not in the passed object.`);
   },
-  isAnyIfIsObj(value: any): value is any {
+  isObjToAny(value: any): value is any {
     if (value && typeof value === "object") return true;
     else return false;
   },

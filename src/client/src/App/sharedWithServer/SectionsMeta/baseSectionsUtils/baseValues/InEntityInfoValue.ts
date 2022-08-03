@@ -40,7 +40,7 @@ export function isInEntityVarbInfoValue(
 function isInEntityVarbInfoShared(value: any): boolean {
   const info: InEntityVarbInfo = value;
   return (
-    Obj.isAnyIfIsObj(info) &&
+    Obj.isObjToAny(info) &&
     info.expectedCount === "onlyOne" &&
     isVarbName(info.varbName) &&
     isSectionName(info.sectionName) &&

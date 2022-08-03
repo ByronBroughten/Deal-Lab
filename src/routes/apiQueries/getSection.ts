@@ -6,12 +6,12 @@ import {
 import { SectionPack } from "../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/SectionPack";
 import { FeSectionInfo } from "../../client/src/App/sharedWithServer/SectionsMeta/Info";
 import { PackBuilderSection } from "../../client/src/App/sharedWithServer/StatePackers.ts/PackBuilderSection";
-import { userAuthWare } from "../../middleware/authWare";
+import { checkLoginWare } from "../../middleware/authWare";
 import { QueryUser } from "./shared/DbSections/QueryUser";
 import { sendSuccess } from "./shared/sendSuccess";
 import { validateDbSectionInfoReq } from "./shared/validateDbSectionInfoReq";
 
-export const getSectionWare = [userAuthWare, getSectionServerSide] as const;
+export const getSectionWare = [checkLoginWare, getSectionServerSide] as const;
 
 async function getSectionServerSide(req: Request, res: Response) {
   const {

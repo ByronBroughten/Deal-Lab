@@ -5,10 +5,10 @@ import {
   dbStoreNameS,
   DbStoreType,
 } from "../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreName";
-import { LoggedIn, UserAuthedReq } from "./UserAuthedReq";
+import { LoggedIn, LoggedInReq } from "./ReqAugmenters";
 
 export function validateDbSectionInfoReq(
-  req: UserAuthedReq<any>
+  req: LoggedInReq<any>
 ): LoggedIn<DbPackInfoSectionReq> {
   const { userJwt, dbId, dbStoreName } = (req as LoggedIn<DbPackInfoSectionReq>)
     .body;

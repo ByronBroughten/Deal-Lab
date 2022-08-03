@@ -4,7 +4,7 @@ import { SectionValues } from "../../client/src/App/sharedWithServer/SectionsMet
 import { PackBuilderSection } from "../../client/src/App/sharedWithServer/StatePackers.ts/PackBuilderSection";
 import { queryParameters } from "../DbSectionsModel";
 import { getStripeEvent } from "../routeUtils/stripe";
-import { DbUser } from "./shared/DbSections/DbUser";
+import { LoadedDbUser } from "./shared/DbSections/LoadedDbUser";
 import { QueryUser } from "./shared/DbSections/QueryUser";
 import { findUserByIdAndUpdate } from "./shared/findAndUpdate";
 
@@ -16,7 +16,7 @@ async function stripeWebhook(req: Request, res: Response) {
   switch (event.type) {
     case "customer.created": {
       const customer = event.data.object as any;
-      const dbUser = await DbUser.queryByEmail(customer.email);
+      const dbUser = await LoadedDbUser.queryByEmail(customer.email);
       await findUserByIdAndUpdate({
         userId: dbUser.userId,
         doWhat: "set stripe customer id",

@@ -1,4 +1,4 @@
-import { DbSectionsRaw } from "../DbSectionsQuerierTypes";
+import { DbSectionsRaw } from "../QueryUserTypes";
 
 export type DbSectionsProps = {
   dbSectionsRaw: DbSectionsRaw;

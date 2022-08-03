@@ -5,15 +5,15 @@ import { PackBuilderSection } from "../../../../../client/src/App/sharedWithServ
 import { makeMongooseObjectId } from "../../../../../client/src/App/sharedWithServer/utils/mongoose";
 import { ResStatusError } from "../../../../../resErrorUtils";
 import { DbSectionsModel, RawDbUser } from "../../../../DbSectionsModel";
-import { DbSectionsRaw } from "../DbSectionsQuerierTypes";
 import { QueryUser } from "../QueryUser";
+import { DbSectionsRaw } from "../QueryUserTypes";
 import {
   initEmptyNames,
   InitEmptyPackArrs,
   InitialUserSectionPackArrs,
   MakeDbUserProps,
   PreppedEmails,
-  UserSectionPackArrs,
+  UserSectionPackArrs
 } from "./userPrepSTypes";
 
 export const userPrepS = {

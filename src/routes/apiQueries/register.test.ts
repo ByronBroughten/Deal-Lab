@@ -6,7 +6,7 @@ import { RegisterReqMaker } from "../../client/src/App/sharedWithServer/ReqMaker
 import { runApp } from "../../runApp";
 import { DbSectionsModel } from "../DbSectionsModel";
 import { registerTestId } from "./register";
-import { DbUser } from "./shared/DbSections/DbUser";
+import { LoadedDbUser } from "./shared/DbSections/LoadedDbUser";
 
 const testedRoute = apiQueriesShared.register.pathRoute;
 function makeTestRegisterReq(): QueryReq<"register"> {
@@ -54,7 +54,7 @@ describe(testedRoute, () => {
   });
   it("should return 400 if a user with that email already exists", async () => {
     const reqObj2 = makeTestRegisterReq();
-    await DbUser.createAndSaveNew({
+    await LoadedDbUser.createAndSaveNew({
       ...reqObj2.body,
       _id: registerTestId,
     });

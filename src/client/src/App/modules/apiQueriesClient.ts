@@ -2,15 +2,15 @@ import { AxiosResponse } from "axios";
 import {
   ApiQueries,
   apiQueriesShared,
-  ApiQuery
+  ApiQuery,
 } from "../sharedWithServer/apiQueriesShared";
 import {
   ApiQueryName,
-  QueryRes
+  QueryRes,
 } from "../sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import {
   isLoginHeaders,
-  isLoginUserNext
+  isLoginUserNext,
 } from "../sharedWithServer/apiQueriesShared/login";
 import { makeRes } from "../sharedWithServer/apiQueriesShared/makeReqAndRes";
 import { Obj } from "../sharedWithServer/utils/Obj";
@@ -20,7 +20,7 @@ import {
   makeResValidationQueryError,
   validateDbArrQueryNameRes,
   validateDbIdRes,
-  validateDbSectionPackRes
+  validateDbSectionPackRes,
 } from "./apiQueriesClient/validateRes";
 import { hasAuthHeadersProp } from "./services/authService";
 import https from "./services/httpService";
@@ -55,6 +55,17 @@ function makeApiQueries(): ApiQueries {
         } else throw makeResValidationQueryError();
       },
     },
+    getUserData: {
+      doingWhat: "retrieving user data",
+      validateRes(res: AxiosResponse<unknown>): QueryRes<"login"> {
+        if (res && isLoginUserNext(res.data) && isLoginHeaders(res.headers)) {
+          return {
+            data: res.data,
+            headers: res.headers,
+          };
+        } else throw makeResValidationQueryError();
+      },
+    },
     addSection: {
       doingWhat: "adding a section",
       validateRes(res: AxiosResponse<unknown>): QueryRes<"addSection"> {
@@ -63,8 +74,8 @@ function makeApiQueries(): ApiQueries {
           if (isDbIdData(data) && hasAuthHeadersProp(headers)) {
             return {
               data,
-              headers
-            }
+              headers,
+            };
           }
         }
         throw makeResValidationQueryError();
@@ -98,7 +109,7 @@ function makeApiQueries(): ApiQueries {
       doingWhat: "going to the pro upgrade payment page",
       validateRes(res: AxiosResponse<unknown>): QueryRes<"getProPaymentLink"> {
         const { data } = res as QueryRes<"getProPaymentLink">;
-        if (Obj.isAnyIfIsObj(data)) {
+        if (Obj.isObjToAny(data)) {
           const { sessionUrl } = data;
           if (typeof sessionUrl === "string") return makeRes({ sessionUrl });
         }

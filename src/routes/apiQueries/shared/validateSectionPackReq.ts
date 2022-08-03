@@ -9,11 +9,11 @@ import {
   SectionArrQueryName,
 } from "../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreName";
 import { SectionPack } from "../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/SectionPack";
-import { LoggedIn, UserAuthedReq } from "./UserAuthedReq";
+import { LoggedIn, LoggedInReq } from "./ReqAugmenters";
 import { validateDbStoreName } from "./validateDbSectionInfoReq";
 
 type PackArrReq = LoggedIn<SectionPackArrReq<SectionArrQueryName>>;
-export function validateSectionPackArrReq(req: UserAuthedReq<any>): PackArrReq {
+export function validateSectionPackArrReq(req: LoggedInReq<any>): PackArrReq {
   const { sectionPackArr, userJwt, dbStoreName } = (req as PackArrReq).body;
   return {
     body: {
@@ -28,7 +28,7 @@ export function validateSectionPackArrReq(req: UserAuthedReq<any>): PackArrReq {
 }
 
 type PackReq = LoggedIn<SectionPackReq>;
-export function validateSectionPackReq(req: UserAuthedReq<any>): PackReq {
+export function validateSectionPackReq(req: LoggedInReq<any>): PackReq {
   const { userJwt, sectionPack, dbStoreName } = (req as PackReq).body;
   return {
     body: {

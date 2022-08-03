@@ -15,9 +15,18 @@ export interface DbSectionsRaw extends DbSectionsModelCore, Document<any, any> {
   _id: mongoose.Types.ObjectId;
 }
 
-export const dbSectionsFilters = {
+export type DbUserSpecifierType = keyof typeof dbUserFilters;
+export const dbUserFilters = {
   userId(userId: string) {
     return { _id: userId } as const;
+  },
+  authId(authId: string) {
+    const path = modelPath.firstSectionVarb({
+      storeName: "authInfoPrivate",
+      sectionName: "authInfoPrivate" as "authInfoPrivate",
+      varbName: "userId",
+    });
+    return { [path]: authId };
   },
   customerId(customerId: string) {
     const path = modelPath.firstSectionVarb({
@@ -35,4 +44,4 @@ export const dbSectionsFilters = {
     });
     return { [path]: email } as const;
   },
-};
+} as const;

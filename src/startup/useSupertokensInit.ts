@@ -2,7 +2,7 @@ import supertokens from "supertokens-node";
 import Session from "supertokens-node/recipe/session";
 import ThirdPartyEmailPassword from "supertokens-node/recipe/thirdpartyemailpassword";
 import { constants } from "../client/src/App/Constants";
-import { userPrepS } from "../routes/apiQueries/shared/DbSections/DbUser/userPrepS";
+import { userPrepS } from "../routes/apiQueries/shared/DbSections/LoadedDbUser/userPrepS";
 
 export function useSupertokensInit() {
   supertokens.init({

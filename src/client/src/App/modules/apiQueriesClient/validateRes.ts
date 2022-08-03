@@ -15,7 +15,7 @@ import { Obj } from "../../sharedWithServer/utils/Obj";
 
 type DbIdData = { dbId: string };
 export function isDbIdData(value: any): value is DbIdData {
-  if (Obj.isAnyIfIsObj(value)) {
+  if (Obj.isObjToAny(value)) {
     const { dbId } = value;
     if (Id.is(dbId)) return true;
   }
@@ -32,7 +32,7 @@ export function validateDbStoreNameRes(
   res: AxiosResponse<unknown>
 ): DbStoreNameRes {
   const { data } = res;
-  if (Obj.isAnyIfIsObj(data)) {
+  if (Obj.isObjToAny(data)) {
     const { dbStoreName } = data;
     if (dbStoreNameS.is(dbStoreName, "allQuery"))
       return makeRes({ dbStoreName });
@@ -44,7 +44,7 @@ export function validateDbArrQueryNameRes(
   res: AxiosResponse<unknown>
 ): DbStoreNameRes<DbStoreNameByType<"arrQuery">> {
   const { data } = res;
-  if (Obj.isAnyIfIsObj(data)) {
+  if (Obj.isObjToAny(data)) {
     const { dbStoreName } = data;
     if (dbStoreNameS.is(dbStoreName, "arrQuery"))
       return makeRes({ dbStoreName });
@@ -56,7 +56,7 @@ export function validateDbSectionPackRes(
   res: AxiosResponse<unknown>
 ): SectionPackRes {
   const { data } = res;
-  if (Obj.isAnyIfIsObj(data)) {
+  if (Obj.isObjToAny(data)) {
     const { sectionPack } = data;
     if (isSectionPack(sectionPack)) {
       return makeRes({ sectionPack }) as SectionPackRes;

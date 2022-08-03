@@ -7,17 +7,20 @@ import {
   DbStoreInfo,
   SectionQueryName,
 } from "../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreName";
-import { userAuthWare, userSubscriptionWare } from "../../middleware/authWare";
+import {
+  checkLoginWare,
+  updateUserSubscriptionWare,
+} from "../../middleware/authWare";
 import { ResStatusError } from "../../resErrorUtils";
-import { SectionPackNotFoundError } from "./shared/DbSections/DbSectionsQuerierTypes";
 import { QueryUser } from "./shared/DbSections/QueryUser";
+import { SectionPackNotFoundError } from "./shared/DbSections/QueryUserTypes";
 import { findUserByIdAndUpdate } from "./shared/findAndUpdate";
 import { sendSuccess } from "./shared/sendSuccess";
 import { validateSectionPackReq } from "./shared/validateSectionPackReq";
 
 export const addSectionWare = [
-  userAuthWare,
-  userSubscriptionWare,
+  checkLoginWare,
+  updateUserSubscriptionWare,
   addSection,
 ] as const;
 async function addSection(req: Request, res: Response) {

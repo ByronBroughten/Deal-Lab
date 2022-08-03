@@ -5,8 +5,8 @@ import {
   LoginFormData,
 } from "../../client/src/App/sharedWithServer/apiQueriesShared/login";
 import { ResHandledError } from "../../resErrorUtils";
-import { DbUser } from "./shared/DbSections/DbUser";
-import { userPrepS } from "./shared/DbSections/DbUser/userPrepS";
+import { LoadedDbUser } from "./shared/DbSections/LoadedDbUser";
+import { userPrepS } from "./shared/DbSections/LoadedDbUser/userPrepS";
 
 export const loginWare = [login] as const;
 
@@ -15,7 +15,7 @@ async function login(req: Request, res: Response) {
 
   const { email: rawEmail, password } = reqObj.body;
   const { email } = userPrepS.processEmail(rawEmail);
-  const dbUser = await DbUser.queryByEmail(email);
+  const dbUser = await LoadedDbUser.queryByEmail(email);
   await dbUser.validatePassword(password);
   dbUser.sendLogin(res);
 }

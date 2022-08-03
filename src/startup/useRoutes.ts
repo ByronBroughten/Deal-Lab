@@ -13,6 +13,7 @@ import { useSupertokensInit } from "./useSupertokensInit";
 
 export function useRoutes(app: express.Application) {
   app.use(express.json()); // parses body into a JSON object
+  useSupertokensInit();
   app.use(
     cors({
       origin: [
@@ -30,8 +31,6 @@ export function useRoutes(app: express.Application) {
       exposedHeaders: [constants.tokenKey.apiUserAuth],
     })
   );
-
-  useSupertokensInit();
   app.use(middleware());
   app.post(
     "/initializeUserData",

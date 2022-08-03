@@ -7,6 +7,7 @@ import {
   DbIdRes,
   DbPackInfoSectionReq,
   DbStoreNameRes,
+  MakeReq,
   RegisterReq,
   SectionPackArrReq,
   SectionPackReq,
@@ -14,6 +15,7 @@ import {
   UpgradeUserToProReq,
   UrlRes,
 } from "./apiQueriesShared/makeReqAndRes";
+import { GuestAccessSectionPackArrs } from "./apiQueriesShared/register";
 import {
   DbStoreNameByType,
   SectionQueryName,
@@ -28,6 +30,9 @@ export type ApiQueries = {
   register: (req: RegisterReq) => Promise<LoginQueryObjects["res"]>;
   login: (req: LoginQueryObjects["req"]) => Promise<LoginQueryObjects["res"]>;
   getProPaymentLink: (req: UpgradeUserToProReq) => Promise<UrlRes>;
+  getUserData: (
+    req: MakeReq<{ guestAccessSections: GuestAccessSectionPackArrs }>
+  ) => Promise<LoginQueryObjects["res"]>;
 };
 type ApiQueriesTest<
   T extends Record<ApiQueryName, (req: any) => Promise<any>>

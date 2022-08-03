@@ -1,4 +1,4 @@
-import { userAuthWare } from "../../middleware/authWare";
+import { checkLoginWare } from "../../middleware/authWare";
 
-export const updateLoginWare = [userAuthWare, updateLogin];
+export const updateLoginWare = [checkLoginWare, updateLogin];
 async function updateLogin(req: Request, res: Response) {}
