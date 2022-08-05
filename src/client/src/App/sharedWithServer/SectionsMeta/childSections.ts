@@ -61,7 +61,7 @@ export const childSections = checkChildSections({
     authInfoPrivate: ["authInfoPrivate"],
     userInfo: ["userInfo"],
 
-    dbOnlyUserInfo: ["dbOnlyUserInfo"],
+    userInfoPrivate: ["userInfoPrivate"],
 
     stripeInfoPrivate: ["stripeInfoPrivate"],
     stripeSubscription: ["stripeSubscription"],

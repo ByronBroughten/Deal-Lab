@@ -2,8 +2,9 @@ import { AppBar, Toolbar } from "@material-ui/core";
 import { rem } from "polished";
 import React from "react";
 import { BsArrowUpCircle, BsFillHouseDoorFill } from "react-icons/bs";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
+import { constants } from "../Constants";
 import { useFeUser } from "../modules/sectionActorHooks/useFeUser";
 import theme from "../theme/Theme";
 import NavBtn from "./NavBar/NavBtn";
@@ -11,11 +12,18 @@ import NavDropDown from "./NavBar/NavDropDown";
 import { NavUserMenu } from "./NavBar/NavUserMenu";
 import { UpgradeUserToProPanel } from "./NavBar/UpgradeUserToProPanel";
 
+// For testing purposes, do I need to add a route for deleting a user?
+// I don't have infinite email addresses, after all.
+
 type NavBarProps = { logout: () => void };
 export default function NavBar(props: NavBarProps) {
   const feUser = useFeUser();
   const { isBasic, isGuest } = feUser;
   const userInfo = feUser.get.onlyChild("userInfo");
+
+  const { pathname } = useLocation();
+  const showSignin = isGuest && !pathname.includes("/auth");
+
   return (
     <Styled className="NavBar-root">
       <Toolbar disableGutters={true}>
@@ -36,7 +44,7 @@ export default function NavBar(props: NavBarProps) {
           </NavBtn> */}
         </div>
         <div className="NavBar-rightSide">
-          {isGuest && (
+          {showSignin && (
             <>
               <Link className="NavBar-navBtnLink" to="/auth">
                 <NavBtn>
@@ -49,6 +57,11 @@ export default function NavBar(props: NavBarProps) {
               <NavDropDown btnText="Login">
                 <LoginForm />
               </NavDropDown> */}
+              {constants.environment !== "production" && (
+                <NavBtn onClick={props.logout}>
+                  <span>Logout</span>
+                </NavBtn>
+              )}
             </>
           )}
           {!isGuest && isBasic && (

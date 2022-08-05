@@ -1,24 +1,26 @@
 const dev = {
+  environment: "development",
   appName: "Ultimate Deal Analyzer — Development",
-  endpoint: "http://localhost:5000",
+  apiUrlBase: "http://localhost:5000",
   clientUrlBase: "http://localhost:3000",
 };
 // do I need the front-end endpoint?
 
 const prod = {
+  environment: "production",
   appName: "Ultimate Deal Analyzer",
-  endpoint: "https://www.dealanalyzer.app",
+  apiUrlBase: "https://www.dealanalyzer.app",
   clientUrlBase: "https://www.dealanalyzer.app",
 };
 
-const baseEnvStuff = process.env.NODE_ENV === "development" ? dev : prod;
+const env = process.env.NODE_ENV === "development" ? dev : prod;
 const apiPathBit = "/api";
+const apiPathFull = `${env.apiUrlBase}${apiPathBit}`;
 
 export const config = {
-  appName: baseEnvStuff.appName,
-  clientUrlBase: baseEnvStuff.clientUrlBase,
-  apiPathBit: apiPathBit,
-  apiPathFull: `${baseEnvStuff.endpoint}${apiPathBit}`,
+  ...env,
+  apiPathBit,
+  apiPathFull,
   plans: {
     basic: {
       sectionSaveLimit: 2,
@@ -27,6 +29,20 @@ export const config = {
     pro: {
       sectionSaveLimit: 1000,
       canUseCompareTable: true,
+    },
+  },
+  superTokens: {
+    appInfo: {
+      // learn more about this on https://supertokens.com/docs/emailpassword/appinfo
+      appName: env.appName,
+      apiDomain: apiPathFull,
+      websiteDomain: env.clientUrlBase,
+    },
+  },
+  auth: {
+    successUrlEnd: "/login-success",
+    get successUrl() {
+      return `${env.clientUrlBase}${this.successUrlEnd}`;
     },
   },
   subscriptionSuccessUrlEnd: "/stripe-subscription-success",

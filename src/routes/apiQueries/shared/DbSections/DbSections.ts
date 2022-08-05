@@ -1,11 +1,11 @@
 import { DbSectionPack } from "../../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbSectionPack";
 import {
   DbStoreInfo,
-  DbStoreName,
+  DbStoreName
 } from "../../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreName";
 import { DbSectionsBase } from "./Bases/DbSectionsBase";
-import { QueryUser } from "./QueryUser";
-import { SectionPackNotFoundError } from "./QueryUserTypes";
+import { DbUser } from "./DbUser";
+import { SectionPackNotFoundError } from "./DbUserTypes";
 
 export interface DbSectionsInitByIdProps {
   userId: string;
@@ -58,7 +58,7 @@ export class DbSections extends DbSectionsBase {
   static async initByEmail({
     email,
   }: DbSectionsInitByEmailProps): Promise<DbSections> {
-    const querier = await QueryUser.initByEmail(email);
+    const querier = await DbUser.initByEmail(email);
     return new DbSections({
       dbSectionsRaw: await querier.getDbSectionsRaw(),
     });
@@ -66,7 +66,7 @@ export class DbSections extends DbSectionsBase {
   static async initById({
     userId,
   }: DbSectionsInitByIdProps): Promise<DbSections> {
-    const querier = await QueryUser.init(userId, "userId");
+    const querier = await DbUser.initBy("userId", userId);
     return new DbSections({
       dbSectionsRaw: await querier.getDbSectionsRaw(),
     });

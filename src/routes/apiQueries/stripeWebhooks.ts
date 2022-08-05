@@ -1,11 +1,11 @@
 import { Request, Response } from "express";
 import Stripe from "stripe";
-import { SectionValues } from "../../client/src/App/sharedWithServer/SectionsMeta/relSectionsUtils/valueMetaTypes";
+import { SectionValues } from "../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsUtils/valueMetaTypes";
 import { PackBuilderSection } from "../../client/src/App/sharedWithServer/StatePackers.ts/PackBuilderSection";
 import { queryParameters } from "../DbSectionsModel";
 import { getStripeEvent } from "../routeUtils/stripe";
+import { DbUser } from "./shared/DbSections/DbUser";
 import { LoadedDbUser } from "./shared/DbSections/LoadedDbUser";
-import { QueryUser } from "./shared/DbSections/QueryUser";
 import { findUserByIdAndUpdate } from "./shared/findAndUpdate";
 
 export const stripeWebhookWare = [stripeWebhook];
@@ -49,7 +49,7 @@ async function stripeWebhook(req: Request, res: Response) {
       const updatedPack = updatedSub.makeSectionPack();
 
       const customerId = subscription.customer as string;
-      const querier = await QueryUser.init(customerId, "customerId");
+      const querier = await DbUser.initBy("customerId", customerId);
       const subPacks = await querier.getSectionPackArr("stripeSubscription");
 
       const currentIdx = subPacks.findIndex(

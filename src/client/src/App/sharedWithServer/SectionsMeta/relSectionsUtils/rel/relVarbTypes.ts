@@ -1,15 +1,15 @@
 import { NumObjUnit } from "../../baseSectionsUtils/baseValues/NumObj";
 import { ValueName } from "../../baseSectionsUtils/baseVarb";
 import {
+  UpdateFnName,
+  ValueNamesToTypes,
+  ValueSchemas,
+} from "../../baseSectionsUtils/valueMetaTypes";
+import {
   RelInVarbInfo,
   RelSingleInVarbInfo,
 } from "../../childSectionsDerived/RelInOutVarbInfo";
 import { RelLocalVarbInfo } from "../../childSectionsDerived/RelVarbInfo";
-import {
-  UpdateFnName,
-  ValueNamesToTypes,
-  ValueSchemas,
-} from "../valueMetaTypes";
 
 export type UpdateFnProps = {
   [kwargName: string]: RelInVarbInfo | RelInVarbInfo[];

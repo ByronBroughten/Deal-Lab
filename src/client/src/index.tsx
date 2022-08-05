@@ -8,26 +8,10 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-// - implement SuperTokens...
+// - Use the same code for creating a user throughout everything
 
-// Ok. The new login works.
-// I can verify basic auth that way.
-// But I need to still implement the subscription-based login
-// And I must get the user's state.
-
-// Ok. Basically, check whether the user is logged in or not
-// Send the register req
-
-// On login, on the server, create a user in the db with the info
-// from the session. Use a variable called userId
-
-// After login, on the client, check for "session.isLoggedIn"
-// if it is logged in, but the state doesn't indicate that it is
-// logged in, call the server and get the logged in user,
-// and the subscription token
-
-// make another thing that logs out the user on the front-end
-// if session.loggedIn is false
+// - Get the subscription block to work for addSection again
+// - Add the test for that
 
 // - Test the pro stuff in addSection.test
 // - Test that addSection only accepts certain sectionNames
@@ -48,6 +32,16 @@ AppRegistry.runApplication("App", {
 // - Add basic Google Analytics
 // - Write a test to verify that the calculations work as expected
 // - Think about what to do about the little "Show Details" bugs
+
+// Should you consider makin gproperty more general, such
+// that it could be many different types of assets?
+// Or such that it can accomodate multiple types of properties?
+// I'm not sure about that.
+// I can instead use different modes.
+
+// Will I ever allow multiple assets?
+// For now, I don't have to.
+// I ought to get rid of propertyGeneral, then.
 
 // - Upload to Heroku
 // - Make a video demo/ad

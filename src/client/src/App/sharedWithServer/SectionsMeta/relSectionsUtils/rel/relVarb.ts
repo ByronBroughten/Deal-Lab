@@ -3,11 +3,11 @@ import {
   LeftRightPropCalculations,
   SinglePropCalculations,
 } from "../../baseSectionsUtils/baseValues/calculations";
+import { valueMeta } from "../../baseSectionsUtils/valueMeta";
 import { ChildName } from "../../childSectionsDerived/ChildName";
 import { RelInVarbInfo } from "../../childSectionsDerived/RelInOutVarbInfo";
 import { relVarbInfoS } from "../../childSectionsDerived/RelVarbInfo";
 import { relVarbInfosS } from "../../childSectionsDerived/RelVarbInfos";
-import { valueMeta } from "../valueMeta";
 import {
   CommonRelVarb,
   DisplayName,

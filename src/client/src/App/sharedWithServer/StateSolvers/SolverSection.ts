@@ -1,10 +1,10 @@
 import {
   SectionVarbName,
-  VarbValues,
+  VarbValues
 } from "../SectionsMeta/baseSectionsDerived/baseSectionTypes";
 import {
   ChildName,
-  FeChildInfo,
+  FeChildInfo
 } from "../SectionsMeta/childSectionsDerived/ChildName";
 import { ChildSectionName } from "../SectionsMeta/childSectionsDerived/ChildSectionName";
 import { SectionPack } from "../SectionsMeta/childSectionsDerived/SectionPack";
@@ -14,11 +14,11 @@ import { GetterSectionProps } from "../StateGetters/Bases/GetterSectionBase";
 import { GetterSection } from "../StateGetters/GetterSection";
 import {
   ChildPackInfo,
-  ChildSectionPackArrs,
+  ChildSectionPackArrs
 } from "../StatePackers.ts/PackLoaderSection";
 import {
   AddChildOptions,
-  UpdaterSection,
+  UpdaterSection
 } from "../StateUpdaters/UpdaterSection";
 import { Obj } from "../utils/Obj";
 import { AddSolverSection } from "./AddSolverSection";
@@ -26,10 +26,11 @@ import { ComboSolverSection } from "./ComboSolverSection";
 import { RemoveSolverSection } from "./RemoveSolverSection";
 import {
   SolverSectionBase,
-  SolverSectionProps,
+  SolverSectionProps
 } from "./SolverBases/SolverSectionBase";
 import { HasSolveShare } from "./SolverBases/SolverSectionsBase";
 import { SolverSections } from "./SolverSections";
+import { SolverVarb } from "./SolverVarb";
 
 interface SolverSectionInitProps<SN extends SectionName>
   extends GetterSectionProps<SN>,
@@ -99,6 +100,16 @@ export class SolverSection<
   removeChildrenAndSolve(childName: ChildName<SN>): void {
     this.remover.removeChildrenAndExtractVarbIds(childName);
     this.solve();
+  }
+  varb<VN extends SectionVarbName<SN>>(varbName: VN): SolverVarb<SN> {
+    return new SolverVarb({
+      ...this.solverSectionProps,
+      varbName: varbName as string
+    });
+  }
+  onlyChild<CN extends ChildName<SN>>(childName: CN): SolverSection<ChildSectionName<SN, CN>> {
+    const { feInfo } = this.get.onlyChild(childName);
+    return this.solverSection(feInfo);
   }
   child<CN extends ChildName<SN>>(
     childInfo: FeChildInfo<SN, CN>

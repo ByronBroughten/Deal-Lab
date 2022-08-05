@@ -4,12 +4,12 @@ import { SimpleSectionName } from "../SectionsMeta/baseSections";
 import { VarbNames } from "../SectionsMeta/baseSectionsDerived/baseVarbInfo";
 import { StateValue } from "../SectionsMeta/baseSectionsUtils/baseValues/StateValueTypes";
 import { Id } from "../SectionsMeta/baseSectionsUtils/id";
-import { ChildIdArrsNarrow } from "../SectionsMeta/childSectionsDerived/ChildName";
-import { FeSectionInfo, FeVarbInfo } from "../SectionsMeta/Info";
 import {
   DbValue,
   SectionValues,
-} from "../SectionsMeta/relSectionsUtils/valueMetaTypes";
+} from "../SectionsMeta/baseSectionsUtils/valueMetaTypes";
+import { ChildIdArrsNarrow } from "../SectionsMeta/childSectionsDerived/ChildName";
+import { FeSectionInfo, FeVarbInfo } from "../SectionsMeta/Info";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { StrictPick, StrictPickPartial } from "../utils/types";
 import { RawFeSection, RawFeVarb, RawFeVarbs } from "./StateSectionsTypes";

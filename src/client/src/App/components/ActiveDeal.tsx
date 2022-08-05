@@ -1,7 +1,6 @@
 import React from "react";
 import { View } from "react-native";
 import styled from "styled-components";
-import { constants } from "../Constants";
 import { useGetterSection } from "../sharedWithServer/stateClassHooks/useGetterSection";
 import theme from "../theme/Theme";
 import DealStats from "./AnalyzerMain/DealStats";
@@ -11,15 +10,10 @@ import { PropertyGeneral } from "./AnalyzerMain/PropertyGeneral";
 
 type Props = {
   feId: string;
-  updateLogin?: boolean;
+  loginSuccess?: boolean;
   className?: string;
 };
-export function ActiveDeal({ className, feId, updateLogin }: Props) {
-  React.useEffect(() => {
-    if (updateLogin) {
-      window.location.replace(constants.clientUrlBase);
-    }
-  });
+export function ActiveDeal({ className, feId }: Props) {
   const deal = useGetterSection({
     sectionName: "deal",
     feId,

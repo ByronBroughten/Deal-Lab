@@ -1,6 +1,7 @@
 import { SimpleSectionName } from "../SectionsMeta/baseSections";
 import { VarbValues } from "../SectionsMeta/baseSectionsDerived/baseSectionTypes";
 import { Id } from "../SectionsMeta/baseSectionsUtils/id";
+import { SectionValues } from "../SectionsMeta/baseSectionsUtils/valueMetaTypes";
 import {
   ChildArrInfo,
   ChildIdArrsNarrow,
@@ -12,7 +13,6 @@ import { ChildSectionName } from "../SectionsMeta/childSectionsDerived/ChildSect
 import { DescendantSectionName } from "../SectionsMeta/childSectionsDerived/DescendantSectionName";
 import { ParentNameSafe } from "../SectionsMeta/childSectionsDerived/ParentName";
 import { FeSectionInfo } from "../SectionsMeta/Info";
-import { SectionValues } from "../SectionsMeta/relSectionsUtils/valueMetaTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { GetterSectionProps } from "../StateGetters/Bases/GetterSectionBase";
 import { InitRawFeSectionProps } from "../StateSections/initRawSection";

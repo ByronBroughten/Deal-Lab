@@ -17,10 +17,15 @@ import { Theme } from "./App/theme/Theme";
 import { Main } from "./Main";
 
 SuperTokens.init({
-  appInfo: constants.superTokensAppInfo,
+  appInfo: constants.superTokens.appInfo,
   recipeList: [
     // EmailPassword.init(), Session.init()
     ThirdPartyEmailPassword.init({
+      getRedirectionURL: async (context) => {
+        if (context.action === "SUCCESS") {
+          return constants.auth.successUrl;
+        }
+      },
       signInAndUpFeature: {
         signUpForm: {
           formFields: [

@@ -5,15 +5,15 @@ import { PackBuilderSection } from "../../../../../client/src/App/sharedWithServ
 import { makeMongooseObjectId } from "../../../../../client/src/App/sharedWithServer/utils/mongoose";
 import { ResStatusError } from "../../../../../resErrorUtils";
 import { DbSectionsModel, RawDbUser } from "../../../../DbSectionsModel";
-import { QueryUser } from "../QueryUser";
-import { DbSectionsRaw } from "../QueryUserTypes";
+import { DbUser } from "../DbUser";
+import { DbSectionsRaw } from "../DbUserTypes";
 import {
   initEmptyNames,
   InitEmptyPackArrs,
   InitialUserSectionPackArrs,
   MakeDbUserProps,
   PreppedEmails,
-  UserSectionPackArrs
+  UserSectionPackArrs,
 } from "./userPrepSTypes";
 
 export const userPrepS = {
@@ -30,7 +30,7 @@ export const userPrepS = {
     };
   },
   async checkThatEmailIsUnique(email: string): Promise<void> {
-    if (await QueryUser.existsByEmail(email)) {
+    if (await DbUser.existsBy("email", email)) {
       throw new ResStatusError({
         errorMessage: `An account with the email ${email} already exists.`,
         resMessage: "An account with that email already exists",
@@ -54,61 +54,14 @@ export const userPrepS = {
           },
         }),
       ],
-      dbOnlyUserInfo: [
-        PackBuilderSection.initSectionPack("dbOnlyUserInfo", {
+      userInfoPrivate: [
+        PackBuilderSection.initSectionPack("userInfoPrivate", {
           dbVarbs: {
             emailAsSubmitted,
             encryptedPassword: await userPrepS.encryptPassword(
               registerFormData.password
             ),
           },
-        }),
-      ],
-      stripeInfoPrivate: [
-        PackBuilderSection.initSectionPack("stripeInfoPrivate", {
-          dbVarbs: {
-            customerId: "",
-          },
-        }),
-      ],
-    };
-  },
-  makeEmptyRawDbUser(): RawDbUser {
-    return dbStoreNames.reduce((rawDbUser, dbStoreName) => {
-      rawDbUser[dbStoreName] = [];
-      return rawDbUser;
-    }, {} as RawDbUser);
-  },
-  initRawDbUser(props: SignUpData): RawDbUser {
-    return {
-      ...this.makeEmptyRawDbUser(),
-      ...this.initUserSectionPackArrs(props),
-    };
-  },
-
-  async initUserInDb(props: SignUpData) {
-    const dbUserModel = new DbSectionsModel(this.initRawDbUser(props));
-    await dbUserModel.save();
-  },
-  initUserSectionPackArrs({
-    userId,
-    email,
-    userName,
-    timeJoined,
-  }: SignUpData): InitialUserSectionPackArrs {
-    return {
-      userInfo: [
-        PackBuilderSection.initSectionPack("userInfo", {
-          dbVarbs: {
-            userName,
-            email,
-            timeJoined,
-          },
-        }),
-      ],
-      authInfoPrivate: [
-        PackBuilderSection.initSectionPack("authInfoPrivate", {
-          dbVarbs: { userId },
         }),
       ],
       stripeInfoPrivate: [
@@ -135,6 +88,58 @@ export const userPrepS = {
       ...sections,
       ...emptySectionArrs,
     });
+  },
+
+  async initUserInDb(props: SignUpData) {
+    const dbUserModel = new DbSectionsModel(this.initRawDbUser(props));
+    await dbUserModel.save();
+  },
+  initRawDbUser(props: SignUpData): RawDbUser {
+    return {
+      ...this.makeEmptyRawDbUser(),
+      ...this.initUserSectionPackArrs(props),
+    };
+  },
+  initUserSectionPackArrs({
+    userId,
+    email,
+    userName,
+    timeJoined,
+  }: SignUpData): InitialUserSectionPackArrs {
+    return {
+      userInfo: [
+        PackBuilderSection.initSectionPack("userInfo", {
+          dbVarbs: {
+            userName,
+            email,
+            timeJoined,
+          },
+        }),
+      ],
+      userInfoPrivate: [
+        PackBuilderSection.initSectionPack("userInfoPrivate", {
+          dbVarbs: { guestAccessSectionsLoaded: false },
+        }),
+      ],
+      authInfoPrivate: [
+        PackBuilderSection.initSectionPack("authInfoPrivate", {
+          dbVarbs: { userId },
+        }),
+      ],
+      stripeInfoPrivate: [
+        PackBuilderSection.initSectionPack("stripeInfoPrivate", {
+          dbVarbs: {
+            customerId: "",
+          },
+        }),
+      ],
+    };
+  },
+  makeEmptyRawDbUser(): RawDbUser {
+    return dbStoreNames.reduce((rawDbUser, dbStoreName) => {
+      rawDbUser[dbStoreName] = [];
+      return rawDbUser;
+    }, {} as RawDbUser);
   },
 };
 

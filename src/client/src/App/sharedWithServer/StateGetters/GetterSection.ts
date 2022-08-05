@@ -14,6 +14,11 @@ import {
 } from "../SectionsMeta/baseSectionsUtils/RelSwitchVarb";
 import { ValueTypesPlusAny } from "../SectionsMeta/baseSectionsUtils/StateVarbTypes";
 import {
+  SectionValues,
+  SectionValuesReq,
+  SectionValuesRes,
+} from "../SectionsMeta/baseSectionsUtils/valueMetaTypes";
+import {
   ChildIdArrsWide,
   ChildName,
   DbChildInfo,
@@ -44,11 +49,6 @@ import {
   FeVarbInfo,
   noParentWarning,
 } from "../SectionsMeta/Info";
-import {
-  SectionValues,
-  SectionValuesReq,
-  SectionValuesRes,
-} from "../SectionsMeta/relSectionsUtils/valueMetaTypes";
 import { SectionMeta } from "../SectionsMeta/SectionMeta";
 import {
   SectionName,

@@ -3,6 +3,7 @@ import { PropKeyOfValue } from "../utils/Obj/SubType";
 import { StrictExtract } from "../utils/types";
 import { SimpleSectionName } from "./baseSections";
 import { baseNameArrs, BaseNameArrs } from "./baseSectionsDerived/baseNameArrs";
+import { SectionValues } from "./baseSectionsUtils/valueMetaTypes";
 import { ChildName, getChildNames } from "./childSectionsDerived/ChildName";
 import {
   childToSectionName,
@@ -11,7 +12,6 @@ import {
 import { ParentName } from "./childSectionsDerived/ParentName";
 import { isSectionPack, SectionPack } from "./childSectionsDerived/SectionPack";
 import { relNameArrs, RelNameArrs } from "./relSectionsDerived/relNameArrs";
-import { SectionValues } from "./relSectionsUtils/valueMetaTypes";
 
 type NameArrs = BaseNameArrs & RelNameArrs;
 function makeNameArrs(): NameArrs {

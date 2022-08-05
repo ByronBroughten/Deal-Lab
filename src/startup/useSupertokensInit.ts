@@ -12,7 +12,7 @@ export function useSupertokensInit() {
         "https://10c84041108411ed883e01b05b97929c-us-east-1.aws.supertokens.io:3573",
       apiKey: "9Fb5Qj2YNNoAbIAHDlvVRyg4IVoZU0",
     },
-    appInfo: constants.superTokensAppInfo,
+    appInfo: constants.superTokens.appInfo,
     recipeList: [
       ThirdPartyEmailPassword.init({
         signUpFeature: {

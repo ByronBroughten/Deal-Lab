@@ -1,13 +1,14 @@
+import { SimpleSectionName } from "../SectionsMeta/baseSections";
 import {
   isStateValue,
-  StateValue,
+  StateValue
 } from "../SectionsMeta/baseSectionsUtils/baseValues/StateValueTypes";
 import { DbSectionInfo } from "../SectionsMeta/baseSectionsUtils/DbSectionInfo";
 import { FeSectionInfo, FeVarbInfo } from "../SectionsMeta/Info";
 import { SectionName } from "../SectionsMeta/SectionName";
 import {
   VariableGetterSections,
-  VariableOption,
+  VariableOption
 } from "../StateEntityGetters/VariableGetterSections";
 import { GetterSections } from "../StateGetters/GetterSections";
 import { GetterVarb } from "../StateGetters/GetterVarb";
@@ -42,6 +43,9 @@ export class SetterSections extends SetterSectionsBase {
       ...this.setterSectionsProps,
       ...varbInfo,
     });
+  }
+  oneAndOnly<SN extends SimpleSectionName>(sectionName: SN): SetterSection<SN>{
+    return this.section(this.get.oneAndOnly(sectionName));
   }
   get main(): SetterSection<"main"> {
     return this.section(this.get.main.feInfo);

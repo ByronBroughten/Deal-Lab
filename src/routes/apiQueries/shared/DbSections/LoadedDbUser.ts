@@ -5,18 +5,15 @@ import { constants } from "../../../../client/src/App/Constants";
 import { LoginUser } from "../../../../client/src/App/sharedWithServer/apiQueriesShared/login";
 import { RegisterReqBody } from "../../../../client/src/App/sharedWithServer/apiQueriesShared/register";
 import { defaultMaker } from "../../../../client/src/App/sharedWithServer/defaultMaker/defaultMaker";
-import {
-  dbStoreNameS,
-  dbStoreNames
-} from "../../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreName";
+import { SectionValues } from "../../../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsUtils/valueMetaTypes";
+import { dbStoreNameS } from "../../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreName";
 import {
   isFeStoreTableName,
-  relChildSections
+  relChildSections,
 } from "../../../../client/src/App/sharedWithServer/SectionsMeta/relChildSections";
-import { SectionValues } from "../../../../client/src/App/sharedWithServer/SectionsMeta/relSectionsUtils/valueMetaTypes";
 import {
   GetterSectionBase,
-  GetterSectionProps
+  GetterSectionProps,
 } from "../../../../client/src/App/sharedWithServer/StateGetters/Bases/GetterSectionBase";
 import { GetterSection } from "../../../../client/src/App/sharedWithServer/StateGetters/GetterSection";
 import { PackBuilderSection } from "../../../../client/src/App/sharedWithServer/StatePackers.ts/PackBuilderSection";
@@ -25,16 +22,15 @@ import { getStandardNow } from "../../../../client/src/App/sharedWithServer/util
 import { stripeS } from "../../../../client/src/App/sharedWithServer/utils/stripe";
 import { HandledResStatusError } from "../../../../resErrorUtils";
 import { isProEmail } from "../../../routeUtils/proList";
-import { DbSectionsProps } from "./Bases/DbSectionsBase";
 import { DbSections } from "./DbSections";
+import { DbUser } from "./DbUser";
+import { DbSectionsRaw, DbUserSpecifierType } from "./DbUserTypes";
 import {
   checkUserAuthToken,
   createUserAuthToken,
-  SubscriptionProps
+  SubscriptionProps,
 } from "./LoadedDbUser/userAuthToken";
 import { SignUpData, userPrepS } from "./LoadedDbUser/userPrepS";
-import { QueryUser } from "./QueryUser";
-import { DbSectionsRaw, DbUserSpecifierType } from "./QueryUserTypes";
 
 interface DbUserProps extends GetterSectionProps<"dbStore"> {
   dbSections: DbSections;
@@ -55,22 +51,6 @@ export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
       throw new Error(`userId "${userId}" is not valid.`);
     return userId.toHexString();
   }
-  private static init(props: DbSectionsProps) {
-    const dbSections = new DbSections(props);
-    const dbStore = PackBuilderSection.initAsOmniChild("dbStore");
-    for (const childName of dbStoreNames) {
-      const sectionPacks = dbSections.sectionPackArr(childName);
-      dbStore.loadChildren({
-        childName,
-        sectionPacks,
-      });
-    }
-    return new LoadedDbUser({
-      ...dbStore.getterSectionProps,
-      dbSections,
-    });
-  }
-
   static async initializeUser(props: SignUpData) {
     const userPackArrs = userPrepS.initUserSectionPackArrs(props);
   }
@@ -89,39 +69,16 @@ export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
     return dbSectionsRaw._id.toHexString();
   }
   static async createSaveGet(props: CreateUserProps): Promise<LoadedDbUser> {
-    const userId = await this.createAndSaveNew(props);    
-    return LoadedDbUser.getBy("userId", userId);;
+    const userId = await this.createAndSaveNew(props);
+    return LoadedDbUser.getBy("userId", userId);
   }
   static async getBy(specifierType: DbUserSpecifierType, specifier: string) {
-    const querier = await QueryUser.init(specifier, specifierType);
-    return LoadedDbUser.init({
-      dbSectionsRaw: await querier.getDbSectionsRaw(),
-    });
-  }
-
-  static async queryByUserId(userId: string): Promise<LoadedDbUser> {
-    const querier = await QueryUser.init(userId, "userId");
-    return LoadedDbUser.init({
-      dbSectionsRaw: await querier.getDbSectionsRaw(),
-    });
-  }
-  static async queryByAuthId(authId: string): Promise<LoadedDbUser> {
-    const querier = await QueryUser.init(authId, "authId");
-    return LoadedDbUser.init({
-      dbSectionsRaw: await querier.getDbSectionsRaw(),
-    });
+    const dbUser = await DbUser.initBy(specifierType, specifier);
+    return dbUser.loadedDbUser();
   }
   static async queryByEmail(email: string): Promise<LoadedDbUser> {
-    const querier = await QueryUser.initByEmail(email);
-    return LoadedDbUser.init({
-      dbSectionsRaw: await querier.getDbSectionsRaw(),
-    });
-  }
-  static async queryByCustomerId(customerId: string): Promise<LoadedDbUser> {
-    const querier = await QueryUser.init(customerId, "customerId");
-    return LoadedDbUser.init({
-      dbSectionsRaw: await querier.getDbSectionsRaw(),
-    });
+    const dbUser = await DbUser.initByEmail(email);
+    return dbUser.loadedDbUser();
   }
   get get(): GetterSection<"dbStore"> {
     return new GetterSection(this.getterSectionProps);
@@ -180,11 +137,11 @@ export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
     }
     return subscriptionProps;
   }
-  get dbOnlyUserInfo(): GetterSection<"dbOnlyUserInfo"> {
-    return this.get.onlyChild("dbOnlyUserInfo");
+  get userInfoPrivate(): GetterSection<"userInfoPrivate"> {
+    return this.get.onlyChild("userInfoPrivate");
   }
   async validatePassword(attemptedPassword: string): Promise<void> {
-    const encryptedPassword = this.dbOnlyUserInfo.value(
+    const encryptedPassword = this.userInfoPrivate.value(
       "encryptedPassword",
       "string"
     );

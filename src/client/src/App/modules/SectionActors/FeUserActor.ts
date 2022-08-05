@@ -1,17 +1,17 @@
 import Session from "supertokens-auth-react/recipe/session";
 import {
   guestAccessNames,
-  GuestAccessSectionPackArrs,
+  GuestAccessSectionPackArrs
 } from "../../sharedWithServer/apiQueriesShared/register";
-import { RegisterReqMaker } from "../../sharedWithServer/ReqMakers/RegisterReqMaker";
 import {
   AuthStatus,
-  UserPlan,
+  UserPlan
 } from "../../sharedWithServer/SectionsMeta/baseSections";
 import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
 import { PackMakerSection } from "../../sharedWithServer/StatePackers.ts/PackMakerSection";
 import { StrictOmit } from "../../sharedWithServer/utils/types";
 import { auth } from "../services/authService";
+import { makeReq } from "./../../sharedWithServer/apiQueriesShared/makeReqAndRes";
 import { SectionActorBase, SectionActorBaseProps } from "./SectionActorBase";
 import { LoginSetter } from "./shared/LoginSetter";
 
@@ -22,6 +22,9 @@ export class FeUserActor extends SectionActorBase<"feStore"> {
       ...props,
       sectionName: "feStore",
     });
+  }
+  get get(): GetterSection<"feStore"> {
+    return new GetterSection(this.sectionActorBaseProps);
   }
   get loginSetter() {
     return new LoginSetter(this.sectionActorBaseProps);
@@ -38,23 +41,13 @@ export class FeUserActor extends SectionActorBase<"feStore"> {
       guestAccessNames
     ) as GuestAccessSectionPackArrs;
   }
-  // basically, I send guestAccessSections
-  // in the body
-
-  private get reqMaker() {
-    // Ok.
-    // The backend can make a base user in the db
-
-    // The frontend can send the register req
-    return new RegisterReqMaker(this.sectionActorBaseProps);
-  }
   async loadUserData() {
-    // instead of login, it's "collectUserData"
-    // const res = await this.apiQueries.login(this.loginReq);
-    // this.loginSetter.setLogin(res);
-  }
-  get get(): GetterSection<"feStore"> {
-    return new GetterSection(this.sectionActorBaseProps);
+    const res = await this.apiQueries.getUserData(
+      makeReq({
+        guestAccessSections: this.guestAccessSectionPacks,
+      })
+    );
+    this.loginSetter.setLogin(res);
   }
   get userPlan(): UserPlan {
     const subInfo = this.get.onlyChild("subscriptionInfo");
@@ -66,7 +59,7 @@ export class FeUserActor extends SectionActorBase<"feStore"> {
   get isBasic(): boolean {
     return this.userPlan === "basicPlan";
   }
-  get isSuperLoggedIn() {
+  get sessionExists() {
     return Session.doesSessionExist();
   }
   get isLoggedIn() {

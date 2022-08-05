@@ -1,13 +1,13 @@
 import { Request, Response } from "express";
 import {
   isMainStoreSectionName,
-  sectionToMainStoreName,
+  sectionToMainStoreName
 } from "../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreName";
 import { SectionPack } from "../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/SectionPack";
 import { FeSectionInfo } from "../../client/src/App/sharedWithServer/SectionsMeta/Info";
 import { PackBuilderSection } from "../../client/src/App/sharedWithServer/StatePackers.ts/PackBuilderSection";
 import { checkLoginWare } from "../../middleware/authWare";
-import { QueryUser } from "./shared/DbSections/QueryUser";
+import { DbUser } from "./shared/DbSections/DbUser";
 import { sendSuccess } from "./shared/sendSuccess";
 import { validateDbSectionInfoReq } from "./shared/validateDbSectionInfoReq";
 
@@ -19,7 +19,7 @@ async function getSectionServerSide(req: Request, res: Response) {
     ...dbInfo
   } = validateDbSectionInfoReq(req).body;
 
-  const querier = await QueryUser.init(userId, "userId");
+  const querier = await DbUser.initBy("userId", userId);
   const sectionPack = await querier.getSectionPack(dbInfo);
   const headSection = PackBuilderSection.loadAsOmniChild(sectionPack);
   const { sections } = headSection;

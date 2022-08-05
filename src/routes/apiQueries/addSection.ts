@@ -12,8 +12,8 @@ import {
   updateUserSubscriptionWare,
 } from "../../middleware/authWare";
 import { ResStatusError } from "../../resErrorUtils";
-import { QueryUser } from "./shared/DbSections/QueryUser";
-import { SectionPackNotFoundError } from "./shared/DbSections/QueryUserTypes";
+import { DbUser } from "./shared/DbSections/DbUser";
+import { SectionPackNotFoundError } from "./shared/DbSections/DbUserTypes";
 import { findUserByIdAndUpdate } from "./shared/findAndUpdate";
 import { sendSuccess } from "./shared/sendSuccess";
 import { validateSectionPackReq } from "./shared/validateSectionPackReq";
@@ -65,7 +65,7 @@ async function validateAuth({
   switch (subscriptionPlan) {
     case "basicPlan": {
       const { basicStorageLimit } = constants;
-      const querier = await QueryUser.init(userId, "userId");
+      const querier = await DbUser.initBy("userId", userId);
       const count = await querier.storeSectionCount(dbStoreName);
       if (count < basicStorageLimit) return true;
       else
@@ -84,7 +84,7 @@ async function checkThatSectionPackIsNotThere<CN extends SectionQueryName>(
 ): Promise<true> {
   const { dbStoreName, dbId, userId } = props;
   try {
-    const querier = await QueryUser.init(userId, "userId");
+    const querier = await DbUser.initBy("userId", userId);
     await querier.getSectionPack(props);
     throw new ResStatusError({
       errorMessage: `An entry at ${dbStoreName}.${dbId} already exists.`,

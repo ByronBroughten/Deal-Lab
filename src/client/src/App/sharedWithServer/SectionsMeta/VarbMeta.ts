@@ -4,6 +4,8 @@ import { SimpleSectionName } from "./baseSections";
 import { VarbNames } from "./baseSectionsDerived/baseVarbInfo";
 import { NumObjUnit } from "./baseSectionsUtils/baseValues/NumObj";
 import { ValueName } from "./baseSectionsUtils/baseVarb";
+import { valueMeta } from "./baseSectionsUtils/valueMeta";
+import { UpdateFnName } from "./baseSectionsUtils/valueMetaTypes";
 import {
   RelInVarbInfo,
   RelOutVarbInfo,
@@ -17,8 +19,6 @@ import {
   UpdateSwitchProp,
 } from "./relSectionsUtils/rel/relVarbTypes";
 import { GeneralRelVarbs } from "./relSectionsUtils/relVarbs";
-import { valueMeta } from "./relSectionsUtils/valueMeta";
-import { UpdateFnName } from "./relSectionsUtils/valueMetaTypes";
 import { SectionMeta } from "./SectionMeta";
 
 type InBaseUpdatePack = {

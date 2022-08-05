@@ -200,10 +200,10 @@ export const baseSections = {
     customerId: "string",
   } as const),
 
-  // This is getting deleted
-  dbOnlyUserInfo: baseSection(
-    baseVarbs("string", ["encryptedPassword", "emailAsSubmitted"] as const)
-  ),
+  userInfoPrivate: baseSection({
+    ...baseVarbs("string", ["encryptedPassword", "emailAsSubmitted"] as const),
+    guestAccessSectionsLoaded: "boolean",
+  }),
 } as const;
 
 export const simpleSectionNames = Obj.keys(baseSections);

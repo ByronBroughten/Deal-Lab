@@ -1,10 +1,10 @@
 import { SimpleSectionName } from "../baseSections";
 import {
   BaseSectionVarbs,
-  SectionVarbName,
+  SectionVarbName
 } from "../baseSectionsDerived/baseSectionTypes";
-import { StateValue } from "../baseSectionsUtils/baseValues/StateValueTypes";
-import { ValueName } from "../baseSectionsUtils/baseVarb";
+import { StateValue } from "./baseValues/StateValueTypes";
+import { ValueName } from "./baseVarb";
 import { valueMeta } from "./valueMeta";
 
 export type ValueSchemas = typeof valueMeta;

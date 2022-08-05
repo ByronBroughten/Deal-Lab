@@ -4,13 +4,13 @@ import { relVarb, relVarbS } from "./relSectionsUtils/rel/relVarb";
 import {
   GeneralRelSection,
   GenericRelSection,
-  relSection,
+  relSection
 } from "./relSectionsUtils/relSection";
 import { RelVarbs, relVarbsS } from "./relSectionsUtils/relVarbs";
 import { dealRelVarbs } from "./relSectionsUtils/relVarbs/dealRelVarbs";
 import {
   financingRelVarbs,
-  loanRelVarbs,
+  loanRelVarbs
 } from "./relSectionsUtils/relVarbs/financingRelVarbs";
 import { mgmtRelVarbs } from "./relSectionsUtils/relVarbs/mgmtRelVarbs";
 import { propertyRelVarbs } from "./relSectionsUtils/relVarbs/propertyRelVarbs";
@@ -63,9 +63,12 @@ export function makeRelSections() {
       }),
       planExp: relVarb("number", { initValue: 0 }),
     }),
-    dbOnlyUserInfo: relSection(
-      "dbOnlyUserInfo",
-      relVarbsS.strings(["encryptedPassword", "emailAsSubmitted"] as const)
+    userInfoPrivate: relSection(
+      "userInfoPrivate",
+      {
+        ...relVarbsS.strings(["encryptedPassword", "emailAsSubmitted"] as const),
+        guestAccessSectionsLoaded: relVarb("boolean", { initValue: false })
+      }
     ),
     stripeInfoPrivate: relSection("Stripe info", {
       customerId: relVarb("string"),

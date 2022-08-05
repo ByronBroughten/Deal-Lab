@@ -3,7 +3,9 @@ import { DbSectionPack } from "../../../../client/src/App/sharedWithServer/Secti
 import {
   DbStoreInfo,
   DbStoreName,
+  dbStoreNames,
 } from "../../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreName";
+import { PackBuilderSection } from "../../../../client/src/App/sharedWithServer/StatePackers.ts/PackBuilderSection";
 import { ResStatusError } from "../../../../resErrorUtils";
 import { DbSectionsModel } from "../../../DbSectionsModel";
 import { DbSectionsQuerierBase } from "./Bases/DbSectionsQuerierBase";
@@ -14,39 +16,10 @@ import {
   DbUserSpecifierType,
   queryOptions,
   UserNotFoundError,
-} from "./QueryUserTypes";
+} from "./DbUserTypes";
+import { LoadedDbUser } from "./LoadedDbUser";
 
-export class QueryUser extends DbSectionsQuerierBase {
-  static async init(identifier: string, identifierType: DbUserSpecifierType) {
-    const querier = new QueryUser({
-      userFilter: dbUserFilters[identifierType](identifier),
-    });
-    if (await querier.exists()) return querier;
-    else throw this.userNotFoundError();
-  }
-  static async initByEmail(email: string): Promise<QueryUser> {
-    try {
-      return this.init(email, "email");
-    } catch (ex) {
-      if (ex instanceof UserNotFoundError) {
-        throw new UserNotFoundError({
-          errorMessage: "Invalid email.",
-          resMessage: "That email address didn't work.",
-          status: 400,
-        });
-      } else throw ex;
-    }
-  }
-  static async existsByEmail(email: string): Promise<boolean> {
-    try {
-      await this.initByEmail(email);
-      return true;
-    } catch (ex) {
-      if (ex instanceof UserNotFoundError) return false;
-      else throw ex;
-    }
-  }
-
+export class DbUser extends DbSectionsQuerierBase {
   async exists(): Promise<boolean> {
     return await DbSectionsModel.exists(this.userFilter);
   }
@@ -56,6 +29,10 @@ export class QueryUser extends DbSectionsQuerierBase {
     const dbSections = await this.dbSections();
     return dbSections.hasSection(dbInfo);
   }
+  // getVarb would basically be "getSectionPack"
+
+  // it would take storeName, sectionName, varbName
+
   async getSectionPack<CN extends DbStoreName>(
     dbInfo: DbStoreInfo<CN>
   ): Promise<DbSectionPack<CN>> {
@@ -124,15 +101,62 @@ export class QueryUser extends DbSectionsQuerierBase {
     if (dbSectionsRaw) return dbSectionsRaw as DbSectionsRaw;
     else throw this.userNotFoundError();
   }
+  private userNotFoundError(): UserNotFoundError {
+    return DbUser.userNotFoundError();
+  }
+  async loadedDbUser(): Promise<LoadedDbUser> {
+    const dbSections = await this.dbSections();
+    const dbStore = PackBuilderSection.initAsOmniChild("dbStore");
+    for (const childName of dbStoreNames) {
+      const sectionPacks = dbSections.sectionPackArr(childName);
+      dbStore.loadChildren({
+        childName,
+        sectionPacks,
+      });
+    }
+    return new LoadedDbUser({
+      ...dbStore.getterSectionProps,
+      dbSections,
+    });
+  }
+  static async initBy(specifierType: DbUserSpecifierType, specifier: string) {
+    const dbUser = new DbUser({
+      userFilter: dbUserFilters[specifierType](specifier),
+    });
+    if (await dbUser.exists()) return dbUser;
+    else throw this.userNotFoundError();
+  }
+  static async initByEmail(email: string): Promise<DbUser> {
+    try {
+      return this.initBy("email", email);
+    } catch (ex) {
+      if (ex instanceof UserNotFoundError) {
+        throw new UserNotFoundError({
+          errorMessage: "Invalid email.",
+          resMessage: "That email address didn't work.",
+          status: 400,
+        });
+      } else throw ex;
+    }
+  }
+  static async existsBy(
+    specifierType: DbUserSpecifierType,
+    specifier: string
+  ): Promise<boolean> {
+    try {
+      await this.initBy(specifierType, specifier);
+      return true;
+    } catch (ex) {
+      if (ex instanceof UserNotFoundError) return false;
+      else throw ex;
+    }
+  }
   static userNotFoundError(): UserNotFoundError {
     return new UserNotFoundError({
       errorMessage: "User not found.",
       resMessage: "Could not access user account.",
       status: 400,
     });
-  }
-  private userNotFoundError(): UserNotFoundError {
-    return QueryUser.userNotFoundError();
   }
 }
 

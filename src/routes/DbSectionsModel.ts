@@ -1,15 +1,15 @@
 import mongoose, { Schema } from "mongoose";
 import { SectionVarbName } from "../client/src/App/sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionTypes";
+import { VarbValue } from "../client/src/App/sharedWithServer/SectionsMeta/baseSectionsUtils/valueMetaTypes";
 import { DbSectionPack } from "../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbSectionPack";
+import { OneDbSectionVarbInfo } from "../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreInfo";
 import {
-  DbSectionName,
+  DbSelfOrDescendantSn,
   DbStoreName,
   dbStoreNames,
 } from "../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreName";
-import { SelfOrDescendantSectionName } from "../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DescendantSectionName";
 import { SectionPack } from "../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/SectionPack";
 import { RawSection } from "../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/SectionPack/RawSection";
-import { VarbValue } from "../client/src/App/sharedWithServer/SectionsMeta/relSectionsUtils/valueMetaTypes";
 import { monSchemas } from "../client/src/App/sharedWithServer/utils/mongoose";
 
 export type DbSectionsModelCore = RawDbUser & { _id: mongoose.Types.ObjectId };
@@ -65,14 +65,14 @@ export const modelPath = {
   },
   firstSectionPackSection<CN extends DbStoreName>(
     storeName: CN,
-    sectionName: SelfOrDescendantSectionName<DbSectionName<CN>>
+    sectionName: DbSelfOrDescendantSn<CN>
   ) {
     return `${this.firstSectionPack(storeName)}.rawSections.${sectionName}.0`;
   },
   firstSectionVarb<
     CN extends DbStoreName,
-    SN extends SelfOrDescendantSectionName<DbSectionName<CN>>
-  >({ storeName, sectionName, varbName }: FirstSectionVarbPathProps<CN, SN>) {
+    SN extends DbSelfOrDescendantSn<CN>
+  >({ storeName, sectionName, varbName }: OneDbSectionVarbInfo<CN, SN>) {
     return `${this.firstSectionPackSection(
       storeName,
       sectionName
@@ -80,20 +80,11 @@ export const modelPath = {
   },
 };
 
-type FirstSectionVarbPathProps<
-  CN extends DbStoreName,
-  SN extends SelfOrDescendantSectionName<DbSectionName<CN>>
-> = {
-  storeName: CN;
-  sectionName: SN;
-  varbName: SectionVarbName<SN>;
-};
-
 interface UpdateVarbProps<
   CN extends DbStoreName,
-  SN extends SelfOrDescendantSectionName<DbSectionName<CN>>,
+  SN extends DbSelfOrDescendantSn<CN>,
   VN extends SectionVarbName<SN>
-> extends FirstSectionVarbPathProps<CN, SN> {
+> extends OneDbSectionVarbInfo<CN, SN> {
   varbName: VN;
   value: VarbValue<SN, VN>;
 }
@@ -101,7 +92,7 @@ interface UpdateVarbProps<
 export const queryParameters = {
   updateVarb: <
     CN extends DbStoreName,
-    SN extends SelfOrDescendantSectionName<DbSectionName<CN>>,
+    SN extends DbSelfOrDescendantSn<CN>,
     VN extends SectionVarbName<SN>
   >({
     value,
