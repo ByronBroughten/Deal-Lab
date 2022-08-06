@@ -1,5 +1,4 @@
 {
-  "name": "Property Analyzer Client",
-  "jwtPrivateKey": "",
+  "name": "Property Analyzer Default",
   "port": 5000
 }

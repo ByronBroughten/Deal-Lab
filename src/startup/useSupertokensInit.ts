@@ -1,3 +1,4 @@
+import config from "config";
 import supertokens from "supertokens-node";
 import Session from "supertokens-node/recipe/session";
 import ThirdPartyEmailPassword from "supertokens-node/recipe/thirdpartyemailpassword";
@@ -8,9 +9,8 @@ export function useSupertokensInit() {
   supertokens.init({
     framework: "express",
     supertokens: {
-      connectionURI:
-        "https://10c84041108411ed883e01b05b97929c-us-east-1.aws.supertokens.io:3573",
-      apiKey: "9Fb5Qj2YNNoAbIAHDlvVRyg4IVoZU0",
+      connectionURI: config.get("supertokensCoreConnectionUri"),
+      apiKey: config.get("supertokensCoreApiKey"),
     },
     appInfo: constants.superTokens.appInfo,
     recipeList: [
