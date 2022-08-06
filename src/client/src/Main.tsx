@@ -1,4 +1,5 @@
 import React from "react";
+import ReactGA from "react-ga4";
 import * as reactRouterDom from "react-router-dom";
 import { Route, Routes } from "react-router-dom";
 import styled from "styled-components";
@@ -11,6 +12,9 @@ import { constants } from "./App/Constants";
 import { useAuthAndLogin } from "./App/modules/customHooks/useAuthAndLogin";
 import { useSetterSection } from "./App/sharedWithServer/stateClassHooks/useSetterSection";
 import theme from "./App/theme/Theme";
+
+ReactGA.initialize("G-19TRW4YTJL");
+ReactGA.send("pageview");
 
 export function Main() {
   const main = useSetterSection();

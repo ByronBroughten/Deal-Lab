@@ -37,10 +37,15 @@ const Styled = styled(Button)`
   justify-content: flex-start;
   border-radius: 0;
   box-shadow: ${theme.boxShadow1};
-  background-color: ${transparentize(0.13, theme["gray-300"])};
+  background-color: ${transparentize(0.05, theme["gray-300"])};
   color: ${theme.softDark};
   line-height: 1rem;
   font-size: 1.1rem;
+
+  :disabled {
+    color: ${transparentize(0.4, theme.softDark)};
+    background-color: ${transparentize(0.05, theme.error.light)};
+  }
 
   .LabeledIconBtn-iconSpan {
     display: flex;

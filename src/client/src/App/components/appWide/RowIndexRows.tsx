@@ -1,4 +1,5 @@
 import { TextField } from "@material-ui/core";
+import { transparentize } from "polished";
 import React from "react";
 import styled from "styled-components";
 import ccs from "../../theme/cssChunks";
@@ -83,6 +84,9 @@ const Styled = styled.div<{ sectionName: ThemeName }>`
     align-items: center;
     width: 250px;
     height: 30px;
+
+    color: ${transparentize(0.4, theme.softDark)};
+    background-color: ${transparentize(0.05, theme.error.light)};
   }
 
   .RowIndexRows-trashBtn {
