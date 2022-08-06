@@ -21,7 +21,9 @@ export default function RowIndexSectionList({
 }: Props) {
   const authStatus = useAuthStatus();
   const noEntriesMessage =
-    authStatus === "guest" ? `Sign in to load saved properties` : "None saved";
+    authStatus === "guest"
+      ? `Sign in to load saved ${pluralName}`
+      : "None saved";
   return (
     <DropdownList
       {...{

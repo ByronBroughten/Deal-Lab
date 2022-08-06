@@ -64,7 +64,7 @@ export function RowIndexRows({ feInfo, className, noEntriesMessage }: Props) {
 
 const Styled = styled.div<{ sectionName: ThemeName }>`
   display: block;
-  position: absolute;
+  position: relative;
   z-index: 2; // 2 beats editor title labels
   background: ${theme.light};
   border-radius: 0 0 ${theme.br1} ${theme.br1};
@@ -84,7 +84,6 @@ const Styled = styled.div<{ sectionName: ThemeName }>`
     align-items: center;
     width: 250px;
     height: 30px;
-
     color: ${transparentize(0.4, theme.softDark)};
     background-color: ${transparentize(0.05, theme.error.light)};
   }
