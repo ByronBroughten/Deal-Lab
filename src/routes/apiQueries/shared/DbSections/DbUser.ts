@@ -1,13 +1,24 @@
-import { QueryOptions } from "mongoose";
+import mongoose, { QueryOptions } from "mongoose";
+import { GuestAccessSectionPackArrs } from "../../../../client/src/App/sharedWithServer/apiQueriesShared/register";
+import { SectionVarbName } from "../../../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionTypes";
+import { VarbValue } from "../../../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsDerived/valueMetaTypes";
 import { DbSectionPack } from "../../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbSectionPack";
 import {
+  OneDbSectionValueInfo,
+  OneDbSectionVarbInfo,
+} from "../../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreInfo";
+import {
+  DbSectionName,
+  DbSelfOrDescendantSn,
   DbStoreInfo,
   DbStoreName,
   dbStoreNames,
 } from "../../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreName";
+import { SectionPack } from "../../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/SectionPack";
 import { PackBuilderSection } from "../../../../client/src/App/sharedWithServer/StatePackers.ts/PackBuilderSection";
+import { Obj } from "../../../../client/src/App/sharedWithServer/utils/Obj";
 import { ResStatusError } from "../../../../resErrorUtils";
-import { DbSectionsModel } from "../../../DbSectionsModel";
+import { DbSectionsModel, modelPath } from "../../../DbSectionsModel";
 import { DbSectionsQuerierBase } from "./Bases/DbSectionsQuerierBase";
 import { DbSections } from "./DbSections";
 import {
@@ -23,16 +34,67 @@ export class DbUser extends DbSectionsQuerierBase {
   async exists(): Promise<boolean> {
     return await DbSectionsModel.exists(this.userFilter);
   }
+  async checkAndLoadGuestAccessSections(
+    guestAccessSections: GuestAccessSectionPackArrs
+  ): Promise<void> {
+    if (!(await this.guestAccessSectionsAreLoaded)) {
+      this.loadGuestAccessSections(guestAccessSections);
+    }
+  }
+  async getUserId(): Promise<string> {
+    const dbSections = await this.getDbSectionsRaw();
+    const userId = dbSections._id;
+    if (!(userId instanceof mongoose.Types.ObjectId))
+      throw new Error(`userId "${userId}" is not valid.`);
+    return userId.toHexString();
+  }
+  private get guestAccessInfo() {
+    return {
+      storeName: "userInfoPrivate",
+      sectionName: "userInfoPrivate",
+      varbName: "guestSectionsAreLoaded",
+    } as const;
+  }
+  private get guestAccessSectionsAreLoaded() {
+    return this.getOnlyValue(this.guestAccessInfo);
+  }
+  private async loadGuestAccessSections(
+    guestAccessSections: GuestAccessSectionPackArrs
+  ): Promise<void> {
+    this.setOnlyValue({
+      ...this.guestAccessInfo,
+      value: true,
+    });
+    for (const storeName of Obj.keys(guestAccessSections)) {
+      const sectionPackArr = guestAccessSections[storeName] as any[];
+      this.setSectionPackArr({
+        storeName,
+        sectionPackArr,
+      });
+    }
+  }
   async hasSectionPack<CN extends DbStoreName>(
     dbInfo: DbStoreInfo<CN>
   ): Promise<boolean> {
     const dbSections = await this.dbSections();
     return dbSections.hasSection(dbInfo);
   }
-  // getVarb would basically be "getSectionPack"
-
-  // it would take storeName, sectionName, varbName
-
+  async getOnlyValue<
+    CN extends DbStoreName,
+    SN extends DbSectionName<CN>,
+    VN extends SectionVarbName<SN>
+  >({
+    varbName,
+    storeName,
+    sectionName,
+  }: OneDbSectionVarbInfo<CN, SN, VN>): Promise<VarbValue<SN, VN>> {
+    const dbSections = await this.dbSections();
+    const sectionPack = dbSections.onlySectionPack(
+      storeName
+    ) as SectionPack<SN>;
+    const section = PackBuilderSection.loadAsOmniChild(sectionPack);
+    return section.get.sections.oneAndOnly(sectionName).valueNext(varbName);
+  }
   async getSectionPack<CN extends DbStoreName>(
     dbInfo: DbStoreInfo<CN>
   ): Promise<DbSectionPack<CN>> {
@@ -52,6 +114,23 @@ export class DbUser extends DbSectionsQuerierBase {
   }: SetSectionPackArrProps<CN>): Promise<void> {
     await this.update({
       operation: { $set: { [`${storeName}`]: sectionPackArr } },
+      options: {
+        new: true,
+        lean: true,
+        useFindAndModify: false,
+        // runValidators: true,
+        strict: false,
+      },
+    });
+  }
+  async setOnlyValue<
+    CN extends DbStoreName,
+    SN extends DbSelfOrDescendantSn<CN>,
+    VN extends SectionVarbName<SN>
+  >({ value, ...rest }: OneDbSectionValueInfo<CN, SN, VN>) {
+    this.update({
+      operation: { $set: { [modelPath.firstSectionVarb(rest)]: value } },
+      doWhat: "set value",
       options: {
         new: true,
         lean: true,

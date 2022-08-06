@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import Stripe from "stripe";
-import { SectionValues } from "../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsUtils/valueMetaTypes";
+import { SectionValues } from "../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsDerived/valueMetaTypes";
 import { PackBuilderSection } from "../../client/src/App/sharedWithServer/StatePackers.ts/PackBuilderSection";
 import { queryParameters } from "../DbSectionsModel";
 import { getStripeEvent } from "../routeUtils/stripe";

@@ -6,7 +6,7 @@ import { SectionArrReqMaker } from "../../client/src/App/sharedWithServer/ReqMak
 import { runApp } from "../../runApp";
 import { DbSectionsModel } from "../DbSectionsModel";
 import { childToSectionName } from "./../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/ChildSectionName";
-import { createTestUserModel } from "./test/createTestUserModel";
+import { createTestDbUserAndLoadDepreciated } from "./test/testDbUser";
 
 const storeName = "singleTimeListMain";
 type StoreName = typeof storeName;
@@ -25,7 +25,7 @@ describe(testedRoute, () => {
 
   beforeEach(async () => {
     server = runApp();
-    const dbUser = await createTestUserModel(testedRoute);
+    const dbUser = await createTestDbUserAndLoadDepreciated(testedRoute);
     token = dbUser.createUserAuthToken();
     req = makeReq();
     userId = dbUser.userId;

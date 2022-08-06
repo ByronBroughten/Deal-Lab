@@ -140,6 +140,13 @@ export class GetterVarb<
       return cloneDeep(value) as ValueTypesPlusAny[VT];
     throw new ValueTypeError(`Value not of type ${valueName}`);
   }
+  valueNext() {
+    const value = this.value();
+    if (this.meta.isVarbValueType(value)) {
+      return value;
+    } else
+      throw new Error(`value ${value} is not of type ${this.meta.valueName}`);
+  }
   get valueName(): ValueName {
     return this.meta.valueName;
   }

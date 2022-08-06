@@ -2,10 +2,10 @@ import { cloneDeep, pick } from "lodash";
 import { sectionsMeta } from "../SectionsMeta";
 import { SimpleSectionName } from "./baseSections";
 import { VarbNames } from "./baseSectionsDerived/baseVarbInfo";
+import { valueMeta } from "./baseSectionsDerived/valueMeta";
+import { UpdateFnName } from "./baseSectionsDerived/valueMetaTypes";
 import { NumObjUnit } from "./baseSectionsUtils/baseValues/NumObj";
 import { ValueName } from "./baseSectionsUtils/baseVarb";
-import { valueMeta } from "./baseSectionsUtils/valueMeta";
-import { UpdateFnName } from "./baseSectionsUtils/valueMetaTypes";
 import {
   RelInVarbInfo,
   RelOutVarbInfo,

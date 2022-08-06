@@ -29,7 +29,7 @@ export class FeUserActor extends SectionActorBase<"feStore"> {
   get loginSetter() {
     return new LoginSetter(this.sectionActorBaseProps);
   }
-  private get guestAccessSectionPacks(): GuestAccessSectionPackArrs {
+  private get guestAccessSectionPacks(): GuestAccessSectionPackArrs {   
     const { sections } = this.get;
     const { getterSectionsProps } = sections;
     const feStore = sections.oneAndOnly("feStore");

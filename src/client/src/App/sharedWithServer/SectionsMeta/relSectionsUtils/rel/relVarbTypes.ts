@@ -1,10 +1,10 @@
-import { NumObjUnit } from "../../baseSectionsUtils/baseValues/NumObj";
-import { ValueName } from "../../baseSectionsUtils/baseVarb";
 import {
   UpdateFnName,
   ValueNamesToTypes,
   ValueSchemas,
-} from "../../baseSectionsUtils/valueMetaTypes";
+} from "../../baseSectionsDerived/valueMetaTypes";
+import { NumObjUnit } from "../../baseSectionsUtils/baseValues/NumObj";
+import { ValueName } from "../../baseSectionsUtils/baseVarb";
 import {
   RelInVarbInfo,
   RelSingleInVarbInfo,

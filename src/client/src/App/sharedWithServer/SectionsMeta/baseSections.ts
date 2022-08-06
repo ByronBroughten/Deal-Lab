@@ -4,7 +4,7 @@ import { Obj } from "../utils/Obj";
 import {
   baseSection,
   baseSectionS,
-  GeneralBaseSection,
+  GeneralBaseSection
 } from "./baseSectionsUtils/baseSection";
 import { baseVarbs, baseVarbsS } from "./baseSectionsUtils/baseVarbs";
 
@@ -189,9 +189,8 @@ export const baseSections = {
     authStatus: "string",
   }),
   authInfoPrivate: baseSection({
-    userId: "string",
+    authId: "string",
   }),
-
   userInfo: baseSection({
     ...baseVarbs("string", ["email", "userName"] as const),
     timeJoined: "number",
@@ -202,7 +201,7 @@ export const baseSections = {
 
   userInfoPrivate: baseSection({
     ...baseVarbs("string", ["encryptedPassword", "emailAsSubmitted"] as const),
-    guestAccessSectionsLoaded: "boolean",
+    guestSectionsAreLoaded: "boolean",
   }),
 } as const;
 

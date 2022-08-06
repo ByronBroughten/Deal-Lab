@@ -54,7 +54,7 @@ export function makeRelSections() {
       }),
     }),
     authInfoPrivate: relSection("Auth info private", {
-      userId: relVarb("string"),
+      authId: relVarb("string"),
     }),
     subscriptionInfo: relSection("Subscription info", {
       plan: relVarb("string", {
@@ -63,13 +63,10 @@ export function makeRelSections() {
       }),
       planExp: relVarb("number", { initValue: 0 }),
     }),
-    userInfoPrivate: relSection(
-      "userInfoPrivate",
-      {
-        ...relVarbsS.strings(["encryptedPassword", "emailAsSubmitted"] as const),
-        guestAccessSectionsLoaded: relVarb("boolean", { initValue: false })
-      }
-    ),
+    userInfoPrivate: relSection("userInfoPrivate", {
+      ...relVarbsS.strings(["encryptedPassword", "emailAsSubmitted"] as const),
+      guestSectionsAreLoaded: relVarb("boolean", { initValue: false }),
+    }),
     stripeInfoPrivate: relSection("Stripe info", {
       customerId: relVarb("string"),
     }),

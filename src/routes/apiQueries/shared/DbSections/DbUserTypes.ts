@@ -23,8 +23,8 @@ export const dbUserFilters = {
   authId(authId: string) {
     const path = modelPath.firstSectionVarb({
       storeName: "authInfoPrivate",
-      sectionName: "authInfoPrivate" as "authInfoPrivate",
-      varbName: "userId",
+      sectionName: "authInfoPrivate",
+      varbName: "authId",
     });
     return { [path]: authId };
   },

@@ -7,8 +7,8 @@ import { Arr } from "../../client/src/App/sharedWithServer/utils/Arr";
 import { runApp } from "../../runApp";
 import { DbSectionsModel } from "../DbSectionsModel";
 import { getUserByIdNoRes } from "./shared/getUserDbSectionsById";
-import { createTestUserModel } from "./test/createTestUserModel";
 import { SectionQueryTester } from "./test/SectionQueryTester";
+import { createTestDbUserAndLoadDepreciated } from "./test/testDbUser";
 
 function makeAddSectionReq(): QueryReq<"addSection"> {
   const sectionName = "property";
@@ -25,7 +25,7 @@ describe(testedRoute, () => {
 
   beforeEach(async () => {
     server = runApp();
-    const dbUser = await createTestUserModel(testedRoute);
+    const dbUser = await createTestDbUserAndLoadDepreciated(testedRoute);
     token = dbUser.createUserAuthToken();
     req = makeAddSectionReq();
     userId = dbUser.userId;

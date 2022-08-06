@@ -2,7 +2,7 @@ import React, { ReactNode } from "react";
 import { IoEllipsisVertical } from "react-icons/io5";
 import styled, { css } from "styled-components";
 import useToggleView from "../../../../modules/customHooks/useToggleView";
-import { SectionValues } from "../../../../sharedWithServer/SectionsMeta/baseSectionsUtils/valueMetaTypes";
+import { SectionValues } from "../../../../sharedWithServer/SectionsMeta/baseSectionsDerived/valueMetaTypes";
 import { ChildName } from "../../../../sharedWithServer/SectionsMeta/childSectionsDerived/ChildName";
 import { DbVarbs } from "../../../../sharedWithServer/SectionsMeta/childSectionsDerived/SectionPack/RawSection";
 import { FeSectionInfo } from "../../../../sharedWithServer/SectionsMeta/Info";

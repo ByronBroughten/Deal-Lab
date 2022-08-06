@@ -4,7 +4,7 @@ import {
   DbIdInfo,
   ExpectedCount,
   FeIdInfo,
-  GeneralInfo,
+  GeneralInfo
 } from "../baseSectionsUtils/NanoIdInfo";
 import { SectionNameProp } from "./baseSectionInfo";
 import { SectionVarbName } from "./baseSectionTypes";
@@ -52,9 +52,16 @@ export function isVarbName(value: any): value is string {
   return typeof value === "string";
 }
 
-export type VarbPropNext<SN extends SimpleSectionName> = {
-  varbName: SectionVarbName<SN>;
+export type VarbPropNext<
+  SN extends SimpleSectionName,
+  VN extends SectionVarbName<SN>=SectionVarbName<SN>
+> = {
+  varbName: VN;
 };
+export interface VarbNamesNext<
+  SN extends SimpleSectionName,
+  VN extends SectionVarbName<SN>=SectionVarbName<SN>
+> extends SectionNameProp<SN>, VarbPropNext<SN, VN> {}
 
 export interface VarbNames<SN extends SimpleSectionName = SimpleSectionName>
   extends SectionNameProp<SN>,

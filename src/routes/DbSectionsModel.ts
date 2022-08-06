@@ -1,8 +1,10 @@
 import mongoose, { Schema } from "mongoose";
 import { SectionVarbName } from "../client/src/App/sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionTypes";
-import { VarbValue } from "../client/src/App/sharedWithServer/SectionsMeta/baseSectionsUtils/valueMetaTypes";
 import { DbSectionPack } from "../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbSectionPack";
-import { OneDbSectionVarbInfo } from "../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreInfo";
+import {
+  OneDbSectionValueInfo,
+  OneDbSectionVarbInfo,
+} from "../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreInfo";
 import {
   DbSelfOrDescendantSn,
   DbStoreName,
@@ -80,15 +82,6 @@ export const modelPath = {
   },
 };
 
-interface UpdateVarbProps<
-  CN extends DbStoreName,
-  SN extends DbSelfOrDescendantSn<CN>,
-  VN extends SectionVarbName<SN>
-> extends OneDbSectionVarbInfo<CN, SN> {
-  varbName: VN;
-  value: VarbValue<SN, VN>;
-}
-
 export const queryParameters = {
   updateVarb: <
     CN extends DbStoreName,
@@ -97,7 +90,7 @@ export const queryParameters = {
   >({
     value,
     ...props
-  }: UpdateVarbProps<CN, SN, VN>) => {
+  }: OneDbSectionValueInfo<CN, SN, VN>) => {
     const path = modelPath.firstSectionVarb(props);
     return {
       operation: {

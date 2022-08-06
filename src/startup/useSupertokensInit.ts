@@ -41,8 +41,8 @@ export function useSupertokensInit() {
                   const userName =
                     nameField && nameField.value ? nameField.value : "User";
 
-                  userPrepS.initUserInDb({
-                    userId: id,
+                  await userPrepS.initUserInDb({
+                    authId: id,
                     email,
                     timeJoined,
                     userName,

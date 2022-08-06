@@ -9,8 +9,8 @@ import {
   QueryRes,
 } from "../sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import {
+  isLoginData,
   isLoginHeaders,
-  isLoginUserNext,
 } from "../sharedWithServer/apiQueriesShared/login";
 import { makeRes } from "../sharedWithServer/apiQueriesShared/makeReqAndRes";
 import { Obj } from "../sharedWithServer/utils/Obj";
@@ -36,7 +36,7 @@ function makeApiQueries(): ApiQueries {
       // the createReq function
       // And I already have that
       validateRes(res: AxiosResponse<unknown>): QueryRes<"register"> {
-        if (res && isLoginUserNext(res.data) && isLoginHeaders(res.headers)) {
+        if (res && isLoginData(res.data) && isLoginHeaders(res.headers)) {
           return {
             data: res.data,
             headers: res.headers,
@@ -47,7 +47,7 @@ function makeApiQueries(): ApiQueries {
     login: {
       doingWhat: "logging in",
       validateRes(res: AxiosResponse<unknown>): QueryRes<"login"> {
-        if (res && isLoginUserNext(res.data) && isLoginHeaders(res.headers)) {
+        if (res && isLoginData(res.data) && isLoginHeaders(res.headers)) {
           return {
             data: res.data,
             headers: res.headers,
@@ -58,7 +58,7 @@ function makeApiQueries(): ApiQueries {
     getUserData: {
       doingWhat: "retrieving user data",
       validateRes(res: AxiosResponse<unknown>): QueryRes<"login"> {
-        if (res && isLoginUserNext(res.data) && isLoginHeaders(res.headers)) {
+        if (res && isLoginData(res.data) && isLoginHeaders(res.headers)) {
           return {
             data: res.data,
             headers: res.headers,

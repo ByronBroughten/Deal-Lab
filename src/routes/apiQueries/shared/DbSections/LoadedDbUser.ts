@@ -2,10 +2,10 @@ import bcrypt from "bcrypt";
 import { Response } from "express";
 import mongoose from "mongoose";
 import { constants } from "../../../../client/src/App/Constants";
-import { LoginUser } from "../../../../client/src/App/sharedWithServer/apiQueriesShared/login";
+import { LoginData } from "../../../../client/src/App/sharedWithServer/apiQueriesShared/login";
 import { RegisterReqBody } from "../../../../client/src/App/sharedWithServer/apiQueriesShared/register";
 import { defaultMaker } from "../../../../client/src/App/sharedWithServer/defaultMaker/defaultMaker";
-import { SectionValues } from "../../../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsUtils/valueMetaTypes";
+import { SectionValues } from "../../../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsDerived/valueMetaTypes";
 import { dbStoreNameS } from "../../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreName";
 import {
   isFeStoreTableName,
@@ -30,7 +30,7 @@ import {
   createUserAuthToken,
   SubscriptionProps,
 } from "./LoadedDbUser/userAuthToken";
-import { SignUpData, userPrepS } from "./LoadedDbUser/userPrepS";
+import { userPrepS } from "./LoadedDbUser/userPrepS";
 
 interface DbUserProps extends GetterSectionProps<"dbStore"> {
   dbSections: DbSections;
@@ -51,14 +51,29 @@ export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
       throw new Error(`userId "${userId}" is not valid.`);
     return userId.toHexString();
   }
-  static async initializeUser(props: SignUpData) {
-    const userPackArrs = userPrepS.initUserSectionPackArrs(props);
+  get authId(): string {
+    const authInfo = this.get.onlyChild("authInfoPrivate");
+    return authInfo.value("authId", "string");
+  }
+  get customerId(): string {
+    const stripeInfoPrivate = this.get.onlyChild("stripeInfoPrivate");
+    return stripeInfoPrivate.value("customerId", "string");
+  }
+  get email(): string {
+    return this.userInfo.value("email", "string");
+  }
+  static async createSaveGet(props: CreateUserProps): Promise<LoadedDbUser> {
+    const userId = await this.createAndSaveNew(props);
+    return LoadedDbUser.getBy("userId", userId);
   }
   static async createAndSaveNew({
     registerFormData,
     guestAccessSections,
     _id,
   }: CreateUserProps): Promise<string> {
+    // I'm going to delete this after I make something that
+    // tests getUserData
+
     const userPackArrs = await userPrepS.initUserSectionPacks(registerFormData);
     const dbSectionsRaw = userPrepS.makeDbSectionsRaw({
       ...userPackArrs,
@@ -68,10 +83,7 @@ export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
     await dbSectionsRaw.save();
     return dbSectionsRaw._id.toHexString();
   }
-  static async createSaveGet(props: CreateUserProps): Promise<LoadedDbUser> {
-    const userId = await this.createAndSaveNew(props);
-    return LoadedDbUser.getBy("userId", userId);
-  }
+
   static async getBy(specifierType: DbUserSpecifierType, specifier: string) {
     const dbUser = await DbUser.initBy(specifierType, specifier);
     return dbUser.loadedDbUser();
@@ -85,13 +97,6 @@ export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
   }
   get userInfo(): GetterSection<"userInfo"> {
     return this.get.onlyChild("userInfo");
-  }
-  get email(): string {
-    return this.userInfo.value("email", "string");
-  }
-  get customerId(): string {
-    const stripeInfoPrivate = this.get.onlyChild("stripeInfoPrivate");
-    return stripeInfoPrivate.value("customerId", "string");
   }
   get subscriptionProps(): SubscriptionProps {
     if (isProEmail(this.email)) {
@@ -153,7 +158,7 @@ export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
       });
     }
   }
-  makeLoginUser(): LoginUser {
+  makeLoginUser(): LoginData {
     const feStore = PackBuilderSection.initAsOmniChild("feStore");
     feStore.loadSelf(defaultMaker.makeSectionPack("feStore"));
     for (const feStoreChildName of feStore.get.childNames) {

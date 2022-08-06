@@ -3,6 +3,12 @@ import {
   DbSectionInfoMixed,
   FeSectionInfoMixed,
 } from "../SectionsMeta/baseSectionsDerived/baseVarbInfo";
+import {
+  SectionValues,
+  SectionValuesReq,
+  SectionValuesRes,
+  VarbValue,
+} from "../SectionsMeta/baseSectionsDerived/valueMetaTypes";
 import { SwitchTargetKey } from "../SectionsMeta/baseSectionsUtils/baseSwitchNames";
 import { InEntityInfo } from "../SectionsMeta/baseSectionsUtils/baseValues/InEntityInfoValue";
 import { ValueName } from "../SectionsMeta/baseSectionsUtils/baseVarb";
@@ -13,11 +19,6 @@ import {
   switchNames,
 } from "../SectionsMeta/baseSectionsUtils/RelSwitchVarb";
 import { ValueTypesPlusAny } from "../SectionsMeta/baseSectionsUtils/StateVarbTypes";
-import {
-  SectionValues,
-  SectionValuesReq,
-  SectionValuesRes,
-} from "../SectionsMeta/baseSectionsUtils/valueMetaTypes";
 import {
   ChildIdArrsWide,
   ChildName,
@@ -440,6 +441,9 @@ export class GetterSection<
     valueType?: VT
   ): ValueTypesPlusAny[VT] {
     return this.varb(varbName).value(valueType);
+  }
+  valueNext<VN extends SectionVarbName<SN>>(varbName: VN): VarbValue<SN, VN> {
+    return this.varb(varbName as string).valueNext() as VarbValue<SN, VN>;
   }
   get selfAndDescendantVarbIds(): string[] {
     return GetterVarb.varbInfosToVarbIds(this.selfAndDescendantVarbInfos);

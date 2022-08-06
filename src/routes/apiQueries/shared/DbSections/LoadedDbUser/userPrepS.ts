@@ -13,7 +13,7 @@ import {
   InitialUserSectionPackArrs,
   MakeDbUserProps,
   PreppedEmails,
-  UserSectionPackArrs,
+  UserSectionPackArrs
 } from "./userPrepSTypes";
 
 export const userPrepS = {
@@ -101,7 +101,7 @@ export const userPrepS = {
     };
   },
   initUserSectionPackArrs({
-    userId,
+    authId,
     email,
     userName,
     timeJoined,
@@ -118,12 +118,12 @@ export const userPrepS = {
       ],
       userInfoPrivate: [
         PackBuilderSection.initSectionPack("userInfoPrivate", {
-          dbVarbs: { guestAccessSectionsLoaded: false },
+          dbVarbs: { guestSectionsAreLoaded: false },
         }),
       ],
       authInfoPrivate: [
         PackBuilderSection.initSectionPack("authInfoPrivate", {
-          dbVarbs: { userId },
+          dbVarbs: { authId },
         }),
       ],
       stripeInfoPrivate: [
@@ -144,7 +144,7 @@ export const userPrepS = {
 };
 
 export type SignUpData = {
-  userId: string;
+  authId: string;
   email: string;
   userName: string;
   timeJoined: number;

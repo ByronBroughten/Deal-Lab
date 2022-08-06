@@ -1,20 +1,21 @@
 import { SectionVarbName } from "../baseSectionsDerived/baseSectionTypes";
-import { VarbValue } from "../baseSectionsUtils/valueMetaTypes";
+import { VarbValue } from "../baseSectionsDerived/valueMetaTypes";
 import { DbSelfOrDescendantSn, DbStoreName } from "./DbStoreName";
 
 export type OneDbSectionVarbInfo<
   CN extends DbStoreName,
-  SN extends DbSelfOrDescendantSn<CN>
+  SN extends DbSelfOrDescendantSn<CN>,
+  VN extends SectionVarbName<SN> = SectionVarbName<SN>
 > = {
   storeName: CN;
   sectionName: SN;
-  varbName: SectionVarbName<SN>;
+  varbName: VN;
 };
 
-export interface UpdateVarbProps<
-  CN extends DbStoreName,
-  SN extends DbSelfOrDescendantSn<CN>,
-  VN extends SectionVarbName<SN>
+export interface OneDbSectionValueInfo<
+  CN extends DbStoreName=DbStoreName,
+  SN extends DbSelfOrDescendantSn<CN>=DbSelfOrDescendantSn<CN>,
+  VN extends SectionVarbName<SN>=SectionVarbName<SN>
 > extends OneDbSectionVarbInfo<CN, SN> {
   varbName: VN;
   value: VarbValue<SN, VN>;

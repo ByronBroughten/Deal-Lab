@@ -14,15 +14,15 @@ export type LoginQueryObjects = {
     body: LoginFormData;
   };
   res: {
-    data: LoginUser;
+    data: LoginData;
     headers: AuthHeadersProp;
   };
 };
 
-export type LoginUser = {
+export type LoginData = {
   [SN in SectionName<"loadOnLogin">]: SectionPack<SN>[];
 };
-export function isLoginUserNext(value: any): value is LoginUser {
+export function isLoginData(value: any): value is LoginData {
   const zLoginUserSchema = makeZLoginUserSchema();
   zLoginUserSchema.parse(value);
   return true;
@@ -33,7 +33,7 @@ function makeZLoginUserSchema() {
     sectionNameS.arrs.loadOnLogin.reduce((partial, sectionName) => {
       partial[sectionName] = zS.array(zRawSectionPack);
       return partial;
-    }, {} as Record<keyof LoginUser, any>) as Record<keyof LoginUser, any>
+    }, {} as Record<keyof LoginData, any>) as Record<keyof LoginData, any>
   );
 }
 

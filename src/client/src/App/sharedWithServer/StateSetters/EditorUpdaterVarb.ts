@@ -10,6 +10,7 @@ import {
   numObjToRawContent,
 } from "../../modules/draftjs/draftUtils";
 import { EntityMap, EntityRanges, RawEditorState } from "../../utils/DraftS";
+import { ValueNamesToTypes } from "../SectionsMeta/baseSectionsDerived/valueMetaTypes";
 import { InEntities } from "../SectionsMeta/baseSectionsUtils/baseValues/entities";
 import {
   EntitiesAndEditorText,
@@ -18,7 +19,6 @@ import {
 import { isEditorUpdateFnName } from "../SectionsMeta/baseSectionsUtils/baseValues/StateValueTypes";
 import { StringObj } from "../SectionsMeta/baseSectionsUtils/baseValues/StringObj";
 import { ValueName } from "../SectionsMeta/baseSectionsUtils/baseVarb";
-import { ValueNamesToTypes } from "../SectionsMeta/baseSectionsUtils/valueMetaTypes";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { GetterVarbBase } from "../StateGetters/Bases/GetterVarbBase";
 import { GetterVarb } from "../StateGetters/GetterVarb";

@@ -1,6 +1,6 @@
+import { valueMeta } from "../baseSectionsDerived/valueMeta";
+import { ValueNamesToTypes } from "../baseSectionsDerived/valueMetaTypes";
 import { StateValue } from "./baseValues/StateValueTypes";
-import { valueMeta } from "./valueMeta";
-import { ValueNamesToTypes } from "./valueMetaTypes";
 
 export type Adornments = {
   startAdornment: string;

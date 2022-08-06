@@ -4,7 +4,7 @@ import { QueryReq } from "../../client/src/App/sharedWithServer/apiQueriesShared
 import { makeReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/makeReqAndRes";
 import {
   areGuestAccessSections,
-  isRegisterFormData,
+  isRegisterFormData
 } from "../../client/src/App/sharedWithServer/apiQueriesShared/register";
 import { makeMongooseObjectId } from "../../client/src/App/sharedWithServer/utils/mongoose";
 import { handleResAndMakeError } from "../../resErrorUtils";

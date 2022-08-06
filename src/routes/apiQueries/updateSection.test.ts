@@ -8,8 +8,8 @@ import { Id } from "../../client/src/App/sharedWithServer/SectionsMeta/baseSecti
 import { runApp } from "../../runApp";
 import { DbSectionsModel } from "../DbSectionsModel";
 import { getUserByIdNoRes } from "./shared/getUserDbSectionsById";
-import { createTestUserModel } from "./test/createTestUserModel";
 import { SectionQueryTester } from "./test/SectionQueryTester";
+import { createTestDbUserAndLoadDepreciated } from "./test/testDbUser";
 
 const sectionName = "property";
 const originalValues = {
@@ -50,7 +50,7 @@ describe(testedRoute, () => {
   beforeEach(async () => {
     reqs = makeReqs();
     server = runApp();
-    const dbUser = await createTestUserModel(testedRoute);
+    const dbUser = await createTestDbUserAndLoadDepreciated(testedRoute);
     token = dbUser.createUserAuthToken();
     userId = dbUser.userId;
   });
