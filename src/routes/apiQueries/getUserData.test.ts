@@ -1,3 +1,4 @@
+import httpMocks from "node-mocks-http";
 import request from "supertest";
 import { createNewSession } from "supertokens-node/recipe/session";
 import { constants } from "../../client/src/App/Constants";
@@ -13,7 +14,7 @@ import { runApp } from "../../runApp";
 import { LoadedDbUser } from "./shared/DbSections/LoadedDbUser";
 import {
   createTestDbUserAndLoad,
-  deleteDbUser,
+  deleteUserTotally,
   getStandardRes,
 } from "./test/testDbUser";
 
@@ -30,26 +31,29 @@ describe(testedRoute, () => {
   let server: ReturnType<typeof runApp>;
   let dbUser: LoadedDbUser;
   let reqObj: QueryReq<"getUserData">;
-  let accessToken: string;
 
   beforeEach(async () => {
     server = runApp();
     dbUser = await createTestDbUserAndLoad(testedRoute);
     reqObj = makeGetUserDataReqObj();
-    const session = await createNewSession({}, dbUser.authId);
-    accessToken = session.getAccessToken();
   });
 
+  // Ok. It seems that I must create a route that makes the tokens.
+
   const exec = async () => {
+    const authRes = httpMocks.createResponse({ writableStream: true });
+    await createNewSession(authRes, dbUser.authId);
+    const { cookies } = authRes;
+
     const res = await request(server)
       .post(testedRoute)
-      // .set("Cookie", [`sAccessToken=${accessToken}`])
+      .set("authId", dbUser.authId)
       .send(reqObj.body);
     return getStandardRes(res);
   };
 
   afterEach(async () => {
-    deleteDbUser(dbUser);
+    deleteUserTotally(dbUser);
     server.close();
   });
 

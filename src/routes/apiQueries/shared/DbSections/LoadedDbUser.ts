@@ -126,7 +126,7 @@ export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
         currentPeriodEnd > now &&
         currentPeriodEnd > subscriptionProps.planExp
       ) {
-        const actives = Arr.findAll(constants.subscriptions, (subConfig) => {
+        const actives = Arr.findAll(constants.stripePrices, (subConfig) => {
           return priceIds.includes(subConfig.priceId);
         });
         const activePro = actives.find((active) => {

@@ -1,19 +1,44 @@
-const dev = {
-  environment: "development",
-  appName: "Ultimate Deal Analyzer — Development",
-  apiUrlBase: "http://localhost:5000",
-  clientUrlBase: "http://localhost:3000",
-};
-// do I need the front-end endpoint?
-
-const prod = {
-  environment: "production",
-  appName: "Ultimate Deal Analyzer",
-  apiUrlBase: "https://www.dealanalyzer.app",
-  clientUrlBase: "https://www.dealanalyzer.app",
+type StripePrice = {
+  priceId: string;
+  costInCents: 1000;
+  billed: "monthly" | "yearly";
+  product: "proPlan";
 };
 
-const env = process.env.NODE_ENV === "development" ? dev : prod;
+const envConstants = {
+  development: {
+    environment: "development",
+    appName: "Ultimate Deal Analyzer — Development",
+    apiUrlBase: "http://localhost:5000",
+    clientUrlBase: "http://localhost:3000",
+    stripePrices: [
+      {
+        priceId: "price_1LTuD1BcSOBChcCBWNRJdonV",
+        costInCents: 1000,
+        billed: "monthly",
+        product: "proPlan",
+      } as StripePrice,
+    ],
+  },
+  production: {
+    environment: "production",
+    appName: "Ultimate Deal Analyzer",
+    apiUrlBase: "https://www.dealanalyzer.app",
+    clientUrlBase: "https://www.dealanalyzer.app",
+    stripePrices: [
+      {
+        priceId: "price_1LTuDKBcSOBChcCBqPTRlPCI",
+        costInCents: 1000,
+        billed: "monthly",
+        product: "proPlan",
+      } as StripePrice,
+    ],
+  },
+} as const;
+
+const envName =
+  process.env.NODE_ENV === "development" ? "development" : "production";
+const env = envConstants[envName];
 const apiPathBit = "/api";
 const apiPathFull = `${env.apiUrlBase}${apiPathBit}`;
 
@@ -45,15 +70,9 @@ export const config = {
       return `${env.clientUrlBase}${this.successUrlEnd}`;
     },
   },
-  subscriptionSuccessUrlEnd: "/stripe-subscription-success",
-  subscriptions: [
-    {
-      priceId: "price_1LOqZQBcSOBChcCBoh0Taacn",
-      costInCents: 1000,
-      billed: "monthly",
-      product: "proPlan",
-    },
-  ],
+  // Ok. For Stripe, I need test and production.
+
+  subscriptionSuccessUrlEnd: "/subscription-success",
   basicStorageLimit: 2,
   // before this will work...
   // I must create a user in the db on register.

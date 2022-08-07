@@ -29,13 +29,7 @@ export async function createTestDbUserAndLoad(
   testSuiteName: string
 ): Promise<LoadedDbUser> {
   const email = `${testSuiteName}/test@gmail.com`;
-  const users = await getUsersByEmail(email);
-
-  if (users.length > 0) {
-    for (const user of users) {
-      await deleteUser(user.id);
-    }
-  }
+  ensureFreshUserStart(email);
 
   const res = await emailPasswordSignUp(email, "TestP@ssword1");
   if (res.status === "OK") {
@@ -52,9 +46,22 @@ export async function createTestDbUserAndLoad(
   }
 }
 
-export async function deleteDbUser(dbUser: LoadedDbUser): Promise<void> {
-  await revokeAllSessionsForUser(dbUser.authId);
-  await deleteUser(dbUser.userId);
+async function ensureFreshUserStart(email: string) {
+  const users = await getUsersByEmail(email);
+  if (users.length > 0) {
+    for (const user of users) {
+      await eraseUserAuth(user.id);
+    }
+  }
+}
+
+async function eraseUserAuth(authId: string) {
+  await revokeAllSessionsForUser(authId);
+  await deleteUser(authId);
+}
+
+export async function deleteUserTotally(dbUser: LoadedDbUser): Promise<void> {
+  await eraseUserAuth(dbUser.authId);
   await DbSectionsModel.deleteOne({ _id: dbUser.userId });
 }
 

@@ -26,7 +26,11 @@ export function useRoutes(app: express.Application) {
       exposedHeaders: [constants.tokenKey.apiUserAuth],
     })
   );
-  app.use(middleware());
+
+  if (process.env.NODE_ENV !== "test") {
+    app.use(middleware());
+  }
+
   app.use(constants.apiPathBit, apiQueriesServer);
   app.use(errorHandler());
 }
