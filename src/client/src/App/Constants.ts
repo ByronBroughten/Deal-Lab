@@ -70,15 +70,8 @@ export const config = {
       return `${env.clientUrlBase}${this.successUrlEnd}`;
     },
   },
-  // Ok. For Stripe, I need test and production.
-
   subscriptionSuccessUrlEnd: "/subscription-success",
   basicStorageLimit: 2,
-  // before this will work...
-  // I must create a user in the db on register.
-
-  // actually, I can do that.
-
   apiQueryNames: [
     "register",
     "login",
@@ -89,6 +82,7 @@ export const config = {
     "replaceSectionArr",
     "getProPaymentLink",
     "getUserData",
+    "makeSession",
     // sends feGuestAccess sections and gets user data from the db
   ],
   get superTokensAppInfo() {

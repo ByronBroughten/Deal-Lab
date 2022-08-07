@@ -8,6 +8,7 @@ import { upgradeUserToProWare } from "./apiQueries/getProPaymentLink";
 import { getSectionWare } from "./apiQueries/getSection";
 import { getUserDataWare } from "./apiQueries/getUserData";
 import { loginWare } from "./apiQueries/login";
+import { makeSessionWare } from "./apiQueries/makeSession";
 import { nextRegisterWare } from "./apiQueries/register";
 import { replaceSectionArrWare } from "./apiQueries/replaceSectionArr";
 import { stripeWebhookWare } from "./apiQueries/stripeWebhooks";
@@ -22,7 +23,8 @@ const endpointWare: Record<ApiQueryName, any> = {
   deleteSection: deleteSectionWare,
   replaceSectionArr: replaceSectionArrWare,
   getProPaymentLink: upgradeUserToProWare,
-  getUserData: getUserDataWare
+  getUserData: getUserDataWare,
+  makeSession: makeSessionWare,
 } as const;
 
 const apiQueriesServer = express.Router();

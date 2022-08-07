@@ -22,6 +22,7 @@ export type LoginQueryObjects = {
 export type LoginData = {
   [SN in SectionName<"loadOnLogin">]: SectionPack<SN>[];
 };
+
 export function isLoginData(value: any): value is LoginData {
   const zLoginUserSchema = makeZLoginUserSchema();
   zLoginUserSchema.parse(value);

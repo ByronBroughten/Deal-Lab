@@ -55,6 +55,12 @@ function makeApiQueries(): ApiQueries {
         } else throw makeResValidationQueryError();
       },
     },
+    makeSession: {
+      doingWhat: "making a session",
+      validateRes(res: AxiosResponse<unknown>): QueryRes<"makeSession"> {
+        throw new Error("makeSession.validateRes is not yet properly set up");
+      },
+    },
     getUserData: {
       doingWhat: "retrieving user data",
       validateRes(res: AxiosResponse<unknown>): QueryRes<"login"> {

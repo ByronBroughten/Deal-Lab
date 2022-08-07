@@ -24,7 +24,7 @@ export function getAuthWare() {
   const envName = process.env.NODE_ENV;
   const verifySessionWare =
     envName === "test" ? bypassVerifySessionForTest : verifySession();
-  return [verifySessionWare, standardizeAuthWare];
+  return [verifySession(), standardizeAuthWare];
 }
 
 function standardizeAuthWare(

@@ -1,3 +1,4 @@
+import { Server } from "http";
 import request from "supertest";
 import { deleteUser } from "supertokens-node";
 import { revokeAllSessionsForUser } from "supertokens-node/recipe/session";
@@ -5,6 +6,7 @@ import {
   emailPasswordSignUp,
   getUsersByEmail,
 } from "supertokens-node/recipe/thirdpartyemailpassword";
+import { apiQueriesShared } from "../../../client/src/App/sharedWithServer/apiQueriesShared";
 import { Id } from "../../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsUtils/id";
 import { getStandardNow } from "../../../client/src/App/sharedWithServer/utils/date";
 import { DbSectionsModel } from "../../DbSectionsModel";
@@ -25,7 +27,7 @@ export async function createTestDbUserAndLoadDepreciated(
 }
 
 // tokens = { cookies: { sAccessToken, sIdRefreshToken }, headers: { anti-csrf }}
-export async function createTestDbUserAndLoad(
+export async function createAndGetDbUser(
   testSuiteName: string
 ): Promise<LoadedDbUser> {
   const email = `${testSuiteName}/test@gmail.com`;
@@ -46,6 +48,17 @@ export async function createTestDbUserAndLoad(
   }
 }
 
+type CreateTestSessionProps = { server: Server; authId: string };
+export async function makeSessionGetCookies({
+  server,
+  authId,
+}: CreateTestSessionProps): Promise<string[]> {
+  const cookieRes = await request(server)
+    .post(apiQueriesShared.makeSession.pathRoute)
+    .send({ authId });
+  return cookieRes.get("Set-Cookie");
+}
+
 async function ensureFreshUserStart(email: string) {
   const users = await getUsersByEmail(email);
   if (users.length > 0) {
@@ -55,14 +68,14 @@ async function ensureFreshUserStart(email: string) {
   }
 }
 
-async function eraseUserAuth(authId: string) {
-  await revokeAllSessionsForUser(authId);
-  await deleteUser(authId);
-}
-
 export async function deleteUserTotally(dbUser: LoadedDbUser): Promise<void> {
   await eraseUserAuth(dbUser.authId);
   await DbSectionsModel.deleteOne({ _id: dbUser.userId });
+}
+
+async function eraseUserAuth(authId: string) {
+  await revokeAllSessionsForUser(authId);
+  await deleteUser(authId);
 }
 
 export function getStandardRes(res: request.Response) {
@@ -70,5 +83,5 @@ export function getStandardRes(res: request.Response) {
     status: res.status,
     headers: res.headers,
     data: JSON.parse(res.text),
-  };
+  } as const;
 }

@@ -8,18 +8,6 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-// <!-- Google tag (gtag.js) -->
-// <script async src="https://www.googletagmanager.com/gtag/js?id=G-ML8PCKW24K"></script>
-// <script>
-//   window.dataLayer = window.dataLayer || [];
-//   function gtag(){dataLayer.push(arguments);}
-//   gtag('js', new Date());
-
-//   gtag('config', 'G-ML8PCKW24K');
-// </script>
-
-// - Add basic Google Analytics
-
 // - Use the same code for creating a user throughout everything
 // - Test getUserData
 
@@ -44,7 +32,6 @@ AppRegistry.runApplication("App", {
 // - Write a test to verify that the calculations work as expected
 // - Think about what to do about the little "Show Details" bugs
 
-// - Upload to Heroku
 // - Make a video demo/ad
 
 reportWebVitals();
