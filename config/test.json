@@ -2,7 +2,5 @@
   "name": "Property Analyzer Client — Test",
   "jwtPrivateKey": "1234",
   "endpoint": "mongodb://localhost/property-analyzer-test",
-  "supertokensCoreConnectionUri": "https://10c84041108411ed883e01b05b97929c-us-east-1.aws.supertokens.io:3573",
-  "supertokensCoreApiKey": "9Fb5Qj2YNNoAbIAHDlvVRyg4IVoZU0",
   "port": 0
 }

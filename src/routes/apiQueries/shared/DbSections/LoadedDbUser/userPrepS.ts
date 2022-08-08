@@ -13,7 +13,7 @@ import {
   InitialUserSectionPackArrs,
   MakeDbUserProps,
   PreppedEmails,
-  UserSectionPackArrs
+  UserSectionPackArrs,
 } from "./userPrepSTypes";
 
 export const userPrepS = {
@@ -73,7 +73,6 @@ export const userPrepS = {
       ],
     };
   },
-
   makeDbSectionsRaw({
     _id = makeMongooseObjectId(),
     ...sections
