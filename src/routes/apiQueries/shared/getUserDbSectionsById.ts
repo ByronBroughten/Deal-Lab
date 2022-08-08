@@ -1,5 +1,5 @@
 import { Response } from "express";
-import { handleResAndMakeError } from "../../../resErrorUtils";
+import { handleResAndMakeError } from "../../../utils/resError";
 import { DbSectionsModel } from "../../DbSectionsModel";
 
 const options = {

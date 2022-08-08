@@ -36,7 +36,7 @@ const envConstants = {
   },
 } as const;
 
-const envName = ["development", "test"].includes(process.env.NODE_ENV)
+const envName = ["development", "test"].includes(process.env.NODE_ENV as string)
   ? "development"
   : "production";
 const env = envConstants[envName];

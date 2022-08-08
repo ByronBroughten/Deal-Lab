@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { constants } from "../../client/src/App/Constants";
 import { QueryReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import { getAuthWare } from "../../middleware/authWare";
-import { ResStatusError } from "../../resErrorUtils";
+import { ResStatusError } from "../../utils/resError";
 import { getStripe } from "../routeUtils/stripe";
 import { LoadedDbUser } from "./shared/DbSections/LoadedDbUser";
 import { Authed, validateAuthObj } from "./shared/ReqAugmenters";

@@ -1,6 +1,6 @@
 import { Response } from "express";
-import { StrictOmit } from "./client/src/App/sharedWithServer/utils/types";
-import { getErrorMessage } from "./client/src/App/utils/error";
+import { StrictOmit } from "../client/src/App/sharedWithServer/utils/types";
+import { getErrorMessage } from "../client/src/App/utils/error";
 
 export class ResHandledError extends Error {}
 

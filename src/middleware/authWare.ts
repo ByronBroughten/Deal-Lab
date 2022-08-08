@@ -2,13 +2,13 @@ import { NextFunction, Request, Response } from "express";
 import { SessionRequest } from "supertokens-node/framework/express";
 import { verifySession } from "supertokens-node/recipe/session/framework/express";
 import { constants } from "../client/src/App/Constants";
-import { ResStatusError } from "../resErrorUtils";
 import { LoadedDbUser } from "../routes/apiQueries/shared/DbSections/LoadedDbUser";
 import { createDbAccessToken } from "../routes/apiQueries/shared/DbSections/LoadedDbUser/userAuthToken";
 import {
   LoggedIn,
   LoggedInReq,
 } from "../routes/apiQueries/shared/ReqAugmenters";
+import { ResStatusError } from "../utils/resError";
 import { getStandardNow } from "./../client/src/App/sharedWithServer/utils/date";
 
 export function checkDbAccessWare(

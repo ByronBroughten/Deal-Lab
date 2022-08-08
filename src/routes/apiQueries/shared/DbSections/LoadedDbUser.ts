@@ -20,7 +20,7 @@ import { PackBuilderSection } from "../../../../client/src/App/sharedWithServer/
 import { Arr } from "../../../../client/src/App/sharedWithServer/utils/Arr";
 import { getStandardNow } from "../../../../client/src/App/sharedWithServer/utils/date";
 import { stripeS } from "../../../../client/src/App/sharedWithServer/utils/stripe";
-import { HandledResStatusError } from "../../../../resErrorUtils";
+import { HandledResStatusError } from "../../../../utils/resError";
 import { isProEmail } from "../../../routeUtils/proList";
 import { DbSections } from "./DbSections";
 import { DbUser } from "./DbUser";

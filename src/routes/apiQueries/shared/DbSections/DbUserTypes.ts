@@ -1,5 +1,5 @@
 import mongoose, { Document } from "mongoose";
-import { ResStatusError } from "../../../../resErrorUtils";
+import { ResStatusError } from "../../../../utils/resError";
 import { DbSectionsModelCore, modelPath } from "../../../DbSectionsModel";
 
 export const queryOptions = {

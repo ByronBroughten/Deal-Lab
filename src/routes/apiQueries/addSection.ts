@@ -12,7 +12,7 @@ import {
   getAuthWare,
   updateUserSubscriptionWare,
 } from "../../middleware/authWare";
-import { ResStatusError } from "../../resErrorUtils";
+import { ResStatusError } from "../../utils/resError";
 import { DbUser } from "./shared/DbSections/DbUser";
 import { SectionPackNotFoundError } from "./shared/DbSections/DbUserTypes";
 import { findUserByIdAndUpdate } from "./shared/findAndUpdate";

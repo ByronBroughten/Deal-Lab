@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import winston from "winston";
-import { ResHandledError, ResStatusError } from "../resErrorUtils";
+import { ResHandledError, ResStatusError } from "../utils/resError";
 
 export function errorBackstop(
   err: Error,

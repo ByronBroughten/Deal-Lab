@@ -3,7 +3,7 @@ import { RegisterFormData } from "../../../../../client/src/App/sharedWithServer
 import { dbStoreNames } from "../../../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreName";
 import { PackBuilderSection } from "../../../../../client/src/App/sharedWithServer/StatePackers.ts/PackBuilderSection";
 import { makeMongooseObjectId } from "../../../../../client/src/App/sharedWithServer/utils/mongoose";
-import { ResStatusError } from "../../../../../resErrorUtils";
+import { ResStatusError } from "../../../../../utils/resError";
 import { DbSectionsModel, RawDbUser } from "../../../../DbSectionsModel";
 import { DbUser } from "../DbUser";
 import { DbSectionsRaw } from "../DbUserTypes";

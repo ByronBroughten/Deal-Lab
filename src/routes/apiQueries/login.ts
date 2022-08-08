@@ -4,7 +4,7 @@ import {
   isLoginFormData,
   LoginFormData,
 } from "../../client/src/App/sharedWithServer/apiQueriesShared/login";
-import { ResHandledError } from "../../resErrorUtils";
+import { ResHandledError } from "../../utils/resError";
 import { LoadedDbUser } from "./shared/DbSections/LoadedDbUser";
 import { userPrepS } from "./shared/DbSections/LoadedDbUser/userPrepS";
 

@@ -6,7 +6,7 @@ import {
   UserPlan,
 } from "../../../../../client/src/App/sharedWithServer/SectionsMeta/baseSections";
 import { StrictOmit } from "../../../../../client/src/App/sharedWithServer/utils/types";
-import { ResStatusError } from "../../../../../resErrorUtils";
+import { ResStatusError } from "../../../../../utils/resError";
 
 export interface SubscriptionProps {
   subscriptionPlan: UserPlan;
