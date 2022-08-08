@@ -18,12 +18,14 @@ export default function Financing({ feId, ...rest }: Props) {
   const addLoan = () => financing.addChild("loan");
   return (
     <Styled {...{ ...rest, themeName: "loan", className: "Financing-root" }}>
-      <GeneralSectionTitle
-        {...{
-          title: "Financing",
-          themeName: "loan",
-        }}
-      >
+      <GeneralSectionTitle {...{ title: "Financing", themeName: "loan" }} />
+      <FinancingInfo feId={feId} />
+      <div className="MainSection-entries">
+        {loanIds.map((feId) => (
+          <Loan key={feId} feId={feId} />
+        ))}
+      </div>
+      <div className="MainSection-addEntryBtnDiv">
         <MainSectionTitleBtn
           themeName="loan"
           className="Financing-mainSectionTitleBtn"
@@ -31,12 +33,6 @@ export default function Financing({ feId, ...rest }: Props) {
         >
           + Loan
         </MainSectionTitleBtn>
-      </GeneralSectionTitle>
-      <FinancingInfo feId={feId} />
-      <div className="MainSection-entries">
-        {loanIds.map((feId) => (
-          <Loan key={feId} feId={feId} />
-        ))}
       </div>
     </Styled>
   );
@@ -44,9 +40,20 @@ export default function Financing({ feId, ...rest }: Props) {
 
 const Styled = styled(MainSection)`
   .Financing-mainSectionTitleBtn {
-    width: 50%;
+    width: 75%;
+    height: 40px;
+    background: ${theme.loan.main};
+    :hover,
+    :active {
+      background-color: ${theme.loan.dark};
+    }
   }
-  div.MainSection-entry.Loan-root {
+  .MainSection-addEntryBtnDiv {
+    display: flex;
+    justify-content: center;
+    padding-bottom: ${theme.s3};
+  }
+  .Loan-root {
     border-top: 2px solid ${theme.loan.dark};
   }
 `;

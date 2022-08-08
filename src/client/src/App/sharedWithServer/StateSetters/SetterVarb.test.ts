@@ -7,16 +7,16 @@ describe("SetterVarb", () => {
     ["property", ["price", numObj(250000)]],
     ["unit", ["rent"]],
   ] as const;
-
-  it("should directly update the value", () => {
-    const tester = SetterTesterVarb.init({
-      sectionName: "property",
-      varbName: "displayName",
+  it("should property be  ", () => {}),
+    it("should directly update the value", () => {
+      const tester = SetterTesterVarb.init({
+        sectionName: "property",
+        varbName: "displayName",
+      });
+      const nextValue = "New Title";
+      tester.setter.updateValueDirectly(nextValue);
+      expect(tester.get.value()).toBe(nextValue);
     });
-    const nextValue = "New Title";
-    tester.setter.updateValueDirectly(nextValue);
-    expect(tester.get.value()).toBe(nextValue);
-  });
   it("should update and solve for the value", () => {
     const tester = SetterTesterVarb.init({
       sectionName: "property",

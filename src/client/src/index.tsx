@@ -7,26 +7,25 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-// - Write a test to verify that the calculations work as expected
-//   - Make a property
-//   - Add some units and expenses to it—keep track of the numbers
-//   - Make a loan, and then a mgmt
-//   - Add some stuff to those in the same way
-//   - Manually calculate some stuff
 
-// One issue is that calculating the load will be dificult.
-// I mean, I can use the loan calculation I hardcoded, I guess
-// But the loan calculation itself should be tested.
-// So maybe, yes, use it, but test it separately, too.
-// "the loan calculation should work"—test with two sets of numbers
-// against an online loan calculator
-// do the same for if it's interest only
+// - Test that PI calculates correctly for at least two scenarios
+// - Test that upfront investment calculates correctly
+// - Test that cash flow calculates correctly
 
-// - Make a video demo/ad
-
-// - get rid of login and register
+// - Try it with two loans at once
 
 // - Test getSection with loading a deal with updated property
+
+// Marketing
+// - Make a video demo
+// - Post to reddit
+// - Post on the bigger pockets forum
+// - Make an ad
+// - Use the ad on facebook
+// - Use the ad on YouTube
+// - Get an "influencer" to showcase it?
+
+// - get rid of login and register stuff
 
 // - Test addSection
 // - Test the pro stuff

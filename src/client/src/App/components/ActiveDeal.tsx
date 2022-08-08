@@ -3,10 +3,10 @@ import { View } from "react-native";
 import styled from "styled-components";
 import { useGetterSection } from "../sharedWithServer/stateClassHooks/useGetterSection";
 import theme from "../theme/Theme";
-import DealStats from "./AnalyzerMain/DealStats";
-import Financing from "./AnalyzerMain/Financing";
-import { MgmtGeneral } from "./AnalyzerMain/MgmtGeneral";
-import { PropertyGeneral } from "./AnalyzerMain/PropertyGeneral";
+import DealStats from "./ActiveDeal/DealStats";
+import Financing from "./ActiveDeal/Financing";
+import { MgmtGeneral } from "./ActiveDeal/MgmtGeneral";
+import { PropertyGeneral } from "./ActiveDeal/PropertyGeneral";
 
 type Props = {
   feId: string;
@@ -23,8 +23,8 @@ export function ActiveDeal({ className, feId }: Props) {
       <Styled {...{ className: `MainSections-root ${className ?? ""}` }}>
         <View style={{ flex: 1 }}>
           <PropertyGeneral feId={deal.onlyChildFeId("propertyGeneral")} />
-          <MgmtGeneral feId={deal.onlyChildFeId("mgmtGeneral")} />
           <Financing feId={deal.onlyChildFeId("financing")} />
+          <MgmtGeneral feId={deal.onlyChildFeId("mgmtGeneral")} />
         </View>
       </Styled>
       <DealStats className="Footer-root" feId={feId} />
@@ -36,9 +36,4 @@ const Styled = styled.div`
   background: ${theme.plus.light};
   display: flex;
   flex: 1;
-
-  .Financing-root {
-    display: flex;
-    flex: 1;
-  }
 `;
