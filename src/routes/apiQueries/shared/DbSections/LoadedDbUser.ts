@@ -27,7 +27,7 @@ import { DbUser } from "./DbUser";
 import { DbSectionsRaw, DbUserSpecifierType } from "./DbUserTypes";
 import {
   checkUserAuthToken,
-  createUserAuthToken,
+  createDbAccessToken,
   SubscriptionProps,
 } from "./LoadedDbUser/userAuthToken";
 import { userPrepS } from "./LoadedDbUser/userPrepS";
@@ -211,14 +211,14 @@ export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
       feStore: [feStore.makeSectionPack()],
     };
   }
-  createUserAuthToken() {
-    return createUserAuthToken({
+  createDbAccessToken() {
+    return createDbAccessToken({
       userId: this.userId,
       ...this.subscriptionProps,
     });
   }
   setResTokenHeader(res: Response): void {
-    const token = this.createUserAuthToken();
+    const token = this.createDbAccessToken();
     LoadedDbUser.setResTokenHeader(res, token);
   }
   static setResTokenHeader(res: Response, token: string): void {

@@ -1,26 +1,23 @@
 import { Request, Response } from "express";
 import {
   isMainStoreSectionName,
-  sectionToMainStoreName
+  sectionToMainStoreName,
 } from "../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreName";
 import { SectionPack } from "../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/SectionPack";
 import { FeSectionInfo } from "../../client/src/App/sharedWithServer/SectionsMeta/Info";
 import { PackBuilderSection } from "../../client/src/App/sharedWithServer/StatePackers.ts/PackBuilderSection";
-import { checkLoginWare } from "../../middleware/authWare";
+import { getAuthWare } from "../../middleware/authWare";
 import { DbUser } from "./shared/DbSections/DbUser";
 import { sendSuccess } from "./shared/sendSuccess";
 import { validateDbSectionInfoReq } from "./shared/validateDbSectionInfoReq";
 
-export const getSectionWare = [checkLoginWare, getSectionServerSide] as const;
+export const getSectionWare = [getAuthWare(), getSectionServerSide] as const;
 
 async function getSectionServerSide(req: Request, res: Response) {
-  const {
-    userJwt: { userId },
-    ...dbInfo
-  } = validateDbSectionInfoReq(req).body;
+  const { auth, ...dbInfo } = validateDbSectionInfoReq(req).body;
 
-  const querier = await DbUser.initBy("userId", userId);
-  const sectionPack = await querier.getSectionPack(dbInfo);
+  const dbUser = await DbUser.initBy("authId", auth.id);
+  const sectionPack = await dbUser.getSectionPack(dbInfo);
   const headSection = PackBuilderSection.loadAsOmniChild(sectionPack);
   const { sections } = headSection;
   let sectionInfos: FeSectionInfo[] = [headSection.feInfo];
@@ -34,8 +31,8 @@ async function getSectionServerSide(req: Request, res: Response) {
           if (isMainStoreSectionName(sectionName)) {
             const dbStoreName = sectionToMainStoreName(sectionName);
             const childDbInfo = { dbStoreName, dbId };
-            if (await querier.hasSectionPack(childDbInfo)) {
-              const childPack = await querier.getSectionPack(childDbInfo);
+            if (await dbUser.hasSectionPack(childDbInfo)) {
+              const childPack = await dbUser.getSectionPack(childDbInfo);
               child.loadSelf(childPack as any as SectionPack<any>);
             }
           }

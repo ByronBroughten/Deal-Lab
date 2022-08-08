@@ -9,32 +9,25 @@ import {
   SectionArrQueryName,
 } from "../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreName";
 import { SectionPack } from "../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/SectionPack";
-import { LoggedIn, LoggedInReq } from "./ReqAugmenters";
+import {
+  Authed,
+  LoggedIn,
+  LoggedInReq,
+  validateAuthObj,
+} from "./ReqAugmenters";
 import { validateDbStoreName } from "./validateDbSectionInfoReq";
 
-type PackArrReq = LoggedIn<SectionPackArrReq<SectionArrQueryName>>;
-export function validateSectionPackArrReq(req: LoggedInReq<any>): PackArrReq {
-  const { sectionPackArr, userJwt, dbStoreName } = (req as PackArrReq).body;
+type PackArrReq = Authed<SectionPackArrReq<SectionArrQueryName>>;
+export function validateSectionPackArrReq(req: Authed<any>): PackArrReq {
+  const { sectionPackArr, auth, dbStoreName } = (req as PackArrReq).body;
   return {
     body: {
-      userJwt,
+      auth: validateAuthObj(auth),
       dbStoreName: validateDbStoreName(dbStoreName, "arrQuery"),
       sectionPackArr: validateDbSectionPackArr({
         dbStoreName,
         value: sectionPackArr,
       }),
-    },
-  };
-}
-
-type PackReq = LoggedIn<SectionPackReq>;
-export function validateSectionPackReq(req: LoggedInReq<any>): PackReq {
-  const { userJwt, sectionPack, dbStoreName } = (req as PackReq).body;
-  return {
-    body: {
-      userJwt,
-      dbStoreName: validateDbStoreName(dbStoreName, "sectionQuery"),
-      sectionPack: validateDbSectionPack(sectionPack, dbStoreName),
     },
   };
 }
@@ -57,10 +50,23 @@ function validateDbSectionPackArr<CN extends DbStoreName>({
   }
 }
 
+type PackReq = Authed<LoggedIn<SectionPackReq>>;
+export function validateSectionPackReq(req: LoggedInReq<any>): PackReq {
+  const { userJwt, sectionPack, dbStoreName, auth } = (req as PackReq).body;
+  return {
+    body: {
+      userJwt,
+      auth: validateAuthObj(auth),
+      dbStoreName: validateDbStoreName(dbStoreName, "sectionQuery"),
+      sectionPack: validateDbSectionPack(sectionPack, dbStoreName),
+    },
+  };
+}
+
 function validateDbSectionPack<CN extends DbStoreName>(
   value: any,
   dbStoreName: CN
 ): SectionPack<DbSectionName<CN>> {
   if (isDbStoreSectionPack(value, dbStoreName)) return value;
-  throw new Error("Payload is not a valid server sectionPack");
+  throw new Error("value is not a valid db sectionPack");
 }

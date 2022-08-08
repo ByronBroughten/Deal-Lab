@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { config } from "../../Constants";
+import { constants } from "../../Constants";
 import { AuthHeadersProp } from "../../modules/services/authService";
 import {
   SectionPack,
@@ -53,6 +53,6 @@ export function isLoginFormData(value: any): value is LoginFormData {
 export function isLoginHeaders(value: any): value is AuthHeadersProp {
   return (
     typeof value === "object" &&
-    typeof value[config.tokenKey.apiUserAuth] === "string"
+    typeof value[constants.tokenKey.apiUserAuth] === "string"
   );
 }

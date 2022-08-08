@@ -27,3 +27,8 @@ export function isAuthObject(value: any): value is AuthData {
     return true;
   } else return false;
 }
+
+export function validateAuthObj(auth: any): AuthData {
+  if (!isAuthObject(auth)) throw new Error("Invalid auth object");
+  return auth;
+}

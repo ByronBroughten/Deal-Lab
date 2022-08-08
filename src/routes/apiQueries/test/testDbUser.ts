@@ -7,26 +7,10 @@ import {
   getUsersByEmail,
 } from "supertokens-node/recipe/thirdpartyemailpassword";
 import { apiQueriesShared } from "../../../client/src/App/sharedWithServer/apiQueriesShared";
-import { Id } from "../../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsUtils/id";
-import { getStandardNow } from "../../../client/src/App/sharedWithServer/utils/date";
 import { DbSectionsModel } from "../../DbSectionsModel";
 import { LoadedDbUser } from "../shared/DbSections/LoadedDbUser";
 import { userPrepS } from "../shared/DbSections/LoadedDbUser/userPrepS";
 
-export async function createTestDbUserAndLoadDepreciated(
-  testSuiteName: string
-): Promise<LoadedDbUser> {
-  const authId = Id.make();
-  await userPrepS.initUserInDb({
-    email: `${testSuiteName}Test@gmail.com`,
-    userName: "Testosis",
-    timeJoined: getStandardNow(),
-    authId,
-  });
-  return await LoadedDbUser.getBy("authId", authId);
-}
-
-// tokens = { cookies: { sAccessToken, sIdRefreshToken }, headers: { anti-csrf }}
 export async function createAndGetDbUser(
   testSuiteName: string
 ): Promise<LoadedDbUser> {
@@ -84,4 +68,8 @@ export function getStandardRes(res: request.Response) {
     headers: res.headers,
     data: JSON.parse(res.text),
   } as const;
+}
+
+export function validateAddSectionRes(res: request.Response): void {
+  if (res.status !== 200) throw new Error("addSection failed");
 }

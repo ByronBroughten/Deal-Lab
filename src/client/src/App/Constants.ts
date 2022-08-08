@@ -36,8 +36,9 @@ const envConstants = {
   },
 } as const;
 
-const envName =
-  process.env.NODE_ENV === "development" ? "development" : "production";
+const envName = ["development", "test"].includes(process.env.NODE_ENV)
+  ? "development"
+  : "production";
 const env = envConstants[envName];
 const apiPathBit = "/api";
 const apiPathFull = `${env.apiUrlBase}${apiPathBit}`;

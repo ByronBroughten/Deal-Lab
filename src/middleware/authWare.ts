@@ -1,19 +1,22 @@
 import { NextFunction, Request, Response } from "express";
 import { SessionRequest } from "supertokens-node/framework/express";
-import { createNewSession } from "supertokens-node/recipe/session";
 import { verifySession } from "supertokens-node/recipe/session/framework/express";
-import { config } from "../client/src/App/Constants";
+import { constants } from "../client/src/App/Constants";
 import { ResStatusError } from "../resErrorUtils";
 import { LoadedDbUser } from "../routes/apiQueries/shared/DbSections/LoadedDbUser";
-import { createUserAuthToken } from "../routes/apiQueries/shared/DbSections/LoadedDbUser/userAuthToken";
+import { createDbAccessToken } from "../routes/apiQueries/shared/DbSections/LoadedDbUser/userAuthToken";
 import {
   LoggedIn,
   LoggedInReq,
 } from "../routes/apiQueries/shared/ReqAugmenters";
 import { getStandardNow } from "./../client/src/App/sharedWithServer/utils/date";
 
-export function checkLoginWare(req: Request, _: Response, next: NextFunction) {
-  const token = req.header(config.tokenKey.apiUserAuth);
+export function checkDbAccessWare(
+  req: Request,
+  _: Response,
+  next: NextFunction
+) {
+  const token = req.header(constants.tokenKey.apiUserAuth);
   if (!token) throw missingTokenError("userJwt");
   const decoded = LoadedDbUser.checkUserAuthToken(token);
   (req as LoggedInReq<any>).body.userJwt = decoded;
@@ -21,9 +24,6 @@ export function checkLoginWare(req: Request, _: Response, next: NextFunction) {
 }
 
 export function getAuthWare() {
-  const envName = process.env.NODE_ENV;
-  const verifySessionWare =
-    envName === "test" ? bypassVerifySessionForTest : verifySession();
   return [verifySession(), standardizeAuthWare];
 }
 
@@ -40,22 +40,6 @@ function standardizeAuthWare(
   next();
 }
 
-async function bypassVerifySessionForTest(
-  req: SessionRequest,
-  res: Response,
-  next: NextFunction
-) {
-  if (process.env.NODE_ENV !== "test") {
-    throw new Error("This function is meant only for server-side tests.");
-  }
-  const authId = req.header("authId");
-  if (authId) {
-    req.session = await createNewSession(res, authId);
-  } else
-    throw new Error("authId not provided in header session-protected test");
-  next();
-}
-
 export async function updateUserSubscriptionWare(
   req: LoggedIn<Request>,
   res: Response,
@@ -67,7 +51,7 @@ export async function updateUserSubscriptionWare(
     const user = await LoadedDbUser.getBy("userId", userId);
     user.setResTokenHeader(res);
   } else {
-    const token = createUserAuthToken(userJwt);
+    const token = createDbAccessToken(userJwt);
     LoadedDbUser.setResTokenHeader(res, token);
   }
   next();

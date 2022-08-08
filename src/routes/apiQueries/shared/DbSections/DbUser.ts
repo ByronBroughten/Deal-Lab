@@ -2,17 +2,20 @@ import mongoose, { QueryOptions } from "mongoose";
 import { GuestAccessSectionPackArrs } from "../../../../client/src/App/sharedWithServer/apiQueriesShared/register";
 import { SectionVarbName } from "../../../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionTypes";
 import { VarbValue } from "../../../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsDerived/valueMetaTypes";
-import { DbSectionPack } from "../../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbSectionPack";
+import {
+  DbPack,
+  DbSectionPack
+} from "../../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbSectionPack";
 import {
   OneDbSectionValueInfo,
-  OneDbSectionVarbInfo,
+  OneDbSectionVarbInfo
 } from "../../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreInfo";
 import {
   DbSectionName,
   DbSelfOrDescendantSn,
   DbStoreInfo,
   DbStoreName,
-  dbStoreNames,
+  dbStoreNames
 } from "../../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreName";
 import { SectionPack } from "../../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/SectionPack";
 import { PackBuilderSection } from "../../../../client/src/App/sharedWithServer/StatePackers.ts/PackBuilderSection";
@@ -26,7 +29,7 @@ import {
   dbUserFilters,
   DbUserSpecifierType,
   queryOptions,
-  UserNotFoundError,
+  UserNotFoundError
 } from "./DbUserTypes";
 import { LoadedDbUser } from "./LoadedDbUser";
 
@@ -108,6 +111,46 @@ export class DbUser extends DbSectionsQuerierBase {
     //   // { $match: { [`${sectionName}.${dbId}`]: dbId } },
     // ]);
   }
+  async updateSectionPack({
+    dbStoreName,
+    sectionPack,
+  }: DbPack<any>): Promise<void> {
+    const userId = await this.getUserId();
+    const { dbId } = sectionPack;
+    await this.update({
+      filter: { _id: userId, [`${dbStoreName}.dbId`]: dbId },
+      operation: { $set: { [`${dbStoreName}.$`]: sectionPack } },
+      options: {
+        new: true,
+        lean: true,
+        useFindAndModify: false,
+        // runValidators: true,
+        strict: false,
+      },
+    });
+  }
+  async addSectionPack({ dbStoreName, sectionPack }: DbPack<any>) {
+    await this.update({
+      operation: { $push: { [dbStoreName]: sectionPack } },
+      options: {
+        new: true,
+        lean: true,
+        useFindAndModify: false,
+        runValidators: true,
+        strict: false,
+        upsert: true,
+      },
+    });
+  }
+  async deleteSectionPack({ dbStoreName, dbId }: DbStoreInfo) {
+    await this.update({
+      operation: { $pull: { [dbStoreName]: { dbId } } },
+      options: {
+        lean: true,
+        useFindAndModify: false,
+      },
+    });
+  }
   async setSectionPackArr<CN extends DbStoreName>({
     storeName,
     sectionPackArr,
@@ -140,9 +183,14 @@ export class DbUser extends DbSectionsQuerierBase {
       },
     });
   }
-  async update({ operation, options, doWhat }: UpdateProps) {
+  async update({
+    filter = this.userFilter,
+    operation,
+    options,
+    doWhat = "query the database",
+  }: UpdateProps) {
     const result = await DbSectionsModel.findOneAndUpdate(
-      this.userFilter,
+      filter,
       operation,
       options
     );
@@ -245,6 +293,7 @@ type SetSectionPackArrProps<CN extends DbStoreName> = {
 };
 
 interface UpdateProps extends QueryParameters {
+  filter?: Record<string, string>;
   doWhat?: string;
 }
 

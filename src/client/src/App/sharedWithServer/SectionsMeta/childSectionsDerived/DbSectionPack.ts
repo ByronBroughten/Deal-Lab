@@ -15,8 +15,8 @@ export function isDbStoreSectionPack<CN extends DbStoreName>(
   value: any,
   dbStoreName: CN
 ): value is SectionPack<DbSectionName<CN>> {
-  return (
-    isSectionPack(value) &&
-    value.sectionName === childToSectionName("dbStore", dbStoreName)
-  );
+  const isPack = isSectionPack(value);
+  const sectionName = childToSectionName("dbStore", dbStoreName);
+  const isOfSectionName = value.sectionName === sectionName;
+  return isPack && isOfSectionName;
 }

@@ -7,9 +7,7 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-
-// - Use the same code for creating a user throughout everything
-// - Test getUserData
+// - use the same code for creating a user throughout everything
 
 // - Make a useEffect on the frontEnd that attempts to update the
 //   front-end subscriptionInfo if the fullPlan planExp is out of date

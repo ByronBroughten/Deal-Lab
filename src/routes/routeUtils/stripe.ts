@@ -2,9 +2,9 @@ import { Request } from "express";
 import Stripe from "stripe";
 import { getErrorMessage } from "../../client/src/App/utils/error";
 
-// It should use a different Strip_Secret depending on whether it's testing.
 export function getStripe(): Stripe {
-  const stripe = new Stripe(process.env.STRIPE_SECRET as string, {
+  const secret = process.env.STRIPE_SECRET;
+  const stripe = new Stripe(secret as string, {
     apiVersion: "2020-08-27",
   });
   return stripe;

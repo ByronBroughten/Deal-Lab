@@ -5,16 +5,14 @@ import {
   dbStoreNameS,
   DbStoreType,
 } from "../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreName";
-import { LoggedIn, LoggedInReq } from "./ReqAugmenters";
+import { Authed, validateAuthObj } from "./ReqAugmenters";
 
-export function validateDbSectionInfoReq(
-  req: LoggedInReq<any>
-): LoggedIn<DbPackInfoSectionReq> {
-  const { userJwt, dbId, dbStoreName } = (req as LoggedIn<DbPackInfoSectionReq>)
-    .body;
+type InfoReq = Authed<DbPackInfoSectionReq>;
+export function validateDbSectionInfoReq(req: Authed<any>): InfoReq {
+  const { dbId, dbStoreName, auth } = (req as InfoReq).body;
   return {
     body: {
-      userJwt: userJwt,
+      auth: validateAuthObj(auth),
       dbId: validateDbId(dbId),
       dbStoreName: validateDbStoreName(dbStoreName, "allQuery"),
     },
@@ -27,7 +25,7 @@ export function validateDbStoreName<DT extends DbStoreType = "all">(
 ): DbStoreNameByType<DT> {
   if (dbStoreNameS.is(value, type)) return value;
   else {
-    throw new Error("The received dbStoreName is not valid.");
+    throw new Error(`The received dbStoreName "${value}" is not valid.`);
   }
 }
 

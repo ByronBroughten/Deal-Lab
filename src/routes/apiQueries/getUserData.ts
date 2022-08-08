@@ -5,7 +5,7 @@ import { makeReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/
 import { areGuestAccessSections } from "../../client/src/App/sharedWithServer/apiQueriesShared/register";
 import { getAuthWare } from "../../middleware/authWare";
 import { DbUser } from "./shared/DbSections/DbUser";
-import { Authed, isAuthObject } from "./shared/ReqAugmenters";
+import { Authed, validateAuthObj } from "./shared/ReqAugmenters";
 
 export const getUserDataWare = [getAuthWare(), getUserData] as const;
 
@@ -20,10 +20,11 @@ async function getUserData(req: SessionRequest, res: Response) {
 type Req = Authed<QueryReq<"getUserData">>;
 function validateGetUserDataReq(req: Request): Req {
   const { guestAccessSections, auth } = (req as Req).body;
-
-  if (!isAuthObject(auth)) throw new Error("Invalid auth object");
   if (!areGuestAccessSections(guestAccessSections)) {
     throw new Error("Invalid guesteAccessSections");
   }
-  return makeReq({ guestAccessSections, auth });
+  return makeReq({
+    auth: validateAuthObj(auth),
+    guestAccessSections,
+  });
 }

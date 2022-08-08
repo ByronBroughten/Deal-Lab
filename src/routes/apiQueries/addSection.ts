@@ -8,7 +8,8 @@ import {
   SectionQueryName,
 } from "../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreName";
 import {
-  checkLoginWare,
+  checkDbAccessWare,
+  getAuthWare,
   updateUserSubscriptionWare,
 } from "../../middleware/authWare";
 import { ResStatusError } from "../../resErrorUtils";
@@ -19,7 +20,8 @@ import { sendSuccess } from "./shared/sendSuccess";
 import { validateSectionPackReq } from "./shared/validateSectionPackReq";
 
 export const addSectionWare = [
-  checkLoginWare,
+  getAuthWare(),
+  checkDbAccessWare,
   updateUserSubscriptionWare,
   addSection,
 ] as const;
@@ -29,7 +31,7 @@ async function addSection(req: Request, res: Response) {
     sectionPack,
     userJwt: { userId, subscriptionPlan },
   } = validateSectionPackReq(req).body;
-  await validateAuth({
+  await validateSubscription({
     userId,
     dbStoreName,
     subscriptionPlan,
@@ -52,16 +54,16 @@ async function addSection(req: Request, res: Response) {
   });
 }
 
-type ValidateAuthProps = {
+type ValidateSubscriptionProps = {
   subscriptionPlan: UserPlan;
   dbStoreName: SectionQueryName;
   userId: string;
 };
-async function validateAuth({
+async function validateSubscription({
   subscriptionPlan,
   dbStoreName,
   userId,
-}: ValidateAuthProps): Promise<boolean> {
+}: ValidateSubscriptionProps): Promise<boolean> {
   switch (subscriptionPlan) {
     case "basicPlan": {
       const { basicStorageLimit } = constants;
@@ -100,8 +102,7 @@ async function checkThatSectionPackIsNotThere<CN extends SectionQueryName>(
   }
 }
 
-function makePushParameters(dbPack: DbPack<any>) {
-  const { dbStoreName, sectionPack } = dbPack;
+function makePushParameters({ dbStoreName, sectionPack }: DbPack<any>) {
   return {
     operation: { $push: { [dbStoreName]: sectionPack } },
     options: {

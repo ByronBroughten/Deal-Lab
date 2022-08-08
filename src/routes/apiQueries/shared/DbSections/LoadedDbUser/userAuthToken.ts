@@ -19,7 +19,7 @@ export interface UserJwt extends SubscriptionProps {
 }
 
 export type UserJwtProps = StrictOmit<UserJwt, "iat">;
-export function createUserAuthToken(userJwt: UserJwtProps): string {
+export function createDbAccessToken(userJwt: UserJwtProps): string {
   const privateKey: string = config.get("jwtPrivateKey");
   try {
     return jwt.sign(userJwt, privateKey);

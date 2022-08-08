@@ -1,14 +1,18 @@
 import { Server } from "http";
 import request from "supertest";
-import { config } from "../../client/src/App/Constants";
+import { constants } from "../../client/src/App/Constants";
 import { apiQueriesShared } from "../../client/src/App/sharedWithServer/apiQueriesShared";
 import { QueryReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import { Arr } from "../../client/src/App/sharedWithServer/utils/Arr";
 import { runApp } from "../../runApp";
-import { DbSectionsModel } from "../DbSectionsModel";
+import { LoadedDbUser } from "./shared/DbSections/LoadedDbUser";
 import { getUserByIdNoRes } from "./shared/getUserDbSectionsById";
 import { SectionQueryTester } from "./test/SectionQueryTester";
-import { createTestDbUserAndLoadDepreciated } from "./test/testDbUser";
+import {
+  createAndGetDbUser,
+  deleteUserTotally,
+  makeSessionGetCookies,
+} from "./test/testDbUser";
 
 function makeAddSectionReq(): QueryReq<"addSection"> {
   const sectionName = "property";
@@ -20,26 +24,28 @@ const testedRoute = apiQueriesShared.addSection.pathRoute;
 describe(testedRoute, () => {
   let req: QueryReq<"addSection">;
   let server: Server;
-  let userId: string;
+  let dbUser: LoadedDbUser;
+  let cookies: string[];
   let token: string;
 
   beforeEach(async () => {
     server = runApp();
-    const dbUser = await createTestDbUserAndLoadDepreciated(testedRoute);
-    token = dbUser.createUserAuthToken();
+    dbUser = await createAndGetDbUser(testedRoute);
+    token = dbUser.createDbAccessToken();
+    cookies = await makeSessionGetCookies({ server, authId: dbUser.authId });
     req = makeAddSectionReq();
-    userId = dbUser.userId;
   });
 
   afterEach(async () => {
-    await DbSectionsModel.deleteOne({ _id: userId });
+    await deleteUserTotally(dbUser);
     server.close();
   });
 
   const exec = async () =>
     await request(server)
       .post(testedRoute)
-      .set(config.tokenKey.apiUserAuth, token)
+      .set("Cookie", cookies)
+      .set(constants.tokenKey.apiUserAuth, token)
       .send(req.body);
 
   async function testStatus(statusNumber: number) {
@@ -48,9 +54,9 @@ describe(testedRoute, () => {
     return res;
   }
   it("should return 200 and add the section if happy path", async () => {
-    const preDoc = await getUserByIdNoRes(userId);
+    const preDoc = await getUserByIdNoRes(dbUser.userId);
     await testStatus(200);
-    const postDoc = await getUserByIdNoRes(userId);
+    const postDoc = await getUserByIdNoRes(dbUser.userId);
 
     expect(postDoc.propertyMain.length).toBe(preDoc.propertyMain.length + 1);
     expect(Arr.lastOrThrow(postDoc.propertyMain).dbId).toBe(

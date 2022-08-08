@@ -1,3 +1,4 @@
+import { URL } from "url";
 import { IsType } from "./types";
 
 export function replaceRange(
@@ -19,6 +20,14 @@ export const Str = {
   },
   replaceRange,
   isRationalNumber: isStringRationalNumber,
+  isValidUrl(str: string) {
+    try {
+      new URL(str);
+      return true;
+    } catch (err) {
+      return false;
+    }
+  },
 } as const;
 
 const numberRegEx = /^\-?[0-9]+(e[0-9]+)?(\.[0-9]+)?$/;

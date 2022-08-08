@@ -1,13 +1,18 @@
 import { Server } from "http";
 import request from "supertest";
-import { config } from "../../client/src/App/Constants";
+import { constants } from "../../client/src/App/Constants";
 import { apiQueriesShared } from "../../client/src/App/sharedWithServer/apiQueriesShared";
 import { QueryReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import { Id } from "../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsUtils/id";
 import { runApp } from "../../runApp";
-import { DbSectionsModel } from "../DbSectionsModel";
+import { LoadedDbUser } from "./shared/DbSections/LoadedDbUser";
 import { SectionQueryTester } from "./test/SectionQueryTester";
-import { createTestDbUserAndLoadDepreciated } from "./test/testDbUser";
+import {
+  createAndGetDbUser,
+  deleteUserTotally,
+  makeSessionGetCookies,
+  validateAddSectionRes,
+} from "./test/testDbUser";
 
 type TestReqs = {
   addSection: QueryReq<"addSection">;
@@ -25,33 +30,35 @@ function makeReqs(): TestReqs {
 
 const testedRoute = apiQueriesShared.deleteSection.pathRoute;
 describe(testedRoute, () => {
-  let reqs: TestReqs;
   let server: Server;
-  let userId: string;
-  let token: string;
+  let dbUser: LoadedDbUser;
+  let cookies: string[];
+  let reqs: TestReqs;
 
   beforeEach(async () => {
     server = runApp();
-    const dbUser = await createTestDbUserAndLoadDepreciated(testedRoute);
-    token = dbUser.createUserAuthToken();
+    dbUser = await createAndGetDbUser(testedRoute);
+    cookies = await makeSessionGetCookies({ server, authId: dbUser.authId });
     reqs = makeReqs();
-    userId = dbUser.userId;
   });
 
   afterEach(async () => {
-    await DbSectionsModel.deleteOne({ _id: userId });
+    await deleteUserTotally(dbUser);
     server.close();
   });
 
   const exec = async () => {
-    await request(server)
+    const res = await request(server)
       .post(apiQueriesShared.addSection.pathRoute)
-      .set(config.tokenKey.apiUserAuth, token)
+      .set(constants.tokenKey.apiUserAuth, dbUser.createDbAccessToken())
+      .set("Cookie", cookies)
       .send(reqs.addSection.body);
+
+    validateAddSectionRes(res);
 
     return await request(server)
       .post(testedRoute)
-      .set(config.tokenKey.apiUserAuth, token)
+      .set("Cookie", cookies)
       .send(reqs.deleteSection.body);
   };
 

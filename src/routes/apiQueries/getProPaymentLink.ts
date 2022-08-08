@@ -1,23 +1,18 @@
 import { Request, Response } from "express";
 import { constants } from "../../client/src/App/Constants";
-import { checkLoginWare } from "../../middleware/authWare";
+import { QueryReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
+import { getAuthWare } from "../../middleware/authWare";
 import { ResStatusError } from "../../resErrorUtils";
 import { getStripe } from "../routeUtils/stripe";
 import { LoadedDbUser } from "./shared/DbSections/LoadedDbUser";
-import { LoggedInReq } from "./shared/ReqAugmenters";
+import { Authed, validateAuthObj } from "./shared/ReqAugmenters";
 import { sendSuccess } from "./shared/sendSuccess";
 
-export const upgradeUserToProWare = [
-  checkLoginWare,
-  getProPaymentLink,
-] as const;
+export const upgradeUserToProWare = [getAuthWare(), getProPaymentLink] as const;
 async function getProPaymentLink(req: Request, res: Response) {
-  const {
-    userJwt: { userId },
-    priceId,
-  } = validateUpgradeUserToProReq(req).body;
+  const { auth, priceId } = validateUpgradeUserToProReq(req).body;
 
-  const dbUser = await LoadedDbUser.getBy("userId", userId);
+  const dbUser = await LoadedDbUser.getBy("authId", auth.id);
   const { customerId, email } = dbUser;
 
   // should this be implemented?: checkIfAlreadySubscribed(userId);
@@ -40,19 +35,17 @@ async function getProPaymentLink(req: Request, res: Response) {
   const sessionUrl = validateSessionUrl(session.url);
   sendSuccess(res, "getProPaymentLink", { data: { sessionUrl } });
 }
-function validateUpgradeUserToProReq(
-  req: LoggedInReq<any>
-): LoggedInReq<"getProPaymentLink"> {
-  const { userJwt, priceId } = (req as LoggedInReq<"getProPaymentLink">).body;
-  if (typeof priceId !== "string") {
-    throw new Error("Failed getProPaymentLink validation.");
-  }
-  return {
-    body: {
-      priceId,
-      userJwt,
-    },
-  };
+type Req = Authed<QueryReq<"getProPaymentLink">>;
+function validateUpgradeUserToProReq(req: Authed<any>): Req {
+  const { auth, priceId } = (req as Req).body;
+  if (typeof priceId === "string") {
+    return {
+      body: {
+        priceId,
+        auth: validateAuthObj(auth),
+      },
+    };
+  } else throw new Error("Failed getProPaymentLink validation.");
 }
 function validateSessionUrl(url: any): string {
   if (typeof url === "string") {

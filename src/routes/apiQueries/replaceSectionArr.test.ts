@@ -1,12 +1,15 @@
 import request from "supertest";
-import { config } from "../../client/src/App/Constants";
 import { apiQueriesShared } from "../../client/src/App/sharedWithServer/apiQueriesShared";
 import { SectionPackArrReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/makeReqAndRes";
 import { SectionArrReqMaker } from "../../client/src/App/sharedWithServer/ReqMakers/SectionArrReqMaker";
 import { runApp } from "../../runApp";
-import { DbSectionsModel } from "../DbSectionsModel";
 import { childToSectionName } from "./../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/ChildSectionName";
-import { createTestDbUserAndLoadDepreciated } from "./test/testDbUser";
+import { LoadedDbUser } from "./shared/DbSections/LoadedDbUser";
+import {
+  createAndGetDbUser,
+  deleteUserTotally,
+  makeSessionGetCookies,
+} from "./test/testDbUser";
 
 const storeName = "singleTimeListMain";
 type StoreName = typeof storeName;
@@ -20,26 +23,25 @@ const testedRoute = apiQueriesShared.replaceSectionArr.pathRoute;
 describe(testedRoute, () => {
   let req: SectionPackArrReq<StoreName>;
   let server: any;
-  let userId: string;
-  let token: string;
+  let dbUser: LoadedDbUser;
+  let cookies: string[];
 
   beforeEach(async () => {
     server = runApp();
-    const dbUser = await createTestDbUserAndLoadDepreciated(testedRoute);
-    token = dbUser.createUserAuthToken();
+    dbUser = await createAndGetDbUser(testedRoute);
+    cookies = await makeSessionGetCookies({ server, authId: dbUser.authId });
     req = makeReq();
-    userId = dbUser.userId;
   });
 
   afterEach(async () => {
-    await DbSectionsModel.deleteOne({ _id: userId });
+    await deleteUserTotally(dbUser);
     server.close();
   });
 
   const exec = async () =>
     await request(server)
       .post(testedRoute)
-      .set(config.tokenKey.apiUserAuth, token)
+      .set("Cookie", cookies)
       .send(req.body);
 
   async function testStatus(statusNumber: number) {
@@ -51,7 +53,7 @@ describe(testedRoute, () => {
     await testStatus(200);
   });
   it("should return 401 if client is not logged in", async () => {
-    token = "" as any;
+    cookies = [];
     await testStatus(401);
   });
 });

@@ -1,5 +1,5 @@
 import request from "supertest";
-import { config } from "../../client/src/App/Constants";
+import { constants } from "../../client/src/App/Constants";
 import { apiQueriesShared } from "../../client/src/App/sharedWithServer/apiQueriesShared";
 import { QueryReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import { makeReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/makeReqAndRes";
@@ -67,7 +67,7 @@ describe(testedRoute, () => {
   });
   it("should return an auth token if the request is valid", async () => {
     const res = await exec();
-    const token = res.headers[config.tokenKey.apiUserAuth];
+    const token = res.headers[constants.tokenKey.apiUserAuth];
     expect(token).not.toBeUndefined();
     expect(() => LoadedDbUser.checkUserAuthToken(token)).not.toThrow();
   });
