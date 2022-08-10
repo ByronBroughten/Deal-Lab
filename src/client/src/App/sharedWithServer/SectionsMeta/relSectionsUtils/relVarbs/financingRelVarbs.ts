@@ -102,7 +102,7 @@ export function loanRelVarbs(): RelVarbs<"loan"> {
           ),
         },
       },
-      { shared: { startAdornment: "$" } }
+      { shared: { startAdornment: "$", unit: "money" } }
     ),
   };
 }

@@ -17,9 +17,7 @@ describe("SetterSection", () => {
   ) => void;
   function runSectionNames(fn: FnWithSnProp) {
     for (const sectionName of sectionNames) {
-      fn({
-        tester: SetterTesterSection.init(sectionName),
-      });
+      fn({ tester: SetterTesterSection.init(sectionName) });
     }
   }
   it("should remove its own section", () => {

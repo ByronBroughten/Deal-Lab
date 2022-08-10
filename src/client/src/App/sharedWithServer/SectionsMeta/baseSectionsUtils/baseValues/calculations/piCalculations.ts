@@ -1,5 +1,6 @@
 import { CalcProp } from "../calculations";
-import { calcPropS } from "./calcPropS";
+import { calcPropMath, calcPropS } from "./calcPropS";
+import { roundedS } from "./numUnitParams";
 import {
   interestOnlySimpleMonthly,
   interestOnlySimpleYearly,
@@ -42,12 +43,16 @@ export function calculatePiMonthly({
   interestRatePercentYearly,
   ...rest
 }: CalculatePiMonthlyProps) {
-  const interestRateDecimalMonthly = calcPropS.percentToDecimal(
-    interestRatePercentMonthly
+  const interestRateDecimalMonthly = calcPropMath(
+    interestRatePercentMonthly,
+    roundedS.percentToDecimal
   );
-  const interestRateDecimalYearly = calcPropS.percentToDecimal(
-    interestRatePercentYearly
+
+  const interestRateDecimalYearly = calcPropMath(
+    interestRatePercentYearly,
+    roundedS.percentToDecimal
   );
+
   return piCalculations.monthly[piCalculationName]({
     ...rest,
     interestRateDecimalYearly,

@@ -307,7 +307,7 @@ export const relVarbsS = {
         switchInit: "years",
       }),
       [ongoingValueNames.switch]: relVarb("string", {
-        initValue: "yearly",
+        initValue: "monthly",
       }),
       // So... that's the numObjEditor, is that right?
 
