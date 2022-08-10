@@ -86,9 +86,10 @@ const Styled = styled.div`
   .LabeledVarb-label {
     font-weight: 700;
     color: ${theme["gray-700"]};
+    font-size: 1.3rem;
   }
   .LabeledVarb-output {
-    font-size: 1.1rem;
+    font-size: 1.3rem;
   }
 `;
 
