@@ -8,7 +8,10 @@ import { VarbListItemGeneric } from "../../ListGroup/ListGroupShared/VarbListIte
 export function OngoingListItem({ feId }: { feId: string }) {
   const feInfo = { sectionName: "ongoingItem", feId } as const;
   const virtualVarb = useSetterSection(feInfo);
-  const valueVarbName = virtualVarb.get.switchVarbName("value", "ongoing");
+  const valueVarbName = virtualVarb.get.switchVarbName(
+    "value",
+    "ongoing"
+  ) as "valueMonthly";
 
   const switchValue = virtualVarb.get.switchValue("value", "ongoing");
   const { endAdornment } = ongoingVarb.target(switchValue);
@@ -24,7 +27,7 @@ export function OngoingListItem({ feId }: { feId: string }) {
           labeledSpanOverCost: () => (
             <LabeledSpanOverCost {...{ valueVarbName, feInfo }} />
           ),
-          loadedVarb: () => <LoadedVarbEditor {...{ valueVarbName, feInfo }} />,
+          loadedVarb: () => <LoadedVarbEditor {...{ feInfo, valueVarbName }} />,
         },
       }}
     />

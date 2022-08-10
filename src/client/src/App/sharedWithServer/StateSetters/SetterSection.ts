@@ -1,12 +1,12 @@
 import { pick } from "lodash";
 import {
   SectionVarbName,
-  VarbValues
+  VarbValues,
 } from "../SectionsMeta/baseSectionsDerived/baseSectionTypes";
 import { SwitchEndingKey } from "../SectionsMeta/baseSectionsUtils/RelSwitchVarb";
 import {
   ChildName,
-  FeChildInfo
+  FeChildInfo,
 } from "../SectionsMeta/childSectionsDerived/ChildName";
 import { ChildSectionName } from "../SectionsMeta/childSectionsDerived/ChildSectionName";
 import { ParentNameSafe } from "../SectionsMeta/childSectionsDerived/ParentName";
@@ -21,7 +21,7 @@ import { ChildSectionPackArrs } from "../StatePackers.ts/PackLoaderSection";
 import { SolverSection } from "../StateSolvers/SolverSection";
 import {
   AddChildOptions,
-  UpdaterSection
+  UpdaterSection,
 } from "../StateUpdaters/UpdaterSection";
 import { SetterSectionBase } from "./SetterBases/SetterSectionBase";
 import { SetterSections } from "./SetterSections";
@@ -75,11 +75,13 @@ export class SetterSection<
       ...this.get.parentInfoSafe,
     });
   }
-  onlyChild<CN extends ChildName<SN>>(childName: CN): SetterSection<ChildSectionName<SN, CN>> {
+  onlyChild<CN extends ChildName<SN>>(
+    childName: CN
+  ): SetterSection<ChildSectionName<SN, CN>> {
     const feId = this.oneChildFeId(childName);
     return this.child({
       childName,
-      feId
+      feId,
     });
   }
   child<CN extends ChildName<SN>>(
@@ -135,10 +137,10 @@ export class SetterSection<
     this.solver.resetToDefaultAndSolve();
     this.setSections();
   }
-  varb(varbName: string): SetterVarb<SN> {
+  varb(varbName: SectionVarbName<SN>): SetterVarb<SN> {
     return new SetterVarb({
       ...this.setterSectionProps,
-      varbName,
+      varbName: varbName as string,
     });
   }
   varbInfo(varbName: SectionVarbName<SN>): FeVarbInfo<SN> {

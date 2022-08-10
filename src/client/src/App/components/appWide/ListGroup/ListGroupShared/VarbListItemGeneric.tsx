@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { FeSectionInfo } from "../../../../sharedWithServer/SectionsMeta/Info";
+import { FeInfoByType } from "../../../../sharedWithServer/SectionsMeta/Info";
 import { useSetterSection } from "../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import { Arr } from "../../../../sharedWithServer/utils/Arr";
 import theme from "../../../../theme/Theme";
@@ -7,7 +7,7 @@ import NextBtn from "../../NextBtn";
 import XBtn from "../../Xbtn";
 
 interface Props {
-  feInfo: FeSectionInfo;
+  feInfo: FeInfoByType<"varbListItem">;
   switchOptions: Record<string, () => any>;
   className?: string;
 }
