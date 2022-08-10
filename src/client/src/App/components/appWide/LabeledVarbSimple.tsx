@@ -47,7 +47,7 @@ type LabeledVarbProps = UseLabeledOutputProps & {
   className?: string;
   themeName?: ThemeName;
 };
-export function LabeledVarbSimpleNext({
+export function LabeledVarbSimple({
   feVarbInfo,
   className,
   onXBtnClick,

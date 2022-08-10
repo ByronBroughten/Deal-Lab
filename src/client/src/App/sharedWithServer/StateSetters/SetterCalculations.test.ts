@@ -6,13 +6,11 @@ describe("SetterCalculations", () => {
     const dealTester = SetterTesterSection.init("deal");
     addTestLoan(dealTester);
     const financing = dealTester.setter.onlyChild("financing");
-    const loanPaymentMonthly = financing.get.varb(
-      "principalAndInterestMonthly"
-    ).numberValue;
+    const loanPaymentMonthly =
+      financing.get.varb("loanPaymentMonthly").numberValue;
 
-    const loanPaymentYearly = financing.get.varb(
-      "principalAndInterestYearly"
-    ).numberValue;
+    const loanPaymentYearly =
+      financing.get.varb("loanPaymentYearly").numberValue;
 
     expect(loanPaymentMonthly).toBe(912.6);
     expect(loanPaymentYearly).toBeCloseTo(12 * 912.6, 1);

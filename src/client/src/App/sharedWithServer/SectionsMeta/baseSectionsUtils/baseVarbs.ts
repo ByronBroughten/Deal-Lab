@@ -71,7 +71,7 @@ export const baseVarbsS = {
       ...this.switch("loanBase", "dollarsPercent"),
       ...this.switch("loanTerm", "monthsYears"),
       piCalculationName: "string",
-      ...this.ongoing("principalAndInterest"),
+      ...this.ongoing("loanPayment"),
       ...this.ongoing("mortgageIns"),
     } as const;
   },

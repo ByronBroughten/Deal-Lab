@@ -75,8 +75,8 @@ export function loanRelVarbs(): RelVarbs<"loan"> {
       initValue: "piFixedStandard" as PiCalculationName,
     }),
     ...relVarbsS.ongoingPureCalc(
-      "principalAndInterest",
-      "Loan payments",
+      "loanPayment",
+      "Loan payment",
       {
         monthly: {
           updateFnName: "piMonthly",
@@ -130,9 +130,9 @@ export const financingRelVarbs: RelVarbs<"financing"> = {
   ),
   ...relVarbsS.ongoingSumNums(
     "piti",
-    "PITI payments",
+    "PITI payment",
     [
-      ...relVarbInfosS.local(["principalAndInterest", "mortgageIns"]),
+      ...relVarbInfosS.local(["loanPayment", "mortgageIns"]),
       relVarbInfoS.stepSibling("propertyGeneral", "propertyGeneral", "taxes"),
       relVarbInfoS.stepSibling("propertyGeneral", "propertyGeneral", "homeIns"),
     ],

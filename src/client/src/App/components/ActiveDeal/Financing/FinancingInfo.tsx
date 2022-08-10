@@ -3,7 +3,7 @@ import { useGetterSection } from "../../../sharedWithServer/stateClassHooks/useG
 import theme from "../../../theme/Theme";
 import useHowMany from "../../appWide/customHooks/useHowMany";
 import LabeledOutputRowSimple from "../../appWide/LabeledOutputRowSimple";
-import { LabeledVarbSimpleNext } from "../../appWide/LabeledVarbSimple";
+import { LabeledVarbSimple } from "../../appWide/LabeledVarbSimple";
 import GlobalInfoSection from "../general/StaticInfoSection";
 
 export default function FinancingInfo({ feId }: { feId: string }) {
@@ -21,7 +21,7 @@ export default function FinancingInfo({ feId }: { feId: string }) {
       <LabeledOutputRowSimple>
         {
           <>
-            <LabeledVarbSimpleNext
+            <LabeledVarbSimple
               themeName="loan"
               feVarbInfo={financing.varbInfo("downPaymentDollars")}
               parenthInfo={
@@ -30,18 +30,20 @@ export default function FinancingInfo({ feId }: { feId: string }) {
                   : undefined
               }
             />
-            <LabeledVarbSimpleNext
+            {isAtLeastOne && (
+              <LabeledVarbSimple
+                themeName="loan"
+                feVarbInfo={financing.varbInfo("loanPaymentMonthly")}
+              />
+            )}
+            <LabeledVarbSimple
               themeName="loan"
               feVarbInfo={financing.varbInfo("pitiMonthly")}
-            />
-            <LabeledVarbSimpleNext
-              themeName="loan"
-              feVarbInfo={financing.varbInfo("pitiYearly")}
             />
           </>
         }
         {areMultiple && (
-          <LabeledVarbSimpleNext
+          <LabeledVarbSimple
             themeName="loan"
             feVarbInfo={financing.varbInfo("loanTotalDollars")}
           />

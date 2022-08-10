@@ -78,7 +78,7 @@ export default function DealStats({ className, feId }: Props) {
       </GeneralSectionTitle>
       <Deal {...{ feId, detailsIsOpen }} />
       <div className="DealStats-appInfo">
-        Ultimate Deal Analyzer LLC | support@dealanalyzer.app
+        Questions or feedback? support@dealanalyzer.app
       </div>
     </Styled>
   );
@@ -140,10 +140,10 @@ const Styled = styled(MainSection)<{ $showDetails: boolean }>`
   .DealStats-appInfo {
     display: flex;
     justify-content: center;
-    background: ${theme.deal.dark};
-    color: ${theme.deal.light};
-    font-size: 12px;
-    padding: ${theme.s0} 0;
+    background: ${theme.deal.main};
+    color: ${theme.dark};
+    font-size: 14px;
+    padding: ${theme.s1} 0;
     /* font-size: 0.9rem; */
     /* line-height: 0.9rem; */
   }

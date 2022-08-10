@@ -22,7 +22,7 @@ export default function RowIndexSectionList({
   const authStatus = useAuthStatus();
   const noEntriesMessage =
     authStatus === "guest"
-      ? `Sign in to load saved ${pluralName}`
+      ? `Sign in to access saved ${pluralName}`
       : "None saved";
   return (
     <DropdownList

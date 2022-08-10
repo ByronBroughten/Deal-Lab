@@ -45,6 +45,9 @@ export function Main() {
         {/* <Route path="/" element={<Navigate replace to="/analyzer" />} /> */}
         <Route path="*" element={<NotFound />} />
       </Routes>
+      {/* <div className="DealStats-appInfo">
+        Ultimate Deal Analyzer LLC | support@dealanalyzer.app
+      </div> */}
     </Styled>
   );
 }

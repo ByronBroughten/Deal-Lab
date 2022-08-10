@@ -8,17 +8,15 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-// - Make it be, "Ultimate Property Analyzer", again.
-
 // - Test that PI calculates correctly for at least two scenarios
-// - Test that upfront investment calculates correctly
-// - Test that cash flow calculates correctly
-
 // - Try it with two loans at once
 
 // - Test getSection with loading a deal with updated property
 
 // Marketing
+// - Make it be propertyanalyzer.app
+// Change the support email
+//
 // - Make a video demo
 // - Post to reddit
 // - Post on the bigger pockets forum
