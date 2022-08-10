@@ -4,7 +4,6 @@ import React from "react";
 import { BsArrowUpCircle, BsFillHouseDoorFill } from "react-icons/bs";
 import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
-import { constants } from "../Constants";
 import { useFeUser } from "../modules/sectionActorHooks/useFeUser";
 import theme from "../theme/Theme";
 import NavBtn from "./NavBar/NavBtn";
@@ -59,11 +58,11 @@ export default function NavBar(props: NavBarProps) {
               <NavDropDown btnText="Login">
                 <LoginForm />
               </NavDropDown> */}
-              {constants.environment !== "production" && (
+              {/* {constants.environment !== "production" && (
                 <NavBtn onClick={props.logout}>
                   <span>Logout</span>
                 </NavBtn>
-              )}
+              )} */}
             </>
           )}
           {!isGuest && isBasic && (
@@ -112,6 +111,7 @@ const Styled = styled(AppBar)`
 
   .NavBar-brandName {
     margin-left: 8px;
+    font-size: 20px;
   }
 
   .NavBar-navBtnLink {
