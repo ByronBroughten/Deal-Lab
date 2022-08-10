@@ -33,7 +33,7 @@ export function ActiveDeal({ className, feId }: Props) {
 }
 
 const Styled = styled.div`
-  background: ${theme.plus.light};
+  background: ${theme.mgmt.light};
   display: flex;
   flex: 1;
 `;
