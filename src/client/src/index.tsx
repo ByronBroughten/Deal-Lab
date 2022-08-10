@@ -10,12 +10,6 @@ AppRegistry.runApplication("App", {
 
 // - Make it be, "Ultimate Property Analyzer", again.
 
-// - You might create a version that lets people
-//   assess the cost of buying a home. Like a glorified mortgage
-//   calculator. It would basically be the analyzer but without
-//   management.
-//   Ultimate Home Analyzer?
-
 // - Test that PI calculates correctly for at least two scenarios
 // - Test that upfront investment calculates correctly
 // - Test that cash flow calculates correctly
