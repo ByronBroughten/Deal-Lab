@@ -1,4 +1,4 @@
-### Ultimate Deal Analyzer Client
+### Ultimate Property Analyzer Client
 
 [Live Test Website](https://ultimate-property-analyzer.herokuapp.com/).
 

@@ -8,7 +8,7 @@ type StripePrice = {
 const envConstants = {
   development: {
     environment: "development",
-    appName: "Ultimate Deal Analyzer — Development",
+    appName: "Ultimate Property Analyzer — Development",
     apiUrlBase: "http://localhost:5000",
     clientUrlBase: "http://localhost:3000",
     stripePrices: [
@@ -22,7 +22,7 @@ const envConstants = {
   },
   production: {
     environment: "production",
-    appName: "Ultimate Deal Analyzer",
+    appName: "Ultimate Property Analyzer",
     apiUrlBase: "https://www.dealanalyzer.app",
     clientUrlBase: "https://www.dealanalyzer.app",
     stripePrices: [

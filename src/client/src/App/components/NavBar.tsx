@@ -31,7 +31,9 @@ export default function NavBar(props: NavBarProps) {
           <Link className="NavBar-navBtnLink" to="/">
             <NavBtn className="NavBar-brandBtn">
               <BsFillHouseDoorFill className="NavBar-brandIcon" />
-              <span className="NavBar-brandName">Ultimate Deal Analyzer</span>
+              <span className="NavBar-brandName">
+                Ultimate Property Analyzer
+              </span>
             </NavBtn>
           </Link>
           {/* <NavBtn
