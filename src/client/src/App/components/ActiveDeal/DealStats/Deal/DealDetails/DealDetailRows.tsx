@@ -20,15 +20,17 @@ export function DealDetailRowsNext({
       {varb.inVarbInfos.map((inInfo) => {
         if (varb.sections.hasSectionMixed(inInfo)) {
           const inVarb = varb.sections.varbByMixed(inInfo);
-          return (
-            <DealDetailRowVarbFound
-              {...{
-                varbInfo: inVarb.feVarbInfo,
-                level,
-                key: inVarb.varbId,
-              }}
-            />
-          );
+          if (inVarb.meta.valueName === "numObj") {
+            return (
+              <DealDetailRowVarbFound
+                {...{
+                  varbInfo: inVarb.feVarbInfo,
+                  level,
+                  key: inVarb.varbId,
+                }}
+              />
+            );
+          }
         } else {
           if (!("entityId" in inInfo)) {
             throw new Error(

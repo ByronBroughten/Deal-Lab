@@ -22,6 +22,7 @@ const defaultCommon = makeDefaultCommon({
 
   displayName: "",
   displayNameEnd: "",
+  displayNameStart: "",
 
   updateFnProps: {},
   inUpdateSwitchProps: [],
@@ -40,8 +41,8 @@ export function relVarb<T extends keyof RelVarbByType>(
     updateFnName: valueSchema.updateFnNames[0],
     initValue: valueSchema.initDefault(),
     ...defaultCommon,
-    ...partial,
     ...(type === "numObj" && { unit: "money" }),
+    ...partial,
   } as RelVarbByType[T];
 }
 

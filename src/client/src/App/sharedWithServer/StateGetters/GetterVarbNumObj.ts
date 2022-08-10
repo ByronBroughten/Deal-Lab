@@ -1,11 +1,11 @@
 import { round } from "lodash";
 import { evaluate } from "mathjs";
+import { numUnitParams } from "../SectionsMeta/baseSectionsUtils/baseValues/calculations/numUnitParams";
 import { InEntity } from "../SectionsMeta/baseSectionsUtils/baseValues/entities";
 import {
   EntitiesAndEditorText,
   NumberOrQ,
   NumObj,
-  numObjUnits,
 } from "../SectionsMeta/baseSectionsUtils/baseValues/NumObj";
 import { isNumObjUpdateFnName } from "../SectionsMeta/baseSectionsUtils/baseValues/updateFnNames";
 import { SectionName } from "../SectionsMeta/SectionName";
@@ -92,7 +92,8 @@ export class GetterVarbNumObj<
       let num = evaluate(text);
       if (mathS.isRationalNumber(num)) {
         num = this.doFinishingTouches(num);
-        return round(num, numObjUnits[unit].roundTo);
+        const finalNum = round(num, numUnitParams[unit].roundTo);
+        return finalNum;
       } else return "?";
     } catch (ex) {
       return "?";
@@ -100,7 +101,9 @@ export class GetterVarbNumObj<
   }
   private doFinishingTouches(num: number): number {
     const { updateFnName } = this.get;
-    if (updateFnName === "divideToPercent") num = mathS.decimalToPercent(num);
+    if (updateFnName === "divideToPercent") {
+      num = mathS.decimalToPercent(num);
+    }
     return num;
   }
 }

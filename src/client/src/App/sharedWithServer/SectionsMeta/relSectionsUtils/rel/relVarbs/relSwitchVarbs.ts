@@ -59,8 +59,8 @@ export function switchInput<SWK extends SwitchEndingKey>(
           updateFnProps: {},
         },
       ],
-      ...option.options,
       ...shared,
+      ...option.options,
       displayNameEnd: targetCore.displayNameEnd,
     });
   }

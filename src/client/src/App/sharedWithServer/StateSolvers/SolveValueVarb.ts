@@ -221,7 +221,6 @@ export class SolveValueVarb<
     const numObj = this.getterVarb.value("numObj");
     return this.numObjSolver.solvableTextFromTextAndEntities(numObj);
   }
-
   private solvableTextFromCalculation() {
     const { updateFnName } = this.getterVarb;
     if (!isCalculationName(updateFnName))

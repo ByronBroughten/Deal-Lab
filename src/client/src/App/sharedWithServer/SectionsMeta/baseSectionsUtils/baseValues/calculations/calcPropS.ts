@@ -1,6 +1,9 @@
 import { isNumber } from "lodash";
-import { mathS } from "../../../../utils/math";
 import { CalcProp } from "../calculations";
+import {
+  percentToDecimalRounded,
+  yearlyToMonthlyRounded,
+} from "./numUnitParams";
 
 export function calcPropMath(v: CalcProp, fn: (v: number) => number): CalcProp {
   return isNumber(v) ? fn(v) : v;
@@ -8,9 +11,9 @@ export function calcPropMath(v: CalcProp, fn: (v: number) => number): CalcProp {
 
 export const calcPropS = {
   percentToDecimal(v: CalcProp): CalcProp {
-    return calcPropMath(v, mathS.percentToDecimal);
+    return calcPropMath(v, percentToDecimalRounded);
   },
   yearlyToMonthly(v: CalcProp): CalcProp {
-    return isNumber(v) ? mathS.yearlyToMonthly(v) : v;
+    return isNumber(v) ? yearlyToMonthlyRounded(v) : v;
   },
 };

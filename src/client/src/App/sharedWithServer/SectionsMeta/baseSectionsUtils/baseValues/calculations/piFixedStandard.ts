@@ -1,6 +1,6 @@
-import { yearlyToMonthly, yearsToMonths } from "../../../../utils/math";
 import { CalcProp } from "../calculations";
 import { calcPropMath } from "./calcPropS";
+import { roundedS } from "./numUnitParams";
 
 interface PiYearlyFullProps extends PiYearlyCalcProps {
   loanTotalDollars: CalcProp;
@@ -16,6 +16,8 @@ export function piFixedStandardYearly({
     loanTotalDollars,
     ...monthlyCalcProps,
   })})`;
+  // loanTermMonths (360)
+  // interest rate decimal must be the difference
 }
 
 type PiMonthlyFullProps = {
@@ -23,6 +25,18 @@ type PiMonthlyFullProps = {
   interestRateDecimalMonthly: CalcProp;
   loanTermMonths: CalcProp;
 };
+// 0.0041666666667
+// 0.0042
+
+// Hmmm... How do I want to handle that?
+// every calculation could have a "displayCalculation" and a
+// number calculation.
+// I don't like that, though.
+
+// A consistent number calculation would be better.
+// interestRateDecimalMonthly could be allowed to
+// be rounded further.
+
 export function piFixedStandardMonthly({
   loanTotalDollars,
   interestRateDecimalMonthly,
@@ -51,8 +65,8 @@ function yearlyToMonthlyCalcProps({
   return {
     interestRateDecimalMonthly: calcPropMath(
       interestRateDecimalYearly,
-      yearlyToMonthly
+      roundedS.yearlyToMonthly
     ),
-    loanTermMonths: calcPropMath(loanTermYears, yearsToMonths),
+    loanTermMonths: calcPropMath(loanTermYears, roundedS.yearsToMonths),
   };
 }

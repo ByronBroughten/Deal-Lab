@@ -3,7 +3,7 @@ import {
   ValueNamesToTypes,
   ValueSchemas,
 } from "../../baseSectionsDerived/valueMetaTypes";
-import { NumObjUnit } from "../../baseSectionsUtils/baseValues/NumObj";
+import { NumUnitName } from "../../baseSectionsUtils/baseValues/calculations/numUnitParams";
 import { ValueName } from "../../baseSectionsUtils/baseVarb";
 import {
   RelInVarbInfo,
@@ -36,15 +36,14 @@ export type CommonRelVarb = {
   inUpdateSwitchProps: UpdateSwitches;
 
   displayName: DisplayName;
+  displayNameStart: string;
   displayNameEnd: string;
 
   startAdornment: string;
   endAdornment: string;
 };
 type UniqueTypeProps = {
-  numObj: {
-    unit: NumObjUnit;
-  };
+  numObj: { unit: NumUnitName };
 };
 type ValueSpecificProps = {
   [Prop in ValueName]: {

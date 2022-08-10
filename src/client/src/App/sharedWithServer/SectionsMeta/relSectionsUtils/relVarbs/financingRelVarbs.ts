@@ -49,17 +49,13 @@ export function loanRelVarbs(): RelVarbs<"loan"> {
     ]),
     ...relVarbsS.ongoingInput("interestRatePercent", "Interest rate", {
       switchInit: "yearly",
-      yearly: {
-        initValue: numObj(3),
-        endAdornment: "% annual",
-      },
+      yearly: { endAdornment: "% annual" },
       monthly: { endAdornment: "% monthly" },
+      shared: { unit: "percent" },
     }),
     ...relVarbsS.monthsYearsInput("loanTerm", "Loan term", {
       switchInit: "years",
-      years: {
-        initValue: numObj(30),
-      },
+      years: { initValue: numObj(30) },
     }),
     ...relVarbsS.timeMoneyInput("mortgageIns", "Mortgage insurance", {
       switchInit: "yearly",
@@ -80,7 +76,7 @@ export function loanRelVarbs(): RelVarbs<"loan"> {
     }),
     ...relVarbsS.ongoingPureCalc(
       "principalAndInterest",
-      "Principal + interest",
+      "Loan payments",
       {
         monthly: {
           updateFnName: "piMonthly",

@@ -138,7 +138,9 @@ export class GetterVarb<
     const { value } = this.raw;
     if (valueSchemasPlusAny[valueName ?? "any"].is(value))
       return cloneDeep(value) as ValueTypesPlusAny[VT];
-    throw new ValueTypeError(`Value not of type ${valueName}`);
+    throw new ValueTypeError(
+      `Value of ${this.sectionName}.${this.varbName} not of type ${valueName}`
+    );
   }
   valueNext() {
     const value = this.value();

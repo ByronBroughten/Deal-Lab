@@ -45,8 +45,8 @@ export type EntitiesAndEditorText = StrictPick<
 >;
 
 export const numObjUnits = {
-  percent: { roundTo: 2 },
-  decimal: { roundTo: 4 },
-  money: { roundTo: 2, roundWithZeros: true },
+  percent: { roundTo: 5 },
+  decimal: { roundTo: 7 },
+  money: { roundTo: 2 },
 } as const;
 export type NumObjUnit = keyof typeof numObjUnits;

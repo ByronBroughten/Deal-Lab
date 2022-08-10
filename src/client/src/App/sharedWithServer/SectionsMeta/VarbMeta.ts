@@ -4,7 +4,7 @@ import { SimpleSectionName } from "./baseSections";
 import { VarbNames } from "./baseSectionsDerived/baseVarbInfo";
 import { valueMeta } from "./baseSectionsDerived/valueMeta";
 import { UpdateFnName } from "./baseSectionsDerived/valueMetaTypes";
-import { NumObjUnit } from "./baseSectionsUtils/baseValues/NumObj";
+import { NumUnitName } from "./baseSectionsUtils/baseValues/calculations/numUnitParams";
 import { ValueName } from "./baseSectionsUtils/baseVarb";
 import {
   RelInVarbInfo,
@@ -123,8 +123,14 @@ export class VarbMeta<SN extends SimpleSectionName> {
   get displayName(): DisplayName {
     return this.core.displayName;
   }
+  get displayNameStart(): string {
+    return this.core.displayNameStart;
+  }
   get displayNameEnd(): string {
     return this.core.displayNameEnd;
+  }
+  get displayNameFull(): string {
+    return this.displayNameStart + this.displayName + this.displayNameEnd;
   }
   get initValue() {
     return cloneDeep(this.core.initValue);
@@ -162,10 +168,9 @@ export class VarbMeta<SN extends SimpleSectionName> {
   get inUpdatePacks(): InUpdatePack[] {
     return [...this.inSwitchUpdatePacks, this.inDefaultUpdatePack];
   }
-  get unit(): NumObjUnit {
+  get unit(): NumUnitName {
     if ("unit" in this.core) return this.core.unit;
-    else
-      throw new Error(`Varb with name ${this.core.varbName} has no NumObjUnit`);
+    else throw new Error(`Varb with name ${this.core.varbName} has no numUnit`);
   }
   get inDefaultUpdatePack(): InDefaultUpdatePack {
     return {

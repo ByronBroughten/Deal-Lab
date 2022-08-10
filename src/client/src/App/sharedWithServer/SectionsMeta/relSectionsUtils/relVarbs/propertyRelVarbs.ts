@@ -6,7 +6,7 @@ import { RelVarbs, relVarbsS } from "../relVarbs";
 export function propertyRelVarbs(): RelVarbs<"property"> {
   return {
     ...relVarbsS.savableSection,
-    price: relVarbS.moneyObj("Price"),
+    price: relVarbS.moneyObj("Price", { displayNameStart: "Property " }),
     sqft: relVarbS.calcVarb("Square feet"),
     ...relVarbsS.timeMoneyInput("taxes", "Taxes", {
       switchInit: "yearly",
