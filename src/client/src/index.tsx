@@ -8,10 +8,10 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-// In show details, some equations show "NaN" instead of question marks.
-
 // Property ongoing expenses should include taxes and home insurance
-// Loan payments
+// Loan payments should be separate
+
+// PITI should be a dead end.
 
 // Launch the app on Sunday.
 // - Make a video demo

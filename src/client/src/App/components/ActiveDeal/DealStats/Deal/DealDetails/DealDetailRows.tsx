@@ -15,7 +15,9 @@ function skipVarbIfDuplicate(varb: SetterVarb): SetterVarb {
     if (sections.hasSectionMixed(inInfo)) {
       const { feVarbInfo } = sections.varbByMixed(inInfo);
       const inVarb = setterSections.varb(feVarbInfo);
-      if (isEqual(varb.value("any"), inVarb.value("any"))) {
+      if (
+        isEqual(varb.get.numberOrQuestionMark, inVarb.get.numberOrQuestionMark)
+      ) {
         return inVarb;
       }
     }
