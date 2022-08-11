@@ -1,8 +1,9 @@
 import { Obj } from "../../../utils/Obj";
+import { calcPropMath } from "./calculations/calcPropS";
 import { percentToDecimalRounded } from "./calculations/numUnitParams";
 import {
   calculatePiMonthly,
-  calculatePiYearly
+  calculatePiYearly,
 } from "./calculations/piCalculations";
 import { NumberOrQ } from "./NumObj";
 
@@ -11,7 +12,6 @@ export type Calculate = (props: any) => string;
 type LRSides = { leftSide: number; rightSide: number };
 export type CalcProp = NumberOrQ;
 export type NumberProps = { [name: string]: CalcProp | CalcProp[] };
-
 
 type NumProp = { num: CalcProp };
 const solvableTextByArgs = {
@@ -39,7 +39,7 @@ const solvableTextByArgs = {
       return this.simpleDivide;
     },
     percentToDecimalTimesBase: ({ leftSide, rightSide }: LRSides) => {
-      const decimalLeft = percentToDecimalRounded(leftSide);
+      const decimalLeft = calcPropMath(leftSide, percentToDecimalRounded);
       return `${decimalLeft} * ${rightSide}`;
     },
     subtractFloorZero: ({ leftSide, rightSide }: LRSides) => {
@@ -86,7 +86,7 @@ const calculations = {
     base: number;
     percentOfBase: number;
   }) => {
-    const decimalOfBase = percentToDecimalRounded(percentOfBase);
+    const decimalOfBase = calcPropMath(percentOfBase, percentToDecimalRounded);
     return `${base} * ${decimalOfBase}`;
   },
   portionToDecimal: ({

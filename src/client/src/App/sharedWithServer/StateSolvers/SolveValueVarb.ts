@@ -232,7 +232,9 @@ export class SolveValueVarb<
     const { numberVarbs } = this.getNumberVarbs(updateFnProps);
     const solvableText = calculations[updateFnName](numberVarbs as any);
     if (solvableText.includes("NaN")) {
-      const test = "breakpoint";
+      throw new Error(
+        `solvableText "${solvableText}" includes NaN; derived from updateFn "${updateFnName}"`
+      );
     }
     return solvableText;
   }
