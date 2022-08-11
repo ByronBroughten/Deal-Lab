@@ -70,6 +70,7 @@ export class GetterVarb<
     } else return [];
   }
   get numberValue(): number {
+    // figure out how to make NaN result in an error or questionMark
     const val = this.value("any");
     if (val && typeof val === "object" && "solvableText" in val) {
       const numString = this.numObj.solveTextToNumStringNext();
@@ -91,7 +92,11 @@ export class GetterVarb<
   }
   get numberOrQuestionMark(): NumberOrQ {
     try {
-      return this.numberValue;
+      const val = this.numberValue;
+      if (`${val}` === "NaN") {
+        throw new Error("no NaN allowed");
+      }
+      return val;
     } catch (ex) {
       if (ex instanceof NotANumberError) {
         return "?";

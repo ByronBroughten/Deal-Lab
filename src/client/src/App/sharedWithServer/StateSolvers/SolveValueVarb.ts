@@ -231,47 +231,11 @@ export class SolveValueVarb<
     const { updateFnProps } = this.getterVarb;
     const { numberVarbs } = this.getNumberVarbs(updateFnProps);
     const solvableText = calculations[updateFnName](numberVarbs as any);
+    if (solvableText.includes("NaN")) {
+      throw new Error("breakpoint");
+    }
     return solvableText;
   }
-  // private gatherProps(updateFnProps: UpdateFnProps): UpdateFnValues {
-  //   // ok. the best way to do this would be to makeUpdateFnProps
-  //   // not have that array option
-  //   /// then again, is this something that I need to fix right now?
-  //   // I don't think so. The code is so bad, though.
-
-  //   // I will fix it, after running tests, first
-
-  //   return Obj.keys(updateFnProps).reduce((values, propName) => {
-  //     const updateFnProp = updateFnProps[propName]
-  //     values[propName]
-  //     return values;
-  //   }, {} as UpdateFnValues)
-
-  //   for (let [propName, propOrArr] of Object.entries(updateFnProps)) {
-  //     if (Array.isArray(propOrArr)) numberVarbs[propName] = [];
-  //     else propOrArr = [propOrArr];
-  //     for (const relInfo of propOrArr) {
-  //       const inVarbs = this.getterSection.varbsByFocalMixed(relInfo);
-  //       for (const inVarb of inVarbs) {
-  //         if (inVarb.hasValueType("numObj")) {
-  //           const num = inVarb.numberOrQuestionMark;
-  //           if (num === "?") {
-  //             failedVarbs.push({
-  //               errorMessage: "failed varb",
-  //               ...relInfo,
-  //             });
-  //           }
-  //           const numArr = numberVarbs[propName];
-  //           if (Array.isArray(numArr)) numArr.push(num);
-  //           else numberVarbs[propName] = num;
-  //         } else {
-  //           numberVarbs[propName] = inVarb.value() as any
-  //         }
-  //       }
-  //     }
-  //   }
-  //   return { numberVarbs, failedVarbs };
-  // }
   private getNumberVarbs(updateFnProps: UpdateFnProps): {
     numberVarbs: NumberProps;
     failedVarbs: FailedVarbs;

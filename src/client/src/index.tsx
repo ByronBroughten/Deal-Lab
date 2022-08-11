@@ -7,7 +7,8 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-// - Address the "Show Details" bugs
+
+// In show details, some equations show "NaN" instead of question marks.
 
 // Property ongoing expenses should include taxes and home insurance
 // Loan payments

@@ -11,13 +11,15 @@ export const mathS = {
   isNumber,
   parseFloatStrict(str: string): number {
     const parsed = parseFloat(str);
-    if (isNaN(parsed) || `${parsed}` !== str) {
+    if (isNaN(parsed)) {
+      throw new NotANumberError(`The passed string ${str} was parsed as NaN.`);
+    }
+    if (`${parsed}` !== str) {
       throw new NotANumberError(
         `The passed string "${str}" was parsed as "${parsed}", which is not an exact conversion.`
       );
-    } else {
-      return parsed;
     }
+    return parsed;
   },
   isRationalNumber(num: any): num is number {
     return typeof num === "number" && isStringRationalNumber(`${num}`);
