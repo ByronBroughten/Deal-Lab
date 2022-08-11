@@ -96,7 +96,10 @@ export function mgmtRelVarbs<R extends RelVarbs<"mgmt">>(): R {
         relVarbInfoS.children("ongoingCostList", "total"),
         ...relVarbInfosS.local(["vacancyLossDollars", "rentCutDollars"]),
       ],
-      { switchInit: "monthly", shared: { startAdornment: "$" } }
+      {
+        switchInit: "monthly",
+        shared: { startAdornment: "$", displayNameStart: "Management " },
+      }
     ),
   } as R;
 }

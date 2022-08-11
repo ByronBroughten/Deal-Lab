@@ -28,7 +28,10 @@ export function propertyRelVarbs(): RelVarbs<"property"> {
       "expenses",
       "Ongoing expenses",
       [relVarbInfoS.children("ongoingCostList", "total")],
-      { switchInit: "monthly", shared: { startAdornment: "$" } }
+      {
+        switchInit: "monthly",
+        shared: { startAdornment: "$", displayNameStart: "Property " },
+      }
     ),
 
     // ongoing revenue

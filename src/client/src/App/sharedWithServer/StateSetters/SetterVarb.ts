@@ -18,6 +18,7 @@ import {
   EditorValue,
 } from "./EditorUpdaterVarb";
 import { SetterVarbBase } from "./SetterBases/SetterVarbBase";
+import { SetterSections } from "./SetterSections";
 
 export class SetterVarb<
   SN extends SectionName = SectionName
@@ -26,14 +27,14 @@ export class SetterVarb<
   private get updaterVarb() {
     return new UpdaterVarb(this.getterVarbBase.getterVarbProps);
   }
-  private get getterVarb() {
-    return new GetterVarb(this.getterVarbBase.getterVarbProps);
+  get setterSections(): SetterSections {
+    return new SetterSections(this.setterSectionsProps);
   }
   private get editorUpdater() {
     return new EditorUpdaterVarb(this.getterVarbBase.getterVarbProps);
   }
   get get(): GetterVarb<SN> {
-    return this.getterVarb;
+    return new GetterVarb(this.getterVarbBase.getterVarbProps);
   }
   get meta(): VarbMeta<SN> {
     return this.get.meta;
@@ -79,7 +80,7 @@ export class SetterVarb<
     return this.updaterVarb.manualUpdateEditorToggle;
   }
   value<VT extends ValueName | "any">(valueName: VT): ValueTypesPlusAny[VT] {
-    return this.getterVarb.value(valueName);
+    return this.get.value(valueName);
   }
   get hasInVarbs(): boolean {
     return this.solverVarb.hasInVarbs;

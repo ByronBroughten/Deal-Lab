@@ -23,8 +23,8 @@ const envConstants = {
   production: {
     environment: "production",
     appName: "Ultimate Property Analyzer",
-    apiUrlBase: "https://www.dealanalyzer.app",
-    clientUrlBase: "https://www.dealanalyzer.app",
+    apiUrlBase: "https://www.propertyanalyzer.app",
+    clientUrlBase: "https://www.propertyanalyzer.app",
     stripePrices: [
       {
         priceId: "price_1LTuDKBcSOBChcCBqPTRlPCI",

@@ -31,7 +31,7 @@ export default function Financing({ feId, ...rest }: Props) {
           className="Financing-mainSectionTitleBtn"
           onClick={addLoan}
         >
-          + Loan
+          Add Loan
         </MainSectionTitleBtn>
       </div>
     </Styled>
@@ -41,6 +41,7 @@ export default function Financing({ feId, ...rest }: Props) {
 const Styled = styled(MainSection)`
   .Financing-mainSectionTitleBtn {
     width: 75%;
+    max-width: 600px;
     height: 40px;
     background: ${theme.loan.main};
     :hover,
@@ -51,7 +52,7 @@ const Styled = styled(MainSection)`
   .MainSection-addEntryBtnDiv {
     display: flex;
     justify-content: center;
-    padding-bottom: ${theme.s3};
+    padding-bottom: ${theme.s4};
   }
   .Loan-root {
     border-top: 2px solid ${theme.loan.dark};

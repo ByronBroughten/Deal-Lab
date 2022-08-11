@@ -7,16 +7,46 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
+// - Address the "Show Details" bugs
+
+// Property ongoing expenses should include taxes and home insurance
+// Loan payments
+
+// Launch the app on Sunday.
+// - Make a video demo
+// - Make a video ad
+// - Make have a little ad banner made
+// - Figure out where to post it
+//   *Reddit
+//    - r/realestateinvesting
+//    - r/realestate
+//    - answer people's questions about how to size up properties
+//    - Reddit ads
+//   *Quora
+//    - answer people's questions about how to size-up property
+//   * Youtube ads
+//   * Facebook ads
+//    - banner
+
+// Possible roadmap
+// - Roadmap
+// - Custom variables
+// - Custom lists
+// - Network effect
+//   - Link with other accounts
+//   - Share variables, lists, properties, etc
+//   - Forum, or a reddit thread or discord
+//     This would be too much I think
 
 // - Test that PI calculates correctly for at least two scenarios
 // - Try it with two loans at once
 
 // - Test getSection with loading a deal with updated property
 
+// - get rid of login and register stuff
+
 // Marketing
-// - Make it be propertyanalyzer.app
-// Change the support email
-//
+
 // - Make a video demo
 // - Post to reddit
 // - Post on the bigger pockets forum
@@ -24,8 +54,6 @@ AppRegistry.runApplication("App", {
 // - Use the ad on facebook
 // - Use the ad on YouTube
 // - Get an "influencer" to showcase it?
-
-// - get rid of login and register stuff
 
 // - Test addSection
 // - Test the pro stuff
@@ -40,8 +68,6 @@ AppRegistry.runApplication("App", {
 // - Test the two Stripe webhooks.
 //   - Create my own webhook events that simulate the ones stripe would send
 //   - Use "generateTestHeaderString" to add a header that works
-
-// - Think about what to do about the little "Show Details" bugs
 
 // Style the buttons so that they match the color and placement of the things they add(?)
 // - This is a little tricky for Unit

@@ -13,13 +13,14 @@ export function DealDetailRowVarbFound({ varbInfo, level }: Props) {
   const props = {
     varbInfo,
     level,
-    displayName: varb.get.displayName,
+    displayName: varb.meta.displayNameStart + varb.get.displayName,
     displayVarb: varb.get.displayVarb(),
     ...(solvableText === `${varb.get.numberOrQuestionMark}`
       ? {}
       : { solvableText }),
   };
   const { hasInVarbs } = varb;
+
   return (
     <>
       {hasInVarbs && <DealDetailRowDropDown {...props} />}

@@ -46,7 +46,7 @@ export function Main() {
         <Route path="*" element={<NotFound />} />
       </Routes>
       {/* <div className="DealStats-appInfo">
-        Ultimate Deal Analyzer LLC | support@dealanalyzer.app
+        Ultimate Deal Analyzer LLC | support@propertyanalyzer.app
       </div> */}
     </Styled>
   );

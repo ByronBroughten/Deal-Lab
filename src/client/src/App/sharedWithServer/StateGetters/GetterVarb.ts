@@ -162,6 +162,9 @@ export class GetterVarb<
     const { displayNameEnd } = this.meta;
     return this.displayName + displayNameEnd;
   }
+  get displayNameStart(): string {
+    return this.meta.displayNameStart;
+  }
   get displayNameEnd(): string {
     return this.meta.displayNameEnd;
   }
