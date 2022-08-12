@@ -99,7 +99,7 @@ export function VarbListGeneric<SN extends VarbListAllowed>({
         </div>
         {viewIsOpen && (
           <VarbListTable {...{ themeName, contentTitle, addItem }}>
-            {[...items].reverse().map((item) => makeItemNode(item))}
+            {items.map((item) => makeItemNode(item))}
           </VarbListTable>
         )}
       </div>

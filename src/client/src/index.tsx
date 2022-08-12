@@ -8,6 +8,13 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
+// Test getSection with loading a deal with updated property
+
+// Make the other two green buttons theme-colored
+// - Either use a themeName hook with ReactNative's system
+// - or use a themeName hook with the current system (kind of a pain)
+// - or use Styled Components' theme utility
+
 // Launch the app on Sunday.
 // - Make a video demo
 // - Make a video ad
@@ -34,15 +41,14 @@ AppRegistry.runApplication("App", {
 //   - Forum, or a reddit thread or discord
 //     This would be too much I think
 
+// Think about making a guest user that has two example properties.
+
 // - Test that PI calculates correctly for at least two scenarios
 // - Try it with two loans at once
-
-// - Test getSection with loading a deal with updated property
 
 // - get rid of login and register stuff
 
 // Marketing
-
 // - Make a video demo
 // - Post to reddit
 // - Post on the bigger pockets forum

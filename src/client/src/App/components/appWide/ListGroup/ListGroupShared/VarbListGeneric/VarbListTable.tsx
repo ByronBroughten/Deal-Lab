@@ -1,5 +1,5 @@
 import { Children } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import ccs from "../../../../../theme/cssChunks";
 import theme, { ThemeName } from "../../../../../theme/Theme";
 import { StandardProps } from "../../../../general/StandardProps";
@@ -39,15 +39,8 @@ export function VarbListTable({
   // const defaultValueSwitch = defaultSwitchVarb.value("string");
 
   return (
-    <Styled className="AdditiveListTable-root" themeName={themeName}>
-      {areNone && (
-        // <BtnTooltip
-        //   title="Add list item"
-        //   className="AdditiveListTable-addItemBtn noTable"
-        // >
-        <AddItemBtn onClick={addItem} className="noTable" />
-        // </BtnTooltip>
-      )}
+    <Styled className="AdditiveListTable-root" $themeName={themeName}>
+      {areNone && <AddItemBtn onClick={addItem} className="noTable" />}
       {isAtLeastOne && (
         <table className="AdditiveListTable-table">
           <thead>
@@ -57,32 +50,52 @@ export function VarbListTable({
                 {contentTitle}
               </th>
               <th colSpan={2} className="AdditiveListTable-buttonHeader">
-                <AddItemBtn className="yesTable" onClick={addItem} />
+                {/* <AddItemBtn className="yesTable" onClick={addItem} /> */}
               </th>
             </tr>
           </thead>
           <tbody>{children}</tbody>
+          <td colSpan={4}>
+            <AddItemBtn onClick={addItem} className="yesTable" />
+          </td>
         </table>
       )}
     </Styled>
   );
 }
 
+// This is close. But I only want the
+// edge of the table to expand.
+// That's not true.
+// I actually only want the middle of the table to expand.
+// I could have two tables with a flex thing in the middle
+
+// I could try making my own table rows.
+// I would have to use separate divs like I did for the
+// if-then variables. It could work. It would just take
+// some time.
+
 const Styled = styled.div<{
-  themeName: ThemeName;
+  $themeName: ThemeName;
 }>`
   .AdditiveListTable-addItemBtn {
+    ${({ $themeName }) =>
+      css`
+        background: ${theme[$themeName].light};
+        border: none;
+        :hover,
+        :active {
+          background: ${theme[$themeName].dark};
+          border: 1px solid ${theme[$themeName].main};
+        }
+      `}
     font-weight: 900;
     height: ${theme.unlabeledInputHeight};
-    width: 50px;
-  }
-  .AdditiveListTable-addItemBtn.noTable {
     width: 100%;
-    margin-top: ${theme.s1};
   }
 
   .AdditiveListTable-table {
-    ${({ themeName }) => ccs.listTable.main(themeName)}
+    ${({ $themeName }) => ccs.listTable.main($themeName)}
   }
   th.AdditiveListTable-nameHeader {
     text-align: left;
@@ -99,7 +112,7 @@ const Styled = styled.div<{
 
   th.AdditiveListTable-contentHeader,
   td.AdditiveItem-contentCell {
-    border-left: 1px solid ${({ themeName }) => theme[themeName].border};
+    border-left: 1px solid ${({ $themeName }) => theme[$themeName].border};
   }
 
   .AdditiveItem-contentCellDiv {
