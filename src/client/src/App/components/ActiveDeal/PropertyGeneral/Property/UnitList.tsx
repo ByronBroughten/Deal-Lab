@@ -34,8 +34,7 @@ export function UnitList({ feInfo, className }: Props) {
         <div className="title-row">
           {areNone && (
             <PlusBtn className="UnitList-addUnitBtn" onClick={addUnit}>
-              + Unit
-              {/* <VscDiffAdded className="UnitList-addUnitBtnIcon" /> */}
+              Add Unit
             </PlusBtn>
           )}
         </div>
@@ -54,8 +53,7 @@ export function UnitList({ feInfo, className }: Props) {
                               className="UnitList-addUnitBtn"
                               onClick={addUnit}
                             >
-                              + Unit
-                              {/* <VscDiffAdded className="UnitList-addUnitBtnIcon" /> */}
+                              Add Unit
                             </PlusBtn>
                             {areMultiple && (
                               <div className="UnitList-total">
@@ -109,6 +107,7 @@ const Styled = styled.div<{ isAtLeastOne: boolean }>`
     padding: ${theme.s2};
     background-color: ${theme.property.light};
     box-shadow: ${theme.boxShadow1};
+    border-top: 1px solid ${theme.property.main};
   }
   .UnitList-totalText {
     font-size: ${rem("15px")};
@@ -120,6 +119,15 @@ const Styled = styled.div<{ isAtLeastOne: boolean }>`
   }
 
   .UnitList-addUnitBtn {
+    box-shadow: ${theme.boxShadow1};
+    background-color: ${theme.property.light};
+    border: none;
+    :hover,
+    :active {
+      background-color: ${theme.property.dark};
+      border: 1px solid ${theme.property.main};
+    }
+
     font-weight: 700;
     font-size: 0.9rem;
     line-height: 1.2rem;

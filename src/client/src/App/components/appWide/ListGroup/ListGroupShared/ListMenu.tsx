@@ -95,8 +95,9 @@ const Styled = styled.div<{ themeName: ThemeName }>`
     border-radius: 0 ${theme.br1} ${theme.br1} 0;
     border: 1px solid;
     border-left: none;
-    box-shadow: ${theme.boxShadow1};
+    /* box-shadow: ${theme.boxShadow1}; */
     position: relative;
+    z-index: 3;
 
     ${({ themeName }) => css`
       background-color: ${theme[themeName].main};
@@ -109,5 +110,6 @@ const Styled = styled.div<{ themeName: ThemeName }>`
     width: 35px;
     height: 32px;
     border-radius: 0;
+    border-left: none;
   }
 `;

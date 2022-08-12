@@ -8,12 +8,16 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
+// It would be good to break up theme
+// themeBtn.ts
+// theme.btn.
+// etc.
+
 // Test getSection with loading a deal with updated property
 
-// Make the other two green buttons theme-colored
-// - Either use a themeName hook with ReactNative's system
-// - or use a themeName hook with the current system (kind of a pain)
-// - or use Styled Components' theme utility
+// what color should the add unit button be?
+// should I integrate it with the units?
+//
 
 // Launch the app on Sunday.
 // - Make a video demo
