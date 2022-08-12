@@ -1,6 +1,6 @@
 import mongoose, { QueryOptions } from "mongoose";
 import { GuestAccessSectionPackArrs } from "../../../../client/src/App/sharedWithServer/apiQueriesShared/register";
-import { SectionVarbName } from "../../../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionTypes";
+import { VarbNameNext } from "../../../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionTypes";
 import { VarbValue } from "../../../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsDerived/valueMetaTypes";
 import {
   DbPack,
@@ -85,7 +85,7 @@ export class DbUser extends DbSectionsQuerierBase {
   async getOnlyValue<
     CN extends DbStoreName,
     SN extends DbSectionName<CN>,
-    VN extends SectionVarbName<SN>
+    VN extends VarbNameNext<SN>
   >({
     varbName,
     storeName,
@@ -169,7 +169,7 @@ export class DbUser extends DbSectionsQuerierBase {
   async setOnlyValue<
     CN extends DbStoreName,
     SN extends DbSelfOrDescendantSn<CN>,
-    VN extends SectionVarbName<SN>
+    VN extends VarbNameNext<SN>
   >({ value, ...rest }: OneDbSectionValueInfo<CN, SN, VN>) {
     this.update({
       operation: { $set: { [modelPath.firstSectionVarb(rest)]: value } },

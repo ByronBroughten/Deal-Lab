@@ -1,10 +1,19 @@
+import { SimpleSectionVarbName } from "../../../../../sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionTypes";
 import { FeVarbInfo } from "../../../../../sharedWithServer/SectionsMeta/Info";
 import { useGetterVarb } from "../../../../../sharedWithServer/stateClassHooks/useGetterVarb";
 import { useSetterVarb } from "../../../../../sharedWithServer/stateClassHooks/useSetterVarb";
+import { GetterVarb } from "../../../../../sharedWithServer/StateGetters/GetterVarb";
 import {
   DealDetailRowDropDown,
   DealDetailRowEndPoint,
 } from "./DealDetailRowStyled";
+import { detailsConfig } from "./dealDetailsConfig";
+
+function getDetailDisplayName(varb: GetterVarb) {
+  const name = varb.sectionVarbName as SimpleSectionVarbName;
+  const title = detailsConfig[name].detailTitle;
+  return title ?? varb.displayName;
+}
 
 type Props = { varbInfo: FeVarbInfo; level: number };
 export function DealDetailRowVarbFound({ varbInfo, level }: Props) {
@@ -13,7 +22,7 @@ export function DealDetailRowVarbFound({ varbInfo, level }: Props) {
   const props = {
     varbInfo,
     level,
-    displayName: varb.meta.displayNameStart + varb.get.displayName,
+    displayName: getDetailDisplayName(varb.get),
     displayVarb: varb.get.displayVarb(),
     ...(solvableText === `${varb.get.numberOrQuestionMark}`
       ? {}

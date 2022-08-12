@@ -1,6 +1,6 @@
 // make TableActor
 
-import { SectionVarbName } from "../../sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionTypes";
+import { VarbNameNext } from "../../sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionTypes";
 import { InEntityVarbInfo } from "../../sharedWithServer/SectionsMeta/baseSectionsUtils/baseValues/entities";
 import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
 import { PackMakerSection } from "../../sharedWithServer/StatePackers.ts/PackMakerSection";
@@ -65,7 +65,7 @@ export class TableActor extends SectionActorBase<"table"> {
   async sortRows(
     colIdOrTitle:
       | string
-      | StrictExtract<SectionVarbName<"tableRow">, "displayName">,
+      | StrictExtract<VarbNameNext<"tableRow">, "displayName">,
     options: { reverse?: boolean } = {}
   ) {
     this.tableState.sortTableRowIdsByColumn(colIdOrTitle, options);

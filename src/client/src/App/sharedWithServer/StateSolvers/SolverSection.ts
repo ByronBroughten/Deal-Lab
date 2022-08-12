@@ -1,10 +1,10 @@
 import {
-  SectionVarbName,
-  VarbValues
+  VarbNameNext,
+  VarbValues,
 } from "../SectionsMeta/baseSectionsDerived/baseSectionTypes";
 import {
   ChildName,
-  FeChildInfo
+  FeChildInfo,
 } from "../SectionsMeta/childSectionsDerived/ChildName";
 import { ChildSectionName } from "../SectionsMeta/childSectionsDerived/ChildSectionName";
 import { SectionPack } from "../SectionsMeta/childSectionsDerived/SectionPack";
@@ -14,11 +14,11 @@ import { GetterSectionProps } from "../StateGetters/Bases/GetterSectionBase";
 import { GetterSection } from "../StateGetters/GetterSection";
 import {
   ChildPackInfo,
-  ChildSectionPackArrs
+  ChildSectionPackArrs,
 } from "../StatePackers.ts/PackLoaderSection";
 import {
   AddChildOptions,
-  UpdaterSection
+  UpdaterSection,
 } from "../StateUpdaters/UpdaterSection";
 import { Obj } from "../utils/Obj";
 import { AddSolverSection } from "./AddSolverSection";
@@ -26,7 +26,7 @@ import { ComboSolverSection } from "./ComboSolverSection";
 import { RemoveSolverSection } from "./RemoveSolverSection";
 import {
   SolverSectionBase,
-  SolverSectionProps
+  SolverSectionProps,
 } from "./SolverBases/SolverSectionBase";
 import { HasSolveShare } from "./SolverBases/SolverSectionsBase";
 import { SolverSections } from "./SolverSections";
@@ -87,7 +87,7 @@ export class SolverSection<
   }
   updateValuesAndSolve(values: VarbValues): void {
     this.updater.updateValuesDirectly(values);
-    const varbNames = Obj.keys(values) as SectionVarbName<SN>[];
+    const varbNames = Obj.keys(values) as VarbNameNext<SN>[];
     const varbInfos = varbNames.map((varbName) => this.get.varbInfo(varbName));
 
     this.addVarbInfosToSolveFor(...varbInfos);
@@ -101,13 +101,15 @@ export class SolverSection<
     this.remover.removeChildrenAndExtractVarbIds(childName);
     this.solve();
   }
-  varb<VN extends SectionVarbName<SN>>(varbName: VN): SolverVarb<SN> {
+  varb<VN extends VarbNameNext<SN>>(varbName: VN): SolverVarb<SN> {
     return new SolverVarb({
       ...this.solverSectionProps,
-      varbName: varbName as string
+      varbName: varbName as string,
     });
   }
-  onlyChild<CN extends ChildName<SN>>(childName: CN): SolverSection<ChildSectionName<SN, CN>> {
+  onlyChild<CN extends ChildName<SN>>(
+    childName: CN
+  ): SolverSection<ChildSectionName<SN, CN>> {
     const { feInfo } = this.get.onlyChild(childName);
     return this.solverSection(feInfo);
   }

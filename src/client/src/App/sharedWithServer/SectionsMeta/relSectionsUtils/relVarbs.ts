@@ -2,8 +2,8 @@ import { Obj } from "../../utils/Obj";
 import { baseSections, SimpleSectionName } from "../baseSections";
 import {
   BaseName,
-  SectionVarbName,
-  SectionVarbNameByType,
+  VarbNameNext,
+  VarbNameNextByType,
 } from "../baseSectionsDerived/baseSectionTypes";
 import { ValueName } from "../baseSectionsUtils/baseVarb";
 import { switchNames } from "../baseSectionsUtils/RelSwitchVarb";
@@ -25,18 +25,18 @@ import { RelVarb, RelVarbByType } from "./rel/relVarbTypes";
 
 export type GeneralRelVarbs = Record<string, RelVarb>;
 export type RelVarbs<SN extends SimpleSectionName> = Record<
-  SectionVarbName<SN>,
+  VarbNameNext<SN>,
   RelVarb
 >;
 
 type RelVarbsByType<SN extends SimpleSectionName, VLN extends ValueName> = Pick<
   RelVarbs<SN>,
-  SectionVarbNameByType<SN, VLN>
+  VarbNameNextByType<SN, VLN>
 >;
 
 function isRelVarbOfType<SN extends BaseName<"hasVarb">, VLN extends ValueName>(
   sectionName: SN,
-  varbName: SectionVarbName<SN>,
+  varbName: VarbNameNext<SN>,
   valueName: VLN,
   _value: any
 ): _value is RelVarbByType[VLN] {

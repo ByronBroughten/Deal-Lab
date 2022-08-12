@@ -1,5 +1,5 @@
 import mongoose, { Schema } from "mongoose";
-import { SectionVarbName } from "../client/src/App/sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionTypes";
+import { VarbNameNext } from "../client/src/App/sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionTypes";
 import { DbSectionPack } from "../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbSectionPack";
 import {
   OneDbSectionValueInfo,
@@ -86,7 +86,7 @@ export const queryParameters = {
   updateVarb: <
     CN extends DbStoreName,
     SN extends DbSelfOrDescendantSn<CN>,
-    VN extends SectionVarbName<SN>
+    VN extends VarbNameNext<SN>
   >({
     value,
     ...props

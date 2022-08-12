@@ -141,7 +141,7 @@ export class VarbMeta<SN extends SimpleSectionName> {
   get sectionName(): SN {
     return this.core.sectionName;
   }
-  get sectionVarbNames(): VarbNames<SN> {
+  get varbNameInfo(): VarbNames<SN> {
     return {
       sectionName: this.sectionName,
       varbName: this.varbName,

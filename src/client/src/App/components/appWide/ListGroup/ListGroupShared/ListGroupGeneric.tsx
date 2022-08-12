@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import { MdOutlinePlaylistAdd } from "react-icons/md";
 import styled, { css } from "styled-components";
-import { SectionVarbName } from "../../../../sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionTypes";
+import { VarbNameNext } from "../../../../sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionTypes";
 import { ChildName } from "../../../../sharedWithServer/SectionsMeta/childSectionsDerived/ChildName";
 import { ChildSectionName } from "../../../../sharedWithServer/SectionsMeta/childSectionsDerived/ChildSectionName";
 import { FeSectionInfo } from "../../../../sharedWithServer/SectionsMeta/Info";
@@ -26,7 +26,7 @@ export type ListGroupGenericProps<SN extends ListParentName> = {
   themeName: ThemeName;
   makeListNode: (props: MakeListNodeProps) => ReactNode;
   titleText: string;
-  totalVarbName?: SectionVarbName<SN>;
+  totalVarbName?: VarbNameNext<SN>;
   className?: string;
 };
 

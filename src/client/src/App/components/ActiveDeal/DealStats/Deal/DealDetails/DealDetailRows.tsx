@@ -9,7 +9,8 @@ import {
 } from "./DealDetailRow";
 
 function skipVarbIfDuplicate(varb: SetterVarb): SetterVarb {
-  if (varb.inVarbInfos.length === 1) {
+  let count = 0;
+  while (varb.inVarbInfos.length === 1) {
     const inInfo = varb.inVarbInfos[0];
     const { setterSections, sections } = varb;
     if (sections.hasSectionMixed(inInfo)) {
@@ -18,8 +19,12 @@ function skipVarbIfDuplicate(varb: SetterVarb): SetterVarb {
       if (
         isEqual(varb.get.numberOrQuestionMark, inVarb.get.numberOrQuestionMark)
       ) {
-        return inVarb;
+        varb = inVarb;
       }
+    }
+    count++;
+    if (count === 100) {
+      throw new Error(`While loop exceeded limit with ${varb.get.varbId}`);
     }
   }
   return varb;

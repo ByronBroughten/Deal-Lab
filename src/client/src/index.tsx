@@ -8,10 +8,19 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-// Property ongoing expenses should include taxes and home insurance
-// Loan payments should be separate
+// Make the skip happen as many times as it needs to, so there is not
+// Property revenue > Property revenue
 
-// PITI should be a dead end.
+// Add a variable that can toggle whether to display the
+// sectionName in the details. This would be easier, more targeted
+// and more versatile
+
+// - make property ongoing expenses include taxes and home insurance
+// - make a new loan variable called ongoingCosts, which includes
+//   mortgage insurance and loan payments
+// - make financing have ongoingCosts as well
+// - put PITI and downpayment on Final
+// - make final's "ongoingCosts" just sum the three ongoingCosts
 
 // Launch the app on Sunday.
 // - Make a video demo

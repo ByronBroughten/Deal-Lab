@@ -43,10 +43,3 @@ export type EntitiesAndEditorText = StrictPick<
   NumObj,
   "editorText" | "entities"
 >;
-
-export const numObjUnits = {
-  percent: { roundTo: 5 },
-  decimal: { roundTo: 7 },
-  money: { roundTo: 2 },
-} as const;
-export type NumObjUnit = keyof typeof numObjUnits;

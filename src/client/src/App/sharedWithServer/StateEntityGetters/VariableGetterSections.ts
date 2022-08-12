@@ -103,9 +103,7 @@ export class VariableGetterSections extends GetterSectionsBase {
         const moreOptions = varbNames
           .map((varbName) => this.sectionsMeta.varb({ sectionName, varbName }))
           .filter((varbMeta) => varbMeta.valueName === "numObj")
-          .map((varbMeta) =>
-            this.initGlobalVarbOption(varbMeta.sectionVarbNames)
-          );
+          .map((varbMeta) => this.initGlobalVarbOption(varbMeta.varbNameInfo));
 
         options = options.concat(moreOptions);
       }

@@ -1,6 +1,6 @@
 import { pick } from "lodash";
 import {
-  SectionVarbName,
+  VarbNameNext,
   VarbValues,
 } from "../SectionsMeta/baseSectionsDerived/baseSectionTypes";
 import { SwitchEndingKey } from "../SectionsMeta/baseSectionsUtils/RelSwitchVarb";
@@ -137,13 +137,13 @@ export class SetterSection<
     this.solver.resetToDefaultAndSolve();
     this.setSections();
   }
-  varb(varbName: SectionVarbName<SN>): SetterVarb<SN> {
+  varb(varbName: VarbNameNext<SN>): SetterVarb<SN> {
     return new SetterVarb({
       ...this.setterSectionProps,
       varbName: varbName as string,
     });
   }
-  varbInfo(varbName: SectionVarbName<SN>): FeVarbInfo<SN> {
+  varbInfo(varbName: VarbNameNext<SN>): FeVarbInfo<SN> {
     return this.get.varbInfo(varbName);
   }
   switchVarbInfo(

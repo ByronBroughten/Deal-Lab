@@ -3,9 +3,9 @@ import { mathS } from "../../../../utils/math";
 
 export type NumUnitName = keyof typeof numUnitParams;
 export const numUnitParams = {
-  percent: { roundTo: 6 },
-  decimal: { roundTo: 8 },
-  money: { roundTo: 2 },
+  percent: { roundTo: 6, displayRound: 3 },
+  decimal: { roundTo: 8, displayRound: 3 },
+  money: { roundTo: 2, displayRound: 2 },
 } as const;
 
 export function percentToDecimalRounded(num: number): number {

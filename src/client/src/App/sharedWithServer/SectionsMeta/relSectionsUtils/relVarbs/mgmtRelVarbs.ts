@@ -98,7 +98,7 @@ export function mgmtRelVarbs<R extends RelVarbs<"mgmt">>(): R {
       ],
       {
         switchInit: "monthly",
-        shared: { startAdornment: "$", displayNameStart: "Management " },
+        shared: { startAdornment: "$" },
       }
     ),
   } as R;

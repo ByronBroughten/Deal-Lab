@@ -6,7 +6,7 @@ import { RelVarbs, relVarbsS } from "../relVarbs";
 export function propertyRelVarbs(): RelVarbs<"property"> {
   return {
     ...relVarbsS.savableSection,
-    price: relVarbS.moneyObj("Price", { displayNameStart: "Property " }),
+    price: relVarbS.moneyObj("Price"),
     sqft: relVarbS.calcVarb("Square feet"),
     ...relVarbsS.timeMoneyInput("taxes", "Taxes", {
       switchInit: "yearly",
@@ -23,14 +23,13 @@ export function propertyRelVarbs(): RelVarbs<"property"> {
     upfrontRevenue: relVarbS.sumMoney("Upfront revenues", [
       relVarbInfoS.children("upfrontRevenueList", "total"),
     ]),
-
     ...relVarbsS.ongoingSumNums(
       "expenses",
       "Ongoing expenses",
       [relVarbInfoS.children("ongoingCostList", "total")],
       {
         switchInit: "monthly",
-        shared: { startAdornment: "$", displayNameStart: "Property " },
+        shared: { startAdornment: "$" },
       }
     ),
 

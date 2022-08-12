@@ -128,6 +128,7 @@ export const financingRelVarbs: RelVarbs<"financing"> = {
     ],
     { endAdornment: "%", displayNameEnd: "percent" }
   ),
+
   ...relVarbsS.ongoingSumNums(
     "piti",
     "PITI payment",
