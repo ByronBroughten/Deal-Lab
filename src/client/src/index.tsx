@@ -8,17 +8,6 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-// Test these things
-// - make property ongoing expenses include taxes and home insurance
-// - make a new loan variable called ongoingCosts, which includes
-//   mortgage insurance and loan payments
-// - make financing have ongoingCosts as well
-// - move PITI and downpayment to Final
-// - fix FinancingInfo
-// - fix things that depend on downpayment
-// - make final's "ongoingCosts" sum the three ongoingCosts
-//   and not draw from PITI
-
 // Launch the app on Sunday.
 // - Make a video demo
 // - Make a video ad
