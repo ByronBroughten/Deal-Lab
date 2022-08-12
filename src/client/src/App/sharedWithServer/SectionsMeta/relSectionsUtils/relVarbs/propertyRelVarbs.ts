@@ -26,7 +26,11 @@ export function propertyRelVarbs(): RelVarbs<"property"> {
     ...relVarbsS.ongoingSumNums(
       "expenses",
       "Ongoing expenses",
-      [relVarbInfoS.children("ongoingCostList", "total")],
+      [
+        relVarbInfoS.children("ongoingCostList", "total"),
+        relVarbInfoS.local("taxes"),
+        relVarbInfoS.local("homeIns"),
+      ],
       {
         switchInit: "monthly",
         shared: { startAdornment: "$" },

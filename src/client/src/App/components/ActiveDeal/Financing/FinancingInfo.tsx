@@ -1,5 +1,8 @@
 import styled from "styled-components";
-import { useGetterSection } from "../../../sharedWithServer/stateClassHooks/useGetterSection";
+import {
+  useGetterSection,
+  useGetterSectionOnlyOne,
+} from "../../../sharedWithServer/stateClassHooks/useGetterSection";
 import theme from "../../../theme/Theme";
 import useHowMany from "../../appWide/customHooks/useHowMany";
 import LabeledOutputRowSimple from "../../appWide/LabeledOutputRowSimple";
@@ -7,12 +10,14 @@ import { LabeledVarbSimple } from "../../appWide/LabeledVarbSimple";
 import GlobalInfoSection from "../general/StaticInfoSection";
 
 export default function FinancingInfo({ feId }: { feId: string }) {
+  const deal = useGetterSectionOnlyOne("deal");
+
   const financing = useGetterSection({
     sectionName: "financing",
     feId,
   });
   const downPaymentDollars =
-    financing.varb("downPaymentDollars").numberOrQuestionMark;
+    deal.varb("downPaymentDollars").numberOrQuestionMark;
   const downPaymentIsPercentable = ![0, "?"].includes(downPaymentDollars);
   const loanIds = financing.childFeIds("loan");
   const { isAtLeastOne, areMultiple } = useHowMany(loanIds);
@@ -23,10 +28,10 @@ export default function FinancingInfo({ feId }: { feId: string }) {
           <>
             <LabeledVarbSimple
               themeName="loan"
-              feVarbInfo={financing.varbInfo("downPaymentDollars")}
+              feVarbInfo={deal.varbInfo("downPaymentDollars")}
               parenthInfo={
                 downPaymentIsPercentable
-                  ? financing.varbInfo("downPaymentPercent")
+                  ? deal.varbInfo("downPaymentPercent")
                   : undefined
               }
             />
@@ -38,7 +43,7 @@ export default function FinancingInfo({ feId }: { feId: string }) {
             )}
             <LabeledVarbSimple
               themeName="loan"
-              feVarbInfo={financing.varbInfo("pitiMonthly")}
+              feVarbInfo={deal.varbInfo("pitiMonthly")}
             />
           </>
         }

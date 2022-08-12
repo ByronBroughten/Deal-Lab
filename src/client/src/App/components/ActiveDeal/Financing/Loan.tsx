@@ -20,7 +20,7 @@ export default function Loan({ feId }: { feId: string }) {
             xBtn: true,
           }}
         />
-        <MainSectionBody>
+        <MainSectionBody themeName="loan">
           <div className="ListGroup-root">
             <div className="ListGroup-viewable">
               {/* <div className="ListGroup-titleRow">

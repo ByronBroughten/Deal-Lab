@@ -7,6 +7,37 @@ import { RelVarbs, relVarbsS } from "../relVarbs";
 export function dealRelVarbs(): RelVarbs<"deal"> {
   return {
     ...relVarbsS.savableSection,
+    ...relVarbsS.ongoingSumNums(
+      "piti",
+      "PITI payment",
+      [
+        relVarbInfoS.children("financing", "mortgageIns"),
+        relVarbInfoS.children("financing", "loanPayment"),
+        relVarbInfoS.children("propertyGeneral", "taxes"),
+        relVarbInfoS.children("propertyGeneral", "homeIns"),
+      ],
+      { shared: { startAdornment: "$" }, switchInit: "monthly" }
+    ),
+    downPaymentDollars: relVarbS.leftRightPropFn(
+      "Down payment",
+      "simpleSubtract",
+      [
+        relVarbInfoS.children("propertyGeneral", "price"),
+        relVarbInfoS.children("financing", "loanBaseDollars"),
+      ],
+      { startAdornment: "$", displayNameEnd: " dollars" }
+      // this should respond to propertyGeneral's price change and be 0
+      // but it's not.
+    ),
+    downPaymentPercent: relVarbS.leftRightPropFn(
+      "Down payment",
+      "divideToPercent",
+      [
+        relVarbInfoS.local("downPaymentDollars"),
+        relVarbInfoS.children("propertyGeneral", "price"),
+      ],
+      { endAdornment: "%", displayNameEnd: "percent" }
+    ),
     totalInvestment: relVarbS.leftRightPropFn(
       "Upfront investment",
       "simpleSubtract",
@@ -61,12 +92,12 @@ export function dealRelVarbs(): RelVarbs<"deal"> {
     upfrontExpensesBaseSum: relVarbS.sumNums(
       "Upfront expenses pre wrapped-in-loan",
       [
+        relVarbInfoS.local("downPaymentDollars"),
         relVarbInfoS.children("propertyGeneral", "upfrontExpenses"),
         relVarbInfoS.children("mgmtGeneral", "upfrontExpenses"),
         ...relVarbInfosS.children("financing", [
-          "downPaymentDollars",
           "closingCosts",
-          "mortInsUpfront",
+          "mortgageInsUpfront",
         ]),
       ],
       { startAdornment: "$" }
@@ -88,7 +119,7 @@ export function dealRelVarbs(): RelVarbs<"deal"> {
     ...relVarbsS.ongoingSumNums("expenses", "Ongoing expenses", [
       relVarbInfoS.children("propertyGeneral", "expenses"),
       relVarbInfoS.children("mgmtGeneral", "expenses"),
-      relVarbInfoS.children("financing", "piti"),
+      relVarbInfoS.children("financing", "expenses"),
     ]),
     ...relVarbsS.ongoingSumNums(
       "revenue",

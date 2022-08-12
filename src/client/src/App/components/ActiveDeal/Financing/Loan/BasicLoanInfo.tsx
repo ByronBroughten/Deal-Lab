@@ -61,7 +61,7 @@ export default function BasicLoanInfo({ feId, className }: Props) {
                 </StandardLabel>
                 <div className="BasicSectionInfo-dualEditors">
                   <NumObjEntityEditor
-                    feVarbInfo={loan.varbInfo("mortInsUpfront")}
+                    feVarbInfo={loan.varbInfo("mortgageInsUpfront")}
                     label="Upfront"
                   />
                   <NumObjEntityEditor

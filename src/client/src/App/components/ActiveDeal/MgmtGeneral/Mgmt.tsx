@@ -11,7 +11,7 @@ export default function Mgmt({ feId }: { feId: string }) {
   return (
     <MainSection>
       <MainSectionTitleRow {...{ ...feInfo, pluralName: "managements" }} />
-      <MainSectionBody>
+      <MainSectionBody themeName="mgmt">
         <div className="ListGroup-root">
           <div className="ListGroup-viewable">
             {/* <div className="ListGroup-titleRow">

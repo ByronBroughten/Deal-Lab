@@ -61,8 +61,17 @@ export function loanRelVarbs(): RelVarbs<"loan"> {
       switchInit: "yearly",
       shared: { initNumber: 0 },
     }),
+    ...relVarbsS.ongoingSumNums(
+      "expenses",
+      "Ongoing expenses",
+      [relVarbInfoS.local("loanPayment"), relVarbInfoS.local("mortgageIns")],
+      {
+        switchInit: "monthly",
+        shared: { startAdornment: "$" },
+      }
+    ),
 
-    mortInsUpfront: relVarbS.moneyObj("Upfront mortgage insurance", {
+    mortgageInsUpfront: relVarbS.moneyObj("Upfront mortgage insurance", {
       initNumber: 0,
     }),
     closingCosts: relVarbS.sumMoney("Closing costs", [
@@ -108,37 +117,6 @@ export function loanRelVarbs(): RelVarbs<"loan"> {
 }
 
 export const financingRelVarbs: RelVarbs<"financing"> = {
-  downPaymentDollars: relVarbS.leftRightPropFn(
-    "Down payment",
-    "simpleSubtract",
-    [
-      relVarbInfoS.stepSibling("propertyGeneral", "propertyGeneral", "price"),
-      relVarbInfoS.local("loanBaseDollars"),
-    ],
-    { startAdornment: "$", displayNameEnd: " dollars" }
-    // this should respond to propertyGeneral's price change and be 0
-    // but it's not.
-  ),
-  downPaymentPercent: relVarbS.leftRightPropFn(
-    "Down payment",
-    "divideToPercent",
-    [
-      relVarbInfoS.local("downPaymentDollars"),
-      relVarbInfoS.stepSibling("propertyGeneral", "propertyGeneral", "price"),
-    ],
-    { endAdornment: "%", displayNameEnd: "percent" }
-  ),
-
-  ...relVarbsS.ongoingSumNums(
-    "piti",
-    "PITI payment",
-    [
-      ...relVarbInfosS.local(["loanPayment", "mortgageIns"]),
-      relVarbInfoS.stepSibling("propertyGeneral", "propertyGeneral", "taxes"),
-      relVarbInfoS.stepSibling("propertyGeneral", "propertyGeneral", "homeIns"),
-    ],
-    { shared: { startAdornment: "$" }, switchInit: "monthly" }
-  ),
   ...relVarbsS.sumSection("loan", loanRelVarbs(), loanVarbsNotInFinancing),
   ...relVarbsS.sectionStrings("loan", loanRelVarbs(), loanVarbsNotInFinancing),
 };

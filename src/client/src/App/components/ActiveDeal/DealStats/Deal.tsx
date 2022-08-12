@@ -28,7 +28,7 @@ export function Deal({
           dropTop: true,
         }}
       />
-      <MainSectionBody>
+      <MainSectionBody themeName="deal">
         <Styled className="ListGroup-root">
           <div className="Deal-viewable viewable">
             {!detailsIsOpen && <DealOutputList feId={outputListId} />}

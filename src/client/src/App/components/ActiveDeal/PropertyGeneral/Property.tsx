@@ -14,7 +14,7 @@ export default function Property({ feId }: { feId: string }) {
   return (
     <MainSection>
       <MainSectionTitleRow {...{ ...feInfo, pluralName: "properties" }} />
-      <MainSectionBody>
+      <MainSectionBody themeName="property">
         <div className="ListGroup-root">
           <div className="ListGroup-viewable">
             {/* <div className="ListGroup-titleRow">

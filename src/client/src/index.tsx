@@ -8,19 +8,16 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-// Make the skip happen as many times as it needs to, so there is not
-// Property revenue > Property revenue
-
-// Add a variable that can toggle whether to display the
-// sectionName in the details. This would be easier, more targeted
-// and more versatile
-
+// Test these things
 // - make property ongoing expenses include taxes and home insurance
 // - make a new loan variable called ongoingCosts, which includes
 //   mortgage insurance and loan payments
 // - make financing have ongoingCosts as well
-// - put PITI and downpayment on Final
-// - make final's "ongoingCosts" just sum the three ongoingCosts
+// - move PITI and downpayment to Final
+// - fix FinancingInfo
+// - fix things that depend on downpayment
+// - make final's "ongoingCosts" sum the three ongoingCosts
+//   and not draw from PITI
 
 // Launch the app on Sunday.
 // - Make a video demo

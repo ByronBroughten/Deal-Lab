@@ -4,7 +4,7 @@ import { Obj } from "../utils/Obj";
 import {
   baseSection,
   baseSectionS,
-  GeneralBaseSection
+  GeneralBaseSection,
 } from "./baseSectionsUtils/baseSection";
 import { baseVarbs, baseVarbsS } from "./baseSectionsUtils/baseVarbs";
 
@@ -140,17 +140,8 @@ export const baseSections = {
   },
   loan: baseSection(baseVarbsS.loan),
   financing: baseSection(
-    {
-      ...omit(baseVarbsS.loan, loanVarbsNotInFinancing),
-      ...baseVarbs("numObj", [
-        "downPaymentDollars",
-        "downPaymentPercent",
-      ] as const),
-      ...baseVarbsS.ongoing("piti"),
-    },
-    {
-      hasGlobalVarbs: true,
-    }
+    { ...omit(baseVarbsS.loan, loanVarbsNotInFinancing) },
+    { hasGlobalVarbs: true }
   ),
   mgmt: baseSection(baseVarbsS.mgmt),
   get mgmtGeneral() {
@@ -166,7 +157,10 @@ export const baseSections = {
         "upfrontExpenses",
         "upfrontRevenue",
         "totalInvestment",
+        "downPaymentDollars",
+        "downPaymentPercent",
       ] as const),
+      ...baseVarbsS.ongoing("piti"),
       ...baseVarbsS.ongoing("expenses"),
       ...baseVarbsS.ongoing("revenue"),
       ...baseVarbsS.ongoing("cashFlow"),

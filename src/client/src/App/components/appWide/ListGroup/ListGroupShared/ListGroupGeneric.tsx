@@ -67,7 +67,10 @@ export function ListGroupGeneric<
 
   const { areMultiple: areMultipleLists } = useHowMany(lists);
   return (
-    <Styled className={`ListGroup-root ` + className ?? ""}>
+    <Styled
+      className={`ListGroup-root ` + className ?? ""}
+      $themeName={themeName}
+    >
       <div className="ListGroup-viewable">
         <div className="ListGroup-titleRow">
           <div className="ListGroup-titleRowLeft">
@@ -108,7 +111,15 @@ export function ListGroupGeneric<
   );
 }
 
-export const listGroupCss = css`
+export const listGroupCss = (themeName: ThemeName = "default") => css`
+  .ListGroup-addListBtn {
+    background: ${theme[themeName].main};
+    border: ${theme[themeName].dark};
+    :hover {
+      background: ${theme[themeName].dark};
+    }
+  }
+
   .ListGroup-titleRow {
     display: flex;
     justify-content: space-between;
@@ -165,6 +176,6 @@ export const listGroupCss = css`
   }
 `;
 
-const Styled = styled.div`
-  ${listGroupCss}
+const Styled = styled.div<{ $themeName: ThemeName }>`
+  ${({ $themeName }) => listGroupCss($themeName)}
 `;

@@ -63,10 +63,11 @@ export const baseVarbsS = {
       ...this.savableSection,
       ...baseVarbs("numObj", [
         "loanTotalDollars",
-        "mortInsUpfront",
+        "mortgageInsUpfront",
         "closingCosts",
         "wrappedInLoan",
       ] as const),
+      ...this.ongoing("expenses"),
       ...this.ongoing("interestRatePercent"),
       ...this.switch("loanBase", "dollarsPercent"),
       ...this.switch("loanTerm", "monthsYears"),
