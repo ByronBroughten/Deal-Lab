@@ -17,8 +17,8 @@ async function getSectionServerSide(req: Request, res: Response) {
   const { auth, ...dbInfo } = validateDbSectionInfoReq(req).body;
 
   const dbUser = await DbUser.initBy("authId", auth.id);
-  const sectionPack = await dbUser.getSectionPack(dbInfo);
-  const headSection = PackBuilderSection.loadAsOmniChild(sectionPack);
+  const sectionPackAsIs = await dbUser.getSectionPack(dbInfo);
+  const headSection = PackBuilderSection.loadAsOmniChild(sectionPackAsIs);
   const { sections } = headSection;
   let sectionInfos: FeSectionInfo[] = [headSection.feInfo];
   while (sectionInfos.length > 0) {
@@ -42,5 +42,7 @@ async function getSectionServerSide(req: Request, res: Response) {
     }
     sectionInfos = nextInfos;
   }
-  sendSuccess(res, "getSection", { data: { sectionPack } });
+  sendSuccess(res, "getSection", {
+    data: { sectionPack: headSection.makeSectionPack() },
+  });
 }

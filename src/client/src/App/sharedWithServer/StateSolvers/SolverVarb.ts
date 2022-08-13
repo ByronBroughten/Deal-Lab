@@ -218,9 +218,18 @@ export class SolverVarb<
   }
   private addOutEntity(outEntity: OutEntity): void {
     const nextOutEntities = [...this.get.outEntities, outEntity];
-    this.updaterVarb.update({
-      outEntities: nextOutEntities,
-    });
+    if (nextOutEntities.length === 2) {
+      if (
+        nextOutEntities.every((entity) => {
+          return (
+            entity.sectionName === "outputItem" && entity.varbName === "value"
+          );
+        })
+      ) {
+        throw new Error("There shouldn't be two of these out entities");
+      }
+    }
+    this.updaterVarb.update({ outEntities: nextOutEntities });
   }
   private inEntitySectionExists(inEntity: InEntity): boolean {
     if (this.getterSections.hasSectionMixed(inEntity)) return true;

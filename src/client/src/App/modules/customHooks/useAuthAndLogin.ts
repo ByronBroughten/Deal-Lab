@@ -6,11 +6,10 @@ import { useSetterSection } from "../../sharedWithServer/stateClassHooks/useSett
 import { useFeUser } from "../sectionActorHooks/useFeUser";
 import { auth } from "../services/authService";
 
-export function useAuthAndLogin() {
-  const main = useSetterSection();
+function useGetAuthStateIfSessionExists() {
   const feUser = useFeUser();
-  const navigate = useNavigate();
   const { pathname } = useLocation();
+  const navigate = useNavigate();
 
   React.useEffect(() => {
     async function syncStateWithSessionLogin() {
@@ -22,27 +21,41 @@ export function useAuthAndLogin() {
     }
     syncStateWithSessionLogin();
   });
+}
 
-  async function stateToDefault() {
+function useLogoutIfNoSessionExists() {
+  const feUser = useFeUser();
+  const stateToDefault = useStateToDefault();
+
+  React.useEffect(() => {
+    async function syncStateWithSessionLogout() {
+      if (!(await feUser.sessionExists) && feUser.authStatus !== "guest") {
+        stateToDefault();
+      }
+    }
+    syncStateWithSessionLogout();
+  });
+}
+
+function useStateToDefault() {
+  const main = useSetterSection();
+  return () => {
     auth.removeToken();
     main.resetToDefault();
-  }
+  };
+}
+// Ok. Now I'm basically going to do this
+// for when a pro subscription expires.
+// Will "getUserData" work?
+
+export function useAuthAndLogin() {
+  useGetAuthStateIfSessionExists();
+  useLogoutIfNoSessionExists();
+
+  const stateToDefault = useStateToDefault();
   async function logout() {
     await signOut();
     stateToDefault();
   }
-
-  React.useEffect(() => {
-    async function syncStateWithSessionExpiration() {
-      if (!(await feUser.sessionExists)) {
-        if (feUser.authStatus !== "guest") {
-          stateToDefault();
-        }
-      }
-    }
-    syncStateWithSessionExpiration();
-  });
-  return {
-    logout,
-  };
+  return { logout };
 }

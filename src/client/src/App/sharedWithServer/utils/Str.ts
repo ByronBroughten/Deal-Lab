@@ -10,6 +10,16 @@ export function replaceRange(
 }
 
 export const Str = {
+  isJsonString(str: string): boolean {
+    try {
+      JSON.parse(str);
+      return true;
+    } catch (ex) {
+      if (ex instanceof SyntaxError) {
+        return false;
+      } else throw ex;
+    }
+  },
   makeStringTypeGuard<T extends string>(arr: readonly T[]): IsType<T> {
     return (value: any): value is T => arr.includes(value);
   },

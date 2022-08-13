@@ -51,7 +51,9 @@ export class GetterList<SN extends SectionName> extends GetterListBase<SN> {
   }
   getByFeId(feId: string): GetterSection<SN> {
     const section = this.stateList.find((section) => section.feId === feId);
-    if (!section) throw this.sectionNotFoundError("feId");
+    if (!section) {
+      throw this.sectionNotFoundError("feId");
+    }
     return this.getterSection(feId);
   }
   hasByFeId(feId: string): boolean {
@@ -116,7 +118,7 @@ export class GetterList<SN extends SectionName> extends GetterListBase<SN> {
   }
   sectionNotFoundError(infoType: string): SectionNotFoundError {
     return new SectionNotFoundError(
-      `No section found using infoType ${infoType}`
+      `No section found of sectionName ${this.sectionName} using infoType ${infoType}`
     );
   }
 }

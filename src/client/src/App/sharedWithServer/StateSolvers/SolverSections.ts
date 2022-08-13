@@ -73,6 +73,8 @@ export class SolverSections extends SolverSectionsBase {
       for (const varbId of [...varbIdsToSolveFor]) {
         if (varbId in outVarbMap) continue;
 
+        // Of the varbIds to solve for
+
         const { outVarbIds } = this.outVarbGetterById(varbId);
         // outVarbIds.forEach((id) => {
         //   if (outVarbMap[id].has(varbId)) return;

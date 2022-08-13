@@ -1,11 +1,11 @@
 import Session from "supertokens-auth-react/recipe/session";
 import {
   guestAccessNames,
-  GuestAccessSectionPackArrs
+  GuestAccessSectionPackArrs,
 } from "../../sharedWithServer/apiQueriesShared/register";
 import {
   AuthStatus,
-  UserPlan
+  UserPlan,
 } from "../../sharedWithServer/SectionsMeta/baseSections";
 import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
 import { PackMakerSection } from "../../sharedWithServer/StatePackers.ts/PackMakerSection";
@@ -29,7 +29,7 @@ export class FeUserActor extends SectionActorBase<"feStore"> {
   get loginSetter() {
     return new LoginSetter(this.sectionActorBaseProps);
   }
-  private get guestAccessSectionPacks(): GuestAccessSectionPackArrs {   
+  private get guestAccessSectionPacks(): GuestAccessSectionPackArrs {
     const { sections } = this.get;
     const { getterSectionsProps } = sections;
     const feStore = sections.oneAndOnly("feStore");

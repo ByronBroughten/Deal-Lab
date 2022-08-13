@@ -8,7 +8,10 @@ import {
   DbStoreName,
   SectionArrQueryName,
 } from "../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreName";
-import { SectionPack } from "../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/SectionPack";
+import {
+  SectionPack,
+  validateSectionPack,
+} from "../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/SectionPack";
 import {
   Authed,
   LoggedIn,
@@ -67,6 +70,9 @@ function validateDbSectionPack<CN extends DbStoreName>(
   value: any,
   dbStoreName: CN
 ): SectionPack<DbSectionName<CN>> {
+  validateSectionPack(value);
   if (isDbStoreSectionPack(value, dbStoreName)) return value;
-  throw new Error("value is not a valid db sectionPack");
+  throw new Error(
+    `value is not a valid sectionPack from dbStore "${dbStoreName}"`
+  );
 }

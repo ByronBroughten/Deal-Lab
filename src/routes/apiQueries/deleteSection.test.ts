@@ -11,7 +11,7 @@ import {
   createAndGetDbUser,
   deleteUserTotally,
   makeSessionGetCookies,
-  validateAddSectionRes,
+  validateStatus200Res,
 } from "./test/testDbUser";
 
 type TestReqs = {
@@ -54,7 +54,7 @@ describe(testedRoute, () => {
       .set("Cookie", cookies)
       .send(reqs.addSection.body);
 
-    validateAddSectionRes(res);
+    validateStatus200Res(res);
 
     return await request(server)
       .post(testedRoute)

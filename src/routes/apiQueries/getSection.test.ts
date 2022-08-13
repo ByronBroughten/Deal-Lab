@@ -3,15 +3,19 @@ import request from "supertest";
 import { constants } from "../../client/src/App/Constants";
 import { apiQueriesShared } from "../../client/src/App/sharedWithServer/apiQueriesShared";
 import { QueryReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
+import { SectionPackRes } from "../../client/src/App/sharedWithServer/apiQueriesShared/makeReqAndRes";
+import { numObj } from "../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsUtils/baseValues/NumObj";
 import { Id } from "../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsUtils/id";
 import { runApp } from "../../runApp";
+import { SetterTesterSection } from "./../../client/src/App/sharedWithServer/StateSetters/TestUtils/SetterTesterSection";
 import { LoadedDbUser } from "./shared/DbSections/LoadedDbUser";
 import { SectionQueryTester } from "./test/SectionQueryTester";
 import {
   createAndGetDbUser,
   deleteUserTotally,
+  getStandardRes,
   makeSessionGetCookies,
-  validateAddSectionRes,
+  validateStatus200Res,
 } from "./test/testDbUser";
 
 type TestReqs = {
@@ -47,19 +51,34 @@ describe(testedRoute, () => {
     server.close();
   });
 
-  const exec = async () => {
+  const addSection = async () => {
     const res = await request(server)
       .post(apiQueriesShared.addSection.pathRoute)
       .set(constants.tokenKey.apiUserAuth, dbUser.createDbAccessToken())
       .set("Cookie", cookies)
       .send(reqs.addSection.body);
+    validateStatus200Res(res);
+  };
 
-    validateAddSectionRes(res);
+  const updateSection = async () => {
+    const res = await request(server)
+      .post(apiQueriesShared.updateSection.pathRoute)
+      .set("Cookie", cookies)
+      .send(reqs.addSection.body);
+    validateStatus200Res(res);
+  };
 
-    return await request(server)
+  const getSection = async () => {
+    const res = await request(server)
       .post(testedRoute)
       .set("Cookie", cookies)
       .send(reqs.getSection.body);
+    return getStandardRes(res);
+  };
+
+  const exec = async () => {
+    await addSection();
+    return await getSection();
   };
 
   async function testStatus(statusNumber: number) {
@@ -79,5 +98,59 @@ describe(testedRoute, () => {
   it("should return 404 if no section in the queried sectionArr has the dbId", async () => {
     reqs.getSection.body.dbId = Id.make();
     await testStatus(404);
+  });
+  it("should load saved subsections", async () => {
+    // Do I just use PackBuilderSection?
+    // const deal = PackBuilderSection.initAsOmniChild("deal");
+    // const propertyGeneral = deal.addAndGetChild("propertyGeneral");
+    // const property = propertyGeneral.addAndGetChild("property");
+
+    const original = {
+      price: numObj(100000),
+      displayName: "Original",
+    };
+
+    const deal = SetterTesterSection.init("deal").setter;
+    const propertyGeneral = deal.onlyChild("propertyGeneral");
+    const property = propertyGeneral.onlyChild("property");
+    property.varb("price").updateValueDirectly(original.price);
+    property.varb("displayName").updateValueDirectly(original.displayName);
+
+    reqs.addSection.body = {
+      dbStoreName: "dealMain",
+      sectionPack: deal.packMaker.makeSectionPack(),
+    } as any;
+    await addSection();
+
+    const updated = {
+      price: numObj(200000),
+      displayName: "Updated",
+    };
+    property.varb("price").updateValueDirectly(updated.price);
+    property.varb("displayName").updateValueDirectly(updated.displayName);
+    reqs.addSection.body = {
+      dbStoreName: "propertyMain",
+      sectionPack: property.packMaker.makeSectionPack(),
+    } as any;
+    await addSection();
+
+    reqs.getSection.body = {
+      dbStoreName: "dealMain",
+      dbId: deal.get.dbId,
+    };
+
+    const res = await getSection();
+    const { sectionPack } = res.data as SectionPackRes<"dealMain">["data"];
+
+    function testSectionPack() {
+      const deal = SetterTesterSection.init("deal").setter;
+      deal.loadSelfSectionPack(sectionPack);
+      const propertyGeneral = deal.get.onlyChild("propertyGeneral");
+      const property = propertyGeneral.onlyChild("property");
+      expect(property.value("price")).toEqual(updated.price);
+      expect(property.value("displayName")).toBe(updated.displayName);
+    }
+
+    testSectionPack();
   });
 });

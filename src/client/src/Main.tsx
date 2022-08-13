@@ -7,7 +7,6 @@ import { getSuperTokensRoutesForReactRouterDom } from "supertokens-auth-react";
 import { ActiveDeal } from "./App/components/ActiveDeal";
 import NotFound from "./App/components/general/NotFound";
 import NavBar from "./App/components/NavBar";
-import { TableStore } from "./App/components/TableStore";
 import { constants } from "./App/Constants";
 import { useAuthAndLogin } from "./App/modules/customHooks/useAuthAndLogin";
 import { useSetterSection } from "./App/sharedWithServer/stateClassHooks/useSetterSection";
@@ -26,12 +25,12 @@ export function Main() {
       <NavBar {...{ logout }} />
       <div className="NavSpaceDiv-root"></div>
       <Routes>
-        <Route
+        {/* <Route
           path="/deals"
           element={
             <TableStore feId={feStore.onlyChild("dealMainTable").feId} />
           }
-        />
+        /> */}
         {getSuperTokensRoutesForReactRouterDom(reactRouterDom)}
         <Route path={constants.subscriptionSuccessUrlEnd} />
         {/* <Route path="/variables" element={<UserVarbsManager/>} /> */}

@@ -45,7 +45,6 @@ export class OutVarbGetterVarb<
     });
     this.outVarbInfoStore.push(...feOutEntities);
   }
-
   get filteredOutUpdatePacks() {
     const { outUpdatePacks } = this.get.meta;
     return outUpdatePacks.filter(({ relTargetVarbInfo: info }) => {
@@ -70,13 +69,6 @@ export class OutVarbGetterVarb<
       if (VarbMeta.isSwitchOutPack(outUpdatePack)) {
         this.gatherFromSwitchUpdatePack(outUpdatePack);
       } else {
-        // 1: If something tries update a parentVarb
-        // but doesn't have a parent with that varb
-        // throw an error
-
-        // 2: Figure out why the outUpdatePacks are trying
-        // to reference all possible parents.
-
         this.gatherFromDefaultUpdatePack(outUpdatePack);
       }
     }

@@ -18,6 +18,7 @@ import { SectionOption } from "../StateEntityGetters/VariableGetterSections";
 import { GetterSection } from "../StateGetters/GetterSection";
 import { GetterVarb } from "../StateGetters/GetterVarb";
 import { ChildSectionPackArrs } from "../StatePackers.ts/PackLoaderSection";
+import { PackMakerSection } from "../StatePackers.ts/PackMakerSection";
 import { SolverSection } from "../StateSolvers/SolverSection";
 import {
   AddChildOptions,
@@ -32,6 +33,9 @@ export class SetterSection<
 > extends SetterSectionBase<SN> {
   get get(): GetterSection<SN> {
     return new GetterSection(this.getterSectionBase.getterSectionProps);
+  }
+  get packMaker(): PackMakerSection<SN> {
+    return new PackMakerSection(this.getterSectionBase.getterSectionProps);
   }
   get update(): UpdaterSection<SN> {
     return new UpdaterSection(this.getterSectionBase.getterSectionProps);

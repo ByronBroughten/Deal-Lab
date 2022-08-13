@@ -159,13 +159,6 @@ export class SolverSection<
     this.updater.addChild(childName);
     const child = this.youngestChild(childName);
     child.loadSelfSectionPackAndSolve(sectionPack);
-
-    // while it's adding main, it jumbles loan varbs
-    // into a property section...
-
-    // I ought to set up something
-    // in solverSections that verifies that
-    // all the varbInfos being entered are valid.
   }
   loadChildPackArrsAndSolve(
     childPackArrs: Partial<ChildSectionPackArrs<SN>>

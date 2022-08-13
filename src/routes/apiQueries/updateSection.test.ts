@@ -13,7 +13,7 @@ import {
   createAndGetDbUser,
   deleteUserTotally,
   makeSessionGetCookies,
-  validateAddSectionRes,
+  validateStatus200Res,
 } from "./test/testDbUser";
 
 const sectionName = "property";
@@ -75,7 +75,7 @@ describe(testedRoute, () => {
       .set("Cookie", addSectionCookies)
       .send(reqs.addSection.body);
 
-    validateAddSectionRes(res);
+    validateStatus200Res(res);
 
     return await request(server)
       .post(testedRoute)

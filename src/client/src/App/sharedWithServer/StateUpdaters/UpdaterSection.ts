@@ -105,6 +105,14 @@ export class UpdaterSection<
       varb.updateValueDirectly(values[varbName]);
     }
   }
+  resetVarbs(dbVarbs: Partial<SectionValues<SN>>): void {
+    this.updateProps({
+      varbs: StateSections.initRawVarbs({
+        dbVarbs,
+        ...this.feSectionInfo,
+      }),
+    });
+  }
   private addChildFeId(childInfo: CreateChildInfo<SN>): void {
     const { childName, feId, idx } = childInfo;
     const feIds = this.get.childFeIds(childName);
@@ -118,14 +126,6 @@ export class UpdaterSection<
     const feIds = this.get.childFeIds(childName);
     const nextIds = Arr.rmFirstMatchCloneOrThrow(feIds, feId);
     this.updateChildFeIds({ childName, feIds: nextIds });
-  }
-  updateVarbsFromDb(dbVarbs: Partial<SectionValues<SN>>): void {
-    this.updateProps({
-      varbs: StateSections.initRawVarbs({
-        dbVarbs,
-        ...this.feSectionInfo,
-      }),
-    });
   }
   newDbId(): void {
     this.updateDbId(Id.make());

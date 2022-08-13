@@ -1,3 +1,4 @@
+import { SectionValues } from "../../SectionsMeta/baseSectionsDerived/valueMetaTypes";
 import {
   ChildIdArrsWide,
   ChildName,
@@ -13,8 +14,6 @@ import {
 import { UpdaterSection } from "../../StateUpdaters/UpdaterSection";
 import { Obj } from "../../utils/Obj";
 import { ChildPackLoader } from "./ChildPackLoader";
-
-// src\client\src\App\sharedWithServer\SectionsMeta\relSectionsUtils\valueMetaTypes.ts"
 
 interface SelfPackLoaderSectionProps<SN extends SectionName>
   extends GetterSectionProps<SN> {
@@ -35,7 +34,7 @@ export class SelfPackLoader<
   loadSelfSectionPack(): void {
     const { dbId, dbVarbs } = this.headRawSection;
     this.updaterSection.updateDbId(dbId);
-    this.updaterSection.updateValuesDirectly(dbVarbs);
+    this.updaterSection.resetVarbs(dbVarbs as Partial<SectionValues<SN>>);
     this.updaterSection.removeAllChildren();
     this.addSectionPackChildren();
   }

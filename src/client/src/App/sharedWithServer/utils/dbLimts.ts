@@ -4,7 +4,7 @@ export const dbLimits = {
   number: {
     max: 99999999999,
     get min() {
-      return this.max;
+      return -this.max;
     },
   },
   string: {

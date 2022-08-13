@@ -39,7 +39,7 @@ function standardizeAuthWare(
   };
   next();
 }
-
+// no no. I should have a separate route for this.
 export async function updateUserSubscriptionWare(
   req: LoggedIn<Request>,
   res: Response,

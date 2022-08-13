@@ -24,3 +24,8 @@ export const zRawSectionPackArr = z.array(zRawSectionPack);
 export function isSectionPack(value: any): value is SectionPack {
   return zRawSectionPack.safeParse(value).success;
 }
+
+export function validateSectionPack(value: any): SectionPack {
+  zRawSectionPack.parse(value);
+  return value;
+}

@@ -7,6 +7,7 @@ import {
   getUsersByEmail,
 } from "supertokens-node/recipe/thirdpartyemailpassword";
 import { apiQueriesShared } from "../../../client/src/App/sharedWithServer/apiQueriesShared";
+import { Str } from "../../../client/src/App/sharedWithServer/utils/Str";
 import { DbSectionsModel } from "../../DbSectionsModel";
 import { LoadedDbUser } from "../shared/DbSections/LoadedDbUser";
 import { userPrepS } from "../shared/DbSections/LoadedDbUser/userPrepS";
@@ -63,13 +64,15 @@ async function eraseUserAuth(authId: string) {
 }
 
 export function getStandardRes(res: request.Response) {
+  const { text } = res;
   return {
     status: res.status,
     headers: res.headers,
-    data: JSON.parse(res.text),
+    data: Str.isJsonString(text) ? JSON.parse(text) : text,
   } as const;
 }
 
-export function validateAddSectionRes(res: request.Response): void {
-  if (res.status !== 200) throw new Error("addSection failed");
+export function validateStatus200Res(res: request.Response): void {
+  if (res.status !== 200)
+    throw new Error(`Query produced status ${res.status} rather than 200`);
 }
