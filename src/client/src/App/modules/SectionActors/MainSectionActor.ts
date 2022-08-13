@@ -71,7 +71,7 @@ export class MainSectionActor<
   async makeACopy() {
     this.setter.resetDbId();
     const titleVarb = this.setter.varb("displayName");
-    titleVarb.updateValueDirectly("Copy of " + titleVarb.value("string"));
+    titleVarb.updateValue("Copy of " + titleVarb.value("string"));
   }
   async saveAsNew() {
     this.setter.resetDbId();

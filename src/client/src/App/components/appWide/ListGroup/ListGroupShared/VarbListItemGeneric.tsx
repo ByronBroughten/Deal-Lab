@@ -23,7 +23,7 @@ export function VarbListItemGeneric({ feInfo, switchOptions, ...rest }: Props) {
   }
   function toggleValueSwitch(): void {
     const nextSwitchValue = Arr.nextRotatingValue(switchValues, switchValue);
-    switchVarb.updateValueDirectly(nextSwitchValue);
+    switchVarb.updateValue(nextSwitchValue);
   }
   return (
     <Styled {...rest}>

@@ -102,7 +102,7 @@ export class UpdaterSection<
   updateValuesDirectly(values: VarbValues): void {
     for (const varbName of Obj.keys(values)) {
       const varb = this.varb(varbName as string);
-      varb.updateValueDirectly(values[varbName]);
+      varb.updateValue(values[varbName]);
     }
   }
   resetVarbs(dbVarbs: Partial<SectionValues<SN>>): void {

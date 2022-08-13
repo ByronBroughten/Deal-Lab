@@ -68,10 +68,10 @@ export class SolverVarb<
   }
   calculateAndUpdateValue() {
     const newValue = this.valueSolver.solveValue();
-    this.updateValueDirectly(newValue);
+    this.updateValue(newValue);
   }
   directUpdateAndSolve(value: StateValue): void {
-    this.updateValueDirectly(value);
+    this.updateValue(value);
     this.addVarbIdsToSolveFor(this.get.varbId);
     this.solveOutVarbs();
   }
@@ -81,18 +81,18 @@ export class SolverVarb<
     this.updateValueByEditor(newValue);
     this.solveOutVarbs();
   }
-  private updateValueDirectly(newValue: StateValue): void {
-    this.updaterVarb.updateValueDirectly(newValue);
+  private updateValue(newValue: StateValue): void {
+    this.updaterVarb.updateValue(newValue);
     this.updateConnectedEntities();
   }
   private updateValueByEditor(newValue: StateValue): void {
-    this.updaterVarb.updateValueByEditor(newValue);
+    this.updaterVarb.updateValue(newValue);
     this.updateConnectedEntities();
   }
 
   // The way to handle this:
   // Make the other varb updates depend on the varbInfo updating.
-  // updateValueDirectly(varbInfo)
+  // updateValue(varbInfo)
   // the rest should take care of itself.
 
   // I don't think I need to unload the previous varb
@@ -119,8 +119,7 @@ export class SolverVarb<
   loadValueFromVarb(varbInfo: InEntityVarbInfo) {
     const entityInfo = { ...varbInfo, entityId: Id.make() };
     const infoVarb = this.localSolverVarb("valueEntityInfo");
-
-    infoVarb.updaterVarb.updateValueByEditor(entityInfo);
+    infoVarb.updaterVarb.updateValue(entityInfo);
 
     this.updateConnectedEntities();
     this.solveOutVarbs();

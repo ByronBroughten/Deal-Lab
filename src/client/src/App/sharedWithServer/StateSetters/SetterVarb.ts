@@ -54,10 +54,10 @@ export class SetterVarb<
   private onChange({ currentTarget }: { currentTarget: any }): void {
     const { value } = currentTarget;
     if (this.meta.validateVarbValue(value)) {
-      this.updateValueDirectly(value);
+      this.updateValue(value);
     }
   }
-  updateValueDirectly(value: StateValue): void {
+  updateValue(value: StateValue): void {
     this.solverVarb.directUpdateAndSolve(value);
     this.setSections();
   }
@@ -75,9 +75,6 @@ export class SetterVarb<
   }
   createEditor(props: CreateEditorProps): EditorState {
     return this.editorUpdater.createEditor(props);
-  }
-  get manualUpdateEditorToggle(): boolean | undefined {
-    return this.updaterVarb.manualUpdateEditorToggle;
   }
   value<VT extends ValueName | "any">(valueName: VT): ValueTypesPlusAny[VT] {
     return this.get.value(valueName);

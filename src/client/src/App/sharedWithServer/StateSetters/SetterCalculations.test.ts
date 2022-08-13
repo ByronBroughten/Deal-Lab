@@ -22,7 +22,7 @@ describe("SetterCalculations", () => {
     const dealTester = SetterTesterSection.init("deal");
     const propertyGeneral = dealTester.setter.onlyChild("propertyGeneral");
     const property = propertyGeneral.onlyChild("property");
-    property.varb("price").updateValueDirectly(numObj(200000));
+    property.varb("price").updateValue(numObj(200000));
 
     const costList = property.addAndGetChild("upfrontCostList");
     const costs = [8000, 2000];
@@ -67,8 +67,8 @@ describe("SetterCalculations", () => {
 
     const propertyGeneral = dealTester.setter.onlyChild("propertyGeneral");
     const property = propertyGeneral.onlyChild("property");
-    property.varb("taxesYearly").updateValueDirectly(numObj(1200));
-    property.varb("homeInsYearly").updateValueDirectly(numObj(1200));
+    property.varb("taxesYearly").updateValue(numObj(1200));
+    property.varb("homeInsYearly").updateValue(numObj(1200));
 
     const rents = [1300, 1700];
     for (const amount of rents) {
@@ -87,8 +87,8 @@ describe("SetterCalculations", () => {
 
     const mgmtGeneral = dealTester.setter.onlyChild("mgmtGeneral");
     const mgmt = mgmtGeneral.onlyChild("mgmt");
-    mgmt.varb("rentCutPercent").updateValueDirectly(numObj(5));
-    mgmt.varb("vacancyRatePercent").updateValueDirectly(numObj(5));
+    mgmt.varb("rentCutPercent").updateValue(numObj(5));
+    mgmt.varb("vacancyRatePercent").updateValue(numObj(5));
 
     const mgmtCostList = mgmt.addAndGetChild("ongoingCostList");
     const mgmtCosts = [100, 100];
@@ -111,14 +111,14 @@ describe("SetterCalculations", () => {
 function addTestLoan(dealTester: SetterTesterSection<"deal">): void {
   const propertyGeneral = dealTester.setter.onlyChild("propertyGeneral");
   const property = propertyGeneral.onlyChild("property");
-  property.varb("price").updateValueDirectly(numObj(200000));
+  property.varb("price").updateValue(numObj(200000));
 
   const financing = dealTester.setter.onlyChild("financing");
   const loan = financing.addAndGetChild("loan");
-  loan.varb("interestRatePercentYearly").updateValueDirectly(numObj(5));
-  loan.varb("loanTermYears").updateValueDirectly(numObj(30));
-  loan.varb("loanBasePercent").updateValueDirectly(numObj(75));
-  loan.varb("mortgageInsYearly").updateValueDirectly(numObj(1200));
+  loan.varb("interestRatePercentYearly").updateValue(numObj(5));
+  loan.varb("loanTermYears").updateValue(numObj(30));
+  loan.varb("loanBasePercent").updateValue(numObj(75));
+  loan.varb("mortgageInsYearly").updateValue(numObj(1200));
 
   const wrapped = loan.addAndGetChild("wrappedInLoanList");
   wrapped.addChild("singleTimeItem", {

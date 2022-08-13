@@ -13,7 +13,7 @@ describe("SetterVarb", () => {
       varbName: "displayName",
     });
     const nextValue = "New Title";
-    tester.setter.updateValueDirectly(nextValue);
+    tester.setter.updateValue(nextValue);
     expect(tester.get.value()).toBe(nextValue);
   });
   it("should update and solve for the value", () => {
@@ -31,7 +31,7 @@ describe("SetterVarb", () => {
 
     const amountToAdd = 10000;
     const nextValue = numObj(preNum + amountToAdd);
-    tester.setter.updateValueDirectly(nextValue);
+    tester.setter.updateValue(nextValue);
 
     const postNum = tester.get.numberOrQuestionMark;
     const postFinal = tester.get.sections
@@ -155,5 +155,5 @@ describe("SetterVarb", () => {
   // });
 });
 
-// makeChangeHandler, updateValueDirectly, loadValueFromVarb
-// updateValueFromEditor, createEditor
+// makeChangeHandler, updateValue, loadValueFromVarb
+// createEditor

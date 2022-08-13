@@ -9,8 +9,6 @@ export class TooManySectionsFoundError extends Error {}
 export type RawFeVarb<SN extends SectionName> = {
   value: StateValue;
   outEntities: OutEntity[];
-  manualUpdateEditorToggle: boolean | undefined;
-  // used to ensure rerenders upon loading varbs
 };
 export type RawFeVarbs<SN extends SectionName> = {
   [key: string]: RawFeVarb<SN>;

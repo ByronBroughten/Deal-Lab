@@ -13,22 +13,7 @@ export class UpdaterVarb<
   get get(): GetterVarb<SN> {
     return new GetterVarb(this.getterVarbProps);
   }
-  get manualUpdateEditorToggle(): boolean | undefined {
-    return this.raw.manualUpdateEditorToggle;
-  }
-  triggerEditorUpdate(): void {
-    return this.update({
-      manualUpdateEditorToggle: !this.manualUpdateEditorToggle,
-    });
-  }
-  updateValueByEditor(value: StateValue): void {
-    this.updateValue(value);
-  }
-  updateValueDirectly(value: StateValue): void {
-    this.updateValue(value);
-    this.triggerEditorUpdate();
-  }
-  private updateValue(value: StateValue): void {
+  updateValue(value: StateValue): void {
     this.get.meta.validateVarbValue(value);
     this.update({ value });
   }

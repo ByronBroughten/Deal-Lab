@@ -18,7 +18,7 @@ export function PiCalculationControl({ feId }: PiCalculationControlProps) {
       piCalculationName === "piFixedStandard"
         ? "interestOnlySimple"
         : ("piFixedStandard" as PiCalculationName);
-    varb.updateValueDirectly(nextCalcName);
+    varb.updateValue(nextCalcName);
   }
 
   return (

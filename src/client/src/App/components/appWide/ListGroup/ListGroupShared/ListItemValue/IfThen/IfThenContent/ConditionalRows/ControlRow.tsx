@@ -17,7 +17,7 @@ export default function ControlRow({
     varbName: "level",
   });
   const incrementLevel = (num: number) =>
-    levelVarb.updateValueDirectly(levelVarb.value("number") + num);
+    levelVarb.updateValue(levelVarb.value("number") + num);
 
   const [height, setHeight] = React.useState("31px");
   const ccRef = React.useRef(null);

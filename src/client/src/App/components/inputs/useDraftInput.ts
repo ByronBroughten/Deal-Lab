@@ -84,21 +84,3 @@ function useUpdateValueFromEditor({
     setterVarb.updateValueFromEditor(contentState);
   }, [contentState]);
 }
-
-interface ManualUpdateIfTriggeredProps extends CreateEditorProps {
-  setterVarb: SetterVarb;
-  setEditorState: React.Dispatch<React.SetStateAction<EditorState>>;
-}
-function useManualUpdateIfTriggered({
-  setterVarb,
-  setEditorState,
-  ...rest
-}: ManualUpdateIfTriggeredProps): void {
-  useEffect(() => {
-    // toggle the manualUpdateEditorToggle to force updates;
-    // the toggle initializes as undefined;
-    if (setterVarb.manualUpdateEditorToggle !== undefined) {
-      setEditorState(setterVarb.createEditor(rest));
-    }
-  }, [setterVarb.manualUpdateEditorToggle]);
-}

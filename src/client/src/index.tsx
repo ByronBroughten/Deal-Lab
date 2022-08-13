@@ -70,7 +70,6 @@ AppRegistry.runApplication("App", {
 // etc.
 
 // - get rid of login and register stuff
-// - get rid of editorUpdate and the editorUpdateToggle
 
 // Marketing
 // - Make a video demo

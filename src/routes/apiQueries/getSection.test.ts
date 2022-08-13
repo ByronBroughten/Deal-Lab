@@ -113,8 +113,8 @@ describe(testedRoute, () => {
     const deal = SetterTesterSection.init("deal").setter;
     const propertyGeneral = deal.onlyChild("propertyGeneral");
     const property = propertyGeneral.onlyChild("property");
-    property.varb("price").updateValueDirectly(original.price);
-    property.varb("displayName").updateValueDirectly(original.displayName);
+    property.varb("price").updateValue(original.price);
+    property.varb("displayName").updateValue(original.displayName);
 
     reqs.addSection.body = {
       dbStoreName: "dealMain",
@@ -126,8 +126,8 @@ describe(testedRoute, () => {
       price: numObj(200000),
       displayName: "Updated",
     };
-    property.varb("price").updateValueDirectly(updated.price);
-    property.varb("displayName").updateValueDirectly(updated.displayName);
+    property.varb("price").updateValue(updated.price);
+    property.varb("displayName").updateValue(updated.displayName);
     reqs.addSection.body = {
       dbStoreName: "propertyMain",
       sectionPack: property.packMaker.makeSectionPack(),

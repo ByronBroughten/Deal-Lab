@@ -17,7 +17,7 @@ export function LoadedVarbEditor<SN extends SectionName<"varbListItem">>({
   const section = useSetterSection(feInfo);
   const infoVarb = section.varb("valueEntityInfo");
   function onSelect({ varbInfo }: VariableOption) {
-    infoVarb.updateValueDirectly(inEntityInfo(varbInfo));
+    infoVarb.updateValue(inEntityInfo(varbInfo));
   }
   const selectedVarbInfo = infoVarb.value("inEntityInfo");
   const valueVarb = section.varb(valueVarbName);

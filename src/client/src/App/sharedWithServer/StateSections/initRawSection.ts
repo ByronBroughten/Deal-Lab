@@ -85,7 +85,6 @@ function initRawVarb<SN extends SectionName>({
 }: InitRawVarbProps<SN>): RawFeVarb<SN> {
   return {
     value: dbToFeValue(rest, dbVarb),
-    manualUpdateEditorToggle: undefined,
     outEntities: [],
   };
 }

@@ -1,14 +1,14 @@
 import { SimpleSectionName } from "../SectionsMeta/baseSections";
 import {
   isStateValue,
-  StateValue
+  StateValue,
 } from "../SectionsMeta/baseSectionsUtils/baseValues/StateValueTypes";
 import { DbSectionInfo } from "../SectionsMeta/baseSectionsUtils/DbSectionInfo";
 import { FeSectionInfo, FeVarbInfo } from "../SectionsMeta/Info";
 import { SectionName } from "../SectionsMeta/SectionName";
 import {
   VariableGetterSections,
-  VariableOption
+  VariableOption,
 } from "../StateEntityGetters/VariableGetterSections";
 import { GetterSections } from "../StateGetters/GetterSections";
 import { GetterVarb } from "../StateGetters/GetterVarb";
@@ -44,7 +44,7 @@ export class SetterSections extends SetterSectionsBase {
       ...varbInfo,
     });
   }
-  oneAndOnly<SN extends SimpleSectionName>(sectionName: SN): SetterSection<SN>{
+  oneAndOnly<SN extends SimpleSectionName>(sectionName: SN): SetterSection<SN> {
     return this.section(this.get.oneAndOnly(sectionName));
   }
   get main(): SetterSection<"main"> {
@@ -74,7 +74,7 @@ export class SetterSections extends SetterSectionsBase {
       const { name, value } = currentTarget;
       const feVarbInfo = GetterVarb.varbIdToVarbInfo(name);
       const varb = this.varb(feVarbInfo);
-      varb.updateValueDirectly(value);
+      varb.updateValue(value);
     }
   }
   variableOptions(): VariableOption[] {
