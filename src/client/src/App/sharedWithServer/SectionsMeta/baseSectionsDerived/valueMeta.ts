@@ -32,7 +32,7 @@ export const valueMeta = {
   },
   dateTime: {
     is: (v: any): v is number => typeof v === "number",
-    updateFnNames: ["updateByEditorOnly", "number"],
+    updateFnNames: ["number"],
     initDefault: () => timeS.now(),
     zod: z.number(),
     mon: reqMonNumber,
