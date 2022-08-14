@@ -94,11 +94,20 @@ export function mgmtRelVarbs(): RelVarbs<"mgmt"> {
       ],
       displayNameEnd: " dollars yearly",
     }),
-    vacancyRatePercent: relVarbS.percentObj("Vacancy Rate", {
+    vacancyRatePercent: relVarbS.percentObj("Vacancy rate", {
       initNumber: 5,
       endAdornment: "%",
     }),
-    ...relVarbsS.ongoingPercentToPortion(
+    vacancyRateDecimal: relVarbS.singlePropFn(
+      "Vacancy rate decimal",
+      "percentToDecimal",
+      relVarbInfoS.local("vacancyRatePercent"),
+      {
+        initNumber: 0.05,
+        unit: "decimal",
+      }
+    ),
+    ...relVarbsS.decimalToPortion(
       "vacancyLossDollars",
       "Vacancy rent lost",
       (baseVarbName) => {
@@ -110,7 +119,7 @@ export function mgmtRelVarbs(): RelVarbs<"mgmt"> {
         );
       },
       "targetRent",
-      "vacancyRatePercent"
+      "vacancyRateDecimal"
     ),
     upfrontExpenses: relVarbS.sumNums(
       "Upfront expenses",

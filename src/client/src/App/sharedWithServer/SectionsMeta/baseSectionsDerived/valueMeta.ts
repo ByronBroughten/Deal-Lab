@@ -25,28 +25,28 @@ import { ValueName } from "../baseSectionsUtils/baseVarb";
 export const valueMeta = {
   number: {
     is: (v: any): v is number => typeof v === "number",
-    updateFnNames: ["updateByEditorOnly", "number"],
+    updateFnNames: ["manualUpdateOnly", "number"],
     initDefault: () => 0,
     zod: z.number(),
     mon: reqMonNumber,
   },
   dateTime: {
     is: (v: any): v is number => typeof v === "number",
-    updateFnNames: ["number"],
+    updateFnNames: ["manualUpdateOnly"],
     initDefault: () => timeS.now(),
     zod: z.number(),
     mon: reqMonNumber,
   },
   boolean: {
     is: (v: any): v is boolean => typeof v === "boolean",
-    updateFnNames: ["updateByEditorOnly"],
+    updateFnNames: ["manualUpdateOnly"],
     initDefault: () => true,
     zod: z.boolean(),
     mon: { type: Boolean, required: true },
   },
   string: {
     is: (v: any): v is string => typeof v === "string",
-    updateFnNames: ["string", "updateByEditorOnly", "displayNameFullVirtual"],
+    updateFnNames: ["string", "manualUpdateOnly", "displayNameFullVirtual"],
     initDefault: () => "",
     zod: z.string(),
     mon: reqMonString,
@@ -56,7 +56,7 @@ export const valueMeta = {
     updateFnNames: [
       "stringObj",
       "loadLocalString",
-      "updateByEditorOnly",
+      "manualUpdateOnly",
       "loadDisplayName",
       "loadDisplayNameEnd",
       "loadStartAdornment",

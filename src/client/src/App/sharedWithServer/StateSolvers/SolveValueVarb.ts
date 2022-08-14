@@ -51,7 +51,7 @@ export class SolveValueVarb<
     return new GetterVarbNumObj(this.getterVarbProps);
   }
   private updateFns = {
-    updateByEditorOnly: (): StateValue => {
+    manualUpdateOnly: (): StateValue => {
       return this.getterVarb.value();
     },
     string: (): string => {

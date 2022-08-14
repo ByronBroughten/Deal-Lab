@@ -60,7 +60,7 @@ export const relVarbS = {
   },
   get displayNameEditor() {
     return relVarb("string", {
-      updateFnName: "updateByEditorOnly",
+      updateFnName: "manualUpdateOnly",
       updateFnProps: {},
       inUpdateSwitchProps: [
         {
@@ -150,17 +150,6 @@ export const relVarbS = {
     return this.sumNums(displayName, [
       relVarbInfoS.children(childName, varbName),
     ]);
-  },
-  percentToPortion(
-    displayName: DisplayName,
-    updateFnProps: { base: RelInVarbInfo; percentOfBase: RelInVarbInfo },
-    options?: RelNumObjOptions
-  ): NumObjRelVarb {
-    return this.calcVarb(displayName, {
-      updateFnName: "percentToPortion",
-      updateFnProps,
-      ...options,
-    });
   },
   singlePropFn(
     displayName: DisplayName,

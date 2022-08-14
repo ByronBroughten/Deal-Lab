@@ -4,7 +4,10 @@ import { SimpleSectionName } from "./baseSections";
 import { VarbNames } from "./baseSectionsDerived/baseVarbInfo";
 import { valueMeta } from "./baseSectionsDerived/valueMeta";
 import { UpdateFnName } from "./baseSectionsDerived/valueMetaTypes";
-import { NumUnitName } from "./baseSectionsUtils/baseValues/calculations/numUnitParams";
+import {
+  NumUnitName,
+  numUnitParams,
+} from "./baseSectionsUtils/baseValues/calculations/numUnitParams";
 import { ValueName } from "./baseSectionsUtils/baseVarb";
 import {
   RelInVarbInfo,
@@ -167,6 +170,12 @@ export class VarbMeta<SN extends SimpleSectionName> {
   }
   get inUpdatePacks(): InUpdatePack[] {
     return [...this.inSwitchUpdatePacks, this.inDefaultUpdatePack];
+  }
+  get calcRound(): number {
+    return numUnitParams[this.unit].calcRound;
+  }
+  get displayRound(): number {
+    return numUnitParams[this.unit].displayRound;
   }
   get unit(): NumUnitName {
     if ("unit" in this.core) return this.core.unit;

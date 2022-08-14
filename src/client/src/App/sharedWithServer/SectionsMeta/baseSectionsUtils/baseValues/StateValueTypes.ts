@@ -7,7 +7,7 @@ const editorUpdateNames = [
   "string",
   "stringArray",
   "stringObj",
-  "updateByEditorOnly",
+  "manualUpdateOnly",
 ] as const;
 type EditorUpdateName = typeof editorUpdateNames[number];
 export function isEditorUpdateFnName(value: string): value is EditorUpdateName {

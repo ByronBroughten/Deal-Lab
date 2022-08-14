@@ -159,12 +159,12 @@ export function ongoingInput<Base extends string>(
   );
 }
 
-export function ongoingPercentToPortion<Base extends string>(
+export function decimalToPortion<Base extends string>(
   baseVarbName: Base,
   displayName: DisplayName,
   makeBaseVarbInfo: (baseVarbName: string) => RelInVarbInfo,
   baseBaseName: string,
-  percentName: string
+  decimalName: string
 ): SwitchRelVarbs<Base, "ongoing"> {
   const varbNames = switchNames(baseVarbName, "ongoing");
   const baseVarbNames = switchNames(baseBaseName, "ongoing");
@@ -173,18 +173,18 @@ export function ongoingPercentToPortion<Base extends string>(
       initValue: "monthly",
     }),
     [varbNames.monthly]: relVarbS.moneyMonth(displayName, {
-      updateFnName: "percentToPortion",
+      updateFnName: "simpleMultiply",
       updateFnProps: {
-        base: makeBaseVarbInfo(baseVarbNames.monthly),
-        percentOfBase: relVarbInfoS.local(percentName),
+        leftSide: relVarbInfoS.local(decimalName),
+        rightSide: makeBaseVarbInfo(baseVarbNames.monthly),
       },
       displayNameEnd: " monthly",
     }),
     [varbNames.yearly]: relVarbS.moneyYear(displayName, {
-      updateFnName: "percentToPortion",
+      updateFnName: "simpleMultiply",
       updateFnProps: {
-        base: makeBaseVarbInfo(baseVarbNames.yearly),
-        percentOfBase: relVarbInfoS.local(percentName),
+        leftSide: relVarbInfoS.local(decimalName),
+        rightSide: makeBaseVarbInfo(baseVarbNames.yearly),
       },
       displayNameEnd: " yearly",
     }),

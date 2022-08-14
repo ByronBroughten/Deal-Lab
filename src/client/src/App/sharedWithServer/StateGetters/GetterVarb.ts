@@ -1,4 +1,4 @@
-import { cloneDeep } from "lodash";
+import { cloneDeep, round } from "lodash";
 import {
   DbVarbInfoMixed,
   FeVarbInfoMixed,
@@ -92,10 +92,11 @@ export class GetterVarb<
   }
   get numberOrQuestionMark(): NumberOrQ {
     try {
-      const val = this.numberValue;
+      let val = this.numberValue;
       if (`${val}` === "NaN") {
         throw new Error("no NaN allowed");
       }
+      val = round(val, this.meta.displayRound);
       return val;
     } catch (ex) {
       if (ex instanceof NotANumberError) {

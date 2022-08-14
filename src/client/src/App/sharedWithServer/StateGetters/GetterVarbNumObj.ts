@@ -1,6 +1,5 @@
 import { round } from "lodash";
 import { evaluate } from "mathjs";
-import { numUnitParams } from "../SectionsMeta/baseSectionsUtils/baseValues/calculations/numUnitParams";
 import { InEntity } from "../SectionsMeta/baseSectionsUtils/baseValues/entities";
 import {
   EntitiesAndEditorText,
@@ -70,7 +69,7 @@ export class GetterVarbNumObj<
   }
   solveText(text: string): NumberOrQ {
     const { updateFnName } = this.get;
-    const { unit } = this.get.meta;
+    const { calcRound } = this.get.meta;
     if (!isNumObjUpdateFnName(updateFnName)) {
       throw new Error("This is only for numObjs.");
     }
@@ -91,7 +90,7 @@ export class GetterVarbNumObj<
     try {
       let num = evaluate(text);
       if (mathS.isRationalNumber(num)) {
-        const finalNum = round(num, numUnitParams[unit].roundTo);
+        const finalNum = round(num, calcRound);
         return finalNum;
       } else return "?";
     } catch (ex) {

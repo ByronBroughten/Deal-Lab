@@ -166,7 +166,11 @@ export const baseSections = {
   },
   mgmt: baseSection({
     ...baseVarbsS.savableSection,
-    ...baseVarbs("numObj", ["vacancyRatePercent", "upfrontExpenses"] as const),
+    ...baseVarbs("numObj", [
+      "vacancyRatePercent",
+      "vacancyRateDecimal",
+      "upfrontExpenses",
+    ] as const),
     ...baseVarbsS.ongoing("expenses"),
     ...baseVarbsS.ongoing("vacancyLossDollars"),
     ...omit(baseVarbsS.switch("rentCut", "dollarsPercentDecimal"), [

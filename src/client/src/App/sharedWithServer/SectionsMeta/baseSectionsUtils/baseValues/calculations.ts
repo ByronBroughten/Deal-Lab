@@ -1,6 +1,4 @@
 import { Obj } from "../../../utils/Obj";
-import { calcPropMath } from "./calculations/calcPropS";
-import { percentToDecimalRounded } from "./calculations/numUnitParams";
 import { interestOnlySimpleYearly } from "./calculations/piCalculations/interestOnlySimple";
 import { piFixedStandardMonthly } from "./calculations/piFixedStandard";
 import { NumberOrQ } from "./NumObj";
@@ -70,16 +68,6 @@ const calculations = {
   ...solvableTextByArgs.leftRight,
   ...solvableTextByArgs.nums,
   one: ({}) => `1`,
-  percentToPortion: ({
-    base,
-    percentOfBase,
-  }: {
-    base: number;
-    percentOfBase: number;
-  }) => {
-    const decimalOfBase = calcPropMath(percentOfBase, percentToDecimalRounded);
-    return `${base} * ${decimalOfBase}`;
-  },
   portionToDecimal: ({
     base,
     portionOfBase,

@@ -12,10 +12,10 @@ import { relVarbInfoS } from "../childSectionsDerived/RelVarbInfo";
 import { relVarbInfosS } from "../childSectionsDerived/RelVarbInfos";
 import { relVarb, relVarbS } from "./rel/relVarb";
 import {
+  decimalToPortion,
   MonthlyYearlySwitchOptions,
   monthsYearsInput,
   ongoingInput,
-  ongoingPercentToPortion,
   ongoingPureCalc,
   ongoingSumNums,
   SwitchRelVarbs,
@@ -88,7 +88,7 @@ export const relVarbsS = {
     } as const;
   },
   ongoingPureCalc,
-  ongoingPercentToPortion,
+  decimalToPortion,
   ongoingSumNums,
   ongoingInput,
   monthsYearsInput,
