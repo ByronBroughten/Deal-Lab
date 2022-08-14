@@ -150,7 +150,7 @@ export const baseSections = {
     ...baseVarbsS.ongoing("interestOnlySimple"),
     ...baseVarbsS.ongoing("expenses"),
     ...baseVarbsS.ongoing("interestRatePercent"),
-    ...baseVarbsS.switch("loanBase", "dollarsPercent"),
+    ...baseVarbsS.switch("loanBase", "dollarsPercentDecimal"),
     ...baseVarbsS.switch("loanTerm", "monthsYears"),
     piCalculationName: "string",
     ...baseVarbsS.ongoing("loanPayment"),
@@ -162,7 +162,16 @@ export const baseSections = {
       { hasGlobalVarbs: true }
     );
   },
-  mgmt: baseSection(baseVarbsS.mgmt),
+  mgmt: baseSection({
+    ...baseVarbsS.savableSection,
+    ...baseVarbs("numObj", ["vacancyRatePercent", "upfrontExpenses"] as const),
+    ...baseVarbsS.ongoing("expenses"),
+    ...baseVarbsS.ongoing("vacancyLossDollars"),
+    ...omit(baseVarbsS.switch("rentCut", "dollarsPercentDecimal"), [
+      "rentCutDollars",
+    ] as const),
+    ...baseVarbsS.ongoing("rentCutDollars"),
+  } as const),
   get mgmtGeneral() {
     return baseSection(omit(this.mgmt.varbSchemas, ["displayName"]), {
       hasGlobalVarbs: true,
@@ -178,11 +187,13 @@ export const baseSections = {
         "totalInvestment",
         "downPaymentDollars",
         "downPaymentPercent",
+        "downPaymentDecimal",
       ] as const),
       ...baseVarbsS.ongoing("piti"),
       ...baseVarbsS.ongoing("expenses"),
       ...baseVarbsS.ongoing("revenue"),
       ...baseVarbsS.ongoing("cashFlow"),
+      ...baseVarbsS.ongoing("roiDecimal"),
       ...baseVarbsS.ongoing("roi"),
     },
     { hasGlobalVarbs: true }

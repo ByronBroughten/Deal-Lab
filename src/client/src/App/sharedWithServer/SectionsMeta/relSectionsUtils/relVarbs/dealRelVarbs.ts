@@ -26,17 +26,21 @@ export function dealRelVarbs(): RelVarbs<"deal"> {
         relVarbInfoS.children("financing", "loanBaseDollars"),
       ],
       { startAdornment: "$", displayNameEnd: " dollars" }
-      // this should respond to propertyGeneral's price change and be 0
-      // but it's not.
     ),
-    downPaymentPercent: relVarbS.leftRightPropFn(
+    downPaymentDecimal: relVarbS.leftRightPropFn(
       "Down payment",
-      "divideToPercent",
+      "simpleDivide",
       [
         relVarbInfoS.local("downPaymentDollars"),
         relVarbInfoS.children("propertyGeneral", "price"),
       ],
-      { endAdornment: "%", displayNameEnd: "percent" }
+      { displayNameEnd: "decimal", unit: "decimal" }
+    ),
+    downPaymentPercent: relVarbS.singlePropFn(
+      "Down payment",
+      "decimalToPercent",
+      relVarbInfoS.local("downPaymentDecimal"),
+      { endAdornment: "%", displayNameEnd: "percent", unit: "percent" }
     ),
     totalInvestment: relVarbS.leftRightPropFn(
       "Upfront investment",
@@ -68,22 +72,34 @@ export function dealRelVarbs(): RelVarbs<"deal"> {
     cashFlowOngoingSwitch: relVarb("string", {
       initValue: "yearly",
     }),
-    roiMonthly: relVarbS.leftRightPropFn(
-      "Monthly ROI",
-      "divideToPercent",
+    roiDecimalMonthly: relVarbS.leftRightPropFn(
+      "Monthly ROI Decimal",
+      "simpleDivide",
       relVarbInfosS.local([
         "cashFlowMonthly",
         "totalInvestment",
       ]) as LeftRightVarbInfos,
+      { unit: "decimal" }
+    ),
+    roiMonthly: relVarbS.singlePropFn(
+      "Monthly ROI",
+      "decimalToPercent",
+      relVarbInfoS.local("roiDecimalMonthly"),
       { endAdornment: "%", unit: "percent" }
     ),
-    roiYearly: relVarbS.leftRightPropFn(
-      "Annual ROI",
-      "divideToPercent",
+    roiDecimalYearly: relVarbS.leftRightPropFn(
+      "Annual ROI Decimal",
+      "simpleDivide",
       relVarbInfosS.local([
         "cashFlowYearly",
         "totalInvestment",
       ]) as LeftRightVarbInfos,
+      { unit: "decimal" }
+    ),
+    roiYearly: relVarbS.singlePropFn(
+      "Annual ROI",
+      "decimalToPercent",
+      relVarbInfoS.local("roiDecimalYearly"),
       { endAdornment: "%", unit: "percent" }
     ),
     roiOngoingSwitch: relVarb("string", {

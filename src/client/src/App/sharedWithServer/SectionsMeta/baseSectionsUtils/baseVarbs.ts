@@ -1,4 +1,3 @@
-import { omit } from "lodash";
 import { ValueName } from "./baseVarb";
 import {
   BaseOngoingVarb,
@@ -56,19 +55,6 @@ export const baseVarbsS = {
       displayName: "string",
       dateTimeFirstSaved: "string",
       dateTimeLastSaved: "string",
-    } as const;
-  },
-  get mgmt() {
-    return {
-      ...this.savableSection,
-      ...baseVarbs("numObj", [
-        "vacancyRatePercent",
-        "upfrontExpenses",
-      ] as const),
-      ...this.ongoing("expenses"),
-      ...this.ongoing("vacancyLossDollars"),
-      ...omit(this.switch("rentCut", "dollarsPercent"), ["rentCutDollars"]),
-      ...this.ongoing("rentCutDollars"),
     } as const;
   },
   get virtualVarb() {

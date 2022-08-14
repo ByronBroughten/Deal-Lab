@@ -1,10 +1,6 @@
 import { Obj } from "../../../utils/Obj";
 import { calcPropMath } from "./calculations/calcPropS";
 import { percentToDecimalRounded } from "./calculations/numUnitParams";
-import {
-  calculatePiMonthly,
-  calculatePiYearly,
-} from "./calculations/piCalculations";
 import { interestOnlySimpleYearly } from "./calculations/piCalculations/interestOnlySimple";
 import { piFixedStandardMonthly } from "./calculations/piFixedStandard";
 import { NumberOrQ } from "./NumObj";
@@ -28,21 +24,14 @@ const solvableTextByArgs = {
     noNegative: ({ num }: { num: NumProp }) => `${num} < 0 ? 0 : ${num}`,
   },
   leftRight: {
+    simpleMultiply: ({ leftSide, rightSide }: LRSides) => {
+      return `${leftSide} * ${rightSide}`;
+    },
     simpleSubtract: ({ leftSide, rightSide }: LRSides) => {
       return `${leftSide} - ${rightSide}`;
     },
     simpleDivide: ({ leftSide, rightSide }: LRSides) => {
       return `${leftSide} / ${rightSide}`;
-    },
-
-    get divideToPercent() {
-      // This is converted to a percent in numObj, in "finishing touches"
-      // to make the displayed computation less confusing for people.
-      return this.simpleDivide;
-    },
-    percentToDecimalTimesBase: ({ leftSide, rightSide }: LRSides) => {
-      const decimalLeft = calcPropMath(leftSide, percentToDecimalRounded);
-      return `${decimalLeft} * ${rightSide}`;
     },
     subtractFloorZero: ({ leftSide, rightSide }: LRSides) => {
       const num = leftSide - rightSide;
@@ -101,9 +90,6 @@ const calculations = {
 
   interestOnlySimpleYearly,
   piFixedStandardMonthly,
-
-  piMonthly: calculatePiMonthly,
-  piYearly: calculatePiYearly,
 } as const;
 
 export const calculationNames = Obj.keys(calculations);

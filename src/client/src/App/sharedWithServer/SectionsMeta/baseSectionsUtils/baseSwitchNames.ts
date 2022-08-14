@@ -4,7 +4,7 @@ type GeneralBaseSwitchSchemas = {
     switch: string;
   };
 };
-const baseSwitchSchemas = {
+export const baseSwitchSchemas = {
   percent: {
     percent: "Percent",
     switch: "UnitSwitch",
@@ -13,6 +13,12 @@ const baseSwitchSchemas = {
     return {
       ...this.percent,
       dollars: "Dollars",
+    } as const;
+  },
+  get dollarsPercentDecimal() {
+    return {
+      ...this.dollarsPercent,
+      decimal: "Decimal",
     } as const;
   },
   ongoing: {

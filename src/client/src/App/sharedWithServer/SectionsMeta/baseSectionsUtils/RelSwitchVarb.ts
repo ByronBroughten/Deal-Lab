@@ -2,6 +2,7 @@ import { pick } from "lodash";
 import { Obj } from "../../utils/Obj";
 import { Merge } from "../../utils/Obj/merge";
 import { StrictPick } from "../../utils/types";
+import { baseSwitchSchemas } from "./baseSwitchNames";
 
 // for all the types, I might want to make the core separate again.
 class RelSwitchVarb<C extends GeneralRelSwitchCore> {
@@ -102,6 +103,27 @@ function makeRelSwitchCores<
 
 export const relSwitchVarbs = {
   ongoing: ongoingVarb,
+  dollarsPercentDecimal: new RelSwitchVarb({
+    targets: {
+      dollars: targetCore({
+        startAdornment: "$",
+        varbNameEnding: "Dollars",
+        displayNameEnd: " dollars",
+      }),
+      percent: targetCore({
+        endAdornment: "%",
+        varbNameEnding: "Percent",
+        displayNameEnd: " percent",
+      } as const),
+      decimal: targetCore({
+        varbNameEnding: "Decimal",
+        displayNameEnd: " decimal",
+      } as const),
+    },
+    switch: {
+      varbNameEnding: "UnitSwitch",
+    },
+  }),
   dollarsPercent: new RelSwitchVarb({
     targets: {
       percent: targetCore({
@@ -114,6 +136,18 @@ export const relSwitchVarbs = {
         varbNameEnding: "Dollars",
         displayNameEnd: " dollars",
       }),
+    },
+    switch: {
+      varbNameEnding: "UnitSwitch",
+    },
+  }),
+  percent: new RelSwitchVarb({
+    targets: {
+      percent: targetCore({
+        endAdornment: "%",
+        varbNameEnding: "Percent",
+        displayNameEnd: " percent",
+      } as const),
     },
     switch: {
       varbNameEnding: "UnitSwitch",
@@ -158,31 +192,14 @@ export function baseNamePlusEndings<
   }, {} as Partial<ToReturn>) as ToReturn;
 }
 
-export const switchEndings = {
-  dollarsPercent: {
-    percent: "Percent",
-    dollars: "Dollars",
-    switch: "UnitSwitch",
-  },
-  ongoing: {
-    monthly: "Monthly",
-    yearly: "Yearly",
-    switch: "OngoingSwitch",
-  },
-  monthsYears: {
-    months: "Months",
-    years: "Years",
-    switch: "SpanSwitch",
-  },
-} as const;
-export type SwitchEndings = typeof switchEndings;
+export type SwitchEndings = typeof baseSwitchSchemas;
 export type SwitchEndingKey = keyof SwitchEndings;
 
 export function switchNames<Base extends string, K extends keyof SwitchEndings>(
   baseName: Base,
   key: K
 ): NamePlusEndings<Base, SwitchEndings[K]> {
-  return baseNamePlusEndings(baseName, switchEndings[key]);
+  return baseNamePlusEndings(baseName, baseSwitchSchemas[key]);
 }
 
 export type SwitchRecord<
@@ -206,5 +223,5 @@ export type BaseSwitchVarb<
 
 export type BaseOngoingVarb<T extends string> = BaseSwitchVarb<
   T,
-  typeof switchEndings.ongoing
+  typeof baseSwitchSchemas.ongoing
 >;

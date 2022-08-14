@@ -8,15 +8,6 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-// - make separate update functions for each of the loan types
-
-// - Make the "loanPaymentMonthly" variable
-//   have a switch that dictates which of "interestOnlyPayments" and "standardLoanPayments" feed into it. For now, this will result in
-// some unnecessary math. That's ok. I know how I could fix it, but
-// it's not a problem.
-
-// - Add a step for transitioning each percent to a decimal
-// - Get rid of doFinishingTouches
 // - Add a date value that is a number
 // - Make the date variables be the date value
 

@@ -5,29 +5,47 @@ import { relUpdateSwitch } from "../rel/relUpdateSwitch";
 import { relVarb, relVarbS } from "../rel/relVarb";
 import { RelVarbs, relVarbsS } from "../relVarbs";
 
-const rentCut = switchNames("rentCut", "dollarsPercent");
+const rentCut = switchNames("rentCut", "dollarsPercentDecimal");
 const rentCutDollars = switchNames(rentCut.dollars, "ongoing");
 
-export function mgmtRelVarbs<R extends RelVarbs<"mgmt">>(): R {
+export function mgmtRelVarbs(): RelVarbs<"mgmt"> {
   return {
     ...relVarbsS.savableSection,
     [rentCut.switch]: relVarb("string", {
       initValue: "percent",
     }),
+    [rentCut.decimal]: relVarbS.numObj("Rent cut decimal", {
+      initNumber: 0.05,
+      updateFnName: "percentToDecimal",
+      updateFnProps: {
+        num: relVarbInfoS.local(rentCut.percent),
+      },
+      inUpdateSwitchProps: [
+        {
+          switchInfo: relVarbInfoS.local(rentCut.switch),
+          switchValue: "dollars",
+          updateFnName: "simpleDivide",
+          updateFnProps: {
+            leftSide: relVarbInfoS.local(rentCutDollars.monthly),
+            rightSide: relVarbInfoS.pibling(
+              "propertyGeneral",
+              "propertyGeneral",
+              "targetRentMonthly",
+              { expectedCount: "onlyOne" }
+            ),
+          },
+        },
+      ],
+    }),
     [rentCut.percent]: relVarbS.percentObj("Rent cut", {
       initNumber: 5,
       inUpdateSwitchProps: [
-        relUpdateSwitch.divideToPercent(
-          rentCut.switch,
-          "dollars",
-          relVarbInfoS.local(rentCutDollars.monthly),
-          relVarbInfoS.pibling(
-            "propertyGeneral",
-            "propertyGeneral",
-            "targetRentMonthly",
-            { expectedCount: "onlyOne" }
-          )
-        ),
+        {
+          switchInfo: relVarbInfoS.local(rentCut.switch),
+          switchValue: "dollars",
+          updateFnName: "decimalToPercent",
+          updateFnProps: { num: relVarbInfoS.local(rentCut.decimal) },
+        },
       ],
       displayNameEnd: " percent",
     }),
@@ -37,31 +55,41 @@ export function mgmtRelVarbs<R extends RelVarbs<"mgmt">>(): R {
     }),
     [rentCutDollars.monthly]: relVarbS.moneyMonth("Rent cut", {
       initNumber: 0,
+      displayNameEnd: " dollars monthly",
       inUpdateSwitchProps: [
-        relUpdateSwitch.percentToDecimalTimesBase(
-          "rentCut",
-          relVarbInfoS.pibling(
-            "propertyGeneral",
-            "propertyGeneral",
-            "targetRentMonthly",
-            { expectedCount: "onlyOne" }
-          )
-        ),
+        {
+          switchInfo: relVarbInfoS.local(rentCut.switch),
+          switchValue: "percent",
+          updateFnName: "simpleMultiply",
+          updateFnProps: {
+            leftSide: relVarbInfoS.local(rentCut.decimal),
+            rightSide: relVarbInfoS.pibling(
+              "propertyGeneral",
+              "propertyGeneral",
+              "targetRentMonthly",
+              { expectedCount: "onlyOne" }
+            ),
+          },
+        },
         relUpdateSwitch.yearlyToMonthly("rentCutDollars"),
       ],
-      displayNameEnd: " dollars monthly",
     }),
     [rentCutDollars.yearly]: relVarbS.moneyYear("Rent cut", {
       inUpdateSwitchProps: [
-        relUpdateSwitch.percentToDecimalTimesBase(
-          "rentCut",
-          relVarbInfoS.pibling(
-            "propertyGeneral",
-            "propertyGeneral",
-            "targetRentYearly",
-            { expectedCount: "onlyOne" }
-          )
-        ),
+        {
+          switchInfo: relVarbInfoS.local(rentCut.switch),
+          switchValue: "percent",
+          updateFnName: "simpleMultiply",
+          updateFnProps: {
+            leftSide: relVarbInfoS.local(rentCut.decimal),
+            rightSide: relVarbInfoS.pibling(
+              "propertyGeneral",
+              "propertyGeneral",
+              "targetRentYearly",
+              { expectedCount: "onlyOne" }
+            ),
+          },
+        },
         relUpdateSwitch.monthlyToYearly("rentCutDollars"),
       ],
       displayNameEnd: " dollars yearly",
@@ -101,5 +129,5 @@ export function mgmtRelVarbs<R extends RelVarbs<"mgmt">>(): R {
         shared: { startAdornment: "$" },
       }
     ),
-  } as R;
+  };
 }

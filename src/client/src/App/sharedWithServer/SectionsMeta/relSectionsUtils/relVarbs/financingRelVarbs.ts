@@ -4,43 +4,77 @@ import { numObj } from "../../baseSectionsUtils/baseValues/NumObj";
 import { switchNames } from "../../baseSectionsUtils/RelSwitchVarb";
 import { relVarbInfoS } from "../../childSectionsDerived/RelVarbInfo";
 import { relVarbInfosS } from "../../childSectionsDerived/RelVarbInfos";
-import { relUpdateSwitch } from "../rel/relUpdateSwitch";
 import { relVarb, relVarbS } from "../rel/relVarb";
 import { RelVarbs, relVarbsS } from "../relVarbs";
 
-const loanBase = switchNames("loanBase", "dollarsPercent");
+const loanBase = switchNames("loanBase", "dollarsPercentDecimal");
 export function loanRelVarbs(): RelVarbs<"loan"> {
   return {
     ...relVarbsS.savableSection,
     [loanBase.switch]: relVarb("string", {
       initValue: "percent",
     }),
+    [loanBase.decimal]: relVarbS.numObj("Base loan decimal", {
+      initNumber: 0.05,
+      unit: "decimal",
+      updateFnName: "percentToDecimal",
+      updateFnProps: { num: relVarbInfoS.local(loanBase.percent) },
+      inUpdateSwitchProps: [
+        {
+          switchInfo: relVarbInfoS.local(loanBase.switch),
+          switchValue: "dollars",
+          updateFnName: "simpleDivide",
+          updateFnProps: {
+            leftSide: relVarbInfoS.local("loanBaseDollars"),
+            rightSide: relVarbInfoS.pibling(
+              "propertyGeneral",
+              "propertyGeneral",
+              "price",
+              {
+                expectedCount: "onlyOne",
+              }
+            ),
+          },
+        },
+      ],
+    }),
     [loanBase.percent]: relVarbS.calcVarb("Base loan", {
       initNumber: 5,
-      inUpdateSwitchProps: [
-        relUpdateSwitch.divideToPercent(
-          loanBase.switch,
-          "dollars",
-          relVarbInfoS.local("loanBaseDollars"),
-          relVarbInfoS.pibling("propertyGeneral", "propertyGeneral", "price", {
-            expectedCount: "onlyOne",
-          })
-        ),
-      ],
+      unit: "percent",
       displayNameEnd: " percent",
       endAdornment: "%",
+      inUpdateSwitchProps: [
+        {
+          switchInfo: relVarbInfoS.local(loanBase.switch),
+          switchValue: "dollars",
+          updateFnName: "decimalToPercent",
+          updateFnProps: {
+            num: relVarbInfoS.local(loanBase.decimal),
+          },
+        },
+      ],
     }),
     [loanBase.dollars]: relVarbS.calcVarb("Base loan dollars", {
-      inUpdateSwitchProps: [
-        relUpdateSwitch.percentToDecimalTimesBase(
-          "loanBase",
-          relVarbInfoS.pibling("propertyGeneral", "propertyGeneral", "price", {
-            expectedCount: "onlyOne",
-          })
-        ),
-      ],
       displayNameEnd: " dollars",
       startAdornment: "$",
+      inUpdateSwitchProps: [
+        {
+          switchInfo: relVarbInfoS.local(loanBase.switch),
+          switchValue: "percent",
+          updateFnName: "simpleMultiply",
+          updateFnProps: {
+            leftSide: relVarbInfoS.local(loanBase.decimal),
+            rightSide: relVarbInfoS.pibling(
+              "propertyGeneral",
+              "propertyGeneral",
+              "price",
+              {
+                expectedCount: "onlyOne",
+              }
+            ),
+          },
+        },
+      ],
     }),
     loanTotalDollars: relVarbS.sumMoney("Loan amount", [
       relVarbInfoS.local("loanBaseDollars"),

@@ -91,19 +91,11 @@ export class GetterVarbNumObj<
     try {
       let num = evaluate(text);
       if (mathS.isRationalNumber(num)) {
-        num = this.doFinishingTouches(num);
         const finalNum = round(num, numUnitParams[unit].roundTo);
         return finalNum;
       } else return "?";
     } catch (ex) {
       return "?";
     }
-  }
-  private doFinishingTouches(num: number): number {
-    const { updateFnName } = this.get;
-    if (updateFnName === "divideToPercent") {
-      num = mathS.decimalToPercent(num);
-    }
-    return num;
   }
 }
