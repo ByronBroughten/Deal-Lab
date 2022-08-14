@@ -6,6 +6,7 @@ import { addSectionWare } from "./apiQueries/addSection";
 import { deleteSectionWare } from "./apiQueries/deleteSection";
 import { upgradeUserToProWare } from "./apiQueries/getProPaymentLink";
 import { getSectionWare } from "./apiQueries/getSection";
+import { subscriptionDataWare } from "./apiQueries/getSubscriptionData";
 import { getUserDataWare } from "./apiQueries/getUserData";
 import { loginWare } from "./apiQueries/login";
 import { makeSessionWare } from "./apiQueries/makeSession";
@@ -24,6 +25,7 @@ const endpointWare: Record<ApiQueryName, any> = {
   replaceSectionArr: replaceSectionArrWare,
   getProPaymentLink: upgradeUserToProWare,
   getUserData: getUserDataWare,
+  getSubscriptionData: subscriptionDataWare,
   makeSession: makeSessionWare,
 } as const;
 

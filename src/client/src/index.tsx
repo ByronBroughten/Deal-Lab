@@ -8,15 +8,7 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 // Manage the pro stuff
-
-// - Create a new route to get updated state and token related to someone's pro status
-// - Create something on feUser called "updateSubscription", which calls that route
-//   and updates state
-// - if the path has subscriptionSuccessUrlEnd, that should trigger attempts
-//   I think that's the only way that stripe gives to do it. Very well.
 // - Test the new route.
-// - Implement a useEffect that checks whether the subscription expried, and if it has,
-//   it attempts to update it.
 
 // - Test the addSection pro stuff
 //   - Test that header updates when appropriate (make sure this happens on addSection)

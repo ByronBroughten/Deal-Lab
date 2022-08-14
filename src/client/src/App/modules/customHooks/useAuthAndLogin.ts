@@ -3,8 +3,39 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { signOut } from "supertokens-auth-react/recipe/thirdpartyemailpassword";
 import { constants } from "../../Constants";
 import { useSetterSection } from "../../sharedWithServer/stateClassHooks/useSetterSection";
+import { timeS } from "../../sharedWithServer/utils/date";
 import { useFeUser } from "../sectionActorHooks/useFeUser";
 import { auth } from "../services/authService";
+
+function useUpdateOnSubscribe() {
+  const feUser = useFeUser();
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
+  React.useEffect(() => {
+    async function updateOnSubscribe() {
+      if (pathname.includes(constants.subscriptionSuccessUrlEnd)) {
+        await feUser.updateSubscriptionData();
+        navigate("/");
+      }
+    }
+    updateOnSubscribe();
+  });
+}
+
+function useUpdateOnExpire() {
+  const feUser = useFeUser();
+  React.useEffect(() => {
+    const { planExp } = feUser.subscriptionValues;
+    if (planExp < timeS.now()) {
+      feUser.updateSubscriptionData();
+    }
+  });
+}
+
+export function useSubscriptionState() {
+  useUpdateOnSubscribe();
+  useUpdateOnExpire();
+}
 
 function useGetAuthStateIfSessionExists() {
   const feUser = useFeUser();

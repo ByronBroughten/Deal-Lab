@@ -155,10 +155,11 @@ export class SolveValueVarb<
   private loadNextEntities(): InEntities {
     const varb = this.getterVarb;
     let nextEntities = [...varb.inEntities];
+    const entitySource = "localValueEntityInfo";
 
     const infoVarb = varb.localVarb("valueEntityInfo");
-    function entityIsOfSource({ entitySource }: InEntity) {
-      return entitySource === infoVarb.varbId;
+    function entityIsOfSource(entity: InEntity) {
+      return entity.entitySource === entitySource;
     }
     function removeEntityOfSource() {
       Arr.findAndRmMutate(nextEntities, entityIsOfSource);
@@ -166,7 +167,7 @@ export class SolveValueVarb<
     function pushEntityOfSource(entityInfo: InEntityInfo) {
       nextEntities.push({
         ...entityInfo,
-        entitySource: infoVarb.varbId,
+        entitySource: entitySource,
         length: 0,
         offset: 0,
       });

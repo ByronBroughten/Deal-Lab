@@ -1,17 +1,13 @@
 import { Request, Response } from "express";
 import { constants } from "../../client/src/App/Constants";
-import { AuthHeadersProp } from "../../client/src/App/modules/services/authService";
+import { UserInfoTokenProp } from "../../client/src/App/modules/services/authService";
 import { UserPlan } from "../../client/src/App/sharedWithServer/SectionsMeta/baseSections";
 import { DbPack } from "../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbSectionPack";
 import {
   DbStoreInfo,
   SectionQueryName,
 } from "../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreName";
-import {
-  checkDbAccessWare,
-  getAuthWare,
-  updateUserSubscriptionWare,
-} from "../../middleware/authWare";
+import { checkUserInfoWare, getAuthWare } from "../../middleware/authWare";
 import { ResStatusError } from "../../utils/resError";
 import { DbUser } from "./shared/DbSections/DbUser";
 import { SectionPackNotFoundError } from "./shared/DbSections/DbUserTypes";
@@ -21,8 +17,7 @@ import { validateSectionPackReq } from "./shared/validateSectionPackReq";
 
 export const addSectionWare = [
   getAuthWare(),
-  checkDbAccessWare,
-  updateUserSubscriptionWare,
+  checkUserInfoWare,
   addSection,
 ] as const;
 async function addSection(req: Request, res: Response) {
@@ -31,7 +26,7 @@ async function addSection(req: Request, res: Response) {
     sectionPack,
     userJwt: { userId, subscriptionPlan },
   } = validateSectionPackReq(req).body;
-  await validateSubscription({
+  await validateStorageLimit({
     userId,
     dbStoreName,
     subscriptionPlan,
@@ -50,7 +45,7 @@ async function addSection(req: Request, res: Response) {
   });
   sendSuccess(res, "addSection", {
     data: { dbId: sectionPack.dbId },
-    headers: req.headers as AuthHeadersProp,
+    headers: req.headers as UserInfoTokenProp,
   });
 }
 
@@ -59,7 +54,7 @@ type ValidateSubscriptionProps = {
   dbStoreName: SectionQueryName;
   userId: string;
 };
-async function validateSubscription({
+async function validateStorageLimit({
   subscriptionPlan,
   dbStoreName,
   userId,

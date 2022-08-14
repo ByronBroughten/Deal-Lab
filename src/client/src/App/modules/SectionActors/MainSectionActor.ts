@@ -1,3 +1,4 @@
+import { SectionValues } from "../../sharedWithServer/SectionsMeta/baseSectionsDerived/valueMetaTypes";
 import { DbSectionNameName } from "../../sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreName";
 import { SectionPack } from "../../sharedWithServer/SectionsMeta/childSectionsDerived/SectionPack";
 import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
@@ -10,7 +11,7 @@ import {
   SectionQuerier,
   SectionQuerierProps,
 } from "../QueriersBasic/SectionQuerier";
-import { auth, AuthHeadersProp } from "../services/authService";
+import { auth, UserInfoTokenProp } from "../services/authService";
 import { SectionActorBase } from "./SectionActorBase";
 
 export class MainSectionActor<
@@ -87,9 +88,9 @@ export class MainSectionActor<
     this.setter.updateValues({
       dateTimeFirstSaved: dateTime,
       dateTimeLastSaved: dateTime,
-    });
+    } as Partial<SectionValues<SN>>);
 
-    let headers: AuthHeadersProp | null = null;
+    let headers: UserInfoTokenProp | null = null;
     this.setter.tryAndRevertIfFail(async () => {
       const res = await this.querier.add(
         this.packMaker.makeSectionPack() as SectionPack<any>
@@ -102,7 +103,7 @@ export class MainSectionActor<
     this.updateRow();
     this.setter.updateValues({
       dateTimeLastSaved: this.newDateTime(),
-    });
+    } as Partial<SectionValues<SN>>);
     this.setter.tryAndRevertIfFail(
       async () =>
         await this.querier.update(

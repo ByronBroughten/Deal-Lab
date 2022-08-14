@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import { constants } from "../../../../client/src/App/Constants";
 import { LoginData } from "../../../../client/src/App/sharedWithServer/apiQueriesShared/login";
 import { RegisterReqBody } from "../../../../client/src/App/sharedWithServer/apiQueriesShared/register";
+import { SubscriptionValues } from "../../../../client/src/App/sharedWithServer/apiQueriesShared/SubscriptionValues";
 import { defaultMaker } from "../../../../client/src/App/sharedWithServer/defaultMaker/defaultMaker";
 import { SectionValues } from "../../../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsDerived/valueMetaTypes";
 import { dbStoreNameS } from "../../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreName";
@@ -18,7 +19,10 @@ import {
 import { GetterSection } from "../../../../client/src/App/sharedWithServer/StateGetters/GetterSection";
 import { PackBuilderSection } from "../../../../client/src/App/sharedWithServer/StatePackers.ts/PackBuilderSection";
 import { Arr } from "../../../../client/src/App/sharedWithServer/utils/Arr";
-import { getStandardNow } from "../../../../client/src/App/sharedWithServer/utils/date";
+import {
+  getStandardNow,
+  timeS,
+} from "../../../../client/src/App/sharedWithServer/utils/date";
 import { stripeS } from "../../../../client/src/App/sharedWithServer/utils/stripe";
 import { HandledResStatusError } from "../../../../utils/resError";
 import { isProEmail } from "../../../routeUtils/proList";
@@ -27,8 +31,7 @@ import { DbUser } from "./DbUser";
 import { DbSectionsRaw, DbUserSpecifierType } from "./DbUserTypes";
 import {
   checkUserAuthToken,
-  createDbAccessToken,
-  SubscriptionProps,
+  createUserInfoToken,
 } from "./LoadedDbUser/userAuthToken";
 import { userPrepS } from "./LoadedDbUser/userPrepS";
 
@@ -98,18 +101,18 @@ export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
   get userInfo(): GetterSection<"userInfo"> {
     return this.get.onlyChild("userInfo");
   }
-  get subscriptionProps(): SubscriptionProps {
+  get subscriptionValues(): SubscriptionValues {
     if (isProEmail(this.email)) {
       return {
         subscriptionPlan: "fullPlan",
-        planExp: 9999999999,
+        planExp: timeS.now() + timeS.oneDay,
       };
     }
 
     const subscriptions = this.get.children("stripeSubscription");
-    let subscriptionProps: SubscriptionProps = {
+    let subscriptionValues: SubscriptionValues = {
       subscriptionPlan: "basicPlan",
-      planExp: 0,
+      planExp: timeS.hundredsOfYearsFromNow,
     };
 
     const now = getStandardNow();
@@ -124,7 +127,7 @@ export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
       if (
         stripeS.isActiveSubStatus(values.subStatus) &&
         currentPeriodEnd > now &&
-        currentPeriodEnd > subscriptionProps.planExp
+        currentPeriodEnd > subscriptionValues.planExp
       ) {
         const actives = Arr.findAll(constants.stripePrices, (subConfig) => {
           return priceIds.includes(subConfig.priceId);
@@ -133,14 +136,14 @@ export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
           active.product === "proPlan";
         });
         if (activePro) {
-          subscriptionProps = {
+          subscriptionValues = {
             subscriptionPlan: "fullPlan",
             planExp: values.currentPeriodEnd,
           };
         }
       }
     }
-    return subscriptionProps;
+    return subscriptionValues;
   }
   get userInfoPrivate(): GetterSection<"userInfoPrivate"> {
     return this.get.onlyChild("userInfoPrivate");
@@ -198,7 +201,7 @@ export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
           sectionPacks: this.dbSections.sectionPackArr(feStoreChildName),
         });
       } else if (feStoreChildName === "subscriptionInfo") {
-        const { subscriptionPlan, planExp } = this.subscriptionProps;
+        const { subscriptionPlan, planExp } = this.subscriptionValues;
         const subInfoValues: SectionValues<"subscriptionInfo"> = {
           plan: subscriptionPlan,
           planExp,
@@ -211,14 +214,15 @@ export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
       feStore: [feStore.makeSectionPack()],
     };
   }
-  createDbAccessToken() {
-    return createDbAccessToken({
+  createUserInfoToken(subscriptionValues?: SubscriptionValues) {
+    return createUserInfoToken({
       userId: this.userId,
-      ...this.subscriptionProps,
+      ...this.subscriptionValues,
+      ...subscriptionValues,
     });
   }
   setResTokenHeader(res: Response): void {
-    const token = this.createDbAccessToken();
+    const token = this.createUserInfoToken();
     LoadedDbUser.setResTokenHeader(res, token);
   }
   static setResTokenHeader(res: Response, token: string): void {

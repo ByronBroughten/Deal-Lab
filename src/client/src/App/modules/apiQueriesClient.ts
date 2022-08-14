@@ -10,9 +10,10 @@ import {
 } from "../sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import {
   isLoginData,
-  isLoginHeaders,
+  isUserInfoHeaders,
 } from "../sharedWithServer/apiQueriesShared/login";
 import { makeRes } from "../sharedWithServer/apiQueriesShared/makeReqAndRes";
+import { validateSubscriptionValues } from "../sharedWithServer/apiQueriesShared/SubscriptionValues";
 import { Obj } from "../sharedWithServer/utils/Obj";
 import { StrictOmit } from "../sharedWithServer/utils/types";
 import {
@@ -36,7 +37,7 @@ function makeApiQueries(): ApiQueries {
       // the createReq function
       // And I already have that
       validateRes(res: AxiosResponse<unknown>): QueryRes<"register"> {
-        if (res && isLoginData(res.data) && isLoginHeaders(res.headers)) {
+        if (res && isLoginData(res.data) && isUserInfoHeaders(res.headers)) {
           return {
             data: res.data,
             headers: res.headers,
@@ -47,7 +48,7 @@ function makeApiQueries(): ApiQueries {
     login: {
       doingWhat: "logging in",
       validateRes(res: AxiosResponse<unknown>): QueryRes<"login"> {
-        if (res && isLoginData(res.data) && isLoginHeaders(res.headers)) {
+        if (res && isLoginData(res.data) && isUserInfoHeaders(res.headers)) {
           return {
             data: res.data,
             headers: res.headers,
@@ -64,12 +65,26 @@ function makeApiQueries(): ApiQueries {
     getUserData: {
       doingWhat: "retrieving user data",
       validateRes(res: AxiosResponse<unknown>): QueryRes<"login"> {
-        if (res && isLoginData(res.data) && isLoginHeaders(res.headers)) {
+        if (res && isLoginData(res.data) && isUserInfoHeaders(res.headers)) {
           return {
             data: res.data,
             headers: res.headers,
           };
         } else throw makeResValidationQueryError();
+      },
+    },
+    getSubscriptionData: {
+      doingWhat: "getting user subscription information",
+      validateRes(
+        res: AxiosResponse<unknown>
+      ): QueryRes<"getSubscriptionData"> {
+        if (res) {
+          const { data, headers } = res;
+          if (data && isUserInfoHeaders(headers)) {
+            return { data: validateSubscriptionValues(data), headers };
+          }
+        }
+        throw makeResValidationQueryError();
       },
     },
     addSection: {

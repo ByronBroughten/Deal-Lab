@@ -2,6 +2,7 @@ import {
   VarbNameNext,
   VarbValues,
 } from "../SectionsMeta/baseSectionsDerived/baseSectionTypes";
+import { SectionValues } from "../SectionsMeta/baseSectionsDerived/valueMetaTypes";
 import {
   ChildName,
   FeChildInfo,
@@ -85,8 +86,8 @@ export class SolverSection<
   private solve() {
     this.solverSections.solve();
   }
-  updateValuesAndSolve(values: VarbValues): void {
-    this.updater.updateValuesDirectly(values);
+  updateValuesAndSolve(values: Partial<SectionValues<SN>>): void {
+    this.updater.updateValuesDirectly(values as VarbValues);
     const varbNames = Obj.keys(values) as VarbNameNext<SN>[];
     const varbInfos = varbNames.map((varbName) => this.get.varbInfo(varbName));
 

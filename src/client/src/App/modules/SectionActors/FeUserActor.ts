@@ -3,6 +3,7 @@ import {
   guestAccessNames,
   GuestAccessSectionPackArrs,
 } from "../../sharedWithServer/apiQueriesShared/register";
+import { SubscriptionValues } from "../../sharedWithServer/apiQueriesShared/SubscriptionValues";
 import {
   AuthStatus,
   UserPlan,
@@ -12,6 +13,7 @@ import { PackMakerSection } from "../../sharedWithServer/StatePackers.ts/PackMak
 import { StrictOmit } from "../../sharedWithServer/utils/types";
 import { auth } from "../services/authService";
 import { makeReq } from "./../../sharedWithServer/apiQueriesShared/makeReqAndRes";
+import { SetterSection } from "./../../sharedWithServer/StateSetters/SetterSection";
 import { SectionActorBase, SectionActorBaseProps } from "./SectionActorBase";
 import { LoginSetter } from "./shared/LoginSetter";
 
@@ -25,6 +27,9 @@ export class FeUserActor extends SectionActorBase<"feStore"> {
   }
   get get(): GetterSection<"feStore"> {
     return new GetterSection(this.sectionActorBaseProps);
+  }
+  get setter(): SetterSection<"feStore"> {
+    return new SetterSection(this.sectionActorBaseProps);
   }
   get loginSetter() {
     return new LoginSetter(this.sectionActorBaseProps);
@@ -41,6 +46,14 @@ export class FeUserActor extends SectionActorBase<"feStore"> {
       guestAccessNames
     ) as GuestAccessSectionPackArrs;
   }
+  async updateSubscriptionData() {
+    const { headers, data } = await this.apiQueries.getSubscriptionData(
+      makeReq({})
+    );
+    this.loginSetter.setUserInfoToken(headers);
+    const subInfo = this.setter.onlyChild("subscriptionInfo");
+    subInfo.updateValues(data);
+  }
   async loadUserData() {
     const res = await this.apiQueries.getUserData(
       makeReq({
@@ -49,9 +62,15 @@ export class FeUserActor extends SectionActorBase<"feStore"> {
     );
     this.loginSetter.setLogin(res);
   }
-  get userPlan(): UserPlan {
+  get subscriptionValues(): SubscriptionValues {
     const subInfo = this.get.onlyChild("subscriptionInfo");
-    return subInfo.value("plan", "string") as UserPlan;
+    return {
+      subscriptionPlan: subInfo.value("plan", "string") as UserPlan,
+      planExp: subInfo.value("planExp", "number"),
+    };
+  }
+  get userPlan(): UserPlan {
+    return this.subscriptionValues.subscriptionPlan;
   }
   get isPro(): boolean {
     return this.userPlan === "fullPlan";

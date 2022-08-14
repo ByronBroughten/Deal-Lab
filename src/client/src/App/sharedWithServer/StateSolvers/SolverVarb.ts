@@ -90,32 +90,6 @@ export class SolverVarb<
     this.updateConnectedEntities();
   }
 
-  // The way to handle this:
-  // Make the other varb updates depend on the varbInfo updating.
-  // updateValue(varbInfo)
-  // the rest should take care of itself.
-
-  // I don't think I need to unload the previous varb
-  // the other varbs should have their entities removed.
-
-  // ok, the tricky part is getting rid of the previous entity
-
-  // 1. Get rid of whichever entity is at 0, 0.
-  //    Assumes there is only one unseen entity
-
-  // 4. Add a property to entity, called "entitySource", which is
-  //    a string. entitySource may just say "editor", or the varbId of a loaded
-  //    varb
-
-  // 5. Make the entityId of those entities be a varbId.
-  //    The entityId is just a way of differentiating entities.
-
-  //    The entityId differentiates between entities
-  //    using a varbId as an entityId comes with two costs:
-  //  1. there are two different types of string that may be an entityId
-  //  2. entityId then serves to differentiate between entities
-  //     as well as to locate the varb from where the entity came.
-
   loadValueFromVarb(varbInfo: InEntityVarbInfo) {
     const entityInfo = { ...varbInfo, entityId: Id.make() };
     const infoVarb = this.localSolverVarb("valueEntityInfo");
@@ -143,6 +117,17 @@ export class SolverVarb<
   }
   addOutEntitiesOfInEntities() {
     const { inEntities } = this.get;
+    if (
+      inEntities.length > 1 &&
+      inEntities.every((entity) => {
+        return (
+          entity.sectionName === "deal" && entity.varbName === "totalInvestment"
+        );
+      })
+    ) {
+      throw new Error("There shouldn't be two of these entities");
+    }
+
     for (const inEntity of inEntities) {
       if (this.getterSections.hasSectionMixed(inEntity)) {
         const inEntityVarb = this.solverSections.varbByMixed(inEntity);

@@ -1,25 +1,18 @@
 import config from "config";
 import jwt from "jsonwebtoken";
 import { isObject } from "lodash";
-import {
-  isUserPlan,
-  UserPlan,
-} from "../../../../../client/src/App/sharedWithServer/SectionsMeta/baseSections";
+import { SubscriptionValues } from "../../../../../client/src/App/sharedWithServer/apiQueriesShared/SubscriptionValues";
+import { isUserPlan } from "../../../../../client/src/App/sharedWithServer/SectionsMeta/baseSections";
 import { StrictOmit } from "../../../../../client/src/App/sharedWithServer/utils/types";
 import { ResStatusError } from "../../../../../utils/resError";
 
-export interface SubscriptionProps {
-  subscriptionPlan: UserPlan;
-  planExp: number;
-}
-
-export interface UserJwt extends SubscriptionProps {
+export interface UserInfoJwt extends SubscriptionValues {
   userId: string;
   iat: number;
 }
 
-export type UserJwtProps = StrictOmit<UserJwt, "iat">;
-export function createDbAccessToken(userJwt: UserJwtProps): string {
+export type UserJwtProps = StrictOmit<UserInfoJwt, "iat">;
+export function createUserInfoToken(userJwt: UserJwtProps): string {
   const privateKey: string = config.get("jwtPrivateKey");
   try {
     return jwt.sign(userJwt, privateKey);
@@ -32,7 +25,7 @@ export function createDbAccessToken(userJwt: UserJwtProps): string {
   }
 }
 
-export function isUserJwt(value: any): value is UserJwt {
+export function isUserJwt(value: any): value is UserInfoJwt {
   return (
     isObject(value) && Object.keys(value).length === 4 && hasTokenProps(value)
   );
@@ -50,7 +43,7 @@ function hasTokenProps(value: any) {
     isUserPlan(value.subscriptionPlan)
   );
 }
-export function checkUserAuthToken(token: any): UserJwt {
+export function checkUserAuthToken(token: any): UserInfoJwt {
   const decoded = jwt.verify(token, config.get("jwtPrivateKey"));
   if (isUserJwt(decoded)) return decoded;
   else

@@ -8,7 +8,10 @@ import { ActiveDeal } from "./App/components/ActiveDeal";
 import NotFound from "./App/components/general/NotFound";
 import NavBar from "./App/components/NavBar";
 import { constants } from "./App/Constants";
-import { useAuthAndLogin } from "./App/modules/customHooks/useAuthAndLogin";
+import {
+  useAuthAndLogin,
+  useSubscriptionState,
+} from "./App/modules/customHooks/useAuthAndLogin";
 import { useSetterSection } from "./App/sharedWithServer/stateClassHooks/useSetterSection";
 import theme from "./App/theme/Theme";
 
@@ -19,6 +22,7 @@ export function Main() {
   const main = useSetterSection();
   const feStore = main.get.onlyChild("feStore");
   const { logout } = useAuthAndLogin();
+  useSubscriptionState();
   const activeDealId = main.get.onlyChild("deal").feId;
   return (
     <Styled className="App-root">
@@ -32,14 +36,19 @@ export function Main() {
           }
         /> */}
         {getSuperTokensRoutesForReactRouterDom(reactRouterDom)}
-        <Route path={constants.subscriptionSuccessUrlEnd} />
+
         {/* <Route path="/variables" element={<UserVarbsManager/>} /> */}
         {/* <Route path="/lists" element={<UserListsManager/>} /> */}
+
+        <Route path="/not-found" element={<NotFound />} />
         <Route
-          path="/login-success"
+          path={constants.subscriptionSuccessUrlEnd}
+          element={<ActiveDeal feId={activeDealId} />}
+        />
+        <Route
+          path={constants.auth.successUrlEnd}
           element={<ActiveDeal feId={activeDealId} loginSuccess={true} />}
         />
-        <Route path="/not-found" element={<NotFound />} />
         <Route path="/" element={<ActiveDeal feId={activeDealId} />} />
         {/* <Route path="/" element={<Navigate replace to="/analyzer" />} /> */}
         <Route path="*" element={<NotFound />} />

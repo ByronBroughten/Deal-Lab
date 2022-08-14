@@ -31,7 +31,7 @@ describe(testedRoute, () => {
   beforeEach(async () => {
     server = runApp();
     dbUser = await createAndGetDbUser(testedRoute);
-    token = dbUser.createDbAccessToken();
+    token = dbUser.createUserInfoToken();
     cookies = await makeSessionGetCookies({ server, authId: dbUser.authId });
     req = makeAddSectionReq();
   });

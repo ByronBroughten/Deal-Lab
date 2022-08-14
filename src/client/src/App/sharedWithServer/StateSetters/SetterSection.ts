@@ -1,8 +1,6 @@
 import { pick } from "lodash";
-import {
-  VarbNameNext,
-  VarbValues,
-} from "../SectionsMeta/baseSectionsDerived/baseSectionTypes";
+import { VarbNameNext } from "../SectionsMeta/baseSectionsDerived/baseSectionTypes";
+import { SectionValues } from "../SectionsMeta/baseSectionsDerived/valueMetaTypes";
 import { SwitchEndingKey } from "../SectionsMeta/baseSectionsUtils/RelSwitchVarb";
 import {
   ChildName,
@@ -98,7 +96,7 @@ export class SetterSection<
     this.solver.loadSelfSectionPackAndSolve(sectionPack);
     this.setSections();
   }
-  updateValues(values: VarbValues): void {
+  updateValues(values: Partial<SectionValues<SN>>): void {
     this.solver.updateValuesAndSolve(values);
     this.setSections();
   }

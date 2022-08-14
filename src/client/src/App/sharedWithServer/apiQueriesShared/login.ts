@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { constants } from "../../Constants";
-import { AuthHeadersProp } from "../../modules/services/authService";
+import { UserInfoTokenProp } from "../../modules/services/authService";
 import {
   SectionPack,
   zRawSectionPack,
@@ -15,7 +15,7 @@ export type LoginQueryObjects = {
   };
   res: {
     data: LoginData;
-    headers: AuthHeadersProp;
+    headers: UserInfoTokenProp;
   };
 };
 
@@ -50,7 +50,7 @@ export function isLoginFormData(value: any): value is LoginFormData {
   return test.success;
 }
 
-export function isLoginHeaders(value: any): value is AuthHeadersProp {
+export function isUserInfoHeaders(value: any): value is UserInfoTokenProp {
   return (
     typeof value === "object" &&
     typeof value[constants.tokenKey.apiUserAuth] === "string"

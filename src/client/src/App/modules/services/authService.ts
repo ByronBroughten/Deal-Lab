@@ -6,7 +6,7 @@ export const auth = {
   setToken(token: string): void {
     localStorage.setItem(constants.tokenKey.apiUserAuth, token);
   },
-  setTokenFromHeaders<H extends AuthHeadersProp>(headers: H): void {
+  setTokenFromHeaders<H extends UserInfoTokenProp>(headers: H): void {
     this.setToken(headers[userAuthKey]);
   },
   getToken(): string | null {
@@ -28,8 +28,8 @@ export const auth = {
   },
 };
 
-export type AuthHeadersProp = { [constants.tokenKey.apiUserAuth]: string };
-export function hasAuthHeadersProp(value: any): value is AuthHeadersProp {
+export type UserInfoTokenProp = { [constants.tokenKey.apiUserAuth]: string };
+export function hasAuthHeadersProp(value: any): value is UserInfoTokenProp {
   return (
     typeof value === "object" &&
     typeof value[constants.tokenKey.apiUserAuth] === "string"

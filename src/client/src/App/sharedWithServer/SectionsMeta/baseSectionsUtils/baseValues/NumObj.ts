@@ -19,7 +19,21 @@ export const mDbNumObj: Record<keyof NumObj, any> = {
   solvableText: reqMonString,
 };
 export function isNumObj(value: any): value is NumObj {
-  // speed is important here, which is why I don't use zod for it
+  // speed is important here, which is why I don't use zod
+  // if (value) {
+  //   const { entities } = value as NumObj;
+  //   if (
+  //     entities.length > 1 &&
+  //     entities.every((entity) => {
+  //       return (
+  //         entity.sectionName === "deal" && entity.varbName === "totalInvestment"
+  //       );
+  //     })
+  //   ) {
+  //     throw new Error("There shouldn't be two of these entities");
+  //   }
+  // }
+
   return (
     typeof value === "object" &&
     "editorText" in value &&

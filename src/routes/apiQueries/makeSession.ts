@@ -5,6 +5,10 @@ import { sendSuccess } from "./shared/sendSuccess";
 
 export const makeSessionWare = [makeSession];
 async function makeSession(req: Request, res: Response) {
+  if (process.env.NODE_ENV !== "test") {
+    throw new Error("This route is only for tests");
+  }
+
   const {
     body: { authId },
   } = validateMakeSessionReq(req);

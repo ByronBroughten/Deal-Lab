@@ -1,6 +1,6 @@
 import urljoin from "url-join";
 import { config } from "../Constants";
-import { AuthHeadersProp } from "../modules/services/authService";
+import { UserInfoTokenProp } from "../modules/services/authService";
 import { ApiQueryName } from "./apiQueriesShared/apiQueriesSharedTypes";
 import { LoginQueryObjects } from "./apiQueriesShared/login";
 import {
@@ -8,6 +8,7 @@ import {
   DbPackInfoSectionReq,
   DbStoreNameRes,
   MakeReq,
+  MakeRes,
   RegisterReq,
   SectionPackArrReq,
   SectionPackReq,
@@ -16,10 +17,12 @@ import {
   UrlRes,
 } from "./apiQueriesShared/makeReqAndRes";
 import { GuestAccessSectionPackArrs } from "./apiQueriesShared/register";
+import { SubscriptionValues } from "./apiQueriesShared/SubscriptionValues";
 import {
   DbStoreNameByType,
   SectionQueryName,
 } from "./SectionsMeta/childSectionsDerived/DbStoreName";
+import { SectionPack } from "./SectionsMeta/childSectionsDerived/SectionPack";
 
 export type ApiQueries = {
   addSection: QueryAddSection;
@@ -32,11 +35,17 @@ export type ApiQueries = {
   getUserData: (
     req: MakeReq<{ guestAccessSections: GuestAccessSectionPackArrs }>
   ) => Promise<LoginQueryObjects["res"]>;
-
+  getSubscriptionData: (
+    req: MakeReq<{}>
+  ) => Promise<{ data: SubscriptionValues; headers: UserInfoTokenProp }>;
   register: (req: RegisterReq) => Promise<LoginQueryObjects["res"]>;
   login: (req: LoginQueryObjects["req"]) => Promise<LoginQueryObjects["res"]>;
   makeSession: (req: MakeReq<{ authId: string }>) => Promise<{ data: {} }>;
 };
+
+type GetSubscriptionDataRes = MakeRes<{
+  subscriptionInfo: SectionPack<"subscriptionInfo">;
+}>;
 
 type ApiQueriesTest<
   T extends Record<ApiQueryName, (req: any) => Promise<any>>
@@ -52,7 +61,7 @@ type QueryUpdateSection = <CN extends SectionQueryName>(
 ) => Promise<DbIdRes>;
 
 export interface AddSectionRes extends DbIdRes {
-  headers: AuthHeadersProp;
+  headers: UserInfoTokenProp;
 }
 
 type GetSectionQuery = <CN extends SectionQueryName>(
