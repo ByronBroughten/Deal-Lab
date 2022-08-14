@@ -7,9 +7,6 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-
-// - Make the roi displayed in values have fewer decimal places.
-
 // - Test the two Stripe webhooks.
 //   - Try the test clock
 //   - Add the user of the email you want to use

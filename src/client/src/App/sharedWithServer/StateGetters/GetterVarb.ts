@@ -90,13 +90,18 @@ export class GetterVarb<
       }
     }
   }
+  get displayNumber(): NumberOrQ {
+    const num = this.numberOrQuestionMark;
+    if (typeof num === "number") {
+      return round(num, this.meta.displayRound);
+    } else return num;
+  }
   get numberOrQuestionMark(): NumberOrQ {
     try {
       let val = this.numberValue;
       if (`${val}` === "NaN") {
         throw new Error("no NaN allowed");
       }
-      val = round(val, this.meta.displayRound);
       return val;
     } catch (ex) {
       if (ex instanceof NotANumberError) {
@@ -185,7 +190,7 @@ export class GetterVarb<
   }
   get displayValue(): string {
     if (this.hasValueType("numObj")) {
-      return `${this.numberOrQuestionMark}`;
+      return `${this.displayNumber}`;
     } else return `${this.value()}`;
   }
   displayVarb({ startAdornment, endAdornment }: Partial<Adornments> = {}) {
