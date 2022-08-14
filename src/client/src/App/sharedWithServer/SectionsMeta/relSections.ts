@@ -1,5 +1,9 @@
 import { timeS } from "../utils/date";
-import { SimpleSectionName, UserPlan } from "./baseSections";
+import {
+  savableSectionVarbNames,
+  SimpleSectionName,
+  UserPlan,
+} from "./baseSections";
 import { relVarbInfoS } from "./childSectionsDerived/RelVarbInfo";
 import { relVarb, relVarbS } from "./relSectionsUtils/rel/relVarb";
 import {
@@ -24,12 +28,6 @@ type GenericRelSections = {
 function relSectionsFilter<RS extends GenericRelSections>(relSections: RS): RS {
   return relSections;
 }
-
-const savableSectionStringVarbNames = [
-  "displayName",
-  "dateTimeFirstSaved",
-  "dateTimeLastSaved",
-] as const;
 
 export function makeRelSections() {
   return relSectionsFilter({
@@ -170,7 +168,7 @@ export function makeRelSections() {
       ...relVarbsS.sectionStrings(
         "property",
         propertyRelVarbs(),
-        savableSectionStringVarbNames
+        savableSectionVarbNames
       ),
     }),
     property: relSection("Property", propertyRelVarbs(), {
@@ -190,7 +188,7 @@ export function makeRelSections() {
       ...relVarbsS.sectionStrings(
         "mgmt",
         { ...mgmtRelVarbs() },
-        savableSectionStringVarbNames
+        savableSectionVarbNames
       ),
     }),
     mgmt: relSection("Management", mgmtRelVarbs(), {

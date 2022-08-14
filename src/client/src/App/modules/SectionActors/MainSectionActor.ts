@@ -7,6 +7,7 @@ import { GetterSections } from "../../sharedWithServer/StateGetters/GetterSectio
 import { PackMakerSection } from "../../sharedWithServer/StatePackers.ts/PackMakerSection";
 import { SetterSection } from "../../sharedWithServer/StateSetters/SetterSection";
 import { SetterTable } from "../../sharedWithServer/StateSetters/SetterTable";
+import { timeS } from "../../sharedWithServer/utils/date";
 import {
   SectionQuerier,
   SectionQuerierProps,
@@ -60,9 +61,6 @@ export class MainSectionActor<
       ...feStore.onlyChild(feTableIndexStoreName).feInfo,
     });
   }
-  newDateTime(): string {
-    return new Date().toISOString();
-  }
   removeSelf(): void {
     this.setter.removeSelf();
   }
@@ -84,7 +82,7 @@ export class MainSectionActor<
   }
   async saveNew(): Promise<void> {
     this.addStoreRow();
-    const dateTime = this.newDateTime();
+    const dateTime = timeS.now();
     this.setter.updateValues({
       dateTimeFirstSaved: dateTime,
       dateTimeLastSaved: dateTime,
@@ -102,7 +100,7 @@ export class MainSectionActor<
   async saveUpdates(): Promise<void> {
     this.updateRow();
     this.setter.updateValues({
-      dateTimeLastSaved: this.newDateTime(),
+      dateTimeLastSaved: timeS.now(),
     } as Partial<SectionValues<SN>>);
     this.setter.tryAndRevertIfFail(
       async () =>

@@ -8,6 +8,8 @@ import {
 } from "./baseSectionsUtils/baseSection";
 import { baseVarbs, baseVarbsS } from "./baseSectionsUtils/baseVarbs";
 
+export const savableSectionVarbNames = Obj.keys(baseVarbsS.savableSection);
+
 export const loanVarbsNotInFinancing = [
   "interestRatePercentMonthly",
   "interestRatePercentYearly",
@@ -19,8 +21,8 @@ export const loanVarbsNotInFinancing = [
   "interestOnlySimpleYearly",
   "loanTermMonths",
   "loanTermYears",
-  "displayName",
   "piCalculationName",
+  ...savableSectionVarbNames,
 ] as const;
 
 export type BaseSections = typeof baseSections;
@@ -131,7 +133,7 @@ export const baseSections = {
   }),
   get propertyGeneral() {
     return baseSection(
-      omit(this.property.varbSchemas, Obj.keys(baseVarbsS.savableSection)),
+      omit(this.property.varbSchemas, savableSectionVarbNames),
       {
         hasGlobalVarbs: true,
       }
@@ -173,7 +175,7 @@ export const baseSections = {
     ...baseVarbsS.ongoing("rentCutDollars"),
   } as const),
   get mgmtGeneral() {
-    return baseSection(omit(this.mgmt.varbSchemas, ["displayName"]), {
+    return baseSection(omit(this.mgmt.varbSchemas, savableSectionVarbNames), {
       hasGlobalVarbs: true,
     });
   },

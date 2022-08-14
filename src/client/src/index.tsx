@@ -8,15 +8,7 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-// - Add a date value that is a number
-// - Make the date variables be the date value
-
-// - Make the roi displayed in values have more decimal places.
-//   - This is happening because it's not using the unitType of the
-//     loaded varb. It should get that from the loadedVarb.
-//     - Add a variable to the section called, "unitType",
-//       which affects the rounding.
-//     - Make every variable have "unitType"
+// - Make the roi displayed in values have fewer decimal places.
 
 // - Test the two Stripe webhooks.
 //   - Try the test clock

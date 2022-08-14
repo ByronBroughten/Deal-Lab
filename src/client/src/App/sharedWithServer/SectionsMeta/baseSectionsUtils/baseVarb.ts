@@ -4,6 +4,7 @@ import { SwitchName } from "./baseSwitchNames";
 
 const valueNames = [
   "number",
+  "dateTime",
   "boolean",
   "string",
   "stringArray",

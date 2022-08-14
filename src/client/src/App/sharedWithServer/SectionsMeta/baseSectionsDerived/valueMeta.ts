@@ -1,22 +1,23 @@
 import { z } from "zod";
+import { timeS } from "../../utils/date";
 import { reqMonNumber, reqMonString } from "../../utils/mongoose";
 import {
   InEntityInfoValue,
   isInEntityVarbInfoValue,
   mInEntityVarbInfoValue,
-  zInEntityVarbInfoValue
+  zInEntityVarbInfoValue,
 } from "../baseSectionsUtils/baseValues/InEntityInfoValue";
 import {
   isNumObj,
   mDbNumObj,
   NumObj,
-  zNumObj
+  zNumObj,
 } from "../baseSectionsUtils/baseValues/NumObj";
 import {
   initDefaultStringObj,
   isStringObj,
   mStringObj,
-  zStringObj
+  zStringObj,
 } from "../baseSectionsUtils/baseValues/StringObj";
 import { numObjUpdateFnNames } from "../baseSectionsUtils/baseValues/updateFnNames";
 import { ValueName } from "../baseSectionsUtils/baseVarb";
@@ -26,6 +27,13 @@ export const valueMeta = {
     is: (v: any): v is number => typeof v === "number",
     updateFnNames: ["updateByEditorOnly", "number"],
     initDefault: () => 0,
+    zod: z.number(),
+    mon: reqMonNumber,
+  },
+  dateTime: {
+    is: (v: any): v is number => typeof v === "number",
+    updateFnNames: ["updateByEditorOnly", "number"],
+    initDefault: () => timeS.now(),
     zod: z.number(),
     mon: reqMonNumber,
   },

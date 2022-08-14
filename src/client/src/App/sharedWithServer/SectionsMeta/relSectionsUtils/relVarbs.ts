@@ -82,12 +82,10 @@ export const relVarbsS = {
   },
   get savableSection() {
     return {
-      ...this.strings([
-        "displayName",
-        "dateTimeFirstSaved",
-        "dateTimeLastSaved",
-      ] as const),
-    };
+      displayName: relVarb("string"),
+      dateTimeFirstSaved: relVarb("dateTime"),
+      dateTimeLastSaved: relVarb("dateTime"),
+    } as const;
   },
   ongoingPureCalc,
   ongoingPercentToPortion,
