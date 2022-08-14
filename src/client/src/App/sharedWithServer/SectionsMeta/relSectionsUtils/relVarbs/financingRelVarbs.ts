@@ -4,7 +4,6 @@ import { numObj } from "../../baseSectionsUtils/baseValues/NumObj";
 import { switchNames } from "../../baseSectionsUtils/RelSwitchVarb";
 import { relVarbInfoS } from "../../childSectionsDerived/RelVarbInfo";
 import { relVarbInfosS } from "../../childSectionsDerived/RelVarbInfos";
-import { relCheckUpdateProps } from "../rel/relUpdateFnProps";
 import { relUpdateSwitch } from "../rel/relUpdateSwitch";
 import { relVarb, relVarbS } from "../rel/relVarb";
 import { RelVarbs, relVarbsS } from "../relVarbs";
@@ -84,26 +83,100 @@ export function loanRelVarbs(): RelVarbs<"loan"> {
       initValue: "piFixedStandard" as PiCalculationName,
     }),
     ...relVarbsS.ongoingPureCalc(
+      "interestRateDecimal",
+      "interest rate decimal",
+      {
+        monthly: {
+          updateFnName: "percentToDecimal",
+          updateFnProps: {
+            num: relVarbInfoS.local("interestRatePercentMonthly"),
+          },
+        },
+        yearly: {
+          updateFnName: "percentToDecimal",
+          updateFnProps: {
+            num: relVarbInfoS.local("interestRatePercentYearly"),
+          },
+        },
+      },
+      { shared: { unit: "decimal" } }
+    ),
+    ...relVarbsS.ongoingPureCalc(
+      "interestOnlySimple",
+      "Interest only loan payment",
+      {
+        monthly: {
+          updateFnName: "yearlyToMonthly",
+          updateFnProps: {
+            num: relVarbInfoS.local("interestOnlySimpleYearly"),
+          },
+        },
+        yearly: {
+          updateFnName: "interestOnlySimpleYearly",
+          updateFnProps: {
+            ...relVarbInfosS.localByVarbName([
+              "interestRateDecimalYearly",
+              "loanTotalDollars",
+            ]),
+          },
+        },
+      },
+      { shared: { startAdornment: "$", unit: "money" } }
+    ),
+    ...relVarbsS.ongoingPureCalc(
+      "piFixedStandard",
+      "Loan payment",
+      {
+        monthly: {
+          updateFnName: "piFixedStandardMonthly",
+          updateFnProps: relVarbInfosS.localByVarbName([
+            "loanTotalDollars",
+            "interestRateDecimalMonthly",
+            "loanTermMonths",
+          ]),
+        },
+        yearly: {
+          updateFnName: "monthlyToYearly",
+          updateFnProps: { num: relVarbInfoS.local("piFixedStandardMonthly") },
+        },
+      },
+      { shared: { startAdornment: "$", unit: "money" } }
+    ),
+    ...relVarbsS.ongoingPureCalc(
       "loanPayment",
       "Loan payment",
       {
         monthly: {
-          updateFnName: "piMonthly",
-          updateFnProps: relCheckUpdateProps.piMonthly(
-            relVarbInfosS.localByVarbName([
-              "piCalculationName",
-              "loanTotalDollars",
-              "loanTermMonths",
-              "interestRatePercentMonthly",
-              "interestRatePercentYearly",
-            ])
-          ),
+          updateFnName: "loadNumObj",
+          updateFnProps: {
+            varbInfo: relVarbInfoS.local("piFixedStandardMonthly"),
+          },
+          inUpdateSwitchProps: [
+            {
+              switchInfo: relVarbInfoS.local("piCalculationName"),
+              switchValue: "interestOnlySimple",
+              updateFnName: "loadNumObj",
+              updateFnProps: {
+                varbInfo: relVarbInfoS.local("interestOnlySimpleMonthly"),
+              },
+            },
+          ],
         },
         yearly: {
-          updateFnName: "monthlyToYearly",
+          updateFnName: "loadNumObj",
           updateFnProps: {
-            num: relVarbInfoS.local("loanPaymentMonthly"),
+            varbInfo: relVarbInfoS.local("piFixedStandardYearly"),
           },
+          inUpdateSwitchProps: [
+            {
+              switchInfo: relVarbInfoS.local("piCalculationName"),
+              switchValue: "interestOnlySimple",
+              updateFnName: "loadNumObj",
+              updateFnProps: {
+                varbInfo: relVarbInfoS.local("interestOnlySimpleYearly"),
+              },
+            },
+          ],
         },
       },
       { shared: { startAdornment: "$", unit: "money" } }

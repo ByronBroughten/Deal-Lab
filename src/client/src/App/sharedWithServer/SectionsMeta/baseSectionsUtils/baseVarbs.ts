@@ -58,24 +58,6 @@ export const baseVarbsS = {
       dateTimeLastSaved: "string",
     } as const;
   },
-  get loan() {
-    return {
-      ...this.savableSection,
-      ...baseVarbs("numObj", [
-        "loanTotalDollars",
-        "mortgageInsUpfront",
-        "closingCosts",
-        "wrappedInLoan",
-      ] as const),
-      ...this.ongoing("expenses"),
-      ...this.ongoing("interestRatePercent"),
-      ...this.switch("loanBase", "dollarsPercent"),
-      ...this.switch("loanTerm", "monthsYears"),
-      piCalculationName: "string",
-      ...this.ongoing("loanPayment"),
-      ...this.ongoing("mortgageIns"),
-    } as const;
-  },
   get mgmt() {
     return {
       ...this.savableSection,

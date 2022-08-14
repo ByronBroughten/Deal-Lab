@@ -60,6 +60,13 @@ export class SolveValueVarb<
     stringObj: (): StringObj => {
       return this.getterVarb.value("stringObj");
     },
+    loadNumObj: (): NumObj => {
+      const { updateFnProps } = this.getterVarb;
+      const varb = this.getterSection.varbByFocalMixed(
+        updateFnProps.varbInfo as RelVarbInfo
+      );
+      return varb.value("numObj");
+    },
     loadLocalString: (): StringObj => {
       const { updateFnProps } = this.getterVarb;
       const varb = this.getterSection.varbByFocalMixed(
@@ -78,7 +85,7 @@ export class SolveValueVarb<
       );
       return { ...value, solvableText };
     },
-    loadedNumObj: (): NumObj => {
+    virtualNumObj: (): NumObj => {
       return {
         ...this.loadNextTexts(),
         entities: this.loadNextEntities(),

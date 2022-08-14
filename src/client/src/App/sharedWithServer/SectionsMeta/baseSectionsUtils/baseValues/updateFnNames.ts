@@ -15,13 +15,12 @@ export function isNumObjUserInputFnName(
 ): value is NumObjUserInputFnName {
   return NumObjUserInputFnNames.includes(value as any);
 }
-
-// all
 export const numObjUpdateFnNames = [
   ...calcNumObjFnNames,
   "userVarb",
-  "loadedNumObj",
+  "virtualNumObj",
   "loadEditorSolvableText",
+  "loadNumObj",
 ] as const;
 export type NumObjUpdateFnName = typeof numObjUpdateFnNames[number];
 export function isNumObjUpdateFnName(value: any): value is NumObjUpdateFnName {

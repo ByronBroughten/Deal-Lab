@@ -11,6 +11,12 @@ import { baseVarbs, baseVarbsS } from "./baseSectionsUtils/baseVarbs";
 export const loanVarbsNotInFinancing = [
   "interestRatePercentMonthly",
   "interestRatePercentYearly",
+  "interestRateDecimalMonthly",
+  "interestRateDecimalYearly",
+  "piFixedStandardMonthly",
+  "piFixedStandardYearly",
+  "interestOnlySimpleMonthly",
+  "interestOnlySimpleYearly",
   "loanTermMonths",
   "loanTermYears",
   "displayName",
@@ -78,13 +84,6 @@ export const baseSections = {
     displayNameEditor: "string",
     numObjEditor: "numObj",
   }),
-
-  // when "loadedVarb" is in effect, those editors will
-  // update based on displayName + displayNameEnd, "virtualDisplayNameFull"
-
-  // when "loadedVarb" is not in effect, that field is then editable
-  // and I think "displayName" then updates based on it.
-
   ongoingItem: baseSection({
     ...baseVarbsS.virtualVarb,
     ...baseVarbsS.loadableVarb,
@@ -138,11 +137,31 @@ export const baseSections = {
       }
     );
   },
-  loan: baseSection(baseVarbsS.loan),
-  financing: baseSection(
-    { ...omit(baseVarbsS.loan, loanVarbsNotInFinancing) },
-    { hasGlobalVarbs: true }
-  ),
+  loan: baseSection({
+    ...baseVarbsS.savableSection,
+    ...baseVarbs("numObj", [
+      "loanTotalDollars",
+      "mortgageInsUpfront",
+      "closingCosts",
+      "wrappedInLoan",
+    ] as const),
+    ...baseVarbsS.ongoing("interestRateDecimal"),
+    ...baseVarbsS.ongoing("piFixedStandard"),
+    ...baseVarbsS.ongoing("interestOnlySimple"),
+    ...baseVarbsS.ongoing("expenses"),
+    ...baseVarbsS.ongoing("interestRatePercent"),
+    ...baseVarbsS.switch("loanBase", "dollarsPercent"),
+    ...baseVarbsS.switch("loanTerm", "monthsYears"),
+    piCalculationName: "string",
+    ...baseVarbsS.ongoing("loanPayment"),
+    ...baseVarbsS.ongoing("mortgageIns"),
+  } as const),
+  get financing() {
+    return baseSection(
+      { ...omit(this.loan.varbSchemas, loanVarbsNotInFinancing) },
+      { hasGlobalVarbs: true }
+    );
+  },
   mgmt: baseSection(baseVarbsS.mgmt),
   get mgmtGeneral() {
     return baseSection(omit(this.mgmt.varbSchemas, ["displayName"]), {

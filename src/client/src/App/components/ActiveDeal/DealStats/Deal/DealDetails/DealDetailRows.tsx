@@ -10,16 +10,24 @@ import {
 
 function skipVarbIfDuplicate(varb: SetterVarb): SetterVarb {
   let count = 0;
-  while (varb.inVarbInfos.length === 1) {
-    const inInfo = varb.inVarbInfos[0];
-    const { setterSections, sections } = varb;
-    if (sections.hasSectionMixed(inInfo)) {
-      const { feVarbInfo } = sections.varbByMixed(inInfo);
-      const inVarb = setterSections.varb(feVarbInfo);
-      if (
-        isEqual(varb.get.numberOrQuestionMark, inVarb.get.numberOrQuestionMark)
-      ) {
-        varb = inVarb;
+  let isGoing = true;
+  while (isGoing) {
+    isGoing = false;
+    if (varb.inVarbInfos.length === 1) {
+      const inInfo = varb.inVarbInfos[0];
+      const { setterSections, sections } = varb;
+      if (sections.hasSectionMixed(inInfo)) {
+        const { feVarbInfo } = sections.varbByMixed(inInfo);
+        const inVarb = setterSections.varb(feVarbInfo);
+        if (
+          isEqual(
+            varb.get.numberOrQuestionMark,
+            inVarb.get.numberOrQuestionMark
+          )
+        ) {
+          varb = inVarb;
+          isGoing = true;
+        }
       }
     }
     count++;

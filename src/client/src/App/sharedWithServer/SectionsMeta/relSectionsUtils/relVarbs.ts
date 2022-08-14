@@ -263,7 +263,7 @@ export const relVarbsS = {
           {
             switchInfo: relVarbInfoS.local("valueSwitch"),
             switchValue: "loadedVarb",
-            updateFnName: "loadedNumObj",
+            updateFnName: "virtualNumObj",
             updateFnProps: {
               varbInfo: relVarbInfoS.local("valueEntityInfo"),
               valueSwitch: valueSwitchProp,
@@ -326,7 +326,7 @@ export const relVarbsS = {
           {
             switchInfo: relVarbInfoS.local("valueSwitch"),
             switchValue: "loadedVarb",
-            updateFnName: "loadedNumObj",
+            updateFnName: "virtualNumObj",
             updateFnProps: {
               valueSwitch: valueSwitchProp,
               varbInfo: relVarbInfoS.local("valueEntityInfo"),
@@ -359,7 +359,7 @@ export const relVarbsS = {
           {
             switchInfo: relVarbInfoS.local("valueSwitch"),
             switchValue: "loadedVarb",
-            updateFnName: "loadedNumObj",
+            updateFnName: "virtualNumObj",
             updateFnProps: {
               valueSwitch: valueSwitchProp,
               varbInfo: relVarbInfoS.local("valueEntityInfo"),

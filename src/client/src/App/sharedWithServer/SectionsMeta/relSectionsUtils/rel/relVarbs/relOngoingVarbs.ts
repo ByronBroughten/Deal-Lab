@@ -1,5 +1,3 @@
-import { Obj } from "../../../../utils/Obj";
-import { BaseName } from "../../../baseSectionsDerived/baseSectionTypes";
 import { NumObjUpdateFnName } from "../../../baseSectionsUtils/baseValues/updateFnNames";
 import {
   ongoingVarb,
@@ -68,41 +66,18 @@ function getMonthlyYearlyProps(
   return monthlyYearlyProps;
 }
 
-type UpdatePropPack = {
+interface UpdatePropPack extends RelNumObjOptions {
   updateFnName: NumObjUpdateFnName;
   updateFnProps: UpdateFnProps;
-};
+}
 
 type OngoingUpdatePacks = {
   monthly: UpdatePropPack;
   yearly: UpdatePropPack;
 };
-export type UpdatePacksOrSectionNames = {
-  [prop in keyof OngoingUpdatePacks]: UpdatePropPack | BaseName<"hasVarb">;
+type NumObjUpdatePack = {
+  [prop in keyof OngoingUpdatePacks]: UpdatePropPack;
 };
-
-function getOngoingUpdatePacks<Base extends string>(
-  baseVarbName: Base,
-  updatePacksOrSectionNames: UpdatePacksOrSectionNames
-) {
-  const updatePacks: any = {};
-  const defaultUpdateFnNames = {
-    monthly: "yearlyToMonthly",
-    yearly: "monthlyToYearly",
-  } as const;
-  const varbNames = switchNames(baseVarbName, "ongoing");
-  for (const [spanly, packOrName] of Obj.entries(updatePacksOrSectionNames)) {
-    if (typeof packOrName === "string")
-      updatePacks[spanly] = {
-        updateFnName: defaultUpdateFnNames[spanly],
-        updateFnProps: {
-          nums: [relVarbInfoS.local(varbNames.yearly)],
-        },
-      };
-    else updatePacks[spanly] = packOrName;
-  }
-  return updatePacks as OngoingUpdatePacks;
-}
 
 export function monthsYearsInput<Base extends string>(
   baseVarbName: Base,
@@ -219,14 +194,10 @@ export function ongoingPercentToPortion<Base extends string>(
 export function ongoingPureCalc<Base extends string>(
   baseVarbName: Base,
   displayName: DisplayName,
-  updatePacksOrSectionNames: UpdatePacksOrSectionNames,
+  updatePacks: NumObjUpdatePack,
   options: MonthlyYearlySwitchOptions
 ): SwitchRelVarbs<Base, "ongoing"> {
   const varbNames = switchNames(baseVarbName, "ongoing");
-  const updatePacks = getOngoingUpdatePacks(
-    baseVarbName,
-    updatePacksOrSectionNames
-  );
   const { switchInit } = options;
   return {
     [varbNames.monthly]: relVarb("numObj", {

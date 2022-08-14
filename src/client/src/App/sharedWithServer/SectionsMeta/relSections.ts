@@ -131,7 +131,7 @@ export function makeRelSections() {
       ...relVarbsS.basicVirtualVarb,
       valueEntityInfo: relVarb("inEntityInfo"),
       value: relVarb("numObj", {
-        updateFnName: "loadedNumObj",
+        updateFnName: "virtualNumObj",
         updateFnProps: {
           varbInfo: relVarbInfoS.local("valueEntityInfo"),
         },

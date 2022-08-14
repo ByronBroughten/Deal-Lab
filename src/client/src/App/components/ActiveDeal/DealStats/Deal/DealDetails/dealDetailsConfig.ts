@@ -30,4 +30,14 @@ export const detailsConfig = testDetailConfigs({
   "property.expensesYearly": { detailTitle: "Ongoing property expenses" },
   "mgmt.expensesMonthly": { detailTitle: "Ongoing management expenses" },
   "mgmt.expensesYearly": { detailTitle: "Ongoing management expenses" },
+  "mgmtGeneral.expensesMonthly": {
+    detailTitle: "Ongoing management expenses total",
+  },
+  "mgmtGeneral.expensesYearly": {
+    detailTitle: "Ongoing management expenses total",
+  },
+  "loan.expensesMonthly": { detailTitle: "Ongoing loan expenses" },
+  "loan.expensesYearly": { detailTitle: "Ongoing loan expenses" },
+  "financing.expensesMonthly": { detailTitle: "Ongoing loan expenses total" },
+  "financing.expensesYearly": { detailTitle: "Ongoing loan expenses total" },
 });
