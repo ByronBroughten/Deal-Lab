@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import express, { Request, Response } from "express";
 import Stripe from "stripe";
 import { SectionValues } from "../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsDerived/valueMetaTypes";
 import { PackBuilderSection } from "../../client/src/App/sharedWithServer/StatePackers.ts/PackBuilderSection";
@@ -8,8 +8,10 @@ import { DbUser } from "./shared/DbSections/DbUser";
 import { LoadedDbUser } from "./shared/DbSections/LoadedDbUser";
 import { findUserByIdAndUpdate } from "./shared/findAndUpdate";
 
-export const stripeWebhookWare = [stripeWebhook];
-
+export const stripeWebhookWare = [
+  express.raw({ type: "application/json" }),
+  stripeWebhook,
+];
 async function stripeWebhook(req: Request, res: Response) {
   const event = getStripeEvent(req);
   res.status(200).end();

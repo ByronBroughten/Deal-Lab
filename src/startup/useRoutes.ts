@@ -7,7 +7,13 @@ import apiQueriesServer from "../routes/apiQueries";
 import { useSupertokensInit } from "./useSupertokensInit";
 
 export function useRoutes(app: express.Application) {
-  app.use(express.json()); // parses body into a JSON object
+  app.use((req, res, next) => {
+    if (req.originalUrl.includes("/webhook")) {
+      next();
+    } else {
+      express.json()(req, res, next);
+    }
+  });
   useSupertokensInit();
   app.use(
     cors({

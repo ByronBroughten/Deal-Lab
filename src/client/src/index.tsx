@@ -7,6 +7,12 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
+// PropertyAnalyzer.App?
+
+// Ok. Create a user that will be for testing things like this.
+// Should I just use busterbyron? Yeah, I'll use busterbyron.
+// I just wish I had an easier way to delete the user.
+
 // - Test the two Stripe webhooks.
 //   - Try the test clock
 //   - Add the user of the email you want to use
