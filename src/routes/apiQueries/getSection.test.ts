@@ -6,6 +6,7 @@ import { QueryReq } from "../../client/src/App/sharedWithServer/apiQueriesShared
 import { SectionPackRes } from "../../client/src/App/sharedWithServer/apiQueriesShared/makeReqAndRes";
 import { numObj } from "../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsUtils/baseValues/NumObj";
 import { Id } from "../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsUtils/id";
+import { PackBuilderSection } from "../../client/src/App/sharedWithServer/StatePackers.ts/PackBuilderSection";
 import { runApp } from "../../runApp";
 import { SetterTesterSection } from "./../../client/src/App/sharedWithServer/StateSetters/TestUtils/SetterTesterSection";
 import { LoadedDbUser } from "./shared/DbSections/LoadedDbUser";
@@ -60,14 +61,6 @@ describe(testedRoute, () => {
     validateStatus200Res(res);
   };
 
-  const updateSection = async () => {
-    const res = await request(server)
-      .post(apiQueriesShared.updateSection.pathRoute)
-      .set("Cookie", cookies)
-      .send(reqs.addSection.body);
-    validateStatus200Res(res);
-  };
-
   const getSection = async () => {
     const res = await request(server)
       .post(testedRoute)
@@ -100,11 +93,6 @@ describe(testedRoute, () => {
     await testStatus(404);
   });
   it("should load saved subsections", async () => {
-    // Do I just use PackBuilderSection?
-    // const deal = PackBuilderSection.initAsOmniChild("deal");
-    // const propertyGeneral = deal.addAndGetChild("propertyGeneral");
-    // const property = propertyGeneral.addAndGetChild("property");
-
     const original = {
       price: numObj(100000),
       displayName: "Original",
@@ -152,5 +140,16 @@ describe(testedRoute, () => {
     }
 
     testSectionPack();
+  });
+  it("should return 500 if the payload isn't for a sectionQuery dbStoreName", async () => {
+    const testName = "authInfoPrivate";
+    const authInfo = PackBuilderSection.initAsOmniChild(testName);
+    reqs.getSection = {
+      body: {
+        dbStoreName: testName,
+        dbId: authInfo.get.dbId,
+      } as any,
+    };
+    await testStatus(500);
   });
 });

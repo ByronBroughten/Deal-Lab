@@ -3,7 +3,9 @@ import request from "supertest";
 import { constants } from "../../client/src/App/Constants";
 import { apiQueriesShared } from "../../client/src/App/sharedWithServer/apiQueriesShared";
 import { QueryReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
+import { PackBuilderSection } from "../../client/src/App/sharedWithServer/StatePackers.ts/PackBuilderSection";
 import { Arr } from "../../client/src/App/sharedWithServer/utils/Arr";
+import { timeS } from "../../client/src/App/sharedWithServer/utils/date";
 import { runApp } from "../../runApp";
 import { LoadedDbUser } from "./shared/DbSections/LoadedDbUser";
 import { getUserByIdNoRes } from "./shared/getUserDbSectionsById";
@@ -67,12 +69,49 @@ describe(testedRoute, () => {
     token = "" as any;
     await testStatus(401);
   });
+  it("should return 500 if the payload isn't for a sectionQuery dbStoreName", async () => {
+    const userInfo = PackBuilderSection.initAsOmniChild("userInfo");
+    req = {
+      body: {
+        dbStoreName: "userInfo",
+        sectionPack: userInfo.makeSectionPack(),
+      } as any,
+    };
+    await testStatus(500);
+    const authInfoPrivate =
+      PackBuilderSection.initAsOmniChild("authInfoPrivate");
+    req = {
+      body: {
+        dbStoreName: "authInfoPrivate",
+        sectionPack: authInfoPrivate.makeSectionPack(),
+      } as any,
+    };
+    await testStatus(500);
+  });
   it("should return 500 if sectionPack is not an object", async () => {
     req.body.sectionPack = null as any;
     await testStatus(500);
   });
-  it("should return 500 if there is already an entry in the db with the sectionPack's dbId", async () => {
+  it("should return 500 if there is an entry in the db with sectionPack's dbId", async () => {
     await exec();
     await testStatus(500);
+  });
+  it("should return 400 if there are already two entries", async () => {
+    await exec();
+    req = makeAddSectionReq();
+    await exec();
+    req = makeAddSectionReq();
+    await testStatus(400);
+  });
+  it("should return 200 if there are two entries and user is pro", async () => {
+    await exec();
+    req = makeAddSectionReq();
+    await exec();
+    req = makeAddSectionReq();
+    token = dbUser.createUserInfoToken({
+      subscriptionPlan: "fullPlan",
+      planExp: timeS.now() + timeS.thirtyDays,
+    });
+    await testStatus(200);
   });
 });

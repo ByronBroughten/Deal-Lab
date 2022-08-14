@@ -26,5 +26,6 @@ export const userVarbItemRelVarbs: RelVarbs<"userVarbItem"> = {
         rowThen: "then",
       }),
     },
+    unit: "decimal",
   }),
 } as const;

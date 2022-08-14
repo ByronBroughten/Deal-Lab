@@ -2,6 +2,7 @@ import request from "supertest";
 import { apiQueriesShared } from "../../client/src/App/sharedWithServer/apiQueriesShared";
 import { SectionPackArrReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/makeReqAndRes";
 import { SectionArrReqMaker } from "../../client/src/App/sharedWithServer/ReqMakers/SectionArrReqMaker";
+import { PackBuilderSection } from "../../client/src/App/sharedWithServer/StatePackers.ts/PackBuilderSection";
 import { runApp } from "../../runApp";
 import { childToSectionName } from "./../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/ChildSectionName";
 import { LoadedDbUser } from "./shared/DbSections/LoadedDbUser";
@@ -55,5 +56,26 @@ describe(testedRoute, () => {
   it("should return 401 if client is not logged in", async () => {
     cookies = [];
     await testStatus(401);
+  });
+  it("should return 500 if the payload isn't for a valid dbStoreName", async () => {
+    const testName = "authInfoPrivate";
+    const authInfo = PackBuilderSection.initAsOmniChild(testName);
+    req = {
+      body: {
+        dbStoreName: testName,
+        sectionPackArr: [authInfo.makeSectionPack()],
+      } as any,
+    };
+    await testStatus(500);
+
+    const sectionQueryName = "propertyMain";
+    const property = PackBuilderSection.initAsOmniChild("property");
+    req = {
+      body: {
+        dbStoreName: sectionQueryName,
+        sectionPackArr: [property.makeSectionPack()],
+      } as any,
+    };
+    await testStatus(500);
   });
 });

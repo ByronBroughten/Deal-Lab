@@ -7,32 +7,32 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-// Manage the pro stuff
-// - Test the new route.
 
-// - Test the addSection pro stuff
-//   - Test that header updates when appropriate (make sure this happens on addSection)
-//   - Actually, I don't need that necessarily. I just need something on the frontend
-//     that tries to update when the subscription is over. A separate function.
+// - Make annual loanPayment draw from loan months
+// - Add a step for transitioning each percent to a decimal
+// - Get rid of doFinishingTouches
+// - Add a date value that is a number
+// - Make the date variables be the date value
 
-// - Test that addSection only accepts certain sectionNames
-//   Copy and paste that test for update/delete/get
-// - Implement an analagous test for the sectionArr route
-
-// - Make a useEffect on the frontEnd that attempts to update the
-//   front-end subscriptionInfo if the fullPlan planExp is out of date
+// - Make the roi displayed in values have more decimal places.
+//   - This is happening because it's not using the unitType of the
+//     loaded varb. It should get that from the loadedVarb.
+//     - Add a variable to the section called, "unitType",
+//       which affects the rounding.
+//     - Make every variable have "unitType"
 
 // - Test the two Stripe webhooks.
-//   - Create my own webhook events that simulate the ones stripe would send
+//   - Try the test clock
+//   - Add the user of the email you want to use
+
+//   - And/or create your own webhook events that simulate the ones stripe would send
 //   - Use "generateTestHeaderString" to add a header that works
 
-// - Test that financing PI calculates correctly
-//   For two loans at once, one of which is interest only
+//  - Think about the race condition on the front-end for starting
+//    a subscription
 
 // Launch the app on Sunday.
 // - Make a video demo
-// - Make a video ad
-// - Make have a little ad banner made
 // - Figure out where to post it
 //   *Reddit
 //    - r/realestateinvesting
@@ -45,6 +45,8 @@ AppRegistry.runApplication("App", {
 //   * Youtube ads
 //   * Facebook ads
 //    - banner
+
+// Make an ad
 
 // Possible roadmap
 // - Roadmap

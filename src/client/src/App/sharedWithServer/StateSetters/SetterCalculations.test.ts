@@ -1,3 +1,4 @@
+import { PiCalculationName } from "../SectionsMeta/baseSectionsUtils/baseValues/calculations/piCalculations";
 import { numObj } from "../SectionsMeta/baseSectionsUtils/baseValues/NumObj";
 import { SetterTesterSection } from "./TestUtils/SetterTesterSection";
 
@@ -5,9 +6,10 @@ describe("SetterCalculations", () => {
   it("should calculate loan payments accurately", () => {
     const dealTester = SetterTesterSection.init("deal");
     addTestLoan(dealTester);
+    addInterestOnlyLoan(dealTester);
     const financing = dealTester.setter.onlyChild("financing");
 
-    const expectedLoanPayment = 912.6;
+    const expectedLoanPayment = 912.6 + 50;
     const loanPaymentMonthly =
       financing.get.varb("loanPaymentMonthly").numberValue;
     const loanPaymentYearly =
@@ -127,4 +129,14 @@ function addTestLoan(dealTester: SetterTesterSection<"deal">): void {
   wrapped.addChild("singleTimeItem", {
     dbVarbs: { numObjEditor: numObj(14000) },
   });
+}
+
+function addInterestOnlyLoan(dealTester: SetterTesterSection<"deal">): void {
+  const financing = dealTester.setter.onlyChild("financing");
+  const loan = financing.addAndGetChild("loan");
+  const calcName: PiCalculationName = "interestOnlySimple";
+  loan.varb("piCalculationName").updateValue(calcName);
+  loan.varb("loanBaseUnitSwitch").updateValue("dollars");
+  loan.varb("loanBaseDollars").updateValue(numObj(10000));
+  loan.varb("interestRatePercentYearly").updateValue(numObj(6));
 }

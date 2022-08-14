@@ -273,6 +273,7 @@ export const relVarbsS = {
           // and the total must update based on
         ],
         startAdornment: "$",
+        unit: "decimal",
       }),
       valueSwitch: relVarb("string", {
         initValue: "labeledEquation",
@@ -342,6 +343,7 @@ export const relVarbsS = {
             },
           },
         ],
+        unit: "decimal",
       }),
       [ongoingValueNames.yearly]: relVarbS.moneyYear("Annual amount", {
         ...defaultValueUpdatePack,
@@ -374,6 +376,7 @@ export const relVarbsS = {
             },
           },
         ],
+        unit: "decimal",
       }),
     };
   },

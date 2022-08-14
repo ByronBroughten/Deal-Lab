@@ -5,6 +5,7 @@ import { apiQueriesShared } from "../../client/src/App/sharedWithServer/apiQueri
 import { QueryReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import { numObj } from "../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsUtils/baseValues/NumObj";
 import { Id } from "../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsUtils/id";
+import { PackBuilderSection } from "../../client/src/App/sharedWithServer/StatePackers.ts/PackBuilderSection";
 import { runApp } from "../../runApp";
 import { LoadedDbUser } from "./shared/DbSections/LoadedDbUser";
 import { getUserByIdNoRes } from "./shared/getUserDbSectionsById";
@@ -110,6 +111,17 @@ describe(testedRoute, () => {
   });
   it("should return 500 if sectionPack is not an object", async () => {
     reqs.updateSection.body.sectionPack = null as any;
+    await testStatus(500);
+  });
+  it("should return 500 if the payload isn't for a sectionQuery dbStoreName", async () => {
+    const testName = "authInfoPrivate";
+    const authInfo = PackBuilderSection.initAsOmniChild(testName);
+    reqs.updateSection = {
+      body: {
+        dbStoreName: testName,
+        sectionPack: authInfo.makeSectionPack(),
+      } as any,
+    };
     await testStatus(500);
   });
 });

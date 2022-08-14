@@ -1,5 +1,6 @@
 import { AuthStatus, UserPlan } from "../SectionsMeta/baseSections";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
+import { timeS } from "../utils/date";
 
 export function makeDefaultPublicUserInfo() {
   const userInfo = PackBuilderSection.initAsOmniChild("userInfo", {
@@ -15,7 +16,7 @@ export function makeDefaultSubscriptionInfo() {
   const plan: UserPlan = "basicPlan";
   const subscriptionInfo = PackBuilderSection.initAsOmniChild(
     "subscriptionInfo",
-    { dbVarbs: { plan, planExp: 0 } }
+    { dbVarbs: { plan, planExp: timeS.hundredsOfYearsFromNow } }
   );
   return subscriptionInfo.makeSectionPack();
 }

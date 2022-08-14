@@ -1,16 +1,17 @@
+import { timeS } from "../utils/date";
 import { SimpleSectionName, UserPlan } from "./baseSections";
 import { relVarbInfoS } from "./childSectionsDerived/RelVarbInfo";
 import { relVarb, relVarbS } from "./relSectionsUtils/rel/relVarb";
 import {
   GeneralRelSection,
   GenericRelSection,
-  relSection
+  relSection,
 } from "./relSectionsUtils/relSection";
 import { RelVarbs, relVarbsS } from "./relSectionsUtils/relVarbs";
 import { dealRelVarbs } from "./relSectionsUtils/relVarbs/dealRelVarbs";
 import {
   financingRelVarbs,
-  loanRelVarbs
+  loanRelVarbs,
 } from "./relSectionsUtils/relVarbs/financingRelVarbs";
 import { mgmtRelVarbs } from "./relSectionsUtils/relVarbs/mgmtRelVarbs";
 import { propertyRelVarbs } from "./relSectionsUtils/relVarbs/propertyRelVarbs";
@@ -61,7 +62,7 @@ export function makeRelSections() {
         displayName: "Api Access Status",
         initValue: "basicPlan" as UserPlan,
       }),
-      planExp: relVarb("number", { initValue: 0 }),
+      planExp: relVarb("number", { initValue: timeS.hundredsOfYearsFromNow }),
     }),
     userInfoPrivate: relSection("userInfoPrivate", {
       ...relVarbsS.strings(["encryptedPassword", "emailAsSubmitted"] as const),
@@ -134,6 +135,7 @@ export function makeRelSections() {
         updateFnProps: {
           varbInfo: relVarbInfoS.local("valueEntityInfo"),
         },
+        unit: "decimal",
       }),
     }),
     singleTimeItem: relSection("List Item", relVarbsS.singleTimeItem()),

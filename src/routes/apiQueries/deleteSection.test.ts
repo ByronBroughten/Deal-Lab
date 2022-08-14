@@ -4,6 +4,7 @@ import { constants } from "../../client/src/App/Constants";
 import { apiQueriesShared } from "../../client/src/App/sharedWithServer/apiQueriesShared";
 import { QueryReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import { Id } from "../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsUtils/id";
+import { PackBuilderSection } from "../../client/src/App/sharedWithServer/StatePackers.ts/PackBuilderSection";
 import { runApp } from "../../runApp";
 import { LoadedDbUser } from "./shared/DbSections/LoadedDbUser";
 import { SectionQueryTester } from "./test/SectionQueryTester";
@@ -79,4 +80,15 @@ describe(testedRoute, () => {
   //   reqs.deleteSection.body.dbId = Id.makeId();
   //   await testStatus(404);
   // });
+  it("should return 500 if the payload isn't for a sectionQuery dbStoreName", async () => {
+    const testName = "authInfoPrivate";
+    const authInfo = PackBuilderSection.initAsOmniChild(testName);
+    reqs.deleteSection = {
+      body: {
+        dbStoreName: testName,
+        dbId: authInfo.get.dbId,
+      } as any,
+    };
+    await testStatus(500);
+  });
 });
