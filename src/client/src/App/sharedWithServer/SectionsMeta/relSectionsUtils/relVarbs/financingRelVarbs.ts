@@ -100,15 +100,10 @@ export function loanRelVarbs(): RelVarbs<"loan"> {
           ),
         },
         yearly: {
-          updateFnName: "piYearly",
-          updateFnProps: relCheckUpdateProps.piYearly(
-            relVarbInfosS.localByVarbName([
-              "piCalculationName",
-              "loanTotalDollars",
-              "loanTermYears",
-              "interestRatePercentYearly",
-            ])
-          ),
+          updateFnName: "monthlyToYearly",
+          updateFnProps: {
+            num: relVarbInfoS.local("loanPaymentMonthly"),
+          },
         },
       },
       { shared: { startAdornment: "$", unit: "money" } }
