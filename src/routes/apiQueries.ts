@@ -29,18 +29,18 @@ const endpointWare: Record<ApiQueryName, any> = {
   makeSession: makeSessionWare,
 } as const;
 
-const apiQueriesServer = express.Router();
-
+const apiQueries = express.Router();
 for (const [queryName, ware] of Obj.entries(endpointWare)) {
-  apiQueriesServer.post(apiQueriesShared[queryName].pathBit, ...ware);
+  apiQueries.post(apiQueriesShared[queryName].pathBit, ...ware);
 }
+export const apiQueriesServer = apiQueries;
 
+const webhooks = express.Router();
 const webhookWare = {
   stripe: stripeWebhookWare,
 } as const;
 
 for (const [webhookName, ware] of Obj.entries(webhookWare)) {
-  apiQueriesServer.post(`/webhook/${webhookName}`, ...ware);
+  webhooks.post(`/webhook/${webhookName}`, ...ware);
 }
-
-export default apiQueriesServer;
+export const preParseWebhooks = webhooks;
