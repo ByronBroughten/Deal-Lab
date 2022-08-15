@@ -9,6 +9,8 @@ AppRegistry.runApplication("App", {
 });
 // PropertyAnalyzer.App?
 
+// 1. Test webhook functionality with signature
+
 // Ok. Create a user that will be for testing things like this.
 // Should I just use busterbyron? Yeah, I'll use busterbyron.
 // I just wish I had an easier way to delete the user.

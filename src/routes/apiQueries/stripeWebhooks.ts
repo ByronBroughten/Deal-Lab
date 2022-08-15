@@ -8,10 +8,7 @@ import { DbUser } from "./shared/DbSections/DbUser";
 import { LoadedDbUser } from "./shared/DbSections/LoadedDbUser";
 import { findUserByIdAndUpdate } from "./shared/findAndUpdate";
 
-export const stripeWebhookWare = [
-  express.raw({ type: "application/json" }),
-  stripeWebhook,
-];
+export const stripeWebhookWare = [express.raw({ type: "*/*" }), stripeWebhook];
 async function stripeWebhook(req: Request, res: Response) {
   const event = getStripeEvent(req);
   res.status(200).end();
