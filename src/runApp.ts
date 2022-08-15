@@ -5,7 +5,9 @@ import Debug from "debug";
 import express from "express";
 import helmet from "helmet";
 import morgan from "morgan";
+import { constants } from "./client/src/App/Constants";
 import { errorBackstop } from "./middleware/errorBackstop";
+import { preParseWebhooks } from "./routes/apiQueries";
 import checkConfig from "./startup/config";
 import setupLogger, { logger } from "./startup/setupLogger";
 import startDb from "./startup/startDb";
@@ -17,6 +19,7 @@ export function runApp() {
   setupLogger();
 
   const app = express();
+  app.use(constants.apiPathBit, preParseWebhooks);
   app.use(helmet());
   app.use(compression());
   app.use(express.urlencoded({ extended: true }));

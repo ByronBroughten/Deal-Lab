@@ -3,12 +3,10 @@ import express from "express";
 import supertokens from "supertokens-node";
 import { errorHandler, middleware } from "supertokens-node/framework/express";
 import { constants } from "../client/src/App/Constants";
-import { apiQueriesServer, preParseWebhooks } from "../routes/apiQueries";
+import { apiQueriesServer } from "../routes/apiQueries";
 import { useSupertokensInit } from "./useSupertokensInit";
 
 export function useRoutes(app: express.Application) {
-  app.use(constants.apiPathBit, preParseWebhooks);
-
   // app.use(
   //   (req, res, next): void => {
   //     if (req.originalUrl === '/webhook') {
