@@ -30,7 +30,6 @@ async function stripeWebhookTest(req: Request, res: Response) {
 }
 
 async function handleStripeEvent(event: Stripe.Event, res: Response) {
-  res.status(200).end();
   switch (event.type) {
     case "customer.created": {
       const customer = event.data.object as any;
@@ -45,6 +44,7 @@ async function handleStripeEvent(event: Stripe.Event, res: Response) {
           value: customer.id,
         }),
       });
+      break;
     }
     // subsicription object api: https://stripe.com/docs/api/subscriptions/object
     case "customer.subscription.updated":
@@ -81,6 +81,8 @@ async function handleStripeEvent(event: Stripe.Event, res: Response) {
         storeName: "stripeSubscription",
         sectionPackArr: subPacks,
       });
+      break;
     }
   }
+  res.status(200).end();
 }
