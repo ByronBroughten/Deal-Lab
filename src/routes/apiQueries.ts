@@ -12,7 +12,10 @@ import { loginWare } from "./apiQueries/login";
 import { makeSessionWare } from "./apiQueries/makeSession";
 import { nextRegisterWare } from "./apiQueries/register";
 import { replaceSectionArrWare } from "./apiQueries/replaceSectionArr";
-import { stripeWebhookWare } from "./apiQueries/stripeWebhooks";
+import {
+  stripeWebhookTestWare,
+  stripeWebhookWare,
+} from "./apiQueries/stripeWebhooks";
 import { updateSectionWare } from "./apiQueries/updateSection";
 
 const endpointWare: Record<ApiQueryName, any> = {
@@ -38,6 +41,7 @@ export const apiQueriesServer = apiQueries;
 const webhooks = express.Router();
 const webhookWare = {
   stripe: stripeWebhookWare,
+  stripeTest: stripeWebhookTestWare,
 } as const;
 
 for (const [webhookName, ware] of Obj.entries(webhookWare)) {

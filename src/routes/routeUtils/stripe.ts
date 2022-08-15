@@ -9,15 +9,20 @@ export function getStripe(): Stripe {
   });
   return stripe;
 }
+// create a version of this that uses process.env.STRIPE_WEBHOOK_SECRET_TEST
+//
 
-export function getStripeEvent(req: Request): Stripe.Event {
+export function getStripeEvent(req: Request, secret: string): Stripe.Event {
   const stripe = getStripe();
   const signature = req.headers["stripe-signature"];
+  if (typeof signature !== "string") {
+    throw new Error(`Signature is not a string but rather, "${signature}"`);
+  }
   try {
     return stripe.webhooks.constructEvent(
       req.body,
       signature as string,
-      process.env.STRIPE_WEBHOOK_SECRET as string
+      secret
     );
   } catch (ex) {
     throw new Error(`Stripe Webhook Error: ${getErrorMessage(ex)}`);

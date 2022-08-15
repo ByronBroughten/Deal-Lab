@@ -9,8 +9,27 @@ import { LoadedDbUser } from "./shared/DbSections/LoadedDbUser";
 import { findUserByIdAndUpdate } from "./shared/findAndUpdate";
 
 export const stripeWebhookWare = [express.raw({ type: "*/*" }), stripeWebhook];
+export const stripeWebhookTestWare = [
+  express.raw({ type: "*/*" }),
+  stripeWebhookTest,
+];
+
 async function stripeWebhook(req: Request, res: Response) {
-  const event = getStripeEvent(req);
+  const event = getStripeEvent(
+    req,
+    process.env.STRIPE_WEBHOOK_SECRET as string
+  );
+  await handleStripeEvent(event, res);
+}
+async function stripeWebhookTest(req: Request, res: Response) {
+  const event = getStripeEvent(
+    req,
+    process.env.STRIPE_WEBHOOK_SECRET_TEST as string
+  );
+  await handleStripeEvent(event, res);
+}
+
+async function handleStripeEvent(event: Stripe.Event, res: Response) {
   res.status(200).end();
   switch (event.type) {
     case "customer.created": {
