@@ -10,18 +10,17 @@ describe("/api/webhook/stripe", () => {
   let server: Server;
   let route: string;
   let secret: string;
-
-  const payload = {
-    id: "evt_test_webhook",
-    object: "event",
-  };
-  const payloadString = JSON.stringify(payload, null, 2);
+  let payload: { id: string; object: any };
 
   beforeEach(() => {
     route = productionRoute;
     secret = process.env.STRIPE_WEBHOOK_SECRET as string;
     stripe = getStripe();
     server = runApp();
+    payload = {
+      id: "evt_test_webhook",
+      object: "event",
+    };
   });
 
   afterEach(() => {
@@ -29,6 +28,7 @@ describe("/api/webhook/stripe", () => {
   });
 
   const exec = async () => {
+    const payloadString = JSON.stringify(payload, null, 2);
     const header = stripe.webhooks.generateTestHeaderString({
       payload: payloadString,
       secret,
@@ -49,5 +49,19 @@ describe("/api/webhook/stripe", () => {
     route = productionRoute + "Test";
     const res = await exec();
     expect(res.status).toBe(200);
+  });
+  it("should create a customer", async () => {
+    payload = {
+      id: "evt_test_webhook",
+      object: {
+        type: "customer.created",
+        data: {
+          object: {
+            id: "cus_test_id",
+            email: "testEmail", // create a user and email with the production route
+          },
+        },
+      },
+    };
   });
 });

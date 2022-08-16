@@ -49,7 +49,7 @@ export function MainSectionTitleRow({
         <DropdownList
           {...{
             className: "MainsectionTitleRow-dropdownList",
-            title: `${displayName} Actions`,
+            title: `Actions`,
             dropTop,
           }}
         >

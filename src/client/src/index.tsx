@@ -9,21 +9,12 @@ AppRegistry.runApplication("App", {
 });
 // PropertyAnalyzer.App?
 
-// 1. Test webhook functionality with signature
+// 1. Finish testing webhook functionality for each event type with users that you create.
+// 2. Think about fixing the css register bug
 
-// Ok. Create a user that will be for testing things like this.
-// Should I just use busterbyron? Yeah, I'll use busterbyron.
-// I just wish I had an easier way to delete the user.
-
-// - Test the two Stripe webhooks.
-//   - Try the test clock
-//   - Add the user of the email you want to use
-
-//   - And/or create your own webhook events that simulate the ones stripe would send
-//   - Use "generateTestHeaderString" to add a header that works
-
-//  - Think about the race condition on the front-end for starting
-//    a subscription
+//  - Think about the race condition on the front-end for someone starting
+//    a subscription. You need the front-end to wait to get the user data
+//    from the backend until it is there. Or try once every one second, or something.
 
 // Launch the app on Sunday.
 // - Make a video demo

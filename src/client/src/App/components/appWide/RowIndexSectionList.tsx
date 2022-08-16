@@ -1,4 +1,3 @@
-import { capitalize } from "lodash";
 import { FaList } from "react-icons/fa";
 import { FeInfoByType } from "../../sharedWithServer/SectionsMeta/Info";
 import { useAuthStatus } from "../../sharedWithServer/stateClassHooks/useAuthStatus";
@@ -28,7 +27,7 @@ export default function RowIndexSectionList({
     <DropdownList
       {...{
         className: "MainsectionTitleRow-dropdownList " + className ?? "",
-        title: `${capitalize(pluralName)}`,
+        title: `Saved`,
         dropTop,
         icon: <FaList className="RowIndexSectionList-listIcon" />,
       }}

@@ -101,8 +101,8 @@ export function themeSectionNameOrDefault(sectionName: string): ThemeName {
 
 const themeColors = {
   property: "#ffc99d",
-  mgmt: "#ff9d64", // #f6a272
-  loan: "#ff8b68", // "#e78472"
+  loan: "#ff9d64", // #f6a272
+  mgmt: "#ff8b68", // "#e78472"
   plus: "#80c883",
   success: "#4caf50",
   next: "#717cbb",

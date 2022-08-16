@@ -89,6 +89,7 @@ const Styled = styled.div<{
           border: 1px solid ${theme[$themeName].main};
         }
       `}
+    font-size: 18px;
     font-weight: 900;
     height: ${theme.unlabeledInputHeight};
     width: 100%;

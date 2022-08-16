@@ -32,8 +32,8 @@ async function stripeWebhookTest(req: Request, res: Response) {
 async function handleStripeEvent(event: Stripe.Event, res: Response) {
   switch (event.type) {
     case "customer.created": {
-      const customer = event.data.object as any;
-      const dbUser = await LoadedDbUser.queryByEmail(customer.email);
+      const customer = event.data.object as Stripe.Customer;
+      const dbUser = await LoadedDbUser.queryByEmail(customer.email as string);
       await findUserByIdAndUpdate({
         userId: dbUser.userId,
         doWhat: "set stripe customer id",

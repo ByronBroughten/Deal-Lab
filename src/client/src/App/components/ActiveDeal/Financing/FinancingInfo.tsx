@@ -45,10 +45,6 @@ export default function FinancingInfo({ feId }: { feId: string }) {
               themeName="loan"
               feVarbInfo={deal.varbInfo("pitiMonthly")}
             />
-            <LabeledVarbSimple
-              themeName="loan"
-              feVarbInfo={deal.varbInfo("pitiYearly")}
-            />
           </>
         }
         {areMultiple && (
