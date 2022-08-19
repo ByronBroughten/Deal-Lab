@@ -26,6 +26,17 @@ async function stripeWebhookTest(req: Request, res: Response) {
   await handleStripeEvent(event, res);
 }
 
+export function stripeSubToValues(
+  sub: Stripe.Subscription
+): SectionValues<"stripeSubscription"> {
+  return {
+    subId: sub.id,
+    status: sub.status,
+    currentPeriodEnd: sub.current_period_end,
+    priceIds: sub.items.data.map((item) => item.price.id),
+  };
+}
+
 async function handleStripeEvent(event: Stripe.Event, res: Response) {
   switch (event.type) {
     case "customer.created": {
@@ -44,28 +55,20 @@ async function handleStripeEvent(event: Stripe.Event, res: Response) {
     case "customer.subscription.updated":
     case "customer.subscription.deleted": {
       const subscription = event.data.object as Stripe.Subscription;
-      const subId = subscription.id;
-      const subValues: SectionValues<"stripeSubscription"> = {
-        subId: subId,
-        subStatus: subscription.status,
-        currentPeriodEnd: subscription.current_period_end,
-        priceIds: subscription.items.data.map((item) => item.price.id),
-      };
-
+      const subValues = stripeSubToValues(subscription);
       const updatedSub = PackBuilderSection.initAsOmniChild(
         "stripeSubscription",
-        {
-          dbVarbs: subValues,
-        }
+        { dbVarbs: subValues }
       );
       const updatedPack = updatedSub.makeSectionPack();
-
       const customerId = subscription.customer as string;
       const querier = await DbUser.initBy("customerId", customerId);
       const subPacks = await querier.getSectionPackArr("stripeSubscription");
 
       const currentIdx = subPacks.findIndex(
-        (sub) => sub.rawSections.stripeSubscription[0].dbVarbs.subId === subId
+        (sub) =>
+          sub.rawSections.stripeSubscription[0].dbVarbs.subId ===
+          subValues.subId
       );
 
       if (currentIdx === -1) subPacks.push(updatedPack);

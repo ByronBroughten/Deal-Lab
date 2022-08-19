@@ -116,13 +116,13 @@ export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
     for (const sub of subscriptions) {
       const values = sub.values({
         subId: "string",
-        subStatus: "string",
+        status: "string",
         priceIds: "stringArray",
         currentPeriodEnd: "number",
       });
       const { priceIds, currentPeriodEnd } = values;
       if (
-        stripeS.isActiveSubStatus(values.subStatus) &&
+        stripeS.isActiveSubStatus(values.status) &&
         currentPeriodEnd > now &&
         currentPeriodEnd > subscriptionValues.planExp
       ) {

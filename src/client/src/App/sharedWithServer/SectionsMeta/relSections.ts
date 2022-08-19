@@ -71,7 +71,7 @@ export function makeRelSections() {
     }),
     stripeSubscription: relSection("Subscription", {
       subId: relVarb("string"),
-      subStatus: relVarb("string"),
+      status: relVarb("string"),
       priceIds: relVarb("stringArray"),
       currentPeriodEnd: relVarb("number"),
     }),

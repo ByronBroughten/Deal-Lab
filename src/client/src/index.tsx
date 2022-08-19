@@ -9,7 +9,8 @@ AppRegistry.runApplication("App", {
 });
 // PropertyAnalyzer.App?
 
-// 1. Finish testing webhook functionality for each event type with users that you create.
+// I still must test the subscription functionality.
+
 // 2. Think about fixing the css register bug
 // - I ought to implement a way to delete a test user after creating them for test purposes.
 

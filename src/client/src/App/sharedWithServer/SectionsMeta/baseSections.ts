@@ -206,7 +206,7 @@ export const baseSections = {
   ),
   stripeSubscription: baseSection({
     subId: "string",
-    subStatus: "string",
+    status: "string",
     priceIds: "stringArray",
     currentPeriodEnd: "number",
   }),

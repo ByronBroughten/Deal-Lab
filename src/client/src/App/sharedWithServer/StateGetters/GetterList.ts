@@ -1,3 +1,5 @@
+import { VarbNameNext } from "../SectionsMeta/baseSectionsDerived/baseSectionTypes";
+import { VarbValue } from "../SectionsMeta/baseSectionsDerived/valueMetaTypes";
 import { IdInfoMultiMixed } from "../SectionsMeta/childSectionsDerived/MixedSectionInfo";
 import { SectionName } from "../SectionsMeta/SectionName";
 import {
@@ -48,6 +50,17 @@ export class GetterList<SN extends SectionName> extends GetterListBase<SN> {
   }
   get allGetterSections(): GetterSection<SN>[] {
     return this.stateList.map(({ feId }) => this.getterSection(feId));
+  }
+  getByValue<VN extends VarbNameNext<SN>>(
+    varbName: VN,
+    value: VarbValue<SN, VN>
+  ): GetterSection<SN> {
+    let sections = this.allGetterSections;
+    sections = sections.filter(
+      (section) => section.valueNext(varbName) === value
+    );
+    this.exactlyOneOrThrow(sections, "dbId");
+    return sections[0];
   }
   getByFeId(feId: string): GetterSection<SN> {
     const section = this.stateList.find((section) => section.feId === feId);

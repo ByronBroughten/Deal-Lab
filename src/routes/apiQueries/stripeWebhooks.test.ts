@@ -1,12 +1,15 @@
 import { Server } from "http";
 import Stripe from "stripe";
 import request from "supertest";
+import { constants } from "../../client/src/App/Constants";
+import { timeS } from "../../client/src/App/sharedWithServer/utils/date";
 import { runApp } from "../../runApp";
 import { getStripe } from "../routeUtils/stripe";
 import { DbUser } from "./shared/DbSections/DbUser";
 import { LoadedDbUser } from "./shared/DbSections/LoadedDbUser";
+import { stripeSubToValues } from "./stripeWebhooks";
 import { createAndGetDbUser, deleteUserTotally } from "./test/testDbUser";
-
+type Payload = { id: string; type: string; data: any };
 const productionRoute = "/api/webhook/stripe";
 describe("/api/webhook/stripe", () => {
   let stripe: Stripe;
@@ -36,6 +39,19 @@ describe("/api/webhook/stripe", () => {
     server.close();
   });
 
+  const makeCreateCustomerPayload = () => {
+    return {
+      ...payload,
+      type: "customer.created",
+      data: {
+        object: {
+          id: customerId,
+          email: loadedDbUser.email,
+        },
+      },
+    };
+  };
+
   const exec = async () => {
     const payloadString = JSON.stringify(payload, null, 2);
     const header = stripe.webhooks.generateTestHeaderString({
@@ -48,19 +64,9 @@ describe("/api/webhook/stripe", () => {
       .set("stripe-signature", header)
       .send(payloadString);
   };
-
   describe("customer.created", () => {
     beforeEach(() => {
-      payload = {
-        ...payload,
-        type: "customer.created",
-        data: {
-          object: {
-            id: customerId,
-            email: loadedDbUser.email,
-          },
-        },
-      };
+      payload = makeCreateCustomerPayload();
     });
     it("should return 200 and add the customer id to the user in the db", async () => {
       const res = await exec();
@@ -77,6 +83,54 @@ describe("/api/webhook/stripe", () => {
       route = productionRoute + "Test";
       const res = await exec();
       expect(res.status).toBe(200);
+    });
+  });
+  describe("customer.subscription", () => {
+    const { priceId } = constants.stripePrices[0];
+    let subId: string;
+    let subscription: Stripe.Subscription;
+
+    beforeEach(async () => {
+      payload = makeCreateCustomerPayload();
+      await exec();
+      subId = "sub_test_id";
+      subscription = {
+        id: subId,
+        status: "active",
+        current_period_end: timeS.now(),
+        items: {
+          data: [{ price: { id: priceId } }],
+        },
+      } as Stripe.Subscription;
+
+      payload = {
+        ...payload,
+        type: "customer.subscription.updated",
+        data: { object: subscription },
+      };
+    });
+    it("should return status 200 and create a subscription", async () => {
+      const res = await exec();
+      expect(res.status).toBe(200);
+      const dbUser = await LoadedDbUser.getBy("userId", loadedDbUser.userId);
+      const subList = dbUser.get.childList("stripeSubscription");
+      const sub = subList.getByValue("subId", subId);
+
+      const expectedVals = stripeSubToValues(subscription);
+      expect(sub.allValues).toEqual(expectedVals);
+    });
+    it("should return status 200 and change the subscription status to canceled", async () => {
+      await exec();
+      subscription.status = "canceled";
+      await exec();
+
+      const dbUser = await LoadedDbUser.getBy("userId", loadedDbUser.userId);
+      const subList = dbUser.get.childList("stripeSubscription");
+      const sub = subList.getByValue("subId", subId);
+
+      expect(sub.valueNext("status")).toBe("canceled");
+      const expectedVals = stripeSubToValues(subscription);
+      expect(sub.allValues).toEqual(expectedVals);
     });
   });
 });
