@@ -25,6 +25,11 @@ export default function BasicSectionInfo({
 const Styled = styled.div<{ sectionName: ThemeName }>`
   ${({ sectionName }) => css`
     ${ccs.subSection.main(sectionName)};
+
+    .BasicSectionInfo-subSection-viewable {
+      border: 1px solid ${theme["gray-400"]};
+    }
+
     .BasicSectionInfo-subSection-viewable,
     .editor-background {
       background-color: ${theme[sectionName].light};

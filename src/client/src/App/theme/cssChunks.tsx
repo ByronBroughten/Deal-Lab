@@ -120,7 +120,7 @@ const ccs = {
         .viewable {
           ${this.viewable};
           background: ${theme[sectionName].subSection};
-          border: 1px solid ${theme[sectionName].border};
+          border: 1px solid ${theme.transparentGrayBorder};
 
           .title-row {
             ${this.titleRow}

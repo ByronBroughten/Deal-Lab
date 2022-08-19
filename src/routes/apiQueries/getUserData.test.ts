@@ -53,6 +53,11 @@ describe(testedRoute, () => {
     expect(headers[constants.tokenKey.apiUserAuth]).not.toBeUndefined();
     isLoginData(data);
   });
+  it("should return a header with the correct subscription info", async () => {
+    // here, how would I insert the right subscription into the db?
+    // I can use the webhook route and borrow code from there.
+    //
+  });
   it("should add guestAccessSections if they have not yet been added", async () => {
     const feStore = PackBuilderSection.initAsOmniChild("feStore");
     feStore.addChild("outputListMain");

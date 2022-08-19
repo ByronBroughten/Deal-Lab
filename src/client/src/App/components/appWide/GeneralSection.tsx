@@ -31,7 +31,9 @@ const Styled = styled.section<{ themeName: ThemeName }>`
   display: flex;
   flex: 0;
 
-  background: red;
+  .MainSectionBody-root {
+    margin-top: ${theme.s2};
+  }
 
   .MainSection-viewable {
     display: flex;

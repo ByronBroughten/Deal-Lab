@@ -15,17 +15,21 @@ export default function Property({ feId }: { feId: string }) {
     <MainSection>
       <MainSectionTitleRow {...{ ...feInfo, pluralName: "properties" }} />
       <MainSectionBody themeName="property">
-        <div className="ListGroup-root">
-          <div className="ListGroup-viewable">
-            {/* <div className="ListGroup-titleRow">
-              <h6 className="ListGroup-titleText">Basic Info</h6>
-            </div> */}
-            <div className="ListGroup-lists">
-              <BasicPropertyInfo feId={feId} className="ListGroup-root" />
-              {/* <UnitList feInfo={feInfo} className="ListGroup-root" /> */}
-            </div>
-          </div>
+        <div className="ListGroup-lists">
+          <BasicPropertyInfo feId={feId} className="ListGroup-root" />
+          {/* <UnitList feInfo={feInfo} className="ListGroup-root" /> */}
         </div>
+
+        {/* <div className="ListGroup-root">
+          <div className="ListGroup-viewable">            
+          The best would be: basic info has the same background
+          as ongoing costs, the background behind the inputs is
+          dark yellow
+          Add Unit is dark yellow and turns darker, and it's in
+          the shape of a unit.
+
+          </div>
+        </div> */}
         <ListGroupOngoing
           listParentInfo={feInfo}
           listAsChildName="ongoingCostList"

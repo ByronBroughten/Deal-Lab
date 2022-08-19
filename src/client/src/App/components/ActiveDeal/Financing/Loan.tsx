@@ -21,15 +21,12 @@ export default function Loan({ feId }: { feId: string }) {
           }}
         />
         <MainSectionBody themeName="loan">
-          <div className="ListGroup-root">
-            <div className="ListGroup-viewable">
-              {/* <div className="ListGroup-titleRow">
-                <h6 className="ListGroup-titleText">Basic Info</h6>
-              </div> */}
-              <div className="ListGroup-lists">
-                <BasicLoanInfo feId={feId} className="ListGroup-root" />
-              </div>
+          {/* <div className="ListGroup-root">
+            <div className="ListGroup-viewable">              
             </div>
+          </div> */}
+          <div className="ListGroup-lists">
+            <BasicLoanInfo feId={feId} className="ListGroup-root" />
           </div>
           <ListGroupSingleTime
             listParentInfo={feInfo}

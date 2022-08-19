@@ -25,6 +25,7 @@ export default function BasicPropertyInfo({ feId, className }: Props) {
               {varbNames.map((varbName) => (
                 <NumObjEntityEditor
                   key={varbName}
+                  className="BasicPropertyInfo-numObjEditor"
                   feVarbInfo={property.varbInfo(varbName)}
                 />
               ))}
@@ -38,6 +39,9 @@ export default function BasicPropertyInfo({ feId, className }: Props) {
 }
 
 const Styled = styled(BasicSectionInfo)`
+  .BasicPropertyInfo-numObjEditor:not(:first-child) {
+    margin-top: ${theme.s2};
+  }
   .UnitList-root {
     margin-left: ${theme.s3};
   }
