@@ -11,10 +11,11 @@ AppRegistry.runApplication("App", {
 
 // 1. Finish testing webhook functionality for each event type with users that you create.
 // 2. Think about fixing the css register bug
+// - I ought to implement a way to delete a test user after creating them for test purposes.
 
-//  - Think about the race condition on the front-end for someone starting
-//    a subscription. You need the front-end to wait to get the user data
-//    from the backend until it is there. Or try once every one second, or something.
+// - Think about the race condition on the front-end for someone starting
+//   a subscription. You need the front-end to wait to get the user data
+//   from the backend until it is there. Or try once every one second, or something.
 
 // Launch the app on Sunday.
 // - Make a video demo

@@ -1,6 +1,5 @@
 import { SectionValues } from "../../SectionsMeta/baseSectionsDerived/valueMetaTypes";
 import {
-  ChildIdArrsWide,
   ChildName,
   DbChildInfo,
 } from "../../SectionsMeta/childSectionsDerived/ChildName";
@@ -11,8 +10,8 @@ import {
   GetterSectionBase,
   GetterSectionProps,
 } from "../../StateGetters/Bases/GetterSectionBase";
+import { GetterSection } from "../../StateGetters/GetterSection";
 import { UpdaterSection } from "../../StateUpdaters/UpdaterSection";
-import { Obj } from "../../utils/Obj";
 import { ChildPackLoader } from "./ChildPackLoader";
 
 interface SelfPackLoaderSectionProps<SN extends SectionName>
@@ -27,7 +26,12 @@ export class SelfPackLoader<
     super(props);
     this.sectionPack = sectionPack;
   }
-  private updaterSection = new UpdaterSection(this.getterSectionProps);
+  get get() {
+    return new GetterSection(this.getterSectionProps);
+  }
+  get updaterSection() {
+    return new UpdaterSection(this.getterSectionProps);
+  }
   get headRawSection(): OneRawSection<SN> {
     return this.sectionPack.rawSections[this.sectionName][0];
   }
@@ -43,8 +47,9 @@ export class SelfPackLoader<
   }
   addSectionPackChildren() {
     if (this.thisHasChildren()) {
+      const { childNames } = this.get;
       const { childDbIds } = this.headRawSection;
-      for (const childName of Obj.keys(childDbIds as ChildIdArrsWide<SN>)) {
+      for (const childName of childNames) {
         for (const dbId of childDbIds[childName]) {
           const childPackLoader = this.childPackLoader({
             childName,

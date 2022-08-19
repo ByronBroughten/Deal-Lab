@@ -1,6 +1,6 @@
 import { VarbNameNext } from "../baseSectionsDerived/baseSectionTypes";
 import { VarbValue } from "../baseSectionsDerived/valueMetaTypes";
-import { DbSelfOrDescendantSn, DbStoreName } from "./DbStoreName";
+import { DbSectionName, DbSelfOrDescendantSn, DbStoreName } from "./DbStoreName";
 
 export type OneDbSectionVarbInfo<
   CN extends DbStoreName,
@@ -9,6 +9,14 @@ export type OneDbSectionVarbInfo<
 > = {
   storeName: CN;
   sectionName: SN;
+  varbName: VN;
+};
+
+export type OneDbVarbInfo<
+  CN extends DbStoreName,
+  VN extends VarbNameNext<DbSectionName<CN>> = VarbNameNext<DbSectionName<CN>>
+> = {
+  storeName: CN;
   varbName: VN;
 };
 

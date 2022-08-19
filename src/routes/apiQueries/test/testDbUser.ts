@@ -7,8 +7,9 @@ import {
   getUsersByEmail,
 } from "supertokens-node/recipe/thirdpartyemailpassword";
 import { apiQueriesShared } from "../../../client/src/App/sharedWithServer/apiQueriesShared";
+import { timeS } from "../../../client/src/App/sharedWithServer/utils/date";
 import { Str } from "../../../client/src/App/sharedWithServer/utils/Str";
-import { DbSectionsModel } from "../../DbSectionsModel";
+import { DbSectionsModel } from "../../DbSectionsModelNext";
 import { LoadedDbUser } from "../shared/DbSections/LoadedDbUser";
 import { userPrepS } from "../shared/DbSections/LoadedDbUser/userPrepS";
 
@@ -16,7 +17,7 @@ export async function createAndGetDbUser(
   testSuiteName: string
 ): Promise<LoadedDbUser> {
   const email = `${testSuiteName}/test@gmail.com`;
-  ensureFreshUserStart(email);
+  await ensureFreshUserStart(email);
 
   const res = await emailPasswordSignUp(email, "TestP@ssword1");
   if (res.status === "OK") {
@@ -24,7 +25,7 @@ export async function createAndGetDbUser(
     await userPrepS.initUserInDb({
       email,
       userName: "Testosis",
-      timeJoined: user.timeJoined,
+      timeJoined: timeS.millisecondsToStandard(user.timeJoined),
       authId: user.id,
     });
     return await LoadedDbUser.getBy("authId", user.id);
@@ -44,7 +45,7 @@ export async function makeSessionGetCookies({
   return cookieRes.get("Set-Cookie");
 }
 
-async function ensureFreshUserStart(email: string) {
+async function ensureFreshUserStart(email: string): Promise<void> {
   const users = await getUsersByEmail(email);
   if (users.length > 0) {
     for (const user of users) {

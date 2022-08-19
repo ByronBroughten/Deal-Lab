@@ -16,7 +16,6 @@ import {
   AddChildOptions,
   UpdaterSection,
 } from "../../StateUpdaters/UpdaterSection";
-import { Obj } from "../../utils/Obj";
 
 interface ChildPackLoaderProps<SN extends SectionName, CN extends ChildName<SN>>
   extends GetterSectionProps<SN> {
@@ -72,9 +71,19 @@ export class ChildPackLoader<
     this.loadChildChildren(feId);
   }
   private loadChildChildren(childFeId: string) {
+    const child = this.get.child({
+      childName: this.childName,
+      feId: childFeId,
+    });
+
+    const { childNames } = child;
     const { childDbIds } = this.childRawSection;
-    for (const childName of Obj.keys(childDbIds)) {
-      for (const dbId of childDbIds[childName as keyof typeof childDbIds]) {
+    for (const childName of childNames) {
+      const dbIds = childDbIds[childName as keyof typeof childDbIds];
+      if (!Array.isArray(dbIds)) {
+        throw new Error("dbIds shoudl be an array but isn't");
+      }
+      for (const dbId of dbIds) {
         const childPackLoader = this.childPackLoader({
           childFeId,
           childDbInfo: {

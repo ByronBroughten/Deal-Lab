@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
-import config from "config";
+import { dbConfig } from "./dbConfig";
 import { logger } from "./setupLogger";
 
 export default function startDb() {
-  const endpoint: string = config.get("endpoint");
+  const endpoint = dbConfig.endpoint;
   mongoose
     .connect(endpoint, {
       useNewUrlParser: true,

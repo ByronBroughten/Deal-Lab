@@ -5,7 +5,7 @@ import { QueryReq } from "../../client/src/App/sharedWithServer/apiQueriesShared
 import { makeReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/makeReqAndRes";
 import { RegisterReqMaker } from "../../client/src/App/sharedWithServer/ReqMakers/RegisterReqMaker";
 import { runApp } from "../../runApp";
-import { DbSectionsModel } from "../DbSectionsModel";
+import { DbSectionsModel } from "../DbSectionsModelNext";
 import { LoadedDbUser } from "./shared/DbSections/LoadedDbUser";
 
 const testedRoute = apiQueriesShared.login.pathRoute;

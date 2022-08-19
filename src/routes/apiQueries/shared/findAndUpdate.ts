@@ -1,6 +1,9 @@
 import { FilterQuery, QueryOptions } from "mongoose";
 import { ResStatusError } from "../../../utils/resError";
-import { DbSectionsModel, DbSectionsModelCore } from "../../DbSectionsModel";
+import {
+  DbSectionsModel,
+  DbSectionsModelCore,
+} from "../../DbSectionsModelNext";
 
 type QueryParameters = { operation: any; options: QueryOptions };
 

@@ -2,11 +2,8 @@ import express, { Request, Response } from "express";
 import Stripe from "stripe";
 import { SectionValues } from "../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsDerived/valueMetaTypes";
 import { PackBuilderSection } from "../../client/src/App/sharedWithServer/StatePackers.ts/PackBuilderSection";
-import { queryParameters } from "../DbSectionsModel";
 import { getStripeEvent } from "../routeUtils/stripe";
 import { DbUser } from "./shared/DbSections/DbUser";
-import { LoadedDbUser } from "./shared/DbSections/LoadedDbUser";
-import { findUserByIdAndUpdate } from "./shared/findAndUpdate";
 
 export const stripeWebhookWare = [express.raw({ type: "*/*" }), stripeWebhook];
 export const stripeWebhookTestWare = [
@@ -33,16 +30,13 @@ async function handleStripeEvent(event: Stripe.Event, res: Response) {
   switch (event.type) {
     case "customer.created": {
       const customer = event.data.object as Stripe.Customer;
-      const dbUser = await LoadedDbUser.queryByEmail(customer.email as string);
-      await findUserByIdAndUpdate({
-        userId: dbUser.userId,
-        doWhat: "set stripe customer id",
-        queryParameters: queryParameters.updateVarb({
-          storeName: "stripeInfoPrivate",
-          sectionName: "stripeInfoPrivate" as "stripeInfoPrivate",
-          varbName: "customerId",
-          value: customer.id,
-        }),
+      // const dbUser = await LoadedDbUser.queryByEmail(customer.email as string);
+      const dbUser = await DbUser.initBy("email", customer.email as string);
+      await dbUser.setOnlyValue({
+        storeName: "stripeInfoPrivate",
+        sectionName: "stripeInfoPrivate",
+        varbName: "customerId",
+        value: customer.id,
       });
       break;
     }

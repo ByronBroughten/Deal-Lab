@@ -64,6 +64,12 @@ export const dbStoreNameS = {
   },
 } as const;
 
+export function dbStoreSectionName<CN extends DbStoreName>(
+  storeName: CN
+): DbSectionName<CN> {
+  return childToSectionName("dbStore", storeName);
+}
+
 type DbStoreNameArrs = typeof dbStoreNameArrs;
 export type DbStoreType = keyof DbStoreNameArrs;
 export type DbStoreNameByType<T extends DbStoreType> =

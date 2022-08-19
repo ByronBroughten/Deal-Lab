@@ -33,6 +33,9 @@ export const monSchemas = {
   reqNumber: reqMonNumber,
   string: monString,
   reqString: reqMonString,
+  get reqStringArr() {
+    return [this.reqString];
+  },
   reqDbId: {
     type: String,
     maxLength: dbLimits.dbId.length,

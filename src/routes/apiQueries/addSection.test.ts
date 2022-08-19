@@ -32,14 +32,16 @@ describe(testedRoute, () => {
 
   beforeEach(async () => {
     server = runApp();
+    req = makeAddSectionReq();
     dbUser = await createAndGetDbUser(testedRoute);
     token = dbUser.createUserInfoToken();
     cookies = await makeSessionGetCookies({ server, authId: dbUser.authId });
-    req = makeAddSectionReq();
   });
 
   afterEach(async () => {
-    await deleteUserTotally(dbUser);
+    if (dbUser) {
+      await deleteUserTotally(dbUser);
+    }
     server.close();
   });
 

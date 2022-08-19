@@ -8,7 +8,7 @@ import {
 } from "../../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbSectionPack";
 import {
   OneDbSectionValueInfo,
-  OneDbSectionVarbInfo,
+  OneDbVarbInfo,
 } from "../../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreInfo";
 import {
   DbSectionName,
@@ -17,11 +17,11 @@ import {
   DbStoreName,
   dbStoreNames,
 } from "../../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreName";
-import { SectionPack } from "../../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/SectionPack";
+import { GetterSection } from "../../../../client/src/App/sharedWithServer/StateGetters/GetterSection";
 import { PackBuilderSection } from "../../../../client/src/App/sharedWithServer/StatePackers.ts/PackBuilderSection";
 import { Obj } from "../../../../client/src/App/sharedWithServer/utils/Obj";
 import { ResStatusError } from "../../../../utils/resError";
-import { DbSectionsModel, modelPath } from "../../../DbSectionsModel";
+import { DbSectionsModel, modelPath } from "../../../DbSectionsModelNext";
 import { DbSectionsQuerierBase } from "./Bases/DbSectionsQuerierBase";
 import { DbSections } from "./DbSections";
 import {
@@ -59,7 +59,7 @@ export class DbUser extends DbSectionsQuerierBase {
     } as const;
   }
   private get guestAccessSectionsAreLoaded() {
-    return this.getOnlyValue(this.guestAccessInfo);
+    return this.getOnlySectionValue(this.guestAccessInfo);
   }
   private async loadGuestAccessSections(
     guestAccessSections: GuestAccessSectionPackArrs
@@ -82,21 +82,17 @@ export class DbUser extends DbSectionsQuerierBase {
     const dbSections = await this.dbSections();
     return dbSections.hasSection(dbInfo);
   }
-  async getOnlyValue<
+  async getOnlySectionValue<
     CN extends DbStoreName,
-    SN extends DbSectionName<CN>,
-    VN extends VarbNameNext<SN>
+    VN extends VarbNameNext<SN>,
+    SN extends DbSectionName<CN> = DbSectionName<CN>
   >({
     varbName,
     storeName,
-    sectionName,
-  }: OneDbSectionVarbInfo<CN, SN, VN>): Promise<VarbValue<SN, VN>> {
-    const dbSections = await this.dbSections();
-    const sectionPack = dbSections.onlySectionPack(
-      storeName
-    ) as SectionPack<SN>;
-    const section = PackBuilderSection.loadAsOmniChild(sectionPack);
-    return section.get.sections.oneAndOnly(sectionName).valueNext(varbName);
+  }: OneDbVarbInfo<CN, VN>): Promise<VarbValue<SN, VN>> {
+    const loaded = await this.loadedDbUser();
+    const section = loaded.get.onlyChild(storeName) as GetterSection<SN>;
+    return section.valueNext(varbName);
   }
   async getSectionPack<CN extends DbStoreName>(
     dbInfo: DbStoreInfo<CN>
@@ -110,24 +106,6 @@ export class DbUser extends DbSectionsQuerierBase {
     //   { $unwind: `$${sectionName}` },
     //   // { $match: { [`${sectionName}.${dbId}`]: dbId } },
     // ]);
-  }
-  async updateSectionPack({
-    dbStoreName,
-    sectionPack,
-  }: DbPack<any>): Promise<void> {
-    const userId = await this.getUserId();
-    const { dbId } = sectionPack;
-    await this.update({
-      filter: { _id: userId, [`${dbStoreName}.dbId`]: dbId },
-      operation: { $set: { [`${dbStoreName}.$`]: sectionPack } },
-      options: {
-        new: true,
-        lean: true,
-        useFindAndModify: false,
-        // runValidators: true,
-        strict: false,
-      },
-    });
   }
   async addSectionPack({ dbStoreName, sectionPack }: DbPack<any>) {
     await this.update({
@@ -166,14 +144,15 @@ export class DbUser extends DbSectionsQuerierBase {
       },
     });
   }
-  async setOnlyValue<
-    CN extends DbStoreName,
-    SN extends DbSelfOrDescendantSn<CN>,
-    VN extends VarbNameNext<SN>
-  >({ value, ...rest }: OneDbSectionValueInfo<CN, SN, VN>) {
-    this.update({
-      operation: { $set: { [modelPath.firstSectionVarb(rest)]: value } },
-      doWhat: "set value",
+  async updateSectionPack({
+    dbStoreName,
+    sectionPack,
+  }: DbPack<any>): Promise<void> {
+    const userId = await this.getUserId();
+    const { dbId } = sectionPack;
+    await this.update({
+      filter: { _id: userId, [`${dbStoreName}.dbId`]: dbId },
+      operation: { $set: { [`${dbStoreName}.$`]: sectionPack } },
       options: {
         new: true,
         lean: true,
@@ -182,6 +161,31 @@ export class DbUser extends DbSectionsQuerierBase {
         strict: false,
       },
     });
+  }
+  async setOnlyValue<
+    CN extends DbStoreName,
+    SN extends DbSelfOrDescendantSn<CN>,
+    VN extends VarbNameNext<SN>
+  >({ value, ...rest }: OneDbSectionValueInfo<CN, SN, VN>) {
+    // filter: { _id: userId, [`${storeName}.0`]: 0 },
+    // operation: { $set: { [`${storeName}.$.`]: value } },
+    const path = modelPath.firstSectionVarb(rest);
+    const raw = await this.getDbSectionsRaw();
+    await this.update({
+      operation: { $set: { [`${path}`]: value } },
+      doWhat: "set value",
+      options: {
+        useFindAndModify: false,
+        lean: true,
+      },
+      // options: {
+      //   new: true,
+      //   // runValidators: true,
+      //   strict: false,
+      // },
+    });
+    const raw2 = await this.getDbSectionsRaw();
+    const breakpoint = "breakpoint";
   }
   async update({
     filter = this.userFilter,

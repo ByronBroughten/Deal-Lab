@@ -27,14 +27,14 @@ export const DbSectionsModel = mongoose.model<DbSectionsModelCore>(
 
 function makeMongooseUserSchema(): Schema<Record<DbStoreName, any>> {
   const partial: Partial<Record<DbStoreName, any>> = {};
-  for (const sectionName of dbStoreNames) {
-    partial[sectionName] = [makeMongooseSectionPack()];
+  for (const storeName of dbStoreNames) {
+    partial[storeName] = [makeMongooseSectionPack()];
   }
   const frame = partial as Record<DbStoreName, any>;
   return new Schema(frame);
 }
 
-export function makeMongooseSectionPack() {
+function makeMongooseSectionPack() {
   const schemaFrame: Record<keyof SectionPack, any> = {
     sectionName: monSchemas.reqString,
     dbId: monSchemas.reqDbId,

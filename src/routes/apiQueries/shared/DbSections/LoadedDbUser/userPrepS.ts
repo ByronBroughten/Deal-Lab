@@ -4,7 +4,7 @@ import { dbStoreNames } from "../../../../../client/src/App/sharedWithServer/Sec
 import { PackBuilderSection } from "../../../../../client/src/App/sharedWithServer/StatePackers.ts/PackBuilderSection";
 import { makeMongooseObjectId } from "../../../../../client/src/App/sharedWithServer/utils/mongoose";
 import { ResStatusError } from "../../../../../utils/resError";
-import { DbSectionsModel, RawDbUser } from "../../../../DbSectionsModel";
+import { DbSectionsModel, RawDbUser } from "../../../../DbSectionsModelNext";
 import { DbUser } from "../DbUser";
 import { DbSectionsRaw } from "../DbUserTypes";
 import {

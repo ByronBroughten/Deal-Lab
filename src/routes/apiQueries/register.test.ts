@@ -4,7 +4,7 @@ import { apiQueriesShared } from "../../client/src/App/sharedWithServer/apiQueri
 import { QueryReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import { RegisterReqMaker } from "../../client/src/App/sharedWithServer/ReqMakers/RegisterReqMaker";
 import { runApp } from "../../runApp";
-import { DbSectionsModel } from "../DbSectionsModel";
+import { DbSectionsModel } from "../DbSectionsModelNext";
 import { registerTestId } from "./register";
 import { LoadedDbUser } from "./shared/DbSections/LoadedDbUser";
 

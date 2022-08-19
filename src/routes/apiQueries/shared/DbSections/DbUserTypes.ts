@@ -1,9 +1,9 @@
 import mongoose, { Document } from "mongoose";
 import { ResStatusError } from "../../../../utils/resError";
-import { DbSectionsModelCore, modelPath } from "../../../DbSectionsModel";
+import { DbSectionsModelCore, modelPath } from "../../../DbSectionsModelNext";
 
 export const queryOptions = {
-  new: true,
+  // new: true,
   lean: true,
   useFindAndModify: false,
 } as const;

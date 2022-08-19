@@ -19,10 +19,7 @@ import {
 import { GetterSection } from "../../../../client/src/App/sharedWithServer/StateGetters/GetterSection";
 import { PackBuilderSection } from "../../../../client/src/App/sharedWithServer/StatePackers.ts/PackBuilderSection";
 import { Arr } from "../../../../client/src/App/sharedWithServer/utils/Arr";
-import {
-  getStandardNow,
-  timeS,
-} from "../../../../client/src/App/sharedWithServer/utils/date";
+import { timeS } from "../../../../client/src/App/sharedWithServer/utils/date";
 import { stripeS } from "../../../../client/src/App/sharedWithServer/utils/stripe";
 import { HandledResStatusError } from "../../../../utils/resError";
 import { isProEmail } from "../../../routeUtils/proList";
@@ -115,7 +112,7 @@ export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
       planExp: timeS.hundredsOfYearsFromNow,
     };
 
-    const now = getStandardNow();
+    const now = timeS.now();
     for (const sub of subscriptions) {
       const values = sub.values({
         subId: "string",

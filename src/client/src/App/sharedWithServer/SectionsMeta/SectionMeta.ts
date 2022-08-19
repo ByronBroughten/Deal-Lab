@@ -1,5 +1,6 @@
 import { Obj } from "../utils/Obj";
 import { SimpleSectionName } from "./baseSections";
+import { SectionVarbName } from "./baseSectionsDerived/baseSectionTypes";
 import {
   ChildIdArrsNarrow,
   ChildIdArrsWide,
@@ -115,6 +116,9 @@ export class SectionMeta<SN extends SimpleSectionName> {
   }
   get varbNames(): string[] {
     return Obj.keys(this.varbMetas);
+  }
+  get varbNamesNext(): SectionVarbName<SN>[] {
+    return Obj.keys(this.varbMetas) as any[];
   }
   isChildName(value: any): value is ChildName<SN> {
     return (this.childNames as string[]).includes(value);
