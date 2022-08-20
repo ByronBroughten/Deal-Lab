@@ -11,7 +11,7 @@ import {
 import {
   isLoginData,
   isUserInfoHeaders,
-} from "../sharedWithServer/apiQueriesShared/login";
+} from "../sharedWithServer/apiQueriesShared/getUserData";
 import { makeRes } from "../sharedWithServer/apiQueriesShared/makeReqAndRes";
 import { validateSubscriptionValues } from "../sharedWithServer/apiQueriesShared/SubscriptionValues";
 import { Obj } from "../sharedWithServer/utils/Obj";
@@ -26,36 +26,10 @@ import {
 import { hasAuthHeadersProp } from "./services/authService";
 import https from "./services/httpService";
 
-// these are what I need to replace.
 export const apiQueries = makeApiQueries();
 
 function makeApiQueries(): ApiQueries {
   const apiQueryProps: AllApiQueryProps = {
-    register: {
-      doingWhat: "registering",
-      // The only other thing I need is
-      // the createReq function
-      // And I already have that
-      validateRes(res: AxiosResponse<unknown>): QueryRes<"register"> {
-        if (res && isLoginData(res.data) && isUserInfoHeaders(res.headers)) {
-          return {
-            data: res.data,
-            headers: res.headers,
-          };
-        } else throw makeResValidationQueryError();
-      },
-    },
-    login: {
-      doingWhat: "logging in",
-      validateRes(res: AxiosResponse<unknown>): QueryRes<"login"> {
-        if (res && isLoginData(res.data) && isUserInfoHeaders(res.headers)) {
-          return {
-            data: res.data,
-            headers: res.headers,
-          };
-        } else throw makeResValidationQueryError();
-      },
-    },
     makeSession: {
       doingWhat: "making a session",
       validateRes(res: AxiosResponse<unknown>): QueryRes<"makeSession"> {
@@ -64,7 +38,7 @@ function makeApiQueries(): ApiQueries {
     },
     getUserData: {
       doingWhat: "retrieving user data",
-      validateRes(res: AxiosResponse<unknown>): QueryRes<"login"> {
+      validateRes(res: AxiosResponse<unknown>): QueryRes<"getUserData"> {
         if (res && isLoginData(res.data) && isUserInfoHeaders(res.headers)) {
           return {
             data: res.data,

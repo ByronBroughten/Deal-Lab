@@ -5,7 +5,7 @@ import { QueryReq } from "../../client/src/App/sharedWithServer/apiQueriesShared
 import {
   isLoginData,
   LoginData,
-} from "../../client/src/App/sharedWithServer/apiQueriesShared/login";
+} from "../../client/src/App/sharedWithServer/apiQueriesShared/getUserData";
 import {
   guestAccessNames,
   GuestAccessSectionPackArrs,

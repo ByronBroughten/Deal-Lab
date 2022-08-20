@@ -2,14 +2,13 @@ import urljoin from "url-join";
 import { config } from "../Constants";
 import { UserInfoTokenProp } from "../modules/services/authService";
 import { ApiQueryName } from "./apiQueriesShared/apiQueriesSharedTypes";
-import { LoginQueryObjects } from "./apiQueriesShared/login";
+import { LoginData } from "./apiQueriesShared/getUserData";
 import {
   DbIdRes,
   DbPackInfoSectionReq,
   DbStoreNameRes,
   MakeReq,
   MakeRes,
-  RegisterReq,
   SectionPackArrReq,
   SectionPackReq,
   SectionPackRes,
@@ -34,12 +33,13 @@ export type ApiQueries = {
   getProPaymentLink: (req: UpgradeUserToProReq) => Promise<UrlRes>;
   getUserData: (
     req: MakeReq<{ guestAccessSections: GuestAccessSectionPackArrs }>
-  ) => Promise<LoginQueryObjects["res"]>;
+  ) => Promise<{
+    data: LoginData;
+    headers: UserInfoTokenProp;
+  }>;
   getSubscriptionData: (
     req: MakeReq<{}>
   ) => Promise<{ data: SubscriptionValues; headers: UserInfoTokenProp }>;
-  register: (req: RegisterReq) => Promise<LoginQueryObjects["res"]>;
-  login: (req: LoginQueryObjects["req"]) => Promise<LoginQueryObjects["res"]>;
   makeSession: (req: MakeReq<{ authId: string }>) => Promise<{ data: {} }>;
 };
 

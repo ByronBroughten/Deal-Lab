@@ -135,7 +135,7 @@ const Styled = styled.div`
     margin-top: ${theme.s4};
     padding: 0;
     border-style: none;
-    background-color: ${theme.loan.light};
+    background-color: ${theme.property.main};
     will-change: opacity, transform;
     box-shadow: 0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08),
       inset 0 1px 0 ${theme.loan.main}

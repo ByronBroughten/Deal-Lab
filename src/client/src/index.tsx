@@ -7,7 +7,29 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-// PropertyAnalyzer.App?
+
+// I think I want to go with ultimatepropertyanalyzer.com
+
+// For now, I can slap "Beta" on there and ask people
+// to use it without charge, before the rest of the functionality is implemented.
+
+// I would have to remove all the "pro" functionality, or
+// add a config variable for switching from beta to paid.
+
+// For it to truly be an ultimate property analyzer, I need 4 more things:
+// 1. Bring back the custom variables/variable lists
+// 2. Bring back custom outputs/output lists
+//    - outputLists might be on the same page as custom variables
+// 3. Bring back custom additive lists
+//    - singleTimeList
+//    - ongoingList
+// 4. Bring back deal compare
+//    - implement property compare, etc
+
+// - Record new demo video in one go
+// - Record demo audio in increments
+
+// - get rid of login and register stuff
 
 // 1. When a subscription is active (or inactive), getUserData and updateSubscription
 //    should return the subscription header like they're supposed to
@@ -27,7 +49,6 @@ AppRegistry.runApplication("App", {
 //     obtained by the front end
 
 // Launch the app on Sunday.
-// - Make a video demo
 // - Post it, asking people for input
 //   *Reddit
 //    - r/realestateinvesting
@@ -60,9 +81,6 @@ AppRegistry.runApplication("App", {
 // theme.btn.
 // etc.
 
-// - get rid of login and register stuff
-
-// Think about making a guest user that has two example properties.
-// No, you probably want example lists and variables, instead.
+// You probably want example lists and variables.
 
 reportWebVitals();

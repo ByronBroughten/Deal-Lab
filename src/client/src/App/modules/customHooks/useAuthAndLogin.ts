@@ -10,11 +10,16 @@ import { auth } from "../services/authService";
 function useUpdateOnSubscribe() {
   const feUser = useFeUser();
   const { pathname } = useLocation();
+
   const navigate = useNavigate();
   React.useEffect(() => {
     async function updateOnSubscribe() {
-      if (pathname.includes(constants.subscriptionSuccessUrlEnd)) {
-        await feUser.updateSubscriptionData();
+      if (pathname.endsWith(constants.subscriptionSuccessUrlEnd)) {
+        try {
+          await feUser.updateSubscriptionData();
+        } catch (ex) {
+          await signOut();
+        }
         navigate("/");
       }
     }
@@ -45,7 +50,11 @@ function useGetAuthStateIfSessionExists() {
   React.useEffect(() => {
     async function syncStateWithSessionLogin() {
       if ((await feUser.sessionExists) && feUser.authStatus === "guest") {
-        feUser.loadUserData();
+        try {
+          await feUser.loadUserData();
+        } catch (ex) {
+          signOut();
+        }
       } else if (pathname.includes(constants.auth.successUrlEnd)) {
         navigate("/");
       }

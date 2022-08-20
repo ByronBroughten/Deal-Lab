@@ -8,9 +8,7 @@ import { upgradeUserToProWare } from "./apiQueries/getProPaymentLink";
 import { getSectionWare } from "./apiQueries/getSection";
 import { subscriptionDataWare } from "./apiQueries/getSubscriptionData";
 import { getUserDataWare } from "./apiQueries/getUserData";
-import { loginWare } from "./apiQueries/login";
 import { makeSessionWare } from "./apiQueries/makeSession";
-import { nextRegisterWare } from "./apiQueries/register";
 import { replaceSectionArrWare } from "./apiQueries/replaceSectionArr";
 import {
   stripeWebhookTestWare,
@@ -19,8 +17,6 @@ import {
 import { updateSectionWare } from "./apiQueries/updateSection";
 
 const endpointWare: Record<ApiQueryName, any> = {
-  register: nextRegisterWare,
-  login: loginWare,
   addSection: addSectionWare,
   updateSection: updateSectionWare,
   getSection: getSectionWare,

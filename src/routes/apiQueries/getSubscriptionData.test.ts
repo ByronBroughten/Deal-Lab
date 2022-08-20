@@ -1,7 +1,7 @@
 import { Server } from "http";
 import request from "supertest";
 import { apiQueriesShared } from "../../client/src/App/sharedWithServer/apiQueriesShared";
-import { isUserInfoHeaders } from "../../client/src/App/sharedWithServer/apiQueriesShared/login";
+import { isUserInfoHeaders } from "../../client/src/App/sharedWithServer/apiQueriesShared/getUserData";
 import { validateSubscriptionValues } from "../../client/src/App/sharedWithServer/apiQueriesShared/SubscriptionValues";
 import { runApp } from "../../runApp";
 import { LoadedDbUser } from "./shared/DbSections/LoadedDbUser";

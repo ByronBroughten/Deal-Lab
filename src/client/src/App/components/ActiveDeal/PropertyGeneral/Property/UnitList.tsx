@@ -64,6 +64,7 @@ export function UnitList({ feInfo, className }: Props) {
                           return unitId === "addUnitBtn" ? (
                             <div className="UnitList-addUnitBtnDiv">
                               <AddUnitBtn
+                                key={unitId}
                                 className="UnitList-addUnitBtn"
                                 onClick={addUnit}
                               />

@@ -167,10 +167,7 @@ export class DbUser extends DbSectionsQuerierBase {
     SN extends DbSelfOrDescendantSn<CN>,
     VN extends VarbNameNext<SN>
   >({ value, ...rest }: OneDbSectionValueInfo<CN, SN, VN>) {
-    // filter: { _id: userId, [`${storeName}.0`]: 0 },
-    // operation: { $set: { [`${storeName}.$.`]: value } },
     const path = modelPath.firstSectionVarb(rest);
-    const raw = await this.getDbSectionsRaw();
     await this.update({
       operation: { $set: { [`${path}`]: value } },
       doWhat: "set value",
@@ -178,14 +175,7 @@ export class DbUser extends DbSectionsQuerierBase {
         useFindAndModify: false,
         lean: true,
       },
-      // options: {
-      //   new: true,
-      //   // runValidators: true,
-      //   strict: false,
-      // },
     });
-    const raw2 = await this.getDbSectionsRaw();
-    const breakpoint = "breakpoint";
   }
   async update({
     filter = this.userFilter,
@@ -282,14 +272,23 @@ export class DbUser extends DbSectionsQuerierBase {
       else throw ex;
     }
   }
-  static userNotFoundError(): UserNotFoundError {
+  static userNotFoundError(options?: UserNotFoundOptions): UserNotFoundError {
+    let errorMessage = "User not found";
+    if (options) {
+      const { idType, id } = options;
+      errorMessage = errorMessage + ` with ${idType} "${id}"`;
+    }
     return new UserNotFoundError({
-      errorMessage: "User not found.",
+      errorMessage,
       resMessage: "Could not access user account.",
       status: 400,
     });
   }
 }
+type UserNotFoundOptions = {
+  idType: string;
+  id: string;
+};
 
 type SetSectionPackArrProps<CN extends DbStoreName> = {
   storeName: CN;

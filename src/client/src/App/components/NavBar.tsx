@@ -52,17 +52,6 @@ export default function NavBar(props: NavBarProps) {
                   <span>Sign In / Sign Up</span>
                 </NavBtn>
               </Link>
-              {/* <NavDropDown btnText="Create Account">
-                <RegisterForm />
-              </NavDropDown>
-              <NavDropDown btnText="Login">
-                <LoginForm />
-              </NavDropDown> */}
-              {/* {constants.environment !== "production" && (
-                <NavBtn onClick={props.logout}>
-                  <span>Logout</span>
-                </NavBtn>
-              )} */}
             </>
           )}
           {!isGuest && isBasic && (

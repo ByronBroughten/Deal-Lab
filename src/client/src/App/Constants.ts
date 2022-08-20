@@ -74,8 +74,6 @@ export const config = {
   subscriptionSuccessUrlEnd: "/subscription-success",
   basicStorageLimit: 2,
   apiQueryNames: [
-    "register",
-    "login",
     "addSection",
     "updateSection",
     "getSection",

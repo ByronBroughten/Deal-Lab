@@ -8,7 +8,6 @@ import {
   SectionQueryName,
 } from "../SectionsMeta/childSectionsDerived/DbStoreName";
 import { SectionPack } from "../SectionsMeta/childSectionsDerived/SectionPack";
-import { RegisterReqBody } from "./register";
 
 export const makeReq = <B extends QueryObj>(body: B): MakeReq<B> => ({ body });
 export type MakeReq<B extends QueryObj> = {
@@ -33,7 +32,7 @@ export type SectionPackArrReq<
   dbStoreName: CN;
   sectionPackArr: SectionPack<DbSectionName<CN>>[];
 }>;
-export type RegisterReq = MakeReq<RegisterReqBody>;
+
 export type UpgradeUserToProReq = MakeReq<{ priceId: string }>;
 
 export type UrlRes = MakeRes<{ sessionUrl: string }>;

@@ -3,20 +3,6 @@ import { sectionsMeta } from "../SectionsMeta";
 import { ChildSectionPack } from "../SectionsMeta/childSectionsDerived/ChildSectionPack";
 import { zRawSectionPackArr } from "../SectionsMeta/childSectionsDerived/SectionPack";
 import { Arr } from "../utils/Arr";
-import { dbLimits } from "../utils/dbLimts";
-import { validationMessage, zS } from "../utils/zod";
-import { QueryRes } from "./apiQueriesSharedTypes";
-
-export type RegisterQueryObjects = {
-  req: {
-    body: RegisterReqBody;
-  };
-  res: QueryRes<"login">;
-};
-export type RegisterReqBody = {
-  registerFormData: RegisterFormData;
-  guestAccessSections: GuestAccessSectionPackArrs;
-};
 
 const feStoreChildNames = sectionsMeta.section("feStore").childNames;
 export const guestAccessNames = Arr.extractStrict(feStoreChildNames, [
@@ -48,25 +34,3 @@ function makeZGuestAccessSectionsNext() {
   );
   return z.object(schemaFrame);
 }
-
-export function isRegisterFormData(value: any): value is RegisterFormData {
-  return zRegisterFormData.safeParse(value).success;
-}
-
-export const zRegisterFormData = z.object({
-  email: zS.string.email(),
-  userName: z
-    .string()
-    .min(3, validationMessage.min(3))
-    .max(50, validationMessage.max(50)),
-  password: z
-    .string()
-    .max(
-      dbLimits.password.maxLength,
-      validationMessage.max(dbLimits.password.maxLength)
-    ),
-});
-
-export type RegisterFormData = z.infer<typeof zRegisterFormData>;
-
-

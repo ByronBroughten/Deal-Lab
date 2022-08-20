@@ -1,7 +1,7 @@
 import { Button } from "@material-ui/core";
 import { rem } from "polished";
 import { AiOutlineMenu } from "react-icons/ai";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import useOnOutsideClickRef from "../../modules/customHooks/useOnOutsideClickRef";
 import useToggleView from "../../modules/customHooks/useToggleView";
 import { auth } from "../../modules/services/authService";
@@ -25,6 +25,15 @@ export function NavUserMenu({ feId, logout }: NavUserMenuProps) {
     feId,
   });
 
+  // const subInfo = useGetterSection({
+  //   sectionName: "subscriptionInfo",
+  //   feId,
+  // });
+
+  // const subscriptionPlan = subInfo.valueNext("plan") as UserPlan;
+  // const isFullPlan = subscriptionPlan === "fullPlan";
+  const isFullPlan = true;
+
   const authStatus = useAuthStatus();
   const { viewIsOpen, toggleView, openView, closeView } = useToggleView({
     initValue: false,
@@ -32,7 +41,7 @@ export function NavUserMenu({ feId, logout }: NavUserMenuProps) {
   const closeIfClickOutsideRef = useOnOutsideClickRef(closeView);
   const userName = userInfo.value("userName", "string");
   return (
-    <Styled ref={closeIfClickOutsideRef}>
+    <Styled ref={closeIfClickOutsideRef} {...{ $isFullPlan: isFullPlan }}>
       {auth.isToken && (
         // this is guarded by auth just temporarily
         <NavBtn
@@ -72,7 +81,7 @@ export function NavUserMenu({ feId, logout }: NavUserMenuProps) {
   );
 }
 
-const Styled = styled.div`
+const Styled = styled.div<{ $isFullPlan: boolean }>`
   display: flex;
   flex-direction: column;
 
@@ -88,6 +97,12 @@ const Styled = styled.div`
   }
 
   .NavUserMenu-navBtn {
+    ${({ $isFullPlan }) =>
+      $isFullPlan &&
+      css`
+        background-color: ${theme.property.main};
+      `}
+
     min-height: ${theme.navBar.height};
     min-width: ${rem(112.78)};
     position: relative;
