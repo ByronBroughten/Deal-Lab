@@ -12,16 +12,7 @@ export default function Mgmt({ feId }: { feId: string }) {
     <MainSection>
       <MainSectionTitleRow {...{ ...feInfo, pluralName: "managements" }} />
       <MainSectionBody themeName="mgmt">
-        <div className="ListGroup-root">
-          <div className="ListGroup-viewable">
-            {/* <div className="ListGroup-titleRow">
-              <h6 className="ListGroup-titleText">Basic Info</h6>
-            </div> */}
-            <div className="ListGroup-lists">
-              <BasicMgmtInfo feId={feId} className="ListGroup-root" />
-            </div>
-          </div>
-        </div>
+        <BasicMgmtInfo feId={feId} className="ListGroup-root" />
         <ListGroupOngoing
           listParentInfo={feInfo}
           listAsChildName="ongoingCostList"

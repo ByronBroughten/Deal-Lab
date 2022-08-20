@@ -86,7 +86,7 @@ const Styled = styled.div<{
         :hover,
         :active {
           background: ${theme[$themeName].dark};
-          border: 1px solid ${theme[$themeName].main};
+          border: 1px solid ${theme.transparentGrayDark};
         }
       `}
     font-size: 18px;

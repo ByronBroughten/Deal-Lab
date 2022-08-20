@@ -52,16 +52,6 @@ const testThemes = {
   },
 };
 
-const muiModDefault = testThemes.current;
-
-// const muiDefault = {
-//   primary: "#3f51b5",
-//   secondary: "#f50057",
-//   success: "#4caf50",
-//   warning: "#ff9800",
-//   danger: "#f44336",
-// };
-
 type SectionThemeBase = {
   main: string;
   [key: string]: string;
@@ -106,7 +96,7 @@ const themeColors = {
   plus: "#80c883",
   success: "#4caf50",
   next: "#717cbb",
-  danger: "#f52617",
+  danger: "#ff3527",
 };
 
 // light burgundy #f17a7a
@@ -207,7 +197,7 @@ const themeSections = {
 };
 
 const theme = {
-  // palette
+  primary: "#3f51b5",
   ...color,
   ...themeColors,
   ...themeSections,
@@ -223,7 +213,9 @@ const theme = {
   // spacing sizes
   s0: "0.0625rem",
   s1: "0.125rem",
+  s15: "0.1875rem",
   s2: "0.25rem",
+  s25: "0.375rem",
   s3: "0.5rem",
   s4: "1rem",
 

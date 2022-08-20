@@ -13,6 +13,7 @@ const Styled = styled.label<{ $active?: boolean }>`
   line-height: 1;
   margin: 0;
   padding: 0;
-  font-weight: 700;
-  color: ${({ $active }) => ($active ? theme.next.dark : theme["gray-600"])}}
+  font-weight: 500;
+  color: ${theme.dark};
+  font-size: 1rem;
 `;

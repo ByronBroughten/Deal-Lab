@@ -1,7 +1,19 @@
 import { css } from "styled-components";
 import theme, { ThemeName } from "./Theme";
 
+function mainColorSection(themeName: ThemeName) {
+  return css`
+    background: ${theme[themeName].main};
+    border: 1px solid ${theme.transparentGrayDark};
+  `;
+}
+
 const ccs = {
+  mainColorSection,
+  neutralColorSection: css`
+    background-color: ${theme.transparentGray};
+    border: 1px solid ${theme.transparentGrayBorder};
+  `,
   coloring: {
     section: {
       lightNeutral: css`
@@ -91,8 +103,7 @@ const ccs = {
   subSection: {
     viewable: css`
       display: inline-block;
-      padding: ${theme.s3};
-      padding-top: ${theme.s2};
+      padding: ${theme.s25};
       border-radius: ${theme.br1};
       box-shadow: ${theme.boxShadow1};
     `,
@@ -115,13 +126,11 @@ const ccs = {
       font-weight: 600;
       color: ${theme["gray-700"]};
     `,
-    main(sectionName: ThemeName) {
+    main(themeName: ThemeName) {
       return css`
         .viewable {
           ${this.viewable};
-          background: ${theme[sectionName].subSection};
-          border: 1px solid ${theme.transparentGrayBorder};
-
+          ${mainColorSection(themeName)}
           .title-row {
             ${this.titleRow}
           }
@@ -225,11 +234,6 @@ const ccs = {
         }
       `;
     },
-  },
-  listSection(sectionName: ThemeName) {
-    return css`
-      ${ccs.subSection.main(sectionName)}
-    `;
   },
   materialDraftEditor: {
     root: css`

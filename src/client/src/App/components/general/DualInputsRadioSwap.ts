@@ -1,7 +1,5 @@
-import { darken } from "polished";
 import styled from "styled-components";
 import theme from "../../theme/Theme";
-import ccs from "../../theme/cssChunks";
 
 const DualInputsRadioSwap = styled.div.attrs(({ className, ...rest }) => ({
   className: "dual-inputs-radio-swap " + className,
@@ -52,11 +50,11 @@ const DualInputsRadioSwap = styled.div.attrs(({ className, ...rest }) => ({
     }
 
     .MuiButtonBase-root {
-      background: ${({ theme }) => theme.light};
-      color: ${({ theme }) => theme.section.dark};
+      background: ${({ theme }) => theme.main};
+      color: ${({ theme }) => theme.primary};
 
       .MuiTouchRipple-root {
-        color: ${({ theme }) => theme.section.light};
+        color: ${({ theme }) => theme.primary};
       }
     }
   }

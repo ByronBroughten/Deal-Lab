@@ -16,41 +16,33 @@ export default function BasicSectionInfo({
     <Styled
       {...{
         className: `BasicSectionInfo-root ${className}`,
-        sectionName,
+        $themeName: sectionName,
         ...rest,
       }}
     />
   );
 }
-const Styled = styled.div<{ sectionName: ThemeName }>`
-  ${({ sectionName }) => css`
-    ${ccs.subSection.main(sectionName)};
+const Styled = styled.div<{ $themeName: ThemeName }>`
+  ${({ $themeName }) => css`
+    ${ccs.subSection.viewable};
+    ${ccs.neutralColorSection};
+    padding: ${theme.s3};
 
     .BasicSectionInfo-subSection-viewable {
-      border: 1px solid ${theme["gray-400"]};
+      ${ccs.mainColorSection($themeName)};
+      border-radius: none;
+      box-shadow: ${theme.boxShadow1};
+      padding: 0.3em;
     }
 
-    .BasicSectionInfo-subSection-viewable,
     .editor-background {
-      background-color: ${theme[sectionName].light};
+      background-color: ${theme[$themeName].light};
     }
   `}
 
   .BasicSectionInfo-viewable {
     display: flex;
     flex-direction: row;
-  }
-
-  .StandardLabel-root {
-    font-size: 0.95em;
-  }
-
-  .BasicSectionInfo-subSection {
-    margin-top: 1px;
-    .BasicSectionInfo-subSection-viewable {
-      box-shadow: ${theme.boxShadow1};
-      padding: 0.3em;
-    }
   }
 
   .BasicSectionInfo-subSection-viewable.titledBlock {
@@ -65,8 +57,11 @@ const Styled = styled.div<{ sectionName: ThemeName }>`
           border-top-right-radius: ${theme.br1};
         }
       }
-    }
-    .BasicSectionInfo-subSection {
+      :not(:first-child) {
+        .BasicSectionInfo-subSection-viewable {
+          border-top: 1px solid ${theme.transparentGrayBorder};
+        }
+      }
       :last-child {
         .BasicSectionInfo-subSection-viewable {
           border-bottom-left-radius: ${theme.br1};
@@ -82,6 +77,6 @@ const Styled = styled.div<{ sectionName: ThemeName }>`
     }
   }
   .editor-background {
-    border: 1px solid ${theme["gray-500"]};
+    border: 1px solid ${theme.transparentGrayBorder};
   }
 `;

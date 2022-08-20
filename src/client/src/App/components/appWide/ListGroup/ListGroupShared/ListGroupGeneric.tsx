@@ -113,11 +113,16 @@ export function ListGroupGeneric<
 
 export const listGroupCss = (themeName: ThemeName = "default") => css`
   .ListGroup-addListBtn {
-    background: ${theme[themeName].main};
-    border: ${theme[themeName].dark};
+    ${ccs.mainColorSection(themeName)};
+    width: 42px;
     :hover {
       background: ${theme[themeName].dark};
     }
+  }
+  .ListGroup-addListBtnIcon {
+    font-size: 35px;
+    padding: 0;
+    margin: 0;
   }
 
   .ListGroup-titleRow {
@@ -152,14 +157,6 @@ export const listGroupCss = (themeName: ThemeName = "default") => css`
     margin: 0;
     margin-left: ${theme.s2};
   }
-  .ListGroup-addListBtn {
-    width: 42px;
-  }
-  .ListGroup-addListBtnIcon {
-    font-size: 35px;
-    padding: 0;
-    margin: 0;
-  }
 
   .ListGroup-lists {
     display: flex;
@@ -171,7 +168,7 @@ export const listGroupCss = (themeName: ThemeName = "default") => css`
 
   .ListGroup-viewable {
     ${ccs.subSection.viewable};
-    ${ccs.coloring.section.lightNeutral};
+    ${ccs.neutralColorSection};
     padding: ${theme.s2};
   }
 `;

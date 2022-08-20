@@ -130,7 +130,7 @@ const Styled = styled.div<{
     flex-wrap: nowrap;
   }
 
-  ${({ themeName }) => ccs.listSection(themeName)};
+  ${({ themeName }) => ccs.subSection.main(themeName)};
   .title-row {
     align-items: flex-start;
     display: flex;

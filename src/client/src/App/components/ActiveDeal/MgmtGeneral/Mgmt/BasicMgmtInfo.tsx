@@ -22,8 +22,8 @@ export default function BasicMgmtInfo({ feId, className }: Props) {
     <Styled
       {...{ sectionName: "mgmt", className: `BasicMgmtInfo-root ${className}` }}
     >
-      <div className="viewable">
-        {viewIsOpen && (
+      {viewIsOpen && (
+        <div className="BasicSectionInfo-viewable viewable">
           <div className="BasicSectionInfo-subSections">
             <div className="BasicSectionInfo-subSection">
               <div className="BasicSectionInfo-subSection-viewable">
@@ -47,8 +47,8 @@ export default function BasicMgmtInfo({ feId, className }: Props) {
               </div>
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </Styled>
   );
 }

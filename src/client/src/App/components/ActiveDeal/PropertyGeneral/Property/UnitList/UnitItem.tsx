@@ -7,13 +7,13 @@ import XBtn from "../../../../appWide/Xbtn";
 import { NumObjEntityEditor } from "../../../../inputs/NumObjEntityEditor";
 
 type Props = { feId: string; unitNumber: number };
-export function UnitItemNext({ feId, unitNumber }: Props) {
+export function UnitItem({ feId, unitNumber }: Props) {
   const unit = useSetterSection({ sectionName: "unit", feId });
   return (
     <Styled className="UnitItem-root" key={feId}>
       <div className="UnitItem-viewable">
-        <div className="UnitItem-titleRow title-row">
-          <h6 className="title-text">Unit {unitNumber}</h6>
+        <div className="UnitItem-titleRow">
+          <div className="UnitItem-titleText">Unit {unitNumber}</div>
           <XBtn className="UnitItem-xBtn" onClick={() => unit.removeSelf()} />
         </div>
         <NumObjEntityEditor
@@ -29,42 +29,42 @@ export function UnitItemNext({ feId, unitNumber }: Props) {
   );
 }
 
-const Styled = styled.div`
-  min-width: 130px;
-  ${ccs.subSection.main("property")};
+export const unitItemWidth = "125px";
 
-  .UnitItem-xBtn {
+const Styled = styled.div`
+  min-width: ${unitItemWidth};
+  .UnitItem-viewable {
+    ${ccs.mainColorSection("property")};
+    padding: ${theme.s2};
+    box-shadow: ${theme.boxShadow1};
+  }
+  /* .UnitItem-xBtn {
     visibility: hidden;
   }
-
   :hover {
     .UnitItem-xBtn {
       visibility: visible;
     }
-  }
-
-  .UnitItem-viewable {
-    background-color: ${theme.property.light};
-    padding: ${theme.s2};
-    display: flex;
-    flex-direction: column;
-    box-shadow: ${theme.boxShadow1};
-  }
-
+  } */
   .UnitItem-titleRow {
+    display: flex;
+    justify-content: space-between;
     align-items: center;
-    h6.title-text {
-      margin-right: ${theme.s2};
-      font-size: 0.9rem;
-    }
+  }
+  .UnitItem-titleText {
+    margin-right: ${theme.s2};
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: ${theme["gray-700"]};
   }
 
   .NumObjEditor-inner {
     margin-top: ${theme.s2};
+
     .editor-background {
       background-color: ${theme.property.light};
-      ..DraftTextField-root {
-        min-width: 35px;
+      .DraftTextField-root {
+        min-width: 110px;
       }
     }
   }

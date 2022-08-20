@@ -1,11 +1,11 @@
-import React from "react";
-import styled, { css } from "styled-components";
-import { CgClose } from "react-icons/cg";
-import { StandardBtnProps } from "../general/StandardProps";
 import { Button } from "@material-ui/core";
-import theme from "../../theme/Theme";
-import ccs from "../../theme/cssChunks";
 import { rem } from "polished";
+import React from "react";
+import { CgClose } from "react-icons/cg";
+import styled, { css } from "styled-components";
+import ccs from "../../theme/cssChunks";
+import theme from "../../theme/Theme";
+import { StandardBtnProps } from "../general/StandardProps";
 
 export default function XBtn({
   children,
@@ -30,11 +30,12 @@ const Styled = styled(Button)<{ $childrenIsDefault: boolean }>`
   padding: 1px ${theme.s2} 0 ${theme.s2};
   color: ${theme["gray-800"]};
   background-color: ${theme.error.main};
-  border: 1px solid ${theme.error.main};
+  border: 1px solid ${theme.transparentGrayDark};
   :hover {
     color: ${theme.light};
     font-weight: bold;
     background-color: ${theme.error.dark};
+    border-color: ${theme.error.dark};
   }
   white-space: nowrap;
   .MuiTouchRipple-root {

@@ -28,9 +28,15 @@ const Styled = styled.div<{ $themeName: ThemeName }>`
   flex-wrap: wrap;
   border-radius: ${theme.br1};
 
-  padding-left: ${theme.s1};
-  padding-right: ${theme.s1};
+  padding-left: ${theme.s15};
+  padding-right: ${theme.s15};
   .LabeledVarb-root {
-    margin: ${theme.s2} ${theme.s1};
+    margin: ${theme.s25} ${theme.s15};
+  }
+  .LabeledVarb-label {
+    font-size: 1.05rem;
+  }
+  .LabeledVarb-output {
+    font-size: 1.05rem;
   }
 `;

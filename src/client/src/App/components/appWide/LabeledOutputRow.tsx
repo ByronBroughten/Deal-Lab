@@ -13,10 +13,10 @@ const Styled = styled.div`
   flex-wrap: wrap;
   align-items: stretch;
 
-  padding-left: ${theme.s1};
-  padding-right: ${theme.s1};
+  padding-left: ${theme.s15};
+  padding-right: ${theme.s15};
   .LabeledVarb-root {
-    margin: ${theme.s2} ${theme.s1};
+    margin: ${theme.s25} ${theme.s15};
   }
 
   .LabeledVarb-label {
