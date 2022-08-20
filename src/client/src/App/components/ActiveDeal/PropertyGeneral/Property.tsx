@@ -18,12 +18,6 @@ export default function Property({ feId }: { feId: string }) {
         <div className="ListGroup-lists">
           <BasicPropertyInfo feId={feId} className="ListGroup-root" />
         </div>
-
-        {/* 
-          change AddUnit to dark yellow
-          change the units to dark yellow
-        */}
-
         <ListGroupOngoing
           listParentInfo={feInfo}
           listAsChildName="ongoingCostList"

@@ -14,11 +14,9 @@ const Styled = styled(PlusBtn)`
   min-width: 80px;
   min-height: 50px;
   box-shadow: ${theme.boxShadow1};
-  border: none;
   :hover,
   :active {
     background-color: ${theme.property.dark};
-    border: 1px solid ${theme.property.main};
   }
 
   font-weight: 700;
