@@ -9,9 +9,10 @@ AppRegistry.runApplication("App", {
 });
 // PropertyAnalyzer.App?
 
-// 1. When a subscription is active, getUserData and updateSubscription
+// 1. When a subscription is active (or inactive), getUserData and updateSubscription
 //    should return the subscription header like they're supposed to
 //    - This will require parsing the json
+//    - You will want to borrow from the stripe webhook
 
 // 2. Think about fixing the css register bug
 // - I'd need to implement a way to delete a dev user.

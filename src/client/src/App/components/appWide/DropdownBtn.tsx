@@ -26,6 +26,10 @@ export function DropdownBtn({ title, isDropped, toggleDropped, icon }: Props) {
 const Styled = styled(Button)<{ $active: boolean }>`
   box-shadow: ${theme.boxShadow1};
   height: ${theme.bigButtonHeight};
+  :hover {
+    background-color: ${theme.transparentGrayDark};
+  }
+
   ${({ $active }) => ccs.coloring.button.lightNeutral($active)};
   .DbDropdownBtn-menu {
     margin-left: ${theme.s2};
