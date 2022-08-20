@@ -9,9 +9,6 @@ AppRegistry.runApplication("App", {
 });
 // PropertyAnalyzer.App?
 
-// Honestly, it's probably ready for actions, though.
-// It's definitely ready for me to make a demo.
-
 // 1. When a subscription is active, getUserData and updateSubscription
 //    should return the subscription header like they're supposed to
 //    - This will require parsing the json

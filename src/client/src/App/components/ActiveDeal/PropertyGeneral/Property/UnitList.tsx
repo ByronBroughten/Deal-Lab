@@ -1,6 +1,6 @@
 import { rem } from "polished";
 import React from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { FeParentInfo } from "../../../../sharedWithServer/SectionsMeta/Info";
 import { useSetterSection } from "../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import { Arr } from "../../../../sharedWithServer/utils/Arr";
@@ -18,7 +18,8 @@ export function UnitList({ feInfo, className }: Props) {
   const totalVarb = unitParent.switchVarb("targetRent", "ongoing");
 
   let unitIds = [...unitParent.childFeIds("unit")];
-  const { isAtLeastOne, areMultiple, areNone } = useHowMany(unitIds);
+  const { isAtLeastOne, areMultiple, areNone, isOne, isEven } =
+    useHowMany(unitIds);
   unitIds = [...unitIds, "addUnitBtn"];
 
   const unitIdRows = Arr.upOneDimension(unitIds, numUnitsPerRow);
@@ -29,7 +30,13 @@ export function UnitList({ feInfo, className }: Props) {
   return (
     <Styled
       className={`UnitList-root ${className ?? ""}`}
-      {...{ isAtLeastOne }}
+      {...{
+        $isAtLeastOne: isAtLeastOne,
+        $areMultiple: areMultiple,
+        $areNone: areNone,
+        $isOne: isOne,
+        $isEven: isEven,
+      }}
     >
       <div className="UnitList-viewable">
         {viewIsOpen && (
@@ -55,10 +62,12 @@ export function UnitList({ feInfo, className }: Props) {
                           const unitIndex = unitNumberOffset + unitInnerIndex;
                           const unitNumber = unitIndex + 1;
                           return unitId === "addUnitBtn" ? (
-                            <AddUnitBtn
-                              className="UnitList-addUnitBtn"
-                              onClick={addUnit}
-                            />
+                            <div className="UnitList-addUnitBtnDiv">
+                              <AddUnitBtn
+                                className="UnitList-addUnitBtn"
+                                onClick={addUnit}
+                              />
+                            </div>
                           ) : (
                             <UnitItem
                               key={unitId}
@@ -81,9 +90,39 @@ export function UnitList({ feInfo, className }: Props) {
 }
 
 /* ${ccs.subSection.main("property")}; */
-const Styled = styled.div<{ isAtLeastOne: boolean }>`
+const Styled = styled.div<{
+  $isAtLeastOne: boolean;
+  $areMultiple: boolean;
+  $areNone: boolean;
+  $isOne: boolean;
+  $isEven: boolean;
+}>`
+  .UnitList-addUnitBtnDiv {
+    display: flex;
+    padding: ${theme.s3};
+    min-width: 109px;
+    ${({ $isEven, $areMultiple }) =>
+      $isEven &&
+      $areMultiple &&
+      css`
+        justify-content: flex-end;
+      `}
+    ${({ $isOne }) =>
+      $isOne &&
+      css`
+        padding-top: 0px;
+      `}
+
+    ${({ $areNone }) =>
+      $areNone &&
+      css`
+        padding-left: 0px;
+        padding-top: 0px;
+      `}
+  }
   .UnitList-unitRows {
   }
+  // isEven and isAtLeastOne
   .UnitList-unitrow {
   }
   .UnitList-unitRowInner {
@@ -94,7 +133,7 @@ const Styled = styled.div<{ isAtLeastOne: boolean }>`
     ${ccs.mainColorSection("property")};
     border-top-left-radius: ${theme.br1};
     border-top-right-radius: ${theme.br1};
-    border-bottom: none;
+
     box-shadow: ${theme.boxShadow1};
     height: 1rem;
   }

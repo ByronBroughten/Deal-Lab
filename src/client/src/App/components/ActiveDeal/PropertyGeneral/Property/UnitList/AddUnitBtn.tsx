@@ -3,7 +3,6 @@ import ccs from "../../../../../theme/cssChunks";
 import theme from "../../../../../theme/Theme";
 import PlusBtn from "../../../../appWide/PlusBtn";
 import { StandardBtnProps } from "../../../../general/StandardProps";
-import { unitItemWidth } from "./UnitItem";
 
 type Props = StandardBtnProps;
 export function AddUnitBtn(props: Props) {
@@ -11,8 +10,9 @@ export function AddUnitBtn(props: Props) {
 }
 
 const Styled = styled(PlusBtn)`
-  min-width: ${unitItemWidth};
   ${ccs.mainColorSection("property")};
+  min-width: 80px;
+  min-height: 50px;
   box-shadow: ${theme.boxShadow1};
   border: none;
   :hover,

@@ -30,22 +30,17 @@ export function UnitItem({ feId, unitNumber }: Props) {
 }
 
 export const unitItemWidth = "125px";
+export const unitItemHeight = "113px";
 
 const Styled = styled.div`
   min-width: ${unitItemWidth};
+  min-height: ${unitItemHeight};
   .UnitItem-viewable {
     ${ccs.mainColorSection("property")};
+    border-radius: ${theme.br1};
     padding: ${theme.s2};
     box-shadow: ${theme.boxShadow1};
   }
-  /* .UnitItem-xBtn {
-    visibility: hidden;
-  }
-  :hover {
-    .UnitItem-xBtn {
-      visibility: visible;
-    }
-  } */
   .UnitItem-titleRow {
     display: flex;
     justify-content: space-between;

@@ -30,7 +30,6 @@ const Styled = styled.div<{ $themeName: ThemeName }>`
 
     .BasicSectionInfo-subSection-viewable {
       ${ccs.mainColorSection($themeName)};
-      border-radius: none;
       box-shadow: ${theme.boxShadow1};
       padding: 0.3em;
     }
