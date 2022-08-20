@@ -83,7 +83,7 @@ export const config = {
     "getUserData",
     "getSubscriptionData",
     "makeSession",
-    // sends feGuestAccess sections and gets user data from the db
+    // delete all users
   ],
   get superTokensAppInfo() {
     return {

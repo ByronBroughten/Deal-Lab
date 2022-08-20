@@ -35,7 +35,7 @@ export type RawDbUser = {
   [CN in DbStoreName]: DbSectionPack<CN>[];
 };
 
-export const DbSectionsModel = mongoose.model<DbSectionsModelCore>(
+export const DbUserModel = mongoose.model<DbSectionsModelCore>(
   "user",
   makeMongooseUserSchema()
 );

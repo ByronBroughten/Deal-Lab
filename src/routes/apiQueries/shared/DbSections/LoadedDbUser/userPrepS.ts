@@ -1,8 +1,11 @@
 import bcrypt from "bcrypt";
+import ThirdPartyEmailPassword from "supertokens-node/recipe/thirdpartyemailpassword";
 import { dbStoreNames } from "../../../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreName";
 import { PackBuilderSection } from "../../../../../client/src/App/sharedWithServer/StatePackers.ts/PackBuilderSection";
+import { timeS } from "../../../../../client/src/App/sharedWithServer/utils/date";
+import { StrictPick } from "../../../../../client/src/App/sharedWithServer/utils/types";
 import { ResStatusError } from "../../../../../utils/resError";
-import { DbSectionsModel, RawDbUser } from "../../../../DbSectionsModelNext";
+import { DbUserModel, RawDbUser } from "../../../../DbUserModel";
 import { DbUser } from "../DbUser";
 import { InitialUserSectionPackArrs, PreppedEmails } from "./userPrepSTypes";
 
@@ -13,9 +16,29 @@ export type SignUpData = {
   timeJoined: number;
 };
 
+export function getSignUpData(
+  user: ThirdPartyEmailPassword.User
+): StrictPick<SignUpData, "authId" | "email" | "timeJoined"> {
+  const { id, email, timeJoined } = user;
+  return {
+    authId: id,
+    email,
+    timeJoined: timeS.millisecondsToStandard(timeJoined),
+  };
+}
+
 export const userPrepS = {
   async initUserInDb(props: SignUpData) {
-    const dbUserModel = new DbSectionsModel(this.initRawDbUser(props));
+    // const { email, authId } = props;
+    // const userExists =
+    //   (await DbUser.existsBy("email", email)) ||
+    //   (await DbUser.existsBy("authId", authId));
+
+    // if (!userExists) {
+    //   const dbUserModel = new DbUserModel(this.initRawDbUser(props));
+    //   await dbUserModel.save();
+    // }
+    const dbUserModel = new DbUserModel(this.initRawDbUser(props));
     await dbUserModel.save();
   },
   initRawDbUser(props: SignUpData): RawDbUser {
@@ -23,6 +46,12 @@ export const userPrepS = {
       ...this.makeEmptyRawDbUser(),
       ...this.initUserSectionPackArrs(props),
     };
+  },
+  makeEmptyRawDbUser(): RawDbUser {
+    return dbStoreNames.reduce((rawDbUser, dbStoreName) => {
+      rawDbUser[dbStoreName] = [];
+      return rawDbUser;
+    }, {} as RawDbUser);
   },
   initUserSectionPackArrs({
     authId,
@@ -58,12 +87,6 @@ export const userPrepS = {
         }),
       ],
     };
-  },
-  makeEmptyRawDbUser(): RawDbUser {
-    return dbStoreNames.reduce((rawDbUser, dbStoreName) => {
-      rawDbUser[dbStoreName] = [];
-      return rawDbUser;
-    }, {} as RawDbUser);
   },
 };
 

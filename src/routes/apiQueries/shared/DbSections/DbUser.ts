@@ -21,7 +21,7 @@ import { GetterSection } from "../../../../client/src/App/sharedWithServer/State
 import { PackBuilderSection } from "../../../../client/src/App/sharedWithServer/StatePackers.ts/PackBuilderSection";
 import { Obj } from "../../../../client/src/App/sharedWithServer/utils/Obj";
 import { ResStatusError } from "../../../../utils/resError";
-import { DbSectionsModel, modelPath } from "../../../DbSectionsModelNext";
+import { DbUserModel, modelPath } from "../../../DbUserModel";
 import { DbSectionsQuerierBase } from "./Bases/DbSectionsQuerierBase";
 import { DbSections } from "./DbSections";
 import {
@@ -35,13 +35,13 @@ import { LoadedDbUser } from "./LoadedDbUser";
 
 export class DbUser extends DbSectionsQuerierBase {
   async exists(): Promise<boolean> {
-    return await DbSectionsModel.exists(this.userFilter);
+    return await DbUserModel.exists(this.userFilter);
   }
   async checkAndLoadGuestAccessSections(
     guestAccessSections: GuestAccessSectionPackArrs
   ): Promise<void> {
     if (!(await this.guestAccessSectionsAreLoaded)) {
-      this.loadGuestAccessSections(guestAccessSections);
+      await this.loadGuestAccessSections(guestAccessSections);
     }
   }
   async getUserId(): Promise<string> {
@@ -100,8 +100,8 @@ export class DbUser extends DbSectionsQuerierBase {
     const dbSections = await this.dbSections();
     return dbSections.sectionPack(dbInfo);
     // It would be cool to query one pack directly, but it didn't work:
-    // const users = await DbSectionsModel.aggregate([{ $match: this.userFilter }]);
-    // const userDocs = await DbSectionsModel.aggregate([
+    // const users = await DbUserModel.aggregate([{ $match: this.userFilter }]);
+    // const userDocs = await DbUserModel.aggregate([
     //   { $match: this.userFilter },
     //   { $unwind: `$${sectionName}` },
     //   // { $match: { [`${sectionName}.${dbId}`]: dbId } },
@@ -183,7 +183,7 @@ export class DbUser extends DbSectionsQuerierBase {
     options,
     doWhat = "query the database",
   }: UpdateProps) {
-    const result = await DbSectionsModel.findOneAndUpdate(
+    const result = await DbUserModel.findOneAndUpdate(
       filter,
       operation,
       options
@@ -214,7 +214,7 @@ export class DbUser extends DbSectionsQuerierBase {
   }
 
   async getDbSectionsRaw(): Promise<DbSectionsRaw> {
-    const dbSectionsRaw = await DbSectionsModel.findOne(
+    const dbSectionsRaw = await DbUserModel.findOne(
       this.userFilter,
       undefined,
       queryOptions

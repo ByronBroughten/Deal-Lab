@@ -5,8 +5,12 @@ import styled, { css } from "styled-components";
 import useOnOutsideClickRef from "../../modules/customHooks/useOnOutsideClickRef";
 import useToggleView from "../../modules/customHooks/useToggleView";
 import { auth } from "../../modules/services/authService";
+import { UserPlan } from "../../sharedWithServer/SectionsMeta/baseSections";
 import { useAuthStatus } from "../../sharedWithServer/stateClassHooks/useAuthStatus";
-import { useGetterSection } from "../../sharedWithServer/stateClassHooks/useGetterSection";
+import {
+  useGetterSection,
+  useGetterSectionOnlyOne,
+} from "../../sharedWithServer/stateClassHooks/useGetterSection";
 import theme from "../../theme/Theme";
 import { StandardProps } from "../general/StandardProps";
 import NavBtn from "./NavBtn";
@@ -25,14 +29,9 @@ export function NavUserMenu({ feId, logout }: NavUserMenuProps) {
     feId,
   });
 
-  // const subInfo = useGetterSection({
-  //   sectionName: "subscriptionInfo",
-  //   feId,
-  // });
-
-  // const subscriptionPlan = subInfo.valueNext("plan") as UserPlan;
-  // const isFullPlan = subscriptionPlan === "fullPlan";
-  const isFullPlan = true;
+  const subInfo = useGetterSectionOnlyOne("subscriptionInfo");
+  const subscriptionPlan = subInfo.valueNext("plan") as UserPlan;
+  const isFullPlan = subscriptionPlan === "fullPlan";
 
   const authStatus = useAuthStatus();
   const { viewIsOpen, toggleView, openView, closeView } = useToggleView({

@@ -9,9 +9,8 @@ import { DbUser } from "./shared/DbSections/DbUser";
 import { LoadedDbUser } from "./shared/DbSections/LoadedDbUser";
 import { stripeSubToValues } from "./stripeWebhooks";
 import { createAndGetDbUser, deleteUserTotally } from "./test/testDbUser";
-type Payload = { id: string; type: string; data: any };
 const productionRoute = "/api/webhook/stripe";
-describe("/api/webhook/stripe", () => {
+describe(productionRoute, () => {
   let stripe: Stripe;
   let server: Server;
   let route: string;
@@ -109,7 +108,7 @@ describe("/api/webhook/stripe", () => {
         data: { object: subscription },
       };
     });
-    it("should return status 200 and create a subscription", async () => {
+    it("should return status 200 and create a subscription concurrent", async () => {
       const res = await exec();
       expect(res.status).toBe(200);
       const dbUser = await LoadedDbUser.getBy("userId", loadedDbUser.userId);
@@ -119,7 +118,7 @@ describe("/api/webhook/stripe", () => {
       const expectedVals = stripeSubToValues(subscription);
       expect(sub.allValues).toEqual(expectedVals);
     });
-    it("should return status 200 and change the subscription status to canceled", async () => {
+    it("should return status 200 and change the subscription status to canceled concurrent", async () => {
       await exec();
       subscription.status = "canceled";
       await exec();

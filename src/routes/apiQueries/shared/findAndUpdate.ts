@@ -1,9 +1,6 @@
 import { FilterQuery, QueryOptions } from "mongoose";
 import { ResStatusError } from "../../../utils/resError";
-import {
-  DbSectionsModel,
-  DbSectionsModelCore,
-} from "../../DbSectionsModelNext";
+import { DbSectionsModelCore, DbUserModel } from "../../DbUserModel";
 
 type QueryParameters = { operation: any; options: QueryOptions };
 
@@ -29,11 +26,7 @@ export async function findOneAndUpdate({
   queryParameters: { operation, options },
   doWhat = "query the database",
 }: FindOneAndUpdateProps) {
-  const result = await DbSectionsModel.findOneAndUpdate(
-    filter,
-    operation,
-    options
-  );
+  const result = await DbUserModel.findOneAndUpdate(filter, operation, options);
   if (result) return result;
   else {
     throw new ResStatusError({
@@ -49,11 +42,7 @@ export async function updateOneUser({
   queryParameters: { operation, options },
   doWhat = "query the database",
 }: FindOneAndUpdateProps) {
-  const result = await DbSectionsModel.findOneAndUpdate(
-    filter,
-    operation,
-    options
-  );
+  const result = await DbUserModel.findOneAndUpdate(filter, operation, options);
   if (!result) {
     throw new ResStatusError({
       resMessage: `Failed to ${doWhat}.`,

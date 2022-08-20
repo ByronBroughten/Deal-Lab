@@ -8,6 +8,16 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
+// alright. if the user isn't found in the database
+// I can make it delete their auth self.
+// That seems risky, though.
+
+// There is a chance that their auth self will be deleted
+// when really it was just a server error that couldn't
+// find them.
+// Their auth-self isn't a big deal, though.
+// Their db self is where all the data is.
+
 // I think I want to go with ultimatepropertyanalyzer.com
 
 // For now, I can slap "Beta" on there and ask people

@@ -88,7 +88,7 @@ describe(testedRoute, () => {
     const res = await exec();
     expect(res.status).toBe(statusNumber);
   }
-  it("should return 200 and update a section if happy path", async () => {
+  it("should return 200 and update a section if happy path concurrent", async () => {
     await testStatus(200);
     const postDoc = await getUserByIdNoRes(dbUser.userId);
     const updatedDoc = postDoc.propertyMain.find(
@@ -101,7 +101,7 @@ describe(testedRoute, () => {
     expect(updatedSection?.dbVarbs.displayName).toBe(updatedValues.displayName);
     expect(updatedSection?.dbVarbs.price).toEqual(updatedValues.price);
   });
-  it("should return 404 if there is not an entry in the db with the sectionPack's dbId", async () => {
+  it("should return 404 if there is not an entry in the db with the sectionPack's dbId concurrent", async () => {
     reqs.updateSection.body.sectionPack.dbId = Id.make();
     await testStatus(404);
   });

@@ -23,7 +23,9 @@ export const Str = {
   makeStringTypeGuard<T extends string>(arr: readonly T[]): IsType<T> {
     return (value: any): value is T => arr.includes(value);
   },
-
+  emailBeforeAt(emailAddress: string) {
+    return emailAddress.substring(0, emailAddress.indexOf("@"));
+  },
   compareAlphanumerically(a: string, b: string) {
     return a.localeCompare(b, undefined, { numeric: true });
   },

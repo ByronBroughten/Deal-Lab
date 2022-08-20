@@ -3,7 +3,12 @@ import supertokens from "supertokens-node";
 import Session from "supertokens-node/recipe/session";
 import ThirdPartyEmailPassword from "supertokens-node/recipe/thirdpartyemailpassword";
 import { constants } from "../client/src/App/Constants";
-import { userPrepS } from "../routes/apiQueries/shared/DbSections/LoadedDbUser/userPrepS";
+import { Str } from "../client/src/App/sharedWithServer/utils/Str";
+import { DbUser } from "../routes/apiQueries/shared/DbSections/DbUser";
+import {
+  getSignUpData,
+  userPrepS,
+} from "../routes/apiQueries/shared/DbSections/LoadedDbUser/userPrepS";
 
 export function useSupertokensInit() {
   supertokens.init({
@@ -26,13 +31,34 @@ export function useSupertokensInit() {
           apis: (original) => {
             return {
               ...original,
+              emailPasswordSignInPOST: async function (input) {
+                if (!original.emailPasswordSignInPOST) {
+                  throw Error("No original.emailPasswordSingInPOST");
+                }
+                const res = await original.emailPasswordSignInPOST(input);
+                if (res.status === "OK") {
+                  const signUpData = getSignUpData(res.user);
+                  const userExists = await DbUser.existsBy(
+                    "authId",
+                    signUpData.authId
+                  );
+                  if (!userExists) {
+                    const userName = Str.emailBeforeAt(signUpData.email);
+                    await userPrepS.initUserInDb({
+                      ...signUpData,
+                      userName,
+                    });
+                  }
+                }
+                return res;
+              },
               emailPasswordSignUpPOST: async function (input) {
                 if (!original.emailPasswordSignUpPOST) {
-                  throw Error("This should't happen.");
+                  throw Error("No original.emailPasswordSingUpPOST");
                 }
                 const res = await original.emailPasswordSignUpPOST(input);
                 if (res.status === "OK") {
-                  const { id, email, timeJoined } = res.user;
+                  const signUpData = getSignUpData(res.user);
                   const { formFields } = input;
                   const nameField = formFields.find(
                     (field) => field.id === "userName"
@@ -41,12 +67,16 @@ export function useSupertokensInit() {
                   const userName =
                     nameField && nameField.value ? nameField.value : "User";
 
-                  await userPrepS.initUserInDb({
-                    authId: id,
-                    email,
-                    timeJoined,
-                    userName,
-                  });
+                  const userExists = await DbUser.existsBy(
+                    "authId",
+                    signUpData.authId
+                  );
+                  if (!userExists) {
+                    await userPrepS.initUserInDb({
+                      ...signUpData,
+                      userName,
+                    });
+                  }
                 }
                 return res;
               },

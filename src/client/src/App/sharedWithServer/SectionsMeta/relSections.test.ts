@@ -29,6 +29,7 @@ describe(`relSections`, () => {
     });
 
     it("should produce a hash that is equal", () => {
+      expect(relSections).toEqual(relSections2);
       expect(relSectionsHash).toBe(relSections2Hash);
     });
     it("should produce a hash that is not equal", () => {
