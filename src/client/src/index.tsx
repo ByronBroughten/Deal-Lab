@@ -37,6 +37,8 @@ AppRegistry.runApplication("App", {
 //    - r/landlords
 //    - answer people's questions about how to size up properties
 //    - Reddit ads
+//   *Podcast ads
+//    - Optimal finance daily
 //   *Quora
 //    - answer people's questions about how to size-up property
 //   * Youtube ads

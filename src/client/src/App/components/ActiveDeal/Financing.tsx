@@ -39,6 +39,13 @@ export default function Financing({ feId, ...rest }: Props) {
 }
 
 const Styled = styled(MainSection)`
+  .FinancingInfo-root {
+    margin-top: ${theme.s2};
+  }
+  .MainSection-entries {
+    margin-top: ${theme.s2};
+  }
+
   .Financing-mainSectionTitleBtn {
     width: 75%;
     max-width: 600px;
@@ -55,6 +62,6 @@ const Styled = styled(MainSection)`
     padding-bottom: ${theme.s4};
   }
   .Loan-root {
-    border-top: 2px solid ${theme.loan.dark};
+    border-top: 2px solid ${theme.loan.main};
   }
 `;

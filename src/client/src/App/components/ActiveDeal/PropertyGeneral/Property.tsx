@@ -20,16 +20,20 @@ export default function Property({ feId }: { feId: string }) {
           {/* <UnitList feInfo={feInfo} className="ListGroup-root" /> */}
         </div>
 
-        {/* <div className="ListGroup-root">
-          <div className="ListGroup-viewable">            
-          The best would be: basic info has the same background
-          as ongoing costs, the background behind the inputs is
-          dark yellow
-          Add Unit is dark yellow and turns darker, and it's in
-          the shape of a unit.
+        {/* 
 
-          </div>
-        </div> */}
+          Change the background to match that of Ongoing Costs
+          Change the inner background to dark yellow
+          change AddUnit to dark yellow
+          change the units to dark yellow
+
+          Change the base loan percent toggle to dark purple
+          Same with the interest only payments checkbox
+          Same with the toggle in mgmt
+          
+          That should do the trick
+          */}
+
         <ListGroupOngoing
           listParentInfo={feInfo}
           listAsChildName="ongoingCostList"

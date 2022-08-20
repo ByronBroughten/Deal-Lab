@@ -4,9 +4,7 @@ import { StandardProps } from "../general/StandardProps";
 
 export function LabeledOutputRow({ className, children }: StandardProps) {
   return (
-    <Styled className={`LabeledOutputRowSimple-root ${className}`}>
-      {children}
-    </Styled>
+    <Styled className={`LabeledVarbRow-root ${className}`}>{children}</Styled>
   );
 }
 
@@ -19,5 +17,12 @@ const Styled = styled.div`
   padding-right: ${theme.s1};
   .LabeledVarb-root {
     margin: ${theme.s2} ${theme.s1};
+  }
+
+  .LabeledVarb-label {
+    font-size: 1.3rem;
+  }
+  .LabeledVarb-output {
+    font-size: 1.3rem;
   }
 `;
