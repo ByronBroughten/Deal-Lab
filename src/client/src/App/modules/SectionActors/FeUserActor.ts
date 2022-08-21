@@ -17,18 +17,18 @@ import { SetterSection } from "./../../sharedWithServer/StateSetters/SetterSecti
 import { SectionActorBase, SectionActorBaseProps } from "./SectionActorBase";
 import { LoginSetter } from "./shared/LoginSetter";
 
-type FeUserProps = StrictOmit<SectionActorBaseProps<"feStore">, "sectionName">;
-export class FeUserActor extends SectionActorBase<"feStore"> {
+type FeUserProps = StrictOmit<SectionActorBaseProps<"feUser">, "sectionName">;
+export class FeUserActor extends SectionActorBase<"feUser"> {
   constructor(props: FeUserProps) {
     super({
       ...props,
-      sectionName: "feStore",
+      sectionName: "feUser",
     });
   }
-  get get(): GetterSection<"feStore"> {
+  get get(): GetterSection<"feUser"> {
     return new GetterSection(this.sectionActorBaseProps);
   }
-  get setter(): SetterSection<"feStore"> {
+  get setter(): SetterSection<"feUser"> {
     return new SetterSection(this.sectionActorBaseProps);
   }
   get loginSetter() {
@@ -37,10 +37,10 @@ export class FeUserActor extends SectionActorBase<"feStore"> {
   private get guestAccessSectionPacks(): GuestAccessSectionPackArrs {
     const { sections } = this.get;
     const { getterSectionsProps } = sections;
-    const feStore = sections.oneAndOnly("feStore");
+    const feUser = sections.oneAndOnly("feUser");
     const feStorePackMaker = new PackMakerSection({
       ...getterSectionsProps,
-      ...feStore.feInfo,
+      ...feUser.feInfo,
     });
     return feStorePackMaker.makeChildTypePackArrs(
       guestAccessNames

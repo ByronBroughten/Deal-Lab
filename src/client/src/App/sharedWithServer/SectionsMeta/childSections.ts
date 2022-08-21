@@ -40,13 +40,13 @@ export const childSections = checkChildSections({
     login: ["login"],
     register: ["register"],
     deal: ["deal"],
-    feStore: ["feStore"],
+    feUser: ["feUser"],
   }),
   displayNameList: childrenSections({
     displayName: ["displayNameItem"],
   }),
-  feStore: childrenSections({
-    // feStore includes everything that has a corresponding child in dbStore
+  feUser: childrenSections({
+    // feUser includes everything that has a corresponding child in dbStore
     // or that has any intermediary sections used to edit and add to them.
     authInfo: ["authInfo"],
     subscriptionInfo: ["subscriptionInfo"],

@@ -47,7 +47,7 @@ export type FeStoreNameByType<SN extends FeStoreType = "all"> =
 const feStoreNameArrs = {
   ...indexStoreNames,
   tableRowDbSource: tableRowDbSources,
-  all: getChildNames("feStore"),
+  all: getChildNames("feUser"),
 } as const;
 type StoreNameArrs = typeof feStoreNameArrs;
 

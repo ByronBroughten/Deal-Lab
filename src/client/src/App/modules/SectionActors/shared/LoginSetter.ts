@@ -14,9 +14,9 @@ export class LoginSetter extends SetterSectionsBase {
   }
   setLogin({ data, headers }: QueryRes<"getUserData">) {
     this.setUserInfoToken(headers);
-    const feStore = this.setterSections.oneAndOnly("feStore");
-    const solverStore = SolverSection.init(feStore.get.getterSectionProps);
-    solverStore.loadSelfSectionPackAndSolve(data.feStore[0]);
+    const feUser = this.setterSections.oneAndOnly("feUser");
+    const solverStore = SolverSection.init(feUser.get.getterSectionProps);
+    solverStore.loadSelfSectionPackAndSolve(data.feUser[0]);
     const authInfo = solverStore.onlyChild("authInfo");
     authInfo.varb("authStatus").directUpdateAndSolve("user");
     this.setterSections.setSections();

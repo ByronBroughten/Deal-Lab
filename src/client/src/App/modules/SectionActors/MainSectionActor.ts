@@ -50,7 +50,7 @@ export class MainSectionActor<
   }
   get table(): SetterTable {
     const { main } = this.getterSections;
-    const feStore = main.onlyChild("feStore");
+    const feUser = main.onlyChild("feUser");
     const { feTableIndexStoreName } = this.get.meta;
 
     // setterTable is creating new initialSections
@@ -58,7 +58,7 @@ export class MainSectionActor<
     // as setterSectionProps
     return new SetterTable({
       ...this.sectionActorBaseProps,
-      ...feStore.onlyChild(feTableIndexStoreName).feInfo,
+      ...feUser.onlyChild(feTableIndexStoreName).feInfo,
     });
   }
   removeSelf(): void {

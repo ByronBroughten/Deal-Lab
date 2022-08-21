@@ -31,7 +31,7 @@ export const baseSections = {
   main: baseSection({
     _typeUniformity: "string",
   } as const),
-  feStore: baseSection({
+  feUser: baseSection({
     _typeUniformity: "string",
   } as const),
   dbStore: baseSection({

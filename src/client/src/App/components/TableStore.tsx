@@ -18,7 +18,7 @@ interface Props {
 export function TableStore({ feId }: Props) {
   const table = useTableActor(feId);
   if (!isFeStoreTableName(table.get.selfChildName)) {
-    throw new Error("TableStore is only fore feStore tables");
+    throw new Error("TableStore is only for feUser tables");
   }
   const { filteredRows } = table;
   const { isAtLeastOne, areNone } = useHowMany(filteredRows);

@@ -8,26 +8,26 @@ import {
 } from "./makeDefaultPublicUserInfo";
 import { makeDefaultFeStoreTables } from "./makeMainTablePackMakers";
 
-export function makeDefaultFeStorePack(): SectionPack<"feStore"> {
-  const feStore = PackBuilderSection.initAsOmniChild("feStore");
-  feStore.loadChild({
+export function makeDefaultFeStorePack(): SectionPack<"feUser"> {
+  const feUser = PackBuilderSection.initAsOmniChild("feUser");
+  feUser.loadChild({
     childName: "userInfo",
     sectionPack: makeDefaultPublicUserInfo(),
   });
-  feStore.loadChild({
+  feUser.loadChild({
     childName: "authInfo",
     sectionPack: makeDefaultAuthInfo(),
   });
-  feStore.loadChild({
+  feUser.loadChild({
     childName: "subscriptionInfo",
     sectionPack: makeDefaultSubscriptionInfo(),
   });
   const defaultTablePacks = makeDefaultFeStoreTables();
   for (const tableName of feStoreTableNames) {
-    feStore.loadChild({
+    feUser.loadChild({
       childName: tableName,
       sectionPack: defaultTablePacks[tableName](),
     });
   }
-  return feStore.makeSectionPack();
+  return feUser.makeSectionPack();
 }

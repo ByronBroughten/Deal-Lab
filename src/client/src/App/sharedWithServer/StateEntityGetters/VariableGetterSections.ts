@@ -28,11 +28,11 @@ export class VariableGetterSections extends GetterSectionsBase {
   }
   private userVarbOptions(): VariableOption[] {
     const { main } = this.getterSections;
-    const feStore = main.onlyChild("feStore");
+    const feUser = main.onlyChild("feUser");
     const childName = "userVarbListMain";
-    const varbListFeIds = feStore.childFeIds(childName);
+    const varbListFeIds = feUser.childFeIds(childName);
     return varbListFeIds.reduce((options, feId) => {
-      const listSection = feStore.child({ childName, feId });
+      const listSection = feUser.child({ childName, feId });
       const userVarbItems = listSection.children("userVarbItem");
       const collectionName = listSection.value("displayName", "string");
       return options.concat(
@@ -66,8 +66,8 @@ export class VariableGetterSections extends GetterSectionsBase {
       const names = totalNames[sectionName];
       const { collectionName, feUserStoreName } = names;
       const { main } = this.getterSections;
-      const feStore = main.onlyChild("feStore");
-      const lists = feStore.children(feUserStoreName);
+      const feUser = main.onlyChild("feUser");
+      const lists = feUser.children(feUserStoreName);
       for (const list of lists) {
         const displayName = list.value("displayName", "string");
         if (sectionName === "ongoingList") {

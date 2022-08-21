@@ -43,7 +43,7 @@ export function makeRelSections() {
       _typeUniformity: relVarb("string"),
     }),
     main: relSection("main", { _typeUniformity: relVarb("string") }),
-    feStore: relSection("feStore", { _typeUniformity: relVarb("string") }),
+    feUser: relSection("FE User", { _typeUniformity: relVarb("string") }),
     dbStore: relSection("dbStore", { _typeUniformity: relVarb("string") }),
     userInfo: relSection(
       "User",

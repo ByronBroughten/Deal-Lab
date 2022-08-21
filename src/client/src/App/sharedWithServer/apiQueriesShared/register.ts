@@ -4,7 +4,7 @@ import { ChildSectionPack } from "../SectionsMeta/childSectionsDerived/ChildSect
 import { zRawSectionPackArr } from "../SectionsMeta/childSectionsDerived/SectionPack";
 import { Arr } from "../utils/Arr";
 
-const feStoreChildNames = sectionsMeta.section("feStore").childNames;
+const feStoreChildNames = sectionsMeta.section("feUser").childNames;
 export const guestAccessNames = Arr.extractStrict(feStoreChildNames, [
   "ongoingListMain",
   "outputListMain",
@@ -14,7 +14,7 @@ export const guestAccessNames = Arr.extractStrict(feStoreChildNames, [
 type GuestAccessName = typeof guestAccessNames[number];
 
 export type GuestAccessSectionPackArrs = {
-  [CN in GuestAccessName]: ChildSectionPack<"feStore", CN>[];
+  [CN in GuestAccessName]: ChildSectionPack<"feUser", CN>[];
 };
 export function areGuestAccessSections(
   value: any

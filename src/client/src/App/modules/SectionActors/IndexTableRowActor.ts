@@ -30,7 +30,7 @@ export class IndexTableRowActor extends SectionActorBase<"tableRow"> {
   private initDbStoreName(): FeStoreNameByType<"tableRowDbSource"> {
     const parentSelfChildName = this.get.parent.selfChildName;
     if (isFeStoreTableName(parentSelfChildName)) {
-      return relChildSections.feStore[parentSelfChildName].tableRowDbSource;
+      return relChildSections.feUser[parentSelfChildName].tableRowDbSource;
     } else throw new Error("This row doesn't have the right parent.");
   }
   get indexQuerier() {

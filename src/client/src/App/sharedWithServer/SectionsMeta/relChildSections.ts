@@ -17,7 +17,7 @@ export const tableRowDbSources = Arr.extractStrict(dbStoreNames, [
 type TableRowDbSource = typeof tableRowDbSources[number];
 
 type GeneralRelChild = {
-  feTableRowStore: ChildSectionNameName<"feStore", "compareTable"> | null;
+  feTableRowStore: ChildSectionNameName<"feUser", "compareTable"> | null;
   tableRowDbSource: TableRowDbSource | null;
 };
 type GenericRelChildren<SN extends SimpleSectionName> = {
@@ -85,7 +85,7 @@ function makeRelChildSections<RCS extends GenericRelChildSections>(
 }
 
 export const feStoreTableNames: ChildSectionNameName<
-  "feStore",
+  "feUser",
   "compareTable"
 >[] = ["propertyMainTable", "loanMainTable", "mgmtMainTable", "dealMainTable"];
 export type FeStoreTableName = typeof feStoreTableNames[number];
@@ -95,7 +95,7 @@ export function isFeStoreTableName(value: any): value is FeStoreTableName {
 
 export const relChildSections = makeRelChildSections({
   ...makeDefaultRelChildSections(),
-  feStore: relChildren("feStore", {
+  feUser: relChildren("feUser", {
     dealMainTable: relChild({
       tableRowDbSource: "dealMain",
     }),

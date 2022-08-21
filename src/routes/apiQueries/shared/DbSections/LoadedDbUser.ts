@@ -135,12 +135,12 @@ export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
     }
   }
   makeLoginUser(): LoginData {
-    const feStore = PackBuilderSection.initAsOmniChild("feStore");
-    feStore.loadSelf(defaultMaker.makeSectionPack("feStore"));
-    for (const feStoreChildName of feStore.get.childNames) {
+    const feUser = PackBuilderSection.initAsOmniChild("feUser");
+    feUser.loadSelf(defaultMaker.makeSectionPack("feUser"));
+    for (const feStoreChildName of feUser.get.childNames) {
       if (isFeStoreTableName(feStoreChildName)) {
-        const table = feStore.onlyChild(feStoreChildName);
-        const { tableRowDbSource } = relChildSections.feStore[feStoreChildName];
+        const table = feUser.onlyChild(feStoreChildName);
+        const { tableRowDbSource } = relChildSections.feUser[feStoreChildName];
         const dbSourceSn = this.sectionsMeta
           .section("dbStore")
           .childType(tableRowDbSource);
@@ -169,7 +169,7 @@ export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
           }
         }
       } else if (dbStoreNameS.is(feStoreChildName)) {
-        feStore.loadChildren({
+        feUser.loadChildren({
           childName: feStoreChildName,
           sectionPacks: this.dbSections.sectionPackArr(feStoreChildName),
         });
@@ -179,12 +179,12 @@ export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
           plan: subscriptionPlan,
           planExp,
         };
-        const subInfo = feStore.onlyChild("subscriptionInfo");
+        const subInfo = feUser.onlyChild("subscriptionInfo");
         subInfo.updater.updateValuesDirectly(subInfoValues);
       }
     }
     return {
-      feStore: [feStore.makeSectionPack()],
+      feUser: [feUser.makeSectionPack()],
     };
   }
   createUserInfoToken(subscriptionValues?: SubscriptionValues) {

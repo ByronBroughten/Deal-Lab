@@ -49,8 +49,8 @@ export type GeneralRelSection = {
   tableIndexName: BaseName | null;
   tableStoreName: BaseName | null;
 
-  feTableIndexStoreName: ChildSectionNameName<"feStore", "compareTable"> | null;
-  feFullIndexStoreName: ChildName<"feStore"> | null;
+  feTableIndexStoreName: ChildSectionNameName<"feUser", "compareTable"> | null;
+  feFullIndexStoreName: ChildName<"feUser"> | null;
   dbIndexStoreName: ChildName<"dbStore"> | null;
   dbArrStoreName: ChildName<"dbStore"> | null;
 };
@@ -58,7 +58,7 @@ export type GeneralRelSection = {
 export type GenericRelSection<SN extends SimpleSectionName> = Merge<
   GeneralRelSection,
   {
-    // feFullIndexStoreName: ChildSectionNameName<"feStore", SN> | null;
+    // feFullIndexStoreName: ChildSectionNameName<"feUser", SN> | null;
     relVarbs: RelVarbs<SN>;
     varbListItem: ChildName<SN> | null;
   }

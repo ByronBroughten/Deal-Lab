@@ -59,28 +59,28 @@ describe(testedRoute, () => {
     //
   });
   it("should add guestAccessSections if they have not yet been added", async () => {
-    const feStore = PackBuilderSection.initAsOmniChild("feStore");
-    feStore.addChild("outputListMain");
-    feStore.addChild("outputListMain");
-    feStore.addChild("userVarbListMain");
-    reqObj = makeReqObj(feStore);
+    const feUser = PackBuilderSection.initAsOmniChild("feUser");
+    feUser.addChild("outputListMain");
+    feUser.addChild("outputListMain");
+    feUser.addChild("userVarbListMain");
+    reqObj = makeReqObj(feUser);
     const { data } = await exec();
 
-    const postFeStore = PackBuilderSection.initAsOmniChild("feStore");
-    postFeStore.loadSelf((data as LoginData).feStore[0]);
+    const postFeStore = PackBuilderSection.initAsOmniChild("feUser");
+    postFeStore.loadSelf((data as LoginData).feUser[0]);
     const postReqObj = makeReqObj(postFeStore);
     expect(reqObj).toEqual(postReqObj);
   });
   it("should not add guestAccessSections if they have already been added", async () => {
-    const feStore = PackBuilderSection.initAsOmniChild("feStore");
-    feStore.addChild("outputListMain");
-    feStore.addChild("outputListMain");
-    feStore.addChild("userVarbListMain");
-    reqObj = makeReqObj(feStore);
+    const feUser = PackBuilderSection.initAsOmniChild("feUser");
+    feUser.addChild("outputListMain");
+    feUser.addChild("outputListMain");
+    feUser.addChild("userVarbListMain");
+    reqObj = makeReqObj(feUser);
     const res1 = await exec();
 
-    feStore.addChild("singleTimeListMain");
-    reqObj = makeReqObj(feStore);
+    feUser.addChild("singleTimeListMain");
+    reqObj = makeReqObj(feUser);
     const res2 = await exec();
 
     expect(changedSection(res1.data)).toEqual(changedSection(res2.data));
@@ -88,18 +88,18 @@ describe(testedRoute, () => {
 });
 
 function changedSection(data: LoginData) {
-  return data.feStore[0].rawSections.singleTimeList;
+  return data.feUser[0].rawSections.singleTimeList;
 }
 
 function makeGetUserDataReqObj(): QueryReq<"getUserData"> {
-  const feStore = PackBuilderSection.initAsOmniChild("feStore");
-  return makeReqObj(feStore);
+  const feUser = PackBuilderSection.initAsOmniChild("feUser");
+  return makeReqObj(feUser);
 }
 
 function makeReqObj(
-  feStore: PackBuilderSection<"feStore">
+  feUser: PackBuilderSection<"feUser">
 ): QueryReq<"getUserData"> {
-  const guestAccessSections = feStore.maker.makeChildTypePackArrs(
+  const guestAccessSections = feUser.maker.makeChildTypePackArrs(
     guestAccessNames
   ) as GuestAccessSectionPackArrs;
   return { body: { guestAccessSections } };

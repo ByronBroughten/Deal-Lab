@@ -10,7 +10,7 @@ export function makeDefaultMainPack(): SectionPack<"main"> {
     sectionPack: makeDefaultDealPack(),
   });
   main.loadChild({
-    childName: "feStore",
+    childName: "feUser",
     sectionPack: makeDefaultFeStorePack(),
   });
   const childNames = ["login", "register"] as const;

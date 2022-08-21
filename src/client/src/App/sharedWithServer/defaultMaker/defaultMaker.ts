@@ -26,5 +26,5 @@ export const defaultMaker = new DefaultSectionPackMaker({
   loan: makeDefaultLoanPack,
   deal: makeDefaultDealPack,
   main: makeDefaultMainPack,
-  feStore: makeDefaultFeStorePack,
+  feUser: makeDefaultFeStorePack,
 } as const);

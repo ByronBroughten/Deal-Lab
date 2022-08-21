@@ -20,7 +20,7 @@ ReactGA.send("pageview");
 
 export function Main() {
   const main = useSetterSection();
-  const feStore = main.get.onlyChild("feStore");
+  const feUser = main.get.onlyChild("feUser");
   const { logout } = useAuthAndLogin();
   useSubscriptionState();
   const activeDealId = main.get.onlyChild("deal").feId;
@@ -32,7 +32,7 @@ export function Main() {
         {/* <Route
           path="/deals"
           element={
-            <TableStore feId={feStore.onlyChild("dealMainTable").feId} />
+            <TableStore feId={feUser.onlyChild("dealMainTable").feId} />
           }
         /> */}
         {getSuperTokensRoutesForReactRouterDom(reactRouterDom)}
