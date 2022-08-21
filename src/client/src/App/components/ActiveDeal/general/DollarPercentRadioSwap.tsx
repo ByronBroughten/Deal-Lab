@@ -1,5 +1,4 @@
 import { FormControl, FormControlLabel, RadioGroup } from "@material-ui/core";
-import styled from "styled-components";
 import { FeSectionInfo } from "../../../sharedWithServer/SectionsMeta/Info";
 import { useHandleChange } from "../../../sharedWithServer/stateClassHooks/useHandleChange";
 import { useSetterSection } from "../../../sharedWithServer/stateClassHooks/useSetterSection";
@@ -42,7 +41,9 @@ export default function DollarPercentRadioSwap({
   }
   const radio = radios[switchValue];
   return (
-    <Styled className={`DualPercentRadioSwap-root ${className ?? ""}`}>
+    <DualInputsRadioSwap
+      className={`DualPercentRadioSwap-root ${className ?? ""}`}
+    >
       <FormControl component="fieldset" className="radio-part">
         <RadioGroup>
           <FormControlLabel
@@ -65,9 +66,9 @@ export default function DollarPercentRadioSwap({
       </FormControl>
       <FormControl component="fieldset" className="labeled-input-group-part">
         {radio === "%" && (
-          <div className="swappable-editors">
+          <div className="RadioSwap-editorDiv">
             <NumObjEntityEditor
-              className="percent-down"
+              className="RadioSwap-percentEditor"
               label={title}
               feVarbInfo={percentVarb.feVarbInfo}
               endAdornment={`${percentAdornment} ${
@@ -79,9 +80,9 @@ export default function DollarPercentRadioSwap({
           </div>
         )}
         {radio === "$" && (
-          <div className="swappable-editors">
+          <div className="RadioSwap-editorDiv">
             <NumObjEntityEditor
-              className="dollars-down"
+              className="RadioSwap-dollarsEditor"
               label={title}
               feVarbInfo={dollarsVarb.feVarbInfo}
               endAdornment={`${
@@ -93,7 +94,7 @@ export default function DollarPercentRadioSwap({
           </div>
         )}
       </FormControl>
-    </Styled>
+    </DualInputsRadioSwap>
   );
 }
 
@@ -102,5 +103,3 @@ type PercentOrDollars = typeof percentOrDollars[number];
 function isPercentOrDollars(value: any): value is PercentOrDollars {
   return percentOrDollars.includes(value);
 }
-
-const Styled = styled(DualInputsRadioSwap)``;

@@ -115,9 +115,8 @@ export class MainSectionActor<
 
     let headers: UserInfoTokenProp | null = null;
     this.setter.tryAndRevertIfFail(async () => {
-      const res = await this.querier.add(
-        this.packMaker.makeSectionPack() as SectionPack<any>
-      );
+      const sectionPack = this.packMaker.makeSectionPack();
+      const res = await this.querier.add(sectionPack as SectionPack<any>);
       headers = res.headers;
     });
     if (headers) auth.setTokenFromHeaders(headers);

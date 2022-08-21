@@ -54,10 +54,14 @@ export function VarbListTable({
               </th>
             </tr>
           </thead>
-          <tbody>{children}</tbody>
-          <td colSpan={4}>
-            <AddItemBtn onClick={addItem} className="yesTable" />
-          </td>
+          <tbody>
+            {children}
+            <tr>
+              <td colSpan={4}>
+                <AddItemBtn onClick={addItem} className="yesTable" />
+              </td>
+            </tr>
+          </tbody>
         </table>
       )}
     </Styled>

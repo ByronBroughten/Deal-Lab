@@ -1,32 +1,24 @@
 import styled from "styled-components";
 import theme from "../../theme/Theme";
 
-const DualInputsRadioSwap = styled.div.attrs(({ className, ...rest }) => ({
-  className: "dual-inputs-radio-swap " + className,
-  ...rest,
-}))`
+const DualInputsRadioSwap = styled.div`
   display: flex;
   align-items: flex-end;
 
-  // Radio Stuff
-  /* .PrivateSwitchBase-root-1 {
-    padding: 0;
+  MuiFormControl-root {
+    display: flex;
+    flex: 1;
   }
-  .PrivateSwitchBase-input-4 {
-    height: 4px;
-    width: 4px;
-    padding: 0;
+  .RadioSwap-editorDiv {
+    display: flex;
+    flex: 1;
   }
-  .PrivateRadioButtonIcon-root-5 {
-    height: 4px;
-    width: 4px;
-    padding: 0;
-  } */
-
-  .MuiInputBase-root {
+  .NumObjEditor-root {
     display: flex;
   }
+
   .MuiFormGroup-root {
+    display: flex;
   }
 
   .MuiSvgIcon-root {

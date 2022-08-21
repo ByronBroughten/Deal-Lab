@@ -89,7 +89,7 @@ const Styled = styled(BasicSectionInfo)`
 
   .BasicLoanInfo-radioSwap {
     .MuiInputBase-root {
-      width: 158px;
+      min-width: 158px;
     }
   }
 
