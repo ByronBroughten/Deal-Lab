@@ -53,7 +53,7 @@ function useGetAuthStateIfSessionExists() {
         try {
           await feUser.loadUserData();
         } catch (ex) {
-          signOut();
+          await signOut();
         }
       } else if (pathname.includes(constants.auth.successUrlEnd)) {
         navigate("/");
@@ -84,9 +84,6 @@ function useStateToDefault() {
     main.resetToDefault();
   };
 }
-// Ok. Now I'm basically going to do this
-// for when a pro subscription expires.
-// Will "getUserData" work?
 
 export function useAuthAndLogin() {
   useGetAuthStateIfSessionExists();

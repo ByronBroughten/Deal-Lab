@@ -11,7 +11,7 @@ import { constants } from "./App/Constants";
 import {
   useAuthAndLogin,
   useSubscriptionState,
-} from "./App/modules/customHooks/useAuthAndLogin";
+} from "./App/modules/customHooks/useAuthAndUserData";
 import { useSetterSection } from "./App/sharedWithServer/stateClassHooks/useSetterSection";
 import theme from "./App/theme/Theme";
 
@@ -53,9 +53,6 @@ export function Main() {
         {/* <Route path="/" element={<Navigate replace to="/analyzer" />} /> */}
         <Route path="*" element={<NotFound />} />
       </Routes>
-      {/* <div className="DealStats-appInfo">
-        Ultimate Deal Analyzer LLC | support@propertyanalyzer.app
-      </div> */}
     </Styled>
   );
 }

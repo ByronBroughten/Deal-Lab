@@ -1,4 +1,5 @@
 import Session from "supertokens-auth-react/recipe/session";
+import { isEmailVerified } from "supertokens-auth-react/recipe/thirdpartyemailpassword";
 import { constants } from "../../Constants";
 
 const userAuthKey = constants.tokenKey.apiUserAuth;
@@ -21,7 +22,10 @@ export const auth = {
     return !!token;
   },
   async sessionExists(): Promise<boolean> {
-    return Session.doesSessionExist();
+    if (await Session.doesSessionExist()) {
+      const { isVerified } = await isEmailVerified();
+      return isVerified;
+    } else return false;
   },
   getAuthId() {
     return Session.getUserId();

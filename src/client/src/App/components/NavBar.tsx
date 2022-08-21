@@ -56,7 +56,7 @@ export default function NavBar(props: NavBarProps) {
               </Link>
             </>
           )}
-          {!isGuest && isBasic && (
+          {!isGuest && isBasic && !constants.isBeta && false && (
             <NavDropDown
               className="NavBar-getProBtn"
               btnText={

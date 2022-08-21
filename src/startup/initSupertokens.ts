@@ -10,7 +10,7 @@ import {
   userPrepS,
 } from "../routes/apiQueries/shared/DbSections/LoadedDbUser/userPrepS";
 
-export function useSupertokensInit() {
+export function initSupertokens() {
   supertokens.init({
     framework: "express",
     supertokens: {
@@ -21,16 +21,13 @@ export function useSupertokensInit() {
     recipeList: [
       ThirdPartyEmailPassword.init({
         signUpFeature: {
-          formFields: [
-            {
-              id: "userName",
-            },
-          ],
+          formFields: [{ id: "userName" }],
         },
         override: {
           apis: (original) => {
             return {
               ...original,
+
               emailPasswordSignInPOST: async function (input) {
                 if (!original.emailPasswordSignInPOST) {
                   throw Error("No original.emailPasswordSingInPOST");

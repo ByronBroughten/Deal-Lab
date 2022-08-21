@@ -5,6 +5,8 @@ type StripePrice = {
   product: "proPlan";
 };
 
+const appUrl = "https://www.ultimatepropertyanalyzer.com";
+
 const envConstants = {
   development: {
     environment: "development",
@@ -23,8 +25,8 @@ const envConstants = {
   production: {
     environment: "production",
     appName: "Ultimate Property Analyzer",
-    apiUrlBase: "https://www.propertyanalyzer.app",
-    clientUrlBase: "https://www.propertyanalyzer.app",
+    apiUrlBase: appUrl,
+    clientUrlBase: appUrl,
     stripePrices: [
       {
         priceId: "price_1LTuDKBcSOBChcCBqPTRlPCI",
@@ -80,7 +82,7 @@ export const config = {
     "getSection",
     "deleteSection",
     "replaceSectionArr",
-    "getProPaymentLink",
+    "getProPaymentUrl",
     "getUserData",
     "getSubscriptionData",
     "makeSession",

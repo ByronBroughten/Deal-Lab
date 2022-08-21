@@ -100,10 +100,10 @@ function makeApiQueries(): ApiQueries {
         return validateDbArrQueryNameRes;
       },
     },
-    getProPaymentLink: {
+    getProPaymentUrl: {
       doingWhat: "going to the pro upgrade payment page",
-      validateRes(res: AxiosResponse<unknown>): QueryRes<"getProPaymentLink"> {
-        const { data } = res as QueryRes<"getProPaymentLink">;
+      validateRes(res: AxiosResponse<unknown>): QueryRes<"getProPaymentUrl"> {
+        const { data } = res as QueryRes<"getProPaymentUrl">;
         if (Obj.isObjToAny(data)) {
           const { sessionUrl } = data;
           if (typeof sessionUrl === "string") return makeRes({ sessionUrl });
@@ -150,6 +150,7 @@ function makeApiQuery<QN extends ApiQueryName>({
 }
 
 async function _testApiQueries() {
-  const _test: QueryRes<"getProPaymentLink"> =
-    await apiQueries.getProPaymentLink({ body: { priceId: "test" } });
+  const _test: QueryRes<"getProPaymentUrl"> = await apiQueries.getProPaymentUrl(
+    { body: { priceId: "test" } }
+  );
 }

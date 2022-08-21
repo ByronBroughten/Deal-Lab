@@ -54,13 +54,14 @@ export class FeUserActor extends SectionActorBase<"feUser"> {
     const subInfo = this.setter.onlyChild("subscriptionInfo");
     subInfo.updateValues(data);
   }
-  async loadUserData() {
+  async loadUserData(): Promise<boolean> {
     const res = await this.apiQueries.getUserData(
       makeReq({
         guestAccessSections: this.guestAccessSectionPacks,
       })
     );
     this.loginSetter.setLogin(res);
+    return true;
   }
   get subscriptionValues(): SubscriptionValues {
     const subInfo = this.get.onlyChild("subscriptionInfo");

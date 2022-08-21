@@ -15,12 +15,12 @@ import {
   makeSessionGetCookies,
 } from "./test/testDbUser";
 
-const testedRoute = apiQueriesShared.getProPaymentLink.pathRoute;
+const testedRoute = apiQueriesShared.getProPaymentUrl.pathRoute;
 describe(testedRoute, () => {
   let server: Server;
   let dbUser: LoadedDbUser;
   let cookies: string[];
-  let req: QueryReq<"getProPaymentLink">;
+  let req: QueryReq<"getProPaymentUrl">;
 
   beforeEach(async () => {
     server = runApp();
@@ -46,7 +46,7 @@ describe(testedRoute, () => {
     const res = await exec();
     expect(res.status).toBe(200);
 
-    const { sessionUrl } = res.data as QueryRes<"getProPaymentLink">["data"];
+    const { sessionUrl } = res.data as QueryRes<"getProPaymentUrl">["data"];
     expect(typeof sessionUrl === "string").toBeTruthy();
   });
   it("should return 401 if client is not logged in", async () => {
@@ -56,7 +56,7 @@ describe(testedRoute, () => {
   });
 });
 
-function makeReq(): QueryReq<"getProPaymentLink"> {
+function makeReq(): QueryReq<"getProPaymentUrl"> {
   const priceId = constants.stripePrices[0].priceId;
   return {
     body: { priceId },

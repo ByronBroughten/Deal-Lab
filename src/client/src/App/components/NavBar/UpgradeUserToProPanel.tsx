@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
 async function goToPaymentPage(): Promise<void> {
   const sub = constants.stripePrices.find((sub) => sub.product === "proPlan");
   if (!sub) throw new Error(`No subscription with proPlan product`);
-  const res = await apiQueries.getProPaymentLink(
+  const res = await apiQueries.getProPaymentUrl(
     makeReq({ priceId: sub.priceId })
   );
   const { sessionUrl } = res.data;

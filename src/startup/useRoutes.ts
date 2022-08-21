@@ -4,7 +4,7 @@ import supertokens from "supertokens-node";
 import { errorHandler, middleware } from "supertokens-node/framework/express";
 import { constants } from "../client/src/App/Constants";
 import { apiQueriesServer } from "../routes/apiQueries";
-import { useSupertokensInit } from "./useSupertokensInit";
+import { initSupertokens } from "./initSupertokens";
 
 export function useRoutes(app: express.Application) {
   // app.use(
@@ -24,14 +24,13 @@ export function useRoutes(app: express.Application) {
       express.json()(req, res, next);
     }
   });
-  useSupertokensInit();
+  initSupertokens();
   app.use(
     cors({
       origin: [
         constants.clientUrlBase,
         "http://localhost:3000",
         "https://ultimate-property-analyzer.herokuapp.com",
-        "https://propertyanalyzer.app",
       ],
       allowedHeaders: [
         constants.tokenKey.apiUserAuth,
