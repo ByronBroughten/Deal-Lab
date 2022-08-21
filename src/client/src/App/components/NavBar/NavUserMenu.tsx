@@ -2,6 +2,7 @@ import { Button } from "@material-ui/core";
 import { rem } from "polished";
 import { AiOutlineMenu } from "react-icons/ai";
 import styled, { css } from "styled-components";
+import { constants } from "../../Constants";
 import useOnOutsideClickRef from "../../modules/customHooks/useOnOutsideClickRef";
 import useToggleView from "../../modules/customHooks/useToggleView";
 import { auth } from "../../modules/services/authService";
@@ -98,6 +99,7 @@ const Styled = styled.div<{ $isFullPlan: boolean }>`
   .NavUserMenu-navBtn {
     ${({ $isFullPlan }) =>
       $isFullPlan &&
+      !constants.isBeta &&
       css`
         background-color: ${theme.property.main};
       `}

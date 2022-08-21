@@ -45,6 +45,7 @@ const apiPathFull = `${env.apiUrlBase}${apiPathBit}`;
 
 export const config = {
   ...env,
+  isBeta: false,
   apiPathBit,
   apiPathFull,
   plans: {

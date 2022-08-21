@@ -98,13 +98,14 @@ describe(testedRoute, () => {
     await exec();
     await testStatus(500);
   });
-  it("should return 400 if there are already two entries", async () => {
-    await exec();
-    req = makeAddSectionReq();
-    await exec();
-    req = makeAddSectionReq();
-    await testStatus(400);
-  });
+  // it("should return 400 if there are already two entries", async () => {
+  // isBeta
+  //   await exec();
+  //   req = makeAddSectionReq();
+  //   await exec();
+  //   req = makeAddSectionReq();
+  //   await testStatus(400);
+  // });
   it("should return 200 if there are two entries and user is pro", async () => {
     await exec();
     req = makeAddSectionReq();

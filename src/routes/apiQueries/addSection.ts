@@ -59,6 +59,9 @@ async function validateStorageLimit({
   dbStoreName,
   userId,
 }: ValidateSubscriptionProps): Promise<boolean> {
+  if (constants.isBeta) {
+    return true;
+  }
   switch (subscriptionPlan) {
     case "basicPlan": {
       const { basicStorageLimit } = constants;

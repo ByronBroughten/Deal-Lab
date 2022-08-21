@@ -4,6 +4,7 @@ import React from "react";
 import { BsArrowUpCircle, BsFillHouseDoorFill } from "react-icons/bs";
 import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
+import { constants } from "../Constants";
 import { useFeUser } from "../modules/sectionActorHooks/useFeUser";
 import theme from "../theme/Theme";
 import NavBtn from "./NavBar/NavBtn";
@@ -23,6 +24,9 @@ export default function NavBar(props: NavBarProps) {
   const { pathname } = useLocation();
   const showSignin = isGuest && !pathname.includes("/auth");
 
+  const appTitle =
+    "Ultimate Property Analyzer" + (constants.isBeta ? " BETA" : "");
+
   return (
     <Styled className="NavBar-root">
       <Toolbar disableGutters={true}>
@@ -30,9 +34,7 @@ export default function NavBar(props: NavBarProps) {
           <Link className="NavBar-navBtnLink" to="/">
             <NavBtn className="NavBar-brandBtn">
               <BsFillHouseDoorFill className="NavBar-brandIcon" />
-              <span className="NavBar-brandName">
-                Ultimate Property Analyzer
-              </span>
+              <span className="NavBar-brandName">{appTitle}</span>
             </NavBtn>
           </Link>
           {/* <NavBtn
@@ -138,7 +140,7 @@ const Styled = styled(AppBar)`
   }
   .NavBar-brandBtn {
     height: 100%;
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     font-weight: 700;
     color: ${theme.dark};
     :hover {
