@@ -100,6 +100,7 @@ const Styled = styled.div<{ $isFullPlan: boolean }>`
     ${({ $isFullPlan }) =>
       $isFullPlan &&
       !constants.isBeta &&
+      false &&
       css`
         background-color: ${theme.property.main};
       `}
