@@ -5,14 +5,15 @@ type StripePrice = {
   product: "proPlan";
 };
 
-const appUrl = "https://www.ultimatepropertyanalyzer.com";
+const clientProdUrl = "https://www.ultimatepropertyanalyzer.com";
+const clientDevUrl = "http://localhost:3000";
 
 const envConstants = {
   development: {
     environment: "development",
     appName: "Ultimate Property Analyzer — Development",
     apiUrlBase: "http://localhost:5000",
-    clientUrlBase: "http://localhost:3000",
+    clientUrlBase: clientDevUrl,
     stripePrices: [
       {
         priceId: "price_1LTuD1BcSOBChcCBWNRJdonV",
@@ -25,8 +26,8 @@ const envConstants = {
   production: {
     environment: "production",
     appName: "Ultimate Property Analyzer",
-    apiUrlBase: appUrl,
-    clientUrlBase: appUrl,
+    apiUrlBase: clientProdUrl,
+    clientUrlBase: clientProdUrl,
     stripePrices: [
       {
         priceId: "price_1LTuDKBcSOBChcCBqPTRlPCI",
@@ -45,14 +46,17 @@ const env = envConstants[envName];
 const apiPathBit = "/api";
 const apiPathFull = `${env.apiUrlBase}${apiPathBit}`;
 
+const isBeta = false;
 export const config = {
   ...env,
-  isBeta: false,
+  clientProdUrl,
+  clientDevUrl,
+  isBeta,
   apiPathBit,
   apiPathFull,
   plans: {
     basic: {
-      sectionSaveLimit: 2,
+      sectionSaveLimit: isBeta ? 1000 : 2,
       canUseCompareTable: false,
     },
     pro: {

@@ -31,6 +31,9 @@ export function useRoutes(app: express.Application) {
         constants.clientUrlBase,
         "http://localhost:3000",
         "https://ultimate-property-analyzer.herokuapp.com",
+        constants.clientProdUrl,
+        constants.clientDevUrl,
+        // "https://www.ultimatepropertyanalyzer.com"
       ],
       allowedHeaders: [
         constants.tokenKey.apiUserAuth,

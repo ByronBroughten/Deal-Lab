@@ -12,6 +12,14 @@ AppRegistry.runApplication("App", {
 // Make a video of the present functionality without
 // the BETA sign
 
+// Make a Beta feedback panel
+// - Email address
+// - Discord
+// - Direct message box?
+
+// Disable getUserData on the backend unless
+// the email has been verified
+
 // Try beta testing for one month.
 // - Make all the features (the one) free
 // - Add a "Beta flag"
