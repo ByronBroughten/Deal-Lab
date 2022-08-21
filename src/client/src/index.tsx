@@ -7,24 +7,21 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-
-// alright. if the user isn't found in the database
-// I can make it delete their auth self.
-// That seems risky, though.
-
-// There is a chance that their auth self will be deleted
-// when really it was just a server error that couldn't
-// find them.
-// Their auth-self isn't a big deal, though.
-// Their db self is where all the data is.
-
 // I think I want to go with ultimatepropertyanalyzer.com
 
-// For now, I can slap "Beta" on there and ask people
-// to use it without charge, before the rest of the functionality is implemented.
+// - Decouple table rows from load dropdown rows
+// - the table willhave children that are
+//   empty rows which can be compared.
 
-// I would have to remove all the "pro" functionality, or
-// add a config variable for switching from beta to paid.
+// Make a video of the present functionality without
+// the BETA sign
+
+// Try beta testing for one month.
+// - Make all the features (the one) free
+// - Add a "Beta flag"
+// - Make a large, "Feedback" button that shows email and
+//   discord
+// - Try adding the other four things during beta.
 
 // For it to truly be an ultimate property analyzer, I need 4 more things:
 // 1. Bring back the custom variables/variable lists

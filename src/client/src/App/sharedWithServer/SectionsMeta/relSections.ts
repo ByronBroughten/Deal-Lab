@@ -32,6 +32,8 @@ function relSectionsFilter<RS extends GenericRelSections>(relSections: RS): RS {
 export function makeRelSections() {
   return relSectionsFilter({
     root: relSection("Root", { _typeUniformity: relVarb("string") }),
+    proxy: relSection("Proxy", { _typeUniformity: relVarb("string") }),
+    displayName: relSection("DisplayName", { displayName: relVarb("string") }),
     omniParent: relSection("Parent of all", {
       _typeUniformity: relVarb("string"),
     }),
@@ -84,7 +86,7 @@ export function makeRelSections() {
       userName: relVarb("string", { displayName: "Name" }),
       password: relVarb("string", { displayName: "Password" }),
     }),
-    table: relSection("Table", { titleFilter: relVarb("string") }),
+    compareTable: relSection("Table", { titleFilter: relVarb("string") }),
     tableRow: relSection("Row", {
       displayName: relVarb("string"),
       compareToggle: relVarb("boolean"),

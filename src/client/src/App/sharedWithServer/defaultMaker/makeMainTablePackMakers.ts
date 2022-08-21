@@ -6,7 +6,7 @@ import { Obj } from "../utils/Obj";
 import { outputNames } from "./makeDefaultOutputList";
 
 type TablePackMakers = {
-  [CN in FeStoreTableName]: () => SectionPack<"table">;
+  [CN in FeStoreTableName]: () => SectionPack<"compareTable">;
 };
 export function makeDefaultFeStoreTables(): TablePackMakers {
   const columnVarbnames = {
@@ -34,9 +34,9 @@ export function makeDefaultFeStoreTables(): TablePackMakers {
   } as const;
 
   return Obj.keys(columnVarbnames).reduce((packMakers, tableName) => {
-    packMakers[tableName] = (): SectionPack<"table"> => {
+    packMakers[tableName] = (): SectionPack<"compareTable"> => {
       const parent = PackBuilderSection.initAsOmniParent();
-      const table = parent.addAndGetChild("table");
+      const table = parent.addAndGetChild("compareTable");
       const { sectionName, varbNames } = columnVarbnames[tableName];
       for (const varbName of varbNames) {
         table.addChild("column", {

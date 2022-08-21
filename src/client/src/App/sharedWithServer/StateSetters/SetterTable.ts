@@ -7,12 +7,12 @@ import { SetterSectionBase } from "./SetterBases/SetterSectionBase";
 import { SetterSection } from "./SetterSection";
 import { SetterTableRow } from "./SetterTableRow";
 
-export class SetterTable extends SetterSectionBase<"table"> {
+export class SetterTable extends SetterSectionBase<"compareTable"> {
   setter = new SetterSection(this.setterSectionProps);
-  get get(): GetterSection<"table"> {
+  get get(): GetterSection<"compareTable"> {
     return this.setter.get;
   }
-  get updater(): UpdaterSection<"table"> {
+  get updater(): UpdaterSection<"compareTable"> {
     return new UpdaterSection(this.setterSectionProps);
   }
   column(feId: string): GetterSection<"column"> {

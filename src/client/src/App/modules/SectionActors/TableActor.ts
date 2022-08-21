@@ -22,19 +22,19 @@ class GetterColumn extends GetterSection<"column"> {
 }
 
 interface TableActorProps
-  extends StrictOmit<SectionActorBaseProps<"table">, "sectionName"> {
+  extends StrictOmit<SectionActorBaseProps<"compareTable">, "sectionName"> {
   sendTable: () => void;
 }
-export class TableActor extends SectionActorBase<"table"> {
+export class TableActor extends SectionActorBase<"compareTable"> {
   sendTable: () => void;
   constructor({ sendTable, ...rest }: TableActorProps) {
     super({
       ...rest,
-      sectionName: "table",
+      sectionName: "compareTable",
     });
     this.sendTable = sendTable;
   }
-  get get(): GetterSection<"table"> {
+  get get(): GetterSection<"compareTable"> {
     return new GetterSection(this.sectionActorBaseProps);
   }
   get tableState(): SetterTable {

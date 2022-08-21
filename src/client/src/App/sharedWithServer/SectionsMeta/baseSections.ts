@@ -37,9 +37,18 @@ export const baseSections = {
   dbStore: baseSection({
     _typeUniformity: "string",
   } as const),
+  proxy: baseSection({
+    _typeUniformity: "string",
+  } as const),
+  displayName: baseSection({
+    displayName: "string",
+  }),
+  // displayNameList: baseSection({
+  //   _typeUniformity: "string"
+  // }),
   omniParent: baseSectionS.container,
   // maybe rename to compareTable and compareTableRow
-  table: baseSection({ titleFilter: "string" } as const),
+  compareTable: baseSection({ titleFilter: "string" } as const),
   tableRow: baseSection({
     displayName: "string",
     compareToggle: "boolean",
@@ -228,7 +237,6 @@ export const baseSections = {
   stripeInfoPrivate: baseSection({
     customerId: "string",
   } as const),
-
   userInfoPrivate: baseSection({
     ...baseVarbs("string", ["encryptedPassword", "emailAsSubmitted"] as const),
     guestSectionsAreLoaded: "boolean",

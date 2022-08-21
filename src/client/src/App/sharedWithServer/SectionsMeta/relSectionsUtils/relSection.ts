@@ -49,7 +49,7 @@ export type GeneralRelSection = {
   tableIndexName: BaseName | null;
   tableStoreName: BaseName | null;
 
-  feTableIndexStoreName: ChildSectionNameName<"feStore", "table"> | null;
+  feTableIndexStoreName: ChildSectionNameName<"feStore", "compareTable"> | null;
   feFullIndexStoreName: ChildName<"feStore"> | null;
   dbIndexStoreName: ChildName<"dbStore"> | null;
   dbArrStoreName: ChildName<"dbStore"> | null;
