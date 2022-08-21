@@ -30,11 +30,11 @@ export function makeDefaultFeUserPack(): SectionPack<"feUser"> {
     feUser.addChild(listName);
   }
 
-  const defaultTablePacks = makeDefaultFeUserTables();
+  const defaultTableMakers = makeDefaultFeUserTables();
   for (const tableName of feStoreTableNames) {
     feUser.loadChild({
       childName: tableName,
-      sectionPack: defaultTablePacks[tableName](),
+      sectionPack: defaultTableMakers[tableName](),
     });
   }
   return feUser.makeSectionPack();

@@ -16,11 +16,7 @@ export class GetterList<SN extends SectionName> extends GetterListBase<SN> {
     return this.sectionsShare.sections.rawSectionList(this.sectionName);
   }
   get oneAndOnly(): GetterSection<SN> {
-    if (this.stateList.length !== 1) {
-      throw new Error(
-        `There is not exactly one section with sectionName ${this.sectionName}.`
-      );
-    }
+    this.exactlyOneOrThrow(this.stateList, "all");
     return this.last;
   }
   private get getterSectionArr() {

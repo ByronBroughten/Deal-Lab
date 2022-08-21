@@ -136,9 +136,8 @@ const Styled = styled.div<{
     ${ccs.mainColorSection("property")};
     border-top-left-radius: ${theme.br1};
     border-top-right-radius: ${theme.br1};
-
     box-shadow: ${theme.boxShadow1};
-    height: 1rem;
+    margin-bottom: ${theme.s3};
   }
   .UnitList-totalText {
     font-size: ${rem("15px")};

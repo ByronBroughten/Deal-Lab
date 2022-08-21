@@ -40,11 +40,12 @@ AppRegistry.runApplication("App", {
 //    - You will want to borrow from the stripe webhook
 
 // 2. Think about fixing the css register bug
-// - I'd need to implement a way to delete a dev user.
-// - I might add a route, "deleteUser", that only works in dev mode
-//   It would send the logged-in user's email and totally delete them
+// - A session is created after register but before email verification
+// - There is a post-email-verification feature that I could use
+//   to create the new user
+
 // - Think about the race condition on the front-end for someone starting
-//   a subscription. This might not even be a problem, though. Try it out.
+//   a subscription. This might notbe a problem.
 //   - The FE waits one second
 //   - The FE sends the request to update its subscription
 //   - the subscription is not yet there—there is no subscription

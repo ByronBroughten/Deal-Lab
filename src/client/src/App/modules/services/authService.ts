@@ -23,7 +23,7 @@ export const auth = {
   async sessionExists(): Promise<boolean> {
     return Session.doesSessionExist();
   },
-  getSuperUserId() {
+  getAuthId() {
     return Session.getUserId();
   },
 };

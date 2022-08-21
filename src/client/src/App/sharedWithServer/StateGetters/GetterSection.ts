@@ -318,11 +318,10 @@ export class GetterSection<
     childName: CN
   ): GetterSection<ChildSectionName<SN, CN>> {
     const children = this.children(childName);
-    if (children.length !== 1) {
-      throw new Error(
-        `There is not exactly one section at ${this.sectionName}.${this.feId}.${childName}.`
-      );
-    }
+    this.list.exactlyOneOrThrow(
+      children,
+      `${this.sectionName}.${this.feId}.${childName}`
+    );
     return children[0];
   }
   onlyChildFeId<CN extends ChildName<SN>>(childName: CN): string {

@@ -19,7 +19,7 @@ import { Str } from "./../../sharedWithServer/utils/Str";
 import { SectionActorBase } from "./SectionActorBase";
 
 export class MainSectionActor<
-  SN extends SectionName<"tableSource">
+  SN extends SectionName<"hasDisplayIndex">
 > extends SectionActorBase<SN> {
   setter = new SetterSection(this.sectionActorBaseProps);
   // setter can't be a getter because its initial
@@ -43,7 +43,10 @@ export class MainSectionActor<
     return new PackMakerSection(this.sectionActorBaseProps);
   }
   get isSaved(): boolean {
-    return this.table.hasRowByDbId(this.dbId);
+    return this.displayNameList.get.hasChildByDbInfo({
+      childName: "displayNameItem",
+      dbId: this.dbId,
+    });
   }
   get getterSections() {
     return new GetterSections(this.sectionActorBaseProps);
@@ -65,7 +68,7 @@ export class MainSectionActor<
       Str.compareAlphanumerically(item1.displayName, item2.displayName)
     );
   }
-  get table(): SetterTable {
+  private get table(): SetterTable {
     const { compareTableName } = this.get.meta;
     const feUser = this.getterSections.oneAndOnly("feUser");
     return new SetterTable({
