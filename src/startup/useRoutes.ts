@@ -7,16 +7,6 @@ import { apiQueriesServer } from "../routes/apiQueries";
 import { initSupertokens } from "./initSupertokens";
 
 export function useRoutes(app: express.Application) {
-  // app.use(
-  //   (req, res, next): void => {
-  //     if (req.originalUrl === '/webhook') {
-  //       next();
-  //     } else {
-  //       express.json()(req, res, next);
-  //     }
-  //   }
-  // );
-  // app.use(express.json());
   app.use((req, res, next) => {
     if (req.originalUrl.includes("/webhook")) {
       next();
@@ -28,12 +18,9 @@ export function useRoutes(app: express.Application) {
   app.use(
     cors({
       origin: [
-        constants.clientUrlBase,
         "http://localhost:3000",
         "https://ultimate-property-analyzer.herokuapp.com",
-        constants.clientProdUrl,
-        constants.clientDevUrl,
-        // "https://www.ultimatepropertyanalyzer.com"
+        "https://www.ultimatepropertyanalyzer.com",
       ],
       allowedHeaders: [
         constants.tokenKey.apiUserAuth,
@@ -45,10 +32,7 @@ export function useRoutes(app: express.Application) {
     })
   );
 
-  if (process.env.NODE_ENV !== "test") {
-    app.use(middleware());
-  }
-
+  app.use(middleware());
   app.use(constants.apiPathBit, apiQueriesServer);
   app.use(errorHandler());
 }
