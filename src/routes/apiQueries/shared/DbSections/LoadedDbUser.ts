@@ -5,10 +5,13 @@ import { constants } from "../../../../client/src/App/Constants";
 import { LoginData } from "../../../../client/src/App/sharedWithServer/apiQueriesShared/getUserData";
 import { SubscriptionValues } from "../../../../client/src/App/sharedWithServer/apiQueriesShared/SubscriptionValues";
 import { defaultMaker } from "../../../../client/src/App/sharedWithServer/defaultMaker/defaultMaker";
+import { makeDefaultFeUserTables } from "../../../../client/src/App/sharedWithServer/defaultMaker/makeDefaultFeUserTables";
 import { SectionValues } from "../../../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsDerived/valueMetaTypes";
 import { dbStoreNameS } from "../../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreName";
+import { SectionPack } from "../../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/SectionPack";
 import {
-  isFeStoreTableName,
+  FeUserTableName,
+  isFeUserDisplayListName,
   relChildSections,
 } from "../../../../client/src/App/sharedWithServer/SectionsMeta/relChildSections";
 import {
@@ -134,46 +137,55 @@ export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
       });
     }
   }
+  makeFeUserTablePack(tableName: FeUserTableName): SectionPack<"compareTable"> {
+    const tables = makeDefaultFeUserTables();
+    const tablePack = tables[tableName]();
+    const table = PackBuilderSection.loadAsOmniChild(tablePack);
+    const { partialIndexDbSource } = relChildSections.feUser[tableName];
+
+    const sources = this.get.children(partialIndexDbSource);
+    const columns = table.get.children("column");
+    for (const source of sources) {
+      const displayName = source.valueNext("displayName");
+      const row = table.addAndGetChild("tableRow", {
+        dbId: source.dbId,
+        dbVarbs: { displayName },
+      });
+      for (const column of columns) {
+        const varb = source.varbByFocalMixed(column.valueInEntityInfo());
+        row.addChild("cell", {
+          dbId: column.dbId,
+          dbVarbs: {
+            displayVarb: varb.displayVarb(),
+            valueEntityInfo: column.valueInEntityInfo(),
+          },
+        });
+      }
+    }
+    return table.makeSectionPack();
+  }
+
   makeLoginUser(): LoginData {
     const feUser = PackBuilderSection.initAsOmniChild("feUser");
     feUser.loadSelf(defaultMaker.makeSectionPack("feUser"));
-    for (const feStoreChildName of feUser.get.childNames) {
-      if (isFeStoreTableName(feStoreChildName)) {
-        const table = feUser.onlyChild(feStoreChildName);
-        const { tableRowDbSource } = relChildSections.feUser[feStoreChildName];
-        const dbSourceSn = this.sectionsMeta
-          .section("dbStore")
-          .childType(tableRowDbSource);
-        const { dbIndexStoreName } = this.sectionsMeta.section(dbSourceSn);
+    for (const feUserChildName of feUser.get.childNames) {
+      if (isFeUserDisplayListName(feUserChildName)) {
+        const nameList = feUser.onlyChild(feUserChildName);
+        const { partialIndexDbSource } =
+          relChildSections.feUser[feUserChildName];
 
-        const sourcePacks = this.dbSections.sectionPackArr(dbIndexStoreName);
-        const columns = table.get.children("column");
-        for (const sourcePack of sourcePacks) {
-          const source = PackBuilderSection.loadAsOmniChild(sourcePack);
-          const displayName = source.get.value("displayName", "string");
-          const row = table.addAndGetChild("tableRow", {
-            dbId: source.get.dbId,
-            dbVarbs: { displayName },
+        const sources = this.get.children(partialIndexDbSource);
+        for (const source of sources) {
+          nameList.addChild("displayNameItem", {
+            dbVarbs: { displayName: source.valueNext("displayName") },
           });
-          for (const column of columns) {
-            const varb = source.get.varbByFocalMixed(
-              column.valueInEntityInfo()
-            );
-            row.addChild("cell", {
-              dbId: column.dbId,
-              dbVarbs: {
-                displayVarb: varb.displayVarb(),
-                valueEntityInfo: column.valueInEntityInfo(),
-              },
-            });
-          }
         }
-      } else if (dbStoreNameS.is(feStoreChildName)) {
+      } else if (dbStoreNameS.is(feUserChildName)) {
         feUser.loadChildren({
-          childName: feStoreChildName,
-          sectionPacks: this.dbSections.sectionPackArr(feStoreChildName),
+          childName: feUserChildName,
+          sectionPacks: this.dbSections.sectionPackArr(feUserChildName),
         });
-      } else if (feStoreChildName === "subscriptionInfo") {
+      } else if (feUserChildName === "subscriptionInfo") {
         const { subscriptionPlan, planExp } = this.subscriptionValues;
         const subInfoValues: SectionValues<"subscriptionInfo"> = {
           plan: subscriptionPlan,

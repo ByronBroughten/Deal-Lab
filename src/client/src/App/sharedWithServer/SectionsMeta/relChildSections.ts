@@ -14,11 +14,13 @@ export const tableRowDbSources = Arr.extractStrict(dbStoreNames, [
   "propertyMain",
   "dealMain",
 ] as const);
+export const displayNameDbSources = tableRowDbSources;
+
 type TableRowDbSource = typeof tableRowDbSources[number];
 
 type GeneralRelChild = {
   feTableRowStore: ChildSectionNameName<"feUser", "compareTable"> | null;
-  tableRowDbSource: TableRowDbSource | null;
+  partialIndexDbSource: TableRowDbSource | null;
 };
 type GenericRelChildren<SN extends SimpleSectionName> = {
   [CN in ChildName<SN>]: GeneralRelChild;
@@ -33,7 +35,7 @@ function makeDefaultRelChild<RC extends GeneralRelChild>(rc: RC): RC {
 }
 const defaultRelChild = makeDefaultRelChild({
   feTableRowStore: null,
-  tableRowDbSource: null,
+  partialIndexDbSource: null,
 });
 type DefaultRelChild = typeof defaultRelChild;
 
@@ -88,25 +90,49 @@ export const feStoreTableNames: ChildSectionNameName<
   "feUser",
   "compareTable"
 >[] = ["propertyMainTable", "loanMainTable", "mgmtMainTable", "dealMainTable"];
-export type FeStoreTableName = typeof feStoreTableNames[number];
-export function isFeStoreTableName(value: any): value is FeStoreTableName {
+export type FeUserTableName = typeof feStoreTableNames[number];
+export function isFeUserTableName(value: any): value is FeUserTableName {
   return feStoreTableNames.includes(value);
+}
+
+export const feUserNameListNames: ChildSectionNameName<
+  "feUser",
+  "displayNameList"
+>[] = ["dealNames", "propertyNames", "mgmtNames", "loanNames"];
+export type FeUserDisplayListName = typeof feUserNameListNames[number];
+export function isFeUserDisplayListName(
+  value: any
+): value is FeUserDisplayListName {
+  return feUserNameListNames.includes(value);
 }
 
 export const relChildSections = makeRelChildSections({
   ...makeDefaultRelChildSections(),
   feUser: relChildren("feUser", {
+    propertyNames: relChild({
+      partialIndexDbSource: "propertyMain",
+    }),
+    loanNames: relChild({
+      partialIndexDbSource: "loanMain",
+    }),
+    mgmtNames: relChild({
+      partialIndexDbSource: "mgmtMain",
+    }),
+    dealNames: relChild({
+      partialIndexDbSource: "dealMain",
+    }),
+
     dealMainTable: relChild({
-      tableRowDbSource: "dealMain",
+      partialIndexDbSource: "dealMain",
     }),
     propertyMainTable: relChild({
-      tableRowDbSource: "propertyMain",
+      partialIndexDbSource: "propertyMain",
     }),
     loanMainTable: relChild({
-      tableRowDbSource: "loanMain",
+      partialIndexDbSource: "loanMain",
     }),
     mgmtMainTable: relChild({
-      tableRowDbSource: "mgmtMain",
+      partialIndexDbSource: "mgmtMain",
     }),
   }),
 });

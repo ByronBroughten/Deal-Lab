@@ -13,6 +13,9 @@ import {
   SectionQuerierProps,
 } from "../QueriersBasic/SectionQuerier";
 import { auth, UserInfoTokenProp } from "../services/authService";
+import { ChildSectionNameName } from "./../../sharedWithServer/SectionsMeta/childSectionsDerived/ChildSectionName";
+import { SetterSections } from "./../../sharedWithServer/StateSetters/SetterSections";
+import { Str } from "./../../sharedWithServer/utils/Str";
 import { SectionActorBase } from "./SectionActorBase";
 
 export class MainSectionActor<
@@ -20,7 +23,7 @@ export class MainSectionActor<
 > extends SectionActorBase<SN> {
   setter = new SetterSection(this.sectionActorBaseProps);
   // setter can't be a getter because its initial
-  // sections would get messed up
+  // sections would get messed up - that's probably depreciated advice.
 
   private get sectionQuerierProps(): SectionQuerierProps<
     DbSectionNameName<SN>
@@ -45,21 +48,40 @@ export class MainSectionActor<
   get getterSections() {
     return new GetterSections(this.sectionActorBaseProps);
   }
+  get setterSections() {
+    return new SetterSections(this.sectionActorBaseProps);
+  }
   get dbId(): string {
     return this.get.dbId;
   }
+  alphabeticalDisplayItems() {
+    const { displayNameList } = this;
+    const nameSections = displayNameList.get.children("displayNameItem");
+    const nameItems = nameSections.map((section) => ({
+      displayName: section.valueNext("displayName"),
+      dbId: section.dbId,
+    }));
+    return nameItems.sort((item1, item2) =>
+      Str.compareAlphanumerically(item1.displayName, item2.displayName)
+    );
+  }
   get table(): SetterTable {
-    const { main } = this.getterSections;
-    const feUser = main.onlyChild("feUser");
-    const { feTableIndexStoreName } = this.get.meta;
-
-    // setterTable is creating new initialSections
-    // I have to pass the initial sections
-    // as setterSectionProps
+    const { compareTableName } = this.get.meta;
+    const feUser = this.getterSections.oneAndOnly("feUser");
     return new SetterTable({
       ...this.sectionActorBaseProps,
-      ...feUser.onlyChild(feTableIndexStoreName).feInfo,
+      ...feUser.onlyChild(compareTableName).feInfo,
     });
+  }
+  get displayNameList(): SetterSection<"displayNameList"> {
+    const { feDisplayIndexStoreName } = this.get.meta;
+    const feUser = this.setterSections.oneAndOnly("feUser");
+    return feUser.onlyChild(
+      feDisplayIndexStoreName as ChildSectionNameName<
+        "feUser",
+        "displayNameList"
+      >
+    );
   }
   removeSelf(): void {
     this.setter.removeSelf();
@@ -81,7 +103,7 @@ export class MainSectionActor<
     this.saveNew();
   }
   async saveNew(): Promise<void> {
-    this.addStoreRow();
+    this.addDisplayItem();
     const dateTime = timeS.now();
     this.setter.updateValues({
       dateTimeFirstSaved: dateTime,
@@ -98,7 +120,7 @@ export class MainSectionActor<
     if (headers) auth.setTokenFromHeaders(headers);
   }
   async saveUpdates(): Promise<void> {
-    this.updateRow();
+    this.updateDisplayItem();
     this.setter.updateValues({
       dateTimeLastSaved: timeS.now(),
     } as Partial<SectionValues<SN>>);
@@ -117,8 +139,42 @@ export class MainSectionActor<
     this.deleteFromIndex(this.dbId);
   }
   async deleteFromIndex(dbId: string) {
-    this.table.removeRow(dbId);
+    this.displayNameList.removeChildByDbId({
+      childName: "displayNameItem",
+      dbId,
+    });
     this.setter.tryAndRevertIfFail(async () => await this.querier.delete(dbId));
+  }
+  private get displayNameValue(): string {
+    return this.get.valueNext("displayName");
+  }
+  private addDisplayItem(): void {
+    const { dbId, displayNameValue } = this;
+    this.displayNameList.addChild("displayNameItem", {
+      dbId,
+      dbVarbs: { displayName: displayNameValue },
+    });
+  }
+  private updateDisplayItem() {
+    const { dbId, displayNameValue, displayNameList } = this;
+    const item = displayNameList.childByDbId({
+      childName: "displayNameItem",
+      dbId,
+    });
+    item.varb("displayName").updateValue(displayNameValue);
+  }
+
+  private addStoreRow(): void {
+    const { table, dbId } = this;
+    const rowIds = table.get.childDbIds("tableRow");
+    if (rowIds.includes(dbId)) {
+      throw new Error("Trying to save a new section that is already saved.");
+    }
+    table.addRow({
+      displayName: this.get.value("displayName", "string"),
+      dbId,
+    });
+    this.updateRow();
   }
   private updateRow(): void {
     // for greater efficiency, most of this could be done at the solver
@@ -132,19 +188,5 @@ export class MainSectionActor<
       const entityInfo = col.valueInEntityInfo();
       row.addCell(entityInfo, col.dbId);
     }
-  } // good enough, I guess.
-
-  private addStoreRow(): void {
-    const { table, dbId } = this;
-    const rowIds = table.get.childDbIds("tableRow");
-    if (rowIds.includes(dbId)) {
-      throw new Error("Trying to save a new section that is already saved.");
-    }
-    table.addRow({
-      displayName: this.get.value("displayName", "string"),
-      dbId,
-    });
-    const test = "breakpoint";
-    this.updateRow();
   }
 }

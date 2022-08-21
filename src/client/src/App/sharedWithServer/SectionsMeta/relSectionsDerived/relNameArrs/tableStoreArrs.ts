@@ -4,14 +4,11 @@ import { getRelParams } from "./getRelParams";
 
 const tableSourceNames = Obj.entryKeysWithPropOfType(
   relSections,
-  "feTableIndexStoreName",
+  "compareTableName",
   "string"
 );
 
-const tableStoreParams = getRelParams(
-  tableSourceNames,
-  "feTableIndexStoreName"
-);
+const tableStoreParams = getRelParams(tableSourceNames, "compareTableName");
 export const tableSourceParams = Obj.swapKeysAndValues(tableStoreParams);
 export const tableStoreNameArrs = {
   tableSource: tableSourceNames,

@@ -27,7 +27,7 @@ export type SectionName<T extends SectionNameType = "all"> =
   NameArrs[T][number & keyof NameArrs[T]];
 
 export type HasRowFeStore = StrictExtract<
-  SectionName<"hasRowIndex">,
+  SectionName<"hasDisplayIndex">,
   "property" | "loan" | "mgmt" | "deal"
 >;
 // HasRowFeStore counteracts a but that makes no sense to me.

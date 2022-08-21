@@ -10,14 +10,14 @@ import useHowMany from "./customHooks/useHowMany";
 import { RowIndexListRow } from "./RowIndexListRow";
 
 type Props = {
-  feInfo: FeInfoByType<"hasRowIndex">;
+  feInfo: FeInfoByType<"hasDisplayIndex">;
   className?: string;
   noEntriesMessage: string;
 };
 export function RowIndexRows({ feInfo, className, noEntriesMessage }: Props) {
   const [filter, setFilter] = React.useState("");
   const section = useMainSectionActor(feInfo);
-  const rows = section.table.alphabeticalGetterRows();
+  const rows = section.alphabeticalDisplayItems();
   const { isAtLeastOne } = useHowMany(rows);
 
   return (

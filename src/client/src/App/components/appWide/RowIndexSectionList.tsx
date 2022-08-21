@@ -5,7 +5,7 @@ import { DropdownList } from "./DropdownList";
 import { RowIndexRows } from "./RowIndexRows";
 
 type Props = {
-  feInfo: FeInfoByType<"hasRowIndex">;
+  feInfo: FeInfoByType<"hasDisplayIndex">;
   pluralName: string;
   disabled: boolean;
   className?: string;

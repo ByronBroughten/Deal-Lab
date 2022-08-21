@@ -43,7 +43,7 @@ export const childSections = checkChildSections({
     feUser: ["feUser"],
   }),
   displayNameList: childrenSections({
-    displayName: ["displayNameItem"],
+    displayNameItem: ["displayNameItem"],
   }),
   feUser: childrenSections({
     // feUser includes everything that has a corresponding child in dbStore
@@ -51,10 +51,17 @@ export const childSections = checkChildSections({
     authInfo: ["authInfo"],
     subscriptionInfo: ["subscriptionInfo"],
     userInfo: ["userInfo"],
+
     propertyMainTable: ["compareTable"],
     loanMainTable: ["compareTable"],
     mgmtMainTable: ["compareTable"],
     dealMainTable: ["compareTable"],
+
+    propertyNames: ["displayNameList"],
+    loanNames: ["displayNameList"],
+    mgmtNames: ["displayNameList"],
+    dealNames: ["displayNameList"],
+
     outputListMain: ["outputList"],
     userVarbListMain: ["userVarbList"],
     singleTimeListMain: ["singleTimeList"],

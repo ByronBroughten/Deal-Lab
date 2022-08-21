@@ -4,6 +4,7 @@ import { SectionValues } from "../SectionsMeta/baseSectionsDerived/valueMetaType
 import { SwitchEndingKey } from "../SectionsMeta/baseSectionsUtils/RelSwitchVarb";
 import {
   ChildName,
+  DbChildInfo,
   FeChildInfo,
 } from "../SectionsMeta/childSectionsDerived/ChildName";
 import { ChildSectionName } from "../SectionsMeta/childSectionsDerived/ChildSectionName";
@@ -92,6 +93,12 @@ export class SetterSection<
     const feInfo = this.get.childToFeInfo(childInfo);
     return this.setterSection(feInfo);
   }
+  childByDbId<CN extends ChildName<SN>>(
+    dbInfo: DbChildInfo<SN, CN>
+  ): SetterSection<ChildSectionName<SN, CN>> {
+    const { feInfo } = this.get.childByDbId(dbInfo);
+    return this.setterSection(feInfo);
+  }
   loadSelfSectionPack(sectionPack: SectionPack<SN>): void {
     this.solver.loadSelfSectionPackAndSolve(sectionPack);
     this.setSections();
@@ -114,6 +121,13 @@ export class SetterSection<
     this.addChild(childName, options);
     const { feInfo } = this.get.youngestChild(childName);
     return this.setterSection(feInfo);
+  }
+  removeChildByDbId<CN extends ChildName<SN>>(
+    dbInfo: DbChildInfo<SN, CN>
+  ): void {
+    const { childName } = dbInfo;
+    const { feId } = this.get.childByDbId(dbInfo);
+    this.removeChild({ childName, feId });
   }
   removeChild(childInfo: FeChildInfo<SN>): void {
     this.solver.removeChildAndSolve(childInfo);

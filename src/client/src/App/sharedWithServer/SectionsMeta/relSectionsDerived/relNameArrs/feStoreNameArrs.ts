@@ -5,9 +5,9 @@ import { relSections } from "../../relSections";
 import { getRelParams } from "./getRelParams";
 
 export const hasStoreNameArrs = {
-  hasRowIndex: Obj.entryKeysWithPropOfType(
+  hasDisplayIndex: Obj.entryKeysWithPropOfType(
     relSections,
-    "feTableIndexStoreName",
+    "feDisplayIndexStoreName",
     "string"
   ),
   hasFullIndex: Obj.entryKeysWithPropOfType(
@@ -16,15 +16,15 @@ export const hasStoreNameArrs = {
     "string"
   ),
   get hasIndexStore() {
-    return [...this.hasRowIndex, ...this.hasFullIndex] as const;
+    return [...this.hasDisplayIndex, ...this.hasFullIndex] as const;
   },
 } as const;
 
 // both of these pertain to feStoreNames
 const hasToStoreNames = {
-  tableIndex: getRelParams(
-    hasStoreNameArrs.hasRowIndex,
-    "feTableIndexStoreName"
+  displayIndex: getRelParams(
+    hasStoreNameArrs.hasDisplayIndex,
+    "feDisplayIndexStoreName"
   ),
   fullIndex: getRelParams(
     hasStoreNameArrs.hasFullIndex,
@@ -32,7 +32,7 @@ const hasToStoreNames = {
   ),
   get indexStore() {
     return {
-      ...this.tableIndex,
+      ...this.displayIndex,
       ...this.fullIndex,
     } as const;
   },
@@ -46,7 +46,8 @@ export type FeStoreNameByType<SN extends FeStoreType = "all"> =
 
 const feStoreNameArrs = {
   ...indexStoreNames,
-  tableRowDbSource: tableRowDbSources,
+  partialIndexDbSource: tableRowDbSources,
+  displayNameDbSource: tableRowDbSources,
   all: getChildNames("feUser"),
 } as const;
 type StoreNameArrs = typeof feStoreNameArrs;

@@ -1,5 +1,5 @@
 import {
-  isFeStoreTableName,
+  isFeUserTableName,
   relChildSections,
 } from "../../sharedWithServer/SectionsMeta/relChildSections";
 import { FeStoreNameByType } from "../../sharedWithServer/SectionsMeta/relSectionsDerived/relNameArrs/feStoreNameArrs";
@@ -13,7 +13,7 @@ export interface IndexTableRowActorProps
   extends StrictOmit<SectionActorBaseProps<"tableRow">, "sectionName"> {}
 
 export class IndexTableRowActor extends SectionActorBase<"tableRow"> {
-  dbStoreName: FeStoreNameByType<"tableRowDbSource">;
+  dbStoreName: FeStoreNameByType<"partialIndexDbSource">;
   constructor(props: IndexTableRowActorProps) {
     super({
       sectionName: "tableRow",
@@ -27,10 +27,10 @@ export class IndexTableRowActor extends SectionActorBase<"tableRow"> {
   get setter() {
     return new SetterSection(this.sectionActorBaseProps);
   }
-  private initDbStoreName(): FeStoreNameByType<"tableRowDbSource"> {
+  private initDbStoreName(): FeStoreNameByType<"partialIndexDbSource"> {
     const parentSelfChildName = this.get.parent.selfChildName;
-    if (isFeStoreTableName(parentSelfChildName)) {
-      return relChildSections.feUser[parentSelfChildName].tableRowDbSource;
+    if (isFeUserTableName(parentSelfChildName)) {
+      return relChildSections.feUser[parentSelfChildName].partialIndexDbSource;
     } else throw new Error("This row doesn't have the right parent.");
   }
   get indexQuerier() {

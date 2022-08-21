@@ -49,7 +49,11 @@ export type GeneralRelSection = {
   tableIndexName: BaseName | null;
   tableStoreName: BaseName | null;
 
-  feTableIndexStoreName: ChildSectionNameName<"feUser", "compareTable"> | null;
+  compareTableName: ChildSectionNameName<"feUser", "compareTable"> | null;
+  feDisplayIndexStoreName: ChildSectionNameName<
+    "feUser",
+    "displayNameList"
+  > | null;
   feFullIndexStoreName: ChildName<"feUser"> | null;
   dbIndexStoreName: ChildName<"dbStore"> | null;
   dbArrStoreName: ChildName<"dbStore"> | null;
@@ -83,7 +87,8 @@ const defaultProps = makeDefault({
   tableIndexName: null,
   tableStoreName: null,
 
-  feTableIndexStoreName: null,
+  compareTableName: null,
+  feDisplayIndexStoreName: null,
   feFullIndexStoreName: null,
   dbIndexStoreName: null,
   dbArrStoreName: null,

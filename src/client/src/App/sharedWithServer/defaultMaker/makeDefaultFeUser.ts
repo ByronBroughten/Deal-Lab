@@ -1,14 +1,17 @@
 import { SectionPack } from "../SectionsMeta/childSectionsDerived/SectionPack";
-import { feStoreTableNames } from "../SectionsMeta/relChildSections";
+import {
+  feStoreTableNames,
+  feUserNameListNames,
+} from "../SectionsMeta/relChildSections";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
+import { makeDefaultFeUserTables } from "./makeDefaultFeUserTables";
 import {
   makeDefaultAuthInfo,
   makeDefaultPublicUserInfo,
   makeDefaultSubscriptionInfo,
 } from "./makeDefaultPublicUserInfo";
-import { makeDefaultFeStoreTables } from "./makeMainTablePackMakers";
 
-export function makeDefaultFeStorePack(): SectionPack<"feUser"> {
+export function makeDefaultFeUserPack(): SectionPack<"feUser"> {
   const feUser = PackBuilderSection.initAsOmniChild("feUser");
   feUser.loadChild({
     childName: "userInfo",
@@ -22,7 +25,12 @@ export function makeDefaultFeStorePack(): SectionPack<"feUser"> {
     childName: "subscriptionInfo",
     sectionPack: makeDefaultSubscriptionInfo(),
   });
-  const defaultTablePacks = makeDefaultFeStoreTables();
+
+  for (const listName of feUserNameListNames) {
+    feUser.addChild(listName);
+  }
+
+  const defaultTablePacks = makeDefaultFeUserTables();
   for (const tableName of feStoreTableNames) {
     feUser.loadChild({
       childName: tableName,

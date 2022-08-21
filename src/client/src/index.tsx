@@ -9,10 +9,6 @@ AppRegistry.runApplication("App", {
 });
 // I think I want to go with ultimatepropertyanalyzer.com
 
-// - Decouple table rows from load dropdown rows
-// - the table willhave children that are
-//   empty rows which can be compared.
-
 // Make a video of the present functionality without
 // the BETA sign
 

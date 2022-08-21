@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useTableActor } from "../modules/sectionActorHooks/useTableActor";
 import { auth } from "../modules/services/authService";
-import { isFeStoreTableName } from "../sharedWithServer/SectionsMeta/relChildSections";
+import { isFeUserTableName } from "../sharedWithServer/SectionsMeta/relChildSections";
 import { VariableOption } from "../sharedWithServer/StateEntityGetters/VariableGetterSections";
 import theme from "../theme/Theme";
 import useHowMany from "./appWide/customHooks/useHowMany";
@@ -17,7 +17,7 @@ interface Props {
 
 export function TableStore({ feId }: Props) {
   const table = useTableActor(feId);
-  if (!isFeStoreTableName(table.get.selfChildName)) {
+  if (!isFeUserTableName(table.get.selfChildName)) {
     throw new Error("TableStore is only for feUser tables");
   }
   const { filteredRows } = table;

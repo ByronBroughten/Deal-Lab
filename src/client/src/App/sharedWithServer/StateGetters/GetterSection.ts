@@ -292,11 +292,20 @@ export class GetterSection<
       })
     ) as any;
   }
+  childByDbId<
+    CN extends ChildName<SN>,
+    CT extends ChildSectionName<SN, CN> = ChildSectionName<SN, CN>
+  >({ childName, dbId }: DbChildInfo<SN, CN>): GetterSection<CT> {
+    let children = this.children(childName);
+    children = children.filter((child) => child.dbId === dbId);
+    this.list.exactlyOneOrThrow(children, "dbId");
+    return children[0] as GetterSection<CT>;
+  }
   childList<CN extends ChildName<SN>, CT extends ChildSectionName<SN, CN>>(
     childName: CN
   ): GetterList<CT> {
-    const childType = this.meta.childType(childName);
-    return this.sections.list(childType) as any;
+    const childSn = this.meta.childType(childName);
+    return this.sections.list(childSn) as any;
   }
   childrenOldToYoung<
     CN extends ChildName<SN>,
@@ -500,6 +509,7 @@ export class GetterSection<
         `"${childName}" is not a possible child section for ${this.sectionName}`
       );
   }
+
   childDbIds<CN extends ChildName<SN>>(childName: CN): string[] {
     return this.children(childName).map(({ dbId }) => dbId);
   }

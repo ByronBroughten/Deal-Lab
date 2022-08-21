@@ -1,7 +1,7 @@
 import { FeInfoByType } from "../../../../../sharedWithServer/SectionsMeta/Info";
 import { BigStringEditor } from "../../../../inputs/BigStringEditor";
 
-type Props = { feInfo: FeInfoByType<"hasRowIndex"> };
+type Props = { feInfo: FeInfoByType<"hasDisplayIndex"> };
 export function MainSectionTitleRowTitle({ feInfo }: Props) {
   return (
     <BigStringEditor

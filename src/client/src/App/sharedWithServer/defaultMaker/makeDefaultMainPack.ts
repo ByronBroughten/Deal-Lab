@@ -1,7 +1,7 @@
 import { SectionPack } from "../SectionsMeta/childSectionsDerived/SectionPack";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
 import { makeDefaultDealPack } from "./makeDefaultDealPack";
-import { makeDefaultFeStorePack } from "./makeDefaultFeStore";
+import { makeDefaultFeUserPack } from "./makeDefaultFeUser";
 
 export function makeDefaultMainPack(): SectionPack<"main"> {
   const main = PackBuilderSection.initAsOmniChild("main");
@@ -11,7 +11,7 @@ export function makeDefaultMainPack(): SectionPack<"main"> {
   });
   main.loadChild({
     childName: "feUser",
-    sectionPack: makeDefaultFeStorePack(),
+    sectionPack: makeDefaultFeUserPack(),
   });
   const childNames = ["login", "register"] as const;
   for (const childName of childNames) {

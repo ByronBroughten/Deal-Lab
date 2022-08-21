@@ -1,14 +1,14 @@
 import { inEntityInfo } from "../SectionsMeta/baseSectionsUtils/baseValues/InEntityInfoValue";
 import { SectionPack } from "../SectionsMeta/childSectionsDerived/SectionPack";
-import { FeStoreTableName } from "../SectionsMeta/relChildSections";
+import { FeUserTableName } from "../SectionsMeta/relChildSections";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
 import { Obj } from "../utils/Obj";
 import { outputNames } from "./makeDefaultOutputList";
 
 type TablePackMakers = {
-  [CN in FeStoreTableName]: () => SectionPack<"compareTable">;
+  [CN in FeUserTableName]: () => SectionPack<"compareTable">;
 };
-export function makeDefaultFeStoreTables(): TablePackMakers {
+export function makeDefaultFeUserTables(): TablePackMakers {
   const columnVarbnames = {
     dealMainTable: {
       sectionName: "deal",
