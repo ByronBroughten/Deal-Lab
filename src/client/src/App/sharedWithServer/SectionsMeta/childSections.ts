@@ -42,6 +42,9 @@ export const childSections = checkChildSections({
     deal: ["deal"],
     feStore: ["feStore"],
   }),
+  displayNameList: childrenSections({
+    displayName: ["displayNameItem"],
+  }),
   feStore: childrenSections({
     // feStore includes everything that has a corresponding child in dbStore
     // or that has any intermediary sections used to edit and add to them.

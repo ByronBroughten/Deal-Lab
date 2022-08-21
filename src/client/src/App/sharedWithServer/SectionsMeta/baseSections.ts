@@ -40,12 +40,12 @@ export const baseSections = {
   proxy: baseSection({
     _typeUniformity: "string",
   } as const),
-  displayName: baseSection({
+  displayNameItem: baseSection({
     displayName: "string",
   }),
-  // displayNameList: baseSection({
-  //   _typeUniformity: "string"
-  // }),
+  displayNameList: baseSection({
+    searchFilter: "string",
+  }),
   omniParent: baseSectionS.container,
   // maybe rename to compareTable and compareTableRow
   compareTable: baseSection({ titleFilter: "string" } as const),

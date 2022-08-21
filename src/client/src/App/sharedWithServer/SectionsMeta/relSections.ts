@@ -33,7 +33,12 @@ export function makeRelSections() {
   return relSectionsFilter({
     root: relSection("Root", { _typeUniformity: relVarb("string") }),
     proxy: relSection("Proxy", { _typeUniformity: relVarb("string") }),
-    displayName: relSection("DisplayName", { displayName: relVarb("string") }),
+    displayNameItem: relSection("DisplayName", {
+      displayName: relVarb("string"),
+    }),
+    displayNameList: relSection("DisplayName List", {
+      searchFilter: relVarb("string"),
+    }),
     omniParent: relSection("Parent of all", {
       _typeUniformity: relVarb("string"),
     }),
