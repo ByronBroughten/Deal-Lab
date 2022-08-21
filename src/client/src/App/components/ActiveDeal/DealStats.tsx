@@ -78,7 +78,7 @@ export default function DealStats({ className, feId }: Props) {
       </GeneralSectionTitle>
       <Deal {...{ feId, detailsIsOpen }} />
       <div className="DealStats-appInfo">
-        Questions or feedback? support@dealanalyzer.app
+        Questions or feedback? support@ultimatepropertyanalyzer.com
       </div>
     </Styled>
   );
