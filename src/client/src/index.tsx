@@ -13,6 +13,10 @@ AppRegistry.runApplication("App", {
 // - Fix state revert not acting how it should
 //   when addSection fails
 // - User solverSections in MainSection
+// - "getUserData" returned 401 - unauthorized
+
+// - Fix variable labels for things with same
+//   names accross sections (Upfront expenses, etc)
 
 // Make a video of the present functionality without
 // the BETA sign

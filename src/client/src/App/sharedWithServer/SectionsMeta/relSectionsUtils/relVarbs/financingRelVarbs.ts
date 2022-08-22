@@ -54,7 +54,7 @@ export function loanRelVarbs(): RelVarbs<"loan"> {
         },
       ],
     }),
-    [loanBase.dollars]: relVarbS.calcVarb("Base loan dollars", {
+    [loanBase.dollars]: relVarbS.calcVarb("Base loan", {
       displayNameEnd: " dollars",
       startAdornment: "$",
       inUpdateSwitchProps: [
@@ -110,7 +110,7 @@ export function loanRelVarbs(): RelVarbs<"loan"> {
     closingCosts: relVarbS.sumMoney("Closing costs", [
       relVarbInfoS.children("closingCostList", "total"),
     ]),
-    wrappedInLoan: relVarbS.sumMoney("Wrapped into loan", [
+    wrappedInLoan: relVarbS.sumMoney("Amount wrapped in loan", [
       relVarbInfoS.children("wrappedInLoanList", "total"),
     ]),
     piCalculationName: relVarb("string", {
