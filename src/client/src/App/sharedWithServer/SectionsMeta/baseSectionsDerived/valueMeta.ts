@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { timeS } from "../../utils/date";
 import { reqMonNumber, reqMonString } from "../../utils/mongoose";
 import {
   InEntityInfoValue,
@@ -33,7 +32,7 @@ export const valueMeta = {
   dateTime: {
     is: (v: any): v is number => typeof v === "number",
     updateFnNames: ["manualUpdateOnly"],
-    initDefault: () => timeS.now(),
+    initDefault: () => 0,
     zod: z.number(),
     mon: reqMonNumber,
   },

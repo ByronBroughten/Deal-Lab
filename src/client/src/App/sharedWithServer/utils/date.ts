@@ -11,6 +11,6 @@ export const timeS = {
     return this.oneDay * 30;
   },
   get hundredsOfYearsFromNow() {
-    return this.now() + 10000000000;
+    return 11661201881;
   },
 } as const;

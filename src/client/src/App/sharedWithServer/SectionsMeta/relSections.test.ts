@@ -2,6 +2,12 @@ import { isEqual } from "lodash";
 import hash from "object-hash";
 import { makeRelSections, RelSections } from "./relSections";
 
+function delay(milliseconds: number) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, milliseconds);
+  });
+}
+
 describe(`relSections`, () => {
   let relSections: any;
 
@@ -20,16 +26,17 @@ describe(`relSections`, () => {
     let relSections2: RelSections;
     let relSections2Hash: string;
 
-    beforeEach(() => {
+    beforeEach(async () => {
       relSections = makeRelSections();
       relSectionsHash = hash(relSections);
-
+      await delay(1001);
       relSections2 = makeRelSections();
       relSections2Hash = hash(relSections2);
     });
-
-    it("should produce a hash that is equal", () => {
+    it("should produce relSections that are equal", () => {
       expect(relSections).toEqual(relSections2);
+    });
+    it("should produce a hash that is equal", () => {
       expect(relSectionsHash).toBe(relSections2Hash);
     });
     it("should produce a hash that is not equal", () => {
