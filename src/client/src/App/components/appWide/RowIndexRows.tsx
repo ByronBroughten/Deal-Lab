@@ -55,7 +55,9 @@ export function RowIndexRows({ feInfo, className, noEntriesMessage }: Props) {
       )}
       {!isAtLeastOne && (
         <div className="RowIndexRows-entry">
-          <div className="RowIndexSectionList-noneDiv">{noEntriesMessage}</div>
+          <div className="DisplayNameSectionList-noneDiv">
+            {noEntriesMessage}
+          </div>
         </div>
       )}
     </Styled>
@@ -78,7 +80,7 @@ const Styled = styled.div<{ sectionName: ThemeName }>`
     padding: 0 ${theme.s3} 0 ${theme.s3};
   }
 
-  .RowIndexSectionList-noneDiv {
+  .DisplayNameSectionList-noneDiv {
     display: flex;
     justify-content: center;
     align-items: center;

@@ -19,8 +19,11 @@ AppRegistry.runApplication("App", {
 // - Fix losing the deal state after login and register
 // - Fix state revert not acting how it should
 //   when addSection fails
+//   - It says there are no sections to load, but the
+//   - actions menu still acts like the loan is saved
 // - User solverSections in MainSection
 // - "getUserData" returned 401 - unauthorized
+// - mgmt
 
 // - Fix variable labels for things with same
 //   names accross sections (Upfront expenses, etc)

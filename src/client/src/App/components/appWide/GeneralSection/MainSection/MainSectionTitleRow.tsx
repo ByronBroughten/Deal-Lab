@@ -8,9 +8,9 @@ import { useMainSectionActor } from "../../../../modules/sectionActorHooks/useMa
 import { HasRowFeStore } from "../../../../sharedWithServer/SectionsMeta/SectionName";
 import { useAuthStatus } from "../../../../sharedWithServer/stateClassHooks/useAuthStatus";
 import theme from "../../../../theme/Theme";
+import DisplayNameSectionList from "../../DisplayNameSectionList";
 import { DropdownList } from "../../DropdownList";
 import { LabeledIconBtn } from "../../LabeledIconBtn";
-import RowIndexSectionList from "../../RowIndexSectionList";
 import XBtn from "../../Xbtn";
 import { MainSectionTitleRowTitle } from "./MainSectionTitleRow/MainSectionTitleRowTitle";
 
@@ -30,11 +30,10 @@ export function MainSectionTitleRow({
   const mainSection = useMainSectionActor(feInfo);
   const authStatus = useAuthStatus();
 
-  const { btnMenuIsOpen, toggleBtnMenu } = useToggleView({
+  const { btnMenuIsOpen } = useToggleView({
     initValue: false,
     viewWhat: "btnMenu",
   });
-  const { displayName } = mainSection.get.meta;
   const isGuest = authStatus === "guest";
   return (
     <Styled
@@ -103,7 +102,7 @@ export function MainSectionTitleRow({
         </DropdownList>
         <div className="MainSectionTitleRow-leftSide-btnsRow">
           {
-            <RowIndexSectionList
+            <DisplayNameSectionList
               {...{
                 className: "MainSectionTitleRow-flexUnit",
                 feInfo,

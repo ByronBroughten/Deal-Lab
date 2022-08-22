@@ -12,7 +12,7 @@ type Props = {
   dropTop?: boolean;
 };
 
-export default function RowIndexSectionList({
+export default function DisplayNameSectionList({
   feInfo,
   dropTop = false,
   className,
@@ -29,7 +29,7 @@ export default function RowIndexSectionList({
         className: "MainsectionTitleRow-dropdownList " + className ?? "",
         title: `Saved`,
         dropTop,
-        icon: <FaList className="RowIndexSectionList-listIcon" />,
+        icon: <FaList className="DisplayNameSectionList-listIcon" />,
       }}
     >
       <RowIndexRows feInfo={feInfo} noEntriesMessage={noEntriesMessage} />
