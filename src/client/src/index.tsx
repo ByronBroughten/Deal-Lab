@@ -9,6 +9,11 @@ AppRegistry.runApplication("App", {
 });
 // I think I want to go with ultimatepropertyanalyzer.com
 
+// - Fix losing the deal state after login and register
+// - Fix state revert not acting how it should
+//   when addSection fails
+// - User solverSections in MainSection
+
 // Make a video of the present functionality without
 // the BETA sign
 
@@ -36,6 +41,10 @@ AppRegistry.runApplication("App", {
 //    - ongoingList
 // 4. Bring back deal compare
 //    - implement property compare, etc
+
+// Cherries on top
+// 5. Api variables
+// 6. Sharing things with other users
 
 // - Record new demo video in one go
 // - Record demo audio in increments

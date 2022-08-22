@@ -99,6 +99,14 @@ export class UpdaterSection<
     const { feId } = childList.get.last;
     this.addChildFeId({ childName, feId });
   }
+  addAndGetChild<CN extends ChildName<SN>>(
+    childName: CN,
+    options?: AddChildOptions<SN, CN>
+  ): UpdaterSection<ChildSectionName<SN, CN>> {
+    this.addChild(childName, options);
+    const { feInfo } = this.get.youngestChild(childName);
+    return this.updaterSection(feInfo);
+  }
   updateValuesDirectly(values: VarbValues): void {
     for (const varbName of Obj.keys(values)) {
       const varb = this.varb(varbName as string);

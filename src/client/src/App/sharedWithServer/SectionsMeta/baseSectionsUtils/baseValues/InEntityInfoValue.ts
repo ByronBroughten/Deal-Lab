@@ -23,7 +23,7 @@ export type InEntityInfoValue = InEntityInfo | null;
 export const zInEntityVarbInfoValue = z.union([z.null(), zInEntityValueInfo]);
 export const mInEntityVarbInfoValue = {
   type: Schema.Types.Mixed,
-  required: true,
+  required: false,
   validate: {
     validator: (v: any) => zInEntityVarbInfoValue.safeParse(v).success,
   },
