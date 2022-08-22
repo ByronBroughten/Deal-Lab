@@ -86,7 +86,7 @@ const Styled = styled.div<{
     ${({ $themeName }) =>
       css`
         background: ${theme[$themeName].light};
-        border: none;
+        border: 1px solid ${theme.transparentGrayDark};
         :hover,
         :active {
           background: ${theme[$themeName].dark};
