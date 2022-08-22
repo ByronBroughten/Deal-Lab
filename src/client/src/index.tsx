@@ -9,6 +9,13 @@ AppRegistry.runApplication("App", {
 });
 // I think I want to go with ultimatepropertyanalyzer.com
 
+// - Removing a loan after saving and creating
+//   new isn't working for some reason
+
+// - Deleted saved loans are coming back when
+//   I reload the app.
+
+// - Refresh is losing state
 // - Fix losing the deal state after login and register
 // - Fix state revert not acting how it should
 //   when addSection fails

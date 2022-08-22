@@ -177,6 +177,7 @@ export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
         const sources = this.get.children(partialIndexDbSource);
         for (const source of sources) {
           nameList.addChild("displayNameItem", {
+            dbId: source.dbId,
             dbVarbs: { displayName: source.valueNext("displayName") },
           });
         }
