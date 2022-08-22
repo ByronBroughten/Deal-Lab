@@ -127,6 +127,7 @@ export const baseSections = {
       "numBedrooms",
       "upfrontExpenses",
       "upfrontRevenue",
+      "zipcode",
     ] as const),
     ...baseVarbsS.ongoing("taxes"),
     ...baseVarbsS.ongoing("homeIns"),
