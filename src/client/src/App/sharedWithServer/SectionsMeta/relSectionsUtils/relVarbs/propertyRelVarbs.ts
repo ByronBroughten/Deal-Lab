@@ -14,6 +14,7 @@ export function propertyRelVarbs(): RelVarbs<"property"> {
     ...relVarbsS.timeMoneyInput("homeIns", "Home insurance", {
       switchInit: "yearly",
     }),
+    // zipcode: relVarbS.numObj("Zipcode"),
     numUnits: relVarbS.sumChildVarb("Unit count", "unit", "one"),
     numBedrooms: relVarbS.sumChildVarb("Bedroom count", "unit", "numBedrooms"),
 

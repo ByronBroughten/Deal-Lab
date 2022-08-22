@@ -71,13 +71,16 @@ export class RemoveSolverSection<
   prepForRemove() {
     this.collectRemovedVarbIds();
     this.collectOutVarbIdsOfRemoved();
-    this.removeOutEntitiesOfInEntities();
+    this.removeOutEntitiesOfCurrentInEntities();
   }
-  private removeOutEntitiesOfInEntities() {
+  private removeOutEntitiesOfCurrentInEntities() {
     const { selfAndDescendantVarbInfos } = this.get;
+    // the outEntity of propertyGeneral was not deleted
+    // that's because the old property was not actually removed
+    // is that right?
     for (const varbInfo of selfAndDescendantVarbInfos) {
       const solverVarb = this.solverVarb(varbInfo);
-      solverVarb.removeOutEntitiesOfInEntities();
+      solverVarb.removeOutEntitiesOfCurrentInEntities();
     }
   }
   private collectRemovedVarbIds() {

@@ -110,7 +110,7 @@ export class AddSolverSection<
         ...this.solverSectionsProps,
         ...varbInfo,
       });
-      solverVarb.addOutEntitiesOfInEntities();
+      solverVarb.addOutEntitiesFromCurrentInEntities();
     }
   }
 }

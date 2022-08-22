@@ -100,12 +100,19 @@ export class SolverVarb<
 
     this.addInEntity({
       ...entityInfo,
-      entitySource: infoVarb.get.varbId,
+      entitySource: "localValueEntityInfo",
       length: 0, // length and offset are arbitrary
       offset: 0, // just borrowing functionality from editor entities
     });
   }
-
+  addOutEntitiesFromCurrentInEntities() {
+    const { inEntities } = this.get;
+    this.addOutEntitiesFromInEntities(inEntities);
+  }
+  removeOutEntitiesOfCurrentInEntities() {
+    const { inEntities } = this.get;
+    this.removeOutEntitiesOfInEntities(inEntities);
+  }
   updateConnectedVarbs(): void {
     this.updateConnectedEntities();
     this.solveOutVarbs();
@@ -115,8 +122,20 @@ export class SolverVarb<
     this.addNewOutEntitites();
     this.initialEntities = [...this.get.inEntities];
   }
-  addOutEntitiesOfInEntities() {
-    const { inEntities } = this.get;
+  private addNewOutEntitites() {
+    const { newEntities } = this;
+    this.addOutEntitiesFromInEntities(newEntities);
+  }
+  private addOutEntitiesFromInEntities(inEntities: InEntity[]) {
+    this.dummyCheck(inEntities);
+    for (const entity of inEntities) {
+      if (this.inEntitySectionExists(entity)) {
+        const inEntityVarb = this.solverSections.varbByMixed(entity);
+        inEntityVarb.addOutEntity(this.newSelfOutEntity(entity.entityId));
+      }
+    }
+  }
+  private dummyCheck(inEntities: InEntity[]) {
     if (
       inEntities.length > 1 &&
       inEntities.every((entity) => {
@@ -125,21 +144,16 @@ export class SolverVarb<
         );
       })
     ) {
-      throw new Error("There shouldn't be two of these entities");
-    }
-
-    for (const inEntity of inEntities) {
-      if (this.getterSections.hasSectionMixed(inEntity)) {
-        const inEntityVarb = this.solverSections.varbByMixed(inEntity);
-        inEntityVarb.addOutEntity({
-          ...this.get.feVarbInfoMixed,
-          entityId: inEntity.entityId,
-        });
-      }
+      throw new Error("There shouldn't be two of these.");
     }
   }
-  removeOutEntitiesOfInEntities() {
-    const { inEntities } = this.get;
+  private newSelfOutEntity(inEntityId: string): OutEntity {
+    return {
+      ...this.get.feVarbInfoMixed,
+      entityId: inEntityId,
+    };
+  }
+  private removeOutEntitiesOfInEntities(inEntities: InEntity[]) {
     for (const inEntity of inEntities) {
       if (this.getterSections.hasSectionMixed(inEntity)) {
         const inEntityVarb = this.solverSections.varbByMixed(inEntity);
@@ -149,22 +163,9 @@ export class SolverVarb<
   }
   private removeObsoleteOutEntities() {
     const { missingEntities } = this;
-    for (const entity of missingEntities) {
-      if (this.getterSections.hasSectionMixed(entity)) {
-        const inEntityVarb = this.solverSections.varbByMixed(entity);
-        inEntityVarb.removeOutEntity(entity.entityId);
-      }
-    }
+    this.removeOutEntitiesOfInEntities(missingEntities);
   }
-  private addNewOutEntitites() {
-    const { newEntities } = this;
-    for (const entity of newEntities) {
-      if (this.inEntitySectionExists(entity)) {
-        const inEntityVarb = this.solverSections.varbByMixed(entity);
-        inEntityVarb.addOutEntity(this.newSelfOutEntity);
-      }
-    }
-  }
+
   private get initialAndNextEntities(): {
     initialEntities: InEntity[];
     nextEntities: InEntity[];
@@ -186,13 +187,13 @@ export class SolverVarb<
       (entity) => !entityS.entitiesHas(initialEntities, entity)
     );
   }
-  private get newSelfOutEntity(): OutEntity {
-    return {
-      ...this.get.feVarbInfoMixed,
-      entityId: Id.make(),
-    };
-  }
   private removeOutEntity(entityId: string): void {
+    const entity = this.get.outEntities.find(
+      (entity) => entity.entityId === entityId
+    );
+    if (!entity) {
+      throw new Error("Tried to remove entity, but entity not found.");
+    }
     const nextOutEntities = this.get.outEntities.filter(
       (outEntity) => outEntity.entityId !== entityId
     );
@@ -202,17 +203,6 @@ export class SolverVarb<
   }
   private addOutEntity(outEntity: OutEntity): void {
     const nextOutEntities = [...this.get.outEntities, outEntity];
-    if (nextOutEntities.length === 2) {
-      if (
-        nextOutEntities.every((entity) => {
-          return (
-            entity.sectionName === "outputItem" && entity.varbName === "value"
-          );
-        })
-      ) {
-        throw new Error("There shouldn't be two of these out entities");
-      }
-    }
     this.updaterVarb.update({ outEntities: nextOutEntities });
   }
   private inEntitySectionExists(inEntity: InEntity): boolean {
@@ -248,27 +238,18 @@ export class SolverVarb<
   private get inRelativeInfos(): RelInVarbInfo[] {
     return this.get.inUpdatePack.inUpdateInfos;
   }
-
-  private removeInEntity({
-    entityId,
-    ...inEntityInfo
-  }: InEntityVarbInfo & { entityId: string }): void {
-    this.updaterVarb.update({
-      value: this.get.numObj.removeEntity(entityId),
-    });
-    if (this.getterSections.hasSectionMixed(inEntityInfo)) {
-      const inEntityVarb = this.solverSections.varbByMixed(inEntityInfo);
-      inEntityVarb.removeOutEntity(entityId);
-    }
-  }
   private addInEntity(inEntity: InEntity): void {
     this.updaterVarb.update({
       value: this.get.numObj.addEntity(inEntity),
     });
-    if (this.inEntitySectionExists(inEntity)) {
-      const inEntityVarb = this.solverSections.varbByMixed(inEntity);
-      inEntityVarb.addOutEntity(this.newSelfOutEntity);
-    }
+    this.addOutEntitiesFromInEntities([inEntity]);
+  }
+  private removeInEntity(inEntity: InEntity): void {
+    const { entityId } = inEntity;
+    this.updaterVarb.update({
+      value: this.get.numObj.removeEntity(entityId),
+    });
+    this.removeOutEntitiesOfInEntities([inEntity]);
   }
 }
 

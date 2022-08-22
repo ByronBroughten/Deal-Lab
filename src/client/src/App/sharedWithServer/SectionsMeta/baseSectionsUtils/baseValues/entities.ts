@@ -70,10 +70,16 @@ export const mInEntities = {
   },
 };
 
+export type EntitySource = "localValueEntityInfo" | "editor";
+
 export const entityS = {
   inEntity(
     varbInfo: InEntityVarbInfo,
-    entityInfo: { offset: number; length: number; entitySource: string }
+    entityInfo: {
+      offset: number;
+      length: number;
+      entitySource: EntitySource;
+    }
   ): InEntity {
     return {
       entityId: Id.make(),
