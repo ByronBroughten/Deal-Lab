@@ -7,8 +7,6 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-// I think I want to go with ultimatepropertyanalyzer.com
-
 // - Removing a loan after saving and creating
 //   new isn't working for some reason
 
