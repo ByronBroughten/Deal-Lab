@@ -13,4 +13,9 @@ export const timeS = {
   get hundredsOfYearsFromNow() {
     return 11661201881;
   },
+  async delay(milliseconds: number) {
+    return new Promise((resolve) => {
+      setTimeout(resolve, milliseconds);
+    });
+  },
 } as const;
