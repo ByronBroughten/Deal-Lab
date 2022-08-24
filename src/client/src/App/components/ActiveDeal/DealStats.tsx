@@ -3,6 +3,7 @@ import styled, { css } from "styled-components";
 import useToggleView from "../../modules/customHooks/useToggleView";
 import { auth } from "../../modules/services/authService";
 import theme from "../../theme/Theme";
+import { AppFooter } from "../AppFooter";
 import MainSection from "../appWide/GeneralSection";
 import GeneralSectionTitle from "../appWide/GeneralSection/GeneralSectionTitle";
 import MainSectionTitleBtn from "../appWide/GeneralSection/GeneralSectionTitle/MainSectionTitleBtn";
@@ -76,9 +77,7 @@ export default function DealStats({ className, feId }: Props) {
         }
       </GeneralSectionTitle>
       <Deal {...{ feId, detailsIsOpen }} />
-      <div className="DealStats-appInfo">
-        Questions or feedback? support@ultimatepropertyanalyzer.com
-      </div>
+      <AppFooter />
     </Styled>
   );
 }
@@ -127,16 +126,5 @@ const Styled = styled(MainSection)<{ $showDetails: boolean }>`
       css`
         overflow: auto;
       `}
-  }
-
-  .DealStats-appInfo {
-    display: flex;
-    justify-content: center;
-    background: ${theme.deal.main};
-    color: ${theme.dark};
-    font-size: 14px;
-    padding: ${theme.s1} 0;
-    /* font-size: 0.9rem; */
-    /* line-height: 0.9rem; */
   }
 `;

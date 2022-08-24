@@ -69,9 +69,4 @@ const Styled = styled.div`
   .NavSpaceDiv-root {
     height: ${theme.s3};
   }
-  .Footer-root {
-    position: sticky;
-    bottom: 0;
-    z-index: 3;
-  }
 `;
