@@ -1,10 +1,10 @@
 import React from "react";
-import useToggleView from "../../modules/customHooks/useToggleView";
-import NavBtn from "./NavBtn";
 import styled from "styled-components";
-import { StandardProps } from "../general/StandardProps";
 import useOnOutsideClickRef from "../../modules/customHooks/useOnOutsideClickRef";
+import useToggleView from "../../modules/customHooks/useToggleView";
 import theme from "../../theme/Theme";
+import { StandardProps } from "../general/StandardProps";
+import NavBtn from "./NavBtn";
 
 interface Props extends StandardProps {
   btnText: string | React.ReactNode;
@@ -40,6 +40,7 @@ const Styled = styled.div`
   z-index: 1;
   display: flex;
   flex-direction: column;
+  height: 100%;
 
   .NavBtn {
     position: relative;

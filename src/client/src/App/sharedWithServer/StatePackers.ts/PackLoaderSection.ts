@@ -59,10 +59,10 @@ export class PackLoaderSection<
       });
     }
   }
-  loadChildSectionPackArr<CN extends ChildName<SN>>({
-    childName,
-    sectionPacks,
-  }: ChildArrPack<SN, CN>): void {
+  loadChildSectionPackArr<
+    CN extends ChildName<SN>,
+    CT extends ChildSectionName<SN, CN>
+  >({ childName, sectionPacks }: ChildArrPack<SN, CN, CT>): void {
     this.update.removeChildren(childName);
     for (const sectionPack of sectionPacks) {
       this.loadChildSectionPack({

@@ -52,7 +52,10 @@ export class FeUserActor extends SectionActorBase<"feUser"> {
     );
     this.loginSetter.setUserInfoToken(headers);
     const subInfo = this.setter.onlyChild("subscriptionInfo");
-    subInfo.updateValues(data);
+    subInfo.updateValues({
+      plan: data.subscriptionPlan,
+      planExp: data.planExp,
+    });
   }
   async loadUserData(): Promise<boolean> {
     const res = await this.apiQueries.getUserData(
@@ -66,8 +69,8 @@ export class FeUserActor extends SectionActorBase<"feUser"> {
   get subscriptionValues(): SubscriptionValues {
     const subInfo = this.get.onlyChild("subscriptionInfo");
     return {
-      subscriptionPlan: subInfo.value("plan", "string") as UserPlan,
-      planExp: subInfo.value("planExp", "number"),
+      subscriptionPlan: subInfo.valueNext("plan") as UserPlan,
+      planExp: subInfo.valueNext("planExp"),
     };
   }
   get userPlan(): UserPlan {

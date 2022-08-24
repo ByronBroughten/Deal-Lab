@@ -7,6 +7,7 @@ import styled from "styled-components";
 import { constants } from "../Constants";
 import { useFeUser } from "../modules/sectionActorHooks/useFeUser";
 import theme from "../theme/Theme";
+import { FeedbackPanel } from "./NavBar/FeedbackPanel";
 import NavBtn from "./NavBar/NavBtn";
 import NavDropDown from "./NavBar/NavDropDown";
 import { NavUserMenu } from "./NavBar/NavUserMenu";
@@ -56,13 +57,21 @@ export default function NavBar(props: NavBarProps) {
               </Link>
             </>
           )}
+          {constants.isBeta && (
+            <NavDropDown
+              className="NavBar-feedbackDropDown"
+              btnText="Give Feedback"
+            >
+              <FeedbackPanel />
+            </NavDropDown>
+          )}
           {!isGuest && isBasic && !constants.isBeta && false && (
             <NavDropDown
-              className="NavBar-getProBtn"
+              className="NavBar-GetProDropdown"
               btnText={
                 <>
-                  <span className="NavBar-getProBtnText">Pro</span>
-                  <BsArrowUpCircle className="NavBar-getProBtnIcon" />
+                  <span className="NavBar-GetProDropdownText">Pro</span>
+                  <BsArrowUpCircle className="NavBar-GetProDropdownIcon" />
                 </>
               }
             >
@@ -77,10 +86,6 @@ export default function NavBar(props: NavBarProps) {
 }
 
 const Styled = styled(AppBar)`
-  .DropdownForm-comingSoon {
-    display: flex;
-    justify-content: center;
-  }
   .MuiToolbar-root {
     position: static;
   }
@@ -102,10 +107,7 @@ const Styled = styled(AppBar)`
 
   .NavBar-brandName {
     margin-left: 8px;
-    font-size: 20px;
-  }
-
-  .NavBar-navBtnLink {
+    font-size: ${constants.isBeta ? "16px" : "20px"};
   }
 
   .NavBar-navBtnLink {
@@ -122,13 +124,19 @@ const Styled = styled(AppBar)`
     font-size: ${rem("25px")};
   }
 
-  .NavBar-getProBtn {
+  .NavBar-GetProDropdown {
     .NavDropDown-navBtn {
       background: ${theme.property.main};
     }
   }
 
-  .NavBar-getProBtnIcon {
+  .NavBar-feedbackDropDown {
+    .NavDropDown-navBtn {
+      font-size: 14px;
+    }
+  }
+
+  .NavBar-GetProDropdownIcon {
     margin-left: ${rem("4px")};
     font-size: ${rem("23px")};
   }
@@ -147,11 +155,7 @@ const Styled = styled(AppBar)`
       color: ${theme.light};
     }
   }
-
   .NavBar-rightSide {
     display: flex;
-  }
-  .NavBar-getProBtn {
-    height: 100%;
   }
 `;

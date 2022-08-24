@@ -14,6 +14,7 @@ import { FeSectionInfo } from "../SectionsMeta/Info";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { GetterSectionBase } from "../StateGetters/Bases/GetterSectionBase";
 import { GetterSection } from "../StateGetters/GetterSection";
+import { StateSections } from "../StateSections/StateSections";
 import { Obj } from "../utils/Obj";
 
 type FeSectionPackArrs<
@@ -23,10 +24,25 @@ type FeSectionPackArrs<
   [C in CN]: ChildSectionPack<SN, C>[];
 };
 
+type MakeFromSectionsProps<SN extends SimpleSectionName> = {
+  sections: StateSections;
+  sectionName: SN;
+};
 export class PackMakerSection<
   SN extends SectionName
 > extends GetterSectionBase<SN> {
-  get = new GetterSection(this.getterSectionProps);
+  get get(): GetterSection<SN> {
+    return new GetterSection(this.getterSectionProps);
+  }
+  static makeFromSections<SN extends SimpleSectionName>({
+    sections,
+    sectionName,
+  }: MakeFromSectionsProps<SN>): PackMakerSection<SN> {
+    return new PackMakerSection({
+      sectionsShare: { sections },
+      ...sections.onlyOneRawSection(sectionName),
+    });
+  }
   makeSectionPack(): SectionPack<SN> {
     return {
       sectionName: this.sectionName,

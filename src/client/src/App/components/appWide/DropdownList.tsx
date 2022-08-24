@@ -64,7 +64,7 @@ const Styled = styled.div<{ $dropTop?: boolean }>`
     position: relative;
     display: flex;
     justify-content: flex-start;
-    z-index: 2;
+    z-index: 4;
   }
   .DropdownList-childrenInner {
     position: absolute;

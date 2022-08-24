@@ -30,9 +30,8 @@ export default function Financing({ feId, ...rest }: Props) {
           themeName="loan"
           className="Financing-mainSectionTitleBtn"
           onClick={addLoan}
-        >
-          Add Loan
-        </MainSectionTitleBtn>
+          text="Add Loan"
+        />
       </div>
     </Styled>
   );

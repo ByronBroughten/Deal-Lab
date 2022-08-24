@@ -50,7 +50,7 @@ export function NavUserMenu({ feId, logout }: NavUserMenuProps) {
           $isactive={viewIsOpen}
         >
           <div className="NavUserMenu-nameDiv">
-            <span>{userName}</span>
+            {!constants.isBeta && <span>{userName}</span>}
             <AiOutlineMenu className="NavBar-menuIcon" />
           </div>
         </NavBtn>
@@ -86,7 +86,7 @@ const Styled = styled.div<{ $isFullPlan: boolean }>`
   flex-direction: column;
 
   .NavBar-menuIcon {
-    margin-left: ${theme.s4};
+    margin-left: ${constants.isBeta ? "0px" : theme.s3};
     height: 24px;
     width: 24px;
   }
@@ -94,6 +94,7 @@ const Styled = styled.div<{ $isFullPlan: boolean }>`
   .NavUserMenu-nameDiv {
     display: flex;
     align-items: center;
+    font-size: 14px;
   }
 
   .NavUserMenu-navBtn {
@@ -106,7 +107,7 @@ const Styled = styled.div<{ $isFullPlan: boolean }>`
       `}
 
     min-height: ${theme.navBar.height};
-    min-width: ${rem(112.78)};
+    min-width: ${rem(50)};
     position: relative;
     z-index: 1;
   }
@@ -128,7 +129,7 @@ const Styled = styled.div<{ $isFullPlan: boolean }>`
       display: flex;
       justify-content: flex-start;
       padding: ${theme.s3};
-      font-size: 1em;
+      font-size: 1rem;
       :hover,
       :focus {
         background-color: ${theme.error.light};

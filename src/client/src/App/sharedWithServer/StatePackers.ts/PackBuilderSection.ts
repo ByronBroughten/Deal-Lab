@@ -89,6 +89,7 @@ export class PackBuilderSection<
   makeSectionPack(): SectionPack<SN> {
     return this.maker.makeSectionPack();
   }
+
   // I shouldn't need to add the childName
   addAndGetChild<CN extends ChildName<SN>>(
     childName: CN,
@@ -132,7 +133,9 @@ export class PackBuilderSection<
     }
     return children;
   }
-  loadChildren<CN extends ChildName<SN>>(childArrPack: ChildArrPack<SN, CN>) {
+  loadChildren<CN extends ChildName<SN>, CT extends ChildSectionName<SN, CN>>(
+    childArrPack: ChildArrPack<SN, CN, CT>
+  ) {
     this.loader.loadChildSectionPackArr(childArrPack);
   }
   loadSelf(sectionPack: SectionPack<SN>) {

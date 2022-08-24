@@ -14,7 +14,7 @@ export function useSetterSection<SN extends SectionName = "main">(
   });
 }
 
-export function useOnlyOneSetterSection<SN extends SectionName>(
+export function useSetterSectionOnlyOne<SN extends SectionName>(
   sectionName: SN
 ): SetterSection<SN> {
   const props = useSetterSectionsProps();

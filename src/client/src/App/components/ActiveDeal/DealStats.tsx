@@ -15,6 +15,17 @@ export default function DealStats({ className, feId }: Props) {
     initValue: false,
     viewWhat: "details",
   });
+
+  const detailsBtnProps = detailsIsOpen
+    ? {
+        text: "Hide Details",
+        icon: <CgDetailsLess className="GeneralSectionTitle-detailsIcon" />,
+      }
+    : {
+        text: "Show Details",
+        icon: <CgDetailsMore className="GeneralSectionTitle-detailsIcon" />,
+      };
+
   return (
     <Styled
       {...{
@@ -24,57 +35,45 @@ export default function DealStats({ className, feId }: Props) {
       }}
     >
       <GeneralSectionTitle title="Deal" themeName="deal">
-        <div className="GeneralSectionTitle-children">
-          <MainSectionTitleBtn
-            themeName="deal"
-            className="GeneralSectionTitle-child"
-            onClick={toggleDetails}
-          >
-            {detailsIsOpen ? (
-              <>
-                {"Hide Details"}
-                <CgDetailsLess className="GeneralSectionTitle-detailsIcon" />
-              </>
-            ) : (
-              <>
-                {"Show Details"}
-                <CgDetailsMore className="GeneralSectionTitle-detailsIcon" />
-              </>
-            )}
-          </MainSectionTitleBtn>
-          {/* // disable the link */}
-          {
-            auth.isToken && null
-            // <Link className="GeneralSectionTitle-dealsLink" to="/deals">
-            //   <MainSectionTitleBtn
-            //     themeName="deal"
-            //     className="GeneralSectionTitle-child"
-            //     // disabled={!auth.isToken}
-            //   >
-            //     {"Compare Deals"}
-            //     <MdCompareArrows className="GeneralSectionTitle-compareIcon" />
-            //   </MainSectionTitleBtn>
-            // </Link>
-          }
-          {
-            !auth.isToken && null
-            // <StandardToolTip
-            //   className="GeneralSectionTitle-toolTip"
-            //   title="Login to compare saved deals"
-            // >
-            //   <div className="GeneralSectionTitle-disabledBtnWrapper">
-            //     <MainSectionTitleBtn
-            //       themeName="deal"
-            //       className="GeneralSectionTitle-child GeneralSectionTitle-compareDealsBtn"
-            //       disabled={true}
-            //     >
-            //       {"Compare Deals"}
-            //       <MdCompareArrows className="GeneralSectionTitle-compareIcon" />
-            //     </MainSectionTitleBtn>
-            //   </div>
-            // </StandardToolTip>
-          }
-        </div>
+        <MainSectionTitleBtn
+          {...{
+            ...detailsBtnProps,
+            themeName: "deal",
+            className: "GeneralSectionTitle-child",
+            onClick: toggleDetails,
+          }}
+        />
+        {
+          auth.isToken && null
+          // <Link className="GeneralSectionTitle-dealsLink" to="/deals">
+          //   <MainSectionTitleBtn
+          //     themeName="deal"
+          //     className="GeneralSectionTitle-child"
+          //     // disabled={!auth.isToken}
+          //   >
+          //     {"Compare Deals"}
+          //     <MdCompareArrows className="GeneralSectionTitle-compareIcon" />
+          //   </MainSectionTitleBtn>
+          // </Link>
+        }
+        {
+          !auth.isToken && null
+          // <StandardToolTip
+          //   className="GeneralSectionTitle-toolTip"
+          //   title="Login to compare saved deals"
+          // >
+          //   <div className="GeneralSectionTitle-disabledBtnWrapper">
+          //     <MainSectionTitleBtn
+          //       themeName="deal"
+          //       className="GeneralSectionTitle-child GeneralSectionTitle-compareDealsBtn"
+          //       disabled={true}
+          //     >
+          //       {"Compare Deals"}
+          //       <MdCompareArrows className="GeneralSectionTitle-compareIcon" />
+          //     </MainSectionTitleBtn>
+          //   </div>
+          // </StandardToolTip>
+        }
       </GeneralSectionTitle>
       <Deal {...{ feId, detailsIsOpen }} />
       <div className="DealStats-appInfo">
@@ -85,13 +84,6 @@ export default function DealStats({ className, feId }: Props) {
 }
 
 const Styled = styled(MainSection)<{ $showDetails: boolean }>`
-  .GeneralSectionTitle-children {
-    display: flex;
-    height: 100%;
-    align-items: center;
-    width: 50%;
-  }
-
   .GeneralSectionTitle-dealsLink {
     display: flex;
     align-items: center;
@@ -112,7 +104,7 @@ const Styled = styled(MainSection)<{ $showDetails: boolean }>`
 
   .GeneralSectionTitle-child {
     margin: 0 ${theme.s1};
-    width: 100%;
+    width: 50%;
   }
   // properly disable compare deals for when you're logged out
   // make Deal stick to the bottom again

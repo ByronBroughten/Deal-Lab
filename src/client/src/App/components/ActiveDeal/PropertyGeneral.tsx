@@ -13,7 +13,7 @@ export function PropertyGeneral({ feId }: { feId: string }) {
   return (
     <MainSection themeName="property" className="PropertyGeneral-root">
       <GeneralSectionTitle title="Property" themeName="property" />
-      <div>
+      <div className="MainSection-entries">
         {propertyIds.map((feId) => (
           <Property key={feId} feId={feId} />
         ))}

@@ -7,45 +7,31 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-// - Removing a loan after saving and creating
-//   new isn't working for some reason
 
-// - Deleted saved loans are coming back when
-//   I reload the app.
-
-// - Refresh is losing state
-// - Fix losing the deal state after login and register
-// - Fix state revert not acting how it should
-//   when addSection fails
-//   - It says there are no sections to load, but the
-//   - actions menu still acts like the loan is saved
 // - User solverSections in MainSection
-// - "getUserData" returned 401 - unauthorized
-// - mgmt
+// - "getUserData" sometimes returns 401 - unauthorized
 
 // - Fix variable labels for things with same
 //   names accross sections (Upfront expenses, etc)
 
-// Make a video of the present functionality without
-// the BETA sign
-
-// Make a Beta feedback panel
-// - Email address
-// - Discord
-// - Direct message box?
-
-// Disable getUserData on the backend unless
-// the email has been verified
-
-// Try beta testing for one month.
-// - Make all the features (the one) free
-// - Add a "Beta flag"
-// - Make a large, "Feedback" button that shows email and
-//   discord
-// - Try adding the other four things during beta.
-
 // For it to truly be an ultimate property analyzer, I need 4 more things:
 // 1. Bring back the custom variables/variable lists
+
+// - Alright. How do I bring back those custom variables?
+
+// - Create the variables page.
+// - An empty state, or default state, is made with a copy of the variables.
+// - On save, the copy replaces the main feUser children.
+// - Track whether the variables are effectively saved using isEqual.
+// - If the user tries to leave when they're, not, warn them.
+
+// I like displaying the equals for totally user-defined variables.
+// To each userVarb value, add "isPureUserVarb".
+// Each time a userVarb value updates, that thing updates based on inVarbs.
+// This is only necessary for userVarb varbs.
+
+// - Put "Your Variables" back in the menu
+
 // 2. Bring back custom outputs/output lists
 //    - outputLists might be on the same page as custom variables
 // 3. Bring back custom additive lists
@@ -53,15 +39,9 @@ AppRegistry.runApplication("App", {
 //    - ongoingList
 // 4. Bring back deal compare
 //    - implement property compare, etc
-
 // Cherries on top
 // 5. Api variables
 // 6. Sharing things with other users
-
-// - Record new demo video in one go
-// - Record demo audio in increments
-
-// - get rid of login and register stuff
 
 // 1. When a subscription is active (or inactive), getUserData and updateSubscription
 //    should return the subscription header like they're supposed to
@@ -72,14 +52,6 @@ AppRegistry.runApplication("App", {
 // - A session is created after register but before email verification
 // - There is a post-email-verification feature that I could use
 //   to create the new user
-
-// - Think about the race condition on the front-end for someone starting
-//   a subscription. This might notbe a problem.
-//   - The FE waits one second
-//   - The FE sends the request to update its subscription
-//   - the subscription is not yet there—there is no subscription
-//     that was made recently, or no subscription that has never been
-//     obtained by the front end
 
 // Launch the app on Sunday.
 // - Post it, asking people for input
@@ -92,12 +64,24 @@ AppRegistry.runApplication("App", {
 //   *Podcast ads
 //    - Optimal finance daily
 //   *Quora
-//    - answer people's questions about how to size-up property
+//    - answer people's questions about how to analyze property
 //   * Youtube ads
 //   * Facebook ads
 //    - banner
 // - Post on the bigger pockets forum
 // - Get an "influencer" to showcase it?
+
+// - Think about the race condition on the front-end for someone starting
+//   a subscription. This might notbe a problem.
+//   - The FE waits one second
+//   - The FE sends the request to update its subscription
+//   - the subscription is not yet there—there is no subscription
+//     that was made recently, or no subscription that has never been
+//     obtained by the front end
+
+// - Maybe implement social login
+// - Maybe disable getUserData on the backend unless
+//   the email has been verified
 
 // Possible roadmap
 // - Roadmap
@@ -115,5 +99,7 @@ AppRegistry.runApplication("App", {
 // etc.
 
 // You probably want example lists and variables.
+
+// Be more like Google—put the menu on the left side.
 
 reportWebVitals();

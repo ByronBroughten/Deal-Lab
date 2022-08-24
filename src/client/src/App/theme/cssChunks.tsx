@@ -134,9 +134,6 @@ const ccs = {
           .title-row {
             ${this.titleRow}
           }
-          h6.title-text {
-            ${this.titleText};
-          }
         }
       `;
     },

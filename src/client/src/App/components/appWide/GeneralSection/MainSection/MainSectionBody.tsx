@@ -21,7 +21,7 @@ const StyledEntryBody = styled.div<{ $themeName: ThemeName }>`
   flex: 0;
   flex-wrap: wrap;
 
-  ${({ $themeName }) => listGroupCss($themeName)};
+  ${listGroupCss()};
 
   .MainSectionBody-inner {
     display: flex;

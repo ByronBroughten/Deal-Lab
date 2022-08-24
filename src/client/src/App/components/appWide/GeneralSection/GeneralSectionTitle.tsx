@@ -22,7 +22,7 @@ export default function GeneralSectionTitle({
       }}
     >
       <h4 className="GeneralSectionTitle-titleText">{title}</h4>
-      {children}
+      <div className="GeneralSectionTitle-children">{children}</div>
       <h4 className="GeneralSectionTitle-titleText GeneralSectionTitle-invisible"></h4>
     </MainSectionTitleStyled>
   );
@@ -41,6 +41,14 @@ export const MainSectionTitleStyled = styled.div<{
   height: 32px;
   align-items: center;
   box-shadow: ${theme.boxShadow1};
+
+  .GeneralSectionTitle-children {
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
 
   .MainSectionTitleAddEntry-invisible {
     visibility: hidden;

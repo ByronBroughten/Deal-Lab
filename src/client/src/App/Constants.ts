@@ -46,9 +46,11 @@ const env = envConstants[envName];
 const apiPathBit = "/api";
 const apiPathFull = `${env.apiUrlBase}${apiPathBit}`;
 
-const isBeta = false;
+const isBeta = true;
 export const config = {
   ...env,
+  supportEmail: "support@ultimatepropertyanalyzer.com",
+  discordLink: "https://discord.gg/W6pxEXT8EV",
   clientProdUrl,
   clientDevUrl,
   isBeta,

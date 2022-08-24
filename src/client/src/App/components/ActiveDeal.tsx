@@ -1,5 +1,4 @@
 import React from "react";
-import { View } from "react-native";
 import styled from "styled-components";
 import { useGetterSection } from "../sharedWithServer/stateClassHooks/useGetterSection";
 import theme from "../theme/Theme";
@@ -19,21 +18,18 @@ export function ActiveDeal({ className, feId }: Props) {
     feId,
   });
   return (
-    <>
-      <Styled {...{ className: `MainSections-root ${className ?? ""}` }}>
-        <View style={{ flex: 1 }}>
-          <PropertyGeneral feId={deal.onlyChildFeId("propertyGeneral")} />
-          <Financing feId={deal.onlyChildFeId("financing")} />
-          <MgmtGeneral feId={deal.onlyChildFeId("mgmtGeneral")} />
-        </View>
-      </Styled>
+    <Styled {...{ className: `MainSections-root ${className ?? ""}` }}>
+      <PropertyGeneral feId={deal.onlyChildFeId("propertyGeneral")} />
+      <Financing feId={deal.onlyChildFeId("financing")} />
+      <MgmtGeneral feId={deal.onlyChildFeId("mgmtGeneral")} />
       <DealStats className="Footer-root" feId={feId} />
-    </>
+    </Styled>
   );
 }
 
 const Styled = styled.div`
   background: ${theme.mgmt.light};
   display: flex;
+  flex-direction: column;
   flex: 1;
 `;

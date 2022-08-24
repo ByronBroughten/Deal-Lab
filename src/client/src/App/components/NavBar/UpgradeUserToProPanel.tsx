@@ -6,6 +6,7 @@ import { constants } from "../../Constants";
 import { apiQueries } from "../../modules/apiQueriesClient";
 import { makeReq } from "../../sharedWithServer/apiQueriesShared/makeReqAndRes";
 import theme from "../../theme/Theme";
+import { NavBarPanel } from "./NavBarPanel";
 
 const styles = StyleSheet.create({
   banner: {},
@@ -23,23 +24,7 @@ const styles = StyleSheet.create({
     marginTop: theme.s3,
   },
   list: {},
-  bulletItem: {
-    marginTop: theme.s2,
-    flexDirection: "column",
-    alignItems: "flex-start",
-  },
-  row: {
-    flexDirection: "row",
-    alignItems: "flex-start",
-    flexWrap: "wrap",
-    flex: 1,
-  },
-  bullet: {
-    width: 12,
-  },
-  bulletText: {
-    flex: 1,
-  },
+  
   boldText: {
     fontWeight: "bold",
     color: theme.softDark,
@@ -99,65 +84,9 @@ export function UpgradeUserToProPanel() {
   );
 }
 
-interface BulletProps {
-  text: string;
-  key: string;
-}
-function Bullet({ text, key }: BulletProps) {
-  return (
-    <View style={styles.bulletItem} key={key}>
-      <View style={styles.row}>
-        <View style={styles.bullet}>
-          <Text style={styles.normalText}>{"\u2022" + " "}</Text>
-        </View>
-        <View style={styles.bulletText}>
-          <Text style={styles.normalText}>{text}</Text>
-        </View>
-      </View>
-    </View>
-  );
-}
 
-const Styled = styled.div`
-  width: 600px;
-  min-width: 300px;
-  background: ${theme.light};
-  padding: ${theme.s4};
-  border-radius: 0 0, ${theme.br1} ${theme.br1};
 
-  .Title-text {
-    color: ${theme["gray-700"]};
-    font-size: ${theme.f3};
-    font-weight: 700;
-  }
-
-  .FormGroup {
-    margin-top: ${theme.s4};
-    padding: 0;
-    border-style: none;
-    background-color: ${theme.property.main};
-    will-change: opacity, transform;
-    box-shadow: 0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08),
-      inset 0 1px 0 ${theme.loan.main}
-    border-radius: 4px;
-  }
-
-  .FormRow {
-    border-top: 1px solid ${theme.loan.main};
-    display: flex;
-    align-items: center;
-    padding-left: 15px;
-  }
-
-  .StripeElement--webkit-autofill {
-    background: transparent !important;
-  }
-
-  .StripeElement {
-    width: 100%;
-    padding: 11px 15px 11px 0;
-  }
-
+const Styled = styled(NavBarPanel)`
   .PaymentForm-payBtn {
     display: block;
     font-size: 16px;
@@ -183,12 +112,5 @@ const Styled = styled.div`
       transform: scale(0.99);
       color: ${theme.light};
     }
-  }
-
-  
-
-  h1,
-  h3 {
-    text-align: center;
   }
 `;

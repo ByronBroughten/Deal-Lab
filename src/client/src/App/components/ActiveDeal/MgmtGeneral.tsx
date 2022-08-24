@@ -19,7 +19,7 @@ export function MgmtGeneral({ feId }: Props) {
       }}
     >
       <GeneralSectionTitle {...{ title: "Management", themeName: "mgmt" }} />
-      <div>
+      <div className="MainSection-entries">
         {mgmtIds.map((feId) => (
           <Mgmt key={feId} feId={feId} />
         ))}
