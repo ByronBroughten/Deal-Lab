@@ -38,7 +38,7 @@ export class VariableGetterSections extends GetterSectionsBase {
       return options.concat(
         userVarbItems.map((item) => {
           return {
-            displayName: item.varb("displayName").value("string"),
+            displayName: item.virtualVarb.displayName,
             collectionName,
             varbInfo: {
               ...item.dbInfoMixed("onlyOne"),

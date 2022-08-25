@@ -110,7 +110,7 @@ const themeSections = {
       light: color["gray-200"],
       main: color["gray-400"],
       dark: color["gray-600"],
-      border: color["gray-500"],
+      border: color["gray-600"],
     }),
   },
   property: {

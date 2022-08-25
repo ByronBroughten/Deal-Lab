@@ -1,20 +1,19 @@
 import React from "react";
 import { AiOutlineSave } from "react-icons/ai";
-import { SectionsContext } from "../../../App/sharedWithServer/stateClassHooks/useSections";
+import styled from "styled-components";
 import { apiQueries } from "../../modules/apiQueriesClient";
 import { SectionArrQuerier } from "../../modules/QueriersBasic/SectionArrQuerier";
+import { SectionsContext } from "../../sharedWithServer/stateClassHooks/useSections";
 import { useSetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useSetterSection";
 import { PackBuilderSection } from "../../sharedWithServer/StatePackers.ts/PackBuilderSection";
 import { PackMakerSection } from "../../sharedWithServer/StatePackers.ts/PackMakerSection";
 import { SolverSections } from "../../sharedWithServer/StateSolvers/SolverSections";
 import MainSection from "../appWide/GeneralSection";
 import GeneralSectionTitle from "../appWide/GeneralSection/GeneralSectionTitle";
-import MainSectionBody from "../appWide/GeneralSection/MainSection/MainSectionBody";
-import { ListGroupLists } from "../appWide/ListGroup/ListGroupShared/ListGroupGeneric/ListGroupLists";
-import MainSectionTitleBtn from "./../appWide/GeneralSection/GeneralSectionTitle/MainSectionTitleBtn";
-import { VarbListUserVarbs } from "./../appWide/VarbLists/VarbListUserVarbs";
+import MainSectionTitleBtn from "../appWide/GeneralSection/GeneralSectionTitle/MainSectionTitleBtn";
+import { UserVarbListSectionEntry } from "./UserVarbListSectionEntry";
 
-export function VariableListSection() {
+export function UserVarbListSection() {
   const feUser = useSetterSectionOnlyOne("feUser");
   const varbListSectionsContext = useUserVarbListSections();
 
@@ -38,10 +37,7 @@ export function VariableListSection() {
 
   return (
     <SectionsContext.Provider value={varbListSectionsContext}>
-      <MainSection
-        themeName="userVarbList"
-        className="VariableListSection-root"
-      >
+      <Styled themeName="userVarbList" className="UserVarbListSection-root">
         <GeneralSectionTitle title="Variables" themeName="userVarbList">
           <MainSectionTitleBtn
             themeName="userVarbList"
@@ -53,13 +49,19 @@ export function VariableListSection() {
             }}
           />
         </GeneralSectionTitle>
-        <div>
-          <VariableListSectionEntry />
+        <div className="MainSection-entries">
+          <UserVarbListSectionEntry />
         </div>
-      </MainSection>
+      </Styled>
     </SectionsContext.Provider>
   );
 }
+
+const Styled = styled(MainSection)`
+  .GeneralSectionTitle-child {
+    width: 50%;
+  }
+`;
 
 function useUserVarbListSections() {
   // I'll want to load all the full sections when those
@@ -80,23 +82,4 @@ function useUserVarbListSections() {
     return packBuilder.sectionsShare.sections;
   });
   return { sections, setSections };
-}
-
-function VariableListSectionEntry() {
-  const feUser = useSetterSectionOnlyOne("feUser");
-  return (
-    <MainSection themeName="userVarbList">
-      {/* Row with Save btn */}
-      <MainSectionBody themeName="userVarbList">
-        <ListGroupLists
-          {...{
-            themeName: "userVarbList",
-            feIds: feUser.get.childFeIds("userVarbListMain"),
-            addList: () => feUser.addChild("userVarbListMain"),
-            makeListNode: (nodeProps) => <VarbListUserVarbs {...nodeProps} />,
-          }}
-        />
-      </MainSectionBody>
-    </MainSection>
-  );
 }

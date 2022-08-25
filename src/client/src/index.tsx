@@ -17,20 +17,17 @@ AppRegistry.runApplication("App", {
 // For it to truly be an ultimate property analyzer, I need 4 more things:
 // 1. Bring back the custom variables/variable lists
 
-// - Alright. How do I bring back those custom variables?
+// - Fix the wrong value type bug
+// - Get the variables to be used effectively as custom variables.
 
 // - Create the variables page.
-// - An empty state, or default state, is made with a copy of the variables.
-// - On save, the copy replaces the main feUser children.
 // - Track whether the variables are effectively saved using isEqual.
-// - If the user tries to leave when they're, not, warn them.
+// - If the user tries to leave when they're not saved, warn them.
 
 // I like displaying the equals for totally user-defined variables.
 // To each userVarb value, add "isPureUserVarb".
 // Each time a userVarb value updates, that thing updates based on inVarbs.
 // This is only necessary for userVarb varbs.
-
-// - Put "Your Variables" back in the menu
 
 // 2. Bring back custom outputs/output lists
 //    - outputLists might be on the same page as custom variables

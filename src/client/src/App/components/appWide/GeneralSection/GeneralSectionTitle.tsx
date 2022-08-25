@@ -45,9 +45,9 @@ export const MainSectionTitleStyled = styled.div<{
   .GeneralSectionTitle-children {
     display: flex;
     height: 100%;
+    width: 100%;
     justify-content: center;
     align-items: center;
-    width: 100%;
   }
 
   .MainSectionTitleAddEntry-invisible {

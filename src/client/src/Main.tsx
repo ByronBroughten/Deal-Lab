@@ -7,6 +7,7 @@ import { getSuperTokensRoutesForReactRouterDom } from "supertokens-auth-react";
 import { ActiveDeal } from "./App/components/ActiveDeal";
 import NotFound from "./App/components/general/NotFound";
 import NavBar from "./App/components/NavBar";
+import { UserVarbLists } from "./App/components/UserVarbLists";
 import { constants } from "./App/Constants";
 import {
   useAuthAndLogin,
@@ -37,7 +38,7 @@ export function Main() {
         /> */}
         {getSuperTokensRoutesForReactRouterDom(reactRouterDom)}
 
-        {/* <Route path="/variables" element={<UserVarbsManager/>} /> */}
+        <Route path="/variables" element={<UserVarbLists />} />
         {/* <Route path="/lists" element={<UserListsManager/>} /> */}
 
         <Route path="/not-found" element={<NotFound />} />
