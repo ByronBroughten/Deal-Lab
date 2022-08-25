@@ -3,9 +3,6 @@ import { rem } from "polished";
 import { AiOutlineMenu } from "react-icons/ai";
 import styled, { css } from "styled-components";
 import { constants } from "../../Constants";
-import useOnOutsideClickRef from "../../modules/customHooks/useOnOutsideClickRef";
-import useToggleView from "../../modules/customHooks/useToggleView";
-import { auth } from "../../modules/services/authService";
 import { UserPlan } from "../../sharedWithServer/SectionsMeta/baseSections";
 import { useAuthStatus } from "../../sharedWithServer/stateClassHooks/useAuthStatus";
 import {
@@ -14,7 +11,7 @@ import {
 } from "../../sharedWithServer/stateClassHooks/useGetterSection";
 import theme from "../../theme/Theme";
 import { StandardProps } from "../general/StandardProps";
-import NavBtn from "./NavBtn";
+import NavDropDown from "./NavDropDown";
 
 function BtnDiv({ children, className }: StandardProps) {
   return <div className={`NavUserMenu-btnDiv ${className}`}>{children}</div>;
@@ -35,55 +32,47 @@ export function NavUserMenu({ feId, logout }: NavUserMenuProps) {
   const isFullPlan = subscriptionPlan === "fullPlan";
 
   const authStatus = useAuthStatus();
-  const { viewIsOpen, toggleView, openView, closeView } = useToggleView({
-    initValue: false,
-  });
-  const closeIfClickOutsideRef = useOnOutsideClickRef(closeView);
   const userName = userInfo.value("userName", "string");
   return (
-    <Styled ref={closeIfClickOutsideRef} {...{ $isFullPlan: isFullPlan }}>
-      {auth.isToken && (
-        // this is guarded by auth just temporarily
-        <NavBtn
-          className="NavUserMenu-navBtn"
-          onClick={toggleView}
-          $isactive={viewIsOpen}
-        >
-          <div className="NavUserMenu-nameDiv">
-            {!constants.isBeta && <span>{userName}</span>}
-            <AiOutlineMenu className="NavBar-menuIcon" />
-          </div>
-        </NavBtn>
-      )}
-      {viewIsOpen && (
-        <div className="NavUserMenu-dropdown">
-          {/* <BtnDiv>
-            <Button href="/variables">{`${preceding} Variables`}</Button>
-          </BtnDiv>
+    <Styled
+      {...{ $isFullPlan: isFullPlan }}
+      btnText={
+        <div className="NavUserMenu-nameDiv">
+          {!constants.isBeta && <span>{userName}</span>}
+          <AiOutlineMenu className="NavBar-menuIcon" />
+        </div>
+      }
+    >
+      <div className="NavUserMenu-dropdown">
+        {/* 
           <BtnDiv>
-            <Button href="/lists">{`${preceding} Lists`}</Button>
+            <Button href="/lists">{`Your lists`}</Button>
           </BtnDiv> */}
-          {authStatus === "user" && (
-            <>
-              <BtnDiv>
-                <Button onClick={logout}>Logout</Button>
-              </BtnDiv>
-              {/* <BtnDiv>
+        {authStatus === "user" && (
+          <>
+            <BtnDiv>
+              <Button href="/variables">{`Your variables`}</Button>
+            </BtnDiv>
+            <BtnDiv>
+              <Button onClick={logout}>Logout</Button>
+            </BtnDiv>
+            {/* <BtnDiv>
                 <Button href="/account" disabled>
                   Account Info
                 </Button>
               </BtnDiv> */}
-            </>
-          )}
-        </div>
-      )}
+          </>
+        )}
+      </div>
     </Styled>
   );
 }
 
-const Styled = styled.div<{ $isFullPlan: boolean }>`
+const Styled = styled(NavDropDown)<{ $isFullPlan: boolean }>`
   display: flex;
   flex-direction: column;
+
+  text-wrap: nowrap;
 
   .NavBar-menuIcon {
     margin-left: ${constants.isBeta ? "0px" : theme.s3};
@@ -119,6 +108,9 @@ const Styled = styled.div<{ $isFullPlan: boolean }>`
     background-color: ${theme.navBar.activeBtn};
     border-radius: 0 0 0 ${theme.br1};
     box-shadow: ${theme.boxShadow4};
+  }
+  .MuiButton-label {
+    white-space: nowrap;
   }
   .NavUserMenu-btnDiv {
     width: 100%;

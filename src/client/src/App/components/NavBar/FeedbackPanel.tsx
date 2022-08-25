@@ -2,17 +2,13 @@ import styled from "styled-components";
 import { constants } from "../../Constants";
 import theme from "../../theme/Theme";
 import { Bullet } from "../general/Bullet";
-import { StandardProps } from "../general/StandardProps";
 import { NavBarPanel } from "./NavBarPanel";
 
-type Props = StandardProps;
 export function FeedbackPanel() {
   return (
     <Styled>
       <div className="FeedbackPanel-welcome">
-        <div className="FeedbackPanel-welcomeText">
-          Bugs reports and feature
-        </div>
+        <div className="FeedbackPanel-welcomeText">Bug reports and feature</div>
         <div className="FeedbackPanel-welcomeText">
           suggestions are welcome!
         </div>
@@ -42,7 +38,7 @@ export function FeedbackPanel() {
 const Styled = styled(NavBarPanel)`
   width: 350px;
   border-radius: ${theme.br1};
-  background-color: ${theme.loan.light};
+  background-color: ${theme.property.main};
   .Bullet-label {
     font-weight: 700;
     margin-right: ${theme.s2};
