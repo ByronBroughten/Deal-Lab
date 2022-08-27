@@ -69,7 +69,7 @@ export const valueMeta = {
   stringArray: {
     is: (v: any): v is string[] =>
       Array.isArray(v) && v.every((i: any) => typeof i === "string"),
-    updateFnNames: ["stringArray"],
+    updateFnNames: ["manualUpdateOnly"],
     initDefault: () => [] as string[],
     zod: z.array(z.string()),
     mon: [reqMonString],

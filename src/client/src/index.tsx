@@ -8,6 +8,11 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
+// - Make main menu always present. Stylize buttons differently when user isn't logged in.
+// - Put userName on the righ side
+
+// Get rid of userName and just show your email
+
 // Demo Link: https://www.youtube.com/watch?v=wGfb8xX2FsI
 
 // Do I want to use the same variable names for the dopdown as I do for the ones in the equations? Yes, I think I do. At least for display purposes.

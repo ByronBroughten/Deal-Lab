@@ -10,7 +10,7 @@ export function FeedbackPanel() {
       <div className="FeedbackPanel-welcome">
         <div className="FeedbackPanel-welcomeText">Notice any bugs?</div>
         <div className="FeedbackPanel-welcomeText">
-          Any features you'd like to see?
+          Would you like any new features?
         </div>
       </div>
       <Bullet

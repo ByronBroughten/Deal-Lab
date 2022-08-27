@@ -16,12 +16,7 @@ export default function IfThen({ feId }: Props) {
     <>
       <td className="AdditiveItem-nameCell">
         <MaterialStringEditor
-          feVarbInfo={{
-            sectionName,
-            varbName: "displayName",
-            feId,
-          }}
-          valueType="stringObj"
+          feVarbInfo={userVarbItem.varbInfo("displayNameEditor")}
         />
       </td>
       <td className="AdditiveItem-contentCell">
