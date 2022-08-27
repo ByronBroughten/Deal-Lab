@@ -9,9 +9,7 @@ export function FeedbackPanel() {
     <Styled>
       <div className="FeedbackPanel-welcome">
         <div className="FeedbackPanel-welcomeText">Bug reports and feature</div>
-        <div className="FeedbackPanel-welcomeText">
-          suggestions are welcome!
-        </div>
+        <div className="FeedbackPanel-welcomeText">suggestions, welcome</div>
       </div>
       <Bullet
         text={
@@ -38,7 +36,7 @@ export function FeedbackPanel() {
 const Styled = styled(NavBarPanel)`
   width: 350px;
   border-radius: ${theme.br1};
-  background-color: ${theme.property.main};
+  background-color: ${theme.transparentGray};
   .Bullet-label {
     font-weight: 700;
     margin-right: ${theme.s2};

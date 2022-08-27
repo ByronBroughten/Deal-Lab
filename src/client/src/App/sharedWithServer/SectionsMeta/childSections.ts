@@ -106,6 +106,7 @@ export const childSections = checkChildSections({
   },
   userVarbList: { userVarbItem: childSection("userVarbItem") },
   userVarbItem: { conditionalRow: childSection("conditionalRow") },
+
   deal: childrenSections({
     propertyGeneral: ["propertyGeneral"],
     financing: ["financing"],

@@ -1,5 +1,6 @@
 import { ButtonProps } from "@material-ui/core/Button";
 import { rem } from "polished";
+import React from "react";
 import styled, { css } from "styled-components";
 import theme from "../../theme/Theme";
 import PlainBtn from "../general/PlainBtn";
@@ -7,8 +8,15 @@ import PlainBtn from "../general/PlainBtn";
 export type NavBtnProps = ButtonProps & {
   $isactive?: boolean;
   target?: string;
+  icon?: React.ReactNode;
+  text: string | React.ReactNode;
 };
-export default function NavBtn({ className, ...rest }: NavBtnProps) {
+export default function NavBtn({
+  className,
+  icon,
+  text,
+  ...rest
+}: NavBtnProps) {
   return (
     <Styled
       {...{
@@ -17,14 +25,26 @@ export default function NavBtn({ className, ...rest }: NavBtnProps) {
         ...rest,
         // title: "Test title",
       }}
-    />
+    >
+      {icon && <span className="NavBtn-icon">{icon}</span>}
+      {<span className="NavBtn-text">{text}</span>}
+    </Styled>
   );
 }
 const Styled = styled(PlainBtn)<{ $isactive?: boolean }>`
-  font-size: ${rem("16px")};
+  font-size: ${rem("14px")};
   padding: 0 ${theme.s4};
-  display: flex;
-  flex-direction: column;
+  height: 100%;
+  .NavBtn-text {
+    margin-left: ${rem("2px")};
+    display: flex;
+    align-items: center;
+  }
+  .NavBtn-icon {
+    display: flex;
+    align-items: center;
+    font-size: 20px;
+  }
 
   flex: 1;
   white-space: nowrap;

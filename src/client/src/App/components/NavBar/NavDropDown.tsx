@@ -8,8 +8,14 @@ import NavBtn from "./NavBtn";
 
 interface Props extends StandardProps {
   btnText: string | React.ReactNode;
+  btnIcon?: React.ReactNode;
 }
-export default function NavDropDown({ btnText, children, className }: Props) {
+export default function NavDropDown({
+  btnText,
+  children,
+  className,
+  btnIcon,
+}: Props) {
   const { viewIsOpen, toggleView, closeView } = useToggleView({
     initValue: false,
   });
@@ -24,9 +30,9 @@ export default function NavDropDown({ btnText, children, className }: Props) {
         onClick={toggleView}
         className="NavDropDown-navBtn"
         $isactive={viewIsOpen}
-      >
-        {btnText}
-      </NavBtn>
+        text={btnText}
+        icon={btnIcon}
+      />
       {viewIsOpen && (
         <div className="NavDropDown-dropdownPosition">
           <div className="NavDropDown-viewable">{children}</div>
@@ -40,8 +46,10 @@ const Styled = styled.div`
   z-index: 1;
   display: flex;
   flex-direction: column;
+  height: 100%;
 
   .NavBtn {
+    height: 100%;
     position: relative;
     z-index: 2;
   }

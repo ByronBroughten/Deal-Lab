@@ -21,7 +21,10 @@ export class UserVarbValueSolver extends GetterSectionBase<"userVarbItem"> {
     for (const row of rows) {
       const left = row.varb("left");
       const rightValue = row.varb("rightValue");
-
+      // what's happening is that the userVarb
+      // needs default rows.
+      // it needs default, "if, then, or else"
+      // I like the idea of
       const vals = row.varbs.values({
         type: "string",
         level: "number",

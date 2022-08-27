@@ -7,6 +7,30 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
+// is it a waste of space for each userVarbItem to have
+// three conditional rows?
+// The alternative is for it to have something else that
+// has the conditional rows. That somthing else gets
+// added if its not there when needed. And it gets deleted
+// when its not needed, on save.
+// Yeah, I like the idea of decoupling.
+
+// Demo Link: https://www.youtube.com/watch?v=wGfb8xX2FsI
+
+// Possible quick tutorials:
+// Overview
+// Analyze deals
+// Reduce data entry
+// - Reusing properties for different scenarios
+// - Custom variables
+// - Custom lists
+// - api variables?
+// Suit your needs
+// - Custom variables
+// - Custom outputs
+// Compare deals
+
+// Do I want to use the same variable names for the dopdown as I do for the ones in the equations? Yes, I think I do. At least for display purposes.
 
 // - User solverSections in MainSection
 // - "getUserData" sometimes returns 401 - unauthorized

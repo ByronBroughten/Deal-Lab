@@ -48,21 +48,18 @@ export function NavUserMenu({ feId, logout }: NavUserMenuProps) {
           <BtnDiv>
             <Button href="/lists">{`Your lists`}</Button>
           </BtnDiv> */}
-        {authStatus === "user" && (
-          <>
-            <BtnDiv>
-              <Button href="/variables">{`Your variables`}</Button>
-            </BtnDiv>
-            <BtnDiv>
-              <Button onClick={logout}>Logout</Button>
-            </BtnDiv>
-            {/* <BtnDiv>
+
+        <BtnDiv>
+          <Button href="/variables">{`Your variables`}</Button>
+        </BtnDiv>
+        <BtnDiv>
+          <Button onClick={logout}>Logout</Button>
+        </BtnDiv>
+        {/* <BtnDiv>
                 <Button href="/account" disabled>
                   Account Info
                 </Button>
               </BtnDiv> */}
-          </>
-        )}
       </div>
     </Styled>
   );

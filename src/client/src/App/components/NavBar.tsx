@@ -1,7 +1,9 @@
 import { AppBar, Toolbar } from "@material-ui/core";
 import { rem } from "polished";
 import React from "react";
+import { AiOutlineYoutube } from "react-icons/ai";
 import { BsArrowUpCircle, BsFillHouseDoorFill } from "react-icons/bs";
+import { VscFeedback } from "react-icons/vsc";
 import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { constants } from "../Constants";
@@ -13,9 +15,6 @@ import NavDropDown from "./NavBar/NavDropDown";
 import { NavUserMenu } from "./NavBar/NavUserMenu";
 import { UpgradeUserToProPanel } from "./NavBar/UpgradeUserToProPanel";
 
-// For testing purposes, do I need to add a route for deleting a user?
-// I don't have infinite email addresses, after all.
-
 type NavBarProps = { logout: () => void };
 export default function NavBar(props: NavBarProps) {
   const feUser = useFeUser();
@@ -23,7 +22,7 @@ export default function NavBar(props: NavBarProps) {
   const userInfo = feUser.get.onlyChild("userInfo");
 
   const { pathname } = useLocation();
-  const showSignin = isGuest && !pathname.includes("/auth");
+  const showSignin = isGuest; // && !pathname.includes("/auth");
 
   const appTitle =
     "Ultimate Property Analyzer" + (constants.isBeta ? " BETA" : "");
@@ -33,52 +32,51 @@ export default function NavBar(props: NavBarProps) {
       <Toolbar disableGutters={true}>
         <div className="NavBar-leftSide">
           <Link className="NavBar-navBtnLink" to="/">
-            <NavBtn className="NavBar-brandBtn">
-              <BsFillHouseDoorFill className="NavBar-brandIcon" />
-              <span className="NavBar-brandName">{appTitle}</span>
-            </NavBtn>
+            <NavBtn
+              className="NavBar-brandBtn"
+              icon={<BsFillHouseDoorFill className="NavBar-brandIcon" />}
+              text={<span className="NavBar-brandName">{appTitle}</span>}
+            />
           </Link>
-          {/* <NavBtn
+          <NavBtn
             className="NavBar-demoBtn NavBtn"
-            href="https://www.youtube.com/watch?v=Fw_HMWWRRUk"
+            href="https://www.youtube.com/watch?v=wGfb8xX2FsI"
             target="_blank"
-          >
-            <span className="NavBar-demoBtnText">Demo</span>
-            <AiOutlineYoutube className="NavBar-demoBtnIcon" />
-          </NavBtn> */}
+            icon={<AiOutlineYoutube className="NavBar-demoBtnIcon" />}
+            text="Demo"
+          />
+          {constants.isBeta && (
+            <NavDropDown
+              className="NavBar-feedbackDropDown"
+              btnText="Give Feedback"
+              btnIcon={<VscFeedback />}
+            >
+              <FeedbackPanel />
+            </NavDropDown>
+          )}
         </div>
         <div className="NavBar-rightSide">
           {showSignin && (
             <>
               <Link className="NavBar-navBtnLink" to="/auth">
-                <NavBtn>
-                  <span>Sign In / Sign Up</span>
-                </NavBtn>
+                <NavBtn text="Sign In / Sign Up" />
               </Link>
             </>
-          )}
-          {constants.isBeta && (
-            <NavDropDown
-              className="NavBar-feedbackDropDown"
-              btnText="Give Feedback"
-            >
-              <FeedbackPanel />
-            </NavDropDown>
           )}
           {!isGuest && isBasic && !constants.isBeta && false && (
             <NavDropDown
               className="NavBar-GetProDropdown"
               btnText={
                 <>
-                  <span className="NavBar-GetProDropdownText">Pro</span>
                   <BsArrowUpCircle className="NavBar-GetProDropdownIcon" />
+                  <span className="NavBar-GetProDropdownText">Pro</span>
                 </>
               }
             >
               <UpgradeUserToProPanel />
             </NavDropDown>
           )}
-          <NavUserMenu {...{ ...props, feId: userInfo.feId }} />
+          {!isGuest && <NavUserMenu {...{ ...props, feId: userInfo.feId }} />}
         </div>
       </Toolbar>
     </Styled>
@@ -101,12 +99,19 @@ const Styled = styled(AppBar)`
     align-items: stretch;
   }
 
+  .NavBar-brandBtn {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: ${theme.dark};
+    :hover {
+      color: ${theme.light};
+    }
+  }
   .NavBar-brandIcon {
     font-size: 25px;
   }
-
   .NavBar-brandName {
-    margin-left: 8px;
+    margin-left: 4px;
     font-size: ${constants.isBeta ? "16px" : "20px"};
   }
 
@@ -116,12 +121,9 @@ const Styled = styled(AppBar)`
     height: inherit;
     text-decoration: none;
   }
-  .NavBar-demoBtn {
-    height: 100%;
-  }
+
   .NavBar-demoBtnIcon {
-    margin-left: ${rem("2px")};
-    font-size: ${rem("25px")};
+    font-size: ${rem("24px")};
   }
 
   .NavBar-GetProDropdown {
@@ -129,32 +131,12 @@ const Styled = styled(AppBar)`
       background: ${theme.property.main};
     }
   }
-
-  .NavBar-feedbackDropDown {
-    .NavDropDown-navBtn {
-      font-size: 14px;
-    }
-  }
-
   .NavBar-GetProDropdownIcon {
     margin-left: ${rem("4px")};
     font-size: ${rem("23px")};
   }
 
-  .NavBar-leftSide {
-    display: flex;
-    align-items: center;
-    height: 100%;
-  }
-  .NavBar-brandBtn {
-    height: 100%;
-    font-size: 1.3rem;
-    font-weight: 700;
-    color: ${theme.dark};
-    :hover {
-      color: ${theme.light};
-    }
-  }
+  .NavBar-leftSide,
   .NavBar-rightSide {
     display: flex;
   }
