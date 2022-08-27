@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useSetterSection } from "../../../../../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import { useSetterSections } from "../../../../../../../../sharedWithServer/stateClassHooks/useSetterSections";
-import { listOperators } from "../../../../../../../../sharedWithServer/StateSolvers/SolveValueVarb/UserVarbValueSolver";
+import { listOperators } from "../../../../../../../../sharedWithServer/StateSolvers/SolveValueVarb/ConditionalValueSolver";
 import { ListEditorNext } from "../../../../../../../inputs/ListEditorNext";
 import MaterialSelect from "../../../../../../../inputs/MaterialSelect";
 import { NumObjEntityEditor } from "../../../../../../../inputs/NumObjEntityEditor";

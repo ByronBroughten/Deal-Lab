@@ -44,10 +44,13 @@ describe(testedRoute, () => {
   }
   it("should return status 200 and a url", async () => {
     const res = await exec();
-    expect(res.status).toBe(200);
-
-    const { sessionUrl } = res.data as QueryRes<"getProPaymentUrl">["data"];
-    expect(typeof sessionUrl === "string").toBeTruthy();
+    if (constants.isBeta) {
+      expect(res.status).toBe(400);
+    } else {
+      expect(res.status).toBe(200);
+      const { sessionUrl } = res.data as QueryRes<"getProPaymentUrl">["data"];
+      expect(typeof sessionUrl === "string").toBeTruthy();
+    }
   });
   it("should return 401 if client is not logged in", async () => {
     cookies = [];

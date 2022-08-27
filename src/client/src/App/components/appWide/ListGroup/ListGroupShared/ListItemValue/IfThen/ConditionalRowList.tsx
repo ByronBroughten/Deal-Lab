@@ -2,17 +2,17 @@ import { rem } from "polished";
 import styled from "styled-components";
 import { useGetterSection } from "../../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import theme from "../../../../../../theme/Theme";
-import ConditionalRows from "./IfThenContent/ConditionalRows";
-import LogicRow from "./IfThenContent/LogicRow";
+import ConditionalRows from "./ConditionalRowList/ConditionalRows";
+import LogicRow from "./ConditionalRowList/LogicRow";
 
 type Props = {
   viewIsOpen: boolean;
   toggleView: () => void;
   feId: string;
 };
-export default function IfThenContent({ viewIsOpen, toggleView, feId }: Props) {
+export function ConditionalRowList({ viewIsOpen, toggleView, feId }: Props) {
   const userVarbItem = useGetterSection({
-    sectionName: "userVarbItem",
+    sectionName: "conditionalRowList",
     feId,
   });
 

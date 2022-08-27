@@ -6,6 +6,7 @@ import { makeDefaultLoanPack } from "./makeDefaultLoanPack";
 import { makeDefaultMainPack } from "./makeDefaultMainPack";
 import { makeDefaultMgmtPack } from "./makeDefaultMgmtPack";
 import { makeDefaultPropertyPack } from "./makeDefaultPropertyPack";
+import { makeDefaultUserVarbItem } from "./makeDefaultUserVarbItem";
 
 type FunctionsMakeDefault<SN extends SectionName> = {
   [S in SN]: () => SectionPack<S>;
@@ -21,6 +22,7 @@ class DefaultSectionPackMaker<SN extends SectionName> {
 }
 
 export const defaultMaker = new DefaultSectionPackMaker({
+  userVarbItem: makeDefaultUserVarbItem,
   property: makeDefaultPropertyPack,
   mgmt: makeDefaultMgmtPack,
   loan: makeDefaultLoanPack,

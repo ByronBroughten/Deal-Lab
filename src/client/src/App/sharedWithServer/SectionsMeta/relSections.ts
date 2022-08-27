@@ -4,7 +4,9 @@ import {
   SimpleSectionName,
   UserPlan,
 } from "./baseSections";
+import { numObj } from "./baseSectionsUtils/baseValues/NumObj";
 import { relVarbInfoS } from "./childSectionsDerived/RelVarbInfo";
+import { relVarbInfosS } from "./childSectionsDerived/RelVarbInfos";
 import { relVarb, relVarbS } from "./relSectionsUtils/rel/relVarb";
 import {
   GeneralRelSection,
@@ -19,7 +21,6 @@ import {
 } from "./relSectionsUtils/relVarbs/financingRelVarbs";
 import { mgmtRelVarbs } from "./relSectionsUtils/relVarbs/mgmtRelVarbs";
 import { propertyRelVarbs } from "./relSectionsUtils/relVarbs/propertyRelVarbs";
-import { userVarbItemRelVarbs } from "./relSectionsUtils/relVarbs/userVarbItemRelVarbs";
 
 type GenericRelSections = {
   [SN in SimpleSectionName]: GenericRelSection<SN>;
@@ -145,7 +146,42 @@ export function makeRelSections() {
     }),
     singleTimeItem: relSection("List Item", relVarbsS.singleTimeItem()),
     ongoingItem: relSection("List Item", relVarbsS.ongoingItem()),
-    userVarbItem: relSection("User Variable", userVarbItemRelVarbs),
+    userVarbItem: relSection("User Variable", {
+      ...relVarbsS.listItemVirtualVarb,
+      valueSwitch: relVarb("string", {
+        initValue: "labeledEquation",
+      }),
+      numObjEditor: relVarb("numObj"),
+      value: relVarb("numObj", {
+        displayName: relVarbInfoS.local("displayName"),
+        updateFnName: "userVarb",
+        initValue: numObj(0),
+        updateFnProps: {
+          ...relVarbInfosS.localByVarbName(["valueSwitch", "numObjEditor"]),
+          conditionalValue: relVarbInfoS.children(
+            "conditionalRowList",
+            "value"
+          ),
+        },
+        unit: "decimal",
+      }),
+    }),
+    conditionalRowList: relSection("Conditional Row List", {
+      value: relVarb("numObj", {
+        updateFnProps: {
+          ...relVarbInfosS.namedChildren("conditionalRow", {
+            rowLevel: "level",
+            rowType: "type",
+            rowLeft: "left",
+            rowOperator: "operator",
+            rowRightValue: "rightValue",
+            rowRightList: "rightList",
+            rowThen: "then",
+          }),
+        },
+        unit: "decimal",
+      }),
+    }),
     conditionalRow: relSection("Conditional Row", {
       level: relVarb("number"),
       type: relVarb("string", { initValue: "if" }),

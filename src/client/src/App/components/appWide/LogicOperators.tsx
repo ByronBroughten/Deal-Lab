@@ -1,6 +1,6 @@
 import { MenuItem } from "@material-ui/core";
 import React from "react";
-import { LogicOperator } from "../../sharedWithServer/StateSolvers/SolveValueVarb/UserVarbValueSolver";
+import { LogicOperator } from "../../sharedWithServer/StateSolvers/SolveValueVarb/ConditionalValueSolver";
 
 const valueChildObj: Record<LogicOperator, string> = {
   "===": "=",

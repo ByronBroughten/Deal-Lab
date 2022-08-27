@@ -47,7 +47,6 @@ export const baseSections = {
     searchFilter: "string",
   }),
   omniParent: baseSectionS.container,
-  // maybe rename to compareTable and compareTableRow
   compareTable: baseSection({ titleFilter: "string" } as const),
   tableRow: baseSection({
     displayName: "string",
@@ -112,6 +111,9 @@ export const baseSections = {
     ...baseVarbsS.loadableVarb,
     ...baseVarbs("string", ["valueSwitch", "displayNameEditor"] as const),
     ...baseVarbs("numObj", ["numObjEditor"] as const),
+  }),
+  conditionalRowList: baseSection({
+    value: "numObj",
   }),
 
   login: baseSection(baseVarbs("string", ["email", "password"] as const)),

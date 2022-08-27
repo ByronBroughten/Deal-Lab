@@ -30,6 +30,7 @@ import {
   stringObj,
   StringObj,
 } from "./../SectionsMeta/baseSectionsUtils/baseValues/StringObj";
+import { ConditionalValueSolver } from "./SolveValueVarb/ConditionalValueSolver";
 import { UserVarbValueSolver } from "./SolveValueVarb/UserVarbValueSolver";
 
 export class SolveValueVarb<
@@ -112,9 +113,18 @@ export class SolveValueVarb<
         const userVarbSolver = new UserVarbValueSolver(
           this.getterSectionProps as GetterSectionProps<"userVarbItem">
         );
-
-        return userVarbSolver.getUserVarbValue();
+        return userVarbSolver.solveValue();
       } else throw new Error("section must contain at least one varb");
+    },
+    conditionalValue: (): NumObj => {
+      if (this.getterVarb.sectionName === "conditionalRowList") {
+        const solver = new ConditionalValueSolver(
+          this.getterSectionProps as GetterSectionProps<"conditionalRowList">
+        );
+        return solver.solveValue();
+      } else {
+        throw new Error("This only works with conditionalRowList");
+      }
     },
     emptyStringObj: (): StringObj => {
       return stringObj("");
