@@ -9,7 +9,7 @@ import {
   sectionNameS,
   SectionNameType,
 } from "../SectionsMeta/SectionName";
-import { RawFeVarbs } from "../StateSections/StateSectionsTypes";
+import { StateVarbs } from "../StateSections/StateSectionsTypes";
 import { Obj } from "../utils/Obj";
 import { GetterSectionBase } from "./Bases/GetterSectionBase";
 import { GetterSection } from "./GetterSection";
@@ -20,7 +20,7 @@ export class GetterVarbs<SN extends SectionName> extends GetterSectionBase<SN> {
   get section() {
     return new GetterSection(this.getterSectionProps);
   }
-  private get stateVarbs(): RawFeVarbs<SN> {
+  private get stateVarbs(): StateVarbs<SN> {
     return this.sectionsShare.sections.rawSection(this.feSectionInfo).varbs;
   }
   get sections(): GetterSections {

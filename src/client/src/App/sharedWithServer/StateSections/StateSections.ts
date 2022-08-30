@@ -8,14 +8,14 @@ import { initRawSection, initRawVarbs } from "./initRawSection";
 import {
   RawFeSection,
   RawFeSections,
-  RawFeVarb,
   RawSectionListProps,
   SectionNotFoundError,
+  StateVarb,
 } from "./StateSectionsTypes";
 
 type UpdateVarbProps<SN extends SectionName> = {
   feVarbInfo: FeVarbInfo<SN>;
-  rawVarb: RawFeVarb<SN>;
+  rawVarb: StateVarb<SN>;
 };
 
 export class StateSections {
@@ -69,7 +69,7 @@ export class StateSections {
   rawVarb<SN extends SectionName>({
     varbName,
     ...rest
-  }: FeVarbInfo<SN>): RawFeVarb<SN> {
+  }: FeVarbInfo<SN>): StateVarb<SN> {
     const rawVarb = this.rawSection(rest).varbs[varbName];
     if (rawVarb === undefined) {
       const { sectionName, feId } = rest;

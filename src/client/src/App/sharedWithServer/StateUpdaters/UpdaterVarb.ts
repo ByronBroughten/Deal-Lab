@@ -2,12 +2,12 @@ import { StateValue } from "../SectionsMeta/baseSectionsUtils/baseValues/StateVa
 import { SectionName } from "../SectionsMeta/SectionName";
 import { GetterVarbBase } from "../StateGetters/Bases/GetterVarbBase";
 import { GetterVarb } from "../StateGetters/GetterVarb";
-import { RawFeVarb } from "../StateSections/StateSectionsTypes";
+import { StateVarb } from "../StateSections/StateSectionsTypes";
 
 export class UpdaterVarb<
   SN extends SectionName<"hasVarb">
 > extends GetterVarbBase<SN> {
-  private get raw(): RawFeVarb<SN> {
+  private get raw(): StateVarb<SN> {
     return this.sectionsShare.sections.rawVarb(this.feVarbInfo);
   }
   get get(): GetterVarb<SN> {
@@ -17,7 +17,7 @@ export class UpdaterVarb<
     this.get.meta.validateVarbValue(value);
     this.update({ value });
   }
-  update(props: Partial<RawFeVarb<SN>>): void {
+  update(props: Partial<StateVarb<SN>>): void {
     this.sectionsShare.sections = this.sectionsShare.sections.updateVarb({
       feVarbInfo: this.feVarbInfo,
       rawVarb: {

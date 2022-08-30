@@ -3,8 +3,16 @@ import { useGetterSection } from "../../../../../sharedWithServer/stateClassHook
 import { MaterialStringEditor } from "../../../../inputs/MaterialStringEditor";
 import { NumObjEntityEditor } from "../../../../inputs/NumObjEntityEditor";
 
-type Props = { feInfo: FeInfoByType<"varbListItem">; endAdornment?: string };
-export default function LabeledEquation({ feInfo, endAdornment }: Props) {
+type Props = {
+  feInfo: FeInfoByType<"varbListItem">;
+  endAdornment?: string;
+  doEquals?: boolean;
+};
+export default function LabeledEquation({
+  feInfo,
+  endAdornment,
+  doEquals,
+}: Props) {
   const section = useGetterSection(feInfo);
   return (
     <>
@@ -20,6 +28,7 @@ export default function LabeledEquation({ feInfo, endAdornment }: Props) {
             className="cost"
             labeled={false}
             endAdornment={endAdornment}
+            doEquals={doEquals}
           />
         </div>
       </td>

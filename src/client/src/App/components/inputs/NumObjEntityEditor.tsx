@@ -23,6 +23,7 @@ type Props = PropAdornments & {
   label?: any;
   labeled?: boolean;
   bypassNumeric?: boolean;
+  doEquals?: boolean;
 };
 
 export function NumObjEntityEditor({
@@ -30,6 +31,7 @@ export function NumObjEntityEditor({
   className,
   labeled = true,
   bypassNumeric = false,
+  doEquals = true,
   ...props
 }: Props) {
   let { editorState, varb, onChange } = useDraftInput({
@@ -54,6 +56,7 @@ export function NumObjEntityEditor({
     vAdornments: pick(varb.meta, adornmentNames),
     editorTextStatus: varb.numObj.editorTextStatus,
     displayValue: varb.displayValue,
+    doEquals,
   });
 
   const { varbSelectorIsOpen, openVarbSelector, closeVarbSelector } =

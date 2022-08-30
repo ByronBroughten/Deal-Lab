@@ -1,3 +1,4 @@
+import { isEqual } from "lodash";
 import React from "react";
 import { AiOutlineSave } from "react-icons/ai";
 import styled from "styled-components";
@@ -13,38 +14,63 @@ import GeneralSectionTitle from "../appWide/GeneralSection/GeneralSectionTitle";
 import MainSectionTitleBtn from "../appWide/GeneralSection/GeneralSectionTitle/MainSectionTitleBtn";
 import { UserVarbListSectionEntry } from "./UserVarbListSectionEntry";
 
-export function UserVarbListSection() {
+function useSaveUserVarbLists() {
   const feUser = useSetterSectionOnlyOne("feUser");
-  const varbListSectionsContext = useUserVarbListSections();
+  const userVarbListsContext = useUserVarbListSections();
 
-  async function saveVariableLists() {
-    const packMaker = PackMakerSection.makeFromSections({
-      sections: varbListSectionsContext.sections,
-      sectionName: "feUser",
-    });
-    const sectionPackArr =
-      packMaker.makeChildSectionPackArr("userVarbListMain");
+  const mainListPack =
+    feUser.packMaker.makeChildSectionPackArr("userVarbListMain");
+
+  const workingPackMaker = PackMakerSection.makeFromSections({
+    sections: userVarbListsContext.sections,
+    sectionName: "feUser",
+  });
+  const workingListPack =
+    workingPackMaker.makeChildSectionPackArr("userVarbListMain");
+
+  const areSaved = isEqual(workingListPack, mainListPack);
+  async function saveUserVarbLists() {
+    const workingPackArr =
+      workingPackMaker.makeChildSectionPackArr("userVarbListMain");
     const arrQuerier = new SectionArrQuerier({
       dbStoreName: "userVarbListMain",
       apiQueries,
     });
-
-    await arrQuerier.replace(sectionPackArr);
+    await arrQuerier.replace(workingPackArr);
     feUser.loadChildPackArrs({
-      userVarbListMain: packMaker.makeChildSectionPackArr("userVarbListMain"),
+      userVarbListMain: workingPackArr,
     });
   }
 
+  return {
+    userVarbListsContext,
+    saveUserVarbLists,
+    areSaved,
+  };
+}
+
+export function UserVarbListSection() {
+  const { saveUserVarbLists, areSaved, userVarbListsContext } =
+    useSaveUserVarbLists();
+  const saveBtnProps = {
+    ...(areSaved
+      ? {
+          disabled: true,
+          text: "Saved",
+        }
+      : { disabled: false, text: "Save" }),
+  };
+
   return (
-    <SectionsContext.Provider value={varbListSectionsContext}>
+    <SectionsContext.Provider value={userVarbListsContext}>
       <Styled themeName="userVarbList" className="UserVarbListSection-root">
         <GeneralSectionTitle title="Variables" themeName="userVarbList">
           <MainSectionTitleBtn
             themeName="userVarbList"
             className="GeneralSectionTitle-child"
-            onClick={saveVariableLists}
+            onClick={saveUserVarbLists}
             {...{
-              text: "Save",
+              ...saveBtnProps,
               icon: <AiOutlineSave size="25" />,
             }}
           />

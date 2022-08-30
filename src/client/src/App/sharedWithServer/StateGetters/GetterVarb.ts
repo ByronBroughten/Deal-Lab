@@ -25,7 +25,7 @@ import { RelLocalInfo } from "../SectionsMeta/childSectionsDerived/RelInfo";
 import { FeVarbInfo, InfoS } from "../SectionsMeta/Info";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { InUpdatePack, VarbMeta } from "../SectionsMeta/VarbMeta";
-import { RawFeVarb } from "../StateSections/StateSectionsTypes";
+import { StateVarb } from "../StateSections/StateSectionsTypes";
 import { mathS, NotANumberError } from "../utils/math";
 import { GetterVarbBase } from "./Bases/GetterVarbBase";
 import { GetterSection } from "./GetterSection";
@@ -123,10 +123,13 @@ export class GetterVarb<
       varbName: this.varbName,
     };
   }
-  get raw(): RawFeVarb<SN> {
+  get raw(): StateVarb<SN> {
     return this.sectionsShare.sections.rawVarb({
       ...this.feVarbInfo,
     });
+  }
+  get isPureUserVarb(): boolean {
+    return this.raw.isPureUserVarb;
   }
   get dbId() {
     return this.getterSection.dbId;

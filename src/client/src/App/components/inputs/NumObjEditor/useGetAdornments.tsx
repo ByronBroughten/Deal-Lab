@@ -12,6 +12,7 @@ interface GetAdornmentsProps {
   vAdornments: Adornments;
   editorTextStatus: string;
   displayValue: string;
+  doEquals: boolean;
 }
 
 function getAdornments({
@@ -19,10 +20,11 @@ function getAdornments({
   vAdornments,
   editorTextStatus,
   displayValue,
+  doEquals,
 }: GetAdornmentsProps): Adornments {
   let startAdornment = pAdornments.startAdornment ?? vAdornments.startAdornment;
   let endAdornment = pAdornments.endAdornment ?? vAdornments.endAdornment;
-  if (editorTextStatus === "solvableText") {
+  if (editorTextStatus === "solvableText" && doEquals) {
     return {
       startAdornment: "",
       endAdornment: (

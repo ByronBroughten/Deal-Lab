@@ -24,6 +24,7 @@ import { GetterSection } from "../StateGetters/GetterSection";
 import { GetterSections } from "../StateGetters/GetterSections";
 import { GetterVarb } from "../StateGetters/GetterVarb";
 import { GetterVarbNumObj } from "../StateGetters/GetterVarbNumObj";
+import { UpdaterVarb } from "../StateUpdaters/UpdaterVarb";
 import { Arr } from "../utils/Arr";
 import { StateValue } from "./../SectionsMeta/baseSectionsUtils/baseValues/StateValueTypes";
 import {
@@ -113,6 +114,49 @@ export class SolveValueVarb<
         const userVarbSolver = new UserVarbValueSolver(
           this.getterSectionProps as GetterSectionProps<"userVarbItem">
         );
+
+        // they both have the same entityId. That makes sense.
+        // so when I delete price from the editor, it removes both inEntities
+
+        // - "isPureUserVarb" ultimately must inform the userVarbEditors
+        // - But in order to do that when userVarbEditors have non-pure
+        //   entities, it needs to be triggered on userVarbs as well, because
+        // - those can be unpure
+
+        // - but also, the editor doesn't go through this update function.
+        // - And the editor isn't an entity of userVarb
+
+        // 1. userVarb stops getting entitites from the editor value
+        //    This would require "isPureUserVarb" to be relevant to
+        //    the editorValue of the userVarb. But also, it would need to translate
+        //    to the userVarb itself.
+
+        // Then again, every userVarb is going to have an editorVarb
+        // It will not necessarily get that value from its editorVarb
+        // What I'm saying is, this can all be deduced from editorVarbs
+        // in their update function
+
+        // 2. userVarb gets the exact entities of its editor.
+        //    The thing is, the userVarb might need to somehow achieve
+        //    The same solvableText as its editor for everything to work right.
+        //    It's editorText could just be the solvableText of its editor.
+        //    That only works, though, if the solvableText is valid.
+        //    Actually, it might work.
+
+        const { inEntities } = this.getterVarb;
+        let isPureUserVarb = true;
+        for (const entity of inEntities) {
+          if (this.getterSections.hasSectionMixed(entity)) {
+            const varb = this.getterSections.varbByMixed(entity);
+            if (!varb.isPureUserVarb) {
+              isPureUserVarb = false;
+              break;
+            }
+          }
+        }
+
+        const updaterVarb = new UpdaterVarb(this.getterVarb.getterVarbProps);
+        updaterVarb.update({ isPureUserVarb });
         return userVarbSolver.solveValue();
       } else throw new Error("section must contain at least one varb");
     },

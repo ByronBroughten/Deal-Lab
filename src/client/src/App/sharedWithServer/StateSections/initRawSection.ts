@@ -12,7 +12,7 @@ import { ChildIdArrsNarrow } from "../SectionsMeta/childSectionsDerived/ChildNam
 import { FeSectionInfo, FeVarbInfo } from "../SectionsMeta/Info";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { StrictPick, StrictPickPartial } from "../utils/types";
-import { RawFeSection, RawFeVarb, RawFeVarbs } from "./StateSectionsTypes";
+import { RawFeSection, StateVarb, StateVarbs } from "./StateSectionsTypes";
 
 type InitVarbs<SN extends SimpleSectionName> = Partial<SectionValues<SN>>;
 
@@ -63,7 +63,7 @@ interface InitRawVarbsProps<SN extends SectionName> extends FeSectionInfo<SN> {
 export function initRawVarbs<SN extends SectionName>({
   dbVarbs,
   ...feSectionInfo
-}: InitRawVarbsProps<SN>): RawFeVarbs<SN> {
+}: InitRawVarbsProps<SN>): StateVarbs<SN> {
   const { sectionName } = feSectionInfo;
   const { varbNames } = sectionsMeta.section(sectionName);
   return varbNames.reduce((varbs, varbName) => {
@@ -73,7 +73,7 @@ export function initRawVarbs<SN extends SectionName>({
       varbName,
     });
     return varbs;
-  }, {} as RawFeVarbs<SN>);
+  }, {} as StateVarbs<SN>);
 }
 
 interface InitRawVarbProps<SN extends SectionName> extends FeVarbInfo<SN> {
@@ -82,10 +82,11 @@ interface InitRawVarbProps<SN extends SectionName> extends FeVarbInfo<SN> {
 function initRawVarb<SN extends SectionName>({
   dbVarb,
   ...rest
-}: InitRawVarbProps<SN>): RawFeVarb<SN> {
+}: InitRawVarbProps<SN>): StateVarb<SN> {
   return {
     value: dbToFeValue(rest, dbVarb),
     outEntities: [],
+    isPureUserVarb: false,
   };
 }
 function dbToFeValue(

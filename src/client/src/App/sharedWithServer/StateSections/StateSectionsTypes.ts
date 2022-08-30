@@ -6,19 +6,20 @@ import { SectionName } from "../SectionsMeta/SectionName";
 export class SectionNotFoundError extends Error {}
 export class TooManySectionsFoundError extends Error {}
 
-export type RawFeVarb<SN extends SectionName> = {
+export type StateVarb<SN extends SectionName> = {
   value: StateValue;
   outEntities: OutEntity[];
+  isPureUserVarb: boolean;
 };
-export type RawFeVarbs<SN extends SectionName> = {
-  [key: string]: RawFeVarb<SN>;
+export type StateVarbs<SN extends SectionName> = {
+  [key: string]: StateVarb<SN>;
 };
 export type RawFeSection<SN extends SectionName> = {
   readonly sectionName: SN;
   readonly feId: string;
   readonly childFeIds: ChildIdArrsNarrow<SN>;
   readonly dbId: string;
-  readonly varbs: RawFeVarbs<SN>;
+  readonly varbs: StateVarbs<SN>;
 };
 
 export type RawFeSections = {
