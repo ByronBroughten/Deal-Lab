@@ -386,6 +386,9 @@ export class GetterSection<
   varb(varbName: string): GetterVarb<SN> {
     return this.varbs.one(varbName);
   }
+  varbNext<VN extends VarbNameNext<SN>>(varbName: VN): GetterVarb<SN> {
+    return this.varbs.one(varbName as string);
+  }
   varbInfo(varbName: VarbNameNext<SN>): FeVarbInfo<SN> {
     return this.varb(varbName as string).feVarbInfo;
   }
