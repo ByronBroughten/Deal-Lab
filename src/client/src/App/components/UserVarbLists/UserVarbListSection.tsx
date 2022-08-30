@@ -3,6 +3,7 @@ import React from "react";
 import { AiOutlineSave } from "react-icons/ai";
 import styled from "styled-components";
 import { apiQueries } from "../../modules/apiQueriesClient";
+import usePrompt from "../../modules/customHooks/useBlockerAndPrompt";
 import { SectionArrQuerier } from "../../modules/QueriersBasic/SectionArrQuerier";
 import { SectionsContext } from "../../sharedWithServer/stateClassHooks/useSections";
 import { useSetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useSetterSection";
@@ -60,6 +61,11 @@ export function UserVarbListSection() {
         }
       : { disabled: false, text: "Save" }),
   };
+
+  usePrompt(
+    "Your unsaved changes will be lost when you leave. Are you sure you want to leave?",
+    !areSaved
+  );
 
   return (
     <SectionsContext.Provider value={userVarbListsContext}>

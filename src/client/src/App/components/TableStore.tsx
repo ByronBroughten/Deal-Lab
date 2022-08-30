@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useTableActor } from "../modules/sectionActorHooks/useTableActor";
 import { auth } from "../modules/services/authService";
 import { isFeUserTableName } from "../sharedWithServer/SectionsMeta/relChildSections";
+import { useAuthStatus } from "../sharedWithServer/stateClassHooks/useAuthStatus";
 import { VariableOption } from "../sharedWithServer/StateEntityGetters/VariableGetterSections";
 import theme from "../theme/Theme";
 import useHowMany from "./appWide/customHooks/useHowMany";
@@ -23,11 +24,13 @@ export function TableStore({ feId }: Props) {
   const { filteredRows } = table;
   const { isAtLeastOne, areNone } = useHowMany(filteredRows);
 
+  const authStatus = useAuthStatus();
+
   return (
     <Styled className="TableStore-root">
-      {!auth.isToken && (
+      {authStatus === "guest" && (
         <div className="TableStore-notLoggedIn">
-          To view saved analyses, create an account or login.
+          To view saved analyses, make an account or sign in.
         </div>
       )}
       {auth.isToken && areNone && (

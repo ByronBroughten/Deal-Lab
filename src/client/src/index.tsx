@@ -22,18 +22,6 @@ I've been computer programming for awhile now and finally managed to make an app
 // - Make main menu always present. Stylize buttons differently when user isn't logged in.
 // - Put userName on the right side
 
-// For it to truly be an ultimate property analyzer, I need 4 more things:
-// 1. Bring back the custom variables/variable lists
-// - Saving when not logged in
-//   - 1. call it something else (like "set")
-//   - 2. don't allow saving
-// - If the user tries to leave when they're not saved, warn them.
-
-// - To each userVarb value, add "isPureUserVarb". This can be added onto varb
-
-// - Each time a userVarb value updates, that thing updates based on inVarbs.
-// - Use that value to determine whether to show equals sign in numObj editor
-
 // 2. Bring back custom outputs/output lists
 //    - outputLists might be on the same page as custom variables
 // 3. Bring back custom additive lists
