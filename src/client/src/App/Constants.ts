@@ -50,6 +50,7 @@ const isBeta = true;
 export const config = {
   ...env,
   supportEmail: "support@ultimatepropertyanalyzer.com",
+  feedbackEmail: "feedback@ultimatepropertyanalyzer.com",
   discordLink: "https://discord.gg/W6pxEXT8EV",
   clientProdUrl,
   clientDevUrl,
@@ -74,13 +75,19 @@ export const config = {
       websiteDomain: env.clientUrlBase,
     },
   },
+  feRoutes: {
+    userVariables: "/variables",
+    userLists: "/additive-lists",
+    userOutputs: "/outputs",
+    authSuccess: "/login-success",
+    subscribeSuccess: "/subscription-success",
+    analyzer: "/",
+  },
   auth: {
-    successUrlEnd: "/login-success",
     get successUrl() {
-      return `${env.clientUrlBase}${this.successUrlEnd}`;
+      return `${env.clientUrlBase}${config.feRoutes.authSuccess}`;
     },
   },
-  subscriptionSuccessUrlEnd: "/subscription-success",
   basicStorageLimit: 2,
   apiQueryNames: [
     "addSection",

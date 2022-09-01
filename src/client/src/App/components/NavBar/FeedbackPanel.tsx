@@ -17,7 +17,7 @@ export function FeedbackPanel() {
         text={
           <>
             <span className="Bullet-label">Email</span>
-            <span>{constants.supportEmail}</span>
+            <span>{constants.feedbackEmail}</span>
           </>
         }
         key="email"

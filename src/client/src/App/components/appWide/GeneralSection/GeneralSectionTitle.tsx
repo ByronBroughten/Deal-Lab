@@ -59,5 +59,6 @@ export const MainSectionTitleStyled = styled.div<{
     line-height: 1rem;
     margin: 0;
     font-size: ${theme.f3};
+    white-space: nowrap;
   }
 `;

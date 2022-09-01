@@ -10,8 +10,18 @@ AppRegistry.runApplication("App", {
 
 // Demo Link: https://www.youtube.com/watch?v=wGfb8xX2FsI
 /* 
-I've been computer programming for awhile now and finally managed to make an app, check it out. And if you know anyone interested in rental property, I would love if they beta test it. https://www.youtube.com/watch?v=wGfb8xX2FsI
+I've been computer programming for awhile now, and after massively underestimating it, managed to make an app. Check it out, eh? And if you know anyone interested in rental property, I would love if they beta test it. https://www.youtube.com/watch?v=wGfb8xX2FsI
 */
+
+// I'm making an app for analyzing rental property. These are the main goals:
+// 1. Analyze properties faster
+// 2. Be as precise as you prefer
+// 3. Save and experiment with different combinations of loans and properties
+// 4. Allow for custom inputs and outputs (still working on this)
+// Right now it's in the beta testing stage. I'm looking for people to try it out, report bugs, and give any and all feedback, really. For beta, everything it can do is free. Most of what it can do will be free in the end.
+// Here's a brief video demo:  https://www.youtube.com/watch?v=wGfb8xX2FsI
+// Here's a link to the app: https://www.ultimatepropertyanalyzer.com/
+// If you will try it and provide me with feedback, I would greatly appreciate it. 😊
 
 // - Get numObj editorText to display updated in-entity text. But also, it should keep
 //   depreciated in-entity text. So it has to cache.
@@ -20,14 +30,20 @@ I've been computer programming for awhile now and finally managed to make an app
 // - "getUserData" sometimes returns 401 - unauthorized
 
 // - Make main menu always present. Stylize buttons differently when user isn't logged in.
-// - Put userName on the right side
+// - Put userName (or first letter of email) on the right side where sign in/sign up were
 
-// 2. Bring back custom outputs/output lists
-//    - outputLists might be on the same page as custom variables
+// It turns out getting beta users will be difficult after all.
+// 1. Post it on facebook
+// 2. Ask Ed to have a look at it
+// 3. Maybe attend an RE meetup or two
+
+// Last steps to Ultimate Property Analyzer
 // 3. Bring back custom additive lists
 //  - For this, you can mostly just copy what you did with userVarbs
 //    - singleTimeList
 //    - ongoingList
+// 2. Bring back custom outputs/output lists
+//    - outputLists might be on the same page as custom variables
 // 4. Bring back deal compare
 // - Generate the table from the db every time
 //    - implement property compare, etc
@@ -68,7 +84,7 @@ I've been computer programming for awhile now and finally managed to make an app
 // - Get an "influencer" to showcase it?
 
 // - Think about the race condition on the front-end for someone starting
-//   a subscription. This might notbe a problem.
+//   a subscription. This might not be a problem.
 //   - The FE waits one second
 //   - The FE sends the request to update its subscription
 //   - the subscription is not yet there—there is no subscription
@@ -119,5 +135,6 @@ I've been computer programming for awhile now and finally managed to make an app
 // You probably want example lists and variables.
 
 // Be more like Google—put the menu on the left side.
+// I could make the lists be "advanced"
 
 reportWebVitals();

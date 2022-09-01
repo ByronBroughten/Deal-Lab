@@ -50,7 +50,12 @@ export function NavUserMenu({ feId, logout }: NavUserMenuProps) {
           </BtnDiv> */}
 
         <BtnDiv>
-          <Button href="/variables">{`Your variables`}</Button>
+          <Button
+            href={constants.feRoutes.userVariables}
+          >{`Your variables`}</Button>
+        </BtnDiv>
+        <BtnDiv>
+          <Button href={constants.feRoutes.userLists}>{`Your lists`}</Button>
         </BtnDiv>
         <BtnDiv>
           <Button onClick={logout}>Logout</Button>

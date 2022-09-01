@@ -7,7 +7,8 @@ import { getSuperTokensRoutesForReactRouterDom } from "supertokens-auth-react";
 import { ActiveDeal } from "./App/components/ActiveDeal";
 import NotFound from "./App/components/general/NotFound";
 import NavBar from "./App/components/NavBar";
-import { UserVarbLists } from "./App/components/UserVarbLists";
+import { UserAdditiveListPage } from "./App/components/UserAdditiveListPage";
+import { UserVarbListPage } from "./App/components/UserVarbListPage";
 import { constants } from "./App/Constants";
 import {
   useAuthAndLogin,
@@ -20,6 +21,8 @@ ReactGA.initialize("G-19TRW4YTJL");
 ReactGA.send("pageview");
 
 export function Main() {
+  const { feRoutes } = constants;
+
   const main = useSetterSection();
   const feUser = main.get.onlyChild("feUser");
   const { logout } = useAuthAndLogin();
@@ -37,21 +40,18 @@ export function Main() {
           }
         /> */}
         {getSuperTokensRoutesForReactRouterDom(reactRouterDom)}
-
-        <Route path="/variables" element={<UserVarbLists />} />
-        {/* <Route path="/lists" element={<UserListsManager/>} /> */}
-
-        <Route path="/not-found" element={<NotFound />} />
+        <Route path={feRoutes.userVariables} element={<UserVarbListPage />} />
+        <Route path={feRoutes.userLists} element={<UserAdditiveListPage />} />
         <Route
-          path={constants.subscriptionSuccessUrlEnd}
+          path={feRoutes.subscribeSuccess}
           element={<ActiveDeal feId={activeDealId} />}
         />
         <Route
-          path={constants.auth.successUrlEnd}
+          path={feRoutes.authSuccess}
           element={<ActiveDeal feId={activeDealId} loginSuccess={true} />}
         />
-        <Route path="/" element={<ActiveDeal feId={activeDealId} />} />
-        {/* <Route path="/" element={<Navigate replace to="/analyzer" />} /> */}
+        <Route path="/not-found" element={<NotFound />} />
+        <Route path={"/"} element={<ActiveDeal feId={activeDealId} />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Styled>

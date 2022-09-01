@@ -14,7 +14,7 @@ function useUpdateOnSubscribe() {
   const navigate = useNavigate();
   React.useEffect(() => {
     async function updateOnSubscribe() {
-      if (pathname.endsWith(constants.subscriptionSuccessUrlEnd)) {
+      if (pathname.endsWith(constants.feRoutes.subscribeSuccess)) {
         try {
           await feUser.updateSubscriptionData();
         } catch (ex) {
@@ -55,7 +55,7 @@ function useGetAuthStateIfSessionExists() {
         } catch (ex) {
           await signOut();
         }
-      } else if (pathname.includes(constants.auth.successUrlEnd)) {
+      } else if (pathname.includes(constants.feRoutes.authSuccess)) {
         navigate("/");
       }
     }

@@ -181,9 +181,9 @@ const themeSections = {
   get userVarbList() {
     return this.default;
   },
-  // get userSingleList() {
-  //   return this.loan;
-  // },
+  get userSingleList() {
+    return this.loan;
+  },
   get userOngoingList() {
     return this.mgmt;
   },

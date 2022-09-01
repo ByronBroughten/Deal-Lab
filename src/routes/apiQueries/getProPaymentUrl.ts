@@ -29,7 +29,7 @@ async function getProPaymentUrl(req: Request, res: Response) {
   const stripe = getStripe();
   const session = await stripe.checkout.sessions.create({
     mode: "subscription",
-    success_url: constants.clientUrlBase + constants.subscriptionSuccessUrlEnd,
+    success_url: constants.clientUrlBase + constants.feRoutes.subscribeSuccess,
     cancel_url: constants.clientUrlBase,
     customer_email: email,
     ...(customerId ? { customer: customerId } : {}),

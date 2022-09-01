@@ -5,54 +5,65 @@ import styled from "styled-components";
 import { apiQueries } from "../../modules/apiQueriesClient";
 import usePrompt from "../../modules/customHooks/useBlockerAndPrompt";
 import { SectionArrQuerier } from "../../modules/QueriersBasic/SectionArrQuerier";
+import { FeStoreNameByType } from "../../sharedWithServer/SectionsMeta/relSectionsDerived/relNameArrs/feStoreNameArrs";
 import { SectionsContext } from "../../sharedWithServer/stateClassHooks/useSections";
 import { useSetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useSetterSection";
 import { PackBuilderSection } from "../../sharedWithServer/StatePackers.ts/PackBuilderSection";
 import { PackMakerSection } from "../../sharedWithServer/StatePackers.ts/PackMakerSection";
 import { SolverSections } from "../../sharedWithServer/StateSolvers/SolverSections";
+import theme, { ThemeName } from "../../theme/Theme";
 import MainSection from "../appWide/GeneralSection";
 import GeneralSectionTitle from "../appWide/GeneralSection/GeneralSectionTitle";
 import MainSectionTitleBtn from "../appWide/GeneralSection/GeneralSectionTitle/MainSectionTitleBtn";
-import { UserVarbListSectionEntry } from "./UserVarbListSectionEntry";
+import { MakeListNode } from "../appWide/ListGroup/ListGroupShared/ListGroupGeneric/ListGroupLists";
+import { UserListSectionEntry } from "./UserListSectionEntry";
 
-function useSaveUserVarbLists() {
+function useSaveUserLists(storeName: FeStoreNameByType<"fullIndex">) {
   const feUser = useSetterSectionOnlyOne("feUser");
-  const userVarbListsContext = useUserVarbListSections();
+  const userListsContext = useUserListMainSection(storeName);
 
-  const mainListPack =
-    feUser.packMaker.makeChildSectionPackArr("userVarbListMain");
+  const mainListPack = feUser.packMaker.makeChildSectionPackArr(storeName);
 
   const workingPackMaker = PackMakerSection.makeFromSections({
-    sections: userVarbListsContext.sections,
+    sections: userListsContext.sections,
     sectionName: "feUser",
   });
-  const workingListPack =
-    workingPackMaker.makeChildSectionPackArr("userVarbListMain");
+  const workingListPack = workingPackMaker.makeChildSectionPackArr(storeName);
 
   const areSaved = isEqual(workingListPack, mainListPack);
-  async function saveUserVarbLists() {
-    const workingPackArr =
-      workingPackMaker.makeChildSectionPackArr("userVarbListMain");
+  async function saveUserLists() {
+    const workingPackArr = workingPackMaker.makeChildSectionPackArr(storeName);
     const arrQuerier = new SectionArrQuerier({
-      dbStoreName: "userVarbListMain",
+      dbStoreName: storeName,
       apiQueries,
     });
     await arrQuerier.replace(workingPackArr);
     feUser.loadChildPackArrs({
-      userVarbListMain: workingPackArr,
+      [storeName]: workingPackArr,
     });
   }
 
   return {
-    userVarbListsContext,
-    saveUserVarbLists,
+    userListsContext,
+    saveUserLists,
     areSaved,
   };
 }
 
-export function UserVarbListSection() {
-  const { saveUserVarbLists, areSaved, userVarbListsContext } =
-    useSaveUserVarbLists();
+type Props = {
+  themeName: ThemeName;
+  storeName: FeStoreNameByType<"fullIndex">;
+  title: string;
+  makeListNode: MakeListNode;
+};
+export function UserListMainSection({
+  themeName,
+  storeName,
+  title,
+  makeListNode,
+}: Props) {
+  const { saveUserLists, areSaved, userListsContext } =
+    useSaveUserLists(storeName);
   const saveBtnProps = {
     ...(areSaved
       ? {
@@ -68,13 +79,13 @@ export function UserVarbListSection() {
   );
 
   return (
-    <SectionsContext.Provider value={userVarbListsContext}>
-      <Styled themeName="userVarbList" className="UserVarbListSection-root">
-        <GeneralSectionTitle title="Variables" themeName="userVarbList">
+    <Styled themeName={themeName} className="UserListMainSection-root">
+      <SectionsContext.Provider value={userListsContext}>
+        <GeneralSectionTitle title={title} themeName={themeName}>
           <MainSectionTitleBtn
-            themeName="userVarbList"
-            className="GeneralSectionTitle-child"
-            onClick={saveUserVarbLists}
+            themeName={themeName}
+            className="UserListMain-saveBtn"
+            onClick={saveUserLists}
             {...{
               ...saveBtnProps,
               icon: <AiOutlineSave size="25" />,
@@ -82,33 +93,39 @@ export function UserVarbListSection() {
           />
         </GeneralSectionTitle>
         <div className="MainSection-entries">
-          <UserVarbListSectionEntry />
+          <UserListSectionEntry
+            {...{
+              themeName,
+              storeName,
+              makeListNode,
+            }}
+          />
         </div>
-      </Styled>
-    </SectionsContext.Provider>
+      </SectionsContext.Provider>
+    </Styled>
   );
 }
 
 const Styled = styled(MainSection)`
-  .GeneralSectionTitle-child {
+  .UserListSectionEntry-root {
+    padding-bottom: ${theme.s2};
+  }
+  .UserListMain-saveBtn {
     width: 50%;
   }
 `;
 
-function useUserVarbListSections() {
-  // I'll want to load all the full sections when those
-  // totals become usable.
+function useUserListMainSection(storeName: FeStoreNameByType<"fullIndex">) {
   const feUser = useSetterSectionOnlyOne("feUser");
   const [sections, setSections] = React.useState(() => {
-    const varbListPacks =
-      feUser.packMaker.makeChildSectionPackArr("userVarbListMain");
+    const varbListPacks = feUser.packMaker.makeChildSectionPackArr(storeName);
     const sections = SolverSections.initSectionsFromDefaultMain();
     const packBuilder = new PackBuilderSection({
       ...sections.onlyOneRawSection("feUser"),
       sectionsShare: { sections },
     });
     packBuilder.loadChildren({
-      childName: "userVarbListMain",
+      childName: storeName,
       sectionPacks: varbListPacks,
     });
     return packBuilder.sectionsShare.sections;
