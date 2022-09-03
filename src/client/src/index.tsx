@@ -33,17 +33,38 @@ I've been computer programming for awhile now, and after massively underestimati
 // - Put userName (or first letter of email) on the right side where sign in/sign up were
 
 // It turns out getting beta users will be difficult after all.
-// 1. Post it on facebook
+// You don't need the extra features for the below:
+// 1. Post it on facebook/insta
 // 2. Ask Ed to have a look at it
 // 3. Maybe attend an RE meetup or two
 
 // Last steps to Ultimate Property Analyzer
-// 3. Bring back custom additive lists
-//  - For this, you can mostly just copy what you did with userVarbs
-//    - singleTimeList
-//    - ongoingList
-// 2. Bring back custom outputs/output lists
-//    - outputLists might be on the same page as custom variables
+// 1. are saved isn't working right with entities
+// - to find the difference, use zod
+
+// 3. Bring back custom outputs/output lists
+//   1. Make the lists be the same as regular varb lists, but green
+//      - This is kind of nice, because then the outputs can be defined
+//        just like varbs
+//   2. Make the lists be like they are displayed now
+//     - I'll need a way to add varbs to the output list
+//       in real time and save it. It would be most intuitive to just
+//       make the output lists look similar, perhaps just stacked instead
+//       of on their side
+
+// Analyzer output list:
+// - Add a title
+// - Add a button to add new outputs
+// - Add a way to remove outputs
+// - Menu for saving and loading output lists
+// Menu output list:
+// - Same as Analyzer output list, but stacked items
+
+// 3.5 Allow custom variables on property, loan, and mgmt
+// - add a list called "variables", which contains labeled equation items
+// - add and remove those beneath the basic variables.
+// - this way, properties and deals can be totally customized.
+
 // 4. Bring back deal compare
 // - Generate the table from the db every time
 //    - implement property compare, etc

@@ -163,6 +163,9 @@ const themeSections = {
   get deal() {
     return this.plus;
   },
+  get userOutput() {
+    return this.deal;
+  },
   plus: {
     ...themeSection({
       main: themeColors.plus,

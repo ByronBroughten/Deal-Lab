@@ -8,6 +8,7 @@ import { ActiveDeal } from "./App/components/ActiveDeal";
 import NotFound from "./App/components/general/NotFound";
 import NavBar from "./App/components/NavBar";
 import { UserAdditiveListPage } from "./App/components/UserAdditiveListPage";
+import { UserOutputListPage } from "./App/components/UserOutputListPage";
 import { UserVarbListPage } from "./App/components/UserVarbListPage";
 import { constants } from "./App/Constants";
 import {
@@ -42,6 +43,7 @@ export function Main() {
         {getSuperTokensRoutesForReactRouterDom(reactRouterDom)}
         <Route path={feRoutes.userVariables} element={<UserVarbListPage />} />
         <Route path={feRoutes.userLists} element={<UserAdditiveListPage />} />
+        <Route path={feRoutes.userOutputs} element={<UserOutputListPage />} />
         <Route
           path={feRoutes.subscribeSuccess}
           element={<ActiveDeal feId={activeDealId} />}

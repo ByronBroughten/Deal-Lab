@@ -27,13 +27,13 @@ export default function NavBtn({
       }}
     >
       {icon && <span className="NavBtn-icon">{icon}</span>}
-      {<span className="NavBtn-text">{text}</span>}
+      {text && <span className="NavBtn-text">{text}</span>}
     </Styled>
   );
 }
 const Styled = styled(PlainBtn)<{ $isactive?: boolean }>`
   font-size: ${rem("14px")};
-  padding: 0 ${theme.s4};
+  padding: 0 ${theme.s3};
   height: 100%;
   .NavBtn-text {
     margin-left: ${rem("2px")};

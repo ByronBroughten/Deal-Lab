@@ -8,7 +8,6 @@ import { SectionArrQuerier } from "../../modules/QueriersBasic/SectionArrQuerier
 import { FeStoreNameByType } from "../../sharedWithServer/SectionsMeta/relSectionsDerived/relNameArrs/feStoreNameArrs";
 import { SectionsContext } from "../../sharedWithServer/stateClassHooks/useSections";
 import { useSetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useSetterSection";
-import { PackBuilderSection } from "../../sharedWithServer/StatePackers.ts/PackBuilderSection";
 import { PackMakerSection } from "../../sharedWithServer/StatePackers.ts/PackMakerSection";
 import { SolverSections } from "../../sharedWithServer/StateSolvers/SolverSections";
 import theme, { ThemeName } from "../../theme/Theme";
@@ -16,6 +15,7 @@ import MainSection from "../appWide/GeneralSection";
 import GeneralSectionTitle from "../appWide/GeneralSection/GeneralSectionTitle";
 import MainSectionTitleBtn from "../appWide/GeneralSection/GeneralSectionTitle/MainSectionTitleBtn";
 import { MakeListNode } from "../appWide/ListGroup/ListGroupShared/ListGroupGeneric/ListGroupLists";
+import { SolverSection } from "./../../sharedWithServer/StateSolvers/SolverSection";
 import { UserListSectionEntry } from "./UserListSectionEntry";
 
 function useSaveUserLists(storeName: FeStoreNameByType<"fullIndex">) {
@@ -120,13 +120,12 @@ function useUserListMainSection(storeName: FeStoreNameByType<"fullIndex">) {
   const [sections, setSections] = React.useState(() => {
     const varbListPacks = feUser.packMaker.makeChildSectionPackArr(storeName);
     const sections = SolverSections.initSectionsFromDefaultMain();
-    const packBuilder = new PackBuilderSection({
+    const packBuilder = SolverSection.init({
       ...sections.onlyOneRawSection("feUser"),
       sectionsShare: { sections },
     });
-    packBuilder.loadChildren({
-      childName: storeName,
-      sectionPacks: varbListPacks,
+    packBuilder.loadChildPackArrsAndSolve({
+      [storeName]: varbListPacks,
     });
     return packBuilder.sectionsShare.sections;
   });

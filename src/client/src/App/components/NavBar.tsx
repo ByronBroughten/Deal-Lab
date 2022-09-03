@@ -31,6 +31,7 @@ export default function NavBar(props: NavBarProps) {
     <Styled className="NavBar-root">
       <Toolbar disableGutters={true}>
         <div className="NavBar-leftSide">
+          {!isGuest && <NavUserMenu {...{ ...props, feId: userInfo.feId }} />}
           <Link className="NavBar-navBtnLink" to="/">
             <NavBtn
               className="NavBar-brandBtn"
@@ -38,6 +39,8 @@ export default function NavBar(props: NavBarProps) {
               text={<span className="NavBar-brandName">{appTitle}</span>}
             />
           </Link>
+        </div>
+        <div className="NavBar-rightSide">
           <NavBtn
             className="NavBar-demoBtn NavBtn"
             href="https://www.youtube.com/watch?v=wGfb8xX2FsI"
@@ -54,8 +57,6 @@ export default function NavBar(props: NavBarProps) {
               <FeedbackPanel />
             </NavDropDown>
           )}
-        </div>
-        <div className="NavBar-rightSide">
           {showSignin && (
             <>
               <Link className="NavBar-navBtnLink" to="/auth">
@@ -76,7 +77,6 @@ export default function NavBar(props: NavBarProps) {
               <UpgradeUserToProPanel />
             </NavDropDown>
           )}
-          {!isGuest && <NavUserMenu {...{ ...props, feId: userInfo.feId }} />}
         </div>
       </Toolbar>
     </Styled>

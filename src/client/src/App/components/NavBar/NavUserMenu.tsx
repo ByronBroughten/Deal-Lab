@@ -36,12 +36,8 @@ export function NavUserMenu({ feId, logout }: NavUserMenuProps) {
   return (
     <Styled
       {...{ $isFullPlan: isFullPlan }}
-      btnText={
-        <div className="NavUserMenu-nameDiv">
-          {!constants.isBeta && <span>{userName}</span>}
-          <AiOutlineMenu className="NavBar-menuIcon" />
-        </div>
-      }
+      btnIcon={<AiOutlineMenu className="NavBar-menuIcon" />}
+      dropDirection={"right"}
     >
       <div className="NavUserMenu-dropdown">
         {/* 
@@ -56,6 +52,11 @@ export function NavUserMenu({ feId, logout }: NavUserMenuProps) {
         </BtnDiv>
         <BtnDiv>
           <Button href={constants.feRoutes.userLists}>{`Your lists`}</Button>
+        </BtnDiv>
+        <BtnDiv>
+          <Button
+            href={constants.feRoutes.userOutputs}
+          >{`Your outputs`}</Button>
         </BtnDiv>
         <BtnDiv>
           <Button onClick={logout}>Logout</Button>

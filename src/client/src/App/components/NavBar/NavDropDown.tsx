@@ -7,14 +7,16 @@ import { StandardProps } from "../general/StandardProps";
 import NavBtn from "./NavBtn";
 
 interface Props extends StandardProps {
-  btnText: string | React.ReactNode;
+  btnText?: string | React.ReactNode;
   btnIcon?: React.ReactNode;
+  dropDirection?: "left" | "right";
 }
 export default function NavDropDown({
   btnText,
   children,
   className,
   btnIcon,
+  dropDirection = "left",
 }: Props) {
   const { viewIsOpen, toggleView, closeView } = useToggleView({
     initValue: false,
@@ -25,6 +27,7 @@ export default function NavDropDown({
     <Styled
       className={`NavDropDown-root ${className}`}
       ref={closeIfClickOutsideRef}
+      $dropDirection={dropDirection}
     >
       <NavBtn
         onClick={toggleView}
@@ -41,7 +44,7 @@ export default function NavDropDown({
     </Styled>
   );
 }
-const Styled = styled.div`
+const Styled = styled.div<{ $dropDirection: "left" | "right" }>`
   position: relative;
   z-index: 1;
   display: flex;
@@ -58,7 +61,8 @@ const Styled = styled.div`
     position: relative;
     z-index: 1;
     display: flex;
-    flex-direction: row-reverse;
+    flex-direction: ${({ $dropDirection }) =>
+      $dropDirection === "left" ? "row-reverse" : "row"};
     .NavDropDown-viewable {
       position: absolute;
       border-top: none;
