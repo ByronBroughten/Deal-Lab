@@ -1,4 +1,4 @@
-import DealOutputList from "./ActiveDeal/DealStats/Deal/DealOutputList";
+import { VarbListOutputs } from "./appWide/VarbLists/VarbListOutputs";
 import { UserListsGeneral } from "./UserListsGeneral";
 import { UserListMainSection } from "./UserVarbListPage/UserListMainSection";
 
@@ -10,7 +10,7 @@ export function UserOutputListPage() {
         themeName={themeName}
         storeName="outputListMain"
         title="Output lists"
-        makeListNode={(nodeProps) => <DealOutputList {...nodeProps} />}
+        makeListNode={(nodeProps) => <VarbListOutputs {...nodeProps} />}
       />
     </UserListsGeneral>
   );

@@ -104,10 +104,20 @@ export function makeRelSections() {
       valueEntityInfo: relVarb("inEntityInfo"),
       displayVarb: relVarb("string"),
     }),
-    outputList: relSection("Output List", relVarbsS.savableSection, {
-      feFullIndexStoreName: "outputListMain",
-      dbIndexStoreName: "outputListMain",
-    }),
+    outputList: relSection(
+      "Output List",
+      {
+        ...relVarbsS.savableSection,
+        defaultValueSwitch: relVarb("string", {
+          initValue: "loadedVarb",
+        } as const),
+      },
+      {
+        varbListItem: "outputItem",
+        feFullIndexStoreName: "outputListMain",
+        dbIndexStoreName: "outputListMain",
+      }
+    ),
     singleTimeList: relSection("List", relVarbsS.singleTimeList(), {
       varbListItem: "singleTimeItem",
       feFullIndexStoreName: "singleTimeListMain",

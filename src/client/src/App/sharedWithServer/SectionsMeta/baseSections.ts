@@ -85,8 +85,10 @@ export const baseSections = {
     ...baseVarbsS.savableSection,
     defaultValueSwitch: "string",
   }),
-  outputList: baseSection(baseVarbsS.savableSection),
-
+  outputList: baseSection({
+    ...baseVarbsS.savableSection,
+    defaultValueSwitch: "string",
+  }),
   singleTimeItem: baseSection({
     ...baseVarbsS.singleValueVirtualVarb,
     ...baseVarbsS.loadableVarb,

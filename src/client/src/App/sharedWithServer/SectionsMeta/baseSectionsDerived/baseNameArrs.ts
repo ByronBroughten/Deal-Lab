@@ -56,6 +56,7 @@ function makeBaseNameArrs() {
         "singleTimeList",
         "ongoingList",
         "userVarbList",
+        "outputList",
       ] as const);
     },
   };

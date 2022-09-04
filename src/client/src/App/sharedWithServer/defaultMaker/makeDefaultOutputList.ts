@@ -23,7 +23,10 @@ export function makeDefaultOutputList(): SectionPack<"outputList"> {
   const outputList = PackBuilderSection.initAsOmniChild("outputList");
   for (const outputVarbInfo of defaultDealOutputInfos) {
     outputList.addChild("outputItem", {
-      dbVarbs: { valueEntityInfo: inEntityInfo(outputVarbInfo) },
+      dbVarbs: {
+        valueSwitch: "loadedVarb",
+        valueEntityInfo: inEntityInfo(outputVarbInfo),
+      },
     });
   }
   return outputList.makeSectionPack();
