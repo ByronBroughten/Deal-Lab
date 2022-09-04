@@ -50,6 +50,12 @@ export const baseVarbsS = {
   ongoing<Base extends string>(baseName: Base): BaseOngoingVarb<Base> {
     return this.switch(baseName, "ongoing");
   },
+  get switchableEquationEditor() {
+    return {
+      ...baseVarbs("string", ["valueSwitch", "displayNameEditor"] as const),
+      ...baseVarbs("numObj", ["numObjEditor"] as const),
+    } as const;
+  },
   get savableSection() {
     return {
       displayName: "string",

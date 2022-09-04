@@ -90,27 +90,25 @@ export const baseSections = {
   singleTimeItem: baseSection({
     ...baseVarbsS.singleValueVirtualVarb,
     ...baseVarbsS.loadableVarb,
-    valueSwitch: "string",
-    displayNameEditor: "string",
-    numObjEditor: "numObj",
+    ...baseVarbsS.switchableEquationEditor,
   }),
   ongoingItem: baseSection({
     ...baseVarbsS.virtualVarb,
     ...baseVarbsS.loadableVarb,
-    ...baseVarbs("string", ["valueSwitch", "displayNameEditor"] as const),
-    ...baseVarbs("numObj", ["costToReplace", "numObjEditor"] as const),
+    ...baseVarbsS.switchableEquationEditor,
     ...baseVarbsS.ongoing("value"),
     ...baseVarbsS.switch("lifespan", "monthsYears"),
+    costToReplace: "numObj",
   }),
   outputItem: baseSection({
     ...baseVarbsS.singleValueVirtualVarb,
     ...baseVarbsS.loadableVarb,
+    ...baseVarbsS.switchableEquationEditor,
   }),
   userVarbItem: baseSection({
     ...baseVarbsS.singleValueVirtualVarb,
     ...baseVarbsS.loadableVarb,
-    ...baseVarbs("string", ["valueSwitch", "displayNameEditor"] as const),
-    ...baseVarbs("numObj", ["numObjEditor"] as const),
+    ...baseVarbsS.switchableEquationEditor,
   }),
   conditionalRowList: baseSection({
     value: "numObj",

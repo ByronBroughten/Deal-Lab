@@ -135,6 +135,9 @@ export function makeRelSections() {
 
     outputItem: relSection("Output", {
       ...relVarbsS.basicVirtualVarb,
+      numObjEditor: relVarbS.calcVarb("User Input"),
+      displayNameEditor: relVarbS.displayNameEditor,
+      valueSwitch: relVarb("string"),
       valueEntityInfo: relVarb("inEntityInfo"),
       value: relVarb("numObj", {
         updateFnName: "virtualNumObj",

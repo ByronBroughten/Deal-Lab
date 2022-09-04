@@ -41,29 +41,41 @@ I've been computer programming for awhile now, and after massively underestimati
 // Last steps to Ultimate Property Analyzer
 // 1. are saved isn't working right with entities
 // - to find the difference, use zod
+// - Or just use a different method of checking for saved
+
+// 2. Add back the list menu
+// - This time it opens from up-top
+// - actions, saved, min/max, close
+
+// 3.5 Allow custom variables on property, loan, and mgmt (add guts, at least)
+// - Add a "variable" item that has loadedVarb and editor
+// - User variables are allowed to be added as variable items to property, loan, or mgmt
+// - When they are loaded, their previous value initially occupies the editor
+// - Their value is then gotten from the editor going forward
+// - If they are used multiple times, their value is summed from the editors
+// I think I love that. The only problem is determining the length of the editor
+// based on the variable name.
+// - Add Variable button added to basicInfo
 
 // 3. Bring back custom outputs/output lists
-//   1. Make the lists be the same as regular varb lists, but green
-//      - This is kind of nice, because then the outputs can be defined
-//        just like varbs
-//   2. Make the lists be like they are displayed now
-//     - I'll need a way to add varbs to the output list
-//       in real time and save it. It would be most intuitive to just
-//       make the output lists look similar, perhaps just stacked instead
-//       of on their side
+// Analysis output list:
+// - Options button VscPreview
+// - Simple view button MdOutlineViewColumn
+// - Add a button that when clicked toggles showing
+//   - X buttons on each output
+//   - add output button by the outputs
+//   - three dots to the right > actions and saved
+//   - title to the left for the output list
+//   - give the option to toggle the varb to labeled equation
+// Add a displayName to each output list
+// Title goes atop the list
+// Add the three dots, like with the other lists
+// "actions" and "saved" are revealed
 
-// Analyzer output list:
-// - Add a title
-// - Add a button to add new outputs
-// - Add a way to remove outputs
 // - Menu for saving and loading output lists
 // Menu output list:
-// - Same as Analyzer output list, but stacked items
-
-// 3.5 Allow custom variables on property, loan, and mgmt
-// - add a list called "variables", which contains labeled equation items
-// - add and remove those beneath the basic variables.
-// - this way, properties and deals can be totally customized.
+// - Initially the same as varbList but green and with
+//   loadedVarb instead of if-then
 
 // 4. Bring back deal compare
 // - Generate the table from the db every time
