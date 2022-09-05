@@ -1,5 +1,4 @@
 import React, { ReactNode } from "react";
-import { IoEllipsisVertical } from "react-icons/io5";
 import styled, { css } from "styled-components";
 import useToggleView from "../../../../modules/customHooks/useToggleView";
 import { SectionValues } from "../../../../sharedWithServer/SectionsMeta/baseSectionsDerived/valueMetaTypes";
@@ -13,7 +12,6 @@ import {
 import { useSetterSection } from "../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import ccs from "../../../../theme/cssChunks";
 import theme, { ThemeName } from "../../../../theme/Theme";
-import PlainIconBtn from "../../../general/PlainIconBtn";
 import { BigStringEditor } from "../../../inputs/BigStringEditor";
 import { useOpenWidth } from "../../SectionTitleRow";
 import { ListMenu } from "./ListMenu";
@@ -29,7 +27,12 @@ type Props<SN extends VarbListAllowed> = {
   totalVarbName?: string;
   className?: string;
   childDbVarbs?: DbVarbs;
+  menuType?: "simple" | "full";
 };
+
+// make two versions of VarbListGeneric
+// one with fullMenu
+// one with simpleMenu
 
 export function VarbListGeneric<SN extends VarbListAllowed>({
   feInfo,
@@ -39,6 +42,7 @@ export function VarbListGeneric<SN extends VarbListAllowed>({
   totalVarbName,
   className,
   childDbVarbs,
+  menuType = "simple",
 }: Props<SN>) {
   const list = useSetterSection(feInfo);
   const titleVarb = list.varb("displayName");
@@ -89,31 +93,23 @@ export function VarbListGeneric<SN extends VarbListAllowed>({
               />
             )}
           </div>
-
-          <PlainIconBtn
-            onClick={toggleListMenu}
-            className="AdditiveList-ellipsisBtn"
-          >
-            <IoEllipsisVertical size="22" />
-          </PlainIconBtn>
+          <ListMenu
+            className="AdditiveList-listMenu"
+            {...{
+              viewIsOpen,
+              feInfo: listGet.feInfo,
+              themeName,
+              toggleListView: trackWidthToggleView,
+            }}
+          />
         </div>
+
         {viewIsOpen && (
           <VarbListTable {...{ themeName, contentTitle, addItem }}>
             {items.map((item) => makeItemNode(item))}
           </VarbListTable>
         )}
       </div>
-      {listGet.thisIsSectionType("hasIndexStore") && listMenuIsOpen && (
-        <ListMenu
-          className="AdditiveList-listMenu"
-          {...{
-            viewIsOpen,
-            feInfo: listGet.feInfo,
-            themeName,
-            toggleListView: trackWidthToggleView,
-          }}
-        />
-      )}
     </Styled>
   );
 }

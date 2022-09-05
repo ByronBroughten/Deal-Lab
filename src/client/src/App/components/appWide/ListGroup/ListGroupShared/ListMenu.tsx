@@ -1,7 +1,6 @@
 import React from "react";
 import { FiMaximize2, FiMinimize2 } from "react-icons/fi";
-import { MdDelete } from "react-icons/md";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import useToggleView from "../../../../modules/customHooks/useToggleView";
 import { FeInfoByType } from "../../../../sharedWithServer/SectionsMeta/Info";
 import { useSetterSection } from "../../../../sharedWithServer/stateClassHooks/useSetterSection";
@@ -54,62 +53,35 @@ export function ListMenu({
     <Styled
       {...{
         className: "ListMenu-root " + className,
-        themeName,
+        $themeName: themeName,
       }}
     >
       <div className="ListMenu-viewable">
-        <XBtn className="ListMenu-listMenuBtn" onClick={menu.remove}>
-          <MdDelete size={24} />
-        </XBtn>
-        <ListMenuBtn className="ListMenu-listMenuBtn" onClick={toggleListView}>
+        <ListMenuBtn
+          themeName={themeName}
+          className="ListMenu-listMenuBtn ListMenu-viewBtn"
+          onClick={toggleListView}
+        >
           {viewIsOpen && <FiMinimize2 size={15} />}
           {!viewIsOpen && <FiMaximize2 size={15} />}
         </ListMenuBtn>
-        {/* {!menu.isSaved && (
-          <ListMenuBtn className="ListMenu-listMenuBtn" onClick={menu.save}>
-            Save
-          </ListMenuBtn>
-        )}
-        {menu.isSaved && (
-          <ListMenuBtn className="ListMenu-listMenuBtn" onClick={menu.update}>
-            Save Updates
-          </ListMenuBtn>
-        )}
-        <ListMenuBtn className="ListMenu-listMenuBtn" onClick={menu.copy}>
-          Copy
-        </ListMenuBtn> */}
-        {/* <ListMenuBtn
-          className="ListMenu-listMenuBtn"
-          onClick={menu.toggleLoadMenu}
-        >
-          Load
-        </ListMenuBtn>
-        {menu.loadMenuIsOpen && <RowIndexRows feInfo={feInfo} />} */}
+        <XBtn className="ListMenu-listMenuBtn" onClick={menu.remove} />
       </div>
     </Styled>
   );
 }
 
-const Styled = styled.div<{ themeName: ThemeName }>`
+const Styled = styled.div<{ $themeName: ThemeName }>`
   .ListMenu-viewable {
-    border-radius: 0 ${theme.br1} ${theme.br1} 0;
-    border: 1px solid;
-    border-left: none;
-    /* box-shadow: ${theme.boxShadow1}; */
-    position: relative;
-    z-index: 3;
-
-    ${({ themeName }) => css`
-      background-color: ${theme[themeName].main};
-      border-color: ${theme[themeName].border};
-    `}
+    display: flex;
   }
   .ListMenu-listMenuBtn {
-    font-size: 0.9rem;
-    display: flex; // centers button content
-    width: 35px;
-    height: 32px;
-    border-radius: 0;
-    border-left: none;
+    margin: ${theme.s1};
+    margin-top: 0;
+    width: 24px;
+    height: 24px;
+    :last-child {
+      margin-right: 0;
+    }
   }
 `;

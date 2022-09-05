@@ -48,34 +48,24 @@ I've been computer programming for awhile now, and after massively underestimati
 // - actions, saved, min/max, close
 
 // 3.5 Allow custom variables on property, loan, and mgmt (add guts, at least)
-// - Add a "variable" item that has loadedVarb and editor
-// - User variables are allowed to be added as variable items to property, loan, or mgmt
+// - Add a "customVarb" item that has some loadedVarb stuff and a numObjEditor
+// - User variables are allowed to be added as variableItems to property, loan, or mgmt
 // - When they are loaded, their previous value initially occupies the editor
 // - Their value is then gotten from the editor going forward
 // - If they are used multiple times, their value is summed from the editors
 // I think I love that. The only problem is determining the length of the editor
 // based on the variable name.
-// - Add Variable button added to basicInfo
+// - "Add Variable" button added to basicInfo
+
+// Give the lists just minimize and X in list view mode
+// Give them ... > actions, saved, minimize, X in analyzer view mode
 
 // 3. Bring back custom outputs/output lists
 // Analysis output list:
-// - Options button VscPreview
-// - Simple view button MdOutlineViewColumn
-// - Add a button that when clicked toggles showing
-//   - X buttons on each output
-//   - add output button by the outputs
-//   - three dots to the right > actions and saved
-//   - title to the left for the output list
-//   - give the option to toggle the varb to labeled equation
-// Add a displayName to each output list
-// Title goes atop the list
-// Add the three dots, like with the other lists
-// "actions" and "saved" are revealed
+// For now, just show a version of the output list with a slightly different menu
 
-// - Menu for saving and loading output lists
-// Menu output list:
-// - Initially the same as varbList but green and with
-//   loadedVarb instead of if-then
+// Ok. I want a version of these lists with something else in the right corner.
+// A light grey backdrop with minimize and x
 
 // 4. Bring back deal compare
 // - Generate the table from the db every time
