@@ -18,8 +18,11 @@ import { SetterSections } from "./../../sharedWithServer/StateSetters/SetterSect
 import { Str } from "./../../sharedWithServer/utils/Str";
 import { SectionActorBase } from "./SectionActorBase";
 
+// Make this work with fullIndexStore
+// and displayIndexStore
+
 export class MainSectionActor<
-  SN extends SectionName<"hasDisplayIndex">
+  SN extends SectionName<"hasIndexStore">
 > extends SectionActorBase<SN> {
   setter = new SetterSection(this.sectionActorBaseProps);
   // setter can't be a getter because its initial
@@ -77,6 +80,9 @@ export class MainSectionActor<
     });
   }
   get displayNameList(): SetterSection<"displayNameList"> {
+    // here I believe I can just use display or full
+    // index store names
+
     const { feDisplayIndexStoreName } = this.get.meta;
     const feUser = this.setterSections.oneAndOnly("feUser");
     return feUser.onlyChild(
@@ -106,6 +112,9 @@ export class MainSectionActor<
     this.saveNew();
   }
   async saveNew(): Promise<void> {
+    // saveNew will differ depending on whether it's a displayItem
+    // I'm adding
+
     this.addDisplayItem();
     const dateTime = timeS.now();
     this.setter.updateValues({

@@ -94,7 +94,7 @@ export function VarbListGeneric<SN extends VarbListAllowed>({
             )}
           </div>
           <ListMenu
-            className="AdditiveList-listMenu"
+            className="VarbListGeneric-menu"
             {...{
               viewIsOpen,
               feInfo: listGet.feInfo,
@@ -120,6 +120,17 @@ const Styled = styled.div<{
 }>`
   display: flex;
   align-items: flex-start;
+
+  :hover {
+    .VarbListGeneric-menu {
+      visibility: visible;
+    }
+  }
+
+  .VarbListGeneric-menu {
+    margin-left: ${theme.s1};
+    visibility: hidden;
+  }
 
   .AdditiveList-viewable {
     display: flex;

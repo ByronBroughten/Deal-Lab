@@ -64,6 +64,9 @@ I've been computer programming for awhile now, and after massively underestimati
 // Analysis output list:
 // Now I need a complex version of the menu
 
+// Maybe give lists a "simple" and an "itemized" mode.
+// This would require adding an additional value to the list.
+
 // Basically, copy the menu from the property title menu
 // edit that menu to handle full stores.
 
