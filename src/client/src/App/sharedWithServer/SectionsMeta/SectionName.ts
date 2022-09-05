@@ -30,7 +30,6 @@ export type HasRowFeStore = StrictExtract<
   SectionName<"hasDisplayIndex">,
   "property" | "loan" | "mgmt" | "deal"
 >;
-// HasRowFeStore counteracts a but that makes no sense to me.
 
 export type SectionValuesByType<ST extends SectionNameType> = SectionValues<
   SectionName<ST>

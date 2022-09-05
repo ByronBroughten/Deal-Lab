@@ -1,7 +1,4 @@
 import React from "react";
-import { AiOutlineSave } from "react-icons/ai";
-import { BiCopy, BiReset } from "react-icons/bi";
-import { MdDelete, MdOutlineSystemUpdateAlt } from "react-icons/md";
 import styled, { css } from "styled-components";
 import useToggleView from "../../../../modules/customHooks/useToggleView";
 import { useMainSectionActor } from "../../../../modules/sectionActorHooks/useMainSectionActor";
@@ -9,10 +6,9 @@ import { HasRowFeStore } from "../../../../sharedWithServer/SectionsMeta/Section
 import { useAuthStatus } from "../../../../sharedWithServer/stateClassHooks/useAuthStatus";
 import theme from "../../../../theme/Theme";
 import DisplayNameSectionList from "../../DisplayNameSectionList";
-import { DropdownList } from "../../DropdownList";
-import { LabeledIconBtn } from "../../LabeledIconBtn";
 import XBtn from "../../Xbtn";
 import { MainSectionTitleRowTitle } from "./MainSectionTitleRow/MainSectionTitleRowTitle";
+import { StoreSectionActionMenu } from "./StoreSectionActionMenu";
 
 type Props = {
   sectionName: HasRowFeStore;
@@ -21,6 +17,7 @@ type Props = {
   xBtn?: boolean;
   dropTop?: boolean;
 };
+
 export function MainSectionTitleRow({
   pluralName,
   xBtn = false,
@@ -29,7 +26,6 @@ export function MainSectionTitleRow({
 }: Props) {
   const mainSection = useMainSectionActor(feInfo);
   const authStatus = useAuthStatus();
-
   const { btnMenuIsOpen } = useToggleView({
     initValue: false,
     viewWhat: "btnMenu",
@@ -45,77 +41,28 @@ export function MainSectionTitleRow({
     >
       <div className="MainSectionTitleRow-leftSide">
         <MainSectionTitleRowTitle feInfo={feInfo} />
-        <DropdownList
-          {...{
-            className: "MainsectionTitleRow-dropdownList",
-            title: `Actions`,
-            dropTop,
-          }}
-        >
-          {!mainSection.isSaved && (
-            <LabeledIconBtn
-              label={isGuest ? "Sign in to Save" : "Save"}
-              disabled={isGuest}
-              icon={<AiOutlineSave size="25" />}
-              onClick={() => mainSection.saveNew()}
-            />
-          )}
-          {mainSection.isSaved && (
-            <>
-              <LabeledIconBtn
-                label="Save updates"
-                icon={<MdOutlineSystemUpdateAlt size="25" />}
-                onClick={() => mainSection.saveUpdates()}
-              />
-              <LabeledIconBtn
-                label="Save as new"
-                icon={<AiOutlineSave size="25" />}
-                onClick={() => mainSection.saveAsNew()}
-              />
-              <LabeledIconBtn
-                label="Make a copy"
-                icon={<BiCopy size="28" />}
-                onClick={() => mainSection.makeACopy()}
-              />
-              <LabeledIconBtn
-                label="Copy and save"
-                icon={
-                  <span style={{ display: "flex" }}>
-                    <BiCopy size="23" />
-                    <AiOutlineSave size="21" />
-                  </span>
-                }
-                onClick={() => mainSection.copyAndSave()}
-              />
-              <LabeledIconBtn
-                label="Delete from saved"
-                icon={<MdDelete size="24" />}
-                onClick={() => mainSection.deleteSelf()}
-              />
-            </>
-          )}
-          <LabeledIconBtn
-            label="Create new"
-            icon={<BiReset size="26" />}
-            onClick={() => mainSection.replaceWithDefault()}
-          />
-        </DropdownList>
         <div className="MainSectionTitleRow-leftSide-btnsRow">
-          {
-            <DisplayNameSectionList
-              {...{
-                className: "MainSectionTitleRow-flexUnit",
-                feInfo,
-                pluralName,
-                disabled: isGuest,
-                dropTop,
-              }}
-            />
-          }
+          <StoreSectionActionMenu
+            {...{ ...feInfo, className: "MainsectionTitleRow-dropdownList" }}
+          />
+          <DisplayNameSectionList
+            {...{
+              className: "MainSectionTitleRow-flexUnit",
+              feInfo,
+              pluralName,
+              disabled: isGuest,
+              dropTop,
+            }}
+          />
         </div>
       </div>
       <div className="MainSectionTitleRow-rightSide">
-        {xBtn && <XBtn onClick={() => mainSection.removeSelf()} />}
+        {xBtn && (
+          <XBtn
+            className="MainSectionTitleRow-xBtn"
+            onClick={() => mainSection.removeSelf()}
+          />
+        )}
       </div>
     </Styled>
   );
@@ -143,39 +90,30 @@ const Styled = styled.div<{ $btnMenuIsOpen: boolean; $dropTop: boolean }>`
       $btnMenuIsOpen ? theme["gray-600"] : theme.dark};
   }
   .MainsectionTitleRow-dropdownList {
-    margin-left: ${theme.s2};
+    :not(:first-child) {
+      margin-left: ${theme.s3};
+    }
   }
-
-  .MainSectionTitleRow-rightSide {
-    display: flex;
-  }
-
   .MainSectionTitleRow-leftSide {
     display: flex;
     justify-content: flex-start;
     flex-wrap: wrap;
   }
-
-  .MainSectionTitleRow-title,
-  .MainSectionTitleRow-leftSide-btnsRow {
-    // these need this in order to flex properly
-    margin: 0 ${theme.s2};
+  .MainSectionTitleRow-rightSide {
+    display: flex;
   }
-
   .MainSectionTitleRow-title ..DraftTextField-root {
     min-width: 150px;
   }
-
   .MainSectionTitleRow-leftSide-btnsRow {
     display: flex;
-    .MainSectionTitleRow-flexUnit {
-      :not(:first-child) {
-        margin-left: ${theme.s2};
-      }
-    }
+  }
+  .MainSectionTitleRow-title,
+  .MainSectionTitleRow-leftSide-btnsRow {
+    margin: 0 ${theme.s2};
   }
 
-  .XBtn {
+  .MainSectionTitleRow-xBtn {
     margin-left: ${theme.s3};
     height: ${theme.bigButtonHeight};
     width: ${theme.bigButtonHeight};

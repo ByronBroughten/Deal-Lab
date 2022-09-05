@@ -62,10 +62,10 @@ I've been computer programming for awhile now, and after massively underestimati
 
 // 3. Bring back custom outputs/output lists
 // Analysis output list:
-// For now, just show a version of the output list with a slightly different menu
+// Now I need a complex version of the menu
 
-// Ok. I want a version of these lists with something else in the right corner.
-// A light grey backdrop with minimize and x
+// Basically, copy the menu from the property title menu
+// edit that menu to handle full stores.
 
 // 4. Bring back deal compare
 // - Generate the table from the db every time
