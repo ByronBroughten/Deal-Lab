@@ -16,6 +16,7 @@ export default function Loan({ feId }: { feId: string }) {
         <MainSectionTitleRow
           {...{
             ...feInfo,
+            sectionName: "loan",
             pluralName: "loans",
             xBtn: true,
           }}

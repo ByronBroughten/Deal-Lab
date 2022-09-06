@@ -159,6 +159,11 @@ export function makeRelSections() {
     }),
     singleTimeItem: relSection("List Item", relVarbsS.singleTimeItem()),
     ongoingItem: relSection("List Item", relVarbsS.ongoingItem()),
+    customVarb: relSection("CustomVarb", {
+      ...relVarbsS.basicVirtualVarb,
+      valueEntityInfo: relVarb("inEntityInfo"),
+      value: relVarb("numObj"),
+    }),
     userVarbItem: relSection("User Variable", {
       ...relVarbsS.listItemVirtualVarb,
       valueSwitch: relVarb("string", {

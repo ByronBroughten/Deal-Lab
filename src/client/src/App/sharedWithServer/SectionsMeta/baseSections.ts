@@ -107,6 +107,10 @@ export const baseSections = {
     ...baseVarbsS.loadableVarb,
     ...baseVarbsS.switchableEquationEditor,
   }),
+  customVarb: baseSection({
+    ...baseVarbsS.singleValueVirtualVarb,
+    ...baseVarbsS.loadableVarb,
+  }),
   userVarbItem: baseSection({
     ...baseVarbsS.singleValueVirtualVarb,
     ...baseVarbsS.loadableVarb,

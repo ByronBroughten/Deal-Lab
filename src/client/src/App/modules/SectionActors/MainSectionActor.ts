@@ -24,9 +24,9 @@ import { SectionActorBase } from "./SectionActorBase";
 export class MainSectionActor<
   SN extends SectionName<"hasIndexStore">
 > extends SectionActorBase<SN> {
-  setter = new SetterSection(this.sectionActorBaseProps);
-  // setter can't be a getter because its initial
-  // sections would get messed up - that's probably depreciated advice.
+  get setter() {
+    return new SetterSection(this.sectionActorBaseProps);
+  }
 
   private get sectionQuerierProps(): SectionQuerierProps<
     DbSectionNameName<SN>

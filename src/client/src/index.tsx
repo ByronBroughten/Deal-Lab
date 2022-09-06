@@ -39,26 +39,18 @@ I've been computer programming for awhile now, and after massively underestimati
 // - Put userName (or first letter of email) on the right side where sign in/sign up were
 
 // Last steps to Ultimate Property Analyzer
-// 1. are saved isn't working right with entities
-// - to find the difference, use zod
-// - Or just use a different method of checking for saved
-
-// 2. Add back the list menu
-// - This time it opens from up-top
-// - actions, saved, min/max, close
-
-// 3.5 Allow custom variables on property, loan, and mgmt (add guts, at least)
-// - Add a "customVarb" item that has some loadedVarb stuff and a numObjEditor
-// - User variables are allowed to be added as variableItems to property, loan, or mgmt
-// - When they are loaded, their previous value initially occupies the editor
-// - Their value is then gotten from the editor going forward
-// - If they are used multiple times, their value is summed from the editors
-// I think I love that. The only problem is determining the length of the editor
-// based on the variable name.
-// - "Add Variable" button added to basicInfo
-
+// 1. User variables - make their entity displayName update
+// 2. Lists -  ddd back the list menu
 // Give the lists just minimize and X in list view mode
 // Give them ... > actions, saved, minimize, X in analyzer view mode
+
+// 2.5 Allow custom variables on property, loan, and mgmt (add guts, at least)
+// - customVarb entityInfo updateFn updates the local value and gives an inEntity
+//   to the varb it targets with source, "customVarb"
+// - userVarbs check for entities with source "customVarb" and sums their values
+// - customVarb editor is basicVarb editor with loaded displayName
+// - is it possible to set editorLength based on title?
+// - "Add Variable" button needed on basicInfo
 
 // 3. Bring back custom outputs/output lists
 // Analysis output list:

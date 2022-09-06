@@ -119,6 +119,7 @@ export const childSections = checkChildSections({
   loan: childrenSections({
     closingCostList: ["singleTimeList"],
     wrappedInLoanList: ["singleTimeList"],
+    customVarb: ["customVarb"],
   }),
   propertyGeneral: { property: childSection("property") },
   property: childrenSections({
@@ -127,11 +128,13 @@ export const childSections = checkChildSections({
     ongoingCostList: ["ongoingList"],
     ongoingRevenueList: ["ongoingList"],
     unit: ["unit"],
+    customVarb: ["customVarb"],
   }),
   mgmtGeneral: { mgmt: childSection("mgmt") },
   mgmt: childrenSections({
     upfrontCostList: ["singleTimeList"],
     ongoingCostList: ["ongoingList"],
+    customVarb: ["customVarb"],
   }),
 });
 

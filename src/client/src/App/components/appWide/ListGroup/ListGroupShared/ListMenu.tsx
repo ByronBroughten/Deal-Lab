@@ -41,6 +41,10 @@ type Props = StandardProps & {
   toggleListView: () => void;
   viewIsOpen: boolean;
 };
+
+// here is the simple list menu
+// let's make the more in-depth list menu
+
 export function ListMenu({
   className,
   feInfo,
