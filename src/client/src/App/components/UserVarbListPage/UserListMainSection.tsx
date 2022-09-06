@@ -1,5 +1,6 @@
 import { isEqual } from "lodash";
 import React from "react";
+import { unstable_batchedUpdates } from "react-dom";
 import { AiOutlineSave } from "react-icons/ai";
 import styled from "styled-components";
 import { apiQueries } from "../../modules/apiQueriesClient";
@@ -9,6 +10,7 @@ import { FeStoreNameByType } from "../../sharedWithServer/SectionsMeta/relSectio
 import { SectionsContext } from "../../sharedWithServer/stateClassHooks/useSections";
 import { useSetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useSetterSection";
 import { PackMakerSection } from "../../sharedWithServer/StatePackers.ts/PackMakerSection";
+import { StateSections } from "../../sharedWithServer/StateSections/StateSections";
 import { SolverSections } from "../../sharedWithServer/StateSolvers/SolverSections";
 import theme, { ThemeName } from "../../theme/Theme";
 import MainSection from "../appWide/GeneralSection";
@@ -18,28 +20,33 @@ import { MakeListNode } from "../appWide/ListGroup/ListGroupShared/ListGroupGene
 import { SolverSection } from "./../../sharedWithServer/StateSolvers/SolverSection";
 import { UserListSectionEntry } from "./UserListSectionEntry";
 
+type StoreName = FeStoreNameByType<"fullIndex">;
+function makePackList(sections: StateSections, storeName: StoreName) {
+  const packMaker = PackMakerSection.makeFromSections({
+    sections: sections,
+    sectionName: "feUser",
+  });
+  return packMaker.makeChildSectionPackArr(storeName);
+}
+
 function useSaveUserLists(storeName: FeStoreNameByType<"fullIndex">) {
   const feUser = useSetterSectionOnlyOne("feUser");
   const userListsContext = useUserListMainSection(storeName);
+  const workingListPack = makePackList(userListsContext.sections, storeName);
+  const savedListPack = makePackList(userListsContext.savedSections, storeName);
 
-  const mainListPack = feUser.packMaker.makeChildSectionPackArr(storeName);
-
-  const workingPackMaker = PackMakerSection.makeFromSections({
-    sections: userListsContext.sections,
-    sectionName: "feUser",
-  });
-  const workingListPack = workingPackMaker.makeChildSectionPackArr(storeName);
-
-  const areSaved = isEqual(workingListPack, mainListPack);
+  const areSaved = isEqual(workingListPack, savedListPack);
   async function saveUserLists() {
-    const workingPackArr = workingPackMaker.makeChildSectionPackArr(storeName);
     const arrQuerier = new SectionArrQuerier({
       dbStoreName: storeName,
       apiQueries,
     });
-    await arrQuerier.replace(workingPackArr);
-    feUser.loadChildPackArrs({
-      [storeName]: workingPackArr,
+    await arrQuerier.replace(workingListPack);
+    unstable_batchedUpdates(() => {
+      feUser.loadChildPackArrs({
+        [storeName]: workingListPack,
+      });
+      userListsContext.setSavedSections(userListsContext.sections);
     });
   }
 
@@ -129,5 +136,7 @@ function useUserListMainSection(storeName: FeStoreNameByType<"fullIndex">) {
     });
     return packBuilder.sectionsShare.sections;
   });
-  return { sections, setSections };
+
+  const [savedSections, setSavedSections] = React.useState(sections);
+  return { sections, setSections, savedSections, setSavedSections };
 }

@@ -8,6 +8,12 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
+// It turns out getting beta users will be difficult after all.
+// You don't need the extra features for the below:
+// 1. Post it on facebook/insta
+// 2. Ask Ed to have a look at it
+// 3. Maybe attend an RE meetup or two
+
 // Demo Link: https://www.youtube.com/watch?v=wGfb8xX2FsI
 /* 
 I've been computer programming for awhile now, and after massively underestimating it, managed to make an app. Check it out, eh? And if you know anyone interested in rental property, I would love if they beta test it. https://www.youtube.com/watch?v=wGfb8xX2FsI
@@ -31,12 +37,6 @@ I've been computer programming for awhile now, and after massively underestimati
 
 // - Make main menu always present. Stylize buttons differently when user isn't logged in.
 // - Put userName (or first letter of email) on the right side where sign in/sign up were
-
-// It turns out getting beta users will be difficult after all.
-// You don't need the extra features for the below:
-// 1. Post it on facebook/insta
-// 2. Ask Ed to have a look at it
-// 3. Maybe attend an RE meetup or two
 
 // Last steps to Ultimate Property Analyzer
 // 1. are saved isn't working right with entities
@@ -66,6 +66,8 @@ I've been computer programming for awhile now, and after massively underestimati
 
 // Maybe give lists a "simple" and an "itemized" mode.
 // This would require adding an additional value to the list.
+
+// Maybe add an "Add Ongoing Costs" button to Management
 
 // Basically, copy the menu from the property title menu
 // edit that menu to handle full stores.

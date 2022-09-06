@@ -1,5 +1,5 @@
 // import { isEqual, pick } from "lodash";
-import { isEqual, pick } from "lodash";
+import { isArray, isEqual, isObject, pick, transform } from "lodash";
 import { entryKeysWithPropOfType } from "./Obj/entryKeysWithProp";
 import { merge, spread } from "./Obj/merge";
 import { PropKeysOfValue } from "./Obj/SubType";
@@ -49,7 +49,24 @@ type SwapKeysAndValues<O extends { [key: string]: string }> = {
   [K in keyof O as O[K]]: K;
 };
 
+function difference(origObj: any, newObj: any) {
+  function changes(newObj: any, origObj: any) {
+    let arrayIndexCounter = 0;
+    return transform(newObj, function (result: any, value: any, key: string) {
+      if (!isEqual(value, origObj[key])) {
+        let resultKey = isArray(origObj) ? arrayIndexCounter++ : key;
+        result[resultKey] =
+          isObject(value) && isObject(origObj[key])
+            ? changes(value, origObj[key])
+            : value;
+      }
+    });
+  }
+  return changes(newObj, origObj);
+}
+
 export const Obj = {
+  difference,
   swapKeysAndValues<O extends StringObj>(obj: O): SwapKeysAndValues<O> {
     return this.keys(obj).reduce((swapObj, key) => {
       swapObj[obj[key]] = key;
