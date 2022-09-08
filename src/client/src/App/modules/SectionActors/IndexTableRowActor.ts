@@ -21,9 +21,6 @@ export class IndexTableRowActor extends SectionActorBase<"tableRow"> {
     });
     this.dbStoreName = this.initDbStoreName();
   }
-  get get() {
-    return new GetterSection(this.sectionActorBaseProps);
-  }
   get setter() {
     return new SetterSection(this.sectionActorBaseProps);
   }

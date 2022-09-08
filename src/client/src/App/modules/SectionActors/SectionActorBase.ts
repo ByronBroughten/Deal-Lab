@@ -1,5 +1,6 @@
 import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
 import { SectionsAndSetSections } from "../../sharedWithServer/stateClassHooks/useSections";
+import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
 import {
   SetterSectionBase,
   SetterSectionProps,
@@ -15,6 +16,9 @@ export interface SectionActorBaseProps<SN extends SectionName>
 
 export class SectionActorBase<SN extends SectionName> extends ApiQuerierBase {
   readonly setterSectionBase: SetterSectionBase<SN>;
+  get get() {
+    return new GetterSection(this.sectionActorBaseProps);
+  }
   constructor(props: SectionActorBaseProps<SN>) {
     super(props);
     this.setterSectionBase = new SetterSectionBase(props);

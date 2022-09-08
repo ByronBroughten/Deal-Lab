@@ -8,7 +8,6 @@ import {
   AuthStatus,
   UserPlan,
 } from "../../sharedWithServer/SectionsMeta/baseSections";
-import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
 import { PackMakerSection } from "../../sharedWithServer/StatePackers.ts/PackMakerSection";
 import { StrictOmit } from "../../sharedWithServer/utils/types";
 import { auth } from "../services/authService";
@@ -24,9 +23,6 @@ export class FeUserActor extends SectionActorBase<"feUser"> {
       ...props,
       sectionName: "feUser",
     });
-  }
-  get get(): GetterSection<"feUser"> {
-    return new GetterSection(this.sectionActorBaseProps);
   }
   get setter(): SetterSection<"feUser"> {
     return new SetterSection(this.sectionActorBaseProps);

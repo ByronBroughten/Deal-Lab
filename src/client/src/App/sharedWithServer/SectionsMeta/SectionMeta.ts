@@ -62,8 +62,21 @@ export class SectionMeta<SN extends SimpleSectionName> {
   get compareTableName(): CorePropNoNull<SN, "compareTableName"> {
     return this.propNoNull("compareTableName");
   }
+  get hasFeDisplayIndex(): boolean {
+    if (this.core.feDisplayIndexStoreName) {
+      return true;
+    } else return false;
+  }
+  get hasFeFullIndex(): boolean {
+    if (this.core.feFullIndexStoreName) {
+      return true;
+    } else return false;
+  }
   get feDisplayIndexStoreName(): CorePropNoNull<SN, "feDisplayIndexStoreName"> {
     return this.propNoNull("feDisplayIndexStoreName");
+  }
+  get feFullIndexStoreName(): CorePropNoNull<SN, "feFullIndexStoreName"> {
+    return this.propNoNull("feFullIndexStoreName");
   }
   get displayName(): string {
     return this.prop("displayName");

@@ -16,7 +16,10 @@ import { SectionName } from "../SectionsMeta/SectionName";
 import { SectionOption } from "../StateEntityGetters/VariableGetterSections";
 import { GetterSection } from "../StateGetters/GetterSection";
 import { GetterVarb } from "../StateGetters/GetterVarb";
-import { ChildSectionPackArrs } from "../StatePackers.ts/PackLoaderSection";
+import {
+  ChildPackInfo,
+  ChildSectionPackArrs,
+} from "../StatePackers.ts/PackLoaderSection";
 import { PackMakerSection } from "../StatePackers.ts/PackMakerSection";
 import { SolverSection } from "../StateSolvers/SolverSection";
 import {
@@ -139,6 +142,10 @@ export class SetterSection<
   }
   loadChildPackArrs(childPackArrs: Partial<ChildSectionPackArrs<SN>>): void {
     this.solver.loadChildPackArrsAndSolve(childPackArrs);
+    this.setSections();
+  }
+  loadChild(childPackInfo: ChildPackInfo<SN>) {
+    this.solver.loadChildPackAndSolve(childPackInfo);
     this.setSections();
   }
   removeSelf(): void {
