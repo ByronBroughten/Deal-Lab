@@ -16,6 +16,7 @@ import {
   AddChildOptions,
   UpdaterSection,
 } from "../../StateUpdaters/UpdaterSection";
+import { Obj } from "../../utils/Obj";
 
 interface ChildPackLoaderProps<SN extends SectionName, CN extends ChildName<SN>>
   extends GetterSectionProps<SN> {
@@ -71,17 +72,12 @@ export class ChildPackLoader<
     this.loadChildChildren(feId);
   }
   private loadChildChildren(childFeId: string) {
-    const child = this.get.child({
-      childName: this.childName,
-      feId: childFeId,
-    });
-
+    const child = this.getterChild(childFeId);
     const { childNames } = child;
-    const { childDbIds } = this.childRawSection;
     for (const childName of childNames) {
-      const dbIds = childDbIds[childName as keyof typeof childDbIds];
+      const dbIds = this.childChildrenDbIds(childName);
       if (!Array.isArray(dbIds)) {
-        throw new Error("dbIds shoudl be an array but isn't");
+        throw new Error(`dbIds should be an array but is this: ${dbIds}`);
       }
       for (const dbId of dbIds) {
         const childPackLoader = this.childPackLoader({
@@ -93,6 +89,25 @@ export class ChildPackLoader<
         });
         childPackLoader.loadChild();
       }
+    }
+  }
+  private getterChild(
+    childFeId: string
+  ): GetterSection<ChildSectionName<SN, CN>> {
+    return this.get.child({
+      childName: this.childName,
+      feId: childFeId,
+    });
+  }
+  private childChildrenDbIds(
+    childName: ChildName<ChildSectionName<SN, CN>>
+  ): string[] {
+    const { childDbIds } = this.childRawSection;
+    const savedDbIdKeys = Obj.keys(childDbIds);
+    if (savedDbIdKeys.includes(childName as any)) {
+      return childDbIds[childName as keyof typeof childDbIds];
+    } else {
+      return [];
     }
   }
   childPackLoader({

@@ -4,10 +4,8 @@ import { BrowserRouter } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Normalize } from "styled-normalize";
-import supertokens, { SuperTokensWrapper } from "supertokens-auth-react";
-import Session from "supertokens-auth-react/recipe/session";
-import ThirdPartyEmailPassword from "supertokens-auth-react/recipe/thirdpartyemailpassword";
-import { constants } from "./App/Constants";
+import { SuperTokensWrapper } from "supertokens-auth-react";
+import { initSupertokens } from "./App/modules/initSupertokens";
 import {
   SectionsContext,
   useSections,
@@ -16,43 +14,7 @@ import GlobalStyle from "./App/theme/globalStyles";
 import { Theme } from "./App/theme/Theme";
 import { Main } from "./Main";
 
-supertokens.init({
-  appInfo: constants.superTokens.appInfo,
-  recipeList: [
-    // EmailPassword.init(), Session.init()
-    ThirdPartyEmailPassword.init({
-      override: {
-        functions(original) {
-          return {
-            ...original,
-          };
-        },
-      },
-
-      getRedirectionURL: async (context) => {
-        if (context.action === "SUCCESS") {
-          return constants.auth.successUrl;
-        }
-      },
-      signInAndUpFeature: {
-        signUpForm: {
-          formFields: [
-            {
-              id: "userName",
-              label: "Name",
-              placeholder: "What should we call you?",
-            },
-          ],
-        },
-      },
-      emailVerificationFeature: {
-        mode: "REQUIRED",
-      },
-    }),
-    Session.init(),
-  ],
-});
-
+initSupertokens();
 const App: React.FC = () => {
   const sectionsContext = useSections({ storeSectionsLocally: true });
   return (
