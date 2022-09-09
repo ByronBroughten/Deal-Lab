@@ -10,10 +10,6 @@ import { subscriptionDataWare } from "./apiQueries/getSubscriptionData";
 import { getUserDataWare } from "./apiQueries/getUserData";
 import { makeSessionWare } from "./apiQueries/makeSession";
 import { replaceSectionArrWare } from "./apiQueries/replaceSectionArr";
-import {
-  stripeWebhookTestWare,
-  stripeWebhookWare,
-} from "./apiQueries/stripeWebhooks";
 import { updateSectionWare } from "./apiQueries/updateSection";
 
 const endpointWare: Record<ApiQueryName, any> = {
@@ -33,14 +29,3 @@ for (const [queryName, ware] of Obj.entries(endpointWare)) {
   apiQueries.post(apiQueriesShared[queryName].pathBit, ...ware);
 }
 export const apiQueriesServer = apiQueries;
-
-const webhooks = express.Router();
-const webhookWare = {
-  stripe: stripeWebhookWare,
-  stripeTest: stripeWebhookTestWare,
-} as const;
-
-for (const [webhookName, ware] of Obj.entries(webhookWare)) {
-  webhooks.post(`/webhook/${webhookName}`, ...ware);
-}
-export const preParseWebhooks = webhooks;

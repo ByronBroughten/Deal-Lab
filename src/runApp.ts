@@ -7,10 +7,10 @@ import helmet from "helmet";
 import morgan from "morgan";
 import { constants } from "./client/src/App/Constants";
 import { errorBackstop } from "./middleware/errorBackstop";
-import { preParseWebhooks } from "./routes/apiQueries";
+import { webhookQueries } from "./routes/webhookQueries";
 import checkConfig from "./startup/config";
 import setupLogger, { logger } from "./startup/setupLogger";
-import startDb from "./startup/startDb";
+import { startDb } from "./startup/startDb";
 import { useRoutes } from "./startup/useRoutes";
 
 export function runApp() {
@@ -19,7 +19,7 @@ export function runApp() {
   setupLogger();
 
   const app = express();
-  app.use(constants.apiPathBit, preParseWebhooks);
+  app.use(constants.apiPathBit, webhookQueries);
   app.use(helmet());
   app.use(compression());
   app.use(express.urlencoded({ extended: true }));

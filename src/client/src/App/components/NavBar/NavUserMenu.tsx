@@ -58,9 +58,12 @@ export function NavUserMenu({ feId, logout }: NavUserMenuProps) {
             href={constants.feRoutes.userOutputs}
           >{`Your outputs`}</Button>
         </BtnDiv> */}
-        <BtnDiv>
-          <Button onClick={logout}>Logout</Button>
-        </BtnDiv>
+        {authStatus !== "guest" && (
+          <BtnDiv>
+            <Button onClick={logout}>Logout</Button>
+          </BtnDiv>
+        )}
+
         {/* <BtnDiv>
                 <Button href="/account" disabled>
                   Account Info

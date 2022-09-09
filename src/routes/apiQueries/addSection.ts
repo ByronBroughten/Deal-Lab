@@ -7,7 +7,8 @@ import {
   DbStoreInfo,
   SectionQueryName,
 } from "../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreName";
-import { checkUserInfoWare, getAuthWare } from "../../middleware/authWare";
+import { getAuthWare } from "../../middleware/authWare";
+import { checkUserInfoWare } from "../../middleware/checkUserInfoWare";
 import { ResStatusError } from "../../utils/resError";
 import { DbUser } from "./shared/DbSections/DbUser";
 import { SectionPackNotFoundError } from "./shared/DbSections/DbUserTypes";

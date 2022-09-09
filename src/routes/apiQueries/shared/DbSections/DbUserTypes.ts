@@ -1,6 +1,9 @@
 import mongoose, { Document } from "mongoose";
 import { ResStatusError } from "../../../../utils/resError";
-import { DbSectionsModelCore, modelPath } from "../../../DbUserModel";
+import {
+  DbSectionsModelCore,
+  modelPath,
+} from "../../../routesShared/DbUserModel";
 
 export const queryOptions = {
   // new: true,

@@ -1,6 +1,6 @@
 import { Response } from "express";
 import { handleResAndMakeError } from "../../../utils/resError";
-import { DbUserModel } from "../../DbUserModel";
+import { DbUserModel } from "../../routesShared/DbUserModel";
 
 const options = {
   new: true,

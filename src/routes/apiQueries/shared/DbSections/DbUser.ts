@@ -21,7 +21,7 @@ import { GetterSection } from "../../../../client/src/App/sharedWithServer/State
 import { PackBuilderSection } from "../../../../client/src/App/sharedWithServer/StatePackers.ts/PackBuilderSection";
 import { Obj } from "../../../../client/src/App/sharedWithServer/utils/Obj";
 import { ResStatusError } from "../../../../utils/resError";
-import { DbUserModel, modelPath } from "../../../DbUserModel";
+import { DbUserModel, modelPath } from "../../../routesShared/DbUserModel";
 import { DbSectionsQuerierBase } from "./Bases/DbSectionsQuerierBase";
 import { DbSections } from "./DbSections";
 import {

@@ -8,7 +8,7 @@ import {
 } from "supertokens-node/recipe/thirdpartyemailpassword";
 import { apiQueriesShared } from "../../../client/src/App/sharedWithServer/apiQueriesShared";
 import { Str } from "../../../client/src/App/sharedWithServer/utils/Str";
-import { DbUserModel } from "../../DbUserModel";
+import { DbUserModel } from "../../routesShared/DbUserModel";
 import { LoadedDbUser } from "../shared/DbSections/LoadedDbUser";
 import {
   getSignUpData,

@@ -5,7 +5,7 @@ import { PackBuilderSection } from "../../../../../client/src/App/sharedWithServ
 import { timeS } from "../../../../../client/src/App/sharedWithServer/utils/date";
 import { StrictPick } from "../../../../../client/src/App/sharedWithServer/utils/types";
 import { ResStatusError } from "../../../../../utils/resError";
-import { DbUserModel, RawDbUser } from "../../../../DbUserModel";
+import { DbUserModel, RawDbUser } from "../../../../routesShared/DbUserModel";
 import { DbUser } from "../DbUser";
 import { InitialUserSectionPackArrs, PreppedEmails } from "./userPrepSTypes";
 

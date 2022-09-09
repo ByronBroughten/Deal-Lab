@@ -1,33 +1,33 @@
 import mongoose, { Schema } from "mongoose";
-import { sectionsMeta } from "../client/src/App/sharedWithServer/SectionsMeta";
-import { SimpleSectionName } from "../client/src/App/sharedWithServer/SectionsMeta/baseSections";
+import { sectionsMeta } from "../../client/src/App/sharedWithServer/SectionsMeta";
+import { SimpleSectionName } from "../../client/src/App/sharedWithServer/SectionsMeta/baseSections";
 import {
   SectionVarbName,
   VarbNameNext,
-} from "../client/src/App/sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionTypes";
+} from "../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionTypes";
 import {
   ChildName,
   getChildNames,
-} from "../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/ChildName";
-import { DbSectionPack } from "../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbSectionPack";
+} from "../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/ChildName";
+import { DbSectionPack } from "../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbSectionPack";
 import {
   OneDbSectionValueInfo,
   OneDbSectionVarbInfo,
-} from "../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreInfo";
+} from "../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreInfo";
 import {
   DbSectionName,
   DbSelfOrDescendantSn,
   DbStoreName,
   dbStoreNames,
   dbStoreSectionName,
-} from "../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreName";
+} from "../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreName";
 import {
   getSelfAndDescendantNames,
   SelfOrDescendantSectionName,
-} from "../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DescendantSectionName";
-import { SectionPack } from "../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/SectionPack";
-import { RawSection } from "../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/SectionPack/RawSection";
-import { monSchemas } from "../client/src/App/sharedWithServer/utils/mongoose";
+} from "../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DescendantSectionName";
+import { SectionPack } from "../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/SectionPack";
+import { RawSection } from "../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/SectionPack/RawSection";
+import { monSchemas } from "../../client/src/App/sharedWithServer/utils/mongoose";
 
 export type DbSectionsModelCore = RawDbUser & { _id: mongoose.Types.ObjectId };
 
