@@ -24,14 +24,13 @@ export default function NavBar(props: NavBarProps) {
   const { pathname } = useLocation();
   const showSignin = isGuest; // && !pathname.includes("/auth");
 
-  const appTitle =
-    "Ultimate Property Analyzer" + (constants.isBeta ? " BETA" : "");
+  const appTitle = "Ultimate Property Analyzer" + (constants.isBeta ? "" : ""); // BETA
 
   return (
     <Styled className="NavBar-root">
       <Toolbar disableGutters={true}>
         <div className="NavBar-leftSide">
-          {!isGuest && <NavUserMenu {...{ ...props, feId: userInfo.feId }} />}
+          <NavUserMenu {...{ ...props, feId: userInfo.feId }} />
           <Link className="NavBar-navBtnLink" to="/">
             <NavBtn
               className="NavBar-brandBtn"
@@ -48,7 +47,7 @@ export default function NavBar(props: NavBarProps) {
             icon={<AiOutlineYoutube className="NavBar-demoBtnIcon" />}
             text="Demo"
           />
-          {constants.isBeta && (
+          {!showSignin && constants.isBeta && (
             <NavDropDown
               className="NavBar-feedbackDropDown"
               btnText="Give Feedback"

@@ -34,6 +34,8 @@ type Props<SN extends VarbListAllowed> = {
 // one with fullMenu
 // one with simpleMenu
 
+// I think I have what I need for fullMenu.
+
 export function VarbListGeneric<SN extends VarbListAllowed>({
   feInfo,
   makeItemNode,

@@ -16,7 +16,7 @@ export function UserListsGeneral({ themeName, children, saveWhat }: Props) {
       {authStatus === "guest" && (
         <div className="UserListsGeneral-notLoggedIn">
           <div className="UserListsGeneral-notLoggedInInner">
-            {`To create and save ${saveWhat}, sign in or make an account.`}
+            {`To create and save ${saveWhat}, sign in or sign up.`}
           </div>
         </div>
       )}
