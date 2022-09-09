@@ -5,10 +5,9 @@ import { useMainSectionActor } from "../../../../modules/sectionActorHooks/useMa
 import { HasRowFeStore } from "../../../../sharedWithServer/SectionsMeta/SectionName";
 import { useAuthStatus } from "../../../../sharedWithServer/stateClassHooks/useAuthStatus";
 import theme from "../../../../theme/Theme";
-import DisplayNameSectionList from "../../DisplayNameSectionList";
 import XBtn from "../../Xbtn";
+import { MainSectionMenus } from "./MainSectionTitleRow/MainSectionMenus";
 import { MainSectionTitleRowTitle } from "./MainSectionTitleRow/MainSectionTitleRowTitle";
-import { StoreSectionActionMenu } from "./StoreSectionActionMenu";
 
 type Props = {
   sectionName: HasRowFeStore;
@@ -42,15 +41,11 @@ export function MainSectionTitleRow({
       <div className="MainSectionTitleRow-leftSide">
         <MainSectionTitleRowTitle feInfo={feInfo} />
         <div className="MainSectionTitleRow-leftSide-btnsRow">
-          <StoreSectionActionMenu
-            {...{ ...feInfo, className: "MainsectionTitleRow-dropdownList" }}
-          />
-          <DisplayNameSectionList
+          <MainSectionMenus
             {...{
-              className: "MainSectionTitleRow-flexUnit",
-              feInfo,
+              ...feInfo,
               pluralName,
-              disabled: isGuest,
+              xBtn,
               dropTop,
             }}
           />
@@ -89,11 +84,7 @@ const Styled = styled.div<{ $btnMenuIsOpen: boolean; $dropTop: boolean }>`
     color: ${({ $btnMenuIsOpen }) =>
       $btnMenuIsOpen ? theme["gray-600"] : theme.dark};
   }
-  .MainsectionTitleRow-dropdownList {
-    :not(:first-child) {
-      margin-left: ${theme.s3};
-    }
-  }
+
   .MainSectionTitleRow-leftSide {
     display: flex;
     justify-content: flex-start;
@@ -104,9 +95,6 @@ const Styled = styled.div<{ $btnMenuIsOpen: boolean; $dropTop: boolean }>`
   }
   .MainSectionTitleRow-title ..DraftTextField-root {
     min-width: 150px;
-  }
-  .MainSectionTitleRow-leftSide-btnsRow {
-    display: flex;
   }
   .MainSectionTitleRow-title,
   .MainSectionTitleRow-leftSide-btnsRow {

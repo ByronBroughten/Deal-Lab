@@ -11,8 +11,9 @@ AppRegistry.runApplication("App", {
 // It turns out getting beta users will be difficult after all.
 // You don't need the extra features for the below:
 // 1. Post it on facebook/insta
-// 2. Ask Ed to have a look at it
-// 3. Maybe attend an RE meetup or two
+// 2. Maybe try posting to facebook groups
+// 3. Ask Ed to have a look at it
+// 4. Maybe attend an RE meetup or two
 
 // Demo Link: https://www.youtube.com/watch?v=wGfb8xX2FsI
 /* 

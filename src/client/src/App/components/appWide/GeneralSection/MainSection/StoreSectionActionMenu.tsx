@@ -3,22 +3,20 @@ import { BiCopy, BiReset } from "react-icons/bi";
 import { MdDelete, MdOutlineSystemUpdateAlt } from "react-icons/md";
 import styled from "styled-components";
 import { useMainSectionActor } from "../../../../modules/sectionActorHooks/useMainSectionActor";
-import { HasRowFeStore } from "../../../../sharedWithServer/SectionsMeta/SectionName";
+import { SectionName } from "../../../../sharedWithServer/SectionsMeta/SectionName";
 import { useAuthStatus } from "../../../../sharedWithServer/stateClassHooks/useAuthStatus";
 import { DropdownList } from "../../DropdownList";
 import { LabeledIconBtn } from "../../LabeledIconBtn";
 
-type Props = {
+type Props<SN extends SectionName<"hasIndexStore">> = {
   dropTop?: boolean;
-  sectionName: HasRowFeStore;
+  sectionName: SN;
   feId: string;
   className?: string;
 };
-export function StoreSectionActionMenu({
-  dropTop,
-  className,
-  ...feInfo
-}: Props) {
+export function StoreSectionActionMenu<
+  SN extends SectionName<"hasIndexStore">
+>({ dropTop, className, ...feInfo }: Props<SN>) {
   const mainSection = useMainSectionActor(feInfo);
   const authStatus = useAuthStatus();
   const isGuest = authStatus === "guest";

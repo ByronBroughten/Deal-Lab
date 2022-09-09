@@ -1,40 +1,42 @@
-import React from "react";
 import { FiMaximize2, FiMinimize2 } from "react-icons/fi";
 import styled from "styled-components";
 import { FeInfoByType } from "../../../../sharedWithServer/SectionsMeta/Info";
 import { useSetterSection } from "../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import theme, { ThemeName } from "../../../../theme/Theme";
-import { StandardProps } from "../../../general/StandardProps";
+import { MainSectionMenusMini } from "../../GeneralSection/MainSection/MainSectionTitleRow/MainSectionMenus";
 import XBtn from "../../Xbtn";
 import ListMenuBtn from "./ListMenu/ListMenuBtn";
 
-type Props = StandardProps & {
-  feInfo: FeInfoByType<"hasFullIndex">;
+type Props = {
+  className: string;
   themeName: ThemeName;
   toggleListView: () => void;
   viewIsOpen: boolean;
+  feInfo: FeInfoByType<"hasFullIndex">;
 };
 
-// here is the simple list menu
-// let's make the more in-depth list menu
-
-// Now the two buttons should work for the other lists
-export function ListMenu({
-  className,
+export function ListMenuFull({
   feInfo,
-  toggleListView,
+  className,
   themeName,
+  toggleListView,
   viewIsOpen,
 }: Props) {
-  const section = useSetterSection(feInfo);
+  const section = useSetterSection();
   return (
     <Styled
       {...{
-        className: "ListMenu-root " + className,
+        className: "ListMenuFull-root " + className,
         $themeName: themeName,
       }}
     >
       <div className="ListMenu-viewable">
+        <MainSectionMenusMini
+          {...{
+            ...feInfo,
+            pluralName: "lists",
+          }}
+        />
         <ListMenuBtn
           themeName={themeName}
           className="ListMenu-listMenuBtn ListMenu-viewBtn"

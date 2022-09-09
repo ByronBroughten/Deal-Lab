@@ -4,7 +4,7 @@ import { useSetterSectionsProps } from "../../sharedWithServer/stateClassHooks/u
 import { apiQueries } from "../apiQueriesClient";
 import { MainSectionActor } from "../SectionActors/MainSectionActor";
 
-export function useMainSectionActor<SN extends SectionName<"tableSource">>(
+export function useMainSectionActor<SN extends SectionName<"hasIndexStore">>(
   feInfo: FeSectionInfo<SN>
 ): MainSectionActor<SN> {
   const props = useSetterSectionsProps();

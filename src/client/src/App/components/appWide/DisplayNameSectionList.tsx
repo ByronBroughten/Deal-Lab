@@ -5,7 +5,7 @@ import { DropdownList } from "./DropdownList";
 import { RowIndexRows } from "./RowIndexRows";
 
 type Props = {
-  feInfo: FeInfoByType<"hasDisplayIndex">;
+  feInfo: FeInfoByType<"hasIndexStore">;
   pluralName: string;
   disabled: boolean;
   className?: string;
@@ -26,7 +26,7 @@ export default function DisplayNameSectionList({
   return (
     <DropdownList
       {...{
-        className: "MainsectionTitleRow-dropdownList " + className ?? "",
+        className: "DisplayNameSectionList-root " + className ?? "",
         title: `Saved`,
         dropTop,
         icon: <FaList className="DisplayNameSectionList-listIcon" />,

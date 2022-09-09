@@ -238,6 +238,7 @@ const theme = {
   unlabeledInputHeight: "21px",
   smallToggleViewIcon: "17px",
   bigButtonHeight: "31px",
+  smallButtonHeight: "24px",
 
   navBar: {
     height: "40px",

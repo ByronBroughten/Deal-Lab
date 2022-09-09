@@ -2,19 +2,24 @@ import { TextField } from "@material-ui/core";
 import { transparentize } from "polished";
 import React from "react";
 import styled from "styled-components";
+import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
 import ccs from "../../theme/cssChunks";
 import theme, { ThemeName, themeSectionNameOrDefault } from "../../theme/Theme";
 import { useMainSectionActor } from "./../../modules/sectionActorHooks/useMainSectionActor";
-import { FeInfoByType } from "./../../sharedWithServer/SectionsMeta/Info";
+import { FeSectionInfo } from "./../../sharedWithServer/SectionsMeta/Info";
 import useHowMany from "./customHooks/useHowMany";
 import { RowIndexListRow } from "./RowIndexListRow";
 
-type Props = {
-  feInfo: FeInfoByType<"hasDisplayIndex">;
+type Props<SN extends SectionName<"hasIndexStore">> = {
+  feInfo: FeSectionInfo<SN>;
   className?: string;
   noEntriesMessage: string;
 };
-export function RowIndexRows({ feInfo, className, noEntriesMessage }: Props) {
+export function RowIndexRows<SN extends SectionName<"hasIndexStore">>({
+  feInfo,
+  className,
+  noEntriesMessage,
+}: Props<SN>) {
   const [filter, setFilter] = React.useState("");
   const section = useMainSectionActor(feInfo);
   const rows = section.alphabeticalDisplayItems();

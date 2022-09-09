@@ -15,6 +15,8 @@ import theme, { ThemeName } from "../../../../theme/Theme";
 import { BigStringEditor } from "../../../inputs/BigStringEditor";
 import { useOpenWidth } from "../../SectionTitleRow";
 import { ListMenu } from "./ListMenu";
+import { ListMenuFull } from "./ListMenuFull";
+import { CaretBtn } from "./VarbListGeneric/CaretBtn";
 import { VarbListTable } from "./VarbListGeneric/VarbListTable";
 import { VarbListTotal } from "./VarbListGeneric/VarbListTotal";
 
@@ -44,7 +46,7 @@ export function VarbListGeneric<SN extends VarbListAllowed>({
   totalVarbName,
   className,
   childDbVarbs,
-  menuType = "simple",
+  menuType = "full",
 }: Props<SN>) {
   const list = useSetterSection(feInfo);
   const titleVarb = list.varb("displayName");
@@ -70,12 +72,31 @@ export function VarbListGeneric<SN extends VarbListAllowed>({
 
   const items = list.get.children(itemName);
   const listGet = list.get;
+
+  const listMenuProps = {
+    viewIsOpen,
+    feInfo: listGet.feInfo,
+    themeName,
+    toggleListView: trackWidthToggleView,
+  };
+
+  const { toggleMenu, menuIsOpen } = useToggleView({
+    viewWhat: "menu",
+    initValue: false,
+  });
   return (
     <Styled
       className={"AdditiveList-root " + className}
       {...{ themeName, listMenuIsOpen }}
     >
       <div className="AdditiveList-viewable viewable">
+        {menuType === "full" && menuIsOpen && (
+          <ListMenuFull
+            className="VarbListGeneric-menuFull"
+            {...listMenuProps}
+          />
+        )}
+
         <div className="AdditiveList-titleRow">
           <div className="AdditiveList-titleRowLeft">
             <BigStringEditor
@@ -95,15 +116,15 @@ export function VarbListGeneric<SN extends VarbListAllowed>({
               />
             )}
           </div>
-          <ListMenu
-            className="VarbListGeneric-menu"
-            {...{
-              viewIsOpen,
-              feInfo: listGet.feInfo,
-              themeName,
-              toggleListView: trackWidthToggleView,
-            }}
-          />
+          {menuType === "full" && (
+            <CaretBtn dropped={menuIsOpen} onClick={toggleMenu} />
+          )}
+          {menuType === "simple" && (
+            <ListMenu
+              className="VarbListGeneric-menuSimple"
+              {...listMenuProps}
+            />
+          )}
         </div>
 
         {viewIsOpen && (
@@ -124,12 +145,18 @@ const Styled = styled.div<{
   align-items: flex-start;
 
   :hover {
-    .VarbListGeneric-menu {
+    .VarbListGeneric-menuSimple {
       visibility: visible;
     }
   }
 
-  .VarbListGeneric-menu {
+  .VarbListGeneric-menuFull {
+    display: flex;
+    flex-direction: row-reverse;
+    margin-bottom: ${theme.s2};
+  }
+
+  .VarbListGeneric-menuSimple {
     margin-left: ${theme.s1};
     visibility: hidden;
   }

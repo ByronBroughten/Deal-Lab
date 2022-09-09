@@ -15,6 +15,7 @@ export function DropdownBtn({ title, isDropped, toggleDropped, icon }: Props) {
       {...{
         onClick: toggleDropped,
         $active: isDropped,
+        className: "DropdownBtn-root",
       }}
     >
       <span>{title}</span>
