@@ -5,12 +5,12 @@ import { SectionArrReqMaker } from "../../client/src/App/sharedWithServer/ReqMak
 import { PackBuilderSection } from "../../client/src/App/sharedWithServer/StatePackers.ts/PackBuilderSection";
 import { runApp } from "../../runApp";
 import { childToSectionName } from "./../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/ChildSectionName";
-import { LoadedDbUser } from "./shared/DbSections/LoadedDbUser";
+import { LoadedDbUser } from "./apiQueriesShared/DbSections/LoadedDbUser";
 import {
   createAndGetDbUser,
   deleteUserTotally,
   makeSessionGetCookies,
-} from "./test/testDbUser";
+} from "./apiQueriesTestTools/testDbUser";
 
 const storeName = "singleTimeListMain";
 type StoreName = typeof storeName;

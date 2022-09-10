@@ -4,8 +4,8 @@ import { QueryReq } from "../../client/src/App/sharedWithServer/apiQueriesShared
 import { makeReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/makeReqAndRes";
 import { areGuestAccessSections } from "../../client/src/App/sharedWithServer/apiQueriesShared/register";
 import { getAuthWare } from "../../middleware/authWare";
-import { DbUser } from "./shared/DbSections/DbUser";
-import { Authed, validateAuthObj } from "./shared/ReqAugmenters";
+import { DbUser } from "./apiQueriesShared/DbSections/DbUser";
+import { Authed, validateAuthObj } from "./apiQueriesShared/ReqAugmenters";
 
 export const getUserDataWare = [getAuthWare(), getUserData] as const;
 

@@ -9,11 +9,11 @@ import {
 import { apiQueriesShared } from "../../../client/src/App/sharedWithServer/apiQueriesShared";
 import { Str } from "../../../client/src/App/sharedWithServer/utils/Str";
 import { DbUserModel } from "../../routesShared/DbUserModel";
-import { LoadedDbUser } from "../shared/DbSections/LoadedDbUser";
+import { LoadedDbUser } from "../apiQueriesShared/DbSections/LoadedDbUser";
 import {
   getSignUpData,
   userPrepS,
-} from "../shared/DbSections/LoadedDbUser/userPrepS";
+} from "../apiQueriesShared/DbSections/LoadedDbUser/userPrepS";
 
 export async function createAndGetDbUser(
   testSuiteName: string

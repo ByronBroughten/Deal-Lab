@@ -7,13 +7,13 @@ import {
   QueryRes,
 } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import { runApp } from "../../runApp";
-import { LoadedDbUser } from "./shared/DbSections/LoadedDbUser";
+import { LoadedDbUser } from "./apiQueriesShared/DbSections/LoadedDbUser";
 import {
   createAndGetDbUser,
   deleteUserTotally,
   getStandardRes,
   makeSessionGetCookies,
-} from "./test/testDbUser";
+} from "./apiQueriesTestTools/testDbUser";
 
 const testedRoute = apiQueriesShared.getProPaymentUrl.pathRoute;
 describe(testedRoute, () => {

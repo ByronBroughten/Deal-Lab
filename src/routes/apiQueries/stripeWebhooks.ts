@@ -3,7 +3,7 @@ import Stripe from "stripe";
 import { SectionValues } from "../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsDerived/valueMetaTypes";
 import { PackBuilderSection } from "../../client/src/App/sharedWithServer/StatePackers.ts/PackBuilderSection";
 import { getStripeEvent } from "../routeUtils/stripe";
-import { DbUser } from "./shared/DbSections/DbUser";
+import { DbUser } from "./apiQueriesShared/DbSections/DbUser";
 
 export const stripeWebhookWare = [express.raw({ type: "*/*" }), stripeWebhook];
 export const stripeWebhookTestWare = [

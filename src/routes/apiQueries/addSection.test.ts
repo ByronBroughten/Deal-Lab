@@ -7,14 +7,14 @@ import { PackBuilderSection } from "../../client/src/App/sharedWithServer/StateP
 import { Arr } from "../../client/src/App/sharedWithServer/utils/Arr";
 import { timeS } from "../../client/src/App/sharedWithServer/utils/date";
 import { runApp } from "../../runApp";
-import { LoadedDbUser } from "./shared/DbSections/LoadedDbUser";
-import { getUserByIdNoRes } from "./shared/getUserDbSectionsById";
-import { SectionQueryTester } from "./test/SectionQueryTester";
+import { LoadedDbUser } from "./apiQueriesShared/DbSections/LoadedDbUser";
+import { getUserByIdNoRes } from "./apiQueriesShared/getUserDbSectionsById";
+import { SectionQueryTester } from "./apiQueriesTestTools/SectionQueryTester";
 import {
   createAndGetDbUser,
   deleteUserTotally,
   makeSessionGetCookies,
-} from "./test/testDbUser";
+} from "./apiQueriesTestTools/testDbUser";
 
 function makeAddSectionReq(): QueryReq<"addSection"> {
   const sectionName = "property";

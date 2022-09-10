@@ -3,12 +3,12 @@ import { apiQueriesShared } from "../client/src/App/sharedWithServer/apiQueriesS
 import { ApiQueryName } from "../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import { Obj } from "../client/src/App/sharedWithServer/utils/Obj";
 import { addSectionWare } from "./apiQueries/addSection";
+import { makeSessionWare } from "./apiQueries/apiQueriesTestTools/makeSession";
 import { deleteSectionWare } from "./apiQueries/deleteSection";
 import { getProPaymentUrlWare } from "./apiQueries/getProPaymentUrl";
 import { getSectionWare } from "./apiQueries/getSection";
 import { subscriptionDataWare } from "./apiQueries/getSubscriptionData";
 import { getUserDataWare } from "./apiQueries/getUserData";
-import { makeSessionWare } from "./apiQueries/makeSession";
 import { replaceSectionArrWare } from "./apiQueries/replaceSectionArr";
 import { updateSectionWare } from "./apiQueries/updateSection";
 

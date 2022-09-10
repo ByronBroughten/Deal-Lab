@@ -5,10 +5,13 @@ import { constants } from "../../client/src/App/Constants";
 import { timeS } from "../../client/src/App/sharedWithServer/utils/date";
 import { runApp } from "../../runApp";
 import { getStripe } from "../routeUtils/stripe";
-import { DbUser } from "./shared/DbSections/DbUser";
-import { LoadedDbUser } from "./shared/DbSections/LoadedDbUser";
+import { DbUser } from "./apiQueriesShared/DbSections/DbUser";
+import { LoadedDbUser } from "./apiQueriesShared/DbSections/LoadedDbUser";
+import {
+  createAndGetDbUser,
+  deleteUserTotally,
+} from "./apiQueriesTestTools/testDbUser";
 import { stripeSubToValues } from "./stripeWebhooks";
-import { createAndGetDbUser, deleteUserTotally } from "./test/testDbUser";
 const productionRoute = "/api/webhook/stripe";
 describe(productionRoute, () => {
   let stripe: Stripe;

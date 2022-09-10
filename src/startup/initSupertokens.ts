@@ -4,11 +4,11 @@ import Session from "supertokens-node/recipe/session";
 import ThirdPartyEmailPassword from "supertokens-node/recipe/thirdpartyemailpassword";
 import { constants } from "../client/src/App/Constants";
 import { Str } from "../client/src/App/sharedWithServer/utils/Str";
-import { DbUser } from "../routes/apiQueries/shared/DbSections/DbUser";
+import { DbUser } from "../routes/apiQueries/apiQueriesShared/DbSections/DbUser";
 import {
   getSignUpData,
   userPrepS,
-} from "../routes/apiQueries/shared/DbSections/LoadedDbUser/userPrepS";
+} from "../routes/apiQueries/apiQueriesShared/DbSections/LoadedDbUser/userPrepS";
 
 export function initSupertokens() {
   supertokens.init({

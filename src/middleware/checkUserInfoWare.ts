@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { constants } from "../client/src/App/Constants";
-import { LoadedDbUser } from "../routes/apiQueries/shared/DbSections/LoadedDbUser";
-import { LoggedInReq } from "../routes/apiQueries/shared/ReqAugmenters";
+import { LoadedDbUser } from "../routes/apiQueries/apiQueriesShared/DbSections/LoadedDbUser";
+import { LoggedInReq } from "../routes/apiQueries/apiQueriesShared/ReqAugmenters";
 import { missingTokenError } from "./middlewareShared/missingTokenError";
 
 export function checkUserInfoWare(

@@ -4,9 +4,9 @@ import { QueryReq } from "../../client/src/App/sharedWithServer/apiQueriesShared
 import { getAuthWare } from "../../middleware/authWare";
 import { ResStatusError } from "../../utils/resError";
 import { getStripe } from "../routeUtils/stripe";
-import { LoadedDbUser } from "./shared/DbSections/LoadedDbUser";
-import { Authed, validateAuthObj } from "./shared/ReqAugmenters";
-import { sendSuccess } from "./shared/sendSuccess";
+import { LoadedDbUser } from "./apiQueriesShared/DbSections/LoadedDbUser";
+import { Authed, validateAuthObj } from "./apiQueriesShared/ReqAugmenters";
+import { sendSuccess } from "./apiQueriesShared/sendSuccess";
 
 export const getProPaymentUrlWare = [getAuthWare(), getProPaymentUrl] as const;
 async function getProPaymentUrl(req: Request, res: Response) {

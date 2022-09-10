@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import { getAuthWare } from "../../middleware/authWare";
-import { DbUser } from "./shared/DbSections/DbUser";
-import { sendSuccess } from "./shared/sendSuccess";
-import { validateDbSectionInfoReq } from "./shared/validateDbSectionInfoReq";
+import { DbUser } from "./apiQueriesShared/DbSections/DbUser";
+import { sendSuccess } from "./apiQueriesShared/sendSuccess";
+import { validateDbSectionInfoReq } from "./apiQueriesShared/validateDbSectionInfoReq";
 
 export const deleteSectionWare = [
   getAuthWare(),

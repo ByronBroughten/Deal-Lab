@@ -10,11 +10,11 @@ import {
 import { getAuthWare } from "../../middleware/authWare";
 import { checkUserInfoWare } from "../../middleware/checkUserInfoWare";
 import { ResStatusError } from "../../utils/resError";
-import { DbUser } from "./shared/DbSections/DbUser";
-import { SectionPackNotFoundError } from "./shared/DbSections/DbUserTypes";
-import { findUserByIdAndUpdate } from "./shared/findAndUpdate";
-import { sendSuccess } from "./shared/sendSuccess";
-import { validateSectionPackReq } from "./shared/validateSectionPackReq";
+import { DbUser } from "./apiQueriesShared/DbSections/DbUser";
+import { SectionPackNotFoundError } from "./apiQueriesShared/DbSections/DbUserTypes";
+import { findUserByIdAndUpdate } from "./apiQueriesShared/findAndUpdate";
+import { sendSuccess } from "./apiQueriesShared/sendSuccess";
+import { validateSectionPackReq } from "./apiQueriesShared/validateSectionPackReq";
 
 export const addSectionWare = [
   getAuthWare(),

@@ -7,15 +7,15 @@ import { numObj } from "../../client/src/App/sharedWithServer/SectionsMeta/baseS
 import { Id } from "../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsUtils/id";
 import { PackBuilderSection } from "../../client/src/App/sharedWithServer/StatePackers.ts/PackBuilderSection";
 import { runApp } from "../../runApp";
-import { LoadedDbUser } from "./shared/DbSections/LoadedDbUser";
-import { getUserByIdNoRes } from "./shared/getUserDbSectionsById";
-import { SectionQueryTester } from "./test/SectionQueryTester";
+import { LoadedDbUser } from "./apiQueriesShared/DbSections/LoadedDbUser";
+import { getUserByIdNoRes } from "./apiQueriesShared/getUserDbSectionsById";
+import { SectionQueryTester } from "./apiQueriesTestTools/SectionQueryTester";
 import {
   createAndGetDbUser,
   deleteUserTotally,
   makeSessionGetCookies,
   validateStatus200Res,
-} from "./test/testDbUser";
+} from "./apiQueriesTestTools/testDbUser";
 
 const sectionName = "property";
 const originalValues = {

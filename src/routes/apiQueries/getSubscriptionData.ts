@@ -2,9 +2,9 @@ import { Request, Response } from "express";
 import { constants } from "../../client/src/App/Constants";
 import { QueryReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import { getAuthWare } from "../../middleware/authWare";
-import { LoadedDbUser } from "./shared/DbSections/LoadedDbUser";
-import { Authed, validateAuthObj } from "./shared/ReqAugmenters";
-import { sendSuccess } from "./shared/sendSuccess";
+import { LoadedDbUser } from "./apiQueriesShared/DbSections/LoadedDbUser";
+import { Authed, validateAuthObj } from "./apiQueriesShared/ReqAugmenters";
+import { sendSuccess } from "./apiQueriesShared/sendSuccess";
 
 export const subscriptionDataWare = [getAuthWare(), getSubscriptionData];
 async function getSubscriptionData(req: Request, res: Response) {

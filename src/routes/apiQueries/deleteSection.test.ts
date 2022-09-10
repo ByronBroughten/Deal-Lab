@@ -6,14 +6,14 @@ import { QueryReq } from "../../client/src/App/sharedWithServer/apiQueriesShared
 import { Id } from "../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsUtils/id";
 import { PackBuilderSection } from "../../client/src/App/sharedWithServer/StatePackers.ts/PackBuilderSection";
 import { runApp } from "../../runApp";
-import { LoadedDbUser } from "./shared/DbSections/LoadedDbUser";
-import { SectionQueryTester } from "./test/SectionQueryTester";
+import { LoadedDbUser } from "./apiQueriesShared/DbSections/LoadedDbUser";
+import { SectionQueryTester } from "./apiQueriesTestTools/SectionQueryTester";
 import {
   createAndGetDbUser,
   deleteUserTotally,
   makeSessionGetCookies,
   validateStatus200Res,
-} from "./test/testDbUser";
+} from "./apiQueriesTestTools/testDbUser";
 
 type TestReqs = {
   addSection: QueryReq<"addSection">;

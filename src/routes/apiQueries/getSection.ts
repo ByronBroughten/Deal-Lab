@@ -7,9 +7,9 @@ import { SectionPack } from "../../client/src/App/sharedWithServer/SectionsMeta/
 import { FeSectionInfo } from "../../client/src/App/sharedWithServer/SectionsMeta/Info";
 import { PackBuilderSection } from "../../client/src/App/sharedWithServer/StatePackers.ts/PackBuilderSection";
 import { getAuthWare } from "../../middleware/authWare";
-import { DbUser } from "./shared/DbSections/DbUser";
-import { sendSuccess } from "./shared/sendSuccess";
-import { validateDbSectionInfoReq } from "./shared/validateDbSectionInfoReq";
+import { DbUser } from "./apiQueriesShared/DbSections/DbUser";
+import { sendSuccess } from "./apiQueriesShared/sendSuccess";
+import { validateDbSectionInfoReq } from "./apiQueriesShared/validateDbSectionInfoReq";
 
 export const getSectionWare = [getAuthWare(), getSectionServerSide] as const;
 
