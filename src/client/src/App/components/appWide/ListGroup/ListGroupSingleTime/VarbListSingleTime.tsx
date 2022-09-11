@@ -1,12 +1,17 @@
 import { ThemeName } from "../../../../theme/Theme";
-import { VarbListGeneric } from "../ListGroupShared/VarbListGeneric";
+import {
+  VarbListGeneric,
+  VarbListGenericMenuType,
+} from "../ListGroupShared/VarbListGeneric";
 import { ListItemSingleTime } from "./VarbListSingleTime/ListItemSingleTime";
 
 type Props = {
   themeName: ThemeName;
   feId: string;
+  menuType?: VarbListGenericMenuType;
   className?: string;
 };
+
 export function VarbListSingleTime({ feId, ...rest }: Props) {
   const feInfo = { sectionName: "singleTimeList", feId } as const;
   return (

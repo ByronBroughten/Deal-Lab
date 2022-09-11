@@ -11,13 +11,17 @@ export function UserAdditiveListPage() {
         themeName="userSingleList"
         storeName="singleTimeListMain"
         title="One time cost lists"
-        makeListNode={(nodeProps) => <VarbListSingleTime {...nodeProps} />}
+        makeListNode={(nodeProps) => (
+          <VarbListSingleTime {...{ ...nodeProps, menuType: "simple" }} />
+        )}
       />
       <UserListMainSection
         themeName="userOngoingList"
         storeName="ongoingListMain"
         title="Ongoing cost lists"
-        makeListNode={(nodeProps) => <VarbListOngoing {...nodeProps} />}
+        makeListNode={(nodeProps) => (
+          <VarbListOngoing {...{ ...nodeProps, menuType: "simple" }} />
+        )}
       />
     </UserListsGeneral>
   );

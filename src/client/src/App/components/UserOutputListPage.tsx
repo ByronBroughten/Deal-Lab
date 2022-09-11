@@ -10,7 +10,9 @@ export function UserOutputListPage() {
         themeName={themeName}
         storeName="outputListMain"
         title="Output lists"
-        makeListNode={(nodeProps) => <VarbListOutputs {...nodeProps} />}
+        makeListNode={(nodeProps) => (
+          <VarbListOutputs {...{ ...nodeProps, menuType: "simple" }} />
+        )}
       />
     </UserListsGeneral>
   );

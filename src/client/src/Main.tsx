@@ -1,45 +1,29 @@
 import React from "react";
-import ReactGA from "react-ga4";
 import * as reactRouterDom from "react-router-dom";
 import { Route, Routes } from "react-router-dom";
 import styled from "styled-components";
 import { getSuperTokensRoutesForReactRouterDom } from "supertokens-auth-react";
 import { ActiveDeal } from "./App/components/ActiveDeal";
 import NotFound from "./App/components/general/NotFound";
-import NavBar from "./App/components/NavBar";
+import { NavBar } from "./App/components/NavBar";
 import { UserAdditiveListPage } from "./App/components/UserAdditiveListPage";
 import { UserOutputListPage } from "./App/components/UserOutputListPage";
 import { UserVarbListPage } from "./App/components/UserVarbListPage";
 import { constants } from "./App/Constants";
-import {
-  useAuthAndLogin,
-  useSubscriptionState,
-} from "./App/modules/customHooks/useAuthAndUserData";
-import { useSetterSection } from "./App/sharedWithServer/stateClassHooks/useSetterSection";
+import { useSubscriptionState } from "./App/modules/customHooks/useAuthAndUserData";
+import { useSetterSectionOnlyOne } from "./App/sharedWithServer/stateClassHooks/useSetterSection";
 import theme from "./App/theme/Theme";
 
-ReactGA.initialize("G-19TRW4YTJL");
-ReactGA.send("pageview");
-
 export function Main() {
-  const { feRoutes } = constants;
-
-  const main = useSetterSection();
-  const feUser = main.get.onlyChild("feUser");
-  const { logout } = useAuthAndLogin();
   useSubscriptionState();
+  const main = useSetterSectionOnlyOne("main");
   const activeDealId = main.get.onlyChild("deal").feId;
+  const { feRoutes } = constants;
   return (
     <Styled className="App-root">
-      <NavBar {...{ logout }} />
+      <NavBar />
       <div className="NavSpaceDiv-root"></div>
       <Routes>
-        {/* <Route
-          path="/deals"
-          element={
-            <TableStore feId={feUser.onlyChild("dealMainTable").feId} />
-          }
-        /> */}
         {getSuperTokensRoutesForReactRouterDom(reactRouterDom)}
         <Route path={feRoutes.userVariables} element={<UserVarbListPage />} />
         <Route path={feRoutes.userLists} element={<UserAdditiveListPage />} />

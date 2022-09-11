@@ -15,9 +15,9 @@ import NavDropDown from "./NavBar/NavDropDown";
 import { NavUserMenu } from "./NavBar/NavUserMenu";
 import { UpgradeUserToProPanel } from "./NavBar/UpgradeUserToProPanel";
 
-type NavBarProps = { logout: () => void };
-export default function NavBar(props: NavBarProps) {
+export function NavBar() {
   const feUser = useFeUser();
+
   const { isBasic, isGuest } = feUser;
   const userInfo = feUser.get.onlyChild("userInfo");
 
@@ -30,7 +30,7 @@ export default function NavBar(props: NavBarProps) {
     <Styled className="NavBar-root">
       <Toolbar disableGutters={true}>
         <div className="NavBar-leftSide">
-          <NavUserMenu {...{ ...props, feId: userInfo.feId }} />
+          <NavUserMenu feId={userInfo.feId} />
           <Link className="NavBar-navBtnLink" to="/">
             <NavBtn
               className="NavBar-brandBtn"

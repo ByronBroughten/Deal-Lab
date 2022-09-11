@@ -32,6 +32,7 @@ type Props<SN extends VarbListAllowed> = {
   menuType?: "simple" | "full";
 };
 
+export type VarbListGenericMenuType = "simple" | "full";
 export function VarbListGeneric<SN extends VarbListAllowed>({
   feInfo,
   makeItemNode,

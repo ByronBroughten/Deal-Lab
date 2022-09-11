@@ -14,6 +14,7 @@ export function VarbListUserVarbs({ feId, ...rest }: Props) {
     <VarbListGeneric
       {...{
         ...rest,
+        menuType: "simple",
         feInfo,
         contentTitle: "Value",
         makeItemNode: ({ feId }) => <UserVarbItem {...{ feId, key: feId }} />,

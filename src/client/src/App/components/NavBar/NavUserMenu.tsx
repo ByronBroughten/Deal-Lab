@@ -3,6 +3,7 @@ import { rem } from "polished";
 import { AiOutlineMenu } from "react-icons/ai";
 import styled, { css } from "styled-components";
 import { constants } from "../../Constants";
+import { useAuthAndLogin } from "../../modules/customHooks/useAuthAndUserData";
 import { UserPlan } from "../../sharedWithServer/SectionsMeta/baseSections";
 import { useAuthStatus } from "../../sharedWithServer/stateClassHooks/useAuthStatus";
 import {
@@ -17,11 +18,9 @@ function BtnDiv({ children, className }: StandardProps) {
   return <div className={`NavUserMenu-btnDiv ${className}`}>{children}</div>;
 }
 
-export type NavUserMenuProps = {
-  feId: string;
-  logout: () => void;
-};
-export function NavUserMenu({ feId, logout }: NavUserMenuProps) {
+export type NavUserMenuProps = { feId: string };
+export function NavUserMenu({ feId }: NavUserMenuProps) {
+  const { logout } = useAuthAndLogin();
   const userInfo = useGetterSection({
     sectionName: "userInfo",
     feId,

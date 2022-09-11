@@ -10,7 +10,7 @@ AppRegistry.runApplication("App", {
 
 // It turns out getting beta users will be difficult after all.
 // You don't need the extra features for the below:
-// 1. Post it on facebook/insta
+// 1. Post it on facebook/insta, asking for testers
 // 2. Maybe try posting to facebook groups
 // 3. Ask Ed to have a look at it
 // 4. Maybe attend an RE meetup or two
@@ -21,6 +21,11 @@ I've been computer programming for awhile now, and after massively underestimati
 */
 
 // I'm making an app for analyzing rental property. These are the main goals:
+
+// - Analyze properties faster and more precisely;
+// - Experiment with different combinations of loans and properties
+// - Save and reuse data
+
 // 1. Analyze properties faster
 // 2. Be as precise as you prefer
 // 3. Save and experiment with different combinations of loans and properties
@@ -41,7 +46,7 @@ I've been computer programming for awhile now, and after massively underestimati
 
 // Last steps to Ultimate Property Analyzer
 // 1. User variables - make their entity displayName update
-// 2. Lists -  ddd back the list menu
+// 2. Lists -  add back the list menu
 // Give the lists just minimize and X in list view mode
 // Give them ... > actions, saved, minimize, X in analyzer view mode
 
