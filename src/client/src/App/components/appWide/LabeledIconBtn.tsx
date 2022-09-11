@@ -40,7 +40,9 @@ const Styled = styled(Button)`
   background-color: ${transparentize(0.05, theme["gray-300"])};
   color: ${theme.softDark};
   line-height: 1rem;
-  font-size: 1.1rem;
+  font-size: 1rem;
+  white-space: nowrap;
+  height: 30px;
 
   :disabled {
     color: ${transparentize(0.4, theme.softDark)};
@@ -50,7 +52,7 @@ const Styled = styled(Button)`
   .LabeledIconBtn-iconSpan {
     display: flex;
     justify-content: flex-start;
-    width: 40px;
+    min-width: 40px;
   }
   .LabeledIconBtn-label {
     margin-left: ${theme.s3};

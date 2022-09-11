@@ -39,11 +39,9 @@ export function NavUserMenu({ feId }: NavUserMenuProps) {
       dropDirection={"right"}
     >
       <div className="NavUserMenu-dropdown">
-        {/* 
-          <BtnDiv>
-            <Button href="/lists">{`Your lists`}</Button>
-          </BtnDiv> */}
-
+        <BtnDiv>
+          <Button href={constants.feRoutes.userLists}>{`Your lists`}</Button>
+        </BtnDiv>
         <BtnDiv>
           <Button
             href={constants.feRoutes.userVariables}

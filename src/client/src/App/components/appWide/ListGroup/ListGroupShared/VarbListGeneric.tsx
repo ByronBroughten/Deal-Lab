@@ -14,8 +14,8 @@ import ccs from "../../../../theme/cssChunks";
 import theme, { ThemeName } from "../../../../theme/Theme";
 import { BigStringEditor } from "../../../inputs/BigStringEditor";
 import { useOpenWidth } from "../../SectionTitleRow";
-import { ListMenu } from "./ListMenu";
 import { ListMenuFull } from "./ListMenuFull";
+import { ListMenuSimple } from "./ListMenuSimple";
 import { CaretBtn } from "./VarbListGeneric/CaretBtn";
 import { VarbListTable } from "./VarbListGeneric/VarbListTable";
 import { VarbListTotal } from "./VarbListGeneric/VarbListTotal";
@@ -79,19 +79,28 @@ export function VarbListGeneric<SN extends VarbListAllowed>({
     viewWhat: "menu",
     initValue: false,
   });
+
+  const listMenu = {
+    full: (
+      <ListMenuFull className="VarbListGeneric-menuFull" {...listMenuProps} />
+    ),
+    simple: (
+      <ListMenuSimple
+        className="VarbListGeneric-menuSimple"
+        {...listMenuProps}
+      />
+    ),
+  };
+
   return (
     <Styled
       className={"AdditiveList-root " + className}
       {...{ themeName, listMenuIsOpen }}
     >
       <div className="AdditiveList-viewable viewable">
-        {menuType === "full" && menuIsOpen && (
-          <ListMenuFull
-            className="VarbListGeneric-menuFull"
-            {...listMenuProps}
-          />
-        )}
-
+        <div className="VarbList-menuRow">
+          {menuIsOpen && listMenu[menuType]}
+        </div>
         <div className="AdditiveList-titleRow">
           <div className="AdditiveList-titleRowLeft">
             <BigStringEditor
@@ -111,15 +120,7 @@ export function VarbListGeneric<SN extends VarbListAllowed>({
               />
             )}
           </div>
-          {menuType === "full" && (
-            <CaretBtn dropped={menuIsOpen} onClick={toggleMenu} />
-          )}
-          {menuType === "simple" && (
-            <ListMenu
-              className="VarbListGeneric-menuSimple"
-              {...listMenuProps}
-            />
-          )}
+          <CaretBtn dropped={menuIsOpen} onClick={toggleMenu} />
         </div>
 
         {viewIsOpen && (
@@ -139,10 +140,9 @@ const Styled = styled.div<{
   display: flex;
   align-items: flex-start;
 
-  :hover {
-    .VarbListGeneric-menuSimple {
-      visibility: visible;
-    }
+  .VarbList-menuRow {
+    display: flex;
+    flex-direction: row-reverse;
   }
 
   .VarbListGeneric-menuFull {
@@ -153,7 +153,6 @@ const Styled = styled.div<{
 
   .VarbListGeneric-menuSimple {
     margin-left: ${theme.s1};
-    visibility: hidden;
   }
 
   .AdditiveList-viewable {

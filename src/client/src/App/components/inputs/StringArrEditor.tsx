@@ -54,7 +54,7 @@ const compositeDecorator = new CompositeDecorator([
   },
 ]);
 
-export function ListEditorNext({
+export function StringArrEditor({
   feVarbInfo,
   ...rest
 }: {
@@ -63,7 +63,6 @@ export function ListEditorNext({
 }) {
   const { onChange, editorState } = useDraftInput({
     ...feVarbInfo,
-    valueType: "stringArray",
     compositeDecorator,
   });
 

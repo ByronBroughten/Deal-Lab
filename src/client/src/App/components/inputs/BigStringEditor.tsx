@@ -20,16 +20,13 @@ export function BigStringEditor({
   label,
   placeholder,
 }: Props) {
-  const { onChange, varb, editorState } = useDraftInput({
-    ...feVarbInfo,
-    valueType: "string",
-  });
+  const { onChange, varb, editorState } = useDraftInput(feVarbInfo);
   return (
     <Styled
       {...{
         sectionName: themeName,
         label,
-        className: `BigStringEditor-root string-editor ${className ?? ""}`,
+        className: `BigStringEditor-root ${className ?? ""}`,
         id: varb.varbId,
         editorProps: {
           editorState,

@@ -1,4 +1,5 @@
 import { numObj } from "../SectionsMeta/baseSectionsUtils/baseValues/NumObj";
+import { stringObj } from "../SectionsMeta/baseSectionsUtils/baseValues/StringObj";
 import { ChildName } from "../SectionsMeta/childSectionsDerived/ChildName";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
@@ -47,7 +48,7 @@ describe("SetterSection", () => {
 
     const packVarbs = {
       price: numObj(257801),
-      displayName: "New Title",
+      displayName: stringObj("New Title"),
     } as const;
 
     const packBuilder = PackBuilderSection.initAsOmniChild("property", {
@@ -70,8 +71,8 @@ describe("SetterSection", () => {
     expect(postChildCounts.childSections).toBe(
       preChildCounts.childSections + childCountDifference
     );
-    expect(getter.value("displayName")).toBe(packVarbs["displayName"]);
-    expect(getter.value("price", "numObj").editorText).toBe(
+    expect(getter.value("displayName")).toEqual(packVarbs["displayName"]);
+    expect(getter.value("price", "numObj").editorText).toEqual(
       packVarbs.price.editorText
     );
   });

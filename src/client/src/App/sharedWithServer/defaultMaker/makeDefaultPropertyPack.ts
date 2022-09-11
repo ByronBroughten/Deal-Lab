@@ -1,3 +1,4 @@
+import { stringObj } from "../SectionsMeta/baseSectionsUtils/baseValues/StringObj";
 import { SectionPack } from "../SectionsMeta/childSectionsDerived/SectionPack";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
 
@@ -15,7 +16,7 @@ export function makeDefaultPropertyPack(): SectionPack<"property"> {
 
   property.addChild("ongoingCostList", {
     dbVarbs: {
-      displayName: "Utilities",
+      displayName: stringObj("Utilities"),
       totalOngoingSwitch: "monthly",
       defaultValueSwitch: "labeledEquation",
       defaultOngoingSwitch: "monthly",
@@ -23,14 +24,14 @@ export function makeDefaultPropertyPack(): SectionPack<"property"> {
   });
   property.addChild("ongoingCostList", {
     dbVarbs: {
-      displayName: "CapEx",
+      displayName: stringObj("CapEx"),
       totalOngoingSwitch: "yearly",
       defaultValueSwitch: "labeledSpanOverCost",
       defaultOngoingSwitch: "yearly",
     },
   });
   property.addChild("upfrontCostList", {
-    dbVarbs: { displayName: "Repairs" },
+    dbVarbs: { displayName: stringObj("Repairs") },
   });
 
   return property.makeSectionPack();

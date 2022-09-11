@@ -22,7 +22,7 @@ export class FullIndexActor<
   }
   get displayItems(): DisplayItemProps[] {
     return this.get.children(this.itemName).map((section) => ({
-      displayName: section.virtualVarb.displayName,
+      displayName: section.valueNext("displayName").text,
       dbId: section.dbId,
     }));
   }

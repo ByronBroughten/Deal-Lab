@@ -2,6 +2,7 @@ import React from "react";
 import styled, { css } from "styled-components";
 import useOnOutsideClickRef from "../../modules/customHooks/useOnOutsideClickRef";
 import useToggleView from "../../modules/customHooks/useToggleView";
+import theme from "../../theme/Theme";
 import { DropdownBtn } from "./DropdownBtn";
 
 interface Props {
@@ -68,6 +69,9 @@ const Styled = styled.div<{ $dropTop?: boolean }>`
   }
   .DropdownList-childrenInner {
     position: absolute;
+    display: flex;
+    flex-direction: column;
+    padding-right: ${theme.s2};
     ${({ $dropTop }) =>
       $dropTop &&
       css`

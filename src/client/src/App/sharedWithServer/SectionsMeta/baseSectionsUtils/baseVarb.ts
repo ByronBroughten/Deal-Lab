@@ -2,7 +2,7 @@ import { Obj } from "../../utils/Obj";
 import { Merge } from "../../utils/Obj/merge";
 import { SwitchName } from "./baseSwitchNames";
 
-const valueNames = [
+export const valueNames = [
   "number",
   "dateTime",
   "boolean",

@@ -46,9 +46,14 @@ I've been computer programming for awhile now, and after massively underestimati
 
 // Last steps to Ultimate Property Analyzer
 // 1. User variables - make their entity displayName update
-// 2. Lists -  add back the list menu
-// Give the lists just minimize and X in list view mode
-// Give them ... > actions, saved, minimize, X in analyzer view mode
+// 2. Lists - debug? The displayName probably should be stringObj. No?
+// the point of making displayName be a string obj is that it allows
+// it to update when that of something else updates.
+
+// make numObj and stringObj keys match
+
+// When I change the displayName of a variable, I want that
+// of its output to change, right?
 
 // 2.5 Allow custom variables on property, loan, and mgmt (add guts, at least)
 // - customVarb entityInfo updateFn updates the local value and gives an inEntity

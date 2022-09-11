@@ -6,23 +6,18 @@ import { useDraftInput } from "./useDraftInput";
 export interface StringEditorProps {
   feVarbInfo: FeVarbInfo;
   className?: string;
-  valueType?: "string" | "stringObj";
   label?: string;
 }
 
 export function MaterialStringEditor({
   feVarbInfo,
-  className = "",
-  valueType = "string",
+  className,
   label,
 }: StringEditorProps) {
-  let { editorState, onChange, varb } = useDraftInput({
-    ...feVarbInfo,
-    valueType,
-  });
+  let { editorState, onChange, varb } = useDraftInput(feVarbInfo);
   return (
     <MaterialDraftEditor
-      className={"string-editor " + className}
+      className={"MaterialStringEditor-root " + className ?? ""}
       id={varb.varbId}
       editorProps={{ editorState, handleOnChange: onChange }}
       label={label}

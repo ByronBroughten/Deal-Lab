@@ -1,5 +1,6 @@
 import { pick } from "lodash";
 import { numObj } from "../SectionsMeta/baseSectionsUtils/baseValues/NumObj";
+import { stringObj } from "../SectionsMeta/baseSectionsUtils/baseValues/StringObj";
 import { isSectionPack } from "../SectionsMeta/childSectionsDerived/SectionPack";
 import { Obj } from "../utils/Obj";
 import { PackBuilderSection } from "./PackBuilderSection";
@@ -7,15 +8,15 @@ import { PackBuilderSection } from "./PackBuilderSection";
 describe("PackBuilderSection", () => {
   const childVarbs = {
     upfrontCostList: {
-      displayName: "Repairs",
+      displayName: stringObj("Repairs"),
     },
     ongoingCostList: {
-      displayName: "Utilities",
+      displayName: stringObj("Utilities"),
     },
   } as const;
 
   const propertyVarbs = {
-    displayName: "Some string",
+    displayName: stringObj("Some string"),
     price: numObj(200000),
     taxesOngoingSwitch: "yearly",
   };

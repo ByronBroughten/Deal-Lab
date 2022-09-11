@@ -82,7 +82,7 @@ export const relVarbsS = {
   },
   get savableSection() {
     return {
-      displayName: relVarb("string"),
+      displayName: relVarb("stringObj"),
       dateTimeFirstSaved: relVarb("dateTime"),
       dateTimeLastSaved: relVarb("dateTime"),
     } as const;

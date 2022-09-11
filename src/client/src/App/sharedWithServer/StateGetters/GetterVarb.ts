@@ -162,8 +162,9 @@ export class GetterVarb<
     const value = this.value();
     if (this.meta.isVarbValueType(value)) {
       return value;
-    } else
+    } else {
       throw new Error(`value ${value} is not of type ${this.meta.valueName}`);
+    }
   }
   get valueName(): ValueName {
     return this.meta.valueName;

@@ -1,5 +1,6 @@
 import { SectionPack } from "../SectionsMeta/childSectionsDerived/SectionPack";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
+import { stringObj } from "./../SectionsMeta/baseSectionsUtils/baseValues/StringObj";
 
 export function makeDefaultLoanPack(): SectionPack<"loan"> {
   const loan = PackBuilderSection.initAsOmniChild("loan", {
@@ -12,7 +13,7 @@ export function makeDefaultLoanPack(): SectionPack<"loan"> {
   });
   loan.addChild("closingCostList", {
     dbVarbs: {
-      displayName: "Closing Costs",
+      displayName: stringObj("Closing Costs"),
       defaultValueSwitch: "labeledEquation",
     },
   });

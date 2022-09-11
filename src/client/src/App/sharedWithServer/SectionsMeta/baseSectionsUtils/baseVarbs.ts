@@ -58,7 +58,7 @@ export const baseVarbsS = {
   },
   get savableSection() {
     return {
-      displayName: "string",
+      displayName: "stringObj",
       dateTimeFirstSaved: "dateTime",
       dateTimeLastSaved: "dateTime",
     } as const;

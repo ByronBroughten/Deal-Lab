@@ -18,19 +18,26 @@ import {
 } from "../SectionsMeta/baseSectionsUtils/baseValues/NumObj";
 import { isEditorUpdateFnName } from "../SectionsMeta/baseSectionsUtils/baseValues/StateValueTypes";
 import { StringObj } from "../SectionsMeta/baseSectionsUtils/baseValues/StringObj";
-import { ValueName } from "../SectionsMeta/baseSectionsUtils/baseVarb";
+import { valueNames } from "../SectionsMeta/baseSectionsUtils/baseVarb";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { GetterVarbBase } from "../StateGetters/Bases/GetterVarbBase";
 import { GetterVarb } from "../StateGetters/GetterVarb";
 import { GetterVarbNumObj } from "../StateGetters/GetterVarbNumObj";
 import { UpdaterVarb } from "../StateUpdaters/UpdaterVarb";
 import { Arr } from "../utils/Arr";
-import { StrictExtract } from "../utils/types";
 
-type EditorValueName = StrictExtract<
-  ValueName,
-  "string" | "numObj" | "stringArray" | "stringObj"
->;
+const editorValueNames = Arr.extract(valueNames, [
+  "string",
+  "numObj",
+  "stringArray",
+  "stringObj",
+] as const);
+
+type EditorValueName = typeof editorValueNames[number];
+export function isEditorValueName(value: any): value is EditorValueName {
+  return editorValueNames.includes(value);
+}
+
 export type EditorValue = ValueNamesToTypes[EditorValueName];
 
 type ContentCreators = {

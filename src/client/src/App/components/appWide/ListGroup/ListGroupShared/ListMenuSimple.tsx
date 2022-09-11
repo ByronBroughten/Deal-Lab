@@ -6,7 +6,7 @@ import { useSetterSection } from "../../../../sharedWithServer/stateClassHooks/u
 import theme, { ThemeName } from "../../../../theme/Theme";
 import { StandardProps } from "../../../general/StandardProps";
 import XBtn from "../../Xbtn";
-import ListMenuBtn from "./ListMenu/ListMenuBtn";
+import ListMenuBtn from "./ListMenuSimple/ListMenuBtn";
 
 type Props = StandardProps & {
   feInfo: FeInfoByType<"hasFullIndex">;
@@ -15,11 +15,7 @@ type Props = StandardProps & {
   viewIsOpen: boolean;
 };
 
-// here is the simple list menu
-// let's make the more in-depth list menu
-
-// Now the two buttons should work for the other lists
-export function ListMenu({
+export function ListMenuSimple({
   className,
   feInfo,
   toggleListView,
@@ -30,21 +26,21 @@ export function ListMenu({
   return (
     <Styled
       {...{
-        className: "ListMenu-root " + className,
+        className: "ListMenuSimple-root " + className,
         $themeName: themeName,
       }}
     >
-      <div className="ListMenu-viewable">
+      <div className="ListMenuSimple-viewable">
         <ListMenuBtn
           themeName={themeName}
-          className="ListMenu-listMenuBtn ListMenu-viewBtn"
+          className="ListMenuSimple-listMenuBtn ListMenuSimple-viewBtn"
           onClick={toggleListView}
         >
           {viewIsOpen && <FiMinimize2 size={15} />}
           {!viewIsOpen && <FiMaximize2 size={15} />}
         </ListMenuBtn>
         <XBtn
-          className="ListMenu-listMenuBtn"
+          className="ListMenuSimple-listMenuBtn"
           onClick={() => section.removeSelf()}
         />
       </div>
@@ -53,10 +49,10 @@ export function ListMenu({
 }
 
 const Styled = styled.div<{ $themeName: ThemeName }>`
-  .ListMenu-viewable {
+  .ListMenuSimple-viewable {
     display: flex;
   }
-  .ListMenu-listMenuBtn {
+  .ListMenuSimple-listMenuBtn {
     margin: ${theme.s1};
     margin-top: 0;
     width: 24px;

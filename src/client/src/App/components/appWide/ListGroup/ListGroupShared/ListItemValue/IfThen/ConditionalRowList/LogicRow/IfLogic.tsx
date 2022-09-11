@@ -3,9 +3,9 @@ import styled from "styled-components";
 import { useSetterSection } from "../../../../../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import { useSetterSections } from "../../../../../../../../sharedWithServer/stateClassHooks/useSetterSections";
 import { listOperators } from "../../../../../../../../sharedWithServer/StateSolvers/SolveValueVarb/ConditionalValueSolver";
-import { ListEditorNext } from "../../../../../../../inputs/ListEditorNext";
 import MaterialSelect from "../../../../../../../inputs/MaterialSelect";
 import { NumObjEntityEditor } from "../../../../../../../inputs/NumObjEntityEditor";
+import { StringArrEditor } from "../../../../../../../inputs/StringArrEditor";
 import LogicOperators from "../../../../../../LogicOperators";
 
 export default function IfLogic({ rowId }: { rowId: string }) {
@@ -50,7 +50,7 @@ export default function IfLogic({ rowId }: { rowId: string }) {
         {LogicOperators()}
       </MaterialSelect>
       {logicType === "listLogic" && (
-        <ListEditorNext
+        <StringArrEditor
           className="logic-right"
           feVarbInfo={row.varbInfo("rightList")}
         />

@@ -36,7 +36,6 @@ export function NumObjEntityEditor({
 }: Props) {
   let { editorState, varb, onChange } = useDraftInput({
     ...feVarbInfo,
-    valueType: "numObj",
     compositeDecorator: varSpanDecorator,
   });
 

@@ -193,18 +193,18 @@ export class MainSectionActor<
 
     this.setter.tryAndRevertIfFail(async () => await this.querier.delete(dbId));
   }
-  private get displayNameValue(): string {
-    return this.get.valueNext("displayName");
+  private get displayNameString(): string {
+    return this.get.valueNext("displayName").text;
   }
   private addFullItem(): void {
     const sectionPack = this.packMaker.makeSectionPack();
     this.fullIndexActor.addItem(sectionPack as SectionPack<any>);
   }
   private addDisplayItem(): void {
-    const { dbId, displayNameValue } = this;
+    const { dbId, displayNameString } = this;
     this.displayIndexActor.addItem({
       dbId,
-      displayName: displayNameValue,
+      displayName: displayNameString,
     });
   }
   private updateFullItem(): void {
@@ -212,10 +212,10 @@ export class MainSectionActor<
     this.fullIndexActor.updateItem(sectionPack as SectionPack<any>);
   }
   private updateDisplayItem(): void {
-    const { dbId, displayNameValue } = this;
+    const { dbId, displayNameString } = this;
     this.displayIndexActor.updateItem({
       dbId,
-      displayName: displayNameValue,
+      displayName: displayNameString,
     });
   }
 }

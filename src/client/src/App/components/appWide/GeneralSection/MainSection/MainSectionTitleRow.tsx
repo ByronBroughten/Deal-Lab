@@ -68,9 +68,6 @@ const Styled = styled.div<{ $btnMenuIsOpen: boolean; $dropTop: boolean }>`
   align-items: flex-start;
   justify-content: space-between;
   .LabeledIconBtn-root {
-    width: 230px;
-    height: 30px;
-    border-top: 1px solid ${theme["gray-500"]};
     :first-child {
       ${({ $dropTop }) =>
         !$dropTop &&

@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { useMainSectionActor } from "../../../../modules/sectionActorHooks/useMainSectionActor";
 import { SectionName } from "../../../../sharedWithServer/SectionsMeta/SectionName";
 import { useAuthStatus } from "../../../../sharedWithServer/stateClassHooks/useAuthStatus";
+import theme from "../../../../theme/Theme";
 import { DropdownList } from "../../DropdownList";
 import { LabeledIconBtn } from "../../LabeledIconBtn";
 
@@ -80,6 +81,9 @@ export function StoreSectionActionMenu<
 }
 
 const Styled = styled(DropdownList)`
+  .LabeledIconBtn-root {
+    border-top: 1px solid ${theme["gray-500"]};
+  }
   position: relative;
   z-index: 5;
 `;

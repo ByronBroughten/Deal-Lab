@@ -4,15 +4,29 @@ import React, { useEffect, useState } from "react";
 import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/Info";
 import { useGetterVarb } from "../../sharedWithServer/stateClassHooks/useGetterVarb";
 import { useSetterVarb } from "../../sharedWithServer/stateClassHooks/useSetterVarb";
-import { CreateEditorProps } from "../../sharedWithServer/StateSetters/EditorUpdaterVarb";
+import {
+  CreateEditorProps,
+  isEditorValueName,
+} from "../../sharedWithServer/StateSetters/EditorUpdaterVarb";
 import { SetterVarb } from "../../sharedWithServer/StateSetters/SetterVarb";
+import { StrictOmit } from "../../sharedWithServer/utils/types";
 import useOnChange from "./useOnChange";
 
-interface UseDraftInputProps extends FeVarbInfo, CreateEditorProps {}
+interface UseDraftInputProps
+  extends FeVarbInfo,
+    StrictOmit<CreateEditorProps, "valueType"> {}
 export function useDraftInput(props: UseDraftInputProps) {
   const setterVarb = useSetterVarb(props);
+  const { valueName } = setterVarb.get;
+  if (!isEditorValueName(valueName)) {
+    throw new Error(`valueName "${valueName}" is not an editorValueName`);
+  }
+
   const [editorState, setEditorState] = useState<EditorState>(() =>
-    setterVarb.createEditor(props)
+    setterVarb.createEditor({
+      ...props,
+      valueType: valueName,
+    })
   );
 
   useUpdateValueFromEditor({
@@ -22,6 +36,7 @@ export function useDraftInput(props: UseDraftInputProps) {
 
   useUpdateEditorFromValue({
     ...props,
+    valueType: valueName,
     editorState,
     setEditorState,
     setterVarb,

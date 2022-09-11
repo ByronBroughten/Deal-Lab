@@ -5,7 +5,7 @@ import { useSetterSection } from "../../../../sharedWithServer/stateClassHooks/u
 import theme, { ThemeName } from "../../../../theme/Theme";
 import { MainSectionMenusMini } from "../../GeneralSection/MainSection/MainSectionTitleRow/MainSectionMenus";
 import XBtn from "../../Xbtn";
-import ListMenuBtn from "./ListMenu/ListMenuBtn";
+import ListMenuBtn from "./ListMenuSimple/ListMenuBtn";
 
 type Props = {
   className: string;
@@ -30,7 +30,7 @@ export function ListMenuFull({
         $themeName: themeName,
       }}
     >
-      <div className="ListMenu-viewable">
+      <div className="ListMenuSimple-viewable">
         <MainSectionMenusMini
           {...{
             ...feInfo,
@@ -39,14 +39,14 @@ export function ListMenuFull({
         />
         <ListMenuBtn
           themeName={themeName}
-          className="ListMenu-listMenuBtn ListMenu-viewBtn"
+          className="ListMenuSimple-listMenuBtn ListMenuSimple-viewBtn"
           onClick={toggleListView}
         >
           {viewIsOpen && <FiMinimize2 size={15} />}
           {!viewIsOpen && <FiMaximize2 size={15} />}
         </ListMenuBtn>
         <XBtn
-          className="ListMenu-listMenuBtn"
+          className="ListMenuSimple-listMenuBtn"
           onClick={() => section.removeSelf()}
         />
       </div>
@@ -55,10 +55,10 @@ export function ListMenuFull({
 }
 
 const Styled = styled.div<{ $themeName: ThemeName }>`
-  .ListMenu-viewable {
+  .ListMenuSimple-viewable {
     display: flex;
   }
-  .ListMenu-listMenuBtn {
+  .ListMenuSimple-listMenuBtn {
     margin: ${theme.s1};
     margin-top: 0;
     width: 24px;
