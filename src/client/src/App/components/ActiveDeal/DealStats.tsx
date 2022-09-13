@@ -2,7 +2,6 @@ import { CgDetailsLess, CgDetailsMore } from "react-icons/cg";
 import styled, { css } from "styled-components";
 import useToggleView from "../../modules/customHooks/useToggleView";
 import { auth } from "../../modules/services/authService";
-import { useGetterSection } from "../../sharedWithServer/stateClassHooks/useGetterSection";
 import theme from "../../theme/Theme";
 import { AppFooter } from "../AppFooter";
 import MainSection from "../appWide/GeneralSection";
@@ -13,10 +12,6 @@ import { DealOutputSection } from "./DealStats/DealOutputSection";
 type Props = { className?: string; feId: string };
 
 export default function DealStats({ className, feId }: Props) {
-  const deal = useGetterSection({
-    sectionName: "deal",
-    feId: feId,
-  });
   const { detailsIsOpen, toggleDetails } = useToggleView({
     initValue: false,
     viewWhat: "details",
@@ -81,9 +76,7 @@ export default function DealStats({ className, feId }: Props) {
           // </StandardToolTip>
         }
       </GeneralSectionTitle>
-      <DealOutputSection
-        {...{ feId: deal.onlyChild("dealOutputList").feId, detailsIsOpen }}
-      />
+      <DealOutputSection {...{ feId, detailsIsOpen }} />
       <AppFooter />
     </Styled>
   );

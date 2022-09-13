@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { useGetterSection } from "../../../sharedWithServer/stateClassHooks/useGetterSection";
 import theme from "../../../theme/Theme";
 import MainSection from "../../appWide/GeneralSection/MainSection";
 import MainSectionBody from "../../appWide/GeneralSection/MainSection/MainSectionBody";
@@ -13,6 +14,11 @@ export function DealOutputSection({
   feId: string;
   detailsIsOpen: boolean;
 }) {
+  const deal = useGetterSection({
+    sectionName: "deal",
+    feId: feId,
+  });
+  const outputListFeId = deal.onlyChild("dealOutputList").feId;
   return (
     <MainSection>
       <MainSectionTitleRow
@@ -25,8 +31,8 @@ export function DealOutputSection({
       <MainSectionBody themeName="deal">
         <Styled className="ListGroup-root">
           <div className="DealOutputSection-viewable viewable">
-            {!detailsIsOpen && <DealOutputList feId={feId} />}
-            {detailsIsOpen && <DealDetails feId={feId} />}
+            {!detailsIsOpen && <DealOutputList feId={outputListFeId} />}
+            {detailsIsOpen && <DealDetails feId={outputListFeId} />}
           </div>
         </Styled>
       </MainSectionBody>

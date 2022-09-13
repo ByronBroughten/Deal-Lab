@@ -97,6 +97,7 @@ describe(productionRoute, () => {
       await exec();
       subId = "sub_test_id";
       subscription = {
+        customer: customerId,
         id: subId,
         status: "active",
         current_period_end: timeS.now(),

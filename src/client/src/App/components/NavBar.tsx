@@ -59,7 +59,10 @@ export function NavBar() {
           {showSignin && (
             <>
               <Link className="NavBar-navBtnLink" to="/auth">
-                <NavBtn text="Sign In / Sign Up" />
+                <NavBtn
+                  className="NavBar-signInUpBtn"
+                  text="Sign In / Sign Up"
+                />
               </Link>
             </>
           )}
@@ -123,6 +126,10 @@ const Styled = styled(AppBar)`
 
   .NavBar-demoBtnIcon {
     font-size: ${rem("24px")};
+  }
+
+  .NavBar-signInUpBtn {
+    background: ${theme.property.main};
   }
 
   .NavBar-GetProDropdown {

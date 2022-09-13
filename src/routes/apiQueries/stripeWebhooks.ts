@@ -61,25 +61,28 @@ async function handleStripeEvent(event: Stripe.Event, res: Response) {
         { dbVarbs: subValues }
       );
       const updatedPack = updatedSub.makeSectionPack();
-      const customerId = subscription.customer as string;
+      const customerId = subscription.customer;
+      if (!(typeof customerId === "string")) {
+        throw new Error(`customerId "${customerId}" needs to be a string.`);
+      }
       const querier = await DbUser.initBy("customerId", customerId);
       const subPacks = await querier.getSectionPackArr("stripeSubscription");
-
       const currentIdx = subPacks.findIndex(
         (sub) =>
           sub.rawSections.stripeSubscription[0].dbVarbs.subId ===
           subValues.subId
       );
 
-      if (currentIdx === -1) subPacks.push(updatedPack);
-      else subPacks[currentIdx] = updatedPack;
+      const nextSubPacks = [...subPacks];
+      if (currentIdx === -1) nextSubPacks.push(updatedPack);
+      else nextSubPacks[currentIdx] = updatedPack;
 
       await querier.setSectionPackArr({
         storeName: "stripeSubscription",
-        sectionPackArr: subPacks,
+        sectionPackArr: nextSubPacks,
       });
       break;
     }
   }
-  res.status(200).end();
+  res.status(200).send();
 }
