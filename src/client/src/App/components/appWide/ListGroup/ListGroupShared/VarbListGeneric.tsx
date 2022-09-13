@@ -98,7 +98,7 @@ export function VarbListGeneric<SN extends VarbListAllowed>({
     >
       <div className="AdditiveList-viewable viewable">
         <div className="VarbList-menuRow">
-          {menuIsOpen && listMenu[menuType]}
+          {menuIsOpen && listMenu["simple"]}
         </div>
         <div className="AdditiveList-titleRow">
           <div className="AdditiveList-titleRowLeft">
