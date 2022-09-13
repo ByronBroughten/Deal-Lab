@@ -2,16 +2,21 @@ import { CgDetailsLess, CgDetailsMore } from "react-icons/cg";
 import styled, { css } from "styled-components";
 import useToggleView from "../../modules/customHooks/useToggleView";
 import { auth } from "../../modules/services/authService";
+import { useGetterSection } from "../../sharedWithServer/stateClassHooks/useGetterSection";
 import theme from "../../theme/Theme";
 import { AppFooter } from "../AppFooter";
 import MainSection from "../appWide/GeneralSection";
 import GeneralSectionTitle from "../appWide/GeneralSection/GeneralSectionTitle";
 import MainSectionTitleBtn from "../appWide/GeneralSection/GeneralSectionTitle/MainSectionTitleBtn";
-import { Deal } from "./DealStats/Deal";
+import { DealOutputSection } from "./DealStats/DealOutputSection";
 
 type Props = { className?: string; feId: string };
 
 export default function DealStats({ className, feId }: Props) {
+  const deal = useGetterSection({
+    sectionName: "deal",
+    feId: feId,
+  });
   const { detailsIsOpen, toggleDetails } = useToggleView({
     initValue: false,
     viewWhat: "details",
@@ -35,7 +40,7 @@ export default function DealStats({ className, feId }: Props) {
         className: `DealStats-root ${className}`,
       }}
     >
-      <GeneralSectionTitle title="Deal" themeName="deal">
+      <GeneralSectionTitle title="DealOutputSection" themeName="deal">
         <MainSectionTitleBtn
           {...{
             ...detailsBtnProps,
@@ -76,7 +81,9 @@ export default function DealStats({ className, feId }: Props) {
           // </StandardToolTip>
         }
       </GeneralSectionTitle>
-      <Deal {...{ feId, detailsIsOpen }} />
+      <DealOutputSection
+        {...{ feId: deal.onlyChild("dealOutputList").feId, detailsIsOpen }}
+      />
       <AppFooter />
     </Styled>
   );
@@ -106,7 +113,7 @@ const Styled = styled(MainSection)<{ $showDetails: boolean }>`
     width: 50%;
   }
   // properly disable compare deals for when you're logged out
-  // make Deal stick to the bottom again
+  // make DealOutputSection stick to the bottom again
 
   .GeneralSectionTitle-compareIcon {
     font-size: 1.9rem;

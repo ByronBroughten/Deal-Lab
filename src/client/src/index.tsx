@@ -8,6 +8,8 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
+// ***Put "Upgrade User to Pro" button back—fix the webhook bug.
+
 // It turns out getting beta users will be difficult after all.
 // You don't need the extra features for the below:
 // 1. Post it on facebook/insta, asking for testers

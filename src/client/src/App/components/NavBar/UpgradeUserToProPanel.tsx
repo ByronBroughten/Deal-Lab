@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     marginTop: theme.s3,
   },
   list: {},
-  
+
   boldText: {
     fontWeight: "bold",
     color: theme.softDark,
@@ -55,25 +55,7 @@ export function UpgradeUserToProPanel() {
               <Text
                 style={styles.normalText}
               >{`For $10 per month, save as many as ${constants.plans.pro.sectionSaveLimit} unique properties, loans, management scenarios, and deals.`}</Text>
-              {/* <Text style={styles.normalText}>
-                <Text style={styles.boldText}>Benefits</Text>
-              </Text> */}
             </View>
-            {/* <FlatList
-              style={styles.list}
-              renderItem={({ item, index }) => (
-                <Bullet text={item} key={`${index}`} />
-              )}
-              data={[
-                `Save up to ${constants.plans.pro.sectionSaveLimit} unique deals, properties, loans, and management scenarios`,
-                // "Easily compare saved deals with the Compare Deals table",
-              ]}
-            />
-            <View style={styles.subSectionSpace}>
-              <Text style={styles.normalText}>
-                <Text style={styles.boldText}>Cost</Text> $10 per month
-              </Text>
-            </View> */}
           </View>
         </View>
         <Button className="PaymentForm-payBtn" onClick={goToPaymentPage}>
@@ -83,8 +65,6 @@ export function UpgradeUserToProPanel() {
     </Styled>
   );
 }
-
-
 
 const Styled = styled(NavBarPanel)`
   .PaymentForm-payBtn {
