@@ -59,8 +59,8 @@ export const textToRawContent = (text: string): RawDraftContentState => {
 };
 
 export function numObjToRawContent(numObj: NumObj): RawDraftContentState {
-  const { editorText, entities } = numObj;
-  const raw = textToRawContent(editorText);
+  const { mainText, entities } = numObj;
+  const raw = textToRawContent(mainText);
   for (const [idx, entity] of Object.entries(entities)) {
     raw.entityMap[idx] = {
       data: entity,

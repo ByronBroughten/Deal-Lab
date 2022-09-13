@@ -78,11 +78,11 @@ export const valueMeta = {
     is: isNumObj,
     updateFnNames: numObjUpdateFnNames,
     initDefault: ({
-      editorText = "",
+      mainText = "",
       entities = [],
-      solvableText = editorText,
+      solvableText = mainText,
     }: Partial<NumObj> = {}) => ({
-      editorText,
+      mainText,
       entities,
       solvableText,
     }),

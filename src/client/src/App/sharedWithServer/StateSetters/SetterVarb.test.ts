@@ -1,9 +1,10 @@
 import { numObj } from "../SectionsMeta/baseSectionsUtils/baseValues/NumObj";
+import { stringObj } from "../SectionsMeta/baseSectionsUtils/baseValues/StringObj";
 import { SetterTesterVarb } from "./TestUtils/SetterTesterVarb";
 
 describe("SetterVarb", () => {
   const namesAndValues = [
-    ["property", ["displayName", "New Title"]],
+    ["property", ["displayName", stringObj("New Title")]],
     ["property", ["price", numObj(250000)]],
     ["unit", ["rent"]],
   ] as const;
@@ -12,9 +13,9 @@ describe("SetterVarb", () => {
       sectionName: "property",
       varbName: "displayName",
     });
-    const nextValue = "New Title";
+    const nextValue = stringObj("New Title");
     tester.setter.updateValue(nextValue);
-    expect(tester.get.value()).toBe(nextValue);
+    expect(tester.get.value()).toEqual(nextValue);
   });
   it("should update and solve for the value", () => {
     const tester = SetterTesterVarb.init({
@@ -75,8 +76,8 @@ describe("SetterVarb", () => {
   //   const [entity1Name, entity1] = pgInEntity("sqft", 0);
   //   const [entity2Name, entity2] = pgInEntity("price", entity1Name.length + 1);
 
-  //   const editorText = `${entity1Name}+${entity2Name}`;
-  //   let numObj = new NumObj({ editorText, entities: [entity1, entity2] });
+  //   const mainText = `${entity1Name}+${entity2Name}`;
+  //   let numObj = new NumObj({ mainText, entities: [entity1, entity2] });
 
   //   let next = exec("homeInsYearly", numObj);
   //   next.feVarb("homeInsYearly", propertyInfo);
@@ -99,13 +100,13 @@ describe("SetterVarb", () => {
   //     entity1Name.length + 1
   //   );
 
-  //   let editorText = `${entity1Name}+${entity2Name}`;
-  //   let numObj = new NumObj({ editorText, entities: [entity1, entity2] });
+  //   let mainText = `${entity1Name}+${entity2Name}`;
+  //   let numObj = new NumObj({ mainText, entities: [entity1, entity2] });
   //   analyzer = exec("homeInsYearly", numObj);
 
-  //   editorText = `${editorText}+`;
+  //   mainText = `${mainText}+`;
   //   numObj = new NumObj({
-  //     editorText: editorText,
+  //     mainText: mainText,
   //     entities: [entity1],
   //   });
 
@@ -122,9 +123,9 @@ describe("SetterVarb", () => {
   // it("should add outEntities for two subsequent updates", () => {
   //   const varbName1 = "sqft";
   //   const [entity1Name, entity1] = pgInEntity(varbName1, 0);
-  //   let editorText = `${entity1Name}+`;
+  //   let mainText = `${entity1Name}+`;
   //   let numObj = new NumObj({
-  //     editorText,
+  //     mainText,
   //     entities: [entity1],
   //   });
 
@@ -136,9 +137,9 @@ describe("SetterVarb", () => {
   //     entity1Name.length + 1
   //   );
 
-  //   editorText = `${editorText}${entity2Name}`;
+  //   mainText = `${mainText}${entity2Name}`;
   //   numObj = new NumObj({
-  //     editorText: editorText,
+  //     mainText: mainText,
   //     entities: [entity1, entity2],
   //   });
 

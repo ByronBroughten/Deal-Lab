@@ -34,15 +34,15 @@ export class GetterVarbNumObj<
     return { ...this.value, entities };
   }
   get editorTextStatus() {
-    if (["", "-"].includes(this.value.editorText as any)) return "empty";
-    if (Str.isRationalNumber(this.value.editorText)) return "number";
+    if (["", "-"].includes(this.value.mainText as any)) return "empty";
+    if (Str.isRationalNumber(this.value.mainText)) return "number";
     else return "solvableText";
   }
   solvableTextFromTextAndEntities({
-    editorText,
+    mainText,
     entities,
   }: EntitiesAndEditorText): string {
-    let solvableText = editorText;
+    let solvableText = mainText;
     for (const entity of entities) {
       const num = this.getSolvableNumber(entity);
       solvableText = Str.replaceRange(

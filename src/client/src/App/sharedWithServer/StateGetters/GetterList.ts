@@ -55,7 +55,7 @@ export class GetterList<SN extends SectionName> extends GetterListBase<SN> {
     sections = sections.filter(
       (section) => section.valueNext(varbName) === value
     );
-    this.exactlyOneOrThrow(sections, "dbId");
+    this.exactlyOneOrThrow(sections, `varbName ${varbName} and value ${value}`);
     return sections[0];
   }
   getByFeId(feId: string): GetterSection<SN> {

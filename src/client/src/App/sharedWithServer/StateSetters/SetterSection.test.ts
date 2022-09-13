@@ -72,8 +72,8 @@ describe("SetterSection", () => {
       preChildCounts.childSections + childCountDifference
     );
     expect(getter.value("displayName")).toEqual(packVarbs["displayName"]);
-    expect(getter.value("price", "numObj").editorText).toEqual(
-      packVarbs.price.editorText
+    expect(getter.value("price", "numObj").mainText).toEqual(
+      packVarbs.price.mainText
     );
   });
   describe("operations with children", () => {

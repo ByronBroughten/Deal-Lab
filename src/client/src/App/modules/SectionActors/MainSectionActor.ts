@@ -194,7 +194,7 @@ export class MainSectionActor<
     this.setter.tryAndRevertIfFail(async () => await this.querier.delete(dbId));
   }
   private get displayNameString(): string {
-    return this.get.valueNext("displayName").text;
+    return this.get.valueNext("displayName").mainText;
   }
   private addFullItem(): void {
     const sectionPack = this.packMaker.makeSectionPack();

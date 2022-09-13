@@ -146,7 +146,7 @@ export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
     const sources = this.get.children(partialIndexDbSource);
     const columns = table.get.children("column");
     for (const source of sources) {
-      const displayName = source.valueNext("displayName").text;
+      const displayName = source.valueNext("displayName").mainText;
       const row = table.addAndGetChild("tableRow", {
         dbId: source.dbId,
         dbVarbs: { displayName },
@@ -178,7 +178,7 @@ export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
         for (const source of sources) {
           nameList.addChild("displayNameItem", {
             dbId: source.dbId,
-            dbVarbs: { displayName: source.valueNext("displayName").text },
+            dbVarbs: { displayName: source.valueNext("displayName").mainText },
           });
         }
       } else if (dbStoreNameS.is(feUserChildName)) {

@@ -72,7 +72,7 @@ export class EditorUpdaterVarb<
       },
       stringObj: () => {
         return ContentState.createFromText(
-          this.getterVarb.value("stringObj").text
+          this.getterVarb.value("stringObj").mainText
         );
       },
       stringArray: () => {
@@ -110,7 +110,7 @@ export class EditorUpdaterVarb<
     stringObj: (contentState: ContentState): StringObj => {
       return {
         ...this.getterVarb.value("stringObj"),
-        text: draftUtils.contentStateText(contentState),
+        mainText: draftUtils.contentStateText(contentState),
       };
     },
     string(contentState: ContentState): string {
@@ -135,9 +135,9 @@ function textAndEntitiesFromRaw(
   rawEditorState: RawDraftContentState
 ): EntitiesAndEditorText {
   const { blocks, entityMap } = rawEditorState as RawEditorState;
-  const { text: editorText, entityRanges } = blocks[0];
+  const { text: mainText, entityRanges } = blocks[0];
   return {
-    editorText,
+    mainText,
     entities: entitiesFromMapAndRanges(entityMap, entityRanges),
   };
 }

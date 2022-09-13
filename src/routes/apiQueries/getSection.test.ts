@@ -5,6 +5,7 @@ import { apiQueriesShared } from "../../client/src/App/sharedWithServer/apiQueri
 import { QueryReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import { SectionPackRes } from "../../client/src/App/sharedWithServer/apiQueriesShared/makeReqAndRes";
 import { numObj } from "../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsUtils/baseValues/NumObj";
+import { stringObj } from "../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsUtils/baseValues/StringObj";
 import { Id } from "../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsUtils/id";
 import { PackBuilderSection } from "../../client/src/App/sharedWithServer/StatePackers.ts/PackBuilderSection";
 import { runApp } from "../../runApp";
@@ -95,7 +96,7 @@ describe(testedRoute, () => {
   it("should load saved subsections", async () => {
     const original = {
       price: numObj(100000),
-      displayName: "Original",
+      displayName: stringObj("Original"),
     };
 
     const deal = SetterTesterSection.init("deal").setter;
@@ -112,7 +113,7 @@ describe(testedRoute, () => {
 
     const updated = {
       price: numObj(200000),
-      displayName: "Updated",
+      displayName: stringObj("Updated"),
     };
     property.varb("price").updateValue(updated.price);
     property.varb("displayName").updateValue(updated.displayName);
@@ -136,7 +137,7 @@ describe(testedRoute, () => {
       const propertyGeneral = deal.get.onlyChild("propertyGeneral");
       const property = propertyGeneral.onlyChild("property");
       expect(property.value("price")).toEqual(updated.price);
-      expect(property.value("displayName")).toBe(updated.displayName);
+      expect(property.value("displayName")).toEqual(updated.displayName);
     }
 
     testSectionPack();

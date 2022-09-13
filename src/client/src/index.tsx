@@ -45,10 +45,10 @@ I've been computer programming for awhile now, and after massively underestimati
 // - Put userName (or first letter of email) on the right side where sign in/sign up were
 
 // Last steps to Ultimate Property Analyzer
-// 1. User variables - make their entity displayName update
-// 2. Lists - debug? The displayName probably should be stringObj. No?
-// the point of making displayName be a string obj is that it allows
-// it to update when that of something else updates.
+// 1. User variables - make their entity displayName update.
+
+// 2. Lists - add something that indicates whether list is saved or synced.
+// Or remove this for now.
 
 // make numObj and stringObj keys match
 

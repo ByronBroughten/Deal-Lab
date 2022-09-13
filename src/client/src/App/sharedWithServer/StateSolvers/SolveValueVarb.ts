@@ -105,7 +105,7 @@ export class SolveValueVarb<
       const numString = this.numObjSolver.solveTextToNumString(solvableText);
       return {
         solvableText,
-        editorText: numString === "?" ? "" : numString,
+        mainText: numString === "?" ? "" : numString,
         entities: [],
       };
     },
@@ -229,7 +229,7 @@ export class SolveValueVarb<
     }
     return nextEntities;
   }
-  private loadNextTexts(): { editorText: string; solvableText: string } {
+  private loadNextTexts(): { mainText: string; solvableText: string } {
     const loadingVarbInfo = this.getterSection.value(
       "valueEntityInfo",
       "inEntityInfo"
@@ -238,16 +238,16 @@ export class SolveValueVarb<
       const varb = this.getterSections.varbByMixed(loadingVarbInfo);
       return {
         solvableText: varb.value("numObj").solvableText,
-        // the editorText is the present numberValue.
+        // the mainText is the present numberValue.
 
         // that is the issue.
-        editorText:
+        mainText:
           varb.numberOrQuestionMark === "?" ? "" : `${varb.numberValue}`,
       };
     } else {
       return {
         solvableText: "?",
-        editorText: "",
+        mainText: "",
       };
     }
   }

@@ -16,19 +16,19 @@ export class GetterVirtualVarb<
     return this.get.values(virtualVarbToValueNames);
   }
   get displayName(): string {
-    return this.values.displayName.text;
+    return this.values.displayName.mainText;
   }
   get displayNameEnd(): string {
-    return this.values.displayNameEnd.text;
+    return this.values.displayNameEnd.mainText;
   }
   get displayNameFull(): string {
     return this.displayName + this.displayNameEnd;
   }
   get startAdornment(): string {
-    return this.values.startAdornment.text;
+    return this.values.startAdornment.mainText;
   }
   get endAdornment(): string {
-    return this.values.endAdornment.text;
+    return this.values.endAdornment.mainText;
   }
   displayVarb(valueVarbName: string = "value"): string {
     const { displayValue } = this.get.varb(valueVarbName);

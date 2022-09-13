@@ -4,38 +4,38 @@ import { zS } from "../../../utils/zod";
 import { InEntity, mInEntities, zInEntities } from "./entities";
 
 export type StringObj = {
-  text: string;
+  mainText: string;
   entities: InEntity[];
 };
 
 export function isStringObj(value: any): value is StringObj {
   return (
     typeof value === "object" &&
-    "text" in value &&
-    typeof value.text === "string" &&
+    "mainText" in value &&
+    typeof value.mainText === "string" &&
     Array.isArray(value.entities)
   );
 }
 
-export function stringObj(text: string): StringObj {
+export function stringObj(mainText: string): StringObj {
   return {
-    text,
+    mainText,
     entities: [],
   };
 }
 
 export const initDefaultStringObj = ({
-  text = "",
+  mainText = "",
   entities = [],
-}: Partial<StringObj> = {}) => ({ text, entities });
+}: Partial<StringObj> = {}) => ({ mainText, entities });
 
 export const zStringObj = z.object({
-  text: zS.string,
+  mainText: zS.string,
   entities: zInEntities,
 } as { [K in keyof StringObj]: any });
 
 export const mStringObj: Record<keyof StringObj, any> = {
-  text: monSchemas.reqString,
+  mainText: monSchemas.reqString,
   entities: mInEntities,
 };
 

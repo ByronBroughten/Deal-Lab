@@ -4,17 +4,17 @@ import { StrictPick } from "../../../utils/types";
 import { InEntities, InEntity, mInEntities, zInEntities } from "./entities";
 
 export type NumObj = {
-  editorText: string;
+  mainText: string;
   entities: InEntity[];
   solvableText: string;
 };
 export const zNumObj = z.object({
-  editorText: z.string(),
+  mainText: z.string(),
   entities: zInEntities,
   solvableText: z.string(),
 } as { [K in keyof NumObj]: any });
 export const mDbNumObj: Record<keyof NumObj, any> = {
-  editorText: reqMonString,
+  mainText: reqMonString,
   entities: mInEntities,
   solvableText: reqMonString,
 };
@@ -36,24 +36,21 @@ export function isNumObj(value: any): value is NumObj {
 
   return (
     typeof value === "object" &&
-    "editorText" in value &&
-    typeof value.editorText === "string" &&
+    "mainText" in value &&
+    typeof value.mainText === "string" &&
     Array.isArray(value.entities)
   );
 }
 export function numObj(
-  editorText: string | number,
+  mainText: string | number,
   entities: InEntities = [],
-  solvableText: string = `${editorText}`
+  solvableText: string = `${mainText}`
 ): NumObj {
   return {
-    editorText: `${editorText}`,
+    mainText: `${mainText}`,
     entities,
     solvableText,
   };
 }
 export type NumberOrQ = number | "?";
-export type EntitiesAndEditorText = StrictPick<
-  NumObj,
-  "editorText" | "entities"
->;
+export type EntitiesAndEditorText = StrictPick<NumObj, "mainText" | "entities">;

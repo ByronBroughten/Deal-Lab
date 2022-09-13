@@ -144,8 +144,8 @@ function testValue(
       return `return ${leftNum}${operator}${rightNum}`;
 
     if (["===", "!=="].includes(operator))
-      return `return "${leftSide.value("numObj").editorText}"${operator}"${
-        rightSide.value("numObj").editorText
+      return `return "${leftSide.value("numObj").mainText}"${operator}"${
+        rightSide.value("numObj").mainText
       }"`;
   }
 
@@ -162,7 +162,7 @@ function testList(
   function getTestString() {
     if (typeof leftSide.numberOrQuestionMark === "number")
       return `${leftSide.numberValue}`;
-    else return leftSide.value("numObj").editorText;
+    else return leftSide.value("numObj").mainText;
   }
   const testString = getTestString();
   const includes = rightSide.includes(testString);

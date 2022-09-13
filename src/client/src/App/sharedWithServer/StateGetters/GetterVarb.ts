@@ -228,9 +228,9 @@ export class GetterVarb<
         `inEntity with entityId ${entityId} not found at ${this.sectionName}.${this.varbName}`
       );
 
-    const { editorText } = this.value("numObj");
+    const { mainText } = this.value("numObj");
     const { length, offset } = inEntity;
-    return editorText.substring(offset, offset + length);
+    return mainText.substring(offset, offset + length);
   }
   get inUpdatePack(): InUpdatePack {
     const {

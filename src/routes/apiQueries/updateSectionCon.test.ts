@@ -4,6 +4,7 @@ import { constants } from "../../client/src/App/Constants";
 import { apiQueriesShared } from "../../client/src/App/sharedWithServer/apiQueriesShared";
 import { QueryReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import { numObj } from "../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsUtils/baseValues/NumObj";
+import { stringObj } from "../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsUtils/baseValues/StringObj";
 import { Id } from "../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsUtils/id";
 import { PackBuilderSection } from "../../client/src/App/sharedWithServer/StatePackers.ts/PackBuilderSection";
 import { runApp } from "../../runApp";
@@ -19,12 +20,12 @@ import {
 
 const sectionName = "property";
 const originalValues = {
-  displayName: "Original displayName",
+  displayName: stringObj("Original displayName"),
   price: numObj(100000),
 } as const;
 
 const updatedValues = {
-  displayName: "Updated displayName",
+  displayName: stringObj("Updated displayName"),
   price: numObj(500000),
 } as const;
 
@@ -98,7 +99,9 @@ describe(testedRoute, () => {
       ({ dbId }) => dbId === reqs.updateSection.body.sectionPack.dbId
     );
 
-    expect(updatedSection?.dbVarbs.displayName).toBe(updatedValues.displayName);
+    expect(updatedSection?.dbVarbs.displayName).toEqual(
+      updatedValues.displayName
+    );
     expect(updatedSection?.dbVarbs.price).toEqual(updatedValues.price);
   });
   it("should return 404 if there is not an entry in the db with the sectionPack's dbId concurrent", async () => {
