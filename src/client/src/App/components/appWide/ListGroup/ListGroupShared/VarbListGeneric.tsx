@@ -91,7 +91,6 @@ export function VarbListGeneric<SN extends VarbListAllowed>({
       />
     ),
   };
-
   return (
     <Styled
       className={"AdditiveList-root " + className}

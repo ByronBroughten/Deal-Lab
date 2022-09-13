@@ -9,6 +9,8 @@ AppRegistry.runApplication("App", {
 });
 
 // ***Maybe put "Upgrade User to Pro" button back.
+// ***Maybe make it possible to switch from numObj to stringObj
+// ***Or just turn all numbers and strings to numObj and stringObj
 
 // It turns out getting beta users will be difficult after all.
 // You don't need the extra features for the below:

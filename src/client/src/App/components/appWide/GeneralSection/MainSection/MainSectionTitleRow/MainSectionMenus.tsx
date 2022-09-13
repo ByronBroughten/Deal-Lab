@@ -12,21 +12,25 @@ type Props = {
   xBtn?: boolean;
   dropTop?: boolean;
   className?: string;
+  showActions?: boolean;
 };
 export function MainSectionMenus({
   pluralName,
   xBtn,
   dropTop,
   className,
+  showActions = true,
   ...feInfo
 }: Props) {
   const authStatus = useAuthStatus();
   const isGuest = authStatus === "guest";
   return (
     <Styled className={`MainSectionMenus-root ${className ?? ""}`}>
-      <StoreSectionActionMenu
-        {...{ ...feInfo, className: "MainSectionMenus-dropdownList" }}
-      />
+      {showActions && (
+        <StoreSectionActionMenu
+          {...{ ...feInfo, className: "MainSectionMenus-dropdownList" }}
+        />
+      )}
       <DisplayNameSectionList
         {...{
           className: "MainSectionMenus-dropdownList",

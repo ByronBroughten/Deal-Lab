@@ -35,6 +35,7 @@ export function ListMenuFull({
           {...{
             ...feInfo,
             pluralName: "lists",
+            showActions: false,
           }}
         />
         <ListMenuBtn
