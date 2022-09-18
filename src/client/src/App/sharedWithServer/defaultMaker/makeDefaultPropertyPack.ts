@@ -14,7 +14,15 @@ export function makeDefaultPropertyPack(): SectionPack<"property"> {
     },
   });
 
-  property.addChild("ongoingCostList", {
+  property.addChild("upfrontRevenueListGroup");
+  const upfrontCostGroup = property.addAndGetChild("upfrontCostListGroup");
+  upfrontCostGroup.addChild("singleTimeList", {
+    dbVarbs: { displayName: stringObj("Repairs") },
+  });
+
+  property.addChild("ongoingRevenueListGroup");
+  const ongoingCostGroup = property.addAndGetChild("ongoingCostListGroup");
+  ongoingCostGroup.addChild("ongoingList", {
     dbVarbs: {
       displayName: stringObj("Utilities"),
       totalOngoingSwitch: "monthly",
@@ -22,7 +30,7 @@ export function makeDefaultPropertyPack(): SectionPack<"property"> {
       defaultOngoingSwitch: "monthly",
     },
   });
-  property.addChild("ongoingCostList", {
+  ongoingCostGroup.addChild("ongoingList", {
     dbVarbs: {
       displayName: stringObj("CapEx"),
       totalOngoingSwitch: "yearly",
@@ -30,9 +38,5 @@ export function makeDefaultPropertyPack(): SectionPack<"property"> {
       defaultOngoingSwitch: "yearly",
     },
   });
-  property.addChild("upfrontCostList", {
-    dbVarbs: { displayName: stringObj("Repairs") },
-  });
-
   return property.makeSectionPack();
 }

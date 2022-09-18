@@ -1,4 +1,5 @@
 import React from "react";
+import { useGetterSection } from "../../../sharedWithServer/stateClassHooks/useGetterSection";
 import MainSection from "../../appWide/GeneralSection/MainSection";
 import MainSectionBody from "../../appWide/GeneralSection/MainSection/MainSectionBody";
 import { MainSectionTitleRow } from "../../appWide/GeneralSection/MainSection/MainSectionTitleRow";
@@ -6,16 +7,16 @@ import { ListGroupSingleTime } from "../../appWide/ListGroup/ListGroupSingleTime
 import BasicLoanInfo from "./Loan/BasicLoanInfo";
 
 export default function Loan({ feId }: { feId: string }) {
-  const feInfo = {
+  const loan = useGetterSection({
     sectionName: "loan",
     feId,
-  } as const;
+  });
   return (
     <MainSection className="Loan-root">
       <div className="MainSection-viewable">
         <MainSectionTitleRow
           {...{
-            ...feInfo,
+            ...loan.feInfo,
             sectionName: "loan",
             pluralName: "loans",
             xBtn: true,
@@ -30,16 +31,12 @@ export default function Loan({ feId }: { feId: string }) {
             <BasicLoanInfo feId={feId} className="ListGroup-root" />
           </div>
           <ListGroupSingleTime
-            listParentInfo={feInfo}
-            listAsChildName="closingCostList"
-            totalVarbName="closingCosts"
+            feId={loan.onlyChild("closingCostListGroup").feId}
             titleText="Upfront Costs"
             themeName="loan"
           />
           <ListGroupSingleTime
-            listParentInfo={feInfo}
-            listAsChildName="wrappedInLoanList"
-            totalVarbName="wrappedInLoan"
+            feId={loan.onlyChild("wrappedInLoanListGroup").feId}
             titleText="Wrapped in loan"
             themeName="loan"
           />

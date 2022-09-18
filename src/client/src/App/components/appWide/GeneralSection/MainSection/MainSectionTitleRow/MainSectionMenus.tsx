@@ -28,7 +28,11 @@ export function MainSectionMenus({
     <Styled className={`MainSectionMenus-root ${className ?? ""}`}>
       {showActions && (
         <StoreSectionActionMenu
-          {...{ ...feInfo, className: "MainSectionMenus-dropdownList" }}
+          {...{
+            ...feInfo,
+            dropTop,
+            className: "MainSectionMenus-dropdownList",
+          }}
         />
       )}
       <DisplayNameSectionList

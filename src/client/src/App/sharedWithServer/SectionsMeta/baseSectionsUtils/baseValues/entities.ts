@@ -56,7 +56,7 @@ export const zInEntity = z.union([zDbInEntity, zGlobalInEntity]);
 export const zInEntities = z.array(zInEntity);
 type InEntityBase = z.infer<typeof zInEntityBase>;
 interface DbInEntity extends InEntityBase, DbInEntityInfo {}
-interface GlobalInEntity extends InEntityBase, GlobalInEntityInfo {}
+export interface GlobalInEntity extends InEntityBase, GlobalInEntityInfo {}
 export type InEntity = DbInEntity | GlobalInEntity;
 export type InEntities = InEntity[];
 // As things stand, I can't infer much from the zod schemas because

@@ -4,26 +4,23 @@ import MainSectionBody from "../../appWide/GeneralSection/MainSection/MainSectio
 import { MainSectionTitleRow } from "../../appWide/GeneralSection/MainSection/MainSectionTitleRow";
 import { ListGroupOngoing } from "../../appWide/ListGroup/ListGroupOngoing";
 import { ListGroupSingleTime } from "../../appWide/ListGroup/ListGroupSingleTime";
+import { useGetterSection } from "./../../../sharedWithServer/stateClassHooks/useGetterSection";
 import BasicMgmtInfo from "./Mgmt/BasicMgmtInfo";
 
-export default function Mgmt({ feId }: { feId: string }) {
-  const feInfo = { sectionName: "mgmt", feId } as const;
+export function Mgmt({ feId }: { feId: string }) {
+  const mgmt = useGetterSection({ sectionName: "mgmt", feId });
   return (
     <MainSection>
-      <MainSectionTitleRow {...{ ...feInfo, pluralName: "managements" }} />
+      <MainSectionTitleRow {...{ ...mgmt.feInfo, pluralName: "managements" }} />
       <MainSectionBody themeName="mgmt">
         <BasicMgmtInfo feId={feId} className="ListGroup-root" />
         <ListGroupOngoing
-          listParentInfo={feInfo}
-          listAsChildName="ongoingCostList"
+          feId={mgmt.onlyChild("ongoingCostListGroup").feId}
           titleText="Ongoing Costs"
-          totalVarbNameBase="expenses"
           themeName="mgmt"
         />
         <ListGroupSingleTime
-          listParentInfo={feInfo}
-          listAsChildName="upfrontCostList"
-          totalVarbName="upfrontExpenses"
+          feId={mgmt.onlyChild("upfrontCostListGroup").feId}
           titleText="Upfront Costs"
           themeName="mgmt"
         />

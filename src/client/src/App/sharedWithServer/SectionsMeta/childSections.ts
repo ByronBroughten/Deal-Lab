@@ -98,6 +98,8 @@ export const childSections = checkChildSections({
   }),
   tableRow: { cell: childSection("cell") },
   outputList: { outputItem: childSection("outputItem") },
+  singleTimeListGroup: { singleTimeList: childSection("singleTimeList") },
+  ongoingListGroup: { ongoingList: childSection("ongoingList") },
   singleTimeList: { singleTimeItem: childSection("singleTimeItem") },
   ongoingList: {
     ongoingItem: childSection("ongoingItem", {
@@ -117,23 +119,23 @@ export const childSections = checkChildSections({
   }),
   financing: { loan: childSection("loan") },
   loan: childrenSections({
-    closingCostList: ["singleTimeList"],
-    wrappedInLoanList: ["singleTimeList"],
+    closingCostListGroup: ["singleTimeListGroup"],
+    wrappedInLoanListGroup: ["singleTimeListGroup"],
     customVarb: ["customVarb"],
   }),
   propertyGeneral: { property: childSection("property") },
   property: childrenSections({
-    upfrontCostList: ["singleTimeList"],
-    upfrontRevenueList: ["singleTimeList"],
-    ongoingCostList: ["ongoingList"],
-    ongoingRevenueList: ["ongoingList"],
+    upfrontCostListGroup: ["singleTimeListGroup"],
+    upfrontRevenueListGroup: ["singleTimeListGroup"],
+    ongoingCostListGroup: ["ongoingListGroup"],
+    ongoingRevenueListGroup: ["ongoingListGroup"],
     unit: ["unit"],
     customVarb: ["customVarb"],
   }),
   mgmtGeneral: { mgmt: childSection("mgmt") },
   mgmt: childrenSections({
-    upfrontCostList: ["singleTimeList"],
-    ongoingCostList: ["ongoingList"],
+    upfrontCostListGroup: ["singleTimeListGroup"],
+    ongoingCostListGroup: ["ongoingListGroup"],
     customVarb: ["customVarb"],
   }),
 });

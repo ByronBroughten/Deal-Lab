@@ -19,16 +19,16 @@ export function propertyRelVarbs(): RelVarbs<"property"> {
     numBedrooms: relVarbS.sumChildVarb("Bedroom count", "unit", "numBedrooms"),
 
     upfrontExpenses: relVarbS.sumMoney("Upfront expenses", [
-      relVarbInfoS.children("upfrontCostList", "total"),
+      relVarbInfoS.children("upfrontCostListGroup", "total"),
     ]),
     upfrontRevenue: relVarbS.sumMoney("Upfront revenues", [
-      relVarbInfoS.children("upfrontRevenueList", "total"),
+      relVarbInfoS.children("upfrontRevenueListGroup", "total"),
     ]),
     ...relVarbsS.ongoingSumNums(
       "expenses",
       "Ongoing expenses",
       [
-        relVarbInfoS.children("ongoingCostList", "total"),
+        relVarbInfoS.children("ongoingCostListGroup", "total"),
         relVarbInfoS.local("taxes"),
         relVarbInfoS.local("homeIns"),
       ],
@@ -40,15 +40,15 @@ export function propertyRelVarbs(): RelVarbs<"property"> {
 
     // ongoing revenue
     ...relVarbsS.ongoingSumNums(
-      "targetRent",
-      "Total rent",
-      [relVarbInfoS.children("unit", "targetRent")],
+      "miscRevenue",
+      "Revenue besides rent",
+      [relVarbInfoS.children("ongoingRevenueListGroup", "total")],
       { switchInit: "monthly", shared: { startAdornment: "$" } }
     ),
     ...relVarbsS.ongoingSumNums(
-      "miscRevenue",
-      "Revenue besides rent",
-      [relVarbInfoS.children("ongoingRevenueList", "total")],
+      "targetRent",
+      "Total rent",
+      [relVarbInfoS.children("unit", "targetRent")],
       { switchInit: "monthly", shared: { startAdornment: "$" } }
     ),
     ...relVarbsS.ongoingSumNums(

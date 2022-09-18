@@ -78,7 +78,7 @@ export function loanRelVarbs(): RelVarbs<"loan"> {
     }),
     loanTotalDollars: relVarbS.sumMoney("Loan amount", [
       relVarbInfoS.local("loanBaseDollars"),
-      relVarbInfoS.children("wrappedInLoanList", "total"),
+      relVarbInfoS.children("wrappedInLoanListGroup", "total"),
     ]),
     ...relVarbsS.ongoingInput("interestRatePercent", "Interest rate", {
       switchInit: "yearly",
@@ -103,15 +103,14 @@ export function loanRelVarbs(): RelVarbs<"loan"> {
         shared: { startAdornment: "$" },
       }
     ),
-
     mortgageInsUpfront: relVarbS.moneyObj("Upfront mortgage insurance", {
       initNumber: 0,
     }),
     closingCosts: relVarbS.sumMoney("Closing costs", [
-      relVarbInfoS.children("closingCostList", "total"),
+      relVarbInfoS.children("closingCostListGroup", "total"),
     ]),
     wrappedInLoan: relVarbS.sumMoney("Amount wrapped in loan", [
-      relVarbInfoS.children("wrappedInLoanList", "total"),
+      relVarbInfoS.children("wrappedInLoanListGroup", "total"),
     ]),
     piCalculationName: relVarb("string", {
       initValue: "piFixedStandard" as PiCalculationName,

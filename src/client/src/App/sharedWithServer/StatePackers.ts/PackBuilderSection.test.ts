@@ -7,14 +7,11 @@ import { PackBuilderSection } from "./PackBuilderSection";
 
 describe("PackBuilderSection", () => {
   const childVarbs = {
-    upfrontCostList: {
-      displayName: stringObj("Repairs"),
-    },
-    ongoingCostList: {
-      displayName: stringObj("Utilities"),
+    unit: {
+      targetRentMonthly: numObj(2500),
+      numBedrooms: numObj(5),
     },
   } as const;
-
   const propertyVarbs = {
     displayName: stringObj("Some string"),
     price: numObj(200000),

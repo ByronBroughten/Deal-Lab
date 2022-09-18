@@ -1,34 +1,26 @@
-import { VarbNameNext } from "../../../sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionTypes";
-import { ChildSectionNameName } from "../../../sharedWithServer/SectionsMeta/childSectionsDerived/ChildSectionName";
-import { FeSectionInfo } from "../../../sharedWithServer/SectionsMeta/Info";
-import { ParentOfTypeName } from "../../../sharedWithServer/SectionsMeta/SectionName";
 import { ThemeName } from "../../../theme/Theme";
 import { VarbListOngoing } from "../VarbLists/VarbListOngoing";
 import { useGetterSection } from "./../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { ListGroupGeneric } from "./ListGroupShared/ListGroupGeneric";
 
-type ListParentName = ParentOfTypeName<"ongoingList">;
-type Props<SN extends ListParentName> = {
-  listParentInfo: FeSectionInfo<SN>;
-  listAsChildName: ChildSectionNameName<SN, "ongoingList">;
+type Props = {
+  feId: string;
   titleText: string;
   themeName: ThemeName;
-  totalVarbNameBase: string;
   className?: string;
 };
-export function ListGroupOngoing<SN extends ListParentName>({
-  totalVarbNameBase,
-  ...props
-}: Props<SN>) {
-  const parent = useGetterSection(props.listParentInfo);
+export function ListGroupOngoing({ feId, ...props }: Props) {
+  const listGroup = useGetterSection({ sectionName: "ongoingListGroup", feId });
   return (
     <ListGroupGeneric
       {...{
         ...props,
-        totalVarbName: parent.switchVarbName(
-          totalVarbNameBase,
+        listParentInfo: listGroup.feInfo,
+        listAsChildName: "ongoingList",
+        totalVarbName: listGroup.switchVarbName(
+          "total",
           "ongoing"
-        ) as VarbNameNext<SN>,
+        ) as "totalMonthly",
         makeListNode: (nodeProps) => <VarbListOngoing {...nodeProps} />,
       }}
     />

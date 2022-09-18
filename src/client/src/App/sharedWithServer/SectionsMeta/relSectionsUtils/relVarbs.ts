@@ -378,34 +378,4 @@ export const relVarbsS = {
       }),
     };
   },
-  singleTimeList(): RelVarbs<"singleTimeList"> {
-    return {
-      ...this.savableSection,
-      total: relVarbS.sumNums(
-        relVarbInfoS.local("displayName"),
-        [relVarbInfoS.children("singleTimeItem", "value")],
-        { startAdornment: "$" }
-      ),
-      defaultValueSwitch: relVarb("string", {
-        initValue: "labeledEquation",
-      }),
-    };
-  },
-  ongoingList(): RelVarbs<"ongoingList"> {
-    return {
-      ...this.savableSection,
-      defaultValueSwitch: relVarb("string", {
-        initValue: "labeledEquation",
-      }),
-      defaultOngoingSwitch: relVarb("string", {
-        initValue: "monthly",
-      }),
-      ...relVarbsS.ongoingSumNums(
-        "total",
-        relVarbInfoS.local("displayName"),
-        [relVarbInfoS.children("ongoingItem", "value")],
-        { switchInit: "monthly", shared: { startAdornment: "$" } }
-      ),
-    };
-  },
 };

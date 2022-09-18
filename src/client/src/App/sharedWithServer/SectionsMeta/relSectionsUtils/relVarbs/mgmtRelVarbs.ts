@@ -123,14 +123,14 @@ export function mgmtRelVarbs(): RelVarbs<"mgmt"> {
     ),
     upfrontExpenses: relVarbS.sumNums(
       "Upfront expenses",
-      [relVarbInfoS.children("upfrontCostList", "total")],
+      [relVarbInfoS.children("upfrontCostListGroup", "total")],
       { startAdornment: "$" }
     ),
     ...relVarbsS.ongoingSumNums(
       "expenses",
       "Ongoing expenses",
       [
-        relVarbInfoS.children("ongoingCostList", "total"),
+        relVarbInfoS.children("ongoingCostListGroup", "total"),
         ...relVarbInfosS.local(["vacancyLossDollars", "rentCutDollars"]),
       ],
       {

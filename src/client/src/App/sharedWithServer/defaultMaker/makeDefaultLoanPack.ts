@@ -11,7 +11,9 @@ export function makeDefaultLoanPack(): SectionPack<"loan"> {
       mortgageInsOngoingSwitch: "yearly",
     },
   });
-  loan.addChild("closingCostList", {
+  loan.addChild("wrappedInLoanListGroup");
+  const closingCostList = loan.addAndGetChild("closingCostListGroup");
+  closingCostList.addChild("singleTimeList", {
     dbVarbs: {
       displayName: stringObj("Closing Costs"),
       defaultValueSwitch: "labeledEquation",

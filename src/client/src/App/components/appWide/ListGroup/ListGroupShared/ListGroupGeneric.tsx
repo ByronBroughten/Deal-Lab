@@ -6,7 +6,7 @@ import { FeSectionInfo } from "../../../../sharedWithServer/SectionsMeta/Info";
 import {
   ChildNameOfType,
   ParentOfTypeName,
-  SectionName,
+  SectionName
 } from "../../../../sharedWithServer/SectionsMeta/SectionName";
 import { useSetterSection } from "../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import { GetterSection } from "../../../../sharedWithServer/StateGetters/GetterSection";
@@ -15,7 +15,7 @@ import theme, { ThemeName } from "../../../../theme/Theme";
 import useHowMany from "../../customHooks/useHowMany";
 import {
   ListGroupLists,
-  MakeListNode,
+  MakeListNode
 } from "./ListGroupGeneric/ListGroupLists";
 import { ListGroupTotal } from "./ListGroupGeneric/ListGroupTotal";
 

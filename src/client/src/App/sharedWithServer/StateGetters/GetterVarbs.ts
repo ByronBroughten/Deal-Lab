@@ -45,12 +45,6 @@ export class GetterVarbs<SN extends SectionName> extends GetterSectionBase<SN> {
     return sectionNameS.is(this.sectionName, sectionNameType);
   }
   one(varbName: string): GetterVarb<SN & SectionName<"hasVarb">> {
-    // this commented code was good when there were sections with no varbs. otherwise it throws.
-    // if (this.thisIsType("hasNoVarbs")) {
-    //   throw new Error(
-    //     `Section with sectionName ${this.sectionName} doesn't have any varbs.`
-    //   );
-    // }
     return new GetterVarb({
       ...this.feSectionInfo,
       sectionsShare: this.sectionsShare,

@@ -2,7 +2,7 @@ import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { signOut } from "supertokens-auth-react/recipe/thirdpartyemailpassword";
 import { constants } from "../../Constants";
-import { useSetterSection } from "../../sharedWithServer/stateClassHooks/useSetterSection";
+import { useSetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useSetterSection";
 import { timeS } from "../../sharedWithServer/utils/date";
 import { useFeUser } from "../sectionActorHooks/useFeUser";
 import { auth } from "../services/authService";
@@ -78,7 +78,7 @@ function useLogoutIfNoSessionExists() {
 }
 
 function useStateToDefault() {
-  const main = useSetterSection();
+  const main = useSetterSectionOnlyOne("main");
   return () => {
     auth.removeToken();
     main.resetToDefault();

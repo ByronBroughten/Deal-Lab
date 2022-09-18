@@ -1,4 +1,5 @@
 import React from "react";
+import { useGetterSection } from "../../../sharedWithServer/stateClassHooks/useGetterSection";
 import MainSection from "../../appWide/GeneralSection/MainSection";
 import MainSectionBody from "../../appWide/GeneralSection/MainSection/MainSectionBody";
 import { MainSectionTitleRow } from "../../appWide/GeneralSection/MainSection/MainSectionTitleRow";
@@ -7,28 +8,26 @@ import { ListGroupSingleTime } from "../../appWide/ListGroup/ListGroupSingleTime
 import BasicPropertyInfo from "./Property/BasicPropertyInfo";
 
 export default function Property({ feId }: { feId: string }) {
-  const feInfo = {
+  const property = useGetterSection({
     sectionName: "property",
     feId,
-  } as const;
+  });
   return (
     <MainSection>
-      <MainSectionTitleRow {...{ ...feInfo, pluralName: "properties" }} />
+      <MainSectionTitleRow
+        {...{ ...property.feInfo, pluralName: "properties" }}
+      />
       <MainSectionBody themeName="property">
         <div className="ListGroup-lists">
           <BasicPropertyInfo feId={feId} className="ListGroup-root" />
         </div>
         <ListGroupOngoing
-          listParentInfo={feInfo}
-          listAsChildName="ongoingCostList"
-          totalVarbNameBase="expenses"
+          feId={property.onlyChild("ongoingCostListGroup").feId}
           titleText="Ongoing Costs"
           themeName="property"
         />
         <ListGroupSingleTime
-          listParentInfo={feInfo}
-          listAsChildName="upfrontCostList"
-          totalVarbName="upfrontExpenses"
+          feId={property.onlyChild("upfrontCostListGroup").feId}
           titleText="Upfront Costs"
           themeName="property"
         />

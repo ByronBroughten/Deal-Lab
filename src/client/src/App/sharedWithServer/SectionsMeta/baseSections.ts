@@ -9,7 +9,6 @@ import {
 import { baseVarbs, baseVarbsS } from "./baseSectionsUtils/baseVarbs";
 
 export const savableSectionVarbNames = Obj.keys(baseVarbsS.savableSection);
-
 export const loanVarbsNotInFinancing = [
   "interestRatePercentMonthly",
   "interestRatePercentYearly",
@@ -70,10 +69,19 @@ export const baseSections = {
     // then
     then: "numObj",
   }),
+  singleTimeListGroup: baseSection({
+    total: "numObj",
+    defaultValueSwitch: "string",
+  }),
   singleTimeList: baseSection({
     ...baseVarbsS.savableSection,
     total: "numObj",
     defaultValueSwitch: "string",
+  }),
+  ongoingListGroup: baseSection({
+    ...baseVarbsS.ongoing("total"),
+    defaultValueSwitch: "string",
+    defaultOngoingSwitch: "string",
   }),
   ongoingList: baseSection({
     ...baseVarbsS.savableSection,

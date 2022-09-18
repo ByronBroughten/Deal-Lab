@@ -25,11 +25,13 @@ describe("SetterCalculations", () => {
     const propertyGeneral = dealTester.setter.onlyChild("propertyGeneral");
     const property = propertyGeneral.onlyChild("property");
     property.varb("price").updateValue(numObj(200000));
+    const propertyCostListGroup = property.onlyChild("upfrontCostListGroup");
 
-    const costList = property.addAndGetChild("upfrontCostList");
-    const costs = [8000, 2000];
-    for (const amount of costs) {
-      costList.addChild("singleTimeItem", {
+    const propertyCostList =
+      propertyCostListGroup.addAndGetChild("singleTimeList");
+    const propertyCosts = [8000, 2000];
+    for (const amount of propertyCosts) {
+      propertyCostList.addChild("singleTimeItem", {
         dbVarbs: { numObjEditor: numObj(amount) },
       });
     }
@@ -39,7 +41,8 @@ describe("SetterCalculations", () => {
     const financing = dealTester.setter.onlyChild("financing");
     const loan = financing.addAndGetChild("loan");
 
-    const wrapped = loan.addAndGetChild("wrappedInLoanList");
+    const group = loan.addAndGetChild("wrappedInLoanListGroup");
+    const wrapped = group.addAndGetChild("singleTimeList");
     const wrappeds = [4000, 1000];
     for (const amount of wrappeds) {
       wrapped.addChild("singleTimeItem", {
@@ -49,10 +52,13 @@ describe("SetterCalculations", () => {
 
     const mgmtGeneral = dealTester.setter.onlyChild("mgmtGeneral");
     const mgmt = mgmtGeneral.onlyChild("mgmt");
-    const upfront = mgmt.addAndGetChild("upfrontCostList");
+
+    const mgmtCostListGroup = mgmt.onlyChild("upfrontCostListGroup");
+
+    const mgmtCostList = mgmtCostListGroup.addAndGetChild("singleTimeList");
     const mgmtCosts = [4000, 6000];
     for (const amount of mgmtCosts) {
-      upfront.addChild("singleTimeItem", {
+      mgmtCostList.addChild("singleTimeItem", {
         dbVarbs: { numObjEditor: numObj(amount) },
       });
     }
@@ -79,7 +85,9 @@ describe("SetterCalculations", () => {
       });
     }
 
-    const propertyCostList = property.addAndGetChild("ongoingCostList");
+    const propertyCostListGroup = property.onlyChild("ongoingCostListGroup");
+    const propertyCostList =
+      propertyCostListGroup.addAndGetChild("ongoingList");
     const propertyCosts = [200, 100, 150];
     for (const amount of propertyCosts) {
       propertyCostList.addChild("ongoingItem", {
@@ -92,7 +100,8 @@ describe("SetterCalculations", () => {
     mgmt.varb("rentCutPercent").updateValue(numObj(5));
     mgmt.varb("vacancyRatePercent").updateValue(numObj(5));
 
-    const mgmtCostList = mgmt.addAndGetChild("ongoingCostList");
+    const mgmtCostListGroup = mgmt.onlyChild("ongoingCostListGroup");
+    const mgmtCostList = mgmtCostListGroup.addAndGetChild("ongoingList");
     const mgmtCosts = [100, 100];
     for (const amount of mgmtCosts) {
       mgmtCostList.addChild("ongoingItem", {
@@ -122,7 +131,8 @@ function addTestLoan(dealTester: SetterTesterSection<"deal">): void {
   loan.varb("loanBasePercent").updateValue(numObj(75));
   loan.varb("mortgageInsYearly").updateValue(numObj(1200));
 
-  const wrapped = loan.addAndGetChild("wrappedInLoanList");
+  const wrappedGroup = loan.onlyChild("wrappedInLoanListGroup");
+  const wrapped = wrappedGroup.addAndGetChild("singleTimeList");
   wrapped.addChild("singleTimeItem", {
     dbVarbs: { numObjEditor: numObj(6000) },
   });

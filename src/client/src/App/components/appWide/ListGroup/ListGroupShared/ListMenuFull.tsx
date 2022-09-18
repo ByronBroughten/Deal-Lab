@@ -22,7 +22,7 @@ export function ListMenuFull({
   toggleListView,
   viewIsOpen,
 }: Props) {
-  const section = useSetterSection();
+  const section = useSetterSection(feInfo);
   return (
     <Styled
       {...{
@@ -35,7 +35,7 @@ export function ListMenuFull({
           {...{
             ...feInfo,
             pluralName: "lists",
-            showActions: false,
+            showActions: true,
           }}
         />
         <ListMenuBtn

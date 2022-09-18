@@ -19,7 +19,8 @@ import {
 function makeAddSectionReq(): QueryReq<"addSection"> {
   const sectionName = "property";
   const tester = SectionQueryTester.init({ sectionName });
-  const costList = tester.updater.addAndGetChild("upfrontCostList");
+  const costListGroup = tester.updater.addAndGetChild("upfrontCostListGroup");
+  const costList = costListGroup.addAndGetChild("singleTimeList");
   costList.addChild("singleTimeItem");
   return tester.makeSectionPackReq() as QueryReq<"addSection">;
 }

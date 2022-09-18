@@ -13,9 +13,7 @@ type Props = {
   menuType?: VarbListGenericMenuType;
 };
 export function VarbListOngoing({ feId, ...rest }: Props) {
-  const feInfo = { sectionName: "ongoingList", feId } as const;
-  const itemName = "ongoingItem";
-  const list = useSetterSection(feInfo);
+  const list = useSetterSection({ sectionName: "ongoingList", feId });
   const totalVarbName = list.get.switchVarbName("total", "ongoing");
   const defaultOngoingSwitch = list
     .varb("defaultOngoingSwitch")
@@ -24,8 +22,8 @@ export function VarbListOngoing({ feId, ...rest }: Props) {
     <VarbListGeneric
       {...{
         ...rest,
-        feInfo,
-        itemName,
+        feInfo: list.feInfo,
+        itemName: "ongoingItem",
         totalVarbName,
         contentTitle: "Cost",
         childDbVarbs: {

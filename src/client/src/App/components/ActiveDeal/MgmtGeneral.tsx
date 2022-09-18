@@ -2,7 +2,7 @@ import React from "react";
 import { useSetterSection } from "../../sharedWithServer/stateClassHooks/useSetterSection";
 import MainSection from "../appWide/GeneralSection";
 import GeneralSectionTitle from "../appWide/GeneralSection/GeneralSectionTitle";
-import Mgmt from "./MgmtGeneral/Mgmt";
+import { Mgmt } from "./MgmtGeneral/Mgmt";
 
 type Props = { className?: string; feId: string };
 export function MgmtGeneral({ feId }: Props) {

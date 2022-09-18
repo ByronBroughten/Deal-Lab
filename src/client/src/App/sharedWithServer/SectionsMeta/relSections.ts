@@ -7,6 +7,7 @@ import {
 import { numObj } from "./baseSectionsUtils/baseValues/NumObj";
 import { relVarbInfoS } from "./childSectionsDerived/RelVarbInfo";
 import { relVarbInfosS } from "./childSectionsDerived/RelVarbInfos";
+import { relAdorn } from "./relSectionsUtils/rel/relAdorn";
 import { relVarb, relVarbS } from "./relSectionsUtils/rel/relVarb";
 import {
   GeneralRelSection,
@@ -118,16 +119,72 @@ export function makeRelSections() {
         dbIndexStoreName: "outputListMain",
       }
     ),
-    singleTimeList: relSection("List", relVarbsS.singleTimeList(), {
-      varbListItem: "singleTimeItem",
-      feFullIndexStoreName: "singleTimeListMain",
-      dbIndexStoreName: "singleTimeListMain",
+    singleTimeListGroup: relSection("List group", {
+      total: relVarbS.sumNums(
+        "List group total",
+        [relVarbInfoS.children("singleTimeList", "total")],
+        relAdorn.money
+      ),
+      defaultValueSwitch: relVarb("string", {
+        initValue: "labeledEquation",
+      }),
     }),
-    ongoingList: relSection("List", relVarbsS.ongoingList(), {
-      varbListItem: "ongoingItem",
-      feFullIndexStoreName: "ongoingListMain",
-      dbIndexStoreName: "ongoingListMain",
+    singleTimeList: relSection(
+      "List",
+      {
+        ...relVarbsS.savableSection,
+        total: relVarbS.sumNums(
+          relVarbInfoS.local("displayName"),
+          [relVarbInfoS.children("singleTimeItem", "value")],
+          relAdorn.money
+        ),
+        defaultValueSwitch: relVarb("string", {
+          initValue: "labeledEquation",
+        }),
+      },
+      {
+        varbListItem: "singleTimeItem",
+        feFullIndexStoreName: "singleTimeListMain",
+        dbIndexStoreName: "singleTimeListMain",
+      }
+    ),
+    ongoingListGroup: relSection("List Group", {
+      ...relVarbsS.ongoingSumNums(
+        "total",
+        "Ongoing List Group",
+        [relVarbInfoS.children("ongoingList", "total")],
+        { switchInit: "monthly", shared: relAdorn.money }
+      ),
+      defaultValueSwitch: relVarb("string", {
+        initValue: "labeledEquation",
+      }),
+      defaultOngoingSwitch: relVarb("string", {
+        initValue: "monthly",
+      }),
     }),
+    ongoingList: relSection(
+      "List",
+      {
+        ...relVarbsS.savableSection,
+        defaultValueSwitch: relVarb("string", {
+          initValue: "labeledEquation",
+        }),
+        defaultOngoingSwitch: relVarb("string", {
+          initValue: "monthly",
+        }),
+        ...relVarbsS.ongoingSumNums(
+          "total",
+          relVarbInfoS.local("displayName"),
+          [relVarbInfoS.children("ongoingItem", "value")],
+          { switchInit: "monthly", shared: { startAdornment: "$" } }
+        ),
+      },
+      {
+        varbListItem: "ongoingItem",
+        feFullIndexStoreName: "ongoingListMain",
+        dbIndexStoreName: "ongoingListMain",
+      }
+    ),
     userVarbList: relSection(
       "Variable List",
       {

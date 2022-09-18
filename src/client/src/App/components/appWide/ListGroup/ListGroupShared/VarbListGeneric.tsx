@@ -97,9 +97,7 @@ export function VarbListGeneric<SN extends VarbListAllowed>({
       {...{ themeName, listMenuIsOpen }}
     >
       <div className="AdditiveList-viewable viewable">
-        <div className="VarbList-menuRow">
-          {menuIsOpen && listMenu["simple"]}
-        </div>
+        <div className="VarbList-menuRow">{menuIsOpen && listMenu["full"]}</div>
         <div className="AdditiveList-titleRow">
           <div className="AdditiveList-titleRowLeft">
             <BigStringEditor

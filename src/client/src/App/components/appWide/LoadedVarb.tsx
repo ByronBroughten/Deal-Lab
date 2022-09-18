@@ -39,8 +39,6 @@ export function LoadedVarb({ feInfo, ...rest }: LabeledVarbProps) {
   );
 }
 
-export function LabeledVarb() {}
-
 interface StyledLabeledVarbProps extends LabeledVarbNotFoundProps {
   labelText: string;
   displayVarb: string;
