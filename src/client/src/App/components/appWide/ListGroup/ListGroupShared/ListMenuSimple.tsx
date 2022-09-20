@@ -1,13 +1,11 @@
 import React from "react";
-import { FiMaximize2, FiMinimize2 } from "react-icons/fi";
 import styled from "styled-components";
 import { FeInfoByType } from "../../../../sharedWithServer/SectionsMeta/Info";
 import { useSetterSection } from "../../../../sharedWithServer/stateClassHooks/useSetterSection";
-import theme, { ThemeName } from "../../../../theme/Theme";
+import { ThemeName } from "../../../../theme/Theme";
 import { StandardProps } from "../../../general/StandardProps";
 import { MainSectionMenusMini } from "../../GeneralSection/MainSection/MainSectionTitleRow/MainSectionMenus";
-import XBtn from "../../Xbtn";
-import ListMenuBtn from "./ListMenuSimple/ListMenuBtn";
+import { ViewAndXMenu } from "./ListMenuSimple/ViewAndXMenu";
 
 type Props = StandardProps & {
   feInfo: FeInfoByType<"hasFullIndex">;
@@ -45,17 +43,12 @@ export function ListMenuSimple({
             showLoadList: false,
           }}
         />
-        <ListMenuBtn
-          themeName={themeName}
-          className="ListMenuSimple-listMenuBtn ListMenuSimple-viewBtn"
-          onClick={toggleListView}
-        >
-          {viewIsOpen && <FiMinimize2 size={15} />}
-          {!viewIsOpen && <FiMaximize2 size={15} />}
-        </ListMenuBtn>
-        <XBtn
-          className="ListMenuSimple-listMenuBtn"
-          onClick={() => section.removeSelf()}
+        <ViewAndXMenu
+          {...{
+            removeSelf: () => section.removeSelf(),
+            viewIsOpen,
+            toggleListView,
+          }}
         />
       </div>
     </Styled>
@@ -63,16 +56,8 @@ export function ListMenuSimple({
 }
 
 const Styled = styled.div<{ $themeName: ThemeName }>`
+  display: flex;
   .ListMenuSimple-viewable {
     display: flex;
-  }
-  .ListMenuSimple-listMenuBtn {
-    margin: ${theme.s1};
-    margin-top: 0;
-    width: 24px;
-    height: 24px;
-    :last-child {
-      margin-right: 0;
-    }
   }
 `;

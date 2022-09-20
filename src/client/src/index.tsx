@@ -14,6 +14,9 @@ AppRegistry.runApplication("App", {
 // When people decide to load something, if they have unsaved changes,
 // tell them which sections have those unsaved changes, and suggest that if they don't want to lose those changes, they can  save the updates or copy the section
 
+// Adding the colors won't be too hard.
+// Adding the icons will be kind of annoying
+
 // Also the simple list menu should still have
 // some actions, namely, "create new"
 

@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { SectionName } from "../../../../../sharedWithServer/SectionsMeta/SectionName";
 import { useAuthStatus } from "../../../../../sharedWithServer/stateClassHooks/useAuthStatus";
 import theme from "../../../../../theme/Theme";
-import DisplayNameSectionList from "../../../DisplayNameSectionList";
+import { DisplayNameSectionList } from "../../../DisplayNameSectionList";
 import { StoreSectionActionMenu } from "../StoreSectionActionMenu";
 import { ActionMenuProps } from "../StoreSectionActionMenu/ActionMenuTypes";
 

@@ -1,7 +1,6 @@
-import { Button } from "@material-ui/core";
 import styled from "styled-components";
-import ccs from "../../theme/cssChunks";
 import theme from "../../theme/Theme";
+import ListMenuBtn from "./ListGroup/ListGroupShared/ListMenuSimple/ListMenuBtn";
 
 type Props = {
   title: string;
@@ -19,20 +18,14 @@ export function DropdownBtn({ title, isDropped, toggleDropped, icon }: Props) {
       }}
     >
       <span>{title}</span>
-      {icon && <span className="DbDropdownBtn-menu">{icon}</span>}
+      {icon && <span className="DropdownBtn-icon">{icon}</span>}
     </Styled>
   );
 }
 
-const Styled = styled(Button)<{ $active: boolean }>`
-  box-shadow: ${theme.boxShadow1};
+const Styled = styled(ListMenuBtn)<{ $active: boolean }>`
   height: ${theme.bigButtonHeight};
-  :hover {
-    background-color: ${theme.transparentGrayDark};
-  }
-
-  ${({ $active }) => ccs.coloring.button.lightNeutral($active)};
-  .DbDropdownBtn-menu {
+  .DropdownBtn-icon {
     margin-left: ${theme.s2};
     font-size: 17px;
     display: flex;

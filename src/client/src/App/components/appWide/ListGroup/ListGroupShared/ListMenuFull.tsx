@@ -1,11 +1,9 @@
-import { FiMaximize2, FiMinimize2 } from "react-icons/fi";
 import styled from "styled-components";
 import { FeInfoByType } from "../../../../sharedWithServer/SectionsMeta/Info";
 import { useSetterSection } from "../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import theme, { ThemeName } from "../../../../theme/Theme";
 import { MainSectionMenusMini } from "../../GeneralSection/MainSection/MainSectionTitleRow/MainSectionMenus";
-import XBtn from "../../Xbtn";
-import ListMenuBtn from "./ListMenuSimple/ListMenuBtn";
+import { ViewAndXMenu } from "./ListMenuSimple/ViewAndXMenu";
 
 type Props = {
   className: string;
@@ -30,7 +28,7 @@ export function ListMenuFull({
         $themeName: themeName,
       }}
     >
-      <div className="ListMenuSimple-viewable">
+      <div className="ListMenuFull-viewable">
         <MainSectionMenusMini
           {...{
             ...feInfo,
@@ -38,17 +36,12 @@ export function ListMenuFull({
             showActions: true,
           }}
         />
-        <ListMenuBtn
-          themeName={themeName}
-          className="ListMenuSimple-listMenuBtn ListMenuSimple-viewBtn"
-          onClick={toggleListView}
-        >
-          {viewIsOpen && <FiMinimize2 size={15} />}
-          {!viewIsOpen && <FiMaximize2 size={15} />}
-        </ListMenuBtn>
-        <XBtn
-          className="ListMenuSimple-listMenuBtn"
-          onClick={() => section.removeSelf()}
+        <ViewAndXMenu
+          {...{
+            removeSelf: () => section.removeSelf(),
+            viewIsOpen,
+            toggleListView,
+          }}
         />
       </div>
     </Styled>
@@ -56,8 +49,16 @@ export function ListMenuFull({
 }
 
 const Styled = styled.div<{ $themeName: ThemeName }>`
-  .ListMenuSimple-viewable {
+  display: flex;
+  flex: 1;
+  .ListMenuFull-viewable {
     display: flex;
+    flex: 1;
+    justify-content: space-between;
+    background-color: ${({ $themeName }) => theme[$themeName].light};
+    border: 1px solid ${theme.transparentGrayBorder};
+    border-radius: ${theme.br1};
+    padding: ${theme.s1};
   }
   .ListMenuSimple-listMenuBtn {
     margin: ${theme.s1};

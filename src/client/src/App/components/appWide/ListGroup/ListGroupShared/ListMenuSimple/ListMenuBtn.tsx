@@ -5,7 +5,7 @@ import theme, { ThemeName } from "../../../../../theme/Theme";
 import { StandardBtnProps } from "../../../../general/StandardProps";
 
 interface Props extends StandardBtnProps {
-  themeName: ThemeName;
+  themeName?: ThemeName;
 }
 export default function ListMenuBtn({ className, themeName, ...props }: Props) {
   return (
@@ -19,13 +19,14 @@ export default function ListMenuBtn({ className, themeName, ...props }: Props) {
   );
 }
 
-const Styled = styled(Button)<{ $themeName: ThemeName }>`
+const Styled = styled(Button)<{ $themeName?: ThemeName }>`
   font-size: 0.8rem;
   padding: ${rem("2px")} ${rem("4px")};
   box-shadow: ${theme.boxShadow1};
   border-radius: ${theme.br1};
   line-height: 1rem;
   background-color: ${theme["gray-300"]};
+  border: 1px solid ${theme.transparentGrayBorder};
   color: ${theme.dark};
   :hover {
     background-color: ${theme["gray-600"]};

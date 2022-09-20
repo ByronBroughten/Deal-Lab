@@ -141,7 +141,6 @@ const Styled = styled.div<{
 
   .VarbList-menuRow {
     display: flex;
-    flex-direction: row-reverse;
   }
 
   .VarbListGeneric-menuFull {

@@ -12,7 +12,7 @@ type Props = {
   dropTop?: boolean;
 };
 
-export default function DisplayNameSectionList({
+export function DisplayNameSectionList({
   feInfo,
   dropTop = false,
   className,
@@ -27,7 +27,7 @@ export default function DisplayNameSectionList({
     <DropdownList
       {...{
         className: "DisplayNameSectionList-root " + className ?? "",
-        title: `Saved`,
+        title: `Load`,
         dropTop,
         icon: <FaList className="DisplayNameSectionList-listIcon" />,
       }}

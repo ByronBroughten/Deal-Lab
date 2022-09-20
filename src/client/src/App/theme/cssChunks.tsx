@@ -29,7 +29,8 @@ const ccs = {
       lightNeutral(active: boolean) {
         return css`
           color: ${theme.dark};
-          ${ccs.coloring.section.lightNeutral};
+          background-color: ${theme["gray-300"]};
+          border: 1px solid ${theme.transparentGrayBorder};
           ${active &&
           css`
             ${ccs.coloring.section.darkNeutral};
