@@ -61,6 +61,10 @@ export const childSections = checkChildSections({
     loanNames: ["displayNameList"],
     mgmtNames: ["displayNameList"],
     dealNames: ["displayNameList"],
+    propertyLoaded: ["property"],
+    loanLoaded: ["loan"],
+    mgmtLoaded: ["mgmt"],
+    dealLoaded: ["deal"],
 
     outputListMain: ["outputList"],
     userVarbListMain: ["userVarbList"],

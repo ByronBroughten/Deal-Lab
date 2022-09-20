@@ -7,6 +7,21 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
+// There are three relevant states of each savable unit
+// 1. not saved - neutral border and shadow, word in the menu
+// 2. saved - green border and shadow, word in the menu
+// 3. unsaved changes - red border and shadow, word in the menu
+// When people decide to load something, if they have unsaved changes,
+// tell them which sections have those unsaved changes, and suggest that if they don't want to lose those changes, they can  save the updates or copy the section
+
+// Also the simple list menu should still have
+// some actions, namely, "create new"
+
+// The tricky part is, how do I keep track of properties
+// that are saved?
+
+// When I load, save, or delete a full section,
+// I must add some additional logic.
 
 // ***Maybe put "Upgrade User to Pro" button back.
 // ***Maybe make it possible to switch from numObj to stringObj

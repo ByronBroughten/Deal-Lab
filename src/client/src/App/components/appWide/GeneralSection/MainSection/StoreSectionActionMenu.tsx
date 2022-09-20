@@ -9,18 +9,56 @@ import theme from "../../../../theme/Theme";
 import { DropdownList } from "../../DropdownList";
 import { LabeledIconBtn } from "../../LabeledIconBtn";
 
+const isNotSavedActions = ["save"] as const;
+type IsNotSavedActions = typeof isNotSavedActions[number];
+
+const isSavedActions = [
+  "save updates",
+  "save as new",
+  "copy",
+  "copy and save",
+  "delete",
+] as const;
+type IsSavedActions = typeof isSavedActions[number];
+
+const alwaysActions = ["create new"] as const;
+type AlwaysActions = typeof alwaysActions[number];
+type AllActions = IsNotSavedActions | IsSavedActions | AlwaysActions;
+
 type Props<SN extends SectionName<"hasIndexStore">> = {
   dropTop?: boolean;
   sectionName: SN;
   feId: string;
   className?: string;
+  isNotSavedArr?: readonly IsNotSavedActions[];
+  isSavedArr?: readonly IsSavedActions[];
+  alwaysArr?: readonly AlwaysActions[];
 };
 export function StoreSectionActionMenu<
   SN extends SectionName<"hasIndexStore">
->({ dropTop, className, ...feInfo }: Props<SN>) {
+>({
+  dropTop,
+  className,
+  isNotSavedArr = isNotSavedActions,
+  isSavedArr = isSavedActions,
+  alwaysArr = alwaysActions,
+  ...feInfo
+}: Props<SN>) {
   const mainSection = useMainSectionActor(feInfo);
   const authStatus = useAuthStatus();
   const isGuest = authStatus === "guest";
+
+  const buttons = {
+    save: (
+      <LabeledIconBtn
+        label={isGuest ? "Sign in to Save" : "Save"}
+        disabled={isGuest}
+        icon={<AiOutlineSave size="25" />}
+        onClick={() => mainSection.saveNew()}
+      />
+    ),
+  } as const;
+
   return (
     <Styled
       {...{
@@ -29,14 +67,7 @@ export function StoreSectionActionMenu<
         dropTop,
       }}
     >
-      {!mainSection.isSaved && (
-        <LabeledIconBtn
-          label={isGuest ? "Sign in to Save" : "Save"}
-          disabled={isGuest}
-          icon={<AiOutlineSave size="25" />}
-          onClick={() => mainSection.saveNew()}
-        />
-      )}
+      {!mainSection.isSaved && buttons["save"]}
       {mainSection.isSaved && (
         <>
           <LabeledIconBtn
@@ -79,6 +110,10 @@ export function StoreSectionActionMenu<
     </Styled>
   );
 }
+
+// function SimpleStoreSectionActionMenu() {
+//   return <Styled></Styled>;
+// }
 
 const Styled = styled(DropdownList)`
   .LabeledIconBtn-root {

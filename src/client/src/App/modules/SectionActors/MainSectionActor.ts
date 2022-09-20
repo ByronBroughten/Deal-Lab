@@ -34,7 +34,7 @@ export class MainSectionActor<
   get hasFullIndex() {
     return this.get.meta.hasFeFullIndex;
   }
-  get fullIndexActor(): FullIndexActor<ChildSectionNameName<"feUser", SN>> {
+  get fullIndexActor(): FullIndexActor<any> {
     if (!this.hasFullIndex) {
       throw new Error(`${this.get.sectionName} has no full index store`);
     }
@@ -44,9 +44,7 @@ export class MainSectionActor<
       ...this.sectionActorBaseProps,
       ...feUser.feInfo,
       itemName: feFullIndexStoreName,
-    }) as FullIndexActor<any> as FullIndexActor<
-      ChildSectionNameName<"feUser", SN>
-    >;
+    }) as FullIndexActor<any>;
   }
   get displayIndexActor() {
     if (!this.hasDisplayIndex) {
