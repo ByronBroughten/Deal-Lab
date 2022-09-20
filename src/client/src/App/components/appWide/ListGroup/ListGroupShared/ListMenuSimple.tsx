@@ -5,6 +5,7 @@ import { FeInfoByType } from "../../../../sharedWithServer/SectionsMeta/Info";
 import { useSetterSection } from "../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import theme, { ThemeName } from "../../../../theme/Theme";
 import { StandardProps } from "../../../general/StandardProps";
+import { MainSectionMenusMini } from "../../GeneralSection/MainSection/MainSectionTitleRow/MainSectionMenus";
 import XBtn from "../../Xbtn";
 import ListMenuBtn from "./ListMenuSimple/ListMenuBtn";
 
@@ -31,6 +32,19 @@ export function ListMenuSimple({
       }}
     >
       <div className="ListMenuSimple-viewable">
+        <MainSectionMenusMini
+          {...{
+            ...feInfo,
+            pluralName: "lists",
+            showActions: true,
+            actionMenuProps: {
+              isNotSavedArr: [],
+              isSavedArr: [],
+              alwaysArr: ["createNew"],
+            },
+            showLoadList: false,
+          }}
+        />
         <ListMenuBtn
           themeName={themeName}
           className="ListMenuSimple-listMenuBtn ListMenuSimple-viewBtn"

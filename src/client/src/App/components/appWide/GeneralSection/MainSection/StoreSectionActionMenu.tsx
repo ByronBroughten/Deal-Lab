@@ -8,32 +8,21 @@ import { useAuthStatus } from "../../../../sharedWithServer/stateClassHooks/useA
 import theme from "../../../../theme/Theme";
 import { DropdownList } from "../../DropdownList";
 import { LabeledIconBtn } from "../../LabeledIconBtn";
+import {
+  ActionMenuProps,
+  AllActions,
+  alwaysActions,
+  isNotSavedActions,
+  isSavedActions,
+} from "./StoreSectionActionMenu/ActionMenuTypes";
 
-const isNotSavedActions = ["save"] as const;
-type IsNotSavedActions = typeof isNotSavedActions[number];
-
-const isSavedActions = [
-  "save updates",
-  "save as new",
-  "copy",
-  "copy and save",
-  "delete",
-] as const;
-type IsSavedActions = typeof isSavedActions[number];
-
-const alwaysActions = ["create new"] as const;
-type AlwaysActions = typeof alwaysActions[number];
-type AllActions = IsNotSavedActions | IsSavedActions | AlwaysActions;
-
-type Props<SN extends SectionName<"hasIndexStore">> = {
+interface Props<SN extends SectionName<"hasIndexStore">>
+  extends ActionMenuProps {
   dropTop?: boolean;
   sectionName: SN;
   feId: string;
   className?: string;
-  isNotSavedArr?: readonly IsNotSavedActions[];
-  isSavedArr?: readonly IsSavedActions[];
-  alwaysArr?: readonly AlwaysActions[];
-};
+}
 export function StoreSectionActionMenu<
   SN extends SectionName<"hasIndexStore">
 >({
@@ -48,13 +37,60 @@ export function StoreSectionActionMenu<
   const authStatus = useAuthStatus();
   const isGuest = authStatus === "guest";
 
-  const buttons = {
+  const buttons: Record<AllActions, React.ReactNode> = {
     save: (
       <LabeledIconBtn
         label={isGuest ? "Sign in to Save" : "Save"}
         disabled={isGuest}
         icon={<AiOutlineSave size="25" />}
         onClick={() => mainSection.saveNew()}
+      />
+    ),
+    saveUpdates: (
+      <LabeledIconBtn
+        label="Save updates"
+        icon={<MdOutlineSystemUpdateAlt size="25" />}
+        onClick={() => mainSection.saveUpdates()}
+      />
+    ),
+    saveAsNew: (
+      <LabeledIconBtn
+        label="Save as new"
+        icon={<AiOutlineSave size="25" />}
+        onClick={() => mainSection.saveAsNew()}
+      />
+    ),
+    copy: (
+      <LabeledIconBtn
+        label="Make a copy"
+        icon={<BiCopy size="28" />}
+        onClick={() => mainSection.makeACopy()}
+      />
+    ),
+    copyAndSave: (
+      <LabeledIconBtn
+        label="Copy and save"
+        icon={
+          <span style={{ display: "flex" }}>
+            <BiCopy size="23" />
+            <AiOutlineSave size="21" />
+          </span>
+        }
+        onClick={() => mainSection.copyAndSave()}
+      />
+    ),
+    delete: (
+      <LabeledIconBtn
+        label="Delete from saved"
+        icon={<MdDelete size="24" />}
+        onClick={() => mainSection.deleteSelf()}
+      />
+    ),
+    createNew: (
+      <LabeledIconBtn
+        label="Create new"
+        icon={<BiReset size="26" />}
+        onClick={() => mainSection.replaceWithDefault()}
       />
     ),
   } as const;
@@ -67,53 +103,14 @@ export function StoreSectionActionMenu<
         dropTop,
       }}
     >
-      {!mainSection.isSaved && buttons["save"]}
-      {mainSection.isSaved && (
-        <>
-          <LabeledIconBtn
-            label="Save updates"
-            icon={<MdOutlineSystemUpdateAlt size="25" />}
-            onClick={() => mainSection.saveUpdates()}
-          />
-          <LabeledIconBtn
-            label="Save as new"
-            icon={<AiOutlineSave size="25" />}
-            onClick={() => mainSection.saveAsNew()}
-          />
-          <LabeledIconBtn
-            label="Make a copy"
-            icon={<BiCopy size="28" />}
-            onClick={() => mainSection.makeACopy()}
-          />
-          <LabeledIconBtn
-            label="Copy and save"
-            icon={
-              <span style={{ display: "flex" }}>
-                <BiCopy size="23" />
-                <AiOutlineSave size="21" />
-              </span>
-            }
-            onClick={() => mainSection.copyAndSave()}
-          />
-          <LabeledIconBtn
-            label="Delete from saved"
-            icon={<MdDelete size="24" />}
-            onClick={() => mainSection.deleteSelf()}
-          />
-        </>
-      )}
-      <LabeledIconBtn
-        label="Create new"
-        icon={<BiReset size="26" />}
-        onClick={() => mainSection.replaceWithDefault()}
-      />
+      {!mainSection.isSaved &&
+        isNotSavedArr.map((actionName) => buttons[actionName])}
+      {mainSection.isSaved &&
+        isSavedArr.map((actionName) => buttons[actionName])}
+      {alwaysArr.map((actionName) => buttons[actionName])}
     </Styled>
   );
 }
-
-// function SimpleStoreSectionActionMenu() {
-//   return <Styled></Styled>;
-// }
 
 const Styled = styled(DropdownList)`
   .LabeledIconBtn-root {

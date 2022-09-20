@@ -4,8 +4,9 @@ import { useAuthStatus } from "../../../../../sharedWithServer/stateClassHooks/u
 import theme from "../../../../../theme/Theme";
 import DisplayNameSectionList from "../../../DisplayNameSectionList";
 import { StoreSectionActionMenu } from "../StoreSectionActionMenu";
+import { ActionMenuProps } from "../StoreSectionActionMenu/ActionMenuTypes";
 
-type Props = {
+interface Props {
   sectionName: SectionName<"hasIndexStore">;
   feId: string;
   pluralName: string;
@@ -13,13 +14,17 @@ type Props = {
   dropTop?: boolean;
   className?: string;
   showActions?: boolean;
-};
+  actionMenuProps?: ActionMenuProps;
+  showLoadList?: boolean;
+}
 export function MainSectionMenus({
   pluralName,
   xBtn,
   dropTop,
   className,
   showActions = true,
+  showLoadList = true,
+  actionMenuProps,
   ...feInfo
 }: Props) {
   const authStatus = useAuthStatus();
@@ -30,20 +35,23 @@ export function MainSectionMenus({
         <StoreSectionActionMenu
           {...{
             ...feInfo,
+            ...actionMenuProps,
             dropTop,
             className: "MainSectionMenus-dropdownList",
           }}
         />
       )}
-      <DisplayNameSectionList
-        {...{
-          className: "MainSectionMenus-dropdownList",
-          feInfo,
-          pluralName,
-          disabled: isGuest,
-          dropTop,
-        }}
-      />
+      {showLoadList && (
+        <DisplayNameSectionList
+          {...{
+            className: "MainSectionMenus-dropdownList",
+            feInfo,
+            pluralName,
+            disabled: isGuest,
+            dropTop,
+          }}
+        />
+      )}
     </Styled>
   );
 }
