@@ -189,6 +189,7 @@ export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
       } else if (feUserChildName === "subscriptionInfo") {
         const { subscriptionPlan, planExp } = this.subscriptionValues;
         const subInfoValues: SectionValues<"subscriptionInfo"> = {
+          _typeUniformity: "",
           plan: subscriptionPlan,
           planExp,
         };

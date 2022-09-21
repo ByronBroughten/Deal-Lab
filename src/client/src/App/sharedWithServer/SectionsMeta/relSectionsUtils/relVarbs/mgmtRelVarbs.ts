@@ -10,6 +10,7 @@ const rentCutDollars = switchNames(rentCut.dollars, "ongoing");
 
 export function mgmtRelVarbs(): RelVarbs<"mgmt"> {
   return {
+    ...relVarbsS._typeUniformity,
     ...relVarbsS.savableSection,
     [rentCut.switch]: relVarb("string", {
       initValue: "percent",

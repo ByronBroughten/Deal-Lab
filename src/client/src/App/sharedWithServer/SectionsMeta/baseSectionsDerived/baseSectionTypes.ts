@@ -23,10 +23,17 @@ export type BaseSectionVarbs<SN extends SimpleSectionName> =
 export type VarbNameNext<SN extends SimpleSectionName> =
   keyof BaseSectionVarbs<SN>;
 
-function varbNamesOfSection<SN extends SimpleSectionName>(
+export function sectionVarbNames<SN extends SimpleSectionName>(
   sectionName: SN
 ): VarbNameNext<SN>[] {
   return Obj.keys(baseSections[sectionName].varbSchemas);
+}
+export function sectionVarbType<
+  SN extends SimpleSectionName,
+  VN extends VarbNameNext<SN>
+>(sectionName: SN, varbName: VN) {
+  const varbSchemas = baseSections[sectionName].varbSchemas;
+  return varbSchemas[varbName as keyof typeof varbSchemas];
 }
 
 type SectionVarbNames<
@@ -41,20 +48,20 @@ export type SectionVarbName<
   VN extends VarbNameNext<SN> = VarbNameNext<SN>
 > = SectionVarbNames<SN, VN>[VN];
 
-function sectionVarbName<
+export function sectionDotVarbName<
   SN extends SimpleSectionName,
   VN extends VarbNameNext<SN>
 >(sectionName: SN, varbName: VN): SectionVarbName<SN, VN> {
   return `${sectionName}.${varbName}` as SectionVarbName<SN, VN>;
 }
 
-function sectionVarbNames<SN extends SimpleSectionName>(
+export function sectionDotVarbNames<SN extends SimpleSectionName>(
   sectionName: SN
 ): SectionVarbName<SN>[] {
   const names: SectionVarbName<SN>[] = [];
-  const varbNames = varbNamesOfSection(sectionName);
+  const varbNames = sectionVarbNames(sectionName);
   for (const varbName of varbNames) {
-    names.push(sectionVarbName(sectionName, varbName));
+    names.push(sectionDotVarbName(sectionName, varbName));
   }
   return names;
 }
@@ -66,7 +73,7 @@ type AllSectionVarbNames = {
 export type SimpleSectionVarbName = AllSectionVarbNames[SimpleSectionName];
 export const simpleSectionVarbNames = simpleSectionNames.reduce(
   (names, sectionName) => {
-    return names.concat(sectionVarbNames(sectionName));
+    return names.concat(sectionDotVarbNames(sectionName));
   },
   [] as SimpleSectionVarbName[]
 );

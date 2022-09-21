@@ -6,6 +6,7 @@ import { RelVarbs, relVarbsS } from "../relVarbs";
 
 export function dealRelVarbs(): RelVarbs<"deal"> {
   return {
+    ...relVarbsS._typeUniformity,
     ...relVarbsS.savableSection,
     ...relVarbsS.ongoingSumNums(
       "piti",

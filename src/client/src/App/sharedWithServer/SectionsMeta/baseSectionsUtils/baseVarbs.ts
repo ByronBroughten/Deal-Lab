@@ -24,6 +24,9 @@ export function baseVarbs<V extends ValueName, T extends readonly string[]>(
 }
 
 export const baseVarbsS = {
+  get typeUniformity() {
+    return { _typeUniformity: "string" } as const;
+  },
   switch<Base extends string, SWN extends SwitchEndingKey>(
     baseName: Base,
     switchName: SWN

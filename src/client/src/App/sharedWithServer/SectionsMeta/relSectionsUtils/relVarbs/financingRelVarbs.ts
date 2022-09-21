@@ -10,6 +10,7 @@ import { RelVarbs, relVarbsS } from "../relVarbs";
 const loanBase = switchNames("loanBase", "dollarsPercentDecimal");
 export function loanRelVarbs(): RelVarbs<"loan"> {
   return {
+    ...relVarbsS._typeUniformity,
     ...relVarbsS.savableSection,
     [loanBase.switch]: relVarb("string", {
       initValue: "percent",

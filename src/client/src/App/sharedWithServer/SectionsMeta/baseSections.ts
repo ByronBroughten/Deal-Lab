@@ -27,18 +27,14 @@ export const loanVarbsNotInFinancing = [
 export type BaseSections = typeof baseSections;
 export const baseSections = {
   root: baseSectionS.container,
-  main: baseSection({
-    _typeUniformity: "string",
-  } as const),
-  feUser: baseSection({
-    _typeUniformity: "string",
-  } as const),
-  dbStore: baseSection({
-    _typeUniformity: "string",
-  } as const),
-  proxy: baseSection({
-    _typeUniformity: "string",
-  } as const),
+  main: baseSection(),
+  feUser: baseSection(),
+  dbStore: baseSection(),
+  proxy: baseSection(),
+  // displayStoreProperty: baseSection(baseVarbsS.typeUniformity),
+  // displayStoreLoan: baseSection(baseVarbsS.typeUniformity),
+  // displayStoreMgmt: baseSection(baseVarbsS.typeUniformity),
+  // displayStoreDeal: baseSection(baseVarbsS.typeUniformity),
   displayNameItem: baseSection({
     displayName: "string",
   }),

@@ -182,7 +182,7 @@ export class GetterVarb<
   get displayNameStart(): string {
     return this.meta.displayNameStart;
   }
-  get sectionVarbName() {
+  get sectionDotVarbName() {
     return `${this.sectionName}.${this.varbName}`;
   }
   get displayNameEnd(): string {

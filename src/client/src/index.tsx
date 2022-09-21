@@ -7,6 +7,30 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
+// This here below is the way to go, I suppose.
+// If a section's dbId is in the displayNameList, it should
+// throw if its not in its corresponding activeSaved
+
+// propertyStore: { displayNameList, activeSaved (property) }
+// I can at least create these sections
+
+// when sections in activeSaved are compared to current sections
+// both have their saved descendants removed
+
+// saving, add the section to its activeSaved (if it's not there)
+// loading, add the section to its activeSaved (if it's not there)
+// updating, update the activeSaved section
+// Create a function to run after each of these that
+// checks whether an activeSaved section should be created.
+
+// copying
+// removing
+// creating new
+// deleting
+// if it's the last section with that dbId, remove it from activeSaved
+// Create a function to run after each of these that checks
+// whether any activeSaved sections should be deleted
+
 // There are three relevant states of each savable unit
 // 1. not saved - neutral border and shadow, word in the menu
 // 2. saved - green border and shadow, word in the menu
@@ -14,17 +38,14 @@ AppRegistry.runApplication("App", {
 // When people decide to load something, if they have unsaved changes,
 // tell them which sections have those unsaved changes, and suggest that if they don't want to lose those changes, they can  save the updates or copy the section
 
-// Adding the colors won't be too hard.
-// Adding the icons will be kind of annoying
+// To the left of actions, add the icon
+// The icon will look like the menu btns
+// But it will be see-through and its colors will be like above
 
-// Also the simple list menu should still have
-// some actions, namely, "create new"
-
-// The tricky part is, how do I keep track of properties
-// that are saved?
-
-// When I load, save, or delete a full section,
-// I must add some additional logic.
+// You'll want to merge the simple list menu with the
+// full one.
+// You'll also want to merge the list menus with the
+// main section menus
 
 // ***Maybe put "Upgrade User to Pro" button back.
 // ***Maybe make it possible to switch from numObj to stringObj

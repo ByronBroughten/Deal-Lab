@@ -5,6 +5,7 @@ import { RelVarbs, relVarbsS } from "../relVarbs";
 
 export function propertyRelVarbs(): RelVarbs<"property"> {
   return {
+    ...relVarbsS._typeUniformity,
     ...relVarbsS.savableSection,
     price: relVarbS.moneyObj("Price"),
     sqft: relVarbS.calcVarb("Square feet"),

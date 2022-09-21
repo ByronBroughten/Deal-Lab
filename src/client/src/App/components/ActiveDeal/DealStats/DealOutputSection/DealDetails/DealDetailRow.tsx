@@ -10,8 +10,8 @@ import {
 import { detailsConfig } from "./dealDetailsConfig";
 
 function getDetailDisplayName(varb: GetterVarb) {
-  const name = varb.sectionVarbName as SimpleSectionVarbName;
-  const title = detailsConfig[name].detailTitle;
+  const name = varb.sectionDotVarbName as SimpleSectionVarbName;
+  const title = detailsConfig[name as keyof typeof detailsConfig].detailTitle;
   return title ?? varb.displayName;
 }
 

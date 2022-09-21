@@ -15,18 +15,20 @@ export const baseOptions = {
   },
 } as const;
 
+const _typeUniformityVarb = { _typeUniformity: "string" } as const;
+
 type FallbackSchema = typeof baseOptions.fallback;
 type ReturnSchema<V extends BaseVarbSchemas, O extends BaseSectionOptions> = {
-  varbSchemas: V;
+  varbSchemas: V & typeof _typeUniformityVarb;
 } & Omit<FallbackSchema, keyof O> &
   O;
 
 export function baseSection<
   V extends BaseVarbSchemas,
   O extends BaseSectionOptions = {}
->(varbSchemas: V, options?: O): ReturnSchema<V, O> {
+>(varbSchemas?: V, options?: O): ReturnSchema<V, O> {
   return {
-    varbSchemas,
+    varbSchemas: { ...varbSchemas, ..._typeUniformityVarb },
     ...omit(baseOptions.fallback, Obj.keys(options ?? {})),
     ...options,
   } as ReturnSchema<V, O>;

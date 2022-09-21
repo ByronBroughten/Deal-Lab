@@ -2,8 +2,10 @@ import { timeS } from "../utils/date";
 import {
   savableSectionVarbNames,
   SimpleSectionName,
+  simpleSectionNames,
   UserPlan,
 } from "./baseSections";
+import { sectionVarbNames } from "./baseSectionsDerived/baseSectionTypes";
 import { numObj } from "./baseSectionsUtils/baseValues/NumObj";
 import { relVarbInfoS } from "./childSectionsDerived/RelVarbInfo";
 import { relVarbInfosS } from "./childSectionsDerived/RelVarbInfos";
@@ -12,6 +14,7 @@ import { relVarb, relVarbS } from "./relSectionsUtils/rel/relVarb";
 import {
   GeneralRelSection,
   GenericRelSection,
+  RelSection,
   relSection,
 } from "./relSectionsUtils/relSection";
 import { RelVarbs, relVarbsS } from "./relSectionsUtils/relVarbs";
@@ -31,6 +34,51 @@ function relSectionsFilter<RS extends GenericRelSections>(relSections: RS): RS {
   return relSections;
 }
 
+type Test = RelVarbs<"property">;
+
+type BasicRelSection<SN extends SimpleSectionName> = RelSection<
+  SN,
+  "",
+  RelVarbs<SN>,
+  {}
+>;
+
+type BasicRelSections = {
+  [SN in SimpleSectionName]: BasicRelSection<SN>;
+};
+
+function makeBasicRelVarbs<SN extends SimpleSectionName>(sectionName: SN) {
+  const varbNames = sectionVarbNames(sectionName);
+  return varbNames.reduce((relVarbs, varbName) => {
+    // get the varbType
+    return relVarbs;
+  }, {} as RelVarbs<SN>);
+}
+function makeBasicRelSection<SN extends SimpleSectionName>(
+  sectionName: SN
+): BasicRelSection<SN> {
+  return relSection("", makeBasicRelVarbs(sectionName), {});
+}
+function makeBasicRelSections(): BasicRelSections {
+  return simpleSectionNames.reduce((basicRelSections, sectionName) => {
+    basicRelSections[sectionName] = makeBasicRelSection(sectionName) as any;
+    return basicRelSections;
+  }, {} as BasicRelSections);
+}
+
+// sectionTraits
+// make defaults
+// allow for adding others
+// make sectionMeta get all of its stuff
+// from sectionTraits
+const sectionTraits = {};
+
+// baseSections should just have the varbs
+// relSections should just have the varbs
+
+// there should be a new layer for section booleans,
+// inBetween relSections and baseSections
+
 export function makeRelSections() {
   return relSectionsFilter({
     root: relSection("Root", { _typeUniformity: relVarb("string") }),
@@ -44,7 +92,7 @@ export function makeRelSections() {
     omniParent: relSection("Parent of all", {
       _typeUniformity: relVarb("string"),
     }),
-    main: relSection("main", { _typeUniformity: relVarb("string") }),
+    main: relSection("Main", { _typeUniformity: relVarb("string") }),
     feUser: relSection("FE User", { _typeUniformity: relVarb("string") }),
     dbStore: relSection("dbStore", { _typeUniformity: relVarb("string") }),
     userInfo: relSection(

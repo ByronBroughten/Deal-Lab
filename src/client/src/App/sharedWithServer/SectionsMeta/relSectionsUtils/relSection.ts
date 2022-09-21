@@ -1,6 +1,7 @@
 import { Merge, Spread } from "../../utils/Obj/merge";
 import {
   StrictExclude,
+  StrictOmit,
   StrictPick,
   StrictPickPartial,
 } from "../../utils/types";
@@ -8,26 +9,33 @@ import { SimpleSectionName } from "../baseSections";
 import { BaseName } from "../baseSectionsDerived/baseSectionTypes";
 import { ChildName } from "../childSectionsDerived/ChildName";
 import { ChildSectionNameName } from "../childSectionsDerived/ChildSectionName";
+import { relVarb } from "./rel/relVarb";
+import { RelVarb } from "./rel/relVarbTypes";
 import { GeneralRelVarbs, RelVarbs } from "./relVarbs";
+
+type UnUniformRelVarbs<SN extends SimpleSectionName> = StrictOmit<
+  RelVarbs<SN>,
+  "_typeUniformity"
+>;
 
 export function relSection<
   SN extends SimpleSectionName,
   DN extends string,
-  RVS extends RelVarbs<SN>,
+  RVS extends UnUniformRelVarbs<SN>,
   O extends RelSectionOptions<SN> = {}
 >(displayName: DN, relVarbs: RVS, options?: O): RelSection<SN, DN, RVS, O> {
   return {
     ...defaultProps,
     ...options,
     displayName,
-    relVarbs,
+    relVarbs: { ...relVarbs, _typeUniformity: relVarb("string") },
   } as any;
 }
 
 export type RelSection<
   SN extends SimpleSectionName,
   DN extends string = string,
-  RVS extends RelVarbs<SN> = RelVarbs<SN>,
+  RVS extends UnUniformRelVarbs<SN> = UnUniformRelVarbs<SN>,
   O extends RelSectionOptions<SN> = {}
 > = Spread<
   [
@@ -35,7 +43,7 @@ export type RelSection<
     O,
     {
       displayName: DN;
-      relVarbs: RVS;
+      relVarbs: RVS & { _typeUniformity: RelVarb<"string"> };
     }
   ]
 >;

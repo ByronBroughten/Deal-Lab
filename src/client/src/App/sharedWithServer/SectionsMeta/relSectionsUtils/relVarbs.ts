@@ -80,6 +80,9 @@ export const relVarbsS = {
       {} as Partial<StringPreVarbsFromNames<VN>>
     ) as StringPreVarbsFromNames<VN>;
   },
+  get _typeUniformity() {
+    return { _typeUniformity: relVarb("string") };
+  },
   get savableSection() {
     return {
       displayName: relVarb("stringObj"),
@@ -250,6 +253,7 @@ export const relVarbsS = {
   singleTimeItem(): RelVarbs<"singleTimeItem"> {
     const valueSwitchProp = relVarbInfoS.local("valueSwitch");
     return {
+      ...this._typeUniformity,
       ...this.listItemVirtualVarb,
       value: relVarbS.numObj(relVarbInfoS.local("displayName"), {
         updateFnName: "loadEditorSolvableText",
@@ -291,6 +295,7 @@ export const relVarbsS = {
     const ongoingSwitchInfo = relVarbInfoS.local(ongoingValueNames.switch);
     const valueSwitchProp = relVarbInfoS.local("valueSwitch");
     return {
+      ...this._typeUniformity,
       ...this.listItemVirtualVarb,
       valueSwitch: relVarb("string", {
         initValue: "labeledEquation",

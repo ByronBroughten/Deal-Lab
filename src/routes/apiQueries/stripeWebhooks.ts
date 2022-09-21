@@ -30,6 +30,7 @@ export function stripeSubToValues(
   sub: Stripe.Subscription
 ): SectionValues<"stripeSubscription"> {
   return {
+    _typeUniformity: "",
     subId: sub.id,
     status: sub.status,
     currentPeriodEnd: sub.current_period_end,
