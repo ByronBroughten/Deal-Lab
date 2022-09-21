@@ -1,7 +1,7 @@
-import { baseSections, SimpleSectionName } from "../baseSections";
 import { StateValue } from "../baseSectionsUtils/baseValues/StateValueTypes";
 import { ValueName } from "../baseSectionsUtils/baseVarb";
 import { BaseVarbSchemas } from "../baseSectionsUtils/baseVarbs";
+import { baseSectionsVarbs, SimpleSectionName } from "../baseSectionsVarbs";
 import { BaseSectionVarbs, VarbNameNext } from "./baseSectionTypes";
 import { VarbNamesNext } from "./baseVarbInfo";
 import { valueMeta } from "./valueMeta";
@@ -27,8 +27,8 @@ export function isVarbValue<
   value: any,
   { sectionName, varbName }: VarbNamesNext<SN, VN>
 ): value is VarbValue<SN, VN> {
-  const varbSchemas = baseSections[sectionName].varbSchemas as BaseVarbSchemas;
-  const valueName = varbSchemas[varbName as string];
+  const baseVarbs = baseSectionsVarbs[sectionName] as BaseVarbSchemas;
+  const valueName = baseVarbs[varbName as string];
   return valueMeta[valueName].is(value);
 }
 

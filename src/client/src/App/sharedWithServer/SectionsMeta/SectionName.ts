@@ -1,9 +1,9 @@
 import { StringTypeChecker } from "../../utils/StringTypeChecker";
 import { PropKeyOfValue } from "../utils/Obj/SubType";
 import { StrictExtract } from "../utils/types";
-import { SimpleSectionName } from "./baseSections";
 import { baseNameArrs, BaseNameArrs } from "./baseSectionsDerived/baseNameArrs";
 import { SectionValues } from "./baseSectionsDerived/valueMetaTypes";
+import { SimpleSectionName } from "./baseSectionsVarbs";
 import { ChildName, getChildNames } from "./childSectionsDerived/ChildName";
 import {
   childToSectionName,

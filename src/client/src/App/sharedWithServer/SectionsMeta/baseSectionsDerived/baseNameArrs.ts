@@ -1,26 +1,15 @@
 import { Arr } from "../../utils/Arr";
-import { Obj } from "../../utils/Obj";
-import { SubType } from "../../utils/types";
 import {
-  BaseSections,
-  baseSections,
+  BaseSectionsVarbs,
   SimpleSectionName,
   simpleSectionNames,
-} from "../baseSections";
-import { GeneralBaseSection } from "../baseSectionsUtils/baseSection";
-
-type HasVarbSectionName<
-  NoVarbSectionName = keyof SubType<
-    BaseSections,
-    { varbSchemas: { [K in any]: never } }
-  >
-> = Exclude<keyof BaseSections, NoVarbSectionName>;
+} from "../baseSectionsVarbs";
 
 type SnArrs = {
-  [SN in keyof BaseSections]: SN[];
+  [SN in SimpleSectionName]: SN[];
 };
 function makeSingleSectionNameArrs(): SnArrs {
-  return Obj.keys(baseSections).reduce((snArrs, sectionName) => {
+  return simpleSectionNames.reduce((snArrs, sectionName) => {
     (snArrs as any)[sectionName] = [sectionName];
     return snArrs;
   }, {} as SnArrs);
@@ -30,16 +19,11 @@ function makeBaseNameArrs() {
   return {
     ...makeSingleSectionNameArrs(),
     all: simpleSectionNames as SimpleSectionName[],
+    hasVarb: simpleSectionNames,
     notRootNorOmni: Arr.excludeStrict(simpleSectionNames, [
       "root",
       "omniParent",
     ] as const),
-    hasVarb: Obj.keys(baseSections).filter((sectionName) => {
-      const varbNames = Object.keys(
-        (baseSections[sectionName] as any as GeneralBaseSection).varbSchemas
-      );
-      return varbNames.length > 0;
-    }) as HasVarbSectionName[],
     get additiveList() {
       return Arr.extractStrict(simpleSectionNames, [
         "singleTimeList",
@@ -57,7 +41,7 @@ function makeBaseNameArrs() {
   };
 }
 
-type GeneralBaseNameArrs = Record<string, readonly (keyof BaseSections)[]>;
+type GeneralBaseNameArrs = Record<string, readonly (keyof BaseSectionsVarbs)[]>;
 
 export const baseNameArrs = makeBaseNameArrs();
 

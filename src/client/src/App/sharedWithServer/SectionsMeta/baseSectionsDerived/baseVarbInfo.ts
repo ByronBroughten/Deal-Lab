@@ -1,11 +1,11 @@
 import { Obj } from "../../utils/Obj";
-import { baseSections, SimpleSectionName } from "../baseSections";
 import {
   DbIdInfo,
   ExpectedCount,
   FeIdInfo,
   GeneralInfo,
 } from "../baseSectionsUtils/NanoIdInfo";
+import { baseSectionsVarbs, SimpleSectionName } from "../baseSectionsVarbs";
 import { SectionNameProp } from "./baseSectionInfo";
 import { VarbNameNext } from "./baseSectionTypes";
 
@@ -69,7 +69,7 @@ export interface VarbNames<SN extends SimpleSectionName = SimpleSectionName>
     VarbProp {}
 
 export function isValidVarbNames({ sectionName, varbName }: VarbNames) {
-  const varbNames = Obj.keys(baseSections[sectionName].varbSchemas) as string[];
+  const varbNames = Obj.keys(baseSectionsVarbs[sectionName]) as string[];
   if (varbNames.includes(varbName)) return true;
   else return false;
 }

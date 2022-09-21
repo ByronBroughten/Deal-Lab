@@ -1,6 +1,6 @@
 import { Arr } from "../../utils/Arr";
 import { StrictExclude } from "../../utils/types";
-import { SimpleSectionName, simpleSectionNames } from "../baseSections";
+import { SimpleSectionName, simpleSectionNames } from "../baseSectionsVarbs";
 import { childSection, ChildSection } from "./childSection";
 
 type OmniParentChildren = {

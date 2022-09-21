@@ -4,7 +4,7 @@ import { AiOutlineMenu } from "react-icons/ai";
 import styled, { css } from "styled-components";
 import { constants } from "../../Constants";
 import { useAuthAndLogin } from "../../modules/customHooks/useAuthAndUserData";
-import { UserPlan } from "../../sharedWithServer/SectionsMeta/baseSections";
+import { UserPlan } from "../../sharedWithServer/SectionsMeta/baseSectionsVarbs";
 import { useAuthStatus } from "../../sharedWithServer/stateClassHooks/useAuthStatus";
 import {
   useGetterSection,

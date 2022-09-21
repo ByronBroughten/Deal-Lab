@@ -1,6 +1,6 @@
 import { sectionsMeta, SectionsMeta } from "../SectionsMeta";
-import { SimpleSectionName } from "../SectionsMeta/baseSections";
 import { DbSectionInfo } from "../SectionsMeta/baseSectionsUtils/DbSectionInfo";
+import { SimpleSectionName } from "../SectionsMeta/baseSectionsVarbs";
 import {
   SectionInfoMixed,
   VarbInfoMixed,

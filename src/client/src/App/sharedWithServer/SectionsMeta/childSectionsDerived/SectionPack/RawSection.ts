@@ -1,8 +1,8 @@
 import { z } from "zod";
 import { zS } from "../../../utils/zod";
-import { SimpleSectionName } from "../../baseSections";
 import { zValue } from "../../baseSectionsDerived/valueMeta";
 import { DbValue } from "../../baseSectionsDerived/valueMetaTypes";
+import { SimpleSectionName } from "../../baseSectionsVarbs";
 import { ChildIdArrsWide, GeneralChildIdArrs } from "../ChildName";
 import { SelfOrDescendantSectionName } from "../DescendantSectionName";
 

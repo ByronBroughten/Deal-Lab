@@ -1,12 +1,12 @@
 import { timeS } from "../utils/date";
+import { sectionVarbNames } from "./baseSectionsDerived/baseSectionTypes";
+import { numObj } from "./baseSectionsUtils/baseValues/NumObj";
 import {
   savableSectionVarbNames,
   SimpleSectionName,
   simpleSectionNames,
   UserPlan,
-} from "./baseSections";
-import { sectionVarbNames } from "./baseSectionsDerived/baseSectionTypes";
-import { numObj } from "./baseSectionsUtils/baseValues/NumObj";
+} from "./baseSectionsVarbs";
 import { relVarbInfoS } from "./childSectionsDerived/RelVarbInfo";
 import { relVarbInfosS } from "./childSectionsDerived/RelVarbInfos";
 import { relAdorn } from "./relSectionsUtils/rel/relAdorn";
@@ -63,13 +63,14 @@ function makeBasicRelSections(): BasicRelSections {
   }, {} as BasicRelSections);
 }
 
-const sectionTraits = {};
+// start with a place to identify the sectionNames
+// sectionChildren comes next
+// sectionTraits comes after sectionChildren
+// sectionTraits should have the necessary displayNames
 
-// baseSections should just have the varbs
-// relSections should just have the varbs
-
-// there should be a new layer for section booleans,
-// inBetween relSections and baseSections
+// baseSectionsVarbs should just have varbs and be called "baseSectionVarbs"
+// each baseSectionVarb should be an object
+// relSections should just have varbs and be called "relSectionVarbs"
 
 export function makeRelSections() {
   return relSectionsFilter({
@@ -119,15 +120,6 @@ export function makeRelSections() {
       status: relVarb("string"),
       priceIds: relVarb("stringArray"),
       currentPeriodEnd: relVarb("number"),
-    }),
-    login: relSection("Login form", {
-      email: relVarb("string", { displayName: "Email" }),
-      password: relVarb("string", { displayName: "Password" }),
-    }),
-    register: relSection("Register form", {
-      email: relVarb("string", { displayName: "Email" }),
-      userName: relVarb("string", { displayName: "Name" }),
-      password: relVarb("string", { displayName: "Password" }),
     }),
     compareTable: relSection("Table", { titleFilter: relVarb("string") }),
     tableRow: relSection("Row", {

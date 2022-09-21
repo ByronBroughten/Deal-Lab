@@ -1,9 +1,9 @@
 import { pick } from "lodash";
+import { VarbNames } from "./SectionsMeta/baseSectionsDerived/baseVarbInfo";
 import {
   SimpleSectionName,
   simpleSectionNames,
-} from "./SectionsMeta/baseSections";
-import { VarbNames } from "./SectionsMeta/baseSectionsDerived/baseVarbInfo";
+} from "./SectionsMeta/baseSectionsVarbs";
 import {
   DescendantSectionName,
   SelfOrDescendantSectionName,

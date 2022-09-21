@@ -1,4 +1,4 @@
-import { isUserPlan, UserPlan } from "../SectionsMeta/baseSections";
+import { isUserPlan, UserPlan } from "../SectionsMeta/baseSectionsVarbs";
 import { Obj } from "../utils/Obj";
 
 export interface SubscriptionValues {

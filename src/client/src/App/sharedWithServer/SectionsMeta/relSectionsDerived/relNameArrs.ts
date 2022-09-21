@@ -1,7 +1,7 @@
 import { Arr } from "../../utils/Arr";
 import { Obj } from "../../utils/Obj";
 import { allSectionTraits } from "../allSectionTraits";
-import { SimpleSectionName, simpleSectionNames } from "../baseSections";
+import { SimpleSectionName, simpleSectionNames } from "../baseSectionsVarbs";
 import { hasChildSectionNames } from "../childSectionsDerived/ChildName";
 import { hasStoreNameArrs } from "./relNameArrs/feStoreNameArrs";
 import { tableStoreNameArrs } from "./relNameArrs/tableStoreArrs";

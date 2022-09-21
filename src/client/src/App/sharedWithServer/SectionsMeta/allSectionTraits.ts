@@ -5,7 +5,7 @@ import {
   sectionTraits,
   SectionTraits,
 } from "./allSectionTraits/sectionTraits";
-import { SimpleSectionName, simpleSectionNames } from "./baseSections";
+import { SimpleSectionName, simpleSectionNames } from "./baseSectionsVarbs";
 
 export type GeneralAllSectionTraits = {
   [SN in SimpleSectionName]: GeneralSectionTraits;

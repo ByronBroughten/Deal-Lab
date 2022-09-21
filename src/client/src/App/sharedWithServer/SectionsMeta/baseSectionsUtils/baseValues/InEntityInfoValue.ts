@@ -2,8 +2,8 @@ import { Schema } from "mongoose";
 import { z } from "zod";
 import { Obj } from "../../../utils/Obj";
 import { zS } from "../../../utils/zod";
-import { isSectionName } from "../../baseSections";
 import { isVarbName } from "../../baseSectionsDerived/baseVarbInfo";
+import { isSectionName } from "../../baseSectionsVarbs";
 import { Id } from "../id";
 import { InEntityVarbInfo, zInEntityVarbInfo } from "./entities";
 

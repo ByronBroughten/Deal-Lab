@@ -1,8 +1,8 @@
-import { SimpleSectionName } from "../SectionsMeta/baseSections";
 import {
   virtualVarbToValueNames,
   VirtualVarbToValues,
 } from "../SectionsMeta/baseSectionsDerived/baseVarbNames";
+import { SimpleSectionName } from "../SectionsMeta/baseSectionsVarbs";
 import { GetterSectionBase } from "./Bases/GetterSectionBase";
 import { GetterSection } from "./GetterSection";
 

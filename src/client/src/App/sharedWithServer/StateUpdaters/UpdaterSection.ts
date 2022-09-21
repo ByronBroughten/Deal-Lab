@@ -1,7 +1,7 @@
-import { SimpleSectionName } from "../SectionsMeta/baseSections";
 import { VarbValues } from "../SectionsMeta/baseSectionsDerived/baseSectionTypes";
 import { SectionValues } from "../SectionsMeta/baseSectionsDerived/valueMetaTypes";
 import { Id } from "../SectionsMeta/baseSectionsUtils/id";
+import { SimpleSectionName } from "../SectionsMeta/baseSectionsVarbs";
 import {
   ChildArrInfo,
   ChildIdArrsNarrow,

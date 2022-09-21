@@ -1,4 +1,4 @@
-import { SimpleSectionName, simpleSectionNames } from "./baseSections";
+import { SimpleSectionName, simpleSectionNames } from "./baseSectionsVarbs";
 import {
   childrenSections,
   GeneralChildrenSections,
@@ -37,8 +37,6 @@ export const childSections = checkChildSections({
 
   // main is basically no longer required.
   main: childrenSections({
-    login: ["login"],
-    register: ["register"],
     deal: ["deal"],
     feUser: ["feUser"],
   }),
@@ -142,6 +140,10 @@ export const childSections = checkChildSections({
     ongoingCostListGroup: ["ongoingListGroup"],
     customVarb: ["customVarb"],
   }),
+  // displayStoreProperty: baseSectionVarbs(baseVarbsS.typeUniformity),
+  // displayStoreLoan: baseSectionVarbs(baseVarbsS.typeUniformity),
+  // displayStoreMgmt: baseSectionVarbs(baseVarbsS.typeUniformity),
+  // displayStoreDeal: baseSectionVarbs(baseVarbsS.typeUniformity),
 });
 
 // base and relSections for that matter?

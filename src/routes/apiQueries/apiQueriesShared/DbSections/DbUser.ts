@@ -89,7 +89,7 @@ export class DbUser extends DbSectionsQuerierBase {
   >({
     varbName,
     storeName,
-  }: OneDbVarbInfo<CN, VN>): Promise<VarbValue<SN, VN>> {
+  }: OneDbVarbInfo<CN, VN, SN>): Promise<VarbValue<SN, VN>> {
     const loaded = await this.loadedDbUser();
     const section = loaded.get.onlyChild(storeName) as GetterSection<SN>;
     return section.valueNext(varbName);

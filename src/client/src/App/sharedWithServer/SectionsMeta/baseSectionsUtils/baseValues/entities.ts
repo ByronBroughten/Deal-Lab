@@ -2,13 +2,13 @@ import { pick } from "lodash";
 import { Schema } from "mongoose";
 import { z } from "zod";
 import { zNumber, zS, zString } from "../../../utils/zod";
-import { SimpleSectionName } from "../../baseSections";
 import { zSectionNameProp } from "../../baseSectionsDerived/baseSectionInfo";
 import {
   DbVarbInfoMixed,
   FeVarbInfoMixed,
   GlobalVarbInfo,
 } from "../../baseSectionsDerived/baseVarbInfo";
+import { SimpleSectionName } from "../../baseSectionsVarbs";
 import { Id } from "../id";
 
 export type OutEntity = FeVarbInfoMixed & { entityId: string };

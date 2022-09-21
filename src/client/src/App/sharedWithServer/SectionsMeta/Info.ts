@@ -1,7 +1,7 @@
-import { SimpleSectionName } from "./baseSections";
 import { VarbProp, VarbPropNext } from "./baseSectionsDerived/baseVarbInfo";
 import { StateValue } from "./baseSectionsUtils/baseValues/StateValueTypes";
 import { Id } from "./baseSectionsUtils/id";
+import { SimpleSectionName } from "./baseSectionsVarbs";
 import {
   DescendantSectionName,
   SelfOrDescendantSectionName,

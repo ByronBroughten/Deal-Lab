@@ -1,5 +1,4 @@
 import { Obj } from "../../utils/Obj";
-import { baseSections, SimpleSectionName } from "../baseSections";
 import {
   BaseName,
   VarbNameNext,
@@ -7,6 +6,7 @@ import {
 } from "../baseSectionsDerived/baseSectionTypes";
 import { ValueName } from "../baseSectionsUtils/baseVarb";
 import { switchNames } from "../baseSectionsUtils/RelSwitchVarb";
+import { baseSectionsVarbs, SimpleSectionName } from "../baseSectionsVarbs";
 import { ChildName } from "../childSectionsDerived/ChildName";
 import { relVarbInfoS } from "../childSectionsDerived/RelVarbInfo";
 import { relVarbInfosS } from "../childSectionsDerived/RelVarbInfos";
@@ -40,9 +40,8 @@ function isRelVarbOfType<SN extends BaseName<"hasVarb">, VLN extends ValueName>(
   valueName: VLN,
   _value: any
 ): _value is RelVarbByType[VLN] {
-  const schema = baseSections[sectionName];
-  const varbType =
-    schema.varbSchemas[varbName as keyof typeof schema.varbSchemas];
+  const baseVarbs = baseSectionsVarbs[sectionName];
+  const varbType = baseVarbs[varbName] as any as ValueName;
   return varbType === valueName;
 }
 

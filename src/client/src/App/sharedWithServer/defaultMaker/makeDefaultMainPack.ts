@@ -13,9 +13,5 @@ export function makeDefaultMainPack(): SectionPack<"main"> {
     childName: "feUser",
     sectionPack: makeDefaultFeUserPack(),
   });
-  const childNames = ["login", "register"] as const;
-  for (const childName of childNames) {
-    main.addChild(childName);
-  }
   return main.makeSectionPack();
 }

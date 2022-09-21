@@ -1,6 +1,6 @@
 import { Obj } from "../utils/Obj";
-import { SimpleSectionName } from "./baseSections";
 import { SectionVarbName } from "./baseSectionsDerived/baseSectionTypes";
+import { SimpleSectionName } from "./baseSectionsVarbs";
 import {
   ChildIdArrsNarrow,
   ChildIdArrsWide,

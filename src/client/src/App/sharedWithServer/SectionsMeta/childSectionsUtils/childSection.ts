@@ -1,6 +1,6 @@
 import { Merge } from "../../utils/Obj/merge";
 import { StrictPick, StrictPickPartial } from "../../utils/types";
-import { SimpleSectionName } from "../baseSections";
+import { SimpleSectionName } from "../baseSectionsVarbs";
 import { SectionName } from "../SectionName";
 
 export function childSection<

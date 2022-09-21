@@ -2,10 +2,10 @@ import { omit } from "lodash";
 import { z } from "zod";
 import { Obj } from "../utils/Obj";
 import {
-  baseSection,
-  baseSectionS,
-  GeneralBaseSection,
-} from "./baseSectionsUtils/baseSection";
+  BaseSection,
+  baseSectionVarbs,
+  GeneralBaseSectionVarbs,
+} from "./baseSectionsUtils/baseSectionVarbs";
 import { baseVarbs, baseVarbsS } from "./baseSectionsUtils/baseVarbs";
 
 export const savableSectionVarbNames = Obj.keys(baseVarbsS.savableSection);
@@ -24,37 +24,93 @@ export const loanVarbsNotInFinancing = [
   ...savableSectionVarbNames,
 ] as const;
 
-export type BaseSections = typeof baseSections;
-export const baseSections = {
-  root: baseSectionS.container,
-  main: baseSection(),
-  feUser: baseSection(),
-  dbStore: baseSection(),
-  proxy: baseSection(),
-  // displayStoreProperty: baseSection(baseVarbsS.typeUniformity),
-  // displayStoreLoan: baseSection(baseVarbsS.typeUniformity),
-  // displayStoreMgmt: baseSection(baseVarbsS.typeUniformity),
-  // displayStoreDeal: baseSection(baseVarbsS.typeUniformity),
-  displayNameItem: baseSection({
+const sectionNames = [
+  "root",
+  "main",
+  "feUser",
+  "dbStore",
+  "proxy",
+  "displayNameItem",
+  "displayNameList",
+  "omniParent",
+  "compareTable",
+  "tableRow",
+  "column",
+  "cell",
+  "conditionalRow",
+  "singleTimeListGroup",
+  "singleTimeList",
+  "ongoingListGroup",
+  "ongoingList",
+  "singleTimeItem",
+  "ongoingItem",
+  "outputItem",
+  "customVarb",
+  "userVarbItem",
+  "conditionalRowList",
+  "userVarbList",
+
+  "deal",
+  "propertyGeneral",
+  "property",
+  "unit",
+  "financing",
+  "loan",
+  "mgmtGeneral",
+  "mgmt",
+
+  "subscriptionInfo",
+  "stripeSubscription",
+  "stripeInfoPrivate",
+
+  "authInfo",
+  "authInfoPrivate",
+
+  "userInfo",
+  "userInfoPrivate",
+] as const;
+
+type DefaultSectionsVarbs = {
+  [SN in SectionNameNext]: BaseSection;
+};
+
+type GeneralBaseSectionsVarbs = {
+  [SN in SectionNameNext]: GeneralBaseSectionVarbs;
+};
+
+const defaults = sectionNames.reduce((defaults, sectionName) => {
+  defaults[sectionName] = baseSectionVarbs();
+  return defaults;
+}, {} as DefaultSectionsVarbs);
+
+type SectionNameNext = typeof sectionNames[number];
+
+const checkBaseSectionsVarbs = <BSV extends GeneralBaseSectionsVarbs>(
+  bsv: BSV
+) => bsv;
+
+export type BaseSectionsVarbs = typeof baseSectionsVarbs;
+export const baseSectionsVarbs = checkBaseSectionsVarbs({
+  ...defaults,
+  displayNameItem: baseSectionVarbs({
     displayName: "string",
   }),
-  displayNameList: baseSection({
+  displayNameList: baseSectionVarbs({
     searchFilter: "string",
   }),
-  omniParent: baseSectionS.container,
-  compareTable: baseSection({ titleFilter: "string" } as const),
-  tableRow: baseSection({
+  compareTable: baseSectionVarbs({ titleFilter: "string" } as const),
+  tableRow: baseSectionVarbs({
     displayName: "string",
     compareToggle: "boolean",
   }),
-  column: baseSection({
+  column: baseSectionVarbs({
     valueEntityInfo: "inEntityInfo",
   }),
-  cell: baseSection({
+  cell: baseSectionVarbs({
     valueEntityInfo: "inEntityInfo",
     displayVarb: "string",
   }),
-  conditionalRow: baseSection({
+  conditionalRow: baseSectionVarbs({
     level: "number",
     type: "string",
     // if
@@ -65,40 +121,40 @@ export const baseSections = {
     // then
     then: "numObj",
   }),
-  singleTimeListGroup: baseSection({
+  singleTimeListGroup: baseSectionVarbs({
     total: "numObj",
     defaultValueSwitch: "string",
   }),
-  singleTimeList: baseSection({
+  singleTimeList: baseSectionVarbs({
     ...baseVarbsS.savableSection,
     total: "numObj",
     defaultValueSwitch: "string",
   }),
-  ongoingListGroup: baseSection({
+  ongoingListGroup: baseSectionVarbs({
     ...baseVarbsS.ongoing("total"),
     defaultValueSwitch: "string",
     defaultOngoingSwitch: "string",
   }),
-  ongoingList: baseSection({
+  ongoingList: baseSectionVarbs({
     ...baseVarbsS.savableSection,
     ...baseVarbsS.ongoing("total"),
     defaultValueSwitch: "string",
     defaultOngoingSwitch: "string",
   }),
-  userVarbList: baseSection({
+  userVarbList: baseSectionVarbs({
     ...baseVarbsS.savableSection,
     defaultValueSwitch: "string",
   }),
-  outputList: baseSection({
+  outputList: baseSectionVarbs({
     ...baseVarbsS.savableSection,
     defaultValueSwitch: "string",
   }),
-  singleTimeItem: baseSection({
+  singleTimeItem: baseSectionVarbs({
     ...baseVarbsS.singleValueVirtualVarb,
     ...baseVarbsS.loadableVarb,
     ...baseVarbsS.switchableEquationEditor,
   }),
-  ongoingItem: baseSection({
+  ongoingItem: baseSectionVarbs({
     ...baseVarbsS.virtualVarb,
     ...baseVarbsS.loadableVarb,
     ...baseVarbsS.switchableEquationEditor,
@@ -106,29 +162,24 @@ export const baseSections = {
     ...baseVarbsS.switch("lifespan", "monthsYears"),
     costToReplace: "numObj",
   }),
-  outputItem: baseSection({
+  outputItem: baseSectionVarbs({
     ...baseVarbsS.singleValueVirtualVarb,
     ...baseVarbsS.loadableVarb,
     ...baseVarbsS.switchableEquationEditor,
   }),
-  customVarb: baseSection({
+  customVarb: baseSectionVarbs({
     ...baseVarbsS.singleValueVirtualVarb,
     ...baseVarbsS.loadableVarb,
   }),
-  userVarbItem: baseSection({
+  userVarbItem: baseSectionVarbs({
     ...baseVarbsS.singleValueVirtualVarb,
     ...baseVarbsS.loadableVarb,
     ...baseVarbsS.switchableEquationEditor,
   }),
-  conditionalRowList: baseSection({
+  conditionalRowList: baseSectionVarbs({
     value: "numObj",
   }),
-
-  login: baseSection(baseVarbs("string", ["email", "password"] as const)),
-  register: baseSection(
-    baseVarbs("string", ["email", "password", "userName"] as const)
-  ),
-  property: baseSection({
+  property: baseSectionVarbs({
     ...baseVarbsS.savableSection,
     ...baseVarbs("numObj", [
       "price",
@@ -146,17 +197,15 @@ export const baseSections = {
     ...baseVarbsS.ongoing("miscRevenue"),
     ...baseVarbsS.ongoing("revenue"),
   }),
-  unit: baseSection({
+  unit: baseSectionVarbs({
     one: "numObj",
     numBedrooms: "numObj",
     ...baseVarbsS.ongoing("targetRent"),
   }),
   get propertyGeneral() {
-    return baseSection(
-      omit(this.property.varbSchemas, savableSectionVarbNames)
-    );
+    return baseSectionVarbs(omit(this.property, savableSectionVarbNames));
   },
-  loan: baseSection({
+  loan: baseSectionVarbs({
     ...baseVarbsS.savableSection,
     ...baseVarbs("numObj", [
       "loanTotalDollars",
@@ -176,11 +225,11 @@ export const baseSections = {
     ...baseVarbsS.ongoing("mortgageIns"),
   } as const),
   get financing() {
-    return baseSection({
-      ...omit(this.loan.varbSchemas, loanVarbsNotInFinancing),
+    return baseSectionVarbs({
+      ...omit(this.loan, loanVarbsNotInFinancing),
     });
   },
-  mgmt: baseSection({
+  mgmt: baseSectionVarbs({
     ...baseVarbsS.savableSection,
     ...baseVarbs("numObj", [
       "vacancyRatePercent",
@@ -195,9 +244,9 @@ export const baseSections = {
     ...baseVarbsS.ongoing("rentCutDollars"),
   } as const),
   get mgmtGeneral() {
-    return baseSection(omit(this.mgmt.varbSchemas, savableSectionVarbNames));
+    return baseSectionVarbs(omit(this.mgmt, savableSectionVarbNames));
   },
-  deal: baseSection({
+  deal: baseSectionVarbs({
     ...baseVarbsS.savableSection,
     ...baseVarbs("numObj", [
       "upfrontExpensesBaseSum",
@@ -215,37 +264,37 @@ export const baseSections = {
     ...baseVarbsS.ongoing("roiDecimal"),
     ...baseVarbsS.ongoing("roi"),
   }),
-  stripeSubscription: baseSection({
+  stripeSubscription: baseSectionVarbs({
     subId: "string",
     status: "string",
     priceIds: "stringArray",
     currentPeriodEnd: "number",
   }),
-  subscriptionInfo: baseSection({
+  subscriptionInfo: baseSectionVarbs({
     plan: "string",
     planExp: "number",
   }),
 
-  authInfo: baseSection({
+  authInfo: baseSectionVarbs({
     authStatus: "string",
   }),
-  authInfoPrivate: baseSection({
+  authInfoPrivate: baseSectionVarbs({
     authId: "string",
   }),
-  userInfo: baseSection({
+  userInfo: baseSectionVarbs({
     ...baseVarbs("string", ["email", "userName"] as const),
     timeJoined: "number",
   }),
-  stripeInfoPrivate: baseSection({
+  stripeInfoPrivate: baseSectionVarbs({
     customerId: "string",
   } as const),
-  userInfoPrivate: baseSection({
+  userInfoPrivate: baseSectionVarbs({
     ...baseVarbs("string", ["encryptedPassword", "emailAsSubmitted"] as const),
     guestSectionsAreLoaded: "boolean",
   }),
-} as const;
+});
 
-export const simpleSectionNames = Obj.keys(baseSections);
+export const simpleSectionNames = Obj.keys(baseSectionsVarbs);
 export type SimpleSectionName = typeof simpleSectionNames[number];
 export function isSectionName(value: any): value is SimpleSectionName {
   return simpleSectionNames.includes(value);
@@ -268,9 +317,11 @@ export function isUserPlan(value: any): value is UserPlan {
 const authStatuses = ["guest", "user"] as const;
 export type AuthStatus = typeof authStatuses[number];
 
-type FeSectionName = keyof BaseSections;
-export type BaseSectionsGeneral = Record<FeSectionName, GeneralBaseSection>;
+export type BaseSectionsGeneral = Record<
+  SimpleSectionName,
+  GeneralBaseSectionVarbs
+>;
 
 const _testBaseSections = <T extends BaseSectionsGeneral>(_: T): void =>
   undefined;
-_testBaseSections(baseSections);
+_testBaseSections(baseSectionsVarbs);

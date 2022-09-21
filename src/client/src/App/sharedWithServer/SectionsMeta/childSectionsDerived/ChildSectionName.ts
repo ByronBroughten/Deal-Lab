@@ -1,7 +1,7 @@
 import { Obj } from "../../utils/Obj";
 import { PropKeyOfValue } from "../../utils/Obj/SubType";
 import { MergeUnionObjFull } from "../../utils/types/mergeUnionObj";
-import { SimpleSectionName, simpleSectionNames } from "../baseSections";
+import { SimpleSectionName, simpleSectionNames } from "../baseSectionsVarbs";
 import { childSections, SectionChildProps } from "../childSections";
 import { GeneralChildrenSections } from "../childSectionsUtils/childrenSections";
 import { ChildName, sectionToChildNames } from "./ChildName";

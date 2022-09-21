@@ -1,4 +1,4 @@
-import { SimpleSectionName } from "../baseSections";
+import { SimpleSectionName } from "../baseSectionsVarbs";
 import { ChildName } from "./ChildName";
 import { ChildSectionName } from "./ChildSectionName";
 import { SectionPack } from "./SectionPack";

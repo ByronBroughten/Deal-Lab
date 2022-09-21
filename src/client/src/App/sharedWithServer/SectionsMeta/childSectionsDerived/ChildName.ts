@@ -1,7 +1,7 @@
 import { Obj } from "../../utils/Obj";
 import { RemoveNotStrings, StrictOmit } from "../../utils/types";
 import { MergeUnionObj } from "../../utils/types/mergeUnionObj";
-import { SimpleSectionName, simpleSectionNames } from "../baseSections";
+import { SimpleSectionName, simpleSectionNames } from "../baseSectionsVarbs";
 import { childSections, ChildSections } from "../childSections";
 import { ChildSectionName } from "./ChildSectionName";
 

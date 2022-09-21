@@ -1,6 +1,5 @@
 import { cloneDeep, pick } from "lodash";
 import { sectionsMeta } from "../SectionsMeta";
-import { SimpleSectionName } from "./baseSections";
 import { VarbNames } from "./baseSectionsDerived/baseVarbInfo";
 import { valueMeta } from "./baseSectionsDerived/valueMeta";
 import { UpdateFnName } from "./baseSectionsDerived/valueMetaTypes";
@@ -9,6 +8,7 @@ import {
   numUnitParams,
 } from "./baseSectionsUtils/baseValues/calculations/numUnitParams";
 import { ValueName } from "./baseSectionsUtils/baseVarb";
+import { SimpleSectionName } from "./baseSectionsVarbs";
 import {
   RelInVarbInfo,
   RelOutVarbInfo,

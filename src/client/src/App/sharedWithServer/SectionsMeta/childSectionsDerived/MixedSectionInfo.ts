@@ -1,5 +1,4 @@
 import { DistributiveOmit } from "../../utils/types";
-import { SimpleSectionName } from "../baseSections";
 import {
   DbSectionInfoMixed,
   FeSectionInfoMixed,
@@ -8,6 +7,7 @@ import {
   VarbProp,
 } from "../baseSectionsDerived/baseVarbInfo";
 import { ExpectedCount } from "../baseSectionsUtils/NanoIdInfo";
+import { SimpleSectionName } from "../baseSectionsVarbs";
 import { RelSectionInfo } from "./RelInfo";
 
 // a mixed section finder that doesn't need a focal section

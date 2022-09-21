@@ -1,5 +1,5 @@
 import { Obj } from "../../utils/Obj";
-import { SimpleSectionName } from "../baseSections";
+import { SimpleSectionName } from "../baseSectionsVarbs";
 import {
   childSection,
   ChildSection,

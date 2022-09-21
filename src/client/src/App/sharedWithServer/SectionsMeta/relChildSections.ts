@@ -1,6 +1,6 @@
 import { Arr } from "../utils/Arr";
 import { Merge } from "../utils/Obj/merge";
-import { SimpleSectionName, simpleSectionNames } from "./baseSections";
+import { SimpleSectionName, simpleSectionNames } from "./baseSectionsVarbs";
 import {
   ChildName,
   sectionToChildNames,

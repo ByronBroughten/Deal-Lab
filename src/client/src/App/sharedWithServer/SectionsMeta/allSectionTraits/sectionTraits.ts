@@ -1,5 +1,5 @@
 import { Merge } from "../../utils/Obj/merge";
-import { SimpleSectionName } from "../baseSections";
+import { SimpleSectionName } from "../baseSectionsVarbs";
 import { ChildName } from "../childSectionsDerived/ChildName";
 import { ChildSectionNameName } from "../childSectionsDerived/ChildSectionName";
 
@@ -25,7 +25,7 @@ export interface GenericSectionTraits<SN extends SimpleSectionName>
 }
 
 export interface GeneralSectionTraits {
-  // displayName: string;
+  displayName: string;
   hasGlobalVarbs: boolean;
   varbListItem: string | null;
 
@@ -46,7 +46,7 @@ function makeDefault<G extends GeneralSectionTraits>(options: G): G {
 
 type DefaultProps = typeof defaultProps;
 const defaultProps = makeDefault({
-  // displayName: "",
+  displayName: "Unnamed Section",
   hasGlobalVarbs: false,
   varbListItem: null,
 

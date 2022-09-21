@@ -2,7 +2,7 @@ import config from "config";
 import jwt from "jsonwebtoken";
 import { isObject } from "lodash";
 import { SubscriptionValues } from "../../../../../client/src/App/sharedWithServer/apiQueriesShared/SubscriptionValues";
-import { isUserPlan } from "../../../../../client/src/App/sharedWithServer/SectionsMeta/baseSections";
+import { isUserPlan } from "../../../../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsVarbs";
 import { StrictOmit } from "../../../../../client/src/App/sharedWithServer/utils/types";
 import { ResStatusError } from "../../../../../utils/resError";
 

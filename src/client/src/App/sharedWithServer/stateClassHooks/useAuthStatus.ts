@@ -1,4 +1,4 @@
-import { AuthStatus } from "../SectionsMeta/baseSections";
+import { AuthStatus } from "../SectionsMeta/baseSectionsVarbs";
 import { useGetterSectionOnlyOne } from "./useGetterSection";
 
 export function useAuthStatus() {

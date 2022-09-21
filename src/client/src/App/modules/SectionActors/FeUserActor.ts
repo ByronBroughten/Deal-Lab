@@ -7,7 +7,7 @@ import { SubscriptionValues } from "../../sharedWithServer/apiQueriesShared/Subs
 import {
   AuthStatus,
   UserPlan,
-} from "../../sharedWithServer/SectionsMeta/baseSections";
+} from "../../sharedWithServer/SectionsMeta/baseSectionsVarbs";
 import { PackMakerSection } from "../../sharedWithServer/StatePackers.ts/PackMakerSection";
 import { StrictOmit } from "../../sharedWithServer/utils/types";
 import { auth } from "../services/authService";

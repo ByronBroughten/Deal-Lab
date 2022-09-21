@@ -1,10 +1,10 @@
 import mongoose, { Schema } from "mongoose";
 import { sectionsMeta } from "../../client/src/App/sharedWithServer/SectionsMeta";
-import { SimpleSectionName } from "../../client/src/App/sharedWithServer/SectionsMeta/baseSections";
 import {
   SectionVarbName,
   VarbNameNext,
 } from "../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionTypes";
+import { SimpleSectionName } from "../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsVarbs";
 import {
   ChildName,
   getChildNames,

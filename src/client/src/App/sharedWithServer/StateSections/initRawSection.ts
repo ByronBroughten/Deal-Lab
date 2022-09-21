@@ -1,6 +1,5 @@
 import { pick } from "lodash";
 import { sectionsMeta } from "../SectionsMeta";
-import { SimpleSectionName } from "../SectionsMeta/baseSections";
 import { VarbNames } from "../SectionsMeta/baseSectionsDerived/baseVarbInfo";
 import {
   DbValue,
@@ -8,6 +7,7 @@ import {
 } from "../SectionsMeta/baseSectionsDerived/valueMetaTypes";
 import { StateValue } from "../SectionsMeta/baseSectionsUtils/baseValues/StateValueTypes";
 import { Id } from "../SectionsMeta/baseSectionsUtils/id";
+import { SimpleSectionName } from "../SectionsMeta/baseSectionsVarbs";
 import { ChildIdArrsNarrow } from "../SectionsMeta/childSectionsDerived/ChildName";
 import { FeSectionInfo, FeVarbInfo } from "../SectionsMeta/Info";
 import { SectionName } from "../SectionsMeta/SectionName";

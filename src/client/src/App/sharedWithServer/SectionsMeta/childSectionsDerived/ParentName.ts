@@ -1,5 +1,5 @@
 import { NeversToSomething, SubType } from "../../utils/types";
-import { SimpleSectionName, simpleSectionNames } from "../baseSections";
+import { SimpleSectionName, simpleSectionNames } from "../baseSectionsVarbs";
 import { noParentWarning } from "../Info";
 import { ChildName } from "./ChildName";
 import {

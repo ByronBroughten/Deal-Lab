@@ -1,4 +1,4 @@
-import { SimpleSectionName } from "../SectionsMeta/baseSections";
+import { SimpleSectionName } from "../SectionsMeta/baseSectionsVarbs";
 import {
   ChildName,
   FeChildInfo,

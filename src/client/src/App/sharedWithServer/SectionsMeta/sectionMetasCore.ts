@@ -3,16 +3,13 @@ import {
   GeneralSectionTraits,
   SectionTraitName,
 } from "./allSectionTraits/sectionTraits";
+import { GeneralBaseSectionVarbs } from "./baseSectionsUtils/baseSectionVarbs";
 import {
-  baseSections,
-  BaseSections,
+  BaseSectionsVarbs,
+  baseSectionsVarbs,
   SimpleSectionName,
   simpleSectionNames,
-} from "./baseSections";
-import {
-  BasePropName,
-  GeneralBaseSection,
-} from "./baseSectionsUtils/baseSection";
+} from "./baseSectionsVarbs";
 import {
   GeneralGeneratedSection,
   generatedSections,
@@ -22,17 +19,22 @@ import {
 import { relSections, RelSections } from "./relSections";
 import { GeneralRelSection, RelPropName } from "./relSectionsUtils/relSection";
 
+type SectionMetaCoreGeneral = {
+  baseVarbs: GeneralBaseSectionVarbs;
+} & GeneralRelSection &
+  GeneralGeneratedSection &
+  GeneralSectionTraits;
+
 type SectionMetasCoreGeneral = {
-  [SN in SimpleSectionName]: GeneralRelSection &
-    GeneralBaseSection &
-    GeneralGeneratedSection &
-    GeneralSectionTraits;
+  [SN in SimpleSectionName]: SectionMetaCoreGeneral;
 };
+
 export type SectionsMetaCore = {
   [SN in SimpleSectionName]: SectionMetaCore<SN>;
 };
-type SectionMetaCore<SN extends SimpleSectionName> = RelSections[SN] &
-  BaseSections[SN] &
+type SectionMetaCore<SN extends SimpleSectionName> = {
+  baseVarbs: BaseSectionsVarbs[SN];
+} & RelSections[SN] &
   GeneratedSections[SN] &
   AllSectionTraits[SN];
 
@@ -41,7 +43,7 @@ export const sectionMetasCore = simpleSectionNames.reduce(
     (core as SectionMetasCoreGeneral)[sectionName] = {
       ...{
         ...relSections[sectionName],
-        ...baseSections[sectionName],
+        baseVarbs: baseSectionsVarbs[sectionName],
       },
       ...({
         ...generatedSections[sectionName],
@@ -53,8 +55,4 @@ export const sectionMetasCore = simpleSectionNames.reduce(
   {} as SectionsMetaCore
 );
 
-export type CorePropName =
-  | BasePropName
-  | RelPropName
-  | GenPropName
-  | SectionTraitName;
+export type CorePropName = RelPropName | GenPropName | SectionTraitName;

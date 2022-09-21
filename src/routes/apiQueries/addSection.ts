@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { constants } from "../../client/src/App/Constants";
 import { UserInfoTokenProp } from "../../client/src/App/modules/services/authService";
-import { UserPlan } from "../../client/src/App/sharedWithServer/SectionsMeta/baseSections";
+import { UserPlan } from "../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsVarbs";
 import { DbPack } from "../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbSectionPack";
 import {
   DbStoreInfo,

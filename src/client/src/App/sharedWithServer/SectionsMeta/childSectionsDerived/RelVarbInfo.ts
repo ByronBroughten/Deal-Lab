@@ -1,6 +1,6 @@
-import { SimpleSectionName } from "../baseSections";
 import { VarbProp } from "../baseSectionsDerived/baseVarbInfo";
 import { ExpectedCount } from "../baseSectionsUtils/NanoIdInfo";
+import { SimpleSectionName } from "../baseSectionsVarbs";
 import { ChildName } from "./ChildName";
 import { ParentName, PiblingName, StepSiblingName } from "./ParentName";
 import {

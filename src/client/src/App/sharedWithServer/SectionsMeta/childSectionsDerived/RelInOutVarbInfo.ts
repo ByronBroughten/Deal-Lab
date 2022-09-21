@@ -1,5 +1,5 @@
-import { SimpleSectionName } from "../baseSections";
 import { VarbNames } from "../baseSectionsDerived/baseVarbInfo";
+import { SimpleSectionName } from "../baseSectionsVarbs";
 import { childToSectionNames } from "./ChildSectionName";
 import { ParentName } from "./ParentName";
 import {

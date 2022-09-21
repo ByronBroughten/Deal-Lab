@@ -1,6 +1,6 @@
 import { Merge } from "../../utils/Obj/merge";
 import { StrictOmit } from "../../utils/types";
-import { SimpleSectionName } from "../baseSections";
+import { SimpleSectionName } from "../baseSectionsVarbs";
 import { relVarb } from "./rel/relVarb";
 import { RelVarb } from "./rel/relVarbTypes";
 import { GeneralRelVarbs, RelVarbs } from "./relVarbs";

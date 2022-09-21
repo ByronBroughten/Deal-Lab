@@ -1,9 +1,9 @@
-import { SimpleSectionName } from "../../baseSections";
 import { valueMeta } from "../../baseSectionsDerived/valueMeta";
 import {
   LeftRightPropCalculations,
   SinglePropCalculations,
 } from "../../baseSectionsUtils/baseValues/calculations";
+import { SimpleSectionName } from "../../baseSectionsVarbs";
 import { ChildName } from "../../childSectionsDerived/ChildName";
 import { RelInVarbInfo } from "../../childSectionsDerived/RelInOutVarbInfo";
 import { relVarbInfoS } from "../../childSectionsDerived/RelVarbInfo";

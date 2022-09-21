@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { zS } from "../../utils/zod";
-import { SimpleSectionName } from "../baseSections";
+import { SimpleSectionName } from "../baseSectionsVarbs";
 
 export interface SectionNameProp<SN extends SimpleSectionName> {
   sectionName: SN;
