@@ -56,9 +56,6 @@ export class SectionMeta<SN extends SimpleSectionName> {
   get dbIndexStoreName(): CorePropNoNull<SN, "dbIndexStoreName"> {
     return this.propNoNull("dbIndexStoreName");
   }
-  get tableStoreName(): CorePropNoNull<SN, "tableStoreName"> {
-    return this.propNoNull("tableStoreName");
-  }
   get compareTableName(): CorePropNoNull<SN, "compareTableName"> {
     return this.propNoNull("compareTableName");
   }

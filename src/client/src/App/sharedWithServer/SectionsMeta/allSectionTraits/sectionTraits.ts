@@ -1,46 +1,57 @@
+import { Merge } from "../../utils/Obj/merge";
+import { SimpleSectionName } from "../baseSections";
+import { ChildName } from "../childSectionsDerived/ChildName";
+import { ChildSectionNameName } from "../childSectionsDerived/ChildSectionName";
 
 export function sectionTraits<
-O extends Options = {}
->(options?: O): SectionTraits<O> {
-return {
-  ...defaultProps,
-  ...options,
-} as any;
+  SN extends SimpleSectionName,
+  O extends Options<SN> = {}
+>(options?: O): SectionTraits<SN, O> {
+  return {
+    ...defaultProps,
+    ...options,
+  } as any;
 }
-export type SectionTraits<O extends Options={}> = Merge<DefaultProps, Options>;
+export type SectionTraits<
+  SN extends SimpleSectionName,
+  O extends Options<SN> = {}
+> = Merge<DefaultProps, O>;
 
-export type GeneralSectionTraits = {
-    hasGlobalVarbs: boolean;
-    displayName: string;
-    varbListItem: string | null;
-    tableIndexName: BaseName | null;
-    tableStoreName: BaseName | null;
+type Options<SN extends SimpleSectionName> = Partial<GenericSectionTraits<SN>>;
 
-    compareTableName: ChildSectionNameName<"feUser", "compareTable"> | null;
-    feDisplayIndexStoreName: ChildSectionNameName<
-        "feUser",
-        "displayNameList"
-    > | null;
-    feFullIndexStoreName: ChildName<"feUser"> | null;
-    dbIndexStoreName: ChildName<"dbStore"> | null;
-    dbArrStoreName: ChildName<"dbStore"> | null;
-};
+export interface GenericSectionTraits<SN extends SimpleSectionName>
+  extends GeneralSectionTraits {
+  varbListItem: ChildName<SN> | null;
+}
 
+export interface GeneralSectionTraits {
+  // displayName: string;
+  hasGlobalVarbs: boolean;
+  varbListItem: string | null;
 
-type Options = Partial<GeneralSectionTraits>;
-function makeDefault<O extends Options>(options: O): O {
-    return options;
-}  
-const defaultProps = makeDefault({
-    displayName: "",
-    varbListItem: null,
-    tableIndexName: null,
-    tableStoreName: null,
+  compareTableName: ChildSectionNameName<"feUser", "compareTable"> | null;
+  feDisplayIndexStoreName: ChildSectionNameName<
+    "feUser",
+    "displayNameList"
+  > | null;
+  feFullIndexStoreName: ChildName<"feUser"> | null;
+  dbIndexStoreName: ChildName<"dbStore"> | null;
+}
 
-    compareTableName: null,
-    feDisplayIndexStoreName: null,
-    feFullIndexStoreName: null,
-    dbIndexStoreName: null,
-    dbArrStoreName: null,
-});
+export type SectionTraitName = keyof GeneralSectionTraits;
+
+function makeDefault<G extends GeneralSectionTraits>(options: G): G {
+  return options;
+}
+
 type DefaultProps = typeof defaultProps;
+const defaultProps = makeDefault({
+  // displayName: "",
+  hasGlobalVarbs: false,
+  varbListItem: null,
+
+  compareTableName: null,
+  feDisplayIndexStoreName: null,
+  feFullIndexStoreName: null,
+  dbIndexStoreName: null,
+});

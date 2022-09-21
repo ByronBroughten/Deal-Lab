@@ -1,37 +1,22 @@
-import { omit } from "lodash";
-import { Obj } from "../../utils/Obj";
 import { BaseVarbSchemas } from "./baseVarbs";
 
 export type BasePropName = keyof GeneralBaseSection;
 export type GeneralBaseSection = {
   varbSchemas: BaseVarbSchemas;
-  hasGlobalVarbs: boolean;
 };
-
-type BaseSectionOptions = Partial<GeneralBaseSection>;
-export const baseOptions = {
-  fallback: {
-    hasGlobalVarbs: false,
-  },
-} as const;
 
 const _typeUniformityVarb = { _typeUniformity: "string" } as const;
 
-type FallbackSchema = typeof baseOptions.fallback;
-type ReturnSchema<V extends BaseVarbSchemas, O extends BaseSectionOptions> = {
+type BaseSection<V extends BaseVarbSchemas> = {
   varbSchemas: V & typeof _typeUniformityVarb;
-} & Omit<FallbackSchema, keyof O> &
-  O;
+};
 
-export function baseSection<
-  V extends BaseVarbSchemas,
-  O extends BaseSectionOptions = {}
->(varbSchemas?: V, options?: O): ReturnSchema<V, O> {
+export function baseSection<V extends BaseVarbSchemas>(
+  varbSchemas?: V
+): BaseSection<V> {
   return {
     varbSchemas: { ...varbSchemas, ..._typeUniformityVarb },
-    ...omit(baseOptions.fallback, Obj.keys(options ?? {})),
-    ...options,
-  } as ReturnSchema<V, O>;
+  } as BaseSection<V>;
 }
 
 export const baseSectionS = {

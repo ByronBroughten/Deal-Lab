@@ -153,10 +153,7 @@ export const baseSections = {
   }),
   get propertyGeneral() {
     return baseSection(
-      omit(this.property.varbSchemas, savableSectionVarbNames),
-      {
-        hasGlobalVarbs: true,
-      }
+      omit(this.property.varbSchemas, savableSectionVarbNames)
     );
   },
   loan: baseSection({
@@ -179,10 +176,9 @@ export const baseSections = {
     ...baseVarbsS.ongoing("mortgageIns"),
   } as const),
   get financing() {
-    return baseSection(
-      { ...omit(this.loan.varbSchemas, loanVarbsNotInFinancing) },
-      { hasGlobalVarbs: true }
-    );
+    return baseSection({
+      ...omit(this.loan.varbSchemas, loanVarbsNotInFinancing),
+    });
   },
   mgmt: baseSection({
     ...baseVarbsS.savableSection,
@@ -199,31 +195,26 @@ export const baseSections = {
     ...baseVarbsS.ongoing("rentCutDollars"),
   } as const),
   get mgmtGeneral() {
-    return baseSection(omit(this.mgmt.varbSchemas, savableSectionVarbNames), {
-      hasGlobalVarbs: true,
-    });
+    return baseSection(omit(this.mgmt.varbSchemas, savableSectionVarbNames));
   },
-  deal: baseSection(
-    {
-      ...baseVarbsS.savableSection,
-      ...baseVarbs("numObj", [
-        "upfrontExpensesBaseSum",
-        "upfrontExpenses",
-        "upfrontRevenue",
-        "totalInvestment",
-        "downPaymentDollars",
-        "downPaymentPercent",
-        "downPaymentDecimal",
-      ] as const),
-      ...baseVarbsS.ongoing("piti"),
-      ...baseVarbsS.ongoing("expenses"),
-      ...baseVarbsS.ongoing("revenue"),
-      ...baseVarbsS.ongoing("cashFlow"),
-      ...baseVarbsS.ongoing("roiDecimal"),
-      ...baseVarbsS.ongoing("roi"),
-    },
-    { hasGlobalVarbs: true }
-  ),
+  deal: baseSection({
+    ...baseVarbsS.savableSection,
+    ...baseVarbs("numObj", [
+      "upfrontExpensesBaseSum",
+      "upfrontExpenses",
+      "upfrontRevenue",
+      "totalInvestment",
+      "downPaymentDollars",
+      "downPaymentPercent",
+      "downPaymentDecimal",
+    ] as const),
+    ...baseVarbsS.ongoing("piti"),
+    ...baseVarbsS.ongoing("expenses"),
+    ...baseVarbsS.ongoing("revenue"),
+    ...baseVarbsS.ongoing("cashFlow"),
+    ...baseVarbsS.ongoing("roiDecimal"),
+    ...baseVarbsS.ongoing("roi"),
+  }),
   stripeSubscription: baseSection({
     subId: "string",
     status: "string",

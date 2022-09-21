@@ -34,13 +34,10 @@ function relSectionsFilter<RS extends GenericRelSections>(relSections: RS): RS {
   return relSections;
 }
 
-type Test = RelVarbs<"property">;
-
 type BasicRelSection<SN extends SimpleSectionName> = RelSection<
   SN,
   "",
-  RelVarbs<SN>,
-  {}
+  RelVarbs<SN>
 >;
 
 type BasicRelSections = {
@@ -57,7 +54,7 @@ function makeBasicRelVarbs<SN extends SimpleSectionName>(sectionName: SN) {
 function makeBasicRelSection<SN extends SimpleSectionName>(
   sectionName: SN
 ): BasicRelSection<SN> {
-  return relSection("", makeBasicRelVarbs(sectionName), {});
+  return relSection("", makeBasicRelVarbs(sectionName));
 }
 function makeBasicRelSections(): BasicRelSections {
   return simpleSectionNames.reduce((basicRelSections, sectionName) => {
@@ -66,12 +63,6 @@ function makeBasicRelSections(): BasicRelSections {
   }, {} as BasicRelSections);
 }
 
-// sectionTraits
-// test
-// make defaults
-// allow for adding others
-// make sectionMeta get all of its stuff
-// from sectionTraits
 const sectionTraits = {};
 
 // baseSections should just have the varbs
@@ -96,15 +87,11 @@ export function makeRelSections() {
     main: relSection("Main", { _typeUniformity: relVarb("string") }),
     feUser: relSection("FE User", { _typeUniformity: relVarb("string") }),
     dbStore: relSection("dbStore", { _typeUniformity: relVarb("string") }),
-    userInfo: relSection(
-      "User",
-      {
-        email: relVarb("string", { displayName: "Email" }),
-        userName: relVarb("string", { displayName: "Name" }),
-        timeJoined: relVarb("number", { displayName: "Time joined" }),
-      },
-      { dbIndexStoreName: "userInfo" }
-    ),
+    userInfo: relSection("User", {
+      email: relVarb("string", { displayName: "Email" }),
+      userName: relVarb("string", { displayName: "Name" }),
+      timeJoined: relVarb("number", { displayName: "Time joined" }),
+    }),
     authInfo: relSection("Auth info", {
       authStatus: relVarb("string", {
         initValue: "user",
@@ -154,20 +141,12 @@ export function makeRelSections() {
       valueEntityInfo: relVarb("inEntityInfo"),
       displayVarb: relVarb("string"),
     }),
-    outputList: relSection(
-      "Output List",
-      {
-        ...relVarbsS.savableSection,
-        defaultValueSwitch: relVarb("string", {
-          initValue: "loadedVarb",
-        } as const),
-      },
-      {
-        varbListItem: "outputItem",
-        feFullIndexStoreName: "outputListMain",
-        dbIndexStoreName: "outputListMain",
-      }
-    ),
+    outputList: relSection("Output List", {
+      ...relVarbsS.savableSection,
+      defaultValueSwitch: relVarb("string", {
+        initValue: "loadedVarb",
+      } as const),
+    }),
     singleTimeListGroup: relSection("List group", {
       total: relVarbS.sumNums(
         "List group total",
@@ -178,25 +157,17 @@ export function makeRelSections() {
         initValue: "labeledEquation",
       }),
     }),
-    singleTimeList: relSection(
-      "List",
-      {
-        ...relVarbsS.savableSection,
-        total: relVarbS.sumNums(
-          relVarbInfoS.local("displayName"),
-          [relVarbInfoS.children("singleTimeItem", "value")],
-          relAdorn.money
-        ),
-        defaultValueSwitch: relVarb("string", {
-          initValue: "labeledEquation",
-        }),
-      },
-      {
-        varbListItem: "singleTimeItem",
-        feFullIndexStoreName: "singleTimeListMain",
-        dbIndexStoreName: "singleTimeListMain",
-      }
-    ),
+    singleTimeList: relSection("List", {
+      ...relVarbsS.savableSection,
+      total: relVarbS.sumNums(
+        relVarbInfoS.local("displayName"),
+        [relVarbInfoS.children("singleTimeItem", "value")],
+        relAdorn.money
+      ),
+      defaultValueSwitch: relVarb("string", {
+        initValue: "labeledEquation",
+      }),
+    }),
     ongoingListGroup: relSection("List Group", {
       ...relVarbsS.ongoingSumNums(
         "total",
@@ -211,43 +182,27 @@ export function makeRelSections() {
         initValue: "monthly",
       }),
     }),
-    ongoingList: relSection(
-      "List",
-      {
-        ...relVarbsS.savableSection,
-        defaultValueSwitch: relVarb("string", {
-          initValue: "labeledEquation",
-        }),
-        defaultOngoingSwitch: relVarb("string", {
-          initValue: "monthly",
-        }),
-        ...relVarbsS.ongoingSumNums(
-          "total",
-          relVarbInfoS.local("displayName"),
-          [relVarbInfoS.children("ongoingItem", "value")],
-          { switchInit: "monthly", shared: { startAdornment: "$" } }
-        ),
-      },
-      {
-        varbListItem: "ongoingItem",
-        feFullIndexStoreName: "ongoingListMain",
-        dbIndexStoreName: "ongoingListMain",
-      }
-    ),
-    userVarbList: relSection(
-      "Variable List",
-      {
-        ...relVarbsS.savableSection,
-        defaultValueSwitch: relVarb("string", {
-          initValue: "labeledEquation",
-        } as const),
-      },
-      {
-        feFullIndexStoreName: "userVarbListMain",
-        dbIndexStoreName: "userVarbListMain",
-        varbListItem: "userVarbItem",
-      }
-    ),
+    ongoingList: relSection("List", {
+      ...relVarbsS.savableSection,
+      defaultValueSwitch: relVarb("string", {
+        initValue: "labeledEquation",
+      }),
+      defaultOngoingSwitch: relVarb("string", {
+        initValue: "monthly",
+      }),
+      ...relVarbsS.ongoingSumNums(
+        "total",
+        relVarbInfoS.local("displayName"),
+        [relVarbInfoS.children("ongoingItem", "value")],
+        { switchInit: "monthly", shared: { startAdornment: "$" } }
+      ),
+    }),
+    userVarbList: relSection("Variable List", {
+      ...relVarbsS.savableSection,
+      defaultValueSwitch: relVarb("string", {
+        initValue: "labeledEquation",
+      } as const),
+    }),
 
     outputItem: relSection("Output", {
       ...relVarbsS.basicVirtualVarb,
@@ -321,17 +276,9 @@ export function makeRelSections() {
     //     { type: "then", level: 0 },
     //     { type: "or else", level: 0 },
 
-    deal: relSection("Deal", dealRelVarbs(), {
-      compareTableName: "dealMainTable",
-      feDisplayIndexStoreName: "dealNames",
-      dbIndexStoreName: "dealMain",
-    } as const),
+    deal: relSection("Deal", dealRelVarbs()),
     financing: relSection("Financing", financingRelVarbs),
-    loan: relSection("Loan", loanRelVarbs(), {
-      compareTableName: "loanMainTable",
-      feDisplayIndexStoreName: "loanNames",
-      dbIndexStoreName: "loanMain",
-    }),
+    loan: relSection("Loan", loanRelVarbs()),
     propertyGeneral: relSection("Property", {
       ...relVarbsS.sumSection("property", propertyRelVarbs()),
       ...relVarbsS.sectionStrings(
@@ -340,11 +287,7 @@ export function makeRelSections() {
         savableSectionVarbNames
       ),
     }),
-    property: relSection("Property", propertyRelVarbs(), {
-      compareTableName: "propertyMainTable",
-      feDisplayIndexStoreName: "propertyNames",
-      dbIndexStoreName: "propertyMain",
-    }),
+    property: relSection("Property", propertyRelVarbs()),
     unit: relSection("Unit", {
       one: relVarbS.numObj("Unit", {
         updateFnName: "one",
@@ -361,11 +304,7 @@ export function makeRelSections() {
         savableSectionVarbNames
       ),
     }),
-    mgmt: relSection("Management", mgmtRelVarbs(), {
-      compareTableName: "mgmtMainTable",
-      feDisplayIndexStoreName: "mgmtNames",
-      dbIndexStoreName: "mgmtMain",
-    }),
+    mgmt: relSection("Management", mgmtRelVarbs()),
   });
 }
 

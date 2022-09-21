@@ -40,11 +40,6 @@ function makeBaseNameArrs() {
       );
       return varbNames.length > 0;
     }) as HasVarbSectionName[],
-    hasGlobalVarbs: Obj.entryKeysWithPropValue(
-      baseSections,
-      "hasGlobalVarbs",
-      true as true
-    ),
     get additiveList() {
       return Arr.extractStrict(simpleSectionNames, [
         "singleTimeList",

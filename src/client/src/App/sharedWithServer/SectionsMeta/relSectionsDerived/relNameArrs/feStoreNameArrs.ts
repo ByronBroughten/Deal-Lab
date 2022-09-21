@@ -1,17 +1,16 @@
 import { Obj } from "../../../utils/Obj";
+import { allSectionTraits, getSomeSectionTraits } from "../../allSectionTraits";
 import { getChildNames } from "../../childSectionsDerived/ChildName";
 import { tableRowDbSources } from "../../relChildSections";
-import { relSections } from "../../relSections";
-import { getRelParams } from "./getRelParams";
 
 export const hasStoreNameArrs = {
   hasDisplayIndex: Obj.entryKeysWithPropOfType(
-    relSections,
+    allSectionTraits,
     "feDisplayIndexStoreName",
     "string"
   ),
   hasFullIndex: Obj.entryKeysWithPropOfType(
-    relSections,
+    allSectionTraits,
     "feFullIndexStoreName",
     "string"
   ),
@@ -22,11 +21,11 @@ export const hasStoreNameArrs = {
 
 // both of these pertain to feStoreNames
 const hasToStoreNames = {
-  displayIndex: getRelParams(
+  displayIndex: getSomeSectionTraits(
     hasStoreNameArrs.hasDisplayIndex,
     "feDisplayIndexStoreName"
   ),
-  fullIndex: getRelParams(
+  fullIndex: getSomeSectionTraits(
     hasStoreNameArrs.hasFullIndex,
     "feFullIndexStoreName"
   ),
