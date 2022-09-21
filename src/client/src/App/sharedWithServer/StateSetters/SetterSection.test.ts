@@ -1,7 +1,7 @@
-import { numObj } from "../SectionsMeta/baseSectionsUtils/baseValues/NumObj";
-import { stringObj } from "../SectionsMeta/baseSectionsUtils/baseValues/StringObj";
+import { numObj } from "../SectionsMeta/baseSectionsVarbs/baseValues/NumObj";
+import { stringObj } from "../SectionsMeta/baseSectionsVarbs/baseValues/StringObj";
 import { ChildName } from "../SectionsMeta/childSectionsDerived/ChildName";
-import { SectionName } from "../SectionsMeta/SectionName";
+import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
 import { SetterTesterSection } from "./TestUtils/SetterTesterSection";
 
@@ -77,12 +77,12 @@ describe("SetterSection", () => {
     );
   });
   describe("operations with children", () => {
-    type SectionChildNameProps<SN extends SectionName<"hasChild">> = {
+    type SectionChildNameProps<SN extends SectionNameByType<"hasChild">> = {
       childName: ChildName<SN>;
       tester: SetterTesterSection<SN>;
     };
     type SectionChildPropsFn<
-      SN extends SectionName<"hasChild"> = SectionName<"hasChild">
+      SN extends SectionNameByType<"hasChild"> = SectionNameByType<"hasChild">
     > = (props: SectionChildNameProps<SN>) => void;
 
     function runWithNames(fn: SectionChildPropsFn): void {

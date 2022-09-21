@@ -1,7 +1,7 @@
 import { VarbNameNext } from "../SectionsMeta/baseSectionsDerived/baseSectionTypes";
 import { VarbValue } from "../SectionsMeta/baseSectionsDerived/valueMetaTypes";
 import { IdInfoMultiMixed } from "../SectionsMeta/childSectionsDerived/MixedSectionInfo";
-import { SectionName } from "../SectionsMeta/SectionName";
+import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import {
   RawFeSection,
   SectionNotFoundError,
@@ -11,7 +11,9 @@ import { Arr } from "../utils/Arr";
 import { GetterListBase } from "./Bases/GetterListBase";
 import { GetterSection } from "./GetterSection";
 
-export class GetterList<SN extends SectionName> extends GetterListBase<SN> {
+export class GetterList<
+  SN extends SectionNameByType
+> extends GetterListBase<SN> {
   private get stateList(): RawFeSection<SN>[] {
     return this.sectionsShare.sections.rawSectionList(this.sectionName);
   }

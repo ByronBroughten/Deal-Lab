@@ -1,14 +1,14 @@
 import {
   StateValueAnyKey,
   ValueTypesPlusAny,
-} from "../SectionsMeta/baseSectionsUtils/StateVarbTypes";
+} from "../SectionsMeta/baseSectionsVarbs/StateVarbTypes";
 import { DbVarbs } from "../SectionsMeta/childSectionsDerived/SectionPack/RawSection";
 import { FeVarbInfo, VarbStringInfo } from "../SectionsMeta/Info";
 import {
-  SectionName,
+  SectionNameByType,
   sectionNameS,
   SectionNameType,
-} from "../SectionsMeta/SectionName";
+} from "../SectionsMeta/SectionNameByType";
 import { StateVarbs } from "../StateSections/StateSectionsTypes";
 import { Obj } from "../utils/Obj";
 import { GetterSectionBase } from "./Bases/GetterSectionBase";
@@ -16,7 +16,9 @@ import { GetterSection } from "./GetterSection";
 import { GetterSections } from "./GetterSections";
 import { GetterVarb } from "./GetterVarb";
 
-export class GetterVarbs<SN extends SectionName> extends GetterSectionBase<SN> {
+export class GetterVarbs<
+  SN extends SectionNameByType
+> extends GetterSectionBase<SN> {
   get section() {
     return new GetterSection(this.getterSectionProps);
   }
@@ -41,10 +43,10 @@ export class GetterVarbs<SN extends SectionName> extends GetterSectionBase<SN> {
   }
   thisIsType<T extends SectionNameType>(
     sectionNameType: T
-  ): this is GetterSection<SectionName<T>> {
+  ): this is GetterSection<SectionNameByType<T>> {
     return sectionNameS.is(this.sectionName, sectionNameType);
   }
-  one(varbName: string): GetterVarb<SN & SectionName<"hasVarb">> {
+  one(varbName: string): GetterVarb<SN & SectionNameByType<"hasVarb">> {
     return new GetterVarb({
       ...this.feSectionInfo,
       sectionsShare: this.sectionsShare,

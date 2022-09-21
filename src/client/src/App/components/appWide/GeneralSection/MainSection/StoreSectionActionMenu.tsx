@@ -3,7 +3,7 @@ import { BiCopy, BiReset } from "react-icons/bi";
 import { MdDelete, MdOutlineSystemUpdateAlt } from "react-icons/md";
 import styled from "styled-components";
 import { useMainSectionActor } from "../../../../modules/sectionActorHooks/useMainSectionActor";
-import { SectionName } from "../../../../sharedWithServer/SectionsMeta/SectionName";
+import { SectionNameByType } from "../../../../sharedWithServer/SectionsMeta/SectionNameByType";
 import { useAuthStatus } from "../../../../sharedWithServer/stateClassHooks/useAuthStatus";
 import theme from "../../../../theme/Theme";
 import { DropdownList } from "../../DropdownList";
@@ -16,7 +16,7 @@ import {
   isSavedActions,
 } from "./StoreSectionActionMenu/ActionMenuTypes";
 
-interface Props<SN extends SectionName<"hasIndexStore">>
+interface Props<SN extends SectionNameByType<"hasIndexStore">>
   extends ActionMenuProps {
   dropTop?: boolean;
   sectionName: SN;
@@ -24,7 +24,7 @@ interface Props<SN extends SectionName<"hasIndexStore">>
   className?: string;
 }
 export function StoreSectionActionMenu<
-  SN extends SectionName<"hasIndexStore">
+  SN extends SectionNameByType<"hasIndexStore">
 >({
   dropTop,
   className,

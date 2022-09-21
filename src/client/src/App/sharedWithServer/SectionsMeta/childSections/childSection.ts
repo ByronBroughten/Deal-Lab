@@ -1,10 +1,10 @@
 import { Merge } from "../../utils/Obj/merge";
 import { StrictPick, StrictPickPartial } from "../../utils/types";
-import { SimpleSectionName } from "../baseSectionsVarbs";
 import { SectionName } from "../SectionName";
+import { SectionNameByType } from "../SectionNameByType";
 
 export function childSection<
-  SN extends SimpleSectionName,
+  SN extends SectionName,
   O extends ChildSectionOptions
 >(sectionName: SN, options?: O): ChildSection<SN, O> {
   return {
@@ -24,7 +24,7 @@ type SelectedOptions<O extends ChildSectionOptions | undefined = {}> = Merge<
   O
 >;
 export type ChildSection<
-  SN extends SectionName,
+  SN extends SectionNameByType,
   O extends ChildSectionOptions | undefined = {}
 > = SelectedOptions<O> & { sectionName: SN };
 
@@ -35,7 +35,7 @@ function _test() {
 }
 
 export type GeneralChildSection = {
-  sectionName: SimpleSectionName;
+  sectionName: SectionName;
   // dbStoreForTableRow:
 };
 

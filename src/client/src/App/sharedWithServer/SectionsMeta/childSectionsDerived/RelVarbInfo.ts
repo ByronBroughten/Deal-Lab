@@ -1,6 +1,6 @@
 import { VarbProp } from "../baseSectionsDerived/baseVarbInfo";
-import { ExpectedCount } from "../baseSectionsUtils/NanoIdInfo";
-import { SimpleSectionName } from "../baseSectionsVarbs";
+import { ExpectedCount } from "../baseSectionsVarbs/NanoIdInfo";
+import { SectionName } from "../SectionName";
 import { ChildName } from "./ChildName";
 import { ParentName, PiblingName, StepSiblingName } from "./ParentName";
 import {
@@ -28,42 +28,42 @@ type _TestRelSectionInfo = RelVarbInfoTest<RelVarbInfo["infoType"]>;
 
 export interface RelLocalVarbInfo extends RelLocalInfo, VarbProp {}
 export interface RelParentVarbInfo<
-  SN extends SimpleSectionName = SimpleSectionName,
+  SN extends SectionName = SectionName,
   PN extends ParentName<SN> = ParentName<SN>
 > extends RelParentInfo<SN, PN>,
     VarbProp {}
 
 export interface RelChildrenVarbInfo<
-  SN extends SimpleSectionName = SimpleSectionName,
+  SN extends SectionName = SectionName,
   CN extends ChildName<SN> = ChildName<SN>,
   OO extends ExpectedCount = ExpectedCount
 > extends RelChildrenInfo<SN, CN, OO>,
     VarbProp {}
 
 export interface RelStepSiblingVarbInfo<
-  SN extends SimpleSectionName = SimpleSectionName,
+  SN extends SectionName = SectionName,
   SSN extends StepSiblingName<SN> = StepSiblingName<SN>,
-  SSSN extends SimpleSectionName = SimpleSectionName,
+  SSSN extends SectionName = SectionName,
   OO extends ExpectedCount = ExpectedCount
 > extends RelStepSiblingInfo<SN, SSN, SSSN, OO>,
     VarbProp {}
 export interface RelPiblingVarbInfo<
-  SN extends SimpleSectionName = SimpleSectionName,
+  SN extends SectionName = SectionName,
   PN extends PiblingName<SN> = PiblingName<SN>,
-  PSN extends SimpleSectionName = SimpleSectionName,
+  PSN extends SectionName = SectionName,
   OO extends ExpectedCount = ExpectedCount
 > extends RelPiblingInfo<SN, PN, PSN, OO>,
     VarbProp {}
 
 export interface RelStepSiblingOfChildVarbInfo<
-  SSSN extends SimpleSectionName = SimpleSectionName,
+  SSSN extends SectionName = SectionName,
   CN extends ChildName = ChildName,
   OO extends ExpectedCount = ExpectedCount
 > extends RelStepSiblingOfChildInfo<SSSN, CN, OO> {
   varbName: string;
 }
 export interface RelNiblingOfChildVarbInfo<
-  NSN extends SimpleSectionName = SimpleSectionName,
+  NSN extends SectionName = SectionName,
   CN extends ChildName = ChildName,
   OO extends ExpectedCount = ExpectedCount
 > extends RelNiblingOfChildInfo<NSN, CN, OO> {
@@ -87,7 +87,7 @@ export const relVarbInfoS = {
     };
   },
   children<
-    SN extends SimpleSectionName,
+    SN extends SectionName,
     CN extends ChildName<SN>,
     O extends FullOptions = Defaults
   >(
@@ -104,9 +104,9 @@ export const relVarbInfoS = {
     };
   },
   stepSibling<
-    SN extends SimpleSectionName,
+    SN extends SectionName,
     SSN extends StepSiblingName<SN>,
-    SSSN extends SimpleSectionName,
+    SSSN extends SectionName,
     O extends FullOptions = Defaults
   >(
     stepSiblingName: SSN,
@@ -124,9 +124,9 @@ export const relVarbInfoS = {
     };
   },
   pibling<
-    SN extends SimpleSectionName,
+    SN extends SectionName,
     PN extends PiblingName<SN>,
-    PSN extends SimpleSectionName,
+    PSN extends SectionName,
     O extends FullOptions = Defaults
   >(
     piblingName: PN,

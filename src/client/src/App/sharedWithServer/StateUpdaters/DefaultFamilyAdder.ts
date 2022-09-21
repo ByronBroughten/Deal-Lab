@@ -4,13 +4,13 @@ import { ChildName } from "../SectionsMeta/childSectionsDerived/ChildName";
 import { ParentNameSafe } from "../SectionsMeta/childSectionsDerived/ParentName";
 import { SectionPack } from "../SectionsMeta/childSectionsDerived/SectionPack";
 import { FeSectionInfo } from "../SectionsMeta/Info";
-import { SectionName } from "../SectionsMeta/SectionName";
+import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { PackLoaderSection } from "../StatePackers.ts/PackLoaderSection";
 import { UpdaterSectionBase } from "./bases/updaterSectionBase";
 import { AddChildOptions, UpdaterSection } from "./UpdaterSection";
 
 export class DefaultFamilyAdder<
-  SN extends SectionName
+  SN extends SectionNameByType
 > extends UpdaterSectionBase<SN> {
   get updater(): UpdaterSection<SN> {
     return new UpdaterSection(this.getterSectionProps);
@@ -38,7 +38,7 @@ export class DefaultFamilyAdder<
     const { parentInfoSafe } = this.get;
     return this.newAdder(parentInfoSafe);
   }
-  newAdder<SN extends SectionName>(
+  newAdder<SN extends SectionNameByType>(
     feInfo: FeSectionInfo<SN>
   ): DefaultFamilyAdder<SN> {
     return new DefaultFamilyAdder({

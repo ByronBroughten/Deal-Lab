@@ -1,17 +1,17 @@
 import { Merge } from "../../utils/Obj/merge";
 import { StrictOmit } from "../../utils/types";
-import { SimpleSectionName } from "../baseSectionsVarbs";
+import { SectionName } from "../SectionName";
 import { relVarb } from "./rel/relVarb";
 import { RelVarb } from "./rel/relVarbTypes";
 import { GeneralRelVarbs, RelVarbs } from "./relVarbs";
 
-type UnUniformRelVarbs<SN extends SimpleSectionName> = StrictOmit<
+type UnUniformRelVarbs<SN extends SectionName> = StrictOmit<
   RelVarbs<SN>,
   "_typeUniformity"
 >;
 
 export function relSection<
-  SN extends SimpleSectionName,
+  SN extends SectionName,
   DN extends string,
   RVS extends UnUniformRelVarbs<SN>
 >(displayName: DN, relVarbs: RVS): RelSection<SN, DN, RVS> {
@@ -22,7 +22,7 @@ export function relSection<
 }
 
 export type RelSection<
-  SN extends SimpleSectionName,
+  SN extends SectionName,
   DN extends string = string,
   RVS extends UnUniformRelVarbs<SN> = UnUniformRelVarbs<SN>
 > = {
@@ -36,7 +36,7 @@ export type GeneralRelSection = {
   relVarbs: GeneralRelVarbs;
 };
 
-export type GenericRelSection<SN extends SimpleSectionName> = Merge<
+export type GenericRelSection<SN extends SectionName> = Merge<
   GeneralRelSection,
   {
     relVarbs: RelVarbs<SN>;

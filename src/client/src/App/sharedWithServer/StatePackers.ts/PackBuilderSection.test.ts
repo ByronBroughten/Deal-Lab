@@ -1,6 +1,6 @@
 import { pick } from "lodash";
-import { numObj } from "../SectionsMeta/baseSectionsUtils/baseValues/NumObj";
-import { stringObj } from "../SectionsMeta/baseSectionsUtils/baseValues/StringObj";
+import { numObj } from "../SectionsMeta/baseSectionsVarbs/baseValues/NumObj";
+import { stringObj } from "../SectionsMeta/baseSectionsVarbs/baseValues/StringObj";
 import { isSectionPack } from "../SectionsMeta/childSectionsDerived/SectionPack";
 import { Obj } from "../utils/Obj";
 import { PackBuilderSection } from "./PackBuilderSection";

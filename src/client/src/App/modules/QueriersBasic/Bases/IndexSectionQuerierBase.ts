@@ -1,16 +1,17 @@
-import { SectionName } from "../../../sharedWithServer/SectionsMeta/SectionName";
+import { SectionNameByType } from "../../../sharedWithServer/SectionsMeta/SectionNameByType";
 import {
   GetterSectionBase,
   GetterSectionProps,
 } from "../../../sharedWithServer/StateGetters/Bases/GetterSectionBase";
 import { ApiQuerierBase, ApiQuerierBaseProps } from "./ApiQuerierBase";
 
-interface IndexSectionQuerierProps<SN extends SectionName<"hasIndexStore">>
-  extends GetterSectionProps<SN>,
+interface IndexSectionQuerierProps<
+  SN extends SectionNameByType<"hasIndexStore">
+> extends GetterSectionProps<SN>,
     ApiQuerierBaseProps {}
 
 export class IndexSectionQuerierBase<
-  SN extends SectionName<"hasIndexStore">
+  SN extends SectionNameByType<"hasIndexStore">
 > extends ApiQuerierBase {
   readonly getterSectionBase: GetterSectionBase<SN>;
   constructor({ apiQueries, ...rest }: IndexSectionQuerierProps<SN>) {

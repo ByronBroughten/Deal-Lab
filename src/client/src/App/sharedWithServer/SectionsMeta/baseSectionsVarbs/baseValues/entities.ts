@@ -8,13 +8,13 @@ import {
   FeVarbInfoMixed,
   GlobalVarbInfo,
 } from "../../baseSectionsDerived/baseVarbInfo";
-import { SimpleSectionName } from "../../baseSectionsVarbs";
+import { SectionName } from "../../SectionName";
 import { Id } from "../id";
 
 export type OutEntity = FeVarbInfoMixed & { entityId: string };
 
 export interface DbInEntityInfo
-  extends DbVarbInfoMixed<SimpleSectionName, "onlyOne"> {}
+  extends DbVarbInfoMixed<SectionName, "onlyOne"> {}
 const zDbInEntityInfo = z.object({
   ...zSectionNameProp.shape,
   infoType: z.literal("dbId" as DbInEntityInfo["infoType"]),
@@ -24,7 +24,7 @@ const zDbInEntityInfo = z.object({
 } as Record<keyof DbInEntityInfo, any>);
 
 export interface GlobalInEntityInfo
-  extends GlobalVarbInfo<SimpleSectionName, "onlyOne"> {}
+  extends GlobalVarbInfo<SectionName, "onlyOne"> {}
 const zGlobalInEntityInfo = z.object({
   ...zSectionNameProp.shape,
   infoType: z.literal("globalSection" as GlobalInEntityInfo["infoType"]),
@@ -60,7 +60,7 @@ export interface GlobalInEntity extends InEntityBase, GlobalInEntityInfo {}
 export type InEntity = DbInEntity | GlobalInEntity;
 export type InEntities = InEntity[];
 // As things stand, I can't infer much from the zod schemas because
-// there isn't a convenient way to make their sectionName enforce SectionName
+// there isn't a convenient way to make their sectionName enforce SectionNameByType
 
 export const mInEntities = {
   type: Schema.Types.Mixed,

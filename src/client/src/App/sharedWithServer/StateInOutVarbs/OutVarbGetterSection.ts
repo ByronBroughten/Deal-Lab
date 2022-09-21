@@ -1,12 +1,12 @@
 import { FeVarbInfo } from "../SectionsMeta/Info";
-import { SectionName } from "../SectionsMeta/SectionName";
+import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { GetterSectionBase } from "../StateGetters/Bases/GetterSectionBase";
 import { GetterSection } from "../StateGetters/GetterSection";
 import { GetterVarb } from "../StateGetters/GetterVarb";
 import { OutVarbGetterVarb } from "./OutVarbGetterVarb";
 
 export class OutVarbGetterSection<
-  SN extends SectionName
+  SN extends SectionNameByType
 > extends GetterSectionBase<SN> {
   get = new GetterSection(this.getterSectionProps);
   get selfAndDescendantOutVarbIds(): string[] {
@@ -21,7 +21,7 @@ export class OutVarbGetterSection<
     }
     return outVarbInfos;
   }
-  outVarbGetter<S extends SectionName>(
+  outVarbGetter<S extends SectionNameByType>(
     varbInfo: FeVarbInfo<S>
   ): OutVarbGetterVarb<S> {
     return new OutVarbGetterVarb({

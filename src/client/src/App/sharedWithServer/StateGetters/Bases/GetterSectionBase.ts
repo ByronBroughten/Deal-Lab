@@ -1,15 +1,18 @@
-import { Id } from "../../SectionsMeta/baseSectionsUtils/id";
+import { Id } from "../../SectionsMeta/baseSectionsVarbs/id";
 import { FeSectionInfo } from "../../SectionsMeta/Info";
-import { SectionName, sectionNameS } from "../../SectionsMeta/SectionName";
+import {
+  SectionNameByType,
+  sectionNameS,
+} from "../../SectionsMeta/SectionNameByType";
 import { StateSections } from "../../StateSections/StateSections";
 import { GetterListBase, GetterListProps } from "./GetterListBase";
 
-export interface GetterSectionProps<SN extends SectionName>
+export interface GetterSectionProps<SN extends SectionNameByType>
   extends GetterListProps<SN> {
   feId: string;
 }
 export class GetterSectionBase<
-  SN extends SectionName
+  SN extends SectionNameByType
 > extends GetterListBase<SN> {
   readonly feId: string;
   constructor(props: GetterSectionProps<SN>) {
@@ -39,12 +42,12 @@ export class GetterSectionBase<
   }
   static isGetterBaseProps(
     value: any
-  ): value is GetterSectionProps<SectionName> {
+  ): value is GetterSectionProps<SectionNameByType> {
     return (
       typeof value === "object" &&
       Id.is(value.feId) &&
       sectionNameS.is(value.sectionName) &&
-      (value as GetterSectionProps<SectionName>).sectionsShare
+      (value as GetterSectionProps<SectionNameByType>).sectionsShare
         .sections instanceof StateSections
     );
   }

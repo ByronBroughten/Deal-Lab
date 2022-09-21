@@ -10,7 +10,7 @@ import {
 import { ChildSectionName } from "../SectionsMeta/childSectionsDerived/ChildSectionName";
 import { SectionPack } from "../SectionsMeta/childSectionsDerived/SectionPack";
 import { FeSectionInfo } from "../SectionsMeta/Info";
-import { SectionName } from "../SectionsMeta/SectionName";
+import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { GetterSectionProps } from "../StateGetters/Bases/GetterSectionBase";
 import { GetterSection } from "../StateGetters/GetterSection";
 import {
@@ -33,14 +33,14 @@ import { HasSolveShare } from "./SolverBases/SolverSectionsBase";
 import { SolverSections } from "./SolverSections";
 import { SolverVarb } from "./SolverVarb";
 
-interface SolverSectionInitProps<SN extends SectionName>
+interface SolverSectionInitProps<SN extends SectionNameByType>
   extends GetterSectionProps<SN>,
     Partial<HasSolveShare> {}
 
 export class SolverSection<
-  SN extends SectionName
+  SN extends SectionNameByType
 > extends SolverSectionBase<SN> {
-  static init<S extends SectionName>(
+  static init<S extends SectionNameByType>(
     props: SolverSectionInitProps<S>
   ): SolverSection<S> {
     if (!props.solveShare) {
@@ -69,7 +69,7 @@ export class SolverSection<
   get varbIdsToSolveFor(): Set<string> {
     return this.solveShare.varbIdsToSolveFor;
   }
-  solverSection<S extends SectionName>(
+  solverSection<S extends SectionNameByType>(
     feInfo: FeSectionInfo<S>
   ): SolverSection<S> {
     return new SolverSection({

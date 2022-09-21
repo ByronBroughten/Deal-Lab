@@ -1,93 +1,32 @@
 import { omit } from "lodash";
-import { z } from "zod";
-import { Obj } from "../utils/Obj";
 import {
   BaseSection,
   baseSectionVarbs,
   GeneralBaseSectionVarbs,
-} from "./baseSectionsUtils/baseSectionVarbs";
-import { baseVarbs, baseVarbsS } from "./baseSectionsUtils/baseVarbs";
+} from "./baseSectionsVarbs/baseSectionVarbs";
+import { baseVarbs, baseVarbsS } from "./baseSectionsVarbs/baseVarbs";
+import {
+  loanVarbsNotInFinancing,
+  savableSectionVarbNames,
+} from "./baseSectionsVarbs/specialVarbNames";
+import { SectionName, sectionNames } from "./SectionName";
 
-export const savableSectionVarbNames = Obj.keys(baseVarbsS.savableSection);
-export const loanVarbsNotInFinancing = [
-  "interestRatePercentMonthly",
-  "interestRatePercentYearly",
-  "interestRateDecimalMonthly",
-  "interestRateDecimalYearly",
-  "piFixedStandardMonthly",
-  "piFixedStandardYearly",
-  "interestOnlySimpleMonthly",
-  "interestOnlySimpleYearly",
-  "loanTermMonths",
-  "loanTermYears",
-  "piCalculationName",
-  ...savableSectionVarbNames,
-] as const;
-
-const sectionNames = [
-  "root",
-  "main",
-  "feUser",
-  "dbStore",
-  "proxy",
-  "displayNameItem",
-  "displayNameList",
-  "omniParent",
-  "compareTable",
-  "tableRow",
-  "column",
-  "cell",
-  "conditionalRow",
-  "singleTimeListGroup",
-  "singleTimeList",
-  "ongoingListGroup",
-  "ongoingList",
-  "singleTimeItem",
-  "ongoingItem",
-  "outputItem",
-  "customVarb",
-  "userVarbItem",
-  "conditionalRowList",
-  "userVarbList",
-
-  "deal",
-  "propertyGeneral",
-  "property",
-  "unit",
-  "financing",
-  "loan",
-  "mgmtGeneral",
-  "mgmt",
-
-  "subscriptionInfo",
-  "stripeSubscription",
-  "stripeInfoPrivate",
-
-  "authInfo",
-  "authInfoPrivate",
-
-  "userInfo",
-  "userInfoPrivate",
-] as const;
-
-type DefaultSectionsVarbs = {
-  [SN in SectionNameNext]: BaseSection;
-};
+const checkBaseSectionsVarbs = <BSV extends GeneralBaseSectionsVarbs>(
+  bsv: BSV
+) => bsv;
 
 type GeneralBaseSectionsVarbs = {
-  [SN in SectionNameNext]: GeneralBaseSectionVarbs;
+  [SN in SectionName]: GeneralBaseSectionVarbs;
+};
+
+type DefaultSectionsVarbs = {
+  [SN in SectionName]: BaseSection;
 };
 
 const defaults = sectionNames.reduce((defaults, sectionName) => {
   defaults[sectionName] = baseSectionVarbs();
   return defaults;
 }, {} as DefaultSectionsVarbs);
-
-type SectionNameNext = typeof sectionNames[number];
-
-const checkBaseSectionsVarbs = <BSV extends GeneralBaseSectionsVarbs>(
-  bsv: BSV
-) => bsv;
 
 export type BaseSectionsVarbs = typeof baseSectionsVarbs;
 export const baseSectionsVarbs = checkBaseSectionsVarbs({
@@ -294,20 +233,6 @@ export const baseSectionsVarbs = checkBaseSectionsVarbs({
   }),
 });
 
-export const simpleSectionNames = Obj.keys(baseSectionsVarbs);
-export type SimpleSectionName = typeof simpleSectionNames[number];
-export function isSectionName(value: any): value is SimpleSectionName {
-  return simpleSectionNames.includes(value);
-}
-export const zSectionName = z
-  .string()
-  .refine((str) => isSectionName(str), "Not a valid sectionName");
-
-export const allNull = simpleSectionNames.reduce((allNull, sectionName) => {
-  allNull[sectionName] = null;
-  return allNull;
-}, {} as Record<SimpleSectionName, null>);
-
 const userPlans = ["basicPlan", "fullPlan"] as const;
 export type UserPlan = typeof userPlans[number];
 export function isUserPlan(value: any): value is UserPlan {
@@ -316,12 +241,3 @@ export function isUserPlan(value: any): value is UserPlan {
 
 const authStatuses = ["guest", "user"] as const;
 export type AuthStatus = typeof authStatuses[number];
-
-export type BaseSectionsGeneral = Record<
-  SimpleSectionName,
-  GeneralBaseSectionVarbs
->;
-
-const _testBaseSections = <T extends BaseSectionsGeneral>(_: T): void =>
-  undefined;
-_testBaseSections(baseSectionsVarbs);

@@ -1,10 +1,10 @@
-import { CalculationName } from "../../../baseSectionsUtils/baseValues/calculations";
+import { CalculationName } from "../../../baseSectionsVarbs/baseValues/calculations";
 import {
   relSwitchVarbs,
   SwitchEndingKey,
   switchNames,
   TargetCoreGeneral,
-} from "../../../baseSectionsUtils/RelSwitchVarb";
+} from "../../../baseSectionsVarbs/RelSwitchVarb";
 import { relVarbInfoS } from "../../../childSectionsDerived/RelVarbInfo";
 import { RelNumObjOptions, relVarb } from "../relVarb";
 import { NumObjRelVarb, StringRelVarb, UpdateFnProps } from "../relVarbTypes";

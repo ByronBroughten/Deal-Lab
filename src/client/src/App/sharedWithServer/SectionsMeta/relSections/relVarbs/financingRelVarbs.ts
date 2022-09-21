@@ -1,7 +1,7 @@
-import { PiCalculationName } from "../../baseSectionsUtils/baseValues/calculations/piCalculations";
-import { numObj } from "../../baseSectionsUtils/baseValues/NumObj";
-import { switchNames } from "../../baseSectionsUtils/RelSwitchVarb";
-import { loanVarbsNotInFinancing } from "../../baseSectionsVarbs";
+import { PiCalculationName } from "../../baseSectionsVarbs/baseValues/calculations/piCalculations";
+import { numObj } from "../../baseSectionsVarbs/baseValues/NumObj";
+import { switchNames } from "../../baseSectionsVarbs/RelSwitchVarb";
+import { loanVarbsNotInFinancing } from "../../baseSectionsVarbs/specialVarbNames";
 import { relVarbInfoS } from "../../childSectionsDerived/RelVarbInfo";
 import { relVarbInfosS } from "../../childSectionsDerived/RelVarbInfos";
 import { relVarb, relVarbS } from "../rel/relVarb";

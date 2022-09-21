@@ -1,11 +1,13 @@
-import { SectionName } from "../SectionsMeta/SectionName";
+import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { GetterListBase } from "../StateGetters/Bases/GetterListBase";
 import { RawFeSection } from "../StateSections/StateSectionsTypes";
 import { Arr } from "../utils/Arr";
 import { GetterList } from "./../StateGetters/GetterList";
 import { UpdaterSections } from "./UpdaterSections";
 
-export class UpdaterList<SN extends SectionName> extends GetterListBase<SN> {
+export class UpdaterList<
+  SN extends SectionNameByType
+> extends GetterListBase<SN> {
   private getterList = new GetterList(this.getterListProps);
   private updaterSections = new UpdaterSections(this.getterSectionsProps);
 
@@ -29,7 +31,7 @@ export class UpdaterList<SN extends SectionName> extends GetterListBase<SN> {
     const idx = this.getterList.idx(feId);
     return this.update(Arr.removeAtIndexClone(this.raw, idx));
   }
-  updaterList<S extends SectionName>(sectionName: S): UpdaterList<S> {
+  updaterList<S extends SectionNameByType>(sectionName: S): UpdaterList<S> {
     return new UpdaterList({
       sectionName,
       sectionsShare: this.sectionsShare,

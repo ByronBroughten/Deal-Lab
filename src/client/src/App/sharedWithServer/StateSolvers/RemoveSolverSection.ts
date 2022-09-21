@@ -4,7 +4,7 @@ import {
 } from "../SectionsMeta/childSectionsDerived/ChildName";
 import { ChildSectionName } from "../SectionsMeta/childSectionsDerived/ChildSectionName";
 import { FeSectionInfo, FeVarbInfo } from "../SectionsMeta/Info";
-import { SectionName } from "../SectionsMeta/SectionName";
+import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { GetterSection } from "../StateGetters/GetterSection";
 import { OutVarbGetterSection } from "../StateInOutVarbs/OutVarbGetterSection";
 import { UpdaterSection } from "../StateUpdaters/UpdaterSection";
@@ -20,20 +20,20 @@ type RemoveSolveShare = {
   outVarbIdsOfRemoved: Set<string>;
 };
 
-interface RemoveSolverSectionProps<SN extends SectionName>
+interface RemoveSolverSectionProps<SN extends SectionNameByType>
   extends SolverSectionProps<SN> {
   removeSolveShare: RemoveSolveShare;
 }
 
 export class RemoveSolverSection<
-  SN extends SectionName
+  SN extends SectionNameByType
 > extends SolverSectionBase<SN> {
   readonly removeSolveShare: RemoveSolveShare;
   constructor({ removeSolveShare, ...rest }: RemoveSolverSectionProps<SN>) {
     super(rest);
     this.removeSolveShare = removeSolveShare;
   }
-  static init<S extends SectionName>(
+  static init<S extends SectionNameByType>(
     props: SolverSectionProps<S>
   ): RemoveSolverSection<S> {
     return new RemoveSolverSection({
@@ -59,7 +59,7 @@ export class RemoveSolverSection<
       ...varbInfo,
     });
   }
-  removeSolverSection<S extends SectionName>(
+  removeSolverSection<S extends SectionNameByType>(
     feInfo: FeSectionInfo<S>
   ): RemoveSolverSection<S> {
     return new RemoveSolverSection({

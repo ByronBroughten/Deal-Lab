@@ -2,12 +2,12 @@ import { valueMeta } from "../../baseSectionsDerived/valueMeta";
 import {
   LeftRightPropCalculations,
   SinglePropCalculations,
-} from "../../baseSectionsUtils/baseValues/calculations";
-import { SimpleSectionName } from "../../baseSectionsVarbs";
+} from "../../baseSectionsVarbs/baseValues/calculations";
 import { ChildName } from "../../childSectionsDerived/ChildName";
 import { RelInVarbInfo } from "../../childSectionsDerived/RelInOutVarbInfo";
 import { relVarbInfoS } from "../../childSectionsDerived/RelVarbInfo";
 import { relVarbInfosS } from "../../childSectionsDerived/RelVarbInfos";
+import { SectionName } from "../../SectionName";
 import {
   CommonRelVarb,
   DisplayName,
@@ -142,7 +142,7 @@ export const relVarbS = {
       startAdornment: "$",
     });
   },
-  sumChildVarb<SN extends SimpleSectionName>(
+  sumChildVarb<SN extends SectionName>(
     displayName: DisplayName,
     childName: ChildName<SN>,
     varbName: string

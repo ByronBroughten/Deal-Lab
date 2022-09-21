@@ -1,14 +1,14 @@
-import { SectionName } from "../../../SectionsMeta/SectionName";
+import { SectionNameByType } from "../../../SectionsMeta/SectionNameByType";
 import { SetterVarbProps } from "./../../SetterBases/SetterVarbBase";
 import { SectionTesterBase, SectionTesterProps } from "./SectionTesterBase";
 
-export interface SetterTesterVarbProps<SN extends SectionName>
+export interface SetterTesterVarbProps<SN extends SectionNameByType>
   extends SectionTesterProps<SN> {
   varbName: string;
 }
 
 export class SetterTesterVarbBase<
-  SN extends SectionName
+  SN extends SectionNameByType
 > extends SectionTesterBase<SN> {
   readonly varbName: string;
   constructor({ varbName, ...rest }: SetterTesterVarbProps<SN>) {

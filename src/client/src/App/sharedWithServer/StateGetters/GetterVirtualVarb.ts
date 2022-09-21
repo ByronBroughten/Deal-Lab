@@ -2,12 +2,12 @@ import {
   virtualVarbToValueNames,
   VirtualVarbToValues,
 } from "../SectionsMeta/baseSectionsDerived/baseVarbNames";
-import { SimpleSectionName } from "../SectionsMeta/baseSectionsVarbs";
+import { SectionName } from "../SectionsMeta/SectionName";
 import { GetterSectionBase } from "./Bases/GetterSectionBase";
 import { GetterSection } from "./GetterSection";
 
 export class GetterVirtualVarb<
-  SN extends SimpleSectionName
+  SN extends SectionName
 > extends GetterSectionBase<SN> {
   get get() {
     return new GetterSection(this.getterSectionProps);

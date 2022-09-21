@@ -1,35 +1,32 @@
 import { Obj } from "../utils/Obj";
-import { SimpleSectionName, simpleSectionNames } from "./baseSectionsVarbs";
 import {
   sectionParentNames,
   SectionToParentNameArrs,
 } from "./childSectionsDerived/ParentName";
 import { tableSourceParams } from "./relSectionsDerived/relNameArrs/tableStoreArrs";
+import { SectionName, sectionNames, sectionNamesToNull } from "./SectionName";
 
-export const allNull = simpleSectionNames.reduce((allNull, sectionName) => {
-  allNull[sectionName] = null;
-  return allNull;
-}, {} as Record<SimpleSectionName, null>);
-
-export const allTableSourceParams = Obj.merge(allNull, tableSourceParams);
-type AllTableSourceParams = typeof allTableSourceParams;
+export const allTableSourceParams = Obj.merge(
+  sectionNamesToNull,
+  tableSourceParams
+);
 
 export type GeneralGeneratedSection = {
   parentNames: string[];
 };
-type GeneratedSection<SN extends SimpleSectionName> = {
+type GeneratedSection<SN extends SectionName> = {
   parentNames: SectionToParentNameArrs[SN];
 };
-export type GenPropName = keyof GeneratedSection<SimpleSectionName>;
+export type GenPropName = keyof GeneratedSection<SectionName>;
 
 type GeneralGeneratedSections = {
-  [SN in SimpleSectionName]: GeneralGeneratedSection;
+  [SN in SectionName]: GeneralGeneratedSection;
 };
 export type GeneratedSections = {
-  [SN in SimpleSectionName]: GeneratedSection<SN>;
+  [SN in SectionName]: GeneratedSection<SN>;
 };
 
-export const generatedSections = simpleSectionNames.reduce(
+export const generatedSections = sectionNames.reduce(
   (generatedSections, sectionName) => {
     generatedSections[sectionName] = {
       parentNames: sectionParentNames[sectionName],

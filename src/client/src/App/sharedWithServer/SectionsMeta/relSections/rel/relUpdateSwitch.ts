@@ -1,4 +1,4 @@
-import { switchNames } from "../../baseSectionsUtils/RelSwitchVarb";
+import { switchNames } from "../../baseSectionsVarbs/RelSwitchVarb";
 import { relVarbInfoS } from "../../childSectionsDerived/RelVarbInfo";
 import { UpdateSwitchProp } from "./relVarbTypes";
 

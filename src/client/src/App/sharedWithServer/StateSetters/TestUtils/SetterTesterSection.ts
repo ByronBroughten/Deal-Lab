@@ -1,7 +1,7 @@
 import { ChildName } from "../../SectionsMeta/childSectionsDerived/ChildName";
 import { ParentNameSafe } from "../../SectionsMeta/childSectionsDerived/ParentName";
 import { FeVarbInfo } from "../../SectionsMeta/Info";
-import { SectionName } from "../../SectionsMeta/SectionName";
+import { SectionNameByType } from "../../SectionsMeta/SectionNameByType";
 import { SectionsShare } from "../../StateGetters/Bases/GetterSectionsBase";
 import { GetterList } from "../../StateGetters/GetterList";
 import { GetterSection } from "../../StateGetters/GetterSection";
@@ -14,9 +14,9 @@ import {
 } from "./Bases/SectionTesterBase";
 
 export class SetterTesterSection<
-  SN extends SectionName
+  SN extends SectionNameByType
 > extends SectionTesterBase<SN> {
-  static initProps<S extends SectionName>(
+  static initProps<S extends SectionNameByType>(
     sectionName: S
   ): SectionTesterProps<S> {
     const sections = SolverSections.initSectionsFromDefaultMain();
@@ -29,7 +29,9 @@ export class SetterTesterSection<
       state: { sections },
     };
   }
-  static init<S extends SectionName>(sectionName: S): SetterTesterSection<S> {
+  static init<S extends SectionNameByType>(
+    sectionName: S
+  ): SetterTesterSection<S> {
     return new SetterTesterSection(this.initProps(sectionName));
   }
   get setter(): SetterSection<SN> {
@@ -41,7 +43,7 @@ export class SetterTesterSection<
   get get(): GetterSection<SN> {
     return this.getter;
   }
-  getterList<S extends SectionName>(sectionName: S): GetterList<S> {
+  getterList<S extends SectionNameByType>(sectionName: S): GetterList<S> {
     return new GetterList({
       ...this.setterSectionTestProps,
       sectionName,
@@ -72,7 +74,7 @@ export class SetterTesterSection<
   get sectionsSharePropFromState(): { sectionsShare: SectionsShare } {
     return { sectionsShare: { sections: this.state.sections } };
   }
-  getterVarbFromState<SN extends SectionName>(
+  getterVarbFromState<SN extends SectionNameByType>(
     feInfo: FeVarbInfo<SN>
   ): GetterVarb<SN> {
     return new GetterVarb({

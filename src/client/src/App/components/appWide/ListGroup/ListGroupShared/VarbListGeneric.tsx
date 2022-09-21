@@ -6,9 +6,9 @@ import { ChildName } from "../../../../sharedWithServer/SectionsMeta/childSectio
 import { DbVarbs } from "../../../../sharedWithServer/SectionsMeta/childSectionsDerived/SectionPack/RawSection";
 import { FeSectionInfo } from "../../../../sharedWithServer/SectionsMeta/Info";
 import {
-  SectionName,
+  SectionNameByType,
   SectionValuesByType,
-} from "../../../../sharedWithServer/SectionsMeta/SectionName";
+} from "../../../../sharedWithServer/SectionsMeta/SectionNameByType";
 import { useSetterSection } from "../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import ccs from "../../../../theme/cssChunks";
 import theme, { ThemeName } from "../../../../theme/Theme";
@@ -20,7 +20,7 @@ import { CaretBtn } from "./VarbListGeneric/CaretBtn";
 import { VarbListTable } from "./VarbListGeneric/VarbListTable";
 import { VarbListTotal } from "./VarbListGeneric/VarbListTotal";
 
-type VarbListAllowed = SectionName<"varbListAllowed">;
+type VarbListAllowed = SectionNameByType<"varbListAllowed">;
 type Props<SN extends VarbListAllowed> = {
   feInfo: FeSectionInfo<SN>;
   makeItemNode: (props: { feId: string }) => ReactNode;

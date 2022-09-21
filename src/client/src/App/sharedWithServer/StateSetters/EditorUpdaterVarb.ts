@@ -11,15 +11,15 @@ import {
 } from "../../modules/draftjs/draftUtils";
 import { EntityMap, EntityRanges, RawEditorState } from "../../utils/DraftS";
 import { ValueNamesToTypes } from "../SectionsMeta/baseSectionsDerived/valueMetaTypes";
-import { InEntities } from "../SectionsMeta/baseSectionsUtils/baseValues/entities";
+import { InEntities } from "../SectionsMeta/baseSectionsVarbs/baseValues/entities";
 import {
   EntitiesAndEditorText,
   NumObj,
-} from "../SectionsMeta/baseSectionsUtils/baseValues/NumObj";
-import { isEditorUpdateFnName } from "../SectionsMeta/baseSectionsUtils/baseValues/StateValueTypes";
-import { StringObj } from "../SectionsMeta/baseSectionsUtils/baseValues/StringObj";
-import { valueNames } from "../SectionsMeta/baseSectionsUtils/baseVarb";
-import { SectionName } from "../SectionsMeta/SectionName";
+} from "../SectionsMeta/baseSectionsVarbs/baseValues/NumObj";
+import { isEditorUpdateFnName } from "../SectionsMeta/baseSectionsVarbs/baseValues/StateValueTypes";
+import { StringObj } from "../SectionsMeta/baseSectionsVarbs/baseValues/StringObj";
+import { valueNames } from "../SectionsMeta/baseSectionsVarbs/baseVarb";
+import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { GetterVarbBase } from "../StateGetters/Bases/GetterVarbBase";
 import { GetterVarb } from "../StateGetters/GetterVarb";
 import { GetterVarbNumObj } from "../StateGetters/GetterVarbNumObj";
@@ -48,7 +48,7 @@ export type CreateEditorProps = {
   compositeDecorator?: CompositeDecorator;
 };
 export class EditorUpdaterVarb<
-  SN extends SectionName<"hasVarb">
+  SN extends SectionNameByType<"hasVarb">
 > extends GetterVarbBase<SN> {
   get updaterVarb(): UpdaterVarb<SN> {
     return new UpdaterVarb(this.getterVarbProps);

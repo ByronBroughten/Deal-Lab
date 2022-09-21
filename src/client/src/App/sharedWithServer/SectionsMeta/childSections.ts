@@ -1,24 +1,24 @@
-import { SimpleSectionName, simpleSectionNames } from "./baseSectionsVarbs";
 import {
   childrenSections,
   GeneralChildrenSections,
-} from "./childSectionsUtils/childrenSections";
+} from "./childSections/childrenSections";
 import {
   childSection,
   GeneralChildSection,
-} from "./childSectionsUtils/childSection";
-import { relOmniParentChildren } from "./childSectionsUtils/omniParentChildren";
+} from "./childSections/childSection";
+import { relOmniParentChildren } from "./childSections/omniParentChildren";
+import { SectionName, sectionNames } from "./SectionName";
 
 type Defaults = {
-  [SN in SimpleSectionName]: {};
+  [SN in SectionName]: {};
 };
-const defaults = simpleSectionNames.reduce((defaults, sectionName) => {
+const defaults = sectionNames.reduce((defaults, sectionName) => {
   defaults[sectionName] = {};
   return defaults;
 }, {} as Defaults);
 
 type GenericChildSections = {
-  [SN in SimpleSectionName]: GeneralChildrenSections;
+  [SN in SectionName]: GeneralChildrenSections;
 };
 
 function checkChildSections<CS extends GenericChildSections>(

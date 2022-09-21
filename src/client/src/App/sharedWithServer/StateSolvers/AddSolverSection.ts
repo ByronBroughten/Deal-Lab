@@ -2,7 +2,7 @@ import { ChildName } from "../SectionsMeta/childSectionsDerived/ChildName";
 import { ChildSectionName } from "../SectionsMeta/childSectionsDerived/ChildSectionName";
 import { ParentNameSafe } from "../SectionsMeta/childSectionsDerived/ParentName";
 import { FeSectionInfo } from "../SectionsMeta/Info";
-import { SectionName } from "../SectionsMeta/SectionName";
+import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { GetterSection } from "../StateGetters/GetterSection";
 import { GetterVarb } from "../StateGetters/GetterVarb";
 import {
@@ -18,13 +18,13 @@ import {
 import { SolverVarb } from "./SolverVarb";
 
 type AddSolverShare = { addedVarbIds: Set<string> };
-interface AddSolverSectionProps<SN extends SectionName>
+interface AddSolverSectionProps<SN extends SectionNameByType>
   extends SolverSectionProps<SN> {
   addSolveShare: AddSolverShare;
 }
 
 export class AddSolverSection<
-  SN extends SectionName
+  SN extends SectionNameByType
 > extends SolverSectionBase<SN> {
   readonly addSolveShare: AddSolverShare;
   constructor({ addSolveShare, ...rest }: AddSolverSectionProps<SN>) {
@@ -35,7 +35,7 @@ export class AddSolverSection<
   private get loader() {
     return new PackLoaderSection(this.getterSectionProps);
   }
-  static init<S extends SectionName>(
+  static init<S extends SectionNameByType>(
     props: SolverSectionProps<S>
   ): AddSolverSection<S> {
     return new AddSolverSection({
@@ -49,7 +49,7 @@ export class AddSolverSection<
   private get defaultAdder() {
     return new DefaultFamilyAdder(this.getterSectionProps);
   }
-  addSolverSection<S extends SectionName>(
+  addSolverSection<S extends SectionNameByType>(
     feInfo: FeSectionInfo<S>
   ): AddSolverSection<S> {
     return new AddSolverSection({

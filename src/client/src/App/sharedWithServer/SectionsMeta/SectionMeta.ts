@@ -1,6 +1,5 @@
 import { Obj } from "../utils/Obj";
 import { SectionVarbName } from "./baseSectionsDerived/baseSectionTypes";
-import { SimpleSectionName } from "./baseSectionsVarbs";
 import {
   ChildIdArrsNarrow,
   ChildIdArrsWide,
@@ -22,30 +21,31 @@ import {
   SectionsMetaCore,
 } from "./sectionMetasCore";
 import { SectionName } from "./SectionName";
+import { SectionNameByType } from "./SectionNameByType";
 import { VarbMeta } from "./VarbMeta";
 
-export type VarbMetas<SN extends SimpleSectionName> = {
+export type VarbMetas<SN extends SectionName> = {
   [varbName: string]: VarbMeta<SN>;
 };
-type SectionMetaExtra<SN extends SimpleSectionName> = {
+type SectionMetaExtra<SN extends SectionName> = {
   varbMetas: VarbMetas<SN>;
 };
-export interface SectionMetaProps<SN extends SimpleSectionName>
+export interface SectionMetaProps<SN extends SectionName>
   extends SectionMetaExtra<SN> {
   sectionName: SN;
 }
 
 type CoreProp<
-  SN extends SimpleSectionName,
+  SN extends SectionName,
   PN extends CorePropName
 > = SectionsMetaCore[SN][PN];
 
-type CorePropNoNull<
-  SN extends SimpleSectionName,
-  PN extends CorePropName
-> = Exclude<SectionsMetaCore[SN][PN], null>;
+type CorePropNoNull<SN extends SectionName, PN extends CorePropName> = Exclude<
+  SectionsMetaCore[SN][PN],
+  null
+>;
 
-export class SectionMeta<SN extends SimpleSectionName> {
+export class SectionMeta<SN extends SectionName> {
   constructor(readonly props: SectionMetaProps<SN>) {}
   get sectionName(): SN {
     return this.props.sectionName;
@@ -106,7 +106,9 @@ export class SectionMeta<SN extends SimpleSectionName> {
   get childNames(): ChildName<SN>[] {
     return getChildNames(this.sectionName);
   }
-  isChildType(sectionName: SectionName): sectionName is ChildSectionName<SN> {
+  isChildType(
+    sectionName: SectionNameByType
+  ): sectionName is ChildSectionName<SN> {
     return this.childTypes.includes(sectionName as any);
   }
   get childTypes(): ChildSectionName<SN>[] {
@@ -115,7 +117,7 @@ export class SectionMeta<SN extends SimpleSectionName> {
   childType<CN extends ChildName<SN>>(childName: CN): ChildSectionName<SN, CN> {
     return childToSectionName(this.sectionName, childName);
   }
-  childTypeNames<CT extends SimpleSectionName>(
+  childTypeNames<CT extends SectionName>(
     childSectionName: CT
   ): ChildSectionNameName<SN, CT>[] {
     const csnsToCns = childSectionNameNames[this.sectionName] as {
@@ -161,7 +163,7 @@ export class SectionMeta<SN extends SimpleSectionName> {
       },
     });
   }
-  static init<SN extends SimpleSectionName>(sectionName: SN): SectionMeta<SN> {
+  static init<SN extends SectionName>(sectionName: SN): SectionMeta<SN> {
     const { relVarbs } = relSections[sectionName];
     const varbMetas = Obj.keys(relVarbs).reduce((vMetas, varbName) => {
       vMetas[varbName] = VarbMeta.init({ sectionName, varbName });

@@ -5,11 +5,14 @@ import {
   SectionPack,
   zRawSectionPack,
 } from "../SectionsMeta/childSectionsDerived/SectionPack";
-import { SectionName, sectionNameS } from "../SectionsMeta/SectionName";
+import {
+  SectionNameByType,
+  sectionNameS,
+} from "../SectionsMeta/SectionNameByType";
 import { zS } from "../utils/zod";
 
 export type LoginData = {
-  [SN in SectionName<"loadOnLogin">]: SectionPack<SN>[];
+  [SN in SectionNameByType<"loadOnLogin">]: SectionPack<SN>[];
 };
 
 export function isLoginData(value: any): value is LoginData {

@@ -1,63 +1,67 @@
 import { VarbProp, VarbPropNext } from "./baseSectionsDerived/baseVarbInfo";
-import { StateValue } from "./baseSectionsUtils/baseValues/StateValueTypes";
-import { Id } from "./baseSectionsUtils/id";
-import { SimpleSectionName } from "./baseSectionsVarbs";
+import { StateValue } from "./baseSectionsVarbs/baseValues/StateValueTypes";
+import { Id } from "./baseSectionsVarbs/id";
 import {
   DescendantSectionName,
   SelfOrDescendantSectionName,
 } from "./childSectionsDerived/DescendantSectionName";
 import { ParentName, ParentNameSafe } from "./childSectionsDerived/ParentName";
-import { SectionName, sectionNameS, SectionNameType } from "./SectionName";
+import { SectionName } from "./SectionName";
+import {
+  SectionNameByType,
+  sectionNameS,
+  SectionNameType,
+} from "./SectionNameByType";
 
 export interface FeInfoByType<T extends SectionNameType = "all"> {
-  sectionName: SectionName<T>;
+  sectionName: SectionNameByType<T>;
   feId: string;
 }
 export type DbInfoByType<ST extends SectionNameType = "all"> = {
-  sectionName: SectionName<ST>;
+  sectionName: SectionNameByType<ST>;
   dbId: string;
 };
 
-export interface FeSectionInfo<
-  SN extends SimpleSectionName = SimpleSectionName
-> {
+export interface FeSectionInfo<SN extends SectionName = SectionName> {
   sectionName: SN;
   feId: string;
 }
-export interface SectionArrInfo<SN extends SectionName> {
+export interface SectionArrInfo<SN extends SectionNameByType> {
   sectionName: SN;
   feIds: string;
 }
 
 export interface FeDescendantInfo<
-  SN extends SectionName = SectionName<"hasChild">
+  SN extends SectionNameByType = SectionNameByType<"hasChild">
 > {
   sectionName: DescendantSectionName<SN>;
   feId: string;
 }
-export interface FeSelfOrDescendantInfo<SN extends SectionName> {
+export interface FeSelfOrDescendantInfo<SN extends SectionNameByType> {
   sectionName: SelfOrDescendantSectionName<SN>;
   feId: string;
 }
-export interface FeParentInfo<SN extends SectionName> {
+export interface FeParentInfo<SN extends SectionNameByType> {
   sectionName: ParentName<SN>;
   feId: string;
 }
-export interface FeParentInfoSafe<SN extends SectionName> {
+export interface FeParentInfoSafe<SN extends SectionNameByType> {
   sectionName: ParentNameSafe<SN>;
   feId: string;
 }
 
-export interface FeVarbInfo<SN extends SectionName = SectionName<"hasVarb">>
-  extends FeSectionInfo<SN>,
+export interface FeVarbInfo<
+  SN extends SectionNameByType = SectionNameByType<"hasVarb">
+> extends FeSectionInfo<SN>,
     VarbProp {}
 
-export interface FeVarbInfoNext<SN extends SimpleSectionName>
+export interface FeVarbInfoNext<SN extends SectionName>
   extends FeSectionInfo<SN>,
     VarbPropNext<SN> {}
 
-export interface VarbValueInfo<SN extends SectionName = SectionName<"hasVarb">>
-  extends FeVarbInfo<SN> {
+export interface VarbValueInfo<
+  SN extends SectionNameByType = SectionNameByType<"hasVarb">
+> extends FeVarbInfo<SN> {
   value: StateValue;
 }
 

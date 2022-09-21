@@ -1,6 +1,6 @@
 import { RelVarbInfo } from "../SectionsMeta/childSectionsDerived/RelVarbInfo";
 import { FeVarbInfo } from "../SectionsMeta/Info";
-import { SectionName } from "../SectionsMeta/SectionName";
+import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import {
   OutDefaultPack,
   OutSwitchPack,
@@ -14,7 +14,7 @@ import { GetterSections } from "../StateGetters/GetterSections";
 import { GetterVarb } from "../StateGetters/GetterVarb";
 
 export class OutVarbGetterVarb<
-  SN extends SectionName<"hasVarb"> = SectionName<"hasVarb">
+  SN extends SectionNameByType<"hasVarb"> = SectionNameByType<"hasVarb">
 > extends GetterVarbBase<SN> {
   private outVarbInfoStore: FeVarbInfo[];
   constructor(props: GetterVarbProps<SN>) {

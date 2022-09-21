@@ -1,5 +1,5 @@
 import { SectionPack } from "../SectionsMeta/childSectionsDerived/SectionPack";
-import { SectionName } from "../SectionsMeta/SectionName";
+import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { makeDefaultDealPack } from "./makeDefaultDealPack";
 import { makeDefaultFeUserPack } from "./makeDefaultFeUser";
 import { makeDefaultLoanPack } from "./makeDefaultLoanPack";
@@ -8,10 +8,10 @@ import { makeDefaultMgmtPack } from "./makeDefaultMgmtPack";
 import { makeDefaultPropertyPack } from "./makeDefaultPropertyPack";
 import { makeDefaultUserVarbItem } from "./makeDefaultUserVarbItem";
 
-type FunctionsMakeDefault<SN extends SectionName> = {
+type FunctionsMakeDefault<SN extends SectionNameByType> = {
   [S in SN]: () => SectionPack<S>;
 };
-class DefaultSectionPackMaker<SN extends SectionName> {
+class DefaultSectionPackMaker<SN extends SectionNameByType> {
   constructor(private makeDefaults: FunctionsMakeDefault<SN>) {}
   has(sectionName: any): sectionName is SN {
     return sectionName in this.makeDefaults;

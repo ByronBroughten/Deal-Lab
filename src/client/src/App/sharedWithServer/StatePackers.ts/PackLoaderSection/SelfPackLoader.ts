@@ -5,7 +5,10 @@ import {
 } from "../../SectionsMeta/childSectionsDerived/ChildName";
 import { SectionPack } from "../../SectionsMeta/childSectionsDerived/SectionPack";
 import { OneRawSection } from "../../SectionsMeta/childSectionsDerived/SectionPack/RawSection";
-import { SectionName, sectionNameS } from "../../SectionsMeta/SectionName";
+import {
+  SectionNameByType,
+  sectionNameS,
+} from "../../SectionsMeta/SectionNameByType";
 import {
   GetterSectionBase,
   GetterSectionProps,
@@ -14,12 +17,12 @@ import { GetterSection } from "../../StateGetters/GetterSection";
 import { UpdaterSection } from "../../StateUpdaters/UpdaterSection";
 import { ChildPackLoader } from "./ChildPackLoader";
 
-interface SelfPackLoaderSectionProps<SN extends SectionName>
+interface SelfPackLoaderSectionProps<SN extends SectionNameByType>
   extends GetterSectionProps<SN> {
   sectionPack: SectionPack<SN>;
 }
 export class SelfPackLoader<
-  SN extends SectionName
+  SN extends SectionNameByType
 > extends GetterSectionBase<SN> {
   sectionPack: SectionPack<SN>;
   constructor({ sectionPack, ...props }: SelfPackLoaderSectionProps<SN>) {
@@ -42,7 +45,7 @@ export class SelfPackLoader<
     this.updaterSection.removeAllChildren();
     this.addSectionPackChildren();
   }
-  thisHasChildren(): this is SelfPackLoader<SectionName<"hasChild">> {
+  thisHasChildren(): this is SelfPackLoader<SectionNameByType<"hasChild">> {
     return sectionNameS.is(this.sectionName, "hasChild");
   }
   addSectionPackChildren() {

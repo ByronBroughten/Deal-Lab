@@ -6,18 +6,20 @@ import {
   GlobalSectionInfo,
   VarbProp,
 } from "../baseSectionsDerived/baseVarbInfo";
-import { ExpectedCount } from "../baseSectionsUtils/NanoIdInfo";
-import { SimpleSectionName } from "../baseSectionsVarbs";
+import { ExpectedCount } from "../baseSectionsVarbs/NanoIdInfo";
+import { SectionName } from "../SectionName";
 import { RelSectionInfo } from "./RelInfo";
 
 // a mixed section finder that doesn't need a focal section
-export type SectionInfoMixed<SN extends SimpleSectionName = SimpleSectionName> =
-  FeSectionInfoMixed<SN> | GlobalSectionInfo<SN> | DbSectionInfoMixed<SN>;
-export type VarbInfoMixed<SN extends SimpleSectionName = SimpleSectionName> =
+export type SectionInfoMixed<SN extends SectionName = SectionName> =
+  | FeSectionInfoMixed<SN>
+  | GlobalSectionInfo<SN>
+  | DbSectionInfoMixed<SN>;
+export type VarbInfoMixed<SN extends SectionName = SectionName> =
   SectionInfoMixed<SN> & VarbProp;
 
 export const mixedInfoS = {
-  makeFe<SN extends SimpleSectionName>(
+  makeFe<SN extends SectionName>(
     sectionName: SN,
     feId: string
   ): FeSectionInfoMixed<SN> {
@@ -29,7 +31,7 @@ export const mixedInfoS = {
     };
   },
   makeGlobalSection<
-    SN extends SimpleSectionName,
+    SN extends SectionName,
     EC extends ExpectedCount = "onlyOne"
   >(sectionName: SN, expectedCount?: EC): GlobalSectionInfo<SN, EC> {
     return {
@@ -38,7 +40,7 @@ export const mixedInfoS = {
       expectedCount: (expectedCount ?? "onlyOne") as EC,
     };
   },
-  makeFeVarb<SN extends SimpleSectionName>(
+  makeFeVarb<SN extends SectionName>(
     sectionName: SN,
     feId: string,
     varbName: string
@@ -48,7 +50,7 @@ export const mixedInfoS = {
       varbName,
     };
   },
-  makeDb<S extends SimpleSectionName, EC extends ExpectedCount = "multiple">(
+  makeDb<S extends SectionName, EC extends ExpectedCount = "multiple">(
     sectionName: S,
     dbId: string,
     expectedCount: EC

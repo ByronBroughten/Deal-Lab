@@ -1,15 +1,15 @@
 import { z } from "zod";
 import { zS } from "../../utils/zod";
-import { SimpleSectionName, zSectionName } from "../baseSectionsVarbs";
+import { SectionName, zSectionName } from "../SectionName";
 import { RawSections, zRawSections } from "./SectionPack/RawSection";
 
-export type SectionPack<SN extends SimpleSectionName = SimpleSectionName> = {
+export type SectionPack<SN extends SectionName = SectionName> = {
   sectionName: SN;
   dbId: string;
   rawSections: RawSections<SN>;
 };
 
-export type SectionArrPack<SN extends SimpleSectionName> = {
+export type SectionArrPack<SN extends SectionName> = {
   sectionName: SN;
   sectionPacks: SectionPack<SN>[];
 };

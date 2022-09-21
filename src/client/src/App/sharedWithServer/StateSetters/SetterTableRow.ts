@@ -1,4 +1,4 @@
-import { InEntityInfo } from "../SectionsMeta/baseSectionsUtils/baseValues/InEntityInfoValue";
+import { InEntityInfo } from "../SectionsMeta/baseSectionsVarbs/baseValues/InEntityInfoValue";
 import { StrictOmit } from "../utils/types";
 import {
   SetterSectionBase,

@@ -1,7 +1,10 @@
 import { pick } from "lodash";
-import { Id } from "../SectionsMeta/baseSectionsUtils/id";
+import { Id } from "../SectionsMeta/baseSectionsVarbs/id";
 import { FeSectionInfo, FeVarbInfo } from "../SectionsMeta/Info";
-import { SectionName, sectionNameS } from "../SectionsMeta/SectionName";
+import {
+  SectionNameByType,
+  sectionNameS,
+} from "../SectionsMeta/SectionNameByType";
 import { Arr } from "../utils/Arr";
 import { Obj } from "../utils/Obj";
 import { initRawSection, initRawVarbs } from "./initRawSection";
@@ -13,7 +16,7 @@ import {
   StateVarb,
 } from "./StateSectionsTypes";
 
-type UpdateVarbProps<SN extends SectionName> = {
+type UpdateVarbProps<SN extends SectionNameByType> = {
   feVarbInfo: FeVarbInfo<SN>;
   rawVarb: StateVarb<SN>;
 };
@@ -23,11 +26,13 @@ export class StateSections {
   get rawSections(): RawFeSections {
     return this.core;
   }
-  rawSectionList<SN extends SectionName>(sectionName: SN): RawFeSection<SN>[] {
+  rawSectionList<SN extends SectionNameByType>(
+    sectionName: SN
+  ): RawFeSection<SN>[] {
     const test = this.core[sectionName];
     return test as RawFeSection<SN>[];
   }
-  sectionIdx<SN extends SectionName>(feInfo: FeSectionInfo<SN>): number {
+  sectionIdx<SN extends SectionNameByType>(feInfo: FeSectionInfo<SN>): number {
     const sectionList = this.rawSectionList(feInfo.sectionName);
     return Arr.idxOrThrow(
       sectionList,
@@ -44,7 +49,9 @@ export class StateSections {
     }
   }
 
-  onlyOneRawSection<SN extends SectionName>(sectionName: SN): RawFeSection<SN> {
+  onlyOneRawSection<SN extends SectionNameByType>(
+    sectionName: SN
+  ): RawFeSection<SN> {
     const sectionList = this.rawSectionList(sectionName);
     const count = sectionList.length;
     if (count !== 1) {
@@ -60,13 +67,13 @@ export class StateSections {
   get mainSectionInfo(): FeSectionInfo<"main"> {
     return pick(this.mainRawSection, ["sectionName", "feId"]);
   }
-  rawSection<SN extends SectionName>(
+  rawSection<SN extends SectionNameByType>(
     feInfo: FeSectionInfo<SN>
   ): RawFeSection<SN> {
     const idx = this.sectionIdx(feInfo);
     return this.rawSectionList(feInfo.sectionName)[idx];
   }
-  rawVarb<SN extends SectionName>({
+  rawVarb<SN extends SectionNameByType>({
     varbName,
     ...rest
   }: FeVarbInfo<SN>): StateVarb<SN> {
@@ -83,7 +90,7 @@ export class StateSections {
       ...lists,
     });
   }
-  updateSectionList<SN extends SectionName>({
+  updateSectionList<SN extends SectionNameByType>({
     sectionName,
     list,
   }: RawSectionListProps<SN>): StateSections {
@@ -91,7 +98,7 @@ export class StateSections {
       [sectionName]: list,
     });
   }
-  updateSection<SN extends SectionName>(
+  updateSection<SN extends SectionNameByType>(
     rawSection: RawFeSection<SN>
   ): StateSections {
     const { sectionName } = rawSection;
@@ -103,7 +110,7 @@ export class StateSections {
       list: nextList,
     });
   }
-  updateVarb<SN extends SectionName>({
+  updateVarb<SN extends SectionNameByType>({
     feVarbInfo: { varbName, ...feSectionInfo },
     rawVarb,
   }: UpdateVarbProps<SN>): StateSections {

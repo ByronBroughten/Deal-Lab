@@ -1,7 +1,8 @@
-import { StateValue } from "../baseSectionsUtils/baseValues/StateValueTypes";
-import { ValueName } from "../baseSectionsUtils/baseVarb";
-import { BaseVarbSchemas } from "../baseSectionsUtils/baseVarbs";
-import { baseSectionsVarbs, SimpleSectionName } from "../baseSectionsVarbs";
+import { baseSectionsVarbs } from "../baseSectionsVarbs";
+import { StateValue } from "../baseSectionsVarbs/baseValues/StateValueTypes";
+import { ValueName } from "../baseSectionsVarbs/baseVarb";
+import { BaseVarbSchemas } from "../baseSectionsVarbs/baseVarbs";
+import { SectionName } from "../SectionName";
 import { BaseSectionVarbs, VarbNameNext } from "./baseSectionTypes";
 import { VarbNamesNext } from "./baseVarbInfo";
 import { valueMeta } from "./valueMeta";
@@ -11,17 +12,17 @@ export type ValueNamesToTypes = {
   [VN in ValueName]: ReturnType<ValueSchemas[VN]["initDefault"]>;
 };
 
-export type SectionValues<SN extends SimpleSectionName> = {
+export type SectionValues<SN extends SectionName> = {
   [VN in VarbNameNext<SN>]: ValueNamesToTypes[BaseSectionVarbs<SN>[VN] &
     keyof ValueNamesToTypes];
 };
 
 export type VarbValue<
-  SN extends SimpleSectionName,
+  SN extends SectionName,
   VN extends VarbNameNext<SN>
 > = SectionValues<SN>[VN];
 export function isVarbValue<
-  SN extends SimpleSectionName,
+  SN extends SectionName,
   VN extends VarbNameNext<SN>
 >(
   value: any,

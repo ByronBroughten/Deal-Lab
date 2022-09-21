@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { SectionName } from "../../../../../sharedWithServer/SectionsMeta/SectionName";
+import { SectionNameByType } from "../../../../../sharedWithServer/SectionsMeta/SectionNameByType";
 import { useAuthStatus } from "../../../../../sharedWithServer/stateClassHooks/useAuthStatus";
 import theme from "../../../../../theme/Theme";
 import { DisplayNameSectionList } from "../../../DisplayNameSectionList";
@@ -7,7 +7,7 @@ import { StoreSectionActionMenu } from "../StoreSectionActionMenu";
 import { ActionMenuProps } from "../StoreSectionActionMenu/ActionMenuTypes";
 
 interface Props {
-  sectionName: SectionName<"hasIndexStore">;
+  sectionName: SectionNameByType<"hasIndexStore">;
   feId: string;
   pluralName: string;
   xBtn?: boolean;

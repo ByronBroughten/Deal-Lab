@@ -6,7 +6,7 @@ import {
   SectionPackReq,
 } from "../../../client/src/App/sharedWithServer/apiQueriesShared/makeReqAndRes";
 import { DbSectionNameName } from "../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreName";
-import { SectionName } from "../../../client/src/App/sharedWithServer/SectionsMeta/SectionName";
+import { SectionNameByType } from "../../../client/src/App/sharedWithServer/SectionsMeta/SectionNameByType";
 import { GetterListProps } from "../../../client/src/App/sharedWithServer/StateGetters/Bases/GetterListBase";
 import { GetterSectionProps } from "../../../client/src/App/sharedWithServer/StateGetters/Bases/GetterSectionBase";
 import { GetterList } from "../../../client/src/App/sharedWithServer/StateGetters/GetterList";
@@ -15,7 +15,7 @@ import { PackMakerSection } from "../../../client/src/App/sharedWithServer/State
 import { SolverSections } from "../../../client/src/App/sharedWithServer/StateSolvers/SolverSections";
 import { UpdaterSection } from "../../../client/src/App/sharedWithServer/StateUpdaters/UpdaterSection";
 
-export function makeLastSectionProps<SN extends SectionName>(
+export function makeLastSectionProps<SN extends SectionNameByType>(
   props: GetterListProps<SN>
 ): GetterSectionProps<SN> {
   const list = new GetterList(props);
@@ -26,12 +26,12 @@ export function makeLastSectionProps<SN extends SectionName>(
   };
 }
 
-interface InitProps<SN extends SectionName<"hasIndexStore">> {
+interface InitProps<SN extends SectionNameByType<"hasIndexStore">> {
   sectionName: SN;
 }
 
 export class SectionQueryTester<
-  SN extends SectionName<"hasIndexStore">
+  SN extends SectionNameByType<"hasIndexStore">
 > extends IndexSectionQuerierBase<SN> {
   get packMaker() {
     return new PackMakerSection(this.getterSectionBase.getterSectionProps);
@@ -45,7 +45,7 @@ export class SectionQueryTester<
   get dbStoreName(): DbSectionNameName<SN> {
     return this.get.meta.dbIndexStoreName as DbSectionNameName<SN>;
   }
-  static init<S extends SectionName<"hasIndexStore">>({
+  static init<S extends SectionNameByType<"hasIndexStore">>({
     sectionName,
   }: InitProps<S>): SectionQueryTester<S> {
     return new SectionQueryTester({

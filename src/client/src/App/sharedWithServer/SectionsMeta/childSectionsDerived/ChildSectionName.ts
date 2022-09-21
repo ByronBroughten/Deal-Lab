@@ -1,14 +1,14 @@
 import { Obj } from "../../utils/Obj";
 import { PropKeyOfValue } from "../../utils/Obj/SubType";
 import { MergeUnionObjFull } from "../../utils/types/mergeUnionObj";
-import { SimpleSectionName, simpleSectionNames } from "../baseSectionsVarbs";
 import { childSections, SectionChildProps } from "../childSections";
-import { GeneralChildrenSections } from "../childSectionsUtils/childrenSections";
+import { GeneralChildrenSections } from "../childSections/childrenSections";
+import { SectionName, sectionNames } from "../SectionName";
 import { ChildName, sectionToChildNames } from "./ChildName";
 
 export type ChildToSectionName = SectionChildProps<"sectionName">;
 
-export const childToSectionNames = simpleSectionNames.reduce(
+export const childToSectionNames = sectionNames.reduce(
   (result, sectionName) => {
     const childSection = childSections[sectionName] as GeneralChildrenSections;
     const childNames = sectionToChildNames[sectionName];
@@ -26,7 +26,7 @@ export const childToSectionNames = simpleSectionNames.reduce(
 );
 
 export function childToSectionName<
-  SN extends SimpleSectionName,
+  SN extends SectionName,
   CN extends ChildName<SN>
 >(sectionName: SN, childName: CN): ChildSectionName<SN, CN> {
   const names = childToSectionNames[sectionName] as {
@@ -40,29 +40,29 @@ export function childToSectionName<
   return names[childName] as ChildSectionName<SN, CN>;
 }
 
-type MergedChildNames<SN extends SimpleSectionName> = MergeUnionObjFull<
+type MergedChildNames<SN extends SectionName> = MergeUnionObjFull<
   ChildToSectionName[SN]
 >;
 
 export type ChildSectionNamePureWide<
-  SN extends SimpleSectionName,
+  SN extends SectionName,
   CN extends ChildName<SN> = ChildName<SN>
 > = MergedChildNames<SN>[CN & keyof MergedChildNames<SN>];
 
 export type ChildSectionNamePure<
-  SN extends SimpleSectionName,
+  SN extends SectionName,
   CN extends ChildName<SN> = ChildName<SN>
 > = ChildToSectionName[SN][CN & keyof ChildToSectionName[SN]];
 
 export type ChildSectionNameNarrow<
-  SN extends SimpleSectionName,
+  SN extends SectionName,
   CN extends ChildName<SN> = ChildName<SN>
-> = ChildSectionNamePure<SN, CN> & SimpleSectionName;
+> = ChildSectionNamePure<SN, CN> & SectionName;
 
 export type ChildSectionName<
-  SN extends SimpleSectionName,
+  SN extends SectionName,
   CN extends ChildName<SN> = ChildName<SN>
-> = ChildSectionNamePureWide<SN, CN> & SimpleSectionName;
+> = ChildSectionNamePureWide<SN, CN> & SectionName;
 function testChildSectionName() {
   const unitName: ChildSectionNamePureWide<"property"> = "unit";
   // @ts-expect-error
@@ -71,30 +71,27 @@ function testChildSectionName() {
 }
 
 type ChildrenSectionNames = {
-  [SN in SimpleSectionName]: ChildSectionName<SN>[];
+  [SN in SectionName]: ChildSectionName<SN>[];
 };
-export const childrenSectionNames = simpleSectionNames.reduce(
-  (arrs, sectionName) => {
-    const childNames = sectionToChildNames[sectionName];
-    const child = childToSectionNames[sectionName] as {
-      [key: string]: SimpleSectionName;
-    };
-    const types = childNames.map((childName) => child[childName]);
-    (arrs[sectionName] as SimpleSectionName[]) = types;
-    return arrs;
-  },
-  {} as ChildrenSectionNames
-);
+export const childrenSectionNames = sectionNames.reduce((arrs, sectionName) => {
+  const childNames = sectionToChildNames[sectionName];
+  const child = childToSectionNames[sectionName] as {
+    [key: string]: SectionName;
+  };
+  const types = childNames.map((childName) => child[childName]);
+  (arrs[sectionName] as SectionName[]) = types;
+  return arrs;
+}, {} as ChildrenSectionNames);
 
 type ChildSectionNamesToName = {
-  [SN in SimpleSectionName]: {
+  [SN in SectionName]: {
     [CSN in ChildSectionName<SN>]: PropKeyOfValue<ChildToSectionName[SN], CSN>;
   };
 };
 
 export type ChildSectionNameName<
-  SN extends SimpleSectionName,
-  CSN extends SimpleSectionName // ChildSectionName<SN>
+  SN extends SectionName,
+  CSN extends SectionName // ChildSectionName<SN>
 > = ChildSectionNamesToName[SN][CSN & keyof ChildSectionNamesToName[SN]] &
   ChildName<SN>;
 
@@ -114,11 +111,11 @@ function _testChildSectionNameName<
 _testChildSectionNameName("property", "singleTimeListGroup");
 
 export type ChildSectionNameToNameArrs = {
-  [SN in SimpleSectionName]: {
+  [SN in SectionName]: {
     [CSN in ChildSectionName<SN>]: ChildSectionNameName<SN, CSN>[];
   };
 };
-export const childSectionNameNames = simpleSectionNames.reduce(
+export const childSectionNameNames = sectionNames.reduce(
   (childSectionNamesToNames, sectionName) => {
     const sectionNames = childrenSectionNames[sectionName] as string[];
     const namesToSectionName = childToSectionNames[sectionName] as {
@@ -138,8 +135,8 @@ export const childSectionNameNames = simpleSectionNames.reduce(
 );
 
 export type ChildSectionNameOrNull<
-  SN extends SimpleSectionName,
-  CN extends SimpleSectionName
+  SN extends SectionName,
+  CN extends SectionName
 > = Extract<ChildSectionNamePure<SN>, CN> extends never ? null : CN;
 
 function testChildSectionNameOrNull() {

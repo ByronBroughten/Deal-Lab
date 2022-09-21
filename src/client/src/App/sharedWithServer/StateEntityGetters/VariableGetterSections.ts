@@ -1,8 +1,11 @@
 import { sectionsMeta } from "../SectionsMeta";
-import { InEntityVarbInfo } from "../SectionsMeta/baseSectionsUtils/baseValues/entities";
-import { switchNames } from "../SectionsMeta/baseSectionsUtils/RelSwitchVarb";
+import { InEntityVarbInfo } from "../SectionsMeta/baseSectionsVarbs/baseValues/entities";
+import { switchNames } from "../SectionsMeta/baseSectionsVarbs/RelSwitchVarb";
 import { mixedInfoS } from "../SectionsMeta/childSectionsDerived/MixedSectionInfo";
-import { SectionName, sectionNameS } from "../SectionsMeta/SectionName";
+import {
+  SectionNameByType,
+  sectionNameS,
+} from "../SectionsMeta/SectionNameByType";
 import { GetterSectionsBase } from "../StateGetters/Bases/GetterSectionsBase";
 import { GetterSections } from "../StateGetters/GetterSections";
 import { Obj } from "../utils/Obj";
@@ -51,7 +54,7 @@ export class VariableGetterSections extends GetterSectionsBase {
   }
 
   private userListTotalOptions(): VariableOption[] {
-    const totalNames: Record<SectionName<"additiveList">, any> = {
+    const totalNames: Record<SectionNameByType<"additiveList">, any> = {
       ongoingList: {
         collectionName: "Ongoing cost totals",
         feUserStoreName: "ongoingListMain",
@@ -127,6 +130,6 @@ export class VariableGetterSections extends GetterSectionsBase {
   }
 }
 type InitGlobalVarbOptionProps = {
-  sectionName: SectionName<"hasGlobalVarbs">;
+  sectionName: SectionNameByType<"hasGlobalVarbs">;
   varbName: string;
 };

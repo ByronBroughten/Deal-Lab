@@ -1,23 +1,23 @@
-import { SimpleSectionName } from "../baseSectionsVarbs";
+import { SectionName } from "../SectionName";
 import { getChildNames } from "./ChildName";
 import { ChildSectionNameNarrow, childToSectionName } from "./ChildSectionName";
 
-export type DescendantSectionName<SN extends SimpleSectionName> =
+export type DescendantSectionName<SN extends SectionName> =
   ChildSectionNameNarrow<SN> extends never
     ? never
     :
         | ChildSectionNameNarrow<SN>
         | DescendantSectionName<ChildSectionNameNarrow<SN>>;
 
-export function getDescendantNames<SN extends SimpleSectionName>(
+export function getDescendantNames<SN extends SectionName>(
   headName: SN
 ): DescendantSectionName<SN>[] {
   const descendantNames: any[] = [];
-  let headNames: SimpleSectionName[] = [headName];
+  let headNames: SectionName[] = [headName];
 
   let reps = 0;
   while (headNames.length > 0) {
-    const nextHeadNames: SimpleSectionName[] = [];
+    const nextHeadNames: SectionName[] = [];
     for (const headName of headNames) {
       const childNames = getChildNames(headName);
       for (const childName of childNames) {
@@ -36,7 +36,7 @@ export function getDescendantNames<SN extends SimpleSectionName>(
   }
   return descendantNames;
 }
-export function getSelfAndDescendantNames<SN extends SimpleSectionName>(
+export function getSelfAndDescendantNames<SN extends SectionName>(
   sectionName: SN
 ): SelfOrDescendantSectionName<SN>[] {
   const names = getDescendantNames(sectionName);
@@ -44,14 +44,14 @@ export function getSelfAndDescendantNames<SN extends SimpleSectionName>(
   return [...selfAndNames];
 }
 
-export type SelfOrDescendantSectionName<SN extends SimpleSectionName> =
+export type SelfOrDescendantSectionName<SN extends SectionName> =
   | SN
   | DescendantSectionName<SN>;
 
-export type DescendantIds<SN extends SimpleSectionName> = {
+export type DescendantIds<SN extends SectionName> = {
   [S in DescendantSectionName<SN>]: string[];
 };
-export type SelfAndDescendantIds<SN extends SimpleSectionName> = {
+export type SelfAndDescendantIds<SN extends SectionName> = {
   [S in SelfOrDescendantSectionName<SN>]: string[];
 };
 

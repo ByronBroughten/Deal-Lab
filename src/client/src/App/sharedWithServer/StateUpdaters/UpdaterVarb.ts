@@ -1,11 +1,11 @@
-import { StateValue } from "../SectionsMeta/baseSectionsUtils/baseValues/StateValueTypes";
-import { SectionName } from "../SectionsMeta/SectionName";
+import { StateValue } from "../SectionsMeta/baseSectionsVarbs/baseValues/StateValueTypes";
+import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { GetterVarbBase } from "../StateGetters/Bases/GetterVarbBase";
 import { GetterVarb } from "../StateGetters/GetterVarb";
 import { StateVarb } from "../StateSections/StateSectionsTypes";
 
 export class UpdaterVarb<
-  SN extends SectionName<"hasVarb">
+  SN extends SectionNameByType<"hasVarb">
 > extends GetterVarbBase<SN> {
   private get raw(): StateVarb<SN> {
     return this.sectionsShare.sections.rawVarb(this.feVarbInfo);

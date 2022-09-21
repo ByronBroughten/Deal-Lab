@@ -2,7 +2,7 @@ import React from "react";
 import styled, { css } from "styled-components";
 import useToggleView from "../../../../modules/customHooks/useToggleView";
 import { useMainSectionActor } from "../../../../modules/sectionActorHooks/useMainSectionActor";
-import { HasRowFeStore } from "../../../../sharedWithServer/SectionsMeta/SectionName";
+import { HasRowFeStore } from "../../../../sharedWithServer/SectionsMeta/SectionNameByType";
 import { useAuthStatus } from "../../../../sharedWithServer/stateClassHooks/useAuthStatus";
 import theme from "../../../../theme/Theme";
 import XBtn from "../../Xbtn";

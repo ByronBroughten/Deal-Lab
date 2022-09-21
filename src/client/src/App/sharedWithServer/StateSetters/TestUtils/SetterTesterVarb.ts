@@ -1,5 +1,5 @@
 import { VarbNames } from "../../SectionsMeta/baseSectionsDerived/baseVarbInfo";
-import { SectionName } from "../../SectionsMeta/SectionName";
+import { SectionNameByType } from "../../SectionsMeta/SectionNameByType";
 import { GetterVarb } from "../../StateGetters/GetterVarb";
 import { SetterVarb } from "../SetterVarb";
 import {
@@ -9,9 +9,9 @@ import {
 import { SetterTesterSection } from "./SetterTesterSection";
 
 export class SetterTesterVarb<
-  SN extends SectionName
+  SN extends SectionNameByType
 > extends SetterTesterVarbBase<SN> {
-  static initProps<S extends SectionName>({
+  static initProps<S extends SectionNameByType>({
     sectionName,
     varbName,
   }: VarbNames<S>): SetterTesterVarbProps<S> {
@@ -20,7 +20,9 @@ export class SetterTesterVarb<
       varbName,
     };
   }
-  static init<S extends SectionName>(props: VarbNames<S>): SetterTesterVarb<S> {
+  static init<S extends SectionNameByType>(
+    props: VarbNames<S>
+  ): SetterTesterVarb<S> {
     return new SetterTesterVarb(this.initProps(props));
   }
 

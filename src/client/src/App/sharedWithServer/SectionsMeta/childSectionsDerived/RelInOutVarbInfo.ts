@@ -1,5 +1,5 @@
 import { VarbNames } from "../baseSectionsDerived/baseVarbInfo";
-import { SimpleSectionName } from "../baseSectionsVarbs";
+import { SectionName } from "../SectionName";
 import { childToSectionNames } from "./ChildSectionName";
 import { ParentName } from "./ParentName";
 import {
@@ -12,15 +12,14 @@ import {
   RelStepSiblingVarbInfo,
 } from "./RelVarbInfo";
 
-export type RelInVarbInfo<SN extends SimpleSectionName = SimpleSectionName> =
+export type RelInVarbInfo<SN extends SectionName = SectionName> =
   | RelLocalVarbInfo
   | RelChildrenVarbInfo<SN>
   | RelStepSiblingVarbInfo<SN>
   | RelPiblingVarbInfo<SN>;
 
-export type RelSingleInVarbInfo<
-  SN extends SimpleSectionName = SimpleSectionName
-> = RelInVarbInfo<SN> & { expectedCount: "onlyOne" };
+export type RelSingleInVarbInfo<SN extends SectionName = SectionName> =
+  RelInVarbInfo<SN> & { expectedCount: "onlyOne" };
 
 export type RelOutVarbInfo =
   | RelLocalVarbInfo
@@ -29,20 +28,20 @@ export type RelOutVarbInfo =
   | RelNiblingOfChildVarbInfo;
 
 type InVarbInfoToOutSectionNameProps = {
-  sectionNameWithInVarb: SimpleSectionName;
+  sectionNameWithInVarb: SectionName;
   inVarbInfo: RelInVarbInfo;
 };
 export function inVarbInfoToOutSectionName({
   sectionNameWithInVarb,
   inVarbInfo,
-}: InVarbInfoToOutSectionNameProps): SimpleSectionName {
+}: InVarbInfoToOutSectionNameProps): SectionName {
   switch (inVarbInfo.infoType) {
     case "local":
       return sectionNameWithInVarb;
     case "children": {
       const cnsToSn = childToSectionNames[sectionNameWithInVarb] as Record<
         string,
-        SimpleSectionName
+        SectionName
       >;
       const sn = cnsToSn[inVarbInfo.childName];
       if (sn === undefined) {

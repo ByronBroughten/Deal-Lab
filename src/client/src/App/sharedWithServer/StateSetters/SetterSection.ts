@@ -1,7 +1,7 @@
 import { pick } from "lodash";
 import { VarbNameNext } from "../SectionsMeta/baseSectionsDerived/baseSectionTypes";
 import { SectionValues } from "../SectionsMeta/baseSectionsDerived/valueMetaTypes";
-import { SwitchEndingKey } from "../SectionsMeta/baseSectionsUtils/RelSwitchVarb";
+import { SwitchEndingKey } from "../SectionsMeta/baseSectionsVarbs/RelSwitchVarb";
 import {
   ChildName,
   DbChildInfo,
@@ -12,7 +12,7 @@ import { ParentNameSafe } from "../SectionsMeta/childSectionsDerived/ParentName"
 import { SectionPack } from "../SectionsMeta/childSectionsDerived/SectionPack";
 import { FeSectionInfo, FeVarbInfo } from "../SectionsMeta/Info";
 import { SectionMeta } from "../SectionsMeta/SectionMeta";
-import { SectionName } from "../SectionsMeta/SectionName";
+import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { SectionOption } from "../StateEntityGetters/VariableGetterSections";
 import { GetterSection } from "../StateGetters/GetterSection";
 import { GetterVarb } from "../StateGetters/GetterVarb";
@@ -31,7 +31,7 @@ import { SetterSections } from "./SetterSections";
 import { SetterVarb } from "./SetterVarb";
 
 export class SetterSection<
-  SN extends SectionName
+  SN extends SectionNameByType
 > extends SetterSectionBase<SN> {
   get get(): GetterSection<SN> {
     return new GetterSection(this.getterSectionBase.getterSectionProps);
@@ -55,7 +55,7 @@ export class SetterSection<
     this.update.newDbId();
     this.setSections();
   }
-  setterSection<S extends SectionName>(
+  setterSection<S extends SectionNameByType>(
     feInfo: FeSectionInfo<S>
   ): SetterSection<S> {
     return new SetterSection({

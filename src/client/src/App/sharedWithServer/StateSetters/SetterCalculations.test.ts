@@ -1,5 +1,5 @@
-import { PiCalculationName } from "../SectionsMeta/baseSectionsUtils/baseValues/calculations/piCalculations";
-import { numObj } from "../SectionsMeta/baseSectionsUtils/baseValues/NumObj";
+import { PiCalculationName } from "../SectionsMeta/baseSectionsVarbs/baseValues/calculations/piCalculations";
+import { numObj } from "../SectionsMeta/baseSectionsVarbs/baseValues/NumObj";
 import { SetterTesterSection } from "./TestUtils/SetterTesterSection";
 
 describe("SetterCalculations", () => {

@@ -1,4 +1,3 @@
-import { SimpleSectionName } from "../SectionsMeta/baseSectionsVarbs";
 import { ChildName } from "../SectionsMeta/childSectionsDerived/ChildName";
 import { ChildSectionName } from "../SectionsMeta/childSectionsDerived/ChildSectionName";
 import {
@@ -8,6 +7,7 @@ import {
 import { SectionPack } from "../SectionsMeta/childSectionsDerived/SectionPack";
 import { FeSectionInfo } from "../SectionsMeta/Info";
 import { SectionName } from "../SectionsMeta/SectionName";
+import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import {
   GetterSectionBase,
   GetterSectionProps,
@@ -19,7 +19,7 @@ import { ChildPackLoader } from "./PackLoaderSection/ChildPackLoader";
 import { SelfPackLoader } from "./PackLoaderSection/SelfPackLoader";
 
 export class PackLoaderSection<
-  SN extends SectionName
+  SN extends SectionNameByType
 > extends GetterSectionBase<SN> {
   constructor(props: GetterSectionProps<SN>) {
     super(props);
@@ -36,7 +36,7 @@ export class PackLoaderSection<
     const { feInfo } = this.get.youngestChild(childName);
     return this.packLoaderSection(feInfo) as PackLoaderSection<any>;
   }
-  packLoaderSection<S extends SimpleSectionName>(
+  packLoaderSection<S extends SectionName>(
     feInfo: FeSectionInfo<S>
   ): PackLoaderSection<S> {
     return new PackLoaderSection({
@@ -91,12 +91,12 @@ export class PackLoaderSection<
   }
 }
 
-export type ChildSectionPackArrs<SN extends SectionName> = {
+export type ChildSectionPackArrs<SN extends SectionNameByType> = {
   [CN in ChildName<SN>]: ChildSectionPack<SN, CN>[];
 };
 
 export type ChildPackInfo<
-  SN extends SectionName,
+  SN extends SectionNameByType,
   CN extends ChildName<SN> = ChildName<SN>,
   CT extends ChildSectionName<SN, CN> = ChildSectionName<SN, CN>
 > = {

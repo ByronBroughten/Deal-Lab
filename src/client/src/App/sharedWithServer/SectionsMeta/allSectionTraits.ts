@@ -1,31 +1,28 @@
+import { SectionName, sectionNames } from "./SectionName";
 import {
   GeneralSectionTraits,
   GenericSectionTraits,
   SectionTraitName,
   sectionTraits,
   SectionTraits,
-} from "./allSectionTraits/sectionTraits";
-import { SimpleSectionName, simpleSectionNames } from "./baseSectionsVarbs";
+} from "./sectionsTraits/sectionTraits";
 
 export type GeneralAllSectionTraits = {
-  [SN in SimpleSectionName]: GeneralSectionTraits;
+  [SN in SectionName]: GeneralSectionTraits;
 };
 
 type GenericAllSectionTraits = {
-  [SN in SimpleSectionName]: GenericSectionTraits<SN>;
+  [SN in SectionName]: GenericSectionTraits<SN>;
 };
 
 type DefaultSectionTraits = {
-  [SN in SimpleSectionName]: SectionTraits<SN>;
+  [SN in SectionName]: SectionTraits<SN>;
 };
 
-const defaultSectionTraits = simpleSectionNames.reduce(
-  (defaultSt, sectionName) => {
-    defaultSt[sectionName] = sectionTraits();
-    return defaultSt;
-  },
-  {} as DefaultSectionTraits
-);
+const defaultSectionTraits = sectionNames.reduce((defaultSt, sectionName) => {
+  defaultSt[sectionName] = sectionTraits();
+  return defaultSt;
+}, {} as DefaultSectionTraits);
 
 const checkAllSectionTraits = <AST extends GenericAllSectionTraits>(
   ast: AST
@@ -88,13 +85,13 @@ export const allSectionTraits = checkAllSectionTraits({
 });
 
 export type SomeSectionTraits<
-  SN extends SimpleSectionName,
+  SN extends SectionName,
   PN extends SectionTraitName
 > = {
   [S in SN]: AllSectionTraits[S][PN];
 };
 export function getSomeSectionTraits<
-  SN extends SimpleSectionName,
+  SN extends SectionName,
   PN extends SectionTraitName
 >(sNames: SN[], paramName: PN) {
   return sNames.reduce((traits, sectionName) => {

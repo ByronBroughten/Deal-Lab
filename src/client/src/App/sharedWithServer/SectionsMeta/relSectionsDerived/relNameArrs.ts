@@ -1,8 +1,8 @@
 import { Arr } from "../../utils/Arr";
 import { Obj } from "../../utils/Obj";
 import { allSectionTraits } from "../allSectionTraits";
-import { SimpleSectionName, simpleSectionNames } from "../baseSectionsVarbs";
 import { hasChildSectionNames } from "../childSectionsDerived/ChildName";
+import { SectionName, sectionNames } from "../SectionName";
 import { hasStoreNameArrs } from "./relNameArrs/feStoreNameArrs";
 import { tableStoreNameArrs } from "./relNameArrs/tableStoreArrs";
 
@@ -15,8 +15,8 @@ export const relNameArrs = {
     true as true
   ),
   hasChild: hasChildSectionNames,
-  loadOnLogin: Arr.extractStrict(simpleSectionNames, ["feUser"] as const),
-  varbListItem: Arr.extractStrict(simpleSectionNames, [
+  loadOnLogin: Arr.extractStrict(sectionNames, ["feUser"] as const),
+  varbListItem: Arr.extractStrict(sectionNames, [
     "outputItem",
     "singleTimeItem",
     "ongoingItem",
@@ -27,8 +27,7 @@ export const relNameArrs = {
 export type RelNameArrs = typeof relNameArrs;
 type RelNameSelector = keyof RelNameArrs;
 
-type RelNameArrsTest<T extends Record<string, readonly SimpleSectionName[]>> =
-  T;
+type RelNameArrsTest<T extends Record<string, readonly SectionName[]>> = T;
 type _Test = RelNameArrsTest<RelNameArrs>;
 
 export type RelName<ST extends RelNameSelector> = RelNameArrs[ST][number];

@@ -1,6 +1,6 @@
 import { Checkbox, FormControlLabel } from "@material-ui/core";
 import styled from "styled-components";
-import { PiCalculationName } from "../../../../sharedWithServer/SectionsMeta/baseSectionsUtils/baseValues/calculations/piCalculations";
+import { PiCalculationName } from "../../../../sharedWithServer/SectionsMeta/baseSectionsVarbs/baseValues/calculations/piCalculations";
 import { useSetterVarb } from "../../../../sharedWithServer/stateClassHooks/useSetterVarb";
 import theme from "../../../../theme/Theme";
 

@@ -5,21 +5,21 @@ import {
   isInEntityVarbInfoValue,
   mInEntityVarbInfoValue,
   zInEntityVarbInfoValue,
-} from "../baseSectionsUtils/baseValues/InEntityInfoValue";
+} from "../baseSectionsVarbs/baseValues/InEntityInfoValue";
 import {
   isNumObj,
   mDbNumObj,
   NumObj,
   zNumObj,
-} from "../baseSectionsUtils/baseValues/NumObj";
+} from "../baseSectionsVarbs/baseValues/NumObj";
 import {
   initDefaultStringObj,
   isStringObj,
   mStringObj,
   zStringObj,
-} from "../baseSectionsUtils/baseValues/StringObj";
-import { numObjUpdateFnNames } from "../baseSectionsUtils/baseValues/updateFnNames";
-import { ValueName } from "../baseSectionsUtils/baseVarb";
+} from "../baseSectionsVarbs/baseValues/StringObj";
+import { numObjUpdateFnNames } from "../baseSectionsVarbs/baseValues/updateFnNames";
+import { ValueName } from "../baseSectionsVarbs/baseVarb";
 
 export const valueMeta = {
   number: {

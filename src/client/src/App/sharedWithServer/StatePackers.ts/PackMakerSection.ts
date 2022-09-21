@@ -1,4 +1,3 @@
-import { SimpleSectionName } from "../SectionsMeta/baseSectionsVarbs";
 import {
   ChildName,
   FeChildInfo,
@@ -12,29 +11,27 @@ import {
 } from "../SectionsMeta/childSectionsDerived/SectionPack/RawSection";
 import { FeSectionInfo } from "../SectionsMeta/Info";
 import { SectionName } from "../SectionsMeta/SectionName";
+import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { GetterSectionBase } from "../StateGetters/Bases/GetterSectionBase";
 import { GetterSection } from "../StateGetters/GetterSection";
 import { StateSections } from "../StateSections/StateSections";
 import { Obj } from "../utils/Obj";
 
-type FeSectionPackArrs<
-  SN extends SimpleSectionName,
-  CN extends ChildName<SN>
-> = {
+type FeSectionPackArrs<SN extends SectionName, CN extends ChildName<SN>> = {
   [C in CN]: ChildSectionPack<SN, C>[];
 };
 
-type MakeFromSectionsProps<SN extends SimpleSectionName> = {
+type MakeFromSectionsProps<SN extends SectionName> = {
   sections: StateSections;
   sectionName: SN;
 };
 export class PackMakerSection<
-  SN extends SectionName
+  SN extends SectionNameByType
 > extends GetterSectionBase<SN> {
   get get(): GetterSection<SN> {
     return new GetterSection(this.getterSectionProps);
   }
-  static makeFromSections<SN extends SimpleSectionName>({
+  static makeFromSections<SN extends SectionName>({
     sections,
     sectionName,
   }: MakeFromSectionsProps<SN>): PackMakerSection<SN> {
@@ -76,7 +73,7 @@ export class PackMakerSection<
       return siblingMaker.makeSectionPack();
     });
   }
-  sectionPackMaker<S extends SectionName>(
+  sectionPackMaker<S extends SectionNameByType>(
     feInfo: FeSectionInfo<S>
   ): PackMakerSection<S> {
     return new PackMakerSection({
@@ -100,7 +97,7 @@ export class PackMakerSection<
       return rawSections;
     }, {} as { [key: string]: any }) as RawSections<SN>;
   }
-  private feIdsToRawSections<S extends SectionName>(
+  private feIdsToRawSections<S extends SectionNameByType>(
     sectionName: S,
     feIdArr: string[]
   ): OneRawSection<S>[] {
@@ -108,7 +105,7 @@ export class PackMakerSection<
       return this.makeRawSection({ sectionName, feId });
     });
   }
-  private makeRawSection<S extends SectionName>(
+  private makeRawSection<S extends SectionNameByType>(
     feInfo: FeSectionInfo<S>
   ): OneRawSection<S> {
     const { dbId, varbs, allChildDbIds } = this.get.getterSection(feInfo);

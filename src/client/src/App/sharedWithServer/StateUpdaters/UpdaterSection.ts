@@ -1,7 +1,6 @@
 import { VarbValues } from "../SectionsMeta/baseSectionsDerived/baseSectionTypes";
 import { SectionValues } from "../SectionsMeta/baseSectionsDerived/valueMetaTypes";
-import { Id } from "../SectionsMeta/baseSectionsUtils/id";
-import { SimpleSectionName } from "../SectionsMeta/baseSectionsVarbs";
+import { Id } from "../SectionsMeta/baseSectionsVarbs/id";
 import {
   ChildArrInfo,
   ChildIdArrsNarrow,
@@ -14,6 +13,7 @@ import { DescendantSectionName } from "../SectionsMeta/childSectionsDerived/Desc
 import { ParentNameSafe } from "../SectionsMeta/childSectionsDerived/ParentName";
 import { FeSectionInfo } from "../SectionsMeta/Info";
 import { SectionName } from "../SectionsMeta/SectionName";
+import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { GetterSectionProps } from "../StateGetters/Bases/GetterSectionBase";
 import { InitRawFeSectionProps } from "../StateSections/initRawSection";
 import { StateSections } from "../StateSections/StateSections";
@@ -26,13 +26,13 @@ import { UpdaterSectionBase } from "./bases/updaterSectionBase";
 import { UpdaterList } from "./UpdaterList";
 import { UpdaterVarb } from "./UpdaterVarb";
 
-type UpdateableRawFeSection<SN extends SectionName> = StrictOmit<
+type UpdateableRawFeSection<SN extends SectionNameByType> = StrictOmit<
   RawFeSection<SN>,
   "sectionName"
 >;
 
 export class UpdaterSection<
-  SN extends SectionName
+  SN extends SectionNameByType
 > extends UpdaterSectionBase<SN> {
   private get parent(): UpdaterSection<ParentNameSafe<SN>> {
     const { parentInfoSafe } = this.get;
@@ -171,7 +171,7 @@ export class UpdaterSection<
       sectionsShare: { sections },
     };
   }
-  updaterSection<S extends SimpleSectionName>(
+  updaterSection<S extends SectionName>(
     feInfo: FeSectionInfo<S>
   ): UpdaterSection<S> {
     return new UpdaterSection({
@@ -190,7 +190,7 @@ export class UpdaterSection<
   }
 }
 
-interface AddSectionProps<SN extends SimpleSectionName = SimpleSectionName>
+interface AddSectionProps<SN extends SectionName = SectionName>
   extends InitRawFeSectionProps<SN> {
   sectionName: SN;
   childFeIds?: ChildIdArrsNarrow<SN>;
@@ -198,18 +198,18 @@ interface AddSectionProps<SN extends SimpleSectionName = SimpleSectionName>
 }
 
 export type DescendantList<
-  SN extends SectionName,
+  SN extends SectionNameByType,
   DN extends DescendantSectionName<SN> = DescendantSectionName<SN>
 > = readonly [...DescendantSectionName<SN>[], DN];
 
 export interface AddChildOptions<
-  SN extends SectionName,
+  SN extends SectionNameByType,
   CN extends ChildName<SN> = ChildName<SN>,
   CT extends ChildSectionName<SN, CN> = ChildSectionName<SN, CN>
 > extends StrictOmit<AddSectionProps<CT>, OmitProps> {}
 
 export type AddDescendantOptions<
-  SN extends SectionName,
+  SN extends SectionNameByType,
   DN extends DescendantSectionName<SN> = DescendantSectionName<SN>
 > = StrictOmit<AddSectionProps<DN>, OmitProps>;
 

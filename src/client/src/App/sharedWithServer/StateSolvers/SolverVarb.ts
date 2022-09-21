@@ -4,12 +4,12 @@ import {
   InEntityVarbInfo,
   InVarbInfo,
   OutEntity,
-} from "../SectionsMeta/baseSectionsUtils/baseValues/entities";
-import { StateValue } from "../SectionsMeta/baseSectionsUtils/baseValues/StateValueTypes";
-import { Id } from "../SectionsMeta/baseSectionsUtils/id";
+} from "../SectionsMeta/baseSectionsVarbs/baseValues/entities";
+import { StateValue } from "../SectionsMeta/baseSectionsVarbs/baseValues/StateValueTypes";
+import { Id } from "../SectionsMeta/baseSectionsVarbs/id";
 import { VarbInfoMixed } from "../SectionsMeta/childSectionsDerived/MixedSectionInfo";
 import { RelInVarbInfo } from "../SectionsMeta/childSectionsDerived/RelInOutVarbInfo";
-import { SectionName } from "../SectionsMeta/SectionName";
+import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { GetterSections } from "../StateGetters/GetterSections";
 import { GetterVarb } from "../StateGetters/GetterVarb";
 import { OutVarbGetterVarb } from "../StateInOutVarbs/OutVarbGetterVarb";
@@ -19,13 +19,13 @@ import { SolverVarbBase, SolverVarbProps } from "./SolverBases/SolverVarbBase";
 import { SolverSections } from "./SolverSections";
 import { SolveValueVarb } from "./SolveValueVarb";
 
-type InitSolverVarbProps<SN extends SectionName> = StrictOmit<
+type InitSolverVarbProps<SN extends SectionNameByType> = StrictOmit<
   SolverVarbProps<SN>,
   "solveShare"
 >;
 
 export class SolverVarb<
-  SN extends SectionName<"hasVarb"> = SectionName<"hasVarb">
+  SN extends SectionNameByType<"hasVarb"> = SectionNameByType<"hasVarb">
 > extends SolverVarbBase<SN> {
   private initialEntities: InEntity[];
   constructor(props: SolverVarbProps<SN>) {
@@ -56,7 +56,7 @@ export class SolverVarb<
     });
   }
 
-  static init<SN extends SectionName>(
+  static init<SN extends SectionNameByType>(
     props: InitSolverVarbProps<SN>
   ): SolverVarb<SN> {
     return new SolverVarb({

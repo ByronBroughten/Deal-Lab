@@ -1,12 +1,14 @@
 import { pick } from "lodash";
-import { SectionName } from "../../SectionsMeta/SectionName";
+import { SectionNameByType } from "../../SectionsMeta/SectionNameByType";
 import { GetterSectionsBase, GetterSectionsProps } from "./GetterSectionsBase";
 
-export interface GetterListProps<SN extends SectionName>
+export interface GetterListProps<SN extends SectionNameByType>
   extends GetterSectionsProps {
   sectionName: SN;
 }
-export class GetterListBase<SN extends SectionName> extends GetterSectionsBase {
+export class GetterListBase<
+  SN extends SectionNameByType
+> extends GetterSectionsBase {
   readonly sectionName: SN;
   constructor({ sectionName, ...rest }: GetterListProps<SN>) {
     super(rest);

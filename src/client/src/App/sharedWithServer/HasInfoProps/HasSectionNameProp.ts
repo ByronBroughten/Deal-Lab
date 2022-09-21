@@ -1,5 +1,5 @@
-import { SectionName } from "../SectionsMeta/SectionName";
+import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 
-export class HasSectionNameProp<SN extends SectionName> {
+export class HasSectionNameProp<SN extends SectionNameByType> {
   constructor(readonly sectionName: SN) {}
 }

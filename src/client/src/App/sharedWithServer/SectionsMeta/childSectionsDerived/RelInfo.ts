@@ -1,5 +1,5 @@
-import { ExpectedCount, GeneralInfo } from "../baseSectionsUtils/NanoIdInfo";
-import { SimpleSectionName } from "../baseSectionsVarbs";
+import { ExpectedCount, GeneralInfo } from "../baseSectionsVarbs/NanoIdInfo";
+import { SectionName } from "../SectionName";
 import { ChildName } from "./ChildName";
 import { ParentName, PiblingName, StepSiblingName } from "./ParentName";
 
@@ -37,14 +37,14 @@ export interface RelLocalInfo extends RelInfo<"onlyOne"> {
   infoType: "local";
 }
 export interface RelParentInfo<
-  SN extends SimpleSectionName = SimpleSectionName,
+  SN extends SectionName = SectionName,
   PN extends ParentName<SN> = ParentName<SN>
 > extends RelInfo<"onlyOne"> {
   infoType: "parent";
   parentName: PN;
 }
 export interface RelChildrenInfo<
-  SN extends SimpleSectionName = SimpleSectionName,
+  SN extends SectionName = SectionName,
   CN extends ChildName<SN> = ChildName<SN>,
   OO extends ExpectedCount = ExpectedCount
 > extends RelInfo<OO> {
@@ -52,9 +52,9 @@ export interface RelChildrenInfo<
   childName: CN;
 }
 export interface RelStepSiblingInfo<
-  SN extends SimpleSectionName = SimpleSectionName,
+  SN extends SectionName = SectionName,
   SSN extends StepSiblingName<SN> = StepSiblingName<SN>,
-  SSSN extends SimpleSectionName = SimpleSectionName,
+  SSSN extends SectionName = SectionName,
   OO extends ExpectedCount = ExpectedCount
 > extends RelInfo<OO> {
   infoType: "stepSibling";
@@ -62,9 +62,9 @@ export interface RelStepSiblingInfo<
   stepSiblingSectionName: SSSN;
 }
 export interface RelPiblingInfo<
-  SN extends SimpleSectionName = SimpleSectionName,
+  SN extends SectionName = SectionName,
   PN extends PiblingName<SN> = PiblingName<SN>,
-  PSN extends SimpleSectionName = SimpleSectionName,
+  PSN extends SectionName = SectionName,
   OO extends ExpectedCount = ExpectedCount
 > extends RelInfo<OO> {
   infoType: "pibling";
@@ -73,7 +73,7 @@ export interface RelPiblingInfo<
 }
 
 export interface RelStepSiblingOfChildInfo<
-  SSN extends SimpleSectionName = SimpleSectionName,
+  SSN extends SectionName = SectionName,
   CN extends ChildName = ChildName,
   OO extends ExpectedCount = ExpectedCount
 > extends RelInfo<OO> {
@@ -82,7 +82,7 @@ export interface RelStepSiblingOfChildInfo<
   selfChildName: CN;
 }
 export interface RelNiblingOfChildInfo<
-  NSN extends SimpleSectionName = SimpleSectionName,
+  NSN extends SectionName = SectionName,
   CN extends ChildName = ChildName,
   OO extends ExpectedCount = ExpectedCount
 > extends RelInfo<OO> {

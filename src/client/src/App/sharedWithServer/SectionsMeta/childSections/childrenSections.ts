@@ -1,5 +1,5 @@
 import { Obj } from "../../utils/Obj";
-import { SimpleSectionName } from "../baseSectionsVarbs";
+import { SectionName } from "../SectionName";
 import {
   childSection,
   ChildSection,
@@ -11,7 +11,7 @@ type ChildrenSections<RP extends ChildrenSectionsProps> = {
   [K in keyof RP]: ChildSection<RP[K][0], RP[K][1]>;
 };
 type ChildrenSectionsProps = {
-  [key: string]: readonly [SimpleSectionName, ChildSectionOptions?];
+  [key: string]: readonly [SectionName, ChildSectionOptions?];
 };
 export function childrenSections<RP extends ChildrenSectionsProps>(
   props: RP

@@ -1,5 +1,5 @@
 import { SectionPack } from "../SectionsMeta/childSectionsDerived/SectionPack";
-import { SectionName } from "../SectionsMeta/SectionName";
+import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import {
   ChildSectionPackArrs,
   PackLoaderSection,
@@ -11,7 +11,7 @@ import { RemoveSolverSection } from "./RemoveSolverSection";
 import { SolverSectionBase } from "./SolverBases/SolverSectionBase";
 
 export class ComboSolverSection<
-  SN extends SectionName
+  SN extends SectionNameByType
 > extends SolverSectionBase<SN> {
   remover = RemoveSolverSection.init(this.solverSectionProps);
   adder = AddSolverSection.init(this.solverSectionProps);

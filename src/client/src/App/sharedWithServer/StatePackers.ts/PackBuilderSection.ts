@@ -1,4 +1,3 @@
-import { SimpleSectionName } from "../SectionsMeta/baseSectionsVarbs";
 import {
   ChildName,
   FeChildInfo,
@@ -8,6 +7,7 @@ import { ChildArrPack } from "../SectionsMeta/childSectionsDerived/ChildSectionP
 import { SectionPack } from "../SectionsMeta/childSectionsDerived/SectionPack";
 import { FeSectionInfo } from "../SectionsMeta/Info";
 import { SectionName } from "../SectionsMeta/SectionName";
+import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { GetterSectionsBase } from "../StateGetters/Bases/GetterSectionsBase";
 import { UpdaterSectionBase } from "../StateUpdaters/bases/updaterSectionBase";
 import {
@@ -18,7 +18,7 @@ import { ChildPackInfo, PackLoaderSection } from "./PackLoaderSection";
 import { PackMakerSection } from "./PackMakerSection";
 
 export class PackBuilderSections extends GetterSectionsBase {
-  section<SN extends SimpleSectionName>(
+  section<SN extends SectionName>(
     feInfo: FeSectionInfo<SN>
   ): PackBuilderSection<SN> {
     return new PackBuilderSection({
@@ -29,7 +29,7 @@ export class PackBuilderSections extends GetterSectionsBase {
 }
 
 export class PackBuilderSection<
-  SN extends SectionName
+  SN extends SectionNameByType
 > extends UpdaterSectionBase<SN> {
   static initAsOmniParent() {
     return new PackBuilderSection(UpdaterSection.initOmniParentProps());
@@ -141,7 +141,7 @@ export class PackBuilderSection<
   loadSelf(sectionPack: SectionPack<SN>) {
     this.loader.loadSelfSectionPack(sectionPack);
   }
-  packBuilderSection<S extends SectionName>(
+  packBuilderSection<S extends SectionNameByType>(
     feInfo: FeSectionInfo<S>
   ): PackBuilderSection<S> {
     return new PackBuilderSection({

@@ -7,23 +7,23 @@ import {
 import {
   InEntity,
   OutEntity,
-} from "../SectionsMeta/baseSectionsUtils/baseValues/entities";
-import { NumberOrQ } from "../SectionsMeta/baseSectionsUtils/baseValues/NumObj";
-import { ValueName } from "../SectionsMeta/baseSectionsUtils/baseVarb";
-import { ExpectedCount } from "../SectionsMeta/baseSectionsUtils/NanoIdInfo";
+} from "../SectionsMeta/baseSectionsVarbs/baseValues/entities";
+import { NumberOrQ } from "../SectionsMeta/baseSectionsVarbs/baseValues/NumObj";
+import { ValueName } from "../SectionsMeta/baseSectionsVarbs/baseVarb";
+import { ExpectedCount } from "../SectionsMeta/baseSectionsVarbs/NanoIdInfo";
 import {
   Adornments,
   StateValueAnyKey,
   valueSchemasPlusAny,
   ValueTypesPlusAny,
-} from "../SectionsMeta/baseSectionsUtils/StateVarbTypes";
+} from "../SectionsMeta/baseSectionsVarbs/StateVarbTypes";
 import {
   mixedInfoS,
   VarbInfoMixedFocal,
 } from "../SectionsMeta/childSectionsDerived/MixedSectionInfo";
 import { RelLocalInfo } from "../SectionsMeta/childSectionsDerived/RelInfo";
 import { FeVarbInfo, InfoS } from "../SectionsMeta/Info";
-import { SectionName } from "../SectionsMeta/SectionName";
+import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { InUpdatePack, VarbMeta } from "../SectionsMeta/VarbMeta";
 import { StateVarb } from "../StateSections/StateSectionsTypes";
 import { mathS, NotANumberError } from "../utils/math";
@@ -36,7 +36,7 @@ import { GetterVarbs } from "./GetterVarbs";
 class ValueTypeError extends Error {}
 
 export class GetterVarb<
-  SN extends SectionName<"hasVarb"> = SectionName<"hasVarb">
+  SN extends SectionNameByType<"hasVarb"> = SectionNameByType<"hasVarb">
 > extends GetterVarbBase<SN> {
   private getterVarbs = new GetterVarbs(this.getterSectionProps);
   get numObj() {
@@ -262,7 +262,9 @@ export class GetterVarb<
       .value("string");
     return switchValue === actualSwitchValue;
   }
-  getterVarb<S extends SectionName>(varbInfo: FeVarbInfo<S>): GetterVarb<S> {
+  getterVarb<S extends SectionNameByType>(
+    varbInfo: FeVarbInfo<S>
+  ): GetterVarb<S> {
     return new GetterVarb({
       ...varbInfo,
       sectionsShare: this.sectionsShare,
@@ -279,7 +281,7 @@ export class GetterVarb<
       label: this.displayName,
     };
   }
-  nearestAnscestor<S extends SectionName>({
+  nearestAnscestor<S extends SectionNameByType>({
     sectionName,
     varbName,
   }: VarbNames<S>): GetterVarb<S> {
@@ -297,7 +299,7 @@ export class GetterVarb<
   }
   static varbIdToVarbInfo(varbId: string): FeVarbInfo {
     const [sectionName, varbName, feId] = varbId.split(".") as [
-      SectionName,
+      SectionNameByType,
       string,
       string
     ];

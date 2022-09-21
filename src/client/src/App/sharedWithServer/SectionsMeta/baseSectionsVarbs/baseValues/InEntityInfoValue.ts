@@ -3,7 +3,7 @@ import { z } from "zod";
 import { Obj } from "../../../utils/Obj";
 import { zS } from "../../../utils/zod";
 import { isVarbName } from "../../baseSectionsDerived/baseVarbInfo";
-import { isSectionName } from "../../baseSectionsVarbs";
+import { isSectionName } from "../../SectionName";
 import { Id } from "../id";
 import { InEntityVarbInfo, zInEntityVarbInfo } from "./entities";
 

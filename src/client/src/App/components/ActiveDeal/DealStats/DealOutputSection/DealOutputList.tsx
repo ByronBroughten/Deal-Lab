@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { inEntityInfo } from "../../../../sharedWithServer/SectionsMeta/baseSectionsUtils/baseValues/InEntityInfoValue";
+import { inEntityInfo } from "../../../../sharedWithServer/SectionsMeta/baseSectionsVarbs/baseValues/InEntityInfoValue";
 import { useSetterSection } from "../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import { VariableOption } from "../../../../sharedWithServer/StateEntityGetters/VariableGetterSections";
 import theme from "../../../../theme/Theme";

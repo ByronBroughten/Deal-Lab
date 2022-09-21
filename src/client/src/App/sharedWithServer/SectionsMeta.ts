@@ -1,10 +1,6 @@
 import { pick } from "lodash";
 import { VarbNames } from "./SectionsMeta/baseSectionsDerived/baseVarbInfo";
 import {
-  SimpleSectionName,
-  simpleSectionNames,
-} from "./SectionsMeta/baseSectionsVarbs";
-import {
   DescendantSectionName,
   SelfOrDescendantSectionName,
 } from "./SectionsMeta/childSectionsDerived/DescendantSectionName";
@@ -14,7 +10,11 @@ import {
   RelOutVarbInfo,
 } from "./SectionsMeta/childSectionsDerived/RelInOutVarbInfo";
 import { SectionMeta, VarbMetas } from "./SectionsMeta/SectionMeta";
-import { SectionName, sectionNameS } from "./SectionsMeta/SectionName";
+import { SectionName, sectionNames } from "./SectionsMeta/SectionName";
+import {
+  SectionNameByType,
+  sectionNameS,
+} from "./SectionsMeta/SectionNameByType";
 import {
   InUpdatePack,
   isDefaultInPack,
@@ -25,7 +25,7 @@ import {
 import { Obj } from "./utils/Obj";
 
 type SectionMetasCore = {
-  [SN in SimpleSectionName]: SectionMeta<SN>;
+  [SN in SectionName]: SectionMeta<SN>;
 };
 
 export class SectionsMeta {
@@ -34,18 +34,18 @@ export class SectionsMeta {
     this.core = SectionsMeta.initCore();
     this.initOutUpdatePacks();
   }
-  get sectionNames(): SimpleSectionName[] {
+  get sectionNames(): SectionName[] {
     return Obj.keys(this.core);
   }
-  get<SN extends SimpleSectionName>(sectionName: SN): SectionMeta<SN> {
+  get<SN extends SectionName>(sectionName: SN): SectionMeta<SN> {
     const sectionCore = this.core[sectionName];
     return sectionCore as any;
   }
-  section<SN extends SimpleSectionName>(sectionName: SN): SectionMeta<SN> {
+  section<SN extends SectionName>(sectionName: SN): SectionMeta<SN> {
     const sectionMeta = this.core[sectionName];
-    return sectionMeta as SectionMeta<SectionName> as any;
+    return sectionMeta as SectionMeta<SectionNameByType> as any;
   }
-  varbs<SN extends SimpleSectionName>(sectionName: SN): VarbMetas<SN> {
+  varbs<SN extends SectionName>(sectionName: SN): VarbMetas<SN> {
     return this.get(sectionName).varbMetas;
   }
   varb<VNS extends VarbNames>(varbNames: VNS): VarbMeta<VNS["sectionName"]> {
@@ -55,7 +55,7 @@ export class SectionsMeta {
   value<VNS extends VarbNames>(varbNames: VNS) {
     return this.varb(varbNames).value;
   }
-  selfAndDescendantNames<SN extends SimpleSectionName>(
+  selfAndDescendantNames<SN extends SectionName>(
     sectionName: SN
   ): SelfOrDescendantSectionName<SN>[] {
     const selfAndDescendantNames: SelfOrDescendantSectionName<SN>[] = [];
@@ -90,7 +90,7 @@ export class SectionsMeta {
     throw new Error("Expected one of two InUpdatePacks.");
   }
   inUpdatePackToOuts(
-    targetNames: VarbNames<SectionName<"hasVarb">>,
+    targetNames: VarbNames<SectionNameByType<"hasVarb">>,
     inUpdatePack: InUpdatePack
   ): void {
     const { inUpdateInfos } = inUpdatePack;
@@ -120,7 +120,7 @@ export class SectionsMeta {
     for (const [sectionName, sectionMeta] of Obj.entriesFull(this.core)) {
       if (!sectionNameS.is(sectionName, "hasVarb")) continue;
       for (const [varbName, varbMeta] of Obj.entriesFull(
-        (sectionMeta as SectionMeta<SectionName>).varbMetas
+        (sectionMeta as SectionMeta<SectionNameByType>).varbMetas
       )) {
         for (const inUpdatePack of varbMeta.inUpdatePacks) {
           this.inUpdatePackToOuts({ sectionName, varbName }, inUpdatePack);
@@ -130,7 +130,7 @@ export class SectionsMeta {
   }
 
   private static initCore(): SectionMetasCore {
-    return simpleSectionNames.reduce((core, sectionName) => {
+    return sectionNames.reduce((core, sectionName) => {
       (core[sectionName] as SectionMeta<typeof sectionName>) =
         SectionMeta.init(sectionName);
       return core;

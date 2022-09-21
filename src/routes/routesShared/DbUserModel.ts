@@ -4,7 +4,6 @@ import {
   SectionVarbName,
   VarbNameNext,
 } from "../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionTypes";
-import { SimpleSectionName } from "../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsVarbs";
 import {
   ChildName,
   getChildNames,
@@ -27,6 +26,7 @@ import {
 } from "../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DescendantSectionName";
 import { SectionPack } from "../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/SectionPack";
 import { RawSection } from "../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/SectionPack/RawSection";
+import { SectionName } from "../../client/src/App/sharedWithServer/SectionsMeta/SectionName";
 import { monSchemas } from "../../client/src/App/sharedWithServer/utils/mongoose";
 
 export type DbSectionsModelCore = RawDbUser & { _id: mongoose.Types.ObjectId };
@@ -70,9 +70,7 @@ function monRawSections<SN extends DbSectionName>(
   }, {} as Record<SelfOrDescendantSectionName<SN>, any>);
   return new Schema(schemaFrame);
 }
-function monRawSection<SN extends SimpleSectionName>(
-  sectionName: SN
-): Schema<any> {
+function monRawSection<SN extends SectionName>(sectionName: SN): Schema<any> {
   const schemaFrame: Record<keyof RawSection, any> = {
     dbId: monSchemas.reqDbId,
     childDbIds: monChildDbIds(sectionName),
@@ -80,9 +78,7 @@ function monRawSection<SN extends SimpleSectionName>(
   };
   return new Schema(schemaFrame);
 }
-function monDbVarbs<SN extends SimpleSectionName>(
-  sectionName: SN
-): Schema<any> {
+function monDbVarbs<SN extends SectionName>(sectionName: SN): Schema<any> {
   const sectionMeta = sectionsMeta.get(sectionName);
   const { varbNamesNext } = sectionMeta;
   const frame = varbNamesNext.reduce((monVarbs, varbName) => {
@@ -92,9 +88,7 @@ function monDbVarbs<SN extends SimpleSectionName>(
   }, {} as Record<SectionVarbName<SN>, any>);
   return new Schema(frame);
 }
-function monChildDbIds<SN extends SimpleSectionName>(
-  sectionName: SN
-): Schema<any> {
+function monChildDbIds<SN extends SectionName>(sectionName: SN): Schema<any> {
   const childNames = getChildNames(sectionName);
   const frame = childNames.reduce((childIds, childName) => {
     childIds[childName] = [monSchemas.reqString];

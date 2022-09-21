@@ -1,15 +1,12 @@
 import { Arr } from "../../utils/Arr";
-import {
-  BaseSectionsVarbs,
-  SimpleSectionName,
-  simpleSectionNames,
-} from "../baseSectionsVarbs";
+import { BaseSectionsVarbs } from "../baseSectionsVarbs";
+import { SectionName, sectionNames } from "../SectionName";
 
 type SnArrs = {
-  [SN in SimpleSectionName]: SN[];
+  [SN in SectionName]: SN[];
 };
 function makeSingleSectionNameArrs(): SnArrs {
-  return simpleSectionNames.reduce((snArrs, sectionName) => {
+  return sectionNames.reduce((snArrs, sectionName) => {
     (snArrs as any)[sectionName] = [sectionName];
     return snArrs;
   }, {} as SnArrs);
@@ -18,20 +15,20 @@ function makeSingleSectionNameArrs(): SnArrs {
 function makeBaseNameArrs() {
   return {
     ...makeSingleSectionNameArrs(),
-    all: simpleSectionNames as SimpleSectionName[],
-    hasVarb: simpleSectionNames,
-    notRootNorOmni: Arr.excludeStrict(simpleSectionNames, [
+    all: sectionNames as readonly SectionName[],
+    hasVarb: sectionNames,
+    notRootNorOmni: Arr.excludeStrict(sectionNames, [
       "root",
       "omniParent",
     ] as const),
     get additiveList() {
-      return Arr.extractStrict(simpleSectionNames, [
+      return Arr.extractStrict(sectionNames, [
         "singleTimeList",
         "ongoingList",
       ] as const);
     },
     get varbListAllowed() {
-      return Arr.extractStrict(simpleSectionNames, [
+      return Arr.extractStrict(sectionNames, [
         "singleTimeList",
         "ongoingList",
         "userVarbList",

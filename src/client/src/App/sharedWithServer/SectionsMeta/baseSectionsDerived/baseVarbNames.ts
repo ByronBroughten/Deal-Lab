@@ -1,6 +1,6 @@
 import { Obj } from "../../utils/Obj";
-import { StringObj } from "../baseSectionsUtils/baseValues/StringObj";
-import { baseVarbsS } from "../baseSectionsUtils/baseVarbs";
+import { StringObj } from "../baseSectionsVarbs/baseValues/StringObj";
+import { baseVarbsS } from "../baseSectionsVarbs/baseVarbs";
 
 export const virtualVarbNames = Obj.keys(baseVarbsS.virtualVarb);
 export type VirtualVarbName = typeof virtualVarbNames[number];

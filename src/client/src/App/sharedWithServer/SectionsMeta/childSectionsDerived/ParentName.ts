@@ -1,6 +1,6 @@
 import { NeversToSomething, SubType } from "../../utils/types";
-import { SimpleSectionName, simpleSectionNames } from "../baseSectionsVarbs";
 import { noParentWarning } from "../Info";
+import { SectionName, sectionNames } from "../SectionName";
 import { ChildName } from "./ChildName";
 import {
   childrenSectionNames,
@@ -11,10 +11,10 @@ import {
 // the name of a section that is the parent of singleTimeList
 // the name of a section that is the parent of allList
 
-type ParentToChildOrNullMap<CN extends SimpleSectionName> = {
-  [S in SimpleSectionName]: ChildSectionNameOrNull<S, CN>;
+type ParentToChildOrNullMap<CN extends SectionName> = {
+  [S in SectionName]: ChildSectionNameOrNull<S, CN>;
 };
-type ParentNameOrNever<SN extends SimpleSectionName> = keyof SubType<
+type ParentNameOrNever<SN extends SectionName> = keyof SubType<
   ParentToChildOrNullMap<SN>,
   SN
 >;
@@ -26,20 +26,20 @@ function _testParentNameOrNever() {
 }
 
 type SectionToParentOrNever = {
-  [SN in SimpleSectionName]: ParentNameOrNever<SN>;
+  [SN in SectionName]: ParentNameOrNever<SN>;
 };
 export type SectionToParentNameArrs = {
   [SN in keyof SectionToParentOrNever]: SectionToParentOrNever[SN][];
 };
 
-type SectionNameArrs = Record<SimpleSectionName, SimpleSectionName[]>;
+type SectionNameArrs = Record<SectionName, SectionName[]>;
 export function makeSectionToParentArrs(): SectionToParentNameArrs {
-  const emptyArrs = simpleSectionNames.reduce((parentNames, sectionName) => {
+  const emptyArrs = sectionNames.reduce((parentNames, sectionName) => {
     parentNames[sectionName] = [];
     return parentNames;
   }, {} as SectionNameArrs);
 
-  return simpleSectionNames.reduce((parentNameArrs, sectionName) => {
+  return sectionNames.reduce((parentNameArrs, sectionName) => {
     for (const childType of childrenSectionNames[sectionName]) {
       parentNameArrs[childType].push(sectionName);
     }
@@ -52,17 +52,19 @@ type SectionToParentOrNos = NeversToSomething<
   SectionToParentOrNever,
   typeof noParentWarning
 >;
-export type ParentName<SN extends SimpleSectionName = SimpleSectionName> =
+export type ParentName<SN extends SectionName = SectionName> =
   SectionToParentOrNos[SN];
-export type ParentNameSafe<SN extends SimpleSectionName> = Exclude<
+export type ParentNameSafe<SN extends SectionName> = Exclude<
   ParentName<SN>,
   typeof noParentWarning
 >;
 
-export type StepSiblingName<SN extends SimpleSectionName = SimpleSectionName> =
-  ChildName<ParentNameSafe<SN>>;
-export type PiblingName<SN extends SimpleSectionName = SimpleSectionName> =
-  StepSiblingName<ParentNameSafe<SN>>;
+export type StepSiblingName<SN extends SectionName = SectionName> = ChildName<
+  ParentNameSafe<SN>
+>;
+export type PiblingName<SN extends SectionName = SectionName> = StepSiblingName<
+  ParentNameSafe<SN>
+>;
 
 function _testParentName() {
   type OneParent = ParentName<"property">;

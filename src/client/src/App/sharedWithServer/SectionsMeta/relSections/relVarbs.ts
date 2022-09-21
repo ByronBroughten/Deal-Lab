@@ -4,12 +4,13 @@ import {
   VarbNameNext,
   VarbNameNextByType,
 } from "../baseSectionsDerived/baseSectionTypes";
-import { ValueName } from "../baseSectionsUtils/baseVarb";
-import { switchNames } from "../baseSectionsUtils/RelSwitchVarb";
-import { baseSectionsVarbs, SimpleSectionName } from "../baseSectionsVarbs";
+import { baseSectionsVarbs } from "../baseSectionsVarbs";
+import { ValueName } from "../baseSectionsVarbs/baseVarb";
+import { switchNames } from "../baseSectionsVarbs/RelSwitchVarb";
 import { ChildName } from "../childSectionsDerived/ChildName";
 import { relVarbInfoS } from "../childSectionsDerived/RelVarbInfo";
 import { relVarbInfosS } from "../childSectionsDerived/RelVarbInfos";
+import { SectionName } from "../SectionName";
 import { relVarb, relVarbS } from "./rel/relVarb";
 import {
   decimalToPortion,
@@ -24,12 +25,12 @@ import { switchInput } from "./rel/relVarbs/relSwitchVarbs";
 import { RelVarb, RelVarbByType } from "./rel/relVarbTypes";
 
 export type GeneralRelVarbs = Record<string, RelVarb>;
-export type RelVarbs<SN extends SimpleSectionName> = Record<
+export type RelVarbs<SN extends SectionName> = Record<
   VarbNameNext<SN>,
   RelVarb
 >;
 
-type RelVarbsByType<SN extends SimpleSectionName, VLN extends ValueName> = Pick<
+type RelVarbsByType<SN extends SectionName, VLN extends ValueName> = Pick<
   RelVarbs<SN>,
   VarbNameNextByType<SN, VLN>
 >;

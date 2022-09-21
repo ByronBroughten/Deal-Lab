@@ -1,6 +1,6 @@
 import { ChildSectionNameName } from "../../../sharedWithServer/SectionsMeta/childSectionsDerived/ChildSectionName";
 import { FeSectionInfo } from "../../../sharedWithServer/SectionsMeta/Info";
-import { ParentOfTypeName } from "../../../sharedWithServer/SectionsMeta/SectionName";
+import { ParentOfTypeName } from "../../../sharedWithServer/SectionsMeta/SectionNameByType";
 import { ThemeName } from "../../../theme/Theme";
 import { VarbListUserVarbs } from "../VarbLists/VarbListUserVarbs";
 import { ListGroupGeneric } from "./ListGroupShared/ListGroupGeneric";

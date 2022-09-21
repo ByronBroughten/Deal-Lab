@@ -1,11 +1,11 @@
 import {
   isStateValue,
   StateValue,
-} from "../SectionsMeta/baseSectionsUtils/baseValues/StateValueTypes";
-import { DbSectionInfo } from "../SectionsMeta/baseSectionsUtils/DbSectionInfo";
-import { SimpleSectionName } from "../SectionsMeta/baseSectionsVarbs";
+} from "../SectionsMeta/baseSectionsVarbs/baseValues/StateValueTypes";
+import { DbSectionInfo } from "../SectionsMeta/baseSectionsVarbs/DbSectionInfo";
 import { FeSectionInfo, FeVarbInfo } from "../SectionsMeta/Info";
 import { SectionName } from "../SectionsMeta/SectionName";
+import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import {
   VariableGetterSections,
   VariableOption,
@@ -25,7 +25,7 @@ export class SetterSections extends SetterSectionsBase {
   get get(): GetterSections {
     return new GetterSections(this.setterSectionsProps);
   }
-  section<SN extends SectionName>(
+  section<SN extends SectionNameByType>(
     feInfo: FeSectionInfo<SN>
   ): SetterSection<SN> {
     return new SetterSection({
@@ -33,18 +33,18 @@ export class SetterSections extends SetterSectionsBase {
       ...feInfo,
     });
   }
-  sectionByDbInfo<SN extends SectionName>(
+  sectionByDbInfo<SN extends SectionNameByType>(
     dbInfo: DbSectionInfo<SN>
   ): SetterSection<SN> {
     return this.section(this.get.sectionByDbInfo(dbInfo).feInfo);
   }
-  varb<SN extends SectionName>(varbInfo: FeVarbInfo<SN>): SetterVarb<SN> {
+  varb<SN extends SectionNameByType>(varbInfo: FeVarbInfo<SN>): SetterVarb<SN> {
     return new SetterVarb({
       ...this.setterSectionsProps,
       ...varbInfo,
     });
   }
-  oneAndOnly<SN extends SimpleSectionName>(sectionName: SN): SetterSection<SN> {
+  oneAndOnly<SN extends SectionName>(sectionName: SN): SetterSection<SN> {
     return this.section(this.get.oneAndOnly(sectionName));
   }
   get main(): SetterSection<"main"> {

@@ -1,11 +1,11 @@
-import { NumObjUpdateFnName } from "../../../baseSectionsUtils/baseValues/updateFnNames";
+import { NumObjUpdateFnName } from "../../../baseSectionsVarbs/baseValues/updateFnNames";
 import {
   ongoingVarb,
   SwitchEndingKey,
   SwitchEndings,
   switchNames,
   SwitchRecord,
-} from "../../../baseSectionsUtils/RelSwitchVarb";
+} from "../../../baseSectionsVarbs/RelSwitchVarb";
 import { RelInVarbInfo } from "../../../childSectionsDerived/RelInOutVarbInfo";
 import { relVarbInfoS } from "../../../childSectionsDerived/RelVarbInfo";
 import { relVarbsS } from "../../relVarbs";

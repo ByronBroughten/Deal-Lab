@@ -1,9 +1,9 @@
 import { FeVarbInfo } from "../SectionsMeta/Info";
-import { SectionName } from "../SectionsMeta/SectionName";
+import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { HasSectionInfoProps } from "./HasSectionInfoProps";
 
 export class HasVarbInfoProps<
-  SN extends SectionName<"hasVarb">
+  SN extends SectionNameByType<"hasVarb">
 > extends HasSectionInfoProps<SN> {
   readonly varbName: string;
   constructor(props: FeVarbInfo<SN>) {

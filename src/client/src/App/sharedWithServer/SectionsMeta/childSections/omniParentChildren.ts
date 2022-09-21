@@ -1,15 +1,12 @@
 import { Arr } from "../../utils/Arr";
 import { StrictExclude } from "../../utils/types";
-import { SimpleSectionName, simpleSectionNames } from "../baseSectionsVarbs";
+import { SectionName, sectionNames } from "../SectionName";
 import { childSection, ChildSection } from "./childSection";
 
 type OmniParentChildren = {
-  [SN in StrictExclude<
-    SimpleSectionName,
-    "root" | "omniParent"
-  >]: ChildSection<SN>;
+  [SN in StrictExclude<SectionName, "root" | "omniParent">]: ChildSection<SN>;
 };
-export const relOmniParentChildren = Arr.excludeStrict(simpleSectionNames, [
+export const relOmniParentChildren = Arr.excludeStrict(sectionNames, [
   "root",
   "omniParent",
 ]).reduce((omniNames, sectionName) => {

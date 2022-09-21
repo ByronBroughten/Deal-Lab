@@ -9,16 +9,16 @@ import {
   SectionValuesRes,
   VarbValue,
 } from "../SectionsMeta/baseSectionsDerived/valueMetaTypes";
-import { SwitchTargetKey } from "../SectionsMeta/baseSectionsUtils/baseSwitchNames";
-import { InEntityInfo } from "../SectionsMeta/baseSectionsUtils/baseValues/InEntityInfoValue";
-import { ValueName } from "../SectionsMeta/baseSectionsUtils/baseVarb";
-import { DbSectionInfo } from "../SectionsMeta/baseSectionsUtils/DbSectionInfo";
-import { ExpectedCount } from "../SectionsMeta/baseSectionsUtils/NanoIdInfo";
+import { SwitchTargetKey } from "../SectionsMeta/baseSectionsVarbs/baseSwitchNames";
+import { InEntityInfo } from "../SectionsMeta/baseSectionsVarbs/baseValues/InEntityInfoValue";
+import { ValueName } from "../SectionsMeta/baseSectionsVarbs/baseVarb";
+import { DbSectionInfo } from "../SectionsMeta/baseSectionsVarbs/DbSectionInfo";
+import { ExpectedCount } from "../SectionsMeta/baseSectionsVarbs/NanoIdInfo";
 import {
   SwitchEndingKey,
   switchNames,
-} from "../SectionsMeta/baseSectionsUtils/RelSwitchVarb";
-import { ValueTypesPlusAny } from "../SectionsMeta/baseSectionsUtils/StateVarbTypes";
+} from "../SectionsMeta/baseSectionsVarbs/RelSwitchVarb";
+import { ValueTypesPlusAny } from "../SectionsMeta/baseSectionsVarbs/StateVarbTypes";
 import {
   ChildIdArrsWide,
   ChildName,
@@ -52,10 +52,10 @@ import {
 } from "../SectionsMeta/Info";
 import { SectionMeta } from "../SectionsMeta/SectionMeta";
 import {
-  SectionName,
+  SectionNameByType,
   sectionNameS,
   SectionNameType,
-} from "../SectionsMeta/SectionName";
+} from "../SectionsMeta/SectionNameByType";
 import { RawFeSection } from "../StateSections/StateSectionsTypes";
 import { Arr } from "../utils/Arr";
 import { Obj } from "../utils/Obj";
@@ -67,7 +67,7 @@ import { GetterVarbs } from "./GetterVarbs";
 import { GetterVirtualVarb } from "./GetterVirtualVarb";
 
 export class GetterSection<
-  SN extends SectionName = SectionName
+  SN extends SectionNameByType = SectionNameByType
 > extends GetterSectionBase<SN> {
   get sections() {
     return new GetterSections(this.getterSectionsProps);
@@ -84,14 +84,14 @@ export class GetterSection<
   get displayName(): string {
     return this.meta.displayName;
   }
-  thisHasSectionName<S extends SectionName>(
+  thisHasSectionName<S extends SectionNameByType>(
     sectionName: S
   ): this is GetterSection<S> {
     return this.sectionName === (sectionName as any);
   }
   thisIsSectionType<ST extends SectionNameType>(
     sectionNameType: ST
-  ): this is GetterSection<SectionName<ST>> {
+  ): this is GetterSection<SectionNameByType<ST>> {
     return sectionNameS.is(this.sectionName, sectionNameType);
   }
   varbByFocalMixed({ varbName, ...mixedInfo }: VarbInfoMixedFocal): GetterVarb {
@@ -278,7 +278,7 @@ export class GetterSection<
   get siblings(): GetterSection<SN>[] {
     return this.siblingFeInfos.map((feInfo) => this.getterSection(feInfo));
   }
-  onlyCousin<S extends SectionName>(sectionName: S): GetterSection<S> {
+  onlyCousin<S extends SectionNameByType>(sectionName: S): GetterSection<S> {
     return this.parent.onlyChild(sectionName as any) as any as GetterSection<S>;
   }
   children<CN extends ChildName<SN>>(
@@ -608,7 +608,9 @@ export class GetterSection<
       throw new Error("This section doesn't have a parent.");
     return parentInfo as FeParentInfoSafe<SN>;
   }
-  nearestAnscestor<S extends SectionName>(anscestorName: S): GetterSection<S> {
+  nearestAnscestor<S extends SectionNameByType>(
+    anscestorName: S
+  ): GetterSection<S> {
     let section = this as any as GetterSection;
     for (let i = 0; i < 100; i++) {
       if (section.sectionName === "main") {
@@ -624,7 +626,7 @@ export class GetterSection<
     }
     throw new Error("Neither anscestor nor main were found.");
   }
-  getterSection<S extends SectionName>(
+  getterSection<S extends SectionNameByType>(
     feInfo: FeSectionInfo<S>
   ): GetterSection<S> {
     return new GetterSection({

@@ -1,13 +1,13 @@
 import { round } from "lodash";
 import { evaluate } from "mathjs";
-import { InEntity } from "../SectionsMeta/baseSectionsUtils/baseValues/entities";
+import { InEntity } from "../SectionsMeta/baseSectionsVarbs/baseValues/entities";
 import {
   EntitiesAndEditorText,
   NumberOrQ,
   NumObj,
-} from "../SectionsMeta/baseSectionsUtils/baseValues/NumObj";
-import { isNumObjUpdateFnName } from "../SectionsMeta/baseSectionsUtils/baseValues/updateFnNames";
-import { SectionName } from "../SectionsMeta/SectionName";
+} from "../SectionsMeta/baseSectionsVarbs/baseValues/NumObj";
+import { isNumObjUpdateFnName } from "../SectionsMeta/baseSectionsVarbs/baseValues/updateFnNames";
+import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { Arr } from "../utils/Arr";
 import { arithmeticOperatorsArr, mathS } from "../utils/math";
 import { Str } from "../utils/Str";
@@ -15,7 +15,7 @@ import { GetterVarbBase } from "./Bases/GetterVarbBase";
 import { GetterVarb } from "./GetterVarb";
 
 export class GetterVarbNumObj<
-  SN extends SectionName
+  SN extends SectionNameByType
 > extends GetterVarbBase<SN> {
   get get() {
     return new GetterVarb(this.getterVarbProps);

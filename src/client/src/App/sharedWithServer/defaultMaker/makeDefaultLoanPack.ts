@@ -1,6 +1,6 @@
+import { stringObj } from "../SectionsMeta/baseSectionsVarbs/baseValues/StringObj";
 import { SectionPack } from "../SectionsMeta/childSectionsDerived/SectionPack";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
-import { stringObj } from "./../SectionsMeta/baseSectionsUtils/baseValues/StringObj";
 
 export function makeDefaultLoanPack(): SectionPack<"loan"> {
   const loan = PackBuilderSection.initAsOmniChild("loan", {

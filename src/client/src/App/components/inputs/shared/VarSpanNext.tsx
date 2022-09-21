@@ -3,7 +3,7 @@ import { lighten } from "polished";
 import React from "react";
 import styled, { css } from "styled-components";
 import { getEntityStrategy } from "../../../modules/draftjs/getEntityStrategies";
-import { EntityMapData } from "../../../sharedWithServer/SectionsMeta/baseSectionsUtils/baseValues/entities";
+import { EntityMapData } from "../../../sharedWithServer/SectionsMeta/baseSectionsVarbs/baseValues/entities";
 import { useGetterSections } from "../../../sharedWithServer/stateClassHooks/useGetterSections";
 import theme from "../../../theme/Theme";
 import BasicDraftSpan from "./BasicDraftSpan";

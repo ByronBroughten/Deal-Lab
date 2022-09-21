@@ -3,20 +3,25 @@ import { VirtualVarbName } from "../SectionsMeta/baseSectionsDerived/baseVarbNam
 import calculations, {
   isCalculationName,
   NumberProps,
-} from "../SectionsMeta/baseSectionsUtils/baseValues/calculations";
+} from "../SectionsMeta/baseSectionsVarbs/baseValues/calculations";
 import {
   InEntities,
   InEntity,
-} from "../SectionsMeta/baseSectionsUtils/baseValues/entities";
+} from "../SectionsMeta/baseSectionsVarbs/baseValues/entities";
 import {
   InEntityInfo,
   InEntityInfoValue,
-} from "../SectionsMeta/baseSectionsUtils/baseValues/InEntityInfoValue";
-import { NumObj } from "../SectionsMeta/baseSectionsUtils/baseValues/NumObj";
+} from "../SectionsMeta/baseSectionsVarbs/baseValues/InEntityInfoValue";
+import { NumObj } from "../SectionsMeta/baseSectionsVarbs/baseValues/NumObj";
+import { StateValue } from "../SectionsMeta/baseSectionsVarbs/baseValues/StateValueTypes";
+import {
+  stringObj,
+  StringObj,
+} from "../SectionsMeta/baseSectionsVarbs/baseValues/StringObj";
 import { RelInVarbInfo } from "../SectionsMeta/childSectionsDerived/RelInOutVarbInfo";
 import { RelVarbInfo } from "../SectionsMeta/childSectionsDerived/RelVarbInfo";
-import { UpdateFnProps } from "../SectionsMeta/relSectionsUtils/rel/relVarbTypes";
-import { SectionName } from "../SectionsMeta/SectionName";
+import { UpdateFnProps } from "../SectionsMeta/relSections/rel/relVarbTypes";
+import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { GetterSectionProps } from "../StateGetters/Bases/GetterSectionBase";
 import { GetterVarbBase } from "../StateGetters/Bases/GetterVarbBase";
 import { GetterList } from "../StateGetters/GetterList";
@@ -26,16 +31,11 @@ import { GetterVarb } from "../StateGetters/GetterVarb";
 import { GetterVarbNumObj } from "../StateGetters/GetterVarbNumObj";
 import { UpdaterVarb } from "../StateUpdaters/UpdaterVarb";
 import { Arr } from "../utils/Arr";
-import { StateValue } from "./../SectionsMeta/baseSectionsUtils/baseValues/StateValueTypes";
-import {
-  stringObj,
-  StringObj,
-} from "./../SectionsMeta/baseSectionsUtils/baseValues/StringObj";
 import { ConditionalValueSolver } from "./SolveValueVarb/ConditionalValueSolver";
 import { UserVarbValueSolver } from "./SolveValueVarb/UserVarbValueSolver";
 
 export class SolveValueVarb<
-  SN extends SectionName<"hasVarb">
+  SN extends SectionNameByType<"hasVarb">
 > extends GetterVarbBase<SN> {
   private get getterSections() {
     return new GetterSections(this.getterSectionsProps);

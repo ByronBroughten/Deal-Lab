@@ -1,91 +1,61 @@
-import { StringTypeChecker } from "../../utils/StringTypeChecker";
-import { PropKeyOfValue } from "../utils/Obj/SubType";
-import { StrictExtract } from "../utils/types";
-import { baseNameArrs, BaseNameArrs } from "./baseSectionsDerived/baseNameArrs";
-import { SectionValues } from "./baseSectionsDerived/valueMetaTypes";
-import { SimpleSectionName } from "./baseSectionsVarbs";
-import { ChildName, getChildNames } from "./childSectionsDerived/ChildName";
-import {
-  childToSectionName,
-  ChildToSectionName,
-} from "./childSectionsDerived/ChildSectionName";
-import { ParentName } from "./childSectionsDerived/ParentName";
-import { isSectionPack, SectionPack } from "./childSectionsDerived/SectionPack";
-import { relNameArrs, RelNameArrs } from "./relSectionsDerived/relNameArrs";
+import { z } from "zod";
 
-type NameArrs = BaseNameArrs & RelNameArrs;
-function makeNameArrs(): NameArrs {
-  return {
-    ...baseNameArrs,
-    ...relNameArrs,
-  };
+export const sectionNames = [
+  "root",
+  "main",
+  "feUser",
+  "dbStore",
+  "proxy",
+  "displayNameItem",
+  "displayNameList",
+  "omniParent",
+  "compareTable",
+  "tableRow",
+  "column",
+  "cell",
+  "conditionalRow",
+  "singleTimeListGroup",
+  "singleTimeList",
+  "ongoingListGroup",
+  "ongoingList",
+  "singleTimeItem",
+  "ongoingItem",
+  "outputList",
+  "outputItem",
+  "customVarb",
+  "userVarbItem",
+  "conditionalRowList",
+  "userVarbList",
+
+  "deal",
+  "propertyGeneral",
+  "property",
+  "unit",
+  "financing",
+  "loan",
+  "mgmtGeneral",
+  "mgmt",
+
+  "subscriptionInfo",
+  "stripeSubscription",
+  "stripeInfoPrivate",
+
+  "authInfo",
+  "authInfoPrivate",
+
+  "userInfo",
+  "userInfoPrivate",
+] as const;
+
+export type SectionName = typeof sectionNames[number];
+export function isSectionName(value: any): value is SectionName {
+  return sectionNames.includes(value);
 }
+export const zSectionName = z
+  .string()
+  .refine((str) => isSectionName(str), "Not a valid sectionName");
 
-export type SectionNameType = keyof NameArrs;
-
-export type SectionName<T extends SectionNameType = "all"> =
-  NameArrs[T][number & keyof NameArrs[T]];
-
-export type HasRowFeStore = StrictExtract<
-  SectionName<"hasDisplayIndex">,
-  "property" | "loan" | "mgmt" | "deal"
->;
-
-export type SectionValuesByType<ST extends SectionNameType> = SectionValues<
-  SectionName<ST>
->;
-
-export const sectionNameS = new StringTypeChecker(makeNameArrs());
-
-type GeneralNameArrs = Record<SectionNameType, readonly SimpleSectionName[]>;
-const _testNameArrs = <T extends GeneralNameArrs>(_: T) => undefined;
-_testNameArrs(sectionNameS.arrs);
-
-export type ParentOfTypeName<T extends SectionNameType = "all"> = ParentName<
-  SectionName<T>
->;
-
-export type ChildNameOfType<
-  SN extends SimpleSectionName,
-  ST extends SectionNameType
-> = PropKeyOfValue<
-  ChildToSectionName[SN],
-  ChildToSectionName[SN][keyof ChildToSectionName[SN]] & SectionName<ST>
-> &
-  ChildName<SN>;
-
-export function childNamesOfType<
-  SN extends SimpleSectionName,
-  ST extends SectionNameType
->(sectionName: SN, sectionType: ST): ChildNameOfType<SN, ST>[] {
-  const childNamesOfType: ChildNameOfType<SN, ST>[] = [];
-  const childNames = getChildNames(sectionName);
-  for (const childName of childNames) {
-    const childSn = childToSectionName(sectionName, childName);
-    if (sectionNameS.is(childSn, sectionType)) {
-      childNamesOfType.push(childSn as ChildNameOfType<SN, ST>);
-    }
-  }
-  return childNamesOfType;
-}
-
-function _testChildNameOfType<
-  SN extends "property" | "mgmt",
-  CN extends ChildNameOfType<SN, "ongoingListGroup">
->(sn: SN, cn: CN) {}
-_testChildNameOfType("property", "ongoingCostListGroup");
-
-export type SectionPackByType<ST extends SectionNameType> = SectionPack<
-  SectionName<ST>
->;
-export function isSectionPackByType<ST extends SectionNameType = "all">(
-  value: any,
-  sectionType?: ST
-): value is SectionPackByType<ST> {
-  if (
-    isSectionPack(value) &&
-    sectionNameS.is(value.sectionName, sectionType ?? "all")
-  ) {
-    return true;
-  } else return false;
-}
+export const sectionNamesToNull = sectionNames.reduce((toNull, sectionName) => {
+  toNull[sectionName] = null;
+  return toNull;
+}, {} as Record<SectionName, null>);

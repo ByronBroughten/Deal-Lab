@@ -6,9 +6,8 @@ import { UpdateFnName } from "./baseSectionsDerived/valueMetaTypes";
 import {
   NumUnitName,
   numUnitParams,
-} from "./baseSectionsUtils/baseValues/calculations/numUnitParams";
-import { ValueName } from "./baseSectionsUtils/baseVarb";
-import { SimpleSectionName } from "./baseSectionsVarbs";
+} from "./baseSectionsVarbs/baseValues/calculations/numUnitParams";
+import { ValueName } from "./baseSectionsVarbs/baseVarb";
 import {
   RelInVarbInfo,
   RelOutVarbInfo,
@@ -20,9 +19,10 @@ import {
   SwitchUpdateInfo,
   UpdateFnProps,
   UpdateSwitchProp,
-} from "./relSectionsUtils/rel/relVarbTypes";
-import { GeneralRelVarbs } from "./relSectionsUtils/relVarbs";
+} from "./relSections/rel/relVarbTypes";
+import { GeneralRelVarbs } from "./relSections/relVarbs";
 import { SectionMeta } from "./SectionMeta";
+import { SectionName } from "./SectionName";
 
 type InBaseUpdatePack = {
   updateFnName: UpdateFnName;
@@ -79,7 +79,7 @@ function inSwitchPropsToInfos(
   return inSwitchInfos;
 }
 
-interface VarbMetaProps<SN extends SimpleSectionName> {
+interface VarbMetaProps<SN extends SectionName> {
   varbName: string;
   sectionName: SN;
   inDefaultInfos: RelInVarbInfo[];
@@ -87,9 +87,8 @@ interface VarbMetaProps<SN extends SimpleSectionName> {
   outUpdatePacks: OutUpdatePack[];
 }
 
-export type VarbMetaCore<SN extends SimpleSectionName> = RelVarb &
-  VarbMetaProps<SN>;
-export class VarbMeta<SN extends SimpleSectionName> {
+export type VarbMetaCore<SN extends SectionName> = RelVarb & VarbMetaProps<SN>;
+export class VarbMeta<SN extends SectionName> {
   constructor(readonly core: VarbMetaCore<SN>) {}
   validateVarbValue(value: any): true {
     if (this.isVarbValueType(value)) return true;
@@ -200,7 +199,7 @@ export class VarbMeta<SN extends SimpleSectionName> {
   static isDefaultInPack(pack: InUpdatePack): pack is InDefaultUpdatePack {
     return "inverseSwitches" in pack;
   }
-  static init<SN extends SimpleSectionName>({
+  static init<SN extends SectionName>({
     sectionName,
     varbName,
   }: VarbNames<SN>): VarbMeta<SN> {

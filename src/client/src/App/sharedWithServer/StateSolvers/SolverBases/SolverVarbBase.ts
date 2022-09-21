@@ -1,14 +1,14 @@
-import { SectionName } from "../../SectionsMeta/SectionName";
+import { SectionNameByType } from "../../SectionsMeta/SectionNameByType";
 import { GetterVarbBase } from "../../StateGetters/Bases/GetterVarbBase";
 import { SolverSectionBase, SolverSectionProps } from "./SolverSectionBase";
 
-export interface SolverVarbProps<SN extends SectionName<"hasVarb">>
+export interface SolverVarbProps<SN extends SectionNameByType<"hasVarb">>
   extends SolverSectionProps<SN> {
   varbName: string;
 }
 
 export class SolverVarbBase<
-  SN extends SectionName<"hasVarb">
+  SN extends SectionNameByType<"hasVarb">
 > extends SolverSectionBase<SN> {
   readonly getterVarbBase: GetterVarbBase<SN>;
   constructor(props: SolverVarbProps<SN>) {

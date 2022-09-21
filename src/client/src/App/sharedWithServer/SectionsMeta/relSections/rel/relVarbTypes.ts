@@ -3,8 +3,8 @@ import {
   ValueNamesToTypes,
   ValueSchemas,
 } from "../../baseSectionsDerived/valueMetaTypes";
-import { NumUnitName } from "../../baseSectionsUtils/baseValues/calculations/numUnitParams";
-import { ValueName } from "../../baseSectionsUtils/baseVarb";
+import { NumUnitName } from "../../baseSectionsVarbs/baseValues/calculations/numUnitParams";
+import { ValueName } from "../../baseSectionsVarbs/baseVarb";
 import {
   RelInVarbInfo,
   RelSingleInVarbInfo,

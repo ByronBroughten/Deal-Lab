@@ -6,7 +6,7 @@ import {
 import { ChildSectionName } from "../../SectionsMeta/childSectionsDerived/ChildSectionName";
 import { SectionPack } from "../../SectionsMeta/childSectionsDerived/SectionPack";
 import { OneRawSection } from "../../SectionsMeta/childSectionsDerived/SectionPack/RawSection";
-import { SectionName } from "../../SectionsMeta/SectionName";
+import { SectionNameByType } from "../../SectionsMeta/SectionNameByType";
 import {
   GetterSectionBase,
   GetterSectionProps,
@@ -18,14 +18,16 @@ import {
 } from "../../StateUpdaters/UpdaterSection";
 import { Obj } from "../../utils/Obj";
 
-interface ChildPackLoaderProps<SN extends SectionName, CN extends ChildName<SN>>
-  extends GetterSectionProps<SN> {
+interface ChildPackLoaderProps<
+  SN extends SectionNameByType,
+  CN extends ChildName<SN>
+> extends GetterSectionProps<SN> {
   sectionPack: SectionPack;
   childDbInfo: DbChildInfo<SN, CN>;
 }
 
 export class ChildPackLoader<
-  SN extends SectionName,
+  SN extends SectionNameByType,
   CN extends ChildName<SN>,
   CT extends ChildSectionName<SN, CN> = ChildSectionName<SN, CN>
 > extends GetterSectionBase<SN> {

@@ -1,9 +1,9 @@
 import { FeSectionInfo } from "../SectionsMeta/Info";
-import { SectionName } from "../SectionsMeta/SectionName";
+import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { GetterSection } from "../StateGetters/GetterSection";
 import { useSectionsContext } from "./useSections";
 
-export function useGetterSection<SN extends SectionName = "main">(
+export function useGetterSection<SN extends SectionNameByType = "main">(
   props?: FeSectionInfo<SN>
 ): GetterSection<SN> {
   const { sections } = useSectionsContext();
@@ -13,7 +13,7 @@ export function useGetterSection<SN extends SectionName = "main">(
   });
 }
 
-export function useGetterSectionOnlyOne<SN extends SectionName>(
+export function useGetterSectionOnlyOne<SN extends SectionNameByType>(
   sectionName: SN
 ): GetterSection<SN> {
   const { sections } = useSectionsContext();

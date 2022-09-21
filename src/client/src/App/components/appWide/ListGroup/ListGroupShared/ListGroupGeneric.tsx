@@ -6,8 +6,8 @@ import { FeSectionInfo } from "../../../../sharedWithServer/SectionsMeta/Info";
 import {
   ChildNameOfType,
   ParentOfTypeName,
-  SectionName
-} from "../../../../sharedWithServer/SectionsMeta/SectionName";
+  SectionNameByType,
+} from "../../../../sharedWithServer/SectionsMeta/SectionNameByType";
 import { useSetterSection } from "../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import { GetterSection } from "../../../../sharedWithServer/StateGetters/GetterSection";
 import ccs from "../../../../theme/cssChunks";
@@ -15,7 +15,7 @@ import theme, { ThemeName } from "../../../../theme/Theme";
 import useHowMany from "../../customHooks/useHowMany";
 import {
   ListGroupLists,
-  MakeListNode
+  MakeListNode,
 } from "./ListGroupGeneric/ListGroupLists";
 import { ListGroupTotal } from "./ListGroupGeneric/ListGroupTotal";
 
@@ -47,7 +47,7 @@ export function ListGroupGeneric<
   const lists = parent.get.children(
     listAsChildName
   ) as GetterSection<any>[] as GetterSection<
-    ChildSectionName<SN, CN> & SectionName<"varbListAllowed">
+    ChildSectionName<SN, CN> & SectionNameByType<"varbListAllowed">
   >[];
 
   const numListsWithItems = lists.reduce<number>((num, list) => {

@@ -1,5 +1,5 @@
-import { numObj } from "../SectionsMeta/baseSectionsUtils/baseValues/NumObj";
-import { stringObj } from "../SectionsMeta/baseSectionsUtils/baseValues/StringObj";
+import { numObj } from "../SectionsMeta/baseSectionsVarbs/baseValues/NumObj";
+import { stringObj } from "../SectionsMeta/baseSectionsVarbs/baseValues/StringObj";
 import { SectionPack } from "../SectionsMeta/childSectionsDerived/SectionPack";
 import {
   feStoreTableNames,

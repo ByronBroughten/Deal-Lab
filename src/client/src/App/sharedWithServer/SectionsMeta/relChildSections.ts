@@ -1,12 +1,12 @@
 import { Arr } from "../utils/Arr";
 import { Merge } from "../utils/Obj/merge";
-import { SimpleSectionName, simpleSectionNames } from "./baseSectionsVarbs";
 import {
   ChildName,
   sectionToChildNames,
 } from "./childSectionsDerived/ChildName";
 import { ChildSectionNameName } from "./childSectionsDerived/ChildSectionName";
 import { dbStoreNames } from "./childSectionsDerived/DbStoreName";
+import { SectionName, sectionNames } from "./SectionName";
 
 export const tableRowDbSources = Arr.extractStrict(dbStoreNames, [
   "mgmtMain",
@@ -22,11 +22,11 @@ type GeneralRelChild = {
   feTableRowStore: ChildSectionNameName<"feUser", "compareTable"> | null;
   partialIndexDbSource: TableRowDbSource | null;
 };
-type GenericRelChildren<SN extends SimpleSectionName> = {
+type GenericRelChildren<SN extends SectionName> = {
   [CN in ChildName<SN>]: GeneralRelChild;
 };
 
-type DefaultRelChildren<SN extends SimpleSectionName> = {
+type DefaultRelChildren<SN extends SectionName> = {
   [CN in ChildName<SN>]: DefaultRelChild;
 };
 
@@ -48,7 +48,7 @@ function relChild<RC extends Partial<GeneralRelChild>>(
   } as any;
 }
 
-function makeDefaultRelChildren<SN extends SimpleSectionName>(
+function makeDefaultRelChildren<SN extends SectionName>(
   sectionName: SN
 ): DefaultRelChildren<SN> {
   const childNames = sectionToChildNames[sectionName] as ChildName<SN>[];
@@ -58,17 +58,17 @@ function makeDefaultRelChildren<SN extends SimpleSectionName>(
   }, {} as DefaultRelChildren<SN>);
 }
 type DefaultRelChildSections = {
-  [SN in SimpleSectionName]: DefaultRelChildren<SN>;
+  [SN in SectionName]: DefaultRelChildren<SN>;
 };
 function makeDefaultRelChildSections(): DefaultRelChildSections {
-  return simpleSectionNames.reduce((defaults, sectionName) => {
+  return sectionNames.reduce((defaults, sectionName) => {
     defaults[sectionName] = makeDefaultRelChildren(sectionName);
     return defaults;
   }, {} as DefaultRelChildSections);
 }
 
 function relChildren<
-  SN extends SimpleSectionName,
+  SN extends SectionName,
   RC extends Partial<GenericRelChildren<SN>>
 >(sectionName: SN, children: RC): Merge<DefaultRelChildren<SN>, RC> {
   return {
@@ -78,7 +78,7 @@ function relChildren<
 }
 
 type GenericRelChildSections = {
-  [SN in SimpleSectionName]: GenericRelChildren<SN>;
+  [SN in SectionName]: GenericRelChildren<SN>;
 };
 function makeRelChildSections<RCS extends GenericRelChildSections>(
   rcs: RCS

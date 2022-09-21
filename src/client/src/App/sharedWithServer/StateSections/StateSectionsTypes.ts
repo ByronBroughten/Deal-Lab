@@ -1,20 +1,20 @@
-import { OutEntity } from "../SectionsMeta/baseSectionsUtils/baseValues/entities";
-import { StateValue } from "../SectionsMeta/baseSectionsUtils/baseValues/StateValueTypes";
+import { OutEntity } from "../SectionsMeta/baseSectionsVarbs/baseValues/entities";
+import { StateValue } from "../SectionsMeta/baseSectionsVarbs/baseValues/StateValueTypes";
 import { ChildIdArrsNarrow } from "../SectionsMeta/childSectionsDerived/ChildName";
-import { SectionName } from "../SectionsMeta/SectionName";
+import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 
 export class SectionNotFoundError extends Error {}
 export class TooManySectionsFoundError extends Error {}
 
-export type StateVarb<SN extends SectionName> = {
+export type StateVarb<SN extends SectionNameByType> = {
   value: StateValue;
   outEntities: OutEntity[];
   isPureUserVarb: boolean;
 };
-export type StateVarbs<SN extends SectionName> = {
+export type StateVarbs<SN extends SectionNameByType> = {
   [key: string]: StateVarb<SN>;
 };
-export type RawFeSection<SN extends SectionName> = {
+export type RawFeSection<SN extends SectionNameByType> = {
   readonly sectionName: SN;
   readonly feId: string;
   readonly childFeIds: ChildIdArrsNarrow<SN>;
@@ -23,10 +23,10 @@ export type RawFeSection<SN extends SectionName> = {
 };
 
 export type RawFeSections = {
-  readonly [SN in SectionName]: readonly RawFeSection<SN>[];
+  readonly [SN in SectionNameByType]: readonly RawFeSection<SN>[];
 };
 
-export type RawSectionListProps<SN extends SectionName> = {
+export type RawSectionListProps<SN extends SectionNameByType> = {
   sectionName: SN;
   list: RawFeSection<SN>[];
 };

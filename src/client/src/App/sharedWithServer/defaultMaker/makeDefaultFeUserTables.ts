@@ -1,4 +1,4 @@
-import { inEntityInfo } from "../SectionsMeta/baseSectionsUtils/baseValues/InEntityInfoValue";
+import { inEntityInfo } from "../SectionsMeta/baseSectionsVarbs/baseValues/InEntityInfoValue";
 import { SectionPack } from "../SectionsMeta/childSectionsDerived/SectionPack";
 import { FeUserTableName } from "../SectionsMeta/relChildSections";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";

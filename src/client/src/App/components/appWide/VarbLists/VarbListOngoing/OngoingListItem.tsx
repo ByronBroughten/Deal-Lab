@@ -1,4 +1,4 @@
-import { ongoingVarb } from "../../../../sharedWithServer/SectionsMeta/baseSectionsUtils/RelSwitchVarb";
+import { ongoingVarb } from "../../../../sharedWithServer/SectionsMeta/baseSectionsVarbs/RelSwitchVarb";
 import { useSetterSection } from "../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import LabeledEquation from "../../ListGroup/ListGroupShared/ListItemValue/LabeledEquation";
 import LabeledSpanOverCost from "../../ListGroup/ListGroupShared/ListItemValue/LabeledSpanOverCost";

@@ -1,4 +1,4 @@
-import { numObj } from "../../SectionsMeta/baseSectionsUtils/baseValues/NumObj";
+import { numObj } from "../../SectionsMeta/baseSectionsVarbs/baseValues/NumObj";
 
 // the text for global variables must come from the varbMeta
 export const capExValues = [

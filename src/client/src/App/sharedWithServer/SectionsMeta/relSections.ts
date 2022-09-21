@@ -1,63 +1,56 @@
 import { timeS } from "../utils/date";
 import { sectionVarbNames } from "./baseSectionsDerived/baseSectionTypes";
-import { numObj } from "./baseSectionsUtils/baseValues/NumObj";
-import {
-  savableSectionVarbNames,
-  SimpleSectionName,
-  simpleSectionNames,
-  UserPlan,
-} from "./baseSectionsVarbs";
+import { UserPlan } from "./baseSectionsVarbs";
+import { numObj } from "./baseSectionsVarbs/baseValues/NumObj";
+import { savableSectionVarbNames } from "./baseSectionsVarbs/specialVarbNames";
 import { relVarbInfoS } from "./childSectionsDerived/RelVarbInfo";
 import { relVarbInfosS } from "./childSectionsDerived/RelVarbInfos";
-import { relAdorn } from "./relSectionsUtils/rel/relAdorn";
-import { relVarb, relVarbS } from "./relSectionsUtils/rel/relVarb";
+import { relAdorn } from "./relSections/rel/relAdorn";
+import { relVarb, relVarbS } from "./relSections/rel/relVarb";
 import {
   GeneralRelSection,
   GenericRelSection,
   RelSection,
   relSection,
-} from "./relSectionsUtils/relSection";
-import { RelVarbs, relVarbsS } from "./relSectionsUtils/relVarbs";
-import { dealRelVarbs } from "./relSectionsUtils/relVarbs/dealRelVarbs";
+} from "./relSections/relSection";
+import { RelVarbs, relVarbsS } from "./relSections/relVarbs";
+import { dealRelVarbs } from "./relSections/relVarbs/dealRelVarbs";
 import {
   financingRelVarbs,
   loanRelVarbs,
-} from "./relSectionsUtils/relVarbs/financingRelVarbs";
-import { mgmtRelVarbs } from "./relSectionsUtils/relVarbs/mgmtRelVarbs";
-import { propertyRelVarbs } from "./relSectionsUtils/relVarbs/propertyRelVarbs";
+} from "./relSections/relVarbs/financingRelVarbs";
+import { mgmtRelVarbs } from "./relSections/relVarbs/mgmtRelVarbs";
+import { propertyRelVarbs } from "./relSections/relVarbs/propertyRelVarbs";
+import { SectionName, sectionNames } from "./SectionName";
 
 type GenericRelSections = {
-  [SN in SimpleSectionName]: GenericRelSection<SN>;
+  [SN in SectionName]: GenericRelSection<SN>;
 };
 
 function relSectionsFilter<RS extends GenericRelSections>(relSections: RS): RS {
   return relSections;
 }
 
-type BasicRelSection<SN extends SimpleSectionName> = RelSection<
-  SN,
-  "",
-  RelVarbs<SN>
->;
+type BasicRelSection<SN extends SectionName> = RelSection<SN, "", RelVarbs<SN>>;
 
 type BasicRelSections = {
-  [SN in SimpleSectionName]: BasicRelSection<SN>;
+  [SN in SectionName]: BasicRelSection<SN>;
 };
 
-function makeBasicRelVarbs<SN extends SimpleSectionName>(sectionName: SN) {
+function makeBasicRelVarbs<SN extends SectionName>(sectionName: SN) {
   const varbNames = sectionVarbNames(sectionName);
   return varbNames.reduce((relVarbs, varbName) => {
     // get the varbType
     return relVarbs;
   }, {} as RelVarbs<SN>);
 }
-function makeBasicRelSection<SN extends SimpleSectionName>(
+function makeBasicRelSection<SN extends SectionName>(
   sectionName: SN
 ): BasicRelSection<SN> {
   return relSection("", makeBasicRelVarbs(sectionName));
 }
 function makeBasicRelSections(): BasicRelSections {
-  return simpleSectionNames.reduce((basicRelSections, sectionName) => {
+  return sectionNames.reduce((basicRelSections, sectionName) => {
     basicRelSections[sectionName] = makeBasicRelSection(sectionName) as any;
     return basicRelSections;
   }, {} as BasicRelSections);
@@ -303,7 +296,7 @@ export function makeRelSections() {
 export const relSections = makeRelSections();
 export type RelSections = typeof relSections;
 type GeneralRelSections = {
-  [SN in SimpleSectionName]: GeneralRelSection;
+  [SN in SectionName]: GeneralRelSection;
 };
 
 const _testRelSections = <RS extends GeneralRelSections>(_: RS): void =>

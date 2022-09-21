@@ -3,7 +3,7 @@ import { defaultMaker } from "../defaultMaker/defaultMaker";
 import { VarbInfoMixed } from "../SectionsMeta/childSectionsDerived/MixedSectionInfo";
 import { SectionPack } from "../SectionsMeta/childSectionsDerived/SectionPack";
 import { FeVarbInfo } from "../SectionsMeta/Info";
-import { SectionName } from "../SectionsMeta/SectionName";
+import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { GetterSections } from "../StateGetters/GetterSections";
 import { GetterVarb } from "../StateGetters/GetterVarb";
 import { StateSections } from "../StateSections/StateSections";
@@ -20,7 +20,7 @@ export class SolverSections extends SolverSectionsBase {
   private getterSections = new GetterSections(
     this.getterSectionsBase.getterSectionsProps
   );
-  varbByMixed<SN extends SectionName<"hasVarb">>(
+  varbByMixed<SN extends SectionNameByType<"hasVarb">>(
     mixedInfo: VarbInfoMixed<SN>
   ): SolverVarb<SN> {
     const varb = this.getterSections.varbByMixed(mixedInfo);
@@ -98,7 +98,9 @@ export class SolverSections extends SolverSectionsBase {
     const feVarbInfo = GetterVarb.varbIdToVarbInfo(varbId);
     return this.solverVarb(feVarbInfo);
   }
-  solverVarb<S extends SectionName>(feVarbInfo: FeVarbInfo<S>): SolverVarb<S> {
+  solverVarb<S extends SectionNameByType>(
+    feVarbInfo: FeVarbInfo<S>
+  ): SolverVarb<S> {
     return new SolverVarb({
       ...this.solverSectionsProps,
       ...feVarbInfo,

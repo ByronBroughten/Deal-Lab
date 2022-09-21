@@ -1,5 +1,5 @@
 import { Obj } from "../../utils/Obj";
-import { SimpleSectionName } from "../baseSectionsVarbs";
+import { SectionName } from "../SectionName";
 import { ChildName } from "./ChildName";
 import {
   RelChildrenVarbInfo,
@@ -7,12 +7,12 @@ import {
   relVarbInfoS,
 } from "./RelVarbInfo";
 
-type RelLocalVarbInfos<SN extends SimpleSectionName, VN extends string> = {
+type RelLocalVarbInfos<SN extends SectionName, VN extends string> = {
   [V in VN]: RelLocalVarbInfo;
 };
 
 export const relVarbInfosS = {
-  localByVarbName<SN extends SimpleSectionName, VN extends string>(
+  localByVarbName<SN extends SectionName, VN extends string>(
     varbNames: readonly VN[]
   ): RelLocalVarbInfos<SN, VN> {
     return varbNames.reduce((localInfos, varbName) => {
@@ -26,14 +26,14 @@ export const relVarbInfosS = {
     });
   },
   children<
-    SN extends SimpleSectionName = SimpleSectionName,
+    SN extends SectionName = SectionName,
     CN extends ChildName<SN> = ChildName<SN>
   >(childName: CN, varbNames: string[]): RelChildrenVarbInfo<SN, CN>[] {
     return varbNames.map((varbName) =>
       relVarbInfoS.children(childName, varbName)
     );
   },
-  namedChildren<SN extends SimpleSectionName, CN extends ChildName<SN>>(
+  namedChildren<SN extends SectionName, CN extends ChildName<SN>>(
     childName: CN,
     kwargsToVarbNames: Record<string, string>
   ): Record<string, RelChildrenVarbInfo<SN, CN>> {

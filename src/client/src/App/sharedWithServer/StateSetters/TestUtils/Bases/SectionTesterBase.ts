@@ -1,18 +1,18 @@
 import { SetStateAction } from "react";
 import { FeSectionInfo } from "../../../SectionsMeta/Info";
-import { SectionName } from "../../../SectionsMeta/SectionName";
+import { SectionNameByType } from "../../../SectionsMeta/SectionNameByType";
 import { SetSections } from "../../../stateClassHooks/useSections";
 import { StateSections } from "../../../StateSections/StateSections";
 import { SetterSectionProps } from "../../SetterBases/SetterSectionBase";
 import { SetterSections } from "../../SetterSections";
 
-export interface SectionTesterProps<SN extends SectionName> {
+export interface SectionTesterProps<SN extends SectionNameByType> {
   sectionName: SN;
   feId: string;
   state: { sections: StateSections };
 }
 
-export class SectionTesterBase<SN extends SectionName> {
+export class SectionTesterBase<SN extends SectionNameByType> {
   readonly state: { sections: StateSections };
   readonly sectionName: SN;
   readonly feId: string;

@@ -2,11 +2,11 @@ import { ContentState, EditorState } from "draft-js";
 import {
   InEntityVarbInfo,
   InVarbInfo,
-} from "../SectionsMeta/baseSectionsUtils/baseValues/entities";
-import { StateValue } from "../SectionsMeta/baseSectionsUtils/baseValues/StateValueTypes";
-import { ValueName } from "../SectionsMeta/baseSectionsUtils/baseVarb";
-import { ValueTypesPlusAny } from "../SectionsMeta/baseSectionsUtils/StateVarbTypes";
-import { SectionName } from "../SectionsMeta/SectionName";
+} from "../SectionsMeta/baseSectionsVarbs/baseValues/entities";
+import { StateValue } from "../SectionsMeta/baseSectionsVarbs/baseValues/StateValueTypes";
+import { ValueName } from "../SectionsMeta/baseSectionsVarbs/baseVarb";
+import { ValueTypesPlusAny } from "../SectionsMeta/baseSectionsVarbs/StateVarbTypes";
+import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { VarbMeta } from "../SectionsMeta/VarbMeta";
 import { GetterSections } from "../StateGetters/GetterSections";
 import { GetterVarb } from "../StateGetters/GetterVarb";
@@ -21,7 +21,7 @@ import { SetterVarbBase } from "./SetterBases/SetterVarbBase";
 import { SetterSections } from "./SetterSections";
 
 export class SetterVarb<
-  SN extends SectionName = SectionName
+  SN extends SectionNameByType = SectionNameByType
 > extends SetterVarbBase<SN> {
   private solverVarb = SolverVarb.init(this.getterVarbBase.getterVarbProps);
   private get updaterVarb() {
