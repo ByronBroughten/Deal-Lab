@@ -2,13 +2,14 @@ import {
   SectionsAndSetSections,
   SetSections,
 } from "../../stateClassHooks/useSections";
-import {
-  GetterSectionsBase,
-  GetterSectionsProps,
-} from "../../StateGetters/Bases/GetterSectionsBase";
+import { GetterSectionsBase } from "../../StateGetters/Bases/GetterSectionsBase";
 import { StateSections } from "../../StateSections/StateSections";
+import {
+  SolverSectionsBase,
+  SolverSectionsProps,
+} from "../../StateSolvers/SolverBases/SolverSectionsBase";
 
-export interface SetterSectionsProps extends GetterSectionsProps {
+export interface SetterSectionsProps extends SolverSectionsProps {
   setSectionsShare: SetSectionsShare;
   initialSectionsShare: InitialSectionsShare;
 }
@@ -16,7 +17,7 @@ type SetSectionsShare = { setSections: SetSections };
 type InitialSectionsShare = { sections: StateSections };
 
 export class SetterSectionsBase {
-  readonly getterSectionsBase: GetterSectionsBase;
+  readonly solverSectionsBase: SolverSectionsBase;
   private setSectionsShare: SetSectionsShare;
   private initialSectionsShare: InitialSectionsShare;
   constructor({
@@ -24,7 +25,7 @@ export class SetterSectionsBase {
     initialSectionsShare,
     ...rest
   }: SetterSectionsProps) {
-    this.getterSectionsBase = new GetterSectionsBase(rest);
+    this.solverSectionsBase = new SolverSectionsBase(rest);
     this.initialSectionsShare = initialSectionsShare;
     this.setSectionsShare = setSectionsShare;
   }
@@ -33,9 +34,9 @@ export class SetterSectionsBase {
     setSections,
   }: SectionsAndSetSections): SetterSectionsProps {
     return {
+      ...SolverSectionsBase.initProps({ sections }),
       setSectionsShare: { setSections },
       initialSectionsShare: { sections },
-      sectionsShare: { sections },
     };
   }
   get initialSections() {
@@ -55,7 +56,9 @@ export class SetterSectionsBase {
       throw err;
     }
   }
-
+  get getterSectionsBase() {
+    return new GetterSectionsBase(this.solverSectionsBase.solverSectionsProps);
+  }
   updateSetterProps({ sections, setSections }: SectionsAndSetSections): void {
     this.getterSectionsBase.updateSections(sections);
     this.initialSectionsShare.sections = sections;
@@ -68,7 +71,7 @@ export class SetterSectionsBase {
   }
   get setterSectionsProps(): SetterSectionsProps {
     return {
-      ...this.getterSectionsBase.getterSectionsProps,
+      ...this.solverSectionsBase.solverSectionsProps,
       initialSectionsShare: this.initialSectionsShare,
       setSectionsShare: this.setSectionsShare,
     };

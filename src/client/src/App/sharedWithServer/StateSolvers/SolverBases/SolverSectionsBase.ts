@@ -4,6 +4,7 @@ import {
   GetterSectionsProps,
 } from "../../StateGetters/Bases/GetterSectionsBase";
 import { GetterVarb } from "../../StateGetters/GetterVarb";
+import { StateSections } from "../../StateSections/StateSections";
 
 export type SolveShare = { varbIdsToSolveFor: Set<string> };
 export type HasSolveShare = {
@@ -19,6 +20,18 @@ export class SolverSectionsBase {
   constructor({ solveShare, ...rest }: SolverSectionsProps) {
     this.solveShare = solveShare;
     this.getterSectionsBase = new GetterSectionsBase(rest);
+  }
+  static initProps({
+    sections,
+  }: {
+    sections: StateSections;
+  }): SolverSectionsProps {
+    return {
+      sectionsShare: { sections },
+      solveShare: {
+        varbIdsToSolveFor: new Set(),
+      },
+    };
   }
   get sectionsShare() {
     return this.getterSectionsBase.sectionsShare;

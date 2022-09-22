@@ -16,7 +16,7 @@ import { Str } from "./../../sharedWithServer/utils/Str";
 import {
   DisplayItemProps,
   DisplayListActor,
-} from "./MainSectionActor/DisplayListActor";
+} from "./MainSectionActor/DisplayIndexActor";
 import { FullIndexActor } from "./MainSectionActor/FullIndexActor";
 import { SectionActorBase } from "./SectionActorBase";
 
@@ -49,9 +49,9 @@ export class MainSectionActor<
     if (!this.hasDisplayIndex) {
       throw new Error(`${this.get.sectionName} has no display index store`);
     }
-    const { feDisplayIndexStoreNext } = this.get.meta;
+    const { feDisplayIndexStoreName } = this.get.meta;
     const feUser = this.setterSections.oneAndOnly("feUser");
-    const list = feUser.onlyChild(feDisplayIndexStoreNext);
+    const list = feUser.onlyChild(feDisplayIndexStoreName);
 
     return new DisplayListActor({
       ...this.sectionActorBaseProps,

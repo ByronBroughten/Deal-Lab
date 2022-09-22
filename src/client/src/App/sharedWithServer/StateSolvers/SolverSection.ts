@@ -25,11 +25,11 @@ import { Obj } from "../utils/Obj";
 import { AddSolverSection } from "./AddSolverSection";
 import { ComboSolverSection } from "./ComboSolverSection";
 import { RemoveSolverSection } from "./RemoveSolverSection";
+import { SolverSectionBase } from "./SolverBases/SolverSectionBase";
 import {
-  SolverSectionBase,
-  SolverSectionProps,
-} from "./SolverBases/SolverSectionBase";
-import { HasSolveShare } from "./SolverBases/SolverSectionsBase";
+  HasSolveShare,
+  SolverSectionsBase,
+} from "./SolverBases/SolverSectionsBase";
 import { SolverSections } from "./SolverSections";
 import { SolverVarb } from "./SolverVarb";
 
@@ -43,12 +43,12 @@ export class SolverSection<
   static init<S extends SectionNameByType>(
     props: SolverSectionInitProps<S>
   ): SolverSection<S> {
-    if (!props.solveShare) {
-      props.solveShare = {
-        varbIdsToSolveFor: new Set(),
-      };
-    }
-    return new SolverSection(props as SolverSectionProps<S>);
+    return new SolverSection({
+      ...SolverSectionsBase.initProps({
+        sections: props.sectionsShare.sections,
+      }),
+      ...props,
+    });
   }
   get get() {
     return new GetterSection(this.getterSectionProps);

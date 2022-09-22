@@ -13,7 +13,6 @@ export class SetterSectionBase<
   SN extends SectionNameByType
 > extends SetterSectionsBase {
   readonly getterSectionBase: GetterSectionBase<SN>;
-
   constructor(props: SetterSectionProps<SN>) {
     super(props);
     this.getterSectionBase = new GetterSectionBase(props);

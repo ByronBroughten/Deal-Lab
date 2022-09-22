@@ -42,10 +42,9 @@ export class SetterSection<
   get update(): UpdaterSection<SN> {
     return new UpdaterSection(this.getterSectionBase.getterSectionProps);
   }
-  // SetterSection should have solveShare
-  private solver = SolverSection.init(
-    this.getterSectionBase.getterSectionProps
-  );
+  get solver(): SolverSection<SN> {
+    return new SolverSection(this.setterSectionProps);
+  }
   get meta(): SectionMeta<SN> {
     return this.get.meta;
   }
