@@ -19,8 +19,8 @@ import {
   SwitchUpdateInfo,
   UpdateFnProps,
   UpdateSwitchProp,
-} from "./relSections/rel/relVarbTypes";
-import { GeneralRelVarbs } from "./relSections/relVarbs";
+} from "./relSectionVarbs/rel/relVarbTypes";
+import { GeneralRelVarbs } from "./relSectionVarbs/relVarbs";
 import { SectionMeta } from "./SectionMeta";
 import { SectionName } from "./SectionName";
 
@@ -203,7 +203,7 @@ export class VarbMeta<SN extends SectionName> {
     sectionName,
     varbName,
   }: VarbNames<SN>): VarbMeta<SN> {
-    const relVarbs = relSections[sectionName].relVarbs as GeneralRelVarbs;
+    const relVarbs = relSections[sectionName] as GeneralRelVarbs;
     const relVarb = relVarbs[varbName];
     return new VarbMeta({
       ...relVarb,

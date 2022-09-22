@@ -4,24 +4,23 @@ import { numObj } from "./baseSectionsVarbs/baseValues/NumObj";
 import { savableSectionVarbNames } from "./baseSectionsVarbs/specialVarbNames";
 import { relVarbInfoS } from "./childSectionsDerived/RelVarbInfo";
 import { relVarbInfosS } from "./childSectionsDerived/RelVarbInfos";
-import { relAdorn } from "./relSections/rel/relAdorn";
-import { relVarb, relVarbS } from "./relSections/rel/relVarb";
+import { relAdorn } from "./relSectionVarbs/rel/relAdorn";
+import { relVarb, relVarbS } from "./relSectionVarbs/rel/relVarb";
 import {
   defaultRelSectionVarbs,
-  GeneralRelSection,
+  GeneralRelSectionVarbs,
   GenericRelSection,
-  relSection,
+  RelSection,
   relSectionProp,
-  RelSectionVarbs,
-} from "./relSections/relSection";
-import { RelVarbs, relVarbsS } from "./relSections/relVarbs";
-import { dealRelVarbs } from "./relSections/relVarbs/dealRelVarbs";
+} from "./relSectionVarbs/relSection";
+import { RelVarbs, relVarbsS } from "./relSectionVarbs/relVarbs";
+import { dealRelVarbs } from "./relSectionVarbs/relVarbs/dealRelVarbs";
 import {
   financingRelVarbs,
   loanRelVarbs,
-} from "./relSections/relVarbs/financingRelVarbs";
-import { mgmtRelVarbs } from "./relSections/relVarbs/mgmtRelVarbs";
-import { propertyRelVarbs } from "./relSections/relVarbs/propertyRelVarbs";
+} from "./relSectionVarbs/relVarbs/financingRelVarbs";
+import { mgmtRelVarbs } from "./relSectionVarbs/relVarbs/mgmtRelVarbs";
+import { propertyRelVarbs } from "./relSectionVarbs/relVarbs/propertyRelVarbs";
 import { SectionName, sectionNames } from "./SectionName";
 
 type GenericRelSections = {
@@ -33,13 +32,11 @@ function relSectionsFilter<RS extends GenericRelSections>(relSections: RS): RS {
 }
 
 type DefaultRelSectionsVarbs = {
-  [SN in SectionName]: RelSectionVarbs<SN>;
+  [SN in SectionName]: RelSection<SN, RelVarbs<SN>>;
 };
 
 const defaults = sectionNames.reduce((basicRelSections, sectionName) => {
-  basicRelSections[sectionName] = {
-    relVarbs: defaultRelSectionVarbs(sectionName) as any,
-  };
+  basicRelSections[sectionName] = defaultRelSectionVarbs(sectionName) as any;
   return basicRelSections;
 }, {} as DefaultRelSectionsVarbs);
 
@@ -122,8 +119,8 @@ export function makeRelSections() {
       } as const),
     }),
     ...relSectionProp("outputItem", {
+      ...relVarbsS.listItemVirtualVarb,
       numObjEditor: relVarbS.calcVarb("User Input"),
-      displayNameEditor: relVarbS.displayNameEditor,
       valueSwitch: relVarb("string", {
         initValue: "loadedVarb",
       }),
@@ -178,11 +175,10 @@ export function makeRelSections() {
       type: relVarb("string", { initValue: "if" }),
       operator: relVarb("string", { initValue: "===" }),
     }),
-
-    deal: relSection(dealRelVarbs()),
-    financing: relSection(financingRelVarbs),
-    loan: relSection(loanRelVarbs()),
-    propertyGeneral: relSection({
+    ...relSectionProp("deal", dealRelVarbs()),
+    ...relSectionProp("financing", financingRelVarbs),
+    ...relSectionProp("loan", loanRelVarbs()),
+    ...relSectionProp("propertyGeneral", {
       ...relVarbsS.sumSection("property", propertyRelVarbs()),
       ...relVarbsS.sectionStrings(
         "property",
@@ -190,16 +186,16 @@ export function makeRelSections() {
         savableSectionVarbNames
       ),
     }),
-    property: relSection(propertyRelVarbs()),
-    unit: relSection({
+    ...relSectionProp("property", propertyRelVarbs()),
+    ...relSectionProp("unit", {
       one: relVarbS.numObj("Unit", {
         updateFnName: "one",
         initNumber: 1,
       }),
       numBedrooms: relVarbS.calcVarb("BRs"),
       ...relVarbsS.timeMoneyInput("targetRent", "Rent"),
-    } as RelVarbs<"unit">),
-    mgmtGeneral: relSection({
+    }),
+    ...relSectionProp("mgmtGeneral", {
       ...relVarbsS.sumSection("mgmt", { ...mgmtRelVarbs() }),
       ...relVarbsS.sectionStrings(
         "mgmt",
@@ -207,14 +203,14 @@ export function makeRelSections() {
         savableSectionVarbNames
       ),
     }),
-    mgmt: relSection(mgmtRelVarbs()),
+    ...relSectionProp("mgmt", mgmtRelVarbs()),
   });
 }
 
 export const relSections = makeRelSections();
 export type RelSections = typeof relSections;
 type GeneralRelSections = {
-  [SN in SectionName]: GeneralRelSection;
+  [SN in SectionName]: GeneralRelSectionVarbs;
 };
 
 const _testRelSections = <RS extends GeneralRelSections>(_: RS): void =>

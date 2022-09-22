@@ -7,7 +7,7 @@ import {
   GenPropName,
 } from "./generatedSections";
 import { relSections, RelSections } from "./relSections";
-import { GeneralRelSection, RelPropName } from "./relSections/relSection";
+import { GeneralRelSectionVarbs } from "./relSectionVarbs/relSection";
 import { SectionName, sectionNames } from "./SectionName";
 import { AllSectionTraits, allSectionTraits } from "./sectionsTraits";
 import {
@@ -17,8 +17,8 @@ import {
 
 type SectionMetaCoreGeneral = {
   baseVarbs: GeneralBaseSectionVarbs;
-} & GeneralRelSection &
-  GeneralGeneratedSection &
+  relVarbs: GeneralRelSectionVarbs;
+} & GeneralGeneratedSection &
   GeneralSectionTraits;
 
 type SectionMetasCoreGeneral = {
@@ -30,15 +30,15 @@ export type SectionsMetaCore = {
 };
 type SectionMetaCore<SN extends SectionName> = {
   baseVarbs: BaseSectionsVarbs[SN];
-} & RelSections[SN] &
-  GeneratedSections[SN] &
+  relVarbs: RelSections[SN];
+} & GeneratedSections[SN] &
   AllSectionTraits[SN];
 
 export const sectionMetasCore = sectionNames.reduce((core, sectionName) => {
   (core as SectionMetasCoreGeneral)[sectionName] = {
     ...{
-      ...relSections[sectionName],
       baseVarbs: baseSectionsVarbs[sectionName],
+      relVarbs: relSections[sectionName],
     },
     ...({
       ...generatedSections[sectionName],
@@ -48,4 +48,4 @@ export const sectionMetasCore = sectionNames.reduce((core, sectionName) => {
   return core;
 }, {} as SectionsMetaCore);
 
-export type CorePropName = RelPropName | GenPropName | SectionTraitName;
+export type CorePropName = GenPropName | SectionTraitName;

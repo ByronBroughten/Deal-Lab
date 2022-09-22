@@ -27,31 +27,17 @@ export function relSectionProp<
 export function relSection<SN extends SectionName, RV extends RelVarbs<SN>>(
   relVarbs: RV
 ): RelSection<SN, RV> {
-  return {
-    relVarbs,
-  } as any;
+  return relVarbs as any;
 }
 
-export type RelSection<SN extends SectionName, O extends Options<SN> = {}> = {
-  relVarbs: Merge<RelVarbs<SN>, O>;
-};
+export type RelSection<
+  SN extends SectionName,
+  O extends Options<SN> = {}
+> = Merge<RelVarbs<SN>, O>;
 
-export type RelPropName = keyof GeneralRelSection;
-export type GeneralRelSection = {
-  relVarbs: GeneralRelVarbs;
-};
+export type GeneralRelSectionVarbs = GeneralRelVarbs;
+export type GenericRelSection<SN extends SectionName> = RelVarbs<SN>;
 
-export type GenericRelSection<SN extends SectionName> = Merge<
-  GeneralRelSection,
-  {
-    relVarbs: RelVarbs<SN>;
-  }
->;
-
-export type RelSectionVarbs<SN extends SectionName> = RelSection<
-  SN,
-  RelVarbs<SN>
->;
 export function defaultRelSectionVarbs<SN extends SectionName>(
   sectionName: SN
 ): RelVarbs<SN> {

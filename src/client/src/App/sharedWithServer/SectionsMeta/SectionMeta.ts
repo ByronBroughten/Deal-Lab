@@ -1,5 +1,8 @@
 import { Obj } from "../utils/Obj";
-import { SectionDotVarbName } from "./baseSectionsDerived/baseSectionsVarbsTypes";
+import {
+  SectionDotVarbName,
+  sectionVarbNames,
+} from "./baseSectionsDerived/baseSectionsVarbsTypes";
 import {
   ChildIdArrsNarrow,
   ChildIdArrsWide,
@@ -14,7 +17,6 @@ import {
   childToSectionName,
 } from "./childSectionsDerived/ChildSectionName";
 import { DbVarbs } from "./childSectionsDerived/SectionPack/RawSection";
-import { relSections } from "./relSections";
 import {
   CorePropName,
   sectionMetasCore,
@@ -91,9 +93,7 @@ export class SectionMeta<SN extends SectionName> {
   propNoNull<PN extends CorePropName>(propName: PN): CorePropNoNull<SN, PN> {
     const prop = this.core[propName];
     if (prop === null) {
-      throw new Error(
-        `Prop at relSections.${this.sectionName}.${propName} is null`
-      );
+      throw new Error(`Prop at this.core.${propName} is null`);
     }
     return prop as CorePropNoNull<SN, PN>;
   }
@@ -164,10 +164,12 @@ export class SectionMeta<SN extends SectionName> {
     });
   }
   static init<SN extends SectionName>(sectionName: SN): SectionMeta<SN> {
-    const relSection = relSections[sectionName];
-    const { relVarbs } = relSection;
-    const varbMetas = Obj.keys(relVarbs).reduce((vMetas, varbName) => {
-      vMetas[varbName] = VarbMeta.init({ sectionName, varbName });
+    const varbNames = sectionVarbNames(sectionName);
+    const varbMetas = varbNames.reduce((vMetas, varbName) => {
+      vMetas[varbName as string] = VarbMeta.init({
+        sectionName,
+        varbName: varbName as string,
+      });
       return vMetas;
     }, {} as VarbMetas<SN>);
 

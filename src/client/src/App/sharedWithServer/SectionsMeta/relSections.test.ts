@@ -22,7 +22,7 @@ describe(`relSections`, () => {
     expect(relSectionsHash).toBe(relSections2Hash);
   });
   it("should produce a hash that is not equal", () => {
-    relSections2.userInfo.relVarbs.userName = null as any;
+    relSections2.userInfo.userName = null as any;
     relSections2Hash = hash(relSections2);
     expect(relSectionsHash).not.toBe(relSections2Hash);
   });

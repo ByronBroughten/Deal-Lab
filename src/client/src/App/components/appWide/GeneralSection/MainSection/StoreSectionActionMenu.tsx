@@ -37,38 +37,43 @@ export function StoreSectionActionMenu<
   const authStatus = useAuthStatus();
   const isGuest = authStatus === "guest";
 
-  const buttons: Record<AllActions, React.ReactNode> = {
-    save: (
+  const buttons: Record<AllActions, () => React.ReactNode> = {
+    save: () => (
       <LabeledIconBtn
+        key="save"
         label={isGuest ? "Sign in to Save" : "Save"}
         disabled={isGuest}
         icon={<AiOutlineSave size="25" />}
         onClick={() => mainSection.saveNew()}
       />
     ),
-    saveUpdates: (
+    saveUpdates: () => (
       <LabeledIconBtn
+        key="saveUpdates"
         label="Save updates"
         icon={<MdOutlineSystemUpdateAlt size="25" />}
         onClick={() => mainSection.saveUpdates()}
       />
     ),
-    saveAsNew: (
+    saveAsNew: () => (
       <LabeledIconBtn
+        key="saveAsNew"
         label="Save as new"
         icon={<AiOutlineSave size="25" />}
         onClick={() => mainSection.saveAsNew()}
       />
     ),
-    copy: (
+    copy: () => (
       <LabeledIconBtn
+        key="copy"
         label="Make a copy"
         icon={<BiCopy size="28" />}
         onClick={() => mainSection.makeACopy()}
       />
     ),
-    copyAndSave: (
+    copyAndSave: () => (
       <LabeledIconBtn
+        key="copyAndSave"
         label="Copy and save"
         icon={
           <span style={{ display: "flex" }}>
@@ -79,15 +84,17 @@ export function StoreSectionActionMenu<
         onClick={() => mainSection.copyAndSave()}
       />
     ),
-    delete: (
+    delete: () => (
       <LabeledIconBtn
+        key="delete"
         label="Delete from saved"
         icon={<MdDelete size="24" />}
         onClick={() => mainSection.deleteSelf()}
       />
     ),
-    createNew: (
+    createNew: () => (
       <LabeledIconBtn
+        key="createNew"
         label="Create new"
         icon={<BiReset size="26" />}
         onClick={() => mainSection.replaceWithDefault()}
@@ -104,10 +111,10 @@ export function StoreSectionActionMenu<
       }}
     >
       {!mainSection.isSaved &&
-        isNotSavedArr.map((actionName) => buttons[actionName])}
+        isNotSavedArr.map((actionName) => buttons[actionName]())}
       {mainSection.isSaved &&
-        isSavedArr.map((actionName) => buttons[actionName])}
-      {alwaysArr.map((actionName) => buttons[actionName])}
+        isSavedArr.map((actionName) => buttons[actionName]())}
+      {alwaysArr.map((actionName) => buttons[actionName]())}
     </Styled>
   );
 }

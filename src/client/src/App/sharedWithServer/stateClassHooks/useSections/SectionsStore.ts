@@ -71,7 +71,6 @@ export class SectionsStore {
     }
   }
   private static newHashIfRelSectionsDidChange(): string | null {
-    // change this from relSections to SectionMetasRaw
     const hashed = hash(relSections);
     const storedHash = localStorage.getItem(tokenKey.sectionsConfigHash);
     const relSectionsDidChange = hashed !== storedHash;
