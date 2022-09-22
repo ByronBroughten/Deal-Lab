@@ -3,7 +3,7 @@ import React from "react";
 import { config } from "../../../Constants";
 import { getStoredObj } from "../../../utils/localStorage";
 import { SectionPack } from "../../SectionsMeta/childSectionsDerived/SectionPack";
-import { relSections } from "../../SectionsMeta/relSections";
+import { relSections } from "../../SectionsMeta/relSectionVarbs";
 import { GetterSections } from "../../StateGetters/GetterSections";
 import { PackMakerSection } from "../../StatePackers.ts/PackMakerSection";
 import { StateSections } from "../../StateSections/StateSections";

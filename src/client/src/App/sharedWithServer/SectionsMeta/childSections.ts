@@ -140,20 +140,24 @@ export const childSections = checkChildSections({
     ongoingCostListGroup: ["ongoingListGroup"],
     customVarb: ["customVarb"],
   }),
-  // displayStoreProperty: baseSectionVarbs(baseVarbsS.typeUniformity),
-  // displayStoreLoan: baseSectionVarbs(baseVarbsS.typeUniformity),
-  // displayStoreMgmt: baseSectionVarbs(baseVarbsS.typeUniformity),
-  // displayStoreDeal: baseSectionVarbs(baseVarbsS.typeUniformity),
+
+  mgmtDisplayStore: childrenSections({
+    displayNameList: ["displayNameList"],
+    activeAsSaved: ["mgmt"],
+  }),
+  propertyDisplayStore: childrenSections({
+    displayNameList: ["displayNameList"],
+    activeAsSaved: ["property"],
+  }),
+  loanDisplayStore: childrenSections({
+    displayNameList: ["displayNameList"],
+    activeAsSaved: ["loan"],
+  }),
+  dealDisplayStore: childrenSections({
+    displayNameList: ["displayNameList"],
+    activeAsSaved: ["deal"],
+  }),
 });
-
-// base and relSections for that matter?
-
-// organize the types
-// make the child types simpler
-// make two versions of ChildType
-// fix the lists
-// get rid of the tableStore sections
-// make a store section on the frontEnd with children analogous to the db sections
 
 export type ChildSections = typeof childSections;
 export type SectionChildProps<PN extends keyof GeneralChildSection> = {

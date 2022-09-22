@@ -11,25 +11,21 @@ AppRegistry.runApplication("App", {
 // If a section's dbId is in the displayNameList, it should
 // throw if its not in its corresponding activeSaved
 
-// propertyStore: { displayNameList, activeSaved (property) }
-// I can at least create these sections
-
 // when sections in activeSaved are compared to current sections
 // both have their saved descendants removed
 
-// saving, add the section to its activeSaved (if it's not there)
-// loading, add the section to its activeSaved (if it's not there)
+// saving
+// loading
+// fn checks whether an activeSaved section should be created.
+
 // updating, update the activeSaved section
-// Create a function to run after each of these that
-// checks whether an activeSaved section should be created.
 
 // copying
 // removing
 // creating new
 // deleting
+// fn checks whether any activeSaved sections should be deleted
 // if it's the last section with that dbId, remove it from activeSaved
-// Create a function to run after each of these that checks
-// whether any activeSaved sections should be deleted
 
 // There are three relevant states of each savable unit
 // 1. not saved - neutral border and shadow, word in the menu

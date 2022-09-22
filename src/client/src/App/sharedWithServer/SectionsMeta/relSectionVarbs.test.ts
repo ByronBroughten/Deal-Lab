@@ -1,6 +1,6 @@
 import hash from "object-hash";
 import { timeS } from "../utils/date";
-import { makeRelSections, RelSections } from "./relSections";
+import { makeRelSections, RelSections } from "./relSectionVarbs";
 
 describe(`relSections`, () => {
   let relSections: RelSections;

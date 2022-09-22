@@ -40,8 +40,6 @@ const defaults = sectionNames.reduce((basicRelSections, sectionName) => {
   return basicRelSections;
 }, {} as DefaultRelSectionsVarbs);
 
-// relSections should just have varbs and be called "relSectionVarbs"
-
 export function makeRelSections() {
   return relSectionsFilter({
     ...defaults,

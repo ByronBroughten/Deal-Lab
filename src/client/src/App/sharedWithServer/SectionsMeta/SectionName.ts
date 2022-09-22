@@ -28,13 +28,20 @@ export const sectionNames = [
   "userVarbList",
 
   "deal",
+  "dealDisplayStore",
+
   "propertyGeneral",
   "property",
+  "propertyDisplayStore",
+
   "unit",
   "financing",
   "loan",
+  "loanDisplayStore",
+
   "mgmtGeneral",
   "mgmt",
+  "mgmtDisplayStore",
 
   "subscriptionInfo",
   "stripeSubscription",
