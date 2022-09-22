@@ -53,15 +53,19 @@ export const allSectionTraits = checkAllSectionTraits({
     varbListItem: "userVarbItem",
   }),
   propertyGeneral: sectionTraits({
+    displayName: "Property",
     hasGlobalVarbs: true,
   }),
   financing: sectionTraits({
+    displayName: "Financing",
     hasGlobalVarbs: true,
   }),
   mgmtGeneral: sectionTraits({
+    displayName: "Management",
     hasGlobalVarbs: true,
   }),
   deal: sectionTraits({
+    displayName: "Deal",
     hasGlobalVarbs: true,
     compareTableName: "dealMainTable",
     feDisplayIndexStoreName: "dealNames",

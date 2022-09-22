@@ -164,7 +164,8 @@ export class SectionMeta<SN extends SectionName> {
     });
   }
   static init<SN extends SectionName>(sectionName: SN): SectionMeta<SN> {
-    const { relVarbs } = relSections[sectionName];
+    const relSection = relSections[sectionName];
+    const { relVarbs } = relSection;
     const varbMetas = Obj.keys(relVarbs).reduce((vMetas, varbName) => {
       vMetas[varbName] = VarbMeta.init({ sectionName, varbName });
       return vMetas;

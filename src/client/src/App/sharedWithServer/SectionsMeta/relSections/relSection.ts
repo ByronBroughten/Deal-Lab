@@ -1,38 +1,43 @@
 import { Merge } from "../../utils/Obj/merge";
-import { StrictOmit } from "../../utils/types";
+import {
+  sectionVarbNames,
+  sectionVarbValueName,
+} from "../baseSectionsDerived/baseSectionsVarbsTypes";
 import { SectionName } from "../SectionName";
 import { relVarb } from "./rel/relVarb";
-import { RelVarb } from "./rel/relVarbTypes";
 import { GeneralRelVarbs, RelVarbs } from "./relVarbs";
 
-type UnUniformRelVarbs<SN extends SectionName> = StrictOmit<
-  RelVarbs<SN>,
-  "_typeUniformity"
->;
+type Options<SN extends SectionName> = Partial<RelVarbs<SN>>;
 
-export function relSection<
+export function relSectionProp<
   SN extends SectionName,
-  DN extends string,
-  RVS extends UnUniformRelVarbs<SN>
->(displayName: DN, relVarbs: RVS): RelSection<SN, DN, RVS> {
+  O extends Options<SN> = {}
+>(
+  sectionName: SN,
+  options?: O
+): { [S in SN]: RelSection<SN, Merge<RelVarbs<SN>, O>> } {
   return {
-    displayName,
-    relVarbs: { ...relVarbs, _typeUniformity: relVarb("string") },
+    [sectionName]: relSection({
+      ...defaultRelSectionVarbs(sectionName),
+      ...options,
+    }),
   } as any;
 }
 
-export type RelSection<
-  SN extends SectionName,
-  DN extends string = string,
-  RVS extends UnUniformRelVarbs<SN> = UnUniformRelVarbs<SN>
-> = {
-  displayName: DN;
-  relVarbs: RVS & { _typeUniformity: RelVarb<"string"> };
+export function relSection<SN extends SectionName, RV extends RelVarbs<SN>>(
+  relVarbs: RV
+): RelSection<SN, RV> {
+  return {
+    relVarbs,
+  } as any;
+}
+
+export type RelSection<SN extends SectionName, O extends Options<SN> = {}> = {
+  relVarbs: Merge<RelVarbs<SN>, O>;
 };
 
 export type RelPropName = keyof GeneralRelSection;
 export type GeneralRelSection = {
-  displayName: string;
   relVarbs: GeneralRelVarbs;
 };
 
@@ -42,3 +47,18 @@ export type GenericRelSection<SN extends SectionName> = Merge<
     relVarbs: RelVarbs<SN>;
   }
 >;
+
+export type RelSectionVarbs<SN extends SectionName> = RelSection<
+  SN,
+  RelVarbs<SN>
+>;
+export function defaultRelSectionVarbs<SN extends SectionName>(
+  sectionName: SN
+): RelVarbs<SN> {
+  const varbNames = sectionVarbNames(sectionName);
+  return varbNames.reduce((relVarbs, varbName) => {
+    const valueName = sectionVarbValueName(sectionName, varbName);
+    relVarbs[varbName] = relVarb(valueName);
+    return relVarbs;
+  }, {} as RelVarbs<SN>);
+}

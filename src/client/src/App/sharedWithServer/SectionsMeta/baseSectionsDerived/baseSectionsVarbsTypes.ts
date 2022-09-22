@@ -10,18 +10,22 @@ export type VarbValues = { [varbName: string]: StateValue };
 export type BaseSectionVarbs<SN extends SectionName> = BaseSectionsVarbs[SN];
 
 export type VarbName<SN extends SectionName> = keyof BaseSectionVarbs<SN>;
+type VarbValueName<SN extends SectionName, VN extends VarbName<SN>> = Extract<
+  ValueName,
+  BaseSectionVarbs<SN>[VN]
+>;
 
 export function sectionVarbNames<SN extends SectionName>(
   sectionName: SN
 ): VarbName<SN>[] {
   return Obj.keys(baseSectionsVarbs[sectionName]);
 }
-export function sectionVarbType<
+export function sectionVarbValueName<
   SN extends SectionName,
   VN extends VarbName<SN>
->(sectionName: SN, varbName: VN) {
+>(sectionName: SN, varbName: VN): VarbValueName<SN, VN> {
   const baseVarbs = baseSectionsVarbs[sectionName];
-  return baseVarbs[varbName as keyof typeof baseVarbs];
+  return baseVarbs[varbName as keyof typeof baseVarbs] as VarbValueName<SN, VN>;
 }
 
 type SectionDotVarbNames<
