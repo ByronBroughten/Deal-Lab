@@ -1,5 +1,5 @@
 import { timeS } from "../utils/date";
-import { sectionVarbNames } from "./baseSectionsDerived/baseSectionTypes";
+import { sectionVarbNames } from "./baseSectionsDerived/baseSectionsVarbsTypes";
 import { UserPlan } from "./baseSectionsVarbs";
 import { numObj } from "./baseSectionsVarbs/baseValues/NumObj";
 import { savableSectionVarbNames } from "./baseSectionsVarbs/specialVarbNames";
@@ -56,9 +56,6 @@ function makeBasicRelSections(): BasicRelSections {
   }, {} as BasicRelSections);
 }
 
-// start with a place to identify the sectionNames
-// sectionChildren comes next
-// sectionTraits comes after sectionChildren
 // sectionTraits should have the necessary displayNames
 
 // baseSectionsVarbs should just have varbs and be called "baseSectionVarbs"
