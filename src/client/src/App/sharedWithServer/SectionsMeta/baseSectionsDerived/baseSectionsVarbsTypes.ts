@@ -1,58 +1,52 @@
+import { Obj } from "../../utils/Obj";
 import { SubType } from "../../utils/types";
 import { baseSectionsVarbs, BaseSectionsVarbs } from "../baseSectionsVarbs";
 import { StateValue } from "../baseSectionsVarbs/baseValues/StateValueTypes";
 import { ValueName } from "../baseSectionsVarbs/baseVarb";
 import { SectionName, sectionNames } from "../SectionName";
-import { Obj } from "./../../utils/Obj";
-import { baseNameArrs, BaseNameArrs, BaseNameSelector } from "./baseNameArrs";
 
 export type VarbValues = { [varbName: string]: StateValue };
 
-export type BaseName<
-  ST extends BaseNameSelector = "all",
-  NameArrs = BaseNameArrs[ST]
-> = NameArrs[number & keyof NameArrs];
-
 export type BaseSectionVarbs<SN extends SectionName> = BaseSectionsVarbs[SN];
 
-export type VarbNameNext<SN extends SectionName> = keyof BaseSectionVarbs<SN>;
+export type VarbName<SN extends SectionName> = keyof BaseSectionVarbs<SN>;
 
 export function sectionVarbNames<SN extends SectionName>(
   sectionName: SN
-): VarbNameNext<SN>[] {
+): VarbName<SN>[] {
   return Obj.keys(baseSectionsVarbs[sectionName]);
 }
 export function sectionVarbType<
   SN extends SectionName,
-  VN extends VarbNameNext<SN>
+  VN extends VarbName<SN>
 >(sectionName: SN, varbName: VN) {
   const baseVarbs = baseSectionsVarbs[sectionName];
   return baseVarbs[varbName as keyof typeof baseVarbs];
 }
 
-type SectionVarbNames<
+type SectionDotVarbNames<
   SN extends SectionName,
-  VN extends VarbNameNext<SN> = VarbNameNext<SN>
+  VN extends VarbName<SN> = VarbName<SN>
 > = {
   [V in VN]: `${SN}.${V & string}`;
 };
 
-export type SectionVarbName<
+export type SectionDotVarbName<
   SN extends SectionName = SectionName,
-  VN extends VarbNameNext<SN> = VarbNameNext<SN>
-> = SectionVarbNames<SN, VN>[VN];
+  VN extends VarbName<SN> = VarbName<SN>
+> = SectionDotVarbNames<SN, VN>[VN];
 
 export function sectionDotVarbName<
   SN extends SectionName,
-  VN extends VarbNameNext<SN>
->(sectionName: SN, varbName: VN): SectionVarbName<SN, VN> {
-  return `${sectionName}.${varbName}` as SectionVarbName<SN, VN>;
+  VN extends VarbName<SN>
+>(sectionName: SN, varbName: VN): SectionDotVarbName<SN, VN> {
+  return `${sectionName}.${varbName}` as SectionDotVarbName<SN, VN>;
 }
 
 export function sectionDotVarbNames<SN extends SectionName>(
   sectionName: SN
-): SectionVarbName<SN>[] {
-  const names: SectionVarbName<SN>[] = [];
+): SectionDotVarbName<SN>[] {
+  const names: SectionDotVarbName<SN>[] = [];
   const varbNames = sectionVarbNames(sectionName);
   for (const varbName of varbNames) {
     names.push(sectionDotVarbName(sectionName, varbName));
@@ -61,7 +55,7 @@ export function sectionDotVarbNames<SN extends SectionName>(
 }
 
 type AllSectionVarbNames = {
-  [SN in SectionName]: SectionVarbName<SN>;
+  [SN in SectionName]: SectionDotVarbName<SN>;
 };
 
 export type SimpleSectionVarbName = AllSectionVarbNames[SectionName];
@@ -72,15 +66,7 @@ export const simpleSectionVarbNames = sectionNames.reduce(
   [] as SimpleSectionVarbName[]
 );
 
-export type VarbNameNextByType<
+export type VarbNameByValueName<
   SN extends SectionName,
   VLN extends ValueName
 > = keyof SubType<BaseSectionVarbs<SN>, VLN>;
-
-function isBaseName<T extends BaseNameSelector = "all">(
-  value: any,
-  type?: T
-): value is BaseName<T> {
-  const names: readonly string[] = baseNameArrs[type ?? "all"];
-  return names.includes(value);
-}

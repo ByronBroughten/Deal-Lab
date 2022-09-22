@@ -1,5 +1,5 @@
 import { defaultMaker } from "../defaultMaker/defaultMaker";
-import { VarbValues } from "../SectionsMeta/baseSectionsDerived/baseSectionTypes";
+import { VarbValues } from "../SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
 import { ChildName } from "../SectionsMeta/childSectionsDerived/ChildName";
 import { ParentNameSafe } from "../SectionsMeta/childSectionsDerived/ParentName";
 import { SectionPack } from "../SectionsMeta/childSectionsDerived/SectionPack";

@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { VarbNameNext } from "../../../../sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionTypes";
+import { VarbName } from "../../../../sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
 import { ChildName } from "../../../../sharedWithServer/SectionsMeta/childSectionsDerived/ChildName";
 import { ChildSectionName } from "../../../../sharedWithServer/SectionsMeta/childSectionsDerived/ChildSectionName";
 import { FeSectionInfo } from "../../../../sharedWithServer/SectionsMeta/Info";
@@ -27,7 +27,7 @@ export type ListGroupGenericProps<SN extends ListParentName> = {
   themeName: ThemeName;
   makeListNode: MakeListNode;
   titleText: string;
-  totalVarbName?: VarbNameNext<SN>;
+  totalVarbName?: VarbName<SN>;
   className?: string;
 };
 

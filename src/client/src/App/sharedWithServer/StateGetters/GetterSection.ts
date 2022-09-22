@@ -1,4 +1,4 @@
-import { VarbNameNext } from "../SectionsMeta/baseSectionsDerived/baseSectionTypes";
+import { VarbName } from "../SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
 import {
   DbSectionInfoMixed,
   FeSectionInfoMixed,
@@ -386,15 +386,15 @@ export class GetterSection<
   varb(varbName: string): GetterVarb<SN> {
     return this.varbs.one(varbName);
   }
-  varbNext<VN extends VarbNameNext<SN>>(varbName: VN): GetterVarb<SN> {
+  varbNext<VN extends VarbName<SN>>(varbName: VN): GetterVarb<SN> {
     return this.varbs.one(varbName as string);
   }
-  varbInfo(varbName: VarbNameNext<SN>): FeVarbInfo<SN> {
+  varbInfo(varbName: VarbName<SN>): FeVarbInfo<SN> {
     return this.varb(varbName as string).feVarbInfo;
   }
   get allValues(): SectionValues<SN> {
     return this.meta.varbNames.reduce((values, varbName) => {
-      (values[varbName as VarbNameNext<SN>] as any) = this.value(varbName);
+      (values[varbName as VarbName<SN>] as any) = this.value(varbName);
       return values;
     }, {} as SectionValues<SN>);
   }
@@ -440,7 +440,7 @@ export class GetterSection<
     const varbName = this.switchVarbName(
       varbNameBase,
       switchEnding
-    ) as VarbNameNext<SN>;
+    ) as VarbName<SN>;
     return this.varbInfo(varbName);
   }
   switchVarb(
@@ -456,7 +456,7 @@ export class GetterSection<
   ): ValueTypesPlusAny[VT] {
     return this.varb(varbName).value(valueType);
   }
-  valueNext<VN extends VarbNameNext<SN>>(varbName: VN): VarbValue<SN, VN> {
+  valueNext<VN extends VarbName<SN>>(varbName: VN): VarbValue<SN, VN> {
     return this.varb(varbName as string).valueNext() as VarbValue<SN, VN>;
   }
   get selfAndDescendantVarbIds(): string[] {

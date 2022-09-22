@@ -1,6 +1,6 @@
 // make TableActor
 
-import { VarbNameNext } from "../../sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionTypes";
+import { VarbName } from "../../sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
 import { InEntityVarbInfo } from "../../sharedWithServer/SectionsMeta/baseSectionsVarbs/baseValues/entities";
 import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
 import { PackMakerSection } from "../../sharedWithServer/StatePackers.ts/PackMakerSection";
@@ -63,9 +63,7 @@ export class TableActor extends SectionActorBase<"compareTable"> {
   // do I need to save the order of the sorted table rows?
   // I guess I might as well
   async sortRows(
-    colIdOrTitle:
-      | string
-      | StrictExtract<VarbNameNext<"tableRow">, "displayName">,
+    colIdOrTitle: string | StrictExtract<VarbName<"tableRow">, "displayName">,
     options: { reverse?: boolean } = {}
   ) {
     this.tableState.sortTableRowIdsByColumn(colIdOrTitle, options);

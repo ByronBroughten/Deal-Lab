@@ -1,4 +1,4 @@
-import { VarbNameNext } from "../SectionsMeta/baseSectionsDerived/baseSectionTypes";
+import { VarbName } from "../SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
 import { VarbValue } from "../SectionsMeta/baseSectionsDerived/valueMetaTypes";
 import { IdInfoMultiMixed } from "../SectionsMeta/childSectionsDerived/MixedSectionInfo";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
@@ -49,7 +49,7 @@ export class GetterList<
   get allGetterSections(): GetterSection<SN>[] {
     return this.stateList.map(({ feId }) => this.getterSection(feId));
   }
-  getByValue<VN extends VarbNameNext<SN>>(
+  getByValue<VN extends VarbName<SN>>(
     varbName: VN,
     value: VarbValue<SN, VN>
   ): GetterSection<SN> {

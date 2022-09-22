@@ -1,7 +1,7 @@
 import { Obj } from "../../../utils/Obj";
-import { allSectionTraits, getSomeSectionTraits } from "../../allSectionTraits";
 import { getChildNames } from "../../childSectionsDerived/ChildName";
 import { tableRowDbSources } from "../../relChildSections";
+import { allSectionTraits, getSomeSectionTraits } from "../../sectionsTraits";
 
 export const hasStoreNameArrs = {
   hasDisplayIndex: Obj.entryKeysWithPropOfType(

@@ -1,4 +1,4 @@
-import { VarbValues } from "../SectionsMeta/baseSectionsDerived/baseSectionTypes";
+import { VarbValues } from "../SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
 import { SectionValues } from "../SectionsMeta/baseSectionsDerived/valueMetaTypes";
 import { Id } from "../SectionsMeta/baseSectionsVarbs/id";
 import {

@@ -8,7 +8,7 @@ import {
 } from "../baseSectionsVarbs/NanoIdInfo";
 import { SectionName } from "../SectionName";
 import { SectionNameProp } from "./baseSectionInfo";
-import { VarbNameNext } from "./baseSectionTypes";
+import { VarbName } from "./baseSectionsVarbsTypes";
 
 export interface GlobalSectionInfo<
   SN extends SectionName = SectionName,
@@ -53,13 +53,13 @@ export function isVarbName(value: any): value is string {
 
 export type VarbPropNext<
   SN extends SectionName,
-  VN extends VarbNameNext<SN> = VarbNameNext<SN>
+  VN extends VarbName<SN> = VarbName<SN>
 > = {
   varbName: VN;
 };
 export interface VarbNamesNext<
   SN extends SectionName,
-  VN extends VarbNameNext<SN> = VarbNameNext<SN>
+  VN extends VarbName<SN> = VarbName<SN>
 > extends SectionNameProp<SN>,
     VarbPropNext<SN, VN> {}
 

@@ -1,4 +1,4 @@
-import { SimpleSectionVarbName } from "../../../../../sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionTypes";
+import { SimpleSectionVarbName } from "../../../../../sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
 import { FeVarbInfo } from "../../../../../sharedWithServer/SectionsMeta/Info";
 import { useGetterVarb } from "../../../../../sharedWithServer/stateClassHooks/useGetterVarb";
 import { useSetterVarb } from "../../../../../sharedWithServer/stateClassHooks/useSetterVarb";

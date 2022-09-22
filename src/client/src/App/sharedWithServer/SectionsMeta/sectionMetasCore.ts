@@ -1,4 +1,3 @@
-import { AllSectionTraits, allSectionTraits } from "./allSectionTraits";
 import { baseSectionsVarbs, BaseSectionsVarbs } from "./baseSectionsVarbs";
 import { GeneralBaseSectionVarbs } from "./baseSectionsVarbs/baseSectionVarbs";
 import {
@@ -10,6 +9,7 @@ import {
 import { relSections, RelSections } from "./relSections";
 import { GeneralRelSection, RelPropName } from "./relSections/relSection";
 import { SectionName, sectionNames } from "./SectionName";
+import { AllSectionTraits, allSectionTraits } from "./sectionsTraits";
 import {
   GeneralSectionTraits,
   SectionTraitName,

@@ -1,9 +1,8 @@
 import { Obj } from "../../utils/Obj";
 import {
-  BaseName,
-  VarbNameNext,
-  VarbNameNextByType,
-} from "../baseSectionsDerived/baseSectionTypes";
+  VarbName,
+  VarbNameByValueName,
+} from "../baseSectionsDerived/baseSectionsVarbsTypes";
 import { baseSectionsVarbs } from "../baseSectionsVarbs";
 import { ValueName } from "../baseSectionsVarbs/baseVarb";
 import { switchNames } from "../baseSectionsVarbs/RelSwitchVarb";
@@ -25,19 +24,16 @@ import { switchInput } from "./rel/relVarbs/relSwitchVarbs";
 import { RelVarb, RelVarbByType } from "./rel/relVarbTypes";
 
 export type GeneralRelVarbs = Record<string, RelVarb>;
-export type RelVarbs<SN extends SectionName> = Record<
-  VarbNameNext<SN>,
-  RelVarb
->;
+export type RelVarbs<SN extends SectionName> = Record<VarbName<SN>, RelVarb>;
 
 type RelVarbsByType<SN extends SectionName, VLN extends ValueName> = Pick<
   RelVarbs<SN>,
-  VarbNameNextByType<SN, VLN>
+  VarbNameByValueName<SN, VLN>
 >;
 
-function isRelVarbOfType<SN extends BaseName<"hasVarb">, VLN extends ValueName>(
+function isRelVarbOfType<SN extends SectionName, VLN extends ValueName>(
   sectionName: SN,
-  varbName: VarbNameNext<SN>,
+  varbName: VarbName<SN>,
   valueName: VLN,
   _value: any
 ): _value is RelVarbByType[VLN] {
@@ -46,10 +42,7 @@ function isRelVarbOfType<SN extends BaseName<"hasVarb">, VLN extends ValueName>(
   return varbType === valueName;
 }
 
-function filterRelVarbsByType<
-  SN extends BaseName<"hasVarb">,
-  VLN extends ValueName
->(
+function filterRelVarbsByType<SN extends SectionName, VLN extends ValueName>(
   sectionName: SN,
   valueName: VLN,
   relVarbs: RelVarbs<SN>
@@ -107,7 +100,7 @@ export const relVarbsS = {
     });
   },
   sectionStrings<
-    SN extends BaseName<"hasVarb">,
+    SN extends SectionName,
     PV extends RelVarbs<SN>,
     ToSkip extends readonly (keyof PV)[] = []
   >(sectionName: SN, relVarbs: PV, toSkip?: ToSkip) {
@@ -129,7 +122,7 @@ export const relVarbsS = {
     return ssPreVarbs as ToReturn;
   },
   sumSection<
-    SN extends BaseName<"hasVarb"> & ChildName,
+    SN extends SectionName & ChildName,
     RV extends RelVarbs<SN>,
     ToSkip extends readonly (keyof RV)[] = []
   >(sectionName: SN, relVarbs: RV, toSkip?: ToSkip) {

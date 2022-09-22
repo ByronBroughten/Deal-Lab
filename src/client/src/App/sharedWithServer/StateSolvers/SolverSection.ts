@@ -1,7 +1,7 @@
 import {
-  VarbNameNext,
+  VarbName,
   VarbValues,
-} from "../SectionsMeta/baseSectionsDerived/baseSectionTypes";
+} from "../SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
 import { SectionValues } from "../SectionsMeta/baseSectionsDerived/valueMetaTypes";
 import {
   ChildName,
@@ -88,7 +88,7 @@ export class SolverSection<
   }
   updateValuesAndSolve(values: Partial<SectionValues<SN>>): void {
     this.updater.updateValuesDirectly(values as VarbValues);
-    const varbNames = Obj.keys(values) as VarbNameNext<SN>[];
+    const varbNames = Obj.keys(values) as VarbName<SN>[];
     const varbInfos = varbNames.map((varbName) => this.get.varbInfo(varbName));
 
     this.addVarbInfosToSolveFor(...varbInfos);
@@ -102,7 +102,7 @@ export class SolverSection<
     this.remover.removeChildrenAndExtractVarbIds(childName);
     this.solve();
   }
-  varb<VN extends VarbNameNext<SN>>(varbName: VN): SolverVarb<SN> {
+  varb<VN extends VarbName<SN>>(varbName: VN): SolverVarb<SN> {
     return new SolverVarb({
       ...this.solverSectionProps,
       varbName: varbName as string,

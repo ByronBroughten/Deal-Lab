@@ -1,4 +1,4 @@
-import { VarbNameNext } from "../../../../../sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionTypes";
+import { VarbName } from "../../../../../sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
 import { inEntityInfo } from "../../../../../sharedWithServer/SectionsMeta/baseSectionsVarbs/baseValues/InEntityInfoValue";
 import { FeSectionInfo } from "../../../../../sharedWithServer/SectionsMeta/Info";
 import { SectionNameByType } from "../../../../../sharedWithServer/SectionsMeta/SectionNameByType";
@@ -8,7 +8,7 @@ import { ControlledVarbAutoComplete } from "../../../../inputs/ControlledVarbAut
 
 interface Props<SN extends SectionNameByType<"varbListItem">> {
   feInfo: FeSectionInfo<SN>;
-  valueVarbName: VarbNameNext<SN>;
+  valueVarbName: VarbName<SN>;
 }
 export function LoadedVarbEditor<SN extends SectionNameByType<"varbListItem">>({
   feInfo,
