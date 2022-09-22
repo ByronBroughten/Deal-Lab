@@ -11,13 +11,12 @@ import {
   SectionQuerierProps,
 } from "../QueriersBasic/SectionQuerier";
 import { auth, UserInfoTokenProp } from "../services/authService";
-import { ChildSectionNameName } from "./../../sharedWithServer/SectionsMeta/childSectionsDerived/ChildSectionName";
 import { SetterSections } from "./../../sharedWithServer/StateSetters/SetterSections";
 import { Str } from "./../../sharedWithServer/utils/Str";
 import {
-  DisplayIndexActor,
   DisplayItemProps,
-} from "./MainSectionActor/DisplayIndexActor";
+  DisplayListActor,
+} from "./MainSectionActor/DisplayListActor";
 import { FullIndexActor } from "./MainSectionActor/FullIndexActor";
 import { SectionActorBase } from "./SectionActorBase";
 
@@ -50,15 +49,11 @@ export class MainSectionActor<
     if (!this.hasDisplayIndex) {
       throw new Error(`${this.get.sectionName} has no display index store`);
     }
-    const { feDisplayIndexStoreName } = this.get.meta;
+    const { feDisplayIndexStoreNext } = this.get.meta;
     const feUser = this.setterSections.oneAndOnly("feUser");
-    const list = feUser.onlyChild(
-      feDisplayIndexStoreName as ChildSectionNameName<
-        "feUser",
-        "displayNameList"
-      >
-    );
-    return new DisplayIndexActor({
+    const list = feUser.onlyChild(feDisplayIndexStoreNext);
+
+    return new DisplayListActor({
       ...this.sectionActorBaseProps,
       ...list.feInfo,
     });
@@ -78,7 +73,7 @@ export class MainSectionActor<
   get packMaker() {
     return new PackMakerSection(this.sectionActorBaseProps);
   }
-  get primaryActor(): DisplayIndexActor | FullIndexActor<any> {
+  get primaryActor(): DisplayListActor | FullIndexActor<any> {
     if (this.hasDisplayIndex) {
       return this.displayIndexActor;
     } else if (this.hasFullIndex) {

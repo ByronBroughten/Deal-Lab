@@ -55,6 +55,11 @@ export const childSections = checkChildSections({
     mgmtMainTable: ["compareTable"],
     dealMainTable: ["compareTable"],
 
+    propertyDisplayStore: ["propertyDisplayStore"],
+    loanDisplayStore: ["loanDisplayStore"],
+    mgmtDisplayStore: ["mgmtDisplayStore"],
+    dealDisplayStore: ["dealDisplayStore"],
+
     propertyNames: ["displayNameList"],
     loanNames: ["displayNameList"],
     mgmtNames: ["displayNameList"],

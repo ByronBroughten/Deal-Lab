@@ -1,8 +1,47 @@
+import { FeStoreNameByType } from "../../../sharedWithServer/SectionsMeta/relSectionsDerived/relNameArrs/feStoreNameArrs";
 import { SetterSection } from "../../../sharedWithServer/StateSetters/SetterSection";
+import { SolverSection } from "../../../sharedWithServer/StateSolvers/SolverSection";
 import { SectionActorBase } from "../SectionActorBase";
 
+export class DisplayIndexActor extends SectionActorBase<
+  FeStoreNameByType<"displayStoreName">
+> {
+  get list() {
+    const list = this.get.onlyChild("displayNameList");
+    return new DisplayListActor({
+      ...this.sectionActorBaseProps,
+      ...list.feInfo,
+    });
+  }
+  get setter() {
+    return new SetterSection(this.setterSectionBase.setterSectionProps);
+  }
+  get solver() {
+    return SolverSection.init(this.setterSectionBase.setterSectionProps);
+  }
+  hasSavedModel(dbId: string): boolean {
+    return this.get.hasChildByDbInfo({
+      childName: "activeAsSaved",
+      dbId,
+    });
+  }
+  removeSavedModel(dbId: string): void {
+    this.setter.removeChildByDbId({
+      childName: "activeAsSaved",
+      dbId,
+    });
+  }
+  removeIfNotSaved(dbId: string) {
+    if (!this.list.hasByDbId(dbId)) {
+      if (this.hasSavedModel(dbId)) {
+        this.removeSavedModel(dbId);
+      }
+    }
+  }
+}
+
 export type DisplayItemProps = { dbId: string; displayName: string };
-export class DisplayIndexActor extends SectionActorBase<"displayNameList"> {
+export class DisplayListActor extends SectionActorBase<"displayNameList"> {
   get setter() {
     return new SetterSection(this.setterSectionBase.setterSectionProps);
   }

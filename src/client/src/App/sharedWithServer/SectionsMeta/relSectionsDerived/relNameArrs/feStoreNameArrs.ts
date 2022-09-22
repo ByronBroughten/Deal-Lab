@@ -2,6 +2,7 @@ import { Obj } from "../../../utils/Obj";
 import { getChildNames } from "../../childSectionsDerived/ChildName";
 import { tableRowDbSources } from "../../relChildSections";
 import { allSectionTraits, getSomeSectionTraits } from "../../sectionsTraits";
+import { Arr } from "./../../../utils/Arr";
 
 export const hasStoreNameArrs = {
   hasDisplayIndex: Obj.entryKeysWithPropOfType(
@@ -43,11 +44,18 @@ export type FeStoreType = keyof StoreNameArrs;
 export type FeStoreNameByType<SN extends FeStoreType = "all"> =
   StoreNameArrs[SN][number];
 
+const feUserChildNames = getChildNames("feUser");
 const feStoreNameArrs = {
   ...indexStoreNames,
   partialIndexDbSource: tableRowDbSources,
   displayNameDbSource: tableRowDbSources,
-  all: getChildNames("feUser"),
+  all: feUserChildNames,
+  displayStoreName: Arr.extractStrict(feUserChildNames, [
+    "dealDisplayStore",
+    "mgmtDisplayStore",
+    "loanDisplayStore",
+    "propertyDisplayStore",
+  ] as const),
 } as const;
 type StoreNameArrs = typeof feStoreNameArrs;
 

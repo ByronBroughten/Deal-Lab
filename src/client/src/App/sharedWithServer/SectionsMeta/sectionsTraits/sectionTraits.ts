@@ -28,7 +28,7 @@ export interface GeneralSectionTraits {
   displayName: string;
   hasGlobalVarbs: boolean;
   varbListItem: string | null;
-
+  feDisplayIndexStoreNext: ChildName<"feUser"> | null;
   compareTableName: ChildSectionNameName<"feUser", "compareTable"> | null;
   feDisplayIndexStoreName: ChildSectionNameName<
     "feUser",
@@ -49,7 +49,7 @@ const defaultProps = makeDefault({
   displayName: "Unnamed Section",
   hasGlobalVarbs: false,
   varbListItem: null,
-
+  feDisplayIndexStoreNext: null,
   compareTableName: null,
   feDisplayIndexStoreName: null,
   feFullIndexStoreName: null,

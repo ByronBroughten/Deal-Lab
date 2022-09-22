@@ -74,6 +74,9 @@ export class SectionMeta<SN extends SectionName> {
   get feDisplayIndexStoreName(): CorePropNoNull<SN, "feDisplayIndexStoreName"> {
     return this.propNoNull("feDisplayIndexStoreName");
   }
+  get feDisplayIndexStoreNext(): CorePropNoNull<SN, "feDisplayIndexStoreNext"> {
+    return this.propNoNull("feDisplayIndexStoreNext");
+  }
   get feFullIndexStoreName(): CorePropNoNull<SN, "feFullIndexStoreName"> {
     return this.propNoNull("feFullIndexStoreName");
   }

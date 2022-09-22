@@ -7,7 +7,8 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-// This here below is the way to go, I suppose.
+// Next step is to use the new stores instead of displayNameList
+
 // If a section's dbId is in the displayNameList, it should
 // throw if its not in its corresponding activeSaved
 
