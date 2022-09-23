@@ -3,7 +3,7 @@ import { SectionPack } from "../../../sharedWithServer/SectionsMeta/childSection
 import { FeStoreNameByType } from "../../../sharedWithServer/SectionsMeta/relSectionsDerived/relNameArrs/feStoreNameArrs";
 import { SetterSection } from "../../../sharedWithServer/StateSetters/SetterSection";
 import { SectionActorBase, SectionActorBaseProps } from "../SectionActorBase";
-import { DisplayItemProps } from "./DisplayListActor";
+import { DisplayItemProps } from "./DisplayIndexActor";
 
 interface FullIndexActorProps<SN extends FeStoreNameByType<"fullIndex">>
   extends SectionActorBaseProps<"feUser"> {

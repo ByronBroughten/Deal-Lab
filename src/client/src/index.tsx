@@ -19,6 +19,11 @@ AppRegistry.runApplication("App", {
 // loading
 // fn checks whether an activeSaved section should be created.
 
+// on loading it also checks whether the old one
+// should be deleted
+// basically, it should only have models that
+// are both saved in the list and loaded
+
 // updating, update the activeSaved section
 
 // copying
