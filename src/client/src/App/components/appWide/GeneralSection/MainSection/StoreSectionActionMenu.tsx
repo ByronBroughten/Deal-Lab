@@ -23,6 +23,7 @@ interface Props<SN extends SectionNameByType<"hasIndexStore">>
   feId: string;
   className?: string;
 }
+
 export function StoreSectionActionMenu<
   SN extends SectionNameByType<"hasIndexStore">
 >({

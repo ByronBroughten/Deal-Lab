@@ -1,10 +1,12 @@
 import styled from "styled-components";
+import { useMainSectionActor } from "../../../../../modules/sectionActorHooks/useMainSectionActor";
 import { SectionNameByType } from "../../../../../sharedWithServer/SectionsMeta/SectionNameByType";
 import { useAuthStatus } from "../../../../../sharedWithServer/stateClassHooks/useAuthStatus";
 import theme from "../../../../../theme/Theme";
 import { DisplayNameSectionList } from "../../../DisplayNameSectionList";
 import { StoreSectionActionMenu } from "../StoreSectionActionMenu";
 import { ActionMenuProps } from "../StoreSectionActionMenu/ActionMenuTypes";
+import { StoreSectionSaveStatus } from "./../StoreSectionSaveStatus";
 
 interface Props {
   sectionName: SectionNameByType<"hasIndexStore">;
@@ -29,8 +31,11 @@ export function MainSectionMenus({
 }: Props) {
   const authStatus = useAuthStatus();
   const isGuest = authStatus === "guest";
+  const section = useMainSectionActor(feInfo);
+  const showSaveStatus = section.saveStatus !== "unsaved";
   return (
     <Styled className={`MainSectionMenus-root ${className ?? ""}`}>
+      {showSaveStatus && <StoreSectionSaveStatus feInfo={feInfo} />}
       {showActions && (
         <StoreSectionActionMenu
           {...{
