@@ -125,5 +125,4 @@ const Styled = styled(DropdownList)`
     border-top: 1px solid ${theme["gray-500"]};
   }
   position: relative;
-  z-index: 5;
 `;
