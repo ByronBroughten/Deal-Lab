@@ -7,9 +7,6 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-// Make the loadSectionList draw from the new displayName section
-// When loading from the db, the sectionList must be correct.
-
 // saving
 // loading
 // fn checks whether an activeSaved section should be created.
@@ -26,7 +23,7 @@ AppRegistry.runApplication("App", {
 // fn checks whether any activeSaved sections should be deleted
 // if it's the last section with that dbId, remove it from activeSaved
 
-// Stayle - there are three relevant states of each savable unit
+// Style - there are three relevant states of each savable unit
 // 1. not saved - neutral border and shadow, word in the menu
 // 2. saved - green border and shadow, word in the menu
 // 3. unsaved changes - red border and shadow, word in the menu

@@ -10,9 +10,12 @@ import {
   SectionQuerierProps,
 } from "../QueriersBasic/SectionQuerier";
 import { DisplayItemProps } from "../SectionSolvers/DisplayListSolver";
+import {
+  MainSectionSolver,
+  SaveStatus,
+} from "../SectionSolvers/MainSectionSolver";
 import { auth, UserInfoTokenProp } from "../services/authService";
 import { Str } from "./../../sharedWithServer/utils/Str";
-import { MainSectionSolver, SaveStatus } from "./MainSectionSolver";
 import { SectionActorBase } from "./SectionActorBase";
 
 export class MainSectionActor<

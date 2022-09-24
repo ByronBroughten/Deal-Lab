@@ -14,8 +14,8 @@ import { StrictOmit } from "../../sharedWithServer/utils/types";
 import { auth } from "../services/authService";
 import { makeReq } from "./../../sharedWithServer/apiQueriesShared/makeReqAndRes";
 import { SetterSection } from "./../../sharedWithServer/StateSetters/SetterSection";
+import { LoginSetter } from "./FeUserActor/LoginSetter";
 import { SectionActorBase, SectionActorBaseProps } from "./SectionActorBase";
-import { LoginSetter } from "./shared/LoginSetter";
 
 type FeUserProps = StrictOmit<SectionActorBaseProps<"feUser">, "sectionName">;
 export class FeUserActor extends SectionActorBase<"feUser"> {

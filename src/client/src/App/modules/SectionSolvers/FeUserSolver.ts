@@ -13,8 +13,8 @@ import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection
 import { PackBuilderSection } from "../../sharedWithServer/StatePackers.ts/PackBuilderSection";
 import { SolverSectionBase } from "../../sharedWithServer/StateSolvers/SolverBases/SolverSectionBase";
 import { SolverSection } from "../../sharedWithServer/StateSolvers/SolverSection";
-import { MainSectionSolver } from "../SectionActors/MainSectionSolver";
 import { DisplayIndexSolver } from "./DisplayIndexSolver";
+import { MainSectionSolver } from "./MainSectionSolver";
 
 export class FeUserSolver extends SolverSectionBase<"feUser"> {
   get get(): GetterSection<"feUser"> {

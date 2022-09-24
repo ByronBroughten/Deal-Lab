@@ -7,10 +7,10 @@ import { GetterSections } from "../../sharedWithServer/StateGetters/GetterSectio
 import { PackMakerSection } from "../../sharedWithServer/StatePackers.ts/PackMakerSection";
 import { SolverSectionBase } from "../../sharedWithServer/StateSolvers/SolverBases/SolverSectionBase";
 import { SolverSection } from "../../sharedWithServer/StateSolvers/SolverSection";
-import { DisplayIndexSolver } from "../SectionSolvers/DisplayIndexSolver";
-import { FeUserSolver } from "../SectionSolvers/FeUserSolver";
-import { FullIndexSolver } from "../SectionSolvers/FullIndexSolver";
-import { timeS } from "./../../sharedWithServer/utils/date";
+import { timeS } from "../../sharedWithServer/utils/date";
+import { DisplayIndexSolver } from "./DisplayIndexSolver";
+import { FeUserSolver } from "./FeUserSolver";
+import { FullIndexSolver } from "./FullIndexSolver";
 
 export type SaveStatus = "unsaved" | "saved" | "unsavedChanges";
 export class MainSectionSolver<
