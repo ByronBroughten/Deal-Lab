@@ -62,7 +62,7 @@ export class SectionMeta<SN extends SectionName> {
     return this.propNoNull("compareTableName");
   }
   get hasFeDisplayIndex(): boolean {
-    if (this.core.feDisplayIndexStoreName) {
+    if (this.core.displayIndexName) {
       return true;
     } else return false;
   }
@@ -71,11 +71,8 @@ export class SectionMeta<SN extends SectionName> {
       return true;
     } else return false;
   }
-  get feDisplayIndexStoreName(): CorePropNoNull<SN, "feDisplayIndexStoreName"> {
-    return this.propNoNull("feDisplayIndexStoreName");
-  }
-  get feDisplayIndexStoreNext(): CorePropNoNull<SN, "feDisplayIndexStoreNext"> {
-    return this.propNoNull("feDisplayIndexStoreNext");
+  get displayIndexName(): CorePropNoNull<SN, "displayIndexName"> {
+    return this.propNoNull("displayIndexName");
   }
   get feFullIndexStoreName(): CorePropNoNull<SN, "feFullIndexStoreName"> {
     return this.propNoNull("feFullIndexStoreName");

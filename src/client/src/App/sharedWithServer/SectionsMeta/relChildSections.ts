@@ -6,6 +6,7 @@ import {
 } from "./childSectionsDerived/ChildName";
 import { ChildSectionNameName } from "./childSectionsDerived/ChildSectionName";
 import { dbStoreNames } from "./childSectionsDerived/DbStoreName";
+import { FeStoreName } from "./relSectionsDerived/relNameArrs/feStoreNameArrs";
 import { SectionName, sectionNames } from "./SectionName";
 
 export const tableRowDbSources = Arr.extractStrict(dbStoreNames, [
@@ -20,7 +21,7 @@ type TableRowDbSource = typeof tableRowDbSources[number];
 
 type GeneralRelChild = {
   feTableRowStore: ChildSectionNameName<"feUser", "compareTable"> | null;
-  partialIndexDbSource: TableRowDbSource | null;
+  dbIndexName: TableRowDbSource | null;
 };
 type GenericRelChildren<SN extends SectionName> = {
   [CN in ChildName<SN>]: GeneralRelChild;
@@ -35,7 +36,7 @@ function makeDefaultRelChild<RC extends GeneralRelChild>(rc: RC): RC {
 }
 const defaultRelChild = makeDefaultRelChild({
   feTableRowStore: null,
-  partialIndexDbSource: null,
+  dbIndexName: null,
 });
 type DefaultRelChild = typeof defaultRelChild;
 
@@ -95,46 +96,38 @@ export function isFeUserTableName(value: any): value is FeUserTableName {
   return feStoreTableNames.includes(value);
 }
 
-export const feUserNameListNames: ChildSectionNameName<
-  "feUser",
-  "displayNameList"
->[] = ["dealNames", "propertyNames", "mgmtNames", "loanNames"];
-export type FeUserDisplayListName = typeof feUserNameListNames[number];
-export function isFeUserDisplayListName(
-  value: any
-): value is FeUserDisplayListName {
-  return feUserNameListNames.includes(value);
-}
-
 export const relChildSections = makeRelChildSections({
   ...makeDefaultRelChildSections(),
   feUser: relChildren("feUser", {
-    propertyNames: relChild({
-      partialIndexDbSource: "propertyMain",
+    propertyDisplayStore: relChild({
+      dbIndexName: "propertyMain",
     }),
-    loanNames: relChild({
-      partialIndexDbSource: "loanMain",
+    loanDisplayStore: relChild({
+      dbIndexName: "loanMain",
     }),
-    mgmtNames: relChild({
-      partialIndexDbSource: "mgmtMain",
+    mgmtDisplayStore: relChild({
+      dbIndexName: "mgmtMain",
     }),
-    dealNames: relChild({
-      partialIndexDbSource: "dealMain",
+    dealDisplayStore: relChild({
+      dbIndexName: "dealMain",
     }),
 
     dealMainTable: relChild({
-      partialIndexDbSource: "dealMain",
+      dbIndexName: "dealMain",
     }),
     propertyMainTable: relChild({
-      partialIndexDbSource: "propertyMain",
+      dbIndexName: "propertyMain",
     }),
     loanMainTable: relChild({
-      partialIndexDbSource: "loanMain",
+      dbIndexName: "loanMain",
     }),
     mgmtMainTable: relChild({
-      partialIndexDbSource: "mgmtMain",
+      dbIndexName: "mgmtMain",
     }),
   }),
 });
 
 type RelChildSections = typeof relChildSections;
+
+export type FeUserDbIndex<SN extends FeStoreName> =
+  RelChildSections["feUser"][SN]["dbIndexName"];

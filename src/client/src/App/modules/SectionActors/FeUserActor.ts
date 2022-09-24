@@ -8,6 +8,7 @@ import {
   AuthStatus,
   UserPlan,
 } from "../../sharedWithServer/SectionsMeta/baseSectionsVarbs";
+import { SectionPack } from "../../sharedWithServer/SectionsMeta/childSectionsDerived/SectionPack";
 import { PackMakerSection } from "../../sharedWithServer/StatePackers.ts/PackMakerSection";
 import { StrictOmit } from "../../sharedWithServer/utils/types";
 import { auth } from "../services/authService";
@@ -42,6 +43,10 @@ export class FeUserActor extends SectionActorBase<"feUser"> {
       guestAccessNames
     ) as GuestAccessSectionPackArrs;
   }
+  private get activeDealPack(): SectionPack<"deal"> {
+    const main = this.get.sections.oneAndOnly("main");
+    return main.onlyChild("deal").packMaker.makeSectionPack();
+  }
   async updateSubscriptionData() {
     const { headers, data } = await this.apiQueries.getSubscriptionData(
       makeReq({})
@@ -53,14 +58,14 @@ export class FeUserActor extends SectionActorBase<"feUser"> {
       planExp: data.planExp,
     });
   }
-  async loadUserData(): Promise<boolean> {
+  async loadUserData(): Promise<void> {
     const res = await this.apiQueries.getUserData(
       makeReq({
+        activeDeal: this.activeDealPack,
         guestAccessSections: this.guestAccessSectionPacks,
       })
     );
     this.loginSetter.setLogin(res);
-    return true;
   }
   get subscriptionValues(): SubscriptionValues {
     const subInfo = this.get.onlyChild("subscriptionInfo");

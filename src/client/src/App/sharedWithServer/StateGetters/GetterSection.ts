@@ -56,6 +56,7 @@ import {
   sectionNameS,
   SectionNameType,
 } from "../SectionsMeta/SectionNameByType";
+import { PackMakerSection } from "../StatePackers.ts/PackMakerSection";
 import { RawFeSection } from "../StateSections/StateSectionsTypes";
 import { Arr } from "../utils/Arr";
 import { Obj } from "../utils/Obj";
@@ -74,6 +75,9 @@ export class GetterSection<
   }
   get list() {
     return new GetterList(this.getterListProps);
+  }
+  get packMaker() {
+    return new PackMakerSection(this.getterSectionProps);
   }
   get raw(): RawFeSection<SN> {
     return this.sectionsShare.sections.rawSection(this.feInfo);
@@ -384,10 +388,14 @@ export class GetterSection<
     return { sectionName, feId };
   }
   varb(varbName: string): GetterVarb<SN> {
-    return this.varbs.one(varbName);
+    return new GetterVarb({
+      ...this.feSectionInfo,
+      sectionsShare: this.sectionsShare,
+      varbName,
+    });
   }
   varbNext<VN extends VarbName<SN>>(varbName: VN): GetterVarb<SN> {
-    return this.varbs.one(varbName as string);
+    return this.varb(varbName as string);
   }
   varbInfo(varbName: VarbName<SN>): FeVarbInfo<SN> {
     return this.varb(varbName as string).feVarbInfo;

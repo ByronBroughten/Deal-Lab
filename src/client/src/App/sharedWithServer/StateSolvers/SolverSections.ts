@@ -2,7 +2,8 @@ import { pick } from "lodash";
 import { defaultMaker } from "../defaultMaker/defaultMaker";
 import { VarbInfoMixed } from "../SectionsMeta/childSectionsDerived/MixedSectionInfo";
 import { SectionPack } from "../SectionsMeta/childSectionsDerived/SectionPack";
-import { FeVarbInfo } from "../SectionsMeta/Info";
+import { FeSectionInfo, FeVarbInfo } from "../SectionsMeta/Info";
+import { SectionName } from "../SectionsMeta/SectionName";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { GetterSections } from "../StateGetters/GetterSections";
 import { GetterVarb } from "../StateGetters/GetterVarb";
@@ -20,6 +21,10 @@ export class SolverSections extends SolverSectionsBase {
   private getterSections = new GetterSections(
     this.getterSectionsBase.getterSectionsProps
   );
+  oneAndOnly<SN extends SectionName>(sectionName: SN) {
+    const { feInfo } = this.getterSections.oneAndOnly(sectionName);
+    return this.solverSection(feInfo);
+  }
   varbByMixed<SN extends SectionNameByType<"hasVarb">>(
     mixedInfo: VarbInfoMixed<SN>
   ): SolverVarb<SN> {
@@ -98,9 +103,15 @@ export class SolverSections extends SolverSectionsBase {
     const feVarbInfo = GetterVarb.varbIdToVarbInfo(varbId);
     return this.solverVarb(feVarbInfo);
   }
-  solverVarb<S extends SectionNameByType>(
-    feVarbInfo: FeVarbInfo<S>
-  ): SolverVarb<S> {
+  solverSection<S extends SectionName>(
+    feInfo: FeSectionInfo<S>
+  ): SolverSection<S> {
+    return new SolverSection({
+      ...this.solverSectionsProps,
+      ...feInfo,
+    });
+  }
+  solverVarb<S extends SectionName>(feVarbInfo: FeVarbInfo<S>): SolverVarb<S> {
     return new SolverVarb({
       ...this.solverSectionsProps,
       ...feVarbInfo,
@@ -119,7 +130,7 @@ export class SolverSections extends SolverSectionsBase {
       ...pick(rootSection, ["sectionName", "feId"]),
       sectionsShare: { sections },
     });
-    solver.loadChildPackAndSolve({
+    solver.loadChildAndSolve({
       childName: "main",
       sectionPack,
     });

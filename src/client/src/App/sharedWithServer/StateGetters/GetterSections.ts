@@ -66,7 +66,7 @@ export class GetterSections extends GetterSectionsBase {
     varbName,
     ...info
   }: FeVarbInfo<SN>): GetterVarb<SN> {
-    return this.varbs(info).one(varbName);
+    return this.section(info).varb(varbName);
   }
   sectionsByMixed<SN extends SectionName>({
     sectionName,

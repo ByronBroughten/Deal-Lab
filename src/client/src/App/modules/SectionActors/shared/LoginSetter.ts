@@ -2,8 +2,8 @@ import { constants } from "../../../Constants";
 import { QueryRes } from "../../../sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import { SetterSectionsBase } from "../../../sharedWithServer/StateSetters/SetterBases/SetterSectionsBase";
 import { SetterSections } from "../../../sharedWithServer/StateSetters/SetterSections";
-import { SolverSection } from "../../../sharedWithServer/StateSolvers/SolverSection";
 import { auth, UserInfoTokenProp } from "../../services/authService";
+import { LoginSolver } from "./LoginSolver";
 
 export class LoginSetter extends SetterSectionsBase {
   get setterSections(): SetterSections {
@@ -12,13 +12,12 @@ export class LoginSetter extends SetterSectionsBase {
   setUserInfoToken(headers: UserInfoTokenProp): void {
     auth.setToken(headers[constants.tokenKey.apiUserAuth]);
   }
+  get loginSolver(): LoginSolver {
+    return new LoginSolver(this.setterSectionsProps);
+  }
   setLogin({ data, headers }: QueryRes<"getUserData">) {
     this.setUserInfoToken(headers);
-    const feUser = this.setterSections.oneAndOnly("feUser");
-    const solverStore = SolverSection.init(feUser.get.getterSectionProps);
-    solverStore.loadSelfSectionPackAndSolve(data.feUser[0]);
-    const authInfo = solverStore.onlyChild("authInfo");
-    authInfo.varb("authStatus").directUpdateAndSolve("user");
+    this.loginSolver.setLogin(data.feUser[0]);
     this.setterSections.setSections();
   }
 }

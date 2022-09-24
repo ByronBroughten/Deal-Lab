@@ -7,13 +7,8 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-// Next step is to use the new stores instead of displayNameList
-
-// If a section's dbId is in the displayNameList, it should
-// throw if its not in its corresponding activeSaved
-
-// when sections in activeSaved are compared to current sections
-// both have their saved descendants removed
+// Make the loadSectionList draw from the new displayName section
+// When loading from the db, the sectionList must be correct.
 
 // saving
 // loading
@@ -21,8 +16,6 @@ AppRegistry.runApplication("App", {
 
 // on loading it also checks whether the old one
 // should be deleted
-// basically, it should only have models that
-// are both saved in the list and loaded
 
 // updating, update the activeSaved section
 
@@ -33,7 +26,7 @@ AppRegistry.runApplication("App", {
 // fn checks whether any activeSaved sections should be deleted
 // if it's the last section with that dbId, remove it from activeSaved
 
-// There are three relevant states of each savable unit
+// Stayle - there are three relevant states of each savable unit
 // 1. not saved - neutral border and shadow, word in the menu
 // 2. saved - green border and shadow, word in the menu
 // 3. unsaved changes - red border and shadow, word in the menu

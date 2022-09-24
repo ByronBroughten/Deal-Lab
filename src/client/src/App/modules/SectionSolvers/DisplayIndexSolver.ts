@@ -1,37 +1,45 @@
-import { ChildSectionPack } from "../../../sharedWithServer/SectionsMeta/childSectionsDerived/ChildSectionPack";
-import { FeStoreNameByType } from "../../../sharedWithServer/SectionsMeta/relSectionsDerived/relNameArrs/feStoreNameArrs";
-import { SetterSection } from "../../../sharedWithServer/StateSetters/SetterSection";
-import { SolverSection } from "../../../sharedWithServer/StateSolvers/SolverSection";
-import { SectionActorBase } from "../SectionActorBase";
-import { DisplayListActor } from "./DisplayListActor";
+import { ChildSectionPack } from "../../sharedWithServer/SectionsMeta/childSectionsDerived/ChildSectionPack";
+import { FeStoreNameByType } from "../../sharedWithServer/SectionsMeta/relSectionsDerived/relNameArrs/feStoreNameArrs";
+import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
+import { SolverSectionBase } from "../../sharedWithServer/StateSolvers/SolverBases/SolverSectionBase";
+import { SolverSection } from "../../sharedWithServer/StateSolvers/SolverSection";
+import { DisplayListSolver } from "./DisplayListSolver";
 
-export class DisplayIndexActor<
+export class DisplayIndexSolver<
   SN extends FeStoreNameByType<"displayStoreName">
-> extends SectionActorBase<SN> {
+> extends SolverSectionBase<SN> {
+  get get() {
+    return new GetterSection(this.solverSectionProps);
+  }
+  get solver() {
+    return SolverSection.init(this.solverSectionProps);
+  }
   get list() {
     const list = this.get.onlyChild("displayNameList");
-    return new DisplayListActor({
-      ...this.sectionActorBaseProps,
+    return new DisplayListSolver({
+      ...this.solverSectionsProps,
       ...list.feInfo,
     });
   }
   get displayItems() {
     return this.list.displayItems;
   }
+  initializeAsSaved(sectionPacks: ChildSectionPack<SN, "activeAsSaved">[]) {
+    for (const sectionPack of sectionPacks) {
+      const { dbId } = sectionPack;
+      if (this.list.hasByDbId(dbId)) {
+        this.addAsSavedIfNot(sectionPack);
+      }
+    }
+  }
   hasByDbId(dbId: string) {
     return this.list.hasByDbId(dbId);
-  }
-  get setter() {
-    return new SetterSection(this.setterSectionBase.setterSectionProps);
-  }
-  get solver() {
-    return SolverSection.init(this.setterSectionBase.setterSectionProps);
   }
   private displayNameString(dbId: string): string {
     return this.getAsSaved(dbId).get.valueNext("displayName").mainText;
   }
   getAsSaved(dbId: string) {
-    return this.setter.childByDbId({
+    return this.solver.childByDbId({
       childName: "activeAsSaved",
       dbId,
     });
@@ -55,15 +63,14 @@ export class DisplayIndexActor<
       displayName: child.valueNext("displayName").mainText,
       dbId,
     });
-    this.setter.setSections();
   }
   updateItem(sectionPack: ChildSectionPack<SN, "activeAsSaved">) {
     const { dbId } = sectionPack;
-    const child = this.setter.childByDbId({
+    const child = this.solver.childByDbId({
       childName: "activeAsSaved",
       dbId,
     });
-    child.loadSelfSectionPack(sectionPack);
+    child.loadSelfSectionPackAndSolve(sectionPack);
     this.list.updateItem({
       displayName: this.displayNameString(dbId),
       dbId,
@@ -73,10 +80,10 @@ export class DisplayIndexActor<
     this.list.removeItem(dbId);
     this.removeAsSavedlIfNot(dbId);
   }
-  private addAsSavedIfNot(sectionPack: ChildSectionPack<SN, "activeAsSaved">) {
+  addAsSavedIfNot(sectionPack: ChildSectionPack<SN, "activeAsSaved">) {
     const { dbId } = sectionPack;
     if (!this.hasAsSaved(dbId)) {
-      this.setter.loadChild({
+      this.solver.loadChildAndSolve({
         childName: "activeAsSaved",
         sectionPack: sectionPack as any,
       });
@@ -89,14 +96,14 @@ export class DisplayIndexActor<
       }
     }
   }
-  private hasAsSaved(dbId: string): boolean {
+  hasAsSaved(dbId: string): boolean {
     return this.get.hasChildByDbInfo({
       childName: "activeAsSaved",
       dbId,
     });
   }
   private removeAsSaved(dbId: string): void {
-    this.setter.removeChildByDbId({
+    this.solver.removeChildByDbIdAndSolve({
       childName: "activeAsSaved",
       dbId,
     });

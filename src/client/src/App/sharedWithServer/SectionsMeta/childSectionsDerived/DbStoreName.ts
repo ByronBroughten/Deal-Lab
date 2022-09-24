@@ -88,7 +88,7 @@ type MainSectionToStoreName = {
   [DN in DbStoreNameByType<"mainIndex"> as DbSectionName<DN>]: DN;
 };
 
-const sectionToMainStoreNames = mainIndexStoreNames.reduce(
+const sectionToMainDbStoreNames = mainIndexStoreNames.reduce(
   (result, storeName) => {
     const sectionName = childToSectionName("dbStore", storeName);
     (result[sectionName] as any) = storeName;
@@ -98,17 +98,17 @@ const sectionToMainStoreNames = mainIndexStoreNames.reduce(
 );
 
 const mainStoreSectionNames: DbSectionNameByType<"mainIndex">[] = Obj.keys(
-  sectionToMainStoreNames
+  sectionToMainDbStoreNames
 );
 
-export function isMainStoreSectionName(
+export function isMainDbStoreSectionName(
   value: any
 ): value is DbSectionNameByType<"mainIndex"> {
   return mainStoreSectionNames.includes(value);
 }
 
-export function sectionToMainStoreName<
+export function sectionToMainDbStoreName<
   SN extends DbSectionNameByType<"mainIndex">
 >(sectionName: SN): MainSectionToStoreName[SN] {
-  return sectionToMainStoreNames[sectionName];
+  return sectionToMainDbStoreNames[sectionName];
 }

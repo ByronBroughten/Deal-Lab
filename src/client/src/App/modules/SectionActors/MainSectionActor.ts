@@ -1,29 +1,34 @@
-import { SectionValues } from "../../sharedWithServer/SectionsMeta/baseSectionsDerived/valueMetaTypes";
 import { DbSectionNameName } from "../../sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreName";
 import { SectionPack } from "../../sharedWithServer/SectionsMeta/childSectionsDerived/SectionPack";
 import { SectionNameByType } from "../../sharedWithServer/SectionsMeta/SectionNameByType";
-import { GetterSections } from "../../sharedWithServer/StateGetters/GetterSections";
 import { PackMakerSection } from "../../sharedWithServer/StatePackers.ts/PackMakerSection";
 import { SetterSection } from "../../sharedWithServer/StateSetters/SetterSection";
-import { timeS } from "../../sharedWithServer/utils/date";
+import { SolverSection } from "../../sharedWithServer/StateSolvers/SolverSection";
+import { UpdaterSection } from "../../sharedWithServer/StateUpdaters/UpdaterSection";
 import {
   SectionQuerier,
   SectionQuerierProps,
 } from "../QueriersBasic/SectionQuerier";
+import { DisplayItemProps } from "../SectionSolvers/DisplayListSolver";
 import { auth, UserInfoTokenProp } from "../services/authService";
-import { SetterSections } from "./../../sharedWithServer/StateSetters/SetterSections";
 import { Str } from "./../../sharedWithServer/utils/Str";
-import {
-  DisplayIndexActor,
-  DisplayItemProps,
-} from "./MainSectionActor/DisplayIndexActor";
-import { FullIndexActor } from "./MainSectionActor/FullIndexActor";
+import { MainSectionSolver, SaveStatus } from "./MainSectionSolver";
 import { SectionActorBase } from "./SectionActorBase";
 
 export class MainSectionActor<
   SN extends SectionNameByType<"hasIndexStore">
 > extends SectionActorBase<SN> {
-  get setter() {
+  get mainSolver() {
+    return new MainSectionSolver(this.sectionActorBaseProps);
+  }
+
+  get updater(): UpdaterSection<SN> {
+    return new UpdaterSection(this.sectionActorBaseProps);
+  }
+  get solver(): SolverSection<SN> {
+    return new SolverSection(this.sectionActorBaseProps);
+  }
+  get setter(): SetterSection<SN> {
     return new SetterSection(this.sectionActorBaseProps);
   }
   get hasDisplayIndex() {
@@ -31,30 +36,6 @@ export class MainSectionActor<
   }
   get hasFullIndex() {
     return this.get.meta.hasFeFullIndex;
-  }
-  get fullIndexActor(): FullIndexActor<any> {
-    if (!this.hasFullIndex) {
-      throw new Error(`${this.get.sectionName} has no full index store`);
-    }
-    const { feFullIndexStoreName } = this.get.meta;
-    const feUser = this.setterSections.oneAndOnly("feUser");
-    return new FullIndexActor({
-      ...this.sectionActorBaseProps,
-      ...feUser.feInfo,
-      itemName: feFullIndexStoreName,
-    }) as FullIndexActor<any>;
-  }
-  get displayIndexActor() {
-    if (!this.hasDisplayIndex) {
-      throw new Error(`${this.get.sectionName} has no display index store`);
-    }
-    const { feDisplayIndexStoreNext } = this.get.meta;
-    const feUser = this.setterSections.oneAndOnly("feUser");
-    const store = feUser.onlyChild(feDisplayIndexStoreNext);
-    return new DisplayIndexActor({
-      ...this.sectionActorBaseProps,
-      ...store.feInfo,
-    });
   }
   private get sectionQuerierProps(): SectionQuerierProps<
     DbSectionNameName<SN>
@@ -70,26 +51,14 @@ export class MainSectionActor<
   get packMaker() {
     return new PackMakerSection(this.sectionActorBaseProps);
   }
-  get primaryActor(): DisplayIndexActor<any> | FullIndexActor<any> {
-    if (this.hasDisplayIndex) {
-      return this.displayIndexActor;
-    } else if (this.hasFullIndex) {
-      return this.fullIndexActor;
-    } else {
-      throw new Error("There is no displayIndex nor fullIndex");
-    }
-  }
   get isSaved(): boolean {
-    return this.primaryActor.hasByDbId(this.dbId);
+    return this.mainSolver.isSaved;
   }
-  get getterSections() {
-    return new GetterSections(this.sectionActorBaseProps);
+  get asSavedPack(): SectionPack<SN> {
+    return this.mainSolver.asSavedPack;
   }
-  get setterSections() {
-    return new SetterSections(this.sectionActorBaseProps);
-  }
-  get dbId(): string {
-    return this.get.dbId;
+  get saveStatus(): SaveStatus {
+    return this.mainSolver.saveStatus;
   }
   alphabeticalDisplayItems() {
     const nameItems = this.displayItems;
@@ -98,15 +67,7 @@ export class MainSectionActor<
     );
   }
   get displayItems(): DisplayItemProps[] {
-    if (this.hasDisplayIndex) {
-      return this.displayIndexActor.displayItems;
-    }
-    if (this.get.meta.hasFeFullIndex) {
-      return this.fullIndexActor.displayItems;
-    }
-    throw new Error(
-      `section with sectionName "${this.get.sectionName}" has no feIndex`
-    );
+    return this.mainSolver.displayItems;
   }
   removeSelf(): void {
     this.setter.removeSelf();
@@ -128,19 +89,8 @@ export class MainSectionActor<
     this.saveNew();
   }
   async saveNew(): Promise<void> {
-    if (this.hasDisplayIndex) {
-      this.addDisplayItem();
-    }
-    if (this.hasFullIndex) {
-      this.addFullItem();
-    }
-
-    const dateTime = timeS.now();
-    this.setter.updateValues({
-      dateTimeFirstSaved: dateTime,
-      dateTimeLastSaved: dateTime,
-    } as Partial<SectionValues<SN>>);
-
+    this.mainSolver.saveNew();
+    this.setter.setSections();
     let headers: UserInfoTokenProp | null = null;
     this.setter.tryAndRevertIfFail(async () => {
       const sectionPack = this.packMaker.makeSectionPack();
@@ -150,15 +100,8 @@ export class MainSectionActor<
     if (headers) auth.setTokenFromHeaders(headers);
   }
   async saveUpdates(): Promise<void> {
-    if (this.hasDisplayIndex) {
-      this.updateDisplayItem();
-    }
-    if (this.hasFullIndex) {
-      this.updateFullItem();
-    }
-    this.setter.updateValues({
-      dateTimeLastSaved: timeS.now(),
-    } as Partial<SectionValues<SN>>);
+    this.mainSolver.saveUpdates();
+    this.setter.setSections();
     this.setter.tryAndRevertIfFail(
       async () =>
         await this.querier.update(
@@ -168,38 +111,15 @@ export class MainSectionActor<
   }
   async loadFromIndex(dbId: string): Promise<void> {
     const sectionPack = (await this.querier.get(dbId)) as SectionPack<SN>;
-    this.setter.loadSelfSectionPack(sectionPack);
-    if (this.hasDisplayIndex) {
-      const siblingDbIds = this.get.siblings.map(({ dbId }) => dbId);
-      this.displayIndexActor.removeAsSavedIfNeeded(siblingDbIds);
-    }
+    this.mainSolver.loadSectionPack(sectionPack);
+    this.setter.setSections();
   }
   async deleteSelf() {
-    this.deleteFromIndex(this.dbId);
+    this.deleteFromIndex(this.get.dbId);
   }
   async deleteFromIndex(dbId: string) {
-    if (this.hasDisplayIndex) {
-      this.displayIndexActor.removeItem(dbId);
-    }
-    if (this.hasFullIndex) {
-      this.fullIndexActor.removeItem(dbId);
-    }
+    this.mainSolver.deleteFromIndex(dbId);
+    this.setter.setSections();
     this.setter.tryAndRevertIfFail(async () => await this.querier.delete(dbId));
-  }
-  private addFullItem(): void {
-    const sectionPack = this.packMaker.makeSectionPack();
-    this.fullIndexActor.addItem(sectionPack as SectionPack<any>);
-  }
-  private addDisplayItem(): void {
-    const sectionPack = this.packMaker.makeSectionPack();
-    this.displayIndexActor.addItem(sectionPack as any);
-  }
-  private updateFullItem(): void {
-    const sectionPack = this.packMaker.makeSectionPack();
-    this.fullIndexActor.updateItem(sectionPack as SectionPack<any>);
-  }
-  private updateDisplayItem(): void {
-    const sectionPack = this.packMaker.makeSectionPack();
-    this.displayIndexActor.updateItem(sectionPack as any);
   }
 }

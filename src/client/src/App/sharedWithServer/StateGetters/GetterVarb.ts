@@ -205,7 +205,7 @@ export class GetterVarb<
     }`;
   }
   localVarb(varbName: string) {
-    return this.getterVarbs.one(varbName);
+    return this.getterSection.varb(varbName);
   }
   localValue<VT extends ValueName>(
     varbName: string,

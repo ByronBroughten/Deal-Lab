@@ -14,7 +14,6 @@ import { Obj } from "../utils/Obj";
 import { GetterSectionBase } from "./Bases/GetterSectionBase";
 import { GetterSection } from "./GetterSection";
 import { GetterSections } from "./GetterSections";
-import { GetterVarb } from "./GetterVarb";
 
 export class GetterVarbs<
   SN extends SectionNameByType
@@ -46,17 +45,12 @@ export class GetterVarbs<
   ): this is GetterSection<SectionNameByType<T>> {
     return sectionNameS.is(this.sectionName, sectionNameType);
   }
-  one(varbName: string): GetterVarb<SN & SectionNameByType<"hasVarb">> {
-    return new GetterVarb({
-      ...this.feSectionInfo,
-      sectionsShare: this.sectionsShare,
-      varbName,
-    });
-  }
   values<T extends ValuesRequest>(varbTypes: T): RequestedValues<T> {
     return Obj.entriesFull(varbTypes).reduce(
       (partial, [varbName, varbType]) => {
-        partial[varbName] = this.one(varbName as string).value(varbType) as any;
+        partial[varbName] = this.section
+          .varb(varbName as string)
+          .value(varbType) as any;
         return partial;
       },
       {} as RequestedValues<T>
@@ -72,7 +66,7 @@ export class GetterVarbs<
   }
   get dbVarbs(): DbVarbs {
     return this.varbNames.reduce((dbVarbs, varbName) => {
-      dbVarbs[varbName] = this.one(varbName).value();
+      dbVarbs[varbName] = this.section.varb(varbName).value();
       return dbVarbs;
     }, {} as DbVarbs);
   }

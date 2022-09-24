@@ -1,10 +1,8 @@
 import { numObj } from "../SectionsMeta/baseSectionsVarbs/baseValues/NumObj";
 import { stringObj } from "../SectionsMeta/baseSectionsVarbs/baseValues/StringObj";
 import { SectionPack } from "../SectionsMeta/childSectionsDerived/SectionPack";
-import {
-  feStoreTableNames,
-  feUserNameListNames,
-} from "../SectionsMeta/relChildSections";
+import { feStoreTableNames } from "../SectionsMeta/relChildSections";
+import { feStoreNameS } from "../SectionsMeta/relSectionsDerived/relNameArrs/feStoreNameArrs";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
 import { capExValues } from "./makeDefaultFeUser/exampleLists";
 import { makeDefaultFeUserTables } from "./makeDefaultFeUserTables";
@@ -48,8 +46,9 @@ export function makeDefaultFeUserPack(): SectionPack<"feUser"> {
     sectionPack: makeDefaultSubscriptionInfo(),
   });
 
-  for (const listName of feUserNameListNames) {
-    feUser.addChild(listName);
+  for (const storeName of feStoreNameS.arrs.displayStoreName) {
+    const displayStore = feUser.addAndGetChild(storeName);
+    displayStore.addChild("displayNameList");
   }
 
   const defaultTableMakers = makeDefaultFeUserTables();

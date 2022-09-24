@@ -76,8 +76,7 @@ export class SolverVarb<
     this.solveOutVarbs();
   }
   editorUpdateAndSolve(newValue: StateValue): void {
-    // solving the varb that was updated messes with the editor cursor
-    // due to manualUpdateEditorToggle, so best to only solve connected varbs
+    // can probably be replaced by directUpdateAndSolve
     this.updateValueByEditor(newValue);
     this.solveOutVarbs();
   }

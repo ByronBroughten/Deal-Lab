@@ -2,18 +2,22 @@ import bcrypt from "bcrypt";
 import { Response } from "express";
 import mongoose from "mongoose";
 import { constants } from "../../../../client/src/App/Constants";
+import { FeUserSolver } from "../../../../client/src/App/modules/SectionSolvers/FeUserSolver";
 import { LoginData } from "../../../../client/src/App/sharedWithServer/apiQueriesShared/getUserData";
 import { SubscriptionValues } from "../../../../client/src/App/sharedWithServer/apiQueriesShared/SubscriptionValues";
-import { defaultMaker } from "../../../../client/src/App/sharedWithServer/defaultMaker/defaultMaker";
 import { makeDefaultFeUserTables } from "../../../../client/src/App/sharedWithServer/defaultMaker/makeDefaultFeUserTables";
-import { SectionValues } from "../../../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsDerived/valueMetaTypes";
-import { dbStoreNameS } from "../../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreName";
 import { SectionPack } from "../../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/SectionPack";
+import { FeSectionInfo } from "../../../../client/src/App/sharedWithServer/SectionsMeta/Info";
 import {
+  FeUserDbIndex,
   FeUserTableName,
-  isFeUserDisplayListName,
   relChildSections,
 } from "../../../../client/src/App/sharedWithServer/SectionsMeta/relChildSections";
+import {
+  FeStoreNameByType,
+  feStoreNameS,
+} from "../../../../client/src/App/sharedWithServer/SectionsMeta/relSectionsDerived/relNameArrs/feStoreNameArrs";
+import { sectionNameS } from "../../../../client/src/App/sharedWithServer/SectionsMeta/SectionNameByType";
 import {
   GetterSectionBase,
   GetterSectionProps,
@@ -63,7 +67,10 @@ export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
   get email(): string {
     return this.userInfo.value("email", "string");
   }
-  static async getBy(specifierType: DbUserSpecifierType, specifier: string) {
+  static async getBy(
+    specifierType: DbUserSpecifierType,
+    specifier: string
+  ): Promise<LoadedDbUser> {
     const dbUser = await DbUser.initBy(specifierType, specifier);
     return dbUser.loadedDbUser();
   }
@@ -141,9 +148,9 @@ export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
     const tables = makeDefaultFeUserTables();
     const tablePack = tables[tableName]();
     const table = PackBuilderSection.loadAsOmniChild(tablePack);
-    const { partialIndexDbSource } = relChildSections.feUser[tableName];
+    const { dbIndexName } = relChildSections.feUser[tableName];
 
-    const sources = this.get.children(partialIndexDbSource);
+    const sources = this.get.children(dbIndexName);
     const columns = table.get.children("column");
     for (const source of sources) {
       const displayName = source.valueNext("displayName").mainText;
@@ -164,44 +171,72 @@ export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
     }
     return table.makeSectionPack();
   }
-
-  makeLoginUser(): LoginData {
-    const feUser = PackBuilderSection.initAsOmniChild("feUser");
-    feUser.loadSelf(defaultMaker.makeSectionPack("feUser"));
-    for (const feUserChildName of feUser.get.childNames) {
-      if (isFeUserDisplayListName(feUserChildName)) {
-        const nameList = feUser.onlyChild(feUserChildName);
-        const { partialIndexDbSource } =
-          relChildSections.feUser[feUserChildName];
-
-        const sources = this.get.children(partialIndexDbSource);
-        for (const source of sources) {
-          nameList.addChild("displayNameItem", {
-            dbId: source.dbId,
-            dbVarbs: { displayName: source.valueNext("displayName").mainText },
-          });
-        }
-      } else if (dbStoreNameS.is(feUserChildName)) {
-        feUser.loadChildren({
-          childName: feUserChildName,
-          sectionPacks: this.dbSections.sectionPackArr(feUserChildName),
+  makeLoginUser(activeDealPack: SectionPack<"deal">): LoginData {
+    const feUser = FeUserSolver.initDefault();
+    for (const feStoreName of feUser.get.childNames) {
+      if (feStoreNameS.is(feStoreName, "displayStoreName")) {
+        const dbIndexName = this.displayToDbStoreName(feStoreName);
+        const sources = this.get.children(dbIndexName);
+        feUser.loadDisplayStoreList(feStoreName, sources);
+      } else if (feStoreNameS.is(feStoreName, "fullIndex")) {
+        feUser.packBuilder.loadChildren({
+          childName: feStoreName,
+          sectionPacks: this.dbSections.sectionPackArr(feStoreName),
         });
-      } else if (feUserChildName === "subscriptionInfo") {
+      } else if (feStoreName === "subscriptionInfo") {
         const { subscriptionPlan, planExp } = this.subscriptionValues;
-        const subInfoValues: SectionValues<"subscriptionInfo"> = {
-          _typeUniformity: "",
+        feUser.loadSubscriptionInfo({
           plan: subscriptionPlan,
           planExp,
-        };
-        const subInfo = feUser.onlyChild("subscriptionInfo");
-        subInfo.updater.updateValuesDirectly(subInfoValues);
+        });
       }
     }
+    this.initActiveAsSaved(feUser, activeDealPack);
     return {
-      feUser: [feUser.makeSectionPack()],
+      feUser: [feUser.packBuilder.makeSectionPack()],
     };
   }
-  createUserInfoToken(subscriptionValues?: SubscriptionValues) {
+  displayToDbStoreName<SN extends FeStoreNameByType<"displayStoreName">>(
+    sectionName: SN
+  ): FeUserDbIndex<SN> {
+    const relFeUser = relChildSections.feUser;
+    const { dbIndexName } = relFeUser[sectionName];
+    return dbIndexName;
+  }
+  initActiveAsSaved(feUser: FeUserSolver, activeDealPack: SectionPack<"deal">) {
+    const headSection = PackBuilderSection.loadAsOmniChild(activeDealPack);
+    const { sections } = headSection;
+    let sectionInfos: FeSectionInfo[] = [headSection.feInfo];
+    while (sectionInfos.length > 0) {
+      const nextInfos: FeSectionInfo[] = [];
+      for (const { sectionName, feId } of sectionInfos) {
+        const section = sections.section({ sectionName, feId });
+        if (sectionNameS.is(sectionName, "hasDisplayIndex")) {
+          const { displayIndexName } =
+            headSection.sectionsMeta.get(sectionName);
+          const displayIndexSolver =
+            feUser.displayIndexSolver(displayIndexName);
+          if (displayIndexSolver.hasByDbId(section.get.dbId)) {
+            const child = this.get.childByDbId({
+              childName: this.displayToDbStoreName(displayIndexName),
+              dbId: section.get.dbId,
+            });
+            displayIndexSolver.addAsSavedIfNot(
+              child.packMaker.makeSectionPack()
+            );
+          }
+        }
+        for (const childName of section.get.childNames) {
+          for (const child of section.children(childName)) {
+            nextInfos.push(child.feInfo);
+          }
+        }
+      }
+      sectionInfos = nextInfos;
+    }
+  }
+
+  createUserInfoToken(subscriptionValues?: SubscriptionValues): string {
     return createUserInfoToken({
       userId: this.userId,
       ...this.subscriptionValues,
@@ -216,8 +251,8 @@ export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
     res.header(constants.tokenKey.apiUserAuth, token);
   }
 
-  sendLogin(res: Response) {
-    const loggedInUser = this.makeLoginUser();
+  sendLogin(res: Response, activeDealPack: SectionPack<"deal">): void {
+    const loggedInUser = this.makeLoginUser(activeDealPack);
     this.setResTokenHeader(res);
     res.status(200).send(loggedInUser);
   }

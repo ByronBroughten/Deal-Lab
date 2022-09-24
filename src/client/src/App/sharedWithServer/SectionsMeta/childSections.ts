@@ -60,15 +60,6 @@ export const childSections = checkChildSections({
     mgmtDisplayStore: ["mgmtDisplayStore"],
     dealDisplayStore: ["dealDisplayStore"],
 
-    propertyNames: ["displayNameList"],
-    loanNames: ["displayNameList"],
-    mgmtNames: ["displayNameList"],
-    dealNames: ["displayNameList"],
-    propertyLoaded: ["property"],
-    loanLoaded: ["loan"],
-    mgmtLoaded: ["mgmt"],
-    dealLoaded: ["deal"],
-
     outputListMain: ["outputList"],
     userVarbListMain: ["userVarbList"],
     singleTimeListMain: ["singleTimeList"],

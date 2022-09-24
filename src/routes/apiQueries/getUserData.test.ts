@@ -31,7 +31,7 @@ describe(testedRoute, () => {
     server = runApp();
     dbUser = await createAndGetDbUser(testedRoute);
     cookies = await makeSessionGetCookies({ server, authId: dbUser.authId });
-    reqObj = makeGetUserDataReqObj();
+    reqObj = makeReqObj();
   });
 
   async function exec() {
@@ -66,10 +66,12 @@ describe(testedRoute, () => {
     reqObj = makeReqObj(feUser);
     const { data } = await exec();
 
-    const postFeStore = PackBuilderSection.initAsOmniChild("feUser");
-    postFeStore.loadSelf((data as LoginData).feUser[0]);
-    const postReqObj = makeReqObj(postFeStore);
-    expect(reqObj).toEqual(postReqObj);
+    const postFeUser = PackBuilderSection.initAsOmniChild("feUser");
+    postFeUser.loadSelf((data as LoginData).feUser[0]);
+    const postReqObj = makeReqObj(postFeUser);
+    expect(reqObj.body.guestAccessSections).toEqual(
+      postReqObj.body.guestAccessSections
+    );
   });
   it("should not add guestAccessSections if they have already been added", async () => {
     const feUser = PackBuilderSection.initAsOmniChild("feUser");
@@ -91,16 +93,17 @@ function changedSection(data: LoginData) {
   return data.feUser[0].rawSections.singleTimeList;
 }
 
-function makeGetUserDataReqObj(): QueryReq<"getUserData"> {
-  const feUser = PackBuilderSection.initAsOmniChild("feUser");
-  return makeReqObj(feUser);
-}
-
 function makeReqObj(
-  feUser: PackBuilderSection<"feUser">
+  feUser = PackBuilderSection.initAsOmniChild("feUser")
 ): QueryReq<"getUserData"> {
+  const activeDeal = PackBuilderSection.initAsOmniChild("deal");
   const guestAccessSections = feUser.maker.makeChildTypePackArrs(
     guestAccessNames
   ) as GuestAccessSectionPackArrs;
-  return { body: { guestAccessSections } };
+  return {
+    body: {
+      guestAccessSections,
+      activeDeal: activeDeal.makeSectionPack(),
+    },
+  };
 }

@@ -2,8 +2,8 @@ import { ChildSectionName } from "../../../sharedWithServer/SectionsMeta/childSe
 import { SectionPack } from "../../../sharedWithServer/SectionsMeta/childSectionsDerived/SectionPack";
 import { FeStoreNameByType } from "../../../sharedWithServer/SectionsMeta/relSectionsDerived/relNameArrs/feStoreNameArrs";
 import { SetterSection } from "../../../sharedWithServer/StateSetters/SetterSection";
+import { DisplayItemProps } from "../../SectionSolvers/DisplayListSolver";
 import { SectionActorBase, SectionActorBaseProps } from "../SectionActorBase";
-import { DisplayItemProps } from "./DisplayIndexActor";
 
 interface FullIndexActorProps<SN extends FeStoreNameByType<"fullIndex">>
   extends SectionActorBaseProps<"feUser"> {
@@ -25,6 +25,15 @@ export class FullIndexActor<
       displayName: section.valueNext("displayName").mainText,
       dbId: section.dbId,
     }));
+  }
+  getItem(dbId: string) {
+    return this.setter.childByDbId({
+      childName: this.itemName,
+      dbId,
+    });
+  }
+  getItemPack(dbId: string) {
+    this.getItem(dbId).packMaker.makeSectionPack();
   }
   hasByDbId(dbId: string) {
     return this.get.hasChildByDbInfo({

@@ -3,11 +3,20 @@ import { Obj } from "../../utils/Obj";
 import { hasChildSectionNames } from "../childSectionsDerived/ChildName";
 import { SectionName, sectionNames } from "../SectionName";
 import { allSectionTraits } from "../sectionsTraits";
-import { hasStoreNameArrs } from "./relNameArrs/feStoreNameArrs";
+import { feStoreNameS, hasStoreNameArrs } from "./relNameArrs/feStoreNameArrs";
 import { tableStoreNameArrs } from "./relNameArrs/tableStoreArrs";
 
 export const relNameArrs = {
   ...hasStoreNameArrs,
+  displayStoreName: Arr.extractStrict(
+    sectionNames,
+    feStoreNameS.arrs.displayStoreName as [
+      "dealDisplayStore",
+      "mgmtDisplayStore",
+      "propertyDisplayStore",
+      "loanDisplayStore"
+    ]
+  ),
   ...tableStoreNameArrs,
   hasGlobalVarbs: Obj.entryKeysWithPropValue(
     allSectionTraits,

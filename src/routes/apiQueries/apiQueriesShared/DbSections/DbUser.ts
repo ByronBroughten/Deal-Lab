@@ -2,6 +2,7 @@ import mongoose, { QueryOptions } from "mongoose";
 import { GuestAccessSectionPackArrs } from "../../../../client/src/App/sharedWithServer/apiQueriesShared/register";
 import { VarbName } from "../../../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
 import { VarbValue } from "../../../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsDerived/valueMetaTypes";
+import { ChildSectionName } from "../../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/ChildSectionName";
 import {
   DbPack,
   DbSectionPack,
@@ -16,7 +17,11 @@ import {
   DbStoreInfo,
   DbStoreName,
   dbStoreNames,
+  isMainDbStoreSectionName,
+  sectionToMainDbStoreName,
 } from "../../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreName";
+import { SectionPack } from "../../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/SectionPack";
+import { FeSectionInfo } from "../../../../client/src/App/sharedWithServer/SectionsMeta/Info";
 import { GetterSection } from "../../../../client/src/App/sharedWithServer/StateGetters/GetterSection";
 import { PackBuilderSection } from "../../../../client/src/App/sharedWithServer/StatePackers.ts/PackBuilderSection";
 import { Obj } from "../../../../client/src/App/sharedWithServer/utils/Obj";
@@ -240,6 +245,36 @@ export class DbUser extends DbSectionsQuerierBase {
       dbSections,
     });
   }
+  async updateSectionPackChildren<SN extends ChildSectionName<"omniParent">>(
+    sectionPack: SectionPack<SN>
+  ) {
+    const headSection = PackBuilderSection.loadAsOmniChild(sectionPack);
+    const { sections } = headSection;
+    let sectionInfos: FeSectionInfo[] = [headSection.feInfo];
+    while (sectionInfos.length > 0) {
+      const nextInfos: FeSectionInfo[] = [];
+      for (const info of sectionInfos) {
+        const section = sections.section(info);
+        for (const childName of section.get.childNames) {
+          for (const child of section.children(childName)) {
+            const { sectionName, dbId } = child.get;
+            if (isMainDbStoreSectionName(sectionName)) {
+              const dbStoreName = sectionToMainDbStoreName(sectionName);
+              const childDbInfo = { dbStoreName, dbId };
+              if (await this.hasSectionPack(childDbInfo)) {
+                const childPack = await this.getSectionPack(childDbInfo);
+                child.loadSelf(childPack as any as SectionPack<any>);
+              }
+            }
+            nextInfos.push(child.feInfo);
+          }
+        }
+      }
+      sectionInfos = nextInfos;
+    }
+    return headSection.makeSectionPack();
+  }
+
   static async initBy(specifierType: DbUserSpecifierType, specifier: string) {
     const dbUser = new DbUser({
       userFilter: dbUserFilters[specifierType](specifier),

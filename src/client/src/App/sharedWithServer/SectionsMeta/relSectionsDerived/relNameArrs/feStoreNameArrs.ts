@@ -1,5 +1,5 @@
 import { Obj } from "../../../utils/Obj";
-import { getChildNames } from "../../childSectionsDerived/ChildName";
+import { ChildName, getChildNames } from "../../childSectionsDerived/ChildName";
 import { tableRowDbSources } from "../../relChildSections";
 import { allSectionTraits, getSomeSectionTraits } from "../../sectionsTraits";
 import { Arr } from "./../../../utils/Arr";
@@ -7,7 +7,7 @@ import { Arr } from "./../../../utils/Arr";
 export const hasStoreNameArrs = {
   hasDisplayIndex: Obj.entryKeysWithPropOfType(
     allSectionTraits,
-    "feDisplayIndexStoreName",
+    "displayIndexName",
     "string"
   ),
   hasFullIndex: Obj.entryKeysWithPropOfType(
@@ -24,7 +24,7 @@ export const hasStoreNameArrs = {
 const hasToStoreNames = {
   displayIndex: getSomeSectionTraits(
     hasStoreNameArrs.hasDisplayIndex,
-    "feDisplayIndexStoreName"
+    "displayIndexName"
   ),
   fullIndex: getSomeSectionTraits(
     hasStoreNameArrs.hasFullIndex,
@@ -40,6 +40,7 @@ const hasToStoreNames = {
 
 const indexStoreNames = makeNestedValueArrs(hasToStoreNames);
 
+export type FeStoreName = ChildName<"feUser">;
 export type FeStoreType = keyof StoreNameArrs;
 export type FeStoreNameByType<SN extends FeStoreType = "all"> =
   StoreNameArrs[SN][number];
@@ -47,7 +48,7 @@ export type FeStoreNameByType<SN extends FeStoreType = "all"> =
 const feUserChildNames = getChildNames("feUser");
 const feStoreNameArrs = {
   ...indexStoreNames,
-  partialIndexDbSource: tableRowDbSources,
+  dbIndexName: tableRowDbSources,
   displayNameDbSource: tableRowDbSources,
   all: feUserChildNames,
   displayStoreName: Arr.extractStrict(feUserChildNames, [

@@ -32,7 +32,10 @@ export type ApiQueries = {
   replaceSectionArr: ReplaceSectionArrQuery;
   getProPaymentUrl: (req: UpgradeUserToProReq) => Promise<UrlRes>;
   getUserData: (
-    req: MakeReq<{ guestAccessSections: GuestAccessSectionPackArrs }>
+    req: MakeReq<{
+      guestAccessSections: GuestAccessSectionPackArrs;
+      activeDeal: SectionPack<"deal">;
+    }>
   ) => Promise<{
     data: LoginData;
     headers: UserInfoTokenProp;

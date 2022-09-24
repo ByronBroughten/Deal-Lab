@@ -145,7 +145,7 @@ export class SetterSection<
     this.setSections();
   }
   loadChild(childPackInfo: ChildPackInfo<SN>) {
-    this.solver.loadChildPackAndSolve(childPackInfo);
+    this.solver.loadChildAndSolve(childPackInfo);
     this.setSections();
   }
   removeSelf(): void {

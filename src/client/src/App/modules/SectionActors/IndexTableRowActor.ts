@@ -13,7 +13,7 @@ export interface IndexTableRowActorProps
   extends StrictOmit<SectionActorBaseProps<"tableRow">, "sectionName"> {}
 
 export class IndexTableRowActor extends SectionActorBase<"tableRow"> {
-  dbStoreName: FeStoreNameByType<"partialIndexDbSource">;
+  dbStoreName: FeStoreNameByType<"dbIndexName">;
   constructor(props: IndexTableRowActorProps) {
     super({
       sectionName: "tableRow",
@@ -24,10 +24,10 @@ export class IndexTableRowActor extends SectionActorBase<"tableRow"> {
   get setter() {
     return new SetterSection(this.sectionActorBaseProps);
   }
-  private initDbStoreName(): FeStoreNameByType<"partialIndexDbSource"> {
+  private initDbStoreName(): FeStoreNameByType<"dbIndexName"> {
     const parentSelfChildName = this.get.parent.selfChildName;
     if (isFeUserTableName(parentSelfChildName)) {
-      return relChildSections.feUser[parentSelfChildName].partialIndexDbSource;
+      return relChildSections.feUser[parentSelfChildName].dbIndexName;
     } else throw new Error("This row doesn't have the right parent.");
   }
   get indexQuerier() {
