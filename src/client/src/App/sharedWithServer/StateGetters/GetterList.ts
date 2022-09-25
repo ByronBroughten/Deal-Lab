@@ -10,12 +10,16 @@ import {
 import { Arr } from "../utils/Arr";
 import { GetterListBase } from "./Bases/GetterListBase";
 import { GetterSection } from "./GetterSection";
+import { GetterSections } from "./GetterSections";
 
 export class GetterList<
   SN extends SectionNameByType
 > extends GetterListBase<SN> {
   private get stateList(): RawFeSection<SN>[] {
     return this.sectionsShare.sections.rawSectionList(this.sectionName);
+  }
+  get getterSections() {
+    return new GetterSections(this.getterSectionsProps);
   }
   get oneAndOnly(): GetterSection<SN> {
     this.exactlyOneOrThrow(this.stateList, "all");

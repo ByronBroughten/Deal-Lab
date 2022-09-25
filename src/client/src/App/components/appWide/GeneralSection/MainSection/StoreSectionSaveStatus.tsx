@@ -5,9 +5,13 @@ import { SectionNameByType } from "../../../../sharedWithServer/SectionsMeta/Sec
 import theme, { ThemeName } from "../../../../theme/Theme";
 import ListMenuBtn from "../../ListGroup/ListGroupShared/ListMenuSimple/ListMenuBtn";
 
+type Props<SN extends SectionNameByType<"hasIndexStore">> = {
+  feInfo: FeSectionInfo<SN>;
+  className?: string;
+};
 export function StoreSectionSaveStatus<
   SN extends SectionNameByType<"hasIndexStore">
->({ feInfo }: { feInfo: FeSectionInfo<SN> }) {
+>({ feInfo, className }: Props<SN>) {
   const mainSection = useMainSectionActor(feInfo);
   const btnProps = {
     unsaved: {
@@ -23,7 +27,14 @@ export function StoreSectionSaveStatus<
       children: "Unsaved Changes",
     },
   } as const;
-  return <Styled {...btnProps[mainSection.saveStatus]} />;
+  return (
+    <Styled
+      {...{
+        ...btnProps[mainSection.saveStatus],
+        className: `StoreSectionSaveStatus ${className ?? ""}`,
+      }}
+    />
+  );
 }
 
 const Styled = styled(ListMenuBtn)<{ $themeName: ThemeName }>`
@@ -32,5 +43,11 @@ const Styled = styled(ListMenuBtn)<{ $themeName: ThemeName }>`
     border: 2px solid ${theme[$themeName].border};
     color: ${theme[$themeName].border};
     font-weight: 700;
+
+    :hover {
+      color: ${theme[$themeName].border};
+      background: transparent;
+      cursor: auto;
+    }
   `};
 `;

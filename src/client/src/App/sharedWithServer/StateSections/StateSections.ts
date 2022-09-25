@@ -5,7 +5,7 @@ import {
   SectionNameByType,
   sectionNameS,
 } from "../SectionsMeta/SectionNameByType";
-import { Arr } from "../utils/Arr";
+import { Arr, ValueNotFoundError } from "../utils/Arr";
 import { Obj } from "../utils/Obj";
 import { initRawSection, initRawVarbs } from "./initRawSection";
 import {
@@ -34,10 +34,16 @@ export class StateSections {
   }
   sectionIdx<SN extends SectionNameByType>(feInfo: FeSectionInfo<SN>): number {
     const sectionList = this.rawSectionList(feInfo.sectionName);
-    return Arr.idxOrThrow(
-      sectionList,
-      (section) => section.feId === feInfo.feId
-    );
+    try {
+      return Arr.idxOrThrow(
+        sectionList,
+        (section) => section.feId === feInfo.feId
+      );
+    } catch (error) {
+      if (error instanceof ValueNotFoundError) {
+        throw new SectionNotFoundError(error.message);
+      } else throw error;
+    }
   }
   hasSection(feInfo: FeSectionInfo): boolean {
     try {

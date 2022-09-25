@@ -141,6 +141,9 @@ export class PackBuilderSection<
   loadSelf(sectionPack: SectionPack<SN>) {
     this.loader.loadSelfSectionPack(sectionPack);
   }
+  removeSelf() {
+    this.updater.removeSelf();
+  }
   packBuilderSection<S extends SectionNameByType>(
     feInfo: FeSectionInfo<S>
   ): PackBuilderSection<S> {

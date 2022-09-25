@@ -51,8 +51,9 @@ export class SelfPackLoader<
   addSectionPackChildren() {
     if (this.thisHasChildren()) {
       const { childNames } = this.get;
-      const { childDbIds } = this.headRawSection;
+      let { childDbIds } = this.headRawSection;
       for (const childName of childNames) {
+        if (childDbIds[childName] === undefined) childDbIds[childName] = [];
         for (const dbId of childDbIds[childName]) {
           const childPackLoader = this.childPackLoader({
             childName,

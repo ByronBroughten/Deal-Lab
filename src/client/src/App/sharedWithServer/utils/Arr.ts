@@ -181,7 +181,7 @@ export const Arr = {
   idxOrThrow<T>(arr: readonly T[], finder: (val: T) => boolean): number {
     const idx = arr.findIndex(finder);
     if (idx < 0) {
-      throw new Error("Value not found at any index.");
+      throw new ValueNotFoundError("Value not found at any index.");
     }
     return idx;
   },
@@ -201,3 +201,5 @@ export const Arr = {
     return [...new Set([...a, ...b])];
   },
 } as const;
+
+export class ValueNotFoundError extends Error {}

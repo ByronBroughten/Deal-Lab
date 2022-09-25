@@ -35,21 +35,26 @@ export function MainSectionMenus({
   const showSaveStatus = section.saveStatus !== "unsaved";
   return (
     <Styled className={`MainSectionMenus-root ${className ?? ""}`}>
-      {showSaveStatus && <StoreSectionSaveStatus feInfo={feInfo} />}
+      {showSaveStatus && (
+        <StoreSectionSaveStatus
+          feInfo={feInfo}
+          className="MainSectionMenus-item"
+        />
+      )}
       {showActions && (
         <StoreSectionActionMenu
           {...{
             ...feInfo,
             ...actionMenuProps,
             dropTop,
-            className: "MainSectionMenus-dropdownList",
+            className: "MainSectionMenus-item",
           }}
         />
       )}
       {showLoadList && (
         <DisplayNameSectionList
           {...{
-            className: "MainSectionMenus-dropdownList",
+            className: "MainSectionMenus-item",
             feInfo,
             pluralName,
             disabled: isGuest,
@@ -63,7 +68,7 @@ export function MainSectionMenus({
 
 const Styled = styled.div`
   display: flex;
-  .MainSectionMenus-dropdownList {
+  .MainSectionMenus-item {
     :not(:first-child) {
       margin-left: ${theme.s3};
     }
@@ -71,16 +76,16 @@ const Styled = styled.div`
 `;
 
 export const MainSectionMenusMini = styled(MainSectionMenus)`
-  .MainSectionMenus-dropdownList {
+  .MainSectionMenus-item {
     :not(:first-child) {
       margin-left: 0;
     }
   }
 
-  .MainSectionMenus-dropdownList {
+  .MainSectionMenus-item {
     margin-right: ${theme.s2};
   }
-  .DropdownBtn-root {
+  .ListMenuBtn-root {
     height: ${theme.smallButtonHeight};
   }
 `;

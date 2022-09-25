@@ -203,4 +203,9 @@ I've been computer programming for awhile now, and after massively underestimati
 // Be more like Google—put the menu on the left side.
 // I could make the lists be "advanced"
 
+// - more difficult. I would have to use an "onlyOne" property in
+//   the childSections section, or something, then go through all of the
+//   property's descendants to make sure they all have their bare minimum
+//   onlyOnes.
+
 reportWebVitals();
