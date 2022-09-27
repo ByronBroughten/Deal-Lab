@@ -7,15 +7,15 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-// saving
-// loading
-// fn checks whether an activeSaved section should be created.
+// Add the syncStatus varb to the savable sections
+// Default syncStatus to unSynced
+// Make loading saved sections as synced depend on syncStatus
+// When a section is saved, show "Changes Synced" and "Unsynced Changes".
 
-// on loading it also checks whether the old one
-// should be deleted
+// Make tables
+// - The tables will, for now, just load things as they are saved, without syncing.
 
-// updating, update the activeSaved section
-
+// DeBug these operations
 // copying
 // removing
 // creating new
@@ -23,21 +23,36 @@ AppRegistry.runApplication("App", {
 // fn checks whether any activeSaved sections should be deleted
 // if it's the last section with that dbId, remove it from activeSaved
 
-// Style - there are three relevant states of each savable unit
-// 1. not saved - neutral border and shadow, word in the menu
-// 2. saved - green border and shadow, word in the menu
-// 3. unsaved changes - red border and shadow, word in the menu
-// When people decide to load something, if they have unsaved changes,
-// tell them which sections have those unsaved changes, and suggest that if they don't want to lose those changes, they can  save the updates or copy the section
+// "Load", "Load/Sync", "Trashcan"
 
-// To the left of actions, add the icon
-// The icon will look like the menu btns
-// But it will be see-through and its colors will be like above
+// Loaded section
+// - Property "syncStatus" set to "unsynced"
+// - Has "Create new", "Make a copy", "Save as new", "Copy and Save", "Save Updates", and "Turn on Sync"
+// - When getSection is used, the section will be loaded as it was when it was saved
 
-// You'll want to merge the simple list menu with the
-// full one.
-// You'll also want to merge the list menus with the
-// main section menus
+// Synced section
+// - Property "syncStatus" set to "synced"
+// - Has "Create new", "Make a copy", "Save as new", "Copy and Save", "Turn off sync", "Apply changes", "Revert changes"
+// - "Synced", "Unsynced changes"
+// - When getSection is used, the section will be loaded as it was saved in the index
+// - If it is no longer in the index, its sync will simply be set to "unsynced"
+// - For comparison's sake, synced sections should not be taken into account
+//   unsynced sections should be
+
+// Property is synced.
+// I change one of its lists from "synced" to "unsynced"
+// I change one of its lists from "unsynced" to "synced"
+// - These will both be considered unsaved changes to Property
+// - This makes sense.
+
+// - Is changing the sync on a list considred an unsaved change
+//   For the list itself? All saved sections should automatically
+//   have sync turned on for comparison purposes. Plus, they are synced, really.
+// - When they are "loaded", their sync is turned off
+
+// If a deal is unsynced but its constituent property is, it will still load the property.
+// syncing and unsyncing doesn't really make sense at the deal level
+// Actually it does make sense
 
 // ***Maybe put "Upgrade User to Pro" button back.
 // ***Maybe make it possible to switch from numObj to stringObj

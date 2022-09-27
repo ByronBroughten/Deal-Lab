@@ -8,7 +8,9 @@ import { OutVarbGetterVarb } from "./OutVarbGetterVarb";
 export class OutVarbGetterSection<
   SN extends SectionNameByType
 > extends GetterSectionBase<SN> {
-  get = new GetterSection(this.getterSectionProps);
+  get get() {
+    return new GetterSection(this.getterSectionProps);
+  }
   get selfAndDescendantOutVarbIds(): string[] {
     return GetterVarb.varbInfosToVarbIds(this.selfAndDescendantOutVarbInfos);
   }

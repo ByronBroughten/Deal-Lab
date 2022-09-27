@@ -90,14 +90,9 @@ export class UpdaterSection<
       ...rest,
     } as InitRawFeSectionProps<any>);
     const childList = this.updaterList.updaterList(sectionName);
-    if (idx === undefined) {
-      childList.push(section);
-    } else {
-      childList.insert({ section, idx });
-    }
-
+    childList.push(section);
     const { feId } = childList.get.last;
-    this.addChildFeId({ childName, feId });
+    this.addChildFeId({ childName, feId, idx });
   }
   addAndGetChild<CN extends ChildName<SN>>(
     childName: CN,

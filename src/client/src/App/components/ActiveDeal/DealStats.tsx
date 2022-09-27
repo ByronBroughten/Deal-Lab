@@ -35,7 +35,7 @@ export default function DealStats({ className, feId }: Props) {
         className: `DealStats-root ${className}`,
       }}
     >
-      <GeneralSectionTitle title="DealOutputSection" themeName="deal">
+      <GeneralSectionTitle title="Deal" themeName="deal">
         <MainSectionTitleBtn
           {...{
             ...detailsBtnProps,

@@ -56,13 +56,14 @@ export class FeIndexSolver<
   get displayItems() {
     return this.primarySolver.displayItems;
   }
-  integrateLoadedPack(
-    sectionPack: SectionPack<SN>,
-    loadedSiblingDbIds: string[]
-  ) {
+  addAsSavedIfMissing(sectionPack: SectionPack<SN>) {
     if (this.hasDisplayIndex) {
       this.displayIndexSolver.addAsSavedIfNot(sectionPack as any);
-      this.displayIndexSolver.removeAsSavedIfNeeded(loadedSiblingDbIds);
+    }
+  }
+  removeExtraAsSaved(loadedDbIds: string[]) {
+    if (this.hasDisplayIndex) {
+      this.displayIndexSolver.removeExtraAsSaved(loadedDbIds);
     }
   }
   deleteFromIndex(dbId: string) {

@@ -31,7 +31,9 @@ export class AddSolverSection<
     super(rest);
     this.addSolveShare = addSolveShare;
   }
-  get = new GetterSection(this.getterSectionProps);
+  get get() {
+    return new GetterSection(this.getterSectionProps);
+  }
   private get loader() {
     return new PackLoaderSection(this.getterSectionProps);
   }
@@ -80,6 +82,10 @@ export class AddSolverSection<
     childName: CN,
     options?: AddChildOptions<SN, CN>
   ): void {
+    // if a child is added at a particular index...
+    // it is no longer the youngest.
+    // idx should only pertain to GetterList, though, for youngestChild
+    // not getterSection
     this.defaultAdder.addChild(childName, options);
     const child = this.youngestChild(childName);
     child.finalizeAddAndExtractVarbIds();

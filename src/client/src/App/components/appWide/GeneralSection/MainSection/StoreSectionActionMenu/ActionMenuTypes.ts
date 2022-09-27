@@ -6,7 +6,7 @@ export const isSavedActions = [
   "saveAsNew",
   "copy",
   "copyAndSave",
-  "delete",
+  // "delete",
 ] as const;
 type IsSavedActions = typeof isSavedActions[number];
 

@@ -44,15 +44,21 @@ export class RemoveSolverSection<
       },
     });
   }
-  get = new GetterSection(this.getterSectionProps);
-  private updater = new UpdaterSection(this.getterSectionProps);
+  get get() {
+    return new GetterSection(this.getterSectionProps);
+  }
+  private get updater() {
+    return new UpdaterSection(this.getterSectionProps);
+  }
   get removedVarbIds() {
     return this.removeSolveShare.removedVarbIds;
   }
   get outVarbIdsOfRemoved() {
     return this.removeSolveShare.outVarbIdsOfRemoved;
   }
-  inOut = new OutVarbGetterSection(this.getterSectionProps);
+  get inOut() {
+    return new OutVarbGetterSection(this.getterSectionProps);
+  }
   solverVarb(varbInfo: FeVarbInfo): SolverVarb {
     return new SolverVarb({
       ...this.solverSectionsProps,

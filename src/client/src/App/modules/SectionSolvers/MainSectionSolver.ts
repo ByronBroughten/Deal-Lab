@@ -7,6 +7,7 @@ import { GetterSections } from "../../sharedWithServer/StateGetters/GetterSectio
 import { PackMakerSection } from "../../sharedWithServer/StatePackers.ts/PackMakerSection";
 import { SolverSectionBase } from "../../sharedWithServer/StateSolvers/SolverBases/SolverSectionBase";
 import { SolverSection } from "../../sharedWithServer/StateSolvers/SolverSection";
+import { UpdaterSection } from "../../sharedWithServer/StateUpdaters/UpdaterSection";
 import { timeS } from "../../sharedWithServer/utils/date";
 import { FeIndexSolver } from "./FeIndexSolver";
 import { FeUserSolver } from "./FeUserSolver";
@@ -17,6 +18,9 @@ export class MainSectionSolver<
 > extends SolverSectionBase<SN> {
   get solver() {
     return new SolverSection(this.solverSectionProps);
+  }
+  get updater() {
+    return new UpdaterSection(this.solverSectionProps);
   }
   get get() {
     return new GetterSection(this.getterSectionProps);
@@ -61,17 +65,48 @@ export class MainSectionSolver<
       }
     }
   }
+  removeSelf() {
+    this.solver.removeSelfAndSolve();
+    this.sectionUnloadCleanup();
+  }
+  replaceWithDefault() {
+    this.solver.replaceWithDefaultAndSolve();
+    this.sectionUnloadCleanup();
+    // no parent found, because replacing with default
+    // actually removes the section
+    // no, that shouldn't happen
+    // the section was removed from its parent without being put back
+  }
   get isSaved(): boolean {
     return this.feIndexSolver.isSaved(this.dbId);
   }
   get displayItems() {
     return this.feIndexSolver.displayItems;
   }
+  makeACopy() {
+    this.updater.newDbId();
+    const titleValue = this.get.valueNext("displayName");
+    this.solver.updateValuesAndSolve({
+      displayName: {
+        ...titleValue,
+        mainText: "Copy of " + titleValue.mainText,
+      },
+    } as Partial<SectionValues<SN>>);
+    this.sectionUnloadCleanup();
+  }
   loadSectionPack(sectionPack: SectionPack<SN>) {
     this.solver.loadSelfSectionPackAndSolve(sectionPack);
-    const siblingDbIds = this.get.siblings.map(({ dbId }) => dbId);
-    this.feIndexSolver.integrateLoadedPack(sectionPack, siblingDbIds);
+    this.sectionUnloadCleanup();
+    this.sectionLoadCleanup(sectionPack);
   }
+  sectionLoadCleanup(sectionPack: SectionPack<SN>) {
+    this.feIndexSolver.addAsSavedIfMissing(sectionPack);
+  }
+  sectionUnloadCleanup() {
+    const siblingDbIds = this.get.siblings.map(({ dbId }) => dbId);
+    this.feIndexSolver.removeExtraAsSaved(siblingDbIds);
+  }
+
   deleteFromIndex(dbId: string) {
     this.feIndexSolver.deleteFromIndex(dbId);
   }
@@ -79,20 +114,21 @@ export class MainSectionSolver<
     this.feIndexSolver.deleteFromIndex(this.dbId);
   }
   saveNew() {
-    const sectionPack = this.packMaker.makeSectionPack();
-    this.feIndexSolver.addItem(sectionPack);
     const dateTime = timeS.now();
     this.solver.updateValuesAndSolve({
       dateTimeFirstSaved: dateTime,
       dateTimeLastSaved: dateTime,
     } as Partial<SectionValues<SN>>);
+
+    const sectionPack = this.packMaker.makeSectionPack();
+    this.feIndexSolver.addItem(sectionPack);
   }
   saveUpdates() {
-    const sectionPack = this.packMaker.makeSectionPack();
-    this.feIndexSolver.updateItem(sectionPack);
     this.solver.updateValuesAndSolve({
       dateTimeLastSaved: timeS.now(),
     } as Partial<SectionValues<SN>>);
+    const sectionPack = this.packMaker.makeSectionPack();
+    this.feIndexSolver.updateItem(sectionPack);
   }
   get asSavedPack(): SectionPack<SN> {
     return this.feIndexSolver.getAsSavedPack(this.dbId);

@@ -1,6 +1,6 @@
 import { AiOutlineSave } from "react-icons/ai";
 import { BiCopy, BiReset } from "react-icons/bi";
-import { MdDelete, MdOutlineSystemUpdateAlt } from "react-icons/md";
+import { MdOutlineSystemUpdateAlt } from "react-icons/md";
 import styled from "styled-components";
 import { useMainSectionActor } from "../../../../modules/sectionActorHooks/useMainSectionActor";
 import { SectionNameByType } from "../../../../sharedWithServer/SectionsMeta/SectionNameByType";
@@ -85,14 +85,14 @@ export function StoreSectionActionMenu<
         onClick={() => mainSection.copyAndSave()}
       />
     ),
-    delete: () => (
-      <LabeledIconBtn
-        key="delete"
-        label="Delete from saved"
-        icon={<MdDelete size="24" />}
-        onClick={() => mainSection.deleteSelf()}
-      />
-    ),
+    // delete: () => (
+    //   <LabeledIconBtn
+    //     key="delete"
+    //     label="Delete from saved"
+    //     icon={<MdDelete size="24" />}
+    //     onClick={() => mainSection.deleteSelf()}
+    //   />
+    // ),
     createNew: () => (
       <LabeledIconBtn
         key="createNew"

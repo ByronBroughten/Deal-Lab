@@ -3,6 +3,7 @@ import { SectionPack } from "../../sharedWithServer/SectionsMeta/childSectionsDe
 import { SectionNameByType } from "../../sharedWithServer/SectionsMeta/SectionNameByType";
 import { PackMakerSection } from "../../sharedWithServer/StatePackers.ts/PackMakerSection";
 import { SetterSection } from "../../sharedWithServer/StateSetters/SetterSection";
+import { SetterSections } from "../../sharedWithServer/StateSetters/SetterSections";
 import { SolverSection } from "../../sharedWithServer/StateSolvers/SolverSection";
 import { UpdaterSection } from "../../sharedWithServer/StateUpdaters/UpdaterSection";
 import {
@@ -30,6 +31,9 @@ export class MainSectionActor<
   }
   get solver(): SolverSection<SN> {
     return new SolverSection(this.sectionActorBaseProps);
+  }
+  get setterSections(): SetterSections {
+    return new SetterSections(this.sectionActorBaseProps);
   }
   get setter(): SetterSection<SN> {
     return new SetterSection(this.sectionActorBaseProps);
@@ -72,28 +76,42 @@ export class MainSectionActor<
   get displayItems(): DisplayItemProps[] {
     return this.mainSolver.displayItems;
   }
+  setSections(): void {
+    // can't user SetterSection in some cases after self is removed
+    this.setterSections.setSections();
+  }
   removeSelf(): void {
-    this.setter.removeSelf();
+    this.mainSolver.removeSelf();
+    this.setSections();
   }
   replaceWithDefault(): void {
-    this.setter.replaceWithDefault();
+    this.mainSolver.replaceWithDefault();
+    this.setSections();
   }
   async makeACopy() {
-    this.setter.resetDbId();
-    const titleVarb = this.setter.varb("displayName");
-    titleVarb.updateValue("Copy of " + titleVarb.value("string"));
+    this.mainSolver.makeACopy();
+    this.setSections();
   }
   async saveAsNew() {
     this.setter.resetDbId();
     this.saveNew();
   }
   async copyAndSave() {
-    this.makeACopy();
+    this.mainSolver.makeACopy();
     this.saveNew();
   }
   async saveNew(): Promise<void> {
     this.mainSolver.saveNew();
-    this.setter.setSections();
+    this.setSections();
+    let headers: UserInfoTokenProp | null = null;
+    this.setter.tryAndRevertIfFail(async () => {
+      const sectionPack = this.packMaker.makeSectionPack();
+      const res = await this.querier.add(sectionPack as SectionPack<any>);
+      headers = res.headers;
+    });
+    if (headers) auth.setTokenFromHeaders(headers);
+  }
+  private querySave() {
     let headers: UserInfoTokenProp | null = null;
     this.setter.tryAndRevertIfFail(async () => {
       const sectionPack = this.packMaker.makeSectionPack();

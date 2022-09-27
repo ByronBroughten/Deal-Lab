@@ -44,7 +44,7 @@ export class DisplayIndexSolver<
       dbId,
     });
   }
-  removeAsSavedIfNeeded(loadedDbIds: string[]) {
+  removeExtraAsSaved(loadedDbIds: string[]) {
     const { itemDbIds } = this.list;
     const asSavedList = this.get.children("activeAsSaved");
     for (const { dbId } of asSavedList) {
