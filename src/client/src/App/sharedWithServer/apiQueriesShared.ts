@@ -44,6 +44,12 @@ export type ApiQueries = {
     req: MakeReq<{}>
   ) => Promise<{ data: SubscriptionValues; headers: UserInfoTokenProp }>;
   makeSession: (req: MakeReq<{ authId: string }>) => Promise<{ data: {} }>;
+  getTableRows: (
+    req: MakeReq<{
+      dbStoreName: DbStoreNameByType<"mainIndex">;
+      columns: SectionPack<"column">[];
+    }>
+  ) => Promise<{ data: { tableRowPacks: SectionPack<"tableRow">[] } }>;
 };
 
 type GetSubscriptionDataRes = MakeRes<{

@@ -8,6 +8,7 @@ import { deleteSectionWare } from "./apiQueries/deleteSection";
 import { getProPaymentUrlWare } from "./apiQueries/getProPaymentUrl";
 import { getSectionWare } from "./apiQueries/getSection";
 import { subscriptionDataWare } from "./apiQueries/getSubscriptionData";
+import { getTableRowsWare } from "./apiQueries/getTableRows";
 import { getUserDataWare } from "./apiQueries/getUserData";
 import { replaceSectionArrWare } from "./apiQueries/replaceSectionArr";
 import { updateSectionWare } from "./apiQueries/updateSection";
@@ -22,6 +23,7 @@ const endpointWare: Record<ApiQueryName, any> = {
   getUserData: getUserDataWare,
   getSubscriptionData: subscriptionDataWare,
   makeSession: makeSessionWare,
+  getTableRows: getTableRowsWare,
 } as const;
 
 const apiQueries = express.Router();

@@ -99,7 +99,7 @@ export const config = {
     "getUserData",
     "getSubscriptionData",
     "makeSession",
-    // delete all users
+    "getTableRows",
   ],
   get superTokensAppInfo() {
     return {

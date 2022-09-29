@@ -1,9 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 import { sectionsMeta } from "../../client/src/App/sharedWithServer/SectionsMeta";
-import {
-  SectionDotVarbName,
-  VarbName,
-} from "../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
+import { VarbName } from "../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
 import {
   ChildName,
   getChildNames,
@@ -80,12 +77,12 @@ function monRawSection<SN extends SectionName>(sectionName: SN): Schema<any> {
 }
 function monDbVarbs<SN extends SectionName>(sectionName: SN): Schema<any> {
   const sectionMeta = sectionsMeta.get(sectionName);
-  const { varbNamesNext } = sectionMeta;
-  const frame = varbNamesNext.reduce((monVarbs, varbName) => {
+  const { varbNames } = sectionMeta;
+  const frame = varbNames.reduce((monVarbs, varbName) => {
     const valueMeta = sectionMeta.varb(varbName).value;
     monVarbs[varbName] = valueMeta.mon;
     return monVarbs;
-  }, {} as Record<SectionDotVarbName<SN>, any>);
+  }, {} as Record<string, any>);
   return new Schema(frame);
 }
 function monChildDbIds<SN extends SectionName>(sectionName: SN): Schema<any> {

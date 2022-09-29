@@ -89,3 +89,21 @@ export function isSectionPackByType<ST extends SectionNameType = "all">(
     return true;
   } else return false;
 }
+
+type ValidateSectionPackArrProps = {
+  value: any;
+  sectionType: SectionNameType;
+};
+export function validateSectionPackArrByType<ST extends SectionNameType>({
+  value,
+  sectionType,
+}: ValidateSectionPackArrProps): SectionPackByType<ST>[] {
+  if (
+    Array.isArray(value) &&
+    value.every((v) => isSectionPackByType(v, sectionType))
+  ) {
+    return value;
+  } else {
+    throw new Error("Payload is not a valid sectionPack array.");
+  }
+}
