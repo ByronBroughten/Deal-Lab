@@ -7,6 +7,7 @@ import { SectionPackRes } from "../../client/src/App/sharedWithServer/apiQueries
 import { numObj } from "../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsVarbs/baseValues/NumObj";
 import { stringObj } from "../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsVarbs/baseValues/StringObj";
 import { Id } from "../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsVarbs/id";
+import { AutoSyncStatus } from "../../client/src/App/sharedWithServer/SectionsMeta/relSectionVarbs/relVarbs";
 import { PackBuilderSection } from "../../client/src/App/sharedWithServer/StatePackers.ts/PackBuilderSection";
 import { runApp } from "../../runApp";
 import { SetterTesterSection } from "./../../client/src/App/sharedWithServer/StateSetters/TestUtils/SetterTesterSection";
@@ -93,7 +94,7 @@ describe(testedRoute, () => {
     reqs.getSection.body.dbId = Id.make();
     await testStatus(404);
   });
-  it("should load saved subsections", async () => {
+  it("should load saved subsections if sync is turned on", async () => {
     const original = {
       price: numObj(100000),
       displayName: stringObj("Original"),
@@ -104,6 +105,9 @@ describe(testedRoute, () => {
     const property = propertyGeneral.onlyChild("property");
     property.varb("price").updateValue(original.price);
     property.varb("displayName").updateValue(original.displayName);
+    property.updateValues({
+      syncStatus: "autoSyncOn" as AutoSyncStatus,
+    });
 
     reqs.addSection.body = {
       dbStoreName: "dealMain",

@@ -18,13 +18,13 @@ export function StoreSectionSaveStatus<
       $themeName: "default",
       children: "Unsaved",
     },
-    saved: {
+    changesSynced: {
       $themeName: "plus",
-      children: "Saved",
+      children: "Changes Synced",
     },
-    unsavedChanges: {
-      $themeName: "error",
-      children: "Unsaved Changes",
+    unsyncedChanges: {
+      $themeName: "primary",
+      children: "Unsynced Changes",
     },
   } as const;
   return (

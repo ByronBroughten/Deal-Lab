@@ -99,6 +99,7 @@ export class GetterSections extends GetterSectionsBase {
       return this.varbByMixed(info).displayVarb();
     } else return "Not Found";
   }
+
   hasSection({ sectionName, feId }: FeSectionInfo): boolean {
     return this.list(sectionName).hasByFeId(feId);
   }
@@ -107,5 +108,12 @@ export class GetterSections extends GetterSectionsBase {
   }
   hasSectionMixed({ sectionName, ...idInfo }: SectionInfoMixed): boolean {
     return this.list(sectionName).hasByMixed(idInfo);
+  }
+  hasVarbMixed({ varbName, ...rest }: VarbInfoMixed): boolean {
+    if (this.hasSectionMixed(rest)) {
+      const section = this.sectionByMixed(rest);
+      return section.meta.isVarbName(varbName);
+    }
+    return false;
   }
 }

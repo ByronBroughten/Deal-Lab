@@ -12,7 +12,7 @@ import { timeS } from "../../sharedWithServer/utils/date";
 import { FeIndexSolver } from "./FeIndexSolver";
 import { FeUserSolver } from "./FeUserSolver";
 
-export type SaveStatus = "unsaved" | "saved" | "unsavedChanges";
+export type SaveStatus = "unsaved" | "changesSynced" | "unsyncedChanges";
 export class MainSectionSolver<
   SN extends SectionNameByType<"hasIndexStore">
 > extends SolverSectionBase<SN> {
@@ -59,9 +59,9 @@ export class MainSectionSolver<
       sectionPack = this.feUserSolver.removeSavedChildren(sectionPack);
       asSavedPack = this.feUserSolver.removeSavedChildren(asSavedPack);
       if (isEqual(sectionPack, asSavedPack)) {
-        return "saved";
+        return "changesSynced";
       } else {
-        return "unsavedChanges";
+        return "unsyncedChanges";
       }
     }
   }
@@ -118,6 +118,7 @@ export class MainSectionSolver<
     this.solver.updateValuesAndSolve({
       dateTimeFirstSaved: dateTime,
       dateTimeLastSaved: dateTime,
+      syncStatus: "autoSyncOff",
     } as Partial<SectionValues<SN>>);
 
     const sectionPack = this.packMaker.makeSectionPack();

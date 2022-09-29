@@ -5,12 +5,10 @@ import { constants } from "../../../../client/src/App/Constants";
 import { FeUserSolver } from "../../../../client/src/App/modules/SectionSolvers/FeUserSolver";
 import { LoginData } from "../../../../client/src/App/sharedWithServer/apiQueriesShared/getUserData";
 import { SubscriptionValues } from "../../../../client/src/App/sharedWithServer/apiQueriesShared/SubscriptionValues";
-import { makeDefaultFeUserTables } from "../../../../client/src/App/sharedWithServer/defaultMaker/makeDefaultFeUserTables";
 import { SectionPack } from "../../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/SectionPack";
 import { FeSectionInfo } from "../../../../client/src/App/sharedWithServer/SectionsMeta/Info";
 import {
   FeUserDbIndex,
-  FeUserTableName,
   relChildSections,
 } from "../../../../client/src/App/sharedWithServer/SectionsMeta/relChildSections";
 import {
@@ -144,33 +142,6 @@ export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
       });
     }
   }
-  makeFeUserTablePack(tableName: FeUserTableName): SectionPack<"compareTable"> {
-    const tables = makeDefaultFeUserTables();
-    const tablePack = tables[tableName]();
-    const table = PackBuilderSection.loadAsOmniChild(tablePack);
-    const { dbIndexName } = relChildSections.feUser[tableName];
-
-    const sources = this.get.children(dbIndexName);
-    const columns = table.get.children("column");
-    for (const source of sources) {
-      const displayName = source.valueNext("displayName").mainText;
-      const row = table.addAndGetChild("tableRow", {
-        dbId: source.dbId,
-        dbVarbs: { displayName },
-      });
-      for (const column of columns) {
-        const varb = source.varbByFocalMixed(column.valueInEntityInfo());
-        row.addChild("cell", {
-          dbId: column.dbId,
-          dbVarbs: {
-            displayVarb: varb.displayVarb(),
-            valueEntityInfo: column.valueInEntityInfo(),
-          },
-        });
-      }
-    }
-    return table.makeSectionPack();
-  }
   makeLoginUser(activeDealPack: SectionPack<"deal">): LoginData {
     const feUser = FeUserSolver.initDefault();
     for (const feStoreName of feUser.get.childNames) {
@@ -179,6 +150,11 @@ export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
         const sources = this.get.children(dbIndexName);
         feUser.loadDisplayStoreList(feStoreName, sources);
       } else if (feStoreNameS.is(feStoreName, "fullIndex")) {
+        feUser.packBuilder.loadChildren({
+          childName: feStoreName,
+          sectionPacks: this.dbSections.sectionPackArr(feStoreName),
+        });
+      } else if (feStoreNameS.is(feStoreName, "mainTableName")) {
         feUser.packBuilder.loadChildren({
           childName: feStoreName,
           sectionPacks: this.dbSections.sectionPackArr(feStoreName),

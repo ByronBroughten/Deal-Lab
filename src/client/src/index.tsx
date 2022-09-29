@@ -7,50 +7,59 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-// Add the syncStatus varb to the savable sections
-// Default syncStatus to unSynced
-// Make loading saved sections as synced depend on syncStatus
-// When a section is saved, show "Changes Synced" and "Unsynced Changes".
 
-// Make tables
-// - The tables will, for now, just load things as they are saved, without syncing.
+// change "guestAccessSectionsAreLoaded" value from boolean to string
+// perhaps add "defaultTablesAreInitialized" value
+
+// Make the deal table
+// *feUser and dbUser each have compareTables.
+// *the feUserTables reference their dbStoreName
+
+// - On register, default comparableTables are saved (without any rows)
+// - On login, the user's saved compareTable is loaded from the dbUser to the feUser
+
+// - I click the link to compare deals
+// - The component takes the feStore compareTable name
+
+// - the feStore columns and source dbStoreName are sent
+// - The sources are loaded from the db
+// - The table's rows are generated from the columns and sent to the front-end
+// - the front-end gets the rows and deletes proxies that are no longer relevant
+// - whenever a change is made to the columns or proxies, the fe compareTable
+//   is saved to the db compareTable without the rows
+
+// - Take a dbStoreName, or columnStoreName, grab the columns from the db, generate the rows
+//   and send the table.
+// - In addition to columns, you also might want to save what is being compared
+// - Show things as they are according to whether they autoSyncOn
+
+// each rawSection needs an feId, except the head, which should have a random one.
+// the top level sectionPack, and the rawSections, need childFeIds instead of childDbIds
+// Everything else should remain the same about these
 
 // DeBug these operations
 // copying
-// removing
+// removing (a saved section)
 // creating new
 // deleting
-// fn checks whether any activeSaved sections should be deleted
-// if it's the last section with that dbId, remove it from activeSaved
 
-// "Load", "Load/Sync", "Trashcan"
-
-// Loaded section
-// - Property "syncStatus" set to "unsynced"
-// - Has "Create new", "Make a copy", "Save as new", "Copy and Save", "Save Updates", and "Turn on Sync"
-// - When getSection is used, the section will be loaded as it was when it was saved
-
-// Synced section
-// - Property "syncStatus" set to "synced"
-// - Has "Create new", "Make a copy", "Save as new", "Copy and Save", "Turn off sync", "Apply changes", "Revert changes"
-// - "Synced", "Unsynced changes"
 // - When getSection is used, the section will be loaded as it was saved in the index
-// - If it is no longer in the index, its sync will simply be set to "unsynced"
-// - For comparison's sake, synced sections should not be taken into account
-//   unsynced sections should be
+// - If it is no longer in the index, its sync will simply be set to "autoSyncOff"
+// - For comparison's sake, autoSyncOn sections should not be taken into account
+//   autoSyncOff sections should be
 
-// Property is synced.
-// I change one of its lists from "synced" to "unsynced"
-// I change one of its lists from "unsynced" to "synced"
+// Property is autoSyncOn.
+// I change one of its lists from "autoSyncOn" to "autoSyncOff"
+// I change one of its lists from "autoSyncOff" to "autoSyncOn"
 // - These will both be considered unsaved changes to Property
 // - This makes sense.
 
 // - Is changing the sync on a list considred an unsaved change
 //   For the list itself? All saved sections should automatically
-//   have sync turned on for comparison purposes. Plus, they are synced, really.
+//   have sync turned on for comparison purposes. Plus, they are autoSyncOn, really.
 // - When they are "loaded", their sync is turned off
 
-// If a deal is unsynced but its constituent property is, it will still load the property.
+// If a deal is autoSyncOff but its constituent property is, it will still load the property.
 // syncing and unsyncing doesn't really make sense at the deal level
 // Actually it does make sense
 
@@ -97,7 +106,7 @@ I've been computer programming for awhile now, and after massively underestimati
 // Last steps to Ultimate Property Analyzer
 // 1. User variables - make their entity displayName update.
 
-// 2. Lists - add something that indicates whether list is saved or synced.
+// 2. Lists - add something that indicates whether list is saved or autoSyncOn.
 // Or remove this for now.
 
 // make numObj and stringObj keys match

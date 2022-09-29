@@ -5,10 +5,8 @@ import { ChildSectionName } from "../../sharedWithServer/SectionsMeta/childSecti
 import { SectionPack } from "../../sharedWithServer/SectionsMeta/childSectionsDerived/SectionPack";
 import { FeSectionInfo } from "../../sharedWithServer/SectionsMeta/Info";
 import { FeStoreNameByType } from "../../sharedWithServer/SectionsMeta/relSectionsDerived/relNameArrs/feStoreNameArrs";
-import {
-  SectionNameByType,
-  sectionNameS,
-} from "../../sharedWithServer/SectionsMeta/SectionNameByType";
+import { AutoSyncStatus } from "../../sharedWithServer/SectionsMeta/relSectionVarbs/relVarbs";
+import { SectionNameByType } from "../../sharedWithServer/SectionsMeta/SectionNameByType";
 import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
 import { PackBuilderSection } from "../../sharedWithServer/StatePackers.ts/PackBuilderSection";
 import { SolverSectionBase } from "../../sharedWithServer/StateSolvers/SolverBases/SolverSectionBase";
@@ -95,11 +93,16 @@ export class FeUserSolver extends SolverSectionBase<"feUser"> {
         for (const childName of section.get.childNames) {
           for (const child of section.children(childName)) {
             const { sectionName, dbId } = child.get;
-            if (sectionNameS.is(sectionName, "hasIndexStore")) {
-              const indexSolver = this.indexSolver(sectionName);
-              if (indexSolver.isSaved(dbId)) {
-                child.removeSelf();
-                continue;
+            const getterChild = child.get;
+            if (getterChild.thisIsSectionType("hasIndexStore")) {
+              if (
+                getterChild.valueNext("syncStatus") ===
+                ("autoSyncOn" as AutoSyncStatus)
+              ) {
+                const indexSolver = this.indexSolver(getterChild.sectionName);
+                if (indexSolver.isSaved(getterChild.dbId)) {
+                  child.removeSelf();
+                }
               }
             }
             nextInfos.push(child.feInfo);

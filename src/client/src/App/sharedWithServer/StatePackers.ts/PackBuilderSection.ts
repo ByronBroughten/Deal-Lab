@@ -3,7 +3,10 @@ import {
   FeChildInfo,
 } from "../SectionsMeta/childSectionsDerived/ChildName";
 import { ChildSectionName } from "../SectionsMeta/childSectionsDerived/ChildSectionName";
-import { ChildArrPack } from "../SectionsMeta/childSectionsDerived/ChildSectionPack";
+import {
+  ChildArrPack,
+  ChildSectionPack,
+} from "../SectionsMeta/childSectionsDerived/ChildSectionPack";
 import { SectionPack } from "../SectionsMeta/childSectionsDerived/SectionPack";
 import { FeSectionInfo } from "../SectionsMeta/Info";
 import { SectionName } from "../SectionsMeta/SectionName";
@@ -85,6 +88,11 @@ export class PackBuilderSection<
     childName: CN
   ): PackBuilderSection<ChildSectionName<SN, CN>> {
     return this.packBuilderSection(this.get.onlyChild(childName).feInfo);
+  }
+  makeChildPackArrs<CN extends ChildName<SN>>(
+    childName: CN
+  ): ChildSectionPack<SN, CN>[] {
+    return this.maker.makeChildSectionPackArr(childName);
   }
   makeSectionPack(): SectionPack<SN> {
     return this.maker.makeSectionPack();

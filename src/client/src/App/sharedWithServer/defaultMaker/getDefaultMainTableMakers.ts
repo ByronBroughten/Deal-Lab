@@ -1,14 +1,26 @@
 import { inEntityInfo } from "../SectionsMeta/baseSectionsVarbs/baseValues/InEntityInfoValue";
+import { DbSectionPack } from "../SectionsMeta/childSectionsDerived/DbSectionPack";
 import { SectionPack } from "../SectionsMeta/childSectionsDerived/SectionPack";
-import { FeUserTableName } from "../SectionsMeta/relChildSections";
+import { FeStoreNameByType } from "../SectionsMeta/relSectionsDerived/relNameArrs/feStoreNameArrs";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
 import { Obj } from "../utils/Obj";
 import { outputNames } from "./makeDefaultOutputList";
 
-type TablePackMakers = {
-  [CN in FeUserTableName]: () => SectionPack<"compareTable">;
+type DefaultTables = {
+  [CN in FeStoreNameByType<"mainTableName">]: DbSectionPack<CN>[];
 };
-export function makeDefaultFeUserTables(): TablePackMakers {
+export function makeDefaultTablePackArrs(): DefaultTables {
+  const tableMakers = getDefaultMainTableMakers();
+  return Obj.keys(tableMakers).reduce((defaultTables, tableName) => {
+    defaultTables[tableName] = [tableMakers[tableName]()];
+    return defaultTables;
+  }, {} as DefaultTables);
+}
+
+type TablePackMakers = {
+  [CN in FeStoreNameByType<"mainTableName">]: () => SectionPack<"compareTable">;
+};
+export function getDefaultMainTableMakers(): TablePackMakers {
   const columnVarbnames = {
     dealMainTable: {
       sectionName: "deal",

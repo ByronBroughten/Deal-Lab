@@ -24,14 +24,6 @@ export class DisplayIndexSolver<
   get displayItems() {
     return this.list.displayItems;
   }
-  initializeAsSaved(sectionPacks: ChildSectionPack<SN, "activeAsSaved">[]) {
-    for (const sectionPack of sectionPacks) {
-      const { dbId } = sectionPack;
-      if (this.list.hasByDbId(dbId)) {
-        this.addAsSavedIfNot(sectionPack);
-      }
-    }
-  }
   hasByDbId(dbId: string) {
     return this.list.hasByDbId(dbId);
   }

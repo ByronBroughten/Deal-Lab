@@ -87,15 +87,6 @@ function makeRelChildSections<RCS extends GenericRelChildSections>(
   return rcs;
 }
 
-export const feStoreTableNames: ChildSectionNameName<
-  "feUser",
-  "compareTable"
->[] = ["propertyMainTable", "loanMainTable", "mgmtMainTable", "dealMainTable"];
-export type FeUserTableName = typeof feStoreTableNames[number];
-export function isFeUserTableName(value: any): value is FeUserTableName {
-  return feStoreTableNames.includes(value);
-}
-
 export const relChildSections = makeRelChildSections({
   ...makeDefaultRelChildSections(),
   feUser: relChildren("feUser", {

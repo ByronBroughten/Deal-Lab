@@ -48,14 +48,20 @@ export type FeStoreNameByType<SN extends FeStoreType = "all"> =
 const feUserChildNames = getChildNames("feUser");
 const feStoreNameArrs = {
   ...indexStoreNames,
+  all: feUserChildNames,
   dbIndexName: tableRowDbSources,
   displayNameDbSource: tableRowDbSources,
-  all: feUserChildNames,
   displayStoreName: Arr.extractStrict(feUserChildNames, [
     "dealDisplayStore",
     "mgmtDisplayStore",
     "loanDisplayStore",
     "propertyDisplayStore",
+  ] as const),
+  mainTableName: Arr.extractStrict(feUserChildNames, [
+    "propertyMainTable",
+    "loanMainTable",
+    "mgmtMainTable",
+    "dealMainTable",
   ] as const),
 } as const;
 type StoreNameArrs = typeof feStoreNameArrs;

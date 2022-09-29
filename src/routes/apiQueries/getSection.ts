@@ -11,7 +11,7 @@ async function getSectionServerSide(req: Request, res: Response) {
 
   const dbUser = await DbUser.initBy("authId", auth.id);
   let sectionPack = await dbUser.getSectionPack(dbInfo);
-  sectionPack = await dbUser.updateSectionPackChildren(sectionPack);
+  sectionPack = await dbUser.syncSectionPackChildren(sectionPack);
   sendSuccess(res, "getSection", {
     data: { sectionPack },
   });

@@ -1,8 +1,8 @@
+import { relChildSections } from "../../sharedWithServer/SectionsMeta/relChildSections";
 import {
-  isFeUserTableName,
-  relChildSections,
-} from "../../sharedWithServer/SectionsMeta/relChildSections";
-import { FeStoreNameByType } from "../../sharedWithServer/SectionsMeta/relSectionsDerived/relNameArrs/feStoreNameArrs";
+  FeStoreNameByType,
+  feStoreNameS,
+} from "../../sharedWithServer/SectionsMeta/relSectionsDerived/relNameArrs/feStoreNameArrs";
 import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
 import { SetterSection } from "../../sharedWithServer/StateSetters/SetterSection";
 import { StrictOmit } from "../../sharedWithServer/utils/types";
@@ -26,7 +26,7 @@ export class IndexTableRowActor extends SectionActorBase<"tableRow"> {
   }
   private initDbStoreName(): FeStoreNameByType<"dbIndexName"> {
     const parentSelfChildName = this.get.parent.selfChildName;
-    if (isFeUserTableName(parentSelfChildName)) {
+    if (feStoreNameS.is(parentSelfChildName, "mainTableName")) {
       return relChildSections.feUser[parentSelfChildName].dbIndexName;
     } else throw new Error("This row doesn't have the right parent.");
   }

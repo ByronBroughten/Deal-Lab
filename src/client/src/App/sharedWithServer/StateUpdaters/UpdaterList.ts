@@ -20,9 +20,6 @@ export class UpdaterList<
   push(section: RawFeSection<SN>): void {
     return this.update([...this.raw, section]);
   }
-  // insert({ section, idx }: { section: RawFeSection<SN>; idx: number }): void {
-  //   return this.update(Arr.insert(this.raw, section, idx));
-  // }
   replace(section: RawFeSection<SN>): void {
     const idx = this.getterList.idx(section.feId);
     return this.update(Arr.replaceAtIdxClone(this.raw, section, idx));

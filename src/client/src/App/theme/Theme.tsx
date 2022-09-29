@@ -113,7 +113,7 @@ const themeSections = {
       border: color["gray-600"],
     }),
   },
-  property: {
+  warning: {
     ...themeSection({
       main: themeColors.property,
       get light() {
@@ -126,6 +126,9 @@ const themeSections = {
         return darken(0.1, themeColors.property);
       },
     }),
+  },
+  get property() {
+    return this.warning;
   },
   mgmt: {
     ...themeSection({
@@ -180,7 +183,20 @@ const themeSections = {
       },
     }),
   },
-
+  get primary() {
+    return themeSection({
+      main: "#3f51b5",
+      get light() {
+        return lighten(0.3, this.main);
+      },
+      get dark() {
+        return darken(0.01, this.main);
+      },
+      get border() {
+        return darken(0.01, this.main);
+      },
+    });
+  },
   get userVarbList() {
     return this.default;
   },
@@ -200,7 +216,6 @@ const themeSections = {
 };
 
 const theme = {
-  primary: "#3f51b5",
   ...color,
   ...themeColors,
   ...themeSections,

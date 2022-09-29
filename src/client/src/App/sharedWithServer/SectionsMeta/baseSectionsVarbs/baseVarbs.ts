@@ -64,6 +64,7 @@ export const baseVarbsS = {
       displayName: "stringObj",
       dateTimeFirstSaved: "dateTime",
       dateTimeLastSaved: "dateTime",
+      syncStatus: "string", // syncStatus - default to false.
     } as const;
   },
   get virtualVarb() {

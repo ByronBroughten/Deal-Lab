@@ -31,7 +31,7 @@ export function PiCalculationControl({ feId }: PiCalculationControlProps) {
         control={
           <Checkbox
             style={{
-              color: theme.primary,
+              color: theme.primary.main,
               padding: 0,
             }}
             checked={piCalculationName === "interestOnlySimple"}

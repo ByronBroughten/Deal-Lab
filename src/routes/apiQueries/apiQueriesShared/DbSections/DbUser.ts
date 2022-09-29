@@ -1,5 +1,7 @@
 import mongoose, { QueryOptions } from "mongoose";
+import { CompareTableBuilder } from "../../../../client/src/App/modules/SectionSolvers/CompareTableBuilder";
 import { GuestAccessSectionPackArrs } from "../../../../client/src/App/sharedWithServer/apiQueriesShared/register";
+import { makeDefaultTablePackArrs } from "../../../../client/src/App/sharedWithServer/defaultMaker/getDefaultMainTableMakers";
 import { VarbName } from "../../../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
 import { VarbValue } from "../../../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsDerived/valueMetaTypes";
 import { ChildSectionName } from "../../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/ChildSectionName";
@@ -16,12 +18,13 @@ import {
   DbSelfOrDescendantSn,
   DbStoreInfo,
   DbStoreName,
+  DbStoreNameByType,
   dbStoreNames,
-  isMainDbStoreSectionName,
   sectionToMainDbStoreName,
 } from "../../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreName";
 import { SectionPack } from "../../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/SectionPack";
 import { FeSectionInfo } from "../../../../client/src/App/sharedWithServer/SectionsMeta/Info";
+import { AutoSyncStatus } from "../../../../client/src/App/sharedWithServer/SectionsMeta/relSectionVarbs/relVarbs";
 import { GetterSection } from "../../../../client/src/App/sharedWithServer/StateGetters/GetterSection";
 import { PackBuilderSection } from "../../../../client/src/App/sharedWithServer/StatePackers.ts/PackBuilderSection";
 import { Obj } from "../../../../client/src/App/sharedWithServer/utils/Obj";
@@ -42,11 +45,37 @@ export class DbUser extends DbSectionsQuerierBase {
   async exists(): Promise<boolean> {
     return await DbUserModel.exists(this.userFilter);
   }
-  async checkAndLoadGuestAccessSections(
+  async initUserSectionsIfNeeded(
     guestAccessSections: GuestAccessSectionPackArrs
   ): Promise<void> {
     if (!(await this.guestAccessSectionsAreLoaded)) {
       await this.loadGuestAccessSections(guestAccessSections);
+      await this.initializeMainTables();
+    }
+  }
+
+  private async initializeMainTables(): Promise<void> {
+    const defaultTablePackArrs = makeDefaultTablePackArrs();
+    return this.loadSectionPackArrs(defaultTablePackArrs);
+  }
+  private async loadGuestAccessSections(
+    guestAccessSections: GuestAccessSectionPackArrs
+  ): Promise<void> {
+    this.setOnlyValue({
+      ...this.guestAccessInfo,
+      value: true,
+    });
+    return this.loadSectionPackArrs(guestAccessSections);
+  }
+  private async loadSectionPackArrs(
+    arrs: Partial<DbSectionPackArrs>
+  ): Promise<void> {
+    for (const storeName of Obj.keys(arrs)) {
+      const sectionPackArr = arrs[storeName] as any[];
+      await this.setSectionPackArr({
+        storeName,
+        sectionPackArr,
+      });
     }
   }
   async getUserId(): Promise<string> {
@@ -65,21 +94,6 @@ export class DbUser extends DbSectionsQuerierBase {
   }
   private get guestAccessSectionsAreLoaded() {
     return this.getOnlySectionValue(this.guestAccessInfo);
-  }
-  private async loadGuestAccessSections(
-    guestAccessSections: GuestAccessSectionPackArrs
-  ): Promise<void> {
-    this.setOnlyValue({
-      ...this.guestAccessInfo,
-      value: true,
-    });
-    for (const storeName of Obj.keys(guestAccessSections)) {
-      const sectionPackArr = guestAccessSections[storeName] as any[];
-      this.setSectionPackArr({
-        storeName,
-        sectionPackArr,
-      });
-    }
   }
   async hasSectionPack<CN extends DbStoreName>(
     dbInfo: DbStoreInfo<CN>
@@ -202,7 +216,21 @@ export class DbUser extends DbSectionsQuerierBase {
       });
     }
   }
-
+  async makeTableRows({
+    dbStoreName,
+    columns,
+  }: {
+    dbStoreName: DbStoreNameByType<"mainIndex">;
+    columns: SectionPack<"column">[];
+  }): Promise<SectionPack<"tableRow">[]> {
+    const tableSolver = CompareTableBuilder.initAsOmniChild();
+    tableSolver.updateColumns(columns);
+    const sources = await this.getSectionPackArr(dbStoreName);
+    for (const source of sources) {
+      tableSolver.addRow(source);
+    }
+    return tableSolver.rowPacks;
+  }
   async getSectionPackArr<DSN extends DbStoreName>(
     dbStoreName: DSN
   ): Promise<DbSectionPack<DSN>[]> {
@@ -245,7 +273,7 @@ export class DbUser extends DbSectionsQuerierBase {
       dbSections,
     });
   }
-  async updateSectionPackChildren<SN extends ChildSectionName<"omniParent">>(
+  async syncSectionPackChildren<SN extends ChildSectionName<"omniParent">>(
     sectionPack: SectionPack<SN>
   ) {
     const headSection = PackBuilderSection.loadAsOmniChild(sectionPack);
@@ -257,13 +285,23 @@ export class DbUser extends DbSectionsQuerierBase {
         const section = sections.section(info);
         for (const childName of section.get.childNames) {
           for (const child of section.children(childName)) {
-            const { sectionName, dbId } = child.get;
-            if (isMainDbStoreSectionName(sectionName)) {
-              const dbStoreName = sectionToMainDbStoreName(sectionName);
-              const childDbInfo = { dbStoreName, dbId };
-              if (await this.hasSectionPack(childDbInfo)) {
-                const childPack = await this.getSectionPack(childDbInfo);
-                child.loadSelf(childPack as any as SectionPack<any>);
+            const getterChild = child.get;
+            if (getterChild.thisIsSectionType("hasIndexStore")) {
+              if (
+                getterChild.valueNext("syncStatus") ===
+                ("autoSyncOn" as AutoSyncStatus)
+              ) {
+                const { sectionName, dbId } = getterChild;
+                const dbStoreName = sectionToMainDbStoreName(sectionName);
+                const childDbInfo = { dbStoreName, dbId };
+                if (await this.hasSectionPack(childDbInfo)) {
+                  const childPack = await this.getSectionPack(childDbInfo);
+                  child.loadSelf(childPack as any as SectionPack<any>);
+                } else {
+                  child.updater
+                    .varb("syncStatus")
+                    .updateValue("autoSyncOff" as AutoSyncStatus);
+                }
               }
             }
             nextInfos.push(child.feInfo);
@@ -328,6 +366,10 @@ type UserNotFoundOptions = {
 type SetSectionPackArrProps<CN extends DbStoreName> = {
   storeName: CN;
   sectionPackArr: DbSectionPack<CN>[];
+};
+
+type DbSectionPackArrs = {
+  [CN in DbStoreName]: DbSectionPack<CN>[];
 };
 
 interface UpdateProps extends QueryParameters {

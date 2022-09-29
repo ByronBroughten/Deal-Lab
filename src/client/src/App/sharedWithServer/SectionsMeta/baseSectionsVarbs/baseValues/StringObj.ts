@@ -42,7 +42,7 @@ export const mStringObj: Record<keyof StringObj, any> = {
 // I'm going to make new update functions for this
 // I'll put them somewhere else, though.
 // I'm not a fan of keeping the updateFns
-// synced with the updateFnNames.
+// autoSyncOn with the updateFnNames.
 
 const stringObjUpdateFns = {
   editorUpdate: () => {},

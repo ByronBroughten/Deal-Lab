@@ -82,10 +82,6 @@ export class AddSolverSection<
     childName: CN,
     options?: AddChildOptions<SN, CN>
   ): void {
-    // if a child is added at a particular index...
-    // it is no longer the youngest.
-    // idx should only pertain to GetterList, though, for youngestChild
-    // not getterSection
     this.defaultAdder.addChild(childName, options);
     const child = this.youngestChild(childName);
     child.finalizeAddAndExtractVarbIds();
