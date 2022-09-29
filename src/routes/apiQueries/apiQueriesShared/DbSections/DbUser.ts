@@ -1,7 +1,7 @@
 import mongoose, { QueryOptions } from "mongoose";
 import { CompareTableBuilder } from "../../../../client/src/App/modules/SectionSolvers/CompareTableBuilder";
 import { GuestAccessSectionPackArrs } from "../../../../client/src/App/sharedWithServer/apiQueriesShared/register";
-import { makeDefaultTablePackArrs } from "../../../../client/src/App/sharedWithServer/defaultMaker/getDefaultMainTableMakers";
+import { getDefaultMainTableMakers } from "../../../../client/src/App/sharedWithServer/defaultMaker/getDefaultMainTableMakers";
 import { VarbName } from "../../../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
 import { VarbValue } from "../../../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsDerived/valueMetaTypes";
 import { ChildSectionName } from "../../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/ChildSectionName";
@@ -30,6 +30,7 @@ import { PackBuilderSection } from "../../../../client/src/App/sharedWithServer/
 import { Obj } from "../../../../client/src/App/sharedWithServer/utils/Obj";
 import { ResStatusError } from "../../../../utils/resError";
 import { DbUserModel, modelPath } from "../../../routesShared/DbUserModel";
+import { feStoreNameS } from "./../../../../client/src/App/sharedWithServer/SectionsMeta/relSectionsDerived/relNameArrs/feStoreNameArrs";
 import { DbSectionsQuerierBase } from "./Bases/DbSectionsQuerierBase";
 import { DbSections } from "./DbSections";
 import {
@@ -45,18 +46,22 @@ export class DbUser extends DbSectionsQuerierBase {
   async exists(): Promise<boolean> {
     return await DbUserModel.exists(this.userFilter);
   }
+  async initMainTablesIfNeeded() {
+    const tableMakers = getDefaultMainTableMakers();
+    for (const tableStoreName of feStoreNameS.arrs.mainTableName) {
+      if ((await this.storeSectionCount(tableStoreName)) !== 1) {
+        await this.loadSectionPackArrs({
+          [tableStoreName]: tableMakers[tableStoreName](),
+        });
+      }
+    }
+  }
   async initUserSectionsIfNeeded(
     guestAccessSections: GuestAccessSectionPackArrs
   ): Promise<void> {
     if (!(await this.guestAccessSectionsAreLoaded)) {
       await this.loadGuestAccessSections(guestAccessSections);
-      await this.initializeMainTables();
     }
-  }
-
-  private async initializeMainTables(): Promise<void> {
-    const defaultTablePackArrs = makeDefaultTablePackArrs();
-    return this.loadSectionPackArrs(defaultTablePackArrs);
   }
   private async loadGuestAccessSections(
     guestAccessSections: GuestAccessSectionPackArrs

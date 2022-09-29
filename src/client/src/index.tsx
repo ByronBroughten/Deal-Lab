@@ -7,10 +7,6 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-
-// change "guestAccessSectionsAreLoaded" value from boolean to string
-// perhaps add "defaultTablesAreInitialized" value
-
 // Make the deal table
 // *feUser and dbUser each have compareTables.
 // *the feUserTables reference their dbStoreName

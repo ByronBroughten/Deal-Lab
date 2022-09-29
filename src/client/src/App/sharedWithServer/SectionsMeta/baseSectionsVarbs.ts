@@ -2,12 +2,12 @@ import { omit } from "lodash";
 import {
   BaseSection,
   baseSectionVarbs,
-  GeneralBaseSectionVarbs
+  GeneralBaseSectionVarbs,
 } from "./baseSectionsVarbs/baseSectionVarbs";
 import { baseVarbs, baseVarbsS } from "./baseSectionsVarbs/baseVarbs";
 import {
   loanVarbsNotInFinancing,
-  savableSectionVarbNames
+  savableSectionVarbNames,
 } from "./baseSectionsVarbs/specialVarbNames";
 import { SectionName, sectionNames } from "./SectionName";
 

@@ -15,6 +15,7 @@ async function getUserData(req: SessionRequest, res: Response) {
     validateGetUserDataReq(req).body;
   const dbUser = await DbUser.initBy("authId", auth.id);
   await dbUser.initUserSectionsIfNeeded(guestAccessSections);
+  await dbUser.initMainTablesIfNeeded();
   const loaded = await dbUser.loadedDbUser();
   loaded.sendLogin(res, activeDeal);
 }
