@@ -46,11 +46,11 @@ export default function ColumnHeader({
 
   return (
     <th>
-      <div className="TableStore-thContent">
+      <div className="CompareTable-thContent">
         {displayName}
         <div ref={colMenuRef}>
           <PlainIconBtn onClick={toggleColMenu}>
-            <IoMdArrowDropdown className="TableStore-columnArrow" />
+            <IoMdArrowDropdown className="CompareTable-columnArrow" />
           </PlainIconBtn>
           {colMenuIsOpen && (
             <SimpleMuiMenu

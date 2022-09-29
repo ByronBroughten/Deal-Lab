@@ -7,19 +7,19 @@ import { useAuthStatus } from "../sharedWithServer/stateClassHooks/useAuthStatus
 import { VariableOption } from "../sharedWithServer/StateEntityGetters/VariableGetterSections";
 import theme from "../theme/Theme";
 import useHowMany from "./appWide/customHooks/useHowMany";
+import ColumnHeader from "./CompareTable/ColumnHeader";
+import IndexRow from "./CompareTable/IndexRow";
 import { MaterialStringEditor } from "./inputs/MaterialStringEditor";
 import VarbAutoComplete from "./inputs/VarbAutoComplete";
-import ColumnHeader from "./TableStore/ColumnHeader";
-import IndexRow from "./TableStore/IndexRow";
 
 interface Props {
   feId: string;
 }
 
-export function TableStore({ feId }: Props) {
+export function CompareTable({ feId }: Props) {
   const table = useTableActor(feId);
   if (!feStoreNameS.is(table.get.selfChildName, "mainTableName")) {
-    throw new Error("TableStore is only for feUser tables");
+    throw new Error("CompareTable is only for feUser tables");
   }
   const { filteredRows } = table;
   const { isAtLeastOne, areNone } = useHowMany(filteredRows);
@@ -27,35 +27,35 @@ export function TableStore({ feId }: Props) {
   const authStatus = useAuthStatus();
 
   return (
-    <Styled className="TableStore-root">
+    <Styled className="CompareTable-root">
       {authStatus === "guest" && (
-        <div className="TableStore-notLoggedIn">
+        <div className="CompareTable-notLoggedIn">
           To view saved analyses, make an account or sign in.
         </div>
       )}
       {auth.isToken && areNone && (
-        <div className="TableStore-areNone">None</div>
+        <div className="CompareTable-areNone">None</div>
       )}
       {auth.isToken && isAtLeastOne && (
-        <div className="TableStore-viewable">
-          <div className="TableStore-titleRow">
-            <h5 className="TableStore-title TableStore-controlRowItem">
+        <div className="CompareTable-viewable">
+          <div className="CompareTable-titleRow">
+            <h5 className="CompareTable-title CompareTable-controlRowItem">
               {"Deals"}
             </h5>
-            <div className="TableStore-controlRow">
+            <div className="CompareTable-controlRow">
               <MaterialStringEditor
                 label="Filter by title"
-                className="TableStore-filterEditor TableStore-controlRowItem"
+                className="CompareTable-filterEditor CompareTable-controlRowItem"
                 feVarbInfo={table.get.varbInfo("titleFilter")}
               />
               <VarbAutoComplete
                 onSelect={(o: VariableOption) => table.addColumn(o.varbInfo)}
                 placeholder="Add column"
-                className="TableStore-addColumnSelector TableStore-controlRowItem"
+                className="CompareTable-addColumnSelector CompareTable-controlRowItem"
               />
             </div>
           </div>
-          <table className="TableStore-table">
+          <table className="CompareTable-table">
             <thead>
               <tr>
                 <ColumnHeader
@@ -100,47 +100,47 @@ const Styled = styled.div`
   overflow: auto;
   align-items: center;
 
-  .TableStore-addColumnSelector {
+  .CompareTable-addColumnSelector {
     .MuiInputBase-root {
       min-width: 130px;
     }
   }
 
-  .TableStore-title {
+  .CompareTable-title {
     font-size: 2rem;
     color: ${theme["gray-700"]};
   }
-  .TableStore-titleRow {
+  .CompareTable-titleRow {
     display: flex;
     align-items: center;
   }
-  .TableStore-controlRow {
+  .CompareTable-controlRow {
     display: flex;
     align-items: flex-start;
   }
 
-  .TableStore-trashBtn {
+  .CompareTable-trashBtn {
     width: 1.1rem;
     height: 1.1rem;
   }
 
-  .TableStore-filterEditor {
+  .CompareTable-filterEditor {
     .DraftTextField-root {
       min-width: 100px;
     }
   }
-  .TableStore-controlRowItem {
+  .CompareTable-controlRowItem {
     margin: ${theme.s2};
   }
 
-  .TableStore-tableCell {
+  .CompareTable-tableCell {
     vertical-align: middle;
   }
-  .TableStore-trashBtn {
+  .CompareTable-trashBtn {
     visibility: hidden;
   }
 
-  .TableStore-viewable {
+  .CompareTable-viewable {
     border-radius: ${theme.br1};
     border: 2px solid ${theme.deal.border};
     padding: ${theme.s2} 0 0 0;
@@ -148,10 +148,10 @@ const Styled = styled.div`
     background: ${theme.deal.light};
   }
 
-  .TableStore-thContent {
+  .CompareTable-thContent {
     display: flex;
   }
-  .TableStore-columnArrow {
+  .CompareTable-columnArrow {
     margin-left: ${theme.s1};
   }
 
@@ -185,7 +185,7 @@ const Styled = styled.div`
     tr {
       :hover {
         background: ${theme.deal.main};
-        .TableStore-trashBtn {
+        .CompareTable-trashBtn {
           visibility: visible;
         }
       }
@@ -205,8 +205,8 @@ const Styled = styled.div`
     vertical-align: top;
   }
 
-  .TableStore-notLoggedIn,
-  .TableStore-areNone {
+  .CompareTable-notLoggedIn,
+  .CompareTable-areNone {
     display: flex;
     justify-content: center;
   }

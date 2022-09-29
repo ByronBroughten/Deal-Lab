@@ -8,15 +8,15 @@ export default function IndexRow(props: UseIndexTableRowActorProps) {
   const indexRow = useIndexTableRowActor(props);
   const title = indexRow.get.value("displayName", "string");
   return (
-    <tr className="TableStore-tableRow">
-      <td className="TableStore-tableCell">{title}</td>
+    <tr className="CompareTable-tableRow">
+      <td className="CompareTable-tableCell">{title}</td>
       {indexRow.cells.map((cell) => {
         const value = cell.value("displayVarb", "string");
-        return <td className="TableStore-tableCell">{value}</td>;
+        return <td className="CompareTable-tableCell">{value}</td>;
       })}
-      <td className="TableStore-tableCell">
+      <td className="CompareTable-tableCell">
         <TrashBtn
-          className="TableStore-trashBtn"
+          className="CompareTable-trashBtn"
           onClick={() => indexRow.deleteSelf()}
         />
       </td>
