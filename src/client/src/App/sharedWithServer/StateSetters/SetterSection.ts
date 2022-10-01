@@ -2,29 +2,33 @@ import { pick } from "lodash";
 import { VarbName } from "../SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
 import { SectionValues } from "../SectionsMeta/baseSectionsDerived/valueMetaTypes";
 import { SwitchEndingKey } from "../SectionsMeta/baseSectionsVarbs/RelSwitchVarb";
+import { ChildValueInfo } from "../SectionsMeta/childSectionsDerived/ChildInfo";
 import {
   ChildName,
   DbChildInfo,
-  FeChildInfo,
+  FeChildInfo
 } from "../SectionsMeta/childSectionsDerived/ChildName";
 import { ChildSectionName } from "../SectionsMeta/childSectionsDerived/ChildSectionName";
 import { ParentNameSafe } from "../SectionsMeta/childSectionsDerived/ParentName";
 import { SectionPack } from "../SectionsMeta/childSectionsDerived/SectionPack";
 import { FeSectionInfo, FeVarbInfo } from "../SectionsMeta/Info";
 import { SectionMeta } from "../SectionsMeta/SectionMeta";
-import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
+import {
+  SectionNameByType,
+  SectionNameType
+} from "../SectionsMeta/SectionNameByType";
 import { SectionOption } from "../StateEntityGetters/VariableGetterSections";
 import { GetterSection } from "../StateGetters/GetterSection";
 import { GetterVarb } from "../StateGetters/GetterVarb";
 import {
   ChildPackInfo,
-  ChildSectionPackArrs,
+  ChildSectionPackArrs
 } from "../StatePackers.ts/PackLoaderSection";
 import { PackMakerSection } from "../StatePackers.ts/PackMakerSection";
 import { SolverSection } from "../StateSolvers/SolverSection";
 import {
   AddChildOptions,
-  UpdaterSection,
+  UpdaterSection
 } from "../StateUpdaters/UpdaterSection";
 import { SetterSectionBase } from "./SetterBases/SetterSectionBase";
 import { SetterSections } from "./SetterSections";
@@ -50,6 +54,11 @@ export class SetterSection<
   }
   get sections(): SetterSections {
     return new SetterSections(this.setterSectionsProps);
+  }
+  isOfType<ST extends SectionNameType>(
+    sectionTypeName: ST
+  ): this is SetterSection<SectionNameByType<ST>> {
+    return this.get.thisIsSectionType(sectionTypeName);
   }
   resetDbId(): void {
     this.update.newDbId();
@@ -89,6 +98,13 @@ export class SetterSection<
       childName,
       feId,
     });
+  }
+  childrenByValue<
+  CN extends ChildName<SN>,
+  VN extends VarbName<ChildSectionName<SN, CN>>
+>(childValueInfo: ChildValueInfo<SN, CN, VN>): SetterSection<ChildSectionName<SN, CN>>[] {
+    const children = this.get.childrenByValue(childValueInfo);
+    return children.map(({ feInfo }) => this.setterSection(feInfo));
   }
   child<CN extends ChildName<SN>>(
     childInfo: FeChildInfo<SN, CN>

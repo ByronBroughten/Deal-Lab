@@ -2,7 +2,7 @@ import { relChildSections } from "../../sharedWithServer/SectionsMeta/relChildSe
 import {
   FeStoreNameByType,
   feStoreNameS,
-} from "../../sharedWithServer/SectionsMeta/relSectionsDerived/relNameArrs/feStoreNameArrs";
+} from "../../sharedWithServer/SectionsMeta/relSectionsDerived/relNameArrs/FeStoreName";
 import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
 import { SetterSection } from "../../sharedWithServer/StateSetters/SetterSection";
 import { StrictOmit } from "../../sharedWithServer/utils/types";
@@ -20,6 +20,34 @@ export class IndexTableRowActor extends SectionActorBase<"tableRow"> {
       ...props,
     });
     this.dbStoreName = this.initDbStoreName();
+  }
+  get parentTable(): SetterSection<"compareTable"> {
+    const parentTable = this.setter.parent;
+    if (this.parentTable.isOfType("compareTable")) {
+      return parentTable as SetterSection<"compareTable">;
+    } else throw new Error("parent is not a compareTable");
+  }
+  get compareRowInfo() {
+    return {
+      childName: "compareRow",
+      varbName: "feId",
+      value: this.get.feId,
+    } as const;
+  }
+  isCompared() {
+    return this.parentTable.get.hasChildByValue(this.compareRowInfo);
+  }
+  toggleCompare() {
+    if (this.isCompared()) {
+      const compareRows = this.parentTable.childrenByValue(this.compareRowInfo);
+      for (const row of compareRows) {
+        row.removeSelf();
+      }
+    } else {
+      this.parentTable.addChild("compareRow", {
+        dbVarbs: { feId: this.get.feId },
+      });
+    }
   }
   get setter() {
     return new SetterSection(this.sectionActorBaseProps);

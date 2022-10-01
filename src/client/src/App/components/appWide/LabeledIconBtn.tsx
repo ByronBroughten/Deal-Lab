@@ -1,7 +1,7 @@
 import { Button } from "@material-ui/core";
 import { transparentize } from "polished";
 import React from "react";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import theme from "../../theme/Theme";
 
 type Props = {
@@ -42,7 +42,7 @@ const Styled = styled(Button)`
   line-height: 1rem;
   font-size: 1rem;
   white-space: nowrap;
-  height: 30px;
+  padding: ${theme.s1} ${theme.s2};
 
   :disabled {
     color: ${transparentize(0.4, theme.softDark)};
@@ -60,10 +60,4 @@ const Styled = styled(Button)`
   :hover {
     background-color: ${theme["gray-500"]};
   }
-
-  /* ${({ disabled }) =>
-    disabled &&
-    css`
-      background-color: ${transparentize(0.13, theme.error.main)};
-    `} */
 `;

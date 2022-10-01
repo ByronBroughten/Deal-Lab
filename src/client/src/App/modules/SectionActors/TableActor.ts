@@ -1,12 +1,15 @@
 // make TableActor
 
+import { makeReq } from "../../sharedWithServer/apiQueriesShared/makeReqAndRes";
 import { VarbName } from "../../sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
 import { InEntityVarbInfo } from "../../sharedWithServer/SectionsMeta/baseSectionsVarbs/baseValues/entities";
+import { DbStoreNameByType } from "../../sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreName";
 import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
 import { PackMakerSection } from "../../sharedWithServer/StatePackers.ts/PackMakerSection";
 import { SetterSection } from "../../sharedWithServer/StateSetters/SetterSection";
 import { SetterTable } from "../../sharedWithServer/StateSetters/SetterTable";
 import { StrictExtract, StrictOmit } from "../../sharedWithServer/utils/types";
+import { CompareTableBuilder } from "../SectionSolvers/CompareTableBuilder";
 import { SectionActorBase, SectionActorBaseProps } from "./SectionActorBase";
 
 class GetterColumn extends GetterSection<"column"> {
@@ -23,22 +26,34 @@ class GetterColumn extends GetterSection<"column"> {
 
 interface TableActorProps
   extends StrictOmit<SectionActorBaseProps<"compareTable">, "sectionName"> {
-  sendTable: () => void;
+  rowSourceName: DbStoreNameByType<"mainIndex">;
 }
 export class TableActor extends SectionActorBase<"compareTable"> {
-  sendTable: () => void;
-  constructor({ sendTable, ...rest }: TableActorProps) {
+  readonly rowSourceName: DbStoreNameByType<"mainIndex">;
+  constructor({ rowSourceName, ...props }: TableActorProps) {
     super({
-      ...rest,
+      ...props,
       sectionName: "compareTable",
     });
-    this.sendTable = sendTable;
+    this.rowSourceName = rowSourceName;
+  }
+  get tableBuilder() {
+    return new CompareTableBuilder(this.get.getterSectionProps);
+  }
+  get tableSetter(): SetterTable {
+    return new SetterTable(this.sectionActorBaseProps);
+  }
+  async getRows() {
+    const res = await this.apiQueries.getTableRows(
+      makeReq({
+        columns: this.tableBuilder.columnPacks,
+        dbStoreName: this.rowSourceName,
+      })
+    );
+    this.tableSetter.updateRows(res.data.tableRowPacks);
   }
   get get(): GetterSection<"compareTable"> {
     return new GetterSection(this.sectionActorBaseProps);
-  }
-  get tableState(): SetterTable {
-    return new SetterTable(this.sectionActorBaseProps);
   }
   get setter() {
     return new SetterSection(this.sectionActorBaseProps);
@@ -48,6 +63,9 @@ export class TableActor extends SectionActorBase<"compareTable"> {
   }
   get rows(): GetterSection<"tableRow">[] {
     return this.get.children("tableRow");
+  }
+  get compareRowProxies(): GetterSection<"proxy">[] {
+    return this.get.children("compareRow");
   }
   get columns(): GetterColumn[] {
     return this.get.children("column").map((col) => {
@@ -66,18 +84,18 @@ export class TableActor extends SectionActorBase<"compareTable"> {
     colIdOrTitle: string | StrictExtract<VarbName<"tableRow">, "displayName">,
     options: { reverse?: boolean } = {}
   ) {
-    this.tableState.sortTableRowIdsByColumn(colIdOrTitle, options);
+    this.tableSetter.sortTableRowIdsByColumn(colIdOrTitle, options);
     // this.sendTable();
   }
   async removeColumn(columnFeId: string) {
-    this.tableState.removeColumn(columnFeId);
+    this.tableSetter.removeColumn(columnFeId);
     // this.sendTable();
   }
   async addColumn(entityInfo: InEntityVarbInfo) {
     const { setter } = this;
     // this is to initialize the setter's "initialSections"
 
-    this.tableState.addColumn(entityInfo);
+    this.tableSetter.addColumn(entityInfo);
     setter.tryAndRevertIfFail(
       () => false
       // sendColumns

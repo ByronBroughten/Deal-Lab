@@ -79,6 +79,7 @@ export const config = {
     userVariables: "/variables",
     userLists: "/additive-lists",
     userOutputs: "/outputs",
+    dealCompare: "/deal-compare",
     authSuccess: "/login-success",
     subscribeSuccess: "/subscription-success",
     analyzer: "/",

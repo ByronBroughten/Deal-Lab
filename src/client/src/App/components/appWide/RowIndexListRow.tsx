@@ -5,26 +5,27 @@ import theme from "./../../theme/Theme";
 import PlainBtn from "./../general/PlainBtn";
 
 type Props = {
+  className?: string;
   displayName: string;
   load: () => void;
   del: () => void;
 };
-export function RowIndexListRow({ displayName, del, load }: Props) {
+export function RowIndexListRow({ displayName, del, load, className }: Props) {
   return (
-    <Styled className="RowIndexRows-entry">
+    <StyledRowIndexRow className={`RowIndexRows-entry ${className ?? ""}`}>
       <PlainBtn className="LoadSectionBtn-root" onClick={load}>
         <span className="LoadSectionBtn-loadText">load</span>
         <span className="LoadSectionBtn-nameText">{displayName}</span>
       </PlainBtn>
       <TrashBtn onClick={del} />
-    </Styled>
+    </StyledRowIndexRow>
   );
 }
 
-const Styled = styled.div`
+export const StyledRowIndexRow = styled.div`
   min-width: 200px;
   display: flex;
-  height: 30px;
+  padding: ${theme.s25} ${theme.s3};
 
   .TrashBtn-root {
     width: 25px;

@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { apiQueries } from "../../modules/apiQueriesClient";
 import usePrompt from "../../modules/customHooks/useBlockerAndPrompt";
 import { SectionArrQuerier } from "../../modules/QueriersBasic/SectionArrQuerier";
-import { FeStoreNameByType } from "../../sharedWithServer/SectionsMeta/relSectionsDerived/relNameArrs/feStoreNameArrs";
+import { FeStoreNameByType } from "../../sharedWithServer/SectionsMeta/relSectionsDerived/relNameArrs/FeStoreName";
 import { SectionsContext } from "../../sharedWithServer/stateClassHooks/useSections";
 import { useSetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useSetterSection";
 import { PackMakerSection } from "../../sharedWithServer/StatePackers.ts/PackMakerSection";

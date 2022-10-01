@@ -1,4 +1,6 @@
+import { CompareTableBuilder } from "../../modules/SectionSolvers/CompareTableBuilder";
 import { InEntityVarbInfo } from "../SectionsMeta/baseSectionsVarbs/baseValues/entities";
+import { SectionPack } from "../SectionsMeta/childSectionsDerived/SectionPack";
 import { DbVarbs } from "../SectionsMeta/childSectionsDerived/SectionPack/RawSection";
 import { GetterSection } from "../StateGetters/GetterSection";
 import { UpdaterSection } from "../StateUpdaters/UpdaterSection";
@@ -8,12 +10,21 @@ import { SetterSection } from "./SetterSection";
 import { SetterTableRow } from "./SetterTableRow";
 
 export class SetterTable extends SetterSectionBase<"compareTable"> {
-  setter = new SetterSection(this.setterSectionProps);
+  get setter() {
+    return new SetterSection(this.setterSectionProps);
+  }
   get get(): GetterSection<"compareTable"> {
     return this.setter.get;
   }
   get updater(): UpdaterSection<"compareTable"> {
     return new UpdaterSection(this.setterSectionProps);
+  }
+  get tableBuilder() {
+    return new CompareTableBuilder(this.get.getterSectionProps);
+  }
+  updateRows(rowPacks: SectionPack<"tableRow">[]) {
+    this.tableBuilder.updateRows(rowPacks);
+    this.setter.setSections();
   }
   column(feId: string): GetterSection<"column"> {
     return this.get.child({

@@ -31,6 +31,9 @@ const defaults = sectionNames.reduce((defaults, sectionName) => {
 export type BaseSectionsVarbs = typeof baseSectionsVarbs;
 export const baseSectionsVarbs = checkBaseSectionsVarbs({
   ...defaults,
+  proxy: baseSectionVarbs({
+    feId: "string",
+  }),
   displayNameItem: baseSectionVarbs({
     displayName: "string",
   }),

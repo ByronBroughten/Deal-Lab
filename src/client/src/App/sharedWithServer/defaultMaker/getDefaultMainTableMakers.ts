@@ -1,7 +1,7 @@
 import { inEntityInfo } from "../SectionsMeta/baseSectionsVarbs/baseValues/InEntityInfoValue";
 import { DbSectionPack } from "../SectionsMeta/childSectionsDerived/DbSectionPack";
 import { SectionPack } from "../SectionsMeta/childSectionsDerived/SectionPack";
-import { FeStoreNameByType } from "../SectionsMeta/relSectionsDerived/relNameArrs/feStoreNameArrs";
+import { FeStoreNameByType } from "../SectionsMeta/relSectionsDerived/relNameArrs/FeStoreName";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
 import { Obj } from "../utils/Obj";
 import { outputNames } from "./makeDefaultOutputList";

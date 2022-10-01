@@ -24,7 +24,7 @@ export function DealOutputSection({
       <MainSectionTitleRow
         {...{
           ...deal.feInfo,
-          pluralName: "Deals",
+          pluralName: "deals",
           dropTop: true,
         }}
       />

@@ -1,7 +1,7 @@
 import { numObj } from "../SectionsMeta/baseSectionsVarbs/baseValues/NumObj";
 import { stringObj } from "../SectionsMeta/baseSectionsVarbs/baseValues/StringObj";
 import { SectionPack } from "../SectionsMeta/childSectionsDerived/SectionPack";
-import { feStoreNameS } from "../SectionsMeta/relSectionsDerived/relNameArrs/feStoreNameArrs";
+import { feStoreNameS } from "../SectionsMeta/relSectionsDerived/relNameArrs/FeStoreName";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
 import { getDefaultMainTableMakers } from "./getDefaultMainTableMakers";
 import { capExValues } from "./makeDefaultFeUser/exampleLists";

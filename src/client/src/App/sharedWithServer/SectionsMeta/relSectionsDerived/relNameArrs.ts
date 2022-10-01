@@ -3,7 +3,7 @@ import { Obj } from "../../utils/Obj";
 import { hasChildSectionNames } from "../childSectionsDerived/ChildName";
 import { SectionName, sectionNames } from "../SectionName";
 import { allSectionTraits } from "../sectionsTraits";
-import { feStoreNameS, hasStoreNameArrs } from "./relNameArrs/feStoreNameArrs";
+import { feStoreNameS, hasStoreNameArrs } from "./relNameArrs/FeStoreName";
 import { tableStoreNameArrs } from "./relNameArrs/tableStoreArrs";
 
 export const relNameArrs = {

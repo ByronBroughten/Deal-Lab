@@ -8,7 +8,7 @@ import theme, { ThemeName, themeSectionNameOrDefault } from "../../theme/Theme";
 import { useMainSectionActor } from "./../../modules/sectionActorHooks/useMainSectionActor";
 import { FeSectionInfo } from "./../../sharedWithServer/SectionsMeta/Info";
 import useHowMany from "./customHooks/useHowMany";
-import { RowIndexListRow } from "./RowIndexListRow";
+import { RowIndexListRow, StyledRowIndexRow } from "./RowIndexListRow";
 
 type Props<SN extends SectionNameByType<"hasIndexStore">> = {
   feInfo: FeSectionInfo<SN>;
@@ -59,11 +59,9 @@ export function RowIndexRows<SN extends SectionNameByType<"hasIndexStore">>({
         </>
       )}
       {!isAtLeastOne && (
-        <div className="RowIndexRows-entry">
-          <div className="DisplayNameSectionList-noneDiv">
-            {noEntriesMessage}
-          </div>
-        </div>
+        <StyledRowIndexRow className={"RowIndexRows-noEntriesRow"}>
+          {noEntriesMessage}
+        </StyledRowIndexRow>
       )}
     </Styled>
   );
@@ -85,12 +83,8 @@ const Styled = styled.div<{ sectionName: ThemeName }>`
     padding: 0 ${theme.s3} 0 ${theme.s3};
   }
 
-  .DisplayNameSectionList-noneDiv {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 250px;
-    height: 30px;
+  .RowIndexRows-noEntriesRow {
+    white-space: nowrap;
     color: ${transparentize(0.4, theme.softDark)};
     background-color: ${transparentize(0.05, theme.error.light)};
   }

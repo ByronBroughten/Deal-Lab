@@ -14,7 +14,7 @@ import {
 import {
   FeStoreNameByType,
   feStoreNameS,
-} from "../../../../client/src/App/sharedWithServer/SectionsMeta/relSectionsDerived/relNameArrs/feStoreNameArrs";
+} from "../../../../client/src/App/sharedWithServer/SectionsMeta/relSectionsDerived/relNameArrs/FeStoreName";
 import { sectionNameS } from "../../../../client/src/App/sharedWithServer/SectionsMeta/SectionNameByType";
 import {
   GetterSectionBase,
@@ -150,12 +150,12 @@ export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
         const sources = this.get.children(dbIndexName);
         feUser.loadDisplayStoreList(feStoreName, sources);
       } else if (feStoreNameS.is(feStoreName, "fullIndex")) {
-        feUser.packBuilder.loadChildren({
+        feUser.packBuilder.replaceChildren({
           childName: feStoreName,
           sectionPacks: this.dbSections.sectionPackArr(feStoreName),
         });
       } else if (feStoreNameS.is(feStoreName, "mainTableName")) {
-        feUser.packBuilder.loadChildren({
+        feUser.packBuilder.replaceChildren({
           childName: feStoreName,
           sectionPacks: this.dbSections.sectionPackArr(feStoreName),
         });

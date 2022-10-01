@@ -1,8 +1,8 @@
+import { Arr } from "../../../utils/Arr";
 import { Obj } from "../../../utils/Obj";
 import { ChildName, getChildNames } from "../../childSectionsDerived/ChildName";
 import { tableRowDbSources } from "../../relChildSections";
 import { allSectionTraits, getSomeSectionTraits } from "../../sectionsTraits";
-import { Arr } from "./../../../utils/Arr";
 
 export const hasStoreNameArrs = {
   hasDisplayIndex: Obj.entryKeysWithPropOfType(

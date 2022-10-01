@@ -19,6 +19,7 @@ import {
   switchNames,
 } from "../SectionsMeta/baseSectionsVarbs/RelSwitchVarb";
 import { ValueTypesPlusAny } from "../SectionsMeta/baseSectionsVarbs/StateVarbTypes";
+import { ChildValueInfo } from "../SectionsMeta/childSectionsDerived/ChildInfo";
 import {
   ChildIdArrsWide,
   ChildName,
@@ -365,6 +366,28 @@ export class GetterSection<
     const child = this.children(childName).find((child) => child.dbId === dbId);
     if (child) return true;
     else return false;
+  }
+  hasChildByValue<
+    CN extends ChildName<SN>,
+    VN extends VarbName<ChildSectionName<SN, CN>>
+  >({ childName, varbName, value }: ChildValueInfo<SN, CN, VN>): boolean {
+    const children = this.children(childName).filter(
+      (child) => child.valueNext(varbName) === value
+    );
+    if (children.length > 0) return true;
+    else return false;
+  }
+  childrenByValue<
+    CN extends ChildName<SN>,
+    VN extends VarbName<ChildSectionName<SN, CN>>
+  >({
+    childName,
+    varbName,
+    value,
+  }: ChildValueInfo<SN, CN, VN>): GetterSection<ChildSectionName<SN, CN>>[] {
+    return this.children(childName).filter(
+      (child) => child.valueNext(varbName) === value
+    );
   }
   childToFeInfo<CN extends ChildName<SN>>({
     childName,

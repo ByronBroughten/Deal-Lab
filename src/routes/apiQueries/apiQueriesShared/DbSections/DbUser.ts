@@ -24,13 +24,13 @@ import {
 } from "../../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreName";
 import { SectionPack } from "../../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/SectionPack";
 import { FeSectionInfo } from "../../../../client/src/App/sharedWithServer/SectionsMeta/Info";
+import { feStoreNameS } from "../../../../client/src/App/sharedWithServer/SectionsMeta/relSectionsDerived/relNameArrs/FeStoreName";
 import { AutoSyncStatus } from "../../../../client/src/App/sharedWithServer/SectionsMeta/relSectionVarbs/relVarbs";
 import { GetterSection } from "../../../../client/src/App/sharedWithServer/StateGetters/GetterSection";
 import { PackBuilderSection } from "../../../../client/src/App/sharedWithServer/StatePackers.ts/PackBuilderSection";
 import { Obj } from "../../../../client/src/App/sharedWithServer/utils/Obj";
 import { ResStatusError } from "../../../../utils/resError";
 import { DbUserModel, modelPath } from "../../../routesShared/DbUserModel";
-import { feStoreNameS } from "./../../../../client/src/App/sharedWithServer/SectionsMeta/relSectionsDerived/relNameArrs/feStoreNameArrs";
 import { DbSectionsQuerierBase } from "./Bases/DbSectionsQuerierBase";
 import { DbSections } from "./DbSections";
 import {
@@ -228,13 +228,13 @@ export class DbUser extends DbSectionsQuerierBase {
     dbStoreName: DbStoreNameByType<"mainIndex">;
     columns: SectionPack<"column">[];
   }): Promise<SectionPack<"tableRow">[]> {
-    const tableSolver = CompareTableBuilder.initAsOmniChild();
-    tableSolver.updateColumns(columns);
+    const tableBuilder = CompareTableBuilder.initAsOmniChild();
+    tableBuilder.updateColumns(columns);
     const sources = await this.getSectionPackArr(dbStoreName);
     for (const source of sources) {
-      tableSolver.addRow(source);
+      tableBuilder.createRow(source);
     }
-    return tableSolver.rowPacks;
+    return tableBuilder.rowPacks;
   }
   async getSectionPackArr<DSN extends DbStoreName>(
     dbStoreName: DSN
@@ -268,7 +268,7 @@ export class DbUser extends DbSectionsQuerierBase {
     const dbStore = PackBuilderSection.initAsOmniChild("dbStore");
     for (const childName of dbStoreNames) {
       const sectionPacks = dbSections.sectionPackArr(childName);
-      dbStore.loadChildren({
+      dbStore.replaceChildren({
         childName,
         sectionPacks,
       });

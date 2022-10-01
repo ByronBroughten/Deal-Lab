@@ -23,13 +23,19 @@ export class CompareTableBuilder extends UpdaterSectionBase<"compareTable"> {
   get get(): GetterSection<"compareTable"> {
     return new GetterSection(this.getterSectionProps);
   }
-  updateColumns(columns: SectionPack<"column">[]): void {
-    this.builder.loadChildren({
+  updateColumns(columnPacks: SectionPack<"column">[]): void {
+    this.builder.replaceChildren({
       childName: "column",
-      sectionPacks: columns,
+      sectionPacks: columnPacks,
     });
   }
-  addRow(sourcePack: SectionPackByType<"hasIndexStore">): void {
+  updateRows(rowPacks: SectionPack<"tableRow">[]): void {
+    this.builder.replaceChildren({
+      childName: "tableRow",
+      sectionPacks: rowPacks,
+    });
+  }
+  createRow(sourcePack: SectionPackByType<"hasIndexStore">): void {
     const source = PackBuilderSection.loadAsOmniChild(sourcePack).get;
     const displayName = source.valueNext("displayName").mainText;
     const row = this.builder.addAndGetChild("tableRow", {
@@ -51,6 +57,9 @@ export class CompareTableBuilder extends UpdaterSectionBase<"compareTable"> {
         },
       });
     }
+  }
+  get columnPacks(): SectionPack<"column">[] {
+    return this.builder.makeChildPackArrs("column");
   }
   get rowPacks(): SectionPack<"tableRow">[] {
     return this.builder.makeChildPackArrs("tableRow");

@@ -141,9 +141,10 @@ export class PackBuilderSection<
     }
     return children;
   }
-  loadChildren<CN extends ChildName<SN>, CT extends ChildSectionName<SN, CN>>(
-    childArrPack: ChildArrPack<SN, CN, CT>
-  ) {
+  replaceChildren<
+    CN extends ChildName<SN>,
+    CT extends ChildSectionName<SN, CN>
+  >(childArrPack: ChildArrPack<SN, CN, CT>) {
     this.loader.loadChildSectionPackArr(childArrPack);
   }
   loadSelf(sectionPack: SectionPack<SN>) {

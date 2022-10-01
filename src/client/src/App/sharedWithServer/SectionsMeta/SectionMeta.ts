@@ -21,6 +21,7 @@ import {
   getDescendantNames,
 } from "./childSectionsDerived/DescendantSectionName";
 import { DbVarbs } from "./childSectionsDerived/SectionPack/RawSection";
+import { relChildSections, SectionRelChildren } from "./relChildSections";
 import {
   CorePropName,
   sectionMetasCore,
@@ -132,6 +133,9 @@ export class SectionMeta<SN extends SectionName> {
     };
     const childNames = csnsToCns[childSectionName] ?? [];
     return childNames as ChildSectionNameName<SN, CT>[];
+  }
+  get relChildren(): SectionRelChildren<SN> {
+    return relChildSections[this.sectionName];
   }
   get varbMetas(): VarbMetas<SN> {
     return this.props.varbMetas;

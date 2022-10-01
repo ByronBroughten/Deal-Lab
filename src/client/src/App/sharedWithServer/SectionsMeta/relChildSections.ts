@@ -6,7 +6,7 @@ import {
 } from "./childSectionsDerived/ChildName";
 import { ChildSectionNameName } from "./childSectionsDerived/ChildSectionName";
 import { dbStoreNames } from "./childSectionsDerived/DbStoreName";
-import { FeStoreName } from "./relSectionsDerived/relNameArrs/feStoreNameArrs";
+import { FeStoreName } from "./relSectionsDerived/relNameArrs/FeStoreName";
 import { SectionName, sectionNames } from "./SectionName";
 
 export const tableRowDbSources = Arr.extractStrict(dbStoreNames, [
@@ -119,6 +119,7 @@ export const relChildSections = makeRelChildSections({
 });
 
 type RelChildSections = typeof relChildSections;
+export type SectionRelChildren<SN extends SectionName> = RelChildSections[SN];
 
-export type FeUserDbIndex<SN extends FeStoreName> =
-  RelChildSections["feUser"][SN]["dbIndexName"];
+export type FeUserDbIndex<CN extends FeStoreName> =
+  SectionRelChildren<"feUser">[CN]["dbIndexName"];

@@ -4,6 +4,7 @@ import { Route, Routes } from "react-router-dom";
 import styled from "styled-components";
 import { getSuperTokensRoutesForReactRouterDom } from "supertokens-auth-react";
 import { ActiveDeal } from "./App/components/ActiveDeal";
+import { FeUserMainTablePage } from "./App/components/FeUserMainTablePage";
 import NotFound from "./App/components/general/NotFound";
 import { NavBar } from "./App/components/NavBar";
 import { UserAdditiveListPage } from "./App/components/UserAdditiveListPage";
@@ -35,6 +36,10 @@ export function Main() {
         <Route
           path={feRoutes.authSuccess}
           element={<ActiveDeal feId={activeDealId} loginSuccess={true} />}
+        />
+        <Route
+          path={feRoutes.dealCompare}
+          element={<FeUserMainTablePage mainTableName={"dealMainTable"} />}
         />
         <Route path="/not-found" element={<NotFound />} />
         <Route path={"/"} element={<ActiveDeal feId={activeDealId} />} />
