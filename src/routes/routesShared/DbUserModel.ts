@@ -47,11 +47,11 @@ function makeMongooseUserSchema(): Schema<Record<DbStoreName, any>> {
 }
 function monSectionPack<SN extends DbSectionName>(sectionName: SN) {
   const schemaFrame: Record<keyof SectionPack, any> = {
+    dbId: monSchemas.reqId,
     sectionName: {
       ...monSchemas.reqString,
       // validate: (v: any) => v === sectionName,
     },
-    dbId: monSchemas.reqDbId,
     rawSections: monRawSections(sectionName),
   };
   return new Schema(schemaFrame);
@@ -69,8 +69,9 @@ function monRawSections<SN extends DbSectionName>(
 }
 function monRawSection<SN extends SectionName>(sectionName: SN): Schema<any> {
   const schemaFrame: Record<keyof RawSection, any> = {
-    dbId: monSchemas.reqDbId,
-    childDbIds: monChildDbIds(sectionName),
+    spNum: monSchemas.reqNumber,
+    dbId: monSchemas.reqId,
+    childSpNums: monChildSpNums(sectionName),
     dbVarbs: monDbVarbs(sectionName),
   };
   return new Schema(schemaFrame);
@@ -85,10 +86,10 @@ function monDbVarbs<SN extends SectionName>(sectionName: SN): Schema<any> {
   }, {} as Record<string, any>);
   return new Schema(frame);
 }
-function monChildDbIds<SN extends SectionName>(sectionName: SN): Schema<any> {
+function monChildSpNums<SN extends SectionName>(sectionName: SN): Schema<any> {
   const childNames = getChildNames(sectionName);
   const frame = childNames.reduce((childIds, childName) => {
-    childIds[childName] = [monSchemas.reqString];
+    childIds[childName] = [monSchemas.reqNumber];
     return childIds;
   }, {} as Record<ChildName<SN>, any>);
   return new Schema(frame);

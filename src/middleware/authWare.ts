@@ -7,7 +7,7 @@ export function getAuthWare() {
   return [verifySession(), standardizeAuthWare];
 }
 
-function standardizeAuthWare(
+async function standardizeAuthWare(
   req: SessionRequest,
   _: Response,
   next: NextFunction

@@ -7,31 +7,26 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-// Make the deal table
-// *feUser and dbUser each have compareTables.
-// *the feUserTables reference their dbStoreName
+// An issue arises when I remove the dbUser while there is still
+// an authUser
 
-// - On register, default comparableTables are saved (without any rows)
-// - On login, the user's saved compareTable is loaded from the dbUser to the feUser
+// Hide Management initially
+// - Make it start out without a mgmt
+// - Make ManagementGeneral have an "Add Management Costs" button
+// - Make each Management removable
 
-// - I click the link to compare deals
-// - The component takes the feStore compareTable name
+// Hide Deal initially
+// - Add a "Calculate Deal Outputs" button;
+//   - When clicked it shows deal
 
-// - the feStore columns and source dbStoreName are sent
-// - The sources are loaded from the db
-// - The table's rows are generated from the columns and sent to the front-end
+// Make the mainSection tables
+// - Reveal the deal table (and perhaps the others)
 // - the front-end gets the rows and deletes proxies that are no longer relevant
-// - whenever a change is made to the columns or proxies, the fe compareTable
-//   is saved to the db compareTable without the rows
-
-// - Take a dbStoreName, or columnStoreName, grab the columns from the db, generate the rows
-//   and send the table.
-// - In addition to columns, you also might want to save what is being compared
-// - Show things as they are according to whether they autoSyncOn
-
-// each rawSection needs an feId, except the head, which should have a random one.
-// the top level sectionPack, and the rawSections, need childFeIds instead of childDbIds
-// Everything else should remain the same about these
+// - whenever a change is made to the columns or to the row order, the compareTable
+//   saves to the db
+// - perhaps whenever a change is made to the proxies, the compareTable saves
+// - Load rows according to whether autoSync is On
+// - Get rid of the ability to delete from the compare page
 
 // DeBug these operations
 // copying

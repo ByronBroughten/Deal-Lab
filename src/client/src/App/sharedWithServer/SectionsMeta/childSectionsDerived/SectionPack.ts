@@ -4,8 +4,8 @@ import { SectionName, zSectionName } from "../SectionName";
 import { RawSections, zRawSections } from "./SectionPack/RawSection";
 
 export type SectionPack<SN extends SectionName = SectionName> = {
-  sectionName: SN;
   dbId: string;
+  sectionName: SN;
   rawSections: RawSections<SN>;
 };
 
@@ -15,8 +15,8 @@ export type SectionArrPack<SN extends SectionName> = {
 };
 
 const zRawSectionPackFrame: Record<keyof SectionPack, any> = {
-  sectionName: zSectionName,
   dbId: zS.nanoId,
+  sectionName: zSectionName,
   rawSections: zRawSections,
 };
 export const zRawSectionPack = z.object(zRawSectionPackFrame);

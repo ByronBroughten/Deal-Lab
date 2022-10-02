@@ -56,8 +56,8 @@ export class MainSectionSolver<
     } else {
       let sectionPack = this.packMaker.makeSectionPack();
       let { asSavedPack } = this;
-      sectionPack = this.feUserSolver.removeSavedChildren(sectionPack);
-      asSavedPack = this.feUserSolver.removeSavedChildren(asSavedPack);
+      sectionPack = this.feUserSolver.prepForCompare(sectionPack);
+      asSavedPack = this.feUserSolver.prepForCompare(asSavedPack);
       if (isEqual(sectionPack, asSavedPack)) {
         return "changesSynced";
       } else {

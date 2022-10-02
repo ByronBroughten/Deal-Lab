@@ -57,7 +57,7 @@ export async function deleteUserTotally(dbUser: LoadedDbUser): Promise<void> {
   await DbUserModel.deleteOne({ _id: dbUser.userId });
 }
 
-async function deleteAuthUser(authId: string) {
+export async function deleteAuthUser(authId: string) {
   await revokeAllSessionsForUser(authId);
   await deleteUser(authId);
 }

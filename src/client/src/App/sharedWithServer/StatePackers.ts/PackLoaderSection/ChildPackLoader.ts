@@ -1,11 +1,11 @@
 import { pick } from "lodash";
-import {
-  ChildName,
-  DbChildInfo,
-} from "../../SectionsMeta/childSectionsDerived/ChildName";
+import { ChildName } from "../../SectionsMeta/childSectionsDerived/ChildName";
 import { ChildSectionName } from "../../SectionsMeta/childSectionsDerived/ChildSectionName";
 import { SectionPack } from "../../SectionsMeta/childSectionsDerived/SectionPack";
-import { OneRawSection } from "../../SectionsMeta/childSectionsDerived/SectionPack/RawSection";
+import {
+  OneRawSection,
+  SpChildInfo,
+} from "../../SectionsMeta/childSectionsDerived/SectionPack/RawSection";
 import { SectionNameByType } from "../../SectionsMeta/SectionNameByType";
 import {
   GetterSectionBase,
@@ -23,7 +23,7 @@ interface ChildPackLoaderProps<
   CN extends ChildName<SN>
 > extends GetterSectionProps<SN> {
   sectionPack: SectionPack;
-  childDbInfo: DbChildInfo<SN, CN>;
+  spChildInfo: SpChildInfo<SN, CN>;
 }
 
 export class ChildPackLoader<
@@ -32,22 +32,22 @@ export class ChildPackLoader<
   CT extends ChildSectionName<SN, CN> = ChildSectionName<SN, CN>
 > extends GetterSectionBase<SN> {
   sectionPack: SectionPack;
-  childDbInfo: DbChildInfo<SN, CN> & { idx?: number };
+  spChildInfo: SpChildInfo<SN, CN> & { idx?: number };
   updaterSection: UpdaterSection<SN>;
   get: GetterSection<SN>;
   constructor({
     sectionPack,
-    childDbInfo,
+    spChildInfo,
     ...props
   }: ChildPackLoaderProps<SN, CN>) {
     super(props);
     this.sectionPack = sectionPack;
-    this.childDbInfo = childDbInfo;
+    this.spChildInfo = spChildInfo;
     this.updaterSection = new UpdaterSection(props);
     this.get = new GetterSection(props);
   }
   get childName(): CN {
-    return this.childDbInfo.childName;
+    return this.spChildInfo.childName;
   }
   get childType(): CT {
     return this.get.meta.childType(this.childName) as CT;
@@ -57,18 +57,19 @@ export class ChildPackLoader<
   }
   get childRawSection(): OneRawSection<CT> {
     const rawSection = this.childRawSectionList.find(
-      ({ dbId }) => dbId === this.childDbInfo.dbId
+      ({ spNum }) => spNum === this.spChildInfo.spNum
     );
     if (rawSection) return rawSection;
-    else
+    else {
       throw new Error(
-        `No rawSection found with childType ${this.childType} and dbId ${this.childDbInfo.dbId}`
+        `No rawSection found with childType ${this.childType} and spNum ${this.spChildInfo.spNum}`
       );
+    }
   }
   loadChild() {
     this.updaterSection.addChild(this.childName, {
       ...pick(this.childRawSection, ["dbId", "dbVarbs"]),
-      idx: this.childDbInfo.idx,
+      idx: this.spChildInfo.idx,
     } as AddChildOptions<any>);
     const { feId } = this.get.youngestChild(this.childName);
     this.loadChildChildren(feId);
@@ -77,15 +78,12 @@ export class ChildPackLoader<
     const child = this.getterChild(childFeId);
     const { childNames } = child;
     for (const childName of childNames) {
-      const dbIds = this.childChildrenDbIds(childName);
-      if (!Array.isArray(dbIds)) {
-        throw new Error(`dbIds should be an array but is this: ${dbIds}`);
-      }
-      for (const dbId of dbIds) {
+      const spNums = this.childChildrenSpNums(childName);
+      for (const spNum of spNums) {
         const childPackLoader = this.childPackLoader({
           childFeId,
-          childDbInfo: {
-            dbId,
+          childChildSpInfo: {
+            spNum,
             childName,
           },
         });
@@ -101,33 +99,30 @@ export class ChildPackLoader<
       feId: childFeId,
     });
   }
-  private childChildrenDbIds(
+  private childChildrenSpNums(
     childName: ChildName<ChildSectionName<SN, CN>>
-  ): string[] {
-    const { childDbIds } = this.childRawSection;
-    const savedDbIdKeys = Obj.keys(childDbIds);
-    if (savedDbIdKeys.includes(childName as any)) {
-      return childDbIds[childName as keyof typeof childDbIds];
+  ): number[] {
+    const { childSpNums } = this.childRawSection;
+    const savedFeIdKeys = Obj.keys(childSpNums);
+    if (savedFeIdKeys.includes(childName as any)) {
+      return childSpNums[childName as keyof typeof childSpNums];
     } else {
       return [];
     }
   }
   childPackLoader({
     childFeId,
-    childDbInfo,
+    childChildSpInfo,
   }: {
     childFeId: string;
-    childDbInfo: {
-      dbId: string;
-      childName: string;
-    };
+    childChildSpInfo: SpChildInfo<any, any>;
   }) {
     return new ChildPackLoader({
       sectionName: this.childType,
       feId: childFeId,
       sectionsShare: this.sectionsShare,
       sectionPack: this.sectionPack,
-      childDbInfo: childDbInfo as any,
+      spChildInfo: childChildSpInfo,
     });
   }
 }

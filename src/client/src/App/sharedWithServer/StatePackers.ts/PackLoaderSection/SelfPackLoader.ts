@@ -1,10 +1,10 @@
 import { SectionValues } from "../../SectionsMeta/baseSectionsDerived/valueMetaTypes";
-import {
-  ChildName,
-  DbChildInfo,
-} from "../../SectionsMeta/childSectionsDerived/ChildName";
+import { ChildName } from "../../SectionsMeta/childSectionsDerived/ChildName";
 import { SectionPack } from "../../SectionsMeta/childSectionsDerived/SectionPack";
-import { OneRawSection } from "../../SectionsMeta/childSectionsDerived/SectionPack/RawSection";
+import {
+  OneRawSection,
+  SpChildInfo,
+} from "../../SectionsMeta/childSectionsDerived/SectionPack/RawSection";
 import {
   SectionNameByType,
   sectionNameS,
@@ -51,13 +51,13 @@ export class SelfPackLoader<
   addSectionPackChildren() {
     if (this.thisHasChildren()) {
       const { childNames } = this.get;
-      let { childDbIds } = this.headRawSection;
+      let { childSpNums } = this.headRawSection;
       for (const childName of childNames) {
-        if (childDbIds[childName] === undefined) childDbIds[childName] = [];
-        for (const dbId of childDbIds[childName]) {
+        if (childSpNums[childName] === undefined) childSpNums[childName] = [];
+        for (const spNum of childSpNums[childName]) {
           const childPackLoader = this.childPackLoader({
             childName,
-            dbId,
+            spNum,
           });
           childPackLoader.loadChild();
         }
@@ -65,12 +65,12 @@ export class SelfPackLoader<
     }
   }
   childPackLoader<CN extends ChildName<SN>>(
-    childDbInfo: DbChildInfo<SN, CN>
+    spChildInfo: SpChildInfo<SN, CN>
   ): ChildPackLoader<SN, CN> {
     return new ChildPackLoader({
       ...this.getterSectionProps,
-      sectionPack: this.sectionPack as any as SectionPack,
-      childDbInfo,
+      sectionPack: this.sectionPack as SectionPack<any>,
+      spChildInfo,
     });
   }
 }

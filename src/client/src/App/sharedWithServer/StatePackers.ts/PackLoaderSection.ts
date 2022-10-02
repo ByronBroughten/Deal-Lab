@@ -80,10 +80,10 @@ export class PackLoaderSection<
   ): void {
     const childPackLoader = new ChildPackLoader({
       ...this.getterSectionProps,
-      sectionPack: sectionPack as any as SectionPack,
-      childDbInfo: {
+      sectionPack: sectionPack as SectionPack<any>,
+      spChildInfo: {
         childName,
-        dbId: sectionPack.dbId,
+        spNum: 0,
         ...options,
       },
     });

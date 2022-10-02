@@ -1,4 +1,5 @@
 import {
+  ChildIdArrsWide,
   ChildName,
   FeChildInfo,
 } from "../SectionsMeta/childSectionsDerived/ChildName";
@@ -6,13 +7,17 @@ import { ChildSectionName } from "../SectionsMeta/childSectionsDerived/ChildSect
 import { ChildSectionPack } from "../SectionsMeta/childSectionsDerived/ChildSectionPack";
 import { SectionPack } from "../SectionsMeta/childSectionsDerived/SectionPack";
 import {
+  ChildSpNums,
   OneRawSection,
   RawSections,
 } from "../SectionsMeta/childSectionsDerived/SectionPack/RawSection";
 import { FeSectionInfo } from "../SectionsMeta/Info";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
-import { GetterSectionBase } from "../StateGetters/Bases/GetterSectionBase";
+import {
+  GetterSectionBase,
+  GetterSectionProps,
+} from "../StateGetters/Bases/GetterSectionBase";
 import { GetterSection } from "../StateGetters/GetterSection";
 import { StateSections } from "../StateSections/StateSections";
 import { Obj } from "../utils/Obj";
@@ -28,6 +33,28 @@ type MakeFromSectionsProps<SN extends SectionName> = {
 export class PackMakerSection<
   SN extends SectionNameByType
 > extends GetterSectionBase<SN> {
+  private sectionCount: number;
+  private feIdToNum: Record<string, number>;
+  constructor(props: GetterSectionProps<SN>) {
+    super(props);
+    this.sectionCount = 0;
+    this.feIdToNum = {};
+  }
+  private reset() {
+    this.sectionCount = 0;
+    this.feIdToNum = {};
+  }
+  private addSpNum(feId: string): void {
+    this.feIdToNum[feId] = this.sectionCount;
+    this.sectionCount += 1;
+  }
+  private getSpNum(feId: string): number {
+    const ids = Obj.keys(this.feIdToNum);
+    if (!ids.includes(feId)) {
+      this.addSpNum(feId);
+    }
+    return this.feIdToNum[feId];
+  }
   get get(): GetterSection<SN> {
     return new GetterSection(this.getterSectionProps);
   }
@@ -41,11 +68,14 @@ export class PackMakerSection<
     });
   }
   makeSectionPack(): SectionPack<SN> {
-    return {
-      sectionName: this.sectionName,
+    this.addSpNum(this.get.feId);
+    const sectionPack = {
       dbId: this.get.dbId,
+      sectionName: this.sectionName,
       rawSections: this.rawDescendantSections(),
     };
+    this.reset();
+    return sectionPack;
   }
   makeChildTypePackArrs<CN extends ChildName<SN>>(
     childNames: CN[]
@@ -105,14 +135,24 @@ export class PackMakerSection<
       return this.makeRawSection({ sectionName, feId });
     });
   }
-  private makeRawSection<S extends SectionNameByType>(
+  private makeRawSection<S extends SectionName>(
     feInfo: FeSectionInfo<S>
   ): OneRawSection<S> {
-    const { dbId, varbs, allChildDbIds } = this.get.getterSection(feInfo);
+    const { feId, dbId, varbs, allChildFeIds } = this.get.getterSection(feInfo);
     return {
+      spNum: this.getSpNum(feId),
       dbId,
       dbVarbs: varbs.dbVarbs,
-      childDbIds: allChildDbIds,
+      childSpNums: this.childFeIdsToSpNums(allChildFeIds),
     };
+  }
+  private childFeIdsToSpNums<S extends SectionName>(
+    childFeIds: ChildIdArrsWide<S>
+  ): ChildSpNums<S> {
+    return Obj.keys(childFeIds).reduce((childSpNums, childName) => {
+      const feIds = childFeIds[childName];
+      childSpNums[childName] = feIds.map((feId) => this.getSpNum(feId));
+      return childSpNums;
+    }, {} as ChildSpNums<S>);
   }
 }

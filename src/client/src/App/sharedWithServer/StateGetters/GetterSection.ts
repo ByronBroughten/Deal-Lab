@@ -543,19 +543,19 @@ export class GetterSection<
       );
   }
 
-  childDbIds<CN extends ChildName<SN>>(childName: CN): string[] {
+  childrenDbIds<CN extends ChildName<SN>>(childName: CN): string[] {
     return this.children(childName).map(({ dbId }) => dbId);
   }
   get allChildDbIds(): ChildIdArrsWide<SN> {
     const { allChildFeIds } = this;
     return Obj.entries(allChildFeIds).reduce(
-      (childDbIds, [childName, idArr]) => {
+      (allChildDbIds, [childName, idArr]) => {
         const sectionName = this.meta.childType(childName);
         const dbIds = idArr.map(
           (feId) => this.sections.section({ sectionName, feId }).dbId
         );
-        childDbIds[childName] = dbIds;
-        return childDbIds;
+        allChildDbIds[childName] = dbIds;
+        return allChildDbIds;
       },
       {} as ChildIdArrsWide<SN>
     );

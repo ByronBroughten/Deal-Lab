@@ -80,7 +80,7 @@ export class FeUserSolver extends SolverSectionBase<"feUser"> {
       ...this.get.onlyChild(sectionName).feInfo,
     }) as DisplayIndexSolver<any>;
   }
-  removeSavedChildren<SN extends ChildSectionName<"omniParent">>(
+  prepForCompare<SN extends ChildSectionName<"omniParent">>(
     sectionPack: SectionPack<SN>
   ): SectionPack<SN> {
     const headSection = PackBuilderSection.loadAsOmniChild(sectionPack);
@@ -92,7 +92,6 @@ export class FeUserSolver extends SolverSectionBase<"feUser"> {
         const section = sections.section(info);
         for (const childName of section.get.childNames) {
           for (const child of section.children(childName)) {
-            const { sectionName, dbId } = child.get;
             const getterChild = child.get;
             if (getterChild.thisIsSectionType("hasIndexStore")) {
               if (
