@@ -60,7 +60,9 @@ export function RowIndexRows<SN extends SectionNameByType<"hasIndexStore">>({
       )}
       {!isAtLeastOne && (
         <StyledRowIndexRow className={"RowIndexRows-noEntriesRow"}>
-          {noEntriesMessage}
+          <span className="RowIndexRows-noEntriesMessage">
+            {noEntriesMessage}
+          </span>
         </StyledRowIndexRow>
       )}
     </Styled>
@@ -87,6 +89,9 @@ const Styled = styled.div<{ sectionName: ThemeName }>`
     white-space: nowrap;
     color: ${transparentize(0.4, theme.softDark)};
     background-color: ${transparentize(0.05, theme.error.light)};
+  }
+  .RowIndexRows-noEntriesMessage {
+    padding: ${theme.s25} ${theme.s3};
   }
 
   .RowIndexRows-trashBtn {

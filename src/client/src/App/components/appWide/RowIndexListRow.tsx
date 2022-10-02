@@ -25,8 +25,7 @@ export function RowIndexListRow({ displayName, del, load, className }: Props) {
 export const StyledRowIndexRow = styled.div`
   min-width: 200px;
   display: flex;
-  padding: ${theme.s25} ${theme.s3};
-
+  padding: 0;
   .TrashBtn-root {
     width: 25px;
   }

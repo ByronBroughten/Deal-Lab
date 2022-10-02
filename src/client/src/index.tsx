@@ -7,9 +7,6 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-// An issue arises when I remove the dbUser while there is still
-// an authUser
-
 // Hide Management initially
 // - Make it start out without a mgmt
 // - Make ManagementGeneral have an "Add Management Costs" button
@@ -27,12 +24,6 @@ AppRegistry.runApplication("App", {
 // - perhaps whenever a change is made to the proxies, the compareTable saves
 // - Load rows according to whether autoSync is On
 // - Get rid of the ability to delete from the compare page
-
-// DeBug these operations
-// copying
-// removing (a saved section)
-// creating new
-// deleting
 
 // - When getSection is used, the section will be loaded as it was saved in the index
 // - If it is no longer in the index, its sync will simply be set to "autoSyncOff"
