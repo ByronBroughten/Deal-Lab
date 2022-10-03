@@ -34,6 +34,25 @@ export class CompareTableBuilder extends UpdaterSectionBase<"compareTable"> {
       childName: "tableRow",
       sectionPacks: rowPacks,
     });
+    this.removeUnusedCompareRows();
+  }
+
+  private removeUnusedCompareRows() {
+    const compareRows = this.builder.children("compareRow");
+    for (const row of compareRows) {
+      if (!this.hasRowByDbId(row.get.valueNext("dbId"))) {
+        this.builder.removeChild({
+          childName: "compareRow",
+          feId: row.feId,
+        });
+      }
+    }
+  }
+  hasRowByDbId(dbId: string): boolean {
+    return this.get.hasChildByDbInfo({
+      childName: "tableRow",
+      dbId,
+    });
   }
   createRow(sourcePack: SectionPackByType<"hasIndexStore">): void {
     const source = PackBuilderSection.loadAsOmniChild(sourcePack).get;

@@ -64,8 +64,11 @@ export class TableActor extends SectionActorBase<"compareTable"> {
   get rows(): GetterSection<"tableRow">[] {
     return this.get.children("tableRow");
   }
-  get compareRowProxies(): GetterSection<"proxy">[] {
-    return this.get.children("compareRow");
+  get compareRowProxies(): GetterSection<"proxyStoreItem">[] {
+    const compareRows = this.get.children("compareRow");
+    return compareRows.filter((row) =>
+      this.tableBuilder.hasRowByDbId(row.valueNext("dbId"))
+    );
   }
   get columns(): GetterColumn[] {
     return this.get.children("column").map((col) => {
@@ -75,11 +78,17 @@ export class TableActor extends SectionActorBase<"compareTable"> {
   get filteredRows() {
     const titleFilter = this.get.value("titleFilter", "string");
     return this.rows.filter((row) => {
-      return row.value("displayName", "string").includes(titleFilter);
+      const passesTitleFilter = row
+        .value("displayName", "string")
+        .includes(titleFilter);
+      const passesProxyFilter = !this.get.hasChildByValue({
+        childName: "compareRow",
+        varbName: "dbId",
+        value: row.dbId,
+      });
+      return passesTitleFilter && passesProxyFilter;
     });
   }
-  // do I need to save the order of the sorted table rows?
-  // I guess I might as well
   async sortRows(
     colIdOrTitle: string | StrictExtract<VarbName<"tableRow">, "displayName">,
     options: { reverse?: boolean } = {}

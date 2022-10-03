@@ -6,7 +6,7 @@ import { ChildValueInfo } from "../SectionsMeta/childSectionsDerived/ChildInfo";
 import {
   ChildName,
   DbChildInfo,
-  FeChildInfo
+  FeChildInfo,
 } from "../SectionsMeta/childSectionsDerived/ChildName";
 import { ChildSectionName } from "../SectionsMeta/childSectionsDerived/ChildSectionName";
 import { ParentNameSafe } from "../SectionsMeta/childSectionsDerived/ParentName";
@@ -15,20 +15,20 @@ import { FeSectionInfo, FeVarbInfo } from "../SectionsMeta/Info";
 import { SectionMeta } from "../SectionsMeta/SectionMeta";
 import {
   SectionNameByType,
-  SectionNameType
+  SectionNameType,
 } from "../SectionsMeta/SectionNameByType";
 import { SectionOption } from "../StateEntityGetters/VariableGetterSections";
 import { GetterSection } from "../StateGetters/GetterSection";
 import { GetterVarb } from "../StateGetters/GetterVarb";
 import {
   ChildPackInfo,
-  ChildSectionPackArrs
+  ChildSectionPackArrs,
 } from "../StatePackers.ts/PackLoaderSection";
 import { PackMakerSection } from "../StatePackers.ts/PackMakerSection";
 import { SolverSection } from "../StateSolvers/SolverSection";
 import {
   AddChildOptions,
-  UpdaterSection
+  UpdaterSection,
 } from "../StateUpdaters/UpdaterSection";
 import { SetterSectionBase } from "./SetterBases/SetterSectionBase";
 import { SetterSections } from "./SetterSections";
@@ -58,7 +58,7 @@ export class SetterSection<
   isOfType<ST extends SectionNameType>(
     sectionTypeName: ST
   ): this is SetterSection<SectionNameByType<ST>> {
-    return this.get.thisIsSectionType(sectionTypeName);
+    return this.get.isSectionType(sectionTypeName);
   }
   resetDbId(): void {
     this.update.newDbId();
@@ -100,9 +100,11 @@ export class SetterSection<
     });
   }
   childrenByValue<
-  CN extends ChildName<SN>,
-  VN extends VarbName<ChildSectionName<SN, CN>>
->(childValueInfo: ChildValueInfo<SN, CN, VN>): SetterSection<ChildSectionName<SN, CN>>[] {
+    CN extends ChildName<SN>,
+    VN extends VarbName<ChildSectionName<SN, CN>>
+  >(
+    childValueInfo: ChildValueInfo<SN, CN, VN>
+  ): SetterSection<ChildSectionName<SN, CN>>[] {
     const children = this.get.childrenByValue(childValueInfo);
     return children.map(({ feInfo }) => this.setterSection(feInfo));
   }

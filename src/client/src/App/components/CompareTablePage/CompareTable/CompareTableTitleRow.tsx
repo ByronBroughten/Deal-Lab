@@ -2,9 +2,7 @@ import {
   useTableActor,
   UseTableActorProps,
 } from "../../../modules/sectionActorHooks/useTableActor";
-import { VariableOption } from "../../../sharedWithServer/StateEntityGetters/VariableGetterSections";
 import { MaterialStringEditor } from "../../inputs/MaterialStringEditor";
-import VarbAutoComplete from "../../inputs/VarbAutoComplete";
 
 interface Props extends UseTableActorProps {
   title: string;
@@ -22,11 +20,11 @@ export function CompareTableTitleRow({ title, ...rest }: Props) {
           className="CompareTable-filterEditor CompareTable-controlRowItem"
           feVarbInfo={table.get.varbInfo("titleFilter")}
         />
-        <VarbAutoComplete
+        {/* <VarbAutoComplete
           onSelect={(o: VariableOption) => table.addColumn(o.varbInfo)}
           placeholder="Add column"
           className="CompareTable-addColumnSelector CompareTable-controlRowItem"
-        />
+        /> */}
       </div>
     </div>
   );

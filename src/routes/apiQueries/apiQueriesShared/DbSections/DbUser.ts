@@ -291,7 +291,7 @@ export class DbUser extends DbSectionsQuerierBase {
         for (const childName of section.get.childNames) {
           for (const child of section.children(childName)) {
             const getterChild = child.get;
-            if (getterChild.thisIsSectionType("hasIndexStore")) {
+            if (getterChild.isSectionType("hasIndexStore")) {
               if (
                 getterChild.valueNext("syncStatus") ===
                 ("autoSyncOn" as AutoSyncStatus)

@@ -1,9 +1,8 @@
-import { FormControl, RadioGroup } from "@material-ui/core";
+import { Switch } from "@material-ui/core";
 import {
   useIndexTableRowActor,
   UseIndexTableRowActorProps,
 } from "../../../modules/sectionActorHooks/useIndexTableRowActor";
-import Radio from "../../general/Radio";
 import TrashBtn from "../../general/TrashBtn";
 
 export function IndexRow(props: UseIndexTableRowActorProps) {
@@ -12,23 +11,23 @@ export function IndexRow(props: UseIndexTableRowActorProps) {
   return (
     <tr className="CompareTable-tableRow">
       <td className="CompareTable-tableCell">
-        <FormControl component="fieldset" className="radio-part">
-          <RadioGroup>
-            <Radio
-              {...{
-                name: "compare radio",
-                value: indexRow.get.feId,
-                checked: indexRow.isCompared(),
-                onChange: () => indexRow.toggleCompare(),
-              }}
-            />
-          </RadioGroup>
-        </FormControl>
+        <Switch
+          {...{
+            name: "compare radio",
+            value: indexRow.get.feId,
+            checked: indexRow.isCompared(),
+            onChange: () => indexRow.toggleCompare(),
+          }}
+        />
       </td>
       <td className="CompareTable-tableCell">{title}</td>
       {indexRow.cells.map((cell) => {
         const value = cell.value("displayVarb", "string");
-        return <td className="CompareTable-tableCell">{value}</td>;
+        return (
+          <td className="CompareTable-tableCell" key={cell.feId}>
+            {value}
+          </td>
+        );
       })}
       <td className="CompareTable-tableCell">
         <TrashBtn

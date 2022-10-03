@@ -16,15 +16,15 @@ function useLoadRows(props: UseTableActorProps) {
   const table = useTableActor(props);
   const [isLoaded, setIsLoaded] = React.useState(false);
   React.useEffect(() => {
-    const loadRows = async () => {
-      if (authStatus !== "guest" && !isLoaded) {
-        unstable_batchedUpdates(async () => {
-          await table.getRows();
-          setIsLoaded(true);
-        });
-      }
-    };
-    loadRows();
+    async function loadRows() {
+      unstable_batchedUpdates(async () => {
+        await table.getRows();
+        setIsLoaded(true);
+      });
+    }
+    if (authStatus !== "guest" && !isLoaded) {
+      loadRows();
+    }
   });
   return isLoaded;
 }

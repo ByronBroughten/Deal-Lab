@@ -1,7 +1,6 @@
-import React from "react";
-import { useSectionsActorProps } from "../../sharedWithServer/stateClassHooks/useSectionActorProps";
+import { useSetterSectionsProps } from "../../sharedWithServer/stateClassHooks/useSetterSectionsProps";
 import { IndexTableRowActor } from "../SectionActors/IndexTableRowActor";
-import { useUpdateSetterSections } from "./useUpdateSetterSections";
+import { apiQueries } from "./../apiQueriesClient";
 
 export interface UseIndexTableRowActorProps {
   feId: string;
@@ -9,13 +8,10 @@ export interface UseIndexTableRowActorProps {
 export function useIndexTableRowActor(
   indexInfo: UseIndexTableRowActorProps
 ): IndexTableRowActor {
-  const moreProps = useSectionsActorProps();
-  const indexRowActor = React.useMemo(() => {
-    return new IndexTableRowActor({
-      ...indexInfo,
-      ...moreProps,
-    });
-  }, [JSON.stringify(indexInfo)]);
-  useUpdateSetterSections(indexRowActor);
-  return indexRowActor;
+  const props = useSetterSectionsProps();
+  return new IndexTableRowActor({
+    apiQueries,
+    ...indexInfo,
+    ...props,
+  });
 }

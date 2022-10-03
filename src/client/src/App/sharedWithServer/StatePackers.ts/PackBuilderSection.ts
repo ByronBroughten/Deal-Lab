@@ -153,6 +153,9 @@ export class PackBuilderSection<
   removeSelf() {
     this.updater.removeSelf();
   }
+  removeChild<CN extends ChildName<SN>>(childInfo: FeChildInfo<SN, CN>) {
+    this.updater.removeChild(childInfo);
+  }
   packBuilderSection<S extends SectionNameByType>(
     feInfo: FeSectionInfo<S>
   ): PackBuilderSection<S> {

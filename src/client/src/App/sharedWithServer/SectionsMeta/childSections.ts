@@ -92,7 +92,7 @@ export const childSections = checkChildSections({
   compareTable: childrenSections({
     column: ["column"],
     tableRow: ["tableRow"],
-    compareRow: ["proxy"],
+    compareRow: ["proxyStoreItem"],
   }),
   tableRow: { cell: childSection("cell") },
   outputList: { outputItem: childSection("outputItem") },

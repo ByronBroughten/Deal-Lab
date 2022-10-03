@@ -30,8 +30,8 @@ export class IndexTableRowActor extends SectionActorBase<"tableRow"> {
   get compareRowInfo() {
     return {
       childName: "compareRow",
-      varbName: "feId",
-      value: this.get.feId,
+      varbName: "dbId",
+      value: this.get.dbId,
     } as const;
   }
   isCompared() {
@@ -41,11 +41,12 @@ export class IndexTableRowActor extends SectionActorBase<"tableRow"> {
     if (this.isCompared()) {
       const compareRows = this.parentTable.childrenByValue(this.compareRowInfo);
       for (const row of compareRows) {
-        row.removeSelf();
+        row.update.removeSelf();
       }
+      this.setter.setSections();
     } else {
       this.parentTable.addChild("compareRow", {
-        dbVarbs: { feId: this.get.feId },
+        dbVarbs: { dbId: this.get.dbId },
       });
     }
   }

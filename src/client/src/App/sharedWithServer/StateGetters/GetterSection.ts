@@ -95,7 +95,7 @@ export class GetterSection<
   ): this is GetterSection<S> {
     return this.sectionName === (sectionName as any);
   }
-  thisIsSectionType<ST extends SectionNameType>(
+  isSectionType<ST extends SectionNameType>(
     sectionNameType: ST
   ): this is GetterSection<SectionNameByType<ST>> {
     return sectionNameS.is(this.sectionName, sectionNameType);
@@ -371,10 +371,8 @@ export class GetterSection<
   hasChildByValue<
     CN extends ChildName<SN>,
     VN extends VarbName<ChildSectionName<SN, CN>>
-  >({ childName, varbName, value }: ChildValueInfo<SN, CN, VN>): boolean {
-    const children = this.children(childName).filter(
-      (child) => child.valueNext(varbName) === value
-    );
+  >(props: ChildValueInfo<SN, CN, VN>): boolean {
+    const children = this.childrenByValue(props);
     if (children.length > 0) return true;
     else return false;
   }
