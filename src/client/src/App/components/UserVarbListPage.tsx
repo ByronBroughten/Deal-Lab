@@ -1,17 +1,17 @@
 import React from "react";
 import { VarbListUserVarbs } from "./appWide/VarbLists/VarbListUserVarbs";
-import { UserListsGeneral } from "./UserListsGeneral";
-import { UserListMainSection } from "./UserVarbListPage/UserListMainSection";
+import { UserListsPageGeneric } from "./UserListsPageGeneric";
+import { UserListsGeneralSection } from "./UserVarbListPage/UserListsGeneralSection";
 
 export function UserVarbListPage() {
   return (
-    <UserListsGeneral themeName="userVarbList" saveWhat="custom variables">
-      <UserListMainSection
+    <UserListsPageGeneric themeName="userVarbList" saveWhat="custom variables">
+      <UserListsGeneralSection
         themeName="userVarbList"
         storeName="userVarbListMain"
         title="Variables"
         makeListNode={(nodeProps) => <VarbListUserVarbs {...nodeProps} />}
       />
-    </UserListsGeneral>
+    </UserListsPageGeneric>
   );
 }

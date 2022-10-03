@@ -1,11 +1,16 @@
 import { isEqual } from "lodash";
 import { SectionValues } from "../../sharedWithServer/SectionsMeta/baseSectionsDerived/valueMetaTypes";
+import { SelfChildName } from "../../sharedWithServer/SectionsMeta/childSectionsDerived/ParentName";
 import { SectionPack } from "../../sharedWithServer/SectionsMeta/childSectionsDerived/SectionPack";
+import { FeParentInfo } from "../../sharedWithServer/SectionsMeta/Info";
 import { SectionNameByType } from "../../sharedWithServer/SectionsMeta/SectionNameByType";
 import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
 import { GetterSections } from "../../sharedWithServer/StateGetters/GetterSections";
 import { PackMakerSection } from "../../sharedWithServer/StatePackers.ts/PackMakerSection";
-import { SolverSectionBase } from "../../sharedWithServer/StateSolvers/SolverBases/SolverSectionBase";
+import {
+  SolverSectionBase,
+  SolverSectionProps,
+} from "../../sharedWithServer/StateSolvers/SolverBases/SolverSectionBase";
 import { SolverSection } from "../../sharedWithServer/StateSolvers/SolverSection";
 import { UpdaterSection } from "../../sharedWithServer/StateUpdaters/UpdaterSection";
 import { timeS } from "../../sharedWithServer/utils/date";
@@ -16,6 +21,17 @@ export type SaveStatus = "unsaved" | "changesSynced" | "unsyncedChanges";
 export class MainSectionSolver<
   SN extends SectionNameByType<"hasIndexStore">
 > extends SolverSectionBase<SN> {
+  private parentInfoCache: FeParentInfo<SN>;
+  private selfChildNameCache: SelfChildName<SN>;
+  constructor(props: SolverSectionProps<SN>) {
+    super(props);
+    this.parentInfoCache = this.get.parentInfo;
+    this.selfChildNameCache = this.get.selfChildName;
+  }
+  private updateCaches() {
+    this.parentInfoCache = this.get.parentInfo;
+    this.selfChildNameCache = this.get.selfChildName;
+  }
   get solver() {
     return new SolverSection(this.solverSectionProps);
   }
@@ -66,16 +82,14 @@ export class MainSectionSolver<
     }
   }
   removeSelf() {
+    this.updateCaches();
     this.solver.removeSelfAndSolve();
     this.sectionUnloadCleanup();
   }
   replaceWithDefault() {
+    this.updateCaches();
     this.solver.replaceWithDefaultAndSolve();
     this.sectionUnloadCleanup();
-    // no parent found, because replacing with default
-    // actually removes the section
-    // no, that shouldn't happen
-    // the section was removed from its parent without being put back
   }
   get isSaved(): boolean {
     return this.feIndexSolver.isSaved(this.dbId);
@@ -92,9 +106,11 @@ export class MainSectionSolver<
         mainText: "Copy of " + titleValue.mainText,
       },
     } as Partial<SectionValues<SN>>);
+    this.updateCaches();
     this.sectionUnloadCleanup();
   }
   loadSectionPack(sectionPack: SectionPack<SN>) {
+    this.updateCaches();
     this.solver.loadSelfSectionPackAndSolve(sectionPack);
     this.sectionUnloadCleanup();
     this.sectionLoadCleanup(sectionPack);
@@ -102,8 +118,11 @@ export class MainSectionSolver<
   sectionLoadCleanup(sectionPack: SectionPack<SN>) {
     this.feIndexSolver.addAsSavedIfMissing(sectionPack);
   }
-  sectionUnloadCleanup() {
-    const siblingDbIds = this.get.siblings.map(({ dbId }) => dbId);
+  private sectionUnloadCleanup() {
+    // caches should be updated before this is used.
+    const parent = this.getterSections.section(this.parentInfoCache);
+    const childName = this.selfChildNameCache;
+    const siblingDbIds = parent.children(childName).map(({ dbId }) => dbId);
     this.feIndexSolver.removeExtraAsSaved(siblingDbIds);
   }
 

@@ -4,6 +4,7 @@ export type StandardProps = { className?: string; children?: React.ReactNode };
 export type StandardBtnProps = StandardProps & {
   onClick?: () => void;
   disabled?: boolean;
+  href?: string;
 };
 export type StandardSelectProps = StandardProps & {
   name: string;

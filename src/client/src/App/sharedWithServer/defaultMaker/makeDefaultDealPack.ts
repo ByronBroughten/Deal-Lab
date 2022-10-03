@@ -1,12 +1,15 @@
 import { SectionPack } from "../SectionsMeta/childSectionsDerived/SectionPack";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
-import { makeDefaultMgmtPack } from "./makeDefaultMgmtPack";
 import { makeDefaultOutputList } from "./makeDefaultOutputList";
 import { makeDefaultPropertyPack } from "./makeDefaultPropertyPack";
 
 export function makeDefaultDealPack(): SectionPack<"deal"> {
-  const childNames = ["financing"] as const;
-  const deal = PackBuilderSection.initAsOmniChild("deal");
+  const childNames = ["financing", "mgmtGeneral"] as const;
+  const deal = PackBuilderSection.initAsOmniChild("deal", {
+    dbVarbs: {
+      showCalculationsStatus: "hide",
+    },
+  });
   childNames.forEach((childName) => {
     deal.addChild(childName);
   });
@@ -19,12 +22,5 @@ export function makeDefaultDealPack(): SectionPack<"deal"> {
     childName: "property",
     sectionPack: makeDefaultPropertyPack(),
   });
-
-  const mgmtGeneral = deal.addAndGetChild("mgmtGeneral");
-  mgmtGeneral.loadChild({
-    childName: "mgmt",
-    sectionPack: makeDefaultMgmtPack(),
-  });
-
   return deal.makeSectionPack();
 }

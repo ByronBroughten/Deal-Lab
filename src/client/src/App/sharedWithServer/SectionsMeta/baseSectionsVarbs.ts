@@ -200,6 +200,7 @@ export const baseSectionsVarbs = checkBaseSectionsVarbs({
       "downPaymentPercent",
       "downPaymentDecimal",
     ] as const),
+    showCalculationsStatus: "string",
     ...baseVarbsS.ongoing("piti"),
     ...baseVarbsS.ongoing("expenses"),
     ...baseVarbsS.ongoing("revenue"),

@@ -7,14 +7,18 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-// Hide Management initially
-// - Make it start out without a mgmt
-// - Make ManagementGeneral have an "Add Management Costs" button
-// - Make each Management removable
+// Get This ready for the code walkthrough
 
-// Hide Deal initially
-// - Add a "Calculate Deal Outputs" button;
-//   - When clicked it shows deal
+// - You want the listGroup store to retain the order of the saved lists.
+
+// - Create an "Add List Group" button, styled like the list group section
+// - Make it big
+// - If there are no list group, put it in place of it
+
+// Hide "Ongoing Costs" and "Upfront Costs" initially
+// - Make childDefaultAdders that take priority over regular default adders
+// - Make the main sections start without their list groups
+// - Give each of them child defaults
 
 // Make the mainSection tables
 // - Reveal the deal table (and perhaps the others)

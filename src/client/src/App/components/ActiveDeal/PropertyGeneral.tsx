@@ -1,7 +1,9 @@
 import React from "react";
+import styled from "styled-components";
 import { useGetterSection } from "../../sharedWithServer/stateClassHooks/useGetterSection";
-import MainSection from "../appWide/GeneralSection";
+import { GeneralSection } from "../appWide/GeneralSection";
 import GeneralSectionTitle from "../appWide/GeneralSection/GeneralSectionTitle";
+import theme from "./../../theme/Theme";
 import Property from "./PropertyGeneral/Property";
 
 export function PropertyGeneral({ feId }: { feId: string }) {
@@ -11,13 +13,19 @@ export function PropertyGeneral({ feId }: { feId: string }) {
   });
   const propertyIds = propertyGeneral.childFeIds("property");
   return (
-    <MainSection themeName="property" className="PropertyGeneral-root">
+    <Styled themeName="property" className="PropertyGeneral-root">
       <GeneralSectionTitle title="Property" themeName="property" />
       <div className="MainSection-entries">
         {propertyIds.map((feId) => (
           <Property key={feId} feId={feId} />
         ))}
       </div>
-    </MainSection>
+    </Styled>
   );
 }
+
+const Styled = styled(GeneralSection)`
+  .GeneralSectionTitle-root {
+    padding-top: ${theme.s2};
+  }
+`;

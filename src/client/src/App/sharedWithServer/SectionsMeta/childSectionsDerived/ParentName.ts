@@ -59,6 +59,11 @@ export type ParentNameSafe<SN extends SectionName> = Exclude<
   typeof noParentWarning
 >;
 
+export type SelfChildName<
+  SN extends SectionName,
+  PN extends ParentNameSafe<SN> = ParentNameSafe<SN>
+> = ChildName<PN>;
+
 export type StepSiblingName<SN extends SectionName = SectionName> = ChildName<
   ParentNameSafe<SN>
 >;

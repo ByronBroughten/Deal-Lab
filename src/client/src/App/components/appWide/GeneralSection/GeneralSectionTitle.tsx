@@ -15,21 +15,21 @@ export default function GeneralSectionTitle({
   children,
 }: Props) {
   return (
-    <MainSectionTitleStyled
+    <Styled
       {...{
-        className: "GeneralSectionTitle-root main-section-title " + className,
+        className: "GeneralSectionTitle-root " + className,
         themeName: themeName ?? "default",
       }}
     >
       <h4 className="GeneralSectionTitle-titleText">{title}</h4>
       <div className="GeneralSectionTitle-children">{children}</div>
       <h4 className="GeneralSectionTitle-titleText GeneralSectionTitle-invisible"></h4>
-    </MainSectionTitleStyled>
+    </Styled>
   );
 }
 
 const toggleViewBtnSize = "17px";
-export const MainSectionTitleStyled = styled.div<{
+const Styled = styled.div<{
   themeName: ThemeName;
 }>`
   position: relative;

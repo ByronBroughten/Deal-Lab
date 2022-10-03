@@ -3,11 +3,11 @@ import { View } from "react-native";
 import styled from "styled-components";
 import { useGetterSection } from "../sharedWithServer/stateClassHooks/useGetterSection";
 import theme from "../theme/Theme";
-import DealStats from "./ActiveDeal/DealStats";
+import { DealGeneral } from "./ActiveDeal/DealGeneral";
 import Financing from "./ActiveDeal/Financing";
 import { MgmtGeneral } from "./ActiveDeal/MgmtGeneral";
 import { PropertyGeneral } from "./ActiveDeal/PropertyGeneral";
-import { PageMain } from "./general/PageMain";
+import { PageMainFn } from "./general/PageMain";
 
 type Props = {
   feId: string;
@@ -26,14 +26,16 @@ export function ActiveDeal({ className, feId }: Props) {
         <Financing feId={deal.onlyChildFeId("financing")} />
         <MgmtGeneral feId={deal.onlyChildFeId("mgmtGeneral")} />
       </View>
-      <DealStats feId={feId} />
+      <DealGeneral feId={feId} />
     </Styled>
   );
 }
 
-const Styled = styled(PageMain)`
+const Styled = styled(PageMainFn)`
+  border: solid 3px ${theme.deal.main};
+  border-top: solid 1px ${theme["gray-500"]};
   background: ${theme.mgmt.light};
-  .DealStats-root {
+  .DealGeneral-root {
     position: sticky;
     bottom: 0;
     z-index: 3;

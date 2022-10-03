@@ -76,10 +76,16 @@ export const config = {
     },
   },
   feRoutes: {
+    mainTables: {
+      property: "/property-compare",
+      loan: "/loan-compare",
+      mgmt: "/mgmt-compare",
+      deal: "/deal-compare",
+    },
+
     userVariables: "/variables",
     userLists: "/additive-lists",
     userOutputs: "/outputs",
-    dealCompare: "/deal-compare",
     authSuccess: "/login-success",
     subscribeSuccess: "/subscription-success",
     analyzer: "/",

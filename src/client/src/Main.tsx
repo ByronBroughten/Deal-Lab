@@ -23,7 +23,6 @@ export function Main() {
   return (
     <Styled className="App-root">
       <NavBar />
-      <div className="NavSpaceDiv-root"></div>
       <Routes>
         {getSuperTokensRoutesForReactRouterDom(reactRouterDom)}
         <Route path={feRoutes.userVariables} element={<UserVarbListPage />} />
@@ -38,8 +37,20 @@ export function Main() {
           element={<ActiveDeal feId={activeDealId} loginSuccess={true} />}
         />
         <Route
-          path={feRoutes.dealCompare}
+          path={feRoutes.mainTables.deal}
           element={<FeUserMainTablePage mainTableName={"dealMainTable"} />}
+        />
+        <Route
+          path={feRoutes.mainTables.property}
+          element={<FeUserMainTablePage mainTableName={"propertyMainTable"} />}
+        />
+        <Route
+          path={feRoutes.mainTables.loan}
+          element={<FeUserMainTablePage mainTableName={"loanMainTable"} />}
+        />
+        <Route
+          path={feRoutes.mainTables.mgmt}
+          element={<FeUserMainTablePage mainTableName={"mgmtMainTable"} />}
         />
         <Route path="/not-found" element={<NotFound />} />
         <Route path={"/"} element={<ActiveDeal feId={activeDealId} />} />

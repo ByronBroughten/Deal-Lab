@@ -9,13 +9,13 @@ type Props = {
   saveWhat: string;
   children: React.ReactNode;
 };
-export function UserListsGeneral({ themeName, children, saveWhat }: Props) {
+export function UserListsPageGeneric({ themeName, children, saveWhat }: Props) {
   const authStatus = useAuthStatus();
   return (
     <Styled $themeName={themeName}>
       {authStatus === "guest" && (
-        <div className="UserListsGeneral-notLoggedIn">
-          <div className="UserListsGeneral-notLoggedInInner">
+        <div className="UserListsPageGeneric-notLoggedIn">
+          <div className="UserListsPageGeneric-notLoggedInInner">
             {`To create and save ${saveWhat}, sign in or sign up.`}
           </div>
         </div>
@@ -30,14 +30,14 @@ const Styled = styled(PageMain)<{ $themeName: ThemeName }>`
     background: ${theme[$themeName].light};
   `}
 
-  .UserListsGeneral-notLoggedIn {
+  .UserListsPageGeneric-notLoggedIn {
     display: flex;
     justify-content: center;
-    .UserListsGeneral-notLoggedInInner {
+    .UserListsPageGeneric-notLoggedInInner {
       margin: ${theme.s3};
     }
   }
-  .UserListsGeneral-notLoggedInInner {
+  .UserListsPageGeneric-notLoggedInInner {
     color: ${theme.dark};
     padding: ${theme.s3};
     border-radius: ${theme.br1};

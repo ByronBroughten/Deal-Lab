@@ -1,12 +1,12 @@
 import { VarbListOutputs } from "./appWide/VarbLists/VarbListOutputs";
-import { UserListsGeneral } from "./UserListsGeneral";
-import { UserListMainSection } from "./UserVarbListPage/UserListMainSection";
+import { UserListsPageGeneric } from "./UserListsPageGeneric";
+import { UserListsGeneralSection } from "./UserVarbListPage/UserListsGeneralSection";
 
 export function UserOutputListPage() {
   const themeName = "userOutput";
   return (
-    <UserListsGeneral themeName={themeName} saveWhat="custom outputs">
-      <UserListMainSection
+    <UserListsPageGeneric themeName={themeName} saveWhat="custom outputs">
+      <UserListsGeneralSection
         themeName={themeName}
         storeName="outputListMain"
         title="Output lists"
@@ -14,6 +14,6 @@ export function UserOutputListPage() {
           <VarbListOutputs {...{ ...nodeProps, menuType: "simple" }} />
         )}
       />
-    </UserListsGeneral>
+    </UserListsPageGeneric>
   );
 }

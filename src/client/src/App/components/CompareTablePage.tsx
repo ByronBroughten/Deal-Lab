@@ -60,9 +60,8 @@ export function CompareTablePage(props: Props) {
     isAtLeastOne: () => <CompareTable {...props} />,
   } as const;
 
-  return (
-    <Styled className="CompareTable-root">{scenarios[getScenarioKey()]}</Styled>
-  );
+  const getScenarioNode = scenarios[getScenarioKey()];
+  return <Styled className="CompareTable-root">{getScenarioNode()}</Styled>;
 }
 
 const Styled = styled.div`

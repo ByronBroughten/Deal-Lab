@@ -1,7 +1,7 @@
 import { FeStoreNameByType } from "../../sharedWithServer/SectionsMeta/relSectionsDerived/relNameArrs/FeStoreName";
 import { useSetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useSetterSection";
 import { ThemeName } from "../../theme/Theme";
-import MainSection from "../appWide/GeneralSection";
+import { MainSection } from "../appWide/GeneralSection/MainSection";
 import MainSectionBody from "../appWide/GeneralSection/MainSection/MainSectionBody";
 import {
   ListGroupLists,
@@ -20,7 +20,7 @@ export function UserListSectionEntry({
 }: Props) {
   const feUser = useSetterSectionOnlyOne("feUser");
   return (
-    <MainSection className="UserListSectionEntry-root" themeName={themeName}>
+    <MainSection className="UserListSectionEntry-root">
       <MainSectionBody themeName={themeName}>
         <ListGroupLists
           {...{

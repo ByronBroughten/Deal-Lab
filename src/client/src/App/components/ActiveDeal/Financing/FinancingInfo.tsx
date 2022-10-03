@@ -60,7 +60,7 @@ export default function FinancingInfo({ feId }: { feId: string }) {
 
 const Styled = styled(GlobalInfoSection)`
   background-color: ${theme.loan.light};
-  padding: ${theme.s2} ${theme.s3};
+  padding: ${theme.s2} ${theme.s3} ${theme.s3} ${theme.s3};
   display: flex;
 
   .LabeledVarb-output {

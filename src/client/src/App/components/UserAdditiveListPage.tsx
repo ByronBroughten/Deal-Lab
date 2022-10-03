@@ -1,13 +1,13 @@
 import React from "react";
 import { VarbListSingleTime } from "./appWide/ListGroup/ListGroupSingleTime/VarbListSingleTime";
 import { VarbListOngoing } from "./appWide/VarbLists/VarbListOngoing";
-import { UserListsGeneral } from "./UserListsGeneral";
-import { UserListMainSection } from "./UserVarbListPage/UserListMainSection";
+import { UserListsPageGeneric } from "./UserListsPageGeneric";
+import { UserListsGeneralSection } from "./UserVarbListPage/UserListsGeneralSection";
 
 export function UserAdditiveListPage() {
   return (
-    <UserListsGeneral themeName="userOngoingList" saveWhat="custom lists">
-      <UserListMainSection
+    <UserListsPageGeneric themeName="userOngoingList" saveWhat="custom lists">
+      <UserListsGeneralSection
         themeName="userSingleList"
         storeName="singleTimeListMain"
         title="One time cost lists"
@@ -15,7 +15,7 @@ export function UserAdditiveListPage() {
           <VarbListSingleTime {...{ ...nodeProps, menuType: "simple" }} />
         )}
       />
-      <UserListMainSection
+      <UserListsGeneralSection
         themeName="userOngoingList"
         storeName="ongoingListMain"
         title="Ongoing cost lists"
@@ -23,6 +23,6 @@ export function UserAdditiveListPage() {
           <VarbListOngoing {...{ ...nodeProps, menuType: "simple" }} />
         )}
       />
-    </UserListsGeneral>
+    </UserListsPageGeneric>
   );
 }

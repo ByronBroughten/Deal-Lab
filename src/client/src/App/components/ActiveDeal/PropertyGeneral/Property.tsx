@@ -1,6 +1,6 @@
 import React from "react";
 import { useGetterSection } from "../../../sharedWithServer/stateClassHooks/useGetterSection";
-import MainSection from "../../appWide/GeneralSection/MainSection";
+import { MainSection } from "../../appWide/GeneralSection/MainSection";
 import MainSectionBody from "../../appWide/GeneralSection/MainSection/MainSectionBody";
 import { MainSectionTitleRow } from "../../appWide/GeneralSection/MainSection/MainSectionTitleRow";
 import { ListGroupOngoing } from "../../appWide/ListGroup/ListGroupOngoing";
@@ -21,14 +21,14 @@ export default function Property({ feId }: { feId: string }) {
         <div className="ListGroup-lists">
           <BasicPropertyInfo feId={feId} className="ListGroup-root" />
         </div>
-        <ListGroupOngoing
-          feId={property.onlyChild("ongoingCostListGroup").feId}
-          titleText="Ongoing Costs"
-          themeName="property"
-        />
         <ListGroupSingleTime
           feId={property.onlyChild("upfrontCostListGroup").feId}
           titleText="Upfront Costs"
+          themeName="property"
+        />
+        <ListGroupOngoing
+          feId={property.onlyChild("ongoingCostListGroup").feId}
+          titleText="Ongoing Costs"
           themeName="property"
         />
       </MainSectionBody>

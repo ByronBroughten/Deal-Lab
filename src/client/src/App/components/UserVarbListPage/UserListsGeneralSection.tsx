@@ -11,13 +11,13 @@ import { SectionsContext } from "../../sharedWithServer/stateClassHooks/useSecti
 import { useSetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useSetterSection";
 import { PackMakerSection } from "../../sharedWithServer/StatePackers.ts/PackMakerSection";
 import { StateSections } from "../../sharedWithServer/StateSections/StateSections";
+import { SolverSection } from "../../sharedWithServer/StateSolvers/SolverSection";
 import { SolverSections } from "../../sharedWithServer/StateSolvers/SolverSections";
 import theme, { ThemeName } from "../../theme/Theme";
-import MainSection from "../appWide/GeneralSection";
+import { GeneralSection } from "../appWide/GeneralSection";
 import GeneralSectionTitle from "../appWide/GeneralSection/GeneralSectionTitle";
 import MainSectionTitleBtn from "../appWide/GeneralSection/GeneralSectionTitle/MainSectionTitleBtn";
 import { MakeListNode } from "../appWide/ListGroup/ListGroupShared/ListGroupGeneric/ListGroupLists";
-import { SolverSection } from "./../../sharedWithServer/StateSolvers/SolverSection";
 import { UserListSectionEntry } from "./UserListSectionEntry";
 
 type StoreName = FeStoreNameByType<"fullIndex">;
@@ -63,7 +63,7 @@ type Props = {
   title: string;
   makeListNode: MakeListNode;
 };
-export function UserListMainSection({
+export function UserListsGeneralSection({
   themeName,
   storeName,
   title,
@@ -86,7 +86,7 @@ export function UserListMainSection({
   );
 
   return (
-    <Styled themeName={themeName} className="UserListMainSection-root">
+    <Styled themeName={themeName} className="UserListsGeneralSection-root">
       <SectionsContext.Provider value={userListsContext}>
         <GeneralSectionTitle title={title} themeName={themeName}>
           <MainSectionTitleBtn
@@ -113,7 +113,7 @@ export function UserListMainSection({
   );
 }
 
-const Styled = styled(MainSection)`
+const Styled = styled(GeneralSection)`
   .UserListSectionEntry-root {
     padding-bottom: ${theme.s2};
   }

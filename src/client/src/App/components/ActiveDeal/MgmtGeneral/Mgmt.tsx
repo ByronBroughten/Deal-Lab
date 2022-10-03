@@ -1,5 +1,5 @@
 import React from "react";
-import MainSection from "../../appWide/GeneralSection/MainSection";
+import { MainSection } from "../../appWide/GeneralSection/MainSection";
 import MainSectionBody from "../../appWide/GeneralSection/MainSection/MainSectionBody";
 import { MainSectionTitleRow } from "../../appWide/GeneralSection/MainSection/MainSectionTitleRow";
 import { ListGroupOngoing } from "../../appWide/ListGroup/ListGroupOngoing";
@@ -11,7 +11,9 @@ export function Mgmt({ feId }: { feId: string }) {
   const mgmt = useGetterSection({ sectionName: "mgmt", feId });
   return (
     <MainSection>
-      <MainSectionTitleRow {...{ ...mgmt.feInfo, pluralName: "managements" }} />
+      <MainSectionTitleRow
+        {...{ ...mgmt.feInfo, pluralName: "managements", xBtn: true }}
+      />
       <MainSectionBody themeName="mgmt">
         <BasicMgmtInfo feId={feId} className="ListGroup-root" />
         <ListGroupOngoing

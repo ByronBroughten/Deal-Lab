@@ -1,12 +1,12 @@
 import React from "react";
 import { useGetterSection } from "../../../sharedWithServer/stateClassHooks/useGetterSection";
-import MainSection from "../../appWide/GeneralSection/MainSection";
+import { MainSection } from "../../appWide/GeneralSection/MainSection";
 import MainSectionBody from "../../appWide/GeneralSection/MainSection/MainSectionBody";
 import { MainSectionTitleRow } from "../../appWide/GeneralSection/MainSection/MainSectionTitleRow";
 import { ListGroupSingleTime } from "../../appWide/ListGroup/ListGroupSingleTime";
 import BasicLoanInfo from "./Loan/BasicLoanInfo";
 
-export default function Loan({ feId }: { feId: string }) {
+export function Loan({ feId }: { feId: string }) {
   const loan = useGetterSection({
     sectionName: "loan",
     feId,
@@ -17,16 +17,11 @@ export default function Loan({ feId }: { feId: string }) {
         <MainSectionTitleRow
           {...{
             ...loan.feInfo,
-            sectionName: "loan",
             pluralName: "loans",
             xBtn: true,
           }}
         />
         <MainSectionBody themeName="loan">
-          {/* <div className="ListGroup-root">
-            <div className="ListGroup-viewable">              
-            </div>
-          </div> */}
           <div className="ListGroup-lists">
             <BasicLoanInfo feId={feId} className="ListGroup-root" />
           </div>

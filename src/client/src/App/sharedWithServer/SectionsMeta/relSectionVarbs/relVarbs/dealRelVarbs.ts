@@ -19,6 +19,7 @@ export function dealRelVarbs(): RelVarbs<"deal"> {
       ],
       { shared: { startAdornment: "$" }, switchInit: "monthly" }
     ),
+    showCalculationsStatus: relVarb("string", { initValue: "hide" }),
     downPaymentDollars: relVarbS.leftRightPropFn(
       "Down payment",
       "simpleSubtract",

@@ -41,6 +41,7 @@ import {
   ParentName,
   ParentNameSafe,
   PiblingName,
+  SelfChildName,
   StepSiblingName,
 } from "../SectionsMeta/childSectionsDerived/ParentName";
 import { RelSectionInfo } from "../SectionsMeta/childSectionsDerived/RelInfo";
@@ -264,7 +265,7 @@ export class GetterSection<
   get feInfoMixed(): FeSectionInfoMixed<SN> {
     return mixedInfoS.makeFe(this.sectionName, this.feId);
   }
-  get selfChildName(): ChildName<ParentNameSafe<SN>> {
+  get selfChildName(): SelfChildName<SN> {
     const { allChildFeIds } = this.parent;
     for (const childName of Obj.keys(allChildFeIds)) {
       if (allChildFeIds[childName].includes(this.feId)) {

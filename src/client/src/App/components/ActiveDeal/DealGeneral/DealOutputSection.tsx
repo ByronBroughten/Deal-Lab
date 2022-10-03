@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useGetterSection } from "../../../sharedWithServer/stateClassHooks/useGetterSection";
 import theme from "../../../theme/Theme";
-import MainSection from "../../appWide/GeneralSection/MainSection";
+import { MainSection } from "../../appWide/GeneralSection/MainSection";
 import MainSectionBody from "../../appWide/GeneralSection/MainSection/MainSectionBody";
 import { MainSectionTitleRow } from "../../appWide/GeneralSection/MainSection/MainSectionTitleRow";
 import DealDetails from "./DealOutputSection/DealDetails";

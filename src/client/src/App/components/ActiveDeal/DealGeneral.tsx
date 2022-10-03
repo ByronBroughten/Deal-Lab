@@ -1,17 +1,23 @@
 import { CgDetailsLess, CgDetailsMore } from "react-icons/cg";
 import styled, { css } from "styled-components";
 import useToggleView from "../../modules/customHooks/useToggleView";
-import { auth } from "../../modules/services/authService";
+import { useSetterSection } from "../../sharedWithServer/stateClassHooks/useSetterSection";
 import theme from "../../theme/Theme";
-import { AppFooter } from "../AppFooter";
-import MainSection from "../appWide/GeneralSection";
+import { GeneralSection } from "../appWide/GeneralSection";
 import GeneralSectionTitle from "../appWide/GeneralSection/GeneralSectionTitle";
 import MainSectionTitleBtn from "../appWide/GeneralSection/GeneralSectionTitle/MainSectionTitleBtn";
-import { DealOutputSection } from "./DealStats/DealOutputSection";
+import { DealOutputSection } from "./DealGeneral/DealOutputSection";
 
 type Props = { className?: string; feId: string };
 
-export default function DealStats({ className, feId }: Props) {
+export function DealGeneral({ className, feId }: Props) {
+  const deal = useSetterSection({
+    sectionName: "deal",
+    feId,
+  });
+  const showCalculations =
+    deal.get.valueNext("showCalculationsStatus") === "show";
+
   const { detailsIsOpen, toggleDetails } = useToggleView({
     initValue: false,
     viewWhat: "details",
@@ -32,57 +38,43 @@ export default function DealStats({ className, feId }: Props) {
       {...{
         $showDetails: detailsIsOpen,
         themeName: "deal",
-        className: `DealStats-root ${className}`,
+        className: `DealGeneral-root ${className}`,
       }}
     >
       <GeneralSectionTitle title="Deal" themeName="deal">
-        <MainSectionTitleBtn
-          {...{
-            ...detailsBtnProps,
-            themeName: "deal",
-            className: "GeneralSectionTitle-child",
-            onClick: toggleDetails,
-          }}
-        />
-        {
-          auth.isToken && null
-          // <Link className="GeneralSectionTitle-dealsLink" to="/deals">
-          //   <MainSectionTitleBtn
-          //     themeName="deal"
-          //     className="GeneralSectionTitle-child"
-          //     // disabled={!auth.isToken}
-          //   >
-          //     {"Compare Deals"}
-          //     <MdCompareArrows className="GeneralSectionTitle-compareIcon" />
-          //   </MainSectionTitleBtn>
-          // </Link>
-        }
-        {
-          !auth.isToken && null
-          // <StandardToolTip
-          //   className="GeneralSectionTitle-toolTip"
-          //   title="Login to compare saved deals"
-          // >
-          //   <div className="GeneralSectionTitle-disabledBtnWrapper">
-          //     <MainSectionTitleBtn
-          //       themeName="deal"
-          //       className="GeneralSectionTitle-child GeneralSectionTitle-compareDealsBtn"
-          //       disabled={true}
-          //     >
-          //       {"Compare Deals"}
-          //       <MdCompareArrows className="GeneralSectionTitle-compareIcon" />
-          //     </MainSectionTitleBtn>
-          //   </div>
-          // </StandardToolTip>
-        }
+        {showCalculations && (
+          <MainSectionTitleBtn
+            {...{
+              ...detailsBtnProps,
+              themeName: "deal",
+              className: "GeneralSectionTitle-child",
+              onClick: toggleDetails,
+            }}
+          />
+        )}
       </GeneralSectionTitle>
-      <DealOutputSection {...{ feId, detailsIsOpen }} />
-      <AppFooter />
+      {!showCalculations && (
+        <>
+          <div className="GeneralSectionInfo-root" />
+          <div className="GeneralSection-addEntryBtnDiv">
+            <MainSectionTitleBtn
+              themeName="deal"
+              className="MainSection-addChildBtn"
+              onClick={() =>
+                deal.varb("showCalculationsStatus").updateValue("show")
+              }
+              text="Calculate Outputs"
+            />
+          </div>
+        </>
+      )}
+      {showCalculations && <DealOutputSection {...{ feId, detailsIsOpen }} />}
+      {/* <AppFooter /> */}
     </Styled>
   );
 }
 
-const Styled = styled(MainSection)<{ $showDetails: boolean }>`
+const Styled = styled(GeneralSection)<{ $showDetails: boolean }>`
   .GeneralSectionTitle-dealsLink {
     display: flex;
     align-items: center;
