@@ -13,16 +13,20 @@ import { StoreSectionActionMenu } from "../StoreSectionActionMenu";
 import { ActionMenuProps } from "../StoreSectionActionMenu/ActionMenuTypes";
 import { StoreSectionSaveStatus } from "./../StoreSectionSaveStatus";
 
-interface Props {
+export interface MainSectionMenuOptions {
+  xBtn?: boolean;
+  dropTop?: boolean;
+  actionMenuProps?: ActionMenuProps;
+  showActions?: boolean;
+  showLoadList?: boolean;
+  showSaveStatus?: boolean;
+}
+
+interface Props extends MainSectionMenuOptions {
   sectionName: SectionNameByType<"hasIndexStore">;
   feId: string;
   pluralName: string;
-  xBtn?: boolean;
-  dropTop?: boolean;
   className?: string;
-  showActions?: boolean;
-  actionMenuProps?: ActionMenuProps;
-  showLoadList?: boolean;
 }
 export function MainSectionMenus({
   pluralName,
@@ -31,19 +35,20 @@ export function MainSectionMenus({
   className,
   showActions = true,
   showLoadList = true,
+  showSaveStatus = true,
   actionMenuProps,
   ...feInfo
 }: Props) {
   const authStatus = useAuthStatus();
   const isGuest = authStatus === "guest";
   const section = useMainSectionActor(feInfo);
-  const showSaveStatus = section.saveStatus !== "unsaved";
-
+  const saveStatusDisplayed =
+    showSaveStatus && section.saveStatus !== "unsaved";
   const { sectionName } = section.get;
 
   return (
     <Styled className={`MainSectionMenus-root ${className ?? ""}`}>
-      {showSaveStatus && (
+      {saveStatusDisplayed && (
         <StoreSectionSaveStatus
           feInfo={feInfo}
           className="MainSectionMenus-item"

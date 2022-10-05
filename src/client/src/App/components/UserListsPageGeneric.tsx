@@ -20,7 +20,9 @@ export function UserListsPageGeneric({ themeName, children, saveWhat }: Props) {
           </div>
         </div>
       )}
-      {authStatus !== "guest" && children}
+      <div className="UserListsPageGeneric-children">
+        {authStatus !== "guest" && children}
+      </div>
     </Styled>
   );
 }
@@ -29,6 +31,14 @@ const Styled = styled(PageMain)<{ $themeName: ThemeName }>`
   ${({ $themeName }) => css`
     background: ${theme[$themeName].light};
   `}
+
+  .UserListsGeneralSection-root {
+    :first-child {
+      .GeneralSectionTitle-root {
+        padding-top: ${theme.s1};
+      }
+    }
+  }
 
   .UserListsPageGeneric-notLoggedIn {
     display: flex;

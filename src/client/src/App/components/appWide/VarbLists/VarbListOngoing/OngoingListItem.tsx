@@ -4,8 +4,24 @@ import LabeledEquation from "../../ListGroup/ListGroupShared/ListItemValue/Label
 import LabeledSpanOverCost from "../../ListGroup/ListGroupShared/ListItemValue/LabeledSpanOverCost";
 import { LoadedVarbEditor } from "../../ListGroup/ListGroupShared/ListItemValue/LoadedVarbEditor";
 import { VarbListItemGeneric } from "../../ListGroup/ListGroupShared/VarbListItemGeneric";
+import { FeInfoByType } from "./../../../../sharedWithServer/SectionsMeta/Info";
 
-export function OngoingListItem({ feId }: { feId: string }) {
+type GetDoEqualsProps = {
+  feInfo: FeInfoByType<"varbListItem">;
+  showEqualsOnlyForPureVarb?: boolean;
+};
+function getDoEquals({ feInfo, showEqualsOnlyForPureVarb }: GetDoEqualsProps) {
+  if (showEqualsOnlyForPureVarb) {
+  } else {
+    return true;
+  }
+}
+
+type Props = { feId: string; showEqualsOnlyForPureVarb?: boolean };
+export function OngoingListItem({
+  feId,
+  showEqualsOnlyForPureVarb = false,
+}: Props) {
   const feInfo = { sectionName: "ongoingItem", feId } as const;
   const virtualVarb = useSetterSection(feInfo);
   const valueVarbName = virtualVarb.get.switchVarbName(

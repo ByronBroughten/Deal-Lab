@@ -56,6 +56,8 @@ const listGroupListsCss = (themeName: ThemeName = "default") => css`
   .ListGroup-addListBtn {
     ${ccs.mainColorSection(themeName)};
     width: 42px;
+    max-height: 200px;
+    min-height: 100px;
     :hover {
       background: ${theme[themeName].dark};
     }

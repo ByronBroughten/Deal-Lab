@@ -7,9 +7,15 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-// - You want the listGroup store to retain the order of the saved lists.
+// For some reason, I lost the variable that determines the capExItem
+// value type.
+
 // - Upload to Heroku
 // - Create some properties, lists, and managements to show off the app
+
+// - Implement "doEquals" in additive and one-time cost lists for the demo
+// - Extrapolate the logic so it works on all four list types
+// - There is some code in "OngoingListItem"
 
 // - Add an icon option to the sectionBtns
 

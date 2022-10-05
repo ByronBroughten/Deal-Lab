@@ -81,10 +81,10 @@ export function VarbListGeneric<SN extends VarbListAllowed>({
   });
 
   const listMenu = {
-    full: (
+    full: () => (
       <ListMenuFull className="VarbListGeneric-menuFull" {...listMenuProps} />
     ),
-    simple: (
+    simple: () => (
       <ListMenuSimple
         className="VarbListGeneric-menuSimple"
         {...listMenuProps}
@@ -98,7 +98,7 @@ export function VarbListGeneric<SN extends VarbListAllowed>({
     >
       <div className="AdditiveList-viewable viewable">
         <div className="VarbList-menuRow">
-          {menuIsOpen && listMenu[menuType]}
+          {menuIsOpen && listMenu[menuType]()}
         </div>
         <div className="AdditiveList-titleRow">
           <div className="AdditiveList-titleRowLeft">
@@ -143,9 +143,7 @@ const Styled = styled.div<{
     display: flex;
   }
 
-  .VarbListGeneric-menuFull {
-    display: flex;
-    flex-direction: row-reverse;
+  .ListMenuGeneric-root {
     margin-bottom: ${theme.s2};
   }
 
