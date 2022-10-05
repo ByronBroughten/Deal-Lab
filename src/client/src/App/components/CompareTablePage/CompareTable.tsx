@@ -7,14 +7,12 @@ import { CompareTableTitleRow } from "./CompareTable/CompareTableTitleRow";
 import { IndexRow } from "./CompareTable/IndexRow";
 import { ProxyIndexRow } from "./CompareTable/ProxyIndexRow";
 
-interface Props extends UseTableActorProps {
-  title: string;
-}
+interface Props extends UseTableActorProps {}
 export function CompareTable(props: Props) {
   const table = useTableActor(props);
   const { filteredRows, compareRowProxies } = table;
   return (
-    <div className="CompareTable-viewable">
+    <div className="CompareTable-root">
       <CompareTableTitleRow {...props} />
       <table className="CompareTable-table">
         <thead>

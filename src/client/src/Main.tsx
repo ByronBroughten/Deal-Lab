@@ -38,19 +38,39 @@ export function Main() {
         />
         <Route
           path={feRoutes.mainTables.deal}
-          element={<FeUserMainTablePage mainTableName={"dealMainTable"} />}
+          element={
+            <FeUserMainTablePage
+              mainTableName={"dealMainTable"}
+              $themeName="deal"
+            />
+          }
         />
         <Route
           path={feRoutes.mainTables.property}
-          element={<FeUserMainTablePage mainTableName={"propertyMainTable"} />}
+          element={
+            <FeUserMainTablePage
+              mainTableName={"propertyMainTable"}
+              $themeName="property"
+            />
+          }
         />
         <Route
           path={feRoutes.mainTables.loan}
-          element={<FeUserMainTablePage mainTableName={"loanMainTable"} />}
+          element={
+            <FeUserMainTablePage
+              mainTableName={"loanMainTable"}
+              $themeName="loan"
+            />
+          }
         />
         <Route
           path={feRoutes.mainTables.mgmt}
-          element={<FeUserMainTablePage mainTableName={"mgmtMainTable"} />}
+          element={
+            <FeUserMainTablePage
+              mainTableName={"mgmtMainTable"}
+              $themeName="mgmt"
+            />
+          }
         />
         <Route path="/not-found" element={<NotFound />} />
         <Route path={"/"} element={<ActiveDeal feId={activeDealId} />} />

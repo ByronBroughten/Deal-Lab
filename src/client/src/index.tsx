@@ -7,9 +7,11 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-// Get This ready for the code walkthrough
-
 // - You want the listGroup store to retain the order of the saved lists.
+// - Upload to Heroku
+// - Create some properties, lists, and managements to show off the app
+
+// - Add an icon option to the sectionBtns
 
 // - Create an "Add List Group" button, styled like the list group section
 // - Make it big
@@ -21,33 +23,7 @@ AppRegistry.runApplication("App", {
 // - Give each of them child defaults
 
 // Make the mainSection tables
-// - Reveal the deal table (and perhaps the others)
-// - the front-end gets the rows and deletes proxies that are no longer relevant
-// - whenever a change is made to the columns or to the row order, the compareTable
-//   saves to the db
-// - perhaps whenever a change is made to the proxies, the compareTable saves
 // - Load rows according to whether autoSync is On
-// - Get rid of the ability to delete from the compare page
-
-// - When getSection is used, the section will be loaded as it was saved in the index
-// - If it is no longer in the index, its sync will simply be set to "autoSyncOff"
-// - For comparison's sake, autoSyncOn sections should not be taken into account
-//   autoSyncOff sections should be
-
-// Property is autoSyncOn.
-// I change one of its lists from "autoSyncOn" to "autoSyncOff"
-// I change one of its lists from "autoSyncOff" to "autoSyncOn"
-// - These will both be considered unsaved changes to Property
-// - This makes sense.
-
-// - Is changing the sync on a list considred an unsaved change
-//   For the list itself? All saved sections should automatically
-//   have sync turned on for comparison purposes. Plus, they are autoSyncOn, really.
-// - When they are "loaded", their sync is turned off
-
-// If a deal is autoSyncOff but its constituent property is, it will still load the property.
-// syncing and unsyncing doesn't really make sense at the deal level
-// Actually it does make sense
 
 // ***Maybe put "Upgrade User to Pro" button back.
 // ***Maybe make it possible to switch from numObj to stringObj

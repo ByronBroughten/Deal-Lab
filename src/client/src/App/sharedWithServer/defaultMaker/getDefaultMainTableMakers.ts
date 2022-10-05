@@ -28,20 +28,20 @@ export function getDefaultMainTableMakers(): TablePackMakers {
     },
     propertyMainTable: {
       sectionName: "property",
-      varbNames: ["price", "numBedrooms", "targetRentMonthly"],
+      varbNames: [
+        "price",
+        "targetRentMonthly",
+        "upfrontExpensesMonthly",
+        "ongoingExpensesMonthly",
+      ],
     },
     loanMainTable: {
       sectionName: "loan",
-      varbNames: ["interestRatePercentMonthly", "loanTermYears"],
+      varbNames: ["closingCosts", "interestRatePercentYearly", "loanTermYears"],
     },
     mgmtMainTable: {
       sectionName: "mgmt",
-      varbNames: [
-        "vacancyRatePercent",
-        "rentCutPercent",
-        "ongoingExpensesMonthly",
-        "upfrontExpensesMonthly",
-      ],
+      varbNames: ["upfrontExpensesMonthly", "ongoingExpensesMonthly"],
     },
   } as const;
 

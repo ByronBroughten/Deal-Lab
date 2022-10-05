@@ -4,16 +4,11 @@ import {
 } from "../../../modules/sectionActorHooks/useTableActor";
 import { MaterialStringEditor } from "../../inputs/MaterialStringEditor";
 
-interface Props extends UseTableActorProps {
-  title: string;
-}
-export function CompareTableTitleRow({ title, ...rest }: Props) {
-  const table = useTableActor(rest);
+interface Props extends UseTableActorProps {}
+export function CompareTableTitleRow(props: Props) {
+  const table = useTableActor(props);
   return (
     <div className="CompareTable-titleRow">
-      <h5 className="CompareTable-title CompareTable-controlRowItem">
-        {title}
-      </h5>
       <div className="CompareTable-controlRow">
         <MaterialStringEditor
           label="Filter by title"

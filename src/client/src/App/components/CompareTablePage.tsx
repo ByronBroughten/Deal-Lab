@@ -1,13 +1,13 @@
 import React from "react";
 import { unstable_batchedUpdates } from "react-dom";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import {
   useTableActor,
   UseTableActorProps,
 } from "../modules/sectionActorHooks/useTableActor";
 import { feStoreNameS } from "../sharedWithServer/SectionsMeta/relSectionsDerived/relNameArrs/FeStoreName";
 import { useAuthStatus } from "../sharedWithServer/stateClassHooks/useAuthStatus";
-import theme from "../theme/Theme";
+import theme, { ThemeName } from "../theme/Theme";
 import useHowMany from "./appWide/customHooks/useHowMany";
 import { CompareTable } from "./CompareTablePage/CompareTable";
 
@@ -31,8 +31,9 @@ function useLoadRows(props: UseTableActorProps) {
 
 interface Props extends UseTableActorProps {
   title: string;
+  $themeName: ThemeName;
 }
-export function CompareTablePage(props: Props) {
+export function CompareTablePage({ $themeName, title, ...props }: Props) {
   const isLoaded = useLoadRows(props);
   const table = useTableActor(props);
   if (!feStoreNameS.is(table.get.selfChildName, "mainTableName")) {
@@ -61,14 +62,33 @@ export function CompareTablePage(props: Props) {
   } as const;
 
   const getScenarioNode = scenarios[getScenarioKey()];
-  return <Styled className="CompareTable-root">{getScenarioNode()}</Styled>;
+  return (
+    <Styled
+      {...{
+        $themeName,
+        className: "CompareTable-root",
+      }}
+    >
+      <h5 className="CompareTable-title CompareTable-controlRowItem">
+        {title}
+      </h5>
+      {getScenarioNode()}
+    </Styled>
+  );
 }
 
-const Styled = styled.div`
+const Styled = styled.div<{ $themeName: ThemeName }>`
   display: flex;
   flex-direction: column;
   overflow: auto;
   align-items: center;
+  padding-top: ${theme.s4};
+  flex: 1;
+  background-color: ${({ $themeName }) => theme[$themeName].light};
+
+  .CompareTable-root {
+    margin-top: ${theme.s2};
+  }
 
   .CompareTable-addColumnSelector {
     .MuiInputBase-root {
@@ -110,12 +130,13 @@ const Styled = styled.div`
     visibility: hidden;
   }
 
-  .CompareTable-viewable {
+  .CompareTable-root {
     border-radius: ${theme.br1};
-    border: 2px solid ${theme.deal.border};
-    padding: ${theme.s2} 0 0 0;
     box-shadow: 0 5px 16px rgba(0, 0, 0, 0.2);
-    background: ${theme.deal.light};
+    ${({ $themeName }) => css`
+      border: 2px solid ${theme[$themeName].border};
+      background: ${theme[$themeName].light};
+    `}
   }
 
   .CompareTable-thContent {
@@ -143,7 +164,7 @@ const Styled = styled.div`
   }
 
   thead {
-    border-bottom: 1px solid ${theme.deal.border};
+    border-bottom: 1px solid ${({ $themeName }) => theme[$themeName].border};
   }
 
   td,
@@ -153,15 +174,17 @@ const Styled = styled.div`
 
   tbody {
     tr {
-      :hover {
-        background: ${theme.deal.main};
-        .CompareTable-trashBtn {
-          visibility: visible;
+      ${({ $themeName }) => css`
+        :hover {
+          background: ${theme[$themeName].main};
+          .CompareTable-trashBtn {
+            visibility: visible;
+          }
         }
-      }
-      :not(:first-child) {
-        border-top: 1px solid ${theme.deal.light};
-      }
+        :not(:first-child) {
+          border-top: 1px solid ${theme[$themeName].light};
+        }
+      `}
     }
   }
 
@@ -172,19 +195,14 @@ const Styled = styled.div`
 
   td {
     padding-top: ${theme.s1};
+    padding-left: ${theme.s3};
     vertical-align: top;
+    text-align: left;
   }
 
   .CompareTable-notLoggedIn,
   .CompareTable-areNone {
     display: flex;
     justify-content: center;
-  }
-
-  .deal:last-child {
-    border-bottom: 1px solid ${theme.dark};
-  }
-  .deal {
-    border-top: 1px solid ${theme.dark};
   }
 `;

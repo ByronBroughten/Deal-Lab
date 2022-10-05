@@ -11,11 +11,6 @@ export function CompareTableHeaderRow(props: Props) {
     <tr>
       <ColumnHeader
         {...{
-          displayName: "Compare",
-        }}
-      />
-      <ColumnHeader
-        {...{
           displayName: "Title",
           // 2. I don't yet have a mechanism for comparing properties
           //    - Add a button to the tableRow
@@ -47,7 +42,12 @@ export function CompareTableHeaderRow(props: Props) {
           />
         );
       })}
-      <th />
+      <ColumnHeader
+        {...{
+          displayName: "Compare",
+        }}
+      />
+      {/* <th className="ColumnHeader-trashBtn" /> */}
     </tr>
   );
 }

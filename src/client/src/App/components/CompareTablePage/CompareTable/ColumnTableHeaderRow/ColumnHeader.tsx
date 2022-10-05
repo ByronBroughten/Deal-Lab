@@ -1,11 +1,9 @@
-import { IoMdArrowDropdown } from "react-icons/io";
 import useOnOutsideClickRef from "../../../../modules/customHooks/useOnOutsideClickRef";
 import useToggleView from "../../../../modules/customHooks/useToggleView";
 import { Obj } from "../../../../sharedWithServer/utils/Obj";
 import SimpleMuiMenu, {
   SimpleMuiMenuItem,
 } from "../../../appWide/SimpleMuiMenu";
-import PlainIconBtn from "../../../general/PlainIconBtn";
 
 interface Props extends MenuOptionProps {
   displayName: string;
@@ -22,11 +20,11 @@ export default function ColumnHeader({ displayName, ...menuFns }: Props) {
       <div className="CompareTable-thContent">
         {displayName}
         <div ref={colMenuRef}>
-          {menuItems.length > 0 && (
+          {/* {menuItems.length > 0 && (
             <PlainIconBtn onClick={toggleColMenu}>
               <IoMdArrowDropdown className="CompareTable-columnArrow" />
             </PlainIconBtn>
-          )}
+          )} */}
           {colMenuIsOpen && (
             <SimpleMuiMenu
               {...{
