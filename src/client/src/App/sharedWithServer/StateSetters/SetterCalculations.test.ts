@@ -51,7 +51,7 @@ describe("SetterCalculations", () => {
     }
 
     const mgmtGeneral = dealTester.setter.onlyChild("mgmtGeneral");
-    const mgmt = mgmtGeneral.onlyChild("mgmt");
+    const mgmt = mgmtGeneral.addAndGetChild("mgmt");
 
     const mgmtCostListGroup = mgmt.onlyChild("upfrontCostListGroup");
 
@@ -96,7 +96,7 @@ describe("SetterCalculations", () => {
     }
 
     const mgmtGeneral = dealTester.setter.onlyChild("mgmtGeneral");
-    const mgmt = mgmtGeneral.onlyChild("mgmt");
+    const mgmt = mgmtGeneral.addAndGetChild("mgmt");
     mgmt.varb("rentCutPercent").updateValue(numObj(5));
     mgmt.varb("vacancyRatePercent").updateValue(numObj(5));
 

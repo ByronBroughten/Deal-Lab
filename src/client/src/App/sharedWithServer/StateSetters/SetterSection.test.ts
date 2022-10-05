@@ -10,7 +10,7 @@ import { SetterTesterSection } from "./TestUtils/SetterTesterSection";
 // replaceWithDefault, resetToDefault
 
 describe("SetterSection", () => {
-  const sectionNames = ["property", "mgmt", "deal"] as const;
+  const sectionNames = ["property", "mgmtGeneral", "deal"] as const;
   type TestName = typeof sectionNames[number];
   type SnTesterProps<SN extends TestName> = { tester: SetterTesterSection<SN> };
   type FnWithSnProp<SN extends TestName = TestName> = (
@@ -87,7 +87,7 @@ describe("SetterSection", () => {
 
     function runWithNames(fn: SectionChildPropsFn): void {
       const sectionAndChildNames = [
-        ["mgmt", ["upfrontCostListGroup"]],
+        ["deal", ["dealOutputList"]],
         ["property", ["unit"]],
       ] as const;
       for (const [sectionName, childNames] of sectionAndChildNames) {
