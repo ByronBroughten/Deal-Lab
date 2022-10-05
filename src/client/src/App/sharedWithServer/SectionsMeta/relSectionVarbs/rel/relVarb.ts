@@ -6,7 +6,6 @@ import {
 import { ChildName } from "../../childSectionsDerived/ChildName";
 import { RelInVarbInfo } from "../../childSectionsDerived/RelInOutVarbInfo";
 import { relVarbInfoS } from "../../childSectionsDerived/RelVarbInfo";
-import { relVarbInfosS } from "../../childSectionsDerived/RelVarbInfos";
 import { SectionName } from "../../SectionName";
 import {
   CommonRelVarb,
@@ -59,21 +58,7 @@ export const relVarbS = {
     });
   },
   get displayNameEditor() {
-    return relVarb("string", {
-      updateFnName: "manualUpdateOnly",
-      updateFnProps: {},
-      inUpdateSwitchProps: [
-        {
-          switchInfo: relVarbInfoS.local("valueSwitch"),
-          switchValue: "loadedVarb",
-          updateFnName: "displayNameFullVirtual",
-          updateFnProps: relVarbInfosS.localByVarbName([
-            "displayName",
-            "displayNameEnd",
-          ]),
-        },
-      ],
-    });
+    return relVarb("string", { updateFnName: "manualUpdateOnly" });
   },
   calcVarb(
     displayName: DisplayName,

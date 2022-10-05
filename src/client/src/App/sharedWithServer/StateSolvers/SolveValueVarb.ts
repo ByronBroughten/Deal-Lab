@@ -150,9 +150,6 @@ export class SolveValueVarb<
     emptyStringObj: (): StringObj => {
       return stringObj("");
     },
-    displayNameFullVirtual: (): string => {
-      return this.getterSection.virtualVarb.displayNameFull;
-    },
     loadDisplayName: (): StringObj => {
       return this.valueEntityVarbProp("displayName", "Variable not found");
     },

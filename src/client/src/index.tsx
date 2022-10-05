@@ -7,48 +7,50 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-// For some reason, I lost the variable that determines the capExItem
-// value type.
 
-// - Upload to Heroku
-// - Create some properties, lists, and managements to show off the app
-
+// Before Marketing
 // - Implement "doEquals" in additive and one-time cost lists for the demo
-// - Extrapolate the logic so it works on all four list types
-// - There is some code in "OngoingListItem"
-
+//   - Extrapolate the logic so it works on all four list types
+//   - There is some code in "OngoingListItem"
 // - Add an icon option to the sectionBtns
+// - Make compare and actions have an icon
+// - Maybe change load button's icons and label
+// - Think about making the menu hidable (arrow next to menu icon?)
+// - Hide "Ongoing Costs" and "Upfront Costs" initially
+//   - Create an "Add List Group" button, styled like the list group section
+//   - If there is no list group, put it in place of it
+//   - Make childDefaultAdders that take priority over regular default adders
+//   - Make the main sections start without their list groups
+//   - Give each of them child defaults
+// - Think about changing all numbers and strings to numObj and stringObj
+// - Get numObj editorText to display updated in-entity text. But also, it should keep
+//   depreciated in-entity text. It has to cache.
 
-// - Create an "Add List Group" button, styled like the list group section
-// - Make it big
-// - If there are no list group, put it in place of it
-
-// Hide "Ongoing Costs" and "Upfront Costs" initially
-// - Make childDefaultAdders that take priority over regular default adders
-// - Make the main sections start without their list groups
-// - Give each of them child defaults
-
-// Make the mainSection tables
+// Extra stuff
 // - Load rows according to whether autoSync is On
+// - Implement column features
 
-// ***Maybe put "Upgrade User to Pro" button back.
-// ***Maybe make it possible to switch from numObj to stringObj
-// ***Or just turn all numbers and strings to numObj and stringObj
-
-// It turns out getting beta users will be difficult after all.
-// You don't need the extra features for the below:
+// Get beta users:
 // 1. Post it on facebook/insta, asking for testers
 // 2. Maybe try posting to facebook groups
 // 3. Ask Ed to have a look at it
 // 4. Maybe attend an RE meetup or two
 
+// After Beta User attempt
+// - Put Upgrade To Pro button back
+// - Consult with a marketing agency
+// - Make a video
+// - Hire a marketing agency
+// - Landing page with high SEO
+// - Done with the app unless it makes any money
+
 // Demo Link: https://www.youtube.com/watch?v=wGfb8xX2FsI
+
 /* 
 I've been computer programming for awhile now, and after massively underestimating it, managed to make an app. Check it out, eh? And if you know anyone interested in rental property, I would love if they beta test it. https://www.youtube.com/watch?v=wGfb8xX2FsI
 */
 
 // I'm making an app for analyzing rental property. These are the main goals:
-
 // - Analyze properties faster and more precisely;
 // - Experiment with different combinations of loans and properties
 // - Save and reuse data
@@ -61,9 +63,6 @@ I've been computer programming for awhile now, and after massively underestimati
 // Here's a brief video demo:  https://www.youtube.com/watch?v=wGfb8xX2FsI
 // Here's a link to the app: https://www.ultimatepropertyanalyzer.com/
 // If you will try it and provide me with feedback, I would greatly appreciate it. 😊
-
-// - Get numObj editorText to display updated in-entity text. But also, it should keep
-//   depreciated in-entity text. So it has to cache.
 
 // - User solverSections in MainSection
 // - "getUserData" sometimes returns 401 - unauthorized

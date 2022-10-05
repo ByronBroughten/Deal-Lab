@@ -45,7 +45,7 @@ export const valueMeta = {
   },
   string: {
     is: (v: any): v is string => typeof v === "string",
-    updateFnNames: ["string", "manualUpdateOnly", "displayNameFullVirtual"],
+    updateFnNames: ["string", "manualUpdateOnly"],
     initDefault: () => "",
     zod: z.string(),
     mon: reqMonString,

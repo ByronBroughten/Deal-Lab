@@ -1,16 +1,26 @@
 import { Button } from "@material-ui/core";
+import { ButtonProps } from "@material-ui/core/Button";
 import React from "react";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import styled from "styled-components";
 import ccs from "../../theme/cssChunks";
 import theme from "../../theme/Theme";
 
-export default styled(Button).attrs(({ className = "", ...rest }) => ({
-  className: "NextBtn-root" + className,
-  variant: "contained",
-  children: <AiOutlineArrowRight size={22} className="icon" />,
-  ...rest,
-}))`
+export function NextBtn({ className, ...rest }: ButtonProps) {
+  return (
+    <Styled
+      {...{
+        ...rest,
+        className: `NextBtn-root ${className ?? ""}`,
+        variant: "contained",
+      }}
+    >
+      {<AiOutlineArrowRight size={22} className="icon" />}
+    </Styled>
+  );
+}
+
+const Styled = styled(Button)`
   ${ccs.xPlusBtnBody}
   background-color: ${theme.next.main};
   color: ${theme.dark};
