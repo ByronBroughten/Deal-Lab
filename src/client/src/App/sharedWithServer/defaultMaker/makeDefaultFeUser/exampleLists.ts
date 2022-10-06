@@ -21,8 +21,9 @@ export const capExValues = [
 
 export const utilityValues = [
   ["water", 100], // (88/3) * bedroom count
-  ["garbage", 100], // (60/3) * bedroom count
+  ["garbage", 75], // (60/3) * bedroom count
   ["energy", 100], //
+  ["lawnCare", 20],
 ] as const;
 
 export const miscOngoingRepairs = "((Price*.005+sqft)/2)/12";

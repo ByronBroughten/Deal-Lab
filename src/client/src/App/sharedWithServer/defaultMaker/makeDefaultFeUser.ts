@@ -4,7 +4,7 @@ import { SectionPack } from "../SectionsMeta/childSectionsDerived/SectionPack";
 import { feStoreNameS } from "../SectionsMeta/relSectionsDerived/relNameArrs/FeStoreName";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
 import { getDefaultMainTableMakers } from "./getDefaultMainTableMakers";
-import { capExValues } from "./makeDefaultFeUser/exampleLists";
+import { capExValues, utilityValues } from "./makeDefaultFeUser/exampleLists";
 import {
   makeDefaultAuthInfo,
   makeDefaultPublicUserInfo,
@@ -13,8 +13,10 @@ import {
 
 export function makeDefaultFeUserPack(): SectionPack<"feUser"> {
   const feUser = PackBuilderSection.initAsOmniChild("feUser");
+  const capExValueSwitch = "labeledSpanOverCost";
   const capExExampleList = feUser.addAndGetChild("ongoingListMain", {
     dbVarbs: {
+      defaultValueSwitch: capExValueSwitch,
       defaultOngoingSwitch: "yearly",
       totalOngoingSwitch: "yearly",
       displayName: stringObj("CapEx Example"),
@@ -26,8 +28,29 @@ export function makeDefaultFeUserPack(): SectionPack<"feUser"> {
         displayNameEditor: values[0],
         valueOngoingSwitch: "yearly",
         lifespanSpanSwitch: "years",
+        valueSwitch: capExValueSwitch,
         lifespanYears: numObj(values[1]),
         costToReplace: values[2],
+      },
+    });
+  }
+
+  const utilityValueSwitch = "labeledEquation";
+  const utiltyExampleList = feUser.addAndGetChild("ongoingListMain", {
+    dbVarbs: {
+      defaultValueSwitch: utilityValueSwitch,
+      defaultOngoingSwitch: "monthly",
+      totalOngoingSwitch: "monthly",
+      displayName: stringObj("Utilities Example"),
+    },
+  });
+  for (const values of utilityValues) {
+    utiltyExampleList.addChild("ongoingItem", {
+      dbVarbs: {
+        displayNameEditor: values[0],
+        valueOngoingSwitch: "monthly",
+        valueSwitch: utilityValueSwitch,
+        numObjEditor: numObj(values[1]),
       },
     });
   }
