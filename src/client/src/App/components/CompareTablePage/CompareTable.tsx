@@ -1,8 +1,10 @@
+import styled from "styled-components";
 import {
   useTableActor,
   UseTableActorProps,
 } from "../../modules/sectionActorHooks/useTableActor";
 import useHowMany from "../appWide/customHooks/useHowMany";
+import theme from "./../../theme/Theme";
 import { CompareTableHeaderRow } from "./CompareTable/CompareTableHeaderRow";
 import { CompareTableTitleRow } from "./CompareTable/CompareTableTitleRow";
 import { IndexRow } from "./CompareTable/IndexRow";
@@ -14,7 +16,13 @@ export function CompareTable(props: Props) {
   const { filteredMinusComparedRows, compareRowProxies } = table;
   const { isAtLeastOne } = useHowMany(filteredMinusComparedRows);
   const scenarios = {
-    areNone: () => <div className="CompareTable-areNone">None</div>,
+    areNone: () => (
+      <tr>
+        <td className="CompareTable-areNone" colSpan={6}>
+          None
+        </td>
+      </tr>
+    ),
     isAtLeastOne: () => (
       <>
         {filteredMinusComparedRows.map(({ feId }) => (
@@ -24,7 +32,7 @@ export function CompareTable(props: Props) {
     ),
   };
   return (
-    <div className="CompareTable-root">
+    <Styled className="CompareTable-root">
       <CompareTableTitleRow {...props} />
       <table className="CompareTable-table">
         <thead>
@@ -37,6 +45,13 @@ export function CompareTable(props: Props) {
           {isAtLeastOne ? scenarios.isAtLeastOne() : scenarios.areNone()}
         </tbody>
       </table>
-    </div>
+    </Styled>
   );
 }
+
+const Styled = styled.div`
+  .CompareTable-areNone {
+    text-align: center;
+    padding: ${theme.s1};
+  }
+`;

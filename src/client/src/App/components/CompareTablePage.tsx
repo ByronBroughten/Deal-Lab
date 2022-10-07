@@ -47,7 +47,7 @@ export function CompareTablePage({ $themeName, title, ...props }: Props) {
   }
   const scenarios = {
     isGuest: () => (
-      <div className="CompareTable-notLoggedIn">
+      <div className="CompareTablePage-notLoggedIn">
         To view saved analyses, make an account or sign in.
       </div>
     ),
@@ -194,8 +194,7 @@ const Styled = styled.div<{ $themeName: ThemeName }>`
     text-align: left;
   }
 
-  .CompareTable-notLoggedIn,
-  .CompareTable-areNone {
+  .CompareTablePage-notLoggedIn {
     display: flex;
     justify-content: center;
   }
