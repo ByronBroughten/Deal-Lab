@@ -1,10 +1,10 @@
-import { numObj } from "../SectionsMeta/baseSectionsVarbs/baseValues/NumObj";
-import { stringObj } from "../SectionsMeta/baseSectionsVarbs/baseValues/StringObj";
 import { SectionPack } from "../SectionsMeta/childSectionsDerived/SectionPack";
 import { feStoreNameS } from "../SectionsMeta/relSectionsDerived/relNameArrs/FeStoreName";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
 import { getDefaultMainTableMakers } from "./getDefaultMainTableMakers";
-import { capExValues, utilityExamples } from "./makeDefaultFeUser/exampleLists";
+import { makeExampleUserOngoingLists } from "./makeDefaultFeUser/makeExampleUserOngoingLists";
+import { makeExampleUserSingleTimeLists } from "./makeDefaultFeUser/makeExampleUserSingleTimeLists";
+import { makeExampleUserVarbLists } from "./makeDefaultFeUser/makeExampleUserVarbLists";
 import {
   makeDefaultAuthInfo,
   makeDefaultPublicUserInfo,
@@ -13,47 +13,18 @@ import {
 
 export function makeDefaultFeUserPack(): SectionPack<"feUser"> {
   const feUser = PackBuilderSection.initAsOmniChild("feUser");
-  const capExValueSwitch = "labeledSpanOverCost";
-  const capExExampleList = feUser.addAndGetChild("ongoingListMain", {
-    dbVarbs: {
-      defaultValueSwitch: capExValueSwitch,
-      defaultOngoingSwitch: "yearly",
-      totalOngoingSwitch: "yearly",
-      displayName: stringObj("CapEx Example"),
-    },
+  feUser.loadChildren({
+    childName: "userVarbListMain",
+    sectionPacks: makeExampleUserVarbLists(),
   });
-  for (const values of capExValues) {
-    capExExampleList.addChild("ongoingItem", {
-      dbVarbs: {
-        displayNameEditor: values[0],
-        valueOngoingSwitch: "yearly",
-        lifespanSpanSwitch: "years",
-        valueSwitch: capExValueSwitch,
-        lifespanYears: numObj(values[1]),
-        costToReplace: values[2],
-      },
-    });
-  }
-
-  const utilityValueSwitch = "labeledEquation";
-  const utiltyExampleList = feUser.addAndGetChild("ongoingListMain", {
-    dbVarbs: {
-      defaultValueSwitch: utilityValueSwitch,
-      defaultOngoingSwitch: "monthly",
-      totalOngoingSwitch: "monthly",
-      displayName: stringObj("Utilities Example"),
-    },
+  feUser.loadChildren({
+    childName: "ongoingListMain",
+    sectionPacks: makeExampleUserOngoingLists(),
   });
-  for (const values of utilityExamples) {
-    utiltyExampleList.addChild("ongoingItem", {
-      dbVarbs: {
-        displayNameEditor: values[0],
-        valueOngoingSwitch: "monthly",
-        valueSwitch: utilityValueSwitch,
-        numObjEditor: numObj(values[1]),
-      },
-    });
-  }
+  feUser.loadChildren({
+    childName: "singleTimeListMain",
+    sectionPacks: makeExampleUserSingleTimeLists(),
+  });
 
   feUser.loadChild({
     childName: "userInfo",

@@ -26,7 +26,6 @@ export function getDefaultMainTableMakers(): TablePackMakers {
   const columnVarbnames = {
     dealMainTable: makeVarbNamesInfo("deal", outputNames),
     propertyMainTable: makeVarbNamesInfo("property", [
-      "price",
       "targetRentMonthly",
       "upfrontExpenses",
       "expensesMonthly",
@@ -49,8 +48,6 @@ export function getDefaultMainTableMakers(): TablePackMakers {
       const { sectionName, varbNames } = columnVarbnames[tableName];
       for (const varbName of varbNames) {
         table.addChild("column", {
-          // doy.
-          // ok.
           dbVarbs: {
             valueEntityInfo: inEntityInfo({
               infoType: "globalSection",

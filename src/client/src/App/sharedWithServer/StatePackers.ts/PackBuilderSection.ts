@@ -124,6 +124,17 @@ export class PackBuilderSection<
   ): void {
     this.loader.loadChildSectionPack(childPackInfo);
   }
+  loadChildren<CN extends ChildName<SN>, CT extends ChildSectionName<SN, CN>>({
+    childName,
+    sectionPacks,
+  }: ChildArrPack<SN, CN, CT>) {
+    for (const sectionPack of sectionPacks) {
+      this.loadChild({
+        childName,
+        sectionPack,
+      });
+    }
+  }
   loadAndGetChildren<
     CN extends ChildName<SN>,
     CT extends ChildSectionName<SN, CN>

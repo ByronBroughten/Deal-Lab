@@ -108,7 +108,7 @@ const themeSections = {
   default: {
     ...themeSection({
       light: color["gray-200"],
-      main: color["gray-400"],
+      main: color["gray-500"],
       dark: color["gray-600"],
       border: color["gray-600"],
     }),
