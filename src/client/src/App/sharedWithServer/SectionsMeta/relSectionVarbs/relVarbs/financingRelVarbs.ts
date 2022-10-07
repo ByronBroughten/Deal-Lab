@@ -31,9 +31,7 @@ export function loanRelVarbs(): RelVarbs<"loan"> {
               "propertyGeneral",
               "propertyGeneral",
               "price",
-              {
-                expectedCount: "onlyOne",
-              }
+              { expectedCount: "onlyOne" }
             ),
           },
         },

@@ -192,8 +192,8 @@ export const baseSectionsVarbs = checkBaseSectionsVarbs({
   deal: baseSectionVarbs({
     ...baseVarbsS.savableSection,
     ...baseVarbs("numObj", [
-      "upfrontExpensesBaseSum",
       "upfrontExpenses",
+      "outOfPocketExpenses",
       "upfrontRevenue",
       "totalInvestment",
       "downPaymentDollars",

@@ -18,9 +18,9 @@ export function propertyRelVarbs(): RelVarbs<"property"> {
     // zipcode: relVarbS.numObj("Zipcode"),
     numUnits: relVarbS.sumChildVarb("Unit count", "unit", "one"),
     numBedrooms: relVarbS.sumChildVarb("Bedroom count", "unit", "numBedrooms"),
-
     upfrontExpenses: relVarbS.sumMoney("Upfront expenses", [
       relVarbInfoS.children("upfrontCostListGroup", "total"),
+      relVarbInfoS.local("price"),
     ]),
     upfrontRevenue: relVarbS.sumMoney("Upfront revenues", [
       relVarbInfoS.children("upfrontRevenueListGroup", "total"),
@@ -33,12 +33,8 @@ export function propertyRelVarbs(): RelVarbs<"property"> {
         relVarbInfoS.local("taxes"),
         relVarbInfoS.local("homeIns"),
       ],
-      {
-        switchInit: "monthly",
-        shared: { startAdornment: "$" },
-      }
+      { switchInit: "monthly", shared: { startAdornment: "$" } }
     ),
-
     // ongoing revenue
     ...relVarbsS.ongoingSumNums(
       "miscRevenue",

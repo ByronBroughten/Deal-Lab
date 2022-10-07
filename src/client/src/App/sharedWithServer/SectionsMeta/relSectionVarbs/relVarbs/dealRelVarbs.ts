@@ -48,7 +48,7 @@ export function dealRelVarbs(): RelVarbs<"deal"> {
       "Upfront investment",
       "simpleSubtract",
       relVarbInfosS.local([
-        "upfrontExpenses",
+        "outOfPocketExpenses",
         "upfrontRevenue",
       ]) as LeftRightVarbInfos,
       { startAdornment: "$" }
@@ -107,10 +107,9 @@ export function dealRelVarbs(): RelVarbs<"deal"> {
     roiOngoingSwitch: relVarb("string", {
       initValue: "yearly",
     }),
-    upfrontExpensesBaseSum: relVarbS.sumNums(
+    upfrontExpenses: relVarbS.sumNums(
       "Upfront expenses pre wrapped-in-loan",
       [
-        relVarbInfoS.local("downPaymentDollars"),
         relVarbInfoS.children("propertyGeneral", "upfrontExpenses"),
         relVarbInfoS.children("mgmtGeneral", "upfrontExpenses"),
         ...relVarbInfosS.children("financing", [
@@ -120,12 +119,12 @@ export function dealRelVarbs(): RelVarbs<"deal"> {
       ],
       { startAdornment: "$" }
     ),
-    upfrontExpenses: relVarbS.leftRightPropFn(
+    outOfPocketExpenses: relVarbS.leftRightPropFn(
       "Upfront expenses total",
       "simpleSubtract",
       [
-        relVarbInfoS.local("upfrontExpensesBaseSum"),
-        relVarbInfoS.children("financing", "wrappedInLoan"),
+        relVarbInfoS.local("upfrontExpenses"),
+        relVarbInfoS.children("financing", "loanTotalDollars"),
       ] as LeftRightVarbInfos,
       { startAdornment: "$" }
     ),

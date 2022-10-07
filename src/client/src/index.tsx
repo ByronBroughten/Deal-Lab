@@ -7,6 +7,7 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
+// should loans have "upfrontCosts"? It's not just closing costs, right?
 
 // Before Marketing
 // - Implement "doEquals" in additive and one-time cost lists for the demo

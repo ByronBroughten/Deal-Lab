@@ -64,7 +64,7 @@ describe("SetterCalculations", () => {
     }
 
     const upfrontInvestment =
-      dealTester.get.varb("upfrontExpenses").numberValue;
+      dealTester.get.varb("totalInvestment").numberValue;
     expect(upfrontInvestment).toBe(45000);
     // 200000 + 8000 + 2000 + 4000 + 6000 - 150000 - 20000 - 4000 - 1000
   });
