@@ -23,8 +23,8 @@ AppRegistry.runApplication("App", {
 //   - Make the main sections start without their list groups
 //   - Give each of them child defaults
 // - Think about changing all numbers and strings to numObj and stringObj
-// - Get numObj editorText to display updated in-entity text. But also, it should keep
-//   depreciated in-entity text. It has to cache.
+// - Get numObj editorText to display updated in-entity text. But also, it should keep depreciated in-entity text. It has to cache.
+// - Should property price count as an upfront expense?
 
 // Extra stuff
 // - Load rows according to whether autoSync is On

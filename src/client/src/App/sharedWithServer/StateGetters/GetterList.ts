@@ -128,7 +128,7 @@ export class GetterList<
   }
   tooManySectionsFound(infoType: string): TooManySectionsFoundError {
     return new TooManySectionsFoundError(
-      `Too many sections found using infoType ${infoType}`
+      `Too many sections found of sectionName ${this.sectionName} using infoType ${infoType}`
     );
   }
   sectionNotFoundError(infoType: string): SectionNotFoundError {

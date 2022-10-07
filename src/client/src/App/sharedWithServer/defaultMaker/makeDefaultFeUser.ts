@@ -4,7 +4,7 @@ import { SectionPack } from "../SectionsMeta/childSectionsDerived/SectionPack";
 import { feStoreNameS } from "../SectionsMeta/relSectionsDerived/relNameArrs/FeStoreName";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
 import { getDefaultMainTableMakers } from "./getDefaultMainTableMakers";
-import { capExValues, utilityValues } from "./makeDefaultFeUser/exampleLists";
+import { capExValues, utilityExamples } from "./makeDefaultFeUser/exampleLists";
 import {
   makeDefaultAuthInfo,
   makeDefaultPublicUserInfo,
@@ -44,7 +44,7 @@ export function makeDefaultFeUserPack(): SectionPack<"feUser"> {
       displayName: stringObj("Utilities Example"),
     },
   });
-  for (const values of utilityValues) {
+  for (const values of utilityExamples) {
     utiltyExampleList.addChild("ongoingItem", {
       dbVarbs: {
         displayNameEditor: values[0],

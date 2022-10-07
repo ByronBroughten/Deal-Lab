@@ -28,6 +28,21 @@ export function sectionVarbValueName<
   return baseVarbs[varbName as keyof typeof baseVarbs] as VarbValueName<SN, VN>;
 }
 
+export type VarbNamesInfo<SN extends SectionName, VN extends VarbName<SN>> = {
+  sectionName: SN;
+  varbNames: readonly VN[];
+};
+
+export function makeVarbNamesInfo<
+  SN extends SectionName,
+  VN extends VarbName<SN>
+>(sectionName: SN, varbNames: readonly VN[]): VarbNamesInfo<SN, VN> {
+  return {
+    sectionName,
+    varbNames,
+  };
+}
+
 type SectionDotVarbNames<
   SN extends SectionName,
   VN extends VarbName<SN> = VarbName<SN>

@@ -1,6 +1,7 @@
 // make TableActor
 
 import { makeReq } from "../../sharedWithServer/apiQueriesShared/makeReqAndRes";
+import { sectionsMeta } from "../../sharedWithServer/SectionsMeta";
 import { VarbName } from "../../sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
 import { InEntityVarbInfo } from "../../sharedWithServer/SectionsMeta/baseSectionsVarbs/baseValues/entities";
 import { DbStoreNameByType } from "../../sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreName";
@@ -15,11 +16,25 @@ import { SectionActorBase, SectionActorBaseProps } from "./SectionActorBase";
 class GetterColumn extends GetterSection<"column"> {
   get displayNameOrNotFound(): string {
     const varbInfo = this.valueInEntityInfo();
-    if (this.sections.hasSectionMixed(varbInfo)) {
-      const varb = this.sections.varbByMixed(varbInfo);
-      return varb.displayName;
+    if (varbInfo.infoType === "globalSection") {
+      const { displayName } = sectionsMeta.varb(varbInfo);
+      if (typeof displayName === "string") {
+        return displayName;
+      } else {
+        throw new Error("displayName must be a hardcoded string here.");
+      }
     } else {
-      return "Variable not found";
+      const userVarbInfo = {
+        ...varbInfo,
+        sectionName: "userVarbItem",
+        varbName: "value",
+      } as const;
+      if (this.sections.hasSectionMixed(userVarbInfo)) {
+        const varb = this.sections.varbByMixed(userVarbInfo);
+        return varb.displayName;
+      } else {
+        return "Variable not found";
+      }
     }
   }
 }
@@ -78,15 +93,16 @@ export class TableActor extends SectionActorBase<"compareTable"> {
   get filteredRows() {
     const titleFilter = this.get.value("titleFilter", "string");
     return this.rows.filter((row) => {
-      const passesTitleFilter = row
-        .value("displayName", "string")
-        .includes(titleFilter);
-      const passesProxyFilter = !this.get.hasChildByValue({
+      return row.value("displayName", "string").includes(titleFilter);
+    });
+  }
+  get filteredMinusComparedRows() {
+    return this.filteredRows.filter((row) => {
+      return !this.get.hasChildByValue({
         childName: "compareRow",
         varbName: "dbId",
         value: row.dbId,
       });
-      return passesTitleFilter && passesProxyFilter;
     });
   }
   async sortRows(

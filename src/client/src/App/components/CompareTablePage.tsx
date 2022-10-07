@@ -8,7 +8,6 @@ import {
 import { feStoreNameS } from "../sharedWithServer/SectionsMeta/relSectionsDerived/relNameArrs/FeStoreName";
 import { useAuthStatus } from "../sharedWithServer/stateClassHooks/useAuthStatus";
 import theme, { ThemeName } from "../theme/Theme";
-import useHowMany from "./appWide/customHooks/useHowMany";
 import { CompareTable } from "./CompareTablePage/CompareTable";
 
 function useLoadRows(props: UseTableActorProps) {
@@ -40,15 +39,11 @@ export function CompareTablePage({ $themeName, title, ...props }: Props) {
     throw new Error("CompareTablePage is only for feUser tables");
   }
 
-  const { filteredRows } = table;
-  const { isAtLeastOne, areNone } = useHowMany(filteredRows);
   const authStatus = useAuthStatus();
   function getScenarioKey(): keyof typeof scenarios {
     if (authStatus === "guest") return "isGuest";
     else if (!isLoaded) return "isLoading";
-    else if (areNone) return "areNone";
-    else if (isAtLeastOne) return "isAtLeastOne";
-    else throw new Error("One of these should have been true.");
+    else return "showTable";
   }
   const scenarios = {
     isGuest: () => (
@@ -57,8 +52,7 @@ export function CompareTablePage({ $themeName, title, ...props }: Props) {
       </div>
     ),
     isLoading: () => <div className="CompareTable-areNone">Loading...</div>,
-    areNone: () => <div className="CompareTable-areNone">None</div>,
-    isAtLeastOne: () => <CompareTable {...props} />,
+    showTable: () => <CompareTable {...props} />,
   } as const;
 
   const getScenarioNode = scenarios[getScenarioKey()];

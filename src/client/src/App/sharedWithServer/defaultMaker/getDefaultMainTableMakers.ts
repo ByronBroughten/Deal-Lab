@@ -1,3 +1,4 @@
+import { makeVarbNamesInfo } from "../SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
 import { inEntityInfo } from "../SectionsMeta/baseSectionsVarbs/baseValues/InEntityInfoValue";
 import { DbSectionPack } from "../SectionsMeta/childSectionsDerived/DbSectionPack";
 import { SectionPack } from "../SectionsMeta/childSectionsDerived/SectionPack";
@@ -20,29 +21,25 @@ export function makeDefaultTablePackArrs(): DefaultTables {
 type TablePackMakers = {
   [CN in FeStoreNameByType<"mainTableName">]: () => SectionPack<"compareTable">;
 };
+
 export function getDefaultMainTableMakers(): TablePackMakers {
   const columnVarbnames = {
-    dealMainTable: {
-      sectionName: "deal",
-      varbNames: outputNames,
-    },
-    propertyMainTable: {
-      sectionName: "property",
-      varbNames: [
-        "price",
-        "targetRentMonthly",
-        "upfrontExpensesMonthly",
-        "ongoingExpensesMonthly",
-      ],
-    },
-    loanMainTable: {
-      sectionName: "loan",
-      varbNames: ["closingCosts", "interestRatePercentYearly", "loanTermYears"],
-    },
-    mgmtMainTable: {
-      sectionName: "mgmt",
-      varbNames: ["upfrontExpensesMonthly", "ongoingExpensesMonthly"],
-    },
+    dealMainTable: makeVarbNamesInfo("deal", outputNames),
+    propertyMainTable: makeVarbNamesInfo("property", [
+      "price",
+      "targetRentMonthly",
+      "upfrontExpenses",
+      "expensesMonthly",
+    ]),
+    loanMainTable: makeVarbNamesInfo("loan", [
+      "closingCosts",
+      "interestRatePercentYearly",
+      "loanTermYears",
+    ]),
+    mgmtMainTable: makeVarbNamesInfo("mgmt", [
+      "upfrontExpenses",
+      "expensesMonthly",
+    ]),
   } as const;
 
   return Obj.keys(columnVarbnames).reduce((packMakers, tableName) => {
