@@ -11,7 +11,10 @@ import {
 import { SectionPack } from "../SectionsMeta/childSectionsDerived/SectionPack";
 import { FeSectionInfo } from "../SectionsMeta/Info";
 import { SectionName } from "../SectionsMeta/SectionName";
-import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
+import {
+  SectionNameByType,
+  SectionNameType,
+} from "../SectionsMeta/SectionNameByType";
 import { GetterSectionsBase } from "../StateGetters/Bases/GetterSectionsBase";
 import { UpdaterSectionBase } from "../StateUpdaters/bases/updaterSectionBase";
 import {
@@ -76,6 +79,11 @@ export class PackBuilderSection<
   }
   get maker(): PackMakerSection<SN> {
     return new PackMakerSection(this.getterSectionProps);
+  }
+  isSectionType<ST extends SectionNameType>(
+    sectionTypeName: ST
+  ): this is PackBuilderSection<SectionNameByType<ST>> {
+    return this.get.isSectionType(sectionTypeName);
   }
   children<CN extends ChildName<SN>>(
     childName: CN
@@ -203,5 +211,23 @@ export class PackBuilderSection<
     CT extends ChildSectionName<SN, CN> = ChildSectionName<SN, CN>
   >(childName: CN): PackBuilderSection<CT> {
     return this.packBuilderSection(this.get.youngestChild(childName));
+  }
+}
+
+export async function loopChildren<SN extends ChildSectionName<"omniParent">>(
+  sectionPack: SectionPack<SN>
+) {
+  const headSection = PackBuilderSection.loadAsOmniChild(sectionPack);
+  let sectionInfos: FeSectionInfo[] = [headSection.feInfo];
+  while (sectionInfos.length > 0) {
+    const nextInfos: FeSectionInfo[] = [];
+    for (const info of sectionInfos) {
+      const section = headSection.sections.section(info);
+      for (const childName of section.get.childNames) {
+        for (const child of section.children(childName)) {
+        }
+      }
+    }
+    sectionInfos = nextInfos;
   }
 }

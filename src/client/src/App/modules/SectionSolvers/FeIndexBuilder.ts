@@ -1,6 +1,10 @@
+import { ChildSectionName } from "../../sharedWithServer/SectionsMeta/childSectionsDerived/ChildSectionName";
 import { SectionPack } from "../../sharedWithServer/SectionsMeta/childSectionsDerived/SectionPack";
+import { FeSectionInfo } from "../../sharedWithServer/SectionsMeta/Info";
+import { FeStoreNameByType } from "../../sharedWithServer/SectionsMeta/relSectionsDerived/relNameArrs/FeStoreName";
 import { SectionNameByType } from "../../sharedWithServer/SectionsMeta/SectionNameByType";
 import { GetterSections } from "../../sharedWithServer/StateGetters/GetterSections";
+import { PackBuilderSection } from "../../sharedWithServer/StatePackers.ts/PackBuilderSection";
 import { SolverListBase } from "../../sharedWithServer/StateSolvers/SolverBases/SolverListBase";
 import { DisplayIndexBuilder } from "./DisplayIndexBuilder";
 import { FullIndexBuilder } from "./FullIndexBuilder";
@@ -34,6 +38,11 @@ export class FeIndexBuilder<
       throw new Error(`${this.getL.sectionName} has no display index store`);
     }
     const { displayIndexName } = this.sectionMeta;
+    return this.makeDisplayIndexBuilder(displayIndexName);
+  }
+  makeDisplayIndexBuilder<CN extends FeStoreNameByType<"displayIndex">>(
+    displayIndexName: CN
+  ): DisplayIndexBuilder<ChildSectionName<"feUser", CN>> {
     const feUser = this.getterSections.oneAndOnly("feUser");
     const store = feUser.onlyChild(displayIndexName);
     return new DisplayIndexBuilder({
@@ -58,12 +67,37 @@ export class FeIndexBuilder<
   }
   addAsSavedIfMissing(sectionPack: SectionPack<SN>) {
     if (this.hasDisplayIndex) {
-      this.displayIndexBuilder.addAsSavedIfNot(sectionPack as any);
+      const headSection = PackBuilderSection.loadAsOmniChild(sectionPack);
+      let sectionInfos: FeSectionInfo[] = [headSection.feInfo];
+      while (sectionInfos.length > 0) {
+        const nextInfos: FeSectionInfo[] = [];
+        for (const info of sectionInfos) {
+          const section = headSection.sections.section(info);
+          for (const childName of section.get.childNames) {
+            for (const child of section.children(childName)) {
+              if (child.isSectionType("hasDisplayIndex")) {
+                const { displayIndexName } = child.sectionMeta;
+                const displayIndexBuilder =
+                  this.makeDisplayIndexBuilder(displayIndexName);
+
+                displayIndexBuilder.addAsSavedIfMissing(
+                  child.makeSectionPack() as any
+                  // It's probably fastest to just check all the displayIndexes
+                  // after each operation and load the sections as saved as necessary
+                  // Do the same for removing.
+                  // Updating should be fine
+                );
+              }
+            }
+          }
+        }
+        sectionInfos = nextInfos;
+      }
     }
   }
-  removeExtraAsSaved(loadedDbIds: string[]) {
+  removeAsSavedExtras(loadedDbIds: string[]) {
     if (this.hasDisplayIndex) {
-      this.displayIndexBuilder.removeExtraAsSaved(loadedDbIds);
+      this.displayIndexBuilder.removeAsSavedExtras(loadedDbIds);
     }
   }
   deleteFromIndex(dbId: string) {

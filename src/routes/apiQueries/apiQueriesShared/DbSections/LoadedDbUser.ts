@@ -197,7 +197,7 @@ export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
               childName: this.displayToDbStoreName(displayIndexName),
               dbId: section.get.dbId,
             });
-            displayIndexBuilder.addAsSavedIfNot(
+            displayIndexBuilder.addAsSavedIfMissing(
               child.packMaker.makeSectionPack()
             );
           }

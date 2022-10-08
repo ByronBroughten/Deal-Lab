@@ -1,5 +1,6 @@
 import { ChildSectionPack } from "../../sharedWithServer/SectionsMeta/childSectionsDerived/ChildSectionPack";
 import { FeStoreNameByType } from "../../sharedWithServer/SectionsMeta/relSectionsDerived/relNameArrs/FeStoreName";
+import { SectionPackByType } from "../../sharedWithServer/SectionsMeta/SectionNameByType";
 import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
 import { PackBuilderSection } from "../../sharedWithServer/StatePackers.ts/PackBuilderSection";
 import { SolverSectionBase } from "../../sharedWithServer/StateSolvers/SolverBases/SolverSectionBase";
@@ -36,25 +37,20 @@ export class DisplayIndexBuilder<
       dbId,
     });
   }
-  removeExtraAsSaved(loadedDbIds: string[]) {
-    const { itemDbIds } = this.list;
-    const asSavedList = this.get.children("activeAsSaved");
-    for (const { dbId } of asSavedList) {
-      if (loadedDbIds.includes(dbId) && itemDbIds.includes(dbId)) {
-        continue;
-      } else {
-        this.removeAsSaved(dbId);
-      }
+  removeAsSavedExtras(loadedDbIds: string[]) {
+    for (const dbId of loadedDbIds) {
+      this.removeAsSavedIfExtra(dbId);
     }
   }
   addItem(sectionPack: ChildSectionPack<SN, "activeAsSaved">) {
-    this.addAsSavedIfNot(sectionPack);
-    const { dbId } = sectionPack;
-    const child = this.getAsSaved(dbId).get;
+    const child = PackBuilderSection.loadAsOmniChild(
+      sectionPack as any as SectionPackByType<"hasDisplayIndex">
+    );
     this.list.addItem({
-      displayName: child.valueNext("displayName").mainText,
-      dbId,
+      displayName: child.get.valueNext("displayName").mainText,
+      dbId: child.get.dbId,
     });
+    this.addAsSavedIfMissing(sectionPack);
   }
   updateItem(sectionPack: ChildSectionPack<SN, "activeAsSaved">) {
     const { dbId } = sectionPack;
@@ -70,21 +66,18 @@ export class DisplayIndexBuilder<
   }
   removeItem(dbId: string) {
     this.list.removeItem(dbId);
-    this.removeAsSavedlIfNot(dbId);
+    this.removeAsSavedIfExtra(dbId);
   }
-  addAsSavedIfNot(sectionPack: ChildSectionPack<SN, "activeAsSaved">): void {
+  addAsSavedIfMissing(
+    sectionPack: ChildSectionPack<SN, "activeAsSaved">
+  ): void {
     const { dbId } = sectionPack;
-    if (!this.hasAsSaved(dbId)) {
-      this.builder.loadChild({
-        childName: "activeAsSaved",
-        sectionPack: sectionPack as any,
-      });
-    }
-  }
-  private removeAsSavedlIfNot(dbId: string) {
-    if (!this.list.hasByDbId(dbId)) {
-      if (this.hasAsSaved(dbId)) {
-        this.removeAsSaved(dbId);
+    if (this.list.hasByDbId(dbId)) {
+      if (!this.hasAsSaved(dbId)) {
+        this.builder.loadChild({
+          childName: "activeAsSaved",
+          sectionPack: sectionPack as any,
+        });
       }
     }
   }
@@ -93,6 +86,13 @@ export class DisplayIndexBuilder<
       childName: "activeAsSaved",
       dbId,
     });
+  }
+  private removeAsSavedIfExtra(dbId: string) {
+    if (!this.list.hasByDbId(dbId)) {
+      if (this.hasAsSaved(dbId)) {
+        this.removeAsSaved(dbId);
+      }
+    }
   }
   private removeAsSaved(dbId: string): void {
     this.builder.removeChildByDbId({

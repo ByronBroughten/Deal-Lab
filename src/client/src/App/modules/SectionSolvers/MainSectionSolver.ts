@@ -123,7 +123,7 @@ export class MainSectionSolver<
     const parent = this.getterSections.section(this.parentInfoCache);
     const childName = this.selfChildNameCache;
     const siblingDbIds = parent.children(childName).map(({ dbId }) => dbId);
-    this.feIndexBuilder.removeExtraAsSaved(siblingDbIds);
+    this.feIndexBuilder.removeAsSavedExtras(siblingDbIds);
   }
 
   deleteFromIndex(dbId: string) {

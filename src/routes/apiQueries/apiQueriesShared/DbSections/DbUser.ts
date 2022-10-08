@@ -278,7 +278,8 @@ export class DbUser extends DbSectionsQuerierBase {
       dbSections,
     });
   }
-  async syncSectionPackChildren<SN extends ChildSectionName<"omniParent">>(
+
+  async syncSectionPack<SN extends ChildSectionName<"omniParent">>(
     sectionPack: SectionPack<SN>
   ) {
     const headSection = PackBuilderSection.loadAsOmniChild(sectionPack);

@@ -7,6 +7,14 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
+// Make all the stores feStores
+// Don't save the stores in localStorage
+
+// The app moves too slow when there are too many
+// list items.
+
+// I suspect it's due mostly due to performing "isEqual"
+// checks with the main sections and their saved counterparts.
 
 // Before Marketing
 // - Implement "doEquals" in additive and one-time cost lists for the demo
