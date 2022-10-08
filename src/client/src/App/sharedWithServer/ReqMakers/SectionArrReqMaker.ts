@@ -15,7 +15,7 @@ export class SectionArrReqMaker<
   }
   static init<SN extends DbSectionNameByType<"arrQuery">>(sectionName: SN) {
     const sections = SolverSections.initSectionsFromDefaultMain();
-    const section = sections.onlyOneRawSection(sectionName);
+    const section = sections.firstRawSection(sectionName);
     return new SectionArrReqMaker({
       ...section,
       sectionsShare: { sections },

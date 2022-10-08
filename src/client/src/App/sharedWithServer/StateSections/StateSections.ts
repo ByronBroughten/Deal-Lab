@@ -54,7 +54,6 @@ export class StateSections {
       else throw error;
     }
   }
-
   onlyOneRawSection<SN extends SectionNameByType>(
     sectionName: SN
   ): RawFeSection<SN> {
@@ -62,7 +61,16 @@ export class StateSections {
     const count = sectionList.length;
     if (count !== 1) {
       throw new Error(
-        `There be exactly one "${sectionName}" section, but there are ${count}.`
+        `There should be exactly one "${sectionName}" section, but there are ${count}.`
+      );
+    }
+    return sectionList[0];
+  }
+  firstRawSection<SN extends SectionNameByType>(sectionName: SN) {
+    const sectionList = this.rawSectionList(sectionName);
+    if (sectionList.length < 1) {
+      throw new Error(
+        `There should be at least one ${sectionName} sections, but there are 0`
       );
     }
     return sectionList[0];
