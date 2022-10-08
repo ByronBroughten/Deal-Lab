@@ -89,8 +89,9 @@ async function checkThatSectionPackIsNotThere<CN extends SectionQueryName>(
     await querier.getSectionPack(props);
     throw new ResStatusError({
       errorMessage: `An entry at ${dbStoreName}.${dbId} already exists.`,
-      resMessage: "The sent payload has already been saved.",
-      status: 500,
+      resMessage:
+        "That section has already been saved. Try logging out and logging back in. Our apologies.",
+      status: 400,
     });
   } catch (err) {
     if (err instanceof SectionPackNotFoundError) {

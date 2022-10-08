@@ -1,8 +1,5 @@
 import styled from "styled-components";
-import {
-  useGetterSection,
-  useGetterSectionOnlyOne,
-} from "../../../sharedWithServer/stateClassHooks/useGetterSection";
+import { useGetterSection } from "../../../sharedWithServer/stateClassHooks/useGetterSection";
 import theme from "../../../theme/Theme";
 import useHowMany from "../../appWide/customHooks/useHowMany";
 import LabeledVarbRow from "../../appWide/LabeledVarbRow";
@@ -10,12 +7,16 @@ import { LabeledVarbSimple } from "../../appWide/LabeledVarbSimple";
 import GlobalInfoSection from "../general/StaticInfoSection";
 
 export default function FinancingInfo({ feId }: { feId: string }) {
-  const deal = useGetterSectionOnlyOne("deal");
-
   const financing = useGetterSection({
     sectionName: "financing",
     feId,
   });
+
+  const deal = useGetterSection({
+    sectionName: "deal",
+    feId: financing.parent.feId,
+  });
+
   const downPaymentDollars =
     deal.varb("downPaymentDollars").numberOrQuestionMark;
   const downPaymentIsPercentable = ![0, "?"].includes(downPaymentDollars);

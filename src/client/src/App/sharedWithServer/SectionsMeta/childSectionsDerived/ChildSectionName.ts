@@ -63,7 +63,7 @@ export type ChildSectionName<
   SN extends SectionName,
   CN extends ChildName<SN> = ChildName<SN>
 > = ChildSectionNamePureWide<SN, CN> & SectionName;
-function testChildSectionName() {
+function _testChildSectionName() {
   const unitName: ChildSectionNamePureWide<"property"> = "unit";
   // @ts-expect-error
   const error: ChildSectionNamePureWide<"property"> = "loan";
