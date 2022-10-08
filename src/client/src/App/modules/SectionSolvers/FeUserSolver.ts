@@ -11,8 +11,8 @@ import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection
 import { PackBuilderSection } from "../../sharedWithServer/StatePackers.ts/PackBuilderSection";
 import { SolverSectionBase } from "../../sharedWithServer/StateSolvers/SolverBases/SolverSectionBase";
 import { SolverSection } from "../../sharedWithServer/StateSolvers/SolverSection";
-import { DisplayIndexSolver } from "./DisplayIndexSolver";
-import { FeIndexSolver } from "./FeIndexSolver";
+import { DisplayIndexBuilder } from "./DisplayIndexBuilder";
+import { FeIndexBuilder } from "./FeIndexBuilder";
 import { MainSectionSolver } from "./MainSectionSolver";
 
 export class FeUserSolver extends SolverSectionBase<"feUser"> {
@@ -67,18 +67,18 @@ export class FeUserSolver extends SolverSectionBase<"feUser"> {
     });
   }
   indexSolver<SN extends SectionNameByType<"hasIndexStore">>(sectionName: SN) {
-    return new FeIndexSolver({
+    return new FeIndexBuilder({
       ...this.solverSectionsProps,
       sectionName,
     });
   }
-  displayIndexSolver<SN extends SectionNameByType<"displayStoreName">>(
+  displayIndexBuilder<SN extends SectionNameByType<"displayStoreName">>(
     sectionName: SN
-  ): DisplayIndexSolver<SN> {
-    return new DisplayIndexSolver({
+  ): DisplayIndexBuilder<SN> {
+    return new DisplayIndexBuilder({
       ...this.solverSectionsProps,
       ...this.get.onlyChild(sectionName).feInfo,
-    }) as DisplayIndexSolver<any>;
+    }) as DisplayIndexBuilder<any>;
   }
   prepForCompare<SN extends ChildSectionName<"omniParent">>(
     sectionPack: SectionPack<SN>

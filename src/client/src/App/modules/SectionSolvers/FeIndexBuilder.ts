@@ -2,10 +2,10 @@ import { SectionPack } from "../../sharedWithServer/SectionsMeta/childSectionsDe
 import { SectionNameByType } from "../../sharedWithServer/SectionsMeta/SectionNameByType";
 import { GetterSections } from "../../sharedWithServer/StateGetters/GetterSections";
 import { SolverListBase } from "../../sharedWithServer/StateSolvers/SolverBases/SolverListBase";
-import { DisplayIndexSolver } from "./DisplayIndexSolver";
-import { FullIndexSolver } from "./FullIndexSolver";
+import { DisplayIndexBuilder } from "./DisplayIndexBuilder";
+import { FullIndexBuilder } from "./FullIndexBuilder";
 
-export class FeIndexSolver<
+export class FeIndexBuilder<
   SN extends SectionNameByType<"hasIndexStore">
 > extends SolverListBase<SN> {
   get hasFullIndex() {
@@ -17,86 +17,86 @@ export class FeIndexSolver<
   get getterSections() {
     return new GetterSections(this.getterListProps);
   }
-  get fullIndexSolver(): FullIndexSolver<any> {
+  get fullIndexBuilder(): FullIndexBuilder<any> {
     if (!this.hasFullIndex) {
       throw new Error(`${this.getL.sectionName} has no full index store`);
     }
     const { feFullIndexStoreName } = this.sectionMeta;
     const feUser = this.getterSections.oneAndOnly("feUser");
-    return new FullIndexSolver({
+    return new FullIndexBuilder({
       ...this.solverSectionsProps,
       ...feUser.feInfo,
       itemName: feFullIndexStoreName,
-    }) as FullIndexSolver<any>;
+    }) as FullIndexBuilder<any>;
   }
-  get displayIndexSolver() {
+  get displayIndexBuilder() {
     if (!this.hasDisplayIndex) {
       throw new Error(`${this.getL.sectionName} has no display index store`);
     }
     const { displayIndexName } = this.sectionMeta;
     const feUser = this.getterSections.oneAndOnly("feUser");
     const store = feUser.onlyChild(displayIndexName);
-    return new DisplayIndexSolver({
+    return new DisplayIndexBuilder({
       ...this.solverSectionsProps,
       ...store.feInfo,
     });
   }
-  get primarySolver(): DisplayIndexSolver<any> | FullIndexSolver<any> {
+  get primaryIndex(): DisplayIndexBuilder<any> | FullIndexBuilder<any> {
     if (this.hasDisplayIndex) {
-      return this.displayIndexSolver;
+      return this.displayIndexBuilder;
     } else if (this.hasFullIndex) {
-      return this.fullIndexSolver;
+      return this.fullIndexBuilder;
     } else {
       throw new Error("There is no displayIndex nor fullIndex");
     }
   }
   isSaved(dbId: string): boolean {
-    return this.primarySolver.hasByDbId(dbId);
+    return this.primaryIndex.hasByDbId(dbId);
   }
   get displayItems() {
-    return this.primarySolver.displayItems;
+    return this.primaryIndex.displayItems;
   }
   addAsSavedIfMissing(sectionPack: SectionPack<SN>) {
     if (this.hasDisplayIndex) {
-      this.displayIndexSolver.addAsSavedIfNot(sectionPack as any);
+      this.displayIndexBuilder.addAsSavedIfNot(sectionPack as any);
     }
   }
   removeExtraAsSaved(loadedDbIds: string[]) {
     if (this.hasDisplayIndex) {
-      this.displayIndexSolver.removeExtraAsSaved(loadedDbIds);
+      this.displayIndexBuilder.removeExtraAsSaved(loadedDbIds);
     }
   }
   deleteFromIndex(dbId: string) {
     if (this.hasDisplayIndex) {
-      this.displayIndexSolver.removeItem(dbId);
+      this.displayIndexBuilder.removeItem(dbId);
     }
     if (this.hasFullIndex) {
-      this.fullIndexSolver.removeItem(dbId);
+      this.fullIndexBuilder.removeItem(dbId);
     }
   }
 
-  addItem(sectionPack: SectionPack<SN>) {
+  addItem(sectionPack: SectionPack<SN>): void {
     if (this.hasDisplayIndex) {
-      this.displayIndexSolver.addItem(sectionPack as any);
+      this.displayIndexBuilder.addItem(sectionPack as any);
     }
     if (this.hasFullIndex) {
-      this.fullIndexSolver.addItem(sectionPack as SectionPack<any>);
+      this.fullIndexBuilder.addItem(sectionPack as SectionPack<any>);
     }
   }
   updateItem(sectionPack: SectionPack<SN>) {
     if (this.hasDisplayIndex) {
-      this.displayIndexSolver.updateItem(sectionPack as any);
+      this.displayIndexBuilder.updateItem(sectionPack as any);
     }
     if (this.hasFullIndex) {
-      this.fullIndexSolver.updateItem(sectionPack as SectionPack<any>);
+      this.fullIndexBuilder.updateItem(sectionPack as SectionPack<any>);
     }
   }
   getAsSavedPack(dbId: string): SectionPack<SN> {
     if (this.hasDisplayIndex) {
-      const asSaved = this.displayIndexSolver.getAsSaved(dbId);
-      return asSaved.packMaker.makeSectionPack() as SectionPack<SN>;
+      const asSaved = this.displayIndexBuilder.getAsSaved(dbId);
+      return asSaved.makeSectionPack() as SectionPack<SN>;
     } else {
-      return this.fullIndexSolver.getItemPack(dbId);
+      return this.fullIndexBuilder.getItemPack(dbId);
     }
   }
 }

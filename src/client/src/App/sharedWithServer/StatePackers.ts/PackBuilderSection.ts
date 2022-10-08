@@ -1,5 +1,6 @@
 import {
   ChildName,
+  DbChildInfo,
   FeChildInfo,
 } from "../SectionsMeta/childSectionsDerived/ChildName";
 import { ChildSectionName } from "../SectionsMeta/childSectionsDerived/ChildSectionName";
@@ -17,7 +18,11 @@ import {
   AddChildOptions,
   UpdaterSection,
 } from "../StateUpdaters/UpdaterSection";
-import { ChildPackInfo, PackLoaderSection } from "./PackLoaderSection";
+import {
+  ChildPackInfo,
+  ChildSectionPackArrs,
+  PackLoaderSection,
+} from "./PackLoaderSection";
 import { PackMakerSection } from "./PackMakerSection";
 
 export class PackBuilderSections extends GetterSectionsBase {
@@ -89,7 +94,7 @@ export class PackBuilderSection<
   ): PackBuilderSection<ChildSectionName<SN, CN>> {
     return this.packBuilderSection(this.get.onlyChild(childName).feInfo);
   }
-  makeChildPackArrs<CN extends ChildName<SN>>(
+  makeChildPackArr<CN extends ChildName<SN>>(
     childName: CN
   ): ChildSectionPack<SN, CN>[] {
     return this.maker.makeChildSectionPackArr(childName);
@@ -111,6 +116,21 @@ export class PackBuilderSection<
     options?: AddChildOptions<SN, CN>
   ): void {
     this.updater.addChild(childName, options);
+  }
+  childByDbId<CN extends ChildName<SN>>(dbInfo: DbChildInfo<SN, CN>) {
+    const { childName } = dbInfo;
+    const { feId } = this.get.childByDbId(dbInfo);
+    return this.child({
+      childName,
+      feId,
+    });
+  }
+  removeChildByDbId<CN extends ChildName<SN>>(
+    dbInfo: DbChildInfo<SN, CN>
+  ): void {
+    const { childName } = dbInfo;
+    const { feId } = this.get.childByDbId(dbInfo);
+    this.removeChild({ childName, feId });
   }
   loadAndGetChild<
     CN extends ChildName<SN>,
@@ -134,6 +154,9 @@ export class PackBuilderSection<
         sectionPack,
       });
     }
+  }
+  loadChildArrs(childPackArrs: Partial<ChildSectionPackArrs<SN>>): void {
+    this.loader.loadChildPackArrs(childPackArrs);
   }
   loadAndGetChildren<
     CN extends ChildName<SN>,

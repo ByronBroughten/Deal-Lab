@@ -1,18 +1,18 @@
 import { ChildSectionPack } from "../../sharedWithServer/SectionsMeta/childSectionsDerived/ChildSectionPack";
 import { FeStoreNameByType } from "../../sharedWithServer/SectionsMeta/relSectionsDerived/relNameArrs/FeStoreName";
 import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
+import { PackBuilderSection } from "../../sharedWithServer/StatePackers.ts/PackBuilderSection";
 import { SolverSectionBase } from "../../sharedWithServer/StateSolvers/SolverBases/SolverSectionBase";
-import { SolverSection } from "../../sharedWithServer/StateSolvers/SolverSection";
-import { DisplayListSolver } from "./DisplayListSolver";
+import { DisplayListSolver } from "./DisplayListBuilder";
 
-export class DisplayIndexSolver<
+export class DisplayIndexBuilder<
   SN extends FeStoreNameByType<"displayStoreName">
 > extends SolverSectionBase<SN> {
   get get() {
     return new GetterSection(this.solverSectionProps);
   }
-  get solver() {
-    return SolverSection.init(this.solverSectionProps);
+  get builder() {
+    return new PackBuilderSection(this.getterSectionProps);
   }
   get list() {
     const list = this.get.onlyChild("displayNameList");
@@ -31,7 +31,7 @@ export class DisplayIndexSolver<
     return this.getAsSaved(dbId).get.valueNext("displayName").mainText;
   }
   getAsSaved(dbId: string) {
-    return this.solver.childByDbId({
+    return this.builder.childByDbId({
       childName: "activeAsSaved",
       dbId,
     });
@@ -58,11 +58,11 @@ export class DisplayIndexSolver<
   }
   updateItem(sectionPack: ChildSectionPack<SN, "activeAsSaved">) {
     const { dbId } = sectionPack;
-    const child = this.solver.childByDbId({
+    const child = this.builder.childByDbId({
       childName: "activeAsSaved",
       dbId,
     });
-    child.loadSelfSectionPackAndSolve(sectionPack);
+    child.loadSelf(sectionPack);
     this.list.updateItem({
       displayName: this.displayNameString(dbId),
       dbId,
@@ -72,10 +72,10 @@ export class DisplayIndexSolver<
     this.list.removeItem(dbId);
     this.removeAsSavedlIfNot(dbId);
   }
-  addAsSavedIfNot(sectionPack: ChildSectionPack<SN, "activeAsSaved">) {
+  addAsSavedIfNot(sectionPack: ChildSectionPack<SN, "activeAsSaved">): void {
     const { dbId } = sectionPack;
     if (!this.hasAsSaved(dbId)) {
-      this.solver.loadChildAndSolve({
+      this.builder.loadChild({
         childName: "activeAsSaved",
         sectionPack: sectionPack as any,
       });
@@ -95,7 +95,7 @@ export class DisplayIndexSolver<
     });
   }
   private removeAsSaved(dbId: string): void {
-    this.solver.removeChildByDbIdAndSolve({
+    this.builder.removeChildByDbId({
       childName: "activeAsSaved",
       dbId,
     });

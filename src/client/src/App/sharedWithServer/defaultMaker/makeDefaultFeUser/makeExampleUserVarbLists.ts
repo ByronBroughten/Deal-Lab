@@ -71,5 +71,5 @@ export function makeExampleUserVarbLists(): SectionPack<"userVarbList">[] {
       });
     }
   }
-  return feUser.makeChildPackArrs("userVarbListMain");
+  return feUser.makeChildPackArr("userVarbListMain");
 }

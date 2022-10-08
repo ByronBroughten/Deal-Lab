@@ -73,5 +73,5 @@ export function makeExampleUserOngoingLists() {
       },
     });
   }
-  return feUser.makeChildPackArrs("ongoingListMain");
+  return feUser.makeChildPackArr("ongoingListMain");
 }

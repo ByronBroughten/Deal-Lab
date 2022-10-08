@@ -78,10 +78,10 @@ export class CompareTableBuilder extends UpdaterSectionBase<"compareTable"> {
     }
   }
   get columnPacks(): SectionPack<"column">[] {
-    return this.builder.makeChildPackArrs("column");
+    return this.builder.makeChildPackArr("column");
   }
   get rowPacks(): SectionPack<"tableRow">[] {
-    return this.builder.makeChildPackArrs("tableRow");
+    return this.builder.makeChildPackArr("tableRow");
   }
   static initAsOmniChild(): CompareTableBuilder {
     const compareTable = PackBuilderSection.initAsOmniChild("compareTable");

@@ -32,5 +32,5 @@ export function makeExampleUserSingleTimeLists(): SectionPack<"singleTimeList">[
       });
     }
   }
-  return feUser.makeChildPackArrs("singleTimeListMain");
+  return feUser.makeChildPackArr("singleTimeListMain");
 }

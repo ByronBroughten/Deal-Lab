@@ -2,19 +2,19 @@ import { ChildSectionName } from "../../sharedWithServer/SectionsMeta/childSecti
 import { SectionPack } from "../../sharedWithServer/SectionsMeta/childSectionsDerived/SectionPack";
 import { FeStoreNameByType } from "../../sharedWithServer/SectionsMeta/relSectionsDerived/relNameArrs/FeStoreName";
 import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
+import { PackBuilderSection } from "../../sharedWithServer/StatePackers.ts/PackBuilderSection";
 import {
   SolverSectionBase,
   SolverSectionProps,
 } from "../../sharedWithServer/StateSolvers/SolverBases/SolverSectionBase";
-import { SolverSection } from "../../sharedWithServer/StateSolvers/SolverSection";
-import { DisplayItemProps } from "./DisplayListSolver";
+import { DisplayItemProps } from "./DisplayListBuilder";
 
 interface FullIndexSolverProps<CN extends FeStoreNameByType<"fullIndex">>
   extends SolverSectionProps<"feUser"> {
   itemName: CN;
 }
 // these are going to be listGroups, remember.
-export class FullIndexSolver<
+export class FullIndexBuilder<
   CN extends FeStoreNameByType<"fullIndex">
 > extends SolverSectionBase<"feUser"> {
   itemName: CN;
@@ -25,8 +25,8 @@ export class FullIndexSolver<
   get get() {
     return new GetterSection(this.getterSectionProps);
   }
-  get solver() {
-    return new SolverSection(this.solverSectionProps);
+  get builder() {
+    return new PackBuilderSection(this.getterSectionProps);
   }
   get displayItems(): DisplayItemProps[] {
     return this.get.children(this.itemName).map((section) => ({
@@ -34,14 +34,14 @@ export class FullIndexSolver<
       dbId: section.dbId,
     }));
   }
-  getItem(dbId: string): SolverSection<ChildSectionName<"feUser", CN>> {
-    return this.solver.childByDbId({
+  getItem(dbId: string): PackBuilderSection<ChildSectionName<"feUser", CN>> {
+    return this.builder.childByDbId({
       childName: this.itemName,
       dbId,
     });
   }
   getItemPack(dbId: string): SectionPack<ChildSectionName<"feUser", CN>> {
-    return this.getItem(dbId).packMaker.makeSectionPack();
+    return this.getItem(dbId).makeSectionPack();
   }
   hasByDbId(dbId: string) {
     return this.get.hasChildByDbInfo({
@@ -50,22 +50,22 @@ export class FullIndexSolver<
     });
   }
   removeItem(dbId: string) {
-    this.solver.removeChildByDbIdAndSolve({
+    this.builder.removeChildByDbId({
       childName: this.itemName,
       dbId,
     });
   }
   addItem(sectionPack: SectionPack<ChildSectionName<"feUser", CN>>): void {
-    this.solver.loadChildAndSolve({
+    this.builder.loadChild({
       childName: this.itemName,
-      sectionPack: sectionPack as SectionPack<any>,
+      sectionPack: sectionPack,
     });
   }
   updateItem(sectionPack: SectionPack<ChildSectionName<"feUser", CN>>) {
-    const child = this.solver.childByDbId({
+    const child = this.builder.childByDbId({
       childName: this.itemName,
       dbId: sectionPack.dbId,
     });
-    child.loadSelfSectionPackAndSolve(sectionPack);
+    child.loadSelf(sectionPack);
   }
 }

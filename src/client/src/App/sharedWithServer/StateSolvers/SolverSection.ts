@@ -14,6 +14,7 @@ import { FeSectionInfo } from "../SectionsMeta/Info";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { GetterSectionProps } from "../StateGetters/Bases/GetterSectionBase";
 import { GetterSection } from "../StateGetters/GetterSection";
+import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
 import {
   ChildPackInfo,
   ChildSectionPackArrs,
@@ -52,11 +53,14 @@ export class SolverSection<
       ...props,
     });
   }
-  get get() {
+  get get(): GetterSection<SN> {
     return new GetterSection(this.getterSectionProps);
   }
   get packMaker(): PackMakerSection<SN> {
     return new PackMakerSection(this.getterSectionProps);
+  }
+  get builder(): PackBuilderSection<SN> {
+    return new PackBuilderSection(this.getterSectionProps);
   }
   private solverSections = new SolverSections(this.solverSectionsProps);
   private get updater() {

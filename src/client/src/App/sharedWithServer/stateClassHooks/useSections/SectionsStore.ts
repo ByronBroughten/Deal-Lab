@@ -3,8 +3,10 @@ import React from "react";
 import { config } from "../../../Constants";
 import { getStoredObj } from "../../../utils/localStorage";
 import { SectionPack } from "../../SectionsMeta/childSectionsDerived/SectionPack";
+import { feStoreNameS } from "../../SectionsMeta/relSectionsDerived/relNameArrs/FeStoreName";
 import { relSections } from "../../SectionsMeta/relSectionVarbs";
 import { GetterSections } from "../../StateGetters/GetterSections";
+import { PackBuilderSection } from "../../StatePackers.ts/PackBuilderSection";
 import { PackMakerSection } from "../../StatePackers.ts/PackMakerSection";
 import { StateSections } from "../../StateSections/StateSections";
 import { SolverSections } from "../../StateSolvers/SolverSections";
@@ -44,9 +46,21 @@ export class SectionsStore {
   static getStoredSections(): StateSections {
     this.rmStoredStateIfPreframesChanged();
     const storedState = this.getSectionsFromStore();
-    return SolverSections.initSolvedSectionsFromMainPack(storedState);
-  }
 
+    const mainBuilder = PackBuilderSection.loadAsOmniChild(storedState);
+    const feUserBuilder = mainBuilder.onlyChild("feUser");
+    const displayIndexNames = feStoreNameS.arrs.displayIndex;
+    const displayIndexPackArrs =
+      feUserBuilder.maker.makeChildTypePackArrs(displayIndexNames);
+    feUserBuilder.updater.removeAllChildrenInArrs(displayIndexNames);
+
+    const mainSolver = SolverSections.initSolverFromMainPack(
+      mainBuilder.makeSectionPack()
+    );
+    const feUserSolver = mainSolver.onlyChild("feUser");
+    feUserSolver.builder.loadChildArrs(displayIndexPackArrs);
+    return mainSolver.sectionsShare.sections;
+  }
   private static setSectionsInStore(mainSectionPack: StoredSectionsState) {
     localStorage.setItem(
       tokenKey.sectionsState,

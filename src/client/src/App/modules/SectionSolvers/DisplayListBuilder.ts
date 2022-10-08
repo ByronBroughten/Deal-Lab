@@ -1,11 +1,11 @@
 import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
+import { PackBuilderSection } from "../../sharedWithServer/StatePackers.ts/PackBuilderSection";
 import { SolverSectionBase } from "../../sharedWithServer/StateSolvers/SolverBases/SolverSectionBase";
-import { SolverSection } from "../../sharedWithServer/StateSolvers/SolverSection";
 
 export type DisplayItemProps = { dbId: string; displayName: string };
 export class DisplayListSolver extends SolverSectionBase<"displayNameList"> {
-  get solver(): SolverSection<"displayNameList"> {
-    return new SolverSection(this.solverSectionProps);
+  get builder(): PackBuilderSection<"displayNameList"> {
+    return new PackBuilderSection(this.getterSectionProps);
   }
   get get(): GetterSection<"displayNameList"> {
     return new GetterSection(this.getterSectionProps);
@@ -26,22 +26,22 @@ export class DisplayListSolver extends SolverSectionBase<"displayNameList"> {
     });
   }
   removeItem(dbId: string): void {
-    this.solver.removeChildByDbIdAndSolve({
+    this.builder.removeChildByDbId({
       childName: "displayNameItem",
       dbId,
     });
   }
   addItem({ dbId, displayName }: DisplayItemProps): void {
-    this.solver.addChildAndSolve("displayNameItem", {
+    this.builder.addChild("displayNameItem", {
       dbId,
       dbVarbs: { displayName },
     });
   }
   updateItem({ dbId, displayName }: DisplayItemProps) {
-    const item = this.solver.childByDbId({
+    const item = this.builder.childByDbId({
       childName: "displayNameItem",
       dbId,
     });
-    item.varb("displayName").directUpdateAndSolve(displayName);
+    item.updater.varb("displayName").updateValue(displayName);
   }
 }

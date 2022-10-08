@@ -190,14 +190,14 @@ export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
         if (sectionNameS.is(sectionName, "hasDisplayIndex")) {
           const { displayIndexName } =
             headSection.sectionsMeta.get(sectionName);
-          const displayIndexSolver =
-            feUser.displayIndexSolver(displayIndexName);
-          if (displayIndexSolver.hasByDbId(section.get.dbId)) {
+          const displayIndexBuilder =
+            feUser.displayIndexBuilder(displayIndexName);
+          if (displayIndexBuilder.hasByDbId(section.get.dbId)) {
             const child = this.get.childByDbId({
               childName: this.displayToDbStoreName(displayIndexName),
               dbId: section.get.dbId,
             });
-            displayIndexSolver.addAsSavedIfNot(
+            displayIndexBuilder.addAsSavedIfNot(
               child.packMaker.makeSectionPack()
             );
           }

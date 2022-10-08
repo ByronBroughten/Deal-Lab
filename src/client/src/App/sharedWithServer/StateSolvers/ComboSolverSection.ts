@@ -13,8 +13,12 @@ import { SolverSectionBase } from "./SolverBases/SolverSectionBase";
 export class ComboSolverSection<
   SN extends SectionNameByType
 > extends SolverSectionBase<SN> {
-  remover = RemoveSolverSection.init(this.solverSectionProps);
-  adder = AddSolverSection.init(this.solverSectionProps);
+  get remover() {
+    return RemoveSolverSection.init(this.solverSectionProps);
+  }
+  get adder() {
+    return AddSolverSection.init(this.solverSectionProps);
+  }
   get loader() {
     return new PackLoaderSection(this.solverSectionProps);
   }
@@ -30,9 +34,7 @@ export class ComboSolverSection<
     childPackArrs: Partial<ChildSectionPackArrs<SN>>
   ): void {
     const childNames = Obj.keys(childPackArrs);
-    // when I log in, this isn't really solving everything
     this.remover.removeChildrenGroupsAndExtractVarbIds(childNames);
-
     for (const childName of childNames) {
       for (const sectionPack of (childPackArrs as ChildSectionPackArrs<SN>)[
         childName

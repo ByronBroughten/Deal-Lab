@@ -61,7 +61,10 @@ export class UpdaterSection<
     this.updaterList.removeByFeId(this.feId);
   }
   removeAllChildren() {
-    for (const childName of this.get.childNames) {
+    this.removeAllChildrenInArrs(this.get.childNames);
+  }
+  removeAllChildrenInArrs<CN extends ChildName<SN>>(childNames: CN[]): void {
+    for (const childName of childNames) {
       this.removeChildren(childName);
     }
   }

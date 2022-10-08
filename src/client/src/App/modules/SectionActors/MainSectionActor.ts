@@ -10,7 +10,7 @@ import {
   SectionQuerier,
   SectionQuerierProps,
 } from "../QueriersBasic/SectionQuerier";
-import { DisplayItemProps } from "../SectionSolvers/DisplayListSolver";
+import { DisplayItemProps } from "../SectionSolvers/DisplayListBuilder";
 import {
   MainSectionSolver,
   SaveStatus,

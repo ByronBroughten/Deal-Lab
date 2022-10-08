@@ -18,9 +18,9 @@ import { SolverVarb } from "./SolverVarb";
 type OutVarbMap = Record<string, Set<string>>;
 
 export class SolverSections extends SolverSectionsBase {
-  private getterSections = new GetterSections(
-    this.getterSectionsBase.getterSectionsProps
-  );
+  private get getterSections() {
+    return new GetterSections(this.getterSectionsBase.getterSectionsProps);
+  }
   oneAndOnly<SN extends SectionName>(sectionName: SN) {
     const { feInfo } = this.getterSections.oneAndOnly(sectionName);
     return this.solverSection(feInfo);
@@ -43,8 +43,6 @@ export class SolverSections extends SolverSectionsBase {
   private resetVarbFullNamesToSolveFor() {
     this.solveShare.varbIdsToSolveFor = new Set();
   }
-  // how did I use a switch to differentiate those before?
-  // or
   private gatherAndSortInfosToSolve(): FeVarbInfo[] {
     const outVarbMap = this.getOutVarbMap();
     const { edges, loneVarbs } = this.getDagEdgesAndLoneVarbs(outVarbMap);
@@ -121,9 +119,9 @@ export class SolverSections extends SolverSectionsBase {
     const defaultMainPack = defaultMaker.makeSectionPack("main");
     return this.initSolvedSectionsFromMainPack(defaultMainPack);
   }
-  static initSolvedSectionsFromMainPack(
+  static initSolverFromMainPack(
     sectionPack: SectionPack<"main">
-  ): StateSections {
+  ): SolverSection<"main"> {
     const sections = StateSections.initWithRoot();
     const rootSection = sections.rawSectionList("root")[0];
     const solver = SolverSection.init({
@@ -134,6 +132,12 @@ export class SolverSections extends SolverSectionsBase {
       childName: "main",
       sectionPack,
     });
-    return solver.sectionsShare.sections;
+    return solver.onlyChild("main");
+  }
+  static initSolvedSectionsFromMainPack(
+    sectionPack: SectionPack<"main">
+  ): StateSections {
+    const main = this.initSolverFromMainPack(sectionPack);
+    return main.sectionsShare.sections;
   }
 }
