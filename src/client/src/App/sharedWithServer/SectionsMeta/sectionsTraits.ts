@@ -32,6 +32,29 @@ export type AllSectionTraits = typeof allSectionTraits;
 export const allSectionTraits = checkAllSectionTraits({
   ...defaultSectionTraits,
   userInfo: sectionTraits({ dbIndexStoreName: "userInfo" }),
+  deal: sectionTraits({
+    displayName: "Deal",
+    hasGlobalVarbs: true,
+    compareTableName: "dealMainTable",
+    feFullIndexStoreName: "dealMain",
+
+    dbIndexStoreName: "dealMain",
+  }),
+  loan: sectionTraits({
+    compareTableName: "loanMainTable",
+    feFullIndexStoreName: "loanMain",
+    dbIndexStoreName: "loanMain",
+  }),
+  property: sectionTraits({
+    compareTableName: "propertyMainTable",
+    feFullIndexStoreName: "propertyMain",
+    dbIndexStoreName: "propertyMain",
+  }),
+  mgmt: sectionTraits({
+    compareTableName: "mgmtMainTable",
+    feFullIndexStoreName: "mgmtMain",
+    dbIndexStoreName: "mgmtMain",
+  }),
   outputList: sectionTraits({
     varbListItem: "outputItem",
     feFullIndexStoreName: "outputListMain",
@@ -64,27 +87,9 @@ export const allSectionTraits = checkAllSectionTraits({
     displayName: "Management",
     hasGlobalVarbs: true,
   }),
-  deal: sectionTraits({
-    displayName: "Deal",
-    hasGlobalVarbs: true,
-    compareTableName: "dealMainTable",
-    displayIndexName: "dealDisplayStore",
-    dbIndexStoreName: "dealMain",
-  }),
-  loan: sectionTraits({
-    compareTableName: "loanMainTable",
-    displayIndexName: "loanDisplayStore",
-    dbIndexStoreName: "loanMain",
-  }),
-  property: sectionTraits({
-    compareTableName: "propertyMainTable",
-    displayIndexName: "propertyDisplayStore",
-    dbIndexStoreName: "propertyMain",
-  }),
-  mgmt: sectionTraits({
-    compareTableName: "mgmtMainTable",
-    displayIndexName: "mgmtDisplayStore",
-    dbIndexStoreName: "mgmtMain",
+  hasDummyDisplayStore: sectionTraits({
+    displayIndexName: "dummyDisplayStore",
+    dbIndexStoreName: "dummyMain",
   }),
 });
 

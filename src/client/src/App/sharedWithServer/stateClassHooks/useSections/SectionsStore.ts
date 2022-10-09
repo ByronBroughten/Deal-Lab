@@ -49,16 +49,16 @@ export class SectionsStore {
 
     const mainBuilder = PackBuilderSection.loadAsOmniChild(storedState);
     const feUserBuilder = mainBuilder.onlyChild("feUser");
-    const displayIndexNames = feStoreNameS.arrs.displayIndex;
-    const displayIndexPackArrs =
-      feUserBuilder.maker.makeChildTypePackArrs(displayIndexNames);
-    feUserBuilder.updater.removeAllChildrenInArrs(displayIndexNames);
+    const mainStoreNames = feStoreNameS.arrs.mainStoreName;
+    const mainStorePackArrs =
+      feUserBuilder.maker.makeChildTypePackArrs(mainStoreNames);
+    feUserBuilder.updater.removeAllChildrenInArrs(mainStoreNames);
 
     const mainSolver = SolverSections.initSolverFromMainPack(
       mainBuilder.makeSectionPack()
     );
     const feUserSolver = mainSolver.onlyChild("feUser");
-    feUserSolver.builder.loadChildArrs(displayIndexPackArrs);
+    feUserSolver.builder.loadChildArrs(mainStorePackArrs);
     return mainSolver.sectionsShare.sections;
   }
   private static setSectionsInStore(mainSectionPack: StoredSectionsState) {

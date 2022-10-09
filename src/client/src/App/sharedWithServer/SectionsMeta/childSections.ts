@@ -49,17 +49,15 @@ export const childSections = checkChildSections({
     authInfo: ["authInfo"],
     subscriptionInfo: ["subscriptionInfo"],
     userInfo: ["userInfo"],
-
     propertyMainTable: ["compareTable"],
     loanMainTable: ["compareTable"],
     mgmtMainTable: ["compareTable"],
     dealMainTable: ["compareTable"],
-
-    propertyDisplayStore: ["propertyDisplayStore"],
-    loanDisplayStore: ["loanDisplayStore"],
-    mgmtDisplayStore: ["mgmtDisplayStore"],
-    dealDisplayStore: ["dealDisplayStore"],
-
+    dummyDisplayStore: ["dummyDisplayStore"],
+    propertyMain: ["property"],
+    loanMain: ["loan"],
+    mgmtMain: ["mgmt"],
+    dealMain: ["deal"],
     outputListMain: ["outputList"],
     userVarbListMain: ["userVarbList"],
     singleTimeListMain: ["singleTimeList"],
@@ -73,6 +71,8 @@ export const childSections = checkChildSections({
 
     stripeInfoPrivate: ["stripeInfoPrivate"],
     stripeSubscription: ["stripeSubscription"],
+
+    dummyMain: ["hasDummyDisplayStore"],
 
     propertyMain: ["property"],
     loanMain: ["loan"],
@@ -136,22 +136,9 @@ export const childSections = checkChildSections({
     ongoingCostListGroup: ["ongoingListGroup"],
     customVarb: ["customVarb"],
   }),
-
-  mgmtDisplayStore: childrenSections({
+  dummyDisplayStore: childrenSections({
     displayNameList: ["displayNameList"],
-    activeAsSaved: ["mgmt"],
-  }),
-  propertyDisplayStore: childrenSections({
-    displayNameList: ["displayNameList"],
-    activeAsSaved: ["property"],
-  }),
-  loanDisplayStore: childrenSections({
-    displayNameList: ["displayNameList"],
-    activeAsSaved: ["loan"],
-  }),
-  dealDisplayStore: childrenSections({
-    displayNameList: ["displayNameList"],
-    activeAsSaved: ["deal"],
+    activeAsSaved: ["hasDummyDisplayStore"],
   }),
 });
 

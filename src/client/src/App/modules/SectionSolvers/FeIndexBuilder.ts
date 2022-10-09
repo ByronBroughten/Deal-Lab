@@ -15,7 +15,7 @@ export class FeIndexBuilder<
   get hasFullIndex() {
     return this.sectionMeta.hasFeFullIndex;
   }
-  get hasDisplayIndex() {
+  get hasFeDisplayIndex() {
     return this.sectionMeta.hasFeDisplayIndex;
   }
   get getterSections() {
@@ -34,7 +34,7 @@ export class FeIndexBuilder<
     }) as FullIndexBuilder<any>;
   }
   get displayIndexBuilder() {
-    if (!this.hasDisplayIndex) {
+    if (!this.hasFeDisplayIndex) {
       throw new Error(`${this.getL.sectionName} has no display index store`);
     }
     const { displayIndexName } = this.sectionMeta;
@@ -51,7 +51,7 @@ export class FeIndexBuilder<
     });
   }
   get primaryIndex(): DisplayIndexBuilder<any> | FullIndexBuilder<any> {
-    if (this.hasDisplayIndex) {
+    if (this.hasFeDisplayIndex) {
       return this.displayIndexBuilder;
     } else if (this.hasFullIndex) {
       return this.fullIndexBuilder;
@@ -66,7 +66,7 @@ export class FeIndexBuilder<
     return this.primaryIndex.displayItems;
   }
   addAsSavedIfMissing(sectionPack: SectionPack<SN>) {
-    if (this.hasDisplayIndex) {
+    if (this.hasFeDisplayIndex) {
       const headSection = PackBuilderSection.loadAsOmniChild(sectionPack);
       let sectionInfos: FeSectionInfo[] = [headSection.feInfo];
       while (sectionInfos.length > 0) {
@@ -75,7 +75,7 @@ export class FeIndexBuilder<
           const section = headSection.sections.section(info);
           for (const childName of section.get.childNames) {
             for (const child of section.children(childName)) {
-              if (child.isSectionType("hasDisplayIndex")) {
+              if (child.isSectionType("hasFeDisplayIndex")) {
                 const { displayIndexName } = child.sectionMeta;
                 const displayIndexBuilder =
                   this.makeDisplayIndexBuilder(displayIndexName);
@@ -96,12 +96,12 @@ export class FeIndexBuilder<
     }
   }
   removeAsSavedExtras(loadedDbIds: string[]) {
-    if (this.hasDisplayIndex) {
+    if (this.hasFeDisplayIndex) {
       this.displayIndexBuilder.removeAsSavedExtras(loadedDbIds);
     }
   }
   deleteFromIndex(dbId: string) {
-    if (this.hasDisplayIndex) {
+    if (this.hasFeDisplayIndex) {
       this.displayIndexBuilder.removeItem(dbId);
     }
     if (this.hasFullIndex) {
@@ -110,7 +110,7 @@ export class FeIndexBuilder<
   }
 
   addItem(sectionPack: SectionPack<SN>): void {
-    if (this.hasDisplayIndex) {
+    if (this.hasFeDisplayIndex) {
       this.displayIndexBuilder.addItem(sectionPack as any);
     }
     if (this.hasFullIndex) {
@@ -118,7 +118,7 @@ export class FeIndexBuilder<
     }
   }
   updateItem(sectionPack: SectionPack<SN>) {
-    if (this.hasDisplayIndex) {
+    if (this.hasFeDisplayIndex) {
       this.displayIndexBuilder.updateItem(sectionPack as any);
     }
     if (this.hasFullIndex) {
@@ -126,7 +126,7 @@ export class FeIndexBuilder<
     }
   }
   getAsSavedPack(dbId: string): SectionPack<SN> {
-    if (this.hasDisplayIndex) {
+    if (this.hasFeDisplayIndex) {
       const asSaved = this.displayIndexBuilder.getAsSaved(dbId);
       return asSaved.makeSectionPack() as SectionPack<SN>;
     } else {

@@ -21,7 +21,7 @@ type TableRowDbSource = typeof tableRowDbSources[number];
 
 type GeneralRelChild = {
   feTableRowStore: ChildSectionNameName<"feUser", "compareTable"> | null;
-  dbIndexName: TableRowDbSource | null;
+  dbIndexName: TableRowDbSource | "dummyMain" | null;
 };
 type GenericRelChildren<SN extends SectionName> = {
   [CN in ChildName<SN>]: GeneralRelChild;
@@ -90,19 +90,9 @@ function makeRelChildSections<RCS extends GenericRelChildSections>(
 export const relChildSections = makeRelChildSections({
   ...makeDefaultRelChildSections(),
   feUser: relChildren("feUser", {
-    propertyDisplayStore: relChild({
-      dbIndexName: "propertyMain",
+    dummyDisplayStore: relChild({
+      dbIndexName: "dummyMain",
     }),
-    loanDisplayStore: relChild({
-      dbIndexName: "loanMain",
-    }),
-    mgmtDisplayStore: relChild({
-      dbIndexName: "mgmtMain",
-    }),
-    dealDisplayStore: relChild({
-      dbIndexName: "dealMain",
-    }),
-
     dealMainTable: relChild({
       dbIndexName: "dealMain",
     }),

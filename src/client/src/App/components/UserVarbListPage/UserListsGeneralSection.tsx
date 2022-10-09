@@ -20,8 +20,10 @@ import MainSectionTitleBtn from "../appWide/GeneralSection/GeneralSectionTitle/M
 import { MakeListNode } from "../appWide/ListGroup/ListGroupShared/ListGroupGeneric/ListGroupLists";
 import { UserListSectionEntry } from "./UserListSectionEntry";
 
-type StoreName = FeStoreNameByType<"fullIndex">;
-function makePackList(sections: StateSections, storeName: StoreName) {
+function makePackList<CN extends FeStoreNameByType<"fullIndex">>(
+  sections: StateSections,
+  storeName: CN
+) {
   const packMaker = PackMakerSection.makeFromSections({
     sections: sections,
     sectionName: "feUser",
@@ -29,7 +31,9 @@ function makePackList(sections: StateSections, storeName: StoreName) {
   return packMaker.makeChildSectionPackArr(storeName);
 }
 
-function useSaveUserLists(storeName: FeStoreNameByType<"fullIndex">) {
+function useSaveUserLists(
+  storeName: FeStoreNameByType<"fullIndexWithArrStore">
+) {
   const feUser = useSetterSectionOnlyOne("feUser");
   const userListsContext = useUserListMainSection(storeName);
   const workingListPack = makePackList(userListsContext.sections, storeName);
@@ -59,7 +63,7 @@ function useSaveUserLists(storeName: FeStoreNameByType<"fullIndex">) {
 
 type Props = {
   themeName: ThemeName;
-  storeName: FeStoreNameByType<"fullIndex">;
+  storeName: FeStoreNameByType<"fullIndexWithArrStore">;
   title: string;
   makeListNode: MakeListNode;
 };

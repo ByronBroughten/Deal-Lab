@@ -7,7 +7,7 @@ import { SolverSectionBase } from "../../sharedWithServer/StateSolvers/SolverBas
 import { DisplayListSolver } from "./DisplayListBuilder";
 
 export class DisplayIndexBuilder<
-  SN extends FeStoreNameByType<"displayStoreName">
+  SN extends FeStoreNameByType<"displayIndex">
 > extends SolverSectionBase<SN> {
   get get() {
     return new GetterSection(this.solverSectionProps);
@@ -44,7 +44,7 @@ export class DisplayIndexBuilder<
   }
   addItem(sectionPack: ChildSectionPack<SN, "activeAsSaved">) {
     const child = PackBuilderSection.loadAsOmniChild(
-      sectionPack as any as SectionPackByType<"hasDisplayIndex">
+      sectionPack as any as SectionPackByType<"hasFeDisplayIndex">
     );
     this.list.addItem({
       displayName: child.get.valueNext("displayName").mainText,

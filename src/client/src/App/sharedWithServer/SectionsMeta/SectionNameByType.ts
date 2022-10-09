@@ -1,6 +1,5 @@
 import { StringTypeChecker } from "../../utils/StringTypeChecker";
 import { PropKeyOfValue } from "../utils/Obj/SubType";
-import { StrictExtract } from "../utils/types";
 import { baseNameArrs, BaseNameArrs } from "./baseSectionsDerived/baseNameArrs";
 import { SectionValues } from "./baseSectionsDerived/valueMetaTypes";
 import { ChildName, getChildNames } from "./childSectionsDerived/ChildName";
@@ -25,11 +24,6 @@ export type SectionNameType = keyof NameArrs;
 
 export type SectionNameByType<T extends SectionNameType = "all"> =
   NameArrs[T][number & keyof NameArrs[T]];
-
-export type HasRowFeStore = StrictExtract<
-  SectionNameByType<"hasDisplayIndex">,
-  "property" | "loan" | "mgmt" | "deal"
->;
 
 export type SectionValuesByType<ST extends SectionNameType> = SectionValues<
   SectionNameByType<ST>

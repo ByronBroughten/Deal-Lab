@@ -2,7 +2,7 @@ import React from "react";
 import styled, { css } from "styled-components";
 import useToggleView from "../../../../modules/customHooks/useToggleView";
 import { useMainSectionActor } from "../../../../modules/sectionActorHooks/useMainSectionActor";
-import { HasRowFeStore } from "../../../../sharedWithServer/SectionsMeta/SectionNameByType";
+import { SectionNameByType } from "../../../../sharedWithServer/SectionsMeta/SectionNameByType";
 import { useAuthStatus } from "../../../../sharedWithServer/stateClassHooks/useAuthStatus";
 import theme from "../../../../theme/Theme";
 import XBtn from "../../Xbtn";
@@ -10,7 +10,7 @@ import { MainSectionMenus } from "./MainSectionTitleRow/MainSectionMenus";
 import { MainSectionTitleRowTitle } from "./MainSectionTitleRow/MainSectionTitleRowTitle";
 
 type Props = {
-  sectionName: HasRowFeStore;
+  sectionName: SectionNameByType<"hasCompareTable">;
   feId: string;
   pluralName: string;
   xBtn?: boolean;

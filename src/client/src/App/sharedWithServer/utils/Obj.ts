@@ -66,6 +66,9 @@ function difference(origObj: any, newObj: any) {
 }
 
 export const Obj = {
+  stringifyEqual(a: any, b: any) {
+    return JSON.stringify(a) === JSON.stringify(b);
+  },
   difference,
   swapKeysAndValues<O extends StringObj>(obj: O): SwapKeysAndValues<O> {
     return this.keys(obj).reduce((swapObj, key) => {

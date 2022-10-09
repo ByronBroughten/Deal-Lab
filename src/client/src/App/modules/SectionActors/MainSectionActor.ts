@@ -8,12 +8,12 @@ import { SolverSection } from "../../sharedWithServer/StateSolvers/SolverSection
 import { UpdaterSection } from "../../sharedWithServer/StateUpdaters/UpdaterSection";
 import {
   SectionQuerier,
-  SectionQuerierProps,
+  SectionQuerierProps
 } from "../QueriersBasic/SectionQuerier";
 import { DisplayItemProps } from "../SectionSolvers/DisplayListBuilder";
 import {
   MainSectionSolver,
-  SaveStatus,
+  SaveStatus
 } from "../SectionSolvers/MainSectionSolver";
 import { auth, UserInfoTokenProp } from "../services/authService";
 import { Str } from "./../../sharedWithServer/utils/Str";
@@ -38,7 +38,7 @@ export class MainSectionActor<
   get setter(): SetterSection<SN> {
     return new SetterSection(this.sectionActorBaseProps);
   }
-  get hasDisplayIndex() {
+  get hasFeDisplayIndex() {
     return this.get.meta.hasFeDisplayIndex;
   }
   get hasFullIndex() {

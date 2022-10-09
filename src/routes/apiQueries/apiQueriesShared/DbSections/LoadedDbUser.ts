@@ -187,7 +187,7 @@ export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
       const nextInfos: FeSectionInfo[] = [];
       for (const { sectionName, feId } of sectionInfos) {
         const section = sections.section({ sectionName, feId });
-        if (sectionNameS.is(sectionName, "hasDisplayIndex")) {
+        if (sectionNameS.is(sectionName, "hasFeDisplayIndex")) {
           const { displayIndexName } =
             headSection.sectionsMeta.get(sectionName);
           const displayIndexBuilder =

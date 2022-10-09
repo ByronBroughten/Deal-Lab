@@ -1,11 +1,12 @@
 import { Arr } from "../../../utils/Arr";
 import { Obj } from "../../../utils/Obj";
 import { ChildName, getChildNames } from "../../childSectionsDerived/ChildName";
+import { dbStoreNameS } from "../../childSectionsDerived/DbStoreName";
 import { tableRowDbSources } from "../../relChildSections";
 import { allSectionTraits, getSomeSectionTraits } from "../../sectionsTraits";
 
 export const hasStoreNameArrs = {
-  hasDisplayIndex: Obj.entryKeysWithPropOfType(
+  hasFeDisplayIndex: Obj.entryKeysWithPropOfType(
     allSectionTraits,
     "displayIndexName",
     "string"
@@ -16,14 +17,19 @@ export const hasStoreNameArrs = {
     "string"
   ),
   get hasIndexStore() {
-    return [...this.hasDisplayIndex, ...this.hasFullIndex] as const;
+    return [...this.hasFeDisplayIndex, ...this.hasFullIndex] as const;
   },
+  hasCompareTable: Obj.entryKeysWithPropOfType(
+    allSectionTraits,
+    "compareTableName",
+    "string"
+  ),
 } as const;
 
 // both of these pertain to feStoreNames
 const hasToStoreNames = {
   displayIndex: getSomeSectionTraits(
-    hasStoreNameArrs.hasDisplayIndex,
+    hasStoreNameArrs.hasFeDisplayIndex,
     "displayIndexName"
   ),
   fullIndex: getSomeSectionTraits(
@@ -50,13 +56,22 @@ const feStoreNameArrs = {
   ...indexStoreNames,
   all: feUserChildNames,
   dbIndexName: tableRowDbSources,
+  get fullIndexWithArrStore() {
+    return Arr.extractStrict(
+      indexStoreNames.fullIndex,
+      dbStoreNameS.arrs.arrQuery
+    );
+  },
+  get mainStoreName() {
+    return Arr.extractStrict(indexStoreNames.fullIndex, [
+      "dealMain",
+      "propertyMain",
+      "loanMain",
+      "mgmtMain",
+    ]);
+  },
   displayNameDbSource: tableRowDbSources,
-  displayStoreName: Arr.extractStrict(feUserChildNames, [
-    "dealDisplayStore",
-    "mgmtDisplayStore",
-    "loanDisplayStore",
-    "propertyDisplayStore",
-  ] as const),
+  displayStoreName: Obj.values(hasToStoreNames.displayIndex),
   mainTableName: Arr.extractStrict(feUserChildNames, [
     "propertyMainTable",
     "loanMainTable",

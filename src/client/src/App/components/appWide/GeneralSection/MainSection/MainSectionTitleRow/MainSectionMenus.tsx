@@ -42,8 +42,7 @@ export function MainSectionMenus({
   const authStatus = useAuthStatus();
   const isGuest = authStatus === "guest";
   const section = useMainSectionActor(feInfo);
-  const saveStatusDisplayed =
-    showSaveStatus && section.saveStatus !== "unsaved";
+  const saveStatusDisplayed = showSaveStatus && section.isSaved;
   const { sectionName } = section.get;
 
   return (
@@ -75,7 +74,7 @@ export function MainSectionMenus({
           }}
         />
       )}
-      {sectionNameS.is(sectionName, "hasDisplayIndex") && (
+      {sectionNameS.is(sectionName, "hasCompareTable") && (
         <ListMenuBtn
           {...{
             className: "MainSectionMenus-item",

@@ -10,12 +10,7 @@ export const relNameArrs = {
   ...hasStoreNameArrs,
   displayStoreName: Arr.extractStrict(
     sectionNames,
-    feStoreNameS.arrs.displayStoreName as [
-      "dealDisplayStore",
-      "mgmtDisplayStore",
-      "propertyDisplayStore",
-      "loanDisplayStore"
-    ]
+    feStoreNameS.arrs.displayStoreName
   ),
   ...tableStoreNameArrs,
   hasGlobalVarbs: Obj.entryKeysWithPropValue(
