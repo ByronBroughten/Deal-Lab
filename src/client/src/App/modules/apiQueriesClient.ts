@@ -14,7 +14,6 @@ import {
 } from "../sharedWithServer/apiQueriesShared/getUserData";
 import { makeRes } from "../sharedWithServer/apiQueriesShared/makeReqAndRes";
 import { validateSubscriptionValues } from "../sharedWithServer/apiQueriesShared/SubscriptionValues";
-import { isSectionPackByType } from "../sharedWithServer/SectionsMeta/SectionNameByType";
 import { Obj } from "../sharedWithServer/utils/Obj";
 import { StrictOmit } from "../sharedWithServer/utils/types";
 import {
@@ -119,9 +118,7 @@ function makeApiQueries(): ApiQueries {
         if (Obj.isObjToAny(data)) {
           const { tableRowPacks } = data;
           if (
-            tableRowPacks.every((rowPack) => {
-              return isSectionPackByType(rowPack, "tableRow");
-            })
+            tableRowPacks.every((rowPack) => rowPack.sectionName === "tableRow")
           ) {
             return makeRes({ tableRowPacks });
           }

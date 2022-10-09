@@ -51,10 +51,10 @@ export class FeIndexBuilder<
     });
   }
   get primaryIndex(): DisplayIndexBuilder<any> | FullIndexBuilder<any> {
-    if (this.hasFeDisplayIndex) {
-      return this.displayIndexBuilder;
-    } else if (this.hasFullIndex) {
+    if (this.hasFullIndex) {
       return this.fullIndexBuilder;
+    } else if (this.hasFeDisplayIndex) {
+      return this.displayIndexBuilder;
     } else {
       throw new Error("There is no displayIndex nor fullIndex");
     }

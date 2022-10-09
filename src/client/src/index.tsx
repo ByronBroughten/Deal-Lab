@@ -7,14 +7,12 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-// The app moves slow when there are too many list items
-// - How about I do an "isEqual" check on load, and then
-//   when there is a change, I will consider it unSynced
-
-// On load, loop through the children.
-// If the
 
 // Before Marketing
+// - Switch useState to useReducer
+// - Or perhaps use a ref that always updates to contain the update functions
+// - Create cheap state-accessor components around list items
+//   that pass in the item's state as a string as well as dispatch
 // - Prevent fullStores from saving to local storage
 // - Implement "doEquals" in additive and one-time cost lists for the demo
 //   - Extrapolate the logic so it works on all four list types

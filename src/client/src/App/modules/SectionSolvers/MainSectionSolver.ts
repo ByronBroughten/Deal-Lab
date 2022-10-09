@@ -21,16 +21,6 @@ export type SaveStatus = "unsaved" | "changesSynced" | "unsyncedChanges";
 export class MainSectionSolver<
   SN extends SectionNameByType<"hasIndexStore">
 > extends SolverSectionBase<SN> {
-  syncStore = "unsyncedChanges" as SaveStatus;
-
-  // I only have to check to update the syncStore
-  // when changes are synced. Then when they become unsynced,
-  // they stay that way. Until either load or save.
-
-  // Is there a way for me to tell whether a change occured?
-  // It'd be like useMemo
-  // Maybe isEqual
-
   private parentInfoCache: FeParentInfo<SN>;
   private selfChildNameCache: SelfChildName<SN>;
   constructor(props: SolverSectionProps<SN>) {
