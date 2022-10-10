@@ -8,6 +8,32 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
+// When there is a saved deal, there is an error when I try to solve,
+// because the deal variables point at too many deals.
+
+// There is another related issue.
+// When I have loaded a list, that list will have the same dbId
+// as the saved lists.
+// - So that list's total can change and still be referenced
+//   by other lists with in entities for the total.
+
+//  Most global variables should switched to "activeDeal" variables
+//   - When I'm creating table rows, I can still use "global"
+//  All of the dbId variables should be treated as "store" variables
+//  That is, they should only be gathered from the designated stores
+
+//
+
+// 2. Hackishly add a rule that says if "deal" is the sectionName, grab the
+//    deal from "main".
+
+// 3. Perhaps put "activeDeal" on feUser
+//    - explicitly say which of feUser's children are allowed in the solve
+//    - make a new state just for that
+//    - after the solve, load up those sections back with the main state
+//    - setState
+// This also solves the other problem I was having.
+
 // Before Marketing
 // - Switch useState to useReducer
 // - Or perhaps use a ref that always updates to contain the update functions

@@ -44,8 +44,8 @@ export class FeUserActor extends SectionActorBase<"feUser"> {
     ) as GuestAccessSectionPackArrs;
   }
   private get activeDealPack(): SectionPack<"deal"> {
-    const main = this.get.sections.oneAndOnly("main");
-    return main.onlyChild("deal").packMaker.makeSectionPack();
+    const feUser = this.get.sections.oneAndOnly("feUser");
+    return feUser.onlyChild("activeDeal").packMaker.makeSectionPack();
   }
   async updateSubscriptionData() {
     const { headers, data } = await this.apiQueries.getSubscriptionData(

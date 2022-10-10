@@ -144,6 +144,10 @@ export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
   }
   makeLoginUser(activeDealPack: SectionPack<"deal">): LoginData {
     const feUser = FeUserSolver.initDefault();
+    feUser.packBuilder.loadChildren({
+      childName: "activeDeal",
+      sectionPacks: [activeDealPack],
+    });
     for (const feStoreName of feUser.get.childNames) {
       if (feStoreNameS.is(feStoreName, "displayStoreName")) {
         const dbIndexName = this.displayToDbStoreName(feStoreName);
@@ -168,6 +172,7 @@ export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
       }
     }
     this.initActiveAsSaved(feUser, activeDealPack);
+
     return {
       feUser: [feUser.packBuilder.makeSectionPack()],
     };

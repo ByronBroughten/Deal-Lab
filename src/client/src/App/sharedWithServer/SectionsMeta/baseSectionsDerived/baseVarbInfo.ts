@@ -10,6 +10,15 @@ import { SectionName } from "../SectionName";
 import { SectionNameProp } from "./baseSectionInfo";
 import { VarbName } from "./baseSectionsVarbsTypes";
 
+export interface ActiveDealInfo<
+  SN extends SectionName = SectionName,
+  EC extends ExpectedCount = ExpectedCount
+> extends GeneralInfo,
+    SectionNameProp<SN> {
+  infoType: "activeDeal";
+  expectedCount: EC;
+}
+
 export interface GlobalSectionInfo<
   SN extends SectionName = SectionName,
   EC extends ExpectedCount = ExpectedCount

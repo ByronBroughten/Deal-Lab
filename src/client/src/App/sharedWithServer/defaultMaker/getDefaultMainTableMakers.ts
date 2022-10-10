@@ -31,9 +31,9 @@ export function getDefaultMainTableMakers(): TablePackMakers {
       "expensesMonthly",
     ]),
     loanMainTable: makeVarbNamesInfo("loan", [
-      "closingCosts",
       "interestRatePercentYearly",
       "loanTermYears",
+      "closingCosts",
     ]),
     mgmtMainTable: makeVarbNamesInfo("mgmt", [
       "upfrontExpenses",

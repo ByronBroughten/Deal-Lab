@@ -12,13 +12,13 @@ import { UserOutputListPage } from "./App/components/UserOutputListPage";
 import { UserVarbListPage } from "./App/components/UserVarbListPage";
 import { constants } from "./App/Constants";
 import { useSubscriptionState } from "./App/modules/customHooks/useAuthAndUserData";
-import { useSetterSectionOnlyOne } from "./App/sharedWithServer/stateClassHooks/useSetterSection";
+import { useGetterSectionOnlyOne } from "./App/sharedWithServer/stateClassHooks/useGetterSection";
 import theme from "./App/theme/Theme";
 
 export function Main() {
   useSubscriptionState();
-  const main = useSetterSectionOnlyOne("main");
-  const activeDealId = main.get.onlyChild("deal").feId;
+  const user = useGetterSectionOnlyOne("feUser");
+  const { feId: activeDealId } = user.onlyChild("activeDeal");
   const { feRoutes } = constants;
   return (
     <Styled className="App-root">

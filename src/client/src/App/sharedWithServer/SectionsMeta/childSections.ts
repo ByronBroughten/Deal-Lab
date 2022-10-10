@@ -36,16 +36,14 @@ export const childSections = checkChildSections({
   omniParent: relOmniParentChildren,
 
   // main is basically no longer required.
-  main: childrenSections({
-    deal: ["deal"],
-    feUser: ["feUser"],
-  }),
+  main: childrenSections({ feUser: ["feUser"] }),
   displayNameList: childrenSections({
     displayNameItem: ["displayNameItem"],
   }),
   feUser: childrenSections({
     // feUser includes everything that has a corresponding child in dbStore
     // or that has any intermediary sections used to edit and add to them.
+    activeDeal: ["deal"],
     authInfo: ["authInfo"],
     subscriptionInfo: ["subscriptionInfo"],
     userInfo: ["userInfo"],
