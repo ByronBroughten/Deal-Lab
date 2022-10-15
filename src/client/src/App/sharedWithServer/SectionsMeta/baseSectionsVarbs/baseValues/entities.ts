@@ -1,7 +1,7 @@
 import { pick } from "lodash";
 import { Schema } from "mongoose";
 import { z } from "zod";
-import { zNumber, zS, zString } from "../../../utils/zod";
+import { zS } from "../../../utils/zod";
 import { zSectionNameProp } from "../../baseSectionsDerived/baseSectionInfo";
 import {
   DbVarbInfoMixed,
@@ -23,6 +23,12 @@ const commonEntityInfo = {
   expectedCount: z.literal("onlyOne" as GlobalInEntityInfo["expectedCount"]),
   varbName: zS.string,
 };
+const zInEntityBase = z.object({
+  entityId: zS.nanoId,
+  entitySource: zS.string,
+  length: zS.number,
+  offset: zS.number,
+});
 
 export interface PathEntityInfo
   extends PathVarbInfoMixed<SectionName, "onlyOne"> {}
@@ -31,6 +37,7 @@ const zPathInEntityInfo = zSectionPathProp.extend({
   ...commonEntityInfo,
   infoType: z.literal("absolutePath"),
 });
+const zPathInEntity = zInEntityBase.merge(zPathInEntityInfo);
 
 export interface PathDbIdEntityInfo
   extends PathDbVarbInfoMixed<SectionName, "onlyOne"> {}
@@ -39,6 +46,7 @@ const zPathDbIdInEntityInfo = zSectionPathProp.extend({
   infoType: z.literal("absolutePathDbId"),
   id: zS.nanoId,
 });
+const zPathDbIdInEntity = zInEntityBase.merge(zPathDbIdInEntityInfo);
 
 export interface GlobalInEntityInfo
   extends GlobalVarbInfo<SectionName, "onlyOne"> {}
@@ -46,6 +54,7 @@ const zGlobalInEntityInfo = z.object({
   ...commonEntityInfo,
   infoType: z.literal("globalSection" as GlobalInEntityInfo["infoType"]),
 } as Record<keyof GlobalInEntityInfo, any>);
+const zGlobalInEntity = zInEntityBase.merge(zGlobalInEntityInfo);
 
 export interface DbInEntityInfo
   extends DbVarbInfoMixed<SectionName, "onlyOne"> {}
@@ -54,6 +63,7 @@ const zDbInEntityInfo = z.object({
   infoType: z.literal("dbId" as DbInEntityInfo["infoType"]),
   id: zS.nanoId,
 } as Record<keyof DbInEntityInfo, any>);
+const zDbInEntity = zInEntityBase.merge(zDbInEntityInfo);
 
 type InEntityVarbInfos = {
   dbId: DbInEntityInfo;
@@ -68,19 +78,13 @@ export const zInEntityVarbInfo = z.union([
   zPathInEntityInfo,
   zPathDbIdInEntityInfo,
 ]);
+export const zInEntity = z.union([
+  zPathInEntity,
+  zPathDbIdInEntity,
+  zDbInEntity,
+  zGlobalInEntity,
+]);
 
-const zInEntityBase = z.object({
-  // things depend on a new entityId being created every time
-  // a new entity is created
-  entityId: zString,
-  entitySource: zString,
-  length: zNumber,
-  offset: zNumber,
-});
-
-const zDbInEntity = zInEntityBase.merge(zDbInEntityInfo);
-const zGlobalInEntity = zInEntityBase.merge(zGlobalInEntityInfo);
-export const zInEntity = z.union([zDbInEntity, zGlobalInEntity]);
 export const zInEntities = z.array(zInEntity);
 type InEntityBase = z.infer<typeof zInEntityBase>;
 interface DbInEntity extends InEntityBase, DbInEntityInfo {}

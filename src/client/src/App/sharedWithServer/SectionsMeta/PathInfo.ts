@@ -8,10 +8,14 @@ import {
   GeneralMixedInfo,
 } from "./baseSectionsVarbs/NanoIdInfo";
 import { AnscestorName } from "./childSectionsDerived/DescendantSectionName";
+import { SelfChildName } from "./childSectionsDerived/ParentName";
 import { SectionName } from "./SectionName";
 
-interface DescendentNamesProp<SN extends SectionName> {
-  sectionPath: AnscestorName<SN>[];
+export type SectionPathName<SN extends SectionName> =
+  | AnscestorName<SN>
+  | SelfChildName<SN>;
+interface SectionPathProp<SN extends SectionName> {
+  sectionPath: SectionPathName<SN>[];
 }
 export const zSectionPathProp = z.object({
   sectionPath: zS.array(zS.string),
@@ -32,7 +36,7 @@ export function isAbsoluteInfoType(value: any): value is PathInfoType {
 
 export interface PathInfo<SN extends SectionName>
   extends SectionNameProp<SN>,
-    DescendentNamesProp<SN> {}
+    SectionPathProp<SN> {}
 
 interface PathMixedProp<EC extends ExpectedCount = ExpectedCount>
   extends GeneralMixedInfo<EC>,
