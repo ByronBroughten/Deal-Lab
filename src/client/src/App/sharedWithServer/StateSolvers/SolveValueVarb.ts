@@ -231,7 +231,10 @@ export class SolveValueVarb<
       "valueEntityInfo",
       "inEntityInfo"
     );
-    if (loadingVarbInfo && this.getterList.hasByMixed(loadingVarbInfo)) {
+    if (
+      loadingVarbInfo &&
+      this.getterSections.hasSectionMixed(loadingVarbInfo)
+    ) {
       const varb = this.getterSections.varbByMixed(loadingVarbInfo);
       return {
         solvableText: varb.value("numObj").solvableText,

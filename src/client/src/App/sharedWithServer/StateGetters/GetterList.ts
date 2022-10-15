@@ -1,6 +1,6 @@
 import { VarbName } from "../SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
 import { VarbValue } from "../SectionsMeta/baseSectionsDerived/valueMetaTypes";
-import { IdInfoMultiMixed } from "../SectionsMeta/childSectionsDerived/MixedSectionInfo";
+import { IdInfoMixedMulti } from "../SectionsMeta/childSectionsDerived/MixedSectionInfo";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import {
   RawFeSection,
@@ -97,22 +97,22 @@ export class GetterList<
   sectionsByDbId(dbId: string): GetterSection<SN>[] {
     return this.getterSectionArr.filter((section) => section.dbId === dbId);
   }
-  getOneByMixed(info: IdInfoMultiMixed): GetterSection<SN> {
+  getOneByMixed(info: IdInfoMixedMulti): GetterSection<SN> {
     const sections = this.getMultiByMixed(info);
     this.exactlyOneOrThrow(sections, info.infoType);
     return sections[0];
   }
-  getMultiByMixed(info: IdInfoMultiMixed) {
+  getMultiByMixed(info: IdInfoMixedMulti) {
     const sections = this.allSectionsByMixed(info);
     if (info.expectedCount === "onlyOne") {
       this.exactlyOneOrThrow(sections, info.infoType);
     }
     return sections;
   }
-  hasByMixed(idInfo: IdInfoMultiMixed): boolean {
+  hasByMixed(idInfo: IdInfoMixedMulti): boolean {
     return this.allSectionsByMixed(idInfo).length > 0;
   }
-  private allSectionsByMixed(info: IdInfoMultiMixed): GetterSection<SN>[] {
+  private allSectionsByMixed(info: IdInfoMixedMulti): GetterSection<SN>[] {
     switch (info.infoType) {
       case "globalSection":
         return this.allGetterSections;

@@ -23,7 +23,7 @@ class GetterColumn extends GetterSection<"column"> {
       } else {
         throw new Error("displayName must be a hardcoded string here.");
       }
-    } else {
+    } else if (varbInfo.infoType === "dbId") {
       const userVarbInfo = {
         ...varbInfo,
         sectionName: "userVarbItem",
@@ -32,10 +32,9 @@ class GetterColumn extends GetterSection<"column"> {
       if (this.sections.hasSectionMixed(userVarbInfo)) {
         const varb = this.sections.varbByMixed(userVarbInfo);
         return varb.displayName;
-      } else {
-        return "Variable not found";
       }
     }
+    return "Variable not found";
   }
 }
 

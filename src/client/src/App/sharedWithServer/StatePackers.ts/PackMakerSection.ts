@@ -77,7 +77,7 @@ export class PackMakerSection<
     this.reset();
     return sectionPack;
   }
-  makeChildTypePackArrs<CN extends ChildName<SN>>(
+  makeChildPackArrs<CN extends ChildName<SN>>(
     childNames: CN[]
   ): FeSectionPackArrs<SN, CN> {
     return childNames.reduce((spArrs, childName) => {
@@ -115,6 +115,13 @@ export class PackMakerSection<
     childInfo: FeChildInfo<SN, CN>
   ): SectionPack<ChildSectionName<SN, CN>> {
     const feInfo = this.get.childToFeInfo(childInfo);
+    const childPackMaker = this.sectionPackMaker(feInfo);
+    return childPackMaker.makeSectionPack();
+  }
+  makeOnlyChildSectionPack<CN extends ChildName<SN>>(
+    childName: CN
+  ): ChildSectionPack<SN, CN> {
+    const { feInfo } = this.get.onlyChild(childName);
     const childPackMaker = this.sectionPackMaker(feInfo);
     return childPackMaker.makeSectionPack();
   }

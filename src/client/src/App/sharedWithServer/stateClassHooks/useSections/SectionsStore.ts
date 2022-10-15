@@ -51,7 +51,7 @@ export class SectionsStore {
     const feUserBuilder = mainBuilder.onlyChild("feUser");
     const mainStoreNames = feStoreNameS.arrs.mainStoreName;
     const mainStorePackArrs =
-      feUserBuilder.maker.makeChildTypePackArrs(mainStoreNames);
+      feUserBuilder.maker.makeChildPackArrs(mainStoreNames);
     feUserBuilder.updater.removeAllChildrenInArrs(mainStoreNames);
 
     const mainSolver = SolverSections.initSolverFromMainPack(

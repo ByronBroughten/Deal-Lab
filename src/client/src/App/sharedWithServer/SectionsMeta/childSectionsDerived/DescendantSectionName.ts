@@ -1,6 +1,25 @@
 import { SectionName } from "../SectionName";
-import { getChildNames } from "./ChildName";
+import { ChildName, getChildNames } from "./ChildName";
 import { ChildSectionNameNarrow, childToSectionName } from "./ChildSectionName";
+import { ParentNameSafe } from "./ParentName";
+
+export type DescendantName<SN extends SectionName> = ChildName<SN> extends never
+  ? never
+  : ChildName<SN> | DescendantName<ChildSectionNameNarrow<SN>>;
+
+export type AnscestorName<SN extends SectionName> =
+  ParentNameSafe<SN> extends never
+    ? never
+    : ParentNameSafe<SN> | AnscestorName<ParentNameSafe<SN>>;
+
+export type AnscestorChildName<SN extends SectionName> = ChildName<
+  AnscestorName<SN>
+>;
+
+export type DescendantAncestorName<
+  SN extends SectionName,
+  S extends SectionName
+> = Extract<DescendantName<SN>, AnscestorName<S>>;
 
 export type DescendantSectionName<SN extends SectionName> =
   ChildSectionNameNarrow<SN> extends never

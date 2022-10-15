@@ -67,10 +67,14 @@ export class ChildPackLoader<
     }
   }
   loadChild() {
-    this.updaterSection.addChild(this.childName, {
+    const addProps = {
       ...pick(this.childRawSection, ["dbId", "dbVarbs"]),
       idx: this.spChildInfo.idx,
-    } as AddChildOptions<any>);
+    };
+    this.updaterSection.addChild(
+      this.childName,
+      addProps as AddChildOptions<any>
+    );
     const { feId } = this.get.youngestChild(this.childName);
     this.loadChildChildren(feId);
   }

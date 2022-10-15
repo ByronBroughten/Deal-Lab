@@ -4,7 +4,7 @@ import {
   DbIdInfo,
   ExpectedCount,
   FeIdInfo,
-  GeneralInfo,
+  GeneralMixedInfo,
 } from "../baseSectionsVarbs/NanoIdInfo";
 import { SectionName } from "../SectionName";
 import { SectionNameProp } from "./baseSectionInfo";
@@ -13,16 +13,21 @@ import { VarbName } from "./baseSectionsVarbsTypes";
 export interface ActiveDealInfo<
   SN extends SectionName = SectionName,
   EC extends ExpectedCount = ExpectedCount
-> extends GeneralInfo,
+> extends GeneralMixedInfo<EC>,
     SectionNameProp<SN> {
   infoType: "activeDeal";
-  expectedCount: EC;
 }
+
+export interface ActiveDealVarbInfo<
+  SN extends SectionName = SectionName,
+  EC extends ExpectedCount = ExpectedCount
+> extends ActiveDealInfo<SN, EC>,
+    VarbProp {}
 
 export interface GlobalSectionInfo<
   SN extends SectionName = SectionName,
   EC extends ExpectedCount = ExpectedCount
-> extends GeneralInfo,
+> extends GeneralMixedInfo,
     SectionNameProp<SN> {
   infoType: "globalSection";
   expectedCount: EC;

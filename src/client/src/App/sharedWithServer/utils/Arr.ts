@@ -87,6 +87,9 @@ export const Arr = {
   lastIdx(arr: readonly any[]): number {
     return arr.length - 1;
   },
+  isLastIdx(arr: readonly any[], idx: number): boolean {
+    return this.lastIdx(arr) === idx;
+  },
   lastOrThrow,
   includes<T, U extends T>(arr: readonly U[], elem: T): elem is U {
     return arr.includes(elem as any);

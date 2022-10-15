@@ -7,9 +7,12 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-
-// When there is a saved deal, there is an error when I try to solve,
-// because the deal variables point at too many deals.
+// It would make the structure of the app easier to change if I
+// use a fixed set of descendant InEntities
+// "activeDeal"
+// "activePropertyGeneral"
+// "activeLoan"
+// Then I can change their paths and meaning as needed.
 
 // There is another related issue.
 // When I have loaded a list, that list will have the same dbId

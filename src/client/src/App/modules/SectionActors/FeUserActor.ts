@@ -39,7 +39,7 @@ export class FeUserActor extends SectionActorBase<"feUser"> {
       ...getterSectionsProps,
       ...feUser.feInfo,
     });
-    return feStorePackMaker.makeChildTypePackArrs(
+    return feStorePackMaker.makeChildPackArrs(
       guestAccessNames
     ) as GuestAccessSectionPackArrs;
   }

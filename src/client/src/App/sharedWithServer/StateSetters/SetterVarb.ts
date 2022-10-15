@@ -1,8 +1,5 @@
 import { ContentState, EditorState } from "draft-js";
-import {
-  InEntityVarbInfo,
-  InVarbInfo,
-} from "../SectionsMeta/baseSectionsVarbs/baseValues/entities";
+import { InEntityVarbInfo } from "../SectionsMeta/baseSectionsVarbs/baseValues/entities";
 import { StateValue } from "../SectionsMeta/baseSectionsVarbs/baseValues/StateValueTypes";
 import { ValueName } from "../SectionsMeta/baseSectionsVarbs/baseVarb";
 import { ValueTypesPlusAny } from "../SectionsMeta/baseSectionsVarbs/StateVarbTypes";
@@ -10,7 +7,7 @@ import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { VarbMeta } from "../SectionsMeta/VarbMeta";
 import { GetterSections } from "../StateGetters/GetterSections";
 import { GetterVarb } from "../StateGetters/GetterVarb";
-import { SolverVarb } from "../StateSolvers/SolverVarb";
+import { InVarbInfo, SolverVarb } from "../StateSolvers/SolverVarb";
 import { UpdaterVarb } from "./../StateUpdaters/UpdaterVarb";
 import {
   CreateEditorProps,

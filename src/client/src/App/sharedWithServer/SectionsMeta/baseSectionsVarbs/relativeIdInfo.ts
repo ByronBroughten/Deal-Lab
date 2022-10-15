@@ -1,4 +1,4 @@
-import { GeneralIdInfo, NanoIdInfo } from "./NanoIdInfo";
+import { GeneralMixedIdInfo, NanoIdInfo } from "./NanoIdInfo";
 
 export type RelativeIds = {
   inVarb: "children" | "local" | "static" | "all";
@@ -14,7 +14,7 @@ export type RelativeIds = {
 type RelType = keyof RelativeIds;
 export type Relative<T extends RelType = RelType> = RelativeIds[T];
 
-export interface RelIdInfo extends GeneralIdInfo {
+export interface RelIdInfo extends GeneralMixedIdInfo {
   id: Relative;
   infoType: "relative";
 }

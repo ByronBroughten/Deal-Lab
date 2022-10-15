@@ -1,10 +1,6 @@
 import { VarbProp, VarbPropNext } from "./baseSectionsDerived/baseVarbInfo";
 import { StateValue } from "./baseSectionsVarbs/baseValues/StateValueTypes";
 import { Id } from "./baseSectionsVarbs/id";
-import {
-  DescendantSectionName,
-  SelfOrDescendantSectionName,
-} from "./childSectionsDerived/DescendantSectionName";
 import { ParentName, ParentNameSafe } from "./childSectionsDerived/ParentName";
 import { SectionName } from "./SectionName";
 import {
@@ -31,16 +27,6 @@ export interface SectionArrInfo<SN extends SectionNameByType> {
   feIds: string;
 }
 
-export interface FeDescendantInfo<
-  SN extends SectionNameByType = SectionNameByType<"hasChild">
-> {
-  sectionName: DescendantSectionName<SN>;
-  feId: string;
-}
-export interface FeSelfOrDescendantInfo<SN extends SectionNameByType> {
-  sectionName: SelfOrDescendantSectionName<SN>;
-  feId: string;
-}
 export interface FeParentInfo<SN extends SectionNameByType> {
   sectionName: ParentName<SN>;
   feId: string;

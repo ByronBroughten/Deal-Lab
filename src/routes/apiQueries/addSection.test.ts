@@ -97,9 +97,9 @@ describe(testedRoute, () => {
     req.body.sectionPack = null as any;
     await testStatus(500);
   });
-  it("should return 500 if there is an entry in the db with sectionPack's dbId", async () => {
+  it("should return 400 if there is an entry in the db with sectionPack's dbId", async () => {
     await exec();
-    await testStatus(500);
+    await testStatus(400);
   });
   // it("should return 400 if there are already two entries", async () => {
   // isBeta

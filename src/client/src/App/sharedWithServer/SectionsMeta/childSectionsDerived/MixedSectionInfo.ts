@@ -1,5 +1,6 @@
 import { DistributiveOmit } from "../../utils/types";
 import {
+  ActiveDealInfo,
   DbSectionInfoMixed,
   FeSectionInfoMixed,
   FeVarbInfoMixed,
@@ -7,14 +8,25 @@ import {
   VarbProp,
 } from "../baseSectionsDerived/baseVarbInfo";
 import { ExpectedCount } from "../baseSectionsVarbs/NanoIdInfo";
+import { PathDbInfoMixed, PathInfoMixed } from "../PathInfo";
 import { SectionName } from "../SectionName";
 import { RelSectionInfo } from "./RelInfo";
+export type SectionContextInfo<SN extends SectionName = SectionName> =
+  ActiveDealInfo<SN>;
 
 // a mixed section finder that doesn't need a focal section
 export type SectionInfoMixed<SN extends SectionName = SectionName> =
   | FeSectionInfoMixed<SN>
   | GlobalSectionInfo<SN>
-  | DbSectionInfoMixed<SN>;
+  | DbSectionInfoMixed<SN>
+  | PathInfoMixed<SN>
+  | PathDbInfoMixed<SN>;
+
+export type IdInfoMixedMulti = DistributiveOmit<
+  FeSectionInfoMixed | GlobalSectionInfo | DbSectionInfoMixed,
+  "sectionName"
+>;
+
 export type VarbInfoMixed<SN extends SectionName = SectionName> =
   SectionInfoMixed<SN> & VarbProp;
 
@@ -36,6 +48,16 @@ export const mixedInfoS = {
   >(sectionName: SN, expectedCount?: EC): GlobalSectionInfo<SN, EC> {
     return {
       infoType: "globalSection",
+      sectionName,
+      expectedCount: (expectedCount ?? "onlyOne") as EC,
+    };
+  },
+  makeActiveDeal<SN extends SectionName, EC extends ExpectedCount = "onlyOne">(
+    sectionName: SN,
+    expectedCount?: EC
+  ): ActiveDealInfo<SN, EC> {
+    return {
+      infoType: "activeDeal",
       sectionName,
       expectedCount: (expectedCount ?? "onlyOne") as EC,
     };
@@ -71,10 +93,6 @@ export const mixedInfoS = {
 };
 
 type MixedInfoType = SectionInfoMixed["infoType"];
-export type IdInfoMultiMixed = DistributiveOmit<
-  SectionInfoMixed,
-  "sectionName"
->;
 
 // may point to multiple sections and may require focal section
 export type SectionInfoMixedFocal = SectionInfoMixed | RelSectionInfo;

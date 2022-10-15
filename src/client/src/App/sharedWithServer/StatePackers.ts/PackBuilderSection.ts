@@ -10,17 +10,16 @@ import {
 } from "../SectionsMeta/childSectionsDerived/ChildSectionPack";
 import { SectionPack } from "../SectionsMeta/childSectionsDerived/SectionPack";
 import { FeSectionInfo } from "../SectionsMeta/Info";
-import { SectionName } from "../SectionsMeta/SectionName";
 import {
   SectionNameByType,
   SectionNameType,
 } from "../SectionsMeta/SectionNameByType";
-import { GetterSectionsBase } from "../StateGetters/Bases/GetterSectionsBase";
 import { UpdaterSectionBase } from "../StateUpdaters/bases/updaterSectionBase";
 import {
   AddChildOptions,
   UpdaterSection,
 } from "../StateUpdaters/UpdaterSection";
+import { PackBuilderSections } from "./PackBuilderSections";
 import {
   ChildPackInfo,
   ChildSectionPackArrs,
@@ -28,20 +27,12 @@ import {
 } from "./PackLoaderSection";
 import { PackMakerSection } from "./PackMakerSection";
 
-export class PackBuilderSections extends GetterSectionsBase {
-  section<SN extends SectionName>(
-    feInfo: FeSectionInfo<SN>
-  ): PackBuilderSection<SN> {
-    return new PackBuilderSection({
-      ...this.getterSectionsProps,
-      ...feInfo,
-    });
-  }
-}
-
 export class PackBuilderSection<
   SN extends SectionNameByType
 > extends UpdaterSectionBase<SN> {
+  get builderSections() {
+    return new PackBuilderSections(this.getterSectionsProps);
+  }
   static initAsOmniParent() {
     return new PackBuilderSection(UpdaterSection.initOmniParentProps());
   }

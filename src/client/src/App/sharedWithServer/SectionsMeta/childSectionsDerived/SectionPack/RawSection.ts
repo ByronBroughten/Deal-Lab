@@ -24,6 +24,7 @@ export type DbVarbs = {
 };
 export type GeneralRawSection = {
   spNum: number;
+  feId: string;
   dbId: string;
   dbVarbs: DbVarbs;
   childSpNums: GeneralChildNumArrs;

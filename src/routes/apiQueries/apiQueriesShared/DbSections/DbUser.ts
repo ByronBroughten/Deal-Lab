@@ -59,14 +59,15 @@ export class DbUser extends DbSectionsQuerierBase {
   async initUserSectionsIfNeeded(
     guestAccessSections: GuestAccessSectionPackArrs
   ): Promise<void> {
-    if (!(await this.guestAccessSectionsAreLoaded)) {
+    const areLoaded = await this.guestAccessSectionsAreLoaded();
+    if (!areLoaded) {
       await this.loadGuestAccessSections(guestAccessSections);
     }
   }
   private async loadGuestAccessSections(
     guestAccessSections: GuestAccessSectionPackArrs
   ): Promise<void> {
-    this.setOnlyValue({
+    await this.setOnlyValue({
       ...this.guestAccessInfo,
       value: true,
     });
@@ -97,7 +98,7 @@ export class DbUser extends DbSectionsQuerierBase {
       varbName: "guestSectionsAreLoaded",
     } as const;
   }
-  private get guestAccessSectionsAreLoaded() {
+  async guestAccessSectionsAreLoaded() {
     return this.getOnlySectionValue(this.guestAccessInfo);
   }
   async hasSectionPack<CN extends DbStoreName>(

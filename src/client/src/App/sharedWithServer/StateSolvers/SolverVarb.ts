@@ -1,13 +1,12 @@
+import { FeVarbInfoMixed } from "../SectionsMeta/baseSectionsDerived/baseVarbInfo";
 import {
   entityS,
   InEntity,
   InEntityVarbInfo,
-  InVarbInfo,
   OutEntity,
 } from "../SectionsMeta/baseSectionsVarbs/baseValues/entities";
 import { StateValue } from "../SectionsMeta/baseSectionsVarbs/baseValues/StateValueTypes";
 import { Id } from "../SectionsMeta/baseSectionsVarbs/id";
-import { VarbInfoMixed } from "../SectionsMeta/childSectionsDerived/MixedSectionInfo";
 import { RelInVarbInfo } from "../SectionsMeta/childSectionsDerived/RelInOutVarbInfo";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { GetterSections } from "../StateGetters/GetterSections";
@@ -15,6 +14,7 @@ import { GetterVarb } from "../StateGetters/GetterVarb";
 import { OutVarbGetterVarb } from "../StateInOutVarbs/OutVarbGetterVarb";
 import { UpdaterVarb } from "../StateUpdaters/UpdaterVarb";
 import { StrictOmit } from "../utils/types";
+import { PackBuilderSections } from "./../StatePackers.ts/PackBuilderSections";
 import { SolverVarbBase, SolverVarbProps } from "./SolverBases/SolverVarbBase";
 import { SolverSections } from "./SolverSections";
 import { SolveValueVarb } from "./SolveValueVarb";
@@ -125,11 +125,14 @@ export class SolverVarb<
     const { newEntities } = this;
     this.addOutEntitiesFromInEntities(newEntities);
   }
+  get builderSections() {
+    return new PackBuilderSections(this.getterSectionProps);
+  }
   private addOutEntitiesFromInEntities(inEntities: InEntity[]) {
     this.dummyCheck(inEntities);
     for (const entity of inEntities) {
       if (this.inEntitySectionExists(entity)) {
-        const inEntityVarb = this.solverSections.varbByMixed(entity);
+        const inEntityVarb = this.getInEntityVarb(entity);
         inEntityVarb.addOutEntity(this.newSelfOutEntity(entity.entityId));
       }
     }
@@ -152,10 +155,16 @@ export class SolverVarb<
       entityId: inEntityId,
     };
   }
+  hasInEntityVarb(inEntity: InEntityVarbInfo) {
+    return this.getterSections.hasSectionMixed(inEntity);
+  }
+  getInEntityVarb(inEntity: InEntity): SolverVarb {
+    return this.solverSections.varbByMixed(inEntity);
+  }
   private removeOutEntitiesOfInEntities(inEntities: InEntity[]) {
     for (const inEntity of inEntities) {
-      if (this.getterSections.hasSectionMixed(inEntity)) {
-        const inEntityVarb = this.solverSections.varbByMixed(inEntity);
+      if (this.hasInEntityVarb(inEntity)) {
+        const inEntityVarb = this.getInEntityVarb(inEntity);
         inEntityVarb.removeOutEntity(inEntity.entityId);
       }
     }
@@ -205,16 +214,13 @@ export class SolverVarb<
     this.updaterVarb.update({ outEntities: nextOutEntities });
   }
   private inEntitySectionExists(inEntity: InEntity): boolean {
-    if (this.getterSections.hasSectionMixed(inEntity)) return true;
+    if (this.hasInEntityVarb(inEntity)) return true;
     if (this.isUserVarbAndWasDeleted(inEntity)) return false;
     throw varbNotFoundMixed(inEntity);
   }
   private isUserVarbAndWasDeleted(varbInfo: InEntityVarbInfo): boolean {
     const { sectionName } = varbInfo;
-    return (
-      sectionName === "userVarbItem" &&
-      !this.getterSections.hasSectionMixed(varbInfo)
-    );
+    return sectionName === "userVarbItem" && !this.hasInEntityVarb(varbInfo);
   }
   private solveOutVarbs(): void {
     this.addVarbInfosToSolveFor(...this.outVarbGetter.outVarbInfos);
@@ -256,8 +262,14 @@ export function varbNotFoundMixed({
   varbName,
   sectionName,
   infoType,
-}: VarbInfoMixed) {
+}: {
+  varbName: string;
+  sectionName: string;
+  infoType: string;
+}) {
   return new Error(
     `There is no varb at ${sectionName}.${varbName} with infoType ${infoType}.`
   );
 }
+
+export type InVarbInfo = InEntity | FeVarbInfoMixed;

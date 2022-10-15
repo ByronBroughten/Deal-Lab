@@ -13,6 +13,9 @@ export const outputNames = [
 const defaultDealOutputInfos: InEntityVarbInfo[] = outputNames.map(
   (varbName) => {
     return {
+      // here, instead of a globalVarb, I ought to use
+      // a path varb
+
       ...mixedInfoS.makeGlobalSection("deal", "onlyOne"),
       varbName,
     } as const;

@@ -1,4 +1,7 @@
-import { ExpectedCount, GeneralInfo } from "../baseSectionsVarbs/NanoIdInfo";
+import {
+  ExpectedCount,
+  GeneralMixedInfo,
+} from "../baseSectionsVarbs/NanoIdInfo";
 import { SectionName } from "../SectionName";
 import { ChildName } from "./ChildName";
 import { ParentName, PiblingName, StepSiblingName } from "./ParentName";
@@ -28,7 +31,7 @@ export type RelSectionInfo =
 type RelSectionInfoTest<T extends RelInfoType> = T;
 type _TestRelSectionInfo = RelSectionInfoTest<RelSectionInfo["infoType"]>;
 
-interface RelInfo<OO extends ExpectedCount> extends GeneralInfo {
+interface RelInfo<OO extends ExpectedCount> extends GeneralMixedInfo {
   infoType: RelInfoType;
   expectedCount: OO;
 }

@@ -3,6 +3,7 @@ import { z } from "zod";
 import { Obj } from "../../../utils/Obj";
 import { zS } from "../../../utils/zod";
 import { isVarbName } from "../../baseSectionsDerived/baseVarbInfo";
+import { isSectionPath } from "../../PathInfo";
 import { isSectionName } from "../../SectionName";
 import { Id } from "../id";
 import { InEntityVarbInfo, zInEntityVarbInfo } from "./entities";
@@ -49,8 +50,18 @@ function isInEntityVarbInfoShared(value: any): boolean {
 }
 function isInEntityVarbInfoSpecific(value: any): boolean {
   const info: InEntityVarbInfo = value;
-  return (
-    (info.infoType === "dbId" && Id.is(info.id)) ||
-    info.infoType === "globalSection"
-  );
+  switch (info.infoType) {
+    case "globalSection":
+      return true;
+    case "dbId":
+      return Id.is(info.id);
+    case "absolutePath": {
+      return isSectionPath(info.sectionPath);
+    }
+    case "absolutePathDbId": {
+      return isSectionPath(info.sectionPath) && Id.is(info.id);
+    }
+    default:
+      return false;
+  }
 }

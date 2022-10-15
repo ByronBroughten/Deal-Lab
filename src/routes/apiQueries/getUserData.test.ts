@@ -80,25 +80,24 @@ describe(testedRoute, () => {
     feUser.addChild("userVarbListMain");
 
     reqObj = makeReqObj(feUser);
-    const res1 = await exec();
+    await exec();
 
-    feUser.addChild("singleTimeListMain");
+    const childName = "singleTimeListMain";
+    const { dbId } = feUser.addAndGetChild(childName).get;
     reqObj = makeReqObj(feUser);
-    const res2 = await exec();
 
-    expect(changedSection(res1.data)).toEqual(changedSection(res2.data));
+    const res2 = await exec();
+    const feUser2 = PackBuilderSection.loadAsOmniChild(res2.data.feUser[0]);
+    const hasList = feUser2.get.hasChildByDbInfo({ childName, dbId });
+    expect(hasList).toBe(false);
   });
 });
-
-function changedSection(data: LoginData) {
-  return data.feUser[0].rawSections.singleTimeList;
-}
 
 function makeReqObj(
   feUser = PackBuilderSection.initAsOmniChild("feUser")
 ): QueryReq<"getUserData"> {
   const activeDeal = PackBuilderSection.initAsOmniChild("deal");
-  const guestAccessSections = feUser.maker.makeChildTypePackArrs(
+  const guestAccessSections = feUser.maker.makeChildPackArrs(
     guestAccessNames
   ) as GuestAccessSectionPackArrs;
   return {
