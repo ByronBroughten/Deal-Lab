@@ -140,6 +140,30 @@ export const childSections = checkChildSections({
   }),
 });
 
+export const childPaths = {
+  get feUser() {
+    return ["main", "feUser"] as const;
+  },
+  get activeDeal() {
+    return [...this.feUser, "activeDeal"] as const;
+  },
+  get userVarbItem() {
+    return [...this.feUser, "userVarbListMain", "userVarbItem"] as const;
+  },
+  get ongoingListMain() {
+    return [...this.feUser, "ongoingListMain"] as const;
+  },
+  get ongoingItemMain() {
+    return [...this.ongoingListMain, "ongoingItem"] as const;
+  },
+  get singleTimeListMain() {
+    return [...this.feUser, "singleTimeListMain"] as const;
+  },
+  get singleTimeItemMain() {
+    return [...this.singleTimeListMain, "singleTimeItem"] as const;
+  },
+} as const;
+
 export type ChildSections = typeof childSections;
 export type SectionChildProps<PN extends keyof GeneralChildSection> = {
   [SN in keyof ChildSections]: {

@@ -7,6 +7,12 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
+
+// Here's the thing. I might some day want to allow for multiple deals
+// to be edited simultaneously.
+// And I would want them to reference the same variables.
+// But in that case, they will try to update eachother.
+
 // It would make the structure of the app easier to change if I
 // use a fixed set of descendant InEntities
 // "activeDeal"

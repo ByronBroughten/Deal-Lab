@@ -7,15 +7,17 @@ import {
   GeneralMixedIdInfo,
   GeneralMixedInfo,
 } from "./baseSectionsVarbs/NanoIdInfo";
-import { AnscestorName } from "./childSectionsDerived/DescendantSectionName";
-import { SelfChildName } from "./childSectionsDerived/ParentName";
+import { ChildName } from "./childSectionsDerived/ChildName";
 import { SectionName } from "./SectionName";
 
-export type SectionPathName<SN extends SectionName> =
-  | AnscestorName<SN>
-  | SelfChildName<SN>;
+export type SectionPathName<SN extends SectionName> = ChildName;
+// Exclude<
+//   AnscestorChildName<SN> | SelfChildName<SN>,
+//   "root"
+// >;
+
 interface SectionPathProp<SN extends SectionName> {
-  sectionPath: SectionPathName<SN>[];
+  sectionPath: readonly SectionPathName<SN>[];
 }
 export const zSectionPathProp = z.object({
   sectionPath: zS.array(zS.string),

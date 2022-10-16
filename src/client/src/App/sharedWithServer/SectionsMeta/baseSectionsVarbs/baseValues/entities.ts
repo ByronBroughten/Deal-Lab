@@ -20,7 +20,7 @@ export type OutEntity = FeVarbInfoMixed & { entityId: string };
 
 const commonEntityInfo = {
   ...zSectionNameProp.shape,
-  expectedCount: z.literal("onlyOne" as GlobalInEntityInfo["expectedCount"]),
+  expectedCount: z.literal("onlyOne"),
   varbName: zS.string,
 };
 const zInEntityBase = z.object({
@@ -48,11 +48,12 @@ const zPathDbIdInEntityInfo = zSectionPathProp.extend({
 });
 const zPathDbIdInEntity = zInEntityBase.merge(zPathDbIdInEntityInfo);
 
+// this must be exported for InEntityInfoValue.zInEntityVarbInfoValue
 export interface GlobalInEntityInfo
   extends GlobalVarbInfo<SectionName, "onlyOne"> {}
 const zGlobalInEntityInfo = z.object({
   ...commonEntityInfo,
-  infoType: z.literal("globalSection" as GlobalInEntityInfo["infoType"]),
+  infoType: z.literal("globalSection"),
 } as Record<keyof GlobalInEntityInfo, any>);
 const zGlobalInEntity = zInEntityBase.merge(zGlobalInEntityInfo);
 
@@ -86,17 +87,17 @@ export const zInEntity = z.union([
 ]);
 
 export const zInEntities = z.array(zInEntity);
-type InEntityBase = z.infer<typeof zInEntityBase>;
+export type InEntityBase = z.infer<typeof zInEntityBase>;
 interface DbInEntity extends InEntityBase, DbInEntityInfo {}
-interface DescendantInEntity extends InEntityBase, PathEntityInfo {}
-interface DescendantDbInEntity extends InEntityBase, PathDbIdEntityInfo {}
+export interface AbsoluteInEntity extends InEntityBase, PathEntityInfo {}
+interface AbsoluteDbIdInEntity extends InEntityBase, PathDbIdEntityInfo {}
 export interface GlobalInEntity extends InEntityBase, GlobalInEntityInfo {}
 
 export type InEntity =
   | DbInEntity
   | GlobalInEntity
-  | DescendantInEntity
-  | DescendantDbInEntity;
+  | AbsoluteInEntity
+  | AbsoluteDbIdInEntity;
 export type InEntities = InEntity[];
 // As things stand, I can't infer much from the zod schemas because
 // there isn't a convenient way to make their sectionName enforce SectionNameByType

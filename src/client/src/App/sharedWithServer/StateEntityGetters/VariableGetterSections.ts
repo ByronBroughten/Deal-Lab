@@ -1,6 +1,7 @@
 import { sectionsMeta } from "../SectionsMeta";
 import { InEntityVarbInfo } from "../SectionsMeta/baseSectionsVarbs/baseValues/entities";
 import { switchNames } from "../SectionsMeta/baseSectionsVarbs/RelSwitchVarb";
+import { childPaths } from "../SectionsMeta/childSections";
 import { mixedInfoS } from "../SectionsMeta/childSectionsDerived/MixedSectionInfo";
 import {
   SectionNameByType,
@@ -30,6 +31,8 @@ export class VariableGetterSections extends GetterSectionsBase {
     ];
   }
   private userVarbOptions(): VariableOption[] {
+    // Ok. This is only for userVarbs, is that right?
+    //
     const { main } = this.getterSections;
     const feUser = main.onlyChild("feUser");
     const childName = "userVarbListMain";
@@ -40,13 +43,19 @@ export class VariableGetterSections extends GetterSectionsBase {
       const collectionName = listSection.valueNext("displayName").mainText;
       return options.concat(
         userVarbItems.map((item) => {
+          const varbInfo = {
+            ...mixedInfoS.absoluteDbIdPath(
+              "userVarbItem",
+              childPaths.userVarbItem,
+              item.dbId,
+              "onlyOne"
+            ),
+            varbName: "value",
+          };
           return {
             displayName: item.virtualVarb.displayName,
             collectionName,
-            varbInfo: {
-              ...item.dbInfoMixed("onlyOne"),
-              varbName: "value",
-            },
+            varbInfo,
           };
         })
       );
@@ -79,16 +88,34 @@ export class VariableGetterSections extends GetterSectionsBase {
             if (key === "switch") continue;
             const varbName = ongoingNames[key];
             const varb = list.varb(varbName);
+            const varbInfo = {
+              ...mixedInfoS.absoluteDbIdPath(
+                "ongoingItem",
+                childPaths.ongoingItemMain,
+                varb.dbId,
+                "onlyOne"
+              ),
+              varbName: varb.varbName,
+            };
             options.push({
-              varbInfo: varb.dbVarbInfoMixed("onlyOne"),
+              varbInfo,
               displayName,
               collectionName,
             });
           }
         } else {
           const varb = list.varb("total");
+          const varbInfo = {
+            ...mixedInfoS.absoluteDbIdPath(
+              "singleTimeItem",
+              childPaths.singleTimeItemMain,
+              varb.dbId,
+              "onlyOne"
+            ),
+            varbName: varb.varbName,
+          };
           options.push({
-            varbInfo: varb.dbVarbInfoMixed("onlyOne"),
+            varbInfo,
             displayName,
             collectionName,
           });
@@ -100,33 +127,53 @@ export class VariableGetterSections extends GetterSectionsBase {
   private initGlobalVarbOptions(): VariableOption[] {
     const sectionNames = sectionNameS.arrs.all;
     return sectionNames.reduce((options, sectionName) => {
-      const sectionMeta = sectionsMeta.section(sectionName);
-      const { varbNames } = sectionMeta;
       if (sectionNameS.is(sectionName, "hasGlobalVarbs")) {
-        const moreOptions = varbNames
-          .map((varbName) => this.sectionsMeta.varb({ sectionName, varbName }))
-          .filter((varbMeta) => varbMeta.valueName === "numObj")
-          .map((varbMeta) => this.initGlobalVarbOption(varbMeta.varbNameInfo));
-
-        options = options.concat(moreOptions);
+        options = options.concat(this.initSectionOptions(sectionName));
       }
       return options;
     }, [] as VariableOption[]);
   }
-  private initGlobalVarbOption({
+  initSectionOptions(sectionName: SectionNameByType<"hasGlobalVarbs">) {
+    const sectionMeta = sectionsMeta.section(sectionName);
+    const { varbNames } = sectionMeta;
+    const varbMetas = varbNames.map((varbName) =>
+      this.sectionsMeta.varb({ sectionName, varbName })
+    );
+    const numObjMetas = varbMetas.filter(
+      (varbMeta) => varbMeta.valueName === "numObj"
+    );
+    return numObjMetas.map((varbMeta) =>
+      this.initAbsoluteVarbOption(varbMeta.varbNameInfo)
+    );
+  }
+  private initAbsoluteVarbOption({
     sectionName,
     varbName,
   }: InitGlobalVarbOptionProps): VariableOption {
+    const path = [
+      ...childPaths.activeDeal,
+      ...this.absoluteOptionPaths[sectionName],
+    ];
     const section = this.getterSections.oneAndOnly(sectionName);
     const varb = section.varb(varbName);
     return {
-      varbInfo: {
-        ...mixedInfoS.makeGlobalSection(sectionName),
+      varbInfo: mixedInfoS.absoluteVarbPath(
+        sectionName,
+        path,
         varbName,
-      },
+        "onlyOne"
+      ),
       collectionName: section.meta.displayName,
       displayName: varb.displayNameFull,
     };
+  }
+  private get absoluteOptionPaths() {
+    return {
+      propertyGeneral: ["propertyGeneral"],
+      financing: ["financing"],
+      mgmtGeneral: ["mgmtGeneral"],
+      deal: [],
+    } as const;
   }
 }
 type InitGlobalVarbOptionProps = {

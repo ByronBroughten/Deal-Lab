@@ -47,10 +47,10 @@ export const mixedInfoS = {
       id: feId,
     };
   },
-  makeGlobalSection<
-    SN extends SectionName,
-    EC extends ExpectedCount = "onlyOne"
-  >(sectionName: SN, expectedCount?: EC): GlobalSectionInfo<SN, EC> {
+  globalSection<SN extends SectionName, EC extends ExpectedCount = "onlyOne">(
+    sectionName: SN,
+    expectedCount?: EC
+  ): GlobalSectionInfo<SN, EC> {
     return {
       infoType: "globalSection",
       sectionName,
@@ -85,7 +85,7 @@ export const mixedInfoS = {
   },
   absoluteDbIdPath<SN extends SectionName, EC extends ExpectedCount>(
     sectionName: SN,
-    sectionPath: SectionPathName<SN>[],
+    sectionPath: readonly SectionPathName<SN>[],
     dbId: string,
     expectedCount: EC
   ): PathDbInfoMixed<SN, EC> {
