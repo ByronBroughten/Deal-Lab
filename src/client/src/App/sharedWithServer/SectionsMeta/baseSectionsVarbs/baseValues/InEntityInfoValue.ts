@@ -3,7 +3,7 @@ import { z } from "zod";
 import { Obj } from "../../../utils/Obj";
 import { zS } from "../../../utils/zod";
 import { isVarbName } from "../../baseSectionsDerived/baseVarbInfo";
-import { isSectionPath } from "../../PathInfo";
+import { isChildPathName } from "../../childPaths";
 import { isSectionName } from "../../SectionName";
 import { Id } from "../id";
 import { InEntityVarbInfo, zInEntityVarbInfo } from "./entities";
@@ -56,10 +56,10 @@ function isInEntityVarbInfoSpecific(value: any): boolean {
     case "dbId":
       return Id.is(info.id);
     case "absolutePath": {
-      return isSectionPath(info.sectionPath);
+      return isChildPathName(info.pathName);
     }
     case "absolutePathDbId": {
-      return isSectionPath(info.sectionPath) && Id.is(info.id);
+      return isChildPathName(info.pathName) && Id.is(info.id);
     }
     default:
       return false;

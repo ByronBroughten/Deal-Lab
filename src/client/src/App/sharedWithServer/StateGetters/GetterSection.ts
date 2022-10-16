@@ -31,7 +31,9 @@ import { ChildSectionName } from "../SectionsMeta/childSectionsDerived/ChildSect
 import {
   DescendantIds,
   DescendantName,
+  DescendantOfSnInfo,
   DescendantSectionName,
+  DescOfSnDbIdInfo,
   SelfAndDescendantIds,
 } from "../SectionsMeta/childSectionsDerived/DescendantSectionName";
 import {
@@ -65,7 +67,6 @@ import { PackMakerSection } from "../StatePackers.ts/PackMakerSection";
 import { RawFeSection } from "../StateSections/StateSectionsTypes";
 import { Arr } from "../utils/Arr";
 import { Obj } from "../utils/Obj";
-import { PathDbIdInfo, PathInfo } from "./../SectionsMeta/PathInfo";
 import { GetterSectionBase } from "./Bases/GetterSectionBase";
 import { GetterList } from "./GetterList";
 import { GetterSections } from "./GetterSections";
@@ -598,16 +599,16 @@ export class GetterSection<
     this.list.exactlyOneOrThrow(sections, "descendantNames");
     return sections[0];
   }
-  hasDescendantByPathInfo<S extends SectionName>(
-    pathInfo: PathInfo<S>
+  hasDescendantOfSn<S extends SectionName>(
+    info: DescendantOfSnInfo<S, SN>
   ): boolean {
-    return this.descendantsByPathInfo(pathInfo).length > 0;
+    return this.descendantsOfSn(info).length > 0;
   }
-  descendantsByPathInfo<S extends SectionName>({
-    sectionPath,
+  descendantsOfSn<S extends SectionName>({
     sectionName,
-  }: PathInfo<S>): GetterSection<S>[] {
-    const sections = this.getDescendants(sectionPath as DescendantName<SN>[]);
+    descendantNames,
+  }: DescendantOfSnInfo<S, SN>): GetterSection<S>[] {
+    const sections = this.getDescendants(descendantNames);
     sections.forEach((section) => {
       if (!section.isOfSectionName(sectionName)) {
         throw section.notOfSectionNameError(sectionName);
@@ -615,11 +616,11 @@ export class GetterSection<
     });
     return sections as GetterSection<any>[];
   }
-  descendantByPathInfo<S extends SectionName>(
-    pathInfo: PathInfo<S>
+  descendantOfSn<S extends SectionName>(
+    descendantInfo: DescendantOfSnInfo<S, SN>
   ): GetterSection<S> {
-    const descendants = this.descendantsByPathInfo(pathInfo);
-    this.list.exactlyOneOrThrow(descendants, "pathInfo");
+    const descendants = this.descendantsOfSn(descendantInfo);
+    this.list.exactlyOneOrThrow(descendants, "descendantInfo");
     return descendants[0];
   }
   notOfSectionNameError(wrongName: string) {
@@ -635,21 +636,21 @@ export class GetterSection<
   descendantsByPathAndDbId<S extends SectionName>({
     dbId,
     ...rest
-  }: PathDbIdInfo<S>): GetterSection<S>[] {
-    const sections = this.descendantsByPathInfo(rest);
+  }: DescOfSnDbIdInfo<S, SN>): GetterSection<S>[] {
+    const sections = this.descendantsOfSn(rest);
     return sections.filter((section) => section.dbId === dbId);
   }
   descendantByPathAndDbId<S extends SectionName>(
-    pathInfo: PathDbIdInfo<S>
+    info: DescOfSnDbIdInfo<S, SN>
   ): GetterSection<S> {
-    const sections = this.descendantsByPathAndDbId(pathInfo);
-    this.list.exactlyOneOrThrow(sections, "pathDbIdInfo");
+    const sections = this.descendantsByPathAndDbId(info);
+    this.list.exactlyOneOrThrow(sections, "descendantDbIdInfo");
     return sections[0];
   }
   hasDescendantByPathAndDbId<S extends SectionName>(
-    pathInfo: PathDbIdInfo<S>
+    info: DescOfSnDbIdInfo<S, SN>
   ): boolean {
-    return this.descendantsByPathAndDbId(pathInfo).length > 0;
+    return this.descendantsByPathAndDbId(info).length > 0;
   }
   descendantFeIds(): DescendantIds<SN> {
     const descendantIds: { [key: string]: string[] } = {};

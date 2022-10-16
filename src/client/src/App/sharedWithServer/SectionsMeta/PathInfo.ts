@@ -7,17 +7,15 @@ import {
   GeneralMixedIdInfo,
   GeneralMixedInfo,
 } from "./baseSectionsVarbs/NanoIdInfo";
-import { ChildName } from "./childSectionsDerived/ChildName";
+import { PathNameOfSection } from "./childPaths";
 import { SectionName } from "./SectionName";
 
-export type SectionPathName<SN extends SectionName> = ChildName;
-
 interface SectionPathProp<SN extends SectionName> {
-  sectionPath: readonly SectionPathName<SN>[];
+  pathName: PathNameOfSection<SN>;
 }
 
 export const zSectionPathProp = z.object({
-  sectionPath: zS.array(zS.string),
+  pathName: zS.string,
 });
 export function isSectionPath(value: any) {
   return Array.isArray(value) && value.every((val) => typeof val === "string");

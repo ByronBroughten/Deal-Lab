@@ -3,6 +3,20 @@ import { ChildName, getChildNames } from "./ChildName";
 import { ChildSectionNameNarrow, childToSectionName } from "./ChildSectionName";
 import { ParentNameSafe } from "./ParentName";
 
+export type DescendantOfSnInfo<
+  SN extends SectionName,
+  BSN extends SectionName
+> = {
+  sectionName: SN;
+  descendantNames: DescendantName<BSN>[];
+};
+export interface DescOfSnDbIdInfo<
+  SN extends SectionName,
+  BSN extends SectionName
+> extends DescendantOfSnInfo<SN, BSN> {
+  dbId: string;
+}
+
 export type DescendantName<SN extends SectionName> = ChildName<SN> extends never
   ? never
   : ChildName<SN> | DescendantName<ChildSectionNameNarrow<SN>>;

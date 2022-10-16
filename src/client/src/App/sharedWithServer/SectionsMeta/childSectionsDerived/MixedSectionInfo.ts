@@ -8,7 +8,7 @@ import {
   VarbProp,
 } from "../baseSectionsDerived/baseVarbInfo";
 import { ExpectedCount } from "../baseSectionsVarbs/NanoIdInfo";
-import { ChildPathName, childPaths } from "../childPaths";
+import { PathNameOfSection, PathSectionName } from "../childPaths";
 import { PathDbInfoMixed, PathInfoMixed, PathVarbInfoMixed } from "../PathInfo";
 import { SectionName } from "../SectionName";
 import { RelSectionInfo } from "./RelInfo";
@@ -54,35 +54,38 @@ export const mixedInfoS = {
       expectedCount: (expectedCount ?? "onlyOne") as EC,
     };
   },
-  absolutePath<SN extends SectionName, EC extends ExpectedCount = "onlyOne">(
+  absolutePath<
+    SN extends PathSectionName,
+    EC extends ExpectedCount = "onlyOne"
+  >(
     sectionName: SN,
-    childPathName: ChildPathName,
+    pathName: PathNameOfSection<SN>,
     expectedCount?: EC
   ): PathInfoMixed<SN, EC> {
     return {
       infoType: "absolutePath",
       sectionName,
-      sectionPath: childPaths[childPathName].path,
+      pathName,
       expectedCount: (expectedCount ?? "onlyOne") as EC,
     };
   },
   absoluteVarbPath<
-    SN extends SectionName,
+    SN extends PathSectionName,
     EC extends ExpectedCount = "onlyOne"
   >(
     sectionName: SN,
-    childPathName: ChildPathName,
+    pathName: PathNameOfSection<SN>,
     varbName: string,
     expectedCount?: EC
   ): PathVarbInfoMixed<SN, EC> {
     return {
-      ...this.absolutePath(sectionName, childPathName, expectedCount),
+      ...this.absolutePath(sectionName, pathName, expectedCount),
       varbName,
     };
   },
-  absoluteDbIdPath<SN extends SectionName, EC extends ExpectedCount>(
+  absoluteDbIdPath<SN extends PathSectionName, EC extends ExpectedCount>(
     sectionName: SN,
-    childPathName: ChildPathName,
+    pathName: PathNameOfSection<SN>,
     dbId: string,
     expectedCount: EC
   ): PathDbInfoMixed<SN, EC> {
@@ -90,7 +93,7 @@ export const mixedInfoS = {
       infoType: "absolutePathDbId",
       id: dbId,
       sectionName,
-      sectionPath: childPaths[childPathName].path,
+      pathName,
       expectedCount,
     };
   },

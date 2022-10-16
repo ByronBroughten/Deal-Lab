@@ -1,3 +1,4 @@
+import { Obj } from "../utils/Obj";
 import { SubType } from "../utils/types";
 import { ChildName } from "./childSectionsDerived/ChildName";
 import { SectionName } from "./SectionName";
@@ -61,15 +62,27 @@ export const childPaths = {
   },
 } as const;
 
+const childPathNames = Obj.keys(childPaths);
+export function isChildPathName(value: any): value is ChildPathName {
+  return childPathNames.includes(value);
+}
+
+type ChildPath<CPN extends ChildPathName> = ChildPaths[CPN]["path"];
+export function getPath<CPN extends ChildPathName>(
+  pathName: CPN
+): ChildPath<CPN> {
+  return childPaths[pathName]["path"];
+}
+
 type ChildPaths = typeof childPaths;
 export type ChildPathName = keyof ChildPaths;
 
 export type PathSectionName<CPN extends ChildPathName = ChildPathName> =
   ChildPaths[CPN]["sectionName"];
 
-export type PathNameOfSection<SN extends PathSectionName> =
+export type PathNameOfSection<SN extends SectionName> =
   keyof PathsOfSectionName<SN>;
-type PathsOfSectionName<SN extends PathSectionName> = SubType<
+type PathsOfSectionName<SN extends SectionName> = SubType<
   PathToSectionName,
   SN
 >;
