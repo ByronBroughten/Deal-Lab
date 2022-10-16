@@ -8,12 +8,6 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-// There is another related issue.
-// When I have loaded a list, that list will have the same dbId
-// as the saved lists.
-// - So that list's total can change and still be referenced
-//   by other lists with in entities for the total.
-
 //  Most global variables should switched to "activeDeal" variables
 //   - When I'm creating table rows, I can still use "global"
 //  All of the dbId variables should be treated as "store" variables

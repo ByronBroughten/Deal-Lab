@@ -97,16 +97,6 @@ export const mixedInfoS = {
       expectedCount,
     };
   },
-  makeActiveDeal<SN extends SectionName, EC extends ExpectedCount = "onlyOne">(
-    sectionName: SN,
-    expectedCount?: EC
-  ): ActiveDealInfo<SN, EC> {
-    return {
-      infoType: "activeDeal",
-      sectionName,
-      expectedCount: (expectedCount ?? "onlyOne") as EC,
-    };
-  },
   makeFeVarb<SN extends SectionName>(
     sectionName: SN,
     feId: string,

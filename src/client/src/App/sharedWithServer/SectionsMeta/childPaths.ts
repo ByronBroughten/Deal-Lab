@@ -33,7 +33,7 @@ export const childPaths = {
     return childPath("mgmtGeneral", [...this.activeDeal.path, "mgmtGeneral"]);
   },
   get userVarbItemMain() {
-    return childPath("userVarbList", [
+    return childPath("userVarbItem", [
       ...this.feUser.path,
       "userVarbListMain",
       "userVarbItem",
