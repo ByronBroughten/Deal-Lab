@@ -8,6 +8,7 @@ import {
   ChildIdArrsWide,
   ChildName,
   getChildNames,
+  isChildName,
 } from "./childSectionsDerived/ChildName";
 import {
   childrenSectionNames,
@@ -150,7 +151,7 @@ export class SectionMeta<SN extends SectionName> {
     return this.varbNamesNext.includes(value);
   }
   isChildName(value: any): value is ChildName<SN> {
-    return (this.childNames as string[]).includes(value);
+    return isChildName(this.sectionName, value);
   }
   emptyChildIdsWide(): ChildIdArrsWide<SN> {
     return this.childNames.reduce((childIds, childName) => {

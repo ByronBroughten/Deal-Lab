@@ -1,6 +1,7 @@
 import { Obj } from "../utils/Obj";
 import { SubType } from "../utils/types";
-import { ChildName } from "./childSectionsDerived/ChildName";
+import { ChildName, isChildName } from "./childSectionsDerived/ChildName";
+import { childToSectionName } from "./childSectionsDerived/ChildSectionName";
 import { SectionName } from "./SectionName";
 
 function childPath<SN extends SectionName, PT extends ChildName[]>(
@@ -89,3 +90,27 @@ type PathsOfSectionName<SN extends SectionName> = SubType<
 type PathToSectionName = {
   [CPN in ChildPathName]: PathSectionName<CPN>;
 };
+
+export function checkChildPaths() {
+  for (const pathName of childPathNames) {
+    checkChildPath(pathName);
+  }
+}
+function checkChildPath(pathName: ChildPathName) {
+  const { path, sectionName } = childPaths[pathName];
+  let focalSn = "root" as SectionName;
+  for (const name of path) {
+    if (isChildName(focalSn, name)) {
+      focalSn = childToSectionName(focalSn, name);
+    } else {
+      throw new Error(
+        `Failed childPath check: "${name}" is not a childName of ${focalSn}`
+      );
+    }
+  }
+  if (focalSn !== sectionName) {
+    throw new Error(
+      `The childPath "${path}" ends with name of type ${focalSn} but was declared as ${sectionName}`
+    );
+  }
+}

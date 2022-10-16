@@ -30,6 +30,13 @@ export function getChildNames<SN extends SectionName>(
 ): ChildName<SN>[] {
   return sectionToChildNames[sectionName] as ChildName<SN>[];
 }
+export function isChildName<SN extends SectionName>(
+  sectionName: SN,
+  childName: any
+): childName is ChildName<SN> {
+  const childNames = getChildNames(sectionName);
+  return childNames.includes(childName);
+}
 
 export type GeneralChildIdArrs = {
   [key: string]: string[];
