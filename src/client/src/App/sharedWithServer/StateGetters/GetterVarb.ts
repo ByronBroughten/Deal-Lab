@@ -176,8 +176,7 @@ export class GetterVarb<
     return displayNameVarb.value("string");
   }
   get displayNameFull(): string {
-    const { displayNameEnd } = this.meta;
-    return this.displayName + displayNameEnd;
+    return this.meta.displayNameFull;
   }
   get displayNameStart(): string {
     return this.meta.displayNameStart;

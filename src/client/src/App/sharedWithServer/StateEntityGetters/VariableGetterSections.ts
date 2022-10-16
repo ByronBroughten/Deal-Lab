@@ -154,8 +154,8 @@ export class VariableGetterSections extends GetterSectionsBase {
       ...childPaths.activeDeal,
       ...this.absoluteOptionPaths[sectionName],
     ];
-    const section = this.getterSections.oneAndOnly(sectionName);
-    const varb = section.varb(varbName);
+    const sectionMeta = this.sectionsMeta.section(sectionName);
+
     return {
       varbInfo: mixedInfoS.absoluteVarbPath(
         sectionName,
@@ -163,8 +163,8 @@ export class VariableGetterSections extends GetterSectionsBase {
         varbName,
         "onlyOne"
       ),
-      collectionName: section.meta.displayName,
-      displayName: varb.displayNameFull,
+      collectionName: sectionMeta.displayName,
+      displayName: sectionMeta.varb(varbName).displayNameFull,
     };
   }
   private get absoluteOptionPaths() {

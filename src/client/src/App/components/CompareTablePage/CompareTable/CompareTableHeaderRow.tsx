@@ -34,6 +34,7 @@ export function CompareTableHeaderRow(props: Props) {
         return (
           <ColumnHeader
             {...{
+              key: col.feId,
               displayName: col.displayNameOrNotFound,
               sortRowsAZ: () => table.sortRows(col.feId),
               sortRowsZA: () => table.sortRows(col.feId, { reverse: true }),
