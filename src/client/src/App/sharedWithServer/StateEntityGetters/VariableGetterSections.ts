@@ -1,7 +1,6 @@
 import { sectionsMeta } from "../SectionsMeta";
 import { InEntityVarbInfo } from "../SectionsMeta/baseSectionsVarbs/baseValues/entities";
 import { switchNames } from "../SectionsMeta/baseSectionsVarbs/RelSwitchVarb";
-import { childPaths } from "../SectionsMeta/childSections";
 import { mixedInfoS } from "../SectionsMeta/childSectionsDerived/MixedSectionInfo";
 import {
   SectionNameByType,
@@ -46,7 +45,7 @@ export class VariableGetterSections extends GetterSectionsBase {
           const varbInfo = {
             ...mixedInfoS.absoluteDbIdPath(
               "userVarbItem",
-              childPaths.userVarbItem,
+              "userVarbItemMain",
               item.dbId,
               "onlyOne"
             ),
@@ -91,7 +90,7 @@ export class VariableGetterSections extends GetterSectionsBase {
             const varbInfo = {
               ...mixedInfoS.absoluteDbIdPath(
                 "ongoingItem",
-                childPaths.ongoingItemMain,
+                "ongoingItemMain",
                 varb.dbId,
                 "onlyOne"
               ),
@@ -108,7 +107,7 @@ export class VariableGetterSections extends GetterSectionsBase {
           const varbInfo = {
             ...mixedInfoS.absoluteDbIdPath(
               "singleTimeItem",
-              childPaths.singleTimeItemMain,
+              "singleTimeItemMain",
               varb.dbId,
               "onlyOne"
             ),
@@ -150,16 +149,12 @@ export class VariableGetterSections extends GetterSectionsBase {
     sectionName,
     varbName,
   }: InitGlobalVarbOptionProps): VariableOption {
-    const path = [
-      ...childPaths.activeDeal,
-      ...this.absoluteOptionPaths[sectionName],
-    ];
     const sectionMeta = this.sectionsMeta.section(sectionName);
 
     return {
       varbInfo: mixedInfoS.absoluteVarbPath(
         sectionName,
-        path,
+        this.pathNames[sectionName],
         varbName,
         "onlyOne"
       ),
@@ -167,12 +162,12 @@ export class VariableGetterSections extends GetterSectionsBase {
       displayName: sectionMeta.varb(varbName).displayNameFull,
     };
   }
-  private get absoluteOptionPaths() {
+  private get pathNames() {
     return {
-      propertyGeneral: ["propertyGeneral"],
-      financing: ["financing"],
-      mgmtGeneral: ["mgmtGeneral"],
-      deal: [],
+      propertyGeneral: "activePropertyGeneral",
+      financing: "activeFinancing",
+      mgmtGeneral: "activeMgmtGeneral",
+      deal: "activeDeal",
     } as const;
   }
 }

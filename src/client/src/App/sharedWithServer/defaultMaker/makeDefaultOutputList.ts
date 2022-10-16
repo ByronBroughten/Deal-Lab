@@ -12,11 +12,7 @@ export const outputNames = [
 
 const defaultDealOutputInfos: InEntityVarbInfo[] = outputNames.map(
   (varbName) => {
-    return mixedInfoS.absoluteVarbPath(
-      "deal",
-      ["main", "feUser", "activeDeal"],
-      varbName
-    );
+    return mixedInfoS.absoluteVarbPath("deal", "activeDeal", varbName);
   }
 );
 

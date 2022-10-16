@@ -11,14 +11,11 @@ import { ChildName } from "./childSectionsDerived/ChildName";
 import { SectionName } from "./SectionName";
 
 export type SectionPathName<SN extends SectionName> = ChildName;
-// Exclude<
-//   AnscestorChildName<SN> | SelfChildName<SN>,
-//   "root"
-// >;
 
 interface SectionPathProp<SN extends SectionName> {
   sectionPath: readonly SectionPathName<SN>[];
 }
+
 export const zSectionPathProp = z.object({
   sectionPath: zS.array(zS.string),
 });
