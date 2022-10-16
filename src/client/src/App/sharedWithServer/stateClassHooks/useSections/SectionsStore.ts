@@ -58,7 +58,7 @@ export class SectionsStore {
       mainBuilder.makeSectionPack()
     );
     const feUserSolver = mainSolver.onlyChild("feUser");
-    feUserSolver.builder.loadChildArrs(mainStorePackArrs);
+    feUserSolver.builder.replaceChildArrs(mainStorePackArrs);
     return mainSolver.sectionsShare.sections;
   }
   private static setSectionsInStore(mainSectionPack: StoredSectionsState) {

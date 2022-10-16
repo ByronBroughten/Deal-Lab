@@ -6,7 +6,7 @@ import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
 import { SetterTesterSection } from "./TestUtils/SetterTesterSection";
 
 // loadSelfSectionPack
-// loadChildPackArrs
+// replaceChildArrs
 // replaceWithDefault, resetToDefault
 
 describe("SetterSection", () => {

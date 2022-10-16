@@ -144,7 +144,7 @@ export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
   }
   makeLoginUser(activeDealPack: SectionPack<"deal">): LoginData {
     const feUser = FeUserSolver.initDefault();
-    feUser.packBuilder.loadChildren({
+    feUser.packBuilder.replaceChildren({
       childName: "activeDeal",
       sectionPacks: [activeDealPack],
     });

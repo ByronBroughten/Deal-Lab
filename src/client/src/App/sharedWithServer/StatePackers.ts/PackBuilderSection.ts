@@ -154,9 +154,6 @@ export class PackBuilderSection<
       });
     }
   }
-  loadChildArrs(childPackArrs: Partial<ChildSectionPackArrs<SN>>): void {
-    this.loader.loadChildPackArrs(childPackArrs);
-  }
   loadAndGetChildren<
     CN extends ChildName<SN>,
     CT extends ChildSectionName<SN, CN>
@@ -174,11 +171,14 @@ export class PackBuilderSection<
     }
     return children;
   }
+  replaceChildArrs(childPackArrs: Partial<ChildSectionPackArrs<SN>>): void {
+    this.loader.replaceChildArrs(childPackArrs);
+  }
   replaceChildren<
     CN extends ChildName<SN>,
     CT extends ChildSectionName<SN, CN>
   >(childArrPack: ChildArrPack<SN, CN, CT>) {
-    this.loader.loadChildSectionPackArr(childArrPack);
+    this.loader.replaceChildren(childArrPack);
   }
   loadSelf(sectionPack: SectionPack<SN>) {
     this.loader.loadSelfSectionPack(sectionPack);

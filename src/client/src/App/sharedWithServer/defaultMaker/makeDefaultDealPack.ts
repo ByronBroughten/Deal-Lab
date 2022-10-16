@@ -4,7 +4,7 @@ import { makeDefaultOutputList } from "./makeDefaultOutputList";
 import { makeDefaultPropertyPack } from "./makeDefaultPropertyPack";
 
 export function makeDefaultDealPack(): SectionPack<"deal"> {
-  const childNames = ["financing", "mgmtGeneral"] as const;
+  const childNames = ["propertyGeneral", "financing", "mgmtGeneral"] as const;
   const deal = PackBuilderSection.initAsOmniChild("deal", {
     dbVarbs: {
       showCalculationsStatus: "hide",
@@ -17,7 +17,7 @@ export function makeDefaultDealPack(): SectionPack<"deal"> {
     childName: "dealOutputList",
     sectionPack: makeDefaultOutputList(),
   });
-  const propertyGeneral = deal.addAndGetChild("propertyGeneral");
+  const propertyGeneral = deal.onlyChild("propertyGeneral");
   propertyGeneral.loadChild({
     childName: "property",
     sectionPack: makeDefaultPropertyPack(),

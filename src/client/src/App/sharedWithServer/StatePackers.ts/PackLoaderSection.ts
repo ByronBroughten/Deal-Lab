@@ -51,9 +51,9 @@ export class PackLoaderSection<
     });
     selfPackLoader.loadSelfSectionPack();
   }
-  loadChildPackArrs(childPackArrs: Partial<ChildSectionPackArrs<SN>>): void {
+  replaceChildArrs(childPackArrs: Partial<ChildSectionPackArrs<SN>>): void {
     for (const childName of Obj.keys(childPackArrs)) {
-      this.loadChildSectionPackArr({
+      this.replaceChildren({
         childName,
         sectionPacks: childPackArrs[
           childName
@@ -61,7 +61,7 @@ export class PackLoaderSection<
       });
     }
   }
-  loadChildSectionPackArr<
+  replaceChildren<
     CN extends ChildName<SN>,
     CT extends ChildSectionName<SN, CN>
   >({ childName, sectionPacks }: ChildArrPack<SN, CN, CT>): void {

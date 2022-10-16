@@ -21,7 +21,8 @@ export function makeDefaultTablePackArrs(): DefaultTables {
 type TablePackMakers = {
   [CN in FeStoreNameByType<"mainTableName">]: () => SectionPack<"compareTable">;
 };
-
+// Is the error stemming from the tables?
+// I don't think so.
 export function getDefaultMainTableMakers(): TablePackMakers {
   const columnVarbnames = {
     dealMainTable: makeVarbNamesInfo("deal", outputNames),

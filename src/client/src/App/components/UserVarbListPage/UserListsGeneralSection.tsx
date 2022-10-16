@@ -47,7 +47,7 @@ function useSaveUserLists(
     });
     await arrQuerier.replace(workingListPack);
     unstable_batchedUpdates(() => {
-      feUser.loadChildPackArrs({
+      feUser.replaceChildArrs({
         [storeName]: workingListPack,
       });
       userListsContext.setSavedSections(userListsContext.sections);

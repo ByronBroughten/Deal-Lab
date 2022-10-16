@@ -4,8 +4,13 @@ import { signOut } from "supertokens-auth-react/recipe/thirdpartyemailpassword";
 import { constants } from "../../Constants";
 import { useSetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useSetterSection";
 import { timeS } from "../../sharedWithServer/utils/date";
+import { getErrorMessage } from "../../utils/error";
 import { useFeUser } from "../sectionActorHooks/useFeUser";
 import { auth } from "../services/authService";
+
+async function signOutWrapper(): Promise<void> {
+  return signOut();
+}
 
 function useUpdateOnSubscribe() {
   const feUser = useFeUser();
@@ -18,7 +23,8 @@ function useUpdateOnSubscribe() {
         try {
           await feUser.updateSubscriptionData();
         } catch (ex) {
-          await signOut();
+          await signOutWrapper();
+          throw new Error(getErrorMessage(ex));
         }
         navigate("/");
       }
@@ -53,7 +59,8 @@ function useGetAuthStateIfSessionExists() {
         try {
           await feUser.loadUserData();
         } catch (ex) {
-          await signOut();
+          await signOutWrapper();
+          throw new Error(getErrorMessage(ex));
         }
       } else if (pathname.includes(constants.feRoutes.authSuccess)) {
         navigate("/");
@@ -91,7 +98,7 @@ export function useAuthAndLogin() {
 
   const stateToDefault = useStateToDefault();
   async function logout() {
-    await signOut();
+    await signOutWrapper();
     stateToDefault();
   }
   return { logout };

@@ -38,7 +38,7 @@ export class PackBuilderSections extends GetterSectionsBase {
       feStoreNameS.arrs.fullIndex
     );
     const indexUser = PackBuilderSection.initAsOmniChild("feUser");
-    indexUser.loadChildArrs(childPackArrs);
+    indexUser.replaceChildArrs(childPackArrs);
     return indexUser.builderSections;
   }
 }
