@@ -27,9 +27,9 @@ export function getDefaultMainTableMakers(): TablePackMakers {
   const columnVarbnames = {
     dealMainTable: makeVarbNamesInfo("deal", outputNames),
     propertyMainTable: makeVarbNamesInfo("property", [
-      "targetRentMonthly",
       "upfrontExpenses",
       "expensesMonthly",
+      "targetRentMonthly",
     ]),
     loanMainTable: makeVarbNamesInfo("loan", [
       "interestRatePercentYearly",

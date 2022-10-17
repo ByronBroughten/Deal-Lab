@@ -1,5 +1,6 @@
 import { numObj } from "../../SectionsMeta/baseSectionsVarbs/baseValues/NumObj";
 import { stringObj } from "../../SectionsMeta/baseSectionsVarbs/baseValues/StringObj";
+import { SectionPack } from "../../SectionsMeta/childSectionsDerived/SectionPack";
 import { PackBuilderSection } from "../../StatePackers.ts/PackBuilderSection";
 import { userVarbLifespans } from "./makeExampleUserVarbLists";
 
@@ -30,7 +31,7 @@ const utilityExamples = [
   ["LawnCare", 20],
 ] as const;
 
-export function makeExampleUserOngoingLists() {
+export function makeExampleUserOngoingLists(): SectionPack<"ongoingList">[] {
   const feUser = PackBuilderSection.initAsOmniChild("feUser");
   const capExExampleswitch = "labeledSpanOverCost";
   const capExExampleList = feUser.addAndGetChild("ongoingListMain", {

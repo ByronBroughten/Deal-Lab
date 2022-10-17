@@ -1,8 +1,5 @@
-import {
-  VarbName,
-  VarbValues,
-} from "../SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
-import { SectionValues } from "../SectionsMeta/baseSectionsDerived/valueMetaTypes";
+import { VarbName } from "../SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
+import { SomeSectionValues } from "../SectionsMeta/baseSectionsDerived/valueMetaTypes";
 import { Id } from "../SectionsMeta/baseSectionsVarbs/id";
 import {
   ChildArrInfo,
@@ -24,6 +21,7 @@ import { RawFeSection } from "../StateSections/StateSectionsTypes";
 import { Arr } from "../utils/Arr";
 import { Obj } from "../utils/Obj";
 import { StrictOmit } from "../utils/types";
+import { StateValue } from "./../SectionsMeta/baseSectionsVarbs/baseValues/StateValueTypes";
 import { GetterSections } from "./../StateGetters/GetterSections";
 import { UpdaterSectionBase } from "./bases/updaterSectionBase";
 import { UpdaterList } from "./UpdaterList";
@@ -126,13 +124,13 @@ export class UpdaterSection<
     const { feInfo } = this.get.youngestChild(childName);
     return this.updaterSection(feInfo);
   }
-  updateValuesDirectly(values: VarbValues): void {
+  updateValues(values: SomeSectionValues<SN>): void {
     for (const varbName of Obj.keys(values)) {
       const varb = this.varb(varbName as string);
-      varb.updateValue(values[varbName]);
+      varb.updateValue(values[varbName] as StateValue);
     }
   }
-  resetVarbs(dbVarbs: Partial<SectionValues<SN>>): void {
+  resetVarbs(dbVarbs: SomeSectionValues<SN>): void {
     this.updateProps({
       varbs: StateSections.initRawVarbs({
         dbVarbs,

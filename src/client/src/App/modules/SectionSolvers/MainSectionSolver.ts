@@ -1,5 +1,8 @@
 import isEqual from "fast-deep-equal";
-import { SectionValues } from "../../sharedWithServer/SectionsMeta/baseSectionsDerived/valueMetaTypes";
+import {
+  SectionValues,
+  SomeSectionValues,
+} from "../../sharedWithServer/SectionsMeta/baseSectionsDerived/valueMetaTypes";
 import { SelfChildName } from "../../sharedWithServer/SectionsMeta/childSectionsDerived/ParentName";
 import { SectionPack } from "../../sharedWithServer/SectionsMeta/childSectionsDerived/SectionPack";
 import { FeParentInfo } from "../../sharedWithServer/SectionsMeta/Info";
@@ -106,7 +109,7 @@ export class MainSectionSolver<
         ...titleValue,
         mainText: "Copy of " + titleValue.mainText,
       },
-    } as Partial<SectionValues<SN>>);
+    } as SomeSectionValues<SN>);
     this.updateCaches();
     this.sectionUnloadCleanup();
   }

@@ -7,10 +7,8 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-
-// - Create a new value that only has solvableText and does relCalculations
-//   - Use it for various totals and values that aren't inputs. Use it for all values that are affected by outside sections.
-// - Remove the behavior of % and $ inputs affecting eachother
+// Perhaps make the table rows sort alphabetically
+// by default
 
 // 2. Make savableSections have a changesSynced varb
 //    - Whenever a section is saved, updatesSaved, or loaded, its changesSynced

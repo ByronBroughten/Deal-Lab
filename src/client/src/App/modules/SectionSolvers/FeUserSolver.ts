@@ -41,7 +41,7 @@ export class FeUserSolver extends SolverSectionBase<"feUser"> {
       ...props,
     };
     const subInfo = this.packBuilder.onlyChild("subscriptionInfo");
-    subInfo.updater.updateValuesDirectly(subInfoValues);
+    subInfo.updater.updateValues(subInfoValues);
   }
   loadDisplayStoreList<
     SN extends FeStoreNameByType<"displayStoreName">,

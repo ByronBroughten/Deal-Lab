@@ -3,7 +3,7 @@ import { StateValue } from "../baseSectionsVarbs/baseValues/StateValueTypes";
 import { ValueName } from "../baseSectionsVarbs/baseVarb";
 import { BaseVarbSchemas } from "../baseSectionsVarbs/baseVarbs";
 import { SectionName } from "../SectionName";
-import { BaseSectionVarbs, VarbName } from "./baseSectionsVarbsTypes";
+import { VarbName, VarbValueName } from "./baseSectionsVarbsTypes";
 import { VarbNamesNext } from "./baseVarbInfo";
 import { valueMeta } from "./valueMeta";
 
@@ -12,10 +12,17 @@ export type ValueNamesToTypes = {
   [VN in ValueName]: ReturnType<ValueSchemas[VN]["initDefault"]>;
 };
 
+type Test<SN extends SectionName, VN extends VarbName<SN>> = VarbValueName<
+  SN,
+  VN
+>;
+
 export type SectionValues<SN extends SectionName> = {
-  [VN in VarbName<SN>]: ValueNamesToTypes[BaseSectionVarbs<SN>[VN] &
-    keyof ValueNamesToTypes];
+  [VN in VarbName<SN>]: ValueNamesToTypes[VarbValueName<SN, VN>];
 };
+export type SomeSectionValues<SN extends SectionName> = Partial<
+  SectionValues<SN>
+>;
 
 export type VarbValue<
   SN extends SectionName,

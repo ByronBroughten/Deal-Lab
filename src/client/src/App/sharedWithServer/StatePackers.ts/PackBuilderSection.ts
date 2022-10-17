@@ -83,6 +83,9 @@ export class PackBuilderSection<
       .childFeIds(childName)
       .map((feId) => this.child({ childName, feId }));
   }
+  get parent() {
+    return this.packBuilderSection(this.get.parent.feInfo);
+  }
   child<CN extends ChildName<SN>>(
     childInfo: FeChildInfo<SN, CN>
   ): PackBuilderSection<ChildSectionName<SN, CN>> {
@@ -170,6 +173,18 @@ export class PackBuilderSection<
       children.push(child);
     }
     return children;
+  }
+  makeSiblingCopy() {
+    const sectionPack = this.makeSectionPack();
+    const child = this.parent.loadAndGetChild({
+      childName: this.get.selfChildName,
+      sectionPack: sectionPack as SectionPack<any>,
+    });
+    child.updater.newDbId();
+  }
+  makeAndGetSiblingCopy(): PackBuilderSection<SN> {
+    this.makeSiblingCopy();
+    return this.packBuilderSection(this.get.list.last.feInfo);
   }
   replaceChildArrs(childPackArrs: Partial<ChildSectionPackArrs<SN>>): void {
     this.loader.replaceChildArrs(childPackArrs);

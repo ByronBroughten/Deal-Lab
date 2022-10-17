@@ -62,7 +62,7 @@ export class VariableGetterSections extends GetterSectionsBase {
   }
 
   private userListTotalOptions(): VariableOption[] {
-    const totalNames: Record<SectionNameByType<"additiveList">, any> = {
+    const totalNames = {
       ongoingList: {
         collectionName: "Ongoing cost totals",
         feUserStoreName: "ongoingListMain",
@@ -71,7 +71,7 @@ export class VariableGetterSections extends GetterSectionsBase {
         collectionName: "One time cost totals",
         feUserStoreName: "singleTimeListMain",
       },
-    };
+    } as const;
     const options: VariableOption[] = [];
     for (const sectionName of Obj.keys(totalNames)) {
       const names = totalNames[sectionName];

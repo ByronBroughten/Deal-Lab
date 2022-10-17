@@ -10,10 +10,10 @@ export type VarbValues = { [varbName: string]: StateValue };
 export type BaseSectionVarbs<SN extends SectionName> = BaseSectionsVarbs[SN];
 
 export type VarbName<SN extends SectionName> = keyof BaseSectionVarbs<SN>;
-type VarbValueName<SN extends SectionName, VN extends VarbName<SN>> = Extract<
-  ValueName,
-  BaseSectionVarbs<SN>[VN]
->;
+export type VarbValueName<
+  SN extends SectionName,
+  VN extends VarbName<SN>
+> = Extract<ValueName, BaseSectionVarbs<SN>[VN]>;
 
 export function sectionVarbNames<SN extends SectionName>(
   sectionName: SN

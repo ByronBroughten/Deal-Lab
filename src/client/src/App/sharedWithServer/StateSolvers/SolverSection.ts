@@ -1,8 +1,5 @@
-import {
-  VarbName,
-  VarbValues,
-} from "../SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
-import { SectionValues } from "../SectionsMeta/baseSectionsDerived/valueMetaTypes";
+import { VarbName } from "../SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
+import { SomeSectionValues } from "../SectionsMeta/baseSectionsDerived/valueMetaTypes";
 import {
   ChildName,
   DbChildInfo,
@@ -95,8 +92,8 @@ export class SolverSection<
   solve() {
     this.solverSections.solve();
   }
-  updateValuesAndSolve(values: Partial<SectionValues<SN>>): void {
-    this.updater.updateValuesDirectly(values as VarbValues);
+  updateValuesAndSolve(values: SomeSectionValues<SN>): void {
+    this.updater.updateValues(values);
     const varbNames = Obj.keys(values) as VarbName<SN>[];
     const varbInfos = varbNames.map((varbName) => this.get.varbInfo(varbName));
 

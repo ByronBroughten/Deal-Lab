@@ -15,12 +15,12 @@ export function makeDefaultPropertyPack(): SectionPack<"property"> {
   });
 
   property.addChild("upfrontRevenueListGroup");
+  property.addChild("ongoingRevenueListGroup");
+
   const upfrontCostGroup = property.addAndGetChild("upfrontCostListGroup");
   upfrontCostGroup.addChild("singleTimeList", {
     dbVarbs: { displayName: stringObj("Repairs") },
   });
-
-  property.addChild("ongoingRevenueListGroup");
   const ongoingCostGroup = property.addAndGetChild("ongoingCostListGroup");
   ongoingCostGroup.addChild("ongoingList", {
     dbVarbs: {

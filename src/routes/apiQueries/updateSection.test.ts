@@ -36,10 +36,10 @@ type TestReqs = {
 function makeReqs(): TestReqs {
   const tester = SectionQueryTester.init({ sectionName });
   const { updater } = tester;
-  updater.updateValuesDirectly(originalValues);
+  updater.updateValues(originalValues);
   const originalSection = tester.makeSectionPackReq();
 
-  updater.updateValuesDirectly(updatedValues);
+  updater.updateValues(updatedValues);
   const updatedSection = tester.makeSectionPackReq();
   return {
     addSection: originalSection,

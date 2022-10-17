@@ -1,5 +1,4 @@
 import { defaultMaker } from "../defaultMaker/defaultMaker";
-import { VarbValues } from "../SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
 import { ChildName } from "../SectionsMeta/childSectionsDerived/ChildName";
 import { ParentNameSafe } from "../SectionsMeta/childSectionsDerived/ParentName";
 import { SectionPack } from "../SectionsMeta/childSectionsDerived/SectionPack";
@@ -31,7 +30,7 @@ export class DefaultFamilyAdder<
     }
     if (dbVarbs) {
       const childUpdater = this.updater.updaterSection(feInfo);
-      childUpdater.updateValuesDirectly(dbVarbs as VarbValues);
+      childUpdater.updateValues(dbVarbs);
     }
   }
   private get parent(): DefaultFamilyAdder<ParentNameSafe<SN>> {
