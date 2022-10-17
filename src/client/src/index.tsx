@@ -32,6 +32,8 @@ AppRegistry.runApplication("App", {
 //    - this could be in the Setter or Solver layer
 
 // Before Marketing
+// - Fix the mgmt inputs so that loding a management works properly with sync
+// - In the load menu, highlight the one that is loaded with green or purple
 // - Switch useState to useReducer
 // - Or perhaps use a ref that always updates to contain the update functions
 // - Create cheap state-accessor components around list items

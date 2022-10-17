@@ -8,6 +8,7 @@ import {
 import { feStoreNameS } from "../sharedWithServer/SectionsMeta/relSectionsDerived/relNameArrs/FeStoreName";
 import { useAuthStatus } from "../sharedWithServer/stateClassHooks/useAuthStatus";
 import theme, { ThemeName } from "../theme/Theme";
+import useHowMany from "./appWide/customHooks/useHowMany";
 import { CompareTable } from "./CompareTablePage/CompareTable";
 
 function useLoadRows(props: UseTableActorProps) {
@@ -39,20 +40,28 @@ export function CompareTablePage({ $themeName, title, ...props }: Props) {
     throw new Error("CompareTablePage is only for feUser tables");
   }
 
+  const { areNone } = useHowMany(table.rows);
+
   const authStatus = useAuthStatus();
   function getScenarioKey(): keyof typeof scenarios {
     if (authStatus === "guest") return "isGuest";
     else if (!isLoaded) return "isLoading";
+    else if (areNone) return "areNone";
     else return "showTable";
   }
   const scenarios = {
     isGuest: () => (
-      <div className="CompareTablePage-notLoggedIn">
-        To view saved analyses, make an account or sign in.
+      <div className="CompareTablePage-message">
+        To view saved deals, make an account or sign in.
       </div>
     ),
-    isLoading: () => <div className="CompareTable-areNone">Loading...</div>,
+    isLoading: () => <div className="CompareTablePage-message">Loading...</div>,
     showTable: () => <CompareTable {...props} />,
+    areNone: () => (
+      <div className="CompareTablePage-message">
+        You have no saved deals. Save some then compare them here!
+      </div>
+    ),
   } as const;
 
   const getScenarioNode = scenarios[getScenarioKey()];
@@ -60,13 +69,11 @@ export function CompareTablePage({ $themeName, title, ...props }: Props) {
     <Styled
       {...{
         $themeName,
-        className: "CompareTable-root",
+        className: "CompareTablePage-root",
       }}
     >
-      <h5 className="CompareTable-title CompareTable-controlRowItem">
-        {title}
-      </h5>
-      {getScenarioNode()}
+      <h5 className="CompareTablePage-title">{title}</h5>
+      <div className="CompareTablePage-body">{getScenarioNode()}</div>
     </Styled>
   );
 }
@@ -80,8 +87,19 @@ const Styled = styled.div<{ $themeName: ThemeName }>`
   flex: 1;
   background-color: ${({ $themeName }) => theme[$themeName].light};
 
-  .CompareTable-root {
+  .CompareTablePage-areNone {
+    text-align: center;
+    padding: ${theme.s3};
+  }
+
+  .CompareTablePage-body {
     margin-top: ${theme.s2};
+    border-radius: ${theme.br1};
+    box-shadow: 0 5px 16px rgba(0, 0, 0, 0.2);
+    ${({ $themeName }) => css`
+      border: 2px solid ${theme[$themeName].border};
+      background: ${theme[$themeName].light};
+    `}
   }
 
   .CompareTable-addColumnSelector {
@@ -90,9 +108,10 @@ const Styled = styled.div<{ $themeName: ThemeName }>`
     }
   }
 
-  .CompareTable-title {
+  .CompareTablePage-title {
     font-size: 2rem;
     color: ${theme["gray-700"]};
+    margin: ${theme.s2};
   }
   .CompareTable-titleRow {
     display: flex;
@@ -113,24 +132,12 @@ const Styled = styled.div<{ $themeName: ThemeName }>`
       min-width: 100px;
     }
   }
-  .CompareTable-controlRowItem {
-    margin: ${theme.s2};
-  }
 
   .CompareTable-tableCell {
     vertical-align: middle;
   }
   .CompareTable-trashBtn {
     visibility: hidden;
-  }
-
-  .CompareTable-root {
-    border-radius: ${theme.br1};
-    box-shadow: 0 5px 16px rgba(0, 0, 0, 0.2);
-    ${({ $themeName }) => css`
-      border: 2px solid ${theme[$themeName].border};
-      background: ${theme[$themeName].light};
-    `}
   }
 
   .CompareTable-thContent {
@@ -194,7 +201,8 @@ const Styled = styled.div<{ $themeName: ThemeName }>`
     text-align: left;
   }
 
-  .CompareTablePage-notLoggedIn {
+  .CompareTablePage-message {
+    padding: ${theme.s3};
     display: flex;
     justify-content: center;
   }
