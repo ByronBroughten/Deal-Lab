@@ -8,22 +8,18 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-//  Most global variables should switched to "activeDeal" variables
-//   - When I'm creating table rows, I can still use "global"
-//  All of the dbId variables should be treated as "store" variables
-//  That is, they should only be gathered from the designated stores
+// - Create a new value that only has solvableText and does relCalculations
+//   - Use it for various totals and values that aren't inputs. Use it for all values that are affected by outside sections.
+// - Remove the behavior of % and $ inputs affecting eachother
 
-//
-
-// 2. Hackishly add a rule that says if "deal" is the sectionName, grab the
-//    deal from "main".
-
-// 3. Perhaps put "activeDeal" on feUser
-//    - explicitly say which of feUser's children are allowed in the solve
-//    - make a new state just for that
-//    - after the solve, load up those sections back with the main state
-//    - setState
-// This also solves the other problem I was having.
+// 2. Make savableSections have a changesSynced varb
+//    - Whenever a section is saved, updatesSaved, or loaded, its changesSynced
+//      varb is set to true
+//    - when it is true, and when a value is changed that belongs
+//      to one of those sections (excluding solvableText)
+//      changesSynced is set to false for the section and all of its
+//      anscestors that are also saved
+//    - this could be in the Setter or Solver layer
 
 // Before Marketing
 // - Switch useState to useReducer

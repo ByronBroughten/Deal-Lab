@@ -92,6 +92,9 @@ export class GetterSection<
   get varbs(): GetterVarbs<SN> {
     return new GetterVarbs(this.getterSectionProps);
   }
+  get varbArr(): GetterVarb<SN>[] {
+    return this.meta.varbNamesNext.map((varbName) => this.varbNext(varbName));
+  }
   get displayName(): string {
     return this.meta.displayName;
   }

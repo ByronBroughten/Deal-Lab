@@ -90,6 +90,7 @@ export class FeUserSolver extends SolverSectionBase<"feUser"> {
       const nextInfos: FeSectionInfo[] = [];
       for (const info of sectionInfos) {
         const section = sections.section(info);
+        section.updater.resetSolvableTexts();
         for (const childName of section.get.childNames) {
           for (const child of section.children(childName)) {
             const getterChild = child.get;

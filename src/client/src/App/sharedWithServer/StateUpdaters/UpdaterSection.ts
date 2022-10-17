@@ -1,4 +1,7 @@
-import { VarbValues } from "../SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
+import {
+  VarbName,
+  VarbValues,
+} from "../SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
 import { SectionValues } from "../SectionsMeta/baseSectionsDerived/valueMetaTypes";
 import { Id } from "../SectionsMeta/baseSectionsVarbs/id";
 import {
@@ -48,6 +51,24 @@ export class UpdaterSection<
     return new UpdaterVarb({
       ...this.getterSectionProps,
       varbName,
+    });
+  }
+  varbNext(varbName: VarbName<SN>): UpdaterVarb<SN> {
+    return this.varb(varbName as string);
+  }
+  resetSolvableTexts() {
+    for (const varb of this.varbArr) {
+      if (varb.meta.valueName === "numObj") {
+        varb.updateValue({
+          ...varb.get.value("numObj"),
+          solvableText: "",
+        });
+      }
+    }
+  }
+  get varbArr() {
+    return this.sectionMeta.varbNamesNext.map((varbName) => {
+      return this.varbNext(varbName);
     });
   }
   removeSelf(): void {

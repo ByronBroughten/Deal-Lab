@@ -8,7 +8,11 @@ import {
   ChildToSectionName,
 } from "./childSectionsDerived/ChildSectionName";
 import { ParentName } from "./childSectionsDerived/ParentName";
-import { isSectionPack, SectionPack } from "./childSectionsDerived/SectionPack";
+import {
+  isSectionPack,
+  SectionPack,
+  validateSectionPack,
+} from "./childSectionsDerived/SectionPack";
 import { relNameArrs, RelNameArrs } from "./relSectionsDerived/relNameArrs";
 import { SectionName } from "./SectionName";
 
@@ -82,6 +86,15 @@ export function isSectionPackByType<ST extends SectionNameType = "all">(
   ) {
     return true;
   } else return false;
+}
+export function validateSectionPackByType<ST extends SectionNameType = "all">(
+  value: any,
+  sectionType?: ST
+): value is SectionPackByType<ST> {
+  if (validateSectionPack(value)) {
+    sectionNameS.validate(value.sectionName, sectionType);
+  }
+  return true;
 }
 
 type ValidateSectionPackArrProps = {

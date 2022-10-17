@@ -102,11 +102,11 @@ export class SolveValueVarb<
     },
     calculation: (): NumObj => {
       const solvableText = this.solvableTextFromCalculation();
-      const numString = this.numObjSolver.solveTextToNumString(solvableText);
       return {
         solvableText,
-        mainText: numString === "?" ? "" : numString,
+        mainText: "",
         entities: [],
+        // if this line of code is changed
       };
     },
     userVarb: (): NumObj => {

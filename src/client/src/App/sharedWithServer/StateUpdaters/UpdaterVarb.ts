@@ -1,5 +1,6 @@
 import { StateValue } from "../SectionsMeta/baseSectionsVarbs/baseValues/StateValueTypes";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
+import { VarbMeta } from "../SectionsMeta/VarbMeta";
 import { GetterVarbBase } from "../StateGetters/Bases/GetterVarbBase";
 import { GetterVarb } from "../StateGetters/GetterVarb";
 import { StateVarb } from "../StateSections/StateSectionsTypes";
@@ -12,6 +13,12 @@ export class UpdaterVarb<
   }
   get get(): GetterVarb<SN> {
     return new GetterVarb(this.getterVarbProps);
+  }
+  get meta(): VarbMeta<SN> {
+    return this.sectionsMeta.varb({
+      sectionName: this.sectionName,
+      varbName: this.varbName,
+    });
   }
   updateValue(value: StateValue): void {
     this.get.meta.validateVarbValue(value);

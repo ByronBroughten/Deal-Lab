@@ -4,7 +4,7 @@ import { getUserById } from "supertokens-node/recipe/thirdpartyemailpassword";
 import { QueryReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import { makeReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/makeReqAndRes";
 import { areGuestAccessSections } from "../../client/src/App/sharedWithServer/apiQueriesShared/register";
-import { isSectionPackByType } from "../../client/src/App/sharedWithServer/SectionsMeta/SectionNameByType";
+import { validateSectionPackByType } from "../../client/src/App/sharedWithServer/SectionsMeta/SectionNameByType";
 import { timeS } from "../../client/src/App/sharedWithServer/utils/date";
 import { Str } from "../../client/src/App/sharedWithServer/utils/Str";
 import { getAuthWare } from "../../middleware/authWare";
@@ -45,7 +45,8 @@ function validateGetUserDataReq(req: Request): Req {
   if (!areGuestAccessSections(guestAccessSections)) {
     throw new Error("Invalid guesteAccessSections");
   }
-  if (!isSectionPackByType(activeDeal, "deal")) {
+
+  if (!validateSectionPackByType(activeDeal, "deal")) {
     throw new Error("Invalid activeDeal");
   }
   return makeReq({

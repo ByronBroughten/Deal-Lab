@@ -25,7 +25,7 @@ export function isSectionPack(value: any): value is SectionPack {
   return zRawSectionPack.safeParse(value).success;
 }
 
-export function validateSectionPack(value: any): SectionPack {
+export function validateSectionPack(value: any): value is SectionPack<any> {
   zRawSectionPack.parse(value);
-  return value;
+  return true;
 }
