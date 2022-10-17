@@ -7,8 +7,20 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-// Perhaps make the table rows sort alphabetically
-// by default
+
+// Ok. If I'm going to redo the tables, here's how.
+
+// There are going to be example properties, loans, and mgmts.
+// I want the tables to reflect those
+// - When creating the default user, initialize the tables
+// - When creating a user, send the tables to the db
+// - When logging in, load the saved table (and check it)
+//   - remove extra rows
+//   - add missing rows (to the front)
+//   - update row information
+
+// - When adding, updating, or deleting a section, adjust
+//   the front-end table accordingly
 
 // 2. Make savableSections have a changesSynced varb
 //    - Whenever a section is saved, updatesSaved, or loaded, its changesSynced
@@ -61,6 +73,8 @@ AppRegistry.runApplication("App", {
 // - Done with the app unless it makes any money
 
 // Demo Link: https://www.youtube.com/watch?v=wGfb8xX2FsI
+
+// Redux state sync https://github.com/AOHUA/redux-state-sync#readme
 
 /* 
 I've been computer programming for awhile now, and after massively underestimating it, managed to make an app. Check it out, eh? And if you know anyone interested in rental property, I would love if they beta test it. https://www.youtube.com/watch?v=wGfb8xX2FsI

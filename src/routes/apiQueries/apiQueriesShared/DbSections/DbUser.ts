@@ -235,6 +235,7 @@ export class DbUser extends DbSectionsQuerierBase {
     for (const source of sources) {
       tableBuilder.createRow(source);
     }
+    tableBuilder.sortRowsByDisplayName();
     return tableBuilder.rowPacks;
   }
   async getSectionPackArr<DSN extends DbStoreName>(

@@ -26,8 +26,8 @@ export function CompareTableHeaderRow(props: Props) {
           //    Actually, it should allow for columns as an option
 
           // 3. Adding a column should create all new rows
-          sortRowsAZ: () => table.sortRows("displayName"),
-          sortRowsZA: () => table.sortRows("displayName", { reverse: true }),
+          sortRowsAZ: () => table.sortRowsByDisplayName(),
+          sortRowsZA: () => table.sortRowsByDisplayName({ reverse: true }),
         }}
       />
       {table.columns.map((col) => {
@@ -36,8 +36,9 @@ export function CompareTableHeaderRow(props: Props) {
             {...{
               key: col.feId,
               displayName: col.displayNameOrNotFound,
-              sortRowsAZ: () => table.sortRows(col.feId),
-              sortRowsZA: () => table.sortRows(col.feId, { reverse: true }),
+              sortRowsAZ: () => table.sortRowsByColumn(col.feId),
+              sortRowsZA: () =>
+                table.sortRowsByColumn(col.feId, { reverse: true }),
               removeColumn: () => table.removeColumn(col.feId),
             }}
           />

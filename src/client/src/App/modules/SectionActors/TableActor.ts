@@ -2,15 +2,17 @@
 
 import { makeReq } from "../../sharedWithServer/apiQueriesShared/makeReqAndRes";
 import { sectionsMeta } from "../../sharedWithServer/SectionsMeta";
-import { VarbName } from "../../sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
 import { InEntityVarbInfo } from "../../sharedWithServer/SectionsMeta/baseSectionsVarbs/baseValues/entities";
 import { DbStoreNameByType } from "../../sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreName";
 import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
 import { PackMakerSection } from "../../sharedWithServer/StatePackers.ts/PackMakerSection";
 import { SetterSection } from "../../sharedWithServer/StateSetters/SetterSection";
 import { SetterTable } from "../../sharedWithServer/StateSetters/SetterTable";
-import { StrictExtract, StrictOmit } from "../../sharedWithServer/utils/types";
-import { CompareTableBuilder } from "../SectionSolvers/CompareTableBuilder";
+import { StrictOmit } from "../../sharedWithServer/utils/types";
+import {
+  CompareTableBuilder,
+  SortOptions,
+} from "../SectionSolvers/CompareTableBuilder";
 import { SectionActorBase, SectionActorBaseProps } from "./SectionActorBase";
 
 class GetterColumn extends GetterSection<"column"> {
@@ -104,16 +106,19 @@ export class TableActor extends SectionActorBase<"compareTable"> {
       });
     });
   }
-  async sortRows(
-    colIdOrTitle: string | StrictExtract<VarbName<"tableRow">, "displayName">,
-    options: { reverse?: boolean } = {}
-  ) {
-    this.tableSetter.sortTableRowIdsByColumn(colIdOrTitle, options);
+  async sortRowsByDisplayName(options?: SortOptions): Promise<void> {
+    this.tableSetter.sortRowsByDisplayName(options);
+    // this.sendTable();
+  }
+  async sortRowsByColumn(
+    colFeId: string,
+    options?: SortOptions
+  ): Promise<void> {
+    this.tableSetter.sortRowsByColumn(colFeId, options);
     // this.sendTable();
   }
   async removeColumn(columnFeId: string) {
     this.tableSetter.removeColumn(columnFeId);
-    // this.sendTable();
   }
   async addColumn(entityInfo: InEntityVarbInfo) {
     const { setter } = this;
