@@ -4,7 +4,6 @@ export const sectionNames = [
   "root",
   "main",
   "feUser",
-  "feUserInfo",
   "dbStore",
   "proxyStoreItem",
   "displayNameItem",

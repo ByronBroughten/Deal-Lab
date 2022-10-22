@@ -43,7 +43,6 @@ export const childSections = checkChildSections({
   feUser: childrenSections({
     // feUser includes everything that has a corresponding child in dbStore
     // or that has any intermediary sections used to edit and add to them.
-    userInfoNext: ["feUserInfo"],
     propertyMainTable: ["compareTable"],
     loanMainTable: ["compareTable"],
     mgmtMainTable: ["compareTable"],

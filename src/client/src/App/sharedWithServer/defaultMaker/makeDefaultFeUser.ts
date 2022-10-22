@@ -1,17 +1,30 @@
+import {
+  AuthStatus,
+  UserDataStatus,
+  UserPlan,
+} from "../SectionsMeta/baseSectionsVarbs";
 import { SectionPack } from "../SectionsMeta/childSectionsDerived/SectionPack";
 import { feStoreNameS } from "../SectionsMeta/relSectionsDerived/relNameArrs/FeStoreName";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
+import { timeS } from "../utils/date";
 import { getDefaultMainTableMakers } from "./getDefaultMainTableMakers";
 import { makeExampleUserOngoingLists } from "./makeDefaultFeUser/makeExampleUserOngoingLists";
 import { makeExampleUserSingleTimeLists } from "./makeDefaultFeUser/makeExampleUserSingleTimeLists";
 import { makeExampleUserVarbLists } from "./makeDefaultFeUser/makeExampleUserVarbLists";
-import { makeDefaultFeUserInfo } from "./makeDefaultPublicUserInfo";
 
 export function makeDefaultFeUserPack(): SectionPack<"feUser"> {
-  const feUser = PackBuilderSection.initAsOmniChild("feUser");
-  feUser.loadChild({
-    childName: "userInfoNext",
-    sectionPack: makeDefaultFeUserInfo(),
+  const analyzerPlan: UserPlan = "basicPlan";
+  const authStatus: AuthStatus = "guest";
+  const userDataStatus: UserDataStatus = "notLoaded";
+  const feUser = PackBuilderSection.initAsOmniChild("feUser", {
+    dbVarbs: {
+      email: "",
+      userName: "Guest",
+      analyzerPlan,
+      analyzerPlanExp: timeS.hundredsOfYearsFromNow,
+      authStatus,
+      userDataStatus,
+    },
   });
   feUser.loadChildren({
     childName: "userVarbListMain",

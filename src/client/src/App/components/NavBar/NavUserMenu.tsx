@@ -5,10 +5,7 @@ import styled, { css } from "styled-components";
 import { constants } from "../../Constants";
 import { useAuthAndLogin } from "../../modules/customHooks/useAuthAndUserData";
 import { UserPlan } from "../../sharedWithServer/SectionsMeta/baseSectionsVarbs";
-import {
-  useGetterSection,
-  useGetterSectionOnlyOne,
-} from "../../sharedWithServer/stateClassHooks/useGetterSection";
+import { useGetterSection } from "../../sharedWithServer/stateClassHooks/useGetterSection";
 import theme from "../../theme/Theme";
 import { StandardProps } from "../general/StandardProps";
 import NavDropDown from "./NavDropDown";
@@ -19,18 +16,16 @@ function BtnDiv({ children, className }: StandardProps) {
 
 export type NavUserMenuProps = { feId: string };
 export function NavUserMenu({ feId }: NavUserMenuProps) {
-  const { logout } = useAuthAndLogin();
-  const userInfoNext = useGetterSection({
-    sectionName: "feUserInfo",
+  const feUser = useGetterSection({
+    sectionName: "feUser",
     feId,
   });
-
-  const subInfo = useGetterSectionOnlyOne("feUserInfo");
-  const analyzerPlan = subInfo.valueNext("analyzerPlan") as UserPlan;
+  const { logout } = useAuthAndLogin();
+  const analyzerPlan = feUser.valueNext("analyzerPlan") as UserPlan;
   const isFullPlan = analyzerPlan === "fullPlan";
 
-  const authStatus = userInfoNext.valueNext("authStatus");
-  const userName = userInfoNext.value("userName", "string");
+  const authStatus = feUser.valueNext("authStatus");
+  const userName = feUser.value("userName", "string");
   return (
     <Styled
       {...{ $isFullPlan: isFullPlan }}

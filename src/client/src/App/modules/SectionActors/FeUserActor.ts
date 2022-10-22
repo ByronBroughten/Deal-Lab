@@ -47,8 +47,7 @@ export class FeUserActor extends SectionActorBase<"feUser"> {
       makeReq({})
     );
     this.loginSetter.setUserInfoToken(headers);
-    const subInfo = this.setter.onlyChild("userInfoNext");
-    subInfo.updateValues({
+    this.setter.updateValues({
       analyzerPlan: data.analyzerPlan,
       analyzerPlanExp: data.analyzerPlanExp,
     });
@@ -62,10 +61,9 @@ export class FeUserActor extends SectionActorBase<"feUser"> {
     this.loginSetter.setLogin(res);
   }
   get subscriptionValues(): AnalyzerPlanValues {
-    const subInfo = this.get.onlyChild("userInfoNext");
     return {
-      analyzerPlan: subInfo.valueNext("analyzerPlan") as UserPlan,
-      analyzerPlanExp: subInfo.valueNext("analyzerPlanExp"),
+      analyzerPlan: this.get.valueNext("analyzerPlan") as UserPlan,
+      analyzerPlanExp: this.get.valueNext("analyzerPlanExp"),
     };
   }
   get userPlan(): UserPlan {
@@ -84,8 +82,7 @@ export class FeUserActor extends SectionActorBase<"feUser"> {
     return auth.isToken;
   }
   get authStatus() {
-    const userInfo = this.get.onlyChild("userInfoNext");
-    return userInfo.valueNext("authStatus") as AuthStatus;
+    return this.get.valueNext("authStatus") as AuthStatus;
   }
   get isGuest() {
     return this.authStatus === "guest";

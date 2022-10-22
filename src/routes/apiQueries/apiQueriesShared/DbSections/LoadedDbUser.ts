@@ -149,6 +149,12 @@ export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
   }
   makeLoginUser(): LoginData {
     const feUser = FeUserSolver.initDefault();
+    feUser.packBuilder.updateValues({
+      ...pick(this.userInfo, ["email", "userName"]),
+      ...this.subscriptionValues,
+      authStatus: "user" as AuthStatus,
+      userDataStatus: "loaded" as UserDataStatus,
+    });
     for (const feStoreName of feUser.get.childNames) {
       if (feStoreNameS.is(feStoreName, "displayStoreName")) {
         const dbIndexName = this.displayToDbStoreName(feStoreName);
@@ -163,14 +169,6 @@ export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
         feUser.packBuilder.replaceChildren({
           childName: feStoreName,
           sectionPacks: this.dbSections.sectionPackArr(feStoreName),
-        });
-      } else if (feStoreName === "userInfoNext") {
-        const userInfo = feUser.packBuilder.onlyChild("userInfoNext");
-        userInfo.updater.updateValues({
-          ...pick(this.userInfo, ["email", "userName"]),
-          ...this.subscriptionValues,
-          authStatus: "user" as AuthStatus,
-          userDataStatus: "loaded" as UserDataStatus,
         });
       }
     }

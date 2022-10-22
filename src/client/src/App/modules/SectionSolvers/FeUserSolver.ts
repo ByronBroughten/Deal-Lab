@@ -38,8 +38,7 @@ export class FeUserSolver extends SolverSectionBase<"feUser"> {
     analyzerPlan,
     analyzerPlanExp,
   }: AnalyzerPlanValues): void {
-    const subInfo = this.packBuilder.onlyChild("userInfoNext");
-    subInfo.updater.updateValues({
+    this.solver.updateValuesAndSolve({
       analyzerPlan,
       analyzerPlanExp,
     });

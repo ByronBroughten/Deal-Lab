@@ -17,18 +17,15 @@ import { UpgradeUserToProPanel } from "./NavBar/UpgradeUserToProPanel";
 
 export function NavBar() {
   const feUser = useFeUser();
-
   const { isBasic, isGuest } = feUser;
-  const userInfoNext = feUser.get.onlyChild("userInfoNext");
   const showSignin = isGuest; // && !pathname.includes("/auth");
-
   const appTitle = "Ultimate Property Analyzer" + (constants.isBeta ? "" : ""); // BETA
 
   return (
     <Styled className="NavBar-root">
       <Toolbar disableGutters={true}>
         <div className="NavBar-leftSide">
-          <NavUserMenu feId={userInfoNext.feId} />
+          <NavUserMenu feId={feUser.get.feId} />
           <Link className="NavBar-navBtnLink" to="/">
             <NavBtn
               className="NavBar-brandBtn"

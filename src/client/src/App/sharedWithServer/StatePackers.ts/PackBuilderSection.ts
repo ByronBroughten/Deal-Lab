@@ -1,3 +1,4 @@
+import { SomeSectionValues } from "../SectionsMeta/baseSectionsDerived/valueMetaTypes";
 import {
   ChildName,
   DbChildInfo,
@@ -70,6 +71,9 @@ export class PackBuilderSection<
   }
   get maker(): PackMakerSection<SN> {
     return new PackMakerSection(this.getterSectionProps);
+  }
+  updateValues(values: SomeSectionValues<SN>): void {
+    this.updater.updateValues(values);
   }
   isSectionType<ST extends SectionNameType>(
     sectionTypeName: ST

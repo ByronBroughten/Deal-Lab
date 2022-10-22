@@ -43,7 +43,7 @@ const defaults = sectionNames.reduce((basicRelSections, sectionName) => {
 export function makeRelSections() {
   return relSectionsFilter({
     ...defaults,
-    ...relSectionProp("feUserInfo", {
+    ...relSectionProp("feUser", {
       authStatus: relVarb("string", {
         initValue: "guest" as AuthStatus,
       }),

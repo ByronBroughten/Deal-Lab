@@ -17,8 +17,6 @@ AppRegistry.runApplication("App", {
 // -  if the load fails, the user should be logged out
 // -  loaded, you know
 
-// - turn basicUserInfo and userInfoNext back to "userInfo"
-
 // - getUserData shouldn't return a whole feUser. It should return
 //   targeted, important aspects of feUser that ought to be synchronized with the
 //   db often

@@ -211,8 +211,7 @@ export const baseSectionsVarbs = checkBaseSectionsVarbs({
     ...baseVarbsS.ongoing("roiDecimal"),
     ...baseVarbsS.ongoing("roi"),
   }),
-
-  feUserInfo: baseSectionVarbs({
+  feUser: baseSectionVarbs({
     ...baseVarbs("string", [
       "authStatus",
       "userDataStatus",
@@ -222,7 +221,6 @@ export const baseSectionsVarbs = checkBaseSectionsVarbs({
     ] as const),
     analyzerPlanExp: "number",
   }),
-
   basicUserInfo: baseSectionVarbs({
     ...baseVarbs("string", ["email", "userName"] as const),
     timeJoined: "number",
