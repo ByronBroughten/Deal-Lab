@@ -52,7 +52,7 @@ describe(testedRoute, () => {
     await request(server)
       .post(testedRoute)
       .set("Cookie", cookies)
-      .set(constants.tokenKey.apiUserAuth, token)
+      .set(constants.tokenKey.userAuthData, token)
       .send(req.body);
 
   async function testStatus(statusNumber: number) {
@@ -75,11 +75,11 @@ describe(testedRoute, () => {
     await testStatus(401);
   });
   it("should return 500 if the payload isn't for a sectionQuery dbStoreName", async () => {
-    const basicUserInfo = PackBuilderSection.initAsOmniChild("basicUserInfo");
+    const userInfo = PackBuilderSection.initAsOmniChild("userInfo");
     req = {
       body: {
-        dbStoreName: "basicUserInfo",
-        sectionPack: basicUserInfo.makeSectionPack(),
+        dbStoreName: "userInfo",
+        sectionPack: userInfo.makeSectionPack(),
       } as any,
     };
     await testStatus(500);

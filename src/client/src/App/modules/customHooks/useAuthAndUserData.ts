@@ -2,13 +2,14 @@ import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { signOut } from "supertokens-auth-react/recipe/thirdpartyemailpassword";
 import { constants } from "../../Constants";
+import { feStoreNameS } from "../../sharedWithServer/SectionsMeta/relSectionsDerived/relNameArrs/FeStoreName";
 import { useSetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useSetterSection";
 import { timeS } from "../../sharedWithServer/utils/date";
 import { getErrorMessage } from "../../utils/error";
 import { useFeUser } from "../sectionActorHooks/useFeUser";
 import { auth } from "../services/authService";
 
-async function signOutWrapper(): Promise<void> {
+async function authSignOut(): Promise<void> {
   return signOut();
 }
 
@@ -23,7 +24,6 @@ function useUpdateOnSubscribe() {
         try {
           await feUser.updateSubscriptionData();
         } catch (ex) {
-          await signOutWrapper();
           throw new Error(getErrorMessage(ex));
         }
         navigate("/");
@@ -48,35 +48,62 @@ export function useSubscriptionState() {
   useUpdateOnExpire();
 }
 
-function useGetAuthStateIfSessionExists() {
+function useControlLoadUserData() {
+  const feUser = useFeUser();
+  React.useEffect(() => {
+    async function controlUnload() {
+      if (await feUser.shouldLoadUserData()) {
+        feUser.triggerLoadUserData();
+      }
+    }
+    controlUnload();
+  });
+}
+
+function useLoadUserData() {
   const feUser = useFeUser();
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
   React.useEffect(() => {
-    async function syncStateWithSessionLogin() {
-      if ((await feUser.sessionExists) && feUser.authStatus === "guest") {
+    async function loadUserDataIfTriggered() {
+      if (feUser.isLoadingUserData) {
         try {
           await feUser.loadUserData();
         } catch (ex) {
-          await signOutWrapper();
+          await authSignOut();
+          feUser.setter.varb("userDataStatus").updateValue("notLoaded");
           throw new Error(getErrorMessage(ex));
         }
       } else if (pathname.includes(constants.feRoutes.authSuccess)) {
         navigate("/");
       }
     }
-    syncStateWithSessionLogin();
+    loadUserDataIfTriggered();
   });
 }
 
-function useLogoutIfNoSessionExists() {
+function useControlUnloadUserData() {
+  const feUser = useFeUser();
+  React.useEffect(() => {
+    async function controlUnload() {
+      if (await feUser.shouldUnloadUserData()) {
+        feUser.triggerUnloadUserData();
+      }
+    }
+    controlUnload();
+  });
+}
+function useUnloadUserData() {
   const feUser = useFeUser();
   const stateToDefault = useStateToDefault();
 
   React.useEffect(() => {
     async function syncStateWithSessionLogout() {
-      if (!(await feUser.sessionExists) && feUser.authStatus !== "guest") {
+      if (
+        !(await feUser.sessionExists) &&
+        feUser.get.valueNext("userDataStatus") === "loaded"
+      ) {
         stateToDefault();
       }
     }
@@ -87,18 +114,23 @@ function useLogoutIfNoSessionExists() {
 function useStateToDefault() {
   const main = useSetterSectionOnlyOne("main");
   return () => {
-    auth.removeToken();
+    auth.removeUserAuthDataToken();
+    const feUser = main.onlyChild("feUser");
+    feUser.update.removeAllChildrenInArrs(feStoreNameS.arrs.mainStoreName);
+    // with the mainStores, I bypass all the solving stuff.
     main.resetToDefault();
   };
 }
 
-export function useAuthAndLogin() {
-  useGetAuthStateIfSessionExists();
-  useLogoutIfNoSessionExists();
+export function useUserData() {
+  useControlLoadUserData();
+  useLoadUserData();
+  useControlUnloadUserData();
+  useUnloadUserData();
 
   const stateToDefault = useStateToDefault();
   async function logout() {
-    await signOutWrapper();
+    await authSignOut();
     stateToDefault();
   }
   return { logout };

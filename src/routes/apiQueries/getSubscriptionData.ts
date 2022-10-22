@@ -14,7 +14,7 @@ async function getSubscriptionData(req: Request, res: Response) {
   sendSuccess(res, "getSubscriptionData", {
     data: subscriptionValues,
     headers: {
-      [constants.tokenKey.apiUserAuth]:
+      [constants.tokenKey.userAuthData]:
         user.createUserInfoToken(subscriptionValues),
     },
   });

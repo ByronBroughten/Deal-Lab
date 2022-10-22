@@ -19,7 +19,8 @@ import { UpdaterSection } from "../../sharedWithServer/StateUpdaters/UpdaterSect
 import { timeS } from "../../sharedWithServer/utils/date";
 import { FeIndexBuilder } from "./FeIndexBuilder";
 import { FeUserSolver } from "./FeUserSolver";
-
+// using the indexBuilder rather than indexSolver works for the mainStores
+// but probably not for the listStores.
 export type SaveStatus = "unsaved" | "changesSynced" | "unsyncedChanges";
 export class MainSectionSolver<
   SN extends SectionNameByType<"hasIndexStore">

@@ -5,7 +5,10 @@ import mongoose from "mongoose";
 import { constants } from "../../../../client/src/App/Constants";
 import { FeUserSolver } from "../../../../client/src/App/modules/SectionSolvers/FeUserSolver";
 import { AnalyzerPlanValues } from "../../../../client/src/App/sharedWithServer/apiQueriesShared/AnalyzerPlanValues";
-import { LoginData } from "../../../../client/src/App/sharedWithServer/apiQueriesShared/getUserData";
+import {
+  MainStoreArrs,
+  UserData,
+} from "../../../../client/src/App/sharedWithServer/apiQueriesShared/getUserData";
 import {
   AuthStatus,
   UserDataStatus,
@@ -84,8 +87,11 @@ export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
   get get(): GetterSection<"dbStore"> {
     return new GetterSection(this.getterSectionProps);
   }
-  get userInfo(): GetterSection<"basicUserInfo"> {
-    return this.get.onlyChild("basicUserInfo");
+  get builder(): PackBuilderSection<"dbStore"> {
+    return new PackBuilderSection(this.getterSectionProps);
+  }
+  get userInfo(): GetterSection<"userInfo"> {
+    return this.get.onlyChild("userInfo");
   }
   get subscriptionValues(): AnalyzerPlanValues {
     if (isProEmail(this.email)) {
@@ -147,7 +153,7 @@ export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
       });
     }
   }
-  makeLoginUser(): LoginData {
+  collectUserData(): UserData {
     const feUser = FeUserSolver.initDefault();
     feUser.packBuilder.updateValues({
       ...pick(this.userInfo, ["email", "userName"]),
@@ -155,27 +161,32 @@ export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
       authStatus: "user" as AuthStatus,
       userDataStatus: "loaded" as UserDataStatus,
     });
-    for (const feStoreName of feUser.get.childNames) {
-      if (feStoreNameS.is(feStoreName, "displayStoreName")) {
-        const dbIndexName = this.displayToDbStoreName(feStoreName);
-        const sources = this.get.children(dbIndexName);
-        feUser.loadDisplayStoreList(feStoreName, sources);
-      } else if (feStoreNameS.is(feStoreName, "fullIndex")) {
-        feUser.packBuilder.replaceChildren({
-          childName: feStoreName,
-          sectionPacks: this.dbSections.sectionPackArr(feStoreName),
-        });
-      } else if (feStoreNameS.is(feStoreName, "mainTableName")) {
-        feUser.packBuilder.replaceChildren({
-          childName: feStoreName,
-          sectionPacks: this.dbSections.sectionPackArr(feStoreName),
-        });
-      }
+    for (const storeName of feStoreNameS.arrs.userListStoreName) {
+      feUser.packBuilder.replaceChildren({
+        childName: storeName,
+        sectionPacks: this.dbSections.sectionPackArr(storeName),
+      });
     }
+    for (const storeName of feStoreNameS.arrs.mainTableName) {
+      feUser.packBuilder.replaceChildren({
+        childName: storeName,
+        sectionPacks: this.dbSections.sectionPackArr(storeName),
+      });
+    }
+    const mainStoreArrs = feStoreNameS.arrs.mainStoreName.reduce(
+      (storeArrs, storeName) => {
+        storeArrs[storeName] = this.builder.makeChildPackArr(storeName) as any;
+        return storeArrs;
+      },
+      {} as MainStoreArrs
+    );
     return {
-      feUser: [feUser.packBuilder.makeSectionPack()],
+      feUser: feUser.packBuilder.makeSectionPack(),
+      mainStoreArrs,
     };
   }
+  collectMainStoreArrs() {}
+
   displayToDbStoreName<SN extends FeStoreNameByType<"displayStoreName">>(
     sectionName: SN
   ): FeUserDbIndex<SN> {
@@ -228,13 +239,13 @@ export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
     LoadedDbUser.setResTokenHeader(res, token);
   }
   static setResTokenHeader(res: Response, token: string): void {
-    res.header(constants.tokenKey.apiUserAuth, token);
+    res.header(constants.tokenKey.userAuthData, token);
   }
 
-  sendLogin(res: Response): void {
-    const loggedInUser = this.makeLoginUser();
+  sendUserData(res: Response): void {
+    const userData = this.collectUserData();
     this.setResTokenHeader(res);
-    res.status(200).send(loggedInUser);
+    res.status(200).send(userData);
   }
   static checkUserAuthToken = checkUserAuthToken;
 }

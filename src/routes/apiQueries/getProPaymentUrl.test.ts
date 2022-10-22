@@ -37,7 +37,7 @@ describe(testedRoute, () => {
   async function exec() {
     const res = await request(server)
       .post(testedRoute)
-      .set(constants.tokenKey.apiUserAuth, dbUser.createUserInfoToken())
+      .set(constants.tokenKey.userAuthData, dbUser.createUserInfoToken())
       .set("Cookie", cookies)
       .send(req.body);
     return getStandardRes(res);

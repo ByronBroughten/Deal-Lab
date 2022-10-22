@@ -3,8 +3,8 @@ import React from "react";
 import { config } from "../../../Constants";
 import { getStoredObj } from "../../../utils/localStorage";
 import { SectionPack } from "../../SectionsMeta/childSectionsDerived/SectionPack";
-import { feStoreNameS } from "../../SectionsMeta/relSectionsDerived/relNameArrs/FeStoreName";
 import { relSections } from "../../SectionsMeta/relSectionVarbs";
+import { validateSectionPackByType } from "../../SectionsMeta/SectionNameByType";
 import { GetterSections } from "../../StateGetters/GetterSections";
 import { PackBuilderSection } from "../../StatePackers.ts/PackBuilderSection";
 import { StateSections } from "../../StateSections/StateSections";
@@ -31,25 +31,41 @@ const { tokenKey } = config;
 export class SectionsStore {
   static storeSections(sections: StateSections): void {
     const getterSections = new GetterSections({ sectionsShare: { sections } });
-    const { feUser } = getterSections;
+    const { main } = getterSections;
     const packBuilder = new PackBuilderSection({
       sectionsShare: { sections },
-      ...feUser.feInfo,
+      ...main.onlyChild("activeDeal").feInfo,
     });
-    packBuilder.removeChildrenArrs(feStoreNameS.arrs.mainStoreName);
-    const feUserPack = packBuilder.makeSectionPack();
-    this.setSectionsInStore(feUserPack);
+    const activeDealPack = packBuilder.makeSectionPack();
+    this.setSectionsInStore(activeDealPack);
   }
   static getStoredSections(): StateSections {
     this.rmStoredStateIfPreframesChanged();
     const storedState = this.getSectionsFromStore();
-    const feUser = SolverSections.initFromFeUserPack(storedState);
-    return feUser.sectionsShare.sections;
+    try {
+      validateSectionPackByType(storedState, "deal");
+    } catch (e) {
+      this.rmStoredState();
+      throw new Error("Failed to validate stored deal state.");
+    }
+    const main = SolverSections.initMainFromActiveDealPack(storedState);
+    const feUser = main.onlyChild("feUser");
+    feUser.updateValuesAndSolve({
+      userDataStatus: "loading",
+    });
+    return main.sectionsShare.sections;
+
+    // if (await auth.sessionExists()) {
+    //   const feUser = main.onlyChild("feUser");
+    //   feUser.updateValuesAndSolve({
+    //     userDataStatus: "loading",
+    //   });
+    // }
   }
-  private static setSectionsInStore(mainSectionPack: StoredSectionsState) {
+  private static setSectionsInStore(activeDealPack: StoredSectionsState) {
     localStorage.setItem(
       tokenKey.sectionsState,
-      JSON.stringify(mainSectionPack)
+      JSON.stringify(activeDealPack)
     );
   }
   private static getSectionsFromStore(): StoredSectionsState {
@@ -61,12 +77,15 @@ export class SectionsStore {
         `No state is stored with tokenKey ${key}.`
       );
   }
+  static rmStoredState() {
+    localStorage.removeItem(tokenKey.sectionsState);
+  }
   static rmStoredStateIfPreframesChanged() {
     const newHash = this.newHashIfRelSectionsDidChange();
     if (newHash) {
       localStorage.setItem(tokenKey.sectionsConfigHash, newHash);
-      localStorage.removeItem(tokenKey.sectionsState);
-      localStorage.removeItem(tokenKey.apiUserAuth);
+      this.rmStoredState();
+      localStorage.removeItem(tokenKey.userAuthData);
     }
   }
   private static newHashIfRelSectionsDidChange(): string | null {
@@ -78,5 +97,5 @@ export class SectionsStore {
   }
 }
 
-type StoredSectionsState = SectionPack<"feUser">;
+type StoredSectionsState = SectionPack<"deal">;
 export class StateMissingFromStorageError extends Error {}

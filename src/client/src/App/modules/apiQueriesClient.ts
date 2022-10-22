@@ -10,8 +10,8 @@ import {
   QueryRes,
 } from "../sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import {
-  isLoginData,
   isUserInfoHeaders,
+  validateUserData,
 } from "../sharedWithServer/apiQueriesShared/getUserData";
 import { makeRes } from "../sharedWithServer/apiQueriesShared/makeReqAndRes";
 import { Obj } from "../sharedWithServer/utils/Obj";
@@ -39,7 +39,11 @@ function makeApiQueries(): ApiQueries {
     getUserData: {
       doingWhat: "retrieving user data",
       validateRes(res: AxiosResponse<unknown>): QueryRes<"getUserData"> {
-        if (res && isLoginData(res.data) && isUserInfoHeaders(res.headers)) {
+        if (
+          res &&
+          validateUserData(res.data) &&
+          isUserInfoHeaders(res.headers)
+        ) {
           return {
             data: res.data,
             headers: res.headers,

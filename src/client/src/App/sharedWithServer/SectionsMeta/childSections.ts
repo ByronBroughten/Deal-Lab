@@ -59,7 +59,7 @@ export const childSections = checkChildSections({
   }),
   dbStore: childrenSections({
     authInfoPrivate: ["authInfoPrivate"],
-    basicUserInfo: ["basicUserInfo"],
+    userInfo: ["userInfo"],
 
     userInfoPrivate: ["userInfoPrivate"],
 

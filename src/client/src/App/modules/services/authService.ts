@@ -2,20 +2,20 @@ import Session from "supertokens-auth-react/recipe/session";
 import { isEmailVerified } from "supertokens-auth-react/recipe/thirdpartyemailpassword";
 import { constants } from "../../Constants";
 
-const userAuthKey = constants.tokenKey.apiUserAuth;
+const userDataKey = constants.tokenKey.userAuthData;
 export const auth = {
   setToken(token: string): void {
-    localStorage.setItem(constants.tokenKey.apiUserAuth, token);
+    localStorage.setItem(constants.tokenKey.userAuthData, token);
   },
   setTokenFromHeaders<H extends UserInfoTokenProp>(headers: H): void {
-    this.setToken(headers[userAuthKey]);
+    this.setToken(headers[userDataKey]);
   },
   getToken(): string | null {
-    const token = localStorage.getItem(userAuthKey);
+    const token = localStorage.getItem(userDataKey);
     return token;
   },
-  removeToken(): void {
-    localStorage.removeItem(userAuthKey);
+  removeUserAuthDataToken(): void {
+    localStorage.removeItem(userDataKey);
   },
   get isToken(): boolean {
     const token = this.getToken();
@@ -32,10 +32,10 @@ export const auth = {
   },
 };
 
-export type UserInfoTokenProp = { [constants.tokenKey.apiUserAuth]: string };
+export type UserInfoTokenProp = { [constants.tokenKey.userAuthData]: string };
 export function hasAuthHeadersProp(value: any): value is UserInfoTokenProp {
   return (
     typeof value === "object" &&
-    typeof value[constants.tokenKey.apiUserAuth] === "string"
+    typeof value[constants.tokenKey.userAuthData] === "string"
   );
 }

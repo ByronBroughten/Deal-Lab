@@ -116,6 +116,20 @@ export class SolverSections extends SolverSectionsBase {
     const defaultMainPack = defaultMaker.makeSectionPack("main");
     return this.initSolvedSectionsFromMainPack(defaultMainPack);
   }
+  static initMainFromActiveDealPack(
+    sectionPack: SectionPack<"deal">
+  ): SolverSection<"main"> {
+    const sections = StateSections.initWithRoot();
+    const rootSection = sections.rawSectionList("root")[0];
+    const solver = SolverSection.init({
+      ...pick(rootSection, ["sectionName", "feId"]),
+      sectionsShare: { sections },
+    });
+    const mainSolver = solver.addAndGetChild("main");
+    const activeDeal = mainSolver.onlyChild("activeDeal");
+    activeDeal.loadSelfSectionPackAndSolve(sectionPack);
+    return mainSolver;
+  }
   static initFromFeUserPack(
     sectionPack: SectionPack<"feUser">
   ): SolverSection<"feUser"> {

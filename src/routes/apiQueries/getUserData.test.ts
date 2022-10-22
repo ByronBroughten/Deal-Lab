@@ -2,10 +2,7 @@ import request from "supertest";
 import { constants } from "../../client/src/App/Constants";
 import { apiQueriesShared } from "../../client/src/App/sharedWithServer/apiQueriesShared";
 import { QueryReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
-import {
-  isLoginData,
-  LoginData,
-} from "../../client/src/App/sharedWithServer/apiQueriesShared/getUserData";
+import { isLoginData } from "../../client/src/App/sharedWithServer/apiQueriesShared/getUserData";
 import {
   guestAccessNames,
   GuestAccessSectionPackArrs,
@@ -50,7 +47,7 @@ describe(testedRoute, () => {
   it("should return status 200 and loginData", async () => {
     const { status, data, headers } = await exec();
     expect(status).toBe(200);
-    expect(headers[constants.tokenKey.apiUserAuth]).not.toBeUndefined();
+    expect(headers[constants.tokenKey.userAuthData]).not.toBeUndefined();
     isLoginData(data);
   });
   it("should return a header with the correct subscription info", async () => {
@@ -67,7 +64,7 @@ describe(testedRoute, () => {
     const { data } = await exec();
 
     const postFeUser = PackBuilderSection.initAsOmniChild("feUser");
-    postFeUser.loadSelf((data as LoginData).feUser[0]);
+    postFeUser.loadSelf(data.feUser);
     const postReqObj = makeReqObj(postFeUser);
     expect(reqObj.body.guestAccessSections).toEqual(
       postReqObj.body.guestAccessSections

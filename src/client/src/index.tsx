@@ -8,11 +8,15 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-// - When coming back to the site, get the main stores from the server (mainStoreArrs)
-// - Get all the stores this way, for that matter
+// - When restoring state, set userDataStatus to loading
 
-// -  make "analysis" be on main rather than feUser
-// -  at outset it's simply "unloaded".
+// - Right now loadUserData takes guestAccessSections. I can
+//   instead make those optional.
+
+// - Remove the mainStores on logout without triggering the outVarb stuff.
+
+// - Also attempt to load stores if logged in and userDataLoadStatus is notLoaded
+
 // -  in certain cases it switches to loading. That's what triggers the query
 // -  if the load fails, the user should be logged out
 // -  loaded, you know

@@ -23,12 +23,12 @@ export function useRoutes(app: express.Application) {
         "https://www.ultimatepropertyanalyzer.com",
       ],
       allowedHeaders: [
-        constants.tokenKey.apiUserAuth,
+        constants.tokenKey.userAuthData,
         "content-type", // supertokens needs content-type header
         ...supertokens.getAllCORSHeaders(),
       ],
       credentials: true,
-      exposedHeaders: [constants.tokenKey.apiUserAuth],
+      exposedHeaders: [constants.tokenKey.userAuthData],
     })
   );
 

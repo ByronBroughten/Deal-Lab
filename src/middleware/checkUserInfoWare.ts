@@ -9,7 +9,7 @@ export function checkUserInfoWare(
   _: Response,
   next: NextFunction
 ) {
-  const token = req.header(constants.tokenKey.apiUserAuth);
+  const token = req.header(constants.tokenKey.userAuthData);
   if (!token) throw missingTokenError("userJwt");
   const decoded = LoadedDbUser.checkUserAuthToken(token);
   (req as LoggedInReq<any>).body.userJwt = decoded;

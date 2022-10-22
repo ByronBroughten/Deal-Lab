@@ -44,7 +44,7 @@ export const sectionNames = [
 
   "stripeSubscription",
   "stripeInfoPrivate",
-  "basicUserInfo",
+  "userInfo",
   "userInfoPrivate",
   "authInfoPrivate",
 ] as const;

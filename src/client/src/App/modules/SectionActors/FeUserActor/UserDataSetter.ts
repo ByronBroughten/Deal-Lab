@@ -3,21 +3,21 @@ import { QueryRes } from "../../../sharedWithServer/apiQueriesShared/apiQueriesS
 import { SetterSectionsBase } from "../../../sharedWithServer/StateSetters/SetterBases/SetterSectionsBase";
 import { SetterSections } from "../../../sharedWithServer/StateSetters/SetterSections";
 import { auth, UserInfoTokenProp } from "../../services/authService";
-import { LoginSolver } from "./LoginSolver";
+import { UserDataSolver } from "./UserDataSolver";
 
-export class LoginSetter extends SetterSectionsBase {
+export class UserDataSetter extends SetterSectionsBase {
   get setterSections(): SetterSections {
     return new SetterSections(this.setterSectionsProps);
   }
   setUserInfoToken(headers: UserInfoTokenProp): void {
-    auth.setToken(headers[constants.tokenKey.apiUserAuth]);
+    auth.setToken(headers[constants.tokenKey.userAuthData]);
   }
-  get loginSolver(): LoginSolver {
-    return new LoginSolver(this.setterSectionsProps);
+  get userDataSolver(): UserDataSolver {
+    return new UserDataSolver(this.setterSectionsProps);
   }
-  setLogin({ data, headers }: QueryRes<"getUserData">) {
+  loadUserData({ data, headers }: QueryRes<"getUserData">) {
     this.setUserInfoToken(headers);
-    this.loginSolver.setLogin(data.feUser[0]);
+    this.userDataSolver.loadUserData(data);
     this.setterSections.setSections();
   }
 }

@@ -1,38 +1,49 @@
 import { z } from "zod";
 import { constants } from "../../Constants";
 import { UserInfoTokenProp } from "../../modules/services/authService";
+import { ChildSectionPack } from "../SectionsMeta/childSectionsDerived/ChildSectionPack";
 import {
   SectionPack,
   zRawSectionPack,
 } from "../SectionsMeta/childSectionsDerived/SectionPack";
 import {
-  SectionNameByType,
-  sectionNameS,
-} from "../SectionsMeta/SectionNameByType";
+  FeStoreNameByType,
+  feStoreNameS,
+} from "../SectionsMeta/relSectionsDerived/relNameArrs/FeStoreName";
+import { validateSectionPackByType } from "../SectionsMeta/SectionNameByType";
 import { zS } from "../utils/zod";
 
-export type LoginData = {
-  [SN in SectionNameByType<"loadOnLogin">]: SectionPack<SN>[];
+export type UserData = {
+  feUser: SectionPack<"feUser">;
+  mainStoreArrs: MainStoreArrs;
 };
-
-export function isLoginData(value: any): value is LoginData {
-  const zLoginUserSchema = makeZLoginUserSchema();
-  zLoginUserSchema.parse(value);
+export function validateUserData(value: any): value is UserData {
+  const { feUser, mainStoreArrs } = value as UserData;
+  validateSectionPackByType(feUser, "feUser");
+  validateMainStoreArrs(mainStoreArrs);
   return true;
 }
 
-function makeZLoginUserSchema() {
-  return z.object(
-    sectionNameS.arrs.loadOnLogin.reduce((partial, sectionName) => {
+function validateMainStoreArrs(value: any): void {
+  const schema = z.object(
+    feStoreNameS.arrs.mainStoreName.reduce((partial, sectionName) => {
       partial[sectionName] = zS.array(zRawSectionPack);
       return partial;
-    }, {} as Record<keyof LoginData, any>) as Record<keyof LoginData, any>
+    }, {} as Record<keyof MainStoreArrs, any>) as Record<
+      keyof MainStoreArrs,
+      any
+    >
   );
+  schema.parse(value);
 }
+
+export type MainStoreArrs = {
+  [CN in FeStoreNameByType<"mainStoreName">]: ChildSectionPack<"feUser", CN>[];
+};
 
 export function isUserInfoHeaders(value: any): value is UserInfoTokenProp {
   return (
     typeof value === "object" &&
-    typeof value[constants.tokenKey.apiUserAuth] === "string"
+    typeof value[constants.tokenKey.userAuthData] === "string"
   );
 }

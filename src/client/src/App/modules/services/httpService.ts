@@ -9,7 +9,7 @@ axios.interceptors.request.use(function (config) {
   if (config.headers && config.headers.common) {
     config.headers = {
       ...config.headers,
-      [constants.tokenKey.apiUserAuth]: auth.getToken() ?? false,
+      [constants.tokenKey.userAuthData]: auth.getToken() ?? false,
     };
   }
 

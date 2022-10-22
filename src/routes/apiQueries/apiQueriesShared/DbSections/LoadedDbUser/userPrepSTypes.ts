@@ -15,7 +15,7 @@ export type PreppedEmails = {
 };
 
 const userInfoStoreName = Arr.extractStrict(dbStoreNames, [
-  "basicUserInfo",
+  "userInfo",
   "userInfoPrivate",
   "stripeInfoPrivate",
 ] as const);
@@ -26,7 +26,7 @@ export type UserSectionPackArrs = {
 
 const initialUserStoreNames = Arr.extractStrict(dbStoreNames, [
   "authInfoPrivate",
-  "basicUserInfo",
+  "userInfo",
   "userInfoPrivate",
   "stripeInfoPrivate",
 ] as const);

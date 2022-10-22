@@ -119,7 +119,7 @@ export const config = {
   tokenKey: {
     sectionsState: "sections-state",
     sectionsConfigHash: "sections-config-hash",
-    apiUserAuth: "x-auth-token",
+    userAuthData: "user-auth-data-token",
     analyzerState: "analyzer-state",
     analyzerConfigHash: "analyzer-config-hash",
   },

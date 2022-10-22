@@ -68,7 +68,15 @@ const feStoreNameArrs = {
       "propertyMain",
       "loanMain",
       "mgmtMain",
-    ]);
+    ] as const);
+  },
+  get userListStoreName() {
+    return Arr.extractStrict(indexStoreNames.fullIndex, [
+      "ongoingListMain",
+      "outputListMain",
+      "singleTimeListMain",
+      "userVarbListMain",
+    ] as const);
   },
   displayNameDbSource: tableRowDbSources,
   displayStoreName: Obj.values(hasToStoreNames.displayIndex),

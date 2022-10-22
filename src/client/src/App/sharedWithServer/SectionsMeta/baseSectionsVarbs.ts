@@ -221,7 +221,7 @@ export const baseSectionsVarbs = checkBaseSectionsVarbs({
     ] as const),
     analyzerPlanExp: "number",
   }),
-  basicUserInfo: baseSectionVarbs({
+  userInfo: baseSectionVarbs({
     ...baseVarbs("string", ["email", "userName"] as const),
     timeJoined: "number",
   }),
@@ -252,5 +252,10 @@ export function isUserPlan(value: any): value is UserPlan {
 const authStatuses = ["guest", "user"] as const;
 export type AuthStatus = typeof authStatuses[number];
 
-const userDataStatuses = ["notLoaded", "loading", "loaded"] as const;
+const userDataStatuses = [
+  "notLoaded",
+  "loading",
+  "loaded",
+  "unloading",
+] as const;
 export type UserDataStatus = typeof userDataStatuses[number];

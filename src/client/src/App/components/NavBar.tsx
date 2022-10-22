@@ -25,7 +25,7 @@ export function NavBar() {
     <Styled className="NavBar-root">
       <Toolbar disableGutters={true}>
         <div className="NavBar-leftSide">
-          <NavUserMenu feId={feUser.get.feId} />
+          <NavUserMenu />
           <Link className="NavBar-navBtnLink" to="/">
             <NavBtn
               className="NavBar-brandBtn"

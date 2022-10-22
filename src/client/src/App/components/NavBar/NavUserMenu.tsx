@@ -3,9 +3,9 @@ import { rem } from "polished";
 import { AiOutlineMenu } from "react-icons/ai";
 import styled, { css } from "styled-components";
 import { constants } from "../../Constants";
-import { useAuthAndLogin } from "../../modules/customHooks/useAuthAndUserData";
+import { useUserData } from "../../modules/customHooks/useAuthAndUserData";
+import { useFeUser } from "../../modules/sectionActorHooks/useFeUser";
 import { UserPlan } from "../../sharedWithServer/SectionsMeta/baseSectionsVarbs";
-import { useGetterSection } from "../../sharedWithServer/stateClassHooks/useGetterSection";
 import theme from "../../theme/Theme";
 import { StandardProps } from "../general/StandardProps";
 import NavDropDown from "./NavDropDown";
@@ -14,18 +14,13 @@ function BtnDiv({ children, className }: StandardProps) {
   return <div className={`NavUserMenu-btnDiv ${className}`}>{children}</div>;
 }
 
-export type NavUserMenuProps = { feId: string };
-export function NavUserMenu({ feId }: NavUserMenuProps) {
-  const feUser = useGetterSection({
-    sectionName: "feUser",
-    feId,
-  });
-  const { logout } = useAuthAndLogin();
-  const analyzerPlan = feUser.valueNext("analyzerPlan") as UserPlan;
+export function NavUserMenu() {
+  const feUser = useFeUser();
+  const { logout } = useUserData();
+  const analyzerPlan = feUser.get.valueNext("analyzerPlan") as UserPlan;
   const isFullPlan = analyzerPlan === "fullPlan";
-
-  const authStatus = feUser.valueNext("authStatus");
-  const userName = feUser.value("userName", "string");
+  const authStatus = feUser.get.valueNext("authStatus");
+  const userName = feUser.get.value("userName", "string");
   return (
     <Styled
       {...{ $isFullPlan: isFullPlan }}

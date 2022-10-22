@@ -13,7 +13,7 @@ import { StrictOmit } from "../../sharedWithServer/utils/types";
 import { auth } from "../services/authService";
 import { makeReq } from "./../../sharedWithServer/apiQueriesShared/makeReqAndRes";
 import { SetterSection } from "./../../sharedWithServer/StateSetters/SetterSection";
-import { LoginSetter } from "./FeUserActor/LoginSetter";
+import { UserDataSetter } from "./FeUserActor/UserDataSetter";
 import { SectionActorBase, SectionActorBaseProps } from "./SectionActorBase";
 
 type FeUserProps = StrictOmit<SectionActorBaseProps<"feUser">, "sectionName">;
@@ -27,8 +27,8 @@ export class FeUserActor extends SectionActorBase<"feUser"> {
   get setter(): SetterSection<"feUser"> {
     return new SetterSection(this.sectionActorBaseProps);
   }
-  get loginSetter() {
-    return new LoginSetter(this.sectionActorBaseProps);
+  get userDataSetter() {
+    return new UserDataSetter(this.sectionActorBaseProps);
   }
   private get guestAccessSectionPacks(): GuestAccessSectionPackArrs {
     const { sections } = this.get;
@@ -42,11 +42,35 @@ export class FeUserActor extends SectionActorBase<"feUser"> {
       guestAccessNames
     ) as GuestAccessSectionPackArrs;
   }
+  get isLoadingUserData(): boolean {
+    return this.get.valueNext("userDataStatus") === "loading";
+  }
+  async shouldLoadUserData() {
+    return (
+      this.get.valueNext("userDataStatus") === "notLoaded" &&
+      (await this.sessionExists)
+    );
+  }
+  async triggerLoadUserData() {
+    this.setter.varb("userDataStatus").updateValue("loading");
+  }
+  async shouldUnloadUserData() {
+    return (
+      this.get.valueNext("userDataStatus") === "loaded" &&
+      !(await this.sessionExists)
+    );
+  }
+  async triggerUnloadUserData() {
+    this.setter.varb("userDataStatus").updateValue("unloading");
+  }
+  async abortSignIn(): Promise<void> {
+    this.setter.varb("userDataStatus").updateValue("notLoaded");
+  }
   async updateSubscriptionData() {
     const { headers, data } = await this.apiQueries.getSubscriptionData(
       makeReq({})
     );
-    this.loginSetter.setUserInfoToken(headers);
+    this.userDataSetter.setUserInfoToken(headers);
     this.setter.updateValues({
       analyzerPlan: data.analyzerPlan,
       analyzerPlanExp: data.analyzerPlanExp,
@@ -58,7 +82,7 @@ export class FeUserActor extends SectionActorBase<"feUser"> {
         guestAccessSections: this.guestAccessSectionPacks,
       })
     );
-    this.loginSetter.setLogin(res);
+    this.userDataSetter.loadUserData(res);
   }
   get subscriptionValues(): AnalyzerPlanValues {
     return {

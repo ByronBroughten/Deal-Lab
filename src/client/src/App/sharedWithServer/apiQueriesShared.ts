@@ -3,7 +3,7 @@ import { config } from "../Constants";
 import { UserInfoTokenProp } from "../modules/services/authService";
 import { AnalyzerPlanValues } from "./apiQueriesShared/AnalyzerPlanValues";
 import { ApiQueryName } from "./apiQueriesShared/apiQueriesSharedTypes";
-import { LoginData } from "./apiQueriesShared/getUserData";
+import { UserData } from "./apiQueriesShared/getUserData";
 import {
   DbIdRes,
   DbPackInfoSectionReq,
@@ -35,7 +35,7 @@ export type ApiQueries = {
       guestAccessSections: GuestAccessSectionPackArrs;
     }>
   ) => Promise<{
-    data: LoginData;
+    data: UserData;
     headers: UserInfoTokenProp;
   }>;
   getSubscriptionData: (

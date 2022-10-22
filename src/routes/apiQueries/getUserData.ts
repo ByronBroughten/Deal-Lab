@@ -34,7 +34,7 @@ async function getUserData(req: SessionRequest, res: Response) {
   await dbUser.initUserSectionsIfNeeded(guestAccessSections);
   await dbUser.initMainTablesIfNeeded();
   const loaded = await dbUser.loadedDbUser();
-  loaded.sendLogin(res);
+  loaded.sendUserData(res);
 }
 
 type Req = Authed<QueryReq<"getUserData">>;

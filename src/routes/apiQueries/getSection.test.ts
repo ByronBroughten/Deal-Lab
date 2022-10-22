@@ -57,7 +57,7 @@ describe(testedRoute, () => {
   const addSection = async () => {
     const res = await request(server)
       .post(apiQueriesShared.addSection.pathRoute)
-      .set(constants.tokenKey.apiUserAuth, dbUser.createUserInfoToken())
+      .set(constants.tokenKey.userAuthData, dbUser.createUserInfoToken())
       .set("Cookie", cookies)
       .send(reqs.addSection.body);
     validateStatus200Res(res);
