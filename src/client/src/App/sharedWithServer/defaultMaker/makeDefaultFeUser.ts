@@ -2,7 +2,6 @@ import { SectionPack } from "../SectionsMeta/childSectionsDerived/SectionPack";
 import { feStoreNameS } from "../SectionsMeta/relSectionsDerived/relNameArrs/FeStoreName";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
 import { getDefaultMainTableMakers } from "./getDefaultMainTableMakers";
-import { makeDefaultDealPack } from "./makeDefaultDealPack";
 import { makeExampleUserOngoingLists } from "./makeDefaultFeUser/makeExampleUserOngoingLists";
 import { makeExampleUserSingleTimeLists } from "./makeDefaultFeUser/makeExampleUserSingleTimeLists";
 import { makeExampleUserVarbLists } from "./makeDefaultFeUser/makeExampleUserVarbLists";
@@ -13,10 +12,6 @@ export function makeDefaultFeUserPack(): SectionPack<"feUser"> {
   feUser.loadChild({
     childName: "userInfoNext",
     sectionPack: makeDefaultFeUserInfo(),
-  });
-  feUser.loadChild({
-    childName: "activeDeal",
-    sectionPack: makeDefaultDealPack(),
   });
   feUser.loadChildren({
     childName: "userVarbListMain",

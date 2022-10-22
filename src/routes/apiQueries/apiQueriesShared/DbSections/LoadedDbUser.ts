@@ -147,12 +147,8 @@ export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
       });
     }
   }
-  makeLoginUser(activeDealPack: SectionPack<"deal">): LoginData {
+  makeLoginUser(): LoginData {
     const feUser = FeUserSolver.initDefault();
-    feUser.packBuilder.replaceChildren({
-      childName: "activeDeal",
-      sectionPacks: [activeDealPack],
-    });
     for (const feStoreName of feUser.get.childNames) {
       if (feStoreNameS.is(feStoreName, "displayStoreName")) {
         const dbIndexName = this.displayToDbStoreName(feStoreName);
@@ -178,8 +174,6 @@ export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
         });
       }
     }
-    this.initActiveAsSaved(feUser, activeDealPack);
-
     return {
       feUser: [feUser.packBuilder.makeSectionPack()],
     };
@@ -239,8 +233,8 @@ export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
     res.header(constants.tokenKey.apiUserAuth, token);
   }
 
-  sendLogin(res: Response, activeDealPack: SectionPack<"deal">): void {
-    const loggedInUser = this.makeLoginUser(activeDealPack);
+  sendLogin(res: Response): void {
+    const loggedInUser = this.makeLoginUser();
     this.setResTokenHeader(res);
     res.status(200).send(loggedInUser);
   }

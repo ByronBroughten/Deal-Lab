@@ -17,8 +17,8 @@ import theme from "./App/theme/Theme";
 
 export function Main() {
   useSubscriptionState();
-  const user = useGetterSectionOnlyOne("feUser");
-  const { feId: activeDealId } = user.onlyChild("activeDeal");
+  const main = useGetterSectionOnlyOne("main");
+  const { feId: activeDealId } = main.onlyChild("activeDeal");
   const { feRoutes } = constants;
   return (
     <Styled className="App-root">

@@ -23,15 +23,6 @@ export class PackBuilderSections extends GetterSectionsBase {
       ...this.getterSectionsProps,
     });
   }
-  get activeDealSections() {
-    const feUser = this.oneAndOnly("feUser");
-    const activeDealPack = feUser.maker.makeOnlyChildSectionPack("activeDeal");
-    const activeDeal = PackBuilderSection.loadAsOmniChild(activeDealPack);
-    return activeDeal.builderSections;
-  }
-  get activeDealGetters() {
-    return this.activeDealSections.get;
-  }
   get mainIndexSections() {
     const feUser = this.oneAndOnly("feUser");
     const childPackArrs = feUser.maker.makeChildPackArrs(

@@ -19,7 +19,7 @@ export const childPaths = {
     return childPath("feUser", ["main", "feUser"]);
   },
   get activeDeal() {
-    return childPath("deal", [...this.feUser.path, "activeDeal"]);
+    return childPath("deal", ["main", "activeDeal"]);
   },
   get activePropertyGeneral() {
     return childPath("propertyGeneral", [

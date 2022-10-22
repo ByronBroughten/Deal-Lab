@@ -96,14 +96,12 @@ describe(testedRoute, () => {
 function makeReqObj(
   feUser = PackBuilderSection.initAsOmniChild("feUser")
 ): QueryReq<"getUserData"> {
-  const activeDeal = PackBuilderSection.initAsOmniChild("deal");
   const guestAccessSections = feUser.maker.makeChildPackArrs(
     guestAccessNames
   ) as GuestAccessSectionPackArrs;
   return {
     body: {
       guestAccessSections,
-      activeDeal: activeDeal.makeSectionPack(),
     },
   };
 }

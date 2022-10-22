@@ -4,7 +4,6 @@ import { getUserById } from "supertokens-node/recipe/thirdpartyemailpassword";
 import { QueryReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import { makeReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/makeReqAndRes";
 import { areGuestAccessSections } from "../../client/src/App/sharedWithServer/apiQueriesShared/register";
-import { validateSectionPackByType } from "../../client/src/App/sharedWithServer/SectionsMeta/SectionNameByType";
 import { timeS } from "../../client/src/App/sharedWithServer/utils/date";
 import { Str } from "../../client/src/App/sharedWithServer/utils/Str";
 import { getAuthWare } from "../../middleware/authWare";
@@ -15,8 +14,7 @@ import { Authed, validateAuthObj } from "./apiQueriesShared/ReqAugmenters";
 export const getUserDataWare = [getAuthWare(), getUserData] as const;
 
 async function getUserData(req: SessionRequest, res: Response) {
-  const { auth, guestAccessSections, activeDeal } =
-    validateGetUserDataReq(req).body;
+  const { auth, guestAccessSections } = validateGetUserDataReq(req).body;
 
   if (!(await DbUser.existsBy("authId", auth.id))) {
     const authUser = await getUserById(auth.id);
@@ -36,22 +34,17 @@ async function getUserData(req: SessionRequest, res: Response) {
   await dbUser.initUserSectionsIfNeeded(guestAccessSections);
   await dbUser.initMainTablesIfNeeded();
   const loaded = await dbUser.loadedDbUser();
-  loaded.sendLogin(res, activeDeal);
+  loaded.sendLogin(res);
 }
 
 type Req = Authed<QueryReq<"getUserData">>;
 function validateGetUserDataReq(req: Request): Req {
-  const { guestAccessSections, auth, activeDeal } = (req as Req).body;
+  const { guestAccessSections, auth } = (req as Req).body;
   if (!areGuestAccessSections(guestAccessSections)) {
     throw new Error("Invalid guesteAccessSections");
-  }
-
-  if (!validateSectionPackByType(activeDeal, "deal")) {
-    throw new Error("Invalid activeDeal");
   }
   return makeReq({
     auth: validateAuthObj(auth),
     guestAccessSections,
-    activeDeal,
   });
 }

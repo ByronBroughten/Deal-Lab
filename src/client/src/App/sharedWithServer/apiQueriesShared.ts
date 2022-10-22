@@ -33,7 +33,6 @@ export type ApiQueries = {
   getUserData: (
     req: MakeReq<{
       guestAccessSections: GuestAccessSectionPackArrs;
-      activeDeal: SectionPack<"deal">;
     }>
   ) => Promise<{
     data: LoginData;
