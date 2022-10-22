@@ -40,7 +40,7 @@ export class OutVarbGetterVarb<
   private gatherOutEntities() {
     const { outEntities } = this.get;
     const feOutEntities = outEntities.map((outEntity) => {
-      const varb = this.getterSections.varbByMixed(outEntity);
+      const varb = this.getterSections.varb(outEntity);
       return varb.feVarbInfo;
     });
     this.outVarbInfoStore.push(...feOutEntities);

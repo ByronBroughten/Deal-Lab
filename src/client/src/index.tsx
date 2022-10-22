@@ -8,8 +8,29 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-// Ok. If I'm going to redo the tables, here's how.
+// - When coming back to the site, get the main stores from the server (mainStoreArrs)
+// - Get all the stores this way, for that matter
 
+// -  make "analysis" be on main rather than feUser
+// -  at outset it's simply "unloaded".
+// -  in certain cases it switches to loading. That's what triggers the query
+// -  if the load fails, the user should be logged out
+// -  loaded, you know
+
+// - turn basicUserInfo and userInfoNext back to "userInfo"
+
+// - getUserData shouldn't return a whole feUser. It should return
+//   targeted, important aspects of feUser that ought to be synchronized with the
+//   db often
+
+// - Get the mainStores separately with getUserData (feUser + mainStoreArrs)
+// - Always load the mainStores with makeOutInfos turned off
+// - Always add to the mainStores (isMainStoreName) with makeOutInfos turned off
+
+// - Indicate on the state from localStorage that the stores, and most other user data,
+//   should be loaded from the db
+
+// If I'm going to make tables faster and increase functionality, here's how:
 // There are going to be example properties, loans, and mgmts.
 // I want the tables to reflect those
 // - When creating the default user, initialize the tables

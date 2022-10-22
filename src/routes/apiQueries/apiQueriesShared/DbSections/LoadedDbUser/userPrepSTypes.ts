@@ -3,10 +3,10 @@ import { GuestAccessSectionPackArrs } from "../../../../../client/src/App/shared
 import { DbSectionPack } from "../../../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbSectionPack";
 import {
   DbSectionName,
-  dbStoreNames
+  dbStoreNames,
 } from "../../../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreName";
 import { SectionPack } from "../../../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/SectionPack";
-import { feStoreNameS } from "../../../../../client/src/App/sharedWithServer/SectionsMeta/relSectionsDerived/relNameArrs/feStoreNameArrs";
+import { feStoreNameS } from "../../../../../client/src/App/sharedWithServer/SectionsMeta/relSectionsDerived/relNameArrs/FeStoreName";
 import { Arr } from "../../../../../client/src/App/sharedWithServer/utils/Arr";
 
 export type PreppedEmails = {
@@ -15,7 +15,7 @@ export type PreppedEmails = {
 };
 
 const userInfoStoreName = Arr.extractStrict(dbStoreNames, [
-  "userInfo",
+  "basicUserInfo",
   "userInfoPrivate",
   "stripeInfoPrivate",
 ] as const);
@@ -26,7 +26,7 @@ export type UserSectionPackArrs = {
 
 const initialUserStoreNames = Arr.extractStrict(dbStoreNames, [
   "authInfoPrivate",
-  "userInfo",
+  "basicUserInfo",
   "userInfoPrivate",
   "stripeInfoPrivate",
 ] as const);

@@ -1,6 +1,7 @@
 import urljoin from "url-join";
 import { config } from "../Constants";
 import { UserInfoTokenProp } from "../modules/services/authService";
+import { AnalyzerPlanValues } from "./apiQueriesShared/AnalyzerPlanValues";
 import { ApiQueryName } from "./apiQueriesShared/apiQueriesSharedTypes";
 import { LoginData } from "./apiQueriesShared/getUserData";
 import {
@@ -8,7 +9,6 @@ import {
   DbPackInfoSectionReq,
   DbStoreNameRes,
   MakeReq,
-  MakeRes,
   SectionPackArrReq,
   SectionPackReq,
   SectionPackRes,
@@ -16,7 +16,6 @@ import {
   UrlRes,
 } from "./apiQueriesShared/makeReqAndRes";
 import { GuestAccessSectionPackArrs } from "./apiQueriesShared/register";
-import { SubscriptionValues } from "./apiQueriesShared/SubscriptionValues";
 import {
   DbStoreNameByType,
   SectionQueryName,
@@ -42,7 +41,7 @@ export type ApiQueries = {
   }>;
   getSubscriptionData: (
     req: MakeReq<{}>
-  ) => Promise<{ data: SubscriptionValues; headers: UserInfoTokenProp }>;
+  ) => Promise<{ data: AnalyzerPlanValues; headers: UserInfoTokenProp }>;
   makeSession: (req: MakeReq<{ authId: string }>) => Promise<{ data: {} }>;
   getTableRows: (
     req: MakeReq<{
@@ -51,10 +50,6 @@ export type ApiQueries = {
     }>
   ) => Promise<{ data: { tableRowPacks: SectionPack<"tableRow">[] } }>;
 };
-
-type GetSubscriptionDataRes = MakeRes<{
-  subscriptionInfo: SectionPack<"subscriptionInfo">;
-}>;
 
 type ApiQueriesTest<
   T extends Record<ApiQueryName, (req: any) => Promise<any>>

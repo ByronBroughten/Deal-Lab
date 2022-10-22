@@ -134,6 +134,9 @@ export class PackBuilderSection<
     const { feId } = this.get.childByDbId(dbInfo);
     this.removeChild({ childName, feId });
   }
+  removeChildrenArrs<CN extends ChildName<SN>>(childNames: CN[]): void {
+    this.updater.removeAllChildrenInArrs(childNames);
+  }
   loadAndGetChild<
     CN extends ChildName<SN>,
     CT extends ChildSectionName<SN, CN>

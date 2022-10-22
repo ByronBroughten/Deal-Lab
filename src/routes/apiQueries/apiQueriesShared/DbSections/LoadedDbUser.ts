@@ -1,10 +1,15 @@
 import bcrypt from "bcrypt";
 import { Response } from "express";
+import { pick } from "lodash";
 import mongoose from "mongoose";
 import { constants } from "../../../../client/src/App/Constants";
 import { FeUserSolver } from "../../../../client/src/App/modules/SectionSolvers/FeUserSolver";
+import { AnalyzerPlanValues } from "../../../../client/src/App/sharedWithServer/apiQueriesShared/AnalyzerPlanValues";
 import { LoginData } from "../../../../client/src/App/sharedWithServer/apiQueriesShared/getUserData";
-import { SubscriptionValues } from "../../../../client/src/App/sharedWithServer/apiQueriesShared/SubscriptionValues";
+import {
+  AuthStatus,
+  UserDataStatus,
+} from "../../../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsVarbs";
 import { SectionPack } from "../../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/SectionPack";
 import { FeSectionInfo } from "../../../../client/src/App/sharedWithServer/SectionsMeta/Info";
 import {
@@ -79,21 +84,21 @@ export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
   get get(): GetterSection<"dbStore"> {
     return new GetterSection(this.getterSectionProps);
   }
-  get userInfo(): GetterSection<"userInfo"> {
-    return this.get.onlyChild("userInfo");
+  get userInfo(): GetterSection<"basicUserInfo"> {
+    return this.get.onlyChild("basicUserInfo");
   }
-  get subscriptionValues(): SubscriptionValues {
+  get subscriptionValues(): AnalyzerPlanValues {
     if (isProEmail(this.email)) {
       return {
-        subscriptionPlan: "fullPlan",
-        planExp: timeS.now() + timeS.oneDay,
+        analyzerPlan: "fullPlan",
+        analyzerPlanExp: timeS.now() + timeS.oneDay,
       };
     }
 
     const subscriptions = this.get.children("stripeSubscription");
-    let subscriptionValues: SubscriptionValues = {
-      subscriptionPlan: "basicPlan",
-      planExp: timeS.hundredsOfYearsFromNow,
+    let subscriptionValues: AnalyzerPlanValues = {
+      analyzerPlan: "basicPlan",
+      analyzerPlanExp: timeS.hundredsOfYearsFromNow,
     };
 
     const now = timeS.now();
@@ -108,7 +113,7 @@ export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
       if (
         stripeS.isActiveSubStatus(values.status) &&
         currentPeriodEnd > now &&
-        currentPeriodEnd > subscriptionValues.planExp
+        currentPeriodEnd > subscriptionValues.analyzerPlanExp
       ) {
         const actives = Arr.findAll(constants.stripePrices, (subConfig) => {
           return priceIds.includes(subConfig.priceId);
@@ -118,8 +123,8 @@ export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
         });
         if (activePro) {
           subscriptionValues = {
-            subscriptionPlan: "fullPlan",
-            planExp: values.currentPeriodEnd,
+            analyzerPlan: "fullPlan",
+            analyzerPlanExp: values.currentPeriodEnd,
           };
         }
       }
@@ -163,11 +168,13 @@ export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
           childName: feStoreName,
           sectionPacks: this.dbSections.sectionPackArr(feStoreName),
         });
-      } else if (feStoreName === "subscriptionInfo") {
-        const { subscriptionPlan, planExp } = this.subscriptionValues;
-        feUser.loadSubscriptionInfo({
-          plan: subscriptionPlan,
-          planExp,
+      } else if (feStoreName === "userInfoNext") {
+        const userInfo = feUser.packBuilder.onlyChild("userInfoNext");
+        userInfo.updater.updateValues({
+          ...pick(this.userInfo, ["email", "userName"]),
+          ...this.subscriptionValues,
+          authStatus: "user" as AuthStatus,
+          userDataStatus: "loaded" as UserDataStatus,
         });
       }
     }
@@ -217,7 +224,7 @@ export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
     }
   }
 
-  createUserInfoToken(subscriptionValues?: SubscriptionValues): string {
+  createUserInfoToken(subscriptionValues?: AnalyzerPlanValues): string {
     return createUserInfoToken({
       userId: this.userId,
       ...this.subscriptionValues,

@@ -4,6 +4,7 @@ export const sectionNames = [
   "root",
   "main",
   "feUser",
+  "feUserInfo",
   "dbStore",
   "proxyStoreItem",
   "displayNameItem",
@@ -42,15 +43,11 @@ export const sectionNames = [
   "mgmtGeneral",
   "mgmt",
 
-  "subscriptionInfo",
   "stripeSubscription",
   "stripeInfoPrivate",
-
-  "authInfo",
-  "authInfoPrivate",
-
-  "userInfo",
+  "basicUserInfo",
   "userInfoPrivate",
+  "authInfoPrivate",
 ] as const;
 
 export type SectionName = typeof sectionNames[number];

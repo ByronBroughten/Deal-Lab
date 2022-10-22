@@ -25,12 +25,12 @@ async function addSection(req: Request, res: Response) {
   const {
     dbStoreName,
     sectionPack,
-    userJwt: { userId, subscriptionPlan },
+    userJwt: { userId, analyzerPlan },
   } = validateSectionPackReq(req).body;
   await validateStorageLimit({
     userId,
     dbStoreName,
-    subscriptionPlan,
+    analyzerPlan,
   });
   await checkThatSectionPackIsNotThere({
     dbStoreName,
@@ -51,19 +51,19 @@ async function addSection(req: Request, res: Response) {
 }
 
 type ValidateSubscriptionProps = {
-  subscriptionPlan: UserPlan;
+  analyzerPlan: UserPlan;
   dbStoreName: SectionQueryName;
   userId: string;
 };
 async function validateStorageLimit({
-  subscriptionPlan,
+  analyzerPlan,
   dbStoreName,
   userId,
 }: ValidateSubscriptionProps): Promise<boolean> {
   if (constants.isBeta) {
     return true;
   }
-  switch (subscriptionPlan) {
+  switch (analyzerPlan) {
     case "basicPlan": {
       const { basicStorageLimit } = constants;
       const querier = await DbUser.initBy("userId", userId);

@@ -5,7 +5,6 @@ import styled, { css } from "styled-components";
 import { constants } from "../../Constants";
 import { useAuthAndLogin } from "../../modules/customHooks/useAuthAndUserData";
 import { UserPlan } from "../../sharedWithServer/SectionsMeta/baseSectionsVarbs";
-import { useAuthStatus } from "../../sharedWithServer/stateClassHooks/useAuthStatus";
 import {
   useGetterSection,
   useGetterSectionOnlyOne,
@@ -21,17 +20,17 @@ function BtnDiv({ children, className }: StandardProps) {
 export type NavUserMenuProps = { feId: string };
 export function NavUserMenu({ feId }: NavUserMenuProps) {
   const { logout } = useAuthAndLogin();
-  const userInfo = useGetterSection({
-    sectionName: "userInfo",
+  const userInfoNext = useGetterSection({
+    sectionName: "feUserInfo",
     feId,
   });
 
-  const subInfo = useGetterSectionOnlyOne("subscriptionInfo");
-  const subscriptionPlan = subInfo.valueNext("plan") as UserPlan;
-  const isFullPlan = subscriptionPlan === "fullPlan";
+  const subInfo = useGetterSectionOnlyOne("feUserInfo");
+  const analyzerPlan = subInfo.valueNext("analyzerPlan") as UserPlan;
+  const isFullPlan = analyzerPlan === "fullPlan";
 
-  const authStatus = useAuthStatus();
-  const userName = userInfo.value("userName", "string");
+  const authStatus = userInfoNext.valueNext("authStatus");
+  const userName = userInfoNext.value("userName", "string");
   return (
     <Styled
       {...{ $isFullPlan: isFullPlan }}

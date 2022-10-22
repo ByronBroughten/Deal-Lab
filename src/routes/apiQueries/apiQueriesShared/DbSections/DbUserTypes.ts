@@ -41,8 +41,8 @@ export const dbUserFilters = {
   },
   email(email: string) {
     const path = modelPath.firstSectionVarb({
-      storeName: "userInfo",
-      sectionName: "userInfo",
+      storeName: "basicUserInfo",
+      sectionName: "basicUserInfo",
       varbName: "email",
     });
     return { [path]: email } as const;

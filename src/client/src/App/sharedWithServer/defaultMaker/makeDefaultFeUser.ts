@@ -6,14 +6,14 @@ import { makeDefaultDealPack } from "./makeDefaultDealPack";
 import { makeExampleUserOngoingLists } from "./makeDefaultFeUser/makeExampleUserOngoingLists";
 import { makeExampleUserSingleTimeLists } from "./makeDefaultFeUser/makeExampleUserSingleTimeLists";
 import { makeExampleUserVarbLists } from "./makeDefaultFeUser/makeExampleUserVarbLists";
-import {
-  makeDefaultAuthInfo,
-  makeDefaultPublicUserInfo,
-  makeDefaultSubscriptionInfo,
-} from "./makeDefaultPublicUserInfo";
+import { makeDefaultFeUserInfo } from "./makeDefaultPublicUserInfo";
 
 export function makeDefaultFeUserPack(): SectionPack<"feUser"> {
   const feUser = PackBuilderSection.initAsOmniChild("feUser");
+  feUser.loadChild({
+    childName: "userInfoNext",
+    sectionPack: makeDefaultFeUserInfo(),
+  });
   feUser.loadChild({
     childName: "activeDeal",
     sectionPack: makeDefaultDealPack(),
@@ -30,20 +30,6 @@ export function makeDefaultFeUserPack(): SectionPack<"feUser"> {
     childName: "singleTimeListMain",
     sectionPacks: makeExampleUserSingleTimeLists(),
   });
-
-  feUser.loadChild({
-    childName: "userInfo",
-    sectionPack: makeDefaultPublicUserInfo(),
-  });
-  feUser.loadChild({
-    childName: "authInfo",
-    sectionPack: makeDefaultAuthInfo(),
-  });
-  feUser.loadChild({
-    childName: "subscriptionInfo",
-    sectionPack: makeDefaultSubscriptionInfo(),
-  });
-
   for (const storeName of feStoreNameS.arrs.displayStoreName) {
     const displayStore = feUser.addAndGetChild(storeName);
     displayStore.addChild("displayNameList");

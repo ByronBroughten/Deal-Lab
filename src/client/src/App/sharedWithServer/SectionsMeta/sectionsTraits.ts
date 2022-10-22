@@ -31,7 +31,6 @@ const checkAllSectionTraits = <AST extends GenericAllSectionTraits>(
 export type AllSectionTraits = typeof allSectionTraits;
 export const allSectionTraits = checkAllSectionTraits({
   ...defaultSectionTraits,
-  userInfo: sectionTraits({ dbIndexStoreName: "userInfo" }),
   deal: sectionTraits({
     displayName: "Deal",
     hasGlobalVarbs: true,

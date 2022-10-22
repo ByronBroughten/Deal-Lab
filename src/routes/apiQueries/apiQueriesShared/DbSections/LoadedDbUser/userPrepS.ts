@@ -60,8 +60,8 @@ export const userPrepS = {
     timeJoined,
   }: SignUpData): InitialUserSectionPackArrs {
     return {
-      userInfo: [
-        PackBuilderSection.initSectionPack("userInfo", {
+      basicUserInfo: [
+        PackBuilderSection.initSectionPack("basicUserInfo", {
           dbVarbs: {
             userName,
             email,

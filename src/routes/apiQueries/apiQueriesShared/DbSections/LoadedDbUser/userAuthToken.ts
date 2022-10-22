@@ -1,12 +1,12 @@
 import config from "config";
 import jwt from "jsonwebtoken";
 import { isObject } from "lodash";
-import { SubscriptionValues } from "../../../../../client/src/App/sharedWithServer/apiQueriesShared/SubscriptionValues";
+import { AnalyzerPlanValues } from "../../../../../client/src/App/sharedWithServer/apiQueriesShared/AnalyzerPlanValues";
 import { isUserPlan } from "../../../../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsVarbs";
 import { StrictOmit } from "../../../../../client/src/App/sharedWithServer/utils/types";
 import { ResStatusError } from "../../../../../utils/resError";
 
-export interface UserInfoJwt extends SubscriptionValues {
+export interface UserInfoJwt extends AnalyzerPlanValues {
   userId: string;
   iat: number;
 }
@@ -34,13 +34,13 @@ export function isUserJwt(value: any): value is UserInfoJwt {
 function hasTokenProps(value: any) {
   return (
     "userId" in value &&
-    "subscriptionPlan" in value &&
-    "planExp" in value &&
+    "analyzerPlan" in value &&
+    "analyzerPlanExp" in value &&
     "iat" in value &&
     typeof value.userId === "string" &&
     typeof value.iat === "number" &&
-    typeof value.planExp === "number" &&
-    isUserPlan(value.subscriptionPlan)
+    typeof value.analyzerPlanExp === "number" &&
+    isUserPlan(value.analyzerPlan)
   );
 }
 export function checkUserAuthToken(token: any): UserInfoJwt {

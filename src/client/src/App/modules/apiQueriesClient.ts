@@ -4,6 +4,7 @@ import {
   apiQueriesShared,
   ApiQuery,
 } from "../sharedWithServer/apiQueriesShared";
+import { validateSubscriptionValues } from "../sharedWithServer/apiQueriesShared/AnalyzerPlanValues";
 import {
   ApiQueryName,
   QueryRes,
@@ -13,7 +14,6 @@ import {
   isUserInfoHeaders,
 } from "../sharedWithServer/apiQueriesShared/getUserData";
 import { makeRes } from "../sharedWithServer/apiQueriesShared/makeReqAndRes";
-import { validateSubscriptionValues } from "../sharedWithServer/apiQueriesShared/SubscriptionValues";
 import { Obj } from "../sharedWithServer/utils/Obj";
 import { StrictOmit } from "../sharedWithServer/utils/types";
 import {

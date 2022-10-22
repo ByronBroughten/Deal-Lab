@@ -75,11 +75,11 @@ describe(testedRoute, () => {
     await testStatus(401);
   });
   it("should return 500 if the payload isn't for a sectionQuery dbStoreName", async () => {
-    const userInfo = PackBuilderSection.initAsOmniChild("userInfo");
+    const basicUserInfo = PackBuilderSection.initAsOmniChild("basicUserInfo");
     req = {
       body: {
-        dbStoreName: "userInfo",
-        sectionPack: userInfo.makeSectionPack(),
+        dbStoreName: "basicUserInfo",
+        sectionPack: basicUserInfo.makeSectionPack(),
       } as any,
     };
     await testStatus(500);
@@ -115,8 +115,8 @@ describe(testedRoute, () => {
     await exec();
     req = makeAddSectionReq();
     token = dbUser.createUserInfoToken({
-      subscriptionPlan: "fullPlan",
-      planExp: timeS.now() + timeS.thirtyDays,
+      analyzerPlan: "fullPlan",
+      analyzerPlanExp: timeS.now() + timeS.thirtyDays,
     });
     await testStatus(200);
   });

@@ -1,5 +1,3 @@
-// make TableActor
-
 import { makeReq } from "../../sharedWithServer/apiQueriesShared/makeReqAndRes";
 import { sectionsMeta } from "../../sharedWithServer/SectionsMeta";
 import { InEntityVarbInfo } from "../../sharedWithServer/SectionsMeta/baseSectionsVarbs/baseValues/entities";

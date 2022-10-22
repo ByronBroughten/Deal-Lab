@@ -1,13 +1,14 @@
 import { pick } from "lodash";
 import { Schema } from "mongoose";
 import { z } from "zod";
+import { Arr } from "../../../utils/Arr";
 import { zS } from "../../../utils/zod";
 import { zSectionNameProp } from "../../baseSectionsDerived/baseSectionInfo";
 import {
   DbVarbInfoMixed,
-  FeVarbInfoMixed,
   GlobalVarbInfo,
 } from "../../baseSectionsDerived/baseVarbInfo";
+import { FeVarbInfo } from "../../Info";
 import {
   PathDbVarbInfoMixed,
   PathVarbInfoMixed,
@@ -16,7 +17,7 @@ import {
 import { SectionName } from "../../SectionName";
 import { Id } from "../id";
 
-export type OutEntity = FeVarbInfoMixed & { entityId: string };
+export type OutEntity = FeVarbInfo & { entityId: string };
 
 const commonEntityInfo = {
   ...zSectionNameProp.shape,
@@ -127,20 +128,29 @@ export const entityS = {
       ...entityInfo,
     };
   },
-  outEntity(feVarbInfo: FeVarbInfoMixed, inEntity: InEntity): OutEntity {
+  outEntity(feVarbInfo: FeVarbInfo, inEntity: InEntity): OutEntity {
     return {
       ...feVarbInfo,
       ...pick(inEntity, ["entityId"]),
     };
   },
-  entitiesHas(
-    entities: (InEntity | OutEntity)[],
-    entity: InEntity | OutEntity
-  ): boolean {
-    const match = entities.find((e) => e.entityId === entity.entityId);
-    if (match) return true;
-    else return false;
+  outEntitiesHas(entities: OutEntity[], info: OutEntityInfo): boolean {
+    return Arr.has(entities, (e) => isInfoForOutEntity(e, info));
+  },
+  outEntitiesCopyRm(entities: OutEntity[], info: OutEntityInfo): OutEntity[] {
+    return entities.filter((e) => isInfoForOutEntity(e, info));
+  },
+  inEntitiesHas(entities: InEntity[], entity: InEntity): boolean {
+    return Arr.has(entities, (e) => e.entityId === entity.entityId);
   },
 } as const;
 
+function isInfoForOutEntity(outEntity: OutEntity, info: OutEntityInfo) {
+  return outEntity.entityId === info.entityId && outEntity.feId === info.feId;
+}
+
 export type EntityMapData = InEntityVarbInfo & { entityId: string };
+export interface OutEntityInfo {
+  feId: string;
+  entityId: string;
+}

@@ -1,30 +1,24 @@
-import { AuthStatus, UserPlan } from "../SectionsMeta/baseSectionsVarbs";
+import {
+  AuthStatus,
+  UserDataStatus,
+  UserPlan,
+} from "../SectionsMeta/baseSectionsVarbs";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
 import { timeS } from "../utils/date";
 
-export function makeDefaultPublicUserInfo() {
-  const userInfo = PackBuilderSection.initAsOmniChild("userInfo", {
+export function makeDefaultFeUserInfo() {
+  const analyzerPlan: UserPlan = "basicPlan";
+  const authStatus: AuthStatus = "guest";
+  const userDataStatus: UserDataStatus = "notLoaded";
+  const userInfoNext = PackBuilderSection.initAsOmniChild("feUserInfo", {
     dbVarbs: {
       email: "",
       userName: "Guest",
+      analyzerPlan,
+      analyzerPlanExp: timeS.hundredsOfYearsFromNow,
+      authStatus,
+      userDataStatus,
     },
   });
-  return userInfo.makeSectionPack();
-}
-
-export function makeDefaultSubscriptionInfo() {
-  const plan: UserPlan = "basicPlan";
-  const subscriptionInfo = PackBuilderSection.initAsOmniChild(
-    "subscriptionInfo",
-    { dbVarbs: { plan, planExp: timeS.hundredsOfYearsFromNow } }
-  );
-  return subscriptionInfo.makeSectionPack();
-}
-
-export function makeDefaultAuthInfo() {
-  const authStatus: AuthStatus = "guest";
-  const authInfo = PackBuilderSection.initAsOmniChild("authInfo", {
-    dbVarbs: { authStatus },
-  });
-  return authInfo.makeSectionPack();
+  return userInfoNext.makeSectionPack();
 }

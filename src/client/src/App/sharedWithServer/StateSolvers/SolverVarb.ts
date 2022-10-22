@@ -4,6 +4,7 @@ import {
   InEntity,
   InEntityVarbInfo,
   OutEntity,
+  OutEntityInfo,
 } from "../SectionsMeta/baseSectionsVarbs/baseValues/entities";
 import { StateValue } from "../SectionsMeta/baseSectionsVarbs/baseValues/StateValueTypes";
 import { Id } from "../SectionsMeta/baseSectionsVarbs/id";
@@ -108,6 +109,11 @@ export class SolverVarb<
     const { inEntities } = this.get;
     this.addOutEntitiesFromInEntities(inEntities);
   }
+  // Here's a possible problem:
+  // When I load a deal, I load propertyGeneral.
+  // That propertyGeneral won't necessarily have the outEntities
+  // It should.
+
   removeOutEntitiesOfCurrentInEntities() {
     const { inEntities } = this.get;
     this.removeOutEntitiesOfInEntities(inEntities);
@@ -151,7 +157,7 @@ export class SolverVarb<
   }
   private newSelfOutEntity(inEntityId: string): OutEntity {
     return {
-      ...this.get.feVarbInfoMixed,
+      ...this.get.feVarbInfo,
       entityId: inEntityId,
     };
   }
@@ -165,7 +171,14 @@ export class SolverVarb<
     for (const inEntity of inEntities) {
       if (this.hasInEntityVarb(inEntity)) {
         const inEntityVarb = this.getInEntityVarb(inEntity);
-        inEntityVarb.removeOutEntity(inEntity.entityId);
+        inEntityVarb.removeOutEntity({
+          entityId: inEntity.entityId,
+          feId: this.get.feId,
+        });
+        // I'm trying to remove outputItem.value.5Ll_JuF4YK7k.wvI3YRiQy4eT
+        // from deal.totalInvestment.k5ZrNgoTvVb9
+
+        // deal.totalInvestment.k5ZrNgoTvVb9 actually has outEntity outputItem.value.5Ll_JuF4YK7k.wvI3YRiQy4eT
       }
     }
   }
@@ -186,30 +199,35 @@ export class SolverVarb<
   private get missingEntities(): InEntity[] {
     const { initialEntities, nextEntities } = this.initialAndNextEntities;
     return initialEntities.filter(
-      (entity) => !entityS.entitiesHas(nextEntities, entity)
+      (entity) => !entityS.inEntitiesHas(nextEntities, entity)
     );
   }
   private get newEntities(): InEntity[] {
     const { initialEntities, nextEntities } = this.initialAndNextEntities;
     return nextEntities.filter(
-      (entity) => !entityS.entitiesHas(initialEntities, entity)
+      (entity) => !entityS.inEntitiesHas(initialEntities, entity)
     );
   }
-  private removeOutEntity(entityId: string): void {
-    const entity = this.get.outEntities.find(
-      (entity) => entity.entityId === entityId
-    );
-    if (!entity) {
+  private hasOutEntity(info: OutEntityInfo): boolean {
+    const { outEntities } = this.get;
+    return entityS.outEntitiesHas(outEntities, info);
+  }
+  private removeOutEntity(info: OutEntityInfo): void {
+    if (!this.hasOutEntity(info)) {
       throw new Error("Tried to remove entity, but entity not found.");
     }
-    const nextOutEntities = this.get.outEntities.filter(
-      (outEntity) => outEntity.entityId !== entityId
-    );
+    const { outEntities } = this.get;
+    const nextOutEntities = entityS.outEntitiesCopyRm(outEntities, info);
     this.updaterVarb.update({
       outEntities: nextOutEntities,
     });
   }
   private addOutEntity(outEntity: OutEntity): void {
+    if (this.hasOutEntity(outEntity)) {
+      throw new Error(
+        `${this.get.sectionDotVarbName} already has outEntity ${outEntity.sectionName}.${outEntity.varbName}.${outEntity.feId}.${outEntity.entityId}`
+      );
+    }
     const nextOutEntities = [...this.get.outEntities, outEntity];
     this.updaterVarb.update({ outEntities: nextOutEntities });
   }

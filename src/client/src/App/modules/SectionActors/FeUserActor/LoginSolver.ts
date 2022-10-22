@@ -9,7 +9,5 @@ export class LoginSolver extends SolverSectionsBase {
   setLogin(feUserPack: SectionPack<"feUser">) {
     const feUser = this.solverSections.oneAndOnly("feUser");
     feUser.loadSelfSectionPackAndSolve(feUserPack);
-    const authInfo = feUser.onlyChild("authInfo");
-    authInfo.varb("authStatus").directUpdateAndSolve("user");
   }
 }

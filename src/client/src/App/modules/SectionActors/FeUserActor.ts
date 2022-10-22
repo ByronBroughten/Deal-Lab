@@ -1,9 +1,9 @@
 import Session from "supertokens-auth-react/recipe/session";
+import { AnalyzerPlanValues } from "../../sharedWithServer/apiQueriesShared/AnalyzerPlanValues";
 import {
   guestAccessNames,
   GuestAccessSectionPackArrs,
 } from "../../sharedWithServer/apiQueriesShared/register";
-import { SubscriptionValues } from "../../sharedWithServer/apiQueriesShared/SubscriptionValues";
 import {
   AuthStatus,
   UserPlan,
@@ -52,10 +52,10 @@ export class FeUserActor extends SectionActorBase<"feUser"> {
       makeReq({})
     );
     this.loginSetter.setUserInfoToken(headers);
-    const subInfo = this.setter.onlyChild("subscriptionInfo");
+    const subInfo = this.setter.onlyChild("userInfoNext");
     subInfo.updateValues({
-      plan: data.subscriptionPlan,
-      planExp: data.planExp,
+      analyzerPlan: data.analyzerPlan,
+      analyzerPlanExp: data.analyzerPlanExp,
     });
   }
   async loadUserData(): Promise<void> {
@@ -67,15 +67,15 @@ export class FeUserActor extends SectionActorBase<"feUser"> {
     );
     this.loginSetter.setLogin(res);
   }
-  get subscriptionValues(): SubscriptionValues {
-    const subInfo = this.get.onlyChild("subscriptionInfo");
+  get subscriptionValues(): AnalyzerPlanValues {
+    const subInfo = this.get.onlyChild("userInfoNext");
     return {
-      subscriptionPlan: subInfo.valueNext("plan") as UserPlan,
-      planExp: subInfo.valueNext("planExp"),
+      analyzerPlan: subInfo.valueNext("analyzerPlan") as UserPlan,
+      analyzerPlanExp: subInfo.valueNext("analyzerPlanExp"),
     };
   }
   get userPlan(): UserPlan {
-    return this.subscriptionValues.subscriptionPlan;
+    return this.subscriptionValues.analyzerPlan;
   }
   get isPro(): boolean {
     return this.userPlan === "fullPlan";
@@ -90,8 +90,8 @@ export class FeUserActor extends SectionActorBase<"feUser"> {
     return auth.isToken;
   }
   get authStatus() {
-    const authInfo = this.get.onlyChild("authInfo");
-    return authInfo.value("authStatus", "string") as AuthStatus;
+    const userInfo = this.get.onlyChild("userInfoNext");
+    return userInfo.valueNext("authStatus") as AuthStatus;
   }
   get isGuest() {
     return this.authStatus === "guest";

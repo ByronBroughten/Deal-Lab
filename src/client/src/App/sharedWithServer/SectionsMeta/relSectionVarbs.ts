@@ -1,5 +1,5 @@
 import { timeS } from "../utils/date";
-import { UserPlan } from "./baseSectionsVarbs";
+import { AuthStatus, UserPlan } from "./baseSectionsVarbs";
 import { numObj } from "./baseSectionsVarbs/baseValues/NumObj";
 import { savableSectionVarbNames } from "./baseSectionsVarbs/specialVarbNames";
 import { relVarbInfoS } from "./childSectionsDerived/RelVarbInfo";
@@ -43,17 +43,20 @@ const defaults = sectionNames.reduce((basicRelSections, sectionName) => {
 export function makeRelSections() {
   return relSectionsFilter({
     ...defaults,
-    ...relSectionProp("authInfo", {
+    ...relSectionProp("feUserInfo", {
       authStatus: relVarb("string", {
-        initValue: "user",
+        initValue: "guest" as AuthStatus,
       }),
-    }),
-    ...relSectionProp("subscriptionInfo", {
-      plan: relVarb("string", {
+      analyzerPlan: relVarb("string", {
         displayName: "Api Access Status",
         initValue: "basicPlan" as UserPlan,
       }),
-      planExp: relVarb("number", { initValue: timeS.hundredsOfYearsFromNow }),
+      analyzerPlanExp: relVarb("number", {
+        initValue: timeS.hundredsOfYearsFromNow,
+      }),
+      userDataStatus: relVarb("string", {
+        initValue: "notLoaded",
+      }),
     }),
     ...relSectionProp("userInfoPrivate", {
       guestSectionsAreLoaded: relVarb("boolean", { initValue: false }),

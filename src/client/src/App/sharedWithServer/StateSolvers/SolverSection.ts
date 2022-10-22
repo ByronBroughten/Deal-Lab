@@ -59,7 +59,9 @@ export class SolverSection<
   get builder(): PackBuilderSection<SN> {
     return new PackBuilderSection(this.getterSectionProps);
   }
-  private solverSections = new SolverSections(this.solverSectionsProps);
+  private get solverSections() {
+    return new SolverSections(this.solverSectionsProps);
+  }
   private get updater() {
     return new UpdaterSection(this.getterSectionProps);
   }
@@ -187,6 +189,13 @@ export class SolverSection<
   ): void {
     this.adder.addChildAndFinalize(childName, options);
     this.solve();
+  }
+  addAndGetChild<CN extends ChildName<SN>>(
+    childName: CN,
+    options?: AddChildOptions<SN, CN>
+  ): SolverSection<ChildSectionName<SN, CN>> {
+    this.addChildAndSolve(childName, options);
+    return this.solverSection(this.get.youngestChild(childName).feInfo);
   }
   loadChildAndSolve<CN extends ChildName<SN>>(
     childPackInfo: ChildPackInfo<SN, CN>

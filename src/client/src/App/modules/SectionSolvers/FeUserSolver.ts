@@ -1,6 +1,5 @@
+import { AnalyzerPlanValues } from "../../sharedWithServer/apiQueriesShared/AnalyzerPlanValues";
 import { defaultMaker } from "../../sharedWithServer/defaultMaker/defaultMaker";
-import { SectionValues } from "../../sharedWithServer/SectionsMeta/baseSectionsDerived/valueMetaTypes";
-import { UserPlan } from "../../sharedWithServer/SectionsMeta/baseSectionsVarbs";
 import { ChildSectionName } from "../../sharedWithServer/SectionsMeta/childSectionsDerived/ChildSectionName";
 import { SectionPack } from "../../sharedWithServer/SectionsMeta/childSectionsDerived/SectionPack";
 import { FeSectionInfo } from "../../sharedWithServer/SectionsMeta/Info";
@@ -35,13 +34,15 @@ export class FeUserSolver extends SolverSectionBase<"feUser"> {
       ...feUser.getterSectionProps,
     });
   }
-  loadSubscriptionInfo(props: { plan: UserPlan; planExp: number }): void {
-    const subInfoValues: SectionValues<"subscriptionInfo"> = {
-      _typeUniformity: "",
-      ...props,
-    };
-    const subInfo = this.packBuilder.onlyChild("subscriptionInfo");
-    subInfo.updater.updateValues(subInfoValues);
+  loadSubscriptionInfo({
+    analyzerPlan,
+    analyzerPlanExp,
+  }: AnalyzerPlanValues): void {
+    const subInfo = this.packBuilder.onlyChild("userInfoNext");
+    subInfo.updater.updateValues({
+      analyzerPlan,
+      analyzerPlanExp,
+    });
   }
   loadDisplayStoreList<
     SN extends FeStoreNameByType<"displayStoreName">,

@@ -184,6 +184,9 @@ export class GetterSection<
             `sectionName ${sectionName} does not equal piblingSectionName ${piblingSectionName}`
           );
       }
+      // stored mgmt references propertyGeneral as a pibling, but propertyGeneral
+      // there is no propertyGeneral to solve from
+      // I have to bypass outEntities for those stores.
       case "stepSiblingOfHasChildName": {
         const { selfChildName, stepSiblingSectionName } = info;
         if (this.selfChildName === selfChildName) {

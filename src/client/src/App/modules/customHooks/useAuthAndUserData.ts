@@ -36,8 +36,8 @@ function useUpdateOnSubscribe() {
 function useUpdateOnExpire() {
   const feUser = useFeUser();
   React.useEffect(() => {
-    const { planExp } = feUser.subscriptionValues;
-    if (planExp < timeS.now()) {
+    const { analyzerPlanExp } = feUser.subscriptionValues;
+    if (analyzerPlanExp < timeS.now()) {
       feUser.updateSubscriptionData();
     }
   });

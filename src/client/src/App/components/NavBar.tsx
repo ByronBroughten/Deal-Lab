@@ -4,7 +4,7 @@ import React from "react";
 import { AiOutlineYoutube } from "react-icons/ai";
 import { BsArrowUpCircle, BsFillHouseDoorFill } from "react-icons/bs";
 import { VscFeedback } from "react-icons/vsc";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { constants } from "../Constants";
 import { useFeUser } from "../modules/sectionActorHooks/useFeUser";
@@ -19,9 +19,7 @@ export function NavBar() {
   const feUser = useFeUser();
 
   const { isBasic, isGuest } = feUser;
-  const userInfo = feUser.get.onlyChild("userInfo");
-
-  const { pathname } = useLocation();
+  const userInfoNext = feUser.get.onlyChild("userInfoNext");
   const showSignin = isGuest; // && !pathname.includes("/auth");
 
   const appTitle = "Ultimate Property Analyzer" + (constants.isBeta ? "" : ""); // BETA
@@ -30,7 +28,7 @@ export function NavBar() {
     <Styled className="NavBar-root">
       <Toolbar disableGutters={true}>
         <div className="NavBar-leftSide">
-          <NavUserMenu feId={userInfo.feId} />
+          <NavUserMenu feId={userInfoNext.feId} />
           <Link className="NavBar-navBtnLink" to="/">
             <NavBtn
               className="NavBar-brandBtn"

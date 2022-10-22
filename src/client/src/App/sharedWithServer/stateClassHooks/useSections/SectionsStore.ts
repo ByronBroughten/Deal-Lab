@@ -7,7 +7,6 @@ import { feStoreNameS } from "../../SectionsMeta/relSectionsDerived/relNameArrs/
 import { relSections } from "../../SectionsMeta/relSectionVarbs";
 import { GetterSections } from "../../StateGetters/GetterSections";
 import { PackBuilderSection } from "../../StatePackers.ts/PackBuilderSection";
-import { PackMakerSection } from "../../StatePackers.ts/PackMakerSection";
 import { StateSections } from "../../StateSections/StateSections";
 import { SolverSections } from "../../StateSolvers/SolverSections";
 
@@ -32,34 +31,20 @@ const { tokenKey } = config;
 export class SectionsStore {
   static storeSections(sections: StateSections): void {
     const getterSections = new GetterSections({ sectionsShare: { sections } });
-    const { mainFeInfo } = getterSections;
-
-    const sectionPackMaker = new PackMakerSection({
+    const { feUser } = getterSections;
+    const packBuilder = new PackBuilderSection({
       sectionsShare: { sections },
-      ...mainFeInfo,
+      ...feUser.feInfo,
     });
-
-    const mainSectionPack = sectionPackMaker.makeSectionPack();
-    this.setSectionsInStore(mainSectionPack);
+    packBuilder.removeChildrenArrs(feStoreNameS.arrs.mainStoreName);
+    const feUserPack = packBuilder.makeSectionPack();
+    this.setSectionsInStore(feUserPack);
   }
-
   static getStoredSections(): StateSections {
     this.rmStoredStateIfPreframesChanged();
     const storedState = this.getSectionsFromStore();
-
-    const mainBuilder = PackBuilderSection.loadAsOmniChild(storedState);
-    const feUserBuilder = mainBuilder.onlyChild("feUser");
-    const mainStoreNames = feStoreNameS.arrs.mainStoreName;
-    const mainStorePackArrs =
-      feUserBuilder.maker.makeChildPackArrs(mainStoreNames);
-    feUserBuilder.updater.removeAllChildrenInArrs(mainStoreNames);
-
-    const mainSolver = SolverSections.initSolverFromMainPack(
-      mainBuilder.makeSectionPack()
-    );
-    const feUserSolver = mainSolver.onlyChild("feUser");
-    feUserSolver.builder.replaceChildArrs(mainStorePackArrs);
-    return mainSolver.sectionsShare.sections;
+    const feUser = SolverSections.initFromFeUserPack(storedState);
+    return feUser.sectionsShare.sections;
   }
   private static setSectionsInStore(mainSectionPack: StoredSectionsState) {
     localStorage.setItem(
@@ -93,5 +78,5 @@ export class SectionsStore {
   }
 }
 
-type StoredSectionsState = SectionPack<"main">;
+type StoredSectionsState = SectionPack<"feUser">;
 export class StateMissingFromStorageError extends Error {}

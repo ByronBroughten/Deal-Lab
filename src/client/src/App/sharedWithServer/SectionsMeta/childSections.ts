@@ -44,9 +44,7 @@ export const childSections = checkChildSections({
     // feUser includes everything that has a corresponding child in dbStore
     // or that has any intermediary sections used to edit and add to them.
     activeDeal: ["deal"],
-    authInfo: ["authInfo"],
-    subscriptionInfo: ["subscriptionInfo"],
-    userInfo: ["userInfo"],
+    userInfoNext: ["feUserInfo"],
     propertyMainTable: ["compareTable"],
     loanMainTable: ["compareTable"],
     mgmtMainTable: ["compareTable"],
@@ -63,7 +61,7 @@ export const childSections = checkChildSections({
   }),
   dbStore: childrenSections({
     authInfoPrivate: ["authInfoPrivate"],
-    userInfo: ["userInfo"],
+    basicUserInfo: ["basicUserInfo"],
 
     userInfoPrivate: ["userInfoPrivate"],
 

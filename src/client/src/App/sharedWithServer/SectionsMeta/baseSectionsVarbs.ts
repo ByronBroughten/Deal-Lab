@@ -211,26 +211,30 @@ export const baseSectionsVarbs = checkBaseSectionsVarbs({
     ...baseVarbsS.ongoing("roiDecimal"),
     ...baseVarbsS.ongoing("roi"),
   }),
+
+  feUserInfo: baseSectionVarbs({
+    ...baseVarbs("string", [
+      "authStatus",
+      "userDataStatus",
+      "analyzerPlan",
+      "email",
+      "userName",
+    ] as const),
+    analyzerPlanExp: "number",
+  }),
+
+  basicUserInfo: baseSectionVarbs({
+    ...baseVarbs("string", ["email", "userName"] as const),
+    timeJoined: "number",
+  }),
   stripeSubscription: baseSectionVarbs({
     subId: "string",
     status: "string",
     priceIds: "stringArray",
     currentPeriodEnd: "number",
   }),
-  subscriptionInfo: baseSectionVarbs({
-    plan: "string",
-    planExp: "number",
-  }),
-
-  authInfo: baseSectionVarbs({
-    authStatus: "string",
-  }),
   authInfoPrivate: baseSectionVarbs({
     authId: "string",
-  }),
-  userInfo: baseSectionVarbs({
-    ...baseVarbs("string", ["email", "userName"] as const),
-    timeJoined: "number",
   }),
   stripeInfoPrivate: baseSectionVarbs({
     customerId: "string",
@@ -249,3 +253,6 @@ export function isUserPlan(value: any): value is UserPlan {
 
 const authStatuses = ["guest", "user"] as const;
 export type AuthStatus = typeof authStatuses[number];
+
+const userDataStatuses = ["notLoaded", "loading", "loaded"] as const;
+export type UserDataStatus = typeof userDataStatuses[number];
