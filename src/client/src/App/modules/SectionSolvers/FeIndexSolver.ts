@@ -87,7 +87,9 @@ export class FeIndexSolver<
     }
   }
   removeAsSavedExtras(loadedDbIds: string[]) {
-    this.displayIndexBuilder.removeAsSavedExtras(loadedDbIds);
+    if (this.hasFeDisplayIndex) {
+      this.displayIndexBuilder.removeAsSavedExtras(loadedDbIds);
+    }
   }
   deleteFromIndex(dbId: string) {
     this.fullIndexSolver.removeItem(dbId);

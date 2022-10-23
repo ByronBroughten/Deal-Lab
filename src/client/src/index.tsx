@@ -7,30 +7,8 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-
-// - When restoring state, set userDataStatus to loading
-
-// - Right now loadUserData takes guestAccessSections. I can
-//   instead make those optional.
-
-// - Remove the mainStores on logout without triggering the outVarb stuff.
-
-// - Also attempt to load stores if logged in and userDataLoadStatus is notLoaded
-
-// -  in certain cases it switches to loading. That's what triggers the query
-// -  if the load fails, the user should be logged out
-// -  loaded, you know
-
-// - getUserData shouldn't return a whole feUser. It should return
-//   targeted, important aspects of feUser that ought to be synchronized with the
-//   db often
-
-// - Get the mainStores separately with getUserData (feUser + mainStoreArrs)
-// - Always load the mainStores with makeOutInfos turned off
-// - Always add to the mainStores (isMainStoreName) with makeOutInfos turned off
-
-// - Indicate on the state from localStorage that the stores, and most other user data,
-//   should be loaded from the db
+// Record the code walkthrough with the properties
+// and everything you have entered.
 
 // If I'm going to make tables faster and increase functionality, here's how:
 // There are going to be example properties, loans, and mgmts.
@@ -55,6 +33,8 @@ AppRegistry.runApplication("App", {
 //    - this could be in the Setter or Solver layer
 
 // Before Marketing
+// - When loading user data, make it say loading in the top right
+// - Fix the speed problem with having too many list items.
 // - Fix the mgmt inputs so that loding a management works properly with sync
 // - In the load menu, highlight the one that is loaded with green or purple
 // - Switch useState to useReducer
