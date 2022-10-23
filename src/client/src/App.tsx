@@ -9,6 +9,7 @@ import { SuperTokensWrapper } from "supertokens-auth-react";
 import { initSupertokens } from "./App/modules/initSupertokens";
 import {
   SectionsContext,
+  SectionsDispatchContext,
   useSections,
 } from "./App/sharedWithServer/stateClassHooks/useSections";
 import GlobalStyle from "./App/theme/globalStyles";
@@ -19,7 +20,9 @@ initSupertokens();
 ReactGA.initialize("G-19TRW4YTJL");
 ReactGA.send("pageview");
 const App: React.FC = () => {
-  const sectionsContext = useSections({ storeSectionsLocally: true });
+  const { sectionsDispatch, ...sectionsContext } = useSections({
+    storeSectionsLocally: true,
+  });
   return (
     <SuperTokensWrapper>
       <React.StrictMode>
@@ -28,9 +31,11 @@ const App: React.FC = () => {
           <Theme>
             <BrowserRouter>
               <SectionsContext.Provider value={sectionsContext}>
-                <GlobalStyle />
-                <Main />
-                <ToastContainer />
+                <SectionsDispatchContext.Provider value={sectionsDispatch}>
+                  <GlobalStyle />
+                  <Main />
+                  <ToastContainer />
+                </SectionsDispatchContext.Provider>
               </SectionsContext.Provider>
             </BrowserRouter>
           </Theme>

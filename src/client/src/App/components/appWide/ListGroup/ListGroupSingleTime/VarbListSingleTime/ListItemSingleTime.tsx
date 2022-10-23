@@ -1,27 +1,49 @@
 import React from "react";
-import LabeledEquation from "../../ListGroupShared/ListItemValue/LabeledEquation";
+import { useGetterVarb } from "../../../../../sharedWithServer/stateClassHooks/useGetterVarb";
+import { LabeledEquation } from "../../ListGroupShared/ListItemValue/LabeledEquation";
 import { LoadedVarbEditor } from "../../ListGroupShared/ListItemValue/LoadedVarbEditor";
-import { VarbListItemGeneric } from "../../ListGroupShared/VarbListItemGeneric";
+import { useOption } from "../../ListGroupShared/useOption";
+import { VarbListItemGenericNext } from "../../ListGroupShared/VarbListItemGenericNext";
 
-export function ListItemSingleTime({ feId }: { feId: string }) {
+type MemoProps = { feId: string; valueSwitch: string };
+const ListItemSingleTimeMemo = React.memo(function ListItemSingleTimeMemo({
+  feId,
+  valueSwitch,
+}: MemoProps) {
   const feInfo = { sectionName: "singleTimeItem", feId } as const;
+  const { option, nextValueSwitch } = useOption(
+    {
+      labeledEquation: () => <LabeledEquation {...feInfo} key={feId} />,
+      loadedVarb: () => (
+        <LoadedVarbEditor
+          {...{
+            feInfo,
+            valueVarbName: "value",
+            key: feId,
+          }}
+        />
+      ),
+    },
+    valueSwitch
+  );
   return (
-    <VarbListItemGeneric
+    <VarbListItemGenericNext
       {...{
-        feInfo,
-        switchOptions: {
-          labeledEquation: () => <LabeledEquation {...{ feInfo, key: feId }} />,
-          loadedVarb: () => (
-            <LoadedVarbEditor
-              {...{
-                feInfo,
-                valueVarbName: "value",
-                key: feId,
-              }}
-            />
-          ),
-        },
+        ...feInfo,
+        nextValueSwitch,
+        firstCells: option(),
       }}
     />
+  );
+});
+
+export function ListItemSingleTime({ feId }: { feId: string }) {
+  const varb = useGetterVarb({
+    feId,
+    sectionName: "singleTimeItem",
+    varbName: "valueSwitch",
+  });
+  return (
+    <ListItemSingleTimeMemo {...{ feId, valueSwitch: varb.value("string") }} />
   );
 }

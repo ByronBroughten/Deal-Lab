@@ -69,8 +69,8 @@ export function VarbListGeneric<SN extends VarbListAllowed>({
   const listGet = list.get;
 
   const listMenuProps = {
+    ...listGet.feInfo,
     viewIsOpen,
-    feInfo: listGet.feInfo,
     themeName,
     toggleListView: trackWidthToggleView,
   };

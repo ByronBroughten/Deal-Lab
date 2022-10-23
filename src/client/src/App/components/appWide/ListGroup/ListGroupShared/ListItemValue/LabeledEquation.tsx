@@ -1,30 +1,35 @@
 import { FeInfoByType } from "../../../../../sharedWithServer/SectionsMeta/Info";
-import { useGetterSection } from "../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { MaterialStringEditor } from "../../../../inputs/MaterialStringEditor";
 import { NumObjEntityEditor } from "../../../../inputs/NumObjEntityEditor";
 
-type Props = {
-  feInfo: FeInfoByType<"varbListItem">;
+interface Props extends FeInfoByType<"varbListItem"> {
   endAdornment?: string;
   doEquals?: boolean;
-};
-export default function LabeledEquation({
-  feInfo,
+}
+export function LabeledEquation({
+  sectionName,
+  feId,
   endAdornment,
   doEquals,
 }: Props) {
-  const section = useGetterSection(feInfo);
+  const feInfo = { sectionName, feId };
   return (
     <>
       <td className="AdditiveItem-nameCell">
         <MaterialStringEditor
-          feVarbInfo={section.varbInfo("displayNameEditor")}
+          {...{
+            ...feInfo,
+            varbName: "displayNameEditor",
+          }}
         />
       </td>
       <td className="AdditiveItem-contentCell">
         <div className="AdditiveItem-contentCellDiv">
           <NumObjEntityEditor
-            feVarbInfo={section.varbInfo("numObjEditor")}
+            feVarbInfo={{
+              ...feInfo,
+              varbName: "numObjEditor",
+            }}
             className="cost"
             labeled={false}
             endAdornment={endAdornment}

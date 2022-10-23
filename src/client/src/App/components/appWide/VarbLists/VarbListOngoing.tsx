@@ -4,7 +4,7 @@ import {
   VarbListGeneric,
   VarbListGenericMenuType,
 } from "../ListGroup/ListGroupShared/VarbListGeneric";
-import { OngoingListItem } from "./VarbListOngoing/OngoingListItem";
+import { ListItemOngoing } from "./VarbListOngoing/ListItemOngoing";
 
 type Props = {
   feId: string;
@@ -30,7 +30,7 @@ export function VarbListOngoing({ feId, ...rest }: Props) {
           valueOngoingSwitch: defaultOngoingSwitch,
         },
         makeItemNode: ({ feId }) => (
-          <OngoingListItem {...{ feId, key: feId }} />
+          <ListItemOngoing {...{ feId, key: feId }} />
         ),
       }}
     />

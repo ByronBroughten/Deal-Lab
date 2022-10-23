@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useGetterVarb } from "../../../../sharedWithServer/stateClassHooks/useGetterVarb";
-import LabeledEquation from "../../ListGroup/ListGroupShared/ListItemValue/LabeledEquation";
+import { LabeledEquation } from "../../ListGroup/ListGroupShared/ListItemValue/LabeledEquation";
 import { LoadedVarbEditor } from "../../ListGroup/ListGroupShared/ListItemValue/LoadedVarbEditor";
 import { VarbListItemGeneric } from "../../ListGroup/ListGroupShared/VarbListItemGeneric";
 
@@ -20,7 +20,9 @@ export function OutputItem({ feId }: Props) {
         feInfo,
         switchOptions: {
           labeledEquation: () => (
-            <LabeledEquation {...{ feInfo, doEquals: varb.isPureUserVarb }} />
+            <LabeledEquation
+              {...{ ...feInfo, doEquals: varb.isPureUserVarb }}
+            />
           ),
           loadedVarb: () => (
             <LoadedVarbEditor

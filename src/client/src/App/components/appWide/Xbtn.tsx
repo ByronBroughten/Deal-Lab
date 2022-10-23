@@ -7,11 +7,8 @@ import ccs from "../../theme/cssChunks";
 import theme from "../../theme/Theme";
 import { StandardBtnProps } from "../general/StandardProps";
 
-export default function XBtn({
-  children,
-  className,
-  ...rest
-}: StandardBtnProps) {
+export function XBtn({ children, className, ...rest }: StandardBtnProps) {
+  console.log(`XBtn ${className}`);
   return (
     <Styled
       {...{

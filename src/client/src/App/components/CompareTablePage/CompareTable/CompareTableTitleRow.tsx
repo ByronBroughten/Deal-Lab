@@ -13,7 +13,7 @@ export function CompareTableTitleRow(props: Props) {
         <MaterialStringEditor
           label="Filter by title"
           className="CompareTable-filterEditor CompareTable-controlRowItem"
-          feVarbInfo={table.get.varbInfo("titleFilter")}
+          {...table.get.varbInfo("titleFilter")}
         />
         {/* <VarbAutoComplete
           onSelect={(o: VariableOption) => table.addColumn(o.varbInfo)}

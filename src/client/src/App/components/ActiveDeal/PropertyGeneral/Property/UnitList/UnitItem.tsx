@@ -3,18 +3,19 @@ import styled from "styled-components";
 import { useSetterSection } from "../../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import ccs from "../../../../../theme/cssChunks";
 import theme from "../../../../../theme/Theme";
-import XBtn from "../../../../appWide/Xbtn";
+import { RemoveSectionXBtn } from "../../../../appWide/RemoveSectionXBtn";
 import { NumObjEntityEditor } from "../../../../inputs/NumObjEntityEditor";
 
 type Props = { feId: string; unitNumber: number };
 export function UnitItem({ feId, unitNumber }: Props) {
-  const unit = useSetterSection({ sectionName: "unit", feId });
+  const feInfo = { sectionName: "unit", feId } as const;
+  const unit = useSetterSection(feInfo);
   return (
     <Styled className="UnitItem-root" key={feId}>
       <div className="UnitItem-viewable">
         <div className="UnitItem-titleRow">
           <div className="UnitItem-titleText">Unit {unitNumber}</div>
-          <XBtn className="UnitItem-xBtn" onClick={() => unit.removeSelf()} />
+          <RemoveSectionXBtn className="UnitItem-xBtn" {...feInfo} />
         </div>
         <NumObjEntityEditor
           className="brs"

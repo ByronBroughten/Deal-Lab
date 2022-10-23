@@ -4,16 +4,17 @@ import { useSetterSection } from "../../../../sharedWithServer/stateClassHooks/u
 import { Arr } from "../../../../sharedWithServer/utils/Arr";
 import theme from "../../../../theme/Theme";
 import { NextBtn } from "../../NextBtn";
-import XBtn from "../../Xbtn";
+import { RemoveSectionXBtn } from "../../RemoveSectionXBtn";
 
 interface Props {
   feInfo: FeInfoByType<"varbListItem">;
   switchOptions: Record<string, () => any>;
   className?: string;
 }
+
 export function VarbListItemGeneric({ feInfo, switchOptions, ...rest }: Props) {
-  const virtualVarb = useSetterSection(feInfo);
-  const switchVarb = virtualVarb.varb("valueSwitch");
+  const varbItem = useSetterSection(feInfo);
+  const switchVarb = varbItem.varb("valueSwitch");
   const switchValue = switchVarb.value("string");
   const switchValues = Object.keys(switchOptions);
   if (!switchValues.includes(switchValue)) {
@@ -25,6 +26,7 @@ export function VarbListItemGeneric({ feInfo, switchOptions, ...rest }: Props) {
     const nextSwitchValue = Arr.nextRotatingValue(switchValues, switchValue);
     switchVarb.updateValue(nextSwitchValue);
   }
+
   return (
     <Styled {...rest}>
       {switchOptions[switchValue]()}
@@ -32,9 +34,11 @@ export function VarbListItemGeneric({ feInfo, switchOptions, ...rest }: Props) {
         <NextBtn className="AdditiveItem-nextBtn" onClick={toggleValueSwitch} />
       </td>
       <td className="AdditiveItem-buttonCell AdditiveList-buttonCell">
-        <XBtn
+        <RemoveSectionXBtn
           className="AdditiveItem-xBtn"
-          onClick={() => virtualVarb.removeSelf()}
+          {...{
+            ...feInfo,
+          }}
         />
       </td>
     </Styled>

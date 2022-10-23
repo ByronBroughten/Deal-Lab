@@ -1,11 +1,10 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import useToggleView from "../../../../modules/customHooks/useToggleView";
-import { useMainSectionActor } from "../../../../modules/sectionActorHooks/useMainSectionActor";
 import { SectionNameByType } from "../../../../sharedWithServer/SectionsMeta/SectionNameByType";
 import { useAuthStatus } from "../../../../sharedWithServer/stateClassHooks/useAuthStatus";
 import theme from "../../../../theme/Theme";
-import XBtn from "../../Xbtn";
+import { RemoveSectionXBtn } from "../../RemoveSectionXBtn";
 import { MainSectionMenus } from "./MainSectionTitleRow/MainSectionMenus";
 import { MainSectionTitleRowTitle } from "./MainSectionTitleRow/MainSectionTitleRowTitle";
 
@@ -23,7 +22,6 @@ export function MainSectionTitleRow({
   dropTop = false,
   ...feInfo
 }: Props) {
-  const mainSection = useMainSectionActor(feInfo);
   const authStatus = useAuthStatus();
   const { btnMenuIsOpen } = useToggleView({
     initValue: false,
@@ -53,10 +51,7 @@ export function MainSectionTitleRow({
       </div>
       <div className="MainSectionTitleRow-rightSide">
         {xBtn && (
-          <XBtn
-            className="MainSectionTitleRow-xBtn"
-            onClick={() => mainSection.removeSelf()}
-          />
+          <RemoveSectionXBtn className="MainSectionTitleRow-xBtn" {...feInfo} />
         )}
       </div>
     </Styled>

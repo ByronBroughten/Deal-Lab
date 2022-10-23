@@ -7,6 +7,11 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
+// - Speed up the app
+// Go from the bottom up starting with list items
+// Implement useReducer for buttons and switches
+// Implement useMemo for the rest
+
 // Record the code walkthrough with the properties
 // and everything you have entered.
 
@@ -44,7 +49,7 @@ AppRegistry.runApplication("App", {
 // - Prevent fullStores from saving to local storage
 // - Implement "doEquals" in additive and one-time cost lists for the demo
 //   - Extrapolate the logic so it works on all four list types
-//   - There is some code in "OngoingListItem"
+//   - There is some code in "ListItemOngoing"
 // - Add an icon option to the sectionBtns
 // - Make compare and actions have an icon
 // - Maybe change load button's icons and label

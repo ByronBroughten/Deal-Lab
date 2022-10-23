@@ -1,5 +1,6 @@
 import {
-  SectionsAndSetSections,
+  SectionsAndControls,
+  SectionsValue,
   SetSections,
 } from "../../stateClassHooks/useSections";
 import { GetterSectionsBase } from "../../StateGetters/Bases/GetterSectionsBase";
@@ -32,7 +33,7 @@ export class SetterSectionsBase {
   static initProps({
     sections,
     setSections,
-  }: SectionsAndSetSections): SetterSectionsProps {
+  }: SectionsValue): SetterSectionsProps {
     return {
       ...SolverSectionsBase.initProps({ sections }),
       setSectionsShare: { setSections },
@@ -59,7 +60,7 @@ export class SetterSectionsBase {
   get getterSectionsBase() {
     return new GetterSectionsBase(this.solverSectionsBase.solverSectionsProps);
   }
-  updateSetterProps({ sections, setSections }: SectionsAndSetSections): void {
+  updateSetterProps({ sections, setSections }: SectionsAndControls): void {
     this.getterSectionsBase.updateSections(sections);
     this.initialSectionsShare.sections = sections;
     this.setSectionsShare.setSections = setSections;

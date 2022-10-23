@@ -1,5 +1,5 @@
 import { SectionNameByType } from "../../sharedWithServer/SectionsMeta/SectionNameByType";
-import { SectionsAndSetSections } from "../../sharedWithServer/stateClassHooks/useSections";
+import { SectionsAndControls } from "../../sharedWithServer/stateClassHooks/useSections";
 import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
 import {
   SetterSectionBase,
@@ -31,7 +31,7 @@ export class SectionActorBase<
       apiQueries: this.apiQueries,
     };
   }
-  updateSetterProps(props: SectionsAndSetSections): void {
+  updateSetterProps(props: SectionsAndControls): void {
     this.setterSectionBase.updateSetterProps(props);
   }
 }

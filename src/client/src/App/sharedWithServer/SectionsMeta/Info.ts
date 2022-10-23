@@ -41,7 +41,7 @@ export interface FeVarbInfo<
 > extends FeSectionInfo<SN>,
     VarbProp {}
 
-export interface FeVarbInfoNext<SN extends SectionName>
+export interface FeVarbInfoNext<SN extends SectionName = SectionName>
   extends FeSectionInfo<SN>,
     VarbPropNext<SN> {}
 

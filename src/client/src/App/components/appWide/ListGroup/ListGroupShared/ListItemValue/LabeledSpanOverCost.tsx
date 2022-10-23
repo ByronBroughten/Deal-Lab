@@ -1,37 +1,48 @@
 import styled from "styled-components";
 import { FeSectionInfo } from "../../../../../sharedWithServer/SectionsMeta/Info";
-import { useGetterSection } from "../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import theme from "../../../../../theme/Theme";
 import { MaterialStringEditor } from "../../../../inputs/MaterialStringEditor";
 import { NumObjEntityEditor } from "../../../../inputs/NumObjEntityEditor";
 
-type Props = { feInfo: FeSectionInfo<"ongoingItem">; valueVarbName: string };
+interface Props extends FeSectionInfo<"ongoingItem"> {
+  displayValueVarb: string;
+  lifespanVarbName: string;
+}
 
-export default function LabeledSpanOverCost({ valueVarbName, feInfo }: Props) {
-  const section = useGetterSection(feInfo);
-  const valueVarb = section.varb(valueVarbName);
-  const lifespanName = section.switchVarb("lifespan", "monthsYears")
-    .varbName as "lifespanMonths" | "lifespanYears";
+export function LabeledSpanOverCost({
+  sectionName,
+  feId,
+  lifespanVarbName,
+  displayValueVarb,
+}: Props) {
+  console.log("LabeledSpanOverCost");
+  const feInfo = { sectionName, feId };
   return (
     <>
       <td className="AdditiveItem-nameCell">
         <MaterialStringEditor
-          feVarbInfo={section.varbInfo("displayNameEditor")}
+          {...{ ...feInfo, varbName: "displayNameEditor" }}
         />
       </td>
       <Styled className="AdditiveItem-contentCell">
         <div className="AdditiveItem-contentCellDiv">
           <NumObjEntityEditor
-            feVarbInfo={section.varbInfo("costToReplace")}
+            feVarbInfo={{
+              ...feInfo,
+              varbName: "costToReplace",
+            }}
             labeled={false}
           />
           <span className="LabeledSpanOverCost-over">/</span>
           <NumObjEntityEditor
-            feVarbInfo={section.varbInfo(lifespanName)}
+            feVarbInfo={{
+              ...feInfo,
+              varbName: lifespanVarbName,
+            }}
             className="lifespan"
             labeled={false}
           />
-          <span className="LabeledSpanOverCost-equals">{`= ${valueVarb.displayVarb()}`}</span>
+          <span className="LabeledSpanOverCost-equals">{`= ${displayValueVarb}`}</span>
         </div>
       </Styled>
     </>

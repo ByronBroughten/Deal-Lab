@@ -1,20 +1,16 @@
 import { FiMaximize2, FiMinimize2 } from "react-icons/fi";
 import styled from "styled-components";
+import { FeSectionInfo } from "../../../../../sharedWithServer/SectionsMeta/Info";
 import theme from "../../../../../theme/Theme";
-import XBtn from "../../../Xbtn";
+import { RemoveSectionXBtn } from "../../../RemoveSectionXBtn";
 import ListMenuBtn from "./ListMenuBtn";
 
-type Props = {
+interface Props extends FeSectionInfo {
   viewIsOpen: boolean;
-  removeSelf: () => void;
   toggleListView: () => void;
-};
+}
 
-export function ViewAndXMenu({
-  viewIsOpen,
-  toggleListView,
-  removeSelf,
-}: Props) {
+export function ViewAndXMenu({ viewIsOpen, toggleListView, ...feInfo }: Props) {
   return (
     <Styled className="ViewAndXMenu">
       <ListMenuBtn
@@ -25,7 +21,7 @@ export function ViewAndXMenu({
         {viewIsOpen && <FiMinimize2 size={15} />}
         {!viewIsOpen && <FiMaximize2 size={15} />}
       </ListMenuBtn>
-      <XBtn className="ViewAndXMenu-btn" onClick={removeSelf} />
+      <RemoveSectionXBtn className="ViewAndXMenu-btn" {...feInfo} />
     </Styled>
   );
 }

@@ -34,7 +34,7 @@ export function NavBarBtns() {
       </>
     ),
     loggingInUser: () => (
-      <NavBtn className="NavBar-isLoadingBtn" text="Logging in..." />
+      <NavBtn className="NavBar-isLoadingBtn" text="Loading..." />
     ),
     loggingOutUser: () => (
       <NavBtn className="NavBar-isLoadingBtn" text="Logging out..." />

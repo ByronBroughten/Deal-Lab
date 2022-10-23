@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { FeInfoByType } from "../../../../sharedWithServer/SectionsMeta/Info";
-import { useSetterSection } from "../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import theme, { ThemeName } from "../../../../theme/Theme";
 import {
   MainSectionMenuOptions,
@@ -8,23 +7,28 @@ import {
 } from "../../GeneralSection/MainSection/MainSectionTitleRow/MainSectionMenus";
 import { ViewAndXMenu } from "./ListMenuSimple/ViewAndXMenu";
 
-export interface ListMenuGenericProps extends MainSectionMenuOptions {
+export interface ListMenuGenericProps
+  extends MainSectionMenuOptions,
+    FeInfoByType<"hasFullIndex"> {
   className?: string;
   themeName: ThemeName;
   toggleListView: () => void;
   viewIsOpen: boolean;
-  feInfo: FeInfoByType<"hasFullIndex">;
 }
 
 export function ListMenuGeneric({
-  feInfo,
   className,
   themeName,
   toggleListView,
   viewIsOpen,
+  sectionName,
+  feId,
   ...rest
 }: ListMenuGenericProps) {
-  const section = useSetterSection(feInfo);
+  const feInfo = {
+    sectionName,
+    feId,
+  };
   return (
     <Styled
       {...{
@@ -42,7 +46,7 @@ export function ListMenuGeneric({
         />
         <ViewAndXMenu
           {...{
-            removeSelf: () => section.removeSelf(),
+            ...feInfo,
             viewIsOpen,
             toggleListView,
           }}

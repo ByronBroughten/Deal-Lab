@@ -3,16 +3,15 @@ import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/Info";
 import MaterialDraftEditor from "./MaterialDraftEditor";
 import { useDraftInput } from "./useDraftInput";
 
-export interface StringEditorProps {
-  feVarbInfo: FeVarbInfo;
+interface StringEditorProps extends FeVarbInfo {
   className?: string;
   label?: string;
 }
 
 export function MaterialStringEditor({
-  feVarbInfo,
   className,
   label,
+  ...feVarbInfo
 }: StringEditorProps) {
   let { editorState, onChange, varb } = useDraftInput(feVarbInfo);
   return (

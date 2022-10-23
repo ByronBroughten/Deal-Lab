@@ -15,9 +15,7 @@ export default function IfThen({ feId }: Props) {
   return (
     <>
       <td className="AdditiveItem-nameCell">
-        <MaterialStringEditor
-          feVarbInfo={userVarbItem.varbInfo("displayNameEditor")}
-        />
+        <MaterialStringEditor {...userVarbItem.varbInfo("displayNameEditor")} />
       </td>
       <td className="AdditiveItem-contentCell">
         <div className="AdditiveItem-contentCellDiv">
