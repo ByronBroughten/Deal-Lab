@@ -141,22 +141,21 @@ export class PackBuilderSection<
   removeChildrenArrs<CN extends ChildName<SN>>(childNames: CN[]): void {
     this.updater.removeAllChildrenInArrs(childNames);
   }
-  loadAndGetChild<
-    CN extends ChildName<SN>,
-    CT extends ChildSectionName<SN, CN>
-  >(childPackInfo: ChildPackInfo<SN, CN, CT>): PackBuilderSection<CT> {
+  loadAndGetChild<CN extends ChildName<SN>>(
+    childPackInfo: ChildPackInfo<SN, CN>
+  ): PackBuilderSection<ChildSectionName<SN, CN>> {
     this.loadChild(childPackInfo);
     return this.youngestChild(childPackInfo.childName);
   }
-  loadChild<CN extends ChildName<SN>, CT extends ChildSectionName<SN, CN>>(
-    childPackInfo: ChildPackInfo<SN, CN, CT>
+  loadChild<CN extends ChildName<SN>>(
+    childPackInfo: ChildPackInfo<SN, CN>
   ): void {
     this.loader.loadChildSectionPack(childPackInfo);
   }
-  loadChildren<CN extends ChildName<SN>, CT extends ChildSectionName<SN, CN>>({
+  loadChildren<CN extends ChildName<SN>>({
     childName,
     sectionPacks,
-  }: ChildArrPack<SN, CN, CT>) {
+  }: ChildArrPack<SN, CN>) {
     for (const sectionPack of sectionPacks) {
       this.loadChild({
         childName,
@@ -164,14 +163,11 @@ export class PackBuilderSection<
       });
     }
   }
-  loadAndGetChildren<
-    CN extends ChildName<SN>,
-    CT extends ChildSectionName<SN, CN>
-  >({
+  loadAndGetChildren<CN extends ChildName<SN>>({
     childName,
     sectionPacks,
-  }: ChildArrPack<SN, CN, CT>): PackBuilderSection<CT>[] {
-    const children: PackBuilderSection<CT>[] = [];
+  }: ChildArrPack<SN, CN>): PackBuilderSection<ChildSectionName<SN, CN>>[] {
+    const children: PackBuilderSection<ChildSectionName<SN, CN>>[] = [];
     for (const sectionPack of sectionPacks) {
       const child = this.loadAndGetChild({
         childName,

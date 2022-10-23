@@ -2,7 +2,7 @@ import request from "supertest";
 import { constants } from "../../client/src/App/Constants";
 import { apiQueriesShared } from "../../client/src/App/sharedWithServer/apiQueriesShared";
 import { QueryReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
-import { isLoginData } from "../../client/src/App/sharedWithServer/apiQueriesShared/getUserData";
+import { validateUserData } from "../../client/src/App/sharedWithServer/apiQueriesShared/getUserData";
 import {
   guestAccessNames,
   GuestAccessSectionPackArrs,
@@ -48,7 +48,7 @@ describe(testedRoute, () => {
     const { status, data, headers } = await exec();
     expect(status).toBe(200);
     expect(headers[constants.tokenKey.userAuthData]).not.toBeUndefined();
-    isLoginData(data);
+    expect(() => validateUserData(data)).not.toThrow();
   });
   it("should return a header with the correct subscription info", async () => {
     // here, how would I insert the right subscription into the db?

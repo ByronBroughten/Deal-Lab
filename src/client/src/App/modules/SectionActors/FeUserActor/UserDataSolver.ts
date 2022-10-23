@@ -8,7 +8,7 @@ export class UserDataSolver extends SolverSectionsBase {
   }
   loadUserData(userData: UserData): void {
     const feUser = this.solverSections.oneAndOnly("feUser");
-    feUser.loadSelfSectionPackAndSolve(userData.feUser);
+    feUser.loadSelf(userData.feUser);
     feUser.builder.replaceChildArrs(userData.mainStoreArrs);
     // loading the mainStoreArrs separately lets them bypass getting outVarbs
     // and solving

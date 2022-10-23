@@ -121,7 +121,7 @@ export class SetterSection<
     return this.setterSection(feInfo);
   }
   loadSelfSectionPack(sectionPack: SectionPack<SN>): void {
-    this.solver.loadSelfSectionPackAndSolve(sectionPack);
+    this.solver.loadSelf(sectionPack);
     this.setSections();
   }
   updateValues(values: Partial<SectionValues<SN>>): void {
@@ -163,7 +163,7 @@ export class SetterSection<
     this.setSections();
   }
   loadChild(childPackInfo: ChildPackInfo<SN>) {
-    this.solver.loadChildAndSolve(childPackInfo);
+    this.solver.loadChild(childPackInfo);
     this.setSections();
   }
   removeSelf(): void {

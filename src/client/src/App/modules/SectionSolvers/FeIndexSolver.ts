@@ -7,9 +7,9 @@ import { GetterSections } from "../../sharedWithServer/StateGetters/GetterSectio
 import { PackBuilderSection } from "../../sharedWithServer/StatePackers.ts/PackBuilderSection";
 import { SolverListBase } from "../../sharedWithServer/StateSolvers/SolverBases/SolverListBase";
 import { DisplayIndexBuilder } from "./DisplayIndexBuilder";
-import { FullIndexBuilder } from "./FullIndexBuilder";
+import { FullIndexSolver } from "./FullIndexSolver";
 
-export class FeIndexBuilder<
+export class FeIndexSolver<
   SN extends SectionNameByType<"hasIndexStore">
 > extends SolverListBase<SN> {
   get hasFullIndex() {
@@ -21,17 +21,17 @@ export class FeIndexBuilder<
   get getterSections() {
     return new GetterSections(this.getterListProps);
   }
-  get fullIndexBuilder(): FullIndexBuilder<any> {
+  get fullIndexSolver(): FullIndexSolver<any> {
     if (!this.hasFullIndex) {
       throw new Error(`${this.getL.sectionName} has no full index store`);
     }
     const { feFullIndexStoreName } = this.sectionMeta;
     const feUser = this.getterSections.oneAndOnly("feUser");
-    return new FullIndexBuilder({
+    return new FullIndexSolver({
       ...this.solverSectionsProps,
       ...feUser.feInfo,
       itemName: feFullIndexStoreName,
-    }) as FullIndexBuilder<any>;
+    }) as FullIndexSolver<any>;
   }
   get displayIndexBuilder() {
     if (!this.hasFeDisplayIndex) {
@@ -50,20 +50,11 @@ export class FeIndexBuilder<
       ...store.feInfo,
     });
   }
-  get primaryIndex(): DisplayIndexBuilder<any> | FullIndexBuilder<any> {
-    if (this.hasFullIndex) {
-      return this.fullIndexBuilder;
-    } else if (this.hasFeDisplayIndex) {
-      return this.displayIndexBuilder;
-    } else {
-      throw new Error("There is no displayIndex nor fullIndex");
-    }
-  }
   isSaved(dbId: string): boolean {
-    return this.primaryIndex.hasByDbId(dbId);
+    return this.fullIndexSolver.hasByDbId(dbId);
   }
   get displayItems() {
-    return this.primaryIndex.displayItems;
+    return this.fullIndexSolver.displayItems;
   }
   addAsSavedIfMissing(sectionPack: SectionPack<SN>) {
     if (this.hasFeDisplayIndex) {
@@ -96,41 +87,23 @@ export class FeIndexBuilder<
     }
   }
   removeAsSavedExtras(loadedDbIds: string[]) {
-    if (this.hasFeDisplayIndex) {
-      this.displayIndexBuilder.removeAsSavedExtras(loadedDbIds);
-    }
+    this.displayIndexBuilder.removeAsSavedExtras(loadedDbIds);
   }
   deleteFromIndex(dbId: string) {
-    if (this.hasFeDisplayIndex) {
-      this.displayIndexBuilder.removeItem(dbId);
-    }
-    if (this.hasFullIndex) {
-      this.fullIndexBuilder.removeItem(dbId);
-    }
+    this.fullIndexSolver.removeItem(dbId);
   }
-
   addItem(sectionPack: SectionPack<SN>): void {
-    if (this.hasFeDisplayIndex) {
-      this.displayIndexBuilder.addItem(sectionPack as any);
-    }
-    if (this.hasFullIndex) {
-      this.fullIndexBuilder.addItem(sectionPack as SectionPack<any>);
-    }
+    this.fullIndexSolver.addItem(sectionPack as SectionPack<any>);
   }
   updateItem(sectionPack: SectionPack<SN>) {
-    if (this.hasFeDisplayIndex) {
-      this.displayIndexBuilder.updateItem(sectionPack as any);
-    }
-    if (this.hasFullIndex) {
-      this.fullIndexBuilder.updateItem(sectionPack as SectionPack<any>);
-    }
+    this.fullIndexSolver.updateItem(sectionPack as SectionPack<any>);
   }
   getAsSavedPack(dbId: string): SectionPack<SN> {
     if (this.hasFeDisplayIndex) {
       const asSaved = this.displayIndexBuilder.getAsSaved(dbId);
       return asSaved.makeSectionPack() as SectionPack<SN>;
     } else {
-      return this.fullIndexBuilder.getItemPack(dbId);
+      return this.fullIndexSolver.getItemPack(dbId);
     }
   }
 }

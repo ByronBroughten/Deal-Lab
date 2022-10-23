@@ -127,7 +127,7 @@ export class SolverSections extends SolverSectionsBase {
     });
     const mainSolver = solver.addAndGetChild("main");
     const activeDeal = mainSolver.onlyChild("activeDeal");
-    activeDeal.loadSelfSectionPackAndSolve(sectionPack);
+    activeDeal.loadSelf(sectionPack);
     return mainSolver;
   }
   static initFromFeUserPack(
@@ -140,7 +140,7 @@ export class SolverSections extends SolverSectionsBase {
       sectionsShare: { sections },
     });
     const mainSolver = solver.addAndGetChild("main");
-    mainSolver.loadChildAndSolve({
+    mainSolver.loadChild({
       childName: "feUser",
       sectionPack,
     });
@@ -155,7 +155,7 @@ export class SolverSections extends SolverSectionsBase {
       ...pick(rootSection, ["sectionName", "feId"]),
       sectionsShare: { sections },
     });
-    solver.loadChildAndSolve({
+    solver.loadChild({
       childName: "main",
       sectionPack,
     });

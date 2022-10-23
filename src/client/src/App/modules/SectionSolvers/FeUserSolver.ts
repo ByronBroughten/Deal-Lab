@@ -11,7 +11,7 @@ import { PackBuilderSection } from "../../sharedWithServer/StatePackers.ts/PackB
 import { SolverSectionBase } from "../../sharedWithServer/StateSolvers/SolverBases/SolverSectionBase";
 import { SolverSection } from "../../sharedWithServer/StateSolvers/SolverSection";
 import { DisplayIndexBuilder } from "./DisplayIndexBuilder";
-import { FeIndexBuilder } from "./FeIndexBuilder";
+import { FeIndexSolver } from "./FeIndexSolver";
 import { MainSectionSolver } from "./MainSectionSolver";
 
 export class FeUserSolver extends SolverSectionBase<"feUser"> {
@@ -66,8 +66,8 @@ export class FeUserSolver extends SolverSectionBase<"feUser"> {
       ...feInfo,
     });
   }
-  indexSolver<SN extends SectionNameByType<"hasIndexStore">>(sectionName: SN) {
-    return new FeIndexBuilder({
+  indexBuilder<SN extends SectionNameByType<"hasIndexStore">>(sectionName: SN) {
+    return new FeIndexSolver({
       ...this.solverSectionsProps,
       sectionName,
     });
@@ -99,8 +99,8 @@ export class FeUserSolver extends SolverSectionBase<"feUser"> {
                 getterChild.valueNext("syncStatus") ===
                 ("autoSyncOn" as AutoSyncStatus)
               ) {
-                const indexSolver = this.indexSolver(getterChild.sectionName);
-                if (indexSolver.isSaved(getterChild.dbId)) {
+                const indexBuilder = this.indexBuilder(getterChild.sectionName);
+                if (indexBuilder.isSaved(getterChild.dbId)) {
                   child.removeSelf();
                 }
               }

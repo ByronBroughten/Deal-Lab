@@ -17,10 +17,19 @@ import {
 import { SolverSection } from "../../sharedWithServer/StateSolvers/SolverSection";
 import { UpdaterSection } from "../../sharedWithServer/StateUpdaters/UpdaterSection";
 import { timeS } from "../../sharedWithServer/utils/date";
-import { FeIndexBuilder } from "./FeIndexBuilder";
+import { FeIndexSolver } from "./FeIndexSolver";
 import { FeUserSolver } from "./FeUserSolver";
+
 // using the indexBuilder rather than indexSolver works for the mainStores
-// but probably not for the listStores.
+// they should probably not solve or remove, too though
+
+// and the listStores should probably solve on updates, no?
+
+// I every time the index store will be edited, it checks whether
+// sectionName is mainStoreName or listStoreName and uses solver/builder accordingly
+// This works I suppose, as long as I unify the props and names of the
+// relevant solver/builder methods
+
 export type SaveStatus = "unsaved" | "changesSynced" | "unsyncedChanges";
 export class MainSectionSolver<
   SN extends SectionNameByType<"hasIndexStore">
@@ -57,8 +66,8 @@ export class MainSectionSolver<
   get hasFeDisplayIndex() {
     return this.get.meta.hasFeDisplayIndex;
   }
-  get feIndexBuilder(): FeIndexBuilder<SN> {
-    return new FeIndexBuilder(this.solverSectionProps);
+  get indexSolver(): FeIndexSolver<SN> {
+    return new FeIndexSolver(this.solverSectionProps);
   }
   get dbId(): string {
     return this.get.dbId;
@@ -97,10 +106,10 @@ export class MainSectionSolver<
     this.sectionUnloadCleanup();
   }
   get isSaved(): boolean {
-    return this.feIndexBuilder.isSaved(this.dbId);
+    return this.indexSolver.isSaved(this.dbId);
   }
   get displayItems() {
-    return this.feIndexBuilder.displayItems;
+    return this.indexSolver.displayItems;
   }
   makeACopy() {
     this.updater.newDbId();
@@ -116,26 +125,26 @@ export class MainSectionSolver<
   }
   loadSectionPack(sectionPack: SectionPack<SN>) {
     this.updateCaches();
-    this.solver.loadSelfSectionPackAndSolve(sectionPack);
+    this.solver.loadSelf(sectionPack);
     this.sectionUnloadCleanup();
     this.sectionLoadCleanup(sectionPack);
   }
   sectionLoadCleanup(sectionPack: SectionPack<SN>) {
-    this.feIndexBuilder.addAsSavedIfMissing(sectionPack);
+    this.indexSolver.addAsSavedIfMissing(sectionPack);
   }
   private sectionUnloadCleanup() {
     // caches should be updated before this is used.
     const parent = this.getterSections.section(this.parentInfoCache);
     const childName = this.selfChildNameCache;
     const siblingDbIds = parent.children(childName).map(({ dbId }) => dbId);
-    this.feIndexBuilder.removeAsSavedExtras(siblingDbIds);
+    this.indexSolver.removeAsSavedExtras(siblingDbIds);
   }
 
   deleteFromIndex(dbId: string) {
-    this.feIndexBuilder.deleteFromIndex(dbId);
+    this.indexSolver.deleteFromIndex(dbId);
   }
   deleteSelfFromIndex() {
-    this.feIndexBuilder.deleteFromIndex(this.dbId);
+    this.indexSolver.deleteFromIndex(this.dbId);
   }
   saveNew() {
     const dateTime = timeS.now();
@@ -145,16 +154,16 @@ export class MainSectionSolver<
       syncStatus: "autoSyncOff",
     } as Partial<SectionValues<SN>>);
     const sectionPack = this.packMaker.makeSectionPack();
-    this.feIndexBuilder.addItem(sectionPack);
+    this.indexSolver.addItem(sectionPack);
   }
   saveUpdates() {
     this.solver.updateValuesAndSolve({
       dateTimeLastSaved: timeS.now(),
     } as Partial<SectionValues<SN>>);
     const sectionPack = this.packMaker.makeSectionPack();
-    this.feIndexBuilder.updateItem(sectionPack);
+    this.indexSolver.updateItem(sectionPack);
   }
   get asSavedPack(): SectionPack<SN> {
-    return this.feIndexBuilder.getAsSavedPack(this.dbId);
+    return this.indexSolver.getAsSavedPack(this.dbId);
   }
 }
