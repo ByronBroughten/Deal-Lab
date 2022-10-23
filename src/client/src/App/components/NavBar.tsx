@@ -1,24 +1,16 @@
 import { AppBar, Toolbar } from "@material-ui/core";
 import { rem } from "polished";
 import React from "react";
-import { AiOutlineYoutube } from "react-icons/ai";
-import { BsArrowUpCircle, BsFillHouseDoorFill } from "react-icons/bs";
-import { VscFeedback } from "react-icons/vsc";
+import { BsFillHouseDoorFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { constants } from "../Constants";
-import { useFeUser } from "../modules/sectionActorHooks/useFeUser";
 import theme from "../theme/Theme";
-import { FeedbackPanel } from "./NavBar/FeedbackPanel";
+import { NavBarBtns } from "./NavBar/NavBarBtns";
 import NavBtn from "./NavBar/NavBtn";
-import NavDropDown from "./NavBar/NavDropDown";
 import { NavUserMenu } from "./NavBar/NavUserMenu";
-import { UpgradeUserToProPanel } from "./NavBar/UpgradeUserToProPanel";
 
 export function NavBar() {
-  const feUser = useFeUser();
-  const { isBasic, isGuest } = feUser;
-  const showSignin = isGuest; // && !pathname.includes("/auth");
   const appTitle = "Ultimate Property Analyzer" + (constants.isBeta ? "" : ""); // BETA
 
   return (
@@ -34,47 +26,7 @@ export function NavBar() {
             />
           </Link>
         </div>
-        <div className="NavBar-rightSide">
-          <NavBtn
-            className="NavBar-demoBtn NavBtn"
-            href="https://www.youtube.com/watch?v=wGfb8xX2FsI"
-            target="_blank"
-            icon={<AiOutlineYoutube className="NavBar-demoBtnIcon" />}
-            text="Demo"
-          />
-          {!showSignin && constants.isBeta && (
-            <NavDropDown
-              className="NavBar-feedbackDropDown"
-              btnText="Give Feedback"
-              btnIcon={<VscFeedback />}
-            >
-              <FeedbackPanel />
-            </NavDropDown>
-          )}
-          {showSignin && (
-            <>
-              <Link className="NavBar-navBtnLink" to="/auth">
-                <NavBtn
-                  className="NavBar-signInUpBtn"
-                  text="Sign In / Sign Up"
-                />
-              </Link>
-            </>
-          )}
-          {!isGuest && isBasic && !constants.isBeta && false && (
-            <NavDropDown
-              className="NavBar-GetProDropdown"
-              btnText={
-                <>
-                  <BsArrowUpCircle className="NavBar-GetProDropdownIcon" />
-                  <span className="NavBar-GetProDropdownText">Pro</span>
-                </>
-              }
-            >
-              <UpgradeUserToProPanel />
-            </NavDropDown>
-          )}
-        </div>
+        <NavBarBtns />
       </Toolbar>
     </Styled>
   );
@@ -137,8 +89,7 @@ const Styled = styled(AppBar)`
     font-size: ${rem("23px")};
   }
 
-  .NavBar-leftSide,
-  .NavBar-rightSide {
+  .NavBar-leftSide {
     display: flex;
   }
 `;

@@ -5,7 +5,7 @@ import styled, { css } from "styled-components";
 import { constants } from "../../Constants";
 import { useUserData } from "../../modules/customHooks/useAuthAndUserData";
 import { useFeUser } from "../../modules/sectionActorHooks/useFeUser";
-import { UserPlan } from "../../sharedWithServer/SectionsMeta/baseSectionsVarbs";
+import { AnalyzerPlan } from "../../sharedWithServer/SectionsMeta/baseSectionsVarbs";
 import theme from "../../theme/Theme";
 import { StandardProps } from "../general/StandardProps";
 import NavDropDown from "./NavDropDown";
@@ -17,7 +17,7 @@ function BtnDiv({ children, className }: StandardProps) {
 export function NavUserMenu() {
   const feUser = useFeUser();
   const { logout } = useUserData();
-  const analyzerPlan = feUser.get.valueNext("analyzerPlan") as UserPlan;
+  const analyzerPlan = feUser.get.valueNext("analyzerPlan") as AnalyzerPlan;
   const isFullPlan = analyzerPlan === "fullPlan";
   const authStatus = feUser.get.valueNext("authStatus");
   const userName = feUser.get.value("userName", "string");

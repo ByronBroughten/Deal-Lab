@@ -5,8 +5,9 @@ import {
   GuestAccessSectionPackArrs,
 } from "../../sharedWithServer/apiQueriesShared/register";
 import {
+  AnalyzerPlan,
   AuthStatus,
-  UserPlan,
+  UserDataStatus,
 } from "../../sharedWithServer/SectionsMeta/baseSectionsVarbs";
 import { PackMakerSection } from "../../sharedWithServer/StatePackers.ts/PackMakerSection";
 import { StrictOmit } from "../../sharedWithServer/utils/types";
@@ -42,14 +43,11 @@ export class FeUserActor extends SectionActorBase<"feUser"> {
       guestAccessNames
     ) as GuestAccessSectionPackArrs;
   }
-  get isLoadingUserData(): boolean {
-    return this.get.valueNext("userDataStatus") === "loading";
+  get userDataStatus(): UserDataStatus {
+    return this.get.valueNext("userDataStatus") as UserDataStatus;
   }
   async shouldLoadUserData() {
-    return (
-      this.get.valueNext("userDataStatus") === "notLoaded" &&
-      (await this.sessionExists)
-    );
+    return this.userDataStatus === "notLoaded" && (await this.sessionExists);
   }
   async triggerLoadUserData() {
     this.setter.varb("userDataStatus").updateValue("loading");
@@ -86,18 +84,18 @@ export class FeUserActor extends SectionActorBase<"feUser"> {
   }
   get subscriptionValues(): AnalyzerPlanValues {
     return {
-      analyzerPlan: this.get.valueNext("analyzerPlan") as UserPlan,
+      analyzerPlan: this.analyzerPlan,
       analyzerPlanExp: this.get.valueNext("analyzerPlanExp"),
     };
   }
-  get userPlan(): UserPlan {
-    return this.subscriptionValues.analyzerPlan;
+  get analyzerPlan(): AnalyzerPlan {
+    return this.get.valueNext("analyzerPlan") as AnalyzerPlan;
   }
   get isPro(): boolean {
-    return this.userPlan === "fullPlan";
+    return this.analyzerPlan === "fullPlan";
   }
   get isBasic(): boolean {
-    return this.userPlan === "basicPlan";
+    return this.analyzerPlan === "basicPlan";
   }
   get sessionExists() {
     return Session.doesSessionExist();

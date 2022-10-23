@@ -1,7 +1,7 @@
 import {
+  AnalyzerPlan,
   AuthStatus,
   UserDataStatus,
-  UserPlan,
 } from "../SectionsMeta/baseSectionsVarbs";
 import { SectionPack } from "../SectionsMeta/childSectionsDerived/SectionPack";
 import { feStoreNameS } from "../SectionsMeta/relSectionsDerived/relNameArrs/FeStoreName";
@@ -13,7 +13,7 @@ import { makeExampleUserSingleTimeLists } from "./makeDefaultFeUser/makeExampleU
 import { makeExampleUserVarbLists } from "./makeDefaultFeUser/makeExampleUserVarbLists";
 
 export function makeDefaultFeUserPack(): SectionPack<"feUser"> {
-  const analyzerPlan: UserPlan = "basicPlan";
+  const analyzerPlan: AnalyzerPlan = "basicPlan";
   const authStatus: AuthStatus = "guest";
   const userDataStatus: UserDataStatus = "notLoaded";
   const feUser = PackBuilderSection.initAsOmniChild("feUser", {

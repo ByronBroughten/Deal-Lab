@@ -1,5 +1,5 @@
 import { timeS } from "../utils/date";
-import { AuthStatus, UserPlan } from "./baseSectionsVarbs";
+import { AnalyzerPlan, AuthStatus } from "./baseSectionsVarbs";
 import { numObj } from "./baseSectionsVarbs/baseValues/NumObj";
 import { savableSectionVarbNames } from "./baseSectionsVarbs/specialVarbNames";
 import { relVarbInfoS } from "./childSectionsDerived/RelVarbInfo";
@@ -49,7 +49,7 @@ export function makeRelSections() {
       }),
       analyzerPlan: relVarb("string", {
         displayName: "Api Access Status",
-        initValue: "basicPlan" as UserPlan,
+        initValue: "basicPlan" as AnalyzerPlan,
       }),
       analyzerPlanExp: relVarb("number", {
         initValue: timeS.hundredsOfYearsFromNow,

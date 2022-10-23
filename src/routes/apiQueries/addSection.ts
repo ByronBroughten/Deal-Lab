@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { constants } from "../../client/src/App/Constants";
 import { UserInfoTokenProp } from "../../client/src/App/modules/services/authService";
-import { UserPlan } from "../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsVarbs";
+import { AnalyzerPlan } from "../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsVarbs";
 import { DbPack } from "../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbSectionPack";
 import {
   DbStoreInfo,
@@ -51,7 +51,7 @@ async function addSection(req: Request, res: Response) {
 }
 
 type ValidateSubscriptionProps = {
-  analyzerPlan: UserPlan;
+  analyzerPlan: AnalyzerPlan;
   dbStoreName: SectionQueryName;
   userId: string;
 };

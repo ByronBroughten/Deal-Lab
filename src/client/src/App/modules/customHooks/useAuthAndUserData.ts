@@ -67,7 +67,7 @@ function useLoadUserData() {
 
   React.useEffect(() => {
     async function loadUserDataIfTriggered() {
-      if (feUser.isLoadingUserData) {
+      if (feUser.userDataStatus === "loading") {
         try {
           await feUser.loadUserData();
         } catch (ex) {

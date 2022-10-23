@@ -244,8 +244,8 @@ export const baseSectionsVarbs = checkBaseSectionsVarbs({
 });
 
 const userPlans = ["basicPlan", "fullPlan"] as const;
-export type UserPlan = typeof userPlans[number];
-export function isUserPlan(value: any): value is UserPlan {
+export type AnalyzerPlan = typeof userPlans[number];
+export function isUserPlan(value: any): value is AnalyzerPlan {
   return userPlans.includes(value);
 }
 
