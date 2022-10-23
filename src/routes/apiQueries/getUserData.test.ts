@@ -2,7 +2,10 @@ import request from "supertest";
 import { constants } from "../../client/src/App/Constants";
 import { apiQueriesShared } from "../../client/src/App/sharedWithServer/apiQueriesShared";
 import { QueryReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
-import { validateUserData } from "../../client/src/App/sharedWithServer/apiQueriesShared/getUserData";
+import {
+  UserData,
+  validateUserData,
+} from "../../client/src/App/sharedWithServer/apiQueriesShared/getUserData";
 import {
   guestAccessNames,
   GuestAccessSectionPackArrs,
@@ -84,7 +87,8 @@ describe(testedRoute, () => {
     reqObj = makeReqObj(feUser);
 
     const res2 = await exec();
-    const feUser2 = PackBuilderSection.loadAsOmniChild(res2.data.feUser[0]);
+    const data: UserData = res2.data;
+    const feUser2 = PackBuilderSection.loadAsOmniChild(data.feUser);
     const hasList = feUser2.get.hasChildByDbInfo({ childName, dbId });
     expect(hasList).toBe(false);
   });
