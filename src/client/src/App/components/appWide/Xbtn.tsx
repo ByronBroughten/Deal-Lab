@@ -8,7 +8,6 @@ import theme from "../../theme/Theme";
 import { StandardBtnProps } from "../general/StandardProps";
 
 export function XBtn({ children, className, ...rest }: StandardBtnProps) {
-  console.log(`XBtn ${className}`);
   return (
     <Styled
       {...{

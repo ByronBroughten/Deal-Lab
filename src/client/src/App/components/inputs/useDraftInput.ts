@@ -2,7 +2,6 @@ import { EditorState } from "draft-js";
 import { isEqual } from "lodash";
 import React, { useEffect, useState } from "react";
 import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/Info";
-import { useGetterVarb } from "../../sharedWithServer/stateClassHooks/useGetterVarb";
 import { useSetterVarb } from "../../sharedWithServer/stateClassHooks/useSetterVarb";
 import {
   CreateEditorProps,
@@ -10,7 +9,6 @@ import {
 } from "../../sharedWithServer/StateSetters/EditorUpdaterVarb";
 import { SetterVarb } from "../../sharedWithServer/StateSetters/SetterVarb";
 import { StrictOmit } from "../../sharedWithServer/utils/types";
-import useOnChange from "./useOnChange";
 
 interface UseDraftInputProps
   extends FeVarbInfo,
@@ -42,16 +40,9 @@ export function useDraftInput(props: UseDraftInputProps) {
     setterVarb,
   });
 
-  const onChange = useOnChange({
+  return {
     editorState,
     setEditorState,
-  });
-
-  const getterVarb = useGetterVarb(props);
-  return {
-    varb: getterVarb,
-    editorState,
-    onChange,
   };
 }
 

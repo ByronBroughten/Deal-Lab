@@ -17,7 +17,6 @@ export function VarbListItemGenericNext({
   feId,
   ...rest
 }: Props) {
-  console.log("VarbListItemGenericNext");
   const feInfo = { sectionName, feId };
   return (
     <Styled {...rest}>

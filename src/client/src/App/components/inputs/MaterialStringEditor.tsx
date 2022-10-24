@@ -1,6 +1,7 @@
 import React from "react";
 import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/Info";
-import MaterialDraftEditor from "./MaterialDraftEditor";
+import { GetterVarb } from "./../../sharedWithServer/StateGetters/GetterVarb";
+import { MaterialDraftEditor } from "./MaterialDraftEditor";
 import { useDraftInput } from "./useDraftInput";
 
 interface StringEditorProps extends FeVarbInfo {
@@ -13,13 +14,16 @@ export function MaterialStringEditor({
   label,
   ...feVarbInfo
 }: StringEditorProps) {
-  let { editorState, onChange, varb } = useDraftInput(feVarbInfo);
+  let { editorState, setEditorState } = useDraftInput(feVarbInfo);
   return (
     <MaterialDraftEditor
       className={"MaterialStringEditor-root " + className ?? ""}
-      id={varb.varbId}
-      editorProps={{ editorState, handleOnChange: onChange }}
-      label={label}
+      id={GetterVarb.feVarbInfoToVarbId(feVarbInfo)}
+      {...{
+        setEditorState,
+        editorState,
+        label,
+      }}
     />
   );
 }

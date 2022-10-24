@@ -4,8 +4,9 @@ import styled from "styled-components";
 import { useOnOutsideClickEffect } from "../../modules/customHooks/useOnOutsideClickRef";
 import useToggleView from "../../modules/customHooks/useToggleView";
 import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/Info";
+import { useGetterVarb } from "../../sharedWithServer/stateClassHooks/useGetterVarb";
 import theme from "../../theme/Theme";
-import MaterialDraftEditor from "./MaterialDraftEditor";
+import { MaterialDraftEditor } from "./MaterialDraftEditor";
 import NumObjVarbSelector from "./NumObjEditor/NumObjVarbSelector";
 import {
   PropAdornments,
@@ -13,9 +14,6 @@ import {
 } from "./NumObjEditor/useGetAdornments";
 import { varSpanDecorator } from "./shared/VarSpanNext";
 import { useDraftInput } from "./useDraftInput";
-
-const numericRegEx = /^[0-9.-]*$/;
-const calculationRegEx = /[\d.*/+()-]/;
 
 type Props = PropAdornments & {
   feVarbInfo: FeVarbInfo;
@@ -34,17 +32,21 @@ export function NumObjEntityEditor({
   doEquals = true,
   ...props
 }: Props) {
-  let { editorState, varb, onChange } = useDraftInput({
+  const varb = useGetterVarb(feVarbInfo);
+  let { editorState, setEditorState } = useDraftInput({
     ...feVarbInfo,
     compositeDecorator: varSpanDecorator,
   });
 
-  const isCalcMode = true;
-  const handleBeforeInput = (char: string): "handled" | "not-handled" => {
-    const regEx = isCalcMode ? calculationRegEx : numericRegEx;
-    if (regEx.test(char)) return "not-handled";
-    return "handled";
-  };
+  const handleBeforeInput = React.useCallback(
+    (char: string): "handled" | "not-handled" => {
+      // const numericRegEx = /^[0-9.-]*$/;
+      const calculationRegEx = /[\d.*/+()-]/;
+      if (calculationRegEx.test(char)) return "not-handled";
+      return "handled";
+    },
+    []
+  );
 
   // dipslay-related stuff
   const label = labeled ? props.label ?? varb.displayName : undefined;
@@ -77,19 +79,19 @@ export function NumObjEntityEditor({
           label={label}
           className={"NumObjEditor-materialDraftEditor"}
           id={varb.varbId}
-          editorProps={{
+          {...{
+            setEditorState,
             editorState,
-            handleReturn: () => "handled",
-            handleOnChange: onChange,
-            ...(!bypassNumeric && { handleBeforeInput }),
-          }}
-          shellProps={{
             startAdornment,
             endAdornment,
+            ...(!bypassNumeric && { handleBeforeInput }),
           }}
         />
         {varbSelectorIsOpen && (
-          <NumObjVarbSelector {...{ onChange, editorState }} ref={popperRef} />
+          <NumObjVarbSelector
+            {...{ setEditorState, editorState }}
+            ref={popperRef}
+          />
         )}
       </div>
     </Styled>

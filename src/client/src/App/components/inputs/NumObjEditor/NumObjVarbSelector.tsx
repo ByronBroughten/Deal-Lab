@@ -7,14 +7,16 @@ import { Id } from "../../../sharedWithServer/SectionsMeta/baseSectionsVarbs/id"
 import { VariableOption } from "../../../sharedWithServer/StateEntityGetters/VariableGetterSections";
 import theme from "../../../theme/Theme";
 import VarbAutoComplete, { PopperRef } from "../VarbAutoComplete";
+import useOnChange from "./../useOnChange";
 
 interface Props {
   editorState: EditorState;
-  onChange: Function;
+  setEditorState: React.Dispatch<React.SetStateAction<EditorState>>;
 }
 
 const NumObjVarbSelector = React.forwardRef(
-  ({ editorState, onChange }: Props, ref: PopperRef) => {
+  ({ editorState, setEditorState }: Props, ref: PopperRef) => {
+    const onChange = useOnChange({ editorState, setEditorState });
     function onSelect(value: VariableOption) {
       const { displayName, varbInfo } = value;
       const entity: EntityMapData = {

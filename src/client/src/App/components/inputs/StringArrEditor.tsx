@@ -13,6 +13,7 @@ import ItemOrCommaSpan, {
   ItemSpan,
 } from "./ListEditor/ItemOrCommaSpan";
 import { useDraftInput } from "./useDraftInput";
+import useOnChange from "./useOnChange";
 
 export const inputHeight = css`
   height: calc(1.5em + 0.5rem + 2px);
@@ -61,12 +62,11 @@ export function StringArrEditor({
   feVarbInfo: FeVarbInfo;
   className?: string;
 }) {
-  const { onChange, editorState } = useDraftInput({
+  const { editorState, setEditorState } = useDraftInput({
     ...feVarbInfo,
     compositeDecorator,
   });
-
-  // this will eventually come from the varb
+  const onChange = useOnChange({ editorState, setEditorState });
   const error = false;
   const editor = React.useRef<Editor>(null);
 

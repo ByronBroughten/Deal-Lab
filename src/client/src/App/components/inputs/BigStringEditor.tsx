@@ -1,8 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/Info";
+import { GetterVarb } from "../../sharedWithServer/StateGetters/GetterVarb";
 import { ThemeName } from "../../theme/Theme";
-import MaterialDraftEditor from "./MaterialDraftEditor";
+import { MaterialDraftEditor } from "./MaterialDraftEditor";
 import { useDraftInput } from "./useDraftInput";
 
 interface Props {
@@ -20,19 +21,17 @@ export function BigStringEditor({
   label,
   placeholder,
 }: Props) {
-  const { onChange, varb, editorState } = useDraftInput(feVarbInfo);
+  const { editorState, setEditorState } = useDraftInput(feVarbInfo);
   return (
     <Styled
       {...{
         sectionName: themeName,
+        editorState,
+        setEditorState,
         label,
         className: `BigStringEditor-root ${className ?? ""}`,
-        id: varb.varbId,
-        editorProps: {
-          editorState,
-          handleOnChange: onChange,
-          placeholder,
-        },
+        id: GetterVarb.feVarbInfoToVarbId(feVarbInfo),
+        placeholder,
       }}
     />
   );

@@ -5,8 +5,8 @@ import React from "react";
 import styled from "styled-components";
 import ccs from "../../theme/cssChunks";
 import theme, { ThemeName } from "../../theme/Theme";
-import { HandleOnChange } from "../../utils/DraftS";
 import MaterialDraftField from "./MaterialDraftField";
+import useOnChange from "./useOnChange";
 
 type ShellProps = {
   endAdornment?: any;
@@ -14,14 +14,20 @@ type ShellProps = {
 };
 interface TweakedEditorProps extends Omit<EditorProps, "onChange"> {
   editorState: EditorState;
-  handleOnChange: HandleOnChange;
 }
+
+type HandleBeforeInput = (char: string) => "handled" | "not-handled";
 
 interface Props extends Omit<FilledTextFieldProps, "InputProps" | "variant"> {
   sectionName?: ThemeName;
-  editorProps: TweakedEditorProps;
-  shellProps?: ShellProps;
+  editorState: EditorState;
+  setEditorState: React.Dispatch<React.SetStateAction<EditorState>>;
+
   onClick?: () => void;
+  handleBeforeInput?: HandleBeforeInput;
+
+  endAdornment?: any;
+  startAdornment?: any;
 }
 
 function getAdornments(shrinkLabel: boolean, shellProps: ShellProps) {
@@ -29,28 +35,27 @@ function getAdornments(shrinkLabel: boolean, shellProps: ShellProps) {
   else return {};
 }
 
-export default function MaterialDraftEditor({
+// this can do a memo prop check
+export const MaterialDraftEditor = React.memo(function MaterialDraftEditor({
   id,
-  editorProps,
+  editorState,
+  setEditorState,
   onClick,
   className,
-  shellProps = {},
   label,
   sectionName,
-
+  placeholder,
   ...rest
 }: Props) {
+  console.log("MaterialDraftEditor");
   const editorRef = React.useRef<Editor | null>(null);
-  const { editorState } = editorProps;
+  const handleOnChange = useOnChange({ setEditorState, editorState });
 
   const hasFocus = editorState.getSelection().getHasFocus();
   const hasText = editorState.getCurrentContent().hasText();
 
   const shrinkLabel = hasFocus || hasText;
-  const { endAdornment, startAdornment } = getAdornments(
-    shrinkLabel,
-    shellProps
-  );
+  const { endAdornment, startAdornment } = getAdornments(shrinkLabel, rest);
 
   return (
     <Styled
@@ -75,10 +80,12 @@ export default function MaterialDraftEditor({
             inputProps: {
               component: Editor,
               editorRef,
-              ...editorProps,
+              handleReturn: React.useCallback(() => "handled" as "handled", []),
+              editorState,
+              placeholder,
+              handleOnChange,
             } as any,
             ...{
-              ...shellProps,
               startAdornment,
               endAdornment,
             },
@@ -90,7 +97,7 @@ export default function MaterialDraftEditor({
       </div>
     </Styled>
   );
-}
+});
 
 const Styled = styled.div<{ label?: any; sectionName?: ThemeName }>`
   ${({ label, sectionName }) =>

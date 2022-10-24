@@ -1,3 +1,4 @@
+import React from "react";
 import { capitalizeFirstLetter } from "../../sharedWithServer/utils/Str";
 import useToggle from "./useToggle";
 
@@ -18,17 +19,18 @@ type PropLast<T extends string> = {
 // @ts-ignore
 type Return<T extends any> = PropFirst<T> & PropLast<T>;
 
-function returnToggleView<T extends string>(
+function useNamedToggleView<T extends string>(
   props: ReturnType<typeof useToggle>,
   viewWhat: T
 ): Return<T & string> {
   const capitalViewWhat = capitalizeFirstLetter(viewWhat);
   const { value, toggle, setOn, setOff } = props;
+
   return {
     [`${viewWhat}IsOpen`]: value,
     [`toggle${capitalViewWhat}`]: toggle,
-    [`open${capitalViewWhat}`]: setOn,
-    [`close${capitalViewWhat}`]: setOff,
+    [`open${capitalViewWhat}`]: React.useCallback(setOn, []),
+    [`close${capitalViewWhat}`]: React.useCallback(setOff, []),
   };
 }
 
@@ -44,6 +46,5 @@ export default function useToggleView<T extends string | undefined>({
   viewWhat,
 }: Props<T> = {}): Return<T> | Return<"view"> {
   const props = useToggle(initValue);
-  if (typeof viewWhat === "string") return returnToggleView(props, viewWhat);
-  else return returnToggleView(props, "view");
+  return useNamedToggleView(props, viewWhat ?? "view");
 }
