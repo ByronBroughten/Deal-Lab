@@ -1,4 +1,3 @@
-import isEqual from "fast-deep-equal";
 import {
   SectionValues,
   SomeSectionValues,
@@ -19,16 +18,6 @@ import { UpdaterSection } from "../../sharedWithServer/StateUpdaters/UpdaterSect
 import { timeS } from "../../sharedWithServer/utils/date";
 import { FeIndexSolver } from "./FeIndexSolver";
 import { FeUserSolver } from "./FeUserSolver";
-
-// using the indexBuilder rather than indexSolver works for the mainStores
-// they should probably not solve or remove, too though
-
-// and the listStores should probably solve on updates, no?
-
-// I every time the index store will be edited, it checks whether
-// sectionName is mainStoreName or listStoreName and uses solver/builder accordingly
-// This works I suppose, as long as I unify the props and names of the
-// relevant solver/builder methods
 
 export type SaveStatus = "unsaved" | "changesSynced" | "unsyncedChanges";
 export class MainSectionSolver<
@@ -84,15 +73,16 @@ export class MainSectionSolver<
     if (!this.isSaved) {
       return "unsaved";
     } else {
-      let sectionPack = this.packMaker.makeSectionPack();
-      let { asSavedPack } = this;
-      sectionPack = this.feUserSolver.prepForCompare(sectionPack);
-      asSavedPack = this.feUserSolver.prepForCompare(asSavedPack);
-      if (isEqual(sectionPack, asSavedPack)) {
-        return "changesSynced";
-      } else {
-        return "unsyncedChanges";
-      }
+      return "changesSynced";
+      // let sectionPack = this.packMaker.makeSectionPack();
+      // let { asSavedPack } = this;
+      // sectionPack = this.feUserSolver.prepForCompare(sectionPack);
+      // asSavedPack = this.feUserSolver.prepForCompare(asSavedPack);
+      // if (isEqual(sectionPack, asSavedPack)) {
+      //   return "changesSynced";
+      // } else {
+      //   return "unsyncedChanges";
+      // }
     }
   }
   removeSelf() {

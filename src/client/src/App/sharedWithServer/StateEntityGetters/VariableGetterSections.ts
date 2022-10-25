@@ -30,8 +30,6 @@ export class VariableGetterSections extends GetterSectionsBase {
     ];
   }
   private userVarbOptions(): VariableOption[] {
-    // Ok. This is only for userVarbs, is that right?
-    //
     const { main } = this.getterSections;
     const feUser = main.onlyChild("feUser");
     const childName = "userVarbListMain";
@@ -43,12 +41,7 @@ export class VariableGetterSections extends GetterSectionsBase {
       return options.concat(
         userVarbItems.map((item) => {
           const varbInfo = {
-            ...mixedInfoS.absoluteDbIdPath(
-              "userVarbItem",
-              "userVarbItemMain",
-              item.dbId,
-              "onlyOne"
-            ),
+            ...mixedInfoS.makeDb("userVarbItem", item.dbId, "onlyOne"),
             varbName: "value",
           };
           return {

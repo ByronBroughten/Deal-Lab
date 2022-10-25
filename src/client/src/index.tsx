@@ -24,18 +24,10 @@ AppRegistry.runApplication("App", {
 // - The userVarb info doesn't know which userVarbList to access the varb from
 //   The problem could be solved either by making a new kind of info or just
 //   by using the userVarb dbId, which shouldn't have a duplicate.
-// - For speed, changing the save check and cutting out the NumObjEntityEditor
-//   refreshes will give you the most bang for your buck
+// - For speed, changing the save check should give the most bang for buck
 
-// - When loading user data, make it say loading in the top right
-// - Fix the speed problem with having too many list items.
 // - Fix the mgmt inputs so that loding a management works properly with sync
 // - In the load menu, highlight the one that is loaded with green or purple
-// - Switch useState to useReducer
-// - Or perhaps use a ref that always updates to contain the update functions
-// - Create cheap state-accessor components around list items
-//   that pass in the item's state as a string as well as dispatch
-// - Prevent fullStores from saving to local storage
 // - Implement "doEquals" in additive and one-time cost lists for the demo
 //   - Extrapolate the logic so it works on all four list types
 //   - There is some code in "ListItemOngoing"
