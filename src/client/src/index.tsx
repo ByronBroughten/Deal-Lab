@@ -7,13 +7,6 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-// - Speed up the app
-// Go from the bottom up starting with list items
-// Implement useReducer for buttons and switches
-// Implement useMemo for the rest
-
-// Record the code walkthrough with the properties
-// and everything you have entered.
 
 // If I'm going to make tables faster and increase functionality, here's how:
 // There are going to be example properties, loans, and mgmts.
@@ -24,20 +17,16 @@ AppRegistry.runApplication("App", {
 //   - remove extra rows
 //   - add missing rows (to the front)
 //   - update row information
-
 // - When adding, updating, or deleting a section, adjust
-//   the front-end table accordingly
-
-// 2. Make savableSections have a changesSynced varb
-//    - Whenever a section is saved, updatesSaved, or loaded, its changesSynced
-//      varb is set to true
-//    - when it is true, and when a value is changed that belongs
-//      to one of those sections (excluding solvableText)
-//      changesSynced is set to false for the section and all of its
-//      anscestors that are also saved
-//    - this could be in the Setter or Solver layer
+//   the front-end table accordingly in real-time
 
 // Before Marketing
+// - The userVarb info doesn't know which userVarbList to access the varb from
+//   The problem could be solved either by making a new kind of info or just
+//   by using the userVarb dbId, which shouldn't have a duplicate.
+// - For speed, changing the save check and cutting out the NumObjEntityEditor
+//   refreshes will give you the most bang for your buck
+
 // - When loading user data, make it say loading in the top right
 // - Fix the speed problem with having too many list items.
 // - Fix the mgmt inputs so that loding a management works properly with sync
@@ -63,6 +52,18 @@ AppRegistry.runApplication("App", {
 // - Think about changing all numbers and strings to numObj and stringObj
 // - Get numObj editorText to display updated in-entity text. But also, it should keep depreciated in-entity text. It has to cache.
 // - Should property price count as an upfront expense?
+
+// Additional speed: Make savableSections have a changesSynced varb
+// The next biggest bang for is to prevent NumObjEditor
+// from re-rendering.
+//    - I can perform value updates from dispatch
+//    - Whenever a section is saved, updatesSaved, or loaded, its changesSynced
+//      varb is set to true
+//    - when it is true, and when a value is changed that belongs
+//      to one of those sections (excluding solvableText)
+//      changesSynced is set to false for the section and all of its
+//      anscestors that are also saved
+//    - this could be in the Setter or Solver layer
 
 // Extra stuff
 // - Load rows according to whether autoSync is On

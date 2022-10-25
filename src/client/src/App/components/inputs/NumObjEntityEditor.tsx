@@ -1,10 +1,14 @@
+import { EditorState } from "draft-js";
 import { pick } from "lodash";
 import React from "react";
 import styled from "styled-components";
 import { useOnOutsideClickEffect } from "../../modules/customHooks/useOnOutsideClickRef";
 import useToggleView from "../../modules/customHooks/useToggleView";
+import { SetEditorState } from "../../modules/draftjs/draftUtils";
 import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/Info";
-import { useGetterVarb } from "../../sharedWithServer/stateClassHooks/useGetterVarb";
+import { VarbMeta } from "../../sharedWithServer/SectionsMeta/VarbMeta";
+import { GetterVarb } from "../../sharedWithServer/StateGetters/GetterVarb";
+import { EditorTextStatus } from "../../sharedWithServer/StateGetters/GetterVarbNumObj";
 import theme from "../../theme/Theme";
 import { MaterialDraftEditor } from "./MaterialDraftEditor";
 import NumObjVarbSelector from "./NumObjEditor/NumObjVarbSelector";
@@ -23,7 +27,7 @@ type Props = PropAdornments & {
   bypassNumeric?: boolean;
   doEquals?: boolean;
 };
-
+const adornmentNames = ["startAdornment", "endAdornment"] as const;
 export function NumObjEntityEditor({
   feVarbInfo,
   className,
@@ -32,11 +36,74 @@ export function NumObjEntityEditor({
   doEquals = true,
   ...props
 }: Props) {
-  const varb = useGetterVarb(feVarbInfo);
-  let { editorState, setEditorState } = useDraftInput({
+  let { editorState, setEditorState, varb } = useDraftInput({
     ...feVarbInfo,
     compositeDecorator: varSpanDecorator,
   });
+  return (
+    <MemoNumObjEntityEditor
+      {...{
+        displayValue: varb.displayValue,
+        editorTextStatus: varb.numObj.editorTextStatus,
+        displayName: varb.displayName,
+
+        className,
+        labeled,
+        doEquals,
+        bypassNumeric,
+
+        editorState,
+        setEditorState,
+        ...varb.feVarbInfo,
+        ...props,
+      }}
+    />
+  );
+}
+
+interface MemoProps extends PropAdornments, FeVarbInfo {
+  displayValue: string;
+  editorTextStatus: EditorTextStatus;
+  displayName: string;
+
+  className?: string;
+  labeled?: boolean;
+  label?: string;
+  doEquals: boolean;
+  bypassNumeric: boolean;
+
+  editorState: EditorState;
+  setEditorState: SetEditorState;
+}
+const MemoNumObjEntityEditor = React.memo(function MemoNumObjEntityEditor({
+  editorTextStatus,
+  displayValue,
+  doEquals,
+  className,
+  labeled,
+  displayName,
+  setEditorState,
+  editorState,
+  bypassNumeric,
+  ...rest
+}: MemoProps) {
+  const meta = VarbMeta.init(rest);
+  const { startAdornment, endAdornment } = useGetAdornments({
+    pAdornments: pick(rest, adornmentNames),
+    vAdornments: pick(meta, adornmentNames),
+    editorTextStatus,
+    displayValue,
+    doEquals,
+  });
+
+  const label = labeled ? rest.label ?? displayName : undefined;
+
+  const { varbSelectorIsOpen, openVarbSelector, closeVarbSelector } =
+    useToggleView({ viewWhat: "varbSelector", initValue: false });
+
+  const numObjEditorRef = React.useRef<HTMLDivElement | null>(null);
+  const popperRef = React.useRef<HTMLDivElement | null>(null);
+  useOnOutsideClickEffect(closeVarbSelector, [numObjEditorRef, popperRef]);
 
   const handleBeforeInput = React.useCallback(
     (char: string): "handled" | "not-handled" => {
@@ -48,25 +115,6 @@ export function NumObjEntityEditor({
     []
   );
 
-  // dipslay-related stuff
-  const label = labeled ? props.label ?? varb.displayName : undefined;
-  const adornmentNames = ["startAdornment", "endAdornment"] as const;
-
-  const { startAdornment, endAdornment } = useGetAdornments({
-    pAdornments: pick(props, adornmentNames),
-    vAdornments: pick(varb.meta, adornmentNames),
-    editorTextStatus: varb.numObj.editorTextStatus,
-    displayValue: varb.displayValue,
-    doEquals,
-  });
-
-  const { varbSelectorIsOpen, openVarbSelector, closeVarbSelector } =
-    useToggleView({ viewWhat: "varbSelector", initValue: false });
-
-  const numObjEditorRef = React.useRef<HTMLDivElement | null>(null);
-  const popperRef = React.useRef<HTMLDivElement | null>(null);
-  useOnOutsideClickEffect(closeVarbSelector, [numObjEditorRef, popperRef]);
-
   return (
     <Styled
       ref={numObjEditorRef}
@@ -76,10 +124,10 @@ export function NumObjEntityEditor({
         <MaterialDraftEditor
           onClick={openVarbSelector}
           onFocus={openVarbSelector}
-          label={label}
           className={"NumObjEditor-materialDraftEditor"}
-          id={varb.varbId}
+          id={GetterVarb.feVarbInfoToVarbId(rest)}
           {...{
+            label,
             setEditorState,
             editorState,
             startAdornment,
@@ -88,15 +136,12 @@ export function NumObjEntityEditor({
           }}
         />
         {varbSelectorIsOpen && (
-          <NumObjVarbSelector
-            {...{ setEditorState, editorState }}
-            ref={popperRef}
-          />
+          <NumObjVarbSelector {...{ setEditorState }} ref={popperRef} />
         )}
       </div>
     </Styled>
   );
-}
+});
 
 const Styled = styled.div`
   display: flex;

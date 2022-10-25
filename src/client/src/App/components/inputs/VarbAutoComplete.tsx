@@ -89,7 +89,11 @@ const VarbAutoComplete = React.forwardRef(
     ref: PopperRef
   ) => {
     const variableSections = useVariableSections();
-    options = options ?? variableSections.variableOptions();
+    const autoCompleteOptions = React.useMemo(
+      () => options ?? variableSections.variableOptions(),
+      []
+    );
+
     const [inputValue, setInputValue] = React.useState(
       value ? value.displayName : ""
     );
@@ -109,9 +113,9 @@ const VarbAutoComplete = React.forwardRef(
           onInputChange={(_, newInputValue) => setInputValue(newInputValue)}
           {...{
             value,
-            options,
+            options: autoCompleteOptions,
             inputValue,
-            ...("collectionName" in options[0] && {
+            ...("collectionName" in autoCompleteOptions[0] && {
               groupBy: (option: any) => option.collectionName,
             }),
           }}

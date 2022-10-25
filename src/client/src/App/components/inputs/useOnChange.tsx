@@ -6,10 +6,7 @@ interface UseOnChangeProps {
   editorState: EditorState;
   setEditorState: Dispatch<SetStateAction<EditorState>>;
 }
-export default function useOnChange({
-  editorState,
-  setEditorState,
-}: UseOnChangeProps) {
+export function useOnChange({ editorState, setEditorState }: UseOnChangeProps) {
   return function onChange(newEditorState: EditorState) {
     const editorIsChanged = isEditorChanged(editorState, newEditorState);
     const selection = editorState.getSelection();

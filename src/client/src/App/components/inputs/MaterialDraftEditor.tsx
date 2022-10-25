@@ -5,8 +5,8 @@ import React from "react";
 import styled from "styled-components";
 import ccs from "../../theme/cssChunks";
 import theme, { ThemeName } from "../../theme/Theme";
-import MaterialDraftField from "./MaterialDraftField";
-import useOnChange from "./useOnChange";
+import { MaterialDraftField } from "./MaterialDraftField";
+import { useOnChange } from "./useOnChange";
 
 type ShellProps = {
   endAdornment?: any;
@@ -47,7 +47,6 @@ export const MaterialDraftEditor = React.memo(function MaterialDraftEditor({
   placeholder,
   ...rest
 }: Props) {
-  console.log("MaterialDraftEditor");
   const editorRef = React.useRef<Editor | null>(null);
   const handleOnChange = useOnChange({ setEditorState, editorState });
 

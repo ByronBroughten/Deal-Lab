@@ -7,16 +7,14 @@ import { Id } from "../../../sharedWithServer/SectionsMeta/baseSectionsVarbs/id"
 import { VariableOption } from "../../../sharedWithServer/StateEntityGetters/VariableGetterSections";
 import theme from "../../../theme/Theme";
 import VarbAutoComplete, { PopperRef } from "../VarbAutoComplete";
-import useOnChange from "./../useOnChange";
 
 interface Props {
-  editorState: EditorState;
   setEditorState: React.Dispatch<React.SetStateAction<EditorState>>;
 }
 
-const NumObjVarbSelector = React.forwardRef(
-  ({ editorState, setEditorState }: Props, ref: PopperRef) => {
-    const onChange = useOnChange({ editorState, setEditorState });
+const NumObjVarbSelector = React.memo(
+  React.forwardRef(({ setEditorState }: Props, ref: PopperRef) => {
+    console.log("NumObjVarbSelector");
     function onSelect(value: VariableOption) {
       const { displayName, varbInfo } = value;
       const entity: EntityMapData = {
@@ -24,8 +22,9 @@ const NumObjVarbSelector = React.forwardRef(
         entityId: Id.make(),
       };
 
-      const newEditorState = insertEntity(editorState, displayName, entity);
-      onChange(newEditorState);
+      setEditorState((editorState) => {
+        return insertEntity(editorState, displayName, entity);
+      });
     }
 
     return (
@@ -37,7 +36,7 @@ const NumObjVarbSelector = React.forwardRef(
         </div>
       </Styled>
     );
-  }
+  })
 );
 
 export default NumObjVarbSelector;

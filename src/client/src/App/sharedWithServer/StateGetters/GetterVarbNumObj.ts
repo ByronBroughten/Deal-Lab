@@ -14,6 +14,8 @@ import { Str } from "../utils/Str";
 import { GetterVarbBase } from "./Bases/GetterVarbBase";
 import { GetterVarb } from "./GetterVarb";
 
+export type EditorTextStatus = "empty" | "number" | "solvableText";
+
 export class GetterVarbNumObj<
   SN extends SectionNameByType
 > extends GetterVarbBase<SN> {
@@ -33,7 +35,7 @@ export class GetterVarbNumObj<
     const entities = [...this.value.entities, entity];
     return { ...this.value, entities };
   }
-  get editorTextStatus() {
+  get editorTextStatus(): EditorTextStatus {
     if (["", "-"].includes(this.value.mainText as any)) return "empty";
     if (Str.isRationalNumber(this.value.mainText)) return "number";
     else return "solvableText";

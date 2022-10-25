@@ -4,8 +4,11 @@ import {
   EditorState,
   RawDraftContentState,
 } from "draft-js";
+import { Dispatch, SetStateAction } from "react";
 import { NumObj } from "../../sharedWithServer/SectionsMeta/baseSectionsVarbs/baseValues/NumObj";
 import { RawEditorState } from "../../utils/DraftS";
+
+export type SetEditorState = Dispatch<SetStateAction<EditorState>>;
 
 export default function getNewRawContent() {
   const editorState = EditorState.createEmpty();

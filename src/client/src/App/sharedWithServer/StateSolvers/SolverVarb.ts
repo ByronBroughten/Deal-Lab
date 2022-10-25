@@ -78,14 +78,10 @@ export class SolverVarb<
   }
   editorUpdateAndSolve(newValue: StateValue): void {
     // can probably be replaced by directUpdateAndSolve
-    this.updateValueByEditor(newValue);
+    this.updateValue(newValue);
     this.solveOutVarbs();
   }
   private updateValue(newValue: StateValue): void {
-    this.updaterVarb.updateValue(newValue);
-    this.updateConnectedEntities();
-  }
-  private updateValueByEditor(newValue: StateValue): void {
     this.updaterVarb.updateValue(newValue);
     this.updateConnectedEntities();
   }

@@ -2,6 +2,7 @@ import { EditorState } from "draft-js";
 import { isEqual } from "lodash";
 import React, { useEffect, useState } from "react";
 import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/Info";
+import { useSectionsDispatch } from "../../sharedWithServer/stateClassHooks/useSections";
 import { useSetterVarb } from "../../sharedWithServer/stateClassHooks/useSetterVarb";
 import {
   CreateEditorProps,
@@ -13,9 +14,11 @@ import { StrictOmit } from "../../sharedWithServer/utils/types";
 interface UseDraftInputProps
   extends FeVarbInfo,
     StrictOmit<CreateEditorProps, "valueType"> {}
+
 export function useDraftInput(props: UseDraftInputProps) {
   const setterVarb = useSetterVarb(props);
-  const { valueName } = setterVarb.get;
+  const varb = setterVarb.get;
+  const { valueName } = varb;
   if (!isEditorValueName(valueName)) {
     throw new Error(`valueName "${valueName}" is not an editorValueName`);
   }
@@ -28,7 +31,7 @@ export function useDraftInput(props: UseDraftInputProps) {
   );
 
   useUpdateValueFromEditor({
-    setterVarb,
+    ...varb.feVarbInfo,
     editorState,
   });
 
@@ -41,6 +44,7 @@ export function useDraftInput(props: UseDraftInputProps) {
   });
 
   return {
+    varb,
     editorState,
     setEditorState,
   };
@@ -64,22 +68,19 @@ function useUpdateEditorFromValue({
   }, [contentState]);
 
   const value = setterVarb.get.value();
-  const valueFromEditor = setterVarb.valueFromContentState(contentState);
   useEffect(() => {
+    const valueFromEditor = setterVarb.valueFromContentState(contentState);
     if (!contentIsUpdated && !isEqual(value, valueFromEditor)) {
       setEditorState(setterVarb.createEditor(rest));
     }
-  }, [contentIsUpdated, value, valueFromEditor, contentState]);
+  }, [contentIsUpdated, JSON.stringify(value), contentState]);
 }
 
-type UseUpdateValueFromEditorProps = {
+interface Props extends FeVarbInfo {
   editorState: EditorState;
-  setterVarb: SetterVarb;
-};
-function useUpdateValueFromEditor({
-  editorState,
-  setterVarb,
-}: UseUpdateValueFromEditorProps) {
+}
+function useUpdateValueFromEditor({ editorState, ...rest }: Props) {
+  const dispatch = useSectionsDispatch();
   const contentState = editorState.getCurrentContent();
   const isFirstUpdateRef = React.useRef(true);
   useEffect(() => {
@@ -87,6 +88,6 @@ function useUpdateValueFromEditor({
       isFirstUpdateRef.current = false;
       return;
     }
-    setterVarb.updateValueFromEditor(contentState);
+    dispatch({ type: "updateValueFromContent", contentState, ...rest });
   }, [contentState]);
 }

@@ -1,6 +1,12 @@
+import { ContentState } from "draft-js";
 import { StateValue } from "../../SectionsMeta/baseSectionsVarbs/baseValues/StateValueTypes";
-import { FeSectionInfo, VarbValueInfo } from "../../SectionsMeta/Info";
+import {
+  FeSectionInfo,
+  FeVarbInfo,
+  VarbValueInfo,
+} from "../../SectionsMeta/Info";
 import { StateSections } from "../../StateSections/StateSections";
+import { EditorUpdaterVarb } from "../../StateSetters/EditorUpdaterVarb";
 import { SolverSection } from "../../StateSolvers/SolverSection";
 import { SolverVarb } from "../../StateSolvers/SolverVarb";
 
@@ -11,11 +17,16 @@ interface UpdateValueAction extends VarbValueInfo {
   type: "updateValue";
   value: StateValue;
 }
+interface UpdateValueFromEditorAction extends FeVarbInfo {
+  type: "updateValueFromContent";
+  contentState: ContentState;
+}
 
 export type SectionsAction =
   | { type: "setState"; sections: StateSections }
   | RemoveSelfAction
-  | UpdateValueAction;
+  | UpdateValueAction
+  | UpdateValueFromEditorAction;
 
 export const sectionsReducer: React.Reducer<StateSections, SectionsAction> = (
   previousSections,
@@ -40,6 +51,20 @@ export const sectionsReducer: React.Reducer<StateSections, SectionsAction> = (
       });
       varb.directUpdateAndSolve(action.value);
       return varb.sectionsShare.sections;
+    }
+    case "updateValueFromContent": {
+      const { contentState } = action;
+      const solverVarb = SolverVarb.init({
+        ...action,
+        sectionsShare,
+      });
+
+      const editorVarb = new EditorUpdaterVarb(
+        solverVarb.getterVarbBase.getterVarbProps
+      );
+      const value = editorVarb.valueFromContentState(contentState);
+      solverVarb.editorUpdateAndSolve(value);
+      return solverVarb.sectionsShare.sections;
     }
   }
 };

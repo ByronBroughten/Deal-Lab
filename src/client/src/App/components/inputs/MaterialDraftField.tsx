@@ -1,4 +1,4 @@
-import { Editor, EditorState, EditorProps } from "draft-js";
+import { Editor, EditorProps, EditorState } from "draft-js";
 import React from "react";
 import useFocusEditor from "../../modules/customHooks/useFocusEditor";
 
@@ -9,7 +9,10 @@ type Props = EditorProps & {
   component: typeof Editor;
   handleOnChange: (newEditorState: EditorState) => void;
 };
-export default React.forwardRef(function DraftField(props: Props, ref) {
+export const MaterialDraftField = React.forwardRef(function MaterialDraftField(
+  props: Props,
+  ref
+) {
   const { component: DraftEditor, editorRef, handleOnChange, ...rest } = props;
   // DraftEditor is the straight draft-js editor component being used
 
