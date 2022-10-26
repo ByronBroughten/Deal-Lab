@@ -7,7 +7,7 @@ import { SectionPackRes } from "../../client/src/App/sharedWithServer/apiQueries
 import { numObj } from "../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsVarbs/baseValues/NumObj";
 import { stringObj } from "../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsVarbs/baseValues/StringObj";
 import { Id } from "../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsVarbs/id";
-import { AutoSyncStatus } from "../../client/src/App/sharedWithServer/SectionsMeta/relSectionVarbs/relVarbs";
+import { AutoSyncControl } from "../../client/src/App/sharedWithServer/SectionsMeta/relSectionVarbs/relVarbs";
 import { PackBuilderSection } from "../../client/src/App/sharedWithServer/StatePackers.ts/PackBuilderSection";
 import { runApp } from "../../runApp";
 import { SetterTesterSection } from "./../../client/src/App/sharedWithServer/StateSetters/TestUtils/SetterTesterSection";
@@ -106,7 +106,7 @@ describe(testedRoute, () => {
     property.varb("price").updateValue(original.price);
     property.varb("displayName").updateValue(original.displayName);
     property.updateValues({
-      syncStatus: "autoSyncOn" as AutoSyncStatus,
+      autoSyncControl: "autoSyncOn" as AutoSyncControl,
     });
 
     reqs.addSection.body = {

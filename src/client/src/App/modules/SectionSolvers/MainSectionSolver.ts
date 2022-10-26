@@ -1,3 +1,4 @@
+import isEqual from "fast-deep-equal";
 import {
   SectionValues,
   SomeSectionValues,
@@ -5,6 +6,10 @@ import {
 import { SelfChildName } from "../../sharedWithServer/SectionsMeta/childSectionsDerived/ParentName";
 import { SectionPack } from "../../sharedWithServer/SectionsMeta/childSectionsDerived/SectionPack";
 import { FeParentInfo } from "../../sharedWithServer/SectionsMeta/Info";
+import {
+  AutoSyncControl,
+  SyncStatus,
+} from "../../sharedWithServer/SectionsMeta/relSectionVarbs/relVarbs";
 import { SectionNameByType } from "../../sharedWithServer/SectionsMeta/SectionNameByType";
 import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
 import { GetterSections } from "../../sharedWithServer/StateGetters/GetterSections";
@@ -73,16 +78,15 @@ export class MainSectionSolver<
     if (!this.isSaved) {
       return "unsaved";
     } else {
-      return "changesSynced";
-      // let sectionPack = this.packMaker.makeSectionPack();
-      // let { asSavedPack } = this;
-      // sectionPack = this.feUserSolver.prepForCompare(sectionPack);
-      // asSavedPack = this.feUserSolver.prepForCompare(asSavedPack);
-      // if (isEqual(sectionPack, asSavedPack)) {
-      //   return "changesSynced";
-      // } else {
-      //   return "unsyncedChanges";
-      // }
+      let sectionPack = this.packMaker.makeSectionPack();
+      let { asSavedPack } = this;
+      sectionPack = this.feUserSolver.prepForCompare(sectionPack);
+      asSavedPack = this.feUserSolver.prepForCompare(asSavedPack);
+      if (isEqual(sectionPack, asSavedPack)) {
+        return "changesSynced";
+      } else {
+        return "unsyncedChanges";
+      }
     }
   }
   removeSelf() {
@@ -135,13 +139,16 @@ export class MainSectionSolver<
   }
   deleteSelfFromIndex() {
     this.indexSolver.deleteFromIndex(this.dbId);
+
+    // the indexSolver should handle the sync stuff with deletes
   }
   saveNew() {
     const dateTime = timeS.now();
     this.solver.updateValuesAndSolve({
       dateTimeFirstSaved: dateTime,
       dateTimeLastSaved: dateTime,
-      syncStatus: "autoSyncOff",
+      syncStatus: "changesSynced" as SyncStatus,
+      autoSyncControl: "autoSyncOff" as AutoSyncControl,
     } as Partial<SectionValues<SN>>);
     const sectionPack = this.packMaker.makeSectionPack();
     this.indexSolver.addItem(sectionPack);

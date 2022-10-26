@@ -4,7 +4,7 @@ import { ChildSectionName } from "../../sharedWithServer/SectionsMeta/childSecti
 import { SectionPack } from "../../sharedWithServer/SectionsMeta/childSectionsDerived/SectionPack";
 import { FeSectionInfo } from "../../sharedWithServer/SectionsMeta/Info";
 import { FeStoreNameByType } from "../../sharedWithServer/SectionsMeta/relSectionsDerived/relNameArrs/FeStoreName";
-import { AutoSyncStatus } from "../../sharedWithServer/SectionsMeta/relSectionVarbs/relVarbs";
+import { AutoSyncControl } from "../../sharedWithServer/SectionsMeta/relSectionVarbs/relVarbs";
 import { SectionNameByType } from "../../sharedWithServer/SectionsMeta/SectionNameByType";
 import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
 import { PackBuilderSection } from "../../sharedWithServer/StatePackers.ts/PackBuilderSection";
@@ -96,8 +96,8 @@ export class FeUserSolver extends SolverSectionBase<"feUser"> {
             const getterChild = child.get;
             if (getterChild.isSectionType("hasIndexStore")) {
               if (
-                getterChild.valueNext("syncStatus") ===
-                ("autoSyncOn" as AutoSyncStatus)
+                getterChild.valueNext("autoSyncControl") ===
+                ("autoSyncOn" as AutoSyncControl)
               ) {
                 const indexBuilder = this.indexBuilder(getterChild.sectionName);
                 if (indexBuilder.isSaved(getterChild.dbId)) {

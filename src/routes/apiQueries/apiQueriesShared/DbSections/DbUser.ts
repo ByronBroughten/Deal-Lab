@@ -25,7 +25,7 @@ import {
 import { SectionPack } from "../../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/SectionPack";
 import { FeSectionInfo } from "../../../../client/src/App/sharedWithServer/SectionsMeta/Info";
 import { feStoreNameS } from "../../../../client/src/App/sharedWithServer/SectionsMeta/relSectionsDerived/relNameArrs/FeStoreName";
-import { AutoSyncStatus } from "../../../../client/src/App/sharedWithServer/SectionsMeta/relSectionVarbs/relVarbs";
+import { AutoSyncControl } from "../../../../client/src/App/sharedWithServer/SectionsMeta/relSectionVarbs/relVarbs";
 import { GetterSection } from "../../../../client/src/App/sharedWithServer/StateGetters/GetterSection";
 import { PackBuilderSection } from "../../../../client/src/App/sharedWithServer/StatePackers.ts/PackBuilderSection";
 import { Obj } from "../../../../client/src/App/sharedWithServer/utils/Obj";
@@ -296,8 +296,8 @@ export class DbUser extends DbSectionsQuerierBase {
             const getterChild = child.get;
             if (getterChild.isSectionType("hasIndexStore")) {
               if (
-                getterChild.valueNext("syncStatus") ===
-                ("autoSyncOn" as AutoSyncStatus)
+                getterChild.valueNext("autoSyncControl") ===
+                ("autoSyncOn" as AutoSyncControl)
               ) {
                 const { sectionName, dbId } = getterChild;
                 const dbStoreName = sectionToMainDbStoreName(sectionName);
@@ -307,8 +307,8 @@ export class DbUser extends DbSectionsQuerierBase {
                   child.loadSelf(childPack as any as SectionPack<any>);
                 } else {
                   child.updater
-                    .varb("syncStatus")
-                    .updateValue("autoSyncOff" as AutoSyncStatus);
+                    .varb("autoSyncControl")
+                    .updateValue("autoSyncOff" as AutoSyncControl);
                 }
               }
             }

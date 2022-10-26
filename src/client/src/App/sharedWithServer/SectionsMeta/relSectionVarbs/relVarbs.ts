@@ -55,7 +55,8 @@ function filterRelVarbsByType<SN extends SectionName, VLN extends ValueName>(
   return partial as RelVarbsByType<SN, VLN>;
 }
 
-export type AutoSyncStatus = "autoSyncOff" | "autoSyncOn";
+export type SyncStatus = "unsyncedChanges" | "changesSynced";
+export type AutoSyncControl = "autoSyncOff" | "autoSyncOn";
 
 export type StringPreVarbsFromNames<VN extends readonly string[]> = Record<
   VN[number],
@@ -84,7 +85,10 @@ export const relVarbsS = {
       dateTimeFirstSaved: relVarb("dateTime"),
       dateTimeLastSaved: relVarb("dateTime"),
       syncStatus: relVarb("string", {
-        initValue: "autoSyncOff" as AutoSyncStatus,
+        initValue: "unsyncedChanges",
+      }),
+      autoSyncControl: relVarb("string", {
+        initValue: "autoSyncOff" as AutoSyncControl,
       }),
     } as const;
   },

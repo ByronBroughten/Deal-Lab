@@ -8,6 +8,15 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
+// Additional speed: Make savableSections have a changesSynced varb
+//    - Whenever a section is saved, updatesSaved, or loaded, set its changesSynced
+//      varb is set to true
+//    - when it is true, and when a value is changed that belongs
+//      to one of those sections (excluding solvableText)
+//      changesSynced is set to false for the section and all of its
+//      anscestors that are also saved
+//    - this could be in the Setter or Solver layer
+
 // If I'm going to make tables faster and increase functionality, here's how:
 // There are going to be example properties, loans, and mgmts.
 // I want the tables to reflect those
@@ -28,9 +37,6 @@ AppRegistry.runApplication("App", {
 
 // - Fix the mgmt inputs so that loding a management works properly with sync
 // - In the load menu, highlight the one that is loaded with green or purple
-// - Implement "doEquals" in additive and one-time cost lists for the demo
-//   - Extrapolate the logic so it works on all four list types
-//   - There is some code in "ListItemOngoing"
 // - Add an icon option to the sectionBtns
 // - Make compare and actions have an icon
 // - Maybe change load button's icons and label
@@ -43,19 +49,6 @@ AppRegistry.runApplication("App", {
 //   - Give each of them child defaults
 // - Think about changing all numbers and strings to numObj and stringObj
 // - Get numObj editorText to display updated in-entity text. But also, it should keep depreciated in-entity text. It has to cache.
-// - Should property price count as an upfront expense?
-
-// Additional speed: Make savableSections have a changesSynced varb
-// The next biggest bang for is to prevent NumObjEditor
-// from re-rendering.
-//    - I can perform value updates from dispatch
-//    - Whenever a section is saved, updatesSaved, or loaded, its changesSynced
-//      varb is set to true
-//    - when it is true, and when a value is changed that belongs
-//      to one of those sections (excluding solvableText)
-//      changesSynced is set to false for the section and all of its
-//      anscestors that are also saved
-//    - this could be in the Setter or Solver layer
 
 // Extra stuff
 // - Load rows according to whether autoSync is On

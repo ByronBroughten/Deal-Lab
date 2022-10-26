@@ -1,3 +1,4 @@
+import React from "react";
 import styled, { css } from "styled-components";
 import { useMainSectionActor } from "../../../../modules/sectionActorHooks/useMainSectionActor";
 import { FeSectionInfo } from "../../../../sharedWithServer/SectionsMeta/Info";
@@ -27,10 +28,25 @@ export function StoreSectionSaveStatus<
       children: "Unsynced Changes",
     },
   } as const;
+  const [saveStatus, setSaveStatus] = React.useState(
+    () => mainSection.saveStatus
+  );
+
+  React.useEffect(() => {
+    let doIt = true;
+    setTimeout(() => {
+      if (doIt) {
+        setSaveStatus(mainSection.saveStatus);
+      }
+    }, 500);
+    return () => {
+      doIt = false;
+    };
+  });
   return (
     <Styled
       {...{
-        ...btnProps[mainSection.saveStatus],
+        ...btnProps[saveStatus],
         className: `StoreSectionSaveStatus ${className ?? ""}`,
       }}
     />

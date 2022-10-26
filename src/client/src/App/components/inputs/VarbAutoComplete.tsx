@@ -99,9 +99,16 @@ const VarbAutoComplete = React.forwardRef(
     );
     const { value: keyBool, toggle: clearSelect } = useToggle();
 
+    // const [open, setOpen] = React.useState(false);
+    // const loading = open && autoCompleteOptions.length === 0;
+    // https://mui.com/material-ui/react-autocomplete/#load-on-open
     return (
       <Styled className={`VarbAutoComplete-root ${className ?? ""}`}>
         <Autocomplete
+          // open={open}
+          // onOpen={() => setOpen(true)}
+          // onClose={() => setOpen(false)}
+          // loading={loading}
           PopperComponent={(props: PopperProps) => (
             <PopperCustom {...props} ref={ref} />
           )}
@@ -111,9 +118,9 @@ const VarbAutoComplete = React.forwardRef(
           key={`${keyBool}`}
           id="VarbAutoComplete-autoComplete"
           onInputChange={(_, newInputValue) => setInputValue(newInputValue)}
+          options={autoCompleteOptions}
           {...{
             value,
-            options: autoCompleteOptions,
             inputValue,
             ...("collectionName" in autoCompleteOptions[0] && {
               groupBy: (option: any) => option.collectionName,
