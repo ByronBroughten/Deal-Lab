@@ -38,8 +38,14 @@ export function mgmtRelVarbs(): RelVarbs<"mgmt"> {
         },
       ],
     }),
-    [rentCut.percent]: relVarbS.percentObj("Rent cut", {
+    rentCutPercentEditor: relVarbS.percentObj("Rent cut", {
       initNumber: 5,
+    }),
+    [rentCut.percent]: relVarbS.percentObj("Rent cut", {
+      updateFnName: "loadSolvableText",
+      updateFnProps: {
+        varbInfo: relVarbInfoS.local("rentCutPercentEditor"),
+      },
       inUpdateSwitchProps: [
         {
           switchInfo: relVarbInfoS.local(rentCut.switch),
@@ -50,19 +56,27 @@ export function mgmtRelVarbs(): RelVarbs<"mgmt"> {
       ],
       displayNameEnd: " percent",
     }),
-    // SectionsMeta is the highest level.
     [rentCutDollars.switch]: relVarb("string", {
       initValue: "monthly",
     }),
-    [rentCutDollars.monthly]: relVarbS.moneyMonth("Rent cut", {
+    rentCutDollarsEditor: relVarbS.moneyObj("Rent cut dollars", {
       initNumber: 0,
+      displayNameEnd: " rent cut dollars input",
+    }),
+    [rentCutDollars.monthly]: relVarbS.moneyMonth("Rent cut", {
       displayNameEnd: " dollars monthly",
+      updateFnName: "loadSolvableText",
+      updateFnProps: {
+        switch: relVarbInfoS.local(rentCut.switch),
+        varbInfo: relVarbInfoS.local("rentCutDollarsEditor"),
+      },
       inUpdateSwitchProps: [
         {
           switchInfo: relVarbInfoS.local(rentCut.switch),
           switchValue: "percent",
           updateFnName: "simpleMultiply",
           updateFnProps: {
+            switch: relVarbInfoS.local(rentCut.switch),
             leftSide: relVarbInfoS.local(rentCut.decimal),
             rightSide: relVarbInfoS.pibling(
               "propertyGeneral",
@@ -76,6 +90,11 @@ export function mgmtRelVarbs(): RelVarbs<"mgmt"> {
       ],
     }),
     [rentCutDollars.yearly]: relVarbS.moneyYear("Rent cut", {
+      displayNameEnd: " dollars yearly",
+      updateFnName: "loadSolvableText",
+      updateFnProps: {
+        varbInfo: relVarbInfoS.local("rentCutDollarsEditor"),
+      },
       inUpdateSwitchProps: [
         {
           switchInfo: relVarbInfoS.local(rentCut.switch),
@@ -93,7 +112,6 @@ export function mgmtRelVarbs(): RelVarbs<"mgmt"> {
         },
         relUpdateSwitch.monthlyToYearly("rentCutDollars"),
       ],
-      displayNameEnd: " dollars yearly",
     }),
     vacancyRatePercent: relVarbS.percentObj("Vacancy rate", {
       initNumber: 5,

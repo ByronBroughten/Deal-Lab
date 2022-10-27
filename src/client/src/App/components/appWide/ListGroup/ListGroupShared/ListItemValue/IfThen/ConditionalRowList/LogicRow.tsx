@@ -36,7 +36,7 @@ export default function LogicRow({ feId, idx = "" }: Props) {
           name: typeVarb.varbId,
           value: type,
           onChange: (event: any) => {
-            sections.handleChange({ currentTarget: event.target });
+            sections.updateVarbCurrentTarget({ currentTarget: event.target });
           },
           className: "select-logic-word",
         }}

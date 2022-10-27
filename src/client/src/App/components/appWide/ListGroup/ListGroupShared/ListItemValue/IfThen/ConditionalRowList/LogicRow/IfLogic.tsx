@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useSetterSection } from "../../../../../../../../sharedWithServer/stateClassHooks/useSetterSection";
-import { useSetterSections } from "../../../../../../../../sharedWithServer/stateClassHooks/useSetterSections";
+import { useUpdateVarbCurrentTarget } from "../../../../../../../../sharedWithServer/stateClassHooks/useUpdateVarbCurrentTarget";
 import { listOperators } from "../../../../../../../../sharedWithServer/StateSolvers/SolveValueVarb/ConditionalValueSolver";
 import MaterialSelect from "../../../../../../../inputs/MaterialSelect";
 import { NumObjEntityEditor } from "../../../../../../../inputs/NumObjEntityEditor";
@@ -10,7 +10,7 @@ import LogicOperators from "../../../../../../LogicOperators";
 
 export default function IfLogic({ rowId }: { rowId: string }) {
   const sectionName = "conditionalRow";
-  const sections = useSetterSections();
+  const updateVarbCurrentTarget = useUpdateVarbCurrentTarget();
   const row = useSetterSection({
     sectionName,
     feId: rowId,
@@ -29,7 +29,7 @@ export default function IfLogic({ rowId }: { rowId: string }) {
   const onChange = (
     event: React.ChangeEvent<{ name?: string; value: any }>
   ) => {
-    sections.handleChange({ currentTarget: event.target });
+    updateVarbCurrentTarget({ currentTarget: event.target });
   };
 
   return (

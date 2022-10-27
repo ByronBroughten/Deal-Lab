@@ -12,7 +12,7 @@ import {
   RelInVarbInfo,
   RelOutVarbInfo,
 } from "./childSectionsDerived/RelInOutVarbInfo";
-import { relSections } from "./relSectionVarbs";
+import { relSections } from "./relSectionsVarbs";
 import {
   DisplayName,
   RelVarb,

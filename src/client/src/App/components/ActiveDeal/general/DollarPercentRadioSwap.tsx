@@ -1,14 +1,20 @@
 import { FormControl, FormControlLabel, RadioGroup } from "@material-ui/core";
 import { FeSectionInfo } from "../../../sharedWithServer/SectionsMeta/Info";
-import { useHandleChange } from "../../../sharedWithServer/stateClassHooks/useHandleChange";
 import { useSetterSection } from "../../../sharedWithServer/stateClassHooks/useSetterSection";
+import { useUpdateVarbCurrentTarget } from "../../../sharedWithServer/stateClassHooks/useUpdateVarbCurrentTarget";
 import DualInputsRadioSwap from "../../general/DualInputsRadioSwap";
 import Radio from "../../general/Radio";
 import { NumObjEntityEditor } from "../../inputs/NumObjEntityEditor";
 
 type Props = {
   feInfo: FeSectionInfo;
-  names: { switch: string; percent: string; dollars: string };
+  names: {
+    switch: string;
+    percent: string;
+    dollars: string;
+    percentEditor: string;
+    dollarsEditor: string;
+  };
   title: string;
   percentAdornment?: string;
   dollarEnding?: string;
@@ -19,16 +25,18 @@ const radios = {
   percent: "%",
   dollars: "$",
 };
-export default function DollarPercentRadioSwap({
+export function DollarPercentRadioSwap({
   feInfo,
   names,
   title,
   percentAdornment = "%",
   className,
 }: Props) {
-  const handleChange = useHandleChange();
+  const updateVarbCurrentTarget = useUpdateVarbCurrentTarget();
   const section = useSetterSection(feInfo);
 
+  const percentEditor = section.get.varb(names.percentEditor);
+  const dollarsEditor = section.get.varb(names.dollarsEditor);
   const dollarsVarb = section.get.varb(names.dollars);
   const percentVarb = section.get.varb(names.percent);
   const switchVarb = section.get.varb(names.switch);
@@ -52,7 +60,7 @@ export default function DollarPercentRadioSwap({
             label="%"
             name={switchVarb.varbId}
             checked={radio === "%"}
-            onChange={handleChange}
+            onChange={updateVarbCurrentTarget}
           />
           <FormControlLabel
             value="dollars"
@@ -60,7 +68,7 @@ export default function DollarPercentRadioSwap({
             label="$"
             name={switchVarb.varbId}
             checked={radio === "$"}
-            onChange={handleChange}
+            onChange={updateVarbCurrentTarget}
           />
         </RadioGroup>
       </FormControl>
@@ -70,7 +78,7 @@ export default function DollarPercentRadioSwap({
             <NumObjEntityEditor
               className="RadioSwap-percentEditor"
               label={title}
-              feVarbInfo={percentVarb.feVarbInfo}
+              feVarbInfo={percentEditor.feVarbInfo}
               endAdornment={`${percentAdornment} ${
                 dollarsVarb.numberOrQuestionMark === "?"
                   ? ""
@@ -84,7 +92,7 @@ export default function DollarPercentRadioSwap({
             <NumObjEntityEditor
               className="RadioSwap-dollarsEditor"
               label={title}
-              feVarbInfo={dollarsVarb.feVarbInfo}
+              feVarbInfo={dollarsEditor.feVarbInfo}
               endAdornment={`${
                 percentVarb.numberOrQuestionMark === "?"
                   ? ""

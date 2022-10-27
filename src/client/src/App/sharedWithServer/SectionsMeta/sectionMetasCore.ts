@@ -6,7 +6,7 @@ import {
   GeneratedSections,
   GenPropName,
 } from "./generatedSections";
-import { relSections, RelSections } from "./relSectionVarbs";
+import { relSections, RelSections } from "./relSectionsVarbs";
 import { GeneralRelSectionVarbs } from "./relSectionVarbs/relSection";
 import { SectionName, sectionNames } from "./SectionName";
 import { AllSectionTraits, allSectionTraits } from "./sectionsTraits";

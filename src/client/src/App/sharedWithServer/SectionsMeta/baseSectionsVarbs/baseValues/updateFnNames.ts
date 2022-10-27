@@ -20,6 +20,7 @@ export const numObjUpdateFnNames = [
   "userVarb",
   "virtualNumObj",
   "loadEditorSolvableText",
+  "loadSolvableText",
   "loadNumObj",
 ] as const;
 export type NumObjUpdateFnName = typeof numObjUpdateFnNames[number];

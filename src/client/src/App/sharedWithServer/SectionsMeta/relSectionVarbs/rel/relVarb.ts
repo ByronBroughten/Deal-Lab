@@ -3,6 +3,7 @@ import {
   LeftRightPropCalculations,
   SinglePropCalculations,
 } from "../../baseSectionsVarbs/baseValues/calculations";
+import { numObj } from "../../baseSectionsVarbs/baseValues/NumObj";
 import { ChildName } from "../../childSectionsDerived/ChildName";
 import { RelInVarbInfo } from "../../childSectionsDerived/RelInOutVarbInfo";
 import { relVarbInfoS } from "../../childSectionsDerived/RelVarbInfo";
@@ -53,8 +54,19 @@ export const relVarbS = {
     { initNumber, ...partial }: Partial<RelNumObjOptions> = {}
   ): NumObjRelVarb {
     return relVarb("numObj", {
+      ...(initNumber ? { initValue: numObj(initNumber) } : {}),
       displayName,
       ...partial,
+    });
+  },
+  percentObj(
+    displayName: DisplayName,
+    partial: Partial<RelNumObjOptions> = {}
+  ): RelVarbByType["numObj"] {
+    return this.numObj(displayName, {
+      ...partial,
+      unit: "percent",
+      endAdornment: "%",
     });
   },
   get displayNameEditor() {
@@ -92,16 +104,6 @@ export const relVarbS = {
     return this.moneyObj(displayName, {
       ...partial,
       endAdornment: "/year",
-    });
-  },
-  percentObj(
-    displayName: DisplayName,
-    partial: Partial<RelNumObjOptions> = {}
-  ): RelVarbByType["numObj"] {
-    return this.numObj(displayName, {
-      ...partial,
-      unit: "percent",
-      endAdornment: "%",
     });
   },
   sumNums(

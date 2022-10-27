@@ -12,6 +12,7 @@ export type NumberProps = { [name: string]: CalcProp | CalcProp[] };
 type NumProp = { num: CalcProp };
 const solvableTextByArgs = {
   single: {
+    solvableText: ({ num }: NumProp) => `${num}`,
     monthlyToYearly: ({ num }: NumProp) => `${num} * 12`,
     yearlyToMonthly: ({ num }: NumProp) => `${num} / 12`,
     yearsToMonths: ({ num }: NumProp) => `${num} * 12`,

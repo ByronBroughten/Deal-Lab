@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { switchNames } from "../../../../sharedWithServer/SectionsMeta/baseSectionsVarbs/RelSwitchVarb";
 import BasicSectionInfo from "../../../appWide/GeneralSection/MainSection/MainSectionBody/BasicSectionInfo";
 import { useOpenWidth } from "../../../appWide/SectionTitleRow";
-import DollarPercentRadioSwap from "../../general/DollarPercentRadioSwap";
+import { DollarPercentRadioSwap } from "../../general/DollarPercentRadioSwap";
 import VacancyRate from "./BasicMgmtInfo/VacancyRate";
 
 type Props = { feId: string; className?: string };
@@ -33,6 +33,8 @@ export default function BasicMgmtInfo({ feId, className }: Props) {
                       switch: rentCut.switch,
                       percent: rentCut.percent,
                       dollars: rentCutDollars.monthly,
+                      dollarsEditor: "rentCutDollarsEditor",
+                      percentEditor: "rentCutPercentEditor",
                     },
                     feInfo,
                     title: "Cut of rent",

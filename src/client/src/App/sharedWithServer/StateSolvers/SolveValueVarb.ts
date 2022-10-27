@@ -100,13 +100,24 @@ export class SolveValueVarb<
         solvableText: this.solvableTextFromCalcVarbs(),
       };
     },
+    loadSolvableText: (): NumObj => {
+      const { updateFnProps } = this.getterVarb;
+      const varb = this.getterSection.varbByFocalMixed(
+        updateFnProps.varbInfo as RelVarbInfo
+      );
+      return {
+        solvableText: varb.value("numObj").solvableText,
+        mainText: "",
+        entities: [],
+      };
+    },
     calculation: (): NumObj => {
       const solvableText = this.solvableTextFromCalculation();
       return {
         solvableText,
         mainText: "",
         entities: [],
-        // if this line of code is changed
+        // for calculations to load correctly, there must be no entities
       };
     },
     userVarb: (): NumObj => {

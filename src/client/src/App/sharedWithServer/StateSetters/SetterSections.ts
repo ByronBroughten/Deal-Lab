@@ -67,9 +67,7 @@ export class SetterSections extends SetterSectionsBase {
     }
     return true;
   }
-  handleChange({ currentTarget }: { currentTarget: any }) {
-    // you can put a version of this on setterVarb
-
+  updateVarbCurrentTarget({ currentTarget }: { currentTarget: any }) {
     if (this.validateTarget(currentTarget)) {
       const { name, value } = currentTarget;
       const feVarbInfo = GetterVarb.varbIdToVarbInfo(name);

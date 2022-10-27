@@ -37,31 +37,40 @@ export function loanRelVarbs(): RelVarbs<"loan"> {
         },
       ],
     }),
-    [loanBase.percent]: relVarbS.calcVarb("Base loan", {
-      initNumber: 5,
-      unit: "percent",
+    // how do I get the switch to update the varbs?
+    [loanBase.percent]: relVarbS.percentObj("Base loan", {
       displayNameEnd: " percent",
-      endAdornment: "%",
+      updateFnName: "loadSolvableText",
+      updateFnProps: {
+        switch: relVarbInfoS.local(loanBase.switch),
+        varbInfo: relVarbInfoS.local("loanBasePercentEditor"),
+      },
       inUpdateSwitchProps: [
         {
           switchInfo: relVarbInfoS.local(loanBase.switch),
           switchValue: "dollars",
           updateFnName: "decimalToPercent",
           updateFnProps: {
+            switch: relVarbInfoS.local(loanBase.switch),
             num: relVarbInfoS.local(loanBase.decimal),
           },
         },
       ],
     }),
-    [loanBase.dollars]: relVarbS.calcVarb("Base loan", {
+    [loanBase.dollars]: relVarbS.moneyObj("Base loan", {
       displayNameEnd: " dollars",
-      startAdornment: "$",
+      updateFnName: "loadSolvableText",
+      updateFnProps: {
+        switch: relVarbInfoS.local(loanBase.switch),
+        varbInfo: relVarbInfoS.local("loanBaseDollarsEditor"),
+      },
       inUpdateSwitchProps: [
         {
           switchInfo: relVarbInfoS.local(loanBase.switch),
           switchValue: "percent",
           updateFnName: "simpleMultiply",
           updateFnProps: {
+            switch: relVarbInfoS.local(loanBase.switch),
             leftSide: relVarbInfoS.local(loanBase.decimal),
             rightSide: relVarbInfoS.pibling(
               "propertyGeneral",
@@ -74,6 +83,12 @@ export function loanRelVarbs(): RelVarbs<"loan"> {
           },
         },
       ],
+    }),
+    loanBaseDollarsEditor: relVarbS.moneyObj("Loan amount", {
+      initNumber: 0,
+    }),
+    loanBasePercentEditor: relVarbS.percentObj("Loan amount", {
+      initNumber: 5,
     }),
     loanTotalDollars: relVarbS.sumMoney("Loan amount", [
       relVarbInfoS.local("loanBaseDollars"),

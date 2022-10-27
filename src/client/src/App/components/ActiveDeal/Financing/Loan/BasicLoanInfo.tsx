@@ -5,7 +5,7 @@ import theme from "../../../../theme/Theme";
 import BasicSectionInfo from "../../../appWide/GeneralSection/MainSection/MainSectionBody/BasicSectionInfo";
 import StandardLabel from "../../../general/StandardLabel";
 import { NumObjEntityEditor } from "../../../inputs/NumObjEntityEditor";
-import DollarPercentRadioSwap from "../../general/DollarPercentRadioSwap";
+import { DollarPercentRadioSwap } from "../../general/DollarPercentRadioSwap";
 import { PiCalculationControl } from "./PiCalculationControl";
 
 type Props = { feId: string; className?: string };
@@ -29,6 +29,8 @@ export default function BasicLoanInfo({ feId, className }: Props) {
                     percent: "loanBasePercent",
                     dollars: "loanBaseDollars",
                     switch: "loanBaseUnitSwitch",
+                    dollarsEditor: "loanBaseDollarsEditor",
+                    percentEditor: "loanBasePercentEditor",
                   },
                   feInfo: loan.feInfo,
                   title: "Base loan amount",

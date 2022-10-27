@@ -8,15 +8,6 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-// Additional speed: Make savableSections have a changesSynced varb
-//    - Whenever a section is saved, updatesSaved, or loaded, set its changesSynced
-//      varb is set to true
-//    - when it is true, and when a value is changed that belongs
-//      to one of those sections (excluding solvableText)
-//      changesSynced is set to false for the section and all of its
-//      anscestors that are also saved
-//    - this could be in the Setter or Solver layer
-
 // If I'm going to make tables faster and increase functionality, here's how:
 // There are going to be example properties, loans, and mgmts.
 // I want the tables to reflect those
@@ -35,7 +26,16 @@ AppRegistry.runApplication("App", {
 //   by using the userVarb dbId, which shouldn't have a duplicate.
 // - For speed, changing the save check should give the most bang for buck
 
+// - When I flip the switch from one editor to another, the value from the
+//   last editor is still retained
+// - I think the problems will be solved if I use one editor
+//   for dollars and one for percent.
+//   then the actual dollars and percent values will both update
+//   accordingly based on the switches
+//
+
 // - Fix the mgmt inputs so that loding a management works properly with sync
+
 // - In the load menu, highlight the one that is loaded with green or purple
 // - Add an icon option to the sectionBtns
 // - Make compare and actions have an icon
