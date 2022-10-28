@@ -8,8 +8,9 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
+// fix the loading bug
+
 // If I'm going to make tables faster and increase functionality, here's how:
-// There are going to be example properties, loans, and mgmts.
 // I want the tables to reflect those
 // - When creating the default user, initialize the tables
 // - When creating a user, send the tables to the db
@@ -21,21 +22,7 @@ AppRegistry.runApplication("App", {
 //   the front-end table accordingly in real-time
 
 // Before Marketing
-// - The userVarb info doesn't know which userVarbList to access the varb from
-//   The problem could be solved either by making a new kind of info or just
-//   by using the userVarb dbId, which shouldn't have a duplicate.
-// - For speed, changing the save check should give the most bang for buck
-
-// - When I flip the switch from one editor to another, the value from the
-//   last editor is still retained
-// - I think the problems will be solved if I use one editor
-//   for dollars and one for percent.
-//   then the actual dollars and percent values will both update
-//   accordingly based on the switches
-//
-
-// - Fix the mgmt inputs so that loding a management works properly with sync
-
+// - Eliminate the unnecessary loading when going to the tables, variables, and whatnot
 // - In the load menu, highlight the one that is loaded with green or purple
 // - Add an icon option to the sectionBtns
 // - Make compare and actions have an icon

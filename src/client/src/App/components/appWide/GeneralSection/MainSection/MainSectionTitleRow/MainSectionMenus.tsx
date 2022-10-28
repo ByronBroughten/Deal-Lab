@@ -7,6 +7,7 @@ import {
 } from "../../../../../sharedWithServer/SectionsMeta/SectionNameByType";
 import { useAuthStatus } from "../../../../../sharedWithServer/stateClassHooks/useAuthStatus";
 import theme from "../../../../../theme/Theme";
+import { DomLink } from "../../../../ActiveDeal/general/DomLink";
 import { DisplayNameSectionList } from "../../../DisplayNameSectionList";
 import ListMenuBtn from "../../../ListGroup/ListGroupShared/ListMenuSimple/ListMenuBtn";
 import { StoreSectionActionMenu } from "../StoreSectionActionMenu";
@@ -75,14 +76,12 @@ export function MainSectionMenus({
         />
       )}
       {sectionNameS.is(sectionName, "hasCompareTable") && (
-        <ListMenuBtn
-          {...{
-            className: "MainSectionMenus-item",
-            href: constants.feRoutes.mainTables[sectionName],
-          }}
+        <DomLink
+          className="MainSectionMenus-item"
+          to={constants.feRoutes.mainTables[sectionName]}
         >
-          {"Compare"}
-        </ListMenuBtn>
+          <ListMenuBtn>{"Compare"}</ListMenuBtn>
+        </DomLink>
       )}
     </Styled>
   );

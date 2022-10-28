@@ -2,10 +2,10 @@ import { AppBar, Toolbar } from "@material-ui/core";
 import { rem } from "polished";
 import React from "react";
 import { BsFillHouseDoorFill } from "react-icons/bs";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { constants } from "../Constants";
 import theme from "../theme/Theme";
+import { DomLink } from "./ActiveDeal/general/DomLink";
 import { NavBarBtns } from "./NavBar/NavBarBtns";
 import NavBtn from "./NavBar/NavBtn";
 import { NavUserMenu } from "./NavBar/NavUserMenu";
@@ -18,13 +18,13 @@ export function NavBar() {
       <Toolbar disableGutters={true}>
         <div className="NavBar-leftSide">
           <NavUserMenu />
-          <Link className="NavBar-navBtnLink" to="/">
+          <DomLink className="NavBar-navBtnLink" to="/">
             <NavBtn
               className="NavBar-brandBtn"
               icon={<BsFillHouseDoorFill className="NavBar-brandIcon" />}
               text={<span className="NavBar-brandName">{appTitle}</span>}
             />
-          </Link>
+          </DomLink>
         </div>
         <NavBarBtns />
       </Toolbar>
@@ -62,13 +62,6 @@ const Styled = styled(AppBar)`
   .NavBar-brandName {
     margin-left: 4px;
     font-size: ${constants.isBeta ? "16px" : "20px"};
-  }
-
-  .NavBar-navBtnLink {
-    display: inherit;
-    align-items: inherit;
-    height: inherit;
-    text-decoration: none;
   }
 
   .NavBar-demoBtnIcon {

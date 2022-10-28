@@ -7,6 +7,7 @@ import { useUserData } from "../../modules/customHooks/useAuthAndUserData";
 import { useFeUser } from "../../modules/sectionActorHooks/useFeUser";
 import { AnalyzerPlan } from "../../sharedWithServer/SectionsMeta/baseSectionsVarbs";
 import theme from "../../theme/Theme";
+import { DomLink } from "../ActiveDeal/general/DomLink";
 import { StandardProps } from "../general/StandardProps";
 import NavDropDown from "./NavDropDown";
 
@@ -29,12 +30,14 @@ export function NavUserMenu() {
     >
       <div className="NavUserMenu-dropdown">
         <BtnDiv>
-          <Button href={constants.feRoutes.userLists}>{`Your lists`}</Button>
+          <DomLink to={constants.feRoutes.userLists}>
+            <Button>{`Your lists`}</Button>
+          </DomLink>
         </BtnDiv>
         <BtnDiv>
-          <Button
-            href={constants.feRoutes.userVariables}
-          >{`Your variables`}</Button>
+          <DomLink to={constants.feRoutes.userVariables}>
+            <Button>{`Your variables`}</Button>
+          </DomLink>
         </BtnDiv>
         {/* <BtnDiv>
           <Button href={constants.feRoutes.userLists}>{`Your lists`}</Button>
