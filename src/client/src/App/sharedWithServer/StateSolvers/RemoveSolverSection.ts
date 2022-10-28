@@ -81,9 +81,6 @@ export class RemoveSolverSection<
   }
   private removeOutEntitiesOfCurrentInEntities() {
     const { selfAndDescendantVarbInfos } = this.get;
-    // the outEntity of propertyGeneral was not deleted
-    // that's because the old property was not actually removed
-    // is that right?
     for (const varbInfo of selfAndDescendantVarbInfos) {
       const solverVarb = this.solverVarb(varbInfo);
       solverVarb.removeOutEntitiesOfCurrentInEntities();

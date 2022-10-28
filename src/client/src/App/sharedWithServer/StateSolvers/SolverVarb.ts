@@ -77,7 +77,6 @@ export class SolverVarb<
     this.solveOutVarbs();
   }
   editorUpdateAndSolve(newValue: StateValue): void {
-    // can probably be replaced by directUpdateAndSolve
     this.updateValue(newValue);
     this.solveOutVarbs();
   }
@@ -105,11 +104,6 @@ export class SolverVarb<
     const { inEntities } = this.get;
     this.addOutEntitiesFromInEntities(inEntities);
   }
-  // Here's a possible problem:
-  // When I load a deal, I load propertyGeneral.
-  // That propertyGeneral won't necessarily have the outEntities
-  // It should.
-
   removeOutEntitiesOfCurrentInEntities() {
     const { inEntities } = this.get;
     this.removeOutEntitiesOfInEntities(inEntities);
@@ -171,10 +165,6 @@ export class SolverVarb<
           entityId: inEntity.entityId,
           feId: this.get.feId,
         });
-        // I'm trying to remove outputItem.value.5Ll_JuF4YK7k.wvI3YRiQy4eT
-        // from deal.totalInvestment.k5ZrNgoTvVb9
-
-        // deal.totalInvestment.k5ZrNgoTvVb9 actually has outEntity outputItem.value.5Ll_JuF4YK7k.wvI3YRiQy4eT
       }
     }
   }
@@ -218,6 +208,15 @@ export class SolverVarb<
       outEntities: nextOutEntities,
     });
   }
+  // Hmm. Why does it already have the outEntity?
+  // The section being loaded is expected to have a new
+  // feId, but it doesn't, that's why.
+
+  // Here's the problem: the section isn't actually being removed.
+
+  // When I load a section that is Solver or higher, I have to do
+  // all the things that I normally do when I remove a section.
+  // I think that's what I'm missing.
   private addOutEntity(outEntity: OutEntity): void {
     if (this.hasOutEntity(outEntity)) {
       throw new Error(

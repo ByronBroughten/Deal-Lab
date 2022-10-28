@@ -8,22 +8,7 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-// fix the loading bug
-
-// If I'm going to make tables faster and increase functionality, here's how:
-// I want the tables to reflect those
-// - When creating the default user, initialize the tables
-// - When creating a user, send the tables to the db
-// - When logging in, load the saved table (and check it)
-//   - remove extra rows
-//   - add missing rows (to the front)
-//   - update row information
-// - When adding, updating, or deleting a section, adjust
-//   the front-end table accordingly in real-time
-
 // Before Marketing
-// - Eliminate the unnecessary loading when going to the tables, variables, and whatnot
-// - In the load menu, highlight the one that is loaded with green or purple
 // - Add an icon option to the sectionBtns
 // - Make compare and actions have an icon
 // - Maybe change load button's icons and label
@@ -36,6 +21,18 @@ AppRegistry.runApplication("App", {
 //   - Give each of them child defaults
 // - Think about changing all numbers and strings to numObj and stringObj
 // - Get numObj editorText to display updated in-entity text. But also, it should keep depreciated in-entity text. It has to cache.
+// - In the load menu, highlight the one that is loaded with green or purple
+
+// If I'm going to make tables faster and increase functionality, here's how:
+// I want the tables to reflect those
+// - When creating the default user, initialize the tables
+// - When creating a user, send the tables to the db
+// - When logging in, load the saved table (and check it)
+//   - remove extra rows
+//   - add missing rows (to the front)
+//   - update row information
+// - When adding, updating, or deleting a section, adjust
+//   the front-end table accordingly in real-time
 
 // Extra stuff
 // - Load rows according to whether autoSync is On

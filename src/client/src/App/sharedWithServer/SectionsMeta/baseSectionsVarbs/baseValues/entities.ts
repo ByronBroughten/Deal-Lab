@@ -138,7 +138,7 @@ export const entityS = {
     return Arr.has(entities, (e) => isInfoForOutEntity(e, info));
   },
   outEntitiesCopyRm(entities: OutEntity[], info: OutEntityInfo): OutEntity[] {
-    return entities.filter((e) => isInfoForOutEntity(e, info));
+    return entities.filter((e) => !isInfoForOutEntity(e, info));
   },
   inEntitiesHas(entities: InEntity[], entity: InEntity): boolean {
     return Arr.has(entities, (e) => e.entityId === entity.entityId);
