@@ -40,6 +40,7 @@ describe("SetterCalculations", () => {
 
     const financing = dealTester.setter.onlyChild("financing");
     const loan = financing.addAndGetChild("loan");
+    loan.varb("loanBasePercentEditor").updateValue(numObj(0));
 
     const group = loan.addAndGetChild("wrappedInLoanListGroup");
     const wrapped = group.addAndGetChild("singleTimeList");
@@ -97,7 +98,7 @@ describe("SetterCalculations", () => {
 
     const mgmtGeneral = dealTester.setter.onlyChild("mgmtGeneral");
     const mgmt = mgmtGeneral.addAndGetChild("mgmt");
-    mgmt.varb("rentCutPercent").updateValue(numObj(5));
+    mgmt.varb("rentCutPercentEditor").updateValue(numObj(5));
     mgmt.varb("vacancyRatePercent").updateValue(numObj(5));
 
     const mgmtCostListGroup = mgmt.onlyChild("ongoingCostListGroup");
@@ -128,7 +129,7 @@ function addTestLoan(dealTester: SetterTesterSection<"deal">): void {
   const loan = financing.addAndGetChild("loan");
   loan.varb("interestRatePercentYearly").updateValue(numObj(5));
   loan.varb("loanTermYears").updateValue(numObj(30));
-  loan.varb("loanBasePercent").updateValue(numObj(75));
+  loan.varb("loanBasePercentEditor").updateValue(numObj(75));
   loan.varb("mortgageInsYearly").updateValue(numObj(1200));
 
   const wrappedGroup = loan.onlyChild("wrappedInLoanListGroup");
@@ -147,6 +148,6 @@ function addInterestOnlyLoan(dealTester: SetterTesterSection<"deal">): void {
   const calcName: PiCalculationName = "interestOnlySimple";
   loan.varb("piCalculationName").updateValue(calcName);
   loan.varb("loanBaseUnitSwitch").updateValue("dollars");
-  loan.varb("loanBaseDollars").updateValue(numObj(10000));
+  loan.varb("loanBaseDollarsEditor").updateValue(numObj(10000));
   loan.varb("interestRatePercentYearly").updateValue(numObj(6));
 }
