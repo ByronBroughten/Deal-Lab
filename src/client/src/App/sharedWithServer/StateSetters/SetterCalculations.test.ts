@@ -25,7 +25,9 @@ describe("SetterCalculations", () => {
     const propertyGeneral = dealTester.setter.onlyChild("propertyGeneral");
     const property = propertyGeneral.onlyChild("property");
     property.varb("price").updateValue(numObj(200000));
-    const propertyCostListGroup = property.onlyChild("upfrontCostListGroup");
+    const propertyCostListGroup = property.addAndGetChild(
+      "upfrontCostListGroup"
+    );
 
     const propertyCostList =
       propertyCostListGroup.addAndGetChild("singleTimeList");
@@ -54,7 +56,7 @@ describe("SetterCalculations", () => {
     const mgmtGeneral = dealTester.setter.onlyChild("mgmtGeneral");
     const mgmt = mgmtGeneral.addAndGetChild("mgmt");
 
-    const mgmtCostListGroup = mgmt.onlyChild("upfrontCostListGroup");
+    const mgmtCostListGroup = mgmt.addAndGetChild("upfrontCostListGroup");
 
     const mgmtCostList = mgmtCostListGroup.addAndGetChild("singleTimeList");
     const mgmtCosts = [4000, 6000];
@@ -86,7 +88,9 @@ describe("SetterCalculations", () => {
       });
     }
 
-    const propertyCostListGroup = property.onlyChild("ongoingCostListGroup");
+    const propertyCostListGroup = property.addAndGetChild(
+      "ongoingCostListGroup"
+    );
     const propertyCostList =
       propertyCostListGroup.addAndGetChild("ongoingList");
     const propertyCosts = [200, 100, 150];
@@ -101,7 +105,7 @@ describe("SetterCalculations", () => {
     mgmt.varb("rentCutPercentEditor").updateValue(numObj(5));
     mgmt.varb("vacancyRatePercent").updateValue(numObj(5));
 
-    const mgmtCostListGroup = mgmt.onlyChild("ongoingCostListGroup");
+    const mgmtCostListGroup = mgmt.addAndGetChild("ongoingCostListGroup");
     const mgmtCostList = mgmtCostListGroup.addAndGetChild("ongoingList");
     const mgmtCosts = [100, 100];
     for (const amount of mgmtCosts) {
@@ -132,7 +136,7 @@ function addTestLoan(dealTester: SetterTesterSection<"deal">): void {
   loan.varb("loanBasePercentEditor").updateValue(numObj(75));
   loan.varb("mortgageInsYearly").updateValue(numObj(1200));
 
-  const wrappedGroup = loan.onlyChild("wrappedInLoanListGroup");
+  const wrappedGroup = loan.addAndGetChild("wrappedInLoanListGroup");
   const wrapped = wrappedGroup.addAndGetChild("singleTimeList");
   wrapped.addChild("singleTimeItem", {
     dbVarbs: { numObjEditor: numObj(6000) },

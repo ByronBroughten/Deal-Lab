@@ -1,7 +1,9 @@
 import { defaultMaker } from "../defaultMaker/defaultMaker";
-import { ChildName } from "../SectionsMeta/childSectionsDerived/ChildName";
+import {
+  ChildName,
+  FeChildInfo,
+} from "../SectionsMeta/childSectionsDerived/ChildName";
 import { ParentNameSafe } from "../SectionsMeta/childSectionsDerived/ParentName";
-import { SectionPack } from "../SectionsMeta/childSectionsDerived/SectionPack";
 import { FeSectionInfo } from "../SectionsMeta/Info";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { PackLoaderSection } from "../StatePackers.ts/PackLoaderSection";
@@ -17,17 +19,37 @@ export class DefaultFamilyAdder<
   get loader(): PackLoaderSection<SN> {
     return new PackLoaderSection(this.getterSectionProps);
   }
+  private loadChildDefaultState<CN extends ChildName<SN>>(
+    childInfo: FeChildInfo<SN, CN>
+  ) {
+    let sectionPack: any;
+    const { childName } = childInfo;
+    const { sectionName, feInfo } = this.get.child(childInfo);
+
+    if (defaultMaker.hasDefaultChild(this.sectionName, childName)) {
+      sectionPack = defaultMaker.makeChildSectionPack(
+        this.sectionName,
+        childName
+      );
+    } else if (defaultMaker.has(sectionName)) {
+      sectionPack = defaultMaker.makeSectionPack(sectionName);
+    }
+
+    if (sectionPack) {
+      const childLoader = this.loader.packLoaderSection(feInfo);
+      childLoader.loadSelfSectionPack(sectionPack);
+    }
+  }
   addChild<CN extends ChildName<SN>>(
     childName: CN,
     { dbVarbs, ...rest }: AddChildOptions<SN, CN> = {}
   ): void {
     this.updater.addChild(childName, rest);
-    const { sectionName, feInfo } = this.get.youngestChild(childName);
-    if (defaultMaker.has(sectionName)) {
-      const sectionPack = defaultMaker.makeSectionPack(sectionName);
-      const childLoader = this.loader.packLoaderSection(feInfo);
-      childLoader.loadSelfSectionPack(sectionPack as SectionPack<any>);
-    }
+    const { feId, feInfo } = this.get.youngestChild(childName);
+    this.loadChildDefaultState({
+      childName,
+      feId,
+    });
     if (dbVarbs) {
       const childUpdater = this.updater.updaterSection(feInfo);
       childUpdater.updateValues(dbVarbs);

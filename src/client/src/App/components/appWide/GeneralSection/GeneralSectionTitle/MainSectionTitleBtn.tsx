@@ -1,8 +1,7 @@
 import styled from "styled-components";
 import theme, { ThemeName } from "../../../../theme/Theme";
 import { StandardBtnProps } from "../../../general/StandardProps";
-import SectionBtn from "../../SectionBtn";
-// Do I call the theme from the styled component, or do I pass in a sectionName?
+import { SectionBtn } from "../../SectionBtn";
 
 interface Props extends StandardBtnProps {
   themeName: ThemeName;

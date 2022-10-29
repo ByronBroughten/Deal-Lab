@@ -12,7 +12,9 @@ import { useSetterSection } from "../../../../sharedWithServer/stateClassHooks/u
 import { GetterSection } from "../../../../sharedWithServer/StateGetters/GetterSection";
 import ccs from "../../../../theme/cssChunks";
 import theme, { ThemeName } from "../../../../theme/Theme";
+import { StandardBtnProps } from "../../../general/StandardProps";
 import useHowMany from "../../customHooks/useHowMany";
+import { SectionBtn } from "../../SectionBtn";
 import {
   ListGroupLists,
   MakeListNode,
@@ -85,6 +87,28 @@ export function ListGroupGeneric<
   );
 }
 
+const listGroupViewable = css`
+  ${ccs.subSection.viewable};
+  ${ccs.neutralColorSection};
+  padding: ${theme.s2};
+`;
+
+interface BtnProps extends StandardBtnProps {
+  text?: React.ReactNode;
+  icon?: React.ReactNode;
+}
+export function ListGroupGenericBtn({ className, ...props }: BtnProps) {
+  return (
+    <BtnStyled className={`ListGroup-root ${className ?? ""}`} {...props} />
+  );
+}
+
+const BtnStyled = styled(SectionBtn)`
+  ${listGroupViewable};
+  height: 140px;
+  padding: ${theme.s3};
+`;
+
 export const listGroupCss = () => css`
   .ListGroup-titleRow {
     display: flex;
@@ -111,9 +135,7 @@ export const listGroupCss = () => css`
     padding-top: ${theme.s1};
   }
   .ListGroup-viewable {
-    ${ccs.subSection.viewable};
-    ${ccs.neutralColorSection};
-    padding: ${theme.s2};
+    ${listGroupViewable};
   }
 `;
 

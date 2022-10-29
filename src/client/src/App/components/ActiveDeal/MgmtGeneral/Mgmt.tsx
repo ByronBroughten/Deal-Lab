@@ -2,29 +2,36 @@ import React from "react";
 import { MainSection } from "../../appWide/GeneralSection/MainSection";
 import MainSectionBody from "../../appWide/GeneralSection/MainSection/MainSectionBody";
 import { MainSectionTitleRow } from "../../appWide/GeneralSection/MainSection/MainSectionTitleRow";
-import { ListGroupOngoing } from "../../appWide/ListGroup/ListGroupOngoing";
-import { ListGroupSingleTime } from "../../appWide/ListGroup/ListGroupSingleTime";
-import { useGetterSection } from "./../../../sharedWithServer/stateClassHooks/useGetterSection";
+import { ListGroupOngoingZone } from "../general/ListGroupOngoingZone";
+import { ListGroupSingleTimeZone } from "../general/ListGroupSingleTimeZone";
 import BasicMgmtInfo from "./Mgmt/BasicMgmtInfo";
 
 export function Mgmt({ feId }: { feId: string }) {
-  const mgmt = useGetterSection({ sectionName: "mgmt", feId });
+  const feInfo = { sectionName: "mgmt", feId } as const;
   return (
     <MainSection>
       <MainSectionTitleRow
-        {...{ ...mgmt.feInfo, pluralName: "managements", xBtn: true }}
+        {...{ ...feInfo, pluralName: "managements", xBtn: true }}
       />
       <MainSectionBody themeName="mgmt">
         <BasicMgmtInfo feId={feId} className="ListGroup-root" />
-        <ListGroupOngoing
-          feId={mgmt.onlyChild("ongoingCostListGroup").feId}
-          titleText="Ongoing Costs"
-          themeName="mgmt"
+        <ListGroupOngoingZone
+          {...{
+            ...feInfo,
+            childName: "ongoingCostListGroup",
+            themeName: "mgmt",
+            btnText: "+ Ongoing Costs",
+            titleText: "Ongoing Costs",
+          }}
         />
-        <ListGroupSingleTime
-          feId={mgmt.onlyChild("upfrontCostListGroup").feId}
-          titleText="Upfront Costs"
-          themeName="mgmt"
+        <ListGroupSingleTimeZone
+          {...{
+            ...feInfo,
+            childName: "upfrontCostListGroup",
+            themeName: "mgmt",
+            btnText: "+ Upfront Costs",
+            titleText: "Upfront Costs",
+          }}
         />
       </MainSectionBody>
     </MainSection>

@@ -10,7 +10,5 @@ export function makeDefaultMgmtPack(): SectionPack<"mgmt"> {
       expensesOngoingSwitch: "monthly",
     },
   });
-  mgmt.addChild("upfrontCostListGroup");
-  mgmt.addChild("ongoingCostListGroup");
   return mgmt.makeSectionPack();
 }

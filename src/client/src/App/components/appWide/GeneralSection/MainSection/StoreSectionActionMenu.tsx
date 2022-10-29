@@ -1,5 +1,6 @@
 import { AiOutlineSave } from "react-icons/ai";
 import { BiCopy, BiReset } from "react-icons/bi";
+import { BsLightningFill } from "react-icons/bs";
 import { MdOutlineSystemUpdateAlt } from "react-icons/md";
 import styled from "styled-components";
 import { useMainSectionActor } from "../../../../modules/sectionActorHooks/useMainSectionActor";
@@ -85,14 +86,6 @@ export function StoreSectionActionMenu<
         onClick={() => mainSection.copyAndSave()}
       />
     ),
-    // delete: () => (
-    //   <LabeledIconBtn
-    //     key="delete"
-    //     label="Delete from saved"
-    //     icon={<MdDelete size="24" />}
-    //     onClick={() => mainSection.deleteSelf()}
-    //   />
-    // ),
     createNew: () => (
       <LabeledIconBtn
         key="createNew"
@@ -108,6 +101,7 @@ export function StoreSectionActionMenu<
       {...{
         className: `StoreSectionActionMenu-root ${className ?? ""}`,
         title: `Actions`,
+        icon: <BsLightningFill className="StoreActionMenu-dropdownBtnIcon" />,
         dropTop,
       }}
     >
@@ -123,6 +117,8 @@ export function StoreSectionActionMenu<
 const Styled = styled(DropdownList)`
   .LabeledIconBtn-root {
     border-top: 1px solid ${theme["gray-500"]};
+  }
+  .StoreActionMenu-dropdownBtnIcon {
   }
   position: relative;
 `;

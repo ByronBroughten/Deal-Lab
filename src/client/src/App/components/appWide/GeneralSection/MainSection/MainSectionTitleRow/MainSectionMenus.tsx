@@ -1,3 +1,4 @@
+import { MdCompareArrows } from "react-icons/md";
 import styled from "styled-components";
 import { constants } from "../../../../../Constants";
 import { useMainSectionActor } from "../../../../../modules/sectionActorHooks/useMainSectionActor";
@@ -9,10 +10,10 @@ import { useAuthStatus } from "../../../../../sharedWithServer/stateClassHooks/u
 import theme from "../../../../../theme/Theme";
 import { DomLink } from "../../../../ActiveDeal/general/DomLink";
 import { DisplayNameSectionList } from "../../../DisplayNameSectionList";
-import ListMenuBtn from "../../../ListGroup/ListGroupShared/ListMenuSimple/ListMenuBtn";
+import { ListMenuBtn } from "../../../ListGroup/ListGroupShared/ListMenuSimple/ListMenuBtn";
+import { ChangesSyncedStatusBtn } from "../ChangesSyncedStatusBtn";
 import { StoreSectionActionMenu } from "../StoreSectionActionMenu";
 import { ActionMenuProps } from "../StoreSectionActionMenu/ActionMenuTypes";
-import { StoreSectionSaveStatus } from "./../StoreSectionSaveStatus";
 
 export interface MainSectionMenuOptions {
   xBtn?: boolean;
@@ -49,7 +50,7 @@ export function MainSectionMenus({
   return (
     <Styled className={`MainSectionMenus-root ${className ?? ""}`}>
       {saveStatusDisplayed && (
-        <StoreSectionSaveStatus
+        <ChangesSyncedStatusBtn
           feInfo={feInfo}
           className="MainSectionMenus-item"
         />
@@ -80,7 +81,10 @@ export function MainSectionMenus({
           className="MainSectionMenus-item"
           to={constants.feRoutes.mainTables[sectionName]}
         >
-          <ListMenuBtn>{"Compare"}</ListMenuBtn>
+          <ListMenuBtn
+            icon={<MdCompareArrows className="MainSectionMenus-compareBtn" />}
+            text="Compare"
+          />
         </DomLink>
       )}
     </Styled>
@@ -93,6 +97,10 @@ const Styled = styled.div`
     :not(:first-child) {
       margin-left: ${theme.s3};
     }
+  }
+  .MainSectionMenus-compareBtn {
+    height: 24px;
+    width: 24px;
   }
 `;
 

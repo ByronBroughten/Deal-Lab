@@ -9,9 +9,6 @@ AppRegistry.runApplication("App", {
 });
 
 // Before Marketing
-// - Add an icon option to the sectionBtns
-// - Make compare and actions have an icon
-// - Maybe change load button's icons and label
 // - Think about making the menu hidable (arrow next to menu icon?)
 // - Hide "Ongoing Costs" and "Upfront Costs" initially
 //   - Create an "Add List Group" button, styled like the list group section
@@ -21,7 +18,6 @@ AppRegistry.runApplication("App", {
 //   - Give each of them child defaults
 // - Think about changing all numbers and strings to numObj and stringObj
 // - Get numObj editorText to display updated in-entity text. But also, it should keep depreciated in-entity text. It has to cache.
-// - In the load menu, highlight the one that is loaded with green or purple
 
 // If I'm going to make tables faster and increase functionality, here's how:
 // I want the tables to reflect those
@@ -35,6 +31,7 @@ AppRegistry.runApplication("App", {
 //   the front-end table accordingly in real-time
 
 // Extra stuff
+// - In the load menu, highlight the one that is loaded with green or purple
 // - Load rows according to whether autoSync is On
 // - Implement column features
 

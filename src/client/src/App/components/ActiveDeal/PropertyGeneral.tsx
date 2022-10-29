@@ -4,7 +4,7 @@ import { useGetterSection } from "../../sharedWithServer/stateClassHooks/useGett
 import { GeneralSection } from "../appWide/GeneralSection";
 import GeneralSectionTitle from "../appWide/GeneralSection/GeneralSectionTitle";
 import theme from "./../../theme/Theme";
-import Property from "./PropertyGeneral/Property";
+import { Property } from "./PropertyGeneral/Property";
 
 export function PropertyGeneral({ feId }: { feId: string }) {
   const propertyGeneral = useGetterSection({

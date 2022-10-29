@@ -66,6 +66,9 @@ function difference(origObj: any, newObj: any) {
 }
 
 export const Obj = {
+  isKey<O extends Record<string, any>>(obj: O, value: any): value is keyof O {
+    return this.keys(obj).includes(value);
+  },
   stringifyEqual(a: any, b: any) {
     return JSON.stringify(a) === JSON.stringify(b);
   },

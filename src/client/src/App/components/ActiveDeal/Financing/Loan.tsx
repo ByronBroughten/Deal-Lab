@@ -1,22 +1,21 @@
 import React from "react";
-import { useGetterSection } from "../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { MainSection } from "../../appWide/GeneralSection/MainSection";
 import MainSectionBody from "../../appWide/GeneralSection/MainSection/MainSectionBody";
 import { MainSectionTitleRow } from "../../appWide/GeneralSection/MainSection/MainSectionTitleRow";
-import { ListGroupSingleTime } from "../../appWide/ListGroup/ListGroupSingleTime";
+import { ListGroupSingleTimeZone } from "./../general/ListGroupSingleTimeZone";
 import BasicLoanInfo from "./Loan/BasicLoanInfo";
 
 export function Loan({ feId }: { feId: string }) {
-  const loan = useGetterSection({
+  const feInfo = {
     sectionName: "loan",
     feId,
-  });
+  } as const;
   return (
     <MainSection className="Loan-root">
       <div className="MainSection-viewable">
         <MainSectionTitleRow
           {...{
-            ...loan.feInfo,
+            ...feInfo,
             pluralName: "loans",
             xBtn: true,
           }}
@@ -25,15 +24,23 @@ export function Loan({ feId }: { feId: string }) {
           <div className="ListGroup-lists">
             <BasicLoanInfo feId={feId} className="ListGroup-root" />
           </div>
-          <ListGroupSingleTime
-            feId={loan.onlyChild("closingCostListGroup").feId}
-            titleText="Upfront Costs"
-            themeName="loan"
+          <ListGroupSingleTimeZone
+            {...{
+              ...feInfo,
+              childName: "closingCostListGroup",
+              themeName: "loan",
+              btnText: "+ Closing Costs",
+              titleText: "Closing Costs",
+            }}
           />
-          <ListGroupSingleTime
-            feId={loan.onlyChild("wrappedInLoanListGroup").feId}
-            titleText="Wrapped in loan"
-            themeName="loan"
+          <ListGroupSingleTimeZone
+            {...{
+              ...feInfo,
+              childName: "wrappedInLoanListGroup",
+              themeName: "loan",
+              btnText: "+ Wrapped in Loan",
+              titleText: "Wrapped in Loan",
+            }}
           />
         </MainSectionBody>
       </div>

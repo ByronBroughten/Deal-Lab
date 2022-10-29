@@ -1,12 +1,25 @@
 import { Button } from "@material-ui/core";
+import React from "react";
 import styled, { css } from "styled-components";
 import ccs from "../../theme/cssChunks";
 import theme, { ThemeName } from "../../theme/Theme";
 import { processProps } from "../../utils/component";
 import { StandardBtnProps } from "../general/StandardProps";
 
-type Props = StandardBtnProps & { themeName?: ThemeName };
-export default function SectionBtn({ themeName, ...props }: Props) {
+type Props = StandardBtnProps & {
+  themeName?: ThemeName;
+  leftIcon?: React.ReactNode;
+  rightIcon?: React.ReactNode;
+  text?: React.ReactNode;
+};
+export function SectionBtn({
+  text,
+  leftIcon,
+  rightIcon,
+  themeName,
+  children,
+  ...props
+}: Props) {
   return (
     <Styled
       {...{
@@ -15,7 +28,12 @@ export default function SectionBtn({ themeName, ...props }: Props) {
         $themeName: themeName,
         ...processProps("SectionBtn-root", props),
       }}
-    ></Styled>
+    >
+      {leftIcon && <span className="SectionBtn-rightIcon">{leftIcon}</span>}
+      {text && <span className="SectionBtn-leftIcon">{text}</span>}
+      {children}
+      {rightIcon && <span className="SectionBtn-text">{rightIcon}</span>}
+    </Styled>
   );
 }
 

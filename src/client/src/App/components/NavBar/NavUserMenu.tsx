@@ -1,6 +1,8 @@
-import { Button } from "@material-ui/core";
 import { rem } from "polished";
 import { AiOutlineMenu } from "react-icons/ai";
+import { FaThList } from "react-icons/fa";
+import { GrLogout } from "react-icons/gr";
+import { HiOutlineVariable } from "react-icons/hi";
 import styled, { css } from "styled-components";
 import { constants } from "../../Constants";
 import { useUserData } from "../../modules/customHooks/useAuthAndUserData";
@@ -8,6 +10,7 @@ import { useFeUser } from "../../modules/sectionActorHooks/useFeUser";
 import { AnalyzerPlan } from "../../sharedWithServer/SectionsMeta/baseSectionsVarbs";
 import theme from "../../theme/Theme";
 import { DomLink } from "../ActiveDeal/general/DomLink";
+import { ListMenuBtn } from "../appWide/ListGroup/ListGroupShared/ListMenuSimple/ListMenuBtn";
 import { StandardProps } from "../general/StandardProps";
 import NavDropDown from "./NavDropDown";
 
@@ -31,12 +34,15 @@ export function NavUserMenu() {
       <div className="NavUserMenu-dropdown">
         <BtnDiv>
           <DomLink to={constants.feRoutes.userLists}>
-            <Button>{`Your lists`}</Button>
+            <ListMenuBtn text="Your lists" icon={<FaThList />} />
           </DomLink>
         </BtnDiv>
         <BtnDiv>
           <DomLink to={constants.feRoutes.userVariables}>
-            <Button>{`Your variables`}</Button>
+            <ListMenuBtn
+              text="Your variables"
+              icon={<HiOutlineVariable className="NavUserMenu-variablesIcon" />}
+            />
           </DomLink>
         </BtnDiv>
         {/* <BtnDiv>
@@ -49,7 +55,7 @@ export function NavUserMenu() {
         </BtnDiv> */}
         {authStatus !== "guest" && (
           <BtnDiv>
-            <Button onClick={logout}>Logout</Button>
+            <ListMenuBtn text="Logout" icon={<GrLogout />} onClick={logout} />
           </BtnDiv>
         )}
 
@@ -68,6 +74,10 @@ const Styled = styled(NavDropDown)<{ $isFullPlan: boolean }>`
   flex-direction: column;
 
   text-wrap: nowrap;
+
+  .ListMenuBtn-text {
+    margin-left: ${theme.s3};
+  }
 
   .NavBar-menuIcon {
     margin-left: ${constants.isBeta ? "0px" : theme.s3};

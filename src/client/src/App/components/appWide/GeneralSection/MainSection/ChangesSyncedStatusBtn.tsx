@@ -1,31 +1,38 @@
 import React from "react";
+import { MdOutlineSync, MdOutlineSyncDisabled } from "react-icons/md";
 import styled, { css } from "styled-components";
 import { useMainSectionActor } from "../../../../modules/sectionActorHooks/useMainSectionActor";
 import { FeSectionInfo } from "../../../../sharedWithServer/SectionsMeta/Info";
 import { SectionNameByType } from "../../../../sharedWithServer/SectionsMeta/SectionNameByType";
 import theme, { ThemeName } from "../../../../theme/Theme";
-import ListMenuBtn from "../../ListGroup/ListGroupShared/ListMenuSimple/ListMenuBtn";
+import { ListMenuBtn } from "../../ListGroup/ListGroupShared/ListMenuSimple/ListMenuBtn";
 
 type Props<SN extends SectionNameByType<"hasIndexStore">> = {
   feInfo: FeSectionInfo<SN>;
   className?: string;
 };
-export function StoreSectionSaveStatus<
+export function ChangesSyncedStatusBtn<
   SN extends SectionNameByType<"hasIndexStore">
 >({ feInfo, className }: Props<SN>) {
   const mainSection = useMainSectionActor(feInfo);
   const btnProps = {
     unsaved: {
       $themeName: "default",
-      children: "Unsaved",
+      text: "Unsaved",
     },
     changesSynced: {
       $themeName: "plus",
-      children: "Changes Synced",
+      get icon() {
+        return <MdOutlineSync />;
+      },
+      text: "Changes Synced",
     },
     unsyncedChanges: {
       $themeName: "primary",
-      children: "Unsynced Changes",
+      get icon() {
+        return <MdOutlineSyncDisabled />;
+      },
+      text: "Unsynced Changes",
     },
   } as const;
   const [saveStatus, setSaveStatus] = React.useState(
@@ -47,7 +54,7 @@ export function StoreSectionSaveStatus<
     <Styled
       {...{
         ...btnProps[saveStatus],
-        className: `StoreSectionSaveStatus ${className ?? ""}`,
+        className: `ChangesSyncedStatusBtn ${className ?? ""}`,
       }}
     />
   );

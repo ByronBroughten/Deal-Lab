@@ -27,7 +27,7 @@ export function DisplayNameSectionList({
     <DropdownList
       {...{
         className: "DisplayNameSectionList-root " + className ?? "",
-        title: `Load`,
+        title: `Saved`,
         dropTop,
         icon: <FaList className="DisplayNameSectionList-listIcon" />,
       }}

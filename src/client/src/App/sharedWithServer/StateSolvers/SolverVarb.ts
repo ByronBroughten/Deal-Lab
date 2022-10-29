@@ -208,15 +208,6 @@ export class SolverVarb<
       outEntities: nextOutEntities,
     });
   }
-  // Hmm. Why does it already have the outEntity?
-  // The section being loaded is expected to have a new
-  // feId, but it doesn't, that's why.
-
-  // Here's the problem: the section isn't actually being removed.
-
-  // When I load a section that is Solver or higher, I have to do
-  // all the things that I normally do when I remove a section.
-  // I think that's what I'm missing.
   private addOutEntity(outEntity: OutEntity): void {
     if (this.hasOutEntity(outEntity)) {
       throw new Error(

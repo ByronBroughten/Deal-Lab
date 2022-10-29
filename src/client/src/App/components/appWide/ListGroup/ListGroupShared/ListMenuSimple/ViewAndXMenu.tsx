@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { FeSectionInfo } from "../../../../../sharedWithServer/SectionsMeta/Info";
 import theme from "../../../../../theme/Theme";
 import { RemoveSectionXBtn } from "../../../RemoveSectionXBtn";
-import ListMenuBtn from "./ListMenuBtn";
+import { ListMenuBtn } from "./ListMenuBtn";
 
 interface Props extends FeSectionInfo {
   viewIsOpen: boolean;

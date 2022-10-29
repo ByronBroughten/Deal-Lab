@@ -58,17 +58,6 @@ export function MainSectionTitleRow({
   );
 }
 
-// <Link className="GeneralSectionTitle-dealsLink" to="/deals">
-//   <MainSectionTitleBtn
-//     themeName="deal"
-//     className="GeneralSectionTitle-child"
-//     // disabled={!auth.isToken}
-//   >
-//     {"Compare Deals"}
-//     <MdCompareArrows className="GeneralSectionTitle-compareIcon" />
-//   </MainSectionTitleBtn>
-// </Link>
-
 const Styled = styled.div<{ $btnMenuIsOpen: boolean; $dropTop: boolean }>`
   display: flex;
   align-items: flex-start;
