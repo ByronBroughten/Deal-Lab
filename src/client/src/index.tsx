@@ -9,9 +9,8 @@ AppRegistry.runApplication("App", {
 });
 
 // Before Marketing
-// - Think about making the menu hidable (arrow next to a menu icon?)
-// - Think about changing all numbers and strings to numObj and stringObj
 // - Get numObj editorText to display updated in-entity text. But also, it should keep depreciated in-entity text. It has to cache.
+// - Think about changing all numbers and strings to numObj and stringObj
 
 // If I'm going to make tables faster and increase functionality, here's how:
 // I want the tables to reflect those

@@ -6,7 +6,7 @@ import { StandardBtnProps } from "../../../../general/StandardProps";
 
 type Props = StandardBtnProps;
 export function AddUnitBtn(props: Props) {
-  return <Styled {...props}>Add Unit</Styled>;
+  return <Styled {...props}>+ Unit</Styled>;
 }
 
 const Styled = styled(PlusBtn)`

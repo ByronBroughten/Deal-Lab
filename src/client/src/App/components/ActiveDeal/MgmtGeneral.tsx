@@ -32,7 +32,7 @@ export function MgmtGeneral({ feId }: Props) {
           themeName="mgmt"
           className="MainSection-addChildBtn"
           onClick={addMgmt}
-          text="Add Management Costs"
+          text="+ Management Costs"
         />
       </div>
     </GeneralSection>
