@@ -23,8 +23,8 @@ export function ActiveDeal({ className, feId }: Props) {
     <Styled {...{ className: `MainSections-root ${className ?? ""}` }}>
       <View style={{ flex: 1 }}>
         <PropertyGeneral feId={deal.onlyChildFeId("propertyGeneral")} />
-        <Financing feId={deal.onlyChildFeId("financing")} />
         <MgmtGeneral feId={deal.onlyChildFeId("mgmtGeneral")} />
+        <Financing feId={deal.onlyChildFeId("financing")} />
       </View>
       <DealGeneral feId={feId} />
     </Styled>
@@ -34,7 +34,7 @@ export function ActiveDeal({ className, feId }: Props) {
 const Styled = styled(PageMainFn)`
   border: solid 3px ${theme.deal.main};
   border-top: solid 1px ${theme["gray-500"]};
-  background: ${theme.mgmt.light};
+  background: ${theme.loan.light};
   .DealGeneral-root {
     position: sticky;
     bottom: 0;

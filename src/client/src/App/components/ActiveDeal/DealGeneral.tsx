@@ -63,7 +63,7 @@ export function DealGeneral({ className, feId }: Props) {
               onClick={() =>
                 deal.varb("showCalculationsStatus").updateValue("show")
               }
-              text="Calculate Outputs"
+              text="Calculate"
             />
           </div>
         </>

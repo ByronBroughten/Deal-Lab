@@ -91,8 +91,8 @@ export function themeSectionNameOrDefault(sectionName: string): ThemeName {
 
 const themeColors = {
   property: "#ffc99d",
-  loan: "#ff9868", // #f6a272
-  mgmt: "#ff7f68", // "#e78472"
+  loan: "#ff7f68", //
+  mgmt: "#ff9868", //
   plus: "#80c883",
   success: "#4caf50",
   next: "#717cbb",
@@ -201,10 +201,10 @@ const themeSections = {
     return this.default;
   },
   get userSingleList() {
-    return this.loan;
+    return this.mgmt;
   },
   get userOngoingList() {
-    return this.mgmt;
+    return this.loan;
   },
   error: {
     ...themeSection({
