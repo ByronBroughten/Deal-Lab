@@ -2,11 +2,12 @@ import React from "react";
 import styled, { css } from "styled-components";
 import useToggleView from "../../../../modules/customHooks/useToggleView";
 import { SectionNameByType } from "../../../../sharedWithServer/SectionsMeta/SectionNameByType";
-import { useAuthStatus } from "../../../../sharedWithServer/stateClassHooks/useAuthStatus";
 import theme from "../../../../theme/Theme";
+import { CaretMenuBtn } from "../../ListGroup/ListGroupShared/VarbListGeneric/CaretMenuBtn";
 import { RemoveSectionXBtn } from "../../RemoveSectionXBtn";
 import { MainSectionMenus } from "./MainSectionTitleRow/MainSectionMenus";
 import { MainSectionTitleRowTitle } from "./MainSectionTitleRow/MainSectionTitleRowTitle";
+import { useSaveStatus } from "./useSaveStatus";
 
 type Props = {
   sectionName: SectionNameByType<"hasCompareTable">;
@@ -15,19 +16,22 @@ type Props = {
   xBtn?: boolean;
   dropTop?: boolean;
 };
-
 export function MainSectionTitleRow({
   pluralName,
   xBtn = false,
   dropTop = false,
   ...feInfo
 }: Props) {
-  const authStatus = useAuthStatus();
   const { btnMenuIsOpen } = useToggleView({
     initValue: false,
     viewWhat: "btnMenu",
   });
-  const isGuest = authStatus === "guest";
+
+  const { toggleMenuBtns, menuBtnsIsOpen } = useToggleView({
+    initValue: false,
+    viewWhat: "menuBtns",
+  });
+  const saveStatus = useSaveStatus(feInfo);
   return (
     <Styled
       className="MainSectionTitleRow-root"
@@ -39,14 +43,25 @@ export function MainSectionTitleRow({
       <div className="MainSectionTitleRow-leftSide">
         <MainSectionTitleRowTitle feInfo={feInfo} />
         <div className="MainSectionTitleRow-leftSide-btnsRow">
-          <MainSectionMenus
+          <CaretMenuBtn
             {...{
-              ...feInfo,
-              pluralName,
-              xBtn,
-              dropTop,
+              saveStatus,
+              className: "MainSectionTitleRow-caretBtn",
+              dropped: menuBtnsIsOpen,
+              onClick: toggleMenuBtns,
+              direction: "right",
             }}
           />
+          {menuBtnsIsOpen && (
+            <MainSectionMenus
+              {...{
+                ...feInfo,
+                pluralName,
+                xBtn,
+                dropTop,
+              }}
+            />
+          )}
         </div>
       </div>
       <div className="MainSectionTitleRow-rightSide">
@@ -71,12 +86,6 @@ const Styled = styled.div<{ $btnMenuIsOpen: boolean; $dropTop: boolean }>`
         `}
     }
   }
-
-  .MainSectionTitleRow-ellipsisBtn {
-    color: ${({ $btnMenuIsOpen }) =>
-      $btnMenuIsOpen ? theme["gray-600"] : theme.dark};
-  }
-
   .MainSectionTitleRow-leftSide {
     display: flex;
     justify-content: flex-start;
@@ -85,17 +94,33 @@ const Styled = styled.div<{ $btnMenuIsOpen: boolean; $dropTop: boolean }>`
   .MainSectionTitleRow-rightSide {
     display: flex;
   }
-  .MainSectionTitleRow-title ..DraftTextField-root {
+  .MainSectionTitleRow-title,
+  .DraftTextField-root {
     min-width: 150px;
   }
   .MainSectionTitleRow-title,
   .MainSectionTitleRow-leftSide-btnsRow {
+    display: flex;
     margin: 0 ${theme.s2};
+  }
+
+  .MainSectionTitleRow-leftSide-btnsRow {
+    background-color: ${theme["gray-400"]};
+    border-radius: ${theme.br1};
   }
 
   .MainSectionTitleRow-xBtn {
     margin-left: ${theme.s3};
     height: ${theme.bigButtonHeight};
     width: ${theme.bigButtonHeight};
+  }
+
+  .MainSectionMenus-root {
+    padding: ${theme.s15};
+    border: ${theme.transparentGrayBorder};
+  }
+
+  .MainSectionTitleRow-caretBtn {
+    height: 36px;
   }
 `;

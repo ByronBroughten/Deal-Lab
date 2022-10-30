@@ -46,7 +46,6 @@ export function MainSectionMenus({
   const section = useMainSectionActor(feInfo);
   const saveStatusDisplayed = showSaveStatus && section.isSaved;
   const { sectionName } = section.get;
-
   return (
     <Styled className={`MainSectionMenus-root ${className ?? ""}`}>
       {saveStatusDisplayed && (
@@ -82,7 +81,7 @@ export function MainSectionMenus({
           to={constants.feRoutes.mainTables[sectionName]}
         >
           <ListMenuBtn
-            icon={<MdCompareArrows className="MainSectionMenus-compareBtn" />}
+            icon={<MdCompareArrows className="MainSectionMenus-compareIcon" />}
             text="Compare"
           />
         </DomLink>
@@ -95,10 +94,10 @@ const Styled = styled.div`
   display: flex;
   .MainSectionMenus-item {
     :not(:first-child) {
-      margin-left: ${theme.s3};
+      margin-left: ${theme.s2};
     }
   }
-  .MainSectionMenus-compareBtn {
+  .MainSectionMenus-compareIcon {
     height: 24px;
     width: 24px;
   }

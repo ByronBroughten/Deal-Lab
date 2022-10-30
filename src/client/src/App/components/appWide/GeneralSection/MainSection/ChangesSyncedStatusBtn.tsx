@@ -1,11 +1,11 @@
 import React from "react";
 import { MdOutlineSync, MdOutlineSyncDisabled } from "react-icons/md";
 import styled, { css } from "styled-components";
-import { useMainSectionActor } from "../../../../modules/sectionActorHooks/useMainSectionActor";
 import { FeSectionInfo } from "../../../../sharedWithServer/SectionsMeta/Info";
 import { SectionNameByType } from "../../../../sharedWithServer/SectionsMeta/SectionNameByType";
 import theme, { ThemeName } from "../../../../theme/Theme";
 import { ListMenuBtn } from "../../ListGroup/ListGroupShared/ListMenuSimple/ListMenuBtn";
+import { useSaveStatus } from "./useSaveStatus";
 
 type Props<SN extends SectionNameByType<"hasIndexStore">> = {
   feInfo: FeSectionInfo<SN>;
@@ -14,7 +14,7 @@ type Props<SN extends SectionNameByType<"hasIndexStore">> = {
 export function ChangesSyncedStatusBtn<
   SN extends SectionNameByType<"hasIndexStore">
 >({ feInfo, className }: Props<SN>) {
-  const mainSection = useMainSectionActor(feInfo);
+  const saveStatus = useSaveStatus(feInfo);
   const btnProps = {
     unsaved: {
       $themeName: "default",
@@ -35,21 +35,6 @@ export function ChangesSyncedStatusBtn<
       text: "Unsynced Changes",
     },
   } as const;
-  const [saveStatus, setSaveStatus] = React.useState(
-    () => mainSection.saveStatus
-  );
-
-  React.useEffect(() => {
-    let doIt = true;
-    setTimeout(() => {
-      if (doIt) {
-        setSaveStatus(mainSection.saveStatus);
-      }
-    }, 500);
-    return () => {
-      doIt = false;
-    };
-  });
   return (
     <Styled
       {...{
@@ -61,7 +46,7 @@ export function ChangesSyncedStatusBtn<
 }
 
 const Styled = styled(ListMenuBtn)<{ $themeName: ThemeName }>`
-  background: transparent;
+  background: ${theme["gray-100"]};
   ${({ $themeName }) => css`
     border: 2px solid ${theme[$themeName].border};
     color: ${theme[$themeName].border};

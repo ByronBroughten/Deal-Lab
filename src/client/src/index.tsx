@@ -9,13 +9,7 @@ AppRegistry.runApplication("App", {
 });
 
 // Before Marketing
-// - Think about making the menu hidable (arrow next to menu icon?)
-// - Hide "Ongoing Costs" and "Upfront Costs" initially
-//   - Create an "Add List Group" button, styled like the list group section
-//   - If there is no list group, put it in place of it
-//   - Make childDefaultAdders that take priority over regular default adders
-//   - Make the main sections start without their list groups
-//   - Give each of them child defaults
+// - Think about making the menu hidable (arrow next to a menu icon?)
 // - Think about changing all numbers and strings to numObj and stringObj
 // - Get numObj editorText to display updated in-entity text. But also, it should keep depreciated in-entity text. It has to cache.
 

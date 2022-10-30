@@ -13,10 +13,11 @@ import { useSetterSection } from "../../../../sharedWithServer/stateClassHooks/u
 import ccs from "../../../../theme/cssChunks";
 import theme, { ThemeName } from "../../../../theme/Theme";
 import { BigStringEditor } from "../../../inputs/BigStringEditor";
+import { useSaveStatus } from "../../GeneralSection/MainSection/useSaveStatus";
 import { useOpenWidth } from "../../SectionTitleRow";
 import { ListMenuFull } from "./ListMenuFull";
 import { ListMenuSimple } from "./ListMenuSimple";
-import { CaretBtn } from "./VarbListGeneric/CaretBtn";
+import { CaretMenuBtn } from "./VarbListGeneric/CaretMenuBtn";
 import { VarbListTable } from "./VarbListGeneric/VarbListTable";
 import { VarbListTotal } from "./VarbListGeneric/VarbListTotal";
 
@@ -45,7 +46,7 @@ export function VarbListGeneric<SN extends VarbListAllowed>({
 }: Props<SN>) {
   const list = useSetterSection(feInfo);
   const titleVarb = list.varb("displayName");
-  const { listMenuIsOpen, toggleListMenu } = useToggleView({
+  const { listMenuIsOpen } = useToggleView({
     initValue: false,
     viewWhat: "listMenu",
   });
@@ -91,6 +92,8 @@ export function VarbListGeneric<SN extends VarbListAllowed>({
       />
     ),
   };
+
+  const saveStatus = useSaveStatus(feInfo);
   return (
     <Styled
       className={"AdditiveList-root " + className}
@@ -119,7 +122,12 @@ export function VarbListGeneric<SN extends VarbListAllowed>({
               />
             )}
           </div>
-          <CaretBtn dropped={menuIsOpen} onClick={toggleMenu} />
+          <CaretMenuBtn
+            saveStatus={saveStatus}
+            className="VarbListGeneric-caretBtn"
+            dropped={menuIsOpen}
+            onClick={toggleMenu}
+          />
         </div>
 
         {viewIsOpen && (
@@ -205,5 +213,10 @@ const Styled = styled.div<{
 
   .AdditiveListTable-root {
     margin-top: ${theme.s2};
+  }
+
+  .VarbListGeneric-caretBtn {
+    margin-left: ${theme.s2};
+    height: ${theme.smallButtonHeight};
   }
 `;

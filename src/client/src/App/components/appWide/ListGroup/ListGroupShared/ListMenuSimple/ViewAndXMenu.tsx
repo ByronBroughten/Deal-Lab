@@ -17,10 +17,10 @@ export function ViewAndXMenu({ viewIsOpen, toggleListView, ...feInfo }: Props) {
         themeName={"default"}
         className="ViewAndXMenu-btn"
         onClick={toggleListView}
-      >
-        {viewIsOpen && <FiMinimize2 size={15} />}
-        {!viewIsOpen && <FiMaximize2 size={15} />}
-      </ListMenuBtn>
+        icon={
+          viewIsOpen ? <FiMinimize2 size={15} /> : <FiMaximize2 size={15} />
+        }
+      />
       <RemoveSectionXBtn className="ViewAndXMenu-btn" {...feInfo} />
     </Styled>
   );
