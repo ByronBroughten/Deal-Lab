@@ -9,7 +9,7 @@ export function FeedbackPanel() {
     <Styled>
       <div className="FeedbackPanel-welcome">
         <div className="FeedbackPanel-welcomeText">Bugs?</div>
-        <div className="FeedbackPanel-welcomeText">Wanted feature?</div>
+        <div className="FeedbackPanel-welcomeText">Want a feature?</div>
       </div>
       <Bullet
         text={
