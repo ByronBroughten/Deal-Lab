@@ -12,6 +12,7 @@ type BiCaretBtnProps = {
   className?: string;
   direction?: "up" | "right";
   saveStatus: SaveStatus;
+  showSaveStatus?: boolean;
 };
 export function CaretMenuBtn({
   dropped,

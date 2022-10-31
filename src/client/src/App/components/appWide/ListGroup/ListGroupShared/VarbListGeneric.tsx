@@ -93,7 +93,9 @@ export function VarbListGeneric<SN extends VarbListAllowed>({
     ),
   };
 
-  const saveStatus = useSaveStatus(feInfo);
+  const disable = menuType === "simple";
+  let saveStatus = useSaveStatus(feInfo, disable);
+
   return (
     <Styled
       className={"AdditiveList-root " + className}

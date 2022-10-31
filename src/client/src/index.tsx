@@ -11,8 +11,12 @@ AppRegistry.runApplication("App", {
 // Before Marketing
 // - Restrict variables to ones that don't need
 //   section specification
-// - Get numObj editorText to display updated in-entity text. But also, it should keep depreciated in-entity text. It has to cache.
-// - Think about changing all numbers and strings to numObj and stringObj
+// - Get numObj editorText to to update when the displayName of one of its inEntities changes
+
+// If anyone uses the app
+// - Offer a way to cancel the subscriptions
+// - Add a way to login with 3rd party auth
+// - Write more tests
 
 // If I'm going to make tables faster and increase functionality, here's how:
 // I want the tables to reflect those

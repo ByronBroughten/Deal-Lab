@@ -197,8 +197,24 @@ const themeSections = {
       },
     });
   },
+  get primaryLight() {
+    return themeSection({
+      get main() {
+        return lighten(0.25, "#3f51b5");
+      },
+      get light() {
+        return lighten(0.3, this.main);
+      },
+      get dark() {
+        return darken(0.01, this.main);
+      },
+      get border() {
+        return darken(0.01, this.main);
+      },
+    });
+  },
   get userVarbList() {
-    return this.default;
+    return this.primaryLight;
   },
   get userSingleList() {
     return this.mgmt;

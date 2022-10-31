@@ -4,14 +4,15 @@ import { FeSectionInfo } from "../../../../sharedWithServer/SectionsMeta/Info";
 import { SectionNameByType } from "../../../../sharedWithServer/SectionsMeta/SectionNameByType";
 
 export function useSaveStatus<SN extends SectionNameByType<"hasIndexStore">>(
-  feInfo: FeSectionInfo<SN>
+  feInfo: FeSectionInfo<SN>,
+  disable: boolean = false
 ) {
   const mainSection = useMainSectionActor(feInfo);
-  const [saveStatus, setSaveStatus] = React.useState(
-    () => mainSection.saveStatus
+  const [saveStatus, setSaveStatus] = React.useState(() =>
+    disable ? "unsaved" : mainSection.saveStatus
   );
   React.useEffect(() => {
-    let doIt = true;
+    let doIt = true && !disable;
     setTimeout(() => {
       if (doIt) {
         setSaveStatus(mainSection.saveStatus);
