@@ -9,6 +9,8 @@ AppRegistry.runApplication("App", {
 });
 
 // Before Marketing
+// - Restrict variables to ones that don't need
+//   section specification
 // - Get numObj editorText to display updated in-entity text. But also, it should keep depreciated in-entity text. It has to cache.
 // - Think about changing all numbers and strings to numObj and stringObj
 

@@ -54,7 +54,7 @@ export function UpgradeUserToProPanel() {
             <View style={styles.subSectionSpace}>
               <Text
                 style={styles.normalText}
-              >{`For $10 per month, save as many as ${constants.plans.pro.sectionSaveLimit} unique properties, loans, management scenarios, and deals.`}</Text>
+              >{`For $10 per month, save as many as ${constants.plans.pro.sectionSaveLimit} unique properties, loans, management scenarios, and deals. And if you cancel, your data will still be maintained.`}</Text>
             </View>
           </View>
         </View>

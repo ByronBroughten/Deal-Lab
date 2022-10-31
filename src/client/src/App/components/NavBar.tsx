@@ -85,4 +85,8 @@ const Styled = styled(AppBar)`
   .NavBar-leftSide {
     display: flex;
   }
+
+  .NavBar-GetProDropdownText {
+    margin-left: ${theme.s2};
+  }
 `;

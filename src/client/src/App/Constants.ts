@@ -46,7 +46,7 @@ const env = envConstants[envName];
 const apiPathBit = "/api";
 const apiPathFull = `${env.apiUrlBase}${apiPathBit}`;
 
-const isBeta = true;
+const isBeta = false;
 export const config = {
   ...env,
   supportEmail: "support@ultimatepropertyanalyzer.com",

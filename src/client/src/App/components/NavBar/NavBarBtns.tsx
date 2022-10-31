@@ -26,11 +26,9 @@ function useScenarioKey() {
 export function NavBarBtns() {
   const scenarios = {
     guest: () => (
-      <>
-        <Link className="NavBar-navBtnLink" to="/auth">
-          <NavBtn className="NavBar-signInUpBtn" text="Sign In / Sign Up" />
-        </Link>
-      </>
+      <Link className="NavBar-navBtnLink" to="/auth">
+        <NavBtn className="NavBar-signInUpBtn" text="Sign In / Sign Up" />
+      </Link>
     ),
     loggingInUser: () => (
       <NavBtn className="NavBar-isLoadingBtn" text="Loading..." />
@@ -67,15 +65,13 @@ export function NavBarBtns() {
         icon={<AiOutlineYoutube className="NavBar-demoBtnIcon" />}
         text="Demo"
       /> */}
-      {constants.isBeta && (
-        <NavDropDown
-          className="NavBar-feedbackDropDown"
-          btnText="Give Feedback"
-          btnIcon={<VscFeedback />}
-        >
-          <FeedbackPanel />
-        </NavDropDown>
-      )}
+      <NavDropDown
+        className="NavBar-feedbackDropDown"
+        btnText="Give Feedback"
+        btnIcon={<VscFeedback />}
+      >
+        <FeedbackPanel />
+      </NavDropDown>
       {scenarios[scenarioKey]()}
     </View>
   );
