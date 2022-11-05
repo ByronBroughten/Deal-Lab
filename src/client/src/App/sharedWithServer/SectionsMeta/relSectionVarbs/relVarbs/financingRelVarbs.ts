@@ -37,7 +37,6 @@ export function loanRelVarbs(): RelVarbs<"loan"> {
         },
       ],
     }),
-    // how do I get the switch to update the varbs?
     [loanBase.percent]: relVarbS.percentObj("Base loan", {
       displayNameEnd: " percent",
       updateFnName: "loadSolvableText",
@@ -123,7 +122,7 @@ export function loanRelVarbs(): RelVarbs<"loan"> {
     closingCosts: relVarbS.sumMoney("Closing costs", [
       relVarbInfoS.children("closingCostListGroup", "total"),
     ]),
-    wrappedInLoan: relVarbS.sumMoney("Amount wrapped in loan", [
+    wrappedInLoan: relVarbS.sumMoney("Wrapped in loan", [
       relVarbInfoS.children("wrappedInLoanListGroup", "total"),
     ]),
     piCalculationName: relVarb("string", {

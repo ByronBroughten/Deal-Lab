@@ -193,7 +193,7 @@ export function makeRelSections() {
         updateFnName: "one",
         initNumber: 1,
       }),
-      numBedrooms: relVarbS.calcVarb("BRs"),
+      numBedrooms: relVarbS.calcVarb("Bedrooms"),
       ...relVarbsS.timeMoneyInput("targetRent", "Rent"),
     }),
     ...relSectionProp("mgmtGeneral", {

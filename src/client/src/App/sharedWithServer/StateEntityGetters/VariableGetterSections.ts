@@ -1,11 +1,7 @@
-import { sectionsMeta } from "../SectionsMeta";
 import { InEntityVarbInfo } from "../SectionsMeta/baseSectionsVarbs/baseValues/entities";
 import { switchNames } from "../SectionsMeta/baseSectionsVarbs/RelSwitchVarb";
 import { mixedInfoS } from "../SectionsMeta/childSectionsDerived/MixedSectionInfo";
-import {
-  SectionNameByType,
-  sectionNameS,
-} from "../SectionsMeta/SectionNameByType";
+import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { GetterSectionsBase } from "../StateGetters/Bases/GetterSectionsBase";
 import { GetterSections } from "../StateGetters/GetterSections";
 import { Obj } from "../utils/Obj";
@@ -18,6 +14,50 @@ export type VariableOption = {
   varbInfo: InEntityVarbInfo;
   collectionName: string;
   displayName: string;
+};
+
+const globalOptionVarbs = {
+  propertyGeneral: [
+    "price",
+    "sqft",
+    "taxesYearly",
+    "taxesMonthly",
+    "numBedrooms",
+    "numUnits",
+    "targetRentMonthly",
+    "targetRentYearly",
+  ] as const,
+  mgmtGeneral: [
+    "vacancyRatePercent",
+    "rentCutDollarsMonthly",
+    "rentCutDollarsYearly",
+  ] as const,
+  financing: [
+    "loanBaseDollars",
+    "loanBasePercent",
+    "mortgageInsYearly",
+    "mortgageInsMonthly",
+    "closingCosts",
+    "wrappedInLoan",
+    "loanPaymentMonthly",
+    "loanPaymentYearly",
+  ] as const,
+  deal: [
+    "pitiMonthly",
+    "pitiYearly",
+    "downPaymentDollars",
+    "downPaymentPercent",
+    "totalInvestment",
+    "cashFlowMonthly",
+    "cashFlowYearly",
+    "roiMonthly",
+    "roiYearly",
+    "upfrontExpenses",
+    "expensesMonthly",
+    "expensesYearly",
+    "revenueMonthly",
+    "revenueYearly",
+  ] as const,
 };
 
 export class VariableGetterSections extends GetterSectionsBase {
@@ -117,25 +157,19 @@ export class VariableGetterSections extends GetterSectionsBase {
     return options;
   }
   private initGlobalVarbOptions(): VariableOption[] {
-    const sectionNames = sectionNameS.arrs.all;
+    const sectionNames = Obj.keys(globalOptionVarbs);
     return sectionNames.reduce((options, sectionName) => {
-      if (sectionNameS.is(sectionName, "hasGlobalVarbs")) {
-        options = options.concat(this.initSectionOptions(sectionName));
-      }
+      options = options.concat(this.initSectionOptions(sectionName));
       return options;
     }, [] as VariableOption[]);
   }
   initSectionOptions(sectionName: SectionNameByType<"hasGlobalVarbs">) {
-    const sectionMeta = sectionsMeta.section(sectionName);
-    const { varbNames } = sectionMeta;
-    const varbMetas = varbNames.map((varbName) =>
-      this.sectionsMeta.varb({ sectionName, varbName })
-    );
-    const numObjMetas = varbMetas.filter(
-      (varbMeta) => varbMeta.valueName === "numObj"
-    );
-    return numObjMetas.map((varbMeta) =>
-      this.initAbsoluteVarbOption(varbMeta.varbNameInfo)
+    const varbNames = globalOptionVarbs[sectionName];
+    return varbNames.map((varbName) =>
+      this.initAbsoluteVarbOption({
+        sectionName,
+        varbName,
+      })
     );
   }
   private initAbsoluteVarbOption({
@@ -143,7 +177,6 @@ export class VariableGetterSections extends GetterSectionsBase {
     varbName,
   }: InitGlobalVarbOptionProps): VariableOption {
     const sectionMeta = this.sectionsMeta.section(sectionName);
-
     return {
       varbInfo: mixedInfoS.absoluteVarbPath(
         sectionName,

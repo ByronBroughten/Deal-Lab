@@ -108,7 +108,7 @@ export function dealRelVarbs(): RelVarbs<"deal"> {
       initValue: "yearly",
     }),
     upfrontExpenses: relVarbS.sumNums(
-      "Upfront expenses pre wrapped-in-loan",
+      "All upfront expenses",
       [
         relVarbInfoS.children("propertyGeneral", "upfrontExpenses"),
         relVarbInfoS.children("mgmtGeneral", "upfrontExpenses"),
@@ -120,7 +120,7 @@ export function dealRelVarbs(): RelVarbs<"deal"> {
       { startAdornment: "$" }
     ),
     outOfPocketExpenses: relVarbS.leftRightPropFn(
-      "Upfront expenses total",
+      "Upfront expenses minus loan",
       "simpleSubtract",
       [
         relVarbInfoS.local("upfrontExpenses"),

@@ -44,7 +44,7 @@ export function propertyRelVarbs(): RelVarbs<"property"> {
     ),
     ...relVarbsS.ongoingSumNums(
       "targetRent",
-      "Total rent",
+      "Rent",
       [relVarbInfoS.children("unit", "targetRent")],
       { switchInit: "monthly", shared: { startAdornment: "$" } }
     ),
