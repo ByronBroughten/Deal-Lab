@@ -1,12 +1,13 @@
 import React from "react";
 import { useMainSectionActor } from "../../../../modules/sectionActorHooks/useMainSectionActor";
+import { SaveStatus } from "../../../../modules/SectionSolvers/MainSectionSolver";
 import { FeSectionInfo } from "../../../../sharedWithServer/SectionsMeta/Info";
 import { SectionNameByType } from "../../../../sharedWithServer/SectionsMeta/SectionNameByType";
 
 export function useSaveStatus<SN extends SectionNameByType<"hasIndexStore">>(
   feInfo: FeSectionInfo<SN>,
   disable: boolean = false
-) {
+): SaveStatus {
   const mainSection = useMainSectionActor(feInfo);
   const [saveStatus, setSaveStatus] = React.useState(() =>
     disable ? "unsaved" : mainSection.saveStatus

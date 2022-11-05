@@ -11,7 +11,7 @@ type BiCaretBtnProps = {
   onClick: () => void;
   className?: string;
   direction?: "up" | "right";
-  saveStatus: SaveStatus;
+  saveStatus?: SaveStatus;
   showSaveStatus?: boolean;
 };
 export function CaretMenuBtn({
@@ -34,10 +34,10 @@ export function CaretMenuBtn({
       $saveStatus={saveStatus}
       icon={
         <>
-          {saveStatus === "changesSynced" && (
+          {!dropped && saveStatus === "changesSynced" && (
             <MdOutlineSync className="CaretMenuBtn-syncedIcon" />
           )}
-          {saveStatus === "unsyncedChanges" && (
+          {!dropped && saveStatus === "unsyncedChanges" && (
             <MdOutlineSyncDisabled className="CaretMenuBtn-unsyncedIcon" />
           )}
           <HiMenu className="CaretMenuBtn-menuIcon" />

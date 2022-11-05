@@ -2,6 +2,7 @@ import { MdCompareArrows } from "react-icons/md";
 import styled from "styled-components";
 import { constants } from "../../../../../Constants";
 import { useMainSectionActor } from "../../../../../modules/sectionActorHooks/useMainSectionActor";
+import { SaveStatus } from "../../../../../modules/SectionSolvers/MainSectionSolver";
 import {
   SectionNameByType,
   sectionNameS,
@@ -22,6 +23,7 @@ export interface MainSectionMenuOptions {
   showActions?: boolean;
   showLoadList?: boolean;
   showSaveStatus?: boolean;
+  saveStatus: SaveStatus;
 }
 
 interface Props extends MainSectionMenuOptions {
@@ -39,6 +41,7 @@ export function MainSectionMenus({
   showLoadList = true,
   showSaveStatus = true,
   actionMenuProps,
+  saveStatus,
   ...feInfo
 }: Props) {
   const authStatus = useAuthStatus();
@@ -50,7 +53,7 @@ export function MainSectionMenus({
     <Styled className={`MainSectionMenus-root ${className ?? ""}`}>
       {saveStatusDisplayed && (
         <ChangesSyncedStatusBtn
-          feInfo={feInfo}
+          saveStatus={saveStatus}
           className="MainSectionMenus-item"
         />
       )}

@@ -59,6 +59,7 @@ export function MainSectionTitleRow({
                 pluralName,
                 xBtn,
                 dropTop,
+                saveStatus,
               }}
             />
           )}

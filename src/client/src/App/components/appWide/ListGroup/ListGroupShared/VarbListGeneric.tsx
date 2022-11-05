@@ -44,6 +44,8 @@ export function VarbListGeneric<SN extends VarbListAllowed>({
   childDbVarbs,
   menuType = "full",
 }: Props<SN>) {
+  const disableSaveStatus = menuType === "simple";
+  let saveStatus = useSaveStatus(feInfo, disableSaveStatus);
   const list = useSetterSection(feInfo);
   const titleVarb = list.varb("displayName");
   const { listMenuIsOpen } = useToggleView({
@@ -74,7 +76,8 @@ export function VarbListGeneric<SN extends VarbListAllowed>({
     viewIsOpen,
     themeName,
     toggleListView: trackWidthToggleView,
-  };
+    saveStatus,
+  } as const;
 
   const { toggleMenu, menuIsOpen } = useToggleView({
     viewWhat: "menu",
@@ -92,10 +95,6 @@ export function VarbListGeneric<SN extends VarbListAllowed>({
       />
     ),
   };
-
-  const disable = menuType === "simple";
-  let saveStatus = useSaveStatus(feInfo, disable);
-
   return (
     <Styled
       className={"AdditiveList-root " + className}

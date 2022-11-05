@@ -1,20 +1,15 @@
 import React from "react";
 import { MdOutlineSync, MdOutlineSyncDisabled } from "react-icons/md";
 import styled, { css } from "styled-components";
-import { FeSectionInfo } from "../../../../sharedWithServer/SectionsMeta/Info";
-import { SectionNameByType } from "../../../../sharedWithServer/SectionsMeta/SectionNameByType";
+import { SaveStatus } from "../../../../modules/SectionSolvers/MainSectionSolver";
 import theme, { ThemeName } from "../../../../theme/Theme";
 import { ListMenuBtn } from "../../ListGroup/ListGroupShared/ListMenuSimple/ListMenuBtn";
-import { useSaveStatus } from "./useSaveStatus";
 
-type Props<SN extends SectionNameByType<"hasIndexStore">> = {
-  feInfo: FeSectionInfo<SN>;
+type Props = {
+  saveStatus: SaveStatus;
   className?: string;
 };
-export function ChangesSyncedStatusBtn<
-  SN extends SectionNameByType<"hasIndexStore">
->({ feInfo, className }: Props<SN>) {
-  const saveStatus = useSaveStatus(feInfo);
+export function ChangesSyncedStatusBtn({ className, saveStatus }: Props) {
   const btnProps = {
     unsaved: {
       $themeName: "default",
