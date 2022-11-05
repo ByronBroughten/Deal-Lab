@@ -22,9 +22,9 @@ const NumObjVarbSelector = React.memo(
         entityId: Id.make(),
       };
 
-      setEditorState((editorState) => {
-        return insertEntity(editorState, displayName, entity);
-      });
+      setEditorState((editorState) =>
+        insertEntity(editorState, displayName, entity)
+      );
     }
 
     return (

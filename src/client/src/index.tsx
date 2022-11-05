@@ -9,9 +9,7 @@ AppRegistry.runApplication("App", {
 });
 
 // Before Marketing
-// - Restrict variables to ones that don't need
-//   section specification
-// - Get numObj editorText to to update when the displayName of one of its inEntities changes
+// - Get numObj editorText to update when the displayName of one of its inEntities changes
 
 // If anyone uses the app
 // - Offer a way to cancel the subscriptions

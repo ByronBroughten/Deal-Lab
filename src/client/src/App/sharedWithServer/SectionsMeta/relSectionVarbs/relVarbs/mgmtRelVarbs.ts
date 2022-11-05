@@ -39,7 +39,7 @@ export function mgmtRelVarbs(): RelVarbs<"mgmt"> {
       ],
     }),
     rentCutPercentEditor: relVarbS.percentObj("Rent cut", {
-      initNumber: 5,
+      initNumber: 0,
     }),
     [rentCut.percent]: relVarbS.percentObj("Rent cut input", {
       updateFnName: "loadSolvableText",
