@@ -21,9 +21,12 @@ export function initSupertokens() {
     appInfo: constants.superTokens.appInfo,
     recipeList: [
       ThirdPartyEmailPassword.init({
-        // providers: [
-        //   // Google({ clientId, clientSecret })
-        // ],
+        providers: [
+          Google({
+            clientId: config.get("googleClientId"),
+            clientSecret: config.get("googleClientSecret"),
+          }),
+        ],
         signUpFeature: {
           formFields: [{ id: "userName" }],
         },

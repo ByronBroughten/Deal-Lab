@@ -1,13 +1,15 @@
 import SuperTokens from "supertokens-auth-react";
 import Session from "supertokens-auth-react/recipe/session";
-import ThirdPartyEmailPassword from "supertokens-auth-react/recipe/thirdpartyemailpassword";
+import ThirdPartyEmailPassword, {
+  Google,
+} from "supertokens-auth-react/recipe/thirdpartyemailpassword";
 import { constants } from "../Constants";
 
 export function initSupertokens(): void {
   SuperTokens.init({
     appInfo: constants.superTokens.appInfo,
     recipeList: [
-      // EmailPassword.init(), Session.init()
+      Session.init(),
       ThirdPartyEmailPassword.init({
         override: {
           functions(original) {
@@ -22,9 +24,7 @@ export function initSupertokens(): void {
           }
         },
         signInAndUpFeature: {
-          // providers: [
-          //   // Google.init()
-          // ],
+          providers: [Google.init()],
           signUpForm: {
             formFields: [
               {
@@ -39,7 +39,6 @@ export function initSupertokens(): void {
           mode: "REQUIRED",
         },
       }),
-      Session.init(),
     ],
   });
 }

@@ -3,5 +3,7 @@
   "endpointTest": "ENDPOINT_TEST",
   "jwtPrivateKey": "UPA_JWT_PRIVATE_KEY",
   "supertokensCoreApiKey": "SUPERTOKENS_CORE_API_KEY",
-  "supertokensCoreConnectionUri": "SUPERTOKENS_CORE_CONNECTION_URI"
+  "supertokensCoreConnectionUri": "SUPERTOKENS_CORE_CONNECTION_URI",
+  "googleClientId": "GOOGLE_CLIENT_ID",
+  "googleClientSecret": "GOOGLE_CLIENT_SECRET"
 }
