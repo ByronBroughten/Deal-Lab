@@ -9,6 +9,7 @@ import {
   getSignUpData,
   userPrepS,
 } from "../routes/apiQueries/apiQueriesShared/DbSections/LoadedDbUser/userPrepS";
+const { Google, Facebook, Apple } = ThirdPartyEmailPassword;
 
 export function initSupertokens() {
   supertokens.init({
@@ -20,6 +21,9 @@ export function initSupertokens() {
     appInfo: constants.superTokens.appInfo,
     recipeList: [
       ThirdPartyEmailPassword.init({
+        // providers: [
+        //   // Google({ clientId, clientSecret })
+        // ],
         signUpFeature: {
           formFields: [{ id: "userName" }],
         },

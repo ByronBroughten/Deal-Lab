@@ -14,6 +14,7 @@ import { constants } from "./App/Constants";
 import { useSubscriptionState } from "./App/modules/customHooks/useAuthAndUserData";
 import { useGetterSectionOnlyOne } from "./App/sharedWithServer/stateClassHooks/useGetterSection";
 import theme from "./App/theme/Theme";
+import { PrivacyPolicyPage } from "./PrivacyPolicyPage";
 
 export function Main() {
   useSubscriptionState();
@@ -72,6 +73,8 @@ export function Main() {
             />
           }
         />
+        <Route path={feRoutes.privacyPolicy} element={<PrivacyPolicyPage />} />
+        <Route path={feRoutes.termsOfService} element={<PrivacyPolicyPage />} />
         <Route path="/not-found" element={<NotFound />} />
         <Route path={"/"} element={<ActiveDeal feId={activeDealId} />} />
         <Route path="*" element={<NotFound />} />

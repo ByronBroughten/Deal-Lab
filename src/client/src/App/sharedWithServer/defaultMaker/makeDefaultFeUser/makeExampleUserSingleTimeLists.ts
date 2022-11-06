@@ -10,7 +10,7 @@ const lists = [
     "Misc upfront cost examples",
     [
       ["Inspection", 500],
-      ["Change all locks", 120],
+      ["Change locks", 120],
       ["Entryway mats", 100],
       ["Radon test", 200],
     ],

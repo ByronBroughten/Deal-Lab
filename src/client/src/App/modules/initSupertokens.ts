@@ -1,10 +1,10 @@
-import supertokens from "supertokens-auth-react";
+import SuperTokens from "supertokens-auth-react";
 import Session from "supertokens-auth-react/recipe/session";
 import ThirdPartyEmailPassword from "supertokens-auth-react/recipe/thirdpartyemailpassword";
 import { constants } from "../Constants";
 
 export function initSupertokens(): void {
-  supertokens.init({
+  SuperTokens.init({
     appInfo: constants.superTokens.appInfo,
     recipeList: [
       // EmailPassword.init(), Session.init()
@@ -16,13 +16,15 @@ export function initSupertokens(): void {
             };
           },
         },
-
         getRedirectionURL: async (context) => {
           if (context.action === "SUCCESS") {
             return constants.auth.successUrl;
           }
         },
         signInAndUpFeature: {
+          // providers: [
+          //   // Google.init()
+          // ],
           signUpForm: {
             formFields: [
               {

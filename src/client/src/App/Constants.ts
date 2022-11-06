@@ -82,7 +82,8 @@ export const config = {
       mgmt: "/mgmt-compare",
       deal: "/deal-compare",
     },
-
+    privacyPolicy: "/privacy-policy",
+    termsOfService: "/terms-of-service",
     userVariables: "/variables",
     userLists: "/additive-lists",
     userOutputs: "/outputs",
