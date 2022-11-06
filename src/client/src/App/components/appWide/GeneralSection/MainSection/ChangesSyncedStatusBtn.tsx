@@ -13,7 +13,7 @@ export function ChangesSyncedStatusBtn({ className, saveStatus }: Props) {
   const btnProps = {
     unsaved: {
       $themeName: "default",
-      text: "Unsaved",
+      text: "Loading",
     },
     changesSynced: {
       $themeName: "plus",
