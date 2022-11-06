@@ -10,7 +10,7 @@ import { initSupertokens } from "./App/modules/initSupertokens";
 import {
   SectionsContext,
   SectionsDispatchContext,
-  useSections,
+  useAnalyzerSections,
 } from "./App/sharedWithServer/stateClassHooks/useSections";
 import GlobalStyle from "./App/theme/globalStyles";
 import { Theme } from "./App/theme/Theme";
@@ -20,7 +20,7 @@ initSupertokens();
 ReactGA.initialize("G-19TRW4YTJL");
 ReactGA.send("pageview");
 const App: React.FC = () => {
-  const { sectionsDispatch, ...sectionsContext } = useSections({
+  const { sectionsDispatch, ...sectionsContext } = useAnalyzerSections({
     storeSectionsLocally: true,
   });
   return (

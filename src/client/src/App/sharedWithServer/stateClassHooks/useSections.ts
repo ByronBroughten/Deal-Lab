@@ -15,21 +15,18 @@ type UseSectionsProps = {
   prePopulatedSections?: StateSections;
   storeSectionsLocally?: boolean;
 };
+export type SectionsDispatch = React.Dispatch<SectionsAction>;
 export interface SectionsAndControls {
   sectionsDispatch: React.Dispatch<SectionsAction>;
   sections: StateSections;
   setSections: React.Dispatch<React.SetStateAction<StateSections>>;
 }
-export function useSections({
-  prePopulatedSections,
-  storeSectionsLocally = false,
-}: UseSectionsProps = {}): SectionsAndControls {
-  const [sections, sectionsDispatch] = React.useReducer(
-    sectionsReducer,
-    StateSections.initEmpty(),
-    () => initializeSections(prePopulatedSections)
-  );
-  const setSections: SetSections = (value) => {
+
+function makeSetSections(
+  currentSections: StateSections,
+  sectionsDispatch: SectionsDispatch
+): SetSections {
+  return (value) => {
     if (value instanceof StateSections)
       sectionsDispatch({
         type: "setState",
@@ -38,25 +35,46 @@ export function useSections({
     else {
       sectionsDispatch({
         type: "setState",
-        sections: value(sections),
+        sections: value(currentSections),
       });
     }
   };
+}
 
-  useLocalSectionsStore({ storeSectionsLocally, sections });
+export function useSections(
+  initializeSections: () => StateSections
+): [StateSections, SetSections, SectionsDispatch] {
+  const [sections, sectionsDispatch] = React.useReducer(
+    sectionsReducer,
+    StateSections.initEmpty(),
+    initializeSections
+  );
+  const setSections = makeSetSections(sections, sectionsDispatch);
+  return [sections, setSections, sectionsDispatch];
+}
 
+export function useAnalyzerSections({
+  prePopulatedSections,
+  storeSectionsLocally = false,
+}: UseSectionsProps = {}): SectionsAndControls {
+  const [sections, setSections, sectionsDispatch] = useSections(() =>
+    initializeAnalyzerSections(prePopulatedSections)
+  );
+  useLocalSectionsStore({
+    storeSectionsLocally,
+    sections,
+  });
   return {
-    sectionsDispatch,
     sections,
     setSections,
+    sectionsDispatch,
   };
 }
 
-type UseSectionsReturn = ReturnType<typeof useSections>;
+type UseSectionsReturn = ReturnType<typeof useAnalyzerSections>;
 export type SectionsValue = StrictOmit<UseSectionsReturn, "sectionsDispatch">;
-export type SectionsDispatch = UseSectionsReturn["sectionsDispatch"];
 
-function initializeSections(prePopulatedSections?: StateSections) {
+function initializeAnalyzerSections(prePopulatedSections?: StateSections) {
   if (prePopulatedSections) return prePopulatedSections;
   else
     try {

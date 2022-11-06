@@ -7,7 +7,11 @@ import { apiQueries } from "../../modules/apiQueriesClient";
 import usePrompt from "../../modules/customHooks/useBlockerAndPrompt";
 import { SectionArrQuerier } from "../../modules/QueriersBasic/SectionArrQuerier";
 import { FeStoreNameByType } from "../../sharedWithServer/SectionsMeta/relSectionsDerived/relNameArrs/FeStoreName";
-import { SectionsContext } from "../../sharedWithServer/stateClassHooks/useSections";
+import {
+  SectionsContext,
+  SectionsDispatchContext,
+  useSections,
+} from "../../sharedWithServer/stateClassHooks/useSections";
 import { useSetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useSetterSection";
 import { PackMakerSection } from "../../sharedWithServer/StatePackers.ts/PackMakerSection";
 import { StateSections } from "../../sharedWithServer/StateSections/StateSections";
@@ -92,26 +96,30 @@ export function UserListsGeneralSection({
   return (
     <Styled themeName={themeName} className="UserListsGeneralSection-root">
       <SectionsContext.Provider value={userListsContext}>
-        <GeneralSectionTitle title={title} themeName={themeName}>
-          <MainSectionTitleBtn
-            themeName={themeName}
-            className="UserListMain-saveBtn"
-            onClick={saveUserLists}
-            {...{
-              ...saveBtnProps,
-              icon: <AiOutlineSave size="25" />,
-            }}
-          />
-        </GeneralSectionTitle>
-        <div className="MainSection-entries">
-          <UserListSectionEntry
-            {...{
-              themeName,
-              storeName,
-              makeListNode,
-            }}
-          />
-        </div>
+        <SectionsDispatchContext.Provider
+          value={userListsContext.sectionsDispatch}
+        >
+          <GeneralSectionTitle title={title} themeName={themeName}>
+            <MainSectionTitleBtn
+              themeName={themeName}
+              className="UserListMain-saveBtn"
+              onClick={saveUserLists}
+              {...{
+                ...saveBtnProps,
+                icon: <AiOutlineSave size="25" />,
+              }}
+            />
+          </GeneralSectionTitle>
+          <div className="MainSection-entries">
+            <UserListSectionEntry
+              {...{
+                themeName,
+                storeName,
+                makeListNode,
+              }}
+            />
+          </div>
+        </SectionsDispatchContext.Provider>
       </SectionsContext.Provider>
     </Styled>
   );
@@ -126,9 +134,11 @@ const Styled = styled(GeneralSection)`
   }
 `;
 
-function useUserListMainSection(storeName: FeStoreNameByType<"fullIndex">) {
+function useInitUserListSections(
+  storeName: FeStoreNameByType<"fullIndex">
+): () => StateSections {
   const feUser = useSetterSectionOnlyOne("feUser");
-  const [sections, setSections] = React.useState(() => {
+  return () => {
     const varbListPacks = feUser.packMaker.makeChildSectionPackArr(storeName);
     const sections = SolverSections.initSectionsFromDefaultMain();
     const packBuilder = SolverSection.init({
@@ -139,8 +149,24 @@ function useUserListMainSection(storeName: FeStoreNameByType<"fullIndex">) {
       [storeName]: varbListPacks,
     });
     return packBuilder.sectionsShare.sections;
-  });
+  };
+}
 
-  const [savedSections, setSavedSections] = React.useState(sections);
-  return { sections, setSections, savedSections, setSavedSections };
+function useUserListMainSection(storeName: FeStoreNameByType<"fullIndex">) {
+  const initUserListSections = useInitUserListSections(storeName);
+  const [sections, setSections, sectionsDispatch] =
+    useSections(initUserListSections);
+
+  const [savedSections, setSavedSections, savedSectionsDispatch] = useSections(
+    () => sections
+  );
+
+  return {
+    sections,
+    setSections,
+    sectionsDispatch,
+    savedSections,
+    setSavedSections,
+    savedSectionsDispatch,
+  };
 }
