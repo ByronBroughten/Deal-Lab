@@ -158,8 +158,10 @@ export class SetterSection<
     this.solver.removeChildrenAndSolve(childName);
     this.setSections();
   }
-  replaceChildArrs(childPackArrs: Partial<ChildSectionPackArrs<SN>>): void {
-    this.solver.loadChildPackArrsAndSolve(childPackArrs);
+  replaceChildArrs<CN extends ChildName<SN>>(
+    childPackArrs: ChildSectionPackArrs<SN, CN>
+  ): void {
+    this.solver.replaceChildPackArrsAndSolve(childPackArrs);
     this.setSections();
   }
   loadChild(childPackInfo: ChildPackInfo<SN>) {

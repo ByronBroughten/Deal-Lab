@@ -24,7 +24,9 @@ export class OutVarbGetterVarb<
   get get() {
     return new GetterVarb(this.getterVarbProps);
   }
-  private getterSections = new GetterSections(this.getterSectionsProps);
+  private get getterSections() {
+    return new GetterSections(this.getterSectionsProps);
+  }
   get outVarbInfos() {
     this.gatherOutVarbInfos();
     return this.outVarbInfoStore;

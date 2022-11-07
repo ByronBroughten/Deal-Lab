@@ -24,7 +24,6 @@ import { UpdateFnProps } from "../SectionsMeta/relSectionVarbs/rel/relVarbTypes"
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { GetterSectionProps } from "../StateGetters/Bases/GetterSectionBase";
 import { GetterVarbBase } from "../StateGetters/Bases/GetterVarbBase";
-import { GetterList } from "../StateGetters/GetterList";
 import { GetterSection } from "../StateGetters/GetterSection";
 import { GetterSections } from "../StateGetters/GetterSections";
 import { GetterVarb } from "../StateGetters/GetterVarb";
@@ -42,9 +41,6 @@ export class SolveValueVarb<
   }
   get getterSection(): GetterSection<SN> {
     return new GetterSection(this.getterSectionProps);
-  }
-  private get getterList() {
-    return new GetterList(this.getterListProps);
   }
   private get getterVarb() {
     return new GetterVarb(this.getterVarbProps);
@@ -110,7 +106,7 @@ export class SolveValueVarb<
         mainText: "",
         entities: [],
       };
-    },
+    }, // mgmt
     calculation: (): NumObj => {
       const solvableText = this.solvableTextFromCalculation();
       return {
@@ -294,7 +290,6 @@ export class SolveValueVarb<
   } {
     const numberVarbs: NumberProps = {};
     const failedVarbs: FailedVarbs = [];
-    // Ok. I would like to redo this to be able to get props for anything.
     for (let [propName, propOrArr] of Object.entries(updateFnProps)) {
       if (Array.isArray(propOrArr)) numberVarbs[propName] = [];
       else propOrArr = [propOrArr];

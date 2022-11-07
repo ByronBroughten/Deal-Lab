@@ -93,8 +93,11 @@ export class PackLoaderSection<
   }
 }
 
-export type ChildSectionPackArrs<SN extends SectionNameByType> = {
-  [CN in ChildName<SN>]: ChildSectionPack<SN, CN>[];
+export type ChildSectionPackArrs<
+  SN extends SectionName,
+  CN extends ChildName<SN> = ChildName<SN>
+> = {
+  [C in CN]: ChildSectionPack<SN, C>[];
 };
 
 export type ChildPackInfo<

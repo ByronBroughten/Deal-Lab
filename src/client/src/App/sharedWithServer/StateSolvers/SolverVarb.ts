@@ -48,15 +48,18 @@ export class SolverVarb<
   private get valueSolver() {
     return new SolveValueVarb(this.getterVarbBase.getterVarbProps);
   }
-  private solverSections = new SolverSections(this.solverSectionsProps);
-
+  private get solverSections() {
+    return new SolverSections(this.solverSectionsProps);
+  }
+  get builderSections() {
+    return new PackBuilderSections(this.getterSectionProps);
+  }
   localSolverVarb(varbName: string): SolverVarb<SN> {
     return new SolverVarb({
       ...this.solverSectionProps,
       varbName,
     });
   }
-
   static init<SN extends SectionNameByType>(
     props: InitSolverVarbProps<SN>
   ): SolverVarb<SN> {
@@ -120,9 +123,6 @@ export class SolverVarb<
   private addNewOutEntitites() {
     const { newEntities } = this;
     this.addOutEntitiesFromInEntities(newEntities);
-  }
-  get builderSections() {
-    return new PackBuilderSections(this.getterSectionProps);
   }
   private addOutEntitiesFromInEntities(inEntities: InEntity[]) {
     this.dummyCheck(inEntities);

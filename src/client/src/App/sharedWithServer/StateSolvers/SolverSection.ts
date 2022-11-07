@@ -113,6 +113,12 @@ export class SolverSection<
     this.remover.removeChildrenAndExtractVarbIds(childName);
     this.solve();
   }
+  removeChildArrsAndSolve<CN extends ChildName<SN>>(childArrs: CN[]): void {
+    for (const childName of childArrs) {
+      this.remover.removeChildrenAndExtractVarbIds(childName);
+      this.solve();
+    }
+  }
   childByDbId<CN extends ChildName<SN>>(dbInfo: DbChildInfo<SN, CN>) {
     const { childName } = dbInfo;
     const { feId } = this.get.childByDbId(dbInfo);
@@ -203,10 +209,17 @@ export class SolverSection<
     const child = this.youngestChild(childName);
     child.loadSelf(sectionPack);
   }
-  loadChildPackArrsAndSolve(
-    childPackArrs: Partial<ChildSectionPackArrs<SN>>
+  addChildArrsAndSolve<CN extends ChildName<SN>>(
+    childPackArrs: ChildSectionPackArrs<SN, CN>
   ): void {
-    this.combo.loadChildPackArrsAndExtractIds(childPackArrs);
+    this.adder.addChildArrsAndFinalize(childPackArrs);
     this.solve();
+  }
+  replaceChildPackArrsAndSolve<CN extends ChildName<SN>>(
+    childPackArrs: ChildSectionPackArrs<SN, CN>
+  ): void {
+    const childNames = Obj.keys(childPackArrs);
+    this.removeChildArrsAndSolve(childNames);
+    this.addChildArrsAndSolve(childPackArrs);
   }
 }

@@ -1,5 +1,6 @@
 import { ChildName } from "../SectionsMeta/childSectionsDerived/ChildName";
 import { ChildSectionName } from "../SectionsMeta/childSectionsDerived/ChildSectionName";
+import { ChildArrPack } from "../SectionsMeta/childSectionsDerived/ChildSectionPack";
 import { ParentNameSafe } from "../SectionsMeta/childSectionsDerived/ParentName";
 import { FeSectionInfo } from "../SectionsMeta/Info";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
@@ -7,10 +8,12 @@ import { GetterSection } from "../StateGetters/GetterSection";
 import { GetterVarb } from "../StateGetters/GetterVarb";
 import {
   ChildPackInfo,
+  ChildSectionPackArrs,
   PackLoaderSection,
 } from "../StatePackers.ts/PackLoaderSection";
 import { DefaultFamilyAdder } from "../StateUpdaters/DefaultFamilyAdder";
 import { AddChildOptions } from "../StateUpdaters/UpdaterSection";
+import { Obj } from "../utils/Obj";
 import {
   SolverSectionBase,
   SolverSectionProps,
@@ -86,6 +89,34 @@ export class AddSolverSection<
     const child = this.youngestChild(childName);
     child.finalizeAddAndExtractVarbIds();
   }
+  loadChildAndFinalize<CN extends ChildName<SN>>(
+    packInfo: ChildPackInfo<SN, CN>
+  ): void {
+    this.loader.loadChildSectionPack(packInfo);
+    const child = this.youngestChild(packInfo.childName);
+    child.finalizeAddAndExtractVarbIds();
+  }
+  addChildrenAndFinalize<CN extends ChildName<SN>>({
+    childName,
+    sectionPacks,
+  }: ChildArrPack<SN, CN>): void {
+    for (const sectionPack of sectionPacks) {
+      this.loadChildAndFinalize({
+        childName,
+        sectionPack,
+      });
+    }
+  }
+  addChildArrsAndFinalize<CN extends ChildName<SN>>(
+    packArrs: ChildSectionPackArrs<SN, CN>
+  ): void {
+    for (const childName of Obj.keys(packArrs)) {
+      this.addChildrenAndFinalize({
+        childName,
+        sectionPacks: packArrs[childName],
+      });
+    }
+  }
   private collectNestedVarbIds() {
     const { selfAndDescendantVarbIds } = this.get;
     this.addToAddedVarbIds(...selfAndDescendantVarbIds);
@@ -112,7 +143,15 @@ export class AddSolverSection<
         ...this.solverSectionsProps,
         ...varbInfo,
       });
+      const { sectionName, dbId, varbName } = solverVarb.get;
       solverVarb.addOutEntitiesFromCurrentInEntities();
+      if (
+        sectionName === "ongoingItem" &&
+        varbName === "costToReplace" &&
+        dbId === "K2mMU7QlD496"
+      ) {
+        console.log("breakpoint");
+      }
     }
   }
 }

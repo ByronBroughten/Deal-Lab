@@ -1,3 +1,4 @@
+import { ChildName } from "../SectionsMeta/childSectionsDerived/ChildName";
 import { SectionPack } from "../SectionsMeta/childSectionsDerived/SectionPack";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import {
@@ -30,8 +31,8 @@ export class ComboSolverSection<
     this.loader.loadSelfSectionPack(sectionPack);
     this.adder.finalizeAddAndExtractVarbIds();
   }
-  loadChildPackArrsAndExtractIds(
-    childPackArrs: Partial<ChildSectionPackArrs<SN>>
+  loadChildPackArrsAndExtractIds<CN extends ChildName<SN>>(
+    childPackArrs: ChildSectionPackArrs<SN, CN>
   ): void {
     const childNames = Obj.keys(childPackArrs);
     this.remover.removeChildrenGroupsAndExtractVarbIds(childNames);

@@ -6,7 +6,10 @@ import styled from "styled-components";
 import { apiQueries } from "../../modules/apiQueriesClient";
 import usePrompt from "../../modules/customHooks/useBlockerAndPrompt";
 import { SectionArrQuerier } from "../../modules/QueriersBasic/SectionArrQuerier";
-import { FeStoreNameByType } from "../../sharedWithServer/SectionsMeta/relSectionsDerived/relNameArrs/FeStoreName";
+import {
+  FeStoreNameByType,
+  feStoreNameS,
+} from "../../sharedWithServer/SectionsMeta/relSectionsDerived/relNameArrs/FeStoreName";
 import {
   SectionsContext,
   SectionsDispatchContext,
@@ -15,7 +18,6 @@ import {
 import { useSetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useSetterSection";
 import { PackMakerSection } from "../../sharedWithServer/StatePackers.ts/PackMakerSection";
 import { StateSections } from "../../sharedWithServer/StateSections/StateSections";
-import { SolverSection } from "../../sharedWithServer/StateSolvers/SolverSection";
 import { SolverSections } from "../../sharedWithServer/StateSolvers/SolverSections";
 import theme, { ThemeName } from "../../theme/Theme";
 import { GeneralSection } from "../appWide/GeneralSection";
@@ -40,20 +42,20 @@ function useSaveUserLists(
 ) {
   const feUser = useSetterSectionOnlyOne("feUser");
   const userListsContext = useUserListMainSection(storeName);
-  const workingListPack = makePackList(userListsContext.sections, storeName);
-  const savedListPack = makePackList(userListsContext.savedSections, storeName);
+  const workingPackList = makePackList(userListsContext.sections, storeName);
+  const savedPackList = makePackList(userListsContext.savedSections, storeName);
 
-  const areSaved = isEqual(workingListPack, savedListPack);
+  const areSaved = isEqual(workingPackList, savedPackList);
   async function saveUserLists() {
     const arrQuerier = new SectionArrQuerier({
       dbStoreName: storeName,
       apiQueries,
     });
-    await arrQuerier.replace(workingListPack);
+    await arrQuerier.replace(workingPackList);
     unstable_batchedUpdates(() => {
       feUser.replaceChildArrs({
-        [storeName]: workingListPack,
-      });
+        [storeName]: workingPackList,
+      } as any);
       userListsContext.setSavedSections(userListsContext.sections);
     });
   }
@@ -137,18 +139,20 @@ const Styled = styled(GeneralSection)`
 function useInitUserListSections(
   storeName: FeStoreNameByType<"fullIndex">
 ): () => StateSections {
-  const feUser = useSetterSectionOnlyOne("feUser");
+  const main = useSetterSectionOnlyOne("main");
+  const feUser = main.onlyChild("feUser");
+  const activeDeal = main.onlyChild("activeDeal");
   return () => {
-    const varbListPacks = feUser.packMaker.makeChildSectionPackArr(storeName);
-    const sections = SolverSections.initSectionsFromDefaultMain();
-    const packBuilder = SolverSection.init({
-      ...sections.onlyOneRawSection("feUser"),
-      sectionsShare: { sections },
-    });
-    packBuilder.loadChildPackArrsAndSolve({
-      [storeName]: varbListPacks,
-    });
-    return packBuilder.sectionsShare.sections;
+    const packArrs = feUser.packMaker.makeChildPackArrs(
+      feStoreNameS.arrs.userListStoreName
+    );
+
+    const mainNext = SolverSections.initMainFromActiveDealPack(
+      activeDeal.packMaker.makeSectionPack()
+    );
+    const feUserNext = mainNext.onlyChild("feUser");
+    feUserNext.replaceChildPackArrsAndSolve(packArrs);
+    return feUserNext.sectionsShare.sections;
   };
 }
 

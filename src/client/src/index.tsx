@@ -8,6 +8,12 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
+// The userLists show the amounts they add up to, even when deal
+// variables are being used.
+// 1. Bring the deal into the state and just let it show that stuff
+//    — this might be the easiest solution for now
+// 2. Try to do what you did for the userVariables, to prevent this.
+
 // Before Marketing
 // - Get numObj editorText to update when the displayName of one of its inEntities changes
 
