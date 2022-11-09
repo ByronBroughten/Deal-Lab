@@ -14,24 +14,38 @@ type Props<SN extends SectionNameByType<"hasIndexStore">> = {
   feInfo: FeSectionInfo<SN>;
   className?: string;
   noEntriesMessage: string;
+  noAccessMessage?: string;
 };
+
+type ScenarioKey = "noAccess" | "areNone" | "isAtLeastOne";
+function useScenarioKey(rows: any[], noAccessMessage?: string): ScenarioKey {
+  const { areNone } = useHowMany(rows);
+  if (noAccessMessage !== undefined) {
+    return "noAccess";
+  } else if (areNone) {
+    return "areNone";
+  } else return "isAtLeastOne";
+}
+
 export function RowIndexRows<SN extends SectionNameByType<"hasIndexStore">>({
   feInfo,
   className,
   noEntriesMessage,
+  noAccessMessage,
 }: Props<SN>) {
   const [filter, setFilter] = React.useState("");
   const section = useMainSectionActor(feInfo);
   const rows = section.alphabeticalDisplayItems();
-  const { isAtLeastOne } = useHowMany(rows);
-
-  return (
-    <Styled
-      className={`RowIndexRows-root ${className}`}
-      tabIndex={0}
-      sectionName={themeSectionNameOrDefault(feInfo.sectionName)}
-    >
-      {isAtLeastOne && (
+  const scenarioKey = useScenarioKey(rows, noAccessMessage);
+  const scenarios = {
+    get noAccess() {
+      return <Message message={noAccessMessage ?? "No access"} />;
+    },
+    get areNone() {
+      return <Message message={noEntriesMessage} />;
+    },
+    get isAtLeastOne() {
+      return (
         <>
           <TextField
             {...{
@@ -57,15 +71,26 @@ export function RowIndexRows<SN extends SectionNameByType<"hasIndexStore">>({
               )
           )}
         </>
-      )}
-      {!isAtLeastOne && (
-        <StyledRowIndexRow className={"RowIndexRows-noEntriesRow"}>
-          <span className="RowIndexRows-noEntriesMessage">
-            {noEntriesMessage}
-          </span>
-        </StyledRowIndexRow>
-      )}
+      );
+    },
+  };
+
+  return (
+    <Styled
+      className={`RowIndexRows-root ${className}`}
+      tabIndex={0}
+      sectionName={themeSectionNameOrDefault(feInfo.sectionName)}
+    >
+      {scenarios[scenarioKey]}
     </Styled>
+  );
+}
+
+function Message({ message }: { message: string }) {
+  return (
+    <StyledRowIndexRow className={"RowIndexRows-noEntriesRow"}>
+      <span className="RowIndexRows-noEntriesMessage">{message}</span>
+    </StyledRowIndexRow>
   );
 }
 

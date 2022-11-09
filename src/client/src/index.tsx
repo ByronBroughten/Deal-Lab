@@ -7,13 +7,10 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-// 1. The repair budget example doesn't solve when loaded
-// - what's the difference? It contains two entities.
-//   That doesn't normally cause an issue, but it does on load
-//   for some reason.
 
 // 2. Write actions are being shown for loaded lists when the user is a guest
 // 3. Write actions (delete) are shown in saved menu
+// For now, remove access to the load menu if the user is a guest
 
 // Before Marketing
 // - Get numObj editorText to update when the displayName of one of its inEntities changes
@@ -22,6 +19,8 @@ AppRegistry.runApplication("App", {
 // - Offer a way to cancel the subscriptions
 // - Add a way to login with 3rd party auth
 // - Write more tests
+// - Let guests access and perhaps manipulate examples
+//   on the front-end
 
 // If I'm going to make tables faster and increase functionality, here's how:
 // I want the tables to reflect those

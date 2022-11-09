@@ -1,6 +1,6 @@
 import { FaList } from "react-icons/fa";
+import { useFeUser } from "../../modules/sectionActorHooks/useFeUser";
 import { FeInfoByType } from "../../sharedWithServer/SectionsMeta/Info";
-import { useAuthStatus } from "../../sharedWithServer/stateClassHooks/useAuthStatus";
 import { DropdownList } from "./DropdownList";
 import { RowIndexRows } from "./RowIndexRows";
 
@@ -18,11 +18,7 @@ export function DisplayNameSectionList({
   className,
   pluralName,
 }: Props) {
-  const authStatus = useAuthStatus();
-  const noEntriesMessage =
-    authStatus === "guest"
-      ? `Sign in to access saved ${pluralName}`
-      : "None saved";
+  const feUser = useFeUser();
   return (
     <DropdownList
       {...{
@@ -32,7 +28,15 @@ export function DisplayNameSectionList({
         icon: <FaList className="DisplayNameSectionList-listIcon" />,
       }}
     >
-      <RowIndexRows feInfo={feInfo} noEntriesMessage={noEntriesMessage} />
+      <RowIndexRows
+        {...{
+          feInfo,
+          noEntriesMessage: "None saved",
+          ...(feUser.isGuest && {
+            noAccessMessage: `To access saved ${pluralName}, sign in`,
+          }),
+        }}
+      />
     </DropdownList>
   );
 }
