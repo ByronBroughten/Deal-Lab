@@ -91,9 +91,10 @@ export class SolveValueVarb<
     },
     calcVarbs: (): NumObj => {
       const current = this.getterVarb.value("numObj");
+      const solvableText = this.solvableTextFromCalcVarbs();
       return {
         ...current,
-        solvableText: this.solvableTextFromCalcVarbs(),
+        solvableText,
       };
     },
     loadSolvableText: (): NumObj => {

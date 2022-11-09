@@ -1,5 +1,6 @@
 import { AnalyzerPlanValues } from "../../sharedWithServer/apiQueriesShared/AnalyzerPlanValues";
 import { defaultMaker } from "../../sharedWithServer/defaultMaker/defaultMaker";
+import { AuthStatus } from "../../sharedWithServer/SectionsMeta/baseSectionsVarbs";
 import { ChildSectionName } from "../../sharedWithServer/SectionsMeta/childSectionsDerived/ChildSectionName";
 import { SectionPack } from "../../sharedWithServer/SectionsMeta/childSectionsDerived/SectionPack";
 import { FeSectionInfo } from "../../sharedWithServer/SectionsMeta/Info";
@@ -24,6 +25,16 @@ export class FeUserSolver extends SolverSectionBase<"feUser"> {
   get solver(): SolverSection<"feUser"> {
     return new SolverSection(this.solverSectionProps);
   }
+  get isLoggedIn(): boolean {
+    return !this.isGuest;
+  }
+  get authStatus(): AuthStatus {
+    return this.get.valueNext("authStatus") as AuthStatus;
+  }
+  get isGuest(): boolean {
+    return this.authStatus === "guest";
+  }
+
   static initDefault() {
     const feUser = PackBuilderSection.initAsOmniChild("feUser");
     feUser.loadSelf(defaultMaker.makeSectionPack("feUser"));

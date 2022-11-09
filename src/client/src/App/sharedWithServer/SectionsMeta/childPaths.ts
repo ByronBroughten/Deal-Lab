@@ -63,7 +63,7 @@ export const childPaths = {
   },
 } as const;
 
-const childPathNames = Obj.keys(childPaths);
+export const childPathNames = Obj.keys(childPaths);
 export function isChildPathName(value: any): value is ChildPathName {
   return childPathNames.includes(value);
 }
@@ -76,7 +76,13 @@ export function getPath<CPN extends ChildPathName>(
 }
 
 type ChildPaths = typeof childPaths;
-export type ChildPathName = keyof ChildPaths;
+export type ChildPathName = typeof childPathNames[number];
+
+export function pathSectionName<PN extends ChildPathName>(
+  pathName: PN
+): PathSectionName<PN> {
+  return childPaths[pathName].sectionName;
+}
 
 export type PathSectionName<CPN extends ChildPathName = ChildPathName> =
   ChildPaths[CPN]["sectionName"];

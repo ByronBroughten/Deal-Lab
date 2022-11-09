@@ -1,18 +1,25 @@
 import { z } from "zod";
 import { zS } from "../utils/zod";
 import { SectionNameProp } from "./baseSectionsDerived/baseSectionInfo";
-import { VarbProp } from "./baseSectionsDerived/baseVarbInfo";
+import { VarbProp, VarbPropNext } from "./baseSectionsDerived/baseVarbInfo";
 import {
   ExpectedCount,
   GeneralMixedIdInfo,
   GeneralMixedInfo,
 } from "./baseSectionsVarbs/NanoIdInfo";
-import { PathNameOfSection } from "./childPaths";
+import {
+  ChildPathName,
+  PathNameOfSection,
+  PathSectionName,
+} from "./childPaths";
 import { SectionName } from "./SectionName";
 
-interface SectionPathProp<SN extends SectionName> {
-  pathName: PathNameOfSection<SN>;
+interface PathNameProp<PN extends ChildPathName> {
+  pathName: PN;
 }
+
+interface SectionPathProp<SN extends SectionName>
+  extends PathNameProp<PathNameOfSection<SN>> {}
 
 export const zSectionPathProp = z.object({
   pathName: zS.string,
@@ -31,7 +38,10 @@ export function isAbsoluteInfoType(value: any): value is PathInfoType {
   return pathInfoTypes.includes(value);
 }
 
-export interface PathInfo<SN extends SectionName>
+export interface PathInfo<PN extends ChildPathName>
+  extends PathNameProp<PN>,
+    SectionNameProp<PathSectionName<PN>> {}
+export interface SectionPathInfo<SN extends SectionName>
   extends SectionNameProp<SN>,
     SectionPathProp<SN> {}
 
@@ -44,41 +54,49 @@ interface PathMixedProp<EC extends ExpectedCount = ExpectedCount>
 export interface PathInfoMixed<
   SN extends SectionName,
   EC extends ExpectedCount = ExpectedCount
-> extends PathInfo<SN>,
+> extends SectionPathInfo<SN>,
     PathMixedProp<EC> {}
 
-export interface PathVarbInfo<SN extends SectionName>
-  extends PathInfo<SN>,
+export interface PathVarbNames<PN extends ChildPathName>
+  extends PathNameProp<PN>,
+    VarbProp {}
+
+export interface PathVarbInfo<PN extends ChildPathName>
+  extends PathInfo<PN>,
+    VarbPropNext<PathSectionName<PN>> {}
+export interface SectionPathVarbInfo<SN extends SectionName>
+  extends SectionPathInfo<SN>,
     VarbProp {}
 
 export interface PathVarbInfoMixed<
   SN extends SectionName,
   EC extends ExpectedCount = ExpectedCount
-> extends PathVarbInfo<SN>,
+> extends SectionPathVarbInfo<SN>,
     PathMixedProp<EC> {}
 
-export interface PathDbIdInfo<SN extends SectionName> extends PathInfo<SN> {
+export interface PathDbIdInfo<SN extends SectionName>
+  extends SectionPathInfo<SN> {
   dbId: string;
 }
 
 export interface PathDbInfoMixed<
   SN extends SectionName,
   EC extends ExpectedCount = ExpectedCount
-> extends PathInfo<SN>,
+> extends SectionPathInfo<SN>,
     GeneralMixedIdInfo<EC>,
     PathInfoTypeProp {
   infoType: "absolutePathDbId";
 }
 
 export interface PathDbVarbInfo<SN extends SectionName>
-  extends PathVarbInfo<SN> {
+  extends SectionPathVarbInfo<SN> {
   dbId: string;
 }
 
 export interface PathDbVarbInfoMixed<
   SN extends SectionName,
   EC extends ExpectedCount = ExpectedCount
-> extends PathVarbInfo<SN>,
+> extends SectionPathVarbInfo<SN>,
     GeneralMixedIdInfo<EC> {
   infoType: "absolutePathDbId";
 }

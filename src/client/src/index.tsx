@@ -7,12 +7,13 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
+// 1. The repair budget example doesn't solve when loaded
+// - what's the difference? It contains two entities.
+//   That doesn't normally cause an issue, but it does on load
+//   for some reason.
 
-// The userLists show the amounts they add up to, even when deal
-// variables are being used.
-// 1. Bring the deal into the state and just let it show that stuff
-//    — this might be the easiest solution for now
-// 2. Try to do what you did for the userVariables, to prevent this.
+// 2. Write actions are being shown for loaded lists when the user is a guest
+// 3. Write actions (delete) are shown in saved menu
 
 // Before Marketing
 // - Get numObj editorText to update when the displayName of one of its inEntities changes

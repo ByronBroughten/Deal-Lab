@@ -55,6 +55,7 @@ export type RelVarbByType = {
   [Prop in ValueName]: CommonRelVarb &
     ValueSpecificProps[Prop] & { type: Prop };
 };
+
 export type RelVarb<T extends ValueName = ValueName> = RelVarbByType[T];
 
 export type NumObjRelVarb = RelVarbByType["numObj"];

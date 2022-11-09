@@ -141,7 +141,7 @@ export class GetterSections extends GetterSectionsBase {
           .varb(varbName);
       }
     }
-    return this.sectionByMixed(info).varb(varbName);
+    return this.sectionByMixed(info).varb(varbName) as any;
   }
   numObjOrNotFoundByMixedAssertOne<SN extends SectionNameByType>(
     info: VarbInfoMixed<SN>

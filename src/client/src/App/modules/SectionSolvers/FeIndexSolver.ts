@@ -56,6 +56,31 @@ export class FeIndexSolver<
   get displayItems() {
     return this.fullIndexSolver.displayItems;
   }
+  deleteFromIndex(dbId: string): void {
+    this.fullIndexSolver.removeItem(dbId);
+  }
+  addItem(sectionPack: SectionPack<SN>): void {
+    this.fullIndexSolver.addItem(sectionPack as SectionPack<any>);
+  }
+  updateItem(sectionPack: SectionPack<SN>): void {
+    this.fullIndexSolver.updateItem(sectionPack as SectionPack<any>);
+  }
+  getItem(dbId: string): SectionPack<SN> {
+    return this.fullIndexSolver.getItem(dbId).makeSectionPack();
+  }
+  getAsSavedPack(dbId: string): SectionPack<SN> {
+    if (this.hasFeDisplayIndex) {
+      const asSaved = this.displayIndexBuilder.getAsSaved(dbId);
+      return asSaved.makeSectionPack() as SectionPack<SN>;
+    } else {
+      return this.fullIndexSolver.getItemPack(dbId);
+    }
+  }
+  removeAsSavedExtras(loadedDbIds: string[]): void {
+    if (this.hasFeDisplayIndex) {
+      this.displayIndexBuilder.removeAsSavedExtras(loadedDbIds);
+    }
+  }
   addAsSavedIfMissing(sectionPack: SectionPack<SN>) {
     if (this.hasFeDisplayIndex) {
       const headSection = PackBuilderSection.loadAsOmniChild(sectionPack);
@@ -84,28 +109,6 @@ export class FeIndexSolver<
         }
         sectionInfos = nextInfos;
       }
-    }
-  }
-  removeAsSavedExtras(loadedDbIds: string[]) {
-    if (this.hasFeDisplayIndex) {
-      this.displayIndexBuilder.removeAsSavedExtras(loadedDbIds);
-    }
-  }
-  deleteFromIndex(dbId: string) {
-    this.fullIndexSolver.removeItem(dbId);
-  }
-  addItem(sectionPack: SectionPack<SN>): void {
-    this.fullIndexSolver.addItem(sectionPack as SectionPack<any>);
-  }
-  updateItem(sectionPack: SectionPack<SN>) {
-    this.fullIndexSolver.updateItem(sectionPack as SectionPack<any>);
-  }
-  getAsSavedPack(dbId: string): SectionPack<SN> {
-    if (this.hasFeDisplayIndex) {
-      const asSaved = this.displayIndexBuilder.getAsSaved(dbId);
-      return asSaved.makeSectionPack() as SectionPack<SN>;
-    } else {
-      return this.fullIndexSolver.getItemPack(dbId);
     }
   }
 }

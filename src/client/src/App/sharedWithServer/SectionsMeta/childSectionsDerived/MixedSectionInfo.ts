@@ -8,7 +8,12 @@ import {
   VarbProp,
 } from "../baseSectionsDerived/baseVarbInfo";
 import { ExpectedCount } from "../baseSectionsVarbs/NanoIdInfo";
-import { PathNameOfSection, PathSectionName } from "../childPaths";
+import {
+  ChildPathName,
+  PathNameOfSection,
+  pathSectionName,
+  PathSectionName,
+} from "../childPaths";
 import { PathDbInfoMixed, PathInfoMixed, PathVarbInfoMixed } from "../PathInfo";
 import { SectionName } from "../SectionName";
 import { RelSectionInfo } from "./RelInfo";
@@ -67,6 +72,26 @@ export const mixedInfoS = {
       sectionName,
       pathName,
       expectedCount: (expectedCount ?? "onlyOne") as EC,
+    };
+  },
+  absolutePathNext<
+    PN extends ChildPathName,
+    EC extends ExpectedCount = "onlyOne"
+  >(pathName: PN, expectedCount?: EC): PathInfoMixed<PathSectionName<PN>, EC> {
+    return {
+      infoType: "absolutePath",
+      sectionName: pathSectionName(pathName),
+      pathName: pathName as any,
+      expectedCount: (expectedCount ?? "onlyOne") as EC,
+    };
+  },
+  absoluteVarbPathNext<
+    PN extends ChildPathName,
+    EC extends ExpectedCount = "onlyOne"
+  >(pathName: PN, varbName: string, expectedCount?: EC) {
+    return {
+      ...this.absolutePathNext(pathName, expectedCount),
+      varbName,
     };
   },
   absoluteVarbPath<

@@ -45,7 +45,10 @@ export class GetterVarbNumObj<
     entities,
   }: EntitiesAndEditorText): string {
     let solvableText = mainText;
-    for (const entity of entities) {
+    const endFirstSorted = [...entities].sort(
+      (en1, en2) => en2.offset - en1.offset
+    );
+    for (const entity of endFirstSorted) {
       const num = this.getSolvableNumber(entity);
       solvableText = Str.replaceRange(
         solvableText,

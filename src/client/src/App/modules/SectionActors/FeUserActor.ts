@@ -11,7 +11,7 @@ import {
 } from "../../sharedWithServer/SectionsMeta/baseSectionsVarbs";
 import { PackMakerSection } from "../../sharedWithServer/StatePackers.ts/PackMakerSection";
 import { StrictOmit } from "../../sharedWithServer/utils/types";
-import { auth } from "../services/authService";
+import { FeUserSolver } from "../SectionSolvers/FeUserSolver";
 import { makeReq } from "./../../sharedWithServer/apiQueriesShared/makeReqAndRes";
 import { SetterSection } from "./../../sharedWithServer/StateSetters/SetterSection";
 import { UserDataSetter } from "./FeUserActor/UserDataSetter";
@@ -24,6 +24,9 @@ export class FeUserActor extends SectionActorBase<"feUser"> {
       ...props,
       sectionName: "feUser",
     });
+  }
+  get solver(): FeUserSolver {
+    return new FeUserSolver(this.sectionActorBaseProps);
   }
   get setter(): SetterSection<"feUser"> {
     return new SetterSection(this.sectionActorBaseProps);
@@ -97,16 +100,16 @@ export class FeUserActor extends SectionActorBase<"feUser"> {
   get isBasic(): boolean {
     return this.analyzerPlan === "basicPlan";
   }
-  get sessionExists() {
+  get sessionExists(): Promise<boolean> {
     return Session.doesSessionExist();
   }
-  get isLoggedIn() {
-    return auth.isToken;
+  get isLoggedIn(): boolean {
+    return this.solver.isLoggedIn;
   }
-  get authStatus() {
-    return this.get.valueNext("authStatus") as AuthStatus;
+  get authStatus(): AuthStatus {
+    return this.solver.authStatus;
   }
-  get isGuest() {
-    return this.authStatus === "guest";
+  get isGuest(): boolean {
+    return this.solver.isGuest;
   }
 }

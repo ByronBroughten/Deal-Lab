@@ -30,6 +30,7 @@ import {
 } from "./sectionMetasCore";
 import { SectionName } from "./SectionName";
 import { SectionNameByType } from "./SectionNameByType";
+import { SectionTrait, sectionTrait } from "./sectionsTraits";
 import { VarbMeta } from "./VarbMeta";
 
 export type VarbMetas<SN extends SectionName> = {
@@ -86,8 +87,8 @@ export class SectionMeta<SN extends SectionName> {
   get feFullIndexStoreName(): CorePropNoNull<SN, "feFullIndexStoreName"> {
     return this.propNoNull("feFullIndexStoreName");
   }
-  get displayName(): string {
-    return this.prop("displayName");
+  get displayName(): SectionTrait<SN, "displayName"> {
+    return sectionTrait(this.sectionName, "displayName");
   }
   get varbListItem(): CoreProp<SN, "varbListItem"> {
     return this.prop("varbListItem");

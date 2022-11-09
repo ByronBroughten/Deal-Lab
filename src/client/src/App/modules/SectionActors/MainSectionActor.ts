@@ -8,24 +8,31 @@ import { SolverSection } from "../../sharedWithServer/StateSolvers/SolverSection
 import { UpdaterSection } from "../../sharedWithServer/StateUpdaters/UpdaterSection";
 import {
   SectionQuerier,
-  SectionQuerierProps
+  SectionQuerierProps,
 } from "../QueriersBasic/SectionQuerier";
 import { DisplayItemProps } from "../SectionSolvers/DisplayListBuilder";
 import {
   MainSectionSolver,
-  SaveStatus
+  SaveStatus,
 } from "../SectionSolvers/MainSectionSolver";
 import { auth, UserInfoTokenProp } from "../services/authService";
 import { Str } from "./../../sharedWithServer/utils/Str";
+import { FeUserActor } from "./FeUserActor";
 import { SectionActorBase } from "./SectionActorBase";
 
 export class MainSectionActor<
   SN extends SectionNameByType<"hasIndexStore">
 > extends SectionActorBase<SN> {
+  get feUser() {
+    const feUser = this.setterSections.oneAndOnly("feUser").get;
+    return new FeUserActor({
+      ...this.sectionActorBaseProps,
+      ...feUser.getterSectionProps,
+    });
+  }
   get mainSolver() {
     return new MainSectionSolver(this.sectionActorBaseProps);
   }
-
   get updater(): UpdaterSection<SN> {
     return new UpdaterSection(this.sectionActorBaseProps);
   }
@@ -40,9 +47,6 @@ export class MainSectionActor<
   }
   get hasFeDisplayIndex() {
     return this.get.meta.hasFeDisplayIndex;
-  }
-  get hasFullIndex() {
-    return this.get.meta.hasFeFullIndex;
   }
   private get sectionQuerierProps(): SectionQuerierProps<
     DbSectionNameName<SN>
@@ -131,9 +135,16 @@ export class MainSectionActor<
     );
   }
   async loadFromIndex(dbId: string): Promise<void> {
-    const sectionPack = (await this.querier.get(dbId)) as SectionPack<SN>;
+    const sectionPack = await this.loadByLogin(dbId);
     this.mainSolver.loadSectionPack(sectionPack);
     this.setter.setSections();
+  }
+  private async loadByLogin(dbId: string): Promise<SectionPack<SN>> {
+    if (this.feUser.isLoggedIn) {
+      return (await this.querier.get(dbId)) as SectionPack<SN>;
+    } else {
+      return this.mainSolver.indexSolver.getItem(dbId);
+    }
   }
   async deleteSelf() {
     this.deleteFromIndex(this.get.dbId);

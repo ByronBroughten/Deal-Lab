@@ -143,15 +143,7 @@ export class AddSolverSection<
         ...this.solverSectionsProps,
         ...varbInfo,
       });
-      const { sectionName, dbId, varbName } = solverVarb.get;
       solverVarb.addOutEntitiesFromCurrentInEntities();
-      if (
-        sectionName === "ongoingItem" &&
-        varbName === "costToReplace" &&
-        dbId === "K2mMU7QlD496"
-      ) {
-        console.log("breakpoint");
-      }
     }
   }
 }

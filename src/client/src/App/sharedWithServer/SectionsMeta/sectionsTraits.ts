@@ -92,6 +92,17 @@ export const allSectionTraits = checkAllSectionTraits({
   }),
 });
 
+export type SectionTrait<
+  SN extends SectionName,
+  TN extends SectionTraitName
+> = AllSectionTraits[SN][TN];
+export function sectionTrait<
+  SN extends SectionName,
+  TN extends SectionTraitName
+>(sectionName: SN, traitName: TN): AllSectionTraits[SN][TN] {
+  return allSectionTraits[sectionName][traitName];
+}
+
 export type SomeSectionTraits<
   SN extends SectionName,
   PN extends SectionTraitName
@@ -100,10 +111,10 @@ export type SomeSectionTraits<
 };
 export function getSomeSectionTraits<
   SN extends SectionName,
-  PN extends SectionTraitName
->(sNames: SN[], paramName: PN) {
+  TN extends SectionTraitName
+>(sNames: SN[], traitName: TN) {
   return sNames.reduce((traits, sectionName) => {
-    traits[sectionName] = allSectionTraits[sectionName][paramName];
+    traits[sectionName] = sectionTrait(sectionName, traitName);
     return traits;
-  }, {} as SomeSectionTraits<SN, PN>);
+  }, {} as SomeSectionTraits<SN, TN>);
 }
