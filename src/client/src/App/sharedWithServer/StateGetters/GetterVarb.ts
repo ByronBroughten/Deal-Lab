@@ -9,6 +9,7 @@ import {
   OutEntity,
 } from "../SectionsMeta/baseSectionsVarbs/baseValues/entities";
 import { NumberOrQ } from "../SectionsMeta/baseSectionsVarbs/baseValues/NumObj";
+import { hasEntitiesProp } from "../SectionsMeta/baseSectionsVarbs/baseValues/StringObj";
 import { ValueName } from "../SectionsMeta/baseSectionsVarbs/baseVarb";
 import { ExpectedCount } from "../SectionsMeta/baseSectionsVarbs/NanoIdInfo";
 import {
@@ -108,6 +109,12 @@ export class GetterVarb<
         throw ex;
       }
     }
+  }
+  get hasInEntities(): boolean {
+    const value = this.value();
+    if (hasEntitiesProp(value)) {
+      return value.entities.length > 0;
+    } else return false;
   }
   get feVarbInfoMixed(): FeVarbInfoMixed<SN> {
     const { sectionName, feId, varbName } = this.feVarbInfo;

@@ -8,12 +8,7 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-// 2. Write actions are being shown for loaded lists when the user is a guest
-// 3. Write actions (delete) are shown in saved menu
-// For now, remove access to the load menu if the user is a guest
-
-// Before Marketing
-// - Get numObj editorText to update when the displayName of one of its inEntities changes
+// Add Apple and FB 3rd party auth.
 
 // If anyone uses the app
 // - Offer a way to cancel the subscriptions

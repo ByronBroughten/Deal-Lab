@@ -2,9 +2,10 @@ import { ChildName } from "../SectionsMeta/childSectionsDerived/ChildName";
 import { ChildSectionName } from "../SectionsMeta/childSectionsDerived/ChildSectionName";
 import { ChildArrPack } from "../SectionsMeta/childSectionsDerived/ChildSectionPack";
 import { ParentNameSafe } from "../SectionsMeta/childSectionsDerived/ParentName";
-import { FeSectionInfo } from "../SectionsMeta/Info";
+import { FeSectionInfo, FeVarbInfo } from "../SectionsMeta/Info";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { GetterSection } from "../StateGetters/GetterSection";
+import { GetterSections } from "../StateGetters/GetterSections";
 import { GetterVarb } from "../StateGetters/GetterVarb";
 import {
   ChildPackInfo,
@@ -36,6 +37,9 @@ export class AddSolverSection<
   }
   get get() {
     return new GetterSection(this.getterSectionProps);
+  }
+  get getterSections(): GetterSections {
+    return new GetterSections(this.getterSectionProps);
   }
   private get loader() {
     return new PackLoaderSection(this.getterSectionProps);
@@ -131,8 +135,22 @@ export class AddSolverSection<
     this.collectNestedVarbIds();
     this.finalizeVarbsAndExtractIds();
   }
+  getAllInEntityVarbs(): FeVarbInfo[] {
+    const { root } = this.getterSections;
+    return root.selfAndDescendantVarbInfosWithEntities;
+  }
+  addAllMissingOutEntities() {
+    const inEntityVarbInfos = this.getAllInEntityVarbs();
+    for (const inVarbInfo of inEntityVarbInfos) {
+      const solverVarb = new SolverVarb({
+        ...this.solverSectionsProps,
+        ...inVarbInfo,
+      });
+      solverVarb.addOutEntitiesFromCurrentInEntities();
+    }
+  }
   finalizeVarbsAndExtractIds() {
-    this.addAllOutEntitiesOfAddedInEntities();
+    this.addAllMissingOutEntities();
     this.addVarbIdsToSolveFor(...this.addedVarbIds);
     this.addSolveShare.addedVarbIds = new Set();
   }

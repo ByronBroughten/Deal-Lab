@@ -110,6 +110,9 @@ export class SolverVarb<
   removeOutEntitiesOfCurrentInEntities() {
     const { inEntities } = this.get;
     this.removeOutEntitiesOfInEntities(inEntities);
+    // the utility list is being removed and then reloaded with
+    // the user's. But for some reason, propertyGeneral doesn't
+    // have the outEntity of the utilty list
   }
   updateConnectedVarbs(): void {
     this.updateConnectedEntities();
@@ -124,25 +127,15 @@ export class SolverVarb<
     const { newEntities } = this;
     this.addOutEntitiesFromInEntities(newEntities);
   }
-  private addOutEntitiesFromInEntities(inEntities: InEntity[]) {
-    this.dummyCheck(inEntities);
+  private addOutEntitiesFromInEntities(inEntities: InEntity[]): void {
     for (const entity of inEntities) {
       if (this.inEntitySectionExists(entity)) {
         const inEntityVarb = this.getInEntityVarb(entity);
-        inEntityVarb.addOutEntity(this.newSelfOutEntity(entity.entityId));
+        const outEntity = this.newSelfOutEntity(entity.entityId);
+        if (!inEntityVarb.hasOutEntity(outEntity)) {
+          inEntityVarb.addOutEntity(outEntity);
+        }
       }
-    }
-  }
-  private dummyCheck(inEntities: InEntity[]) {
-    if (
-      inEntities.length > 1 &&
-      inEntities.every((entity) => {
-        return (
-          entity.sectionName === "deal" && entity.varbName === "totalInvestment"
-        );
-      })
-    ) {
-      throw new Error("There shouldn't be two of these.");
     }
   }
   private newSelfOutEntity(inEntityId: string): OutEntity {
@@ -209,11 +202,6 @@ export class SolverVarb<
     });
   }
   private addOutEntity(outEntity: OutEntity): void {
-    if (this.hasOutEntity(outEntity)) {
-      throw new Error(
-        `${this.get.sectionDotVarbName} already has outEntity ${outEntity.sectionName}.${outEntity.varbName}.${outEntity.feId}.${outEntity.entityId}`
-      );
-    }
     const nextOutEntities = [...this.get.outEntities, outEntity];
     this.updaterVarb.update({ outEntities: nextOutEntities });
   }

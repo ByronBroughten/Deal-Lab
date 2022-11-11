@@ -511,6 +511,19 @@ export class GetterSection<
   get selfAndDescendantVarbIds(): string[] {
     return GetterVarb.varbInfosToVarbIds(this.selfAndDescendantVarbInfos);
   }
+  get varbArrWithInEntities(): GetterVarb<SN>[] {
+    return this.varbArr.filter((varb) => varb.hasInEntities);
+  }
+  get selfAndDescendantVarbInfosWithEntities(): FeVarbInfo[] {
+    const sectionInfos = this.selfAndDescendantSectionInfos;
+    return sectionInfos.reduce((feVarbInfos, sectionInfo) => {
+      const section = this.getterSection(sectionInfo);
+      const varbInfos = section.varbArrWithInEntities.map(
+        (varb) => varb.feVarbInfo
+      );
+      return feVarbInfos.concat(...varbInfos);
+    }, [] as FeVarbInfo[]);
+  }
   get selfAndDescendantVarbInfos(): FeVarbInfo[] {
     const sectionInfos = this.selfAndDescendantSectionInfos;
     return sectionInfos.reduce((feVarbInfos, sectionInfo) => {

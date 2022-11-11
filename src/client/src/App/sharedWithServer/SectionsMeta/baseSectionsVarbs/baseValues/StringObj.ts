@@ -1,12 +1,24 @@
 import { z } from "zod";
 import { monSchemas } from "../../../utils/mongoose";
+import { Obj } from "../../../utils/Obj";
 import { zS } from "../../../utils/zod";
 import { InEntity, mInEntities, zInEntities } from "./entities";
 
-export type StringObj = {
-  mainText: string;
+export type EntitiesProp = {
   entities: InEntity[];
 };
+
+export interface StringObj extends EntitiesProp {
+  mainText: string;
+}
+
+export function hasEntitiesProp(value: any): value is EntitiesProp {
+  if (Obj.isObjToAny(value) && Array.isArray(value.entities)) {
+    return true;
+  } else {
+    return false;
+  }
+}
 
 export function isStringObj(value: any): value is StringObj {
   return (
