@@ -22,7 +22,10 @@ import { GetterSection } from "../StateGetters/GetterSection";
 import { StateSections } from "../StateSections/StateSections";
 import { Obj } from "../utils/Obj";
 
-type FeSectionPackArrs<SN extends SectionName, CN extends ChildName<SN>> = {
+export type FeSectionPackArrs<
+  SN extends SectionName,
+  CN extends ChildName<SN>
+> = {
   [C in CN]: ChildSectionPack<SN, C>[];
 };
 

@@ -3,12 +3,15 @@ import { defaultMaker } from "../defaultMaker/defaultMaker";
 import { VarbInfoMixed } from "../SectionsMeta/childSectionsDerived/MixedSectionInfo";
 import { SectionPack } from "../SectionsMeta/childSectionsDerived/SectionPack";
 import { FeSectionInfo, FeVarbInfo } from "../SectionsMeta/Info";
+import { FeStoreNameByType } from "../SectionsMeta/relSectionsDerived/relNameArrs/FeStoreName";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { GetterSections } from "../StateGetters/GetterSections";
 import { GetterVarb } from "../StateGetters/GetterVarb";
 import { PackBuilderSections } from "../StatePackers.ts/PackBuilderSections";
+import { FeSectionPackArrs } from "../StatePackers.ts/PackMakerSection";
 import { StateSections } from "../StateSections/StateSections";
+import { UpdaterSection } from "../StateUpdaters/UpdaterSection";
 import { Arr } from "../utils/Arr";
 import { OutVarbGetterVarb } from "./../StateInOutVarbs/OutVarbGetterVarb";
 import { SolverSectionsBase } from "./SolverBases/SolverSectionsBase";
@@ -165,6 +168,22 @@ export class SolverSections extends SolverSectionsBase {
     sectionPack: SectionPack<"main">
   ): StateSections {
     const main = this.initSolverFromMainPack(sectionPack);
+    return main.sectionsShare.sections;
+  }
+  static initSaveUserListSections(
+    activeDealPack: SectionPack<"deal">,
+    packArrs: FeSectionPackArrs<"feUser", FeStoreNameByType<"saveUserLists">>
+  ): StateSections {
+    const props = UpdaterSection.initMainSectionPropsWithEmptyUser();
+    const main = SolverSection.init(props);
+    const mainAdder = main.adder;
+    mainAdder.loadChild({
+      childName: "activeDeal",
+      sectionPack: activeDealPack,
+    });
+    const userAdder = mainAdder.onlyChild("feUser");
+    userAdder.loadChildArrsAndFinalize(packArrs);
+    main.solve();
     return main.sectionsShare.sections;
   }
 }

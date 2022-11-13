@@ -86,6 +86,12 @@ const feStoreNameArrs = {
     "mgmtMainTable",
     "dealMainTable",
   ] as const),
+  saveUserLists: Arr.excludeStrict(feUserChildNames, [
+    "propertyMain",
+    "mgmtMain",
+    "loanMain",
+    "dealMain",
+  ] as const),
 } as const;
 type StoreNameArrs = typeof feStoreNameArrs;
 

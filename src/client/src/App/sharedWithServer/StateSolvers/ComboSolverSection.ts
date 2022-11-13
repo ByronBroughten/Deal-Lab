@@ -29,30 +29,20 @@ export class ComboSolverSection<
   loadSelfSectionPackAndExtractIds(sectionPack: SectionPack<SN>): void {
     this.remover.prepForRemoveAndExtractVarbIds();
     this.loader.loadSelfSectionPack(sectionPack);
-    this.adder.finalizeAddAndExtractVarbIds();
+    this.adder.finalizeAddedThisAndAll();
   }
-  loadChildPackArrsAndExtractIds<CN extends ChildName<SN>>(
+  replaceChildPackArrsAndFinalize<CN extends ChildName<SN>>(
     childPackArrs: ChildSectionPackArrs<SN, CN>
   ): void {
     const childNames = Obj.keys(childPackArrs);
     this.remover.removeChildrenGroupsAndExtractVarbIds(childNames);
-    for (const childName of childNames) {
-      for (const sectionPack of (childPackArrs as ChildSectionPackArrs<SN>)[
-        childName
-      ]) {
-        this.adder.loadChildAndCollectVarbIds({
-          childName,
-          sectionPack,
-        });
-      }
-    }
-    this.adder.finalizeVarbsAndExtractIds();
+    this.adder.loadChildArrsAndFinalize(childPackArrs);
   }
   resetToDefaultAndExtractIds(): void {
     const { feInfo, feId, idx, dbId } = this.get;
     const { parent } = this.adder;
     const childName = parent.get.sectionChildName(feInfo);
     this.remover.removeSelfAndExtractVarbIds();
-    parent.addChildAndFinalize(childName, { feId, idx, dbId });
+    parent.addChildAndFinalizeAllAdds(childName, { feId, idx, dbId });
   }
 }

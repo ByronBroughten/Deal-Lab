@@ -6,7 +6,6 @@ import { FeSectionInfo, FeVarbInfo } from "../SectionsMeta/Info";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { GetterSection } from "../StateGetters/GetterSection";
 import { GetterSections } from "../StateGetters/GetterSections";
-import { GetterVarb } from "../StateGetters/GetterVarb";
 import {
   ChildPackInfo,
   ChildSectionPackArrs,
@@ -71,57 +70,74 @@ export class AddSolverSection<
     const { parentInfoSafe } = this.get;
     return this.addSolverSection(parentInfoSafe);
   }
+  onlyChild<CN extends ChildName<SN>>(
+    childName: CN
+  ): AddSolverSection<ChildSectionName<SN, CN>> {
+    const { feInfo } = this.get.onlyChild(childName);
+    return this.addSolverSection(feInfo);
+  }
   youngestChild<CN extends ChildName<SN>>(
     childName: CN
   ): AddSolverSection<ChildSectionName<SN, CN>> {
     const { feInfo } = this.get.youngestChild(childName);
     return this.addSolverSection(feInfo);
   }
-
-  loadChildAndCollectVarbIds<CN extends ChildName<SN>>(
-    packInfo: ChildPackInfo<SN, CN>
+  addChildAndFinalizeAllAdds<CN extends ChildName<SN>>(
+    childName: CN,
+    options?: AddChildOptions<SN, CN>
   ): void {
-    this.loader.loadChildSectionPack(packInfo);
-    const child = this.youngestChild(packInfo.childName);
-    child.collectNestedVarbIds();
+    this.addChild(childName, options);
+    this.finalizeAllAdds();
   }
-  addChildAndFinalize<CN extends ChildName<SN>>(
+  addChild<CN extends ChildName<SN>>(
     childName: CN,
     options?: AddChildOptions<SN, CN>
   ): void {
     this.defaultAdder.addChild(childName, options);
     const child = this.youngestChild(childName);
-    child.finalizeAddAndExtractVarbIds();
+    child.finalizeAddedThis();
   }
   loadChildAndFinalize<CN extends ChildName<SN>>(
     packInfo: ChildPackInfo<SN, CN>
   ): void {
+    this.loadChild(packInfo);
+    this.finalizeAllAdds();
+  }
+  loadChild<CN extends ChildName<SN>>(packInfo: ChildPackInfo<SN, CN>): void {
     this.loader.loadChildSectionPack(packInfo);
     const child = this.youngestChild(packInfo.childName);
-    child.finalizeAddAndExtractVarbIds();
+    child.finalizeAddedThis();
   }
-  addChildrenAndFinalize<CN extends ChildName<SN>>({
+
+  loadChildrenAndFinalize<CN extends ChildName<SN>>(
+    props: ChildArrPack<SN, CN>
+  ): void {
+    this.loadChildren(props);
+    this.finalizeAllAdds();
+  }
+  private loadChildren<CN extends ChildName<SN>>({
     childName,
     sectionPacks,
   }: ChildArrPack<SN, CN>): void {
     for (const sectionPack of sectionPacks) {
-      this.loadChildAndFinalize({
+      this.loadChild({
         childName,
         sectionPack,
       });
     }
   }
-  addChildArrsAndFinalize<CN extends ChildName<SN>>(
+  loadChildArrsAndFinalize<CN extends ChildName<SN>>(
     packArrs: ChildSectionPackArrs<SN, CN>
   ): void {
     for (const childName of Obj.keys(packArrs)) {
-      this.addChildrenAndFinalize({
+      this.loadChildren({
         childName,
         sectionPacks: packArrs[childName],
       });
     }
+    this.finalizeAllAdds();
   }
-  private collectNestedVarbIds() {
+  private finalizeAddedThis() {
     const { selfAndDescendantVarbIds } = this.get;
     this.addToAddedVarbIds(...selfAndDescendantVarbIds);
   }
@@ -131,9 +147,9 @@ export class AddSolverSection<
       ...varbIds,
     ]);
   }
-  finalizeAddAndExtractVarbIds() {
-    this.collectNestedVarbIds();
-    this.finalizeVarbsAndExtractIds();
+  finalizeAddedThisAndAll() {
+    this.finalizeAddedThis();
+    this.finalizeAllAdds();
   }
   getAllInEntityVarbs(): FeVarbInfo[] {
     const { root } = this.getterSections;
@@ -149,19 +165,9 @@ export class AddSolverSection<
       solverVarb.addOutEntitiesFromCurrentInEntities();
     }
   }
-  finalizeVarbsAndExtractIds() {
+  finalizeAllAdds() {
     this.addAllMissingOutEntities();
     this.addVarbIdsToSolveFor(...this.addedVarbIds);
     this.addSolveShare.addedVarbIds = new Set();
-  }
-  private addAllOutEntitiesOfAddedInEntities() {
-    for (const varbId of this.addedVarbIds) {
-      const varbInfo = GetterVarb.varbIdToVarbInfo(varbId);
-      const solverVarb = new SolverVarb({
-        ...this.solverSectionsProps,
-        ...varbInfo,
-      });
-      solverVarb.addOutEntitiesFromCurrentInEntities();
-    }
   }
 }

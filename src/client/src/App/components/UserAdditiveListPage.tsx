@@ -4,6 +4,7 @@ import { VarbListOngoing } from "./appWide/VarbLists/VarbListOngoing";
 import { UserListsPageGeneric } from "./UserListsPageGeneric";
 import { UserListsGeneralSection } from "./UserVarbListPage/UserListsGeneralSection";
 
+// Can I reduce this page down to one state?
 export function UserAdditiveListPage() {
   return (
     <UserListsPageGeneric themeName="userOngoingList" saveWhat="custom lists">

@@ -96,6 +96,10 @@ export class UpdaterSection<
   removeChild(childInfo: FeChildInfo<SN>): void {
     this.child(childInfo).removeSelf();
   }
+  onlyChild<CN extends ChildName<SN>>(childName: CN) {
+    const { feInfo } = this.get.onlyChild(childName);
+    return this.updaterSection(feInfo);
+  }
   child<CN extends ChildName<SN>>(
     childInfo: FeChildInfo<SN, CN>
   ): UpdaterSection<ChildSectionName<SN, CN>> {
@@ -174,20 +178,6 @@ export class UpdaterSection<
       },
     });
   }
-  static initMainProps(): GetterSectionProps<"main"> {
-    const root = this.initRootUpdater();
-    root.addChild("main");
-    const main = root.get.youngestChild("main");
-    return main.getterSectionProps;
-  }
-  static initRootProps(): GetterSectionProps<"root"> {
-    const sections = StateSections.initWithRoot();
-    const rootRaw = sections.onlyOneRawSection("root");
-    return {
-      ...rootRaw,
-      sectionsShare: { sections },
-    };
-  }
   updaterSection<S extends SectionName>(
     feInfo: FeSectionInfo<S>
   ): UpdaterSection<S> {
@@ -204,6 +194,27 @@ export class UpdaterSection<
   }
   static initRootUpdater(): UpdaterSection<"root"> {
     return new UpdaterSection(this.initRootProps());
+  }
+  static initMainSectionProps(): GetterSectionProps<"main"> {
+    const root = this.initRootUpdater();
+    root.addChild("main");
+    const main = root.get.youngestChild("main");
+    return main.getterSectionProps;
+  }
+  static initMainSectionPropsWithEmptyUser(): GetterSectionProps<"main"> {
+    const root = this.initRootUpdater();
+    root.addChild("main");
+    const main = root.onlyChild("main");
+    main.addChild("feUser");
+    return main.getterSectionProps;
+  }
+  static initRootProps(): GetterSectionProps<"root"> {
+    const sections = StateSections.initWithRoot();
+    const rootRaw = sections.onlyOneRawSection("root");
+    return {
+      ...rootRaw,
+      sectionsShare: { sections },
+    };
   }
 }
 

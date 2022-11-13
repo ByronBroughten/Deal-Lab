@@ -1,9 +1,9 @@
 import { BsArrowUpCircle } from "react-icons/bs";
 import { VscFeedback } from "react-icons/vsc";
 import { View } from "react-native";
-import { Link } from "react-router-dom";
 import { constants } from "../../Constants";
 import { useFeUser } from "../../modules/sectionActorHooks/useFeUser";
+import { DomLink } from "../ActiveDeal/general/DomLink";
 import { FeedbackPanel } from "./FeedbackPanel";
 import NavBtn from "./NavBtn";
 import NavDropDown from "./NavDropDown";
@@ -26,9 +26,9 @@ function useScenarioKey() {
 export function NavBarBtns() {
   const scenarios = {
     guest: () => (
-      <Link className="NavBar-navBtnLink" to="/auth">
+      <DomLink className="NavBar-navBtnLink" to="/auth">
         <NavBtn className="NavBar-signInUpBtn" text="Sign In / Sign Up" />
-      </Link>
+      </DomLink>
     ),
     loggingInUser: () => (
       <NavBtn className="NavBar-isLoadingBtn" text="Loading..." />

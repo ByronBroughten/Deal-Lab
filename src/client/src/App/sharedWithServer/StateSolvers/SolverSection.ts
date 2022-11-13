@@ -68,7 +68,7 @@ export class SolverSection<
   private get remover() {
     return RemoveSolverSection.init(this.solverSectionProps);
   }
-  private get adder() {
+  get adder() {
     return AddSolverSection.init(this.solverSectionProps);
   }
   private get combo() {
@@ -191,7 +191,7 @@ export class SolverSection<
     childName: CN,
     options?: AddChildOptions<SN, CN>
   ): void {
-    this.adder.addChildAndFinalize(childName, options);
+    this.adder.addChildAndFinalizeAllAdds(childName, options);
     this.solve();
   }
   addAndGetChild<CN extends ChildName<SN>>(
@@ -212,7 +212,7 @@ export class SolverSection<
   addChildArrsAndSolve<CN extends ChildName<SN>>(
     childPackArrs: ChildSectionPackArrs<SN, CN>
   ): void {
-    this.adder.addChildArrsAndFinalize(childPackArrs);
+    this.adder.loadChildArrsAndFinalize(childPackArrs);
     this.solve();
   }
   replaceChildPackArrsAndSolve<CN extends ChildName<SN>>(
