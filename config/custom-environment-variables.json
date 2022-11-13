@@ -5,5 +5,11 @@
   "supertokensCoreApiKey": "SUPERTOKENS_CORE_API_KEY",
   "supertokensCoreConnectionUri": "SUPERTOKENS_CORE_CONNECTION_URI",
   "googleClientId": "GOOGLE_CLIENT_ID",
-  "googleClientSecret": "GOOGLE_CLIENT_SECRET"
+  "googleClientSecret": "GOOGLE_CLIENT_SECRET",
+  "facebookClientId": "FACEBOOK_CLIENT_ID",
+  "facebookClientSecret": "FACEBOOK_CLIENT_SECRET",
+  "appleClientId": "APPLE_CLIENT_ID",
+  "appleClientKeyId": "APPLE_CLIENT_KEY_ID",
+  "appleClientPrivateKey": "APPLE_CLIENT_PRIVATE_KEY",
+  "appleClientTeamId": "APPLE_CLIENT_TEAM_ID"
 }

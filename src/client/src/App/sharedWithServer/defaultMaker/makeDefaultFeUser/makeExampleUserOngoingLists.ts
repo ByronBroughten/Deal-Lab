@@ -28,7 +28,7 @@ const capExAdvancedExamples = [
   [...userVarbLifespans.waterHeater, numObjNext("1200*", ["numUnits"])],
   [...userVarbLifespans.hvac, numObjNext("3500*", ["numUnits"])],
   [...userVarbLifespans.interiorPaint, numObjNext(["sqft"], "*3")],
-  [...userVarbLifespans.windows, numObjNext("5+2*", ["numBedrooms"])],
+  [...userVarbLifespans.windows, numObjNext("(5+2*", ["numBedrooms"]), ")*500"],
   [...userVarbLifespans.siding, numObjNext(["sqft"], "*4")],
   [...userVarbLifespans.appliances, numObjNext("550+715")],
   [...userVarbLifespans.plumbing, numObjNext("5000*", ["numUnits"])],

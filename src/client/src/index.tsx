@@ -9,6 +9,9 @@ AppRegistry.runApplication("App", {
 });
 
 // Add Apple and FB 3rd party auth.
+// Add loading indicator when going to userLists page
+// Add saving indicator when saving userLists
+// The variable loader input doesn't work
 
 // If anyone uses the app
 // - Offer a way to cancel the subscriptions

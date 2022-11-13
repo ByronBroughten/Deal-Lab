@@ -1,6 +1,7 @@
 import SuperTokens from "supertokens-auth-react";
 import Session from "supertokens-auth-react/recipe/session";
 import ThirdPartyEmailPassword, {
+  Facebook,
   Google,
 } from "supertokens-auth-react/recipe/thirdpartyemailpassword";
 import { constants } from "../Constants";
@@ -24,7 +25,7 @@ export function initSupertokens(): void {
           }
         },
         signInAndUpFeature: {
-          providers: [Google.init()],
+          providers: [Google.init(), Facebook.init()],
           signUpForm: {
             formFields: [
               {

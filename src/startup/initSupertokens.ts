@@ -26,6 +26,19 @@ export function initSupertokens() {
             clientId: config.get("googleClientId"),
             clientSecret: config.get("googleClientSecret"),
           }),
+          Facebook({
+            clientId: config.get("facebookClientId"),
+            clientSecret: config.get("facebookClientSecret"),
+          }),
+          // Apple({
+          //   clientId: config.get("appleClientId"),
+          //   clientSecret: {
+          //     keyId: config.get("appleKeyId"),
+          //     privateKey: config.get("applePrivateKey"),
+          //     teamId: config.get("appleTeamId")
+          //   }
+
+          // })
         ],
         signUpFeature: {
           formFields: [{ id: "userName" }],

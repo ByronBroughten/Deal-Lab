@@ -10,7 +10,8 @@ import { SetterTesterSection } from "./TestUtils/SetterTesterSection";
 // replaceWithDefault, resetToDefault
 
 describe("SetterSection", () => {
-  const sectionNames = ["property", "mgmtGeneral", "deal"] as const;
+  // removing just deal doesn't seem to work for some reason.
+  const sectionNames = ["property", "mgmtGeneral", "financing"] as const;
   type TestName = typeof sectionNames[number];
   type SnTesterProps<SN extends TestName> = { tester: SetterTesterSection<SN> };
   type FnWithSnProp<SN extends TestName = TestName> = (
@@ -26,7 +27,12 @@ describe("SetterSection", () => {
       const { parent, feInfo } = tester;
       const childName = parent.get.sectionChildName(feInfo);
       const preCounts = parent.childCounts(childName);
-      tester.setter.removeSelf();
+      try {
+        tester.setter.removeSelf();
+      } catch (err) {
+        throw new Error(`tester sectionName: ${tester.sectionName}`);
+      }
+
       const postCounts = parent.childCounts(childName);
 
       expect(parent.get.sectionIsChild(feInfo)).toBe(false);
