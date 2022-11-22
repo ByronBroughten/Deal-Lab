@@ -17,7 +17,7 @@ export function useSaveUserLists(
   storeName: FeStoreNameByType<"fullIndexWithArrStore">
 ) {
   const feUser = useSetterSectionOnlyOne("feUser");
-  const userListsContext = useUserListMainSection(storeName);
+  const userListsContext = useUserListMainSection();
   function makeWorkingPackList() {
     return makePackList(userListsContext.sections, storeName);
   }
@@ -69,8 +69,8 @@ function makePackList<CN extends FeStoreNameByType<"fullIndex">>(
   return packMaker.makeChildSectionPackArr(storeName);
 }
 
-function useUserListMainSection(storeName: FeStoreNameByType<"fullIndex">) {
-  const initUserListSections = useInitUserListSections(storeName);
+function useUserListMainSection() {
+  const initUserListSections = useInitUserListSections();
   const [sections, setSections, sectionsDispatch] =
     useSections(initUserListSections);
   const [savedSections, setSavedSections, savedSectionsDispatch] = useSections(
@@ -85,9 +85,7 @@ function useUserListMainSection(storeName: FeStoreNameByType<"fullIndex">) {
     savedSectionsDispatch,
   };
 }
-function useInitUserListSections(
-  storeName: FeStoreNameByType<"fullIndex">
-): () => StateSections {
+function useInitUserListSections(): () => StateSections {
   const main = useSetterSectionOnlyOne("main");
   const feUser = main.onlyChild("feUser");
   const activeDeal = main.onlyChild("activeDeal");

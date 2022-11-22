@@ -1,3 +1,4 @@
+import { AiOutlineYoutube } from "react-icons/ai";
 import { BsArrowUpCircle } from "react-icons/bs";
 import { VscFeedback } from "react-icons/vsc";
 import { View } from "react-native";
@@ -58,13 +59,13 @@ export function NavBarBtns() {
   const scenarioKey = useScenarioKey();
   return (
     <View style={{ flexDirection: "row" }}>
-      {/* <NavBtn
+      <NavBtn
         className="NavBar-demoBtn NavBtn"
-        href="https://www.youtube.com/watch?v=wGfb8xX2FsI"
+        href="https://youtu.be/81Ed3e54YS8"
         target="_blank"
         icon={<AiOutlineYoutube className="NavBar-demoBtnIcon" />}
         text="Demo"
-      /> */}
+      />
       <NavDropDown
         className="NavBar-feedbackDropDown"
         btnText="Give Feedback"
