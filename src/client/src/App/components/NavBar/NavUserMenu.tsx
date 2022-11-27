@@ -50,7 +50,7 @@ export function NavUserMenu() {
         {feUser.isPro && (
           <BtnDiv>
             <ListMenuBtn
-              text="Your account"
+              text="Account"
               icon={<MdAccountCircle />}
               onClick={goToCustomerPortalPage}
             />

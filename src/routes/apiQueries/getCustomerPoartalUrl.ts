@@ -15,7 +15,9 @@ async function getCustomerPortalUrl(req: Request, res: Response) {
   const { auth } = validateAuthReq(req).body;
   const dbUser = await LoadedDbUser.getBy("authId", auth.id);
   const { customerId } = dbUser;
-
+  if (!customerId) {
+    throw new Error(`"customerId" hasn't been set yet for this user`);
+  }
   const stripe = getStripe();
   const session = await stripe.billingPortal.sessions.create({
     customer: customerId,
