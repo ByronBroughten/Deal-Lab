@@ -5,6 +5,7 @@ import { Obj } from "../client/src/App/sharedWithServer/utils/Obj";
 import { addSectionWare } from "./apiQueries/addSection";
 import { makeSessionWare } from "./apiQueries/apiQueriesTestTools/makeSession";
 import { deleteSectionWare } from "./apiQueries/deleteSection";
+import { getCustomerPortalUrlWare } from "./apiQueries/getCustomerPoartalUrl";
 import { getProPaymentUrlWare } from "./apiQueries/getProPaymentUrl";
 import { getSectionWare } from "./apiQueries/getSection";
 import { subscriptionDataWare } from "./apiQueries/getSubscriptionData";
@@ -20,6 +21,7 @@ const endpointWare: Record<ApiQueryName, any> = {
   deleteSection: deleteSectionWare,
   replaceSectionArr: replaceSectionArrWare,
   getProPaymentUrl: getProPaymentUrlWare,
+  getCustomerPortalUrl: getCustomerPortalUrlWare,
   getUserData: getUserDataWare,
   getSubscriptionData: subscriptionDataWare,
   makeSession: makeSessionWare,

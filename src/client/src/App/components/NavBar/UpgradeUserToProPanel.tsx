@@ -2,16 +2,14 @@ import { Button } from "@material-ui/core";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import styled from "styled-components";
-import { constants } from "../../Constants";
-import { apiQueries } from "../../modules/apiQueriesClient";
-import { makeReq } from "../../sharedWithServer/apiQueriesShared/makeReqAndRes";
+import { goToPaymentPage } from "../../modules/services/stripeService";
 import theme from "../../theme/Theme";
 import { NavBarPanel } from "./NavBarPanel";
 
 const styles = StyleSheet.create({
   banner: {},
   pitch: {
-    backgroundColor: theme.mgmt.light,
+    backgroundColor: theme.property.main,
     borderRadius: 3,
     padding: theme.s3,
   },
@@ -21,7 +19,7 @@ const styles = StyleSheet.create({
     color: theme.softDark,
   },
   subSectionSpace: {
-    marginTop: theme.s3,
+    marginTop: theme.s1,
   },
   list: {},
 
@@ -31,16 +29,6 @@ const styles = StyleSheet.create({
   },
   normalText: { fontSize: 16 },
 });
-
-async function goToPaymentPage(): Promise<void> {
-  const sub = constants.stripePrices.find((sub) => sub.product === "proPlan");
-  if (!sub) throw new Error(`No subscription with proPlan product`);
-  const res = await apiQueries.getProPaymentUrl(
-    makeReq({ priceId: sub.priceId })
-  );
-  const { sessionUrl } = res.data;
-  window.location.replace(sessionUrl);
-}
 
 export function UpgradeUserToProPanel() {
   return (
@@ -54,12 +42,12 @@ export function UpgradeUserToProPanel() {
             <View style={styles.subSectionSpace}>
               <Text
                 style={styles.normalText}
-              >{`For $10 per month, save as many as ${constants.plans.pro.sectionSaveLimit} unique properties, loans, management scenarios, and deals. And if you cancel, your data will still be maintained.`}</Text>
+              >{`Save and load hundreds of properties, deals, and whatever else.\nAnd hey, there's a 7 day free trial, so give it a try.`}</Text>
             </View>
           </View>
         </View>
         <Button className="PaymentForm-payBtn" onClick={goToPaymentPage}>
-          Go to Payment Page
+          View Offer
         </Button>
       </div>
     </Styled>

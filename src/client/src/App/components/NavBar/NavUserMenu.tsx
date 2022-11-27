@@ -3,10 +3,12 @@ import { AiOutlineMenu } from "react-icons/ai";
 import { FaThList } from "react-icons/fa";
 import { GrLogout } from "react-icons/gr";
 import { HiOutlineVariable } from "react-icons/hi";
+import { MdAccountCircle } from "react-icons/md";
 import styled, { css } from "styled-components";
 import { constants } from "../../Constants";
 import { useUserData } from "../../modules/customHooks/useAuthAndUserData";
 import { useFeUser } from "../../modules/sectionActorHooks/useFeUser";
+import { goToCustomerPortalPage } from "../../modules/services/stripeService";
 import { AnalyzerPlan } from "../../sharedWithServer/SectionsMeta/baseSectionsVarbs";
 import theme from "../../theme/Theme";
 import { DomLink } from "../ActiveDeal/general/DomLink";
@@ -45,6 +47,15 @@ export function NavUserMenu() {
             />
           </DomLink>
         </BtnDiv>
+        {feUser.isPro && (
+          <BtnDiv>
+            <ListMenuBtn
+              text="Your account"
+              icon={<MdAccountCircle />}
+              onClick={goToCustomerPortalPage}
+            />
+          </BtnDiv>
+        )}
         {/* <BtnDiv>
           <Button href={constants.feRoutes.userLists}>{`Your lists`}</Button>
         </BtnDiv>

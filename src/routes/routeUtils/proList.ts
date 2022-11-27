@@ -1,6 +1,6 @@
 const proEmailList = [
   "byron.broughten@gmail.com",
-  "bbroughten1@gmail.com",
+  "byronbroughten@gmail.com",
 ] as const;
 type ProEmail = typeof proEmailList[number];
 

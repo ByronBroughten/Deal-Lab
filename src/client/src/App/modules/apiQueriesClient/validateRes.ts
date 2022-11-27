@@ -4,6 +4,7 @@ import {
   DbStoreNameRes,
   makeRes,
   SectionPackRes,
+  UrlRes,
 } from "../../sharedWithServer/apiQueriesShared/makeReqAndRes";
 import { Id } from "../../sharedWithServer/SectionsMeta/baseSectionsVarbs/id";
 import {
@@ -36,6 +37,15 @@ export function validateDbStoreNameRes(
     const { dbStoreName } = data;
     if (dbStoreNameS.is(dbStoreName, "allQuery"))
       return makeRes({ dbStoreName });
+  }
+  throw makeResValidationQueryError();
+}
+
+export function validateSessionUrlRes(res: AxiosResponse<unknown>): UrlRes {
+  const { data } = res as UrlRes;
+  if (Obj.isObjToAny(data)) {
+    const { sessionUrl } = data;
+    if (typeof sessionUrl === "string") return makeRes({ sessionUrl });
   }
   throw makeResValidationQueryError();
 }

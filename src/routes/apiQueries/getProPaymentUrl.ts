@@ -1,12 +1,30 @@
 import { Request, Response } from "express";
 import { constants } from "../../client/src/App/Constants";
 import { QueryReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
+import { makeRes } from "../../client/src/App/sharedWithServer/apiQueriesShared/makeReqAndRes";
 import { getAuthWare } from "../../middleware/authWare";
 import { ResStatusError } from "../../utils/resError";
 import { getStripe } from "../routeUtils/stripe";
 import { LoadedDbUser } from "./apiQueriesShared/DbSections/LoadedDbUser";
 import { Authed, validateAuthObj } from "./apiQueriesShared/ReqAugmenters";
 import { sendSuccess } from "./apiQueriesShared/sendSuccess";
+
+export async function getCustomerPortalUrl(req: Request, res: Response) {
+  const { auth } = validateUpgradeUserToProReq(req).body;
+  const dbUser = await LoadedDbUser.getBy("authId", auth.id);
+  const { customerId } = dbUser;
+
+  const stripe = getStripe();
+  const session = await stripe.billingPortal.sessions.create({
+    customer: customerId,
+    return_url: constants.clientUrlBase,
+  });
+  sendSuccess(
+    res,
+    "getCustomerPortalUrl",
+    makeRes({ sessionUrl: session.url })
+  );
+}
 
 export const getProPaymentUrlWare = [getAuthWare(), getProPaymentUrl] as const;
 async function getProPaymentUrl(req: Request, res: Response) {
@@ -29,10 +47,14 @@ async function getProPaymentUrl(req: Request, res: Response) {
   const stripe = getStripe();
   const session = await stripe.checkout.sessions.create({
     mode: "subscription",
+    subscription_data: {
+      trial_period_days: 7,
+    },
     success_url: constants.clientUrlBase + constants.feRoutes.subscribeSuccess,
     cancel_url: constants.clientUrlBase,
     customer_email: email,
     ...(customerId ? { customer: customerId } : {}),
+
     line_items: [
       {
         price: priceId,
@@ -56,6 +78,7 @@ function validateUpgradeUserToProReq(req: Authed<any>): Req {
     };
   } else throw new Error("Failed getProPaymentUrl validation.");
 }
+
 function validateSessionUrl(url: any): string {
   if (typeof url === "string") {
     return url;

@@ -9,7 +9,9 @@ import {
 } from "../SectionsMeta/childSectionsDerived/DbStoreName";
 import { SectionPack } from "../SectionsMeta/childSectionsDerived/SectionPack";
 
-export const makeReq = <B extends QueryObj>(body: B): MakeReq<B> => ({ body });
+export const makeReq = <B extends QueryObj = {}>(body?: B): MakeReq<B> => ({
+  body: body ?? ({} as B),
+});
 export type MakeReq<B extends QueryObj> = {
   body: B;
 };

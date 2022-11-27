@@ -22,6 +22,7 @@ import {
   validateDbArrQueryNameRes,
   validateDbIdRes,
   validateDbSectionPackRes,
+  validateSessionUrlRes,
 } from "./apiQueriesClient/validateRes";
 import { hasAuthHeadersProp } from "./services/authService";
 import https from "./services/httpService";
@@ -106,14 +107,11 @@ function makeApiQueries(): ApiQueries {
     },
     getProPaymentUrl: {
       doingWhat: "going to the pro upgrade payment page",
-      validateRes(res: AxiosResponse<unknown>): QueryRes<"getProPaymentUrl"> {
-        const { data } = res as QueryRes<"getProPaymentUrl">;
-        if (Obj.isObjToAny(data)) {
-          const { sessionUrl } = data;
-          if (typeof sessionUrl === "string") return makeRes({ sessionUrl });
-        }
-        throw makeResValidationQueryError();
-      },
+      validateRes: validateSessionUrlRes,
+    },
+    getCustomerPortalUrl: {
+      doingWhat: "going to your account portal",
+      validateRes: validateSessionUrlRes,
     },
     getTableRows: {
       doingWhat: "getting table rows",

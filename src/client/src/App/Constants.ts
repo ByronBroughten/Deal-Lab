@@ -1,8 +1,15 @@
 type StripePrice = {
   priceId: string;
-  costInCents: 1000;
+  costInCents: number;
   billed: "monthly" | "yearly";
-  product: "proPlan";
+  product: "proPlan" | "trial";
+};
+
+const proPlanStripePrice: StripePrice = {
+  priceId: "price_1M8A2OBcSOBChcCBAqDD2TQn",
+  costInCents: 800,
+  billed: "monthly",
+  product: "proPlan",
 };
 
 const clientProdUrl = "https://www.ultimatepropertyanalyzer.com";
@@ -14,28 +21,18 @@ const envConstants = {
     appName: "Ultimate Property Analyzer — Development",
     apiUrlBase: "http://localhost:5000",
     clientUrlBase: clientDevUrl,
-    stripePrices: [
-      {
-        priceId: "price_1LTuD1BcSOBChcCBWNRJdonV",
-        costInCents: 1000,
-        billed: "monthly",
-        product: "proPlan",
-      } as StripePrice,
-    ],
+    stripePrices: [proPlanStripePrice],
+    paymentManagementLink:
+      "https://billing.stripe.com/p/login/test_5kA16HgOu6k00nubII",
   },
   production: {
     environment: "production",
     appName: "Ultimate Property Analyzer",
     apiUrlBase: clientProdUrl,
     clientUrlBase: clientProdUrl,
-    stripePrices: [
-      {
-        priceId: "price_1LTuDKBcSOBChcCBqPTRlPCI",
-        costInCents: 1000,
-        billed: "monthly",
-        product: "proPlan",
-      } as StripePrice,
-    ],
+    stripePrices: [proPlanStripePrice],
+    paymentManagementLink:
+      "https://billing.stripe.com/p/login/cN24j771Yd5qc3C9AA",
   },
 } as const;
 
@@ -47,6 +44,8 @@ const apiPathBit = "/api";
 const apiPathFull = `${env.apiUrlBase}${apiPathBit}`;
 
 const isBeta = false;
+const maxSectionSaveLimit = 1000;
+const basicSectionSaveLimit = 3;
 export const config = {
   ...env,
   supportEmail: "support@ultimatepropertyanalyzer.com",
@@ -59,11 +58,11 @@ export const config = {
   apiPathFull,
   plans: {
     basic: {
-      sectionSaveLimit: isBeta ? 1000 : 2,
+      sectionSaveLimit: isBeta ? maxSectionSaveLimit : basicSectionSaveLimit,
       canUseCompareTable: false,
     },
     pro: {
-      sectionSaveLimit: 1000,
+      sectionSaveLimit: maxSectionSaveLimit,
       canUseCompareTable: true,
     },
   },
@@ -82,6 +81,7 @@ export const config = {
       mgmt: "/mgmt-compare",
       deal: "/deal-compare",
     },
+    paymentManagement: env.paymentManagementLink,
     privacyPolicy: "/privacy-policy",
     termsOfService: "/terms-of-service",
     userVariables: "/your-variables",
@@ -104,6 +104,7 @@ export const config = {
     "deleteSection",
     "replaceSectionArr",
     "getProPaymentUrl",
+    "getCustomerPortalUrl",
     "getUserData",
     "getSubscriptionData",
     "makeSession",
