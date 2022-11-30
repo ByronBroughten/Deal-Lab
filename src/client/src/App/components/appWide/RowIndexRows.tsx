@@ -17,14 +17,11 @@ type Props<SN extends SectionNameByType<"hasIndexStore">> = {
   noAccessMessage?: string;
 };
 
-type ScenarioKey = "noAccess" | "areNone" | "isAtLeastOne";
-function useScenarioKey(rows: any[], noAccessMessage?: string): ScenarioKey {
+type ScenarioKey = "areNone" | "isAtLeastOne";
+function useScenarioKey(rows: any[]): ScenarioKey {
   const { areNone } = useHowMany(rows);
-  if (noAccessMessage !== undefined) {
-    return "noAccess";
-  } else if (areNone) {
-    return "areNone";
-  } else return "isAtLeastOne";
+  if (areNone) return "areNone";
+  else return "isAtLeastOne";
 }
 
 export function RowIndexRows<SN extends SectionNameByType<"hasIndexStore">>({
@@ -36,11 +33,8 @@ export function RowIndexRows<SN extends SectionNameByType<"hasIndexStore">>({
   const [filter, setFilter] = React.useState("");
   const section = useMainSectionActor(feInfo);
   const rows = section.alphabeticalDisplayItems();
-  const scenarioKey = useScenarioKey(rows, noAccessMessage);
+  const scenarioKey = useScenarioKey(rows);
   const scenarios = {
-    get noAccess() {
-      return <Message message={noAccessMessage ?? "No access"} />;
-    },
     get areNone() {
       return <Message message={noEntriesMessage} />;
     },
@@ -64,7 +58,9 @@ export function RowIndexRows<SN extends SectionNameByType<"hasIndexStore">>({
                   {...{
                     displayName,
                     load: () => section.loadFromIndex(dbId),
-                    del: () => section.deleteFromIndex(dbId),
+                    del: noAccessMessage
+                      ? undefined
+                      : () => section.deleteFromIndex(dbId),
                     key: dbId,
                   }}
                 />

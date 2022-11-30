@@ -33,7 +33,7 @@ export function DisplayNameSectionList({
           feInfo,
           noEntriesMessage: "None saved",
           ...(feUser.isGuest && {
-            noAccessMessage: `To access saved ${pluralName}, sign in`,
+            noAccessMessage: `Sign in to access saved ${pluralName}`,
           }),
         }}
       />

@@ -8,7 +8,7 @@ type Props = {
   className?: string;
   displayName: string;
   load: () => void;
-  del: () => void;
+  del?: () => void;
 };
 export function RowIndexListRow({ displayName, del, load, className }: Props) {
   return (
@@ -17,7 +17,7 @@ export function RowIndexListRow({ displayName, del, load, className }: Props) {
         <span className="LoadSectionBtn-loadText">load</span>
         <span className="LoadSectionBtn-nameText">{displayName}</span>
       </PlainBtn>
-      <TrashBtn onClick={del} />
+      {del && <TrashBtn onClick={del} />}
     </StyledRowIndexRow>
   );
 }

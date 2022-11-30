@@ -1,6 +1,11 @@
-export const isNotSavedActions = ["save"] as const;
-type IsNotSavedActions = typeof isNotSavedActions[number];
+export const guestActions = ["createNew"];
 
+export const isNotSavedActions = ["save"] as const;
+export const guestIsNotSavedActions = ["signInToSave"] as const;
+const allIsNotSavedActions = [...isNotSavedActions, ...guestIsNotSavedActions];
+type IsNotSavedActions = typeof allIsNotSavedActions[number];
+
+export const guestIsSavedActions = ["copy"] as const;
 export const isSavedActions = [
   "saveUpdates",
   "saveAsNew",
@@ -8,14 +13,17 @@ export const isSavedActions = [
   "copyAndSave",
   // "delete",
 ] as const;
-type IsSavedActions = typeof isSavedActions[number];
+const allIsSavedActions = [...guestIsSavedActions, ...isSavedActions];
+type IsSavedActions = typeof allIsSavedActions[number];
 
 export const alwaysActions = ["createNew"] as const;
 type AlwaysActions = typeof alwaysActions[number];
 export type AllActions = IsNotSavedActions | IsSavedActions | AlwaysActions;
 
-export interface ActionMenuProps {
-  isNotSavedArr?: readonly IsNotSavedActions[];
-  isSavedArr?: readonly IsSavedActions[];
-  alwaysArr?: readonly AlwaysActions[];
+export interface ActionMenuLists {
+  isNotSavedArr: readonly IsNotSavedActions[];
+  isSavedArr: readonly IsSavedActions[];
+  alwaysArr: readonly AlwaysActions[];
 }
+
+export type ActionMenuProps = Partial<ActionMenuLists>;
