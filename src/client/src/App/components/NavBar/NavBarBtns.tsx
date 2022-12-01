@@ -7,7 +7,7 @@ import { useFeUser } from "../../modules/sectionActorHooks/useFeUser";
 import { DomLink } from "../ActiveDeal/general/DomLink";
 import { FeedbackPanel } from "./FeedbackPanel";
 import NavBtn from "./NavBtn";
-import NavDropDown from "./NavDropDown";
+import { NavDropDown } from "./NavDropDown";
 import { UpgradeUserToProPanel } from "./UpgradeUserToProPanel";
 
 function useScenarioKey() {

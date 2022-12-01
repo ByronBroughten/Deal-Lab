@@ -7,15 +7,24 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-// It would be nice if the NavMenu went away after clicking on
-// a NavLink
+// Options
+// - Let them edit but require they login to save
+//   - This is ideal except for that if they log in they will lose
+//     their edits. I could theoretically save their edits
+//     to localStorage.
+//     that might actually be the easiest solution.
+//     Yeah, let's do it. Except. Hmmm...
+//     What about the problem of leaving without saving?
+
+//     I can still warn when leaving without saving changes—except I don't
+//     want to when they login
+
+//     I could have a button for "discard changes"
+
+// Make tables look nicer
 
 // If anyone uses the app
-// - Offer a way to cancel the subscriptions
-// - Add a way to login with 3rd party auth
-// - Write more tests
-// - Let guests access and perhaps manipulate examples
-//   on the front-end
+// - Let guests access examples on the front-end
 
 // If I'm going to make tables faster and increase functionality, here's how:
 // I want the tables to reflect those

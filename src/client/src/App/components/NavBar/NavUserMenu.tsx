@@ -1,4 +1,5 @@
 import { rem } from "polished";
+import React from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 import { FaThList } from "react-icons/fa";
 import { GrLogout } from "react-icons/gr";
@@ -7,6 +8,7 @@ import { MdAccountCircle } from "react-icons/md";
 import styled, { css } from "styled-components";
 import { constants } from "../../Constants";
 import { useUserData } from "../../modules/customHooks/useAuthAndUserData";
+import useToggle from "../../modules/customHooks/useToggle";
 import { useFeUser } from "../../modules/sectionActorHooks/useFeUser";
 import { goToCustomerPortalPage } from "../../modules/services/stripeService";
 import { AnalyzerPlan } from "../../sharedWithServer/SectionsMeta/baseSectionsVarbs";
@@ -14,7 +16,7 @@ import theme from "../../theme/Theme";
 import { DomLink } from "../ActiveDeal/general/DomLink";
 import { ListMenuBtn } from "../appWide/ListGroup/ListGroupShared/ListMenuSimple/ListMenuBtn";
 import { StandardProps } from "../general/StandardProps";
-import NavDropDown from "./NavDropDown";
+import { NavDropDown } from "./NavDropDown";
 
 function BtnDiv({ children, className }: StandardProps) {
   return <div className={`NavUserMenu-btnDiv ${className}`}>{children}</div>;
@@ -36,22 +38,29 @@ export function NavUserMenu() {
       variables: "Your variables",
     },
   };
+  const { value: doCloseMenuToggle, toggle: closeMenu } = useToggle();
   return (
     <Styled
       {...{ $isFullPlan: isFullPlan }}
       btnIcon={<AiOutlineMenu className="NavBar-menuIcon" />}
       dropDirection={"right"}
+      doCloseViewToggle={doCloseMenuToggle}
     >
       <div className="NavUserMenu-dropdown">
         <BtnDiv>
           <DomLink to={constants.feRoutes.userLists}>
-            <ListMenuBtn text={titles[authStatus].lists} icon={<FaThList />} />
+            <ListMenuBtn
+              text={titles[authStatus].lists}
+              onClick={closeMenu}
+              icon={<FaThList />}
+            />
           </DomLink>
         </BtnDiv>
         <BtnDiv>
           <DomLink to={constants.feRoutes.userVariables}>
             <ListMenuBtn
               text={titles[authStatus].variables}
+              onClick={closeMenu}
               icon={<HiOutlineVariable className="NavUserMenu-variablesIcon" />}
             />
           </DomLink>

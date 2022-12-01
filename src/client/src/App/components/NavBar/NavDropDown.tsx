@@ -10,18 +10,29 @@ interface Props extends StandardProps {
   btnText?: string | React.ReactNode;
   btnIcon?: React.ReactNode;
   dropDirection?: "left" | "right";
+  doCloseViewToggle?: boolean;
 }
-export default function NavDropDown({
+export function NavDropDown({
   btnText,
   children,
   className,
   btnIcon,
   dropDirection = "left",
+  doCloseViewToggle = false,
 }: Props) {
   const { viewIsOpen, toggleView, closeView } = useToggleView({
     initValue: false,
   });
   const closeIfClickOutsideRef = useOnOutsideClickRef(closeView);
+
+  const isFirstRender = React.useRef(true);
+  React.useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+    } else {
+      closeView();
+    }
+  }, [doCloseViewToggle]);
 
   return (
     <Styled
