@@ -65,25 +65,11 @@ export function NavUserMenu() {
             />
           </BtnDiv>
         )}
-        {/* <BtnDiv>
-          <Button href={constants.feRoutes.userLists}>{`Your lists`}</Button>
-        </BtnDiv>
-        <BtnDiv>
-          <Button
-            href={constants.feRoutes.userOutputs}
-          >{`Your outputs`}</Button>
-        </BtnDiv> */}
         {authStatus !== "guest" && (
           <BtnDiv>
             <ListMenuBtn text="Logout" icon={<GrLogout />} onClick={logout} />
           </BtnDiv>
         )}
-
-        {/* <BtnDiv>
-                <Button href="/account" disabled>
-                  Account Info
-                </Button>
-              </BtnDiv> */}
       </div>
     </Styled>
   );
