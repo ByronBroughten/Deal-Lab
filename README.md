@@ -8,7 +8,7 @@ This is a fullstack web application designed to produce useful estimates for det
 
 As the user enters information, the input values feed into calculations that produce other derrivative variables (the monthly loan payment amount, total monthly expenses, etc) that ultimately solve for the outputs (ROI, etc).
 
-A complication arises, however, from the fact that the dependency tree of the inputs and derrivative variables is dynamic. That's because users may enter variables into the inputs to make inputs adjust automatically in response to one another. For example, the user may enter something like this in the field dedicated to the cost of heating a property: "property-sqft\*0.05". Then if the property's square feet is increased, so too is its heating cost.
+A complication arises, however, from the fact that the dependency tree of the inputs and derrivative variables is dynamic. That's because users may enter variables into the inputs to make inputs adjust automatically in response to one another. For example, the user may enter something like this in the field dedicated to the cost of heating a property: "property-sqft \* 0.05". Then if the property's square feet is increased, so too is its heating cost.
 
 To accomodate the dynamic nature of the dependency tree, the app uses a topological sort, which takes in identifiers of interdependent nodes, each paired with the identifiers of their dependencies, and produces a valid sequence of processes. That sequence is then used to calculate the values of the inputs and derrivative variables in a valid order.
 
