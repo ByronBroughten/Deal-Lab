@@ -25,8 +25,17 @@ export function NavUserMenu() {
   const { logout } = useUserData();
   const analyzerPlan = feUser.get.valueNext("analyzerPlan") as AnalyzerPlan;
   const isFullPlan = analyzerPlan === "fullPlan";
-  const authStatus = feUser.get.valueNext("authStatus");
-  const userName = feUser.get.value("userName", "string");
+  const { authStatus } = feUser;
+  const titles = {
+    guest: {
+      lists: "Lists",
+      variables: "Variables",
+    },
+    user: {
+      lists: "Your lists",
+      variables: "Your variables",
+    },
+  };
   return (
     <Styled
       {...{ $isFullPlan: isFullPlan }}
@@ -36,13 +45,13 @@ export function NavUserMenu() {
       <div className="NavUserMenu-dropdown">
         <BtnDiv>
           <DomLink to={constants.feRoutes.userLists}>
-            <ListMenuBtn text="Your lists" icon={<FaThList />} />
+            <ListMenuBtn text={titles[authStatus].lists} icon={<FaThList />} />
           </DomLink>
         </BtnDiv>
         <BtnDiv>
           <DomLink to={constants.feRoutes.userVariables}>
             <ListMenuBtn
-              text="Your variables"
+              text={titles[authStatus].variables}
               icon={<HiOutlineVariable className="NavUserMenu-variablesIcon" />}
             />
           </DomLink>
