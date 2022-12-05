@@ -8,9 +8,7 @@ This fullstack web application is designed to produce estimates that are useful 
 
 To that end, the user may enter information about a rental property as well as about whatever financing they'd use to purchase it and whatever costs they'd incure to manage it. As the user enters information, the input values feed into calculations that produce other derrivative variables (like monthly loan payment amounts, total monthly expenses, etc) which ultimately solve for the outputs (ROI, etc).
 
-A complication arises from the fact that the inputs and derrivative variables compose a dependency tree that is dynamic. This dynamicness is because users may enter variables into the input fields such that input fields may automatically adjust in response to one another. For example, in the field dedicated to the cost of heating a property, the user may enter something like this: "property-sqft \* 0.05". Then if the property's square feet is increased, so too is the entered heating cost.
-
-To accomodate the dynamicness of the dependency tree, the app uses a topological sort, which takes in ids of interdependent nodes, each paired with the ids of their dependencies, and produces a valid sequence of ids. That sequence is then followed when the values of the inputs and derrivative variables are calculated.
+Users may enter variables into the input fields such that input fields may automatically adjust in response to one another. For example, in the field dedicated to the cost of heating a property, the user may enter something like this: "property-sqft \* 0.05". Then if the property's square feet is increased, so too is the entered heating cost.
 
 In addition to carrying out calculations and allowing for interdependent inputs and variables, the app lets users save properties, management service providers, loans, custom variables, custom lists of variables, and whole deals. The user can then load up any of that information, copy and tweak it, delete it, and compare things like saved properties and deals side-by-side in a table format.
 
@@ -28,7 +26,9 @@ The client side also has HTML and CSS interwoven throughout using Styled Compone
 
 The server facilitates CRUD operations and serves as an intermediary between the client and a MongoDB database. It produces and validates JSON web tokens to safeguard user-specific operations, and it validates the structure of incoming data before allowing it to be written to the database.
 
-Some environment-agnostic Typescript code is shared accross the client and server. This includes various types that help coordinate request and response payloads as well as various modular classes that ease the manipulation and querying of data structures common accross the app, representing things like users, properties, and deals.
+Some environment-agnostic Typescript code is shared accross the client and server, which can be found at src/client/sharedwithserver. This includes various types that help coordinate request and response payloads as well as various modular classes that ease the manipulation and querying of data structures common accross the app, representing things like users, properties, and deals.
+
+Because the user can change how inputs depend on one another by entering or removing them as variables, the app's variables end up forming a dynamic dependency tree. To accomodate this, the app uses a topological sort, which essentially takes in ids of interdependent variables, each paired with the ids of their dependencies, and spits out a valid sequence of ids. That sequence is updated and followed whenever the values of the inputs and derrivative variables are calculated.
 
 SuperTokens is integrated as a micro service to implement OAuth 2.0 user registration and login well as a username and password flow that includes email validation and password resetting.
 
