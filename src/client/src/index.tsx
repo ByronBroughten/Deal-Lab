@@ -7,19 +7,15 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-// Options
-// - Let them edit but require they login to save
-//   - This is ideal except for that if they log in they will lose
-//     their edits. I could theoretically save their edits
-//     to localStorage.
-//     that might actually be the easiest solution.
-//     Yeah, let's do it. Except. Hmmm...
-//     What about the problem of leaving without saving?
+// Let guests see example lists and variables
+// - Allow guests to edit the variables and lists
+// - Don't allow them to save
 
-//     I can still warn when leaving without saving changes—except I don't
-//     want to when they login
-
-//     I could have a button for "discard changes"
+// - When comparing changes, save edited lists to localStorage
+// - When a user navigates to variables or lists, if they're saved
+//   in localStorage, load them up
+// - Add a button called "discard changes"
+// - Change the prompt when navigating away to just say, "Changes Not Saved", etc.
 
 // Make tables look nicer
 

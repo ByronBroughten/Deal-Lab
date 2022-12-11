@@ -12,8 +12,9 @@ import {
   SectionsDispatchContext,
   useAnalyzerSections,
 } from "./App/sharedWithServer/stateClassHooks/useSections";
-import GlobalStyle from "./App/theme/globalStyles";
 import { Theme } from "./App/theme/Theme";
+import { GlobalFonts } from "./fonts/fonts";
+import GlobalStyle from "./globalStyles";
 import { Main } from "./Main";
 
 initSupertokens();
@@ -32,6 +33,7 @@ const App: React.FC = () => {
             <BrowserRouter>
               <SectionsContext.Provider value={sectionsContext}>
                 <SectionsDispatchContext.Provider value={sectionsDispatch}>
+                  <GlobalFonts />
                   <GlobalStyle />
                   <Main />
                   <ToastContainer />

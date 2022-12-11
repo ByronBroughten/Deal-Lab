@@ -82,12 +82,18 @@ export function Main() {
     </Styled>
   );
 }
+// Ok, I got a handle on that.
+// Now. I want there to be a gray
 
 const Styled = styled.div`
   display: flex;
   flex-direction: column;
   min-height: 100vh;
   background-color: ${theme.light};
+
+  * {
+    font-family: "Source Sans Pro", Arial, sans-serif;
+  }
 
   .NavBar-root {
     position: sticky;
