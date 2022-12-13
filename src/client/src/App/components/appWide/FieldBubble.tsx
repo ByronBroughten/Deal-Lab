@@ -9,7 +9,7 @@ export default function FieldBubble({ className, ...rest }: Props) {
 }
 const Styled = styled.div<{ sectionName: ThemeName }>`
   background-color: ${({ sectionName }) => theme[sectionName].light};
-  border-radius: ${theme.br1};
+  border-radius: ${theme.br0};
   padding: ${theme.s2};
   display: inline-block;
 `;

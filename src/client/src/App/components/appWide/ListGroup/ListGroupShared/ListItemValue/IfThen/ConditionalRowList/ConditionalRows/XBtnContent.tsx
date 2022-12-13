@@ -31,7 +31,7 @@ const Styled = styled.div`
   }
   .XBtn-row:last-child {
     .XBtn,
-    .PlusBtn {
+    .SolidBtn {
       visibility: hidden;
     }
   }

@@ -1,9 +1,8 @@
 import { ReactNode } from "react";
 import { MdOutlinePlaylistAdd } from "react-icons/md";
 import styled, { css } from "styled-components";
-import ccs from "../../../../../theme/cssChunks";
 import theme, { ThemeName } from "../../../../../theme/Theme";
-import PlusBtn from "../../../PlusBtn";
+import { HollowBtn } from "../../../HollowBtn";
 
 export type MakeListNode = (props: MakeListNodeProps) => ReactNode;
 type MakeListNodeProps = {
@@ -35,12 +34,12 @@ export function ListGroupLists({
           className: "ListGroup-list",
         });
       })}
-      <PlusBtn
+      <HollowBtn
         className="ListGroup-addListBtn ListGroup-list"
         onClick={addList}
       >
         <MdOutlinePlaylistAdd className="ListGroup-addListBtnIcon" />
-      </PlusBtn>
+      </HollowBtn>
     </Styled>
   );
 }
@@ -54,13 +53,10 @@ const listGroupListsCss = (themeName: ThemeName = "default") => css`
     margin: ${theme.s2};
   }
   .ListGroup-addListBtn {
-    ${ccs.mainColorSection(themeName)};
-    width: 42px;
+    border-color: ${theme.primaryBorder};
+    width: 80px;
     max-height: 200px;
     min-height: 100px;
-    :hover {
-      background: ${theme[themeName].dark};
-    }
   }
   .ListGroup-addListBtnIcon {
     font-size: 35px;

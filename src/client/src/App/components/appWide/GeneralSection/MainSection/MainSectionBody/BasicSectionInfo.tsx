@@ -1,6 +1,5 @@
 import React from "react";
-import styled, { css } from "styled-components";
-import ccs from "../../../../../theme/cssChunks";
+import styled from "styled-components";
 import theme, { ThemeName } from "../../../../../theme/Theme";
 
 type Props = {
@@ -23,22 +22,7 @@ export default function BasicSectionInfo({
   );
 }
 const Styled = styled.div<{ $themeName: ThemeName }>`
-  ${({ $themeName }) => css`
-    ${ccs.subSection.viewable};
-    ${ccs.neutralColorSection};
-    padding: ${theme.s3};
-
-    .BasicSectionInfo-subSection-viewable {
-      ${ccs.mainColorSection($themeName)};
-      box-shadow: ${theme.boxShadow1};
-      padding: 0.3em;
-    }
-
-    .editor-background {
-      background-color: ${theme[$themeName].light};
-    }
-  `}
-
+  padding: 0 ${theme.sectionPadding} ${theme.sectionPadding} 0;
   .BasicSectionInfo-viewable {
     display: flex;
     flex-direction: row;
@@ -52,19 +36,19 @@ const Styled = styled.div<{ $themeName: ThemeName }>`
     .BasicSectionInfo-subSection {
       :first-child {
         .BasicSectionInfo-subSection-viewable {
-          border-top-left-radius: ${theme.br1};
-          border-top-right-radius: ${theme.br1};
+          border-top-left-radius: ${theme.br0};
+          border-top-right-radius: ${theme.br0};
         }
       }
       :not(:first-child) {
+        margin-top: ${theme.s3};
         .BasicSectionInfo-subSection-viewable {
-          border-top: 1px solid ${theme.transparentGrayBorder};
         }
       }
       :last-child {
         .BasicSectionInfo-subSection-viewable {
-          border-bottom-left-radius: ${theme.br1};
-          border-bottom-right-radius: ${theme.br1};
+          border-bottom-left-radius: ${theme.br0};
+          border-bottom-right-radius: ${theme.br0};
         }
       }
     }
@@ -74,8 +58,5 @@ const Styled = styled.div<{ $themeName: ThemeName }>`
     :not(:first-child) {
       margin-top: ${theme.s1};
     }
-  }
-  .editor-background {
-    border: 1px solid ${theme.transparentGrayBorder};
   }
 `;

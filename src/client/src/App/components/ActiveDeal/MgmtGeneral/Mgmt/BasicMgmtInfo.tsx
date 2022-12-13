@@ -56,6 +56,11 @@ export default function BasicMgmtInfo({ feId, className }: Props) {
 }
 
 const Styled = styled(BasicSectionInfo)`
+  .BasicSectionInfo-subSections {
+  }
+
+  .BasicSectionInfo-subSection {
+  }
   .BasicMgmtInfo-radioSwap {
     .MuiInputBase-root {
       min-width: 85px;

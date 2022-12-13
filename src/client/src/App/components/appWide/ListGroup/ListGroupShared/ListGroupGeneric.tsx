@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { VarbName } from "../../../../sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
 import { ChildName } from "../../../../sharedWithServer/SectionsMeta/childSectionsDerived/ChildName";
 import { ChildSectionName } from "../../../../sharedWithServer/SectionsMeta/childSectionsDerived/ChildSectionName";
@@ -10,16 +10,15 @@ import {
 } from "../../../../sharedWithServer/SectionsMeta/SectionNameByType";
 import { useSetterSection } from "../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import { GetterSection } from "../../../../sharedWithServer/StateGetters/GetterSection";
-import ccs from "../../../../theme/cssChunks";
 import theme, { ThemeName } from "../../../../theme/Theme";
 import { StandardBtnProps } from "../../../general/StandardProps";
 import useHowMany from "../../customHooks/useHowMany";
 import { SectionBtn } from "../../SectionBtn";
+import { SectionTitleAndCost } from "../../SectionTitleAndCost";
 import {
   ListGroupLists,
   MakeListNode,
 } from "./ListGroupGeneric/ListGroupLists";
-import { ListGroupTotal } from "./ListGroupGeneric/ListGroupTotal";
 
 type ListParentName = ParentOfTypeName<"varbListAllowed">;
 
@@ -66,12 +65,15 @@ export function ListGroupGeneric<
     <Styled className={`ListGroup-root ` + className ?? ""}>
       <div className="ListGroup-viewable">
         <div className="ListGroup-titleRow">
-          <div className="ListGroup-titleRowLeft">
-            <h6 className="ListGroup-titleText">{titleText}</h6>
-            {areMultipleLists && numListsWithItems > 1 && totalVarbName && (
-              <ListGroupTotal varbInfo={parent.get.varbInfo(totalVarbName)} />
-            )}
-          </div>
+          <SectionTitleAndCost
+            className="ListGroup-titleRowLeft"
+            text={titleText}
+            cost={
+              areMultipleLists && numListsWithItems > 1 && totalVarbName
+                ? parent.get.varbNext(totalVarbName).displayVarb()
+                : undefined
+            }
+          />
           <div className="listGroup-titleRowRight"></div>
         </div>
         <ListGroupLists
@@ -87,12 +89,6 @@ export function ListGroupGeneric<
   );
 }
 
-const listGroupViewable = css`
-  ${ccs.subSection.viewable};
-  ${ccs.neutralColorSection};
-  padding: ${theme.s2};
-`;
-
 interface BtnProps extends StandardBtnProps {
   text?: React.ReactNode;
   icon?: React.ReactNode;
@@ -104,41 +100,25 @@ export function ListGroupGenericBtn({ className, ...props }: BtnProps) {
 }
 
 const BtnStyled = styled(SectionBtn)`
-  ${listGroupViewable};
-  height: 140px;
-  padding: ${theme.s3};
+  ${theme.sectionBorderChunk};
+  padding: ${theme.sectionPadding};
+  height: 260px;
+  width: 200px;
+  font-size: ${theme.titleSize};
 `;
 
-export const listGroupCss = () => css`
+const Styled = styled.div`
+  ${theme.sectionBorderChunk};
+  padding: ${theme.sectionPadding};
+
   .ListGroup-titleRow {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-    padding: ${theme.s2} ${theme.s2} 0 ${theme.s2};
   }
   .ListGroup-titleRowLeft {
     display: flex;
     align-items: center;
-  }
-
-  .ListGroup-titleText {
-    ${ccs.subSection.titleText};
     padding-left: ${theme.s1};
-    font-size: 1.05rem;
-    line-height: 0.95rem;
   }
-  .ListGroup-totalText {
-    font-weight: 700;
-    font-size: 1.05rem;
-    line-height: 0.95rem;
-    padding-left: ${theme.s1};
-    padding-top: ${theme.s1};
-  }
-  .ListGroup-viewable {
-    ${listGroupViewable};
-  }
-`;
-
-const Styled = styled.div`
-  ${listGroupCss()}
 `;

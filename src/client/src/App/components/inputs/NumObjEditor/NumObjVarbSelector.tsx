@@ -61,7 +61,7 @@ const Styled = styled.div`
     border: 2px solid;
     border-top: 1px solid;
     border-left: 1px solid;
-    border-radius: ${theme.br1};
+    border-radius: ${theme.br0};
     border-color: ${theme.next.dark};
     background-color: ${theme["gray-300"]};
   }

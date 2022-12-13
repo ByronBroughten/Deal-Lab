@@ -1,6 +1,5 @@
 import styled from "styled-components";
-import theme, { ThemeName } from "../../../../theme/Theme";
-import { listGroupCss } from "../../ListGroup/ListGroupShared/ListGroupGeneric";
+import { ThemeName } from "../../../../theme/Theme";
 
 export default function MainSectionBody({
   children,
@@ -21,15 +20,8 @@ const StyledEntryBody = styled.div<{ $themeName: ThemeName }>`
   flex: 0;
   flex-wrap: wrap;
 
-  ${listGroupCss()};
-
   .MainSectionBody-inner {
     display: flex;
     flex-wrap: wrap;
-  }
-  .MainEntryItem {
-  }
-  .ListGroup-root {
-    margin: ${theme.s2};
   }
 `;

@@ -24,6 +24,7 @@ export function DealOutputSection({
       <MainSectionTitleRow
         {...{
           ...deal.feInfo,
+          sectionTitle: "Deal",
           pluralName: "deals",
           dropTop: true,
         }}
@@ -44,7 +45,4 @@ const Styled = styled.div`
   border: solid 1px ${theme.deal.border};
   border-radius: ${theme.s1};
   box-shadow: ${theme.boxShadow1};
-  .MainSection-entry {
-    padding-bottom: ${theme.s2};
-  }
 `;

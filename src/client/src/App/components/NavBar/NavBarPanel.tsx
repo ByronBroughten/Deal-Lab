@@ -6,5 +6,5 @@ export const NavBarPanel = styled.div`
   min-width: 300px;
   background: ${theme.light};
   padding: ${theme.s4};
-  border-radius: 0 0, ${theme.br1} ${theme.br1};
+  border-radius: 0 0, ${theme.br0} ${theme.br0};
 `;

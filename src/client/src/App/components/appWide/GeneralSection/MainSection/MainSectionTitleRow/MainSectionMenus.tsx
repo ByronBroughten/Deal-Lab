@@ -95,9 +95,10 @@ export function MainSectionMenus({
 
 const Styled = styled.div`
   display: flex;
+
   .MainSectionMenus-item {
     :not(:first-child) {
-      margin-left: ${theme.s2};
+      margin-left: ${theme.s25};
     }
   }
   .MainSectionMenus-compareIcon {

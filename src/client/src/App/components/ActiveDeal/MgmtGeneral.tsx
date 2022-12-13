@@ -1,8 +1,7 @@
 import React from "react";
 import { useSetterSection } from "../../sharedWithServer/stateClassHooks/useSetterSection";
 import { GeneralSection } from "../appWide/GeneralSection";
-import GeneralSectionTitle from "../appWide/GeneralSection/GeneralSectionTitle";
-import MainSectionTitleBtn from "../appWide/GeneralSection/GeneralSectionTitle/MainSectionTitleBtn";
+import { MainSectionBtn } from "../appWide/GeneralSection/GeneralSectionTitle/MainSectionBtn";
 import { Mgmt } from "./MgmtGeneral/Mgmt";
 
 type Props = { className?: string; feId: string };
@@ -20,21 +19,19 @@ export function MgmtGeneral({ feId }: Props) {
         className: "MgmtGeneral-root",
       }}
     >
-      <GeneralSectionTitle {...{ title: "Management", themeName: "mgmt" }} />
       {mgmtIds.length === 0 && <div className="GeneralSectionInfo-root" />}
       <div className="MainSection-entries">
         {mgmtIds.map((feId) => (
           <Mgmt key={feId} feId={feId} />
         ))}
       </div>
-      <div className="GeneralSection-addEntryBtnDiv">
-        <MainSectionTitleBtn
-          themeName="mgmt"
+      {mgmtIds.length === 0 && (
+        <MainSectionBtn
           className="MainSection-addChildBtn"
           onClick={addMgmt}
           text="+ Management Costs"
         />
-      </div>
+      )}
     </GeneralSection>
   );
 }

@@ -10,10 +10,10 @@ export default function StandardLabel({ className, ...props }: Props) {
 }
 
 const Styled = styled.label<{ $active?: boolean }>`
-  line-height: 1;
+  line-height: 1.2;
   margin: 0;
   padding: 0;
   font-weight: 500;
-  color: ${theme.dark};
-  font-size: 1rem;
+  color: ${theme.primaryNext};
+  font-size: 16px;
 `;

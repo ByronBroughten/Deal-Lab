@@ -50,10 +50,11 @@ export function CaretMenuBtn({
 }
 
 const Styled = styled(ListMenuBtn)<{ $saveStatus?: SaveStatus }>`
+  border: none !important;
   .CaretMenuBtn-syncedIcon {
-    color: ${theme.plus.dark};
+    color: ${theme.success};
   }
   .CaretMenuBtn-unsyncedIcon {
-    color: ${theme.primary.main};
+    color: ${theme.primary.dark};
   }
 `;

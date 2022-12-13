@@ -50,7 +50,7 @@ const Styled = styled(PageMain)<{ $themeName: ThemeName }>`
   .UserListsPageGeneric-notLoggedInInner {
     color: ${theme.dark};
     padding: ${theme.s3};
-    border-radius: ${theme.br1};
+    border-radius: ${theme.br0};
     font-size: 18px;
     font-weight: 700;
   }

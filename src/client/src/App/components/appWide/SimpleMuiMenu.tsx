@@ -40,7 +40,7 @@ const Styled = styled.div`
   z-index: 2;
   font-size: 0.85rem;
   background: ${theme.light};
-  border-radius: ${theme.br1};
+  border-radius: ${theme.br0};
   box-shadow: ${theme.boxShadow1};
 
   .MuiMenuItem-root {

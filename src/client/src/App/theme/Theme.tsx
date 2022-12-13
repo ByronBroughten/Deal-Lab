@@ -1,6 +1,6 @@
-import { darken, lighten, transparentize } from "polished";
+import { darken, lighten, rem, transparentize } from "polished";
 import React from "react";
-import { ThemeProvider } from "styled-components";
+import { css, ThemeProvider } from "styled-components";
 import { Obj } from "../sharedWithServer/utils/Obj";
 
 const color = {
@@ -28,38 +28,15 @@ const color = {
   black: "#000",
 };
 
-const testThemes = {
-  current: {
-    primary: "#962d1a",
-    secondary: "#b94b0c",
-    warning: "#e66d0a",
-    success: "#4caf50",
-    danger: "#f52617",
-  },
-  lighter: {
-    primary: "#3f51b5",
-    secondary: "#b11414",
-    success: "#4caf50",
-    warning: "#ff9800",
-    danger: "#f44336",
-  },
-  muiDefault: {
-    primary: "#3f51b5",
-    secondary: "#f50057",
-    success: "#4caf50",
-    warning: "#ff9800",
-    danger: "#f44336",
-  },
-};
-
 type SectionThemeBase = {
   main: string;
   [key: string]: string;
 };
 
-function themeSection({ main, ...rest }: SectionThemeBase) {
+function themeSection({ main, contrastText, ...rest }: SectionThemeBase) {
   return {
     main,
+    contrastText: contrastText ?? themeColors.dark,
     get light(): string {
       return lighten(0.25, this.main);
     },
@@ -89,24 +66,77 @@ export function themeSectionNameOrDefault(sectionName: string): ThemeName {
   return isThemeSectionName(sectionName) ? sectionName : "default";
 }
 
-const themeColors = {
+const v1Theme = {
   property: "#ffc99d",
   loan: "#ff7f68", //
   mgmt: "#ff9868", //
   plus: "#80c883",
-  success: "#4caf50",
   next: "#717cbb",
   danger: "#ff3527",
 };
 
-// light burgundy #f17a7a
+const themeColors = {
+  primaryNext: "#00684A",
+  property: color["gray-100"],
+  loan: "#ff7f68",
+  mgmt: "#ff9868",
+  get plus() {
+    return this.primaryNext;
+  },
+  secondary: "#00A35C",
+  tertiary: "#E3FCF7",
+  get success() {
+    return this.secondary;
+  },
 
-// #ad6f69
-// #a27d66
+  next: "#717cbb",
+  danger: "#ff3527",
+  primary: "#3f51b5",
+  mainBackground: "#f5f7fa",
+  primaryBorder: color["gray-400"],
+
+  light: "#fff",
+  dark: "#001E2B", //color["gray-900"],
+  softDark: color["gray-800"],
+};
+
+const fontSize = {
+  labelSize: rem("14px"),
+  titleSize: rem("20px"),
+  siteTitleSize: rem("20px"),
+} as const;
+
+const fonts = {
+  titleChunk: css`
+    font-size: ${fontSize.titleSize};
+    color: ${themeColors.primaryNext};
+  `,
+};
+
+const buttons = {
+  primaryButtonColorChunk: css`
+    color: ${themeColors.light};
+    background-color: ${themeColors.primaryNext};
+  `,
+  primaryButtonColorHoverChunk: css`
+    background-color: ${themeColors.secondary};
+  `,
+};
+
+const borders = {
+  sectionBorderChunk: css`
+    border-top: solid 1px ${themeColors.primaryBorder};
+    border-right: solid 1px ${themeColors.primaryBorder};
+    border-bottom: none;
+    border-left: none;
+    border-radius: 0;
+  `,
+};
 
 const themeSections = {
   default: {
     ...themeSection({
+      contrastText: themeColors.dark,
       light: color["gray-200"],
       main: color["gray-500"],
       dark: color["gray-600"],
@@ -115,6 +145,7 @@ const themeSections = {
   },
   warning: {
     ...themeSection({
+      contrastText: themeColors.dark,
       main: themeColors.property,
       get light() {
         return lighten(0.17, themeColors.property);
@@ -132,6 +163,7 @@ const themeSections = {
   },
   mgmt: {
     ...themeSection({
+      contrastText: themeColors.dark,
       main: lighten(0.04, themeColors.mgmt),
       get light() {
         return lighten(0.23, themeColors.mgmt);
@@ -146,6 +178,7 @@ const themeSections = {
   },
   loan: {
     ...themeSection({
+      contrastText: themeColors.dark,
       main: lighten(0.02, themeColors.loan),
       get light() {
         return lighten(0.25, themeColors.loan);
@@ -158,11 +191,6 @@ const themeSections = {
       },
     }),
   },
-  next: {
-    ...themeSection({
-      main: themeColors.next,
-    }),
-  },
   get deal() {
     return this.plus;
   },
@@ -171,6 +199,7 @@ const themeSections = {
   },
   plus: {
     ...themeSection({
+      contrastText: themeColors.light,
       main: themeColors.plus,
       get light() {
         return lighten(0.3, this.main);
@@ -183,9 +212,15 @@ const themeSections = {
       },
     }),
   },
+  get primaryNextSet() {
+    return themeSection({
+      main: themeColors.primaryNext,
+    });
+  },
+
   get primary() {
     return themeSection({
-      main: "#3f51b5",
+      main: themeColors.primary,
       get light() {
         return lighten(0.3, this.main);
       },
@@ -197,6 +232,9 @@ const themeSections = {
       },
     });
   },
+  next: themeSection({
+    main: themeColors.next,
+  }),
   get primaryLight() {
     return themeSection({
       get main() {
@@ -231,20 +269,7 @@ const themeSections = {
   },
 };
 
-const theme = {
-  ...color,
-  ...themeColors,
-  ...themeSections,
-  light: color["gray-100"],
-  dark: color["gray-900"],
-  softDark: color["gray-800"],
-  transparentGrayDark: transparentize(0.8, color["gray-600"]),
-  transparentGrayLight: transparentize(0.75, color["gray-300"]),
-  transparentGray: transparentize(0.8, color["gray-400"]),
-  transparentGrayBorder: transparentize(0.75, color["gray-800"]),
-  placeholderGray: color["gray-600"] + "e0",
-
-  // spacing sizes
+const spacings = {
   s0: "0.0625rem",
   s1: "0.125rem",
   s15: "0.1875rem",
@@ -252,10 +277,27 @@ const theme = {
   s25: "0.375rem",
   s3: "0.5rem",
   s4: "1rem",
+} as const;
+
+const theme = {
+  ...color,
+  ...themeColors,
+  ...themeSections,
+  ...fontSize,
+  ...fonts,
+  ...borders,
+  ...spacings,
+  ...buttons,
+  sectionPadding: spacings.s3,
+
+  transparentGrayDark: transparentize(0.8, color["gray-600"]),
+  transparentGrayLight: transparentize(0.75, color["gray-300"]),
+  transparentGray: transparentize(0.8, color["gray-400"]),
+  transparentGrayBorder: transparentize(0.75, color["gray-800"]),
+  placeholderGray: color["gray-600"] + "e0",
 
   // border radius
-  br0: "0.1rem",
-  br1: "0.2rem",
+  br0: "5px",
   brMaterialEditor: "4px",
 
   // font size
@@ -272,7 +314,7 @@ const theme = {
   smallButtonHeight: "24px",
 
   navBar: {
-    height: "40px",
+    height: "50px",
     activeBtn: color["gray-200"],
   },
 

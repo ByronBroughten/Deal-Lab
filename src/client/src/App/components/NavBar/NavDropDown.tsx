@@ -4,7 +4,7 @@ import useOnOutsideClickRef from "../../modules/customHooks/useOnOutsideClickRef
 import useToggleView from "../../modules/customHooks/useToggleView";
 import theme from "../../theme/Theme";
 import { StandardProps } from "../general/StandardProps";
-import NavBtn from "./NavBtn";
+import { NavBtn } from "./NavBtn";
 
 interface Props extends StandardProps {
   btnText?: string | React.ReactNode;
@@ -62,7 +62,7 @@ const Styled = styled.div<{ $dropDirection: "left" | "right" }>`
   flex-direction: column;
   height: 100%;
 
-  .NavBtn {
+  .NavBtn-root {
     height: 100%;
     position: relative;
     z-index: 2;
@@ -77,10 +77,10 @@ const Styled = styled.div<{ $dropDirection: "left" | "right" }>`
     .NavDropDown-viewable {
       position: absolute;
       border-top: none;
-      border-radius: 0 0 ${theme.br1} ${theme.br1};
+      border-radius: 0 0 ${theme.br0} ${theme.br0};
       background-color: ${theme["gray-200"]};
       border-top: none;
-      box-shadow: ${theme.boxShadow4};
+      /* box-shadow: ${theme.boxShadow4}; */
     }
   }
 `;

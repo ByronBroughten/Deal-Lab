@@ -1,4 +1,3 @@
-import { rem } from "polished";
 import React from "react";
 import styled, { css } from "styled-components";
 import { FeParentInfo } from "../../../../sharedWithServer/SectionsMeta/Info";
@@ -7,6 +6,7 @@ import { Arr } from "../../../../sharedWithServer/utils/Arr";
 import ccs from "../../../../theme/cssChunks";
 import theme from "../../../../theme/Theme";
 import useHowMany from "../../../appWide/customHooks/useHowMany";
+import { SectionTitleAndCost } from "../../../appWide/SectionTitleAndCost";
 import { useOpenWidth } from "../../../appWide/SectionTitleRow";
 import { AddUnitBtn } from "./UnitList/AddUnitBtn";
 import { UnitItem } from "./UnitList/UnitItem";
@@ -48,29 +48,23 @@ export function UnitList({ feInfo, className }: Props) {
                   return (
                     <div className="UnitList-unitRow" key={rowIndex}>
                       {rowIndex === 0 && (
-                        <>
-                          {areMultiple && (
-                            <div className="UnitList-total">
-                              <span className="UnitList-totalText">{`Total Rent`}</span>
-                              <span className="UnitList-totalNumber">{`(${totalVarb.displayVarb()})`}</span>
-                            </div>
-                          )}
-                        </>
+                        <SectionTitleAndCost
+                          text="Units & Rent"
+                          cost={
+                            areMultiple ? totalVarb.displayVarb() : undefined
+                          }
+                        />
                       )}
                       <div className="UnitList-unitRowInner">
                         {idRow.map((unitId, unitInnerIndex) => {
                           const unitIndex = unitNumberOffset + unitInnerIndex;
                           const unitNumber = unitIndex + 1;
                           return unitId === "addUnitBtn" ? (
-                            <div
-                              className="UnitList-addUnitBtnDiv"
+                            <AddUnitBtn
+                              className="UnitList-addUnitBtn"
+                              onClick={addUnit}
                               key={unitId}
-                            >
-                              <AddUnitBtn
-                                className="UnitList-addUnitBtn"
-                                onClick={addUnit}
-                              />
-                            </div>
+                            />
                           ) : (
                             <UnitItem
                               key={unitId}
@@ -92,7 +86,6 @@ export function UnitList({ feInfo, className }: Props) {
   );
 }
 
-/* ${ccs.subSection.main("property")}; */
 const Styled = styled.div<{
   $isAtLeastOne: boolean;
   $areMultiple: boolean;
@@ -100,10 +93,14 @@ const Styled = styled.div<{
   $isOne: boolean;
   $isEven: boolean;
 }>`
+  padding: ${theme.sectionPadding};
+  ${theme.sectionBorderChunk};
+
+  .UnitItem-root {
+    margin: ${theme.s15};
+  }
+
   .UnitList-addUnitBtnDiv {
-    display: flex;
-    padding: ${theme.s3};
-    min-width: 109px;
     ${({ $isEven, $areMultiple }) =>
       $isEven &&
       $areMultiple &&
@@ -128,24 +125,11 @@ const Styled = styled.div<{
   // isEven and isAtLeastOne
   .UnitList-unitrow {
   }
+  .SectionTitleAndCost-root {
+    padding-bottom: ${theme.s2};
+  }
   .UnitList-unitRowInner {
     display: flex;
-  }
-  .UnitList-total {
-    padding: ${theme.s2};
-    ${ccs.mainColorSection("property")};
-    border-top-left-radius: ${theme.br1};
-    border-top-right-radius: ${theme.br1};
-    box-shadow: ${theme.boxShadow1};
-    margin-bottom: ${theme.s3};
-  }
-  .UnitList-totalText {
-    font-size: ${rem("15px")};
-    font-weight: 700;
-    color: ${theme["gray-700"]};
-  }
-  .UnitList-totalNumber {
-    margin-left: ${theme.s2};
   }
 
   .XBtn {

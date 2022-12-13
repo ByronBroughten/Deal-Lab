@@ -5,16 +5,25 @@ import { MainSectionTitleRow } from "../../appWide/GeneralSection/MainSection/Ma
 import { ListGroupOngoingZone } from "../general/ListGroupOngoingZone";
 import { ListGroupSingleTimeZone } from "../general/ListGroupSingleTimeZone";
 import BasicPropertyInfo from "./Property/BasicPropertyInfo";
+import { UnitList } from "./Property/UnitList";
 
 export function Property({ feId }: { feId: string }) {
   const feInfo = { sectionName: "property", feId } as const;
   return (
     <MainSection>
-      <MainSectionTitleRow {...{ ...feInfo, pluralName: "properties" }} />
+      <MainSectionTitleRow
+        {...{
+          ...feInfo,
+          sectionTitle: "Property",
+          pluralName: "properties",
+          className: "MainSectionGroup",
+        }}
+      />
       <MainSectionBody themeName="property">
         <div className="ListGroup-lists">
-          <BasicPropertyInfo feId={feId} className="ListGroup-root" />
+          <BasicPropertyInfo feId={feId} className="MainSectionGroup" />
         </div>
+        <UnitList feInfo={feInfo} />
         <ListGroupSingleTimeZone
           {...{
             ...feInfo,

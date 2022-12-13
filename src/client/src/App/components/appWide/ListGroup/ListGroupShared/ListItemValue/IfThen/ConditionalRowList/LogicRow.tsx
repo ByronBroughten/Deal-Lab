@@ -5,7 +5,7 @@ import { useSetterSections } from "../../../../../../../sharedWithServer/stateCl
 import theme from "../../../../../../../theme/Theme";
 import MaterialSelect from "../../../../../../inputs/MaterialSelect";
 import { NumObjEntityEditor } from "../../../../../../inputs/NumObjEntityEditor";
-import PlusBtn from "../../../../../PlusBtn";
+import SolidBtn from "../../../../../SolidBtn";
 import {
   IfOptions,
   OrElseOptions,
@@ -30,7 +30,9 @@ export default function LogicRow({ feId, idx = "" }: Props) {
   return (
     <Styled className={`${idx}`}>
       {type !== " " &&
-        levelArray.map((_, idx) => <PlusBtn className="invisible" key={idx} />)}
+        levelArray.map((_, idx) => (
+          <SolidBtn className="invisible" key={idx} />
+        ))}
       <MaterialSelect
         {...{
           name: typeVarb.varbId,

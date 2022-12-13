@@ -11,16 +11,11 @@ export type NavBtnProps = ButtonProps & {
   icon?: React.ReactNode;
   text: string | React.ReactNode;
 };
-export default function NavBtn({
-  className,
-  icon,
-  text,
-  ...rest
-}: NavBtnProps) {
+export function NavBtn({ className, icon, text, ...rest }: NavBtnProps) {
   return (
     <Styled
       {...{
-        className: `NavBtn ${className}`,
+        className: `NavBtn-root ${className}`,
         disableRipple: true,
         ...rest,
         // title: "Test title",
@@ -32,9 +27,12 @@ export default function NavBtn({
   );
 }
 const Styled = styled(PlainBtn)<{ $isactive?: boolean }>`
-  font-size: ${rem("14px")};
+  color: inherit;
+  font-size: ${rem("16px")};
   padding: 0 ${theme.s3};
   height: 100%;
+  flex: 1;
+  white-space: nowrap;
   .NavBtn-text {
     margin-left: ${rem("2px")};
     display: flex;
@@ -46,22 +44,16 @@ const Styled = styled(PlainBtn)<{ $isactive?: boolean }>`
     font-size: 20px;
   }
 
-  flex: 1;
-  white-space: nowrap;
-  background-color: ${theme.deal.main};
-  font-weight: 700;
-
   :hover {
-    box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.5);
+    background-color: ${theme.primaryNext};
     color: ${theme.light};
-    background-color: ${theme.deal.main};
   }
 
   ${({ $isactive }) =>
     $isactive &&
     css`
-      box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.5);
+      background-color: ${theme.primaryNext};
       color: ${theme.light};
-      background-color: ${theme.deal.main};
+      box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.5);
     `};
 `;

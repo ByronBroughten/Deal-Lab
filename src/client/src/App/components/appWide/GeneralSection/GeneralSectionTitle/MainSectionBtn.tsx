@@ -1,19 +1,13 @@
 import styled from "styled-components";
-import theme, { ThemeName } from "../../../../theme/Theme";
+import theme from "../../../../theme/Theme";
 import { StandardBtnProps } from "../../../general/StandardProps";
 import { HollowBtn } from "../../HollowBtn";
 
 interface Props extends StandardBtnProps {
-  themeName: ThemeName;
   text: string | React.ReactElement;
   icon?: React.ReactElement;
 }
-export default function MainSectionTitleBtn({
-  className,
-  text,
-  icon,
-  ...props
-}: Props) {
+export function MainSectionBtn({ className, text, icon, ...props }: Props) {
   return (
     <Styled
       {...{ className: `GeneralSectionTitle-btn ${className ?? ""}`, ...props }}
@@ -24,13 +18,17 @@ export default function MainSectionTitleBtn({
   );
 }
 const Styled = styled(HollowBtn)`
-  min-height: 50px;
-  min-width: 300px;
-  color: inherit;
   display: flex;
   align-items: center;
-  .MainSectionTitleBtn-text {
-  }
+  background-color: ${theme.light};
+  border: none;
+  padding: ${theme.s4};
+  border-radius: ${theme.br0};
+  box-shadow: ${theme.boxShadow1};
+  font-size: ${theme.titleSize};
+  height: 80px;
+  width: 100%;
+
   .MainSectionTitleBtn-icon {
     display: flex;
     align-items: center;

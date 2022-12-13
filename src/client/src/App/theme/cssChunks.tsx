@@ -71,7 +71,7 @@ const ccs = {
       smallCurved: css`
         width: ${theme.unlabeledInputHeight};
         height: ${theme.unlabeledInputHeight};
-        border-radius: ${theme.br1};
+        border-radius: ${theme.br0};
       `,
     },
   },
@@ -104,9 +104,8 @@ const ccs = {
   subSection: {
     viewable: css`
       display: inline-block;
-      padding: ${theme.s25};
-      border-radius: ${theme.br1};
-      box-shadow: ${theme.boxShadow1};
+      padding: ${theme.sectionPadding};
+      border-radius: ${theme.br0};
     `,
     get titleRow() {
       return css`
@@ -124,26 +123,14 @@ const ccs = {
       margin: 0;
       margin-bottom: ${theme.s1};
       margin-right: ${theme.s1};
-      font-weight: 600;
       color: ${theme["gray-700"]};
     `,
-    main(themeName: ThemeName) {
-      return css`
-        .viewable {
-          ${this.viewable};
-          ${mainColorSection(themeName)}
-          .title-row {
-            ${this.titleRow}
-          }
-        }
-      `;
-    },
   },
   listTable: {
     main(sectionName: ThemeName) {
       return css`
         border-collapse: collapse;
-        border-radius: ${theme.br1};
+        border-radius: ${theme.br0};
         th {
           border-bottom: solid 1px ${theme[sectionName].border};
         }
@@ -169,10 +156,10 @@ const ccs = {
           padding-top: ${theme.s2};
 
           :first-child {
-            border-radius: ${theme.br1} 0 0 0;
+            border-radius: ${theme.br0} 0 0 0;
           }
           :last-child {
-            border-radius: 0 ${theme.br1} 0 0;
+            border-radius: 0 ${theme.br0} 0 0;
           }
 
           padding-left: ${theme.s2};
@@ -189,44 +176,33 @@ const ccs = {
     },
     bodyRow(sectionName: ThemeName) {
       return css`
-        // tr
         background-color: ${theme[sectionName].row};
-        box-shadow: ${theme.boxShadow1};
         :not(:last-child) {
           border-bottom: 1px solid ${theme[sectionName].border};
         }
         :last-child {
           td {
-            padding-bottom: ${theme.s2};
-            :first-child {
-              border-bottom-left-radius: ${theme.br1};
-            }
-            :last-child {
-              border-bottom-right-radius: ${theme.br1};
-            }
           }
         }
 
         td {
-          padding: ${theme.s1} 0 ${theme.s1} ${theme.s2};
-          /* vertical-align: middle; */
+          padding: ${theme.s15};
           :last-child {
-            padding-right: ${theme.s2};
           }
         }
         td.name {
-          ..DraftTextField-root {
+          .DraftTextField-root {
             min-width: 50px;
           }
         }
         td.cost {
-          ..DraftTextField-root {
+          .DraftTextField-root {
             min-width: 35px;
           }
         }
 
         td.content {
-          ..DraftTextField-root {
+          .DraftTextField-root {
             min-width: 30px;
           }
         }
@@ -236,15 +212,18 @@ const ccs = {
   materialDraftEditor: {
     root: css`
       padding: ${theme.s1} ${theme.s2} 0 ${theme.s2};
+      border-radius: ${theme.br0};
     `,
     main({ label, sectionName }: { label?: string; sectionName?: ThemeName }) {
       return css`
         display: inline-block;
         .editor-background {
           display: inline-block;
-          border-top-left-radius: ${theme.brMaterialEditor};
-          border-top-right-radius: ${theme.brMaterialEditor};
-          border: 1px solid ${theme["gray-500"]};
+          border-top-left-radius: ${theme.br0};
+          border-top-right-radius: ${theme.br0};
+          border: 1px solid ${theme.primaryBorder};
+          /* border-bottom: 1px solid transparent; */
+          background-color: ${theme.light};
 
           ${sectionName &&
           css`
@@ -263,6 +242,7 @@ const ccs = {
           ${this.root};
           display: inline-block;
           white-space: nowrap;
+          background: ${theme.light};
         }
 
         .DraftEditor-root {

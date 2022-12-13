@@ -1,18 +1,15 @@
 import { AppBar, Toolbar } from "@material-ui/core";
 import { rem } from "polished";
 import React from "react";
-import { BsFillHouseDoorFill } from "react-icons/bs";
+import { BsHouse } from "react-icons/bs";
 import styled from "styled-components";
-import { constants } from "../Constants";
 import theme from "../theme/Theme";
 import { DomLink } from "./ActiveDeal/general/DomLink";
 import { NavBarBtns } from "./NavBar/NavBarBtns";
-import NavBtn from "./NavBar/NavBtn";
+import { NavBtn } from "./NavBar/NavBtn";
 import { NavUserMenu } from "./NavBar/NavUserMenu";
 
 export function NavBar() {
-  const appTitle = "Ultimate Property Analyzer" + (constants.isBeta ? "" : ""); // BETA
-
   return (
     <Styled className="NavBar-root">
       <Toolbar disableGutters={true}>
@@ -21,8 +18,8 @@ export function NavBar() {
           <DomLink className="NavBar-navBtnLink" to="/">
             <NavBtn
               className="NavBar-brandBtn"
-              icon={<BsFillHouseDoorFill className="NavBar-brandIcon" />}
-              text={<span className="NavBar-brandName">{appTitle}</span>}
+              icon={<BsHouse className="NavBar-brandIcon" />}
+              text={<span className="NavBar-brandName">Deal Lab</span>}
             />
           </DomLink>
         </div>
@@ -33,13 +30,17 @@ export function NavBar() {
 }
 
 const Styled = styled(AppBar)`
+  height: 50px;
+  background-color: ${theme.light};
+  color: ${theme.primaryNext};
+
+  .NavBar-leftSide {
+    display: flex;
+  }
+
   .MuiToolbar-root {
     position: static;
   }
-  padding: 0;
-  background-color: ${theme.deal.main};
-  color: ${theme.dark};
-  height: ${theme.navBar.height};
   div.MuiToolbar-root.MuiToolbar-regular {
     height: ${theme.navBar.height};
     min-height: ${theme.navBar.height};
@@ -49,19 +50,31 @@ const Styled = styled(AppBar)`
   }
 
   .NavBar-brandBtn {
-    font-size: 1.3rem;
+    font-size: ${theme.siteTitleSize};
     font-weight: 700;
-    color: ${theme.dark};
     :hover {
-      color: ${theme.light};
+      .NavBar-brandIcon {
+        color: ${theme.light};
+      }
     }
   }
+  .NavBar-navBtnLink {
+    color: inherit;
+  }
+
   .NavBar-brandIcon {
-    font-size: 25px;
+    font-size: 27px;
+    font-weight: 700;
   }
   .NavBar-brandName {
     margin-left: 4px;
-    font-size: ${constants.isBeta ? "16px" : "20px"};
+    font-size: ${"22px"};
+    font-weight: 500;
+    .NavBar-brandNameBold {
+    }
+    .NavBar-brandNameRegular {
+      margin-left: ${theme.s25};
+    }
   }
 
   .NavBar-demoBtnIcon {
@@ -69,7 +82,6 @@ const Styled = styled(AppBar)`
   }
 
   .NavBar-signInUpBtn {
-    background: ${theme.property.main};
   }
 
   .NavBar-GetProDropdown {
@@ -80,10 +92,6 @@ const Styled = styled(AppBar)`
   .NavBar-GetProDropdownIcon {
     margin-left: ${rem("4px")};
     font-size: ${rem("23px")};
-  }
-
-  .NavBar-leftSide {
-    display: flex;
   }
 
   .NavBar-GetProDropdownText {

@@ -1,6 +1,6 @@
 import React from "react";
 import { useSetterSection } from "../../../../../../../../../sharedWithServer/stateClassHooks/useSetterSection";
-import PlusBtn from "../../../../../../../PlusBtn";
+import SolidBtn from "../../../../../../../SolidBtn";
 import { XBtn } from "../../../../../../../Xbtn";
 import { conditionalRowSectionName } from "../../ConditionalRows";
 
@@ -31,7 +31,7 @@ export default function XBtnRow({ feId, idx }: { feId: string; idx: number }) {
       className="XBtn-row content-row"
       style={{ height: height, display: "flex" }}
     >
-      <PlusBtn onClick={() => parent.addChild(conditionalRowSectionName)} />
+      <SolidBtn onClick={() => parent.addChild(conditionalRowSectionName)} />
       <XBtn onClick={() => conditionalRow.removeSelf} />
     </div>
   );

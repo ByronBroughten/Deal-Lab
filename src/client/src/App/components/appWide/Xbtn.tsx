@@ -14,7 +14,7 @@ export function XBtn({ children, className, ...rest }: StandardBtnProps) {
         className: "XBtn " + className ?? "",
         variant: "contained",
         size: "small",
-        children: children || <CgClose size={20} className="icon" />,
+        children: children || <CgClose size={16} className="icon" />,
         $childrenIsDefault: !children,
         ...rest,
       }}
@@ -24,14 +24,13 @@ export function XBtn({ children, className, ...rest }: StandardBtnProps) {
 
 const Styled = styled(Button)<{ $childrenIsDefault: boolean }>`
   padding: 1px ${theme.s2} 0 ${theme.s2};
-  color: ${theme["gray-800"]};
+  color: ${theme.light};
   background-color: ${theme.error.main};
-  border: 1px solid ${theme.transparentGrayDark};
+  box-shadow: none;
+  border: none;
+
   :hover {
-    color: ${theme.light};
-    font-weight: bold;
     background-color: ${theme.error.dark};
-    border-color: ${theme.error.dark};
   }
   white-space: nowrap;
   .MuiTouchRipple-root {

@@ -14,7 +14,6 @@ export function RowIndexListRow({ displayName, del, load, className }: Props) {
   return (
     <StyledRowIndexRow className={`RowIndexRows-entry ${className ?? ""}`}>
       <PlainBtn className="LoadSectionBtn-root" onClick={load}>
-        <span className="LoadSectionBtn-loadText">load</span>
         <span className="LoadSectionBtn-nameText">{displayName}</span>
       </PlainBtn>
       {del && <TrashBtn onClick={del} />}

@@ -35,7 +35,7 @@ export function FeedbackPanel() {
 
 const Styled = styled(NavBarPanel)`
   width: 350px;
-  border-radius: ${theme.br1};
+  border-radius: ${theme.br0};
   background-color: ${theme.transparentGray};
   .Bullet-label {
     font-weight: 700;

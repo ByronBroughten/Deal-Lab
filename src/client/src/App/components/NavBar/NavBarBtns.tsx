@@ -6,7 +6,7 @@ import { constants } from "../../Constants";
 import { useFeUser } from "../../modules/sectionActorHooks/useFeUser";
 import { DomLink } from "../ActiveDeal/general/DomLink";
 import { FeedbackPanel } from "./FeedbackPanel";
-import NavBtn from "./NavBtn";
+import { NavBtn } from "./NavBtn";
 import { NavDropDown } from "./NavDropDown";
 import { UpgradeUserToProPanel } from "./UpgradeUserToProPanel";
 
@@ -64,11 +64,11 @@ export function NavBarBtns() {
         href="https://youtu.be/81Ed3e54YS8"
         target="_blank"
         icon={<AiOutlineYoutube className="NavBar-demoBtnIcon" />}
-        text="Demo"
+        text="1 Min Demo"
       />
       <NavDropDown
         className="NavBar-feedbackDropDown"
-        btnText="Give Feedback"
+        btnText="Feedback"
         btnIcon={<VscFeedback />}
       >
         <FeedbackPanel />

@@ -1,12 +1,20 @@
 import styled from "styled-components";
 import theme from "../../../theme/Theme";
 
-export const MainSection = styled.div.attrs(({ className = "", ...rest }) => ({
-  className: "MainSection-entry " + className,
-  ...rest,
-}))`
-  padding: ${theme.s3};
-  .toggle-view-btn {
-    color: ${theme["gray-700"]};
+type Props = {
+  children: React.ReactNode;
+  className?: string;
+};
+export function MainSection({ className, ...rest }: Props) {
+  return <Styled className={`MainSection-root ${className}`} {...rest} />;
+}
+
+const Styled = styled.div`
+  background: ${theme.light};
+  padding: ${theme.s4};
+  border-radius: ${theme.br0};
+  box-shadow: ${theme.boxShadow1};
+  .MainSectionBody-root {
+    margin-top: ${theme.s3};
   }
 `;

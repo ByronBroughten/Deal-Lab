@@ -3,8 +3,8 @@ import styled from "styled-components";
 import { useSetterSection } from "../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import theme from "../../../../theme/Theme";
 import BasicSectionInfo from "../../../appWide/GeneralSection/MainSection/MainSectionBody/BasicSectionInfo";
+import { MainSectionTitleEditor } from "../../../appWide/GeneralSection/MainSection/MainSectionTitleRow/MainSectionTitleEditor";
 import { NumObjEntityEditor } from "../../../inputs/NumObjEntityEditor";
-import { UnitList } from "./UnitList";
 
 type Props = { feId: string; className?: string };
 export default function BasicPropertyInfo({ feId, className }: Props) {
@@ -17,32 +17,30 @@ export default function BasicPropertyInfo({ feId, className }: Props) {
         sectionName: "property",
       }}
     >
-      <div className="BasicSectionInfo-viewable viewable">
+      <div className="BasicSectionInfo-viewable">
         <div className="BasicSectionInfo-subSections">
           <div className="BasicSectionInfo-subSection">
-            <div className="BasicSectionInfo-subSection-viewable">
-              {varbNames.map((varbName) => (
-                <NumObjEntityEditor
-                  key={varbName}
-                  className="BasicPropertyInfo-numObjEditor"
-                  feVarbInfo={property.varbInfo(varbName)}
-                />
-              ))}
-            </div>
+            <MainSectionTitleEditor
+              className="MainSectionTitleRow-title"
+              feInfo={{ feId, sectionName: "property" }}
+            />
+            {varbNames.map((varbName) => (
+              <NumObjEntityEditor
+                key={varbName}
+                className="BasicPropertyInfo-numObjEditor"
+                feVarbInfo={property.varbInfo(varbName)}
+              />
+            ))}
           </div>
         </div>
-        <UnitList feInfo={property.feSectionInfo} />
       </div>
     </Styled>
   );
 }
 
 const Styled = styled(BasicSectionInfo)`
-  .BasicPropertyInfo-numObjEditor:not(:first-child) {
-    margin-top: ${theme.s2};
-  }
-  .UnitList-root {
-    margin-left: ${theme.s3};
+  .BasicPropertyInfo-numObjEditor {
+    margin-top: ${theme.s25};
   }
   .MuiFormControl-root.labeled {
     min-width: 127px;

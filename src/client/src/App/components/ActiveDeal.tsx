@@ -1,5 +1,4 @@
 import React from "react";
-import { View } from "react-native";
 import styled from "styled-components";
 import { useGetterSection } from "../sharedWithServer/stateClassHooks/useGetterSection";
 import theme from "../theme/Theme";
@@ -21,20 +20,31 @@ export function ActiveDeal({ className, feId }: Props) {
   });
   return (
     <Styled {...{ className: `MainSections-root ${className ?? ""}` }}>
-      <View style={{ flex: 1 }}>
-        <PropertyGeneral feId={deal.onlyChildFeId("propertyGeneral")} />
-        <MgmtGeneral feId={deal.onlyChildFeId("mgmtGeneral")} />
-        <Financing feId={deal.onlyChildFeId("financing")} />
-      </View>
+      <div className="ActiveDeal-inputSectionsWrapper">
+        <div className="ActiveDeal-inputSections" style={{ flex: 0 }}>
+          <PropertyGeneral feId={deal.onlyChildFeId("propertyGeneral")} />
+          <MgmtGeneral feId={deal.onlyChildFeId("mgmtGeneral")} />
+          <Financing feId={deal.onlyChildFeId("financing")} />
+        </div>
+      </div>
       <DealGeneral feId={feId} />
     </Styled>
   );
 }
 
 const Styled = styled(PageMainFn)`
-  border: solid 3px ${theme.deal.main};
-  border-top: solid 1px ${theme["gray-500"]};
-  background: ${theme.loan.light};
+  display: flex;
+  flex: 0;
+  background: ${theme.mainBackground};
+  .PropertyGeneral-root {
+    padding-top: ${theme.s4};
+    margin-top: ${theme.s1};
+  }
+  .ActiveDeal-inputSections {
+  }
+  .ActiveDeal-inputSectionsWrapper {
+    margin: auto;
+  }
   .DealGeneral-root {
     position: sticky;
     bottom: 0;

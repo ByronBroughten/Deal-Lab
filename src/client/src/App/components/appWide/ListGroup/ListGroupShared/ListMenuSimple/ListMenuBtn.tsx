@@ -32,17 +32,18 @@ export function ListMenuBtn({
 }
 
 const Styled = styled(Button)<{ $themeName?: ThemeName }>`
-  font-size: 0.8rem;
+  font-size: ${theme.labelSize};
   padding: ${rem("2px")} ${rem("4px")};
-  box-shadow: ${theme.boxShadow1};
-  border-radius: ${theme.br1};
+  box-shadow: none;
+  border-radius: ${theme.br0};
   line-height: 1rem;
-  background-color: ${theme["gray-300"]};
-  border: 1px solid ${theme.transparentGrayBorder};
-  color: ${theme.dark};
+  background-color: ${theme.light};
+  border: 1px solid ${theme.deal.main};
+  border-radius: ${theme.br0};
+  color: ${theme.deal.main};
   :hover {
-    background-color: ${theme["gray-600"]};
-    color: ${theme.light};
+    background-color: ${theme.deal.main};
+    color: ${theme.deal.contrastText};
   }
   .ListMenuBtn-text {
     margin-left: ${theme.s2};

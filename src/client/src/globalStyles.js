@@ -17,8 +17,6 @@ const GlobalStyle = createGlobalStyle`
   }
 
   h6 {
-    font-weight: 600;
-    font-size: .95em;
   }
 
   h5 {

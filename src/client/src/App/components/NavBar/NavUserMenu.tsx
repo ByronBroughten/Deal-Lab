@@ -1,8 +1,8 @@
 import { rem } from "polished";
 import React from "react";
 import { AiOutlineMenu } from "react-icons/ai";
+import { BiLogOut } from "react-icons/bi";
 import { FaThList } from "react-icons/fa";
-import { GrLogout } from "react-icons/gr";
 import { HiOutlineVariable } from "react-icons/hi";
 import { MdAccountCircle } from "react-icons/md";
 import styled, { css } from "styled-components";
@@ -76,7 +76,7 @@ export function NavUserMenu() {
         )}
         {authStatus !== "guest" && (
           <BtnDiv>
-            <ListMenuBtn text="Logout" icon={<GrLogout />} onClick={logout} />
+            <ListMenuBtn text="Logout" icon={<BiLogOut />} onClick={logout} />
           </BtnDiv>
         )}
       </div>
@@ -87,7 +87,6 @@ export function NavUserMenu() {
 const Styled = styled(NavDropDown)<{ $isFullPlan: boolean }>`
   display: flex;
   flex-direction: column;
-
   text-wrap: nowrap;
 
   .ListMenuBtn-text {
@@ -95,7 +94,7 @@ const Styled = styled(NavDropDown)<{ $isFullPlan: boolean }>`
   }
 
   .NavBar-menuIcon {
-    margin-left: ${constants.isBeta ? "0px" : theme.s3};
+    margin-left: ${theme.s3};
     height: 24px;
     width: 24px;
   }
@@ -126,8 +125,7 @@ const Styled = styled(NavDropDown)<{ $isFullPlan: boolean }>`
     z-index: 0;
     width: 100%;
     background-color: ${theme.navBar.activeBtn};
-    border-radius: 0 0 0 ${theme.br1};
-    box-shadow: ${theme.boxShadow4};
+    border-radius: 0 0 0 ${theme.br0};
   }
   .MuiButton-label {
     white-space: nowrap;
@@ -140,12 +138,11 @@ const Styled = styled(NavDropDown)<{ $isFullPlan: boolean }>`
 
       display: flex;
       justify-content: flex-start;
-      padding: ${theme.s3};
-      font-size: 1rem;
+      padding: ${theme.s4};
+      font-size: ${theme.titleSize};
       :hover,
       :focus {
-        background-color: ${theme.error.light};
-        color: ${theme.next.dark};
+        background-color: ${theme.secondary};
       }
 
       .MuiTouchRipple-root {

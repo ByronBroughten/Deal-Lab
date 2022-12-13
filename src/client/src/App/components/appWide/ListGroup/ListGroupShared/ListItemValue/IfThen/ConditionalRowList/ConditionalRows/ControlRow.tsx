@@ -52,7 +52,7 @@ const StyledBox = styled.div<{ height: string; ref: any }>`
   align-items: flex-start;
   height: ${({ height }) => height};
 
-  .PlusBtn,
+  .SolidBtn,
   .tic-btn {
     height: ${({ height }) => height};
   }

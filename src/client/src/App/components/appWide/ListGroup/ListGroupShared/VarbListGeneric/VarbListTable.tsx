@@ -1,5 +1,5 @@
 import { Children } from "react";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import ccs from "../../../../../theme/cssChunks";
 import theme, { ThemeName } from "../../../../../theme/Theme";
 import { StandardProps } from "../../../../general/StandardProps";
@@ -20,89 +20,57 @@ export function VarbListTable({
   addItem,
 }: Props) {
   const { isAtLeastOne, areNone } = useHowMany(Children.toArray(children));
-  // const switches = valueSwitches[itemType];
-  // const { selectDefaultIsOpen, toggleSelectDefault, closeSelectDefault } =
-  //   useToggleView({
-  //     initValue: false,
-  //     viewWhat: "selectDefault",
-  //   });
-  // const defaultSwitchVarb = analyzer.feVarb("defaultValueSwitch", feInfo);
-  // function updateDefaultSwitch(switchValue: string) {
-  //   handleDirectUpdate(aefaultSwitchVarb.feVarbInfo, switchValue);
-  // }
-  // const selectDefaultHeaderRef = useOnOutsideClickRef(closeSelectDefault, "th");
-  // const setDefaultMenuItems = switches.map((switchValue) => ({
-  //   onClick: () => updateDefaultSwitch(switchValue),
-  //   displayValue: switchValueToDisplay[switchValue],
-  //   switchValue,
-  // }));
-  // const defaultValueSwitch = defaultSwitchVarb.value("string");
-
   return (
-    <Styled className="AdditiveListTable-root" $themeName={themeName}>
+    <Styled className="VarbListTable-root" $themeName={themeName}>
       {areNone && <AddItemBtn onClick={addItem} className="noTable" />}
       {isAtLeastOne && (
-        <table className="AdditiveListTable-table">
-          <thead>
-            <tr>
-              <th className="AdditiveListTable-nameHeader">Name</th>
-              <th className="AdditiveListTable-contentHeader">
-                {contentTitle}
-              </th>
-              <th colSpan={2} className="AdditiveListTable-buttonHeader">
-                {/* <AddItemBtn className="yesTable" onClick={addItem} /> */}
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {children}
-            <tr>
-              <td colSpan={4}>
+        <div className="VarbListTable-tableContainer">
+          <table className="VarbListTable-table">
+            <thead>
+              <tr>
+                <th className="VarbListTable-nameHeader">Name</th>
+                <th className="AdditiveListTable-contentHeader">
+                  {contentTitle}
+                </th>
+                <th colSpan={2} className="AdditiveListTable-buttonHeader"></th>
+              </tr>
+            </thead>
+            <tbody>
+              {children}
+              {/* <tr>
+              <td colSpan={4} className="VarbListTable-addItemCell">
                 <AddItemBtn onClick={addItem} className="yesTable" />
               </td>
-            </tr>
-          </tbody>
-        </table>
+            </tr> */}
+            </tbody>
+          </table>
+          <AddItemBtn
+            onClick={addItem}
+            className="VarbListTable-addItemBtn tableBottom"
+          />
+        </div>
       )}
     </Styled>
   );
 }
 
-// This is close. But I only want the
-// edge of the table to expand.
-// That's not true.
-// I actually only want the middle of the table to expand.
-// I could have two tables with a flex thing in the middle
-
-// I could try making my own table rows.
-// I would have to use separate divs like I did for the
-// if-then variables. It could work. It would just take
-// some time.
-
 const Styled = styled.div<{
   $themeName: ThemeName;
 }>`
-  .AdditiveListTable-addItemBtn {
-    ${({ $themeName }) =>
-      css`
-        background: ${theme[$themeName].light};
-        border: 1px solid ${theme.transparentGrayDark};
-        :hover,
-        :active {
-          background: ${theme[$themeName].dark};
-          border: 1px solid ${theme.transparentGrayDark};
-        }
-      `}
-    font-size: 18px;
-    font-weight: 900;
-    height: ${theme.unlabeledInputHeight};
-    width: 100%;
+  .VarbListTable-addItemBtn.tableBottom {
+    border-top: none;
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
   }
 
-  .AdditiveListTable-table {
+  .VarbListTable-tableContainer {
+    display: inline-block;
+  }
+
+  .VarbListTable-table {
     ${({ $themeName }) => ccs.listTable.main($themeName)}
   }
-  th.AdditiveListTable-nameHeader {
+  th.VarbListTable-nameHeader {
     text-align: left;
   }
   th.AdditiveListTable-contentHeader,
@@ -110,7 +78,7 @@ const Styled = styled.div<{
     text-align: center;
   }
 
-  th.AdditiveListTable-nameHeader,
+  th.VarbListTable-nameHeader,
   td.AdditiveItem-nameCell {
     background: ${theme["gray-200"]};
   }

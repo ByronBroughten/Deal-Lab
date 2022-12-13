@@ -11,7 +11,12 @@ export function Mgmt({ feId }: { feId: string }) {
   return (
     <MainSection>
       <MainSectionTitleRow
-        {...{ ...feInfo, pluralName: "managements", xBtn: true }}
+        {...{
+          ...feInfo,
+          sectionTitle: "Management",
+          pluralName: "managements",
+          xBtn: true,
+        }}
       />
       <MainSectionBody themeName="mgmt">
         <BasicMgmtInfo feId={feId} className="ListGroup-root" />

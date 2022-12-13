@@ -100,7 +100,7 @@ export function VarbListGeneric<SN extends VarbListAllowed>({
       className={"AdditiveList-root " + className}
       {...{ themeName, listMenuIsOpen }}
     >
-      <div className="AdditiveList-viewable viewable">
+      <div className="VarbListGeneric-viewable viewable">
         <div className="VarbList-menuRow">
           {menuIsOpen && listMenu[menuType]()}
         </div>
@@ -109,7 +109,7 @@ export function VarbListGeneric<SN extends VarbListAllowed>({
             <BigStringEditor
               {...{
                 feVarbInfo: titleVarb.get.feVarbInfo,
-                placeholder: "List Title",
+                placeholder: "Category",
                 className: "AdditiveList-title",
                 themeName,
               }}
@@ -160,12 +160,20 @@ const Styled = styled.div<{
     margin-left: ${theme.s1};
   }
 
-  .AdditiveList-viewable {
+  .VarbListGeneric-viewable {
     display: flex;
     flex-wrap: nowrap;
   }
 
-  ${({ themeName }) => ccs.subSection.main(themeName)};
+  border: solid 1px ${theme.primaryBorder};
+  border-radius: ${theme.br0};
+  .viewable {
+    ${ccs.subSection.viewable};
+    .title-row {
+      ${ccs.subSection.titleRow}
+    }
+  }
+
   .title-row {
     align-items: flex-start;
     display: flex;
@@ -179,7 +187,7 @@ const Styled = styled.div<{
     css`
       .viewable {
         border-right: none;
-        border-radius: ${theme.br1} 0 0 ${theme.br1};
+        border-radius: ${theme.br0} 0 0 ${theme.br0};
       }
     `}
 
@@ -212,7 +220,7 @@ const Styled = styled.div<{
     margin-top: ${theme.s2};
   }
 
-  .AdditiveListTable-root {
+  .VarbListTable-root {
     margin-top: ${theme.s2};
   }
 

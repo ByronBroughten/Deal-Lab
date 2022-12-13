@@ -95,7 +95,7 @@ const Styled = styled.div<{ sectionName: ThemeName }>`
   position: relative;
   z-index: 2; // 2 beats editor title labels
   background: ${theme.light};
-  border-radius: 0 0 ${theme.br1} ${theme.br1};
+  border-radius: 0 0 ${theme.br0} ${theme.br0};
   border: 1px solid ${theme["gray-500"]};
   max-height: 200px;
   overflow-y: auto;

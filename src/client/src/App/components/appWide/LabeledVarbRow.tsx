@@ -26,7 +26,7 @@ const Styled = styled.div<{ $themeName: ThemeName }>`
   background: ${({ $themeName }) => theme[$themeName].main};
   display: flex;
   flex-wrap: wrap;
-  border-radius: ${theme.br1};
+  border-radius: ${theme.br0};
 
   padding-left: ${theme.s15};
   padding-right: ${theme.s15};

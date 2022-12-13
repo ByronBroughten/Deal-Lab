@@ -65,7 +65,7 @@ const Styled = styled.div<{ $themeName: ThemeName }>`
     justify-content: space-between;
     background-color: ${({ $themeName }) => theme[$themeName].light};
     border: 1px solid ${theme.transparentGrayBorder};
-    border-radius: ${theme.br1};
+    border-radius: ${theme.br0};
     padding: ${theme.s1};
   }
 `;

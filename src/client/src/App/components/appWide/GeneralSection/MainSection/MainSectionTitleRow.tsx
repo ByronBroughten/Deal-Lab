@@ -3,23 +3,26 @@ import styled, { css } from "styled-components";
 import useToggleView from "../../../../modules/customHooks/useToggleView";
 import { SectionNameByType } from "../../../../sharedWithServer/SectionsMeta/SectionNameByType";
 import theme from "../../../../theme/Theme";
-import { CaretMenuBtn } from "../../ListGroup/ListGroupShared/VarbListGeneric/CaretMenuBtn";
 import { RemoveSectionXBtn } from "../../RemoveSectionXBtn";
+import { SectionTitle } from "../../SectionTitle";
 import { MainSectionMenus } from "./MainSectionTitleRow/MainSectionMenus";
-import { MainSectionTitleRowTitle } from "./MainSectionTitleRow/MainSectionTitleRowTitle";
 import { useSaveStatus } from "./useSaveStatus";
 
 type Props = {
+  sectionTitle?: string;
   sectionName: SectionNameByType<"hasCompareTable">;
   feId: string;
   pluralName: string;
   xBtn?: boolean;
   dropTop?: boolean;
+  className?: string;
 };
 export function MainSectionTitleRow({
+  sectionTitle,
   pluralName,
   xBtn = false,
   dropTop = false,
+  className,
   ...feInfo
 }: Props) {
   const { btnMenuIsOpen } = useToggleView({
@@ -34,36 +37,29 @@ export function MainSectionTitleRow({
   const saveStatus = useSaveStatus(feInfo);
   return (
     <Styled
-      className="MainSectionTitleRow-root"
+      className={`MainSectionTitleRow-root ${className ?? ""}`}
       {...{
         $btnMenuIsOpen: btnMenuIsOpen,
         $dropTop: dropTop,
       }}
     >
       <div className="MainSectionTitleRow-leftSide">
-        <MainSectionTitleRowTitle feInfo={feInfo} />
-        <div className="MainSectionTitleRow-leftSide-btnsRow">
-          <CaretMenuBtn
-            {...{
-              saveStatus,
-              className: "MainSectionTitleRow-caretBtn",
-              dropped: menuBtnsIsOpen,
-              onClick: toggleMenuBtns,
-              direction: "right",
-            }}
+        {sectionTitle && (
+          <SectionTitle
+            text={sectionTitle}
+            className="MainSectionTitleRow-sectionTitle"
           />
-          {menuBtnsIsOpen && (
-            <MainSectionMenus
-              {...{
-                ...feInfo,
-                pluralName,
-                xBtn,
-                dropTop,
-                saveStatus,
-              }}
-            />
-          )}
-        </div>
+        )}
+        <MainSectionMenus
+          {...{
+            ...feInfo,
+            pluralName,
+            xBtn,
+            dropTop,
+            saveStatus,
+            className: "MainSectionTitleRow-leftSide-btnsRow",
+          }}
+        />
       </div>
       <div className="MainSectionTitleRow-rightSide">
         {xBtn && (
@@ -78,6 +74,20 @@ const Styled = styled.div<{ $btnMenuIsOpen: boolean; $dropTop: boolean }>`
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
+  .ListMenuBtn-root {
+    width: 100px;
+  }
+  .MainSectionTitleRow-sectionTitle {
+    display: flex;
+    align-items: center;
+  }
+  .MainSectionTitleRow-leftSide-btnsRow {
+    display: flex;
+    background-color: ${theme.tertiary};
+    border-radius: ${theme.br0};
+    margin-left: ${theme.s3};
+  }
+
   .LabeledIconBtn-root {
     :first-child {
       ${({ $dropTop }) =>
@@ -87,6 +97,7 @@ const Styled = styled.div<{ $btnMenuIsOpen: boolean; $dropTop: boolean }>`
         `}
     }
   }
+
   .MainSectionTitleRow-leftSide {
     display: flex;
     justify-content: flex-start;
@@ -94,20 +105,6 @@ const Styled = styled.div<{ $btnMenuIsOpen: boolean; $dropTop: boolean }>`
   }
   .MainSectionTitleRow-rightSide {
     display: flex;
-  }
-  .MainSectionTitleRow-title,
-  .DraftTextField-root {
-    min-width: 150px;
-  }
-  .MainSectionTitleRow-title,
-  .MainSectionTitleRow-leftSide-btnsRow {
-    display: flex;
-    margin: 0 ${theme.s2};
-  }
-
-  .MainSectionTitleRow-leftSide-btnsRow {
-    background-color: ${theme["gray-400"]};
-    border-radius: ${theme.br1};
   }
 
   .MainSectionTitleRow-xBtn {
@@ -122,6 +119,5 @@ const Styled = styled.div<{ $btnMenuIsOpen: boolean; $dropTop: boolean }>`
   }
 
   .MainSectionTitleRow-caretBtn {
-    height: 36px;
   }
 `;

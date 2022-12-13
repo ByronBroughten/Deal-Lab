@@ -12,38 +12,37 @@ export function Loan({ feId }: { feId: string }) {
   } as const;
   return (
     <MainSection className="Loan-root">
-      <div className="MainSection-viewable">
-        <MainSectionTitleRow
+      <MainSectionTitleRow
+        {...{
+          ...feInfo,
+          sectionTitle: "Loan",
+          pluralName: "loans",
+          xBtn: true,
+        }}
+      />
+      <MainSectionBody themeName="loan">
+        <div className="ListGroup-lists">
+          <BasicLoanInfo feId={feId} className="ListGroup-root" />
+        </div>
+        <ListGroupSingleTimeZone
           {...{
             ...feInfo,
-            pluralName: "loans",
-            xBtn: true,
+            childName: "closingCostListGroup",
+            themeName: "loan",
+            btnText: "+ Closing Costs",
+            titleText: "Closing Costs",
           }}
         />
-        <MainSectionBody themeName="loan">
-          <div className="ListGroup-lists">
-            <BasicLoanInfo feId={feId} className="ListGroup-root" />
-          </div>
-          <ListGroupSingleTimeZone
-            {...{
-              ...feInfo,
-              childName: "closingCostListGroup",
-              themeName: "loan",
-              btnText: "+ Closing Costs",
-              titleText: "Closing Costs",
-            }}
-          />
-          <ListGroupSingleTimeZone
-            {...{
-              ...feInfo,
-              childName: "wrappedInLoanListGroup",
-              themeName: "loan",
-              btnText: "+ Wrapped in Loan",
-              titleText: "Wrapped in Loan",
-            }}
-          />
-        </MainSectionBody>
-      </div>
+        <ListGroupSingleTimeZone
+          {...{
+            ...feInfo,
+            childName: "wrappedInLoanListGroup",
+            themeName: "loan",
+            btnText: "+ Wrapped in Loan",
+            titleText: "Wrapped in Loan",
+          }}
+        />
+      </MainSectionBody>
     </MainSection>
   );
 }

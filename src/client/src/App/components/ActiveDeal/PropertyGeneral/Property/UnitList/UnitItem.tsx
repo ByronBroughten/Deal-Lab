@@ -1,7 +1,7 @@
+import { rem } from "polished";
 import React from "react";
 import styled from "styled-components";
 import { useSetterSection } from "../../../../../sharedWithServer/stateClassHooks/useSetterSection";
-import ccs from "../../../../../theme/cssChunks";
 import theme from "../../../../../theme/Theme";
 import { RemoveSectionXBtn } from "../../../../appWide/RemoveSectionXBtn";
 import { NumObjEntityEditor } from "../../../../inputs/NumObjEntityEditor";
@@ -31,16 +31,29 @@ export function UnitItem({ feId, unitNumber }: Props) {
 }
 
 export const unitItemWidth = "125px";
-export const unitItemHeight = "113px";
+export const unitItemHeight = "118px";
+// it's buggy when you use styled-components css utility
+// it works when you just use consts like these
 
 const Styled = styled.div`
   min-width: ${unitItemWidth};
   min-height: ${unitItemHeight};
+
+  .UnitItem-xBtn {
+    visibility: hidden;
+  }
+  :hover {
+    .UnitItem-xBtn {
+      visibility: visible;
+    }
+  }
+
   .UnitItem-viewable {
-    ${ccs.mainColorSection("property")};
-    border-radius: ${theme.br1};
-    padding: ${theme.s2};
-    box-shadow: ${theme.boxShadow1};
+    color: ${theme.dark};
+    border: solid 1px ${theme.primaryBorder};
+    border-radius: ${theme.br0};
+    padding: ${theme.s25};
+    padding-top: ${theme.s15};
   }
   .UnitItem-titleRow {
     display: flex;
@@ -49,13 +62,11 @@ const Styled = styled.div`
   }
   .UnitItem-titleText {
     margin-right: ${theme.s2};
-    font-size: 0.9rem;
-    font-weight: 700;
-    color: ${theme["gray-700"]};
+    font-size: ${rem("16px")};
   }
 
   .NumObjEditor-inner {
-    margin-top: ${theme.s2};
+    margin-top: ${theme.s25};
 
     .editor-background {
       background-color: ${theme.property.light};

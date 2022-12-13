@@ -94,7 +94,7 @@ const Styled = styled.div<{ $themeName: ThemeName }>`
 
   .CompareTablePage-body {
     margin-top: ${theme.s2};
-    border-radius: ${theme.br1};
+    border-radius: ${theme.br0};
     box-shadow: 0 5px 16px rgba(0, 0, 0, 0.2);
     ${({ $themeName }) => css`
       border: 2px solid ${theme[$themeName].border};
