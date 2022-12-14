@@ -42,11 +42,11 @@ const DualInputsRadioSwap = styled.div`
     }
 
     .MuiButtonBase-root {
-      background: ${({ theme }) => theme.main};
-      color: ${({ theme }) => theme.primary.main};
+      background: ${theme.light};
+      color: ${theme.primaryNext};
 
       .MuiTouchRipple-root {
-        color: ${({ theme }) => theme.primary.main};
+        color: ${theme.primaryNext};
       }
     }
   }

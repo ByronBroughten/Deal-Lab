@@ -6,6 +6,8 @@ import { DealGeneral } from "./ActiveDeal/DealGeneral";
 import Financing from "./ActiveDeal/Financing";
 import { MgmtGeneral } from "./ActiveDeal/MgmtGeneral";
 import { PropertyGeneral } from "./ActiveDeal/PropertyGeneral";
+import { MainSection } from "./appWide/GeneralSection/MainSection";
+import { MainSectionTitleRow } from "./appWide/GeneralSection/MainSection/MainSectionTitleRow";
 import { PageMainFn } from "./general/PageMain";
 
 type Props = {
@@ -14,20 +16,28 @@ type Props = {
   className?: string;
 };
 export function ActiveDeal({ className, feId }: Props) {
-  const deal = useGetterSection({
-    sectionName: "deal",
-    feId,
-  });
+  const feInfo = { sectionName: "deal", feId } as const;
+  const deal = useGetterSection(feInfo);
   return (
     <Styled {...{ className: `MainSections-root ${className ?? ""}` }}>
-      <div className="ActiveDeal-inputSectionsWrapper">
-        <div className="ActiveDeal-inputSections" style={{ flex: 0 }}>
+      <MainSection className="ActiveDeal-root">
+        <MainSectionTitleRow
+          {...{
+            ...feInfo,
+            sectionTitle: "Deal",
+            pluralName: "deals",
+            className: "ActiveDeal-mainSectionTitleRow",
+          }}
+        />
+        <div className="ActiveDeal-inputSectionsWrapper">
+          {/* <div className="ActiveDeal-inputSections" style={{ flex: 0 }}> */}
           <PropertyGeneral feId={deal.onlyChildFeId("propertyGeneral")} />
           <MgmtGeneral feId={deal.onlyChildFeId("mgmtGeneral")} />
           <Financing feId={deal.onlyChildFeId("financing")} />
+          {/* </div> */}
         </div>
-      </div>
-      <DealGeneral feId={feId} />
+        <DealGeneral feId={feId} />
+      </MainSection>
     </Styled>
   );
 }
@@ -36,10 +46,28 @@ const Styled = styled(PageMainFn)`
   display: flex;
   flex: 0;
   background: ${theme.mainBackground};
+  .ActiveDeal-root {
+    background: ${theme.mainBackground};
+    margin-top: ${theme.s1};
+    padding-bottom: none;
+  }
   .PropertyGeneral-root {
     padding-top: ${theme.s4};
-    margin-top: ${theme.s1};
   }
+
+  .ActiveDeal-mainSectionTitleRow {
+    margin-left: ${theme.s3};
+    .MainSectionTitleRow-sectionTitle {
+      font-size: 22px;
+    }
+    .ListMenuBtn-root {
+      background-color: ${theme.mainBackground};
+      :hover {
+        background-color: ${theme.primaryNext};
+      }
+    }
+  }
+
   .ActiveDeal-inputSections {
   }
   .ActiveDeal-inputSectionsWrapper {

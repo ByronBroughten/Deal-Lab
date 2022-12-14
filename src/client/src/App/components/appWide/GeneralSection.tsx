@@ -61,7 +61,7 @@ const Styled = styled.section<{ $themeName: ThemeName }>`
 
   .MainSection-entries {
     .MainSection-root:not(:first-child) {
-      border-top: 2px solid ${({ $themeName }) => theme[$themeName].dark};
+      margin-top: ${theme.s3};
     }
   }
 `;

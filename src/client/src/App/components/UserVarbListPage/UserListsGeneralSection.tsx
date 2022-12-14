@@ -1,5 +1,4 @@
 import React from "react";
-import { AiOutlineSave } from "react-icons/ai";
 import styled from "styled-components";
 import usePrompt from "../../modules/customHooks/useBlockerAndPrompt";
 import { FeStoreNameByType } from "../../sharedWithServer/SectionsMeta/relSectionsDerived/relNameArrs/FeStoreName";
@@ -9,10 +8,8 @@ import {
 } from "../../sharedWithServer/stateClassHooks/useSections";
 import theme, { ThemeName } from "../../theme/Theme";
 import { GeneralSection } from "../appWide/GeneralSection";
-import GeneralSectionTitle from "../appWide/GeneralSection/GeneralSectionTitle";
-import MainSectionTitleBtn from "../appWide/GeneralSection/GeneralSectionTitle/MainSectionTitleBtn";
 import { MakeListNode } from "../appWide/ListGroup/ListGroupShared/ListGroupGeneric/ListGroupLists";
-import { UserListSectionEntry } from "./UserListSectionEntry";
+import { UserListMainSection } from "./UserListMainSection";
 import { useSaveUserLists } from "./useSaveUserLists";
 
 type Props = {
@@ -38,7 +35,7 @@ export function UserListsGeneralSection({
       : { disabled: false, text: "Save" }),
   };
   usePrompt(
-    "Your unsaved changes will be lost when you leave. Are you sure you want to leave?",
+    "You have unsaved changes. Are you sure you want to leave?",
     !areSaved
   );
 
@@ -48,7 +45,7 @@ export function UserListsGeneralSection({
         <SectionsDispatchContext.Provider
           value={userListsContext.sectionsDispatch}
         >
-          <GeneralSectionTitle title={title} themeName={themeName}>
+          {/* <GeneralSectionTitle title={title} themeName={themeName}>
             <MainSectionTitleBtn
               themeName={themeName}
               className="UserListMain-saveBtn"
@@ -58,10 +55,11 @@ export function UserListsGeneralSection({
                 icon: <AiOutlineSave size="25" />,
               }}
             />
-          </GeneralSectionTitle>
+          </GeneralSectionTitle> */}
           <div className="MainSection-entries">
-            <UserListSectionEntry
+            <UserListMainSection
               {...{
+                title,
                 themeName,
                 storeName,
                 makeListNode,
@@ -75,7 +73,7 @@ export function UserListsGeneralSection({
 }
 
 const Styled = styled(GeneralSection)`
-  .UserListSectionEntry-root {
+  .UserListMainSection-root {
     padding-bottom: ${theme.s2};
   }
   .UserListMain-saveBtn {

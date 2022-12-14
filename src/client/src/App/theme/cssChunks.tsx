@@ -127,31 +127,28 @@ const ccs = {
     `,
   },
   listTable: {
-    main(sectionName: ThemeName) {
+    main() {
       return css`
         border-collapse: collapse;
         border-radius: ${theme.br0};
         th {
-          border-bottom: solid 1px ${theme[sectionName].border};
+          border-bottom: solid 1px ${theme.primaryBorder};
         }
         thead {
           padding: ${theme.s2};
           tr {
-            ${this.headRow(sectionName)};
+            ${this.headRow()};
           }
         }
         tbody {
           tr {
-            ${this.bodyRow(sectionName)};
+            ${this.bodyRow()};
           }
         }
       `;
     },
-    headRow(sectionName: ThemeName) {
+    headRow() {
       return css`
-        //tr
-        background-color: ${theme[sectionName].row};
-
         th {
           padding-top: ${theme.s2};
 
@@ -174,11 +171,10 @@ const ccs = {
         }
       `;
     },
-    bodyRow(sectionName: ThemeName) {
+    bodyRow() {
       return css`
-        background-color: ${theme[sectionName].row};
         :not(:last-child) {
-          border-bottom: 1px solid ${theme[sectionName].border};
+          border-bottom: 1px solid ${theme.primaryBorder};
         }
         :last-child {
           td {

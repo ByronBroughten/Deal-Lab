@@ -54,6 +54,5 @@ const Styled = styled(PlainBtn)<{ $isactive?: boolean }>`
     css`
       background-color: ${theme.primaryNext};
       color: ${theme.light};
-      box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.5);
     `};
 `;

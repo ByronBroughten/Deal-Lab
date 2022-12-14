@@ -1,9 +1,9 @@
-import React from "react";
 import { darken, lighten } from "polished";
+import React from "react";
 import styled from "styled-components";
-import BasicDraftSpan from "../shared/BasicDraftSpan";
+import { EntitySpanBasic } from "../shared/EntitySpanBasic";
 
-export const ItemSpan = styled(BasicDraftSpan)`
+export const ItemSpan = styled(EntitySpanBasic)`
   margin: 0;
   padding: 0;
   border-radius: 0;

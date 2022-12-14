@@ -16,7 +16,7 @@ import {
   PropAdornments,
   useGetAdornments,
 } from "./NumObjEditor/useGetAdornments";
-import { varSpanDecorator } from "./shared/VarSpanNext";
+import { varSpanDecorator } from "./shared/EntitySpanWithError";
 import { useDraftInput } from "./useDraftInput";
 
 type Props = PropAdornments & {

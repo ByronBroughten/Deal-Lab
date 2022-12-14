@@ -17,4 +17,12 @@ const Styled = styled.div`
   .MainSectionBody-root {
     margin-top: ${theme.s3};
   }
+  .MainSectionTitleRow-xBtn {
+    visibility: hidden;
+  }
+  :hover {
+    .MainSectionTitleRow-xBtn {
+      visibility: visible;
+    }
+  }
 `;

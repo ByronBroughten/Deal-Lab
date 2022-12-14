@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import { useSetterSection } from "../../sharedWithServer/stateClassHooks/useSetterSection";
-import theme from "../../theme/Theme";
 import { GeneralSection } from "../appWide/GeneralSection";
 import { MainSectionBtn } from "../appWide/GeneralSection/GeneralSectionTitle/MainSectionBtn";
 import { Loan } from "./Financing/Loan";
@@ -33,8 +32,4 @@ export default function Financing({ feId, ...rest }: Props) {
   );
 }
 
-const Styled = styled(GeneralSection)`
-  .FinancingInfo-root {
-    margin-top: ${theme.s2};
-  }
-`;
+const Styled = styled(GeneralSection)``;

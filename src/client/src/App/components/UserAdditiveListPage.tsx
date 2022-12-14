@@ -1,13 +1,15 @@
 import React from "react";
+import styled from "styled-components";
+import theme from "../theme/Theme";
 import { VarbListSingleTime } from "./appWide/ListGroup/ListGroupSingleTime/VarbListSingleTime";
 import { VarbListOngoing } from "./appWide/VarbLists/VarbListOngoing";
 import { UserListsPageGeneric } from "./UserListsPageGeneric";
 import { UserListsGeneralSection } from "./UserVarbListPage/UserListsGeneralSection";
 
-// Can I reduce this page down to one state?
+// Can this page be reduced to one state?
 export function UserAdditiveListPage() {
   return (
-    <UserListsPageGeneric themeName="userOngoingList" saveWhat="custom lists">
+    <Styled themeName="userOngoingList" saveWhat="custom lists">
       <UserListsGeneralSection
         themeName="userSingleList"
         storeName="singleTimeListMain"
@@ -24,6 +26,14 @@ export function UserAdditiveListPage() {
           <VarbListOngoing {...{ ...nodeProps, menuType: "simple" }} />
         )}
       />
-    </UserListsPageGeneric>
+    </Styled>
   );
 }
+
+const Styled = styled(UserListsPageGeneric)`
+  .UserListMainSection-root {
+    .SectionTitle-root {
+      color: ${theme.loan.dark};
+    }
+  }
+`;

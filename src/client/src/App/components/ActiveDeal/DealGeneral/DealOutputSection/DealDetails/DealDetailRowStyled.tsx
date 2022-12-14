@@ -102,10 +102,10 @@ const Styled = styled.div<{ level: number }>`
   font-size: 1em;
   width: 100%;
 
-  background: ${theme.deal.light};
+  background: ${theme.secondary};
 
   :hover {
-    background: ${theme.deal.main};
+    background: ${theme.tertiary};
   }
   cursor: pointer;
 

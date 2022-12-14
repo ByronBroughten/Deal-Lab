@@ -14,19 +14,17 @@ export function DealOutputSection({
   feId: string;
   detailsIsOpen: boolean;
 }) {
-  const deal = useGetterSection({
-    sectionName: "deal",
-    feId: feId,
-  });
+  const feInfo = { sectionName: "deal", feId } as const;
+  const deal = useGetterSection(feInfo);
   const outputListFeId = deal.onlyChild("dealOutputList").feId;
   return (
     <MainSection>
       <MainSectionTitleRow
         {...{
-          ...deal.feInfo,
-          sectionTitle: "Deal",
-          pluralName: "deals",
-          dropTop: true,
+          ...feInfo,
+          sectionTitle: "Outputs",
+          pluralName: "outputs",
+          showSectionMenus: false,
         }}
       />
       <MainSectionBody themeName="deal">
@@ -41,8 +39,5 @@ export function DealOutputSection({
   );
 }
 const Styled = styled.div`
-  background: ${theme.deal.main};
-  border: solid 1px ${theme.deal.border};
-  border-radius: ${theme.s1};
-  box-shadow: ${theme.boxShadow1};
+  border-radius: ${theme.br0};
 `;

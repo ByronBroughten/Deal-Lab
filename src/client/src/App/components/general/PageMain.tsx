@@ -12,9 +12,9 @@ export const PageMain = styled.div`
   flex-direction: column;
   flex: 1;
   z-index: 5;
+  background-color: ${theme.mainBackground};
 
   .NavSpaceDiv-root {
     height: ${theme.s3};
-    background: ${theme.light};
   }
 `;

@@ -206,9 +206,6 @@ const Styled = styled.div<{
     color: ${({ listMenuIsOpen }) =>
       listMenuIsOpen ? theme.light : theme.dark};
   }
-  tr {
-    border-bottom: 1px solid ${({ themeName }) => theme[themeName].border};
-  }
 
   .AdditiveList-title {
     .MuiInputBase-root {

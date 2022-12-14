@@ -7,6 +7,12 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
+// Left Toolbar (make it depend on screen width)
+
+// Analysis
+// Variables (enter these into equations)
+// Lists (use lists as templates in any section that has itemized costs)
+
 // Let guests see example lists and variables
 // - Allow guests to edit the variables and lists
 // - Don't allow them to save

@@ -6,16 +6,16 @@ import { getEntityStrategy } from "../../../modules/draftjs/getEntityStrategies"
 import { EntityMapData } from "../../../sharedWithServer/SectionsMeta/baseSectionsVarbs/baseValues/entities";
 import { useGetterSections } from "../../../sharedWithServer/stateClassHooks/useGetterSections";
 import theme from "../../../theme/Theme";
-import BasicDraftSpan from "./BasicDraftSpan";
+import { EntitySpanBasic } from "./EntitySpanBasic";
 
 export const varSpanDecorator = new CompositeDecorator([
   {
     strategy: getEntityStrategy("IMMUTABLE"),
-    component: VarSpanNext,
+    component: EntitySpan,
   },
 ]);
 
-export function VarSpanNext(draftProps: any) {
+export function EntitySpan(draftProps: any) {
   const draftEntity = draftProps.contentState.getEntity(draftProps.entityKey);
   const entityData: EntityMapData = draftEntity.getData();
 
@@ -24,7 +24,7 @@ export function VarSpanNext(draftProps: any) {
   return <Styled {...{ markDeleted }}>{draftProps.children}</Styled>;
 }
 
-const Styled = styled(BasicDraftSpan)<{ markDeleted: boolean }>`
+const Styled = styled(EntitySpanBasic)<{ markDeleted: boolean }>`
   ${({ markDeleted }) =>
     markDeleted &&
     css`

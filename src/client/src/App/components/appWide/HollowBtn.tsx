@@ -47,8 +47,9 @@ const Styled = styled(Button)`
   font-size: ${theme.labelSize};
 
   :hover {
-    background-color: ${theme.primaryNext};
+    background-color: ${theme.secondary};
     color: ${theme.light};
+    box-shadow: none;
   }
 `;
 

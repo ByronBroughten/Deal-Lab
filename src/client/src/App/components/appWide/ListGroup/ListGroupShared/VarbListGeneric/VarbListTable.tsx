@@ -68,7 +68,7 @@ const Styled = styled.div<{
   }
 
   .VarbListTable-table {
-    ${({ $themeName }) => ccs.listTable.main($themeName)}
+    ${ccs.listTable.main()}
   }
   th.VarbListTable-nameHeader {
     text-align: left;
@@ -85,7 +85,10 @@ const Styled = styled.div<{
 
   th.AdditiveListTable-contentHeader,
   td.AdditiveItem-contentCell {
-    border-left: 1px solid ${({ $themeName }) => theme[$themeName].border};
+    border-left: 1px solid ${theme.primaryBorder};
+  }
+  tr {
+    border-bottom: 1px solid ${theme.primaryBorder};
   }
 
   .AdditiveItem-contentCellDiv {

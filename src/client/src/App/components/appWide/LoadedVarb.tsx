@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { FeSectionInfo } from "../../sharedWithServer/SectionsMeta/Info";
 import { useGetterSection } from "../../sharedWithServer/stateClassHooks/useGetterSection";
 import theme, { ThemeName } from "../../theme/Theme";
@@ -86,17 +86,17 @@ const Styled = styled.div<{ $themeName: ThemeName }>`
   align-items: center;
 
   box-shadow: ${theme.boxShadow1};
-  ${({ $themeName }) =>
-    css`
-      background: ${theme[$themeName].light};
-    `}
+  background: transparent;
+  border: solid 1px ${theme.primaryNext};
+  box-shadow: none;
+
   border-radius: ${theme.br0};
   padding: ${theme.s2};
 
   .LabeledVarb-label {
-    font-weight: 700;
-    color: ${theme["gray-700"]};
+    color: ${theme.primaryNext};
   }
   .LabeledVarb-output {
+    color: ${theme.dark};
   }
 `;

@@ -13,16 +13,14 @@ export function UserListsPageGeneric({ themeName, children, saveWhat }: Props) {
   const authStatus = useAuthStatus();
   return (
     <Styled $themeName={themeName}>
-      {authStatus === "guest" && (
+      {/* {authStatus === "guest" && (
         <div className="UserListsPageGeneric-notLoggedIn">
           <div className="UserListsPageGeneric-notLoggedInInner">
             {`To create and save ${saveWhat}, sign in or sign up.`}
           </div>
         </div>
-      )}
-      <div className="UserListsPageGeneric-children">
-        {authStatus !== "guest" && children}
-      </div>
+      )} */}
+      <div className="UserListsPageGeneric-children">{children}</div>
     </Styled>
   );
 }

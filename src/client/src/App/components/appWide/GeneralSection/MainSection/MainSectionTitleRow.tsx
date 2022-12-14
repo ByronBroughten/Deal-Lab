@@ -16,11 +16,13 @@ type Props = {
   xBtn?: boolean;
   dropTop?: boolean;
   className?: string;
+  showSectionMenus?: boolean;
 };
 export function MainSectionTitleRow({
   sectionTitle,
   pluralName,
   xBtn = false,
+  showSectionMenus = true,
   dropTop = false,
   className,
   ...feInfo
@@ -50,16 +52,18 @@ export function MainSectionTitleRow({
             className="MainSectionTitleRow-sectionTitle"
           />
         )}
-        <MainSectionMenus
-          {...{
-            ...feInfo,
-            pluralName,
-            xBtn,
-            dropTop,
-            saveStatus,
-            className: "MainSectionTitleRow-leftSide-btnsRow",
-          }}
-        />
+        {showSectionMenus && (
+          <MainSectionMenus
+            {...{
+              ...feInfo,
+              pluralName,
+              xBtn,
+              dropTop,
+              saveStatus,
+              className: "MainSectionTitleRow-leftSide-btnsRow",
+            }}
+          />
+        )}
       </div>
       <div className="MainSectionTitleRow-rightSide">
         {xBtn && (

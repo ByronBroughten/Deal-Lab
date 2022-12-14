@@ -40,18 +40,6 @@ export function DealGeneral({ className, feId }: Props) {
         className: `DealGeneral-root ${className}`,
       }}
     >
-      {/* <GeneralSectionTitle title="Deal" themeName="deal">
-        {showCalculations && (
-          <MainSectionTitleBtn
-            {...{
-              ...detailsBtnProps,
-              themeName: "deal",
-              className: "GeneralSectionTitle-child",
-              onClick: toggleDetails,
-            }}
-          />
-        )}
-      </GeneralSectionTitle> */}
       {!showCalculations && (
         <>
           <div className="GeneralSectionInfo-root" />
@@ -68,20 +56,11 @@ export function DealGeneral({ className, feId }: Props) {
         </>
       )}
       {showCalculations && <DealOutputSection {...{ feId, detailsIsOpen }} />}
-      {/* <AppFooter /> */}
     </Styled>
   );
 }
 
 const Styled = styled(GeneralSection)<{ $showDetails: boolean }>`
-  .GeneralSectionTitle-dealsLink {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    height: 100%;
-    width: 100%;
-  }
-
   .GeneralSectionTitle-toolTip {
     width: 100%;
     display: flex;
