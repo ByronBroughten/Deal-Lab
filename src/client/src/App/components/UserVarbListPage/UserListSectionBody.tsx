@@ -12,7 +12,7 @@ type Props = {
   storeName: FeStoreNameByType<"fullIndexWithArrStore">;
   makeListNode: MakeListNode;
 };
-export function UserListsSectionBody({
+export function UserListSectionBody({
   themeName,
   storeName,
   makeListNode,

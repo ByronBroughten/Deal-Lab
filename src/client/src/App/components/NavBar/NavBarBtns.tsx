@@ -1,13 +1,11 @@
 import { AiOutlineYoutube } from "react-icons/ai";
 import { BsArrowUpCircle } from "react-icons/bs";
-import { VscFeedback } from "react-icons/vsc";
 import { View } from "react-native";
-import { constants } from "../../Constants";
 import { useFeUser } from "../../modules/sectionActorHooks/useFeUser";
 import { DomLink } from "../ActiveDeal/general/DomLink";
-import { FeedbackPanel } from "./FeedbackPanel";
 import { NavBtn } from "./NavBtn";
 import { NavDropDown } from "./NavDropDown";
+import { NavUserMenu } from "./NavUserMenu";
 import { UpgradeUserToProPanel } from "./UpgradeUserToProPanel";
 
 function useScenarioKey() {
@@ -39,22 +37,21 @@ export function NavBarBtns() {
     ),
     basicUser: () => (
       <>
-        {!constants.isBeta && (
-          <NavDropDown
-            className="NavBar-GetProDropdown"
-            btnText={
-              <>
-                <BsArrowUpCircle className="NavBar-GetProDropdownIcon" />
-                <span className="NavBar-GetProDropdownText">Pro</span>
-              </>
-            }
-          >
-            <UpgradeUserToProPanel />
-          </NavDropDown>
-        )}
+        <NavDropDown
+          className="NavBar-GetProDropdown"
+          btnText={
+            <>
+              <BsArrowUpCircle className="NavBar-GetProDropdownIcon" />
+              <span className="NavBar-GetProDropdownText">Pro</span>
+            </>
+          }
+        >
+          <UpgradeUserToProPanel />
+        </NavDropDown>
+        <NavUserMenu />
       </>
     ),
-    proUser: () => <></>,
+    proUser: () => <NavUserMenu />,
   };
   const scenarioKey = useScenarioKey();
   return (
@@ -66,13 +63,13 @@ export function NavBarBtns() {
         icon={<AiOutlineYoutube className="NavBar-demoBtnIcon" />}
         text="1 Min Demo"
       />
-      <NavDropDown
+      {/* <NavDropDown
         className="NavBar-feedbackDropDown"
         btnText="Feedback"
         btnIcon={<VscFeedback />}
       >
         <FeedbackPanel />
-      </NavDropDown>
+      </NavDropDown> */}
       {scenarios[scenarioKey]()}
     </View>
   );

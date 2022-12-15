@@ -10,7 +10,7 @@ interface Props extends StandardBtnProps {
   icon?: React.ReactNode;
   text?: React.ReactNode;
 }
-export function ListMenuBtn({
+export function NavDropdownMenuBtn({
   className,
   themeName,
   icon,
@@ -21,34 +21,49 @@ export function ListMenuBtn({
     <Styled
       {...{
         $themeName: themeName,
-        className: `ListMenuBtn-root ${className ?? ""}`,
+        className: "NavDropdownMenuBtn-root " + className,
         ...props,
       }}
     >
-      {icon && <span className="ListMenuBtn-icon">{icon}</span>}
-      {text && <span className="ListMenuBtn-text">{text}</span>}
+      {icon && <span className="NavDropdownMenuBtn-icon">{icon}</span>}
+      {text && <span className="NavDropdownMenuBtn-text">{text}</span>}
     </Styled>
   );
 }
 
 const Styled = styled(Button)<{ $themeName?: ThemeName }>`
-  font-size: ${theme.labelSize};
-  padding: ${rem("2px")} ${rem("4px")};
-  box-shadow: none;
+  font-size: ${theme.titleSize};
   border-radius: ${theme.br0};
   line-height: 1rem;
-  background-color: ${theme.light};
-  border: 1px solid ${theme.deal.main};
-  border-radius: ${theme.br0};
-  color: ${theme.deal.main};
-  :hover {
-    background-color: ${theme.deal.main};
+  box-shadow: none;
+  background-color: ${theme["gray-200"]};
+  border: 1px solid ${theme["gray-500"]};
+  color: ${theme.dark};
+  height: ${rem("40px")};
+
+  width: 100%;
+  border-radius: 0;
+
+  display: flex;
+  justify-content: flex-start;
+  padding: ${theme.s4};
+  .MuiTouchRipple-root {
+    visibility: hidden;
+  }
+
+  .MuiButton-label {
+    white-space: nowrap;
+  }
+
+  :hover,
+  :focus {
+    background-color: ${theme.primaryNext};
     color: ${theme.deal.contrastText};
   }
-  .ListMenuBtn-text {
+  .NavDropdownMenuBtn-text {
     margin-left: ${theme.s2};
   }
-  .ListMenuBtn-icon {
+  .NavDropdownMenuBtn-icon {
     font-size: 17px;
     display: flex;
     align-items: center;

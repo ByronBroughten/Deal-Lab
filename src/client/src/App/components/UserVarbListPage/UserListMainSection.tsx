@@ -1,14 +1,17 @@
 import { AiOutlineSave } from "react-icons/ai";
+import { VscDiscard } from "react-icons/vsc";
 import styled from "styled-components";
 import usePrompt from "../../modules/customHooks/useBlockerAndPrompt";
 import { FeStoreNameByType } from "../../sharedWithServer/SectionsMeta/relSectionsDerived/relNameArrs/FeStoreName";
+import { useAuthStatus } from "../../sharedWithServer/stateClassHooks/useAuthStatus";
 import { SectionsContextProvider } from "../../sharedWithServer/stateClassHooks/useSections";
 import theme, { ThemeName } from "../../theme/Theme";
+import BtnTooltip from "../appWide/BtnTooltip";
 import { MainSection } from "../appWide/GeneralSection/MainSection";
 import { SectionTitleRow } from "../appWide/GeneralSection/MainSection/SectionTitleRow";
 import { MakeListNode } from "../appWide/ListGroup/ListGroupShared/ListGroupGeneric/ListGroupLists";
 import { ListMenuBtn } from "../appWide/ListGroup/ListGroupShared/ListMenuSimple/ListMenuBtn";
-import { UserListsSectionBody } from "./UserListGroupLists";
+import { UserListSectionBody } from "./UserListSectionBody";
 import { useSaveUserLists } from "./useSaveUserLists";
 
 type Props = {
@@ -25,18 +28,28 @@ type BtnProps = {
   onClick: () => void;
   icon: React.ReactNode;
   className: string;
+  tooltipText: string;
 };
-function useSaveBtnProps({ areSaved, onClick }: UseProps): BtnProps {
-  const props = (
-    areSaved ? [true, "Saved"] : [false, "Save and Apply Changes"]
-  ) as [boolean, string];
-
+function useVariableProps({
+  areSaved,
+}: {
+  areSaved: boolean;
+}): [boolean, string, string] {
+  const authStatus = useAuthStatus();
+  if (authStatus === "guest")
+    return [true, "Login to Save and Apply Changes", ""];
+  else if (areSaved) return [true, "Save and Apply Changes", ""];
+  else return [false, "Save and Apply Changes", ""];
+}
+function useSaveBtnProps({ onClick, ...rest }: UseProps): BtnProps {
+  const props = useVariableProps(rest);
   return {
     onClick,
     disabled: props[0],
     text: props[1],
     icon: <AiOutlineSave size="25" />,
     className: "UserListMainSection-saveBtn",
+    tooltipText: props[2],
   };
 }
 
@@ -45,20 +58,35 @@ export function UserListMainSection({ title, storeName, ...rest }: Props) {
     useSaveUserLists(storeName);
 
   usePrompt(
-    "You have unsaved changes. Are you sure you want to leave?",
+    "Your changes are unapplied. Are you sure you want to leave?",
     !areSaved
   );
 
-  const btnProps = useSaveBtnProps({ areSaved, onClick: saveUserLists });
+  const { tooltipText, ...btnProps } = useSaveBtnProps({
+    areSaved,
+    onClick: saveUserLists,
+  });
   return (
     <Styled className="UserListMainSection-root">
       <SectionsContextProvider sectionsContext={userListsContext}>
         <SectionTitleRow
           sectionTitle={title}
           className="UserListMainSection-sectionTitle"
-          leftSide={<ListMenuBtn {...btnProps} />}
+          leftSide={
+            <div className="UserListMainSection-btnsRow">
+              <BtnTooltip title={tooltipText}>
+                <ListMenuBtn {...btnProps} />
+              </BtnTooltip>
+              <ListMenuBtn
+                text="Discard Changes"
+                icon={<VscDiscard />}
+                disabled={areSaved}
+                className="UserListMainSection-discardChanges"
+              />
+            </div>
+          }
         />
-        <UserListsSectionBody
+        <UserListSectionBody
           {...{
             storeName,
             ...rest,
@@ -70,8 +98,19 @@ export function UserListMainSection({ title, storeName, ...rest }: Props) {
 }
 
 const Styled = styled(MainSection)`
+  .UserListMainSection-btnsRow {
+    display: flex;
+    align-items: center;
+    .ListMenuBtn-root {
+      height: 33px;
+      margin: 0 ${theme.s2};
+    }
+  }
+  .UserListMainSection-discardChanges {
+    width: 150px;
+  }
   .UserListMainSection-saveBtn {
-    width: 200px;
+    width: 250px;
   }
   .SectionTitle-root {
     margin-left: ${theme.s3};

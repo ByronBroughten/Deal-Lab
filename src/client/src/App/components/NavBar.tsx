@@ -5,16 +5,16 @@ import { BsHouse } from "react-icons/bs";
 import styled from "styled-components";
 import theme from "../theme/Theme";
 import { DomLink } from "./ActiveDeal/general/DomLink";
+import { NavAppMenu } from "./NavBar/NavAppMenu";
 import { NavBarBtns } from "./NavBar/NavBarBtns";
 import { NavBtn } from "./NavBar/NavBtn";
-import { NavUserMenu } from "./NavBar/NavUserMenu";
 
 export function NavBar() {
   return (
     <Styled className="NavBar-root">
       <Toolbar disableGutters={true}>
         <div className="NavBar-leftSide">
-          <NavUserMenu />
+          <NavAppMenu />
           <DomLink className="NavBar-navBtnLink" to="/">
             <NavBtn
               className="NavBar-brandBtn"
@@ -33,6 +33,7 @@ const Styled = styled(AppBar)`
   height: 50px;
   background-color: ${theme.light};
   color: ${theme.primaryNext};
+  box-shadow: none;
 
   .NavBar-leftSide {
     display: flex;

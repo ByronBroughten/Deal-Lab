@@ -45,11 +45,13 @@ export function ActiveDeal({ className, feId }: Props) {
 const Styled = styled(PageMainFn)`
   display: flex;
   flex: 0;
-  background: ${theme.mainBackground};
+  background: ${theme.light};
   .ActiveDeal-root {
     background: ${theme.mainBackground};
     margin-top: ${theme.s1};
     padding-bottom: none;
+    border-top-right-radius: ${theme.br0};
+    box-shadow: none;
   }
   .PropertyGeneral-root {
     padding-top: ${theme.s4};

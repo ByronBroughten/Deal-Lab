@@ -1,17 +1,10 @@
-import { MdCompareArrows } from "react-icons/md";
 import styled from "styled-components";
-import { constants } from "../../../../../Constants";
 import { useMainSectionActor } from "../../../../../modules/sectionActorHooks/useMainSectionActor";
 import { SaveStatus } from "../../../../../modules/SectionSolvers/MainSectionSolver";
-import {
-  SectionNameByType,
-  sectionNameS,
-} from "../../../../../sharedWithServer/SectionsMeta/SectionNameByType";
+import { SectionNameByType } from "../../../../../sharedWithServer/SectionsMeta/SectionNameByType";
 import { useAuthStatus } from "../../../../../sharedWithServer/stateClassHooks/useAuthStatus";
 import theme from "../../../../../theme/Theme";
-import { DomLink } from "../../../../ActiveDeal/general/DomLink";
 import { DisplayNameSectionList } from "../../../DisplayNameSectionList";
-import { ListMenuBtn } from "../../../ListGroup/ListGroupShared/ListMenuSimple/ListMenuBtn";
 import { ChangesSyncedStatusBtn } from "../ChangesSyncedStatusBtn";
 import { StoreSectionActionMenu } from "../StoreSectionActionMenu";
 import { ActionMenuProps } from "../StoreSectionActionMenu/ActionMenuTypes";
@@ -77,17 +70,6 @@ export function MainSectionMenus({
             dropTop,
           }}
         />
-      )}
-      {sectionNameS.is(sectionName, "hasCompareTable") && (
-        <DomLink
-          className="MainSectionMenus-item"
-          to={constants.feRoutes.mainTables[sectionName]}
-        >
-          <ListMenuBtn
-            icon={<MdCompareArrows className="MainSectionMenus-compareIcon" />}
-            text="Compare"
-          />
-        </DomLink>
       )}
     </Styled>
   );

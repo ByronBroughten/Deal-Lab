@@ -1,20 +1,15 @@
 import { rem } from "polished";
 import React from "react";
-import { AiOutlineMenu } from "react-icons/ai";
-import { BiLogOut } from "react-icons/bi";
-import { FaThList } from "react-icons/fa";
-import { HiOutlineVariable } from "react-icons/hi";
+import { BiLogOut, BiUserCircle } from "react-icons/bi";
 import { MdAccountCircle } from "react-icons/md";
-import styled, { css } from "styled-components";
-import { constants } from "../../Constants";
+import styled from "styled-components";
 import { useUserData } from "../../modules/customHooks/useAuthAndUserData";
 import useToggle from "../../modules/customHooks/useToggle";
 import { useFeUser } from "../../modules/sectionActorHooks/useFeUser";
 import { goToCustomerPortalPage } from "../../modules/services/stripeService";
 import { AnalyzerPlan } from "../../sharedWithServer/SectionsMeta/baseSectionsVarbs";
 import theme from "../../theme/Theme";
-import { DomLink } from "../ActiveDeal/general/DomLink";
-import { ListMenuBtn } from "../appWide/ListGroup/ListGroupShared/ListMenuSimple/ListMenuBtn";
+import { NavDropdownMenuBtn } from "../appWide/ListGroup/ListGroupShared/ListMenuSimple/NavDropdownMenuBtn";
 import { StandardProps } from "../general/StandardProps";
 import { NavDropDown } from "./NavDropDown";
 
@@ -27,58 +22,31 @@ export function NavUserMenu() {
   const { logout } = useUserData();
   const analyzerPlan = feUser.get.valueNext("analyzerPlan") as AnalyzerPlan;
   const isFullPlan = analyzerPlan === "fullPlan";
-  const { authStatus } = feUser;
-  const titles = {
-    guest: {
-      lists: "Lists",
-      variables: "Variables",
-    },
-    user: {
-      lists: "Your lists",
-      variables: "Your variables",
-    },
-  };
   const { value: doCloseMenuToggle, toggle: closeMenu } = useToggle();
   return (
     <Styled
       {...{ $isFullPlan: isFullPlan }}
-      btnIcon={<AiOutlineMenu className="NavBar-menuIcon" />}
-      dropDirection={"right"}
+      btnIcon={<BiUserCircle size={28} />}
+      dropDirection={"left"}
       doCloseViewToggle={doCloseMenuToggle}
     >
       <div className="NavUserMenu-dropdown">
-        <BtnDiv>
-          <DomLink to={constants.feRoutes.userLists}>
-            <ListMenuBtn
-              text={titles[authStatus].lists}
-              onClick={closeMenu}
-              icon={<FaThList />}
-            />
-          </DomLink>
-        </BtnDiv>
-        <BtnDiv>
-          <DomLink to={constants.feRoutes.userVariables}>
-            <ListMenuBtn
-              text={titles[authStatus].variables}
-              onClick={closeMenu}
-              icon={<HiOutlineVariable className="NavUserMenu-variablesIcon" />}
-            />
-          </DomLink>
-        </BtnDiv>
         {feUser.isPro && (
           <BtnDiv>
-            <ListMenuBtn
+            <NavDropdownMenuBtn
               text="Account"
-              icon={<MdAccountCircle />}
+              icon={<MdAccountCircle size={25} />}
               onClick={goToCustomerPortalPage}
             />
           </BtnDiv>
         )}
-        {authStatus !== "guest" && (
-          <BtnDiv>
-            <ListMenuBtn text="Logout" icon={<BiLogOut />} onClick={logout} />
-          </BtnDiv>
-        )}
+        <BtnDiv>
+          <NavDropdownMenuBtn
+            text="Logout"
+            icon={<BiLogOut />}
+            onClick={logout}
+          />
+        </BtnDiv>
       </div>
     </Styled>
   );
@@ -88,15 +56,23 @@ const Styled = styled(NavDropDown)<{ $isFullPlan: boolean }>`
   display: flex;
   flex-direction: column;
   text-wrap: nowrap;
+  margin-right: ${theme.s4};
+
+  .NavUserMenu-btnDiv {
+    :first-child {
+      .NavDropdownMenuBtn-root {
+        border-bottom: none;
+      }
+    }
+    :last-child {
+      .NavDropdownMenuBtn-root {
+        border-radius: 0 0 ${theme.br0} ${theme.br0};
+      }
+    }
+  }
 
   .ListMenuBtn-text {
     margin-left: ${theme.s3};
-  }
-
-  .NavBar-menuIcon {
-    margin-left: ${theme.s3};
-    height: 24px;
-    width: 24px;
   }
 
   .NavUserMenu-nameDiv {
@@ -106,14 +82,6 @@ const Styled = styled(NavDropDown)<{ $isFullPlan: boolean }>`
   }
 
   .NavUserMenu-navBtn {
-    ${({ $isFullPlan }) =>
-      $isFullPlan &&
-      !constants.isBeta &&
-      false &&
-      css`
-        background-color: ${theme.property.main};
-      `}
-
     min-height: ${theme.navBar.height};
     min-width: ${rem(50)};
     position: relative;
@@ -125,29 +93,9 @@ const Styled = styled(NavDropDown)<{ $isFullPlan: boolean }>`
     z-index: 0;
     width: 100%;
     background-color: ${theme.navBar.activeBtn};
-    border-radius: 0 0 0 ${theme.br0};
   }
-  .MuiButton-label {
-    white-space: nowrap;
-  }
+
   .NavUserMenu-btnDiv {
     width: 100%;
-    .MuiButtonBase-root {
-      width: 100%;
-      border-radius: 0;
-
-      display: flex;
-      justify-content: flex-start;
-      padding: ${theme.s4};
-      font-size: ${theme.titleSize};
-      :hover,
-      :focus {
-        background-color: ${theme.secondary};
-      }
-
-      .MuiTouchRipple-root {
-        visibility: hidden;
-      }
-    }
   }
 `;

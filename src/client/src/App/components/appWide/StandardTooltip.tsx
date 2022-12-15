@@ -29,7 +29,7 @@ export default function StandardToolTip({
             flip: { enabled: false },
             offset: {
               enabled: true,
-              offset: "0px, -12px",
+              offset: "0px, -8px",
             },
           },
         },
