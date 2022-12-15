@@ -1,15 +1,14 @@
 import React from "react";
 import styled, { css } from "styled-components";
-import useToggleView from "../../../../modules/customHooks/useToggleView";
 import { SectionNameByType } from "../../../../sharedWithServer/SectionsMeta/SectionNameByType";
 import theme from "../../../../theme/Theme";
 import { RemoveSectionXBtn } from "../../RemoveSectionXBtn";
-import { SectionTitle } from "../../SectionTitle";
 import { MainSectionMenus } from "./MainSectionTitleRow/MainSectionMenus";
+import { SectionTitleRow } from "./SectionTitleRow";
 import { useSaveStatus } from "./useSaveStatus";
 
 type Props = {
-  sectionTitle?: string;
+  sectionTitle: string;
   sectionName: SectionNameByType<"hasCompareTable">;
   feId: string;
   pluralName: string;
@@ -27,32 +26,14 @@ export function MainSectionTitleRow({
   className,
   ...feInfo
 }: Props) {
-  const { btnMenuIsOpen } = useToggleView({
-    initValue: false,
-    viewWhat: "btnMenu",
-  });
-
-  const { toggleMenuBtns, menuBtnsIsOpen } = useToggleView({
-    initValue: false,
-    viewWhat: "menuBtns",
-  });
   const saveStatus = useSaveStatus(feInfo);
   return (
     <Styled
-      className={`MainSectionTitleRow-root ${className ?? ""}`}
       {...{
-        $btnMenuIsOpen: btnMenuIsOpen,
+        sectionTitle,
         $dropTop: dropTop,
-      }}
-    >
-      <div className="MainSectionTitleRow-leftSide">
-        {sectionTitle && (
-          <SectionTitle
-            text={sectionTitle}
-            className="MainSectionTitleRow-sectionTitle"
-          />
-        )}
-        {showSectionMenus && (
+        className: `MainSectionTitleRow-root ${className ?? ""}`,
+        leftSide: showSectionMenus && (
           <MainSectionMenus
             {...{
               ...feInfo,
@@ -60,36 +41,26 @@ export function MainSectionTitleRow({
               xBtn,
               dropTop,
               saveStatus,
-              className: "MainSectionTitleRow-leftSide-btnsRow",
+              className: "MainSectionTitleRow-btnsRow-LeftSide",
             }}
           />
-        )}
-      </div>
-      <div className="MainSectionTitleRow-rightSide">
-        {xBtn && (
+        ),
+        rightSide: xBtn && (
           <RemoveSectionXBtn className="MainSectionTitleRow-xBtn" {...feInfo} />
-        )}
-      </div>
-    </Styled>
+        ),
+      }}
+    />
   );
 }
 
-const Styled = styled.div<{ $btnMenuIsOpen: boolean; $dropTop: boolean }>`
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  .ListMenuBtn-root {
-    width: 100px;
-  }
-  .MainSectionTitleRow-sectionTitle {
-    display: flex;
-    align-items: center;
-  }
-  .MainSectionTitleRow-leftSide-btnsRow {
+const Styled = styled(SectionTitleRow)<{ $dropTop: boolean }>`
+  .MainSectionTitleRow-btnsRow-LeftSide {
     display: flex;
     background-color: ${theme.tertiary};
     border-radius: ${theme.br0};
-    margin-left: ${theme.s3};
+    .ListMenuBtn-root {
+      width: 100px;
+    }
   }
 
   .LabeledIconBtn-root {
@@ -102,15 +73,6 @@ const Styled = styled.div<{ $btnMenuIsOpen: boolean; $dropTop: boolean }>`
     }
   }
 
-  .MainSectionTitleRow-leftSide {
-    display: flex;
-    justify-content: flex-start;
-    flex-wrap: wrap;
-  }
-  .MainSectionTitleRow-rightSide {
-    display: flex;
-  }
-
   .MainSectionTitleRow-xBtn {
     margin-left: ${theme.s3};
     height: ${theme.bigButtonHeight};
@@ -120,8 +82,5 @@ const Styled = styled.div<{ $btnMenuIsOpen: boolean; $dropTop: boolean }>`
   .MainSectionMenus-root {
     padding: ${theme.s15};
     border: ${theme.transparentGrayBorder};
-  }
-
-  .MainSectionTitleRow-caretBtn {
   }
 `;

@@ -6,8 +6,8 @@ import { Arr } from "../../../../sharedWithServer/utils/Arr";
 import ccs from "../../../../theme/cssChunks";
 import theme from "../../../../theme/Theme";
 import useHowMany from "../../../appWide/customHooks/useHowMany";
+import { useOpenWidth } from "../../../appWide/customHooks/useOpenWidth";
 import { SectionTitleAndCost } from "../../../appWide/SectionTitleAndCost";
-import { useOpenWidth } from "../../../appWide/SectionTitleRow";
 import { AddUnitBtn } from "./UnitList/AddUnitBtn";
 import { UnitItem } from "./UnitList/UnitItem";
 

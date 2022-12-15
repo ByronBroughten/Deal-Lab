@@ -16,7 +16,7 @@ export function AddItemBtn({ className, ...props }: StandardBtnProps) {
 const Styled = styled(SectionBtn)`
   font-size: 18px;
   font-weight: bold;
-  height: 27px;
+  height: 25px;
   box-shadow: none;
   width: 100%;
 `;

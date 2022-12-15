@@ -48,6 +48,8 @@ const Styled = styled.tr`
   .AdditiveItem-xBtn,
   .AdditiveItem-nextBtn {
     visibility: hidden;
+    height: 22px;
+    width: 22px;
   }
   :hover {
     .AdditiveItem-xBtn,

@@ -35,14 +35,7 @@ export function VarbListTable({
                 <th colSpan={2} className="AdditiveListTable-buttonHeader"></th>
               </tr>
             </thead>
-            <tbody>
-              {children}
-              {/* <tr>
-              <td colSpan={4} className="VarbListTable-addItemCell">
-                <AddItemBtn onClick={addItem} className="yesTable" />
-              </td>
-            </tr> */}
-            </tbody>
+            <tbody>{children}</tbody>
           </table>
           <AddItemBtn
             onClick={addItem}

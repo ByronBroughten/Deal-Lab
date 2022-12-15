@@ -13,8 +13,8 @@ import { useSetterSection } from "../../../../sharedWithServer/stateClassHooks/u
 import ccs from "../../../../theme/cssChunks";
 import theme, { ThemeName } from "../../../../theme/Theme";
 import { BigStringEditor } from "../../../inputs/BigStringEditor";
+import { useOpenWidth } from "../../customHooks/useOpenWidth";
 import { useSaveStatus } from "../../GeneralSection/MainSection/useSaveStatus";
-import { useOpenWidth } from "../../SectionTitleRow";
 import { ListMenuFull } from "./ListMenuFull";
 import { ListMenuSimple } from "./ListMenuSimple";
 import { CaretMenuBtn } from "./VarbListGeneric/CaretMenuBtn";

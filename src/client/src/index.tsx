@@ -7,11 +7,26 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-// Left Toolbar (make it depend on screen width)
+
+// To Save user lists, allow for "Save"
+// in place of "Actions" in title.
+// Also possibly, "Discharge Changes"
+// 1. Make a dumber version of the MainSectionTitleRow
+
+// Left navbar (inspired by Google)
+// Add the left toolbar for full-screen desktop first
+// Add a condensed version for tablet/desktop next
+// add a menu dropdown for phone last
+// make each depend on screen width
+
+// Add "Load" to actions
+
+// Info bubble in top-left
 
 // Analysis
 // Variables (enter these into equations)
 // Lists (use lists as templates in any section that has itemized costs)
+// Compare
 
 // Let guests see example lists and variables
 // - Allow guests to edit the variables and lists

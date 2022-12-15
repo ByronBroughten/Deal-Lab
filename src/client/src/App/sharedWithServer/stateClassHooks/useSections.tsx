@@ -94,3 +94,19 @@ export const [SectionsDispatchContext, useSectionsDispatch] =
     "SectionsDispatchContext",
     {} as SectionsDispatch
   );
+
+type Props = {
+  sectionsContext: SectionsAndControls;
+  children: React.ReactNode;
+};
+export function SectionsContextProvider({ sectionsContext, children }: Props) {
+  return (
+    <SectionsContext.Provider value={sectionsContext}>
+      <SectionsDispatchContext.Provider
+        value={sectionsContext.sectionsDispatch}
+      >
+        {children}
+      </SectionsDispatchContext.Provider>
+    </SectionsContext.Provider>
+  );
+}

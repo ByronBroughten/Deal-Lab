@@ -100,6 +100,7 @@ export function ListGroupGenericBtn({ className, ...props }: BtnProps) {
 }
 
 const BtnStyled = styled(SectionBtn)`
+  ${theme.sectionBorderChunk};
   padding: ${theme.sectionPadding};
   height: 260px;
   width: 200px;

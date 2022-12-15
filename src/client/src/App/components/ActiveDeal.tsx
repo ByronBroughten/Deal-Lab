@@ -57,7 +57,7 @@ const Styled = styled(PageMainFn)`
 
   .ActiveDeal-mainSectionTitleRow {
     margin-left: ${theme.s3};
-    .MainSectionTitleRow-sectionTitle {
+    .SectionTitleRow-sectionTitle {
       font-size: 22px;
     }
     .ListMenuBtn-root {

@@ -88,6 +88,7 @@ const themeColors = {
   get success() {
     return this.secondary;
   },
+  successLight: "#cfffcc",
 
   next: "#717cbb",
   danger: "#ff3527",

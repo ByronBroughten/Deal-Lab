@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { switchNames } from "../../../../sharedWithServer/SectionsMeta/baseSectionsVarbs/RelSwitchVarb";
+import { useOpenWidth } from "../../../appWide/customHooks/useOpenWidth";
 import BasicSectionInfo from "../../../appWide/GeneralSection/MainSection/MainSectionBody/BasicSectionInfo";
-import { useOpenWidth } from "../../../appWide/SectionTitleRow";
 import { DollarPercentRadioSwap } from "../../general/DollarPercentRadioSwap";
 import VacancyRate from "./BasicMgmtInfo/VacancyRate";
 
