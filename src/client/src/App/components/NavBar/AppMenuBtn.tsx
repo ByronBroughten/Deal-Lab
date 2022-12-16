@@ -5,15 +5,13 @@ import { ListMenuBtn } from "../appWide/ListGroup/ListGroupShared/ListMenuSimple
 export const AppMenuBtn = styled(ListMenuBtn)`
   width: 100%;
   border-radius: 0;
-
   border: none;
 
   display: flex;
   justify-content: flex-start;
   padding: ${theme.s4};
   font-size: ${theme.titleSize};
-  :hover,
-  :focus {
+  :hover {
     background-color: ${theme.secondary};
   }
 

@@ -7,11 +7,12 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
+// Necessary
+// 1. Unite the Compare Tables
 
-// To Save user lists, allow for "Save"
-// in place of "Actions" in title.
-// Also possibly, "Discharge Changes"
-// 1. Make a dumber version of the MainSectionTitleRow
+// 2. Add the side bar to the inside of each component, and simply have
+//    each one add their thing. That wouldn't be too bad.
+//    Each of the buttons can have an onClick that changes its own style, too.
 
 // Left navbar (inspired by Google)
 // Add the left toolbar for full-screen desktop first

@@ -1,6 +1,6 @@
 import React from "react";
 import * as reactRouterDom from "react-router-dom";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import styled from "styled-components";
 import { getSuperTokensRoutesForReactRouterDom } from "supertokens-auth-react";
 import { ActiveDeal } from "./App/components/ActiveDeal";
@@ -45,6 +45,10 @@ export function Main() {
             <Route
               path={feRoutes.userOutputs}
               element={<UserOutputListPage />}
+            />
+            <Route
+              path={feRoutes.analyzer}
+              element={<ActiveDeal feId={activeDealId} />}
             />
             <Route
               path={feRoutes.subscribeSuccess}
@@ -99,7 +103,8 @@ export function Main() {
               element={<PrivacyPolicyPage />}
             />
             <Route path="/not-found" element={<NotFound />} />
-            <Route path={"/"} element={<ActiveDeal feId={activeDealId} />} />
+
+            <Route path={"/"} element={<Navigate to={feRoutes.analyzer} />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>

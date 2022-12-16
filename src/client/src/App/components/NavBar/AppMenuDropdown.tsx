@@ -48,6 +48,10 @@ export function AppMenuDropdown() {
 }
 
 const Styled = styled.div`
+  .AppMenuBtn-selected {
+    background-color: ${theme.primaryNext};
+    color: ${theme.light};
+  }
   .AppMenuDropdown-compareBtn {
     .AppMenuDropdown-compareArrows {
     }

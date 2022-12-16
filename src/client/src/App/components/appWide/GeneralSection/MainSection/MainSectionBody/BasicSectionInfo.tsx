@@ -41,7 +41,7 @@ const Styled = styled.div<{ $themeName: ThemeName }>`
         }
       }
       :not(:first-child) {
-        margin-top: ${theme.s3};
+        margin-top: ${theme.s35};
         .BasicSectionInfo-subSection-viewable {
         }
       }

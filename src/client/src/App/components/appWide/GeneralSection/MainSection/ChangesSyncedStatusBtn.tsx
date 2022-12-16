@@ -34,14 +34,16 @@ export function ChangesSyncedStatusBtn({ className, saveStatus }: Props) {
     <Styled
       {...{
         ...btnProps[saveStatus],
-        className: `ChangesSyncedStatusBtn ${className ?? ""}`,
+        className: `ChangesSyncedStatusBtn-root ${className ?? ""}`,
       }}
     />
   );
 }
 
 const Styled = styled(ListMenuBtn)<{ $color: string }>`
-  background: transparent;
+  background: ${theme.light};
+  white-space: nowrap;
+
   ${({ $color }) => css`
     border: 2px solid ${$color};
     color: ${$color};

@@ -100,6 +100,10 @@ const ccs = {
     display: flex;
     justify-content: center;
     align-items: center;
+    box-shadow: none;
+    :hover {
+      box-shadow: none;
+    }
   `,
   subSection: {
     viewable: css`

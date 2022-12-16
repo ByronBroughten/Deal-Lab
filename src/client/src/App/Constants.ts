@@ -84,12 +84,12 @@ export const config = {
     paymentManagement: env.paymentManagementLink,
     privacyPolicy: "/privacy-policy",
     termsOfService: "/terms-of-service",
-    userVariables: "/your-variables",
-    userLists: "/your-lists",
-    userOutputs: "/your-outputs",
+    analyzer: "/analyzer",
+    userVariables: "/variables",
+    userLists: "/lists",
+    userOutputs: "/outputs",
     authSuccess: "/login-success",
     subscribeSuccess: "/subscription-success",
-    analyzer: "/",
   },
   auth: {
     get successUrl() {

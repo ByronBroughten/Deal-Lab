@@ -21,11 +21,10 @@ export function NextBtn({ className, ...rest }: ButtonProps) {
 }
 
 const Styled = styled(Button)`
-  ${ccs.xPlusBtnBody}
-  background-color: ${theme.next.main};
-  color: ${theme.dark};
+  ${ccs.xPlusBtnBody};
+  background-color: ${theme.mgmt.dark};
+  color: ${theme.light};
   :hover {
-    color: ${theme.light};
-    background-color: ${theme.next.dark};
+    background-color: ${theme.mgmt.main};
   }
 `;

@@ -277,6 +277,7 @@ const spacings = {
   s2: "0.25rem",
   s25: "0.375rem",
   s3: "0.5rem",
+  s35: "0.75rem",
   s4: "1rem",
 } as const;
 

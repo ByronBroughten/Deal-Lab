@@ -61,6 +61,9 @@ const Styled = styled(SectionTitleRow)<{ $dropTop: boolean }>`
     .ListMenuBtn-root {
       width: 100px;
     }
+    .ChangesSyncedStatusBtn-root {
+      width: auto;
+    }
   }
 
   .LabeledIconBtn-root {
