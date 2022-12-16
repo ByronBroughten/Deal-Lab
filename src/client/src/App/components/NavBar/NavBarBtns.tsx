@@ -1,4 +1,3 @@
-import { AiOutlineYoutube } from "react-icons/ai";
 import { BsArrowUpCircle } from "react-icons/bs";
 import { View } from "react-native";
 import { useFeUser } from "../../modules/sectionActorHooks/useFeUser";
@@ -56,13 +55,13 @@ export function NavBarBtns() {
   const scenarioKey = useScenarioKey();
   return (
     <View style={{ flexDirection: "row" }}>
-      <NavBtn
+      {/* <NavBtn
         className="NavBar-demoBtn NavBtn"
         href="https://youtu.be/81Ed3e54YS8"
         target="_blank"
         icon={<AiOutlineYoutube className="NavBar-demoBtnIcon" />}
         text="1 Min Demo"
-      />
+      /> */}
       {/* <NavDropDown
         className="NavBar-feedbackDropDown"
         btnText="Feedback"

@@ -77,6 +77,7 @@ const v1Theme = {
 
 const themeColors = {
   primaryNext: "#00684A",
+  primaryContrast: "#fff",
   property: color["gray-100"],
   loan: "#ff7f68",
   mgmt: "#ff9868",

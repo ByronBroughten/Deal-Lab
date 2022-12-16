@@ -14,15 +14,21 @@ AppRegistry.runApplication("App", {
 //    each one add their thing. That wouldn't be too bad.
 //    Each of the buttons can have an onClick that changes its own style, too.
 
-// Left navbar (inspired by Google)
-// Add the left toolbar for full-screen desktop first
-// Add a condensed version for tablet/desktop next
-// add a menu dropdown for phone last
-// make each depend on screen width
+// 3. Add local storage stores for list pages and compare table
 
-// Add "Load" to actions
+// 4. Add a message at the top of list pages saying you must
+//    login to save and apply changes.
 
-// Info bubble in top-left
+// 5. Make discard changes button work
+
+// 6. Hide things based on screen-size (like nav menu in top-left);
+
+// Nice
+// 1. Implement a "Load" modal to add load to Actions
+// 2. Make repairs, utilities, etc, be able to be singular values
+//    But make them itemizable, too.
+//    When they are in itemize mode, a modal is summoned with a full,
+//    spacious menu for editing the list and list items.
 
 // Analysis
 // Variables (enter these into equations)

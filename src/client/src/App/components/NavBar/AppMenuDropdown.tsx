@@ -18,7 +18,7 @@ export function AppMenuDropdown() {
     <Styled className="NavAppMenu-dropdown">
       <BtnDiv>
         <DomLink to={constants.feRoutes.analyzer}>
-          <AppMenuBtn text={"Analyzer"} icon={<ImLab />} />
+          <AppMenuBtn text={"Lab"} icon={<ImLab />} />
         </DomLink>
       </BtnDiv>
       <BtnDiv>

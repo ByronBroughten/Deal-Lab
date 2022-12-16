@@ -35,7 +35,7 @@ export function NavUserMenu() {
           <BtnDiv>
             <NavDropdownMenuBtn
               text="Account"
-              icon={<MdAccountCircle size={25} />}
+              icon={<MdAccountCircle size={22} />}
               onClick={goToCustomerPortalPage}
             />
           </BtnDiv>
@@ -43,7 +43,7 @@ export function NavUserMenu() {
         <BtnDiv>
           <NavDropdownMenuBtn
             text="Logout"
-            icon={<BiLogOut />}
+            icon={<BiLogOut size={20} />}
             onClick={logout}
           />
         </BtnDiv>

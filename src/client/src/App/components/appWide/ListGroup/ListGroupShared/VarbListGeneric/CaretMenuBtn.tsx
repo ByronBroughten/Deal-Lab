@@ -1,7 +1,7 @@
 import { BiCaretDown, BiCaretRight, BiCaretUp } from "react-icons/bi";
 import { HiMenu } from "react-icons/hi";
 import { MdOutlineSync, MdOutlineSyncDisabled } from "react-icons/md";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { SaveStatus } from "../../../../../modules/SectionSolvers/MainSectionSolver";
 import theme from "../../../../../theme/Theme";
 import { ListMenuBtn } from "../ListMenuSimple/ListMenuBtn";
@@ -32,6 +32,7 @@ export function CaretMenuBtn({
     <Styled
       {...rest}
       $saveStatus={saveStatus}
+      $dropped={dropped}
       icon={
         <>
           {!dropped && saveStatus === "changesSynced" && (
@@ -49,7 +50,10 @@ export function CaretMenuBtn({
   );
 }
 
-const Styled = styled(ListMenuBtn)<{ $saveStatus?: SaveStatus }>`
+const Styled = styled(ListMenuBtn)<{
+  $dropped: boolean;
+  $saveStatus?: SaveStatus;
+}>`
   border: none !important;
   .CaretMenuBtn-syncedIcon {
     color: ${theme.success};
@@ -57,4 +61,10 @@ const Styled = styled(ListMenuBtn)<{ $saveStatus?: SaveStatus }>`
   .CaretMenuBtn-unsyncedIcon {
     color: ${theme.primary.dark};
   }
+  ${({ $dropped }) =>
+    $dropped &&
+    css`
+      background-color: ${theme.primaryNext};
+      color: ${theme.white};
+    `}
 `;
