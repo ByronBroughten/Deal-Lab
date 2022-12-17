@@ -16,7 +16,7 @@ export default function ColumnHeader({ displayName, ...menuFns }: Props) {
   const colMenuRef = useOnOutsideClickRef(closeColMenu, "th");
   const menuItems = makeMenuItems(menuFns);
   return (
-    <th>
+    <th className="ColumnHeader-root">
       <div className="CompareTable-thContent">
         {displayName}
         <div ref={colMenuRef}>

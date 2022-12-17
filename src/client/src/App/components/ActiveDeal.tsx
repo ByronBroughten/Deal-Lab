@@ -8,6 +8,7 @@ import { MgmtGeneral } from "./ActiveDeal/MgmtGeneral";
 import { PropertyGeneral } from "./ActiveDeal/PropertyGeneral";
 import { MainSection } from "./appWide/GeneralSection/MainSection";
 import { MainSectionTitleRow } from "./appWide/GeneralSection/MainSection/MainSectionTitleRow";
+import { MainSectionTitleEditor } from "./appWide/GeneralSection/MainSection/MainSectionTitleRow/MainSectionTitleEditor";
 import { PageMainFn } from "./general/PageMain";
 
 type Props = {
@@ -28,6 +29,10 @@ export function ActiveDeal({ className, feId }: Props) {
             pluralName: "deals",
             className: "ActiveDeal-mainSectionTitleRow",
           }}
+        />
+        <MainSectionTitleEditor
+          className="ActiveDeal-mainSectionTitleEditor"
+          feInfo={feInfo}
         />
         <div className="ActiveDeal-inputSectionsWrapper">
           {/* <div className="ActiveDeal-inputSections" style={{ flex: 0 }}> */}
@@ -55,6 +60,11 @@ const Styled = styled(PageMainFn)`
   }
   .PropertyGeneral-root {
     padding-top: ${theme.s4};
+  }
+
+  .ActiveDeal-mainSectionTitleEditor {
+    margin-left: ${theme.s3};
+    margin-top: ${theme.s3};
   }
 
   .ActiveDeal-mainSectionTitleRow {

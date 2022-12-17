@@ -1,14 +1,16 @@
 import { Switch } from "@material-ui/core";
+import styled from "styled-components";
 import {
   useIndexTableRowActor,
   UseIndexTableRowActorProps,
 } from "../../../modules/sectionActorHooks/useIndexTableRowActor";
+import theme from "../../../theme/Theme";
 
 export function IndexRow(props: UseIndexTableRowActorProps) {
   const indexRow = useIndexTableRowActor(props);
   const title = indexRow.get.value("displayName", "string");
   return (
-    <tr className="CompareTable-tableRow">
+    <Styled className="CompareTable-tableRow">
       <td className="CompareTable-tableCell">{title}</td>
       {indexRow.cells.map((cell) => {
         const value = cell.value("displayVarb", "string");
@@ -30,12 +32,22 @@ export function IndexRow(props: UseIndexTableRowActorProps) {
           }}
         />
       </td>
-      {/* <td className="CompareTable-tableCell">
-        <TrashBtn
-          className="CompareTable-trashBtn"
-          onClick={() => indexRow.deleteSelf()}
-        />
-      </td> */}
-    </tr>
+    </Styled>
   );
 }
+
+const Styled = styled.tr`
+  .CompareTable-tableCell {
+    padding: 0 ${theme.s35};
+  }
+
+  :hover {
+    background: ${theme.tertiary};
+    .CompareTable-trashBtn {
+      visibility: visible;
+    }
+  }
+  :not(:first-child) {
+    border-top: 1px solid ${theme.primary};
+  }
+`;

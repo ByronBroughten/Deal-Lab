@@ -84,6 +84,7 @@ export const config = {
     paymentManagement: env.paymentManagementLink,
     privacyPolicy: "/privacy-policy",
     termsOfService: "/terms-of-service",
+    compare: "/compare",
     analyzer: "/analyzer",
     userVariables: "/variables",
     userLists: "/lists",

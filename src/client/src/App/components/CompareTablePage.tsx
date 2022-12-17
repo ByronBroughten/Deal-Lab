@@ -1,6 +1,6 @@
 import React from "react";
 import { unstable_batchedUpdates } from "react-dom";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import {
   useTableActor,
   UseTableActorProps,
@@ -59,7 +59,7 @@ export function CompareTablePage({ $themeName, title, ...props }: Props) {
     showTable: () => <CompareTable {...props} />,
     areNone: () => (
       <div className="CompareTablePage-message">
-        You have no saved deals. Save some then compare them here!
+        You have no saved deals. Save some then compare them here.
       </div>
     ),
   } as const;
@@ -77,15 +77,17 @@ export function CompareTablePage({ $themeName, title, ...props }: Props) {
     </Styled>
   );
 }
+// Here I want "Deals" to be a dropdown box I guess.
 
 const Styled = styled.div<{ $themeName: ThemeName }>`
   display: flex;
   flex-direction: column;
-  overflow: auto;
-  align-items: center;
-  padding-top: ${theme.s4};
   flex: 1;
-  background-color: ${({ $themeName }) => theme[$themeName].light};
+  align-items: center;
+  overflow: auto;
+  padding-top: ${theme.s4};
+  background-color: ${theme.mainBackground};
+  min-height: 93vh;
 
   .CompareTablePage-areNone {
     text-align: center;
@@ -95,11 +97,8 @@ const Styled = styled.div<{ $themeName: ThemeName }>`
   .CompareTablePage-body {
     margin-top: ${theme.s2};
     border-radius: ${theme.br0};
-    box-shadow: 0 5px 16px rgba(0, 0, 0, 0.2);
-    ${({ $themeName }) => css`
-      border: 2px solid ${theme[$themeName].border};
-      background: ${theme[$themeName].light};
-    `}
+    border: 2px solid ${theme.primaryNext};
+    background: ${theme.light};
   }
 
   .CompareTable-addColumnSelector {
@@ -110,7 +109,7 @@ const Styled = styled.div<{ $themeName: ThemeName }>`
 
   .CompareTablePage-title {
     font-size: 2rem;
-    color: ${theme["gray-700"]};
+    color: ${theme.dark};
     margin: ${theme.s2};
   }
   .CompareTable-titleRow {
@@ -165,28 +164,12 @@ const Styled = styled.div<{ $themeName: ThemeName }>`
   }
 
   thead {
-    border-bottom: 1px solid ${({ $themeName }) => theme[$themeName].border};
+    border-bottom: 1px solid ${({ $themeName }) => theme.primaryNext};
   }
 
   td,
   th {
     padding: 0 ${theme.s2} 0 ${theme.s2};
-  }
-
-  tbody {
-    tr {
-      ${({ $themeName }) => css`
-        :hover {
-          background: ${theme[$themeName].main};
-          .CompareTable-trashBtn {
-            visibility: visible;
-          }
-        }
-        :not(:first-child) {
-          border-top: 1px solid ${theme[$themeName].light};
-        }
-      `}
-    }
   }
 
   th {

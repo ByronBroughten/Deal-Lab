@@ -50,10 +50,21 @@ export function CompareTable(props: Props) {
 }
 
 const Styled = styled.div`
+  padding: ${theme.s3};
+  .CompareTable-table {
+    margin-top: ${theme.s3};
+  }
   .CompareTable-areNone {
     text-align: center;
     padding: ${theme.s3};
   }
+  .ColumnHeader-root {
+    padding: 0 ${theme.s2};
+  }
+  .CompareTable-thContent {
+    padding: 0 ${theme.s2};
+  }
+
   .CompareTable-controlRowItem {
     margin: ${theme.s2};
   }

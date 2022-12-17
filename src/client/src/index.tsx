@@ -7,12 +7,14 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-// Necessary
-// 1. Unite the Compare Tables
 
 // 2. Add the side bar to the inside of each component, and simply have
 //    each one add their thing. That wouldn't be too bad.
 //    Each of the buttons can have an onClick that changes its own style, too.
+// - Lab Page
+// - Variables Page
+// - Lists Page
+// - Compare Page
 
 // 3. Add local storage stores for list pages and compare table
 
@@ -29,6 +31,10 @@ AppRegistry.runApplication("App", {
 //    But make them itemizable, too.
 //    When they are in itemize mode, a modal is summoned with a full,
 //    spacious menu for editing the list and list items.
+// 3. Add the other compare tables. It basically just needs to start
+//    with "deal", and then have a selector for changing which
+//    table is displayed.
+//    Just add a selector to the current table
 
 // Analysis
 // Variables (enter these into equations)

@@ -59,7 +59,7 @@ export function Main() {
               element={<ActiveDeal feId={activeDealId} loginSuccess={true} />}
             />
             <Route
-              path={feRoutes.mainTables.deal}
+              path={feRoutes.compare}
               element={
                 <FeUserMainTablePage
                   mainTableName={"dealMainTable"}
@@ -121,6 +121,11 @@ const Styled = styled.div`
 
   * {
     font-family: "Source Sans Pro", "Roboto", Arial, sans-serif;
+  }
+
+  .App-Routes {
+    width: 100%;
+    height: 100%;
   }
 
   .App-container {

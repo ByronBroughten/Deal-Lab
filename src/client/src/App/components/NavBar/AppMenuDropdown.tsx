@@ -35,7 +35,7 @@ export function AppMenuDropdown() {
         </DomLink>
       </BtnDiv>
       <BtnDiv>
-        <DomLink to={constants.feRoutes.userLists}>
+        <DomLink to={constants.feRoutes.compare}>
           <AppMenuBtn
             text={"Compare"}
             icon={<IoIosGitCompare className="AppMenuDropdown-compareArrows" />}
