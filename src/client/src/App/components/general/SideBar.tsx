@@ -17,6 +17,6 @@ const Styled = styled.div`
   left: 0;
   overflow-x: hidden; /* Disable horizontal scroll */
   margin-top: ${theme.navBar.height};
-  padding-top: 70px;
+  padding-top: 125px;
   background: ${theme.light};
 `;

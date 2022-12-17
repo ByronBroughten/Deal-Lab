@@ -34,15 +34,14 @@ const Styled = styled.div<{ $themeName: ThemeName }>`
 
   .BasicSectionInfo-subSections {
     .BasicSectionInfo-subSection {
+      :not(:first-child) {
+        margin-top: ${theme.s2};
+      }
+
       :first-child {
         .BasicSectionInfo-subSection-viewable {
           border-top-left-radius: ${theme.br0};
           border-top-right-radius: ${theme.br0};
-        }
-      }
-      :not(:first-child) {
-        margin-top: ${theme.s35};
-        .BasicSectionInfo-subSection-viewable {
         }
       }
       :last-child {

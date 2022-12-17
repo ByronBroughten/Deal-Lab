@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { switchNames } from "../../../../../sharedWithServer/SectionsMeta/baseSectionsVarbs/RelSwitchVarb";
 import { useOpenWidth } from "../../../../appWide/customHooks/useOpenWidth";
 import BasicSectionInfo from "../../../../appWide/GeneralSection/MainSection/MainSectionBody/BasicSectionInfo";
+import { MainSectionTitleEditor } from "../../../../appWide/GeneralSection/MainSection/MainSectionTitleRow/MainSectionTitleEditor";
 import { DollarPercentRadioSwap } from "../../general/DollarPercentRadioSwap";
 import VacancyRate from "./BasicMgmtInfo/VacancyRate";
 
@@ -25,6 +26,10 @@ export default function BasicMgmtInfo({ feId, className }: Props) {
       {viewIsOpen && (
         <div className="BasicSectionInfo-viewable viewable">
           <div className="BasicSectionInfo-subSections">
+            <MainSectionTitleEditor
+              className="MainSectionTitleRow-title"
+              feInfo={feInfo}
+            />
             <div className="BasicSectionInfo-subSection">
               <div className="BasicSectionInfo-subSection-viewable">
                 <DollarPercentRadioSwap

@@ -18,6 +18,7 @@ export function MainSectionTitleEditor({ feInfo, className }: Props) {
 const Styled = styled(BigStringEditor)`
   font-size: 20px;
   .DraftTextField-root {
+    display: flex;
     min-width: 150px;
   }
 `;

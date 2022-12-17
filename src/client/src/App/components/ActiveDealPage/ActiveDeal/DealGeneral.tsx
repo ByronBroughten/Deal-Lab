@@ -61,6 +61,11 @@ export function DealGeneral({ className, feId }: Props) {
 }
 
 const Styled = styled(GeneralSection)<{ $showDetails: boolean }>`
+  .MainSection-addChildBtn {
+    width: 50%;
+    height: 50px;
+  }
+
   .GeneralSectionTitle-toolTip {
     width: 100%;
     display: flex;

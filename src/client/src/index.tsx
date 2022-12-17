@@ -8,16 +8,22 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-// 3. Add local storage stores for list pages (and maybe compare)
-//    - actually, just add persistent state for the list pages
-//    they'll have to provide their own variables context
-//    for the varb selector and span, but that shouldn't be
-//    too bad. Then you solve the latency problem, too. There
-//    just might be a bit more start-up lag.
-//    They should be attached to main, not feUser.
-//    Each page could be a section with children.
-//    This will change how Discard Chages is handled
-// 5. Make discard changes button work
+// 1. Add titles to Mgmt and Loan
+
+// 3. Add persistent state for list pages
+//    - Tweak the variables context to allow those pages to
+//    alter it.
+//    - Varb spans must update color accordingly
+//    - Attach the editor pages to main
+//    - Each page should be a section with listgroup children.
+//    - Implement discard changes
+//    - You ought not solve for the lists and variables on
+//      those pages.
+// 5. Implement Discard Changes
+
+// See about adding it to a domain that has a WP page
+// Get a logo
+// Consult marketers re advertising wp page
 
 // Nice
 // 1. Implement a "Load" modal to add load to Actions
@@ -29,8 +35,10 @@ AppRegistry.runApplication("App", {
 //    with "deal", and then have a selector for changing which
 //    table is displayed.
 //    Just add a selector to the current table
-// 4. Add local storage for compare page
+// 4. Make compare table state update from front-end state
 // 5. Get list pages to load faster, without creating secondary states.
+// 6. Add custom outputs
+// 7. Add modes for Brrrr, flipping, etc.
 
 // Analysis
 // Variables (enter these into equations)

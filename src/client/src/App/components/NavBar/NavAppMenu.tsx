@@ -40,7 +40,7 @@ const Styled = styled(NavDropDown)<{ $isFullPlan: boolean }>`
   }
 
   .NavAppMenu-Sidebar {
-    margin-top: calc(${theme.navBar.height} + 2px);
+    margin-top: calc(${theme.navBar.height} + 1px);
   }
 
   .NavBar-menuIcon {
