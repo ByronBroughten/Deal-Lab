@@ -9,6 +9,7 @@ import theme, { ThemeName } from "../../theme/Theme";
 import BtnTooltip from "../appWide/BtnTooltip";
 import { MainSection } from "../appWide/GeneralSection/MainSection";
 import { SectionTitleRow } from "../appWide/GeneralSection/MainSection/SectionTitleRow";
+import { InfoBlurb } from "../appWide/infoBlurb";
 import { MakeListNode } from "../appWide/ListGroup/ListGroupShared/ListGroupGeneric/ListGroupLists";
 import { ListMenuBtn } from "../appWide/ListGroup/ListGroupShared/ListMenuSimple/ListMenuBtn";
 import { UserListSectionBody } from "./UserListSectionBody";
@@ -36,8 +37,7 @@ function useVariableProps({
   areSaved: boolean;
 }): [boolean, string, string] {
   const authStatus = useAuthStatus();
-  if (authStatus === "guest")
-    return [true, "Login to Save and Apply Changes", ""];
+  if (authStatus === "guest") return [true, "Save and Apply Changes", ""];
   else if (areSaved) return [true, "Save and Apply Changes", ""];
   else return [false, "Save and Apply Changes", ""];
 }
@@ -66,6 +66,8 @@ export function UserListMainSection({ title, storeName, ...rest }: Props) {
     areSaved,
     onClick: saveUserLists,
   });
+
+  const authStatus = useAuthStatus();
   return (
     <Styled className="UserListMainSection-root">
       <SectionsContextProvider sectionsContext={userListsContext}>
@@ -86,6 +88,11 @@ export function UserListMainSection({ title, storeName, ...rest }: Props) {
             </div>
           }
         />
+        {authStatus === "guest" && (
+          <InfoBlurb className="UserListMainSection-infoBlurb">
+            Log in to save and apply changes.
+          </InfoBlurb>
+        )}
         <UserListSectionBody
           {...{
             storeName,
@@ -98,6 +105,9 @@ export function UserListMainSection({ title, storeName, ...rest }: Props) {
 }
 
 const Styled = styled(MainSection)`
+  .UserListMainSection-infoBlurb {
+    margin-top: ${theme.s3};
+  }
   .UserListMainSection-btnsRow {
     display: flex;
     align-items: center;

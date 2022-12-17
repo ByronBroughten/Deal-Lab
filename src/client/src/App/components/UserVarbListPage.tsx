@@ -2,13 +2,13 @@ import React from "react";
 import styled from "styled-components";
 import theme from "../theme/Theme";
 import { VarbListUserVarbs } from "./appWide/VarbLists/VarbListUserVarbs";
-import { SidebarContainer } from "./general/SidebarContainer";
-import { UserListsPageGeneric } from "./UserListsPageGeneric";
+import { NavContainer } from "./general/NavContainer";
+import { UserListsPageGeneric } from "./UserListPageShared/UserListsPageGeneric";
 import { UserListsGeneralSection } from "./UserVarbListPage/UserListsGeneralSection";
 
 export function UserVarbListPage() {
   return (
-    <SidebarContainer activeBtnName="variables">
+    <NavContainer activeBtnName="variables">
       <Styled themeName="userVarbList" saveWhat="custom variables">
         <UserListsGeneralSection
           themeName="userVarbList"
@@ -17,7 +17,7 @@ export function UserVarbListPage() {
           makeListNode={(nodeProps) => <VarbListUserVarbs {...nodeProps} />}
         />
       </Styled>
-    </SidebarContainer>
+    </NavContainer>
   );
 }
 const Styled = styled(UserListsPageGeneric)`

@@ -1,7 +1,7 @@
 import { BsArrowUpCircle } from "react-icons/bs";
 import { View } from "react-native";
 import { useFeUser } from "../../modules/sectionActorHooks/useFeUser";
-import { DomLink } from "../ActiveDeal/general/DomLink";
+import { DomLink } from "../ActiveDealPage/ActiveDeal/general/DomLink";
 import { NavBtn } from "./NavBtn";
 import { NavDropDown } from "./NavDropDown";
 import { NavUserMenu } from "./NavUserMenu";

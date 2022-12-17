@@ -122,16 +122,17 @@ function useStateToDefault() {
   };
 }
 
+export function useLogout() {
+  const stateToDefault = useStateToDefault();
+  return async function logout() {
+    await authSignOut();
+    stateToDefault();
+  };
+}
+
 export function useUserData() {
   useControlLoadUserData();
   useLoadUserData();
   useControlUnloadUserData();
   useUnloadUserData();
-
-  const stateToDefault = useStateToDefault();
-  async function logout() {
-    await authSignOut();
-    stateToDefault();
-  }
-  return { logout };
 }

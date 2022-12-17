@@ -32,7 +32,7 @@ export function NavDropdownMenuBtn({
 }
 
 const Styled = styled(Button)<{ $themeName?: ThemeName }>`
-  font-size: ${theme.titleSize};
+  font-size: ${theme.infoSize};
   border-radius: ${theme.br0};
   line-height: 1rem;
   box-shadow: ${theme.boxShadow1};

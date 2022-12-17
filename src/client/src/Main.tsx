@@ -6,21 +6,25 @@ import { getSuperTokensRoutesForReactRouterDom } from "supertokens-auth-react";
 import { ActiveDealPage } from "./App/components/ActiveDealPage";
 import { FeUserMainTablePage } from "./App/components/FeUserMainTablePage";
 import NotFound from "./App/components/general/NotFound";
-import { NavBar } from "./App/components/NavBar";
 import { UserAdditiveListPage } from "./App/components/UserAdditiveListPage";
 import { UserOutputListPage } from "./App/components/UserOutputListPage";
 import { UserVarbListPage } from "./App/components/UserVarbListPage";
 import { constants } from "./App/Constants";
-import { useSubscriptionState } from "./App/modules/customHooks/useAuthAndUserData";
+import {
+  useSubscriptionState,
+  useUserData,
+} from "./App/modules/customHooks/useAuthAndUserData";
 import theme from "./App/theme/Theme";
 import { PrivacyPolicyPage } from "./PrivacyPolicyPage";
 
 export function Main() {
+  useUserData();
   useSubscriptionState();
   const { feRoutes } = constants;
+  // I need a Nav setup.
   return (
     <Styled className="App-root">
-      <NavBar />
+      {/* <NavBar /> */}
       <Routes>
         {getSuperTokensRoutesForReactRouterDom(reactRouterDom)}
         <Route path={feRoutes.userVariables} element={<UserVarbListPage />} />

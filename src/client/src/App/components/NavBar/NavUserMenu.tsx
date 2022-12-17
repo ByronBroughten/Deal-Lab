@@ -3,7 +3,7 @@ import React from "react";
 import { BiLogOut, BiUserCircle } from "react-icons/bi";
 import { MdAccountCircle } from "react-icons/md";
 import styled from "styled-components";
-import { useUserData } from "../../modules/customHooks/useAuthAndUserData";
+import { useLogout } from "../../modules/customHooks/useAuthAndUserData";
 import useToggle from "../../modules/customHooks/useToggle";
 import { useFeUser } from "../../modules/sectionActorHooks/useFeUser";
 import { goToCustomerPortalPage } from "../../modules/services/stripeService";
@@ -19,7 +19,7 @@ function BtnDiv({ children, className }: StandardProps) {
 
 export function NavUserMenu() {
   const feUser = useFeUser();
-  const { logout } = useUserData();
+  const logout = useLogout();
   const analyzerPlan = feUser.get.valueNext("analyzerPlan") as AnalyzerPlan;
   const isFullPlan = analyzerPlan === "fullPlan";
   const { value: doCloseMenuToggle, toggle: closeMenu } = useToggle();

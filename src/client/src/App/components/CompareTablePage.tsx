@@ -32,7 +32,7 @@ function useLoadRows(props: UseTableActorProps) {
 
 interface Props extends UseTableActorProps {
   title: string;
-  $themeName: ThemeName;
+  $themeName?: ThemeName;
 }
 export function CompareTablePage({ $themeName, title, ...props }: Props) {
   const isLoaded = useLoadRows(props);
@@ -53,7 +53,7 @@ export function CompareTablePage({ $themeName, title, ...props }: Props) {
   const scenarios = {
     isGuest: () => (
       <div className="CompareTablePage-message">
-        To view saved deals, make an account or sign in.
+        Log in to save and compare deals.
       </div>
     ),
     isLoading: () => <div className="CompareTablePage-message">Loading...</div>,
@@ -82,7 +82,7 @@ export function CompareTablePage({ $themeName, title, ...props }: Props) {
 }
 // Here I want "Deals" to be a dropdown box I guess.
 
-const Styled = styled.div<{ $themeName: ThemeName }>`
+const Styled = styled.div<{ $themeName?: ThemeName }>`
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -167,7 +167,7 @@ const Styled = styled.div<{ $themeName: ThemeName }>`
   }
 
   thead {
-    border-bottom: 1px solid ${({ $themeName }) => theme.primaryNext};
+    border-bottom: 1px solid ${theme.primaryNext};
   }
 
   td,

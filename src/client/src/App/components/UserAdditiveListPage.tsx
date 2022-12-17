@@ -3,14 +3,14 @@ import styled from "styled-components";
 import theme from "../theme/Theme";
 import { VarbListSingleTime } from "./appWide/ListGroup/ListGroupSingleTime/VarbListSingleTime";
 import { VarbListOngoing } from "./appWide/VarbLists/VarbListOngoing";
-import { SidebarContainer } from "./general/SidebarContainer";
-import { UserListsPageGeneric } from "./UserListsPageGeneric";
+import { NavContainer } from "./general/NavContainer";
+import { UserListsPageGeneric } from "./UserListPageShared/UserListsPageGeneric";
 import { UserListsGeneralSection } from "./UserVarbListPage/UserListsGeneralSection";
 
 // Can this page be reduced to one state?
 export function UserAdditiveListPage() {
   return (
-    <SidebarContainer activeBtnName="lists">
+    <NavContainer activeBtnName="lists">
       <Styled themeName="userOngoingList" saveWhat="custom lists">
         <UserListsGeneralSection
           themeName="userSingleList"
@@ -29,7 +29,7 @@ export function UserAdditiveListPage() {
           )}
         />
       </Styled>
-    </SidebarContainer>
+    </NavContainer>
   );
 }
 

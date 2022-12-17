@@ -1,18 +1,20 @@
 import styled from "styled-components";
+import theme from "../../theme/Theme";
 import { AppMenuDropdown, AppMenuProps } from "../NavBar/AppMenuDropdown";
+import { Sidebar } from "./SideBar";
 import { StandardProps } from "./StandardProps";
 
-interface Props extends StandardProps, AppMenuProps {}
+export interface SidebarContainerProps extends StandardProps, AppMenuProps {}
 export function SidebarContainer({
   children,
   className,
   activeBtnName,
-}: Props) {
+}: SidebarContainerProps) {
   return (
     <StyledAppContainer className={`SidebarContainer-root ${className ?? ""}`}>
-      <div className="SidebarContainer-sideBar">
+      <Sidebar className="SidebarContainer-sideBar">
         <AppMenuDropdown {...{ activeBtnName }} />
-      </div>
+      </Sidebar>
       <div className="SidebarContainer-content">{children}</div>
     </StyledAppContainer>
   );
@@ -20,19 +22,15 @@ export function SidebarContainer({
 const StyledAppContainer = styled.div`
   display: flex;
   margin-left: 150px;
+  @media (max-width: ${theme.mediaPhone}) {
+    margin-left: 0;
+    .SidebarContainer-sideBar {
+      display: none;
+    }
+  }
+
   .SidebarContainer-content {
     width: 100%;
     height: 100%;
-  }
-  .SidebarContainer-sideBar {
-    margin-top: 100px;
-    height: 100%; /* Full-height: remove this if you want "auto" height */
-    width: 150px; /* Set the width of the sidebar */
-    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
-    z-index: 1; /* Stay on top */
-    top: 0; /* Stay at the top */
-    left: 0;
-    overflow-x: hidden; /* Disable horizontal scroll */
-    padding-top: 20px;
   }
 `;

@@ -4,17 +4,18 @@ import React from "react";
 import { BsHouse } from "react-icons/bs";
 import styled from "styled-components";
 import theme from "../theme/Theme";
-import { DomLink } from "./ActiveDeal/general/DomLink";
+import { DomLink } from "./ActiveDealPage/ActiveDeal/general/DomLink";
+import { AppMenuProps } from "./NavBar/AppMenuDropdown";
 import { NavAppMenu } from "./NavBar/NavAppMenu";
 import { NavBarBtns } from "./NavBar/NavBarBtns";
 import { NavBtn } from "./NavBar/NavBtn";
 
-export function NavBar() {
+export function NavBar(props: AppMenuProps) {
   return (
     <Styled className="NavBar-root">
       <Toolbar disableGutters={true}>
         <div className="NavBar-leftSide">
-          <NavAppMenu />
+          <NavAppMenu {...props} />
           <DomLink className="NavBar-navBtnLink" to="/">
             <NavBtn
               className="NavBar-brandBtn"
@@ -34,6 +35,7 @@ const Styled = styled(AppBar)`
   background-color: ${theme.light};
   color: ${theme.primaryNext};
   box-shadow: none;
+  z-index: 5;
 
   .NavBar-leftSide {
     display: flex;

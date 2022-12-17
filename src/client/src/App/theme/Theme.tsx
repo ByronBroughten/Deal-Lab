@@ -104,6 +104,7 @@ const themeColors = {
 
 const fontSize = {
   labelSize: rem("14px"),
+  infoSize: rem("16px"),
   titleSize: rem("20px"),
   siteTitleSize: rem("20px"),
 } as const;
@@ -133,7 +134,11 @@ const borders = {
     border-left: none;
     border-radius: 0;
   `,
-};
+} as const;
+
+const mediaQuery = {
+  mediaPhone: "768px",
+} as const;
 
 const themeSections = {
   default: {
@@ -291,6 +296,7 @@ const theme = {
   ...borders,
   ...spacings,
   ...buttons,
+  ...mediaQuery,
   sectionPadding: spacings.s3,
 
   transparentGrayDark: transparentize(0.8, color["gray-600"]),
@@ -324,6 +330,7 @@ const theme = {
   // box shadow
   boxShadow1:
     "0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)",
+
   boxShadow4:
     "0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 4px 0px rgba(0 0 0 /14%), 0px 1px 10px 0px rgba(0 0 0 / 12%)",
   boxShadow4NoTop:

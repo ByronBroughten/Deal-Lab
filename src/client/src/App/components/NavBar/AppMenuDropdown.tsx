@@ -1,23 +1,28 @@
 import React from "react";
 import { BsFillHouseFill } from "react-icons/bs";
-import { FaThList } from "react-icons/fa";
 import { HiOutlineVariable } from "react-icons/hi";
 import { IoIosGitCompare } from "react-icons/io";
+import { MdOutlineViewList } from "react-icons/md";
 import styled from "styled-components";
 import { constants } from "../../Constants";
 import { Obj } from "../../sharedWithServer/utils/Obj";
 import theme from "../../theme/Theme";
-import { DomLink } from "../ActiveDeal/general/DomLink";
+import { DomLink } from "../ActiveDealPage/ActiveDeal/general/DomLink";
 import { StandardBtnProps } from "../general/StandardProps";
 import { AppMenuBtn } from "./AppMenuBtn";
 
 interface BtnProps extends StandardBtnProps {
   $active?: boolean;
 }
+const iconSize = 22;
 const navBtns = {
   deal: (props: BtnProps) => (
     <DomLink to={constants.feRoutes.analyzer}>
-      <AppMenuBtn {...props} text={"Deal"} icon={<BsFillHouseFill />} />
+      <AppMenuBtn
+        {...props}
+        text={"Deal"}
+        icon={<BsFillHouseFill size={iconSize} />}
+      />
     </DomLink>
   ),
   variables: (props: BtnProps) => (
@@ -25,13 +30,22 @@ const navBtns = {
       <AppMenuBtn
         {...props}
         text={"Variables"}
-        icon={<HiOutlineVariable className="NavAppMenu-variablesIcon" />}
+        icon={
+          <HiOutlineVariable
+            size={iconSize}
+            className="NavAppMenu-variablesIcon"
+          />
+        }
       />
     </DomLink>
   ),
   lists: (props: BtnProps) => (
     <DomLink to={constants.feRoutes.userLists}>
-      <AppMenuBtn {...props} text={"Lists"} icon={<FaThList />} />
+      <AppMenuBtn
+        {...props}
+        text={"Lists"}
+        icon={<MdOutlineViewList size={iconSize} />}
+      />
     </DomLink>
   ),
   compare: (props: BtnProps) => (
@@ -39,7 +53,12 @@ const navBtns = {
       <AppMenuBtn
         {...props}
         text={"Compare"}
-        icon={<IoIosGitCompare className="AppMenuDropdown-compareArrows" />}
+        icon={
+          <IoIosGitCompare
+            size={iconSize}
+            className="AppMenuDropdown-compareArrows"
+          />
+        }
         className="AppMenuDropdown-compareBtn"
       />
     </DomLink>

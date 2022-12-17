@@ -25,6 +25,8 @@ export function NavDropDown({
   });
   const closeIfClickOutsideRef = useOnOutsideClickRef(closeView);
 
+  // this is complicated.
+
   const isFirstRender = React.useRef(true);
   React.useEffect(() => {
     if (isFirstRender.current) {

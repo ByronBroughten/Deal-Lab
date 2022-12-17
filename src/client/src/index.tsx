@@ -8,22 +8,16 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-// 2. Add the side bar to the inside of each component, and simply have
-//    each one add their thing. That wouldn't be too bad.
-//    Each of the buttons can have an onClick that changes its own style, too.
-// - Lab Page
-// - Variables Page
-// - Lists Page
-// - Compare Page
-
-// 3. Add local storage stores for list pages and compare table
-
-// 4. Add a message at the top of list pages saying you must
-//    login to save and apply changes.
-
+// 3. Add local storage stores for list pages (and maybe compare)
+//    - actually, just add persistent state for the list pages
+//    they'll have to provide their own variables context
+//    for the varb selector and span, but that shouldn't be
+//    too bad. Then you solve the latency problem, too. There
+//    just might be a bit more start-up lag.
+//    They should be attached to main, not feUser.
+//    Each page could be a section with children.
+//    This will change how Discard Chages is handled
 // 5. Make discard changes button work
-
-// 6. Hide things based on screen-size (like nav menu in top-left);
 
 // Nice
 // 1. Implement a "Load" modal to add load to Actions
@@ -35,6 +29,8 @@ AppRegistry.runApplication("App", {
 //    with "deal", and then have a selector for changing which
 //    table is displayed.
 //    Just add a selector to the current table
+// 4. Add local storage for compare page
+// 5. Get list pages to load faster, without creating secondary states.
 
 // Analysis
 // Variables (enter these into equations)
