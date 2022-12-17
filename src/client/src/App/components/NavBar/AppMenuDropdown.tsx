@@ -1,57 +1,78 @@
+import React from "react";
+import { BsFillHouseFill } from "react-icons/bs";
 import { FaThList } from "react-icons/fa";
 import { HiOutlineVariable } from "react-icons/hi";
-import { ImLab } from "react-icons/im";
 import { IoIosGitCompare } from "react-icons/io";
 import styled from "styled-components";
 import { constants } from "../../Constants";
+import { Obj } from "../../sharedWithServer/utils/Obj";
 import theme from "../../theme/Theme";
 import { DomLink } from "../ActiveDeal/general/DomLink";
-import { StandardProps } from "../general/StandardProps";
+import { StandardBtnProps } from "../general/StandardProps";
 import { AppMenuBtn } from "./AppMenuBtn";
 
-function BtnDiv({ children, className }: StandardProps) {
-  return <div className={`NavAppMenu-btnDiv ${className}`}>{children}</div>;
+interface BtnProps extends StandardBtnProps {
+  $active?: boolean;
 }
+const navBtns = {
+  deal: (props: BtnProps) => (
+    <DomLink to={constants.feRoutes.analyzer}>
+      <AppMenuBtn {...props} text={"Deal"} icon={<BsFillHouseFill />} />
+    </DomLink>
+  ),
+  variables: (props: BtnProps) => (
+    <DomLink to={constants.feRoutes.userVariables}>
+      <AppMenuBtn
+        {...props}
+        text={"Variables"}
+        icon={<HiOutlineVariable className="NavAppMenu-variablesIcon" />}
+      />
+    </DomLink>
+  ),
+  lists: (props: BtnProps) => (
+    <DomLink to={constants.feRoutes.userLists}>
+      <AppMenuBtn {...props} text={"Lists"} icon={<FaThList />} />
+    </DomLink>
+  ),
+  compare: (props: BtnProps) => (
+    <DomLink to={constants.feRoutes.compare}>
+      <AppMenuBtn
+        {...props}
+        text={"Compare"}
+        icon={<IoIosGitCompare className="AppMenuDropdown-compareArrows" />}
+        className="AppMenuDropdown-compareBtn"
+      />
+    </DomLink>
+  ),
+};
 
-export function AppMenuDropdown() {
+const navBtnNames = Obj.keys(navBtns);
+type NavBtnName = typeof navBtnNames[number];
+
+export type AppMenuProps = { activeBtnName?: NavBtnName };
+export function AppMenuDropdown({ activeBtnName }: AppMenuProps) {
+  const [activeName, setActiveName] = React.useState(activeBtnName);
+
   return (
     <Styled className="NavAppMenu-dropdown">
-      <BtnDiv>
-        <DomLink to={constants.feRoutes.analyzer}>
-          <AppMenuBtn text={"Lab"} icon={<ImLab />} />
-        </DomLink>
-      </BtnDiv>
-      <BtnDiv>
-        <DomLink to={constants.feRoutes.userVariables}>
-          <AppMenuBtn
-            text={"Variables"}
-            icon={<HiOutlineVariable className="NavAppMenu-variablesIcon" />}
-          />
-        </DomLink>
-      </BtnDiv>
-      <BtnDiv>
-        <DomLink to={constants.feRoutes.userLists}>
-          <AppMenuBtn text={"Lists"} icon={<FaThList />} />
-        </DomLink>
-      </BtnDiv>
-      <BtnDiv>
-        <DomLink to={constants.feRoutes.compare}>
-          <AppMenuBtn
-            text={"Compare"}
-            icon={<IoIosGitCompare className="AppMenuDropdown-compareArrows" />}
-            className="AppMenuDropdown-compareBtn"
-          />
-        </DomLink>
-      </BtnDiv>
+      {navBtnNames.map((navBtnName) => {
+        return (
+          <BtnDiv key={navBtnName} onClick={() => setActiveName(navBtnName)}>
+            {navBtns[navBtnName]({
+              $active: navBtnName === activeName,
+            })}
+          </BtnDiv>
+        );
+      })}
     </Styled>
   );
 }
 
+function BtnDiv({ children, className }: StandardBtnProps) {
+  return <div className={`NavAppMenu-btnDiv ${className}`}>{children}</div>;
+}
+
 const Styled = styled.div`
-  .AppMenuBtn-selected {
-    background-color: ${theme.primaryNext};
-    color: ${theme.light};
-  }
   .AppMenuDropdown-compareBtn {
     .AppMenuDropdown-compareArrows {
     }
@@ -69,14 +90,11 @@ const Styled = styled.div`
     white-space: nowrap;
   }
   .NavAppMenu-btnDiv {
+    width: 100%;
     :not(:last-child) {
       .ListMenuBtn-root {
         border-bottom: none;
       }
     }
-  }
-
-  .NavAppMenu-btnDiv {
-    width: 100%;
   }
 `;

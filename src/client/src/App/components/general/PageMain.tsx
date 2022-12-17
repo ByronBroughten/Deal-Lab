@@ -13,8 +13,4 @@ export const PageMain = styled.div`
   flex: 1;
   z-index: 5;
   background-color: ${theme.mainBackground};
-
-  .NavSpaceDiv-root {
-    height: ${theme.s3};
-  }
 `;

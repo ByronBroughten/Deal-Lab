@@ -10,6 +10,7 @@ import { useAuthStatus } from "../sharedWithServer/stateClassHooks/useAuthStatus
 import theme, { ThemeName } from "../theme/Theme";
 import useHowMany from "./appWide/customHooks/useHowMany";
 import { CompareTable } from "./CompareTablePage/CompareTable";
+import { SidebarContainer } from "./general/SidebarContainer";
 
 function useLoadRows(props: UseTableActorProps) {
   const authStatus = useAuthStatus();
@@ -66,15 +67,17 @@ export function CompareTablePage({ $themeName, title, ...props }: Props) {
 
   const getScenarioNode = scenarios[getScenarioKey()];
   return (
-    <Styled
-      {...{
-        $themeName,
-        className: "CompareTablePage-root",
-      }}
-    >
-      <h5 className="CompareTablePage-title">{title}</h5>
-      <div className="CompareTablePage-body">{getScenarioNode()}</div>
-    </Styled>
+    <SidebarContainer activeBtnName="compare">
+      <Styled
+        {...{
+          $themeName,
+          className: "CompareTablePage-root",
+        }}
+      >
+        <h5 className="CompareTablePage-title">{title}</h5>
+        <div className="CompareTablePage-body">{getScenarioNode()}</div>
+      </Styled>
+    </SidebarContainer>
   );
 }
 // Here I want "Deals" to be a dropdown box I guess.
