@@ -1,4 +1,5 @@
 import React from "react";
+import styled from "styled-components";
 import { MainSection } from "../../../appWide/GeneralSection/MainSection";
 import MainSectionBody from "../../../appWide/GeneralSection/MainSection/MainSectionBody";
 import { MainSectionTitleRow } from "../../../appWide/GeneralSection/MainSection/MainSectionTitleRow";
@@ -11,7 +12,7 @@ export function Loan({ feId }: { feId: string }) {
     feId,
   } as const;
   return (
-    <MainSection className="Loan-root">
+    <Styled className="Loan-root">
       <MainSectionTitleRow
         {...{
           ...feInfo,
@@ -43,6 +44,14 @@ export function Loan({ feId }: { feId: string }) {
           }}
         />
       </MainSectionBody>
-    </MainSection>
+    </Styled>
   );
 }
+
+const Styled = styled(MainSection)`
+  :hover {
+    .MainSectionTitleRow-xBtn {
+      visibility: visible;
+    }
+  }
+`;

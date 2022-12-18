@@ -1,16 +1,16 @@
 import { Obj } from "../utils/Obj";
 import { Arr } from "./../utils/Arr";
+import { childPathNames, PathSectionName } from "./absoluteVarbPaths";
 import { VarbName } from "./baseSectionsDerived/baseSectionsVarbsTypes";
 import { VarbNames } from "./baseSectionsDerived/baseVarbInfo";
-import { childPathNames, PathSectionName } from "./childPaths";
 import { SectionName } from "./SectionName";
 import { VarbMeta } from "./VarbMeta";
 
 export const activePathNames = Arr.extractStrict(childPathNames, [
-  "activeDeal",
-  "activeFinancing",
-  "activeMgmtGeneral",
-  "activePropertyGeneral",
+  "dealFocal",
+  "financingFocal",
+  "mgmtGeneralFocal",
+  "propertyGeneralFocal",
 ] as const);
 
 export type ActivePathName = typeof activePathNames[number];
@@ -43,7 +43,7 @@ function optionVarbsProp<
 }
 
 export const globalOptionVarbs = {
-  ...optionVarbsProp("activePropertyGeneral", [
+  ...optionVarbsProp("propertyGeneralFocal", [
     "price",
     "sqft",
     "taxesYearly",
@@ -53,12 +53,12 @@ export const globalOptionVarbs = {
     "targetRentMonthly",
     "targetRentYearly",
   ]),
-  ...optionVarbsProp("activeMgmtGeneral", [
+  ...optionVarbsProp("mgmtGeneralFocal", [
     "vacancyRatePercent",
     "rentCutDollarsMonthly",
     "rentCutDollarsYearly",
   ]),
-  ...optionVarbsProp("activeFinancing", [
+  ...optionVarbsProp("financingFocal", [
     "loanBaseDollars",
     "loanBasePercent",
     "mortgageInsYearly",
@@ -68,7 +68,7 @@ export const globalOptionVarbs = {
     "loanPaymentMonthly",
     "loanPaymentYearly",
   ]),
-  ...optionVarbsProp("activeDeal", [
+  ...optionVarbsProp("dealFocal", [
     "pitiMonthly",
     "pitiYearly",
     "downPaymentDollars",

@@ -1,5 +1,11 @@
 import { DistributiveOmit } from "../../utils/types";
 import {
+  ChildPathName,
+  PathNameOfSection,
+  pathSectionName,
+  PathSectionName,
+} from "../absoluteVarbPaths";
+import {
   ActiveDealInfo,
   DbSectionInfoMixed,
   FeSectionInfoMixed,
@@ -8,12 +14,6 @@ import {
   VarbProp,
 } from "../baseSectionsDerived/baseVarbInfo";
 import { ExpectedCount } from "../baseSectionsVarbs/NanoIdInfo";
-import {
-  ChildPathName,
-  PathNameOfSection,
-  pathSectionName,
-  PathSectionName,
-} from "../childPaths";
 import { PathDbInfoMixed, PathInfoMixed, PathVarbInfoMixed } from "../PathInfo";
 import { SectionName } from "../SectionName";
 import { RelSectionInfo } from "./RelInfo";

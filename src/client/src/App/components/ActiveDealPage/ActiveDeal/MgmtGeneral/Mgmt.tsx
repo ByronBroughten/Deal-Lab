@@ -1,4 +1,5 @@
 import React from "react";
+import styled from "styled-components";
 import { MainSection } from "../../../appWide/GeneralSection/MainSection";
 import MainSectionBody from "../../../appWide/GeneralSection/MainSection/MainSectionBody";
 import { MainSectionTitleRow } from "../../../appWide/GeneralSection/MainSection/MainSectionTitleRow";
@@ -9,7 +10,7 @@ import BasicMgmtInfo from "./Mgmt/BasicMgmtInfo";
 export function Mgmt({ feId }: { feId: string }) {
   const feInfo = { sectionName: "mgmt", feId } as const;
   return (
-    <MainSection>
+    <Styled>
       <MainSectionTitleRow
         {...{
           ...feInfo,
@@ -39,6 +40,14 @@ export function Mgmt({ feId }: { feId: string }) {
           }}
         />
       </MainSectionBody>
-    </MainSection>
+    </Styled>
   );
 }
+
+const Styled = styled(MainSection)`
+  :hover {
+    .MainSectionTitleRow-xBtn {
+      visibility: visible;
+    }
+  }
+`;

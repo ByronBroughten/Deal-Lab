@@ -7,6 +7,8 @@ export class UserDataSolver extends SolverSectionsBase {
     return new SolverSections(this.solverSectionsProps);
   }
   loadUserData(userData: UserData): void {
+    // Do I want to turn off solving for these?
+
     const feUser = this.solverSections.oneAndOnly("feUser");
     feUser.loadSelf(userData.feUser);
     feUser.builder.replaceChildArrs(userData.mainStoreArrs);

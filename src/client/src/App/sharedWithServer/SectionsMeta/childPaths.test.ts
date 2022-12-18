@@ -1,4 +1,4 @@
-import { checkChildPaths } from "./childPaths";
+import { checkChildPaths } from "./absoluteVarbPaths";
 
 describe("childPaths", () => {
   it("should have all valid paths", () => {

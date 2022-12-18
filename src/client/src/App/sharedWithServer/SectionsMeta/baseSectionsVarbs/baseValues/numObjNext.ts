@@ -5,7 +5,7 @@ import {
   OptionVarbName,
   optionVarbPathName,
 } from "../../absolutePathVarbs";
-import { pathSectionName } from "../../childPaths";
+import { pathSectionName } from "../../absoluteVarbPaths";
 import { PathVarbNames } from "../../PathInfo";
 import { Id } from "../id";
 import { AbsoluteInEntity, InEntities } from "./entities";

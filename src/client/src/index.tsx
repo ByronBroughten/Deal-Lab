@@ -7,9 +7,6 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-
-// 1. Add titles to Mgmt and Loan
-
 // 3. Add persistent state for list pages
 //    - Tweak the variables context to allow those pages to
 //    alter it.

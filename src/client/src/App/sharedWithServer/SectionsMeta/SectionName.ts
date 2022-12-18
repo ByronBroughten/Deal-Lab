@@ -47,6 +47,9 @@ export const sectionNames = [
   "userInfo",
   "userInfoPrivate",
   "authInfoPrivate",
+
+  "userListEditor",
+  "userVarbEditor",
 ] as const;
 
 export type SectionName = typeof sectionNames[number];

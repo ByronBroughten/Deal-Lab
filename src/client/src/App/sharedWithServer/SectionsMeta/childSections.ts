@@ -34,9 +34,20 @@ export const childSections = checkChildSections({
     main: ["main"],
   }),
   omniParent: relOmniParentChildren,
-
-  // main is basically no longer required.
-  main: childrenSections({ feUser: ["feUser"], activeDeal: ["deal"] }),
+  // main has feUser and each of the main app pages
+  main: childrenSections({
+    feUser: ["feUser"],
+    activeDeal: ["deal"],
+    userVarbEditor: ["userVarbEditor"],
+    userListEditor: ["userListEditor"],
+  }),
+  userVarbEditor: childrenSections({
+    userVarbList: ["userVarbList"],
+  }),
+  userListEditor: childrenSections({
+    singleTimeList: ["singleTimeList"],
+    ongoingList: ["ongoingList"],
+  }),
   displayNameList: childrenSections({
     displayNameItem: ["displayNameItem"],
   }),

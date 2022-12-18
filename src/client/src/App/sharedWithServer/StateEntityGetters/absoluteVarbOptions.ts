@@ -4,7 +4,7 @@ import {
   activeVarbDisplayName,
   globalOptionVarbs,
 } from "../SectionsMeta/absolutePathVarbs";
-import { pathSectionName } from "../SectionsMeta/childPaths";
+import { pathSectionName } from "../SectionsMeta/absoluteVarbPaths";
 import { mixedInfoS } from "../SectionsMeta/childSectionsDerived/MixedSectionInfo";
 import { PathVarbNames } from "../SectionsMeta/PathInfo";
 import { sectionTrait } from "../SectionsMeta/sectionsTraits";

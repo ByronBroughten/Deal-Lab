@@ -1,5 +1,10 @@
 import { z } from "zod";
 import { zS } from "../utils/zod";
+import {
+  ChildPathName,
+  PathNameOfSection,
+  PathSectionName,
+} from "./absoluteVarbPaths";
 import { SectionNameProp } from "./baseSectionsDerived/baseSectionInfo";
 import { VarbProp, VarbPropNext } from "./baseSectionsDerived/baseVarbInfo";
 import {
@@ -7,11 +12,6 @@ import {
   GeneralMixedIdInfo,
   GeneralMixedInfo,
 } from "./baseSectionsVarbs/NanoIdInfo";
-import {
-  ChildPathName,
-  PathNameOfSection,
-  PathSectionName,
-} from "./childPaths";
 import { SectionName } from "./SectionName";
 
 interface PathNameProp<PN extends ChildPathName> {

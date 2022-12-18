@@ -1,6 +1,6 @@
 import { sectionsMeta, SectionsMeta } from "../SectionsMeta";
+import { getPath } from "../SectionsMeta/absoluteVarbPaths";
 import { DbSectionInfo } from "../SectionsMeta/baseSectionsVarbs/DbSectionInfo";
-import { getPath } from "../SectionsMeta/childPaths";
 import {
   IdInfoMixedMulti,
   SectionInfoMixed,

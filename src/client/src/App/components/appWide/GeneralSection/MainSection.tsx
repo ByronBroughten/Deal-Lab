@@ -20,9 +20,4 @@ const Styled = styled.div`
   .MainSectionTitleRow-xBtn {
     visibility: hidden;
   }
-  :hover {
-    .MainSectionTitleRow-xBtn {
-      visibility: visible;
-    }
-  }
 `;
