@@ -1,4 +1,4 @@
-import { FeStoreNameByType } from "../sharedWithServer/SectionsMeta/relSectionsDerived/relNameArrs/FeStoreName";
+import { FeStoreNameByType } from "../sharedWithServer/SectionsMeta/relSectionsDerived/FeStoreName";
 import { useGetterSectionOnlyOne } from "../sharedWithServer/stateClassHooks/useGetterSection";
 import { ThemeName } from "../theme/Theme";
 import { CompareTablePage } from "./CompareTablePage";
@@ -24,7 +24,7 @@ export function FeUserMainTablePage({ mainTableName, $themeName }: Props) {
         {...{
           feId: feUser.onlyChild(mainTableName).feId,
           rowSourceName: dbIndexName,
-          title: titles[mainTableName],
+          title: "Compare",
           $themeName,
         }}
       />

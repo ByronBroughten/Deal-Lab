@@ -1,7 +1,7 @@
 import { InEntityVarbInfo } from "../SectionsMeta/baseSectionsVarbs/baseValues/entities";
 import { inEntityInfo } from "../SectionsMeta/baseSectionsVarbs/baseValues/InEntityInfoValue";
-import { mixedInfoS } from "../SectionsMeta/childSectionsDerived/MixedSectionInfo";
-import { SectionPack } from "../SectionsMeta/childSectionsDerived/SectionPack";
+import { mixedInfoS } from "../SectionsMeta/sectionChildrenDerived/MixedSectionInfo";
+import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
 
 export const outputNames = [
@@ -12,7 +12,7 @@ export const outputNames = [
 
 const defaultDealOutputInfos: InEntityVarbInfo[] = outputNames.map(
   (varbName) => {
-    return mixedInfoS.absoluteVarbPath("deal", "dealFocal", varbName);
+    return mixedInfoS.absoluteVarbPath("dealFocal", varbName);
   }
 );
 

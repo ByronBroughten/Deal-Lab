@@ -1,4 +1,4 @@
-import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/Info";
+import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { useGetterSections } from "../../sharedWithServer/stateClassHooks/useGetterSections";
 import { GetterVarb } from "../../sharedWithServer/StateGetters/GetterVarb";
 import { ThemeName } from "../../theme/Theme";

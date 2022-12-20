@@ -5,14 +5,12 @@ import {
 } from "../../baseSectionsDerived/valueMetaTypes";
 import { NumUnitName } from "../../baseSectionsVarbs/baseValues/calculations/numUnitParams";
 import { ValueName } from "../../baseSectionsVarbs/baseVarb";
-import {
-  RelInVarbInfo,
-  RelSingleInVarbInfo,
-} from "../../childSectionsDerived/RelInOutVarbInfo";
-import { RelLocalVarbInfo } from "../../childSectionsDerived/RelVarbInfo";
+import { PathInVarbInfo } from "../../sectionChildrenDerived/RelInOutVarbInfo";
+import { RelLocalInfo } from "../../SectionInfo/RelInfo";
+import { RelLocalVarbInfo } from "../../SectionInfo/RelVarbInfo";
 
 export type UpdateFnProps = {
-  [kwargName: string]: RelInVarbInfo | RelInVarbInfo[];
+  [kwargName: string]: PathInVarbInfo | PathInVarbInfo[];
 };
 export type SwitchUpdateInfo = {
   switchInfo: RelLocalVarbInfo;
@@ -24,7 +22,7 @@ export type UpdateSwitchProp = SwitchUpdateInfo & {
 };
 
 export type UpdateSwitches = UpdateSwitchProp[];
-export type DisplayName = string | RelSingleInVarbInfo;
+export type DisplayName = string | RelLocalInfo;
 export type CommonRelVarb = {
   virtualVarb: {
     value: string;

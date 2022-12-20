@@ -3,18 +3,23 @@ import {
   ChildName,
   DbChildInfo,
   FeChildInfo,
-} from "../SectionsMeta/childSectionsDerived/ChildName";
-import { ChildSectionName } from "../SectionsMeta/childSectionsDerived/ChildSectionName";
+} from "../SectionsMeta/sectionChildrenDerived/ChildName";
+import { ChildSectionName } from "../SectionsMeta/sectionChildrenDerived/ChildSectionName";
 import {
   ChildArrPack,
   ChildSectionPack,
-} from "../SectionsMeta/childSectionsDerived/ChildSectionPack";
-import { SectionPack } from "../SectionsMeta/childSectionsDerived/SectionPack";
-import { FeSectionInfo } from "../SectionsMeta/Info";
+} from "../SectionsMeta/sectionChildrenDerived/ChildSectionPack";
+import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
+import { FeSectionInfo } from "../SectionsMeta/SectionInfo/FeInfo";
+import { SectionName } from "../SectionsMeta/SectionName";
 import {
   SectionNameByType,
   SectionNameType,
 } from "../SectionsMeta/SectionNameByType";
+import {
+  GetterSection,
+  GetterSectionRequiredProps,
+} from "../StateGetters/GetterSection";
 import { UpdaterSectionBase } from "../StateUpdaters/bases/updaterSectionBase";
 import {
   AddChildOptions,
@@ -29,8 +34,16 @@ import {
 import { PackMakerSection } from "./PackMakerSection";
 
 export class PackBuilderSection<
-  SN extends SectionNameByType
+  SN extends SectionName
 > extends UpdaterSectionBase<SN> {
+  static init<SN extends SectionName>(
+    props: GetterSectionRequiredProps<SN>
+  ): PackBuilderSection<SN> {
+    return new PackBuilderSection({
+      ...props,
+      ...GetterSection.initProps(props),
+    });
+  }
   get builderSections() {
     return new PackBuilderSections(this.getterSectionsProps);
   }
@@ -213,7 +226,7 @@ export class PackBuilderSection<
   ): PackBuilderSection<S> {
     return new PackBuilderSection({
       ...feInfo,
-      sectionsShare: this.sectionsShare,
+      ...this.getterSectionsProps,
     });
   }
   private youngestChild<

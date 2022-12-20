@@ -1,22 +1,22 @@
 import React from "react";
-import { VarbValueInfo } from "../../sharedWithServer/SectionsMeta/Info";
-import { useSectionsDispatch } from "../../sharedWithServer/stateClassHooks/useSections";
+import { FeVarbValueInfo } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
+import { useUpdateValue } from "../../sharedWithServer/stateClassHooks/useReduceActions";
 import { StandardProps } from "../general/StandardProps";
 import { NextBtn } from "./NextBtn";
 
-interface Props extends StandardProps, VarbValueInfo {}
+interface Props extends StandardProps, FeVarbValueInfo {}
 export const UpdateValueNextBtn = React.memo(function UpdateValueNextBtn({
   className,
   children,
   ...rest
 }: Props) {
-  const dispatch = useSectionsDispatch();
+  const updateValue = useUpdateValue();
   return (
     <NextBtn
       {...{
         className,
         children,
-        onClick: () => dispatch({ type: "updateValue", ...rest }),
+        onClick: () => updateValue(rest),
       }}
     />
   );

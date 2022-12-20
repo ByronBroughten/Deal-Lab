@@ -5,8 +5,8 @@ import {
 import {
   DbSectionName,
   DbStoreNameByType,
-} from "../../sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreName";
-import { SectionPack } from "../../sharedWithServer/SectionsMeta/childSectionsDerived/SectionPack";
+} from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/DbStoreName";
+import { SectionPack } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/SectionPack";
 import { ApiQuerierBase, ApiQuerierBaseProps } from "./Bases/ApiQuerierBase";
 
 interface SectionArrQuerierProps<CN extends DbStoreNameByType<"arrQuery">>

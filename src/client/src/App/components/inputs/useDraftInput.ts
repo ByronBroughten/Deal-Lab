@@ -1,8 +1,8 @@
 import { EditorState } from "draft-js";
 import { isEqual } from "lodash";
 import React, { useEffect, useState } from "react";
-import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/Info";
-import { useSectionsDispatch } from "../../sharedWithServer/stateClassHooks/useSections";
+import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
+import { useUpdateValueFromContent } from "../../sharedWithServer/stateClassHooks/useReduceActions";
 import { useSetterVarb } from "../../sharedWithServer/stateClassHooks/useSetterVarb";
 import {
   CreateEditorProps,
@@ -80,7 +80,7 @@ interface Props extends FeVarbInfo {
   editorState: EditorState;
 }
 function useUpdateValueFromEditor({ editorState, ...rest }: Props) {
-  const dispatch = useSectionsDispatch();
+  const updateFromContent = useUpdateValueFromContent();
   const contentState = editorState.getCurrentContent();
   const isFirstUpdateRef = React.useRef(true);
   useEffect(() => {
@@ -88,6 +88,6 @@ function useUpdateValueFromEditor({ editorState, ...rest }: Props) {
       isFirstUpdateRef.current = false;
       return;
     }
-    dispatch({ type: "updateValueFromContent", contentState, ...rest });
+    updateFromContent({ contentState, ...rest });
   }, [contentState]);
 }

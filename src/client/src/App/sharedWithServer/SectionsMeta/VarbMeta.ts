@@ -8,10 +8,6 @@ import {
   numUnitParams,
 } from "./baseSectionsVarbs/baseValues/calculations/numUnitParams";
 import { ValueName } from "./baseSectionsVarbs/baseVarb";
-import {
-  RelInVarbInfo,
-  RelOutVarbInfo,
-} from "./childSectionsDerived/RelInOutVarbInfo";
 import { relSections } from "./relSectionsVarbs";
 import {
   DisplayName,
@@ -21,13 +17,17 @@ import {
   UpdateSwitchProp,
 } from "./relSectionVarbs/rel/relVarbTypes";
 import { GeneralRelVarbs } from "./relSectionVarbs/relVarbs";
+import {
+  PathInVarbInfo,
+  RelOutVarbInfo,
+} from "./sectionChildrenDerived/RelInOutVarbInfo";
 import { SectionMeta } from "./SectionMeta";
 import { SectionName } from "./SectionName";
 
 type InBaseUpdatePack = {
   updateFnName: UpdateFnName;
   updateFnProps: UpdateFnProps;
-  inUpdateInfos: RelInVarbInfo[];
+  inUpdateInfos: PathInVarbInfo[];
 };
 type InDefaultUpdatePack = InBaseUpdatePack & {
   inverseSwitches: SwitchUpdateInfo[];
@@ -57,9 +57,9 @@ export function isSwitchOutPack(pack: OutUpdatePack): pack is OutSwitchPack {
 }
 export type OutUpdatePack = OutSwitchPack | OutDefaultPack;
 
-function fnPropsToInVarbInfos(updateFnProps: UpdateFnProps): RelInVarbInfo[] {
+function fnPropsToInVarbInfos(updateFnProps: UpdateFnProps): PathInVarbInfo[] {
   const infos = Object.values(updateFnProps);
-  let nextInfos: RelInVarbInfo[] = [];
+  let nextInfos: PathInVarbInfo[] = [];
   for (const info of infos) {
     if (Array.isArray(info)) nextInfos = nextInfos.concat(info);
     else nextInfos.push(info);
@@ -82,7 +82,7 @@ function inSwitchPropsToInfos(
 interface VarbMetaProps<SN extends SectionName> {
   varbName: string;
   sectionName: SN;
-  inDefaultInfos: RelInVarbInfo[];
+  inDefaultInfos: PathInVarbInfo[];
   InSwitchUpdatePacks: InSwitchUpdatePack[];
   outUpdatePacks: OutUpdatePack[];
 }

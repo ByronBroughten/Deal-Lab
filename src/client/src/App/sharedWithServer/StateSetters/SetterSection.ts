@@ -2,16 +2,16 @@ import { pick } from "lodash";
 import { VarbName } from "../SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
 import { SectionValues } from "../SectionsMeta/baseSectionsDerived/valueMetaTypes";
 import { SwitchEndingKey } from "../SectionsMeta/baseSectionsVarbs/RelSwitchVarb";
-import { ChildValueInfo } from "../SectionsMeta/childSectionsDerived/ChildInfo";
+import { ChildValueInfo } from "../SectionsMeta/sectionChildrenDerived/ChildInfo";
 import {
   ChildName,
   DbChildInfo,
   FeChildInfo,
-} from "../SectionsMeta/childSectionsDerived/ChildName";
-import { ChildSectionName } from "../SectionsMeta/childSectionsDerived/ChildSectionName";
-import { ParentNameSafe } from "../SectionsMeta/childSectionsDerived/ParentName";
-import { SectionPack } from "../SectionsMeta/childSectionsDerived/SectionPack";
-import { FeSectionInfo, FeVarbInfo } from "../SectionsMeta/Info";
+} from "../SectionsMeta/sectionChildrenDerived/ChildName";
+import { ChildSectionName } from "../SectionsMeta/sectionChildrenDerived/ChildSectionName";
+import { ParentNameSafe } from "../SectionsMeta/sectionChildrenDerived/ParentName";
+import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
+import { FeSectionInfo, FeVarbInfo } from "../SectionsMeta/SectionInfo/FeInfo";
 import { SectionMeta } from "../SectionsMeta/SectionMeta";
 import {
   SectionNameByType,

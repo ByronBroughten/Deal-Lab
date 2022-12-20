@@ -1,8 +1,7 @@
-import { ChildName } from "../../SectionsMeta/childSectionsDerived/ChildName";
-import { ParentNameSafe } from "../../SectionsMeta/childSectionsDerived/ParentName";
-import { FeVarbInfo } from "../../SectionsMeta/Info";
+import { ChildName } from "../../SectionsMeta/sectionChildrenDerived/ChildName";
+import { ParentNameSafe } from "../../SectionsMeta/sectionChildrenDerived/ParentName";
+import { FeVarbInfo } from "../../SectionsMeta/SectionInfo/FeInfo";
 import { SectionNameByType } from "../../SectionsMeta/SectionNameByType";
-import { SectionsShare } from "../../StateGetters/Bases/GetterSectionsBase";
 import { GetterList } from "../../StateGetters/GetterList";
 import { GetterSection } from "../../StateGetters/GetterSection";
 import { GetterVarb } from "../../StateGetters/GetterVarb";
@@ -22,7 +21,7 @@ export class SetterTesterSection<
     const sections = SolverSections.initSectionsFromDefaultMain();
     const list = new GetterList({
       sectionName,
-      sectionsShare: { sections },
+      ...GetterList.initProps({ sections, sectionContextName: "default" }),
     });
     return {
       ...list.last.feInfo,
@@ -59,27 +58,25 @@ export class SetterTesterSection<
   childCounts(childName: ChildName<SN>) {
     return {
       childIds: this.get.childFeIds(childName).length,
-      childSections: this.get.childList(childName).length,
+      allSectionChildren: this.get.childList(childName).length,
     };
   }
   counts() {
     const counts = this.parent.childCounts(this.sectionName as any);
     return {
       siblings: counts.childIds,
-      sectionsWithName: counts.childSections,
+      sectionsWithName: counts.allSectionChildren,
     };
-  }
-
-  // on the way out
-  get sectionsSharePropFromState(): { sectionsShare: SectionsShare } {
-    return { sectionsShare: { sections: this.state.sections } };
   }
   getterVarbFromState<SN extends SectionNameByType>(
     feInfo: FeVarbInfo<SN>
   ): GetterVarb<SN> {
     return new GetterVarb({
       ...feInfo,
-      ...this.sectionsSharePropFromState,
+      ...GetterVarb.initProps({
+        sections: this.state.sections,
+        sectionContextName: "default",
+      }),
     });
   }
 }

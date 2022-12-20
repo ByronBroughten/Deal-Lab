@@ -1,5 +1,5 @@
-import { DbSectionNameName } from "../../sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreName";
-import { SectionPack } from "../../sharedWithServer/SectionsMeta/childSectionsDerived/SectionPack";
+import { DbSectionNameName } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/DbStoreName";
+import { SectionPack } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/SectionPack";
 import { SectionNameByType } from "../../sharedWithServer/SectionsMeta/SectionNameByType";
 import { PackMakerSection } from "../../sharedWithServer/StatePackers.ts/PackMakerSection";
 import { SetterSection } from "../../sharedWithServer/StateSetters/SetterSection";

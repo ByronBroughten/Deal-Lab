@@ -1,5 +1,5 @@
 import { switchNames } from "../../baseSectionsVarbs/RelSwitchVarb";
-import { relVarbInfoS } from "../../childSectionsDerived/RelVarbInfo";
+import { relVarbInfoS } from "../../SectionInfo/RelVarbInfo";
 import { UpdateSwitchProp } from "./relVarbTypes";
 
 export const relUpdateSwitch = {

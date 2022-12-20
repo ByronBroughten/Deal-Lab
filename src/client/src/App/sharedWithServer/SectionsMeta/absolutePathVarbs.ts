@@ -1,12 +1,15 @@
 import { Obj } from "../utils/Obj";
 import { Arr } from "./../utils/Arr";
-import { childPathNames, PathSectionName } from "./absoluteVarbPaths";
 import { VarbName } from "./baseSectionsDerived/baseSectionsVarbsTypes";
 import { VarbNames } from "./baseSectionsDerived/baseVarbInfo";
 import { SectionName } from "./SectionName";
+import {
+  SectionNameOfPath,
+  sectionPathNames,
+} from "./sectionPathContexts/sectionPathNames";
 import { VarbMeta } from "./VarbMeta";
 
-export const activePathNames = Arr.extractStrict(childPathNames, [
+export const activePathNames = Arr.extractStrict(sectionPathNames, [
   "dealFocal",
   "financingFocal",
   "mgmtGeneralFocal",
@@ -28,21 +31,21 @@ export function activeVarbDisplayName<SN extends SectionName>({
 
 type OptionVarbsProp<
   PN extends ActivePathName,
-  VNS extends VarbName<PathSectionName<PN>>
+  VNS extends VarbName<SectionNameOfPath<PN>>
 > = {
   [P in PN]: VNS[];
 };
 
 function optionVarbsProp<
   PN extends ActivePathName,
-  VNS extends VarbName<PathSectionName<PN>>
+  VNS extends VarbName<SectionNameOfPath<PN>>
 >(pathName: PN, varbNames: VNS[]): OptionVarbsProp<PN, VNS> {
   return {
     [pathName]: varbNames,
   } as OptionVarbsProp<PN, VNS>;
 }
 
-export const globalOptionVarbs = {
+export const soloVarbOptions = {
   ...optionVarbsProp("propertyGeneralFocal", [
     "price",
     "sqft",
@@ -86,16 +89,16 @@ export const globalOptionVarbs = {
   ]),
 } as const;
 
-type GlobalOptionVarbArrs = typeof globalOptionVarbs;
+type GlobalOptionVarbArrs = typeof soloVarbOptions;
 type GlobalOptionVarbs = {
   [PN in keyof GlobalOptionVarbArrs]: GlobalOptionVarbArrs[PN][number];
 };
 type OptionVarbsToPathName = {
   [PN in keyof GlobalOptionVarbs as GlobalOptionVarbs[PN]]: PN;
 };
-const optionVarbsToPathName = Obj.keys(globalOptionVarbs).reduce(
+const optionVarbsToPathName = Obj.keys(soloVarbOptions).reduce(
   (result, pathName) => {
-    const varbNames = globalOptionVarbs[pathName];
+    const varbNames = soloVarbOptions[pathName];
     for (const varbName of varbNames) {
       (result as any)[varbName] = pathName;
     }

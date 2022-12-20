@@ -5,10 +5,11 @@ import {
   makeReq,
   SectionPackReq,
 } from "../../../client/src/App/sharedWithServer/apiQueriesShared/makeReqAndRes";
-import { DbSectionNameName } from "../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreName";
+import { DbSectionNameName } from "../../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/DbStoreName";
 import { SectionNameByType } from "../../../client/src/App/sharedWithServer/SectionsMeta/SectionNameByType";
 import { GetterListProps } from "../../../client/src/App/sharedWithServer/StateGetters/Bases/GetterListBase";
 import { GetterSectionProps } from "../../../client/src/App/sharedWithServer/StateGetters/Bases/GetterSectionBase";
+import { GetterSectionsBase } from "../../../client/src/App/sharedWithServer/StateGetters/Bases/GetterSectionsBase";
 import { GetterList } from "../../../client/src/App/sharedWithServer/StateGetters/GetterList";
 import { GetterSection } from "../../../client/src/App/sharedWithServer/StateGetters/GetterSection";
 import { PackMakerSection } from "../../../client/src/App/sharedWithServer/StatePackers.ts/PackMakerSection";
@@ -52,9 +53,10 @@ export class SectionQueryTester<
       apiQueries: {} as ApiQueries,
       ...makeLastSectionProps({
         sectionName,
-        sectionsShare: {
+        ...GetterSectionsBase.initProps({
           sections: SolverSections.initSectionsFromDefaultMain(),
-        },
+          sectionContextName: "default",
+        }),
       }),
     });
   }

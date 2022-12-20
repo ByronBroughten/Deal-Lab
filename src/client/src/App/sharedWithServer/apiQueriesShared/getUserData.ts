@@ -1,15 +1,15 @@
 import { z } from "zod";
 import { constants } from "../../Constants";
 import { UserInfoTokenProp } from "../../modules/services/authService";
-import { ChildSectionPack } from "../SectionsMeta/childSectionsDerived/ChildSectionPack";
-import {
-  SectionPack,
-  zRawSectionPack,
-} from "../SectionsMeta/childSectionsDerived/SectionPack";
 import {
   FeStoreNameByType,
   feStoreNameS,
-} from "../SectionsMeta/relSectionsDerived/relNameArrs/FeStoreName";
+} from "../SectionsMeta/relSectionsDerived/FeStoreName";
+import { ChildSectionPack } from "../SectionsMeta/sectionChildrenDerived/ChildSectionPack";
+import {
+  SectionPack,
+  zRawSectionPack,
+} from "../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { validateSectionPackByType } from "../SectionsMeta/SectionNameByType";
 import { zS } from "../utils/zod";
 

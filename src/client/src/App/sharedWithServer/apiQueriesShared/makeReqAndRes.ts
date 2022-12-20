@@ -1,4 +1,4 @@
-import { DbPack } from "../SectionsMeta/childSectionsDerived/DbSectionPack";
+import { DbPack } from "../SectionsMeta/sectionChildrenDerived/DbSectionPack";
 import {
   AllQueryName,
   DbSectionName,
@@ -6,8 +6,8 @@ import {
   DbStoreNameProp,
   SectionArrQueryName,
   SectionQueryName,
-} from "../SectionsMeta/childSectionsDerived/DbStoreName";
-import { SectionPack } from "../SectionsMeta/childSectionsDerived/SectionPack";
+} from "../SectionsMeta/sectionChildrenDerived/DbStoreName";
+import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
 
 export const makeReq = <B extends QueryObj = {}>(body?: B): MakeReq<B> => ({
   body: body ?? ({} as B),

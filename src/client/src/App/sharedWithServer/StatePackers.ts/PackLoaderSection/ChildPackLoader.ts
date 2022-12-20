@@ -1,11 +1,11 @@
 import { pick } from "lodash";
-import { ChildName } from "../../SectionsMeta/childSectionsDerived/ChildName";
-import { ChildSectionName } from "../../SectionsMeta/childSectionsDerived/ChildSectionName";
-import { SectionPack } from "../../SectionsMeta/childSectionsDerived/SectionPack";
+import { ChildName } from "../../SectionsMeta/sectionChildrenDerived/ChildName";
+import { ChildSectionName } from "../../SectionsMeta/sectionChildrenDerived/ChildSectionName";
+import { SectionPack } from "../../SectionsMeta/sectionChildrenDerived/SectionPack";
 import {
   OneRawSection,
   SpChildInfo,
-} from "../../SectionsMeta/childSectionsDerived/SectionPack/RawSection";
+} from "../../SectionsMeta/sectionChildrenDerived/SectionPack/RawSection";
 import { SectionNameByType } from "../../SectionsMeta/SectionNameByType";
 import {
   GetterSectionBase,
@@ -122,9 +122,9 @@ export class ChildPackLoader<
     childChildSpInfo: SpChildInfo<any, any>;
   }) {
     return new ChildPackLoader({
+      ...this.getterSectionsProps,
       sectionName: this.childType,
       feId: childFeId,
-      sectionsShare: this.sectionsShare,
       sectionPack: this.sectionPack,
       spChildInfo: childChildSpInfo,
     });

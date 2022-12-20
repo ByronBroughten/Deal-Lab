@@ -19,15 +19,15 @@ import {
   switchNames,
 } from "../SectionsMeta/baseSectionsVarbs/RelSwitchVarb";
 import { ValueTypesPlusAny } from "../SectionsMeta/baseSectionsVarbs/StateVarbTypes";
-import { ChildValueInfo } from "../SectionsMeta/childSectionsDerived/ChildInfo";
+import { ChildValueInfo } from "../SectionsMeta/sectionChildrenDerived/ChildInfo";
 import {
   ChildIdArrsWide,
   ChildName,
   DbChildInfo,
   FeChildInfo,
   GeneralChildIdArrs,
-} from "../SectionsMeta/childSectionsDerived/ChildName";
-import { ChildSectionName } from "../SectionsMeta/childSectionsDerived/ChildSectionName";
+} from "../SectionsMeta/sectionChildrenDerived/ChildName";
+import { ChildSectionName } from "../SectionsMeta/sectionChildrenDerived/ChildSectionName";
 import {
   DescendantIds,
   DescendantName,
@@ -35,27 +35,27 @@ import {
   DescendantSectionName,
   DescOfSnDbIdInfo,
   SelfAndDescendantIds,
-} from "../SectionsMeta/childSectionsDerived/DescendantSectionName";
+} from "../SectionsMeta/sectionChildrenDerived/DescendantSectionName";
 import {
   mixedInfoS,
   SectionInfoMixedFocal,
   VarbInfoMixedFocal,
-} from "../SectionsMeta/childSectionsDerived/MixedSectionInfo";
+} from "../SectionsMeta/sectionChildrenDerived/MixedSectionInfo";
 import {
+  noParentWarning,
   ParentName,
   ParentNameSafe,
   PiblingName,
   SelfChildName,
   StepSiblingName,
-} from "../SectionsMeta/childSectionsDerived/ParentName";
-import { RelSectionInfo } from "../SectionsMeta/childSectionsDerived/RelInfo";
+} from "../SectionsMeta/sectionChildrenDerived/ParentName";
 import {
   FeParentInfo,
   FeParentInfoSafe,
   FeSectionInfo,
   FeVarbInfo,
-  noParentWarning,
-} from "../SectionsMeta/Info";
+} from "../SectionsMeta/SectionInfo/FeInfo";
+import { RelSectionInfo } from "../SectionsMeta/SectionInfo/RelInfo";
 import { SectionMeta } from "../SectionsMeta/SectionMeta";
 import { SectionName } from "../SectionsMeta/SectionName";
 import {
@@ -67,16 +67,32 @@ import { PackMakerSection } from "../StatePackers.ts/PackMakerSection";
 import { RawFeSection } from "../StateSections/StateSectionsTypes";
 import { Arr } from "../utils/Arr";
 import { Obj } from "../utils/Obj";
-import { GetterSectionBase } from "./Bases/GetterSectionBase";
+import {
+  GetterSectionBase,
+  GetterSectionProps,
+} from "./Bases/GetterSectionBase";
+import { GetterSectionsRequiredProps } from "./Bases/GetterSectionsBase";
 import { GetterList } from "./GetterList";
 import { GetterSections } from "./GetterSections";
 import { GetterVarb } from "./GetterVarb";
 import { GetterVarbs } from "./GetterVarbs";
 import { GetterVirtualVarb } from "./GetterVirtualVarb";
 
+export interface GetterSectionRequiredProps<SN extends SectionName>
+  extends FeSectionInfo<SN>,
+    GetterSectionsRequiredProps {}
+
 export class GetterSection<
-  SN extends SectionNameByType = SectionNameByType
+  SN extends SectionName = SectionName
 > extends GetterSectionBase<SN> {
+  static initSectionProps<SN extends SectionName>(
+    props: GetterSectionRequiredProps<SN>
+  ): GetterSectionProps<SN> {
+    return {
+      ...this.initProps(props),
+      ...props,
+    };
+  }
   get sections() {
     return new GetterSections(this.getterSectionsProps);
   }
@@ -215,13 +231,13 @@ export class GetterSection<
     }
   }
   childrenOfType<CSN extends ChildSectionName<SN>>(
-    childSectionName: CSN
+    sectionChildName: CSN
   ): GetterSection<CSN>[] {
-    const childIds = this.childIdsOfType(childSectionName);
+    const childIds = this.childIdsOfType(sectionChildName);
     return childIds.map((feId) =>
       this.getterSection({
         feId,
-        sectionName: childSectionName,
+        sectionName: sectionChildName,
       })
     );
   }
@@ -428,10 +444,15 @@ export class GetterSection<
     const sectionName = this.meta.childType(childName) as CT;
     return { sectionName, feId };
   }
+  get getterSectionProps(): GetterSectionProps<SN> {
+    return {
+      ...this.getterListProps,
+      feId: this.feId,
+    };
+  }
   varb(varbName: string): GetterVarb<SN> {
     return new GetterVarb({
-      ...this.feSectionInfo,
-      sectionsShare: this.sectionsShare,
+      ...this.getterSectionProps,
       varbName,
     });
   }
@@ -724,7 +745,7 @@ export class GetterSection<
     const { parentNames } = this.meta;
     for (const parentName of parentNames) {
       const parentList = new GetterList({
-        sectionsShare: this.sectionsShare,
+        ...this.getterSectionsProps,
         sectionName: parentName,
       });
 
@@ -771,8 +792,8 @@ export class GetterSection<
     feInfo: FeSectionInfo<S>
   ): GetterSection<S> {
     return new GetterSection({
+      ...this.getterSectionsProps,
       ...feInfo,
-      sectionsShare: this.sectionsShare,
     });
   }
 }

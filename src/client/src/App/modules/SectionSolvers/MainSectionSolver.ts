@@ -3,13 +3,13 @@ import {
   SectionValues,
   SomeSectionValues,
 } from "../../sharedWithServer/SectionsMeta/baseSectionsDerived/valueMetaTypes";
-import { SelfChildName } from "../../sharedWithServer/SectionsMeta/childSectionsDerived/ParentName";
-import { SectionPack } from "../../sharedWithServer/SectionsMeta/childSectionsDerived/SectionPack";
-import { FeParentInfo } from "../../sharedWithServer/SectionsMeta/Info";
 import {
   AutoSyncControl,
   SyncStatus,
 } from "../../sharedWithServer/SectionsMeta/relSectionVarbs/relVarbs";
+import { SelfChildName } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/ParentName";
+import { SectionPack } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/SectionPack";
+import { FeParentInfo } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { SectionNameByType } from "../../sharedWithServer/SectionsMeta/SectionNameByType";
 import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
 import { GetterSections } from "../../sharedWithServer/StateGetters/GetterSections";

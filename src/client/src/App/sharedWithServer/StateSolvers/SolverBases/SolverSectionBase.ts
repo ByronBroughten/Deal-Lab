@@ -1,4 +1,4 @@
-import { FeSectionInfo } from "../../SectionsMeta/Info";
+import { FeSectionInfo } from "../../SectionsMeta/SectionInfo/FeInfo";
 import { SectionNameByType } from "../../SectionsMeta/SectionNameByType";
 import {
   GetterSectionBase,

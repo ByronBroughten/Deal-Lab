@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { FeInfoByType } from "../../../../sharedWithServer/SectionsMeta/Info";
+import { FeInfoByType } from "../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { useSetterSection } from "../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import { Arr } from "../../../../sharedWithServer/utils/Arr";
 import theme from "../../../../theme/Theme";

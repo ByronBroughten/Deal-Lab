@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { FeStoreNameByType } from "../../sharedWithServer/SectionsMeta/relSectionsDerived/relNameArrs/FeStoreName";
+import { FeStoreNameByType } from "../../sharedWithServer/SectionsMeta/relSectionsDerived/FeStoreName";
 import theme, { ThemeName } from "../../theme/Theme";
 import { GeneralSection } from "../appWide/GeneralSection";
 import { MakeListNode } from "../appWide/ListGroup/ListGroupShared/ListGroupGeneric/ListGroupLists";

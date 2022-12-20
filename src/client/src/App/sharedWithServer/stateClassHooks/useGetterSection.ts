@@ -1,25 +1,30 @@
-import { FeSectionInfo } from "../SectionsMeta/Info";
+import { FeSectionInfo } from "../SectionsMeta/SectionInfo/FeInfo";
+import { SectionName } from "../SectionsMeta/SectionName";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { GetterSection } from "../StateGetters/GetterSection";
-import { useSectionsContext } from "./useSections";
+import { GetterSections } from "../StateGetters/GetterSections";
+import { useFullSectionsContext } from "./useFullSectionsContext";
 
-export function useGetterSection<SN extends SectionNameByType = "main">(
-  props?: FeSectionInfo<SN>
+export function useGetterSection<SN extends SectionName>(
+  feInfo: FeSectionInfo<SN>
 ): GetterSection<SN> {
-  const { sections } = useSectionsContext();
+  const sectionsContext = useFullSectionsContext();
   return new GetterSection({
-    ...(props ?? (sections.mainSectionInfo as FeSectionInfo<SN>)),
-    sectionsShare: { sections },
+    ...GetterSections.initProps(sectionsContext),
+    ...feInfo,
   });
 }
 
 export function useGetterSectionOnlyOne<SN extends SectionNameByType>(
   sectionName: SN
 ): GetterSection<SN> {
-  const { sections } = useSectionsContext();
+  const { sections, ...rest } = useFullSectionsContext();
   const { feId } = sections.onlyOneRawSection(sectionName);
   return new GetterSection({
-    sectionsShare: { sections },
+    ...GetterSections.initProps({
+      sections,
+      ...rest,
+    }),
     sectionName,
     feId,
   });

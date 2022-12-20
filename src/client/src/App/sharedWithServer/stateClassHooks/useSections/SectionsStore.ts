@@ -2,8 +2,8 @@ import hash from "object-hash";
 import React from "react";
 import { config } from "../../../Constants";
 import { getStoredObj } from "../../../utils/localStorage";
-import { SectionPack } from "../../SectionsMeta/childSectionsDerived/SectionPack";
 import { relSections } from "../../SectionsMeta/relSectionsVarbs";
+import { SectionPack } from "../../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { validateSectionPackByType } from "../../SectionsMeta/SectionNameByType";
 import { GetterSections } from "../../StateGetters/GetterSections";
 import { PackBuilderSection } from "../../StatePackers.ts/PackBuilderSection";
@@ -30,10 +30,13 @@ export function useLocalSectionsStore({
 const { tokenKey } = config;
 export class SectionsStore {
   static storeSections(sections: StateSections): void {
-    const getterSections = new GetterSections({ sectionsShare: { sections } });
+    const getterSections = GetterSections.init({
+      sections,
+      sectionContextName: "default",
+    });
     const { main } = getterSections;
     const packBuilder = new PackBuilderSection({
-      sectionsShare: { sections },
+      ...getterSections.getterSectionsProps,
       ...main.onlyChild("activeDeal").feInfo,
     });
     const activeDealPack = packBuilder.makeSectionPack();

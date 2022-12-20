@@ -1,9 +1,9 @@
 import { Obj } from "../utils/Obj";
+import { tableSourceParams } from "./relSectionsDerived/relNameArrs/tableStoreArrs";
 import {
   sectionParentNames,
   SectionToParentNameArrs,
-} from "./childSectionsDerived/ParentName";
-import { tableSourceParams } from "./relSectionsDerived/relNameArrs/tableStoreArrs";
+} from "./sectionChildrenDerived/ParentName";
 import { SectionName, sectionNames, sectionNamesToNull } from "./SectionName";
 
 export const allTableSourceParams = Obj.merge(

@@ -1,5 +1,5 @@
-import { ChildName } from "../../../../sharedWithServer/SectionsMeta/childSectionsDerived/ChildName";
-import { FeSectionInfo } from "../../../../sharedWithServer/SectionsMeta/Info";
+import { ChildName } from "../../../../sharedWithServer/SectionsMeta/sectionChildrenDerived/ChildName";
+import { FeSectionInfo } from "../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { SectionName } from "../../../../sharedWithServer/SectionsMeta/SectionName";
 import { useSetterSection } from "../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import { ThemeName } from "../../../../theme/Theme";

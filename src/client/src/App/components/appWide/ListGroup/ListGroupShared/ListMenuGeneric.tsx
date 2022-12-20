@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { FeInfoByType } from "../../../../sharedWithServer/SectionsMeta/Info";
+import { FeInfoByType } from "../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import theme, { ThemeName } from "../../../../theme/Theme";
 import {
   MainSectionMenuOptions,

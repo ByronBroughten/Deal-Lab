@@ -5,7 +5,7 @@ import {
   useTableActor,
   UseTableActorProps,
 } from "../modules/sectionActorHooks/useTableActor";
-import { feStoreNameS } from "../sharedWithServer/SectionsMeta/relSectionsDerived/relNameArrs/FeStoreName";
+import { feStoreNameS } from "../sharedWithServer/SectionsMeta/relSectionsDerived/FeStoreName";
 import { useAuthStatus } from "../sharedWithServer/stateClassHooks/useAuthStatus";
 import theme, { ThemeName } from "../theme/Theme";
 import useHowMany from "./appWide/customHooks/useHowMany";
@@ -80,7 +80,6 @@ export function CompareTablePage({ $themeName, title, ...props }: Props) {
     </SidebarContainer>
   );
 }
-// Here I want "Deals" to be a dropdown box I guess.
 
 const Styled = styled.div<{ $themeName?: ThemeName }>`
   display: flex;
@@ -98,7 +97,7 @@ const Styled = styled.div<{ $themeName?: ThemeName }>`
   }
 
   .CompareTablePage-body {
-    margin-top: ${theme.s2};
+    margin-top: ${theme.s4};
     border-radius: ${theme.br0};
     border: 2px solid ${theme.primaryNext};
     background: ${theme.light};

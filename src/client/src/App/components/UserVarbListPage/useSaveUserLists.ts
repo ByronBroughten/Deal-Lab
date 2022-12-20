@@ -6,7 +6,7 @@ import { SectionArrQuerier } from "../../modules/QueriersBasic/SectionArrQuerier
 import {
   FeStoreNameByType,
   feStoreNameS,
-} from "../../sharedWithServer/SectionsMeta/relSectionsDerived/relNameArrs/FeStoreName";
+} from "../../sharedWithServer/SectionsMeta/relSectionsDerived/FeStoreName";
 import { useSections } from "../../sharedWithServer/stateClassHooks/useSections";
 import { useSetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useSetterSection";
 import { PackMakerSection } from "../../sharedWithServer/StatePackers.ts/PackMakerSection";

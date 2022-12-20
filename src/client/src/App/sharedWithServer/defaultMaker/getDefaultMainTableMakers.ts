@@ -1,8 +1,8 @@
 import { makeVarbNamesInfo } from "../SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
 import { inEntityInfo } from "../SectionsMeta/baseSectionsVarbs/baseValues/InEntityInfoValue";
-import { DbSectionPack } from "../SectionsMeta/childSectionsDerived/DbSectionPack";
-import { SectionPack } from "../SectionsMeta/childSectionsDerived/SectionPack";
-import { FeStoreNameByType } from "../SectionsMeta/relSectionsDerived/relNameArrs/FeStoreName";
+import { FeStoreNameByType } from "../SectionsMeta/relSectionsDerived/FeStoreName";
+import { DbSectionPack } from "../SectionsMeta/sectionChildrenDerived/DbSectionPack";
+import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
 import { Obj } from "../utils/Obj";
 import { outputNames } from "./makeDefaultOutputList";

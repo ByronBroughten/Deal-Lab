@@ -1,9 +1,9 @@
 import {
   ChildName,
   FeChildInfo,
-} from "../SectionsMeta/childSectionsDerived/ChildName";
-import { ChildSectionName } from "../SectionsMeta/childSectionsDerived/ChildSectionName";
-import { FeSectionInfo, FeVarbInfo } from "../SectionsMeta/Info";
+} from "../SectionsMeta/sectionChildrenDerived/ChildName";
+import { ChildSectionName } from "../SectionsMeta/sectionChildrenDerived/ChildSectionName";
+import { FeSectionInfo, FeVarbInfo } from "../SectionsMeta/SectionInfo/FeInfo";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { GetterSection } from "../StateGetters/GetterSection";
 import { OutVarbGetterSection } from "../StateInOutVarbs/OutVarbGetterSection";

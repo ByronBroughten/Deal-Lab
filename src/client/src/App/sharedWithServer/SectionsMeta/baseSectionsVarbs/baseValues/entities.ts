@@ -8,12 +8,12 @@ import {
   DbVarbInfoMixed,
   GlobalVarbInfo,
 } from "../../baseSectionsDerived/baseVarbInfo";
-import { FeVarbInfo } from "../../Info";
 import {
   PathDbVarbInfoMixed,
-  PathVarbInfoMixed,
+  VarbAbsoluteInfoMixed,
   zSectionPathProp,
-} from "../../PathInfo";
+} from "../../SectionInfo/AbsolutePathInfo";
+import { FeVarbInfo } from "../../SectionInfo/FeInfo";
 import { SectionName } from "../../SectionName";
 import { Id } from "../id";
 
@@ -32,7 +32,7 @@ const zInEntityBase = z.object({
 });
 
 export interface PathEntityInfo
-  extends PathVarbInfoMixed<SectionName, "onlyOne"> {}
+  extends VarbAbsoluteInfoMixed<SectionName, "onlyOne"> {}
 
 const zPathInEntityInfo = zSectionPathProp.extend({
   ...commonEntityInfo,

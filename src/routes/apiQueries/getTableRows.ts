@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { QueryReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
-import { SectionPack } from "../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/SectionPack";
+import { SectionPack } from "../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/SectionPack";
 import { validateSectionPackArrByType } from "../../client/src/App/sharedWithServer/SectionsMeta/SectionNameByType";
 import { getAuthWare } from "../../middleware/authWare";
 import { DbUser } from "./apiQueriesShared/DbSections/DbUser";

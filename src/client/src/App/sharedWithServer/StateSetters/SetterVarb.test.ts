@@ -22,12 +22,15 @@ describe("SetterVarb", () => {
       sectionName: "property",
       varbName: "price",
     });
-
     const preNum = tester.get.numberOrZero;
 
-    const preFinal = tester.get.sections
-      .oneAndOnly("deal")
-      .varb("totalInvestment");
+    const getDealAnscestor = () =>
+      tester.get.nearestAnscestor({
+        sectionName: "deal",
+        varbName: "totalInvestment",
+      });
+
+    const preFinal = getDealAnscestor();
     const preFinalNum = preFinal.numberOrZero;
 
     const amountToAdd = 10000;
@@ -35,9 +38,7 @@ describe("SetterVarb", () => {
     tester.setter.updateValue(nextValue);
 
     const postNum = tester.get.numberOrQuestionMark;
-    const postFinal = tester.get.sections
-      .oneAndOnly("deal")
-      .varb("totalInvestment");
+    const postFinal = getDealAnscestor();
     const postFinalNum = postFinal.numberOrZero;
 
     expect(postNum).toBe(preNum + amountToAdd);
@@ -82,7 +83,7 @@ describe("SetterVarb", () => {
   //   let next = exec("homeInsYearly", numObj);
   //   next.feVarb("homeInsYearly", propertyInfo);
 
-  //   const homeInsYearlyInfo = InfoS.feVarb("homeInsYearly", propertyInfo);
+  //   const homeInsYearlyInfo = FeInfoS.feVarb("homeInsYearly", propertyInfo);
   //   const propertyGeneral = next.section("propertyGeneral");
 
   //   const outEntity1 = propertyGeneral.varb("sqft").outEntities[0];
@@ -111,7 +112,7 @@ describe("SetterVarb", () => {
   //   });
 
   //   analyzer = exec("homeInsYearly", numObj);
-  //   const homeInsYearlyInfo = InfoS.feVarb("homeInsYearly", propertyInfo);
+  //   const homeInsYearlyInfo = FeInfoS.feVarb("homeInsYearly", propertyInfo);
   //   const propertyGeneral = analyzer.section("propertyGeneral");
 
   //   const outEntity1 = propertyGeneral.varb(varbName1).outEntities[0];
@@ -145,7 +146,7 @@ describe("SetterVarb", () => {
 
   //   analyzer = exec("homeInsYearly", numObj);
 
-  //   const homeInsYearlyInfo = InfoS.feVarb("homeInsYearly", propertyInfo);
+  //   const homeInsYearlyInfo = FeInfoS.feVarb("homeInsYearly", propertyInfo);
   //   const propertyGeneral = analyzer.section("propertyGeneral");
 
   //   const outEntity1 = propertyGeneral.varb(varbName1).outEntities[0];

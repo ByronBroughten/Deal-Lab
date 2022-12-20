@@ -1,11 +1,5 @@
 import { DistributiveOmit } from "../../utils/types";
 import {
-  ChildPathName,
-  PathNameOfSection,
-  pathSectionName,
-  PathSectionName,
-} from "../absoluteVarbPaths";
-import {
   ActiveDealInfo,
   DbSectionInfoMixed,
   FeSectionInfoMixed,
@@ -14,9 +8,18 @@ import {
   VarbProp,
 } from "../baseSectionsDerived/baseVarbInfo";
 import { ExpectedCount } from "../baseSectionsVarbs/NanoIdInfo";
-import { PathDbInfoMixed, PathInfoMixed, PathVarbInfoMixed } from "../PathInfo";
+import {
+  PathDbInfoMixed,
+  PathInfoMixed,
+} from "../SectionInfo/AbsolutePathInfo";
+import { RelSectionInfo } from "../SectionInfo/RelInfo";
 import { SectionName } from "../SectionName";
-import { RelSectionInfo } from "./RelInfo";
+import {
+  PathNameOfSection,
+  PathSectionName,
+  sectionNameByPathName,
+  SectionPathName,
+} from "../sectionPathContexts/sectionPathNames";
 
 export type SectionContextInfo<SN extends SectionName = SectionName> =
   ActiveDealInfo<SN>;
@@ -60,51 +63,22 @@ export const mixedInfoS = {
     };
   },
   absolutePath<
-    SN extends PathSectionName,
-    EC extends ExpectedCount = "onlyOne"
-  >(
-    sectionName: SN,
-    pathName: PathNameOfSection<SN>,
-    expectedCount?: EC
-  ): PathInfoMixed<SN, EC> {
-    return {
-      infoType: "absolutePath",
-      sectionName,
-      pathName,
-      expectedCount: (expectedCount ?? "onlyOne") as EC,
-    };
-  },
-  absolutePathNext<
-    PN extends ChildPathName,
+    PN extends SectionPathName,
     EC extends ExpectedCount = "onlyOne"
   >(pathName: PN, expectedCount?: EC): PathInfoMixed<PathSectionName<PN>, EC> {
     return {
       infoType: "absolutePath",
-      sectionName: pathSectionName(pathName),
+      sectionName: sectionNameByPathName(pathName),
       pathName: pathName as any,
       expectedCount: (expectedCount ?? "onlyOne") as EC,
     };
   },
-  absoluteVarbPathNext<
-    PN extends ChildPathName,
+  absoluteVarbPath<
+    PN extends SectionPathName,
     EC extends ExpectedCount = "onlyOne"
   >(pathName: PN, varbName: string, expectedCount?: EC) {
     return {
-      ...this.absolutePathNext(pathName, expectedCount),
-      varbName,
-    };
-  },
-  absoluteVarbPath<
-    SN extends PathSectionName,
-    EC extends ExpectedCount = "onlyOne"
-  >(
-    sectionName: SN,
-    pathName: PathNameOfSection<SN>,
-    varbName: string,
-    expectedCount?: EC
-  ): PathVarbInfoMixed<SN, EC> {
-    return {
-      ...this.absolutePath(sectionName, pathName, expectedCount),
+      ...this.absolutePath(pathName, expectedCount),
       varbName,
     };
   },

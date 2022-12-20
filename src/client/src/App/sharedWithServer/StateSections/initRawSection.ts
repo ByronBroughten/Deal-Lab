@@ -7,8 +7,8 @@ import {
 } from "../SectionsMeta/baseSectionsDerived/valueMetaTypes";
 import { StateValue } from "../SectionsMeta/baseSectionsVarbs/baseValues/StateValueTypes";
 import { Id } from "../SectionsMeta/baseSectionsVarbs/id";
-import { ChildIdArrsNarrow } from "../SectionsMeta/childSectionsDerived/ChildName";
-import { FeSectionInfo, FeVarbInfo } from "../SectionsMeta/Info";
+import { ChildIdArrsNarrow } from "../SectionsMeta/sectionChildrenDerived/ChildName";
+import { FeSectionInfo, FeVarbInfo } from "../SectionsMeta/SectionInfo/FeInfo";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { StrictPick, StrictPickPartial } from "../utils/types";

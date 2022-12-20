@@ -1,7 +1,10 @@
 import { InEntityVarbInfo } from "../SectionsMeta/baseSectionsVarbs/baseValues/entities";
 import { switchNames } from "../SectionsMeta/baseSectionsVarbs/RelSwitchVarb";
-import { mixedInfoS } from "../SectionsMeta/childSectionsDerived/MixedSectionInfo";
-import { GetterSectionsBase } from "../StateGetters/Bases/GetterSectionsBase";
+import { mixedInfoS } from "../SectionsMeta/sectionChildrenDerived/MixedSectionInfo";
+import {
+  GetterSectionsBase,
+  GetterSectionsRequiredProps,
+} from "../StateGetters/Bases/GetterSectionsBase";
 import { GetterSections } from "../StateGetters/GetterSections";
 import { Obj } from "../utils/Obj";
 import { absoluteVarbOptions } from "./absoluteVarbOptions";
@@ -17,6 +20,9 @@ export type VariableOption = {
 };
 
 export class VariableGetterSections extends GetterSectionsBase {
+  static init(props: GetterSectionsRequiredProps) {
+    return new VariableGetterSections(GetterSectionsBase.initProps(props));
+  }
   get getterSections() {
     return new GetterSections(this.getterSectionsProps);
   }

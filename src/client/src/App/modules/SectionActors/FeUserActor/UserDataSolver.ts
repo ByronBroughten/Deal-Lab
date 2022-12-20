@@ -7,11 +7,15 @@ export class UserDataSolver extends SolverSectionsBase {
     return new SolverSections(this.solverSectionsProps);
   }
   loadUserData(userData: UserData): void {
-    // Do I want to turn off solving for these?
+    const { solverSections } = this;
 
-    const feUser = this.solverSections.oneAndOnly("feUser");
+    const feUser = solverSections.oneAndOnly("feUser");
     feUser.loadSelf(userData.feUser);
-    feUser.builder.replaceChildArrs(userData.mainStoreArrs);
+
+    feUser.updateSectionContextName("userMainSectionStores");
+    feUser.replaceChildPackArrsAndSolve(userData.mainStoreArrs);
+
+    const main = solverSections.oneAndOnly("main");
     // loading the mainStoreArrs separately lets them bypass getting outVarbs
     // and solving
   }

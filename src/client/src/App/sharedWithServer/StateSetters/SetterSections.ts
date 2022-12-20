@@ -3,7 +3,7 @@ import {
   StateValue,
 } from "../SectionsMeta/baseSectionsVarbs/baseValues/StateValueTypes";
 import { DbSectionInfo } from "../SectionsMeta/baseSectionsVarbs/DbSectionInfo";
-import { FeSectionInfo, FeVarbInfo } from "../SectionsMeta/Info";
+import { FeSectionInfo, FeVarbInfo } from "../SectionsMeta/SectionInfo/FeInfo";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import {

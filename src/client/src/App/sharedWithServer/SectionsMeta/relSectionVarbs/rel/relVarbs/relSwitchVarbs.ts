@@ -5,7 +5,7 @@ import {
   switchNames,
   TargetCoreGeneral,
 } from "../../../baseSectionsVarbs/RelSwitchVarb";
-import { relVarbInfoS } from "../../../childSectionsDerived/RelVarbInfo";
+import { relVarbInfoS } from "../../../SectionInfo/RelVarbInfo";
 import { RelNumObjOptions, relVarb } from "../relVarb";
 import { NumObjRelVarb, StringRelVarb, UpdateFnProps } from "../relVarbTypes";
 

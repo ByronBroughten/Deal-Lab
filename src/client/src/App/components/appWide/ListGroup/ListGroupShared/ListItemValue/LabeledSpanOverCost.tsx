@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { FeSectionInfo } from "../../../../../sharedWithServer/SectionsMeta/Info";
+import { FeSectionInfo } from "../../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import theme from "../../../../../theme/Theme";
 import { MaterialStringEditor } from "../../../../inputs/MaterialStringEditor";
 import { NumObjEntityEditor } from "../../../../inputs/NumObjEntityEditor";

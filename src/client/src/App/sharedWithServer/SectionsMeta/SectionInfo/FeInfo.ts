@@ -1,13 +1,16 @@
-import { VarbProp, VarbPropNext } from "./baseSectionsDerived/baseVarbInfo";
-import { StateValue } from "./baseSectionsVarbs/baseValues/StateValueTypes";
-import { Id } from "./baseSectionsVarbs/id";
-import { ParentName, ParentNameSafe } from "./childSectionsDerived/ParentName";
-import { SectionName } from "./SectionName";
+import { VarbProp, VarbPropNext } from "../baseSectionsDerived/baseVarbInfo";
+import { StateValue } from "../baseSectionsVarbs/baseValues/StateValueTypes";
+import { Id } from "../baseSectionsVarbs/id";
+import {
+  ParentName,
+  ParentNameSafe,
+} from "../sectionChildrenDerived/ParentName";
+import { SectionName } from "../SectionName";
 import {
   SectionNameByType,
   sectionNameS,
   SectionNameType,
-} from "./SectionNameByType";
+} from "../SectionNameByType";
 
 export interface FeInfoByType<T extends SectionNameType = "all"> {
   sectionName: SectionNameByType<T>;
@@ -45,23 +48,14 @@ export interface FeVarbInfoNext<SN extends SectionName = SectionName>
   extends FeSectionInfo<SN>,
     VarbPropNext<SN> {}
 
-export interface VarbValueInfo<
+export interface FeVarbValueInfo<
   SN extends SectionNameByType = SectionNameByType<"hasVarb">
 > extends FeVarbInfo<SN> {
   value: StateValue;
 }
 
-export type VarbStringInfo = {
-  sectionName: string;
-  varbName: string;
-  id: string;
-  infoType: string;
-};
-
-export const noParentWarning = "no parent";
-
-export const InfoS = {
-  isFeVarbInfo(value: any): value is FeVarbInfo {
+export const FeInfoS = {
+  isVarbInfo(value: any): value is FeVarbInfo {
     return (
       Id.is(value.feId) &&
       sectionNameS.is(value.sectionName) &&

@@ -1,15 +1,18 @@
-import { FeVarbInfo } from "../../SectionsMeta/Info";
+import { FeVarbInfo } from "../../SectionsMeta/SectionInfo/FeInfo";
+import { SectionPathContextName } from "../../SectionsMeta/sectionPathContexts";
 import {
   GetterSectionsBase,
   GetterSectionsProps,
+  GetterSectionsRequiredProps,
 } from "../../StateGetters/Bases/GetterSectionsBase";
 import { GetterVarb } from "../../StateGetters/GetterVarb";
-import { StateSections } from "../../StateSections/StateSections";
 
 export type SolveShare = { varbIdsToSolveFor: Set<string> };
 export type HasSolveShare = {
   solveShare: SolveShare;
 };
+
+export type SolverSectionsRequiredProps = GetterSectionsRequiredProps;
 
 export interface SolverSectionsProps
   extends GetterSectionsProps,
@@ -21,29 +24,32 @@ export class SolverSectionsBase {
     this.solveShare = solveShare;
     this.getterSectionsBase = new GetterSectionsBase(rest);
   }
-  static initProps({
-    sections,
-  }: {
-    sections: StateSections;
-  }): SolverSectionsProps {
+  static initProps(props: SolverSectionsRequiredProps): SolverSectionsProps {
     return {
-      sectionsShare: { sections },
-      solveShare: {
-        varbIdsToSolveFor: new Set(),
-      },
+      ...GetterSectionsBase.initProps(props),
+      solveShare: this.initSolveShare(),
     };
   }
+  static initSolveShare(): SolveShare {
+    return {
+      varbIdsToSolveFor: new Set(),
+    };
+  }
+
   get sectionsShare() {
     return this.getterSectionsBase.sectionsShare;
   }
-  get solverSectionsProps() {
+  get solverSectionsProps(): SolverSectionsProps {
     return {
-      sectionsShare: this.sectionsShare,
+      ...this.getterSectionsBase.getterSectionsProps,
       solveShare: this.solveShare,
     };
   }
   get varbIdsToSolveFor(): Set<string> {
     return this.solveShare.varbIdsToSolveFor;
+  }
+  updateSectionContextName(sectionContextName: SectionPathContextName): void {
+    this.getterSectionsBase.updateSectionContextName(sectionContextName);
   }
   addVarbInfosToSolveFor(...varbInfos: FeVarbInfo[]): void {
     const varbIds = GetterVarb.varbInfosToVarbIds(varbInfos);

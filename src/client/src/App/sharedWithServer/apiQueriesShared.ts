@@ -19,8 +19,8 @@ import { GuestAccessSectionPackArrs } from "./apiQueriesShared/register";
 import {
   DbStoreNameByType,
   SectionQueryName,
-} from "./SectionsMeta/childSectionsDerived/DbStoreName";
-import { SectionPack } from "./SectionsMeta/childSectionsDerived/SectionPack";
+} from "./SectionsMeta/sectionChildrenDerived/DbStoreName";
+import { SectionPack } from "./SectionsMeta/sectionChildrenDerived/SectionPack";
 
 export type ApiQueries = {
   addSection: QueryAddSection;

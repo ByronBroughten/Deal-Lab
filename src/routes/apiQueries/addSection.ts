@@ -2,11 +2,11 @@ import { Request, Response } from "express";
 import { constants } from "../../client/src/App/Constants";
 import { UserInfoTokenProp } from "../../client/src/App/modules/services/authService";
 import { AnalyzerPlan } from "../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsVarbs";
-import { DbPack } from "../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbSectionPack";
+import { DbPack } from "../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/DbSectionPack";
 import {
   DbStoreInfo,
   SectionQueryName,
-} from "../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreName";
+} from "../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/DbStoreName";
 import { getAuthWare } from "../../middleware/authWare";
 import { checkUserInfoWare } from "../../middleware/checkUserInfoWare";
 import { ResStatusError } from "../../utils/resError";

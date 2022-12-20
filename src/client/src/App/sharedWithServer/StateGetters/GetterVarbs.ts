@@ -2,8 +2,8 @@ import {
   StateValueAnyKey,
   ValueTypesPlusAny,
 } from "../SectionsMeta/baseSectionsVarbs/StateVarbTypes";
-import { DbVarbs } from "../SectionsMeta/childSectionsDerived/SectionPack/RawSection";
-import { FeVarbInfo, VarbStringInfo } from "../SectionsMeta/Info";
+import { DbVarbs } from "../SectionsMeta/sectionChildrenDerived/SectionPack/RawSection";
+import { FeVarbInfo } from "../SectionsMeta/SectionInfo/FeInfo";
 import {
   SectionNameByType,
   sectionNameS,
@@ -55,14 +55,6 @@ export class GetterVarbs<
       },
       {} as RequestedValues<T>
     );
-  }
-  get varbInfoStringValues(): VarbStringInfo {
-    return this.values({
-      sectionName: "string",
-      varbName: "string",
-      id: "string",
-      infoType: "string",
-    });
   }
   get dbVarbs(): DbVarbs {
     return this.varbNames.reduce((dbVarbs, varbName) => {

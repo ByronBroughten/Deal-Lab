@@ -1,11 +1,11 @@
 import { Obj } from "../../utils/Obj";
 import { SectionName } from "../SectionName";
 import {
-  childSection,
   ChildSection,
   ChildSectionOptions,
   GeneralChildSection,
-} from "./childSection";
+  sectionChild,
+} from "./sectionChild";
 
 type ChildrenSections<RP extends ChildrenSectionsProps> = {
   [K in keyof RP]: ChildSection<RP[K][0], RP[K][1]>;
@@ -13,11 +13,11 @@ type ChildrenSections<RP extends ChildrenSectionsProps> = {
 type ChildrenSectionsProps = {
   [key: string]: readonly [SectionName, ChildSectionOptions?];
 };
-export function childrenSections<RP extends ChildrenSectionsProps>(
+export function sectionChildren<RP extends ChildrenSectionsProps>(
   props: RP
 ): ChildrenSections<RP> {
   return Obj.keys(props).reduce((children, childName) => {
-    (children as any)[childName] = childSection(
+    (children as any)[childName] = sectionChild(
       props[childName][0],
       props[childName][1]
     );

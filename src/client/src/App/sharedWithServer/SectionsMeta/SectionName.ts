@@ -50,6 +50,7 @@ export const sectionNames = [
 
   "userListEditor",
   "userVarbEditor",
+  "latentSections",
 ] as const;
 
 export type SectionName = typeof sectionNames[number];

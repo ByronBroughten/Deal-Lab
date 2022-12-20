@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { FeInfoByType } from "../../../../sharedWithServer/SectionsMeta/Info";
+import { FeInfoByType } from "../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import theme from "../../../../theme/Theme";
 import { RemoveSectionXBtn } from "../../RemoveSectionXBtn";
 import { UpdateValueNextBtn } from "../../UpdateValueNextBtn";

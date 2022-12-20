@@ -1,5 +1,5 @@
 import { FormControl, FormControlLabel, RadioGroup } from "@material-ui/core";
-import { FeSectionInfo } from "../../../../sharedWithServer/SectionsMeta/Info";
+import { FeSectionInfo } from "../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { useSetterSection } from "../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import { useUpdateVarbCurrentTarget } from "../../../../sharedWithServer/stateClassHooks/useUpdateVarbCurrentTarget";
 import DualInputsRadioSwap from "../../../general/DualInputsRadioSwap";

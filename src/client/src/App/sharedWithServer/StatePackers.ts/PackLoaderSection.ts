@@ -1,11 +1,11 @@
-import { ChildName } from "../SectionsMeta/childSectionsDerived/ChildName";
-import { ChildSectionName } from "../SectionsMeta/childSectionsDerived/ChildSectionName";
+import { ChildName } from "../SectionsMeta/sectionChildrenDerived/ChildName";
+import { ChildSectionName } from "../SectionsMeta/sectionChildrenDerived/ChildSectionName";
 import {
   ChildArrPack,
   ChildSectionPack,
-} from "../SectionsMeta/childSectionsDerived/ChildSectionPack";
-import { SectionPack } from "../SectionsMeta/childSectionsDerived/SectionPack";
-import { FeSectionInfo } from "../SectionsMeta/Info";
+} from "../SectionsMeta/sectionChildrenDerived/ChildSectionPack";
+import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
+import { FeSectionInfo } from "../SectionsMeta/SectionInfo/FeInfo";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import {

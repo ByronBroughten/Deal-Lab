@@ -2,7 +2,7 @@ import { AiOutlineSave } from "react-icons/ai";
 import { VscDiscard } from "react-icons/vsc";
 import styled from "styled-components";
 import usePrompt from "../../modules/customHooks/useBlockerAndPrompt";
-import { FeStoreNameByType } from "../../sharedWithServer/SectionsMeta/relSectionsDerived/relNameArrs/FeStoreName";
+import { FeStoreNameByType } from "../../sharedWithServer/SectionsMeta/relSectionsDerived/FeStoreName";
 import { useAuthStatus } from "../../sharedWithServer/stateClassHooks/useAuthStatus";
 import { SectionsContextProvider } from "../../sharedWithServer/stateClassHooks/useSections";
 import theme, { ThemeName } from "../../theme/Theme";

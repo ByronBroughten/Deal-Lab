@@ -1,6 +1,6 @@
-import { ChildName } from "../SectionsMeta/childSectionsDerived/ChildName";
-import { ChildSectionName } from "../SectionsMeta/childSectionsDerived/ChildSectionName";
-import { SectionPack } from "../SectionsMeta/childSectionsDerived/SectionPack";
+import { ChildName } from "../SectionsMeta/sectionChildrenDerived/ChildName";
+import { ChildSectionName } from "../SectionsMeta/sectionChildrenDerived/ChildSectionName";
+import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { Obj } from "../utils/Obj";

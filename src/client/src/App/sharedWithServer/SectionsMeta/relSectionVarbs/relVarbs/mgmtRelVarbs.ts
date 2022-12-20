@@ -1,6 +1,6 @@
 import { switchNames } from "../../baseSectionsVarbs/RelSwitchVarb";
-import { relVarbInfoS } from "../../childSectionsDerived/RelVarbInfo";
-import { relVarbInfosS } from "../../childSectionsDerived/RelVarbInfos";
+import { relVarbInfoS } from "../../SectionInfo/RelVarbInfo";
+import { relVarbInfosS } from "../../SectionInfo/RelVarbInfos";
 import { relUpdateSwitch } from "../rel/relUpdateSwitch";
 import { relVarb, relVarbS } from "../rel/relVarb";
 import { RelVarbs, relVarbsS } from "../relVarbs";

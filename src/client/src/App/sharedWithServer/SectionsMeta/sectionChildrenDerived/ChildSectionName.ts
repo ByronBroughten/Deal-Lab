@@ -1,8 +1,8 @@
 import { Obj } from "../../utils/Obj";
 import { PropKeyOfValue } from "../../utils/Obj/SubType";
 import { MergeUnionObjFull } from "../../utils/types/mergeUnionObj";
-import { childSections, SectionChildProps } from "../childSections";
-import { GeneralChildrenSections } from "../childSections/childrenSections";
+import { allSectionChildren, SectionChildProps } from "../allSectionChildren";
+import { GeneralChildrenSections } from "../allSectionChildren/sectionChildren";
 import { SectionName, sectionNames } from "../SectionName";
 import { ChildName, sectionToChildNames } from "./ChildName";
 
@@ -10,11 +10,13 @@ export type ChildToSectionName = SectionChildProps<"sectionName">;
 
 export const childToSectionNames = sectionNames.reduce(
   (result, sectionName) => {
-    const childSection = childSections[sectionName] as GeneralChildrenSections;
+    const sectionChild = allSectionChildren[
+      sectionName
+    ] as GeneralChildrenSections;
     const childNames = sectionToChildNames[sectionName];
     const toSectionNames = (childNames as string[]).reduce(
       (childObj, childName) => {
-        childObj[childName] = childSection[childName].sectionName;
+        childObj[childName] = sectionChild[childName].sectionName;
         return childObj;
       },
       {} as { [key: string]: string }
@@ -115,21 +117,21 @@ export type ChildSectionNameToNameArrs = {
     [CSN in ChildSectionName<SN>]: ChildSectionNameName<SN, CSN>[];
   };
 };
-export const childSectionNameNames = sectionNames.reduce(
-  (childSectionNamesToNames, sectionName) => {
+export const sectionChildNameNames = sectionNames.reduce(
+  (sectionChildNamesToNames, sectionName) => {
     const sectionNames = childrenSectionNames[sectionName] as string[];
     const namesToSectionName = childToSectionNames[sectionName] as {
       [key: string]: string;
     };
 
-    (childSectionNamesToNames as any)[sectionName] = sectionNames.reduce(
+    (sectionChildNamesToNames as any)[sectionName] = sectionNames.reduce(
       (nameToNames, sn) => {
         nameToNames[sn] = Obj.propKeysOfValue(namesToSectionName, sn);
         return nameToNames;
       },
       {} as { [key: string]: string[] }
     );
-    return childSectionNamesToNames;
+    return sectionChildNamesToNames;
   },
   {} as ChildSectionNameToNameArrs
 );

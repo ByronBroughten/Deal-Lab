@@ -1,4 +1,4 @@
-import { FeSectionInfo } from "../../sharedWithServer/SectionsMeta/Info";
+import { FeSectionInfo } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { SectionNameByType } from "../../sharedWithServer/SectionsMeta/SectionNameByType";
 import { useSetterSectionsProps } from "../../sharedWithServer/stateClassHooks/useSetterSectionsProps";
 import { apiQueries } from "../apiQueriesClient";

@@ -4,10 +4,10 @@ import {
   ChildName,
   DbChildInfo,
   FeChildInfo,
-} from "../SectionsMeta/childSectionsDerived/ChildName";
-import { ChildSectionName } from "../SectionsMeta/childSectionsDerived/ChildSectionName";
-import { SectionPack } from "../SectionsMeta/childSectionsDerived/SectionPack";
-import { FeSectionInfo } from "../SectionsMeta/Info";
+} from "../SectionsMeta/sectionChildrenDerived/ChildName";
+import { ChildSectionName } from "../SectionsMeta/sectionChildrenDerived/ChildSectionName";
+import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
+import { FeSectionInfo } from "../SectionsMeta/SectionInfo/FeInfo";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { GetterSectionProps } from "../StateGetters/Bases/GetterSectionBase";
 import { GetterSection } from "../StateGetters/GetterSection";
@@ -44,10 +44,8 @@ export class SolverSection<
     props: SolverSectionInitProps<S>
   ): SolverSection<S> {
     return new SolverSection({
-      ...SolverSectionsBase.initProps({
-        sections: props.sectionsShare.sections,
-      }),
       ...props,
+      solveShare: SolverSectionsBase.initSolveShare(),
     });
   }
   get get(): GetterSection<SN> {

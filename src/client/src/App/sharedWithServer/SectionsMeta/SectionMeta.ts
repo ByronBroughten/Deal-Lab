@@ -3,26 +3,26 @@ import {
   sectionVarbNames,
   VarbName,
 } from "./baseSectionsDerived/baseSectionsVarbsTypes";
+import { relChildSections, SectionRelChildren } from "./relChildSections";
 import {
   ChildIdArrsNarrow,
   ChildIdArrsWide,
   ChildName,
   getChildNames,
   isChildName,
-} from "./childSectionsDerived/ChildName";
+} from "./sectionChildrenDerived/ChildName";
 import {
   childrenSectionNames,
   ChildSectionName,
   ChildSectionNameName,
-  childSectionNameNames,
   childToSectionName,
-} from "./childSectionsDerived/ChildSectionName";
+  sectionChildNameNames,
+} from "./sectionChildrenDerived/ChildSectionName";
 import {
   DescendantSectionName,
   getDescendantNames,
-} from "./childSectionsDerived/DescendantSectionName";
-import { DbVarbs } from "./childSectionsDerived/SectionPack/RawSection";
-import { relChildSections, SectionRelChildren } from "./relChildSections";
+} from "./sectionChildrenDerived/DescendantSectionName";
+import { DbVarbs } from "./sectionChildrenDerived/SectionPack/RawSection";
 import {
   CorePropName,
   sectionMetasCore,
@@ -128,12 +128,12 @@ export class SectionMeta<SN extends SectionName> {
     return childToSectionName(this.sectionName, childName);
   }
   childTypeNames<CT extends SectionName>(
-    childSectionName: CT
+    sectionChildName: CT
   ): ChildSectionNameName<SN, CT>[] {
-    const csnsToCns = childSectionNameNames[this.sectionName] as {
+    const csnsToCns = sectionChildNameNames[this.sectionName] as {
       [key: string]: string[];
     };
-    const childNames = csnsToCns[childSectionName] ?? [];
+    const childNames = csnsToCns[sectionChildName] ?? [];
     return childNames as ChildSectionNameName<SN, CT>[];
   }
   get relChildren(): SectionRelChildren<SN> {

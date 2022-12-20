@@ -2,8 +2,9 @@ import { makeReq, SectionPackArrReq } from "../apiQueriesShared/makeReqAndRes";
 import {
   DbSectionNameByType,
   DbSectionNameName,
-} from "../SectionsMeta/childSectionsDerived/DbStoreName";
+} from "../SectionsMeta/sectionChildrenDerived/DbStoreName";
 import { GetterSectionBase } from "../StateGetters/Bases/GetterSectionBase";
+import { GetterSectionsBase } from "../StateGetters/Bases/GetterSectionsBase";
 import { PackMakerSection } from "../StatePackers.ts/PackMakerSection";
 import { SolverSections } from "../StateSolvers/SolverSections";
 
@@ -18,7 +19,10 @@ export class SectionArrReqMaker<
     const section = sections.firstRawSection(sectionName);
     return new SectionArrReqMaker({
       ...section,
-      sectionsShare: { sections },
+      ...GetterSectionsBase.initProps({
+        sections,
+        sectionContextName: "default",
+      }),
     });
   }
   get packMaker() {

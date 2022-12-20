@@ -6,7 +6,7 @@ import styled from "styled-components/macro";
 import useOnOutsideClickRef from "../../modules/customHooks/useOnOutsideClickRef";
 import { getEntityStrategy } from "../../modules/draftjs/getEntityStrategies";
 import { insertEntity } from "../../modules/draftjs/insert";
-import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/Info";
+import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import ErrorMessage from "../appWide/ErrorMessage";
 import ItemOrCommaSpan, {
   CommaSpan,

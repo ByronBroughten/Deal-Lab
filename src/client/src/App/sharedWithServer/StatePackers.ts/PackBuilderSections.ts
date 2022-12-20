@@ -1,7 +1,7 @@
 import { pick } from "lodash";
-import { SectionPack } from "../SectionsMeta/childSectionsDerived/SectionPack";
-import { FeSectionInfo } from "../SectionsMeta/Info";
-import { feStoreNameS } from "../SectionsMeta/relSectionsDerived/relNameArrs/FeStoreName";
+import { feStoreNameS } from "../SectionsMeta/relSectionsDerived/FeStoreName";
+import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
+import { FeSectionInfo } from "../SectionsMeta/SectionInfo/FeInfo";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { GetterSectionsBase } from "../StateGetters/Bases/GetterSectionsBase";
 import { GetterSections } from "../StateGetters/GetterSections";
@@ -41,9 +41,10 @@ export class PackBuilderSections extends GetterSectionsBase {
     const sections = StateSections.initWithRoot();
     const rootSection = sections.rawSectionList("root")[0];
 
-    const builder = new PackBuilderSection({
+    const builder = PackBuilderSection.init({
       ...pick(rootSection, ["sectionName", "feId"]),
-      sectionsShare: { sections },
+      sections,
+      sectionContextName: "default",
     });
     builder.loadChild({
       childName: "main",

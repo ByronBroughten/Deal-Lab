@@ -7,11 +7,11 @@ import {
   ChildName,
   CreateChildInfo,
   FeChildInfo,
-} from "../SectionsMeta/childSectionsDerived/ChildName";
-import { ChildSectionName } from "../SectionsMeta/childSectionsDerived/ChildSectionName";
-import { DescendantSectionName } from "../SectionsMeta/childSectionsDerived/DescendantSectionName";
-import { ParentNameSafe } from "../SectionsMeta/childSectionsDerived/ParentName";
-import { FeSectionInfo } from "../SectionsMeta/Info";
+} from "../SectionsMeta/sectionChildrenDerived/ChildName";
+import { ChildSectionName } from "../SectionsMeta/sectionChildrenDerived/ChildSectionName";
+import { DescendantSectionName } from "../SectionsMeta/sectionChildrenDerived/DescendantSectionName";
+import { ParentNameSafe } from "../SectionsMeta/sectionChildrenDerived/ParentName";
+import { FeSectionInfo } from "../SectionsMeta/SectionInfo/FeInfo";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { GetterSectionProps } from "../StateGetters/Bases/GetterSectionBase";
@@ -214,6 +214,7 @@ export class UpdaterSection<
     return {
       ...rootRaw,
       sectionsShare: { sections },
+      contextShare: { sectionContextName: "default" },
     };
   }
 }

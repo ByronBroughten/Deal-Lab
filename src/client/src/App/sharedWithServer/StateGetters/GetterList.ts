@@ -1,6 +1,6 @@
 import { VarbName } from "../SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
 import { VarbValue } from "../SectionsMeta/baseSectionsDerived/valueMetaTypes";
-import { IdInfoMixedMulti } from "../SectionsMeta/childSectionsDerived/MixedSectionInfo";
+import { IdInfoMixedMulti } from "../SectionsMeta/sectionChildrenDerived/MixedSectionInfo";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import {
   RawFeSection,
@@ -45,9 +45,8 @@ export class GetterList<
   }
   private getterSection(feId: string): GetterSection<SN> {
     return new GetterSection({
-      sectionName: this.sectionName,
+      ...this.getterListProps,
       feId,
-      sectionsShare: this.sectionsShare,
     });
   }
   get allGetterSections(): GetterSection<SN>[] {

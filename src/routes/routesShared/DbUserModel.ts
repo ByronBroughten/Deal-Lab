@@ -4,25 +4,25 @@ import { VarbName } from "../../client/src/App/sharedWithServer/SectionsMeta/bas
 import {
   ChildName,
   getChildNames,
-} from "../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/ChildName";
-import { DbSectionPack } from "../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbSectionPack";
+} from "../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/ChildName";
+import { DbSectionPack } from "../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/DbSectionPack";
 import {
   OneDbSectionValueInfo,
   OneDbSectionVarbInfo,
-} from "../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreInfo";
+} from "../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/DbStoreInfo";
 import {
   DbSectionName,
   DbSelfOrDescendantSn,
   DbStoreName,
   dbStoreNames,
   dbStoreSectionName,
-} from "../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreName";
+} from "../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/DbStoreName";
 import {
   getSelfAndDescendantNames,
   SelfOrDescendantSectionName,
-} from "../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DescendantSectionName";
-import { SectionPack } from "../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/SectionPack";
-import { RawSection } from "../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/SectionPack/RawSection";
+} from "../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/DescendantSectionName";
+import { SectionPack } from "../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/SectionPack";
+import { RawSection } from "../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/SectionPack/RawSection";
 import { SectionName } from "../../client/src/App/sharedWithServer/SectionsMeta/SectionName";
 import { monSchemas } from "../../client/src/App/sharedWithServer/utils/mongoose";
 

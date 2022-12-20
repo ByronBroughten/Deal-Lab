@@ -1,6 +1,6 @@
 import React from "react";
-import { FeSectionInfo } from "../../sharedWithServer/SectionsMeta/Info";
-import { useSectionsDispatch } from "../../sharedWithServer/stateClassHooks/useSections";
+import { FeSectionInfo } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
+import { useRemoveSelf } from "../../sharedWithServer/stateClassHooks/useReduceActions";
 import { StandardProps } from "../general/StandardProps";
 import { XBtn } from "./Xbtn";
 
@@ -10,16 +10,12 @@ export const RemoveSectionXBtn = React.memo(function RemoveSectionXBtn({
   className,
   ...rest
 }: Props) {
-  const dispatch = useSectionsDispatch();
+  const removeSelf = useRemoveSelf();
   return (
     <XBtn
       {...{
         className,
-        onClick: () =>
-          dispatch({
-            type: "removeSelf",
-            ...rest,
-          }),
+        onClick: () => removeSelf(rest),
       }}
     />
   );

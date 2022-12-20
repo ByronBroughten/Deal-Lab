@@ -1,14 +1,10 @@
-import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
-import { GetterVarbProps } from "../StateGetters/Bases/GetterVarbBase";
+import { FeVarbInfo } from "../SectionsMeta/SectionInfo/FeInfo";
+import { SectionName } from "../SectionsMeta/SectionName";
 import { SetterVarb } from "../StateSetters/SetterVarb";
-import { StrictOmit } from "../utils/types";
 import { useSetterSectionsProps } from "./useSetterSectionsProps";
 
-interface UseSetterVarbProps<SN extends SectionNameByType>
-  extends StrictOmit<GetterVarbProps<SN>, "sectionsShare"> {}
-
-export function useSetterVarb<SN extends SectionNameByType>(
-  varbInfo: UseSetterVarbProps<SN>
+export function useSetterVarb<SN extends SectionName>(
+  varbInfo: FeVarbInfo<SN>
 ): SetterVarb<SN> {
   const moreProps = useSetterSectionsProps();
   const setterVarb = new SetterVarb({

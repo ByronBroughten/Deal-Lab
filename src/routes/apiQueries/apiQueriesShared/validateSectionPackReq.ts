@@ -2,16 +2,16 @@ import {
   SectionPackArrReq,
   SectionPackReq,
 } from "../../../client/src/App/sharedWithServer/apiQueriesShared/makeReqAndRes";
-import { isDbStoreSectionPack } from "../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbSectionPack";
+import { isDbStoreSectionPack } from "../../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/DbSectionPack";
 import {
   DbSectionName,
   DbStoreName,
   SectionArrQueryName,
-} from "../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreName";
+} from "../../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/DbStoreName";
 import {
   SectionPack,
   validateSectionPack,
-} from "../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/SectionPack";
+} from "../../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/SectionPack";
 import {
   Authed,
   LoggedIn,

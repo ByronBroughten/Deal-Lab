@@ -1,6 +1,5 @@
 import {
   SectionsAndControls,
-  SectionsValue,
   SetSections,
 } from "../../stateClassHooks/useSections";
 import { GetterSectionsBase } from "../../StateGetters/Bases/GetterSectionsBase";
@@ -8,6 +7,7 @@ import { StateSections } from "../../StateSections/StateSections";
 import {
   SolverSectionsBase,
   SolverSectionsProps,
+  SolverSectionsRequiredProps,
 } from "../../StateSolvers/SolverBases/SolverSectionsBase";
 
 export interface SetterSectionsProps extends SolverSectionsProps {
@@ -17,6 +17,9 @@ export interface SetterSectionsProps extends SolverSectionsProps {
 type SetSectionsShare = { setSections: SetSections };
 type InitialSectionsShare = { sections: StateSections };
 
+interface SetterSectionsRequiredProps extends SolverSectionsRequiredProps {
+  setSections: SetSections;
+}
 export class SetterSectionsBase {
   readonly solverSectionsBase: SolverSectionsBase;
   private setSectionsShare: SetSectionsShare;
@@ -33,9 +36,10 @@ export class SetterSectionsBase {
   static initProps({
     sections,
     setSections,
-  }: SectionsValue): SetterSectionsProps {
+    ...rest
+  }: SetterSectionsRequiredProps): SetterSectionsProps {
     return {
-      ...SolverSectionsBase.initProps({ sections }),
+      ...SolverSectionsBase.initProps({ sections, ...rest }),
       setSectionsShare: { setSections },
       initialSectionsShare: { sections },
     };

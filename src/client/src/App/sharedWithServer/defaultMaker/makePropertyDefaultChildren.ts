@@ -1,5 +1,5 @@
 import { stringObj } from "../SectionsMeta/baseSectionsVarbs/baseValues/StringObj";
-import { SectionPack } from "../SectionsMeta/childSectionsDerived/SectionPack";
+import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
 
 export const defaultPropertyChildrenMakers = {

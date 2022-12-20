@@ -1,5 +1,5 @@
-import { RelVarbInfo } from "../SectionsMeta/childSectionsDerived/RelVarbInfo";
-import { FeVarbInfo } from "../SectionsMeta/Info";
+import { FeVarbInfo } from "../SectionsMeta/SectionInfo/FeInfo";
+import { RelVarbInfo } from "../SectionsMeta/SectionInfo/RelVarbInfo";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import {
   OutDefaultPack,

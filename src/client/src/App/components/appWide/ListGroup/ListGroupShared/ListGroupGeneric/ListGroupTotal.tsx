@@ -1,4 +1,4 @@
-import { FeVarbInfo } from "../../../../../sharedWithServer/SectionsMeta/Info";
+import { FeVarbInfo } from "../../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { useGetterVarb } from "../../../../../sharedWithServer/stateClassHooks/useGetterVarb";
 
 type Props = { varbInfo: FeVarbInfo };

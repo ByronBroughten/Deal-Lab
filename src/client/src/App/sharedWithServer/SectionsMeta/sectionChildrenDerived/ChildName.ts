@@ -1,12 +1,12 @@
 import { Obj } from "../../utils/Obj";
 import { RemoveNotStrings, StrictOmit } from "../../utils/types";
 import { MergeUnionObj } from "../../utils/types/mergeUnionObj";
-import { childSections, ChildSections } from "../childSections";
+import { allSectionChildren, AllSectionChildren } from "../allSectionChildren";
 import { SectionName, sectionNames } from "../SectionName";
 import { ChildSectionName } from "./ChildSectionName";
 
 type SectionToCN = {
-  [SN in SectionName]: keyof ChildSections[SN];
+  [SN in SectionName]: keyof AllSectionChildren[SN];
 };
 export type ChildName<SN extends SectionName = SectionName> = SectionToCN[SN];
 
@@ -14,7 +14,7 @@ type SectionToChildren = RemoveNotStrings<SectionToCN>;
 
 export type HasChildSectionName = keyof SectionToChildren;
 export const hasChildSectionNames = sectionNames.filter((sectionName) => {
-  return Obj.keys(childSections[sectionName]).length > 0;
+  return Obj.keys(allSectionChildren[sectionName]).length > 0;
 }) as HasChildSectionName[];
 
 type SectionToChildNameArrs = {
@@ -22,7 +22,7 @@ type SectionToChildNameArrs = {
 };
 
 export const sectionToChildNames = sectionNames.reduce((arrs, sectionName) => {
-  arrs[sectionName] = Obj.keys(childSections[sectionName]);
+  arrs[sectionName] = Obj.keys(allSectionChildren[sectionName]);
   return arrs;
 }, {} as SectionToChildNameArrs);
 export function getChildNames<SN extends SectionName>(

@@ -1,12 +1,12 @@
 import { Arr } from "../utils/Arr";
 import { Merge } from "../utils/Obj/merge";
+import { FeStoreName } from "./relSectionsDerived/FeStoreName";
 import {
   ChildName,
   sectionToChildNames,
-} from "./childSectionsDerived/ChildName";
-import { ChildSectionNameName } from "./childSectionsDerived/ChildSectionName";
-import { dbStoreNames } from "./childSectionsDerived/DbStoreName";
-import { FeStoreName } from "./relSectionsDerived/relNameArrs/FeStoreName";
+} from "./sectionChildrenDerived/ChildName";
+import { ChildSectionNameName } from "./sectionChildrenDerived/ChildSectionName";
+import { dbStoreNames } from "./sectionChildrenDerived/DbStoreName";
 import { SectionName, sectionNames } from "./SectionName";
 
 export const tableRowDbSources = Arr.extractStrict(dbStoreNames, [

@@ -1,5 +1,5 @@
 import { SetStateAction } from "react";
-import { FeSectionInfo } from "../../../SectionsMeta/Info";
+import { FeSectionInfo } from "../../../SectionsMeta/SectionInfo/FeInfo";
 import { SectionNameByType } from "../../../SectionsMeta/SectionNameByType";
 import { SetSections } from "../../../stateClassHooks/useSections";
 import { StateSections } from "../../../StateSections/StateSections";
@@ -48,6 +48,7 @@ export class SectionTesterBase<SN extends SectionNameByType> {
     return {
       ...this.feInfo,
       ...SetterSections.initProps({
+        sectionContextName: "default",
         sections: this.state.sections,
         setSections: this.testSetSections,
       }),

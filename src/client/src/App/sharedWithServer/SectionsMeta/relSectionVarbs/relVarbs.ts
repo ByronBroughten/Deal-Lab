@@ -6,9 +6,9 @@ import {
 import { baseSectionsVarbs } from "../baseSectionsVarbs";
 import { ValueName } from "../baseSectionsVarbs/baseVarb";
 import { switchNames } from "../baseSectionsVarbs/RelSwitchVarb";
-import { ChildName } from "../childSectionsDerived/ChildName";
-import { relVarbInfoS } from "../childSectionsDerived/RelVarbInfo";
-import { relVarbInfosS } from "../childSectionsDerived/RelVarbInfos";
+import { ChildName } from "../sectionChildrenDerived/ChildName";
+import { relVarbInfoS } from "../SectionInfo/RelVarbInfo";
+import { relVarbInfosS } from "../SectionInfo/RelVarbInfos";
 import { SectionName } from "../SectionName";
 import { relVarb, relVarbS } from "./rel/relVarb";
 import {

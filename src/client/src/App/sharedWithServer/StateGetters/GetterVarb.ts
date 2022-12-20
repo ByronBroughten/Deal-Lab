@@ -21,9 +21,9 @@ import {
 import {
   mixedInfoS,
   VarbInfoMixedFocal,
-} from "../SectionsMeta/childSectionsDerived/MixedSectionInfo";
-import { RelLocalInfo } from "../SectionsMeta/childSectionsDerived/RelInfo";
-import { FeVarbInfo, InfoS } from "../SectionsMeta/Info";
+} from "../SectionsMeta/sectionChildrenDerived/MixedSectionInfo";
+import { FeInfoS, FeVarbInfo } from "../SectionsMeta/SectionInfo/FeInfo";
+import { RelLocalInfo } from "../SectionsMeta/SectionInfo/RelInfo";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { InUpdatePack, VarbMeta } from "../SectionsMeta/VarbMeta";
 import { StateVarb } from "../StateSections/StateSectionsTypes";
@@ -270,8 +270,8 @@ export class GetterVarb<
     varbInfo: FeVarbInfo<S>
   ): GetterVarb<S> {
     return new GetterVarb({
+      ...this.getterSectionsProps,
       ...varbInfo,
-      sectionsShare: this.sectionsShare,
     });
   }
   varbsByFocalMixed(multiVarbInfo: VarbInfoMixedFocal): GetterVarb[] {
@@ -308,7 +308,7 @@ export class GetterVarb<
       string
     ];
     const info = { sectionName, varbName, feId };
-    if (InfoS.isFeVarbInfo(info)) return info;
+    if (FeInfoS.isVarbInfo(info)) return info;
     else throw new Error(`Was passed an invalid varbId: ${varbId}`);
   }
 }

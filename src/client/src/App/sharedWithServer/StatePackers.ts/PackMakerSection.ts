@@ -2,23 +2,26 @@ import {
   ChildIdArrsWide,
   ChildName,
   FeChildInfo,
-} from "../SectionsMeta/childSectionsDerived/ChildName";
-import { ChildSectionName } from "../SectionsMeta/childSectionsDerived/ChildSectionName";
-import { ChildSectionPack } from "../SectionsMeta/childSectionsDerived/ChildSectionPack";
-import { SectionPack } from "../SectionsMeta/childSectionsDerived/SectionPack";
+} from "../SectionsMeta/sectionChildrenDerived/ChildName";
+import { ChildSectionName } from "../SectionsMeta/sectionChildrenDerived/ChildSectionName";
+import { ChildSectionPack } from "../SectionsMeta/sectionChildrenDerived/ChildSectionPack";
+import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
 import {
   ChildSpNums,
   OneRawSection,
   RawSections,
-} from "../SectionsMeta/childSectionsDerived/SectionPack/RawSection";
-import { FeSectionInfo } from "../SectionsMeta/Info";
+} from "../SectionsMeta/sectionChildrenDerived/SectionPack/RawSection";
+import { FeSectionInfo } from "../SectionsMeta/SectionInfo/FeInfo";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import {
   GetterSectionBase,
   GetterSectionProps,
 } from "../StateGetters/Bases/GetterSectionBase";
-import { GetterSection } from "../StateGetters/GetterSection";
+import {
+  GetterSection,
+  GetterSectionRequiredProps,
+} from "../StateGetters/GetterSection";
 import { StateSections } from "../StateSections/StateSections";
 import { Obj } from "../utils/Obj";
 
@@ -34,8 +37,11 @@ type MakeFromSectionsProps<SN extends SectionName> = {
   sectionName: SN;
 };
 export class PackMakerSection<
-  SN extends SectionNameByType
+  SN extends SectionName
 > extends GetterSectionBase<SN> {
+  static init<SN extends SectionName>(props: GetterSectionRequiredProps<SN>) {
+    return new PackMakerSection(GetterSection.initSectionProps(props));
+  }
   private sectionCount: number;
   private feIdToNum: Record<string, number>;
   constructor(props: GetterSectionProps<SN>) {
@@ -66,7 +72,7 @@ export class PackMakerSection<
     sectionName,
   }: MakeFromSectionsProps<SN>): PackMakerSection<SN> {
     return new PackMakerSection({
-      sectionsShare: { sections },
+      ...this.initProps({ sections, sectionContextName: "default" }),
       ...sections.onlyOneRawSection(sectionName),
     });
   }
@@ -111,7 +117,7 @@ export class PackMakerSection<
   ): PackMakerSection<S> {
     return new PackMakerSection({
       ...feInfo,
-      sectionsShare: this.sectionsShare,
+      ...this.getterSectionsProps,
     });
   }
   makeChildSectionPack<CN extends ChildName<SN>>(

@@ -1,5 +1,4 @@
 import { NeversToSomething, SubType } from "../../utils/types";
-import { noParentWarning } from "../Info";
 import { SectionName, sectionNames } from "../SectionName";
 import { ChildName } from "./ChildName";
 import {
@@ -7,9 +6,7 @@ import {
   ChildSectionNameOrNull,
 } from "./ChildSectionName";
 
-// listParent
-// the name of a section that is the parent of singleTimeList
-// the name of a section that is the parent of allList
+export const noParentWarning = "no parent";
 
 type ParentToChildOrNullMap<CN extends SectionName> = {
   [S in SectionName]: ChildSectionNameOrNull<S, CN>;

@@ -5,8 +5,8 @@ import {
   OptionVarbName,
   optionVarbPathName,
 } from "../../absolutePathVarbs";
-import { pathSectionName } from "../../absoluteVarbPaths";
-import { PathVarbNames } from "../../PathInfo";
+import { PathVarbNames } from "../../SectionInfo/AbsolutePathInfo";
+import { sectionNameByPathName } from "../../sectionPathContexts/sectionPathNames";
 import { Id } from "../id";
 import { AbsoluteInEntity, InEntities } from "./entities";
 import { NumObj } from "./NumObj";
@@ -62,7 +62,7 @@ function absoluteEntityInfo<PN extends ActivePathName>({
     expectedCount: "onlyOne",
     infoType: "absolutePath",
     pathName,
-    sectionName: pathSectionName(pathName),
+    sectionName: sectionNameByPathName(pathName),
     varbName: varbName as string,
   };
 }

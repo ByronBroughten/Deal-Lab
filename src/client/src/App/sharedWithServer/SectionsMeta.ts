@@ -3,12 +3,12 @@ import { VarbNames } from "./SectionsMeta/baseSectionsDerived/baseVarbInfo";
 import {
   DescendantSectionName,
   SelfOrDescendantSectionName,
-} from "./SectionsMeta/childSectionsDerived/DescendantSectionName";
+} from "./SectionsMeta/sectionChildrenDerived/DescendantSectionName";
 import {
   inVarbInfoToOutSectionName,
-  relInToOutVarbInfo,
+  pathInToOutVarbInfo,
   RelOutVarbInfo,
-} from "./SectionsMeta/childSectionsDerived/RelInOutVarbInfo";
+} from "./SectionsMeta/sectionChildrenDerived/RelInOutVarbInfo";
 import { SectionMeta, VarbMetas } from "./SectionsMeta/SectionMeta";
 import { SectionName, sectionNames } from "./SectionsMeta/SectionName";
 import {
@@ -72,6 +72,7 @@ export class SectionsMeta {
     }
     return selfAndDescendantNames;
   }
+  // Interesting. For these, do I have to be able to turn
   makeOutUpdatePack(
     relTargetVarbInfo: RelOutVarbInfo,
     inUpdatePack: InUpdatePack
@@ -95,7 +96,7 @@ export class SectionsMeta {
   ): void {
     const { inUpdateInfos } = inUpdatePack;
     for (const inVarbInfo of inUpdateInfos) {
-      const outInfo = relInToOutVarbInfo({
+      const outInfo = pathInToOutVarbInfo({
         namesOfVarbWithInVarb: targetNames,
         inVarbInfo,
       });

@@ -1,4 +1,4 @@
-import { FeStoreNameByType } from "../../sharedWithServer/SectionsMeta/relSectionsDerived/relNameArrs/FeStoreName";
+import { FeStoreNameByType } from "../../sharedWithServer/SectionsMeta/relSectionsDerived/FeStoreName";
 import { useSetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useSetterSection";
 import { ThemeName } from "../../theme/Theme";
 import MainSectionBody from "../appWide/GeneralSection/MainSection/MainSectionBody";

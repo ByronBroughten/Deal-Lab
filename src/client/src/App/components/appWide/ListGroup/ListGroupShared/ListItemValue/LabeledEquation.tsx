@@ -1,4 +1,4 @@
-import { FeInfoByType } from "../../../../../sharedWithServer/SectionsMeta/Info";
+import { FeInfoByType } from "../../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { MaterialStringEditor } from "../../../../inputs/MaterialStringEditor";
 import { NumObjEntityEditor } from "../../../../inputs/NumObjEntityEditor";
 

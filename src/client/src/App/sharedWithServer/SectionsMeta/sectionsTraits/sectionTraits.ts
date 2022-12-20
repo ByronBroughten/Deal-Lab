@@ -1,6 +1,6 @@
 import { Merge } from "../../utils/Obj/merge";
-import { ChildName } from "../childSectionsDerived/ChildName";
-import { ChildSectionNameName } from "../childSectionsDerived/ChildSectionName";
+import { ChildName } from "../sectionChildrenDerived/ChildName";
+import { ChildSectionNameName } from "../sectionChildrenDerived/ChildSectionName";
 import { SectionName } from "../SectionName";
 
 export function sectionTraits<

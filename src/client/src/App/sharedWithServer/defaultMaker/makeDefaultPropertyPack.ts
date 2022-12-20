@@ -1,4 +1,4 @@
-import { SectionPack } from "../SectionsMeta/childSectionsDerived/SectionPack";
+import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
 
 export function makeDefaultPropertyPack(): SectionPack<"property"> {

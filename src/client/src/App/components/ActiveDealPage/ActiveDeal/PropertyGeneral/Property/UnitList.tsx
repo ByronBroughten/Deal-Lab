@@ -1,6 +1,6 @@
 import React from "react";
 import styled, { css } from "styled-components";
-import { FeParentInfo } from "../../../../../sharedWithServer/SectionsMeta/Info";
+import { FeParentInfo } from "../../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { useSetterSection } from "../../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import { Arr } from "../../../../../sharedWithServer/utils/Arr";
 import ccs from "../../../../../theme/cssChunks";

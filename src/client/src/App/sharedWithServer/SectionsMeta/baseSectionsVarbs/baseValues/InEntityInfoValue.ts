@@ -2,9 +2,9 @@ import { Schema } from "mongoose";
 import { z } from "zod";
 import { Obj } from "../../../utils/Obj";
 import { zS } from "../../../utils/zod";
-import { isChildPathName } from "../../absoluteVarbPaths";
 import { isVarbName } from "../../baseSectionsDerived/baseVarbInfo";
 import { isSectionName } from "../../SectionName";
+import { isSectionPathName } from "../../sectionPathContexts/sectionPathNames";
 import { Id } from "../id";
 import { InEntityVarbInfo, zInEntityVarbInfo } from "./entities";
 
@@ -56,10 +56,10 @@ function isInEntityVarbInfoSpecific(value: any): boolean {
     case "dbId":
       return Id.is(info.id);
     case "absolutePath": {
-      return isChildPathName(info.pathName);
+      return isSectionPathName(info.pathName);
     }
     case "absolutePathDbId": {
-      return isChildPathName(info.pathName) && Id.is(info.id);
+      return isSectionPathName(info.pathName) && Id.is(info.id);
     }
     default:
       return false;

@@ -1,5 +1,5 @@
 import React from "react";
-import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/Info";
+import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { GetterVarb } from "./../../sharedWithServer/StateGetters/GetterVarb";
 import { MaterialDraftEditor } from "./MaterialDraftEditor";
 import { useDraftInput } from "./useDraftInput";

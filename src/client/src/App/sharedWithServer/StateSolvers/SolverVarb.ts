@@ -8,7 +8,7 @@ import {
 } from "../SectionsMeta/baseSectionsVarbs/baseValues/entities";
 import { StateValue } from "../SectionsMeta/baseSectionsVarbs/baseValues/StateValueTypes";
 import { Id } from "../SectionsMeta/baseSectionsVarbs/id";
-import { RelInVarbInfo } from "../SectionsMeta/childSectionsDerived/RelInOutVarbInfo";
+import { RelInVarbInfo } from "../SectionsMeta/sectionChildrenDerived/RelInOutVarbInfo";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { GetterSections } from "../StateGetters/GetterSections";
 import { GetterVarb } from "../StateGetters/GetterVarb";

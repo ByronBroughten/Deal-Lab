@@ -1,6 +1,6 @@
 import { Arr } from "../../utils/Arr";
 import { Obj } from "../../utils/Obj";
-import { childSections } from "../childSections";
+import { allSectionChildren } from "../allSectionChildren";
 import {
   ChildSectionName,
   ChildSectionNameName,
@@ -8,7 +8,7 @@ import {
 } from "./ChildSectionName";
 import { SelfOrDescendantSectionName } from "./DescendantSectionName";
 
-export const dbStoreNames = Obj.keys(childSections.dbStore);
+export const dbStoreNames = Obj.keys(allSectionChildren.dbStore);
 export type DbStoreName = typeof dbStoreNames[number];
 export type DbSectionName<CN extends DbStoreName = DbStoreName> =
   ChildSectionName<"dbStore", CN>;

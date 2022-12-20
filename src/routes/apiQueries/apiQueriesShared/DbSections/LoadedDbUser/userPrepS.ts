@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 import ThirdPartyEmailPassword from "supertokens-node/recipe/thirdpartyemailpassword";
-import { dbStoreNames } from "../../../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreName";
+import { dbStoreNames } from "../../../../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/DbStoreName";
 import { PackBuilderSection } from "../../../../../client/src/App/sharedWithServer/StatePackers.ts/PackBuilderSection";
 import { timeS } from "../../../../../client/src/App/sharedWithServer/utils/date";
 import { StrictPick } from "../../../../../client/src/App/sharedWithServer/utils/types";

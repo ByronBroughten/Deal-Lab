@@ -4,15 +4,17 @@ import { GuestAccessSectionPackArrs } from "../../../../client/src/App/sharedWit
 import { getDefaultMainTableMakers } from "../../../../client/src/App/sharedWithServer/defaultMaker/getDefaultMainTableMakers";
 import { VarbName } from "../../../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
 import { VarbValue } from "../../../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsDerived/valueMetaTypes";
-import { ChildSectionName } from "../../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/ChildSectionName";
+import { feStoreNameS } from "../../../../client/src/App/sharedWithServer/SectionsMeta/relSectionsDerived/FeStoreName";
+import { AutoSyncControl } from "../../../../client/src/App/sharedWithServer/SectionsMeta/relSectionVarbs/relVarbs";
+import { ChildSectionName } from "../../../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/ChildSectionName";
 import {
   DbPack,
   DbSectionPack,
-} from "../../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbSectionPack";
+} from "../../../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/DbSectionPack";
 import {
   OneDbSectionValueInfo,
   OneDbVarbInfo,
-} from "../../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreInfo";
+} from "../../../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/DbStoreInfo";
 import {
   DbSectionName,
   DbSelfOrDescendantSn,
@@ -21,11 +23,9 @@ import {
   DbStoreNameByType,
   dbStoreNames,
   sectionToMainDbStoreName,
-} from "../../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreName";
-import { SectionPack } from "../../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/SectionPack";
-import { FeSectionInfo } from "../../../../client/src/App/sharedWithServer/SectionsMeta/Info";
-import { feStoreNameS } from "../../../../client/src/App/sharedWithServer/SectionsMeta/relSectionsDerived/relNameArrs/FeStoreName";
-import { AutoSyncControl } from "../../../../client/src/App/sharedWithServer/SectionsMeta/relSectionVarbs/relVarbs";
+} from "../../../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/DbStoreName";
+import { SectionPack } from "../../../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/SectionPack";
+import { FeSectionInfo } from "../../../../client/src/App/sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { GetterSection } from "../../../../client/src/App/sharedWithServer/StateGetters/GetterSection";
 import { PackBuilderSection } from "../../../../client/src/App/sharedWithServer/StatePackers.ts/PackBuilderSection";
 import { Obj } from "../../../../client/src/App/sharedWithServer/utils/Obj";

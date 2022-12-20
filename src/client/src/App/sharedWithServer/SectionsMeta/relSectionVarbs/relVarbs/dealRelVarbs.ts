@@ -1,5 +1,5 @@
-import { relVarbInfoS } from "../../childSectionsDerived/RelVarbInfo";
-import { relVarbInfosS } from "../../childSectionsDerived/RelVarbInfos";
+import { relVarbInfoS } from "../../SectionInfo/RelVarbInfo";
+import { relVarbInfosS } from "../../SectionInfo/RelVarbInfos";
 import { relAdorn } from "../rel/relAdorn";
 import { LeftRightVarbInfos, relVarb, relVarbS } from "../rel/relVarb";
 import { RelVarbs, relVarbsS } from "../relVarbs";

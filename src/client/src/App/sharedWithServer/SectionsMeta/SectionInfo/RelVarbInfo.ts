@@ -1,8 +1,12 @@
 import { VarbProp } from "../baseSectionsDerived/baseVarbInfo";
 import { ExpectedCount } from "../baseSectionsVarbs/NanoIdInfo";
+import { ChildName } from "../sectionChildrenDerived/ChildName";
+import {
+  ParentName,
+  PiblingName,
+  StepSiblingName,
+} from "../sectionChildrenDerived/ParentName";
 import { SectionName } from "../SectionName";
-import { ChildName } from "./ChildName";
-import { ParentName, PiblingName, StepSiblingName } from "./ParentName";
 import {
   RelChildrenInfo,
   RelInfoType,

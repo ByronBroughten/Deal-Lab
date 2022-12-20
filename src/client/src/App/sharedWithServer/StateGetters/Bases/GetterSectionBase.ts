@@ -1,5 +1,5 @@
 import { Id } from "../../SectionsMeta/baseSectionsVarbs/id";
-import { FeSectionInfo } from "../../SectionsMeta/Info";
+import { FeSectionInfo } from "../../SectionsMeta/SectionInfo/FeInfo";
 import {
   SectionNameByType,
   sectionNameS,
@@ -37,7 +37,7 @@ export class GetterSectionBase<
   get getterSectionProps(): GetterSectionProps<SN> {
     return {
       ...this.feInfo,
-      sectionsShare: this.sectionsShare,
+      ...this.getterSectionsProps,
     };
   }
   static isGetterBaseProps(

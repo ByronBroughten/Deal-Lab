@@ -2,8 +2,8 @@ import { PiCalculationName } from "../../baseSectionsVarbs/baseValues/calculatio
 import { numObj } from "../../baseSectionsVarbs/baseValues/NumObj";
 import { switchNames } from "../../baseSectionsVarbs/RelSwitchVarb";
 import { loanVarbsNotInFinancing } from "../../baseSectionsVarbs/specialVarbNames";
-import { relVarbInfoS } from "../../childSectionsDerived/RelVarbInfo";
-import { relVarbInfosS } from "../../childSectionsDerived/RelVarbInfos";
+import { relVarbInfoS } from "../../SectionInfo/RelVarbInfo";
+import { relVarbInfosS } from "../../SectionInfo/RelVarbInfos";
 import { relVarb, relVarbS } from "../rel/relVarb";
 import { RelVarbs, relVarbsS } from "../relVarbs";
 

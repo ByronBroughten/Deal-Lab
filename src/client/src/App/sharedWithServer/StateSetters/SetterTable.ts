@@ -3,8 +3,8 @@ import {
   SortOptions,
 } from "../../modules/SectionSolvers/CompareTableBuilder";
 import { InEntityVarbInfo } from "../SectionsMeta/baseSectionsVarbs/baseValues/entities";
-import { SectionPack } from "../SectionsMeta/childSectionsDerived/SectionPack";
-import { DbVarbs } from "../SectionsMeta/childSectionsDerived/SectionPack/RawSection";
+import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
+import { DbVarbs } from "../SectionsMeta/sectionChildrenDerived/SectionPack/RawSection";
 import { GetterSection } from "../StateGetters/GetterSection";
 import { UpdaterSection } from "../StateUpdaters/UpdaterSection";
 import { SetterSectionBase } from "./SetterBases/SetterSectionBase";

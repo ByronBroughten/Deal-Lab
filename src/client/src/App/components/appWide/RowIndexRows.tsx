@@ -2,11 +2,11 @@ import { TextField } from "@material-ui/core";
 import { transparentize } from "polished";
 import React from "react";
 import styled from "styled-components";
+import { FeSectionInfo } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { SectionNameByType } from "../../sharedWithServer/SectionsMeta/SectionNameByType";
 import ccs from "../../theme/cssChunks";
 import theme, { ThemeName, themeSectionNameOrDefault } from "../../theme/Theme";
 import { useMainSectionActor } from "./../../modules/sectionActorHooks/useMainSectionActor";
-import { FeSectionInfo } from "./../../sharedWithServer/SectionsMeta/Info";
 import useHowMany from "./customHooks/useHowMany";
 import { RowIndexListRow, StyledRowIndexRow } from "./RowIndexListRow";
 

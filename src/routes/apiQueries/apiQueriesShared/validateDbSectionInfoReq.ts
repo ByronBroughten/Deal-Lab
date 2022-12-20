@@ -4,7 +4,7 @@ import {
   DbStoreNameByType,
   dbStoreNameS,
   DbStoreType,
-} from "../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreName";
+} from "../../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/DbStoreName";
 import { Authed, validateAuthObj } from "./ReqAugmenters";
 
 type InfoReq = Authed<DbPackInfoSectionReq>;

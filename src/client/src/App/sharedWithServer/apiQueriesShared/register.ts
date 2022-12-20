@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { sectionsMeta } from "../SectionsMeta";
-import { ChildSectionPack } from "../SectionsMeta/childSectionsDerived/ChildSectionPack";
-import { zRawSectionPackArr } from "../SectionsMeta/childSectionsDerived/SectionPack";
+import { ChildSectionPack } from "../SectionsMeta/sectionChildrenDerived/ChildSectionPack";
+import { zRawSectionPackArr } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { Arr } from "../utils/Arr";
 
 const feStoreChildNames = sectionsMeta.section("feUser").childNames;

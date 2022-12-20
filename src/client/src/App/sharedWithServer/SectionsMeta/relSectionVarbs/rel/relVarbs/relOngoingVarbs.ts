@@ -6,8 +6,8 @@ import {
   switchNames,
   SwitchRecord,
 } from "../../../baseSectionsVarbs/RelSwitchVarb";
-import { RelInVarbInfo } from "../../../childSectionsDerived/RelInOutVarbInfo";
-import { relVarbInfoS } from "../../../childSectionsDerived/RelVarbInfo";
+import { RelInVarbInfo } from "../../../sectionChildrenDerived/RelInOutVarbInfo";
+import { relVarbInfoS } from "../../../SectionInfo/RelVarbInfo";
 import { relVarbsS } from "../../relVarbs";
 import { RelNumObjOptions, relVarb, relVarbS } from "../relVarb";
 import { DisplayName, StringRelVarb, UpdateFnProps } from "../relVarbTypes";

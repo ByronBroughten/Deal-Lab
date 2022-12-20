@@ -3,7 +3,7 @@ import { StrictPick, StrictPickPartial } from "../../utils/types";
 import { SectionName } from "../SectionName";
 import { SectionNameByType } from "../SectionNameByType";
 
-export function childSection<
+export function sectionChild<
   SN extends SectionName,
   O extends ChildSectionOptions
 >(sectionName: SN, options?: O): ChildSection<SN, O> {

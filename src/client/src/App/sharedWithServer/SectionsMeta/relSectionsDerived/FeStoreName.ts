@@ -1,9 +1,9 @@
-import { Arr } from "../../../utils/Arr";
-import { Obj } from "../../../utils/Obj";
-import { ChildName, getChildNames } from "../../childSectionsDerived/ChildName";
-import { dbStoreNameS } from "../../childSectionsDerived/DbStoreName";
-import { tableRowDbSources } from "../../relChildSections";
-import { allSectionTraits, getSomeSectionTraits } from "../../sectionsTraits";
+import { Arr } from "../../utils/Arr";
+import { Obj } from "../../utils/Obj";
+import { tableRowDbSources } from "../relChildSections";
+import { ChildName, getChildNames } from "../sectionChildrenDerived/ChildName";
+import { dbStoreNameS } from "../sectionChildrenDerived/DbStoreName";
+import { allSectionTraits, getSomeSectionTraits } from "../sectionsTraits";
 
 export const hasStoreNameArrs = {
   hasFeDisplayIndex: Obj.entryKeysWithPropOfType(

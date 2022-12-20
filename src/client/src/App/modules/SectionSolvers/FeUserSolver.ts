@@ -1,11 +1,11 @@
 import { AnalyzerPlanValues } from "../../sharedWithServer/apiQueriesShared/AnalyzerPlanValues";
 import { defaultMaker } from "../../sharedWithServer/defaultMaker/defaultMaker";
 import { AuthStatus } from "../../sharedWithServer/SectionsMeta/baseSectionsVarbs";
-import { ChildSectionName } from "../../sharedWithServer/SectionsMeta/childSectionsDerived/ChildSectionName";
-import { SectionPack } from "../../sharedWithServer/SectionsMeta/childSectionsDerived/SectionPack";
-import { FeSectionInfo } from "../../sharedWithServer/SectionsMeta/Info";
-import { FeStoreNameByType } from "../../sharedWithServer/SectionsMeta/relSectionsDerived/relNameArrs/FeStoreName";
+import { FeStoreNameByType } from "../../sharedWithServer/SectionsMeta/relSectionsDerived/FeStoreName";
 import { AutoSyncControl } from "../../sharedWithServer/SectionsMeta/relSectionVarbs/relVarbs";
+import { ChildSectionName } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/ChildSectionName";
+import { SectionPack } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/SectionPack";
+import { FeSectionInfo } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { SectionNameByType } from "../../sharedWithServer/SectionsMeta/SectionNameByType";
 import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
 import { PackBuilderSection } from "../../sharedWithServer/StatePackers.ts/PackBuilderSection";
@@ -41,6 +41,7 @@ export class FeUserSolver extends SolverSectionBase<"feUser"> {
     return new FeUserSolver({
       ...FeUserSolver.initProps({
         sections: feUser.sectionsShare.sections,
+        sectionContextName: "default",
       }),
       ...feUser.getterSectionProps,
     });

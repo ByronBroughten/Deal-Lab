@@ -53,7 +53,7 @@ export function useSections(
   return [sections, setSections, sectionsDispatch];
 }
 
-export function useAnalyzerSections({
+export function useDealLabSections({
   prePopulatedSections,
   storeSectionsLocally = false,
 }: UseSectionsProps = {}): SectionsAndControls {
@@ -71,7 +71,7 @@ export function useAnalyzerSections({
   };
 }
 
-type UseSectionsReturn = ReturnType<typeof useAnalyzerSections>;
+type UseSectionsReturn = ReturnType<typeof useDealLabSections>;
 export type SectionsValue = StrictOmit<UseSectionsReturn, "sectionsDispatch">;
 
 function initializeAnalyzerSections(prePopulatedSections?: StateSections) {

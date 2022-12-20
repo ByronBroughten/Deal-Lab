@@ -3,12 +3,12 @@ import {
   makeReq,
   SectionPackReq,
 } from "../../sharedWithServer/apiQueriesShared/makeReqAndRes";
-import { ChildName } from "../../sharedWithServer/SectionsMeta/childSectionsDerived/ChildName";
+import { ChildName } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/ChildName";
 import {
   DbSectionName,
   DbStoreNameByType,
-} from "../../sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreName";
-import { SectionPack } from "../../sharedWithServer/SectionsMeta/childSectionsDerived/SectionPack";
+} from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/DbStoreName";
+import { SectionPack } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/SectionPack";
 import { ApiQuerierBase, ApiQuerierBaseProps } from "./Bases/ApiQuerierBase";
 
 export interface SectionQuerierProps<CN extends ChildName<"dbStore">>

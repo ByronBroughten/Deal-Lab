@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import { VarbName } from "../../../../sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
-import { ChildName } from "../../../../sharedWithServer/SectionsMeta/childSectionsDerived/ChildName";
-import { ChildSectionName } from "../../../../sharedWithServer/SectionsMeta/childSectionsDerived/ChildSectionName";
-import { FeSectionInfo } from "../../../../sharedWithServer/SectionsMeta/Info";
+import { ChildName } from "../../../../sharedWithServer/SectionsMeta/sectionChildrenDerived/ChildName";
+import { ChildSectionName } from "../../../../sharedWithServer/SectionsMeta/sectionChildrenDerived/ChildSectionName";
+import { FeSectionInfo } from "../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import {
   ChildNameOfType,
   ParentOfTypeName,

@@ -4,9 +4,9 @@ import {
   SinglePropCalculations,
 } from "../../baseSectionsVarbs/baseValues/calculations";
 import { numObj } from "../../baseSectionsVarbs/baseValues/NumObj";
-import { ChildName } from "../../childSectionsDerived/ChildName";
-import { RelInVarbInfo } from "../../childSectionsDerived/RelInOutVarbInfo";
-import { relVarbInfoS } from "../../childSectionsDerived/RelVarbInfo";
+import { ChildName } from "../../sectionChildrenDerived/ChildName";
+import { PathInVarbInfo } from "../../sectionChildrenDerived/RelInOutVarbInfo";
+import { relVarbInfoS } from "../../SectionInfo/RelVarbInfo";
 import { SectionName } from "../../SectionName";
 import {
   CommonRelVarb,
@@ -47,7 +47,7 @@ export function relVarb<T extends keyof RelVarbByType>(
 }
 
 export type RelNumObjOptions = Partial<NumObjRelVarb & { initNumber: number }>;
-export type LeftRightVarbInfos = [RelInVarbInfo, RelInVarbInfo];
+export type LeftRightVarbInfos = [PathInVarbInfo, PathInVarbInfo];
 export const relVarbS = {
   numObj(
     displayName: DisplayName,
@@ -108,7 +108,7 @@ export const relVarbS = {
   },
   sumNums(
     displayName: DisplayName,
-    nums: RelInVarbInfo[],
+    nums: PathInVarbInfo[],
     options?: RelNumObjOptions
   ): NumObjRelVarb {
     return relVarb("numObj", {
@@ -120,7 +120,7 @@ export const relVarbS = {
   },
   sumMoney(
     displayName: DisplayName,
-    nums: RelInVarbInfo[],
+    nums: PathInVarbInfo[],
     options?: RelNumObjOptions
   ): NumObjRelVarb {
     return this.sumNums(displayName, nums, {
@@ -141,7 +141,7 @@ export const relVarbS = {
   singlePropFn(
     displayName: DisplayName,
     updateFnName: SinglePropCalculations,
-    num: RelInVarbInfo,
+    num: PathInVarbInfo,
     options?: RelNumObjOptions
   ): NumObjRelVarb {
     return relVarb("numObj", {

@@ -1,29 +1,36 @@
 import { sectionsMeta, SectionsMeta } from "../SectionsMeta";
-import { getPath } from "../SectionsMeta/absoluteVarbPaths";
 import { DbSectionInfo } from "../SectionsMeta/baseSectionsVarbs/DbSectionInfo";
 import {
   IdInfoMixedMulti,
   SectionInfoMixed,
   VarbInfoMixed,
-} from "../SectionsMeta/childSectionsDerived/MixedSectionInfo";
-import { FeSectionInfo, FeVarbInfo } from "../SectionsMeta/Info";
-import { isAbsoluteInfoType } from "../SectionsMeta/PathInfo";
+} from "../SectionsMeta/sectionChildrenDerived/MixedSectionInfo";
+import { isAbsoluteInfoType } from "../SectionsMeta/SectionInfo/AbsolutePathInfo";
+import { FeSectionInfo, FeVarbInfo } from "../SectionsMeta/SectionInfo/FeInfo";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
-import { GetterSectionsBase } from "./Bases/GetterSectionsBase";
+import { sectionPathContexts } from "../SectionsMeta/sectionPathContexts";
+import { SectionPathName } from "../SectionsMeta/sectionPathContexts/sectionPathNames";
+import {
+  GetterSectionsBase,
+  GetterSectionsRequiredProps,
+} from "./Bases/GetterSectionsBase";
 import { GetterList } from "./GetterList";
 import { GetterSection } from "./GetterSection";
 import { GetterVarb } from "./GetterVarb";
 import { GetterVarbs } from "./GetterVarbs";
 
 export class GetterSections extends GetterSectionsBase {
+  static init(requiredProps: GetterSectionsRequiredProps) {
+    return new GetterSections(GetterSectionsBase.initProps(requiredProps));
+  }
   get meta(): SectionsMeta {
     return sectionsMeta;
   }
   list<SN extends SectionNameByType>(sectionName: SN): GetterList<SN> {
     return new GetterList({
       sectionName,
-      sectionsShare: this.sectionsShare,
+      ...this.getterSectionsProps,
     });
   }
   oneAndOnly<SN extends SectionNameByType>(sectionName: SN): GetterSection<SN> {
@@ -57,7 +64,7 @@ export class GetterSections extends GetterSectionsBase {
   ): GetterSection<SN> {
     return new GetterSection({
       ...info,
-      sectionsShare: this.sectionsShare,
+      ...this.getterSectionsProps,
     });
   }
   sectionVarbs<SN extends SectionNameByType>(
@@ -65,7 +72,7 @@ export class GetterSections extends GetterSectionsBase {
   ): GetterVarbs<SN> {
     return new GetterVarbs({
       ...info,
-      sectionsShare: this.sectionsShare,
+      ...this.getterSectionsProps,
     });
   }
   varbs<SN extends SectionName>(info: FeSectionInfo<SN>): GetterVarbs<SN> {
@@ -77,6 +84,9 @@ export class GetterSections extends GetterSectionsBase {
   }: FeVarbInfo<SN>): GetterVarb<SN> {
     return this.section(info).varb(varbName);
   }
+  getPath<PN extends SectionPathName>(pathName: PN) {
+    return sectionPathContexts[this.sectionContextName][pathName]["path"];
+  }
   sectionsByMixed<SN extends SectionName>(
     infoMixed: SectionInfoMixed<SN>
   ): GetterSection<SN>[] {
@@ -84,13 +94,13 @@ export class GetterSections extends GetterSectionsBase {
       const { sectionName, pathName } = infoMixed;
       return this.root.descendantsOfSn({
         sectionName,
-        descendantNames: getPath(pathName),
+        descendantNames: this.getPath(pathName),
       });
     } else if (infoMixed.infoType === "absolutePathDbId") {
       const { sectionName, pathName } = infoMixed;
       return this.root.descendantsByPathAndDbId({
         sectionName,
-        descendantNames: getPath(pathName),
+        descendantNames: this.getPath(pathName),
         dbId: infoMixed.id,
       });
     } else {
@@ -104,13 +114,13 @@ export class GetterSections extends GetterSectionsBase {
       const { sectionName, pathName } = infoMixed;
       return this.root.descendantOfSn({
         sectionName,
-        descendantNames: getPath(pathName),
+        descendantNames: this.getPath(pathName),
       });
     } else if (infoMixed.infoType === "absolutePathDbId") {
       const { sectionName, pathName } = infoMixed;
       return this.root.descendantByPathAndDbId({
         sectionName,
-        descendantNames: getPath(pathName),
+        descendantNames: this.getPath(pathName),
         dbId: infoMixed.id,
       });
     } else {
@@ -136,7 +146,7 @@ export class GetterSections extends GetterSectionsBase {
         return root
           .descendantOfSn({
             sectionName,
-            descendantNames: getPath(pathName),
+            descendantNames: this.getPath(pathName),
           })
           .varb(varbName);
       }
@@ -161,13 +171,13 @@ export class GetterSections extends GetterSectionsBase {
       const { sectionName, pathName } = mixedInfo;
       return this.root.hasDescendantOfSn({
         sectionName,
-        descendantNames: getPath(pathName),
+        descendantNames: this.getPath(pathName),
       });
     } else if (mixedInfo.infoType === "absolutePathDbId") {
       const { sectionName, pathName } = mixedInfo;
       return this.root.hasDescendantByPathAndDbId({
         sectionName,
-        descendantNames: getPath(pathName),
+        descendantNames: this.getPath(pathName),
         dbId: mixedInfo.id,
       });
     } else {

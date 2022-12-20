@@ -1,9 +1,7 @@
 import { VariableGetterSections } from "../StateEntityGetters/VariableGetterSections";
-import { useSectionsContext } from "./useSections";
+import { useFullSectionsContext } from "./useFullSectionsContext";
 
 export function useVariableSections(): VariableGetterSections {
-  const { sections } = useSectionsContext();
-  return new VariableGetterSections({
-    sectionsShare: { sections },
-  });
+  const context = useFullSectionsContext();
+  return VariableGetterSections.init(context);
 }

@@ -1,7 +1,7 @@
 import React from "react";
 import { useMainSectionActor } from "../../../../modules/sectionActorHooks/useMainSectionActor";
 import { SaveStatus } from "../../../../modules/SectionSolvers/MainSectionSolver";
-import { FeSectionInfo } from "../../../../sharedWithServer/SectionsMeta/Info";
+import { FeSectionInfo } from "../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { SectionNameByType } from "../../../../sharedWithServer/SectionsMeta/SectionNameByType";
 
 export function useSaveStatus<SN extends SectionNameByType<"hasIndexStore">>(

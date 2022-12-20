@@ -1,9 +1,7 @@
 import { GetterSections } from "../StateGetters/GetterSections";
-import { useSectionsContext } from "./useSections";
+import { useFullSectionsContext } from "./useFullSectionsContext";
 
 export function useGetterSections(): GetterSections {
-  const { sections } = useSectionsContext();
-  return new GetterSections({
-    sectionsShare: { sections },
-  });
+  const context = useFullSectionsContext();
+  return new GetterSections(GetterSections.initProps(context));
 }

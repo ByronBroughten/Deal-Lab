@@ -1,6 +1,6 @@
 import { FaList } from "react-icons/fa";
 import { useFeUser } from "../../modules/sectionActorHooks/useFeUser";
-import { FeInfoByType } from "../../sharedWithServer/SectionsMeta/Info";
+import { FeInfoByType } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { DropdownList } from "./DropdownList";
 import { RowIndexRows } from "./RowIndexRows";
 

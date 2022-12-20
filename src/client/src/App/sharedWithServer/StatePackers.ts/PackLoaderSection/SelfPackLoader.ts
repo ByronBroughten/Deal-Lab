@@ -1,10 +1,10 @@
 import { SectionValues } from "../../SectionsMeta/baseSectionsDerived/valueMetaTypes";
-import { ChildName } from "../../SectionsMeta/childSectionsDerived/ChildName";
-import { SectionPack } from "../../SectionsMeta/childSectionsDerived/SectionPack";
+import { ChildName } from "../../SectionsMeta/sectionChildrenDerived/ChildName";
+import { SectionPack } from "../../SectionsMeta/sectionChildrenDerived/SectionPack";
 import {
   OneRawSection,
   SpChildInfo,
-} from "../../SectionsMeta/childSectionsDerived/SectionPack/RawSection";
+} from "../../SectionsMeta/sectionChildrenDerived/SectionPack/RawSection";
 import {
   SectionNameByType,
   sectionNameS,

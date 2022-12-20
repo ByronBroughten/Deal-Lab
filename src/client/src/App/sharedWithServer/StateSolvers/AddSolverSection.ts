@@ -1,8 +1,8 @@
-import { ChildName } from "../SectionsMeta/childSectionsDerived/ChildName";
-import { ChildSectionName } from "../SectionsMeta/childSectionsDerived/ChildSectionName";
-import { ChildArrPack } from "../SectionsMeta/childSectionsDerived/ChildSectionPack";
-import { ParentNameSafe } from "../SectionsMeta/childSectionsDerived/ParentName";
-import { FeSectionInfo, FeVarbInfo } from "../SectionsMeta/Info";
+import { ChildName } from "../SectionsMeta/sectionChildrenDerived/ChildName";
+import { ChildSectionName } from "../SectionsMeta/sectionChildrenDerived/ChildSectionName";
+import { ChildArrPack } from "../SectionsMeta/sectionChildrenDerived/ChildSectionPack";
+import { ParentNameSafe } from "../SectionsMeta/sectionChildrenDerived/ParentName";
+import { FeSectionInfo, FeVarbInfo } from "../SectionsMeta/SectionInfo/FeInfo";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { GetterSection } from "../StateGetters/GetterSection";
 import { GetterSections } from "../StateGetters/GetterSections";

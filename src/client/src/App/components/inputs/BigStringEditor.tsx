@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/Info";
+import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { GetterVarb } from "../../sharedWithServer/StateGetters/GetterVarb";
 import { ThemeName } from "../../theme/Theme";
 import { MaterialDraftEditor } from "./MaterialDraftEditor";

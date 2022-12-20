@@ -1,13 +1,13 @@
 import { isValidVarbNames } from "../../SectionsMeta/baseSectionsDerived/baseVarbInfo";
-import { SectionNameByType } from "../../SectionsMeta/SectionNameByType";
+import { SectionName } from "../../SectionsMeta/SectionName";
 import { GetterSectionBase, GetterSectionProps } from "./GetterSectionBase";
 
-export interface GetterVarbProps<SN extends SectionNameByType<"hasVarb">>
+export interface GetterVarbProps<SN extends SectionName>
   extends GetterSectionProps<SN> {
   varbName: string;
 }
 export class GetterVarbBase<
-  SN extends SectionNameByType<"hasVarb">
+  SN extends SectionName
 > extends GetterSectionBase<SN> {
   readonly varbName: string;
   constructor({ varbName, ...props }: GetterVarbProps<SN>) {
@@ -27,7 +27,7 @@ export class GetterVarbBase<
   get getterVarbProps(): GetterVarbProps<SN> {
     return {
       ...this.feVarbInfo,
-      sectionsShare: this.sectionsShare,
+      ...this.getterSectionsProps,
     };
   }
 }

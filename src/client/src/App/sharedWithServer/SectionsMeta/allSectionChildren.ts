@@ -1,12 +1,12 @@
+import { relOmniParentChildren } from "./allSectionChildren/omniParentChildren";
 import {
-  childrenSections,
-  GeneralChildrenSections,
-} from "./childSections/childrenSections";
-import {
-  childSection,
   GeneralChildSection,
-} from "./childSections/childSection";
-import { relOmniParentChildren } from "./childSections/omniParentChildren";
+  sectionChild,
+} from "./allSectionChildren/sectionChild";
+import {
+  GeneralChildrenSections,
+  sectionChildren,
+} from "./allSectionChildren/sectionChildren";
 import { SectionName, sectionNames } from "./SectionName";
 
 type Defaults = {
@@ -21,37 +21,44 @@ type GenericChildSections = {
   [SN in SectionName]: GeneralChildrenSections;
 };
 
-function checkChildSections<CS extends GenericChildSections>(
-  childSections: CS
+function checkAllSectionChildren<CS extends GenericChildSections>(
+  allSectionChildren: CS
 ) {
-  return childSections;
+  return allSectionChildren;
 }
 
-export const childSections = checkChildSections({
+export const allSectionChildren = checkAllSectionChildren({
   ...defaults,
-  root: childrenSections({
+  root: sectionChildren({
     omniParent: ["omniParent"],
     main: ["main"],
   }),
   omniParent: relOmniParentChildren,
   // main has feUser and each of the main app pages
-  main: childrenSections({
+  main: sectionChildren({
     feUser: ["feUser"],
     activeDeal: ["deal"],
+    latentSections: ["latentSections"],
     userVarbEditor: ["userVarbEditor"],
     userListEditor: ["userListEditor"],
   }),
-  userVarbEditor: childrenSections({
+  latentSections: sectionChildren({
+    deal: ["deal"],
     userVarbList: ["userVarbList"],
-  }),
-  userListEditor: childrenSections({
     singleTimeList: ["singleTimeList"],
     ongoingList: ["ongoingList"],
   }),
-  displayNameList: childrenSections({
+  userVarbEditor: sectionChildren({
+    userVarbList: ["userVarbList"],
+  }),
+  userListEditor: sectionChildren({
+    singleTimeList: ["singleTimeList"],
+    ongoingList: ["ongoingList"],
+  }),
+  displayNameList: sectionChildren({
     displayNameItem: ["displayNameItem"],
   }),
-  feUser: childrenSections({
+  feUser: sectionChildren({
     // feUser includes everything that has a corresponding child in dbStore
     // or that has any intermediary sections used to edit and add to them.
     propertyMainTable: ["compareTable"],
@@ -68,7 +75,7 @@ export const childSections = checkChildSections({
     singleTimeListMain: ["singleTimeList"],
     ongoingListMain: ["ongoingList"],
   }),
-  dbStore: childrenSections({
+  dbStore: sectionChildren({
     authInfoPrivate: ["authInfoPrivate"],
     userInfo: ["userInfo"],
 
@@ -94,40 +101,40 @@ export const childSections = checkChildSections({
     singleTimeListMain: ["singleTimeList"],
     ongoingListMain: ["ongoingList"],
   }),
-  compareTable: childrenSections({
+  compareTable: sectionChildren({
     column: ["column"],
     tableRow: ["tableRow"],
     compareRow: ["proxyStoreItem"],
   }),
-  tableRow: { cell: childSection("cell") },
-  outputList: { outputItem: childSection("outputItem") },
-  singleTimeListGroup: { singleTimeList: childSection("singleTimeList") },
-  ongoingListGroup: { ongoingList: childSection("ongoingList") },
-  singleTimeList: { singleTimeItem: childSection("singleTimeItem") },
+  tableRow: { cell: sectionChild("cell") },
+  outputList: { outputItem: sectionChild("outputItem") },
+  singleTimeListGroup: { singleTimeList: sectionChild("singleTimeList") },
+  ongoingListGroup: { ongoingList: sectionChild("ongoingList") },
+  singleTimeList: { singleTimeItem: sectionChild("singleTimeItem") },
   ongoingList: {
-    ongoingItem: childSection("ongoingItem", {
+    ongoingItem: sectionChild("ongoingItem", {
       isListItem: true,
     }),
   },
-  userVarbList: { userVarbItem: childSection("userVarbItem") },
+  userVarbList: { userVarbItem: sectionChild("userVarbItem") },
   userVarbItem: {
-    conditionalRowList: childSection("conditionalRowList"),
+    conditionalRowList: sectionChild("conditionalRowList"),
   },
-  conditionalRowList: { conditionalRow: childSection("conditionalRow") },
-  deal: childrenSections({
+  conditionalRowList: { conditionalRow: sectionChild("conditionalRow") },
+  deal: sectionChildren({
     propertyGeneral: ["propertyGeneral"],
     financing: ["financing"],
     mgmtGeneral: ["mgmtGeneral"],
     dealOutputList: ["outputList"],
   }),
-  financing: { loan: childSection("loan") },
-  loan: childrenSections({
+  financing: { loan: sectionChild("loan") },
+  loan: sectionChildren({
     closingCostListGroup: ["singleTimeListGroup"],
     wrappedInLoanListGroup: ["singleTimeListGroup"],
     customVarb: ["customVarb"],
   }),
-  propertyGeneral: { property: childSection("property") },
-  property: childrenSections({
+  propertyGeneral: { property: sectionChild("property") },
+  property: sectionChildren({
     upfrontCostListGroup: ["singleTimeListGroup"],
     upfrontRevenueListGroup: ["singleTimeListGroup"],
     ongoingCostListGroup: ["ongoingListGroup"],
@@ -135,22 +142,22 @@ export const childSections = checkChildSections({
     unit: ["unit"],
     customVarb: ["customVarb"],
   }),
-  mgmtGeneral: { mgmt: childSection("mgmt") },
-  mgmt: childrenSections({
+  mgmtGeneral: { mgmt: sectionChild("mgmt") },
+  mgmt: sectionChildren({
     upfrontCostListGroup: ["singleTimeListGroup"],
     ongoingCostListGroup: ["ongoingListGroup"],
     customVarb: ["customVarb"],
   }),
-  dummyDisplayStore: childrenSections({
+  dummyDisplayStore: sectionChildren({
     displayNameList: ["displayNameList"],
     activeAsSaved: ["hasDummyDisplayStore"],
   }),
 });
 
-export type ChildSections = typeof childSections;
+export type AllSectionChildren = typeof allSectionChildren;
 export type SectionChildProps<PN extends keyof GeneralChildSection> = {
-  [SN in keyof ChildSections]: {
-    [CN in keyof ChildSections[SN]]: ChildSections[SN][CN][PN &
-      keyof ChildSections[SN][CN]];
+  [SN in keyof AllSectionChildren]: {
+    [CN in keyof AllSectionChildren[SN]]: AllSectionChildren[SN][CN][PN &
+      keyof AllSectionChildren[SN][CN]];
   };
 };

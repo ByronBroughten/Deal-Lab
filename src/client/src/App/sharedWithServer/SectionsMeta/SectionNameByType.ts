@@ -2,18 +2,18 @@ import { StringTypeChecker } from "../../utils/StringTypeChecker";
 import { PropKeyOfValue } from "../utils/Obj/SubType";
 import { baseNameArrs, BaseNameArrs } from "./baseSectionsDerived/baseNameArrs";
 import { SectionValues } from "./baseSectionsDerived/valueMetaTypes";
-import { ChildName, getChildNames } from "./childSectionsDerived/ChildName";
+import { relNameArrs, RelNameArrs } from "./relSectionsDerived/relNameArrs";
+import { ChildName, getChildNames } from "./sectionChildrenDerived/ChildName";
 import {
   childToSectionName,
   ChildToSectionName,
-} from "./childSectionsDerived/ChildSectionName";
-import { ParentName } from "./childSectionsDerived/ParentName";
+} from "./sectionChildrenDerived/ChildSectionName";
+import { ParentName } from "./sectionChildrenDerived/ParentName";
 import {
   isSectionPack,
   SectionPack,
   validateSectionPack,
-} from "./childSectionsDerived/SectionPack";
-import { relNameArrs, RelNameArrs } from "./relSectionsDerived/relNameArrs";
+} from "./sectionChildrenDerived/SectionPack";
 import { SectionName } from "./SectionName";
 
 type NameArrs = BaseNameArrs & RelNameArrs;

@@ -1,4 +1,4 @@
-import { FeVarbInfo } from "../SectionsMeta/Info";
+import { FeVarbInfo } from "../SectionsMeta/SectionInfo/FeInfo";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { HasSectionInfoProps } from "./HasSectionInfoProps";
 

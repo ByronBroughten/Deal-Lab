@@ -18,9 +18,9 @@ import {
   stringObj,
   StringObj,
 } from "../SectionsMeta/baseSectionsVarbs/baseValues/StringObj";
-import { RelInVarbInfo } from "../SectionsMeta/childSectionsDerived/RelInOutVarbInfo";
-import { RelVarbInfo } from "../SectionsMeta/childSectionsDerived/RelVarbInfo";
 import { UpdateFnProps } from "../SectionsMeta/relSectionVarbs/rel/relVarbTypes";
+import { RelInVarbInfo } from "../SectionsMeta/sectionChildrenDerived/RelInOutVarbInfo";
+import { RelVarbInfo } from "../SectionsMeta/SectionInfo/RelVarbInfo";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { GetterSectionProps } from "../StateGetters/Bases/GetterSectionBase";
 import { GetterVarbBase } from "../StateGetters/Bases/GetterVarbBase";

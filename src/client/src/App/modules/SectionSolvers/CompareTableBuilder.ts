@@ -1,4 +1,4 @@
-import { SectionPack } from "../../sharedWithServer/SectionsMeta/childSectionsDerived/SectionPack";
+import { SectionPack } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/SectionPack";
 import { SectionPackByType } from "../../sharedWithServer/SectionsMeta/SectionNameByType";
 import { GetterSectionProps } from "../../sharedWithServer/StateGetters/Bases/GetterSectionBase";
 import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";

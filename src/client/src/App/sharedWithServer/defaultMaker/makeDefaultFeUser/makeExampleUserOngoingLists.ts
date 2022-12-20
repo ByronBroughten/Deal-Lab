@@ -1,7 +1,7 @@
 import { numObj } from "../../SectionsMeta/baseSectionsVarbs/baseValues/NumObj";
 import { numObjNext } from "../../SectionsMeta/baseSectionsVarbs/baseValues/numObjNext";
 import { stringObj } from "../../SectionsMeta/baseSectionsVarbs/baseValues/StringObj";
-import { SectionPack } from "../../SectionsMeta/childSectionsDerived/SectionPack";
+import { SectionPack } from "../../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { PackBuilderSection } from "../../StatePackers.ts/PackBuilderSection";
 import { userVarbLifespans } from "./makeExampleUserVarbLists";
 

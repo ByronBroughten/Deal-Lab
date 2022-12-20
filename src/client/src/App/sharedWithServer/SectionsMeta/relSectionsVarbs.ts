@@ -2,8 +2,6 @@ import { timeS } from "../utils/date";
 import { AnalyzerPlan, AuthStatus } from "./baseSectionsVarbs";
 import { numObj } from "./baseSectionsVarbs/baseValues/NumObj";
 import { savableSectionVarbNames } from "./baseSectionsVarbs/specialVarbNames";
-import { relVarbInfoS } from "./childSectionsDerived/RelVarbInfo";
-import { relVarbInfosS } from "./childSectionsDerived/RelVarbInfos";
 import { relAdorn } from "./relSectionVarbs/rel/relAdorn";
 import { relVarb, relVarbS } from "./relSectionVarbs/rel/relVarb";
 import {
@@ -21,6 +19,8 @@ import {
 } from "./relSectionVarbs/relVarbs/financingRelVarbs";
 import { mgmtRelVarbs } from "./relSectionVarbs/relVarbs/mgmtRelVarbs";
 import { propertyRelVarbs } from "./relSectionVarbs/relVarbs/propertyRelVarbs";
+import { relVarbInfoS } from "./SectionInfo/RelVarbInfo";
+import { relVarbInfosS } from "./SectionInfo/RelVarbInfos";
 import { SectionName, sectionNames } from "./SectionName";
 
 type GenericRelSections = {

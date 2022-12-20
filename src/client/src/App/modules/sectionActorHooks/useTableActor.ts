@@ -1,4 +1,4 @@
-import { DbStoreNameByType } from "../../sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreName";
+import { DbStoreNameByType } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/DbStoreName";
 import { useSetterSectionsProps } from "../../sharedWithServer/stateClassHooks/useSetterSectionsProps";
 import { apiQueries } from "../apiQueriesClient";
 import { TableActor } from "../SectionActors/TableActor";

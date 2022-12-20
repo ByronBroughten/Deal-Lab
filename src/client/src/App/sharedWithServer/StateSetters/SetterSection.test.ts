@@ -1,6 +1,6 @@
 import { numObj } from "../SectionsMeta/baseSectionsVarbs/baseValues/NumObj";
 import { stringObj } from "../SectionsMeta/baseSectionsVarbs/baseValues/StringObj";
-import { ChildName } from "../SectionsMeta/childSectionsDerived/ChildName";
+import { ChildName } from "../SectionsMeta/sectionChildrenDerived/ChildName";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
 import { SetterTesterSection } from "./TestUtils/SetterTesterSection";
@@ -37,7 +37,9 @@ describe("SetterSection", () => {
 
       expect(parent.get.sectionIsChild(feInfo)).toBe(false);
       expect(postCounts.childIds).toBe(preCounts.childIds - 1);
-      expect(postCounts.childSections).toBe(preCounts.childSections - 1);
+      expect(postCounts.allSectionChildren).toBe(
+        preCounts.allSectionChildren - 1
+      );
     });
   });
   it("should load a sectionPack", () => {
@@ -74,8 +76,8 @@ describe("SetterSection", () => {
 
     expect(getter.dbId).toBe(sectionPack.dbId);
     expect(postChildCounts.childIds).toBe(numChildrenNext);
-    expect(postChildCounts.childSections).toBe(
-      preChildCounts.childSections + childCountDifference
+    expect(postChildCounts.allSectionChildren).toBe(
+      preChildCounts.allSectionChildren + childCountDifference
     );
     expect(getter.value("displayName")).toEqual(packVarbs["displayName"]);
     expect(getter.value("price", "numObj").mainText).toEqual(
@@ -112,7 +114,9 @@ describe("SetterSection", () => {
         const postCounts = tester.childCounts(childName);
 
         expect(postCounts.childIds).toBe(preCounts.childIds + 1);
-        expect(postCounts.childSections).toBe(preCounts.childSections + 1);
+        expect(postCounts.allSectionChildren).toBe(
+          preCounts.allSectionChildren + 1
+        );
       });
     });
     it("should get the child it adds", () => {
@@ -143,7 +147,9 @@ describe("SetterSection", () => {
         const postCounts = tester.childCounts(childName);
         expect(tester.get.hasChild(childInfo)).toBe(false);
         expect(postCounts.childIds).toBe(preCounts.childIds - 1);
-        expect(postCounts.childSections).toBe(preCounts.childSections - 1);
+        expect(postCounts.allSectionChildren).toBe(
+          preCounts.allSectionChildren - 1
+        );
       });
     });
     it("should remove all children of a childName from state", () => {
@@ -156,8 +162,8 @@ describe("SetterSection", () => {
 
         const postCounts = tester.childCounts(childName);
         expect(postCounts.childIds).toBe(0);
-        expect(postCounts.childSections).toBe(
-          preCounts.childSections - preCounts.childIds
+        expect(postCounts.allSectionChildren).toBe(
+          preCounts.allSectionChildren - preCounts.childIds
         );
       });
     });

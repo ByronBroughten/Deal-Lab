@@ -13,8 +13,6 @@ import {
   AuthStatus,
   UserDataStatus,
 } from "../../../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsVarbs";
-import { SectionPack } from "../../../../client/src/App/sharedWithServer/SectionsMeta/childSectionsDerived/SectionPack";
-import { FeSectionInfo } from "../../../../client/src/App/sharedWithServer/SectionsMeta/Info";
 import {
   FeUserDbIndex,
   relChildSections,
@@ -22,7 +20,9 @@ import {
 import {
   FeStoreNameByType,
   feStoreNameS,
-} from "../../../../client/src/App/sharedWithServer/SectionsMeta/relSectionsDerived/relNameArrs/FeStoreName";
+} from "../../../../client/src/App/sharedWithServer/SectionsMeta/relSectionsDerived/FeStoreName";
+import { SectionPack } from "../../../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/SectionPack";
+import { FeSectionInfo } from "../../../../client/src/App/sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { sectionNameS } from "../../../../client/src/App/sharedWithServer/SectionsMeta/SectionNameByType";
 import {
   GetterSectionBase,

@@ -2,7 +2,7 @@ import { relChildSections } from "../../sharedWithServer/SectionsMeta/relChildSe
 import {
   FeStoreNameByType,
   feStoreNameS,
-} from "../../sharedWithServer/SectionsMeta/relSectionsDerived/relNameArrs/FeStoreName";
+} from "../../sharedWithServer/SectionsMeta/relSectionsDerived/FeStoreName";
 import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
 import { SetterSection } from "../../sharedWithServer/StateSetters/SetterSection";
 import { StrictOmit } from "../../sharedWithServer/utils/types";

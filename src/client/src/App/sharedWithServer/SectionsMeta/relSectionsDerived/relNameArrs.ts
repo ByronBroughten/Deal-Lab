@@ -1,9 +1,9 @@
 import { Arr } from "../../utils/Arr";
 import { Obj } from "../../utils/Obj";
-import { hasChildSectionNames } from "../childSectionsDerived/ChildName";
+import { hasChildSectionNames } from "../sectionChildrenDerived/ChildName";
 import { SectionName, sectionNames } from "../SectionName";
 import { allSectionTraits } from "../sectionsTraits";
-import { feStoreNameS, hasStoreNameArrs } from "./relNameArrs/FeStoreName";
+import { feStoreNameS, hasStoreNameArrs } from "./FeStoreName";
 import { tableStoreNameArrs } from "./relNameArrs/tableStoreArrs";
 
 export const relNameArrs = {

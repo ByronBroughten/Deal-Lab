@@ -2,18 +2,18 @@ import {
   ActivePathName,
   activePathNames,
   activeVarbDisplayName,
-  globalOptionVarbs,
+  soloVarbOptions,
 } from "../SectionsMeta/absolutePathVarbs";
-import { pathSectionName } from "../SectionsMeta/absoluteVarbPaths";
-import { mixedInfoS } from "../SectionsMeta/childSectionsDerived/MixedSectionInfo";
-import { PathVarbNames } from "../SectionsMeta/PathInfo";
+import { mixedInfoS } from "../SectionsMeta/sectionChildrenDerived/MixedSectionInfo";
+import { PathVarbNames } from "../SectionsMeta/SectionInfo/AbsolutePathInfo";
+import { sectionNameByPathName } from "../SectionsMeta/sectionPathContexts/sectionPathNames";
 import { sectionTrait } from "../SectionsMeta/sectionsTraits";
 import { VariableOption } from "./VariableGetterSections";
 
 export const absoluteVarbOptions = makeAbsoluteVarbOptions();
 function makeAbsoluteVarbOptions(): VariableOption[] {
   return activePathNames.reduce((variableOptions, pathName) => {
-    const varbNames = globalOptionVarbs[pathName];
+    const varbNames = soloVarbOptions[pathName];
     for (const varbName of varbNames) {
       variableOptions.push(initAbsoluteVarbOption({ pathName, varbName }));
     }
@@ -24,9 +24,9 @@ function initAbsoluteVarbOption<PN extends ActivePathName>({
   pathName,
   varbName,
 }: PathVarbNames<PN>): VariableOption {
-  const sectionName = pathSectionName(pathName);
+  const sectionName = sectionNameByPathName(pathName);
   return {
-    varbInfo: mixedInfoS.absoluteVarbPathNext(pathName, varbName, "onlyOne"),
+    varbInfo: mixedInfoS.absoluteVarbPath(pathName, varbName, "onlyOne"),
     collectionName: sectionTrait(sectionName, "displayName"),
     displayName: activeVarbDisplayName({ sectionName, varbName }),
   };

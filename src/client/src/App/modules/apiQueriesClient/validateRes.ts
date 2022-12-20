@@ -10,8 +10,8 @@ import { Id } from "../../sharedWithServer/SectionsMeta/baseSectionsVarbs/id";
 import {
   DbStoreNameByType,
   dbStoreNameS,
-} from "../../sharedWithServer/SectionsMeta/childSectionsDerived/DbStoreName";
-import { isSectionPack } from "../../sharedWithServer/SectionsMeta/childSectionsDerived/SectionPack";
+} from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/DbStoreName";
+import { isSectionPack } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/SectionPack";
 import { Obj } from "../../sharedWithServer/utils/Obj";
 
 type DbIdData = { dbId: string };

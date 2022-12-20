@@ -1,9 +1,9 @@
 import { pick } from "lodash";
 import { defaultMaker } from "../defaultMaker/defaultMaker";
-import { VarbInfoMixed } from "../SectionsMeta/childSectionsDerived/MixedSectionInfo";
-import { SectionPack } from "../SectionsMeta/childSectionsDerived/SectionPack";
-import { FeSectionInfo, FeVarbInfo } from "../SectionsMeta/Info";
-import { FeStoreNameByType } from "../SectionsMeta/relSectionsDerived/relNameArrs/FeStoreName";
+import { FeStoreNameByType } from "../SectionsMeta/relSectionsDerived/FeStoreName";
+import { VarbInfoMixed } from "../SectionsMeta/sectionChildrenDerived/MixedSectionInfo";
+import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
+import { FeSectionInfo, FeVarbInfo } from "../SectionsMeta/SectionInfo/FeInfo";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { GetterSections } from "../StateGetters/GetterSections";
@@ -119,15 +119,21 @@ export class SolverSections extends SolverSectionsBase {
     const defaultMainPack = defaultMaker.makeSectionPack("main");
     return this.initSolvedSectionsFromMainPack(defaultMainPack);
   }
+  static initRoot(): SolverSection<"root"> {
+    const sections = StateSections.initWithRoot();
+    const rootSection = sections.rawSectionList("root")[0];
+    return SolverSection.init({
+      ...pick(rootSection, ["sectionName", "feId"]),
+      ...SolverSectionsBase.initProps({
+        sections,
+        sectionContextName: "default",
+      }),
+    });
+  }
   static initMainFromActiveDealPack(
     sectionPack: SectionPack<"deal">
   ): SolverSection<"main"> {
-    const sections = StateSections.initWithRoot();
-    const rootSection = sections.rawSectionList("root")[0];
-    const solver = SolverSection.init({
-      ...pick(rootSection, ["sectionName", "feId"]),
-      sectionsShare: { sections },
-    });
+    const solver = this.initRoot();
     const mainSolver = solver.addAndGetChild("main");
     const activeDeal = mainSolver.onlyChild("activeDeal");
     activeDeal.loadSelf(sectionPack);
@@ -136,12 +142,7 @@ export class SolverSections extends SolverSectionsBase {
   static initFromFeUserPack(
     sectionPack: SectionPack<"feUser">
   ): SolverSection<"feUser"> {
-    const sections = StateSections.initWithRoot();
-    const rootSection = sections.rawSectionList("root")[0];
-    const solver = SolverSection.init({
-      ...pick(rootSection, ["sectionName", "feId"]),
-      sectionsShare: { sections },
-    });
+    const solver = this.initRoot();
     const mainSolver = solver.addAndGetChild("main");
     mainSolver.loadChild({
       childName: "feUser",
@@ -152,12 +153,7 @@ export class SolverSections extends SolverSectionsBase {
   static initSolverFromMainPack(
     sectionPack: SectionPack<"main">
   ): SolverSection<"main"> {
-    const sections = StateSections.initWithRoot();
-    const rootSection = sections.rawSectionList("root")[0];
-    const solver = SolverSection.init({
-      ...pick(rootSection, ["sectionName", "feId"]),
-      sectionsShare: { sections },
-    });
+    const solver = this.initRoot();
     solver.loadChild({
       childName: "main",
       sectionPack,

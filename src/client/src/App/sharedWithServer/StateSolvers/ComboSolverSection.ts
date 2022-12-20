@@ -1,5 +1,5 @@
-import { ChildName } from "../SectionsMeta/childSectionsDerived/ChildName";
-import { SectionPack } from "../SectionsMeta/childSectionsDerived/SectionPack";
+import { ChildName } from "../SectionsMeta/sectionChildrenDerived/ChildName";
+import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import {
   ChildSectionPackArrs,

@@ -2,9 +2,9 @@ import { defaultMaker } from "../defaultMaker/defaultMaker";
 import {
   ChildName,
   FeChildInfo,
-} from "../SectionsMeta/childSectionsDerived/ChildName";
-import { ParentNameSafe } from "../SectionsMeta/childSectionsDerived/ParentName";
-import { FeSectionInfo } from "../SectionsMeta/Info";
+} from "../SectionsMeta/sectionChildrenDerived/ChildName";
+import { ParentNameSafe } from "../SectionsMeta/sectionChildrenDerived/ParentName";
+import { FeSectionInfo } from "../SectionsMeta/SectionInfo/FeInfo";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { PackLoaderSection } from "../StatePackers.ts/PackLoaderSection";
 import { UpdaterSectionBase } from "./bases/updaterSectionBase";
@@ -64,7 +64,7 @@ export class DefaultFamilyAdder<
   ): DefaultFamilyAdder<SN> {
     return new DefaultFamilyAdder({
       ...feInfo,
-      sectionsShare: this.sectionsShare,
+      ...this.getterSectionsProps,
     });
   }
 }

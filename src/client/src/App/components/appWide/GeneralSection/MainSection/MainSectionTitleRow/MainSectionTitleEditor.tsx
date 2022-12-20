@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { FeInfoByType } from "../../../../../sharedWithServer/SectionsMeta/Info";
+import { FeInfoByType } from "../../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { BigStringEditor } from "../../../../inputs/BigStringEditor";
 
 type Props = { feInfo: FeInfoByType<"hasCompareTable">; className?: string };

@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { SectionPathContext } from "../sharedWithServer/stateClassHooks/useSectionContextName";
 import theme from "../theme/Theme";
 import { VarbListUserVarbs } from "./appWide/VarbLists/VarbListUserVarbs";
 import { NavContainer } from "./general/NavContainer";
@@ -9,14 +10,16 @@ import { UserListsGeneralSection } from "./UserVarbListPage/UserListsGeneralSect
 export function UserVarbListPage() {
   return (
     <NavContainer activeBtnName="variables">
-      <Styled themeName="userVarbList" saveWhat="custom variables">
-        <UserListsGeneralSection
-          themeName="userVarbList"
-          storeName="userVarbListMain"
-          title="Variables"
-          makeListNode={(nodeProps) => <VarbListUserVarbs {...nodeProps} />}
-        />
-      </Styled>
+      <SectionPathContext.Provider value="userVarbEditorPage">
+        <Styled themeName="userVarbList" saveWhat="custom variables">
+          <UserListsGeneralSection
+            themeName="userVarbList"
+            storeName="userVarbListMain"
+            title="Variables"
+            makeListNode={(nodeProps) => <VarbListUserVarbs {...nodeProps} />}
+          />
+        </Styled>
+      </SectionPathContext.Provider>
     </NavContainer>
   );
 }

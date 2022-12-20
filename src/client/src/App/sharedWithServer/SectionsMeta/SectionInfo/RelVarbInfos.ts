@@ -1,6 +1,6 @@
 import { Obj } from "../../utils/Obj";
+import { ChildName } from "../sectionChildrenDerived/ChildName";
 import { SectionName } from "../SectionName";
-import { ChildName } from "./ChildName";
 import {
   RelChildrenVarbInfo,
   RelLocalVarbInfo,

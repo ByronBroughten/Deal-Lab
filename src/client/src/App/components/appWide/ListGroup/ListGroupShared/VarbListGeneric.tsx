@@ -2,9 +2,9 @@ import React, { ReactNode } from "react";
 import styled, { css } from "styled-components";
 import useToggleView from "../../../../modules/customHooks/useToggleView";
 import { SectionValues } from "../../../../sharedWithServer/SectionsMeta/baseSectionsDerived/valueMetaTypes";
-import { ChildName } from "../../../../sharedWithServer/SectionsMeta/childSectionsDerived/ChildName";
-import { DbVarbs } from "../../../../sharedWithServer/SectionsMeta/childSectionsDerived/SectionPack/RawSection";
-import { FeSectionInfo } from "../../../../sharedWithServer/SectionsMeta/Info";
+import { ChildName } from "../../../../sharedWithServer/SectionsMeta/sectionChildrenDerived/ChildName";
+import { DbVarbs } from "../../../../sharedWithServer/SectionsMeta/sectionChildrenDerived/SectionPack/RawSection";
+import { FeSectionInfo } from "../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import {
   SectionNameByType,
   SectionValuesByType,
