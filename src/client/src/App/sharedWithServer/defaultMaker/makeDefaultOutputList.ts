@@ -1,5 +1,5 @@
-import { InEntityVarbInfo } from "../SectionsMeta/baseSectionsVarbs/baseValues/entities";
-import { inEntityInfo } from "../SectionsMeta/baseSectionsVarbs/baseValues/InEntityInfoValue";
+import { ValueInEntityInfo } from "../SectionsMeta/baseSectionsVarbs/baseValues/entities";
+import { inEntityIdInfo } from "../SectionsMeta/baseSectionsVarbs/baseValues/InEntityIdInfoValue";
 import { mixedInfoS } from "../SectionsMeta/sectionChildrenDerived/MixedSectionInfo";
 import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
@@ -10,7 +10,7 @@ export const outputNames = [
   "roiYearly",
 ] as const;
 
-const defaultDealOutputInfos: InEntityVarbInfo[] = outputNames.map(
+const defaultDealOutputInfos: ValueInEntityInfo[] = outputNames.map(
   (varbName) => {
     return mixedInfoS.absoluteVarbPath("dealFocal", varbName);
   }
@@ -22,7 +22,7 @@ export function makeDefaultOutputList(): SectionPack<"outputList"> {
     outputList.addChild("outputItem", {
       dbVarbs: {
         valueSwitch: "loadedVarb",
-        valueEntityInfo: inEntityInfo(outputVarbInfo),
+        valueEntityInfo: inEntityIdInfo(outputVarbInfo),
       },
     });
   }

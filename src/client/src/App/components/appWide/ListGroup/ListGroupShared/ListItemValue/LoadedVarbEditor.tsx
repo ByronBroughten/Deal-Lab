@@ -1,5 +1,5 @@
 import { VarbName } from "../../../../../sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
-import { inEntityInfo } from "../../../../../sharedWithServer/SectionsMeta/baseSectionsVarbs/baseValues/InEntityInfoValue";
+import { inEntityIdInfo } from "../../../../../sharedWithServer/SectionsMeta/baseSectionsVarbs/baseValues/InEntityIdInfoValue";
 import { FeSectionInfo } from "../../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { SectionNameByType } from "../../../../../sharedWithServer/SectionsMeta/SectionNameByType";
 import { useSetterSection } from "../../../../../sharedWithServer/stateClassHooks/useSetterSection";
@@ -17,7 +17,7 @@ export function LoadedVarbEditor<SN extends SectionNameByType<"varbListItem">>({
   const section = useSetterSection(feInfo);
   const infoVarb = section.varb("valueEntityInfo");
   function onSelect({ varbInfo }: VariableOption) {
-    infoVarb.updateValue(inEntityInfo(varbInfo));
+    infoVarb.updateValue(inEntityIdInfo(varbInfo));
   }
   const selectedVarbInfo = infoVarb.value("inEntityInfo");
   const valueVarb = section.varb(valueVarbName);

@@ -2,6 +2,7 @@ import { relVarbInfoS } from "../../SectionInfo/RelVarbInfo";
 import { relVarbInfosS } from "../../SectionInfo/RelVarbInfos";
 import { relAdorn } from "../rel/relAdorn";
 import { LeftRightVarbInfos, relVarb, relVarbS } from "../rel/relVarb";
+import { updateFnPropS, updateFnPropsS } from "../rel/UpdateFnProps";
 import { RelVarbs, relVarbsS } from "../relVarbs";
 
 export function dealRelVarbs(): RelVarbs<"deal"> {
@@ -12,10 +13,10 @@ export function dealRelVarbs(): RelVarbs<"deal"> {
       "piti",
       "PITI payment",
       [
-        relVarbInfoS.children("financing", "mortgageIns"),
-        relVarbInfoS.children("financing", "loanPayment"),
-        relVarbInfoS.children("propertyGeneral", "taxes"),
-        relVarbInfoS.children("propertyGeneral", "homeIns"),
+        updateFnPropS.children("financing", "mortgageIns"),
+        updateFnPropS.children("financing", "loanPayment"),
+        updateFnPropS.children("propertyGeneral", "taxes"),
+        updateFnPropS.children("propertyGeneral", "homeIns"),
       ],
       { shared: { startAdornment: "$" }, switchInit: "monthly" }
     ),
@@ -24,8 +25,8 @@ export function dealRelVarbs(): RelVarbs<"deal"> {
       "Down payment",
       "simpleSubtract",
       [
-        relVarbInfoS.children("propertyGeneral", "price"),
-        relVarbInfoS.children("financing", "loanBaseDollars"),
+        updateFnPropS.children("propertyGeneral", "price"),
+        updateFnPropS.children("financing", "loanBaseDollars"),
       ],
       { startAdornment: "$", displayNameEnd: " dollars" }
     ),
@@ -33,15 +34,15 @@ export function dealRelVarbs(): RelVarbs<"deal"> {
       "Down payment",
       "simpleDivide",
       [
-        relVarbInfoS.local("downPaymentDollars"),
-        relVarbInfoS.children("propertyGeneral", "price"),
+        updateFnPropS.local("downPaymentDollars"),
+        updateFnPropS.children("propertyGeneral", "price"),
       ],
       { displayNameEnd: "decimal", unit: "decimal" }
     ),
     downPaymentPercent: relVarbS.singlePropFn(
       "Down payment",
       "decimalToPercent",
-      relVarbInfoS.local("downPaymentDecimal"),
+      updateFnPropS.local("downPaymentDecimal"),
       { endAdornment: "%", displayNameEnd: "percent", unit: "percent" }
     ),
     totalInvestment: relVarbS.leftRightPropFn(
@@ -86,7 +87,7 @@ export function dealRelVarbs(): RelVarbs<"deal"> {
     roiMonthly: relVarbS.singlePropFn(
       "Monthly ROI",
       "decimalToPercent",
-      relVarbInfoS.local("roiDecimalMonthly"),
+      updateFnPropS.local("roiDecimalMonthly"),
       { endAdornment: "%", unit: "percent" }
     ),
     roiDecimalYearly: relVarbS.leftRightPropFn(
@@ -101,7 +102,7 @@ export function dealRelVarbs(): RelVarbs<"deal"> {
     roiYearly: relVarbS.singlePropFn(
       "Annual ROI",
       "decimalToPercent",
-      relVarbInfoS.local("roiDecimalYearly"),
+      updateFnPropS.local("roiDecimalYearly"),
       { endAdornment: "%", unit: "percent" }
     ),
     roiOngoingSwitch: relVarb("string", {
@@ -110,9 +111,9 @@ export function dealRelVarbs(): RelVarbs<"deal"> {
     upfrontExpenses: relVarbS.sumNums(
       "All upfront expenses",
       [
-        relVarbInfoS.children("propertyGeneral", "upfrontExpenses"),
-        relVarbInfoS.children("mgmtGeneral", "upfrontExpenses"),
-        ...relVarbInfosS.children("financing", [
+        updateFnPropS.children("propertyGeneral", "upfrontExpenses"),
+        updateFnPropS.children("mgmtGeneral", "upfrontExpenses"),
+        ...updateFnPropsS.childrenByVarbName("financing", [
           "closingCosts",
           "mortgageInsUpfront",
         ]),
@@ -130,18 +131,18 @@ export function dealRelVarbs(): RelVarbs<"deal"> {
     ),
     upfrontRevenue: relVarbS.sumNums(
       "Upfront revenue",
-      [relVarbInfoS.children("propertyGeneral", "upfrontRevenue")],
+      [updateFnPropS.children("propertyGeneral", "upfrontRevenue")],
       { startAdornment: "$" }
     ),
     ...relVarbsS.ongoingSumNums("expenses", "Ongoing expenses", [
-      relVarbInfoS.children("propertyGeneral", "expenses"),
-      relVarbInfoS.children("mgmtGeneral", "expenses"),
-      relVarbInfoS.children("financing", "expenses"),
+      updateFnPropS.children("propertyGeneral", "expenses"),
+      updateFnPropS.children("mgmtGeneral", "expenses"),
+      updateFnPropS.children("financing", "expenses"),
     ]),
     ...relVarbsS.ongoingSumNums(
       "revenue",
       "Revenue",
-      [relVarbInfoS.children("propertyGeneral", "revenue")],
+      [updateFnPropS.children("propertyGeneral", "revenue")],
       { shared: { startAdornment: "$" }, switchInit: "monthly" }
     ),
   } as RelVarbs<"deal">;

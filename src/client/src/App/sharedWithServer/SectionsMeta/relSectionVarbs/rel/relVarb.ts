@@ -5,8 +5,6 @@ import {
 } from "../../baseSectionsVarbs/baseValues/calculations";
 import { numObj } from "../../baseSectionsVarbs/baseValues/NumObj";
 import { ChildName } from "../../sectionChildrenDerived/ChildName";
-import { PathInVarbInfo } from "../../sectionChildrenDerived/RelInOutVarbInfo";
-import { relVarbInfoS } from "../../SectionInfo/RelVarbInfo";
 import { SectionName } from "../../SectionName";
 import {
   CommonRelVarb,
@@ -14,6 +12,7 @@ import {
   NumObjRelVarb,
   RelVarbByType,
 } from "./relVarbTypes";
+import { UpdateFnProp, updateFnPropS } from "./UpdateFnProps";
 
 const makeDefaultCommon = <T extends CommonRelVarb>(common: T): CommonRelVarb =>
   common;
@@ -47,7 +46,7 @@ export function relVarb<T extends keyof RelVarbByType>(
 }
 
 export type RelNumObjOptions = Partial<NumObjRelVarb & { initNumber: number }>;
-export type LeftRightVarbInfos = [PathInVarbInfo, PathInVarbInfo];
+export type LeftRightVarbInfos = [UpdateFnProp, UpdateFnProp];
 export const relVarbS = {
   numObj(
     displayName: DisplayName,
@@ -108,7 +107,7 @@ export const relVarbS = {
   },
   sumNums(
     displayName: DisplayName,
-    nums: PathInVarbInfo[],
+    nums: UpdateFnProp[],
     options?: RelNumObjOptions
   ): NumObjRelVarb {
     return relVarb("numObj", {
@@ -120,7 +119,7 @@ export const relVarbS = {
   },
   sumMoney(
     displayName: DisplayName,
-    nums: PathInVarbInfo[],
+    nums: UpdateFnProp[],
     options?: RelNumObjOptions
   ): NumObjRelVarb {
     return this.sumNums(displayName, nums, {
@@ -135,13 +134,13 @@ export const relVarbS = {
     varbName: string
   ) {
     return this.sumNums(displayName, [
-      relVarbInfoS.children(childName, varbName),
+      updateFnPropS.children(childName, varbName),
     ]);
   },
   singlePropFn(
     displayName: DisplayName,
     updateFnName: SinglePropCalculations,
-    num: PathInVarbInfo,
+    num: UpdateFnProp,
     options?: RelNumObjOptions
   ): NumObjRelVarb {
     return relVarb("numObj", {

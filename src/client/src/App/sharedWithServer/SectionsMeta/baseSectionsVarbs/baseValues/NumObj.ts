@@ -1,11 +1,11 @@
 import { z } from "zod";
 import { reqMonString } from "../../../utils/mongoose";
 import { StrictPick } from "../../../utils/types";
-import { InEntities, InEntity, mInEntities, zInEntities } from "./entities";
+import { mInEntities, ValueInEntity, zInEntities } from "./entities";
 
 export type NumObj = {
   mainText: string;
-  entities: InEntity[];
+  entities: ValueInEntity[];
   solvableText: string;
 };
 export const zNumObj = z.object({
@@ -29,7 +29,7 @@ export function isNumObj(value: any): value is NumObj {
 }
 export function numObj(
   mainText: string | number,
-  entities: InEntities = [],
+  entities: ValueInEntity[] = [],
   solvableText: string = `${mainText}`
 ): NumObj {
   return {

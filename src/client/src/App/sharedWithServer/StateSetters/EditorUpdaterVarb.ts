@@ -11,7 +11,7 @@ import {
 } from "../../modules/draftjs/draftUtils";
 import { EntityMap, EntityRanges, RawEditorState } from "../../utils/DraftS";
 import { ValueNamesToTypes } from "../SectionsMeta/baseSectionsDerived/valueMetaTypes";
-import { InEntities } from "../SectionsMeta/baseSectionsVarbs/baseValues/entities";
+import { ValueInEntity } from "../SectionsMeta/baseSectionsVarbs/baseValues/entities";
 import {
   EntitiesAndEditorText,
   NumObj,
@@ -23,6 +23,7 @@ import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { GetterVarbBase } from "../StateGetters/Bases/GetterVarbBase";
 import { GetterVarb } from "../StateGetters/GetterVarb";
 import { GetterVarbNumObj } from "../StateGetters/GetterVarbNumObj";
+import { InEntityGetterVarb } from "../StateGetters/InEntityGetterVarb";
 import { UpdaterVarb } from "../StateUpdaters/UpdaterVarb";
 import { Arr } from "../utils/Arr";
 
@@ -52,6 +53,9 @@ export class EditorUpdaterVarb<
 > extends GetterVarbBase<SN> {
   get updaterVarb(): UpdaterVarb<SN> {
     return new UpdaterVarb(this.getterVarbProps);
+  }
+  get inEntity(): InEntityGetterVarb<SN> {
+    return new InEntityGetterVarb(this.getterVarbProps);
   }
   get getterVarb(): GetterVarb<SN> {
     return new GetterVarb(this.getterVarbProps);
@@ -88,7 +92,7 @@ export class EditorUpdaterVarb<
   valueFromContentState(
     contentState: ContentState
   ): string | string[] | NumObj | StringObj {
-    const { updateFnName } = this.getterVarb;
+    const { updateFnName } = this.inEntity;
     if (!isEditorUpdateFnName(updateFnName)) {
       throw new Error(`"${updateFnName}" is not an editor updateFnName.`);
     }
@@ -144,7 +148,7 @@ function textAndEntitiesFromRaw(
 function entitiesFromMapAndRanges(
   entityMap: EntityMap,
   entityRanges: EntityRanges
-): InEntities {
+): ValueInEntity[] {
   const inEntities = entityRanges.reduce((inEntities, entityRange) => {
     const { data } = entityMap[entityRange.key];
     return inEntities.concat([
@@ -154,7 +158,7 @@ function entitiesFromMapAndRanges(
         entitySource: "editor",
       },
     ]);
-  }, [] as InEntities);
+  }, [] as ValueInEntity[]);
   // the entities must be updated from right to left.
   // otherwise their offsets can become inaccurate in the middle of updating
   return inEntities.sort((a, b) => b.offset - a.offset);

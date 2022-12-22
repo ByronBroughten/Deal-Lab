@@ -1,6 +1,6 @@
 import { round } from "lodash";
 import { evaluate } from "mathjs";
-import { InEntity } from "../SectionsMeta/baseSectionsVarbs/baseValues/entities";
+import { ValueInEntity } from "../SectionsMeta/baseSectionsVarbs/baseValues/entities";
 import {
   EntitiesAndEditorText,
   NumberOrQ,
@@ -13,6 +13,7 @@ import { arithmeticOperatorsArr, mathS } from "../utils/math";
 import { Str } from "../utils/Str";
 import { GetterVarbBase } from "./Bases/GetterVarbBase";
 import { GetterVarb } from "./GetterVarb";
+import { InEntityGetterVarb } from "./InEntityGetterVarb";
 
 export type EditorTextStatus = "empty" | "number" | "solvableText";
 
@@ -21,6 +22,9 @@ export class GetterVarbNumObj<
 > extends GetterVarbBase<SN> {
   get get() {
     return new GetterVarb(this.getterVarbProps);
+  }
+  get inEntity() {
+    return new InEntityGetterVarb(this.getterVarbProps);
   }
   get value(): NumObj {
     return this.get.value("numObj");
@@ -31,7 +35,7 @@ export class GetterVarbNumObj<
     });
     return { ...this.value, entities };
   }
-  addEntity(entity: InEntity): NumObj {
+  addEntity(entity: ValueInEntity): NumObj {
     const entities = [...this.value.entities, entity];
     return { ...this.value, entities };
   }
@@ -59,7 +63,7 @@ export class GetterVarbNumObj<
     }
     return solvableText;
   }
-  private getSolvableNumber(inEntity: InEntity): NumberOrQ {
+  private getSolvableNumber(inEntity: ValueInEntity): NumberOrQ {
     if (this.get.sections.hasSectionMixed(inEntity)) {
       const varb = this.get.sections.varbByMixed(inEntity);
       return varb.numberOrQuestionMark;
@@ -73,7 +77,7 @@ export class GetterVarbNumObj<
     return `${this.solveText(solvableText)}`;
   }
   solveText(text: string): NumberOrQ {
-    const { updateFnName } = this.get;
+    const { updateFnName } = this.inEntity;
     const { calcRound } = this.get.meta;
     if (!isNumObjUpdateFnName(updateFnName)) {
       throw new Error("This is only for numObjs.");

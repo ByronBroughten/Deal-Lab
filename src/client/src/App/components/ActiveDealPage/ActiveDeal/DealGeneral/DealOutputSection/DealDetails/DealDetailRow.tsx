@@ -1,8 +1,9 @@
 import { SimpleSectionVarbName } from "../../../../../../sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
 import { FeVarbInfo } from "../../../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
-import { useGetterVarb } from "../../../../../../sharedWithServer/stateClassHooks/useGetterVarb";
+import { useGetterSectionsProps } from "../../../../../../sharedWithServer/stateClassHooks/useGetterSectionsProps";
 import { useSetterVarb } from "../../../../../../sharedWithServer/stateClassHooks/useSetterVarb";
 import { GetterVarb } from "../../../../../../sharedWithServer/StateGetters/GetterVarb";
+import { InEntityGetterVarb } from "./../../../../../../sharedWithServer/StateGetters/InEntityGetterVarb";
 import {
   DealDetailRowDropDown,
   DealDetailRowEndPoint,
@@ -48,12 +49,16 @@ export function DealDetailRowVarbNotFound({
   entityId,
   level,
 }: DealDetailRowVarbNotFoundProps) {
-  const varb = useGetterVarb(varbInfo);
+  const props = useGetterSectionsProps();
+  const varb = new InEntityGetterVarb({
+    ...props,
+    ...varbInfo,
+  });
   return (
     <DealDetailRowEndPoint
       {...{
         level,
-        displayName: varb.entityText(entityId),
+        displayName: varb.valueInEntityText(entityId),
         displayVarb: "Not found",
       }}
     />

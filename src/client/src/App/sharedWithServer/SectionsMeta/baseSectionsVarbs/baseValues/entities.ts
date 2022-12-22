@@ -8,6 +8,7 @@ import {
   DbVarbInfoMixed,
   GlobalVarbInfo,
 } from "../../baseSectionsDerived/baseVarbInfo";
+import { PathInVarbInfo } from "../../sectionChildrenDerived/RelInOutVarbInfo";
 import {
   PathDbVarbInfoMixed,
   VarbAbsoluteInfoMixed,
@@ -17,7 +18,8 @@ import { FeVarbInfo } from "../../SectionInfo/FeInfo";
 import { SectionName } from "../../SectionName";
 import { Id } from "../id";
 
-export type OutEntity = FeVarbInfo & { entityId: string };
+type EntityIdProp = { entityId: string };
+export type OutEntity = FeVarbInfo & EntityIdProp;
 
 const commonEntityInfo = {
   ...zSectionNameProp.shape,
@@ -31,8 +33,10 @@ const zInEntityBase = z.object({
   offset: zS.number,
 });
 
-export interface PathEntityInfo
+interface AbsoluteEntityInfo
   extends VarbAbsoluteInfoMixed<SectionName, "onlyOne"> {}
+
+type PathEntityInfo = PathInVarbInfo;
 
 const zPathInEntityInfo = zSectionPathProp.extend({
   ...commonEntityInfo,
@@ -40,7 +44,7 @@ const zPathInEntityInfo = zSectionPathProp.extend({
 });
 const zPathInEntity = zInEntityBase.merge(zPathInEntityInfo);
 
-export interface PathDbIdEntityInfo
+interface AbsoluteDbIdEntityInfo
   extends PathDbVarbInfoMixed<SectionName, "onlyOne"> {}
 const zPathDbIdInEntityInfo = zSectionPathProp.extend({
   ...commonEntityInfo,
@@ -49,7 +53,7 @@ const zPathDbIdInEntityInfo = zSectionPathProp.extend({
 });
 const zPathDbIdInEntity = zInEntityBase.merge(zPathDbIdInEntityInfo);
 
-// this must be exported for InEntityInfoValue.zInEntityVarbInfoValue
+// this must be exported for InEntityIdInfoValue.zInEntityVarbInfoValue
 export interface GlobalInEntityInfo
   extends GlobalVarbInfo<SectionName, "onlyOne"> {}
 const zGlobalInEntityInfo = z.object({
@@ -70,8 +74,9 @@ const zDbInEntity = zInEntityBase.merge(zDbInEntityInfo);
 type InEntityVarbInfos = {
   dbId: DbInEntityInfo;
   global: GlobalInEntityInfo;
-  absolutePath: PathEntityInfo;
-  absolutePathDbId: PathDbIdEntityInfo;
+  absolutePath: AbsoluteEntityInfo;
+  absolutePathDbId: AbsoluteDbIdEntityInfo;
+  path: PathEntityInfo;
 };
 export type InEntityVarbInfo = InEntityVarbInfos[keyof InEntityVarbInfos];
 export const zInEntityVarbInfo = z.union([
@@ -90,19 +95,27 @@ export const zInEntity = z.union([
 export const zInEntities = z.array(zInEntity);
 export type InEntityBase = z.infer<typeof zInEntityBase>;
 interface DbInEntity extends InEntityBase, DbInEntityInfo {}
-export interface AbsoluteInEntity extends InEntityBase, PathEntityInfo {}
-interface AbsoluteDbIdInEntity extends InEntityBase, PathDbIdEntityInfo {}
+export interface AbsoluteInEntity extends InEntityBase, AbsoluteEntityInfo {}
+interface AbsoluteDbIdInEntity extends InEntityBase, AbsoluteDbIdEntityInfo {}
 export interface GlobalInEntity extends InEntityBase, GlobalInEntityInfo {}
 
-export type InEntity =
+export type ValueInEntityInfo =
+  | DbInEntityInfo
+  | GlobalInEntityInfo
+  | AbsoluteEntityInfo
+  | AbsoluteDbIdEntityInfo;
+
+export type FixedInEntity = PathEntityInfo & EntityIdProp;
+export type ValueInEntity =
   | DbInEntity
   | GlobalInEntity
   | AbsoluteInEntity
   | AbsoluteDbIdInEntity;
-export type InEntities = InEntity[];
+
+export type InEntity = FixedInEntity | ValueInEntity;
+
 // As things stand, I can't infer much from the zod schemas because
 // there isn't a convenient way to make their sectionName enforce SectionNameByType
-
 export const mInEntities = {
   type: Schema.Types.Mixed,
   required: true,
@@ -128,7 +141,7 @@ export const entityS = {
       ...entityInfo,
     };
   },
-  outEntity(feVarbInfo: FeVarbInfo, inEntity: InEntity): OutEntity {
+  outEntity(feVarbInfo: FeVarbInfo, inEntity: ValueInEntity): OutEntity {
     return {
       ...feVarbInfo,
       ...pick(inEntity, ["entityId"]),
@@ -140,7 +153,7 @@ export const entityS = {
   outEntitiesCopyRm(entities: OutEntity[], info: OutEntityInfo): OutEntity[] {
     return entities.filter((e) => !isInfoForOutEntity(e, info));
   },
-  inEntitiesHas(entities: InEntity[], entity: InEntity): boolean {
+  inEntitiesHas(entities: ValueInEntity[], entity: ValueInEntity): boolean {
     return Arr.has(entities, (e) => e.entityId === entity.entityId);
   },
 } as const;
@@ -149,8 +162,7 @@ function isInfoForOutEntity(outEntity: OutEntity, info: OutEntityInfo) {
   return outEntity.entityId === info.entityId && outEntity.feId === info.feId;
 }
 
-export type EntityMapData = InEntityVarbInfo & { entityId: string };
-export interface OutEntityInfo {
+export type EntityMapData = ValueInEntityInfo & EntityIdProp;
+export interface OutEntityInfo extends EntityIdProp {
   feId: string;
-  entityId: string;
 }

@@ -10,7 +10,7 @@ import { useFeUser } from "../sectionActorHooks/useFeUser";
 import { auth } from "../services/authService";
 
 async function authSignOut(): Promise<void> {
-  return signOut();
+  return await signOut();
 }
 
 function useUpdateOnSubscribe() {
@@ -72,7 +72,7 @@ function useLoadUserData() {
           await feUser.loadUserData();
         } catch (ex) {
           await authSignOut();
-          feUser.setter.varb("userDataStatus").updateValue("notLoaded");
+          feUser.updateUserDataStatus("notLoaded");
           throw new Error(getErrorMessage(ex));
         }
       } else if (pathname.includes(constants.feRoutes.authSuccess)) {

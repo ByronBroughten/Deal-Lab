@@ -14,10 +14,10 @@ export function makeDefaultMainPack(): SectionPack<"main"> {
     childName: "activeDeal",
     sectionPack: defaultDealPack,
   });
-  const latentSections = main.addAndGetChild("latentSections");
-  latentSections.loadChild({
-    childName: "deal",
-    sectionPack: defaultDealPack,
-  });
+  // const latentSections = main.addAndGetChild("latentSections");
+  // latentSections.loadChild({
+  //   childName: "deal",
+  //   sectionPack: defaultDealPack,
+  // });
   return main.makeSectionPack();
 }

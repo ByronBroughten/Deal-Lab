@@ -10,7 +10,7 @@ import {
   VarbValue,
 } from "../SectionsMeta/baseSectionsDerived/valueMetaTypes";
 import { SwitchTargetKey } from "../SectionsMeta/baseSectionsVarbs/baseSwitchNames";
-import { InEntityInfo } from "../SectionsMeta/baseSectionsVarbs/baseValues/InEntityInfoValue";
+import { InEntityIdInfoValue } from "../SectionsMeta/baseSectionsVarbs/baseValues/InEntityIdInfoValue";
 import { ValueName } from "../SectionsMeta/baseSectionsVarbs/baseVarb";
 import { DbSectionInfo } from "../SectionsMeta/baseSectionsVarbs/DbSectionInfo";
 import { ExpectedCount } from "../SectionsMeta/baseSectionsVarbs/NanoIdInfo";
@@ -479,7 +479,7 @@ export class GetterSection<
   get virtualVarb(): GetterVirtualVarb<SN> {
     return new GetterVirtualVarb(this.getterSectionProps);
   }
-  valueInEntityInfo(): InEntityInfo {
+  valueInEntityInfo(): Exclude<InEntityIdInfoValue, null> {
     const value = this.value("valueEntityInfo", "inEntityInfo");
     if (!value) throw new Error("inEntityInfo value is not initialized");
     return value;
@@ -531,19 +531,6 @@ export class GetterSection<
   }
   get selfAndDescendantVarbIds(): string[] {
     return GetterVarb.varbInfosToVarbIds(this.selfAndDescendantVarbInfos);
-  }
-  get varbArrWithInEntities(): GetterVarb<SN>[] {
-    return this.varbArr.filter((varb) => varb.hasInEntities);
-  }
-  get selfAndDescendantVarbInfosWithEntities(): FeVarbInfo[] {
-    const sectionInfos = this.selfAndDescendantSectionInfos;
-    return sectionInfos.reduce((feVarbInfos, sectionInfo) => {
-      const section = this.getterSection(sectionInfo);
-      const varbInfos = section.varbArrWithInEntities.map(
-        (varb) => varb.feVarbInfo
-      );
-      return feVarbInfos.concat(...varbInfos);
-    }, [] as FeVarbInfo[]);
   }
   get selfAndDescendantVarbInfos(): FeVarbInfo[] {
     const sectionInfos = this.selfAndDescendantSectionInfos;

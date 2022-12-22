@@ -49,6 +49,9 @@ export class FeUserActor extends SectionActorBase<"feUser"> {
   get userDataStatus(): UserDataStatus {
     return this.get.valueNext("userDataStatus") as UserDataStatus;
   }
+  updateUserDataStatus(userDataStatus: UserDataStatus): void {
+    this.setter.varb("userDataStatus").updateValue(userDataStatus);
+  }
   async shouldLoadUserData() {
     return this.userDataStatus === "notLoaded" && (await this.sessionExists);
   }

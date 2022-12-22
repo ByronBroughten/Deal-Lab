@@ -2,10 +2,10 @@ import { z } from "zod";
 import { monSchemas } from "../../../utils/mongoose";
 import { Obj } from "../../../utils/Obj";
 import { zS } from "../../../utils/zod";
-import { InEntity, mInEntities, zInEntities } from "./entities";
+import { mInEntities, ValueInEntity, zInEntities } from "./entities";
 
 export type EntitiesProp = {
-  entities: InEntity[];
+  entities: ValueInEntity[];
 };
 
 export interface StringObj extends EntitiesProp {

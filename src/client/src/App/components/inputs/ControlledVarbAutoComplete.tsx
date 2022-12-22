@@ -1,12 +1,12 @@
 import { isEqual, omit } from "lodash";
 import React from "react";
-import { InEntityInfoValue } from "../../sharedWithServer/SectionsMeta/baseSectionsVarbs/baseValues/InEntityInfoValue";
+import { InEntityIdInfoValue } from "../../sharedWithServer/SectionsMeta/baseSectionsVarbs/baseValues/InEntityIdInfoValue";
 import { useVariableSections } from "../../sharedWithServer/stateClassHooks/useVariableOptions";
 import { VariableOption } from "../../sharedWithServer/StateEntityGetters/VariableGetterSections";
 import VarbAutoComplete from "./VarbAutoComplete";
 
 type Props = {
-  selectedVarbInfo: InEntityInfoValue;
+  selectedVarbInfo: InEntityIdInfoValue;
   onSelect: (value: VariableOption) => void;
 };
 export function ControlledVarbAutoComplete({

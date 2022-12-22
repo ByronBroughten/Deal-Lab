@@ -7,6 +7,9 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
+// Should numObjEditor have any inVarbs?
+// singleTimeItem.value has a local singleTimeItem.valueSwitch inEntity
+// but singleTimeItem.valueSwitch doesn't have any outEntities
 
 // 3. Add persistent state for list pages
 //    - Tweak the variables context to allow those pages to

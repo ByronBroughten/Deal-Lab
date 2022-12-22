@@ -85,7 +85,9 @@ export class GetterSections extends GetterSectionsBase {
     return this.section(info).varb(varbName);
   }
   getPath<PN extends SectionPathName>(pathName: PN) {
-    return sectionPathContexts[this.sectionContextName][pathName]["path"];
+    const sectionContext =
+      sectionPathContexts[this.sectionContextName][pathName];
+    return sectionContext["path"];
   }
   sectionsByMixed<SN extends SectionName>(
     infoMixed: SectionInfoMixed<SN>

@@ -7,7 +7,8 @@ import {
 } from "../../../baseSectionsVarbs/RelSwitchVarb";
 import { relVarbInfoS } from "../../../SectionInfo/RelVarbInfo";
 import { RelNumObjOptions, relVarb } from "../relVarb";
-import { NumObjRelVarb, StringRelVarb, UpdateFnProps } from "../relVarbTypes";
+import { NumObjRelVarb, StringRelVarb } from "../relVarbTypes";
+import { UpdateFnProps } from "../UpdateFnProps";
 
 type GeneralSwitchVarbNames = {
   [switchValue: string]: string;

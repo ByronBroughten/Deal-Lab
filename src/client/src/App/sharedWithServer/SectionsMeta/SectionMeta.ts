@@ -170,15 +170,6 @@ export class SectionMeta<SN extends SectionName> {
     }
     return defaultDbVarbs;
   }
-  depreciatingUpdateVarbMeta(varbMeta: VarbMeta<SN>) {
-    return new SectionMeta({
-      ...this.props,
-      varbMetas: {
-        ...this.props.varbMetas,
-        [varbMeta.varbName]: varbMeta,
-      },
-    });
-  }
   static init<SN extends SectionName>(sectionName: SN): SectionMeta<SN> {
     const varbNames = sectionVarbNames(sectionName);
     const varbMetas = varbNames.reduce((vMetas, varbName) => {

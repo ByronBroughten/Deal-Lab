@@ -1,5 +1,5 @@
 import { makeVarbNamesInfo } from "../SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
-import { inEntityInfo } from "../SectionsMeta/baseSectionsVarbs/baseValues/InEntityInfoValue";
+import { inEntityIdInfo } from "../SectionsMeta/baseSectionsVarbs/baseValues/InEntityIdInfoValue";
 import { FeStoreNameByType } from "../SectionsMeta/relSectionsDerived/FeStoreName";
 import { DbSectionPack } from "../SectionsMeta/sectionChildrenDerived/DbSectionPack";
 import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
@@ -50,7 +50,7 @@ export function getDefaultMainTableMakers(): TablePackMakers {
       for (const varbName of varbNames) {
         table.addChild("column", {
           dbVarbs: {
-            valueEntityInfo: inEntityInfo({
+            valueEntityInfo: inEntityIdInfo({
               infoType: "globalSection",
               expectedCount: "onlyOne",
               sectionName,

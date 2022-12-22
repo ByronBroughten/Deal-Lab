@@ -78,13 +78,14 @@ export class SolverSections extends SolverSectionsBase {
   private getOutVarbMap(): OutVarbMap {
     const outVarbMap: OutVarbMap = {};
     let varbIdsToSolveFor = [...this.varbIdsToSolveFor];
+
     while (varbIdsToSolveFor.length > 0) {
       const nextVarbsToSolveFor = [] as string[];
       for (const varbId of [...varbIdsToSolveFor]) {
         if (varbId in outVarbMap) continue;
-        const { outVarbIds } = this.outVarbGetterById(varbId);
-        outVarbMap[varbId] = new Set(outVarbIds);
-        nextVarbsToSolveFor.push(...outVarbIds);
+        const { activeOutVarbIds } = this.outVarbGetterById(varbId);
+        outVarbMap[varbId] = new Set(activeOutVarbIds);
+        nextVarbsToSolveFor.push(...activeOutVarbIds);
       }
       varbIdsToSolveFor = nextVarbsToSolveFor;
     }

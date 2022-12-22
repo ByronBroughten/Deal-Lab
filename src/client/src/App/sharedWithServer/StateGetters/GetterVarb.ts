@@ -4,12 +4,8 @@ import {
   FeVarbInfoMixed,
   VarbNames,
 } from "../SectionsMeta/baseSectionsDerived/baseVarbInfo";
-import {
-  InEntity,
-  OutEntity,
-} from "../SectionsMeta/baseSectionsVarbs/baseValues/entities";
 import { NumberOrQ } from "../SectionsMeta/baseSectionsVarbs/baseValues/NumObj";
-import { hasEntitiesProp } from "../SectionsMeta/baseSectionsVarbs/baseValues/StringObj";
+import { StateValue } from "../SectionsMeta/baseSectionsVarbs/baseValues/StateValueTypes";
 import { ValueName } from "../SectionsMeta/baseSectionsVarbs/baseVarb";
 import { ExpectedCount } from "../SectionsMeta/baseSectionsVarbs/NanoIdInfo";
 import {
@@ -23,9 +19,7 @@ import {
   VarbInfoMixedFocal,
 } from "../SectionsMeta/sectionChildrenDerived/MixedSectionInfo";
 import { FeInfoS, FeVarbInfo } from "../SectionsMeta/SectionInfo/FeInfo";
-import { RelLocalInfo } from "../SectionsMeta/SectionInfo/RelInfo";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
-import { InUpdatePack, VarbMeta } from "../SectionsMeta/VarbMeta";
 import { StateVarb } from "../StateSections/StateSectionsTypes";
 import { mathS, NotANumberError } from "../utils/math";
 import { GetterVarbBase } from "./Bases/GetterVarbBase";
@@ -50,23 +44,11 @@ export class GetterVarb<
   get sections() {
     return new GetterSections(this.getterSectionsProps);
   }
-  get meta(): VarbMeta<SN> {
-    return this.sectionMeta.varb(this.varbName);
-  }
   get feVarbInfo(): FeVarbInfo<SN> {
     return {
       ...this.feSectionInfo,
       varbName: this.varbName,
     };
-  }
-  get outEntities(): OutEntity[] {
-    return this.raw.outEntities;
-  }
-  get inEntities(): InEntity[] {
-    const val = this.value("any");
-    if (val && typeof val === "object" && "entities" in val) {
-      return cloneDeep(val.entities);
-    } else return [];
   }
   get numberValue(): number {
     // figure out how to make NaN result in an error or questionMark
@@ -109,12 +91,6 @@ export class GetterVarb<
         throw ex;
       }
     }
-  }
-  get hasInEntities(): boolean {
-    const value = this.value();
-    if (hasEntitiesProp(value)) {
-      return value.entities.length > 0;
-    } else return false;
   }
   get feVarbInfoMixed(): FeVarbInfoMixed<SN> {
     const { sectionName, feId, varbName } = this.feVarbInfo;
@@ -217,55 +193,6 @@ export class GetterVarb<
   ): ValueTypesPlusAny[VT] {
     return this.localVarb(varbName).value(valueName);
   }
-  get updateFnName() {
-    return this.inUpdatePack.updateFnName;
-  }
-  get updateFnProps() {
-    return this.inUpdatePack.updateFnProps;
-  }
-  entityText(entityId: string) {
-    const inEntity = this.inEntities.find(
-      (entity) => entity.entityId === entityId
-    );
-    if (!inEntity)
-      throw new Error(
-        `inEntity with entityId ${entityId} not found at ${this.sectionName}.${this.varbName}`
-      );
-
-    const { mainText } = this.value("numObj");
-    const { length, offset } = inEntity;
-    return mainText.substring(offset, offset + length);
-  }
-  get inUpdatePack(): InUpdatePack {
-    const {
-      inSwitchUpdatePacks,
-      defaultUpdateFnName,
-      defaultInUpdateFnInfos,
-      defaultUpdateFnProps,
-    } = this.meta;
-    for (const pack of inSwitchUpdatePacks) {
-      const {
-        switchInfo,
-        switchValue,
-        updateFnName,
-        inUpdateInfos,
-        updateFnProps,
-      } = pack;
-      if (this.switchIsActive(switchInfo, switchValue))
-        return { updateFnName, updateFnProps, inUpdateInfos: inUpdateInfos };
-    }
-    return {
-      updateFnName: defaultUpdateFnName,
-      updateFnProps: defaultUpdateFnProps,
-      inUpdateInfos: defaultInUpdateFnInfos,
-    };
-  }
-  switchIsActive(relSwitchInfo: RelLocalInfo, switchValue: string): boolean {
-    const actualSwitchValue = this.section
-      .varbByFocalMixed(relSwitchInfo as VarbInfoMixedFocal)
-      .value("string");
-    return switchValue === actualSwitchValue;
-  }
   getterVarb<S extends SectionNameByType>(
     varbInfo: FeVarbInfo<S>
   ): GetterVarb<S> {
@@ -277,7 +204,12 @@ export class GetterVarb<
   varbsByFocalMixed(multiVarbInfo: VarbInfoMixedFocal): GetterVarb[] {
     return this.section.varbsByFocalMixed(multiVarbInfo);
   }
-  inputProps(valueName?: StateValueAnyKey) {
+  inputProps(valueName?: StateValueAnyKey): {
+    id: string;
+    name: string;
+    value: StateValue;
+    label: string;
+  } {
     return {
       id: this.varbName,
       name: this.varbName,

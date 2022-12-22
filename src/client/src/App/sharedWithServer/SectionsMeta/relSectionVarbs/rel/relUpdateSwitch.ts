@@ -1,6 +1,7 @@
 import { switchNames } from "../../baseSectionsVarbs/RelSwitchVarb";
 import { relVarbInfoS } from "../../SectionInfo/RelVarbInfo";
 import { UpdateSwitchProp } from "./relVarbTypes";
+import { updateFnPropS } from "./UpdateFnProps";
 
 export const relUpdateSwitch = {
   yearlyToMonthly<Base extends string>(baseVarbName: Base): UpdateSwitchProp {
@@ -10,8 +11,8 @@ export const relUpdateSwitch = {
       switchValue: "yearly",
       updateFnName: "yearlyToMonthly",
       updateFnProps: {
-        num: relVarbInfoS.local(varbNames.yearly),
-        switch: relVarbInfoS.local(varbNames.switch),
+        num: updateFnPropS.local(varbNames.yearly),
+        switch: updateFnPropS.local(varbNames.switch),
       },
     };
   },
@@ -22,7 +23,7 @@ export const relUpdateSwitch = {
       switchValue: "monthly",
       updateFnName: "monthlyToYearly",
       updateFnProps: {
-        num: relVarbInfoS.local(varbNames.monthly),
+        num: updateFnPropS.local(varbNames.monthly),
       },
     };
   },

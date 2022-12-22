@@ -13,8 +13,9 @@ function skipVarbIfDuplicate(varb: SetterVarb): SetterVarb {
   let isGoing = true;
   while (isGoing) {
     isGoing = false;
-    if (varb.inVarbInfos.length === 1) {
-      const inInfo = varb.inVarbInfos[0];
+    const { activeMixedFeInfos } = varb.inEntity;
+    if (activeMixedFeInfos.length === 1) {
+      const inInfo = activeMixedFeInfos[0];
       const { setterSections, sections } = varb;
       if (sections.hasSectionMixed(inInfo)) {
         const { feVarbInfo } = sections.varbByMixed(inInfo);
@@ -50,7 +51,7 @@ export function DealDetailRowsNext({
   const { setterSections, sections } = varb;
   return (
     <Styled className="DealDetailRows-root">
-      {varb.inVarbInfos.map((inInfo) => {
+      {varb.inEntity.activeMixedFeInfos.map((inInfo) => {
         if (sections.hasSectionMixed(inInfo)) {
           const { feVarbInfo } = sections.varbByMixed(inInfo);
           let inVarb = setterSections.varb(feVarbInfo);

@@ -8,7 +8,6 @@ import { ValueName } from "../baseSectionsVarbs/baseVarb";
 import { switchNames } from "../baseSectionsVarbs/RelSwitchVarb";
 import { ChildName } from "../sectionChildrenDerived/ChildName";
 import { relVarbInfoS } from "../SectionInfo/RelVarbInfo";
-import { relVarbInfosS } from "../SectionInfo/RelVarbInfos";
 import { SectionName } from "../SectionName";
 import { relVarb, relVarbS } from "./rel/relVarb";
 import {
@@ -22,6 +21,7 @@ import {
 } from "./rel/relVarbs/relOngoingVarbs";
 import { switchInput } from "./rel/relVarbs/relSwitchVarbs";
 import { RelVarb, RelVarbByType } from "./rel/relVarbTypes";
+import { updateFnPropS, updateFnPropsS } from "./rel/UpdateFnProps";
 
 export type GeneralRelVarbs = Record<string, RelVarb>;
 export type RelVarbs<SN extends SectionName> = Record<VarbName<SN>, RelVarb>;
@@ -152,7 +152,7 @@ export const relVarbsS = {
           pVarb;
         ssPreVarbs[varbName] = relVarbS.sumNums(
           displayName,
-          [relVarbInfoS.children(sectionName, varbName)],
+          [updateFnPropS.children(sectionName, varbName)],
           { startAdornment, endAdornment, displayNameEnd }
         );
       }
@@ -164,25 +164,25 @@ export const relVarbsS = {
       displayName: relVarb("stringObj", {
         updateFnName: "loadDisplayName",
         updateFnProps: {
-          varbInfo: relVarbInfoS.local("valueEntityInfo"),
+          varbInfo: updateFnPropS.local("valueEntityInfo"),
         },
       }),
       displayNameEnd: relVarb("stringObj", {
         updateFnName: "loadDisplayNameEnd",
         updateFnProps: {
-          varbInfo: relVarbInfoS.local("valueEntityInfo"),
+          varbInfo: updateFnPropS.local("valueEntityInfo"),
         },
       }),
       startAdornment: relVarb("stringObj", {
         updateFnName: "loadStartAdornment",
         updateFnProps: {
-          varbInfo: relVarbInfoS.local("valueEntityInfo"),
+          varbInfo: updateFnPropS.local("valueEntityInfo"),
         },
       }),
       endAdornment: relVarb("stringObj", {
         updateFnName: "loadEndAdornment",
         updateFnProps: {
-          varbInfo: relVarbInfoS.local("valueEntityInfo"),
+          varbInfo: updateFnPropS.local("valueEntityInfo"),
         },
       }),
     } as const;
@@ -194,14 +194,14 @@ export const relVarbsS = {
       displayName: relVarb("stringObj", {
         updateFnName: "loadLocalString",
         updateFnProps: {
-          loadLocalString: relVarbInfoS.local("displayNameEditor"),
+          loadLocalString: updateFnPropS.local("displayNameEditor"),
         },
         inUpdateSwitchProps: [
           {
             switchInfo: relVarbInfoS.local("valueSwitch"),
             switchValue: "loadedVarb",
             updateFnName: "loadDisplayName",
-            updateFnProps: relVarbInfosS.localByVarbName([
+            updateFnProps: updateFnPropsS.localByVarbName([
               "valueSwitch",
               "valueEntityInfo",
             ]),
@@ -215,7 +215,7 @@ export const relVarbsS = {
             switchInfo: relVarbInfoS.local("valueSwitch"),
             switchValue: "loadedVarb",
             updateFnName: "loadDisplayNameEnd",
-            updateFnProps: relVarbInfosS.localByVarbName([
+            updateFnProps: updateFnPropsS.localByVarbName([
               "valueSwitch",
               "valueEntityInfo",
             ]),
@@ -229,7 +229,7 @@ export const relVarbsS = {
             switchInfo: relVarbInfoS.local("valueSwitch"),
             switchValue: "loadedVarb",
             updateFnName: "loadStartAdornment",
-            updateFnProps: relVarbInfosS.localByVarbName([
+            updateFnProps: updateFnPropsS.localByVarbName([
               "valueSwitch",
               "valueEntityInfo",
             ]),
@@ -243,7 +243,7 @@ export const relVarbsS = {
             switchInfo: relVarbInfoS.local("valueSwitch"),
             switchValue: "loadedVarb",
             updateFnName: "loadEndAdornment",
-            updateFnProps: relVarbInfosS.localByVarbName([
+            updateFnProps: updateFnPropsS.localByVarbName([
               "valueSwitch",
               "valueEntityInfo",
             ]),
@@ -253,15 +253,14 @@ export const relVarbsS = {
     } as const;
   },
   singleTimeItem(): RelVarbs<"singleTimeItem"> {
-    const valueSwitchProp = relVarbInfoS.local("valueSwitch");
     return {
       ...this._typeUniformity,
       ...this.listItemVirtualVarb,
       value: relVarbS.numObj(relVarbInfoS.local("displayName"), {
         updateFnName: "loadEditorSolvableText",
         updateFnProps: {
-          proxyValue: relVarbInfoS.local("numObjEditor"),
-          valueSwitch: valueSwitchProp,
+          proxyValue: updateFnPropS.local("numObjEditor"),
+          valueSwitch: updateFnPropS.local("valueSwitch"),
         },
         inUpdateSwitchProps: [
           {
@@ -269,12 +268,10 @@ export const relVarbsS = {
             switchValue: "loadedVarb",
             updateFnName: "virtualNumObj",
             updateFnProps: {
-              varbInfo: relVarbInfoS.local("valueEntityInfo"),
-              valueSwitch: valueSwitchProp,
+              varbInfo: updateFnPropS.local("valueEntityInfo"),
+              valueSwitch: updateFnPropS.local("valueSwitch"),
             },
           },
-          // the total is updating right away.
-          // and the total must update based on
         ],
         startAdornment: "$",
         unit: "decimal",
@@ -287,15 +284,15 @@ export const relVarbsS = {
   },
   ongoingItem(): RelVarbs<"ongoingItem"> {
     const ongoingValueNames = switchNames("value", "ongoing");
-    const defaultValueUpdatePack = {
-      updateFnName: "loadEditorSolvableText",
-      updateFnProps: relVarbInfosS.localByVarbName([
-        "numObjEditor",
-        "valueSwitch",
-      ]),
-    } as const;
+    const makeDefaultValueUpdatePack = () =>
+      ({
+        updateFnName: "loadEditorSolvableText",
+        updateFnProps: updateFnPropsS.localByVarbName([
+          "numObjEditor",
+          "valueSwitch",
+        ]),
+      } as const);
     const ongoingSwitchInfo = relVarbInfoS.local(ongoingValueNames.switch);
-    const valueSwitchProp = relVarbInfoS.local("valueSwitch");
     return {
       ...this._typeUniformity,
       ...this.listItemVirtualVarb,
@@ -315,17 +312,15 @@ export const relVarbsS = {
       [ongoingValueNames.switch]: relVarb("string", {
         initValue: "monthly",
       }),
-      // So... that's the numObjEditor, is that right?
-
       [ongoingValueNames.monthly]: relVarbS.moneyMonth("Monthly amount", {
-        ...defaultValueUpdatePack,
+        ...makeDefaultValueUpdatePack(),
         inUpdateSwitchProps: [
           {
             switchInfo: ongoingSwitchInfo,
             switchValue: "yearly",
             updateFnName: "yearlyToMonthly",
             updateFnProps: {
-              num: relVarbInfoS.local(ongoingValueNames.yearly),
+              num: updateFnPropS.local(ongoingValueNames.yearly),
             },
           },
           {
@@ -333,8 +328,8 @@ export const relVarbsS = {
             switchValue: "loadedVarb",
             updateFnName: "virtualNumObj",
             updateFnProps: {
-              valueSwitch: valueSwitchProp,
-              varbInfo: relVarbInfoS.local("valueEntityInfo"),
+              valueSwitch: updateFnPropS.local("valueSwitch"),
+              varbInfo: updateFnPropS.local("valueEntityInfo"),
             },
           },
           {
@@ -342,23 +337,23 @@ export const relVarbsS = {
             switchValue: "labeledSpanOverCost",
             updateFnName: "simpleDivide",
             updateFnProps: {
-              valueSwitch: valueSwitchProp,
-              leftSide: relVarbInfoS.local("costToReplace"),
-              rightSide: relVarbInfoS.local("lifespanMonths"),
+              valueSwitch: updateFnPropS.local("valueSwitch"),
+              leftSide: updateFnPropS.local("costToReplace"),
+              rightSide: updateFnPropS.local("lifespanMonths"),
             },
           },
         ],
         unit: "decimal",
       }),
       [ongoingValueNames.yearly]: relVarbS.moneyYear("Annual amount", {
-        ...defaultValueUpdatePack,
+        ...makeDefaultValueUpdatePack(),
         inUpdateSwitchProps: [
           {
             switchInfo: ongoingSwitchInfo,
             switchValue: "monthly",
             updateFnName: "monthlyToYearly",
             updateFnProps: {
-              num: relVarbInfoS.local(ongoingValueNames.monthly),
+              num: updateFnPropS.local(ongoingValueNames.monthly),
             },
           },
           {
@@ -366,8 +361,8 @@ export const relVarbsS = {
             switchValue: "loadedVarb",
             updateFnName: "virtualNumObj",
             updateFnProps: {
-              valueSwitch: valueSwitchProp,
-              varbInfo: relVarbInfoS.local("valueEntityInfo"),
+              valueSwitch: updateFnPropS.local("valueSwitch"),
+              varbInfo: updateFnPropS.local("valueEntityInfo"),
             },
           },
           {
@@ -375,9 +370,9 @@ export const relVarbsS = {
             switchValue: "labeledSpanOverCost",
             updateFnName: "simpleDivide",
             updateFnProps: {
-              valueSwitch: valueSwitchProp,
-              leftSide: relVarbInfoS.local("costToReplace"),
-              rightSide: relVarbInfoS.local("lifespanYears"),
+              valueSwitch: updateFnPropS.local("valueSwitch"),
+              leftSide: updateFnPropS.local("costToReplace"),
+              rightSide: updateFnPropS.local("lifespanYears"),
             },
           },
         ],

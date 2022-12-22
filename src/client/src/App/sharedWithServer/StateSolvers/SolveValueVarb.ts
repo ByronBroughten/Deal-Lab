@@ -4,22 +4,22 @@ import calculations, {
   isCalculationName,
   NumberProps,
 } from "../SectionsMeta/baseSectionsVarbs/baseValues/calculations";
+import { ValueInEntity } from "../SectionsMeta/baseSectionsVarbs/baseValues/entities";
 import {
-  InEntities,
-  InEntity,
-} from "../SectionsMeta/baseSectionsVarbs/baseValues/entities";
-import {
-  InEntityInfo,
-  InEntityInfoValue,
-} from "../SectionsMeta/baseSectionsVarbs/baseValues/InEntityInfoValue";
+  InEntityIdInfoValue,
+  ValueIdInEntityInfo,
+} from "../SectionsMeta/baseSectionsVarbs/baseValues/InEntityIdInfoValue";
 import { NumObj } from "../SectionsMeta/baseSectionsVarbs/baseValues/NumObj";
 import { StateValue } from "../SectionsMeta/baseSectionsVarbs/baseValues/StateValueTypes";
 import {
   stringObj,
   StringObj,
 } from "../SectionsMeta/baseSectionsVarbs/baseValues/StringObj";
-import { UpdateFnProps } from "../SectionsMeta/relSectionVarbs/rel/relVarbTypes";
-import { RelInVarbInfo } from "../SectionsMeta/sectionChildrenDerived/RelInOutVarbInfo";
+import { UpdateFnProps } from "../SectionsMeta/relSectionVarbs/rel/UpdateFnProps";
+import {
+  PathInVarbInfo,
+  RelInVarbInfo,
+} from "../SectionsMeta/sectionChildrenDerived/RelInOutVarbInfo";
 import { RelVarbInfo } from "../SectionsMeta/SectionInfo/RelVarbInfo";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { GetterSectionProps } from "../StateGetters/Bases/GetterSectionBase";
@@ -28,8 +28,10 @@ import { GetterSection } from "../StateGetters/GetterSection";
 import { GetterSections } from "../StateGetters/GetterSections";
 import { GetterVarb } from "../StateGetters/GetterVarb";
 import { GetterVarbNumObj } from "../StateGetters/GetterVarbNumObj";
+import { InEntityGetterVarb } from "../StateGetters/InEntityGetterVarb";
 import { UpdaterVarb } from "../StateUpdaters/UpdaterVarb";
 import { Arr } from "../utils/Arr";
+import { Obj } from "../utils/Obj";
 import { ConditionalValueSolver } from "./SolveValueVarb/ConditionalValueSolver";
 import { UserVarbValueSolver } from "./SolveValueVarb/UserVarbValueSolver";
 
@@ -45,6 +47,9 @@ export class SolveValueVarb<
   private get getterVarb() {
     return new GetterVarb(this.getterVarbProps);
   }
+  private get inEntityVarb() {
+    return new InEntityGetterVarb(this.getterVarbProps);
+  }
   private get numObjSolver() {
     return new GetterVarbNumObj(this.getterVarbProps);
   }
@@ -59,20 +64,20 @@ export class SolveValueVarb<
       return this.getterVarb.value("stringObj");
     },
     loadNumObj: (): NumObj => {
-      const { updateFnProps } = this.getterVarb;
+      const { updateFnProps } = this.inEntityVarb;
       const varb = this.getterSection.varbByFocalMixed(
         updateFnProps.varbInfo as RelVarbInfo
       );
       return varb.value("numObj");
     },
     loadLocalString: (): StringObj => {
-      const { updateFnProps } = this.getterVarb;
+      const { updateFnProps } = this.inEntityVarb;
       const varb = this.getterSection.varbByFocalMixed(
         updateFnProps.loadLocalString as RelInVarbInfo
       );
       return stringObj(varb.value("string"));
     },
-    inEntityInfo: (): InEntityInfoValue => {
+    inEntityInfo: (): InEntityIdInfoValue => {
       return this.getterVarb.value("inEntityInfo");
     },
     loadEditorSolvableText: (): NumObj => {
@@ -98,7 +103,7 @@ export class SolveValueVarb<
       };
     },
     loadSolvableText: (): NumObj => {
-      const { updateFnProps } = this.getterVarb;
+      const { updateFnProps } = this.inEntityVarb;
       const varb = this.getterSection.varbByFocalMixed(
         updateFnProps.varbInfo as RelVarbInfo
       );
@@ -126,7 +131,7 @@ export class SolveValueVarb<
         const editor = (
           section as any as GetterSection<"userVarbItem">
         ).varbNext("numObjEditor");
-        const editorEntities = editor.inEntities;
+        const editorEntities = editor.value("numObj").entities;
         let isPureUserVarb = true;
         for (const entity of editorEntities) {
           if (this.getterSections.hasSectionMixed(entity)) {
@@ -190,24 +195,24 @@ export class SolveValueVarb<
     }
   }
   solveValue(): StateValue {
-    const { updateFnName } = this.getterVarb;
+    const { updateFnName } = this.inEntityVarb;
     if (isCalculationName(updateFnName)) return this.updateFns.calculation();
     if (this.isInUpdateFns(updateFnName)) return this.updateFns[updateFnName]();
     else throw new Error(`updateFnName ${updateFnName} not found.`);
   }
-  private loadNextEntities(): InEntities {
-    const varb = this.getterVarb;
-    let nextEntities = [...varb.inEntities];
+  private loadNextEntities(): ValueInEntity[] {
+    const varb = this.inEntityVarb;
+    let nextEntities = [...varb.valueInEntities];
     const entitySource = "localValueEntityInfo";
 
-    const infoVarb = varb.localVarb("valueEntityInfo");
-    function entityIsOfSource(entity: InEntity) {
+    const infoVarb = varb.get.localVarb("valueEntityInfo");
+    function entityIsOfSource(entity: ValueInEntity) {
       return entity.entitySource === entitySource;
     }
     function removeEntityOfSource() {
       Arr.findAndRmMutate(nextEntities, entityIsOfSource);
     }
-    function pushEntityOfSource(entityInfo: InEntityInfo) {
+    function pushEntityOfSource(entityInfo: ValueIdInEntityInfo) {
       nextEntities.push({
         ...entityInfo,
         entitySource: entitySource,
@@ -263,19 +268,19 @@ export class SolveValueVarb<
     return str in this.updateFns;
   }
   private solvableTextFromCalcVarbs(): string {
-    if (this.getterVarb.updateFnName !== "calcVarbs")
+    if (this.inEntityVarb.updateFnName !== "calcVarbs")
       throw new Error("This is only for calcVarbs");
     const numObj = this.getterVarb.value("numObj");
     return this.numObjSolver.solvableTextFromTextAndEntities(numObj);
   }
   private solvableTextFromCalculation() {
-    const { updateFnName } = this.getterVarb;
+    const { updateFnName } = this.inEntityVarb;
     if (!isCalculationName(updateFnName))
       throw new Error(
         `updateFnName is ${updateFnName}, but this is only for pure calculations`
       );
 
-    const { updateFnProps } = this.getterVarb;
+    const { updateFnProps } = this.inEntityVarb;
     const { numberVarbs } = this.getNumberVarbs(updateFnProps);
     const solvableText = calculations[updateFnName](numberVarbs as any);
     if (solvableText.includes("NaN")) {
@@ -291,7 +296,7 @@ export class SolveValueVarb<
   } {
     const numberVarbs: NumberProps = {};
     const failedVarbs: FailedVarbs = [];
-    for (let [propName, propOrArr] of Object.entries(updateFnProps)) {
+    for (let [propName, propOrArr] of Obj.entries(updateFnProps)) {
       if (Array.isArray(propOrArr)) numberVarbs[propName] = [];
       else propOrArr = [propOrArr];
       for (const relInfo of propOrArr) {
@@ -318,8 +323,6 @@ export class SolveValueVarb<
   }
 }
 
-type UpdateFnValues = Record<string, StateValue>;
-
 export type FailedVarbs = FailedVarb[];
 type FailedVarb = { errorMessage: string } & UpdateVarbInfo;
-type UpdateVarbInfo = RelVarbInfo | DbVarbInfoMixed;
+type UpdateVarbInfo = PathInVarbInfo | DbVarbInfoMixed;

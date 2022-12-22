@@ -6,11 +6,10 @@ import {
   switchNames,
   SwitchRecord,
 } from "../../../baseSectionsVarbs/RelSwitchVarb";
-import { RelInVarbInfo } from "../../../sectionChildrenDerived/RelInOutVarbInfo";
-import { relVarbInfoS } from "../../../SectionInfo/RelVarbInfo";
 import { relVarbsS } from "../../relVarbs";
 import { RelNumObjOptions, relVarb, relVarbS } from "../relVarb";
-import { DisplayName, StringRelVarb, UpdateFnProps } from "../relVarbTypes";
+import { DisplayName, StringRelVarb } from "../relVarbTypes";
+import { UpdateFnProp, updateFnPropS, UpdateFnProps } from "../UpdateFnProps";
 
 export type SwitchRelVarbs<
   Base extends string,
@@ -38,7 +37,7 @@ type MonthsYearsSwitchOptions = MonthsYearsOptions & {
   switchInit?: "months" | "years";
 };
 
-function concatVarbName(info: RelInVarbInfo, toConcat: string) {
+function concatVarbName(info: UpdateFnProp, toConcat: string) {
   return { ...info, varbName: info.varbName + toConcat };
 }
 
@@ -93,7 +92,7 @@ export function monthsYearsInput<Base extends string>(
       {
         updateFnName: "yearsToMonths",
         updateFnProps: {
-          num: relVarbInfoS.local(varbNames.years),
+          num: updateFnPropS.local(varbNames.years),
         },
         switchValue: "months",
         options: {
@@ -105,7 +104,7 @@ export function monthsYearsInput<Base extends string>(
       {
         updateFnName: "monthsToYears",
         updateFnProps: {
-          num: relVarbInfoS.local(varbNames.months),
+          num: updateFnPropS.local(varbNames.months),
         },
         switchValue: "years",
         options: {
@@ -133,7 +132,7 @@ export function ongoingInput<Base extends string>(
       {
         updateFnName: "yearlyToMonthly",
         updateFnProps: {
-          num: relVarbInfoS.local(varbNames.yearly),
+          num: updateFnPropS.local(varbNames.yearly),
         },
         switchValue: "monthly",
         options: {
@@ -145,7 +144,7 @@ export function ongoingInput<Base extends string>(
       {
         updateFnName: "monthlyToYearly",
         updateFnProps: {
-          num: relVarbInfoS.local(varbNames.monthly),
+          num: updateFnPropS.local(varbNames.monthly),
         },
         switchValue: "yearly",
         options: {
@@ -162,7 +161,7 @@ export function ongoingInput<Base extends string>(
 export function decimalToPortion<Base extends string>(
   baseVarbName: Base,
   displayName: DisplayName,
-  makeBaseVarbInfo: (baseVarbName: string) => RelInVarbInfo,
+  makeBaseVarbInfo: (baseVarbName: string) => UpdateFnProp,
   baseBaseName: string,
   decimalName: string
 ): SwitchRelVarbs<Base, "ongoing"> {
@@ -175,7 +174,7 @@ export function decimalToPortion<Base extends string>(
     [varbNames.monthly]: relVarbS.moneyMonth(displayName, {
       updateFnName: "simpleMultiply",
       updateFnProps: {
-        leftSide: relVarbInfoS.local(decimalName),
+        leftSide: updateFnPropS.local(decimalName),
         rightSide: makeBaseVarbInfo(baseVarbNames.monthly),
       },
       displayNameEnd: " monthly",
@@ -183,7 +182,7 @@ export function decimalToPortion<Base extends string>(
     [varbNames.yearly]: relVarbS.moneyYear(displayName, {
       updateFnName: "simpleMultiply",
       updateFnProps: {
-        leftSide: relVarbInfoS.local(decimalName),
+        leftSide: updateFnPropS.local(decimalName),
         rightSide: makeBaseVarbInfo(baseVarbNames.yearly),
       },
       displayNameEnd: " yearly",
@@ -224,7 +223,7 @@ export function ongoingPureCalc<Base extends string>(
 export function ongoingSumNums<Base extends string>(
   varbNameBase: Base,
   displayName: DisplayName,
-  updateFnArrProp: RelInVarbInfo[],
+  updateFnArrProp: UpdateFnProp[],
   options: MonthlyYearlySwitchOptions = {}
 ): SwitchRelVarbs<Base, "ongoing"> {
   const props = getMonthlyYearlyProps({ nums: updateFnArrProp });

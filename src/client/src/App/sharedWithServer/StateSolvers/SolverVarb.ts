@@ -2,16 +2,18 @@ import { FeVarbInfoMixed } from "../SectionsMeta/baseSectionsDerived/baseVarbInf
 import {
   entityS,
   InEntity,
-  InEntityVarbInfo,
   OutEntity,
   OutEntityInfo,
+  ValueInEntity,
+  ValueInEntityInfo,
 } from "../SectionsMeta/baseSectionsVarbs/baseValues/entities";
 import { StateValue } from "../SectionsMeta/baseSectionsVarbs/baseValues/StateValueTypes";
 import { Id } from "../SectionsMeta/baseSectionsVarbs/id";
-import { RelInVarbInfo } from "../SectionsMeta/sectionChildrenDerived/RelInOutVarbInfo";
+import { VarbInfoMixedFocal } from "../SectionsMeta/sectionChildrenDerived/MixedSectionInfo";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { GetterSections } from "../StateGetters/GetterSections";
 import { GetterVarb } from "../StateGetters/GetterVarb";
+import { InEntityGetterVarb } from "../StateGetters/InEntityGetterVarb";
 import { OutVarbGetterVarb } from "../StateInOutVarbs/OutVarbGetterVarb";
 import { UpdaterVarb } from "../StateUpdaters/UpdaterVarb";
 import { StrictOmit } from "../utils/types";
@@ -28,13 +30,16 @@ type InitSolverVarbProps<SN extends SectionNameByType> = StrictOmit<
 export class SolverVarb<
   SN extends SectionNameByType<"hasVarb"> = SectionNameByType<"hasVarb">
 > extends SolverVarbBase<SN> {
-  private initialEntities: InEntity[];
+  private initialValueEntities: ValueInEntity[];
   constructor(props: SolverVarbProps<SN>) {
     super(props);
-    this.initialEntities = [...this.get.inEntities];
+    this.initialValueEntities = [...this.inEntity.valueInEntities];
   }
   get get() {
     return new GetterVarb(this.getterVarbBase.getterVarbProps);
+  }
+  get inEntity() {
+    return new InEntityGetterVarb(this.getterVarbBase.getterVarbProps);
   }
   get outVarbGetter() {
     return new OutVarbGetterVarb(this.getterVarbBase.getterVarbProps);
@@ -88,7 +93,7 @@ export class SolverVarb<
     this.updateConnectedEntities();
   }
 
-  loadValueFromVarb(varbInfo: InEntityVarbInfo) {
+  loadValueFromVarb(varbInfo: ValueInEntityInfo): void {
     const entityInfo = { ...varbInfo, entityId: Id.make() };
     const infoVarb = this.localSolverVarb("valueEntityInfo");
     infoVarb.updaterVarb.updateValue(entityInfo);
@@ -103,31 +108,28 @@ export class SolverVarb<
       offset: 0, // just borrowing functionality from editor entities
     });
   }
-  addOutEntitiesFromCurrentInEntities() {
-    const { inEntities } = this.get;
-    this.addOutEntitiesFromInEntities(inEntities);
+  varbsByFocalMixed(info: VarbInfoMixedFocal) {
+    const getterVarbs = this.get.varbsByFocalMixed(info);
+    return getterVarbs.map((varb) =>
+      SolverVarb.init({
+        ...this.solverSectionsProps,
+        ...varb.feVarbInfo,
+      })
+    );
   }
-  removeOutEntitiesOfCurrentInEntities() {
-    const { inEntities } = this.get;
-    this.removeOutEntitiesOfInEntities(inEntities);
-    // the utility list is being removed and then reloaded with
-    // the user's. But for some reason, propertyGeneral doesn't
-    // have the outEntity of the utilty list
+  addOutEntitiesFromAllInEntities(): void {
+    const { allInEntities } = this.inEntity;
+    for (const entity of allInEntities) {
+      const entityVarbs = this.varbsByFocalMixed(entity);
+      for (const inEntityVarb of entityVarbs) {
+        const outEntity = this.newSelfOutEntity(entity.entityId);
+        if (!inEntityVarb.hasOutEntity(outEntity)) {
+          inEntityVarb.addOutEntity(outEntity);
+        }
+      }
+    }
   }
-  updateConnectedVarbs(): void {
-    this.updateConnectedEntities();
-    this.solveOutVarbs();
-  }
-  private updateConnectedEntities() {
-    this.removeObsoleteOutEntities();
-    this.addNewOutEntitites();
-    this.initialEntities = [...this.get.inEntities];
-  }
-  private addNewOutEntitites() {
-    const { newEntities } = this;
-    this.addOutEntitiesFromInEntities(newEntities);
-  }
-  private addOutEntitiesFromInEntities(inEntities: InEntity[]): void {
+  private addOutEntitiesFromNewValueIn(inEntities: ValueInEntity[]): void {
     for (const entity of inEntities) {
       if (this.inEntitySectionExists(entity)) {
         const inEntityVarb = this.getInEntityVarb(entity);
@@ -138,23 +140,48 @@ export class SolverVarb<
       }
     }
   }
+
+  removeAllOutEntitiesOfInEntities() {
+    const { allInEntities } = this.inEntity;
+    this.removeOutEntitiesOfInEntities(allInEntities);
+  }
+  private updateConnectedEntities() {
+    this.removeObsoleteOutEntities();
+    this.addNewOutEntitites();
+    this.initialValueEntities = [...this.inEntity.valueInEntities];
+  }
+  private addNewOutEntitites() {
+    const { newValueInEntities } = this;
+    this.addOutEntitiesFromNewValueIn(newValueInEntities);
+  }
+
   private newSelfOutEntity(inEntityId: string): OutEntity {
     return {
       ...this.get.feVarbInfo,
       entityId: inEntityId,
     };
   }
-  hasInEntityVarb(inEntity: InEntityVarbInfo) {
+  private hasValueEntityVarb(inEntity: ValueInEntity) {
     return this.getterSections.hasSectionMixed(inEntity);
   }
-  getInEntityVarb(inEntity: InEntity): SolverVarb {
+  getInEntityVarb(inEntity: ValueInEntity): SolverVarb {
     return this.solverSections.varbByMixed(inEntity);
+  }
+  getInEntityVarbs(inEntity: InEntity): SolverVarb[] {
+    const varbs = this.get.varbsByFocalMixed(inEntity);
+    return varbs.map(
+      ({ feVarbInfo }) =>
+        new SolverVarb({
+          ...this.solverSectionsProps,
+          ...feVarbInfo,
+        })
+    );
   }
   private removeOutEntitiesOfInEntities(inEntities: InEntity[]) {
     for (const inEntity of inEntities) {
-      if (this.hasInEntityVarb(inEntity)) {
-        const inEntityVarb = this.getInEntityVarb(inEntity);
-        inEntityVarb.removeOutEntity({
+      const inVarbs = this.getInEntityVarbs(inEntity);
+      for (const inVarb of inVarbs) {
+        inVarb.removeOutEntity({
           entityId: inEntity.entityId,
           feId: this.get.feId,
         });
@@ -167,81 +194,69 @@ export class SolverVarb<
   }
 
   private get initialAndNextEntities(): {
-    initialEntities: InEntity[];
-    nextEntities: InEntity[];
+    initialValueEntities: ValueInEntity[];
+    nextValueEntities: ValueInEntity[];
   } {
     return {
-      initialEntities: this.initialEntities,
-      nextEntities: this.get.inEntities,
+      initialValueEntities: this.initialValueEntities,
+      nextValueEntities: this.inEntity.valueInEntities,
     };
   }
-  private get missingEntities(): InEntity[] {
-    const { initialEntities, nextEntities } = this.initialAndNextEntities;
-    return initialEntities.filter(
-      (entity) => !entityS.inEntitiesHas(nextEntities, entity)
+  private get missingEntities(): ValueInEntity[] {
+    const { initialValueEntities, nextValueEntities } =
+      this.initialAndNextEntities;
+    return initialValueEntities.filter(
+      (entity) => !entityS.inEntitiesHas(nextValueEntities, entity)
     );
   }
-  private get newEntities(): InEntity[] {
-    const { initialEntities, nextEntities } = this.initialAndNextEntities;
-    return nextEntities.filter(
-      (entity) => !entityS.inEntitiesHas(initialEntities, entity)
+  private get newValueInEntities(): ValueInEntity[] {
+    const { initialValueEntities, nextValueEntities } =
+      this.initialAndNextEntities;
+    return nextValueEntities.filter(
+      (entity) => !entityS.inEntitiesHas(initialValueEntities, entity)
     );
   }
   private hasOutEntity(info: OutEntityInfo): boolean {
-    const { outEntities } = this.get;
+    const { outEntities } = this.outVarbGetter;
     return entityS.outEntitiesHas(outEntities, info);
   }
   private removeOutEntity(info: OutEntityInfo): void {
     if (!this.hasOutEntity(info)) {
       throw new Error("Tried to remove entity, but entity not found.");
     }
-    const { outEntities } = this.get;
+    const { outEntities } = this.outVarbGetter;
     const nextOutEntities = entityS.outEntitiesCopyRm(outEntities, info);
     this.updaterVarb.update({
       outEntities: nextOutEntities,
     });
   }
   private addOutEntity(outEntity: OutEntity): void {
-    const nextOutEntities = [...this.get.outEntities, outEntity];
+    const nextOutEntities = [...this.outVarbGetter.outEntities, outEntity];
     this.updaterVarb.update({ outEntities: nextOutEntities });
   }
-  private inEntitySectionExists(inEntity: InEntity): boolean {
-    if (this.hasInEntityVarb(inEntity)) return true;
+  private inEntitySectionExists(inEntity: ValueInEntity): boolean {
+    if (this.hasValueEntityVarb(inEntity)) return true;
     if (this.isUserVarbAndWasDeleted(inEntity)) return false;
     throw varbNotFoundMixed(inEntity);
   }
-  private isUserVarbAndWasDeleted(varbInfo: InEntityVarbInfo): boolean {
+  private isUserVarbAndWasDeleted(varbInfo: ValueInEntity): boolean {
     const { sectionName } = varbInfo;
-    return sectionName === "userVarbItem" && !this.hasInEntityVarb(varbInfo);
+    return sectionName === "userVarbItem" && !this.hasValueEntityVarb(varbInfo);
   }
   private solveOutVarbs(): void {
-    this.addVarbInfosToSolveFor(...this.outVarbGetter.outVarbInfos);
+    this.addVarbInfosToSolveFor(...this.outVarbGetter.activeOutEntities);
     this.solverSections.solve();
   }
   get hasInVarbs(): boolean {
-    return this.inVarbInfos.length > 0;
+    return this.inEntity.hasActiveInEntities;
   }
-  get inVarbInfos(): InVarbInfo[] {
-    const relativeInfos = this.inRelToFeMixedInfos();
-    const { inEntities } = this.get;
-    return [...relativeInfos, ...inEntities];
-  }
-  private inRelToFeMixedInfos(): InVarbInfo[] {
-    return this.inRelativeInfos.reduce((inFeInfos, inRelInfo) => {
-      const varbs = this.get.varbsByFocalMixed(inRelInfo);
-      return inFeInfos.concat(varbs.map((varb) => varb.feVarbInfoMixed));
-    }, [] as InVarbInfo[]);
-  }
-  private get inRelativeInfos(): RelInVarbInfo[] {
-    return this.get.inUpdatePack.inUpdateInfos;
-  }
-  private addInEntity(inEntity: InEntity): void {
+  private addInEntity(inEntity: ValueInEntity): void {
     this.updaterVarb.update({
       value: this.get.numObj.addEntity(inEntity),
     });
-    this.addOutEntitiesFromInEntities([inEntity]);
+    this.addOutEntitiesFromNewValueIn([inEntity]);
   }
-  private removeInEntity(inEntity: InEntity): void {
+  private removeInEntity(inEntity: ValueInEntity): void {
     const { entityId } = inEntity;
     this.updaterVarb.update({
       value: this.get.numObj.removeEntity(entityId),
@@ -264,4 +279,4 @@ export function varbNotFoundMixed({
   );
 }
 
-export type InVarbInfo = InEntity | FeVarbInfoMixed;
+export type InVarbInfo = ValueInEntity | FeVarbInfoMixed;

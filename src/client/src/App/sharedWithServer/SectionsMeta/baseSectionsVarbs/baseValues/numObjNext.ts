@@ -8,13 +8,13 @@ import {
 import { PathVarbNames } from "../../SectionInfo/AbsolutePathInfo";
 import { sectionNameByPathName } from "../../sectionPathContexts/sectionPathNames";
 import { Id } from "../id";
-import { AbsoluteInEntity, InEntities } from "./entities";
+import { AbsoluteInEntity, ValueInEntity } from "./entities";
 import { NumObj } from "./NumObj";
 
 export function numObjNext(...propArr: EntityNumObjPropArr): NumObj {
   let mainText: string = "";
   let solvableText: string = "";
-  const entities: InEntities = [];
+  const entities: ValueInEntity[] = [];
   for (const prop of propArr) {
     if (typeof prop === "string") {
       mainText += prop;

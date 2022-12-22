@@ -1,5 +1,6 @@
 import { isValidVarbNames } from "../../SectionsMeta/baseSectionsDerived/baseVarbInfo";
 import { SectionName } from "../../SectionsMeta/SectionName";
+import { VarbMeta } from "../../SectionsMeta/VarbMeta";
 import { GetterSectionBase, GetterSectionProps } from "./GetterSectionBase";
 
 export interface GetterVarbProps<SN extends SectionName>
@@ -17,6 +18,9 @@ export class GetterVarbBase<
     if (!isValidVarbNames({ sectionName, varbName })) {
       throw new Error(`"${varbName}" is not a varbName of "${sectionName}"`);
     }
+  }
+  get meta(): VarbMeta<SN> {
+    return this.sectionMeta.varb(this.varbName);
   }
   get feVarbInfo() {
     return {

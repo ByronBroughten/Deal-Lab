@@ -1,8 +1,8 @@
 import { switchNames } from "../../baseSectionsVarbs/RelSwitchVarb";
 import { relVarbInfoS } from "../../SectionInfo/RelVarbInfo";
-import { relVarbInfosS } from "../../SectionInfo/RelVarbInfos";
 import { relUpdateSwitch } from "../rel/relUpdateSwitch";
 import { relVarb, relVarbS } from "../rel/relVarb";
+import { updateFnPropS, updateFnPropsS } from "../rel/UpdateFnProps";
 import { RelVarbs, relVarbsS } from "../relVarbs";
 
 const rentCut = switchNames("rentCut", "dollarsPercentDecimal");
@@ -19,7 +19,7 @@ export function mgmtRelVarbs(): RelVarbs<"mgmt"> {
       initNumber: 0.05,
       updateFnName: "percentToDecimal",
       updateFnProps: {
-        num: relVarbInfoS.local(rentCut.percent),
+        num: updateFnPropS.local(rentCut.percent),
       },
       inUpdateSwitchProps: [
         {
@@ -27,13 +27,17 @@ export function mgmtRelVarbs(): RelVarbs<"mgmt"> {
           switchValue: "dollars",
           updateFnName: "simpleDivide",
           updateFnProps: {
-            leftSide: relVarbInfoS.local(rentCutDollars.monthly),
-            rightSide: relVarbInfoS.pibling(
-              "propertyGeneral",
-              "propertyGeneral",
-              "targetRentMonthly",
-              { expectedCount: "onlyOne" }
+            leftSide: updateFnPropS.local(rentCutDollars.monthly),
+            rightSide: updateFnPropS.absolutePath(
+              "propertyGeneralFocal",
+              "targetRentMonthly"
             ),
+            // relVarbInfoS.pibling(
+            //   "propertyGeneral",
+            //   "propertyGeneral",
+            //   "targetRentMonthly",
+            //   { expectedCount: "onlyOne" }
+            // ),
           },
         },
       ],
@@ -44,14 +48,14 @@ export function mgmtRelVarbs(): RelVarbs<"mgmt"> {
     [rentCut.percent]: relVarbS.percentObj("Rent cut input", {
       updateFnName: "loadSolvableText",
       updateFnProps: {
-        varbInfo: relVarbInfoS.local("rentCutPercentEditor"),
+        varbInfo: updateFnPropS.local("rentCutPercentEditor"),
       },
       inUpdateSwitchProps: [
         {
           switchInfo: relVarbInfoS.local(rentCut.switch),
           switchValue: "dollars",
           updateFnName: "decimalToPercent",
-          updateFnProps: { num: relVarbInfoS.local(rentCut.decimal) },
+          updateFnProps: { num: updateFnPropS.local(rentCut.decimal) },
         },
       ],
       displayNameEnd: " percent",
@@ -67,8 +71,8 @@ export function mgmtRelVarbs(): RelVarbs<"mgmt"> {
       displayNameEnd: " monthly",
       updateFnName: "loadSolvableText",
       updateFnProps: {
-        switch: relVarbInfoS.local(rentCut.switch),
-        varbInfo: relVarbInfoS.local("rentCutDollarsEditor"),
+        switch: updateFnPropS.local(rentCut.switch),
+        varbInfo: updateFnPropS.local("rentCutDollarsEditor"),
       },
       inUpdateSwitchProps: [
         {
@@ -76,13 +80,11 @@ export function mgmtRelVarbs(): RelVarbs<"mgmt"> {
           switchValue: "percent",
           updateFnName: "simpleMultiply",
           updateFnProps: {
-            switch: relVarbInfoS.local(rentCut.switch),
-            leftSide: relVarbInfoS.local(rentCut.decimal),
-            rightSide: relVarbInfoS.pibling(
-              "propertyGeneral",
-              "propertyGeneral",
-              "targetRentMonthly",
-              { expectedCount: "onlyOne" }
+            switch: updateFnPropS.local(rentCut.switch),
+            leftSide: updateFnPropS.local(rentCut.decimal),
+            rightSide: updateFnPropS.absolutePath(
+              "propertyGeneralFocal",
+              "targetRentMonthly"
             ),
           },
         },
@@ -93,7 +95,7 @@ export function mgmtRelVarbs(): RelVarbs<"mgmt"> {
       displayNameEnd: " yearly",
       updateFnName: "loadSolvableText",
       updateFnProps: {
-        varbInfo: relVarbInfoS.local("rentCutDollarsEditor"),
+        varbInfo: updateFnPropS.local("rentCutDollarsEditor"),
       },
       inUpdateSwitchProps: [
         {
@@ -101,12 +103,10 @@ export function mgmtRelVarbs(): RelVarbs<"mgmt"> {
           switchValue: "percent",
           updateFnName: "simpleMultiply",
           updateFnProps: {
-            leftSide: relVarbInfoS.local(rentCut.decimal),
-            rightSide: relVarbInfoS.pibling(
-              "propertyGeneral",
-              "propertyGeneral",
-              "targetRentYearly",
-              { expectedCount: "onlyOne" }
+            leftSide: updateFnPropS.local(rentCut.decimal),
+            rightSide: updateFnPropS.absolutePath(
+              "propertyGeneralFocal",
+              "targetRentYearly"
             ),
           },
         },
@@ -120,7 +120,7 @@ export function mgmtRelVarbs(): RelVarbs<"mgmt"> {
     vacancyRateDecimal: relVarbS.singlePropFn(
       "Vacancy rate decimal",
       "percentToDecimal",
-      relVarbInfoS.local("vacancyRatePercent"),
+      updateFnPropS.local("vacancyRatePercent"),
       {
         initNumber: 0.05,
         unit: "decimal",
@@ -129,28 +129,22 @@ export function mgmtRelVarbs(): RelVarbs<"mgmt"> {
     ...relVarbsS.decimalToPortion(
       "vacancyLossDollars",
       "Vacancy rent lost",
-      (baseVarbName) => {
-        return relVarbInfoS.pibling(
-          "propertyGeneral",
-          "propertyGeneral",
-          baseVarbName,
-          { expectedCount: "onlyOne" }
-        );
-      },
+      (baseVarbName) =>
+        updateFnPropS.absolutePath("propertyGeneralFocal", baseVarbName),
       "targetRent",
       "vacancyRateDecimal"
     ),
     upfrontExpenses: relVarbS.sumNums(
       "Upfront expenses",
-      [relVarbInfoS.children("upfrontCostListGroup", "total")],
+      [updateFnPropS.children("upfrontCostListGroup", "total")],
       { startAdornment: "$" }
     ),
     ...relVarbsS.ongoingSumNums(
       "expenses",
       "Ongoing expenses",
       [
-        relVarbInfoS.children("ongoingCostListGroup", "total"),
-        ...relVarbInfosS.local(["vacancyLossDollars", "rentCutDollars"]),
+        updateFnPropS.children("ongoingCostListGroup", "total"),
+        ...updateFnPropsS.localArr(["vacancyLossDollars", "rentCutDollars"]),
       ],
       {
         switchInit: "monthly",

@@ -3,8 +3,8 @@ import { numObj } from "../../baseSectionsVarbs/baseValues/NumObj";
 import { switchNames } from "../../baseSectionsVarbs/RelSwitchVarb";
 import { loanVarbsNotInFinancing } from "../../baseSectionsVarbs/specialVarbNames";
 import { relVarbInfoS } from "../../SectionInfo/RelVarbInfo";
-import { relVarbInfosS } from "../../SectionInfo/RelVarbInfos";
 import { relVarb, relVarbS } from "../rel/relVarb";
+import { updateFnPropS, updateFnPropsS } from "../rel/UpdateFnProps";
 import { RelVarbs, relVarbsS } from "../relVarbs";
 
 const loanBase = switchNames("loanBase", "dollarsPercentDecimal");
@@ -19,19 +19,17 @@ export function loanRelVarbs(): RelVarbs<"loan"> {
       initNumber: 0.05,
       unit: "decimal",
       updateFnName: "percentToDecimal",
-      updateFnProps: { num: relVarbInfoS.local(loanBase.percent) },
+      updateFnProps: { num: updateFnPropS.local(loanBase.percent) },
       inUpdateSwitchProps: [
         {
           switchInfo: relVarbInfoS.local(loanBase.switch),
           switchValue: "dollars",
           updateFnName: "simpleDivide",
           updateFnProps: {
-            leftSide: relVarbInfoS.local("loanBaseDollars"),
-            rightSide: relVarbInfoS.pibling(
-              "propertyGeneral",
-              "propertyGeneral",
-              "price",
-              { expectedCount: "onlyOne" }
+            leftSide: updateFnPropS.local("loanBaseDollars"),
+            rightSide: updateFnPropS.absolutePath(
+              "propertyGeneralFocal",
+              "price"
             ),
           },
         },
@@ -41,8 +39,8 @@ export function loanRelVarbs(): RelVarbs<"loan"> {
       displayNameEnd: " percent",
       updateFnName: "loadSolvableText",
       updateFnProps: {
-        switch: relVarbInfoS.local(loanBase.switch),
-        varbInfo: relVarbInfoS.local("loanBasePercentEditor"),
+        switch: updateFnPropS.local(loanBase.switch),
+        varbInfo: updateFnPropS.local("loanBasePercentEditor"),
       },
       inUpdateSwitchProps: [
         {
@@ -50,8 +48,8 @@ export function loanRelVarbs(): RelVarbs<"loan"> {
           switchValue: "dollars",
           updateFnName: "decimalToPercent",
           updateFnProps: {
-            switch: relVarbInfoS.local(loanBase.switch),
-            num: relVarbInfoS.local(loanBase.decimal),
+            switch: updateFnPropS.local(loanBase.switch),
+            num: updateFnPropS.local(loanBase.decimal),
           },
         },
       ],
@@ -60,8 +58,8 @@ export function loanRelVarbs(): RelVarbs<"loan"> {
       displayNameEnd: " dollars",
       updateFnName: "loadSolvableText",
       updateFnProps: {
-        switch: relVarbInfoS.local(loanBase.switch),
-        varbInfo: relVarbInfoS.local("loanBaseDollarsEditor"),
+        switch: updateFnPropS.local(loanBase.switch),
+        varbInfo: updateFnPropS.local("loanBaseDollarsEditor"),
       },
       inUpdateSwitchProps: [
         {
@@ -69,15 +67,11 @@ export function loanRelVarbs(): RelVarbs<"loan"> {
           switchValue: "percent",
           updateFnName: "simpleMultiply",
           updateFnProps: {
-            switch: relVarbInfoS.local(loanBase.switch),
-            leftSide: relVarbInfoS.local(loanBase.decimal),
-            rightSide: relVarbInfoS.pibling(
-              "propertyGeneral",
-              "propertyGeneral",
-              "price",
-              {
-                expectedCount: "onlyOne",
-              }
+            switch: updateFnPropS.local(loanBase.switch),
+            leftSide: updateFnPropS.local(loanBase.decimal),
+            rightSide: updateFnPropS.absolutePath(
+              "propertyGeneralFocal",
+              "price"
             ),
           },
         },
@@ -90,8 +84,8 @@ export function loanRelVarbs(): RelVarbs<"loan"> {
       initNumber: 5,
     }),
     loanTotalDollars: relVarbS.sumMoney("Loan amount", [
-      relVarbInfoS.local("loanBaseDollars"),
-      relVarbInfoS.children("wrappedInLoanListGroup", "total"),
+      updateFnPropS.local("loanBaseDollars"),
+      updateFnPropS.children("wrappedInLoanListGroup", "total"),
     ]),
     ...relVarbsS.ongoingInput("interestRatePercent", "Interest rate", {
       switchInit: "yearly",
@@ -110,7 +104,7 @@ export function loanRelVarbs(): RelVarbs<"loan"> {
     ...relVarbsS.ongoingSumNums(
       "expenses",
       "Ongoing expenses",
-      [relVarbInfoS.local("loanPayment"), relVarbInfoS.local("mortgageIns")],
+      [updateFnPropS.local("loanPayment"), updateFnPropS.local("mortgageIns")],
       {
         switchInit: "monthly",
         shared: { startAdornment: "$" },
@@ -120,10 +114,10 @@ export function loanRelVarbs(): RelVarbs<"loan"> {
       initNumber: 0,
     }),
     closingCosts: relVarbS.sumMoney("Closing costs", [
-      relVarbInfoS.children("closingCostListGroup", "total"),
+      updateFnPropS.children("closingCostListGroup", "total"),
     ]),
     wrappedInLoan: relVarbS.sumMoney("Wrapped in loan", [
-      relVarbInfoS.children("wrappedInLoanListGroup", "total"),
+      updateFnPropS.children("wrappedInLoanListGroup", "total"),
     ]),
     piCalculationName: relVarb("string", {
       initValue: "piFixedStandard" as PiCalculationName,
@@ -135,13 +129,13 @@ export function loanRelVarbs(): RelVarbs<"loan"> {
         monthly: {
           updateFnName: "percentToDecimal",
           updateFnProps: {
-            num: relVarbInfoS.local("interestRatePercentMonthly"),
+            num: updateFnPropS.local("interestRatePercentMonthly"),
           },
         },
         yearly: {
           updateFnName: "percentToDecimal",
           updateFnProps: {
-            num: relVarbInfoS.local("interestRatePercentYearly"),
+            num: updateFnPropS.local("interestRatePercentYearly"),
           },
         },
       },
@@ -154,13 +148,13 @@ export function loanRelVarbs(): RelVarbs<"loan"> {
         monthly: {
           updateFnName: "yearlyToMonthly",
           updateFnProps: {
-            num: relVarbInfoS.local("interestOnlySimpleYearly"),
+            num: updateFnPropS.local("interestOnlySimpleYearly"),
           },
         },
         yearly: {
           updateFnName: "interestOnlySimpleYearly",
           updateFnProps: {
-            ...relVarbInfosS.localByVarbName([
+            ...updateFnPropsS.localByVarbName([
               "interestRateDecimalYearly",
               "loanTotalDollars",
             ]),
@@ -175,7 +169,7 @@ export function loanRelVarbs(): RelVarbs<"loan"> {
       {
         monthly: {
           updateFnName: "piFixedStandardMonthly",
-          updateFnProps: relVarbInfosS.localByVarbName([
+          updateFnProps: updateFnPropsS.localByVarbName([
             "loanTotalDollars",
             "interestRateDecimalMonthly",
             "loanTermMonths",
@@ -183,7 +177,7 @@ export function loanRelVarbs(): RelVarbs<"loan"> {
         },
         yearly: {
           updateFnName: "monthlyToYearly",
-          updateFnProps: { num: relVarbInfoS.local("piFixedStandardMonthly") },
+          updateFnProps: { num: updateFnPropS.local("piFixedStandardMonthly") },
         },
       },
       { shared: { startAdornment: "$", unit: "money" } }
@@ -195,7 +189,7 @@ export function loanRelVarbs(): RelVarbs<"loan"> {
         monthly: {
           updateFnName: "loadNumObj",
           updateFnProps: {
-            varbInfo: relVarbInfoS.local("piFixedStandardMonthly"),
+            varbInfo: updateFnPropS.local("piFixedStandardMonthly"),
           },
           inUpdateSwitchProps: [
             {
@@ -203,7 +197,7 @@ export function loanRelVarbs(): RelVarbs<"loan"> {
               switchValue: "interestOnlySimple",
               updateFnName: "loadNumObj",
               updateFnProps: {
-                varbInfo: relVarbInfoS.local("interestOnlySimpleMonthly"),
+                varbInfo: updateFnPropS.local("interestOnlySimpleMonthly"),
               },
             },
           ],
@@ -211,7 +205,7 @@ export function loanRelVarbs(): RelVarbs<"loan"> {
         yearly: {
           updateFnName: "loadNumObj",
           updateFnProps: {
-            varbInfo: relVarbInfoS.local("piFixedStandardYearly"),
+            varbInfo: updateFnPropS.local("piFixedStandardYearly"),
           },
           inUpdateSwitchProps: [
             {
@@ -219,7 +213,7 @@ export function loanRelVarbs(): RelVarbs<"loan"> {
               switchValue: "interestOnlySimple",
               updateFnName: "loadNumObj",
               updateFnProps: {
-                varbInfo: relVarbInfoS.local("interestOnlySimpleYearly"),
+                varbInfo: updateFnPropS.local("interestOnlySimpleYearly"),
               },
             },
           ],

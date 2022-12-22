@@ -5,6 +5,10 @@ import { savableSectionVarbNames } from "./baseSectionsVarbs/specialVarbNames";
 import { relAdorn } from "./relSectionVarbs/rel/relAdorn";
 import { relVarb, relVarbS } from "./relSectionVarbs/rel/relVarb";
 import {
+  updateFnPropS,
+  updateFnPropsS,
+} from "./relSectionVarbs/rel/UpdateFnProps";
+import {
   defaultRelSectionVarbs,
   GeneralRelSectionVarbs,
   GenericRelSection,
@@ -69,7 +73,7 @@ export function makeRelSections() {
     ...relSectionProp("singleTimeListGroup", {
       total: relVarbS.sumNums(
         "List group total",
-        [relVarbInfoS.children("singleTimeList", "total")],
+        [updateFnPropS.children("singleTimeList", "total")],
         relAdorn.money
       ),
       defaultValueSwitch: relVarb("string", {
@@ -79,7 +83,7 @@ export function makeRelSections() {
     ...relSectionProp("singleTimeList", {
       total: relVarbS.sumNums(
         relVarbInfoS.local("displayName"),
-        [relVarbInfoS.children("singleTimeItem", "value")],
+        [updateFnPropS.children("singleTimeItem", "value")],
         relAdorn.money
       ),
       defaultValueSwitch: relVarb("string", {
@@ -90,7 +94,7 @@ export function makeRelSections() {
       ...relVarbsS.ongoingSumNums(
         "total",
         "Ongoing List Group",
-        [relVarbInfoS.children("ongoingList", "total")],
+        [updateFnPropS.children("ongoingList", "total")],
         { switchInit: "monthly", shared: relAdorn.money }
       ),
       defaultValueSwitch: relVarb("string", {
@@ -104,7 +108,7 @@ export function makeRelSections() {
       ...relVarbsS.ongoingSumNums(
         "total",
         relVarbInfoS.local("displayName"),
-        [relVarbInfoS.children("ongoingItem", "value")],
+        [updateFnPropS.children("ongoingItem", "value")],
         { switchInit: "monthly", shared: { startAdornment: "$" } }
       ),
       defaultValueSwitch: relVarb("string", {
@@ -129,7 +133,7 @@ export function makeRelSections() {
       value: relVarb("numObj", {
         updateFnName: "virtualNumObj",
         updateFnProps: {
-          varbInfo: relVarbInfoS.local("valueEntityInfo"),
+          varbInfo: updateFnPropS.local("valueEntityInfo"),
         },
         unit: "decimal",
       }),
@@ -148,7 +152,7 @@ export function makeRelSections() {
         initValue: numObj(0),
         updateFnProps: {
           ...relVarbInfosS.localByVarbName(["valueSwitch", "numObjEditor"]),
-          conditionalValue: relVarbInfoS.children(
+          conditionalValue: updateFnPropS.children(
             "conditionalRowList",
             "value"
           ),
@@ -158,17 +162,15 @@ export function makeRelSections() {
     }),
     ...relSectionProp("conditionalRowList", {
       value: relVarb("numObj", {
-        updateFnProps: {
-          ...relVarbInfosS.namedChildren("conditionalRow", {
-            rowLevel: "level",
-            rowType: "type",
-            rowLeft: "left",
-            rowOperator: "operator",
-            rowRightValue: "rightValue",
-            rowRightList: "rightList",
-            rowThen: "then",
-          }),
-        },
+        updateFnProps: updateFnPropsS.namedChildren("conditionalRow", {
+          rowLevel: "level",
+          rowType: "type",
+          rowLeft: "left",
+          rowOperator: "operator",
+          rowRightValue: "rightValue",
+          rowRightList: "rightList",
+          rowThen: "then",
+        }),
         unit: "decimal",
       }),
     }),

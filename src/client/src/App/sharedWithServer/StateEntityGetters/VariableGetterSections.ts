@@ -1,4 +1,4 @@
-import { InEntityVarbInfo } from "../SectionsMeta/baseSectionsVarbs/baseValues/entities";
+import { ValueInEntityInfo } from "../SectionsMeta/baseSectionsVarbs/baseValues/entities";
 import { switchNames } from "../SectionsMeta/baseSectionsVarbs/RelSwitchVarb";
 import { mixedInfoS } from "../SectionsMeta/sectionChildrenDerived/MixedSectionInfo";
 import {
@@ -14,7 +14,7 @@ export type SectionOption = {
   displayName: string;
 };
 export type VariableOption = {
-  varbInfo: InEntityVarbInfo;
+  varbInfo: ValueInEntityInfo;
   collectionName: string;
   displayName: string;
 };

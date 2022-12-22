@@ -77,13 +77,13 @@ export class RemoveSolverSection<
   prepForRemove() {
     this.collectRemovedVarbIds();
     this.collectOutVarbIdsOfRemoved();
-    this.removeOutEntitiesOfCurrentInEntities();
+    this.removeOutEntitiesOfAllInEntities();
   }
-  private removeOutEntitiesOfCurrentInEntities() {
+  private removeOutEntitiesOfAllInEntities() {
     const { selfAndDescendantVarbInfos } = this.get;
     for (const varbInfo of selfAndDescendantVarbInfos) {
       const solverVarb = this.solverVarb(varbInfo);
-      solverVarb.removeOutEntitiesOfCurrentInEntities();
+      solverVarb.removeAllOutEntitiesOfInEntities();
     }
   }
   private collectRemovedVarbIds() {
@@ -94,10 +94,10 @@ export class RemoveSolverSection<
     ]);
   }
   private collectOutVarbIdsOfRemoved() {
-    const { selfAndDescendantOutVarbIds } = this.inOut;
+    const { selfAndDescendantActiveOutVarbIds } = this.inOut;
     this.removeSolveShare.outVarbIdsOfRemoved = new Set([
       ...this.outVarbIdsOfRemoved,
-      ...selfAndDescendantOutVarbIds,
+      ...selfAndDescendantActiveOutVarbIds,
     ]);
   }
   prepForRemoveAndExtractVarbIds() {

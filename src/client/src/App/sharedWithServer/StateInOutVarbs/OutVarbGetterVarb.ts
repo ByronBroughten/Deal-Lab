@@ -1,3 +1,4 @@
+import { OutEntity } from "../SectionsMeta/baseSectionsVarbs/baseValues/entities";
 import { FeVarbInfo } from "../SectionsMeta/SectionInfo/FeInfo";
 import { RelVarbInfo } from "../SectionsMeta/SectionInfo/RelVarbInfo";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
@@ -12,6 +13,7 @@ import {
 } from "../StateGetters/Bases/GetterVarbBase";
 import { GetterSections } from "../StateGetters/GetterSections";
 import { GetterVarb } from "../StateGetters/GetterVarb";
+import { InEntityGetterVarb } from "../StateGetters/InEntityGetterVarb";
 
 export class OutVarbGetterVarb<
   SN extends SectionNameByType<"hasVarb"> = SectionNameByType<"hasVarb">
@@ -24,15 +26,17 @@ export class OutVarbGetterVarb<
   get get() {
     return new GetterVarb(this.getterVarbProps);
   }
+  get inEntity() {
+    return new InEntityGetterVarb(this.getterVarbProps);
+  }
   private get getterSections() {
     return new GetterSections(this.getterSectionsProps);
   }
-  get outVarbInfos() {
-    this.gatherOutVarbInfos();
-    return this.outVarbInfoStore;
+  get activeOutVarbIds(): string[] {
+    return GetterVarb.varbInfosToVarbIds(this.activeOutEntities);
   }
-  get outVarbIds(): string[] {
-    return GetterVarb.varbInfosToVarbIds(this.outVarbInfos);
+  get outEntities(): OutEntity[] {
+    return this.get.raw.outEntities;
   }
   private gatherOutVarbInfos() {
     this.outVarbInfoStore = [];
@@ -40,8 +44,7 @@ export class OutVarbGetterVarb<
     this.gatherOutRelatives();
   }
   private gatherOutEntities() {
-    const { outEntities } = this.get;
-    const feOutEntities = outEntities.map((outEntity) => {
+    const feOutEntities = this.outEntities.map((outEntity) => {
       const varb = this.getterSections.varb(outEntity);
       return varb.feVarbInfo;
     });
@@ -66,6 +69,16 @@ export class OutVarbGetterVarb<
       }
     });
   }
+  get activeOutEntities(): OutEntity[] {
+    return this.outEntities.filter((outEntity) => {
+      const varb = new InEntityGetterVarb({
+        ...outEntity,
+        ...this.getterSectionsProps,
+      });
+      return varb.isActiveInEntity(outEntity.entityId);
+    });
+  }
+
   private gatherOutRelatives() {
     for (const outUpdatePack of this.filteredOutUpdatePacks) {
       if (VarbMeta.isSwitchOutPack(outUpdatePack)) {
@@ -84,7 +97,7 @@ export class OutVarbGetterVarb<
       relTargetVarbInfo as RelVarbInfo
     );
     for (const targetInfo of targetVarbInfos) {
-      const targetVarb = this.get.getterVarb(targetInfo);
+      const targetVarb = this.inEntity.entityGetter(targetInfo);
       if (targetVarb.switchIsActive(switchInfo, switchValue))
         this.outVarbInfoStore.push(targetInfo);
     }
@@ -97,7 +110,7 @@ export class OutVarbGetterVarb<
       relTargetVarbInfo as RelVarbInfo
     );
     for (const targetInfo of targetVarbInfos) {
-      const targetVarb = this.get.getterVarb(targetInfo);
+      const targetVarb = this.inEntity.entityGetter(targetInfo);
       let gatherTargetVarb = true;
       for (const { switchInfo, switchValue } of inverseSwitches) {
         if (targetVarb.switchIsActive(switchInfo, switchValue)) {

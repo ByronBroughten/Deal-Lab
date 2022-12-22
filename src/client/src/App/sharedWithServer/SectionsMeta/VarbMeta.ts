@@ -7,28 +7,27 @@ import {
   NumUnitName,
   numUnitParams,
 } from "./baseSectionsVarbs/baseValues/calculations/numUnitParams";
+import { FixedInEntity } from "./baseSectionsVarbs/baseValues/entities";
 import { ValueName } from "./baseSectionsVarbs/baseVarb";
 import { relSections } from "./relSectionsVarbs";
 import {
   DisplayName,
   RelVarb,
   SwitchUpdateInfo,
-  UpdateFnProps,
   UpdateSwitchProp,
 } from "./relSectionVarbs/rel/relVarbTypes";
+import { UpdateFnProps } from "./relSectionVarbs/rel/UpdateFnProps";
 import { GeneralRelVarbs } from "./relSectionVarbs/relVarbs";
-import {
-  PathInVarbInfo,
-  RelOutVarbInfo,
-} from "./sectionChildrenDerived/RelInOutVarbInfo";
+import { RelOutVarbInfo } from "./sectionChildrenDerived/RelInOutVarbInfo";
 import { SectionMeta } from "./SectionMeta";
 import { SectionName } from "./SectionName";
 
 type InBaseUpdatePack = {
   updateFnName: UpdateFnName;
   updateFnProps: UpdateFnProps;
-  inUpdateInfos: PathInVarbInfo[];
+  fixedInEntities: FixedInEntity[];
 };
+
 type InDefaultUpdatePack = InBaseUpdatePack & {
   inverseSwitches: SwitchUpdateInfo[];
 };
@@ -56,10 +55,11 @@ export function isSwitchOutPack(pack: OutUpdatePack): pack is OutSwitchPack {
   return "switchInfo" in pack;
 }
 export type OutUpdatePack = OutSwitchPack | OutDefaultPack;
-
-function fnPropsToInVarbInfos(updateFnProps: UpdateFnProps): PathInVarbInfo[] {
+function fnPropsToFixedInEntities(
+  updateFnProps: UpdateFnProps
+): FixedInEntity[] {
   const infos = Object.values(updateFnProps);
-  let nextInfos: PathInVarbInfo[] = [];
+  let nextInfos: FixedInEntity[] = [];
   for (const info of infos) {
     if (Array.isArray(info)) nextInfos = nextInfos.concat(info);
     else nextInfos.push(info);
@@ -71,9 +71,10 @@ function inSwitchPropsToInfos(
 ): InSwitchUpdatePack[] {
   const inSwitchInfos: InSwitchUpdatePack[] = [];
   for (const prop of inSwitchProps) {
+    const fixedInEntities = fnPropsToFixedInEntities(prop.updateFnProps);
     inSwitchInfos.push({
       ...prop,
-      inUpdateInfos: fnPropsToInVarbInfos(prop.updateFnProps),
+      fixedInEntities,
     });
   }
   return inSwitchInfos;
@@ -82,8 +83,7 @@ function inSwitchPropsToInfos(
 interface VarbMetaProps<SN extends SectionName> {
   varbName: string;
   sectionName: SN;
-  inDefaultInfos: PathInVarbInfo[];
-  InSwitchUpdatePacks: InSwitchUpdatePack[];
+  inSwitchUpdatePacks: InSwitchUpdatePack[];
   outUpdatePacks: OutUpdatePack[];
 }
 
@@ -152,23 +152,11 @@ export class VarbMeta<SN extends SectionName> {
   get valueName(): ValueName {
     return this.core.type;
   }
-  get defaultUpdateFnProps() {
-    return this.core.updateFnProps;
-  }
-  get defaultUpdateFnName() {
-    return this.core.updateFnName;
-  }
-  get defaultInUpdateFnInfos() {
-    return this.core.inDefaultInfos;
-  }
   get inSwitchUpdatePacks(): InSwitchUpdatePack[] {
-    return cloneDeep(this.core.InSwitchUpdatePacks);
+    return cloneDeep(this.core.inSwitchUpdatePacks);
   }
   get outUpdatePacks(): OutUpdatePack[] {
     return cloneDeep(this.core.outUpdatePacks);
-  }
-  get inUpdatePacks(): InUpdatePack[] {
-    return [...this.inSwitchUpdatePacks, this.inDefaultUpdatePack];
   }
   get calcRound(): number {
     return numUnitParams[this.unit].calcRound;
@@ -181,10 +169,11 @@ export class VarbMeta<SN extends SectionName> {
     else throw new Error(`Varb with name ${this.core.varbName} has no numUnit`);
   }
   get inDefaultUpdatePack(): InDefaultUpdatePack {
+    const { updateFnProps, updateFnName } = this.core;
     return {
-      updateFnProps: this.core.updateFnProps,
-      updateFnName: this.core.updateFnName,
-      inUpdateInfos: this.core.inDefaultInfos,
+      updateFnProps,
+      updateFnName,
+      fixedInEntities: fnPropsToFixedInEntities(updateFnProps),
       inverseSwitches: this.inSwitchUpdatePacks.map((pack) =>
         pick(pack, ["switchInfo", "switchValue"])
       ),
@@ -209,8 +198,7 @@ export class VarbMeta<SN extends SectionName> {
       ...relVarb,
       sectionName,
       varbName,
-      inDefaultInfos: fnPropsToInVarbInfos(relVarb.updateFnProps),
-      InSwitchUpdatePacks: inSwitchPropsToInfos(relVarb.inUpdateSwitchProps),
+      inSwitchUpdatePacks: inSwitchPropsToInfos(relVarb.inUpdateSwitchProps),
       outUpdatePacks: [], // static after initialization
     });
   }

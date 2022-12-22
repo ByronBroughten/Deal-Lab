@@ -1,5 +1,5 @@
 import { ContentState, EditorState } from "draft-js";
-import { InEntityVarbInfo } from "../SectionsMeta/baseSectionsVarbs/baseValues/entities";
+import { ValueInEntityInfo } from "../SectionsMeta/baseSectionsVarbs/baseValues/entities";
 import { StateValue } from "../SectionsMeta/baseSectionsVarbs/baseValues/StateValueTypes";
 import { ValueName } from "../SectionsMeta/baseSectionsVarbs/baseVarb";
 import { ValueTypesPlusAny } from "../SectionsMeta/baseSectionsVarbs/StateVarbTypes";
@@ -7,8 +7,8 @@ import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { VarbMeta } from "../SectionsMeta/VarbMeta";
 import { GetterSections } from "../StateGetters/GetterSections";
 import { GetterVarb } from "../StateGetters/GetterVarb";
-import { InVarbInfo, SolverVarb } from "../StateSolvers/SolverVarb";
-import { UpdaterVarb } from "./../StateUpdaters/UpdaterVarb";
+import { InEntityGetterVarb } from "../StateGetters/InEntityGetterVarb";
+import { SolverVarb } from "../StateSolvers/SolverVarb";
 import {
   CreateEditorProps,
   EditorUpdaterVarb,
@@ -21,11 +21,11 @@ export class SetterVarb<
   SN extends SectionNameByType = SectionNameByType
 > extends SetterVarbBase<SN> {
   private solverVarb = SolverVarb.init(this.getterVarbBase.getterVarbProps);
-  private get updaterVarb() {
-    return new UpdaterVarb(this.getterVarbBase.getterVarbProps);
-  }
   get setterSections(): SetterSections {
     return new SetterSections(this.setterSectionsProps);
+  }
+  get inEntity() {
+    return new InEntityGetterVarb(this.getterVarbBase.getterVarbProps);
   }
   private get editorUpdater() {
     return new EditorUpdaterVarb(this.getterVarbBase.getterVarbProps);
@@ -58,7 +58,7 @@ export class SetterVarb<
     this.solverVarb.directUpdateAndSolve(value);
     this.setSections();
   }
-  loadValueFromVarb(varbInfo: InEntityVarbInfo) {
+  loadValueFromVarb(varbInfo: ValueInEntityInfo) {
     this.solverVarb.loadValueFromVarb(varbInfo);
     this.setSections();
   }
@@ -78,8 +78,5 @@ export class SetterVarb<
   }
   get hasInVarbs(): boolean {
     return this.solverVarb.hasInVarbs;
-  }
-  get inVarbInfos(): InVarbInfo[] {
-    return this.solverVarb.inVarbInfos;
   }
 }

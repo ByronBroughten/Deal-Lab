@@ -2,10 +2,11 @@ import { ChildName } from "../SectionsMeta/sectionChildrenDerived/ChildName";
 import { ChildSectionName } from "../SectionsMeta/sectionChildrenDerived/ChildSectionName";
 import { ChildArrPack } from "../SectionsMeta/sectionChildrenDerived/ChildSectionPack";
 import { ParentNameSafe } from "../SectionsMeta/sectionChildrenDerived/ParentName";
-import { FeSectionInfo, FeVarbInfo } from "../SectionsMeta/SectionInfo/FeInfo";
+import { FeSectionInfo } from "../SectionsMeta/SectionInfo/FeInfo";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { GetterSection } from "../StateGetters/GetterSection";
 import { GetterSections } from "../StateGetters/GetterSections";
+import { InEntityGetterSection } from "../StateGetters/InEntityGetterSection";
 import {
   ChildPackInfo,
   ChildSectionPackArrs,
@@ -36,6 +37,9 @@ export class AddSolverSection<
   }
   get get() {
     return new GetterSection(this.getterSectionProps);
+  }
+  get inEntitySection() {
+    return new InEntityGetterSection(this.getterSectionProps);
   }
   get getterSections(): GetterSections {
     return new GetterSections(this.getterSectionProps);
@@ -151,23 +155,19 @@ export class AddSolverSection<
     this.finalizeAddedThis();
     this.finalizeAllAdds();
   }
-  getAllInEntityVarbs(): FeVarbInfo[] {
-    const { root } = this.getterSections;
-    return root.selfAndDescendantVarbInfosWithEntities;
-  }
-  addAllMissingOutEntities() {
-    const inEntityVarbInfos = this.getAllInEntityVarbs();
-    for (const inVarbInfo of inEntityVarbInfos) {
-      const solverVarb = new SolverVarb({
-        ...this.solverSectionsProps,
-        ...inVarbInfo,
-      });
-      solverVarb.addOutEntitiesFromCurrentInEntities();
-    }
-  }
   finalizeAllAdds() {
-    this.addAllMissingOutEntities();
+    this.addAppWideMissingOutEntities();
     this.addVarbIdsToSolveFor(...this.addedVarbIds);
     this.addSolveShare.addedVarbIds = new Set();
+  }
+  private addAppWideMissingOutEntities() {
+    const { appWideVarbInfosWithInEntities } = this.inEntitySection;
+    for (const feVarbInfo of appWideVarbInfosWithInEntities) {
+      const solverVarb = new SolverVarb({
+        ...this.solverSectionsProps,
+        ...feVarbInfo,
+      });
+      solverVarb.addOutEntitiesFromAllInEntities();
+    }
   }
 }

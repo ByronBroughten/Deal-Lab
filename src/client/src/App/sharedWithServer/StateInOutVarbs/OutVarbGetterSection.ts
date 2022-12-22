@@ -11,15 +11,17 @@ export class OutVarbGetterSection<
   get get() {
     return new GetterSection(this.getterSectionProps);
   }
-  get selfAndDescendantOutVarbIds(): string[] {
-    return GetterVarb.varbInfosToVarbIds(this.selfAndDescendantOutVarbInfos);
+  get selfAndDescendantActiveOutVarbIds(): string[] {
+    return GetterVarb.varbInfosToVarbIds(
+      this.selfAndDescendantActiveOutVarbInfos
+    );
   }
-  get selfAndDescendantOutVarbInfos(): FeVarbInfo[] {
+  get selfAndDescendantActiveOutVarbInfos(): FeVarbInfo[] {
     const outVarbInfos: FeVarbInfo[] = [];
     const { selfAndDescendantVarbInfos } = this.get;
     for (const varbInfo of selfAndDescendantVarbInfos) {
       const outVarbGetter = this.outVarbGetter(varbInfo);
-      outVarbInfos.push(...outVarbGetter.outVarbInfos);
+      outVarbInfos.push(...outVarbGetter.activeOutEntities);
     }
     return outVarbInfos;
   }
