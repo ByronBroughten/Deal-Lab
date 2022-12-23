@@ -22,7 +22,7 @@ export const updateFnPropS = {
   },
   absolutePath(pathName: SectionPathName, varbName: string): UpdateFnProp {
     return {
-      ...mixedInfoS.absoluteVarbPath(pathName, varbName),
+      ...mixedInfoS.pathNameVarb(pathName, varbName),
       entityId: Id.make(),
     };
   },

@@ -7,9 +7,28 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-// Should numObjEditor have any inVarbs?
-// singleTimeItem.value has a local singleTimeItem.valueSwitch inEntity
-// but singleTimeItem.valueSwitch doesn't have any outEntities
+// Is this the way?
+// It's fairly easy to change if it's not.
+// It's a pretty good way to solve one of my problems:
+// the issue of the userList sections referencing themselves
+
+// It's not necessarily the best way to solve one of my other
+// problems: making the mainSections not update.
+// It would be nice if those had updateProps that were sensitive
+// to the context.
+
+// This solution can work for them, though.
+
+// The pathInfos defined by context should only be allowed to be used
+// from a getterSection, not from getterSections.
+// getterSections can use absolutePathInfo, but not contextPathInfo
+
+// All section-add operations (add, load, replace) should allow a context to be provided as an option.
+
+// Each StateSection should have a section context.
+
+// The context will be referenced whenever outVarbs are doled out
+// and inVarbs are used to calculate values.
 
 // 3. Add persistent state for list pages
 //    - Tweak the variables context to allow those pages to

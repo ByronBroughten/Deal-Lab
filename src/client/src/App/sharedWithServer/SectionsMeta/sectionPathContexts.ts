@@ -1,4 +1,4 @@
-import { SectionAbsolutePathInfo } from "./sectionPathContexts/sectionAbsolutePathInfo";
+import { AbsolutePathInfo } from "./SectionInfo/AbsolutePathInfo";
 import { sectionAbsolutePathInfos } from "./sectionPathContexts/sectionAbsolutePathInfos";
 import {
   SectionNameOfPath,
@@ -71,7 +71,7 @@ type SectionPathContext<SPCN extends SectionPathContextName> =
   SectionPathContexts[SPCN];
 
 export type SectionPathContextGeneric = {
-  [PN in SectionPathName]: SectionAbsolutePathInfo<SectionNameOfPath<PN>>;
+  [PN in SectionPathName]: AbsolutePathInfo<SectionNameOfPath<PN>>;
 };
 function sectionPathContext<T extends SectionPathContextGeneric>(context: T) {
   return context;

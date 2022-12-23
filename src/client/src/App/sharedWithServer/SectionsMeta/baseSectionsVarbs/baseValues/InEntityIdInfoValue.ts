@@ -61,10 +61,10 @@ function isInEntityVarbInfoSpecific(value: any): boolean {
       return true;
     case "dbId":
       return Id.is(info.id);
-    case "absolutePath": {
+    case "pathName": {
       return isSectionPathName(info.pathName);
     }
-    case "absolutePathDbId": {
+    case "pathNameDbId": {
       return isSectionPathName(info.pathName) && Id.is(info.id);
     }
     default:

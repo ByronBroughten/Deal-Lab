@@ -8,10 +8,7 @@ import {
   VarbProp,
 } from "../baseSectionsDerived/baseVarbInfo";
 import { ExpectedCount } from "../baseSectionsVarbs/NanoIdInfo";
-import {
-  PathDbInfoMixed,
-  PathInfoMixed,
-} from "../SectionInfo/AbsolutePathInfo";
+import { PathDbInfoMixed, PathInfoMixed } from "../SectionInfo/PathNameInfo";
 import { RelSectionInfo } from "../SectionInfo/RelInfo";
 import { SectionName } from "../SectionName";
 import {
@@ -62,34 +59,34 @@ export const mixedInfoS = {
       expectedCount: (expectedCount ?? "onlyOne") as EC,
     };
   },
-  absolutePath<
-    PN extends SectionPathName,
-    EC extends ExpectedCount = "onlyOne"
-  >(pathName: PN, expectedCount?: EC): PathInfoMixed<PathSectionName<PN>, EC> {
+  pathName<PN extends SectionPathName, EC extends ExpectedCount = "onlyOne">(
+    pathName: PN,
+    expectedCount?: EC
+  ): PathInfoMixed<PathSectionName<PN>, EC> {
     return {
-      infoType: "absolutePath",
+      infoType: "pathName",
       sectionName: sectionNameByPathName(pathName),
       pathName: pathName as any,
       expectedCount: (expectedCount ?? "onlyOne") as EC,
     };
   },
-  absoluteVarbPath<
+  pathNameVarb<
     PN extends SectionPathName,
     EC extends ExpectedCount = "onlyOne"
   >(pathName: PN, varbName: string, expectedCount?: EC) {
     return {
-      ...this.absolutePath(pathName, expectedCount),
+      ...this.pathName(pathName, expectedCount),
       varbName,
     };
   },
-  absoluteDbIdPath<SN extends PathSectionName, EC extends ExpectedCount>(
+  pathNameDbId<SN extends PathSectionName, EC extends ExpectedCount>(
     sectionName: SN,
     pathName: PathNameOfSection<SN>,
     dbId: string,
     expectedCount: EC
   ): PathDbInfoMixed<SN, EC> {
     return {
-      infoType: "absolutePathDbId",
+      infoType: "pathNameDbId",
       id: dbId,
       sectionName,
       pathName,

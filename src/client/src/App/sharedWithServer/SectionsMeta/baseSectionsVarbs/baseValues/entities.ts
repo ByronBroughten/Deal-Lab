@@ -9,12 +9,12 @@ import {
   GlobalVarbInfo,
 } from "../../baseSectionsDerived/baseVarbInfo";
 import { PathInVarbInfo } from "../../sectionChildrenDerived/RelInOutVarbInfo";
+import { FeVarbInfo } from "../../SectionInfo/FeInfo";
 import {
   PathDbVarbInfoMixed,
-  VarbAbsoluteInfoMixed,
+  VarbPathNameInfoMixed,
   zSectionPathProp,
-} from "../../SectionInfo/AbsolutePathInfo";
-import { FeVarbInfo } from "../../SectionInfo/FeInfo";
+} from "../../SectionInfo/PathNameInfo";
 import { SectionName } from "../../SectionName";
 import { Id } from "../id";
 
@@ -33,22 +33,22 @@ const zInEntityBase = z.object({
   offset: zS.number,
 });
 
-interface AbsoluteEntityInfo
-  extends VarbAbsoluteInfoMixed<SectionName, "onlyOne"> {}
+interface PathNameEntityInfo
+  extends VarbPathNameInfoMixed<SectionName, "onlyOne"> {}
 
 type PathEntityInfo = PathInVarbInfo;
 
 const zPathInEntityInfo = zSectionPathProp.extend({
   ...commonEntityInfo,
-  infoType: z.literal("absolutePath"),
+  infoType: z.literal("pathName"),
 });
 const zPathInEntity = zInEntityBase.merge(zPathInEntityInfo);
 
-interface AbsoluteDbIdEntityInfo
+interface PathNameDbIdEntityInfo
   extends PathDbVarbInfoMixed<SectionName, "onlyOne"> {}
 const zPathDbIdInEntityInfo = zSectionPathProp.extend({
   ...commonEntityInfo,
-  infoType: z.literal("absolutePathDbId"),
+  infoType: z.literal("pathNameDbId"),
   id: zS.nanoId,
 });
 const zPathDbIdInEntity = zInEntityBase.merge(zPathDbIdInEntityInfo);
@@ -74,8 +74,8 @@ const zDbInEntity = zInEntityBase.merge(zDbInEntityInfo);
 type InEntityVarbInfos = {
   dbId: DbInEntityInfo;
   global: GlobalInEntityInfo;
-  absolutePath: AbsoluteEntityInfo;
-  absolutePathDbId: AbsoluteDbIdEntityInfo;
+  pathName: PathNameEntityInfo;
+  pathNameDbId: PathNameDbIdEntityInfo;
   path: PathEntityInfo;
 };
 export type InEntityVarbInfo = InEntityVarbInfos[keyof InEntityVarbInfos];
@@ -95,15 +95,15 @@ export const zInEntity = z.union([
 export const zInEntities = z.array(zInEntity);
 export type InEntityBase = z.infer<typeof zInEntityBase>;
 interface DbInEntity extends InEntityBase, DbInEntityInfo {}
-export interface AbsoluteInEntity extends InEntityBase, AbsoluteEntityInfo {}
-interface AbsoluteDbIdInEntity extends InEntityBase, AbsoluteDbIdEntityInfo {}
+export interface AbsoluteInEntity extends InEntityBase, PathNameEntityInfo {}
+interface AbsoluteDbIdInEntity extends InEntityBase, PathNameDbIdEntityInfo {}
 export interface GlobalInEntity extends InEntityBase, GlobalInEntityInfo {}
 
 export type ValueInEntityInfo =
   | DbInEntityInfo
   | GlobalInEntityInfo
-  | AbsoluteEntityInfo
-  | AbsoluteDbIdEntityInfo;
+  | PathNameEntityInfo
+  | PathNameDbIdEntityInfo;
 
 export type FixedInEntity = PathEntityInfo & EntityIdProp;
 export type ValueInEntity =

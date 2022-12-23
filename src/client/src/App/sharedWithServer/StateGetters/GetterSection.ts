@@ -63,6 +63,8 @@ import {
   sectionNameS,
   SectionNameType,
 } from "../SectionsMeta/SectionNameByType";
+import { sectionPathContexts } from "../SectionsMeta/sectionPathContexts";
+import { SectionPathName } from "../SectionsMeta/sectionPathContexts/sectionPathNames";
 import { PackMakerSection } from "../StatePackers.ts/PackMakerSection";
 import { RawFeSection } from "../StateSections/StateSectionsTypes";
 import { Arr } from "../utils/Arr";
@@ -145,8 +147,8 @@ export class GetterSection<
       case "feId":
       case "dbId":
       case "globalSection":
-      case "absolutePath":
-      case "absolutePathDbId": {
+      case "pathName":
+      case "pathNameDbId": {
         return this.sections.sectionsByMixed(info);
       }
     }
@@ -200,9 +202,6 @@ export class GetterSection<
             `sectionName ${sectionName} does not equal piblingSectionName ${piblingSectionName}`
           );
       }
-      // stored mgmt references propertyGeneral as a pibling, but propertyGeneral
-      // there is no propertyGeneral to solve from
-      // I have to bypass outEntities for those stores.
       case "stepSiblingOfHasChildName": {
         const { selfChildName, stepSiblingSectionName } = info;
         if (this.selfChildName === selfChildName) {
@@ -285,6 +284,11 @@ export class GetterSection<
       dbId: this.dbId,
       sectionName: this.sectionName,
     };
+  }
+  getPathFromContext(pathName: SectionPathName): ChildName[] {
+    const sectionContext =
+      sectionPathContexts[this.raw.sectionContextName][pathName];
+    return sectionContext["path"];
   }
   dbInfoMixed<EC extends ExpectedCount>(
     expectedCount: EC

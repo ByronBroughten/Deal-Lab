@@ -21,7 +21,10 @@ type InitChildIdArrs<SN extends SectionNameByType> = Partial<
 >;
 export interface InitRawFeSectionProps<SN extends SectionNameByType>
   extends StrictPick<RawFeSection<SN>, "sectionName">,
-    StrictPickPartial<RawFeSection<SN>, "feId" | "dbId"> {
+    StrictPickPartial<
+      RawFeSection<SN>,
+      "feId" | "dbId" | "sectionContextName"
+    > {
   dbVarbs?: InitVarbs<SN>;
   childFeIds?: InitChildIdArrs<SN>;
 }
@@ -29,6 +32,7 @@ export interface InitRawFeSectionProps<SN extends SectionNameByType>
 // there are no varbs
 export function initRawSection<SN extends SectionNameByType>({
   sectionName,
+  sectionContextName = "default",
   feId = Id.make(),
   dbId = Id.make(),
   childFeIds = {},
@@ -36,6 +40,7 @@ export function initRawSection<SN extends SectionNameByType>({
 }: InitRawFeSectionProps<SN>): RawFeSection<SN> {
   return {
     sectionName,
+    sectionContextName,
     feId,
     dbId,
     childFeIds: initChildFeIds(sectionName, childFeIds),

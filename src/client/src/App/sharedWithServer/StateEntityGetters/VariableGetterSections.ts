@@ -85,7 +85,7 @@ export class VariableGetterSections extends GetterSectionsBase {
             const varbName = ongoingNames[key];
             const varb = list.varb(varbName);
             const varbInfo = {
-              ...mixedInfoS.absoluteDbIdPath(
+              ...mixedInfoS.pathNameDbId(
                 "ongoingItem",
                 "ongoingItemMain",
                 varb.dbId,
@@ -102,7 +102,7 @@ export class VariableGetterSections extends GetterSectionsBase {
         } else {
           const varb = list.varb("total");
           const varbInfo = {
-            ...mixedInfoS.absoluteDbIdPath(
+            ...mixedInfoS.pathNameDbId(
               "singleTimeItem",
               "singleTimeItemMain",
               varb.dbId,

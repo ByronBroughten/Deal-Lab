@@ -1,10 +1,10 @@
 import { Obj } from "../../utils/Obj";
 import { isChildName } from "../sectionChildrenDerived/ChildName";
 import { childToSectionName } from "../sectionChildrenDerived/ChildSectionName";
+import { absolutePathInfo } from "../SectionInfo/AbsolutePathInfo";
 import { SectionName } from "../SectionName";
-import { sectionAbsolutePathInfo } from "./sectionAbsolutePathInfo";
 
-const absolute = sectionAbsolutePathInfo;
+const absolute = absolutePathInfo;
 
 export const sectionAbsolutePathInfos = {
   get userVarbEditor() {

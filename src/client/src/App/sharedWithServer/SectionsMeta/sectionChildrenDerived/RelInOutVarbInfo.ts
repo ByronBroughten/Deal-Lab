@@ -1,4 +1,4 @@
-import { VarbAbsoluteInfoMixed } from "../SectionInfo/AbsolutePathInfo";
+import { VarbPathNameInfoMixed } from "../SectionInfo/PathNameInfo";
 import {
   RelChildrenVarbInfo,
   RelLocalVarbInfo,
@@ -12,7 +12,7 @@ import { SectionName } from "../SectionName";
 
 export type PathInVarbInfo<SN extends SectionName = SectionName> =
   | RelInVarbInfo<SN>
-  | VarbAbsoluteInfoMixed<SN, "onlyOne">;
+  | VarbPathNameInfoMixed<SN, "onlyOne">;
 
 export type RelInVarbInfo<SN extends SectionName = SectionName> =
   | RelLocalVarbInfo

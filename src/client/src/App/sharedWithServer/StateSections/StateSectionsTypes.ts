@@ -2,6 +2,7 @@ import { OutEntity } from "../SectionsMeta/baseSectionsVarbs/baseValues/entities
 import { StateValue } from "../SectionsMeta/baseSectionsVarbs/baseValues/StateValueTypes";
 import { ChildIdArrsNarrow } from "../SectionsMeta/sectionChildrenDerived/ChildName";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
+import { SectionPathContextName } from "../SectionsMeta/sectionPathContexts";
 
 export class SectionNotFoundError extends Error {}
 export class TooManySectionsFoundError extends Error {}
@@ -15,6 +16,7 @@ export type StateVarbs<SN extends SectionNameByType> = {
   [key: string]: StateVarb<SN>;
 };
 export type RawFeSection<SN extends SectionNameByType> = {
+  readonly sectionContextName: SectionPathContextName;
   readonly sectionName: SN;
   readonly feId: string;
   readonly childFeIds: ChildIdArrsNarrow<SN>;

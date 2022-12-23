@@ -5,8 +5,8 @@ import {
   SectionInfoMixed,
   VarbInfoMixed,
 } from "../SectionsMeta/sectionChildrenDerived/MixedSectionInfo";
-import { isAbsoluteInfoType } from "../SectionsMeta/SectionInfo/AbsolutePathInfo";
 import { FeSectionInfo, FeVarbInfo } from "../SectionsMeta/SectionInfo/FeInfo";
+import { isPathInfoType } from "../SectionsMeta/SectionInfo/PathNameInfo";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { sectionPathContexts } from "../SectionsMeta/sectionPathContexts";
@@ -92,13 +92,13 @@ export class GetterSections extends GetterSectionsBase {
   sectionsByMixed<SN extends SectionName>(
     infoMixed: SectionInfoMixed<SN>
   ): GetterSection<SN>[] {
-    if (infoMixed.infoType === "absolutePath") {
+    if (infoMixed.infoType === "pathName") {
       const { sectionName, pathName } = infoMixed;
       return this.root.descendantsOfSn({
         sectionName,
         descendantNames: this.getPath(pathName),
       });
-    } else if (infoMixed.infoType === "absolutePathDbId") {
+    } else if (infoMixed.infoType === "pathNameDbId") {
       const { sectionName, pathName } = infoMixed;
       return this.root.descendantsByPathAndDbId({
         sectionName,
@@ -112,13 +112,13 @@ export class GetterSections extends GetterSectionsBase {
   sectionByMixed<SN extends SectionName>(
     infoMixed: SectionInfoMixed<SN>
   ): GetterSection<SN> {
-    if (infoMixed.infoType === "absolutePath") {
+    if (infoMixed.infoType === "pathName") {
       const { sectionName, pathName } = infoMixed;
       return this.root.descendantOfSn({
         sectionName,
         descendantNames: this.getPath(pathName),
       });
-    } else if (infoMixed.infoType === "absolutePathDbId") {
+    } else if (infoMixed.infoType === "pathNameDbId") {
       const { sectionName, pathName } = infoMixed;
       return this.root.descendantByPathAndDbId({
         sectionName,
@@ -141,9 +141,9 @@ export class GetterSections extends GetterSectionsBase {
     varbName,
     ...info
   }: VarbInfoMixed<SN>): GetterVarb<SN> {
-    if (isAbsoluteInfoType(info.infoType)) {
+    if (isPathInfoType(info.infoType)) {
       const { root } = this;
-      if (info.infoType === "absolutePath") {
+      if (info.infoType === "pathName") {
         const { sectionName, pathName } = info;
         return root
           .descendantOfSn({
@@ -169,13 +169,13 @@ export class GetterSections extends GetterSectionsBase {
     return this.list(sectionName).hasByDbId(dbId);
   }
   hasSectionMixed(mixedInfo: SectionInfoMixed): boolean {
-    if (mixedInfo.infoType === "absolutePath") {
+    if (mixedInfo.infoType === "pathName") {
       const { sectionName, pathName } = mixedInfo;
       return this.root.hasDescendantOfSn({
         sectionName,
         descendantNames: this.getPath(pathName),
       });
-    } else if (mixedInfo.infoType === "absolutePathDbId") {
+    } else if (mixedInfo.infoType === "pathNameDbId") {
       const { sectionName, pathName } = mixedInfo;
       return this.root.hasDescendantByPathAndDbId({
         sectionName,
