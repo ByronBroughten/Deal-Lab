@@ -324,9 +324,12 @@ export class GetterSection<
       sectionName: this.sectionName,
     };
   }
+  get sectionContextName() {
+    return this.raw.sectionContextName;
+  }
   getPathFromContext(pathName: SectionPathName): DescendantName<"root">[] {
     const sectionContext =
-      sectionPathContexts[this.raw.sectionContextName][pathName];
+      sectionPathContexts[this.sectionContextName][pathName];
     return sectionContext["path"];
   }
   dbInfoMixed<EC extends ExpectedCount>(

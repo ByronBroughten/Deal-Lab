@@ -188,6 +188,7 @@ export class SolverVarb<
         inVarb.removeOutEntity({
           entityId: inEntity.entityId,
           feId: this.get.feId,
+          varbName: this.get.varbName,
         });
       }
     }

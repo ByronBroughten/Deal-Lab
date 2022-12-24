@@ -8,8 +8,6 @@ import {
 import { FeSectionInfo, FeVarbInfo } from "../SectionsMeta/SectionInfo/FeInfo";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
-import { sectionPathContexts } from "../SectionsMeta/sectionPathContexts";
-import { SectionPathName } from "../SectionsMeta/sectionPathContexts/sectionPathNames";
 import {
   GetterSectionsBase,
   GetterSectionsRequiredProps,
@@ -82,11 +80,6 @@ export class GetterSections extends GetterSectionsBase {
     ...info
   }: FeVarbInfo<SN>): GetterVarb<SN> {
     return this.section(info).varb(varbName);
-  }
-  getPath<PN extends SectionPathName>(pathName: PN) {
-    const sectionContext =
-      sectionPathContexts[this.sectionContextName][pathName];
-    return sectionContext["path"];
   }
   sectionsByMixed<SN extends SectionName>(
     infoMixed: SectionInfoMixed<SN>

@@ -159,10 +159,15 @@ export const entityS = {
 } as const;
 
 function isInfoForOutEntity(outEntity: OutEntity, info: OutEntityInfo) {
-  return outEntity.entityId === info.entityId && outEntity.feId === info.feId;
+  return (
+    outEntity.entityId === info.entityId && // differentiates multiple from the same varb
+    outEntity.feId === info.feId && // differentiates inEntites between sections
+    outEntity.varbName === info.varbName // differentiates local inEntities
+  );
 }
 
 export type EntityMapData = ValueInEntityInfo & EntityIdProp;
 export interface OutEntityInfo extends EntityIdProp {
   feId: string;
+  varbName: string;
 }

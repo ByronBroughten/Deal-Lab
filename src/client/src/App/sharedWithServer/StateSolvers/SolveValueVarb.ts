@@ -204,9 +204,9 @@ export class SolveValueVarb<
   private loadNextEntities(): ValueInEntity[] {
     const varb = this.inEntityVarb;
     let nextEntities = [...varb.valueInEntities];
-    const entitySource = "localValueEntityInfo";
-
     const infoVarb = varb.get.localVarb("valueEntityInfo");
+
+    const entitySource = "localValueEntityInfo";
     function entityIsOfSource(entity: ValueInEntity) {
       return entity.entitySource === entitySource;
     }

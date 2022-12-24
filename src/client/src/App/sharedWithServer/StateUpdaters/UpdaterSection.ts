@@ -115,8 +115,8 @@ export class UpdaterSection<
     const { sectionName, ...props } = this.getChildProps(childName);
     const section = StateSections.initRawSection({
       sectionName,
-      ...props,
       ...rest,
+      ...props,
     } as InitRawFeSectionProps<any>);
     const childList = this.updaterList.updaterList(sectionName);
     childList.push(section);
@@ -134,7 +134,7 @@ export class UpdaterSection<
     const { sectionContextName } = sectionMeta.childTraits(childName);
     return {
       sectionName,
-      sectionContextName: sectionContextName ?? this.sectionContextName,
+      sectionContextName: sectionContextName ?? this.get.sectionContextName,
     };
   }
 

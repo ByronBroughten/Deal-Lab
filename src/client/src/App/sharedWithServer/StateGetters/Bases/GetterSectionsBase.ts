@@ -21,9 +21,6 @@ export class GetterSectionsBase {
   get sectionsMeta() {
     return sectionsMeta;
   }
-  get sectionContextName(): SectionPathContextName {
-    return this.contextShare.sectionContextName;
-  }
   get stateSections(): StateSections {
     return this.sectionsShare.sections;
   }
