@@ -6,8 +6,10 @@ import {
   FeChildInfo,
 } from "../SectionsMeta/sectionChildrenDerived/ChildName";
 import { ChildSectionName } from "../SectionsMeta/sectionChildrenDerived/ChildSectionName";
+import { VarbInfoMixedFocal } from "../SectionsMeta/sectionChildrenDerived/MixedSectionInfo";
 import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { FeSectionInfo } from "../SectionsMeta/SectionInfo/FeInfo";
+import { SectionName } from "../SectionsMeta/SectionName";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { GetterSectionProps } from "../StateGetters/Bases/GetterSectionBase";
 import { GetterSection } from "../StateGetters/GetterSection";
@@ -33,14 +35,14 @@ import {
 import { SolverSections } from "./SolverSections";
 import { SolverVarb } from "./SolverVarb";
 
-interface SolverSectionInitProps<SN extends SectionNameByType>
+interface SolverSectionInitProps<SN extends SectionName>
   extends GetterSectionProps<SN>,
     Partial<HasSolveShare> {}
 
 export class SolverSection<
-  SN extends SectionNameByType
+  SN extends SectionName
 > extends SolverSectionBase<SN> {
-  static init<S extends SectionNameByType>(
+  static init<S extends SectionName>(
     props: SolverSectionInitProps<S>
   ): SolverSection<S> {
     return new SolverSection({
@@ -136,13 +138,20 @@ export class SolverSection<
     const { feId } = this.get.childByDbId(dbInfo);
     this.removeChild({ childName, feId });
   }
-
   varb<VN extends VarbName<SN>>(varbName: VN): SolverVarb<SN> {
     return new SolverVarb({
       ...this.solverSectionProps,
       varbName: varbName as string,
     });
   }
+  varbByFocalMixed(mixedInfo: VarbInfoMixedFocal): SolverVarb {
+    const { feVarbInfo } = this.get.varbByFocalMixed(mixedInfo);
+    return new SolverVarb({
+      ...this.solverSectionsProps,
+      ...feVarbInfo,
+    });
+  }
+
   onlyChild<CN extends ChildName<SN>>(
     childName: CN
   ): SolverSection<ChildSectionName<SN, CN>> {

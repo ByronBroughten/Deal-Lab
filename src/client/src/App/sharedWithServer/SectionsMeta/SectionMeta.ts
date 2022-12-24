@@ -3,7 +3,11 @@ import {
   sectionVarbNames,
   VarbName,
 } from "./baseSectionsDerived/baseSectionsVarbsTypes";
-import { relChildSections, SectionRelChildren } from "./relChildSections";
+import {
+  allChildrenTraits,
+  ChildrenTraits,
+  GenericChildTraits,
+} from "./childrenTraits";
 import {
   ChildIdArrsNarrow,
   ChildIdArrsWide,
@@ -136,8 +140,13 @@ export class SectionMeta<SN extends SectionName> {
     const childNames = csnsToCns[sectionChildName] ?? [];
     return childNames as ChildSectionNameName<SN, CT>[];
   }
-  get relChildren(): SectionRelChildren<SN> {
-    return relChildSections[this.sectionName];
+  get childrenTraits(): ChildrenTraits<SN> {
+    return allChildrenTraits[this.sectionName];
+  }
+  childTraits<CN extends ChildName<SN>>(childName: CN): GenericChildTraits {
+    return this.childrenTraits[
+      childName as CN & keyof ChildrenTraits<SN>
+    ] as any;
   }
   get varbMetas(): VarbMetas<SN> {
     return this.props.varbMetas;

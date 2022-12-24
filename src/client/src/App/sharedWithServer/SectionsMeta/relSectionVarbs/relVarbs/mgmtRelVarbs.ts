@@ -28,7 +28,7 @@ export function mgmtRelVarbs(): RelVarbs<"mgmt"> {
           updateFnName: "simpleDivide",
           updateFnProps: {
             leftSide: updateFnPropS.local(rentCutDollars.monthly),
-            rightSide: updateFnPropS.absolutePath(
+            rightSide: updateFnPropS.pathName(
               "propertyGeneralFocal",
               "targetRentMonthly"
             ),
@@ -82,7 +82,7 @@ export function mgmtRelVarbs(): RelVarbs<"mgmt"> {
           updateFnProps: {
             switch: updateFnPropS.local(rentCut.switch),
             leftSide: updateFnPropS.local(rentCut.decimal),
-            rightSide: updateFnPropS.absolutePath(
+            rightSide: updateFnPropS.pathName(
               "propertyGeneralFocal",
               "targetRentMonthly"
             ),
@@ -104,7 +104,7 @@ export function mgmtRelVarbs(): RelVarbs<"mgmt"> {
           updateFnName: "simpleMultiply",
           updateFnProps: {
             leftSide: updateFnPropS.local(rentCut.decimal),
-            rightSide: updateFnPropS.absolutePath(
+            rightSide: updateFnPropS.pathName(
               "propertyGeneralFocal",
               "targetRentYearly"
             ),
@@ -130,7 +130,7 @@ export function mgmtRelVarbs(): RelVarbs<"mgmt"> {
       "vacancyLossDollars",
       "Vacancy rent lost",
       (baseVarbName) =>
-        updateFnPropS.absolutePath("propertyGeneralFocal", baseVarbName),
+        updateFnPropS.pathName("propertyGeneralFocal", baseVarbName),
       "targetRent",
       "vacancyRateDecimal"
     ),

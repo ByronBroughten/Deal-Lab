@@ -20,7 +20,7 @@ export const updateFnPropS = {
       entityId: Id.make(),
     };
   },
-  absolutePath(pathName: SectionPathName, varbName: string): UpdateFnProp {
+  pathName(pathName: SectionPathName, varbName: string): UpdateFnProp {
     return {
       ...mixedInfoS.pathNameVarb(pathName, varbName),
       entityId: Id.make(),

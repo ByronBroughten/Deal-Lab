@@ -38,11 +38,6 @@ export function makeDefaultFeUserPack(): SectionPack<"feUser"> {
     childName: "singleTimeListMain",
     sectionPacks: makeExampleUserSingleTimeLists(),
   });
-  for (const storeName of feStoreNameS.arrs.displayStoreName) {
-    const displayStore = feUser.addAndGetChild(storeName);
-    displayStore.addChild("displayNameList");
-  }
-
   const defaultTableMakers = getDefaultMainTableMakers();
   for (const tableName of feStoreNameS.arrs.mainTableName) {
     feUser.loadChild({

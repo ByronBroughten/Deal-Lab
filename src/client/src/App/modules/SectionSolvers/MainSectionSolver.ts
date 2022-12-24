@@ -7,17 +7,12 @@ import {
   AutoSyncControl,
   SyncStatus,
 } from "../../sharedWithServer/SectionsMeta/relSectionVarbs/relVarbs";
-import { SelfChildName } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/ParentName";
 import { SectionPack } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/SectionPack";
-import { FeParentInfo } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { SectionNameByType } from "../../sharedWithServer/SectionsMeta/SectionNameByType";
 import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
 import { GetterSections } from "../../sharedWithServer/StateGetters/GetterSections";
 import { PackMakerSection } from "../../sharedWithServer/StatePackers.ts/PackMakerSection";
-import {
-  SolverSectionBase,
-  SolverSectionProps,
-} from "../../sharedWithServer/StateSolvers/SolverBases/SolverSectionBase";
+import { SolverSectionBase } from "../../sharedWithServer/StateSolvers/SolverBases/SolverSectionBase";
 import { SolverSection } from "../../sharedWithServer/StateSolvers/SolverSection";
 import { UpdaterSection } from "../../sharedWithServer/StateUpdaters/UpdaterSection";
 import { timeS } from "../../sharedWithServer/utils/date";
@@ -28,17 +23,6 @@ export type SaveStatus = "unsaved" | "changesSynced" | "unsyncedChanges";
 export class MainSectionSolver<
   SN extends SectionNameByType<"hasIndexStore">
 > extends SolverSectionBase<SN> {
-  private parentInfoCache: FeParentInfo<SN>;
-  private selfChildNameCache: SelfChildName<SN>;
-  constructor(props: SolverSectionProps<SN>) {
-    super(props);
-    this.parentInfoCache = this.get.parentInfo;
-    this.selfChildNameCache = this.get.selfChildName;
-  }
-  private updateCaches() {
-    this.parentInfoCache = this.get.parentInfo;
-    this.selfChildNameCache = this.get.selfChildName;
-  }
   get solver() {
     return new SolverSection(this.solverSectionProps);
   }
@@ -90,14 +74,10 @@ export class MainSectionSolver<
     }
   }
   removeSelf() {
-    this.updateCaches();
     this.solver.removeSelfAndSolve();
-    this.sectionUnloadCleanup();
   }
   replaceWithDefault() {
-    this.updateCaches();
     this.solver.replaceWithDefaultAndSolve();
-    this.sectionUnloadCleanup();
   }
   get isSaved(): boolean {
     return this.indexSolver.isSaved(this.dbId);
@@ -114,24 +94,9 @@ export class MainSectionSolver<
         mainText: "Copy of " + titleValue.mainText,
       },
     } as SomeSectionValues<SN>);
-    this.updateCaches();
-    this.sectionUnloadCleanup();
   }
   loadSectionPack(sectionPack: SectionPack<SN>) {
-    this.updateCaches();
     this.solver.loadSelf(sectionPack);
-    this.sectionUnloadCleanup();
-    this.sectionLoadCleanup(sectionPack);
-  }
-  sectionLoadCleanup(sectionPack: SectionPack<SN>) {
-    this.indexSolver.addAsSavedIfMissing(sectionPack);
-  }
-  private sectionUnloadCleanup() {
-    // caches should be updated before this is used.
-    const parent = this.getterSections.section(this.parentInfoCache);
-    const childName = this.selfChildNameCache;
-    const siblingDbIds = parent.children(childName).map(({ dbId }) => dbId);
-    this.indexSolver.removeAsSavedExtras(siblingDbIds);
   }
 
   deleteFromIndex(dbId: string) {

@@ -86,10 +86,6 @@ export const allSectionTraits = checkAllSectionTraits({
     displayName: "Management",
     hasGlobalVarbs: true,
   }),
-  hasDummyDisplayStore: sectionTraits({
-    displayIndexName: "dummyDisplayStore",
-    dbIndexStoreName: "dummyMain",
-  }),
 });
 
 export type SectionTrait<

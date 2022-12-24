@@ -59,13 +59,11 @@ export const allSectionChildren = checkAllSectionChildren({
     displayNameItem: ["displayNameItem"],
   }),
   feUser: sectionChildren({
-    // feUser includes everything that has a corresponding child in dbStore
-    // or that has any intermediary sections used to edit and add to them.
+    // feUser includes everything that has a corresponding child in dbStore or that has any intermediary sections used to edit and add to them.
     propertyMainTable: ["compareTable"],
     loanMainTable: ["compareTable"],
     mgmtMainTable: ["compareTable"],
     dealMainTable: ["compareTable"],
-    dummyDisplayStore: ["dummyDisplayStore"],
     propertyMain: ["property"],
     loanMain: ["loan"],
     mgmtMain: ["mgmt"],
@@ -83,8 +81,6 @@ export const allSectionChildren = checkAllSectionChildren({
 
     stripeInfoPrivate: ["stripeInfoPrivate"],
     stripeSubscription: ["stripeSubscription"],
-
-    dummyMain: ["hasDummyDisplayStore"],
 
     propertyMain: ["property"],
     loanMain: ["loan"],
@@ -147,10 +143,6 @@ export const allSectionChildren = checkAllSectionChildren({
     upfrontCostListGroup: ["singleTimeListGroup"],
     ongoingCostListGroup: ["ongoingListGroup"],
     customVarb: ["customVarb"],
-  }),
-  dummyDisplayStore: sectionChildren({
-    displayNameList: ["displayNameList"],
-    activeAsSaved: ["hasDummyDisplayStore"],
   }),
 });
 

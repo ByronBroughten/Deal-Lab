@@ -19,6 +19,7 @@ import { UpdaterVarb } from "../StateUpdaters/UpdaterVarb";
 import { StrictOmit } from "../utils/types";
 import { PackBuilderSections } from "./../StatePackers.ts/PackBuilderSections";
 import { SolverVarbBase, SolverVarbProps } from "./SolverBases/SolverVarbBase";
+import { SolverSection } from "./SolverSection";
 import { SolverSections } from "./SolverSections";
 import { SolveValueVarb } from "./SolveValueVarb";
 
@@ -52,6 +53,9 @@ export class SolverVarb<
   }
   private get valueSolver() {
     return new SolveValueVarb(this.getterVarbBase.getterVarbProps);
+  }
+  private get solverSection() {
+    return new SolverSection(this.solverSectionProps);
   }
   private get solverSections() {
     return new SolverSections(this.solverSectionsProps);
@@ -162,10 +166,10 @@ export class SolverVarb<
     };
   }
   private hasValueEntityVarb(inEntity: ValueInEntity) {
-    return this.getterSections.hasSectionMixed(inEntity);
+    return this.get.section.hasSectionByFocalMixed(inEntity);
   }
   getInEntityVarb(inEntity: ValueInEntity): SolverVarb {
-    return this.solverSections.varbByMixed(inEntity);
+    return this.solverSection.varbByFocalMixed(inEntity);
   }
   getInEntityVarbs(inEntity: InEntity): SolverVarb[] {
     const varbs = this.get.varbsByFocalMixed(inEntity);

@@ -17,7 +17,7 @@ type Props = {
 };
 export function FeUserMainTablePage({ mainTableName, $themeName }: Props) {
   const feUser = useGetterSectionOnlyOne("feUser");
-  const { dbIndexName } = feUser.meta.relChildren[mainTableName];
+  const { dbIndexName } = feUser.meta.childrenTraits[mainTableName];
   return (
     <NavContainer>
       <CompareTablePage

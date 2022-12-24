@@ -5,8 +5,8 @@ import {
   OptionVarbName,
   optionVarbPathName,
 } from "../../absolutePathVarbs";
+import { mixedInfoS } from "../../sectionChildrenDerived/MixedSectionInfo";
 import { PathVarbNames } from "../../SectionInfo/PathNameInfo";
-import { sectionNameByPathName } from "../../sectionPathContexts/sectionPathNames";
 import { Id } from "../id";
 import { AbsoluteInEntity, ValueInEntity } from "./entities";
 import { NumObj } from "./NumObj";
@@ -25,7 +25,7 @@ export function numObjNext(...propArr: EntityNumObjPropArr): NumObj {
     } else {
       const varbName = prop[0];
       const pathName = optionVarbPathName(varbName);
-      const { sectionName, ...rest } = absoluteEntityInfo({
+      const { sectionName, ...rest } = pathNameEntityInfo({
         pathName,
         varbName,
       });
@@ -50,7 +50,7 @@ export function numObjNext(...propArr: EntityNumObjPropArr): NumObj {
 
 type EntityNumObjPropArr = (number | string | [OptionVarbName])[];
 
-function absoluteEntityInfo<PN extends ActivePathName>({
+function pathNameEntityInfo<PN extends ActivePathName>({
   pathName,
   varbName,
 }: PathVarbNames<PN>): StrictOmit<
@@ -59,10 +59,6 @@ function absoluteEntityInfo<PN extends ActivePathName>({
 > {
   return {
     entitySource: "editor",
-    expectedCount: "onlyOne",
-    infoType: "absolutePath",
-    pathName,
-    sectionName: sectionNameByPathName(pathName),
-    varbName: varbName as string,
+    ...mixedInfoS.pathNameVarb(pathName, varbName, "onlyOne"),
   };
 }

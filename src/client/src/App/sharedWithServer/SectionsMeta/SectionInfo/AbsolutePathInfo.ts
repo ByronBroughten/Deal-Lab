@@ -5,6 +5,7 @@ import {
   GeneralMixedIdInfo,
 } from "../baseSectionsVarbs/NanoIdInfo";
 import { ChildName } from "../sectionChildrenDerived/ChildName";
+import { DescendantName } from "../sectionChildrenDerived/DescendantSectionName";
 import { SectionName } from "../SectionName";
 
 type AbsolutePathProp<PT extends ChildName[]> = {
@@ -13,13 +14,13 @@ type AbsolutePathProp<PT extends ChildName[]> = {
 
 export interface AbsolutePathInfo<
   SN extends SectionName,
-  PT extends ChildName[] = ChildName[]
+  PT extends DescendantName<"root">[] = DescendantName<"root">[]
 > extends SectionNameProp<SN>,
     AbsolutePathProp<PT> {}
 
 export interface AbsolutePathDbInfo<
   SN extends SectionName,
-  PT extends ChildName[] = ChildName[]
+  PT extends DescendantName<"root">[] = DescendantName<"root">[]
 > extends AbsolutePathInfo<SN, PT> {
   dbId: string;
 }
@@ -29,9 +30,12 @@ type AbsolutePathInfoType = typeof absolutePathInfoTypes[number];
 type AbsolutePathInfoTypeProp = {
   infoType: AbsolutePathInfoType;
 };
+export function isAbsolutePathType(value: any): value is AbsolutePathInfoType {
+  return absolutePathInfoTypes.includes(value);
+}
 
 export interface AbsolutePathInfoMixed<
-  SN extends SectionName,
+  SN extends SectionName = SectionName,
   EC extends ExpectedCount = ExpectedCount
 > extends AbsolutePathInfo<SN>,
     GeneralMixedIdInfo<EC>,
@@ -39,8 +43,8 @@ export interface AbsolutePathInfoMixed<
   infoType: "absolutePath";
 }
 
-export interface AbsolutePathDbIdInfoMixed<
-  SN extends SectionName,
+export interface AbsolutePathDbInfoMixed<
+  SN extends SectionName = SectionName,
   EC extends ExpectedCount = ExpectedCount
 > extends AbsolutePathInfo<SN>,
     GeneralMixedIdInfo<EC>,
@@ -64,7 +68,7 @@ export interface AbsoluteDbVarbInfoMixed<
 
 export function absolutePathInfo<
   SN extends SectionName,
-  PT extends ChildName[]
+  PT extends DescendantName<"root">[]
 >(sectionName: SN, path: PT): AbsolutePathInfo<SN, PT> {
   return {
     sectionName,

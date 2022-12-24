@@ -1,7 +1,6 @@
 import { AnalyzerPlanValues } from "../../sharedWithServer/apiQueriesShared/AnalyzerPlanValues";
 import { defaultMaker } from "../../sharedWithServer/defaultMaker/defaultMaker";
 import { AuthStatus } from "../../sharedWithServer/SectionsMeta/baseSectionsVarbs";
-import { FeStoreNameByType } from "../../sharedWithServer/SectionsMeta/relSectionsDerived/FeStoreName";
 import { AutoSyncControl } from "../../sharedWithServer/SectionsMeta/relSectionVarbs/relVarbs";
 import { ChildSectionName } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/ChildSectionName";
 import { SectionPack } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/SectionPack";
@@ -11,7 +10,6 @@ import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection
 import { PackBuilderSection } from "../../sharedWithServer/StatePackers.ts/PackBuilderSection";
 import { SolverSectionBase } from "../../sharedWithServer/StateSolvers/SolverBases/SolverSectionBase";
 import { SolverSection } from "../../sharedWithServer/StateSolvers/SolverSection";
-import { DisplayIndexBuilder } from "./DisplayIndexBuilder";
 import { FeIndexSolver } from "./FeIndexSolver";
 import { MainSectionSolver } from "./MainSectionSolver";
 
@@ -55,21 +53,6 @@ export class FeUserSolver extends SolverSectionBase<"feUser"> {
       analyzerPlanExp,
     });
   }
-  loadDisplayStoreList<
-    SN extends FeStoreNameByType<"displayStoreName">,
-    S extends ChildSectionName<SN, "activeAsSaved">
-  >(sectionName: SN, sources: GetterSection<S>[]): void {
-    const store = this.solver.onlyChild(
-      sectionName as FeStoreNameByType<"displayStoreName">
-    );
-    const nameList = store.onlyChild("displayNameList");
-    for (const source of sources) {
-      nameList.addChildAndSolve("displayNameItem", {
-        dbId: source.dbId,
-        dbVarbs: { displayName: source.valueNext("displayName").mainText },
-      });
-    }
-  }
   mainSolver<SN extends SectionNameByType<"hasIndexStore">>(
     feInfo: FeSectionInfo<SN>
   ): MainSectionSolver<SN> {
@@ -83,14 +66,6 @@ export class FeUserSolver extends SolverSectionBase<"feUser"> {
       ...this.solverSectionsProps,
       sectionName,
     });
-  }
-  displayIndexBuilder<SN extends SectionNameByType<"displayStoreName">>(
-    sectionName: SN
-  ): DisplayIndexBuilder<SN> {
-    return new DisplayIndexBuilder({
-      ...this.solverSectionsProps,
-      ...this.get.onlyChild(sectionName).feInfo,
-    }) as DisplayIndexBuilder<any>;
   }
   prepForCompare<SN extends ChildSectionName<"omniParent">>(
     sectionPack: SectionPack<SN>

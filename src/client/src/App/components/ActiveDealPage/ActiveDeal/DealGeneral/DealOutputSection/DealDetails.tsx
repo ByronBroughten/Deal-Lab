@@ -11,21 +11,16 @@ export default function DealDetails({ feId }: { feId: string }) {
     sectionName: "outputList",
     feId,
   });
-
   const outputs = outputList.children("outputItem");
-  const mixedInfos = outputs.map((outputItem) =>
-    outputItem.valueInEntityInfo()
-  );
-  const { sections } = outputList;
-
   const level = 0;
   return (
     <Styled className="DealDetails-root">
       <div className="DealDetails-allRows">
-        {mixedInfos.map((mixedInfo, idx) => {
+        {outputs.map((output, idx) => {
+          const mixedInfo = output.valueInEntityInfo();
           const key = mixedInfo.varbName + `${idx}`;
-          if (sections.hasSectionMixed(mixedInfo)) {
-            const { feVarbInfo } = sections.varbByMixed(mixedInfo);
+          if (output.hasSectionByFocalMixed(mixedInfo)) {
+            const { feVarbInfo } = output.varbByFocalMixed(mixedInfo);
             return (
               <DealDetailRowVarbFound
                 {...{ varbInfo: feVarbInfo, level, key }}

@@ -1,4 +1,4 @@
-import { relChildSections } from "../../sharedWithServer/SectionsMeta/relChildSections";
+import { allChildrenTraits } from "../../sharedWithServer/SectionsMeta/childrenTraits";
 import {
   FeStoreNameByType,
   feStoreNameS,
@@ -56,7 +56,7 @@ export class IndexTableRowActor extends SectionActorBase<"tableRow"> {
   private initDbStoreName(): FeStoreNameByType<"dbIndexName"> {
     const parentSelfChildName = this.get.parent.selfChildName;
     if (feStoreNameS.is(parentSelfChildName, "mainTableName")) {
-      return relChildSections.feUser[parentSelfChildName].dbIndexName;
+      return allChildrenTraits.feUser[parentSelfChildName].dbIndexName;
     } else throw new Error("This row doesn't have the right parent.");
   }
   get indexQuerier() {

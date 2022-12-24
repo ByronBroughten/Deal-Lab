@@ -87,7 +87,7 @@ export class CompareTableBuilder extends UpdaterSectionBase<"compareTable"> {
     for (const column of this.get.children("column")) {
       const varbInfo = column.valueInEntityInfo();
       let displayVarb = "N/A";
-      if (source.sections.hasVarbMixed(varbInfo)) {
+      if (source.hasVarbByFocalMixed(varbInfo)) {
         const varb = source.varbByFocalMixed(column.valueInEntityInfo());
         displayVarb = varb.displayVarb();
       }

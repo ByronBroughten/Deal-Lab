@@ -28,7 +28,6 @@ export type DbSelfOrDescendantSn<CN extends DbStoreName> =
   SelfOrDescendantSectionName<DbSectionName<CN>>;
 
 const mainIndexStoreNames = Arr.extractStrict(dbStoreNames, [
-  "dummyMain",
   "dealMain",
   "loanMain",
   "mgmtMain",

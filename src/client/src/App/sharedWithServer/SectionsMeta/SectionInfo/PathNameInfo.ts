@@ -54,8 +54,8 @@ interface PathMixedProp<EC extends ExpectedCount = ExpectedCount>
   infoType: "pathName";
 }
 
-export interface PathInfoMixed<
-  SN extends SectionName,
+export interface PathNameInfoMixed<
+  SN extends SectionName = SectionName,
   EC extends ExpectedCount = ExpectedCount
 > extends SectionPathNameInfo<SN>,
     PathMixedProp<EC> {}
@@ -64,7 +64,7 @@ export interface PathVarbNames<PN extends SectionPathName>
   extends PathNameProp<PN>,
     VarbProp {}
 
-export interface AbsolutePathVarbInfo<PN extends SectionPathName>
+export interface PathNameVarbInfo<PN extends SectionPathName>
   extends PathNameInfo<PN>,
     VarbPropNext<SectionNameOfPath<PN>> {}
 
@@ -78,13 +78,13 @@ export interface VarbPathNameInfoMixed<
 > extends VarbPathNameInfo<SN>,
     PathMixedProp<EC> {}
 
-export interface PathDbIdInfo<SN extends SectionName>
+export interface PathNameDbInfo<SN extends SectionName>
   extends SectionPathNameInfo<SN> {
   dbId: string;
 }
 
-export interface PathDbInfoMixed<
-  SN extends SectionName,
+export interface PathNameDbInfoMixed<
+  SN extends SectionName = SectionName,
   EC extends ExpectedCount = ExpectedCount
 > extends SectionPathNameInfo<SN>,
     GeneralMixedIdInfo<EC>,
@@ -98,7 +98,7 @@ export interface PathDbVarbInfo<SN extends SectionName>
 }
 
 export interface PathDbVarbInfoMixed<
-  SN extends SectionName,
+  SN extends SectionName = SectionName,
   EC extends ExpectedCount = ExpectedCount
 > extends VarbPathNameInfo<SN>,
     GeneralMixedIdInfo<EC> {

@@ -8,7 +8,14 @@ import {
   VarbProp,
 } from "../baseSectionsDerived/baseVarbInfo";
 import { ExpectedCount } from "../baseSectionsVarbs/NanoIdInfo";
-import { PathDbInfoMixed, PathInfoMixed } from "../SectionInfo/PathNameInfo";
+import {
+  AbsolutePathDbInfoMixed,
+  AbsolutePathInfoMixed,
+} from "../SectionInfo/AbsolutePathInfo";
+import {
+  PathNameDbInfoMixed,
+  PathNameInfoMixed,
+} from "../SectionInfo/PathNameInfo";
 import { RelSectionInfo } from "../SectionInfo/RelInfo";
 import { SectionName } from "../SectionName";
 import {
@@ -26,8 +33,8 @@ export type SectionInfoMixed<SN extends SectionName = SectionName> =
   | FeSectionInfoMixed<SN>
   | GlobalSectionInfo<SN>
   | DbSectionInfoMixed<SN>
-  | PathInfoMixed<SN>
-  | PathDbInfoMixed<SN>;
+  | AbsolutePathInfoMixed<SN>
+  | AbsolutePathDbInfoMixed<SN>;
 
 export type IdInfoMixedMulti = DistributiveOmit<
   FeSectionInfoMixed | GlobalSectionInfo | DbSectionInfoMixed,
@@ -62,7 +69,7 @@ export const mixedInfoS = {
   pathName<PN extends SectionPathName, EC extends ExpectedCount = "onlyOne">(
     pathName: PN,
     expectedCount?: EC
-  ): PathInfoMixed<PathSectionName<PN>, EC> {
+  ): PathNameInfoMixed<PathSectionName<PN>, EC> {
     return {
       infoType: "pathName",
       sectionName: sectionNameByPathName(pathName),
@@ -84,7 +91,7 @@ export const mixedInfoS = {
     pathName: PathNameOfSection<SN>,
     dbId: string,
     expectedCount: EC
-  ): PathDbInfoMixed<SN, EC> {
+  ): PathNameDbInfoMixed<SN, EC> {
     return {
       infoType: "pathNameDbId",
       id: dbId,
@@ -125,6 +132,9 @@ export const mixedInfoS = {
 
 type MixedInfoType = SectionInfoMixed["infoType"];
 
-// may point to multiple sections and may require focal section
-export type SectionInfoMixedFocal = SectionInfoMixed | RelSectionInfo;
+export type SectionInfoMixedFocal =
+  | SectionInfoMixed
+  | RelSectionInfo
+  | PathNameInfoMixed
+  | PathNameDbInfoMixed;
 export type VarbInfoMixedFocal = SectionInfoMixedFocal & VarbProp;

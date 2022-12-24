@@ -34,9 +34,6 @@ export const baseSectionsVarbs = checkBaseSectionsVarbs({
   proxyStoreItem: baseSectionVarbs({
     dbId: "string",
   }),
-  hasDummyDisplayStore: baseSectionVarbs({
-    ...baseVarbsS.savableSection,
-  }),
   displayNameItem: baseSectionVarbs({
     displayName: "string",
   }),

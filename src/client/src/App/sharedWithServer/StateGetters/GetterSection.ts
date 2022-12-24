@@ -49,6 +49,7 @@ import {
   SelfChildName,
   StepSiblingName,
 } from "../SectionsMeta/sectionChildrenDerived/ParentName";
+import { AbsolutePathInfoMixed } from "../SectionsMeta/SectionInfo/AbsolutePathInfo";
 import {
   FeParentInfo,
   FeParentInfoSafe,
@@ -130,6 +131,13 @@ export class GetterSection<
     const section = this.sectionByFocalMixed(mixedInfo);
     return section.varb(varbName);
   }
+  hasVarbByFocalMixed({ varbName, ...rest }: VarbInfoMixedFocal): boolean {
+    if (this.hasSectionByFocalMixed(rest)) {
+      const section = this.sectionByFocalMixed(rest);
+      return section.meta.isVarbName(varbName);
+    }
+    return false;
+  }
   varbsByFocalMixed({
     varbName,
     ...mixedInfo
@@ -142,17 +150,43 @@ export class GetterSection<
     this.list.exactlyOneOrThrow(sections, info.infoType);
     return sections[0];
   }
+  hasSectionByFocalMixed(info: SectionInfoMixedFocal) {
+    const sections = this.sectionsByFocalMixed(info);
+    if (sections.length === 0) return false;
+    this.list.exactlyOneOrThrow(sections, info.infoType);
+    return true;
+  }
   sectionsByFocalMixed(info: SectionInfoMixedFocal): GetterSection[] {
     switch (info.infoType) {
       case "feId":
       case "dbId":
       case "globalSection":
-      case "pathName":
-      case "pathNameDbId": {
+      case "absolutePath":
+      case "absolutePathDbId": {
         return this.sections.sectionsByMixed(info);
       }
+      case "pathName":
+      case "pathNameDbId": {
+        const { pathName, ...rest } = info;
+        const path = this.getPathFromContext(pathName);
+        if (rest.infoType === "pathName") {
+          return this.sections.sectionsByMixed({
+            ...rest,
+            path,
+            infoType: "absolutePath",
+          } as AbsolutePathInfoMixed);
+        } else if (rest.infoType === "pathNameDbId") {
+          return this.sections.sectionsByMixed({
+            ...rest,
+            path,
+            infoType: "absolutePathDbId",
+          });
+        } else throw new Error("This shouldn't happen.");
+      }
+      default: {
+        return this.sectionsByRelative(info);
+      }
     }
-    return this.sectionsByRelative(info);
   }
   sectionsByRelative(info: RelSectionInfo): GetterSection[] {
     const sections = this.allSectionsByRelative(info);
@@ -229,6 +263,11 @@ export class GetterSection<
       }
     }
   }
+  numObjOrNotFoundByMixedAssertOne(info: VarbInfoMixedFocal): string {
+    if (this.hasVarbByFocalMixed(info)) {
+      return this.varbByFocalMixed(info).displayVarb();
+    } else return "Not Found";
+  }
   childrenOfType<CSN extends ChildSectionName<SN>>(
     sectionChildName: CSN
   ): GetterSection<CSN>[] {
@@ -285,7 +324,7 @@ export class GetterSection<
       sectionName: this.sectionName,
     };
   }
-  getPathFromContext(pathName: SectionPathName): ChildName[] {
+  getPathFromContext(pathName: SectionPathName): DescendantName<"root">[] {
     const sectionContext =
       sectionPathContexts[this.raw.sectionContextName][pathName];
     return sectionContext["path"];
@@ -488,6 +527,7 @@ export class GetterSection<
     if (!value) throw new Error("inEntityInfo value is not initialized");
     return value;
   }
+
   switchValue<SK extends SwitchEndingKey>(
     varbNameBase: string,
     switchEnding: SK

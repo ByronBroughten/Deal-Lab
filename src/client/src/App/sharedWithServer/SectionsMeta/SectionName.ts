@@ -27,9 +27,6 @@ export const sectionNames = [
   "conditionalRowList",
   "userVarbList",
 
-  "hasDummyDisplayStore",
-  "dummyDisplayStore",
-
   "deal",
 
   "propertyGeneral",

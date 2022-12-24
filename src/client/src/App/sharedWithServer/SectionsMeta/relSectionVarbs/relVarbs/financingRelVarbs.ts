@@ -27,10 +27,7 @@ export function loanRelVarbs(): RelVarbs<"loan"> {
           updateFnName: "simpleDivide",
           updateFnProps: {
             leftSide: updateFnPropS.local("loanBaseDollars"),
-            rightSide: updateFnPropS.absolutePath(
-              "propertyGeneralFocal",
-              "price"
-            ),
+            rightSide: updateFnPropS.pathName("propertyGeneralFocal", "price"),
           },
         },
       ],
@@ -69,10 +66,7 @@ export function loanRelVarbs(): RelVarbs<"loan"> {
           updateFnProps: {
             switch: updateFnPropS.local(loanBase.switch),
             leftSide: updateFnPropS.local(loanBase.decimal),
-            rightSide: updateFnPropS.absolutePath(
-              "propertyGeneralFocal",
-              "price"
-            ),
+            rightSide: updateFnPropS.pathName("propertyGeneralFocal", "price"),
           },
         },
       ],

@@ -4,6 +4,12 @@ import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { GetterSection } from "../StateGetters/GetterSection";
 import { GetterSections } from "../StateGetters/GetterSections";
 import { useFullSectionsContext } from "./useFullSectionsContext";
+import { useSectionInfoContext } from "./useSectionContext";
+
+export function useGetterSectionContext() {
+  const feInfo = useSectionInfoContext();
+  return useGetterSection(feInfo);
+}
 
 export function useGetterSection<SN extends SectionName>(
   feInfo: FeSectionInfo<SN>

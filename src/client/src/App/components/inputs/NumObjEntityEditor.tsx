@@ -7,6 +7,7 @@ import useToggleView from "../../modules/customHooks/useToggleView";
 import { SetEditorState } from "../../modules/draftjs/draftUtils";
 import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { VarbMeta } from "../../sharedWithServer/SectionsMeta/VarbMeta";
+import { SectionInfoContextProvider } from "../../sharedWithServer/stateClassHooks/useSectionContext";
 import { GetterVarb } from "../../sharedWithServer/StateGetters/GetterVarb";
 import { EditorTextStatus } from "../../sharedWithServer/StateGetters/GetterVarbNumObj";
 import theme from "../../theme/Theme";
@@ -116,30 +117,32 @@ const MemoNumObjEntityEditor = React.memo(function MemoNumObjEntityEditor({
   );
 
   return (
-    <Styled
-      ref={numObjEditorRef}
-      className={`NumObjEditor-root ${className ?? ""}`}
-    >
-      <div className="NumObjEditor-inner">
-        <MaterialDraftEditor
-          onClick={openVarbSelector}
-          onFocus={openVarbSelector}
-          className={"NumObjEditor-materialDraftEditor"}
-          id={GetterVarb.feVarbInfoToVarbId(rest)}
-          {...{
-            label,
-            setEditorState,
-            editorState,
-            startAdornment,
-            endAdornment,
-            ...(!bypassNumeric && { handleBeforeInput }),
-          }}
-        />
-        {varbSelectorIsOpen && (
-          <NumObjVarbSelector {...{ setEditorState }} ref={popperRef} />
-        )}
-      </div>
-    </Styled>
+    <SectionInfoContextProvider {...rest}>
+      <Styled
+        ref={numObjEditorRef}
+        className={`NumObjEditor-root ${className ?? ""}`}
+      >
+        <div className="NumObjEditor-inner">
+          <MaterialDraftEditor
+            onClick={openVarbSelector}
+            onFocus={openVarbSelector}
+            className={"NumObjEditor-materialDraftEditor"}
+            id={GetterVarb.feVarbInfoToVarbId(rest)}
+            {...{
+              label,
+              setEditorState,
+              editorState,
+              startAdornment,
+              endAdornment,
+              ...(!bypassNumeric && { handleBeforeInput }),
+            }}
+          />
+          {varbSelectorIsOpen && (
+            <NumObjVarbSelector {...{ setEditorState }} ref={popperRef} />
+          )}
+        </div>
+      </Styled>
+    </SectionInfoContextProvider>
   );
 });
 

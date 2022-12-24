@@ -16,6 +16,13 @@ import { SectionActorBase, SectionActorBaseProps } from "./SectionActorBase";
 class GetterColumn extends GetterSection<"column"> {
   get displayNameOrNotFound(): string {
     const varbInfo = this.valueInEntityInfo();
+    switch (varbInfo.infoType) {
+      case "pathName":
+      case "pathNameDbId": {
+        const { displayName } = this.varbByFocalMixed(varbInfo);
+        return displayName;
+      }
+    }
     if (varbInfo.infoType === "globalSection") {
       const { displayName } = sectionsMeta.varb(varbInfo);
       if (typeof displayName === "string") {

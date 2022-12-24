@@ -1,6 +1,6 @@
 import { Arr } from "../../utils/Arr";
 import { Obj } from "../../utils/Obj";
-import { tableRowDbSources } from "../relChildSections";
+import { tableRowDbSources } from "../childrenTraits";
 import { ChildName, getChildNames } from "../sectionChildrenDerived/ChildName";
 import { dbStoreNameS } from "../sectionChildrenDerived/DbStoreName";
 import { allSectionTraits, getSomeSectionTraits } from "../sectionsTraits";
@@ -79,7 +79,6 @@ const feStoreNameArrs = {
     ] as const);
   },
   displayNameDbSource: tableRowDbSources,
-  displayStoreName: Obj.values(hasToStoreNames.displayIndex),
   mainTableName: Arr.extractStrict(feUserChildNames, [
     "propertyMainTable",
     "loanMainTable",

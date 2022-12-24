@@ -16,9 +16,10 @@ function skipVarbIfDuplicate(varb: SetterVarb): SetterVarb {
     const { activeMixedFeInfos } = varb.inEntity;
     if (activeMixedFeInfos.length === 1) {
       const inInfo = activeMixedFeInfos[0];
-      const { setterSections, sections } = varb;
-      if (sections.hasSectionMixed(inInfo)) {
-        const { feVarbInfo } = sections.varbByMixed(inInfo);
+      const { setterSections } = varb;
+      const { section } = varb.get;
+      if (section.hasSectionByFocalMixed(inInfo)) {
+        const { feVarbInfo } = section.varbByFocalMixed(inInfo);
         const inVarb = setterSections.varb(feVarbInfo);
         if (
           isEqual(
@@ -48,12 +49,13 @@ export function DealDetailRowsNext({
 }) {
   level = level + 1;
   const varb = useSetterVarb(varbInfo);
-  const { setterSections, sections } = varb;
+  const { setterSections } = varb;
+  const { section } = varb.get;
   return (
     <Styled className="DealDetailRows-root">
       {varb.inEntity.activeMixedFeInfos.map((inInfo) => {
-        if (sections.hasSectionMixed(inInfo)) {
-          const { feVarbInfo } = sections.varbByMixed(inInfo);
+        if (section.hasSectionByFocalMixed(inInfo)) {
+          const { feVarbInfo } = section.varbByFocalMixed(inInfo);
           let inVarb = setterSections.varb(feVarbInfo);
           if (inVarb.meta.valueName === "numObj") {
             inVarb = skipVarbIfDuplicate(inVarb);

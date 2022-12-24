@@ -134,8 +134,8 @@ export class SolveValueVarb<
         const editorEntities = editor.value("numObj").entities;
         let isPureUserVarb = true;
         for (const entity of editorEntities) {
-          if (this.getterSections.hasSectionMixed(entity)) {
-            const varb = this.getterSections.varbByMixed(entity);
+          if (section.hasSectionByFocalMixed(entity)) {
+            const varb = section.varbByFocalMixed(entity);
             if (!(varb.sectionName === "userVarbItem")) {
               isPureUserVarb = false;
               break;
@@ -180,6 +180,7 @@ export class SolveValueVarb<
     varbPropName: VirtualVarbName,
     notFoundString: string
   ): StringObj {
+    const section = this.getterSection;
     const entityInfo = this.getterSection.value(
       "valueEntityInfo",
       "inEntityInfo"
@@ -187,8 +188,8 @@ export class SolveValueVarb<
     if (!entityInfo) {
       return stringObj("");
     }
-    if (this.getterSections.hasSectionMixed(entityInfo)) {
-      const varb = this.getterSections.varbByMixed(entityInfo);
+    if (section.hasSectionByFocalMixed(entityInfo)) {
+      const varb = section.varbByFocalMixed(entityInfo);
       return stringObj(varb[varbPropName]);
     } else {
       return stringObj(notFoundString);
@@ -240,20 +241,12 @@ export class SolveValueVarb<
     return nextEntities;
   }
   private loadNextTexts(): { mainText: string; solvableText: string } {
-    const loadingVarbInfo = this.getterSection.value(
-      "valueEntityInfo",
-      "inEntityInfo"
-    );
-    if (
-      loadingVarbInfo &&
-      this.getterSections.hasSectionMixed(loadingVarbInfo)
-    ) {
-      const varb = this.getterSections.varbByMixed(loadingVarbInfo);
+    const section = this.getterSection;
+    const loadingVarbInfo = section.value("valueEntityInfo", "inEntityInfo");
+    if (loadingVarbInfo && section.hasSectionByFocalMixed(loadingVarbInfo)) {
+      const varb = section.varbByFocalMixed(loadingVarbInfo);
       return {
         solvableText: varb.value("numObj").solvableText,
-        // the mainText is the present numberValue.
-
-        // that is the issue.
         mainText:
           varb.numberOrQuestionMark === "?" ? "" : `${varb.numberValue}`,
       };

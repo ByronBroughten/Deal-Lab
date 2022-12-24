@@ -13,17 +13,7 @@ import {
   AuthStatus,
   UserDataStatus,
 } from "../../../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsVarbs";
-import {
-  FeUserDbIndex,
-  relChildSections,
-} from "../../../../client/src/App/sharedWithServer/SectionsMeta/relChildSections";
-import {
-  FeStoreNameByType,
-  feStoreNameS,
-} from "../../../../client/src/App/sharedWithServer/SectionsMeta/relSectionsDerived/FeStoreName";
-import { SectionPack } from "../../../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/SectionPack";
-import { FeSectionInfo } from "../../../../client/src/App/sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
-import { sectionNameS } from "../../../../client/src/App/sharedWithServer/SectionsMeta/SectionNameByType";
+import { feStoreNameS } from "../../../../client/src/App/sharedWithServer/SectionsMeta/relSectionsDerived/FeStoreName";
 import {
   GetterSectionBase,
   GetterSectionProps,
@@ -185,48 +175,6 @@ export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
       mainStoreArrs,
     };
   }
-  collectMainStoreArrs() {}
-
-  displayToDbStoreName<SN extends FeStoreNameByType<"displayStoreName">>(
-    sectionName: SN
-  ): FeUserDbIndex<SN> {
-    const relFeUser = relChildSections.feUser;
-    const { dbIndexName } = relFeUser[sectionName];
-    return dbIndexName;
-  }
-  initActiveAsSaved(feUser: FeUserSolver, activeDealPack: SectionPack<"deal">) {
-    const headSection = PackBuilderSection.loadAsOmniChild(activeDealPack);
-    const { sections } = headSection;
-    let sectionInfos: FeSectionInfo[] = [headSection.feInfo];
-    while (sectionInfos.length > 0) {
-      const nextInfos: FeSectionInfo[] = [];
-      for (const { sectionName, feId } of sectionInfos) {
-        const section = sections.section({ sectionName, feId });
-        if (sectionNameS.is(sectionName, "hasFeDisplayIndex")) {
-          const { displayIndexName } =
-            headSection.sectionsMeta.get(sectionName);
-          const displayIndexBuilder =
-            feUser.displayIndexBuilder(displayIndexName);
-          if (displayIndexBuilder.hasByDbId(section.get.dbId)) {
-            const child = this.get.childByDbId({
-              childName: this.displayToDbStoreName(displayIndexName),
-              dbId: section.get.dbId,
-            });
-            displayIndexBuilder.addAsSavedIfMissing(
-              child.packMaker.makeSectionPack()
-            );
-          }
-        }
-        for (const childName of section.get.childNames) {
-          for (const child of section.children(childName)) {
-            nextInfos.push(child.feInfo);
-          }
-        }
-      }
-      sectionInfos = nextInfos;
-    }
-  }
-
   createUserInfoToken(subscriptionValues?: AnalyzerPlanValues): string {
     return createUserInfoToken({
       userId: this.userId,

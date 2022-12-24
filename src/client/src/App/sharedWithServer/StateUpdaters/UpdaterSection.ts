@@ -14,6 +14,7 @@ import { ParentNameSafe } from "../SectionsMeta/sectionChildrenDerived/ParentNam
 import { FeSectionInfo } from "../SectionsMeta/SectionInfo/FeInfo";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
+import { SectionPathContextName } from "../SectionsMeta/sectionPathContexts";
 import { GetterSectionProps } from "../StateGetters/Bases/GetterSectionBase";
 import { InitRawFeSectionProps } from "../StateSections/initRawSection";
 import { StateSections } from "../StateSections/StateSections";
@@ -106,13 +107,15 @@ export class UpdaterSection<
     const feInfo = this.get.childInfoToFe(childInfo);
     return this.updaterSection(feInfo);
   }
+
   addChild<CN extends ChildName<SN>>(
     childName: CN,
     { idx, ...rest }: AddChildOptions<SN, CN> = {}
   ): void {
-    const sectionName = this.get.meta.childType(childName);
+    const { sectionName, ...props } = this.getChildProps(childName);
     const section = StateSections.initRawSection({
       sectionName,
+      ...props,
       ...rest,
     } as InitRawFeSectionProps<any>);
     const childList = this.updaterList.updaterList(sectionName);
@@ -120,6 +123,21 @@ export class UpdaterSection<
     const { feId } = childList.get.last;
     this.addChildFeId({ childName, feId, idx });
   }
+  private getChildProps<CN extends ChildName<SN>>(
+    childName: CN
+  ): {
+    sectionName: ChildSectionName<SN, CN>;
+    sectionContextName: SectionPathContextName;
+  } {
+    const { sectionMeta } = this;
+    const sectionName = sectionMeta.childType(childName);
+    const { sectionContextName } = sectionMeta.childTraits(childName);
+    return {
+      sectionName,
+      sectionContextName: sectionContextName ?? this.sectionContextName,
+    };
+  }
+
   addAndGetChild<CN extends ChildName<SN>>(
     childName: CN,
     options?: AddChildOptions<SN, CN>
