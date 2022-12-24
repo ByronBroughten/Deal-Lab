@@ -1,15 +1,12 @@
 import Session from "supertokens-auth-react/recipe/session";
 import { AnalyzerPlanValues } from "../../sharedWithServer/apiQueriesShared/AnalyzerPlanValues";
-import {
-  guestAccessNames,
-  GuestAccessSectionPackArrs,
-} from "../../sharedWithServer/apiQueriesShared/register";
+import { GuestAccessSectionPackArrs } from "../../sharedWithServer/apiQueriesShared/register";
 import {
   AnalyzerPlan,
   AuthStatus,
   UserDataStatus,
 } from "../../sharedWithServer/SectionsMeta/baseSectionsVarbs";
-import { PackMakerSection } from "../../sharedWithServer/StatePackers.ts/PackMakerSection";
+import { PackBuilderSection } from "../../sharedWithServer/StatePackers.ts/PackBuilderSection";
 import { StrictOmit } from "../../sharedWithServer/utils/types";
 import { FeUserSolver } from "../SectionSolvers/FeUserSolver";
 import { makeReq } from "./../../sharedWithServer/apiQueriesShared/makeReqAndRes";
@@ -31,20 +28,24 @@ export class FeUserActor extends SectionActorBase<"feUser"> {
   get setter(): SetterSection<"feUser"> {
     return new SetterSection(this.sectionActorBaseProps);
   }
+  get builder(): PackBuilderSection<"feUser"> {
+    return new PackBuilderSection(this.sectionActorBaseProps);
+  }
   get userDataSetter() {
     return new UserDataSetter(this.sectionActorBaseProps);
   }
   private get guestAccessSectionPacks(): GuestAccessSectionPackArrs {
-    const { sections } = this.get;
-    const { getterSectionsProps } = sections;
-    const feUser = sections.oneAndOnly("feUser");
-    const feStorePackMaker = new PackMakerSection({
-      ...getterSectionsProps,
-      ...feUser.feInfo,
-    });
-    return feStorePackMaker.makeChildPackArrs(
-      guestAccessNames
-    ) as GuestAccessSectionPackArrs;
+    const main = this.builder.packBuilderSection(
+      this.get.sections.oneAndOnly("main")
+    );
+    const varbEditor = main.onlyChild("userVarbEditor");
+    const listEditor = main.onlyChild("userListEditor");
+    return {
+      userVarbListMain: varbEditor.makeChildPackArr("userVarbList"),
+      singleTimeListMain: listEditor.makeChildPackArr("singleTimeList"),
+      ongoingListMain: listEditor.makeChildPackArr("ongoingList"),
+      outputListMain: this.builder.makeChildPackArr("outputListMain"),
+    };
   }
   get userDataStatus(): UserDataStatus {
     return this.get.valueNext("userDataStatus") as UserDataStatus;
