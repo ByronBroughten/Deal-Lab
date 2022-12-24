@@ -15,12 +15,10 @@ import { zS } from "../utils/zod";
 
 export type UserData = {
   feUser: SectionPack<"feUser">;
-  mainStoreArrs: MainStoreArrs;
 };
 export function validateUserData(value: any): value is UserData {
-  const { feUser, mainStoreArrs } = value as UserData;
+  const { feUser } = value as UserData;
   validateSectionPackByType(feUser, "feUser");
-  validateMainStoreArrs(mainStoreArrs);
   return true;
 }
 

@@ -7,12 +7,6 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-// Debug
-// when registering, make the feStores populate
-// from the editor pages
-// on loadUserData, make the editor pages update
-// from feStore
-
 // Edit the userVarbListPage to make it a regular editable section
 // Make save both save to the db and transfer state to feUser via sectionPack
 // Make revert just transfer feUser's userVarbLists to userVarbListPage

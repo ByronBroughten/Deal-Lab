@@ -1,4 +1,4 @@
-import { UserData } from "../../../sharedWithServer/apiQueriesShared/getUserData";
+import { UserData } from "../../../sharedWithServer/apiQueriesShared/validateUserData";
 import { SolverSectionsBase } from "../../../sharedWithServer/StateSolvers/SolverBases/SolverSectionsBase";
 import { SolverSections } from "../../../sharedWithServer/StateSolvers/SolverSections";
 
@@ -8,9 +8,21 @@ export class UserDataSolver extends SolverSectionsBase {
   }
   loadUserData(userData: UserData): void {
     const { solverSections } = this;
-
-    const feUser = solverSections.oneAndOnly("feUser");
+    const main = solverSections.oneAndOnly("main");
+    const feUser = main.onlyChild("feUser");
     feUser.loadSelf(userData.feUser);
-    feUser.replaceChildPackArrsAndSolve(userData.mainStoreArrs);
+
+    const varbEditor = main.onlyChild("userVarbEditor");
+    varbEditor.replaceChildPackArrsAndSolve({
+      userVarbList:
+        feUser.packMaker.makeChildSectionPackArr("userVarbListMain"),
+    });
+
+    const listEditor = main.onlyChild("userListEditor");
+    listEditor.replaceChildPackArrsAndSolve({
+      singleTimeList:
+        feUser.packMaker.makeChildSectionPackArr("singleTimeListMain"),
+      ongoingList: feUser.packMaker.makeChildSectionPackArr("ongoingListMain"),
+    });
   }
 }

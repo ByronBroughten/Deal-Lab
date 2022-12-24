@@ -9,11 +9,11 @@ import {
   ApiQueryName,
   QueryRes,
 } from "../sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
+import { makeRes } from "../sharedWithServer/apiQueriesShared/makeReqAndRes";
 import {
   isUserInfoHeaders,
   validateUserData,
-} from "../sharedWithServer/apiQueriesShared/getUserData";
-import { makeRes } from "../sharedWithServer/apiQueriesShared/makeReqAndRes";
+} from "../sharedWithServer/apiQueriesShared/validateUserData";
 import { Obj } from "../sharedWithServer/utils/Obj";
 import { StrictOmit } from "../sharedWithServer/utils/types";
 import {

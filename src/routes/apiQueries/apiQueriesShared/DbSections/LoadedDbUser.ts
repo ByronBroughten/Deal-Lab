@@ -5,10 +5,7 @@ import mongoose from "mongoose";
 import { constants } from "../../../../client/src/App/Constants";
 import { FeUserSolver } from "../../../../client/src/App/modules/SectionSolvers/FeUserSolver";
 import { AnalyzerPlanValues } from "../../../../client/src/App/sharedWithServer/apiQueriesShared/AnalyzerPlanValues";
-import {
-  MainStoreArrs,
-  UserData,
-} from "../../../../client/src/App/sharedWithServer/apiQueriesShared/getUserData";
+import { UserData } from "../../../../client/src/App/sharedWithServer/apiQueriesShared/getUserData";
 import {
   AuthStatus,
   UserDataStatus,
@@ -151,7 +148,7 @@ export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
       authStatus: "user" as AuthStatus,
       userDataStatus: "loaded" as UserDataStatus,
     });
-    for (const storeName of feStoreNameS.arrs.userListStoreName) {
+    for (const storeName of feStoreNameS.arrs.fullIndex) {
       feUser.packBuilder.replaceChildren({
         childName: storeName,
         sectionPacks: this.dbSections.sectionPackArr(storeName),
@@ -163,16 +160,8 @@ export class LoadedDbUser extends GetterSectionBase<"dbStore"> {
         sectionPacks: this.dbSections.sectionPackArr(storeName),
       });
     }
-    const mainStoreArrs = feStoreNameS.arrs.mainStoreName.reduce(
-      (storeArrs, storeName) => {
-        storeArrs[storeName] = this.builder.makeChildPackArr(storeName) as any;
-        return storeArrs;
-      },
-      {} as MainStoreArrs
-    );
     return {
       feUser: feUser.packBuilder.makeSectionPack(),
-      mainStoreArrs,
     };
   }
   createUserInfoToken(subscriptionValues?: AnalyzerPlanValues): string {

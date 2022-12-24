@@ -3,7 +3,6 @@ import { config } from "../Constants";
 import { UserInfoTokenProp } from "../modules/services/authService";
 import { AnalyzerPlanValues } from "./apiQueriesShared/AnalyzerPlanValues";
 import { ApiQueryName } from "./apiQueriesShared/apiQueriesSharedTypes";
-import { UserData } from "./apiQueriesShared/getUserData";
 import {
   DbIdRes,
   DbPackInfoSectionReq,
@@ -16,6 +15,7 @@ import {
   UrlRes,
 } from "./apiQueriesShared/makeReqAndRes";
 import { GuestAccessSectionPackArrs } from "./apiQueriesShared/register";
+import { UserData } from "./apiQueriesShared/validateUserData";
 import {
   DbStoreNameByType,
   SectionQueryName,
