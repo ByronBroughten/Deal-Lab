@@ -7,12 +7,7 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-// Add default sectionContext as an option in childTraits
-// or whatever it is, and if present, make it override the parent's
-// sectionContextName.
-
-// Make sure solverSection is used for logout rather than
-// builderSection
+// I guess test this stuff somehow.
 
 // Edit the userVarbListPage to make it a regular editable section
 // Make save both save to the db and transfer state to feUser via sectionPack

@@ -11,12 +11,6 @@ export class UserDataSolver extends SolverSectionsBase {
 
     const feUser = solverSections.oneAndOnly("feUser");
     feUser.loadSelf(userData.feUser);
-
-    feUser.updateSectionContextName("userMainSectionStores");
     feUser.replaceChildPackArrsAndSolve(userData.mainStoreArrs);
-
-    const main = solverSections.oneAndOnly("main");
-    // loading the mainStoreArrs separately lets them bypass getting outVarbs
-    // and solving
   }
 }

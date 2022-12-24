@@ -2,7 +2,6 @@ import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { signOut } from "supertokens-auth-react/recipe/thirdpartyemailpassword";
 import { constants } from "../../Constants";
-import { feStoreNameS } from "../../sharedWithServer/SectionsMeta/relSectionsDerived/FeStoreName";
 import { useSetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useSetterSection";
 import { timeS } from "../../sharedWithServer/utils/date";
 import { getErrorMessage } from "../../utils/error";
@@ -115,9 +114,6 @@ function useStateToDefault() {
   const main = useSetterSectionOnlyOne("main");
   return () => {
     auth.removeUserAuthDataToken();
-    const feUser = main.onlyChild("feUser");
-    feUser.update.removeAllChildrenInArrs(feStoreNameS.arrs.mainStoreName);
-    // with the mainStores, I bypass all the solving stuff.
     main.resetToDefault();
   };
 }

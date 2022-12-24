@@ -92,6 +92,20 @@ function checkAllChildrenTraits<RCS extends GenericAllChildrenTraits>(
 
 export const allChildrenTraits = checkAllChildrenTraits({
   ...makeDefaultAllChildrenTraits(),
+  main: childrenTraits("main", {
+    userVarbEditor: childTraits({
+      sectionContextName: "userVarbEditorPage",
+    }),
+    userListEditor: childTraits({
+      sectionContextName: "userListEditorPage",
+    }),
+    activeDeal: childTraits({
+      sectionContextName: "activeDealPage",
+    }),
+    latentSections: childTraits({
+      sectionContextName: "latentSection",
+    }),
+  }),
   feUser: childrenTraits("feUser", {
     dealMainTable: childTraits({
       dbIndexName: "dealMain",
@@ -106,16 +120,28 @@ export const allChildrenTraits = checkAllChildrenTraits({
       dbIndexName: "mgmtMain",
     }),
     dealMain: childTraits({
-      sectionContextName: "userMainSectionStores",
+      sectionContextName: "latentSection",
     }),
     propertyMain: childTraits({
-      sectionContextName: "userMainSectionStores",
+      sectionContextName: "latentSection",
     }),
     mgmtMain: childTraits({
-      sectionContextName: "userMainSectionStores",
+      sectionContextName: "latentSection",
     }),
     loanMain: childTraits({
-      sectionContextName: "userMainSectionStores",
+      sectionContextName: "latentSection",
+    }),
+    outputListMain: childTraits({
+      sectionContextName: "activeDealPage",
+    }),
+    userVarbListMain: childTraits({
+      sectionContextName: "activeDealPage",
+    }),
+    singleTimeListMain: childTraits({
+      sectionContextName: "activeDealPage",
+    }),
+    ongoingListMain: childTraits({
+      sectionContextName: "activeDealPage",
     }),
   }),
 });

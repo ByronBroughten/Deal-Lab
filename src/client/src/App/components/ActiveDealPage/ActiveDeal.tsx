@@ -72,12 +72,6 @@ const Styled = styled(PageMainFn)`
     .SectionTitleRow-sectionTitle {
       font-size: 22px;
     }
-    .ListMenuBtn-root {
-      background-color: ${theme.mainBackground};
-      :hover {
-        background-color: ${theme.primaryNext};
-      }
-    }
   }
 
   .ActiveDeal-inputSections {

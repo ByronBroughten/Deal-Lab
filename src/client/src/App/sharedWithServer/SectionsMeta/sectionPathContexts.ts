@@ -51,7 +51,7 @@ export const sectionPathContexts = {
     singleTimeListMain: absolute.singleTimeListEditor,
     singleTimeItemMain: absolute.singleTimeItemEditor,
   }),
-  userMainSectionStores: sectionPathContext({
+  latentSection: sectionPathContext({
     dealFocal: absolute.dealLatent,
     propertyGeneralFocal: absolute.propertyGeneralLatent,
     financingFocal: absolute.financingLatent,
