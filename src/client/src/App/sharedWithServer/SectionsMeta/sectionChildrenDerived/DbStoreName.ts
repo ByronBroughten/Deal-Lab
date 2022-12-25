@@ -63,6 +63,17 @@ export const dbStoreNameS = {
   ): value is DbStoreNameByType<T> {
     return (this.arrs[(type ?? "all") as T] as any).includes(value);
   },
+  validate<T extends DbStoreType = "all">(
+    value: any,
+    type?: T
+  ): DbStoreNameByType<T> {
+    if (this.is(value, type ?? "all")) {
+      return value;
+    } else
+      throw new Error(
+        `"${value}" is not a dbStoreName of type "${type ?? "all"}"`
+      );
+  },
 } as const;
 
 export function dbStoreSectionName<CN extends DbStoreName>(

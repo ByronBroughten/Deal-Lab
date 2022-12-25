@@ -14,15 +14,13 @@ export class UserDataSolver extends SolverSectionsBase {
 
     const varbEditor = main.onlyChild("userVarbEditor");
     varbEditor.replaceChildPackArrsAndSolve({
-      userVarbList:
-        feUser.packMaker.makeChildSectionPackArr("userVarbListMain"),
+      userVarbList: feUser.packMaker.makeChildPackArr("userVarbListMain"),
     });
 
     const listEditor = main.onlyChild("userListEditor");
     listEditor.replaceChildPackArrsAndSolve({
-      singleTimeList:
-        feUser.packMaker.makeChildSectionPackArr("singleTimeListMain"),
-      ongoingList: feUser.packMaker.makeChildSectionPackArr("ongoingListMain"),
+      singleTimeList: feUser.packMaker.makeChildPackArr("singleTimeListMain"),
+      ongoingList: feUser.packMaker.makeChildPackArr("ongoingListMain"),
     });
   }
 }

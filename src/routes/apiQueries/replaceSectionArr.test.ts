@@ -1,6 +1,6 @@
 import request from "supertest";
 import { apiQueriesShared } from "../../client/src/App/sharedWithServer/apiQueriesShared";
-import { SectionPackArrReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/makeReqAndRes";
+import { ReplacePackArrsReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/makeReqAndRes";
 import { SectionArrReqMaker } from "../../client/src/App/sharedWithServer/ReqMakers/SectionArrReqMaker";
 import { childToSectionName } from "../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/ChildSectionName";
 import { PackBuilderSection } from "../../client/src/App/sharedWithServer/StatePackers.ts/PackBuilderSection";
@@ -13,16 +13,15 @@ import {
 } from "./apiQueriesTestTools/testDbUser";
 
 const storeName = "singleTimeListMain";
-type StoreName = typeof storeName;
 const sectionName = childToSectionName("dbStore", storeName);
-function makeReq(): SectionPackArrReq<StoreName> {
+function makeReq(): ReplacePackArrsReq {
   const reqMaker = SectionArrReqMaker.init(sectionName);
   return reqMaker.makeReq();
 }
 
-const testedRoute = apiQueriesShared.replaceSectionArr.pathRoute;
+const testedRoute = apiQueriesShared.replaceSectionArrs.pathRoute;
 describe(testedRoute, () => {
-  let req: SectionPackArrReq<StoreName>;
+  let req: ReplacePackArrsReq;
   let server: any;
   let dbUser: LoadedDbUser;
   let cookies: string[];
@@ -62,8 +61,9 @@ describe(testedRoute, () => {
     const authInfo = PackBuilderSection.initAsOmniChild(testName);
     req = {
       body: {
-        dbStoreName: testName,
-        sectionPackArr: [authInfo.makeSectionPack()],
+        sectionPackArrs: {
+          [testName]: [authInfo.makeSectionPack()],
+        },
       } as any,
     };
     await testStatus(500);
@@ -72,8 +72,9 @@ describe(testedRoute, () => {
     const property = PackBuilderSection.initAsOmniChild("property");
     req = {
       body: {
-        dbStoreName: sectionQueryName,
-        sectionPackArr: [property.makeSectionPack()],
+        sectionPackArrs: {
+          [sectionQueryName]: [property.makeSectionPack()],
+        },
       } as any,
     };
     await testStatus(500);

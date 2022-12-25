@@ -25,7 +25,7 @@ type ListParentName = ParentOfTypeName<"varbListAllowed">;
 export type ListGroupGenericProps<SN extends ListParentName> = {
   listParentInfo: FeSectionInfo<SN>;
   listAsChildName: ChildName<SN>;
-  themeName: ThemeName;
+  themeName?: ThemeName;
   makeListNode: MakeListNode;
   titleText: string;
   totalVarbName?: VarbName<SN>;

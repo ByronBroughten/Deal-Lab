@@ -1,6 +1,6 @@
 import { VarbListOutputs } from "./appWide/VarbLists/VarbListOutputs";
-import { UserListsPageGeneric } from "./UserListPageShared/UserListsPageGeneric";
-import { UserListsGeneralSection } from "./UserVarbListPage/UserListsGeneralSection";
+import { UserListsPageGeneric } from "./UserEditorPageShared/UserListsPageGeneric";
+import { UserListsGeneralSection } from "./UserVarbEditorPage/UserListsGeneralSection";
 
 export function UserOutputListPage() {
   const themeName = "userOutput";

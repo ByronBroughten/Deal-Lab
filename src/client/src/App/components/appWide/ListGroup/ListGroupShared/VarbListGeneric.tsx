@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import useToggleView from "../../../../modules/customHooks/useToggleView";
 import { SectionValues } from "../../../../sharedWithServer/SectionsMeta/baseSectionsDerived/valueMetaTypes";
 import { ChildName } from "../../../../sharedWithServer/SectionsMeta/sectionChildrenDerived/ChildName";
@@ -10,7 +10,6 @@ import {
   SectionValuesByType,
 } from "../../../../sharedWithServer/SectionsMeta/SectionNameByType";
 import { useSetterSection } from "../../../../sharedWithServer/stateClassHooks/useSetterSection";
-import ccs from "../../../../theme/cssChunks";
 import theme, { ThemeName } from "../../../../theme/Theme";
 import { BigStringEditor } from "../../../inputs/BigStringEditor";
 import { useOpenWidth } from "../../customHooks/useOpenWidth";
@@ -97,15 +96,16 @@ export function VarbListGeneric<SN extends VarbListAllowed>({
   };
   return (
     <Styled
-      className={"AdditiveList-root " + className}
+      className={"VarbListGeneric-root " + className}
       {...{ themeName, listMenuIsOpen }}
     >
-      <div className="VarbListGeneric-viewable viewable">
-        <div className="VarbList-menuRow">
-          {menuIsOpen && listMenu[menuType]()}
-        </div>
-        <div className="AdditiveList-titleRow">
-          <div className="AdditiveList-titleRowLeft">
+      <div className="VarbListGeneric-viewable">
+        {menuIsOpen && (
+          <div className="VarbList-menuRow">{listMenu[menuType]()}</div>
+        )}
+
+        <div className="VarbListGeneric-titleRow">
+          <div className="VarbListGeneric-titleRowLeft">
             <BigStringEditor
               {...{
                 feVarbInfo: titleVarb.get.feVarbInfo,
@@ -150,6 +150,7 @@ const Styled = styled.div<{
 
   .VarbList-menuRow {
     display: flex;
+    margin-bottom: ${theme.s1};
   }
 
   .ListMenuGeneric-root {
@@ -161,41 +162,19 @@ const Styled = styled.div<{
   }
 
   .VarbListGeneric-viewable {
-    display: flex;
     flex-wrap: nowrap;
+    background: ${theme.light};
+    border: solid 1px ${theme.primaryBorder};
+    border-radius: ${theme.br0};
+    display: inline-block;
+    padding: ${theme.sectionPadding};
   }
 
-  border: solid 1px ${theme.primaryBorder};
-  border-radius: ${theme.br0};
-  .viewable {
-    ${ccs.subSection.viewable};
-    .title-row {
-      ${ccs.subSection.titleRow}
-    }
-  }
-
-  .title-row {
-    align-items: flex-start;
-    display: flex;
-    button {
-      margin-left: ${theme.s2};
-    }
-  }
-
-  ${({ listMenuIsOpen }) =>
-    listMenuIsOpen &&
-    css`
-      .viewable {
-        border-right: none;
-        border-radius: ${theme.br0} 0 0 ${theme.br0};
-      }
-    `}
-
-  .AdditiveList-titleRow {
+  .VarbListGeneric-titleRow {
     display: flex;
     justify-content: space-between;
   }
-  .AdditiveList-titleRowLeft {
+  .VarbListGeneric-titleRowLeft {
     display: flex;
   }
   .AdditiveList-total {

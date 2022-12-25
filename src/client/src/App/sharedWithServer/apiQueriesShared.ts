@@ -6,9 +6,9 @@ import { ApiQueryName } from "./apiQueriesShared/apiQueriesSharedTypes";
 import {
   DbIdRes,
   DbPackInfoSectionReq,
-  DbStoreNameRes,
   MakeReq,
-  SectionPackArrReq,
+  MakeRes,
+  ReplacePackArrsReq,
   SectionPackReq,
   SectionPackRes,
   UpgradeUserToProReq,
@@ -28,7 +28,7 @@ export type ApiQueries = {
   getSection: GetSectionQuery;
   deleteSection: DeleteSectionQuery;
 
-  replaceSectionArr: ReplaceSectionArrQuery;
+  replaceSectionArrs: ReplaceSectionArrQuery;
   getProPaymentUrl: (req: UpgradeUserToProReq) => Promise<UrlRes>;
   getCustomerPortalUrl: (req: { body: {} }) => Promise<UrlRes>;
   getUserData: (
@@ -76,9 +76,7 @@ type DeleteSectionQuery = <CN extends SectionQueryName>(
   req: DbPackInfoSectionReq<CN>
 ) => Promise<DbIdRes>;
 
-type ReplaceSectionArrQuery = <CN extends DbStoreNameByType<"arrQuery">>(
-  req: SectionPackArrReq<CN>
-) => Promise<DbStoreNameRes<CN>>;
+type ReplaceSectionArrQuery = (req: ReplacePackArrsReq) => Promise<MakeRes<{}>>;
 
 export type ApiQuery<QN extends ApiQueryName> = ApiQueries[QN];
 

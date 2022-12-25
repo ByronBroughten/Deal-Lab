@@ -1,8 +1,8 @@
-import React, { MouseEventHandler } from "react";
-import { FiMinimize2, FiMaximize2 } from "react-icons/fi";
+import React from "react";
+import { FiMaximize2, FiMinimize2 } from "react-icons/fi";
+import styled from "styled-components";
 import theme from "../../theme/Theme";
 import PlainIconBtn from "./PlainIconBtn";
-import styled from "styled-components";
 
 export default function ToggleViewBtn({
   className = "",
@@ -14,7 +14,7 @@ export default function ToggleViewBtn({
   onClick?: any;
 }) {
   return (
-    <Styled className={"toggle-view-btn " + className} {...rest}>
+    <Styled className={"ToggleViewBtn-root " + className} {...rest}>
       {!viewIsOpen && <FiMinimize2 className="icon" />}
       {viewIsOpen && <FiMaximize2 className="icon" />}
     </Styled>

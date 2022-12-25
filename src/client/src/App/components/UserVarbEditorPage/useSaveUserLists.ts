@@ -38,12 +38,9 @@ export function useSaveUserLists(
     }, 700);
   });
   async function saveUserLists() {
-    const arrQuerier = new SectionArrQuerier({
-      dbStoreName: storeName,
-      apiQueries,
-    });
+    const arrQuerier = new SectionArrQuerier({ apiQueries });
     const workingPackList = makeWorkingPackList();
-    await arrQuerier.replace(workingPackList);
+    await arrQuerier.replace({ [storeName]: workingPackList });
     unstable_batchedUpdates(() => {
       feUser.replaceChildArrs({
         [storeName]: workingPackList,
@@ -66,7 +63,7 @@ function makePackList<CN extends FeStoreNameByType<"fullIndex">>(
     sections: sections,
     sectionName: "feUser",
   });
-  return packMaker.makeChildSectionPackArr(storeName);
+  return packMaker.makeChildPackArr(storeName);
 }
 
 function useUserListMainSection() {

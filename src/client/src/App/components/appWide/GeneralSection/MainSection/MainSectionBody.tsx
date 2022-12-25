@@ -6,16 +6,16 @@ export default function MainSectionBody({
   themeName,
 }: {
   children: any;
-  themeName: ThemeName;
+  themeName?: ThemeName;
 }) {
   return (
-    <StyledEntryBody className="MainSectionBody-root" $themeName={themeName}>
+    <StyledEntryBody className="MainSectionBody-root">
       <div className="MainSectionBody-inner">{children}</div>
     </StyledEntryBody>
   );
 }
 
-const StyledEntryBody = styled.div<{ $themeName: ThemeName }>`
+const StyledEntryBody = styled.div`
   display: flex;
   flex: 0;
   flex-wrap: wrap;

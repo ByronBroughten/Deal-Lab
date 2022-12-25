@@ -93,6 +93,10 @@ export const Obj = {
     if (value && typeof value === "object") return true;
     else return false;
   },
+  validateObjToAny(value: any): any {
+    if (this.isObjToAny(value)) return value;
+    else throw new Error(`"${value}" is not an Object`);
+  },
   strictPick<O extends object, KS extends keyof O>(
     obj: O,
     keys: KS[]

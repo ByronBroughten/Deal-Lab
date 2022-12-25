@@ -25,9 +25,9 @@ import {
 import { StateSections } from "../StateSections/StateSections";
 import { Obj } from "../utils/Obj";
 
-export type FeSectionPackArrs<
+export type SectionPackArrs<
   SN extends SectionName,
-  CN extends ChildName<SN>
+  CN extends ChildName<SN> = ChildName<SN>
 > = {
   [C in CN]: ChildSectionPack<SN, C>[];
 };
@@ -88,13 +88,13 @@ export class PackMakerSection<
   }
   makeChildPackArrs<CN extends ChildName<SN>>(
     childNames: CN[]
-  ): FeSectionPackArrs<SN, CN> {
+  ): SectionPackArrs<SN, CN> {
     return childNames.reduce((spArrs, childName) => {
-      (spArrs[childName] as any) = this.makeChildSectionPackArr(childName);
+      (spArrs[childName] as any) = this.makeChildPackArr(childName);
       return spArrs;
-    }, {} as FeSectionPackArrs<SN, CN>);
+    }, {} as SectionPackArrs<SN, CN>);
   }
-  makeChildSectionPackArr<CN extends ChildName<SN>>(
+  makeChildPackArr<CN extends ChildName<SN>>(
     childName: CN
   ): SectionPack<ChildSectionName<SN, CN>>[] {
     const feIds = this.get.childFeIds(childName);

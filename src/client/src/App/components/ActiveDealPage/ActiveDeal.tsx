@@ -2,10 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import { useGetterSection } from "../../sharedWithServer/stateClassHooks/useGetterSection";
 import theme from "../../theme/Theme";
-import { MainSection } from "../appWide/GeneralSection/MainSection";
 import { MainSectionTitleRow } from "../appWide/GeneralSection/MainSection/MainSectionTitleRow";
 import { MainSectionTitleEditor } from "../appWide/GeneralSection/MainSection/MainSectionTitleRow/MainSectionTitleEditor";
-import { PageMainFn } from "../general/PageMain";
+import { OuterMainSection } from "./../appWide/GeneralSection/OuterMainSection";
 import { DealGeneral } from "./ActiveDeal/DealGeneral";
 import Financing from "./ActiveDeal/Financing";
 import { MgmtGeneral } from "./ActiveDeal/MgmtGeneral";
@@ -20,44 +19,30 @@ export function ActiveDeal({ className, feId }: Props) {
   const feInfo = { sectionName: "deal", feId } as const;
   const deal = useGetterSection(feInfo);
   return (
-    <Styled {...{ className: `MainSections-root ${className ?? ""}` }}>
-      <MainSection className="ActiveDeal-root">
-        <MainSectionTitleRow
-          {...{
-            ...feInfo,
-            sectionTitle: "Deal",
-            pluralName: "deals",
-            className: "ActiveDeal-mainSectionTitleRow",
-          }}
-        />
-        <MainSectionTitleEditor
-          className="ActiveDeal-mainSectionTitleEditor"
-          feInfo={feInfo}
-        />
-        <div className="ActiveDeal-inputSectionsWrapper">
-          {/* <div className="ActiveDeal-inputSections" style={{ flex: 0 }}> */}
-          <PropertyGeneral feId={deal.onlyChildFeId("propertyGeneral")} />
-          <MgmtGeneral feId={deal.onlyChildFeId("mgmtGeneral")} />
-          <Financing feId={deal.onlyChildFeId("financing")} />
-          {/* </div> */}
-        </div>
-        <DealGeneral feId={feId} />
-      </MainSection>
+    <Styled className={`ActiveDeal-root ${className ?? ""}`}>
+      <MainSectionTitleRow
+        {...{
+          ...feInfo,
+          sectionTitle: "Deal",
+          pluralName: "deals",
+          className: "ActiveDeal-mainSectionTitleRow",
+        }}
+      />
+      <MainSectionTitleEditor
+        className="ActiveDeal-mainSectionTitleEditor"
+        feInfo={feInfo}
+      />
+      <div className="ActiveDeal-inputSectionsWrapper">
+        <PropertyGeneral feId={deal.onlyChildFeId("propertyGeneral")} />
+        <MgmtGeneral feId={deal.onlyChildFeId("mgmtGeneral")} />
+        <Financing feId={deal.onlyChildFeId("financing")} />
+      </div>
+      <DealGeneral feId={feId} />
     </Styled>
   );
 }
 
-const Styled = styled(PageMainFn)`
-  display: flex;
-  flex: 0;
-  background: ${theme.light};
-
-  .ActiveDeal-root {
-    border-top-right-radius: 0;
-    background: ${theme.mainBackground};
-    padding-bottom: none;
-    box-shadow: none;
-  }
+const Styled = styled(OuterMainSection)`
   .PropertyGeneral-root {
     padding-top: ${theme.s4};
   }
@@ -72,9 +57,6 @@ const Styled = styled(PageMainFn)`
     .SectionTitleRow-sectionTitle {
       font-size: 22px;
     }
-  }
-
-  .ActiveDeal-inputSections {
   }
   .ActiveDeal-inputSectionsWrapper {
     margin: auto;

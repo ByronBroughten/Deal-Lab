@@ -2,15 +2,18 @@ import { useGetterSectionOnlyOne } from "../sharedWithServer/stateClassHooks/use
 import { SectionPathContext } from "../sharedWithServer/stateClassHooks/useSectionContextName";
 import { ActiveDeal } from "./ActiveDealPage/ActiveDeal";
 import { NavContainer } from "./general/NavContainer";
+import { PageMain } from "./general/PageMain";
 
 export function ActiveDealPage() {
   const main = useGetterSectionOnlyOne("main");
   return (
-    <NavContainer activeBtnName="deal">
-      <SectionPathContext.Provider value="activeDealPage">
-        <ActiveDeal feId={main.onlyChild("activeDeal").feId} />
-      </SectionPathContext.Provider>
-    </NavContainer>
+    <PageMain>
+      <NavContainer activeBtnName="deal">
+        <SectionPathContext.Provider value="activeDealPage">
+          <ActiveDeal feId={main.onlyChild("activeDeal").feId} />
+        </SectionPathContext.Provider>
+      </NavContainer>
+    </PageMain>
   );
 }
 //

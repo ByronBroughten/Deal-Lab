@@ -1,4 +1,5 @@
 import { StringTypeChecker } from "../../utils/StringTypeChecker";
+import { Arr } from "../utils/Arr";
 import { PropKeyOfValue } from "../utils/Obj/SubType";
 import { baseNameArrs, BaseNameArrs } from "./baseSectionsDerived/baseNameArrs";
 import { SectionValues } from "./baseSectionsDerived/valueMetaTypes";
@@ -106,8 +107,9 @@ export function validateSectionPackArrByType<ST extends SectionNameType>({
   sectionType,
 }: ValidateSectionPackArrProps): SectionPackByType<ST>[] {
   if (
-    Array.isArray(value) &&
-    value.every((v) => isSectionPackByType(v, sectionType))
+    Arr.validateIsArray(value).every((v) =>
+      validateSectionPackByType(v, sectionType)
+    )
   ) {
     return value;
   } else {

@@ -19,7 +19,7 @@ import { StrictOmit } from "../sharedWithServer/utils/types";
 import {
   isDbIdData,
   makeResValidationQueryError,
-  validateDbArrQueryNameRes,
+  validateAxiosRes,
   validateDbIdRes,
   validateDbSectionPackRes,
   validateSessionUrlRes,
@@ -99,10 +99,10 @@ function makeApiQueries(): ApiQueries {
         return validateDbIdRes;
       },
     },
-    replaceSectionArr: {
+    replaceSectionArrs: {
       doingWhat: "replacing sections",
       get validateRes() {
-        return validateDbArrQueryNameRes;
+        return validateAxiosRes;
       },
     },
     getProPaymentUrl: {

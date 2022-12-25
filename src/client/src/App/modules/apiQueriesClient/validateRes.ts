@@ -2,6 +2,7 @@ import { AxiosResponse } from "axios";
 import {
   DbIdRes,
   DbStoreNameRes,
+  MakeRes,
   makeRes,
   SectionPackRes,
   UrlRes,
@@ -23,8 +24,15 @@ export function isDbIdData(value: any): value is DbIdData {
   return false;
 }
 
+export function validateAxiosRes(res: AxiosResponse<unknown>): MakeRes<any> {
+  const obj = Obj.validateObjToAny(res);
+  Obj.validateObjToAny(obj.data);
+  return obj;
+}
+
 export function validateDbIdRes(res: AxiosResponse<unknown>): DbIdRes {
-  const { data } = res;
+  const axiosRes = validateAxiosRes(res);
+  const { data } = axiosRes;
   if (isDbIdData(data)) {
     return makeRes({ dbId: data.dbId });
   } else throw makeResValidationQueryError();
@@ -32,7 +40,8 @@ export function validateDbIdRes(res: AxiosResponse<unknown>): DbIdRes {
 export function validateDbStoreNameRes(
   res: AxiosResponse<unknown>
 ): DbStoreNameRes {
-  const { data } = res;
+  const axiosRes = validateAxiosRes(res);
+  const { data } = axiosRes;
   if (Obj.isObjToAny(data)) {
     const { dbStoreName } = data;
     if (dbStoreNameS.is(dbStoreName, "allQuery"))

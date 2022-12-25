@@ -9,7 +9,7 @@ import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { GetterSections } from "../StateGetters/GetterSections";
 import { GetterVarb } from "../StateGetters/GetterVarb";
 import { PackBuilderSections } from "../StatePackers.ts/PackBuilderSections";
-import { FeSectionPackArrs } from "../StatePackers.ts/PackMakerSection";
+import { SectionPackArrs } from "../StatePackers.ts/PackMakerSection";
 import { StateSections } from "../StateSections/StateSections";
 import { UpdaterSection } from "../StateUpdaters/UpdaterSection";
 import { Arr } from "../utils/Arr";
@@ -169,7 +169,7 @@ export class SolverSections extends SolverSectionsBase {
   }
   static initSaveUserListSections(
     activeDealPack: SectionPack<"deal">,
-    packArrs: FeSectionPackArrs<"feUser", FeStoreNameByType<"saveUserLists">>
+    packArrs: SectionPackArrs<"feUser", FeStoreNameByType<"saveUserLists">>
   ): StateSections {
     const props = UpdaterSection.initMainSectionPropsWithEmptyUser();
     const main = SolverSection.init(props);

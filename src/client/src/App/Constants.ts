@@ -103,7 +103,7 @@ export const config = {
     "updateSection",
     "getSection",
     "deleteSection",
-    "replaceSectionArr",
+    "replaceSectionArrs",
     "getProPaymentUrl",
     "getCustomerPortalUrl",
     "getUserData",

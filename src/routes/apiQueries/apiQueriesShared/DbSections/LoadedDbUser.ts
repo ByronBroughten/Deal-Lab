@@ -5,7 +5,7 @@ import mongoose from "mongoose";
 import { constants } from "../../../../client/src/App/Constants";
 import { FeUserSolver } from "../../../../client/src/App/modules/SectionSolvers/FeUserSolver";
 import { AnalyzerPlanValues } from "../../../../client/src/App/sharedWithServer/apiQueriesShared/AnalyzerPlanValues";
-import { UserData } from "../../../../client/src/App/sharedWithServer/apiQueriesShared/getUserData";
+import { UserData } from "../../../../client/src/App/sharedWithServer/apiQueriesShared/validateUserData";
 import {
   AuthStatus,
   UserDataStatus,

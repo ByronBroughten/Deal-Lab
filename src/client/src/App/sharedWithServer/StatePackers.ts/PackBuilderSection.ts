@@ -116,7 +116,7 @@ export class PackBuilderSection<
   makeChildPackArr<CN extends ChildName<SN>>(
     childName: CN
   ): ChildSectionPack<SN, CN>[] {
-    return this.maker.makeChildSectionPackArr(childName);
+    return this.maker.makeChildPackArr(childName);
   }
   makeSectionPack(): SectionPack<SN> {
     return this.maker.makeSectionPack();

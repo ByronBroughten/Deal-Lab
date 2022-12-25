@@ -6,9 +6,8 @@ import { FeStoreNameByType } from "../../sharedWithServer/SectionsMeta/relSectio
 import { useAuthStatus } from "../../sharedWithServer/stateClassHooks/useAuthStatus";
 import { SectionsContextProvider } from "../../sharedWithServer/stateClassHooks/useSections";
 import theme, { ThemeName } from "../../theme/Theme";
-import BtnTooltip from "../appWide/BtnTooltip";
-import { MainSection } from "../appWide/GeneralSection/MainSection";
 import { SectionTitleRow } from "../appWide/GeneralSection/MainSection/SectionTitleRow";
+import { OuterMainSection } from "../appWide/GeneralSection/OuterMainSection";
 import { InfoBlurb } from "../appWide/infoBlurb";
 import { MakeListNode } from "../appWide/ListGroup/ListGroupShared/ListGroupGeneric/ListGroupLists";
 import { ListMenuBtn } from "../appWide/ListGroup/ListGroupShared/ListMenuSimple/ListMenuBtn";
@@ -29,27 +28,16 @@ type BtnProps = {
   onClick: () => void;
   icon: React.ReactNode;
   className: string;
-  tooltipText: string;
 };
-function useVariableProps({
-  areSaved,
-}: {
-  areSaved: boolean;
-}): [boolean, string, string] {
+
+function useSaveBtnProps({ onClick, areSaved }: UseProps): BtnProps {
   const authStatus = useAuthStatus();
-  if (authStatus === "guest") return [true, "Save and Apply Changes", ""];
-  else if (areSaved) return [true, "Save and Apply Changes", ""];
-  else return [false, "Save and Apply Changes", ""];
-}
-function useSaveBtnProps({ onClick, ...rest }: UseProps): BtnProps {
-  const props = useVariableProps(rest);
   return {
+    disabled: authStatus === "guest" || areSaved,
     onClick,
-    disabled: props[0],
-    text: props[1],
+    text: "Save and Apply Changes",
     icon: <AiOutlineSave size="25" />,
     className: "UserListMainSection-saveBtn",
-    tooltipText: props[2],
   };
 }
 
@@ -62,7 +50,7 @@ export function UserListMainSection({ title, storeName, ...rest }: Props) {
     !areSaved
   );
 
-  const { tooltipText, ...btnProps } = useSaveBtnProps({
+  const { ...btnProps } = useSaveBtnProps({
     areSaved,
     onClick: saveUserLists,
   });
@@ -76,9 +64,8 @@ export function UserListMainSection({ title, storeName, ...rest }: Props) {
           className="UserListMainSection-sectionTitle"
           leftSide={
             <div className="UserListMainSection-btnsRow">
-              <BtnTooltip title={tooltipText}>
-                <ListMenuBtn {...btnProps} />
-              </BtnTooltip>
+              <ListMenuBtn {...btnProps} />
+
               <ListMenuBtn
                 text="Discard Changes"
                 icon={<VscDiscard />}
@@ -104,7 +91,7 @@ export function UserListMainSection({ title, storeName, ...rest }: Props) {
   );
 }
 
-const Styled = styled(MainSection)`
+const Styled = styled(OuterMainSection)`
   .UserListMainSection-infoBlurb {
     margin-top: ${theme.s3};
   }

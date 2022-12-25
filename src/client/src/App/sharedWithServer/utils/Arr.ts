@@ -203,6 +203,11 @@ export const Arr = {
   ): (A | B)[] {
     return [...new Set([...a, ...b])];
   },
+  validateIsArray(value: any): any[] {
+    if (!Array.isArray(value)) {
+      throw new Error("The received value is not an array.");
+    } else return value;
+  },
 } as const;
 
 export class ValueNotFoundError extends Error {}

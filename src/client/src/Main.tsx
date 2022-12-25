@@ -6,9 +6,8 @@ import { getSuperTokensRoutesForReactRouterDom } from "supertokens-auth-react";
 import { ActiveDealPage } from "./App/components/ActiveDealPage";
 import { FeUserMainTablePage } from "./App/components/FeUserMainTablePage";
 import NotFound from "./App/components/general/NotFound";
-import { UserAdditiveListPage } from "./App/components/UserAdditiveListPage";
-import { UserOutputListPage } from "./App/components/UserOutputListPage";
-import { UserVarbListPage } from "./App/components/UserVarbListPage";
+import { UserAdditiveListPage } from "./App/components/UserListEditorPage";
+import { UserVarbEditorPage } from "./App/components/UserVarbEditorPage";
 import { constants } from "./App/Constants";
 import {
   useSubscriptionState,
@@ -27,9 +26,8 @@ export function Main() {
       {/* <NavBar /> */}
       <Routes>
         {getSuperTokensRoutesForReactRouterDom(reactRouterDom)}
-        <Route path={feRoutes.userVariables} element={<UserVarbListPage />} />
+        <Route path={feRoutes.userVariables} element={<UserVarbEditorPage />} />
         <Route path={feRoutes.userLists} element={<UserAdditiveListPage />} />
-        <Route path={feRoutes.userOutputs} element={<UserOutputListPage />} />
         <Route path={feRoutes.analyzer} element={<ActiveDealPage />} />
         <Route path={feRoutes.subscribeSuccess} element={<ActiveDealPage />} />
         <Route path={feRoutes.authSuccess} element={<ActiveDealPage />} />

@@ -11,7 +11,7 @@ import { getSectionWare } from "./apiQueries/getSection";
 import { subscriptionDataWare } from "./apiQueries/getSubscriptionData";
 import { getTableRowsWare } from "./apiQueries/getTableRows";
 import { getUserDataWare } from "./apiQueries/getUserData";
-import { replaceSectionArrWare } from "./apiQueries/replaceSectionArr";
+import { replaceSectionArrWare } from "./apiQueries/replaceSectionArrs";
 import { updateSectionWare } from "./apiQueries/updateSection";
 
 const endpointWare: Record<ApiQueryName, any> = {
@@ -19,7 +19,7 @@ const endpointWare: Record<ApiQueryName, any> = {
   updateSection: updateSectionWare,
   getSection: getSectionWare,
   deleteSection: deleteSectionWare,
-  replaceSectionArr: replaceSectionArrWare,
+  replaceSectionArrs: replaceSectionArrWare,
   getProPaymentUrl: getProPaymentUrlWare,
   getCustomerPortalUrl: getCustomerPortalUrlWare,
   getUserData: getUserDataWare,

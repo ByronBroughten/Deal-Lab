@@ -1,8 +1,5 @@
-import { makeReq, SectionPackArrReq } from "../apiQueriesShared/makeReqAndRes";
-import {
-  DbSectionNameByType,
-  DbSectionNameName,
-} from "../SectionsMeta/sectionChildrenDerived/DbStoreName";
+import { makeReq, ReplacePackArrsReq } from "../apiQueriesShared/makeReqAndRes";
+import { DbSectionNameByType } from "../SectionsMeta/sectionChildrenDerived/DbStoreName";
 import { GetterSectionBase } from "../StateGetters/Bases/GetterSectionBase";
 import { GetterSectionsBase } from "../StateGetters/Bases/GetterSectionsBase";
 import { PackMakerSection } from "../StatePackers.ts/PackMakerSection";
@@ -28,10 +25,11 @@ export class SectionArrReqMaker<
   get packMaker() {
     return new PackMakerSection(this.getterSectionProps);
   }
-  makeReq(): SectionPackArrReq<DbSectionNameName<SN>> {
+  makeReq(): ReplacePackArrsReq {
     return makeReq({
-      dbStoreName: this.dbStoreName,
-      sectionPackArr: [this.packMaker.makeSectionPack()],
-    }) as SectionPackArrReq<DbSectionNameName<SN>>;
+      sectionPackArrs: {
+        [this.dbStoreName]: this.packMaker.makeSectionPack(),
+      },
+    });
   }
 }

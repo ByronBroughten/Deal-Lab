@@ -28,6 +28,7 @@ import { SectionPack } from "../../../../client/src/App/sharedWithServer/Section
 import { FeSectionInfo } from "../../../../client/src/App/sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { GetterSection } from "../../../../client/src/App/sharedWithServer/StateGetters/GetterSection";
 import { PackBuilderSection } from "../../../../client/src/App/sharedWithServer/StatePackers.ts/PackBuilderSection";
+import { SectionPackArrs } from "../../../../client/src/App/sharedWithServer/StatePackers.ts/PackMakerSection";
 import { Obj } from "../../../../client/src/App/sharedWithServer/utils/Obj";
 import { ResStatusError } from "../../../../utils/resError";
 import { DbUserModel, modelPath } from "../../../routesShared/DbUserModel";
@@ -50,7 +51,7 @@ export class DbUser extends DbSectionsQuerierBase {
     const tableMakers = getDefaultMainTableMakers();
     for (const tableStoreName of feStoreNameS.arrs.mainTableName) {
       if ((await this.storeSectionCount(tableStoreName)) !== 1) {
-        await this.loadSectionPackArrs({
+        await this.setSectionPackArrs({
           [tableStoreName]: tableMakers[tableStoreName](),
         });
       }
@@ -61,21 +62,19 @@ export class DbUser extends DbSectionsQuerierBase {
   ): Promise<void> {
     const areLoaded = await this.guestAccessSectionsAreLoaded();
     if (!areLoaded) {
-      await this.loadGuestAccessSections(guestAccessSections);
+      await this.setGuestAccessSections(guestAccessSections);
     }
   }
-  private async loadGuestAccessSections(
+  private async setGuestAccessSections(
     guestAccessSections: GuestAccessSectionPackArrs
   ): Promise<void> {
     await this.setOnlyValue({
       ...this.guestAccessInfo,
       value: true,
     });
-    return this.loadSectionPackArrs(guestAccessSections);
+    return this.setSectionPackArrs(guestAccessSections);
   }
-  private async loadSectionPackArrs(
-    arrs: Partial<DbSectionPackArrs>
-  ): Promise<void> {
+  async setSectionPackArrs(arrs: Partial<DbSectionPackArrs>): Promise<void> {
     for (const storeName of Obj.keys(arrs)) {
       const sectionPackArr = arrs[storeName] as any[];
       await this.setSectionPackArr({
@@ -376,9 +375,7 @@ type SetSectionPackArrProps<CN extends DbStoreName> = {
   sectionPackArr: DbSectionPack<CN>[];
 };
 
-type DbSectionPackArrs = {
-  [CN in DbStoreName]: DbSectionPack<CN>[];
-};
+type DbSectionPackArrs = SectionPackArrs<"dbStore">;
 
 interface UpdateProps extends QueryParameters {
   filter?: Record<string, string>;

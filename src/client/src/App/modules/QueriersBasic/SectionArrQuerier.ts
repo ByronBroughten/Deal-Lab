@@ -1,34 +1,12 @@
 import {
+  DbPackArrQueryArrs,
   makeReq,
-  SectionPackArrReq,
 } from "../../sharedWithServer/apiQueriesShared/makeReqAndRes";
-import {
-  DbSectionName,
-  DbStoreNameByType,
-} from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/DbStoreName";
-import { SectionPack } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/SectionPack";
-import { ApiQuerierBase, ApiQuerierBaseProps } from "./Bases/ApiQuerierBase";
+import { ApiQuerierBase } from "./Bases/ApiQuerierBase";
 
-interface SectionArrQuerierProps<CN extends DbStoreNameByType<"arrQuery">>
-  extends ApiQuerierBaseProps {
-  dbStoreName: CN;
-}
-
-export class SectionArrQuerier<
-  CN extends DbStoreNameByType<"arrQuery">
-> extends ApiQuerierBase {
-  readonly dbStoreName: CN;
-  constructor({ dbStoreName, ...rest }: SectionArrQuerierProps<CN>) {
-    super(rest);
-    this.dbStoreName = dbStoreName;
-  }
-  async replace(
-    feSectionPackArr: SectionPack<DbSectionName<CN>>[]
-  ): Promise<void> {
-    const req = makeReq({
-      dbStoreName: this.dbStoreName,
-      sectionPackArr: feSectionPackArr,
-    }) as SectionPackArrReq<CN>;
-    await this.apiQueries.replaceSectionArr(req);
+export class SectionArrQuerier extends ApiQuerierBase {
+  async replace(sectionPackArrs: DbPackArrQueryArrs): Promise<void> {
+    const req = makeReq({ sectionPackArrs });
+    await this.apiQueries.replaceSectionArrs(req);
   }
 }

@@ -105,31 +105,6 @@ const ccs = {
       box-shadow: none;
     }
   `,
-  subSection: {
-    viewable: css`
-      display: inline-block;
-      padding: ${theme.sectionPadding};
-      border-radius: ${theme.br0};
-    `,
-    get titleRow() {
-      return css`
-        ${ccs.flex.titleRow};
-        .toggle-view-btn {
-          .icon {
-            height: ${theme.smallToggleViewIcon};
-            width: ${theme.smallToggleViewIcon};
-          }
-        }
-      `;
-    },
-    titleText: css`
-      padding: 0;
-      margin: 0;
-      margin-bottom: ${theme.s1};
-      margin-right: ${theme.s1};
-      color: ${theme["gray-700"]};
-    `,
-  },
   listTable: {
     main() {
       return css`
