@@ -8,24 +8,36 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-// See about adding it to app.dealanalyzer.com
-// Get a logo
+// Consult a branding and logo-making
+// https://bstro.com/
+
+// See about consulting Taylor's UI person
+
 // Consult marketers re advertising wp page
 
 // Nice
-// 1. Implement a "Load" modal to add load to Actions
+// 7. Add modes for Brrrr, flipping, etc.
+// - Hardcode the necessary inputs for each
+// - Add a "mode" toggle to property and outputs
+//   and/or deal.
+// - Make some outputs hard-coded and based on mode
+// - Make another spot for custom ones that load from variables
+
+// 1. Implement a "Load" modal to only present "Actions" button
+// 1.5 Show some unusable actions as disabled
+
+// 6. Add custom outputs
+
 // 2. Make repairs, utilities, etc, be able to be singular values
-//    But make them itemizable, too.
+//    that can switch to being itemizable.
 //    When they are in itemize mode, a modal is summoned with a full,
 //    spacious menu for editing the list and list items.
 // 3. Add the other compare tables. It basically just needs to start
 //    with "deal", and then have a selector for changing which
 //    table is displayed.
 //    Just add a selector to the current table
+// 3.5 Make compareTable columns editable
 // 4. Make compare table state update from front-end state
-// 5. Get list pages to load faster, without creating secondary states.
-// 6. Add custom outputs
-// 7. Add modes for Brrrr, flipping, etc.
 
 // Analysis
 // Variables (enter these into equations)

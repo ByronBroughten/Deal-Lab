@@ -4,7 +4,6 @@ import useToggleView from "../../../modules/customHooks/useToggleView";
 import { useSetterSection } from "../../../sharedWithServer/stateClassHooks/useSetterSection";
 import theme from "../../../theme/Theme";
 import { GeneralSection } from "../../appWide/GeneralSection";
-import MainSectionTitleBtn from "../../appWide/GeneralSection/GeneralSectionTitle/MainSectionTitleBtn";
 import { DealOutputSection } from "./DealGeneral/DealOutputSection";
 
 type Props = { className?: string; feId: string };
@@ -40,7 +39,7 @@ export function DealGeneral({ className, feId }: Props) {
         className: `DealGeneral-root ${className}`,
       }}
     >
-      {!showCalculations && (
+      {/* {!showCalculations && (
         <>
           <div className="GeneralSectionInfo-root" />
           <div className="GeneralSection-addEntryBtnDiv">
@@ -55,7 +54,8 @@ export function DealGeneral({ className, feId }: Props) {
           </div>
         </>
       )}
-      {showCalculations && <DealOutputSection {...{ feId, detailsIsOpen }} />}
+      {showCalculations && <DealOutputSection {...{ feId, detailsIsOpen }} />} */}
+      <DealOutputSection {...{ feId, detailsIsOpen }} />
     </Styled>
   );
 }

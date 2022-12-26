@@ -51,21 +51,23 @@ export function RowIndexRows<SN extends SectionNameByType<"hasIndexStore">>({
               },
             }}
           />
-          {rows.map(
-            ({ dbId, displayName }) =>
-              displayName.includes(filter) && (
-                <RowIndexListRow
-                  {...{
-                    displayName,
-                    load: () => section.loadFromIndex(dbId),
-                    del: noAccessMessage
-                      ? undefined
-                      : () => section.deleteFromIndex(dbId),
-                    key: dbId,
-                  }}
-                />
-              )
-          )}
+          <div>
+            {rows.map(
+              ({ dbId, displayName }) =>
+                displayName.includes(filter) && (
+                  <RowIndexListRow
+                    {...{
+                      displayName,
+                      load: () => section.loadFromIndex(dbId),
+                      del: noAccessMessage
+                        ? undefined
+                        : () => section.deleteFromIndex(dbId),
+                      key: dbId,
+                    }}
+                  />
+                )
+            )}
+          </div>
         </>
       );
     },
@@ -120,12 +122,15 @@ const Styled = styled.div<{ sectionName: ThemeName }>`
     height: auto;
   }
 
-  .RowIndexRows-entry:not(:first-child) {
-    border-top: 1px solid ${({ sectionName }) => theme[sectionName].light};
+  .RowIndexListRow-root {
+    :not(:first-child) {
+      border-top: 1px solid ${theme.primaryBorder};
+    }
   }
 
-  .RowIndexRows-entry {
+  .RowIndexListRow-root {
     display: flex;
     justify-content: space-between;
+    min-height: 33px;
   }
 `;

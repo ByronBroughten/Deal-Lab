@@ -60,7 +60,7 @@ export function useActionMenuBtns<
       return (
         <LabeledIconBtn
           key="saveUpdates"
-          label="Save updates"
+          label="Save changes"
           icon={<MdOutlineSystemUpdateAlt size="25" />}
           onClick={() => mainSection.saveUpdates()}
         />

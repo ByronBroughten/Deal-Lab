@@ -12,7 +12,7 @@ type Props = {
 };
 export function RowIndexListRow({ displayName, del, load, className }: Props) {
   return (
-    <StyledRowIndexRow className={`RowIndexRows-entry ${className ?? ""}`}>
+    <StyledRowIndexRow className={`RowIndexListRow-root ${className ?? ""}`}>
       <PlainBtn className="LoadSectionBtn-root" onClick={load}>
         <span className="LoadSectionBtn-nameText">{displayName}</span>
       </PlainBtn>
