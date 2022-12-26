@@ -1,25 +1,35 @@
 import { AiOutlineSave } from "react-icons/ai";
 import { VscDiscard } from "react-icons/vsc";
 import styled from "styled-components";
+import usePrompt from "../../modules/customHooks/useBlockerAndPrompt";
+import { SnFeUserChildNames } from "../../sharedWithServer/SectionsMeta/relSectionsDerived/FeStoreName";
+import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
 import { useAuthStatus } from "../../sharedWithServer/stateClassHooks/useAuthStatus";
 import { SectionTitleRow } from "../appWide/GeneralSection/MainSection/SectionTitleRow";
 import { InfoBlurb } from "../appWide/infoBlurb";
 import { ListMenuBtn } from "../appWide/ListGroup/ListGroupShared/ListMenuSimple/ListMenuBtn";
 import theme from "./../../theme/Theme";
+import { useSaveEditorToDb } from "./useSaveEditorToDb";
 
-type Props = {
-  saveChanges: () => void;
-  discardChanges: () => void;
-  areSaved: boolean;
+type Props<SN extends SectionName> = {
   titleText: string;
+  sectionName: SN;
+  childNames: SnFeUserChildNames<SN>[];
 };
-export function UserEditorTitleRow({
-  saveChanges,
-  discardChanges,
-  areSaved,
+export function UserEditorTitleRow<SN extends SectionName>({
   titleText,
-}: Props) {
+  sectionName,
+  childNames,
+}: Props<SN>) {
   const authStatus = useAuthStatus();
+  const { saveChanges, discardChanges, areSaved } = useSaveEditorToDb(
+    sectionName,
+    childNames
+  );
+  usePrompt(
+    "Your changes have not been applied. Are you sure you want to leave? (Your changes will not be lost)",
+    !areSaved
+  );
   return (
     <Styled className="UserEditorTitleRow-root">
       <SectionTitleRow

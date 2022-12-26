@@ -7,19 +7,14 @@ import { VarbListSingleTime } from "../appWide/ListGroup/ListGroupSingleTime/Var
 import { VarbListOngoing } from "../appWide/VarbLists/VarbListOngoing";
 import { UserEditorTitleRow } from "../UserEditorPageShared/UserEditorTitleRow";
 
-// change the editor page childNames to match storeNames
-// make generalizable save and discard changes
-// logic that works with both editors
-
 export function UserListEditor() {
   const userListEditor = useSetterSectionOnlyOne("userListEditor");
   return (
     <Styled>
       <UserEditorTitleRow
         titleText="Cost Lists"
-        saveChanges={() => {}}
-        discardChanges={() => {}}
-        areSaved={true}
+        sectionName="userListEditor"
+        childNames={["singleTimeListMain", "ongoingListMain"]}
       />
       <div className="UserListEditor-listGroups">
         <ListGroupGeneric

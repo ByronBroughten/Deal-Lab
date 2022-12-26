@@ -3,6 +3,7 @@ import { Obj } from "../../utils/Obj";
 import { tableRowDbSources } from "../childrenTraits";
 import { ChildName, getChildNames } from "../sectionChildrenDerived/ChildName";
 import { dbStoreNameS } from "../sectionChildrenDerived/DbStoreName";
+import { SectionName } from "../SectionName";
 import { allSectionTraits, getSomeSectionTraits } from "../sectionsTraits";
 
 export const hasStoreNameArrs = {
@@ -117,3 +118,8 @@ function makeNestedValueArrs<T extends HasNestedValues>(
     return nestedValueArr;
   }, {} as NestedValueArr<T>);
 }
+
+export type SnFeUserChildNames<SN extends SectionName> = Extract<
+  ChildName<"feUser">,
+  ChildName<SN>
+>;
