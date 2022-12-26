@@ -31,7 +31,7 @@ import {
   ChildSectionPackArrs,
   PackLoaderSection,
 } from "./PackLoaderSection";
-import { PackMakerSection } from "./PackMakerSection";
+import { PackMakerSection, SectionPackArrs } from "./PackMakerSection";
 
 export class PackBuilderSection<
   SN extends SectionName
@@ -117,6 +117,11 @@ export class PackBuilderSection<
     childName: CN
   ): ChildSectionPack<SN, CN>[] {
     return this.maker.makeChildPackArr(childName);
+  }
+  makeChildPackArrs<CN extends ChildName<SN>>(
+    ...childNames: CN[]
+  ): SectionPackArrs<SN, CN> {
+    return this.maker.makeChildPackArrs(childNames);
   }
   makeSectionPack(): SectionPack<SN> {
     return this.maker.makeSectionPack();

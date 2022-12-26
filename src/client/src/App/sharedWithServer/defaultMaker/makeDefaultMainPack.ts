@@ -24,16 +24,12 @@ export function makeDefaultMainPack(): SectionPack<"main"> {
   });
 
   const varbEditor = main.addAndGetChild("userVarbEditor");
-  varbEditor.loadChildren({
-    childName: "userVarbList",
-    sectionPacks: feUser.makeChildPackArr("userVarbListMain"),
-  });
+  varbEditor.replaceChildArrs(feUser.makeChildPackArrs("userVarbListMain"));
 
   const listEditor = main.addAndGetChild("userListEditor");
-  listEditor.replaceChildArrs({
-    ongoingList: feUser.makeChildPackArr("ongoingListMain"),
-    singleTimeList: feUser.makeChildPackArr("singleTimeListMain"),
-  });
+  listEditor.replaceChildArrs(
+    feUser.makeChildPackArrs("singleTimeListMain", "ongoingListMain")
+  );
 
   return main.makeSectionPack();
 }

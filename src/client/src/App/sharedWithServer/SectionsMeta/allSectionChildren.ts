@@ -49,11 +49,11 @@ export const allSectionChildren = checkAllSectionChildren({
     ongoingList: ["ongoingList"],
   }),
   userVarbEditor: sectionChildren({
-    userVarbList: ["userVarbList"],
+    userVarbListMain: ["userVarbList"],
   }),
   userListEditor: sectionChildren({
-    singleTimeList: ["singleTimeList"],
-    ongoingList: ["ongoingList"],
+    singleTimeListMain: ["singleTimeList"],
+    ongoingListMain: ["ongoingList"],
   }),
   displayNameList: sectionChildren({
     displayNameItem: ["displayNameItem"],

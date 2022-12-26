@@ -19,7 +19,7 @@ function useSaveUserVarbs(): {
   const varbEditor = useSetterSectionOnlyOne("userVarbEditor");
   const feUser = useSetterSectionOnlyOne("feUser");
   const getEditorPacks = () => {
-    return varbEditor.packMaker.makeChildPackArr("userVarbList");
+    return varbEditor.packMaker.makeChildPackArr("userVarbListMain");
   };
   const getStoredPacks = () => {
     return feUser.packMaker.makeChildPackArr("userVarbListMain");
@@ -37,7 +37,7 @@ function useSaveUserVarbs(): {
   const discardChanges = () => {
     const listPacks = getStoredPacks();
     varbEditor.replaceChildArrs({
-      userVarbList: listPacks,
+      userVarbListMain: listPacks,
     });
   };
   const [areSaved, setAreSaved] = React.useState(true);
@@ -79,8 +79,8 @@ export function UserVarbEditor() {
       <MainSectionBody>
         <ListGroupLists
           {...{
-            feIds: userVarbEditor.childFeIds("userVarbList"),
-            addList: () => userVarbEditor.addChild("userVarbList"),
+            feIds: userVarbEditor.childFeIds("userVarbListMain"),
+            addList: () => userVarbEditor.addChild("userVarbListMain"),
             makeListNode: (nodeProps) => <VarbListUserVarbs {...nodeProps} />,
           }}
         />

@@ -40,10 +40,10 @@ export class FeUserActor extends SectionActorBase<"feUser"> {
     );
     const varbEditor = main.onlyChild("userVarbEditor");
     const listEditor = main.onlyChild("userListEditor");
+
     return {
-      userVarbListMain: varbEditor.makeChildPackArr("userVarbList"),
-      singleTimeListMain: listEditor.makeChildPackArr("singleTimeList"),
-      ongoingListMain: listEditor.makeChildPackArr("ongoingList"),
+      ...varbEditor.makeChildPackArrs("userVarbListMain"),
+      ...listEditor.makeChildPackArrs("singleTimeListMain", "ongoingListMain"),
       outputListMain: this.builder.makeChildPackArr("outputListMain"),
     };
   }

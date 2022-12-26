@@ -7,14 +7,9 @@ import { VarbListSingleTime } from "../appWide/ListGroup/ListGroupSingleTime/Var
 import { VarbListOngoing } from "../appWide/VarbLists/VarbListOngoing";
 import { UserEditorTitleRow } from "../UserEditorPageShared/UserEditorTitleRow";
 
-// change the arrQuerier route to accept multiple arrs
-// change the ArrQuerier to accept an array of arrs
 // change the editor page childNames to match storeNames
 // make generalizable save and discard changes
 // logic that works with both editors
-
-// Or, copy and paste the code and add a bunch
-// of duplicate stuff to make it work.
 
 export function UserListEditor() {
   const userListEditor = useSetterSectionOnlyOne("userListEditor");
@@ -31,7 +26,7 @@ export function UserListEditor() {
           {...{
             titleText: "Upfront",
             listParentInfo: userListEditor.feInfo,
-            listAsChildName: "singleTimeList",
+            listAsChildName: "singleTimeListMain",
             makeListNode: (nodeProps) => (
               <VarbListSingleTime {...{ ...nodeProps, menuType: "simple" }} />
             ),
@@ -41,7 +36,7 @@ export function UserListEditor() {
           {...{
             titleText: "Ongoing",
             listParentInfo: userListEditor.feInfo,
-            listAsChildName: "ongoingList",
+            listAsChildName: "ongoingListMain",
             makeListNode: (nodeProps) => (
               <VarbListOngoing {...{ ...nodeProps, menuType: "simple" }} />
             ),
