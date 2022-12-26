@@ -22,13 +22,13 @@ export class SectionArrReqMaker<
       }),
     });
   }
-  get packMaker() {
+  get packMaker(): PackMakerSection<SN> {
     return new PackMakerSection(this.getterSectionProps);
   }
   makeReq(): ReplacePackArrsReq {
     return makeReq({
       sectionPackArrs: {
-        [this.dbStoreName]: this.packMaker.makeSectionPack(),
+        [this.dbStoreName]: [this.packMaker.makeSectionPack()],
       },
     });
   }

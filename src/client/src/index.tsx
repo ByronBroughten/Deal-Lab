@@ -7,27 +7,8 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-// Edit the userVarbListPage to make it a regular editable section
-// Make save both save to the db and transfer state to feUser via sectionPack
-// Make revert just transfer feUser's userVarbLists to userVarbListPage
-// Make the Variables section be gray like Deal
 
-// Do the same with the list page, and combine their states into one
-
-// Style accordingly
-
-// 3. Add persistent state for list pages
-//    - Tweak the variables context to allow those pages to
-//    alter it.
-//    - Varb spans must update color accordingly
-//    - Attach the editor pages to main
-//    - Each page should be a section with listgroup children.
-//    - Implement discard changes
-//    - You ought not solve for the lists and variables on
-//      those pages.
-// 5. Implement Discard Changes
-
-// See about adding it to a domain that has a WP page
+// See about adding it to app.dealanalyzer.com
 // Get a logo
 // Consult marketers re advertising wp page
 

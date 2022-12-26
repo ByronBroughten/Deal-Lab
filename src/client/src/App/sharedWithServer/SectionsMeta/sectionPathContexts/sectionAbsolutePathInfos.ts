@@ -106,7 +106,7 @@ export const sectionAbsolutePathInfos = {
   get singleTimeListEditor() {
     return absolute("singleTimeList", [
       ...this.userListEditor.path,
-      "singleTimeList",
+      "singleTimeListMain",
     ]);
   },
   get singleTimeItemEditor() {
@@ -118,7 +118,7 @@ export const sectionAbsolutePathInfos = {
   get ongoingListEditor() {
     return absolute("ongoingList", [
       ...this.userListEditor.path,
-      "ongoingList",
+      "ongoingListMain",
     ]);
   },
   get ongoingItemEditor() {
@@ -130,7 +130,7 @@ export const sectionAbsolutePathInfos = {
   get userVarbListEditor() {
     return absolute("userVarbList", [
       ...this.userVarbEditor.path,
-      "userVarbList",
+      "userVarbListMain",
     ]);
   },
   get userVarbItemEditor() {

@@ -58,12 +58,12 @@ export function validateDbSectionPackArrs(
   value: any,
   dbStoreType?: DbStoreType
 ): SectionPackArrs<"dbStore"> {
-  const obj = Obj.validateObjToAny(value);
-  for (const key of obj) {
+  const packArrs = Obj.validateObjToAny(value);
+  for (const key of Obj.keys(packArrs)) {
     const dbStoreName = dbStoreNameS.validate(key, dbStoreType ?? "all");
     validateDbSectionPackArr({
       dbStoreName,
-      value: value,
+      value: packArrs[dbStoreName],
     });
   }
   return value;
