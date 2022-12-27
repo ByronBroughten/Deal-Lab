@@ -1,9 +1,10 @@
 import { TextField } from "@material-ui/core";
-import { transparentize } from "polished";
 import React from "react";
+import { AiOutlineInfoCircle } from "react-icons/ai";
 import styled from "styled-components";
 import { FeSectionInfo } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { SectionNameByType } from "../../sharedWithServer/SectionsMeta/SectionNameByType";
+import { useAuthStatus } from "../../sharedWithServer/stateClassHooks/useAuthStatus";
 import ccs from "../../theme/cssChunks";
 import theme, { ThemeName, themeSectionNameOrDefault } from "../../theme/Theme";
 import { useMainSectionActor } from "./../../modules/sectionActorHooks/useMainSectionActor";
@@ -14,7 +15,6 @@ type Props<SN extends SectionNameByType<"hasIndexStore">> = {
   feInfo: FeSectionInfo<SN>;
   className?: string;
   noEntriesMessage: string;
-  noAccessMessage?: string;
 };
 
 type ScenarioKey = "areNone" | "isAtLeastOne";
@@ -28,8 +28,8 @@ export function RowIndexRows<SN extends SectionNameByType<"hasIndexStore">>({
   feInfo,
   className,
   noEntriesMessage,
-  noAccessMessage,
 }: Props<SN>) {
+  const authStatus = useAuthStatus();
   const [filter, setFilter] = React.useState("");
   const section = useMainSectionActor(feInfo);
   const rows = section.alphabeticalDisplayItems();
@@ -59,9 +59,10 @@ export function RowIndexRows<SN extends SectionNameByType<"hasIndexStore">>({
                     {...{
                       displayName,
                       load: () => section.loadFromIndex(dbId),
-                      del: noAccessMessage
-                        ? undefined
-                        : () => section.deleteFromIndex(dbId),
+                      del:
+                        authStatus === "guest"
+                          ? undefined
+                          : () => section.deleteFromIndex(dbId),
                       key: dbId,
                     }}
                   />
@@ -87,6 +88,7 @@ export function RowIndexRows<SN extends SectionNameByType<"hasIndexStore">>({
 function Message({ message }: { message: string }) {
   return (
     <StyledRowIndexRow className={"RowIndexRows-noEntriesRow"}>
+      <AiOutlineInfoCircle size={25} />
       <span className="RowIndexRows-noEntriesMessage">{message}</span>
     </StyledRowIndexRow>
   );
@@ -109,12 +111,15 @@ const Styled = styled.div<{ sectionName: ThemeName }>`
   }
 
   .RowIndexRows-noEntriesRow {
+    display: flex;
+    align-items: center;
     white-space: nowrap;
-    color: ${transparentize(0.4, theme.softDark)};
-    background-color: ${transparentize(0.05, theme.error.light)};
+    padding: ${theme.s15} ${theme.s3};
+    color: ${theme["gray-600"]};
+    background-color: ${theme.info.light};
   }
   .RowIndexRows-noEntriesMessage {
-    padding: ${theme.s25} ${theme.s3};
+    margin-left: ${theme.s25};
   }
 
   .RowIndexRows-trashBtn {

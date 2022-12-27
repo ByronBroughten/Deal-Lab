@@ -32,9 +32,6 @@ export function DisplayNameSectionList({
         {...{
           feInfo,
           noEntriesMessage: "None saved",
-          ...(feUser.isGuest && {
-            noAccessMessage: `Sign in to access saved ${pluralName}`,
-          }),
         }}
       />
     </DropdownList>
