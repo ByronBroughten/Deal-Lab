@@ -7,47 +7,37 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
+// UI consultation first.
+// Then make a mock WP site.
 
-// See about consulting Taylor's UI/UX person
-
-// Consult a branding and logo-making
+// Then consult branding and logo and wp site people
 // https://bstro.com/
 
-// Consult marketers re advertising wp page
-// 3. Add an example property/loan/mgmt/deal for loading and media
+// 3. Add an example loan/mgmt/deal for loading and media
 //    Make them usable for all deal modes
 
-// 2. Begin adding modes (add the underpinnings for them)
 // 3. Implement a "Load" modal to only present "Actions" button
 
-// 8. Begin to add modes for buyHold and fixFlip (buyHoldSell, brrrr, and wholesale come later)
-//  Every property should have all the necessary inputs for each, but
-//  they are activated based on the mode of activeDeal
+// 2. Begin adding underpinnings of modes
+// 4.
+// -Give property the necessary vabs for buyAndHold and fixAndFlip
+// -Give deal the necessary varbs for buyAndHold and fixAndFlip
+// -Give deal an outputSection per mode
+//  outputBuyAndHold
+//  outputFixAndFlip
+//  the varbs in those sections are things like, "showCocRoi", "showPitiPayments", etc.
+//  They also have childSection virtualVarbs called "customOutputs"
 
-//   Mode is adjustable on each deal
-//   Each deal has an outputSection per mode
-//   outputBuyAndHold
-//   outputFixAndFlip
-//   outputBuyHoldSell
-//   outputBrrrr
-//   outputtWholesale
+// -Make feUser have stores for each mode of outputSection
+// -Make sure it has a store for custom output lists, too
 
-//   And each of those sections has default varbs, as well as a varb
-//   for each of those default varbs that controls whether the varb
-//   is displayed, via checkbox.
+// -make the example property and deal work with all modes
+// -add other modes: buyHoldSell, brrrr, and wholesale
 
-//   In addition to the defaults constrolled by checkboxes, custom variables
-//   can be loaded as well.
-
-//   Each of those output sections can be saved by mode
-//   Lists of custom variables to use as outputs should also be savable
-
-//   property should have a mode property that receives from activeDeal's
-//   mode property, and that should determine whether some of property's
-//   variables produce "?"
-
-//   make the example property,loan, and deal work with all modes
-//   same with mgmt and loan, which is trivial
+// -Add the mode switch next to Deal
+// -Make a property Component for each mode
+// -Make an output component for each mode,
+//  or make one that can be generalizable.
 
 // 4. Make repairs, utilities, etc, be able to be singular values
 //    that can switch to being itemizable.

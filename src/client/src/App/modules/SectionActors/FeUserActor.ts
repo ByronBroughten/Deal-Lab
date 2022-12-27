@@ -3,9 +3,9 @@ import { AnalyzerPlanValues } from "../../sharedWithServer/apiQueriesShared/Anal
 import { GuestAccessSectionPackArrs } from "../../sharedWithServer/apiQueriesShared/register";
 import {
   AnalyzerPlan,
-  AuthStatus,
   UserDataStatus,
 } from "../../sharedWithServer/SectionsMeta/baseSectionsVarbs";
+import { AuthStatus } from "../../sharedWithServer/SectionsMeta/baseSectionsVarbsValues";
 import { PackBuilderSection } from "../../sharedWithServer/StatePackers.ts/PackBuilderSection";
 import { StrictOmit } from "../../sharedWithServer/utils/types";
 import { FeUserSolver } from "../SectionSolvers/FeUserSolver";

@@ -204,6 +204,7 @@ export function makeBaseSectionsVarbs() {
         "downPaymentPercent",
         "downPaymentDecimal",
       ] as const),
+      mode: "string",
       showCalculationsStatus: "string",
       ...baseVarbsS.ongoing("piti"),
       ...baseVarbsS.ongoing("expenses"),
@@ -256,9 +257,6 @@ export type AnalyzerPlan = typeof userPlans[number];
 export function isUserPlan(value: any): value is AnalyzerPlan {
   return userPlans.includes(value);
 }
-
-const authStatuses = ["guest", "user"] as const;
-export type AuthStatus = typeof authStatuses[number];
 
 const userDataStatuses = [
   "notLoaded",

@@ -1,7 +1,8 @@
 import { timeS } from "../utils/date";
-import { AnalyzerPlan, AuthStatus } from "./baseSectionsVarbs";
+import { AnalyzerPlan } from "./baseSectionsVarbs";
 import { numObj } from "./baseSectionsVarbs/baseValues/NumObj";
 import { savableSectionVarbNames } from "./baseSectionsVarbs/specialVarbNames";
+import { AuthStatus } from "./baseSectionsVarbsValues";
 import { relAdorn } from "./relSectionVarbs/rel/relAdorn";
 import { relVarb, relVarbS } from "./relSectionVarbs/rel/relVarb";
 import {
