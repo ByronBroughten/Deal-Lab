@@ -8,6 +8,7 @@ import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack"
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
 import { timeS } from "../utils/date";
 import { getDefaultMainTableMakers } from "./getDefaultMainTableMakers";
+import { makeExampleProperty } from "./makeDefaultFeUser/makeExampleProperty";
 import { makeExampleUserOngoingLists } from "./makeDefaultFeUser/makeExampleUserOngoingLists";
 import { makeExampleUserSingleTimeLists } from "./makeDefaultFeUser/makeExampleUserSingleTimeLists";
 import { makeExampleUserVarbLists } from "./makeDefaultFeUser/makeExampleUserVarbLists";
@@ -45,5 +46,11 @@ export function makeDefaultFeUserPack(): SectionPack<"feUser"> {
       sectionPack: defaultTableMakers[tableName](),
     });
   }
+
+  feUser.loadChildren({
+    childName: "propertyMain",
+    sectionPacks: [makeExampleProperty()],
+  });
+
   return feUser.makeSectionPack();
 }

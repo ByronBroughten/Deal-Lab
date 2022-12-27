@@ -5,7 +5,7 @@ export const guestIsNotSavedActions = ["signInToSave"] as const;
 const allIsNotSavedActions = [...isNotSavedActions, ...guestIsNotSavedActions];
 type IsNotSavedActions = typeof allIsNotSavedActions[number];
 
-export const guestIsSavedActions = ["copy"] as const;
+export const guestIsSavedActions = ["signInToSave", "copy"] as const;
 export const isSavedActions = [
   "saveUpdates",
   "saveAsNew",

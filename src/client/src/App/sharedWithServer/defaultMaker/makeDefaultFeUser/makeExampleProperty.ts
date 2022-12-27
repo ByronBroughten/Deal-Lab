@@ -5,9 +5,10 @@ import { PackBuilderSection } from "../../StatePackers.ts/PackBuilderSection";
 import { makeExampleUserOngoingLists } from "./makeExampleUserOngoingLists";
 import { makeExampleUserSingleTimeLists } from "./makeExampleUserSingleTimeLists";
 
-export function makeExampleProperties(): SectionPack<"property">[] {
-  const feUser = PackBuilderSection.initAsOmniChild("feUser");
-  const property = feUser.addAndGetChild("propertyMain");
+export function makeExampleProperty(): SectionPack<"property"> {
+  const property = PackBuilderSection.initAsOmniChild("property", {
+    dbId: "exampleprop1",
+  });
   property.addChild("upfrontRevenueListGroup");
   property.addChild("ongoingRevenueListGroup");
 
@@ -22,8 +23,11 @@ export function makeExampleProperties(): SectionPack<"property">[] {
     sectionPacks: makeExampleUserSingleTimeLists(),
   });
   property.updater.updateValues({
-    displayName: stringObj("140 Case"),
-    price: numObj(185000),
+    displayName: stringObj("Example Property"),
+    price: numObj(250000),
+    taxesYearly: numObj(2800),
+    homeInsYearly: numObj(1800),
+    sqft: numObj(2500),
   });
   property.addChild("unit", {
     dbVarbs: { targetRentMonthly: numObj(1500), numBedrooms: numObj(3) },
@@ -31,6 +35,5 @@ export function makeExampleProperties(): SectionPack<"property">[] {
   property.addChild("unit", {
     dbVarbs: { targetRentMonthly: numObj(1500), numBedrooms: numObj(3) },
   });
-
-  return feUser.makeChildPackArr("propertyMain");
+  return property.makeSectionPack();
 }

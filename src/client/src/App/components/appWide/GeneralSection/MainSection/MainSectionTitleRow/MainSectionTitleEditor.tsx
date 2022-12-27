@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { FeInfoByType } from "../../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
+import theme from "../../../../../theme/Theme";
 import { BigStringEditor } from "../../../../inputs/BigStringEditor";
 
 type Props = { feInfo: FeInfoByType<"hasCompareTable">; className?: string };
@@ -16,7 +17,9 @@ export function MainSectionTitleEditor({ feInfo, className }: Props) {
 }
 
 const Styled = styled(BigStringEditor)`
-  font-size: 20px;
+  .DraftEditor-root {
+    font-size: ${theme.inputSize};
+  }
   .DraftTextField-root {
     display: flex;
     min-width: 150px;

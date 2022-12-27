@@ -126,8 +126,6 @@ export class PackBuilderSection<
   makeSectionPack(): SectionPack<SN> {
     return this.maker.makeSectionPack();
   }
-
-  // I shouldn't need to add the childName
   addAndGetChild<CN extends ChildName<SN>>(
     childName: CN,
     options?: AddChildOptions<SN, CN>

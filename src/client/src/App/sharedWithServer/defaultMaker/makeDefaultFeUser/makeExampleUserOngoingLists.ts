@@ -40,6 +40,7 @@ export function makeExampleUserOngoingLists(): SectionPack<"ongoingList">[] {
 
   const utilityValueSwitch = "labeledEquation";
   const advancedUtilityList = feUser.addAndGetChild("ongoingListMain", {
+    dbId: "exampleUtil1",
     dbVarbs: {
       defaultValueSwitch: utilityValueSwitch,
       defaultOngoingSwitch: "monthly",
@@ -60,6 +61,7 @@ export function makeExampleUserOngoingLists(): SectionPack<"ongoingList">[] {
 
   const repairsValueSwitch = "labeledEquation";
   const ongoingRepairsList = feUser.addAndGetChild("ongoingListMain", {
+    dbId: "exampleRepr1",
     dbVarbs: {
       defaultValueSwitch: repairsValueSwitch,
       defaultOngoingSwitch: "yearly",
@@ -80,6 +82,7 @@ export function makeExampleUserOngoingLists(): SectionPack<"ongoingList">[] {
 
   const capExExampleswitch = "labeledSpanOverCost";
   const advancedCapExList = feUser.addAndGetChild("ongoingListMain", {
+    dbId: "exampleCapX1",
     dbVarbs: {
       defaultValueSwitch: capExExampleswitch,
       defaultOngoingSwitch: "yearly",

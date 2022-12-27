@@ -2,7 +2,8 @@ import hash from "object-hash";
 import React from "react";
 import { config } from "../../../Constants";
 import { getStoredObj } from "../../../utils/localStorage";
-import { relSections } from "../../SectionsMeta/relSectionsVarbs";
+import { makeDefaultMainPack } from "../../defaultMaker/makeDefaultMainPack";
+import { baseSectionsVarbs } from "../../SectionsMeta/baseSectionsVarbs";
 import { ChildSectionPack } from "../../SectionsMeta/sectionChildrenDerived/ChildSectionPack";
 import { validateSectionPackArrs } from "../../SectionsMeta/SectionNameByType";
 import { GetterSections } from "../../StateGetters/GetterSections";
@@ -20,11 +21,16 @@ export function useLocalSectionsStore({
   sections,
 }: UseSectionsStoreProps) {
   React.useEffect(() => {
-    if (storeSectionsLocally) SectionsStore.rmStoredStateIfPreframesChanged();
+    if (storeSectionsLocally)
+      SectionsStore.rmStoredStateIfBaseSectionVarbsChange();
   }, [storeSectionsLocally]);
 
   React.useEffect(() => {
-    if (storeSectionsLocally) SectionsStore.storeSections(sections);
+    if (storeSectionsLocally) {
+      setTimeout(() => {
+        SectionsStore.storeSections(sections);
+      }, 5000);
+    }
   }, [storeSectionsLocally, sections]);
 }
 
@@ -41,11 +47,15 @@ export class SectionsStore {
       ...main.feInfo,
     });
 
+    const feUser = main.onlyChild("feUser");
+    const authStatus = feUser.valueNext("authStatus");
+
     this.setSectionsInStore(
       packBuilder.makeChildPackArrs(
         "activeDeal",
         "userVarbEditor",
-        "userListEditor"
+        "userListEditor",
+        ...(authStatus === "guest" ? (["feUser"] as const) : [])
       )
     );
   }
@@ -53,7 +63,10 @@ export class SectionsStore {
   private static getAndValidateStoredState(): StoredSectionsState {
     const storedState = this.getSectionsFromStore();
     try {
-      return validateSectionPackArrs(storedState, "main", storeChildNames);
+      return validateSectionPackArrs(storedState, "main", [
+        ...storeChildNames,
+        optionalStoreName,
+      ]);
     } catch (e) {
       this.rmStoredState();
       throw new Error("Failed to validate stored deal state.");
@@ -62,13 +75,17 @@ export class SectionsStore {
   private static initMainFromStoredState(
     storedState: StoredSectionsState
   ): SolverSection<"main"> {
+    const main = PackBuilderSection.initAsOmniChild("main");
+    main.loadSelf(makeDefaultMainPack());
+    main.replaceChildArrs(storedState);
     const solver = SolverSections.initRoot();
-    const mainSolver = solver.addAndGetChild("main");
-    mainSolver.builder.replaceChildArrs(storedState);
-    return mainSolver;
+    return solver.loadAndGetChild({
+      childName: "main",
+      sectionPack: main.makeSectionPack(),
+    });
   }
   static getStoredSections(): StateSections {
-    this.rmStoredStateIfPreframesChanged();
+    this.rmStoredStateIfBaseSectionVarbsChange();
     const storedState = this.getAndValidateStoredState();
     const main = this.initMainFromStoredState(storedState);
     const feUser = main.onlyChild("feUser");
@@ -95,19 +112,19 @@ export class SectionsStore {
   static rmStoredState() {
     localStorage.removeItem(tokenKey.sectionsState);
   }
-  static rmStoredStateIfPreframesChanged() {
-    const newHash = this.newHashIfRelSectionsDidChange();
+  static rmStoredStateIfBaseSectionVarbsChange() {
+    const newHash = this.newHashIfbaseSectionsVarbsChanged();
     if (newHash) {
       localStorage.setItem(tokenKey.sectionsConfigHash, newHash);
       this.rmStoredState();
       localStorage.removeItem(tokenKey.userAuthData);
     }
   }
-  private static newHashIfRelSectionsDidChange(): string | null {
-    const hashed = hash(relSections);
+  private static newHashIfbaseSectionsVarbsChanged(): string | null {
+    const hashed = hash(baseSectionsVarbs);
     const storedHash = localStorage.getItem(tokenKey.sectionsConfigHash);
-    const relSectionsDidChange = hashed !== storedHash;
-    if (relSectionsDidChange) return hashed;
+    const baseSectionsVarbsChanged = hashed !== storedHash;
+    if (baseSectionsVarbsChanged) return hashed;
     else return null;
   }
 }
@@ -118,9 +135,13 @@ const storeChildNames = [
   "userListEditor",
 ] as const;
 type StoredChildName = typeof storeChildNames[number];
+const optionalStoreName = "feUser";
+type OptionalStoreName = typeof optionalStoreName;
 
 type StoredSectionsState = {
   [CN in StoredChildName]: ChildSectionPack<"main", CN>[];
+} & {
+  [CN in OptionalStoreName]?: ChildSectionPack<"main", CN>[];
 };
 
 export class StateMissingFromStorageError extends Error {}

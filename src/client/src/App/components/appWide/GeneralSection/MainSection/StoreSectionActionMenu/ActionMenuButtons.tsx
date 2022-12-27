@@ -41,7 +41,7 @@ export function useActionMenuBtns<
           key="signInToSave"
           label={"Sign in to Save"}
           disabled={true}
-          icon={<AiOutlineInfoCircle size={25} className="InfoBlurb-icon" />}
+          icon={<AiOutlineInfoCircle size={25} />}
           onClick={() => {}}
           className="ActionMenuButtons-signInToSave"
         />
@@ -87,7 +87,6 @@ export function useActionMenuBtns<
           label="Make a copy"
           icon={<BiCopy size="28" />}
           onClick={() => mainSection.makeACopy()}
-          disabled={isGuest}
         />
       );
     },

@@ -20,14 +20,14 @@ export function ChangesSyncedStatusBtn({ className, saveStatus }: Props) {
       get icon() {
         return <MdOutlineSync />;
       },
-      text: "Changes Synced",
+      text: "Changes Saved",
     },
     unsyncedChanges: {
-      $color: theme.primary.border,
+      $color: theme.info.border,
       get icon() {
         return <MdOutlineSyncDisabled />;
       },
-      text: "Unsynced Changes",
+      text: "Unsaved Changes",
     },
   } as const;
   return (

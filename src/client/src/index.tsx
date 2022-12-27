@@ -14,9 +14,9 @@ AppRegistry.runApplication("App", {
 // https://bstro.com/
 
 // Consult marketers re advertising wp page
-// 3. Add example property/loan/mgmt/deal for loading and media
+// 3. Add an example property/loan/mgmt/deal for loading and media
+//    Make them usable for all deal modes
 
-// 1. Show some unusable actions as disabled
 // 2. Begin adding modes (add the underpinnings for them)
 // 3. Implement a "Load" modal to only present "Actions" button
 
@@ -45,6 +45,9 @@ AppRegistry.runApplication("App", {
 //   property should have a mode property that receives from activeDeal's
 //   mode property, and that should determine whether some of property's
 //   variables produce "?"
+
+//   make the example property,loan, and deal work with all modes
+//   same with mgmt and loan, which is trivial
 
 // 4. Make repairs, utilities, etc, be able to be singular values
 //    that can switch to being itemizable.

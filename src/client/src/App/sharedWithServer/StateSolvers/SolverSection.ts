@@ -216,6 +216,13 @@ export class SolverSection<
     const child = this.youngestChild(childName);
     child.loadSelf(sectionPack);
   }
+  loadAndGetChild<CN extends ChildName<SN>>(
+    childPackInfo: ChildPackInfo<SN, CN>
+  ): SolverSection<ChildSectionName<SN, CN>> {
+    const { childName } = childPackInfo;
+    this.loadChild(childPackInfo);
+    return this.youngestChild(childName);
+  }
   addChildArrsAndSolve<CN extends ChildName<SN>>(
     childPackArrs: ChildSectionPackArrs<SN, CN>
   ): void {

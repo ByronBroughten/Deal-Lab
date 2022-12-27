@@ -50,7 +50,7 @@ export function StoreSectionActionMenu<
 const Styled = styled(DropdownList)`
   position: relative;
   .ActionMenuButtons-signInToSave {
-    color: ${theme["gray-600"]};
+    color: ${theme["gray-700"]};
     background-color: ${theme.info.light};
   }
   .LabeledIconBtn-root {
