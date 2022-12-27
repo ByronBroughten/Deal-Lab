@@ -37,6 +37,15 @@ export function isChildName<SN extends SectionName>(
   const childNames = getChildNames(sectionName);
   return childNames.includes(childName);
 }
+export function validateChildName<
+  SN extends SectionName,
+  CN extends ChildName<SN> = ChildName<SN>
+>(sectionName: SN, childName: any, validNames?: readonly CN[]): CN {
+  const names = (validNames ?? getChildNames(sectionName)) as CN[];
+  if (names.includes(childName)) {
+    return childName;
+  } else throw new Error(`"${childName}" is not a childName of ${sectionName}`);
+}
 
 export type GeneralChildIdArrs = {
   [key: string]: string[];

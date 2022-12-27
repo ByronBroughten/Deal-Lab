@@ -3,11 +3,12 @@ import React from "react";
 import { config } from "../../../Constants";
 import { getStoredObj } from "../../../utils/localStorage";
 import { relSections } from "../../SectionsMeta/relSectionsVarbs";
-import { SectionPack } from "../../SectionsMeta/sectionChildrenDerived/SectionPack";
-import { validateSectionPackByType } from "../../SectionsMeta/SectionNameByType";
+import { ChildSectionPack } from "../../SectionsMeta/sectionChildrenDerived/ChildSectionPack";
+import { validateSectionPackArrs } from "../../SectionsMeta/SectionNameByType";
 import { GetterSections } from "../../StateGetters/GetterSections";
 import { PackBuilderSection } from "../../StatePackers.ts/PackBuilderSection";
 import { StateSections } from "../../StateSections/StateSections";
+import { SolverSection } from "../../StateSolvers/SolverSection";
 import { SolverSections } from "../../StateSolvers/SolverSections";
 
 type UseSectionsStoreProps = {
@@ -37,33 +38,44 @@ export class SectionsStore {
     const { main } = getterSections;
     const packBuilder = new PackBuilderSection({
       ...getterSections.getterSectionsProps,
-      ...main.onlyChild("activeDeal").feInfo,
+      ...main.feInfo,
     });
-    const activeDealPack = packBuilder.makeSectionPack();
-    this.setSectionsInStore(activeDealPack);
+
+    this.setSectionsInStore(
+      packBuilder.makeChildPackArrs(
+        "activeDeal",
+        "userVarbEditor",
+        "userListEditor"
+      )
+    );
   }
-  static getStoredSections(): StateSections {
-    this.rmStoredStateIfPreframesChanged();
+
+  private static getAndValidateStoredState(): StoredSectionsState {
     const storedState = this.getSectionsFromStore();
     try {
-      validateSectionPackByType(storedState, "deal");
+      return validateSectionPackArrs(storedState, "main", storeChildNames);
     } catch (e) {
       this.rmStoredState();
       throw new Error("Failed to validate stored deal state.");
     }
-    const main = SolverSections.initMainFromActiveDealPack(storedState);
+  }
+  private static initMainFromStoredState(
+    storedState: StoredSectionsState
+  ): SolverSection<"main"> {
+    const solver = SolverSections.initRoot();
+    const mainSolver = solver.addAndGetChild("main");
+    mainSolver.builder.replaceChildArrs(storedState);
+    return mainSolver;
+  }
+  static getStoredSections(): StateSections {
+    this.rmStoredStateIfPreframesChanged();
+    const storedState = this.getAndValidateStoredState();
+    const main = this.initMainFromStoredState(storedState);
     const feUser = main.onlyChild("feUser");
     feUser.updateValuesAndSolve({
       userDataStatus: "loading",
     });
     return main.sectionsShare.sections;
-
-    // if (await auth.sessionExists()) {
-    //   const feUser = main.onlyChild("feUser");
-    //   feUser.updateValuesAndSolve({
-    //     userDataStatus: "loading",
-    //   });
-    // }
   }
   private static setSectionsInStore(activeDealPack: StoredSectionsState) {
     localStorage.setItem(
@@ -100,5 +112,15 @@ export class SectionsStore {
   }
 }
 
-type StoredSectionsState = SectionPack<"deal">;
+const storeChildNames = [
+  "activeDeal",
+  "userVarbEditor",
+  "userListEditor",
+] as const;
+type StoredChildName = typeof storeChildNames[number];
+
+type StoredSectionsState = {
+  [CN in StoredChildName]: ChildSectionPack<"main", CN>[];
+};
+
 export class StateMissingFromStorageError extends Error {}

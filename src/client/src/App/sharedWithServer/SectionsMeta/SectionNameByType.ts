@@ -1,10 +1,16 @@
 import { StringTypeChecker } from "../../utils/StringTypeChecker";
+import { SectionPackArrs } from "../StatePackers.ts/PackMakerSection";
 import { Arr } from "../utils/Arr";
+import { Obj } from "../utils/Obj";
 import { PropKeyOfValue } from "../utils/Obj/SubType";
 import { baseNameArrs, BaseNameArrs } from "./baseSectionsDerived/baseNameArrs";
 import { SectionValues } from "./baseSectionsDerived/valueMetaTypes";
 import { relNameArrs, RelNameArrs } from "./relSectionsDerived/relNameArrs";
-import { ChildName, getChildNames } from "./sectionChildrenDerived/ChildName";
+import {
+  ChildName,
+  getChildNames,
+  validateChildName,
+} from "./sectionChildrenDerived/ChildName";
 import {
   childToSectionName,
   ChildToSectionName,
@@ -115,4 +121,24 @@ export function validateSectionPackArrByType<ST extends SectionNameType>({
   } else {
     throw new Error("Payload is not a valid sectionPack array.");
   }
+}
+
+export function validateSectionPackArrs<
+  SN extends SectionName,
+  CN extends ChildName<SN> = ChildName<SN>
+>(
+  value: any,
+  sectionName: SN,
+  validNames?: readonly CN[]
+): SectionPackArrs<SN, CN> {
+  const packArrs = Obj.validateObjToAny(value);
+  for (const key of Obj.keys(packArrs)) {
+    const childName = validateChildName(sectionName, key, validNames);
+    const childSn = childToSectionName(sectionName, childName);
+    validateSectionPackArrByType({
+      value: packArrs[childName],
+      sectionType: childSn,
+    });
+  }
+  return value;
 }

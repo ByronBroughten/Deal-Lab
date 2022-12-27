@@ -5,9 +5,8 @@ import { SectionPack } from "./SectionPack";
 
 export type ChildSectionPack<
   SN extends SectionName,
-  CN extends ChildName<SN>,
-  CT extends ChildSectionName<SN, CN> = ChildSectionName<SN, CN>
-> = SectionPack<CT>;
+  CN extends ChildName<SN>
+> = SectionPack<ChildSectionName<SN, CN>>;
 
 export type ChildArrPack<
   SN extends SectionName,
