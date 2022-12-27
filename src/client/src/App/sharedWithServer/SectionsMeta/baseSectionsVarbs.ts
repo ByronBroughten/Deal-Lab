@@ -210,8 +210,8 @@ export function makeBaseSectionsVarbs() {
       ...baseVarbsS.ongoing("expenses"),
       ...baseVarbsS.ongoing("revenue"),
       ...baseVarbsS.ongoing("cashFlow"),
-      ...baseVarbsS.ongoing("roiDecimal"),
-      ...baseVarbsS.ongoing("roi"),
+      ...baseVarbsS.ongoing("cocRoiDecimal"),
+      ...baseVarbsS.ongoing("cocRoi"),
     }),
     feUser: baseSectionVarbs({
       ...baseVarbs("string", [

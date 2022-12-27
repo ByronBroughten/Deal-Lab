@@ -6,7 +6,7 @@ export function propertyRelVarbs(): RelVarbs<"property"> {
   return {
     ...relVarbsS._typeUniformity,
     ...relVarbsS.savableSection,
-    price: relVarbS.moneyObj("Price"),
+    price: relVarbS.moneyObj("Purchase price"),
     sqft: relVarbS.calcVarb("Square feet"),
     ...relVarbsS.timeMoneyInput("taxes", "Taxes", {
       switchInit: "yearly",

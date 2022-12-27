@@ -59,7 +59,7 @@ const Styled = styled(ListMenuBtn)<{
     color: ${theme.success};
   }
   .CaretMenuBtn-unsyncedIcon {
-    color: ${theme.primary.dark};
+    color: ${theme.info.dark};
   }
   ${({ $dropped }) =>
     $dropped &&

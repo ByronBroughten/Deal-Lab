@@ -75,8 +75,8 @@ export function dealRelVarbs(): RelVarbs<"deal"> {
     cashFlowOngoingSwitch: relVarb("string", {
       initValue: "yearly",
     }),
-    roiDecimalMonthly: relVarbS.leftRightPropFn(
-      "Monthly ROI Decimal",
+    cocRoiDecimalMonthly: relVarbS.leftRightPropFn(
+      "Monthly CoC ROI Decimal",
       "simpleDivide",
       relVarbInfosS.local([
         "cashFlowMonthly",
@@ -84,14 +84,14 @@ export function dealRelVarbs(): RelVarbs<"deal"> {
       ]) as LeftRightVarbInfos,
       { unit: "decimal" }
     ),
-    roiMonthly: relVarbS.singlePropFn(
-      "Monthly ROI",
+    cocRoiMonthly: relVarbS.singlePropFn(
+      "Monthly CoC ROI",
       "decimalToPercent",
-      updateFnPropS.local("roiDecimalMonthly"),
+      updateFnPropS.local("cocRoiDecimalMonthly"),
       { endAdornment: "%", unit: "percent" }
     ),
-    roiDecimalYearly: relVarbS.leftRightPropFn(
-      "Annual ROI Decimal",
+    cocRoiDecimalYearly: relVarbS.leftRightPropFn(
+      "Annual CoC ROI Decimal",
       "simpleDivide",
       relVarbInfosS.local([
         "cashFlowYearly",
@@ -99,13 +99,13 @@ export function dealRelVarbs(): RelVarbs<"deal"> {
       ]) as LeftRightVarbInfos,
       { unit: "decimal" }
     ),
-    roiYearly: relVarbS.singlePropFn(
-      "Annual ROI",
+    cocRoiYearly: relVarbS.singlePropFn(
+      "Annual CoC ROI",
       "decimalToPercent",
-      updateFnPropS.local("roiDecimalYearly"),
+      updateFnPropS.local("cocRoiDecimalYearly"),
       { endAdornment: "%", unit: "percent" }
     ),
-    roiOngoingSwitch: relVarb("string", {
+    cocRoiOngoingSwitch: relVarb("string", {
       initValue: "yearly",
     }),
     upfrontExpenses: relVarbS.sumNums(

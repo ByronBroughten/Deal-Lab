@@ -7,7 +7,7 @@ import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
 export const outputNames = [
   "totalInvestment",
   "cashFlowYearly",
-  "roiYearly",
+  "cocRoiYearly",
 ] as const;
 
 const defaultDealOutputInfos: ValueInEntityInfo[] = outputNames.map(
