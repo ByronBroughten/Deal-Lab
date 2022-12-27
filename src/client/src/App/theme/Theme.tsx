@@ -81,6 +81,7 @@ const themeColors = {
   property: color["gray-100"],
   loan: "#ff7f68",
   mgmt: "#ff9868",
+  info: "#ff9868",
   get plus() {
     return this.primaryNext;
   },
@@ -167,6 +168,21 @@ const themeSections = {
   },
   get property() {
     return this.warning;
+  },
+  info: {
+    ...themeSection({
+      contrastText: themeColors.dark,
+      main: lighten(0.04, themeColors.info),
+      get light() {
+        return lighten(0.23, themeColors.info);
+      },
+      get dark() {
+        return darken(0.1, themeColors.info);
+      },
+      get border() {
+        return darken(0.1, themeColors.info);
+      },
+    }),
   },
   mgmt: {
     ...themeSection({

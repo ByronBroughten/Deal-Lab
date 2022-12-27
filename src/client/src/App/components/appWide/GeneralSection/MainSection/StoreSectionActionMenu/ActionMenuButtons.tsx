@@ -1,4 +1,4 @@
-import { AiOutlineSave } from "react-icons/ai";
+import { AiOutlineInfoCircle, AiOutlineSave } from "react-icons/ai";
 import { BiCopy, BiReset } from "react-icons/bi";
 import { MdOutlineSystemUpdateAlt } from "react-icons/md";
 import { useFeUser } from "../../../../../modules/sectionActorHooks/useFeUser";
@@ -41,8 +41,9 @@ export function useActionMenuBtns<
           key="signInToSave"
           label={"Sign in to Save"}
           disabled={true}
-          icon={<AiOutlineSave size="25" />}
+          icon={<AiOutlineInfoCircle size={25} className="InfoBlurb-icon" />}
           onClick={() => {}}
+          className="ActionMenuButtons-signInToSave"
         />
       );
     },
@@ -53,6 +54,7 @@ export function useActionMenuBtns<
           label={"Save"}
           icon={<AiOutlineSave size="25" />}
           onClick={() => mainSection.saveNew()}
+          disabled={isGuest}
         />
       );
     },
@@ -63,6 +65,7 @@ export function useActionMenuBtns<
           label="Save changes"
           icon={<MdOutlineSystemUpdateAlt size="25" />}
           onClick={() => mainSection.saveUpdates()}
+          disabled={isGuest}
         />
       );
     },
@@ -73,6 +76,7 @@ export function useActionMenuBtns<
           label="Save as new"
           icon={<AiOutlineSave size="25" />}
           onClick={() => mainSection.saveAsNew()}
+          disabled={isGuest}
         />
       );
     },
@@ -83,6 +87,7 @@ export function useActionMenuBtns<
           label="Make a copy"
           icon={<BiCopy size="28" />}
           onClick={() => mainSection.makeACopy()}
+          disabled={isGuest}
         />
       );
     },
@@ -98,6 +103,7 @@ export function useActionMenuBtns<
             </span>
           }
           onClick={() => mainSection.copyAndSave()}
+          disabled={isGuest}
         />
       );
     },

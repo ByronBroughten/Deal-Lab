@@ -48,10 +48,12 @@ export function StoreSectionActionMenu<
 }
 
 const Styled = styled(DropdownList)`
+  position: relative;
+  .ActionMenuButtons-signInToSave {
+    color: ${theme["gray-600"]};
+    background-color: ${theme.info.light};
+  }
   .LabeledIconBtn-root {
     border-top: 1px solid ${theme["gray-500"]};
   }
-  .StoreActionMenu-dropdownBtnIcon {
-  }
-  position: relative;
 `;

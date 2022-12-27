@@ -42,12 +42,7 @@ const Styled = styled(Button)`
   line-height: 1rem;
   font-size: 1rem;
   white-space: nowrap;
-  padding: ${theme.s1} ${theme.s2};
-
-  :disabled {
-    color: ${transparentize(0.4, theme.softDark)};
-    background-color: ${transparentize(0.05, theme.error.light)};
-  }
+  padding: ${theme.s15} ${theme.s3};
 
   .LabeledIconBtn-iconSpan {
     display: flex;

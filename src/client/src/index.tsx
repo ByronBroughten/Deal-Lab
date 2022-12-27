@@ -8,56 +8,51 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
+// See about consulting Taylor's UI/UX person
+
 // Consult a branding and logo-making
 // https://bstro.com/
 
-// See about consulting Taylor's UI person
-
 // Consult marketers re advertising wp page
+// 3. Add example property/loan/mgmt/deal for loading and media
 
-// Nice
-// 7. Add modes for Brrrr, flipping, etc.
-// - Hardcode the necessary inputs for each
-// - Add a "mode" toggle to property and outputs
-//   and/or deal.
-// - Make some outputs hard-coded and based on mode
-// - Make another spot for custom ones that load from variables
+// 1. Show some unusable actions as disabled
+// 2. Begin adding modes (add the underpinnings for them)
+// 3. Implement a "Load" modal to only present "Actions" button
 
-// 1. Implement a "Load" modal to only present "Actions" button
-// 1.5 Show some unusable actions as disabled
+// 8. Begin to add modes for buyHold and fixFlip (buyHoldSell, brrrr, and wholesale come later)
+//  Every property should have all the necessary inputs for each, but
+//  they are activated based on the mode of activeDeal
 
-// 6. Add custom outputs
+//   Mode is adjustable on each deal
+//   Each deal has an outputSection per mode
+//   outputBuyAndHold
+//   outputFixAndFlip
+//   outputBuyHoldSell
+//   outputBrrrr
+//   outputtWholesale
 
-// 2. Make repairs, utilities, etc, be able to be singular values
+//   And each of those sections has default varbs, as well as a varb
+//   for each of those default varbs that controls whether the varb
+//   is displayed, via checkbox.
+
+//   In addition to the defaults constrolled by checkboxes, custom variables
+//   can be loaded as well.
+
+//   Each of those output sections can be saved by mode
+//   Lists of custom variables to use as outputs should also be savable
+
+//   property should have a mode property that receives from activeDeal's
+//   mode property, and that should determine whether some of property's
+//   variables produce "?"
+
+// 4. Make repairs, utilities, etc, be able to be singular values
 //    that can switch to being itemizable.
 //    When they are in itemize mode, a modal is summoned with a full,
 //    spacious menu for editing the list and list items.
-// 3. Add the other compare tables. It basically just needs to start
-//    with "deal", and then have a selector for changing which
-//    table is displayed.
-//    Just add a selector to the current table
-// 3.5 Make compareTable columns editable
-// 4. Make compare table state update from front-end state
 
-// Analysis
-// Variables (enter these into equations)
-// Lists (use lists as templates in any section that has itemized costs)
-// Compare
-
-// Let guests see example lists and variables
-// - Allow guests to edit the variables and lists
-// - Don't allow them to save
-
-// - When comparing changes, save edited lists to localStorage
-// - When a user navigates to variables or lists, if they're saved
-//   in localStorage, load them up
-// - Add a button called "discard changes"
-// - Change the prompt when navigating away to just say, "Changes Not Saved", etc.
-
-// Make tables look nicer
-
-// If anyone uses the app
-// - Let guests access examples on the front-end
+// 5. Make compareTable columns editable
+// 6. Add info hover-ey thingies next to outputs and maybe some inputs
 
 // If I'm going to make tables faster and increase functionality, here's how:
 // I want the tables to reflect those

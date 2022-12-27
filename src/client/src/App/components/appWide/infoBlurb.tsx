@@ -15,11 +15,11 @@ export function InfoBlurb({ className, children }: Props) {
 const Styled = styled.div`
   display: flex;
   align-items: center;
-  color: ${theme.dark};
   padding: ${theme.s2} ${theme.s3};
   font-size: ${theme.infoSize};
   border-radius: ${theme.br0};
-  background: ${theme.mgmt.light};
+  color: ${theme.dark};
+  background: ${theme.info.light};
   .InfoBlurb-icon {
     margin-right: ${theme.s2};
   }

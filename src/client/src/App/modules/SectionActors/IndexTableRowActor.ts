@@ -24,7 +24,7 @@ export class IndexTableRowActor extends SectionActorBase<"tableRow"> {
   get parentTable(): SetterSection<"compareTable"> {
     const parentTable = this.setter.parent;
     if (parentTable.isOfType("compareTable")) {
-      return parentTable;
+      return parentTable as SetterSection<"compareTable">;
     } else throw new Error("parent is not a compareTable");
   }
   get compareRowInfo() {
