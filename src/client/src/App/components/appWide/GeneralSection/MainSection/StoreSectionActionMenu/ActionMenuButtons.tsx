@@ -123,11 +123,12 @@ export function useActionMenuBtns<
             icon={<AiOutlineCloudDownload size={26} />}
             onClick={() => setLoadModalIsOpen(() => true)}
           />
-          {loadModalIsOpen && (
-            <SectionModal closeModal={() => setLoadModalIsOpen(() => false)}>
-              <RowIndexRows {...{ feInfo }} />
-            </SectionModal>
-          )}
+          <SectionModal
+            closeModal={() => setLoadModalIsOpen(() => false)}
+            show={loadModalIsOpen}
+          >
+            <RowIndexRows {...{ feInfo }} />
+          </SectionModal>
         </>
       );
     },

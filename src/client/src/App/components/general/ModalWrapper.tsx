@@ -1,15 +1,23 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { StandardProps } from "./StandardProps";
 
-export function ModalWrapper({ children, className }: StandardProps) {
+export interface ModalWrapperProps extends StandardProps {
+  show: boolean;
+}
+export function ModalWrapper({ children, className, show }: ModalWrapperProps) {
   return (
-    <Styled className={`Modal-root ${className ?? ""}`}>
-      <div className="Modal-content">{children}</div>
+    <Styled
+      $show={show}
+      className={`ModalWrapper-root ${show ? "ModalWrapper-show" : ""} ${
+        className ?? ""
+      }`}
+    >
+      <div className="ModalWrapper-content">{children}</div>
     </Styled>
   );
 }
 
-const Styled = styled.div`
+const Styled = styled.div<{ $show: boolean }>`
   position: fixed;
   left: 0;
   top: 0;
@@ -20,4 +28,22 @@ const Styled = styled.div`
   align-items: center;
   justify-content: center;
   z-index: 10;
+  opacity: 0;
+  transition: all 0.3s ease-in-out;
+  pointer-events: none;
+
+  .ModalWrapper-content {
+    transform: translateY(-200px);
+    transition: all 0.3s ease-in-out;
+  }
+
+  ${({ $show }) =>
+    $show &&
+    css`
+      opacity: 1;
+      pointer-events: visible;
+      .ModalWrapper-content {
+        transform: translateY(0);
+      }
+    `}
 `;

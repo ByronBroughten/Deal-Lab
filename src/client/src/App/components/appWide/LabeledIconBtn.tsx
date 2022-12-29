@@ -4,26 +4,20 @@ import React from "react";
 import styled from "styled-components";
 import theme from "../../theme/Theme";
 
-type Props = {
+interface Props {
   label: string;
   icon: React.ReactNode;
   onClick: () => void;
   className?: string;
   disabled?: boolean;
-};
-export function LabeledIconBtn({
-  label,
-  icon,
-  onClick,
-  className,
-  disabled,
-}: Props) {
+  key?: string;
+}
+export function LabeledIconBtn({ label, icon, className, ...rest }: Props) {
   return (
     <Styled
       {...{
-        onClick,
+        ...rest,
         className: "LabeledIconBtn-root " + className ?? "",
-        disabled,
       }}
     >
       <span className="LabeledIconBtn-iconSpan">{icon}</span>
