@@ -4,8 +4,8 @@ import { ListMenuBtn } from "./ListGroup/ListGroupShared/ListMenuSimple/ListMenu
 
 type Props = {
   title: string;
-  isDropped: boolean;
   toggleDropped: () => void;
+  isDropped?: boolean;
   icon?: React.ReactNode;
 };
 export function DropdownBtn({ title, isDropped, toggleDropped, icon }: Props) {
@@ -22,7 +22,7 @@ export function DropdownBtn({ title, isDropped, toggleDropped, icon }: Props) {
   );
 }
 
-const Styled = styled(ListMenuBtn)<{ $active: boolean }>`
+const Styled = styled(ListMenuBtn)<{ $active?: boolean }>`
   height: ${theme.bigButtonHeight};
   .DropdownBtn-caret {
     margin-right: ${theme.s1};

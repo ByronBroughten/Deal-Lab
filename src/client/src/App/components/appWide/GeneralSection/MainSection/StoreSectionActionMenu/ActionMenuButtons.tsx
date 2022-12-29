@@ -1,10 +1,17 @@
-import { AiOutlineInfoCircle, AiOutlineSave } from "react-icons/ai";
+import React from "react";
+import {
+  AiOutlineCloudDownload,
+  AiOutlineInfoCircle,
+  AiOutlineSave,
+} from "react-icons/ai";
 import { BiCopy, BiReset } from "react-icons/bi";
 import { MdOutlineSystemUpdateAlt } from "react-icons/md";
 import { useFeUser } from "../../../../../modules/sectionActorHooks/useFeUser";
 import { useMainSectionActor } from "../../../../../modules/sectionActorHooks/useMainSectionActor";
 import { SectionNameByType } from "../../../../../sharedWithServer/SectionsMeta/SectionNameByType";
 import { LabeledIconBtn } from "../../../LabeledIconBtn";
+import { RowIndexRows } from "../../../RowIndexRows";
+import { SectionModal } from "../../../SectionModal";
 import {
   ActionMenuLists,
   AllActions,
@@ -31,9 +38,10 @@ export function useDefaultActionLists(): ActionMenuLists {
 
 export function useActionMenuBtns<
   SN extends SectionNameByType<"hasIndexStore">
->(feInfo: Props<SN>) {
+>({ ...feInfo }: Props<SN>) {
   const mainSection = useMainSectionActor(feInfo);
   const { isGuest } = mainSection.feUser;
+  const [loadModalIsOpen, setLoadModalIsOpen] = React.useState(false);
   const actionMenuBtns: Record<AllActions, React.ReactNode> = {
     get signInToSave() {
       return (
@@ -104,6 +112,23 @@ export function useActionMenuBtns<
           onClick={() => mainSection.copyAndSave()}
           disabled={isGuest}
         />
+      );
+    },
+    get load() {
+      return (
+        <>
+          <LabeledIconBtn
+            key="load"
+            label="Load"
+            icon={<AiOutlineCloudDownload size={26} />}
+            onClick={() => setLoadModalIsOpen(() => true)}
+          />
+          {loadModalIsOpen && (
+            <SectionModal closeModal={() => setLoadModalIsOpen(() => false)}>
+              <RowIndexRows {...{ feInfo }} />
+            </SectionModal>
+          )}
+        </>
       );
     },
     get createNew() {

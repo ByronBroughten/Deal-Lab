@@ -7,14 +7,64 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-// UI consultation first.
+
 // Then make a mock WP site.
+// You gotta get rid of "load" in the stored lists.
 
 // Then consult branding and logo and wp site people
 // https://bstro.com/
 
 // 3. Add an example loan/mgmt/deal for loading and media
 //    Make them usable for all deal modes
+
+// Fix and flip notes:
+// - Loans can be used to pay not only for the property
+//   purchase price, but for the rehab costs, too.
+//   That is, they can be a percentage of the rehab costs.
+
+// - Closing costs are called purchase costs with fix and flip
+
+// - Cost overrun is a property variable—
+//   add a certain percent to the rehab costs cause we always underestimate
+//   It's kind of like the CapEx and maintenance budget
+
+// BRRRR will involve both holding costs and ongoing costs
+// - There can still be one purchase price, in
+//   One Time Costs
+
+// - Property taxes will play into both
+// - Insurance will also play into both.
+// - But it could be for two separate rates—one for holding costs, and one
+//   for ongoing.
+
+// - Ongoing costs
+
+// - The comping is amazing
+
+// - Holding costs has its own category, which is basically
+//   "ongoing costs". Ongoing costs could be called holding costs.
+//   Many of the property's basic information would be considered
+//   holding costs
+//   You would just change the title of Ongoing Costs to Holding Costs
+//   Or you would add both and keep them separate
+
+//   You might consider putting basic info like taxes and insurance
+//   in the "Ongoing Costs" category
+//   And you can put the purchase price in the upfront costs
+//   category
+//   That just leaves square feet as a miscellanious variable
+//   You could also let the units be the bearers of sqft
+
+// - One-Time costs would include both Purchase Costs (Loan closing costs)
+// and Selling Costs (6% ARV, on the property).
+
+//   It might not make sense to let properties function both as
+//   buyAndHold and as
+
+// Should the example sections contain each other?
+// It might be easier if they don't.
+// Then I don't have to worry as much about the Saved/unsaved
+// changes status
 
 // 3. Implement a "Load" modal to only present "Actions" button
 

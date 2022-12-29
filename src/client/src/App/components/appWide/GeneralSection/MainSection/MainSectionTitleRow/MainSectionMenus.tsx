@@ -2,9 +2,7 @@ import styled from "styled-components";
 import { useMainSectionActor } from "../../../../../modules/sectionActorHooks/useMainSectionActor";
 import { SaveStatus } from "../../../../../modules/SectionSolvers/MainSectionSolver";
 import { SectionNameByType } from "../../../../../sharedWithServer/SectionsMeta/SectionNameByType";
-import { useAuthStatus } from "../../../../../sharedWithServer/stateClassHooks/useAuthStatus";
 import theme from "../../../../../theme/Theme";
-import { DisplayNameSectionList } from "../../../DisplayNameSectionList";
 import { ChangesSyncedStatusBtn } from "../ChangesSyncedStatusBtn";
 import { StoreSectionActionMenu } from "../StoreSectionActionMenu";
 import { ActionMenuProps } from "../StoreSectionActionMenu/ActionMenuTypes";
@@ -37,19 +35,10 @@ export function MainSectionMenus({
   saveStatus,
   ...feInfo
 }: Props) {
-  const authStatus = useAuthStatus();
-  const isGuest = authStatus === "guest";
   const section = useMainSectionActor(feInfo);
   const saveStatusDisplayed = showSaveStatus && section.isSaved;
-  const { sectionName } = section.get;
   return (
     <Styled className={`MainSectionMenus-root ${className ?? ""}`}>
-      {saveStatusDisplayed && (
-        <ChangesSyncedStatusBtn
-          saveStatus={saveStatus}
-          className="MainSectionMenus-item"
-        />
-      )}
       {showActions && (
         <StoreSectionActionMenu
           {...{
@@ -60,15 +49,10 @@ export function MainSectionMenus({
           }}
         />
       )}
-      {showLoadList && (
-        <DisplayNameSectionList
-          {...{
-            className: "MainSectionMenus-item",
-            feInfo,
-            pluralName,
-            disabled: isGuest,
-            dropTop,
-          }}
+      {saveStatusDisplayed && (
+        <ChangesSyncedStatusBtn
+          saveStatus={saveStatus}
+          className="MainSectionMenus-item"
         />
       )}
     </Styled>

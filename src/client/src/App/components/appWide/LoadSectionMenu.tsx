@@ -12,7 +12,7 @@ type Props = {
   dropTop?: boolean;
 };
 
-export function DisplayNameSectionList({
+export function LoadSectionMenu({
   feInfo,
   dropTop = false,
   className,
@@ -22,10 +22,10 @@ export function DisplayNameSectionList({
   return (
     <DropdownList
       {...{
-        className: "DisplayNameSectionList-root " + className ?? "",
-        title: `Load`,
+        className: "LoadSectionMenu-root " + className ?? "",
+        title: "Load",
         dropTop,
-        icon: <FaList className="DisplayNameSectionList-listIcon" />,
+        icon: <FaList className="LoadSectionMenu-listIcon" />,
       }}
     >
       <RowIndexRows

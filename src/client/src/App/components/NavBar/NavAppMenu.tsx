@@ -35,6 +35,10 @@ const Styled = styled(NavDropDown)<{ $isFullPlan: boolean }>`
   flex-direction: column;
   text-wrap: nowrap;
 
+  @media (min-width: ${theme.mediaPhone}) {
+    visibility: hidden;
+  }
+
   .NavAppMenu-Sidebar {
     box-shadow: ${theme.boxShadow1};
   }
@@ -47,9 +51,6 @@ const Styled = styled(NavDropDown)<{ $isFullPlan: boolean }>`
     margin-left: ${theme.s3};
     height: 24px;
     width: 24px;
-    @media (min-width: ${theme.mediaPhone}) {
-      visibility: hidden;
-    }
   }
 
   .NavAppMenu-dropdown {

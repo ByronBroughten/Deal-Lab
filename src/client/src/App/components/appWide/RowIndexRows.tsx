@@ -14,7 +14,6 @@ import { RowIndexListRow, StyledRowIndexRow } from "./RowIndexListRow";
 type Props<SN extends SectionNameByType<"hasIndexStore">> = {
   feInfo: FeSectionInfo<SN>;
   className?: string;
-  noEntriesMessage: string;
 };
 
 type ScenarioKey = "areNone" | "isAtLeastOne";
@@ -27,7 +26,6 @@ function useScenarioKey(rows: any[]): ScenarioKey {
 export function RowIndexRows<SN extends SectionNameByType<"hasIndexStore">>({
   feInfo,
   className,
-  noEntriesMessage,
 }: Props<SN>) {
   const authStatus = useAuthStatus();
   const [filter, setFilter] = React.useState("");
@@ -36,7 +34,7 @@ export function RowIndexRows<SN extends SectionNameByType<"hasIndexStore">>({
   const scenarioKey = useScenarioKey(rows);
   const scenarios = {
     get areNone() {
-      return <Message message={noEntriesMessage} />;
+      return <Message message="None Saved" />;
     },
     get isAtLeastOne() {
       return (

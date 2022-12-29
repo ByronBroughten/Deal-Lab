@@ -14,7 +14,9 @@ export function propertyRelVarbs(): RelVarbs<"property"> {
     ...relVarbsS.timeMoneyInput("homeIns", "Home insurance", {
       switchInit: "yearly",
     }),
-    // zipcode: relVarbS.numObj("Zipcode"),
+    arv: relVarbS.moneyObj("ARV"),
+    ...relVarbsS.monthsYearsInput("holdingPeriod", "Holding period"),
+
     numUnits: relVarbS.sumChildVarb("Unit count", "unit", "one"),
     numBedrooms: relVarbS.sumChildVarb("Bedroom count", "unit", "numBedrooms"),
     upfrontExpenses: relVarbS.sumMoney("Upfront expenses", [
