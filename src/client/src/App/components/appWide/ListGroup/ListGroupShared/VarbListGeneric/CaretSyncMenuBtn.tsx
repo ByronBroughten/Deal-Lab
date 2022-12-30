@@ -1,6 +1,6 @@
 import { BiCaretDown, BiCaretRight, BiCaretUp } from "react-icons/bi";
+import { BsCloudCheck, BsCloudSlash } from "react-icons/bs";
 import { HiMenu } from "react-icons/hi";
-import { MdOutlineSync, MdOutlineSyncDisabled } from "react-icons/md";
 import styled, { css } from "styled-components";
 import { SaveStatus } from "../../../../../modules/SectionSolvers/MainSectionSolver";
 import theme from "../../../../../theme/Theme";
@@ -14,7 +14,7 @@ type BiCaretBtnProps = {
   saveStatus?: SaveStatus;
   showSaveStatus?: boolean;
 };
-export function CaretMenuBtn({
+export function CaretSyncMenuBtn({
   dropped,
   direction = "up",
   saveStatus,
@@ -36,12 +36,12 @@ export function CaretMenuBtn({
       icon={
         <>
           {!dropped && saveStatus === "changesSynced" && (
-            <MdOutlineSync className="CaretMenuBtn-syncedIcon" />
+            <BsCloudCheck className="CaretSyncMenuBtn-syncedIcon" />
           )}
           {!dropped && saveStatus === "unsyncedChanges" && (
-            <MdOutlineSyncDisabled className="CaretMenuBtn-unsyncedIcon" />
+            <BsCloudSlash className="CaretSyncMenuBtn-unsyncedIcon" />
           )}
-          <HiMenu className="CaretMenuBtn-menuIcon" />
+          <HiMenu className="CaretSyncMenuBtn-menuIcon" />
           {dropped && directions[direction]}
           {!dropped && <BiCaretDown />}
         </>
@@ -55,10 +55,10 @@ const Styled = styled(ListMenuBtn)<{
   $saveStatus?: SaveStatus;
 }>`
   border: none !important;
-  .CaretMenuBtn-syncedIcon {
+  .CaretSyncMenuBtn-syncedIcon {
     color: ${theme.success};
   }
-  .CaretMenuBtn-unsyncedIcon {
+  .CaretSyncMenuBtn-unsyncedIcon {
     color: ${theme.info.dark};
   }
   ${({ $dropped }) =>

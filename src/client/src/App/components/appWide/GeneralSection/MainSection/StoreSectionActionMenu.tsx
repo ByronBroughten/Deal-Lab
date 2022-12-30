@@ -53,6 +53,11 @@ const Styled = styled(DropdownList)`
     color: ${theme["gray-700"]};
     background-color: ${theme.info.light};
   }
+  .DropdownList-dropDownBtn {
+    height: 25px;
+    width: 90px;
+  }
+
   .LabeledIconBtn-root {
     border-top: 1px solid ${theme["gray-500"]};
   }

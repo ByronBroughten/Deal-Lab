@@ -1,5 +1,5 @@
 import React from "react";
-import { MdOutlineSync, MdOutlineSyncDisabled } from "react-icons/md";
+import { BsCloudCheck, BsCloudSlash } from "react-icons/bs";
 import styled, { css } from "styled-components";
 import { SaveStatus } from "../../../../modules/SectionSolvers/MainSectionSolver";
 import theme from "../../../../theme/Theme";
@@ -18,14 +18,14 @@ export function ChangesSyncedStatusBtn({ className, saveStatus }: Props) {
     changesSynced: {
       $color: theme.success,
       get icon() {
-        return <MdOutlineSync />;
+        return <BsCloudCheck />;
       },
       text: "Changes Saved",
     },
     unsyncedChanges: {
       $color: theme.info.border,
       get icon() {
-        return <MdOutlineSyncDisabled />;
+        return <BsCloudSlash />;
       },
       text: "Unsaved Changes",
     },
@@ -43,9 +43,10 @@ export function ChangesSyncedStatusBtn({ className, saveStatus }: Props) {
 const Styled = styled(ListMenuBtn)<{ $color: string }>`
   background: ${theme.light};
   white-space: nowrap;
+  font-size: ${theme.labelSize};
 
   ${({ $color }) => css`
-    border: 2px solid ${$color};
+    border: none;
     color: ${$color};
     font-size: ${theme.labelSize};
 

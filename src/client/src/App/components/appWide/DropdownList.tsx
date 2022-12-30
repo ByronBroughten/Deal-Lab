@@ -41,6 +41,7 @@ export function DropdownList({
       )}
       <DropdownBtn
         {...{
+          className: "DropdownList-dropDownBtn",
           isDropped: listIsOpen,
           toggleDropped: toggleList,
           title,

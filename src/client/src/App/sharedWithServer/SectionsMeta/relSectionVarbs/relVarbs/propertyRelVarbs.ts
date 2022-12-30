@@ -15,7 +15,12 @@ export function propertyRelVarbs(): RelVarbs<"property"> {
       switchInit: "yearly",
     }),
     arv: relVarbS.moneyObj("ARV"),
-    ...relVarbsS.monthsYearsInput("holdingPeriod", "Holding period"),
+    sellingCosts: relVarbS.moneyObj("ARV"),
+    // this should be a percent or dollar
+
+    ...relVarbsS.monthsYearsInput("holdingPeriod", "Holding period", {
+      switchInit: "months",
+    }),
 
     numUnits: relVarbS.sumChildVarb("Unit count", "unit", "one"),
     numBedrooms: relVarbS.sumChildVarb("Bedroom count", "unit", "numBedrooms"),

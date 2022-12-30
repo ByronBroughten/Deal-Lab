@@ -107,6 +107,7 @@ const fontSize = {
   labelSize: rem("14px"),
   infoSize: rem("16px"),
   inputSize: rem("16px"),
+  smallTitleSize: rem("18px"),
   titleSize: rem("20px"),
   siteTitleSize: rem("20px"),
 } as const;

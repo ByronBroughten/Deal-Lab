@@ -8,5 +8,8 @@ export function SectionTitle({ className, text }: Props) {
   );
 }
 const Styled = styled.div`
-  ${theme.titleChunk}
+  ${theme.titleChunk};
+  .public-DraftEditor-content {
+    min-height: 25px;
+  }
 `;

@@ -16,7 +16,7 @@ import { useOpenWidth } from "../../customHooks/useOpenWidth";
 import { useSaveStatus } from "../../GeneralSection/MainSection/useSaveStatus";
 import { ListMenuFull } from "./ListMenuFull";
 import { ListMenuSimple } from "./ListMenuSimple";
-import { CaretMenuBtn } from "./VarbListGeneric/CaretMenuBtn";
+import { CaretSyncMenuBtn } from "./VarbListGeneric/CaretSyncMenuBtn";
 import { VarbListTable } from "./VarbListGeneric/VarbListTable";
 import { VarbListTotal } from "./VarbListGeneric/VarbListTotal";
 
@@ -123,7 +123,7 @@ export function VarbListGeneric<SN extends VarbListAllowed>({
               />
             )}
           </div>
-          <CaretMenuBtn
+          <CaretSyncMenuBtn
             saveStatus={saveStatus}
             className="VarbListGeneric-caretBtn"
             dropped={menuIsOpen}

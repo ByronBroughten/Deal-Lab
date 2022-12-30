@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import theme from "../../../../theme/Theme";
-import { SectionTitle } from "../../SectionTitle";
 
 type Props = {
   sectionTitle: string;
@@ -17,10 +16,10 @@ export function SectionTitleRow({
   return (
     <Styled className={`SectionTitleRow-root ${className ?? ""}`}>
       <div className="SectionTitleRow-leftSide">
-        <SectionTitle
+        {/* <SectionTitle
           text={sectionTitle}
           className="SectionTitleRow-sectionTitle"
-        />
+        /> */}
         <div className="SectionTitleRow-rightOfTitle">{leftSide ?? null}</div>
       </div>
       <div className="SectionTitleRow-rightSide">{rightSide ?? null}</div>
@@ -35,10 +34,10 @@ const Styled = styled.div`
 
   .SectionTitleRow-sectionTitle {
     display: flex;
-    align-items: center;
+    align-items: flex-end;
   }
   .SectionTitleRow-rightOfTitle {
-    margin-left: ${theme.s3};
+    margin-left: ${theme.s1};
   }
 
   .SectionTitleRow-leftSide {

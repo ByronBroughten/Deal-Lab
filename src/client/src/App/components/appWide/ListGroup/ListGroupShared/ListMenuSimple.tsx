@@ -9,8 +9,6 @@ export function ListMenuSimple({ className, ...rest }: Props) {
         ...rest,
         className: `ListMenuSimple-root ${className ?? ""}`,
         showSaveStatus: false,
-        showLoadList: false,
-        showActions: true,
         actionMenuProps: {
           alwaysArr: ["createNew"],
           isNotSavedArr: [],

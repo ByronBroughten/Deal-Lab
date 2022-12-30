@@ -7,14 +7,31 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
+// I think I can implement the examples properly,
+// and add a mode Toggle that for now just says "Buy and Hold"
 
-// Then make a mock WP site.
-// You gotta get rid of "load" in the stored lists.
+//
 
-// Then consult branding and logo and wp site people
+// Options for how to spend this evening:
+// 1. Work on a placeholder Wordpress site
+// 2. Work on updating the UI
+// 3. Work on adding the beginnings of the modes
+// 4. Start gathering tax documents—maybe that's a Monday project
+// 5. Implement the examples
+
+// Consult branding, logo, and pro wordpress people
 // https://bstro.com/
 
-// 3. Add an example loan/mgmt/deal for loading and media
+// UI Update
+// 1. Make an un-itemized cost an option for singleTimeList
+// 2. Do the same for ongoingList
+// 3. Make a modal for editing itemized lists, which includes the
+//    whole list menu
+// 4. Start by displaying only the name and value of the cost list
+//    and add an "edit" button
+// 5. Think about making the cost list viewable
+
+// 6. Add an example loan/mgmt/deal for loading and media
 //    Make them usable for all deal modes
 
 // Fix and flip notes:
@@ -66,8 +83,6 @@ AppRegistry.runApplication("App", {
 // Then I don't have to worry as much about the Saved/unsaved
 // changes status
 
-// 3. Implement a "Load" modal to only present "Actions" button
-
 // 2. Begin adding underpinnings of modes
 // 4.
 // -Give property the necessary vabs for buyAndHold and fixAndFlip
@@ -78,7 +93,6 @@ AppRegistry.runApplication("App", {
 //  the varbs in those sections are things like, "showCocRoi", "showPitiPayments", etc.
 //  They also have childSection virtualVarbs called "customOutputs"
 
-// -Make feUser have stores for each mode of outputSection
 // -Make sure it has a store for custom output lists, too
 
 // -make the example property and deal work with all modes

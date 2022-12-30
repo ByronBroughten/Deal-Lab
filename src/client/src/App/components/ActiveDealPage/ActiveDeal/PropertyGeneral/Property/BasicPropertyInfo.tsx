@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { useSetterSection } from "../../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import theme from "../../../../../theme/Theme";
 import BasicSectionInfo from "../../../../appWide/GeneralSection/MainSection/MainSectionBody/BasicSectionInfo";
-import { MainSectionTitleEditor } from "../../../../appWide/GeneralSection/MainSection/MainSectionTitleRow/MainSectionTitleEditor";
 import { NumObjEntityEditor } from "../../../../inputs/NumObjEntityEditor";
 
 type Props = { feId: string; className?: string };
@@ -20,10 +19,6 @@ export default function BasicPropertyInfo({ feId, className }: Props) {
       <div className="BasicSectionInfo-viewable">
         <div className="BasicSectionInfo-subSections">
           <div className="BasicSectionInfo-subSection">
-            <MainSectionTitleEditor
-              className="MainSectionTitleRow-title"
-              feInfo={{ feId, sectionName: "property" }}
-            />
             {varbNames.map((varbName) => (
               <NumObjEntityEditor
                 key={varbName}

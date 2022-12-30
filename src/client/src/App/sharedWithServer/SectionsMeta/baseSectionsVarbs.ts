@@ -70,6 +70,8 @@ export function makeBaseSectionsVarbs() {
     }),
     singleTimeList: baseSectionVarbs({
       ...baseVarbsS.savableSection,
+      inputMode: "string", // dollarValue, itemized
+
       total: "numObj",
       defaultValueSwitch: "string",
     }),

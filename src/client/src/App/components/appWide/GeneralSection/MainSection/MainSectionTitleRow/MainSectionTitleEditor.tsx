@@ -9,7 +9,7 @@ export function MainSectionTitleEditor({ feInfo, className }: Props) {
     <Styled
       {...{
         feVarbInfo: { ...feInfo, varbName: "displayName" },
-        label: "Title",
+        placeholder: "Title",
         className: `MainSectionTitleRow-root ${className ?? ""}`,
       }}
     />
@@ -18,7 +18,7 @@ export function MainSectionTitleEditor({ feInfo, className }: Props) {
 
 const Styled = styled(BigStringEditor)`
   .DraftEditor-root {
-    font-size: ${theme.inputSize};
+    font-size: ${theme.smallTitleSize};
   }
   .DraftTextField-root {
     display: flex;

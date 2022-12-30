@@ -2,9 +2,9 @@ import styled from "styled-components";
 import { FeInfoByType } from "../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import theme, { ThemeName } from "../../../../theme/Theme";
 import {
+  MainSectionActionRowMini,
   MainSectionMenuOptions,
-  MainSectionMenusMini,
-} from "../../GeneralSection/MainSection/MainSectionTitleRow/MainSectionMenus";
+} from "../../GeneralSection/MainSection/MainSectionTitleRow/MainSectionActionRow";
 import { ViewAndXMenu } from "./ListMenuSimple/ViewAndXMenu";
 
 export interface ListMenuGenericProps
@@ -37,7 +37,7 @@ export function ListMenuGeneric({
       }}
     >
       <div className="ListMenuGeneric-viewable">
-        <MainSectionMenusMini
+        <MainSectionActionRowMini
           {...{
             ...feInfo,
             ...rest,
