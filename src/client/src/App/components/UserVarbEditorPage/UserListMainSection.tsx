@@ -11,6 +11,7 @@ import { OuterMainSection } from "../appWide/GeneralSection/OuterMainSection";
 import { InfoBlurb } from "../appWide/infoBlurb";
 import { MakeListNode } from "../appWide/ListGroup/ListGroupShared/ListGroupGeneric/ListGroupLists";
 import { ListMenuBtn } from "../appWide/ListGroup/ListGroupShared/ListMenuSimple/ListMenuBtn";
+import { SectionTitle } from "../appWide/SectionTitle";
 import { UserListSectionBody } from "./UserListSectionBody";
 import { useSaveUserLists } from "./useSaveUserLists";
 
@@ -60,19 +61,21 @@ export function UserListMainSection({ title, storeName, ...rest }: Props) {
     <Styled className="UserListMainSection-root">
       <SectionsContextProvider sectionsContext={userListsContext}>
         <SectionTitleRow
-          sectionTitle={title}
           className="UserListMainSection-sectionTitle"
           leftSide={
-            <div className="UserListMainSection-btnsRow">
-              <ListMenuBtn {...btnProps} />
+            <>
+              <SectionTitle text={title} />
+              <div className="UserListMainSection-btnsRow">
+                <ListMenuBtn {...btnProps} />
 
-              <ListMenuBtn
-                text="Discard Changes"
-                icon={<VscDiscard />}
-                disabled={areSaved}
-                className="UserListMainSection-discardChanges"
-              />
-            </div>
+                <ListMenuBtn
+                  text="Discard Changes"
+                  icon={<VscDiscard />}
+                  disabled={areSaved}
+                  className="UserListMainSection-discardChanges"
+                />
+              </div>
+            </>
           }
         />
         {authStatus === "guest" && (

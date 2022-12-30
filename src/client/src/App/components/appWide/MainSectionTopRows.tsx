@@ -11,10 +11,12 @@ type Props = {
   sectionTitle: string;
   sectionName: SectionNameByType<"hasCompareTable">;
   feId: string;
+  loadWhat: string;
 };
 export function MainSectionTopRows({
   className,
   sectionTitle,
+  loadWhat,
   ...feInfo
 }: Props) {
   const saveStatus = useSaveStatus(feInfo);
@@ -35,7 +37,7 @@ export function MainSectionTopRows({
         <MainSectionActionRow
           {...{
             ...feInfo,
-            pluralName: "deal",
+            loadWhat,
             xBtn: false,
             dropTop: false,
             saveStatus,

@@ -16,14 +16,22 @@ interface Props<SN extends SectionNameByType<"hasIndexStore">>
   sectionName: SN;
   feId: string;
   className?: string;
+  loadWhat: string;
 }
 
 export function StoreSectionActionMenu<
   SN extends SectionNameByType<"hasIndexStore">
->({ dropTop, className, sectionName, feId, ...menuListProps }: Props<SN>) {
+>({
+  dropTop,
+  className,
+  sectionName,
+  feId,
+  loadWhat,
+  ...menuListProps
+}: Props<SN>) {
   const feInfo = { sectionName, feId };
   const mainSection = useMainSectionActor(feInfo);
-  const buttons = useActionMenuBtns(feInfo);
+  const buttons = useActionMenuBtns({ ...feInfo, loadWhat });
   const defaultActionLists = useDefaultActionLists();
   const { alwaysArr, isNotSavedArr, isSavedArr } = {
     ...defaultActionLists,
@@ -55,7 +63,7 @@ const Styled = styled(DropdownList)`
   }
   .DropdownList-dropDownBtn {
     height: 25px;
-    width: 90px;
+    width: 152px;
   }
 
   .LabeledIconBtn-root {

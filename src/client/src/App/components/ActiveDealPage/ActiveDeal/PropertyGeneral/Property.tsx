@@ -15,6 +15,7 @@ export function Property({ feId }: { feId: string }) {
         {...{
           ...feInfo,
           sectionTitle: "Property",
+          loadWhat: "Property",
         }}
       />
       <MainSectionBody themeName="property">

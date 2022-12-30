@@ -23,6 +23,7 @@ import {
 } from "./ActionMenuTypes";
 
 type Props<SN extends SectionNameByType<"hasIndexStore">> = {
+  loadWhat: string;
   sectionName: SN;
   feId: string;
 };
@@ -38,7 +39,7 @@ export function useDefaultActionLists(): ActionMenuLists {
 
 export function useActionMenuBtns<
   SN extends SectionNameByType<"hasIndexStore">
->({ ...feInfo }: Props<SN>) {
+>({ loadWhat, ...feInfo }: Props<SN>) {
   const mainSection = useMainSectionActor(feInfo);
   const { isGuest } = mainSection.feUser;
   const [loadModalIsOpen, setLoadModalIsOpen] = React.useState(false);
@@ -126,6 +127,7 @@ export function useActionMenuBtns<
           <SectionModal
             closeModal={() => setLoadModalIsOpen(() => false)}
             show={loadModalIsOpen}
+            title={`Load ${loadWhat}`}
           >
             <RowIndexRows {...{ feInfo }} />
           </SectionModal>

@@ -25,6 +25,7 @@ export function ActiveDeal({ className, feId }: Props) {
         {...{
           ...feInfo,
           sectionTitle: "Deal",
+          loadWhat: "Deal"
         }}
       />
       <div className="ActiveDeal-inputSectionsWrapper">

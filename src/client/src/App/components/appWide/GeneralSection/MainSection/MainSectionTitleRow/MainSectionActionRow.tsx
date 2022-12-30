@@ -13,11 +13,13 @@ interface Props extends MainSectionMenuOptions {
   sectionName: SectionNameByType<"hasIndexStore">;
   feId: string;
   className?: string;
+  loadWhat: string;
 }
 export function MainSectionActionRow({
   dropTop,
   className,
   actionMenuProps,
+  loadWhat,
   ...feInfo
 }: Props) {
   return (
@@ -26,6 +28,7 @@ export function MainSectionActionRow({
         {...{
           ...feInfo,
           ...actionMenuProps,
+          loadWhat,
           dropTop,
           className: "MainSectionActionRow-item",
         }}

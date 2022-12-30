@@ -41,7 +41,7 @@ export function ListMenuGeneric({
           {...{
             ...feInfo,
             ...rest,
-            pluralName: "lists",
+            loadWhat: "List",
           }}
         />
         <ViewAndXMenu

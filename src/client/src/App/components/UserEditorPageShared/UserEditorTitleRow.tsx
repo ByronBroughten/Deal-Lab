@@ -8,6 +8,7 @@ import { useAuthStatus } from "../../sharedWithServer/stateClassHooks/useAuthSta
 import { SectionTitleRow } from "../appWide/GeneralSection/MainSection/SectionTitleRow";
 import { InfoBlurb } from "../appWide/infoBlurb";
 import { ListMenuBtn } from "../appWide/ListGroup/ListGroupShared/ListMenuSimple/ListMenuBtn";
+import { SectionTitle } from "../appWide/SectionTitle";
 import theme from "./../../theme/Theme";
 import { useSaveEditorToDb } from "./useSaveEditorToDb";
 
@@ -33,10 +34,10 @@ export function UserEditorTitleRow<SN extends SectionName>({
   return (
     <Styled className="UserEditorTitleRow-root">
       <SectionTitleRow
-        sectionTitle={titleText}
         className="UserListMainSection-sectionTitle"
         leftSide={
           <div className="UserListMainSection-btnsRow">
+            <SectionTitle text={titleText} />
             <ListMenuBtn
               {...{
                 text: "Save and Apply Changes",

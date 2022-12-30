@@ -1,27 +1,14 @@
 import styled from "styled-components";
-import theme from "../../../../theme/Theme";
 
 type Props = {
-  sectionTitle: string;
   leftSide?: React.ReactNode;
   rightSide?: React.ReactNode;
   className?: string;
 };
-export function SectionTitleRow({
-  sectionTitle,
-  leftSide,
-  rightSide,
-  className,
-}: Props) {
+export function SectionTitleRow({ leftSide, rightSide, className }: Props) {
   return (
     <Styled className={`SectionTitleRow-root ${className ?? ""}`}>
-      <div className="SectionTitleRow-leftSide">
-        {/* <SectionTitle
-          text={sectionTitle}
-          className="SectionTitleRow-sectionTitle"
-        /> */}
-        <div className="SectionTitleRow-rightOfTitle">{leftSide ?? null}</div>
-      </div>
+      <div className="SectionTitleRow-leftSide">{leftSide ?? null}</div>
       <div className="SectionTitleRow-rightSide">{rightSide ?? null}</div>
     </Styled>
   );
@@ -31,14 +18,6 @@ const Styled = styled.div`
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-
-  .SectionTitleRow-sectionTitle {
-    display: flex;
-    align-items: flex-end;
-  }
-  .SectionTitleRow-rightOfTitle {
-    margin-left: ${theme.s1};
-  }
 
   .SectionTitleRow-leftSide {
     display: flex;
