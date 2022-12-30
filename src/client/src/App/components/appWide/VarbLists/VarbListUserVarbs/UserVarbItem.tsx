@@ -11,7 +11,7 @@ export function UserVarbItem({ feId }: Props) {
   } as const;
   const varb = useGetterVarb({
     ...feInfo,
-    varbName: "numObjEditor",
+    varbName: "valueEditor",
   });
   return (
     <Styled

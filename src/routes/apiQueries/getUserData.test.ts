@@ -3,13 +3,13 @@ import { constants } from "../../client/src/App/Constants";
 import { apiQueriesShared } from "../../client/src/App/sharedWithServer/apiQueriesShared";
 import { QueryReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
 import {
-  UserData,
-  validateUserData,
-} from "../../client/src/App/sharedWithServer/apiQueriesShared/getUserData";
-import {
   guestAccessNames,
   GuestAccessSectionPackArrs,
 } from "../../client/src/App/sharedWithServer/apiQueriesShared/register";
+import {
+  UserData,
+  validateUserData,
+} from "../../client/src/App/sharedWithServer/apiQueriesShared/validateUserData";
 import { PackBuilderSection } from "../../client/src/App/sharedWithServer/StatePackers.ts/PackBuilderSection";
 import { runApp } from "../../runApp";
 import { LoadedDbUser } from "./apiQueriesShared/DbSections/LoadedDbUser";

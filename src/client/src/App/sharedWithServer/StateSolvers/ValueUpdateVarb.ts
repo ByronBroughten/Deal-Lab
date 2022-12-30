@@ -15,7 +15,10 @@ import {
   stringObj,
   StringObj,
 } from "../SectionsMeta/baseSectionsVarbs/baseValues/StringObj";
-import { UpdateFnProps } from "../SectionsMeta/relSectionVarbs/rel/UpdateFnProps";
+import {
+  UpdateFnProp,
+  UpdateFnProps,
+} from "../SectionsMeta/relSectionVarbs/rel/UpdateFnProps";
 import {
   PathInVarbInfo,
   RelInVarbInfo,
@@ -25,22 +28,27 @@ import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { GetterSectionProps } from "../StateGetters/Bases/GetterSectionBase";
 import { GetterVarbBase } from "../StateGetters/Bases/GetterVarbBase";
 import { GetterSection } from "../StateGetters/GetterSection";
-import { GetterSections } from "../StateGetters/GetterSections";
 import { GetterVarb } from "../StateGetters/GetterVarb";
 import { GetterVarbNumObj } from "../StateGetters/GetterVarbNumObj";
 import { InEntityGetterVarb } from "../StateGetters/InEntityGetterVarb";
 import { UpdaterVarb } from "../StateUpdaters/UpdaterVarb";
 import { Arr } from "../utils/Arr";
 import { Obj } from "../utils/Obj";
-import { ConditionalValueSolver } from "./SolveValueVarb/ConditionalValueSolver";
-import { UserVarbValueSolver } from "./SolveValueVarb/UserVarbValueSolver";
+import { ConditionalValueSolver } from "./ValueUpdaterVarb/ConditionalValueSolver";
+import { UserVarbValueSolver } from "./ValueUpdaterVarb/UserVarbValueSolver";
+
+function calculatedNumObj(solvableText: string): NumObj {
+  return {
+    solvableText,
+    mainText: "",
+    entities: [],
+    // for calculations to load correctly, there must be no entities
+  };
+}
 
 export class SolveValueVarb<
   SN extends SectionNameByType<"hasVarb">
 > extends GetterVarbBase<SN> {
-  private get getterSections() {
-    return new GetterSections(this.getterSectionsProps);
-  }
   get getterSection(): GetterSection<SN> {
     return new GetterSection(this.getterSectionProps);
   }
@@ -53,6 +61,7 @@ export class SolveValueVarb<
   private get numObjSolver() {
     return new GetterVarbNumObj(this.getterVarbProps);
   }
+
   private updateFns = {
     manualUpdateOnly: (): StateValue => {
       return this.getterVarb.value();
@@ -70,6 +79,18 @@ export class SolveValueVarb<
       );
       return varb.value("numObj");
     },
+    getNumObjOfSwitch: (): NumObj => {
+      const { updateFnProps } = this.inEntityVarb;
+      const { getterSection: get } = this;
+      const switchVarb = get.varbByFocalMixed(
+        updateFnProps.switch as UpdateFnProp
+      );
+      const stringSwitch = switchVarb.value("string");
+      const valueVarb = get.varbByFocalMixed(
+        updateFnProps[stringSwitch] as UpdateFnProp
+      );
+      return calculatedNumObj(valueVarb.value("numObj").solvableText);
+    },
     loadLocalString: (): StringObj => {
       const { updateFnProps } = this.inEntityVarb;
       const varb = this.getterSection.varbByFocalMixed(
@@ -80,10 +101,17 @@ export class SolveValueVarb<
     inEntityInfo: (): InEntityIdInfoValue => {
       return this.getterVarb.value("inEntityInfo");
     },
-    loadEditorSolvableText: (): NumObj => {
+    loadSolvableTextByVarbInfo: (): NumObj => {
+      const { updateFnProps } = this.inEntityVarb;
+      const varb = this.getterSection.varbByFocalMixed(
+        updateFnProps.varbInfo as RelVarbInfo
+      );
+      return calculatedNumObj(varb.value("numObj").solvableText);
+    },
+    loadValueEditorSolvableText: (): NumObj => {
       const value = this.getterVarb.value("numObj");
       const { solvableText } = this.getterVarb.localValue(
-        "numObjEditor",
+        "valueEditor",
         "numObj"
       );
       return { ...value, solvableText };
@@ -102,25 +130,9 @@ export class SolveValueVarb<
         solvableText,
       };
     },
-    loadSolvableText: (): NumObj => {
-      const { updateFnProps } = this.inEntityVarb;
-      const varb = this.getterSection.varbByFocalMixed(
-        updateFnProps.varbInfo as RelVarbInfo
-      );
-      return {
-        solvableText: varb.value("numObj").solvableText,
-        mainText: "",
-        entities: [],
-      };
-    }, // mgmt
     calculation: (): NumObj => {
       const solvableText = this.solvableTextFromCalculation();
-      return {
-        solvableText,
-        mainText: "",
-        entities: [],
-        // for calculations to load correctly, there must be no entities
-      };
+      return calculatedNumObj(solvableText);
     },
     userVarb: (): NumObj => {
       const section = this.getterSection;
@@ -130,7 +142,7 @@ export class SolveValueVarb<
         );
         const editor = (
           section as any as GetterSection<"userVarbItem">
-        ).varbNext("numObjEditor");
+        ).varbNext("valueEditor");
         const editorEntities = editor.value("numObj").entities;
         let isPureUserVarb = true;
         for (const entity of editorEntities) {

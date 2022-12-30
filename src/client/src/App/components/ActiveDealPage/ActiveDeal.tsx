@@ -35,7 +35,7 @@ export function ActiveDeal({ className, feId }: Props) {
                 label="Age"
                 onChange={() => {}}
               >
-                <MenuItem value={"buyAndHold"}>Buy and Hold</MenuItem>
+                <MenuItem value={"buyAndHold"}>Buy & Hold</MenuItem>
                 <MenuItem value={"moreToCome"}>More to Come...</MenuItem>
               </Select>
             </FormControl>

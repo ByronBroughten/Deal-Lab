@@ -27,6 +27,16 @@ export function isNumObj(value: any): value is NumObj {
     Array.isArray(value.entities)
   );
 }
+export const numObjS = {
+  validate(value: any): NumObj {
+    if (isNumObj(value)) {
+      return value;
+    } else {
+      throw new Error(`value "${value}" is not a NumObj`);
+    }
+  },
+};
+
 export function numObj(
   mainText: string | number,
   entities: ValueInEntity[] = [],

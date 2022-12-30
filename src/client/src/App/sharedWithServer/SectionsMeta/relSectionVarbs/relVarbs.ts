@@ -21,7 +21,11 @@ import {
 } from "./rel/relVarbs/relOngoingVarbs";
 import { switchInput } from "./rel/relVarbs/relSwitchVarbs";
 import { RelVarb, RelVarbByType } from "./rel/relVarbTypes";
-import { updateFnPropS, updateFnPropsS } from "./rel/UpdateFnProps";
+import {
+  updateFnPropS,
+  updateFnPropsS,
+  updatePropsS,
+} from "./rel/UpdateFnProps";
 
 export type GeneralRelVarbs = Record<string, RelVarb>;
 export type RelVarbs<SN extends SectionName> = Record<VarbName<SN>, RelVarb>;
@@ -257,11 +261,7 @@ export const relVarbsS = {
       ...this._typeUniformity,
       ...this.listItemVirtualVarb,
       value: relVarbS.numObj(relVarbInfoS.local("displayName"), {
-        updateFnName: "loadEditorSolvableText",
-        updateFnProps: {
-          proxyValue: updateFnPropS.local("numObjEditor"),
-          valueSwitch: updateFnPropS.local("valueSwitch"),
-        },
+        ...updatePropsS.loadFromLocalValueEditor(),
         inUpdateSwitchProps: [
           {
             switchInfo: relVarbInfoS.local("valueSwitch"),
@@ -279,18 +279,18 @@ export const relVarbsS = {
       valueSwitch: relVarb("string", {
         initValue: "labeledEquation",
       }),
-      numObjEditor: relVarbS.calcVarb("", { startAdornment: "$" }),
+      valueEditor: relVarbS.calcVarb("", { startAdornment: "$" }),
     };
   },
   ongoingItem(): RelVarbs<"ongoingItem"> {
     const ongoingValueNames = switchNames("value", "ongoing");
     const makeDefaultValueUpdatePack = () =>
       ({
-        updateFnName: "loadEditorSolvableText",
-        updateFnProps: updateFnPropsS.localByVarbName([
-          "numObjEditor",
-          "valueSwitch",
-        ]),
+        updateFnName: "loadSolvableTextByVarbInfo",
+        updateFnProps: {
+          varbInfo: updateFnPropS.local("valueEditor"),
+          switch: updateFnPropS.local("valueSwitch"),
+        },
       } as const);
     const ongoingSwitchInfo = relVarbInfoS.local(ongoingValueNames.switch);
     return {
@@ -302,7 +302,7 @@ export const relVarbsS = {
       costToReplace: relVarbS.calcVarb("Replacement cost", {
         startAdornment: "$",
       }),
-      numObjEditor: relVarbS.calcVarb("", {
+      valueEditor: relVarbS.calcVarb("", {
         startAdornment: "$",
         endAdornment: "provide adornment to editor",
       }),

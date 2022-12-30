@@ -25,7 +25,7 @@ export function MainSectionTopRows({
   const saveStatus = useSaveStatus(feInfo);
   return (
     <Styled className={`MainSectionTopRows-root ${className ?? ""}`}>
-      <div>
+      <div className="MainSectionTopRows-leftBlock">
         <SectionTitle
           text={sectionTitle}
           className="MainSectionTopRows-sectionTitle"
@@ -58,11 +58,15 @@ export function MainSectionTopRows({
 const Styled = styled.div`
   display: flex;
   align-items: center;
+  .MainSectionTopRows-leftBlock {
+    width: 100px;
+    color: ${theme.primary};
+  }
   .MainSectionTopRows-sectionTitle {
     font-size: ${theme.siteTitleSize};
   }
   .MainSectionTopRows-controls {
-    margin-left: ${theme.s4};
+    margin-left: ${theme.s2};
   }
   .MainSectionTopRows-sectionMenus {
     margin-top: ${theme.s25};

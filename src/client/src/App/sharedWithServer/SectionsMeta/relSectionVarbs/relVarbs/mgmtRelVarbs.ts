@@ -46,7 +46,7 @@ export function mgmtRelVarbs(): RelVarbs<"mgmt"> {
       initNumber: 0,
     }),
     [rentCut.percent]: relVarbS.percentObj("Rent cut input", {
-      updateFnName: "loadSolvableText",
+      updateFnName: "loadSolvableTextByVarbInfo",
       updateFnProps: {
         varbInfo: updateFnPropS.local("rentCutPercentEditor"),
       },
@@ -69,7 +69,7 @@ export function mgmtRelVarbs(): RelVarbs<"mgmt"> {
     }),
     [rentCutDollars.monthly]: relVarbS.moneyMonth("Rent cut", {
       displayNameEnd: " monthly",
-      updateFnName: "loadSolvableText",
+      updateFnName: "loadSolvableTextByVarbInfo",
       updateFnProps: {
         switch: updateFnPropS.local(rentCut.switch),
         varbInfo: updateFnPropS.local("rentCutDollarsEditor"),
@@ -93,7 +93,7 @@ export function mgmtRelVarbs(): RelVarbs<"mgmt"> {
     }),
     [rentCutDollars.yearly]: relVarbS.moneyYear("Rent cut", {
       displayNameEnd: " yearly",
-      updateFnName: "loadSolvableText",
+      updateFnName: "loadSolvableTextByVarbInfo",
       updateFnProps: {
         varbInfo: updateFnPropS.local("rentCutDollarsEditor"),
       },

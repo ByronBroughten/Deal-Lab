@@ -34,7 +34,7 @@ describe("SetterCalculations", () => {
     const propertyCosts = [8000, 2000];
     for (const amount of propertyCosts) {
       propertyCostList.addChild("singleTimeItem", {
-        dbVarbs: { numObjEditor: numObj(amount) },
+        dbVarbs: { valueEditor: numObj(amount) },
       });
     }
 
@@ -49,7 +49,7 @@ describe("SetterCalculations", () => {
     const wrappeds = [4000, 1000];
     for (const amount of wrappeds) {
       wrapped.addChild("singleTimeItem", {
-        dbVarbs: { numObjEditor: numObj(amount) },
+        dbVarbs: { valueEditor: numObj(amount) },
       });
     }
 
@@ -62,7 +62,7 @@ describe("SetterCalculations", () => {
     const mgmtCosts = [4000, 6000];
     for (const amount of mgmtCosts) {
       mgmtCostList.addChild("singleTimeItem", {
-        dbVarbs: { numObjEditor: numObj(amount) },
+        dbVarbs: { valueEditor: numObj(amount) },
       });
     }
 
@@ -96,7 +96,7 @@ describe("SetterCalculations", () => {
     const propertyCosts = [200, 100, 150];
     for (const amount of propertyCosts) {
       propertyCostList.addChild("ongoingItem", {
-        dbVarbs: { numObjEditor: numObj(amount) },
+        dbVarbs: { valueEditor: numObj(amount) },
       });
     }
 
@@ -110,7 +110,7 @@ describe("SetterCalculations", () => {
     const mgmtCosts = [100, 100];
     for (const amount of mgmtCosts) {
       mgmtCostList.addChild("ongoingItem", {
-        dbVarbs: { numObjEditor: numObj(amount) },
+        dbVarbs: { valueEditor: numObj(amount) },
       });
     }
 
@@ -139,10 +139,10 @@ function addTestLoan(dealTester: SetterTesterSection<"deal">): void {
   const wrappedGroup = loan.addAndGetChild("wrappedInLoanListGroup");
   const wrapped = wrappedGroup.addAndGetChild("singleTimeList");
   wrapped.addChild("singleTimeItem", {
-    dbVarbs: { numObjEditor: numObj(6000) },
+    dbVarbs: { valueEditor: numObj(6000) },
   });
   wrapped.addChild("singleTimeItem", {
-    dbVarbs: { numObjEditor: numObj(14000) },
+    dbVarbs: { valueEditor: numObj(14000) },
   });
 }
 

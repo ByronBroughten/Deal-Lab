@@ -10,6 +10,13 @@ export function replaceRange(
 }
 
 export const Str = {
+  validate(value: any): string {
+    if (typeof value === "string") {
+      return value;
+    } else {
+      throw new Error(`value "${value}" is not a string.`);
+    }
+  },
   isJsonString(str: string): boolean {
     try {
       JSON.parse(str);

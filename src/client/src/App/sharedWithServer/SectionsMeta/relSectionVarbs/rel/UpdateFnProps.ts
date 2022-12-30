@@ -1,10 +1,35 @@
 import { Obj } from "../../../utils/Obj";
+import { UpdateFnName } from "../../baseSectionsDerived/valueMetaTypes";
+import { ValueName } from "../../baseSectionsVarbs/baseVarb";
 import { Id } from "../../baseSectionsVarbs/id";
 import { ChildName } from "../../sectionChildrenDerived/ChildName";
 import { mixedInfoS } from "../../sectionChildrenDerived/MixedSectionInfo";
 import { PathInVarbInfo } from "../../sectionChildrenDerived/RelInOutVarbInfo";
 import { relVarbInfoS } from "../../SectionInfo/RelVarbInfo";
 import { SectionPathName } from "../../sectionPathContexts/sectionPathNames";
+
+export type UpdateProps<VN extends ValueName = ValueName> = {
+  updateFnName: UpdateFnName<VN>;
+  updateFnProps: UpdateFnProps;
+};
+
+export const updatePropsS = {
+  loadFromLocalValueEditor(): UpdateProps<"numObj"> {
+    return this.loadSolvableTextByVarbInfo("valueEditor", "valueSwitch");
+  },
+  loadSolvableTextByVarbInfo(
+    varbInfoName: string,
+    switchName: string
+  ): UpdateProps<"numObj"> {
+    return {
+      updateFnName: "loadSolvableTextByVarbInfo",
+      updateFnProps: {
+        varbInfo: updateFnPropS.local(varbInfoName),
+        switch: updateFnPropS.local(switchName),
+      },
+    };
+  },
+};
 
 export type UpdateFnProp = PathInVarbInfo & { entityId: string };
 export const updateFnPropS = {

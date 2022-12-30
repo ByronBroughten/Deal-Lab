@@ -16,7 +16,7 @@ export function makeExampleLoan() {
   closingCostList.addChild("singleTimeItem", {
     dbVarbs: {
       displayNameEditor: "Lump Sum",
-      numObjEditor: numObj(6000),
+      valueEditor: numObj(6000),
     },
   });
   const wrappedInLoanGroup = loan.addAndGetChild("wrappedInLoanListGroup");
@@ -28,7 +28,7 @@ export function makeExampleLoan() {
   sellerPaidList.addChild("singleTimeItem", {
     dbVarbs: {
       displayNameEditor: "Closing",
-      numObjEditor: numObj(2500),
+      valueEditor: numObj(2500),
     },
   });
 }

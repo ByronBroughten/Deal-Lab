@@ -16,7 +16,7 @@ export const defaultPropertyChildrenMakers = {
       dbVarbs: {
         displayName: stringObj("Utilities"),
         totalOngoingSwitch: "monthly",
-        defaultValueSwitch: "labeledEquation",
+        itemValueSwitch: "labeledEquation",
         defaultOngoingSwitch: "monthly",
       },
     });
@@ -24,7 +24,7 @@ export const defaultPropertyChildrenMakers = {
       dbVarbs: {
         displayName: stringObj("CapEx"),
         totalOngoingSwitch: "yearly",
-        defaultValueSwitch: "labeledSpanOverCost",
+        itemValueSwitch: "labeledSpanOverCost",
         defaultOngoingSwitch: "yearly",
       },
     });

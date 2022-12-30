@@ -21,7 +21,7 @@ import { PackBuilderSections } from "./../StatePackers.ts/PackBuilderSections";
 import { SolverVarbBase, SolverVarbProps } from "./SolverBases/SolverVarbBase";
 import { SolverSection } from "./SolverSection";
 import { SolverSections } from "./SolverSections";
-import { SolveValueVarb } from "./SolveValueVarb";
+import { SolveValueVarb } from "./ValueUpdateVarb";
 
 type InitSolverVarbProps<SN extends SectionNameByType> = StrictOmit<
   SolverVarbProps<SN>,

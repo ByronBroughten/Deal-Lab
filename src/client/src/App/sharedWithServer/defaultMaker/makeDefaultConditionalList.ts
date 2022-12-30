@@ -1,5 +1,5 @@
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
-import { ConditionalRowTypeName } from "../StateSolvers/SolveValueVarb/ConditionalValueSolver";
+import { ConditionalRowTypeName } from "../StateSolvers/ValueUpdaterVarb/ConditionalValueSolver";
 
 export function makeDefaultConditionalList() {
   const conditionalList =

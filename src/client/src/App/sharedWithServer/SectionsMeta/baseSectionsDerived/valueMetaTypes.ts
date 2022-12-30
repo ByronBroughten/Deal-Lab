@@ -46,5 +46,5 @@ export type SectionValuesRes<VNS extends SectionValuesReq> = {
 
 export type DbValue = StateValue;
 
-export type UpdateFnName =
-  ValueSchemas[keyof ValueSchemas]["updateFnNames"][number];
+export type UpdateFnName<VN extends ValueName = ValueName> =
+  ValueSchemas[VN]["updateFnNames"][number];

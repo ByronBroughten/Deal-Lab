@@ -27,7 +27,7 @@ export function makeExampleUserSingleTimeLists(): SectionPack<"singleTimeList">[
       varbList.addChild("singleTimeItem", {
         dbVarbs: {
           displayNameEditor: item[0],
-          numObjEditor: numObj(item[1]),
+          valueEditor: numObj(item[1]),
         },
       });
     }

@@ -66,7 +66,7 @@ export function makeExampleUserVarbLists(): SectionPack<"userVarbList">[] {
       varbList.addChild("userVarbItem", {
         dbVarbs: {
           displayNameEditor: item[0],
-          numObjEditor: numObj(item[1]),
+          valueEditor: numObj(item[1]),
         },
       });
     }

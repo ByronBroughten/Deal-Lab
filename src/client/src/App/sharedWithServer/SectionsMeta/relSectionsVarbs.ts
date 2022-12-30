@@ -67,7 +67,7 @@ export function makeRelSections() {
       guestSectionsAreLoaded: relVarb("boolean", { initValue: false }),
     }),
     ...relSectionProp("outputList", {
-      defaultValueSwitch: relVarb("string", {
+      itemValueSwitch: relVarb("string", {
         initValue: "loadedVarb",
       } as const),
     }),
@@ -77,17 +77,28 @@ export function makeRelSections() {
         [updateFnPropS.children("singleTimeList", "total")],
         relAdorn.money
       ),
-      defaultValueSwitch: relVarb("string", {
+      itemValueSwitch: relVarb("string", {
         initValue: "labeledEquation",
       }),
     }),
     ...relSectionProp("singleTimeList", {
+      value: relVarbS.moneyObj("Expense", {
+        updateFnName: "getNumObjOfSwitch",
+        updateFnProps: {
+          switch: updateFnPropS.local("valueSwitch"),
+          total: updateFnPropS.local("total"),
+          valueEditor: updateFnPropS.local("valueEditor"),
+        },
+      }),
+      valueSwitch: relVarb("string", {
+        initValue: "valueEditor",
+      }),
       total: relVarbS.sumNums(
         relVarbInfoS.local("displayName"),
         [updateFnPropS.children("singleTimeItem", "value")],
         relAdorn.money
       ),
-      defaultValueSwitch: relVarb("string", {
+      itemValueSwitch: relVarb("string", {
         initValue: "labeledEquation",
       }),
     }),
@@ -98,7 +109,8 @@ export function makeRelSections() {
         [updateFnPropS.children("ongoingList", "total")],
         { switchInit: "monthly", shared: relAdorn.money }
       ),
-      defaultValueSwitch: relVarb("string", {
+      value: relVarb("numObj"),
+      itemValueSwitch: relVarb("string", {
         initValue: "labeledEquation",
       }),
       defaultOngoingSwitch: relVarb("string", {
@@ -112,7 +124,40 @@ export function makeRelSections() {
         [updateFnPropS.children("ongoingItem", "value")],
         { switchInit: "monthly", shared: { startAdornment: "$" } }
       ),
-      defaultValueSwitch: relVarb("string", {
+      valueMonthly: relVarbS.moneyObj("Expense", {
+        updateFnName: "getNumObjOfSwitch",
+        updateFnProps: {
+          switch: updateFnPropS.local("valueSwitch"),
+          total: updateFnPropS.local("totalYearly"),
+          valueEditor: updateFnPropS.local("valueEditor"),
+        },
+      }),
+      valueYearly: relVarbS.moneyObj("Expense", {
+        updateFnName: "monthlyToYearly",
+        updateFnProps: {
+          num: updateFnPropS.local("valueMonthly"),
+        },
+        inUpdateSwitchProps: [
+          {
+            switchInfo: relVarbInfoS.local("valueOngoingSwitch"),
+            switchValue: "yearly",
+            updateFnName: "getNumObjOfSwitch",
+            updateFnProps: {
+              switch: updateFnPropS.local("valueSwitch"),
+              total: updateFnPropS.local("totalMonthly"),
+              valueEditor: updateFnPropS.local("valueEditor"),
+            },
+          },
+        ],
+      }),
+      // there is only one valueEditor
+      // if the valueYearly switch is flipped,
+      //
+
+      valueSwitch: relVarb("string", {
+        initValue: "valueEditor",
+      }),
+      itemValueSwitch: relVarb("string", {
         initValue: "labeledEquation",
       }),
       defaultOngoingSwitch: relVarb("string", {
@@ -120,13 +165,13 @@ export function makeRelSections() {
       }),
     }),
     ...relSectionProp("userVarbList", {
-      defaultValueSwitch: relVarb("string", {
+      itemValueSwitch: relVarb("string", {
         initValue: "labeledEquation",
       } as const),
     }),
     ...relSectionProp("outputItem", {
       ...relVarbsS.listItemVirtualVarb,
-      numObjEditor: relVarbS.calcVarb("User Input"),
+      valueEditor: relVarbS.calcVarb("User Input"),
       valueSwitch: relVarb("string", {
         initValue: "loadedVarb",
       }),
@@ -149,10 +194,10 @@ export function makeRelSections() {
       }),
       value: relVarb("numObj", {
         displayName: relVarbInfoS.local("displayName"),
-        updateFnName: "userVarb",
         initValue: numObj(0),
+        updateFnName: "userVarb",
         updateFnProps: {
-          ...relVarbInfosS.localByVarbName(["valueSwitch", "numObjEditor"]),
+          ...relVarbInfosS.localByVarbName(["valueSwitch", "valueEditor"]),
           conditionalValue: updateFnPropS.children(
             "conditionalRowList",
             "value"

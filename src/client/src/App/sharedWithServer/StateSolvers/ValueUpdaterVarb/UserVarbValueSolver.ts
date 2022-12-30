@@ -16,7 +16,7 @@ export class UserVarbValueSolver extends GetterSectionBase<"userVarbItem"> {
       | "ifThen";
 
     if (varbType === "labeledEquation") {
-      const varb = this.get.varb("numObjEditor");
+      const varb = this.get.varb("valueEditor");
       const numObjVarb = new GetterVarbNumObj(varb.getterVarbProps);
       const solvableText = numObjVarb.solvableTextFromTextAndEntities(
         numObjVarb.value

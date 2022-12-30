@@ -2,7 +2,7 @@ import { Server } from "http";
 import request from "supertest";
 import { apiQueriesShared } from "../../client/src/App/sharedWithServer/apiQueriesShared";
 import { validateSubscriptionValues } from "../../client/src/App/sharedWithServer/apiQueriesShared/AnalyzerPlanValues";
-import { isUserInfoHeaders } from "../../client/src/App/sharedWithServer/apiQueriesShared/getUserData";
+import { isUserInfoHeaders } from "../../client/src/App/sharedWithServer/apiQueriesShared/validateUserData";
 import { runApp } from "../../runApp";
 import { LoadedDbUser } from "./apiQueriesShared/DbSections/LoadedDbUser";
 import {

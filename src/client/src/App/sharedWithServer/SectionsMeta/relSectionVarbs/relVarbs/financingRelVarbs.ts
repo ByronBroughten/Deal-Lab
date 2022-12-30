@@ -34,7 +34,7 @@ export function loanRelVarbs(): RelVarbs<"loan"> {
     }),
     [loanBase.percent]: relVarbS.percentObj("Base loan", {
       displayNameEnd: " percent",
-      updateFnName: "loadSolvableText",
+      updateFnName: "loadSolvableTextByVarbInfo",
       updateFnProps: {
         switch: updateFnPropS.local(loanBase.switch),
         varbInfo: updateFnPropS.local("loanBasePercentEditor"),
@@ -53,7 +53,7 @@ export function loanRelVarbs(): RelVarbs<"loan"> {
     }),
     [loanBase.dollars]: relVarbS.moneyObj("Base loan", {
       displayNameEnd: " dollars",
-      updateFnName: "loadSolvableText",
+      updateFnName: "loadSolvableTextByVarbInfo",
       updateFnProps: {
         switch: updateFnPropS.local(loanBase.switch),
         varbInfo: updateFnPropS.local("loanBaseDollarsEditor"),

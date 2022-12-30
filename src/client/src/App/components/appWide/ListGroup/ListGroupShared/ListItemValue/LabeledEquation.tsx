@@ -28,7 +28,7 @@ export function LabeledEquation({
           <NumObjEntityEditor
             feVarbInfo={{
               ...feInfo,
-              varbName: "numObjEditor",
+              varbName: "valueEditor",
             }}
             className="cost"
             labeled={false}

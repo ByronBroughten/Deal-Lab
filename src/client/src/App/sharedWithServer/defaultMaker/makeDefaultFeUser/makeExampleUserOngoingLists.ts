@@ -42,7 +42,7 @@ export function makeExampleUserOngoingLists(): SectionPack<"ongoingList">[] {
   const advancedUtilityList = feUser.addAndGetChild("ongoingListMain", {
     dbId: "exampleUtil1",
     dbVarbs: {
-      defaultValueSwitch: utilityValueSwitch,
+      itemValueSwitch: utilityValueSwitch,
       defaultOngoingSwitch: "monthly",
       totalOngoingSwitch: "monthly",
       displayName: stringObj("Utility Examples"),
@@ -54,7 +54,7 @@ export function makeExampleUserOngoingLists(): SectionPack<"ongoingList">[] {
         displayNameEditor: values[0],
         valueOngoingSwitch: "monthly",
         valueSwitch: utilityValueSwitch,
-        numObjEditor: values[1],
+        valueEditor: values[1],
       },
     });
   }
@@ -63,7 +63,7 @@ export function makeExampleUserOngoingLists(): SectionPack<"ongoingList">[] {
   const ongoingRepairsList = feUser.addAndGetChild("ongoingListMain", {
     dbId: "exampleRepr1",
     dbVarbs: {
-      defaultValueSwitch: repairsValueSwitch,
+      itemValueSwitch: repairsValueSwitch,
       defaultOngoingSwitch: "yearly",
       totalOngoingSwitch: "yearly",
       displayName: stringObj("Ongoing Repair Budget Example"),
@@ -75,7 +75,7 @@ export function makeExampleUserOngoingLists(): SectionPack<"ongoingList">[] {
         displayNameEditor: values[0],
         valueOngoingSwitch: "yearly",
         valueSwitch: repairsValueSwitch,
-        numObjEditor: values[1],
+        valueEditor: values[1],
       },
     });
   }
@@ -84,7 +84,7 @@ export function makeExampleUserOngoingLists(): SectionPack<"ongoingList">[] {
   const advancedCapExList = feUser.addAndGetChild("ongoingListMain", {
     dbId: "exampleCapX1",
     dbVarbs: {
-      defaultValueSwitch: capExExampleswitch,
+      itemValueSwitch: capExExampleswitch,
       defaultOngoingSwitch: "yearly",
       totalOngoingSwitch: "yearly",
       displayName: stringObj("CapEx Examples"),

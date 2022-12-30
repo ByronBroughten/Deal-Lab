@@ -14,10 +14,16 @@ AppRegistry.runApplication("App", {
 
 // Options for how to spend this evening:
 // 1. Work on a placeholder Wordpress site
+
 // 2. Work on updating the UI
-// 3. Work on adding the beginnings of the modes
-// 4. Start gathering tax documents—maybe that's a Monday project
+// 3. Work on adding the underpinnings of the modes
+
 // 5. Implement the examples
+//    What is the best way to implement these?
+//    You may want to allow for single-value lists, first, as your
+//    examples will probably want to include them.
+
+// 4. Start gathering tax documents—maybe that's a Monday project
 
 // Consult branding, logo, and pro wordpress people
 // https://bstro.com/

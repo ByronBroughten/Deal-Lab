@@ -56,7 +56,7 @@ export const baseVarbsS = {
   get switchableEquationEditor() {
     return {
       ...baseVarbs("string", ["valueSwitch", "displayNameEditor"] as const),
-      ...baseVarbs("numObj", ["numObjEditor"] as const),
+      ...baseVarbs("numObj", ["valueEditor"] as const),
     } as const;
   },
   get savableSection() {
