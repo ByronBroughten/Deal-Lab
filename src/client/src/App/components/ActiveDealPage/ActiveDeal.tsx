@@ -1,8 +1,8 @@
+import { FormControl, MenuItem, Select } from "@material-ui/core";
 import React from "react";
 import styled from "styled-components";
 import { useGetterSection } from "../../sharedWithServer/stateClassHooks/useGetterSection";
 import theme from "../../theme/Theme";
-import { useSaveStatus } from "../appWide/GeneralSection/MainSection/useSaveStatus";
 import { MainSectionTopRows } from "../appWide/MainSectionTopRows";
 import { OuterMainSection } from "./../appWide/GeneralSection/OuterMainSection";
 import { DealGeneral } from "./ActiveDeal/DealGeneral";
@@ -18,14 +18,28 @@ type Props = {
 export function ActiveDeal({ className, feId }: Props) {
   const feInfo = { sectionName: "deal", feId } as const;
   const deal = useGetterSection(feInfo);
-  const saveStatus = useSaveStatus(feInfo);
   return (
     <Styled className={`ActiveDeal-root ${className ?? ""}`}>
       <MainSectionTopRows
         {...{
           ...feInfo,
+          className: "ActiveDeal-mainSectionTopRowRoot",
           sectionTitle: "Deal",
-          loadWhat: "Deal"
+          loadWhat: "Deal",
+          belowTitle: (
+            <FormControl className="ActiveDeal-modeSelector" size={"small"}>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={"buyAndHold"}
+                label="Age"
+                onChange={() => {}}
+              >
+                <MenuItem value={"buyAndHold"}>Buy and Hold</MenuItem>
+                <MenuItem value={"moreToCome"}>More to Come...</MenuItem>
+              </Select>
+            </FormControl>
+          ),
         }}
       />
       <div className="ActiveDeal-inputSectionsWrapper">
@@ -39,6 +53,12 @@ export function ActiveDeal({ className, feId }: Props) {
 }
 
 const Styled = styled(OuterMainSection)`
+  .ActiveDeal-mainSectionTopRowRoot {
+    margin-left: ${theme.s3};
+  }
+  .ActiveDeal-modeSelector {
+    margin-top: ${theme.s2};
+  }
   .PropertyGeneral-root {
     padding-top: ${theme.s35};
   }
