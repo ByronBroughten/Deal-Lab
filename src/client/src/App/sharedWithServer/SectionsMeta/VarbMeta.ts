@@ -2,7 +2,6 @@ import { cloneDeep, pick } from "lodash";
 import { sectionsMeta } from "../SectionsMeta";
 import { VarbNames } from "./baseSectionsDerived/baseVarbInfo";
 import { valueMeta } from "./baseSectionsDerived/valueMeta";
-import { UpdateFnName } from "./baseSectionsDerived/valueMetaTypes";
 import {
   NumUnitName,
   numUnitParams,
@@ -10,13 +9,13 @@ import {
 import { FixedInEntity } from "./baseSectionsVarbs/baseValues/entities";
 import { ValueName } from "./baseSectionsVarbs/baseVarb";
 import { relSections } from "./relSectionsVarbs";
+import { UpdateFnName } from "./relSectionVarbs/rel/relVarb/UpdateFnName";
+import { UpdateFnProps } from "./relSectionVarbs/rel/relVarb/UpdateFnProps";
 import {
-  DisplayName,
-  RelVarb,
-  SwitchUpdateInfo,
-  UpdateSwitchProp,
-} from "./relSectionVarbs/rel/relVarbTypes";
-import { UpdateFnProps } from "./relSectionVarbs/rel/UpdateFnProps";
+  UpdateOverride,
+  UpdateOverrideProps,
+} from "./relSectionVarbs/rel/relVarb/UpdateOverrides";
+import { DisplayName, RelVarb } from "./relSectionVarbs/rel/relVarbTypes";
 import { GeneralRelVarbs } from "./relSectionVarbs/relVarbs";
 import { RelOutVarbInfo } from "./sectionChildrenDerived/RelInOutVarbInfo";
 import { SectionMeta } from "./SectionMeta";
@@ -29,24 +28,16 @@ type InBaseUpdatePack = {
 };
 
 type InDefaultUpdatePack = InBaseUpdatePack & {
-  inverseSwitches: SwitchUpdateInfo[];
+  inverseSwitches: UpdateOverrideProps[];
 };
-export function isDefaultInPack(
-  pack: InUpdatePack
-): pack is InDefaultUpdatePack {
-  return "inverseSwitches" in pack;
-}
-export function isSwitchInPack(pack: InUpdatePack): pack is InSwitchUpdatePack {
-  return "switchInfo" in pack;
-}
 
-type InSwitchUpdatePack = InBaseUpdatePack & SwitchUpdateInfo;
+type InSwitchUpdatePack = InBaseUpdatePack & UpdateOverrideProps;
 export type InUpdatePack = InBaseUpdatePack | InSwitchUpdatePack;
 
 type OutBaseUpdatePack = { relTargetVarbInfo: RelOutVarbInfo };
-export type OutSwitchPack = OutBaseUpdatePack & SwitchUpdateInfo;
+export type OutSwitchPack = OutBaseUpdatePack & UpdateOverrideProps;
 export type OutDefaultPack = OutBaseUpdatePack & {
-  inverseSwitches: SwitchUpdateInfo[];
+  inverseSwitches: UpdateOverrideProps[];
 };
 export function isDefaultOutPack(pack: OutUpdatePack): pack is OutDefaultPack {
   return "inverseSwitches" in pack;
@@ -66,11 +57,11 @@ function fnPropsToFixedInEntities(
   }
   return nextInfos;
 }
-function inSwitchPropsToInfos(
-  inSwitchProps: UpdateSwitchProp[]
+function updateOverrideToInfos(
+  updateOverride: UpdateOverride[]
 ): InSwitchUpdatePack[] {
   const inSwitchInfos: InSwitchUpdatePack[] = [];
-  for (const prop of inSwitchProps) {
+  for (const prop of updateOverride) {
     const fixedInEntities = fnPropsToFixedInEntities(prop.updateFnProps);
     inSwitchInfos.push({
       ...prop,
@@ -198,7 +189,7 @@ export class VarbMeta<SN extends SectionName> {
       ...relVarb,
       sectionName,
       varbName,
-      inSwitchUpdatePacks: inSwitchPropsToInfos(relVarb.inUpdateSwitchProps),
+      inSwitchUpdatePacks: updateOverrideToInfos(relVarb.updateOverrides),
       outUpdatePacks: [], // static after initialization
     });
   }

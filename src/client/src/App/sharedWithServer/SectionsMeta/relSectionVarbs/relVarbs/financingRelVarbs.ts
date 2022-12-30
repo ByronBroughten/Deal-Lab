@@ -4,7 +4,7 @@ import { switchNames } from "../../baseSectionsVarbs/RelSwitchVarb";
 import { loanVarbsNotInFinancing } from "../../baseSectionsVarbs/specialVarbNames";
 import { relVarbInfoS } from "../../SectionInfo/RelVarbInfo";
 import { relVarb, relVarbS } from "../rel/relVarb";
-import { updateFnPropS, updateFnPropsS } from "../rel/UpdateFnProps";
+import { updateFnPropS, updateFnPropsS } from "../rel/relVarb/UpdateFnProps";
 import { RelVarbs, relVarbsS } from "../relVarbs";
 
 const loanBase = switchNames("loanBase", "dollarsPercentDecimal");
@@ -20,7 +20,7 @@ export function loanRelVarbs(): RelVarbs<"loan"> {
       unit: "decimal",
       updateFnName: "percentToDecimal",
       updateFnProps: { num: updateFnPropS.local(loanBase.percent) },
-      inUpdateSwitchProps: [
+      updateOverrides: [
         {
           switchInfo: relVarbInfoS.local(loanBase.switch),
           switchValue: "dollars",
@@ -39,7 +39,7 @@ export function loanRelVarbs(): RelVarbs<"loan"> {
         switch: updateFnPropS.local(loanBase.switch),
         varbInfo: updateFnPropS.local("loanBasePercentEditor"),
       },
-      inUpdateSwitchProps: [
+      updateOverrides: [
         {
           switchInfo: relVarbInfoS.local(loanBase.switch),
           switchValue: "dollars",
@@ -58,7 +58,7 @@ export function loanRelVarbs(): RelVarbs<"loan"> {
         switch: updateFnPropS.local(loanBase.switch),
         varbInfo: updateFnPropS.local("loanBaseDollarsEditor"),
       },
-      inUpdateSwitchProps: [
+      updateOverrides: [
         {
           switchInfo: relVarbInfoS.local(loanBase.switch),
           switchValue: "percent",
@@ -185,7 +185,7 @@ export function loanRelVarbs(): RelVarbs<"loan"> {
           updateFnProps: {
             varbInfo: updateFnPropS.local("piFixedStandardMonthly"),
           },
-          inUpdateSwitchProps: [
+          updateOverrides: [
             {
               switchInfo: relVarbInfoS.local("piCalculationName"),
               switchValue: "interestOnlySimple",
@@ -201,7 +201,7 @@ export function loanRelVarbs(): RelVarbs<"loan"> {
           updateFnProps: {
             varbInfo: updateFnPropS.local("piFixedStandardYearly"),
           },
-          inUpdateSwitchProps: [
+          updateOverrides: [
             {
               switchInfo: relVarbInfoS.local("piCalculationName"),
               switchValue: "interestOnlySimple",

@@ -1,5 +1,5 @@
 import { relVarbS } from "../rel/relVarb";
-import { updateFnPropS, updateFnPropsS } from "../rel/UpdateFnProps";
+import { updateFnPropS, updateFnPropsS } from "../rel/relVarb/UpdateFnProps";
 import { RelVarbs, relVarbsS } from "../relVarbs";
 
 export function propertyRelVarbs(): RelVarbs<"property"> {

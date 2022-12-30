@@ -4,15 +4,17 @@ import {
   SinglePropCalculations,
 } from "../../baseSectionsVarbs/baseValues/calculations";
 import { numObj } from "../../baseSectionsVarbs/baseValues/NumObj";
+import { ValueName } from "../../baseSectionsVarbs/baseVarb";
 import { ChildName } from "../../sectionChildrenDerived/ChildName";
 import { SectionName } from "../../SectionName";
+import { getUpdateFnNames } from "./relVarb/UpdateFnName";
+import { UpdateFnProp, updateFnPropS } from "./relVarb/UpdateFnProps";
 import {
   CommonRelVarb,
   DisplayName,
   NumObjRelVarb,
-  RelVarbByType,
+  RelVarb,
 } from "./relVarbTypes";
-import { UpdateFnProp, updateFnPropS } from "./UpdateFnProps";
 
 const makeDefaultCommon = <T extends CommonRelVarb>(common: T): CommonRelVarb =>
   common;
@@ -24,25 +26,25 @@ const defaultCommon = makeDefaultCommon({
   displayNameStart: "",
 
   updateFnProps: {},
-  inUpdateSwitchProps: [],
+  updateOverrides: [],
 
   startAdornment: "",
   endAdornment: "",
 });
 
-export function relVarb<T extends keyof RelVarbByType>(
+export function relVarb<T extends ValueName>(
   type: T,
-  partial: Partial<RelVarbByType[T]> = {}
-): RelVarbByType[T] {
+  partial: Partial<RelVarb<T>> = {}
+): RelVarb<T> {
   const valueSchema = valueMeta[type];
   return {
     type,
-    updateFnName: valueSchema.updateFnNames[0],
+    updateFnName: getUpdateFnNames(type)[0],
     initValue: valueSchema.initDefault(),
     ...defaultCommon,
     ...(type === "numObj" && { unit: "money" }),
     ...partial,
-  } as RelVarbByType[T];
+  } as RelVarb<T>;
 }
 
 export type RelNumObjOptions = Partial<NumObjRelVarb & { initNumber: number }>;
@@ -61,7 +63,7 @@ export const relVarbS = {
   percentObj(
     displayName: DisplayName,
     partial: Partial<RelNumObjOptions> = {}
-  ): RelVarbByType["numObj"] {
+  ): RelVarb<"numObj"> {
     return this.numObj(displayName, {
       ...partial,
       unit: "percent",

@@ -7,8 +7,8 @@ import {
 } from "../../../baseSectionsVarbs/RelSwitchVarb";
 import { relVarbInfoS } from "../../../SectionInfo/RelVarbInfo";
 import { RelNumObjOptions, relVarb } from "../relVarb";
+import { UpdateFnProps } from "../relVarb/UpdateFnProps";
 import { NumObjRelVarb, StringRelVarb } from "../relVarbTypes";
-import { UpdateFnProps } from "../UpdateFnProps";
 
 type GeneralSwitchVarbNames = {
   [switchValue: string]: string;
@@ -52,7 +52,7 @@ export function switchInput<SWK extends SwitchEndingKey>(
       displayName,
       updateFnName: option.updateFnName,
       updateFnProps: option.updateFnProps,
-      inUpdateSwitchProps: [
+      updateOverrides: [
         {
           switchInfo: relVarbInfoS.local(varbNames.switch),
           switchValue: option.switchValue,

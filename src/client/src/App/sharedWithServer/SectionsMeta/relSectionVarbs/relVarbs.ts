@@ -10,6 +10,8 @@ import { ChildName } from "../sectionChildrenDerived/ChildName";
 import { relVarbInfoS } from "../SectionInfo/RelVarbInfo";
 import { SectionName } from "../SectionName";
 import { relVarb, relVarbS } from "./rel/relVarb";
+import { updateBasicsS } from "./rel/relVarb/UpdateBasicts";
+import { updateFnPropS, updateFnPropsS } from "./rel/relVarb/UpdateFnProps";
 import {
   decimalToPortion,
   MonthlyYearlySwitchOptions,
@@ -20,12 +22,7 @@ import {
   SwitchRelVarbs,
 } from "./rel/relVarbs/relOngoingVarbs";
 import { switchInput } from "./rel/relVarbs/relSwitchVarbs";
-import { RelVarb, RelVarbByType } from "./rel/relVarbTypes";
-import {
-  updateFnPropS,
-  updateFnPropsS,
-  updatePropsS,
-} from "./rel/UpdateFnProps";
+import { RelVarb } from "./rel/relVarbTypes";
 
 export type GeneralRelVarbs = Record<string, RelVarb>;
 export type RelVarbs<SN extends SectionName> = Record<VarbName<SN>, RelVarb>;
@@ -40,7 +37,7 @@ function isRelVarbOfType<SN extends SectionName, VLN extends ValueName>(
   varbName: VarbName<SN>,
   valueName: VLN,
   _value: any
-): _value is RelVarbByType[VLN] {
+): _value is RelVarb<VLN> {
   const baseVarbs = baseSectionsVarbs[sectionName];
   const varbType = baseVarbs[varbName] as any as ValueName;
   return varbType === valueName;
@@ -64,7 +61,7 @@ export type AutoSyncControl = "autoSyncOff" | "autoSyncOn";
 
 export type StringPreVarbsFromNames<VN extends readonly string[]> = Record<
   VN[number],
-  RelVarbByType["string"]
+  RelVarb<"string">
 >;
 export const relVarbsS = {
   strings<VN extends readonly string[]>(
@@ -200,7 +197,7 @@ export const relVarbsS = {
         updateFnProps: {
           loadLocalString: updateFnPropS.local("displayNameEditor"),
         },
-        inUpdateSwitchProps: [
+        updateOverrides: [
           {
             switchInfo: relVarbInfoS.local("valueSwitch"),
             switchValue: "loadedVarb",
@@ -214,7 +211,7 @@ export const relVarbsS = {
       }),
       displayNameEnd: relVarb("stringObj", {
         updateFnName: "emptyStringObj",
-        inUpdateSwitchProps: [
+        updateOverrides: [
           {
             switchInfo: relVarbInfoS.local("valueSwitch"),
             switchValue: "loadedVarb",
@@ -228,7 +225,7 @@ export const relVarbsS = {
       }),
       startAdornment: relVarb("stringObj", {
         updateFnName: "emptyStringObj",
-        inUpdateSwitchProps: [
+        updateOverrides: [
           {
             switchInfo: relVarbInfoS.local("valueSwitch"),
             switchValue: "loadedVarb",
@@ -242,7 +239,7 @@ export const relVarbsS = {
       }),
       endAdornment: relVarb("stringObj", {
         updateFnName: "emptyStringObj",
-        inUpdateSwitchProps: [
+        updateOverrides: [
           {
             switchInfo: relVarbInfoS.local("valueSwitch"),
             switchValue: "loadedVarb",
@@ -261,8 +258,8 @@ export const relVarbsS = {
       ...this._typeUniformity,
       ...this.listItemVirtualVarb,
       value: relVarbS.numObj(relVarbInfoS.local("displayName"), {
-        ...updatePropsS.loadFromLocalValueEditor(),
-        inUpdateSwitchProps: [
+        ...updateBasicsS.loadFromLocalValueEditor(),
+        updateOverrides: [
           {
             switchInfo: relVarbInfoS.local("valueSwitch"),
             switchValue: "loadedVarb",
@@ -314,7 +311,7 @@ export const relVarbsS = {
       }),
       [ongoingValueNames.monthly]: relVarbS.moneyMonth("Monthly amount", {
         ...makeDefaultValueUpdatePack(),
-        inUpdateSwitchProps: [
+        updateOverrides: [
           {
             switchInfo: ongoingSwitchInfo,
             switchValue: "yearly",
@@ -347,7 +344,7 @@ export const relVarbsS = {
       }),
       [ongoingValueNames.yearly]: relVarbS.moneyYear("Annual amount", {
         ...makeDefaultValueUpdatePack(),
-        inUpdateSwitchProps: [
+        updateOverrides: [
           {
             switchInfo: ongoingSwitchInfo,
             switchValue: "monthly",

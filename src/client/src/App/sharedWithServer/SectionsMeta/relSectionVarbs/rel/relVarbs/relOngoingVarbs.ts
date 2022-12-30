@@ -1,4 +1,3 @@
-import { NumObjUpdateFnName } from "../../../baseSectionsVarbs/baseValues/updateFnNames";
 import {
   ongoingVarb,
   SwitchEndingKey,
@@ -8,8 +7,13 @@ import {
 } from "../../../baseSectionsVarbs/RelSwitchVarb";
 import { relVarbsS } from "../../relVarbs";
 import { RelNumObjOptions, relVarb, relVarbS } from "../relVarb";
+import { UpdateBasics } from "../relVarb/UpdateBasicts";
+import {
+  UpdateFnProp,
+  updateFnPropS,
+  UpdateFnProps,
+} from "../relVarb/UpdateFnProps";
 import { DisplayName, StringRelVarb } from "../relVarbTypes";
-import { UpdateFnProp, updateFnPropS, UpdateFnProps } from "../UpdateFnProps";
 
 export type SwitchRelVarbs<
   Base extends string,
@@ -65,17 +69,16 @@ function getMonthlyYearlyProps(
   return monthlyYearlyProps;
 }
 
-interface UpdatePropPack extends RelNumObjOptions {
-  updateFnName: NumObjUpdateFnName;
-  updateFnProps: UpdateFnProps;
-}
+interface NumObjSwitchTargetPack
+  extends Omit<RelNumObjOptions, "updateFnName" | "updateFnProps">,
+    UpdateBasics<"numObj"> {}
 
 type OngoingUpdatePacks = {
-  monthly: UpdatePropPack;
-  yearly: UpdatePropPack;
+  monthly: NumObjSwitchTargetPack;
+  yearly: NumObjSwitchTargetPack;
 };
 type NumObjUpdatePack = {
-  [prop in keyof OngoingUpdatePacks]: UpdatePropPack;
+  [prop in keyof OngoingUpdatePacks]: NumObjSwitchTargetPack;
 };
 
 export function monthsYearsInput<Base extends string>(

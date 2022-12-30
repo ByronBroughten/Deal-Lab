@@ -6,7 +6,6 @@ import {
   NumberOrQ,
   NumObj,
 } from "../SectionsMeta/baseSectionsVarbs/baseValues/NumObj";
-import { isNumObjUpdateFnName } from "../SectionsMeta/baseSectionsVarbs/baseValues/updateFnNames";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { Arr } from "../utils/Arr";
 import { arithmeticOperatorsArr, mathS } from "../utils/math";
@@ -77,9 +76,8 @@ export class GetterVarbNumObj<
     return `${this.solveText(solvableText)}`;
   }
   solveText(text: string): NumberOrQ {
-    const { updateFnName } = this.inEntity;
-    const { calcRound } = this.get.meta;
-    if (!isNumObjUpdateFnName(updateFnName)) {
+    const { calcRound, valueName } = this.get.meta;
+    if (!(valueName === "numObj")) {
       throw new Error("This is only for numObjs.");
     }
 

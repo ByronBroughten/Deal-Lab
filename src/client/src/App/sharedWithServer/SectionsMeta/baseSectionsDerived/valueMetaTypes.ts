@@ -12,11 +12,6 @@ export type ValueNamesToTypes = {
   [VN in ValueName]: ReturnType<ValueSchemas[VN]["initDefault"]>;
 };
 
-type Test<SN extends SectionName, VN extends VarbName<SN>> = VarbValueName<
-  SN,
-  VN
->;
-
 export type SectionValues<SN extends SectionName> = {
   [VN in VarbName<SN>]: ValueNamesToTypes[VarbValueName<SN, VN>];
 };
@@ -45,6 +40,3 @@ export type SectionValuesRes<VNS extends SectionValuesReq> = {
 };
 
 export type DbValue = StateValue;
-
-export type UpdateFnName<VN extends ValueName = ValueName> =
-  ValueSchemas[VN]["updateFnNames"][number];

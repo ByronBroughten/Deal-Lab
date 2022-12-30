@@ -2,7 +2,7 @@ import { relVarbInfoS } from "../../SectionInfo/RelVarbInfo";
 import { relVarbInfosS } from "../../SectionInfo/RelVarbInfos";
 import { relAdorn } from "../rel/relAdorn";
 import { LeftRightVarbInfos, relVarb, relVarbS } from "../rel/relVarb";
-import { updateFnPropS, updateFnPropsS } from "../rel/UpdateFnProps";
+import { updateFnPropS, updateFnPropsS } from "../rel/relVarb/UpdateFnProps";
 import { RelVarbs, relVarbsS } from "../relVarbs";
 
 export function dealRelVarbs(): RelVarbs<"deal"> {

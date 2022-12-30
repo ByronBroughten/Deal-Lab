@@ -50,12 +50,3 @@ export const mStringObj: Record<keyof StringObj, any> = {
   mainText: monSchemas.reqString,
   entities: mInEntities,
 };
-
-// I'm going to make new update functions for this
-// I'll put them somewhere else, though.
-// I'm not a fan of keeping the updateFns
-// autoSyncOn with the updateFnNames.
-
-const stringObjUpdateFns = {
-  editorUpdate: () => {},
-};

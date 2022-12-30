@@ -8,7 +8,7 @@ import { relVarb, relVarbS } from "./relSectionVarbs/rel/relVarb";
 import {
   updateFnPropS,
   updateFnPropsS,
-} from "./relSectionVarbs/rel/UpdateFnProps";
+} from "./relSectionVarbs/rel/relVarb/UpdateFnProps";
 import {
   defaultRelSectionVarbs,
   GeneralRelSectionVarbs,
@@ -137,7 +137,7 @@ export function makeRelSections() {
         updateFnProps: {
           num: updateFnPropS.local("valueMonthly"),
         },
-        inUpdateSwitchProps: [
+        updateOverrides: [
           {
             switchInfo: relVarbInfoS.local("valueOngoingSwitch"),
             switchValue: "yearly",

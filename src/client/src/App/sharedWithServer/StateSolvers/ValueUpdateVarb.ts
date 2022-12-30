@@ -5,10 +5,7 @@ import calculations, {
   NumberProps,
 } from "../SectionsMeta/baseSectionsVarbs/baseValues/calculations";
 import { ValueInEntity } from "../SectionsMeta/baseSectionsVarbs/baseValues/entities";
-import {
-  InEntityIdInfoValue,
-  ValueIdInEntityInfo,
-} from "../SectionsMeta/baseSectionsVarbs/baseValues/InEntityIdInfoValue";
+import { ValueIdInEntityInfo } from "../SectionsMeta/baseSectionsVarbs/baseValues/InEntityIdInfoValue";
 import { NumObj } from "../SectionsMeta/baseSectionsVarbs/baseValues/NumObj";
 import { StateValue } from "../SectionsMeta/baseSectionsVarbs/baseValues/StateValueTypes";
 import {
@@ -18,7 +15,7 @@ import {
 import {
   UpdateFnProp,
   UpdateFnProps,
-} from "../SectionsMeta/relSectionVarbs/rel/UpdateFnProps";
+} from "../SectionsMeta/relSectionVarbs/rel/relVarb/UpdateFnProps";
 import {
   PathInVarbInfo,
   RelInVarbInfo,
@@ -66,9 +63,6 @@ export class SolveValueVarb<
     manualUpdateOnly: (): StateValue => {
       return this.getterVarb.value();
     },
-    string: (): string => {
-      return this.getterVarb.value("string");
-    },
     stringObj: (): StringObj => {
       return this.getterVarb.value("stringObj");
     },
@@ -98,13 +92,10 @@ export class SolveValueVarb<
       );
       return stringObj(varb.value("string"));
     },
-    inEntityInfo: (): InEntityIdInfoValue => {
-      return this.getterVarb.value("inEntityInfo");
-    },
     loadSolvableTextByVarbInfo: (): NumObj => {
       const { updateFnProps } = this.inEntityVarb;
       const varb = this.getterSection.varbByFocalMixed(
-        updateFnProps.varbInfo as RelVarbInfo
+        updateFnProps.varbInfo as UpdateFnProp
       );
       return calculatedNumObj(varb.value("numObj").solvableText);
     },

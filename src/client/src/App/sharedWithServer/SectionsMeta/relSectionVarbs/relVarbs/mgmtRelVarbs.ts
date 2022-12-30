@@ -1,8 +1,8 @@
 import { switchNames } from "../../baseSectionsVarbs/RelSwitchVarb";
 import { relVarbInfoS } from "../../SectionInfo/RelVarbInfo";
-import { relUpdateSwitch } from "../rel/relUpdateSwitch";
 import { relVarb, relVarbS } from "../rel/relVarb";
-import { updateFnPropS, updateFnPropsS } from "../rel/UpdateFnProps";
+import { updateFnPropS, updateFnPropsS } from "../rel/relVarb/UpdateFnProps";
+import { updateOverrideS } from "../rel/relVarb/UpdateOverrides";
 import { RelVarbs, relVarbsS } from "../relVarbs";
 
 const rentCut = switchNames("rentCut", "dollarsPercentDecimal");
@@ -21,7 +21,7 @@ export function mgmtRelVarbs(): RelVarbs<"mgmt"> {
       updateFnProps: {
         num: updateFnPropS.local(rentCut.percent),
       },
-      inUpdateSwitchProps: [
+      updateOverrides: [
         {
           switchInfo: relVarbInfoS.local(rentCut.switch),
           switchValue: "dollars",
@@ -50,7 +50,7 @@ export function mgmtRelVarbs(): RelVarbs<"mgmt"> {
       updateFnProps: {
         varbInfo: updateFnPropS.local("rentCutPercentEditor"),
       },
-      inUpdateSwitchProps: [
+      updateOverrides: [
         {
           switchInfo: relVarbInfoS.local(rentCut.switch),
           switchValue: "dollars",
@@ -74,7 +74,7 @@ export function mgmtRelVarbs(): RelVarbs<"mgmt"> {
         switch: updateFnPropS.local(rentCut.switch),
         varbInfo: updateFnPropS.local("rentCutDollarsEditor"),
       },
-      inUpdateSwitchProps: [
+      updateOverrides: [
         {
           switchInfo: relVarbInfoS.local(rentCut.switch),
           switchValue: "percent",
@@ -88,7 +88,7 @@ export function mgmtRelVarbs(): RelVarbs<"mgmt"> {
             ),
           },
         },
-        relUpdateSwitch.yearlyToMonthly("rentCutDollars"),
+        updateOverrideS.yearlyToMonthly("rentCutDollars"),
       ],
     }),
     [rentCutDollars.yearly]: relVarbS.moneyYear("Rent cut", {
@@ -97,7 +97,7 @@ export function mgmtRelVarbs(): RelVarbs<"mgmt"> {
       updateFnProps: {
         varbInfo: updateFnPropS.local("rentCutDollarsEditor"),
       },
-      inUpdateSwitchProps: [
+      updateOverrides: [
         {
           switchInfo: relVarbInfoS.local(rentCut.switch),
           switchValue: "percent",
@@ -110,7 +110,7 @@ export function mgmtRelVarbs(): RelVarbs<"mgmt"> {
             ),
           },
         },
-        relUpdateSwitch.monthlyToYearly("rentCutDollars"),
+        updateOverrideS.monthlyToYearly("rentCutDollars"),
       ],
     }),
     vacancyRatePercent: relVarbS.percentObj("Vacancy rate", {
