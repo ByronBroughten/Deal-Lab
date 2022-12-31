@@ -14,7 +14,7 @@ interface Props {
 
 export function VarbListItemGeneric({ feInfo, switchOptions, ...rest }: Props) {
   const varbItem = useSetterSection(feInfo);
-  const switchVarb = varbItem.varb("valueSwitch");
+  const switchVarb = varbItem.varb("valueSourceSwitch");
   const switchValue = switchVarb.value("string");
   const switchValues = Object.keys(switchOptions);
   if (!switchValues.includes(switchValue)) {

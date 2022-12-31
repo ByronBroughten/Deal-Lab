@@ -1,14 +1,14 @@
 import React from "react";
-import { useGetterVarb } from "../../../../../sharedWithServer/stateClassHooks/useGetterVarb";
+import { useGetterVarbNext } from "../../../../../sharedWithServer/stateClassHooks/useGetterVarb";
 import { LabeledEquation } from "../../ListGroupShared/ListItemValue/LabeledEquation";
 import { LoadedVarbEditor } from "../../ListGroupShared/ListItemValue/LoadedVarbEditor";
 import { useOption } from "../../ListGroupShared/useOption";
 import { VarbListItemGenericNext } from "../../ListGroupShared/VarbListItemGenericNext";
 
-type MemoProps = { feId: string; valueSwitch: string };
+type MemoProps = { feId: string; valueSourceSwitch: string };
 const ListItemSingleTimeMemo = React.memo(function ListItemSingleTimeMemo({
   feId,
-  valueSwitch,
+  valueSourceSwitch,
 }: MemoProps) {
   const feInfo = { sectionName: "singleTimeItem", feId } as const;
   const { option, nextValueSwitch } = useOption(
@@ -24,7 +24,7 @@ const ListItemSingleTimeMemo = React.memo(function ListItemSingleTimeMemo({
         />
       ),
     },
-    valueSwitch
+    valueSourceSwitch
   );
   return (
     <VarbListItemGenericNext
@@ -38,12 +38,14 @@ const ListItemSingleTimeMemo = React.memo(function ListItemSingleTimeMemo({
 });
 
 export function ListItemSingleTime({ feId }: { feId: string }) {
-  const varb = useGetterVarb({
+  const varb = useGetterVarbNext({
     feId,
     sectionName: "singleTimeItem",
-    varbName: "valueSwitch",
+    varbName: "valueSourceSwitch",
   });
   return (
-    <ListItemSingleTimeMemo {...{ feId, valueSwitch: varb.value("string") }} />
+    <ListItemSingleTimeMemo
+      {...{ feId, valueSourceSwitch: varb.value("string") }}
+    />
   );
 }

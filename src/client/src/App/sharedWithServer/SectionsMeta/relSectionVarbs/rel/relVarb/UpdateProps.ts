@@ -1,7 +1,7 @@
 import { LeftRightPropCalcName } from "../../../baseSectionsVarbs/baseValues/calculations";
 import { ValueName } from "../../../baseSectionsVarbs/baseVarb";
 import { SinglePropCalcName } from "./calculationsNext";
-import { UpdateBasics } from "./UpdateBasicts";
+import { UpdateBasics } from "./UpdateBasics";
 import { UpdateFnName } from "./UpdateFnName";
 import { UpdateFnProp, UpdateFnProps } from "./UpdateFnProps";
 import { UpdateOverrides } from "./UpdateOverrides";

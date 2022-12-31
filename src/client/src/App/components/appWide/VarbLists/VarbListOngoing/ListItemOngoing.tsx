@@ -9,7 +9,7 @@ import { useOption } from "./../../ListGroup/ListGroupShared/useOption";
 
 interface MemoProps {
   feId: string;
-  valueSwitch: string;
+  valueSourceSwitch: string;
   endAdornment: string;
   valueVarbName: "valueMonthly";
   displayValueVarb: string;
@@ -17,7 +17,7 @@ interface MemoProps {
 }
 const ListItemOngoingMemo = React.memo(function ListItemOngoingMemo({
   feId,
-  valueSwitch,
+  valueSourceSwitch,
   valueVarbName,
   endAdornment,
   displayValueVarb,
@@ -36,7 +36,7 @@ const ListItemOngoingMemo = React.memo(function ListItemOngoingMemo({
       ),
       loadedVarb: () => <LoadedVarbEditor {...{ feInfo, valueVarbName }} />,
     },
-    valueSwitch
+    valueSourceSwitch
   );
   return (
     <VarbListItemGenericNext
@@ -72,7 +72,7 @@ export function ListItemOngoing({ feId }: Props) {
         lifespanVarbName,
         displayValueVarb: valueVarb.get.displayVarb(),
         valueVarbName,
-        valueSwitch: section.get.valueNext("valueSwitch"),
+        valueSourceSwitch: section.get.valueNext("valueSourceSwitch"),
         endAdornment,
       }}
     />

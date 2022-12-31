@@ -9,8 +9,14 @@ export type UpdateBasics<VN extends ValueName = ValueName> = {
 };
 
 export const updateBasicsS = {
+  manualUpdateOnly() {
+    return {
+      updateFnName: "manualUpdateOnly",
+      updateFnProps: {},
+    } as const;
+  },
   loadFromLocalValueEditor(): UpdateBasics<"numObj"> {
-    return this.loadSolvableTextByVarbInfo("valueEditor", "valueSwitch");
+    return this.loadSolvableTextByVarbInfo("valueEditor", "valueSourceSwitch");
   },
   loadSolvableTextByVarbInfo(
     varbInfoName: string,

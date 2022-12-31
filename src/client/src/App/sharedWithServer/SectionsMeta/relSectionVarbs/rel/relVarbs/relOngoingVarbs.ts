@@ -7,7 +7,7 @@ import {
 } from "../../../baseSectionsVarbs/RelSwitchVarb";
 import { relVarbsS } from "../../relVarbs";
 import { RelNumObjOptions, relVarb, relVarbS } from "../relVarb";
-import { UpdateBasics } from "../relVarb/UpdateBasicts";
+import { UpdateBasics } from "../relVarb/UpdateBasics";
 import {
   UpdateFnProp,
   updateFnPropS,

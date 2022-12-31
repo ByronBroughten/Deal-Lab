@@ -4,14 +4,14 @@ import {
   RelLocalVarbInfo,
   relVarbInfoS,
 } from "../../../SectionInfo/RelVarbInfo";
-import { UpdateBasics, updateBasicsS } from "./UpdateBasicts";
+import { UpdateBasics, updateBasicsS } from "./UpdateBasics";
 
-export interface UpdateOverrideProps {
+export interface UpdateOverrideSwitch {
   switchInfo: RelLocalVarbInfo;
   switchValue: string;
 }
 export interface UpdateOverride<VN extends ValueName = ValueName>
-  extends UpdateOverrideProps,
+  extends UpdateOverrideSwitch,
     UpdateBasics<VN> {}
 
 export type UpdateOverrides<VN extends ValueName = ValueName> =

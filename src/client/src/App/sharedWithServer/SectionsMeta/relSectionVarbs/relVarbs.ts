@@ -10,7 +10,7 @@ import { ChildName } from "../sectionChildrenDerived/ChildName";
 import { relVarbInfoS } from "../SectionInfo/RelVarbInfo";
 import { SectionName } from "../SectionName";
 import { relVarb, relVarbS } from "./rel/relVarb";
-import { updateBasicsS } from "./rel/relVarb/UpdateBasicts";
+import { updateBasicsS } from "./rel/relVarb/UpdateBasics";
 import { updateFnPropS, updateFnPropsS } from "./rel/relVarb/UpdateFnProps";
 import {
   decimalToPortion,
@@ -199,11 +199,11 @@ export const relVarbsS = {
         },
         updateOverrides: [
           {
-            switchInfo: relVarbInfoS.local("valueSwitch"),
+            switchInfo: relVarbInfoS.local("valueSourceSwitch"),
             switchValue: "loadedVarb",
             updateFnName: "loadDisplayName",
             updateFnProps: updateFnPropsS.localByVarbName([
-              "valueSwitch",
+              "valueSourceSwitch",
               "valueEntityInfo",
             ]),
           },
@@ -213,11 +213,11 @@ export const relVarbsS = {
         updateFnName: "emptyStringObj",
         updateOverrides: [
           {
-            switchInfo: relVarbInfoS.local("valueSwitch"),
+            switchInfo: relVarbInfoS.local("valueSourceSwitch"),
             switchValue: "loadedVarb",
             updateFnName: "loadDisplayNameEnd",
             updateFnProps: updateFnPropsS.localByVarbName([
-              "valueSwitch",
+              "valueSourceSwitch",
               "valueEntityInfo",
             ]),
           },
@@ -227,11 +227,11 @@ export const relVarbsS = {
         updateFnName: "emptyStringObj",
         updateOverrides: [
           {
-            switchInfo: relVarbInfoS.local("valueSwitch"),
+            switchInfo: relVarbInfoS.local("valueSourceSwitch"),
             switchValue: "loadedVarb",
             updateFnName: "loadStartAdornment",
             updateFnProps: updateFnPropsS.localByVarbName([
-              "valueSwitch",
+              "valueSourceSwitch",
               "valueEntityInfo",
             ]),
           },
@@ -241,11 +241,11 @@ export const relVarbsS = {
         updateFnName: "emptyStringObj",
         updateOverrides: [
           {
-            switchInfo: relVarbInfoS.local("valueSwitch"),
+            switchInfo: relVarbInfoS.local("valueSourceSwitch"),
             switchValue: "loadedVarb",
             updateFnName: "loadEndAdornment",
             updateFnProps: updateFnPropsS.localByVarbName([
-              "valueSwitch",
+              "valueSourceSwitch",
               "valueEntityInfo",
             ]),
           },
@@ -261,19 +261,19 @@ export const relVarbsS = {
         ...updateBasicsS.loadFromLocalValueEditor(),
         updateOverrides: [
           {
-            switchInfo: relVarbInfoS.local("valueSwitch"),
+            switchInfo: relVarbInfoS.local("valueSourceSwitch"),
             switchValue: "loadedVarb",
             updateFnName: "virtualNumObj",
             updateFnProps: {
               varbInfo: updateFnPropS.local("valueEntityInfo"),
-              valueSwitch: updateFnPropS.local("valueSwitch"),
+              valueSourceSwitch: updateFnPropS.local("valueSourceSwitch"),
             },
           },
         ],
         startAdornment: "$",
         unit: "decimal",
       }),
-      valueSwitch: relVarb("string", {
+      valueSourceSwitch: relVarb("string", {
         initValue: "labeledEquation",
       }),
       valueEditor: relVarbS.calcVarb("", { startAdornment: "$" }),
@@ -286,14 +286,14 @@ export const relVarbsS = {
         updateFnName: "loadSolvableTextByVarbInfo",
         updateFnProps: {
           varbInfo: updateFnPropS.local("valueEditor"),
-          switch: updateFnPropS.local("valueSwitch"),
+          switch: updateFnPropS.local("valueSourceSwitch"),
         },
       } as const);
     const ongoingSwitchInfo = relVarbInfoS.local(ongoingValueNames.switch);
     return {
       ...this._typeUniformity,
       ...this.listItemVirtualVarb,
-      valueSwitch: relVarb("string", {
+      valueSourceSwitch: relVarb("string", {
         initValue: "labeledEquation",
       }),
       costToReplace: relVarbS.calcVarb("Replacement cost", {
@@ -321,20 +321,20 @@ export const relVarbsS = {
             },
           },
           {
-            switchInfo: relVarbInfoS.local("valueSwitch"),
+            switchInfo: relVarbInfoS.local("valueSourceSwitch"),
             switchValue: "loadedVarb",
             updateFnName: "virtualNumObj",
             updateFnProps: {
-              valueSwitch: updateFnPropS.local("valueSwitch"),
+              valueSourceSwitch: updateFnPropS.local("valueSourceSwitch"),
               varbInfo: updateFnPropS.local("valueEntityInfo"),
             },
           },
           {
-            switchInfo: relVarbInfoS.local("valueSwitch"),
+            switchInfo: relVarbInfoS.local("valueSourceSwitch"),
             switchValue: "labeledSpanOverCost",
             updateFnName: "simpleDivide",
             updateFnProps: {
-              valueSwitch: updateFnPropS.local("valueSwitch"),
+              valueSourceSwitch: updateFnPropS.local("valueSourceSwitch"),
               leftSide: updateFnPropS.local("costToReplace"),
               rightSide: updateFnPropS.local("lifespanMonths"),
             },
@@ -354,20 +354,20 @@ export const relVarbsS = {
             },
           },
           {
-            switchInfo: relVarbInfoS.local("valueSwitch"),
+            switchInfo: relVarbInfoS.local("valueSourceSwitch"),
             switchValue: "loadedVarb",
             updateFnName: "virtualNumObj",
             updateFnProps: {
-              valueSwitch: updateFnPropS.local("valueSwitch"),
+              valueSourceSwitch: updateFnPropS.local("valueSourceSwitch"),
               varbInfo: updateFnPropS.local("valueEntityInfo"),
             },
           },
           {
-            switchInfo: relVarbInfoS.local("valueSwitch"),
+            switchInfo: relVarbInfoS.local("valueSourceSwitch"),
             switchValue: "labeledSpanOverCost",
             updateFnName: "simpleDivide",
             updateFnProps: {
-              valueSwitch: updateFnPropS.local("valueSwitch"),
+              valueSourceSwitch: updateFnPropS.local("valueSourceSwitch"),
               leftSide: updateFnPropS.local("costToReplace"),
               rightSide: updateFnPropS.local("lifespanYears"),
             },

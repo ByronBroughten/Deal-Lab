@@ -53,7 +53,7 @@ export function makeExampleUserOngoingLists(): SectionPack<"ongoingList">[] {
       dbVarbs: {
         displayNameEditor: values[0],
         valueOngoingSwitch: "monthly",
-        valueSwitch: utilityValueSwitch,
+        valueSourceSwitch: utilityValueSwitch,
         valueEditor: values[1],
       },
     });
@@ -74,7 +74,7 @@ export function makeExampleUserOngoingLists(): SectionPack<"ongoingList">[] {
       dbVarbs: {
         displayNameEditor: values[0],
         valueOngoingSwitch: "yearly",
-        valueSwitch: repairsValueSwitch,
+        valueSourceSwitch: repairsValueSwitch,
         valueEditor: values[1],
       },
     });
@@ -96,7 +96,7 @@ export function makeExampleUserOngoingLists(): SectionPack<"ongoingList">[] {
         displayNameEditor: values[0],
         valueOngoingSwitch: "yearly",
         lifespanSpanSwitch: "years",
-        valueSwitch: capExExampleswitch,
+        valueSourceSwitch: capExExampleswitch,
         lifespanYears: numObj(values[1]),
         costToReplace: values[2],
       },

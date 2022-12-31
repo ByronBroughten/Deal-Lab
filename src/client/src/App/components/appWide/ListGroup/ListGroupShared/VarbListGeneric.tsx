@@ -61,7 +61,7 @@ export function VarbListGeneric<SN extends VarbListAllowed>({
     const itemValueSwitch = list.varb("itemValueSwitch").value("string");
     list.addChild(itemName, {
       dbVarbs: {
-        valueSwitch: itemValueSwitch,
+        valueSourceSwitch: itemValueSwitch,
         ...childDbVarbs,
       } as SectionValuesByType<"varbListItem"> as SectionValues<any>,
     });

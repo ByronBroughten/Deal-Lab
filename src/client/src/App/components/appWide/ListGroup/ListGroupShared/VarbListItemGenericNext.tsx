@@ -26,7 +26,7 @@ export function VarbListItemGenericNext({
           className="AdditiveItem-nextBtn"
           {...{
             ...feInfo,
-            varbName: "valueSwitch",
+            varbName: "valueSourceSwitch",
             value: nextValueSwitch,
           }}
         />

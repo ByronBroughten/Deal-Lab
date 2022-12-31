@@ -70,8 +70,7 @@ export function makeBaseSectionsVarbs() {
     }),
     singleTimeList: baseSectionVarbs({
       ...baseVarbsS.savableSection,
-      valueSwitch: "string", // total, valueEditor
-      // change "valueSwitch" to "valueSourceSwitch"
+      valueSourceSwitch: "string",
       value: "numObj",
       valueEditor: "numObj",
       total: "numObj",
@@ -83,12 +82,11 @@ export function makeBaseSectionsVarbs() {
       itemOngoingSwitch: "string",
     }),
     ongoingList: baseSectionVarbs({
-      // I want to make an updateFn that is generalizable
       ...baseVarbsS.savableSection,
-      ...baseVarbsS.ongoing("total"),
       ...baseVarbsS.ongoing("value"),
+      ...baseVarbsS.ongoing("total"),
       valueEditor: "numObj",
-      valueSwitch: "string", // total, valueEditor
+      valueSourceSwitch: "string",
       itemValueSwitch: "string",
       itemOngoingSwitch: "string",
     }),

@@ -11,7 +11,7 @@ export class UserVarbValueSolver extends GetterSectionBase<"userVarbItem"> {
     return new GetterSection(this.getterSectionProps);
   }
   solveValue(): NumObj {
-    const varbType = this.get.value("valueSwitch", "string") as
+    const varbType = this.get.valueNext("valueSourceSwitch") as
       | "labeledEquation"
       | "ifThen";
 

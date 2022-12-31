@@ -21,7 +21,7 @@ export function makeDefaultOutputList(): SectionPack<"outputList"> {
   for (const outputVarbInfo of defaultDealOutputInfos) {
     outputList.addChild("outputItem", {
       dbVarbs: {
-        valueSwitch: "loadedVarb",
+        valueSourceSwitch: "loadedVarb",
         valueEntityInfo: inEntityIdInfo(outputVarbInfo),
       },
     });

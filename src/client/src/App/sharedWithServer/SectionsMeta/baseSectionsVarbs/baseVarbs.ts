@@ -55,7 +55,10 @@ export const baseVarbsS = {
   },
   get switchableEquationEditor() {
     return {
-      ...baseVarbs("string", ["valueSwitch", "displayNameEditor"] as const),
+      ...baseVarbs("string", [
+        "valueSourceSwitch",
+        "displayNameEditor",
+      ] as const),
       ...baseVarbs("numObj", ["valueEditor"] as const),
     } as const;
   },

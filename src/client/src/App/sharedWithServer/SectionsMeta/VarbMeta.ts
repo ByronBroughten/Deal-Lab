@@ -12,8 +12,8 @@ import { relSections } from "./relSectionsVarbs";
 import { UpdateFnName } from "./relSectionVarbs/rel/relVarb/UpdateFnName";
 import { UpdateFnProps } from "./relSectionVarbs/rel/relVarb/UpdateFnProps";
 import {
-  UpdateOverrideProps,
   UpdateOverrides,
+  UpdateOverrideSwitch,
 } from "./relSectionVarbs/rel/relVarb/UpdateOverrides";
 import { DisplayName, RelVarb } from "./relSectionVarbs/rel/relVarbTypes";
 import { GeneralRelVarbs } from "./relSectionVarbs/relVarbs";
@@ -28,16 +28,16 @@ type InBaseUpdatePack = {
 };
 
 type InDefaultUpdatePack = InBaseUpdatePack & {
-  inverseSwitches: UpdateOverrideProps[];
+  inverseSwitches: UpdateOverrideSwitch[];
 };
 
-type InSwitchUpdatePack = InBaseUpdatePack & UpdateOverrideProps;
+type InSwitchUpdatePack = InBaseUpdatePack & UpdateOverrideSwitch;
 export type InUpdatePack = InBaseUpdatePack | InSwitchUpdatePack;
 
 type OutBaseUpdatePack = { relTargetVarbInfo: RelOutVarbInfo };
-export type OutSwitchPack = OutBaseUpdatePack & UpdateOverrideProps;
+export type OutSwitchPack = OutBaseUpdatePack & UpdateOverrideSwitch;
 export type OutDefaultPack = OutBaseUpdatePack & {
-  inverseSwitches: UpdateOverrideProps[];
+  inverseSwitches: UpdateOverrideSwitch[];
 };
 export function isDefaultOutPack(pack: OutUpdatePack): pack is OutDefaultPack {
   return "inverseSwitches" in pack;
