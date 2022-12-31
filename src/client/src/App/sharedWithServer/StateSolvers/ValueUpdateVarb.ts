@@ -63,9 +63,6 @@ export class SolveValueVarb<
     manualUpdateOnly: (): StateValue => {
       return this.getterVarb.value();
     },
-    stringObj: (): StringObj => {
-      return this.getterVarb.value("stringObj");
-    },
     loadNumObj: (): NumObj => {
       const { updateFnProps } = this.inEntityVarb;
       const varb = this.getterSection.varbByFocalMixed(

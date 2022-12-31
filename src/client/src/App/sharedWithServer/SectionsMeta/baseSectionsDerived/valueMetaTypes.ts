@@ -5,9 +5,9 @@ import { BaseVarbSchemas } from "../baseSectionsVarbs/baseVarbs";
 import { SectionName } from "../SectionName";
 import { VarbName, VarbValueName } from "./baseSectionsVarbsTypes";
 import { VarbNamesNext } from "./baseVarbInfo";
-import { valueMeta } from "./valueMeta";
+import { valueMetas } from "./valueMetas";
 
-export type ValueSchemas = typeof valueMeta;
+export type ValueSchemas = typeof valueMetas;
 export type ValueNamesToTypes = {
   [VN in ValueName]: ReturnType<ValueSchemas[VN]["initDefault"]>;
 };
@@ -29,7 +29,7 @@ export function isVarbValue<SN extends SectionName, VN extends VarbName<SN>>(
 ): value is VarbValue<SN, VN> {
   const baseVarbs = baseSectionsVarbs[sectionName] as BaseVarbSchemas;
   const valueName = baseVarbs[varbName as string];
-  return valueMeta[valueName].is(value);
+  return valueMetas[valueName].is(value);
 }
 
 export type SectionValuesReq = {

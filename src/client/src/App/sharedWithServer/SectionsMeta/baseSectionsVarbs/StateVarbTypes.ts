@@ -1,4 +1,4 @@
-import { valueMeta } from "../baseSectionsDerived/valueMeta";
+import { valueMetas } from "../baseSectionsDerived/valueMetas";
 import { ValueNamesToTypes } from "../baseSectionsDerived/valueMetaTypes";
 import { StateValue } from "./baseValues/StateValueTypes";
 
@@ -9,7 +9,7 @@ export type Adornments = {
 
 export type ValueTypesPlusAny = ValueNamesToTypes & { any: StateValue };
 export const valueSchemasPlusAny = {
-  ...valueMeta,
+  ...valueMetas,
   any: { is: () => true },
 } as const;
 

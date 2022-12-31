@@ -1,5 +1,5 @@
 import { Obj } from "../../../utils/Obj";
-import { valueMeta } from "../../baseSectionsDerived/valueMeta";
+import { valueMetas } from "../../baseSectionsDerived/valueMetas";
 import { ValueNamesToTypes } from "../../baseSectionsDerived/valueMetaTypes";
 
 const editorUpdateNames = [
@@ -27,8 +27,8 @@ export function isBasicValue(value: any): value is BasicValue {
 }
 
 export function isStateValue(value: any): value is StateValue {
-  for (const valueType of Obj.keys(valueMeta)) {
-    if (valueMeta[valueType].is(value)) return true;
+  for (const valueType of Obj.keys(valueMetas)) {
+    if (valueMetas[valueType].is(value)) return true;
   }
   return false;
 }

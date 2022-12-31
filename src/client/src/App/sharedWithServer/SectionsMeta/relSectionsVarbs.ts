@@ -113,7 +113,7 @@ export function makeRelSections() {
       itemValueSwitch: relVarb("string", {
         initValue: "labeledEquation",
       }),
-      defaultOngoingSwitch: relVarb("string", {
+      itemOngoingSwitch: relVarb("string", {
         initValue: "monthly",
       }),
     }),
@@ -124,6 +124,7 @@ export function makeRelSections() {
         [updateFnPropS.children("ongoingItem", "value")],
         { switchInit: "monthly", shared: { startAdornment: "$" } }
       ),
+      // I need "valueOngoingSwitch"
       valueMonthly: relVarbS.moneyObj("Expense", {
         updateFnName: "getNumObjOfSwitch",
         updateFnProps: {
@@ -153,14 +154,13 @@ export function makeRelSections() {
       // there is only one valueEditor
       // if the valueYearly switch is flipped,
       //
-
       valueSwitch: relVarb("string", {
         initValue: "valueEditor",
       }),
       itemValueSwitch: relVarb("string", {
         initValue: "labeledEquation",
       }),
-      defaultOngoingSwitch: relVarb("string", {
+      itemOngoingSwitch: relVarb("string", {
         initValue: "monthly",
       }),
     }),

@@ -14,6 +14,7 @@ const updateFnNames = checkUpdateFnNames({
   ...makeDefaults(),
   numObj: [
     "calcVarbs",
+    "manualUpdateOnly",
     "userVarb",
     "virtualNumObj",
     "loadSolvableTextByVarbInfo",
@@ -22,7 +23,7 @@ const updateFnNames = checkUpdateFnNames({
     ...calculationNames,
   ],
   stringObj: [
-    "stringObj",
+    "manualUpdateOnly",
     "loadLocalString",
     "manualUpdateOnly",
     "loadDisplayName",

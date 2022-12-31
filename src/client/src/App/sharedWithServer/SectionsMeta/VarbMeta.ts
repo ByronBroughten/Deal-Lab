@@ -1,7 +1,7 @@
 import { cloneDeep, pick } from "lodash";
 import { sectionsMeta } from "../SectionsMeta";
 import { VarbNames } from "./baseSectionsDerived/baseVarbInfo";
-import { valueMeta } from "./baseSectionsDerived/valueMeta";
+import { valueMetas } from "./baseSectionsDerived/valueMetas";
 import {
   NumUnitName,
   numUnitParams,
@@ -12,8 +12,8 @@ import { relSections } from "./relSectionsVarbs";
 import { UpdateFnName } from "./relSectionVarbs/rel/relVarb/UpdateFnName";
 import { UpdateFnProps } from "./relSectionVarbs/rel/relVarb/UpdateFnProps";
 import {
-  UpdateOverride,
   UpdateOverrideProps,
+  UpdateOverrides,
 } from "./relSectionVarbs/rel/relVarb/UpdateOverrides";
 import { DisplayName, RelVarb } from "./relSectionVarbs/rel/relVarbTypes";
 import { GeneralRelVarbs } from "./relSectionVarbs/relVarbs";
@@ -58,7 +58,7 @@ function fnPropsToFixedInEntities(
   return nextInfos;
 }
 function updateOverrideToInfos(
-  updateOverride: UpdateOverride[]
+  updateOverride: UpdateOverrides
 ): InSwitchUpdatePack[] {
   const inSwitchInfos: InSwitchUpdatePack[] = [];
   for (const prop of updateOverride) {
@@ -95,7 +95,10 @@ export class VarbMeta<SN extends SectionName> {
     return sectionsMeta.section(this.sectionName);
   }
   get value() {
-    return valueMeta[this.valueName];
+    const valueMeta = valueMetas[this.valueName];
+    if (valueMeta === undefined) {
+      throw new Error(`There is no valueMeta of valueName ${this.valueName}`);
+    } else return valueMeta;
   }
   get raw() {
     return { ...this.core };
@@ -141,7 +144,7 @@ export class VarbMeta<SN extends SectionName> {
     };
   }
   get valueName(): ValueName {
-    return this.core.type;
+    return this.core.valueName;
   }
   get inSwitchUpdatePacks(): InSwitchUpdatePack[] {
     return cloneDeep(this.core.inSwitchUpdatePacks);

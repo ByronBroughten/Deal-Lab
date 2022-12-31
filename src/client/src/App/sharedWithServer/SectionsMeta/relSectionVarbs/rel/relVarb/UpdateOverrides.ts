@@ -15,23 +15,27 @@ export interface UpdateOverride<VN extends ValueName = ValueName>
     UpdateBasics<VN> {}
 
 export type UpdateOverrides<VN extends ValueName = ValueName> =
-  UpdateOverride<VN>[];
+  readonly UpdateOverride<VN>[];
 
 export const updateOverrideS = {
-  yearlyToMonthly<Base extends string>(baseVarbName: Base): UpdateOverride {
+  yearlyToMonthly<Base extends string>(
+    baseVarbName: Base
+  ): UpdateOverride<"numObj"> {
     const varbNames = switchNames(baseVarbName, "ongoing");
     return {
       switchInfo: relVarbInfoS.local(varbNames.switch),
       switchValue: "yearly",
       ...updateBasicsS.yearlyToMonthly(baseVarbName),
-    };
+    } as const;
   },
-  monthlyToYearly<Base extends string>(baseVarbName: Base): UpdateOverride {
+  monthlyToYearly<Base extends string>(
+    baseVarbName: Base
+  ): UpdateOverride<"numObj"> {
     const varbNames = switchNames(baseVarbName, "ongoing");
     return {
       switchInfo: relVarbInfoS.local(varbNames.switch),
       switchValue: "monthly",
       ...updateBasicsS.monthlyToYearly(baseVarbName),
-    };
+    } as const;
   },
 };

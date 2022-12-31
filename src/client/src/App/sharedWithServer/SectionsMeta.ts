@@ -27,6 +27,9 @@ export class SectionsMeta {
   }
   section<SN extends SectionName>(sectionName: SN): SectionMeta<SN> {
     const sectionMeta = this.core[sectionName];
+    if (sectionMeta === undefined) {
+      throw new Error(`No section with of sectionName ${sectionName}`);
+    }
     return sectionMeta as SectionMeta<SectionNameByType> as any;
   }
   varbs<SN extends SectionName>(sectionName: SN): VarbMetas<SN> {

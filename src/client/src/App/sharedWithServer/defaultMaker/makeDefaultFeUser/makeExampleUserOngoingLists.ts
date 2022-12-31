@@ -43,7 +43,7 @@ export function makeExampleUserOngoingLists(): SectionPack<"ongoingList">[] {
     dbId: "exampleUtil1",
     dbVarbs: {
       itemValueSwitch: utilityValueSwitch,
-      defaultOngoingSwitch: "monthly",
+      itemOngoingSwitch: "monthly",
       totalOngoingSwitch: "monthly",
       displayName: stringObj("Utility Examples"),
     },
@@ -64,7 +64,7 @@ export function makeExampleUserOngoingLists(): SectionPack<"ongoingList">[] {
     dbId: "exampleRepr1",
     dbVarbs: {
       itemValueSwitch: repairsValueSwitch,
-      defaultOngoingSwitch: "yearly",
+      itemOngoingSwitch: "yearly",
       totalOngoingSwitch: "yearly",
       displayName: stringObj("Ongoing Repair Budget Example"),
     },
@@ -85,7 +85,7 @@ export function makeExampleUserOngoingLists(): SectionPack<"ongoingList">[] {
     dbId: "exampleCapX1",
     dbVarbs: {
       itemValueSwitch: capExExampleswitch,
-      defaultOngoingSwitch: "yearly",
+      itemOngoingSwitch: "yearly",
       totalOngoingSwitch: "yearly",
       displayName: stringObj("CapEx Examples"),
     },

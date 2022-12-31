@@ -80,8 +80,8 @@ function monDbVarbs<SN extends SectionName>(sectionName: SN): Schema<any> {
   const sectionMeta = sectionsMeta.get(sectionName);
   const { varbNames } = sectionMeta;
   const frame = varbNames.reduce((monVarbs, varbName) => {
-    const valueMeta = sectionMeta.varb(varbName).value;
-    monVarbs[varbName] = valueMeta.mon;
+    const valueMetas = sectionMeta.varb(varbName).value;
+    monVarbs[varbName] = valueMetas.mon;
     return monVarbs;
   }, {} as Record<string, any>);
   return new Schema(frame);

@@ -101,8 +101,7 @@ export class SectionMeta<SN extends SectionName> {
     const varbMeta = this.varbMetas[varbName];
     if (varbMeta === undefined) {
       throw new Error(`No varbMeta at ${this.sectionName}.${varbName}`);
-    }
-    return varbMeta;
+    } else return varbMeta;
   }
   propNoNull<PN extends CorePropName>(propName: PN): CorePropNoNull<SN, PN> {
     const prop = this.core[propName];

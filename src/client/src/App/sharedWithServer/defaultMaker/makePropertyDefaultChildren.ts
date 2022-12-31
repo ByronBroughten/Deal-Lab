@@ -17,7 +17,7 @@ export const defaultPropertyChildrenMakers = {
         displayName: stringObj("Utilities"),
         totalOngoingSwitch: "monthly",
         itemValueSwitch: "labeledEquation",
-        defaultOngoingSwitch: "monthly",
+        itemOngoingSwitch: "monthly",
       },
     });
     listGroup.addChild("ongoingList", {
@@ -25,7 +25,7 @@ export const defaultPropertyChildrenMakers = {
         displayName: stringObj("CapEx"),
         totalOngoingSwitch: "yearly",
         itemValueSwitch: "labeledSpanOverCost",
-        defaultOngoingSwitch: "yearly",
+        itemOngoingSwitch: "yearly",
       },
     });
     return listGroup.makeSectionPack();

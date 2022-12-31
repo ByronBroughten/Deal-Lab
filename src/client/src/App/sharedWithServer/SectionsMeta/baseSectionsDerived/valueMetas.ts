@@ -20,7 +20,7 @@ import {
 } from "../baseSectionsVarbs/baseValues/StringObj";
 import { ValueName } from "../baseSectionsVarbs/baseVarb";
 
-export const valueMeta = {
+export const valueMetas = {
   number: {
     is: (v: any): v is number => typeof v === "number",
     initDefault: () => 0,
@@ -80,15 +80,15 @@ export const valueMeta = {
   },
 } as const;
 
-type ValueMeta = typeof valueMeta;
+type ValueMeta = typeof valueMetas;
 
 type RelValueTest = Record<ValueName, ValueMeta[keyof ValueMeta]>;
 function testValues<T extends RelValueTest>(test: T): T {
   return test;
 }
-const _ = testValues(valueMeta);
+const _ = testValues(valueMetas);
 
-const zValueArr = Object.values(valueMeta).map((schema) => schema.zod) as [
+const zValueArr = Object.values(valueMetas).map((schema) => schema.zod) as [
   z.ZodTypeAny,
   z.ZodTypeAny
 ];

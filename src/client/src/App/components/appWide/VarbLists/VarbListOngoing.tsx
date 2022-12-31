@@ -15,9 +15,7 @@ type Props = {
 export function VarbListOngoing({ feId, ...rest }: Props) {
   const list = useSetterSection({ sectionName: "ongoingList", feId });
   const totalVarbName = list.get.switchVarbName("total", "ongoing");
-  const defaultOngoingSwitch = list
-    .varb("defaultOngoingSwitch")
-    .value("string");
+  const itemOngoingSwitch = list.varb("itemOngoingSwitch").value("string");
   return (
     <VarbListGeneric
       {...{
@@ -27,7 +25,7 @@ export function VarbListOngoing({ feId, ...rest }: Props) {
         totalVarbName,
         contentTitle: "Cost",
         childDbVarbs: {
-          valueOngoingSwitch: defaultOngoingSwitch,
+          valueOngoingSwitch: itemOngoingSwitch,
         },
         makeItemNode: ({ feId }) => (
           <ListItemOngoing {...{ feId, key: feId }} />

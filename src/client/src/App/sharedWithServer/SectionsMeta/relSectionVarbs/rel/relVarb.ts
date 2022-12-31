@@ -1,7 +1,7 @@
-import { valueMeta } from "../../baseSectionsDerived/valueMeta";
+import { valueMetas } from "../../baseSectionsDerived/valueMetas";
 import {
-  LeftRightPropCalculations,
-  SinglePropCalculations,
+  LeftRightPropCalcName,
+  SinglePropCalcName,
 } from "../../baseSectionsVarbs/baseValues/calculations";
 import { numObj } from "../../baseSectionsVarbs/baseValues/NumObj";
 import { ValueName } from "../../baseSectionsVarbs/baseVarb";
@@ -9,6 +9,7 @@ import { ChildName } from "../../sectionChildrenDerived/ChildName";
 import { SectionName } from "../../SectionName";
 import { getUpdateFnNames } from "./relVarb/UpdateFnName";
 import { UpdateFnProp, updateFnPropS } from "./relVarb/UpdateFnProps";
+import { UpdateProps, updatePropsS } from "./relVarb/UpdateProps";
 import {
   CommonRelVarb,
   DisplayName,
@@ -20,31 +21,36 @@ const makeDefaultCommon = <T extends CommonRelVarb>(common: T): CommonRelVarb =>
   common;
 const defaultCommon = makeDefaultCommon({
   virtualVarb: null,
-
   displayName: "",
   displayNameEnd: "",
   displayNameStart: "",
-
-  updateFnProps: {},
-  updateOverrides: [],
-
   startAdornment: "",
   endAdornment: "",
 });
 
-export function relVarb<T extends ValueName>(
-  type: T,
-  partial: Partial<RelVarb<T>> = {}
-): RelVarb<T> {
-  const valueSchema = valueMeta[type];
+function makeDefaultUpdateProps<VN extends ValueName>(
+  valueName: VN
+): UpdateProps<VN> {
   return {
-    type,
-    updateFnName: getUpdateFnNames(type)[0],
+    updateFnName: getUpdateFnNames(valueName)[0],
+    updateFnProps: {},
+    updateOverrides: [],
+  };
+}
+
+export function relVarb<VN extends ValueName>(
+  valueName: VN,
+  partial: Partial<RelVarb<VN>> = {}
+): RelVarb<VN> {
+  const valueSchema = valueMetas[valueName];
+  return {
+    valueName,
     initValue: valueSchema.initDefault(),
     ...defaultCommon,
-    ...(type === "numObj" && { unit: "money" }),
+    ...(makeDefaultUpdateProps(valueName) as any),
+    ...(valueName === "numObj" && { unit: "money" }),
     ...partial,
-  } as RelVarb<T>;
+  } as RelVarb<VN>;
 }
 
 export type RelNumObjOptions = Partial<NumObjRelVarb & { initNumber: number }>;
@@ -71,7 +77,7 @@ export const relVarbS = {
     });
   },
   get displayNameEditor() {
-    return relVarb("string", { updateFnName: "manualUpdateOnly" });
+    return relVarb("string", updatePropsS.simple("manualUpdateOnly"));
   },
   calcVarb(
     displayName: DisplayName,
@@ -79,7 +85,7 @@ export const relVarbS = {
   ): NumObjRelVarb {
     return this.numObj(displayName, {
       ...options,
-      updateFnName: "calcVarbs",
+      ...updatePropsS.simple("calcVarbs"),
     });
   },
   calcVarbBlank(options?: RelNumObjOptions): NumObjRelVarb {
@@ -114,8 +120,7 @@ export const relVarbS = {
   ): NumObjRelVarb {
     return relVarb("numObj", {
       displayName,
-      updateFnName: "sumNums",
-      updateFnProps: { nums },
+      ...updatePropsS.sumNums(nums),
       ...options,
     });
   },
@@ -141,27 +146,26 @@ export const relVarbS = {
   },
   singlePropFn(
     displayName: DisplayName,
-    updateFnName: SinglePropCalculations,
+    updateFnName: SinglePropCalcName,
     num: UpdateFnProp,
     options?: RelNumObjOptions
   ): NumObjRelVarb {
     return relVarb("numObj", {
       displayName,
-      updateFnName,
-      updateFnProps: { num },
+      ...updatePropsS.singlePropCalc(updateFnName, num),
       ...options,
     });
   },
   leftRightPropFn(
     displayName: DisplayName,
-    updateFnName: LeftRightPropCalculations,
+    updateFnName: LeftRightPropCalcName,
     leftRight: LeftRightVarbInfos,
     options?: RelNumObjOptions
   ): NumObjRelVarb {
+    const [left, right] = leftRight;
     return relVarb("numObj", {
       displayName,
-      updateFnName,
-      updateFnProps: { leftSide: leftRight[0], rightSide: leftRight[1] },
+      ...updatePropsS.leftRightPropCalc(updateFnName, left, right),
       ...options,
     });
   },

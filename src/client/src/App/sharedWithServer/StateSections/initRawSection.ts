@@ -109,7 +109,7 @@ function getValidValue(
   varbNames: VarbNames<SectionNameByType>,
   dbValue: StateValue | undefined
 ): StateValue {
-  const valueMeta = sectionsMeta.value(varbNames);
+  const valueMetas = sectionsMeta.value(varbNames);
   const varbMeta = sectionsMeta.varb(varbNames);
-  return valueMeta.is(dbValue) ? dbValue : varbMeta.initValue;
+  return valueMetas.is(dbValue) ? dbValue : varbMeta.initValue;
 }

@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { zS } from "../../../utils/zod";
-import { zValue } from "../../baseSectionsDerived/valueMeta";
+import { zValue } from "../../baseSectionsDerived/valueMetas";
 import { DbValue } from "../../baseSectionsDerived/valueMetaTypes";
 import { SectionName } from "../../SectionName";
 import { ChildName } from "../ChildName";
