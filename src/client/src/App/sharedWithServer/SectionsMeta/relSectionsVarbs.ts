@@ -79,7 +79,7 @@ export function makeRelSections() {
     ...relSectionProp("singleTimeListGroup", {
       total: relVarbS.sumNums(
         "List group total",
-        [updateFnPropS.children("singleTimeList", "total")],
+        [updateFnPropS.children("singleTimeList", "value")],
         relAdorn.money
       ),
       itemValueSwitch: relVarb("string", {
@@ -114,7 +114,7 @@ export function makeRelSections() {
       ...relVarbsS.ongoingSumNums(
         "total",
         "Ongoing List Group",
-        [updateFnPropS.children("ongoingList", "total")],
+        [updateFnPropS.children("ongoingList", "value")],
         { switchInit: "monthly", shared: relAdorn.money }
       ),
       value: relVarb("numObj"),
