@@ -3,7 +3,7 @@ import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { GetterSectionBase } from "../StateGetters/Bases/GetterSectionBase";
 import { GetterSection } from "../StateGetters/GetterSection";
 import { GetterVarb } from "../StateGetters/GetterVarb";
-import { OutVarbGetterVarb } from "./OutVarbGetterVarb";
+import { OutEntityGetterVarb } from "./OutEntityGetterVarb";
 
 export class OutVarbGetterSection<
   SN extends SectionNameByType
@@ -27,8 +27,8 @@ export class OutVarbGetterSection<
   }
   outVarbGetter<S extends SectionNameByType>(
     varbInfo: FeVarbInfo<S>
-  ): OutVarbGetterVarb<S> {
-    return new OutVarbGetterVarb({
+  ): OutEntityGetterVarb<S> {
+    return new OutEntityGetterVarb({
       ...this.getterSectionsProps,
       ...varbInfo,
     });

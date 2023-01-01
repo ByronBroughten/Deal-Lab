@@ -10,7 +10,10 @@ import {
   updateFnPropS,
   updateFnPropsS,
 } from "./relSectionVarbs/rel/relVarb/UpdateFnProps";
-import { updateOverrideS } from "./relSectionVarbs/rel/relVarb/UpdateOverrides";
+import {
+  overrideSwitchS,
+  updateOverride,
+} from "./relSectionVarbs/rel/relVarb/UpdateOverrides";
 import {
   defaultRelSectionVarbs,
   GeneralRelSectionVarbs,
@@ -93,7 +96,10 @@ export function makeRelSections() {
         },
       }),
       valueSourceSwitch: relVarb("string", {
-        initValue: "valueEditor",
+        initValue: "total",
+      }),
+      valueOngoingSwitch: relVarb("string", {
+        initValue: "monthly",
       }),
       total: relVarbS.sumNums(
         relVarbInfoS.local("displayName"),
@@ -121,47 +127,61 @@ export function makeRelSections() {
     }),
     ...relSectionProp("ongoingList", {
       valueMonthly: relVarbS.moneyObj("Expense", {
-        // it gets its value from
-        // - valueEditor
-        // - valueYearly (valueDaily)
-        // - totalMonthly
         ...updateBasicsS.manualUpdateOnly(),
         updateOverrides: [
-          {
-            switchInfo: relVarbInfoS.local("valueSourceSwitch"),
-            switchValue: "total",
-            ...updateBasicsS.loadSolvableTextByVarbInfo(
+          updateOverride(
+            [overrideSwitchS.local("valueSourceSwitch", "total")],
+            updateBasicsS.loadSolvableTextByVarbInfo(
               "totalMonthly",
               "valueSourceSwitch"
-            ),
-          },
-          updateOverrideS.yearlyToMonthly("value"),
-          {
-            switchInfo: relVarbInfoS.local("valueOngoingSwitch"),
-            switchValue: "monthly",
-            ...updateBasicsS.loadSolvableTextByVarbInfo(
+            )
+          ),
+          updateOverride(
+            [
+              overrideSwitchS.local("valueSourceSwitch", "valueEditor"),
+              overrideSwitchS.yearlyIsActive("value"),
+            ],
+            updateBasicsS.yearlyToMonthly("value")
+          ),
+          updateOverride(
+            [
+              overrideSwitchS.local("valueSourceSwitch", "valueEditor"),
+              overrideSwitchS.monthlyIsActive("value"),
+            ],
+            updateBasicsS.loadSolvableTextByVarbInfo(
               "valueMonthly",
               "valueSourceSwitch"
-            ),
-          },
+            )
+          ),
         ],
       }),
       valueYearly: relVarbS.moneyObj("Expense", {
-        updateFnName: "monthlyToYearly",
-        updateFnProps: {
-          num: updateFnPropS.local("valueMonthly"),
-        },
+        ...updateBasicsS.manualUpdateOnly(),
         updateOverrides: [
-          {
-            switchInfo: relVarbInfoS.local("valueOngoingSwitch"),
-            switchValue: "yearly",
-            updateFnName: "getNumObjOfSwitch",
-            updateFnProps: {
-              switch: updateFnPropS.local("valueSourceSwitch"),
-              total: updateFnPropS.local("totalMonthly"),
-              valueEditor: updateFnPropS.local("valueEditor"),
-            },
-          },
+          updateOverride(
+            [overrideSwitchS.local("valueSourceSwitch", "total")],
+            updateBasicsS.loadSolvableTextByVarbInfo(
+              "totalYearly",
+              "valueSourceSwitch"
+            )
+          ),
+          updateOverride(
+            [
+              overrideSwitchS.local("valueSourceSwitch", "valueEditor"),
+              overrideSwitchS.monthlyIsActive("value"),
+            ],
+            updateBasicsS.monthlyToYearly("value")
+          ),
+          updateOverride(
+            [
+              overrideSwitchS.local("valueSourceSwitch", "valueEditor"),
+              overrideSwitchS.yearlyIsActive("value"),
+            ],
+            updateBasicsS.loadSolvableTextByVarbInfo(
+              "valueYearly",
+              "valueSourceSwitch"
+            )
+          ),
         ],
       }),
       ...relVarbsS.ongoingSumNums(
@@ -170,10 +190,11 @@ export function makeRelSections() {
         [updateFnPropS.children("ongoingItem", "value")],
         { switchInit: "monthly", shared: { startAdornment: "$" } }
       ),
-      // I need "valueOngoingSwitch"
-
+      valueOngoingSwitch: relVarb("string", {
+        initValue: "monthly",
+      }),
       valueSourceSwitch: relVarb("string", {
-        initValue: "valueEditor",
+        initValue: "total",
       }),
       itemValueSwitch: relVarb("string", {
         initValue: "labeledEquation",

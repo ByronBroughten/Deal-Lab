@@ -13,7 +13,7 @@ import { SectionPackArrs } from "../StatePackers.ts/PackMakerSection";
 import { StateSections } from "../StateSections/StateSections";
 import { UpdaterSection } from "../StateUpdaters/UpdaterSection";
 import { Arr } from "../utils/Arr";
-import { OutVarbGetterVarb } from "./../StateInOutVarbs/OutVarbGetterVarb";
+import { OutEntityGetterVarb } from "./../StateInOutVarbs/OutEntityGetterVarb";
 import { SolverSectionsBase } from "./SolverBases/SolverSectionsBase";
 import { SolverSection } from "./SolverSection";
 import tsort from "./SolverSections/tsort/tsort";
@@ -91,9 +91,9 @@ export class SolverSections extends SolverSectionsBase {
     }
     return outVarbMap;
   }
-  outVarbGetterById(varbId: string): OutVarbGetterVarb {
+  outVarbGetterById(varbId: string): OutEntityGetterVarb {
     const feVarbInfo = GetterVarb.varbIdToVarbInfo(varbId);
-    return new OutVarbGetterVarb({
+    return new OutEntityGetterVarb({
       ...this.solverSectionsProps,
       ...feVarbInfo,
     });

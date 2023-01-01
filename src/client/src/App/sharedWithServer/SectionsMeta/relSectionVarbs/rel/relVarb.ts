@@ -1,7 +1,7 @@
 import { valueMetas } from "../../baseSectionsDerived/valueMetas";
 import {
   LeftRightPropCalcName,
-  SinglePropCalcName,
+  NumPropCalcName,
 } from "../../baseSectionsVarbs/baseValues/calculations";
 import { numObj } from "../../baseSectionsVarbs/baseValues/NumObj";
 import { ValueName } from "../../baseSectionsVarbs/baseVarb";
@@ -146,7 +146,7 @@ export const relVarbS = {
   },
   singlePropFn(
     displayName: DisplayName,
-    updateFnName: SinglePropCalcName,
+    updateFnName: NumPropCalcName,
     num: UpdateFnProp,
     options?: RelNumObjOptions
   ): NumObjRelVarb {

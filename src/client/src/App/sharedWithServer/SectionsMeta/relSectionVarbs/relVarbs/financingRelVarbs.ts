@@ -2,9 +2,13 @@ import { PiCalculationName } from "../../baseSectionsVarbs/baseValues/calculatio
 import { numObj } from "../../baseSectionsVarbs/baseValues/NumObj";
 import { switchNames } from "../../baseSectionsVarbs/RelSwitchVarb";
 import { loanVarbsNotInFinancing } from "../../baseSectionsVarbs/specialVarbNames";
-import { relVarbInfoS } from "../../SectionInfo/RelVarbInfo";
 import { relVarb, relVarbS } from "../rel/relVarb";
+import { updateBasics } from "../rel/relVarb/UpdateBasics";
 import { updateFnPropS, updateFnPropsS } from "../rel/relVarb/UpdateFnProps";
+import {
+  overrideSwitchS,
+  updateOverride,
+} from "../rel/relVarb/UpdateOverrides";
 import { RelVarbs, relVarbsS } from "../relVarbs";
 
 const loanBase = switchNames("loanBase", "dollarsPercentDecimal");
@@ -21,15 +25,13 @@ export function loanRelVarbs(): RelVarbs<"loan"> {
       updateFnName: "percentToDecimal",
       updateFnProps: { num: updateFnPropS.local(loanBase.percent) },
       updateOverrides: [
-        {
-          switchInfo: relVarbInfoS.local(loanBase.switch),
-          switchValue: "dollars",
-          updateFnName: "simpleDivide",
-          updateFnProps: {
+        updateOverride(
+          [overrideSwitchS.local(loanBase.switch, "dollars")],
+          updateBasics("simpleDivide", {
             leftSide: updateFnPropS.local("loanBaseDollars"),
             rightSide: updateFnPropS.pathName("propertyGeneralFocal", "price"),
-          },
-        },
+          })
+        ),
       ],
     }),
     [loanBase.percent]: relVarbS.percentObj("Base loan", {
@@ -40,15 +42,12 @@ export function loanRelVarbs(): RelVarbs<"loan"> {
         varbInfo: updateFnPropS.local("loanBasePercentEditor"),
       },
       updateOverrides: [
-        {
-          switchInfo: relVarbInfoS.local(loanBase.switch),
-          switchValue: "dollars",
-          updateFnName: "decimalToPercent",
-          updateFnProps: {
-            switch: updateFnPropS.local(loanBase.switch),
+        updateOverride(
+          [overrideSwitchS.local(loanBase.switch, "decimal")],
+          updateBasics("decimalToPercent", {
             num: updateFnPropS.local(loanBase.decimal),
-          },
-        },
+          })
+        ),
       ],
     }),
     [loanBase.dollars]: relVarbS.moneyObj("Base loan", {
@@ -59,16 +58,13 @@ export function loanRelVarbs(): RelVarbs<"loan"> {
         varbInfo: updateFnPropS.local("loanBaseDollarsEditor"),
       },
       updateOverrides: [
-        {
-          switchInfo: relVarbInfoS.local(loanBase.switch),
-          switchValue: "percent",
-          updateFnName: "simpleMultiply",
-          updateFnProps: {
-            switch: updateFnPropS.local(loanBase.switch),
+        updateOverride(
+          [overrideSwitchS.local(loanBase.switch, "percent")],
+          updateBasics("simpleMultiply", {
             leftSide: updateFnPropS.local(loanBase.decimal),
             rightSide: updateFnPropS.pathName("propertyGeneralFocal", "price"),
-          },
-        },
+          })
+        ),
       ],
     }),
     loanBaseDollarsEditor: relVarbS.moneyObj("Loan amount", {
@@ -186,14 +182,17 @@ export function loanRelVarbs(): RelVarbs<"loan"> {
             varbInfo: updateFnPropS.local("piFixedStandardMonthly"),
           },
           updateOverrides: [
-            {
-              switchInfo: relVarbInfoS.local("piCalculationName"),
-              switchValue: "interestOnlySimple",
-              updateFnName: "loadNumObj",
-              updateFnProps: {
+            updateOverride(
+              [
+                overrideSwitchS.local(
+                  "piCalculationName",
+                  "interestOnlySimple"
+                ),
+              ],
+              updateBasics("loadNumObj", {
                 varbInfo: updateFnPropS.local("interestOnlySimpleMonthly"),
-              },
-            },
+              })
+            ),
           ],
         },
         yearly: {
@@ -202,14 +201,17 @@ export function loanRelVarbs(): RelVarbs<"loan"> {
             varbInfo: updateFnPropS.local("piFixedStandardYearly"),
           },
           updateOverrides: [
-            {
-              switchInfo: relVarbInfoS.local("piCalculationName"),
-              switchValue: "interestOnlySimple",
-              updateFnName: "loadNumObj",
-              updateFnProps: {
+            updateOverride(
+              [
+                overrideSwitchS.local(
+                  "piCalculationName",
+                  "interestOnlySimple"
+                ),
+              ],
+              updateBasics("loadNumObj", {
                 varbInfo: updateFnPropS.local("interestOnlySimpleYearly"),
-              },
-            },
+              })
+            ),
           ],
         },
       },

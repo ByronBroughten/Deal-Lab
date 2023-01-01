@@ -21,7 +21,7 @@ export class UpdaterVarb<
     });
   }
   updateValue(value: StateValue): void {
-    this.get.meta.validateVarbValue(value);
+    this.get.meta.validateValue(value);
     this.update({ value });
   }
   update(props: Partial<StateVarb<SN>>): void {

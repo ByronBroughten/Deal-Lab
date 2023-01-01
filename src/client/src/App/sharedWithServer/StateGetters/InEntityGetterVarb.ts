@@ -4,9 +4,8 @@ import {
   InEntity,
   ValueInEntity,
 } from "../SectionsMeta/baseSectionsVarbs/baseValues/entities";
-import { VarbInfoMixedFocal } from "../SectionsMeta/sectionChildrenDerived/MixedSectionInfo";
+import { UpdateOverrideSwitch } from "../SectionsMeta/relSectionVarbs/rel/relVarb/UpdateOverrides";
 import { FeVarbInfo } from "../SectionsMeta/SectionInfo/FeInfo";
-import { RelLocalInfo } from "../SectionsMeta/SectionInfo/RelInfo";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { InUpdatePack } from "../SectionsMeta/VarbMeta";
 import { InVarbInfo } from "../StateSolvers/SolverVarb";
@@ -48,16 +47,19 @@ export class InEntityGetterVarb<
   get activeUpdatePack(): InUpdatePack {
     const { inSwitchUpdatePacks, inDefaultUpdatePack } = this.meta;
     for (const pack of inSwitchUpdatePacks) {
-      const { switchInfo, switchValue, ...rest } = pack;
-      if (this.switchIsActive(switchInfo, switchValue)) {
+      const { switches, ...rest } = pack;
+      if (switches.every((updateSwitch) => this.switchIsActive(updateSwitch))) {
         return rest;
       }
     }
     return inDefaultUpdatePack;
   }
-  switchIsActive(relSwitchInfo: RelLocalInfo, switchValue: string): boolean {
+  private switchIsActive({
+    switchInfo,
+    switchValue,
+  }: UpdateOverrideSwitch): boolean {
     const actualSwitchValue = this.get.section
-      .varbByFocalMixed(relSwitchInfo as VarbInfoMixedFocal)
+      .varbByFocalMixed(switchInfo)
       .value("string");
     return switchValue === actualSwitchValue;
   }
@@ -65,8 +67,7 @@ export class InEntityGetterVarb<
     const allFixedInEntities: FixedInEntity[] = [];
     const { inSwitchUpdatePacks, inDefaultUpdatePack } = this.meta;
     for (const pack of inSwitchUpdatePacks) {
-      const { switchInfo, switchValue, ...rest } = pack;
-      allFixedInEntities.push(...rest.fixedInEntities);
+      allFixedInEntities.push(...pack.fixedInEntities);
     }
     allFixedInEntities.push(...inDefaultUpdatePack.fixedInEntities);
     return allFixedInEntities;

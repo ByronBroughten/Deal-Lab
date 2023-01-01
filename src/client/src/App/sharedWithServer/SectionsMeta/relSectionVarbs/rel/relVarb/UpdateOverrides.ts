@@ -5,18 +5,24 @@ import {
   RelLocalVarbInfo,
   relVarbInfoS,
 } from "../../../SectionInfo/RelVarbInfo";
-import { UpdateBasics, updateBasicsS } from "./UpdateBasics";
+import { updateBasics, UpdateBasics, updateBasicsS } from "./UpdateBasics";
+import { UpdateFnName } from "./UpdateFnName";
+import { updateFnProp, updateFnPropsS } from "./UpdateFnProps";
+
+export type UpdateOverrides<VN extends ValueName = ValueName> =
+  readonly UpdateOverride<VN>[];
+
+export interface UpdateOverride<VN extends ValueName = ValueName>
+  extends UpdateBasics<VN> {
+  switches: UpdateOverrideSwitches;
+}
+
+export type UpdateOverrideSwitches = readonly UpdateOverrideSwitch[];
 
 export interface UpdateOverrideSwitch {
   switchInfo: RelLocalVarbInfo;
   switchValue: string;
 }
-export interface UpdateOverride<VN extends ValueName = ValueName>
-  extends UpdateOverrideSwitch,
-    UpdateBasics<VN> {}
-
-export type UpdateOverrides<VN extends ValueName = ValueName> =
-  readonly UpdateOverride<VN>[];
 
 export const overrideSwitchS = {
   ongoing<K extends SwitchTargetKey<"ongoing">>(
@@ -24,10 +30,7 @@ export const overrideSwitchS = {
     switchKey: K
   ) {
     const varbNames = switchNames(baseVarbName, "ongoing");
-    return {
-      switchInfo: relVarbInfoS.local(varbNames.switch),
-      switchValue: switchKey,
-    } as const;
+    return this.local(varbNames.switch, switchKey);
   },
   monthlyIsActive(baseVarbName: string) {
     return this.ongoing(baseVarbName, "monthly");
@@ -35,22 +38,53 @@ export const overrideSwitchS = {
   yearlyIsActive(baseVarbName: string) {
     return this.ongoing(baseVarbName, "yearly");
   },
-};
-
-export const updateOverrideS = {
-  yearlyToMonthly<Base extends string>(
-    baseVarbName: Base
-  ): UpdateOverride<"numObj"> {
+  local(varbName: string, switchValue: string) {
     return {
-      ...overrideSwitchS.yearlyIsActive(baseVarbName),
-      ...updateBasicsS.yearlyToMonthly(baseVarbName),
+      switchInfo: relVarbInfoS.local(varbName),
+      switchValue,
     } as const;
   },
-  monthlyToYearly<Base extends string>(
+};
+
+export function updateOverride<
+  VN extends ValueName,
+  US extends UpdateOverrideSwitches
+>(switches: US, updateBasics: UpdateBasics<VN>): UpdateOverride<VN> {
+  const { updateFnProps, ...rest } = updateBasics;
+  for (const updateSwitch of switches) {
+    const { switchInfo } = updateSwitch;
+    updateFnProps[switchInfo.varbName] = updateFnProp(switchInfo);
+  }
+  return {
+    switches,
+    updateFnProps,
+    ...rest,
+  };
+}
+
+export const updateOverrideS = {
+  loadedVarbProp(updateFnName: UpdateFnName<"stringObj">) {
+    return updateOverride(
+      [overrideSwitchS.local("valueSourceSwitch", "loadedVarb")],
+      updateBasics(
+        updateFnName,
+        updateFnPropsS.localByVarbName(["valueEntityInfo"])
+      )
+    ) as UpdateOverride<"stringObj">;
+  },
+  yearlyIfActive<Base extends string>(
+    baseVarbName: Base
+  ): UpdateOverride<"numObj"> {
+    return updateOverride(
+      [overrideSwitchS.yearlyIsActive(baseVarbName)],
+      updateBasicsS.yearlyToMonthly(baseVarbName)
+    );
+  },
+  monthlyIfActive<Base extends string>(
     baseVarbName: Base
   ): UpdateOverride<"numObj"> {
     return {
-      ...overrideSwitchS.monthlyIsActive(baseVarbName),
+      switches: [overrideSwitchS.monthlyIsActive(baseVarbName)],
       ...updateBasicsS.monthlyToYearly(baseVarbName),
     } as const;
   },

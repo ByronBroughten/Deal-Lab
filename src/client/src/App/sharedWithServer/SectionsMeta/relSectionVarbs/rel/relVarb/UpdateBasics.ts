@@ -1,14 +1,41 @@
+import {
+  LeftRightPropCalcName,
+  NumPropCalcName,
+} from "../../../baseSectionsVarbs/baseValues/calculations";
 import { ValueName } from "../../../baseSectionsVarbs/baseVarb";
 import { switchNames } from "../../../baseSectionsVarbs/RelSwitchVarb";
 import { UpdateFnName } from "./UpdateFnName";
-import { UpdateFnProps, updateFnPropS } from "./UpdateFnProps";
+import { UpdateFnProp, UpdateFnProps, updateFnPropS } from "./UpdateFnProps";
 
 export type UpdateBasics<VN extends ValueName = ValueName> = {
   updateFnName: UpdateFnName<VN>;
   updateFnProps: UpdateFnProps;
 };
 
+export function updateBasics<VN extends ValueName>(
+  updateFnName: UpdateFnName<VN>,
+  updateFnProps: UpdateFnProps
+): UpdateBasics<VN> {
+  return {
+    updateFnName,
+    updateFnProps,
+  };
+}
+
 export const updateBasicsS = {
+  equationLeftRight(
+    updateFnName: LeftRightPropCalcName,
+    leftSide: UpdateFnProp,
+    rightSide: UpdateFnProp
+  ): UpdateBasics<"numObj"> {
+    return updateBasics(updateFnName, { leftSide, rightSide });
+  },
+  equationSimple(
+    updateFnName: NumPropCalcName,
+    num: UpdateFnProp
+  ): UpdateBasics<"numObj"> {
+    return updateBasics(updateFnName, { num });
+  },
   manualUpdateOnly() {
     return {
       updateFnName: "manualUpdateOnly",
@@ -22,13 +49,10 @@ export const updateBasicsS = {
     varbInfoName: string,
     switchName: string
   ): UpdateBasics<"numObj"> {
-    return {
-      updateFnName: "loadSolvableTextByVarbInfo",
-      updateFnProps: {
-        varbInfo: updateFnPropS.local(varbInfoName),
-        switch: updateFnPropS.local(switchName),
-      },
-    };
+    return updateBasics("loadSolvableTextByVarbInfo", {
+      varbInfo: updateFnPropS.local(varbInfoName),
+      switch: updateFnPropS.local(switchName),
+    });
   },
   yearlyToMonthly<Base extends string>(
     baseVarbName: Base

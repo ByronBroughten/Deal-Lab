@@ -50,7 +50,7 @@ export class SetterVarb<
   }
   private onChange({ currentTarget }: { currentTarget: any }): void {
     const { value } = currentTarget;
-    if (this.meta.validateVarbValue(value)) {
+    if (this.meta.validateValue(value)) {
       this.updateValue(value);
     }
   }

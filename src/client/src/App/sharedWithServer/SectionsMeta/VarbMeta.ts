@@ -1,4 +1,4 @@
-import { cloneDeep, pick } from "lodash";
+import { cloneDeep } from "lodash";
 import { sectionsMeta } from "../SectionsMeta";
 import { VarbNames } from "./baseSectionsDerived/baseVarbInfo";
 import { valueMetas } from "./baseSectionsDerived/valueMetas";
@@ -9,79 +9,25 @@ import {
 import { FixedInEntity } from "./baseSectionsVarbs/baseValues/entities";
 import { ValueName } from "./baseSectionsVarbs/baseVarb";
 import { relSections } from "./relSectionsVarbs";
-import { UpdateFnName } from "./relSectionVarbs/rel/relVarb/UpdateFnName";
+import { UpdateBasics } from "./relSectionVarbs/rel/relVarb/UpdateBasics";
 import { UpdateFnProps } from "./relSectionVarbs/rel/relVarb/UpdateFnProps";
 import {
   UpdateOverrides,
-  UpdateOverrideSwitch,
+  UpdateOverrideSwitches,
 } from "./relSectionVarbs/rel/relVarb/UpdateOverrides";
 import { DisplayName, RelVarb } from "./relSectionVarbs/rel/relVarbTypes";
 import { GeneralRelVarbs } from "./relSectionVarbs/relVarbs";
-import { RelOutVarbInfo } from "./sectionChildrenDerived/RelInOutVarbInfo";
 import { SectionMeta } from "./SectionMeta";
 import { SectionName } from "./SectionName";
 
-type InBaseUpdatePack = {
-  updateFnName: UpdateFnName;
-  updateFnProps: UpdateFnProps;
-  fixedInEntities: FixedInEntity[];
-};
-
-type InDefaultUpdatePack = InBaseUpdatePack & {
-  inverseSwitches: UpdateOverrideSwitch[];
-};
-
-type InSwitchUpdatePack = InBaseUpdatePack & UpdateOverrideSwitch;
-export type InUpdatePack = InBaseUpdatePack | InSwitchUpdatePack;
-
-type OutBaseUpdatePack = { relTargetVarbInfo: RelOutVarbInfo };
-export type OutSwitchPack = OutBaseUpdatePack & UpdateOverrideSwitch;
-export type OutDefaultPack = OutBaseUpdatePack & {
-  inverseSwitches: UpdateOverrideSwitch[];
-};
-export function isDefaultOutPack(pack: OutUpdatePack): pack is OutDefaultPack {
-  return "inverseSwitches" in pack;
-}
-export function isSwitchOutPack(pack: OutUpdatePack): pack is OutSwitchPack {
-  return "switchInfo" in pack;
-}
-export type OutUpdatePack = OutSwitchPack | OutDefaultPack;
-function fnPropsToFixedInEntities(
-  updateFnProps: UpdateFnProps
-): FixedInEntity[] {
-  const infos = Object.values(updateFnProps);
-  let nextInfos: FixedInEntity[] = [];
-  for (const info of infos) {
-    if (Array.isArray(info)) nextInfos = nextInfos.concat(info);
-    else nextInfos.push(info);
-  }
-  return nextInfos;
-}
-function updateOverrideToInfos(
-  updateOverride: UpdateOverrides
-): InSwitchUpdatePack[] {
-  const inSwitchInfos: InSwitchUpdatePack[] = [];
-  for (const prop of updateOverride) {
-    const fixedInEntities = fnPropsToFixedInEntities(prop.updateFnProps);
-    inSwitchInfos.push({
-      ...prop,
-      fixedInEntities,
-    });
-  }
-  return inSwitchInfos;
-}
-
-interface VarbMetaProps<SN extends SectionName> {
+export type VarbMetaCore<SN extends SectionName> = RelVarb & {
   varbName: string;
   sectionName: SN;
   inSwitchUpdatePacks: InSwitchUpdatePack[];
-  outUpdatePacks: OutUpdatePack[];
-}
-
-export type VarbMetaCore<SN extends SectionName> = RelVarb & VarbMetaProps<SN>;
+};
 export class VarbMeta<SN extends SectionName> {
   constructor(readonly core: VarbMetaCore<SN>) {}
-  validateVarbValue(value: any): true {
+  validateValue(value: any): true {
     if (this.isVarbValueType(value)) return true;
     else
       throw new Error(
@@ -149,9 +95,6 @@ export class VarbMeta<SN extends SectionName> {
   get inSwitchUpdatePacks(): InSwitchUpdatePack[] {
     return cloneDeep(this.core.inSwitchUpdatePacks);
   }
-  get outUpdatePacks(): OutUpdatePack[] {
-    return cloneDeep(this.core.outUpdatePacks);
-  }
   get calcRound(): number {
     return numUnitParams[this.unit].calcRound;
   }
@@ -162,25 +105,13 @@ export class VarbMeta<SN extends SectionName> {
     if ("unit" in this.core) return this.core.unit;
     else throw new Error(`Varb with name ${this.core.varbName} has no numUnit`);
   }
-  get inDefaultUpdatePack(): InDefaultUpdatePack {
+  get inDefaultUpdatePack(): InUpdatePack {
     const { updateFnProps, updateFnName } = this.core;
     return {
       updateFnProps,
       updateFnName,
       fixedInEntities: fnPropsToFixedInEntities(updateFnProps),
-      inverseSwitches: this.inSwitchUpdatePacks.map((pack) =>
-        pick(pack, ["switchInfo", "switchValue"])
-      ),
     };
-  }
-  static isSwitchOutPack(pack: OutUpdatePack): pack is OutSwitchPack {
-    return "switchInfo" in pack;
-  }
-  static isDefaultOutPack(pack: OutUpdatePack): pack is OutDefaultPack {
-    return "inverseSwitches" in pack;
-  }
-  static isDefaultInPack(pack: InUpdatePack): pack is InDefaultUpdatePack {
-    return "inverseSwitches" in pack;
   }
   static init<SN extends SectionName>({
     sectionName,
@@ -193,7 +124,39 @@ export class VarbMeta<SN extends SectionName> {
       sectionName,
       varbName,
       inSwitchUpdatePacks: updateOverrideToInfos(relVarb.updateOverrides),
-      outUpdatePacks: [], // static after initialization
     });
   }
+}
+
+export interface InUpdatePack extends UpdateBasics {
+  fixedInEntities: FixedInEntity[];
+}
+interface InSwitchUpdatePack extends InUpdatePack {
+  switches: UpdateOverrideSwitches;
+}
+
+function updateOverrideToInfos(
+  updateOverride: UpdateOverrides
+): InSwitchUpdatePack[] {
+  const inSwitchInfos: InSwitchUpdatePack[] = [];
+  for (const prop of updateOverride) {
+    const fixedInEntities = fnPropsToFixedInEntities(prop.updateFnProps);
+    inSwitchInfos.push({
+      ...prop,
+      fixedInEntities,
+    });
+  }
+  return inSwitchInfos;
+}
+
+function fnPropsToFixedInEntities(
+  updateFnProps: UpdateFnProps
+): FixedInEntity[] {
+  const infos = Object.values(updateFnProps);
+  let nextInfos: FixedInEntity[] = [];
+  for (const info of infos) {
+    if (Array.isArray(info)) nextInfos = nextInfos.concat(info);
+    else nextInfos.push(info);
+  }
+  return nextInfos;
 }

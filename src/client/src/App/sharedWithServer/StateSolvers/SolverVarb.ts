@@ -14,7 +14,7 @@ import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { GetterSections } from "../StateGetters/GetterSections";
 import { GetterVarb } from "../StateGetters/GetterVarb";
 import { InEntityGetterVarb } from "../StateGetters/InEntityGetterVarb";
-import { OutVarbGetterVarb } from "../StateInOutVarbs/OutVarbGetterVarb";
+import { OutEntityGetterVarb } from "../StateInOutVarbs/OutEntityGetterVarb";
 import { UpdaterVarb } from "../StateUpdaters/UpdaterVarb";
 import { StrictOmit } from "../utils/types";
 import { PackBuilderSections } from "./../StatePackers.ts/PackBuilderSections";
@@ -42,8 +42,8 @@ export class SolverVarb<
   get inEntity() {
     return new InEntityGetterVarb(this.getterVarbBase.getterVarbProps);
   }
-  get outVarbGetter() {
-    return new OutVarbGetterVarb(this.getterVarbBase.getterVarbProps);
+  get outEntity() {
+    return new OutEntityGetterVarb(this.getterVarbBase.getterVarbProps);
   }
   get getterSections() {
     return new GetterSections(this.getterSectionsBase.getterSectionsProps);
@@ -127,7 +127,7 @@ export class SolverVarb<
       const entityVarbs = this.varbsByFocalMixed(entity);
       for (const inEntityVarb of entityVarbs) {
         const outEntity = this.newSelfOutEntity(entity.entityId);
-        if (!inEntityVarb.hasOutEntity(outEntity)) {
+        if (!inEntityVarb.outEntity.hasOutEntity(outEntity)) {
           inEntityVarb.addOutEntity(outEntity);
         }
       }
@@ -138,7 +138,7 @@ export class SolverVarb<
       if (this.inEntitySectionExists(entity)) {
         const inEntityVarb = this.getInEntityVarb(entity);
         const outEntity = this.newSelfOutEntity(entity.entityId);
-        if (!inEntityVarb.hasOutEntity(outEntity)) {
+        if (!inEntityVarb.outEntity.hasOutEntity(outEntity)) {
           inEntityVarb.addOutEntity(outEntity);
         }
       }
@@ -221,22 +221,17 @@ export class SolverVarb<
       (entity) => !entityS.inEntitiesHas(initialValueEntities, entity)
     );
   }
-  private hasOutEntity(info: OutEntityInfo): boolean {
-    const { outEntities } = this.outVarbGetter;
-    return entityS.outEntitiesHas(outEntities, info);
-  }
   private removeOutEntity(info: OutEntityInfo): void {
-    if (!this.hasOutEntity(info)) {
+    if (!this.outEntity.hasOutEntity(info)) {
       throw new Error("Tried to remove entity, but entity not found.");
     }
-    const { outEntities } = this.outVarbGetter;
-    const nextOutEntities = entityS.outEntitiesCopyRm(outEntities, info);
+    const nextOutEntities = this.outEntity.outEntitiesWithout(info);
     this.updaterVarb.update({
       outEntities: nextOutEntities,
     });
   }
   private addOutEntity(outEntity: OutEntity): void {
-    const nextOutEntities = [...this.outVarbGetter.outEntities, outEntity];
+    const nextOutEntities = [...this.outEntity.outEntities, outEntity];
     this.updaterVarb.update({ outEntities: nextOutEntities });
   }
   private inEntitySectionExists(inEntity: ValueInEntity): boolean {
@@ -249,7 +244,7 @@ export class SolverVarb<
     return sectionName === "userVarbItem" && !this.hasValueEntityVarb(varbInfo);
   }
   private solveOutVarbs(): void {
-    this.addVarbInfosToSolveFor(...this.outVarbGetter.activeOutEntities);
+    this.addVarbInfosToSolveFor(...this.outEntity.activeOutEntities);
     this.solverSections.solve();
   }
   get hasInVarbs(): boolean {

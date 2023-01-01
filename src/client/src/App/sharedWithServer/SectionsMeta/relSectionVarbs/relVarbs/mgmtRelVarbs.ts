@@ -1,8 +1,12 @@
 import { switchNames } from "../../baseSectionsVarbs/RelSwitchVarb";
-import { relVarbInfoS } from "../../SectionInfo/RelVarbInfo";
 import { relVarb, relVarbS } from "../rel/relVarb";
+import { updateBasicsS } from "../rel/relVarb/UpdateBasics";
 import { updateFnPropS, updateFnPropsS } from "../rel/relVarb/UpdateFnProps";
-import { updateOverrideS } from "../rel/relVarb/UpdateOverrides";
+import {
+  overrideSwitchS,
+  updateOverride,
+  updateOverrideS,
+} from "../rel/relVarb/UpdateOverrides";
 import { RelVarbs, relVarbsS } from "../relVarbs";
 
 const rentCut = switchNames("rentCut", "dollarsPercentDecimal");
@@ -22,24 +26,14 @@ export function mgmtRelVarbs(): RelVarbs<"mgmt"> {
         num: updateFnPropS.local(rentCut.percent),
       },
       updateOverrides: [
-        {
-          switchInfo: relVarbInfoS.local(rentCut.switch),
-          switchValue: "dollars",
-          updateFnName: "simpleDivide",
-          updateFnProps: {
-            leftSide: updateFnPropS.local(rentCutDollars.monthly),
-            rightSide: updateFnPropS.pathName(
-              "propertyGeneralFocal",
-              "targetRentMonthly"
-            ),
-            // relVarbInfoS.pibling(
-            //   "propertyGeneral",
-            //   "propertyGeneral",
-            //   "targetRentMonthly",
-            //   { expectedCount: "onlyOne" }
-            // ),
-          },
-        },
+        updateOverride(
+          [overrideSwitchS.local(rentCut.switch, "dollars")],
+          updateBasicsS.equationLeftRight(
+            "simpleDivide",
+            updateFnPropS.local(rentCutDollars.monthly),
+            updateFnPropS.pathName("propertyGeneralFocal", "targetRentMonthly")
+          )
+        ),
       ],
     }),
     rentCutPercentEditor: relVarbS.percentObj("Rent cut", {
@@ -51,12 +45,13 @@ export function mgmtRelVarbs(): RelVarbs<"mgmt"> {
         varbInfo: updateFnPropS.local("rentCutPercentEditor"),
       },
       updateOverrides: [
-        {
-          switchInfo: relVarbInfoS.local(rentCut.switch),
-          switchValue: "dollars",
-          updateFnName: "decimalToPercent",
-          updateFnProps: { num: updateFnPropS.local(rentCut.decimal) },
-        },
+        updateOverride(
+          [overrideSwitchS.local(rentCut.switch, "dollars")],
+          updateBasicsS.equationSimple(
+            "decimalToPercent",
+            updateFnPropS.local(rentCut.decimal)
+          )
+        ),
       ],
       displayNameEnd: " percent",
     }),
@@ -75,20 +70,15 @@ export function mgmtRelVarbs(): RelVarbs<"mgmt"> {
         varbInfo: updateFnPropS.local("rentCutDollarsEditor"),
       },
       updateOverrides: [
-        {
-          switchInfo: relVarbInfoS.local(rentCut.switch),
-          switchValue: "percent",
-          updateFnName: "simpleMultiply",
-          updateFnProps: {
-            switch: updateFnPropS.local(rentCut.switch),
-            leftSide: updateFnPropS.local(rentCut.decimal),
-            rightSide: updateFnPropS.pathName(
-              "propertyGeneralFocal",
-              "targetRentMonthly"
-            ),
-          },
-        },
-        updateOverrideS.yearlyToMonthly("rentCutDollars"),
+        updateOverride(
+          [overrideSwitchS.local(rentCut.switch, "percent")],
+          updateBasicsS.equationLeftRight(
+            "simpleMultiply",
+            updateFnPropS.local(rentCut.decimal),
+            updateFnPropS.pathName("propertyGeneralFocal", "targetRentMonthly")
+          )
+        ),
+        updateOverrideS.yearlyIfActive("rentCutDollars"),
       ],
     }),
     [rentCutDollars.yearly]: relVarbS.moneyYear("Rent cut", {
@@ -98,19 +88,15 @@ export function mgmtRelVarbs(): RelVarbs<"mgmt"> {
         varbInfo: updateFnPropS.local("rentCutDollarsEditor"),
       },
       updateOverrides: [
-        {
-          switchInfo: relVarbInfoS.local(rentCut.switch),
-          switchValue: "percent",
-          updateFnName: "simpleMultiply",
-          updateFnProps: {
-            leftSide: updateFnPropS.local(rentCut.decimal),
-            rightSide: updateFnPropS.pathName(
-              "propertyGeneralFocal",
-              "targetRentYearly"
-            ),
-          },
-        },
-        updateOverrideS.monthlyToYearly("rentCutDollars"),
+        updateOverride(
+          [overrideSwitchS.local(rentCut.switch, "percent")],
+          updateBasicsS.equationLeftRight(
+            "simpleMultiply",
+            updateFnPropS.local(rentCut.decimal),
+            updateFnPropS.pathName("propertyGeneralFocal", "targetRentYearly")
+          )
+        ),
+        updateOverrideS.monthlyIfActive("rentCutDollars"),
       ],
     }),
     vacancyRatePercent: relVarbS.percentObj("Vacancy rate", {

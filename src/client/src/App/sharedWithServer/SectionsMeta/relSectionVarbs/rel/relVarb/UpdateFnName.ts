@@ -10,20 +10,22 @@ const checkUpdateFnNames = (updateFnNames: {
   [VN in ValueName]: GeneralUpdateFnNames;
 }) => updateFnNames;
 
+const commonUpdateFnNames = ["manualUpdateOnly", "throw"] as const;
 const updateFnNames = checkUpdateFnNames({
+  // the first updateFnName in each group is the one used by default.
   ...makeDefaults(),
   numObj: [
     "calcVarbs",
-    "manualUpdateOnly",
     "userVarb",
     "virtualNumObj",
     "loadSolvableTextByVarbInfo",
     "loadNumObj",
     "getNumObjOfSwitch",
     ...calculationNames,
+    ...commonUpdateFnNames,
   ],
   stringObj: [
-    "manualUpdateOnly",
+    ...commonUpdateFnNames,
     "loadLocalString",
     "manualUpdateOnly",
     "loadDisplayName",
@@ -40,11 +42,11 @@ export const getUpdateFnNames = <VN extends ValueName>(
 
 type GeneralUpdateFnNames = readonly string[];
 type DefaultUpdateFnNames = {
-  [VN in ValueName]: ["manualUpdateOnly"];
+  [VN in ValueName]: typeof commonUpdateFnNames;
 };
 function makeDefaults(): DefaultUpdateFnNames {
   return valueNames.reduce((defaults, valueName) => {
-    defaults[valueName] = ["manualUpdateOnly"];
+    defaults[valueName] = commonUpdateFnNames;
     return defaults;
   }, {} as DefaultUpdateFnNames);
 }

@@ -5,9 +5,14 @@ import {
   switchNames,
   TargetCoreGeneral,
 } from "../../../baseSectionsVarbs/RelSwitchVarb";
-import { relVarbInfoS } from "../../../SectionInfo/RelVarbInfo";
 import { RelNumObjOptions, relVarb } from "../relVarb";
+import { updateBasics } from "../relVarb/UpdateBasics";
 import { UpdateFnProps } from "../relVarb/UpdateFnProps";
+import {
+  overrideSwitchS,
+  UpdateOverride,
+  updateOverride,
+} from "../relVarb/UpdateOverrides";
 import { NumObjRelVarb, StringRelVarb } from "../relVarbTypes";
 
 type GeneralSwitchVarbNames = {
@@ -53,12 +58,10 @@ export function switchInput<SWK extends SwitchEndingKey>(
       updateFnName: option.updateFnName,
       updateFnProps: option.updateFnProps,
       updateOverrides: [
-        {
-          switchInfo: relVarbInfoS.local(varbNames.switch),
-          switchValue: option.switchValue,
-          updateFnName: "calcVarbs",
-          updateFnProps: {},
-        },
+        updateOverride(
+          [overrideSwitchS.local(varbNames.switch, option.switchValue)],
+          updateBasics("calcVarbs", {})
+        ) as UpdateOverride<"numObj">,
       ],
       ...shared,
       ...option.options,

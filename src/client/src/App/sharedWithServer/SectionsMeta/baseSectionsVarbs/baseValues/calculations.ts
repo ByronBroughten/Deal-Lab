@@ -61,7 +61,7 @@ const solvableTextByArgs = {
 } as const;
 
 type solvableTextByArgs = typeof solvableTextByArgs;
-export type SinglePropCalcName = keyof solvableTextByArgs["single"];
+export type NumPropCalcName = keyof solvableTextByArgs["single"];
 export type LeftRightPropCalcName = keyof solvableTextByArgs["leftRight"];
 
 const calculations = {

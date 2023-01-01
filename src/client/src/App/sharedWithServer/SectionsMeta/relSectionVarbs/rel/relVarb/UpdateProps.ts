@@ -1,6 +1,6 @@
 import { LeftRightPropCalcName } from "../../../baseSectionsVarbs/baseValues/calculations";
 import { ValueName } from "../../../baseSectionsVarbs/baseVarb";
-import { SinglePropCalcName } from "./calculationsNext";
+import { NumPropCalcName } from "./calculationsNext";
 import { UpdateBasics } from "./UpdateBasics";
 import { UpdateFnName } from "./UpdateFnName";
 import { UpdateFnProp, UpdateFnProps } from "./UpdateFnProps";
@@ -43,7 +43,7 @@ export const updatePropsS = {
       updateOverrides: [],
     } as const;
   },
-  singlePropCalc(updateFnName: SinglePropCalcName, num: UpdateFnProp) {
+  singlePropCalc(updateFnName: NumPropCalcName, num: UpdateFnProp) {
     return {
       updateFnName,
       updateFnProps: { num },

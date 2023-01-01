@@ -41,24 +41,22 @@ export const updateFnPropsS = {
   },
 };
 
+export function updateFnProp(varbInfo: PathInVarbInfo): UpdateFnProp {
+  return {
+    ...varbInfo,
+    entityId: Id.make(),
+  };
+}
+
 export type UpdateFnProp = PathInVarbInfo & { entityId: string };
 export const updateFnPropS = {
   local(varbName: string): UpdateFnProp {
-    return {
-      ...relVarbInfoS.local(varbName),
-      entityId: Id.make(),
-    };
+    return updateFnProp(relVarbInfoS.local(varbName));
   },
   children(childName: ChildName, varbName: string) {
-    return {
-      ...relVarbInfoS.children(childName, varbName),
-      entityId: Id.make(),
-    };
+    return updateFnProp(relVarbInfoS.children(childName, varbName));
   },
   pathName(pathName: SectionPathName, varbName: string): UpdateFnProp {
-    return {
-      ...mixedInfoS.pathNameVarb(pathName, varbName),
-      entityId: Id.make(),
-    };
+    return updateFnProp(mixedInfoS.pathNameVarb(pathName, varbName));
   },
 };

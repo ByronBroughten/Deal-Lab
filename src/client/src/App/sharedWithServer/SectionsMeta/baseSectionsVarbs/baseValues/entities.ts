@@ -147,24 +147,10 @@ export const entityS = {
       ...pick(inEntity, ["entityId"]),
     };
   },
-  outEntitiesHas(entities: OutEntity[], info: OutEntityInfo): boolean {
-    return Arr.has(entities, (e) => isInfoForOutEntity(e, info));
-  },
-  outEntitiesCopyRm(entities: OutEntity[], info: OutEntityInfo): OutEntity[] {
-    return entities.filter((e) => !isInfoForOutEntity(e, info));
-  },
   inEntitiesHas(entities: ValueInEntity[], entity: ValueInEntity): boolean {
     return Arr.has(entities, (e) => e.entityId === entity.entityId);
   },
 } as const;
-
-function isInfoForOutEntity(outEntity: OutEntity, info: OutEntityInfo) {
-  return (
-    outEntity.entityId === info.entityId && // differentiates multiple from the same varb
-    outEntity.feId === info.feId && // differentiates inEntites between sections
-    outEntity.varbName === info.varbName // differentiates local inEntities
-  );
-}
 
 export type EntityMapData = ValueInEntityInfo & EntityIdProp;
 export interface OutEntityInfo extends EntityIdProp {

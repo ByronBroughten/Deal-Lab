@@ -4,7 +4,6 @@ import { Merge } from "../../utils/Obj/merge";
 import { StrictPick } from "../../utils/types";
 import { baseSwitchSchemas } from "./baseSwitchNames";
 
-// for all the types, I might want to make the core separate again.
 class RelSwitchVarb<C extends GeneralRelSwitchCore> {
   constructor(readonly core: C) {}
   get targets(): C["targets"] {

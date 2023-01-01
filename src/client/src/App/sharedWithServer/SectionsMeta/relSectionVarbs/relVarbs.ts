@@ -10,8 +10,13 @@ import { ChildName } from "../sectionChildrenDerived/ChildName";
 import { relVarbInfoS } from "../SectionInfo/RelVarbInfo";
 import { SectionName } from "../SectionName";
 import { relVarb, relVarbS } from "./rel/relVarb";
-import { updateBasicsS } from "./rel/relVarb/UpdateBasics";
-import { updateFnPropS, updateFnPropsS } from "./rel/relVarb/UpdateFnProps";
+import { updateBasics, updateBasicsS } from "./rel/relVarb/UpdateBasics";
+import { updateFnPropS } from "./rel/relVarb/UpdateFnProps";
+import {
+  overrideSwitchS,
+  updateOverride,
+  updateOverrideS,
+} from "./rel/relVarb/UpdateOverrides";
 import {
   decimalToPortion,
   MonthlyYearlySwitchOptions,
@@ -196,60 +201,21 @@ export const relVarbsS = {
         updateFnName: "loadLocalString",
         updateFnProps: {
           loadLocalString: updateFnPropS.local("displayNameEditor"),
+          valueSourceSwitch: updateFnPropS.local("valueSourceSwitch"),
         },
-        updateOverrides: [
-          {
-            switchInfo: relVarbInfoS.local("valueSourceSwitch"),
-            switchValue: "loadedVarb",
-            updateFnName: "loadDisplayName",
-            updateFnProps: updateFnPropsS.localByVarbName([
-              "valueSourceSwitch",
-              "valueEntityInfo",
-            ]),
-          },
-        ],
+        updateOverrides: [updateOverrideS.loadedVarbProp("loadDisplayName")],
       }),
       displayNameEnd: relVarb("stringObj", {
         updateFnName: "emptyStringObj",
-        updateOverrides: [
-          {
-            switchInfo: relVarbInfoS.local("valueSourceSwitch"),
-            switchValue: "loadedVarb",
-            updateFnName: "loadDisplayNameEnd",
-            updateFnProps: updateFnPropsS.localByVarbName([
-              "valueSourceSwitch",
-              "valueEntityInfo",
-            ]),
-          },
-        ],
+        updateOverrides: [updateOverrideS.loadedVarbProp("loadDisplayNameEnd")],
       }),
       startAdornment: relVarb("stringObj", {
         updateFnName: "emptyStringObj",
-        updateOverrides: [
-          {
-            switchInfo: relVarbInfoS.local("valueSourceSwitch"),
-            switchValue: "loadedVarb",
-            updateFnName: "loadStartAdornment",
-            updateFnProps: updateFnPropsS.localByVarbName([
-              "valueSourceSwitch",
-              "valueEntityInfo",
-            ]),
-          },
-        ],
+        updateOverrides: [updateOverrideS.loadedVarbProp("loadStartAdornment")],
       }),
       endAdornment: relVarb("stringObj", {
         updateFnName: "emptyStringObj",
-        updateOverrides: [
-          {
-            switchInfo: relVarbInfoS.local("valueSourceSwitch"),
-            switchValue: "loadedVarb",
-            updateFnName: "loadEndAdornment",
-            updateFnProps: updateFnPropsS.localByVarbName([
-              "valueSourceSwitch",
-              "valueEntityInfo",
-            ]),
-          },
-        ],
+        updateOverrides: [updateOverrideS.loadedVarbProp("loadEndAdornment")],
       }),
     } as const;
   },
@@ -258,20 +224,17 @@ export const relVarbsS = {
       ...this._typeUniformity,
       ...this.listItemVirtualVarb,
       value: relVarbS.numObj(relVarbInfoS.local("displayName"), {
-        ...updateBasicsS.loadFromLocalValueEditor(),
-        updateOverrides: [
-          {
-            switchInfo: relVarbInfoS.local("valueSourceSwitch"),
-            switchValue: "loadedVarb",
-            updateFnName: "virtualNumObj",
-            updateFnProps: {
-              varbInfo: updateFnPropS.local("valueEntityInfo"),
-              valueSourceSwitch: updateFnPropS.local("valueSourceSwitch"),
-            },
-          },
-        ],
         startAdornment: "$",
         unit: "decimal",
+        ...updateBasicsS.loadFromLocalValueEditor(),
+        updateOverrides: [
+          updateOverride(
+            [overrideSwitchS.local("valueSourceSwitch", "loadedVarb")],
+            updateBasics("virtualNumObj", {
+              varbInfo: updateFnPropS.local("valueEntityInfo"),
+            })
+          ),
+        ],
       }),
       valueSourceSwitch: relVarb("string", {
         initValue: "labeledEquation",
@@ -280,7 +243,8 @@ export const relVarbsS = {
     };
   },
   ongoingItem(): RelVarbs<"ongoingItem"> {
-    const ongoingValueNames = switchNames("value", "ongoing");
+    const valueNameBase = "value";
+    const ongoingValueNames = switchNames(valueNameBase, "ongoing");
     const makeDefaultValueUpdatePack = () =>
       ({
         updateFnName: "loadSolvableTextByVarbInfo",
@@ -289,7 +253,6 @@ export const relVarbsS = {
           switch: updateFnPropS.local("valueSourceSwitch"),
         },
       } as const);
-    const ongoingSwitchInfo = relVarbInfoS.local(ongoingValueNames.switch);
     return {
       ...this._typeUniformity,
       ...this.listItemVirtualVarb,
@@ -311,67 +274,55 @@ export const relVarbsS = {
       }),
       [ongoingValueNames.monthly]: relVarbS.moneyMonth("Monthly amount", {
         ...makeDefaultValueUpdatePack(),
+        // this could be clearer if it were linked to the switches
+        // and I used an error updateFn
         updateOverrides: [
-          {
-            switchInfo: ongoingSwitchInfo,
-            switchValue: "yearly",
-            updateFnName: "yearlyToMonthly",
-            updateFnProps: {
-              num: updateFnPropS.local(ongoingValueNames.yearly),
-            },
-          },
-          {
-            switchInfo: relVarbInfoS.local("valueSourceSwitch"),
-            switchValue: "loadedVarb",
-            updateFnName: "virtualNumObj",
-            updateFnProps: {
-              valueSourceSwitch: updateFnPropS.local("valueSourceSwitch"),
+          updateOverrideS.yearlyIfActive(valueNameBase),
+          updateOverride(
+            [
+              overrideSwitchS.monthlyIsActive(valueNameBase),
+              overrideSwitchS.local("valueSourceSwitch", "loadedVarb"),
+            ],
+            updateBasics("virtualNumObj", {
               varbInfo: updateFnPropS.local("valueEntityInfo"),
-            },
-          },
-          {
-            switchInfo: relVarbInfoS.local("valueSourceSwitch"),
-            switchValue: "labeledSpanOverCost",
-            updateFnName: "simpleDivide",
-            updateFnProps: {
-              valueSourceSwitch: updateFnPropS.local("valueSourceSwitch"),
+            })
+          ),
+          updateOverride(
+            [
+              overrideSwitchS.monthlyIsActive(valueNameBase),
+              overrideSwitchS.local("valueSourceSwitch", "labeledSpanOverCost"),
+            ],
+            updateBasics("simpleDivide", {
               leftSide: updateFnPropS.local("costToReplace"),
               rightSide: updateFnPropS.local("lifespanMonths"),
-            },
-          },
+            })
+          ),
         ],
         unit: "decimal",
       }),
       [ongoingValueNames.yearly]: relVarbS.moneyYear("Annual amount", {
         ...makeDefaultValueUpdatePack(),
         updateOverrides: [
-          {
-            switchInfo: ongoingSwitchInfo,
-            switchValue: "monthly",
-            updateFnName: "monthlyToYearly",
-            updateFnProps: {
-              num: updateFnPropS.local(ongoingValueNames.monthly),
-            },
-          },
-          {
-            switchInfo: relVarbInfoS.local("valueSourceSwitch"),
-            switchValue: "loadedVarb",
-            updateFnName: "virtualNumObj",
-            updateFnProps: {
-              valueSourceSwitch: updateFnPropS.local("valueSourceSwitch"),
+          updateOverrideS.monthlyIfActive(valueNameBase),
+          updateOverride(
+            [
+              overrideSwitchS.yearlyIsActive(valueNameBase),
+              overrideSwitchS.local("valueSourceSwitch", "loadedVarb"),
+            ],
+            updateBasics("virtualNumObj", {
               varbInfo: updateFnPropS.local("valueEntityInfo"),
-            },
-          },
-          {
-            switchInfo: relVarbInfoS.local("valueSourceSwitch"),
-            switchValue: "labeledSpanOverCost",
-            updateFnName: "simpleDivide",
-            updateFnProps: {
-              valueSourceSwitch: updateFnPropS.local("valueSourceSwitch"),
+            })
+          ),
+          updateOverride(
+            [
+              overrideSwitchS.yearlyIsActive(valueNameBase),
+              overrideSwitchS.local("valueSourceSwitch", "labeledSpanOverCost"),
+            ],
+            updateBasics("simpleDivide", {
               leftSide: updateFnPropS.local("costToReplace"),
-              rightSide: updateFnPropS.local("lifespanYears"),
-            },
-          },
+              rightSide: updateFnPropS.local("lifespanMonths"),
+            })
+          ),
         ],
         unit: "decimal",
       }),
