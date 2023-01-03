@@ -82,7 +82,7 @@ export function makeBaseSectionsVarbs() {
       total: "numObj",
       itemValueSwitch: "string",
     }),
-    ongoingListGroup: baseSectionVarbs({
+    ongoingValueGroup: baseSectionVarbs({
       ...baseVarbsS.ongoing("total"),
       itemValueSwitch: "string",
       itemOngoingSwitch: "string",

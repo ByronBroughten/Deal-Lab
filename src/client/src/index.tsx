@@ -9,16 +9,32 @@ AppRegistry.runApplication("App", {
 });
 // Options for how to spend this evening:
 // 1. Work on a placeholder Wordpress site
-
-// 2. Work on updating the UI
 // 3. Work on adding the underpinnings of the modes
-
 // 5. Implement the examples
-//    What is the best way to implement these?
 
-// Loan only needs singleTimeValues for
-// Closing Costs and Wrapped in Loan.
-// Start with Closing Costs
+// Update the lists UI
+// - Implement singleTimeValueGroup instead
+//   of singleTimeListGroup
+
+// - Make a new list that do
+// - Get rid of the list menus
+//   Have an option to just show the xBtn on hover
+
+// Updating Loan UI
+// - Hide morgage insurance behind a switch
+// - Hide loan term behind a switch if payments are interest only
+// - Label the radios behind loan term amount—use a selector
+//   instead, and include Down Payment, % of price,
+//   and Dollar Amount
+
+// How should I handle the loan being able to cover repair costs?
+// DealCheck uses two boxes for that.
+// - Financed repair cost
+// - Financed property cost
+
+// - Perhaps untie the load modal from the menu that
+//   shows the load button.
+// - Make the actions buttons not get in the way of the section they pertain to
 
 // I need a new block.
 // It will be able to switch between these three things:

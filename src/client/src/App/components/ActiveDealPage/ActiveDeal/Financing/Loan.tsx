@@ -38,7 +38,7 @@ export function Loan({ feId }: { feId: string }) {
             ...feInfo,
             className: "Loan-financedCosts",
             childName: "wrappedInLoanValue",
-            plusBtnText: "+ Financed costs",
+            plusBtnText: "+ Other Financed costs",
             displayName: "Other Financed Costs",
           }}
         />

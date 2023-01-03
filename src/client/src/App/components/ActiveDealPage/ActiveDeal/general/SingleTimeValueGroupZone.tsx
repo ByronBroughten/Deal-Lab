@@ -3,8 +3,8 @@ import { FeSectionInfo } from "../../../../sharedWithServer/SectionsMeta/Section
 import { SectionName } from "../../../../sharedWithServer/SectionsMeta/SectionName";
 import { useSetterSection } from "../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import { ThemeName } from "../../../../theme/Theme";
-import { ListGroupOngoing } from "../../../appWide/ListGroup/ListGroupOngoing";
 import { SubSectionGroupBtn } from "../../../appWide/ListGroup/ListGroupShared/SubSectionGroupBtn";
+import { ValueGroupSingleTime } from "../../../appWide/ListGroup/ValueGroupSingleTime";
 
 interface Props<SN extends SectionName, CN extends ChildName<SN>>
   extends FeSectionInfo<SN> {
@@ -13,7 +13,7 @@ interface Props<SN extends SectionName, CN extends ChildName<SN>>
   btnText: string;
   titleText: string;
 }
-export function ListGroupOngoingZone<
+export function SingleTimeValueGroupZone<
   SN extends SectionName,
   CN extends ChildName<SN>
 >({ childName, btnText, titleText, themeName, ...feInfo }: Props<SN, CN>) {
@@ -27,10 +27,9 @@ export function ListGroupOngoingZone<
         />
       )}
       {section.get.hasOnlyChild(childName) && (
-        <ListGroupOngoing
+        <ValueGroupSingleTime
           feId={section.get.onlyChild(childName).feId}
           titleText={titleText}
-          themeName={themeName}
         />
       )}
     </>

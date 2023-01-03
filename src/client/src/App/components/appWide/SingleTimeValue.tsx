@@ -6,6 +6,7 @@ import { useToggleViewNext } from "../../modules/customHooks/useToggleView";
 import { useSetterSection } from "../../sharedWithServer/stateClassHooks/useSetterSection";
 import theme from "../../theme/Theme";
 import PlainIconBtn from "../general/PlainIconBtn";
+import { BigStringEditor } from "../inputs/BigStringEditor";
 import { NumObjEntityEditor } from "./../inputs/NumObjEntityEditor";
 import { VarbListSingleTime } from "./ListGroup/ListGroupSingleTime/VarbListSingleTime";
 import { SectionModal } from "./SectionModal";
@@ -30,10 +31,22 @@ export function SingleTimeValue({ className, feId, displayName }: Props) {
     false
   );
 
+  const displayNameValue = section
+    .varb("displayName")
+    .value("stringObj").mainText;
+
   return (
     <Styled className={`SingleTimeValue-root ${className ?? ""}`}>
       <div className={"SingleTimeValue-viewable"}>
         {displayName && <SectionTitle text={displayName} />}
+        {!displayName && (
+          <BigStringEditor
+            {...{
+              feVarbInfo: section.varbInfo("displayNameEditor"),
+              placeholder: "Name",
+            }}
+          />
+        )}
         <div className="SingleTimeValue-value">
           {isItemized && (
             <span>{`Total: ${section.varb("value").get.displayVarb()}`}</span>
@@ -81,7 +94,7 @@ export function SingleTimeValue({ className, feId, displayName }: Props) {
       </div>
       <SectionModal
         {...{
-          title: `Itemized ${displayName}`,
+          title: `Itemized ${displayName ?? displayNameValue}`,
           closeModal,
           show: modalIsOpen,
         }}
@@ -93,6 +106,14 @@ export function SingleTimeValue({ className, feId, displayName }: Props) {
 }
 
 const Styled = styled.div`
+  .SingleTimeValue-viewable {
+    height: ${theme.valueSectionSize};
+    display: inline-block;
+    border: solid 1px ${theme.primaryBorder};
+    background: ${theme.light};
+    border-radius: ${theme.br0};
+    padding: ${theme.sectionPadding};
+  }
   .SingleTimeValue-editItemsBtn {
     color: ${theme.primaryNext};
   }
@@ -130,13 +151,5 @@ const Styled = styled.div`
     .DraftTextField-root {
       min-width: 100px;
     }
-  }
-
-  .SingleTimeValue-viewable {
-    display: inline-block;
-    border: solid 1px ${theme.primaryBorder};
-    background: ${theme.light};
-    border-radius: ${theme.br0};
-    padding: ${theme.sectionPadding};
   }
 `;

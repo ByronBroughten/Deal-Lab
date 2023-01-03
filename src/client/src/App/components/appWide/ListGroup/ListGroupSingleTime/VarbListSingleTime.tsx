@@ -26,3 +26,5 @@ export function VarbListSingleTime({ feId, ...rest }: Props) {
     />
   );
 }
+
+export function SingleTimeListTable() {}

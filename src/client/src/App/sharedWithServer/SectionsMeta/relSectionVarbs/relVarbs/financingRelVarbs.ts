@@ -3,7 +3,7 @@ import { numObj } from "../../baseSectionsVarbs/baseValues/NumObj";
 import { switchNames } from "../../baseSectionsVarbs/RelSwitchVarb";
 import { loanVarbsNotInFinancing } from "../../baseSectionsVarbs/specialVarbNames";
 import { relVarb, relVarbS } from "../rel/relVarb";
-import { updateBasics } from "../rel/relVarb/UpdateBasics";
+import { updateBasics, updateBasicsS } from "../rel/relVarb/UpdateBasics";
 import { updateFnPropS, updateFnPropsS } from "../rel/relVarb/UpdateFnProps";
 import {
   overrideSwitchS,
@@ -22,8 +22,7 @@ export function loanRelVarbs(): RelVarbs<"loan"> {
     [loanBase.decimal]: relVarbS.numObj("Base loan decimal", {
       initNumber: 0.05,
       unit: "decimal",
-      updateFnName: "percentToDecimal",
-      updateFnProps: { num: updateFnPropS.local(loanBase.percent) },
+      updateFnName: "throwIfReached",
       updateOverrides: [
         updateOverride(
           [overrideSwitchS.local(loanBase.switch, "dollars")],
@@ -31,6 +30,13 @@ export function loanRelVarbs(): RelVarbs<"loan"> {
             leftSide: updateFnPropS.local("loanBaseDollars"),
             rightSide: updateFnPropS.pathName("propertyGeneralFocal", "price"),
           })
+        ),
+        updateOverride(
+          [overrideSwitchS.local(loanBase.switch, "percent")],
+          updateBasicsS.equationSimple(
+            "percentToDecimal",
+            updateFnPropS.local(loanBase.percent)
+          )
         ),
       ],
     }),

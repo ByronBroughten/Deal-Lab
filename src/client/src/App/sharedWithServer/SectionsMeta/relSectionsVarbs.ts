@@ -131,7 +131,7 @@ export function makeRelSections() {
         initValue: "labeledEquation",
       }),
     }),
-    ...relSectionProp("ongoingListGroup", {
+    ...relSectionProp("ongoingValueGroup", {
       ...relVarbsS.ongoingSumNums(
         "total",
         "Ongoing List Group",

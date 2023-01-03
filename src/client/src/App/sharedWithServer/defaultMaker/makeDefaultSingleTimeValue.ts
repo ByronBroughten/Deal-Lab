@@ -8,6 +8,7 @@ export function makeDefaultSingleTimeValue() {
       dbVarbs: {
         itemValueSwitch,
         valueSourceSwitch: "valueEditor",
+        isItemized: false,
       },
     }
   );

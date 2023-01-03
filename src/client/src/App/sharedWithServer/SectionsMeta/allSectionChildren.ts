@@ -108,7 +108,7 @@ export const allSectionChildren = checkAllSectionChildren({
     singleTimeList: sectionChild("singleTimeList"),
     singleTimeValue: sectionChild("singleTimeValue"),
   },
-  ongoingListGroup: { ongoingList: sectionChild("ongoingList") },
+  ongoingValueGroup: { ongoingList: sectionChild("ongoingList") },
   singleTimeValue: { singleTimeList: sectionChild("singleTimeList") },
   singleTimeList: { singleTimeItem: sectionChild("singleTimeItem") },
   ongoingList: {
@@ -135,17 +135,18 @@ export const allSectionChildren = checkAllSectionChildren({
   }),
   propertyGeneral: { property: sectionChild("property") },
   property: sectionChildren({
+    repairCostValue: ["singleTimeValue"],
     upfrontExpenseGroup: ["singleTimeValueGroup"],
     upfrontRevenueGroup: ["singleTimeValueGroup"],
-    ongoingCostListGroup: ["ongoingListGroup"],
-    ongoingRevenueListGroup: ["ongoingListGroup"],
+    ongoingCostListGroup: ["ongoingValueGroup"],
+    ongoingRevenueListGroup: ["ongoingValueGroup"],
     unit: ["unit"],
     customVarb: ["customVarb"],
   }),
   mgmtGeneral: { mgmt: sectionChild("mgmt") },
   mgmt: sectionChildren({
     upfrontExpenseGroup: ["singleTimeValueGroup"],
-    ongoingCostListGroup: ["ongoingListGroup"],
+    ongoingCostListGroup: ["ongoingValueGroup"],
     customVarb: ["customVarb"],
   }),
 });

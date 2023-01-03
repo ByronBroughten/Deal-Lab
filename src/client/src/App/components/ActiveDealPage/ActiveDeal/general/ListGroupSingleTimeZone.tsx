@@ -3,7 +3,7 @@ import { FeSectionInfo } from "../../../../sharedWithServer/SectionsMeta/Section
 import { SectionName } from "../../../../sharedWithServer/SectionsMeta/SectionName";
 import { useSetterSection } from "../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import { ThemeName } from "../../../../theme/Theme";
-import { ListGroupGenericBtn } from "../../../appWide/ListGroup/ListGroupShared/ListGroupGeneric";
+import { SubSectionGroupBtn } from "../../../appWide/ListGroup/ListGroupShared/SubSectionGroupBtn";
 import { ListGroupSingleTime } from "../../../appWide/ListGroup/ListGroupSingleTime";
 
 interface Props<SN extends SectionName, CN extends ChildName<SN>>
@@ -21,7 +21,7 @@ export function ListGroupSingleTimeZone<
   return (
     <>
       {!section.get.hasOnlyChild(childName) && (
-        <ListGroupGenericBtn
+        <SubSectionGroupBtn
           text={btnText}
           onClick={() => section.addChild(childName)}
         />

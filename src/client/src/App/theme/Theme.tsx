@@ -112,6 +112,10 @@ const fontSize = {
   siteTitleSize: rem("22px"),
 } as const;
 
+const sectionSize = {
+  valueSectionSize: "85px",
+};
+
 const fonts = {
   titleChunk: css`
     font-size: ${fontSize.titleSize};
@@ -310,6 +314,7 @@ const theme = {
   ...themeColors,
   ...themeSections,
   ...fontSize,
+  ...sectionSize,
   ...fonts,
   ...borders,
   ...spacings,

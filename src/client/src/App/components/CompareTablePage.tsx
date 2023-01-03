@@ -1,3 +1,4 @@
+import { rem } from "polished";
 import React from "react";
 import { unstable_batchedUpdates } from "react-dom";
 import styled from "styled-components";
@@ -74,7 +75,7 @@ export function CompareTablePage({ $themeName, title, ...props }: Props) {
           className: "CompareTablePage-root",
         }}
       >
-        <h5 className="CompareTablePage-title">{title}</h5>
+        <div className="CompareTablePage-title">{title}</div>
         <div className="CompareTablePage-body">{getScenarioNode()}</div>
       </Styled>
     </SidebarContainer>
@@ -110,8 +111,8 @@ const Styled = styled.div<{ $themeName?: ThemeName }>`
   }
 
   .CompareTablePage-title {
-    font-size: 2rem;
-    color: ${theme.dark};
+    font-size: ${rem("28px")};
+    color: ${theme.primaryNext};
     margin: ${theme.s2};
   }
   .CompareTable-titleRow {

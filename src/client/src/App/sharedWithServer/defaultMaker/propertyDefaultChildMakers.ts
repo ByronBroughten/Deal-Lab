@@ -21,8 +21,8 @@ export const propertyDefaultChildMakers = {
     });
     return listGroup.makeSectionPack();
   },
-  ongoingCostListGroup(): SectionPack<"ongoingListGroup"> {
-    const listGroup = PackBuilderSection.initAsOmniChild("ongoingListGroup");
+  ongoingCostListGroup(): SectionPack<"ongoingValueGroup"> {
+    const listGroup = PackBuilderSection.initAsOmniChild("ongoingValueGroup");
     listGroup.addChild("ongoingList", {
       dbVarbs: {
         displayName: stringObj("Utilities"),

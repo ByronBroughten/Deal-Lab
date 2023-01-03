@@ -1,3 +1,4 @@
+import React from "react";
 import styled from "styled-components";
 import { VarbName } from "../../../../sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
 import { ChildName } from "../../../../sharedWithServer/SectionsMeta/sectionChildrenDerived/ChildName";
@@ -10,76 +11,68 @@ import {
 } from "../../../../sharedWithServer/SectionsMeta/SectionNameByType";
 import { useSetterSection } from "../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import { GetterSection } from "../../../../sharedWithServer/StateGetters/GetterSection";
-import theme, { ThemeName } from "../../../../theme/Theme";
+import theme from "../../../../theme/Theme";
+import { StandardBtnProps } from "../../../general/StandardProps";
 import useHowMany from "../../customHooks/useHowMany";
+import { SectionBtn } from "../../SectionBtn";
 import { SectionTitleAndCost } from "../../SectionTitleAndCost";
 import {
-  ListGroupLists,
-  MakeListNode,
-} from "./ListGroupGeneric/ListGroupLists";
+  MakeValueNode,
+  ValueGroupValues,
+} from "./ListGroupGeneric/ValueGroupValues";
 
 type ListParentName = ParentOfTypeName<"varbListAllowed">;
 
 export type ListGroupGenericProps<SN extends ListParentName> = {
-  listParentInfo: FeSectionInfo<SN>;
-  listAsChildName: ChildName<SN>;
-  themeName?: ThemeName;
-  makeListNode: MakeListNode;
+  valueParentInfo: FeSectionInfo<SN>;
+  valueAsChildName: ChildName<SN>;
+  makeValueNode: MakeValueNode;
   titleText: string;
   totalVarbName?: VarbName<SN>;
   className?: string;
+  extraValueChildren?: React.ReactNode;
 };
 
-export function ListGroupGeneric<
+export function ValueGroupGeneric<
   SN extends ListParentName,
   CN extends ChildNameOfType<SN, "varbListAllowed">
 >({
-  themeName,
-  listParentInfo,
-  listAsChildName,
-  makeListNode,
+  valueParentInfo,
+  valueAsChildName,
+  makeValueNode,
   titleText,
   totalVarbName,
   className,
+  extraValueChildren,
 }: ListGroupGenericProps<SN>) {
-  const parent = useSetterSection(listParentInfo);
-  const lists = parent.get.children(
-    listAsChildName
+  const parent = useSetterSection(valueParentInfo);
+  const values = parent.get.children(
+    valueAsChildName
   ) as GetterSection<any>[] as GetterSection<
     ChildSectionName<SN, CN> & SectionNameByType<"varbListAllowed">
   >[];
-
-  const numListsWithItems = lists.reduce<number>((num, list) => {
-    const itemName = list.meta.varbListItem as ChildName<
-      ChildSectionName<SN, CN>
-    >;
-    const childIds = list.childFeIds(itemName as any);
-    if (childIds.length > 0) num++;
-    return num;
-  }, 0);
-
-  const { areMultiple: areMultipleLists } = useHowMany(lists);
+  const { areMultiple: areMultipleValues } = useHowMany(values);
   return (
-    <Styled className={`ListGroup-root ` + className ?? ""}>
-      <div className="ListGroup-viewable">
-        <div className="ListGroup-titleRow">
+    <Styled className={`ValueGroup-root ` + className ?? ""}>
+      <div className="ValueGroup-viewable">
+        <div className="ValueGroup-titleRow">
           <SectionTitleAndCost
-            className="ListGroup-titleRowLeft"
+            className="ValueGroup-titleRowLeft"
             text={titleText}
             cost={
-              areMultipleLists && numListsWithItems > 1 && totalVarbName
+              areMultipleValues && totalVarbName
                 ? parent.get.varbNext(totalVarbName).displayVarb()
                 : undefined
             }
           />
-          <div className="listGroup-titleRowRight"></div>
+          <div className="ValueGroup-titleRowRight"></div>
         </div>
-        <ListGroupLists
+        <ValueGroupValues
           {...{
-            themeName,
-            feIds: lists.map(({ feId }) => feId),
-            makeListNode,
-            addList: () => parent.addChild(listAsChildName),
+            feIds: values.map(({ feId }) => feId),
+            makeValueNode,
+            addValue: () => parent.addChild(valueAsChildName),
+            extraValueChildren,
           }}
         />
       </div>
@@ -87,16 +80,34 @@ export function ListGroupGeneric<
   );
 }
 
+interface BtnProps extends StandardBtnProps {
+  text?: React.ReactNode;
+  icon?: React.ReactNode;
+}
+export function ListGroupGenericBtn({ className, ...props }: BtnProps) {
+  return (
+    <BtnStyled className={`ValueGroup-root ${className ?? ""}`} {...props} />
+  );
+}
+
+const BtnStyled = styled(SectionBtn)`
+  ${theme.sectionBorderChunk};
+  padding: ${theme.sectionPadding};
+  height: 260px;
+  width: 200px;
+  font-size: ${theme.titleSize};
+`;
+
 const Styled = styled.div`
   ${theme.sectionBorderChunk};
   padding: ${theme.sectionPadding};
 
-  .ListGroup-titleRow {
+  .ValueGroup-titleRow {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
   }
-  .ListGroup-titleRowLeft {
+  .ValueGroup-titleRowLeft {
     display: flex;
     align-items: center;
     padding-left: ${theme.s1};
