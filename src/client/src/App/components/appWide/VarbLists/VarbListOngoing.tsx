@@ -1,5 +1,4 @@
 import { useSetterSection } from "../../../sharedWithServer/stateClassHooks/useSetterSection";
-import { ThemeName } from "../../../theme/Theme";
 import {
   VarbListGeneric,
   VarbListGenericMenuType,
@@ -8,7 +7,6 @@ import { ListItemOngoing } from "./VarbListOngoing/ListItemOngoing";
 
 type Props = {
   feId: string;
-  themeName: ThemeName;
   className?: string;
   menuType?: VarbListGenericMenuType;
 };

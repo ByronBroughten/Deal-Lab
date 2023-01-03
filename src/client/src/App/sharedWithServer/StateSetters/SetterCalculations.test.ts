@@ -89,7 +89,7 @@ describe("SetterCalculations", () => {
     }
 
     const propertyCostListGroup = property.addAndGetChild(
-      "ongoingCostListGroup"
+      "ongoingExpenseGroup"
     );
     const propertyCostList =
       propertyCostListGroup.addAndGetChild("ongoingList");
@@ -105,7 +105,7 @@ describe("SetterCalculations", () => {
     mgmt.varb("rentCutPercentEditor").updateValue(numObj(5));
     mgmt.varb("vacancyRatePercent").updateValue(numObj(5));
 
-    const mgmtCostListGroup = mgmt.addAndGetChild("ongoingCostListGroup");
+    const mgmtCostListGroup = mgmt.addAndGetChild("ongoingExpenseGroup");
     const mgmtCostList = mgmtCostListGroup.addAndGetChild("ongoingList");
     const mgmtCosts = [100, 100];
     for (const amount of mgmtCosts) {

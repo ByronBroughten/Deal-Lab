@@ -13,8 +13,9 @@ AppRegistry.runApplication("App", {
 // 5. Implement the examples
 
 // Update the lists UI
-// - Implement singleTimeValueGroup instead
-//   of singleTimeListGroup
+// - create ongoingValue
+// - add an xBtn to singleTimeValue
+// -
 
 // - Make a new list that do
 // - Get rid of the list menus

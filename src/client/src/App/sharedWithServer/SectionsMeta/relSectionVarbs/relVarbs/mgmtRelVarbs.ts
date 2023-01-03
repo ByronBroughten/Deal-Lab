@@ -129,7 +129,7 @@ export function mgmtRelVarbs(): RelVarbs<"mgmt"> {
       "expenses",
       "Ongoing expenses",
       [
-        updateFnPropS.children("ongoingCostListGroup", "total"),
+        updateFnPropS.children("ongoingExpenseGroup", "total"),
         ...updateFnPropsS.localArr(["vacancyLossDollars", "rentCutDollars"]),
       ],
       {

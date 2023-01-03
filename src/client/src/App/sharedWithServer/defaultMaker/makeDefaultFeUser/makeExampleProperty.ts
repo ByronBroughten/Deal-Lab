@@ -10,9 +10,9 @@ export function makeExampleProperty(): SectionPack<"property"> {
     dbId: "exampleprop1",
   });
   property.addChild("upfrontRevenueGroup");
-  property.addChild("ongoingRevenueListGroup");
+  property.addChild("ongoingRevenueGroup");
 
-  const ongoingGroup = property.addAndGetChild("ongoingCostListGroup");
+  const ongoingGroup = property.addAndGetChild("ongoingExpenseGroup");
   ongoingGroup.loadChildren({
     childName: "ongoingList",
     sectionPacks: makeExampleUserOngoingLists(),

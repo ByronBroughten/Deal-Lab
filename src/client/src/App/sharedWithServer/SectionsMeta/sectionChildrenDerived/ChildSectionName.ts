@@ -102,7 +102,7 @@ function _testChildSectionNameName<
   CSN extends ChildSectionName<SN>
 >(_sn: SN, _csn: CSN) {
   const _test1: ChildSectionNameName<"property", "ongoingValueGroup"> =
-    "ongoingCostListGroup";
+    "ongoingExpenseGroup";
   //@ts-expect-error
   const _test2: ChildSectionNameName<"property", "ongoingList"> = "ongoingList";
   const _test3: ChildSectionNameName<

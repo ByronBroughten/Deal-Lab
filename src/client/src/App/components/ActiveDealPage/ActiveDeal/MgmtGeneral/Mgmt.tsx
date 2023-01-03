@@ -23,7 +23,7 @@ export function Mgmt({ feId }: { feId: string }) {
         <ListGroupOngoingZone
           {...{
             ...feInfo,
-            childName: "ongoingCostListGroup",
+            childName: "ongoingExpenseGroup",
             themeName: "mgmt",
             btnText: "+ Ongoing Costs",
             titleText: "Ongoing Costs",

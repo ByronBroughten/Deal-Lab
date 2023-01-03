@@ -87,6 +87,16 @@ export function makeBaseSectionsVarbs() {
       itemValueSwitch: "string",
       itemOngoingSwitch: "string",
     }),
+    ongoingValue: baseSectionVarbs({
+      ...baseVarbsS.ongoing("value"),
+      displayName: "stringObj",
+      displayNameEditor: "stringObj",
+      valueEditor: "numObj",
+      valueSourceSwitch: "string",
+      itemValueSwitch: "string",
+      itemOngoingSwitch: "string",
+      isItemized: "boolean",
+    }),
     ongoingList: baseSectionVarbs({
       ...baseVarbsS.savableSection,
       ...baseVarbsS.ongoing("value"),

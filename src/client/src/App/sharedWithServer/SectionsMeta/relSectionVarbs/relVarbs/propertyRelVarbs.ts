@@ -25,9 +25,9 @@ export function propertyRelVarbs(): RelVarbs<"property"> {
     numUnits: relVarbS.sumChildVarb("Unit count", "unit", "one"),
     numBedrooms: relVarbS.sumChildVarb("Bedroom count", "unit", "numBedrooms"),
     upfrontExpenses: relVarbS.sumMoney("Upfront expenses", [
-      updateFnPropS.children("repairCostValue", "value"),
-      updateFnPropS.children("upfrontExpenseGroup", "total"),
       updateFnPropS.local("price"),
+      updateFnPropS.onlyChild("repairCostValue", "value"),
+      updateFnPropS.children("upfrontExpenseGroup", "total"),
     ]),
     upfrontRevenue: relVarbS.sumMoney("Upfront revenues", [
       updateFnPropS.children("upfrontRevenueGroup", "total"),
@@ -36,9 +36,11 @@ export function propertyRelVarbs(): RelVarbs<"property"> {
       "expenses",
       "Ongoing expenses",
       [
-        updateFnPropS.children("ongoingCostListGroup", "total"),
         updateFnPropS.local("taxes"),
         updateFnPropS.local("homeIns"),
+        updateFnPropS.onlyChild("utilityCostValue", "value"),
+        updateFnPropS.onlyChild("capExCostValue", "value"),
+        updateFnPropS.children("ongoingExpenseGroup", "total"),
       ],
       { switchInit: "monthly", shared: { startAdornment: "$" } }
     ),
@@ -46,7 +48,7 @@ export function propertyRelVarbs(): RelVarbs<"property"> {
     ...relVarbsS.ongoingSumNums(
       "miscRevenue",
       "Revenue besides rent",
-      [updateFnPropS.children("ongoingRevenueListGroup", "total")],
+      [updateFnPropS.children("ongoingRevenueGroup", "total")],
       { switchInit: "monthly", shared: { startAdornment: "$" } }
     ),
     ...relVarbsS.ongoingSumNums(

@@ -67,7 +67,11 @@ import {
 import { sectionPathContexts } from "../SectionsMeta/sectionPathContexts";
 import { SectionPathName } from "../SectionsMeta/sectionPathContexts/sectionPathNames";
 import { PackMakerSection } from "../StatePackers.ts/PackMakerSection";
-import { RawFeSection } from "../StateSections/StateSectionsTypes";
+import {
+  RawFeSection,
+  SectionNotFoundError,
+  TooManySectionsFoundError,
+} from "../StateSections/StateSectionsTypes";
 import { Arr } from "../utils/Arr";
 import { Obj } from "../utils/Obj";
 import {
@@ -399,12 +403,24 @@ export class GetterSection<
     childName: CN
   ): GetterSection<ChildSectionName<SN, CN>> {
     const children = this.children(childName);
-    this.list.exactlyOneOrThrow(
-      children,
-      `${this.sectionName}.${this.feId}.${childName}`
-    );
+    if (children.length > 1) {
+      throw this.tooManyChildrenError(childName);
+    } else if (children.length < 1) {
+      throw this.noChildError(childName);
+    }
     return children[0];
   }
+  tooManyChildrenError(childName: ChildName<SN>): TooManySectionsFoundError {
+    return new TooManySectionsFoundError(
+      `${this.sectionName} has too many children of childName ${childName}`
+    );
+  }
+  noChildError(childName: ChildName<SN>): SectionNotFoundError {
+    return new SectionNotFoundError(
+      `${this.sectionName} has no children of childName ${childName}`
+    );
+  }
+
   onlyChildFeId<CN extends ChildName<SN>>(childName: CN): string {
     return this.onlyChild(childName).feId;
   }
@@ -431,7 +447,9 @@ export class GetterSection<
   }
   hasOnlyChild<CN extends ChildName<SN>>(childName: CN): boolean {
     if (this.childFeIds(childName).length > 1) {
-      throw this.list.tooManySectionsFound("onlyChild");
+      throw new Error(
+        `${this.sectionName} has too many children of childName ${childName}`
+      );
     }
     return this.childFeIds(childName).length === 1;
   }

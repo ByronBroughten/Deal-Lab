@@ -104,11 +104,17 @@ export const allSectionChildren = checkAllSectionChildren({
   }),
   tableRow: { cell: sectionChild("cell") },
   outputList: { outputItem: sectionChild("outputItem") },
+  ongoingValueGroup: {
+    ongoingList: sectionChild("ongoingList"),
+    ongoingValue: sectionChild("ongoingValue"),
+  },
+  ongoingValue: {
+    ongoingList: sectionChild("ongoingList"),
+  },
   singleTimeValueGroup: {
     singleTimeList: sectionChild("singleTimeList"),
     singleTimeValue: sectionChild("singleTimeValue"),
   },
-  ongoingValueGroup: { ongoingList: sectionChild("ongoingList") },
   singleTimeValue: { singleTimeList: sectionChild("singleTimeList") },
   singleTimeList: { singleTimeItem: sectionChild("singleTimeItem") },
   ongoingList: {
@@ -136,17 +142,19 @@ export const allSectionChildren = checkAllSectionChildren({
   propertyGeneral: { property: sectionChild("property") },
   property: sectionChildren({
     repairCostValue: ["singleTimeValue"],
+    capExCostValue: ["ongoingValue"],
+    utilityCostValue: ["ongoingValue"],
     upfrontExpenseGroup: ["singleTimeValueGroup"],
     upfrontRevenueGroup: ["singleTimeValueGroup"],
-    ongoingCostListGroup: ["ongoingValueGroup"],
-    ongoingRevenueListGroup: ["ongoingValueGroup"],
+    ongoingExpenseGroup: ["ongoingValueGroup"],
+    ongoingRevenueGroup: ["ongoingValueGroup"],
     unit: ["unit"],
     customVarb: ["customVarb"],
   }),
   mgmtGeneral: { mgmt: sectionChild("mgmt") },
   mgmt: sectionChildren({
     upfrontExpenseGroup: ["singleTimeValueGroup"],
-    ongoingCostListGroup: ["ongoingValueGroup"],
+    ongoingExpenseGroup: ["ongoingValueGroup"],
     customVarb: ["customVarb"],
   }),
 });

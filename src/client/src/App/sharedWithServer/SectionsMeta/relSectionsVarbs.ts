@@ -123,9 +123,77 @@ export function makeRelSections() {
       isItemized: relVarb("boolean", {
         initValue: false,
       }),
-      valueEditor: relVarbS.moneyObj("Expense"),
+      valueEditor: relVarbS.moneyObj("Value"),
       valueSourceSwitch: relVarb("string", {
-        initValue: "total",
+        initValue: "valueEditor",
+      }),
+      itemValueSwitch: relVarb("string", {
+        initValue: "labeledEquation",
+      }),
+    }),
+    ...relSectionProp("ongoingValue", {
+      displayName: relVarb("stringObj", {
+        updateFnName: "loadMainTextByVarbInfo",
+        updateFnProps: { varbInfo: updateFnPropS.local("displayNameEditor") },
+      }),
+      valueMonthly: relVarbS.moneyMonth("Monthly value", {
+        updateFnName: "throwIfReached",
+        updateOverrides: [
+          updateOverride(
+            [overrideSwitchS.local("isItemized", true)],
+            updateBasicsS.loadFromChild(
+              "ongoingList",
+              "totalMonthly"
+            ) as UpdateBasics<"numObj">
+          ),
+          updateOverride(
+            [
+              overrideSwitchS.valueSourceIs("valueEditor"),
+              overrideSwitchS.monthlyIsActive("value"),
+            ],
+            updateBasicsS.loadFromLocal("valueEditor") as UpdateBasics<"numObj">
+          ),
+          updateOverride(
+            [
+              overrideSwitchS.valueSourceIs("valueEditor"),
+              overrideSwitchS.yearlyIsActive("value"),
+            ],
+            updateBasicsS.yearlyToMonthly("value") as UpdateBasics<"numObj">
+          ),
+        ],
+      }),
+      valueYearly: relVarbS.moneyMonth("Yearly value", {
+        updateFnName: "throwIfReached",
+        updateOverrides: [
+          updateOverride(
+            [overrideSwitchS.local("isItemized", true)],
+            updateBasicsS.loadFromChild(
+              "ongoingList",
+              "totalYearly"
+            ) as UpdateBasics<"numObj">
+          ),
+          updateOverride(
+            [
+              overrideSwitchS.valueSourceIs("valueEditor"),
+              overrideSwitchS.yearlyIsActive("value"),
+            ],
+            updateBasicsS.loadFromLocal("valueEditor") as UpdateBasics<"numObj">
+          ),
+          updateOverride(
+            [
+              overrideSwitchS.valueSourceIs("valueEditor"),
+              overrideSwitchS.monthlyIsActive("value"),
+            ],
+            updateBasicsS.monthlyToYearly("value") as UpdateBasics<"numObj">
+          ),
+        ],
+      }),
+      valueEditor: relVarbS.moneyObj("Value"),
+      isItemized: relVarb("boolean", {
+        initValue: false,
+      }),
+      valueSourceSwitch: relVarb("string", {
+        initValue: "valueEditor",
       }),
       itemValueSwitch: relVarb("string", {
         initValue: "labeledEquation",

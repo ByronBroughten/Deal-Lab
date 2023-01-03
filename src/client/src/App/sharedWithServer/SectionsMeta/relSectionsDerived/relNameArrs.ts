@@ -22,6 +22,10 @@ export const relNameArrs = {
     "ongoingItem",
     "userVarbItem",
   ] as const),
+  valueSection: Arr.extractStrict(sectionNames, [
+    "singleTimeValue",
+    "ongoingValue",
+  ] as const),
 } as const;
 
 export type RelNameArrs = typeof relNameArrs;
