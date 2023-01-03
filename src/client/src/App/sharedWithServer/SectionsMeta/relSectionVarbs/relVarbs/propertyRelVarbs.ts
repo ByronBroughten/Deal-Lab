@@ -25,11 +25,11 @@ export function propertyRelVarbs(): RelVarbs<"property"> {
     numUnits: relVarbS.sumChildVarb("Unit count", "unit", "one"),
     numBedrooms: relVarbS.sumChildVarb("Bedroom count", "unit", "numBedrooms"),
     upfrontExpenses: relVarbS.sumMoney("Upfront expenses", [
-      updateFnPropS.children("upfrontCostListGroup", "total"),
+      updateFnPropS.children("upfrontExpenseGroup", "total"),
       updateFnPropS.local("price"),
     ]),
     upfrontRevenue: relVarbS.sumMoney("Upfront revenues", [
-      updateFnPropS.children("upfrontRevenueListGroup", "total"),
+      updateFnPropS.children("upfrontRevenueGroup", "total"),
     ]),
     ...relVarbsS.ongoingSumNums(
       "expenses",

@@ -6,7 +6,7 @@ import {
   DealDetailRowVarbNotFoundTopLevel,
 } from "./DealDetails/DealDetailRow";
 
-export default function DealDetails({ feId }: { feId: string }) {
+export function DealDetails({ feId }: { feId: string }) {
   const outputList = useGetterSection({
     sectionName: "outputList",
     feId,

@@ -48,3 +48,11 @@ export default function useToggleView<T extends string | undefined>({
   const props = useToggle(initValue);
   return useNamedToggleView(props, viewWhat ?? "view");
 }
+
+export function useToggleViewNext<T extends string>(
+  viewWhat: T,
+  initValue: boolean = false
+): Return<T> {
+  const props = useToggle(initValue);
+  return useNamedToggleView(props, viewWhat);
+}

@@ -15,7 +15,7 @@ export function ListGroupSingleTime({ feId, ...props }: Props) {
       {...{
         ...props,
         listParentInfo: {
-          sectionName: "singleTimeListGroup",
+          sectionName: "singleTimeValueGroup",
           feId,
         } as const,
         listAsChildName: "singleTimeList",

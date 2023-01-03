@@ -64,15 +64,21 @@ export function makeBaseSectionsVarbs() {
       // then
       then: "numObj",
     }),
-    singleTimeListGroup: baseSectionVarbs({
+    singleTimeValueGroup: baseSectionVarbs({
       total: "numObj",
+      itemValueSwitch: "string",
+    }),
+    singleTimeValue: baseSectionVarbs({
+      displayName: "stringObj",
+      displayNameEditor: "stringObj",
+      value: "numObj",
+      valueEditor: "numObj",
+      valueSourceSwitch: "string",
+      isItemized: "boolean",
       itemValueSwitch: "string",
     }),
     singleTimeList: baseSectionVarbs({
       ...baseVarbsS.savableSection,
-      valueSourceSwitch: "string",
-      value: "numObj",
-      valueEditor: "numObj",
       total: "numObj",
       itemValueSwitch: "string",
     }),
@@ -176,6 +182,7 @@ export function makeBaseSectionsVarbs() {
       piCalculationName: "string",
       ...baseVarbsS.ongoing("loanPayment"),
       ...baseVarbsS.ongoing("mortgageIns"),
+      hasMortgageIns: "boolean",
     } as const),
     get financing() {
       return baseSectionVarbs({

@@ -55,6 +55,9 @@ export class SetterSection<
   get sections(): SetterSections {
     return new SetterSections(this.setterSectionsProps);
   }
+  get feId(): string {
+    return this.get.feId;
+  }
   isOfType<ST extends SectionNameType>(
     sectionTypeName: ST
   ): this is SetterSection<SectionNameByType<ST>> {

@@ -3,7 +3,7 @@ import { FeVarbInfo } from "../../../../../../sharedWithServer/SectionsMeta/Sect
 import { useGetterSectionsProps } from "../../../../../../sharedWithServer/stateClassHooks/useGetterSectionsProps";
 import { useSetterVarb } from "../../../../../../sharedWithServer/stateClassHooks/useSetterVarb";
 import { GetterVarb } from "../../../../../../sharedWithServer/StateGetters/GetterVarb";
-import { InEntityGetterVarb } from "./../../../../../../sharedWithServer/StateGetters/InEntityGetterVarb";
+import { InEntityGetterVarb } from "../../../../../../sharedWithServer/StateGetters/InEntityGetterVarb";
 import {
   DealDetailRowDropDown,
   DealDetailRowEndPoint,

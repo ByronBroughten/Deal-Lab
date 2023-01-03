@@ -5,7 +5,10 @@ import { savableSectionVarbNames } from "./baseSectionsVarbs/specialVarbNames";
 import { AuthStatus } from "./baseSectionsVarbsValues";
 import { relAdorn } from "./relSectionVarbs/rel/relAdorn";
 import { relVarb, relVarbS } from "./relSectionVarbs/rel/relVarb";
-import { updateBasicsS } from "./relSectionVarbs/rel/relVarb/UpdateBasics";
+import {
+  UpdateBasics,
+  updateBasicsS,
+} from "./relSectionVarbs/rel/relVarb/UpdateBasics";
 import {
   updateFnPropS,
   updateFnPropsS,
@@ -76,10 +79,10 @@ export function makeRelSections() {
         initValue: "loadedVarb",
       } as const),
     }),
-    ...relSectionProp("singleTimeListGroup", {
+    ...relSectionProp("singleTimeValueGroup", {
       total: relVarbS.sumNums(
         "List group total",
-        [updateFnPropS.children("singleTimeList", "value")],
+        [updateFnPropS.children("singleTimeList", "total")],
         relAdorn.money
       ),
       itemValueSwitch: relVarb("string", {
@@ -87,25 +90,43 @@ export function makeRelSections() {
       }),
     }),
     ...relSectionProp("singleTimeList", {
-      value: relVarbS.moneyObj("Expense", {
-        updateFnName: "getNumObjOfSwitch",
-        updateFnProps: {
-          switch: updateFnPropS.local("valueSourceSwitch"),
-          total: updateFnPropS.local("total"),
-          valueEditor: updateFnPropS.local("valueEditor"),
-        },
-      }),
-      valueSourceSwitch: relVarb("string", {
-        initValue: "total",
-      }),
-      valueOngoingSwitch: relVarb("string", {
-        initValue: "monthly",
-      }),
       total: relVarbS.sumNums(
         relVarbInfoS.local("displayName"),
         [updateFnPropS.children("singleTimeItem", "value")],
         relAdorn.money
       ),
+      itemValueSwitch: relVarb("string", {
+        initValue: "labeledEquation",
+      }),
+    }),
+    ...relSectionProp("singleTimeValue", {
+      displayName: relVarb("stringObj", {
+        updateFnName: "loadMainTextByVarbInfo",
+        updateFnProps: { varbInfo: updateFnPropS.local("displayNameEditor") },
+      }),
+      value: relVarbS.moneyObj("Expense", {
+        updateFnName: "throwIfReached",
+        updateOverrides: [
+          updateOverride(
+            [overrideSwitchS.local("isItemized", true)],
+            updateBasicsS.loadFromChild(
+              "singleTimeList",
+              "total"
+            ) as UpdateBasics<"numObj">
+          ),
+          updateOverride(
+            [overrideSwitchS.valueSourceIs("valueEditor")],
+            updateBasicsS.loadFromLocal("valueEditor") as UpdateBasics<"numObj">
+          ),
+        ],
+      }),
+      isItemized: relVarb("boolean", {
+        initValue: false,
+      }),
+      valueEditor: relVarbS.moneyObj("Expense"),
+      valueSourceSwitch: relVarb("string", {
+        initValue: "total",
+      }),
       itemValueSwitch: relVarb("string", {
         initValue: "labeledEquation",
       }),

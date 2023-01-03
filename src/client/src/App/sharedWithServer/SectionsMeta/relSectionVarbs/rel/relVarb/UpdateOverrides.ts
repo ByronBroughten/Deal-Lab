@@ -21,8 +21,9 @@ export type UpdateOverrideSwitches = readonly UpdateOverrideSwitch[];
 
 export interface UpdateOverrideSwitch {
   switchInfo: RelLocalVarbInfo;
-  switchValue: string;
+  switchValue: OverrideSwitchValue;
 }
+type OverrideSwitchValue = string | boolean;
 
 export const overrideSwitchS = {
   ongoing<K extends SwitchTargetKey<"ongoing">>(
@@ -38,11 +39,14 @@ export const overrideSwitchS = {
   yearlyIsActive(baseVarbName: string) {
     return this.ongoing(baseVarbName, "yearly");
   },
-  local(varbName: string, switchValue: string) {
+  local(varbName: string, switchValue: OverrideSwitchValue) {
     return {
       switchInfo: relVarbInfoS.local(varbName),
       switchValue,
     } as const;
+  },
+  valueSourceIs(valueSource: string) {
+    return overrideSwitchS.local("valueSourceSwitch", "valueEditor");
   },
 };
 

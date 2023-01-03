@@ -104,8 +104,12 @@ export const allSectionChildren = checkAllSectionChildren({
   }),
   tableRow: { cell: sectionChild("cell") },
   outputList: { outputItem: sectionChild("outputItem") },
-  singleTimeListGroup: { singleTimeList: sectionChild("singleTimeList") },
+  singleTimeValueGroup: {
+    singleTimeList: sectionChild("singleTimeList"),
+    singleTimeValue: sectionChild("singleTimeValue"),
+  },
   ongoingListGroup: { ongoingList: sectionChild("ongoingList") },
+  singleTimeValue: { singleTimeList: sectionChild("singleTimeList") },
   singleTimeList: { singleTimeItem: sectionChild("singleTimeItem") },
   ongoingList: {
     ongoingItem: sectionChild("ongoingItem", {
@@ -125,14 +129,14 @@ export const allSectionChildren = checkAllSectionChildren({
   }),
   financing: { loan: sectionChild("loan") },
   loan: sectionChildren({
-    closingCostListGroup: ["singleTimeListGroup"],
-    wrappedInLoanListGroup: ["singleTimeListGroup"],
+    closingCostValue: ["singleTimeValue"],
+    wrappedInLoanValue: ["singleTimeValue"],
     customVarb: ["customVarb"],
   }),
   propertyGeneral: { property: sectionChild("property") },
   property: sectionChildren({
-    upfrontCostListGroup: ["singleTimeListGroup"],
-    upfrontRevenueListGroup: ["singleTimeListGroup"],
+    upfrontExpenseGroup: ["singleTimeValueGroup"],
+    upfrontRevenueGroup: ["singleTimeValueGroup"],
     ongoingCostListGroup: ["ongoingListGroup"],
     ongoingRevenueListGroup: ["ongoingListGroup"],
     unit: ["unit"],
@@ -140,7 +144,7 @@ export const allSectionChildren = checkAllSectionChildren({
   }),
   mgmtGeneral: { mgmt: sectionChild("mgmt") },
   mgmt: sectionChildren({
-    upfrontCostListGroup: ["singleTimeListGroup"],
+    upfrontExpenseGroup: ["singleTimeValueGroup"],
     ongoingCostListGroup: ["ongoingListGroup"],
     customVarb: ["customVarb"],
   }),

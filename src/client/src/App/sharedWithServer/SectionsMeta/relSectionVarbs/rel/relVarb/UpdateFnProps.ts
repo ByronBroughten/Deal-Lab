@@ -56,6 +56,9 @@ export const updateFnPropS = {
   children(childName: ChildName, varbName: string) {
     return updateFnProp(relVarbInfoS.children(childName, varbName));
   },
+  onlyChild(childName: ChildName, varbName: string) {
+    return updateFnProp(relVarbInfoS.onlyChild(childName, varbName));
+  },
   pathName(pathName: SectionPathName, varbName: string): UpdateFnProp {
     return updateFnProp(mixedInfoS.pathNameVarb(pathName, varbName));
   },

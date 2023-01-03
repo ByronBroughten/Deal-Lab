@@ -1,5 +1,6 @@
 import { TextField } from "@material-ui/core";
 import React from "react";
+import { unstable_batchedUpdates } from "react-dom";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import styled from "styled-components";
 import { FeSectionInfo } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
@@ -14,6 +15,7 @@ import { RowIndexListRow, StyledRowIndexRow } from "./RowIndexListRow";
 type Props<SN extends SectionNameByType<"hasIndexStore">> = {
   feInfo: FeSectionInfo<SN>;
   className?: string;
+  onClick?: () => void;
 };
 
 type ScenarioKey = "areNone" | "isAtLeastOne";
@@ -26,6 +28,7 @@ function useScenarioKey(rows: any[]): ScenarioKey {
 export function RowIndexRows<SN extends SectionNameByType<"hasIndexStore">>({
   feInfo,
   className,
+  onClick,
 }: Props<SN>) {
   const authStatus = useAuthStatus();
   const [filter, setFilter] = React.useState("");
@@ -56,7 +59,12 @@ export function RowIndexRows<SN extends SectionNameByType<"hasIndexStore">>({
                   <RowIndexListRow
                     {...{
                       displayName,
-                      load: () => section.loadFromIndex(dbId),
+                      load: () => {
+                        unstable_batchedUpdates(() => {
+                          section.loadFromIndex(dbId);
+                          onClick && onClick();
+                        });
+                      },
                       del:
                         authStatus === "guest"
                           ? undefined

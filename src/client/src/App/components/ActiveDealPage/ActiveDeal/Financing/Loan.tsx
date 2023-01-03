@@ -1,9 +1,10 @@
 import React from "react";
 import styled from "styled-components";
+import theme from "../../../../theme/Theme";
 import { MainSection } from "../../../appWide/GeneralSection/MainSection";
 import MainSectionBody from "../../../appWide/GeneralSection/MainSection/MainSectionBody";
-import { MainSectionTitleRow } from "../../../appWide/GeneralSection/MainSection/MainSectionTitleRow";
-import { ListGroupSingleTimeZone } from "../general/ListGroupSingleTimeZone";
+import { MainSectionTopRows } from "../../../appWide/MainSectionTopRows";
+import { SingleTimeValueZone } from "../../../appWide/SingleTimeValueZone";
 import BasicLoanInfo from "./Loan/BasicLoanInfo";
 
 export function Loan({ feId }: { feId: string }) {
@@ -13,34 +14,32 @@ export function Loan({ feId }: { feId: string }) {
   } as const;
   return (
     <Styled className="Loan-root">
-      <MainSectionTitleRow
+      <MainSectionTopRows
         {...{
           ...feInfo,
           sectionTitle: "Loan",
-          pluralName: "loans",
-          xBtn: true,
+          loadWhat: "Loan",
         }}
       />
       <MainSectionBody themeName="loan">
         <div className="ListGroup-lists">
           <BasicLoanInfo feId={feId} className="ListGroup-root" />
         </div>
-        <ListGroupSingleTimeZone
+        <SingleTimeValueZone
           {...{
             ...feInfo,
-            childName: "closingCostListGroup",
-            themeName: "loan",
-            btnText: "+ Closing Costs",
-            titleText: "Closing Costs",
+            childName: "closingCostValue",
+            plusBtnText: "+ Closing Costs",
+            displayName: "Closing Costs",
           }}
         />
-        <ListGroupSingleTimeZone
+        <SingleTimeValueZone
           {...{
             ...feInfo,
-            childName: "wrappedInLoanListGroup",
-            themeName: "loan",
-            btnText: "+ Wrapped in Loan",
-            titleText: "Wrapped in Loan",
+            className: "Loan-financedCosts",
+            childName: "wrappedInLoanValue",
+            plusBtnText: "+ Financed costs",
+            displayName: "Other Financed Costs",
           }}
         />
       </MainSectionBody>
@@ -49,6 +48,11 @@ export function Loan({ feId }: { feId: string }) {
 }
 
 const Styled = styled(MainSection)`
+  .SingleTimeValue-root {
+    margin: ${theme.s2};
+    margin-top: 0;
+  }
+
   :hover {
     .MainSectionTitleRow-xBtn {
       visibility: visible;

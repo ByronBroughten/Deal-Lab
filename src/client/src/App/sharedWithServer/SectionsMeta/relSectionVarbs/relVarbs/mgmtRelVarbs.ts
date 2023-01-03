@@ -122,7 +122,7 @@ export function mgmtRelVarbs(): RelVarbs<"mgmt"> {
     ),
     upfrontExpenses: relVarbS.sumNums(
       "Upfront expenses",
-      [updateFnPropS.children("upfrontCostListGroup", "total")],
+      [updateFnPropS.children("upfrontExpenseGroup", "total")],
       { startAdornment: "$" }
     ),
     ...relVarbsS.ongoingSumNums(

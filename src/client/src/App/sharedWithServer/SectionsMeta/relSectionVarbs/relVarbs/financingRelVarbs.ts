@@ -67,6 +67,7 @@ export function loanRelVarbs(): RelVarbs<"loan"> {
         ),
       ],
     }),
+    hasMortgageIns: relVarb("boolean"),
     loanBaseDollarsEditor: relVarbS.moneyObj("Loan amount", {
       initNumber: 0,
     }),
@@ -75,7 +76,7 @@ export function loanRelVarbs(): RelVarbs<"loan"> {
     }),
     loanTotalDollars: relVarbS.sumMoney("Loan amount", [
       updateFnPropS.local("loanBaseDollars"),
-      updateFnPropS.children("wrappedInLoanListGroup", "total"),
+      updateFnPropS.children("wrappedInLoanValue", "value"),
     ]),
     ...relVarbsS.ongoingInput("interestRatePercent", "Interest rate", {
       switchInit: "yearly",
@@ -104,10 +105,10 @@ export function loanRelVarbs(): RelVarbs<"loan"> {
       initNumber: 0,
     }),
     closingCosts: relVarbS.sumMoney("Closing costs", [
-      updateFnPropS.children("closingCostListGroup", "total"),
+      updateFnPropS.children("closingCostValue", "value"),
     ]),
     wrappedInLoan: relVarbS.sumMoney("Wrapped in loan", [
-      updateFnPropS.children("wrappedInLoanListGroup", "total"),
+      updateFnPropS.children("wrappedInLoanValue", "value"),
     ]),
     piCalculationName: relVarb("string", {
       initValue: "piFixedStandard" as PiCalculationName,

@@ -60,7 +60,7 @@ export class InEntityGetterVarb<
   }: UpdateOverrideSwitch): boolean {
     const actualSwitchValue = this.get.section
       .varbByFocalMixed(switchInfo)
-      .value("string");
+      .value();
     return switchValue === actualSwitchValue;
   }
   get allFixedInEntities() {

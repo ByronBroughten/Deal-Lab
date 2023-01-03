@@ -4,6 +4,7 @@ import {
 } from "../../../baseSectionsVarbs/baseValues/calculations";
 import { ValueName } from "../../../baseSectionsVarbs/baseVarb";
 import { switchNames } from "../../../baseSectionsVarbs/RelSwitchVarb";
+import { ChildName } from "../../../sectionChildrenDerived/ChildName";
 import { UpdateFnName } from "./UpdateFnName";
 import { UpdateFnProp, UpdateFnProps, updateFnPropS } from "./UpdateFnProps";
 
@@ -41,6 +42,16 @@ export const updateBasicsS = {
       updateFnName: "manualUpdateOnly",
       updateFnProps: {},
     } as const;
+  },
+  loadFromLocal(varbName: string) {
+    return updateBasics("loadSolvableTextByVarbInfo", {
+      varbInfo: updateFnPropS.local(varbName),
+    });
+  },
+  loadFromChild(childName: ChildName, varbName: string) {
+    return updateBasics("loadSolvableTextByVarbInfo", {
+      varbInfo: updateFnPropS.onlyChild(childName, varbName),
+    });
   },
   loadFromLocalValueEditor(): UpdateBasics<"numObj"> {
     return this.loadSolvableTextByVarbInfo("valueEditor", "valueSourceSwitch");

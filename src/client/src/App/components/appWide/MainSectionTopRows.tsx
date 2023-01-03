@@ -63,7 +63,7 @@ const Styled = styled.div`
     color: ${theme.primary};
   }
   .MainSectionTopRows-sectionTitle {
-    font-size: ${theme.siteTitleSize};
+    font-size: ${"22px"};
   }
   .MainSectionTopRows-controls {
     margin-left: ${theme.s2};

@@ -1,12 +1,23 @@
 import { stringObj } from "../SectionsMeta/baseSectionsVarbs/baseValues/StringObj";
 import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
+import { makeDefaultSingleTimeValue } from "./makeDefaultSingleTimeValue";
 
-export const defaultPropertyChildrenMakers = {
-  upfrontCostListGroup(): SectionPack<"singleTimeListGroup"> {
-    const listGroup = PackBuilderSection.initAsOmniChild("singleTimeListGroup");
+export const propertyDefaultChildMakers = {
+  upfrontExpenseGroup(): SectionPack<"singleTimeValueGroup"> {
+    const listGroup = PackBuilderSection.initAsOmniChild(
+      "singleTimeValueGroup"
+    );
     listGroup.addChild("singleTimeList", {
       dbVarbs: { displayName: stringObj("Repairs") },
+    });
+
+    const value = listGroup.loadAndGetChild({
+      childName: "singleTimeValue",
+      sectionPack: makeDefaultSingleTimeValue(),
+    });
+    value.updateValues({
+      displayNameEditor: stringObj("Repairs"),
     });
     return listGroup.makeSectionPack();
   },

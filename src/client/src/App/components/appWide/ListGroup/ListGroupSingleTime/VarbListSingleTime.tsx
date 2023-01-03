@@ -1,4 +1,3 @@
-import { ThemeName } from "../../../../theme/Theme";
 import {
   VarbListGeneric,
   VarbListGenericMenuType,
@@ -6,7 +5,6 @@ import {
 import { ListItemSingleTime } from "./VarbListSingleTime/ListItemSingleTime";
 
 type Props = {
-  themeName: ThemeName;
   feId: string;
   menuType?: VarbListGenericMenuType;
   className?: string;

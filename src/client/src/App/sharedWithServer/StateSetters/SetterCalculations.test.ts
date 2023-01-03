@@ -26,7 +26,7 @@ describe("SetterCalculations", () => {
     const property = propertyGeneral.onlyChild("property");
     property.varb("price").updateValue(numObj(200000));
     const propertyCostListGroup = property.addAndGetChild(
-      "upfrontCostListGroup"
+      "upfrontExpenseGroup"
     );
 
     const propertyCostList =
@@ -44,7 +44,7 @@ describe("SetterCalculations", () => {
     const loan = financing.addAndGetChild("loan");
     loan.varb("loanBasePercentEditor").updateValue(numObj(0));
 
-    const group = loan.addAndGetChild("wrappedInLoanListGroup");
+    const group = loan.addAndGetChild("wrappedInLoanValue");
     const wrapped = group.addAndGetChild("singleTimeList");
     const wrappeds = [4000, 1000];
     for (const amount of wrappeds) {
@@ -56,7 +56,7 @@ describe("SetterCalculations", () => {
     const mgmtGeneral = dealTester.setter.onlyChild("mgmtGeneral");
     const mgmt = mgmtGeneral.addAndGetChild("mgmt");
 
-    const mgmtCostListGroup = mgmt.addAndGetChild("upfrontCostListGroup");
+    const mgmtCostListGroup = mgmt.addAndGetChild("upfrontExpenseGroup");
 
     const mgmtCostList = mgmtCostListGroup.addAndGetChild("singleTimeList");
     const mgmtCosts = [4000, 6000];
@@ -136,7 +136,7 @@ function addTestLoan(dealTester: SetterTesterSection<"deal">): void {
   loan.varb("loanBasePercentEditor").updateValue(numObj(75));
   loan.varb("mortgageInsYearly").updateValue(numObj(1200));
 
-  const wrappedGroup = loan.addAndGetChild("wrappedInLoanListGroup");
+  const wrappedGroup = loan.addAndGetChild("wrappedInLoanValue");
   const wrapped = wrappedGroup.addAndGetChild("singleTimeList");
   wrapped.addChild("singleTimeItem", {
     dbVarbs: { valueEditor: numObj(6000) },

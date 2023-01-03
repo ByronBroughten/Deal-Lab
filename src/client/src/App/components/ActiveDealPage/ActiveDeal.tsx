@@ -5,7 +5,7 @@ import { useGetterSection } from "../../sharedWithServer/stateClassHooks/useGett
 import theme from "../../theme/Theme";
 import { MainSectionTopRows } from "../appWide/MainSectionTopRows";
 import { OuterMainSection } from "./../appWide/GeneralSection/OuterMainSection";
-import { DealGeneral } from "./ActiveDeal/DealGeneral";
+import { DealOutputs } from "./ActiveDeal/DealOutputs";
 import Financing from "./ActiveDeal/Financing";
 import { MgmtGeneral } from "./ActiveDeal/MgmtGeneral";
 import { PropertyGeneral } from "./ActiveDeal/PropertyGeneral";
@@ -44,10 +44,10 @@ export function ActiveDeal({ className, feId }: Props) {
       />
       <div className="ActiveDeal-inputSectionsWrapper">
         <PropertyGeneral feId={deal.onlyChildFeId("propertyGeneral")} />
-        <MgmtGeneral feId={deal.onlyChildFeId("mgmtGeneral")} />
         <Financing feId={deal.onlyChildFeId("financing")} />
+        <MgmtGeneral feId={deal.onlyChildFeId("mgmtGeneral")} />
       </div>
-      <DealGeneral feId={feId} />
+      <DealOutputs feId={feId} />
     </Styled>
   );
 }
@@ -66,7 +66,7 @@ const Styled = styled(OuterMainSection)`
   .ActiveDeal-inputSectionsWrapper {
     margin: auto;
   }
-  .DealGeneral-root {
+  .DealOutputs-root {
     position: sticky;
     bottom: 0;
     z-index: 3;

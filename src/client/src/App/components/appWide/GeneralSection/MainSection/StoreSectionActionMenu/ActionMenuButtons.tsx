@@ -6,6 +6,7 @@ import {
 } from "react-icons/ai";
 import { BiCopy, BiReset } from "react-icons/bi";
 import { MdOutlineSystemUpdateAlt } from "react-icons/md";
+import { useToggleViewNext } from "../../../../../modules/customHooks/useToggleView";
 import { useFeUser } from "../../../../../modules/sectionActorHooks/useFeUser";
 import { useMainSectionActor } from "../../../../../modules/sectionActorHooks/useMainSectionActor";
 import { SectionNameByType } from "../../../../../sharedWithServer/SectionsMeta/SectionNameByType";
@@ -42,7 +43,10 @@ export function useActionMenuBtns<
 >({ loadWhat, ...feInfo }: Props<SN>) {
   const mainSection = useMainSectionActor(feInfo);
   const { isGuest } = mainSection.feUser;
-  const [loadModalIsOpen, setLoadModalIsOpen] = React.useState(false);
+  const { modalIsOpen, openModal, closeModal } = useToggleViewNext(
+    "modal",
+    false
+  );
   const actionMenuBtns: Record<AllActions, React.ReactNode> = {
     get signInToSave() {
       return (
@@ -122,14 +126,14 @@ export function useActionMenuBtns<
             key="load"
             label="Load"
             icon={<AiOutlineCloudDownload size={26} />}
-            onClick={() => setLoadModalIsOpen(() => true)}
+            onClick={openModal}
           />
           <SectionModal
-            closeModal={() => setLoadModalIsOpen(() => false)}
-            show={loadModalIsOpen}
+            closeModal={closeModal}
+            show={modalIsOpen}
             title={`Load ${loadWhat}`}
           >
-            <RowIndexRows {...{ feInfo }} />
+            <RowIndexRows {...{ feInfo, onClick: closeModal }} />
           </SectionModal>
         </>
       );

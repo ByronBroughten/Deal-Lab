@@ -10,7 +10,7 @@ const checkUpdateFnNames = (updateFnNames: {
   [VN in ValueName]: GeneralUpdateFnNames;
 }) => updateFnNames;
 
-const commonUpdateFnNames = ["manualUpdateOnly", "throw"] as const;
+const commonUpdateFnNames = ["manualUpdateOnly", "throwIfReached"] as const;
 const updateFnNames = checkUpdateFnNames({
   // the first updateFnName in each group is the one used by default.
   ...makeDefaults(),
@@ -27,6 +27,7 @@ const updateFnNames = checkUpdateFnNames({
   stringObj: [
     ...commonUpdateFnNames,
     "loadLocalString",
+    "loadMainTextByVarbInfo",
     "manualUpdateOnly",
     "loadDisplayName",
     "loadDisplayNameEnd",

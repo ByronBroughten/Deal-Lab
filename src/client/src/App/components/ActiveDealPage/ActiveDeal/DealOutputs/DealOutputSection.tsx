@@ -3,11 +3,11 @@ import { useGetterSection } from "../../../../sharedWithServer/stateClassHooks/u
 import theme from "../../../../theme/Theme";
 import { MainSection } from "../../../appWide/GeneralSection/MainSection";
 import MainSectionBody from "../../../appWide/GeneralSection/MainSection/MainSectionBody";
-import { MainSectionTitleRow } from "../../../appWide/GeneralSection/MainSection/MainSectionTitleRow";
-import DealDetails from "./DealOutputSection/DealDetails";
-import DealOutputList from "./DealOutputSection/DealOutputList";
+import { SectionTitle } from "../../../appWide/SectionTitle";
+import { DealDetails } from "./OutputSection/DealDetails";
+import { DealOutputList } from "./OutputSection/DealOutputList";
 
-export function DealOutputSection({
+export function OutputSection({
   feId,
   detailsIsOpen,
 }: {
@@ -19,17 +19,10 @@ export function DealOutputSection({
   const outputListFeId = deal.onlyChild("dealOutputList").feId;
   return (
     <MainSection>
-      <MainSectionTitleRow
-        {...{
-          ...feInfo,
-          sectionTitle: "Outputs",
-          pluralName: "outputs",
-          showSectionMenus: false,
-        }}
-      />
+      <SectionTitle text="Outputs" />
       <MainSectionBody themeName="deal">
         <Styled className="ListGroup-root">
-          <div className="DealOutputSection-viewable viewable">
+          <div className="OutputSection-viewable viewable">
             {!detailsIsOpen && <DealOutputList feId={outputListFeId} />}
             {detailsIsOpen && <DealDetails feId={outputListFeId} />}
           </div>

@@ -63,6 +63,11 @@ export class SolveValueVarb<
     manualUpdateOnly: (): StateValue => {
       return this.getterVarb.value();
     },
+    throwIfReached: () => {
+      throw new Error(
+        `Varb ${this.sectionName}.${this.varbName} should have had an updateOverride take effect but didn't.`
+      );
+    },
     loadNumObj: (): NumObj => {
       const { updateFnProps } = this.inEntityVarb;
       const varb = this.getterSection.varbByFocalMixed(
@@ -81,6 +86,13 @@ export class SolveValueVarb<
         updateFnProps[stringSwitch] as UpdateFnProp
       );
       return calculatedNumObj(valueVarb.value("numObj").solvableText);
+    },
+    loadMainTextByVarbInfo: (): StringObj => {
+      const { updateFnProps } = this.inEntityVarb;
+      const varb = this.getterSection.varbByFocalMixed(
+        updateFnProps.varbInfo as RelInVarbInfo
+      );
+      return stringObj(varb.value("stringObj").mainText);
     },
     loadLocalString: (): StringObj => {
       const { updateFnProps } = this.inEntityVarb;

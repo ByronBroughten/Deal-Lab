@@ -26,7 +26,7 @@ export function Property({ feId }: { feId: string }) {
         <ListGroupSingleTimeZone
           {...{
             ...feInfo,
-            childName: "upfrontCostListGroup",
+            childName: "upfrontExpenseGroup",
             themeName: "property",
             btnText: "+ Upfront Costs",
             titleText: "Upfront Costs",

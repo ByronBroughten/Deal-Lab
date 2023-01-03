@@ -1,3 +1,7 @@
+import {
+  hasDefaultChild,
+  makeDefaultChildPack,
+} from "../defaultMaker/defaultChildMakers";
 import { defaultMaker } from "../defaultMaker/defaultMaker";
 import {
   ChildName,
@@ -26,11 +30,8 @@ export class DefaultFamilyAdder<
     const { childName } = childInfo;
     const { sectionName, feInfo } = this.get.child(childInfo);
 
-    if (defaultMaker.hasDefaultChild(this.sectionName, childName)) {
-      sectionPack = defaultMaker.makeChildSectionPack(
-        this.sectionName,
-        childName
-      );
+    if (hasDefaultChild(this.sectionName, childName)) {
+      sectionPack = makeDefaultChildPack(this.sectionName, childName);
     } else if (defaultMaker.has(sectionName)) {
       sectionPack = defaultMaker.makeSectionPack(sectionName);
     }

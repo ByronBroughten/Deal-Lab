@@ -4,11 +4,11 @@ import useToggleView from "../../../modules/customHooks/useToggleView";
 import { useSetterSection } from "../../../sharedWithServer/stateClassHooks/useSetterSection";
 import theme from "../../../theme/Theme";
 import { GeneralSection } from "../../appWide/GeneralSection";
-import { DealOutputSection } from "./DealGeneral/DealOutputSection";
+import { OutputSection } from "./DealOutputs/DealOutputSection";
 
 type Props = { className?: string; feId: string };
 
-export function DealGeneral({ className, feId }: Props) {
+export function DealOutputs({ className, feId }: Props) {
   const deal = useSetterSection({
     sectionName: "deal",
     feId,
@@ -36,7 +36,7 @@ export function DealGeneral({ className, feId }: Props) {
       {...{
         $showDetails: detailsIsOpen,
         themeName: "deal",
-        className: `DealGeneral-root ${className}`,
+        className: `DealOutputs-root ${className}`,
       }}
     >
       {/* {!showCalculations && (
@@ -54,8 +54,8 @@ export function DealGeneral({ className, feId }: Props) {
           </div>
         </>
       )}
-      {showCalculations && <DealOutputSection {...{ feId, detailsIsOpen }} />} */}
-      <DealOutputSection {...{ feId, detailsIsOpen }} />
+      {showCalculations && <OutputSection {...{ feId, detailsIsOpen }} />} */}
+      <OutputSection {...{ feId, detailsIsOpen }} />
     </Styled>
   );
 }
@@ -81,7 +81,7 @@ const Styled = styled(GeneralSection)<{ $showDetails: boolean }>`
     width: 50%;
   }
   // properly disable compare deals for when you're logged out
-  // make DealOutputSection stick to the bottom again
+  // make OutputSection stick to the bottom again
 
   .GeneralSectionTitle-compareIcon {
     font-size: 1.9rem;

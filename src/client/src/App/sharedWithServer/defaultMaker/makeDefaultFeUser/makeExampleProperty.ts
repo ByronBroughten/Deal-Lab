@@ -9,7 +9,7 @@ export function makeExampleProperty(): SectionPack<"property"> {
   const property = PackBuilderSection.initAsOmniChild("property", {
     dbId: "exampleprop1",
   });
-  property.addChild("upfrontRevenueListGroup");
+  property.addChild("upfrontRevenueGroup");
   property.addChild("ongoingRevenueListGroup");
 
   const ongoingGroup = property.addAndGetChild("ongoingCostListGroup");
@@ -17,7 +17,7 @@ export function makeExampleProperty(): SectionPack<"property"> {
     childName: "ongoingList",
     sectionPacks: makeExampleUserOngoingLists(),
   });
-  const upfrontGroup = property.addAndGetChild("upfrontCostListGroup");
+  const upfrontGroup = property.addAndGetChild("upfrontExpenseGroup");
   upfrontGroup.loadChildren({
     childName: "singleTimeList",
     sectionPacks: makeExampleUserSingleTimeLists(),

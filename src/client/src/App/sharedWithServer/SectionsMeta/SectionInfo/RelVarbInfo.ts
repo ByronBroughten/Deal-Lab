@@ -107,6 +107,24 @@ export const relVarbInfoS = {
       ...options,
     };
   },
+  onlyChild<
+    SN extends SectionName,
+    CN extends ChildName<SN>,
+    O extends FullOptions = Defaults
+  >(
+    childName: CN,
+    varbName: string,
+    options?: O
+  ): RelChildrenVarbInfo<SN, CN, "onlyOne"> {
+    return {
+      infoType: "children",
+      childName,
+      varbName,
+      ...defaultOptions,
+      ...options,
+      expectedCount: "onlyOne",
+    };
+  },
   stepSibling<
     SN extends SectionName,
     SSN extends StepSiblingName<SN>,

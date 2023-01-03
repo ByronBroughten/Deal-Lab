@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { useGetterSection } from "../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import theme from "../../../../../theme/Theme";
 import BasicSectionInfo from "../../../../appWide/GeneralSection/MainSection/MainSectionBody/BasicSectionInfo";
-import { MainSectionTitleEditor } from "../../../../appWide/GeneralSection/MainSection/MainSectionTitleRow/MainSectionTitleEditor";
 import StandardLabel from "../../../../general/StandardLabel";
 import { NumObjEntityEditor } from "../../../../inputs/NumObjEntityEditor";
 import { DollarPercentRadioSwap } from "../../general/DollarPercentRadioSwap";
@@ -22,10 +21,6 @@ export default function BasicLoanInfo({ feId, className }: Props) {
     >
       <div className="viewable">
         <div className="BasicSectionInfo-subSections">
-          <MainSectionTitleEditor
-            className="BasicLoanInfo-title"
-            feInfo={{ feId, sectionName: "loan" }}
-          />
           <div className="BasicSectionInfo-subSection">
             <div className="BasicSectionInfo-subSection-viewable">
               <DollarPercentRadioSwap

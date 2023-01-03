@@ -7,11 +7,6 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-// I think I can implement the examples properly,
-// and add a mode Toggle that for now just says "Buy and Hold"
-
-//
-
 // Options for how to spend this evening:
 // 1. Work on a placeholder Wordpress site
 
@@ -20,8 +15,18 @@ AppRegistry.runApplication("App", {
 
 // 5. Implement the examples
 //    What is the best way to implement these?
-//    You may want to allow for single-value lists, first, as your
-//    examples will probably want to include them.
+
+// Loan only needs singleTimeValues for
+// Closing Costs and Wrapped in Loan.
+// Start with Closing Costs
+
+// I need a new block.
+// It will be able to switch between these three things:
+// Single expense (name field and cost field)
+// - It will have labeled a labeled editor for the expense's name and its cost
+// - To the right of the name, or above or below the name, it will have a selector for for switching between the types of expenses.
+
+// This will take some work. Do I want to do this? I guess so.
 
 // 4. Start gathering tax documents—maybe that's a Monday project
 

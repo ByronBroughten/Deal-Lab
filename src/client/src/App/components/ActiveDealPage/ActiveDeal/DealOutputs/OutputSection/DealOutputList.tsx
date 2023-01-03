@@ -6,7 +6,7 @@ import theme from "../../../../../theme/Theme";
 import { LabeledOutputRow } from "../../../../appWide/LabeledOutputRow";
 import { LabeledVarbOutput } from "../../../../appWide/LabeledVarbOutput";
 
-export default function DealOutputList({ feId }: { feId: string }) {
+export function DealOutputList({ feId }: { feId: string }) {
   const outPutList = useSetterSection({
     sectionName: "outputList",
     feId,

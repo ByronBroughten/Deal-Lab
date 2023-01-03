@@ -24,7 +24,7 @@ type VarbListAllowed = SectionNameByType<"varbListAllowed">;
 type Props<SN extends VarbListAllowed> = {
   feInfo: FeSectionInfo<SN>;
   makeItemNode: (props: { feId: string }) => ReactNode;
-  themeName: ThemeName;
+  themeName?: ThemeName;
   contentTitle: string;
   totalVarbName?: string;
   className?: string;
@@ -36,7 +36,7 @@ export type VarbListGenericMenuType = "simple" | "full";
 export function VarbListGeneric<SN extends VarbListAllowed>({
   feInfo,
   makeItemNode,
-  themeName,
+  themeName = "default",
   contentTitle,
   totalVarbName,
   className,
@@ -109,7 +109,7 @@ export function VarbListGeneric<SN extends VarbListAllowed>({
             <BigStringEditor
               {...{
                 feVarbInfo: titleVarb.get.feVarbInfo,
-                placeholder: "Category",
+                placeholder: "Name",
                 className: "AdditiveList-title",
                 themeName,
               }}
@@ -163,10 +163,11 @@ const Styled = styled.div<{
 
   .VarbListGeneric-viewable {
     flex-wrap: nowrap;
-    background: ${theme.light};
-    border: solid 1px ${theme.primaryBorder};
-    border-radius: ${theme.br0};
+
     display: inline-block;
+    border: solid 1px ${theme.primaryBorder};
+    background: ${theme.light};
+    border-radius: ${theme.br0};
     padding: ${theme.sectionPadding};
   }
 

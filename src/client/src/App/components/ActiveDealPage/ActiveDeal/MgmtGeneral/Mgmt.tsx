@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { MainSection } from "../../../appWide/GeneralSection/MainSection";
 import MainSectionBody from "../../../appWide/GeneralSection/MainSection/MainSectionBody";
-import { MainSectionTitleRow } from "../../../appWide/GeneralSection/MainSection/MainSectionTitleRow";
+import { MainSectionTopRows } from "../../../appWide/MainSectionTopRows";
 import { ListGroupOngoingZone } from "../general/ListGroupOngoingZone";
 import { ListGroupSingleTimeZone } from "../general/ListGroupSingleTimeZone";
 import BasicMgmtInfo from "./Mgmt/BasicMgmtInfo";
@@ -11,12 +11,11 @@ export function Mgmt({ feId }: { feId: string }) {
   const feInfo = { sectionName: "mgmt", feId } as const;
   return (
     <Styled>
-      <MainSectionTitleRow
+      <MainSectionTopRows
         {...{
           ...feInfo,
-          sectionTitle: "Management",
-          pluralName: "managements",
-          xBtn: true,
+          sectionTitle: "Mgmt",
+          loadWhat: "Management",
         }}
       />
       <MainSectionBody themeName="mgmt">
@@ -33,7 +32,7 @@ export function Mgmt({ feId }: { feId: string }) {
         <ListGroupSingleTimeZone
           {...{
             ...feInfo,
-            childName: "upfrontCostListGroup",
+            childName: "upfrontExpenseGroup",
             themeName: "mgmt",
             btnText: "+ Upfront Costs",
             titleText: "Upfront Costs",
