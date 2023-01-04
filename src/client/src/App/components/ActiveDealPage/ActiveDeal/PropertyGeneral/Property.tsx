@@ -62,6 +62,13 @@ export function Property({ feId }: { feId: string }) {
                     className: "ValueGroup-value",
                   }}
                 />
+                <ValueOngoingSection
+                  {...{
+                    displayName: "Misc Repairs",
+                    feId: property.onlyChild("maintenanceCostValue").feId,
+                    className: "ValueGroup-value",
+                  }}
+                />
               </>
             ),
           }}

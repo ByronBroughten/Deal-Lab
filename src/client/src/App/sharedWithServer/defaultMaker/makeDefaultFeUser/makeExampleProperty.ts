@@ -2,26 +2,24 @@ import { numObj } from "../../SectionsMeta/baseSectionsVarbs/baseValues/NumObj";
 import { stringObj } from "../../SectionsMeta/baseSectionsVarbs/baseValues/StringObj";
 import { SectionPack } from "../../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { PackBuilderSection } from "../../StatePackers.ts/PackBuilderSection";
-import { makeExampleUserOngoingLists } from "./makeExampleUserOngoingLists";
-import { makeExampleUserSingleTimeLists } from "./makeExampleUserSingleTimeLists";
+import { makeDefaultPropertyPack } from "../makeDefaultPropertyPack";
+import {
+  makeCapExList,
+  makeExampleSingleTimeList,
+  makeUtilityList,
+} from "./makeExampleOngoingLists";
+import {
+  examplePropertyCapExListProps,
+  examplePropertyUtilityProps,
+  examplePropetyRepairProps,
+  priceSqftMiscRepairHybrid,
+} from "./makeExampleOngoingListsProps";
 
 export function makeExampleProperty(): SectionPack<"property"> {
-  const property = PackBuilderSection.initAsOmniChild("property", {
-    dbId: "exampleprop1",
-  });
-  property.addChild("upfrontRevenueGroup");
-  property.addChild("ongoingRevenueGroup");
+  const property = PackBuilderSection.initAsOmniChild("property");
+  property.loadSelf(makeDefaultPropertyPack());
+  property.updater.updateDbId("exampleprop1");
 
-  const ongoingGroup = property.addAndGetChild("ongoingExpenseGroup");
-  ongoingGroup.loadChildren({
-    childName: "ongoingList",
-    sectionPacks: makeExampleUserOngoingLists(),
-  });
-  const upfrontGroup = property.addAndGetChild("upfrontExpenseGroup");
-  upfrontGroup.loadChildren({
-    childName: "singleTimeList",
-    sectionPacks: makeExampleUserSingleTimeLists(),
-  });
   property.updater.updateValues({
     displayName: stringObj("Example Property"),
     price: numObj(250000),
@@ -35,5 +33,30 @@ export function makeExampleProperty(): SectionPack<"property"> {
   property.addChild("unit", {
     dbVarbs: { targetRentMonthly: numObj(1500), numBedrooms: numObj(3) },
   });
+
+  const upfrontRepairValue = property.onlyChild("repairCostValue");
+  upfrontRepairValue.updateValues({ isItemized: true });
+  const repairList = upfrontRepairValue.onlyChild("singleTimeList");
+  repairList.loadSelf(
+    makeExampleSingleTimeList("Repairs", examplePropetyRepairProps)
+  );
+
+  const utilityValue = property.onlyChild("utilityCostValue");
+  utilityValue.updateValues({ isItemized: true });
+  const utilityList = utilityValue.onlyChild("ongoingList");
+  utilityList.loadSelf(makeUtilityList(examplePropertyUtilityProps));
+
+  const capExValue = property.onlyChild("capExCostValue");
+  capExValue.updateValues({ isItemized: true });
+  const capExList = capExValue.onlyChild("ongoingList");
+  capExList.loadSelf(makeCapExList(examplePropertyCapExListProps));
+
+  const ongoingRepairValue = property.onlyChild("repairCostValue");
+  ongoingRepairValue.updateValues({
+    valueSourceSwitch: "valueEditor",
+    valueEditor: priceSqftMiscRepairHybrid,
+    isItemized: false,
+  });
+
   return property.makeSectionPack();
 }

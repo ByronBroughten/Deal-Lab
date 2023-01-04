@@ -1,106 +1,37 @@
-import { numObj } from "../../SectionsMeta/baseSectionsVarbs/baseValues/NumObj";
-import { numObjNext } from "../../SectionsMeta/baseSectionsVarbs/baseValues/numObjNext";
-import { stringObj } from "../../SectionsMeta/baseSectionsVarbs/baseValues/StringObj";
 import { SectionPack } from "../../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { PackBuilderSection } from "../../StatePackers.ts/PackBuilderSection";
-import { userVarbLifespans } from "./makeExampleUserVarbLists";
-
-const capExAdvancedExamples = [
-  [...userVarbLifespans.roof, numObj(8000)],
-  [...userVarbLifespans.waterHeater, numObjNext("1200*", ["numUnits"])],
-  [...userVarbLifespans.hvac, numObjNext("3500*", ["numUnits"])],
-  [...userVarbLifespans.interiorPaint, numObjNext(["sqft"], "*3")],
-  [...userVarbLifespans.windows, numObjNext("(5+2*", ["numBedrooms"]), ")*500"],
-  [...userVarbLifespans.siding, numObjNext(["sqft"], "*4")],
-  [...userVarbLifespans.appliances, numObjNext("550+715")],
-  [...userVarbLifespans.plumbing, numObjNext("5000*", ["numUnits"])],
-  [...userVarbLifespans.driveway, numObjNext(5000)],
-  [...userVarbLifespans.laundry, numObjNext(1200)],
-  [...userVarbLifespans.flooring, numObjNext(["sqft"], "*3")],
-  [...userVarbLifespans.structure, numObjNext(10000)],
-  [...userVarbLifespans.cabinetsCounters, numObjNext("4000*", ["numUnits"])],
-  [...userVarbLifespans.garageDoor, numObjNext(1000)],
-  [...userVarbLifespans.landscaping, numObjNext(1000)],
-] as const;
-
-const utilitiesAdvanced = [
-  ["Water", numObjNext("60*", ["numUnits"])],
-  ["Garbage", numObjNext("40*", ["numUnits"])],
-  ["Energy", numObjNext("120*", ["numUnits"])],
-  ["LawnCare", numObjNext(20)],
-] as const;
-
-const repairsAdvanced = [
-  ["Misc", numObjNext("(", ["price"], "*.005+", ["sqft"], ")/2")],
-] as const;
-// (price*.005+sqft)/2
+import {
+  makeCapExList,
+  makeExampleSingleTimeList,
+  makeUtilityList,
+} from "./makeExampleOngoingLists";
+import {
+  exampleUserCapExProps,
+  exampleUserUtilityProps,
+  userRepairVarbProps,
+} from "./makeExampleOngoingListsProps";
 
 export function makeExampleUserOngoingLists(): SectionPack<"ongoingList">[] {
   const feUser = PackBuilderSection.initAsOmniChild("feUser");
-
-  const utilityValueSwitch = "labeledEquation";
-  const advancedUtilityList = feUser.addAndGetChild("ongoingListMain", {
-    dbId: "exampleUtil1",
-    dbVarbs: {
-      itemValueSwitch: utilityValueSwitch,
-      itemOngoingSwitch: "monthly",
-      totalOngoingSwitch: "monthly",
-      displayName: stringObj("Utility Examples"),
-    },
+  feUser.loadChild({
+    childName: "ongoingListMain",
+    sectionPack: makeUtilityList(exampleUserUtilityProps, "exampleUtil1"),
   });
-  for (const values of utilitiesAdvanced) {
-    advancedUtilityList.addChild("ongoingItem", {
-      dbVarbs: {
-        displayNameEditor: values[0],
-        valueOngoingSwitch: "monthly",
-        valueSourceSwitch: utilityValueSwitch,
-        valueEditor: values[1],
-      },
-    });
-  }
-
-  const repairsValueSwitch = "labeledEquation";
-  const ongoingRepairsList = feUser.addAndGetChild("ongoingListMain", {
-    dbId: "exampleRepr1",
-    dbVarbs: {
-      itemValueSwitch: repairsValueSwitch,
-      itemOngoingSwitch: "yearly",
-      totalOngoingSwitch: "yearly",
-      displayName: stringObj("Ongoing Repair Budget Example"),
-    },
+  feUser.loadChild({
+    childName: "ongoingListMain",
+    sectionPack: makeCapExList(exampleUserCapExProps, "exampleCapX1"),
   });
-  for (const values of repairsAdvanced) {
-    ongoingRepairsList.addChild("ongoingItem", {
-      dbVarbs: {
-        displayNameEditor: values[0],
-        valueOngoingSwitch: "yearly",
-        valueSourceSwitch: repairsValueSwitch,
-        valueEditor: values[1],
-      },
-    });
-  }
-
-  const capExExampleswitch = "labeledSpanOverCost";
-  const advancedCapExList = feUser.addAndGetChild("ongoingListMain", {
-    dbId: "exampleCapX1",
-    dbVarbs: {
-      itemValueSwitch: capExExampleswitch,
-      itemOngoingSwitch: "yearly",
-      totalOngoingSwitch: "yearly",
-      displayName: stringObj("CapEx Examples"),
-    },
-  });
-  for (const values of capExAdvancedExamples) {
-    advancedCapExList.addChild("ongoingItem", {
-      dbVarbs: {
-        displayNameEditor: values[0],
-        valueOngoingSwitch: "yearly",
-        lifespanSpanSwitch: "years",
-        valueSourceSwitch: capExExampleswitch,
-        lifespanYears: numObj(values[1]),
-        costToReplace: values[2],
-      },
-    });
-  }
   return feUser.makeChildPackArr("ongoingListMain");
+}
+
+export function makeExampleUserSingleTimeLists() {
+  const feUser = PackBuilderSection.initAsOmniChild("feUser");
+  feUser.loadChild({
+    childName: "singleTimeListMain",
+    sectionPack: makeExampleSingleTimeList(
+      "Misc upfront cost examples",
+      userRepairVarbProps
+    ),
+  });
+  return feUser.makeChildPackArr("singleTimeListMain");
 }

@@ -144,6 +144,7 @@ export const allSectionChildren = checkAllSectionChildren({
     repairCostValue: ["singleTimeValue"],
     capExCostValue: ["ongoingValue"],
     utilityCostValue: ["ongoingValue"],
+    maintenanceCostValue: ["ongoingValue"],
     upfrontExpenseGroup: ["singleTimeValueGroup"],
     upfrontRevenueGroup: ["singleTimeValueGroup"],
     ongoingExpenseGroup: ["ongoingValueGroup"],

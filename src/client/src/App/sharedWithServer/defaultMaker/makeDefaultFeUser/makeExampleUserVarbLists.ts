@@ -1,26 +1,13 @@
 import { numObj } from "../../SectionsMeta/baseSectionsVarbs/baseValues/NumObj";
+import { numObjNext } from "../../SectionsMeta/baseSectionsVarbs/baseValues/numObjNext";
 import { stringObj } from "../../SectionsMeta/baseSectionsVarbs/baseValues/StringObj";
 import { SectionPack } from "../../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { PackBuilderSection } from "../../StatePackers.ts/PackBuilderSection";
 import { Obj } from "../../utils/Obj";
-
-export const userVarbLifespans = {
-  roof: ["Roof", 12],
-  waterHeater: ["Water heater", 12],
-  hvac: ["HVAC", 20],
-  interiorPaint: ["Interior paint", 10],
-  windows: ["Windows", 50],
-  siding: ["Siding", 9000],
-  appliances: ["Appliances", 10],
-  plumbing: ["Plumbing", 50],
-  driveway: ["Driveway", 50],
-  laundry: ["Laundry", 12],
-  flooring: ["Flooring", 20],
-  structure: ["Structure", 50],
-  cabinetsCounters: ["Cabinets/counters", 20],
-  garageDoor: ["Garage door", 10],
-  landscaping: ["Landscaping", 10],
-} as const;
+import {
+  priceSqftMiscRepairHybrid,
+  userVarbLifespans,
+} from "./makeExampleOngoingListsProps";
 
 type UserVarbLifespansMap = typeof userVarbLifespans;
 type UserVarbLifespanArrs = UserVarbLifespansMap[keyof UserVarbLifespansMap][];
@@ -56,6 +43,16 @@ const lists = [
   ],
 ] as const;
 
+const miscRepairList = [
+  "Misc Repair Estimate Methods",
+  [
+    ["10% of Rent", numObjNext(["targetRentMonthly"], "* .10")],
+    ["1% of Price", numObjNext(["price"], "* .01")],
+    ["Square Feet", numObjNext(["sqft"])],
+    ["Price/Sqft Hybrid", priceSqftMiscRepairHybrid],
+  ],
+] as const;
+
 export function makeExampleUserVarbLists(): SectionPack<"userVarbList">[] {
   const feUser = PackBuilderSection.initAsOmniChild("feUser");
   for (const listArr of lists) {
@@ -70,6 +67,19 @@ export function makeExampleUserVarbLists(): SectionPack<"userVarbList">[] {
         },
       });
     }
+  }
+  const repairList = feUser.addAndGetChild("userVarbListMain", {
+    dbVarbs: {
+      displayName: stringObj(miscRepairList[0]),
+    },
+  });
+  for (const item of miscRepairList[1]) {
+    repairList.addChild("userVarbItem", {
+      dbVarbs: {
+        displayNameEditor: item[0],
+        valueEditor: item[1],
+      },
+    });
   }
   return feUser.makeChildPackArr("userVarbListMain");
 }

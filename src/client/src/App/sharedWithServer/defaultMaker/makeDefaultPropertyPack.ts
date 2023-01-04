@@ -28,6 +28,16 @@ export function makeDefaultPropertyPack(): SectionPack<"property"> {
   });
 
   property.addChild("ongoingExpenseGroup");
+  const utilities = property.loadAndGetChild({
+    childName: "utilityCostValue",
+    sectionPack: makeDefaultOngoingValue(),
+  });
+  utilities.updateValues({
+    displayNameEditor: stringObj("Utilities"),
+    isItemized: false,
+    itemValueSwitch: "labeledEquation",
+    valueSourceSwitch: "valueEditor",
+  });
   const capEx = property.loadAndGetChild({
     childName: "capExCostValue",
     sectionPack: makeDefaultOngoingValue(),
@@ -38,12 +48,12 @@ export function makeDefaultPropertyPack(): SectionPack<"property"> {
     itemValueSwitch: "labeledSpanOverCost",
     valueSourceSwitch: "valueEditor",
   });
-  const utilities = property.loadAndGetChild({
-    childName: "utilityCostValue",
+  const maintenance = property.loadAndGetChild({
+    childName: "maintenanceCostValue",
     sectionPack: makeDefaultOngoingValue(),
   });
-  utilities.updateValues({
-    displayNameEditor: stringObj("Utilities"),
+  maintenance.updateValues({
+    displayNameEditor: stringObj("Misc Repairs"),
     isItemized: false,
     itemValueSwitch: "labeledEquation",
     valueSourceSwitch: "valueEditor",

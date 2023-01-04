@@ -9,8 +9,10 @@ import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
 import { timeS } from "../utils/date";
 import { getDefaultMainTableMakers } from "./getDefaultMainTableMakers";
 import { makeExampleProperty } from "./makeDefaultFeUser/makeExampleProperty";
-import { makeExampleUserOngoingLists } from "./makeDefaultFeUser/makeExampleUserOngoingLists";
-import { makeExampleUserSingleTimeLists } from "./makeDefaultFeUser/makeExampleUserSingleTimeLists";
+import {
+  makeExampleUserOngoingLists,
+  makeExampleUserSingleTimeLists,
+} from "./makeDefaultFeUser/makeExampleUserOngoingLists";
 import { makeExampleUserVarbLists } from "./makeDefaultFeUser/makeExampleUserVarbLists";
 
 export function makeDefaultFeUserPack(): SectionPack<"feUser"> {
@@ -32,12 +34,12 @@ export function makeDefaultFeUserPack(): SectionPack<"feUser"> {
     sectionPacks: makeExampleUserVarbLists(),
   });
   feUser.loadChildren({
-    childName: "ongoingListMain",
-    sectionPacks: makeExampleUserOngoingLists(),
-  });
-  feUser.loadChildren({
     childName: "singleTimeListMain",
     sectionPacks: makeExampleUserSingleTimeLists(),
+  });
+  feUser.loadChildren({
+    childName: "ongoingListMain",
+    sectionPacks: makeExampleUserOngoingLists(),
   });
   const defaultTableMakers = getDefaultMainTableMakers();
   for (const tableName of feStoreNameS.arrs.mainTableName) {

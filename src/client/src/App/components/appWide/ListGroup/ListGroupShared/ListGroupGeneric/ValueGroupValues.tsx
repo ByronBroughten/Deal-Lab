@@ -55,8 +55,6 @@ const Styled = styled.div<{ $themeName?: ThemeName }>`
     width: 100px;
     border-color: ${theme.primaryBorder};
     font-size: ${theme.smallTitleSize};
-    /* max-height: 200px;
-    min-height: 100px; */
   }
   .ValueGroup-addValueBtnIcon {
     font-size: 35px;
