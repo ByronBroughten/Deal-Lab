@@ -1,4 +1,5 @@
 import React from "react";
+import styled from "styled-components";
 import { useGetterSection } from "../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { MainSection } from "../../../appWide/GeneralSection/MainSection";
 import MainSectionBody from "../../../appWide/GeneralSection/MainSection/MainSectionBody";
@@ -14,7 +15,7 @@ export function Property({ feId }: { feId: string }) {
   const feInfo = { sectionName: "property", feId } as const;
   const property = useGetterSection(feInfo);
   return (
-    <MainSection>
+    <Styled>
       <MainSectionTopRows
         {...{
           ...feInfo,
@@ -23,10 +24,12 @@ export function Property({ feId }: { feId: string }) {
         }}
       />
       <MainSectionBody themeName="property">
-        <div className="ListGroup-lists">
-          <BasicPropertyInfo feId={feId} className="MainSectionGroup" />
+        <div className="Property-basicInfoAndUnits">
+          <div className="ListGroup-lists">
+            <BasicPropertyInfo feId={feId} className="MainSectionGroup" />
+          </div>
+          <UnitList feInfo={feInfo} />
         </div>
-        <UnitList feInfo={feInfo} />
         <ValueGroupSingleTime
           {...{
             feId: property.onlyChild("upfrontExpenseGroup").feId,
@@ -74,6 +77,19 @@ export function Property({ feId }: { feId: string }) {
           }}
         />
       </MainSectionBody>
-    </MainSection>
+    </Styled>
   );
 }
+
+const Styled = styled(MainSection)`
+  .MainSectionBody-root {
+    flex-direction: column;
+  }
+  .MainSectionBody-inner {
+    flex-direction: column;
+  }
+
+  .Property-basicInfoAndUnits {
+    display: flex;
+  }
+`;

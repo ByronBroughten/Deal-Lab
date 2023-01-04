@@ -7,7 +7,6 @@ import ccs from "../../../../../theme/cssChunks";
 import theme from "../../../../../theme/Theme";
 import useHowMany from "../../../../appWide/customHooks/useHowMany";
 import { useOpenWidth } from "../../../../appWide/customHooks/useOpenWidth";
-import { SectionTitleAndCost } from "../../../../appWide/SectionTitleAndCost";
 import { AddUnitBtn } from "./UnitList/AddUnitBtn";
 import { UnitItem } from "./UnitList/UnitItem";
 
@@ -47,14 +46,6 @@ export function UnitList({ feInfo, className }: Props) {
                   const unitNumberOffset = rowIndex * numUnitsPerRow;
                   return (
                     <div className="UnitList-unitRow" key={rowIndex}>
-                      {rowIndex === 0 && (
-                        <SectionTitleAndCost
-                          text="Units & Rent"
-                          cost={
-                            areMultiple ? totalVarb.displayVarb() : undefined
-                          }
-                        />
-                      )}
                       <div className="UnitList-unitRowInner">
                         {idRow.map((unitId, unitInnerIndex) => {
                           const unitIndex = unitNumberOffset + unitInnerIndex;
@@ -94,10 +85,12 @@ const Styled = styled.div<{
   $isEven: boolean;
 }>`
   padding: ${theme.sectionPadding};
-  ${theme.sectionBorderChunk};
+  padding-top: ${theme.s25};
 
   .UnitItem-root {
     margin: ${theme.s15};
+    margin-top: 0;
+    margin-bottom: ${theme.s25};
   }
 
   .UnitList-addUnitBtnDiv {
@@ -124,9 +117,6 @@ const Styled = styled.div<{
   }
   // isEven and isAtLeastOne
   .UnitList-unitrow {
-  }
-  .SectionTitleAndCost-root {
-    padding-bottom: ${theme.s2};
   }
   .UnitList-unitRowInner {
     display: flex;
