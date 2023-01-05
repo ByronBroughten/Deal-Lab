@@ -1,4 +1,4 @@
-import { SingleTimeValue } from "../SingleTimeValue";
+import { ValueSectionOneTime } from "../ValueSectionOneTime";
 import { ValueGroupGeneric } from "./ListGroupShared/ValueGroupGeneric";
 
 type Props = {
@@ -19,7 +19,7 @@ export function ValueGroupSingleTime({ feId, ...props }: Props) {
         } as const,
         valueAsChildName: "singleTimeValue",
         totalVarbName: "total",
-        makeValueNode: (nodeProps) => <SingleTimeValue {...nodeProps} />,
+        makeValueNode: (nodeProps) => <ValueSectionOneTime {...nodeProps} />,
       }}
     />
   );

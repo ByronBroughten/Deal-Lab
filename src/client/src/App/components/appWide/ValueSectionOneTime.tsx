@@ -1,13 +1,14 @@
 import { VarbListSingleTime } from "./ListGroup/ListGroupSingleTime/VarbListSingleTime";
 import { ValueSectionGeneric } from "./ValueSectionGeneric";
 
-interface Props {
+export interface ValueSectionOneTimeProps {
   className?: string;
   feId: string;
   displayName?: string;
+  showXBtn?: boolean;
 }
 
-export function SingleTimeValue(props: Props) {
+export function ValueSectionOneTime(props: ValueSectionOneTimeProps) {
   return (
     <ValueSectionGeneric
       {...{

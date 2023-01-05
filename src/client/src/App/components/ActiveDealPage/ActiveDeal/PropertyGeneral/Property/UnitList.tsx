@@ -113,13 +113,13 @@ const Styled = styled.div<{
         padding-top: 0px;
       `}
   }
+
   .UnitList-unitRows {
+    display: flex;
   }
-  // isEven and isAtLeastOne
-  .UnitList-unitrow {
+  .UnitList-unitRow {
   }
   .UnitList-unitRowInner {
-    display: flex;
   }
 
   .XBtn {

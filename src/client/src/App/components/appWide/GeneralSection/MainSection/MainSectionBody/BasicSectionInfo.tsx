@@ -29,13 +29,13 @@ const Styled = styled.div<{ $themeName: ThemeName }>`
   }
 
   .BasicSectionInfo-subSection-viewable.titledBlock {
-    padding-top: ${theme.s1};
+    /* padding-top: ${theme.s1}; */
   }
 
   .BasicSectionInfo-subSections {
     .BasicSectionInfo-subSection {
       :not(:first-child) {
-        margin-top: ${theme.s2};
+        margin-top: ${theme.s3};
       }
 
       :first-child {

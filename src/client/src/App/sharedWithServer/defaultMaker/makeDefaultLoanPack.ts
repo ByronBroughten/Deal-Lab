@@ -10,5 +10,6 @@ export function makeDefaultLoanPack(): SectionPack<"loan"> {
       mortgageInsOngoingSwitch: "yearly",
     },
   });
+  loan.addChild("closingCostValue");
   return loan.makeSectionPack();
 }

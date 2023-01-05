@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import theme, { ThemeName } from "../../../../../theme/Theme";
-import { HollowBtn } from "../../../HollowBtn";
+import { ValueSectionBtn } from "../ValueSectionBtn";
 
 export type MakeValueNode = (props: MakeListNodeProps) => React.ReactNode;
 type MakeListNodeProps = {
@@ -32,15 +32,11 @@ export function ValueGroupValues({
           className: "ValueGroup-value",
         });
       })}
-      <HollowBtn
-        className="ValueGroup-addValueBtn ValueGroup-value"
+      <ValueSectionBtn
+        text={"+ Custom"}
         onClick={addValue}
-      >
-        <>
-          <span>+ Custom</span>
-          {/* <BiPlus className="ValueGroup-addValueBtnIcon" /> */}
-        </>
-      </HollowBtn>
+        className="ValueGroup-addValueBtn ValueGroup-value"
+      />
     </Styled>
   );
 }
@@ -52,9 +48,7 @@ const Styled = styled.div<{ $themeName?: ThemeName }>`
   }
   .ValueGroup-addValueBtn {
     height: calc(${theme.valueSectionSize} + 18px);
-    width: 100px;
-    border-color: ${theme.primaryBorder};
-    font-size: ${theme.smallTitleSize};
+    width: 120px;
   }
   .ValueGroup-addValueBtnIcon {
     font-size: 35px;

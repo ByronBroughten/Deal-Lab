@@ -1,5 +1,5 @@
 import { useGetterSection } from "../../../sharedWithServer/stateClassHooks/useGetterSection";
-import { ValueOngoingSection } from "../ValueOngoingSection";
+import { ValueSectionOngoing } from "../ValueSectionOngoing";
 import { ValueGroupGeneric } from "./ListGroupShared/ValueGroupGeneric";
 
 type Props = {
@@ -28,7 +28,7 @@ export function ValueGroupOngoing({ feId, ...props }: Props) {
         } as const,
         valueAsChildName: "ongoingValue",
         totalVarbName,
-        makeValueNode: (nodeProps) => <ValueOngoingSection {...nodeProps} />,
+        makeValueNode: (nodeProps) => <ValueSectionOngoing {...nodeProps} />,
       }}
     />
   );

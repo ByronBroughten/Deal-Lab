@@ -12,6 +12,7 @@ import theme from "../../theme/Theme";
 import PlainIconBtn from "../general/PlainIconBtn";
 import { BigStringEditor } from "../inputs/BigStringEditor";
 import { NumObjEntityEditor } from "../inputs/NumObjEntityEditor";
+import { RemoveSectionXBtn } from "./RemoveSectionXBtn";
 import { SectionModal } from "./SectionModal";
 import { SectionTitle } from "./SectionTitle";
 
@@ -26,6 +27,7 @@ interface Props<SN extends ValueSectionName> {
   className?: string;
   feId: string;
   displayName?: string;
+  showXBtn?: boolean;
 }
 
 function getChildName<SN extends ValueSectionName>(
@@ -44,6 +46,7 @@ export function ValueSectionGeneric<
   sectionName,
   valueName,
   makeItemizedListNode,
+  showXBtn = true,
 }: Props<SN>) {
   const section = useSetterSection({ sectionName, feId });
   const listChildName = getChildName(sectionName);
@@ -62,15 +65,24 @@ export function ValueSectionGeneric<
   return (
     <Styled className={`ValueSection-root ${className ?? ""}`}>
       <div className={"ValueSection-viewable"}>
-        {displayName && <SectionTitle text={displayName} />}
-        {!displayName && (
-          <BigStringEditor
-            {...{
-              feVarbInfo: section.varbInfo("displayNameEditor"),
-              placeholder: "Name",
-            }}
-          />
-        )}
+        <div className="ValueSection-titleRow">
+          {displayName && <SectionTitle text={displayName} />}
+          {!displayName && (
+            <BigStringEditor
+              {...{
+                className: "ValueSection-nameEditor",
+                feVarbInfo: section.varbInfo("displayNameEditor"),
+                placeholder: "Name",
+              }}
+            />
+          )}
+          {showXBtn && (
+            <RemoveSectionXBtn
+              className="ValueSection-xBtn"
+              {...section.feInfo}
+            />
+          )}
+        </div>
         <div className="ValueSection-value">
           {isItemized && (
             <span>{`Total: ${section.varb(valueName).get.displayVarb()}`}</span>
@@ -139,7 +151,39 @@ const Styled = styled.div`
     background: ${theme.light};
     border-radius: ${theme.br0};
     padding: ${theme.sectionPadding};
+    :hover {
+      .ValueSection-xBtn {
+        visibility: visible;
+      }
+    }
   }
+
+  .ValueSection-xBtn {
+    height: 22px;
+    width: 22px;
+    visibility: hidden;
+  }
+
+  .ValueSection-titleRow {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .ValueSection-nameEditor {
+    .DraftTextField-root {
+      min-width: 100px;
+    }
+  }
+  .ValueSection-valueEditor {
+    .DraftTextField-root {
+      min-width: 100px;
+    }
+  }
+
+  .ValueSection-xBtn {
+    margin-left: ${theme.s3};
+  }
+
   .ValueSection-editItemsBtn {
     color: ${theme.primaryNext};
   }
@@ -171,11 +215,5 @@ const Styled = styled.div`
     justify-content: center;
     margin-top: ${theme.s3};
     height: 25px;
-  }
-
-  .ValueSection-valueEditor {
-    .DraftTextField-root {
-      min-width: 100px;
-    }
   }
 `;

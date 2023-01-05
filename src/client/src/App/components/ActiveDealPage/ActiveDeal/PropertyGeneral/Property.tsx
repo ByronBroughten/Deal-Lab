@@ -6,8 +6,8 @@ import MainSectionBody from "../../../appWide/GeneralSection/MainSection/MainSec
 import { ValueGroupOngoing } from "../../../appWide/ListGroup/ValueGroupOngoing";
 import { ValueGroupSingleTime } from "../../../appWide/ListGroup/ValueGroupSingleTime";
 import { MainSectionTopRows } from "../../../appWide/MainSectionTopRows";
-import { SingleTimeValue } from "../../../appWide/SingleTimeValue";
-import { ValueOngoingSection } from "../../../appWide/ValueOngoingSection";
+import { ValueSectionOneTime } from "../../../appWide/ValueSectionOneTime";
+import { ValueSectionOngoing } from "../../../appWide/ValueSectionOngoing";
 import BasicPropertyInfo from "./Property/BasicPropertyInfo";
 import { UnitList } from "./Property/UnitList";
 
@@ -35,11 +35,12 @@ export function Property({ feId }: { feId: string }) {
             feId: property.onlyChild("upfrontExpenseGroup").feId,
             titleText: "Upfront Costs",
             extraValueChildren: (
-              <SingleTimeValue
+              <ValueSectionOneTime
                 {...{
                   displayName: "Repairs",
                   feId: property.onlyChild("repairCostValue").feId,
                   className: "ValueGroup-value",
+                  showXBtn: false,
                 }}
               />
             ),
@@ -51,25 +52,28 @@ export function Property({ feId }: { feId: string }) {
             titleText: "Ongoing Costs",
             extraValueChildren: (
               <>
-                <ValueOngoingSection
-                  {...{
-                    displayName: "Utilities",
-                    feId: property.onlyChild("utilityCostValue").feId,
-                    className: "ValueGroup-value",
-                  }}
-                />
-                <ValueOngoingSection
+                <ValueSectionOngoing
                   {...{
                     displayName: "CapEx",
                     feId: property.onlyChild("capExCostValue").feId,
                     className: "ValueGroup-value",
+                    showXBtn: false,
                   }}
                 />
-                <ValueOngoingSection
+                <ValueSectionOngoing
                   {...{
-                    displayName: "Misc Repairs",
+                    displayName: "Maintenance",
                     feId: property.onlyChild("maintenanceCostValue").feId,
                     className: "ValueGroup-value",
+                    showXBtn: false,
+                  }}
+                />
+                <ValueSectionOngoing
+                  {...{
+                    displayName: "Utilities",
+                    feId: property.onlyChild("utilityCostValue").feId,
+                    className: "ValueGroup-value",
+                    showXBtn: false,
                   }}
                 />
               </>

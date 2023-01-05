@@ -1,8 +1,8 @@
 import { stringObj } from "../SectionsMeta/baseSectionsVarbs/baseValues/StringObj";
 import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
+import { makeDefaultOneTimeValue } from "./makeDefaultOneTimeValue";
 import { makeDefaultOngoingValue } from "./makeDefaultOngoingValue";
-import { makeDefaultSingleTimeValue } from "./makeDefaultSingleTimeValue";
 
 export function makeDefaultPropertyPack(): SectionPack<"property"> {
   const property = PackBuilderSection.initAsOmniChild("property", {
@@ -18,7 +18,7 @@ export function makeDefaultPropertyPack(): SectionPack<"property"> {
   property.addChild("upfrontExpenseGroup");
   const repairValue = property.loadAndGetChild({
     childName: "repairCostValue",
-    sectionPack: makeDefaultSingleTimeValue(),
+    sectionPack: makeDefaultOneTimeValue(),
   });
   repairValue.updateValues({
     displayNameEditor: stringObj("Repairs"),

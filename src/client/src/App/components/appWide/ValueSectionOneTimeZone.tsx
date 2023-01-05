@@ -2,33 +2,38 @@ import { ChildName } from "../../sharedWithServer/SectionsMeta/sectionChildrenDe
 import { FeSectionInfo } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
 import { useSetterSection } from "../../sharedWithServer/stateClassHooks/useSetterSection";
-import { SubSectionGroupBtn } from "./ListGroup/ListGroupShared/SubSectionGroupBtn";
-import { SingleTimeValue } from "./SingleTimeValue";
+import { ValueSectionBtn } from "./ListGroup/ListGroupShared/ValueSectionBtn";
+import { ValueSectionOneTime } from "./ValueSectionOneTime";
 
 interface Props<SN extends SectionName, CN extends ChildName<SN>>
   extends FeSectionInfo<SN> {
   childName: CN;
   plusBtnText: string;
-  displayName: string;
+  displayName?: string;
+  showXBtn?: boolean;
+  className?: string;
 }
-
-export function SingleTimeValueZone<
+export function ValueSectionOneTimeZone<
   SN extends SectionName,
   CN extends ChildName<SN>
->({ childName, displayName, plusBtnText, ...feInfo }: Props<SN, CN>) {
-  const section = useSetterSection(feInfo);
+>({ childName, plusBtnText, sectionName, feId, ...rest }: Props<SN, CN>) {
+  const section = useSetterSection({ sectionName, feId });
+  const hasValueSection = section.get.hasOnlyChild(childName);
   return (
     <>
-      {!section.get.hasOnlyChild(childName) && (
-        <SubSectionGroupBtn
+      {!hasValueSection && (
+        <ValueSectionBtn
           text={plusBtnText}
           onClick={() => section.addChild(childName)}
+          className={rest.className}
         />
       )}
-      {section.get.hasOnlyChild(childName) && (
-        <SingleTimeValue
-          feId={section.get.onlyChild(childName).feId}
-          displayName={displayName}
+      {hasValueSection && (
+        <ValueSectionOneTime
+          {...{
+            feId: section.get.onlyChild(childName).feId,
+            ...rest,
+          }}
         />
       )}
     </>

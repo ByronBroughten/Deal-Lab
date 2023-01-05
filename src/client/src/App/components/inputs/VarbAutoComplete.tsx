@@ -133,7 +133,7 @@ const VarbAutoComplete = React.forwardRef(
           renderInput={(params: any) => (
             <TextField
               {...params}
-              placeholder={placeholder ?? "Variables"}
+              placeholder={placeholder ?? "+ Variable"}
               variant="filled"
             />
           )}

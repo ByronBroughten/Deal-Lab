@@ -10,7 +10,7 @@ interface Props {
   displayName?: string;
 }
 
-export function ValueOngoingSection({ feId, ...rest }: Props) {
+export function ValueSectionOngoing({ feId, ...rest }: Props) {
   const section = useSetterSection({
     sectionName: "ongoingValue",
     feId,
@@ -33,7 +33,7 @@ export function ValueOngoingSection({ feId, ...rest }: Props) {
 }
 
 const Styled = styled.div`
-  .ValueOngoingSection-viewable {
+  .ValueSectionOngoing-viewable {
     height: ${theme.valueSectionSize};
     display: inline-block;
     border: solid 1px ${theme.primaryBorder};
@@ -41,15 +41,15 @@ const Styled = styled.div`
     border-radius: ${theme.br0};
     padding: ${theme.sectionPadding};
   }
-  .ValueOngoingSection-editItemsBtn {
+  .ValueSectionOngoing-editItemsBtn {
     color: ${theme.primaryNext};
   }
 
-  .ValueOngoingSection-itemizeControls {
+  .ValueSectionOngoing-itemizeControls {
     display: flex;
     align-items: flex-end;
   }
-  .ValueOngoingSection-itemizeGroup {
+  .ValueSectionOngoing-itemizeGroup {
     margin-top: ${theme.s2};
     margin-left: ${theme.s25};
     .MuiFormControlLabel-root {
@@ -66,7 +66,7 @@ const Styled = styled.div`
     }
   }
 
-  .ValueOngoingSection-value {
+  .ValueSectionOngoing-value {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -74,7 +74,7 @@ const Styled = styled.div`
     height: 25px;
   }
 
-  .ValueOngoingSection-valueEditor {
+  .ValueSectionOngoing-valueEditor {
     .DraftTextField-root {
       min-width: 100px;
     }

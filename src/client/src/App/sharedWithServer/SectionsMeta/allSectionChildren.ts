@@ -154,6 +154,9 @@ export const allSectionChildren = checkAllSectionChildren({
   }),
   mgmtGeneral: { mgmt: sectionChild("mgmt") },
   mgmt: sectionChildren({
+    upfrontExpenseValue: ["singleTimeValue"],
+    ongoingExpenseValue: ["ongoingValue"],
+
     upfrontExpenseGroup: ["singleTimeValueGroup"],
     ongoingExpenseGroup: ["ongoingValueGroup"],
     customVarb: ["customVarb"],

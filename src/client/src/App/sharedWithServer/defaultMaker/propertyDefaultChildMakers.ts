@@ -1,7 +1,7 @@
 import { stringObj } from "../SectionsMeta/baseSectionsVarbs/baseValues/StringObj";
 import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
-import { makeDefaultSingleTimeValue } from "./makeDefaultSingleTimeValue";
+import { makeDefaultOneTimeValue } from "./makeDefaultOneTimeValue";
 
 export const propertyDefaultChildMakers = {
   upfrontExpenseGroup(): SectionPack<"singleTimeValueGroup"> {
@@ -14,7 +14,7 @@ export const propertyDefaultChildMakers = {
 
     const value = listGroup.loadAndGetChild({
       childName: "singleTimeValue",
-      sectionPack: makeDefaultSingleTimeValue(),
+      sectionPack: makeDefaultOneTimeValue(),
     });
     value.updateValues({
       displayNameEditor: stringObj("Repairs"),

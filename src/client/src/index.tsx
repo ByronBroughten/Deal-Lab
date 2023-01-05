@@ -7,17 +7,28 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
+
 // Options for how to spend this evening:
 // 1. Work on a placeholder Wordpress site
 // 3. Work on adding the underpinnings of the modes
 // 5. Implement the examples
 
 // Update the lists UI
-// - create ongoingValue
-// - add an xBtn to singleTimeValue
-// -
+
+// - Show property rent.
+
+// How should the units be added? Should I add a unit-adder modal?
+// That's not a bad idea.
+// I could just display, "3 Units", "$3000/month rent", edit units
+// Then clicking "+ Unit" could summon a modal that asks for BRs, rent, and number of simlar units. Then the unit is added and can be edited, just like now. These things aren't that hard.
+
+// - Make valueSection child lists get their displayName
+//   from the value's displayName, at least initially. Does
+//   that make sense?
 
 // - Make a new list that do
+// - Make an example mgmt and loan
+// - Make the deal example contain a different property (dbId, title, units, etc), and maybe a different loan and mgmt.
 // - Get rid of the list menus
 //   Have an option to just show the xBtn on hover
 

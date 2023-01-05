@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useSetterSection } from "../../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import theme from "../../../../../theme/Theme";
+import useHowMany from "../../../../appWide/customHooks/useHowMany";
 import BasicSectionInfo from "../../../../appWide/GeneralSection/MainSection/MainSectionBody/BasicSectionInfo";
 import { NumObjEntityEditor } from "../../../../inputs/NumObjEntityEditor";
 
@@ -9,6 +10,8 @@ type Props = { feId: string; className?: string };
 export default function BasicPropertyInfo({ feId, className }: Props) {
   const property = useSetterSection({ sectionName: "property", feId });
   const varbNames = ["price", "taxesYearly", "homeInsYearly", "sqft"] as const;
+  const unitIds = property.childFeIds("unit");
+  const { areMultiple: isMultiFamily } = useHowMany(unitIds);
   return (
     <Styled
       {...{

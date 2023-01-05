@@ -39,7 +39,5 @@ export function BigStringEditor({
 
 const Styled = styled(MaterialDraftEditor)`
   .DraftEditor-root {
-    min-width: 100px;
-    font-size: 1.1rem;
   }
 `;

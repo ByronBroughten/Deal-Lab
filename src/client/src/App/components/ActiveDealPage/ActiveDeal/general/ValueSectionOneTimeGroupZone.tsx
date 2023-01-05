@@ -13,7 +13,7 @@ interface Props<SN extends SectionName, CN extends ChildName<SN>>
   btnText: string;
   titleText: string;
 }
-export function SingleTimeValueGroupZone<
+export function ValueSectionOneTimeGroupZone<
   SN extends SectionName,
   CN extends ChildName<SN>
 >({ childName, btnText, titleText, themeName, ...feInfo }: Props<SN, CN>) {
