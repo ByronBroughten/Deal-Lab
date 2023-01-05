@@ -13,6 +13,13 @@ AppRegistry.runApplication("App", {
 // 3. Work on adding the underpinnings of the modes
 // 5. Implement the examples
 
+// It's just about ready for applying for jobs again.
+// - Get the units to flex how they should.
+// - Get everything to solve how it should
+// - Make Loan look better
+// - Buy a new domain for DealLab
+// - Make a Wordpress site for it
+
 // Update the lists UI
 
 // - Show property rent.

@@ -21,6 +21,7 @@ export function Loan({ feId }: { feId: string }) {
           ...feInfo,
           sectionTitle: "Loan",
           loadWhat: "Loan",
+          showXBtn: true,
         }}
       />
       <MainSectionBody themeName="loan">
@@ -53,8 +54,12 @@ const Styled = styled(MainSection)`
     margin-top: 0;
   }
 
+  .MainSectionTopRows-xBtn {
+    visibility: hidden;
+  }
+
   :hover {
-    .MainSectionTitleRow-xBtn {
+    .MainSectionTopRows-xBtn {
       visibility: visible;
     }
   }

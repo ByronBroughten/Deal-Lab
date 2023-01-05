@@ -5,6 +5,7 @@ import theme from "../../theme/Theme";
 import { MainSectionTitleRow } from "./GeneralSection/MainSection/MainSectionTitleRow";
 import { MainSectionActionRow } from "./GeneralSection/MainSection/MainSectionTitleRow/MainSectionActionRow";
 import { useSaveStatus } from "./GeneralSection/MainSection/useSaveStatus";
+import { RemoveSectionXBtn } from "./RemoveSectionXBtn";
 import { SectionTitle } from "./SectionTitle";
 
 type Props = {
@@ -14,12 +15,14 @@ type Props = {
   feId: string;
   loadWhat: string;
   belowTitle?: React.ReactNode;
+  showXBtn?: boolean;
 };
 export function MainSectionTopRows({
   className,
   sectionTitle,
   loadWhat,
   belowTitle,
+  showXBtn,
   ...feInfo
 }: Props) {
   const saveStatus = useSaveStatus(feInfo);
@@ -51,6 +54,11 @@ export function MainSectionTopRows({
           }}
         />
       </div>
+      {showXBtn && (
+        <div className="MainSectionTopRows-rightBlock">
+          <RemoveSectionXBtn className="MainSectionTopRows-xBtn" {...feInfo} />
+        </div>
+      )}
     </Styled>
   );
 }
@@ -66,8 +74,25 @@ const Styled = styled.div`
     font-size: ${"22px"};
   }
   .MainSectionTopRows-controls {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
     margin-left: ${theme.s2};
   }
+
+  .MainSectionTopRows-rightBlock {
+    height: 55px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    justify-content: flex-start;
+    align-items: flex-end;
+  }
+  .MainSectionTopRows-xBtn {
+    height: ${theme.bigButtonHeight};
+    width: ${theme.bigButtonHeight};
+  }
+
   .MainSectionTopRows-sectionMenus {
     margin-top: ${theme.s25};
   }

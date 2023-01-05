@@ -12,14 +12,14 @@ type Props = {
   sectionTitle: string;
   sectionName: SectionNameByType<"hasCompareTable">;
   feId: string;
-  xBtn?: boolean;
+  showXBtn?: boolean;
   dropTop?: boolean;
   className?: string;
   showSectionMenus?: boolean;
 };
 export function MainSectionTitleRow({
   sectionTitle,
-  xBtn = false,
+  showXBtn = false,
   showSectionMenus = true,
   dropTop = false,
   className,
@@ -46,7 +46,7 @@ export function MainSectionTitleRow({
             )}
           </div>
         ),
-        rightSide: xBtn && (
+        rightSide: showXBtn && (
           <RemoveSectionXBtn className="MainSectionTitleRow-xBtn" {...feInfo} />
         ),
       }}

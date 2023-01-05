@@ -1,5 +1,5 @@
 import React from "react";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { FeParentInfo } from "../../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { useSetterSection } from "../../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import { Arr } from "../../../../../sharedWithServer/utils/Arr";
@@ -39,37 +39,31 @@ export function UnitList({ feInfo, className }: Props) {
     >
       <div className="UnitList-viewable">
         {viewIsOpen && (
-          <div className="UnitList-unitsArea">
-            <div className="UnitList-units">
-              <div className="UnitList-unitRows">
-                {unitIdRows.map((idRow, rowIndex) => {
-                  const unitNumberOffset = rowIndex * numUnitsPerRow;
-                  return (
-                    <div className="UnitList-unitRow" key={rowIndex}>
-                      <div className="UnitList-unitRowInner">
-                        {idRow.map((unitId, unitInnerIndex) => {
-                          const unitIndex = unitNumberOffset + unitInnerIndex;
-                          const unitNumber = unitIndex + 1;
-                          return unitId === "addUnitBtn" ? (
-                            <AddUnitBtn
-                              className="UnitList-addUnitBtn"
-                              onClick={addUnit}
-                              key={unitId}
-                            />
-                          ) : (
-                            <UnitItem
-                              key={unitId}
-                              feId={unitId}
-                              unitNumber={unitNumber}
-                            />
-                          );
-                        })}
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
+          <div className="UnitList-unitRows">
+            {unitIdRows.map((idRow, rowIndex) => {
+              const unitNumberOffset = rowIndex * numUnitsPerRow;
+              return (
+                <div className="UnitList-unitRow" key={idRow[0]}>
+                  {idRow.map((unitId, unitInnerIndex) => {
+                    const unitIndex = unitNumberOffset + unitInnerIndex;
+                    const unitNumber = unitIndex + 1;
+                    return unitId === "addUnitBtn" ? (
+                      <AddUnitBtn
+                        className="UnitList-addUnitBtn"
+                        onClick={addUnit}
+                        key={unitId}
+                      />
+                    ) : (
+                      <UnitItem
+                        key={unitId}
+                        feId={unitId}
+                        unitNumber={unitNumber}
+                      />
+                    );
+                  })}
+                </div>
+              );
+            })}
           </div>
         )}
       </div>
@@ -87,42 +81,22 @@ const Styled = styled.div<{
   padding: ${theme.sectionPadding};
   padding-top: ${theme.s25};
 
+  .UnitList-unitRow {
+    display: flex;
+    flex-wrap: nowrap;
+  }
+
+  .UnitList-unitRows {
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .XBtn {
+    ${ccs.shape.button.smallCurved};
+  }
   .UnitItem-root {
     margin: ${theme.s15};
     margin-top: 0;
     margin-bottom: ${theme.s25};
-  }
-
-  .UnitList-addUnitBtnDiv {
-    ${({ $isEven, $areMultiple }) =>
-      $isEven &&
-      $areMultiple &&
-      css`
-        justify-content: flex-end;
-      `}
-    ${({ $isOne }) =>
-      $isOne &&
-      css`
-        padding-top: 0px;
-      `}
-
-    ${({ $areNone }) =>
-      $areNone &&
-      css`
-        padding-left: 0px;
-        padding-top: 0px;
-      `}
-  }
-
-  .UnitList-unitRows {
-    display: flex;
-  }
-  .UnitList-unitRow {
-  }
-  .UnitList-unitRowInner {
-  }
-
-  .XBtn {
-    ${ccs.shape.button.smallCurved};
   }
 `;

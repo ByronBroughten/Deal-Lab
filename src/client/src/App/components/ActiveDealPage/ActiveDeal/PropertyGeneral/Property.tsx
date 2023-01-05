@@ -95,5 +95,6 @@ const Styled = styled(MainSection)`
 
   .Property-basicInfoAndUnits {
     display: flex;
+    flex-wrap: wrap;
   }
 `;
