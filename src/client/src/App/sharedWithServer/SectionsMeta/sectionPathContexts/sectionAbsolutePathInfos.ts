@@ -16,6 +16,15 @@ export const sectionAbsolutePathInfos = {
   get feUser() {
     return absolute("feUser", ["main", "feUser"]);
   },
+  get calculatedVarbsActive() {
+    return absolute("calculatedVarbs", ["main", "calculatedVarbs"]);
+  },
+  get calculatedVarbsLatent() {
+    return absolute("calculatedVarbs", [
+      ...this.latent.path,
+      "calculatedVarbs",
+    ]);
+  },
   get dealActive() {
     return absolute("deal", ["main", "activeDeal"]);
   },
@@ -57,10 +66,22 @@ export const sectionAbsolutePathInfos = {
       "propertyGeneral",
     ]);
   },
+  get propertyActive() {
+    return absolute("property", [
+      ...this.propertyGeneralActive.path,
+      "property",
+    ]);
+  },
   get propertyGeneralLatent() {
     return absolute("propertyGeneral", [
       ...this.dealLatent.path,
       "propertyGeneral",
+    ]);
+  },
+  get propertyLatent() {
+    return absolute("property", [
+      ...this.propertyGeneralLatent.path,
+      "property",
     ]);
   },
   get financingActive() {

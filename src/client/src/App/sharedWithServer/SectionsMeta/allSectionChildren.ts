@@ -38,11 +38,13 @@ export const allSectionChildren = checkAllSectionChildren({
   main: sectionChildren({
     feUser: ["feUser"],
     activeDeal: ["deal"],
+    calculatedVarbs: ["calculatedVarbs"],
     latentSections: ["latentSections"],
     userVarbEditor: ["userVarbEditor"],
     userListEditor: ["userListEditor"],
   }),
   latentSections: sectionChildren({
+    calculatedVarbs: ["calculatedVarbs"],
     deal: ["deal"],
     userVarbList: ["userVarbList"],
     singleTimeList: ["singleTimeList"],

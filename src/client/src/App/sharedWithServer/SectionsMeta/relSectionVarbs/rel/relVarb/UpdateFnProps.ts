@@ -47,7 +47,6 @@ export function updateFnProp(varbInfo: PathInVarbInfo): UpdateFnProp {
     entityId: Id.make(),
   };
 }
-
 export type UpdateFnProp = PathInVarbInfo & { entityId: string };
 export const updateFnPropS = {
   local(varbName: string): UpdateFnProp {

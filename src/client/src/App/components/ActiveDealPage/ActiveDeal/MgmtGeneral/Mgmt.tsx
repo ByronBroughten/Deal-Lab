@@ -27,7 +27,7 @@ export function Mgmt({ feId }: { feId: string }) {
             ...feInfo,
             childName: "ongoingExpenseValue",
             displayName: "Other Ongoing Expenses",
-            plusBtnText: "+ Other ongoing expenses",
+            plusBtnText: "+ Other Ongoing Expenses",
             className: "Mgmt-ongoingExpenseValue",
           }}
         />
@@ -35,8 +35,8 @@ export function Mgmt({ feId }: { feId: string }) {
           {...{
             ...feInfo,
             childName: "upfrontExpenseValue",
-            displayName: "One-time expenses",
-            plusBtnText: "+ One-time expenses",
+            displayName: "One-Time Expenses",
+            plusBtnText: "+ One-Time Expenses",
             className: "Mgmt-oneTimeExpenseValue",
           }}
         />

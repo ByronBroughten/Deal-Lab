@@ -51,7 +51,7 @@ export function makeExampleProperty(): SectionPack<"property"> {
   const capExList = capExValue.onlyChild("ongoingList");
   capExList.loadSelf(makeCapExList(examplePropertyCapExListProps));
 
-  const ongoingRepairValue = property.onlyChild("repairCostValue");
+  const ongoingRepairValue = property.onlyChild("maintenanceCostValue");
   ongoingRepairValue.updateValues({
     valueSourceSwitch: "valueEditor",
     valueEditor: priceSqftMiscRepairHybrid,

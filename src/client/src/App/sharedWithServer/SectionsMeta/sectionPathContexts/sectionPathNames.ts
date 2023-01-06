@@ -8,6 +8,8 @@ const sectionPathNameToSn = checkPathTypeToSectionName({
   // to those sectionPathNames need to be addressed.
   dealFocal: "deal",
   propertyGeneralFocal: "propertyGeneral",
+  propertyFocal: "property",
+  calculatedVarbsFocal: "calculatedVarbs",
   financingFocal: "financing",
   mgmtGeneralFocal: "mgmtGeneral",
   userVarbItemMain: "userVarbItem",

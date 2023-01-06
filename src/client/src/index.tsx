@@ -13,10 +13,33 @@ AppRegistry.runApplication("App", {
 // 3. Work on adding the underpinnings of the modes
 // 5. Implement the examples
 
+// - Separate relPropertyGeneral from property
+// - Implement 1% Price, 5% rent, etc.
+// - Everything that you might want to search or sort
+//   a property by, keep on property
+//   Everything else, keep strictly on dealGeneral
+// - Similar story for loan and finnacing
+// - Same with mgmt and mgmtGeneral
+
 // It's just about ready for applying for jobs again.
-// - Get the units to flex how they should.
 // - Get everything to solve how it should
 // - Make Loan look better
+// - Make the capEx list table have all its headers
+// Hell, maybe just make the example capEx list be the default
+// items
+// - Hide the ability to save lists.
+// - Maybe make them load and copy
+
+// If I have the capEx list relatively stable.
+// And if I have the utilities list relatively stable.
+// Do I need lists?
+// I still need a way to load the big default capEx list.
+// It would be nice for people to edit the big default one, too.
+// It would be nice to have a separate capEx list section.
+
+// - Make all the flexable units have margin all around them.
+// - Adjust padding to compensate.
+
 // - Buy a new domain for DealLab
 // - Make a Wordpress site for it
 

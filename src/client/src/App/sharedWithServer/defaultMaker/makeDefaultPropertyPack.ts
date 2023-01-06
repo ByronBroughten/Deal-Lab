@@ -48,6 +48,13 @@ export function makeDefaultPropertyPack(): SectionPack<"property"> {
     itemValueSwitch: "labeledSpanOverCost",
     valueSourceSwitch: "valueEditor",
   });
+  const capExList = capEx.onlyChild("ongoingList");
+  capExList.updateValues({
+    valueOngoingSwitch: "yearly",
+    itemValueSwitch: "labeledSpanOverCost",
+    itemOngoingSwitch: "yearly",
+  });
+
   const maintenance = property.loadAndGetChild({
     childName: "maintenanceCostValue",
     sectionPack: makeDefaultOngoingValue(),

@@ -25,7 +25,7 @@ export function propertyRelVarbs(): RelVarbs<"property"> {
     numBedrooms: relVarbS.sumChildVarb("Bedroom count", "unit", "numBedrooms"),
     upfrontExpenses: relVarbS.sumMoney("Upfront expenses", [
       updateFnPropS.local("price"),
-      updateFnPropS.onlyChild("repairCostValue", "value"),
+      updateFnPropS.children("repairCostValue", "value"),
       updateFnPropS.children("upfrontExpenseGroup", "total"),
     ]),
     upfrontRevenue: relVarbS.sumMoney("Upfront revenues", [
@@ -37,8 +37,9 @@ export function propertyRelVarbs(): RelVarbs<"property"> {
       [
         updateFnPropS.local("taxes"),
         updateFnPropS.local("homeIns"),
-        updateFnPropS.onlyChild("utilityCostValue", "value"),
         updateFnPropS.onlyChild("capExCostValue", "value"),
+        updateFnPropS.onlyChild("maintenanceCostValue", "value"),
+        updateFnPropS.children("utilityCostValue", "value"),
         updateFnPropS.children("ongoingExpenseGroup", "total"),
       ],
       { switchInit: "monthly", shared: { startAdornment: "$" } }

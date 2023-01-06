@@ -669,20 +669,23 @@ export class GetterSection<
   getDescendants(
     descendantNames: DescendantName<SN>[]
   ): GetterSection<DescendantSectionName<SN>>[] {
-    let section: GetterSection<any> = this;
+    let descendants: GetterSection<any>[] = [];
+    let sections: GetterSection<any>[] = [this];
     for (let idx = 0; idx < descendantNames.length; idx++) {
       const name = descendantNames[idx];
-      if (section.hasChildName(name)) {
-        if (Arr.isLastIdx(descendantNames, idx)) {
-          return section.children(name);
+      for (const section of sections) {
+        if (section.hasChildName(name)) {
+          descendants.push(...section.children(name));
         } else {
-          section = section.onlyChild(name);
+          throw section.isNotValidChildNameError(name);
         }
-      } else {
-        throw section.isNotValidChildNameError(name);
+      }
+      if (!Arr.isLastIdx(descendantNames, idx)) {
+        sections = descendants;
+        descendants = [];
       }
     }
-    throw new Error("Arr.isLastIdx never returned true");
+    return descendants;
   }
   getOnlyDescendant(
     descendantNames: DescendantName<SN>[]

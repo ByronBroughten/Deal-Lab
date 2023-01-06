@@ -172,6 +172,9 @@ export function makeBaseSectionsVarbs() {
     get propertyGeneral() {
       return baseSectionVarbs(omit(this.property, savableSectionVarbNames));
     },
+    calculatedVarbs: baseSectionVarbs({
+      ...baseVarbs("numObj", ["onePercentPrice"]),
+    }),
     loan: baseSectionVarbs({
       ...baseVarbsS.savableSection,
       ...baseVarbs("numObj", [

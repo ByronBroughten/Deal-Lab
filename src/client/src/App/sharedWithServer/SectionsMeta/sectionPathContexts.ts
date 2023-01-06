@@ -8,6 +8,8 @@ import {
 const absolute = sectionAbsolutePathInfos;
 export const sectionPathContexts = {
   default: sectionPathContext({
+    calculatedVarbsFocal: absolute.calculatedVarbsActive,
+    propertyFocal: absolute.propertyActive,
     dealFocal: absolute.dealActive,
     propertyGeneralFocal: absolute.propertyGeneralActive,
     financingFocal: absolute.financingActive,
@@ -19,6 +21,8 @@ export const sectionPathContexts = {
     singleTimeItemMain: absolute.singleTimeItemStored,
   }),
   activeDealPage: sectionPathContext({
+    calculatedVarbsFocal: absolute.calculatedVarbsActive,
+    propertyFocal: absolute.propertyActive,
     dealFocal: absolute.dealActive,
     propertyGeneralFocal: absolute.propertyGeneralActive,
     financingFocal: absolute.financingActive,
@@ -30,6 +34,8 @@ export const sectionPathContexts = {
     singleTimeItemMain: absolute.singleTimeItemStored,
   }),
   userVarbEditorPage: sectionPathContext({
+    calculatedVarbsFocal: absolute.calculatedVarbsActive,
+    propertyFocal: absolute.propertyActive,
     dealFocal: absolute.dealActive,
     propertyGeneralFocal: absolute.propertyGeneralActive,
     financingFocal: absolute.financingActive,
@@ -41,6 +47,8 @@ export const sectionPathContexts = {
     singleTimeItemMain: absolute.singleTimeItemStored,
   }),
   userListEditorPage: sectionPathContext({
+    calculatedVarbsFocal: absolute.calculatedVarbsActive,
+    propertyFocal: absolute.propertyActive,
     dealFocal: absolute.dealActive,
     propertyGeneralFocal: absolute.propertyGeneralActive,
     financingFocal: absolute.financingActive,
@@ -52,6 +60,8 @@ export const sectionPathContexts = {
     singleTimeItemMain: absolute.singleTimeItemEditor,
   }),
   latentSection: sectionPathContext({
+    calculatedVarbsFocal: absolute.calculatedVarbsLatent,
+    propertyFocal: absolute.propertyLatent,
     dealFocal: absolute.dealLatent,
     propertyGeneralFocal: absolute.propertyGeneralLatent,
     financingFocal: absolute.financingLatent,

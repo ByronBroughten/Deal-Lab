@@ -31,6 +31,9 @@ export const sectionNames = [
 
   "deal",
 
+  "calculatedVarbs",
+
+  "propertyGeneralNext",
   "propertyGeneral",
   "property",
 

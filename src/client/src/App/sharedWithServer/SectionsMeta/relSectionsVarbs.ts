@@ -355,6 +355,14 @@ export function makeRelSections() {
       type: relVarb("string", { initValue: "if" }),
       operator: relVarb("string", { initValue: "===" }),
     }),
+    ...relSectionProp("calculatedVarbs", {
+      onePercentPrice: relVarbS.moneyObj("1% Price", {
+        ...updateBasicsS.equationSimple(
+          "onePercent",
+          updateFnPropS.pathName("propertyFocal", "price")
+        ),
+      }),
+    }),
     ...relSectionProp("deal", dealRelVarbs()),
     ...relSectionProp("financing", financingRelVarbs),
     ...relSectionProp("loan", loanRelVarbs()),
