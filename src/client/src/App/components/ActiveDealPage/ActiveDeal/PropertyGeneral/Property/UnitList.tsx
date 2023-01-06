@@ -78,9 +78,6 @@ const Styled = styled.div<{
   $isOne: boolean;
   $isEven: boolean;
 }>`
-  padding: ${theme.sectionPadding};
-  padding-top: ${theme.s25};
-
   .UnitList-unitRow {
     display: flex;
     flex-wrap: nowrap;
@@ -95,8 +92,6 @@ const Styled = styled.div<{
     ${ccs.shape.button.smallCurved};
   }
   .UnitItem-root {
-    margin: ${theme.s15};
-    margin-top: 0;
-    margin-bottom: ${theme.s25};
+    margin: ${theme.flexElementSpacing};
   }
 `;

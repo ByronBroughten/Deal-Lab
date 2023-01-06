@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useGetterSection } from "../../../../sharedWithServer/stateClassHooks/useGetterSection";
+import theme from "../../../../theme/Theme";
 import { MainSection } from "../../../appWide/GeneralSection/MainSection";
 import MainSectionBody from "../../../appWide/GeneralSection/MainSection/MainSectionBody";
 import { ValueGroupOngoing } from "../../../appWide/ListGroup/ValueGroupOngoing";
@@ -25,13 +26,12 @@ export function Property({ feId }: { feId: string }) {
       />
       <MainSectionBody themeName="property">
         <div className="Property-basicInfoAndUnits">
-          <div className="ListGroup-lists">
-            <BasicPropertyInfo feId={feId} className="MainSectionGroup" />
-          </div>
+          <BasicPropertyInfo feId={feId} className="Property-basicInfo" />
           <UnitList feInfo={feInfo} />
         </div>
         <ValueGroupSingleTime
           {...{
+            className: "Property-upfrontCostsGroup",
             feId: property.onlyChild("upfrontExpenseGroup").feId,
             titleText: "Upfront Costs",
             extraValueChildren: (
@@ -86,15 +86,15 @@ export function Property({ feId }: { feId: string }) {
 }
 
 const Styled = styled(MainSection)`
-  .MainSectionBody-root {
-    flex-direction: column;
-  }
-  .MainSectionBody-inner {
-    flex-direction: column;
-  }
-
   .Property-basicInfoAndUnits {
     display: flex;
     flex-wrap: wrap;
+  }
+  .Property-basicInfo {
+    margin: ${theme.flexElementSpacing};
+    margin-right: ${theme.s3};
+  }
+  .Property-upfrontCostsGroup {
+    margin-top: ${theme.s3};
   }
 `;

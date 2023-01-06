@@ -22,14 +22,9 @@ export default function BasicSectionInfo({
   );
 }
 const Styled = styled.div<{ $themeName: ThemeName }>`
-  padding: 0 ${theme.sectionPadding} ${theme.sectionPadding} 0;
   .BasicSectionInfo-viewable {
     display: flex;
     flex-direction: row;
-  }
-
-  .BasicSectionInfo-subSection-viewable.titledBlock {
-    /* padding-top: ${theme.s1}; */
   }
 
   .BasicSectionInfo-subSections {
@@ -50,12 +45,6 @@ const Styled = styled.div<{ $themeName: ThemeName }>`
           border-bottom-right-radius: ${theme.br0};
         }
       }
-    }
-  }
-
-  .NumObjEditor-inner {
-    :not(:first-child) {
-      margin-top: ${theme.s1};
     }
   }
 `;

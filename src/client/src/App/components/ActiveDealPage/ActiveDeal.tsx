@@ -53,6 +53,10 @@ export function ActiveDeal({ className, feId }: Props) {
 }
 
 const Styled = styled(OuterMainSection)`
+  @media (max-width: ${theme.mediaPhone}) {
+    padding-left: ${theme.s15};
+    padding-right: ${theme.s15};
+  }
   .ActiveDeal-mainSectionTopRowRoot {
     margin-left: ${theme.s3};
   }

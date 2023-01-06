@@ -20,16 +20,16 @@ export default function BasicPropertyInfo({ feId, className }: Props) {
       }}
     >
       <div className="BasicSectionInfo-viewable">
-        <div className="BasicSectionInfo-subSections">
-          <div className="BasicSectionInfo-subSection">
-            {varbNames.map((varbName) => (
-              <NumObjEntityEditor
-                key={varbName}
-                className="BasicPropertyInfo-numObjEditor"
-                feVarbInfo={property.varbInfo(varbName)}
-              />
-            ))}
-          </div>
+        <div>
+          {varbNames.map((varbName, idx) => (
+            <NumObjEntityEditor
+              key={varbName}
+              className={`BasicPropertyInfo-numObjEditor ${
+                idx !== 0 && "BasicPropertyInfo-marginEditor"
+              }`}
+              feVarbInfo={property.varbInfo(varbName)}
+            />
+          ))}
         </div>
       </div>
     </Styled>
@@ -37,7 +37,7 @@ export default function BasicPropertyInfo({ feId, className }: Props) {
 }
 
 const Styled = styled(BasicSectionInfo)`
-  .BasicPropertyInfo-numObjEditor {
+  .BasicPropertyInfo-marginEditor {
     margin-top: ${theme.s25};
   }
   .MuiFormControl-root.labeled {

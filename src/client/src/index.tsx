@@ -8,27 +8,31 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
+// Now, what is really needed in order for me to use
+// this to apply for jobs again?
+// - Make all the flexable units have margin all around them
+// - Adjust padding to compensate.
+// - Delete the old lists from the list groups
+// - Get everything to solve how it should (tests pass)
+// - Make Loan look better
+// - Make main lists loadAndCopy only and remove their title
+// - Make the capEx list table have all its headers
+// - Make the default property capEx list have items filled in
+// - DealLab url
+// - Wordpress..
+
+// Big ETC and efficiency gains:
+// - make InVarbInfo work with PathInfo<"multi">
+// - get one of financing's varbs to work
+// - transition out of financing, and propertyGeneral
+// - make a mgmtFocal path
+// - transition out of mgmtGeneral
+// - make varbPathNameInfo and make InVarbInfo work with it
+
 // Options for how to spend this evening:
 // 1. Work on a placeholder Wordpress site
 // 3. Work on adding the underpinnings of the modes
 // 5. Implement the examples
-
-// - Separate relPropertyGeneral from property
-// - Implement 1% Price, 5% rent, etc.
-// - Everything that you might want to search or sort
-//   a property by, keep on property
-//   Everything else, keep strictly on dealGeneral
-// - Similar story for loan and finnacing
-// - Same with mgmt and mgmtGeneral
-
-// It's just about ready for applying for jobs again.
-// - Get everything to solve how it should
-// - Make Loan look better
-// - Make the capEx list table have all its headers
-// Hell, maybe just make the example capEx list be the default
-// items
-// - Hide the ability to save lists.
-// - Maybe make them load and copy
 
 // If I have the capEx list relatively stable.
 // And if I have the utilities list relatively stable.
@@ -37,14 +41,7 @@ AppRegistry.runApplication("App", {
 // It would be nice for people to edit the big default one, too.
 // It would be nice to have a separate capEx list section.
 
-// - Make all the flexable units have margin all around them.
-// - Adjust padding to compensate.
-
-// - Buy a new domain for DealLab
-// - Make a Wordpress site for it
-
 // Update the lists UI
-
 // - Show property rent.
 
 // How should the units be added? Should I add a unit-adder modal?
