@@ -322,6 +322,7 @@ const theme = {
   ...mediaQuery,
   sectionPadding: spacings.s3,
   flexElementSpacing: spacings.s2,
+  dealElementSpacing: spacings.s4,
 
   transparentGrayDark: transparentize(0.8, color["gray-600"]),
   transparentGrayLight: transparentize(0.75, color["gray-300"]),

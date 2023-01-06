@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { useGetterSection } from "../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import theme from "../../../../theme/Theme";
 import { MainSection } from "../../../appWide/GeneralSection/MainSection";
 import MainSectionBody from "../../../appWide/GeneralSection/MainSection/MainSectionBody";
@@ -8,14 +7,19 @@ import { MainSectionTopRows } from "../../../appWide/MainSectionTopRows";
 import { ValueSectionZone } from "../../../appWide/ValueSectionZone";
 import BasicLoanInfo from "./Loan/BasicLoanInfo";
 
-export function Loan({ feId }: { feId: string }) {
+export function Loan({
+  feId,
+  className,
+}: {
+  feId: string;
+  className?: string;
+}) {
   const feInfo = {
     sectionName: "loan",
     feId,
   } as const;
-  const loan = useGetterSection(feInfo);
   return (
-    <Styled className="Loan-root">
+    <Styled className={`Loan-root ${className ?? ""}`}>
       <MainSectionTopRows
         {...{
           ...feInfo,

@@ -1,6 +1,8 @@
-import { LeftRightPropCalcName } from "../../../baseSectionsVarbs/baseValues/calculations";
+import {
+  LeftRightPropCalcName,
+  NumPropCalcName,
+} from "../../../baseSectionsVarbs/baseValues/calculations";
 import { ValueName } from "../../../baseSectionsVarbs/baseVarb";
-import { NumPropCalcName } from "./calculationsNext";
 import { UpdateBasics } from "./UpdateBasics";
 import { UpdateFnName } from "./UpdateFnName";
 import { UpdateFnProp, UpdateFnProps } from "./UpdateFnProps";

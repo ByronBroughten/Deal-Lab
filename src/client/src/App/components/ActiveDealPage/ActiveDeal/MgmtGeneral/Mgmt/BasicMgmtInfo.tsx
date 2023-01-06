@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { switchNames } from "../../../../../sharedWithServer/SectionsMeta/baseSectionsVarbs/RelSwitchVarb";
+import theme from "../../../../../theme/Theme";
 import { useOpenWidth } from "../../../../appWide/customHooks/useOpenWidth";
 import BasicSectionInfo from "../../../../appWide/GeneralSection/MainSection/MainSectionBody/BasicSectionInfo";
 import { DollarPercentRadioSwap } from "../../general/DollarPercentRadioSwap";
@@ -23,32 +24,22 @@ export default function BasicMgmtInfo({ feId, className }: Props) {
       {...{ sectionName: "mgmt", className: `BasicMgmtInfo-root ${className}` }}
     >
       {viewIsOpen && (
-        <div className="BasicSectionInfo-viewable viewable">
-          <div className="BasicSectionInfo-subSections">
-            <div className="BasicSectionInfo-subSection">
-              <div className="BasicSectionInfo-subSection-viewable">
-                <DollarPercentRadioSwap
-                  {...{
-                    names: {
-                      switch: rentCut.switch,
-                      percent: rentCut.percent,
-                      dollars: rentCutDollars.monthly,
-                      dollarsEditor: "rentCutDollarsEditor",
-                      percentEditor: "rentCutPercentEditor",
-                    },
-                    feInfo,
-                    title: "Cut of rent",
-                    className: "BasicMgmtInfo-radioSwap",
-                  }}
-                />
-              </div>
-            </div>
-            <div className="BasicSectionInfo-subSection">
-              <div className="BasicSectionInfo-subSection-viewable">
-                <VacancyRate feId={feId} />
-              </div>
-            </div>
-          </div>
+        <div>
+          <DollarPercentRadioSwap
+            {...{
+              className: "BasicMgmtInfo-radioSwap",
+              names: {
+                switch: rentCut.switch,
+                percent: rentCut.percent,
+                dollars: rentCutDollars.monthly,
+                dollarsEditor: "rentCutDollarsEditor",
+                percentEditor: "rentCutPercentEditor",
+              },
+              feInfo,
+              title: "Cut of rent",
+            }}
+          />
+          <VacancyRate feId={feId} />
         </div>
       )}
     </Styled>
@@ -56,17 +47,13 @@ export default function BasicMgmtInfo({ feId, className }: Props) {
 }
 
 const Styled = styled(BasicSectionInfo)`
-  .BasicSectionInfo-subSections {
-  }
-
-  .BasicSectionInfo-subSection {
-  }
   .BasicMgmtInfo-radioSwap {
     .MuiInputBase-root {
       min-width: 85px;
     }
   }
   .VacancyRate-root {
+    margin-top: ${theme.s3};
     .MuiInputBase-root {
       min-width: 123px;
     }

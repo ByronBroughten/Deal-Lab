@@ -32,14 +32,8 @@ export function DealOutputs({ className, feId }: Props) {
       };
 
   return (
-    <Styled
-      {...{
-        $showDetails: detailsIsOpen,
-        themeName: "deal",
-        className: `DealOutputs-root ${className}`,
-      }}
-    >
-      {/* {!showCalculations && (
+    <OutputSection {...{ feId, detailsIsOpen }} />
+    /* {!showCalculations && (
         <>
           <div className="GeneralSectionInfo-root" />
           <div className="GeneralSection-addEntryBtnDiv">
@@ -54,18 +48,11 @@ export function DealOutputs({ className, feId }: Props) {
           </div>
         </>
       )}
-      {showCalculations && <OutputSection {...{ feId, detailsIsOpen }} />} */}
-      <OutputSection {...{ feId, detailsIsOpen }} />
-    </Styled>
+      {showCalculations && <OutputSection {...{ feId, detailsIsOpen }} />} */
   );
 }
 
 const Styled = styled(GeneralSection)<{ $showDetails: boolean }>`
-  .MainSection-addChildBtn {
-    width: 50%;
-    height: 50px;
-  }
-
   .GeneralSectionTitle-toolTip {
     width: 100%;
     display: flex;

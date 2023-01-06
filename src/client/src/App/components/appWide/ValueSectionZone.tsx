@@ -19,14 +19,20 @@ interface Props<SN extends SectionName, CN extends ChildName<SN>>
 export function ValueSectionZone<
   SN extends SectionName,
   CN extends ChildName<SN>
->({ childName, plusBtnText, sectionName, feId, ...rest }: Props<SN, CN>) {
+>({
+  childName,
+  plusBtnText,
+  sectionName,
+  feId,
+  className,
+  ...rest
+}: Props<SN, CN>) {
   const section = useSetterSection({ sectionName, feId });
   const hasValueSection = section.get.hasOnlyChild(childName);
   const noValueScenario = () => (
     <ValueSectionBtn
       text={plusBtnText}
       onClick={() => section.addChild(childName)}
-      className={rest.className}
     />
   );
   const hasValueScenario = () => {
@@ -47,9 +53,9 @@ export function ValueSectionZone<
     }
   };
   return (
-    <>
+    <div className={`ValueSectionZone-root ${className ?? ""}`}>
       {!hasValueSection && noValueScenario()}
       {hasValueSection && hasValueScenario()}
-    </>
+    </div>
   );
 }

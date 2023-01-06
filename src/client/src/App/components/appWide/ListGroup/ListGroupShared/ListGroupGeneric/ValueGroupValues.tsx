@@ -15,15 +15,17 @@ interface Props {
   makeValueNode: MakeValueNode;
   addValue: () => void;
   extraValueChildren: React.ReactNode;
+  className?: string;
 }
 export function ValueGroupValues({
   feIds,
   makeValueNode,
   addValue,
   extraValueChildren,
+  className,
 }: Props) {
   return (
-    <Styled className="ValueGroup-values">
+    <Styled className={`ValueGroup-values ${className ?? ""}`}>
       {extraValueChildren}
       {feIds.map((feId) => {
         return makeValueNode({
@@ -44,7 +46,7 @@ const Styled = styled.div<{ $themeName?: ThemeName }>`
   display: flex;
   flex-wrap: wrap;
   .ValueGroup-value {
-    margin: ${theme.s2};
+    margin: ${theme.flexElementSpacing};
   }
   .ValueGroup-addValueBtn {
     height: calc(${theme.valueSectionSize} + 18px);

@@ -53,24 +53,31 @@ export function ActiveDeal({ className, feId }: Props) {
 }
 
 const Styled = styled(OuterMainSection)`
+  padding-bottom: 0;
   @media (max-width: ${theme.mediaPhone}) {
     padding-left: ${theme.s15};
     padding-right: ${theme.s15};
   }
+
   .ActiveDeal-mainSectionTopRowRoot {
     margin-left: ${theme.s3};
   }
   .ActiveDeal-modeSelector {
     margin-top: ${theme.s2};
   }
-  .PropertyGeneral-root {
-    padding-top: ${theme.s35};
-  }
 
   .ActiveDeal-inputSectionsWrapper {
     margin: auto;
   }
-  .DealOutputs-root {
+
+  .Property-root,
+  .Financing-root,
+  .Mgmt-root {
+    margin-top: ${theme.dealElementSpacing};
+  }
+
+  .OutputSection-root {
+    margin-top: ${theme.dealElementSpacing};
     position: sticky;
     bottom: 0;
     z-index: 3;

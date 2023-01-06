@@ -16,7 +16,7 @@ export function Property({ feId }: { feId: string }) {
   const feInfo = { sectionName: "property", feId } as const;
   const property = useGetterSection(feInfo);
   return (
-    <Styled>
+    <Styled className="Property-root">
       <MainSectionTopRows
         {...{
           ...feInfo,
@@ -48,6 +48,7 @@ export function Property({ feId }: { feId: string }) {
         />
         <ValueGroupOngoing
           {...{
+            className: "Property-ongoingCostGroup",
             feId: property.onlyChild("ongoingExpenseGroup").feId,
             titleText: "Ongoing Costs",
             extraValueChildren: (
@@ -94,7 +95,8 @@ const Styled = styled(MainSection)`
     margin: ${theme.flexElementSpacing};
     margin-right: ${theme.s3};
   }
-  .Property-upfrontCostsGroup {
+  .Property-upfrontCostsGroup,
+  .Property-ongoingCostGroup {
     margin-top: ${theme.s3};
   }
 `;

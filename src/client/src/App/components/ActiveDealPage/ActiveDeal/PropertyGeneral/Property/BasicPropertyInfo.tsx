@@ -19,18 +19,16 @@ export default function BasicPropertyInfo({ feId, className }: Props) {
         sectionName: "property",
       }}
     >
-      <div className="BasicSectionInfo-viewable">
-        <div>
-          {varbNames.map((varbName, idx) => (
-            <NumObjEntityEditor
-              key={varbName}
-              className={`BasicPropertyInfo-numObjEditor ${
-                idx !== 0 && "BasicPropertyInfo-marginEditor"
-              }`}
-              feVarbInfo={property.varbInfo(varbName)}
-            />
-          ))}
-        </div>
+      <div>
+        {varbNames.map((varbName, idx) => (
+          <NumObjEntityEditor
+            key={varbName}
+            className={`BasicPropertyInfo-numObjEditor ${
+              idx !== 0 && "BasicPropertyInfo-marginEditor"
+            }`}
+            feVarbInfo={property.varbInfo(varbName)}
+          />
+        ))}
       </div>
     </Styled>
   );

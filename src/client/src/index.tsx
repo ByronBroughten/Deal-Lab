@@ -11,6 +11,9 @@ AppRegistry.runApplication("App", {
 // Now, what is really needed in order for me to use
 // this to apply for jobs again?
 // - Make all the flexable units have margin all around them
+//   - Each of the smallest flexible units need margin around them
+//
+
 // - Adjust padding to compensate.
 // - Delete the old lists from the list groups
 // - Get everything to solve how it should (tests pass)

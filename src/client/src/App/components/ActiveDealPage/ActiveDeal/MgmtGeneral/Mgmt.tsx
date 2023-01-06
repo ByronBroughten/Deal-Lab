@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { useGetterSection } from "../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import theme from "../../../../theme/Theme";
 import { MainSection } from "../../../appWide/GeneralSection/MainSection";
 import MainSectionBody from "../../../appWide/GeneralSection/MainSection/MainSectionBody";
@@ -10,9 +9,8 @@ import BasicMgmtInfo from "./Mgmt/BasicMgmtInfo";
 
 export function Mgmt({ feId }: { feId: string }) {
   const feInfo = { sectionName: "mgmt", feId } as const;
-  const mgmt = useGetterSection(feInfo);
   return (
-    <Styled>
+    <Styled className="Mgmt-root">
       <MainSectionTopRows
         {...{
           ...feInfo,
@@ -21,23 +19,23 @@ export function Mgmt({ feId }: { feId: string }) {
         }}
       />
       <MainSectionBody themeName="mgmt">
-        <BasicMgmtInfo feId={feId} className="ListGroup-root" />
+        <BasicMgmtInfo feId={feId} className="Mgmt-basicInfo" />
         <ValueSectionZone
           {...{
+            className: "Mgmt-ongoingExpenseValue",
             ...feInfo,
             childName: "ongoingExpenseValue",
             displayName: "Other Ongoing Expenses",
             plusBtnText: "+ Other Ongoing Expenses",
-            className: "Mgmt-ongoingExpenseValue",
           }}
         />
         <ValueSectionZone
           {...{
             ...feInfo,
+            className: "Mgmt-oneTimeExpenseValue",
             childName: "upfrontExpenseValue",
             displayName: "One-Time Expenses",
             plusBtnText: "+ One-Time Expenses",
-            className: "Mgmt-oneTimeExpenseValue",
           }}
         />
       </MainSectionBody>
@@ -46,14 +44,15 @@ export function Mgmt({ feId }: { feId: string }) {
 }
 
 const Styled = styled(MainSection)`
+  .Mgmt-basicInfo,
+  .Mgmt-ongoingExpenseValue,
+  .Mgmt-oneTimeExpenseValue {
+    margin: ${theme.flexElementSpacing};
+  }
   :hover {
     .MainSectionTitleRow-xBtn {
       visibility: visible;
     }
-  }
-
-  .Mgmt-oneTimeExpenseValue {
-    margin-left: ${theme.s3};
   }
 
   .ValueSectionBtn-root {

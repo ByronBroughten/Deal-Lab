@@ -18,7 +18,7 @@ export function OutputSection({
   const deal = useGetterSection(feInfo);
   const outputListFeId = deal.onlyChild("dealOutputList").feId;
   return (
-    <MainSection>
+    <MainSection className="OutputSection-root">
       <SectionTitle text="Outputs" />
       <MainSectionBody themeName="deal">
         <Styled className="ListGroup-root">

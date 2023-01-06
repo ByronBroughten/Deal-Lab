@@ -12,9 +12,7 @@ import {
 import { useSetterSection } from "../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import { GetterSection } from "../../../../sharedWithServer/StateGetters/GetterSection";
 import theme from "../../../../theme/Theme";
-import { StandardBtnProps } from "../../../general/StandardProps";
 import useHowMany from "../../customHooks/useHowMany";
-import { SectionBtn } from "../../SectionBtn";
 import { SectionTitleAndCost } from "../../SectionTitleAndCost";
 import {
   MakeValueNode,
@@ -80,27 +78,13 @@ export function ValueGroupGeneric<
   );
 }
 
-interface BtnProps extends StandardBtnProps {
-  text?: React.ReactNode;
-  icon?: React.ReactNode;
-}
-export function ListGroupGenericBtn({ className, ...props }: BtnProps) {
-  return (
-    <BtnStyled className={`ValueGroup-root ${className ?? ""}`} {...props} />
-  );
-}
-
-const BtnStyled = styled(SectionBtn)`
-  ${theme.sectionBorderChunk};
-  padding: ${theme.sectionPadding};
-  height: 260px;
-  width: 200px;
-  font-size: ${theme.titleSize};
-`;
-
 const Styled = styled.div`
   ${theme.sectionBorderChunk};
-  padding: ${theme.sectionPadding};
+  padding-top: ${theme.s3};
+
+  .ValueGroup-values {
+    margin-top: ${theme.s2};
+  }
 
   .ValueGroup-titleRow {
     display: flex;

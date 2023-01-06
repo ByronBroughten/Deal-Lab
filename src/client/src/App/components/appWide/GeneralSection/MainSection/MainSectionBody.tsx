@@ -10,18 +10,9 @@ export default function MainSectionBody({
 }) {
   return (
     <StyledEntryBody className="MainSectionBody-root">
-      <div className="MainSectionBody-inner">{children}</div>
+      {children}
     </StyledEntryBody>
   );
 }
 
-const StyledEntryBody = styled.div`
-  display: flex;
-  flex: 0;
-  flex-wrap: wrap;
-
-  .MainSectionBody-inner {
-    display: flex;
-    flex-wrap: wrap;
-  }
-`;
+const StyledEntryBody = styled.div``;
