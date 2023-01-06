@@ -7,7 +7,7 @@ import {
 } from "../StateGetters/Bases/GetterSectionsBase";
 import { GetterSections } from "../StateGetters/GetterSections";
 import { Obj } from "../utils/Obj";
-import { absoluteVarbOptions } from "./absoluteVarbOptions";
+import { absoluteVarbOptions } from "./pathVarbOptions";
 
 export type SectionOption = {
   dbId: string;

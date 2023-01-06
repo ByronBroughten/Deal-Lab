@@ -36,13 +36,6 @@ export function Loan({ feId }: { feId: string }) {
             plusBtnText: "+ Closing Costs",
           }}
         />
-        {/* <ValueSectionOneTime
-          {...{
-            feId: loan.onlyChild("closingCostValue").feId,
-            displayName: "Closing Costs",
-            showXBtn: false,
-          }}
-        /> */}
       </MainSectionBody>
     </Styled>
   );

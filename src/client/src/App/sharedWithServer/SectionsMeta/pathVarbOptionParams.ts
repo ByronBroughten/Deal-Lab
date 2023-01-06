@@ -1,11 +1,11 @@
+import { Arr } from "../utils/Arr";
 import { Obj } from "../utils/Obj";
-import { Arr } from "./../utils/Arr";
 import { VarbName } from "./baseSectionsDerived/baseSectionsVarbsTypes";
 import { VarbNames } from "./baseSectionsDerived/baseVarbInfo";
 import { SectionName } from "./SectionName";
 import {
   SectionNameOfPath,
-  sectionPathNames,
+  sectionPathNames
 } from "./sectionPathContexts/sectionPathNames";
 import { VarbMeta } from "./VarbMeta";
 
@@ -14,6 +14,7 @@ export const activePathNames = Arr.extractStrict(sectionPathNames, [
   "financingFocal",
   "mgmtGeneralFocal",
   "propertyGeneralFocal",
+  "calculatedVarbsFocal",
 ] as const);
 
 export type ActivePathName = typeof activePathNames[number];
@@ -33,20 +34,25 @@ type OptionVarbsProp<
   PN extends ActivePathName,
   VNS extends VarbName<SectionNameOfPath<PN>>
 > = {
-  [P in PN]: VNS[];
+  [P in PN]: { collectionName: string; varbNames: VNS[] };
 };
 
 function optionVarbsProp<
   PN extends ActivePathName,
   VNS extends VarbName<SectionNameOfPath<PN>>
->(pathName: PN, varbNames: VNS[]): OptionVarbsProp<PN, VNS> {
+>(
+  pathName: PN,
+  collectionName: string,
+  varbNames: VNS[]
+): OptionVarbsProp<PN, VNS> {
   return {
-    [pathName]: varbNames,
+    [pathName]: { collectionName, varbNames },
   } as OptionVarbsProp<PN, VNS>;
 }
 
 export const soloVarbOptions = {
-  ...optionVarbsProp("propertyGeneralFocal", [
+  ...optionVarbsProp("calculatedVarbsFocal", "Property", ["onePercentPrice"]),
+  ...optionVarbsProp("propertyGeneralFocal", "Property", [
     "price",
     "sqft",
     "taxesYearly",
@@ -56,12 +62,12 @@ export const soloVarbOptions = {
     "targetRentMonthly",
     "targetRentYearly",
   ]),
-  ...optionVarbsProp("mgmtGeneralFocal", [
+  ...optionVarbsProp("mgmtGeneralFocal", "Management", [
     "vacancyRatePercent",
     "rentCutDollarsMonthly",
     "rentCutDollarsYearly",
   ]),
-  ...optionVarbsProp("financingFocal", [
+  ...optionVarbsProp("financingFocal", "Financing", [
     "loanBaseDollars",
     "loanBasePercent",
     "mortgageInsYearly",
@@ -71,7 +77,7 @@ export const soloVarbOptions = {
     "loanPaymentMonthly",
     "loanPaymentYearly",
   ]),
-  ...optionVarbsProp("dealFocal", [
+  ...optionVarbsProp("dealFocal", "Deal", [
     "pitiMonthly",
     "pitiYearly",
     "downPaymentDollars",
@@ -91,14 +97,14 @@ export const soloVarbOptions = {
 
 type GlobalOptionVarbArrs = typeof soloVarbOptions;
 type GlobalOptionVarbs = {
-  [PN in keyof GlobalOptionVarbArrs]: GlobalOptionVarbArrs[PN][number];
+  [PN in keyof GlobalOptionVarbArrs]: GlobalOptionVarbArrs[PN]["varbNames"][number];
 };
 type OptionVarbsToPathName = {
   [PN in keyof GlobalOptionVarbs as GlobalOptionVarbs[PN]]: PN;
 };
 const optionVarbsToPathName = Obj.keys(soloVarbOptions).reduce(
   (result, pathName) => {
-    const varbNames = soloVarbOptions[pathName];
+    const { varbNames } = soloVarbOptions[pathName];
     for (const varbName of varbNames) {
       (result as any)[varbName] = pathName;
     }

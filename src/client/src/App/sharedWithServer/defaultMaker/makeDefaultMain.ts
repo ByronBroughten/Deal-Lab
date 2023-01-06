@@ -3,8 +3,10 @@ import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
 import { makeDefaultDealPack } from "./makeDefaultDealPack";
 import { makeDefaultFeUserPack } from "./makeDefaultFeUser";
 
-export function makeDefaultMainPack(): SectionPack<"main"> {
+export function makeDefaultMain(): SectionPack<"main"> {
   const main = PackBuilderSection.initAsOmniChild("main");
+
+  main.addChild("calculatedVarbs");
 
   const defaultDealPack = makeDefaultDealPack();
   main.loadChild({
@@ -13,6 +15,7 @@ export function makeDefaultMainPack(): SectionPack<"main"> {
   });
 
   const latentSections = main.addAndGetChild("latentSections");
+  latentSections.addChild("calculatedVarbs");
   latentSections.loadChild({
     childName: "deal",
     sectionPack: defaultDealPack,

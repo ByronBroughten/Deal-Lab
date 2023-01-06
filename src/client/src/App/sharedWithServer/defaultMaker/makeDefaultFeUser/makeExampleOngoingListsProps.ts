@@ -53,8 +53,8 @@ export const exampleUserUtilityProps = [
 
 export const priceSqftMiscRepairHybrid = numObjNext(
   "(",
-  ["price"],
-  "*.01+", // this should maybe be .005...
+  ["onePercentPrice"],
+  "+",
   ["sqft"],
   ")/2"
 );

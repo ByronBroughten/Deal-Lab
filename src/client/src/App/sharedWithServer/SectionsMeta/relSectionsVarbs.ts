@@ -362,6 +362,12 @@ export function makeRelSections() {
           updateFnPropS.pathName("propertyFocal", "price")
         ),
       }),
+      twoPercentPrice: relVarbS.moneyObj("2% Price", {
+        ...updateBasicsS.equationSimple(
+          "twoPercent",
+          updateFnPropS.pathName("propertyFocal", "price")
+        ),
+      }),
     }),
     ...relSectionProp("deal", dealRelVarbs()),
     ...relSectionProp("financing", financingRelVarbs),

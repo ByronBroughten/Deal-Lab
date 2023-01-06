@@ -15,17 +15,16 @@ export function ValueSectionOngoing({ feId, ...rest }: Props) {
     sectionName: "ongoingValue",
     feId,
   });
-  const valueName = section.get.switchVarbName(
-    "value",
-    "ongoing"
-  ) as "valueMonthly";
+  const valueVarb = section.get.switchVarb("value", "ongoing");
+  const { endAdornment, varbName } = valueVarb;
   return (
     <ValueSectionGeneric
       {...{
         ...rest,
         sectionName: "ongoingValue",
         feId,
-        valueName,
+        valueName: varbName as "valueMonthly",
+        endAdornment,
         makeItemizedListNode: (props) => <VarbListOngoing {...props} />,
       }}
     />

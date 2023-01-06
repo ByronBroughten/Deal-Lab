@@ -20,6 +20,9 @@ const solvableTextByArgs = {
     decimalToPercent: ({ num }: NumProp) => `${num} * 100`,
     percentToDecimal: ({ num }: NumProp) => `${num} / 100`,
     onePercent: ({ num }: NumProp) => `${num}*.01`,
+    twoPercent: ({ num }: NumProp) => `${num}*.02`,
+    fivePercent: ({ num }: NumProp) => `${num}*.05`,
+    tenPercent: ({ num }: NumProp) => `${num}*.1`,
     noNegative: ({ num }: { num: NumProp }) => `${num} < 0 ? 0 : ${num}`,
   },
   leftRight: {

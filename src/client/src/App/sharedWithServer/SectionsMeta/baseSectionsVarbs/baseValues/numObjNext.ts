@@ -4,7 +4,7 @@ import {
   activeVarbDisplayName,
   OptionVarbName,
   optionVarbPathName,
-} from "../../absolutePathVarbs";
+} from "../../pathVarbOptionParams";
 import { mixedInfoS } from "../../sectionChildrenDerived/MixedSectionInfo";
 import { PathVarbNames } from "../../SectionInfo/PathNameInfo";
 import { Id } from "../id";

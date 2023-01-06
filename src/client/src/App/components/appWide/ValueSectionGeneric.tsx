@@ -28,6 +28,7 @@ interface Props<SN extends ValueSectionName> {
   feId: string;
   displayName?: string;
   showXBtn?: boolean;
+  endAdornment?: string;
 }
 
 function getChildName<SN extends ValueSectionName>(
@@ -47,6 +48,7 @@ export function ValueSectionGeneric<
   valueName,
   makeItemizedListNode,
   showXBtn = true,
+  endAdornment,
 }: Props<SN>) {
   const section = useSetterSection({ sectionName, feId });
   const listChildName = getChildName(sectionName);
@@ -92,6 +94,7 @@ export function ValueSectionGeneric<
               className={"ValueSection-valueEditor"}
               feVarbInfo={section.varbInfo("valueEditor")}
               labeled={false}
+              endAdornment={endAdornment}
             />
           )}
         </div>

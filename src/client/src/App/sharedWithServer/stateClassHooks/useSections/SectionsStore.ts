@@ -2,7 +2,7 @@ import hash from "object-hash";
 import React from "react";
 import { config } from "../../../Constants";
 import { getStoredObj } from "../../../utils/localStorage";
-import { makeDefaultMainPack } from "../../defaultMaker/makeDefaultMainPack";
+import { makeDefaultMain } from "../../defaultMaker/makeDefaultMain";
 import { baseSectionsVarbs } from "../../SectionsMeta/baseSectionsVarbs";
 import { ChildSectionPack } from "../../SectionsMeta/sectionChildrenDerived/ChildSectionPack";
 import { validateSectionPackArrs } from "../../SectionsMeta/SectionNameByType";
@@ -76,7 +76,7 @@ export class SectionsStore {
     storedState: StoredSectionsState
   ): SolverSection<"main"> {
     const main = PackBuilderSection.initAsOmniChild("main");
-    main.loadSelf(makeDefaultMainPack());
+    main.loadSelf(makeDefaultMain());
     main.replaceChildArrs(storedState);
     const solver = SolverSections.initRoot();
     return solver.loadAndGetChild({
