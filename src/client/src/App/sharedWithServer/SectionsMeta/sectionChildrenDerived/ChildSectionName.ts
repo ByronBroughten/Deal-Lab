@@ -106,9 +106,9 @@ function _testChildSectionNameName<
   //@ts-expect-error
   const _test2: ChildSectionNameName<"property", "ongoingList"> = "ongoingList";
   const _test3: ChildSectionNameName<
-    "property" | "mgmt",
-    "singleTimeValueGroup"
-  > = "upfrontExpenseGroup";
+    "singleTimeValue" | "singleTimeListGroup",
+    "singleTimeList"
+  > = "singleTimeList";
 }
 _testChildSectionNameName("property", "singleTimeValueGroup");
 

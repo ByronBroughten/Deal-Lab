@@ -10,5 +10,6 @@ export function makeDefaultMgmtPack(): SectionPack<"mgmt"> {
       expensesOngoingSwitch: "monthly",
     },
   });
+
   return mgmt.makeSectionPack();
 }

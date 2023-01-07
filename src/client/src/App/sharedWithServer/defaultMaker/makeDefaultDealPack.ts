@@ -1,5 +1,6 @@
 import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
+import { makeDefaultMgmtPack } from "./makeDefaultMgmtPack";
 import { makeDefaultOutputList } from "./makeDefaultOutputList";
 import { makeDefaultPropertyPack } from "./makeDefaultPropertyPack";
 
@@ -21,6 +22,11 @@ export function makeDefaultDealPack(): SectionPack<"deal"> {
   propertyGeneral.loadChild({
     childName: "property",
     sectionPack: makeDefaultPropertyPack(),
+  });
+  const mgmtGeneral = deal.onlyChild("mgmtGeneral");
+  mgmtGeneral.loadChild({
+    childName: "mgmt",
+    sectionPack: makeDefaultMgmtPack(),
   });
   return deal.makeSectionPack();
 }

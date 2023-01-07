@@ -25,12 +25,13 @@ describe("SetterCalculations", () => {
     const propertyGeneral = dealTester.setter.onlyChild("propertyGeneral");
     const property = propertyGeneral.onlyChild("property");
     property.varb("price").updateValue(numObj(200000));
-    const propertyCostListGroup = property.addAndGetChild(
-      "upfrontExpenseGroup"
-    );
 
-    const propertyCostList =
-      propertyCostListGroup.addAndGetChild("singleTimeList");
+    const propertyCostListGroup = property.onlyChild("upfrontExpenseGroup");
+    const propertyCostValue = propertyCostListGroup.addAndGetChild(
+      "singleTimeValue",
+      { dbVarbs: { isItemized: true } }
+    );
+    const propertyCostList = propertyCostValue.onlyChild("singleTimeList");
     const propertyCosts = [8000, 2000];
     for (const amount of propertyCosts) {
       propertyCostList.addChild("singleTimeItem", {
@@ -44,21 +45,15 @@ describe("SetterCalculations", () => {
     const loan = financing.addAndGetChild("loan");
     loan.varb("loanBasePercentEditor").updateValue(numObj(0));
 
-    const group = loan.addAndGetChild("wrappedInLoanValue");
-    const wrapped = group.addAndGetChild("singleTimeList");
-    const wrappeds = [4000, 1000];
-    for (const amount of wrappeds) {
-      wrapped.addChild("singleTimeItem", {
-        dbVarbs: { valueEditor: numObj(amount) },
-      });
-    }
+    const wrappedValue = loan.addAndGetChild("wrappedInLoanValue");
+    wrappedValue.updateValues({ valueEditor: numObj(5000) });
 
     const mgmtGeneral = dealTester.setter.onlyChild("mgmtGeneral");
     const mgmt = mgmtGeneral.addAndGetChild("mgmt");
-
-    const mgmtCostListGroup = mgmt.addAndGetChild("upfrontExpenseGroup");
-
-    const mgmtCostList = mgmtCostListGroup.addAndGetChild("singleTimeList");
+    const expenseValue = mgmt.addAndGetChild("upfrontExpenseValue", {
+      dbVarbs: { isItemized: true },
+    });
+    const mgmtCostList = expenseValue.onlyChild("singleTimeList");
     const mgmtCosts = [4000, 6000];
     for (const amount of mgmtCosts) {
       mgmtCostList.addChild("singleTimeItem", {
@@ -73,13 +68,9 @@ describe("SetterCalculations", () => {
   });
   it("should calculate annual cash flow accurately", () => {
     const dealTester = SetterTesterSection.init("deal");
-    addTestLoan(dealTester);
-    // 1012.6 expense
 
     const propertyGeneral = dealTester.setter.onlyChild("propertyGeneral");
     const property = propertyGeneral.onlyChild("property");
-    property.varb("taxesYearly").updateValue(numObj(1200));
-    property.varb("homeInsYearly").updateValue(numObj(1200));
 
     const rents = [1300, 1700];
     for (const amount of rents) {
@@ -88,25 +79,33 @@ describe("SetterCalculations", () => {
       });
     }
 
-    const propertyCostListGroup = property.addAndGetChild(
-      "ongoingExpenseGroup"
-    );
-    const propertyCostList =
-      propertyCostListGroup.addAndGetChild("ongoingList");
+    property.varb("taxesYearly").updateValue(numObj(1200));
+    property.varb("homeInsYearly").updateValue(numObj(1200));
+
+    const propertyCostListGroup = property.onlyChild("ongoingExpenseGroup");
+    const ongoingValue = propertyCostListGroup.addAndGetChild("ongoingValue", {
+      dbVarbs: { isItemized: true },
+    });
+    const propertyCostList = ongoingValue.onlyChild("ongoingList");
     const propertyCosts = [200, 100, 150];
     for (const amount of propertyCosts) {
       propertyCostList.addChild("ongoingItem", {
         dbVarbs: { valueEditor: numObj(amount) },
       });
-    }
+    } // why is there an extra 150?
+
+    addTestLoan(dealTester);
+    // 1012.6 expense
 
     const mgmtGeneral = dealTester.setter.onlyChild("mgmtGeneral");
-    const mgmt = mgmtGeneral.addAndGetChild("mgmt");
+    const mgmt = mgmtGeneral.onlyChild("mgmt");
     mgmt.varb("rentCutPercentEditor").updateValue(numObj(5));
     mgmt.varb("vacancyRatePercent").updateValue(numObj(5));
 
-    const mgmtCostListGroup = mgmt.addAndGetChild("ongoingExpenseGroup");
-    const mgmtCostList = mgmtCostListGroup.addAndGetChild("ongoingList");
+    const mgmtCostListGroup = mgmt.addAndGetChild("ongoingExpenseValue", {
+      dbVarbs: { isItemized: true },
+    });
+    const mgmtCostList = mgmtCostListGroup.onlyChild("ongoingList");
     const mgmtCosts = [100, 100];
     for (const amount of mgmtCosts) {
       mgmtCostList.addChild("ongoingItem", {
@@ -117,11 +116,24 @@ describe("SetterCalculations", () => {
     const cashFlowMonthly = dealTester.get.varb("cashFlowMonthly").numberValue;
     const cashFlowYearly = dealTester.get.varb("cashFlowYearly").numberValue;
 
-    // 1700 + 1300 - 1012.6 - 100 - 100 - 200 - 100 - 150  - 100 - 100 - 150 - 150
+    // + 1700
+    // + 1300
+    // - 100 taxes
+    // - 100 home insurance
+    // - 200 property cost
+    // - 100 property cost
+    // - 150 property cost
+    // - 1012.6 loan payment
+    // - 150 mgmt rent cut
+    // - 150 mgmt vacancy loss
+    // - 100 mgmt cost
+    // - 100 mgmt cost
+
+    // a mystery 150 is being subtracted from cashflow
+
     expect(cashFlowMonthly).toBe(837.4);
     expect(cashFlowYearly).toBeCloseTo(cashFlowMonthly * 12, 1);
   });
-  // To test ROI, just break up the other two tests.
 });
 
 function addTestLoan(dealTester: SetterTesterSection<"deal">): void {
@@ -136,14 +148,16 @@ function addTestLoan(dealTester: SetterTesterSection<"deal">): void {
   loan.varb("loanBasePercentEditor").updateValue(numObj(75));
   loan.varb("mortgageInsYearly").updateValue(numObj(1200));
 
-  const wrappedGroup = loan.addAndGetChild("wrappedInLoanValue");
-  const wrapped = wrappedGroup.addAndGetChild("singleTimeList");
-  wrapped.addChild("singleTimeItem", {
-    dbVarbs: { valueEditor: numObj(6000) },
+  const wrappedValue = loan.addAndGetChild("wrappedInLoanValue", {
+    dbVarbs: { isItemized: true },
   });
-  wrapped.addChild("singleTimeItem", {
-    dbVarbs: { valueEditor: numObj(14000) },
-  });
+  const wrapped = wrappedValue.onlyChild("singleTimeList");
+  const amounts = [6000, 14000];
+  for (const amount of amounts) {
+    wrapped.addChild("singleTimeItem", {
+      dbVarbs: { valueEditor: numObj(amount) },
+    });
+  }
 }
 
 function addInterestOnlyLoan(dealTester: SetterTesterSection<"deal">): void {

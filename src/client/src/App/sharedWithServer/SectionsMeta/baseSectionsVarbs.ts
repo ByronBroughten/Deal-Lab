@@ -64,6 +64,10 @@ export function makeBaseSectionsVarbs() {
       // then
       then: "numObj",
     }),
+    singleTimeListGroup: baseSectionVarbs({
+      total: "numObj",
+      itemValueSwitch: "string",
+    }),
     singleTimeValueGroup: baseSectionVarbs({
       total: "numObj",
       itemValueSwitch: "string",
@@ -96,6 +100,11 @@ export function makeBaseSectionsVarbs() {
       itemValueSwitch: "string",
       itemOngoingSwitch: "string",
       isItemized: "boolean",
+    }),
+    ongoingListGroup: baseSectionVarbs({
+      ...baseVarbsS.ongoing("total"),
+      itemValueSwitch: "string",
+      itemOngoingSwitch: "string",
     }),
     ongoingList: baseSectionVarbs({
       ...baseVarbsS.savableSection,

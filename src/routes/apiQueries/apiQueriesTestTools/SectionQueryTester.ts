@@ -13,6 +13,7 @@ import { GetterSectionsBase } from "../../../client/src/App/sharedWithServer/Sta
 import { GetterList } from "../../../client/src/App/sharedWithServer/StateGetters/GetterList";
 import { GetterSection } from "../../../client/src/App/sharedWithServer/StateGetters/GetterSection";
 import { PackMakerSection } from "../../../client/src/App/sharedWithServer/StatePackers.ts/PackMakerSection";
+import { SolverSection } from "../../../client/src/App/sharedWithServer/StateSolvers/SolverSection";
 import { SolverSections } from "../../../client/src/App/sharedWithServer/StateSolvers/SolverSections";
 import { UpdaterSection } from "../../../client/src/App/sharedWithServer/StateUpdaters/UpdaterSection";
 
@@ -42,6 +43,9 @@ export class SectionQueryTester<
   }
   get updater() {
     return new UpdaterSection(this.indexSectionQuerierProps);
+  }
+  get solver() {
+    return SolverSection.init(this.indexSectionQuerierProps);
   }
   get dbStoreName(): DbSectionNameName<SN> {
     return this.get.meta.dbIndexStoreName as DbSectionNameName<SN>;

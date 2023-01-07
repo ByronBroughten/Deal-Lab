@@ -195,7 +195,9 @@ export class GetterSection<
   sectionsByRelative(info: RelSectionInfo): GetterSection[] {
     const sections = this.allSectionsByRelative(info);
     if (info.expectedCount === "onlyOne") {
-      this.list.exactlyOneOrThrow(sections, info.infoType);
+      if (info.infoType === "children") {
+        this.oneOrThrowChildError(sections, info.childName as ChildName<SN>);
+      } else this.list.exactlyOneOrThrow(sections, info.infoType);
     }
     return sections;
   }
@@ -403,13 +405,20 @@ export class GetterSection<
     childName: CN
   ): GetterSection<ChildSectionName<SN, CN>> {
     const children = this.children(childName);
-    if (children.length > 1) {
-      throw this.tooManyChildrenError(childName);
-    } else if (children.length < 1) {
-      throw this.noChildError(childName);
-    }
+    this.oneOrThrowChildError(children, childName);
     return children[0];
   }
+  oneOrThrowChildError<CN extends ChildName<SN>>(
+    arr: any[],
+    childName: CN
+  ): void {
+    if (arr.length > 1) {
+      throw this.tooManyChildrenError(childName);
+    } else if (arr.length < 1) {
+      throw this.noChildError(childName);
+    }
+  }
+
   tooManyChildrenError(childName: ChildName<SN>): TooManySectionsFoundError {
     return new TooManySectionsFoundError(
       `${this.sectionName} has too many children of childName ${childName}`

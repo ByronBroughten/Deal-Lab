@@ -10,14 +10,18 @@ AppRegistry.runApplication("App", {
 
 // Now, what is really needed in order for me to use
 // this to apply for jobs again?
-// - Make all the flexable units have margin all around them
-//   - Each of the smallest flexible units need margin around them
-//
 
-// - Adjust padding to compensate.
 // - Delete the old lists from the list groups
 // - Get everything to solve how it should (tests pass)
-// - Make Loan look better
+
+// - Make Mgmt look good
+//   - Add a more adequate selector to Cut of rent, and retitle it
+//     "Base Pay". Use a "Select" method of choosing between
+//     "Percent of gross rent" and "Dollar amount"
+//     Display the unchosen value below
+
+// - Make Loan look good
+
 // - Make main lists loadAndCopy only and remove their title
 // - Make the capEx list table have all its headers
 // - Make the default property capEx list have items filled in

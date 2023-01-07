@@ -11,7 +11,7 @@ type Props = {
 };
 export function ListGroupOngoing({ feId, ...props }: Props) {
   const listGroup = useGetterSection({
-    sectionName: "ongoingValueGroup",
+    sectionName: "ongoingListGroup",
     feId,
   });
   return (

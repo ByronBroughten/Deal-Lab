@@ -28,7 +28,9 @@ export function makeDefaultChildPack<
   if (Obj.isKey(childDefaultMakers, sectionName)) {
     const childMakers = childDefaultMakers[sectionName];
     if (Obj.isKey(childMakers, childName)) {
-      const childMaker = childMakers[childName] as () => SectionPack<any>;
+      const childMaker = childMakers[
+        childName
+      ] as any as () => SectionPack<any>;
       return childMaker();
     }
   }

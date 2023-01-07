@@ -1,3 +1,4 @@
+import { makeDefaultPropertyPack } from "../defaultMaker/makeDefaultPropertyPack";
 import { numObj } from "../SectionsMeta/baseSectionsVarbs/baseValues/NumObj";
 import { stringObj } from "../SectionsMeta/baseSectionsVarbs/baseValues/StringObj";
 import { ChildName } from "../SectionsMeta/sectionChildrenDerived/ChildName";
@@ -59,9 +60,10 @@ describe("SetterSection", () => {
       displayName: stringObj("New Title"),
     } as const;
 
-    const packBuilder = PackBuilderSection.initAsOmniChild("property", {
-      dbVarbs: packVarbs,
-    });
+    const packBuilder = PackBuilderSection.loadAsOmniChild(
+      makeDefaultPropertyPack()
+    );
+    packBuilder.updateValues(packVarbs);
 
     for (let i = 0; i < numChildrenNext; i++) {
       packBuilder.addChild(childName);

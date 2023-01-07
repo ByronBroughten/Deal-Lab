@@ -19,7 +19,7 @@ import {
   ValueGroupValues,
 } from "./ListGroupGeneric/ValueGroupValues";
 
-type ListParentName = ParentOfTypeName<"varbListAllowed">;
+type ListParentName = ParentOfTypeName<"varbValue">;
 
 export type ListGroupGenericProps<SN extends ListParentName> = {
   valueParentInfo: FeSectionInfo<SN>;
@@ -33,7 +33,7 @@ export type ListGroupGenericProps<SN extends ListParentName> = {
 
 export function ValueGroupGeneric<
   SN extends ListParentName,
-  CN extends ChildNameOfType<SN, "varbListAllowed">
+  CN extends ChildNameOfType<SN, "varbValue">
 >({
   valueParentInfo,
   valueAsChildName,
@@ -47,7 +47,7 @@ export function ValueGroupGeneric<
   const values = parent.get.children(
     valueAsChildName
   ) as GetterSection<any>[] as GetterSection<
-    ChildSectionName<SN, CN> & SectionNameByType<"varbListAllowed">
+    ChildSectionName<SN, CN> & SectionNameByType<"varbValue">
   >[];
   const { areMultiple: areMultipleValues } = useHowMany(values);
   return (

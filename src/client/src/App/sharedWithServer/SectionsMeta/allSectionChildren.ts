@@ -106,15 +106,20 @@ export const allSectionChildren = checkAllSectionChildren({
   }),
   tableRow: { cell: sectionChild("cell") },
   outputList: { outputItem: sectionChild("outputItem") },
-  ongoingValueGroup: {
+
+  ongoingListGroup: {
     ongoingList: sectionChild("ongoingList"),
+  },
+  ongoingValueGroup: {
     ongoingValue: sectionChild("ongoingValue"),
   },
   ongoingValue: {
     ongoingList: sectionChild("ongoingList"),
   },
-  singleTimeValueGroup: {
+  singleTimeListGroup: {
     singleTimeList: sectionChild("singleTimeList"),
+  },
+  singleTimeValueGroup: {
     singleTimeValue: sectionChild("singleTimeValue"),
   },
   singleTimeValue: { singleTimeList: sectionChild("singleTimeList") },
@@ -158,9 +163,6 @@ export const allSectionChildren = checkAllSectionChildren({
   mgmt: sectionChildren({
     upfrontExpenseValue: ["singleTimeValue"],
     ongoingExpenseValue: ["ongoingValue"],
-
-    upfrontExpenseGroup: ["singleTimeValueGroup"],
-    ongoingExpenseGroup: ["ongoingValueGroup"],
     customVarb: ["customVarb"],
   }),
 });
