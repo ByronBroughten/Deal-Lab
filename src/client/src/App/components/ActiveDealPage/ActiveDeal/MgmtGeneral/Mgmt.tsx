@@ -14,7 +14,7 @@ export function Mgmt({ feId }: { feId: string }) {
       <MainSectionTopRows
         {...{
           ...feInfo,
-          sectionTitle: "Mgmt",
+          sectionTitle: "Management",
           loadWhat: "Management",
         }}
       />

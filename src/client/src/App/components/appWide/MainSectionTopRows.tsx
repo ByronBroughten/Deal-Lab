@@ -67,7 +67,7 @@ const Styled = styled.div`
   display: flex;
   align-items: center;
   .MainSectionTopRows-leftBlock {
-    width: 100px;
+    /* width: 130px; */
     color: ${theme.primary};
   }
   .MainSectionTopRows-sectionTitle {
@@ -77,7 +77,7 @@ const Styled = styled.div`
     display: flex;
     flex-direction: column;
     flex: 1;
-    margin-left: ${theme.s2};
+    margin-left: ${theme.s4};
   }
 
   .MainSectionTopRows-rightBlock {
