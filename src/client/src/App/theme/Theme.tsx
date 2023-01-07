@@ -134,6 +134,9 @@ const buttons = {
 };
 
 const borders = {
+  get borderStyle() {
+    return `solid 1px ${themeColors.primaryBorder}`;
+  },
   sectionBorderChunk: css`
     border-top: solid 1px ${themeColors.primaryBorder};
     /* border-right: solid 1px ${themeColors.primaryBorder}; */

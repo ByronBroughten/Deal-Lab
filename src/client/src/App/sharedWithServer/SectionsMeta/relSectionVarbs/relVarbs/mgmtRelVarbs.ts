@@ -1,125 +1,251 @@
 import { switchNames } from "../../baseSectionsVarbs/RelSwitchVarb";
 import { relVarb, relVarbS } from "../rel/relVarb";
-import { updateBasicsS } from "../rel/relVarb/UpdateBasics";
+import { UpdateBasics, updateBasicsS } from "../rel/relVarb/UpdateBasics";
 import { updateFnPropS, updateFnPropsS } from "../rel/relVarb/UpdateFnProps";
 import {
   overrideSwitchS,
   updateOverride,
-  updateOverrideS,
 } from "../rel/relVarb/UpdateOverrides";
 import { RelVarbs, relVarbsS } from "../relVarbs";
 
-const rentCut = switchNames("rentCut", "dollarsPercentDecimal");
-const rentCutDollars = switchNames(rentCut.dollars, "ongoing");
-
-export function mgmtRelVarbs(): RelVarbs<"mgmt"> {
+function basePay() {
+  const baseNames = switchNames("basePay", "dollarsPercentDecimal");
+  const ongoingNames = switchNames(baseNames.dollars, "ongoing");
+  const percentEditorName = `${baseNames.percent}Editor` as const;
+  const dollarsEditorName = `${baseNames.dollars}Editor` as const;
+  const baseDisplayName = "Base pay";
   return {
-    ...relVarbsS._typeUniformity,
-    ...relVarbsS.savableSection,
-    [rentCut.switch]: relVarb("string", {
+    [baseNames.switch]: relVarb("string", {
       initValue: "percent",
     }),
-    [rentCut.decimal]: relVarbS.numObj("Rent cut decimal", {
+    [baseNames.decimal]: relVarbS.numObj(`${baseDisplayName} decimal`, {
       initNumber: 0.05,
       updateFnName: "percentToDecimal",
       updateFnProps: {
-        num: updateFnPropS.local(rentCut.percent),
+        num: updateFnPropS.local(baseNames.percent),
       },
       updateOverrides: [
         updateOverride(
-          [overrideSwitchS.local(rentCut.switch, "dollars")],
+          [overrideSwitchS.local(baseNames.switch, "dollars")],
           updateBasicsS.equationLeftRight(
             "simpleDivide",
-            updateFnPropS.local(rentCutDollars.monthly),
+            updateFnPropS.local(ongoingNames.monthly),
             updateFnPropS.pathName("propertyGeneralFocal", "targetRentMonthly")
           )
         ),
       ],
     }),
-    rentCutPercentEditor: relVarbS.percentObj("Rent cut", {
+    [percentEditorName]: relVarbS.percentObj(baseDisplayName, {
       initNumber: 0,
+      endAdornment: "%",
     }),
-    [rentCut.percent]: relVarbS.percentObj("Rent cut input", {
+    [baseNames.percent]: relVarbS.percentObj(baseDisplayName, {
       updateFnName: "loadSolvableTextByVarbInfo",
       updateFnProps: {
-        varbInfo: updateFnPropS.local("rentCutPercentEditor"),
+        varbInfo: updateFnPropS.local(percentEditorName),
       },
       updateOverrides: [
         updateOverride(
-          [overrideSwitchS.local(rentCut.switch, "dollars")],
+          [overrideSwitchS.local(baseNames.switch, "dollars")],
           updateBasicsS.equationSimple(
             "decimalToPercent",
-            updateFnPropS.local(rentCut.decimal)
+            updateFnPropS.local(baseNames.decimal)
           )
         ),
       ],
       displayNameEnd: " percent",
     }),
-    [rentCutDollars.switch]: relVarb("string", {
+    [ongoingNames.switch]: relVarb("string", {
       initValue: "monthly",
     }),
-    rentCutDollarsEditor: relVarbS.moneyObj("Rent cut dollars", {
+    [dollarsEditorName]: relVarbS.moneyMonth(`${baseDisplayName} dollars`, {
       initNumber: 0,
-      displayName: "Rent cut input dollars",
     }),
-    [rentCutDollars.monthly]: relVarbS.moneyMonth("Rent cut", {
+    [ongoingNames.monthly]: relVarbS.moneyMonth(baseDisplayName, {
       displayNameEnd: " monthly",
-      updateFnName: "loadSolvableTextByVarbInfo",
-      updateFnProps: {
-        switch: updateFnPropS.local(rentCut.switch),
-        varbInfo: updateFnPropS.local("rentCutDollarsEditor"),
-      },
+      updateFnName: "throwIfReached",
       updateOverrides: [
         updateOverride(
-          [overrideSwitchS.local(rentCut.switch, "percent")],
+          [overrideSwitchS.local(baseNames.switch, "percent")],
           updateBasicsS.equationLeftRight(
             "simpleMultiply",
-            updateFnPropS.local(rentCut.decimal),
+            updateFnPropS.local(baseNames.decimal),
             updateFnPropS.pathName("propertyGeneralFocal", "targetRentMonthly")
           )
         ),
-        updateOverrideS.yearlyIfActive("rentCutDollars"),
+        updateOverride(
+          [
+            overrideSwitchS.local(baseNames.switch, "dollars"),
+            overrideSwitchS.monthlyIsActive(baseNames.dollars),
+          ],
+          updateBasicsS.loadFromLocal(
+            dollarsEditorName
+          ) as UpdateBasics<"numObj">
+        ),
+        updateOverride(
+          [
+            overrideSwitchS.local(baseNames.switch, "dollars"),
+            overrideSwitchS.yearlyIsActive(baseNames.dollars),
+          ],
+          updateBasicsS.yearlyToMonthly(baseNames.dollars)
+        ),
       ],
     }),
-    [rentCutDollars.yearly]: relVarbS.moneyYear("Rent cut", {
+    [ongoingNames.yearly]: relVarbS.moneyYear(baseDisplayName, {
       displayNameEnd: " yearly",
-      updateFnName: "loadSolvableTextByVarbInfo",
-      updateFnProps: {
-        varbInfo: updateFnPropS.local("rentCutDollarsEditor"),
-      },
+      updateFnName: "throwIfReached",
       updateOverrides: [
         updateOverride(
-          [overrideSwitchS.local(rentCut.switch, "percent")],
+          [overrideSwitchS.local(baseNames.switch, "percent")],
           updateBasicsS.equationLeftRight(
             "simpleMultiply",
-            updateFnPropS.local(rentCut.decimal),
+            updateFnPropS.local(baseNames.decimal),
             updateFnPropS.pathName("propertyGeneralFocal", "targetRentYearly")
           )
         ),
-        updateOverrideS.monthlyIfActive("rentCutDollars"),
+        updateOverride(
+          [
+            overrideSwitchS.local(baseNames.switch, "dollars"),
+            overrideSwitchS.monthlyIsActive(baseNames.dollars),
+          ],
+          updateBasicsS.monthlyToYearly(baseNames.dollars)
+        ),
+        updateOverride(
+          [
+            overrideSwitchS.local(baseNames.switch, "dollars"),
+            overrideSwitchS.yearlyIsActive(baseNames.dollars),
+          ],
+          updateBasicsS.loadFromLocal(
+            dollarsEditorName
+          ) as UpdateBasics<"numObj">
+        ),
       ],
     }),
-    vacancyRatePercent: relVarbS.percentObj("Vacancy rate", {
-      initNumber: 5,
+  };
+}
+
+function vacancyLoss() {
+  const baseNames = switchNames("vacancyLoss", "dollarsPercentDecimal");
+  const ongoingNames = switchNames(baseNames.dollars, "ongoing");
+  const percentEditorName = `${baseNames.percent}Editor` as const;
+  const dollarsEditorName = `${baseNames.dollars}Editor` as const;
+  const baseDisplayName = "Vacancy loss";
+  return {
+    [baseNames.switch]: relVarb("string", {
+      initValue: "percent",
+    }),
+    [baseNames.decimal]: relVarbS.numObj(`${baseDisplayName} decimal`, {
+      initNumber: 0.05,
+      updateFnName: "percentToDecimal",
+      updateFnProps: {
+        num: updateFnPropS.local(baseNames.percent),
+      },
+      updateOverrides: [
+        updateOverride(
+          [overrideSwitchS.local(baseNames.switch, "dollars")],
+          updateBasicsS.equationLeftRight(
+            "simpleDivide",
+            updateFnPropS.local(ongoingNames.monthly),
+            updateFnPropS.pathName("propertyGeneralFocal", "targetRentMonthly")
+          )
+        ),
+      ],
+    }),
+    [percentEditorName]: relVarbS.percentObj(baseDisplayName, {
+      initNumber: 0,
       endAdornment: "%",
     }),
-    vacancyRateDecimal: relVarbS.singlePropFn(
-      "Vacancy rate decimal",
-      "percentToDecimal",
-      updateFnPropS.local("vacancyRatePercent"),
-      {
-        initNumber: 0.05,
-        unit: "decimal",
-      }
-    ),
-    ...relVarbsS.decimalToPortion(
-      "vacancyLossDollars",
-      "Vacancy rent lost",
-      (baseVarbName) =>
-        updateFnPropS.pathName("propertyGeneralFocal", baseVarbName),
-      "targetRent",
-      "vacancyRateDecimal"
-    ),
+    [baseNames.percent]: relVarbS.percentObj(baseDisplayName, {
+      updateFnName: "loadSolvableTextByVarbInfo",
+      updateFnProps: {
+        varbInfo: updateFnPropS.local(percentEditorName),
+      },
+      updateOverrides: [
+        updateOverride(
+          [overrideSwitchS.local(baseNames.switch, "dollars")],
+          updateBasicsS.equationSimple(
+            "decimalToPercent",
+            updateFnPropS.local(baseNames.decimal)
+          )
+        ),
+      ],
+      displayNameEnd: " percent",
+    }),
+    [ongoingNames.switch]: relVarb("string", {
+      initValue: "monthly",
+    }),
+    [dollarsEditorName]: relVarbS.moneyMonth(`${baseDisplayName} dollars`, {
+      initNumber: 0,
+    }),
+    [ongoingNames.monthly]: relVarbS.moneyMonth(baseDisplayName, {
+      displayNameEnd: " monthly",
+      updateFnName: "throwIfReached",
+      updateOverrides: [
+        updateOverride(
+          [overrideSwitchS.local(baseNames.switch, "percent")],
+          updateBasicsS.equationLeftRight(
+            "simpleMultiply",
+            updateFnPropS.local(baseNames.decimal),
+            updateFnPropS.pathName("propertyGeneralFocal", "targetRentMonthly")
+          )
+        ),
+        updateOverride(
+          [
+            overrideSwitchS.local(baseNames.switch, "dollars"),
+            overrideSwitchS.monthlyIsActive(baseNames.dollars),
+          ],
+          updateBasicsS.loadFromLocal(
+            dollarsEditorName
+          ) as UpdateBasics<"numObj">
+        ),
+        updateOverride(
+          [
+            overrideSwitchS.local(baseNames.switch, "dollars"),
+            overrideSwitchS.yearlyIsActive(baseNames.dollars),
+          ],
+          updateBasicsS.yearlyToMonthly(baseNames.dollars)
+        ),
+      ],
+    }),
+    [ongoingNames.yearly]: relVarbS.moneyYear(baseDisplayName, {
+      displayNameEnd: " yearly",
+      updateFnName: "throwIfReached",
+      updateOverrides: [
+        updateOverride(
+          [overrideSwitchS.local(baseNames.switch, "percent")],
+          updateBasicsS.equationLeftRight(
+            "simpleMultiply",
+            updateFnPropS.local(baseNames.decimal),
+            updateFnPropS.pathName("propertyGeneralFocal", "targetRentYearly")
+          )
+        ),
+        updateOverride(
+          [
+            overrideSwitchS.local(baseNames.switch, "dollars"),
+            overrideSwitchS.monthlyIsActive(baseNames.dollars),
+          ],
+          updateBasicsS.monthlyToYearly(baseNames.dollars)
+        ),
+        updateOverride(
+          [
+            overrideSwitchS.local(baseNames.switch, "dollars"),
+            overrideSwitchS.yearlyIsActive(baseNames.dollars),
+          ],
+          updateBasicsS.loadFromLocal(
+            dollarsEditorName
+          ) as UpdateBasics<"numObj">
+        ),
+      ],
+    }),
+  };
+}
+
+export function mgmtRelVarbs(): RelVarbs<"mgmt"> {
+  return {
+    ...relVarbsS._typeUniformity,
+    ...relVarbsS.savableSection,
+    ...basePay(),
+    ...vacancyLoss(),
     upfrontExpenses: relVarbS.sumNums(
       "Upfront expenses",
       [updateFnPropS.children("upfrontExpenseValue", "value")],
@@ -130,7 +256,7 @@ export function mgmtRelVarbs(): RelVarbs<"mgmt"> {
       "Ongoing expenses",
       [
         updateFnPropS.children("ongoingExpenseValue", "value"),
-        ...updateFnPropsS.localArr(["vacancyLossDollars", "rentCutDollars"]),
+        ...updateFnPropsS.localArr(["vacancyLossDollars", "basePayDollars"]),
       ],
       {
         switchInit: "monthly",

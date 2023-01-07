@@ -99,8 +99,8 @@ describe("SetterCalculations", () => {
 
     const mgmtGeneral = dealTester.setter.onlyChild("mgmtGeneral");
     const mgmt = mgmtGeneral.onlyChild("mgmt");
-    mgmt.varb("rentCutPercentEditor").updateValue(numObj(5));
-    mgmt.varb("vacancyRatePercent").updateValue(numObj(5));
+    mgmt.varb("basePayPercentEditor").updateValue(numObj(5));
+    mgmt.varb("vacancyLossPercent").updateValue(numObj(5));
 
     const mgmtCostListGroup = mgmt.addAndGetChild("ongoingExpenseValue", {
       dbVarbs: { isItemized: true },

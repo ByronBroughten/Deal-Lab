@@ -15,5 +15,5 @@ const Styled = styled.label<{ $active?: boolean }>`
   padding: 0;
   font-weight: 500;
   color: ${theme.primaryNext};
-  font-size: 16px;
+  font-size: 17px;
 `;

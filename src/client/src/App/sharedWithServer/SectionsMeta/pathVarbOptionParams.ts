@@ -5,7 +5,7 @@ import { VarbNames } from "./baseSectionsDerived/baseVarbInfo";
 import { SectionName } from "./SectionName";
 import {
   SectionNameOfPath,
-  sectionPathNames
+  sectionPathNames,
 } from "./sectionPathContexts/sectionPathNames";
 import { VarbMeta } from "./VarbMeta";
 
@@ -63,9 +63,9 @@ export const soloVarbOptions = {
     "targetRentYearly",
   ]),
   ...optionVarbsProp("mgmtGeneralFocal", "Management", [
-    "vacancyRatePercent",
-    "rentCutDollarsMonthly",
-    "rentCutDollarsYearly",
+    "vacancyLossPercent",
+    "basePayDollarsMonthly",
+    "basePayDollarsYearly",
   ]),
   ...optionVarbsProp("financingFocal", "Financing", [
     "loanBaseDollars",

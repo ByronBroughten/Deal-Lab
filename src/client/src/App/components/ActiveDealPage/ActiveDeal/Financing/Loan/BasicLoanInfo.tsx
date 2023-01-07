@@ -58,9 +58,7 @@ export default function BasicLoanInfo({ feId, className }: Props) {
           <div className="BasicSectionInfo-subSection">
             <div className="BasicSectionInfo-subSection-viewable titledBlock">
               <div className="BasicSectionInfo-editorBlock titledBlock">
-                <StandardLabel className="BasicSectionInfo-editorBlockTitle">
-                  Mortgage Insurance
-                </StandardLabel>
+                <StandardLabel>Mortgage Insurance</StandardLabel>
                 <div className="BasicSectionInfo-dualEditors">
                   <NumObjEntityEditor
                     feVarbInfo={loan.varbInfo("mortgageInsUpfront")}

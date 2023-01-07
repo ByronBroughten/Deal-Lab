@@ -194,12 +194,21 @@ export function baseNamePlusEndings<
 export type SwitchEndings = typeof baseSwitchSchemas;
 export type SwitchEndingKey = keyof SwitchEndings;
 
-export function switchNames<Base extends string, K extends keyof SwitchEndings>(
-  baseName: Base,
+export type SwitchNames<
+  BN extends string,
+  K extends keyof SwitchEndings
+> = NamePlusEndings<BN, SwitchEndings[K]>;
+export function switchNames<BN extends string, K extends keyof SwitchEndings>(
+  baseName: BN,
   key: K
-): NamePlusEndings<Base, SwitchEndings[K]> {
+): SwitchNames<BN, K> {
   return baseNamePlusEndings(baseName, baseSwitchSchemas[key]);
 }
+
+export type SwitchName<
+  BN extends string,
+  K extends keyof SwitchEndings
+> = SwitchNames<BN, K>[keyof SwitchNames<BN, K>];
 
 export type SwitchRecord<
   Base extends string,

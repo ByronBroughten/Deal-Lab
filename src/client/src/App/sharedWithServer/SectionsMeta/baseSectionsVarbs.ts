@@ -214,18 +214,21 @@ export function makeBaseSectionsVarbs() {
     mgmt: baseSectionVarbs({
       ...baseVarbsS.savableSection,
       ...baseVarbs("numObj", [
-        "vacancyRatePercent",
-        "vacancyRateDecimal",
+        "vacancyLossDollarsEditor",
+        "vacancyLossPercentEditor",
+        "basePayDollarsEditor",
+        "basePayPercentEditor",
         "upfrontExpenses",
-        "rentCutDollarsEditor",
-        "rentCutPercentEditor",
       ] as const),
       ...baseVarbsS.ongoing("expenses"),
-      ...baseVarbsS.ongoing("vacancyLossDollars"),
-      ...omit(baseVarbsS.switch("rentCut", "dollarsPercentDecimal"), [
-        "rentCutDollars",
+      ...baseVarbsS.ongoing("basePayDollars"),
+      ...omit(baseVarbsS.switch("basePay", "dollarsPercentDecimal"), [
+        "basePayDollars",
       ] as const),
-      ...baseVarbsS.ongoing("rentCutDollars"),
+      ...baseVarbsS.ongoing("vacancyLossDollars"),
+      ...omit(baseVarbsS.switch("vacancyLoss", "dollarsPercentDecimal"), [
+        "vacancyLossDollars",
+      ] as const),
     } as const),
     get mgmtGeneral() {
       return baseSectionVarbs(omit(this.mgmt, savableSectionVarbNames));

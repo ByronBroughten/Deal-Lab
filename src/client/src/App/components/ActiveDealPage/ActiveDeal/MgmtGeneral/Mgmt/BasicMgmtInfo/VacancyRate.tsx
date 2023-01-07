@@ -8,7 +8,7 @@ export default function VacancyRate({ feId }: Props) {
     feId,
   });
 
-  const percentVarb = mgmt.varb("vacancyRatePercent");
+  const percentVarb = mgmt.varb("vacancyLossPercentEditor");
   const dollarsVarb = mgmt.varb("vacancyLossDollarsMonthly");
 
   const { endAdornment } = percentVarb.meta;
