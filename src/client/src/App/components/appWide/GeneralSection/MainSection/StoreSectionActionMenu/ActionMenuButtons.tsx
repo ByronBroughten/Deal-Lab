@@ -19,6 +19,7 @@ import {
 
 type Props<SN extends SectionNameByType<"hasIndexStore">> = {
   loadWhat: string;
+  onLoad?: () => void;
   sectionName: SN;
   feId: string;
 };
@@ -34,7 +35,7 @@ export function useDefaultActionLists(): ActionMenuLists {
 
 export function useActionMenuBtns<
   SN extends SectionNameByType<"hasIndexStore">
->({ loadWhat, ...feInfo }: Props<SN>) {
+>({ loadWhat, onLoad, ...feInfo }: Props<SN>) {
   const mainSection = useMainSectionActor(feInfo);
   const { isGuest } = mainSection.feUser;
 
@@ -117,6 +118,7 @@ export function useActionMenuBtns<
             feInfo,
             loadWhat,
             loadMode: "load",
+            onLoad,
           }}
         />
       );
@@ -128,6 +130,7 @@ export function useActionMenuBtns<
             feInfo,
             loadWhat,
             loadMode: "loadAndCopy",
+            onLoad,
           }}
         />
       );

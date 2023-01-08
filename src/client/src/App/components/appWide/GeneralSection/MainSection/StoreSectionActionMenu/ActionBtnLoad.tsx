@@ -11,12 +11,14 @@ type Props<SN extends SectionNameByType<"hasIndexStore">> = {
   feInfo: FeSectionInfo<SN>;
   loadMode: "load" | "loadAndCopy";
   className?: string;
+  onLoad?: () => void;
 };
 export function ActionBtnLoad<SN extends SectionNameByType<"hasIndexStore">>({
   loadWhat,
   feInfo,
   loadMode,
   className,
+  onLoad,
 }: Props<SN>) {
   const { modalIsOpen, openModal, closeModal } = useToggleViewNext(
     "modal",
@@ -36,7 +38,16 @@ export function ActionBtnLoad<SN extends SectionNameByType<"hasIndexStore">>({
         show={modalIsOpen}
         title={`Load ${loadWhat}`}
       >
-        <SectionIndexRows {...{ feInfo, onClick: closeModal, loadMode }} />
+        <SectionIndexRows
+          {...{
+            feInfo,
+            onClick: () => {
+              closeModal();
+              onLoad && onLoad();
+            },
+            loadMode,
+          }}
+        />
       </SectionModal>
     </>
   );

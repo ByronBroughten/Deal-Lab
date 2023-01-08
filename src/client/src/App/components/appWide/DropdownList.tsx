@@ -11,6 +11,11 @@ interface Props {
   className?: string;
   dropTop?: boolean;
   icon?: React.ReactNode;
+  controller?: {
+    toggleList: () => void;
+    closeList: () => void;
+    listIsOpen: boolean;
+  };
 }
 
 export function DropdownList({
@@ -19,13 +24,15 @@ export function DropdownList({
   className,
   dropTop,
   icon,
+  controller,
 }: Props) {
-  const { toggleList, closeList, listIsOpen } = useToggleView({
+  const internalController = useToggleView({
     initValue: false,
     viewWhat: "list",
   });
 
-  const listRef = useOnOutsideClickRef(closeList);
+  const control = controller ?? internalController;
+  const listRef = useOnOutsideClickRef(control.closeList);
   return (
     <Styled
       {...{
@@ -34,7 +41,7 @@ export function DropdownList({
         $dropTop: dropTop,
       }}
     >
-      {dropTop && listIsOpen && (
+      {dropTop && control.listIsOpen && (
         <div className="DropdownList-childrenOuter">
           <div className="DropdownList-childrenInner">{children}</div>
         </div>
@@ -42,14 +49,14 @@ export function DropdownList({
       <DropdownBtn
         {...{
           className: "DropdownList-dropDownBtn",
-          isDropped: listIsOpen,
-          toggleDropped: toggleList,
+          isDropped: control.listIsOpen,
+          toggleDropped: control.toggleList,
           title,
           icon,
         }}
       />
 
-      {!dropTop && listIsOpen && (
+      {!dropTop && control.listIsOpen && (
         <div className="DropdownList-childrenOuter">
           <div className="DropdownList-childrenInner">{children}</div>
         </div>
