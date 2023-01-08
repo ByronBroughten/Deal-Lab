@@ -16,9 +16,13 @@ export const isSavedActions = [
 const allIsSavedActions = [...guestIsSavedActions, ...isSavedActions];
 type IsSavedActions = typeof allIsSavedActions[number];
 
-export const alwaysActions = ["load", "loadAndCopy", "createNew"] as const;
+export const alwaysActions = ["load", "createNew"] as const;
 type AlwaysActions = typeof alwaysActions[number];
-export type AllActions = IsNotSavedActions | IsSavedActions | AlwaysActions;
+export type AllActions =
+  | IsNotSavedActions
+  | IsSavedActions
+  | AlwaysActions
+  | "loadAndCopy";
 
 export interface ActionMenuLists {
   isNotSavedArr: readonly IsNotSavedActions[];
