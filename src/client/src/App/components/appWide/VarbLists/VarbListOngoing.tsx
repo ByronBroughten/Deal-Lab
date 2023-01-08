@@ -12,7 +12,7 @@ type Props = {
 };
 export function VarbListOngoing({ feId, ...rest }: Props) {
   const list = useSetterSection({ sectionName: "ongoingList", feId });
-  const totalVarbName = list.get.switchVarbName("total", "ongoing");
+  const totalVarbName = list.get.activeSwitchTargetName("total", "ongoing");
   const itemOngoingSwitch = list.varb("itemOngoingSwitch").value("string");
   return (
     <VarbListGeneric

@@ -3,7 +3,11 @@ import { numObj } from "../../baseSectionsVarbs/baseValues/NumObj";
 import { switchNames } from "../../baseSectionsVarbs/RelSwitchVarb";
 import { loanVarbsNotInFinancing } from "../../baseSectionsVarbs/specialVarbNames";
 import { relVarb, relVarbS } from "../rel/relVarb";
-import { updateBasics, updateBasicsS } from "../rel/relVarb/UpdateBasics";
+import {
+  UpdateBasics,
+  updateBasics,
+  updateBasicsS,
+} from "../rel/relVarb/UpdateBasics";
 import { updateFnPropS, updateFnPropsS } from "../rel/relVarb/UpdateFnProps";
 import {
   overrideSwitchS,
@@ -11,69 +15,14 @@ import {
 } from "../rel/relVarb/UpdateOverrides";
 import { RelVarbs, relVarbsS } from "../relVarbs";
 
-const loanBase = switchNames("loanBase", "dollarsPercentDecimal");
 export function loanRelVarbs(): RelVarbs<"loan"> {
   return {
     ...relVarbsS._typeUniformity,
     ...relVarbsS.savableSection,
-    [loanBase.switch]: relVarb("string", {
-      initValue: "percent",
+    ...loanAmount(),
+    isInterestOnly: relVarb("boolean", {
+      initValue: false,
     }),
-    [loanBase.decimal]: relVarbS.numObj("Base loan decimal", {
-      initNumber: 0.05,
-      unit: "decimal",
-      updateFnName: "throwIfReached",
-      updateOverrides: [
-        updateOverride(
-          [overrideSwitchS.local(loanBase.switch, "dollars")],
-          updateBasics("simpleDivide", {
-            leftSide: updateFnPropS.local("loanBaseDollars"),
-            rightSide: updateFnPropS.pathName("propertyGeneralFocal", "price"),
-          })
-        ),
-        updateOverride(
-          [overrideSwitchS.local(loanBase.switch, "percent")],
-          updateBasicsS.equationSimple(
-            "percentToDecimal",
-            updateFnPropS.local(loanBase.percent)
-          )
-        ),
-      ],
-    }),
-    [loanBase.percent]: relVarbS.percentObj("Base loan", {
-      displayNameEnd: " percent",
-      updateFnName: "loadSolvableTextByVarbInfo",
-      updateFnProps: {
-        switch: updateFnPropS.local(loanBase.switch),
-        varbInfo: updateFnPropS.local("loanBasePercentEditor"),
-      },
-      updateOverrides: [
-        updateOverride(
-          [overrideSwitchS.local(loanBase.switch, "decimal")],
-          updateBasics("decimalToPercent", {
-            num: updateFnPropS.local(loanBase.decimal),
-          })
-        ),
-      ],
-    }),
-    [loanBase.dollars]: relVarbS.moneyObj("Base loan", {
-      displayNameEnd: " dollars",
-      updateFnName: "loadSolvableTextByVarbInfo",
-      updateFnProps: {
-        switch: updateFnPropS.local(loanBase.switch),
-        varbInfo: updateFnPropS.local("loanBaseDollarsEditor"),
-      },
-      updateOverrides: [
-        updateOverride(
-          [overrideSwitchS.local(loanBase.switch, "percent")],
-          updateBasics("simpleMultiply", {
-            leftSide: updateFnPropS.local(loanBase.decimal),
-            rightSide: updateFnPropS.pathName("propertyGeneralFocal", "price"),
-          })
-        ),
-      ],
-    }),
-    hasMortgageIns: relVarb("boolean"),
     loanBaseDollarsEditor: relVarbS.moneyObj("Loan amount", {
       initNumber: 0,
     }),
@@ -94,9 +43,68 @@ export function loanRelVarbs(): RelVarbs<"loan"> {
       switchInit: "years",
       years: { initValue: numObj(30) },
     }),
+    mortgageInsOngoingEditor: relVarbS.moneyYear("Mortgage insurance"),
+    mortgageInsUpfrontInput: relVarbS.numObj("Mortgage insurance upfront"),
+    hasMortgageIns: relVarb("boolean", {
+      initValue: false,
+    }),
     ...relVarbsS.timeMoneyInput("mortgageIns", "Mortgage insurance", {
       switchInit: "yearly",
-      shared: { initNumber: 0 },
+      shared: {
+        updateFnName: "throwIfReached",
+        initNumber: 0,
+      },
+      monthly: {
+        updateOverrides: [
+          updateOverride(
+            [overrideSwitchS.localIsFalse("hasMortgageIns")],
+            updateBasics("solvableTextZero")
+          ),
+          updateOverride(
+            [
+              overrideSwitchS.localIsTrue("hasMortgageIns"),
+              overrideSwitchS.monthlyIsActive("mortgageIns"),
+            ],
+            updateBasicsS.loadFromLocal(
+              "mortgageInsOngoingEditor"
+            ) as UpdateBasics<"numObj">
+          ),
+          updateOverride(
+            [
+              overrideSwitchS.localIsTrue("hasMortgageIns"),
+              overrideSwitchS.yearlyIsActive("mortgageIns"),
+            ],
+            updateBasicsS.yearlyToMonthly("mortgageIns")
+          ),
+        ],
+      },
+      yearly: {
+        updateOverrides: [
+          updateOverride(
+            [overrideSwitchS.localIsFalse("hasMortgageIns")],
+            updateBasics("solvableTextZero")
+          ),
+          updateOverride(
+            [
+              overrideSwitchS.localIsTrue("hasMortgageIns"),
+              overrideSwitchS.yearlyIsActive("mortgageIns"),
+            ],
+            updateBasicsS.loadFromLocal(
+              "mortgageInsOngoingEditor"
+            ) as UpdateBasics<"numObj">
+          ),
+          updateOverride(
+            [
+              overrideSwitchS.localIsTrue("hasMortgageIns"),
+              overrideSwitchS.monthlyIsActive("mortgageIns"),
+            ],
+            updateBasicsS.monthlyToYearly("mortgageIns")
+          ),
+        ],
+      },
+    }),
+    mortgageInsUpfront: relVarbS.moneyObj("Upfront mortgage insurance", {
+      initNumber: 0,
     }),
     ...relVarbsS.ongoingSumNums(
       "expenses",
@@ -107,9 +115,6 @@ export function loanRelVarbs(): RelVarbs<"loan"> {
         shared: { startAdornment: "$" },
       }
     ),
-    mortgageInsUpfront: relVarbS.moneyObj("Upfront mortgage insurance", {
-      initNumber: 0,
-    }),
     closingCosts: relVarbS.sumMoney("Closing costs", [
       updateFnPropS.children("closingCostValue", "value"),
     ]),
@@ -184,18 +189,16 @@ export function loanRelVarbs(): RelVarbs<"loan"> {
       "Loan payment",
       {
         monthly: {
-          updateFnName: "loadNumObj",
-          updateFnProps: {
-            varbInfo: updateFnPropS.local("piFixedStandardMonthly"),
-          },
+          updateFnName: "throwIfReached",
           updateOverrides: [
             updateOverride(
-              [
-                overrideSwitchS.local(
-                  "piCalculationName",
-                  "interestOnlySimple"
-                ),
-              ],
+              [overrideSwitchS.local("isInterestOnly", false)],
+              updateBasicsS.loadFromLocal(
+                "piFixedStandardMonthly"
+              ) as UpdateBasics<"numObj">
+            ),
+            updateOverride(
+              [overrideSwitchS.local("isInterestOnly", true)],
               updateBasics("loadNumObj", {
                 varbInfo: updateFnPropS.local("interestOnlySimpleMonthly"),
               })
@@ -203,18 +206,16 @@ export function loanRelVarbs(): RelVarbs<"loan"> {
           ],
         },
         yearly: {
-          updateFnName: "loadNumObj",
-          updateFnProps: {
-            varbInfo: updateFnPropS.local("piFixedStandardYearly"),
-          },
+          updateFnName: "throwIfReached",
           updateOverrides: [
             updateOverride(
-              [
-                overrideSwitchS.local(
-                  "piCalculationName",
-                  "interestOnlySimple"
-                ),
-              ],
+              [overrideSwitchS.local("isInterestOnly", false)],
+              updateBasicsS.loadFromLocal(
+                "piFixedStandardYearly"
+              ) as UpdateBasics<"numObj">
+            ),
+            updateOverride(
+              [overrideSwitchS.local("isInterestOnly", true)],
               updateBasics("loadNumObj", {
                 varbInfo: updateFnPropS.local("interestOnlySimpleYearly"),
               })
@@ -231,3 +232,85 @@ export const financingRelVarbs: RelVarbs<"financing"> = {
   ...relVarbsS.sumSection("loan", loanRelVarbs(), loanVarbsNotInFinancing),
   ...relVarbsS.sectionStrings("loan", loanRelVarbs(), loanVarbsNotInFinancing),
 };
+
+function loanAmount() {
+  const baseNames = switchNames("loanBase", "dollarsPercentDecimal");
+  const percentEditorName = `${baseNames.percent}Editor` as const;
+  const dollarsEditorName = `${baseNames.dollars}Editor` as const;
+  const baseDisplayName = "Loan Amount";
+  const propToDivideBy = updateFnPropS.pathName(
+    "propertyGeneralFocal",
+    "price"
+  );
+  return {
+    [baseNames.switch]: relVarb("string", {
+      initValue: "percent",
+    }),
+    [percentEditorName]: relVarbS.percentObj(baseDisplayName, {
+      initNumber: 0,
+      endAdornment: "%",
+    }),
+    [dollarsEditorName]: relVarbS.moneyMonth(`${baseDisplayName} dollars`, {
+      initNumber: 0,
+    }),
+    [baseNames.decimal]: relVarbS.numObj(`${baseDisplayName} decimal`, {
+      initNumber: 0.05,
+      updateFnName: "throwIfReached",
+      updateOverrides: [
+        updateOverride(
+          [overrideSwitchS.local(baseNames.switch, "percent")],
+          updateBasicsS.equationSimple(
+            "percentToDecimal",
+            updateFnPropS.local(baseNames.percent)
+          )
+        ),
+        updateOverride(
+          [overrideSwitchS.local(baseNames.switch, "dollars")],
+          updateBasicsS.equationLeftRight(
+            "simpleDivide",
+            updateFnPropS.local(baseNames.dollars),
+            propToDivideBy
+          )
+        ),
+      ],
+    }),
+    [baseNames.percent]: relVarbS.percentObj(baseDisplayName, {
+      updateFnName: "throwIfReached",
+      updateOverrides: [
+        updateOverride(
+          [overrideSwitchS.local(baseNames.switch, "percent")],
+          updateBasicsS.loadFromLocal(
+            percentEditorName
+          ) as UpdateBasics<"numObj">
+        ),
+        updateOverride(
+          [overrideSwitchS.local(baseNames.switch, "dollars")],
+          updateBasicsS.equationSimple(
+            "decimalToPercent",
+            updateFnPropS.local(baseNames.decimal)
+          )
+        ),
+      ],
+      displayNameEnd: " percent",
+    }),
+    [baseNames.dollars]: relVarbS.moneyObj(baseDisplayName, {
+      updateFnName: "throwIfReached",
+      updateOverrides: [
+        updateOverride(
+          [overrideSwitchS.local(baseNames.switch, "dollars")],
+          updateBasicsS.loadFromLocal(
+            dollarsEditorName
+          ) as UpdateBasics<"numObj">
+        ),
+        updateOverride(
+          [overrideSwitchS.local(baseNames.switch, "percent")],
+          updateBasicsS.equationLeftRight(
+            "simpleMultiply",
+            updateFnPropS.local(baseNames.decimal),
+            propToDivideBy
+          )
+        ),
+      ],
+    }),
+  } as const;
+}

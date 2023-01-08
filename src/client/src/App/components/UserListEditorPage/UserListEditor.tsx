@@ -23,7 +23,9 @@ export function UserListEditor() {
             listParentInfo: userListEditor.feInfo,
             listAsChildName: "singleTimeListMain",
             makeListNode: (nodeProps) => (
-              <VarbListSingleTime {...{ ...nodeProps, menuType: "simple" }} />
+              <VarbListSingleTime
+                {...{ ...nodeProps, menuType: "editorPage" }}
+              />
             ),
           }}
         />
@@ -33,7 +35,7 @@ export function UserListEditor() {
             listParentInfo: userListEditor.feInfo,
             listAsChildName: "ongoingListMain",
             makeListNode: (nodeProps) => (
-              <VarbListOngoing {...{ ...nodeProps, menuType: "simple" }} />
+              <VarbListOngoing {...{ ...nodeProps, menuType: "editorPage" }} />
             ),
           }}
         />

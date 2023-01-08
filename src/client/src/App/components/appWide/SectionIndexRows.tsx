@@ -3,17 +3,18 @@ import React from "react";
 import { unstable_batchedUpdates } from "react-dom";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import styled from "styled-components";
+import { useMainSectionActor } from "../../modules/sectionActorHooks/useMainSectionActor";
 import { FeSectionInfo } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { SectionNameByType } from "../../sharedWithServer/SectionsMeta/SectionNameByType";
 import { useAuthStatus } from "../../sharedWithServer/stateClassHooks/useAuthStatus";
 import ccs from "../../theme/cssChunks";
 import theme, { ThemeName, themeSectionNameOrDefault } from "../../theme/Theme";
-import { useMainSectionActor } from "./../../modules/sectionActorHooks/useMainSectionActor";
 import useHowMany from "./customHooks/useHowMany";
 import { RowIndexListRow, StyledRowIndexRow } from "./RowIndexListRow";
 
 type Props<SN extends SectionNameByType<"hasIndexStore">> = {
   feInfo: FeSectionInfo<SN>;
+  loadMode: "load" | "loadAndCopy";
   className?: string;
   onClick?: () => void;
 };
@@ -25,16 +26,20 @@ function useScenarioKey(rows: any[]): ScenarioKey {
   else return "isAtLeastOne";
 }
 
-export function RowIndexRows<SN extends SectionNameByType<"hasIndexStore">>({
-  feInfo,
-  className,
-  onClick,
-}: Props<SN>) {
+export function SectionIndexRows<
+  SN extends SectionNameByType<"hasIndexStore">
+>({ feInfo, className, onClick, loadMode }: Props<SN>) {
   const authStatus = useAuthStatus();
   const [filter, setFilter] = React.useState("");
   const section = useMainSectionActor(feInfo);
   const rows = section.alphabeticalDisplayItems();
   const scenarioKey = useScenarioKey(rows);
+
+  const loadMethod = {
+    load: (dbId: string) => section.loadFromIndex(dbId),
+    loadAndCopy: (dbId: string) => section.loadAndCopy(dbId),
+  };
+
   const scenarios = {
     get areNone() {
       return <Message message="None Saved" />;
@@ -44,7 +49,7 @@ export function RowIndexRows<SN extends SectionNameByType<"hasIndexStore">>({
         <>
           <TextField
             {...{
-              className: "RowIndexRows-filter",
+              className: "SectionIndexRows-filter",
               placeholder: "filter",
               value: filter,
               onChange: ({ currentTarget }) => {
@@ -61,7 +66,7 @@ export function RowIndexRows<SN extends SectionNameByType<"hasIndexStore">>({
                       displayName,
                       load: () => {
                         unstable_batchedUpdates(() => {
-                          section.loadFromIndex(dbId);
+                          loadMethod[loadMode ?? "load"](dbId);
                           onClick && onClick();
                         });
                       },
@@ -82,7 +87,7 @@ export function RowIndexRows<SN extends SectionNameByType<"hasIndexStore">>({
 
   return (
     <Styled
-      className={`RowIndexRows-root ${className}`}
+      className={`SectionIndexRows-root ${className}`}
       tabIndex={0}
       sectionName={themeSectionNameOrDefault(feInfo.sectionName)}
     >
@@ -93,9 +98,9 @@ export function RowIndexRows<SN extends SectionNameByType<"hasIndexStore">>({
 
 function Message({ message }: { message: string }) {
   return (
-    <StyledRowIndexRow className={"RowIndexRows-noEntriesRow"}>
+    <StyledRowIndexRow className={"SectionIndexRows-noEntriesRow"}>
       <AiOutlineInfoCircle size={25} />
-      <span className="RowIndexRows-noEntriesMessage">{message}</span>
+      <span className="SectionIndexRows-noEntriesMessage">{message}</span>
     </StyledRowIndexRow>
   );
 }
@@ -112,11 +117,11 @@ const Styled = styled.div<{ sectionName: ThemeName }>`
   overflow-x: hidden;
   ${ccs.dropdown.scrollbar};
 
-  .RowIndexRows-filter {
+  .SectionIndexRows-filter {
     padding: 0 ${theme.s3} 0 ${theme.s3};
   }
 
-  .RowIndexRows-noEntriesRow {
+  .SectionIndexRows-noEntriesRow {
     display: flex;
     align-items: center;
     white-space: nowrap;
@@ -124,11 +129,11 @@ const Styled = styled.div<{ sectionName: ThemeName }>`
     color: ${theme["gray-600"]};
     background-color: ${theme.info.light};
   }
-  .RowIndexRows-noEntriesMessage {
+  .SectionIndexRows-noEntriesMessage {
     margin-left: ${theme.s25};
   }
 
-  .RowIndexRows-trashBtn {
+  .SectionIndexRows-trashBtn {
     width: 20px;
     height: auto;
   }

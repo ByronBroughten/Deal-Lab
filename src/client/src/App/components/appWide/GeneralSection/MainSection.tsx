@@ -12,7 +12,7 @@ export function MainSection({ className, ...rest }: Props) {
 const Styled = styled.div`
   background: ${theme.light};
   padding: ${theme.s4};
-  padding-top: ${theme.s35};
+  /* padding-top: ${theme.s35}; */
   border-radius: ${theme.br0};
   box-shadow: ${theme.boxShadow1};
   .MainSectionBody-root {

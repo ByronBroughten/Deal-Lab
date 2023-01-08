@@ -95,6 +95,9 @@ export class MainSectionSolver<
       },
     } as SomeSectionValues<SN>);
   }
+  copyMinusNameChange() {
+    this.updater.newDbId();
+  }
   loadSectionPack(sectionPack: SectionPack<SN>) {
     this.solver.loadSelf(sectionPack);
   }

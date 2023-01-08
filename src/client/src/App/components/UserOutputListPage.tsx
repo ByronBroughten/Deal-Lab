@@ -11,7 +11,7 @@ export function UserOutputListPage() {
         storeName="outputListMain"
         title="Output lists"
         makeListNode={(nodeProps) => (
-          <VarbListOutputs {...{ ...nodeProps, menuType: "simple" }} />
+          <VarbListOutputs {...{ ...nodeProps, menuType: "editorPage" }} />
         )}
       />
     </UserListsPageGeneric>

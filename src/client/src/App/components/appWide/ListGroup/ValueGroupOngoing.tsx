@@ -14,7 +14,7 @@ export function ValueGroupOngoing({ feId, ...props }: Props) {
     sectionName: "ongoingValueGroup",
     feId,
   });
-  const totalVarbName = valueGroup.switchVarbName(
+  const totalVarbName = valueGroup.activeSwitchTargetName(
     "total",
     "ongoing"
   ) as "totalMonthly";

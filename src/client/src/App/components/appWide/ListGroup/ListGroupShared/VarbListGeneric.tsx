@@ -9,14 +9,13 @@ import {
   SectionNameByType,
   SectionValuesByType,
 } from "../../../../sharedWithServer/SectionsMeta/SectionNameByType";
+import { useGetterSection } from "../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { useSetterSection } from "../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import theme, { ThemeName } from "../../../../theme/Theme";
 import { BigStringEditor } from "../../../inputs/BigStringEditor";
 import { useOpenWidth } from "../../customHooks/useOpenWidth";
+import { ActionBtnLoad } from "../../GeneralSection/MainSection/StoreSectionActionMenu/ActionBtnLoad";
 import { useSaveStatus } from "../../GeneralSection/MainSection/useSaveStatus";
-import { ListMenuFull } from "./ListMenuFull";
-import { ListMenuSimple } from "./ListMenuSimple";
-import { CaretSyncMenuBtn } from "./VarbListGeneric/CaretSyncMenuBtn";
 import { VarbListTable } from "./VarbListGeneric/VarbListTable";
 import { VarbListTotal } from "./VarbListGeneric/VarbListTotal";
 
@@ -29,10 +28,10 @@ type Props<SN extends VarbListAllowed> = {
   totalVarbName?: string;
   className?: string;
   childDbVarbs?: DbVarbs;
-  menuType?: "simple" | "full";
+  menuType?: VarbListGenericMenuType;
 };
 
-export type VarbListGenericMenuType = "simple" | "full";
+export type VarbListGenericMenuType = "value" | "editorPage";
 export function VarbListGeneric<SN extends VarbListAllowed>({
   feInfo,
   makeItemNode,
@@ -41,17 +40,15 @@ export function VarbListGeneric<SN extends VarbListAllowed>({
   totalVarbName,
   className,
   childDbVarbs,
-  menuType = "full",
+  menuType = "value",
 }: Props<SN>) {
-  const disableSaveStatus = menuType === "simple";
+  const disableSaveStatus = true;
   let saveStatus = useSaveStatus(feInfo, disableSaveStatus);
   const list = useSetterSection(feInfo);
-  const titleVarb = list.varb("displayName");
   const { listMenuIsOpen } = useToggleView({
     initValue: false,
     viewWhat: "listMenu",
   });
-
   const { trackWidthToggleView, ...titleRowProps } = useOpenWidth();
   const { viewIsOpen } = titleRowProps;
 
@@ -66,71 +63,40 @@ export function VarbListGeneric<SN extends VarbListAllowed>({
       } as SectionValuesByType<"varbListItem"> as SectionValues<any>,
     });
   };
-
   const items = list.get.children(itemName);
-  const listGet = list.get;
-
-  const listMenuProps = {
-    ...listGet.feInfo,
-    viewIsOpen,
-    themeName,
-    toggleListView: trackWidthToggleView,
-    saveStatus,
-  } as const;
-
   const { toggleMenu, menuIsOpen } = useToggleView({
     viewWhat: "menu",
     initValue: false,
   });
 
   const listMenu = {
-    full: () => (
-      <ListMenuFull className="VarbListGeneric-menuFull" {...listMenuProps} />
-    ),
-    simple: () => (
-      <ListMenuSimple
+    value: () => (
+      <ValueListMenu
         className="VarbListGeneric-menuSimple"
-        {...listMenuProps}
+        {...{
+          ...feInfo,
+          totalVarbName,
+        }}
+      />
+    ),
+    editorPage: () => (
+      <EditorPageListMenu
+        className="VarbListGeneric-menuSimple"
+        {...{
+          ...feInfo,
+          totalVarbName,
+        }}
       />
     ),
   };
+
   return (
     <Styled
       className={"VarbListGeneric-root " + className}
       {...{ themeName, listMenuIsOpen }}
     >
       <div className="VarbListGeneric-viewable">
-        {menuIsOpen && (
-          <div className="VarbList-menuRow">{listMenu[menuType]()}</div>
-        )}
-
-        <div className="VarbListGeneric-titleRow">
-          <div className="VarbListGeneric-titleRowLeft">
-            <BigStringEditor
-              {...{
-                feVarbInfo: titleVarb.get.feVarbInfo,
-                placeholder: "Name",
-                className: "AdditiveList-title",
-                themeName,
-              }}
-            />
-            {totalVarbName && (
-              <VarbListTotal
-                varbInfo={{
-                  ...feInfo,
-                  varbName: totalVarbName,
-                }}
-              />
-            )}
-          </div>
-          <CaretSyncMenuBtn
-            saveStatus={saveStatus}
-            className="VarbListGeneric-caretBtn"
-            dropped={menuIsOpen}
-            onClick={toggleMenu}
-          />
-        </div>
-
+        {listMenu[menuType]()}
         {viewIsOpen && (
           <VarbListTable {...{ themeName, contentTitle, addItem }}>
             {items.map((item) => makeItemNode(item))}
@@ -204,5 +170,94 @@ const Styled = styled.div<{
   .VarbListGeneric-caretBtn {
     margin-left: ${theme.s2};
     height: ${theme.smallButtonHeight};
+  }
+`;
+
+function ValueListMenu<SN extends VarbListAllowed>({
+  totalVarbName,
+  className,
+  ...feInfo
+}: FeSectionInfo<SN> & { totalVarbName?: string; className?: string }) {
+  return (
+    <StyledListMenu className={`ValueListMenu-root ${className ?? ""}`}>
+      <div className="VarbListGeneric-titleRow">
+        <div className="VarbListGeneric-titleRowLeft">
+          {totalVarbName && (
+            <VarbListTotal
+              varbInfo={{
+                ...feInfo,
+                varbName: totalVarbName,
+              }}
+            />
+          )}
+        </div>
+        <div className="VarbListGeneric-titleRowRight">
+          <ActionBtnLoad
+            {...{
+              loadMode: "loadAndCopy",
+              loadWhat: "List",
+              feInfo,
+            }}
+          />
+        </div>
+      </div>
+    </StyledListMenu>
+  );
+}
+
+function EditorPageListMenu<SN extends VarbListAllowed>({
+  totalVarbName,
+  className,
+  ...feInfo
+}: FeSectionInfo<SN> & { totalVarbName?: string; className?: string }) {
+  const list = useGetterSection(feInfo);
+  return (
+    <StyledListMenu className={`ValueListMenu-root ${className ?? ""}`}>
+      <div className="VarbListGeneric-titleRow">
+        <div className="VarbListGeneric-titleRowLeft">
+          <BigStringEditor
+            {...{
+              feVarbInfo: list.varbInfo("displayName"),
+              placeholder: "Name",
+              className: "AdditiveList-title",
+            }}
+          />
+          {totalVarbName && (
+            <VarbListTotal
+              varbInfo={{
+                ...feInfo,
+                varbName: totalVarbName,
+              }}
+            />
+          )}
+        </div>
+        <div className="VarbListGeneric-titleRowRight">
+          <ActionBtnLoad
+            {...{
+              loadMode: "loadAndCopy",
+              loadWhat: "List",
+              feInfo,
+            }}
+          />
+        </div>
+      </div>
+    </StyledListMenu>
+  );
+}
+
+const StyledListMenu = styled.div`
+  .ActionBtnLoad-root {
+    margin-left: ${theme.s25};
+    width: 75px;
+    height: 25px;
+    border-radius: ${theme.br0};
+    box-shadow: none;
+
+    .LabeledIconBtn-iconSpan {
+      min-width: 25px;
+    }
+    .LabeledIconBtn-label {
+      margin-left: ${theme.s2};
+    }
   }
 `;

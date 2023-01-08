@@ -29,15 +29,14 @@ export function Loan({
         }}
       />
       <MainSectionBody themeName="loan">
-        <div className="ListGroup-lists">
-          <BasicLoanInfo feId={feId} className="ListGroup-root" />
-        </div>
+        <BasicLoanInfo feId={feId} className="ListGroup-root" />
         <ValueSectionZone
           {...{
             ...feInfo,
             childName: "closingCostValue",
             displayName: "Closing Costs",
             plusBtnText: "+ Closing Costs",
+            className: "Loan-closingCosts",
           }}
         />
       </MainSectionBody>
@@ -59,5 +58,8 @@ const Styled = styled(MainSection)`
     .MainSectionTopRows-xBtn {
       visibility: visible;
     }
+  }
+  .Loan-closingCosts {
+    margin-top: ${theme.s4};
   }
 `;

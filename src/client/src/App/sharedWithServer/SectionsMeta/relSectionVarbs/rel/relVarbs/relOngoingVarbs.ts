@@ -7,7 +7,6 @@ import {
 } from "../../../baseSectionsVarbs/RelSwitchVarb";
 import { relVarbsS } from "../../relVarbs";
 import { RelNumObjOptions, relVarb, relVarbS } from "../relVarb";
-import { UpdateBasics } from "../relVarb/UpdateBasics";
 import {
   UpdateFnProp,
   updateFnPropS,
@@ -69,16 +68,9 @@ function getMonthlyYearlyProps(
   return monthlyYearlyProps;
 }
 
-interface NumObjSwitchTargetPack
-  extends Omit<RelNumObjOptions, "updateFnName" | "updateFnProps">,
-    UpdateBasics<"numObj"> {}
-
 type OngoingUpdatePacks = {
-  monthly: NumObjSwitchTargetPack;
-  yearly: NumObjSwitchTargetPack;
-};
-type NumObjUpdatePack = {
-  [prop in keyof OngoingUpdatePacks]: NumObjSwitchTargetPack;
+  monthly: RelNumObjOptions;
+  yearly: RelNumObjOptions;
 };
 
 export function monthsYearsInput<Base extends string>(
@@ -196,7 +188,7 @@ export function decimalToPortion<Base extends string>(
 export function ongoingPureCalc<Base extends string>(
   baseVarbName: Base,
   displayName: DisplayName,
-  updatePacks: NumObjUpdatePack,
+  updatePacks: OngoingUpdatePacks,
   options: MonthlyYearlySwitchOptions
 ): SwitchRelVarbs<Base, "ongoing"> {
   const varbNames = switchNames(baseVarbName, "ongoing");

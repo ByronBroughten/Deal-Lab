@@ -572,7 +572,10 @@ export class GetterSection<
       );
     return switchValue as SwitchTargetKey<SK>;
   }
-  switchVarbName(varbNameBase: string, switchEnding: SwitchEndingKey): string {
+  activeSwitchTargetName(
+    varbNameBase: string,
+    switchEnding: SwitchEndingKey
+  ): string {
     const varbNames = switchNames(varbNameBase, switchEnding);
     const switchValue = this.switchValue(varbNameBase, switchEnding);
     return varbNames[switchValue as keyof typeof varbNames];
@@ -581,7 +584,7 @@ export class GetterSection<
     varbNameBase: string,
     switchEnding: SwitchEndingKey
   ): FeVarbInfo<SN> {
-    const varbName = this.switchVarbName(
+    const varbName = this.activeSwitchTargetName(
       varbNameBase,
       switchEnding
     ) as VarbName<SN>;
@@ -591,7 +594,7 @@ export class GetterSection<
     varbNameBase: string,
     switchEnding: SwitchEndingKey
   ): GetterVarb<SN> {
-    const varbName = this.switchVarbName(varbNameBase, switchEnding);
+    const varbName = this.activeSwitchTargetName(varbNameBase, switchEnding);
     return this.varb(varbName);
   }
   value<VT extends ValueName | "any" = "any">(

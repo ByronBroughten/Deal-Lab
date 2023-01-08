@@ -1,6 +1,4 @@
-import { FormControlLabel, FormGroup, Switch } from "@material-ui/core";
 import React from "react";
-import { unstable_batchedUpdates } from "react-dom";
 import { AiFillEdit } from "react-icons/ai";
 import styled from "styled-components";
 import { useToggleViewNext } from "../../modules/customHooks/useToggleView";
@@ -15,6 +13,7 @@ import { NumObjEntityEditor } from "../inputs/NumObjEntityEditor";
 import { RemoveSectionXBtn } from "./RemoveSectionXBtn";
 import { SectionModal } from "./SectionModal";
 import { SectionTitle } from "./SectionTitle";
+import { TogglerBooleanVarb } from "./TogglerBooleanVarb";
 
 type ValueSectionName = SectionNameByType<"valueSection">;
 type MakeItemizedListNodeProps = {
@@ -99,28 +98,17 @@ export function ValueSectionGeneric<
           )}
         </div>
         <div className="ValueSection-itemizeControls">
-          <FormGroup className="ValueSection-itemizeGroup">
-            <FormControlLabel
-              control={
-                <Switch
-                  {...{
-                    name: "itemize switch",
-                    checked: isItemized,
-                    onChange: () => {
-                      unstable_batchedUpdates(() => {
-                        const nextValue = !isItemized;
-                        isItemizedVarb.updateValue(nextValue);
-                        nextValue && openModal();
-                      });
-                    },
-                    size: "small",
-                    color: "primary",
-                  }}
-                />
-              }
-              label="Itemize"
-            />
-          </FormGroup>
+          <TogglerBooleanVarb
+            {...{
+              feVarbInfo: isItemizedVarb.get.feVarbInfo,
+              className: "ValueSection-itemizeGroup",
+              label: "Itemize",
+              name: "itemize switch",
+              onChange: (nextValue) => {
+                nextValue && openModal();
+              },
+            }}
+          />
           {isItemized && (
             <PlainIconBtn
               className="ValueSection-editItemsBtn"
@@ -198,18 +186,6 @@ const Styled = styled.div`
   .ValueSection-itemizeGroup {
     margin-top: ${theme.s2};
     margin-left: ${theme.s25};
-    .MuiFormControlLabel-root {
-      margin-right: ${theme.s2};
-      color: ${theme.primaryNext};
-
-      .MuiSwitch-colorPrimary {
-        color: ${theme["gray-500"]};
-      }
-
-      .MuiSwitch-colorPrimary.Mui-checked {
-        color: ${theme.primaryNext};
-      }
-    }
   }
 
   .ValueSection-value {

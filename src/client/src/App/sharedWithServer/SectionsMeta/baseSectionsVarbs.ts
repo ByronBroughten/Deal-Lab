@@ -188,11 +188,13 @@ export function makeBaseSectionsVarbs() {
       ...baseVarbsS.savableSection,
       ...baseVarbs("numObj", [
         "loanTotalDollars",
-        "mortgageInsUpfront",
         "closingCosts",
         "wrappedInLoan",
         "loanBaseDollarsEditor",
         "loanBasePercentEditor",
+        "mortgageInsUpfront",
+        "mortgageInsOngoingEditor",
+        "mortgageInsUpfrontInput",
       ] as const),
       ...baseVarbsS.switch("loanBase", "dollarsPercentDecimal"),
       ...baseVarbsS.ongoing("interestRateDecimal"),
@@ -201,10 +203,12 @@ export function makeBaseSectionsVarbs() {
       ...baseVarbsS.ongoing("interestOnlySimple"),
       ...baseVarbsS.ongoing("expenses"),
       ...baseVarbsS.switch("loanTerm", "monthsYears"),
-      piCalculationName: "string",
       ...baseVarbsS.ongoing("loanPayment"),
       ...baseVarbsS.ongoing("mortgageIns"),
+
+      piCalculationName: "string",
       hasMortgageIns: "boolean",
+      isInterestOnly: "boolean",
     } as const),
     get financing() {
       return baseSectionVarbs({

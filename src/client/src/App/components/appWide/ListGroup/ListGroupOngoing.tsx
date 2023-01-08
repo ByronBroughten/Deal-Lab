@@ -20,7 +20,7 @@ export function ListGroupOngoing({ feId, ...props }: Props) {
         ...props,
         listParentInfo: listGroup.feInfo,
         listAsChildName: "ongoingList",
-        totalVarbName: listGroup.switchVarbName(
+        totalVarbName: listGroup.activeSwitchTargetName(
           "total",
           "ongoing"
         ) as "totalMonthly",

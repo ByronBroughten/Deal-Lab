@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { SwitchTargetKey } from "../../../../../sharedWithServer/SectionsMeta/baseSectionsVarbs/baseSwitchNames";
 import { switchNames } from "../../../../../sharedWithServer/SectionsMeta/baseSectionsVarbs/RelSwitchVarb";
 import theme from "../../../../../theme/Theme";
-import { DollarPercentInput } from "../../general/DollarPercentInput";
+import { PercentOngoingDollarInput } from "../../general/PercentOngoingDollarInput";
 
 function getEditorVarbName(unitSwitch: SwitchTargetKey<"dollarsPercent">) {
   switch (unitSwitch) {
@@ -37,7 +37,7 @@ export function BasicMgmtInfo({ feId, className }: Props) {
     <Styled
       {...{ sectionName: "mgmt", className: `BasicMgmtInfo-root ${className}` }}
     >
-      <DollarPercentInput
+      <PercentOngoingDollarInput
         {...{
           label: "Base Pay",
           percentOfWhat: "gross rent",
@@ -47,7 +47,7 @@ export function BasicMgmtInfo({ feId, className }: Props) {
           ...feInfo,
         }}
       />
-      <DollarPercentInput
+      <PercentOngoingDollarInput
         {...{
           label: "Vacancy Loss",
           percentOfWhat: "gross rent",
@@ -62,7 +62,6 @@ export function BasicMgmtInfo({ feId, className }: Props) {
 }
 
 const Styled = styled.div`
-  flex-direction: column;
   .BasicMgmtInfo-basePay {
   }
   .BasicMgmtInfo-vacancyLoss {

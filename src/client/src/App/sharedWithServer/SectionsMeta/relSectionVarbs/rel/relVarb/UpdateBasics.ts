@@ -15,11 +15,11 @@ export type UpdateBasics<VN extends ValueName = ValueName> = {
 
 export function updateBasics<VN extends ValueName>(
   updateFnName: UpdateFnName<VN>,
-  updateFnProps: UpdateFnProps
+  updateFnProps?: UpdateFnProps
 ): UpdateBasics<VN> {
   return {
     updateFnName,
-    updateFnProps,
+    updateFnProps: updateFnProps ?? {},
   };
 }
 

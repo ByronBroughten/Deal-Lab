@@ -14,7 +14,6 @@ interface Props {
 
 const NumObjVarbSelector = React.memo(
   React.forwardRef(({ setEditorState }: Props, ref: PopperRef) => {
-    console.log("NumObjVarbSelector");
     function onSelect(value: VariableOption) {
       const { displayName, varbInfo } = value;
       const entity: EntityMapData = {

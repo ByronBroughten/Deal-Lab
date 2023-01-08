@@ -45,8 +45,14 @@ export const overrideSwitchS = {
       switchValue,
     } as const;
   },
+  localIsTrue(varbName: string) {
+    return this.local(varbName, true);
+  },
+  localIsFalse(varbName: string) {
+    return this.local(varbName, false);
+  },
   valueSourceIs(valueSource: string) {
-    return overrideSwitchS.local("valueSourceSwitch", "valueEditor");
+    return overrideSwitchS.local("valueSourceSwitch", valueSource);
   },
 };
 

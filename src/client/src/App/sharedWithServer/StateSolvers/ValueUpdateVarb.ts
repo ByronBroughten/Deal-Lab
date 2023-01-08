@@ -75,6 +75,12 @@ export class SolveValueVarb<
       );
       return varb.value("numObj");
     },
+    solvableTextZero: (): NumObj => {
+      return {
+        ...this.getterVarb.value("numObj"),
+        solvableText: "0",
+      };
+    },
     getNumObjOfSwitch: (): NumObj => {
       const { updateFnProps } = this.inEntityVarb;
       const { getterSection: get } = this;

@@ -135,9 +135,17 @@ export class MainSectionActor<
     );
   }
   async loadFromIndex(dbId: string): Promise<void> {
+    this.initLoad(dbId);
+    this.setter.setSections();
+  }
+  async loadAndCopy(dbId: string): Promise<void> {
+    this.initLoad(dbId);
+    this.mainSolver.copyMinusNameChange();
+    this.setter.setSections();
+  }
+  private async initLoad(dbId: string) {
     const sectionPack = await this.loadByLogin(dbId);
     this.mainSolver.loadSectionPack(sectionPack);
-    this.setter.setSections();
   }
   private async loadByLogin(dbId: string): Promise<SectionPack<SN>> {
     if (this.feUser.isLoggedIn) {

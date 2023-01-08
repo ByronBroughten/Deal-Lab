@@ -1,0 +1,43 @@
+import { BsCloudArrowDown } from "react-icons/bs";
+import { useToggleViewNext } from "../../../../../modules/customHooks/useToggleView";
+import { FeSectionInfo } from "../../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
+import { SectionNameByType } from "../../../../../sharedWithServer/SectionsMeta/SectionNameByType";
+import { LabeledIconBtn } from "../../../LabeledIconBtn";
+import { SectionIndexRows } from "../../../SectionIndexRows";
+import { SectionModal } from "../../../SectionModal";
+
+type Props<SN extends SectionNameByType<"hasIndexStore">> = {
+  loadWhat: string;
+  feInfo: FeSectionInfo<SN>;
+  loadMode: "load" | "loadAndCopy";
+  className?: string;
+};
+export function ActionBtnLoad<SN extends SectionNameByType<"hasIndexStore">>({
+  loadWhat,
+  feInfo,
+  loadMode,
+  className,
+}: Props<SN>) {
+  const { modalIsOpen, openModal, closeModal } = useToggleViewNext(
+    "modal",
+    false
+  );
+  return (
+    <>
+      <LabeledIconBtn
+        key="load"
+        label="Load"
+        icon={<BsCloudArrowDown size={26} />}
+        onClick={openModal}
+        className={`ActionBtnLoad-root ${className ?? ""}`}
+      />
+      <SectionModal
+        closeModal={closeModal}
+        show={modalIsOpen}
+        title={`Load ${loadWhat}`}
+      >
+        <SectionIndexRows {...{ feInfo, onClick: closeModal, loadMode }} />
+      </SectionModal>
+    </>
+  );
+}

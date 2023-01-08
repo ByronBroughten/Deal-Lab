@@ -1,18 +1,12 @@
 import React from "react";
-import {
-  AiOutlineCloudDownload,
-  AiOutlineInfoCircle,
-  AiOutlineSave,
-} from "react-icons/ai";
+import { AiOutlineInfoCircle, AiOutlineSave } from "react-icons/ai";
 import { BiCopy, BiReset } from "react-icons/bi";
 import { MdOutlineSystemUpdateAlt } from "react-icons/md";
-import { useToggleViewNext } from "../../../../../modules/customHooks/useToggleView";
 import { useFeUser } from "../../../../../modules/sectionActorHooks/useFeUser";
 import { useMainSectionActor } from "../../../../../modules/sectionActorHooks/useMainSectionActor";
 import { SectionNameByType } from "../../../../../sharedWithServer/SectionsMeta/SectionNameByType";
 import { LabeledIconBtn } from "../../../LabeledIconBtn";
-import { RowIndexRows } from "../../../RowIndexRows";
-import { SectionModal } from "../../../SectionModal";
+import { ActionBtnLoad } from "./ActionBtnLoad";
 import {
   ActionMenuLists,
   AllActions,
@@ -43,10 +37,7 @@ export function useActionMenuBtns<
 >({ loadWhat, ...feInfo }: Props<SN>) {
   const mainSection = useMainSectionActor(feInfo);
   const { isGuest } = mainSection.feUser;
-  const { modalIsOpen, openModal, closeModal } = useToggleViewNext(
-    "modal",
-    false
-  );
+
   const actionMenuBtns: Record<AllActions, React.ReactNode> = {
     get signInToSave() {
       return (
@@ -121,21 +112,24 @@ export function useActionMenuBtns<
     },
     get load() {
       return (
-        <>
-          <LabeledIconBtn
-            key="load"
-            label="Load"
-            icon={<AiOutlineCloudDownload size={26} />}
-            onClick={openModal}
-          />
-          <SectionModal
-            closeModal={closeModal}
-            show={modalIsOpen}
-            title={`Load ${loadWhat}`}
-          >
-            <RowIndexRows {...{ feInfo, onClick: closeModal }} />
-          </SectionModal>
-        </>
+        <ActionBtnLoad
+          {...{
+            feInfo,
+            loadWhat,
+            loadMode: "load",
+          }}
+        />
+      );
+    },
+    get loadAndCopy() {
+      return (
+        <ActionBtnLoad
+          {...{
+            feInfo,
+            loadWhat,
+            loadMode: "loadAndCopy",
+          }}
+        />
       );
     },
     get createNew() {

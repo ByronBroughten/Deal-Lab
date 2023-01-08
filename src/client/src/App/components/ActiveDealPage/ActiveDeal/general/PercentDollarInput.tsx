@@ -10,16 +10,18 @@ import theme from "../../../../theme/Theme";
 import StandardLabel from "../../../general/StandardLabel";
 import { NumObjEntityEditor } from "../../../inputs/NumObjEntityEditor";
 
+// In this case, I can just use the unitBaseName, yes?
+// but...
 interface Props<SN extends SectionName> extends FeSectionInfo<SN> {
   unitBaseName: string;
-  ongoingBaseName: string;
+  dollarVarbName: VarbName<SN>;
   percentOfWhat: string;
   label: string;
   className?: string;
 }
-export function DollarPercentInput<SN extends SectionName>({
+export function PercentDollarInput<SN extends SectionName>({
   unitBaseName,
-  ongoingBaseName,
+  dollarVarbName,
   percentOfWhat,
   label,
   className,
@@ -32,7 +34,6 @@ export function DollarPercentInput<SN extends SectionName>({
     .switch as VarbName<SN>;
 
   const unitSwitchValue = get.switchValue(unitBaseName, "dollarsPercent");
-  const ongoingSwitchValue = get.switchValue(ongoingBaseName, "ongoing");
 
   const editorInfo = section.varbInfo(
     getEditorVarbName(unitBaseName, unitSwitchValue) as VarbName<SN>
@@ -42,7 +43,7 @@ export function DollarPercentInput<SN extends SectionName>({
     const varbName = getDisplayVarbName({
       unitBaseName,
       unitSwitchValue,
-      ongoingSwitchValue,
+      dollarVarbName,
     }) as VarbName<SN>;
 
     const varb = section.varb(varbName);
@@ -60,9 +61,9 @@ export function DollarPercentInput<SN extends SectionName>({
   return (
     <Styled className={`DollarsPercentInput-root ${className ?? ""}`}>
       <StandardLabel>{label}</StandardLabel>
-      <div className="DollarPercentInput-basePayEditorDiv">
+      <div className="PercentDollarInput-basePayEditorDiv">
         <FormControl
-          className="DollarPercentInput-basePayFormControl"
+          className="PercentDollarInput-basePayFormControl"
           size="small"
           variant="filled"
         >
@@ -83,13 +84,13 @@ export function DollarPercentInput<SN extends SectionName>({
           </Select>
         </FormControl>
         <NumObjEntityEditor
-          className="DollarPercentInput-basePayEditor"
+          className="PercentDollarInput-basePayEditor"
           feVarbInfo={editorInfo}
           labeled={false}
         />
-        <div className="DollarPercentInput-equalsDiv">
-          <span className="DollarPercentInput-equals">=</span>
-          <span className="DollarPercentInput-equalsText">
+        <div className="PercentDollarInput-equalsDiv">
+          <span className="PercentDollarInput-equals">=</span>
+          <span className="PercentDollarInput-equalsText">
             {getEqualsText()}
           </span>
         </div>
@@ -102,11 +103,11 @@ const Styled = styled.div`
   border-bottom: ${theme.borderStyle};
   padding-bottom: ${theme.s35};
 
-  .DollarPercentInput-basePayEditorDiv {
+  .PercentDollarInput-basePayEditorDiv {
     margin-top: ${theme.s15};
     display: flex;
   }
-  .DollarPercentInput-basePayFormControl {
+  .PercentDollarInput-basePayFormControl {
     border: solid 1px ${theme["gray-300"]};
     border-right: none;
     border-top-left-radius: ${theme.br0};
@@ -118,7 +119,7 @@ const Styled = styled.div`
       border-top-right-radius: 0;
     }
   }
-  .DollarPercentInput-basePayEditor {
+  .PercentDollarInput-basePayEditor {
     .NumObjEditor-materialDraftEditor {
       .editor-background {
         border-top-left-radius: 0;
@@ -131,18 +132,18 @@ const Styled = styled.div`
       }
     }
   }
-  .DollarPercentInput-equalsDiv {
+  .PercentDollarInput-equalsDiv {
     display: flex;
     align-items: center;
     padding-left: ${theme.s3};
     font-size: ${theme.infoSize};
   }
 
-  .DollarPercentInput-equals {
+  .PercentDollarInput-equals {
     font-size: 22px;
   }
 
-  .DollarPercentInput-equalsText {
+  .PercentDollarInput-equalsText {
     margin-left: ${theme.s2};
   }
 `;
@@ -162,20 +163,20 @@ function getEditorVarbName(
   }
 }
 
-type GetDisplayNameProps = {
+type GetDisplayNameProps<SN extends SectionName> = {
   unitBaseName: string;
   unitSwitchValue: SwitchTargetKey<"dollarsPercent">;
-  ongoingSwitchValue: SwitchTargetKey<"ongoing">;
+  dollarVarbName: VarbName<SN>;
 };
-function getDisplayVarbName({
+function getDisplayVarbName<SN extends SectionName>({
   unitBaseName,
   unitSwitchValue,
-  ongoingSwitchValue,
-}: GetDisplayNameProps) {
+  dollarVarbName,
+}: GetDisplayNameProps<SN>) {
   const names = switchNames(unitBaseName, "dollarsPercent");
   switch (unitSwitchValue) {
     case "percent":
-      return switchNames(names.dollars, "ongoing")[ongoingSwitchValue];
+      return dollarVarbName;
     case "dollars":
       return names.percent;
     default:

@@ -68,7 +68,7 @@ const Styled = styled.div<{
   }
   th.AdditiveListTable-contentHeader,
   th.AdditiveListTable-buttonHeader {
-    text-align: center;
+    text-align: left;
   }
 
   th.VarbListTable-nameHeader,
