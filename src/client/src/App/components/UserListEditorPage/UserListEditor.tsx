@@ -12,14 +12,14 @@ export function UserListEditor() {
   return (
     <Styled>
       <UserEditorTitleRow
-        titleText="Cost Lists"
+        titleText="Lists"
         sectionName="userListEditor"
         childNames={["singleTimeListMain", "ongoingListMain"]}
       />
       <div className="UserListEditor-listGroups">
         <ListGroupGeneric
           {...{
-            titleText: "Upfront",
+            titleText: "One-time Costs",
             listParentInfo: userListEditor.feInfo,
             listAsChildName: "singleTimeListMain",
             makeListNode: (nodeProps) => (
@@ -31,7 +31,7 @@ export function UserListEditor() {
         />
         <ListGroupGeneric
           {...{
-            titleText: "Ongoing",
+            titleText: "Ongoing Costs",
             listParentInfo: userListEditor.feInfo,
             listAsChildName: "ongoingListMain",
             makeListNode: (nodeProps) => (

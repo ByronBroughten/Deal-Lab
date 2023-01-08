@@ -44,7 +44,23 @@ export function loanRelVarbs(): RelVarbs<"loan"> {
       years: { initValue: numObj(30) },
     }),
     mortgageInsOngoingEditor: relVarbS.moneyYear("Mortgage insurance"),
-    mortgageInsUpfrontInput: relVarbS.numObj("Mortgage insurance upfront"),
+    mortgageInsUpfrontEditor: relVarbS.numObj("Mortgage insurance upfront"),
+    mortgageInsUpfront: relVarbS.moneyObj("Upfront mortgage insurance", {
+      initNumber: 0,
+      updateFnName: "throwIfReached",
+      updateOverrides: [
+        updateOverride(
+          [overrideSwitchS.localIsFalse("hasMortgageIns")],
+          updateBasics("solvableTextZero")
+        ),
+        updateOverride(
+          [overrideSwitchS.localIsTrue("hasMortgageIns")],
+          updateBasicsS.loadFromLocal(
+            "mortgageInsUpfrontEditor"
+          ) as UpdateBasics<"numObj">
+        ),
+      ],
+    }),
     hasMortgageIns: relVarb("boolean", {
       initValue: false,
     }),
@@ -102,9 +118,6 @@ export function loanRelVarbs(): RelVarbs<"loan"> {
           ),
         ],
       },
-    }),
-    mortgageInsUpfront: relVarbS.moneyObj("Upfront mortgage insurance", {
-      initNumber: 0,
     }),
     ...relVarbsS.ongoingSumNums(
       "expenses",

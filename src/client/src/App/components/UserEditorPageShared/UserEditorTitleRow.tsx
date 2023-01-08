@@ -83,8 +83,6 @@ const Styled = styled.div`
   }
   .UserListMainSection-saveBtn {
     width: 250px;
-  }
-  .SectionTitle-root {
     margin-left: ${theme.s3};
   }
 `;

@@ -1,4 +1,3 @@
-import { PiCalculationName } from "../SectionsMeta/baseSectionsVarbs/baseValues/calculations/piCalculations";
 import { numObj } from "../SectionsMeta/baseSectionsVarbs/baseValues/NumObj";
 import { SetterTesterSection } from "./TestUtils/SetterTesterSection";
 
@@ -100,7 +99,7 @@ describe("SetterCalculations", () => {
     const mgmtGeneral = dealTester.setter.onlyChild("mgmtGeneral");
     const mgmt = mgmtGeneral.onlyChild("mgmt");
     mgmt.varb("basePayPercentEditor").updateValue(numObj(5));
-    mgmt.varb("vacancyLossPercent").updateValue(numObj(5));
+    mgmt.varb("vacancyLossPercentEditor").updateValue(numObj(5));
 
     const mgmtCostListGroup = mgmt.addAndGetChild("ongoingExpenseValue", {
       dbVarbs: { isItemized: true },
@@ -146,7 +145,8 @@ function addTestLoan(dealTester: SetterTesterSection<"deal">): void {
   loan.varb("interestRatePercentYearly").updateValue(numObj(5));
   loan.varb("loanTermYears").updateValue(numObj(30));
   loan.varb("loanBasePercentEditor").updateValue(numObj(75));
-  loan.varb("mortgageInsYearly").updateValue(numObj(1200));
+  loan.varb("hasMortgageIns").updateValue(true);
+  loan.varb("mortgageInsOngoingEditor").updateValue(numObj(1200));
 
   const wrappedValue = loan.addAndGetChild("wrappedInLoanValue", {
     dbVarbs: { isItemized: true },
@@ -163,9 +163,9 @@ function addTestLoan(dealTester: SetterTesterSection<"deal">): void {
 function addInterestOnlyLoan(dealTester: SetterTesterSection<"deal">): void {
   const financing = dealTester.setter.onlyChild("financing");
   const loan = financing.addAndGetChild("loan");
-  const calcName: PiCalculationName = "interestOnlySimple";
-  loan.varb("piCalculationName").updateValue(calcName);
+  loan.varb("isInterestOnly").updateValue(true);
   loan.varb("loanBaseUnitSwitch").updateValue("dollars");
   loan.varb("loanBaseDollarsEditor").updateValue(numObj(10000));
   loan.varb("interestRatePercentYearly").updateValue(numObj(6));
+  loan.varb("interestRatePercentOngoingSwitch").updateValue("yearly");
 }

@@ -194,7 +194,7 @@ export function makeBaseSectionsVarbs() {
         "loanBasePercentEditor",
         "mortgageInsUpfront",
         "mortgageInsOngoingEditor",
-        "mortgageInsUpfrontInput",
+        "mortgageInsUpfrontEditor",
       ] as const),
       ...baseVarbsS.switch("loanBase", "dollarsPercentDecimal"),
       ...baseVarbsS.ongoing("interestRateDecimal"),
