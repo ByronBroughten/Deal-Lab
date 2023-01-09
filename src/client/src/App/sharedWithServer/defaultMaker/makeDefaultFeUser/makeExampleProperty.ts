@@ -47,7 +47,8 @@ export function makeExampleProperty(): SectionPack<"property"> {
   utilityList.loadSelf(makeUtilityList(examplePropertyUtilityProps));
 
   const capExValue = property.onlyChild("capExCostValue");
-  capExValue.updateValues({ isItemized: true });
+
+  capExValue.updateValues({ isItemized: true, valueOngoingSwitch: "yearly" });
   const capExList = capExValue.onlyChild("ongoingList");
   capExList.loadSelf(makeCapExList(examplePropertyCapExListProps));
 

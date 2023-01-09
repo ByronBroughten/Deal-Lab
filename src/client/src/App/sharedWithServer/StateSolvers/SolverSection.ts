@@ -46,8 +46,16 @@ export class SolverSection<
     props: SolverSectionInitProps<S>
   ): SolverSection<S> {
     return new SolverSection({
-      ...props,
       solveShare: SolverSectionsBase.initSolveShare(),
+      ...props,
+    });
+  }
+  static initDefaultMain(): SolverSection<"main"> {
+    const sections = SolverSections.initSectionsFromDefaultMain();
+    const mainRaw = sections.firstRawSection("main");
+    return this.init({
+      sectionsShare: { sections },
+      ...mainRaw,
     });
   }
   get get(): GetterSection<SN> {
@@ -157,6 +165,12 @@ export class SolverSection<
   ): SolverSection<ChildSectionName<SN, CN>> {
     const { feInfo } = this.get.onlyChild(childName);
     return this.solverSection(feInfo);
+  }
+  children<CN extends ChildName<SN>>(
+    childName: CN
+  ): SolverSection<ChildSectionName<SN, CN>>[] {
+    const getters = this.get.children(childName);
+    return getters.map(({ feInfo }) => this.solverSection(feInfo));
   }
   child<CN extends ChildName<SN>>(
     childInfo: FeChildInfo<SN, CN>

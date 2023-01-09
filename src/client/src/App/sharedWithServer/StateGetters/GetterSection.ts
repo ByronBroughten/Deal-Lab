@@ -385,7 +385,7 @@ export class GetterSection<
   >({ childName, dbId }: DbChildInfo<SN, CN>): GetterSection<CT> {
     let children = this.children(childName);
     children = children.filter((child) => child.dbId === dbId);
-    this.list.exactlyOneOrThrow(children, "dbId");
+    this.oneOrThrowChildError(children, childName);
     return children[0] as GetterSection<CT>;
   }
   childList<CN extends ChildName<SN>, CT extends ChildSectionName<SN, CN>>(

@@ -4,7 +4,7 @@ import { StateSections } from "../../StateSections/StateSections";
 
 export interface GetterSectionsProps {
   sectionsShare: SectionsShare;
-  contextShare: ContextShare;
+  contextShare?: ContextShare;
 }
 
 export type SectionsShare = { sections: StateSections };

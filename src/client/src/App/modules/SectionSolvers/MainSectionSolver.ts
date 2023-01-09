@@ -16,6 +16,7 @@ import { SolverSectionBase } from "../../sharedWithServer/StateSolvers/SolverBas
 import { SolverSection } from "../../sharedWithServer/StateSolvers/SolverSection";
 import { UpdaterSection } from "../../sharedWithServer/StateUpdaters/UpdaterSection";
 import { timeS } from "../../sharedWithServer/utils/date";
+import { ChildSectionName } from "./../../sharedWithServer/SectionsMeta/sectionChildrenDerived/ChildSectionName";
 import { FeIndexSolver } from "./FeIndexSolver";
 import { FeUserSolver } from "./FeUserSolver";
 
@@ -57,16 +58,32 @@ export class MainSectionSolver<
       ...feUser.feInfo,
     });
   }
-
+  loadFromLocalStore(dbId: string) {
+    const sectionPack = this.indexSolver.getItem(dbId);
+    this.loadSectionPack(sectionPack);
+  }
+  prepForCompare<SN extends ChildSectionName<"omniParent">>(
+    sectionPack: SectionPack<SN>
+  ): SectionPack<SN> {
+    return this.feUserSolver.prepForCompare(sectionPack);
+  }
+  getPreppedSaveStatusPacks() {
+    return {
+      loaded: this.prepForCompare(this.packMaker.makeSectionPack()),
+      saved: this.prepForCompare(this.asSavedPack),
+    };
+  }
   get saveStatus(): SaveStatus {
     if (!this.isSaved) {
       return "unsaved";
     } else {
-      let sectionPack = this.packMaker.makeSectionPack();
-      let { asSavedPack } = this;
-      sectionPack = this.feUserSolver.prepForCompare(sectionPack);
-      asSavedPack = this.feUserSolver.prepForCompare(asSavedPack);
-      if (isEqual(sectionPack, asSavedPack)) {
+      const { loaded, saved } = this.getPreppedSaveStatusPacks();
+      const areEqual = isEqual(loaded, saved);
+      // if (!areEqual) {
+      //   const diffs = Obj.difference(loaded, saved);
+      //   console.log(JSON.stringify(diffs));
+      // }
+      if (areEqual) {
         return "changesSynced";
       } else {
         return "unsyncedChanges";

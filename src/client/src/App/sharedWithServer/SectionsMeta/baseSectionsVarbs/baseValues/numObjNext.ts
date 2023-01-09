@@ -41,6 +41,7 @@ export function numObjNext(...propArr: EntityNumObjPropArr): NumObj {
       solvableText += "?";
     }
   }
+  entities.sort((a, b) => b.offset - a.offset);
   return {
     mainText,
     entities,
