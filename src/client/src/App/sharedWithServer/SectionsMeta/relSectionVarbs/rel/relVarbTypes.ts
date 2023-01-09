@@ -1,20 +1,13 @@
+import { DisplayName } from "../../allDisplaySectionVarbs";
 import { ValueNamesToTypes } from "../../baseSectionsDerived/valueMetaTypes";
 import { NumUnitName } from "../../baseSectionsVarbs/baseValues/calculations/numUnitParams";
 import { ValueName } from "../../baseSectionsVarbs/baseVarb";
-import { RelLocalVarbInfo } from "../../SectionInfo/RelVarbInfo";
 import { UpdateProps } from "./relVarb/UpdateProps";
 
-export type DisplayName = string | RelLocalVarbInfo;
 export type CommonRelVarb = {
-  virtualVarb: {
-    value: string;
-    displayName: string;
-    displayNameEnd: string;
-  } | null;
   displayName: DisplayName;
   displayNameStart: string;
   displayNameEnd: string;
-
   startAdornment: string;
   endAdornment: string;
 };

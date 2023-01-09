@@ -1,5 +1,6 @@
 import { cloneDeep } from "lodash";
 import { sectionsMeta } from "../SectionsMeta";
+import { DisplayName } from "./allDisplaySectionVarbs";
 import { VarbNames } from "./baseSectionsDerived/baseVarbInfo";
 import { valueMetas } from "./baseSectionsDerived/valueMetas";
 import {
@@ -15,7 +16,7 @@ import {
   UpdateOverrides,
   UpdateOverrideSwitches,
 } from "./relSectionVarbs/rel/relVarb/UpdateOverrides";
-import { DisplayName, RelVarb } from "./relSectionVarbs/rel/relVarbTypes";
+import { RelVarb } from "./relSectionVarbs/rel/relVarbTypes";
 import { GeneralRelVarbs } from "./relSectionVarbs/relVarbs";
 import { SectionMeta } from "./SectionMeta";
 import { SectionName } from "./SectionName";

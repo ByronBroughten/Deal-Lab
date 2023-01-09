@@ -1,3 +1,4 @@
+import { DisplayName } from "../../allDisplaySectionVarbs";
 import { valueMetas } from "../../baseSectionsDerived/valueMetas";
 import {
   LeftRightPropCalcName,
@@ -10,17 +11,11 @@ import { SectionName } from "../../SectionName";
 import { getUpdateFnNames } from "./relVarb/UpdateFnName";
 import { UpdateFnProp, updateFnPropS } from "./relVarb/UpdateFnProps";
 import { UpdateProps, updatePropsS } from "./relVarb/UpdateProps";
-import {
-  CommonRelVarb,
-  DisplayName,
-  NumObjRelVarb,
-  RelVarb,
-} from "./relVarbTypes";
+import { CommonRelVarb, NumObjRelVarb, RelVarb } from "./relVarbTypes";
 
 const makeDefaultCommon = <T extends CommonRelVarb>(common: T): CommonRelVarb =>
   common;
 const defaultCommon = makeDefaultCommon({
-  virtualVarb: null,
   displayName: "",
   displayNameEnd: "",
   displayNameStart: "",

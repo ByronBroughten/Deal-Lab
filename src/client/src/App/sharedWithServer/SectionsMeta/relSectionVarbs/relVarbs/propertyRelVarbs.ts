@@ -6,21 +6,16 @@ export function propertyRelVarbs(): RelVarbs<"property"> {
   return {
     ...relVarbsS._typeUniformity,
     ...relVarbsS.savableSection,
+
     price: relVarbS.moneyObj("Purchase price"),
     sqft: relVarbS.calcVarb("Square feet"),
     ...relVarbsS.timeMoneyInput("taxes", "Taxes", {
       switchInit: "yearly",
     }),
-    ...relVarbsS.timeMoneyInput("homeIns", "Home insurance", {
-      switchInit: "yearly",
-    }),
-    arv: relVarbS.moneyObj("ARV"),
-    sellingCosts: relVarbS.moneyObj("ARV"),
-    // this should be a percent or dollar
 
-    ...relVarbsS.monthsYearsInput("holdingPeriod", "Holding period", {
-      switchInit: "months",
-    }),
+    arv: relVarbS.moneyObj("ARV"),
+    sellingCosts: relVarbS.moneyObj("Selling costs"),
+
     numUnits: relVarbS.sumChildVarb("Unit count", "unit", "one"),
     numBedrooms: relVarbS.sumChildVarb("Bedroom count", "unit", "numBedrooms"),
     upfrontExpenses: relVarbS.sumMoney("Upfront expenses", [
@@ -31,6 +26,7 @@ export function propertyRelVarbs(): RelVarbs<"property"> {
     upfrontRevenue: relVarbS.sumMoney("Upfront revenues", [
       updateFnPropS.children("upfrontRevenueGroup", "total"),
     ]),
+
     ...relVarbsS.ongoingSumNums(
       "expenses",
       "Ongoing expenses",
@@ -45,6 +41,12 @@ export function propertyRelVarbs(): RelVarbs<"property"> {
       { switchInit: "monthly", shared: { startAdornment: "$" } }
     ),
     // ongoing revenue
+    ...relVarbsS.timeMoneyInput("homeIns", "Home insurance", {
+      switchInit: "yearly",
+    }),
+    ...relVarbsS.monthsYearsInput("holdingPeriod", "Holding period", {
+      switchInit: "months",
+    }),
     ...relVarbsS.ongoingSumNums(
       "miscRevenue",
       "Revenue besides rent",

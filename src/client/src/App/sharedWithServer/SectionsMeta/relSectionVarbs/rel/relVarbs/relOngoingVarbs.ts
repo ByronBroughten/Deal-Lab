@@ -1,3 +1,4 @@
+import { DisplayName } from "../../../allDisplaySectionVarbs";
 import {
   ongoingVarb,
   SwitchEndingKey,
@@ -12,7 +13,7 @@ import {
   updateFnPropS,
   UpdateFnProps,
 } from "../relVarb/UpdateFnProps";
-import { DisplayName, StringRelVarb } from "../relVarbTypes";
+import { StringRelVarb } from "../relVarbTypes";
 
 export type SwitchRelVarbs<
   Base extends string,
