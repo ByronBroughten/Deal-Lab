@@ -9,23 +9,21 @@ import { NavBarPanel } from "./NavBarPanel";
 const styles = StyleSheet.create({
   banner: {},
   pitch: {
-    backgroundColor: theme.property.main,
-    borderRadius: 3,
+    backgroundColor: theme.light,
+    borderRadius: 5,
     padding: theme.s3,
   },
   upgradeToProTitle: {
     fontSize: 20,
-    fontWeight: "700",
-    color: theme.softDark,
+    color: theme.primaryNext,
   },
   subSectionSpace: {
-    marginTop: theme.s1,
+    marginTop: theme.s3,
   },
   list: {},
 
   boldText: {
-    fontWeight: "bold",
-    color: theme.softDark,
+    color: theme.light,
   },
   normalText: { fontSize: 16 },
 });
@@ -42,12 +40,12 @@ export function UpgradeUserToProPanel() {
             <View style={styles.subSectionSpace}>
               <Text
                 style={styles.normalText}
-              >{`Save and load hundreds of properties, deals, and whatever else.\nAnd hey, there's a 7 day free trial, so give it a try.`}</Text>
+              >{`Save and load hundreds of deals, properties, loans, managements, variables, and lists.\nAnd hey, there's a 7 day free trial.`}</Text>
             </View>
           </View>
         </View>
         <Button className="PaymentForm-payBtn" onClick={goToPaymentPage}>
-          View Offer
+          Upgrade Page
         </Button>
       </div>
     </Styled>
@@ -55,18 +53,22 @@ export function UpgradeUserToProPanel() {
 }
 
 const Styled = styled(NavBarPanel)`
+  border: solid 1px ${theme.primaryBorder};
+  border-radius: 0 0 ${theme.br0} ${theme.br0};
+  border-top: none;
+  box-shadow: ${theme.boxShadow1};
   .PaymentForm-payBtn {
     display: block;
     font-size: 16px;
     width: 100%;
     height: 40px;
     margin-top: ${theme.s3};
-    background-color: ${theme.deal.main};
+    background-color: ${theme.primaryNext};
     box-shadow: 0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08),
       inset 0 1px 0 ${theme.deal.main}
     border-radius: 4px;
-    color: ${theme.softDark};
-    font-weight: 600;
+    color: ${theme.light};
+    
     cursor: pointer;
     transition: all 100ms ease-in-out;
     will-change: transform, background-color, box-shadow;

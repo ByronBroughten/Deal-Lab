@@ -54,7 +54,6 @@ const Styled = styled(AppBar)`
 
   .NavBar-brandBtn {
     font-size: ${theme.siteTitleSize};
-    font-weight: 700;
     :hover {
       .NavBar-brandIcon {
         color: ${theme.light};
@@ -85,12 +84,6 @@ const Styled = styled(AppBar)`
   }
 
   .NavBar-signInUpBtn {
-  }
-
-  .NavBar-GetProDropdown {
-    .NavDropDown-navBtn {
-      background: ${theme.property.main};
-    }
   }
   .NavBar-GetProDropdownIcon {
     margin-left: ${rem("4px")};
