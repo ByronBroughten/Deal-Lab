@@ -10,11 +10,22 @@ AppRegistry.runApplication("App", {
 
 reportWebVitals();
 
-// Do I need the wordpress site in order to apply for jobs?
-// I don't need it for the app to look impressive.
-//
-
 // - Wordpress..
+
+// Options:
+// 1. Apply for programming jobs again
+// 2. Keep working on the app to make it marketable
+// 3. Make a simple wordpress website
+// - This is towards marketing it
+// - This also might be towards a programming job
+
+// Really, everything I do to make it more marketable
+// also helps with my getting a programming job.
+
+// I can just continuously apply for programming jobs
+
+// I ought to launch this to deallab.app
+// I ought to connect deallab.app to
 
 // Now, what is really needed in order for me to
 // launch this for real?
