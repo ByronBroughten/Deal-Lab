@@ -37,7 +37,10 @@ export function UserEditorTitleRow<SN extends SectionName>({
         className="UserListMainSection-sectionTitle"
         leftSide={
           <div className="UserListMainSection-btnsRow">
-            <SectionTitle text={titleText} />
+            <SectionTitle
+              className="UserEditorTitleRow-sectionTitle"
+              text={titleText}
+            />
             <ListMenuBtn
               {...{
                 text: "Save and Apply Changes",
@@ -81,8 +84,12 @@ const Styled = styled.div`
   .UserListMainSection-discardChanges {
     width: 150px;
   }
+
+  .UserEditorTitleRow-sectionTitle {
+    margin-right: ${theme.s2};
+  }
+
   .UserListMainSection-saveBtn {
     width: 250px;
-    margin-left: ${theme.s3};
   }
 `;

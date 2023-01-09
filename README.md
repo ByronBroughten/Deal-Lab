@@ -1,4 +1,4 @@
-### Ultimate Property Analyzer
+### Deal Lab
 
 Deployed at [ultimatepropertyanalyzer.com](https://www.ultimatepropertyanalyzer.com/)
 

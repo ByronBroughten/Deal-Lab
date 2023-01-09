@@ -21,9 +21,9 @@ export function TermsOfServicePage() {
 
       <p>
         Permission is granted to temporarily download one copy of the materials
-        on Ultimate Property Analyzer's Website for personal, non-commercial
-        transitory viewing only. This is the grant of a license, not a transfer
-        of title, and under this license you may not:
+        on Deal Lab's Website for personal, non-commercial transitory viewing
+        only. This is the grant of a license, not a transfer of title, and under
+        this license you may not:
       </p>
 
       <ul>
@@ -47,11 +47,11 @@ export function TermsOfServicePage() {
       </ul>
 
       <p>
-        This will let Ultimate Property Analyzer to terminate upon violations of
-        any of these restrictions. Upon termination, your viewing right will
-        also be terminated and you should destroy any downloaded materials in
-        your possession whether it is printed or electronic format. These Terms
-        of Service has been created with the help of the{" "}
+        This will let Deal Lab to terminate upon violations of any of these
+        restrictions. Upon termination, your viewing right will also be
+        terminated and you should destroy any downloaded materials in your
+        possession whether it is printed or electronic format. These Terms of
+        Service has been created with the help of the{" "}
         <a href="https://www.termsofservicegenerator.net">
           Terms Of Service Generator
         </a>
@@ -61,10 +61,9 @@ export function TermsOfServicePage() {
       <h2>3. Disclaimer</h2>
 
       <p>
-        All the materials on Ultimate Property Analyzer’s Website are provided
-        "as is". Ultimate Property Analyzer makes no warranties, may it be
-        expressed or implied, therefore negates all other warranties.
-        Furthermore, Ultimate Property Analyzer does not make any
+        All the materials on Deal Lab’s Website are provided "as is". Deal Lab
+        makes no warranties, may it be expressed or implied, therefore negates
+        all other warranties. Furthermore, Deal Lab does not make any
         representations concerning the accuracy or reliability of the use of the
         materials on its Website or otherwise relating to such materials or any
         sites linked to this Website.
@@ -73,45 +72,41 @@ export function TermsOfServicePage() {
       <h2>4. Limitations</h2>
 
       <p>
-        Ultimate Property Analyzer or its suppliers will not be hold accountable
-        for any damages that will arise with the use or inability to use the
-        materials on Ultimate Property Analyzer’s Website, even if Ultimate
-        Property Analyzer or an authorize representative of this Website has
-        been notified, orally or written, of the possibility of such damage.
-        Some jurisdiction does not allow limitations on implied warranties or
-        limitations of liability for incidental damages, these limitations may
-        not apply to you.
+        Deal Lab or its suppliers will not be hold accountable for any damages
+        that will arise with the use or inability to use the materials on Deal
+        Lab’s Website, even if Ultimate Property Analyzer or an authorize
+        representative of this Website has been notified, orally or written, of
+        the possibility of such damage. Some jurisdiction does not allow
+        limitations on implied warranties or limitations of liability for
+        incidental damages, these limitations may not apply to you.
       </p>
 
       <h2>5. Revisions and Errata</h2>
 
       <p>
-        The materials appearing on Ultimate Property Analyzer’s Website may
-        include technical, typographical, or photographic errors. Ultimate
-        Property Analyzer will not promise that any of the materials in this
-        Website are accurate, complete, or current. Ultimate Property Analyzer
-        may change the materials contained on its Website at any time without
-        notice. Ultimate Property Analyzer does not make any commitment to
-        update the materials.
+        The materials appearing on Deal Lab’s Website may include technical,
+        typographical, or photographic errors. Ultimate Property Analyzer will
+        not promise that any of the materials in this Website are accurate,
+        complete, or current. Deal Lab may change the materials contained on its
+        Website at any time without notice. Deal Lab does not make any
+        commitment to update the materials.
       </p>
 
       <h2>6. Links</h2>
 
       <p>
-        Ultimate Property Analyzer has not reviewed all of the sites linked to
-        its Website and is not responsible for the contents of any such linked
-        site. The presence of any link does not imply endorsement by Ultimate
-        Property Analyzer of the site. The use of any linked website is at the
-        user’s own risk.
+        Deal Lab has not reviewed all of the sites linked to its Website and is
+        not responsible for the contents of any such linked site. The presence
+        of any link does not imply endorsement by Ultimate Property Analyzer of
+        the site. The use of any linked website is at the user’s own risk.
       </p>
 
       <h2>7. Site Terms of Use Modifications</h2>
 
       <p>
-        Ultimate Property Analyzer may revise these Terms of Use for its Website
-        at any time without prior notice. By using this Website, you are
-        agreeing to be bound by the current version of these Terms and
-        Conditions of Use.
+        Deal Lab may revise these Terms of Use for its Website at any time
+        without prior notice. By using this Website, you are agreeing to be
+        bound by the current version of these Terms and Conditions of Use.
       </p>
 
       <h2>8. Your Privacy</h2>
@@ -121,9 +116,8 @@ export function TermsOfServicePage() {
       <h2>9. Governing Law</h2>
 
       <p>
-        Any claim related to Ultimate Property Analyzer's Website shall be
-        governed by the laws of us without regards to its conflict of law
-        provisions.
+        Any claim related to Deal Lab's Website shall be governed by the laws of
+        us without regards to its conflict of law provisions.
       </p>
     </PageMain>
   );

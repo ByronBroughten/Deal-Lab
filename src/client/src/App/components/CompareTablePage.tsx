@@ -1,4 +1,3 @@
-import { rem } from "polished";
 import React from "react";
 import { unstable_batchedUpdates } from "react-dom";
 import styled from "styled-components";
@@ -10,8 +9,10 @@ import { feStoreNameS } from "../sharedWithServer/SectionsMeta/relSectionsDerive
 import { useAuthStatus } from "../sharedWithServer/stateClassHooks/useAuthStatus";
 import theme, { ThemeName } from "../theme/Theme";
 import useHowMany from "./appWide/customHooks/useHowMany";
+import { OuterMainSection } from "./appWide/GeneralSection/OuterMainSection";
+import { SectionTitle } from "./appWide/SectionTitle";
 import { CompareTable } from "./CompareTablePage/CompareTable";
-import { SidebarContainer } from "./general/SidebarContainer";
+import { NavContainerPage } from "./general/NavContainerPage";
 
 function useLoadRows(props: UseTableActorProps) {
   const authStatus = useAuthStatus();
@@ -61,36 +62,45 @@ export function CompareTablePage({ $themeName, title, ...props }: Props) {
     showTable: () => <CompareTable {...props} />,
     areNone: () => (
       <div className="CompareTablePage-message">
-        You have no saved deals. Save some then compare them here.
+        You have no saved deals. Save some, then compare them here.
       </div>
     ),
   } as const;
 
   const getScenarioNode = scenarios[getScenarioKey()];
   return (
-    <SidebarContainer activeBtnName="compare">
+    <NavContainerPage activeBtnName="compare">
       <Styled
         {...{
           $themeName,
           className: "CompareTablePage-root",
         }}
       >
-        <div className="CompareTablePage-title">{title}</div>
+        <div className="CompareTablePage-titleRow">
+          <SectionTitle text={title} className="CompareTablePage-title" />
+        </div>
         <div className="CompareTablePage-body">{getScenarioNode()}</div>
       </Styled>
-    </SidebarContainer>
+    </NavContainerPage>
   );
 }
 
-const Styled = styled.div<{ $themeName?: ThemeName }>`
+const Styled = styled(OuterMainSection)<{ $themeName?: ThemeName }>`
   display: flex;
   flex-direction: column;
   flex: 1;
   align-items: center;
   overflow: auto;
-  padding-top: ${theme.s4};
-  background-color: ${theme.mainBackground};
   min-height: 93vh;
+  width: 100%;
+
+  .CompareTablePage-titleRow {
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;
+    font-size: ${theme.titleSize};
+    color: ${theme.primaryNext};
+  }
 
   .CompareTablePage-areNone {
     text-align: center;
@@ -110,11 +120,6 @@ const Styled = styled.div<{ $themeName?: ThemeName }>`
     }
   }
 
-  .CompareTablePage-title {
-    font-size: ${rem("28px")};
-    color: ${theme.primaryNext};
-    margin: ${theme.s2};
-  }
   .CompareTable-titleRow {
     display: flex;
     align-items: center;

@@ -18,7 +18,7 @@ const clientDevUrl = "http://localhost:3000";
 const envConstants = {
   development: {
     environment: "development",
-    appName: "Ultimate Property Analyzer — Development",
+    appName: "Deal Lab — Development",
     apiUrlBase: "http://localhost:5000",
     clientUrlBase: clientDevUrl,
     stripePrices: [proPlanStripePrice],
@@ -27,7 +27,7 @@ const envConstants = {
   },
   production: {
     environment: "production",
-    appName: "Ultimate Property Analyzer",
+    appName: "Deal Lab",
     apiUrlBase: clientProdUrl,
     clientUrlBase: clientProdUrl,
     stripePrices: [proPlanStripePrice],
