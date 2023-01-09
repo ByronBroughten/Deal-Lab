@@ -85,7 +85,7 @@ export const config = {
     privacyPolicy: "/privacy-policy",
     termsOfService: "/terms-of-service",
     compare: "/compare",
-    analyzer: "/analyzer",
+    analyzer: "/deal",
     userVariables: "/variables",
     userLists: "/lists",
     userOutputs: "/outputs",

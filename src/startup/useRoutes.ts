@@ -21,6 +21,8 @@ export function useRoutes(app: express.Application) {
         "http://localhost:3000",
         "https://ultimate-property-analyzer.herokuapp.com",
         "https://www.ultimatepropertyanalyzer.com",
+        "https://www.deallab.app",
+        "https://the.deallab.app",
       ],
       allowedHeaders: [
         constants.tokenKey.userAuthData,
