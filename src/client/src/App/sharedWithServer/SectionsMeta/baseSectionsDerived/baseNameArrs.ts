@@ -1,5 +1,4 @@
 import { Arr } from "../../utils/Arr";
-import { BaseSectionsVarbs } from "../baseSectionsVarbs";
 import { SectionName, sectionNames } from "../SectionName";
 
 type SnArrs = {
@@ -44,8 +43,7 @@ function makeBaseNameArrs() {
   };
 }
 
-type GeneralBaseNameArrs = Record<string, readonly (keyof BaseSectionsVarbs)[]>;
-
+type GeneralBaseNameArrs = Record<string, readonly SectionName[]>;
 export const baseNameArrs = makeBaseNameArrs();
 
 const testBaseNameArrs = (_: GeneralBaseNameArrs) => undefined;

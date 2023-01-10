@@ -18,7 +18,7 @@ import {
 } from "../SectionsMeta/baseSectionsVarbs/baseValues/NumObj";
 import { isEditorUpdateFnName } from "../SectionsMeta/baseSectionsVarbs/baseValues/StateValueTypes";
 import { StringObj } from "../SectionsMeta/baseSectionsVarbs/baseValues/StringObj";
-import { valueNames } from "../SectionsMeta/baseSectionsVarbs/baseVarb";
+import { valueNames } from "../SectionsMeta/baseSectionsVarbs/baseVarbDepreciated";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { GetterVarbBase } from "../StateGetters/Bases/GetterVarbBase";
 import { GetterVarb } from "../StateGetters/GetterVarb";

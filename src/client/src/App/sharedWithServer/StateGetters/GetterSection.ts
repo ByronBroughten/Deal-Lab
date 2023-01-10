@@ -11,7 +11,7 @@ import {
 } from "../SectionsMeta/baseSectionsDerived/valueMetaTypes";
 import { SwitchTargetKey } from "../SectionsMeta/baseSectionsVarbs/baseSwitchNames";
 import { InEntityIdInfoValue } from "../SectionsMeta/baseSectionsVarbs/baseValues/InEntityIdInfoValue";
-import { ValueName } from "../SectionsMeta/baseSectionsVarbs/baseVarb";
+import { ValueName } from "../SectionsMeta/baseSectionsVarbs/baseVarbDepreciated";
 import { DbSectionInfo } from "../SectionsMeta/baseSectionsVarbs/DbSectionInfo";
 import { ExpectedCount } from "../SectionsMeta/baseSectionsVarbs/NanoIdInfo";
 import {

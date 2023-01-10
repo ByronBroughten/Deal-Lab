@@ -2,7 +2,7 @@ import {
   LeftRightPropCalcName,
   NumPropCalcName,
 } from "../../../baseSectionsVarbs/baseValues/calculations";
-import { ValueName } from "../../../baseSectionsVarbs/baseVarb";
+import { ValueName } from "../../../baseSectionsVarbs/baseVarbDepreciated";
 import { switchNames } from "../../../baseSectionsVarbs/RelSwitchVarb";
 import { ChildName } from "../../../sectionChildrenDerived/ChildName";
 import { UpdateFnName } from "./UpdateFnName";

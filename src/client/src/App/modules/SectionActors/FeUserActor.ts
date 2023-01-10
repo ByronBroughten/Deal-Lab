@@ -4,7 +4,7 @@ import { GuestAccessSectionPackArrs } from "../../sharedWithServer/apiQueriesSha
 import {
   AnalyzerPlan,
   UserDataStatus,
-} from "../../sharedWithServer/SectionsMeta/baseSectionsVarbs";
+} from "../../sharedWithServer/SectionsMeta/allBaseSectionVarbs";
 import { AuthStatus } from "../../sharedWithServer/SectionsMeta/baseSectionsVarbsValues";
 import { PackBuilderSection } from "../../sharedWithServer/StatePackers.ts/PackBuilderSection";
 import { StrictOmit } from "../../sharedWithServer/utils/types";

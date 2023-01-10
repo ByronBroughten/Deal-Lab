@@ -3,7 +3,7 @@ import { AiOutlineMenu } from "react-icons/ai";
 import styled from "styled-components";
 import useToggle from "../../modules/customHooks/useToggle";
 import { useFeUser } from "../../modules/sectionActorHooks/useFeUser";
-import { AnalyzerPlan } from "../../sharedWithServer/SectionsMeta/baseSectionsVarbs";
+import { AnalyzerPlan } from "../../sharedWithServer/SectionsMeta/allBaseSectionVarbs";
 import theme from "../../theme/Theme";
 import { Sidebar } from "../general/SideBar";
 import { AppMenuDropdown, AppMenuProps } from "./AppMenuDropdown";

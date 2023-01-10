@@ -8,7 +8,7 @@ import {
   numUnitParams,
 } from "./baseSectionsVarbs/baseValues/calculations/numUnitParams";
 import { FixedInEntity } from "./baseSectionsVarbs/baseValues/entities";
-import { ValueName } from "./baseSectionsVarbs/baseVarb";
+import { ValueName } from "./baseSectionsVarbs/baseVarbDepreciated";
 import { relSections } from "./relSectionsVarbs";
 import { UpdateBasics } from "./relSectionVarbs/rel/relVarb/UpdateBasics";
 import { UpdateFnProps } from "./relSectionVarbs/rel/relVarb/UpdateFnProps";

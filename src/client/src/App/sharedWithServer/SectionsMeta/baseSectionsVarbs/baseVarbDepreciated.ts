@@ -30,12 +30,12 @@ export const baseVarb = {
     baseName: BN,
     valueName: T,
     options?: O
-  ): BaseVarb<BN, T> {
+  ): BaseVarbDepreciated<BN, T> {
     return Obj.merge(this.default(baseName, valueName), options ?? {});
   },
 };
 
-export type BaseVarb<
+export type BaseVarbDepreciated<
   BN extends string,
   T extends ValueName,
   O extends BaseVarbOptions = {}

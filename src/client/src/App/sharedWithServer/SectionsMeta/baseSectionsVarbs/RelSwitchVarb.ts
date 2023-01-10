@@ -3,6 +3,7 @@ import { Obj } from "../../utils/Obj";
 import { Merge } from "../../utils/Obj/merge";
 import { StrictPick } from "../../utils/types";
 import { baseSwitchSchemas } from "./baseSwitchNames";
+import { BaseVarb } from "./baseVarbs";
 
 class RelSwitchVarb<C extends GeneralRelSwitchCore> {
   constructor(readonly core: C) {}
@@ -226,8 +227,8 @@ export type SwitchEndingsBase = {
 export type BaseSwitchVarb<
   Base extends string,
   Endings extends SwitchEndingsBase
-> = SwitchRecord<Base, Pick<Endings, "switch">, "string"> &
-  SwitchRecord<Base, Omit<Endings, "switch">, "numObj">;
+> = SwitchRecord<Base, Pick<Endings, "switch">, BaseVarb<"string">> &
+  SwitchRecord<Base, Omit<Endings, "switch">, BaseVarb<"numObj">>;
 
 export type BaseOngoingVarb<T extends string> = BaseSwitchVarb<
   T,

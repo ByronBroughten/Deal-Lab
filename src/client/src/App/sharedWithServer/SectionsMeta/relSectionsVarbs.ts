@@ -1,5 +1,5 @@
 import { timeS } from "../utils/date";
-import { AnalyzerPlan } from "./baseSectionsVarbs";
+import { AnalyzerPlan } from "./allBaseSectionVarbs";
 import { numObj } from "./baseSectionsVarbs/baseValues/NumObj";
 import { savableSectionVarbNames } from "./baseSectionsVarbs/specialVarbNames";
 import { AuthStatus } from "./baseSectionsVarbsValues";

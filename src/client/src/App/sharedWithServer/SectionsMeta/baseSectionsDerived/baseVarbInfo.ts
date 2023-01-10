@@ -1,5 +1,5 @@
 import { Obj } from "../../utils/Obj";
-import { baseSectionsVarbs } from "../baseSectionsVarbs";
+import { baseSectionsVarbs } from "../allBaseSectionVarbs";
 import {
   DbIdInfo,
   ExpectedCount,

@@ -1,6 +1,9 @@
 import hash from "object-hash";
 import { timeS } from "../utils/date";
-import { BaseSectionsVarbs, makeBaseSectionsVarbs } from "./baseSectionsVarbs";
+import {
+  BaseSectionsVarbs,
+  makeAllBaseSectionVarbs,
+} from "./allBaseSectionVarbs";
 
 describe(`sectionsVarbs`, () => {
   let sectionsVarbs: BaseSectionsVarbs;
@@ -9,10 +12,10 @@ describe(`sectionsVarbs`, () => {
   let sectionsVarbs2Hash: string;
 
   beforeEach(async () => {
-    sectionsVarbs = makeBaseSectionsVarbs();
+    sectionsVarbs = makeAllBaseSectionVarbs();
     sectionsVarbsHash = hash(sectionsVarbs);
     await timeS.delay(1001);
-    sectionsVarbs2 = makeBaseSectionsVarbs();
+    sectionsVarbs2 = makeAllBaseSectionVarbs();
     sectionsVarbs2Hash = hash(sectionsVarbs2);
   });
   it("should produce sectionsVarbs that are equal", () => {

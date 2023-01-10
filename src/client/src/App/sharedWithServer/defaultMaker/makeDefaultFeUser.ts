@@ -1,7 +1,7 @@
 import {
   AnalyzerPlan,
   UserDataStatus,
-} from "../SectionsMeta/baseSectionsVarbs";
+} from "../SectionsMeta/allBaseSectionVarbs";
 import { AuthStatus } from "../SectionsMeta/baseSectionsVarbsValues";
 import { feStoreNameS } from "../SectionsMeta/relSectionsDerived/FeStoreName";
 import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";

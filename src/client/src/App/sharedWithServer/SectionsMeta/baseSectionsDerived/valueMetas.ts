@@ -18,7 +18,7 @@ import {
   mStringObj,
   zStringObj,
 } from "../baseSectionsVarbs/baseValues/StringObj";
-import { ValueName } from "../baseSectionsVarbs/baseVarb";
+import { ValueName } from "../baseSectionsVarbs/baseVarbDepreciated";
 
 export const valueMetas = {
   number: {

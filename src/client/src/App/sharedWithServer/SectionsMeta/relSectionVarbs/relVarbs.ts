@@ -1,10 +1,10 @@
 import { Obj } from "../../utils/Obj";
+import { baseSectionsVarbs } from "../allBaseSectionVarbs";
 import {
   VarbName,
   VarbNameByValueName,
 } from "../baseSectionsDerived/baseSectionsVarbsTypes";
-import { baseSectionsVarbs } from "../baseSectionsVarbs";
-import { ValueName } from "../baseSectionsVarbs/baseVarb";
+import { ValueName } from "../baseSectionsVarbs/baseVarbDepreciated";
 import { switchNames } from "../baseSectionsVarbs/RelSwitchVarb";
 import { ChildName } from "../sectionChildrenDerived/ChildName";
 import { relVarbInfoS } from "../SectionInfo/RelVarbInfo";

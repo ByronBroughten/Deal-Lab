@@ -2,9 +2,13 @@ import { omit } from "lodash";
 import {
   BaseSection,
   baseSectionVarbs,
-  GeneralBaseSectionVarbs,
 } from "./baseSectionsVarbs/baseSectionVarbs";
-import { baseVarbs, baseVarbsS } from "./baseSectionsVarbs/baseVarbs";
+import {
+  baseVarb,
+  baseVarbs,
+  baseVarbsS,
+  GeneralBaseSectionVarbs,
+} from "./baseSectionsVarbs/baseVarbs";
 import {
   loanVarbsNotInFinancing,
   savableSectionVarbNames,
@@ -28,100 +32,102 @@ const defaults = sectionNames.reduce((defaults, sectionName) => {
   return defaults;
 }, {} as DefaultSectionsVarbs);
 
-export function makeBaseSectionsVarbs() {
+export function makeAllBaseSectionVarbs() {
   return checkBaseSectionsVarbs({
     ...defaults,
     proxyStoreItem: baseSectionVarbs({
-      dbId: "string",
+      dbId: baseVarb("string"),
     }),
     displayNameItem: baseSectionVarbs({
-      displayName: "string",
+      displayName: baseVarb("string"),
     }),
     displayNameList: baseSectionVarbs({
-      searchFilter: "string",
+      searchFilter: baseVarb("string"),
     }),
-    compareTable: baseSectionVarbs({ titleFilter: "string" } as const),
+    compareTable: baseSectionVarbs({
+      titleFilter: baseVarb("string"),
+    } as const),
     tableRow: baseSectionVarbs({
-      displayName: "string",
-      compareToggle: "boolean",
+      displayName: baseVarb("string"),
+      compareToggle: baseVarb("boolean"),
     }),
     column: baseSectionVarbs({
-      valueEntityInfo: "inEntityInfo",
+      valueEntityInfo: baseVarb("inEntityInfo"),
     }),
     cell: baseSectionVarbs({
-      columnFeId: "string",
-      valueEntityInfo: "inEntityInfo",
-      displayVarb: "string",
+      columnFeId: baseVarb("string"),
+      valueEntityInfo: baseVarb("inEntityInfo"),
+      displayVarb: baseVarb("string"),
     }),
     conditionalRow: baseSectionVarbs({
-      level: "number",
-      type: "string",
+      level: baseVarb("number"),
+      type: baseVarb("string"),
       // if
-      left: "numObj",
-      operator: "string",
-      rightList: "stringArray",
-      rightValue: "numObj",
+      left: baseVarb("numObj"),
+      operator: baseVarb("string"),
+      rightList: baseVarb("stringArray"),
+      rightValue: baseVarb("numObj"),
       // then
-      then: "numObj",
+      then: baseVarb("numObj"),
     }),
     singleTimeListGroup: baseSectionVarbs({
-      total: "numObj",
-      itemValueSwitch: "string",
+      total: baseVarb("numObj"),
+      itemValueSwitch: baseVarb("string"),
     }),
     singleTimeValueGroup: baseSectionVarbs({
-      total: "numObj",
-      itemValueSwitch: "string",
+      total: baseVarb("numObj"),
+      itemValueSwitch: baseVarb("string"),
     }),
     singleTimeValue: baseSectionVarbs({
-      displayName: "stringObj",
-      displayNameEditor: "stringObj",
-      value: "numObj",
-      valueEditor: "numObj",
-      valueSourceSwitch: "string",
-      isItemized: "boolean",
-      itemValueSwitch: "string",
+      displayName: baseVarb("stringObj"),
+      displayNameEditor: baseVarb("stringObj"),
+      value: baseVarb("numObj"),
+      valueEditor: baseVarb("numObj"),
+      valueSourceSwitch: baseVarb("string"),
+      isItemized: baseVarb("boolean"),
+      itemValueSwitch: baseVarb("string"),
     }),
     singleTimeList: baseSectionVarbs({
       ...baseVarbsS.savableSection,
-      total: "numObj",
-      itemValueSwitch: "string",
+      total: baseVarb("numObj"),
+      itemValueSwitch: baseVarb("string"),
     }),
     ongoingValueGroup: baseSectionVarbs({
       ...baseVarbsS.ongoing("total"),
-      itemValueSwitch: "string",
-      itemOngoingSwitch: "string",
+      itemValueSwitch: baseVarb("string"),
+      itemOngoingSwitch: baseVarb("string"),
     }),
     ongoingValue: baseSectionVarbs({
       ...baseVarbsS.ongoing("value"),
-      displayName: "stringObj",
-      displayNameEditor: "stringObj",
-      valueEditor: "numObj",
-      valueSourceSwitch: "string",
-      itemValueSwitch: "string",
-      itemOngoingSwitch: "string",
-      isItemized: "boolean",
+      displayName: baseVarb("stringObj"),
+      displayNameEditor: baseVarb("stringObj"),
+      valueEditor: baseVarb("numObj"),
+      valueSourceSwitch: baseVarb("string"),
+      itemValueSwitch: baseVarb("string"),
+      itemOngoingSwitch: baseVarb("string"),
+      isItemized: baseVarb("boolean"),
     }),
     ongoingListGroup: baseSectionVarbs({
       ...baseVarbsS.ongoing("total"),
-      itemValueSwitch: "string",
-      itemOngoingSwitch: "string",
+      itemValueSwitch: baseVarb("string"),
+      itemOngoingSwitch: baseVarb("string"),
     }),
     ongoingList: baseSectionVarbs({
       ...baseVarbsS.savableSection,
       ...baseVarbsS.ongoing("value"),
       ...baseVarbsS.ongoing("total"),
-      valueEditor: "numObj",
-      valueSourceSwitch: "string",
-      itemValueSwitch: "string",
-      itemOngoingSwitch: "string",
+      valueEditor: baseVarb("numObj"),
+      valueSourceSwitch: baseVarb("string"),
+      itemValueSwitch: baseVarb("string"),
+      itemOngoingSwitch: baseVarb("string"),
     }),
     userVarbList: baseSectionVarbs({
       ...baseVarbsS.savableSection,
-      itemValueSwitch: "string",
+      itemValueSwitch: baseVarb("string"),
     }),
     outputList: baseSectionVarbs({
       ...baseVarbsS.savableSection,
-      itemValueSwitch: "string",
+      itemValueSwitch: baseVarb("string"),
     }),
     singleTimeItem: baseSectionVarbs({
       ...baseVarbsS.singleValueVirtualVarb,
@@ -134,7 +140,7 @@ export function makeBaseSectionsVarbs() {
       ...baseVarbsS.switchableEquationEditor,
       ...baseVarbsS.ongoing("value"),
       ...baseVarbsS.switch("lifespan", "monthsYears"),
-      costToReplace: "numObj",
+      costToReplace: baseVarb("numObj"),
     }),
     outputItem: baseSectionVarbs({
       ...baseVarbsS.singleValueVirtualVarb,
@@ -151,7 +157,7 @@ export function makeBaseSectionsVarbs() {
       ...baseVarbsS.switchableEquationEditor,
     }),
     conditionalRowList: baseSectionVarbs({
-      value: "numObj",
+      value: baseVarb("numObj"),
     }),
     property: baseSectionVarbs({
       ...baseVarbsS.savableSection,
@@ -174,8 +180,8 @@ export function makeBaseSectionsVarbs() {
       ...baseVarbsS.ongoing("revenue"),
     }),
     unit: baseSectionVarbs({
-      one: "numObj",
-      numBedrooms: "numObj",
+      one: baseVarb("numObj"),
+      numBedrooms: baseVarb("numObj"),
       ...baseVarbsS.ongoing("targetRent"),
     }),
     get propertyGeneral() {
@@ -206,9 +212,9 @@ export function makeBaseSectionsVarbs() {
       ...baseVarbsS.ongoing("loanPayment"),
       ...baseVarbsS.ongoing("mortgageIns"),
 
-      piCalculationName: "string",
-      hasMortgageIns: "boolean",
-      isInterestOnly: "boolean",
+      piCalculationName: baseVarb("string"),
+      hasMortgageIns: baseVarb("boolean"),
+      isInterestOnly: baseVarb("boolean"),
     } as const),
     get financing() {
       return baseSectionVarbs({
@@ -248,8 +254,8 @@ export function makeBaseSectionsVarbs() {
         "downPaymentPercent",
         "downPaymentDecimal",
       ] as const),
-      mode: "string",
-      showCalculationsStatus: "string",
+      mode: baseVarb("string"),
+      showCalculationsStatus: baseVarb("string"),
       ...baseVarbsS.ongoing("piti"),
       ...baseVarbsS.ongoing("expenses"),
       ...baseVarbsS.ongoing("revenue"),
@@ -265,36 +271,36 @@ export function makeBaseSectionsVarbs() {
         "email",
         "userName",
       ] as const),
-      analyzerPlanExp: "number",
+      analyzerPlanExp: baseVarb("number"),
     }),
     userInfo: baseSectionVarbs({
       ...baseVarbs("string", ["email", "userName"] as const),
-      timeJoined: "number",
+      timeJoined: baseVarb("number"),
     }),
     stripeSubscription: baseSectionVarbs({
-      subId: "string",
-      status: "string",
-      priceIds: "stringArray",
-      currentPeriodEnd: "number",
+      subId: baseVarb("string"),
+      status: baseVarb("string"),
+      priceIds: baseVarb("stringArray"),
+      currentPeriodEnd: baseVarb("number"),
     }),
     authInfoPrivate: baseSectionVarbs({
-      authId: "string",
+      authId: baseVarb("string"),
     }),
     stripeInfoPrivate: baseSectionVarbs({
-      customerId: "string",
+      customerId: baseVarb("string"),
     } as const),
     userInfoPrivate: baseSectionVarbs({
       ...baseVarbs("string", [
         "encryptedPassword",
         "emailAsSubmitted",
       ] as const),
-      guestSectionsAreLoaded: "boolean",
+      guestSectionsAreLoaded: baseVarb("boolean"),
     }),
   });
 }
 
 export type BaseSectionsVarbs = typeof baseSectionsVarbs;
-export const baseSectionsVarbs = makeBaseSectionsVarbs();
+export const baseSectionsVarbs = makeAllBaseSectionVarbs();
 
 const userPlans = ["basicPlan", "fullPlan"] as const;
 export type AnalyzerPlan = typeof userPlans[number];

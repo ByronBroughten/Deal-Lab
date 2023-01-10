@@ -3,7 +3,7 @@ import React from "react";
 import { config } from "../../../Constants";
 import { getStoredObj } from "../../../utils/localStorage";
 import { makeDefaultMain } from "../../defaultMaker/makeDefaultMain";
-import { baseSectionsVarbs } from "../../SectionsMeta/baseSectionsVarbs";
+import { baseSectionsVarbs } from "../../SectionsMeta/allBaseSectionVarbs";
 import { ChildSectionPack } from "../../SectionsMeta/sectionChildrenDerived/ChildSectionPack";
 import { validateSectionPackArrs } from "../../SectionsMeta/SectionNameByType";
 import { GetterSections } from "../../StateGetters/GetterSections";

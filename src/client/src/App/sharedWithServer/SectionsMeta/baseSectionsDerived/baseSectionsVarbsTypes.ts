@@ -1,19 +1,21 @@
 import { Obj } from "../../utils/Obj";
 import { SubType } from "../../utils/types";
-import { baseSectionsVarbs, BaseSectionsVarbs } from "../baseSectionsVarbs";
+import { baseSectionsVarbs, BaseSectionsVarbs } from "../allBaseSectionVarbs";
 import { StateValue } from "../baseSectionsVarbs/baseValues/StateValueTypes";
-import { ValueName } from "../baseSectionsVarbs/baseVarb";
+import { ValueName } from "../baseSectionsVarbs/baseVarbDepreciated";
 import { SectionName, sectionNames } from "../SectionName";
 
 export type VarbValues = { [varbName: string]: StateValue };
 
 export type BaseSectionVarbs<SN extends SectionName> = BaseSectionsVarbs[SN];
-
 export type VarbName<SN extends SectionName> = keyof BaseSectionVarbs<SN>;
 export type VarbValueName<
   SN extends SectionName,
   VN extends VarbName<SN>
-> = Extract<ValueName, BaseSectionVarbs<SN>[VN]>;
+> = Extract<
+  ValueName,
+  BaseSectionVarbs<SN>[VN][keyof BaseSectionVarbs<SN>[VN] & "valueName"]
+>;
 
 export function sectionVarbNames<SN extends SectionName>(
   sectionName: SN
@@ -24,8 +26,10 @@ export function sectionVarbValueName<
   SN extends SectionName,
   VN extends VarbName<SN>
 >(sectionName: SN, varbName: VN): VarbValueName<SN, VN> {
-  const baseVarbs = baseSectionsVarbs[sectionName];
-  return baseVarbs[varbName as keyof typeof baseVarbs] as VarbValueName<SN, VN>;
+  const baseVarbs = baseSectionsVarbs[sectionName][varbName];
+  return baseVarbs[
+    "valueName" as "valueName" & keyof typeof baseVarbs
+  ] as VarbValueName<SN, VN>;
 }
 
 export type VarbNamesInfo<SN extends SectionName, VN extends VarbName<SN>> = {

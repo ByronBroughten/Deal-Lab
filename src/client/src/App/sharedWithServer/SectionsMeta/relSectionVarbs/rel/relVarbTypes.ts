@@ -1,7 +1,7 @@
 import { DisplayName } from "../../allDisplaySectionVarbs";
 import { ValueNamesToTypes } from "../../baseSectionsDerived/valueMetaTypes";
 import { NumUnitName } from "../../baseSectionsVarbs/baseValues/calculations/numUnitParams";
-import { ValueName } from "../../baseSectionsVarbs/baseVarb";
+import { ValueName } from "../../baseSectionsVarbs/baseVarbDepreciated";
 import { UpdateProps } from "./relVarb/UpdateProps";
 
 export type CommonRelVarb = {

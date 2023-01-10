@@ -1,12 +1,14 @@
 import { SwitchName, SwitchTargetKey, SwitchVarbName } from "./baseSwitchNames";
-import { BaseVarb } from "./baseVarb";
+import { BaseVarbDepreciated } from "./baseVarbDepreciated";
 
-export type BaseTargetVarb<BN extends string, SW extends SwitchName> = BaseVarb<
-  BN,
-  "numObj",
-  { switchName: SW }
->;
-type BaseSwitchVarb<BN extends string, SW extends SwitchName> = BaseVarb<
+export type BaseTargetVarb<
+  BN extends string,
+  SW extends SwitchName
+> = BaseVarbDepreciated<BN, "numObj", { switchName: SW }>;
+type BaseSwitchVarb<
+  BN extends string,
+  SW extends SwitchName
+> = BaseVarbDepreciated<
   BN,
   "string",
   {

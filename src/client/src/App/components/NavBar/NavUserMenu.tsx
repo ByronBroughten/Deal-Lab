@@ -7,7 +7,7 @@ import { useLogout } from "../../modules/customHooks/useAuthAndUserData";
 import useToggle from "../../modules/customHooks/useToggle";
 import { useFeUser } from "../../modules/sectionActorHooks/useFeUser";
 import { goToCustomerPortalPage } from "../../modules/services/stripeService";
-import { AnalyzerPlan } from "../../sharedWithServer/SectionsMeta/baseSectionsVarbs";
+import { AnalyzerPlan } from "../../sharedWithServer/SectionsMeta/allBaseSectionVarbs";
 import theme from "../../theme/Theme";
 import { NavDropdownMenuBtn } from "../appWide/ListGroup/ListGroupShared/ListMenuSimple/NavDropdownMenuBtn";
 import { StandardProps } from "../general/StandardProps";

@@ -2,7 +2,7 @@ import {
   LeftRightPropCalcName,
   NumPropCalcName,
 } from "../../../baseSectionsVarbs/baseValues/calculations";
-import { ValueName } from "../../../baseSectionsVarbs/baseVarb";
+import { ValueName } from "../../../baseSectionsVarbs/baseVarbDepreciated";
 import { UpdateBasics } from "./UpdateBasics";
 import { UpdateFnName } from "./UpdateFnName";
 import { UpdateFnProp, UpdateFnProps } from "./UpdateFnProps";

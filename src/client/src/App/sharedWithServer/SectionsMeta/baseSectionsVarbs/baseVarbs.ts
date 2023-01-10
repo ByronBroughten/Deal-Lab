@@ -1,4 +1,4 @@
-import { ValueName } from "./baseVarb";
+import { ValueName } from "./baseVarbDepreciated";
 import {
   BaseOngoingVarb,
   BaseSwitchVarb,
@@ -8,19 +8,38 @@ import {
   SwitchRecord,
 } from "./RelSwitchVarb";
 
-export type BaseVarbSchemas = { [varbName: string]: ValueName };
-type TypeRecord<T extends readonly string[], V extends ValueName> = {
-  [Prop in T[number]]: V;
+type GeneralBaseVarb = {
+  valueName: ValueName;
 };
 
-export function baseVarbs<V extends ValueName, T extends readonly string[]>(
-  vt: V,
-  keys: T
-): TypeRecord<T, V> {
-  return keys.reduce((schemas, key) => {
-    schemas[key as T[number]] = vt;
-    return schemas;
-  }, {} as Partial<TypeRecord<T, V>>) as TypeRecord<T, V>;
+type BaseVarbOptions = Partial<GeneralBaseVarb>;
+
+function defaultBaseVarb<VN extends ValueName>(
+  valueName: VN
+): { valueName: VN } {
+  return { valueName };
+}
+export type BaseVarb<VN extends ValueName> = {
+  valueName: VN;
+};
+export function baseVarb<VN extends ValueName>(valueName: VN): BaseVarb<VN> {
+  return defaultBaseVarb(valueName);
+}
+
+export type GeneralBaseSectionVarbs = { [varbName: string]: GeneralBaseVarb };
+
+type DefaultBaseVarbs<VN extends ValueName, VNS extends string> = {
+  [Prop in VNS]: BaseVarb<VN>;
+};
+
+export function baseVarbs<VN extends ValueName, VNS extends string>(
+  valueName: VN,
+  varbNames: readonly VNS[]
+): DefaultBaseVarbs<VN, VNS> {
+  return varbNames.reduce((varbs, varbName) => {
+    varbs[varbName] = baseVarb(valueName);
+    return varbs;
+  }, {} as DefaultBaseVarbs<VN, VNS>);
 }
 
 export const baseVarbsS = {
@@ -32,21 +51,20 @@ export const baseVarbsS = {
     switchName: SWN
   ): BaseSwitchVarb<Base, SwitchEndings[SWN]> {
     const { targetEndings, switchEnding } = relSwitchVarbs[switchName];
-    type NumObjEndings = Omit<SwitchEndings[SWN], "switch">;
     const numObjSchemas: Partial<
-      SwitchRecord<Base, SwitchEndings[SWN], "numObj">
+      SwitchRecord<Base, SwitchEndings[SWN], BaseVarb<"numObj">>
     > = {};
     for (const ending of Object.values(targetEndings)) {
       numObjSchemas[
         `${baseName}${ending}` as keyof SwitchRecord<
           Base,
           SwitchEndings[SWN],
-          "numObj"
+          BaseVarb<"numObj">
         >
-      ] = "numObj";
+      ] = baseVarb("numObj");
     }
     return {
-      [`${baseName}${switchEnding}`]: "string",
+      [`${baseName}${switchEnding}`]: baseVarb("string"),
       ...numObjSchemas,
     } as BaseSwitchVarb<Base, SwitchEndings[SWN]>;
   },
@@ -64,30 +82,30 @@ export const baseVarbsS = {
   },
   get savableSection() {
     return {
-      displayName: "stringObj",
-      dateTimeFirstSaved: "dateTime",
-      dateTimeLastSaved: "dateTime",
-      autoSyncControl: "string", // autoSyncControl - default to false.
-      syncStatus: "string",
+      displayName: baseVarb("stringObj"),
+      dateTimeFirstSaved: baseVarb("dateTime"),
+      dateTimeLastSaved: baseVarb("dateTime"),
+      autoSyncControl: baseVarb("string"), // autoSyncControl - default to false.
+      syncStatus: baseVarb("string"),
     } as const;
   },
   get virtualVarb() {
-    return {
-      displayName: "stringObj",
-      displayNameEnd: "stringObj",
-      startAdornment: "stringObj",
-      endAdornment: "stringObj",
-    } as const;
+    return baseVarbs("stringObj", [
+      "displayName",
+      "displayNameEnd",
+      "startAdornment",
+      "endAdornment",
+    ] as const);
   },
   get singleValueVirtualVarb() {
     return {
       ...this.virtualVarb,
-      value: "numObj",
+      value: baseVarb("numObj"),
     } as const;
   },
   get loadableVarb() {
     return {
-      valueEntityInfo: "inEntityInfo",
+      valueEntityInfo: baseVarb("inEntityInfo"),
     } as const;
   },
 } as const;

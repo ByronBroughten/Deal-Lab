@@ -1,5 +1,5 @@
 import { SwitchTargetKey } from "../../../baseSectionsVarbs/baseSwitchNames";
-import { ValueName } from "../../../baseSectionsVarbs/baseVarb";
+import { ValueName } from "../../../baseSectionsVarbs/baseVarbDepreciated";
 import { switchNames } from "../../../baseSectionsVarbs/RelSwitchVarb";
 import {
   RelLocalVarbInfo,

@@ -6,7 +6,7 @@ import {
 } from "../SectionsMeta/baseSectionsDerived/baseVarbInfo";
 import { NumberOrQ } from "../SectionsMeta/baseSectionsVarbs/baseValues/NumObj";
 import { StateValue } from "../SectionsMeta/baseSectionsVarbs/baseValues/StateValueTypes";
-import { ValueName } from "../SectionsMeta/baseSectionsVarbs/baseVarb";
+import { ValueName } from "../SectionsMeta/baseSectionsVarbs/baseVarbDepreciated";
 import { ExpectedCount } from "../SectionsMeta/baseSectionsVarbs/NanoIdInfo";
 import {
   Adornments,

@@ -1,5 +1,5 @@
-import { baseSectionsVarbs, BaseSectionsVarbs } from "./baseSectionsVarbs";
-import { GeneralBaseSectionVarbs } from "./baseSectionsVarbs/baseSectionVarbs";
+import { baseSectionsVarbs, BaseSectionsVarbs } from "./allBaseSectionVarbs";
+import { GeneralBaseSectionVarbs } from "./baseSectionsVarbs/baseVarbs";
 import {
   GeneralGeneratedSection,
   generatedSections,

@@ -5,7 +5,7 @@ import {
   NumPropCalcName,
 } from "../../baseSectionsVarbs/baseValues/calculations";
 import { numObj } from "../../baseSectionsVarbs/baseValues/NumObj";
-import { ValueName } from "../../baseSectionsVarbs/baseVarb";
+import { ValueName } from "../../baseSectionsVarbs/baseVarbDepreciated";
 import { ChildName } from "../../sectionChildrenDerived/ChildName";
 import { SectionName } from "../../SectionName";
 import { getUpdateFnNames } from "./relVarb/UpdateFnName";
