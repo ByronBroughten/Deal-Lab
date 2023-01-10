@@ -47,7 +47,7 @@ type SwitchKey<SW extends SwitchName> = keyof BaseSwitchSchemas[SW];
 export type SwitchVarbName<
   BN extends string,
   SW extends SwitchName,
-  SK extends SwitchKey<SW>
+  SK extends SwitchKey<SW> = SwitchKey<SW>
 > = keyof {
   [Prop in SK as `${BN}${BaseSwitchSchemas[SW][Prop] & string}`]: any;
 };

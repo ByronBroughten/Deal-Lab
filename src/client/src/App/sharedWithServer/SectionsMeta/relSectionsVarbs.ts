@@ -215,76 +215,12 @@ export function makeRelSections() {
       }),
     }),
     ...relSectionProp("ongoingList", {
-      valueMonthly: relVarbS.moneyObj("Expense", {
-        ...updateBasicsS.manualUpdateOnly(),
-        updateOverrides: [
-          updateOverride(
-            [overrideSwitchS.local("valueSourceSwitch", "total")],
-            updateBasicsS.loadSolvableTextByVarbInfo(
-              "totalMonthly",
-              "valueSourceSwitch"
-            )
-          ),
-          updateOverride(
-            [
-              overrideSwitchS.local("valueSourceSwitch", "valueEditor"),
-              overrideSwitchS.yearlyIsActive("value"),
-            ],
-            updateBasicsS.yearlyToMonthly("value")
-          ),
-          updateOverride(
-            [
-              overrideSwitchS.local("valueSourceSwitch", "valueEditor"),
-              overrideSwitchS.monthlyIsActive("value"),
-            ],
-            updateBasicsS.loadSolvableTextByVarbInfo(
-              "valueMonthly",
-              "valueSourceSwitch"
-            )
-          ),
-        ],
-      }),
-      valueYearly: relVarbS.moneyObj("Expense", {
-        ...updateBasicsS.manualUpdateOnly(),
-        updateOverrides: [
-          updateOverride(
-            [overrideSwitchS.local("valueSourceSwitch", "total")],
-            updateBasicsS.loadSolvableTextByVarbInfo(
-              "totalYearly",
-              "valueSourceSwitch"
-            )
-          ),
-          updateOverride(
-            [
-              overrideSwitchS.local("valueSourceSwitch", "valueEditor"),
-              overrideSwitchS.monthlyIsActive("value"),
-            ],
-            updateBasicsS.monthlyToYearly("value")
-          ),
-          updateOverride(
-            [
-              overrideSwitchS.local("valueSourceSwitch", "valueEditor"),
-              overrideSwitchS.yearlyIsActive("value"),
-            ],
-            updateBasicsS.loadSolvableTextByVarbInfo(
-              "valueYearly",
-              "valueSourceSwitch"
-            )
-          ),
-        ],
-      }),
       ...relVarbsS.ongoingSumNums(
         "total",
         relVarbInfoS.local("displayName"),
         [updateFnPropS.children("ongoingItem", "value")],
         { switchInit: "monthly", shared: { startAdornment: "$" } }
       ),
-      valueOngoingSwitch: relVarb("string", {
-        initValue: "monthly",
-      }),
-      valueSourceSwitch: relVarb("string", {
-        initValue: "total",
-      }),
       itemValueSwitch: relVarb("string", {
         initValue: "labeledEquation",
       }),

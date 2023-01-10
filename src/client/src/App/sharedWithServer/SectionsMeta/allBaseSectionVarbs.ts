@@ -7,7 +7,7 @@ import {
   baseVarb,
   baseVarbs,
   baseVarbsS,
-  GeneralBaseSectionVarbs,
+  GeneralBaseVarb,
 } from "./baseSectionsVarbs/baseVarbs";
 import {
   loanVarbsNotInFinancing,
@@ -18,6 +18,8 @@ import { SectionName, sectionNames } from "./SectionName";
 const checkBaseSectionsVarbs = <BSV extends GeneralBaseSectionsVarbs>(
   bsv: BSV
 ) => bsv;
+
+export type GeneralBaseSectionVarbs = { [varbName: string]: GeneralBaseVarb };
 
 type GeneralBaseSectionsVarbs = {
   [SN in SectionName]: GeneralBaseSectionVarbs;
@@ -114,10 +116,7 @@ export function makeAllBaseSectionVarbs() {
     }),
     ongoingList: baseSectionVarbs({
       ...baseVarbsS.savableSection,
-      ...baseVarbsS.ongoing("value"),
       ...baseVarbsS.ongoing("total"),
-      valueEditor: baseVarb("numObj"),
-      valueSourceSwitch: baseVarb("string"),
       itemValueSwitch: baseVarb("string"),
       itemOngoingSwitch: baseVarb("string"),
     }),
@@ -179,6 +178,7 @@ export function makeAllBaseSectionVarbs() {
       ...baseVarbsS.ongoing("miscRevenue"),
       ...baseVarbsS.ongoing("revenue"),
     }),
+    //
     unit: baseSectionVarbs({
       one: baseVarb("numObj"),
       numBedrooms: baseVarb("numObj"),
@@ -187,9 +187,6 @@ export function makeAllBaseSectionVarbs() {
     get propertyGeneral() {
       return baseSectionVarbs(omit(this.property, savableSectionVarbNames));
     },
-    calculatedVarbs: baseSectionVarbs({
-      ...baseVarbs("numObj", ["onePercentPrice"]),
-    }),
     loan: baseSectionVarbs({
       ...baseVarbsS.savableSection,
       ...baseVarbs("numObj", [
@@ -243,6 +240,9 @@ export function makeAllBaseSectionVarbs() {
     get mgmtGeneral() {
       return baseSectionVarbs(omit(this.mgmt, savableSectionVarbNames));
     },
+    calculatedVarbs: baseSectionVarbs({
+      ...baseVarbs("numObj", ["onePercentPrice"]),
+    }),
     deal: baseSectionVarbs({
       ...baseVarbsS.savableSection,
       ...baseVarbs("numObj", [

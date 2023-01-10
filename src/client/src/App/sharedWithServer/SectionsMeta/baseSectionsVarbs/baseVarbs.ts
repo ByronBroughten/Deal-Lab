@@ -1,3 +1,4 @@
+import { Merge, merge } from "./../../utils/Obj/merge";
 import { ValueName } from "./baseVarbDepreciated";
 import {
   BaseOngoingVarb,
@@ -8,40 +9,63 @@ import {
   SwitchRecord,
 } from "./RelSwitchVarb";
 
-type GeneralBaseVarb = {
+export type GeneralBaseVarb = {
   valueName: ValueName;
 };
-
-type BaseVarbOptions = Partial<GeneralBaseVarb>;
-
-function defaultBaseVarb<VN extends ValueName>(
-  valueName: VN
-): { valueName: VN } {
-  return { valueName };
+function checkBaseVarb<BV extends GeneralBaseVarb>(baseVarb: BV): BV {
+  return baseVarb;
 }
-export type BaseVarb<VN extends ValueName> = {
+type DefaultBaseVarb<VN extends ValueName> = {
   valueName: VN;
 };
-export function baseVarb<VN extends ValueName>(valueName: VN): BaseVarb<VN> {
-  return defaultBaseVarb(valueName);
+function defaultBaseVarb<VN extends ValueName>(
+  valueName: VN
+): DefaultBaseVarb<VN> {
+  return checkBaseVarb({ valueName });
 }
-
-export type GeneralBaseSectionVarbs = { [varbName: string]: GeneralBaseVarb };
-
-type DefaultBaseVarbs<VN extends ValueName, VNS extends string> = {
-  [Prop in VNS]: BaseVarb<VN>;
+type Options = Partial<Omit<GeneralBaseVarb, "valueName">>;
+export type BaseVarb<VN extends ValueName, O extends Options> = Merge<
+  DefaultBaseVarb<VN>,
+  O
+>;
+export function baseVarb<VN extends ValueName, O extends Options = {}>(
+  valueName: VN,
+  options?: O
+): BaseVarb<VN, O> {
+  return merge(defaultBaseVarb(valueName), options ?? ({} as O));
+}
+const baseVarbS = {
+  moneyMonthly<VN extends ValueName>(valueName: VN) {
+    return baseVarb(valueName, {
+      unitName: "dollars",
+      timespanName: "monthly",
+    });
+  },
+  moneyYearly<VN extends ValueName>(valueName: VN) {
+    return baseVarb(valueName, {
+      unitName: "dollars",
+      timespanName: "monthly",
+    });
+  },
 };
 
-export function baseVarbs<VN extends ValueName, VNS extends string>(
+type BaseVarbs<VN extends ValueName, VNS extends string, O extends Options> = {
+  [Prop in VNS]: BaseVarb<VN, O>;
+};
+export function baseVarbs<
+  VN extends ValueName,
+  VNS extends string,
+  O extends Options = {}
+>(
   valueName: VN,
-  varbNames: readonly VNS[]
-): DefaultBaseVarbs<VN, VNS> {
+  varbNames: readonly VNS[],
+  options?: O
+): BaseVarbs<VN, VNS, O> {
   return varbNames.reduce((varbs, varbName) => {
-    varbs[varbName] = baseVarb(valueName);
+    varbs[varbName] = baseVarb(valueName, options ?? ({} as O));
     return varbs;
-  }, {} as DefaultBaseVarbs<VN, VNS>);
+  }, {} as BaseVarbs<VN, VNS, O>);
 }
-
 export const baseVarbsS = {
   get typeUniformity() {
     return { _typeUniformity: "string" } as const;
@@ -52,14 +76,14 @@ export const baseVarbsS = {
   ): BaseSwitchVarb<Base, SwitchEndings[SWN]> {
     const { targetEndings, switchEnding } = relSwitchVarbs[switchName];
     const numObjSchemas: Partial<
-      SwitchRecord<Base, SwitchEndings[SWN], BaseVarb<"numObj">>
+      SwitchRecord<Base, SwitchEndings[SWN], BaseVarb<"numObj", {}>>
     > = {};
     for (const ending of Object.values(targetEndings)) {
       numObjSchemas[
         `${baseName}${ending}` as keyof SwitchRecord<
           Base,
           SwitchEndings[SWN],
-          BaseVarb<"numObj">
+          BaseVarb<"numObj", {}>
         >
       ] = baseVarb("numObj");
     }
