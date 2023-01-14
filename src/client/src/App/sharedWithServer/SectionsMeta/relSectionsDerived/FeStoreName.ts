@@ -1,10 +1,10 @@
 import { Arr } from "../../utils/Arr";
 import { Obj } from "../../utils/Obj";
+import { allSectionTraits, getSomeSectionTraits } from "../allSectionTraits";
 import { tableRowDbSources } from "../childrenTraits";
 import { ChildName, getChildNames } from "../sectionChildrenDerived/ChildName";
 import { dbStoreNameS } from "../sectionChildrenDerived/DbStoreName";
 import { SectionName } from "../SectionName";
-import { allSectionTraits, getSomeSectionTraits } from "../sectionsTraits";
 
 export const hasStoreNameArrs = {
   hasFeDisplayIndex: Obj.entryKeysWithPropOfType(

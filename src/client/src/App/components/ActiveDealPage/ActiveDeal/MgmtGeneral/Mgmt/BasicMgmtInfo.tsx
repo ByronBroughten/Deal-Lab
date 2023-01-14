@@ -1,7 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import { SwitchTargetKey } from "../../../../../sharedWithServer/SectionsMeta/baseSectionsVarbs/baseSwitchNames";
-import { switchNames } from "../../../../../sharedWithServer/SectionsMeta/baseSectionsVarbs/RelSwitchVarb";
+import {
+  switchKeyToVarbNames,
+  SwitchTargetKey,
+} from "../../../../../sharedWithServer/SectionsMeta/baseSectionsVarbs/baseSwitchNames";
 import theme from "../../../../../theme/Theme";
 import { PercentOngoingDollarInput } from "../../general/PercentOngoingDollarInput";
 
@@ -22,7 +24,7 @@ function getDisplayVarbName(
 ) {
   switch (unitSwitch) {
     case "percent":
-      return switchNames("basePayDollars", "ongoing")[ongoingSwitch];
+      return switchKeyToVarbNames("basePayDollars", "ongoing")[ongoingSwitch];
     case "dollars":
       return "basePayPercent";
     default:

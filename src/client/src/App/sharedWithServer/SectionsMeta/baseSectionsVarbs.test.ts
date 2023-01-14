@@ -1,14 +1,14 @@
 import hash from "object-hash";
 import { timeS } from "../utils/date";
 import {
-  BaseSectionsVarbs,
+  AllBaseSectionVarbs,
   makeAllBaseSectionVarbs,
 } from "./allBaseSectionVarbs";
 
 describe(`sectionsVarbs`, () => {
-  let sectionsVarbs: BaseSectionsVarbs;
+  let sectionsVarbs: AllBaseSectionVarbs;
   let sectionsVarbsHash: string;
-  let sectionsVarbs2: BaseSectionsVarbs;
+  let sectionsVarbs2: AllBaseSectionVarbs;
   let sectionsVarbs2Hash: string;
 
   beforeEach(async () => {

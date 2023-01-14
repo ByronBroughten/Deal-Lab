@@ -3,9 +3,9 @@ import { CompareTableBuilder } from "../../../../client/src/App/modules/SectionS
 import { GuestAccessSectionPackArrs } from "../../../../client/src/App/sharedWithServer/apiQueriesShared/register";
 import { getDefaultMainTableMakers } from "../../../../client/src/App/sharedWithServer/defaultMaker/getDefaultMainTableMakers";
 import { VarbName } from "../../../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
+import { AutoSyncControl } from "../../../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsDerived/subValues";
 import { VarbValue } from "../../../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsDerived/valueMetaTypes";
 import { feStoreNameS } from "../../../../client/src/App/sharedWithServer/SectionsMeta/relSectionsDerived/FeStoreName";
-import { AutoSyncControl } from "../../../../client/src/App/sharedWithServer/SectionsMeta/relSectionVarbs/relVarbs";
 import { ChildSectionName } from "../../../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/ChildSectionName";
 import {
   DbPack,

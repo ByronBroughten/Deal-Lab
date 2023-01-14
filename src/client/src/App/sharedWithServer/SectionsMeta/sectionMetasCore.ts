@@ -1,15 +1,18 @@
-import { baseSectionsVarbs, BaseSectionsVarbs } from "./allBaseSectionVarbs";
-import { GeneralBaseSectionVarbs } from "./baseSectionsVarbs/baseVarbs";
+import {
+  AllBaseSectionVarbs,
+  baseSectionsVarbs,
+  GeneralBaseSectionVarbs,
+} from "./allBaseSectionVarbs";
+import { AllSectionTraits, allSectionTraits } from "./allSectionTraits";
+import { allUpdateSections, AllUpdateSections } from "./allUpdateSectionVarbs";
 import {
   GeneralGeneratedSection,
   generatedSections,
   GeneratedSections,
   GenPropName,
 } from "./generatedSections";
-import { relSections, RelSections } from "./relSectionsVarbs";
-import { GeneralRelSectionVarbs } from "./relSectionVarbs/relSection";
+import { GeneralUpdateSectionVarbs } from "./relSectionVarbs/updateVarbs";
 import { SectionName, sectionNames } from "./SectionName";
-import { AllSectionTraits, allSectionTraits } from "./sectionsTraits";
 import {
   GeneralSectionTraits,
   SectionTraitName,
@@ -17,7 +20,7 @@ import {
 
 type SectionMetaCoreGeneral = {
   baseVarbs: GeneralBaseSectionVarbs;
-  relVarbs: GeneralRelSectionVarbs;
+  relVarbs: GeneralUpdateSectionVarbs;
 } & GeneralGeneratedSection &
   GeneralSectionTraits;
 
@@ -29,8 +32,8 @@ export type SectionsMetaCore = {
   [SN in SectionName]: SectionMetaCore<SN>;
 };
 type SectionMetaCore<SN extends SectionName> = {
-  baseVarbs: BaseSectionsVarbs[SN];
-  relVarbs: RelSections[SN];
+  baseVarbs: AllBaseSectionVarbs[SN];
+  relVarbs: AllUpdateSections[SN];
 } & GeneratedSections[SN] &
   AllSectionTraits[SN];
 
@@ -38,7 +41,7 @@ export const sectionMetasCore = sectionNames.reduce((core, sectionName) => {
   (core as SectionMetasCoreGeneral)[sectionName] = {
     ...{
       baseVarbs: baseSectionsVarbs[sectionName],
-      relVarbs: relSections[sectionName],
+      relVarbs: allUpdateSections[sectionName],
     },
     ...({
       ...generatedSections[sectionName],

@@ -1,4 +1,8 @@
-export type ExpectedCount = "onlyOne" | "multiple";
+const expectedCounts = ["onlyOne", "multiple"] as const;
+export function isExpectedCount(value: any): value is ExpectedCount {
+  return expectedCounts.includes(value);
+}
+export type ExpectedCount = typeof expectedCounts[number];
 export interface ExpectedCountProp<EC extends ExpectedCount> {
   expectedCount: EC;
 }

@@ -1,8 +1,4 @@
 import { VarbNames } from "./SectionsMeta/baseSectionsDerived/baseVarbInfo";
-import {
-  DescendantSectionName,
-  SelfOrDescendantSectionName,
-} from "./SectionsMeta/sectionChildrenDerived/DescendantSectionName";
 import { SectionMeta, VarbMetas } from "./SectionsMeta/SectionMeta";
 import { SectionName, sectionNames } from "./SectionsMeta/SectionName";
 import { SectionNameByType } from "./SectionsMeta/SectionNameByType";
@@ -41,23 +37,6 @@ export class SectionsMeta {
   }
   value<VNS extends VarbNames>(varbNames: VNS) {
     return this.varb(varbNames).value;
-  }
-  selfAndDescendantNames<SN extends SectionName>(
-    sectionName: SN
-  ): SelfOrDescendantSectionName<SN>[] {
-    const selfAndDescendantNames: SelfOrDescendantSectionName<SN>[] = [];
-    const queue: SelfOrDescendantSectionName<SN>[] = [sectionName];
-    while (queue.length > 0) {
-      const queueLength = queue.length;
-      for (let i = 0; i < queueLength; i++) {
-        const descendantName = queue.shift() as DescendantSectionName<SN>;
-        selfAndDescendantNames.push(descendantName);
-
-        const { childNames } = this.section(descendantName);
-        queue.push(...(childNames as DescendantSectionName<SN>[]));
-      }
-    }
-    return selfAndDescendantNames;
   }
   private static initCore(): SectionMetasCore {
     return sectionNames.reduce((core, sectionName) => {

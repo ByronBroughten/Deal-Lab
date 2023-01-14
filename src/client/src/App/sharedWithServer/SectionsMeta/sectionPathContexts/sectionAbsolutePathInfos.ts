@@ -66,6 +66,19 @@ export const sectionAbsolutePathInfos = {
       "propertyGeneral",
     ]);
   },
+  get loanActive() {
+    return absolute("loan", [...this.financingActive.path, "loan"]);
+  },
+  get mgmtActive() {
+    return absolute("mgmt", [...this.mgmtGeneralActive.path, "mgmt"]);
+  },
+
+  get loanLatent() {
+    return absolute("loan", [...this.financingLatent.path, "loan"]);
+  },
+  get mgmtLatent() {
+    return absolute("mgmt", [...this.mgmtGeneralLatent.path, "mgmt"]);
+  },
   get propertyActive() {
     return absolute("property", [
       ...this.propertyGeneralActive.path,

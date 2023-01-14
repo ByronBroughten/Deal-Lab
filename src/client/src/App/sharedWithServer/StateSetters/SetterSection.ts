@@ -1,7 +1,7 @@
 import { pick } from "lodash";
 import { VarbName } from "../SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
 import { SectionValues } from "../SectionsMeta/baseSectionsDerived/valueMetaTypes";
-import { SwitchEndingKey } from "../SectionsMeta/baseSectionsVarbs/RelSwitchVarb";
+import { SwitchName } from "../SectionsMeta/baseSectionsVarbs/baseSwitchNames";
 import { ChildValueInfo } from "../SectionsMeta/sectionChildrenDerived/ChildInfo";
 import {
   ChildName,
@@ -194,14 +194,11 @@ export class SetterSection<
   }
   switchVarbInfo(
     varbNameBase: string,
-    switchEnding: SwitchEndingKey
+    switchEnding: SwitchName
   ): FeVarbInfo<SN> {
     return this.get.switchVarbInfo(varbNameBase, switchEnding);
   }
-  switchVarb(
-    varbNameBase: string,
-    switchEnding: SwitchEndingKey
-  ): GetterVarb<SN> {
+  switchVarb(varbNameBase: string, switchEnding: SwitchName): GetterVarb<SN> {
     return this.get.switchVarb(varbNameBase, switchEnding);
   }
   get feSectionInfo(): FeSectionInfo<SN> {

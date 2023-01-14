@@ -6,17 +6,19 @@ describe("SetterCalculations", () => {
     const dealTester = SetterTesterSection.init("deal");
     addTestLoan(dealTester);
     addInterestOnlyLoan(dealTester);
-    const financing = dealTester.setter.onlyChild("financing");
+    const calculated =
+      dealTester.setter.sections.main.onlyChild("calculatedVarbs");
 
     const expectedLoanPayment = 912.6 + 50;
+    const loanExpensesMonthly = calculated.get.varbNext(
+      "loanExpensesMonthly"
+    ).numberValue;
     const loanPaymentMonthly =
-      financing.get.varb("loanPaymentMonthly").numberValue;
+      calculated.get.varbNext("loanPaymentMonthly").numberValue;
     const loanPaymentYearly =
-      financing.get.varb("loanPaymentYearly").numberValue;
-    const loanExpensesMonthly =
-      financing.varb("expensesMonthly").get.numberValue;
-    expect(loanPaymentMonthly).toBe(expectedLoanPayment);
+      calculated.get.varbNext("loanPaymentYearly").numberValue;
     expect(loanExpensesMonthly).toBe(expectedLoanPayment + 100);
+    expect(loanPaymentMonthly).toBe(expectedLoanPayment);
     expect(loanPaymentYearly).toBeCloseTo(12 * expectedLoanPayment, 1);
   });
   it("should calculate upfront investment accurately", () => {

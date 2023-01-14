@@ -1,5 +1,9 @@
+import { Obj } from "../../utils/Obj";
 import { VarbProp } from "../baseSectionsDerived/baseVarbInfo";
-import { ExpectedCount } from "../baseSectionsVarbs/NanoIdInfo";
+import {
+  ExpectedCount,
+  isExpectedCount,
+} from "../baseSectionsVarbs/NanoIdInfo";
 import { ChildName } from "../sectionChildrenDerived/ChildName";
 import {
   ParentName,
@@ -83,6 +87,14 @@ const defaultOptions = makeDefaultOptions({ expectedCount: "multiple" });
 type Defaults = typeof defaultOptions;
 
 export const relVarbInfoS = {
+  isLocal(value: any): value is RelLocalVarbInfo {
+    return (
+      Obj.isObjToAny(value) &&
+      value.infoType === "local" &&
+      typeof value.varbName === "string" &&
+      isExpectedCount(value.expectedCount)
+    );
+  },
   local(varbName: string): RelLocalVarbInfo {
     return {
       infoType: "local",

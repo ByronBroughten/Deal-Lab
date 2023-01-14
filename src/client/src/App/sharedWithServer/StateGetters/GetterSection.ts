@@ -9,16 +9,16 @@ import {
   SectionValuesRes,
   VarbValue,
 } from "../SectionsMeta/baseSectionsDerived/valueMetaTypes";
-import { SwitchTargetKey } from "../SectionsMeta/baseSectionsVarbs/baseSwitchNames";
+import {
+  switchKeyToVarbNames,
+  SwitchName,
+  SwitchTargetKey,
+} from "../SectionsMeta/baseSectionsVarbs/baseSwitchNames";
 import { InEntityIdInfoValue } from "../SectionsMeta/baseSectionsVarbs/baseValues/InEntityIdInfoValue";
-import { ValueName } from "../SectionsMeta/baseSectionsVarbs/baseVarbDepreciated";
 import { DbSectionInfo } from "../SectionsMeta/baseSectionsVarbs/DbSectionInfo";
 import { ExpectedCount } from "../SectionsMeta/baseSectionsVarbs/NanoIdInfo";
-import {
-  SwitchEndingKey,
-  switchNames,
-} from "../SectionsMeta/baseSectionsVarbs/RelSwitchVarb";
 import { ValueTypesPlusAny } from "../SectionsMeta/baseSectionsVarbs/StateVarbTypes";
+import { ValueName } from "../SectionsMeta/baseSectionsVarbs/ValueName";
 import { ChildValueInfo } from "../SectionsMeta/sectionChildrenDerived/ChildInfo";
 import {
   ChildIdArrsWide,
@@ -558,11 +558,11 @@ export class GetterSection<
     return value;
   }
 
-  switchValue<SK extends SwitchEndingKey>(
+  switchValue<SK extends SwitchName>(
     varbNameBase: string,
     switchEnding: SK
   ): SwitchTargetKey<SK> {
-    const varbNames = switchNames(varbNameBase, switchEnding);
+    const varbNames = switchKeyToVarbNames(varbNameBase, switchEnding);
     const switchValue = this.value(varbNames.switch, "string");
     if (!(switchValue in varbNames) || switchValue === "switch")
       throw new Error(
@@ -574,15 +574,15 @@ export class GetterSection<
   }
   activeSwitchTargetName(
     varbNameBase: string,
-    switchEnding: SwitchEndingKey
+    switchEnding: SwitchName
   ): string {
-    const varbNames = switchNames(varbNameBase, switchEnding);
+    const varbNames = switchKeyToVarbNames(varbNameBase, switchEnding);
     const switchValue = this.switchValue(varbNameBase, switchEnding);
     return varbNames[switchValue as keyof typeof varbNames];
   }
   switchVarbInfo(
     varbNameBase: string,
-    switchEnding: SwitchEndingKey
+    switchEnding: SwitchName
   ): FeVarbInfo<SN> {
     const varbName = this.activeSwitchTargetName(
       varbNameBase,
@@ -590,10 +590,7 @@ export class GetterSection<
     ) as VarbName<SN>;
     return this.varbInfo(varbName);
   }
-  switchVarb(
-    varbNameBase: string,
-    switchEnding: SwitchEndingKey
-  ): GetterVarb<SN> {
+  switchVarb(varbNameBase: string, switchEnding: SwitchName): GetterVarb<SN> {
     const varbName = this.activeSwitchTargetName(varbNameBase, switchEnding);
     return this.varb(varbName);
   }

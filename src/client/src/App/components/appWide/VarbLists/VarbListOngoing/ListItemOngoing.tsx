@@ -1,5 +1,4 @@
 import React from "react";
-import { ongoingVarb } from "../../../../sharedWithServer/SectionsMeta/baseSectionsVarbs/RelSwitchVarb";
 import { useSetterSection } from "../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import { LabeledEquation } from "../../ListGroup/ListGroupShared/ListItemValue/LabeledEquation";
 import { LabeledSpanOverCost } from "../../ListGroup/ListGroupShared/ListItemValue/LabeledSpanOverCost";
@@ -61,10 +60,7 @@ export function ListItemOngoing({ feId }: Props) {
 
   const lifespanVarbName = section.switchVarb("lifespan", "monthsYears")
     .varbName as "lifespanMonths" | "lifespanYears";
-
-  const ongoingSwitch = section.get.switchValue("value", "ongoing");
-  const { endAdornment } = ongoingVarb.target(ongoingSwitch);
-
+  const { endAdornment } = section.get.switchVarb("value", "ongoing");
   return (
     <ListItemOngoingMemo
       {...{

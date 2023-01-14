@@ -19,19 +19,33 @@ reportWebVitals();
 // - This is towards marketing it
 // - This also might be towards a programming job
 
-// Really, everything I do to make it more marketable
-// also helps with my getting a programming job.
+// I could continuously apply for programming jobs
 
-// I can just continuously apply for programming jobs
-
-// I ought to launch this to deallab.app
-// I ought to connect deallab.app to
-
-// Now, what is really needed in order for me to
-// launch this for real?
-// 0. Separate the displayName stuff from relVarb(?)
 // 1. OngoingEditor
-// - make ongoingEditor templates for baseVarbs and relVarbs
+// - The ongoingEditor stuff may generally need
+//   custom updateFn stuff
+// - But you should be able to make generalizable displayName stuff for it
+// - Make it so editors can get their rounding from a switch, like how
+//   they get their displayName
+
+// 2. Add these to deal baseSectionVarbs:
+// loanTotalDollars
+// closingCosts
+// upfront mortgageInsurance
+// expenses
+// ongoingMortgageInsurance
+// loanPayment
+// 3. Add them to deal updateSectionVarbs as sum variables
+// 4. Replace financing
+// 5. Replace mgmtGeneral
+// 6. Make property, mgmt, and loan be children of deal
+// 7. Fix their focal paths
+// 8. On deal use childrenInfo instead of pathInfo
+
+// - transition relVarbs to updateVarbs
+// - make ongoingEditor switchEnding templates for baseVarbs
+// - Do the same for displayVarbs and updateVarbs
+
 // - perhaps separate the displayName stuff from relVarbs
 // - create a component called "OngoingEditor" that takes
 //   a baseName. It then uses that to get the editorName

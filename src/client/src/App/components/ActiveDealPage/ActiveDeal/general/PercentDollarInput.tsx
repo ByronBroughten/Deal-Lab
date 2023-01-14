@@ -1,8 +1,10 @@
 import { FormControl, MenuItem, Select } from "@material-ui/core";
 import styled from "styled-components";
 import { VarbName } from "../../../../sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
-import { SwitchTargetKey } from "../../../../sharedWithServer/SectionsMeta/baseSectionsVarbs/baseSwitchNames";
-import { switchNames } from "../../../../sharedWithServer/SectionsMeta/baseSectionsVarbs/RelSwitchVarb";
+import {
+  switchKeyToVarbNames,
+  SwitchTargetKey,
+} from "../../../../sharedWithServer/SectionsMeta/baseSectionsVarbs/baseSwitchNames";
 import { FeSectionInfo } from "../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { SectionName } from "../../../../sharedWithServer/SectionsMeta/SectionName";
 import { useSetterSection } from "../../../../sharedWithServer/stateClassHooks/useSetterSection";
@@ -30,7 +32,7 @@ export function PercentDollarInput<SN extends SectionName>({
   const section = useSetterSection(feInfo);
   const { get } = section;
 
-  const unitSwitchName = switchNames(unitBaseName, "dollarsPercent")
+  const unitSwitchName = switchKeyToVarbNames(unitBaseName, "dollarsPercent")
     .switch as VarbName<SN>;
 
   const unitSwitchValue = get.switchValue(unitBaseName, "dollarsPercent");
@@ -152,7 +154,7 @@ function getEditorVarbName(
   unitBaseName: string,
   unitSwitchValue: SwitchTargetKey<"dollarsPercent">
 ) {
-  const names = switchNames(unitBaseName, "dollarsPercent");
+  const names = switchKeyToVarbNames(unitBaseName, "dollarsPercent");
   switch (unitSwitchValue) {
     case "percent":
       return `${names.percent}Editor`;
@@ -173,7 +175,7 @@ function getDisplayVarbName<SN extends SectionName>({
   unitSwitchValue,
   dollarVarbName,
 }: GetDisplayNameProps<SN>) {
-  const names = switchNames(unitBaseName, "dollarsPercent");
+  const names = switchKeyToVarbNames(unitBaseName, "dollarsPercent");
   switch (unitSwitchValue) {
     case "percent":
       return dollarVarbName;

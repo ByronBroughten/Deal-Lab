@@ -59,7 +59,7 @@ export default function BasicLoanInfo({ feId, className }: Props) {
         {hasMortIns && (
           <div className="BasicLoanInfo-mortInsRow BasicLoanInfo-editorsRow">
             <NumObjEntityEditor
-              feVarbInfo={loan.varbInfo("mortgageInsUpfront")}
+              feVarbInfo={loan.varbInfo("mortgageInsUpfrontEditor")}
               label="Upfront"
             />
             <NumObjEntityEditor

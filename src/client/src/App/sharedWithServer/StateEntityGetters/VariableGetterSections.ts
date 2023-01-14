@@ -1,5 +1,5 @@
+import { switchKeyToVarbNames } from "../SectionsMeta/baseSectionsVarbs/baseSwitchNames";
 import { ValueInEntityInfo } from "../SectionsMeta/baseSectionsVarbs/baseValues/entities";
-import { switchNames } from "../SectionsMeta/baseSectionsVarbs/RelSwitchVarb";
 import { mixedInfoS } from "../SectionsMeta/sectionChildrenDerived/MixedSectionInfo";
 import {
   GetterSectionsBase,
@@ -79,7 +79,7 @@ export class VariableGetterSections extends GetterSectionsBase {
       for (const list of lists) {
         const displayName = list.valueNext("displayName").mainText;
         if (sectionName === "ongoingList") {
-          const ongoingNames = switchNames("total", "ongoing");
+          const ongoingNames = switchKeyToVarbNames("total", "ongoing");
           for (const key of Obj.keys(ongoingNames)) {
             if (key === "switch") continue;
             const varbName = ongoingNames[key];

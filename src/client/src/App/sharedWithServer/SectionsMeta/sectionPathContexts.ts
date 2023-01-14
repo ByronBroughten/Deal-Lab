@@ -10,6 +10,8 @@ export const sectionPathContexts = {
   default: sectionPathContext({
     calculatedVarbsFocal: absolute.calculatedVarbsActive,
     propertyFocal: absolute.propertyActive,
+    mgmtFocal: absolute.mgmtActive,
+    loanFocal: absolute.loanActive,
     dealFocal: absolute.dealActive,
     propertyGeneralFocal: absolute.propertyGeneralActive,
     financingFocal: absolute.financingActive,
@@ -23,6 +25,8 @@ export const sectionPathContexts = {
   activeDealPage: sectionPathContext({
     calculatedVarbsFocal: absolute.calculatedVarbsActive,
     propertyFocal: absolute.propertyActive,
+    mgmtFocal: absolute.mgmtActive,
+    loanFocal: absolute.loanActive,
     dealFocal: absolute.dealActive,
     propertyGeneralFocal: absolute.propertyGeneralActive,
     financingFocal: absolute.financingActive,
@@ -36,6 +40,8 @@ export const sectionPathContexts = {
   userVarbEditorPage: sectionPathContext({
     calculatedVarbsFocal: absolute.calculatedVarbsActive,
     propertyFocal: absolute.propertyActive,
+    mgmtFocal: absolute.mgmtActive,
+    loanFocal: absolute.loanActive,
     dealFocal: absolute.dealActive,
     propertyGeneralFocal: absolute.propertyGeneralActive,
     financingFocal: absolute.financingActive,
@@ -49,6 +55,8 @@ export const sectionPathContexts = {
   userListEditorPage: sectionPathContext({
     calculatedVarbsFocal: absolute.calculatedVarbsActive,
     propertyFocal: absolute.propertyActive,
+    mgmtFocal: absolute.mgmtActive,
+    loanFocal: absolute.loanActive,
     dealFocal: absolute.dealActive,
     propertyGeneralFocal: absolute.propertyGeneralActive,
     financingFocal: absolute.financingActive,
@@ -62,11 +70,12 @@ export const sectionPathContexts = {
   latentSection: sectionPathContext({
     calculatedVarbsFocal: absolute.calculatedVarbsLatent,
     propertyFocal: absolute.propertyLatent,
+    mgmtFocal: absolute.mgmtLatent,
+    loanFocal: absolute.loanLatent,
     dealFocal: absolute.dealLatent,
     propertyGeneralFocal: absolute.propertyGeneralLatent,
     financingFocal: absolute.financingLatent,
     mgmtGeneralFocal: absolute.mgmtGeneralLatent,
-
     userVarbItemMain: absolute.userVarbItemLatent,
     ongoingListMain: absolute.ongoingListLatent,
     ongoingItemMain: absolute.ongoingItemLatent,

@@ -50,7 +50,6 @@ export function makeDefaultPropertyPack(): SectionPack<"property"> {
   });
   const capExList = capEx.onlyChild("ongoingList");
   capExList.updateValues({
-    valueOngoingSwitch: "yearly",
     itemValueSwitch: "labeledSpanOverCost",
     itemOngoingSwitch: "yearly",
   });

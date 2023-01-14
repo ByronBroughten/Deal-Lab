@@ -34,6 +34,10 @@ const defaults = sectionNames.reduce((defaults, sectionName) => {
   return defaults;
 }, {} as DefaultSectionsVarbs);
 
+const dollars = { valueUnit: "dollars" } as const;
+const percent = { valueUnit: "percent" } as const;
+const decimal = { valueUnit: "decimal" } as const;
+
 export function makeAllBaseSectionVarbs() {
   return checkBaseSectionsVarbs({
     ...defaults,
@@ -73,17 +77,17 @@ export function makeAllBaseSectionVarbs() {
       then: baseVarb("numObj"),
     }),
     singleTimeListGroup: baseSectionVarbs({
-      total: baseVarb("numObj"),
+      total: baseVarb("numObj", dollars),
       itemValueSwitch: baseVarb("string"),
     }),
     singleTimeValueGroup: baseSectionVarbs({
-      total: baseVarb("numObj"),
+      total: baseVarb("numObj", dollars),
       itemValueSwitch: baseVarb("string"),
     }),
     singleTimeValue: baseSectionVarbs({
       displayName: baseVarb("stringObj"),
       displayNameEditor: baseVarb("stringObj"),
-      value: baseVarb("numObj"),
+      value: baseVarb("numObj", dollars),
       valueEditor: baseVarb("numObj"),
       valueSourceSwitch: baseVarb("string"),
       isItemized: baseVarb("boolean"),
@@ -91,7 +95,7 @@ export function makeAllBaseSectionVarbs() {
     }),
     singleTimeList: baseSectionVarbs({
       ...baseVarbsS.savableSection,
-      total: baseVarb("numObj"),
+      total: baseVarb("numObj", dollars),
       itemValueSwitch: baseVarb("string"),
     }),
     ongoingValueGroup: baseSectionVarbs({
@@ -139,7 +143,7 @@ export function makeAllBaseSectionVarbs() {
       ...baseVarbsS.switchableEquationEditor,
       ...baseVarbsS.ongoing("value"),
       ...baseVarbsS.switch("lifespan", "monthsYears"),
-      costToReplace: baseVarb("numObj"),
+      costToReplace: baseVarb("numObj", dollars),
     }),
     outputItem: baseSectionVarbs({
       ...baseVarbsS.singleValueVirtualVarb,
@@ -160,55 +164,60 @@ export function makeAllBaseSectionVarbs() {
     }),
     property: baseSectionVarbs({
       ...baseVarbsS.savableSection,
-      ...baseVarbs("numObj", [
-        "price",
-        "sqft",
-        "numUnits",
-        "numBedrooms",
-        "upfrontExpenses",
-        "upfrontRevenue",
-        "arv",
-        "sellingCosts",
-      ] as const),
+      ...baseVarbs(
+        "numObj",
+        [
+          "price",
+          "upfrontExpenses",
+          "upfrontRevenue",
+          "arv",
+          "sellingCosts",
+        ] as const,
+        dollars
+      ),
+      ...baseVarbs("numObj", ["sqft", "numUnits", "numBedrooms"] as const),
+      // Let's do the taxes input
+      ...baseVarbsS.ongoingDollars("taxes"),
+      ...baseVarbsS.ongoingDollars("homeIns"),
+      ...baseVarbsS.ongoingDollars("targetRent"),
+      ...baseVarbsS.ongoingDollars("expenses"),
+      ...baseVarbsS.ongoingDollars("miscRevenue"),
+      ...baseVarbsS.ongoingDollars("revenue"),
       ...baseVarbsS.switch("holdingPeriod", "monthsYears"),
-      ...baseVarbsS.ongoing("taxes"),
-      ...baseVarbsS.ongoing("homeIns"),
-      ...baseVarbsS.ongoing("targetRent"),
-      ...baseVarbsS.ongoing("expenses"),
-      ...baseVarbsS.ongoing("miscRevenue"),
-      ...baseVarbsS.ongoing("revenue"),
     }),
-    //
+    get propertyGeneral() {
+      return baseSectionVarbs(omit(this.property, savableSectionVarbNames));
+    },
     unit: baseSectionVarbs({
       one: baseVarb("numObj"),
       numBedrooms: baseVarb("numObj"),
       ...baseVarbsS.ongoing("targetRent"),
     }),
-    get propertyGeneral() {
-      return baseSectionVarbs(omit(this.property, savableSectionVarbNames));
-    },
     loan: baseSectionVarbs({
       ...baseVarbsS.savableSection,
-      ...baseVarbs("numObj", [
-        "loanTotalDollars",
-        "closingCosts",
-        "wrappedInLoan",
-        "loanBaseDollarsEditor",
-        "loanBasePercentEditor",
-        "mortgageInsUpfront",
-        "mortgageInsOngoingEditor",
-        "mortgageInsUpfrontEditor",
-      ] as const),
+      ...baseVarbs(
+        "numObj",
+        [
+          "loanTotalDollars",
+          "closingCosts",
+          "wrappedInLoan",
+          "loanBaseDollarsEditor",
+          "mortgageInsUpfront",
+          "mortgageInsUpfrontEditor",
+        ] as const,
+        dollars
+      ),
+      loanBasePercentEditor: baseVarb("numObj"),
+      mortgageInsOngoingEditor: baseVarb("numObj"),
       ...baseVarbsS.switch("loanBase", "dollarsPercentDecimal"),
       ...baseVarbsS.ongoing("interestRateDecimal"),
       ...baseVarbsS.ongoing("interestRatePercent"),
-      ...baseVarbsS.ongoing("piFixedStandard"),
-      ...baseVarbsS.ongoing("interestOnlySimple"),
+      ...baseVarbsS.ongoingDollars("piFixedStandard"),
+      ...baseVarbsS.ongoingDollars("interestOnlySimple"),
       ...baseVarbsS.ongoing("expenses"),
       ...baseVarbsS.switch("loanTerm", "monthsYears"),
       ...baseVarbsS.ongoing("loanPayment"),
       ...baseVarbsS.ongoing("mortgageIns"),
-
       piCalculationName: baseVarb("string"),
       hasMortgageIns: baseVarb("boolean"),
       isInterestOnly: baseVarb("boolean"),
@@ -220,13 +229,20 @@ export function makeAllBaseSectionVarbs() {
     },
     mgmt: baseSectionVarbs({
       ...baseVarbsS.savableSection,
-      ...baseVarbs("numObj", [
-        "vacancyLossDollarsEditor",
-        "vacancyLossPercentEditor",
-        "basePayDollarsEditor",
-        "basePayPercentEditor",
-        "upfrontExpenses",
-      ] as const),
+      ...baseVarbs(
+        "numObj",
+        [
+          "upfrontExpenses",
+          "vacancyLossDollarsEditor",
+          "basePayDollarsEditor",
+        ] as const,
+        dollars
+      ),
+      ...baseVarbs(
+        "numObj",
+        ["vacancyLossPercentEditor", "basePayPercentEditor"] as const,
+        percent
+      ),
       ...baseVarbsS.ongoing("expenses"),
       ...baseVarbsS.ongoing("basePayDollars"),
       ...omit(baseVarbsS.switch("basePay", "dollarsPercentDecimal"), [
@@ -241,7 +257,21 @@ export function makeAllBaseSectionVarbs() {
       return baseSectionVarbs(omit(this.mgmt, savableSectionVarbNames));
     },
     calculatedVarbs: baseSectionVarbs({
-      ...baseVarbs("numObj", ["onePercentPrice"]),
+      ...baseVarbs("numObj", ["onePercentPrice"] as const, percent),
+      ...baseVarbs(
+        "numObj",
+        [
+          "loanTotalDollars",
+          "closingCosts",
+          "mortgageInsUpfront",
+          "loanBaseDollars",
+          "loanUpfrontExpenses",
+        ] as const,
+        dollars
+      ),
+      ...baseVarbsS.ongoing("loanExpenses"),
+      ...baseVarbsS.ongoing("mortgageIns"),
+      ...baseVarbsS.ongoing("loanPayment"),
     }),
     deal: baseSectionVarbs({
       ...baseVarbsS.savableSection,
@@ -251,9 +281,9 @@ export function makeAllBaseSectionVarbs() {
         "upfrontRevenue",
         "totalInvestment",
         "downPaymentDollars",
-        "downPaymentPercent",
-        "downPaymentDecimal",
       ] as const),
+      downPaymentPercent: baseVarb("numObj", percent),
+      downPaymentDecimal: baseVarb("numObj", decimal),
       mode: baseVarb("string"),
       showCalculationsStatus: baseVarb("string"),
       ...baseVarbsS.ongoing("piti"),
@@ -299,7 +329,7 @@ export function makeAllBaseSectionVarbs() {
   });
 }
 
-export type BaseSectionsVarbs = typeof baseSectionsVarbs;
+export type AllBaseSectionVarbs = typeof baseSectionsVarbs;
 export const baseSectionsVarbs = makeAllBaseSectionVarbs();
 
 const userPlans = ["basicPlan", "fullPlan"] as const;

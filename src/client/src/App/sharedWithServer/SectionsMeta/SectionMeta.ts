@@ -1,5 +1,11 @@
 import { Obj } from "../utils/Obj";
 import {
+  getSectionTraits,
+  GetSectionTraits,
+  SectionTrait,
+  sectionTrait,
+} from "./allSectionTraits";
+import {
   sectionVarbNames,
   VarbName,
 } from "./baseSectionsDerived/baseSectionsVarbsTypes";
@@ -34,7 +40,6 @@ import {
 } from "./sectionMetasCore";
 import { SectionName } from "./SectionName";
 import { SectionNameByType } from "./SectionNameByType";
-import { SectionTrait, sectionTrait } from "./sectionsTraits";
 import { VarbMeta } from "./VarbMeta";
 
 export type VarbMetas<SN extends SectionName> = {
@@ -63,6 +68,9 @@ export class SectionMeta<SN extends SectionName> {
   get sectionName(): SN {
     return this.props.sectionName;
   }
+  get sectionTraits(): GetSectionTraits<SN> {
+    return getSectionTraits(this.sectionName);
+  }
   get core() {
     return sectionMetasCore[this.sectionName];
   }
@@ -76,12 +84,12 @@ export class SectionMeta<SN extends SectionName> {
     return getDescendantNames(this.sectionName);
   }
   get hasFeDisplayIndex(): boolean {
-    if (this.core.displayIndexName) {
+    if (this.sectionTraits.displayIndexName) {
       return true;
     } else return false;
   }
   get hasFeFullIndex(): boolean {
-    if (this.core.feFullIndexStoreName) {
+    if (this.sectionTraits.feFullIndexStoreName) {
       return true;
     } else return false;
   }

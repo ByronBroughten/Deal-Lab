@@ -1,7 +1,9 @@
-import { baseSectionsVarbs } from "../allBaseSectionVarbs";
+import {
+  baseSectionsVarbs,
+  GeneralBaseSectionVarbs,
+} from "../allBaseSectionVarbs";
 import { StateValue } from "../baseSectionsVarbs/baseValues/StateValueTypes";
-import { ValueName } from "../baseSectionsVarbs/baseVarbDepreciated";
-import { GeneralBaseSectionVarbs } from "../baseSectionsVarbs/baseVarbs";
+import { ValueName } from "../baseSectionsVarbs/ValueName";
 import { SectionName } from "../SectionName";
 import { VarbName, VarbValueName } from "./baseSectionsVarbsTypes";
 import { VarbNamesNext } from "./baseVarbInfo";
@@ -11,10 +13,12 @@ type ValueMetas = typeof valueMetas;
 export type ValueNamesToTypes = {
   [VN in ValueName]: ReturnType<ValueMetas[VN]["initDefault"]>;
 };
+export type ValueByValueName<VN extends ValueName> = ValueNamesToTypes[VN];
 
 export type SectionValues<SN extends SectionName> = {
   [VN in VarbName<SN>]: ValueNamesToTypes[VarbValueName<SN, VN>];
 };
+
 export type SomeSectionValues<SN extends SectionName> = Partial<
   SectionValues<SN>
 >;

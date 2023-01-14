@@ -88,6 +88,13 @@ export const allSectionTraits = checkAllSectionTraits({
   }),
 });
 
+export type GetSectionTraits<SN extends SectionName> = AllSectionTraits[SN];
+export function getSectionTraits<SN extends SectionName>(
+  sectionName: SN
+): GetSectionTraits<SN> {
+  return allSectionTraits[sectionName];
+}
+
 export type SectionTrait<
   SN extends SectionName,
   TN extends SectionTraitName

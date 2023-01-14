@@ -1,9 +1,9 @@
+import { switchKeyToVarbNames } from "../../../baseSectionsVarbs/baseSwitchNames";
 import {
   LeftRightPropCalcName,
   NumPropCalcName,
 } from "../../../baseSectionsVarbs/baseValues/calculations";
-import { ValueName } from "../../../baseSectionsVarbs/baseVarbDepreciated";
-import { switchNames } from "../../../baseSectionsVarbs/RelSwitchVarb";
+import { ValueName } from "../../../baseSectionsVarbs/ValueName";
 import { ChildName } from "../../../sectionChildrenDerived/ChildName";
 import { UpdateFnName } from "./UpdateFnName";
 import { UpdateFnProp, UpdateFnProps, updateFnPropS } from "./UpdateFnProps";
@@ -24,6 +24,9 @@ export function updateBasics<VN extends ValueName>(
 }
 
 export const updateBasicsS = {
+  sumNums(...nums: UpdateFnProp[]) {
+    return updateBasics("sumNums", { nums });
+  },
   equationLeftRight(
     updateFnName: LeftRightPropCalcName,
     leftSide: UpdateFnProp,
@@ -68,7 +71,7 @@ export const updateBasicsS = {
   yearlyToMonthly<Base extends string>(
     baseVarbName: Base
   ): UpdateBasics<"numObj"> {
-    const varbNames = switchNames(baseVarbName, "ongoing");
+    const varbNames = switchKeyToVarbNames(baseVarbName, "ongoing");
     return {
       updateFnName: "yearlyToMonthly",
       updateFnProps: {
@@ -80,7 +83,7 @@ export const updateBasicsS = {
   monthlyToYearly<Base extends string>(
     baseVarbName: Base
   ): UpdateBasics<"numObj"> {
-    const varbNames = switchNames(baseVarbName, "ongoing");
+    const varbNames = switchKeyToVarbNames(baseVarbName, "ongoing");
     return {
       updateFnName: "monthlyToYearly",
       updateFnProps: {

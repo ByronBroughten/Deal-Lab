@@ -1,33 +1,59 @@
 import { cloneDeep } from "lodash";
 import { sectionsMeta } from "../SectionsMeta";
-import { DisplayName } from "./allDisplaySectionVarbs";
+import {
+  DisplayName,
+  DisplaySourceFinder,
+  getDisplayVarb,
+} from "./allDisplaySectionVarbs";
+import { allUpdateSections, getUpdateVarb } from "./allUpdateSectionVarbs";
+import {
+  getBaseVarb,
+  VarbName,
+} from "./baseSectionsDerived/baseSectionsVarbsTypes";
 import { VarbNames } from "./baseSectionsDerived/baseVarbInfo";
 import { valueMetas } from "./baseSectionsDerived/valueMetas";
-import {
-  NumUnitName,
-  numUnitParams,
-} from "./baseSectionsVarbs/baseValues/calculations/numUnitParams";
 import { FixedInEntity } from "./baseSectionsVarbs/baseValues/entities";
-import { ValueName } from "./baseSectionsVarbs/baseVarbDepreciated";
-import { relSections } from "./relSectionsVarbs";
-import { UpdateBasics } from "./relSectionVarbs/rel/relVarb/UpdateBasics";
-import { UpdateFnProps } from "./relSectionVarbs/rel/relVarb/UpdateFnProps";
+import { GeneralBaseVarb } from "./baseSectionsVarbs/baseVarbs";
+import { ValueName } from "./baseSectionsVarbs/ValueName";
+import { GeneralUpdateVarb } from "./relSectionVarbs/rel/updateVarb";
+import { UpdateBasics } from "./relSectionVarbs/rel/updateVarb/UpdateBasics";
+import { UpdateFnProps } from "./relSectionVarbs/rel/updateVarb/UpdateFnProps";
 import {
   UpdateOverrides,
   UpdateOverrideSwitches,
-} from "./relSectionVarbs/rel/relVarb/UpdateOverrides";
-import { RelVarb } from "./relSectionVarbs/rel/relVarbTypes";
-import { GeneralRelVarbs } from "./relSectionVarbs/relVarbs";
+} from "./relSectionVarbs/rel/updateVarb/UpdateOverrides";
+import { GeneralUpdateSectionVarbs } from "./relSectionVarbs/updateVarbs";
 import { SectionMeta } from "./SectionMeta";
 import { SectionName } from "./SectionName";
 
-export type VarbMetaCore<SN extends SectionName> = RelVarb & {
+export type VarbMetaCore<SN extends SectionName> = {
   varbName: string;
   sectionName: SN;
   inSwitchUpdatePacks: InSwitchUpdatePack[];
 };
 export class VarbMeta<SN extends SectionName> {
   constructor(readonly core: VarbMetaCore<SN>) {}
+  get varbName(): string {
+    return this.core.varbName;
+  }
+  get sectionName(): SN {
+    return this.core.sectionName;
+  }
+  get baseVarb(): GeneralBaseVarb {
+    return getBaseVarb(
+      this.sectionName,
+      this.varbName as VarbName<SN>
+    ) as any as GeneralBaseVarb;
+  }
+  get displayVarb() {
+    return getDisplayVarb(this.sectionName, this.varbName as VarbName<SN>);
+  }
+  get updateVarb(): GeneralUpdateVarb {
+    return getUpdateVarb(
+      this.sectionName,
+      this.varbName as VarbName<SN>
+    ) as any as GeneralUpdateVarb;
+  }
   validateValue(value: any): true {
     if (this.isVarbValueType(value)) return true;
     else
@@ -47,42 +73,36 @@ export class VarbMeta<SN extends SectionName> {
       throw new Error(`There is no valueMeta of valueName ${this.valueName}`);
     } else return valueMeta;
   }
-  get raw() {
-    return { ...this.core };
-  }
   get fullName(): string {
     const { sectionName, varbName } = this.core;
     return `${sectionName}.${varbName}`;
   }
   get updateFnProps() {
-    return cloneDeep(this.core.updateFnProps);
+    return cloneDeep(this.updateVarb.updateFnProps);
   }
   get startAdornment() {
-    return this.core.startAdornment ?? "";
+    return this.displayVarb.startAdornment;
   }
   get endAdornment() {
-    return this.core.endAdornment ?? "";
+    return this.displayVarb.endAdornment;
   }
   get displayName(): DisplayName {
-    return this.core.displayName;
+    return this.displayVarb.displayName;
   }
   get displayNameStart(): string {
-    return this.core.displayNameStart;
+    return this.displayVarb.displayNameStart;
   }
   get displayNameEnd(): string {
-    return this.core.displayNameEnd;
+    return this.displayVarb.displayNameEnd;
   }
   get displayNameFull(): string {
     return this.displayNameStart + this.displayName + this.displayNameEnd;
   }
   get initValue() {
-    return cloneDeep(this.core.initValue);
+    return cloneDeep(this.updateVarb.initValue);
   }
-  get varbName(): string {
-    return this.core.varbName;
-  }
-  get sectionName(): SN {
-    return this.core.sectionName;
+  get displaySourceFinder(): DisplaySourceFinder {
+    return this.displayVarb.displaySourceFinder;
   }
   get varbNameInfo(): VarbNames<SN> {
     return {
@@ -91,23 +111,19 @@ export class VarbMeta<SN extends SectionName> {
     };
   }
   get valueName(): ValueName {
-    return this.core.valueName;
+    return this.baseVarb.valueName;
   }
   get inSwitchUpdatePacks(): InSwitchUpdatePack[] {
     return cloneDeep(this.core.inSwitchUpdatePacks);
   }
   get calcRound(): number {
-    return numUnitParams[this.unit].calcRound;
+    return this.updateVarb.calculateRound;
   }
   get displayRound(): number {
-    return numUnitParams[this.unit].displayRound;
-  }
-  get unit(): NumUnitName {
-    if ("unit" in this.core) return this.core.unit;
-    else throw new Error(`Varb with name ${this.core.varbName} has no numUnit`);
+    return this.displayVarb.displayRound;
   }
   get inDefaultUpdatePack(): InUpdatePack {
-    const { updateFnProps, updateFnName } = this.core;
+    const { updateFnProps, updateFnName } = this.updateVarb;
     return {
       updateFnProps,
       updateFnName,
@@ -118,13 +134,15 @@ export class VarbMeta<SN extends SectionName> {
     sectionName,
     varbName,
   }: VarbNames<SN>): VarbMeta<SN> {
-    const relVarbs = relSections[sectionName] as GeneralRelVarbs;
-    const relVarb = relVarbs[varbName];
+    const relVarbs = allUpdateSections[
+      sectionName
+    ] as GeneralUpdateSectionVarbs;
+    const updateVarb = relVarbs[varbName];
     return new VarbMeta({
-      ...relVarb,
+      ...updateVarb,
       sectionName,
       varbName,
-      inSwitchUpdatePacks: updateOverrideToInfos(relVarb.updateOverrides),
+      inSwitchUpdatePacks: updateOverrideToInfos(updateVarb.updateOverrides),
     });
   }
 }

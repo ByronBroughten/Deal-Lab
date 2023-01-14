@@ -46,14 +46,13 @@ export class SolverSections extends SolverSectionsBase {
     }
     this.resetVarbFullNamesToSolveFor();
   }
-
   private resetVarbFullNamesToSolveFor() {
     this.solveShare.varbIdsToSolveFor = new Set();
   }
   private gatherAndSortInfosToSolve(): FeVarbInfo[] {
     const outVarbMap = this.getOutVarbMap();
     const { edges, loneVarbs } = this.getDagEdgesAndLoneVarbs(outVarbMap);
-    let orderedVarbIds = tsort(edges); // tsort must have found a circularity issue
+    let orderedVarbIds = tsort(edges);
     orderedVarbIds = orderedVarbIds.concat(loneVarbs);
     return orderedVarbIds.map((stringInfo) =>
       GetterVarb.varbIdToVarbInfo(stringInfo)

@@ -1,5 +1,5 @@
 import { Obj } from "../../../utils/Obj";
-import { allSectionTraits, getSomeSectionTraits } from "../../sectionsTraits";
+import { allSectionTraits, getSomeSectionTraits } from "../../allSectionTraits";
 
 const tableSourceNames = Obj.entryKeysWithPropOfType(
   allSectionTraits,

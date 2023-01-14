@@ -1,7 +1,7 @@
 import { AnalyzerPlanValues } from "../../sharedWithServer/apiQueriesShared/AnalyzerPlanValues";
 import { defaultMaker } from "../../sharedWithServer/defaultMaker/defaultMaker";
+import { AutoSyncControl } from "../../sharedWithServer/SectionsMeta/baseSectionsDerived/subValues";
 import { AuthStatus } from "../../sharedWithServer/SectionsMeta/baseSectionsVarbsValues";
-import { AutoSyncControl } from "../../sharedWithServer/SectionsMeta/relSectionVarbs/relVarbs";
 import { ChildSectionName } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/ChildSectionName";
 import { SectionPack } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/SectionPack";
 import { FeSectionInfo } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";

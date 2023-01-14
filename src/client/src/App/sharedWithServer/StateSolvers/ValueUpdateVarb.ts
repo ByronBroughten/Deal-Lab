@@ -15,7 +15,7 @@ import {
 import {
   UpdateFnProp,
   UpdateFnProps,
-} from "../SectionsMeta/relSectionVarbs/rel/relVarb/UpdateFnProps";
+} from "../SectionsMeta/relSectionVarbs/rel/updateVarb/UpdateFnProps";
 import {
   PathInVarbInfo,
   RelInVarbInfo,

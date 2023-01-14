@@ -1,5 +1,6 @@
 import { Merge } from "../../utils/Obj/merge";
-import { BaseVarb, baseVarb, GeneralBaseSectionVarbs } from "./baseVarbs";
+import { GeneralBaseSectionVarbs } from "../allBaseSectionVarbs";
+import { BaseVarb, baseVarb } from "./baseVarbs";
 
 const typeUniformityVarbProp: TypeUniformityVarbProp = {
   _typeUniformity: baseVarb("string"),

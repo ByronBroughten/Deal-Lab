@@ -1,4 +1,5 @@
 import { cloneDeep, round } from "lodash";
+import { DisplayOverrideSwitches } from "../SectionsMeta/allDisplaySectionVarbs";
 import {
   DbVarbInfoMixed,
   FeVarbInfoMixed,
@@ -6,7 +7,6 @@ import {
 } from "../SectionsMeta/baseSectionsDerived/baseVarbInfo";
 import { NumberOrQ } from "../SectionsMeta/baseSectionsVarbs/baseValues/NumObj";
 import { StateValue } from "../SectionsMeta/baseSectionsVarbs/baseValues/StateValueTypes";
-import { ValueName } from "../SectionsMeta/baseSectionsVarbs/baseVarbDepreciated";
 import { ExpectedCount } from "../SectionsMeta/baseSectionsVarbs/NanoIdInfo";
 import {
   Adornments,
@@ -14,12 +14,15 @@ import {
   valueSchemasPlusAny,
   ValueTypesPlusAny,
 } from "../SectionsMeta/baseSectionsVarbs/StateVarbTypes";
+import { ValueName } from "../SectionsMeta/baseSectionsVarbs/ValueName";
 import {
   mixedInfoS,
   VarbInfoMixedFocal,
 } from "../SectionsMeta/sectionChildrenDerived/MixedSectionInfo";
 import { FeInfoS, FeVarbInfo } from "../SectionsMeta/SectionInfo/FeInfo";
+import { relVarbInfoS } from "../SectionsMeta/SectionInfo/RelVarbInfo";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
+import { VarbMeta } from "../SectionsMeta/VarbMeta";
 import { StateVarb } from "../StateSections/StateSectionsTypes";
 import { mathS, NotANumberError } from "../utils/math";
 import { GetterVarbBase } from "./Bases/GetterVarbBase";
@@ -150,29 +153,73 @@ export class GetterVarb<
   get valueName(): ValueName {
     return this.meta.valueName;
   }
+  get displaySource(): GetterVarb<any> {
+    let source: GetterVarb<any> = this;
+    let finder = this.meta.displaySourceFinder;
+
+    let reps = 0;
+    while (finder !== null) {
+      if (relVarbInfoS.isLocal(finder)) {
+        source = this.section.varbByFocalMixed(finder);
+      } else if (Array.isArray(finder)) {
+        for (const override of finder as DisplayOverrideSwitches) {
+          const switchVarb = this.section.varbByFocalMixed(override.switchInfo);
+          const switchValue = switchVarb.value("string");
+          if (override.switchValue === switchValue) {
+            source = this.section.varbByFocalMixed(override.sourceInfo);
+          }
+        }
+      }
+      finder = source.meta.displaySourceFinder;
+      reps += 1;
+      if (reps > 3) {
+        throw new Error(
+          "varbs shouldn't have many stacked sources for their displayVarb information"
+        );
+      }
+    }
+    return source;
+  }
+  get displayMeta(): VarbMeta<any> {
+    return this.displaySource.meta;
+  }
+  get displayInfo() {
+    const { displayMeta } = this;
+    // this isn't great.
+    return {
+      displayName: displayMeta.displayName as string,
+      displayNameEnd: displayMeta.displayNameEnd,
+      displayNameStart: displayMeta.displayNameStart,
+      startAdornment: displayMeta.startAdornment,
+      endAdornment: displayMeta.endAdornment,
+    };
+  }
   get displayName(): string {
-    const { displayName } = this.meta;
-    if (typeof displayName === "string") return displayName;
-    const displayNameVarb = this.section.varbByFocalMixed(displayName);
-    return displayNameVarb.value("string");
+    const { displayName } = this.displayMeta;
+    if (typeof displayName === "string") {
+      return displayName;
+    } else {
+      return this.section.varbByFocalMixed(displayName).value("stringObj")
+        .mainText;
+    }
   }
   get displayNameFull(): string {
-    return this.meta.displayNameFull;
+    return this.displayMeta.displayNameFull;
   }
   get displayNameStart(): string {
-    return this.meta.displayNameStart;
+    return this.displayMeta.displayNameStart;
   }
   get sectionDotVarbName() {
     return `${this.sectionName}.${this.varbName}`;
   }
   get displayNameEnd(): string {
-    return this.meta.displayNameEnd;
+    return this.displayMeta.displayNameEnd;
   }
   get startAdornment(): string {
-    return this.meta.startAdornment;
+    return this.displayMeta.startAdornment;
   }
   get endAdornment(): string {
-    return this.meta.endAdornment;
+    return this.displayMeta.endAdornment;
   }
   get displayValue(): string {
     if (this.hasValueType("numObj")) {
@@ -180,9 +227,10 @@ export class GetterVarb<
     } else return `${this.value()}`;
   }
   displayVarb({ startAdornment, endAdornment }: Partial<Adornments> = {}) {
-    return `${startAdornment ?? this.meta.startAdornment}${this.displayValue}${
-      endAdornment ?? this.meta.endAdornment
-    }`;
+    const { displayMeta } = this;
+    return `${startAdornment ?? displayMeta.startAdornment}${
+      this.displayValue
+    }${endAdornment ?? displayMeta.endAdornment}`;
   }
   localVarb(varbName: string) {
     return this.getterSection.varb(varbName);

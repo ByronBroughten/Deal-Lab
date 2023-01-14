@@ -1,6 +1,8 @@
-import { SwitchTargetKey } from "../../../baseSectionsVarbs/baseSwitchNames";
-import { ValueName } from "../../../baseSectionsVarbs/baseVarbDepreciated";
-import { switchNames } from "../../../baseSectionsVarbs/RelSwitchVarb";
+import {
+  switchKeyToVarbNames,
+  SwitchTargetKey,
+} from "../../../baseSectionsVarbs/baseSwitchNames";
+import { ValueName } from "../../../baseSectionsVarbs/ValueName";
 import {
   RelLocalVarbInfo,
   relVarbInfoS,
@@ -30,7 +32,7 @@ export const overrideSwitchS = {
     baseVarbName: string,
     switchKey: K
   ) {
-    const varbNames = switchNames(baseVarbName, "ongoing");
+    const varbNames = switchKeyToVarbNames(baseVarbName, "ongoing");
     return this.local(varbNames.switch, switchKey);
   },
   monthlyIsActive(baseVarbName: string) {

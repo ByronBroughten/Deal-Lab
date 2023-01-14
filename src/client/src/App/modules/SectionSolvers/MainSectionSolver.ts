@@ -1,12 +1,12 @@
 import isEqual from "fast-deep-equal";
 import {
+  AutoSyncControl,
+  SyncStatus,
+} from "../../sharedWithServer/SectionsMeta/baseSectionsDerived/subValues";
+import {
   SectionValues,
   SomeSectionValues,
 } from "../../sharedWithServer/SectionsMeta/baseSectionsDerived/valueMetaTypes";
-import {
-  AutoSyncControl,
-  SyncStatus,
-} from "../../sharedWithServer/SectionsMeta/relSectionVarbs/relVarbs";
 import { SectionPack } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/SectionPack";
 import { SectionNameByType } from "../../sharedWithServer/SectionsMeta/SectionNameByType";
 import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";

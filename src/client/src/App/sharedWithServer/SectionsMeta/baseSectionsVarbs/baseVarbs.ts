@@ -1,50 +1,87 @@
+import { Obj } from "../../utils/Obj";
 import { Merge, merge } from "./../../utils/Obj/merge";
-import { ValueName } from "./baseVarbDepreciated";
 import {
-  BaseOngoingVarb,
-  BaseSwitchVarb,
-  relSwitchVarbs,
-  SwitchEndingKey,
-  SwitchEndings,
-  SwitchRecord,
-} from "./RelSwitchVarb";
+  GetSwitchOptions,
+  getSwitchOptions,
+  GetTargetOptions,
+  getTargetOptions,
+  SwitchKey,
+  switchKeyToVarbNames,
+  SwitchName,
+  switchOptions,
+  SwitchOptionsProps,
+  SwitchVarbName,
+  SwitchVarbNameRecord,
+} from "./baseSwitchNames";
+import { ValueName, valueNames } from "./ValueName";
 
+const customValueUnits = {
+  numObj: ["dollars", "percent", "decimal"],
+} as const;
+
+type CustomValueUnits = typeof customValueUnits;
+type ValueUnits = {
+  [VN in ValueName]: VN extends keyof CustomValueUnits
+    ? ["max", ...CustomValueUnits[VN]]
+    : ["max"];
+};
+const valueUnits = valueNames.reduce((units, valueName) => {
+  (units as any)[valueName] =
+    valueName in customValueUnits
+      ? ["max", ...customValueUnits[valueName as keyof CustomValueUnits]]
+      : (["max"] as ValueUnits[typeof valueName]);
+  return units;
+}, {} as ValueUnits);
+
+export type ValueUnit<VN extends ValueName = ValueName> =
+  ValueUnits[VN][number];
+
+type ValueTimespan = "single" | "monthly" | "yearly";
 export type GeneralBaseVarb = {
   valueName: ValueName;
+  valueUnit: ValueUnit;
+  valueTimespan: ValueTimespan;
 };
 function checkBaseVarb<BV extends GeneralBaseVarb>(baseVarb: BV): BV {
   return baseVarb;
 }
 type DefaultBaseVarb<VN extends ValueName> = {
   valueName: VN;
+  valueUnit: ValueUnits[VN][0];
+  valueTimespan: "single";
 };
 function defaultBaseVarb<VN extends ValueName>(
   valueName: VN
 ): DefaultBaseVarb<VN> {
-  return checkBaseVarb({ valueName });
+  return checkBaseVarb({
+    valueName,
+    valueUnit: valueUnits[valueName][0],
+    valueTimespan: "single",
+  });
 }
 type Options = Partial<Omit<GeneralBaseVarb, "valueName">>;
-export type BaseVarb<VN extends ValueName, O extends Options> = Merge<
+export type BaseVarb<VN extends ValueName, O extends Options = {}> = Merge<
   DefaultBaseVarb<VN>,
   O
 >;
+
 export function baseVarb<VN extends ValueName, O extends Options = {}>(
   valueName: VN,
   options?: O
 ): BaseVarb<VN, O> {
   return merge(defaultBaseVarb(valueName), options ?? ({} as O));
 }
-const baseVarbS = {
-  moneyMonthly<VN extends ValueName>(valueName: VN) {
-    return baseVarb(valueName, {
-      unitName: "dollars",
-      timespanName: "monthly",
+export const baseVarbS = {
+  dollarsMonthly() {
+    return baseVarb("numObj", {
+      valueUnit: "dollars",
+      valueTimespan: "monthly",
     });
   },
-  moneyYearly<VN extends ValueName>(valueName: VN) {
-    return baseVarb(valueName, {
-      unitName: "dollars",
-      timespanName: "monthly",
+  dollarsYearly() {
+    return baseVarb("numObj", {
+      valueUnit: "dollars",
+      valueTimespan: "yearly",
     });
   },
 };
@@ -66,34 +103,68 @@ export function baseVarbs<
     return varbs;
   }, {} as BaseVarbs<VN, VNS, O>);
 }
+
+export type BaseSwitchVarbs<
+  BN extends string,
+  SN extends SwitchName
+> = SwitchVarbNameRecord<BN, SN, BaseVarb<"numObj">, BaseVarb<"string">>;
+
+type BaseSwitchVarbsNext<
+  BN extends string,
+  SN extends SwitchName,
+  O extends SwitchOptionsProps<SN, Options>
+> = {
+  [SK in SwitchKey<SN> as SwitchVarbName<BN, SN, SK>]: SK extends "switch"
+    ? BaseVarb<"string", GetSwitchOptions<SN, SK, O>>
+    : BaseVarb<"numObj", GetTargetOptions<SN, SK, O>>;
+};
+
+const ongoingDollarsOptions = {
+  targets: { valueUnit: "dollars" },
+  monthly: { valueTimespan: "monthly" },
+  yearly: { valueTimespan: "yearly" },
+} as const;
+type OngoingDollarsOptions = typeof ongoingDollarsOptions;
+
 export const baseVarbsS = {
   get typeUniformity() {
     return { _typeUniformity: "string" } as const;
   },
-  switch<Base extends string, SWN extends SwitchEndingKey>(
+  switch<Base extends string, SN extends SwitchName>(
     baseName: Base,
-    switchName: SWN
-  ): BaseSwitchVarb<Base, SwitchEndings[SWN]> {
-    const { targetEndings, switchEnding } = relSwitchVarbs[switchName];
-    const numObjSchemas: Partial<
-      SwitchRecord<Base, SwitchEndings[SWN], BaseVarb<"numObj", {}>>
-    > = {};
-    for (const ending of Object.values(targetEndings)) {
-      numObjSchemas[
-        `${baseName}${ending}` as keyof SwitchRecord<
+    switchName: SN
+  ): BaseSwitchVarbs<Base, SN> {
+    const keyToVarbNames = switchKeyToVarbNames(baseName, switchName);
+    return Obj.keys(keyToVarbNames).reduce((varbs, key) => {
+      const varbName = keyToVarbNames[key];
+      if (key === "switch") {
+        varbs[varbName] = baseVarb("string") as BaseSwitchVarbs<
           Base,
-          SwitchEndings[SWN],
-          BaseVarb<"numObj", {}>
-        >
-      ] = baseVarb("numObj");
-    }
-    return {
-      [`${baseName}${switchEnding}`]: baseVarb("string"),
-      ...numObjSchemas,
-    } as BaseSwitchVarb<Base, SwitchEndings[SWN]>;
+          SN
+        >[typeof varbName];
+      } else {
+        varbs[varbName] = baseVarb("numObj") as BaseSwitchVarbs<
+          Base,
+          SN
+        >[typeof varbName];
+      }
+      return varbs;
+    }, {} as BaseSwitchVarbs<Base, SN>);
   },
-  ongoing<Base extends string>(baseName: Base): BaseOngoingVarb<Base> {
+  ongoing<Base extends string>(
+    baseName: Base
+  ): BaseSwitchVarbs<Base, "ongoing"> {
     return this.switch(baseName, "ongoing");
+  },
+  ongoingDollars<BN extends string>(
+    baseName: BN
+  ): BaseSwitchVarbsNext<BN, "ongoing", OngoingDollarsOptions> {
+    return this.switchNext(baseName, "ongoing", ongoingDollarsOptions);
+  },
+  ongoingDollarsInput<BN extends string>(
+    baseName: BN
+  ): BaseSwitchVarbsNext<BN, "ongoingInput", OngoingDollarsOptions> {
+    return this.switchNext(baseName, "ongoingInput", ongoingDollarsOptions);
   },
   get switchableEquationEditor() {
     return {
@@ -132,4 +203,59 @@ export const baseVarbsS = {
       valueEntityInfo: baseVarb("inEntityInfo"),
     } as const;
   },
+  switchNext: <
+    BN extends string,
+    SN extends SwitchName,
+    O extends SwitchOptionsProps<SN, Options> = {}
+  >(
+    baseName: BN,
+    switchName: SN,
+    options?: O
+  ): BaseSwitchVarbsNext<BN, SN, O> => {
+    const fullOptions = switchOptions(switchName, options ?? ({} as O));
+    const keyToVarbNames = switchKeyToVarbNames(baseName, switchName);
+    return Obj.keys(keyToVarbNames).reduce((varbs, key) => {
+      const varbName = keyToVarbNames[key];
+      if (key === "switch") {
+        varbs[varbName] = {
+          ...baseVarb("string"),
+          ...getSwitchOptions(switchName, key, fullOptions as any),
+        } as any as BaseSwitchVarbsNext<BN, SN, O>[typeof varbName];
+      } else {
+        varbs[varbName] = {
+          ...baseVarb("numObj"),
+          ...getTargetOptions(switchName, key, fullOptions as any),
+        } as any as BaseSwitchVarbsNext<BN, SN, O>[typeof varbName];
+      }
+      return varbs;
+    }, {} as BaseSwitchVarbsNext<BN, SN, O>);
+  },
 } as const;
+
+function switchNext<
+  Base extends string,
+  SN extends SwitchName,
+  O extends SwitchOptionsProps<SN, Options> = {}
+>(
+  baseName: Base,
+  switchName: SN,
+  options?: O
+): BaseSwitchVarbsNext<Base, SN, O> {
+  const fullOptions = switchOptions(switchName, options ?? ({} as O));
+  const keyToVarbNames = switchKeyToVarbNames(baseName, switchName);
+  return Obj.keys(keyToVarbNames).reduce((varbs, key) => {
+    const varbName = keyToVarbNames[key];
+    if (key === "switch") {
+      varbs[varbName] = {
+        ...baseVarb("string"),
+        ...getSwitchOptions(switchName, key, fullOptions as any),
+      } as any as BaseSwitchVarbsNext<Base, SN, O>[typeof varbName];
+    } else {
+      varbs[varbName] = {
+        ...baseVarb("numObj"),
+        ...getTargetOptions(switchName, key, fullOptions as any),
+      } as any as BaseSwitchVarbsNext<Base, SN, O>[typeof varbName];
+    }
+    return varbs;
+  }, {} as BaseSwitchVarbsNext<Base, SN, O>);
+}
