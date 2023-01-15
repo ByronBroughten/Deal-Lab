@@ -1,6 +1,6 @@
 import { omit } from "lodash";
 import {
-  BaseSection,
+  BaseSectionVarbs,
   baseSectionVarbs,
 } from "./baseSectionsVarbs/baseSectionVarbs";
 import {
@@ -26,7 +26,7 @@ type GeneralBaseSectionsVarbs = {
 };
 
 type DefaultSectionsVarbs = {
-  [SN in SectionName]: BaseSection;
+  [SN in SectionName]: BaseSectionVarbs;
 };
 
 const defaults = sectionNames.reduce((defaults, sectionName) => {
@@ -37,6 +37,10 @@ const defaults = sectionNames.reduce((defaults, sectionName) => {
 const dollars = { valueUnit: "dollars" } as const;
 const percent = { valueUnit: "percent" } as const;
 const decimal = { valueUnit: "decimal" } as const;
+const dollarsMonthly = { ...dollars, valueTimespan: "monthly" } as const;
+const dollarsYearly = { ...dollars, valueTimespan: "yearly" } as const;
+const months = { valueUnit: "months" };
+const years = { valueUnit: "years" };
 
 export function makeAllBaseSectionVarbs() {
   return checkBaseSectionsVarbs({
@@ -99,12 +103,12 @@ export function makeAllBaseSectionVarbs() {
       itemValueSwitch: baseVarb("string"),
     }),
     ongoingValueGroup: baseSectionVarbs({
-      ...baseVarbsS.ongoing("total"),
+      ...baseVarbsS.ongoingDollars("total"),
       itemValueSwitch: baseVarb("string"),
       itemOngoingSwitch: baseVarb("string"),
     }),
     ongoingValue: baseSectionVarbs({
-      ...baseVarbsS.ongoing("value"),
+      ...baseVarbsS.ongoingDollars("value"),
       displayName: baseVarb("stringObj"),
       displayNameEditor: baseVarb("stringObj"),
       valueEditor: baseVarb("numObj"),
@@ -114,13 +118,13 @@ export function makeAllBaseSectionVarbs() {
       isItemized: baseVarb("boolean"),
     }),
     ongoingListGroup: baseSectionVarbs({
-      ...baseVarbsS.ongoing("total"),
+      ...baseVarbsS.ongoingDollars("total"),
       itemValueSwitch: baseVarb("string"),
       itemOngoingSwitch: baseVarb("string"),
     }),
     ongoingList: baseSectionVarbs({
       ...baseVarbsS.savableSection,
-      ...baseVarbsS.ongoing("total"),
+      ...baseVarbsS.ongoingDollars("total"),
       itemValueSwitch: baseVarb("string"),
       itemOngoingSwitch: baseVarb("string"),
     }),
@@ -141,7 +145,7 @@ export function makeAllBaseSectionVarbs() {
       ...baseVarbsS.virtualVarb,
       ...baseVarbsS.loadableVarb,
       ...baseVarbsS.switchableEquationEditor,
-      ...baseVarbsS.ongoing("value"),
+      ...baseVarbsS.ongoingDollars("value"),
       ...baseVarbsS.switch("lifespan", "monthsYears"),
       costToReplace: baseVarb("numObj", dollars),
     }),
@@ -182,7 +186,7 @@ export function makeAllBaseSectionVarbs() {
       ...baseVarbsS.ongoingDollars("expenses"),
       ...baseVarbsS.ongoingDollars("miscRevenue"),
       ...baseVarbsS.ongoingDollars("revenue"),
-      ...baseVarbsS.switch("holdingPeriod", "monthsYears"),
+      ...baseVarbsS.monthsYears("holdingPeriod"),
     }),
     get propertyGeneral() {
       return baseSectionVarbs(omit(this.property, savableSectionVarbNames));
@@ -190,7 +194,7 @@ export function makeAllBaseSectionVarbs() {
     unit: baseSectionVarbs({
       one: baseVarb("numObj"),
       numBedrooms: baseVarb("numObj"),
-      ...baseVarbsS.ongoing("targetRent"),
+      ...baseVarbsS.ongoingDollars("targetRent"),
     }),
     loan: baseSectionVarbs({
       ...baseVarbsS.savableSection,
@@ -213,7 +217,7 @@ export function makeAllBaseSectionVarbs() {
       ...baseVarbsS.ongoing("interestRatePercent"),
       ...baseVarbsS.ongoingDollars("piFixedStandard"),
       ...baseVarbsS.ongoingDollars("interestOnlySimple"),
-      ...baseVarbsS.ongoing("expenses"),
+      ...baseVarbsS.ongoingDollars("expenses"),
       ...baseVarbsS.switch("loanTerm", "monthsYears"),
       ...baseVarbsS.ongoing("loanPayment"),
       ...baseVarbsS.ongoing("mortgageIns"),

@@ -36,7 +36,7 @@ export function defaultDisplayVarb(displayName: DisplayName) {
   });
 }
 
-export type DisplayVarbOptions = Partial<Omit<DisplayVarb, "displayName">>;
+export type DisplayVarbOptions = Partial<DisplayVarb>;
 export function displayVarb<DN extends DisplayName>(
   displayName: DN,
   partial: DisplayVarbOptions = {}

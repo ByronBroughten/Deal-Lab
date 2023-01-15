@@ -22,9 +22,12 @@ reportWebVitals();
 // I could continuously apply for programming jobs
 
 // 1. OngoingEditor
-// - But you should be able to make generalizable displayName stuff for it
+// Fix bugs
+// - Monthly/yearly not showing up for the editor
+// - baseVarbs not being used for startAdornment/endAdornment
+//   (which should be changed to startUnit/endUnit)
 // - Make it so editors can get their rounding from a switch, like how
-//   they get their displayName.
+//   they get their displayName. roundSource, same as displaySource
 
 // 2. Add these to deal baseSectionVarbs:
 // 3. Add them to deal updateSectionVarbs as sum variables

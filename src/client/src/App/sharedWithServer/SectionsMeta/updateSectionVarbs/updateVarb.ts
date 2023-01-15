@@ -36,6 +36,8 @@ export const calculatedRounding: Record<ValueUnit, number> = {
   percent: 6,
   decimal: decimalRounding,
   absolute: maxRounding,
+  months: 2,
+  years: 2,
 } as const;
 
 const checkUpdateVarb = <VN extends ValueName, T extends UpdateVarb<VN>>(

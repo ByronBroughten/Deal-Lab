@@ -8,37 +8,30 @@ export type Adornments = {
 export type PropAdornments = Partial<Adornments>;
 
 interface GetAdornmentsProps {
-  pAdornments: PropAdornments;
-  vAdornments: Adornments;
+  startAdornment: Adornment;
+  endAdornment: Adornment;
   editorTextStatus: string;
   displayValue: string;
   doEquals: boolean;
 }
 
-function getAdornments({
-  pAdornments,
-  vAdornments,
+export function getEntityEditorAdornments({
+  startAdornment,
+  endAdornment,
   editorTextStatus,
   displayValue,
   doEquals,
 }: GetAdornmentsProps): Adornments {
-  let startAdornment = pAdornments.startAdornment ?? vAdornments.startAdornment;
-  let endAdornment = pAdornments.endAdornment ?? vAdornments.endAdornment;
   if (editorTextStatus === "solvableText" && doEquals) {
-    return {
-      startAdornment: "",
-      endAdornment: (
-        <>
-          <span className="input-extra">{`=${startAdornment}`}</span>
-          <span className="result">{displayValue}</span>
-          {endAdornment}
-        </>
-      ),
-    };
-  } else return { startAdornment, endAdornment };
-}
-
-export function useGetAdornments(props: GetAdornmentsProps) {
-  const adornments = getAdornments(props);
-  return adornments;
+    startAdornment = "";
+    endAdornment = (
+      <span className="NumObjEntityEditor-equalsAdornment">
+        <span className="NumObjEntityEditor-equals">=</span>
+        {startAdornment}
+        {displayValue}
+        {endAdornment}
+      </span>
+    );
+  }
+  return { startAdornment, endAdornment };
 }

@@ -1,12 +1,10 @@
 import { EditorState } from "draft-js";
-import { pick } from "lodash";
 import React from "react";
 import styled from "styled-components";
 import { useOnOutsideClickEffect } from "../../modules/customHooks/useOnOutsideClickRef";
 import useToggleView from "../../modules/customHooks/useToggleView";
 import { SetEditorState } from "../../modules/draftjs/draftUtils";
 import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
-import { VarbMeta } from "../../sharedWithServer/SectionsMeta/VarbMeta";
 import { SectionInfoContextProvider } from "../../sharedWithServer/stateClassHooks/useSectionContext";
 import { GetterVarb } from "../../sharedWithServer/StateGetters/GetterVarb";
 import { EditorTextStatus } from "../../sharedWithServer/StateGetters/GetterVarbNumObj";
@@ -14,8 +12,9 @@ import theme from "../../theme/Theme";
 import { MaterialDraftEditor } from "./MaterialDraftEditor";
 import NumObjVarbSelector from "./NumObjEditor/NumObjVarbSelector";
 import {
+  Adornments,
+  getEntityEditorAdornments,
   PropAdornments,
-  useGetAdornments,
 } from "./NumObjEditor/useGetAdornments";
 import { varSpanDecorator } from "./shared/EntitySpanWithError";
 import { useDraftInput } from "./useDraftInput";
@@ -35,6 +34,7 @@ export function NumObjEntityEditor({
   labeled = true,
   bypassNumeric = false,
   doEquals = true,
+  label,
   ...props
 }: Props) {
   let { editorState, setEditorState, varb } = useDraftInput({
@@ -47,22 +47,24 @@ export function NumObjEntityEditor({
         displayValue: varb.displayValue,
         editorTextStatus: varb.numObj.editorTextStatus,
         displayName: varb.displayName,
+        startAdornment: props.startAdornment ?? varb.startAdornment,
+        endAdornment: props.endAdornment ?? varb.endAdornment,
 
         className,
         labeled,
+        label,
         doEquals,
         bypassNumeric,
 
         editorState,
         setEditorState,
         ...varb.feVarbInfo,
-        ...props,
       }}
     />
   );
 }
 
-interface MemoProps extends PropAdornments, FeVarbInfo {
+interface MemoProps extends Adornments, FeVarbInfo {
   displayValue: string;
   editorTextStatus: EditorTextStatus;
   displayName: string;
@@ -77,9 +79,7 @@ interface MemoProps extends PropAdornments, FeVarbInfo {
   setEditorState: SetEditorState;
 }
 const MemoNumObjEntityEditor = React.memo(function MemoNumObjEntityEditor({
-  editorTextStatus,
   displayValue,
-  doEquals,
   className,
   labeled,
   displayName,
@@ -88,13 +88,9 @@ const MemoNumObjEntityEditor = React.memo(function MemoNumObjEntityEditor({
   bypassNumeric,
   ...rest
 }: MemoProps) {
-  const meta = VarbMeta.init(rest);
-  const { startAdornment, endAdornment } = useGetAdornments({
-    pAdornments: pick(rest, adornmentNames),
-    vAdornments: pick(meta, adornmentNames),
-    editorTextStatus,
+  const { startAdornment, endAdornment } = getEntityEditorAdornments({
+    ...rest,
     displayValue,
-    doEquals,
   });
 
   const label = labeled ? rest.label ?? displayName : undefined;

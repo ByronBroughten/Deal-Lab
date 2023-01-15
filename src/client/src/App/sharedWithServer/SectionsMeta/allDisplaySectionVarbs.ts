@@ -1,5 +1,6 @@
 import {
   displayVarbOptions,
+  displayVarbOptionsS,
   displayVarbS,
 } from "./allDisplaySectionVarbs/displayVarb";
 import { displayVarbsS } from "./allDisplaySectionVarbs/displayVarbs";
@@ -16,6 +17,13 @@ import {
 } from "./displaySectionVarbs/displayVarb";
 import { relVarbInfoS } from "./SectionInfo/RelVarbInfo";
 import { SectionName, sectionNames } from "./SectionName";
+
+// Ok. What is the optimal way to do this?
+
+// class DisplaySectionVarbs
+// - allBaseSectionVarbs
+// - sectionName
+// *options (generic)
 
 type AllDisplaySectionVarbsGeneric = {
   [SN in SectionName]: DisplaySectionVarbs<SN>;
@@ -38,17 +46,18 @@ const ongoingInputDollars = <BN extends string>(
   displayName: DisplayName
 ) => displayVarbsS.ongoingInputDollars(baseName, displayName);
 
+const display = displayVarbOptions;
 export const allDisplaySectionVarbs = {
   ...allDefaultDisplaySectionVarbs(),
   ...displaySectionVarbsProp("property", {
-    price: displayVarb("Purchase price"),
-    sqft: displayVarb("Square feet"),
-    arv: dollars("ARV"),
-    sellingCosts: dollars("Selling costs"),
-    numUnits: displayVarb("Unit count"),
-    numBedrooms: displayVarb("Bedrooms"),
-    upfrontExpenses: dollars("Upfront expenses"),
-    upfrontRevenue: dollars("Upfront revenues"),
+    price: display("Purchase price"),
+    sqft: display("Square feet"),
+    arv: display("ARV"),
+    sellingCosts: display("Selling costs"),
+    numUnits: display("Unit count"),
+    numBedrooms: display("Bedrooms"),
+    upfrontExpenses: display("Upfront expenses"),
+    upfrontRevenue: display("Upfront revenues"),
     ...displayVarbsS.monthsYears("holdingPeriod", "Holding period"),
     ...ongoingInputDollars("taxes", "Taxes"),
     ...ongoingInputDollars("homeIns", "Home Insurance"),
@@ -81,10 +90,10 @@ export const allDisplaySectionVarbs = {
       "interestRateDecimal",
       "ongoing",
       "Interest rate decimal",
-      { targets: displayVarbOptions.decimal }
+      { targets: displayVarbOptionsS.decimal }
     ),
     ...displayVarbsS.switch("interestRatePercent", "ongoing", "Interest rate", {
-      targets: displayVarbOptions.percent,
+      targets: displayVarbOptionsS.percent,
     }),
     ...ongoingDollars("piFixedStandard", "Principal and interest"),
     ...ongoingDollars("interestOnlySimple", "Interest"),
@@ -122,10 +131,10 @@ export const allDisplaySectionVarbs = {
     ...ongoingDollars("revenue", "Revenue"),
     ...ongoingDollars("cashFlow", "Cash Flow"),
     ...displayVarbsS.switch("cocRoiDecimal", "ongoing", "CoC ROI as decimal", {
-      targets: displayVarbOptions.decimal,
+      targets: displayVarbOptionsS.decimal,
     }),
     ...displayVarbsS.switch("cocRoi", "ongoing", "CoC ROI", {
-      targets: displayVarbOptions.percent,
+      targets: displayVarbOptionsS.percent,
     }),
   }),
 

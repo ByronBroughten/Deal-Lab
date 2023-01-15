@@ -31,6 +31,12 @@ export const switchVarbNameEndings = {
       editor: "OngoingEditor",
     } as const;
   },
+  get monthsYearsInput() {
+    return {
+      ...this.monthsYears,
+      editor: "SpanEditor",
+    } as const;
+  },
   ongoing: {
     monthly: "Monthly",
     yearly: "Yearly",

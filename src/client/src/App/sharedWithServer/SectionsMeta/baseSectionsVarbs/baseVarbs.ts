@@ -16,7 +16,7 @@ import {
 import { ValueName, valueNames } from "./ValueName";
 
 const customValueUnits = {
-  numObj: ["dollars", "percent", "decimal"],
+  numObj: ["dollars", "percent", "decimal", "months", "years"],
 } as const;
 
 type CustomValueUnits = typeof customValueUnits;
@@ -36,7 +36,7 @@ const valueUnits = valueNames.reduce((units, valueName) => {
 export type ValueUnit<VN extends ValueName = ValueName> =
   ValueUnits[VN][number];
 
-type ValueTimespan = "single" | "monthly" | "yearly";
+export type ValueTimespan = "oneTime" | "monthly" | "yearly";
 export type GeneralBaseVarb = {
   valueName: ValueName;
   valueUnit: ValueUnit;
@@ -48,7 +48,7 @@ function checkBaseVarb<BV extends GeneralBaseVarb>(baseVarb: BV): BV {
 type DefaultBaseVarb<VN extends ValueName> = {
   valueName: VN;
   valueUnit: ValueUnits[VN][0];
-  valueTimespan: "single";
+  valueTimespan: "oneTime";
 };
 function defaultBaseVarb<VN extends ValueName>(
   valueName: VN
@@ -56,7 +56,7 @@ function defaultBaseVarb<VN extends ValueName>(
   return checkBaseVarb({
     valueName,
     valueUnit: valueUnits[valueName][0],
-    valueTimespan: "single",
+    valueTimespan: "oneTime",
   });
 }
 type Options = Partial<Omit<GeneralBaseVarb, "valueName">>;
@@ -119,12 +119,27 @@ type BaseSwitchVarbsNext<
     : BaseVarb<"numObj", GetTargetOptions<SN, SK, O>>;
 };
 
-const ongoingDollarsOptions = {
-  targets: { valueUnit: "dollars" },
+const ongoingOptions = {
   monthly: { valueTimespan: "monthly" },
   yearly: { valueTimespan: "yearly" },
 } as const;
+
+const ongoingDollarsOptions = {
+  targets: { valueUnit: "dollars" },
+  ...ongoingOptions,
+} as const;
 type OngoingDollarsOptions = typeof ongoingDollarsOptions;
+const ongoingPercentOptions = {
+  targets: { valueUnit: "percent" },
+  ...ongoingOptions,
+} as const;
+type OngoingPercentOptions = typeof ongoingPercentOptions;
+
+const monthsYearsOptions = {
+  months: { valueUnit: "months" },
+  years: { valueUnit: "years" },
+} as const;
+type MonthsYearsOptions = typeof monthsYearsOptions;
 
 export const baseVarbsS = {
   get typeUniformity() {
@@ -151,10 +166,44 @@ export const baseVarbsS = {
       return varbs;
     }, {} as BaseSwitchVarbs<Base, SN>);
   },
+  switchNext: <
+    BN extends string,
+    SN extends SwitchName,
+    O extends SwitchOptionsProps<SN, Options> = {}
+  >(
+    baseName: BN,
+    switchName: SN,
+    options?: O
+  ): BaseSwitchVarbsNext<BN, SN, O> => {
+    const fullOptions = switchOptions(switchName, options ?? ({} as O));
+    const keyToVarbNames = switchKeyToVarbNames(baseName, switchName);
+    return Obj.keys(keyToVarbNames).reduce((varbs, key) => {
+      const varbName = keyToVarbNames[key];
+      if (key === "switch") {
+        varbs[varbName] = {
+          ...baseVarb("string"),
+          ...getSwitchOptions(switchName, key, fullOptions as any),
+        } as any as BaseSwitchVarbsNext<BN, SN, O>[typeof varbName];
+      } else {
+        varbs[varbName] = {
+          ...baseVarb("numObj"),
+          ...getTargetOptions(switchName, key, fullOptions as any),
+        } as any as BaseSwitchVarbsNext<BN, SN, O>[typeof varbName];
+      }
+      return varbs;
+    }, {} as BaseSwitchVarbsNext<BN, SN, O>);
+  },
   ongoing<Base extends string>(
     baseName: Base
   ): BaseSwitchVarbs<Base, "ongoing"> {
-    return this.switch(baseName, "ongoing");
+    return this.switchNext(baseName, "ongoing", ongoingOptions);
+  },
+  ongoingDecimal<BN extends string>(
+    baseName: BN
+  ): BaseSwitchVarbsNext<BN, "ongoing", OngoingDollarsOptions> {
+    return this.switchNext(baseName, "ongoing", {
+      targets: { valueUnit: "decimal" },
+    });
   },
   ongoingDollars<BN extends string>(
     baseName: BN
@@ -165,6 +214,26 @@ export const baseVarbsS = {
     baseName: BN
   ): BaseSwitchVarbsNext<BN, "ongoingInput", OngoingDollarsOptions> {
     return this.switchNext(baseName, "ongoingInput", ongoingDollarsOptions);
+  },
+  ongoingPercent<BN extends string>(
+    baseName: BN
+  ): BaseSwitchVarbsNext<BN, "ongoing", OngoingPercentOptions> {
+    return this.switchNext(baseName, "ongoing", ongoingPercentOptions);
+  },
+  ongoingPercentInput<BN extends string>(
+    baseName: BN
+  ): BaseSwitchVarbsNext<BN, "ongoingInput", OngoingPercentOptions> {
+    return this.switchNext(baseName, "ongoingInput", ongoingPercentOptions);
+  },
+  monthsYears<BN extends string>(
+    baseName: BN
+  ): BaseSwitchVarbsNext<BN, "monthsYears", MonthsYearsOptions> {
+    return this.switchNext(baseName, "monthsYears", monthsYearsOptions);
+  },
+  monthsYearsInput<BN extends string>(
+    baseName: BN
+  ): BaseSwitchVarbsNext<BN, "monthsYearsInput", MonthsYearsOptions> {
+    return this.switchNext(baseName, "monthsYearsInput", monthsYearsOptions);
   },
   get switchableEquationEditor() {
     return {
@@ -203,59 +272,4 @@ export const baseVarbsS = {
       valueEntityInfo: baseVarb("inEntityInfo"),
     } as const;
   },
-  switchNext: <
-    BN extends string,
-    SN extends SwitchName,
-    O extends SwitchOptionsProps<SN, Options> = {}
-  >(
-    baseName: BN,
-    switchName: SN,
-    options?: O
-  ): BaseSwitchVarbsNext<BN, SN, O> => {
-    const fullOptions = switchOptions(switchName, options ?? ({} as O));
-    const keyToVarbNames = switchKeyToVarbNames(baseName, switchName);
-    return Obj.keys(keyToVarbNames).reduce((varbs, key) => {
-      const varbName = keyToVarbNames[key];
-      if (key === "switch") {
-        varbs[varbName] = {
-          ...baseVarb("string"),
-          ...getSwitchOptions(switchName, key, fullOptions as any),
-        } as any as BaseSwitchVarbsNext<BN, SN, O>[typeof varbName];
-      } else {
-        varbs[varbName] = {
-          ...baseVarb("numObj"),
-          ...getTargetOptions(switchName, key, fullOptions as any),
-        } as any as BaseSwitchVarbsNext<BN, SN, O>[typeof varbName];
-      }
-      return varbs;
-    }, {} as BaseSwitchVarbsNext<BN, SN, O>);
-  },
 } as const;
-
-function switchNext<
-  Base extends string,
-  SN extends SwitchName,
-  O extends SwitchOptionsProps<SN, Options> = {}
->(
-  baseName: Base,
-  switchName: SN,
-  options?: O
-): BaseSwitchVarbsNext<Base, SN, O> {
-  const fullOptions = switchOptions(switchName, options ?? ({} as O));
-  const keyToVarbNames = switchKeyToVarbNames(baseName, switchName);
-  return Obj.keys(keyToVarbNames).reduce((varbs, key) => {
-    const varbName = keyToVarbNames[key];
-    if (key === "switch") {
-      varbs[varbName] = {
-        ...baseVarb("string"),
-        ...getSwitchOptions(switchName, key, fullOptions as any),
-      } as any as BaseSwitchVarbsNext<Base, SN, O>[typeof varbName];
-    } else {
-      varbs[varbName] = {
-        ...baseVarb("numObj"),
-        ...getTargetOptions(switchName, key, fullOptions as any),
-      } as any as BaseSwitchVarbsNext<Base, SN, O>[typeof varbName];
-    }
-    return varbs;
-  }, {} as BaseSwitchVarbsNext<Base, SN, O>);
-}

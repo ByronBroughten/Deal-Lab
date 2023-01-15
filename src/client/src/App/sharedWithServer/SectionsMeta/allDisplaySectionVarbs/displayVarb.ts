@@ -4,7 +4,7 @@ import {
   DisplayVarbOptions,
 } from "../displaySectionVarbs/displayVarb";
 
-export const displayVarbOptions = {
+export const displayVarbOptionsS = {
   dollars: { startAdornment: "$", displayRound: 2 },
   monthly: { endAdornment: "/month" },
   yearly: { endAdornment: "/year" },
@@ -12,42 +12,52 @@ export const displayVarbOptions = {
   decimal: { displayRound: 5 },
 } as const;
 
+export function displayVarbOptions(
+  displayName: DisplayName,
+  options?: DisplayVarbOptions
+): DisplayVarbOptions {
+  return {
+    displayName,
+    ...options,
+  };
+}
+
 export const displayVarbS = {
   dollars(displayName: DisplayName, options?: DisplayVarbOptions) {
     return displayVarb(displayName, {
-      ...displayVarbOptions.dollars,
+      ...displayVarbOptionsS.dollars,
       ...options,
     });
   },
   percent(displayName: DisplayName, options?: DisplayVarbOptions) {
     return displayVarb(displayName, {
-      ...displayVarbOptions.percent,
+      ...displayVarbOptionsS.percent,
       ...options,
     });
   },
   monthly(displayName: DisplayName, options?: DisplayVarbOptions) {
     return displayVarb(displayName, {
-      ...displayVarbOptions.monthly,
+      ...displayVarbOptionsS.monthly,
       ...options,
     });
   },
   yearly(displayName: DisplayName, options?: DisplayVarbOptions) {
     return displayVarb(displayName, {
-      ...displayVarbOptions.yearly,
+      ...displayVarbOptionsS.yearly,
       ...options,
     });
   },
   dollarsMonthly(displayName: DisplayName, options?: DisplayVarbOptions) {
     return displayVarb(displayName, {
-      ...displayVarbOptions.dollars,
-      ...displayVarbOptions.monthly,
+      ...displayVarbOptionsS.dollars,
+      ...displayVarbOptionsS.monthly,
       ...options,
     });
   },
   dollarsYearly(displayName: DisplayName, options?: DisplayVarbOptions) {
     return displayVarb(displayName, {
-      ...displayVarbOptions.dollars,
-      ...displayVarbOptions.yearly,
+      ...displayVarbOptionsS.dollars,
+      ...displayVarbOptionsS.yearly,
       ...options,
     });
   },

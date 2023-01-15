@@ -22,7 +22,10 @@ interface Props extends Omit<FilledTextFieldProps, "InputProps" | "variant"> {
   startAdornment?: any;
 }
 
-function getAdornments(shrinkLabel: boolean, shellProps: PropAdornments) {
+function getEntityEditorAdornments(
+  shrinkLabel: boolean,
+  shellProps: PropAdornments
+) {
   if (shrinkLabel) return pick(shellProps, ["endAdornment", "startAdornment"]);
   else return {};
 }
@@ -48,7 +51,7 @@ export const MaterialDraftEditor = React.memo(function MaterialDraftEditor({
   const hasText = editorState.getCurrentContent().hasText();
 
   const shrinkLabel = hasFocus || hasText;
-  ({ endAdornment, startAdornment } = getAdornments(shrinkLabel, {
+  ({ endAdornment, startAdornment } = getEntityEditorAdornments(shrinkLabel, {
     startAdornment,
     endAdornment,
   }));
