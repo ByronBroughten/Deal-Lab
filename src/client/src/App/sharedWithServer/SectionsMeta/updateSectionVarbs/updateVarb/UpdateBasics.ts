@@ -57,15 +57,11 @@ export const updateBasicsS = {
     });
   },
   loadFromLocalValueEditor(): UpdateBasics<"numObj"> {
-    return this.loadSolvableTextByVarbInfo("valueEditor", "valueSourceSwitch");
+    return this.loadSolvableTextByVarbInfo("valueEditor");
   },
-  loadSolvableTextByVarbInfo(
-    varbInfoName: string,
-    switchName: string
-  ): UpdateBasics<"numObj"> {
+  loadSolvableTextByVarbInfo(varbInfoName: string): UpdateBasics<"numObj"> {
     return updateBasics("loadSolvableTextByVarbInfo", {
       varbInfo: updateFnPropS.local(varbInfoName),
-      switch: updateFnPropS.local(switchName),
     });
   },
   yearlyToMonthly<Base extends string>(

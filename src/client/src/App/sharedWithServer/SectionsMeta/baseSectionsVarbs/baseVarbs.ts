@@ -22,14 +22,14 @@ const customValueUnits = {
 type CustomValueUnits = typeof customValueUnits;
 type ValueUnits = {
   [VN in ValueName]: VN extends keyof CustomValueUnits
-    ? ["max", ...CustomValueUnits[VN]]
-    : ["max"];
+    ? ["absolute", ...CustomValueUnits[VN]]
+    : ["absolute"];
 };
 const valueUnits = valueNames.reduce((units, valueName) => {
   (units as any)[valueName] =
     valueName in customValueUnits
-      ? ["max", ...customValueUnits[valueName as keyof CustomValueUnits]]
-      : (["max"] as ValueUnits[typeof valueName]);
+      ? ["absolute", ...customValueUnits[valueName as keyof CustomValueUnits]]
+      : (["absolute"] as ValueUnits[typeof valueName]);
   return units;
 }, {} as ValueUnits);
 

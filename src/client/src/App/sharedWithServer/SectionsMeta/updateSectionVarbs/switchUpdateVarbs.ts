@@ -18,7 +18,7 @@ import {
   updateVarb,
   UpdateVarbOptions,
 } from "./updateVarb";
-import { updateBasics } from "./updateVarb/UpdateBasics";
+import { updateBasics, updateBasicsS } from "./updateVarb/UpdateBasics";
 import {
   UpdateFnProp,
   updateFnPropS,
@@ -65,7 +65,7 @@ function switchOptionsToFull<SN extends SwitchName>(
   }, {} as SwitchOptionsFull<SN>);
 }
 
-function switchUpdateVarbsNext<BN extends string, SN extends SwitchName>(
+function switchUpdateVarbs<BN extends string, SN extends SwitchName>(
   baseName: BN,
   switchName: SN,
   switchInit: string,
@@ -92,12 +92,47 @@ function switchUpdateVarbsNext<BN extends string, SN extends SwitchName>(
   }, {} as SwitchUpdateVarbs<BN, SN>);
 }
 
-export type MonthlyYearlySwitchOptions = {
-  monthly?: UpdateVarbOptions<"numObj">;
-  yearly?: UpdateVarbOptions<"numObj">;
-  shared?: UpdateVarbOptions<"numObj">;
-  switchInit?: "monthly" | "yearly";
-};
+export function ongoingInputNext<BN extends string>(
+  baseName: BN,
+  {
+    switchInit = "monthly",
+    ...options
+  }: SwitchOptions<"ongoingInput"> & {
+    switchInit?: SwitchTargetKey<"ongoingInput">;
+  } = {}
+): SwitchUpdateVarbs<BN, "ongoingInput"> {
+  const names = switchKeyToVarbNames(baseName, "ongoingInput");
+  return switchUpdateVarbs(baseName, "ongoingInput", switchInit, {
+    ...options,
+    editor: { updateFnName: "calcVarbs", ...options.editor },
+    monthly: {
+      updateFnName: "throwIfReached",
+      updateOverrides: [
+        updateOverrideS.activeYearlyToMonthly(baseName),
+        updateOverride(
+          [overrideSwitchS.monthlyIsActive(baseName)],
+          updateBasicsS.loadSolvableTextByVarbInfo(names.editor)
+        ),
+      ],
+      ...options.monthly,
+    },
+    yearly: {
+      updateFnName: "throwIfReached",
+      updateOverrides: [
+        updateOverrideS.activeMonthlyToYearly(baseName),
+        updateOverride(
+          [overrideSwitchS.yearlyIsActive(baseName)],
+          updateBasicsS.loadSolvableTextByVarbInfo(names.editor)
+        ),
+      ],
+      ...options.yearly,
+    },
+  });
+}
+
+export const switchUpdateVarbsS = {
+  ongoingInputNext,
+} as const;
 
 function switchEndingToUpdateProp<
   SN extends SwitchName,
@@ -157,7 +192,7 @@ export function monthsYearsInput<BN extends string>(
   options?: SwitchOptions<"monthsYears">
 ): SwitchUpdateVarbs<BN, "monthsYears"> {
   const varbNames = switchKeyToVarbNames(baseName, "monthsYears");
-  return switchUpdateVarbsNext(baseName, "monthsYears", switchInit, {
+  return switchUpdateVarbs(baseName, "monthsYears", switchInit, {
     ...options,
     months: {
       updateFnName: "throwIfReached",
@@ -193,6 +228,7 @@ export function monthsYearsInput<BN extends string>(
     },
   });
 }
+
 export function ongoingInput<BN extends string>(
   baseName: BN,
   {
@@ -200,7 +236,7 @@ export function ongoingInput<BN extends string>(
     ...options
   }: SwitchOptions<"ongoing"> & { switchInit?: SwitchTargetKey<"ongoing"> } = {}
 ): SwitchUpdateVarbs<BN, "ongoing"> {
-  return switchUpdateVarbsNext(baseName, "ongoing", switchInit, {
+  return switchUpdateVarbs(baseName, "ongoing", switchInit, {
     ...options,
     monthly: {
       updateFnName: "throwIfReached",

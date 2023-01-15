@@ -1,10 +1,6 @@
 import { cloneDeep } from "lodash";
 import { sectionsMeta } from "../SectionsMeta";
-import {
-  DisplayName,
-  DisplaySourceFinder,
-  getDisplayVarb,
-} from "./allDisplaySectionVarbs";
+import { getDisplayVarb } from "./allDisplaySectionVarbs";
 import { allUpdateSections, getUpdateVarb } from "./allUpdateSectionVarbs";
 import {
   getBaseVarb,
@@ -15,6 +11,10 @@ import { valueMetas } from "./baseSectionsDerived/valueMetas";
 import { FixedInEntity } from "./baseSectionsVarbs/baseValues/entities";
 import { GeneralBaseVarb } from "./baseSectionsVarbs/baseVarbs";
 import { ValueName } from "./baseSectionsVarbs/ValueName";
+import {
+  DisplayName,
+  DisplaySourceFinder,
+} from "./displaySectionVarbs/displayVarb";
 import { SectionMeta } from "./SectionMeta";
 import { SectionName } from "./SectionName";
 import { GeneralUpdateSectionVarbs } from "./updateSectionVarbs/updateSectionVarbs";

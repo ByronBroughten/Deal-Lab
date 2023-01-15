@@ -22,19 +22,11 @@ reportWebVitals();
 // I could continuously apply for programming jobs
 
 // 1. OngoingEditor
-// - The ongoingEditor stuff may generally need
-//   custom updateFn stuff
 // - But you should be able to make generalizable displayName stuff for it
 // - Make it so editors can get their rounding from a switch, like how
-//   they get their displayName
+//   they get their displayName.
 
 // 2. Add these to deal baseSectionVarbs:
-// loanTotalDollars
-// closingCosts
-// upfront mortgageInsurance
-// expenses
-// ongoingMortgageInsurance
-// loanPayment
 // 3. Add them to deal updateSectionVarbs as sum variables
 // 4. Replace financing
 // 5. Replace mgmtGeneral

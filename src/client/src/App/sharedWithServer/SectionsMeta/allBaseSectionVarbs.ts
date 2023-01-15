@@ -176,9 +176,8 @@ export function makeAllBaseSectionVarbs() {
         dollars
       ),
       ...baseVarbs("numObj", ["sqft", "numUnits", "numBedrooms"] as const),
-      // Let's do the taxes input
-      ...baseVarbsS.ongoingDollars("taxes"),
-      ...baseVarbsS.ongoingDollars("homeIns"),
+      ...baseVarbsS.ongoingDollarsInput("taxes"),
+      ...baseVarbsS.ongoingDollarsInput("homeIns"),
       ...baseVarbsS.ongoingDollars("targetRent"),
       ...baseVarbsS.ongoingDollars("expenses"),
       ...baseVarbsS.ongoingDollars("miscRevenue"),

@@ -1,303 +1,47 @@
 import {
-  sectionVarbNames,
-  VarbName,
-} from "./baseSectionsDerived/baseSectionsVarbsTypes";
+  displayVarbOptions,
+  displayVarbS,
+} from "./allDisplaySectionVarbs/displayVarb";
+import { displayVarbsS } from "./allDisplaySectionVarbs/displayVarbs";
+import { VarbName } from "./baseSectionsDerived/baseSectionsVarbsTypes";
 import {
-  getSwitchVarbName,
-  switchKeys,
-  SwitchName,
-  SwitchOptionName,
-  switchOptionNames,
-  SwitchVarbName,
-} from "./baseSectionsVarbs/baseSwitchNames";
-import { RelLocalVarbInfo, relVarbInfoS } from "./SectionInfo/RelVarbInfo";
+  displaySectionVarbs,
+  DisplaySectionVarbs,
+  displaySectionVarbsProp,
+} from "./displaySectionVarbs/displaySectionVarbs";
+import {
+  DisplayName,
+  DisplayVarb,
+  displayVarb,
+} from "./displaySectionVarbs/displayVarb";
+import { relVarbInfoS } from "./SectionInfo/RelVarbInfo";
 import { SectionName, sectionNames } from "./SectionName";
 
-export type DisplayName = string | RelLocalVarbInfo;
-export type DisplayOverrideSwitches = readonly DisplayOverrideSwitch[];
-export interface DisplayOverrideSwitch {
-  switchInfo: RelLocalVarbInfo;
-  switchValue: string;
-  sourceInfo: RelLocalVarbInfo;
-}
-export type DisplaySourceFinder =
-  | null
-  | RelLocalVarbInfo
-  | DisplayOverrideSwitches;
-type DisplaySectionVarbGeneric = {
-  displayName: DisplayName;
-  displayNameStart: string;
-  displayNameEnd: string;
-  startAdornment: string;
-  endAdornment: string;
-  displayRound: number;
-  displaySourceFinder: DisplaySourceFinder;
-};
-
-const displayVarbCheck = <DS extends DisplaySectionVarbGeneric>(
-  value: DS
-): DS => value;
-
-function defaultDisplayVarb(displayName: DisplayName) {
-  return displayVarbCheck({
-    displayName,
-    displayNameStart: "",
-    displayNameEnd: "",
-    startAdornment: "",
-    endAdornment: "",
-    displayRound: 0,
-    displaySourceFinder: null,
-  });
-}
-
-type Options = Partial<Omit<DisplaySectionVarbGeneric, "displayName">>;
-function displayVarb<DN extends DisplayName>(
-  displayName: DN,
-  partial: Options = {}
-): DisplaySectionVarbGeneric {
-  return {
-    ...defaultDisplayVarb(displayName),
-    ...partial,
-  };
-}
-
-type SectionVarbsOptions<SN extends SectionName> = Partial<{
-  [VN in VarbName<SN>]: Partial<DisplaySectionVarbGeneric>;
-}>;
-
-function optionsToFull<SN extends SectionName>(
-  sectionName: SN,
-  options: SectionVarbsOptions<SN>
-): DisplaySectionVarbsGeneric<SN> {
-  const varbNames = sectionVarbNames(sectionName);
-  return varbNames.reduce((full, varbName) => {
-    const varbOptions = options[varbName] ?? {};
-    full[varbName] = displayVarb("", varbOptions);
-    return full;
-  }, {} as DisplaySectionVarbsGeneric<SN>);
-}
-
-function displaySectionVarbsProp<SN extends SectionName>(
-  sectionName: SN,
-  options: Partial<DisplaySectionVarbsGeneric<SN>> = {}
-): DisplaySectionVarbsProp<SN> {
-  return {
-    [sectionName]: optionsToFull(sectionName, options),
-  } as DisplaySectionVarbsProp<SN>;
-}
-
-type DisplaySectionVarbsProp<SN extends SectionName> = {
-  [S in SN]: DisplaySectionVarbsGeneric<SN>;
-};
-
-type DisplaySectionVarbsGeneric<SN extends SectionName> = {
-  [VN in VarbName<SN>]: DisplaySectionVarbGeneric;
-};
-
-function defaultDisplaySectionVarbs<SN extends SectionName>(
-  sectionName: SN
-): DisplaySectionVarbsGeneric<SN> {
-  const varbNames = sectionVarbNames(sectionName);
-  return varbNames.reduce((defaults, varbName) => {
-    // const valueName = sectionVarbValueName(sectionName, varbName);
-    // const options = valueName === "numObj" ? optionsS.dollars : {}
-    // this commented out modification is interesting, but numObjs should
-    // generally have manually entered displayNames anyways
-    defaults[varbName] = defaultDisplayVarb("");
-    return defaults;
-  }, {} as DisplaySectionVarbsGeneric<SN>);
-}
-
 type AllDisplaySectionVarbsGeneric = {
-  [SN in SectionName]: DisplaySectionVarbsGeneric<SN>;
+  [SN in SectionName]: DisplaySectionVarbs<SN>;
 };
 
 function allDefaultDisplaySectionVarbs(): AllDisplaySectionVarbsGeneric {
   return sectionNames.reduce((defaults, sectionName) => {
-    (defaults as any)[sectionName] = defaultDisplaySectionVarbs(sectionName);
+    (defaults as any)[sectionName] = displaySectionVarbs(sectionName);
     return defaults;
   }, {} as AllDisplaySectionVarbsGeneric);
 }
-
-const optionsS = {
-  dollars: { startAdornment: "$", displayRound: 2 },
-  monthly: { endAdornment: "/month" },
-  yearly: { endAdornment: "/year" },
-  percent: { endAdornment: "%", displayRound: 3 },
-  decimal: { displayRound: 5 },
-} as const;
-
-const displayVarbS = {
-  dollars(displayName: DisplayName, options?: Options) {
-    return displayVarb(displayName, {
-      ...optionsS.dollars,
-      ...options,
-    });
-  },
-  percent(displayName: DisplayName, options?: Options) {
-    return displayVarb(displayName, {
-      ...optionsS.percent,
-      ...options,
-    });
-  },
-  monthly(displayName: DisplayName, options?: Options) {
-    return displayVarb(displayName, {
-      ...optionsS.monthly,
-      ...options,
-    });
-  },
-  yearly(displayName: DisplayName, options?: Options) {
-    return displayVarb(displayName, {
-      ...optionsS.yearly,
-      ...options,
-    });
-  },
-  dollarsMonthly(displayName: DisplayName, options?: Options) {
-    return displayVarb(displayName, {
-      ...optionsS.dollars,
-      ...optionsS.monthly,
-      ...options,
-    });
-  },
-  dollarsYearly(displayName: DisplayName, options?: Options) {
-    return displayVarb(displayName, {
-      ...optionsS.dollars,
-      ...optionsS.yearly,
-      ...options,
-    });
-  },
-};
-
-const checkSwitchDisplayVarbProps = <T extends Record<SwitchName, any>>(
-  props: T
-): T => props;
-const switchDisplayVarbProps = checkSwitchDisplayVarbProps({
-  ongoing: {
-    monthly: optionsS.monthly,
-    yearly: optionsS.yearly,
-  },
-  get ongoingInput() {
-    // this is going to change.
-    return {
-      monthly: optionsS.monthly,
-      yearly: optionsS.yearly,
-    };
-  },
-  monthsYears: {
-    months: { endAdornment: "months" },
-    years: { endAdornment: "years" },
-  },
-  percent: { percent: optionsS.percent },
-  get dollarsPercent() {
-    return {
-      percent: optionsS.percent,
-      dollars: optionsS.dollars,
-    } as const;
-  },
-  get dollarsPercentDecimal() {
-    return {
-      percent: optionsS.percent,
-      dollars: optionsS.dollars,
-      decimal: optionsS.decimal,
-    };
-  },
-} as const);
-
-type SwitchDisplayVarb<BN extends string, SN extends SwitchName> = Record<
-  SwitchVarbName<BN, SN>,
-  DisplaySectionVarbGeneric
->;
-
-type SwitchOptionsFull<SN extends SwitchName> = Record<
-  SwitchOptionName<SN>,
-  Options
->;
-
-type SwitchOptions<SN extends SwitchName> = Partial<SwitchOptionsFull<SN>>;
-
-function switchOptionsToFull<SN extends SwitchName>(
-  switchName: SN,
-  options: SwitchOptions<SN>
-): SwitchOptionsFull<SN> {
-  const names = switchOptionNames(switchName);
-  const displayProps = switchDisplayVarbProps[switchName];
-  return names.reduce((fullOptions, name) => {
-    const displayOptions = {
-      ...((name as string) in displayProps ? (displayProps as any)[name] : {}),
-    };
-    const inputOptions = options[name] ?? {};
-    fullOptions[name] = {
-      ...displayOptions,
-      ...inputOptions,
-    };
-    return fullOptions;
-  }, {} as SwitchOptionsFull<SN>);
-}
-
-const displayVarbsS = {
-  switch<BN extends string, SN extends SwitchName>(
-    baseName: BN,
-    switchName: SN,
-    displayName: DisplayName,
-    options: SwitchOptions<SN> = {}
-  ): SwitchDisplayVarb<BN, SN> {
-    const keys = switchKeys(switchName);
-    return keys.reduce((varbs, key) => {
-      const name = getSwitchVarbName(baseName, switchName, key);
-      const fullOptions = switchOptionsToFull(switchName, options);
-      varbs[name] = {
-        ...defaultDisplayVarb(displayName),
-        ...fullOptions.all,
-        ...(key === "switch" ? {} : fullOptions.targets),
-        ...fullOptions[key],
-      };
-      return varbs;
-    }, {} as SwitchDisplayVarb<BN, SN>);
-  },
-  ongoingDollars<BN extends string>(
-    baseName: BN,
-    displayName: DisplayName,
-    options: SwitchOptions<"ongoing"> = {}
-  ): SwitchDisplayVarb<BN, "ongoing"> {
-    return this.switch(baseName, "ongoing", displayName, {
-      ...options,
-      targets: {
-        ...optionsS.dollars,
-        ...options!.targets,
-      },
-    });
-  },
-  monthsYears<BN extends string>(
-    baseName: BN,
-    displayName: DisplayName
-  ): SwitchDisplayVarb<BN, "monthsYears"> {
-    return this.switch(baseName, "monthsYears", displayName);
-  },
-};
 
 const dollars = displayVarbS.dollars;
 const ongoingDollars = <BN extends string>(
   baseName: BN,
   displayName: DisplayName
 ) => displayVarbsS.ongoingDollars(baseName, displayName);
+const ongoingInputDollars = <BN extends string>(
+  baseName: BN,
+  displayName: DisplayName
+) => displayVarbsS.ongoingInputDollars(baseName, displayName);
 
-type DisplayVarb<
-  SN extends SectionName,
-  VN extends VarbName<SN>
-> = AllDisplaySectionVarbs[SN][VN & keyof AllDisplaySectionVarbs[SN]];
-export function getDisplayVarb<SN extends SectionName, VN extends VarbName<SN>>(
-  sectionName: SN,
-  varbName: VN
-): DisplaySectionVarbGeneric {
-  const sectionVarbs = allDisplaySectionVarbs[sectionName];
-  return (sectionVarbs as any)[varbName] as DisplaySectionVarbGeneric;
-}
-
-type AllDisplaySectionVarbs = typeof allDisplaySectionVarbs;
 export const allDisplaySectionVarbs = {
   ...allDefaultDisplaySectionVarbs(),
   ...displaySectionVarbsProp("property", {
-    price: dollars("Purchase price"),
+    price: displayVarb("Purchase price"),
     sqft: displayVarb("Square feet"),
     arv: dollars("ARV"),
     sellingCosts: dollars("Selling costs"),
@@ -306,8 +50,8 @@ export const allDisplaySectionVarbs = {
     upfrontExpenses: dollars("Upfront expenses"),
     upfrontRevenue: dollars("Upfront revenues"),
     ...displayVarbsS.monthsYears("holdingPeriod", "Holding period"),
-    ...ongoingDollars("taxes", "Taxes"),
-    ...ongoingDollars("homeIns", "Home Insurance"),
+    ...ongoingInputDollars("taxes", "Taxes"),
+    ...ongoingInputDollars("homeIns", "Home Insurance"),
     ...ongoingDollars("targetRent", "Rent"),
     ...ongoingDollars("expenses", "Expenses"),
     ...ongoingDollars("miscRevenue", "Misc revenue"),
@@ -337,10 +81,10 @@ export const allDisplaySectionVarbs = {
       "interestRateDecimal",
       "ongoing",
       "Interest rate decimal",
-      { targets: optionsS.decimal }
+      { targets: displayVarbOptions.decimal }
     ),
     ...displayVarbsS.switch("interestRatePercent", "ongoing", "Interest rate", {
-      targets: optionsS.percent,
+      targets: displayVarbOptions.percent,
     }),
     ...ongoingDollars("piFixedStandard", "Principal and interest"),
     ...ongoingDollars("interestOnlySimple", "Interest"),
@@ -378,10 +122,10 @@ export const allDisplaySectionVarbs = {
     ...ongoingDollars("revenue", "Revenue"),
     ...ongoingDollars("cashFlow", "Cash Flow"),
     ...displayVarbsS.switch("cocRoiDecimal", "ongoing", "CoC ROI as decimal", {
-      targets: optionsS.decimal,
+      targets: displayVarbOptions.decimal,
     }),
     ...displayVarbsS.switch("cocRoi", "ongoing", "CoC ROI", {
-      targets: optionsS.percent,
+      targets: displayVarbOptions.percent,
     }),
   }),
 
@@ -422,6 +166,14 @@ export const allDisplaySectionVarbs = {
     valueEditor: displayVarbS.dollars("Item cost"),
   }),
 };
+
+export function getDisplayVarb<SN extends SectionName, VN extends VarbName<SN>>(
+  sectionName: SN,
+  varbName: VN
+): DisplayVarb {
+  const sectionVarbs = allDisplaySectionVarbs[sectionName];
+  return (sectionVarbs as any)[varbName] as DisplayVarb;
+}
 
 // export const relSwitchVarbs = {
 //   ongoing: ongoingVarb,

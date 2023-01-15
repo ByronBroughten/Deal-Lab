@@ -2,6 +2,7 @@ import { round } from "lodash";
 import { mathS } from "../../../../utils/math";
 
 export const decimalRounding = 8;
+export const maxRounding = 10;
 
 export function percentToDecimalRounded(num: number): number {
   return round(mathS.percentToDecimal(num), decimalRounding);

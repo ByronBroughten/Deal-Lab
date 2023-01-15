@@ -13,7 +13,7 @@ export function propertyRelVarbs(): UpdateSectionVarbs<"property"> {
 
     price: updateVarb("numObj"),
     sqft: updateVarb("numObj"),
-    ...updateVarbsS.ongoingInput("taxes", {
+    ...updateVarbsS.ongoingInputNext("taxes", {
       switchInit: "yearly",
     }),
 
@@ -43,8 +43,8 @@ export function propertyRelVarbs(): UpdateSectionVarbs<"property"> {
       ],
       "monthly"
     ),
-    // ongoing revenue
-    ...updateVarbsS.ongoingInput("homeIns", {
+
+    ...updateVarbsS.ongoingInputNext("homeIns", {
       switchInit: "yearly",
     }),
     ...updateVarbsS.monthsYearsInput("holdingPeriod", "months"),

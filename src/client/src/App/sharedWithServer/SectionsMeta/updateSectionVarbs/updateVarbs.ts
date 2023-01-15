@@ -5,6 +5,7 @@ import {
   ongoingInput,
   ongoingPureCalc,
   ongoingSumNums,
+  switchUpdateVarbsS,
 } from "./switchUpdateVarbs";
 import { UpdateSectionVarbs } from "./updateSectionVarbs";
 import { relVarbS, updateVarb } from "./updateVarb";
@@ -17,6 +18,7 @@ import {
 } from "./updateVarb/UpdateOverrides";
 
 export const updateVarbsS = {
+  ...switchUpdateVarbsS,
   get _typeUniformity() {
     return { _typeUniformity: updateVarb("string") };
   },
@@ -37,7 +39,6 @@ export const updateVarbsS = {
   ongoingSumNums,
   ongoingInput,
   monthsYearsInput,
-  ongoingInputNext<BN extends string>(baseName: BN) {},
   get basicVirtualVarb() {
     return {
       displayName: updateVarb("stringObj", {
@@ -97,8 +98,12 @@ export const updateVarbsS = {
       ...this._typeUniformity,
       ...this.listItemVirtualVarb,
       value: updateVarb("numObj", {
-        ...updateBasicsS.loadFromLocalValueEditor(),
+        updateFnName: "throwIfReached",
         updateOverrides: [
+          updateOverride(
+            [overrideSwitchS.local("valueSourceSwitch", "labeledEquation")],
+            updateBasicsS.loadFromLocalValueEditor()
+          ),
           updateOverride(
             [overrideSwitchS.local("valueSourceSwitch", "loadedVarb")],
             updateBasics("virtualNumObj", {

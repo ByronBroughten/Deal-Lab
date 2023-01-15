@@ -1,5 +1,4 @@
 import { cloneDeep, round } from "lodash";
-import { DisplayOverrideSwitches } from "../SectionsMeta/allDisplaySectionVarbs";
 import {
   DbVarbInfoMixed,
   FeVarbInfoMixed,
@@ -15,6 +14,7 @@ import {
   ValueTypesPlusAny,
 } from "../SectionsMeta/baseSectionsVarbs/StateVarbTypes";
 import { ValueName } from "../SectionsMeta/baseSectionsVarbs/ValueName";
+import { DisplayOverrideSwitches } from "../SectionsMeta/displaySectionVarbs/displayVarb";
 import {
   mixedInfoS,
   VarbInfoMixedFocal,
@@ -167,6 +167,7 @@ export class GetterVarb<
           const switchValue = switchVarb.value("string");
           if (override.switchValue === switchValue) {
             source = this.section.varbByFocalMixed(override.sourceInfo);
+            break;
           }
         }
       }
@@ -185,7 +186,6 @@ export class GetterVarb<
   }
   get displayInfo() {
     const { displayMeta } = this;
-    // this isn't great.
     return {
       displayName: displayMeta.displayName as string,
       displayNameEnd: displayMeta.displayNameEnd,

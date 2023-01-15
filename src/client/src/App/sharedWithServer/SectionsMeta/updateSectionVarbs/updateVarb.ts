@@ -4,7 +4,10 @@ import {
   LeftRightPropCalcName,
   NumPropCalcName,
 } from "../baseSectionsVarbs/baseValues/calculations";
-import { decimalRounding } from "../baseSectionsVarbs/baseValues/calculations/numUnitParams";
+import {
+  decimalRounding,
+  maxRounding,
+} from "../baseSectionsVarbs/baseValues/calculations/numUnitParams";
 import { StateValue } from "../baseSectionsVarbs/baseValues/StateValueTypes";
 import { ValueUnit } from "../baseSectionsVarbs/baseVarbs";
 import { ValueName } from "../baseSectionsVarbs/ValueName";
@@ -32,7 +35,7 @@ export const calculatedRounding: Record<ValueUnit, number> = {
   dollars: 2,
   percent: 6,
   decimal: decimalRounding,
-  max: 10,
+  absolute: maxRounding,
 } as const;
 
 const checkUpdateVarb = <VN extends ValueName, T extends UpdateVarb<VN>>(
