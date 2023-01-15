@@ -1,40 +1,36 @@
 import { timeS } from "../utils/date";
 import { AnalyzerPlan } from "./allBaseSectionVarbs";
+import { dealRelVarbs } from "./allUpdateSectionVarbs/dealUpdateVarbs";
+import { loanRelVarbs } from "./allUpdateSectionVarbs/loanUpdateVarbs";
+import { mgmtRelVarbs } from "./allUpdateSectionVarbs/mgmtUpdateVarbs";
+import { propertyRelVarbs } from "./allUpdateSectionVarbs/propertyUpdateVarbs";
 import { VarbName } from "./baseSectionsDerived/baseSectionsVarbsTypes";
 import { numObj } from "./baseSectionsVarbs/baseValues/NumObj";
 import { AuthStatus } from "./baseSectionsVarbsValues";
-import { relVarbS, updateVarb } from "./relSectionVarbs/rel/updateVarb";
+import { relVarbInfosS } from "./SectionInfo/RelVarbInfos";
+import { SectionName, sectionNames } from "./SectionName";
+import {
+  defaultSectionUpdateVarbs,
+  updateSectionProp,
+  UpdateSectionVarbs,
+} from "./updateSectionVarbs/updateSectionVarbs";
+import { relVarbS, updateVarb } from "./updateSectionVarbs/updateVarb";
 import {
   UpdateBasics,
   updateBasicsS,
-} from "./relSectionVarbs/rel/updateVarb/UpdateBasics";
+} from "./updateSectionVarbs/updateVarb/UpdateBasics";
 import {
   updateFnPropS,
   updateFnPropsS,
-} from "./relSectionVarbs/rel/updateVarb/UpdateFnProps";
+} from "./updateSectionVarbs/updateVarb/UpdateFnProps";
 import {
   overrideSwitchS,
   updateOverride,
-} from "./relSectionVarbs/rel/updateVarb/UpdateOverrides";
-import { dealRelVarbs } from "./relSectionVarbs/sectionUpdateVarbs/dealUpdateVarbs";
-import { loanRelVarbs } from "./relSectionVarbs/sectionUpdateVarbs/loanUpdateVarbs";
-import { mgmtRelVarbs } from "./relSectionVarbs/sectionUpdateVarbs/mgmtUpdateVarbs";
-import { propertyRelVarbs } from "./relSectionVarbs/sectionUpdateVarbs/propertyUpdateVarbs";
-import {
-  defaultSectionUpdateVarbs,
-  GenericRelSection,
-  RelSection,
-  updateSectionProp,
-} from "./relSectionVarbs/updateSection";
-import {
-  UpdateSectionVarbs,
-  updateVarbsS,
-} from "./relSectionVarbs/updateVarbs";
-import { relVarbInfosS } from "./SectionInfo/RelVarbInfos";
-import { SectionName, sectionNames } from "./SectionName";
+} from "./updateSectionVarbs/updateVarb/UpdateOverrides";
+import { updateVarbsS } from "./updateSectionVarbs/updateVarbs";
 
 type GenericAllUpdateSections = {
-  [SN in SectionName]: GenericRelSection<SN>;
+  [SN in SectionName]: UpdateSectionVarbs<SN>;
 };
 
 function checkAllUpdateSections<US extends GenericAllUpdateSections>(
@@ -44,16 +40,21 @@ function checkAllUpdateSections<US extends GenericAllUpdateSections>(
 }
 
 type DefaultRelSectionsVarbs = {
-  [SN in SectionName]: RelSection<SN, UpdateSectionVarbs<SN>>;
+  [SN in SectionName]: UpdateSectionVarbs<SN>;
 };
-const defaults = sectionNames.reduce((basicRelSections, sectionName) => {
-  basicRelSections[sectionName] = defaultSectionUpdateVarbs(sectionName) as any;
-  return basicRelSections;
-}, {} as DefaultRelSectionsVarbs);
+
+function makeAllDefaultUpdateSections() {
+  return sectionNames.reduce((defaultUpdateSections, sectionName) => {
+    defaultUpdateSections[sectionName] = defaultSectionUpdateVarbs(
+      sectionName
+    ) as any;
+    return defaultUpdateSections;
+  }, {} as DefaultRelSectionsVarbs);
+}
 
 function makeAllUpdateSections() {
   return checkAllUpdateSections({
-    ...defaults,
+    ...makeAllDefaultUpdateSections(),
     ...updateSectionProp("feUser", {
       authStatus: updateVarb("string", {
         initValue: "guest" as AuthStatus,

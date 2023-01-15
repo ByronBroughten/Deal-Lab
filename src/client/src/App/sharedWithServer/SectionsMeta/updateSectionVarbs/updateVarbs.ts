@@ -1,34 +1,20 @@
-import {
-  VarbName,
-  VarbValueName,
-} from "../baseSectionsDerived/baseSectionsVarbsTypes";
 import { AutoSyncControl } from "../baseSectionsDerived/subValues";
 import { switchKeyToVarbNames } from "../baseSectionsVarbs/baseSwitchNames";
-import { SectionName } from "../SectionName";
-import {
-  GeneralUpdateVarb,
-  relVarbS,
-  UpdateVarb,
-  updateVarb,
-} from "./rel/updateVarb";
-import { updateBasics, updateBasicsS } from "./rel/updateVarb/UpdateBasics";
-import { updateFnPropS } from "./rel/updateVarb/UpdateFnProps";
-import {
-  overrideSwitchS,
-  updateOverride,
-  updateOverrideS,
-} from "./rel/updateVarb/UpdateOverrides";
 import {
   monthsYearsInput,
   ongoingInput,
   ongoingPureCalc,
   ongoingSumNums,
-} from "./rel/updateVarbs/switchUpdateVarbs";
-
-export type GeneralUpdateSectionVarbs = Record<string, GeneralUpdateVarb>;
-export type UpdateSectionVarbs<SN extends SectionName> = {
-  [VN in VarbName<SN>]: UpdateVarb<VarbValueName<SN, VN>>;
-};
+} from "./switchUpdateVarbs";
+import { UpdateSectionVarbs } from "./updateSectionVarbs";
+import { relVarbS, updateVarb } from "./updateVarb";
+import { updateBasics, updateBasicsS } from "./updateVarb/UpdateBasics";
+import { updateFnPropS } from "./updateVarb/UpdateFnProps";
+import {
+  overrideSwitchS,
+  updateOverride,
+  updateOverrideS,
+} from "./updateVarb/UpdateOverrides";
 
 export const updateVarbsS = {
   get _typeUniformity() {
@@ -144,14 +130,14 @@ export const updateVarbsS = {
       }),
       costToReplace: updateVarb("numObj"),
       valueEditor: updateVarb("numObj"),
-      ...updateVarbsS.monthsYearsInput("lifespan", { switchInit: "years" }),
+      ...updateVarbsS.monthsYearsInput("lifespan", "years"),
       [ongoingValueNames.switch]: updateVarb("string", {
         initValue: "monthly",
       }),
       [ongoingValueNames.monthly]: updateVarb("numObj", {
         ...makeDefaultValueUpdatePack(),
         updateOverrides: [
-          updateOverrideS.yearlyIfActive(valueNameBase),
+          updateOverrideS.activeYearlyToMonthly(valueNameBase),
           updateOverride(
             [
               overrideSwitchS.monthlyIsActive(valueNameBase),
@@ -176,7 +162,7 @@ export const updateVarbsS = {
       [ongoingValueNames.yearly]: updateVarb("numObj", {
         ...makeDefaultValueUpdatePack(),
         updateOverrides: [
-          updateOverrideS.monthlyIfActive(valueNameBase),
+          updateOverrideS.activeMonthlyToYearly(valueNameBase),
           updateOverride(
             [
               overrideSwitchS.yearlyIsActive(valueNameBase),

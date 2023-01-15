@@ -1,12 +1,19 @@
-import { switchKeyToVarbNames } from "../../baseSectionsVarbs/baseSwitchNames";
-import { relVarbS, updateVarb } from "../rel/updateVarb";
-import { UpdateBasics, updateBasicsS } from "../rel/updateVarb/UpdateBasics";
-import { updateFnPropS, updateFnPropsS } from "../rel/updateVarb/UpdateFnProps";
+import { switchKeyToVarbNames } from "../baseSectionsVarbs/baseSwitchNames";
+import { UpdateSectionVarbs } from "../updateSectionVarbs/updateSectionVarbs";
+import { relVarbS, updateVarb } from "../updateSectionVarbs/updateVarb";
+import {
+  UpdateBasics,
+  updateBasicsS,
+} from "../updateSectionVarbs/updateVarb/UpdateBasics";
+import {
+  updateFnPropS,
+  updateFnPropsS,
+} from "../updateSectionVarbs/updateVarb/UpdateFnProps";
 import {
   overrideSwitchS,
   updateOverride,
-} from "../rel/updateVarb/UpdateOverrides";
-import { UpdateSectionVarbs, updateVarbsS } from "../updateVarbs";
+} from "../updateSectionVarbs/updateVarb/UpdateOverrides";
+import { updateVarbsS } from "../updateSectionVarbs/updateVarbs";
 
 export function mgmtRelVarbs(): UpdateSectionVarbs<"mgmt"> {
   return {

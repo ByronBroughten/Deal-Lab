@@ -1,5 +1,5 @@
-import { Arr } from "../../../../utils/Arr";
-import { Obj } from "../../../../utils/Obj";
+import { Arr } from "../../utils/Arr";
+import { Obj } from "../../utils/Obj";
 import {
   getSwitchVarbName,
   SwitchKey,
@@ -11,20 +11,25 @@ import {
   SwitchTargetKey,
   switchTargetKeys,
   SwitchVarbNameRecord,
-} from "../../../baseSectionsVarbs/baseSwitchNames";
-import { updateVarbsS } from "../../updateVarbs";
+} from "../baseSectionsVarbs/baseSwitchNames";
 import {
   defaultUpdateVarb,
   UpdateVarb,
   updateVarb,
   UpdateVarbOptions,
-} from "../updateVarb";
+} from "./updateVarb";
+import { updateBasics } from "./updateVarb/UpdateBasics";
 import {
   UpdateFnProp,
   updateFnPropS,
   UpdateFnProps,
-} from "../updateVarb/UpdateFnProps";
-import { switchUpdateVarbs } from "./switchUpdateVarbsDepreciated";
+} from "./updateVarb/UpdateFnProps";
+import {
+  overrideSwitchS,
+  updateOverride,
+  updateOverrideS,
+} from "./updateVarb/UpdateOverrides";
+import { updateVarbsS } from "./updateVarbs";
 
 export type SwitchUpdateVarbs<
   BN extends string,
@@ -94,15 +99,6 @@ export type MonthlyYearlySwitchOptions = {
   switchInit?: "monthly" | "yearly";
 };
 
-type MonthsYearsOptions = {
-  months?: UpdateVarbOptions<"numObj">;
-  years?: UpdateVarbOptions<"numObj">;
-  shared?: UpdateVarbOptions<"numObj">;
-};
-type MonthsYearsSwitchOptions = MonthsYearsOptions & {
-  switchInit?: "months" | "years";
-};
-
 function switchEndingToUpdateProp<
   SN extends SwitchName,
   SK extends SwitchKey<SN>
@@ -155,82 +151,87 @@ type OngoingUpdatePacks = {
   yearly: UpdateVarbOptions<"numObj">;
 };
 
-export function monthsYearsInput<Base extends string>(
-  baseVarbName: Base,
-  { switchInit = "months", ...options }: MonthsYearsSwitchOptions = {}
-): SwitchUpdateVarbs<Base, "monthsYears"> {
-  const varbNames = switchKeyToVarbNames(baseVarbName, "monthsYears");
-  return switchUpdateVarbs(
-    baseVarbName,
-    "monthsYears",
-    [
-      {
-        updateFnName: "yearsToMonths",
-        updateFnProps: {
-          num: updateFnPropS.local(varbNames.years),
-        },
-        switchValue: "months",
-        options: {
-          ...options.shared,
-          ...options.months,
-        },
-      },
-      {
-        updateFnName: "monthsToYears",
-        updateFnProps: {
-          num: updateFnPropS.local(varbNames.months),
-        },
-        switchValue: "years",
-        options: {
-          ...options.shared,
-          ...options.years,
-        },
-      },
-    ],
-    switchInit
-  );
+export function monthsYearsInput<BN extends string>(
+  baseName: BN,
+  switchInit: SwitchTargetKey<"monthsYears">,
+  options?: SwitchOptions<"monthsYears">
+): SwitchUpdateVarbs<BN, "monthsYears"> {
+  const varbNames = switchKeyToVarbNames(baseName, "monthsYears");
+  return switchUpdateVarbsNext(baseName, "monthsYears", switchInit, {
+    ...options,
+    months: {
+      updateFnName: "throwIfReached",
+      updateOverrides: [
+        updateOverride(
+          [overrideSwitchS.switchIsActive(baseName, "monthsYears", "years")],
+          updateBasics("yearsToMonths", {
+            num: updateFnPropS.local(varbNames.years),
+          })
+        ),
+        updateOverride(
+          [overrideSwitchS.switchIsActive(baseName, "monthsYears", "months")],
+          updateBasics("calcVarbs")
+        ),
+      ],
+      ...options?.months,
+    },
+    years: {
+      updateFnName: "throwIfReached",
+      updateOverrides: [
+        updateOverride(
+          [overrideSwitchS.switchIsActive(baseName, "monthsYears", "months")],
+          updateBasics("monthsToYears", {
+            num: updateFnPropS.local(varbNames.months),
+          })
+        ),
+        updateOverride(
+          [overrideSwitchS.switchIsActive(baseName, "monthsYears", "years")],
+          updateBasics("calcVarbs")
+        ),
+      ],
+      ...options?.years,
+    },
+  });
 }
-export function ongoingInput<Base extends string>(
-  baseVarbName: Base,
-  { switchInit = "monthly", ...options }: MonthlyYearlySwitchOptions = {}
-): SwitchUpdateVarbs<Base, "ongoing"> {
-  const varbNames = switchKeyToVarbNames(baseVarbName, "ongoing");
-  return switchUpdateVarbs(
-    baseVarbName,
-    "ongoing",
-    [
-      {
-        updateFnName: "yearlyToMonthly",
-        updateFnProps: {
-          num: updateFnPropS.local(varbNames.yearly),
-        },
-        switchValue: "monthly",
-        options: {
-          ...options.monthly,
-          ...options.shared,
-        },
-      },
-      {
-        updateFnName: "monthlyToYearly",
-        updateFnProps: {
-          num: updateFnPropS.local(varbNames.monthly),
-        },
-        switchValue: "yearly",
-        options: {
-          ...options.yearly,
-          ...options.shared,
-        },
-      },
-    ],
-    switchInit
-  );
+export function ongoingInput<BN extends string>(
+  baseName: BN,
+  {
+    switchInit = "monthly",
+    ...options
+  }: SwitchOptions<"ongoing"> & { switchInit?: SwitchTargetKey<"ongoing"> } = {}
+): SwitchUpdateVarbs<BN, "ongoing"> {
+  return switchUpdateVarbsNext(baseName, "ongoing", switchInit, {
+    ...options,
+    monthly: {
+      updateFnName: "throwIfReached",
+      updateOverrides: [
+        updateOverrideS.activeYearlyToMonthly(baseName),
+        updateOverride(
+          [overrideSwitchS.monthlyIsActive(baseName)],
+          updateBasics("calcVarbs")
+        ),
+      ],
+      ...options.monthly,
+    },
+    yearly: {
+      updateFnName: "throwIfReached",
+      updateOverrides: [
+        updateOverrideS.activeMonthlyToYearly(baseName),
+        updateOverride(
+          [overrideSwitchS.yearlyIsActive(baseName)],
+          updateBasics("calcVarbs")
+        ),
+      ],
+      ...options.yearly,
+    },
+  });
 }
 export function ongoingPureCalc<Base extends string>(
-  baseVarbName: Base,
+  baseName: Base,
   updatePacks: OngoingUpdatePacks,
   switchInit?: string
 ): SwitchUpdateVarbs<Base, "ongoing"> {
-  const varbNames = switchKeyToVarbNames(baseVarbName, "ongoing");
+  const varbNames = switchKeyToVarbNames(baseName, "ongoing");
   return {
     [varbNames.monthly]: updateVarb("numObj", updatePacks.monthly),
     [varbNames.yearly]: updateVarb("numObj", updatePacks.yearly),

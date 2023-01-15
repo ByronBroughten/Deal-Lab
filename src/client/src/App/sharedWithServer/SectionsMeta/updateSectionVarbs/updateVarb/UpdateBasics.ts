@@ -1,10 +1,10 @@
-import { switchKeyToVarbNames } from "../../../baseSectionsVarbs/baseSwitchNames";
+import { switchKeyToVarbNames } from "../../baseSectionsVarbs/baseSwitchNames";
 import {
   LeftRightPropCalcName,
   NumPropCalcName,
-} from "../../../baseSectionsVarbs/baseValues/calculations";
-import { ValueName } from "../../../baseSectionsVarbs/ValueName";
-import { ChildName } from "../../../sectionChildrenDerived/ChildName";
+} from "../../baseSectionsVarbs/baseValues/calculations";
+import { ValueName } from "../../baseSectionsVarbs/ValueName";
+import { ChildName } from "../../sectionChildrenDerived/ChildName";
 import { UpdateFnName } from "./UpdateFnName";
 import { UpdateFnProp, UpdateFnProps, updateFnPropS } from "./UpdateFnProps";
 

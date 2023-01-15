@@ -11,12 +11,12 @@ import {
   GeneratedSections,
   GenPropName,
 } from "./generatedSections";
-import { GeneralUpdateSectionVarbs } from "./relSectionVarbs/updateVarbs";
 import { SectionName, sectionNames } from "./SectionName";
 import {
   GeneralSectionTraits,
   SectionTraitName,
 } from "./sectionsTraits/sectionTraits";
+import { GeneralUpdateSectionVarbs } from "./updateSectionVarbs/updateSectionVarbs";
 
 type SectionMetaCoreGeneral = {
   baseVarbs: GeneralBaseSectionVarbs;

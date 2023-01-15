@@ -15,16 +15,16 @@ import { valueMetas } from "./baseSectionsDerived/valueMetas";
 import { FixedInEntity } from "./baseSectionsVarbs/baseValues/entities";
 import { GeneralBaseVarb } from "./baseSectionsVarbs/baseVarbs";
 import { ValueName } from "./baseSectionsVarbs/ValueName";
-import { GeneralUpdateVarb } from "./relSectionVarbs/rel/updateVarb";
-import { UpdateBasics } from "./relSectionVarbs/rel/updateVarb/UpdateBasics";
-import { UpdateFnProps } from "./relSectionVarbs/rel/updateVarb/UpdateFnProps";
+import { SectionMeta } from "./SectionMeta";
+import { SectionName } from "./SectionName";
+import { GeneralUpdateSectionVarbs } from "./updateSectionVarbs/updateSectionVarbs";
+import { GeneralUpdateVarb } from "./updateSectionVarbs/updateVarb";
+import { UpdateBasics } from "./updateSectionVarbs/updateVarb/UpdateBasics";
+import { UpdateFnProps } from "./updateSectionVarbs/updateVarb/UpdateFnProps";
 import {
   UpdateOverrides,
   UpdateOverrideSwitches,
-} from "./relSectionVarbs/rel/updateVarb/UpdateOverrides";
-import { GeneralUpdateSectionVarbs } from "./relSectionVarbs/updateVarbs";
-import { SectionMeta } from "./SectionMeta";
-import { SectionName } from "./SectionName";
+} from "./updateSectionVarbs/updateVarb/UpdateOverrides";
 
 export type VarbMetaCore<SN extends SectionName> = {
   varbName: string;

@@ -1,6 +1,10 @@
-import { relVarbS, updateVarb } from "../rel/updateVarb";
-import { updateFnPropS, updateFnPropsS } from "../rel/updateVarb/UpdateFnProps";
-import { UpdateSectionVarbs, updateVarbsS } from "../updateVarbs";
+import { UpdateSectionVarbs } from "../updateSectionVarbs/updateSectionVarbs";
+import { relVarbS, updateVarb } from "../updateSectionVarbs/updateVarb";
+import {
+  updateFnPropS,
+  updateFnPropsS,
+} from "../updateSectionVarbs/updateVarb/UpdateFnProps";
+import { updateVarbsS } from "../updateSectionVarbs/updateVarbs";
 
 export function propertyRelVarbs(): UpdateSectionVarbs<"property"> {
   return {
@@ -43,9 +47,7 @@ export function propertyRelVarbs(): UpdateSectionVarbs<"property"> {
     ...updateVarbsS.ongoingInput("homeIns", {
       switchInit: "yearly",
     }),
-    ...updateVarbsS.monthsYearsInput("holdingPeriod", {
-      switchInit: "months",
-    }),
+    ...updateVarbsS.monthsYearsInput("holdingPeriod", "months"),
     ...updateVarbsS.ongoingSumNums(
       "miscRevenue",
       [updateFnPropS.children("ongoingRevenueGroup", "total")],

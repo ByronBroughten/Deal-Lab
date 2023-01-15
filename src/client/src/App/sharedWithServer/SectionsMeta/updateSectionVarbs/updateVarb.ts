@@ -1,15 +1,15 @@
-import { valueMetas } from "../../baseSectionsDerived/valueMetas";
-import { ValueByValueName } from "../../baseSectionsDerived/valueMetaTypes";
+import { valueMetas } from "../baseSectionsDerived/valueMetas";
+import { ValueByValueName } from "../baseSectionsDerived/valueMetaTypes";
 import {
   LeftRightPropCalcName,
   NumPropCalcName,
-} from "../../baseSectionsVarbs/baseValues/calculations";
-import { decimalRounding } from "../../baseSectionsVarbs/baseValues/calculations/numUnitParams";
-import { StateValue } from "../../baseSectionsVarbs/baseValues/StateValueTypes";
-import { ValueUnit } from "../../baseSectionsVarbs/baseVarbs";
-import { ValueName } from "../../baseSectionsVarbs/ValueName";
-import { ChildName } from "../../sectionChildrenDerived/ChildName";
-import { SectionName } from "../../SectionName";
+} from "../baseSectionsVarbs/baseValues/calculations";
+import { decimalRounding } from "../baseSectionsVarbs/baseValues/calculations/numUnitParams";
+import { StateValue } from "../baseSectionsVarbs/baseValues/StateValueTypes";
+import { ValueUnit } from "../baseSectionsVarbs/baseVarbs";
+import { ValueName } from "../baseSectionsVarbs/ValueName";
+import { ChildName } from "../sectionChildrenDerived/ChildName";
+import { SectionName } from "../SectionName";
 import { getUpdateFnNames } from "./updateVarb/UpdateFnName";
 import { UpdateFnProp, updateFnPropS } from "./updateVarb/UpdateFnProps";
 import { UpdateProps, updatePropsS } from "./updateVarb/UpdateProps";

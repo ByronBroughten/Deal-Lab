@@ -1,8 +1,13 @@
-import { relVarbInfoS } from "../../SectionInfo/RelVarbInfo";
-import { relVarbInfosS } from "../../SectionInfo/RelVarbInfos";
-import { LeftRightVarbInfos, relVarbS, updateVarb } from "../rel/updateVarb";
-import { updateFnPropS } from "../rel/updateVarb/UpdateFnProps";
-import { UpdateSectionVarbs, updateVarbsS } from "../updateVarbs";
+import { relVarbInfoS } from "../SectionInfo/RelVarbInfo";
+import { relVarbInfosS } from "../SectionInfo/RelVarbInfos";
+import { UpdateSectionVarbs } from "../updateSectionVarbs/updateSectionVarbs";
+import {
+  LeftRightVarbInfos,
+  relVarbS,
+  updateVarb,
+} from "../updateSectionVarbs/updateVarb";
+import { updateFnPropS } from "../updateSectionVarbs/updateVarb/UpdateFnProps";
+import { updateVarbsS } from "../updateSectionVarbs/updateVarbs";
 
 export function dealRelVarbs(): UpdateSectionVarbs<"deal"> {
   return {

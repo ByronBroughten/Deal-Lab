@@ -4,9 +4,9 @@ import {
   InEntity,
   ValueInEntity,
 } from "../SectionsMeta/baseSectionsVarbs/baseValues/entities";
-import { UpdateOverrideSwitch } from "../SectionsMeta/relSectionVarbs/rel/updateVarb/UpdateOverrides";
 import { FeVarbInfo } from "../SectionsMeta/SectionInfo/FeInfo";
 import { SectionName } from "../SectionsMeta/SectionName";
+import { UpdateOverrideSwitch } from "../SectionsMeta/updateSectionVarbs/updateVarb/UpdateOverrides";
 import { InUpdatePack } from "../SectionsMeta/VarbMeta";
 import { InVarbInfo } from "../StateSolvers/SolverVarb";
 import { GetterVarbBase } from "./Bases/GetterVarbBase";

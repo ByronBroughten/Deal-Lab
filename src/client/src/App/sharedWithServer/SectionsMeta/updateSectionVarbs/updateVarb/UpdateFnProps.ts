@@ -1,10 +1,10 @@
-import { Obj } from "../../../../utils/Obj";
-import { Id } from "../../../baseSectionsVarbs/id";
-import { ChildName } from "../../../sectionChildrenDerived/ChildName";
-import { mixedInfoS } from "../../../sectionChildrenDerived/MixedSectionInfo";
-import { PathInVarbInfo } from "../../../sectionChildrenDerived/RelInOutVarbInfo";
-import { relVarbInfoS } from "../../../SectionInfo/RelVarbInfo";
-import { SectionPathName } from "../../../sectionPathContexts/sectionPathNames";
+import { Obj } from "../../../utils/Obj";
+import { Id } from "../../baseSectionsVarbs/id";
+import { ChildName } from "../../sectionChildrenDerived/ChildName";
+import { mixedInfoS } from "../../sectionChildrenDerived/MixedSectionInfo";
+import { PathInVarbInfo } from "../../sectionChildrenDerived/RelInOutVarbInfo";
+import { relVarbInfoS } from "../../SectionInfo/RelVarbInfo";
+import { SectionPathName } from "../../sectionPathContexts/sectionPathNames";
 
 export type UpdateFnProps = {
   [kwargName: string]: UpdateFnProp | UpdateFnProp[];

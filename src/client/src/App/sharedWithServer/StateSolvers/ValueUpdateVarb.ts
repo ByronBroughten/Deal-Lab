@@ -13,15 +13,15 @@ import {
   StringObj,
 } from "../SectionsMeta/baseSectionsVarbs/baseValues/StringObj";
 import {
-  UpdateFnProp,
-  UpdateFnProps,
-} from "../SectionsMeta/relSectionVarbs/rel/updateVarb/UpdateFnProps";
-import {
   PathInVarbInfo,
   RelInVarbInfo,
 } from "../SectionsMeta/sectionChildrenDerived/RelInOutVarbInfo";
 import { RelVarbInfo } from "../SectionsMeta/SectionInfo/RelVarbInfo";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
+import {
+  UpdateFnProp,
+  UpdateFnProps,
+} from "../SectionsMeta/updateSectionVarbs/updateVarb/UpdateFnProps";
 import { GetterSectionProps } from "../StateGetters/Bases/GetterSectionBase";
 import { GetterVarbBase } from "../StateGetters/Bases/GetterVarbBase";
 import { GetterSection } from "../StateGetters/GetterSection";

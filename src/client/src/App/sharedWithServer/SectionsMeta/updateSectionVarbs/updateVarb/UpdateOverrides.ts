@@ -1,12 +1,10 @@
 import {
-  switchKeyToVarbNames,
+  getSwitchVarbName,
+  SwitchName,
   SwitchTargetKey,
-} from "../../../baseSectionsVarbs/baseSwitchNames";
-import { ValueName } from "../../../baseSectionsVarbs/ValueName";
-import {
-  RelLocalVarbInfo,
-  relVarbInfoS,
-} from "../../../SectionInfo/RelVarbInfo";
+} from "../../baseSectionsVarbs/baseSwitchNames";
+import { ValueName } from "../../baseSectionsVarbs/ValueName";
+import { RelLocalVarbInfo, relVarbInfoS } from "../../SectionInfo/RelVarbInfo";
 import { updateBasics, UpdateBasics, updateBasicsS } from "./UpdateBasics";
 import { UpdateFnName } from "./UpdateFnName";
 import { updateFnProp, updateFnPropsS } from "./UpdateFnProps";
@@ -28,12 +26,20 @@ export interface UpdateOverrideSwitch {
 type OverrideSwitchValue = string | boolean;
 
 export const overrideSwitchS = {
+  switchIsActive<SN extends SwitchName, SK extends SwitchTargetKey<SN>>(
+    baseName: string,
+    switchName: SN,
+    switchKey: SK
+  ) {
+    const varbName = getSwitchVarbName(baseName, switchName, "switch");
+    return this.local(varbName, switchKey as string);
+  },
   ongoing<K extends SwitchTargetKey<"ongoing">>(
-    baseVarbName: string,
+    baseName: string,
     switchKey: K
   ) {
-    const varbNames = switchKeyToVarbNames(baseVarbName, "ongoing");
-    return this.local(varbNames.switch, switchKey);
+    const varbName = getSwitchVarbName(baseName, "ongoing", "switch");
+    return this.local(varbName, switchKey);
   },
   monthlyIsActive(baseVarbName: string) {
     return this.ongoing(baseVarbName, "monthly");
@@ -84,7 +90,7 @@ export const updateOverrideS = {
       )
     ) as UpdateOverride<"stringObj">;
   },
-  yearlyIfActive<Base extends string>(
+  activeYearlyToMonthly<Base extends string>(
     baseVarbName: Base
   ): UpdateOverride<"numObj"> {
     return updateOverride(
@@ -92,7 +98,7 @@ export const updateOverrideS = {
       updateBasicsS.yearlyToMonthly(baseVarbName)
     );
   },
-  monthlyIfActive<Base extends string>(
+  activeMonthlyToYearly<Base extends string>(
     baseVarbName: Base
   ): UpdateOverride<"numObj"> {
     return {

@@ -1,18 +1,22 @@
-import { switchKeyToVarbNames } from "../../baseSectionsVarbs/baseSwitchNames";
-import { PiCalculationName } from "../../baseSectionsVarbs/baseValues/calculations/piCalculations";
-import { numObj } from "../../baseSectionsVarbs/baseValues/NumObj";
-import { relVarbS, updateVarb } from "../rel/updateVarb";
+import { switchKeyToVarbNames } from "../baseSectionsVarbs/baseSwitchNames";
+import { PiCalculationName } from "../baseSectionsVarbs/baseValues/calculations/piCalculations";
+import { numObj } from "../baseSectionsVarbs/baseValues/NumObj";
+import { UpdateSectionVarbs } from "../updateSectionVarbs/updateSectionVarbs";
+import { relVarbS, updateVarb } from "../updateSectionVarbs/updateVarb";
 import {
   UpdateBasics,
   updateBasics,
   updateBasicsS,
-} from "../rel/updateVarb/UpdateBasics";
-import { updateFnPropS, updateFnPropsS } from "../rel/updateVarb/UpdateFnProps";
+} from "../updateSectionVarbs/updateVarb/UpdateBasics";
+import {
+  updateFnPropS,
+  updateFnPropsS,
+} from "../updateSectionVarbs/updateVarb/UpdateFnProps";
 import {
   overrideSwitchS,
   updateOverride,
-} from "../rel/updateVarb/UpdateOverrides";
-import { UpdateSectionVarbs, updateVarbsS } from "../updateVarbs";
+} from "../updateSectionVarbs/updateVarb/UpdateOverrides";
+import { updateVarbsS } from "../updateSectionVarbs/updateVarbs";
 
 export function loanRelVarbs(): UpdateSectionVarbs<"loan"> {
   return {
@@ -31,8 +35,7 @@ export function loanRelVarbs(): UpdateSectionVarbs<"loan"> {
     ...updateVarbsS.ongoingInput("interestRatePercent", {
       switchInit: "yearly",
     }),
-    ...updateVarbsS.monthsYearsInput("loanTerm", {
-      switchInit: "years",
+    ...updateVarbsS.monthsYearsInput("loanTerm", "years", {
       years: { initValue: numObj(30) },
     }),
     mortgageInsOngoingEditor: updateVarb("numObj"),
@@ -57,7 +60,6 @@ export function loanRelVarbs(): UpdateSectionVarbs<"loan"> {
     }),
     ...updateVarbsS.ongoingInput("mortgageIns", {
       switchInit: "yearly",
-      shared: { updateFnName: "throwIfReached" },
       monthly: {
         updateOverrides: [
           updateOverride(
