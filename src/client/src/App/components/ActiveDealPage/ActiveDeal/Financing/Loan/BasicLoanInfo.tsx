@@ -37,10 +37,10 @@ export default function BasicLoanInfo({ feId, className }: Props) {
         />
         <div className="BasicLoanInfo-rateAndTermRow BasicLoanInfo-editorsRow">
           <NumObjEntityEditor
-            feVarbInfo={loan.varbInfo("interestRatePercentYearly")}
+            feVarbInfo={loan.varbInfo("interestRatePercentOngoingEditor")}
           />
           <NumObjEntityEditor
-            feVarbInfo={loan.varbInfo("loanTermYears")}
+            feVarbInfo={loan.varbInfo("loanTermSpanEditor")}
             label="Loan term"
             className="BasicLoanInfo-secondEditor"
           />

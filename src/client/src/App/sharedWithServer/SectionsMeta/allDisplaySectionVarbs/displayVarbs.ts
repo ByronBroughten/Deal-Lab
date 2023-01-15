@@ -1,5 +1,6 @@
 import { Arr } from "../../utils/Arr";
 import {
+  EditorSwitchName,
   getSwitchVarbName,
   switchKeys,
   switchKeyToVarbNames,
@@ -28,32 +29,52 @@ type SwitchOptionsFull<SN extends SwitchName> = Record<
 
 type SwitchOptions<SN extends SwitchName> = Partial<SwitchOptionsFull<SN>>;
 
+export function displayGroup<BN extends string, SN extends SwitchName>(
+  switchName: SN,
+  baseName: BN,
+  displayName: DisplayName,
+  options: SwitchOptions<SN> = {}
+): SwitchDisplayVarbOptions<BN, SN> {
+  const keys = switchKeys(switchName);
+  return keys.reduce((varbs, key) => {
+    const name = getSwitchVarbName(baseName, switchName, key);
+    const fullOptions = switchOptionsToFull(switchName, options);
+    varbs[name] = {
+      displayName,
+      ...fullOptions.all,
+      ...(key === "switch" ? {} : fullOptions.targets),
+      ...fullOptions[key],
+    };
+    return varbs;
+  }, {} as SwitchDisplayVarbOptions<BN, SN>);
+}
+export function editorDisplayGroup<
+  BN extends string,
+  SN extends EditorSwitchName
+>(
+  switchName: SN,
+  baseName: BN,
+  displayName: DisplayName,
+  options: SwitchOptions<SN> = {}
+): SwitchDisplayVarbOptions<BN, SN> {
+  return displayGroup(switchName, baseName, displayName, {
+    ...options,
+    editor: {
+      displaySourceFinder: editorDisplaySourceSwitches(baseName, switchName),
+      ...options?.editor,
+    },
+  });
+}
+
 export const displayVarbsS = {
-  switch<BN extends string, SN extends SwitchName>(
-    baseName: BN,
-    switchName: SN,
-    displayName: DisplayName,
-    options: SwitchOptions<SN> = {}
-  ): SwitchDisplayVarbOptions<BN, SN> {
-    const keys = switchKeys(switchName);
-    return keys.reduce((varbs, key) => {
-      const name = getSwitchVarbName(baseName, switchName, key);
-      const fullOptions = switchOptionsToFull(switchName, options);
-      varbs[name] = {
-        displayName,
-        ...fullOptions.all,
-        ...(key === "switch" ? {} : fullOptions.targets),
-        ...fullOptions[key],
-      };
-      return varbs;
-    }, {} as SwitchDisplayVarbOptions<BN, SN>);
-  },
+  group: displayGroup,
+  editorGroup: editorDisplayGroup,
   ongoingInputDollars<BN extends string>(
     baseName: BN,
     displayName: DisplayName,
     options: SwitchOptions<"ongoingInput"> = {}
-  ) {
-    return this.switch(baseName, "ongoingInput", displayName, {
+  ): SwitchDisplayVarbOptions<BN, "ongoingInput"> {
+    return this.group("ongoingInput", baseName, displayName, {
       ...options,
       editor: {
         displaySourceFinder: editorDisplaySourceSwitches(
@@ -69,13 +90,13 @@ export const displayVarbsS = {
     displayName: DisplayName,
     options: SwitchOptions<"ongoing"> = {}
   ): SwitchDisplayVarbOptions<BN, "ongoing"> {
-    return this.switch(baseName, "ongoing", displayName, options);
+    return this.group("ongoing", baseName, displayName, options);
   },
   monthsYears<BN extends string>(
     baseName: BN,
     displayName: DisplayName
   ): SwitchDisplayVarbOptions<BN, "monthsYears"> {
-    return this.switch(baseName, "monthsYears", displayName);
+    return this.group("monthsYears", baseName, displayName);
   },
 };
 
@@ -92,7 +113,7 @@ function switchOptionsToFull<SN extends SwitchName>(
 
 function editorDisplaySourceSwitches<
   BN extends string,
-  SN extends "ongoingInput"
+  SN extends EditorSwitchName
 >(baseName: BN, switchName: SN): DisplayOverrideSwitches {
   const names = switchKeyToVarbNames(baseName, switchName);
   const targetKeys = Arr.exclude(switchTargetKeys(switchName), [

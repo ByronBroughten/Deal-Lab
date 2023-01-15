@@ -1,4 +1,5 @@
 import React from "react";
+import { getSwitchVarbName } from "../../../../sharedWithServer/SectionsMeta/baseSectionsVarbs/baseSwitchNames";
 import { useSetterSection } from "../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import { LabeledEquation } from "../../ListGroup/ListGroupShared/ListItemValue/LabeledEquation";
 import { LabeledSpanOverCost } from "../../ListGroup/ListGroupShared/ListItemValue/LabeledSpanOverCost";
@@ -12,7 +13,6 @@ interface MemoProps {
   endAdornment: string;
   valueVarbName: "valueMonthly";
   displayValueVarb: string;
-  lifespanVarbName: string;
 }
 const ListItemOngoingMemo = React.memo(function ListItemOngoingMemo({
   feId,
@@ -20,8 +20,13 @@ const ListItemOngoingMemo = React.memo(function ListItemOngoingMemo({
   valueVarbName,
   endAdornment,
   displayValueVarb,
-  lifespanVarbName,
 }: MemoProps) {
+  const lifespanVarbName = getSwitchVarbName(
+    "lifespan",
+    "monthsYearsInput",
+    "editor"
+  );
+
   const feInfo = { sectionName: "ongoingItem", feId } as const;
   const { option, nextValueSwitch } = useOption(
     {
@@ -57,15 +62,11 @@ export function ListItemOngoing({ feId }: Props) {
   ) as "valueMonthly";
 
   const valueVarb = section.varb(valueVarbName);
-
-  const lifespanVarbName = section.switchVarb("lifespan", "monthsYears")
-    .varbName as "lifespanMonths" | "lifespanYears";
   const { endAdornment } = section.get.switchVarb("value", "ongoing");
   return (
     <ListItemOngoingMemo
       {...{
         feId,
-        lifespanVarbName,
         displayValueVarb: valueVarb.get.displayVarb(),
         valueVarbName,
         valueSourceSwitch: section.get.valueNext("valueSourceSwitch"),

@@ -1,6 +1,7 @@
 import { Arr } from "../../utils/Arr";
 import { Obj } from "../../utils/Obj";
 import { Merge, Spread } from "../../utils/Obj/merge";
+import { StrictExtract } from "../../utils/types";
 
 type GeneralBaseSwitchSchemas = {
   [key: string]: {
@@ -61,6 +62,10 @@ export function switchKeys<SN extends SwitchName>(
 }
 
 export type SwitchName = keyof SwitchVarbNameEndings;
+export type EditorSwitchName = StrictExtract<
+  SwitchName,
+  "ongoingInput" | "monthsYearsInput"
+>;
 export type SwitchTargetKey<SW extends SwitchName> = Exclude<
   SwitchKey<SW>,
   "switch"

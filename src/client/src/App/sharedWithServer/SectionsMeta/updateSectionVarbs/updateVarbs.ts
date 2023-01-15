@@ -1,11 +1,9 @@
 import { AutoSyncControl } from "../baseSectionsDerived/subValues";
 import { switchKeyToVarbNames } from "../baseSectionsVarbs/baseSwitchNames";
 import {
-  monthsYearsInput,
-  ongoingInput,
   ongoingPureCalc,
   ongoingSumNums,
-  switchUpdateVarbsS,
+  updateGroupS,
 } from "./switchUpdateVarbs";
 import { UpdateSectionVarbs } from "./updateSectionVarbs";
 import { relVarbS, updateVarb } from "./updateVarb";
@@ -18,7 +16,7 @@ import {
 } from "./updateVarb/UpdateOverrides";
 
 export const updateVarbsS = {
-  ...switchUpdateVarbsS,
+  ...updateGroupS,
   get _typeUniformity() {
     return { _typeUniformity: updateVarb("string") };
   },
@@ -37,8 +35,6 @@ export const updateVarbsS = {
   },
   ongoingPureCalc,
   ongoingSumNums,
-  ongoingInput,
-  monthsYearsInput,
   get basicVirtualVarb() {
     return {
       displayName: updateVarb("stringObj", {

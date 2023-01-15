@@ -34,8 +34,8 @@ const standardUnit = {
   oneTime: {},
 };
 const timeRound = { displayRound: 2 };
-const months = { ...timeRound, endAdornment: "months" };
-const years = { ...timeRound, endAdornment: "years" };
+const months = { ...timeRound, endAdornment: " months" };
+const years = { ...timeRound, endAdornment: " years" };
 const displayByUnitAndSpan: Record<
   ValueUnit,
   Record<ValueTimespan, DisplayVarbOptions>

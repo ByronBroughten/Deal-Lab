@@ -22,23 +22,19 @@ export function loanRelVarbs(): UpdateSectionVarbs<"loan"> {
   return {
     ...updateVarbsS._typeUniformity,
     ...updateVarbsS.savableSection,
-    ...loanAmount(),
-    isInterestOnly: updateVarb("boolean", {
-      initValue: false,
-    }),
-    loanBaseDollarsEditor: updateVarb("numObj"),
-    loanBasePercentEditor: updateVarb("numObj", { initValue: numObj(5) }),
-    loanTotalDollars: relVarbS.sumNums([
-      updateFnPropS.local("loanBaseDollars"),
-      updateFnPropS.children("wrappedInLoanValue", "value"),
-    ]),
-    ...updateVarbsS.ongoingInput("interestRatePercent", {
+    ...loanBase(),
+    ...updateVarbsS.ongoingInputNext("interestRatePercent", {
       switchInit: "yearly",
     }),
     ...updateVarbsS.monthsYearsInput("loanTerm", "years", {
       years: { initValue: numObj(30) },
     }),
-    mortgageInsOngoingEditor: updateVarb("numObj"),
+    isInterestOnly: updateVarb("boolean", {
+      initValue: false,
+    }),
+    hasMortgageIns: updateVarb("boolean", {
+      initValue: false,
+    }),
     mortgageInsUpfrontEditor: updateVarb("numObj"),
     mortgageInsUpfront: updateVarb("numObj", {
       updateFnName: "throwIfReached",
@@ -55,11 +51,9 @@ export function loanRelVarbs(): UpdateSectionVarbs<"loan"> {
         ),
       ],
     }),
-    hasMortgageIns: updateVarb("boolean", {
-      initValue: false,
-    }),
-    ...updateVarbsS.ongoingInput("mortgageIns", {
+    ...updateVarbsS.ongoingInputNext("mortgageIns", {
       switchInit: "yearly",
+      editor: { updateFnName: "calcVarbs" },
       monthly: {
         updateOverrides: [
           updateOverride(
@@ -109,6 +103,10 @@ export function loanRelVarbs(): UpdateSectionVarbs<"loan"> {
         ],
       },
     }),
+    loanTotalDollars: relVarbS.sumNums([
+      updateFnPropS.local("loanBaseDollars"),
+      updateFnPropS.children("wrappedInLoanValue", "value"),
+    ]),
     ...updateVarbsS.ongoingSumNums(
       "expenses",
       [updateFnPropS.local("loanPayment"), updateFnPropS.local("mortgageIns")],
@@ -207,7 +205,7 @@ export function loanRelVarbs(): UpdateSectionVarbs<"loan"> {
   };
 }
 
-function loanAmount() {
+function loanBase() {
   const baseNames = switchKeyToVarbNames("loanBase", "dollarsPercentDecimal");
   const percentEditorName = `${baseNames.percent}Editor` as const;
   const dollarsEditorName = `${baseNames.dollars}Editor` as const;

@@ -3,18 +3,18 @@ import {
   displayVarbOptionsS,
   displayVarbS,
 } from "./allDisplaySectionVarbs/displayVarb";
-import { displayVarbsS } from "./allDisplaySectionVarbs/displayVarbs";
+import {
+  displayGroup,
+  displayVarbsS,
+  editorDisplayGroup,
+} from "./allDisplaySectionVarbs/displayVarbs";
 import { VarbName } from "./baseSectionsDerived/baseSectionsVarbsTypes";
 import {
   displaySectionVarbs,
   DisplaySectionVarbs,
   displaySectionVarbsProp,
 } from "./displaySectionVarbs/displaySectionVarbs";
-import {
-  DisplayName,
-  DisplayVarb,
-  displayVarb,
-} from "./displaySectionVarbs/displayVarb";
+import { DisplayName, DisplayVarb } from "./displaySectionVarbs/displayVarb";
 import { relVarbInfoS } from "./SectionInfo/RelVarbInfo";
 import { SectionName, sectionNames } from "./SectionName";
 
@@ -47,6 +47,7 @@ const ongoingInputDollars = <BN extends string>(
 ) => displayVarbsS.ongoingInputDollars(baseName, displayName);
 
 const display = displayVarbOptions;
+
 export const allDisplaySectionVarbs = {
   ...allDefaultDisplaySectionVarbs(),
   ...displaySectionVarbsProp("property", {
@@ -58,7 +59,7 @@ export const allDisplaySectionVarbs = {
     numBedrooms: display("Bedrooms"),
     upfrontExpenses: display("Upfront expenses"),
     upfrontRevenue: display("Upfront revenues"),
-    ...displayVarbsS.monthsYears("holdingPeriod", "Holding period"),
+    ...displayGroup("monthsYears", "holdingPeriod", "Holding period"),
     ...ongoingInputDollars("taxes", "Taxes"),
     ...ongoingInputDollars("homeIns", "Home Insurance"),
     ...ongoingDollars("targetRent", "Rent"),
@@ -67,49 +68,44 @@ export const allDisplaySectionVarbs = {
     ...ongoingDollars("revenue", "Revenue"),
   }),
   ...displaySectionVarbsProp("unit", {
-    numBedrooms: displayVarb("Bedrooms"),
+    numBedrooms: display("Bedrooms"),
     ...ongoingDollars("targetRent", "Rent"),
   }),
   ...displaySectionVarbsProp("calculatedVarbs", {
-    onePercentPrice: displayVarb("1% Purchase Price"),
+    onePercentPrice: display("1% Purchase Price"),
   }),
   ...displaySectionVarbsProp("loan", {
+    ...editorDisplayGroup("monthsYearsInput", "loanTerm", "Loan term"),
+    ...displayGroup("dollarsPercentDecimal", "loanBase", "Base loan amount"),
+    loanBaseDollarsEditor: display("Base loan amount"),
+    loanBasePercentEditor: display("base loan amount"),
+    ...editorDisplayGroup(
+      "ongoingInput",
+      "interestRatePercent",
+      "Interest rate"
+    ),
+    ...displayGroup("ongoing", "interestRateDecimal", "Interest rate decimal"),
+
+    ...displayGroup("ongoing", "piFixedStandard", "Principal and interest"),
+    ...ongoingDollars("interestOnlySimple", "Interest"),
+    ...ongoingDollars("expenses", "Expenses"),
+    ...ongoingDollars("loanPayment", "Loan payment"),
+
     loanTotalDollars: dollars("Total loan amount"),
     closingCosts: dollars("Closing Costs"),
     wrappedInLoan: dollars("Extras wrapped in loan"),
-    loanBaseDollarsEditor: dollars("Base loan amount"),
+
     mortgageInsUpfront: dollars("Upfront mortgage insurance"),
-    mortgageInsOngoingEditor: displayVarbS.dollarsMonthly("Mortgage insurance"),
     mortgageInsUpfrontEditor: dollars("Upfront mortgage insurance"),
-    ...displayVarbsS.switch(
-      "loanBase",
-      "dollarsPercentDecimal",
-      "Base loan amount"
-    ),
-    ...displayVarbsS.switch(
-      "interestRateDecimal",
-      "ongoing",
-      "Interest rate decimal",
-      { targets: displayVarbOptionsS.decimal }
-    ),
-    ...displayVarbsS.switch("interestRatePercent", "ongoing", "Interest rate", {
-      targets: displayVarbOptionsS.percent,
-    }),
-    ...ongoingDollars("piFixedStandard", "Principal and interest"),
-    ...ongoingDollars("interestOnlySimple", "Interest"),
-    ...ongoingDollars("expenses", "Expenses"),
-    ...displayVarbsS.monthsYears("loanTerm", "Loan term"),
-    ...ongoingDollars("loanPayment", "Loan payment"),
-    ...ongoingDollars("mortgageIns", "Mortgage insurance"),
+    ...editorDisplayGroup("ongoingInput", "mortgageIns", "Mortgage insurance"),
   }),
   ...displaySectionVarbsProp("mgmt", {
     ...ongoingDollars("basePayDollars", "Base pay"),
     basePayDollarsEditor: displayVarbS.dollarsMonthly("Base pay"),
     basePayPercentEditor: displayVarbS.percent("Base pay percent of rent"),
-
-    ...displayVarbsS.switch(
-      "vacancyLossDollars",
+    ...displayGroup(
       "dollarsPercentDecimal",
+      "vacancyLossDollars",
       "vacancyLoss"
     ),
     vacancyLossDollarsEditor: displayVarbS.dollarsMonthly("Vacancy loss"),
@@ -119,21 +115,22 @@ export const allDisplaySectionVarbs = {
     ...ongoingDollars("expenses", "Expenses"),
   }),
   ...displaySectionVarbsProp("deal", {
-    upfrontExpenses: dollars("Upfront expenses"),
-    outOfPocketExpenses: dollars("Out of pocket expenses"),
-    upfrontRevenue: dollars("Upfront revenue"),
-    totalInvestment: dollars("Total investment"),
-    downPaymentDollars: dollars("Down payment"),
-    downPaymentPercent: displayVarbS.percent("Down payment"),
-    downPaymentDecimal: displayVarb("Down payment as decimal"),
+    upfrontExpenses: display("Upfront expenses"),
+    outOfPocketExpenses: display("Out of pocket expenses"),
+    upfrontRevenue: display("Upfront revenue"),
+    totalInvestment: display("Total investment"),
+    downPaymentDollars: display("Down payment"),
+    downPaymentPercent: display("Down payment"),
+    downPaymentDecimal: display("Down payment as decimal"),
+
     ...ongoingDollars("piti", "PITI payment"),
     ...ongoingDollars("expenses", "Expenses"),
     ...ongoingDollars("revenue", "Revenue"),
     ...ongoingDollars("cashFlow", "Cash Flow"),
-    ...displayVarbsS.switch("cocRoiDecimal", "ongoing", "CoC ROI as decimal", {
+    ...displayGroup("ongoing", "cocRoiDecimal", "CoC ROI as decimal", {
       targets: displayVarbOptionsS.decimal,
     }),
-    ...displayVarbsS.switch("cocRoi", "ongoing", "CoC ROI", {
+    ...displayGroup("ongoing", "cocRoi", "CoC ROI", {
       targets: displayVarbOptionsS.percent,
     }),
   }),
@@ -154,12 +151,12 @@ export const allDisplaySectionVarbs = {
   ...displaySectionVarbsProp("ongoingValueGroup", {
     ...ongoingDollars("total", relVarbInfoS.local("displayName")),
   }),
-  ...displaySectionVarbsProp("ongoingValue", {
-    ...ongoingDollars("value", relVarbInfoS.local("displayName")),
-    valueEditor: displayVarbS.dollars(relVarbInfoS.local("displayName")),
-  }),
+  ...displaySectionVarbsProp(
+    "ongoingValue",
+    displayGroup("ongoingInput", "value", relVarbInfoS.local("displayName"))
+  ),
   ...displaySectionVarbsProp("ongoingListGroup", {
-    ...ongoingDollars("total", relVarbInfoS.local("displayName")),
+    ...displayGroup("ongoing", "total", relVarbInfoS.local("displayName")),
   }),
   ...displaySectionVarbsProp("ongoingList", {
     ...ongoingDollars("total", relVarbInfoS.local("displayName")),
@@ -170,9 +167,9 @@ export const allDisplaySectionVarbs = {
   }),
   ...displaySectionVarbsProp("ongoingItem", {
     ...ongoingDollars("value", relVarbInfoS.local("displayName")),
-    ...displayVarbsS.monthsYears("lifespan", "Lifespan"),
-    costToReplace: displayVarbS.dollars("Cost to replace"),
-    valueEditor: displayVarbS.dollars("Item cost"),
+    ...displayGroup("monthsYearsInput", "lifespan", "Lifespan"),
+    costToReplace: dollars("Cost to replace"),
+    valueEditor: dollars("Item cost"), // That's not great
   }),
 };
 
@@ -183,74 +180,3 @@ export function getDisplayVarb<SN extends SectionName, VN extends VarbName<SN>>(
   const sectionVarbs = allDisplaySectionVarbs[sectionName];
   return (sectionVarbs as any)[varbName] as DisplayVarb;
 }
-
-// export const relSwitchVarbs = {
-//   ongoing: ongoingVarb,
-//   dollarsPercentDecimal: new RelSwitchVarb({
-//     targets: {
-//       dollars: targetCore({
-//         startAdornment: "$",
-//         varbNameEnding: "Dollars",
-//         displayNameEnd: " dollars",
-//       }),
-//       percent: targetCore({
-//         endAdornment: "%",
-//         varbNameEnding: "Percent",
-//         displayNameEnd: " percent",
-//       } as const),
-//       decimal: targetCore({
-//         varbNameEnding: "Decimal",
-//         displayNameEnd: " decimal",
-//       } as const),
-//     },
-//     switch: {
-//       varbNameEnding: "UnitSwitch",
-//     },
-//   }),
-//   dollarsPercent: new RelSwitchVarb({
-//     targets: {
-//       percent: targetCore({
-//         endAdornment: "%",
-//         varbNameEnding: "Percent",
-//         displayNameEnd: " percent",
-//       } as const),
-//       dollars: targetCore({
-//         startAdornment: "$",
-//         varbNameEnding: "Dollars",
-//         displayNameEnd: " dollars",
-//       }),
-//     },
-//     switch: {
-//       varbNameEnding: "UnitSwitch",
-//     },
-//   }),
-//   percent: new RelSwitchVarb({
-//     targets: {
-//       percent: targetCore({
-//         endAdornment: "%",
-//         varbNameEnding: "Percent",
-//         displayNameEnd: " percent",
-//       } as const),
-//     },
-//     switch: {
-//       varbNameEnding: "UnitSwitch",
-//     },
-//   }),
-//   monthsYears: new RelSwitchVarb({
-//     targets: {
-//       months: targetCore({
-//         endAdornment: "months",
-//         varbNameEnding: "Months",
-//         displayNameEnd: " months",
-//       }),
-//       years: targetCore({
-//         endAdornment: "years",
-//         varbNameEnding: "Years",
-//         displayNameEnd: " years",
-//       }),
-//     },
-//     switch: {
-//       varbNameEnding: "SpanSwitch",
-//     },
-//   }),
-// };

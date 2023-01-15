@@ -119,6 +119,8 @@ type BaseSwitchVarbsNext<
     : BaseVarb<"numObj", GetTargetOptions<SN, SK, O>>;
 };
 
+const dollarsValueUnit = { valueUnit: "dollars" } as const;
+const percentValueUnit = { valueUnit: "percent" } as const;
 const ongoingOptions = {
   monthly: { valueTimespan: "monthly" },
   yearly: { valueTimespan: "yearly" },
@@ -134,6 +136,13 @@ const ongoingPercentOptions = {
   ...ongoingOptions,
 } as const;
 type OngoingPercentOptions = typeof ongoingPercentOptions;
+
+const dollarsPercentDecimalOptions = {
+  dollars: { valueUnit: "dollars" },
+  percent: { valueUnit: "percent" },
+  decimal: { valueUnit: "decimal" },
+} as const;
+type DollarsPercentDecimalOptions = typeof dollarsPercentDecimalOptions;
 
 const monthsYearsOptions = {
   months: { valueUnit: "months" },
@@ -166,7 +175,7 @@ export const baseVarbsS = {
       return varbs;
     }, {} as BaseSwitchVarbs<Base, SN>);
   },
-  switchNext: <
+  group: <
     BN extends string,
     SN extends SwitchName,
     O extends SwitchOptionsProps<SN, Options> = {}
@@ -196,44 +205,57 @@ export const baseVarbsS = {
   ongoing<Base extends string>(
     baseName: Base
   ): BaseSwitchVarbs<Base, "ongoing"> {
-    return this.switchNext(baseName, "ongoing", ongoingOptions);
+    return this.group(baseName, "ongoing", ongoingOptions);
   },
   ongoingDecimal<BN extends string>(
     baseName: BN
   ): BaseSwitchVarbsNext<BN, "ongoing", OngoingDollarsOptions> {
-    return this.switchNext(baseName, "ongoing", {
+    return this.group(baseName, "ongoing", {
       targets: { valueUnit: "decimal" },
     });
   },
   ongoingDollars<BN extends string>(
     baseName: BN
   ): BaseSwitchVarbsNext<BN, "ongoing", OngoingDollarsOptions> {
-    return this.switchNext(baseName, "ongoing", ongoingDollarsOptions);
+    return this.group(baseName, "ongoing", ongoingDollarsOptions);
   },
   ongoingDollarsInput<BN extends string>(
     baseName: BN
   ): BaseSwitchVarbsNext<BN, "ongoingInput", OngoingDollarsOptions> {
-    return this.switchNext(baseName, "ongoingInput", ongoingDollarsOptions);
+    return this.group(baseName, "ongoingInput", ongoingDollarsOptions);
   },
   ongoingPercent<BN extends string>(
     baseName: BN
   ): BaseSwitchVarbsNext<BN, "ongoing", OngoingPercentOptions> {
-    return this.switchNext(baseName, "ongoing", ongoingPercentOptions);
+    return this.group(baseName, "ongoing", ongoingPercentOptions);
   },
   ongoingPercentInput<BN extends string>(
     baseName: BN
   ): BaseSwitchVarbsNext<BN, "ongoingInput", OngoingPercentOptions> {
-    return this.switchNext(baseName, "ongoingInput", ongoingPercentOptions);
+    return this.group(baseName, "ongoingInput", ongoingPercentOptions);
   },
   monthsYears<BN extends string>(
     baseName: BN
   ): BaseSwitchVarbsNext<BN, "monthsYears", MonthsYearsOptions> {
-    return this.switchNext(baseName, "monthsYears", monthsYearsOptions);
+    return this.group(baseName, "monthsYears", monthsYearsOptions);
   },
   monthsYearsInput<BN extends string>(
     baseName: BN
   ): BaseSwitchVarbsNext<BN, "monthsYearsInput", MonthsYearsOptions> {
-    return this.switchNext(baseName, "monthsYearsInput", monthsYearsOptions);
+    return this.group(baseName, "monthsYearsInput", monthsYearsOptions);
+  },
+  dollarsPercentDecimal<BN extends string>(
+    baseName: BN
+  ): BaseSwitchVarbsNext<
+    BN,
+    "dollarsPercentDecimal",
+    DollarsPercentDecimalOptions
+  > {
+    return this.group(
+      baseName,
+      "dollarsPercentDecimal",
+      dollarsPercentDecimalOptions
+    );
   },
   get switchableEquationEditor() {
     return {

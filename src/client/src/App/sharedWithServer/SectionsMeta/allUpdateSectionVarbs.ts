@@ -130,59 +130,6 @@ function makeAllUpdateSections() {
         updateFnName: "loadMainTextByVarbInfo",
         updateFnProps: { varbInfo: updateFnPropS.local("displayNameEditor") },
       }),
-      valueMonthly: updateVarb("numObj", {
-        updateFnName: "throwIfReached",
-        updateOverrides: [
-          updateOverride(
-            [overrideSwitchS.local("isItemized", true)],
-            updateBasicsS.loadFromChild(
-              "ongoingList",
-              "totalMonthly"
-            ) as UpdateBasics<"numObj">
-          ),
-          updateOverride(
-            [
-              overrideSwitchS.valueSourceIs("valueEditor"),
-              overrideSwitchS.monthlyIsActive("value"),
-            ],
-            updateBasicsS.loadFromLocal("valueEditor") as UpdateBasics<"numObj">
-          ),
-          updateOverride(
-            [
-              overrideSwitchS.valueSourceIs("valueEditor"),
-              overrideSwitchS.yearlyIsActive("value"),
-            ],
-            updateBasicsS.yearlyToMonthly("value") as UpdateBasics<"numObj">
-          ),
-        ],
-      }),
-      valueYearly: updateVarb("numObj", {
-        updateFnName: "throwIfReached",
-        updateOverrides: [
-          updateOverride(
-            [overrideSwitchS.local("isItemized", true)],
-            updateBasicsS.loadFromChild(
-              "ongoingList",
-              "totalYearly"
-            ) as UpdateBasics<"numObj">
-          ),
-          updateOverride(
-            [
-              overrideSwitchS.valueSourceIs("valueEditor"),
-              overrideSwitchS.yearlyIsActive("value"),
-            ],
-            updateBasicsS.loadFromLocal("valueEditor") as UpdateBasics<"numObj">
-          ),
-          updateOverride(
-            [
-              overrideSwitchS.valueSourceIs("valueEditor"),
-              overrideSwitchS.monthlyIsActive("value"),
-            ],
-            updateBasicsS.monthlyToYearly("value") as UpdateBasics<"numObj">
-          ),
-        ],
-      }),
-      valueEditor: updateVarb("numObj"),
       isItemized: updateVarb("boolean", {
         initValue: false,
       }),
@@ -191,6 +138,65 @@ function makeAllUpdateSections() {
       }),
       itemValueSwitch: updateVarb("string", {
         initValue: "labeledEquation",
+      }),
+      ...updateVarbsS.ongoingInputNext("value", {
+        monthly: {
+          updateFnName: "throwIfReached",
+          updateOverrides: [
+            updateOverride(
+              [overrideSwitchS.local("isItemized", true)],
+              updateBasicsS.loadFromChild(
+                "ongoingList",
+                "totalMonthly"
+              ) as UpdateBasics<"numObj">
+            ),
+            updateOverride(
+              [
+                overrideSwitchS.valueSourceIs("valueEditor"),
+                overrideSwitchS.monthlyIsActive("value"),
+              ],
+              updateBasicsS.loadFromLocal(
+                "valueEditor"
+              ) as UpdateBasics<"numObj">
+            ),
+            updateOverride(
+              [
+                overrideSwitchS.valueSourceIs("valueEditor"),
+                overrideSwitchS.yearlyIsActive("value"),
+              ],
+              updateBasicsS.yearlyToMonthly("value") as UpdateBasics<"numObj">
+            ),
+          ],
+        },
+        yearly: {
+          updateFnName: "throwIfReached",
+          updateOverrides: [
+            updateOverride(
+              [overrideSwitchS.local("isItemized", true)],
+              updateBasicsS.loadFromChild(
+                "ongoingList",
+                "totalYearly"
+              ) as UpdateBasics<"numObj">
+            ),
+            updateOverride(
+              [
+                overrideSwitchS.valueSourceIs("valueEditor"),
+                overrideSwitchS.yearlyIsActive("value"),
+              ],
+              updateBasicsS.loadFromLocal(
+                "valueEditor"
+              ) as UpdateBasics<"numObj">
+            ),
+            updateOverride(
+              [
+                overrideSwitchS.valueSourceIs("valueEditor"),
+                overrideSwitchS.monthlyIsActive("value"),
+              ],
+              updateBasicsS.monthlyToYearly("value") as UpdateBasics<"numObj">
+            ),
+          ],
+        },
+        editor: { updateFnName: "calcVarbs" },
       }),
     }),
     ...updateSectionProp("ongoingValueGroup", {

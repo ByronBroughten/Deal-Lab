@@ -31,7 +31,7 @@ import {
 } from "./updateVarb/UpdateOverrides";
 import { updateVarbsS } from "./updateVarbs";
 
-export type SwitchUpdateVarbs<
+type UpdateGroup<
   BN extends string,
   SN extends SwitchName
 > = SwitchVarbNameRecord<BN, SN, UpdateVarb<"numObj">, UpdateVarb<"string">>;
@@ -65,12 +65,12 @@ function switchOptionsToFull<SN extends SwitchName>(
   }, {} as SwitchOptionsFull<SN>);
 }
 
-function switchUpdateVarbs<BN extends string, SN extends SwitchName>(
+function updateGroup<BN extends string, SN extends SwitchName>(
   baseName: BN,
   switchName: SN,
   switchInit: string,
   options: SwitchOptions<SN>
-): SwitchUpdateVarbs<BN, SN> {
+): UpdateGroup<BN, SN> {
   const fullOptions = switchOptionsToFull(options, switchName);
   const keys = switchKeys(switchName);
   return keys.reduce((varbs, key) => {
@@ -89,7 +89,7 @@ function switchUpdateVarbs<BN extends string, SN extends SwitchName>(
       };
     }
     return varbs;
-  }, {} as SwitchUpdateVarbs<BN, SN>);
+  }, {} as UpdateGroup<BN, SN>);
 }
 
 export function ongoingInputNext<BN extends string>(
@@ -100,9 +100,9 @@ export function ongoingInputNext<BN extends string>(
   }: SwitchOptions<"ongoingInput"> & {
     switchInit?: SwitchTargetKey<"ongoingInput">;
   } = {}
-): SwitchUpdateVarbs<BN, "ongoingInput"> {
+): UpdateGroup<BN, "ongoingInput"> {
   const names = switchKeyToVarbNames(baseName, "ongoingInput");
-  return switchUpdateVarbs(baseName, "ongoingInput", switchInit, {
+  return updateGroup(baseName, "ongoingInput", switchInit, {
     ...options,
     editor: { updateFnName: "calcVarbs", ...options.editor },
     monthly: {
@@ -130,8 +130,11 @@ export function ongoingInputNext<BN extends string>(
   });
 }
 
-export const switchUpdateVarbsS = {
+export const updateGroupS = {
+  group: updateGroup,
   ongoingInputNext,
+  monthsYearsInput,
+  ongoingInput,
 } as const;
 
 function switchEndingToUpdateProp<
@@ -188,24 +191,37 @@ type OngoingUpdatePacks = {
 
 export function monthsYearsInput<BN extends string>(
   baseName: BN,
-  switchInit: SwitchTargetKey<"monthsYears">,
-  options?: SwitchOptions<"monthsYears">
-): SwitchUpdateVarbs<BN, "monthsYears"> {
-  const varbNames = switchKeyToVarbNames(baseName, "monthsYears");
-  return switchUpdateVarbs(baseName, "monthsYears", switchInit, {
+  switchInit: SwitchTargetKey<"monthsYearsInput">,
+  options?: SwitchOptions<"monthsYearsInput">
+): UpdateGroup<BN, "monthsYearsInput"> {
+  const varbNames = switchKeyToVarbNames(baseName, "monthsYearsInput");
+  return updateGroup(baseName, "monthsYearsInput", switchInit, {
     ...options,
+    editor: { updateFnName: "calcVarbs" },
     months: {
       updateFnName: "throwIfReached",
       updateOverrides: [
         updateOverride(
-          [overrideSwitchS.switchIsActive(baseName, "monthsYears", "years")],
+          [
+            overrideSwitchS.switchIsActive(
+              baseName,
+              "monthsYearsInput",
+              "years"
+            ),
+          ],
           updateBasics("yearsToMonths", {
             num: updateFnPropS.local(varbNames.years),
           })
         ),
         updateOverride(
-          [overrideSwitchS.switchIsActive(baseName, "monthsYears", "months")],
-          updateBasics("calcVarbs")
+          [
+            overrideSwitchS.switchIsActive(
+              baseName,
+              "monthsYearsInput",
+              "months"
+            ),
+          ],
+          updateBasicsS.loadSolvableTextByVarbInfo(varbNames.editor)
         ),
       ],
       ...options?.months,
@@ -214,14 +230,26 @@ export function monthsYearsInput<BN extends string>(
       updateFnName: "throwIfReached",
       updateOverrides: [
         updateOverride(
-          [overrideSwitchS.switchIsActive(baseName, "monthsYears", "months")],
+          [
+            overrideSwitchS.switchIsActive(
+              baseName,
+              "monthsYearsInput",
+              "months"
+            ),
+          ],
           updateBasics("monthsToYears", {
             num: updateFnPropS.local(varbNames.months),
           })
         ),
         updateOverride(
-          [overrideSwitchS.switchIsActive(baseName, "monthsYears", "years")],
-          updateBasics("calcVarbs")
+          [
+            overrideSwitchS.switchIsActive(
+              baseName,
+              "monthsYearsInput",
+              "years"
+            ),
+          ],
+          updateBasicsS.loadSolvableTextByVarbInfo(varbNames.editor)
         ),
       ],
       ...options?.years,
@@ -235,8 +263,8 @@ export function ongoingInput<BN extends string>(
     switchInit = "monthly",
     ...options
   }: SwitchOptions<"ongoing"> & { switchInit?: SwitchTargetKey<"ongoing"> } = {}
-): SwitchUpdateVarbs<BN, "ongoing"> {
-  return switchUpdateVarbs(baseName, "ongoing", switchInit, {
+): UpdateGroup<BN, "ongoing"> {
+  return updateGroup(baseName, "ongoing", switchInit, {
     ...options,
     monthly: {
       updateFnName: "throwIfReached",
@@ -266,7 +294,7 @@ export function ongoingPureCalc<Base extends string>(
   baseName: Base,
   updatePacks: OngoingUpdatePacks,
   switchInit?: string
-): SwitchUpdateVarbs<Base, "ongoing"> {
+): UpdateGroup<Base, "ongoing"> {
   const varbNames = switchKeyToVarbNames(baseName, "ongoing");
   return {
     [varbNames.monthly]: updateVarb("numObj", updatePacks.monthly),
@@ -282,7 +310,7 @@ export function ongoingSumNums<Base extends string>(
   varbNameBase: Base,
   updateFnArrProp: UpdateFnProp[],
   switchInit: SwitchTargetKey<"ongoing"> = "monthly"
-): SwitchUpdateVarbs<Base, "ongoing"> {
+): UpdateGroup<Base, "ongoing"> {
   const props = getSwitchUpdateFnProps({ nums: updateFnArrProp }, "ongoing");
   return updateVarbsS.ongoingPureCalc(
     varbNameBase,
