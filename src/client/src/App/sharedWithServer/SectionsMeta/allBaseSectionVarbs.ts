@@ -207,9 +207,7 @@ export function makeAllBaseSectionVarbs() {
       },
       ...{
         ...varbs.ongoingPercentInput("interestRatePercent"),
-        ...baseVarbsS.group("interestRateDecimal", "ongoing", {
-          targets: { valueUnit: "decimal" },
-        }),
+        ...baseVarbsS.ongoingDecimal("interestRateDecimal"),
       },
       ...varbs.monthsYearsInput("loanTerm"),
 
@@ -269,9 +267,9 @@ export function makeAllBaseSectionVarbs() {
         ] as const,
         dollars
       ),
-      ...baseVarbsS.ongoing("loanExpenses"),
-      ...baseVarbsS.ongoing("mortgageIns"),
-      ...baseVarbsS.ongoing("loanPayment"),
+      ...baseVarbsS.ongoingDollars("loanExpenses"),
+      ...baseVarbsS.ongoingDollars("mortgageIns"),
+      ...baseVarbsS.ongoingDollars("loanPayment"),
     }),
     deal: baseSectionVarbs({
       ...baseVarbsS.savableSection,
@@ -286,12 +284,12 @@ export function makeAllBaseSectionVarbs() {
       downPaymentDecimal: baseVarb("numObj", decimal),
       mode: baseVarb("string"),
       showCalculationsStatus: baseVarb("string"),
-      ...baseVarbsS.ongoing("piti"),
-      ...baseVarbsS.ongoing("expenses"),
-      ...baseVarbsS.ongoing("revenue"),
-      ...baseVarbsS.ongoing("cashFlow"),
-      ...baseVarbsS.ongoing("cocRoiDecimal"),
-      ...baseVarbsS.ongoing("cocRoi"),
+      ...baseVarbsS.ongoingDollars("piti"),
+      ...baseVarbsS.ongoingDollars("expenses"),
+      ...baseVarbsS.ongoingDollars("revenue"),
+      ...baseVarbsS.ongoingDollars("cashFlow"),
+      ...baseVarbsS.ongoingDecimal("cocRoiDecimal"),
+      ...baseVarbsS.ongoingPercent("cocRoi"),
     }),
     feUser: baseSectionVarbs({
       ...baseVarbs("string", [
