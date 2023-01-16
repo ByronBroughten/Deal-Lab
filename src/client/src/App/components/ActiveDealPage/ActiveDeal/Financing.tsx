@@ -6,13 +6,13 @@ import theme from "./../../../theme/Theme";
 import { Loan } from "./Financing/Loan";
 
 type Props = { feId: string; className?: string };
-export default function Financing({ feId, className }: Props) {
-  const financing = useSetterSection({
-    sectionName: "financing",
+export function Financing({ feId, className }: Props) {
+  const deal = useSetterSection({
+    sectionName: "deal",
     feId,
   });
-  const loanIds = financing.childFeIds("loan");
-  const addLoan = () => financing.addChild("loan");
+  const loanIds = deal.childFeIds("loan");
+  const addLoan = () => deal.addChild("loan");
   return (
     <Styled
       {...{ themeName: "loan", className: `Financing-root ${className ?? ""}` }}

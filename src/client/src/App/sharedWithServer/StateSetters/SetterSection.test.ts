@@ -12,7 +12,7 @@ import { SetterTesterSection } from "./TestUtils/SetterTesterSection";
 
 describe("SetterSection", () => {
   // removing just deal doesn't seem to work for some reason.
-  const sectionNames = ["property", "mgmtGeneral", "financing"] as const;
+  const sectionNames = ["property", "mgmt", "deal"] as const;
   type TestName = typeof sectionNames[number];
   type SnTesterProps<SN extends TestName> = { tester: SetterTesterSection<SN> };
   type FnWithSnProp<SN extends TestName = TestName> = (

@@ -69,11 +69,11 @@ export type PiblingName<SN extends SectionName = SectionName> = StepSiblingName<
 >;
 
 function _testParentName() {
-  type OneParent = ParentName<"property">;
-  const _case1: OneParent = "propertyGeneral";
+  type OneParentTest = ParentName<"property">;
+  const _case1: OneParentTest = "propertyGeneral";
   //@ts-expect-error
-  const _case2: OneParent = "financing";
+  const _case2: OneParentTest = "loan";
 
-  type NoParent = ParentName<"root">;
-  const _case3: NoParent = "no parent";
+  type NoParentTest = ParentName<"root">;
+  const _case3: NoParentTest = "no parent";
 }

@@ -1,6 +1,4 @@
 import { Arr } from "../../utils/Arr";
-import { Obj } from "../../utils/Obj";
-import { allSectionTraits } from "../allSectionTraits";
 import { hasChildSectionNames } from "../sectionChildrenDerived/ChildName";
 import { SectionName, sectionNames } from "../SectionName";
 import { hasStoreNameArrs } from "./FeStoreName";
@@ -9,11 +7,6 @@ import { tableStoreNameArrs } from "./relNameArrs/tableStoreArrs";
 export const relNameArrs = {
   ...hasStoreNameArrs,
   ...tableStoreNameArrs,
-  hasGlobalVarbs: Obj.entryKeysWithPropValue(
-    allSectionTraits,
-    "hasGlobalVarbs",
-    true as true
-  ),
   hasChild: hasChildSectionNames,
   loadOnLogin: Arr.extractStrict(sectionNames, ["feUser"] as const),
   varbListItem: Arr.extractStrict(sectionNames, [

@@ -6,9 +6,9 @@ import theme from "../../theme/Theme";
 import { MainSectionTopRows } from "../appWide/MainSectionTopRows";
 import { OuterMainSection } from "./../appWide/GeneralSection/OuterMainSection";
 import { DealOutputs } from "./ActiveDeal/DealOutputs";
-import Financing from "./ActiveDeal/Financing";
-import { MgmtGeneral } from "./ActiveDeal/MgmtGeneral";
-import { PropertyGeneral } from "./ActiveDeal/PropertyGeneral";
+import { Financing } from "./ActiveDeal/Financing";
+import { Mgmt } from "./ActiveDeal/MgmtGeneral/Mgmt";
+import { Property } from "./ActiveDeal/PropertyGeneral/Property";
 
 type Props = {
   feId: string;
@@ -43,9 +43,9 @@ export function ActiveDeal({ className, feId }: Props) {
         }}
       />
       <div className="ActiveDeal-inputSectionsWrapper">
-        <PropertyGeneral feId={deal.onlyChildFeId("propertyGeneral")} />
-        <Financing feId={deal.onlyChildFeId("financing")} />
-        <MgmtGeneral feId={deal.onlyChildFeId("mgmtGeneral")} />
+        <Property feId={deal.onlyChildFeId("property")} />
+        <Financing feId={deal.feId} />
+        <Mgmt feId={deal.onlyChildFeId("mgmt")} />
       </div>
       <DealOutputs feId={feId} />
     </Styled>

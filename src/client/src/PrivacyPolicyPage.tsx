@@ -6,10 +6,10 @@ export function PrivacyPolicyPage() {
       <h1>Privacy Policy forUltimate Property Analyzer</h1>
 
       <p>
-        At Deal Lab, accessible from https://www.ultimatepropertyanalyzer.com,
-        one of our main priorities is the privacy of our visitors. This Privacy
-        Policy document contains types of information that is collected and
-        recorded by Ultimate Property Analyzer and how we use it.
+        At Deal Lab, accessible from https://www.deallab.app, one of our main
+        priorities is the privacy of our visitors. This Privacy Policy document
+        contains types of information that is collected and recorded by Ultimate
+        Property Analyzer and how we use it.
       </p>
 
       <p>

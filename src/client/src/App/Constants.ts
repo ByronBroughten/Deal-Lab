@@ -12,7 +12,7 @@ const proPlanStripePrice: StripePrice = {
   product: "proPlan",
 };
 
-const clientProdUrl = "https://www.ultimatepropertyanalyzer.comc";
+const clientProdUrl = "https://the.deallab.app";
 const clientDevUrl = "http://localhost:3000";
 
 const envConstants = {

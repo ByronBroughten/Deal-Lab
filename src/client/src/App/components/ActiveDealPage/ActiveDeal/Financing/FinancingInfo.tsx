@@ -1,5 +1,8 @@
 import styled from "styled-components";
-import { useGetterSection } from "../../../../sharedWithServer/stateClassHooks/useGetterSection";
+import {
+  useGetterSection,
+  useGetterSectionOnlyOne,
+} from "../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import theme from "../../../../theme/Theme";
 import useHowMany from "../../../appWide/customHooks/useHowMany";
 import LabeledVarbRow from "../../../appWide/LabeledVarbRow";
@@ -7,20 +10,17 @@ import { LabeledVarbSimple } from "../../../appWide/LabeledVarbSimple";
 import GlobalInfoSection from "../general/StaticInfoSection";
 
 export default function FinancingInfo({ feId }: { feId: string }) {
-  const financing = useGetterSection({
-    sectionName: "financing",
-    feId,
-  });
-
+  const main = useGetterSectionOnlyOne("main");
+  const calculated = main.onlyChild("calculatedVarbs");
   const deal = useGetterSection({
     sectionName: "deal",
-    feId: financing.parent.feId,
+    feId: feId,
   });
 
   const downPaymentDollars =
     deal.varb("downPaymentDollars").numberOrQuestionMark;
   const downPaymentIsPercentable = ![0, "?"].includes(downPaymentDollars);
-  const loanIds = financing.childFeIds("loan");
+  const loanIds = deal.childFeIds("loan");
   const { isAtLeastOne, areMultiple } = useHowMany(loanIds);
   return (
     <Styled className="FinancingInfo-root">
@@ -39,7 +39,7 @@ export default function FinancingInfo({ feId }: { feId: string }) {
             {isAtLeastOne && (
               <LabeledVarbSimple
                 themeName="loan"
-                feVarbInfo={financing.varbInfo("loanPaymentMonthly")}
+                feVarbInfo={calculated.varbInfo("loanPaymentMonthly")}
               />
             )}
             <LabeledVarbSimple
@@ -51,7 +51,7 @@ export default function FinancingInfo({ feId }: { feId: string }) {
         {areMultiple && (
           <LabeledVarbSimple
             themeName="loan"
-            feVarbInfo={financing.varbInfo("loanTotalDollars")}
+            feVarbInfo={calculated.varbInfo("loanTotalDollars")}
           />
         )}
       </LabeledVarbRow>

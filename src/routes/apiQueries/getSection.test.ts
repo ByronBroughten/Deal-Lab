@@ -101,8 +101,7 @@ describe(testedRoute, () => {
     };
 
     const deal = SetterTesterSection.init("deal").setter;
-    const propertyGeneral = deal.onlyChild("propertyGeneral");
-    const property = propertyGeneral.onlyChild("property");
+    const property = deal.onlyChild("property");
     property.varb("price").updateValue(original.price);
     property.varb("displayName").updateValue(original.displayName);
     property.updateValues({
@@ -138,8 +137,7 @@ describe(testedRoute, () => {
     function testSectionPack() {
       const deal = SetterTesterSection.init("deal").setter;
       deal.loadSelfSectionPack(sectionPack);
-      const propertyGeneral = deal.get.onlyChild("propertyGeneral");
-      const property = propertyGeneral.onlyChild("property");
+      const property = deal.get.onlyChild("property");
       expect(property.value("price")).toEqual(updated.price);
       expect(property.value("displayName")).toEqual(updated.displayName);
     }

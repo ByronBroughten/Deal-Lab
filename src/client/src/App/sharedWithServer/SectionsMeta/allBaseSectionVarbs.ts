@@ -9,10 +9,6 @@ import {
   baseVarbsS,
   GeneralBaseVarb,
 } from "./baseSectionsVarbs/baseVarbs";
-import {
-  loanVarbsNotInFinancing,
-  savableSectionVarbNames,
-} from "./baseSectionsVarbs/specialVarbNames";
 import { SectionName, sectionNames } from "./SectionName";
 
 const checkBaseSectionsVarbs = <BSV extends GeneralBaseSectionsVarbs>(
@@ -184,9 +180,6 @@ export function makeAllBaseSectionVarbs() {
       ...baseVarbsS.ongoingDollars("revenue"),
       ...baseVarbsS.monthsYearsInput("holdingPeriod"),
     }),
-    get propertyGeneral() {
-      return baseSectionVarbs(omit(this.property, savableSectionVarbNames));
-    },
     unit: baseSectionVarbs({
       one: baseVarb("numObj"),
       numBedrooms: baseVarb("numObj"),
@@ -224,11 +217,23 @@ export function makeAllBaseSectionVarbs() {
         dollars
       ),
     } as const),
-    get financing() {
-      return baseSectionVarbs({
-        ...omit(this.loan, loanVarbsNotInFinancing),
-      });
-    },
+    calculatedVarbs: baseSectionVarbs({
+      ...baseVarbs("numObj", ["onePercentPrice"] as const, percent),
+      ...baseVarbs(
+        "numObj",
+        [
+          "loanTotalDollars",
+          "closingCosts",
+          "mortgageInsUpfront",
+          "loanBaseDollars",
+          "loanUpfrontExpenses",
+        ] as const,
+        dollars
+      ),
+      ...baseVarbsS.ongoingDollars("loanExpenses"),
+      ...baseVarbsS.ongoingDollars("mortgageIns"),
+      ...baseVarbsS.ongoingDollars("loanPayment"),
+    }),
     mgmt: baseSectionVarbs({
       ...baseVarbsS.savableSection,
       ...{
@@ -250,26 +255,6 @@ export function makeAllBaseSectionVarbs() {
       upfrontExpenses: baseVarb("numObj", dollars),
       ...baseVarbsS.ongoingDollars("expenses"),
     } as const),
-    get mgmtGeneral() {
-      return baseSectionVarbs(omit(this.mgmt, savableSectionVarbNames));
-    },
-    calculatedVarbs: baseSectionVarbs({
-      ...baseVarbs("numObj", ["onePercentPrice"] as const, percent),
-      ...baseVarbs(
-        "numObj",
-        [
-          "loanTotalDollars",
-          "closingCosts",
-          "mortgageInsUpfront",
-          "loanBaseDollars",
-          "loanUpfrontExpenses",
-        ] as const,
-        dollars
-      ),
-      ...baseVarbsS.ongoingDollars("loanExpenses"),
-      ...baseVarbsS.ongoingDollars("mortgageIns"),
-      ...baseVarbsS.ongoingDollars("loanPayment"),
-    }),
     deal: baseSectionVarbs({
       ...baseVarbsS.savableSection,
       ...baseVarbs("numObj", [

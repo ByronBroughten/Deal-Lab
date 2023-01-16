@@ -56,58 +56,26 @@ export const sectionAbsolutePathInfos = {
       "ongoingItem",
     ]);
   },
-
   get dealLatent() {
     return absolute("deal", [...this.latent.path, "deal"]);
   },
-  get propertyGeneralActive() {
-    return absolute("propertyGeneral", [
-      ...this.dealActive.path,
-      "propertyGeneral",
-    ]);
-  },
   get loanActive() {
-    return absolute("loan", [...this.financingActive.path, "loan"]);
+    return absolute("loan", [...this.dealActive.path, "loan"]);
   },
   get mgmtActive() {
-    return absolute("mgmt", [...this.mgmtGeneralActive.path, "mgmt"]);
+    return absolute("mgmt", [...this.dealActive.path, "mgmt"]);
   },
-
   get loanLatent() {
-    return absolute("loan", [...this.financingLatent.path, "loan"]);
+    return absolute("loan", [...this.dealLatent.path, "loan"]);
   },
   get mgmtLatent() {
-    return absolute("mgmt", [...this.mgmtGeneralLatent.path, "mgmt"]);
+    return absolute("mgmt", [...this.dealLatent.path, "mgmt"]);
   },
   get propertyActive() {
-    return absolute("property", [
-      ...this.propertyGeneralActive.path,
-      "property",
-    ]);
-  },
-  get propertyGeneralLatent() {
-    return absolute("propertyGeneral", [
-      ...this.dealLatent.path,
-      "propertyGeneral",
-    ]);
+    return absolute("property", [...this.dealActive.path, "property"]);
   },
   get propertyLatent() {
-    return absolute("property", [
-      ...this.propertyGeneralLatent.path,
-      "property",
-    ]);
-  },
-  get financingActive() {
-    return absolute("financing", [...this.dealActive.path, "financing"]);
-  },
-  get financingLatent() {
-    return absolute("financing", [...this.dealLatent.path, "financing"]);
-  },
-  get mgmtGeneralActive() {
-    return absolute("mgmtGeneral", [...this.dealActive.path, "mgmtGeneral"]);
-  },
-  get mgmtGeneralLatent() {
-    return absolute("mgmtGeneral", [...this.dealLatent.path, "mgmtGeneral"]);
+    return absolute("property", [...this.dealLatent.path, "property"]);
   },
   get userVarbItemStored() {
     return absolute("userVarbItem", [

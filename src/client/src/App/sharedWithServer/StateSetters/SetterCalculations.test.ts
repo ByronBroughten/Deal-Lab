@@ -26,8 +26,7 @@ describe("SetterCalculations", () => {
   });
   it("should calculate upfront investment accurately", () => {
     const dealTester = SetterTesterSection.initActiveDeal();
-    const propertyGeneral = dealTester.setter.onlyChild("propertyGeneral");
-    const property = propertyGeneral.onlyChild("property");
+    const property = dealTester.setter.onlyChild("property");
     property.varb("price").updateValue(numObj(200000));
 
     const propertyCostListGroup = property.onlyChild("upfrontExpenseGroup");
@@ -45,15 +44,13 @@ describe("SetterCalculations", () => {
 
     addTestLoan(dealTester);
 
-    const financing = dealTester.setter.onlyChild("financing");
-    const loan = financing.addAndGetChild("loan");
+    const loan = dealTester.setter.addAndGetChild("loan");
     loan.varb("loanBasePercentEditor").updateValue(numObj(0));
 
     const wrappedValue = loan.addAndGetChild("wrappedInLoanValue");
     wrappedValue.updateValues({ valueEditor: numObj(5000) });
 
-    const mgmtGeneral = dealTester.setter.onlyChild("mgmtGeneral");
-    const mgmt = mgmtGeneral.addAndGetChild("mgmt");
+    const mgmt = dealTester.setter.addAndGetChild("mgmt");
     const expenseValue = mgmt.addAndGetChild("upfrontExpenseValue", {
       dbVarbs: { isItemized: true },
     });
@@ -72,9 +69,7 @@ describe("SetterCalculations", () => {
   });
   it("should calculate annual cash flow accurately", () => {
     const dealTester = SetterTesterSection.initActiveDeal();
-
-    const propertyGeneral = dealTester.setter.onlyChild("propertyGeneral");
-    const property = propertyGeneral.onlyChild("property");
+    const property = dealTester.setter.onlyChild("property");
 
     const rents = [1300, 1700];
     for (const amount of rents) {
@@ -107,8 +102,7 @@ describe("SetterCalculations", () => {
     addTestLoan(dealTester);
     // 1012.6 expense
 
-    const mgmtGeneral = dealTester.setter.onlyChild("mgmtGeneral");
-    const mgmt = mgmtGeneral.onlyChild("mgmt");
+    const mgmt = dealTester.setter.onlyChild("mgmt");
     mgmt.varb("basePayPercentEditor").updateValue(numObj(5));
     mgmt.varb("vacancyLossPercentEditor").updateValue(numObj(5));
 
@@ -148,12 +142,10 @@ describe("SetterCalculations", () => {
 });
 
 function addTestLoan(dealTester: SetterTesterSection<"deal">): void {
-  const propertyGeneral = dealTester.setter.onlyChild("propertyGeneral");
-  const property = propertyGeneral.onlyChild("property");
+  const property = dealTester.setter.onlyChild("property");
   property.varb("price").updateValue(numObj(200000));
 
-  const financing = dealTester.setter.onlyChild("financing");
-  const loan = financing.addAndGetChild("loan");
+  const loan = dealTester.setter.addAndGetChild("loan");
   loan.varb("interestRatePercentOngoingSwitch").updateValue("yearly");
   loan.varb("interestRatePercentOngoingEditor").updateValue(numObj(5));
 
@@ -179,8 +171,7 @@ function addTestLoan(dealTester: SetterTesterSection<"deal">): void {
 }
 
 function addInterestOnlyLoan(dealTester: SetterTesterSection<"deal">): void {
-  const financing = dealTester.setter.onlyChild("financing");
-  const loan = financing.addAndGetChild("loan");
+  const loan = dealTester.setter.addAndGetChild("loan");
   loan.varb("isInterestOnly").updateValue(true);
 
   loan.varb("loanBaseUnitSwitch").updateValue("dollars");

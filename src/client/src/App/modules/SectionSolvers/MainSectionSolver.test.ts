@@ -4,10 +4,7 @@ import { MainSectionSolver } from "./MainSectionSolver";
 describe("MainSectionSolver", () => {
   it("should load a section whose sectionPack passes an equality check with that of the section from which it was loaded", () => {
     const main = SolverSection.initDefaultMain();
-    const { feInfo } = main
-      .onlyChild("activeDeal")
-      .onlyChild("propertyGeneral")
-      .onlyChild("property").get;
+    const { feInfo } = main.onlyChild("activeDeal").onlyChild("property").get;
 
     const property = new MainSectionSolver({
       ...SolverSection.initProps({

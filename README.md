@@ -1,6 +1,6 @@
 ### Deal Lab
 
-Deployed at [ultimatepropertyanalyzer.com](https://www.ultimatepropertyanalyzer.com/)
+Deployed at [deallab.app](https://www.deallab.app/)
 
 ## Functional Description
 
