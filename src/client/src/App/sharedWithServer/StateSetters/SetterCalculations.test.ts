@@ -3,26 +3,29 @@ import { SetterTesterSection } from "./TestUtils/SetterTesterSection";
 
 describe("SetterCalculations", () => {
   it("should calculate loan payments accurately", () => {
-    const dealTester = SetterTesterSection.init("deal");
+    const dealTester = SetterTesterSection.initActiveDeal();
     addTestLoan(dealTester);
     addInterestOnlyLoan(dealTester);
+
     const calculated =
-      dealTester.setter.sections.main.onlyChild("calculatedVarbs");
+      dealTester.get.sections.main.onlyChild("calculatedVarbs");
 
     const expectedLoanPayment = 912.6 + 50;
-    const loanExpensesMonthly = calculated.get.varbNext(
+    const loanPaymentMonthly =
+      calculated.varbNext("loanPaymentMonthly").numberValue;
+    expect(loanPaymentMonthly).toBe(expectedLoanPayment);
+
+    const loanPaymentYearly =
+      calculated.varbNext("loanPaymentYearly").numberValue;
+    expect(loanPaymentYearly).toBeCloseTo(12 * expectedLoanPayment, 1);
+
+    const loanExpensesMonthly = calculated.varbNext(
       "loanExpensesMonthly"
     ).numberValue;
-    const loanPaymentMonthly =
-      calculated.get.varbNext("loanPaymentMonthly").numberValue;
-    const loanPaymentYearly =
-      calculated.get.varbNext("loanPaymentYearly").numberValue;
     expect(loanExpensesMonthly).toBe(expectedLoanPayment + 100);
-    expect(loanPaymentMonthly).toBe(expectedLoanPayment);
-    expect(loanPaymentYearly).toBeCloseTo(12 * expectedLoanPayment, 1);
   });
   it("should calculate upfront investment accurately", () => {
-    const dealTester = SetterTesterSection.init("deal");
+    const dealTester = SetterTesterSection.initActiveDeal();
     const propertyGeneral = dealTester.setter.onlyChild("propertyGeneral");
     const property = propertyGeneral.onlyChild("property");
     property.varb("price").updateValue(numObj(200000));
@@ -68,7 +71,7 @@ describe("SetterCalculations", () => {
     // 200000 + 8000 + 2000 + 4000 + 6000 - 150000 - 20000 - 4000 - 1000
   });
   it("should calculate annual cash flow accurately", () => {
-    const dealTester = SetterTesterSection.init("deal");
+    const dealTester = SetterTesterSection.initActiveDeal();
 
     const propertyGeneral = dealTester.setter.onlyChild("propertyGeneral");
     const property = propertyGeneral.onlyChild("property");
@@ -80,8 +83,11 @@ describe("SetterCalculations", () => {
       });
     }
 
-    property.varb("taxesYearly").updateValue(numObj(1200));
-    property.varb("homeInsYearly").updateValue(numObj(1200));
+    property.varb("taxesOngoingSwitch").updateValue("yearly");
+    property.varb("taxesOngoingEditor").updateValue(numObj(1200));
+
+    property.varb("homeInsOngoingSwitch").updateValue("yearly");
+    property.varb("homeInsOngoingEditor").updateValue(numObj(1200));
 
     const propertyCostListGroup = property.onlyChild("ongoingExpenseGroup");
     const ongoingValue = propertyCostListGroup.addAndGetChild("ongoingValue", {
@@ -91,9 +97,12 @@ describe("SetterCalculations", () => {
     const propertyCosts = [200, 100, 150];
     for (const amount of propertyCosts) {
       propertyCostList.addChild("ongoingItem", {
-        dbVarbs: { valueEditor: numObj(amount) },
+        dbVarbs: {
+          valueSourceSwitch: "labeledEquation",
+          valueEditor: numObj(amount),
+        },
       });
-    } // why is there an extra 150?
+    }
 
     addTestLoan(dealTester);
     // 1012.6 expense
@@ -110,7 +119,10 @@ describe("SetterCalculations", () => {
     const mgmtCosts = [100, 100];
     for (const amount of mgmtCosts) {
       mgmtCostList.addChild("ongoingItem", {
-        dbVarbs: { valueEditor: numObj(amount) },
+        dbVarbs: {
+          valueSourceSwitch: "labeledEquation",
+          valueEditor: numObj(amount),
+        },
       });
     }
 
@@ -130,8 +142,6 @@ describe("SetterCalculations", () => {
     // - 100 mgmt cost
     // - 100 mgmt cost
 
-    // a mystery 150 is being subtracted from cashflow
-
     expect(cashFlowMonthly).toBe(837.4);
     expect(cashFlowYearly).toBeCloseTo(cashFlowMonthly * 12, 1);
   });
@@ -144,9 +154,15 @@ function addTestLoan(dealTester: SetterTesterSection<"deal">): void {
 
   const financing = dealTester.setter.onlyChild("financing");
   const loan = financing.addAndGetChild("loan");
-  loan.varb("interestRatePercentYearly").updateValue(numObj(5));
-  loan.varb("loanTermYears").updateValue(numObj(30));
+  loan.varb("interestRatePercentOngoingSwitch").updateValue("yearly");
+  loan.varb("interestRatePercentOngoingEditor").updateValue(numObj(5));
+
+  loan.varb("loanTermSpanSwitch").updateValue("years");
+  loan.varb("loanTermSpanEditor").updateValue(numObj(30));
+
+  loan.varb("loanBaseUnitSwitch").updateValue("percent");
   loan.varb("loanBasePercentEditor").updateValue(numObj(75));
+
   loan.varb("hasMortgageIns").updateValue(true);
   loan.varb("mortgageInsOngoingEditor").updateValue(numObj(1200));
 
@@ -166,8 +182,10 @@ function addInterestOnlyLoan(dealTester: SetterTesterSection<"deal">): void {
   const financing = dealTester.setter.onlyChild("financing");
   const loan = financing.addAndGetChild("loan");
   loan.varb("isInterestOnly").updateValue(true);
+
   loan.varb("loanBaseUnitSwitch").updateValue("dollars");
   loan.varb("loanBaseDollarsEditor").updateValue(numObj(10000));
-  loan.varb("interestRatePercentYearly").updateValue(numObj(6));
+
   loan.varb("interestRatePercentOngoingSwitch").updateValue("yearly");
+  loan.varb("interestRatePercentOngoingEditor").updateValue(numObj(6));
 }

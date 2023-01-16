@@ -299,6 +299,12 @@ function makeAllUpdateSections() {
           updateFnPropS.pathName("propertyFocal", "price")
         ),
       }),
+      loanBaseDollars: updateVarb(
+        "numObj",
+        updateBasicsS.sumNums(
+          updateFnPropS.pathName("loanFocal", "loanBaseDollars")
+        )
+      ),
       loanTotalDollars: updateVarb(
         "numObj",
         updateBasicsS.sumNums(
@@ -315,12 +321,6 @@ function makeAllUpdateSections() {
         "numObj",
         updateBasicsS.sumNums(
           updateFnPropS.pathName("loanFocal", "mortgageInsUpfront")
-        )
-      ),
-      loanBaseDollars: updateVarb(
-        "numObj",
-        updateBasicsS.sumNums(
-          updateFnPropS.pathName("loanFocal", "loanBaseDollars")
         )
       ),
       loanUpfrontExpenses: relVarbS.sumNums([

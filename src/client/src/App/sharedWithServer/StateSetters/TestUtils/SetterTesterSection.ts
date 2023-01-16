@@ -1,6 +1,11 @@
 import { ChildName } from "../../SectionsMeta/sectionChildrenDerived/ChildName";
+import { ChildSectionName } from "../../SectionsMeta/sectionChildrenDerived/ChildSectionName";
 import { ParentNameSafe } from "../../SectionsMeta/sectionChildrenDerived/ParentName";
-import { FeVarbInfo } from "../../SectionsMeta/SectionInfo/FeInfo";
+import {
+  FeSectionInfo,
+  FeVarbInfo,
+} from "../../SectionsMeta/SectionInfo/FeInfo";
+import { SectionName } from "../../SectionsMeta/SectionName";
 import { SectionNameByType } from "../../SectionsMeta/SectionNameByType";
 import { GetterList } from "../../StateGetters/GetterList";
 import { GetterSection } from "../../StateGetters/GetterSection";
@@ -13,9 +18,9 @@ import {
 } from "./Bases/SectionTesterBase";
 
 export class SetterTesterSection<
-  SN extends SectionNameByType
+  SN extends SectionName
 > extends SectionTesterBase<SN> {
-  static initProps<S extends SectionNameByType>(
+  static initProps<S extends SectionName>(
     sectionName: S
   ): SectionTesterProps<S> {
     const sections = SolverSections.initSectionsFromDefaultMain();
@@ -27,6 +32,30 @@ export class SetterTesterSection<
       ...list.last.feInfo,
       state: { sections },
     };
+  }
+  onlyChild<CN extends ChildName<SN>>(
+    childName: CN
+  ): SetterTesterSection<ChildSectionName<SN, CN>> {
+    const child = this.get.onlyChild(childName);
+    return this.setterTester(child.feInfo);
+  }
+  setterTester<S extends SectionName>(
+    feInfo: FeSectionInfo<S>
+  ): SetterTesterSection<S> {
+    return new SetterTesterSection({
+      ...feInfo,
+      state: this.state,
+    });
+  }
+  static initMain(): SetterTesterSection<"main"> {
+    const sections = SolverSections.initSectionsFromDefaultMain();
+    return new SetterTesterSection({
+      ...sections.mainRawSection,
+      state: { sections },
+    });
+  }
+  static initActiveDeal(): SetterTesterSection<"deal"> {
+    return this.initMain().onlyChild("activeDeal");
   }
   static init<S extends SectionNameByType>(
     sectionName: S

@@ -42,7 +42,7 @@ export function childToSectionName<
   return names[childName] as ChildSectionName<SN, CN>;
 }
 
-type MergedChildNames<SN extends SectionName> = MergeUnionObjFull<
+export type MergedChildNames<SN extends SectionName> = MergeUnionObjFull<
   ChildToSectionName[SN]
 >;
 

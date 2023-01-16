@@ -12,8 +12,7 @@
     "heroku-postbuild": "cd src/client && npm install --only=dev && npm install && npm run build",
     "build": "cd src/client && npm run build",
     "install": "cd src/client && npm install",
-    "test": "jest --watchAll --verbose --coverage",
-    "test-no-cache": "jest --watchAll --verbose --coverage --no-cache"
+    "test": "jest --watchAll --verbose --coverage --no-cache"
   },
   "engines": {
     "node": "14.15.5",

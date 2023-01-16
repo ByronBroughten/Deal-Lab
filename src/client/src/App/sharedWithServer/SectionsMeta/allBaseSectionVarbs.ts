@@ -194,16 +194,10 @@ export function makeAllBaseSectionVarbs() {
     }),
     loan: baseSectionVarbs({
       ...baseVarbsS.savableSection,
-      ...baseVarbs(
-        "numObj",
-        ["loanTotalDollars", "closingCosts", "wrappedInLoan"] as const,
-        dollars
-      ),
       ...{
-        // breaking them up into groups like this seems to help Typescript
-        ...varbs.dollarsPercentDecimal("loanBase"),
         loanBasePercentEditor: baseVarb("numObj", percent),
         loanBaseDollarsEditor: baseVarb("numObj", dollars),
+        ...varbs.dollarsPercentDecimal("loanBase"),
       },
       ...{
         ...varbs.ongoingPercentInput("interestRatePercent"),
@@ -224,6 +218,11 @@ export function makeAllBaseSectionVarbs() {
         mortgageInsUpfrontEditor: baseVarb("numObj", dollars),
         ...baseVarbsS.ongoingDollarsInput("mortgageIns"),
       },
+      ...baseVarbs(
+        "numObj",
+        ["loanTotalDollars", "closingCosts", "wrappedInLoan"] as const,
+        dollars
+      ),
     } as const),
     get financing() {
       return baseSectionVarbs({

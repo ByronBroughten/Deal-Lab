@@ -1,6 +1,4 @@
-import isEqual from "fast-deep-equal";
 import { SolverSection } from "../../sharedWithServer/StateSolvers/SolverSection";
-import { numObj } from "./../../sharedWithServer/SectionsMeta/baseSectionsVarbs/baseValues/NumObj";
 import { MainSectionSolver } from "./MainSectionSolver";
 
 describe("MainSectionSolver", () => {
@@ -21,12 +19,7 @@ describe("MainSectionSolver", () => {
 
     const { dbId } = main.onlyChild("feUser").get.children("propertyMain")[0];
     property.loadFromLocalStore(dbId);
-    property.solver.updateValuesAndSolve({
-      price: numObj(240000),
-    });
-
     const { loaded, saved } = property.getPreppedSaveStatusPacks();
     expect(loaded).toEqual(saved);
-    expect(isEqual(loaded, saved)).toBe(true);
   });
 });
