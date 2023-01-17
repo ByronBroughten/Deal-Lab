@@ -10,45 +10,56 @@ AppRegistry.runApplication("App", {
 
 reportWebVitals();
 
-// - Wordpress..
-
-// Options:
-// 1. Apply for programming jobs again
-// 2. Keep working on the app to make it marketable
 // 3. Make a simple wordpress website
 // - This is towards marketing it
 // - This also might be towards a programming job
 
-// replace mgmtGeneral
-// replace propertyGeneral
-// 6. Make property, mgmt, and loan be children of deal
-// 7. Fix their focal paths
-// 8. On deal use childrenInfo instead of pathInfo
+// Options:
+// Deal should just have very simple, "property", "loan", and "management"
 
-// - transition relVarbs to updateVarbs
-// - make ongoingEditor switchEnding templates for baseVarbs
-// - Do the same for displayVarbs and updateVarbs
+// The property page is just the deal page but with all the extra deal
+// stuff and everything but property removed.
 
-// - perhaps separate the displayName stuff from relVarbs
-// - create a component called "OngoingEditor" that takes
-//   a baseName. It then uses that to get the editorName
-//   as well as the ongoingValue switch.
-// 2. Big ETC and efficiency gains:
-// - make InVarbInfo work with PathInfo<"multi">
-// - get one of financing's varbs to work
-// - transition out of financing, and propertyGeneral
-// - make a mgmtFocal path
-// - transition out of mgmtGeneral
-// - make varbPathNameInfo and make InVarbInfo work with it
-// 3. Allow for Fix and Flip
+// 1. Create a property info component.
+// 2. Add an edit button to it.
+// 3. Make clicking the edit button make the full property
+//    component cover the whole deal page
+// 4. Show need only have a string, "deal", "property", "loan", "mgmt"
+
+// 1. Create a financing info component.
+// 2. That component starts with a switch between using loans or using cash only
+// 3. If the switch is flipped to use loans, you may click to go in
+//    to edit and add loans
+// 4. The loans are displayed on the outside.
+
+// 1. Do with mgmt like you did with property
+// 1. Make a full output page.
+
+// 2. Sort out the variables
+// - Make varbOptionInfo, reduced to a mere variable name.
+// - Make a reduced set of variables appear in the variable editor
+// - Add a "see more" modal or dropdown for the variables
+// - Add an explanation to the Variables page
+// - Add an explanation to the Lists page
+// - Perhaps restrict which inputs are allowed to use variables
+// - Perhaps add an explanation of the equation capabilities of
+//   inputs that can take equations
+// - Maybe put "+ - x /" in fields that can use equations
+// - Maybe note when a field is an equation field.
+
+// 5. Make specialized CapEx and Utility values and lists
+// 6. Make a specialized maintenance value (with different methods
+//    for calculating maintenance costs)
+
+// 4. Allow for Fix and Flip
 //  - Add ARV
 //  - Add holding costs (Like ongoing costs but just has utilities and custom)
-// 3.5 Allow for Brrrr
+// 4.5 Allow for Brrrr
 //  - Differentiate between purchase and refinance loans (right?)
 //  - Add Post-Purchase loan
-// 4. Make specialized CapEx and Utility values and lists
-// 5. Make a specialized maintenance value (with different methods
-//    for calculating maintenance costs)
+
+// 1. Change updateSection so that it only takes updateVarb
+//    options and provides default rounding based on baseSectionVarbs
 
 // Options for how to spend this evening:
 // 3. Work on adding the underpinnings of the modes
@@ -234,10 +245,6 @@ reportWebVitals();
 // 2. Be as precise as you prefer
 // 3. Save and experiment with different combinations of loans and properties
 // 4. Allow for custom inputs and outputs (still working on this)
-// Right now it's in the beta testing stage. I'm looking for people to try it out, report bugs, and give any and all feedback, really. For beta, everything it can do is free. Most of what it can do will be free in the end.
-// Here's a brief video demo:  https://www.youtube.com/watch?v=wGfb8xX2FsI
-// Here's a link to the app: https://www.ultimatepropertyanalyzer.com/
-// If you will try it and provide me with feedback, I would greatly appreciate it. 😊
 
 // - Put userName (or first letter of email) on the right side where sign in/sign up were
 // - When I change the displayName of a variable, I want that

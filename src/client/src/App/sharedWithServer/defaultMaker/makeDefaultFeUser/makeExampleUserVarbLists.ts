@@ -17,39 +17,56 @@ const userVarbLifespanArrs: UserVarbLifespanArrs = Obj.keys(
   return userVarbLifespans[key];
 });
 
-const lists = [
+const fullLists = [
   ["Average lifespan examples", userVarbLifespanArrs],
   [
     "Common repair examples",
     [
-      ["Swap toilet hardware", 30],
-      ["Change deadbolt", 20],
-      ["Add smoke detector", 15],
-      ["Install outlet", 30],
+      ["Swap toilet hardware", numObj(30)],
+      ["Change deadbolt", numObj(20)],
+      ["Add smoke detector", numObj(15)],
+      ["Install outlet", numObj(30)],
     ],
   ],
   [
     "Replacement cost examples",
     [
-      ["Vinyl plank per sqft", 3],
-      ["Furnace", 3500],
-      ["Water heater", 1200],
-      ["Window", 500],
-      ["Stove", 600],
-      ["Refrigerator", 800],
-      ["Laundry", 1200],
-      ["Roof", 8000],
+      ["Vinyl plank per sqft", numObj(3)],
+      ["Force Air Furnace", numObj(3500)],
+      ["Water heater", numObj(1200)],
+      ["Window", numObj(500)],
+      ["Stove", numObj(600)],
+      ["Refrigerator", numObj(800)],
+      ["Laundry", numObj(1200)],
+      ["Roof", numObj(8000)],
+    ],
+  ],
+  [
+    "Misc Repair Estimate Methods",
+    [
+      ["10% of Rent", numObjNext(["targetRentMonthly"], "* .10")],
+      ["1% of Price", numObjNext(["price"], "* .01")],
+      ["Square Feet", numObjNext(["sqft"])],
+      ["Price/Sqft Hybrid", priceSqftMiscRepairHybrid],
     ],
   ],
 ] as const;
 
-const miscRepairList = [
-  "Misc Repair Estimate Methods",
+const lists = [
   [
-    ["10% of Rent", numObjNext(["targetRentMonthly"], "* .10")],
-    ["1% of Price", numObjNext(["price"], "* .01")],
-    ["Square Feet", numObjNext(["sqft"])],
-    ["Price/Sqft Hybrid", priceSqftMiscRepairHybrid],
+    "Small fix cost examples",
+    [
+      ["Change deadbolt", numObj(20)],
+      ["Add smoke detector", numObj(15)],
+      ["Install outlet", numObj(30)],
+    ],
+  ],
+  [
+    "Replacement cost examples",
+    [
+      ["Water heater", numObj(1200)],
+      ["Vinyl plank per sqft", numObj(3)],
+    ],
   ],
 ] as const;
 
@@ -63,23 +80,11 @@ export function makeExampleUserVarbLists(): SectionPack<"userVarbList">[] {
       varbList.addChild("userVarbItem", {
         dbVarbs: {
           displayNameEditor: item[0],
-          valueEditor: numObj(item[1]),
+          valueEditor: item[1],
         },
       });
     }
   }
-  const repairList = feUser.addAndGetChild("userVarbListMain", {
-    dbVarbs: {
-      displayName: stringObj(miscRepairList[0]),
-    },
-  });
-  for (const item of miscRepairList[1]) {
-    repairList.addChild("userVarbItem", {
-      dbVarbs: {
-        displayNameEditor: item[0],
-        valueEditor: item[1],
-      },
-    });
-  }
+
   return feUser.makeChildPackArr("userVarbListMain");
 }

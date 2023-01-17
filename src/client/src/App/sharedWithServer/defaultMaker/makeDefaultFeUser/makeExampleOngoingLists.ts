@@ -6,7 +6,7 @@ import { stringObj } from "../../SectionsMeta/baseSectionsVarbs/baseValues/Strin
 import { SectionPack } from "../../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { PackBuilderSection } from "../../StatePackers.ts/PackBuilderSection";
 
-type CapExItemProp = readonly [string, number, NumObj];
+type CapExItemProp = readonly [string, NumObj, NumObj];
 export function makeCapExList(
   itemPropArr: readonly CapExItemProp[],
   dbId?: string
@@ -29,7 +29,7 @@ export function makeCapExList(
         valueOngoingSwitch: "yearly",
         lifespanSpanSwitch: "years",
         valueSourceSwitch: capExListSwitch,
-        lifespanYears: numObj(itemProps[1]),
+        lifespanYears: itemProps[1],
         costToReplace: itemProps[2],
       },
     });

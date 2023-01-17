@@ -147,6 +147,16 @@ export class VarbMeta<SN extends SectionName> {
   }
 }
 
+export function getVarbMeta<SN extends SectionName>({
+  sectionName,
+  varbName,
+}: VarbNames<SN>) {
+  return VarbMeta.init({
+    sectionName,
+    varbName: varbName as string,
+  });
+}
+
 export interface InUpdatePack extends UpdateBasics {
   fixedInEntities: FixedInEntity[];
 }

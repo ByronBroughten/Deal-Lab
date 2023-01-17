@@ -1,12 +1,12 @@
 import { StrictOmit } from "../../../utils/types";
-import {
-  ActivePathName,
-  activeVarbDisplayName,
-  OptionVarbName,
-  optionVarbPathName,
-} from "../../pathVarbOptionParams";
 import { mixedInfoS } from "../../sectionChildrenDerived/MixedSectionInfo";
 import { PathVarbNames } from "../../SectionInfo/PathNameInfo";
+import {
+  VarbPathName,
+  VarbSectionPathName,
+  varbSectionPathName,
+} from "../../SectionInfo/VarbPathNameInfo";
+import { getVarbMeta } from "../../VarbMeta";
 import { Id } from "../id";
 import { AbsoluteInEntity, ValueInEntity } from "./entities";
 import { NumObj } from "./NumObj";
@@ -24,12 +24,13 @@ export function numObjNext(...propArr: EntityNumObjPropArr): NumObj {
       solvableText += `${prop}`;
     } else {
       const varbName = prop[0];
-      const pathName = optionVarbPathName(varbName);
+      const pathName = varbSectionPathName(varbName);
       const { sectionName, ...rest } = pathNameEntityInfo({
         pathName,
         varbName,
       });
-      const text = activeVarbDisplayName({ sectionName, varbName });
+
+      const text = getVarbMeta({ sectionName, varbName }).displayNameFull;
       entities.push({
         ...rest,
         sectionName,
@@ -49,9 +50,9 @@ export function numObjNext(...propArr: EntityNumObjPropArr): NumObj {
   };
 }
 
-type EntityNumObjPropArr = (number | string | [OptionVarbName])[];
+type EntityNumObjPropArr = (number | string | [VarbPathName])[];
 
-function pathNameEntityInfo<PN extends ActivePathName>({
+function pathNameEntityInfo<PN extends VarbSectionPathName>({
   pathName,
   varbName,
 }: PathVarbNames<PN>): StrictOmit<

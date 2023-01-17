@@ -1,21 +1,22 @@
+import { numObj } from "../../SectionsMeta/baseSectionsVarbs/baseValues/NumObj";
 import { numObjNext } from "../../SectionsMeta/baseSectionsVarbs/baseValues/numObjNext";
 
 export const userVarbLifespans = {
-  roof: ["Roof", 12],
-  waterHeater: ["Water heater", 12],
-  hvac: ["HVAC", 20],
-  interiorPaint: ["Interior paint", 10],
-  windows: ["Windows", 50],
-  siding: ["Siding", 9000],
-  appliances: ["Appliances", 10],
-  plumbing: ["Plumbing", 50],
-  driveway: ["Driveway", 50],
-  laundry: ["Laundry", 12],
-  flooring: ["Flooring", 20],
-  structure: ["Structure", 50],
-  cabinetsCounters: ["Cabinets/counters", 20],
-  garageDoor: ["Garage door", 10],
-  landscaping: ["Landscaping", 10],
+  roof: ["Roof", numObj(12)],
+  waterHeater: ["Water heater", numObj(12)],
+  hvac: ["HVAC", numObj(20)],
+  interiorPaint: ["Interior paint", numObj(10)],
+  windows: ["Windows", numObj(50)],
+  siding: ["Siding", numObj(9000)],
+  appliances: ["Appliances", numObj(10)],
+  plumbing: ["Plumbing", numObj(50)],
+  driveway: ["Driveway", numObj(50)],
+  laundry: ["Laundry", numObj(12)],
+  flooring: ["Flooring", numObj(20)],
+  structure: ["Structure", numObj(50)],
+  cabinetsCounters: ["Cabinets/counters", numObj(20)],
+  garageDoor: ["Garage door", numObj(10)],
+  landscaping: ["Landscaping", numObj(10)],
 } as const;
 
 export const examplePropertyCapExListProps = [

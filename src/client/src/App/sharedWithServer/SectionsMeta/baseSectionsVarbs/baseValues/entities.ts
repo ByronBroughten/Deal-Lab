@@ -12,7 +12,7 @@ import { PathInVarbInfo } from "../../sectionChildrenDerived/RelInOutVarbInfo";
 import { FeVarbInfo } from "../../SectionInfo/FeInfo";
 import {
   PathDbVarbInfoMixed,
-  VarbPathNameInfoMixed,
+  PathNameVarbInfoMixed,
   zSectionPathProp,
 } from "../../SectionInfo/PathNameInfo";
 import { SectionName } from "../../SectionName";
@@ -34,7 +34,7 @@ const zInEntityBase = z.object({
 });
 
 interface PathNameEntityInfo
-  extends VarbPathNameInfoMixed<SectionName, "onlyOne"> {}
+  extends PathNameVarbInfoMixed<SectionName, "onlyOne"> {}
 
 type PathEntityInfo = PathInVarbInfo;
 

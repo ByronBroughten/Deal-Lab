@@ -1,5 +1,6 @@
 import { Obj } from "../../utils/Obj";
 import { SubType } from "../../utils/types";
+import { VarbName } from "../baseSectionsDerived/baseSectionsVarbsTypes";
 import { SectionName } from "../SectionName";
 
 const sectionPathNameToSn = checkPathTypeToSectionName({
@@ -28,6 +29,10 @@ export type SectionPathName = keyof SectionPathNameToSn;
 export function isSectionPathName(value: any): value is SectionPathName {
   return sectionPathNames.includes(value);
 }
+
+export type SectionPathVarbName<PN extends SectionPathName> = VarbName<
+  PathSectionName<PN>
+>;
 
 export type PathSectionName<PN extends SectionPathName = SectionPathName> =
   SectionPathNameToSn[PN];
