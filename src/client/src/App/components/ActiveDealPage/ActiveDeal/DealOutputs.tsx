@@ -13,8 +13,6 @@ export function DealOutputs({ className, feId }: Props) {
     sectionName: "deal",
     feId,
   });
-  const showCalculations =
-    deal.get.valueNext("showCalculationsStatus") === "show";
 
   const { detailsIsOpen, toggleDetails } = useToggleView({
     initValue: false,
@@ -41,7 +39,7 @@ export function DealOutputs({ className, feId }: Props) {
               themeName="deal"
               className="MainSection-addChildBtn"
               onClick={() =>
-                deal.varb("showCalculationsStatus").updateValue("show")
+                showCalculationStatus()
               }
               text="Calculate Outputs"
             />

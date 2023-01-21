@@ -44,7 +44,9 @@ describe("SetterCalculations", () => {
 
     addTestLoan(dealTester);
 
-    const loan = dealTester.setter.addAndGetChild("loan");
+    const financing = dealTester.setter.onlyChild("financing");
+    financing.varb("financingMode").updateValue("useLoan");
+    const loan = financing.addAndGetChild("loan");
     loan.varb("loanBasePercentEditor").updateValue(numObj(0));
 
     const wrappedValue = loan.addAndGetChild("wrappedInLoanValue");
@@ -145,7 +147,10 @@ function addTestLoan(dealTester: SetterTesterSection<"deal">): void {
   const property = dealTester.setter.onlyChild("property");
   property.varb("price").updateValue(numObj(200000));
 
-  const loan = dealTester.setter.addAndGetChild("loan");
+  const financing = dealTester.setter.onlyChild("financing");
+  financing.varb("financingMode").updateValue("useLoan");
+
+  const loan = financing.addAndGetChild("loan");
   loan.varb("interestRatePercentOngoingSwitch").updateValue("yearly");
   loan.varb("interestRatePercentOngoingEditor").updateValue(numObj(5));
 
@@ -171,7 +176,10 @@ function addTestLoan(dealTester: SetterTesterSection<"deal">): void {
 }
 
 function addInterestOnlyLoan(dealTester: SetterTesterSection<"deal">): void {
-  const loan = dealTester.setter.addAndGetChild("loan");
+  const financing = dealTester.setter.onlyChild("financing");
+  financing.varb("financingMode").updateValue("useLoan");
+
+  const loan = financing.addAndGetChild("loan");
   loan.varb("isInterestOnly").updateValue(true);
 
   loan.varb("loanBaseUnitSwitch").updateValue("dollars");

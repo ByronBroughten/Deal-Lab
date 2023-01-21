@@ -1,8 +1,8 @@
 import {
   AllBaseSectionVarbs,
   allBaseSectionVarbs,
-  GeneralBaseSectionVarbs,
 } from "./allBaseSectionVarbs";
+import { GeneralBaseSectionVarbs } from "./allBaseSectionVarbs/baseSectionVarbs";
 import { AllSectionTraits, allSectionTraits } from "./allSectionTraits";
 import { allUpdateSections, AllUpdateSections } from "./allUpdateSectionVarbs";
 import {

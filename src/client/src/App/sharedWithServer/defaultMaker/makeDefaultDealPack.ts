@@ -6,10 +6,9 @@ import { makeDefaultPropertyPack } from "./makeDefaultPropertyPack";
 
 export function makeDefaultDealPack(): SectionPack<"deal"> {
   const deal = PackBuilderSection.initAsOmniChild("deal", {
-    dbVarbs: {
-      showCalculationsStatus: "hide",
-    },
+    dbVarbs: { dealMode: "buyAndHold" },
   });
+  deal.addChild("financing");
   deal.loadChild({
     childName: "dealOutputList",
     sectionPack: makeDefaultOutputList(),

@@ -59,14 +59,21 @@ export const sectionAbsolutePathInfos = {
   get dealLatent() {
     return absolute("deal", [...this.latent.path, "deal"]);
   },
-  get loanActive() {
-    return absolute("loan", [...this.dealActive.path, "loan"]);
-  },
+
   get mgmtActive() {
     return absolute("mgmt", [...this.dealActive.path, "mgmt"]);
   },
+  get financingActive() {
+    return absolute("financing", [...this.dealActive.path, "financing"]);
+  },
+  get financingLatent() {
+    return absolute("financing", [...this.dealLatent.path, "financing"]);
+  },
+  get loanActive() {
+    return absolute("loan", [...this.financingActive.path, "loan"]);
+  },
   get loanLatent() {
-    return absolute("loan", [...this.dealLatent.path, "loan"]);
+    return absolute("loan", [...this.financingLatent.path, "loan"]);
   },
   get mgmtLatent() {
     return absolute("mgmt", [...this.dealLatent.path, "mgmt"]);

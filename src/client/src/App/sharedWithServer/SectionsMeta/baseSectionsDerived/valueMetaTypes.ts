@@ -1,7 +1,5 @@
-import {
-  allBaseSectionVarbs,
-  GeneralBaseSectionVarbs,
-} from "../allBaseSectionVarbs";
+import { allBaseSectionVarbs } from "../allBaseSectionVarbs";
+import { GeneralBaseSectionVarbs } from "../allBaseSectionVarbs/baseSectionVarbs";
 import { StateValue } from "../allBaseSectionVarbs/baseValues/StateValueTypes";
 import { ValueName } from "../allBaseSectionVarbs/ValueName";
 import { SectionName } from "../SectionName";

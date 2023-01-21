@@ -57,6 +57,7 @@ import {
   FeVarbInfo,
 } from "../SectionsMeta/SectionInfo/FeInfo";
 import { RelSectionInfo } from "../SectionsMeta/SectionInfo/RelInfo";
+import { getVarbPathParams } from "../SectionsMeta/SectionInfo/VarbPathNameInfo";
 import { SectionMeta } from "../SectionsMeta/SectionMeta";
 import { SectionName } from "../SectionsMeta/SectionName";
 import {
@@ -65,7 +66,10 @@ import {
   SectionNameType,
 } from "../SectionsMeta/SectionNameByType";
 import { sectionPathContexts } from "../SectionsMeta/sectionPathContexts";
-import { SectionPathName } from "../SectionsMeta/sectionPathContexts/sectionPathNames";
+import {
+  pathSectionName,
+  SectionPathName,
+} from "../SectionsMeta/sectionPathContexts/sectionPathNames";
 import { PackMakerSection } from "../StatePackers.ts/PackMakerSection";
 import {
   RawFeSection,
@@ -131,22 +135,45 @@ export class GetterSection<
   ): this is GetterSection<SectionNameByType<ST>> {
     return sectionNameS.is(this.sectionName, sectionNameType);
   }
-  varbByFocalMixed({ varbName, ...mixedInfo }: VarbInfoMixedFocal): GetterVarb {
-    const section = this.sectionByFocalMixed(mixedInfo);
+  varbByFocalMixed(mixedInfo: VarbInfoMixedFocal): GetterVarb {
+    const { sectionInfo, varbName } = this.sectionAndVarbInfo(mixedInfo);
+    const section = this.sectionByFocalMixed(sectionInfo);
     return section.varb(varbName);
   }
-  hasVarbByFocalMixed({ varbName, ...rest }: VarbInfoMixedFocal): boolean {
-    if (this.hasSectionByFocalMixed(rest)) {
-      const section = this.sectionByFocalMixed(rest);
+  hasVarbByFocalMixed(mixedInfo: VarbInfoMixedFocal): boolean {
+    const { sectionInfo, varbName } = this.sectionAndVarbInfo(mixedInfo);
+    if (this.hasSectionByFocalMixed(sectionInfo)) {
+      const section = this.sectionByFocalMixed(sectionInfo);
       return section.meta.isVarbName(varbName);
     }
     return false;
   }
-  varbsByFocalMixed({
-    varbName,
-    ...mixedInfo
-  }: VarbInfoMixedFocal): GetterVarb[] {
-    const sections = this.sectionsByFocalMixed(mixedInfo);
+  private sectionAndVarbInfo(mixedInfo: VarbInfoMixedFocal): {
+    varbName: string;
+    sectionInfo: SectionInfoMixedFocal;
+  } {
+    if (mixedInfo.infoType === "varbPathName") {
+      const { pathName, varbName } = getVarbPathParams(mixedInfo.varbPathName);
+      return {
+        varbName,
+        sectionInfo: {
+          infoType: "pathName",
+          pathName,
+          expectedCount: mixedInfo.expectedCount,
+          sectionName: pathSectionName(pathName),
+        },
+      };
+    } else {
+      const { varbName, ...sectionInfo } = mixedInfo;
+      return {
+        varbName,
+        sectionInfo,
+      };
+    }
+  }
+  varbsByFocalMixed(mixedInfo: VarbInfoMixedFocal): GetterVarb[] {
+    const { varbName, sectionInfo } = this.sectionAndVarbInfo(mixedInfo);
+    const sections = this.sectionsByFocalMixed(sectionInfo);
     return sections.map((section) => section.varb(varbName));
   }
   sectionByFocalMixed(info: SectionInfoMixedFocal) {

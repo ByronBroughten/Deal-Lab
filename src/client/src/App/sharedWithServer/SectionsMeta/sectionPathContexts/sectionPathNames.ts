@@ -10,6 +10,7 @@ const sectionPathNameToSn = checkPathTypeToSectionName({
   dealFocal: "deal",
   propertyFocal: "property",
   loanFocal: "loan",
+  financingFocal: "financing",
   mgmtFocal: "mgmt",
   calculatedVarbsFocal: "calculatedVarbs",
   userVarbItemMain: "userVarbItem",
@@ -39,7 +40,7 @@ export type PathSectionName<PN extends SectionPathName = SectionPathName> =
 
 export type SectionNameOfPath<PN extends SectionPathName> =
   SectionPathNameToSn[PN];
-export function sectionNameByPathName<PN extends SectionPathName>(
+export function pathSectionName<PN extends SectionPathName>(
   pathName: PN
 ): SectionNameOfPath<PN> {
   return sectionPathNameToSn[pathName];

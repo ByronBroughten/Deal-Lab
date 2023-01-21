@@ -17,11 +17,12 @@ import {
   PathNameInfoMixed,
 } from "../SectionInfo/PathNameInfo";
 import { RelSectionInfo } from "../SectionInfo/RelInfo";
+import { VarbPathNameInfoMixed } from "../SectionInfo/VarbPathNameInfo";
 import { SectionName } from "../SectionName";
 import {
   PathNameOfSection,
   PathSectionName,
-  sectionNameByPathName,
+  pathSectionName,
   SectionPathName,
 } from "../sectionPathContexts/sectionPathNames";
 
@@ -72,7 +73,7 @@ export const mixedInfoS = {
   ): PathNameInfoMixed<PathSectionName<PN>, EC> {
     return {
       infoType: "pathName",
-      sectionName: sectionNameByPathName(pathName),
+      sectionName: pathSectionName(pathName),
       pathName: pathName as any,
       expectedCount: (expectedCount ?? "onlyOne") as EC,
     };
@@ -137,4 +138,6 @@ export type SectionInfoMixedFocal =
   | RelSectionInfo
   | PathNameInfoMixed
   | PathNameDbInfoMixed;
-export type VarbInfoMixedFocal = SectionInfoMixedFocal & VarbProp;
+
+type SectionToVarbInfoMixed = SectionInfoMixedFocal & VarbProp;
+export type VarbInfoMixedFocal = SectionToVarbInfoMixed | VarbPathNameInfoMixed;

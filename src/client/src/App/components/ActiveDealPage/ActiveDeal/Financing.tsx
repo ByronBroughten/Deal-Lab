@@ -16,7 +16,7 @@ import {
 } from "./MainDealSection";
 
 function useFinancingCompletionStatus(
-  deal: GetterSection<"deal">
+  financing: GetterSection<"financing">
 ): CompletionStatus {
   let allEmpty = true;
   let allValid = true;
@@ -31,12 +31,12 @@ function useFinancingCompletionStatus(
     if (!isValid) allValid = false;
   };
 
-  const financingMode = deal.valueNext("financingMode");
+  const financingMode = financing.valueNext("financingMode");
   if (!financingMode) updateBools({ isEmpty: true, isValid: false });
   else updateBools({ isEmpty: false, isValid: true });
 
   if (financingMode === "useLoan") {
-    const loans = deal.children("loan");
+    const loans = financing.children("loan");
     if (loans.length < 1) {
       updateBools({ isEmpty: true, isValid: false });
     }
@@ -108,13 +108,13 @@ function useFinancingCompletionStatus(
   else return "someInvalid";
 }
 
-function getDisplayName(deal: GetterSection<"deal">) {
-  const financingMode = deal.valueNext("financingMode");
+function getDisplayName(financing: GetterSection<"financing">) {
+  const financingMode = financing.valueNext("financingMode");
   if (financingMode === "cashOnly") {
     return "Cash Only";
   }
 
-  const loans = deal.children("loan");
+  const loans = financing.children("loan");
   let displayName = "";
   for (let i = 0; i < loans.length; i++) {
     if (i !== 0) displayName += " | ";
@@ -128,18 +128,18 @@ export function Financing({
   closeInputs,
   ...props
 }: MainDealSectionProps & { closeInputs: () => void }) {
-  const deal = useSetterSection({
-    sectionName: "deal",
+  const financing = useSetterSection({
+    sectionName: "financing",
     feId,
   });
 
-  const financingModeVarb = deal.varb("financingMode");
+  const financingModeVarb = financing.varb("financingMode");
   const financingMode = financingModeVarb.value("string");
 
-  const loanIds = deal.childFeIds("loan");
-  const addLoan = () => deal.addChild("loan");
+  const loanIds = financing.childFeIds("loan");
+  const addLoan = () => financing.addChild("loan");
 
-  const completionStatus = useFinancingCompletionStatus(deal.get);
+  const completionStatus = useFinancingCompletionStatus(financing.get);
   return (
     <Styled
       {...{
@@ -148,7 +148,7 @@ export function Financing({
         sectionTitle: "Financing",
         className: "Financing-root",
         closeInputs,
-        displayName: getDisplayName(deal.get),
+        displayName: getDisplayName(financing.get),
         completionStatus,
       }}
     >

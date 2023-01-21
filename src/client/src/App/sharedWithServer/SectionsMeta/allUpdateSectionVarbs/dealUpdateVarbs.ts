@@ -19,8 +19,7 @@ export function dealRelVarbs(): UpdateSectionVarbs<"deal"> {
       updateFnPropS.pathName("propertyFocal", "taxes"),
       updateFnPropS.pathName("propertyFocal", "homeIns"),
     ]),
-    financingMode: updateVarb("string", { initValue: "" }),
-    showCalculationsStatus: updateVarb("string", { initValue: "hide" }),
+    dealMode: updateVarb("string", { initValue: "buyAndHold" }),
     downPaymentDollars: relVarbS.leftRightPropFn("simpleSubtract", [
       updateFnPropS.pathName("propertyFocal", "price"),
       updateFnPropS.pathName("calculatedVarbsFocal", "loanBaseDollars"),

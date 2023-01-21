@@ -136,7 +136,7 @@ export const allSectionChildren = checkAllSectionChildren({
   conditionalRowList: { conditionalRow: sectionChild("conditionalRow") },
   deal: sectionChildren({
     property: ["property"],
-    loan: ["loan"],
+    financing: ["financing"],
     mgmt: ["mgmt"],
     dealOutputList: ["outputList"],
   }),

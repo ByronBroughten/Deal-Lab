@@ -4,7 +4,7 @@ import {
   allVarbPathParams,
   VarbSectionPathName,
 } from "../SectionsMeta/SectionInfo/VarbPathNameInfo";
-import { sectionNameByPathName } from "../SectionsMeta/sectionPathContexts/sectionPathNames";
+import { pathSectionName } from "../SectionsMeta/sectionPathContexts/sectionPathNames";
 import { getVarbMeta } from "../SectionsMeta/VarbMeta";
 import { Obj } from "../utils/Obj";
 import { VariableOption } from "./VariableGetterSections";
@@ -21,7 +21,7 @@ function initAbsoluteVarbOption<PN extends VarbSectionPathName>({
   varbName,
   collectionName,
 }: PathVarbNames<PN> & { collectionName: string }): VariableOption {
-  const sectionName = sectionNameByPathName(pathName);
+  const sectionName = pathSectionName(pathName);
   return {
     varbInfo: mixedInfoS.pathNameVarb(pathName, varbName, "onlyOne"),
     collectionName,

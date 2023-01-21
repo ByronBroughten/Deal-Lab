@@ -27,8 +27,7 @@ export function ActiveDeal({ className, feId }: Props) {
   const makeSectionProps = (
     sectionName: StrictExclude<SectionView, "deal">
   ) => ({
-    feId:
-      sectionName === "financing" ? deal.feId : deal.onlyChildFeId(sectionName),
+    feId: deal.onlyChildFeId(sectionName),
     showInputs: sectionView === sectionName,
     openInputs: () => setSectionView(sectionName),
     closeInputs: () => setSectionView("deal"),

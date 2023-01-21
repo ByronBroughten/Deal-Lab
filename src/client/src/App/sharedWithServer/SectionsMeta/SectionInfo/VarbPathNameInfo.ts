@@ -1,3 +1,4 @@
+import { ExpectedCount } from "../allBaseSectionVarbs/NanoIdInfo";
 import {
   SectionPathName,
   SectionPathVarbName,
@@ -72,8 +73,16 @@ export function getVarbPathParams<VPN extends VarbPathName>(
   return allVarbPathParams[varbPathName];
 }
 
-interface VarbPathNameInfo<VPN extends VarbPathName> {
+export interface VarbPathNameInfo<VPN extends VarbPathName> {
   varbPathName: VPN;
+}
+export interface VarbPathNameInfoMixed<
+  VPN extends VarbPathName = VarbPathName,
+  EC extends ExpectedCount = ExpectedCount
+> {
+  infoType: "varbPathName";
+  varbPathName: VPN;
+  expectedCount: EC;
 }
 
 type SectionVarbPathParams<
