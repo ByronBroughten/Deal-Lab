@@ -183,7 +183,7 @@ export function makeAllBaseSectionVarbs() {
     unit: baseSectionVarbs({
       one: baseVarb("numObj"),
       numBedrooms: baseVarb("numObj"),
-      ...baseVarbsS.ongoingDollars("targetRent"),
+      ...baseVarbsS.ongoingDollarsInput("targetRent"),
     }),
     loan: baseSectionVarbs({
       ...baseVarbsS.savableSection,
@@ -267,6 +267,7 @@ export function makeAllBaseSectionVarbs() {
       downPaymentPercent: baseVarb("numObj", percent),
       downPaymentDecimal: baseVarb("numObj", decimal),
       mode: baseVarb("string"),
+      financingMode: baseVarb("string"), // cashOnly, useLoan
       showCalculationsStatus: baseVarb("string"),
       ...baseVarbsS.ongoingDollars("piti"),
       ...baseVarbsS.ongoingDollars("expenses"),

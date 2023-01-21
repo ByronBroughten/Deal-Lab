@@ -69,7 +69,7 @@ export const allDisplaySectionVarbs = {
   }),
   ...displaySectionVarbsProp("unit", {
     numBedrooms: display("Bedrooms"),
-    ...ongoingDollars("targetRent", "Rent"),
+    ...ongoingInputDollars("targetRent", "Rent"),
   }),
   ...displaySectionVarbsProp("calculatedVarbs", {
     onePercentPrice: display("1% Purchase Price"),

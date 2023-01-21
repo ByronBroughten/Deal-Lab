@@ -1,42 +1,34 @@
 import styled from "styled-components";
-import theme, { ThemeName } from "../../theme/Theme";
-import { StandardProps } from "../general/StandardProps";
+import theme from "../../theme/Theme";
+import { LabeledVarb, LabeledVarbProps } from "./LabeledVarb";
 
-interface Props extends StandardProps {
-  themeName: ThemeName;
-}
-export default function LabeledVarbRow({
-  className,
-  children,
-  themeName,
-}: Props) {
+type Props = { varbPropArr: LabeledVarbProps[]; className?: string };
+export function LabeledVarbRow({ varbPropArr, className }: Props) {
   return (
-    <Styled
-      {...{
-        $themeName: themeName,
-        className: `LabeledVarbRow-root ${className}`,
-      }}
-    >
-      {children}
-    </Styled>
+    <StyledLabeledVarbRow className={`LabeledVarbRow-root ${className}`}>
+      {varbPropArr.map((props) => (
+        <LabeledVarb
+          {...{
+            ...props,
+            key: props.feId,
+          }}
+        />
+      ))}
+    </StyledLabeledVarbRow>
   );
 }
 
-const Styled = styled.div<{ $themeName: ThemeName }>`
-  background: ${({ $themeName }) => theme[$themeName].main};
+export const StyledLabeledVarbRow = styled.div`
   display: flex;
   flex-wrap: wrap;
-  border-radius: ${theme.br0};
+  align-items: stretch;
 
-  padding-left: ${theme.s15};
-  padding-right: ${theme.s15};
   .LabeledVarb-root {
-    margin: ${theme.s25} ${theme.s15};
+    margin: ${theme.s25} ${theme.s25};
   }
-  .LabeledVarb-label {
-    font-size: 1.05rem;
-  }
+
+  .LabeledVarb-label,
   .LabeledVarb-output {
-    font-size: 1.05rem;
+    font-size: 1.3rem;
   }
 `;

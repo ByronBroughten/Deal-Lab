@@ -23,7 +23,7 @@ export function UnitItem({ feId, unitNumber }: Props) {
         />
         <NumObjEntityEditor
           className="target-rent"
-          feVarbInfo={unit.switchVarbInfo("targetRent", "ongoing")}
+          feVarbInfo={unit.varbInfo("targetRentOngoingEditor")}
         />
       </div>
     </Styled>

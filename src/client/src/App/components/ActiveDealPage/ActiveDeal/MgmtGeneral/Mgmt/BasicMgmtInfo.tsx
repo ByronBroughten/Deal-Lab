@@ -1,36 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import {
-  switchKeyToVarbNames,
-  SwitchTargetKey,
-} from "../../../../../sharedWithServer/SectionsMeta/baseSectionsVarbs/baseSwitchNames";
 import theme from "../../../../../theme/Theme";
 import { PercentOngoingDollarInput } from "../../general/PercentOngoingDollarInput";
-
-function getEditorVarbName(unitSwitch: SwitchTargetKey<"dollarsPercent">) {
-  switch (unitSwitch) {
-    case "percent":
-      return "basePayPercentEditor";
-    case "dollars":
-      return "basePayDollarsEditor";
-    default:
-      throw new Error("unitSwitch should be percent or dollars");
-  }
-}
-
-function getDisplayVarbName(
-  unitSwitch: SwitchTargetKey<"dollarsPercent">,
-  ongoingSwitch: SwitchTargetKey<"ongoing">
-) {
-  switch (unitSwitch) {
-    case "percent":
-      return switchKeyToVarbNames("basePayDollars", "ongoing")[ongoingSwitch];
-    case "dollars":
-      return "basePayPercent";
-    default:
-      throw new Error("unitSwitch should be percent or dollars");
-  }
-}
 
 type Props = { feId: string; className?: string };
 export function BasicMgmtInfo({ feId, className }: Props) {

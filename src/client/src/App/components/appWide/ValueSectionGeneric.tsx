@@ -7,7 +7,7 @@ import { ChildName } from "../../sharedWithServer/SectionsMeta/sectionChildrenDe
 import { SectionNameByType } from "../../sharedWithServer/SectionsMeta/SectionNameByType";
 import { useSetterSection } from "../../sharedWithServer/stateClassHooks/useSetterSection";
 import theme from "../../theme/Theme";
-import PlainIconBtn from "../general/PlainIconBtn";
+import { PlainIconBtn } from "../general/PlainIconBtn";
 import { BigStringEditor } from "../inputs/BigStringEditor";
 import { NumObjEntityEditor } from "../inputs/NumObjEntityEditor";
 import { RemoveSectionXBtn } from "./RemoveSectionXBtn";
@@ -113,9 +113,8 @@ export function ValueSectionGeneric<
             <PlainIconBtn
               className="ValueSection-editItemsBtn"
               onClick={openModal}
-            >
-              <AiFillEdit size={20} />
-            </PlainIconBtn>
+              middle={<AiFillEdit size={20} />}
+            />
           )}
         </div>
       </div>

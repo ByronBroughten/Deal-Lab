@@ -2,9 +2,9 @@ import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeIn
 import { useGetterSections } from "../../sharedWithServer/stateClassHooks/useGetterSections";
 import { GetterVarb } from "../../sharedWithServer/StateGetters/GetterVarb";
 import { ThemeName } from "../../theme/Theme";
-import { StyledLabeledVarb } from "./LoadedVarb";
+import { StyledLabeledVarb } from "./LabeledVarb";
 
-type useLabeledVarbProps = {
+type UseLabeledVarbProps = {
   feVarbInfo?: FeVarbInfo;
   displayVarb?: string;
   displayLabel?: string;
@@ -16,7 +16,7 @@ function useLabeledVarb({
   displayVarb,
   parenthInfo,
   ...adornments
-}: useLabeledVarbProps): { displayLabel: string; displayVarb: string } {
+}: UseLabeledVarbProps): { displayLabel: string; displayVarb: string } {
   const sections = useGetterSections();
   if (!feVarbInfo || !sections.hasSection(feVarbInfo))
     return {
@@ -39,12 +39,12 @@ function useLabeledVarb({
   return { displayLabel, displayVarb };
 }
 
-type LabeledVarbProps = useLabeledVarbProps & {
+interface LabeledVarbProps extends UseLabeledVarbProps {
   feVarbInfo: FeVarbInfo;
   onXBtnClick?: () => void;
   className?: string;
   themeName?: ThemeName;
-};
+}
 export function LabeledVarbSimple({
   feVarbInfo,
   className,

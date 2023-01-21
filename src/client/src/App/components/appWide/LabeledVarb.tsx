@@ -1,13 +1,17 @@
 import styled from "styled-components";
-import { FeSectionInfo } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
+import {
+  FeSectionInfo,
+  FeVarbInfo,
+} from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { useGetterSection } from "../../sharedWithServer/stateClassHooks/useGetterSection";
+import { useGetterVarb } from "../../sharedWithServer/stateClassHooks/useGetterVarb";
 import theme, { ThemeName } from "../../theme/Theme";
 
 interface LabeledVarbNotFoundProps {
   className?: string;
   onXBtnClick?: () => void;
 }
-export function LoadedVarbNotFound({ ...rest }: LabeledVarbNotFoundProps) {
+export function LabeledVarbNotFound({ ...rest }: LabeledVarbNotFoundProps) {
   return (
     <StyledLabeledVarb
       {...{
@@ -20,10 +24,10 @@ export function LoadedVarbNotFound({ ...rest }: LabeledVarbNotFoundProps) {
   );
 }
 
-interface LabeledVarbProps extends LabeledVarbNotFoundProps {
+export interface LoadedVarbProps extends LabeledVarbNotFoundProps {
   feInfo: FeSectionInfo;
 }
-export function LoadedVarb({ feInfo, ...rest }: LabeledVarbProps) {
+export function LoadedVarb({ feInfo, ...rest }: LoadedVarbProps) {
   const section = useGetterSection(feInfo);
   const { virtualVarb } = section;
   const { entityId } = section.valueInEntityInfo();
@@ -33,6 +37,28 @@ export function LoadedVarb({ feInfo, ...rest }: LabeledVarbProps) {
         labelText: virtualVarb.displayName,
         displayVarb: virtualVarb.displayVarb(),
         labelId: entityId,
+        ...rest,
+      }}
+    />
+  );
+}
+
+export interface LabeledVarbProps
+  extends LabeledVarbNotFoundProps,
+    FeVarbInfo {}
+export function LabeledVarb({
+  varbName,
+  sectionName,
+  feId,
+  ...rest
+}: LabeledVarbProps) {
+  const varb = useGetterVarb({ varbName, sectionName, feId });
+  return (
+    <StyledLabeledVarb
+      {...{
+        labelText: varb.displayName,
+        displayVarb: varb.displayVarb(),
+        labelId: varb.varbId,
         ...rest,
       }}
     />
@@ -91,7 +117,7 @@ const Styled = styled.div<{ $themeName: ThemeName }>`
   box-shadow: none;
 
   border-radius: ${theme.br0};
-  padding: ${theme.s2};
+  padding: ${theme.s3};
 
   .LabeledVarb-label {
     color: ${theme.primaryNext};

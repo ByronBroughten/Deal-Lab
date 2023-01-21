@@ -23,15 +23,17 @@ export function makeExampleProperty(): SectionPack<"property"> {
   property.updater.updateValues({
     displayName: stringObj("Example Property"),
     price: numObj(250000),
-    taxesYearly: numObj(2800),
-    homeInsYearly: numObj(1800),
+    taxesOngoingEditor: numObj(2800),
+    taxesOngoingSwitch: "yearly",
+    homeInsOngoingEditor: numObj(1800),
+    homeInsOngoingSwitch: "yearly",
     sqft: numObj(2500),
   });
   property.addChild("unit", {
-    dbVarbs: { targetRentMonthly: numObj(1500), numBedrooms: numObj(3) },
+    dbVarbs: { targetRentOngoingEditor: numObj(1500), numBedrooms: numObj(3) },
   });
   property.addChild("unit", {
-    dbVarbs: { targetRentMonthly: numObj(1500), numBedrooms: numObj(3) },
+    dbVarbs: { targetRentOngoingEditor: numObj(1500), numBedrooms: numObj(3) },
   });
 
   const upfrontRepairValue = property.onlyChild("repairCostValue");

@@ -344,7 +344,7 @@ function makeAllUpdateSections() {
         initValue: numObj(1),
       }),
       numBedrooms: updateVarb("numObj"),
-      ...updateVarbsS.ongoingInput("targetRent"),
+      ...updateVarbsS.ongoingInputNext("targetRent"),
     }),
     ...updateSectionProp("loan", loanRelVarbs()),
     ...updateSectionProp("mgmt", mgmtRelVarbs()),

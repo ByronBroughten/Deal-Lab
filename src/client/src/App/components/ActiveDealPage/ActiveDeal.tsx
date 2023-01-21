@@ -1,11 +1,12 @@
 import { FormControl, MenuItem, Select } from "@material-ui/core";
 import React from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { useGetterSection } from "../../sharedWithServer/stateClassHooks/useGetterSection";
+import { StrictExclude } from "../../sharedWithServer/utils/types";
 import theme from "../../theme/Theme";
 import { MainSectionTopRows } from "../appWide/MainSectionTopRows";
 import { OuterMainSection } from "./../appWide/GeneralSection/OuterMainSection";
-import { DealOutputs } from "./ActiveDeal/DealOutputs";
+import { OutputSection } from "./ActiveDeal/DealOutputs/DealOutputSection";
 import { Financing } from "./ActiveDeal/Financing";
 import { Mgmt } from "./ActiveDeal/MgmtGeneral/Mgmt";
 import { Property } from "./ActiveDeal/PropertyGeneral/Property";
@@ -15,11 +16,31 @@ type Props = {
   loginSuccess?: boolean;
   className?: string;
 };
+
+type SectionView = "deal" | "property" | "financing" | "mgmt";
+
 export function ActiveDeal({ className, feId }: Props) {
   const feInfo = { sectionName: "deal", feId } as const;
   const deal = useGetterSection(feInfo);
+  const [sectionView, setSectionView] = React.useState("deal" as SectionView);
+
+  const makeSectionProps = (
+    sectionName: StrictExclude<SectionView, "deal">
+  ) => ({
+    feId:
+      sectionName === "financing" ? deal.feId : deal.onlyChildFeId(sectionName),
+    showInputs: sectionView === sectionName,
+    openInputs: () => setSectionView(sectionName),
+    closeInputs: () => setSectionView("deal"),
+    hide: ![sectionName, "deal"].includes(sectionView),
+  });
+
+  const isDealView = sectionView === "deal";
   return (
-    <Styled className={`ActiveDeal-root ${className ?? ""}`}>
+    <Styled
+      className={`ActiveDeal-root ${className ?? ""}`}
+      $showDeal={isDealView}
+    >
       <MainSectionTopRows
         {...{
           ...feInfo,
@@ -43,16 +64,20 @@ export function ActiveDeal({ className, feId }: Props) {
         }}
       />
       <div className="ActiveDeal-inputSectionsWrapper">
-        <Property feId={deal.onlyChildFeId("property")} />
-        <Financing feId={deal.feId} />
-        <Mgmt feId={deal.onlyChildFeId("mgmt")} />
+        <Property {...makeSectionProps("property")} />
+        <Financing {...makeSectionProps("financing")} />
+        <Mgmt {...makeSectionProps("mgmt")} />
       </div>
-      <DealOutputs feId={feId} />
+      <OutputSection
+        feId={feId}
+        hide={!(sectionView === "deal")}
+        detailsIsOpen={false}
+      />
     </Styled>
   );
 }
 
-const Styled = styled(OuterMainSection)`
+const Styled = styled(OuterMainSection)<{ $showDeal: boolean }>`
   padding-bottom: 0;
   @media (max-width: ${theme.mediaPhone}) {
     padding-left: ${theme.s15};
@@ -61,20 +86,29 @@ const Styled = styled(OuterMainSection)`
 
   .ActiveDeal-mainSectionTopRowRoot {
     margin-left: ${theme.s3};
+    ${({ $showDeal }) =>
+      !$showDeal &&
+      css`
+        display: none;
+      `}
   }
   .ActiveDeal-modeSelector {
     margin-top: ${theme.s2};
   }
 
   .ActiveDeal-inputSectionsWrapper {
-    margin: auto;
+    /* margin: auto; */
   }
 
-  .Property-root,
-  .Financing-root,
-  .Mgmt-root {
-    margin-top: ${theme.dealElementSpacing};
-  }
+  ${({ $showDeal }) =>
+    $showDeal &&
+    css`
+      .Property-root,
+      .Financing-root,
+      .Mgmt-root {
+        margin-top: ${theme.dealElementSpacing};
+      }
+    `}
 
   .OutputSection-root {
     margin-top: ${theme.dealElementSpacing};

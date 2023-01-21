@@ -74,6 +74,9 @@ export const sectionAbsolutePathInfos = {
   get propertyActive() {
     return absolute("property", [...this.dealActive.path, "property"]);
   },
+  get unitActive() {
+    return absolute("property", [...this.propertyActive.path, "property"]);
+  },
   get propertyLatent() {
     return absolute("property", [...this.dealLatent.path, "property"]);
   },

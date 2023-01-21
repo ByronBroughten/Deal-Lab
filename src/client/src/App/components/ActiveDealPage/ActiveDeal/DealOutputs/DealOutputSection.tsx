@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { useGetterSection } from "../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import theme from "../../../../theme/Theme";
 import { MainSection } from "../../../appWide/GeneralSection/MainSection";
@@ -10,27 +10,36 @@ import { DealOutputList } from "./OutputSection/DealOutputList";
 export function OutputSection({
   feId,
   detailsIsOpen,
+  hide,
 }: {
   feId: string;
   detailsIsOpen: boolean;
+  hide?: boolean;
 }) {
   const feInfo = { sectionName: "deal", feId } as const;
   const deal = useGetterSection(feInfo);
   const outputListFeId = deal.onlyChild("dealOutputList").feId;
   return (
-    <MainSection className="OutputSection-root">
+    <Styled className="OutputSection-root" $hide={hide}>
       <SectionTitle text="Outputs" />
       <MainSectionBody themeName="deal">
-        <Styled className="ListGroup-root">
+        <div className="ListGroup-root">
           <div className="OutputSection-viewable viewable">
             {!detailsIsOpen && <DealOutputList feId={outputListFeId} />}
             {detailsIsOpen && <DealDetails feId={outputListFeId} />}
           </div>
-        </Styled>
+        </div>
       </MainSectionBody>
-    </MainSection>
+    </Styled>
   );
 }
-const Styled = styled.div`
-  border-radius: ${theme.br0};
+const Styled = styled(MainSection)<{ $hide?: boolean }>`
+  .DealOutputList-root {
+    margin-left: -${theme.s2};
+  }
+  ${({ $hide }) =>
+    $hide &&
+    css`
+      display: none;
+    `}
 `;

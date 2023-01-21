@@ -1,10 +1,24 @@
 import styled from "styled-components";
 import { inEntityIdInfo } from "../../../../../sharedWithServer/SectionsMeta/baseSectionsVarbs/baseValues/InEntityIdInfoValue";
+import { useGetterSection } from "../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { useSetterSection } from "../../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import { VariableOption } from "../../../../../sharedWithServer/StateEntityGetters/VariableGetterSections";
 import theme from "../../../../../theme/Theme";
-import { LabeledOutputRow } from "../../../../appWide/LabeledOutputRow";
-import { LabeledVarbOutput } from "../../../../appWide/LabeledVarbOutput";
+import { LoadedVarbProps } from "../../../../appWide/LabeledVarb";
+import { LoadedVarbRow } from "../../../../appWide/LoadedVarbRow";
+
+function useLoadedOutputRowProps(feId: string): LoadedVarbProps[] {
+  const outputList = useGetterSection({
+    sectionName: "outputList",
+    feId,
+  });
+
+  return outputList.children("outputItem").map((outputItem) => {
+    const entityVarbInfo = outputItem.value("valueEntityInfo", "inEntityInfo");
+    if (entityVarbInfo === null) throw new Error("Value not initialized");
+    return { feInfo: outputItem.feInfo };
+  });
+}
 
 export function DealOutputList({ feId }: { feId: string }) {
   const outPutList = useSetterSection({
@@ -17,13 +31,10 @@ export function DealOutputList({ feId }: { feId: string }) {
       dbVarbs: { valueEntityInfo: inEntityIdInfo(varbInfo) },
     });
 
+  const propArr = useLoadedOutputRowProps(feId);
   return (
-    <Styled className="BasicAnalysis-root">
-      <LabeledOutputRow>
-        {outPutList.childFeIds("outputItem").map((outputId) => (
-          <LabeledVarbOutput key={outputId} feId={outputId} />
-        ))}
-      </LabeledOutputRow>
+    <Styled className="DealOutputList-root">
+      <LoadedVarbRow {...{ varbPropArr: propArr }} />
     </Styled>
   );
 }

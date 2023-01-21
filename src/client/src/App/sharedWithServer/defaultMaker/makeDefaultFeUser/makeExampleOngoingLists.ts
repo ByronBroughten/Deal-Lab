@@ -27,9 +27,9 @@ export function makeCapExList(
       dbVarbs: {
         displayNameEditor: itemProps[0],
         valueOngoingSwitch: "yearly",
-        lifespanSpanSwitch: "years",
         valueSourceSwitch: capExListSwitch,
-        lifespanYears: itemProps[1],
+        lifespanSpanEditor: itemProps[1],
+        lifespanSpanSwitch: "years",
         costToReplace: itemProps[2],
       },
     });

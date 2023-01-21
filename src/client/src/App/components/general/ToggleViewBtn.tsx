@@ -2,7 +2,7 @@ import React from "react";
 import { FiMaximize2, FiMinimize2 } from "react-icons/fi";
 import styled from "styled-components";
 import theme from "../../theme/Theme";
-import PlainIconBtn from "./PlainIconBtn";
+import { PlainIconBtn } from "./PlainIconBtn";
 
 export default function ToggleViewBtn({
   className = "",
@@ -13,11 +13,16 @@ export default function ToggleViewBtn({
   viewIsOpen: boolean;
   onClick?: any;
 }) {
+  const middle = viewIsOpen ? (
+    <FiMaximize2 className="icon" />
+  ) : (
+    <FiMinimize2 className="icon" />
+  );
   return (
-    <Styled className={"ToggleViewBtn-root " + className} {...rest}>
-      {!viewIsOpen && <FiMinimize2 className="icon" />}
-      {viewIsOpen && <FiMaximize2 className="icon" />}
-    </Styled>
+    <Styled
+      className={"ToggleViewBtn-root " + className}
+      {...{ ...rest, middle }}
+    />
   );
 }
 

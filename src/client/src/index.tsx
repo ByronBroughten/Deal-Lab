@@ -1,6 +1,5 @@
 import { AppRegistry } from "react-native";
 import App from "./App";
-import reportWebVitals from "./reportWebVitals";
 
 AppRegistry.registerComponent("App", () => App);
 AppRegistry.runApplication("App", {
@@ -8,23 +7,31 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-reportWebVitals();
+// 3. Add Financing back and give it a completionStatus varb
+//    it doesn't necessarily need its variables. But it could get them
+// 2. Make the completion statuses update based on solve
+// 1. Fix the slow type check.
+//    - Try making most of baseVarb not generic. That's best for now.
+
+// - For now, I could just disable it and put a hover-over that
+//   says, "please fill in all the fields" when it's not yet complete
+
+// How do I want the finish button to work?
+// - Well, the ideal is that it triggers a display
+// of the fields that aren't filled in correctly.
 
 // 3. Make a simple wordpress website
-// - This is towards marketing it
-// - This also might be towards a programming job
+// - Just do it badly at first, for the gist of it.
+// - Then pay someone to do it well
 
-// Options:
-// Deal should just have very simple, "property", "loan", and "management"
-
-// The property page is just the deal page but with all the extra deal
-// stuff and everything but property removed.
+// *Ouputs
+// "To view ouptuts, enter Property, Financing, and Management data."
+//  "Calculate Outputs", or, "View Outputs"
 
 // 1. Create a property info component.
-// 2. Add an edit button to it.
-// 3. Make clicking the edit button make the full property
-//    component cover the whole deal page
-// 4. Show need only have a string, "deal", "property", "loan", "mgmt"
+// When a section has all info, I want to display some of it
+// have an "edit" button, and indicate that the section is complete.
+// - Display total income, total expenses, total upfront costs
 
 // 1. Create a financing info component.
 // 2. That component starts with a switch between using loans or using cash only

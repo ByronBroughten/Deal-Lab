@@ -45,6 +45,9 @@ export function Loan({
 }
 
 const Styled = styled(MainSection)`
+  box-shadow: none;
+  border: ${theme.borderStyle};
+
   .ValueSectionOneTime-root {
     margin: ${theme.s2};
     margin-top: 0;

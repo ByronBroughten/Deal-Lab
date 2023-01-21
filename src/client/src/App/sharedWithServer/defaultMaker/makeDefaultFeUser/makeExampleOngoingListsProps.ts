@@ -20,7 +20,7 @@ export const userVarbLifespans = {
 } as const;
 
 export const examplePropertyCapExListProps = [
-  [...userVarbLifespans.roof, numObjNext(8000)],
+  [...userVarbLifespans.roof, numObj(8000)],
   [...userVarbLifespans.waterHeater, numObjNext("1200*", ["numUnits"])],
   [...userVarbLifespans.hvac, numObjNext("3500*", ["numUnits"])],
   [...userVarbLifespans.interiorPaint, numObjNext(["sqft"], "*3")],

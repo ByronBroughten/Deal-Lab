@@ -5,7 +5,7 @@ import {
 } from "../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import theme from "../../../../theme/Theme";
 import useHowMany from "../../../appWide/customHooks/useHowMany";
-import LabeledVarbRow from "../../../appWide/LabeledVarbRow";
+import { StyledLabeledVarbRow } from "../../../appWide/LabeledVarbRow";
 import { LabeledVarbSimple } from "../../../appWide/LabeledVarbSimple";
 import GlobalInfoSection from "../general/StaticInfoSection";
 
@@ -24,7 +24,7 @@ export default function FinancingInfo({ feId }: { feId: string }) {
   const { isAtLeastOne, areMultiple } = useHowMany(loanIds);
   return (
     <Styled className="FinancingInfo-root">
-      <LabeledVarbRow themeName="loan">
+      <StyledLabeledVarbRow>
         {
           <>
             <LabeledVarbSimple
@@ -54,7 +54,7 @@ export default function FinancingInfo({ feId }: { feId: string }) {
             feVarbInfo={calculated.varbInfo("loanTotalDollars")}
           />
         )}
-      </LabeledVarbRow>
+      </StyledLabeledVarbRow>
     </Styled>
   );
 }

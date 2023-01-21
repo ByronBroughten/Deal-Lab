@@ -535,6 +535,9 @@ export class GetterSection<
   varbInfo(varbName: VarbName<SN>): FeVarbInfo<SN> {
     return this.varb(varbName as string).feVarbInfo;
   }
+  varbInfoArr(varbNames: readonly VarbName<SN>[]): FeVarbInfo<SN>[] {
+    return varbNames.map((varbName) => this.varbInfo(varbName));
+  }
   get allValues(): SectionValues<SN> {
     return this.meta.varbNames.reduce((values, varbName) => {
       (values[varbName as VarbName<SN>] as any) = this.value(varbName);
@@ -602,6 +605,21 @@ export class GetterSection<
   }
   valueNext<VN extends VarbName<SN>>(varbName: VN): VarbValue<SN, VN> {
     return this.varb(varbName as string).valueNext() as VarbValue<SN, VN>;
+  }
+  checkInputValue<VN extends VarbName<SN>>(
+    varbName: VN
+  ): { isEmpty: boolean; isValid: boolean } {
+    const value = this.value(varbName as string, "numObj");
+    if (!value.mainText)
+      return {
+        isEmpty: true,
+        isValid: false,
+      };
+    else
+      return {
+        isEmpty: false,
+        isValid: true,
+      };
   }
   get selfAndDescendantVarbIds(): string[] {
     return GetterVarb.varbInfosToVarbIds(this.selfAndDescendantVarbInfos);

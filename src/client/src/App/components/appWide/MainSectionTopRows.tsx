@@ -16,6 +16,8 @@ type Props = {
   loadWhat: string;
   belowTitle?: React.ReactNode;
   showXBtn?: boolean;
+  showControls?: boolean;
+  rightTop?: React.ReactNode;
 };
 export function MainSectionTopRows({
   className,
@@ -23,6 +25,8 @@ export function MainSectionTopRows({
   loadWhat,
   belowTitle,
   showXBtn,
+  showControls = true,
+  rightTop,
   ...feInfo
 }: Props) {
   const saveStatus = useSaveStatus(feInfo);
@@ -35,29 +39,37 @@ export function MainSectionTopRows({
         />
         {belowTitle ?? null}
       </div>
-      <div className="MainSectionTopRows-controls">
-        <MainSectionTitleRow
-          {...{
-            ...feInfo,
-            sectionTitle,
-            className: "MainSectionTopRows-titleRow",
-          }}
-        />
-        <MainSectionActionRow
-          {...{
-            ...feInfo,
-            loadWhat,
-            xBtn: false,
-            dropTop: false,
-            saveStatus,
-            className: "MainSectionTopRows-sectionMenus",
-          }}
-        />
-      </div>
-      {showXBtn && (
-        <div className="MainSectionTopRows-rightBlock">
-          <RemoveSectionXBtn className="MainSectionTopRows-xBtn" {...feInfo} />
-        </div>
+      {showControls && (
+        <>
+          <div className="MainSectionTopRows-controls">
+            <MainSectionTitleRow
+              {...{
+                ...feInfo,
+                sectionTitle,
+                className: "MainSectionTopRows-titleRow",
+              }}
+            />
+            <MainSectionActionRow
+              {...{
+                ...feInfo,
+                loadWhat,
+                xBtn: false,
+                dropTop: false,
+                saveStatus,
+                className: "MainSectionTopRows-sectionMenus",
+              }}
+            />
+          </div>
+          <div className="MainSectionTopRows-rightBlock">
+            {rightTop}
+            {showXBtn && (
+              <RemoveSectionXBtn
+                className="MainSectionTopRows-xBtn"
+                {...feInfo}
+              />
+            )}
+          </div>
+        </>
       )}
     </Styled>
   );

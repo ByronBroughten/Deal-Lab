@@ -253,6 +253,13 @@ const StyledListMenu = styled.div`
     border-radius: ${theme.br0};
     box-shadow: none;
 
+    background: none;
+    color: ${theme.primaryNext};
+    :hover {
+      background: ${theme.secondary};
+      color: ${theme.light};
+    }
+
     .LabeledIconBtn-iconSpan {
       min-width: 25px;
     }

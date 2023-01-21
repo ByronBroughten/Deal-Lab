@@ -2,7 +2,7 @@ import { AiOutlineClose } from "react-icons/ai";
 import styled from "styled-components";
 import useOnOutsideClickRef from "../../modules/customHooks/useOnOutsideClickRef";
 import { ModalWrapper, ModalWrapperProps } from "../general/ModalWrapper";
-import PlainIconBtn from "../general/PlainIconBtn";
+import { PlainIconBtn } from "../general/PlainIconBtn";
 import { MainSection } from "./GeneralSection/MainSection";
 import { SectionTitleRow } from "./GeneralSection/MainSection/SectionTitleRow";
 import { SectionTitle } from "./SectionTitle";
@@ -26,9 +26,7 @@ export function SectionModal({
           <SectionTitleRow
             leftSide={<SectionTitle text={title} />}
             rightSide={
-              <PlainIconBtn onClick={closeModal}>
-                <AiOutlineClose />
-              </PlainIconBtn>
+              <PlainIconBtn middle={<AiOutlineClose />} onClick={closeModal} />
             }
           />
           <div className="MainSectionBody-root">{children}</div>

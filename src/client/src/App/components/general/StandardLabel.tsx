@@ -2,7 +2,7 @@ import styled from "styled-components";
 import theme from "../../theme/Theme";
 import { StandardProps } from "../general/StandardProps";
 
-type Props = StandardProps & { $active?: boolean };
+type Props = StandardProps & { $active?: boolean; id?: string };
 export default function StandardLabel({ className, ...props }: Props) {
   return (
     <Styled className={`StandardLabel-root ${className ?? ""}`} {...props} />
