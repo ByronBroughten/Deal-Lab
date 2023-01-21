@@ -1,4 +1,4 @@
-import { Id } from "../SectionsMeta/baseSectionsVarbs/id";
+import { Id } from "../SectionsMeta/allBaseSectionVarbs/id";
 
 export const dbLimits = {
   number: {

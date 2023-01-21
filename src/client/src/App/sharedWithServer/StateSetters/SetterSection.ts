@@ -1,7 +1,7 @@
 import { pick } from "lodash";
+import { SwitchName } from "../SectionsMeta/allBaseSectionVarbs/baseSwitchNames";
 import { VarbName } from "../SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
 import { SectionValues } from "../SectionsMeta/baseSectionsDerived/valueMetaTypes";
-import { SwitchName } from "../SectionsMeta/baseSectionsVarbs/baseSwitchNames";
 import { ChildValueInfo } from "../SectionsMeta/sectionChildrenDerived/ChildInfo";
 import {
   ChildName,

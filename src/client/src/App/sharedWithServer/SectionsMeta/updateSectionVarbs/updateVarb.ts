@@ -1,16 +1,16 @@
-import { valueMetas } from "../baseSectionsDerived/valueMetas";
-import { ValueByValueName } from "../baseSectionsDerived/valueMetaTypes";
 import {
   LeftRightPropCalcName,
   NumPropCalcName,
-} from "../baseSectionsVarbs/baseValues/calculations";
+} from "../allBaseSectionVarbs/baseValues/calculations";
 import {
   decimalRounding,
   maxRounding,
-} from "../baseSectionsVarbs/baseValues/calculations/numUnitParams";
-import { StateValue } from "../baseSectionsVarbs/baseValues/StateValueTypes";
-import { ValueUnit } from "../baseSectionsVarbs/baseVarbs";
-import { ValueName } from "../baseSectionsVarbs/ValueName";
+} from "../allBaseSectionVarbs/baseValues/calculations/numUnitParams";
+import { StateValue } from "../allBaseSectionVarbs/baseValues/StateValueTypes";
+import { ValueUnit } from "../allBaseSectionVarbs/baseVarbs";
+import { ValueName } from "../allBaseSectionVarbs/ValueName";
+import { valueMetas } from "../baseSectionsDerived/valueMetas";
+import { ValueByValueName } from "../baseSectionsDerived/valueMetaTypes";
 import { ChildName } from "../sectionChildrenDerived/ChildName";
 import { SectionName } from "../SectionName";
 import { getUpdateFnNames } from "./updateVarb/UpdateFnName";

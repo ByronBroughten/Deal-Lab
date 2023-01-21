@@ -1,5 +1,5 @@
 import { Obj } from "../../../utils/Obj";
-import { Id } from "../../baseSectionsVarbs/id";
+import { Id } from "../../allBaseSectionVarbs/id";
 import { ChildName } from "../../sectionChildrenDerived/ChildName";
 import { mixedInfoS } from "../../sectionChildrenDerived/MixedSectionInfo";
 import { PathInVarbInfo } from "../../sectionChildrenDerived/RelInOutVarbInfo";

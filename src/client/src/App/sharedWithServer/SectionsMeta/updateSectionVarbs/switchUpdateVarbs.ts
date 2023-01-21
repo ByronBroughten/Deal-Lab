@@ -11,7 +11,7 @@ import {
   SwitchTargetKey,
   switchTargetKeys,
   SwitchVarbNameRecord,
-} from "../baseSectionsVarbs/baseSwitchNames";
+} from "../allBaseSectionVarbs/baseSwitchNames";
 import {
   defaultUpdateVarb,
   UpdateVarb,

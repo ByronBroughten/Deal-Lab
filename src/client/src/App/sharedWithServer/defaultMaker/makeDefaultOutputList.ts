@@ -1,5 +1,5 @@
-import { ValueInEntityInfo } from "../SectionsMeta/baseSectionsVarbs/baseValues/entities";
-import { inEntityIdInfo } from "../SectionsMeta/baseSectionsVarbs/baseValues/InEntityIdInfoValue";
+import { ValueInEntityInfo } from "../SectionsMeta/allBaseSectionVarbs/baseValues/entities";
+import { inEntityIdInfo } from "../SectionsMeta/allBaseSectionVarbs/baseValues/InEntityIdInfoValue";
 import { mixedInfoS } from "../SectionsMeta/sectionChildrenDerived/MixedSectionInfo";
 import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";

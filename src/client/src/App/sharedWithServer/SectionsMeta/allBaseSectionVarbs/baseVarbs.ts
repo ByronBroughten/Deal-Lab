@@ -1,5 +1,5 @@
 import { Obj } from "../../utils/Obj";
-import { Merge, merge } from "./../../utils/Obj/merge";
+import { Merge, merge } from "../../utils/Obj/merge";
 import {
   GetSwitchOptions,
   getSwitchOptions,
@@ -11,7 +11,6 @@ import {
   switchOptions,
   SwitchOptionsProps,
   SwitchVarbName,
-  SwitchVarbNameRecord,
 } from "./baseSwitchNames";
 import { ValueName, valueNames } from "./ValueName";
 
@@ -50,6 +49,13 @@ type DefaultBaseVarb<VN extends ValueName> = {
   valueUnit: ValueUnits[VN][0];
   valueTimespan: "oneTime";
 };
+
+export type SimpleBaseVarb<VN extends ValueName> = {
+  valueName: VN;
+  valueUnit: ValueUnit;
+  valueTimespan: ValueTimespan;
+};
+
 function defaultBaseVarb<VN extends ValueName>(
   valueName: VN
 ): DefaultBaseVarb<VN> {
@@ -68,8 +74,11 @@ export type BaseVarb<VN extends ValueName, O extends Options = {}> = Merge<
 export function baseVarb<VN extends ValueName, O extends Options = {}>(
   valueName: VN,
   options?: O
-): BaseVarb<VN, O> {
-  return merge(defaultBaseVarb(valueName), options ?? ({} as O));
+): SimpleBaseVarb<VN> {
+  return merge(
+    defaultBaseVarb(valueName),
+    options ?? ({} as O)
+  ) as any as SimpleBaseVarb<VN>;
 }
 export const baseVarbS = {
   dollarsMonthly() {
@@ -89,6 +98,11 @@ export const baseVarbS = {
 type BaseVarbs<VN extends ValueName, VNS extends string, O extends Options> = {
   [Prop in VNS]: BaseVarb<VN, O>;
 };
+
+type SimpleBaseVarbs<VN extends ValueName, VNS extends string> = {
+  [Prop in VNS]: SimpleBaseVarb<VN>;
+};
+
 export function baseVarbs<
   VN extends ValueName,
   VNS extends string,
@@ -97,19 +111,14 @@ export function baseVarbs<
   valueName: VN,
   varbNames: readonly VNS[],
   options?: O
-): BaseVarbs<VN, VNS, O> {
+): SimpleBaseVarbs<VN, VNS> {
   return varbNames.reduce((varbs, varbName) => {
     varbs[varbName] = baseVarb(valueName, options ?? ({} as O));
     return varbs;
-  }, {} as BaseVarbs<VN, VNS, O>);
+  }, {} as SimpleBaseVarbs<VN, VNS>);
 }
 
-export type BaseSwitchVarbs<
-  BN extends string,
-  SN extends SwitchName
-> = SwitchVarbNameRecord<BN, SN, BaseVarb<"numObj">, BaseVarb<"string">>;
-
-type BaseSwitchVarbsNext<
+type BaseSwitchVarbs<
   BN extends string,
   SN extends SwitchName,
   O extends SwitchOptionsProps<SN, Options>
@@ -119,12 +128,17 @@ type BaseSwitchVarbsNext<
     : BaseVarb<"numObj", GetTargetOptions<SN, SK, O>>;
 };
 
-const dollarsValueUnit = { valueUnit: "dollars" } as const;
-const percentValueUnit = { valueUnit: "percent" } as const;
+type SimpleBaseSwitchVarbs<BN extends string, SN extends SwitchName> = {
+  [SK in SwitchKey<SN> as SwitchVarbName<BN, SN, SK>]: SK extends "switch"
+    ? SimpleBaseVarb<"string">
+    : SimpleBaseVarb<"numObj">;
+};
+
 const ongoingOptions = {
   monthly: { valueTimespan: "monthly" },
   yearly: { valueTimespan: "yearly" },
 } as const;
+type OngoingOptions = typeof ongoingOptions;
 
 const ongoingDollarsOptions = {
   targets: { valueUnit: "dollars" },
@@ -154,27 +168,6 @@ export const baseVarbsS = {
   get typeUniformity() {
     return { _typeUniformity: "string" } as const;
   },
-  switch<Base extends string, SN extends SwitchName>(
-    baseName: Base,
-    switchName: SN
-  ): BaseSwitchVarbs<Base, SN> {
-    const keyToVarbNames = switchKeyToVarbNames(baseName, switchName);
-    return Obj.keys(keyToVarbNames).reduce((varbs, key) => {
-      const varbName = keyToVarbNames[key];
-      if (key === "switch") {
-        varbs[varbName] = baseVarb("string") as BaseSwitchVarbs<
-          Base,
-          SN
-        >[typeof varbName];
-      } else {
-        varbs[varbName] = baseVarb("numObj") as BaseSwitchVarbs<
-          Base,
-          SN
-        >[typeof varbName];
-      }
-      return varbs;
-    }, {} as BaseSwitchVarbs<Base, SN>);
-  },
   group: <
     BN extends string,
     SN extends SwitchName,
@@ -183,7 +176,7 @@ export const baseVarbsS = {
     baseName: BN,
     switchName: SN,
     options?: O
-  ): BaseSwitchVarbsNext<BN, SN, O> => {
+  ): SimpleBaseSwitchVarbs<BN, SN> => {
     const fullOptions = switchOptions(switchName, options ?? ({} as O));
     const keyToVarbNames = switchKeyToVarbNames(baseName, switchName);
     return Obj.keys(keyToVarbNames).reduce((varbs, key) => {
@@ -192,65 +185,61 @@ export const baseVarbsS = {
         varbs[varbName] = {
           ...baseVarb("string"),
           ...getSwitchOptions(switchName, key, fullOptions as any),
-        } as any as BaseSwitchVarbsNext<BN, SN, O>[typeof varbName];
+        } as any as SimpleBaseSwitchVarbs<BN, SN>[typeof varbName];
       } else {
         varbs[varbName] = {
           ...baseVarb("numObj"),
           ...getTargetOptions(switchName, key, fullOptions as any),
-        } as any as BaseSwitchVarbsNext<BN, SN, O>[typeof varbName];
+        } as any as SimpleBaseSwitchVarbs<BN, SN>[typeof varbName];
       }
       return varbs;
-    }, {} as BaseSwitchVarbsNext<BN, SN, O>);
+    }, {} as SimpleBaseSwitchVarbs<BN, SN>);
   },
-  ongoing<Base extends string>(
-    baseName: Base
-  ): BaseSwitchVarbs<Base, "ongoing"> {
-    return this.group(baseName, "ongoing", ongoingOptions);
+  ongoing<BN extends string>(
+    baseName: BN
+  ): SimpleBaseSwitchVarbs<BN, "ongoing"> {
+    return this.group(baseName, "ongoing");
   },
   ongoingDecimal<BN extends string>(
     baseName: BN
-  ): BaseSwitchVarbsNext<BN, "ongoing", OngoingDollarsOptions> {
+  ): SimpleBaseSwitchVarbs<BN, "ongoing"> {
     return this.group(baseName, "ongoing", {
       targets: { valueUnit: "decimal" },
     });
   },
   ongoingDollars<BN extends string>(
     baseName: BN
-  ): BaseSwitchVarbsNext<BN, "ongoing", OngoingDollarsOptions> {
+  ): SimpleBaseSwitchVarbs<BN, "ongoing"> {
     return this.group(baseName, "ongoing", ongoingDollarsOptions);
   },
   ongoingDollarsInput<BN extends string>(
     baseName: BN
-  ): BaseSwitchVarbsNext<BN, "ongoingInput", OngoingDollarsOptions> {
-    return this.group(baseName, "ongoingInput", ongoingDollarsOptions);
+  ): SimpleBaseSwitchVarbs<BN, "ongoingInput"> {
+    return this.group(baseName, "ongoingInput");
   },
   ongoingPercent<BN extends string>(
     baseName: BN
-  ): BaseSwitchVarbsNext<BN, "ongoing", OngoingPercentOptions> {
+  ): SimpleBaseSwitchVarbs<BN, "ongoing"> {
     return this.group(baseName, "ongoing", ongoingPercentOptions);
   },
   ongoingPercentInput<BN extends string>(
     baseName: BN
-  ): BaseSwitchVarbsNext<BN, "ongoingInput", OngoingPercentOptions> {
+  ): SimpleBaseSwitchVarbs<BN, "ongoingInput"> {
     return this.group(baseName, "ongoingInput", ongoingPercentOptions);
   },
   monthsYears<BN extends string>(
     baseName: BN
-  ): BaseSwitchVarbsNext<BN, "monthsYears", MonthsYearsOptions> {
+  ): SimpleBaseSwitchVarbs<BN, "monthsYears"> {
     return this.group(baseName, "monthsYears", monthsYearsOptions);
   },
   monthsYearsInput<BN extends string>(
     baseName: BN
-  ): BaseSwitchVarbsNext<BN, "monthsYearsInput", MonthsYearsOptions> {
+  ): SimpleBaseSwitchVarbs<BN, "monthsYearsInput"> {
     return this.group(baseName, "monthsYearsInput", monthsYearsOptions);
   },
   dollarsPercentDecimal<BN extends string>(
     baseName: BN
-  ): BaseSwitchVarbsNext<
-    BN,
-    "dollarsPercentDecimal",
-    DollarsPercentDecimalOptions
-  > {
+  ): SimpleBaseSwitchVarbs<BN, "dollarsPercentDecimal"> {
     return this.group(
       baseName,
       "dollarsPercentDecimal",

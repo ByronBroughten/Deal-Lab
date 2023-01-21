@@ -1,4 +1,5 @@
 import { DistributiveOmit } from "../../utils/types";
+import { ExpectedCount } from "../allBaseSectionVarbs/NanoIdInfo";
 import {
   ActiveDealInfo,
   DbSectionInfoMixed,
@@ -7,7 +8,6 @@ import {
   GlobalSectionInfo,
   VarbProp,
 } from "../baseSectionsDerived/baseVarbInfo";
-import { ExpectedCount } from "../baseSectionsVarbs/NanoIdInfo";
 import {
   AbsolutePathDbInfoMixed,
   AbsolutePathInfoMixed,

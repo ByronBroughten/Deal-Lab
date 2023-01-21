@@ -1,12 +1,12 @@
 import { z } from "zod";
 import { zS } from "../../utils/zod";
-import { SectionNameProp } from "../baseSectionsDerived/baseSectionInfo";
-import { VarbProp, VarbPropNext } from "../baseSectionsDerived/baseVarbInfo";
 import {
   ExpectedCount,
   GeneralMixedIdInfo,
   GeneralMixedInfo,
-} from "../baseSectionsVarbs/NanoIdInfo";
+} from "../allBaseSectionVarbs/NanoIdInfo";
+import { SectionNameProp } from "../baseSectionsDerived/baseSectionInfo";
+import { VarbProp, VarbPropNext } from "../baseSectionsDerived/baseVarbInfo";
 import { SectionName } from "../SectionName";
 import {
   PathNameOfSection,

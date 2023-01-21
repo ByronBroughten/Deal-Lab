@@ -3,7 +3,7 @@ import React from "react";
 import { config } from "../../../Constants";
 import { getStoredObj } from "../../../utils/localStorage";
 import { makeDefaultMain } from "../../defaultMaker/makeDefaultMain";
-import { baseSectionsVarbs } from "../../SectionsMeta/allBaseSectionVarbs";
+import { allBaseSectionVarbs } from "../../SectionsMeta/allBaseSectionVarbs";
 import { ChildSectionPack } from "../../SectionsMeta/sectionChildrenDerived/ChildSectionPack";
 import { validateSectionPackArrs } from "../../SectionsMeta/SectionNameByType";
 import { GetterSections } from "../../StateGetters/GetterSections";
@@ -121,7 +121,7 @@ export class SectionsStore {
     }
   }
   private static newHashIfbaseSectionsVarbsChanged(): string | null {
-    const hashed = hash(baseSectionsVarbs);
+    const hashed = hash(allBaseSectionVarbs);
     const storedHash = localStorage.getItem(tokenKey.sectionsConfigHash);
     const baseSectionsVarbsChanged = hashed !== storedHash;
     if (baseSectionsVarbsChanged) return hashed;

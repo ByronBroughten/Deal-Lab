@@ -1,4 +1,4 @@
-import { switchKeyToVarbNames } from "../baseSectionsVarbs/baseSwitchNames";
+import { switchKeyToVarbNames } from "../allBaseSectionVarbs/baseSwitchNames";
 import { UpdateSectionVarbs } from "../updateSectionVarbs/updateSectionVarbs";
 import { relVarbS, updateVarb } from "../updateSectionVarbs/updateVarb";
 import {

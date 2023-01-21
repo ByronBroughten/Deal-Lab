@@ -1,6 +1,6 @@
-import { switchKeyToVarbNames } from "../baseSectionsVarbs/baseSwitchNames";
-import { PiCalculationName } from "../baseSectionsVarbs/baseValues/calculations/piCalculations";
-import { numObj } from "../baseSectionsVarbs/baseValues/NumObj";
+import { switchKeyToVarbNames } from "../allBaseSectionVarbs/baseSwitchNames";
+import { PiCalculationName } from "../allBaseSectionVarbs/baseValues/calculations/piCalculations";
+import { numObj } from "../allBaseSectionVarbs/baseValues/NumObj";
 import { UpdateSectionVarbs } from "../updateSectionVarbs/updateSectionVarbs";
 import { relVarbS, updateVarb } from "../updateSectionVarbs/updateVarb";
 import {

@@ -1,17 +1,17 @@
-import { DbVarbInfoMixed } from "../SectionsMeta/baseSectionsDerived/baseVarbInfo";
-import { VirtualVarbName } from "../SectionsMeta/baseSectionsDerived/baseVarbNames";
 import calculations, {
   isCalculationName,
   NumberProps,
-} from "../SectionsMeta/baseSectionsVarbs/baseValues/calculations";
-import { ValueInEntity } from "../SectionsMeta/baseSectionsVarbs/baseValues/entities";
-import { ValueIdInEntityInfo } from "../SectionsMeta/baseSectionsVarbs/baseValues/InEntityIdInfoValue";
-import { NumObj } from "../SectionsMeta/baseSectionsVarbs/baseValues/NumObj";
-import { StateValue } from "../SectionsMeta/baseSectionsVarbs/baseValues/StateValueTypes";
+} from "../SectionsMeta/allBaseSectionVarbs/baseValues/calculations";
+import { ValueInEntity } from "../SectionsMeta/allBaseSectionVarbs/baseValues/entities";
+import { ValueIdInEntityInfo } from "../SectionsMeta/allBaseSectionVarbs/baseValues/InEntityIdInfoValue";
+import { NumObj } from "../SectionsMeta/allBaseSectionVarbs/baseValues/NumObj";
+import { StateValue } from "../SectionsMeta/allBaseSectionVarbs/baseValues/StateValueTypes";
 import {
   stringObj,
   StringObj,
-} from "../SectionsMeta/baseSectionsVarbs/baseValues/StringObj";
+} from "../SectionsMeta/allBaseSectionVarbs/baseValues/StringObj";
+import { DbVarbInfoMixed } from "../SectionsMeta/baseSectionsDerived/baseVarbInfo";
+import { VirtualVarbName } from "../SectionsMeta/baseSectionsDerived/baseVarbNames";
 import {
   PathInVarbInfo,
   RelInVarbInfo,

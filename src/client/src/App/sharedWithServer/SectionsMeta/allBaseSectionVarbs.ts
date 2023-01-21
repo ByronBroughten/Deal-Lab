@@ -2,22 +2,20 @@ import { omit } from "lodash";
 import {
   BaseSectionVarbs,
   baseSectionVarbs,
-} from "./baseSectionsVarbs/baseSectionVarbs";
+  GeneralBaseSectionVarbs,
+} from "./allBaseSectionVarbs/baseSectionVarbs";
 import {
   baseVarb,
   baseVarbs,
   baseVarbsS,
-  GeneralBaseVarb,
-} from "./baseSectionsVarbs/baseVarbs";
+} from "./allBaseSectionVarbs/baseVarbs";
 import { SectionName, sectionNames } from "./SectionName";
 
-const checkBaseSectionsVarbs = <BSV extends GeneralBaseSectionsVarbs>(
+const checkAllBaseSectionVarbs = <BSV extends GeneralAllBaseSectionVarbs>(
   bsv: BSV
 ) => bsv;
 
-export type GeneralBaseSectionVarbs = { [varbName: string]: GeneralBaseVarb };
-
-type GeneralBaseSectionsVarbs = {
+type GeneralAllBaseSectionVarbs = {
   [SN in SectionName]: GeneralBaseSectionVarbs;
 };
 
@@ -35,7 +33,7 @@ const percent = { valueUnit: "percent" } as const;
 const decimal = { valueUnit: "decimal" } as const;
 const varbs = baseVarbsS;
 export function makeAllBaseSectionVarbs() {
-  return checkBaseSectionsVarbs({
+  return checkAllBaseSectionVarbs({
     ...defaults,
     proxyStoreItem: baseSectionVarbs({
       dbId: baseVarb("string"),
@@ -187,15 +185,13 @@ export function makeAllBaseSectionVarbs() {
     }),
     loan: baseSectionVarbs({
       ...baseVarbsS.savableSection,
-      ...{
-        loanBasePercentEditor: baseVarb("numObj", percent),
-        loanBaseDollarsEditor: baseVarb("numObj", dollars),
-        ...varbs.dollarsPercentDecimal("loanBase"),
-      },
-      ...{
-        ...varbs.ongoingPercentInput("interestRatePercent"),
-        ...baseVarbsS.ongoingDecimal("interestRateDecimal"),
-      },
+      loanBasePercentEditor: baseVarb("numObj", percent),
+      loanBaseDollarsEditor: baseVarb("numObj", dollars),
+      ...varbs.dollarsPercentDecimal("loanBase"),
+
+      ...varbs.ongoingPercentInput("interestRatePercent"),
+      ...baseVarbsS.ongoingDecimal("interestRateDecimal"),
+
       ...varbs.monthsYearsInput("loanTerm"),
 
       isInterestOnly: baseVarb("boolean"),
@@ -205,12 +201,12 @@ export function makeAllBaseSectionVarbs() {
       ...baseVarbsS.ongoingDollars("expenses"),
 
       piCalculationName: baseVarb("string"), // depreciated
-      ...{
-        hasMortgageIns: baseVarb("boolean"),
-        mortgageInsUpfront: baseVarb("numObj", dollars),
-        mortgageInsUpfrontEditor: baseVarb("numObj", dollars),
-        ...baseVarbsS.ongoingDollarsInput("mortgageIns"),
-      },
+
+      hasMortgageIns: baseVarb("boolean"),
+      mortgageInsUpfront: baseVarb("numObj", dollars),
+      mortgageInsUpfrontEditor: baseVarb("numObj", dollars),
+      ...baseVarbsS.ongoingDollarsInput("mortgageIns"),
+
       ...baseVarbs(
         "numObj",
         ["loanTotalDollars", "closingCosts", "wrappedInLoan"] as const,
@@ -236,22 +232,21 @@ export function makeAllBaseSectionVarbs() {
     }),
     mgmt: baseSectionVarbs({
       ...baseVarbsS.savableSection,
-      ...{
-        basePayDollarsEditor: baseVarb("numObj", dollars),
-        basePayPercentEditor: baseVarb("numObj", percent),
-        ...baseVarbsS.ongoingDollars("basePayDollars"),
-        ...omit(varbs.dollarsPercentDecimal("basePay"), [
-          "basePayDollars",
-        ] as const),
-      },
-      ...{
-        vacancyLossDollarsEditor: baseVarb("numObj", dollars),
-        vacancyLossPercentEditor: baseVarb("numObj", percent),
-        ...baseVarbsS.ongoingDollars("vacancyLossDollars"),
-        ...omit(varbs.dollarsPercentDecimal("vacancyLoss"), [
-          "vacancyLossDollars",
-        ] as const),
-      },
+
+      basePayDollarsEditor: baseVarb("numObj", dollars),
+      basePayPercentEditor: baseVarb("numObj", percent),
+      ...baseVarbsS.ongoingDollars("basePayDollars"),
+      ...omit(varbs.dollarsPercentDecimal("basePay"), [
+        "basePayDollars",
+      ] as const),
+
+      vacancyLossDollarsEditor: baseVarb("numObj", dollars),
+      vacancyLossPercentEditor: baseVarb("numObj", percent),
+      ...baseVarbsS.ongoingDollars("vacancyLossDollars"),
+      ...omit(varbs.dollarsPercentDecimal("vacancyLoss"), [
+        "vacancyLossDollars",
+      ] as const),
+
       upfrontExpenses: baseVarb("numObj", dollars),
       ...baseVarbsS.ongoingDollars("expenses"),
     } as const),
@@ -312,8 +307,8 @@ export function makeAllBaseSectionVarbs() {
   });
 }
 
-export type AllBaseSectionVarbs = typeof baseSectionsVarbs;
-export const baseSectionsVarbs = makeAllBaseSectionVarbs();
+export type AllBaseSectionVarbs = typeof allBaseSectionVarbs;
+export const allBaseSectionVarbs = makeAllBaseSectionVarbs();
 
 const userPlans = ["basicPlan", "fullPlan"] as const;
 export type AnalyzerPlan = typeof userPlans[number];

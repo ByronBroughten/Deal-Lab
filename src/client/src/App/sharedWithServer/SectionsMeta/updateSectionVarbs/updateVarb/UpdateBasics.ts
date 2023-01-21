@@ -1,9 +1,9 @@
-import { switchKeyToVarbNames } from "../../baseSectionsVarbs/baseSwitchNames";
+import { switchKeyToVarbNames } from "../../allBaseSectionVarbs/baseSwitchNames";
 import {
   LeftRightPropCalcName,
   NumPropCalcName,
-} from "../../baseSectionsVarbs/baseValues/calculations";
-import { ValueName } from "../../baseSectionsVarbs/ValueName";
+} from "../../allBaseSectionVarbs/baseValues/calculations";
+import { ValueName } from "../../allBaseSectionVarbs/ValueName";
 import { ChildName } from "../../sectionChildrenDerived/ChildName";
 import { UpdateFnName } from "./UpdateFnName";
 import { UpdateFnProp, UpdateFnProps, updateFnPropS } from "./UpdateFnProps";

@@ -10,15 +10,15 @@ import {
   numObjToRawContent,
 } from "../../modules/draftjs/draftUtils";
 import { EntityMap, EntityRanges, RawEditorState } from "../../utils/DraftS";
-import { ValueNamesToTypes } from "../SectionsMeta/baseSectionsDerived/valueMetaTypes";
-import { ValueInEntity } from "../SectionsMeta/baseSectionsVarbs/baseValues/entities";
+import { ValueInEntity } from "../SectionsMeta/allBaseSectionVarbs/baseValues/entities";
 import {
   EntitiesAndEditorText,
   NumObj,
-} from "../SectionsMeta/baseSectionsVarbs/baseValues/NumObj";
-import { isEditorUpdateFnName } from "../SectionsMeta/baseSectionsVarbs/baseValues/StateValueTypes";
-import { StringObj } from "../SectionsMeta/baseSectionsVarbs/baseValues/StringObj";
-import { valueNames } from "../SectionsMeta/baseSectionsVarbs/ValueName";
+} from "../SectionsMeta/allBaseSectionVarbs/baseValues/NumObj";
+import { isEditorUpdateFnName } from "../SectionsMeta/allBaseSectionVarbs/baseValues/StateValueTypes";
+import { StringObj } from "../SectionsMeta/allBaseSectionVarbs/baseValues/StringObj";
+import { valueNames } from "../SectionsMeta/allBaseSectionVarbs/ValueName";
+import { ValueNamesToTypes } from "../SectionsMeta/baseSectionsDerived/valueMetaTypes";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { GetterVarbBase } from "../StateGetters/Bases/GetterVarbBase";
 import { GetterVarb } from "../StateGetters/GetterVarb";

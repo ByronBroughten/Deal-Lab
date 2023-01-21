@@ -1,5 +1,5 @@
 import React from "react";
-import { getSwitchVarbName } from "../../../../sharedWithServer/SectionsMeta/baseSectionsVarbs/baseSwitchNames";
+import { getSwitchVarbName } from "../../../../sharedWithServer/SectionsMeta/allBaseSectionVarbs/baseSwitchNames";
 import { useSetterSection } from "../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import { LabeledEquation } from "../../ListGroup/ListGroupShared/ListItemValue/LabeledEquation";
 import { LabeledSpanOverCost } from "../../ListGroup/ListGroupShared/ListItemValue/LabeledSpanOverCost";

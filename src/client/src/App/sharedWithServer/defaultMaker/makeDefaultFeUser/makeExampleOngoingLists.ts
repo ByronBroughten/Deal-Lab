@@ -1,8 +1,8 @@
 import {
   numObj,
   NumObj,
-} from "../../SectionsMeta/baseSectionsVarbs/baseValues/NumObj";
-import { stringObj } from "../../SectionsMeta/baseSectionsVarbs/baseValues/StringObj";
+} from "../../SectionsMeta/allBaseSectionVarbs/baseValues/NumObj";
+import { stringObj } from "../../SectionsMeta/allBaseSectionVarbs/baseValues/StringObj";
 import { SectionPack } from "../../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { PackBuilderSection } from "../../StatePackers.ts/PackBuilderSection";
 

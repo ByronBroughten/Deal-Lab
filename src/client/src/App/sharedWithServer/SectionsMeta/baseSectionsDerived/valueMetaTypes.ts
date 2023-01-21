@@ -1,9 +1,9 @@
 import {
-  baseSectionsVarbs,
+  allBaseSectionVarbs,
   GeneralBaseSectionVarbs,
 } from "../allBaseSectionVarbs";
-import { StateValue } from "../baseSectionsVarbs/baseValues/StateValueTypes";
-import { ValueName } from "../baseSectionsVarbs/ValueName";
+import { StateValue } from "../allBaseSectionVarbs/baseValues/StateValueTypes";
+import { ValueName } from "../allBaseSectionVarbs/ValueName";
 import { SectionName } from "../SectionName";
 import { VarbName, VarbValueName } from "./baseSectionsVarbsTypes";
 import { VarbNamesNext } from "./baseVarbInfo";
@@ -33,7 +33,7 @@ export function isVarbValue<SN extends SectionName, VN extends VarbName<SN>>(
   value: any,
   { sectionName, varbName }: VarbNamesNext<SN, VN>
 ): value is VarbValue<SN, VN> {
-  const baseVarbs = baseSectionsVarbs[sectionName] as GeneralBaseSectionVarbs;
+  const baseVarbs = allBaseSectionVarbs[sectionName] as GeneralBaseSectionVarbs;
   const valueName = baseVarbs[varbName as string].valueName;
   return valueMetas[valueName].is(value);
 }

@@ -1,4 +1,4 @@
-import { stringObj } from "../SectionsMeta/baseSectionsVarbs/baseValues/StringObj";
+import { stringObj } from "../SectionsMeta/allBaseSectionVarbs/baseValues/StringObj";
 import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
 import { makeDefaultOneTimeValue } from "./makeDefaultOneTimeValue";

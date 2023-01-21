@@ -1,13 +1,13 @@
 import {
+  GeneralBaseVarb,
+  ValueTimespan,
+  ValueUnit,
+} from "../allBaseSectionVarbs/baseVarbs";
+import {
   getBaseVarb,
   sectionVarbNames,
   VarbName,
 } from "../baseSectionsDerived/baseSectionsVarbsTypes";
-import {
-  GeneralBaseVarb,
-  ValueTimespan,
-  ValueUnit,
-} from "../baseSectionsVarbs/baseVarbs";
 import { SectionName } from "../SectionName";
 import { displayVarb, DisplayVarb, DisplayVarbOptions } from "./displayVarb";
 

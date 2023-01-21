@@ -9,7 +9,7 @@ import {
   switchOptionNames,
   switchTargetKeys,
   SwitchVarbName,
-} from "../baseSectionsVarbs/baseSwitchNames";
+} from "../allBaseSectionVarbs/baseSwitchNames";
 import {
   DisplayName,
   DisplayOverrideSwitches,

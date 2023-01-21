@@ -1,8 +1,8 @@
 import { ContentState, EditorState } from "draft-js";
-import { ValueInEntityInfo } from "../SectionsMeta/baseSectionsVarbs/baseValues/entities";
-import { StateValue } from "../SectionsMeta/baseSectionsVarbs/baseValues/StateValueTypes";
-import { ValueTypesPlusAny } from "../SectionsMeta/baseSectionsVarbs/StateVarbTypes";
-import { ValueName } from "../SectionsMeta/baseSectionsVarbs/ValueName";
+import { ValueInEntityInfo } from "../SectionsMeta/allBaseSectionVarbs/baseValues/entities";
+import { StateValue } from "../SectionsMeta/allBaseSectionVarbs/baseValues/StateValueTypes";
+import { ValueTypesPlusAny } from "../SectionsMeta/allBaseSectionVarbs/StateVarbTypes";
+import { ValueName } from "../SectionsMeta/allBaseSectionVarbs/ValueName";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { VarbMeta } from "../SectionsMeta/VarbMeta";
 import { GetterSections } from "../StateGetters/GetterSections";

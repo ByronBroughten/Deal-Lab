@@ -1,5 +1,5 @@
-import { OutEntity } from "../SectionsMeta/baseSectionsVarbs/baseValues/entities";
-import { StateValue } from "../SectionsMeta/baseSectionsVarbs/baseValues/StateValueTypes";
+import { OutEntity } from "../SectionsMeta/allBaseSectionVarbs/baseValues/entities";
+import { StateValue } from "../SectionsMeta/allBaseSectionVarbs/baseValues/StateValueTypes";
 import { ChildIdArrsNarrow } from "../SectionsMeta/sectionChildrenDerived/ChildName";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { SectionPathContextName } from "../SectionsMeta/sectionPathContexts";

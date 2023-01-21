@@ -1,5 +1,5 @@
-import { numObj } from "../../SectionsMeta/baseSectionsVarbs/baseValues/NumObj";
-import { numObjNext } from "../../SectionsMeta/baseSectionsVarbs/baseValues/numObjNext";
+import { numObj } from "../../SectionsMeta/allBaseSectionVarbs/baseValues/NumObj";
+import { numObjNext } from "../../SectionsMeta/allBaseSectionVarbs/baseValues/numObjNext";
 
 export const userVarbLifespans = {
   roof: ["Roof", numObj(12)],

@@ -2,7 +2,7 @@ import {
   CompareTableBuilder,
   SortOptions,
 } from "../../modules/SectionSolvers/CompareTableBuilder";
-import { InEntityVarbInfo } from "../SectionsMeta/baseSectionsVarbs/baseValues/entities";
+import { InEntityVarbInfo } from "../SectionsMeta/allBaseSectionVarbs/baseValues/entities";
 import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { DbVarbs } from "../SectionsMeta/sectionChildrenDerived/SectionPack/RawSection";
 import { GetterSection } from "../StateGetters/GetterSection";

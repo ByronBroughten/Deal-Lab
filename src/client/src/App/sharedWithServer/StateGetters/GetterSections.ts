@@ -1,5 +1,5 @@
 import { sectionsMeta, SectionsMeta } from "../SectionsMeta";
-import { DbSectionInfo } from "../SectionsMeta/baseSectionsVarbs/DbSectionInfo";
+import { DbSectionInfo } from "../SectionsMeta/allBaseSectionVarbs/DbSectionInfo";
 import {
   IdInfoMixedMulti,
   SectionInfoMixed,

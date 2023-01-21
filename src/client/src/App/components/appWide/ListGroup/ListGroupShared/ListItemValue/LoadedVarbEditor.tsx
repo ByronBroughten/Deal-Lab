@@ -1,5 +1,5 @@
+import { inEntityIdInfo } from "../../../../../sharedWithServer/SectionsMeta/allBaseSectionVarbs/baseValues/InEntityIdInfoValue";
 import { VarbName } from "../../../../../sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
-import { inEntityIdInfo } from "../../../../../sharedWithServer/SectionsMeta/baseSectionsVarbs/baseValues/InEntityIdInfoValue";
 import { FeSectionInfo } from "../../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { SectionNameByType } from "../../../../../sharedWithServer/SectionsMeta/SectionNameByType";
 import { useSetterSection } from "../../../../../sharedWithServer/stateClassHooks/useSetterSection";

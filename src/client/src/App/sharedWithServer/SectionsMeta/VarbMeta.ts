@@ -1,5 +1,8 @@
 import { cloneDeep } from "lodash";
 import { sectionsMeta } from "../SectionsMeta";
+import { FixedInEntity } from "./allBaseSectionVarbs/baseValues/entities";
+import { GeneralBaseVarb } from "./allBaseSectionVarbs/baseVarbs";
+import { ValueName } from "./allBaseSectionVarbs/ValueName";
 import { getDisplayVarb } from "./allDisplaySectionVarbs";
 import { allUpdateSections, getUpdateVarb } from "./allUpdateSectionVarbs";
 import {
@@ -8,9 +11,6 @@ import {
 } from "./baseSectionsDerived/baseSectionsVarbsTypes";
 import { VarbNames } from "./baseSectionsDerived/baseVarbInfo";
 import { valueMetas } from "./baseSectionsDerived/valueMetas";
-import { FixedInEntity } from "./baseSectionsVarbs/baseValues/entities";
-import { GeneralBaseVarb } from "./baseSectionsVarbs/baseVarbs";
-import { ValueName } from "./baseSectionsVarbs/ValueName";
 import {
   DisplayName,
   DisplaySourceFinder,

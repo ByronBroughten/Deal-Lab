@@ -1,6 +1,6 @@
 import { isEqual, omit } from "lodash";
 import React from "react";
-import { InEntityIdInfoValue } from "../../sharedWithServer/SectionsMeta/baseSectionsVarbs/baseValues/InEntityIdInfoValue";
+import { InEntityIdInfoValue } from "../../sharedWithServer/SectionsMeta/allBaseSectionVarbs/baseValues/InEntityIdInfoValue";
 import { useVariableSections } from "../../sharedWithServer/stateClassHooks/useVariableOptions";
 import { VariableOption } from "../../sharedWithServer/StateEntityGetters/VariableGetterSections";
 import VarbAutoComplete from "./VarbAutoComplete";

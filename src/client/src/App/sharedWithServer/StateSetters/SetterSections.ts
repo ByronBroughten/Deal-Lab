@@ -1,8 +1,8 @@
 import {
   isStateValue,
   StateValue,
-} from "../SectionsMeta/baseSectionsVarbs/baseValues/StateValueTypes";
-import { DbSectionInfo } from "../SectionsMeta/baseSectionsVarbs/DbSectionInfo";
+} from "../SectionsMeta/allBaseSectionVarbs/baseValues/StateValueTypes";
+import { DbSectionInfo } from "../SectionsMeta/allBaseSectionVarbs/DbSectionInfo";
 import { FeSectionInfo, FeVarbInfo } from "../SectionsMeta/SectionInfo/FeInfo";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";

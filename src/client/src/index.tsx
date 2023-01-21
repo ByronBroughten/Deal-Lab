@@ -7,11 +7,11 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-// 3. Add Financing back and give it a completionStatus varb
-//    it doesn't necessarily need its variables. But it could get them
-// 2. Make the completion statuses update based on solve
 // 1. Fix the slow type check.
 //    - Try making most of baseVarb not generic. That's best for now.
+// 2. Make the completion statuses update based on solve
+// 3. Add Financing back and give it a completionStatus varb
+//    it doesn't necessarily need its variables. But it could get them
 
 // - For now, I could just disable it and put a hover-over that
 //   says, "please fill in all the fields" when it's not yet complete

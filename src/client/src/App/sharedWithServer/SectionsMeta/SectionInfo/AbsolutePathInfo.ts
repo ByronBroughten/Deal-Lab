@@ -1,9 +1,9 @@
-import { SectionNameProp } from "../baseSectionsDerived/baseSectionInfo";
-import { VarbProp } from "../baseSectionsDerived/baseVarbInfo";
 import {
   ExpectedCount,
   GeneralMixedIdInfo,
-} from "../baseSectionsVarbs/NanoIdInfo";
+} from "../allBaseSectionVarbs/NanoIdInfo";
+import { SectionNameProp } from "../baseSectionsDerived/baseSectionInfo";
+import { VarbProp } from "../baseSectionsDerived/baseVarbInfo";
 import { ChildName } from "../sectionChildrenDerived/ChildName";
 import { DescendantName } from "../sectionChildrenDerived/DescendantSectionName";
 import { SectionName } from "../SectionName";

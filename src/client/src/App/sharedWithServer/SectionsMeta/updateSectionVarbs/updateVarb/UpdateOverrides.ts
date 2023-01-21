@@ -2,8 +2,8 @@ import {
   getSwitchVarbName,
   SwitchName,
   SwitchTargetKey,
-} from "../../baseSectionsVarbs/baseSwitchNames";
-import { ValueName } from "../../baseSectionsVarbs/ValueName";
+} from "../../allBaseSectionVarbs/baseSwitchNames";
+import { ValueName } from "../../allBaseSectionVarbs/ValueName";
 import { RelLocalVarbInfo, relVarbInfoS } from "../../SectionInfo/RelVarbInfo";
 import { updateBasics, UpdateBasics, updateBasicsS } from "./UpdateBasics";
 import { UpdateFnName } from "./UpdateFnName";

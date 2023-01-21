@@ -1,7 +1,7 @@
 import {
   StateValueAnyKey,
   ValueTypesPlusAny,
-} from "../SectionsMeta/baseSectionsVarbs/StateVarbTypes";
+} from "../SectionsMeta/allBaseSectionVarbs/StateVarbTypes";
 import { DbVarbs } from "../SectionsMeta/sectionChildrenDerived/SectionPack/RawSection";
 import { FeVarbInfo } from "../SectionsMeta/SectionInfo/FeInfo";
 import {

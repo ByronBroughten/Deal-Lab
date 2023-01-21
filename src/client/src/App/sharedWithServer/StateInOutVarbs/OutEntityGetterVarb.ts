@@ -1,7 +1,7 @@
 import {
   OutEntity,
   OutEntityInfo,
-} from "../SectionsMeta/baseSectionsVarbs/baseValues/entities";
+} from "../SectionsMeta/allBaseSectionVarbs/baseValues/entities";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { GetterVarbBase } from "../StateGetters/Bases/GetterVarbBase";
 import { GetterVarb } from "../StateGetters/GetterVarb";

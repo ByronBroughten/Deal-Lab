@@ -1,9 +1,9 @@
 import { Obj } from "../../utils/Obj";
-import { VarbProp } from "../baseSectionsDerived/baseVarbInfo";
 import {
   ExpectedCount,
   isExpectedCount,
-} from "../baseSectionsVarbs/NanoIdInfo";
+} from "../allBaseSectionVarbs/NanoIdInfo";
+import { VarbProp } from "../baseSectionsDerived/baseVarbInfo";
 import { ChildName } from "../sectionChildrenDerived/ChildName";
 import {
   ParentName,

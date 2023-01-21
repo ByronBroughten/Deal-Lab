@@ -1,6 +1,6 @@
 import { makeReq } from "../../sharedWithServer/apiQueriesShared/makeReqAndRes";
 import { sectionsMeta } from "../../sharedWithServer/SectionsMeta";
-import { InEntityVarbInfo } from "../../sharedWithServer/SectionsMeta/baseSectionsVarbs/baseValues/entities";
+import { InEntityVarbInfo } from "../../sharedWithServer/SectionsMeta/allBaseSectionVarbs/baseValues/entities";
 import { DbStoreNameByType } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/DbStoreName";
 import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
 import { PackMakerSection } from "../../sharedWithServer/StatePackers.ts/PackMakerSection";

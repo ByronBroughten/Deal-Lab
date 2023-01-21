@@ -1,6 +1,6 @@
+import { StateValue } from "../allBaseSectionVarbs/baseValues/StateValueTypes";
+import { Id } from "../allBaseSectionVarbs/id";
 import { VarbProp, VarbPropNext } from "../baseSectionsDerived/baseVarbInfo";
-import { StateValue } from "../baseSectionsVarbs/baseValues/StateValueTypes";
-import { Id } from "../baseSectionsVarbs/id";
 import {
   ParentName,
   ParentNameSafe,

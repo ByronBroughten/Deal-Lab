@@ -1,4 +1,4 @@
-import { StateValue } from "../SectionsMeta/baseSectionsVarbs/baseValues/StateValueTypes";
+import { StateValue } from "../SectionsMeta/allBaseSectionVarbs/baseValues/StateValueTypes";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { VarbMeta } from "../SectionsMeta/VarbMeta";
 import { GetterVarbBase } from "../StateGetters/Bases/GetterVarbBase";

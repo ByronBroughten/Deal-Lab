@@ -1,11 +1,12 @@
 import { Merge } from "../../utils/Obj/merge";
-import { GeneralBaseSectionVarbs } from "../allBaseSectionVarbs";
-import { BaseVarb, baseVarb } from "./baseVarbs";
+import { baseVarb, GeneralBaseVarb, SimpleBaseVarb } from "./baseVarbs";
+
+export type GeneralBaseSectionVarbs = { [varbName: string]: GeneralBaseVarb };
 
 const typeUniformityVarbProp: TypeUniformityVarbProp = {
   _typeUniformity: baseVarb("string"),
 };
-type TypeUniformityVarbProp = { _typeUniformity: BaseVarb<"string"> };
+type TypeUniformityVarbProp = { _typeUniformity: SimpleBaseVarb<"string"> };
 
 export type BaseSectionVarbs<V extends GeneralBaseSectionVarbs = {}> = Merge<
   V,

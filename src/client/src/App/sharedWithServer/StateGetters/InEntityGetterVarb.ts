@@ -3,7 +3,7 @@ import {
   FixedInEntity,
   InEntity,
   ValueInEntity,
-} from "../SectionsMeta/baseSectionsVarbs/baseValues/entities";
+} from "../SectionsMeta/allBaseSectionVarbs/baseValues/entities";
 import { FeVarbInfo } from "../SectionsMeta/SectionInfo/FeInfo";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { UpdateOverrideSwitch } from "../SectionsMeta/updateSectionVarbs/updateVarb/UpdateOverrides";

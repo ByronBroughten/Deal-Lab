@@ -1,4 +1,4 @@
-import { numObj } from "../SectionsMeta/baseSectionsVarbs/baseValues/NumObj";
+import { numObj } from "../SectionsMeta/allBaseSectionVarbs/baseValues/NumObj";
 import { SetterTesterSection } from "./TestUtils/SetterTesterSection";
 
 describe("SetterCalculations", () => {

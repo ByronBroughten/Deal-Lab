@@ -1,3 +1,4 @@
+import { GeneralBaseVarb } from "../allBaseSectionVarbs/baseVarbs";
 import {
   getBaseVarb,
   sectionVarbNames,
@@ -5,7 +6,6 @@ import {
   VarbName,
   VarbValueName,
 } from "../baseSectionsDerived/baseSectionsVarbsTypes";
-import { GeneralBaseVarb } from "../baseSectionsVarbs/baseVarbs";
 import { SectionName } from "../SectionName";
 import {
   calculatedRounding,

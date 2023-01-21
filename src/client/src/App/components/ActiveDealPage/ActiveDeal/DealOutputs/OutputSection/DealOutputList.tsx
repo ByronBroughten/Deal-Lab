@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { inEntityIdInfo } from "../../../../../sharedWithServer/SectionsMeta/baseSectionsVarbs/baseValues/InEntityIdInfoValue";
+import { inEntityIdInfo } from "../../../../../sharedWithServer/SectionsMeta/allBaseSectionVarbs/baseValues/InEntityIdInfoValue";
 import { useGetterSection } from "../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { useSetterSection } from "../../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import { VariableOption } from "../../../../../sharedWithServer/StateEntityGetters/VariableGetterSections";

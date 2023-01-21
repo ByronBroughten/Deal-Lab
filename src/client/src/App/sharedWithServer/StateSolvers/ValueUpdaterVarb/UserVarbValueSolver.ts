@@ -1,7 +1,7 @@
 import {
   numObj,
   NumObj,
-} from "../../SectionsMeta/baseSectionsVarbs/baseValues/NumObj";
+} from "../../SectionsMeta/allBaseSectionVarbs/baseValues/NumObj";
 import { GetterSectionBase } from "../../StateGetters/Bases/GetterSectionBase";
 import { GetterSection } from "../../StateGetters/GetterSection";
 import { GetterVarbNumObj } from "../../StateGetters/GetterVarbNumObj";

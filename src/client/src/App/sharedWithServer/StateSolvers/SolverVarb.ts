@@ -1,4 +1,3 @@
-import { FeVarbInfoMixed } from "../SectionsMeta/baseSectionsDerived/baseVarbInfo";
 import {
   entityS,
   InEntity,
@@ -6,9 +5,10 @@ import {
   OutEntityInfo,
   ValueInEntity,
   ValueInEntityInfo,
-} from "../SectionsMeta/baseSectionsVarbs/baseValues/entities";
-import { StateValue } from "../SectionsMeta/baseSectionsVarbs/baseValues/StateValueTypes";
-import { Id } from "../SectionsMeta/baseSectionsVarbs/id";
+} from "../SectionsMeta/allBaseSectionVarbs/baseValues/entities";
+import { StateValue } from "../SectionsMeta/allBaseSectionVarbs/baseValues/StateValueTypes";
+import { Id } from "../SectionsMeta/allBaseSectionVarbs/id";
+import { FeVarbInfoMixed } from "../SectionsMeta/baseSectionsDerived/baseVarbInfo";
 import { VarbInfoMixedFocal } from "../SectionsMeta/sectionChildrenDerived/MixedSectionInfo";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { GetterSections } from "../StateGetters/GetterSections";

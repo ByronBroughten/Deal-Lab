@@ -1,5 +1,5 @@
-import { calculationNames } from "../../baseSectionsVarbs/baseValues/calculations";
-import { ValueName, valueNames } from "../../baseSectionsVarbs/ValueName";
+import { calculationNames } from "../../allBaseSectionVarbs/baseValues/calculations";
+import { ValueName, valueNames } from "../../allBaseSectionVarbs/ValueName";
 
 export type UpdateFnName<VN extends ValueName = ValueName> =
   UpdateFnNames[VN][number];

@@ -1,10 +1,10 @@
 import { FormControl, MenuItem, Select } from "@material-ui/core";
 import styled from "styled-components";
-import { VarbName } from "../../../../sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
 import {
   switchKeyToVarbNames,
   SwitchTargetKey,
-} from "../../../../sharedWithServer/SectionsMeta/baseSectionsVarbs/baseSwitchNames";
+} from "../../../../sharedWithServer/SectionsMeta/allBaseSectionVarbs/baseSwitchNames";
+import { VarbName } from "../../../../sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
 import { FeSectionInfo } from "../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { SectionName } from "../../../../sharedWithServer/SectionsMeta/SectionName";
 import { useSetterSection } from "../../../../sharedWithServer/stateClassHooks/useSetterSection";

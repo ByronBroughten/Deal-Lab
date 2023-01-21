@@ -1,19 +1,19 @@
 import { cloneDeep, round } from "lodash";
-import {
-  DbVarbInfoMixed,
-  FeVarbInfoMixed,
-  VarbNames,
-} from "../SectionsMeta/baseSectionsDerived/baseVarbInfo";
-import { NumberOrQ } from "../SectionsMeta/baseSectionsVarbs/baseValues/NumObj";
-import { StateValue } from "../SectionsMeta/baseSectionsVarbs/baseValues/StateValueTypes";
-import { ExpectedCount } from "../SectionsMeta/baseSectionsVarbs/NanoIdInfo";
+import { NumberOrQ } from "../SectionsMeta/allBaseSectionVarbs/baseValues/NumObj";
+import { StateValue } from "../SectionsMeta/allBaseSectionVarbs/baseValues/StateValueTypes";
+import { ExpectedCount } from "../SectionsMeta/allBaseSectionVarbs/NanoIdInfo";
 import {
   Adornments,
   StateValueAnyKey,
   valueSchemasPlusAny,
   ValueTypesPlusAny,
-} from "../SectionsMeta/baseSectionsVarbs/StateVarbTypes";
-import { ValueName } from "../SectionsMeta/baseSectionsVarbs/ValueName";
+} from "../SectionsMeta/allBaseSectionVarbs/StateVarbTypes";
+import { ValueName } from "../SectionsMeta/allBaseSectionVarbs/ValueName";
+import {
+  DbVarbInfoMixed,
+  FeVarbInfoMixed,
+  VarbNames,
+} from "../SectionsMeta/baseSectionsDerived/baseVarbInfo";
 import { DisplayOverrideSwitches } from "../SectionsMeta/displaySectionVarbs/displayVarb";
 import {
   mixedInfoS,

@@ -1,6 +1,6 @@
 import {
   AllBaseSectionVarbs,
-  baseSectionsVarbs,
+  allBaseSectionVarbs,
   GeneralBaseSectionVarbs,
 } from "./allBaseSectionVarbs";
 import { AllSectionTraits, allSectionTraits } from "./allSectionTraits";
@@ -40,7 +40,7 @@ type SectionMetaCore<SN extends SectionName> = {
 export const sectionMetasCore = sectionNames.reduce((core, sectionName) => {
   (core as SectionMetasCoreGeneral)[sectionName] = {
     ...{
-      baseVarbs: baseSectionsVarbs[sectionName],
+      baseVarbs: allBaseSectionVarbs[sectionName],
       relVarbs: allUpdateSections[sectionName],
     },
     ...({

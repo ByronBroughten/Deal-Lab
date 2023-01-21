@@ -1,11 +1,11 @@
 import { timeS } from "../utils/date";
 import { AnalyzerPlan } from "./allBaseSectionVarbs";
+import { numObj } from "./allBaseSectionVarbs/baseValues/NumObj";
 import { dealRelVarbs } from "./allUpdateSectionVarbs/dealUpdateVarbs";
 import { loanRelVarbs } from "./allUpdateSectionVarbs/loanUpdateVarbs";
 import { mgmtRelVarbs } from "./allUpdateSectionVarbs/mgmtUpdateVarbs";
 import { propertyRelVarbs } from "./allUpdateSectionVarbs/propertyUpdateVarbs";
 import { VarbName } from "./baseSectionsDerived/baseSectionsVarbsTypes";
-import { numObj } from "./baseSectionsVarbs/baseValues/NumObj";
 import { AuthStatus } from "./baseSectionsVarbsValues";
 import { relVarbInfosS } from "./SectionInfo/RelVarbInfos";
 import { SectionName, sectionNames } from "./SectionName";

@@ -1,7 +1,7 @@
 import {
   ExpectedCount,
   GeneralMixedInfo,
-} from "../baseSectionsVarbs/NanoIdInfo";
+} from "../allBaseSectionVarbs/NanoIdInfo";
 import { ChildName } from "../sectionChildrenDerived/ChildName";
 import {
   ParentName,
