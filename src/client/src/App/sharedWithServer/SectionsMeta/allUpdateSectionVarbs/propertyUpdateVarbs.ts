@@ -6,7 +6,7 @@ import {
 } from "../updateSectionVarbs/updateVarb/UpdateFnProps";
 import { updateVarbsS } from "../updateSectionVarbs/updateVarbs";
 
-export function propertyRelVarbs(): UpdateSectionVarbs<"property"> {
+export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
   return {
     ...updateVarbsS._typeUniformity,
     ...updateVarbsS.savableSection,

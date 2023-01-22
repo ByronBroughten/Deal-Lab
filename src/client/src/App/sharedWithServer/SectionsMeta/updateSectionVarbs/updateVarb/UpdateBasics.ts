@@ -24,6 +24,18 @@ export function updateBasics<VN extends ValueName>(
 }
 
 export const updateBasicsS = {
+  get zero() {
+    return {
+      updateFnName: "solvableTextZero",
+      updateFnProps: {},
+    };
+  },
+  get throw() {
+    return {
+      updateFnName: "throwIfReached",
+      updateFnProps: {},
+    };
+  },
   sumNums(...nums: UpdateFnProp[]) {
     return updateBasics("sumNums", { nums });
   },

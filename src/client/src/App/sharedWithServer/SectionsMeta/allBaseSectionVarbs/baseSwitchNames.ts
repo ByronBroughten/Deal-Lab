@@ -76,6 +76,19 @@ export function switchTargetKeys<SW extends SwitchName>(
   return Arr.exclude(switchKeys(switchName), ["switch"]);
 }
 
+type TargetNames<BN extends string, SN extends SwitchName> = keyof {
+  [SK in SwitchTargetKey<SN> as SwitchVarbName<BN, SN, SK>]: any;
+};
+
+export function targetNames<BN extends string, SN extends SwitchName>(
+  baseName: BN,
+  switchName: SN
+): TargetNames<BN, SN>[] {
+  const keyToVarbNames = switchKeyToVarbNames(baseName, switchName);
+  const targetKeys = switchTargetKeys(switchName);
+  return targetKeys.map((targetKey) => keyToVarbNames[targetKey]);
+}
+
 export type SwitchVarbName<
   BN extends string,
   SN extends SwitchName,

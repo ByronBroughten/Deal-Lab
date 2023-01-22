@@ -56,6 +56,7 @@ export function makeExampleProperty(): SectionPack<"property"> {
 
   const ongoingRepairValue = property.onlyChild("maintenanceCostValue");
   ongoingRepairValue.updateValues({
+    valueOngoingSwitch: "yearly",
     valueSourceSwitch: "valueEditor",
     valueEditor: priceSqftMiscRepairHybrid,
     isItemized: false,

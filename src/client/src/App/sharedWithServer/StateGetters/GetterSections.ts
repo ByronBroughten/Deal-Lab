@@ -15,7 +15,6 @@ import {
 import { GetterList } from "./GetterList";
 import { GetterSection } from "./GetterSection";
 import { GetterVarb } from "./GetterVarb";
-import { GetterVarbs } from "./GetterVarbs";
 
 export class GetterSections extends GetterSectionsBase {
   static init(requiredProps: GetterSectionsRequiredProps) {
@@ -63,17 +62,6 @@ export class GetterSections extends GetterSectionsBase {
       ...info,
       ...this.getterSectionsProps,
     });
-  }
-  sectionVarbs<SN extends SectionNameByType>(
-    info: FeSectionInfo<SN>
-  ): GetterVarbs<SN> {
-    return new GetterVarbs({
-      ...info,
-      ...this.getterSectionsProps,
-    });
-  }
-  varbs<SN extends SectionName>(info: FeSectionInfo<SN>): GetterVarbs<SN> {
-    return this.section(info).varbs;
   }
   varb<SN extends SectionNameByType>({
     varbName,

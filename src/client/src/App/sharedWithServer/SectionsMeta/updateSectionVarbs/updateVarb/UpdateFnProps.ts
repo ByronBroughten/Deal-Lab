@@ -1,13 +1,15 @@
 import { Obj } from "../../../utils/Obj";
 import { Id } from "../../allBaseSectionVarbs/id";
+import { ExpectedCount } from "../../allBaseSectionVarbs/NanoIdInfo";
 import { ChildName } from "../../sectionChildrenDerived/ChildName";
 import { mixedInfoS } from "../../sectionChildrenDerived/MixedSectionInfo";
 import { PathInVarbInfo } from "../../sectionChildrenDerived/RelInOutVarbInfo";
 import { relVarbInfoS } from "../../SectionInfo/RelVarbInfo";
+import { VarbPathName } from "../../SectionInfo/VarbPathNameInfo";
 import { SectionPathName } from "../../sectionPathContexts/sectionPathNames";
 
 export type UpdateFnProps = {
-  [kwargName: string]: UpdateFnProp | UpdateFnProp[];
+  [propName: string]: UpdateFnProp | UpdateFnProp[];
 };
 export const updateFnPropsS = {
   namedChildren(
@@ -60,5 +62,16 @@ export const updateFnPropS = {
   },
   pathName(pathName: SectionPathName, varbName: string): UpdateFnProp {
     return updateFnProp(mixedInfoS.pathNameVarb(pathName, varbName));
+  },
+  varbPathName(
+    varbPathName: VarbPathName,
+    expectedCount: ExpectedCount = "onlyOne"
+  ) {
+    return updateFnProp(mixedInfoS.varbPathName(varbPathName, expectedCount));
+  },
+  varbPathBase(varbPathName: string, expectedCount: ExpectedCount = "onlyOne") {
+    return updateFnProp(
+      mixedInfoS.varbPathName(varbPathName as VarbPathName, expectedCount)
+    );
   },
 };

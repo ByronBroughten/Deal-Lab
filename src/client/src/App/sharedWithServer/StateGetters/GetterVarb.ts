@@ -29,14 +29,18 @@ import { GetterVarbBase } from "./Bases/GetterVarbBase";
 import { GetterSection } from "./GetterSection";
 import { GetterSections } from "./GetterSections";
 import { GetterVarbNumObj } from "./GetterVarbNumObj";
+import { InEntityGetterVarb } from "./InEntityGetterVarb";
 
 class ValueTypeError extends Error {}
 
 export class GetterVarb<
   SN extends SectionNameByType<"hasVarb"> = SectionNameByType<"hasVarb">
 > extends GetterVarbBase<SN> {
-  get numObj() {
+  get numObj(): GetterVarbNumObj<SN> {
     return new GetterVarbNumObj(this.getterVarbProps);
+  }
+  get inEntity(): InEntityGetterVarb<SN> {
+    return new InEntityGetterVarb(this.getterVarbProps);
   }
   get getterSection() {
     return new GetterSection(this.getterSectionProps);

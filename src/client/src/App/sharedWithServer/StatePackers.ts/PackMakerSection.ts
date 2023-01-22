@@ -154,11 +154,13 @@ export class PackMakerSection<
   private makeRawSection<S extends SectionName>(
     feInfo: FeSectionInfo<S>
   ): OneRawSection<S> {
-    const { feId, dbId, varbs, allChildFeIds } = this.get.getterSection(feInfo);
+    const { feId, dbId, allChildFeIds, dbVarbs } =
+      this.get.getterSection(feInfo);
+
     return {
       spNum: this.getSpNum(feId),
       dbId,
-      dbVarbs: varbs.dbVarbs,
+      dbVarbs,
       childSpNums: this.childFeIdsToSpNums(allChildFeIds),
     };
   }

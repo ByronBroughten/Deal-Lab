@@ -2,9 +2,10 @@ import { timeS } from "../utils/date";
 import { AnalyzerPlan } from "./allBaseSectionVarbs";
 import { numObj } from "./allBaseSectionVarbs/baseValues/NumObj";
 import { dealRelVarbs } from "./allUpdateSectionVarbs/dealUpdateVarbs";
+import { financingUpdateVarbs } from "./allUpdateSectionVarbs/financingUpdateVarbs";
 import { loanRelVarbs } from "./allUpdateSectionVarbs/loanUpdateVarbs";
 import { mgmtRelVarbs } from "./allUpdateSectionVarbs/mgmtUpdateVarbs";
-import { propertyRelVarbs } from "./allUpdateSectionVarbs/propertyUpdateVarbs";
+import { propertyUpdateVarbs } from "./allUpdateSectionVarbs/propertyUpdateVarbs";
 import { VarbName } from "./baseSectionsDerived/baseSectionsVarbsTypes";
 import { AuthStatus } from "./baseSectionsVarbsValues";
 import { relVarbInfosS } from "./SectionInfo/RelVarbInfos";
@@ -55,6 +56,19 @@ function makeAllDefaultUpdateSections() {
 function makeAllUpdateSections() {
   return checkAllUpdateSections({
     ...makeAllDefaultUpdateSections(),
+    ...updateSectionProp("loan", loanRelVarbs()),
+    ...updateSectionProp("mgmt", mgmtRelVarbs()),
+    ...updateSectionProp("deal", dealRelVarbs()),
+    ...updateSectionProp("financing", financingUpdateVarbs()),
+    ...updateSectionProp("property", propertyUpdateVarbs()),
+    ...updateSectionProp("unit", {
+      one: updateVarb("numObj", {
+        updateFnName: "one",
+        initValue: numObj(1),
+      }),
+      numBedrooms: updateVarb("numObj"),
+      ...updateVarbsS.ongoingInputNext("targetRent"),
+    }),
     ...updateSectionProp("feUser", {
       authStatus: updateVarb("string", {
         initValue: "guest" as AuthStatus,
@@ -299,56 +313,7 @@ function makeAllUpdateSections() {
           updateFnPropS.pathName("propertyFocal", "price")
         ),
       }),
-      loanBaseDollars: updateVarb(
-        "numObj",
-        updateBasicsS.sumNums(
-          updateFnPropS.pathName("loanFocal", "loanBaseDollars")
-        )
-      ),
-      loanTotalDollars: updateVarb(
-        "numObj",
-        updateBasicsS.sumNums(
-          updateFnPropS.pathName("loanFocal", "loanTotalDollars")
-        )
-      ),
-      closingCosts: updateVarb(
-        "numObj",
-        updateBasicsS.sumNums(
-          updateFnPropS.pathName("loanFocal", "closingCosts")
-        )
-      ),
-      mortgageInsUpfront: updateVarb(
-        "numObj",
-        updateBasicsS.sumNums(
-          updateFnPropS.pathName("loanFocal", "mortgageInsUpfront")
-        )
-      ),
-      loanUpfrontExpenses: relVarbS.sumNums([
-        updateFnPropS.local("closingCosts"),
-        updateFnPropS.local("mortgageInsUpfront"),
-      ]),
-      ...updateVarbsS.ongoingSumNums("loanExpenses", [
-        updateFnPropS.pathName("loanFocal", "expenses"),
-      ]),
-      ...updateVarbsS.ongoingSumNums("mortgageIns", [
-        updateFnPropS.pathName("loanFocal", "mortgageIns"),
-      ]),
-      ...updateVarbsS.ongoingSumNums("loanPayment", [
-        updateFnPropS.pathName("loanFocal", "loanPayment"),
-      ]),
     }),
-    ...updateSectionProp("property", propertyRelVarbs()),
-    ...updateSectionProp("unit", {
-      one: updateVarb("numObj", {
-        updateFnName: "one",
-        initValue: numObj(1),
-      }),
-      numBedrooms: updateVarb("numObj"),
-      ...updateVarbsS.ongoingInputNext("targetRent"),
-    }),
-    ...updateSectionProp("loan", loanRelVarbs()),
-    ...updateSectionProp("mgmt", mgmtRelVarbs()),
-    ...updateSectionProp("deal", dealRelVarbs()),
   });
 }
 

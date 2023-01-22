@@ -17,7 +17,10 @@ import {
   PathNameInfoMixed,
 } from "../SectionInfo/PathNameInfo";
 import { RelSectionInfo } from "../SectionInfo/RelInfo";
-import { VarbPathNameInfoMixed } from "../SectionInfo/VarbPathNameInfo";
+import {
+  VarbPathName,
+  VarbPathNameInfoMixed,
+} from "../SectionInfo/VarbPathNameInfo";
 import { SectionName } from "../SectionName";
 import {
   PathNameOfSection,
@@ -76,6 +79,16 @@ export const mixedInfoS = {
       sectionName: pathSectionName(pathName),
       pathName: pathName as any,
       expectedCount: (expectedCount ?? "onlyOne") as EC,
+    };
+  },
+  varbPathName<VPN extends VarbPathName, EC extends ExpectedCount = "onlyOne">(
+    varbPathName: VPN,
+    expectedCount?: EC
+  ): VarbPathNameInfoMixed<VPN, EC> {
+    return {
+      infoType: "varbPathName",
+      varbPathName,
+      expectedCount: expectedCount ?? ("onlyOne" as EC),
     };
   },
   pathNameVarb<

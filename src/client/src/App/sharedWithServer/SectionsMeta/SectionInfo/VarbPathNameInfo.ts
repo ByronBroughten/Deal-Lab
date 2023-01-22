@@ -1,10 +1,15 @@
+import { targetNames } from "../allBaseSectionVarbs/baseSwitchNames";
 import { ExpectedCount } from "../allBaseSectionVarbs/NanoIdInfo";
+import { VarbName } from "../baseSectionsDerived/baseSectionsVarbsTypes";
+import { MixedInfoProps } from "../baseSectionsDerived/baseVarbInfo";
+import { VarbValue } from "../baseSectionsDerived/valueMetaTypes";
 import {
+  PathSectionName,
   SectionPathName,
   SectionPathVarbName,
 } from "../sectionPathContexts/sectionPathNames";
 
-type VarbPathParams<
+type MakeVarbPathParams<
   PN extends SectionPathName,
   VN extends SectionPathVarbName<PN>
 > = {
@@ -14,47 +19,43 @@ type VarbPathParams<
 };
 
 export const allVarbPathParams = {
-  ...sectionVarbNameParams("calculatedVarbsFocal", "Financing", [
+  ...sectionVarbNameParams("financingFocal", "Financing", [
+    "financingMode",
     "loanBaseDollars",
-    "mortgageInsYearly",
-    "mortgageInsMonthly",
     "closingCosts",
-    "loanPaymentMonthly",
-    "loanPaymentYearly",
+    "loanUpfrontExpenses",
+    "loanTotalDollars",
+    ...targetNames("mortgageIns", "ongoing"),
+    ...targetNames("loanPayment", "ongoing"),
+    ...targetNames("loanExpenses", "ongoing"),
   ]),
   ...sectionVarbNameParams("calculatedVarbsFocal", "Property", [
     "onePercentPrice",
+    "twoPercentPrice",
   ]),
   ...sectionVarbNameParams("propertyFocal", "Property", [
     "price",
     "sqft",
-    "taxesYearly",
-    "taxesMonthly",
     "numBedrooms",
     "numUnits",
-    "targetRentMonthly",
-    "targetRentYearly",
+    ...targetNames("taxes", "ongoing"),
+    ...targetNames("homeIns", "ongoing"),
+    ...targetNames("targetRent", "ongoing"),
   ]),
   ...sectionVarbNameParams("mgmtFocal", "Management", [
     "vacancyLossPercent",
-    "basePayDollarsMonthly",
-    "basePayDollarsYearly",
+    ...targetNames("basePayDollars", "ongoing"),
   ]),
   ...sectionVarbNameParams("dealFocal", "Deal", [
-    "pitiMonthly",
-    "pitiYearly",
     "downPaymentDollars",
     "downPaymentPercent",
-    "totalInvestment",
-    "cashFlowMonthly",
-    "cashFlowYearly",
-    "cocRoiMonthly",
-    "cocRoiYearly",
     "upfrontExpenses",
-    "expensesMonthly",
-    "expensesYearly",
-    "revenueMonthly",
-    "revenueYearly",
+    "totalInvestment",
+    ...targetNames("piti", "ongoing"),
+    ...targetNames("cashFlow", "ongoing"),
+    ...targetNames("cocRoi", "ongoing"),
+    ...targetNames("expenses", "ongoing"),
+    ...targetNames("revenue", "ongoing"),
   ]),
 };
 type AllVarbPathParams = typeof allVarbPathParams;
@@ -67,29 +68,38 @@ export function varbSectionPathName<VPN extends VarbPathName>(
   return allVarbPathParams[varbPathName]["pathName"];
 }
 
+type VarbPathParams<VPN extends VarbPathName> = AllVarbPathParams[VPN];
+
+type VarbPathSectionName<VPN extends VarbPathName> = PathSectionName<
+  VarbPathParams<VPN>["pathName"]
+>;
+
+export type VarbPathValue<VPN extends VarbPathName> = VarbValue<
+  VarbPathSectionName<VPN>,
+  VarbPathParams<VPN>["varbName"] & VarbName<VarbPathSectionName<VPN>>
+>;
+
 export function getVarbPathParams<VPN extends VarbPathName>(
   varbPathName: VPN
 ): AllVarbPathParams[VPN] {
   return allVarbPathParams[varbPathName];
 }
 
-export interface VarbPathNameInfo<VPN extends VarbPathName> {
+export interface VarbPathNameInfo<VPN extends VarbPathName = VarbPathName> {
   varbPathName: VPN;
 }
 export interface VarbPathNameInfoMixed<
   VPN extends VarbPathName = VarbPathName,
   EC extends ExpectedCount = ExpectedCount
-> {
-  infoType: "varbPathName";
+> extends MixedInfoProps<"varbPathName", EC> {
   varbPathName: VPN;
-  expectedCount: EC;
 }
 
 type SectionVarbPathParams<
   PN extends SectionPathName,
   VN extends SectionPathVarbName<PN>
 > = {
-  [V in VN]: VarbPathParams<PN, V>;
+  [V in VN]: MakeVarbPathParams<PN, V>;
 };
 function sectionVarbNameParams<
   PN extends SectionPathName,

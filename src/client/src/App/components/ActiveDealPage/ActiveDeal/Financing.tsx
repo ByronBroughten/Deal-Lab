@@ -40,7 +40,6 @@ function useFinancingCompletionStatus(
     if (loans.length < 1) {
       updateBools({ isEmpty: true, isValid: false });
     }
-
     for (const loan of loans) {
       const loanBaseUnitSwitch = loan.valueNext("loanBaseUnitSwitch");
       if (loanBaseUnitSwitch === "percent") {
@@ -74,35 +73,7 @@ function useFinancingCompletionStatus(
         updateBools(closingCostValue.checkInputValue("valueEditor"));
       }
     }
-    if (allEmpty) return "allEmpty";
-    if (allValid) return "allValid";
-    else return "someInvalid";
   }
-
-  // function getBasePayInputName() {
-  //   const unitSwitch = mgmt.valueNext("basePayUnitSwitch");
-  //   if (unitSwitch === "percent") {
-  //     return "basePayPercentEditor";
-  //   } else if (unitSwitch === "dollars") {
-  //     return "basePayDollarsEditor";
-  //   } else throw new Error(`"unitSwitch" is ${unitSwitch}`);
-  // }
-
-  // function getVacancyLossInputName() {
-  //   const unitSwitch = mgmt.valueNext("vacancyLossUnitSwitch");
-  //   if (unitSwitch === "percent") {
-  //     return "vacancyLossPercentEditor";
-  //   } else if (unitSwitch === "dollars") {
-  //     return "vacancyLossDollarsEditor";
-  //   } else throw new Error(`"unitSwitch" is ${unitSwitch}`);
-  // }
-
-  // const basePayInputName = getBasePayInputName();
-  // updateBools(mgmt.checkInputValue(basePayInputName));
-
-  // const vacancyLossInputName = getVacancyLossInputName();
-  // updateBools(mgmt.checkInputValue(vacancyLossInputName));
-
   if (allEmpty) return "allEmpty";
   if (allValid) return "allValid";
   else return "someInvalid";
@@ -150,6 +121,11 @@ export function Financing({
         closeInputs,
         displayName: getDisplayName(financing.get),
         completionStatus,
+        detailVarbPropArr: financing.get.varbInfoArr([
+          "loanPaymentMonthly",
+          "loanTotalDollars",
+          // "downPayment"
+        ] as const),
       }}
     >
       <div className="Financing-titleRow">
@@ -168,12 +144,12 @@ export function Financing({
         >
           <FormControlLabel
             value="cashOnly"
-            control={<Radio />}
+            control={<Radio color="primary" />}
             label="Cash Only"
           />
           <FormControlLabel
             value="useLoan"
-            control={<Radio />}
+            control={<Radio color="primary" />}
             label="Use Loan(s)"
           />
         </RadioGroup>

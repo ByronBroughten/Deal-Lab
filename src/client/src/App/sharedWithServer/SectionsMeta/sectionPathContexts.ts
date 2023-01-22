@@ -7,19 +7,9 @@ import {
 
 const absolute = sectionAbsolutePathInfos;
 export const sectionPathContexts = {
-  default: sectionPathContext({
-    calculatedVarbsFocal: absolute.calculatedVarbsActive,
-    propertyFocal: absolute.propertyActive,
-    mgmtFocal: absolute.mgmtActive,
-    loanFocal: absolute.loanActive,
-    financingFocal: absolute.financingActive,
-    dealFocal: absolute.dealActive,
-    userVarbItemMain: absolute.userVarbItemStored,
-    ongoingListMain: absolute.ongoingListStored,
-    ongoingItemMain: absolute.ongoingItemStored,
-    singleTimeListMain: absolute.singleTimeListStored,
-    singleTimeItemMain: absolute.singleTimeItemStored,
-  }),
+  get default() {
+    return this.activeDealPage;
+  },
   activeDealPage: sectionPathContext({
     calculatedVarbsFocal: absolute.calculatedVarbsActive,
     propertyFocal: absolute.propertyActive,

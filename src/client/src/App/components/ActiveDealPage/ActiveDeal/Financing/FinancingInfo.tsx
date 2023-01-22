@@ -8,7 +8,6 @@ import GlobalInfoSection from "../general/StaticInfoSection";
 
 export default function FinancingInfo({ feId }: { feId: string }) {
   const main = useGetterSectionOnlyOne("main");
-  const calculated = main.onlyChild("calculatedVarbs");
   const financing = useGetterSection({
     sectionName: "financing",
     feId: feId,

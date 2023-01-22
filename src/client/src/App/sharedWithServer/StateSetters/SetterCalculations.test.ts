@@ -7,19 +7,17 @@ describe("SetterCalculations", () => {
     addTestLoan(dealTester);
     addInterestOnlyLoan(dealTester);
 
-    const calculated =
-      dealTester.get.sections.main.onlyChild("calculatedVarbs");
-
+    const financing = dealTester.get.onlyChild("financing");
     const expectedLoanPayment = 912.6 + 50;
     const loanPaymentMonthly =
-      calculated.varbNext("loanPaymentMonthly").numberValue;
+      financing.varbNext("loanPaymentMonthly").numberValue;
     expect(loanPaymentMonthly).toBe(expectedLoanPayment);
 
     const loanPaymentYearly =
-      calculated.varbNext("loanPaymentYearly").numberValue;
+      financing.varbNext("loanPaymentYearly").numberValue;
     expect(loanPaymentYearly).toBeCloseTo(12 * expectedLoanPayment, 1);
 
-    const loanExpensesMonthly = calculated.varbNext(
+    const loanExpensesMonthly = financing.varbNext(
       "loanExpensesMonthly"
     ).numberValue;
     expect(loanExpensesMonthly).toBe(expectedLoanPayment + 100);
@@ -76,7 +74,10 @@ describe("SetterCalculations", () => {
     const rents = [1300, 1700];
     for (const amount of rents) {
       property.addChild("unit", {
-        dbVarbs: { targetRentMonthly: numObj(amount) },
+        dbVarbs: {
+          targetRentOngoingSwitch: "monthly",
+          targetRentOngoingEditor: numObj(amount),
+        },
       });
     }
 
@@ -95,6 +96,7 @@ describe("SetterCalculations", () => {
     for (const amount of propertyCosts) {
       propertyCostList.addChild("ongoingItem", {
         dbVarbs: {
+          valueOngoingSwitch: "monthly",
           valueSourceSwitch: "labeledEquation",
           valueEditor: numObj(amount),
         },
@@ -102,6 +104,8 @@ describe("SetterCalculations", () => {
     }
 
     addTestLoan(dealTester);
+    const financing = dealTester.setter.onlyChild("financing");
+    financing.varb("financingMode").updateValue("useLoan");
     // 1012.6 expense
 
     const mgmt = dealTester.setter.onlyChild("mgmt");
@@ -116,6 +120,7 @@ describe("SetterCalculations", () => {
     for (const amount of mgmtCosts) {
       mgmtCostList.addChild("ongoingItem", {
         dbVarbs: {
+          valueOngoingSwitch: "monthly",
           valueSourceSwitch: "labeledEquation",
           valueEditor: numObj(amount),
         },

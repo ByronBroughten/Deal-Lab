@@ -104,7 +104,11 @@ export const simpleSectionVarbNames = sectionNames.reduce(
   [] as SimpleSectionVarbName[]
 );
 
+type SectionVarbToValueName<SN extends SectionName> = {
+  [VN in VarbName<SN>]: VarbValueName<SN, VN>;
+};
+
 export type VarbNameByValueName<
   SN extends SectionName,
   VLN extends ValueName
-> = keyof SubType<BaseSectionVarbs<SN>, VLN>;
+> = keyof SubType<SectionVarbToValueName<SN>, VLN>;

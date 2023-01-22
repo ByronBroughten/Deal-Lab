@@ -49,6 +49,7 @@ import {
   SelfChildName,
   StepSiblingName,
 } from "../SectionsMeta/sectionChildrenDerived/ParentName";
+import { DbVarbs } from "../SectionsMeta/sectionChildrenDerived/SectionPack/RawSection";
 import { AbsolutePathInfoMixed } from "../SectionsMeta/SectionInfo/AbsolutePathInfo";
 import {
   FeParentInfo,
@@ -86,12 +87,13 @@ import { GetterSectionsRequiredProps } from "./Bases/GetterSectionsBase";
 import { GetterList } from "./GetterList";
 import { GetterSections } from "./GetterSections";
 import { GetterVarb } from "./GetterVarb";
-import { GetterVarbs } from "./GetterVarbs";
 import { GetterVirtualVarb } from "./GetterVirtualVarb";
 
 export interface GetterSectionRequiredProps<SN extends SectionName>
   extends FeSectionInfo<SN>,
     GetterSectionsRequiredProps {}
+
+type GetterVarbs<SN extends SectionName> = Record<VarbName<SN>, GetterVarb<SN>>;
 
 export class GetterSection<
   SN extends SectionName = SectionName
@@ -117,7 +119,13 @@ export class GetterSection<
     return this.sectionsShare.sections.rawSection(this.feInfo);
   }
   get varbs(): GetterVarbs<SN> {
-    return new GetterVarbs(this.getterSectionProps);
+    return this.meta.varbNamesNext.reduce((varbs, varbName) => {
+      varbs[varbName] = new GetterVarb({
+        ...this.getterSectionProps,
+        varbName: varbName as string,
+      });
+      return varbs;
+    }, {} as GetterVarbs<SN>);
   }
   get varbArr(): GetterVarb<SN>[] {
     return this.meta.varbNamesNext.map((varbName) => this.varbNext(varbName));
@@ -445,7 +453,6 @@ export class GetterSection<
       throw this.noChildError(childName);
     }
   }
-
   tooManyChildrenError(childName: ChildName<SN>): TooManySectionsFoundError {
     return new TooManySectionsFoundError(
       `${this.sectionName} has too many children of childName ${childName}`
@@ -571,6 +578,9 @@ export class GetterSection<
       return values;
     }, {} as SectionValues<SN>);
   }
+  get dbVarbs(): DbVarbs {
+    return this.allValues as DbVarbs;
+  }
   values<VNS extends SectionValuesReq>(
     varbToValuesNames: VNS
   ): SectionValuesRes<VNS> {
@@ -651,11 +661,21 @@ export class GetterSection<
   get selfAndDescendantVarbIds(): string[] {
     return GetterVarb.varbInfosToVarbIds(this.selfAndDescendantVarbInfos);
   }
+  get feVarbInfos(): FeVarbInfo<SN>[] {
+    const { feSectionInfo } = this;
+    return this.meta.varbNames.map(
+      (varbName) =>
+        ({
+          ...feSectionInfo,
+          varbName,
+        } as FeVarbInfo<SN>)
+    );
+  }
   get selfAndDescendantVarbInfos(): FeVarbInfo[] {
     const sectionInfos = this.selfAndDescendantSectionInfos;
     return sectionInfos.reduce((feVarbInfos, sectionInfo) => {
       const section = this.getterSection(sectionInfo);
-      return feVarbInfos.concat(...section.varbs.feVarbInfos);
+      return feVarbInfos.concat(...section.feVarbInfos);
     }, [] as FeVarbInfo[]);
   }
   get selfAndDescendantSectionInfos(): FeSectionInfo[] {

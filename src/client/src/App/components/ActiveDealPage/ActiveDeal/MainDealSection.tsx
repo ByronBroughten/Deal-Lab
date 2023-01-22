@@ -51,7 +51,9 @@ export function MainDealSection({
         $completionStatus: completionStatus,
         $showInputs: showInputs,
         $hide: hide,
-        ...(showInputs ? {} : { onClick: openInputs }),
+        ...(!showInputs && completionStatus !== "allValid"
+          ? { onClick: openInputs }
+          : {}),
       }}
     >
       <div className="MainDealSection-detailsDiv">
@@ -121,7 +123,7 @@ export const Styled = styled(MainSection)<{
   .MainDealSection-detailsDiv {
   }
   .MainDealSection-editBtn {
-    margin-left: ${theme.s3};
+    margin-left: ${theme.s1};
   }
   .MainDealSection-detailsTitleRow {
     display: flex;

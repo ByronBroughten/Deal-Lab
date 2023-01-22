@@ -4,7 +4,7 @@ import useToggleView from "../../../modules/customHooks/useToggleView";
 import { useSetterSection } from "../../../sharedWithServer/stateClassHooks/useSetterSection";
 import theme from "../../../theme/Theme";
 import { GeneralSection } from "../../appWide/GeneralSection";
-import { OutputSection } from "./DealOutputs/DealOutputSection";
+import { OutputSection } from "./DealOutputs/OutputSection";
 
 type Props = { className?: string; feId: string };
 

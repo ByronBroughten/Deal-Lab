@@ -13,20 +13,22 @@ export function dealRelVarbs(): UpdateSectionVarbs<"deal"> {
   return {
     ...updateVarbsS._typeUniformity,
     ...updateVarbsS.savableSection,
-    ...updateVarbsS.ongoingSumNums("piti", [
-      updateFnPropS.pathName("calculatedVarbsFocal", "mortgageIns"),
-      updateFnPropS.pathName("calculatedVarbsFocal", "loanPayment"),
-      updateFnPropS.pathName("propertyFocal", "taxes"),
-      updateFnPropS.pathName("propertyFocal", "homeIns"),
-    ]),
+    ...updateVarbsS.ongoingSumNumsNext("piti", "monthly", {
+      updateFnProps: [
+        updateFnPropS.varbPathBase("taxes"),
+        updateFnPropS.varbPathBase("homeIns"),
+        updateFnPropS.varbPathBase("mortgageIns"),
+        updateFnPropS.varbPathBase("loanPayment"),
+      ],
+    }),
     dealMode: updateVarb("string", { initValue: "buyAndHold" }),
     downPaymentDollars: relVarbS.leftRightPropFn("simpleSubtract", [
-      updateFnPropS.pathName("propertyFocal", "price"),
-      updateFnPropS.pathName("calculatedVarbsFocal", "loanBaseDollars"),
+      updateFnPropS.varbPathName("price"),
+      updateFnPropS.varbPathName("loanBaseDollars"),
     ]),
     downPaymentDecimal: relVarbS.leftRightPropFn("simpleDivide", [
       updateFnPropS.local("downPaymentDollars"),
-      updateFnPropS.pathName("propertyFocal", "price"),
+      updateFnPropS.varbPathName("price"),
     ]),
     downPaymentPercent: relVarbS.singlePropFn(
       "decimalToPercent",
@@ -84,21 +86,26 @@ export function dealRelVarbs(): UpdateSectionVarbs<"deal"> {
     upfrontExpenses: relVarbS.sumNums([
       updateFnPropS.pathName("propertyFocal", "upfrontExpenses"),
       updateFnPropS.pathName("mgmtFocal", "upfrontExpenses"),
-      updateFnPropS.pathName("calculatedVarbsFocal", "loanUpfrontExpenses"),
+      updateFnPropS.varbPathName("loanUpfrontExpenses"),
     ]),
 
     outOfPocketExpenses: relVarbS.leftRightPropFn("simpleSubtract", [
       relVarbInfoS.local("upfrontExpenses"),
-      updateFnPropS.pathName("calculatedVarbsFocal", "loanTotalDollars"),
+      updateFnPropS.varbPathName("loanTotalDollars"),
     ] as LeftRightVarbInfos),
     upfrontRevenue: relVarbS.sumNums([
       updateFnPropS.pathName("propertyFocal", "upfrontRevenue"),
     ]),
-    ...updateVarbsS.ongoingSumNums("expenses", [
-      updateFnPropS.pathName("propertyFocal", "expenses"),
-      updateFnPropS.pathName("mgmtFocal", "expenses"),
-      updateFnPropS.pathName("calculatedVarbsFocal", "loanExpenses"),
-    ]),
+    ...updateVarbsS.ongoingSumNumsNext("expenses", "yearly", {
+      updateFnProps: [
+        updateFnPropS.pathName("propertyFocal", "expenses"),
+        updateFnPropS.pathName("mgmtFocal", "expenses"),
+        updateFnPropS.varbPathBase("loanExpenses"),
+      ],
+    }),
+
+    // How can I get in to see what is the problem?
+    // Reimplement
     ...updateVarbsS.ongoingSumNums("revenue", [
       updateFnPropS.pathName("propertyFocal", "revenue"),
     ]),

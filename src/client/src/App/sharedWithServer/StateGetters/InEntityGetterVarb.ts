@@ -56,12 +56,12 @@ export class InEntityGetterVarb<
   }
   private switchIsActive({
     switchInfo,
-    switchValue,
+    switchValues,
   }: UpdateOverrideSwitch): boolean {
     const actualSwitchValue = this.get.section
       .varbByFocalMixed(switchInfo)
       .value();
-    return switchValue === actualSwitchValue;
+    return switchValues.includes(actualSwitchValue as any);
   }
   get allFixedInEntities() {
     const allFixedInEntities: FixedInEntity[] = [];

@@ -26,6 +26,7 @@ const commonEntityInfo = {
   expectedCount: z.literal("onlyOne"),
   varbName: zS.string,
 };
+
 const zInEntityBase = z.object({
   entityId: zS.nanoId,
   entitySource: zS.string,
@@ -64,6 +65,7 @@ const zGlobalInEntity = zInEntityBase.merge(zGlobalInEntityInfo);
 
 export interface DbInEntityInfo
   extends DbVarbInfoMixed<SectionName, "onlyOne"> {}
+
 const zDbInEntityInfo = z.object({
   ...commonEntityInfo,
   infoType: z.literal("dbId" as DbInEntityInfo["infoType"]),
@@ -71,14 +73,12 @@ const zDbInEntityInfo = z.object({
 } as Record<keyof DbInEntityInfo, any>);
 const zDbInEntity = zInEntityBase.merge(zDbInEntityInfo);
 
-type InEntityVarbInfos = {
-  dbId: DbInEntityInfo;
-  global: GlobalInEntityInfo;
-  pathName: PathNameEntityInfo;
-  pathNameDbId: PathNameDbIdEntityInfo;
-  path: PathEntityInfo;
-};
-export type InEntityVarbInfo = InEntityVarbInfos[keyof InEntityVarbInfos];
+export type InEntityVarbInfo =
+  | DbInEntityInfo
+  | GlobalInEntityInfo
+  | PathNameEntityInfo
+  | PathNameDbIdEntityInfo
+  | PathEntityInfo;
 export const zInEntityVarbInfo = z.union([
   zDbInEntityInfo,
   zGlobalInEntityInfo,

@@ -21,7 +21,7 @@ export class ConditionalValueSolver extends GetterSectionBase<"conditionalRowLis
     for (const row of rows) {
       const left = row.varb("left");
       const rightValue = row.varb("rightValue");
-      const vals = row.varbs.values({
+      const vals = row.values({
         type: "string",
         level: "number",
         operator: "string",

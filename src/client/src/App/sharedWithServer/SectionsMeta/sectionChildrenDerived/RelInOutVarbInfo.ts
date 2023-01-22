@@ -8,13 +8,15 @@ import {
   RelStepSiblingOfChildVarbInfo,
   RelStepSiblingVarbInfo,
 } from "../SectionInfo/RelVarbInfo";
+import { VarbPathNameInfoMixed } from "../SectionInfo/VarbPathNameInfo";
 import { SectionName } from "../SectionName";
 
 export type PathInVarbInfo<SN extends SectionName = SectionName> =
   | RelInVarbInfo<SN>
-  | PathNameVarbInfoMixed<SN, "onlyOne">;
+  | PathNameVarbInfoMixed<SN>
+  | VarbPathNameInfoMixed;
 
-export type RelInVarbInfo<SN extends SectionName = SectionName> =
+type RelInVarbInfo<SN extends SectionName = SectionName> =
   | RelLocalVarbInfo
   | RelChildrenVarbInfo<SN>
   | RelStepSiblingVarbInfo<SN>

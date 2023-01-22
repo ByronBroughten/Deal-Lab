@@ -81,11 +81,14 @@ export const sectionAbsolutePathInfos = {
   get propertyActive() {
     return absolute("property", [...this.dealActive.path, "property"]);
   },
-  get unitActive() {
-    return absolute("property", [...this.propertyActive.path, "property"]);
-  },
   get propertyLatent() {
     return absolute("property", [...this.dealLatent.path, "property"]);
+  },
+  get unitActive() {
+    return absolute("unit", [...this.propertyActive.path, "unit"]);
+  },
+  get unitLatent() {
+    return absolute("unit", [...this.propertyLatent.path, "unit"]);
   },
   get userVarbItemStored() {
     return absolute("userVarbItem", [

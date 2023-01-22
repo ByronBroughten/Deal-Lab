@@ -12,10 +12,7 @@ import {
 } from "../SectionsMeta/allBaseSectionVarbs/baseValues/StringObj";
 import { DbVarbInfoMixed } from "../SectionsMeta/baseSectionsDerived/baseVarbInfo";
 import { VirtualVarbName } from "../SectionsMeta/baseSectionsDerived/baseVarbNames";
-import {
-  PathInVarbInfo,
-  RelInVarbInfo,
-} from "../SectionsMeta/sectionChildrenDerived/RelInOutVarbInfo";
+import { PathInVarbInfo } from "../SectionsMeta/sectionChildrenDerived/RelInOutVarbInfo";
 import { RelVarbInfo } from "../SectionsMeta/SectionInfo/RelVarbInfo";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import {
@@ -96,14 +93,14 @@ export class SolveValueVarb<
     loadMainTextByVarbInfo: (): StringObj => {
       const { updateFnProps } = this.inEntityVarb;
       const varb = this.getterSection.varbByFocalMixed(
-        updateFnProps.varbInfo as RelInVarbInfo
+        updateFnProps.varbInfo as PathInVarbInfo
       );
       return stringObj(varb.value("stringObj").mainText);
     },
     loadLocalString: (): StringObj => {
       const { updateFnProps } = this.inEntityVarb;
       const varb = this.getterSection.varbByFocalMixed(
-        updateFnProps.loadLocalString as RelInVarbInfo
+        updateFnProps.loadLocalString as PathInVarbInfo
       );
       return stringObj(varb.value("string"));
     },

@@ -12,13 +12,18 @@ import {
   switchTargetKeys,
   SwitchVarbNameRecord,
 } from "../allBaseSectionVarbs/baseSwitchNames";
+import { VarbPathName } from "../SectionInfo/VarbPathNameInfo";
 import {
   defaultUpdateVarb,
   UpdateVarb,
   updateVarb,
   UpdateVarbOptions,
 } from "./updateVarb";
-import { updateBasics, updateBasicsS } from "./updateVarb/UpdateBasics";
+import {
+  UpdateBasics,
+  updateBasics,
+  updateBasicsS,
+} from "./updateVarb/UpdateBasics";
 import {
   UpdateFnProp,
   updateFnPropS,
@@ -28,10 +33,11 @@ import {
   overrideSwitchS,
   updateOverride,
   updateOverrideS,
+  UpdateOverrideSwitches,
 } from "./updateVarb/UpdateOverrides";
 import { updateVarbsS } from "./updateVarbs";
 
-type UpdateGroup<
+export type UpdateGroup<
   BN extends string,
   SN extends SwitchName
 > = SwitchVarbNameRecord<BN, SN, UpdateVarb<"numObj">, UpdateVarb<"string">>;
@@ -130,24 +136,103 @@ export function ongoingInputNext<BN extends string>(
   });
 }
 
+type OngoingSumNumProps = {
+  updateBasics?: UpdateBasics<"numObj">;
+  updateFnProps?: UpdateFnProp[];
+  updateOverrides?: {
+    switches: UpdateOverrideSwitches;
+    updateBasics?: UpdateBasics<"numObj">;
+    updateFnProps?: UpdateFnProp[];
+  }[];
+};
+
 export const updateGroupS = {
   group: updateGroup,
   ongoingInputNext,
   monthsYearsInput,
   ongoingInput,
-} as const;
+  ongoingSumNumsNext<BN extends string>(
+    baseName: BN,
+    initSwitch: SwitchTargetKey<"ongoing">,
+    {
+      updateBasics: updateFnBasics,
+      updateFnProps = [],
+      updateOverrides = [],
+    }: OngoingSumNumProps
+  ): UpdateGroup<BN, "ongoing"> {
+    const targetKeys = switchTargetKeys("ongoing");
+    const options = targetKeys.reduce((options, key) => {
+      options[key] = {
+        updateFnName: "sumNums",
+        updateFnProps: {
+          nums: updatePropsPlusGroupEnding(updateFnProps, "ongoing", key),
+        },
+        ...updateFnBasics,
+        updateOverrides: [
+          ...updateOverrides.map((override) => {
+            return updateOverride(
+              override.switches,
+              override.updateBasics ??
+                updateBasics("sumNums", {
+                  nums: updatePropsPlusGroupEnding(
+                    override.updateFnProps ?? [],
+                    "ongoing",
+                    key
+                  ),
+                })
+            );
+          }),
+        ],
+      };
+      return options;
+    }, {} as SwitchOptions<"ongoing">);
+    return updateGroup(baseName, "ongoing", initSwitch, options);
+  },
+};
+
+export function ongoingSumNums<Base extends string>(
+  varbNameBase: Base,
+  updateFnArrProp: UpdateFnProp[],
+  switchInit: SwitchTargetKey<"ongoing"> = "monthly"
+): UpdateGroup<Base, "ongoing"> {
+  const props = getSwitchUpdateFnProps({ nums: updateFnArrProp }, "ongoing");
+  return updateVarbsS.ongoingPureCalc(
+    varbNameBase,
+    {
+      monthly: {
+        updateFnName: "sumNums",
+        updateFnProps: props.monthly,
+      },
+      yearly: {
+        updateFnName: "sumNums",
+        updateFnProps: props.yearly,
+      },
+    },
+    switchInit
+  );
+}
 
 function switchEndingToUpdateProp<
   SN extends SwitchName,
   SK extends SwitchKey<SN>
->(info: UpdateFnProp, switchName: SN, switchKey: SK) {
-  return {
-    ...info,
-    varbName: getSwitchVarbName(info.varbName, switchName, switchKey),
-  };
+>(info: UpdateFnProp, switchName: SN, switchKey: SK): UpdateFnProp {
+  if (info.infoType === "varbPathName") {
+    return {
+      ...info,
+      varbPathName: getSwitchVarbName(
+        info.varbPathName,
+        switchName,
+        switchKey
+      ) as any as VarbPathName,
+    };
+  } else
+    return {
+      ...info,
+      varbName: getSwitchVarbName(info.varbName, switchName, switchKey),
+    };
 }
 
-function switchEndingsToUpdateProps<
+function updatePropsPlusGroupEnding<
   SN extends SwitchName,
   SK extends SwitchKey<SN>
 >(
@@ -178,7 +263,7 @@ function getSwitchUpdateFnProps<SN extends SwitchName>(
     for (const propName of Obj.keys(updateFnProps)) {
       const props = updateFnProps[propName];
       (switchUpdateProps as any)[switchKey][propName] =
-        switchEndingsToUpdateProps(props, switchName, switchKey);
+        updatePropsPlusGroupEnding(props, switchName, switchKey);
     }
     return switchUpdateProps;
   }, {} as SwitchUpdateFnProps<SN>);
@@ -305,25 +390,4 @@ export function ongoingPureCalc<Base extends string>(
       }),
     }),
   };
-}
-export function ongoingSumNums<Base extends string>(
-  varbNameBase: Base,
-  updateFnArrProp: UpdateFnProp[],
-  switchInit: SwitchTargetKey<"ongoing"> = "monthly"
-): UpdateGroup<Base, "ongoing"> {
-  const props = getSwitchUpdateFnProps({ nums: updateFnArrProp }, "ongoing");
-  return updateVarbsS.ongoingPureCalc(
-    varbNameBase,
-    {
-      monthly: {
-        updateFnName: "sumNums",
-        updateFnProps: props.monthly,
-      },
-      yearly: {
-        updateFnName: "sumNums",
-        updateFnProps: props.yearly,
-      },
-    },
-    switchInit
-  );
 }

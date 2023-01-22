@@ -73,6 +73,11 @@ export const allDisplaySectionVarbs = {
   }),
   ...displaySectionVarbsProp("calculatedVarbs", {
     onePercentPrice: display("1% Purchase Price"),
+    twoPercentPrice: display("2% Purchase Price"),
+  }),
+  ...displaySectionVarbsProp("financing", {
+    ...displayGroup("ongoing", "loanPayment", "Loan Payments"),
+    loanTotalDollars: display("Loan total"),
   }),
   ...displaySectionVarbsProp("loan", {
     ...editorDisplayGroup("monthsYearsInput", "loanTerm", "Loan term"),

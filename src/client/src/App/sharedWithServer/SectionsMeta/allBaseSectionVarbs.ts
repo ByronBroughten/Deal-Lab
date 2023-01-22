@@ -206,7 +206,6 @@ export function makeAllBaseSectionVarbs() {
       mortgageInsUpfront: baseVarb("numObj", dollars),
       mortgageInsUpfrontEditor: baseVarb("numObj", dollars),
       ...baseVarbsS.ongoingDollarsInput("mortgageIns"),
-
       ...baseVarbs(
         "numObj",
         ["loanTotalDollars", "closingCosts", "wrappedInLoan"] as const,
@@ -257,10 +256,7 @@ export function makeAllBaseSectionVarbs() {
       downPaymentDecimal: baseVarb("numObj", decimal),
     }),
     financing: baseSectionVarbs({
-      financingMode: baseVarb("string"), // cashOnly, useLoan
-    }),
-    calculatedVarbs: baseSectionVarbs({
-      ...baseVarbs("numObj", ["onePercentPrice"] as const, percent),
+      financingMode: baseVarb("string"), // "cashOnly", "useLoan", ""
       ...baseVarbs(
         "numObj",
         [
@@ -275,6 +271,13 @@ export function makeAllBaseSectionVarbs() {
       ...baseVarbsS.ongoingDollars("loanExpenses"),
       ...baseVarbsS.ongoingDollars("mortgageIns"),
       ...baseVarbsS.ongoingDollars("loanPayment"),
+    }),
+    calculatedVarbs: baseSectionVarbs({
+      ...baseVarbs(
+        "numObj",
+        ["onePercentPrice", "twoPercentPrice"] as const,
+        percent
+      ),
     }),
     feUser: baseSectionVarbs({
       ...baseVarbs("string", [

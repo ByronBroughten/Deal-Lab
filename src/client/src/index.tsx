@@ -6,11 +6,7 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-// 3. Add Financing back and give it a completionStatus varb
-//    it doesn't necessarily need its variables. But it could get them
-//    they're not many.
 
-// completionStatus will be a string
 // Add these updateFns (with the right props):
 // "propertyCompletionStatus"
 // "financingCompletionStatus"

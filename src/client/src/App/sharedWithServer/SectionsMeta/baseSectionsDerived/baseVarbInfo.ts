@@ -10,6 +10,14 @@ import { SectionName } from "../SectionName";
 import { SectionNameProp } from "./baseSectionInfo";
 import { VarbName } from "./baseSectionsVarbsTypes";
 
+export type MixedInfoProps<
+  IT extends string,
+  EC extends ExpectedCount = ExpectedCount
+> = {
+  infoType: IT;
+  expectedCount: EC;
+};
+
 export interface ActiveDealInfo<
   SN extends SectionName = SectionName,
   EC extends ExpectedCount = ExpectedCount

@@ -6,7 +6,7 @@ import { StrictExclude } from "../../sharedWithServer/utils/types";
 import theme from "../../theme/Theme";
 import { MainSectionTopRows } from "../appWide/MainSectionTopRows";
 import { OuterMainSection } from "./../appWide/GeneralSection/OuterMainSection";
-import { OutputSection } from "./ActiveDeal/DealOutputs/DealOutputSection";
+import { OutputSection } from "./ActiveDeal/DealOutputs/OutputSection";
 import { Financing } from "./ActiveDeal/Financing";
 import { Mgmt } from "./ActiveDeal/MgmtGeneral/Mgmt";
 import { Property } from "./ActiveDeal/PropertyGeneral/Property";
@@ -68,9 +68,8 @@ export function ActiveDeal({ className, feId }: Props) {
         <Mgmt {...makeSectionProps("mgmt")} />
       </div>
       <OutputSection
-        feId={feId}
+        feId={deal.onlyChildFeId("dealOutputList")}
         hide={!(sectionView === "deal")}
-        detailsIsOpen={false}
       />
     </Styled>
   );
