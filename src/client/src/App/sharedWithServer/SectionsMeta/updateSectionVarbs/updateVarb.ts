@@ -14,7 +14,12 @@ import { ValueByValueName } from "../baseSectionsDerived/valueMetaTypes";
 import { ChildName } from "../sectionChildrenDerived/ChildName";
 import { SectionName } from "../SectionName";
 import { getUpdateFnNames } from "./updateVarb/UpdateFnName";
-import { UpdateFnProp, updateFnPropS } from "./updateVarb/UpdateFnProps";
+import {
+  collectUpdateFnSwitchProps,
+  UpdateFnProp,
+  updateFnPropS,
+} from "./updateVarb/UpdateFnProps";
+import { collectOverrideSwitchProps } from "./updateVarb/UpdateOverrides";
 import { UpdateProps, updatePropsS } from "./updateVarb/UpdateProps";
 
 export interface GeneralUpdateVarb extends UpdateProps {
@@ -63,9 +68,14 @@ export function updateVarb<VN extends ValueName>(
   valueName: VN,
   partial: Partial<UpdateVarb<VN>> = {}
 ): UpdateVarb<VN> {
-  return {
+  const { updateFnProps, updateOverrides, ...rest }: UpdateVarb<VN> = {
     ...defaultUpdateVarb(valueName),
     ...partial,
+  };
+  return {
+    ...rest,
+    updateOverrides: collectOverrideSwitchProps(updateOverrides),
+    updateFnProps: collectUpdateFnSwitchProps(updateFnProps),
   };
 }
 

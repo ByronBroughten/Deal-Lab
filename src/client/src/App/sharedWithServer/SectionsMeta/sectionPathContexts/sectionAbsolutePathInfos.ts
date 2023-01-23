@@ -1,10 +1,10 @@
 import { Obj } from "../../utils/Obj";
 import { isChildName } from "../sectionChildrenDerived/ChildName";
 import { childToSectionName } from "../sectionChildrenDerived/ChildSectionName";
-import { absolutePathInfo } from "../SectionInfo/AbsolutePathInfo";
+import { rootAbsolutePathInfo } from "../SectionInfo/AbsolutePathInfo";
 import { SectionName } from "../SectionName";
 
-const absolute = absolutePathInfo;
+const absolute = rootAbsolutePathInfo;
 
 export const sectionAbsolutePathInfos = {
   get userVarbEditor() {
@@ -75,6 +75,18 @@ export const sectionAbsolutePathInfos = {
   get loanLatent() {
     return absolute("loan", [...this.financingLatent.path, "loan"]);
   },
+  get closingCostActive() {
+    return absolute("singleTimeValue", [
+      ...this.loanActive.path,
+      "closingCostValue",
+    ]);
+  },
+  get closingCostLatent() {
+    return absolute("singleTimeValue", [
+      ...this.loanLatent.path,
+      "closingCostValue",
+    ]);
+  },
   get mgmtLatent() {
     return absolute("mgmt", [...this.dealLatent.path, "mgmt"]);
   },
@@ -89,6 +101,54 @@ export const sectionAbsolutePathInfos = {
   },
   get unitLatent() {
     return absolute("unit", [...this.propertyLatent.path, "unit"]);
+  },
+  get repairCostValueActive() {
+    return absolute("singleTimeValue", [
+      ...this.propertyActive.path,
+      "repairCostValue",
+    ]);
+  },
+  get repairCostValueLatent() {
+    return absolute("singleTimeValue", [
+      ...this.propertyLatent.path,
+      "repairCostValue",
+    ]);
+  },
+  get capExCostValueActive() {
+    return absolute("ongoingValue", [
+      ...this.propertyActive.path,
+      "capExCostValue",
+    ]);
+  },
+  get capExCostValueLatent() {
+    return absolute("ongoingValue", [
+      ...this.propertyLatent.path,
+      "capExCostValue",
+    ]);
+  },
+  get maintenanceCostValueActive() {
+    return absolute("ongoingValue", [
+      ...this.propertyActive.path,
+      "maintenanceCostValue",
+    ]);
+  },
+  get maintenanceCostValueLatent() {
+    return absolute("ongoingValue", [
+      ...this.propertyLatent.path,
+      "maintenanceCostValue",
+    ]);
+  },
+  get utilityCostValueActive() {
+    return absolute("ongoingValue", [
+      ...this.propertyActive.path,
+      "utilityCostValue",
+    ]);
+  },
+  get utilityCostValueLatent() {
+    return absolute("ongoingValue", [
+      ...this.propertyLatent.path,
+      "utilityCostValue",
+    ]);
   },
   get userVarbItemStored() {
     return absolute("userVarbItem", [

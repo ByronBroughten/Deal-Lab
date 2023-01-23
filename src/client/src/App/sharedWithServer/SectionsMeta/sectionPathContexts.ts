@@ -6,17 +6,31 @@ import {
 } from "./sectionPathContexts/sectionPathNames";
 
 const absolute = sectionAbsolutePathInfos;
+
+const activeFocals = {
+  calculatedVarbsFocal: absolute.calculatedVarbsActive,
+
+  propertyFocal: absolute.propertyActive,
+  unitFocal: absolute.unitActive,
+  repairCostFocal: absolute.repairCostValueActive,
+  utilityCostFocal: absolute.utilityCostValueActive,
+  capExCostFocal: absolute.capExCostValueActive,
+  maintenanceCostFocal: absolute.maintenanceCostValueActive,
+
+  financingFocal: absolute.financingActive,
+  loanFocal: absolute.loanActive,
+  closingCostFocal: absolute.closingCostActive,
+
+  mgmtFocal: absolute.mgmtActive,
+  dealFocal: absolute.dealActive,
+} as const;
+
 export const sectionPathContexts = {
   get default() {
     return this.activeDealPage;
   },
   activeDealPage: sectionPathContext({
-    calculatedVarbsFocal: absolute.calculatedVarbsActive,
-    propertyFocal: absolute.propertyActive,
-    mgmtFocal: absolute.mgmtActive,
-    loanFocal: absolute.loanActive,
-    financingFocal: absolute.financingActive,
-    dealFocal: absolute.dealActive,
+    ...activeFocals,
     userVarbItemMain: absolute.userVarbItemStored,
     ongoingListMain: absolute.ongoingListStored,
     ongoingItemMain: absolute.ongoingItemStored,
@@ -24,12 +38,7 @@ export const sectionPathContexts = {
     singleTimeItemMain: absolute.singleTimeItemStored,
   }),
   userVarbEditorPage: sectionPathContext({
-    calculatedVarbsFocal: absolute.calculatedVarbsActive,
-    propertyFocal: absolute.propertyActive,
-    mgmtFocal: absolute.mgmtActive,
-    loanFocal: absolute.loanActive,
-    financingFocal: absolute.financingActive,
-    dealFocal: absolute.dealActive,
+    ...activeFocals,
     userVarbItemMain: absolute.userVarbItemEditor,
     ongoingListMain: absolute.ongoingListStored,
     ongoingItemMain: absolute.ongoingItemStored,
@@ -37,12 +46,7 @@ export const sectionPathContexts = {
     singleTimeItemMain: absolute.singleTimeItemStored,
   }),
   userListEditorPage: sectionPathContext({
-    calculatedVarbsFocal: absolute.calculatedVarbsActive,
-    propertyFocal: absolute.propertyActive,
-    mgmtFocal: absolute.mgmtActive,
-    loanFocal: absolute.loanActive,
-    financingFocal: absolute.financingActive,
-    dealFocal: absolute.dealActive,
+    ...activeFocals,
     userVarbItemMain: absolute.userVarbItemStored,
     ongoingListMain: absolute.ongoingListEditor,
     ongoingItemMain: absolute.ongoingItemEditor,
@@ -52,9 +56,18 @@ export const sectionPathContexts = {
   latentSection: sectionPathContext({
     calculatedVarbsFocal: absolute.calculatedVarbsLatent,
     propertyFocal: absolute.propertyLatent,
-    mgmtFocal: absolute.mgmtLatent,
-    loanFocal: absolute.loanLatent,
+    unitFocal: absolute.unitLatent,
+    repairCostFocal: absolute.repairCostValueLatent,
+    utilityCostFocal: absolute.utilityCostValueLatent,
+    capExCostFocal: absolute.capExCostValueLatent,
+    maintenanceCostFocal: absolute.maintenanceCostValueLatent,
+
     financingFocal: absolute.financingLatent,
+    loanFocal: absolute.loanLatent,
+    closingCostFocal: absolute.closingCostLatent,
+
+    mgmtFocal: absolute.mgmtLatent,
+
     dealFocal: absolute.dealLatent,
     userVarbItemMain: absolute.userVarbItemLatent,
     ongoingListMain: absolute.ongoingListLatent,

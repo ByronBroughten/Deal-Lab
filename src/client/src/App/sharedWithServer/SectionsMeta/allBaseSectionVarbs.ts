@@ -278,6 +278,10 @@ export function makeAllBaseSectionVarbs() {
         ["onePercentPrice", "twoPercentPrice"] as const,
         percent
       ),
+      propertyCompletionStatus: baseVarb("string"),
+      financingCompletionStatus: baseVarb("string"),
+      mgmtCompletionStatus: baseVarb("string"),
+      dealCompletionStatus: baseVarb("string"),
     }),
     feUser: baseSectionVarbs({
       ...baseVarbs("string", [

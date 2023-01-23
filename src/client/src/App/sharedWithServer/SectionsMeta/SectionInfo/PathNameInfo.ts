@@ -73,7 +73,7 @@ export interface PathNameVarbInfo<SN extends SectionName = SectionName>
     VarbProp {}
 
 export interface PathNameVarbInfoMixed<
-  SN extends SectionName,
+  SN extends SectionName = SectionName,
   EC extends ExpectedCount = ExpectedCount
 > extends PathNameVarbInfo<SN>,
     PathMixedProp<EC> {}

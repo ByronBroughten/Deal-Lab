@@ -7,16 +7,6 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-// Add these updateFns (with the right props):
-// "propertyCompletionStatus"
-// "financingCompletionStatus"
-// "mgmtCompletionStatus"
-
-// 2. Make the completion statuses update based on solve
-
-// - For now, I could just disable it and put a hover-over that
-//   says, "please fill in all the fields" when it's not yet complete
-
 // How do I want the finish button to work?
 // - Well, the ideal is that it triggers a display
 // of the fields that aren't filled in correctly.
@@ -25,35 +15,27 @@ AppRegistry.runApplication("App", {
 // - Just do it badly at first, for the gist of it.
 // - Then pay someone to do it well
 
+// 0, Make "Deal" page have "buy and hold" labeled. Space things out.
+
 // *Ouputs
-// "To view ouptuts, enter Property, Financing, and Management data."
+// orange:
+// "To view ouptuts, complete Property, Financing, and Management sections"
 //  "Calculate Outputs", or, "View Outputs"
-
-// 1. Create a property info component.
-// When a section has all info, I want to display some of it
-// have an "edit" button, and indicate that the section is complete.
-// - Display total income, total expenses, total upfront costs
-
-// 1. Create a financing info component.
-// 2. That component starts with a switch between using loans or using cash only
-// 3. If the switch is flipped to use loans, you may click to go in
-//    to edit and add loans
-// 4. The loans are displayed on the outside.
-
-// 1. Do with mgmt like you did with property
-// 1. Make a full output page.
+// "What determines whether 'Calculate Outputs' is displayed? It
+//  could be a deal variable. If a deal has had it clicked already, it'll
+//  display automatically."
+// "Calculate Outputs" could trigger an orange toast...
 
 // 2. Sort out the variables
-// - Make varbOptionInfo, reduced to a mere variable name.
 // - Make a reduced set of variables appear in the variable editor
 // - Add a "see more" modal or dropdown for the variables
 // - Add an explanation to the Variables page
 // - Add an explanation to the Lists page
-// - Perhaps restrict which inputs are allowed to use variables
-// - Perhaps add an explanation of the equation capabilities of
+// - Restrict which inputs are allowed to use variables
+// - Add an explanation of the equation capabilities of
 //   inputs that can take equations
-// - Maybe put "+ - x /" in fields that can use equations
-// - Maybe note when a field is an equation field.
+// - Mark equation editor fields with an "Equation Editor" label,
+//   or something
 
 // 5. Make specialized CapEx and Utility values and lists
 // 6. Make a specialized maintenance value (with different methods
@@ -65,6 +47,8 @@ AppRegistry.runApplication("App", {
 // 4.5 Allow for Brrrr
 //  - Differentiate between purchase and refinance loans (right?)
 //  - Add Post-Purchase loan
+
+// 7. Make a full output page.
 
 // 1. Change updateSection so that it only takes updateVarb
 //    options and provides default rounding based on baseSectionVarbs

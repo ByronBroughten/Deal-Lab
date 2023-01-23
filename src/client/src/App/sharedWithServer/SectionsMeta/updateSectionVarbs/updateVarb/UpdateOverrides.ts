@@ -5,6 +5,7 @@ import {
 } from "../../allBaseSectionVarbs/baseSwitchNames";
 import { ValueName } from "../../allBaseSectionVarbs/ValueName";
 import { mixedInfoS } from "../../sectionChildrenDerived/MixedSectionInfo";
+import { PathNameVarbInfoMixed } from "../../SectionInfo/PathNameInfo";
 import { RelLocalVarbInfo, relVarbInfoS } from "../../SectionInfo/RelVarbInfo";
 import {
   VarbPathName,
@@ -13,7 +14,12 @@ import {
 } from "../../SectionInfo/VarbPathNameInfo";
 import { updateBasics, UpdateBasics, updateBasicsS } from "./UpdateBasics";
 import { UpdateFnName } from "./UpdateFnName";
-import { updateFnProp, updateFnPropsS } from "./UpdateFnProps";
+import {
+  collectUpdateFnSwitchProps,
+  UpdateFnProp,
+  updateFnProp,
+  updateFnPropsS,
+} from "./UpdateFnProps";
 
 export type UpdateOverrides<VN extends ValueName = ValueName> =
   readonly UpdateOverride<VN>[];
@@ -26,10 +32,43 @@ export interface UpdateOverride<VN extends ValueName = ValueName>
 export type UpdateOverrideSwitches = readonly UpdateOverrideSwitch[];
 
 export interface UpdateOverrideSwitch {
-  switchInfo: RelLocalVarbInfo | VarbPathNameInfoMixed;
+  switchInfo: RelLocalVarbInfo | VarbPathNameInfoMixed | PathNameVarbInfoMixed;
   switchValues: OverrideSwitchValue[];
 }
+
+export function overrideSwitch(
+  switchInfo: RelLocalVarbInfo | VarbPathNameInfoMixed | PathNameVarbInfoMixed,
+  ...switchValues: OverrideSwitchValue[]
+): UpdateOverrideSwitch {
+  return {
+    switchInfo,
+    switchValues,
+  };
+}
+
 type OverrideSwitchValue = string | boolean;
+
+export function collectOverrideSwitchProps(
+  updateOverrides: UpdateOverrides
+): UpdateOverrides {
+  let nextOverrides: UpdateOverrides = [];
+  for (const { switches, updateFnProps, ...rest } of updateOverrides) {
+    const andOverrideSwitches: UpdateFnProp[] = [];
+    for (const updateSwitch of switches) {
+      const { switchInfo } = updateSwitch;
+      andOverrideSwitches.push(updateFnProp(switchInfo));
+    }
+    nextOverrides = nextOverrides.concat({
+      switches,
+      updateFnProps: collectUpdateFnSwitchProps({
+        ...updateFnProps,
+        andOverrideSwitches,
+      }),
+      ...rest,
+    });
+  }
+  return nextOverrides;
+}
 
 export const overrideSwitchS = {
   switchIsActive<SN extends SwitchName, SK extends SwitchTargetKey<SN>>(
@@ -86,19 +125,9 @@ export function updateOverride<
   VN extends ValueName,
   US extends UpdateOverrideSwitches
 >(switches: US, updateBasics: UpdateBasics<VN>): UpdateOverride<VN> {
-  const { updateFnProps, ...rest } = updateBasics;
-  for (const updateSwitch of switches) {
-    const { switchInfo } = updateSwitch;
-    if (switchInfo.infoType === "local") {
-      updateFnProps[switchInfo.varbName] = updateFnProp(switchInfo);
-    } else if (switchInfo.infoType === "varbPathName") {
-      updateFnProps[switchInfo.varbPathName] = updateFnProp(switchInfo);
-    }
-  }
   return {
     switches,
-    updateFnProps,
-    ...rest,
+    ...updateBasics,
   };
 }
 

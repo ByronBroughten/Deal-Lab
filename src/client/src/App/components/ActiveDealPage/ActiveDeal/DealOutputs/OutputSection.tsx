@@ -1,6 +1,7 @@
 import { CgDetailsLess, CgDetailsMore } from "react-icons/cg";
 import styled, { css } from "styled-components";
 import { useToggleViewNext } from "../../../../modules/customHooks/useToggleView";
+import { CompletionStatus } from "../../../../sharedWithServer/SectionsMeta/baseSectionsDerived/subValues";
 import theme from "../../../../theme/Theme";
 import { MainSection } from "../../../appWide/GeneralSection/MainSection";
 import MainSectionBody from "../../../appWide/GeneralSection/MainSection/MainSectionBody";
@@ -12,12 +13,17 @@ import { DealOutputList } from "./OutputSection/DealOutputList";
 export function OutputSection({
   feId,
   hide,
+  completionStatus,
 }: {
   feId: string;
   hide?: boolean;
+  completionStatus: CompletionStatus;
 }) {
   const { detailsIsOpen, toggleDetails } = useToggleViewNext("details", false);
   return (
+    // I want a button that says, "calculate outputs"
+    // I want to show progress towards the outputs being calculatable
+
     <Styled className="OutputSection-root" $hide={hide}>
       <div className="OutputSection-titleRow">
         <SectionTitle text="Outputs" />

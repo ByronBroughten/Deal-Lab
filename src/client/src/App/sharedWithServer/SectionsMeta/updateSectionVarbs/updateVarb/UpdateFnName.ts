@@ -36,6 +36,7 @@ const updateFnNames = checkUpdateFnNames({
     "loadEndAdornment",
     "emptyStringObj",
   ],
+  string: [...commonUpdateFnNames, "propertyCompletionStatus"],
 });
 
 export const getUpdateFnNames = <VN extends ValueName>(

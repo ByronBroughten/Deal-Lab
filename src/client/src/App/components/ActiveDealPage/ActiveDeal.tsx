@@ -1,7 +1,12 @@
 import { FormControl, MenuItem, Select } from "@material-ui/core";
 import React from "react";
 import styled, { css } from "styled-components";
-import { useGetterSection } from "../../sharedWithServer/stateClassHooks/useGetterSection";
+import { VarbName } from "../../sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
+import { CompletionStatus } from "../../sharedWithServer/SectionsMeta/baseSectionsDerived/subValues";
+import {
+  useGetterSection,
+  useGetterSectionOnlyOne,
+} from "../../sharedWithServer/stateClassHooks/useGetterSection";
 import { StrictExclude } from "../../sharedWithServer/utils/types";
 import theme from "../../theme/Theme";
 import { MainSectionTopRows } from "../appWide/MainSectionTopRows";
@@ -24,15 +29,34 @@ export function ActiveDeal({ className, feId }: Props) {
   const deal = useGetterSection(feInfo);
   const [sectionView, setSectionView] = React.useState("deal" as SectionView);
 
+  const main = useGetterSectionOnlyOne("main");
+  const calculatedVarbs = main.onlyChild("calculatedVarbs");
+
+  const completionStatus = calculatedVarbs.valueNext("dealCompletionStatus");
+  const completionStatusNames: Record<
+    SectionView,
+    VarbName<"calculatedVarbs">
+  > = {
+    property: "propertyCompletionStatus",
+    financing: "financingCompletionStatus",
+    mgmt: "mgmtCompletionStatus",
+    deal: "dealCompletionStatus",
+  };
+
   const makeSectionProps = (
     sectionName: StrictExclude<SectionView, "deal">
-  ) => ({
-    feId: deal.onlyChildFeId(sectionName),
-    showInputs: sectionView === sectionName,
-    openInputs: () => setSectionView(sectionName),
-    closeInputs: () => setSectionView("deal"),
-    hide: ![sectionName, "deal"].includes(sectionView),
-  });
+  ) => {
+    return {
+      feId: deal.onlyChildFeId(sectionName),
+      showInputs: sectionView === sectionName,
+      openInputs: () => setSectionView(sectionName),
+      closeInputs: () => setSectionView("deal"),
+      hide: ![sectionName, "deal"].includes(sectionView),
+      completionStatus: calculatedVarbs.valueNext(
+        completionStatusNames[sectionName]
+      ) as CompletionStatus,
+    };
+  };
 
   const isDealView = sectionView === "deal";
   return (
@@ -67,10 +91,17 @@ export function ActiveDeal({ className, feId }: Props) {
         <Financing {...makeSectionProps("financing")} />
         <Mgmt {...makeSectionProps("mgmt")} />
       </div>
-      <OutputSection
-        feId={deal.onlyChildFeId("dealOutputList")}
-        hide={!(sectionView === "deal")}
-      />
+      {completionStatus === "allValid" && (
+        <OutputSection
+          feId={deal.onlyChildFeId("dealOutputList")}
+          hide={!(sectionView === "deal")}
+          completionStatus={
+            calculatedVarbs.valueNext(
+              "dealCompletionStatus"
+            ) as CompletionStatus
+          }
+        />
+      )}
     </Styled>
   );
 }

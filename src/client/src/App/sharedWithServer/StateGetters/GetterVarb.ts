@@ -5,7 +5,6 @@ import { ExpectedCount } from "../SectionsMeta/allBaseSectionVarbs/NanoIdInfo";
 import {
   Adornments,
   StateValueAnyKey,
-  valueSchemasPlusAny,
   ValueTypesPlusAny,
 } from "../SectionsMeta/allBaseSectionVarbs/StateVarbTypes";
 import { ValueName } from "../SectionsMeta/allBaseSectionVarbs/ValueName";
@@ -56,6 +55,21 @@ export class GetterVarb<
       ...this.feSectionInfo,
       varbName: this.varbName,
     };
+  }
+  checkObjValue(): { isEmpty: boolean; isValid: boolean } {
+    const value = this.multiValue("numObj", "stringObj", "string");
+    const text = typeof value === "string" ? value : value.mainText;
+    if (!text) {
+      return {
+        isEmpty: true,
+        isValid: false,
+      };
+    } else {
+      return {
+        isEmpty: false,
+        isValid: true,
+      };
+    }
   }
   get numberValue(): number {
     // figure out how to make NaN result in an error or questionMark
@@ -138,11 +152,28 @@ export class GetterVarb<
     valueName?: VT
   ): ValueTypesPlusAny[VT] {
     const { value } = this.raw;
-    if (valueSchemasPlusAny[valueName ?? "any"].is(value)) {
+    if ([this.valueName, "any"].includes(valueName ?? "any")) {
       return cloneDeep(value) as ValueTypesPlusAny[VT];
     } else {
       throw new ValueTypeError(
         `Value of ${this.sectionName}.${this.varbName} not of type ${valueName}`
+      );
+    }
+  }
+  multiValue<VT extends ValueName | "any" = "any">(
+    ...valueNames: VT[]
+  ): ValueTypesPlusAny[VT] {
+    const { value } = this.raw;
+    if (
+      valueNames.includes(this.valueName as any) ||
+      valueNames.includes("any" as any)
+    ) {
+      return cloneDeep(value) as ValueTypesPlusAny[VT];
+    } else {
+      throw new ValueTypeError(
+        `Value of ${this.sectionName}.${
+          this.varbName
+        } not of type ${valueNames.join(" ")}`
       );
     }
   }
@@ -243,7 +274,7 @@ export class GetterVarb<
     varbName: string,
     valueName?: VT
   ): ValueTypesPlusAny[VT] {
-    return this.localVarb(varbName).value(valueName);
+    return this.localVarb(varbName).value(valueName ?? ("any" as VT));
   }
   getterVarb<S extends SectionNameByType>(
     varbInfo: FeVarbInfo<S>
@@ -265,7 +296,7 @@ export class GetterVarb<
     return {
       id: this.varbName,
       name: this.varbName,
-      value: this.value(valueName),
+      value: this.value(valueName ?? "any"),
       label: this.displayName,
     };
   }

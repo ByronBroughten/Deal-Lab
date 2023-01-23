@@ -8,7 +8,9 @@ export function makeDefaultDealPack(): SectionPack<"deal"> {
   const deal = PackBuilderSection.initAsOmniChild("deal", {
     dbVarbs: { dealMode: "buyAndHold" },
   });
-  deal.addChild("financing");
+  const financing = deal.addAndGetChild("financing");
+  financing.addChild("loan");
+
   deal.loadChild({
     childName: "dealOutputList",
     sectionPack: makeDefaultOutputList(),

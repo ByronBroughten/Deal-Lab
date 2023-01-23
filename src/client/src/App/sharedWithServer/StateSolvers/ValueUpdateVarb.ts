@@ -1,3 +1,4 @@
+import { CompletionStatus } from "../../components/ActiveDealPage/ActiveDeal/MainDealSection";
 import calculations, {
   isCalculationName,
   NumberProps,
@@ -16,6 +17,7 @@ import { PathInVarbInfo } from "../SectionsMeta/sectionChildrenDerived/RelInOutV
 import { RelVarbInfo } from "../SectionsMeta/SectionInfo/RelVarbInfo";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import {
+  CompletionStatusProps,
   UpdateFnProp,
   UpdateFnProps,
 } from "../SectionsMeta/updateSectionVarbs/updateVarb/UpdateFnProps";
@@ -55,8 +57,75 @@ export class SolveValueVarb<
   private get numObjSolver() {
     return new GetterVarbNumObj(this.getterVarbProps);
   }
-
+  updatePropIsActive(
+    focalSection: GetterSection,
+    { andSwitches }: UpdateFnProp
+  ): boolean {
+    return andSwitches.every(({ switchInfo, switchValues }) => {
+      const varb = focalSection.varbByFocalMixed(switchInfo);
+      return switchValues.includes(varb.valueNext() as any);
+    });
+  }
+  activePropVarbs(updateProp: UpdateFnProp) {
+    const varbs = this.getterSection.varbsByFocalMixed(updateProp);
+    return varbs.filter((varb) =>
+      this.updatePropIsActive(varb.getterSection, updateProp)
+    );
+  }
   private updateFns = {
+    completionStatus: (): CompletionStatus => {
+      const { updateFnProps } = this.inEntityVarb;
+      const { nonZeros, validInputs, othersValid } =
+        updateFnProps as CompletionStatusProps;
+
+      let allEmpty = true;
+      let allValid = true;
+
+      const updateBools = ({
+        isEmpty,
+        isValid,
+      }: {
+        isEmpty: boolean;
+        isValid: boolean;
+      }) => {
+        if (!isEmpty) allEmpty = false;
+        if (!isValid) allValid = false;
+      };
+
+      for (const updateProp of othersValid) {
+        const varbs = this.activePropVarbs(updateProp);
+        for (const varb of varbs) {
+          const value = varb.valueNext() as CompletionStatus;
+          if (value === "allEmpty") {
+            updateBools({ isEmpty: true, isValid: false });
+          } else if (value === "someInvalid") {
+            updateBools({ isEmpty: false, isValid: false });
+          } else if (value === "allValid") {
+            updateBools({ isEmpty: false, isValid: true });
+          }
+        }
+      }
+
+      for (const updateProp of validInputs) {
+        const varbs = this.activePropVarbs(updateProp);
+        for (const varb of varbs) {
+          updateBools(varb.checkObjValue());
+        }
+      }
+
+      for (const updateProp of nonZeros) {
+        const varbs = this.activePropVarbs(updateProp);
+        for (const varb of varbs) {
+          if (varb.numberOrQuestionMark === 0) {
+            updateBools({ isEmpty: true, isValid: false });
+          }
+        }
+      }
+
+      if (allEmpty) return "allEmpty";
+      if (allValid) return "allValid";
+      else return "someInvalid";
+    },
     manualUpdateOnly: (): StateValue => {
       return this.getterVarb.value();
     },

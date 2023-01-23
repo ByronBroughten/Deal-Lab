@@ -8,7 +8,8 @@ import { mgmtRelVarbs } from "./allUpdateSectionVarbs/mgmtUpdateVarbs";
 import { propertyUpdateVarbs } from "./allUpdateSectionVarbs/propertyUpdateVarbs";
 import { VarbName } from "./baseSectionsDerived/baseSectionsVarbsTypes";
 import { AuthStatus } from "./baseSectionsVarbsValues";
-import { relVarbInfosS } from "./SectionInfo/RelVarbInfos";
+import { mixedInfoS } from "./sectionChildrenDerived/MixedSectionInfo";
+import { relVarbInfoS } from "./SectionInfo/RelVarbInfo";
 import { SectionName, sectionNames } from "./SectionName";
 import {
   defaultSectionUpdateVarbs,
@@ -17,14 +18,17 @@ import {
 } from "./updateSectionVarbs/updateSectionVarbs";
 import { relVarbS, updateVarb } from "./updateSectionVarbs/updateVarb";
 import {
+  updateBasics,
   UpdateBasics,
   updateBasicsS,
 } from "./updateSectionVarbs/updateVarb/UpdateBasics";
 import {
+  completionStatusProps,
   updateFnPropS,
   updateFnPropsS,
 } from "./updateSectionVarbs/updateVarb/UpdateFnProps";
 import {
+  overrideSwitch,
   overrideSwitchS,
   updateOverride,
 } from "./updateSectionVarbs/updateVarb/UpdateOverrides";
@@ -269,7 +273,7 @@ function makeAllUpdateSections() {
         initValue: numObj(0),
         updateFnName: "userVarb",
         updateFnProps: {
-          ...relVarbInfosS.localByVarbName([
+          ...updateFnPropsS.localByVarbName([
             "valueSourceSwitch",
             "valueEditor",
           ]),
@@ -312,6 +316,177 @@ function makeAllUpdateSections() {
           "twoPercent",
           updateFnPropS.pathName("propertyFocal", "price")
         ),
+      }),
+      dealCompletionStatus: updateVarb("string", {
+        initValue: "allEmpty",
+        updateFnName: "completionStatus",
+        updateFnProps: completionStatusProps({
+          othersValid: [
+            updateFnPropS.pathNameNext(
+              "calculatedVarbsFocal",
+              "propertyCompletionStatus"
+            ),
+            updateFnPropS.pathNameNext(
+              "calculatedVarbsFocal",
+              "financingCompletionStatus"
+            ),
+            updateFnPropS.pathNameNext(
+              "calculatedVarbsFocal",
+              "mgmtCompletionStatus"
+            ),
+          ],
+        }),
+      }),
+      propertyCompletionStatus: updateVarb("string", {
+        initValue: "allEmpty",
+        updateFnName: "completionStatus",
+        updateFnProps: completionStatusProps({
+          nonZeros: [updateFnPropS.pathName("propertyFocal", "numUnits")],
+          validInputs: [
+            ...updateFnPropsS.varbPathArr("price", "sqft"),
+            updateFnPropS.pathName("propertyFocal", "taxesOngoingEditor"),
+            updateFnPropS.pathName("propertyFocal", "homeInsOngoingEditor"),
+            updateFnPropS.pathName("unitFocal", "targetRentOngoingEditor"),
+            updateFnPropS.pathName("unitFocal", "numBedrooms"),
+            updateFnPropS.pathNameNext("capExCostFocal", "valueEditor", [
+              overrideSwitch(
+                mixedInfoS.pathNameVarb("capExCostFocal", "isItemized"),
+                false
+              ),
+            ]),
+            updateFnPropS.pathNameNext("maintenanceCostFocal", "valueEditor", [
+              overrideSwitch(
+                mixedInfoS.pathNameVarb("maintenanceCostFocal", "isItemized"),
+                false
+              ),
+            ]),
+            updateFnPropS.pathNameNext("utilityCostFocal", "valueEditor", [
+              overrideSwitch(
+                mixedInfoS.pathNameVarb("utilityCostFocal", "isItemized"),
+                false
+              ),
+            ]),
+            updateFnPropS.pathNameNext("repairCostFocal", "valueEditor", [
+              overrideSwitch(
+                mixedInfoS.pathNameVarb("repairCostFocal", "isItemized"),
+                false
+              ),
+            ]),
+          ],
+        }),
+      }),
+      mgmtCompletionStatus: updateVarb("string", {
+        initValue: "allEmpty",
+        updateFnName: "completionStatus",
+        updateFnProps: completionStatusProps({
+          validInputs: [
+            updateFnPropS.pathNameNext("mgmtFocal", "basePayPercentEditor", [
+              overrideSwitch(
+                mixedInfoS.pathNameVarb("mgmtFocal", "basePayUnitSwitch"),
+                "percent"
+              ),
+            ]),
+            updateFnPropS.pathNameNext("mgmtFocal", "basePayDollarsEditor", [
+              overrideSwitch(
+                mixedInfoS.pathNameVarb("mgmtFocal", "basePayUnitSwitch"),
+                "dollars"
+              ),
+            ]),
+            updateFnPropS.pathNameNext(
+              "mgmtFocal",
+              "vacancyLossPercentEditor",
+              [
+                overrideSwitch(
+                  mixedInfoS.pathNameVarb("mgmtFocal", "vacancyLossUnitSwitch"),
+                  "percent"
+                ),
+              ]
+            ),
+            updateFnPropS.pathNameNext(
+              "mgmtFocal",
+              "vacancyLossDollarsEditor",
+              [
+                overrideSwitch(
+                  mixedInfoS.pathNameVarb("mgmtFocal", "vacancyLossUnitSwitch"),
+                  "dollars"
+                ),
+              ]
+            ),
+          ],
+        }),
+      }),
+      financingCompletionStatus: updateVarb("string", {
+        initValue: "allEmpty",
+        updateFnName: "throwIfReached",
+        updateOverrides: [
+          updateOverride(
+            [overrideSwitchS.varbIsValue("financingMode", "", "cashOnly")],
+            updateBasics(
+              "completionStatus",
+              completionStatusProps({
+                validInputs: [updateFnPropS.varbPathName("financingMode")],
+              })
+            )
+          ),
+          updateOverride(
+            [overrideSwitchS.varbIsValue("financingMode", "useLoan")],
+            updateBasics(
+              "completionStatus",
+              completionStatusProps({
+                validInputs: [
+                  updateFnPropS.pathNameNext(
+                    "loanFocal",
+                    "loanBasePercentEditor",
+                    [
+                      overrideSwitch(
+                        relVarbInfoS.local("loanBaseUnitSwitch"),
+                        "percent"
+                      ),
+                    ]
+                  ),
+                  updateFnPropS.pathNameNext(
+                    "loanFocal",
+                    "loanBaseDollarsEditor",
+                    [
+                      overrideSwitch(
+                        relVarbInfoS.local("loanBaseUnitSwitch"),
+                        "dollars"
+                      ),
+                    ]
+                  ),
+                  updateFnPropS.pathNameNext(
+                    "loanFocal",
+                    "interestRatePercentOngoingEditor"
+                  ),
+                  updateFnPropS.pathNameNext("loanFocal", "loanTermSpanEditor"),
+                  updateFnPropS.pathNameNext(
+                    "loanFocal",
+                    "mortgageInsUpfrontEditor",
+                    [overrideSwitch(relVarbInfoS.local("hasMortgageIns"), true)]
+                  ),
+                  updateFnPropS.pathNameNext(
+                    "loanFocal",
+                    "mortgageInsOngoingEditor",
+                    [overrideSwitch(relVarbInfoS.local("hasMortgageIns"), true)]
+                  ),
+                  updateFnPropS.pathNameNext(
+                    "closingCostFocal",
+                    "valueEditor",
+                    [
+                      overrideSwitch(
+                        mixedInfoS.pathNameVarb(
+                          "closingCostFocal",
+                          "isItemized"
+                        ),
+                        false
+                      ),
+                    ]
+                  ),
+                ],
+              })
+            )
+          ),
+        ],
       }),
     }),
   });

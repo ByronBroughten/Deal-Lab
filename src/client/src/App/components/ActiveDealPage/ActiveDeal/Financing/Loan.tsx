@@ -10,9 +10,11 @@ import BasicLoanInfo from "./Loan/BasicLoanInfo";
 export function Loan({
   feId,
   className,
+  showXBtn,
 }: {
   feId: string;
   className?: string;
+  showXBtn: boolean;
 }) {
   const feInfo = {
     sectionName: "loan",
@@ -25,7 +27,7 @@ export function Loan({
           ...feInfo,
           sectionTitle: "Loan",
           loadWhat: "Loan",
-          showXBtn: true,
+          showXBtn,
         }}
       />
       <MainSectionBody themeName="loan">

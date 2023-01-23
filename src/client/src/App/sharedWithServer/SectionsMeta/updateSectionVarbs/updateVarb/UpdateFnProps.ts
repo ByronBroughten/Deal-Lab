@@ -6,12 +6,73 @@ import { mixedInfoS } from "../../sectionChildrenDerived/MixedSectionInfo";
 import { PathInVarbInfo } from "../../sectionChildrenDerived/RelInOutVarbInfo";
 import { relVarbInfoS } from "../../SectionInfo/RelVarbInfo";
 import { VarbPathName } from "../../SectionInfo/VarbPathNameInfo";
-import { SectionPathName } from "../../sectionPathContexts/sectionPathNames";
+import {
+  SectionPathName,
+  SectionPathVarbName,
+} from "../../sectionPathContexts/sectionPathNames";
+import { UpdateOverrideSwitch } from "./UpdateOverrides";
 
 export type UpdateFnProps = {
   [propName: string]: UpdateFnProp | UpdateFnProp[];
 };
+
+export type CompletionStatusProps = {
+  nonZeros: UpdateFnProp[];
+  validInputs: UpdateFnProp[];
+  othersValid: UpdateFnProp[];
+};
+
+export function completionStatusProps(
+  props: Partial<CompletionStatusProps>
+): CompletionStatusProps {
+  return {
+    nonZeros: [],
+    validInputs: [],
+    othersValid: [],
+    ...props,
+  };
+}
+
+export function collectUpdateFnSwitchProps(
+  updateFnProps: UpdateFnProps
+): UpdateFnProps {
+  const andPropSwitches: UpdateFnProp[] = [];
+  for (const propName of Obj.keys(updateFnProps)) {
+    const uProp = updateFnProps[propName];
+    const arrProp = Array.isArray(uProp) ? uProp : [uProp];
+    for (const prop of arrProp) {
+      const { andSwitches } = prop;
+      for (const andSwitch of andSwitches) {
+        const { switchInfo } = andSwitch;
+        if (switchInfo.infoType === "local") {
+          if (prop.infoType === "pathName") {
+            andPropSwitches.push(
+              updateFnProp({
+                ...prop,
+                varbName: switchInfo.varbName,
+              })
+            );
+          } else {
+            throw new Error(
+              `prop has an infoType of ${prop.infoType}, but that hasn't been handled here yet`
+            );
+          }
+        } else {
+          andPropSwitches.push(updateFnProp(andSwitch.switchInfo));
+        }
+      }
+    }
+  }
+  return {
+    ...updateFnProps,
+    andPropSwitches: andPropSwitches,
+  };
+}
+
 export const updateFnPropsS = {
+  varbPathArr(...varbPathNames: VarbPathName[]): UpdateFnProp[] {
+    return varbPathNames.map((name) => updateFnPropS.varbPathName(name));
+  },
   namedChildren(
     childName: ChildName,
     kwargToVarbNames: Record<string, string>
@@ -43,16 +104,32 @@ export const updateFnPropsS = {
   },
 };
 
-export function updateFnProp(varbInfo: PathInVarbInfo): UpdateFnProp {
+export function updateFnProp(
+  varbInfo: PathInVarbInfo,
+  andSwitches: UpdateOverrideSwitch[] = []
+): UpdateFnProp {
   return {
     ...varbInfo,
+    andSwitches,
     entityId: Id.make(),
   };
 }
-export type UpdateFnProp = PathInVarbInfo & { entityId: string };
+export type UpdateFnProp = PathInVarbInfo & {
+  entityId: string;
+  // so here... I'm providing loanVarbInfo
+  // I'll get multiple loanVarbs
+
+  //
+  andSwitches: UpdateOverrideSwitch[];
+};
 export const updateFnPropS = {
   local(varbName: string): UpdateFnProp {
     return updateFnProp(relVarbInfoS.local(varbName));
+  },
+  localArr(...varbNames: string[]): UpdateFnProp[] {
+    return varbNames.map((varbName) =>
+      updateFnProp(relVarbInfoS.local(varbName))
+    );
   },
   children(childName: ChildName, varbName: string) {
     return updateFnProp(relVarbInfoS.children(childName, varbName));
@@ -60,8 +137,25 @@ export const updateFnPropS = {
   onlyChild(childName: ChildName, varbName: string) {
     return updateFnProp(relVarbInfoS.onlyChild(childName, varbName));
   },
-  pathName(pathName: SectionPathName, varbName: string): UpdateFnProp {
-    return updateFnProp(mixedInfoS.pathNameVarb(pathName, varbName));
+  pathName(
+    pathName: SectionPathName,
+    varbName: string,
+    andSwitches: UpdateOverrideSwitch[] = []
+  ): UpdateFnProp {
+    return updateFnProp(
+      mixedInfoS.pathNameVarb(pathName, varbName),
+      andSwitches
+    );
+  },
+  pathNameNext<PN extends SectionPathName>(
+    pathName: PN,
+    varbName: SectionPathVarbName<PN>,
+    andSwitches: UpdateOverrideSwitch[] = []
+  ): UpdateFnProp {
+    return updateFnProp(
+      mixedInfoS.pathNameVarb(pathName, varbName as string),
+      andSwitches
+    );
   },
   varbPathName(
     varbPathName: VarbPathName,

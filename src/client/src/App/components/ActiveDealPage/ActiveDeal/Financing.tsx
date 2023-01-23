@@ -1,6 +1,7 @@
 import { FormControl, FormControlLabel, RadioGroup } from "@material-ui/core";
 import React from "react";
 import styled from "styled-components";
+import { CompletionStatus } from "../../../sharedWithServer/SectionsMeta/baseSectionsDerived/subValues";
 import { useSetterSection } from "../../../sharedWithServer/stateClassHooks/useSetterSection";
 import { GetterSection } from "../../../sharedWithServer/StateGetters/GetterSection";
 import { MainSectionBtn } from "../../appWide/GeneralSection/GeneralSectionTitle/MainSectionBtn";
@@ -9,75 +10,7 @@ import Radio from "../../general/Radio";
 import theme from "./../../../theme/Theme";
 import { BackToDealBtn } from "./BackToDealBtn";
 import { Loan } from "./Financing/Loan";
-import {
-  CompletionStatus,
-  MainDealSection,
-  MainDealSectionProps,
-} from "./MainDealSection";
-
-function useFinancingCompletionStatus(
-  financing: GetterSection<"financing">
-): CompletionStatus {
-  let allEmpty = true;
-  let allValid = true;
-  const updateBools = ({
-    isEmpty,
-    isValid,
-  }: {
-    isEmpty: boolean;
-    isValid: boolean;
-  }) => {
-    if (!isEmpty) allEmpty = false;
-    if (!isValid) allValid = false;
-  };
-
-  const financingMode = financing.valueNext("financingMode");
-  if (!financingMode) updateBools({ isEmpty: true, isValid: false });
-  else updateBools({ isEmpty: false, isValid: true });
-
-  if (financingMode === "useLoan") {
-    const loans = financing.children("loan");
-    if (loans.length < 1) {
-      updateBools({ isEmpty: true, isValid: false });
-    }
-    for (const loan of loans) {
-      const loanBaseUnitSwitch = loan.valueNext("loanBaseUnitSwitch");
-      if (loanBaseUnitSwitch === "percent") {
-        updateBools(loan.checkInputValue("loanBasePercentEditor"));
-      } else if (loanBaseUnitSwitch === "dollars") {
-        updateBools(loan.checkInputValue("loanBaseDollarsEditor"));
-      }
-
-      const varbNames = [
-        "interestRatePercentOngoingEditor",
-        "loanTermSpanEditor",
-      ] as const;
-      for (const varbName of varbNames) {
-        updateBools(loan.checkInputValue(varbName));
-      }
-
-      const hasMortgageIns = loan.valueNext("hasMortgageIns");
-      if (hasMortgageIns) {
-        const varbNames = [
-          "mortgageInsUpfrontEditor",
-          "mortgageInsOngoingEditor",
-        ] as const;
-        for (const varbName of varbNames) {
-          updateBools(loan.checkInputValue(varbName));
-        }
-      }
-
-      const closingCostValue = loan.onlyChild("closingCostValue");
-      const isItemized = closingCostValue.valueNext("isItemized");
-      if (!isItemized) {
-        updateBools(closingCostValue.checkInputValue("valueEditor"));
-      }
-    }
-  }
-  if (allEmpty) return "allEmpty";
-  if (allValid) return "allValid";
-  else return "someInvalid";
-}
+import { MainDealSection, MainDealSectionProps } from "./MainDealSection";
 
 function getDisplayName(financing: GetterSection<"financing">) {
   const financingMode = financing.valueNext("financingMode");
@@ -97,8 +30,12 @@ function getDisplayName(financing: GetterSection<"financing">) {
 export function Financing({
   feId,
   closeInputs,
+  completionStatus,
   ...props
-}: MainDealSectionProps & { closeInputs: () => void }) {
+}: MainDealSectionProps & {
+  closeInputs: () => void;
+  completionStatus: CompletionStatus;
+}) {
   const financing = useSetterSection({
     sectionName: "financing",
     feId,
@@ -110,7 +47,6 @@ export function Financing({
   const loanIds = financing.childFeIds("loan");
   const addLoan = () => financing.addChild("loan");
 
-  const completionStatus = useFinancingCompletionStatus(financing.get);
   return (
     <Styled
       {...{
@@ -162,6 +98,7 @@ export function Financing({
                 key={feId}
                 feId={feId}
                 className={idx !== 0 ? "Financing-marginLoan" : ""}
+                showXBtn={loanIds.length > 1}
               />
             ))}
           </div>

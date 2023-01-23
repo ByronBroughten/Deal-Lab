@@ -1,5 +1,3 @@
-import { relVarbInfoS } from "../SectionInfo/RelVarbInfo";
-import { relVarbInfosS } from "../SectionInfo/RelVarbInfos";
 import { UpdateSectionVarbs } from "../updateSectionVarbs/updateSectionVarbs";
 import {
   LeftRightVarbInfos,
@@ -36,34 +34,34 @@ export function dealRelVarbs(): UpdateSectionVarbs<"deal"> {
     ),
     totalInvestment: relVarbS.leftRightPropFn(
       "simpleSubtract",
-      relVarbInfosS.local([
+      updateFnPropS.localArr(
         "outOfPocketExpenses",
-        "upfrontRevenue",
-      ]) as LeftRightVarbInfos
+        "upfrontRevenue"
+      ) as LeftRightVarbInfos
     ),
     cashFlowMonthly: relVarbS.leftRightPropFn(
       "simpleSubtract",
-      relVarbInfosS.local([
+      updateFnPropS.localArr(
         "revenueMonthly",
-        "expensesMonthly",
-      ]) as LeftRightVarbInfos
+        "expensesMonthly"
+      ) as LeftRightVarbInfos
     ),
     cashFlowYearly: relVarbS.leftRightPropFn(
       "simpleSubtract",
-      relVarbInfosS.local([
+      updateFnPropS.localArr(
         "revenueYearly",
-        "expensesYearly",
-      ]) as LeftRightVarbInfos
+        "expensesYearly"
+      ) as LeftRightVarbInfos
     ),
     cashFlowOngoingSwitch: updateVarb("string", {
       initValue: "yearly",
     }),
     cocRoiDecimalMonthly: relVarbS.leftRightPropFn(
       "simpleDivide",
-      relVarbInfosS.local([
+      updateFnPropS.localArr(
         "cashFlowMonthly",
-        "totalInvestment",
-      ]) as LeftRightVarbInfos
+        "totalInvestment"
+      ) as LeftRightVarbInfos
     ),
     cocRoiMonthly: relVarbS.singlePropFn(
       "decimalToPercent",
@@ -71,10 +69,10 @@ export function dealRelVarbs(): UpdateSectionVarbs<"deal"> {
     ),
     cocRoiDecimalYearly: relVarbS.leftRightPropFn(
       "simpleDivide",
-      relVarbInfosS.local([
+      updateFnPropS.localArr(
         "cashFlowYearly",
-        "totalInvestment",
-      ]) as LeftRightVarbInfos
+        "totalInvestment"
+      ) as LeftRightVarbInfos
     ),
     cocRoiYearly: relVarbS.singlePropFn(
       "decimalToPercent",
@@ -90,9 +88,9 @@ export function dealRelVarbs(): UpdateSectionVarbs<"deal"> {
     ]),
 
     outOfPocketExpenses: relVarbS.leftRightPropFn("simpleSubtract", [
-      relVarbInfoS.local("upfrontExpenses"),
+      updateFnPropS.local("upfrontExpenses"),
       updateFnPropS.varbPathName("loanTotalDollars"),
-    ] as LeftRightVarbInfos),
+    ]),
     upfrontRevenue: relVarbS.sumNums([
       updateFnPropS.pathName("propertyFocal", "upfrontRevenue"),
     ]),
@@ -103,9 +101,6 @@ export function dealRelVarbs(): UpdateSectionVarbs<"deal"> {
         updateFnPropS.varbPathBase("loanExpenses"),
       ],
     }),
-
-    // How can I get in to see what is the problem?
-    // Reimplement
     ...updateVarbsS.ongoingSumNums("revenue", [
       updateFnPropS.pathName("propertyFocal", "revenue"),
     ]),

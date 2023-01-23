@@ -75,3 +75,13 @@ export function absolutePathInfo<
     path,
   };
 }
+
+export function rootAbsolutePathInfo<
+  SN extends SectionName,
+  PT extends ChildName
+>(sectionName: SN, path: PT[]): AbsolutePathInfo<SN> {
+  return {
+    sectionName,
+    path: path as any,
+  };
+}
