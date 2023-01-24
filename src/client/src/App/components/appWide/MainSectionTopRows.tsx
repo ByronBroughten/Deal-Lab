@@ -32,16 +32,13 @@ export function MainSectionTopRows({
   const saveStatus = useSaveStatus(feInfo);
   return (
     <Styled className={`MainSectionTopRows-root ${className ?? ""}`}>
-      <div className="MainSectionTopRows-leftBlock">
-        <SectionTitle
-          text={sectionTitle}
-          className="MainSectionTopRows-sectionTitle"
-        />
-        {belowTitle ?? null}
-      </div>
-      {showControls && (
-        <>
-          <div className="MainSectionTopRows-controls">
+      <div className="MainSectionTopRows-topRow">
+        <div className="MainSectionTopRows-topLeft">
+          <SectionTitle
+            text={sectionTitle}
+            className="MainSectionTopRows-sectionTitle"
+          />
+          {showControls && (
             <MainSectionTitleRow
               {...{
                 ...feInfo,
@@ -49,63 +46,64 @@ export function MainSectionTopRows({
                 className: "MainSectionTopRows-titleRow",
               }}
             />
-            <MainSectionActionRow
-              {...{
-                ...feInfo,
-                loadWhat,
-                xBtn: false,
-                dropTop: false,
-                saveStatus,
-                className: "MainSectionTopRows-sectionMenus",
-              }}
+          )}
+        </div>
+        <div className="MainSectionTopRows-topRight">
+          {showControls && showXBtn && (
+            <RemoveSectionXBtn
+              className="MainSectionTopRows-xBtn"
+              {...feInfo}
             />
-          </div>
-          <div className="MainSectionTopRows-rightBlock">
-            {rightTop}
-            {showXBtn && (
-              <RemoveSectionXBtn
-                className="MainSectionTopRows-xBtn"
-                {...feInfo}
-              />
-            )}
-          </div>
-        </>
-      )}
+          )}
+        </div>
+      </div>
+      <div className="MainSectionTopRows-secondRow">
+        {showControls && (
+          <MainSectionActionRow
+            {...{
+              ...feInfo,
+              loadWhat,
+              xBtn: false,
+              dropTop: false,
+              saveStatus,
+              className: "MainSectionTopRows-sectionMenus",
+            }}
+          />
+        )}
+      </div>
     </Styled>
   );
 }
 
 const Styled = styled.div`
-  display: flex;
-  align-items: center;
+  .MainSectionTopRows-topRow,
+  .MainSectionTopRows-secondRow,
+  .MainSectionTopRows-topLeft,
+  .MainSectionTopRows-topRight {
+    display: flex;
+  }
+
   .MainSectionTopRows-leftBlock {
     /* width: 130px; */
     color: ${theme.primary};
   }
   .MainSectionTopRows-sectionTitle {
-    font-size: ${"22px"};
-  }
-  .MainSectionTopRows-controls {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    margin-left: ${theme.s4};
+    font-size: 22px;
   }
 
-  .MainSectionTopRows-rightBlock {
-    height: 55px;
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    justify-content: flex-start;
-    align-items: flex-end;
+  .MainSectionTopRows-titleRow {
+    margin-left: ${theme.s3};
   }
+
   .MainSectionTopRows-xBtn {
     height: ${theme.bigButtonHeight};
     width: ${theme.bigButtonHeight};
   }
 
+  .MainSectionTopRows-secondRow {
+    margin-top: ${theme.s3};
+  }
+
   .MainSectionTopRows-sectionMenus {
-    margin-top: ${theme.s25};
   }
 `;

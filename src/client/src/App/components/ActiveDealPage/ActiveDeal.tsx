@@ -10,6 +10,7 @@ import {
 import { StrictExclude } from "../../sharedWithServer/utils/types";
 import theme from "../../theme/Theme";
 import { MainSectionTopRows } from "../appWide/MainSectionTopRows";
+import StandardLabel from "../general/StandardLabel";
 import { OuterMainSection } from "./../appWide/GeneralSection/OuterMainSection";
 import { OutputSection } from "./ActiveDeal/DealOutputs/OutputSection";
 import { Financing } from "./ActiveDeal/Financing";
@@ -70,22 +71,26 @@ export function ActiveDeal({ className, feId }: Props) {
           className: "ActiveDeal-mainSectionTopRowRoot",
           sectionTitle: "Deal",
           loadWhat: "Deal",
-          belowTitle: (
-            <FormControl className="ActiveDeal-modeSelector" size={"small"}>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={"buyAndHold"}
-                label="Age"
-                onChange={() => {}}
-              >
-                <MenuItem value={"buyAndHold"}>Buy & Hold</MenuItem>
-                <MenuItem value={"moreToCome"}>More to Come...</MenuItem>
-              </Select>
-            </FormControl>
-          ),
         }}
       />
+      <div className="ActiveDeal-modeSection">
+        <FormControl className="ActiveDeal-modeSelectorControl" size={"small"}>
+          <StandardLabel className="ActiveDeal-dealModeLabel">
+            Mode
+          </StandardLabel>
+          <Select
+            className="ActiveDeal-modeSelector"
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={"buyAndHold"}
+            label="Age"
+            onChange={() => {}}
+          >
+            <MenuItem value={"buyAndHold"}>Buy & Hold</MenuItem>
+            <MenuItem value={"moreToCome"}>More to Come...</MenuItem>
+          </Select>
+        </FormControl>
+      </div>
       <div className="ActiveDeal-inputSectionsWrapper">
         <Property {...makeSectionProps("property")} />
         <Financing {...makeSectionProps("financing")} />
@@ -113,16 +118,27 @@ const Styled = styled(OuterMainSection)<{ $showDeal: boolean }>`
     padding-right: ${theme.s15};
   }
 
+  .ActiveDeal-modeSection {
+    margin-top: ${theme.s35};
+    padding-top: ${theme.s25};
+    display: flex;
+    flex: 1;
+    ${theme.sectionBorderChunk};
+  }
+
+  .ActiveDeal-modeSelectorControl {
+  }
+
+  .ActiveDeal-modeSelector {
+    margin-top: 0px;
+  }
+
   .ActiveDeal-mainSectionTopRowRoot {
-    margin-left: ${theme.s3};
     ${({ $showDeal }) =>
       !$showDeal &&
       css`
         display: none;
       `}
-  }
-  .ActiveDeal-modeSelector {
-    margin-top: ${theme.s2};
   }
 
   .ActiveDeal-inputSectionsWrapper {
