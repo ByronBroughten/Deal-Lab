@@ -97,7 +97,7 @@ export function ActiveDeal({ className, feId }: Props) {
         <Financing {...makeSectionProps("financing")} />
         <Mgmt {...makeSectionProps("mgmt")} />
       </div>
-      {completionStatus === "allValid" && (
+      {
         <OutputSection
           feId={deal.onlyChildFeId("dealOutputList")}
           hide={!(sectionView === "deal")}
@@ -107,7 +107,7 @@ export function ActiveDeal({ className, feId }: Props) {
             ) as CompletionStatus
           }
         />
-      )}
+      }
     </Styled>
   );
 }

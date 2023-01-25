@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { FeParentInfo } from "../../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { useSetterSection } from "../../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import { Arr } from "../../../../../sharedWithServer/utils/Arr";
 import ccs from "../../../../../theme/cssChunks";
@@ -10,10 +9,13 @@ import { useOpenWidth } from "../../../../appWide/customHooks/useOpenWidth";
 import { AddUnitBtn } from "./UnitList/AddUnitBtn";
 import { UnitItem } from "./UnitList/UnitItem";
 
-type Props = { feInfo: FeParentInfo<"unit">; className?: string };
-export function UnitList({ feInfo, className }: Props) {
+type Props = { feId: string; className?: string };
+export function UnitList({ feId, className }: Props) {
   const numUnitsPerRow = 2;
-  const unitParent = useSetterSection(feInfo);
+  const unitParent = useSetterSection({
+    sectionName: "property",
+    feId,
+  });
   const totalVarb = unitParent.switchVarb("targetRent", "ongoing");
 
   let unitIds = [...unitParent.childFeIds("unit")];

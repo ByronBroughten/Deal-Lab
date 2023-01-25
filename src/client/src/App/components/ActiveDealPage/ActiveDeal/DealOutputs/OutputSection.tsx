@@ -7,6 +7,7 @@ import { MainSection } from "../../../appWide/GeneralSection/MainSection";
 import MainSectionBody from "../../../appWide/GeneralSection/MainSection/MainSectionBody";
 import { SectionTitle } from "../../../appWide/SectionTitle";
 import { StyledIconBtn } from "../../../appWide/StyledIconBtn";
+import { FinishBtn } from "../FinishBtn";
 import { DealOutputDetails } from "./OutputSection/DealOutputDetails";
 import { DealOutputList } from "./OutputSection/DealOutputList";
 
@@ -19,37 +20,51 @@ export function OutputSection({
   hide?: boolean;
   completionStatus: CompletionStatus;
 }) {
+  const { outputsIsOpen, openOutputs } = useToggleViewNext("outputs", false);
   const { detailsIsOpen, toggleDetails } = useToggleViewNext("details", false);
+  const isComplete = completionStatus === "allValid";
   return (
-    // I want a button that says, "calculate outputs"
-    // I want to show progress towards the outputs being calculatable
-
     <Styled className="OutputSection-root" $hide={hide}>
-      <div className="OutputSection-titleRow">
-        <SectionTitle text="Outputs" />
-        <StyledIconBtn
-          className="OutputSection-detailsBtn"
-          left={
-            detailsIsOpen ? (
-              <CgDetailsLess size={20} />
-            ) : (
-              <CgDetailsMore size={20} />
-            )
-          }
-          middle="Details"
-          onClick={toggleDetails}
+      {!outputsIsOpen && (
+        <FinishBtn
+          {...{
+            btnText: "Calculate Outputs",
+            styleDisabled: !isComplete,
+            tooltipText: "",
+            onClick: openOutputs,
+            warningText: "Please complete each of the sections first.",
+          }}
         />
-      </div>
-      <MainSectionBody>
-        {!detailsIsOpen && (
-          <div className="ListGroup-root">
-            <div className="OutputSection-viewable viewable">
-              <DealOutputList feId={feId} />
-            </div>
+      )}
+      {outputsIsOpen && (
+        <>
+          <div className="OutputSection-titleRow">
+            <SectionTitle text="Outputs" />
+            <StyledIconBtn
+              className="OutputSection-detailsBtn"
+              left={
+                detailsIsOpen ? (
+                  <CgDetailsLess size={20} />
+                ) : (
+                  <CgDetailsMore size={20} />
+                )
+              }
+              middle="Details"
+              onClick={toggleDetails}
+            />
           </div>
-        )}
-        {detailsIsOpen && <DealOutputDetails {...{ feId }} />}
-      </MainSectionBody>
+          <MainSectionBody>
+            {!detailsIsOpen && (
+              <div className="ListGroup-root">
+                <div className="OutputSection-viewable viewable">
+                  <DealOutputList feId={feId} />
+                </div>
+              </div>
+            )}
+            {detailsIsOpen && <DealOutputDetails {...{ feId }} />}
+          </MainSectionBody>
+        </>
+      )}
     </Styled>
   );
 }

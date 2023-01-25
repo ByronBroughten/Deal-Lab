@@ -84,6 +84,22 @@ const Styled = styled.div`
     display: flex;
   }
 
+  .MainSectionTopRows-sectionTitle {
+    margin-bottom: ${theme.s3};
+    margin-right: ${theme.s25};
+  }
+  .MainSectionTopRows-titleRow {
+    margin-bottom: ${theme.s3};
+  }
+
+  .MainSectionTopRows-topRight {
+    align-items: flex-start;
+  }
+
+  .MainSectionTopRows-topLeft {
+    flex-wrap: wrap;
+  }
+
   .MainSectionTopRows-topRow {
     display: flex;
     justify-content: space-between;
@@ -97,17 +113,12 @@ const Styled = styled.div`
     font-size: 22px;
   }
 
-  .MainSectionTopRows-titleRow {
-    margin-left: ${theme.s3};
-  }
-
   .MainSectionTopRows-xBtn {
     height: ${theme.bigButtonHeight};
     width: ${theme.bigButtonHeight};
   }
 
   .MainSectionTopRows-secondRow {
-    margin-top: ${theme.s3};
   }
 
   .MainSectionTopRows-sectionMenus {

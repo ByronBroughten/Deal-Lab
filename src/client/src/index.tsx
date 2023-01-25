@@ -7,24 +7,12 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-// How do I want the finish button to work?
-// - Well, the ideal is that it triggers a display
-// of the fields that aren't filled in correctly.
-
 // 3. Make a simple wordpress website
 // - Just do it badly at first, for the gist of it.
 // - Then pay someone to do it well
 
-// 0, Make "Deal" page have "buy and hold" labeled. Space things out.
-
-// *Ouputs
-// orange:
-// "To view ouptuts, complete Property, Financing, and Management sections"
-//  "Calculate Outputs", or, "View Outputs"
-// "What determines whether 'Calculate Outputs' is displayed? It
-//  could be a deal variable. If a deal has had it clicked already, it'll
-//  display automatically."
-// "Calculate Outputs" could trigger an orange toast...
+// 1. *Ouputs
+// - Make "Calculate Outputs" button use the Finish Button
 
 // 2. Sort out the variables
 // - Make a reduced set of variables appear in the variable editor
@@ -36,6 +24,18 @@ AppRegistry.runApplication("App", {
 //   inputs that can take equations
 // - Mark equation editor fields with an "Equation Editor" label,
 //   or something
+
+// PROPERTY
+// - Make an "add units" button
+// - Once there are units display their stats (unit count, rent total) with an "edit" button
+// - Make a repairs value with a selector:
+//   "turn key (no repairs)"
+//   "lump sum"
+//   "itemize" show the total and an "edit" button
+//   title "Upfront Repairs"
+
+// - Do the same thing for CapEx, Utilities, and Ongoing Maintenance
+// - "Add Custom Expenses (optional)"
 
 // 5. Make specialized CapEx and Utility values and lists
 // 6. Make a specialized maintenance value (with different methods

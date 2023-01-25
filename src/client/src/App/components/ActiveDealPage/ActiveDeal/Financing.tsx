@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { CompletionStatus } from "../../../sharedWithServer/SectionsMeta/baseSectionsDerived/subValues";
 import { useSetterSection } from "../../../sharedWithServer/stateClassHooks/useSetterSection";
 import { GetterSection } from "../../../sharedWithServer/StateGetters/GetterSection";
-import { MainSectionBtn } from "../../appWide/GeneralSection/GeneralSectionTitle/MainSectionBtn";
+import { SubSectionBtn } from "../../appWide/GeneralSection/GeneralSectionTitle/SubSectionBtn";
 import { SectionTitle } from "../../appWide/SectionTitle";
 import Radio from "../../general/Radio";
 import theme from "./../../../theme/Theme";
@@ -102,7 +102,7 @@ export function Financing({
               />
             ))}
           </div>
-          <MainSectionBtn
+          <SubSectionBtn
             className="Financing-addLoanBtn"
             onClick={addLoan}
             text="+ Loan"
@@ -114,11 +114,6 @@ export function Financing({
 }
 
 const Styled = styled(MainDealSection)`
-  .Financing-addLoanBtn {
-    box-shadow: none;
-    border: ${theme.borderStyle};
-  }
-
   .Financing-financingTypeControl {
     margin: 0;
     padding: 0;

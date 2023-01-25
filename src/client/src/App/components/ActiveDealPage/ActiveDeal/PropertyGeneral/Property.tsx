@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import { useGetterSection } from "../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import theme from "../../../../theme/Theme";
-import { FormSection } from "../../../appWide/FormSection";
 import MainSectionBody from "../../../appWide/GeneralSection/MainSection/MainSectionBody";
 import { ValueGroupOngoing } from "../../../appWide/ListGroup/ValueGroupOngoing";
 import { ValueGroupSingleTime } from "../../../appWide/ListGroup/ValueGroupSingleTime";
@@ -16,7 +15,7 @@ import {
   MainDealSectionProps,
 } from "../MainDealSection";
 import BasicPropertyInfo from "./Property/BasicPropertyInfo";
-import { UnitList } from "./Property/UnitList";
+import { Units } from "./Property/Units";
 
 // function getPropertyCompletionStatus(
 //   property: GetterSection<"property">
@@ -95,8 +94,8 @@ export function Property({
     someInvalid: { title: "Continue Property" },
     allValid: { title: "Edit Property" },
   };
-  const props = completionStatusProps[completionStatus];
 
+  const props = completionStatusProps[completionStatus];
   return (
     <Styled
       {...{
@@ -127,12 +126,8 @@ export function Property({
         }}
       />
       <MainSectionBody themeName="property">
-        <FormSection className="Property-basicInfoAndUnits">
-          <BasicPropertyInfo feId={feId} className="Property-basicInfo" />
-        </FormSection>
-        <FormSection>
-          <UnitList className="Property-unitList" feInfo={feInfo} />
-        </FormSection>
+        <BasicPropertyInfo feId={feId} className="Property-basicInfo" />
+        <Units {...{ feId }} />
         <ValueGroupSingleTime
           {...{
             className: "Property-upfrontCostsGroup",
@@ -197,12 +192,7 @@ const Styled = styled(MainDealSection)<{
   .Property-unitList {
   }
 
-  .Property-basicInfoAndUnits {
-    display: flex;
-  }
   .Property-basicInfo {
-    margin: ${theme.flexElementSpacing};
-    margin-right: ${theme.s3};
   }
   .Property-upfrontCostsGroup,
   .Property-ongoingCostGroup {

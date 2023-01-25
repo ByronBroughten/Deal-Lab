@@ -1,11 +1,10 @@
-import { AiFillEdit } from "react-icons/ai";
 import styled, { css } from "styled-components";
 import theme from "../../../theme/Theme";
+import { EditSectionBtn } from "../../appWide/EditSectionBtn";
 import { MainSection } from "../../appWide/GeneralSection/MainSection";
 import { LabeledVarbProps } from "../../appWide/LabeledVarb";
 import { LabeledVarbRow } from "../../appWide/LabeledVarbRow";
 import { SectionTitle } from "../../appWide/SectionTitle";
-import { StyledIconBtn } from "../../appWide/StyledIconBtn";
 import { StandardProps } from "../../general/StandardProps";
 import { FinishBtn } from "./FinishBtn";
 
@@ -62,10 +61,8 @@ export function MainDealSection({
             className="MainDealSection-showInputsTitle"
             text={sectionTitle}
           />
-          <StyledIconBtn
+          <EditSectionBtn
             className="MainDealSection-editBtn"
-            left={<AiFillEdit size={20} />}
-            middle="Edit"
             onClick={openInputs}
           />
         </div>
@@ -93,8 +90,8 @@ export function MainDealSection({
           styleDisabled={completionStatus !== "allValid"}
           className="MainDealSection-finishBtn"
           btnText="Finish"
-          tooltipText="Please fill in all the fields"
           onClick={closeInputs}
+          warningText="Please fill in all the fields."
         />
       </div>
     </Styled>

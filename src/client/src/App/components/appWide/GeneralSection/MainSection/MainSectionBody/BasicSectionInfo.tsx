@@ -17,7 +17,6 @@ export default function BasicSectionInfo({
     <Styled
       {...{
         className: `BasicSectionInfo-root ${className}`,
-        $themeName: sectionName,
         ...rest,
       }}
     >
@@ -25,7 +24,7 @@ export default function BasicSectionInfo({
     </Styled>
   );
 }
-const Styled = styled.div<{ $themeName: ThemeName }>`
+const Styled = styled.div`
   .BasicSectionInfo-viewable {
     display: flex;
     flex-direction: row;

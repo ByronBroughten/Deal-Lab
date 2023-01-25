@@ -2,7 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import { useSetterSection } from "../../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import theme from "../../../../../theme/Theme";
-import BasicSectionInfo from "../../../../appWide/GeneralSection/MainSection/MainSectionBody/BasicSectionInfo";
+import { FormSection } from "../../../../appWide/FormSection";
+import StandardLabel from "../../../../general/StandardLabel";
 import { NumObjEntityEditor } from "../../../../inputs/NumObjEntityEditor";
 
 type Props = { feId: string; className?: string };
@@ -14,7 +15,6 @@ export default function BasicPropertyInfo({ feId, className }: Props) {
     "homeInsOngoingEditor",
     "sqft",
   ] as const;
-  const unitIds = property.childFeIds("unit");
   return (
     <Styled
       {...{
@@ -23,23 +23,34 @@ export default function BasicPropertyInfo({ feId, className }: Props) {
       }}
     >
       <div>
-        {varbNames.map((varbName, idx) => (
-          <NumObjEntityEditor
-            key={varbName}
-            className={`BasicPropertyInfo-numObjEditor ${
-              idx !== 0 && "BasicPropertyInfo-marginEditor"
-            }`}
-            feVarbInfo={property.varbInfo(varbName)}
-          />
-        ))}
+        <StandardLabel>Basic Info</StandardLabel>
+        <div className="BasicPropertyInfo-editors">
+          {varbNames.map((varbName, idx) => (
+            <NumObjEntityEditor
+              key={varbName}
+              className={`BasicPropertyInfo-numObjEditor ${
+                idx == 0 && "BasicPropertyInfo-marginEditor"
+              }`}
+              feVarbInfo={property.varbInfo(varbName)}
+            />
+          ))}
+        </div>
       </div>
     </Styled>
   );
 }
 
-const Styled = styled(BasicSectionInfo)`
-  .BasicPropertyInfo-marginEditor {
+const Styled = styled(FormSection)`
+  padding-bottom: ${theme.s1};
+  .BasicPropertyInfo-editors {
+    display: flex;
+    flex-wrap: wrap;
     margin-top: ${theme.s25};
+  }
+  .BasicPropertyInfo-numObjEditor {
+    margin: ${theme.s3};
+    margin-left: 0;
+    margin-right: ${theme.s4};
   }
   .MuiFormControl-root.labeled {
     min-width: 127px;
