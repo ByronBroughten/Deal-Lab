@@ -16,37 +16,42 @@ export function Units({ feId }: Props) {
   });
 
   const hasUnits = property.childFeIds("unit").length > 0;
-  const { unitsIsOpen, openUnits, closeUnits } = useToggleViewNext(
-    "units",
-    false
-  );
+  const { unitsIsOpen, unitsIsClosed, openUnits, closeUnits } =
+    useToggleViewNext("units", false);
 
   return (
     <div className="Units-root">
       {unitsIsOpen && (
-        <SectionModal
-          {...{
-            title: "Units",
-            show: unitsIsOpen,
-            closeModal: closeUnits,
-          }}
-        >
-          <UnitList
+        <>
+          <FormSection>
+            <div style={{ height: "80px" }}></div>
+          </FormSection>
+          <SectionModal
             {...{
-              feId,
-              className: "Property-unitList",
+              title: "Units",
+              show: unitsIsOpen,
+              closeModal: closeUnits,
             }}
+          >
+            <UnitList
+              {...{
+                feId,
+                className: "Property-unitList",
+              }}
+            />
+          </SectionModal>
+        </>
+      )}
+      {unitsIsClosed && !hasUnits && (
+        <FormSection>
+          <SubSectionBtn
+            className="Units-addUnitsBtn"
+            onClick={openUnits}
+            text="Add Units"
           />
-        </SectionModal>
+        </FormSection>
       )}
-      {!hasUnits && (
-        <SubSectionBtn
-          className="Financing-addLoanBtn"
-          onClick={openUnits}
-          text="Add Units"
-        />
-      )}
-      {hasUnits && (
+      {unitsIsClosed && hasUnits && (
         <FormSection>
           <div>
             <div style={{ display: "flex" }}>

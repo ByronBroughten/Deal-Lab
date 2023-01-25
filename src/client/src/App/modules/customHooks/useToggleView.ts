@@ -4,6 +4,7 @@ import useToggle from "./useToggle";
 
 type TFirst = {
   IsOpen: boolean;
+  IsClosed: boolean;
 };
 type TLast = {
   toggle: () => void;
@@ -28,6 +29,7 @@ function useNamedToggleView<T extends string>(
 
   return {
     [`${viewWhat}IsOpen`]: value,
+    [`${viewWhat}IsClosed`]: !value,
     [`toggle${capitalViewWhat}`]: toggle,
     [`open${capitalViewWhat}`]: React.useCallback(setOn, []),
     [`close${capitalViewWhat}`]: React.useCallback(setOff, []),
