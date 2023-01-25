@@ -90,8 +90,10 @@ export function MainDealSection({
       <div className="MainDealSection-inputsDiv">
         {children}
         <FinishBtn
+          styleDisabled={completionStatus !== "allValid"}
           className="MainDealSection-finishBtn"
-          text="Finish"
+          btnText="Finish"
+          tooltipText="Please fill in all the fields"
           onClick={closeInputs}
         />
       </div>

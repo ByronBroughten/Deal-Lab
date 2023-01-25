@@ -9,6 +9,7 @@ import {
 } from "../../sharedWithServer/stateClassHooks/useGetterSection";
 import { StrictExclude } from "../../sharedWithServer/utils/types";
 import theme from "../../theme/Theme";
+import { FormSection } from "../appWide/FormSection";
 import { MainSectionTopRows } from "../appWide/MainSectionTopRows";
 import StandardLabel from "../general/StandardLabel";
 import { OuterMainSection } from "./../appWide/GeneralSection/OuterMainSection";
@@ -73,14 +74,14 @@ export function ActiveDeal({ className, feId }: Props) {
           loadWhat: "Deal",
         }}
       />
-      <div className="ActiveDeal-modeSection">
+      <FormSection className="ActiveDeal-modeSelectorSection">
         <FormControl className="ActiveDeal-modeSelectorControl" size={"small"}>
           <StandardLabel className="ActiveDeal-dealModeLabel">
             Mode
           </StandardLabel>
           <Select
             className="ActiveDeal-modeSelector"
-            labelId="demo-simple-select-label"
+            labelId="ActiveDeal-modeSelector"
             id="demo-simple-select"
             value={"buyAndHold"}
             label="Age"
@@ -90,7 +91,7 @@ export function ActiveDeal({ className, feId }: Props) {
             <MenuItem value={"moreToCome"}>More to Come...</MenuItem>
           </Select>
         </FormControl>
-      </div>
+      </FormSection>
       <div className="ActiveDeal-inputSectionsWrapper">
         <Property {...makeSectionProps("property")} />
         <Financing {...makeSectionProps("financing")} />
@@ -118,31 +119,8 @@ const Styled = styled(OuterMainSection)<{ $showDeal: boolean }>`
     padding-right: ${theme.s15};
   }
 
-  .ActiveDeal-modeSection {
-    margin-top: ${theme.s35};
-    padding-top: ${theme.s25};
-    display: flex;
-    flex: 1;
-    ${theme.sectionBorderChunk};
-  }
-
-  .ActiveDeal-modeSelectorControl {
-  }
-
   .ActiveDeal-modeSelector {
     margin-top: 0px;
-  }
-
-  .ActiveDeal-mainSectionTopRowRoot {
-    ${({ $showDeal }) =>
-      !$showDeal &&
-      css`
-        display: none;
-      `}
-  }
-
-  .ActiveDeal-inputSectionsWrapper {
-    /* margin: auto; */
   }
 
   ${({ $showDeal }) =>
@@ -154,11 +132,23 @@ const Styled = styled(OuterMainSection)<{ $showDeal: boolean }>`
         margin-top: ${theme.dealElementSpacing};
       }
     `}
+  ${({ $showDeal }) =>
+    !$showDeal &&
+    css`
+      .ActiveDeal-modeSelectorSection,
+      .ActiveDeal-mainSectionTopRowRoot {
+        display: none;
+      }
+    `}
 
   .OutputSection-root {
     margin-top: ${theme.dealElementSpacing};
     position: sticky;
     bottom: 0;
     z-index: 3;
+  }
+
+  .ActiveDeal-inputSectionsWrapper {
+    /* margin: auto; */
   }
 `;

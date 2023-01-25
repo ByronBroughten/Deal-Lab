@@ -18,5 +18,5 @@ export function BackToDealBtn(props: StandardBtnProps) {
 
 const Styled = styled(StyledIconBtn)`
   font-size: ${theme.infoSize};
-  padding: ${theme.s1} ${theme.s3};
+  padding: 0 ${theme.s3};
 `;

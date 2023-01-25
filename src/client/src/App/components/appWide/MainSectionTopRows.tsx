@@ -49,6 +49,7 @@ export function MainSectionTopRows({
           )}
         </div>
         <div className="MainSectionTopRows-topRight">
+          {rightTop}
           {showControls && showXBtn && (
             <RemoveSectionXBtn
               className="MainSectionTopRows-xBtn"
@@ -81,6 +82,11 @@ const Styled = styled.div`
   .MainSectionTopRows-topLeft,
   .MainSectionTopRows-topRight {
     display: flex;
+  }
+
+  .MainSectionTopRows-topRow {
+    display: flex;
+    justify-content: space-between;
   }
 
   .MainSectionTopRows-leftBlock {

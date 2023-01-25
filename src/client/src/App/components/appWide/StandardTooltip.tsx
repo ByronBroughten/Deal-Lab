@@ -1,4 +1,5 @@
 import { Tooltip } from "@material-ui/core";
+import theme from "../../theme/Theme";
 
 export default function StandardToolTip({
   children,
@@ -15,21 +16,24 @@ export default function StandardToolTip({
       style={{ margin: "1px" }}
       title={
         title ? (
-          <span style={{ fontSize: ".8rem" }} className="StandardToolTip-title">
+          <span
+            style={{ fontSize: theme.infoSize }}
+            className="StandardToolTip-title"
+          >
             {title}
           </span>
         ) : (
           title
         )
       }
-      placement="top-end"
+      placement="top"
       PopperProps={{
         popperOptions: {
           modifiers: {
             flip: { enabled: false },
             offset: {
               enabled: true,
-              offset: "0px, -8px",
+              offset: "0px, -10px",
             },
           },
         },

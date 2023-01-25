@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useGetterSection } from "../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import theme from "../../../../theme/Theme";
+import { FormSection } from "../../../appWide/FormSection";
 import MainSectionBody from "../../../appWide/GeneralSection/MainSection/MainSectionBody";
 import { ValueGroupOngoing } from "../../../appWide/ListGroup/ValueGroupOngoing";
 import { ValueGroupSingleTime } from "../../../appWide/ListGroup/ValueGroupSingleTime";
@@ -126,10 +127,12 @@ export function Property({
         }}
       />
       <MainSectionBody themeName="property">
-        <div className="Property-basicInfoAndUnits">
+        <FormSection className="Property-basicInfoAndUnits">
           <BasicPropertyInfo feId={feId} className="Property-basicInfo" />
-          <UnitList feInfo={feInfo} />
-        </div>
+        </FormSection>
+        <FormSection>
+          <UnitList className="Property-unitList" feInfo={feInfo} />
+        </FormSection>
         <ValueGroupSingleTime
           {...{
             className: "Property-upfrontCostsGroup",
@@ -191,9 +194,11 @@ const Styled = styled(MainDealSection)<{
   $showInputs?: boolean;
   $hide?: boolean;
 }>`
+  .Property-unitList {
+  }
+
   .Property-basicInfoAndUnits {
     display: flex;
-    flex-wrap: wrap;
   }
   .Property-basicInfo {
     margin: ${theme.flexElementSpacing};
