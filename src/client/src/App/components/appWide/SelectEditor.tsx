@@ -11,18 +11,22 @@ type OnChange = (
 ) => void;
 
 export type SelectEditorProps = {
-  value: string;
+  selectValue: string;
   onChange?: OnChange;
   editorVarbInfo?: FeVarbInfo;
   label?: string;
   menuItems: [string, string][];
+  equalsValue?: string;
+  rightOfControls?: React.ReactNode;
 };
 export function SelectEditor({
-  value,
+  selectValue,
   onChange,
   editorVarbInfo,
   label,
   menuItems,
+  equalsValue,
+  rightOfControls,
 }: SelectEditorProps) {
   return (
     <Styled>
@@ -36,15 +40,15 @@ export function SelectEditor({
         >
           <Select
             className={`SelectEditor-select ${
-              value === "none" ? "SelectEditor-noneSelected" : ""
+              selectValue === "none" ? "SelectEditor-noneSelected" : ""
             }`}
             labelId="RepairsValue-modeLabel"
             id="demo-simple-select"
             autoWidth={true}
-            value={value}
+            value={selectValue}
             onChange={onChange}
           >
-            {value === "none" && (
+            {selectValue === "none" && (
               <MenuItem value="none" disabled={true}>
                 Choose Method
               </MenuItem>
@@ -62,12 +66,21 @@ export function SelectEditor({
             }}
           />
         )}
+        {rightOfControls ?? null}
+        {equalsValue && (
+          <div className="SelectEditor-equalsValue">{`= ${equalsValue}`}</div>
+        )}
       </div>
     </Styled>
   );
 }
 
 const Styled = styled.div`
+  .SelectEditor-equalsValue {
+    display: flex;
+    align-items: center;
+    margin-left: ${theme.s2};
+  }
   .SelectEditor-controlDiv {
     display: flex;
     margin-top: ${theme.s2};

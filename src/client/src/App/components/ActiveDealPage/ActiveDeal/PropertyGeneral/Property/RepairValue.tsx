@@ -17,7 +17,7 @@ export function RepairValue({ feId }: Props) {
     <SelectAndItemizeEditor
       {...{
         label: "Upfront Repairs",
-        value: valueMode,
+        selectValue: valueMode,
         onChange: (e) => {
           const value = e.target.value as string;
           repairValue.varb("valueMode").updateValue(value);

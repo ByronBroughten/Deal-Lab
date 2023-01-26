@@ -13,11 +13,13 @@ interface Props extends SelectEditorProps {
   total: string;
   itemsComponent: React.ReactNode;
 }
+
 export function SelectAndItemizeEditor({
   isItemized,
   total,
   itemsComponent,
   onChange,
+  rightOfControls,
   ...rest
 }: Props) {
   const { itemsIsOpen, closeItems, openItems } = useToggleViewNext(
@@ -26,48 +28,46 @@ export function SelectAndItemizeEditor({
   );
   return (
     <Styled>
-      <div>
-        <div style={{ display: "flex", alignItems: "flex-end" }}>
-          <SelectEditor
-            {...{
-              onChange: (e) => {
-                unstable_batchedUpdates(() => {
-                  onChange && onChange(e);
-                  isItemized && openItems();
-                });
-              },
-              ...rest,
-            }}
-          />
-          {isItemized && (
-            <>
-              <div className="SelectAndItemizeEditor-itemizedTotalDiv">{`Total = ${total}`}</div>
-              <EditSectionBtn
-                className="SelectAndItemizeEditor-editBtn"
-                onClick={openItems}
-              />
-              <SectionModal
-                title="Repairs"
-                closeModal={closeItems}
-                show={itemsIsOpen}
-              >
-                {itemsComponent}
-              </SectionModal>
-            </>
-          )}
-        </div>
-      </div>
+      <SelectEditor
+        {...{
+          onChange: (e) => {
+            unstable_batchedUpdates(() => {
+              onChange && onChange(e);
+              isItemized && openItems();
+            });
+          },
+          ...rest,
+          rightOfControls:
+            rightOfControls ||
+            (isItemized && (
+              <>
+                <div className="SelectAndItemizeEditor-itemizedTotalDiv">{`Total = ${total}`}</div>
+                <EditSectionBtn
+                  className="SelectAndItemizeEditor-editBtn"
+                  onClick={openItems}
+                />
+                <SectionModal
+                  title="Repairs"
+                  closeModal={closeItems}
+                  show={itemsIsOpen}
+                >
+                  {itemsComponent}
+                </SectionModal>
+              </>
+            )),
+        }}
+      />
     </Styled>
   );
 }
 
 const Styled = styled(FormSection)`
   .SelectAndItemizeEditor-itemizedTotalDiv {
-    padding-bottom: 11px;
     margin-left: ${theme.s3};
+    display: flex;
+    align-items: center;
   }
   .SelectAndItemizeEditor-editBtn {
-    height: 37px;
     margin-left: ${theme.s2};
   }
 `;

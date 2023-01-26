@@ -10,11 +10,12 @@ export function UtilityValue({ feId }: { feId: string }) {
   });
   const valueMode = utilityValue.value("valueMode") as UtilityValueMode;
   const valueVarb = utilityValue.get.switchVarb("value", "ongoing");
+  const equalsValue = valueMode === "tenantUtilities" ? "$0" : undefined;
   return (
     <SelectAndItemizeEditor
       {...{
         label: "Utilities",
-        value: valueMode,
+        selectValue: valueMode,
         onChange: (e) => {
           const value = e.target.value as string;
           utilityValue.varb("valueMode").updateValue(value);
@@ -25,6 +26,7 @@ export function UtilityValue({ feId }: { feId: string }) {
         ],
         isItemized: valueMode === "itemize",
         total: valueVarb.displayVarb(),
+        equalsValue,
         itemsComponent: (
           <VarbListOngoing
             {...{
