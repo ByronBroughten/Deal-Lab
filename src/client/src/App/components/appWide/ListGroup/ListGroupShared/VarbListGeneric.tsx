@@ -92,8 +92,8 @@ export function VarbListGeneric<SN extends VarbListAllowed>({
 
   return (
     <Styled
-      className={"VarbListGeneric-root " + className}
-      {...{ themeName, listMenuIsOpen }}
+      className={`VarbListGeneric-root ${className ?? ""}`}
+      {...{ listMenuIsOpen }}
     >
       <div className="VarbListGeneric-viewable">
         {listMenu[menuType]()}
@@ -108,7 +108,6 @@ export function VarbListGeneric<SN extends VarbListAllowed>({
 }
 
 const Styled = styled.div<{
-  themeName: ThemeName;
   listMenuIsOpen: boolean;
 }>`
   display: flex;

@@ -41,11 +41,15 @@ export function VarbListItemGeneric({ feInfo, switchOptions, ...rest }: Props) {
           }}
         />
       </td>
+      <td className="VarbListItem-fillerCell"></td>
     </Styled>
   );
 }
 
 const Styled = styled.tr`
+  .VarbListItem-fillerCell {
+    width: 100%;
+  }
   .DraftTextField-root {
     min-width: 40px;
   }

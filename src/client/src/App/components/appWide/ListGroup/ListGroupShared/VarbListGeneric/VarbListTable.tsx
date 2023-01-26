@@ -21,7 +21,7 @@ export function VarbListTable({
 }: Props) {
   const { isAtLeastOne, areNone } = useHowMany(Children.toArray(children));
   return (
-    <Styled className="VarbListTable-root" $themeName={themeName}>
+    <Styled className="VarbListTable-root">
       {areNone && <AddItemBtn onClick={addItem} className="noTable" />}
       {isAtLeastOne && (
         <div className="VarbListTable-tableContainer">
@@ -33,6 +33,7 @@ export function VarbListTable({
                   {contentTitle}
                 </th>
                 <th colSpan={2} className="AdditiveListTable-buttonHeader"></th>
+                <th className="VarbListTable-fillerHeader"></th>
               </tr>
             </thead>
             <tbody>{children}</tbody>
@@ -47,22 +48,19 @@ export function VarbListTable({
   );
 }
 
-const Styled = styled.div<{
-  $themeName: ThemeName;
-}>`
-  .VarbListTable-addItemBtn.tableBottom {
-    border-top: none;
-    border-top-right-radius: 0;
-    border-top-left-radius: 0;
-  }
-
+const Styled = styled.div`
   .VarbListTable-tableContainer {
     display: inline-block;
+    width: 100%;
   }
-
   .VarbListTable-table {
     ${ccs.listTable.main()}
+    min-width: 230px;
   }
+  .VarbListTable-fillerHeader {
+    width: 100%;
+  }
+
   th.VarbListTable-nameHeader {
     text-align: left;
   }
@@ -83,11 +81,15 @@ const Styled = styled.div<{
   tr {
     border-bottom: 1px solid ${theme.primaryBorder};
   }
-
   .AdditiveItem-contentCellDiv {
     display: flex;
     flex: 1;
     justify-content: flex-end;
     align-items: flex-end;
+  }
+  .VarbListTable-addItemBtn.tableBottom {
+    border-top: none;
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
   }
 `;

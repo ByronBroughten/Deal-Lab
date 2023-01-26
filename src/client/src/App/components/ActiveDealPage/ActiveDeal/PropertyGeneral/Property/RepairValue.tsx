@@ -66,6 +66,7 @@ export function RepairValue({ feId }: Props) {
               >
                 <VarbListSingleTime
                   {...{
+                    className: "RepairValue-singleTimeList",
                     feId: repairValue.oneChildFeId("singleTimeList"),
                     menuType: "value",
                   }}

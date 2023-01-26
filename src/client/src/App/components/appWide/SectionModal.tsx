@@ -1,6 +1,7 @@
 import { AiOutlineClose } from "react-icons/ai";
 import styled from "styled-components";
 import useOnOutsideClickRef from "../../modules/customHooks/useOnOutsideClickRef";
+import theme from "../../theme/Theme";
 import { ModalWrapper, ModalWrapperProps } from "../general/ModalWrapper";
 import { PlainIconBtn } from "../general/PlainIconBtn";
 import { MainSection } from "./GeneralSection/MainSection";
@@ -29,7 +30,7 @@ export function SectionModal({
               <PlainIconBtn middle={<AiOutlineClose />} onClick={closeModal} />
             }
           />
-          <div className="MainSectionBody-root">{children}</div>
+          <div className="SectionModal-content">{children}</div>
         </MainSection>
       </div>
     </Styled>
@@ -39,5 +40,9 @@ export function SectionModal({
 const Styled = styled(ModalWrapper)`
   .SectionModal-mainSection {
     min-width: 250px;
+  }
+
+  .SectionModal-content {
+    margin-top: ${theme.s3};
   }
 `;
