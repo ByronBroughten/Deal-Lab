@@ -141,6 +141,6 @@ const Styled = styled(MainDealSection)<{
   }
   .Property-upfrontCostsGroup,
   .Property-ongoingCostGroup {
-    margin-top: ${theme.s3};
+    padding-top: ${theme.s3};
   }
 `;

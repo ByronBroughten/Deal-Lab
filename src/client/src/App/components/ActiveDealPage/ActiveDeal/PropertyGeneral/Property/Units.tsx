@@ -2,7 +2,7 @@ import { useToggleViewNext } from "../../../../../modules/customHooks/useToggleV
 import { useGetterSection } from "../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { EditSectionBtn } from "../../../../appWide/EditSectionBtn";
 import { FormSection } from "../../../../appWide/FormSection";
-import { SubSectionBtn } from "../../../../appWide/GeneralSection/GeneralSectionTitle/SubSectionBtn";
+import { FormSectionBtn } from "../../../../appWide/GeneralSection/GeneralSectionTitle/FormSectionBtn";
 import { LabeledVarbRow } from "../../../../appWide/LabeledVarbRow";
 import { SectionModal } from "../../../../appWide/SectionModal";
 import StandardLabel from "../../../../general/StandardLabel";
@@ -43,13 +43,11 @@ export function Units({ feId }: Props) {
         </>
       )}
       {unitsIsClosed && !hasUnits && (
-        <FormSection>
-          <SubSectionBtn
-            className="Units-addUnitsBtn"
-            onClick={openUnits}
-            text="Add Units"
-          />
-        </FormSection>
+        <FormSectionBtn
+          className="Units-addUnitsBtn"
+          onClick={openUnits}
+          text="Add Units"
+        />
       )}
       {unitsIsClosed && hasUnits && (
         <FormSection>

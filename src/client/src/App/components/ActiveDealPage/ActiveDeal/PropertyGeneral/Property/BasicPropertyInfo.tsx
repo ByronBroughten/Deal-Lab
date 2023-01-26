@@ -41,7 +41,7 @@ export default function BasicPropertyInfo({ feId, className }: Props) {
 }
 
 const Styled = styled(FormSection)`
-  padding-bottom: ${theme.s1};
+  padding-bottom: ${theme.s3};
   .BasicPropertyInfo-editors {
     display: flex;
     flex-wrap: wrap;
