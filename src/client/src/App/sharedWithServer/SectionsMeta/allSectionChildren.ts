@@ -67,6 +67,7 @@ export const allSectionChildren = checkAllSectionChildren({
     mgmtMainTable: ["compareTable"],
     dealMainTable: ["compareTable"],
     propertyMain: ["property"],
+
     loanMain: ["loan"],
     mgmtMain: ["mgmt"],
     dealMain: ["deal"],
@@ -148,6 +149,7 @@ export const allSectionChildren = checkAllSectionChildren({
   }),
   propertyGeneral: { property: sectionChild("property") },
   property: sectionChildren({
+    repairValue: ["repairValue"],
     repairCostValue: ["singleTimeValue"],
     capExCostValue: ["ongoingValue"],
     utilityCostValue: ["ongoingValue"],
@@ -158,6 +160,9 @@ export const allSectionChildren = checkAllSectionChildren({
     ongoingRevenueGroup: ["ongoingValueGroup"],
     unit: ["unit"],
     customVarb: ["customVarb"],
+  }),
+  repairValue: sectionChildren({
+    singleTimeList: ["singleTimeList"],
   }),
   mgmtGeneral: { mgmt: sectionChild("mgmt") },
   mgmt: sectionChildren({

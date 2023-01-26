@@ -178,6 +178,11 @@ export function makeAllBaseSectionVarbs() {
       ...baseVarbsS.ongoingDollars("revenue"),
       ...baseVarbsS.monthsYearsInput("holdingPeriod"),
     }),
+    repairValue: baseSectionVarbs({
+      value: baseVarb("numObj", dollars),
+      valueMode: baseVarb("string"),
+      valueLumpSumEditor: baseVarb("numObj", dollars),
+    }),
     unit: baseSectionVarbs({
       one: baseVarb("numObj"),
       numBedrooms: baseVarb("numObj"),

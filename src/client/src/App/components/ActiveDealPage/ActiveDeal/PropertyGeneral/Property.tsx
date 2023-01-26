@@ -4,9 +4,7 @@ import { useGetterSection } from "../../../../sharedWithServer/stateClassHooks/u
 import theme from "../../../../theme/Theme";
 import MainSectionBody from "../../../appWide/GeneralSection/MainSection/MainSectionBody";
 import { ValueGroupOngoing } from "../../../appWide/ListGroup/ValueGroupOngoing";
-import { ValueGroupSingleTime } from "../../../appWide/ListGroup/ValueGroupSingleTime";
 import { MainSectionTopRows } from "../../../appWide/MainSectionTopRows";
-import { ValueSectionOneTime } from "../../../appWide/ValueSectionOneTime";
 import { ValueSectionOngoing } from "../../../appWide/ValueSectionOngoing";
 import { BackToDealBtn } from "../BackToDealBtn";
 import {
@@ -15,66 +13,8 @@ import {
   MainDealSectionProps,
 } from "../MainDealSection";
 import BasicPropertyInfo from "./Property/BasicPropertyInfo";
+import { RepairValue } from "./Property/RepairValue";
 import { Units } from "./Property/Units";
-
-// function getPropertyCompletionStatus(
-//   property: GetterSection<"property">
-// ): CompletionStatus {
-//   let allEmpty = true;
-//   let allValid = true;
-//   const updateBools = ({
-//     isEmpty,
-//     isValid,
-//   }: {
-//     isEmpty: boolean;
-//     isValid: boolean;
-//   }) => {
-//     if (!isEmpty) allEmpty = false;
-//     if (!isValid) allValid = false;
-//   };
-
-//   const varbNames = [
-//     "price",
-//     "taxesOngoingEditor",
-//     "homeInsOngoingEditor",
-//     "sqft",
-//   ] as const;
-//   for (const varbName of varbNames) {
-//     updateBools(property.checkInputValue(varbName));
-//   }
-//   const units = property.children("unit");
-//   if (units.length === 0) {
-//     updateBools({ isEmpty: true, isValid: false });
-//   }
-
-//   const unitVarbNames = ["targetRentOngoingEditor", "numBedrooms"] as const;
-//   for (const unit of units) {
-//     for (const varbName of unitVarbNames) {
-//       updateBools(unit.checkInputValue(varbName));
-//     }
-//   }
-//   const repairsValue = property.onlyChild("repairCostValue");
-//   const isItemized = repairsValue.valueNext("isItemized");
-//   if (!isItemized) {
-//     updateBools(repairsValue.checkInputValue("valueEditor"));
-//   }
-
-//   const childNames = [
-//     "capExCostValue",
-//     "maintenanceCostValue",
-//     "utilityCostValue",
-//   ] as const;
-//   for (const childName of childNames) {
-//     const ongoingValue = property.onlyChild(childName);
-//     const isItemized = ongoingValue.valueNext("isItemized");
-//     if (!isItemized) {
-//       updateBools(ongoingValue.checkInputValue("valueEditor"));
-//     }
-//   }
-//   if (allEmpty) return "allEmpty";
-//   if (allValid) return "allValid";
-//   else return "someInvalid";
-// }
 
 export function Property({
   feId,
@@ -128,7 +68,12 @@ export function Property({
       <MainSectionBody themeName="property">
         <BasicPropertyInfo feId={feId} className="Property-basicInfo" />
         <Units {...{ feId }} />
-        <ValueGroupSingleTime
+        <RepairValue
+          {...{
+            feId: property.onlyChildFeId("repairValue"),
+          }}
+        />
+        {/* <ValueGroupSingleTime
           {...{
             className: "Property-upfrontCostsGroup",
             feId: property.onlyChild("upfrontExpenseGroup").feId,
@@ -144,7 +89,7 @@ export function Property({
               />
             ),
           }}
-        />
+        /> */}
         <ValueGroupOngoing
           {...{
             className: "Property-ongoingCostGroup",

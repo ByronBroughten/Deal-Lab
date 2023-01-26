@@ -1,7 +1,10 @@
 import { pick } from "lodash";
 import { SwitchName } from "../SectionsMeta/allBaseSectionVarbs/baseSwitchNames";
 import { VarbName } from "../SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
-import { SectionValues } from "../SectionsMeta/baseSectionsDerived/valueMetaTypes";
+import {
+  SectionValues,
+  VarbValue,
+} from "../SectionsMeta/baseSectionsDerived/valueMetaTypes";
 import { ChildValueInfo } from "../SectionsMeta/sectionChildrenDerived/ChildInfo";
 import {
   ChildName,
@@ -188,6 +191,9 @@ export class SetterSection<
       ...this.setterSectionProps,
       varbName: varbName as string,
     });
+  }
+  value<VN extends VarbName<SN>>(varbName: VN): VarbValue<SN, VN> {
+    return this.varb(varbName).get.valueNext() as VarbValue<SN, VN>;
   }
   varbInfo(varbName: VarbName<SN>): FeVarbInfo<SN> {
     return this.get.varbInfo(varbName);

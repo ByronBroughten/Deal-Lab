@@ -5,4 +5,5 @@ import { MainSectionBtn } from "./MainSectionBtn";
 export const SubSectionBtn = styled(MainSectionBtn)`
   box-shadow: none;
   border: ${theme.borderStyle};
+  font-size: ${theme.smallTitleSize};
 `;

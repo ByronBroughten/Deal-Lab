@@ -5,7 +5,10 @@ import calculations, {
 } from "../SectionsMeta/allBaseSectionVarbs/baseValues/calculations";
 import { ValueInEntity } from "../SectionsMeta/allBaseSectionVarbs/baseValues/entities";
 import { ValueIdInEntityInfo } from "../SectionsMeta/allBaseSectionVarbs/baseValues/InEntityIdInfoValue";
-import { NumObj } from "../SectionsMeta/allBaseSectionVarbs/baseValues/NumObj";
+import {
+  numObj,
+  NumObj,
+} from "../SectionsMeta/allBaseSectionVarbs/baseValues/NumObj";
 import { StateValue } from "../SectionsMeta/allBaseSectionVarbs/baseValues/StateValueTypes";
 import {
   stringObj,
@@ -146,6 +149,9 @@ export class SolveValueVarb<
         ...this.getterVarb.value("numObj"),
         solvableText: "0",
       };
+    },
+    emptyNumObj: (): NumObj => {
+      return numObj("");
     },
     getNumObjOfSwitch: (): NumObj => {
       const { updateFnProps } = this.inEntityVarb;

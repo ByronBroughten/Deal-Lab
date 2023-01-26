@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useGetterSection } from "../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import theme from "../../../../../theme/Theme";
+import { FormSection } from "../../../../appWide/FormSection";
 import { TogglerBooleanVarb } from "../../../../appWide/TogglerBooleanVarb";
 import { NumObjEntityEditor } from "../../../../inputs/NumObjEntityEditor";
 import { PercentDollarInput } from "../../general/PercentDollarInput";
@@ -17,59 +18,64 @@ export default function BasicLoanInfo({ feId, className }: Props) {
     <Styled
       {...{ className: `BasicLoanInfo-root ${className}`, sectionName: "loan" }}
     >
-      <PercentDollarInput
-        {...{
-          ...feInfo,
-          unitBaseName: "loanBase",
-          dollarVarbName: "loanBaseDollars",
-          label: "Base Loan Amount",
-          percentOfWhat: "purchase price",
-        }}
-      />
-      <div className="BasicLoanInfo-firstEditorBlock">
-        <TogglerBooleanVarb
+      <FormSection>
+        <PercentDollarInput
           {...{
-            className: "BasicLoanInfo-toggler",
-            feVarbInfo: isInterestOnlyVarb.feVarbInfo,
-            label: "Interest only payments",
-            name: "interest only toggle",
+            ...feInfo,
+            unitBaseName: "loanBase",
+            dollarVarbName: "loanBaseDollars",
+            label: "Base Loan Amount",
+            percentOfWhat: "purchase price",
           }}
         />
-        <div className="BasicLoanInfo-rateAndTermRow BasicLoanInfo-editorsRow">
-          <NumObjEntityEditor
-            feVarbInfo={loan.varbInfo("interestRatePercentOngoingEditor")}
+      </FormSection>
+      <FormSection>
+        <div>
+          <TogglerBooleanVarb
+            {...{
+              className: "BasicLoanInfo-toggler",
+              feVarbInfo: isInterestOnlyVarb.feVarbInfo,
+              label: "Interest only payments",
+              name: "interest only toggle",
+            }}
           />
-          <NumObjEntityEditor
-            feVarbInfo={loan.varbInfo("loanTermSpanEditor")}
-            label="Loan term"
-            className="BasicLoanInfo-secondEditor"
-          />
-        </div>
-      </div>
-
-      <div className="BasicLoanInfo-mortgageInsurance">
-        <TogglerBooleanVarb
-          {...{
-            className: "BasicLoanInfo-toggler",
-            feVarbInfo: hasMortInsVarb.feVarbInfo,
-            label: "Mortgage insurance",
-            name: "Mortgage insurance toggle",
-          }}
-        />
-        {hasMortIns && (
-          <div className="BasicLoanInfo-mortInsRow BasicLoanInfo-editorsRow">
+          <div className="BasicLoanInfo-rateAndTermRow BasicLoanInfo-editorsRow">
             <NumObjEntityEditor
-              feVarbInfo={loan.varbInfo("mortgageInsUpfrontEditor")}
-              label="Upfront"
+              feVarbInfo={loan.varbInfo("interestRatePercentOngoingEditor")}
             />
             <NumObjEntityEditor
-              feVarbInfo={loan.varbInfo("mortgageInsOngoingEditor")}
-              label="Ongoing"
-              className={"BasicLoanInfo-secondEditor"}
+              feVarbInfo={loan.varbInfo("loanTermSpanEditor")}
+              label="Loan term"
+              className="BasicLoanInfo-secondEditor"
             />
           </div>
-        )}
-      </div>
+        </div>
+      </FormSection>
+      <FormSection>
+        <div>
+          <TogglerBooleanVarb
+            {...{
+              className: "BasicLoanInfo-toggler",
+              feVarbInfo: hasMortInsVarb.feVarbInfo,
+              label: "Mortgage insurance",
+              name: "Mortgage insurance toggle",
+            }}
+          />
+          {hasMortIns && (
+            <div className="BasicLoanInfo-mortInsRow BasicLoanInfo-editorsRow">
+              <NumObjEntityEditor
+                feVarbInfo={loan.varbInfo("mortgageInsUpfrontEditor")}
+                label="Upfront"
+              />
+              <NumObjEntityEditor
+                feVarbInfo={loan.varbInfo("mortgageInsOngoingEditor")}
+                label="Ongoking"
+                className={"BasicLoanInfo-secondEditor"}
+              />
+            </div>
+          )}
+        </div>
+      </FormSection>
     </Styled>
   );
 }

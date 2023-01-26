@@ -73,6 +73,30 @@ function makeAllUpdateSections() {
       numBedrooms: updateVarb("numObj"),
       ...updateVarbsS.ongoingInputNext("targetRent"),
     }),
+    ...updateSectionProp("repairValue", {
+      valueMode: updateVarb("string", { initValue: "none" }),
+      value: updateVarb("numObj", {
+        updateFnName: "throwIfReached",
+        updateOverrides: [
+          updateOverride(
+            [overrideSwitchS.local("valueMode", "none")],
+            updateBasics("emptyNumObj")
+          ),
+          updateOverride(
+            [overrideSwitchS.local("valueMode", "turnkey")],
+            updateBasicsS.zero
+          ),
+          updateOverride(
+            [overrideSwitchS.local("valueMode", "lumpSum")],
+            updateBasicsS.loadFromLocal("valueLumpSumEditor")
+          ),
+          updateOverride(
+            [overrideSwitchS.local("valueMode", "itemize")],
+            updateBasicsS.loadFromChild("singleTimeList", "total")
+          ),
+        ],
+      }),
+    }),
     ...updateSectionProp("feUser", {
       authStatus: updateVarb("string", {
         initValue: "guest" as AuthStatus,

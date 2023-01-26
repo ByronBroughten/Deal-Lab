@@ -27,6 +27,9 @@ export function makeDefaultPropertyPack(): SectionPack<"property"> {
     valueSourceSwitch: "valueEditor",
   });
 
+  const repairValueNext = property.addAndGetChild("repairValue");
+  repairValueNext.addChild("singleTimeList");
+
   property.addChild("ongoingExpenseGroup");
   const utilities = property.loadAndGetChild({
     childName: "utilityCostValue",

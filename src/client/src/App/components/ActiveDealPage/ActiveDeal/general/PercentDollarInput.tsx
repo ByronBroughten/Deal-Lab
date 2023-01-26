@@ -102,9 +102,6 @@ export function PercentDollarInput<SN extends SectionName>({
 }
 
 const Styled = styled.div`
-  border-bottom: ${theme.borderStyle};
-  padding-bottom: ${theme.s35};
-
   .PercentDollarInput-basePayEditorDiv {
     margin-top: ${theme.s15};
     display: flex;
