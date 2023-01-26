@@ -36,16 +36,14 @@ export function makeExampleProperty(): SectionPack<"property"> {
     dbVarbs: { targetRentOngoingEditor: numObj(1500), numBedrooms: numObj(3) },
   });
 
-  const upfrontRepairValue = property.onlyChild("repairCostValue");
-  upfrontRepairValue.updateValues({ isItemized: true });
-  const repairList = upfrontRepairValue.onlyChild("singleTimeList");
+  const repairValue = property.addAndGetChild("repairValue");
+  const repairList = repairValue.addAndGetChild("singleTimeList");
   repairList.loadSelf(
     makeExampleSingleTimeList("Repairs", examplePropetyRepairProps)
   );
 
-  const utilityValue = property.onlyChild("utilityCostValue");
-  utilityValue.updateValues({ isItemized: true });
-  const utilityList = utilityValue.onlyChild("ongoingList");
+  const utilityValue = property.addAndGetChild("utilityValue");
+  const utilityList = utilityValue.addAndGetChild("ongoingList");
   utilityList.loadSelf(makeUtilityList(examplePropertyUtilityProps));
 
   const capExValue = property.onlyChild("capExCostValue");

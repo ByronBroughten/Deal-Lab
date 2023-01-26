@@ -102,16 +102,16 @@ export const sectionAbsolutePathInfos = {
   get unitLatent() {
     return absolute("unit", [...this.propertyLatent.path, "unit"]);
   },
-  get repairCostValueActive() {
+  get repairValueActive() {
     return absolute("singleTimeValue", [
       ...this.propertyActive.path,
-      "repairCostValue",
+      "repairValue",
     ]);
   },
-  get repairCostValueLatent() {
+  get repairValueLatent() {
     return absolute("singleTimeValue", [
       ...this.propertyLatent.path,
-      "repairCostValue",
+      "repairValue",
     ]);
   },
   get capExCostValueActive() {
@@ -139,15 +139,15 @@ export const sectionAbsolutePathInfos = {
     ]);
   },
   get utilityCostValueActive() {
-    return absolute("ongoingValue", [
+    return absolute("utilityValue", [
       ...this.propertyActive.path,
-      "utilityCostValue",
+      "utilityValue",
     ]);
   },
   get utilityCostValueLatent() {
     return absolute("ongoingValue", [
       ...this.propertyLatent.path,
-      "utilityCostValue",
+      "utilityValue",
     ]);
   },
   get userVarbItemStored() {

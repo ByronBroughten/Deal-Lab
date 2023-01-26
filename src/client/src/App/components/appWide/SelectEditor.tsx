@@ -6,17 +6,13 @@ import theme from "../../theme/Theme";
 import StandardLabel from "../general/StandardLabel";
 import { NumObjEntityEditor } from "../inputs/NumObjEntityEditor";
 
+type OnChange = (
+  event: React.ChangeEvent<{ name?: string | undefined; value: unknown }>
+) => void;
+
 export type SelectEditorProps = {
   value: string;
-  onChange:
-    | ((
-        event: React.ChangeEvent<{
-          name?: string | undefined;
-          value: unknown;
-        }>,
-        child: React.ReactNode
-      ) => void)
-    | undefined;
+  onChange?: OnChange;
   editorVarbInfo?: FeVarbInfo;
   label?: string;
   menuItems: [string, string][];

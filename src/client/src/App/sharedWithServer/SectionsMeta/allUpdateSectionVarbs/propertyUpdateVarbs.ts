@@ -24,7 +24,7 @@ export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
     numBedrooms: relVarbS.sumChildNums("unit", "numBedrooms"),
     upfrontExpenses: relVarbS.sumNums([
       updateFnPropS.local("price"),
-      updateFnPropS.children("repairCostValue", "value"),
+      updateFnPropS.children("repairValue", "value"),
       updateFnPropS.children("upfrontExpenseGroup", "total"),
     ]),
     upfrontRevenue: relVarbS.sumNums([
@@ -36,9 +36,9 @@ export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
       [
         updateFnPropS.local("taxes"),
         updateFnPropS.local("homeIns"),
+        updateFnPropS.children("utilityValue", "value"),
         updateFnPropS.onlyChild("capExCostValue", "value"),
         updateFnPropS.onlyChild("maintenanceCostValue", "value"),
-        updateFnPropS.children("utilityCostValue", "value"),
         updateFnPropS.children("ongoingExpenseGroup", "total"),
       ],
       "monthly"

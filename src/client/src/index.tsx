@@ -11,9 +11,6 @@ AppRegistry.runApplication("App", {
 // - Just do it badly at first, for the gist of it.
 // - Then pay someone to do it well
 
-// 1. *Ouputs
-// - Make "Calculate Outputs" button use the Finish Button
-
 // 2. Sort out the variables
 // - Make a reduced set of variables appear in the variable editor
 // - Add a "see more" modal or dropdown for the variables
@@ -26,20 +23,17 @@ AppRegistry.runApplication("App", {
 //   or something
 
 // PROPERTY
-// - Make an "add units" button
-// - Once there are units display their stats (unit count, rent total) with an "edit" button
-// - Make a repairs value with a selector:
-//   "turn key (no repairs)"
-//   "lump sum"
-//   "itemize" show the total and an "edit" button
-//   title "Upfront Repairs"
+// - Utilities
+// Utilities can be, "all tenant-paid", and "itemized"
+// Itemized will have the standard utilities:
+//  - Water, Garbage, Gas, Electric
+// Try just starting with the main 4 filled in and let users add
+// custom ones.
 
-// - Do the same thing for CapEx, Utilities, and Ongoing Maintenance
+// - Do the same thing for Utilities and CapEx
+// - Ongoing Maintenance should have this, too, but no itemize option
 // - "Add Custom Expenses (optional)"
-
-// 5. Make specialized CapEx and Utility values and lists
-// 6. Make a specialized maintenance value (with different methods
-//    for calculating maintenance costs)
+// - - One-time, Ongoing
 
 // 4. Allow for Fix and Flip
 //  - Add ARV

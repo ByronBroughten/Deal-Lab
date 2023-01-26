@@ -47,6 +47,13 @@ export const examplePropertyUtilityProps = [
   ["LawnCare", numObjNext(20)],
 ] as const;
 
+export const blankPropertyUtilityProps = [
+  ["Water", numObj("")],
+  ["Garbage", numObj("")],
+  ["Heat", numObj("")],
+  ["Electricity", numObj("")],
+] as const;
+
 export const exampleUserUtilityProps = [
   ...examplePropertyUtilityProps,
   ["Energy", numObjNext("120*", ["numUnits"])],

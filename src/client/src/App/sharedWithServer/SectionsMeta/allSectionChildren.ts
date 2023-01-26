@@ -150,10 +150,9 @@ export const allSectionChildren = checkAllSectionChildren({
   propertyGeneral: { property: sectionChild("property") },
   property: sectionChildren({
     repairValue: ["repairValue"],
-    repairCostValue: ["singleTimeValue"],
-    capExCostValue: ["ongoingValue"],
-    utilityCostValue: ["ongoingValue"],
+    utilityValue: ["utilityValue"],
     maintenanceCostValue: ["ongoingValue"],
+    capExCostValue: ["ongoingValue"],
     upfrontExpenseGroup: ["singleTimeValueGroup"],
     upfrontRevenueGroup: ["singleTimeValueGroup"],
     ongoingExpenseGroup: ["ongoingValueGroup"],
@@ -163,6 +162,9 @@ export const allSectionChildren = checkAllSectionChildren({
   }),
   repairValue: sectionChildren({
     singleTimeList: ["singleTimeList"],
+  }),
+  utilityValue: sectionChildren({
+    ongoingList: ["ongoingList"],
   }),
   mgmtGeneral: { mgmt: sectionChild("mgmt") },
   mgmt: sectionChildren({

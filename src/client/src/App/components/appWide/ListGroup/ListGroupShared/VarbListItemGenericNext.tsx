@@ -21,6 +21,7 @@ export function VarbListItemGenericNext({
   return (
     <Styled {...rest}>
       {firstCells}
+      <td className="VarbListItem-fillerCell"></td>
       <td className="AdditiveItem-buttonCell">
         <UpdateValueNextBtn
           className="AdditiveItem-nextBtn"

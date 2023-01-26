@@ -15,6 +15,7 @@ import {
 import BasicPropertyInfo from "./Property/BasicPropertyInfo";
 import { RepairValue } from "./Property/RepairValue";
 import { Units } from "./Property/Units";
+import { UtilityValue } from "./Property/UtilityValue";
 
 export function Property({
   feId,
@@ -68,28 +69,8 @@ export function Property({
       <MainSectionBody themeName="property">
         <BasicPropertyInfo feId={feId} className="Property-basicInfo" />
         <Units {...{ feId }} />
-        <RepairValue
-          {...{
-            feId: property.onlyChildFeId("repairValue"),
-          }}
-        />
-        {/* <ValueGroupSingleTime
-          {...{
-            className: "Property-upfrontCostsGroup",
-            feId: property.onlyChild("upfrontExpenseGroup").feId,
-            titleText: "Upfront Costs",
-            extraValueChildren: (
-              <ValueSectionOneTime
-                {...{
-                  displayName: "Repairs",
-                  feId: property.onlyChild("repairCostValue").feId,
-                  className: "ValueGroup-value",
-                  showXBtn: false,
-                }}
-              />
-            ),
-          }}
-        /> */}
+        <RepairValue feId={property.onlyChildFeId("repairValue")} />
+        <UtilityValue feId={property.onlyChildFeId("utilityValue")} />
         <ValueGroupOngoing
           {...{
             className: "Property-ongoingCostGroup",
@@ -109,14 +90,6 @@ export function Property({
                   {...{
                     displayName: "Maintenance",
                     feId: property.onlyChild("maintenanceCostValue").feId,
-                    className: "ValueGroup-value",
-                    showXBtn: false,
-                  }}
-                />
-                <ValueSectionOngoing
-                  {...{
-                    displayName: "Utilities",
-                    feId: property.onlyChild("utilityCostValue").feId,
                     className: "ValueGroup-value",
                     showXBtn: false,
                   }}

@@ -126,7 +126,6 @@ const Styled = styled(OuterMainSection)<{ $showDeal: boolean }>`
   ${({ $showDeal }) =>
     $showDeal &&
     css`
-      .Property-root,
       .Financing-root,
       .Mgmt-root {
         margin-top: ${theme.dealElementSpacing};
@@ -140,6 +139,10 @@ const Styled = styled(OuterMainSection)<{ $showDeal: boolean }>`
         display: none;
       }
     `}
+
+  .ActiveDeal-mainSectionTopRowRoot {
+    padding-bottom: ${theme.s35};
+  }
 
   .OutputSection-root {
     margin-top: ${theme.dealElementSpacing};

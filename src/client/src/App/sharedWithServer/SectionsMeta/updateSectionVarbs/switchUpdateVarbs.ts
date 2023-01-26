@@ -375,6 +375,7 @@ export function ongoingInput<BN extends string>(
     },
   });
 }
+
 export function ongoingPureCalc<Base extends string>(
   baseName: Base,
   updatePacks: OngoingUpdatePacks,

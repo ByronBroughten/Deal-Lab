@@ -32,7 +32,7 @@ export function OutputSection({
             styleDisabled: !isComplete,
             tooltipText: "",
             onClick: openOutputs,
-            warningText: "Please complete each of the sections first.",
+            warningText: "To calculate outputs, first complete each section.",
           }}
         />
       )}

@@ -3,7 +3,6 @@ import { FeInfoByType } from "../../../../sharedWithServer/SectionsMeta/SectionI
 import { useSetterSection } from "../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import { Arr } from "../../../../sharedWithServer/utils/Arr";
 import theme from "../../../../theme/Theme";
-import { NextBtn } from "../../NextBtn";
 import { RemoveSectionXBtn } from "../../RemoveSectionXBtn";
 
 interface Props {
@@ -30,10 +29,11 @@ export function VarbListItemGeneric({ feInfo, switchOptions, ...rest }: Props) {
   return (
     <Styled {...rest}>
       {switchOptions[switchValue]()}
-      <td className="AdditiveItem-buttonCell">
+      <td className="VarbListItem-fillerCell"></td>
+      {/* <td>
         <NextBtn className="AdditiveItem-nextBtn" onClick={toggleValueSwitch} />
-      </td>
-      <td className="AdditiveItem-buttonCell AdditiveList-buttonCell">
+      </td> */}
+      <td>
         <RemoveSectionXBtn
           className="AdditiveItem-xBtn"
           {...{
@@ -41,7 +41,6 @@ export function VarbListItemGeneric({ feInfo, switchOptions, ...rest }: Props) {
           }}
         />
       </td>
-      <td className="VarbListItem-fillerCell"></td>
     </Styled>
   );
 }

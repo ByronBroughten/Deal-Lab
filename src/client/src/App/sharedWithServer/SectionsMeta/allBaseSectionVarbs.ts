@@ -183,6 +183,10 @@ export function makeAllBaseSectionVarbs() {
       valueMode: baseVarb("string"),
       valueLumpSumEditor: baseVarb("numObj", dollars),
     }),
+    utilityValue: baseSectionVarbs({
+      ...baseVarbsS.ongoingDollars("value"),
+      valueMode: baseVarb("string"),
+    }),
     unit: baseSectionVarbs({
       one: baseVarb("numObj"),
       numBedrooms: baseVarb("numObj"),

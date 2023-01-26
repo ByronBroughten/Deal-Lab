@@ -73,6 +73,36 @@ function makeAllUpdateSections() {
       numBedrooms: updateVarb("numObj"),
       ...updateVarbsS.ongoingInputNext("targetRent"),
     }),
+    ...updateSectionProp("utilityValue", {
+      valueMode: updateVarb("string", { initValue: "none" }),
+      ...updateVarbsS.group("value", "ongoing", "monthly", {
+        targets: { updateFnName: "throwIfReached" },
+        monthly: {
+          updateOverrides: [
+            updateOverride(
+              [overrideSwitchS.local("valueMode", "none")],
+              updateBasics("emptyNumObj")
+            ),
+            updateOverride(
+              [overrideSwitchS.local("valueMode", "itemize")],
+              updateBasicsS.loadFromChild("ongoingList", "totalMonthly")
+            ),
+          ],
+        },
+        yearly: {
+          updateOverrides: [
+            updateOverride(
+              [overrideSwitchS.local("valueMode", "none")],
+              updateBasics("emptyNumObj")
+            ),
+            updateOverride(
+              [overrideSwitchS.local("valueMode", "itemize")],
+              updateBasicsS.loadFromChild("ongoingList", "totalYearly")
+            ),
+          ],
+        },
+      }),
+    }),
     ...updateSectionProp("repairValue", {
       valueMode: updateVarb("string", { initValue: "none" }),
       value: updateVarb("numObj", {
@@ -365,19 +395,29 @@ function makeAllUpdateSections() {
         initValue: "allEmpty",
         updateFnName: "completionStatus",
         updateFnProps: completionStatusProps({
-          nonZeros: [updateFnPropS.pathName("propertyFocal", "numUnits")],
+          nonZeros: [updateFnPropS.pathNameNext("propertyFocal", "numUnits")],
           validInputs: [
             ...updateFnPropsS.varbPathArr("price", "sqft"),
-            updateFnPropS.pathName("propertyFocal", "taxesOngoingEditor"),
-            updateFnPropS.pathName("propertyFocal", "homeInsOngoingEditor"),
-            updateFnPropS.pathName("unitFocal", "targetRentOngoingEditor"),
-            updateFnPropS.pathName("unitFocal", "numBedrooms"),
+            updateFnPropS.pathNameNext("propertyFocal", "taxesOngoingEditor"),
+            updateFnPropS.pathNameNext("propertyFocal", "homeInsOngoingEditor"),
+            updateFnPropS.pathNameNext("unitFocal", "targetRentOngoingEditor"),
+            updateFnPropS.pathNameNext("unitFocal", "numBedrooms"),
             updateFnPropS.pathNameNext("capExCostFocal", "valueEditor", [
               overrideSwitch(
                 mixedInfoS.pathNameVarb("capExCostFocal", "isItemized"),
                 false
               ),
             ]),
+            updateFnPropS.pathNameNext(
+              "repairCostFocal",
+              "valueLumpSumEditor",
+              [
+                overrideSwitch(
+                  mixedInfoS.pathNameVarb("repairCostFocal", "valueMode"),
+                  "lumpSum"
+                ),
+              ]
+            ),
             updateFnPropS.pathNameNext("maintenanceCostFocal", "valueEditor", [
               overrideSwitch(
                 mixedInfoS.pathNameVarb("maintenanceCostFocal", "isItemized"),
@@ -387,12 +427,6 @@ function makeAllUpdateSections() {
             updateFnPropS.pathNameNext("utilityCostFocal", "valueEditor", [
               overrideSwitch(
                 mixedInfoS.pathNameVarb("utilityCostFocal", "isItemized"),
-                false
-              ),
-            ]),
-            updateFnPropS.pathNameNext("repairCostFocal", "valueEditor", [
-              overrideSwitch(
-                mixedInfoS.pathNameVarb("repairCostFocal", "isItemized"),
                 false
               ),
             ]),

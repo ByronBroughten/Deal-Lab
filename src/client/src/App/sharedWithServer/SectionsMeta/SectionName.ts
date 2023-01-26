@@ -40,6 +40,7 @@ export const sectionNames = [
   "property",
 
   "repairValue",
+  "utilityValue",
 
   "unit",
   "financing",

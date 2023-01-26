@@ -32,8 +32,8 @@ export function VarbListTable({
                 <th className="AdditiveListTable-contentHeader">
                   {contentTitle}
                 </th>
-                <th colSpan={2} className="AdditiveListTable-buttonHeader"></th>
                 <th className="VarbListTable-fillerHeader"></th>
+                <th colSpan={1} className="AdditiveListTable-buttonHeader"></th>
               </tr>
             </thead>
             <tbody>{children}</tbody>

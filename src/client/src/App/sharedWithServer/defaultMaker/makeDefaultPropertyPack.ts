@@ -1,7 +1,8 @@
 import { stringObj } from "../SectionsMeta/allBaseSectionVarbs/baseValues/StringObj";
 import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
-import { makeDefaultOneTimeValue } from "./makeDefaultOneTimeValue";
+import { makeUtilityList } from "./makeDefaultFeUser/makeExampleOngoingLists";
+import { blankPropertyUtilityProps } from "./makeDefaultFeUser/makeExampleOngoingListsProps";
 import { makeDefaultOngoingValue } from "./makeDefaultOngoingValue";
 
 export function makeDefaultPropertyPack(): SectionPack<"property"> {
@@ -16,31 +17,16 @@ export function makeDefaultPropertyPack(): SectionPack<"property"> {
     },
   });
   property.addChild("upfrontExpenseGroup");
-  const repairValue = property.loadAndGetChild({
-    childName: "repairCostValue",
-    sectionPack: makeDefaultOneTimeValue(),
-  });
-  repairValue.updateValues({
-    displayNameEditor: stringObj("Repairs"),
-    isItemized: false,
-    itemValueSwitch: "labeledEquation",
-    valueSourceSwitch: "valueEditor",
-  });
 
-  const repairValueNext = property.addAndGetChild("repairValue");
-  repairValueNext.addChild("singleTimeList");
+  const repairValue = property.addAndGetChild("repairValue");
+  repairValue.addChild("singleTimeList");
+
+  const utilityValue = property.addAndGetChild("utilityValue");
+  const utilityList = utilityValue.addAndGetChild("ongoingList");
+  utilityList.loadSelf(makeUtilityList(blankPropertyUtilityProps));
 
   property.addChild("ongoingExpenseGroup");
-  const utilities = property.loadAndGetChild({
-    childName: "utilityCostValue",
-    sectionPack: makeDefaultOngoingValue(),
-  });
-  utilities.updateValues({
-    displayNameEditor: stringObj("Utilities"),
-    isItemized: false,
-    itemValueSwitch: "labeledEquation",
-    valueSourceSwitch: "valueEditor",
-  });
+
   const capEx = property.loadAndGetChild({
     childName: "capExCostValue",
     sectionPack: makeDefaultOngoingValue(),

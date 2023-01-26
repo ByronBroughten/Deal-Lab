@@ -128,6 +128,7 @@ const Styled = styled.div<{
 
   .VarbListGeneric-viewable {
     flex-wrap: nowrap;
+    min-width: 230px;
 
     display: inline-block;
     border: solid 1px ${theme.primaryBorder};

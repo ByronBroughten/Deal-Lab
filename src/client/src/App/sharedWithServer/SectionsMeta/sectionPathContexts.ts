@@ -12,7 +12,7 @@ const activeFocals = {
 
   propertyFocal: absolute.propertyActive,
   unitFocal: absolute.unitActive,
-  repairCostFocal: absolute.repairCostValueActive,
+  repairCostFocal: absolute.repairValueActive,
   utilityCostFocal: absolute.utilityCostValueActive,
   capExCostFocal: absolute.capExCostValueActive,
   maintenanceCostFocal: absolute.maintenanceCostValueActive,
@@ -57,7 +57,7 @@ export const sectionPathContexts = {
     calculatedVarbsFocal: absolute.calculatedVarbsLatent,
     propertyFocal: absolute.propertyLatent,
     unitFocal: absolute.unitLatent,
-    repairCostFocal: absolute.repairCostValueLatent,
+    repairCostFocal: absolute.repairValueLatent,
     utilityCostFocal: absolute.utilityCostValueLatent,
     capExCostFocal: absolute.capExCostValueLatent,
     maintenanceCostFocal: absolute.maintenanceCostValueLatent,
