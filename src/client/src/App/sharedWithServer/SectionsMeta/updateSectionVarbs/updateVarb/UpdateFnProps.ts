@@ -1,4 +1,5 @@
 import { Obj } from "../../../utils/Obj";
+import { NumObj } from "../../allBaseSectionVarbs/baseValues/NumObj";
 import { Id } from "../../allBaseSectionVarbs/id";
 import { ExpectedCount } from "../../allBaseSectionVarbs/NanoIdInfo";
 import { ChildName } from "../../sectionChildrenDerived/ChildName";
@@ -18,6 +19,7 @@ export type UpdateFnProps = {
 
 export type CompletionStatusProps = {
   nonZeros: UpdateFnProp[];
+  nonNone: UpdateFnProp[];
   validInputs: UpdateFnProp[];
   othersValid: UpdateFnProp[];
 };
@@ -27,6 +29,7 @@ export function completionStatusProps(
 ): CompletionStatusProps {
   return {
     nonZeros: [],
+    nonNone: [],
     validInputs: [],
     othersValid: [],
     ...props,
@@ -114,12 +117,18 @@ export function updateFnProp(
     entityId: Id.make(),
   };
 }
+
+type FinderUpdateFnProp = PathInVarbInfo & {
+  propType: "finder";
+  entityId: string;
+  andSwitches: UpdateOverrideSwitch[];
+};
+type NumObjUpdateFnProp = {
+  propType: "numObj";
+  value: NumObj;
+};
 export type UpdateFnProp = PathInVarbInfo & {
   entityId: string;
-  // so here... I'm providing loanVarbInfo
-  // I'll get multiple loanVarbs
-
-  //
   andSwitches: UpdateOverrideSwitch[];
 };
 export const updateFnPropS = {

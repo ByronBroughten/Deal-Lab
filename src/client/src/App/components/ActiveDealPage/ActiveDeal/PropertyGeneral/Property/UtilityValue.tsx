@@ -24,9 +24,10 @@ export function UtilityValue({ feId }: { feId: string }) {
           ["tenantUtilities", "Tenant pays all utilities"],
           ["itemize", "Itemize"],
         ],
-        isItemized: valueMode === "itemize",
-        total: valueVarb.displayVarb(),
         equalsValue,
+        itemizedModalTitle: "Utilities",
+        itemizeValue: "itemize",
+        total: valueVarb.displayVarb(),
         itemsComponent: (
           <VarbListOngoing
             {...{

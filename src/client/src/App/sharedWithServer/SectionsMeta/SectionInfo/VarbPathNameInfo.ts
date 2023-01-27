@@ -30,8 +30,12 @@ export const allVarbPathParams = {
     ...targetNames("loanExpenses", "ongoing"),
   ]),
   ...sectionVarbNameParams("calculatedVarbsFocal", "Property", [
+    "two",
     "onePercentPrice",
     "twoPercentPrice",
+    "onePercentPricePlusSqft",
+    "onePercentPriceSqftAverage",
+    ...targetNames("fivePercentRent", "ongoing"),
   ]),
   ...sectionVarbNameParams("propertyFocal", "Property", [
     "price",

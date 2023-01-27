@@ -41,6 +41,10 @@ export const sectionNames = [
 
   "repairValue",
   "utilityValue",
+  "maintenanceValue",
+  "capExValue",
+  "capExList",
+  "capExItem",
 
   "unit",
   "financing",

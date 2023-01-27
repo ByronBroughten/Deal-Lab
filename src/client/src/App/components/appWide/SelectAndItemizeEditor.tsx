@@ -4,28 +4,31 @@ import styled from "styled-components";
 import { useToggleViewNext } from "../../modules/customHooks/useToggleView";
 import theme from "../../theme/Theme";
 import { EditSectionBtn } from "./EditSectionBtn";
-import { FormSection } from "./FormSection";
 import { SectionModal } from "./SectionModal";
 import { SelectEditor, SelectEditorProps } from "./SelectEditor";
 
 interface Props extends SelectEditorProps {
-  isItemized: boolean;
   total: string;
+  itemizeValue: string;
   itemsComponent: React.ReactNode;
+  itemizedModalTitle: string;
 }
 
 export function SelectAndItemizeEditor({
-  isItemized,
   total,
   itemsComponent,
   onChange,
   rightOfControls,
+  itemizeValue,
+  itemizedModalTitle,
   ...rest
 }: Props) {
   const { itemsIsOpen, closeItems, openItems } = useToggleViewNext(
     "items",
     false
   );
+
+  const isItemized = rest.selectValue === itemizeValue;
   return (
     <Styled>
       <SelectEditor
@@ -33,7 +36,7 @@ export function SelectAndItemizeEditor({
           onChange: (e) => {
             unstable_batchedUpdates(() => {
               onChange && onChange(e);
-              isItemized && openItems();
+              e.target.value === itemizeValue && openItems();
             });
           },
           ...rest,
@@ -47,7 +50,7 @@ export function SelectAndItemizeEditor({
                   onClick={openItems}
                 />
                 <SectionModal
-                  title="Repairs"
+                  title={itemizedModalTitle}
                   closeModal={closeItems}
                   show={itemsIsOpen}
                 >
@@ -61,7 +64,8 @@ export function SelectAndItemizeEditor({
   );
 }
 
-const Styled = styled(FormSection)`
+// If you try to just use a Styled SelectEditor, these css selectors won't work.
+const Styled = styled.div`
   .SelectAndItemizeEditor-itemizedTotalDiv {
     margin-left: ${theme.s3};
     display: flex;

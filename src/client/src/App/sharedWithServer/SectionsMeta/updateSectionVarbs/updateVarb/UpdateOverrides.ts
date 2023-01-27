@@ -95,6 +95,12 @@ export const overrideSwitchS = {
     const varbName = getSwitchVarbName(baseName, "ongoing", "switch");
     return this.local(varbName, switchKey);
   },
+  monthsIsActive(baseName: string) {
+    return this.switchIsActive(baseName, "monthsYears", "months");
+  },
+  yearsIsActive(baseName: string) {
+    return this.switchIsActive(baseName, "monthsYears", "years");
+  },
   monthlyIsActive(baseVarbName: string): UpdateOverrideSwitch {
     return this.ongoing(baseVarbName, "monthly");
   },

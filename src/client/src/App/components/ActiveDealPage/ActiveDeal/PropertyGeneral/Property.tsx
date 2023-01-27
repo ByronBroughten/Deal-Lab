@@ -5,7 +5,6 @@ import theme from "../../../../theme/Theme";
 import MainSectionBody from "../../../appWide/GeneralSection/MainSection/MainSectionBody";
 import { ValueGroupOngoing } from "../../../appWide/ListGroup/ValueGroupOngoing";
 import { MainSectionTopRows } from "../../../appWide/MainSectionTopRows";
-import { ValueSectionOngoing } from "../../../appWide/ValueSectionOngoing";
 import { BackToDealBtn } from "../BackToDealBtn";
 import {
   CompletionStatus,
@@ -13,6 +12,8 @@ import {
   MainDealSectionProps,
 } from "../MainDealSection";
 import BasicPropertyInfo from "./Property/BasicPropertyInfo";
+import { CapExValue } from "./Property/CapExValue";
+import { MaintenanceValue } from "./Property/MaintenanceValue";
 import { RepairValue } from "./Property/RepairValue";
 import { Units } from "./Property/Units";
 import { UtilityValue } from "./Property/UtilityValue";
@@ -71,31 +72,13 @@ export function Property({
         <Units {...{ feId }} />
         <RepairValue feId={property.onlyChildFeId("repairValue")} />
         <UtilityValue feId={property.onlyChildFeId("utilityValue")} />
+        <MaintenanceValue feId={property.onlyChildFeId("maintenanceValue")} />
+        <CapExValue feId={property.onlyChildFeId("capExValue")} />
         <ValueGroupOngoing
           {...{
             className: "Property-ongoingCostGroup",
             feId: property.onlyChild("ongoingExpenseGroup").feId,
             titleText: "Ongoing Costs",
-            extraValueChildren: (
-              <>
-                <ValueSectionOngoing
-                  {...{
-                    displayName: "CapEx",
-                    feId: property.onlyChild("capExCostValue").feId,
-                    className: "ValueGroup-value",
-                    showXBtn: false,
-                  }}
-                />
-                <ValueSectionOngoing
-                  {...{
-                    displayName: "Maintenance",
-                    feId: property.onlyChild("maintenanceCostValue").feId,
-                    className: "ValueGroup-value",
-                    showXBtn: false,
-                  }}
-                />
-              </>
-            ),
           }}
         />
       </MainSectionBody>

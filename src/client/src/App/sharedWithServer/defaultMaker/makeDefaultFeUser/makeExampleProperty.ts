@@ -12,7 +12,6 @@ import {
   examplePropertyCapExListProps,
   examplePropertyUtilityProps,
   examplePropetyRepairProps,
-  priceSqftMiscRepairHybrid,
 } from "./makeExampleOngoingListsProps";
 
 export function makeExampleProperty(): SectionPack<"property"> {
@@ -42,23 +41,20 @@ export function makeExampleProperty(): SectionPack<"property"> {
     makeExampleSingleTimeList("Repairs", examplePropetyRepairProps)
   );
 
-  const utilityValue = property.addAndGetChild("utilityValue");
-  const utilityList = utilityValue.addAndGetChild("ongoingList");
+  const utilityValue = property.onlyChild("utilityValue");
+  const utilityList = utilityValue.onlyChild("ongoingList");
   utilityList.loadSelf(makeUtilityList(examplePropertyUtilityProps));
+
+  const maintenanceValue = property.onlyChild("maintenanceValue");
+  maintenanceValue.updateValues({
+    valueMode: "onePercentAndSqft",
+  });
 
   const capExValue = property.onlyChild("capExCostValue");
 
   capExValue.updateValues({ isItemized: true, valueOngoingSwitch: "yearly" });
   const capExList = capExValue.onlyChild("ongoingList");
   capExList.loadSelf(makeCapExList(examplePropertyCapExListProps));
-
-  const ongoingRepairValue = property.onlyChild("maintenanceCostValue");
-  ongoingRepairValue.updateValues({
-    valueOngoingSwitch: "yearly",
-    valueSourceSwitch: "valueEditor",
-    valueEditor: priceSqftMiscRepairHybrid,
-    isItemized: false,
-  });
 
   return property.makeSectionPack();
 }

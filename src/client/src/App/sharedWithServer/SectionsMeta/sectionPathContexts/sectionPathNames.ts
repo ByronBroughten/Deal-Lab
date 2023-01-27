@@ -8,12 +8,13 @@ const sectionPathNameToSn = checkPathTypeToSectionName({
   // after deploy, then the sectionInfos stored in the db that point
   // to those sectionPathNames need to be addressed.
   dealFocal: "deal",
+
   propertyFocal: "property",
-  repairCostFocal: "repairValue",
-  utilityCostFocal: "ongoingValue",
-  capExCostFocal: "ongoingValue",
-  maintenanceCostFocal: "ongoingValue",
   unitFocal: "unit",
+  repairCostFocal: "repairValue",
+  utilityCostFocal: "utilityValue",
+  maintenanceCostFocal: "maintenanceValue",
+  capExCostFocal: "capExValue",
 
   financingFocal: "financing",
   loanFocal: "loan",

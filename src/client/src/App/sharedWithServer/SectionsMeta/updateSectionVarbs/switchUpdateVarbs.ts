@@ -13,12 +13,7 @@ import {
   SwitchVarbNameRecord,
 } from "../allBaseSectionVarbs/baseSwitchNames";
 import { VarbPathName } from "../SectionInfo/VarbPathNameInfo";
-import {
-  defaultUpdateVarb,
-  UpdateVarb,
-  updateVarb,
-  UpdateVarbOptions,
-} from "./updateVarb";
+import { UpdateVarb, updateVarb, UpdateVarbOptions } from "./updateVarb";
 import {
   UpdateBasics,
   updateBasics,
@@ -82,17 +77,15 @@ function updateGroup<BN extends string, SN extends SwitchName>(
   return keys.reduce((varbs, key) => {
     const varbName = getSwitchVarbName(baseName, switchName, key);
     if (key === "switch") {
-      (varbs as any)[varbName] = {
-        ...defaultUpdateVarb("string"),
+      (varbs as any)[varbName] = updateVarb("string", {
         ...fullOptions[key as "switch"],
         initValue: switchInit,
-      };
+      });
     } else {
-      (varbs as any)[varbName] = {
-        ...defaultUpdateVarb("numObj"),
+      (varbs as any)[varbName] = updateVarb("numObj", {
         ...fullOptions.targets,
         ...fullOptions[key as keyof typeof fullOptions],
-      };
+      });
     }
     return varbs;
   }, {} as UpdateGroup<BN, SN>);

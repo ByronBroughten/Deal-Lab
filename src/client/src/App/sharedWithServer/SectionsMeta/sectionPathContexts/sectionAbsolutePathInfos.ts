@@ -103,39 +103,15 @@ export const sectionAbsolutePathInfos = {
     return absolute("unit", [...this.propertyLatent.path, "unit"]);
   },
   get repairValueActive() {
-    return absolute("singleTimeValue", [
+    return absolute("repairValue", [
       ...this.propertyActive.path,
       "repairValue",
     ]);
   },
   get repairValueLatent() {
-    return absolute("singleTimeValue", [
+    return absolute("repairValue", [
       ...this.propertyLatent.path,
       "repairValue",
-    ]);
-  },
-  get capExCostValueActive() {
-    return absolute("ongoingValue", [
-      ...this.propertyActive.path,
-      "capExCostValue",
-    ]);
-  },
-  get capExCostValueLatent() {
-    return absolute("ongoingValue", [
-      ...this.propertyLatent.path,
-      "capExCostValue",
-    ]);
-  },
-  get maintenanceCostValueActive() {
-    return absolute("ongoingValue", [
-      ...this.propertyActive.path,
-      "maintenanceCostValue",
-    ]);
-  },
-  get maintenanceCostValueLatent() {
-    return absolute("ongoingValue", [
-      ...this.propertyLatent.path,
-      "maintenanceCostValue",
     ]);
   },
   get utilityCostValueActive() {
@@ -145,10 +121,28 @@ export const sectionAbsolutePathInfos = {
     ]);
   },
   get utilityCostValueLatent() {
-    return absolute("ongoingValue", [
+    return absolute("utilityValue", [
       ...this.propertyLatent.path,
       "utilityValue",
     ]);
+  },
+  get maintenanceCostValueActive() {
+    return absolute("maintenanceValue", [
+      ...this.propertyActive.path,
+      "maintenanceValue",
+    ]);
+  },
+  get maintenanceCostValueLatent() {
+    return absolute("maintenanceValue", [
+      ...this.propertyLatent.path,
+      "maintenanceValue",
+    ]);
+  },
+  get capExCostValueActive() {
+    return absolute("capExValue", [...this.propertyActive.path, "capExValue"]);
+  },
+  get capExCostValueLatent() {
+    return absolute("capExValue", [...this.propertyLatent.path, "capExValue"]);
   },
   get userVarbItemStored() {
     return absolute("userVarbItem", [
@@ -217,7 +211,7 @@ export const sectionAbsolutePathInfos = {
 } as const;
 
 const absolutePathNames = Obj.keys(sectionAbsolutePathInfos);
-export type AbsolutePathName = typeof absolutePathNames[number];
+type AbsolutePathName = typeof absolutePathNames[number];
 
 export function checkAbsolutePathInfos() {
   for (const pathName of absolutePathNames) {

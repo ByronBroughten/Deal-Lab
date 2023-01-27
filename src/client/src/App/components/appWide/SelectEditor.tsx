@@ -5,6 +5,7 @@ import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeIn
 import theme from "../../theme/Theme";
 import StandardLabel from "../general/StandardLabel";
 import { NumObjEntityEditor } from "../inputs/NumObjEntityEditor";
+import { FormSection } from "./FormSection";
 
 type OnChange = (
   event: React.ChangeEvent<{ name?: string | undefined; value: unknown }>
@@ -30,56 +31,63 @@ export function SelectEditor({
 }: SelectEditorProps) {
   return (
     <Styled>
-      {label && <StandardLabel>{label}</StandardLabel>}
-      <div className="SelectEditor-controlDiv">
-        <FormControl
-          className="SelectEditor-formControl"
-          size="small"
-          variant="filled"
-          style={{ minWidth: "120px" }}
-        >
-          <Select
-            className={`SelectEditor-select ${
-              selectValue === "none" ? "SelectEditor-noneSelected" : ""
-            }`}
-            labelId="RepairsValue-modeLabel"
-            id="demo-simple-select"
-            autoWidth={true}
-            value={selectValue}
-            onChange={onChange}
+      <div>
+        {label && <StandardLabel>{label}</StandardLabel>}
+        <div className="SelectEditor-controlDiv">
+          <FormControl
+            className="SelectEditor-formControl"
+            size="small"
+            variant="filled"
+            style={{ minWidth: "120px" }}
           >
-            {selectValue === "none" && (
-              <MenuItem value="none" disabled={true}>
-                Choose Method
-              </MenuItem>
-            )}
-            {menuItems.map((item) => (
-              <MenuItem value={item[0]}>{item[1]}</MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-        {editorVarbInfo && (
-          <NumObjEntityEditor
-            {...{
-              className: "SelectEditor-editor",
-              feVarbInfo: editorVarbInfo,
-            }}
-          />
-        )}
-        {rightOfControls ?? null}
-        {equalsValue && (
-          <div className="SelectEditor-equalsValue">{`= ${equalsValue}`}</div>
-        )}
+            <Select
+              className={`SelectEditor-select ${
+                selectValue === "none" ? "SelectEditor-noneSelected" : ""
+              }`}
+              labelId="RepairsValue-modeLabel"
+              id="demo-simple-select"
+              autoWidth={true}
+              value={selectValue}
+              onChange={onChange}
+            >
+              {selectValue === "none" && (
+                <MenuItem value="none" disabled={true}>
+                  Choose Method
+                </MenuItem>
+              )}
+              {menuItems.map((item) => (
+                <MenuItem value={item[0]}>{item[1]}</MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          {editorVarbInfo && (
+            <NumObjEntityEditor
+              {...{
+                className: "SelectEditor-editor",
+                feVarbInfo: editorVarbInfo,
+              }}
+            />
+          )}
+          {rightOfControls ?? null}
+          {equalsValue && (
+            <div className="SelectEditor-equalsValue">{`= ${equalsValue}`}</div>
+          )}
+        </div>
       </div>
     </Styled>
   );
 }
 
-const Styled = styled.div`
+const Styled = styled(FormSection)`
+  .SelectEditor-select {
+    min-width: 0px;
+  }
   .SelectEditor-equalsValue {
     display: flex;
     align-items: center;
+    flex-wrap: nowrap;
     margin-left: ${theme.s2};
+    white-space: nowrap;
   }
   .SelectEditor-controlDiv {
     display: flex;

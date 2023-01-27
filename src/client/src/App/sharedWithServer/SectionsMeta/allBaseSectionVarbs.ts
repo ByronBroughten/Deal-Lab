@@ -118,6 +118,27 @@ export function makeAllBaseSectionVarbs() {
       itemValueSwitch: baseVarb("string"),
       itemOngoingSwitch: baseVarb("string"),
     }),
+    capExList: baseSectionVarbs({
+      ...baseVarbsS.savableSection,
+      ...baseVarbsS.ongoingDollars("total"),
+      itemOngoingSwitch: baseVarb("string"),
+    }),
+    capExItem: baseSectionVarbs({
+      displayName: baseVarb("stringObj"),
+      displayNameEditor: baseVarb("stringObj"),
+      ...baseVarbsS.ongoingDollars("value"),
+      ...baseVarbsS.monthsYearsInput("lifespan"),
+      costToReplace: baseVarb("numObj", dollars),
+    }),
+    ongoingItem: baseSectionVarbs({
+      ...baseVarbsS.virtualVarb,
+      ...baseVarbsS.loadableVarb,
+      ...baseVarbsS.switchableEquationEditor,
+      ...baseVarbsS.ongoingDollars("value"),
+      ...baseVarbsS.monthsYearsInput("lifespan"),
+      costToReplace: baseVarb("numObj", dollars),
+    }),
+
     userVarbList: baseSectionVarbs({
       ...baseVarbsS.savableSection,
       itemValueSwitch: baseVarb("string"),
@@ -130,14 +151,6 @@ export function makeAllBaseSectionVarbs() {
       ...baseVarbsS.singleValueVirtualVarb,
       ...baseVarbsS.loadableVarb,
       ...baseVarbsS.switchableEquationEditor,
-    }),
-    ongoingItem: baseSectionVarbs({
-      ...baseVarbsS.virtualVarb,
-      ...baseVarbsS.loadableVarb,
-      ...baseVarbsS.switchableEquationEditor,
-      ...baseVarbsS.ongoingDollars("value"),
-      ...baseVarbsS.monthsYearsInput("lifespan"),
-      costToReplace: baseVarb("numObj", dollars),
     }),
     outputItem: baseSectionVarbs({
       ...baseVarbsS.singleValueVirtualVarb,
@@ -178,6 +191,11 @@ export function makeAllBaseSectionVarbs() {
       ...baseVarbsS.ongoingDollars("revenue"),
       ...baseVarbsS.monthsYearsInput("holdingPeriod"),
     }),
+    unit: baseSectionVarbs({
+      one: baseVarb("numObj"),
+      numBedrooms: baseVarb("numObj"),
+      ...baseVarbsS.ongoingDollarsInput("targetRent"),
+    }),
     repairValue: baseSectionVarbs({
       value: baseVarb("numObj", dollars),
       valueMode: baseVarb("string"),
@@ -187,10 +205,15 @@ export function makeAllBaseSectionVarbs() {
       ...baseVarbsS.ongoingDollars("value"),
       valueMode: baseVarb("string"),
     }),
-    unit: baseSectionVarbs({
-      one: baseVarb("numObj"),
-      numBedrooms: baseVarb("numObj"),
-      ...baseVarbsS.ongoingDollarsInput("targetRent"),
+    maintenanceValue: baseSectionVarbs({
+      ...baseVarbsS.ongoingDollars("value"),
+      valueMode: baseVarb("string"),
+      valueLumpSumEditor: baseVarb("numObj", dollars),
+    }),
+    capExValue: baseSectionVarbs({
+      ...baseVarbsS.ongoingDollars("value"),
+      valueMode: baseVarb("string"),
+      valueLumpSumEditor: baseVarb("numObj", dollars),
     }),
     loan: baseSectionVarbs({
       ...baseVarbsS.savableSection,
@@ -284,7 +307,16 @@ export function makeAllBaseSectionVarbs() {
     calculatedVarbs: baseSectionVarbs({
       ...baseVarbs(
         "numObj",
-        ["onePercentPrice", "twoPercentPrice"] as const,
+        [
+          "two",
+          "onePercentPrice",
+          "twoPercentPrice",
+          "fivePercentRentMonthly",
+          "fivePercentRentYearly",
+          "onePercentSqftAverage",
+          "onePercentPricePlusSqft",
+          "onePercentPriceSqftAverage",
+        ] as const,
         percent
       ),
       propertyCompletionStatus: baseVarb("string"),

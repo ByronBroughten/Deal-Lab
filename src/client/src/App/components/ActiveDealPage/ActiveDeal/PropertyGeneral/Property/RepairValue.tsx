@@ -13,6 +13,7 @@ export function RepairValue({ feId }: Props) {
     feId,
   });
   const valueMode = repairValue.value("valueMode") as RepairValueMode;
+  const equalsValue = valueMode === "turnkey" ? "$0" : undefined;
   return (
     <SelectAndItemizeEditor
       {...{
@@ -31,8 +32,10 @@ export function RepairValue({ feId }: Props) {
           ["lumpSum", "Enter lump sum"],
           ["itemize", "Itemize"],
         ],
-        isItemized: valueMode === "itemize",
+        equalsValue,
         total: repairValue.get.varbNext("value").displayVarb(),
+        itemizeValue: "itemize",
+        itemizedModalTitle: "Repairs",
         itemsComponent: (
           <VarbListSingleTime
             {...{

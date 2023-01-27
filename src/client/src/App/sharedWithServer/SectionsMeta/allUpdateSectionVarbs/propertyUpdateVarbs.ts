@@ -36,14 +36,13 @@ export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
       [
         updateFnPropS.local("taxes"),
         updateFnPropS.local("homeIns"),
-        updateFnPropS.children("utilityValue", "value"),
-        updateFnPropS.onlyChild("capExCostValue", "value"),
-        updateFnPropS.onlyChild("maintenanceCostValue", "value"),
-        updateFnPropS.children("ongoingExpenseGroup", "total"),
+        updateFnPropS.onlyChild("utilityValue", "value"),
+        updateFnPropS.onlyChild("maintenanceValue", "value"),
+        updateFnPropS.onlyChild("capExValue", "value"),
+        updateFnPropS.onlyChild("ongoingExpenseGroup", "total"),
       ],
       "monthly"
     ),
-
     ...updateVarbsS.ongoingInputNext("homeIns", {
       switchInit: "yearly",
     }),

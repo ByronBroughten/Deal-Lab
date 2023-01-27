@@ -78,7 +78,7 @@ export class SolveValueVarb<
   private updateFns = {
     completionStatus: (): CompletionStatus => {
       const { updateFnProps } = this.inEntityVarb;
-      const { nonZeros, validInputs, othersValid } =
+      const { nonZeros, validInputs, othersValid, nonNone } =
         updateFnProps as CompletionStatusProps;
 
       let allEmpty = true;
@@ -120,6 +120,15 @@ export class SolveValueVarb<
         const varbs = this.activePropVarbs(updateProp);
         for (const varb of varbs) {
           if (varb.numberOrQuestionMark === 0) {
+            updateBools({ isEmpty: true, isValid: false });
+          }
+        }
+      }
+
+      for (const updateProp of nonNone) {
+        const varbs = this.activePropVarbs(updateProp);
+        for (const varb of varbs) {
+          if (varb.valueNext() === "none") {
             updateBools({ isEmpty: true, isValid: false });
           }
         }

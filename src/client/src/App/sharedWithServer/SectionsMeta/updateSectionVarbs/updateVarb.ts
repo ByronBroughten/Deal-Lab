@@ -50,7 +50,7 @@ const checkUpdateVarb = <VN extends ValueName, T extends UpdateVarb<VN>>(
   value: T
 ): T => value;
 
-export function defaultUpdateVarb<VN extends ValueName>(
+function defaultUpdateVarb<VN extends ValueName>(
   valueName: VN
 ): UpdateVarb<VN> {
   const valueMeta = valueMetas[valueName];

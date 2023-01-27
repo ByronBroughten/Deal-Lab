@@ -25,6 +25,12 @@ export function makeDefaultPropertyPack(): SectionPack<"property"> {
   const utilityList = utilityValue.addAndGetChild("ongoingList");
   utilityList.loadSelf(makeUtilityList(blankPropertyUtilityProps));
 
+  property.addChild("maintenanceValue");
+
+  const capExValue = property.addAndGetChild("capExValue");
+  capExValue.addChild("capExList");
+  capExValue.addChild("capExListNext");
+
   property.addChild("ongoingExpenseGroup");
 
   const capEx = property.loadAndGetChild({
@@ -41,17 +47,6 @@ export function makeDefaultPropertyPack(): SectionPack<"property"> {
   capExList.updateValues({
     itemValueSwitch: "labeledSpanOverCost",
     itemOngoingSwitch: "yearly",
-  });
-
-  const maintenance = property.loadAndGetChild({
-    childName: "maintenanceCostValue",
-    sectionPack: makeDefaultOngoingValue(),
-  });
-  maintenance.updateValues({
-    displayNameEditor: stringObj("Misc Repairs"),
-    isItemized: false,
-    itemValueSwitch: "labeledEquation",
-    valueSourceSwitch: "valueEditor",
   });
 
   return property.makeSectionPack();

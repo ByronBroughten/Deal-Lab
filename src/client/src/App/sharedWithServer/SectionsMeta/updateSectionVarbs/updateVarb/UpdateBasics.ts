@@ -5,6 +5,7 @@ import {
 } from "../../allBaseSectionVarbs/baseValues/calculations";
 import { ValueName } from "../../allBaseSectionVarbs/ValueName";
 import { ChildName } from "../../sectionChildrenDerived/ChildName";
+import { VarbPathName } from "../../SectionInfo/VarbPathNameInfo";
 import { UpdateFnName } from "./UpdateFnName";
 import { UpdateFnProp, UpdateFnProps, updateFnPropS } from "./UpdateFnProps";
 
@@ -36,8 +37,27 @@ export const updateBasicsS = {
       updateFnProps: {},
     };
   },
-  sumNums(...nums: UpdateFnProp[]) {
+  sumVarbPathName(...names: VarbPathName[]): UpdateBasics<"numObj"> {
+    return updateBasics("sumNums", {
+      nums: names.map((name) => updateFnPropS.varbPathName(name)),
+    });
+  },
+  sumNums(...nums: UpdateFnProp[]): UpdateBasics<"numObj"> {
     return updateBasics("sumNums", { nums });
+  },
+  sumChildren(childName: ChildName, varbName: string): UpdateBasics<"numObj"> {
+    return this.sumNums(updateFnPropS.children(childName, varbName));
+  },
+  varbPathLeftRight(
+    updateFnName: LeftRightPropCalcName,
+    leftSide: VarbPathName,
+    rightSide: VarbPathName
+  ): UpdateBasics<"numObj"> {
+    return this.equationLeftRight(
+      updateFnName,
+      updateFnPropS.varbPathName(leftSide),
+      updateFnPropS.varbPathName(rightSide)
+    );
   },
   equationLeftRight(
     updateFnName: LeftRightPropCalcName,
@@ -68,6 +88,11 @@ export const updateBasicsS = {
       varbInfo: updateFnPropS.onlyChild(childName, varbName),
     });
   },
+  loadByVarbPathName(varbPathName: VarbPathName) {
+    return updateBasics("loadSolvableTextByVarbInfo", {
+      varbInfo: updateFnPropS.varbPathName(varbPathName),
+    });
+  },
   loadFromLocalValueEditor(): UpdateBasics<"numObj"> {
     return this.loadSolvableTextByVarbInfo("valueEditor");
   },
@@ -75,6 +100,20 @@ export const updateBasicsS = {
     return updateBasics("loadSolvableTextByVarbInfo", {
       varbInfo: updateFnPropS.local(varbInfoName),
     });
+  },
+  monthsToYears<Base extends string>(base: Base) {
+    const varbNames = switchKeyToVarbNames(base, "monthsYears");
+    return {
+      updateFnName: "monthsToYears",
+      updateFnProps: { num: updateFnPropS.local(varbNames.months) },
+    };
+  },
+  yearsToMonths<Base extends string>(base: Base) {
+    const varbNames = switchKeyToVarbNames(base, "monthsYears");
+    return {
+      updateFnName: "yearsToMonths",
+      updateFnProps: { num: updateFnPropS.local(varbNames.years) },
+    };
   },
   yearlyToMonthly<Base extends string>(
     baseVarbName: Base
