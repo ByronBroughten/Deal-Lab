@@ -4,7 +4,7 @@ import theme from "../../../../../theme/Theme";
 import { MaterialStringEditor } from "../../../../inputs/MaterialStringEditor";
 import { NumObjEntityEditor } from "../../../../inputs/NumObjEntityEditor";
 
-interface Props extends FeSectionInfo<"ongoingItem"> {
+interface Props extends FeSectionInfo<"ongoingItem" | "capExItem"> {
   displayValueVarb: string;
   lifespanVarbName: string;
 }
@@ -18,12 +18,12 @@ export function LabeledSpanOverCost({
   const feInfo = { sectionName, feId };
   return (
     <>
-      <td className="AdditiveItem-nameCell">
+      <td className="VarbListTable-nameCell">
         <MaterialStringEditor
           {...{ ...feInfo, varbName: "displayNameEditor" }}
         />
       </td>
-      <Styled className="AdditiveItem-contentCell">
+      <Styled className="VarbListTable-firstContentCell">
         <div className="AdditiveItem-contentCellDiv">
           <NumObjEntityEditor
             feVarbInfo={{
@@ -36,7 +36,7 @@ export function LabeledSpanOverCost({
           <NumObjEntityEditor
             feVarbInfo={{
               ...feInfo,
-              varbName: lifespanVarbName,
+              varbName: "lifespanOngoingEditor",
             }}
             className="lifespan"
             labeled={false}

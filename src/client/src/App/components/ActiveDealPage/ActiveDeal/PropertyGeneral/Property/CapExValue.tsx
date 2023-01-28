@@ -1,7 +1,7 @@
 import { CapExValueMode } from "../../../../../sharedWithServer/SectionsMeta/baseSectionsDerived/subValues";
 import { useSetterSection } from "../../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import { SelectAndItemizeEditor } from "../../../../appWide/SelectAndItemizeEditor";
-import { VarbListOngoing } from "../../../../appWide/VarbLists/VarbListOngoing";
+import { VarbListCapEx } from "../../../../appWide/VarbLists/VarbListCapEx";
 
 export function CapExValue({ feId }: { feId: string }) {
   const capExValue = useSetterSection({
@@ -32,13 +32,13 @@ export function CapExValue({ feId }: { feId: string }) {
           ["lumpSum", "Custom amount"],
         ],
         equalsValue,
-        itemizedModalTitle: "CapEx Lifespans Over Costs",
+        itemizedModalTitle: "CapEx Budget Itemizer",
         itemizeValue: "itemize",
         total: valueVarb.displayVarb(),
         itemsComponent: (
-          <VarbListOngoing
+          <VarbListCapEx
             {...{
-              feId: capExValue.oneChildFeId("capExList"),
+              feId: capExValue.oneChildFeId("capExListNext"),
               menuType: "value",
             }}
           />

@@ -125,7 +125,7 @@ export function makeAllBaseSectionVarbs() {
     }),
     capExItem: baseSectionVarbs({
       displayName: baseVarb("stringObj"),
-      displayNameEditor: baseVarb("stringObj"),
+      displayNameEditor: baseVarb("string"),
       ...baseVarbsS.ongoingDollars("value"),
       ...baseVarbsS.monthsYearsInput("lifespan"),
       costToReplace: baseVarb("numObj", dollars),

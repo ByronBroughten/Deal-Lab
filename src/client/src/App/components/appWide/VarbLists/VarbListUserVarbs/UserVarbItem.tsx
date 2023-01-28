@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useGetterVarb } from "../../../../sharedWithServer/stateClassHooks/useGetterVarb";
 import { LabeledEquation } from "../../ListGroup/ListGroupShared/ListItemValue/LabeledEquation";
-import { VarbListItemGeneric } from "../../ListGroup/ListGroupShared/VarbListItemGeneric";
+import { VarbListItemStyled } from "../../ListGroup/ListGroupShared/VarbListItemStyled";
 
 type Props = { feId: string };
 export function UserVarbItem({ feId }: Props) {
@@ -16,21 +16,17 @@ export function UserVarbItem({ feId }: Props) {
   return (
     <Styled
       {...{
-        feInfo,
-        switchOptions: {
-          labeledEquation: () => (
-            <LabeledEquation
-              {...{ ...feInfo, doEquals: varb.isPureUserVarb }}
-            />
-          ),
-          // ifThen: () => <IfThen {...{ feId }} />,
-        },
+        ...feInfo,
+        firstCells: (
+          <LabeledEquation {...{ ...feInfo, doEquals: varb.isPureUserVarb }} />
+        ),
+        nextValueSwitch: "labeledEquation",
       }}
     />
   );
 }
 
-const Styled = styled(VarbListItemGeneric)`
+const Styled = styled(VarbListItemStyled)`
   :hover {
     .AdditiveItem-nextBtn {
       visibility: hidden;

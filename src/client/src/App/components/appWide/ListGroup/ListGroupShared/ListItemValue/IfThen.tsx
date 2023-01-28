@@ -14,10 +14,10 @@ export default function IfThen({ feId }: Props) {
 
   return (
     <>
-      <td className="AdditiveItem-nameCell">
+      <td className="VarbListTable-nameCell">
         <MaterialStringEditor {...userVarbItem.varbInfo("displayNameEditor")} />
       </td>
-      <td className="AdditiveItem-contentCell">
+      <td className="VarbListTable-firstContentCell">
         <div className="AdditiveItem-contentCellDiv">
           <ConditionalRowList
             {...{

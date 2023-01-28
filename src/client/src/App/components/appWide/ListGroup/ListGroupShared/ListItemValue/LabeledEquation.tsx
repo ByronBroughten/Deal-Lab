@@ -15,7 +15,7 @@ export function LabeledEquation({
   const feInfo = { sectionName, feId };
   return (
     <>
-      <td className="AdditiveItem-nameCell">
+      <td className="VarbListTable-nameCell">
         <MaterialStringEditor
           {...{
             ...feInfo,
@@ -23,7 +23,7 @@ export function LabeledEquation({
           }}
         />
       </td>
-      <td className="AdditiveItem-contentCell">
+      <td className="VarbListTable-firstContentCell">
         <div className="AdditiveItem-contentCellDiv">
           <NumObjEntityEditor
             feVarbInfo={{

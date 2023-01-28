@@ -9,7 +9,14 @@ export const relNameArrs = {
   ...tableStoreNameArrs,
   hasChild: hasChildSectionNames,
   loadOnLogin: Arr.extractStrict(sectionNames, ["feUser"] as const),
+  itemWithLoadedVarb: Arr.extractStrict(sectionNames, [
+    "outputItem",
+    "singleTimeItem",
+    "ongoingItem",
+    "userVarbItem",
+  ] as const),
   varbListItem: Arr.extractStrict(sectionNames, [
+    "capExItem",
     "outputItem",
     "singleTimeItem",
     "ongoingItem",

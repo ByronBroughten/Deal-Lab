@@ -10,7 +10,7 @@ export function LabeledVarbRow({ varbPropArr, className }: Props) {
         <LabeledVarb
           {...{
             ...props,
-            key: props.feId,
+            key: props.feId + props.varbName,
           }}
         />
       ))}

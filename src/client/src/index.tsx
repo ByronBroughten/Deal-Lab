@@ -23,15 +23,11 @@ AppRegistry.runApplication("App", {
 //   or something
 
 // PROPERTY
-// - Utilities
-// Utilities can be, "all tenant-paid", and "itemized"
-// Itemized will have the standard utilities:
-//  - Water, Garbage, Gas, Electric
-// Try just starting with the main 4 filled in and let users add
-// custom ones.
+// Capital Expense Budget (to eventually replace expensive items)
+// - 5% rent (simple)
+// - Itemize Lifespan Over Cost (most accurate)
+// - Custom amount
 
-// - Do the same thing for Utilities and CapEx
-// - Ongoing Maintenance should have this, too, but no itemize option
 // - "Add Custom Expenses (optional)"
 // - - One-time, Ongoing
 

@@ -109,61 +109,22 @@ const ccs = {
     main() {
       return css`
         border-collapse: collapse;
-        border-radius: ${theme.br0};
         th {
           border-bottom: solid 1px ${theme.primaryBorder};
-        }
-        thead {
-          padding: ${theme.s2};
-          tr {
-            ${this.headRow()};
-          }
-        }
-        tbody {
-          tr {
-            ${this.bodyRow()};
-          }
-        }
-      `;
-    },
-    headRow() {
-      return css`
-        th {
           padding-top: ${theme.s2};
-
-          :first-child {
-            border-radius: ${theme.br0} 0 0 0;
-          }
-          :last-child {
-            border-radius: 0 ${theme.br0} 0 0;
-          }
-
-          padding-left: ${theme.s2};
           vertical-align: bottom;
 
           font-weight: 400;
           line-height: 1rem;
           font-size: 1rem;
         }
-        th.button {
-          padding-bottom: ${theme.s1};
-        }
-      `;
-    },
-    bodyRow() {
-      return css`
-        :not(:last-child) {
-          border-bottom: 1px solid ${theme.primaryBorder};
-        }
-        :last-child {
-          td {
-          }
-        }
-
+        th,
         td {
-          padding: ${theme.s15};
-          :last-child {
-          }
+          padding-left: ${theme.s3};
+        }
+        td {
+          padding-top: ${theme.s15};
+          padding-bottom: ${theme.s15};
         }
         td.name {
           .DraftTextField-root {
@@ -175,10 +136,16 @@ const ccs = {
             min-width: 35px;
           }
         }
-
         td.content {
           .DraftTextField-root {
             min-width: 30px;
+          }
+        }
+        tbody {
+          tr {
+            :not(:last-child) {
+              border-bottom: 1px solid ${theme.primaryBorder};
+            }
           }
         }
       `;

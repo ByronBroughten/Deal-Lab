@@ -6,14 +6,13 @@ import { useSetterSection } from "../../../../../sharedWithServer/stateClassHook
 import { VariableOption } from "../../../../../sharedWithServer/StateEntityGetters/VariableGetterSections";
 import { ControlledVarbAutoComplete } from "../../../../inputs/ControlledVarbAutoComplete";
 
-interface Props<SN extends SectionNameByType<"varbListItem">> {
+interface Props<SN extends SectionNameByType<"itemWithLoadedVarb">> {
   feInfo: FeSectionInfo<SN>;
   valueVarbName: VarbName<SN>;
 }
-export function LoadedVarbEditor<SN extends SectionNameByType<"varbListItem">>({
-  feInfo,
-  valueVarbName,
-}: Props<SN>) {
+export function LoadedVarbEditor<
+  SN extends SectionNameByType<"itemWithLoadedVarb">
+>({ feInfo, valueVarbName }: Props<SN>) {
   const section = useSetterSection(feInfo);
   const infoVarb = section.varb("valueEntityInfo");
   function onSelect({ varbInfo }: VariableOption) {
@@ -23,10 +22,10 @@ export function LoadedVarbEditor<SN extends SectionNameByType<"varbListItem">>({
   const valueVarb = section.varb(valueVarbName);
   return (
     <>
-      <td className="AdditiveItem-nameCell">
+      <td className="VarbListTable-nameCell">
         <ControlledVarbAutoComplete {...{ selectedVarbInfo, onSelect }} />
       </td>
-      <td className="AdditiveItem-contentCell">
+      <td className="VarbListTable-firstContentCell">
         <div className="AdditiveItem-contentCellDiv">{`${valueVarb.get.displayVarb()}`}</div>
       </td>
     </>

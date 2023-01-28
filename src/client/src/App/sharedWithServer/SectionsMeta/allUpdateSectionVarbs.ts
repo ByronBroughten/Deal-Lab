@@ -188,17 +188,18 @@ function makeAllUpdateSections() {
         yearly: updateBasicsS.equationLeftRight(
           "simpleDivide",
           updateFnPropS.local("costToReplace"),
-          updateFnPropS.local("lifespanYearly")
+          updateFnPropS.local("lifespanYears")
         ),
         monthly: updateBasicsS.equationLeftRight(
           "simpleDivide",
           updateFnPropS.local("costToReplace"),
-          updateFnPropS.local("lifespanMonthly")
+          updateFnPropS.local("lifespanMonths")
         ),
       }),
 
       ...updateVarbsS.group("lifespan", "monthsYearsInput", "years", {
         targets: { updateFnName: "throwIfReached" },
+        editor: { updateFnName: "calcVarbs" },
         months: {
           updateOverrides: [
             updateOverride(

@@ -56,7 +56,9 @@ export function SelectEditor({
                 </MenuItem>
               )}
               {menuItems.map((item) => (
-                <MenuItem value={item[0]}>{item[1]}</MenuItem>
+                <MenuItem key={item[0]} value={item[0]}>
+                  {item[1]}
+                </MenuItem>
               ))}
             </Select>
           </FormControl>

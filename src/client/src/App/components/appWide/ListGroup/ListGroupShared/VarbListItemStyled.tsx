@@ -6,35 +6,39 @@ import { UpdateValueNextBtn } from "../../UpdateValueNextBtn";
 
 interface Props extends FeInfoByType<"varbListItem"> {
   firstCells: React.ReactNode;
-  nextValueSwitch: string;
+  nextValueSwitch?: string;
+  useXBtn?: boolean;
   className?: string;
 }
 
-export function VarbListItemGenericNext({
+export function VarbListItemStyled({
+  className,
   firstCells,
   nextValueSwitch,
-  sectionName,
-  feId,
-  ...rest
+  useXBtn = true,
+  ...feInfo
 }: Props) {
-  const feInfo = { sectionName, feId };
   return (
-    <Styled {...rest}>
+    <Styled className={`VarbListItem-root ${className ?? ""}`}>
       {firstCells}
       <td className="VarbListItem-fillerCell"></td>
-      <td className="AdditiveItem-buttonCell">
-        <UpdateValueNextBtn
-          className="AdditiveItem-nextBtn"
-          {...{
-            ...feInfo,
-            varbName: "valueSourceSwitch",
-            value: nextValueSwitch,
-          }}
-        />
-      </td>
-      <td className="AdditiveItem-buttonCell AdditiveList-buttonCell">
-        <RemoveSectionXBtn className="AdditiveItem-xBtn" {...feInfo} />
-      </td>
+      {nextValueSwitch && (
+        <td className="VarbListItem-buttonCell">
+          <UpdateValueNextBtn
+            className="VarbListItem-nextBtn"
+            {...{
+              ...feInfo,
+              varbName: "valueSourceSwitch",
+              value: nextValueSwitch,
+            }}
+          />
+        </td>
+      )}
+      {useXBtn && (
+        <td className="VarbListItem-buttonCell AdditiveList-buttonCell">
+          <RemoveSectionXBtn className="VarbListItem-xBtn" {...feInfo} />
+        </td>
+      )}
     </Styled>
   );
 }
@@ -46,19 +50,19 @@ const Styled = styled.tr`
   .NumObjEditor-calcIconPositioner {
     bottom: 1px;
   }
-  .AdditiveItem-xBtn,
-  .AdditiveItem-nextBtn {
+  .VarbListItem-xBtn,
+  .VarbListItem-nextBtn {
     visibility: hidden;
     height: 22px;
     width: 22px;
   }
   :hover {
-    .AdditiveItem-xBtn,
-    .AdditiveItem-nextBtn {
+    .VarbListItem-xBtn,
+    .VarbListItem-nextBtn {
       visibility: visible;
     }
   }
-  td.AdditiveItem-nameCell {
+  td.VarbListTable-nameCell {
     .DraftTextField-root {
       min-width: 50px;
     }

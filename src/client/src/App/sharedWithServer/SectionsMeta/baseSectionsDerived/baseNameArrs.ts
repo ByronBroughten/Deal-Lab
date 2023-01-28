@@ -34,6 +34,7 @@ function makeBaseNameArrs() {
     },
     get varbListAllowed() {
       return Arr.extractStrict(sectionNames, [
+        "capExList",
         "singleTimeList",
         "ongoingList",
         "userVarbList",

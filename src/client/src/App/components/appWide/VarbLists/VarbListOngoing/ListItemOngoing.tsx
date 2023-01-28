@@ -1,10 +1,8 @@
 import React from "react";
-import { getSwitchVarbName } from "../../../../sharedWithServer/SectionsMeta/allBaseSectionVarbs/baseSwitchNames";
 import { useSetterSection } from "../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import { LabeledEquation } from "../../ListGroup/ListGroupShared/ListItemValue/LabeledEquation";
-import { LabeledSpanOverCost } from "../../ListGroup/ListGroupShared/ListItemValue/LabeledSpanOverCost";
 import { LoadedVarbEditor } from "../../ListGroup/ListGroupShared/ListItemValue/LoadedVarbEditor";
-import { VarbListItemGenericNext } from "../../ListGroup/ListGroupShared/VarbListItemGenericNext";
+import { VarbListItemStyled } from "../../ListGroup/ListGroupShared/VarbListItemStyled";
 import { useOption } from "./../../ListGroup/ListGroupShared/useOption";
 
 interface MemoProps {
@@ -21,33 +19,23 @@ const ListItemOngoingMemo = React.memo(function ListItemOngoingMemo({
   endAdornment,
   displayValueVarb,
 }: MemoProps) {
-  const lifespanVarbName = getSwitchVarbName(
-    "lifespan",
-    "monthsYearsInput",
-    "editor"
-  );
-
   const feInfo = { sectionName: "ongoingItem", feId } as const;
   const { option, nextValueSwitch } = useOption(
     {
       labeledEquation: () => (
         <LabeledEquation {...{ ...feInfo, endAdornment }} />
       ),
-      labeledSpanOverCost: () => (
-        <LabeledSpanOverCost
-          {...{ valueVarbName, ...feInfo, displayValueVarb, lifespanVarbName }}
-        />
-      ),
       loadedVarb: () => <LoadedVarbEditor {...{ feInfo, valueVarbName }} />,
     },
     valueSourceSwitch
   );
   return (
-    <VarbListItemGenericNext
+    <VarbListItemStyled
       {...{
         ...feInfo,
         nextValueSwitch,
         firstCells: option(),
+        useXBtn: true,
       }}
     />
   );

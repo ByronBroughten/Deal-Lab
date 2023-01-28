@@ -3,7 +3,7 @@ import { useGetterVarbNext } from "../../../../../sharedWithServer/stateClassHoo
 import { LabeledEquation } from "../../ListGroupShared/ListItemValue/LabeledEquation";
 import { LoadedVarbEditor } from "../../ListGroupShared/ListItemValue/LoadedVarbEditor";
 import { useOption } from "../../ListGroupShared/useOption";
-import { VarbListItemGenericNext } from "../../ListGroupShared/VarbListItemGenericNext";
+import { VarbListItemStyled } from "../../ListGroupShared/VarbListItemStyled";
 
 type MemoProps = { feId: string; valueSourceSwitch: string };
 const ListItemSingleTimeMemo = React.memo(function ListItemSingleTimeMemo({
@@ -27,11 +27,12 @@ const ListItemSingleTimeMemo = React.memo(function ListItemSingleTimeMemo({
     valueSourceSwitch
   );
   return (
-    <VarbListItemGenericNext
+    <VarbListItemStyled
       {...{
         ...feInfo,
         nextValueSwitch,
         firstCells: option(),
+        useXBtn: true,
       }}
     />
   );

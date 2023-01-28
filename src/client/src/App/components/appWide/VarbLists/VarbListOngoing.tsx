@@ -14,6 +14,18 @@ export function VarbListOngoing({ feId, ...rest }: Props) {
   const list = useSetterSection({ sectionName: "ongoingList", feId });
   const totalVarbName = list.get.activeSwitchTargetName("total", "ongoing");
   const itemOngoingSwitch = list.varb("itemOngoingSwitch").value("string");
+
+  const itemName = list.meta.varbListItem;
+  const addItem = () => {
+    const itemValueSwitch = list.varb("itemValueSwitch").value("string");
+    list.addChild(itemName, {
+      dbVarbs: {
+        valueSourceSwitch: itemValueSwitch,
+        valueOngoingSwitch: itemOngoingSwitch,
+      },
+    });
+  };
+
   return (
     <VarbListGeneric
       {...{
@@ -22,9 +34,7 @@ export function VarbListOngoing({ feId, ...rest }: Props) {
         itemName: "ongoingItem",
         totalVarbName,
         contentTitle: "Cost",
-        childDbVarbs: {
-          valueOngoingSwitch: itemOngoingSwitch,
-        },
+        addItem,
         makeItemNode: ({ feId }) => (
           <ListItemOngoing {...{ feId, key: feId }} />
         ),
@@ -32,3 +42,5 @@ export function VarbListOngoing({ feId, ...rest }: Props) {
     />
   );
 }
+// Should I make separate lists for utilities, closing costs, etc?
+// No, just capEx I think.
