@@ -4,12 +4,10 @@ import { SectionPack } from "../../SectionsMeta/sectionChildrenDerived/SectionPa
 import { PackBuilderSection } from "../../StatePackers.ts/PackBuilderSection";
 import { makeDefaultPropertyPack } from "../makeDefaultPropertyPack";
 import {
-  makeCapExList,
   makeExampleSingleTimeList,
   makeUtilityList,
 } from "./makeExampleOngoingLists";
 import {
-  examplePropertyCapExListProps,
   examplePropertyUtilityProps,
   examplePropetyRepairProps,
 } from "./makeExampleOngoingListsProps";
@@ -49,12 +47,6 @@ export function makeExampleProperty(): SectionPack<"property"> {
   maintenanceValue.updateValues({
     valueMode: "onePercentAndSqft",
   });
-
-  const capExValue = property.onlyChild("capExCostValue");
-
-  capExValue.updateValues({ isItemized: true, valueOngoingSwitch: "yearly" });
-  const capExList = capExValue.onlyChild("ongoingList");
-  capExList.loadSelf(makeCapExList(examplePropertyCapExListProps));
 
   return property.makeSectionPack();
 }

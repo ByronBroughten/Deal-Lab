@@ -53,6 +53,11 @@ export const allSectionTraits = checkAllSectionTraits({
     feFullIndexStoreName: "mgmtMain",
     dbIndexStoreName: "mgmtMain",
   }),
+  capExList: sectionTraits({
+    varbListItem: "capExItem",
+    feFullIndexStoreName: "capExListMain",
+    dbIndexStoreName: "capExListMain",
+  }),
   outputList: sectionTraits({
     varbListItem: "outputItem",
     feFullIndexStoreName: "outputListMain",

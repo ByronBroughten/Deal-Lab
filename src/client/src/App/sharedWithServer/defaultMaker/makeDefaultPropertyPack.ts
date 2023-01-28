@@ -1,9 +1,7 @@
-import { stringObj } from "../SectionsMeta/allBaseSectionVarbs/baseValues/StringObj";
 import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
 import { makeUtilityList } from "./makeDefaultFeUser/makeExampleOngoingLists";
 import { blankPropertyUtilityProps } from "./makeDefaultFeUser/makeExampleOngoingListsProps";
-import { makeDefaultOngoingValue } from "./makeDefaultOngoingValue";
 
 export function makeDefaultPropertyPack(): SectionPack<"property"> {
   const property = PackBuilderSection.initAsOmniChild("property", {
@@ -32,22 +30,5 @@ export function makeDefaultPropertyPack(): SectionPack<"property"> {
   capExValue.addChild("capExListNext");
 
   property.addChild("ongoingExpenseGroup");
-
-  const capEx = property.loadAndGetChild({
-    childName: "capExCostValue",
-    sectionPack: makeDefaultOngoingValue(),
-  });
-  capEx.updateValues({
-    displayNameEditor: stringObj("CapEx"),
-    isItemized: false,
-    itemValueSwitch: "labeledSpanOverCost",
-    valueSourceSwitch: "valueEditor",
-  });
-  const capExList = capEx.onlyChild("ongoingList");
-  capExList.updateValues({
-    itemValueSwitch: "labeledSpanOverCost",
-    itemOngoingSwitch: "yearly",
-  });
-
   return property.makeSectionPack();
 }

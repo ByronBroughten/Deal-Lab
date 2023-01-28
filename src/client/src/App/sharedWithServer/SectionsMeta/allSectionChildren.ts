@@ -66,11 +66,13 @@ export const allSectionChildren = checkAllSectionChildren({
     loanMainTable: ["compareTable"],
     mgmtMainTable: ["compareTable"],
     dealMainTable: ["compareTable"],
-    propertyMain: ["property"],
 
+    dealMain: ["deal"],
+    propertyMain: ["property"],
     loanMain: ["loan"],
     mgmtMain: ["mgmt"],
-    dealMain: ["deal"],
+
+    capExListMain: ["capExList"],
     outputListMain: ["outputList"],
     userVarbListMain: ["userVarbList"],
     singleTimeListMain: ["singleTimeList"],
@@ -94,6 +96,8 @@ export const allSectionChildren = checkAllSectionChildren({
     loanMainTable: ["compareTable"],
     mgmtMainTable: ["compareTable"],
     dealMainTable: ["compareTable"],
+
+    capExListMain: ["capExList"],
 
     outputListMain: ["outputList"],
     userVarbListMain: ["userVarbList"],
@@ -155,7 +159,6 @@ export const allSectionChildren = checkAllSectionChildren({
     maintenanceValue: ["maintenanceValue"],
     capExValue: ["capExValue"],
 
-    capExCostValue: ["ongoingValue"],
     upfrontExpenseGroup: ["singleTimeValueGroup"],
     upfrontRevenueGroup: ["singleTimeValueGroup"],
     ongoingExpenseGroup: ["ongoingValueGroup"],
