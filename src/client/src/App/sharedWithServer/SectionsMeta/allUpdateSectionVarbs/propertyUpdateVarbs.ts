@@ -5,6 +5,7 @@ import {
   updateFnPropsS,
 } from "../updateSectionVarbs/updateVarb/UpdateFnProps";
 import { updateVarbsS } from "../updateSectionVarbs/updateVarbs";
+import { overrideSwitchS } from "./../updateSectionVarbs/updateVarb/UpdateOverrides";
 
 export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
   return {
@@ -25,12 +26,14 @@ export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
     upfrontExpenses: relVarbS.sumNums([
       updateFnPropS.local("price"),
       updateFnPropS.children("repairValue", "value"),
-      updateFnPropS.children("upfrontExpenseGroup", "total"),
+      updateFnPropS.onlyChild("upfrontExpenseGroup", "total", [
+        overrideSwitchS.pathHasValue("propertyFocal", "useCustomCosts", true),
+      ]),
     ]),
     upfrontRevenue: relVarbS.sumNums([
       updateFnPropS.children("upfrontRevenueGroup", "total"),
     ]),
-
+    useCustomCosts: updateVarb("boolean", { initValue: false }),
     ...updateVarbsS.ongoingSumNums(
       "expenses",
       [
@@ -39,7 +42,9 @@ export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
         updateFnPropS.onlyChild("utilityValue", "value"),
         updateFnPropS.onlyChild("maintenanceValue", "value"),
         updateFnPropS.onlyChild("capExValue", "value"),
-        updateFnPropS.onlyChild("ongoingExpenseGroup", "total"),
+        updateFnPropS.onlyChild("ongoingExpenseGroup", "total", [
+          overrideSwitchS.pathHasValue("propertyFocal", "useCustomCosts", true),
+        ]),
       ],
       "monthly"
     ),

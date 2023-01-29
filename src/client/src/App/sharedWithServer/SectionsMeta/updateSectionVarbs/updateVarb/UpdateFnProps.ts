@@ -140,11 +140,25 @@ export const updateFnPropS = {
       updateFnProp(relVarbInfoS.local(varbName))
     );
   },
-  children(childName: ChildName, varbName: string) {
-    return updateFnProp(relVarbInfoS.children(childName, varbName));
+  children(
+    childName: ChildName,
+    varbName: string,
+    andSwitches?: UpdateOverrideSwitch[]
+  ) {
+    return updateFnProp(
+      relVarbInfoS.children(childName, varbName),
+      andSwitches
+    );
   },
-  onlyChild(childName: ChildName, varbName: string) {
-    return updateFnProp(relVarbInfoS.onlyChild(childName, varbName));
+  onlyChild(
+    childName: ChildName,
+    varbName: string,
+    andSwitches?: UpdateOverrideSwitch[]
+  ) {
+    return updateFnProp(
+      relVarbInfoS.onlyChild(childName, varbName),
+      andSwitches
+    );
   },
   pathName(
     pathName: SectionPathName,

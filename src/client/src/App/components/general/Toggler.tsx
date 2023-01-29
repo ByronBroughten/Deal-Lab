@@ -12,31 +12,34 @@ type Props = {
 export function Toggler({ label, className, ...rest }: Props) {
   return (
     <Styled className={`Toggler-root ${className ?? ""}`}>
-      <FormControlLabel
-        control={
-          <Switch
-            {...{
-              ...rest,
-              size: "small",
-              color: "primary",
-            }}
-          />
-        }
-        label={label}
-      />
+      <div>
+        <FormControlLabel
+          control={
+            <Switch
+              {...{
+                ...rest,
+                size: "small",
+                color: "primary",
+              }}
+            />
+          }
+          label={label}
+          labelPlacement="start"
+        />
+      </div>
     </Styled>
   );
 }
 const Styled = styled(FormGroup)`
-  margin-left: ${theme.s25};
+  .MuiFormControlLabel-labelPlacementStart {
+    margin: 0;
+    padding: 0;
+  }
   .MuiFormControlLabel-root {
-    margin-right: ${theme.s2};
     color: ${theme.primaryNext};
-
     .MuiSwitch-colorPrimary {
       color: ${theme["gray-500"]};
     }
-
     .MuiSwitch-colorPrimary.Mui-checked {
       color: ${theme.secondary};
     }

@@ -22,14 +22,12 @@ AppRegistry.runApplication("App", {
 // - Mark equation editor fields with an "Equation Editor" label,
 //   or something
 
-// PROPERTY
-// Capital Expense Budget (to eventually replace expensive items)
-// - 5% rent (simple)
-// - Itemize Lifespan Over Cost (most accurate)
-// - Custom amount
+// 1. Get rid of that weird sectionName PathVarbInfo, and
+//    any other mixed infos like that.
 
-// - "Add Custom Expenses (optional)"
-// - - One-time, Ongoing
+// PROPERTY
+// Give property a switch that says, "Add Custom Expenses (optional)"
+// Then open up a subSection that says, inside of which are "Custom Upfront Costs" and "Custom Ongoing Costs"
 
 // 4. Allow for Fix and Flip
 //  - Add ARV

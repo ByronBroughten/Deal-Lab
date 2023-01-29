@@ -6,13 +6,12 @@ type Props = {
   className?: string;
 };
 export function MainSection({ className, ...rest }: Props) {
-  return <Styled className={`MainSection-root ${className}`} {...rest} />;
+  return <Styled className={`MainSection-root ${className ?? ""}`} {...rest} />;
 }
 
 const Styled = styled.div`
   background: ${theme.light};
   padding: ${theme.s4};
-  /* padding-top: ${theme.s35}; */
   border-radius: ${theme.br0};
   box-shadow: ${theme.boxShadow1};
   .MainSectionBody-root {

@@ -13,6 +13,7 @@ import { useSetterSection } from "../../../../sharedWithServer/stateClassHooks/u
 import { GetterSection } from "../../../../sharedWithServer/StateGetters/GetterSection";
 import theme from "../../../../theme/Theme";
 import useHowMany from "../../customHooks/useHowMany";
+import { FormSection } from "../../FormSection";
 import { SectionTitleAndCost } from "../../SectionTitleAndCost";
 import {
   MakeValueNode,
@@ -78,10 +79,7 @@ export function ValueGroupGeneric<
   );
 }
 
-const Styled = styled.div`
-  ${theme.sectionBorderChunk};
-  padding-top: ${theme.s3};
-
+const Styled = styled(FormSection)`
   .ValueGroup-values {
     margin-top: ${theme.s2};
   }

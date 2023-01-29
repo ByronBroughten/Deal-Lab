@@ -148,6 +148,14 @@ const Styled = styled.div`
     }
   }
 
+  .ValueSection-value {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: ${theme.s3};
+    height: 25px;
+  }
+
   .ValueSection-xBtn {
     height: 22px;
     width: 22px;
@@ -175,6 +183,7 @@ const Styled = styled.div`
   }
 
   .ValueSection-editItemsBtn {
+    margin-left: ${theme.s2};
     color: ${theme.primaryNext};
   }
 
@@ -184,14 +193,5 @@ const Styled = styled.div`
   }
   .ValueSection-itemizeGroup {
     margin-top: ${theme.s2};
-    margin-left: ${theme.s25};
-  }
-
-  .ValueSection-value {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin-top: ${theme.s3};
-    height: 25px;
   }
 `;

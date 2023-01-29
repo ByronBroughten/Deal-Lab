@@ -190,6 +190,7 @@ export function makeAllBaseSectionVarbs() {
       ...baseVarbsS.ongoingDollars("miscRevenue"),
       ...baseVarbsS.ongoingDollars("revenue"),
       ...baseVarbsS.monthsYearsInput("holdingPeriod"),
+      useCustomCosts: baseVarb("boolean"),
     }),
     unit: baseSectionVarbs({
       one: baseVarb("numObj"),

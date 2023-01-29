@@ -1,6 +1,7 @@
 import styled, { css } from "styled-components";
 import theme from "../../../theme/Theme";
 import { EditSectionBtn } from "../../appWide/EditSectionBtn";
+import { FormSection } from "../../appWide/FormSection";
 import { MainSection } from "../../appWide/GeneralSection/MainSection";
 import { LabeledVarbProps } from "../../appWide/LabeledVarb";
 import { LabeledVarbRow } from "../../appWide/LabeledVarbRow";
@@ -86,13 +87,15 @@ export function MainDealSection({
       </div>
       <div className="MainDealSection-inputsDiv">
         {children}
-        <FinishBtn
-          styleDisabled={completionStatus !== "allValid"}
-          className="MainDealSection-finishBtn"
-          btnText="Finish"
-          onClick={closeInputs}
-          warningText="Please fill in all the fields."
-        />
+        <FormSection>
+          <FinishBtn
+            styleDisabled={completionStatus !== "allValid"}
+            className="MainDealSection-finishBtn"
+            btnText="Finish"
+            onClick={closeInputs}
+            warningText="Please fill in all the required fields"
+          />
+        </FormSection>
       </div>
     </Styled>
   );

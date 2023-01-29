@@ -18,13 +18,6 @@ import { DisplayName, DisplayVarb } from "./displaySectionVarbs/displayVarb";
 import { relVarbInfoS } from "./SectionInfo/RelVarbInfo";
 import { SectionName, sectionNames } from "./SectionName";
 
-// Ok. What is the optimal way to do this?
-
-// class DisplaySectionVarbs
-// - allBaseSectionVarbs
-// - sectionName
-// *options (generic)
-
 type AllDisplaySectionVarbsGeneric = {
   [SN in SectionName]: DisplaySectionVarbs<SN>;
 };

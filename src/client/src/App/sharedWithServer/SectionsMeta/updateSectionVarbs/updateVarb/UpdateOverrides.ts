@@ -12,6 +12,10 @@ import {
   VarbPathNameInfoMixed,
   VarbPathValue,
 } from "../../SectionInfo/VarbPathNameInfo";
+import {
+  SectionPathName,
+  SectionPathVarbName,
+} from "../../sectionPathContexts/sectionPathNames";
 import { updateBasics, UpdateBasics, updateBasicsS } from "./UpdateBasics";
 import { UpdateFnName } from "./UpdateFnName";
 import {
@@ -106,6 +110,16 @@ export const overrideSwitchS = {
   },
   yearlyIsActive(baseVarbName: string): UpdateOverrideSwitch {
     return this.ongoing(baseVarbName, "yearly");
+  },
+  pathHasValue<PN extends SectionPathName, VN extends SectionPathVarbName<PN>>(
+    pathName: PN,
+    varbName: VN,
+    ...switchValues: OverrideSwitchValue[]
+  ): UpdateOverrideSwitch {
+    return {
+      switchInfo: mixedInfoS.pathNameVarb(pathName, varbName as string),
+      switchValues,
+    };
   },
   varbIsValue<VPN extends VarbPathName>(
     varbPathName: VPN,

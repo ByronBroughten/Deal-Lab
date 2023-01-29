@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import theme from "../../../../theme/Theme";
-import { MainSection } from "../../../appWide/GeneralSection/MainSection";
 import MainSectionBody from "../../../appWide/GeneralSection/MainSection/MainSectionBody";
+import { MainSectionInner } from "../../../appWide/GeneralSection/MainSectionInner";
 import { MainSectionTopRows } from "../../../appWide/MainSectionTopRows";
 import { ValueSectionZone } from "../../../appWide/ValueSectionZone";
 import BasicLoanInfo from "./Loan/BasicLoanInfo";
@@ -46,10 +46,7 @@ export function Loan({
   );
 }
 
-const Styled = styled(MainSection)`
-  box-shadow: none;
-  border: ${theme.borderStyle};
-
+const Styled = styled(MainSectionInner)`
   .ValueSectionOneTime-root {
     margin: ${theme.s2};
     margin-top: 0;

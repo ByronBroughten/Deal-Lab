@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { useGetterSection } from "../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import theme from "../../../../theme/Theme";
 import MainSectionBody from "../../../appWide/GeneralSection/MainSection/MainSectionBody";
-import { ValueGroupOngoing } from "../../../appWide/ListGroup/ValueGroupOngoing";
 import { MainSectionTopRows } from "../../../appWide/MainSectionTopRows";
 import { BackToDealBtn } from "../BackToDealBtn";
 import {
@@ -13,6 +12,7 @@ import {
 } from "../MainDealSection";
 import BasicPropertyInfo from "./Property/BasicPropertyInfo";
 import { CapExValue } from "./Property/CapExValue";
+import { CustomExpenses } from "./Property/CustomExpenses";
 import { MaintenanceValue } from "./Property/MaintenanceValue";
 import { RepairValue } from "./Property/RepairValue";
 import { Units } from "./Property/Units";
@@ -74,13 +74,7 @@ export function Property({
         <UtilityValue feId={property.onlyChildFeId("utilityValue")} />
         <MaintenanceValue feId={property.onlyChildFeId("maintenanceValue")} />
         <CapExValue feId={property.onlyChildFeId("capExValue")} />
-        <ValueGroupOngoing
-          {...{
-            className: "Property-ongoingCostGroup",
-            feId: property.onlyChild("ongoingExpenseGroup").feId,
-            titleText: "Ongoing Costs",
-          }}
-        />
+        <CustomExpenses feId={feId} />
       </MainSectionBody>
     </Styled>
   );

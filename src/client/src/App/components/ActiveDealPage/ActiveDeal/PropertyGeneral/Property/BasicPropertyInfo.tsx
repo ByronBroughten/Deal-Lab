@@ -45,7 +45,7 @@ const Styled = styled(FormSection)`
   .BasicPropertyInfo-editors {
     display: flex;
     flex-wrap: wrap;
-    margin-top: ${theme.s25};
+    margin-top: ${theme.s15};
   }
   .BasicPropertyInfo-numObjEditor {
     margin: ${theme.s3};
