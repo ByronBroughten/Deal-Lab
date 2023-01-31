@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { CompletionStatus } from "../../../sharedWithServer/SectionsMeta/baseSectionsDerived/subValues";
 import { useSetterSection } from "../../../sharedWithServer/stateClassHooks/useSetterSection";
 import { GetterSection } from "../../../sharedWithServer/StateGetters/GetterSection";
+import { FormSection } from "../../appWide/FormSection";
 import { SubSectionBtn } from "../../appWide/GeneralSection/GeneralSectionTitle/SubSectionBtn";
 import { SectionTitle } from "../../appWide/SectionTitle";
 import Radio from "../../general/Radio";
@@ -71,49 +72,60 @@ export function Financing({
         />
         <BackToDealBtn onClick={closeInputs} />
       </div>
-      <FormControl className="Financing-financingTypeControl">
-        <RadioGroup
-          aria-labelledby="financing-type-radio-buttons-group"
-          name="financing-type-radio-buttons-group"
-          value={financingMode}
-          onChange={(e) => financingModeVarb.updateValue(e.currentTarget.value)}
-        >
-          <FormControlLabel
-            value="cashOnly"
-            control={<Radio color="primary" />}
-            label="Cash Only"
-          />
-          <FormControlLabel
-            value="useLoan"
-            control={<Radio color="primary" />}
-            label="Use Loan(s)"
-          />
-        </RadioGroup>
-      </FormControl>
-      {financingMode === "useLoan" && (
-        <>
-          <div className={"Financing-loans"}>
-            {loanIds.map((feId, idx) => (
-              <Loan
-                key={feId}
-                feId={feId}
-                className={idx !== 0 ? "Financing-marginLoan" : ""}
-                showXBtn={loanIds.length > 1}
+      <FormSection>
+        <div className="Financing-inputDiv">
+          <FormControl className="Financing-financingTypeControl">
+            <RadioGroup
+              aria-labelledby="financing-type-radio-buttons-group"
+              name="financing-type-radio-buttons-group"
+              value={financingMode}
+              onChange={(e) =>
+                financingModeVarb.updateValue(e.currentTarget.value)
+              }
+            >
+              <FormControlLabel
+                value="cashOnly"
+                control={<Radio color="primary" />}
+                label="Cash Only"
               />
-            ))}
-          </div>
-          <SubSectionBtn
-            className="Financing-addLoanBtn"
-            onClick={addLoan}
-            text="+ Loan"
-          />
-        </>
-      )}
+              <FormControlLabel
+                value="useLoan"
+                control={<Radio color="primary" />}
+                label="Use Loan(s)"
+              />
+            </RadioGroup>
+          </FormControl>
+          {financingMode === "useLoan" && (
+            <>
+              <div className={"Financing-loans"}>
+                {loanIds.map((feId, idx) => (
+                  <Loan
+                    key={feId}
+                    feId={feId}
+                    className={idx !== 0 ? "Financing-marginLoan" : ""}
+                    showXBtn={loanIds.length > 1}
+                  />
+                ))}
+              </div>
+              <SubSectionBtn
+                className="Financing-addLoanBtn"
+                onClick={addLoan}
+                text="+ Loan"
+              />
+            </>
+          )}
+        </div>
+      </FormSection>
     </Styled>
   );
 }
 
 const Styled = styled(MainDealSection)`
+  .Financing-inputDiv {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
   .Financing-financingTypeControl {
     margin: 0;
     padding: 0;
@@ -138,6 +150,7 @@ const Styled = styled(MainDealSection)`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding-bottom: ${theme.s3};
   }
   .Financing-marginLoan,
   .Financing-addLoanBtn {

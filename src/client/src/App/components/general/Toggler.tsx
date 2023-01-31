@@ -36,7 +36,7 @@ const Styled = styled(FormGroup)`
     padding: 0;
   }
   .MuiFormControlLabel-root {
-    color: ${theme.primaryNext};
+    color: ${theme["gray-700"]};
     .MuiSwitch-colorPrimary {
       color: ${theme["gray-500"]};
     }

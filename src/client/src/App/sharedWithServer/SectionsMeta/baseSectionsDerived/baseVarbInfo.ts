@@ -1,69 +1,41 @@
 import { Obj } from "../../utils/Obj";
 import { allBaseSectionVarbs } from "../allBaseSectionVarbs";
-import {
-  DbIdInfo,
-  ExpectedCount,
-  FeIdInfo,
-  GeneralMixedInfo,
-} from "../allBaseSectionVarbs/NanoIdInfo";
+import { NanoIdProp } from "../allBaseSectionVarbs/NanoIdInfo";
 import { SectionName } from "../SectionName";
 import { SectionNameProp } from "./baseSectionInfo";
 import { VarbName } from "./baseSectionsVarbsTypes";
 
-export type MixedInfoProps<
-  IT extends string,
-  EC extends ExpectedCount = ExpectedCount
-> = {
+export type MixedInfoProps<IT extends string> = {
   infoType: IT;
-  expectedCount: EC;
 };
 
-export interface ActiveDealInfo<
-  SN extends SectionName = SectionName,
-  EC extends ExpectedCount = ExpectedCount
-> extends GeneralMixedInfo<EC>,
-    SectionNameProp<SN> {
-  infoType: "activeDeal";
-}
+export interface ActiveDealInfo<SN extends SectionName = SectionName>
+  extends SectionNameProp<SN>,
+    MixedInfoProps<"activeDeal"> {}
 
-export interface ActiveDealVarbInfo<
-  SN extends SectionName = SectionName,
-  EC extends ExpectedCount = ExpectedCount
-> extends ActiveDealInfo<SN, EC>,
+export interface ActiveDealVarbInfo<SN extends SectionName = SectionName>
+  extends ActiveDealInfo<SN>,
     VarbProp {}
 
-export interface GlobalSectionInfo<
-  SN extends SectionName = SectionName,
-  EC extends ExpectedCount = ExpectedCount
-> extends GeneralMixedInfo,
-    SectionNameProp<SN> {
-  infoType: "globalSection";
-  expectedCount: EC;
-}
-export interface GlobalVarbInfo<
-  SN extends SectionName = SectionName,
-  EC extends ExpectedCount = ExpectedCount
-> extends GlobalSectionInfo<SN, EC>,
+export interface GlobalSectionInfo<SN extends SectionName = SectionName>
+  extends MixedInfoProps<"globalSection">,
+    SectionNameProp<SN> {}
+export interface GlobalVarbInfo<SN extends SectionName = SectionName>
+  extends GlobalSectionInfo<SN>,
     VarbProp {}
 
-export interface DbSectionInfoMixed<
-  SN extends SectionName = SectionName,
-  EC extends ExpectedCount = ExpectedCount
-> extends DbIdInfo,
-    SectionNameProp<SN> {
-  expectedCount: EC;
-}
-export interface DbVarbInfoMixed<
-  SN extends SectionName = SectionName,
-  EC extends ExpectedCount = ExpectedCount
-> extends DbSectionInfoMixed<SN, EC>,
+export interface DbSectionInfoMixed<SN extends SectionName = SectionName>
+  extends MixedInfoProps<"dbId">,
+    NanoIdProp,
+    SectionNameProp<SN> {}
+export interface DbVarbInfoMixed<SN extends SectionName = SectionName>
+  extends DbSectionInfoMixed<SN>,
     VarbProp {}
 
 export interface FeSectionInfoMixed<SN extends SectionName = SectionName>
-  extends FeIdInfo,
-    SectionNameProp<SN> {
-  expectedCount: "onlyOne";
-}
+  extends MixedInfoProps<"feId">,
+    NanoIdProp,
+    SectionNameProp<SN> {}
 export interface FeVarbInfoMixed<SN extends SectionName = SectionName>
   extends FeSectionInfoMixed<SN>,
     VarbProp {}
@@ -73,12 +45,14 @@ export function isVarbName(value: any): value is string {
   return typeof value === "string";
 }
 
-export type VarbPropNext<
+export interface MakeVarbProp<VN extends any> {
+  varbName: VN;
+}
+export interface VarbPropNext<
   SN extends SectionName,
   VN extends VarbName<SN> = VarbName<SN>
-> = {
-  varbName: VN;
-};
+> extends MakeVarbProp<VN> {}
+
 export interface VarbNamesNext<
   SN extends SectionName,
   VN extends VarbName<SN> = VarbName<SN>

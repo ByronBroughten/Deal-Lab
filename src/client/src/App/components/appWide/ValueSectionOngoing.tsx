@@ -1,7 +1,5 @@
-import styled from "styled-components";
 import { useSetterSection } from "../../sharedWithServer/stateClassHooks/useSetterSection";
-import theme from "../../theme/Theme";
-import { ValueSectionGeneric } from "./ValueSectionGeneric";
+import { ValueSectionGenericNext } from "./ValueSectionGenericNext";
 import { VarbListOngoing } from "./VarbLists/VarbListOngoing";
 
 interface Props {
@@ -18,7 +16,7 @@ export function ValueSectionOngoing({ feId, ...rest }: Props) {
   const valueVarb = section.get.switchVarb("value", "ongoing");
   const { endAdornment, varbName } = valueVarb;
   return (
-    <ValueSectionGeneric
+    <ValueSectionGenericNext
       {...{
         ...rest,
         sectionName: "ongoingValue",
@@ -30,52 +28,3 @@ export function ValueSectionOngoing({ feId, ...rest }: Props) {
     />
   );
 }
-
-const Styled = styled.div`
-  .ValueSectionOngoing-viewable {
-    height: ${theme.valueSectionSize};
-    display: inline-block;
-    border: solid 1px ${theme.primaryBorder};
-    background: ${theme.light};
-    border-radius: ${theme.br0};
-    padding: ${theme.sectionPadding};
-  }
-  .ValueSectionOngoing-editItemsBtn {
-    color: ${theme.primaryNext};
-  }
-
-  .ValueSectionOngoing-itemizeControls {
-    display: flex;
-    align-items: flex-end;
-  }
-  .ValueSectionOngoing-itemizeGroup {
-    margin-top: ${theme.s2};
-    margin-left: ${theme.s25};
-    .MuiFormControlLabel-root {
-      margin-right: ${theme.s2};
-      color: ${theme.primaryNext};
-
-      .MuiSwitch-colorPrimary {
-        color: ${theme["gray-500"]};
-      }
-
-      .MuiSwitch-colorPrimary.Mui-checked {
-        color: ${theme.primaryNext};
-      }
-    }
-  }
-
-  .ValueSectionOngoing-value {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin-top: ${theme.s3};
-    height: 25px;
-  }
-
-  .ValueSectionOngoing-valueEditor {
-    .DraftTextField-root {
-      min-width: 100px;
-    }
-  }
-`;

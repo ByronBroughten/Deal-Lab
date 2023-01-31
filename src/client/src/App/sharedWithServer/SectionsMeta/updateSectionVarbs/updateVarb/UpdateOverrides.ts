@@ -117,7 +117,7 @@ export const overrideSwitchS = {
     ...switchValues: OverrideSwitchValue[]
   ): UpdateOverrideSwitch {
     return {
-      switchInfo: mixedInfoS.pathNameVarb(pathName, varbName as string),
+      switchInfo: mixedInfoS.pathNameVarb(pathName, varbName),
       switchValues,
     };
   },

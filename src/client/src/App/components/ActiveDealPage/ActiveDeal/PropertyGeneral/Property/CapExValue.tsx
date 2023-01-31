@@ -1,6 +1,6 @@
 import { CapExValueMode } from "../../../../../sharedWithServer/SectionsMeta/baseSectionsDerived/subValues";
 import { useSetterSection } from "../../../../../sharedWithServer/stateClassHooks/useSetterSection";
-import { SelectAndItemizeEditor } from "../../../../appWide/SelectAndItemizeEditor";
+import { SelectAndItemizeEditorSection } from "../../../../appWide/SelectAndItemizeEditorSection";
 import { VarbListCapEx } from "../../../../appWide/VarbLists/VarbListCapEx";
 
 export function CapExValue({ feId }: { feId: string }) {
@@ -15,7 +15,7 @@ export function CapExValue({ feId }: { feId: string }) {
     ? valueVarb.displayVarb()
     : undefined;
   return (
-    <SelectAndItemizeEditor
+    <SelectAndItemizeEditorSection
       {...{
         label: "Capital Expense Budget",
         selectValue: valueMode,
@@ -28,7 +28,12 @@ export function CapExValue({ feId }: { feId: string }) {
             "fivePercentRent",
             `5% of rent${valueMode === "fivePercentRent" ? "" : " (simplest)"}`,
           ],
-          ["itemize", "Itemize lifespan over cost (most accurate)"],
+          [
+            "itemize",
+            `Itemize lifespan over cost${
+              valueMode === "itemize" ? "" : " (more accurate)"
+            }`,
+          ],
           ["lumpSum", "Custom amount"],
         ],
         equalsValue,

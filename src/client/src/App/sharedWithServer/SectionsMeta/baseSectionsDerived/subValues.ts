@@ -11,3 +11,5 @@ export type MaintenanceValueMode =
   | "onePercentAndSqft"
   | "lumpSum";
 export type CapExValueMode = "none" | "fivePercentRent" | "lumpSum" | "itemize";
+
+export type CustomValueMode = "none" | "lumpSum" | "itemize";

@@ -4,7 +4,7 @@ import { RepairValueMode } from "../../../../../sharedWithServer/SectionsMeta/ba
 import { useSetterSection } from "../../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import { FormSection } from "../../../../appWide/FormSection";
 import { VarbListSingleTime } from "../../../../appWide/ListGroup/ListGroupSingleTime/VarbListSingleTime";
-import { SelectAndItemizeEditor } from "../../../../appWide/SelectAndItemizeEditor";
+import { SelectAndItemizeEditorSection } from "../../../../appWide/SelectAndItemizeEditorSection";
 
 type Props = { feId: string };
 export function RepairValue({ feId }: Props) {
@@ -15,7 +15,7 @@ export function RepairValue({ feId }: Props) {
   const valueMode = repairValue.value("valueMode") as RepairValueMode;
   const equalsValue = valueMode === "turnkey" ? "$0" : undefined;
   return (
-    <SelectAndItemizeEditor
+    <SelectAndItemizeEditorSection
       {...{
         label: "Upfront Repairs",
         selectValue: valueMode,

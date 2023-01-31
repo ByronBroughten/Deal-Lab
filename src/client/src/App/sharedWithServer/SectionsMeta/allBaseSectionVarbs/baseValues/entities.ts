@@ -15,7 +15,6 @@ import {
   PathNameVarbInfoMixed,
   zSectionPathProp,
 } from "../../SectionInfo/PathNameInfo";
-import { SectionName } from "../../SectionName";
 import { Id } from "../id";
 
 type EntityIdProp = { entityId: string };
@@ -23,7 +22,6 @@ export type OutEntity = FeVarbInfo & EntityIdProp;
 
 const commonEntityInfo = {
   ...zSectionNameProp.shape,
-  expectedCount: z.literal("onlyOne"),
   varbName: zS.string,
 };
 
@@ -34,19 +32,12 @@ const zInEntityBase = z.object({
   offset: zS.number,
 });
 
-interface PathNameEntityInfo
-  extends PathNameVarbInfoMixed<SectionName, "onlyOne"> {}
-
-type PathEntityInfo = PathInVarbInfo;
-
 const zPathInEntityInfo = zSectionPathProp.extend({
   ...commonEntityInfo,
   infoType: z.literal("pathName"),
 });
 const zPathInEntity = zInEntityBase.merge(zPathInEntityInfo);
 
-interface PathNameDbIdEntityInfo
-  extends PathDbVarbInfoMixed<SectionName, "onlyOne"> {}
 const zPathDbIdInEntityInfo = zSectionPathProp.extend({
   ...commonEntityInfo,
   infoType: z.literal("pathNameDbId"),
@@ -55,30 +46,19 @@ const zPathDbIdInEntityInfo = zSectionPathProp.extend({
 const zPathDbIdInEntity = zInEntityBase.merge(zPathDbIdInEntityInfo);
 
 // this must be exported for InEntityIdInfoValue.zInEntityVarbInfoValue
-export interface GlobalInEntityInfo
-  extends GlobalVarbInfo<SectionName, "onlyOne"> {}
 const zGlobalInEntityInfo = z.object({
   ...commonEntityInfo,
   infoType: z.literal("globalSection"),
-} as Record<keyof GlobalInEntityInfo, any>);
+} as Record<keyof GlobalVarbInfo, any>);
 const zGlobalInEntity = zInEntityBase.merge(zGlobalInEntityInfo);
-
-export interface DbInEntityInfo
-  extends DbVarbInfoMixed<SectionName, "onlyOne"> {}
 
 const zDbInEntityInfo = z.object({
   ...commonEntityInfo,
-  infoType: z.literal("dbId" as DbInEntityInfo["infoType"]),
+  infoType: z.literal("dbId" as DbVarbInfoMixed["infoType"]),
   id: zS.nanoId,
-} as Record<keyof DbInEntityInfo, any>);
+} as Record<keyof DbVarbInfoMixed, any>);
 const zDbInEntity = zInEntityBase.merge(zDbInEntityInfo);
 
-export type InEntityVarbInfo =
-  | DbInEntityInfo
-  | GlobalInEntityInfo
-  | PathNameEntityInfo
-  | PathNameDbIdEntityInfo
-  | PathEntityInfo;
 export const zInEntityVarbInfo = z.union([
   zDbInEntityInfo,
   zGlobalInEntityInfo,
@@ -94,23 +74,30 @@ export const zInEntity = z.union([
 
 export const zInEntities = z.array(zInEntity);
 export type InEntityBase = z.infer<typeof zInEntityBase>;
-interface DbInEntity extends InEntityBase, DbInEntityInfo {}
-export interface AbsoluteInEntity extends InEntityBase, PathNameEntityInfo {}
-interface AbsoluteDbIdInEntity extends InEntityBase, PathNameDbIdEntityInfo {}
-export interface GlobalInEntity extends InEntityBase, GlobalInEntityInfo {}
+interface DbInEntity extends InEntityBase, DbVarbInfoMixed {}
+export interface PathNameInEntity extends InEntityBase, PathNameVarbInfoMixed {}
+interface PathNameDbIdInEntity extends InEntityBase, PathDbVarbInfoMixed {}
+export interface GlobalInEntity extends InEntityBase, GlobalVarbInfo {}
+
+export type InEntityVarbInfo =
+  | DbVarbInfoMixed
+  | GlobalVarbInfo
+  | PathDbVarbInfoMixed
+  | PathNameVarbInfoMixed
+  | PathInVarbInfo;
 
 export type ValueInEntityInfo =
-  | DbInEntityInfo
-  | GlobalInEntityInfo
-  | PathNameEntityInfo
-  | PathNameDbIdEntityInfo;
+  | DbVarbInfoMixed
+  | GlobalVarbInfo
+  | PathNameVarbInfoMixed
+  | PathDbVarbInfoMixed;
 
-export type FixedInEntity = PathEntityInfo & EntityIdProp;
+export type FixedInEntity = PathInVarbInfo & EntityIdProp;
 export type ValueInEntity =
   | DbInEntity
   | GlobalInEntity
-  | AbsoluteInEntity
-  | AbsoluteDbIdInEntity;
+  | PathNameInEntity
+  | PathNameDbIdInEntity;
 
 export type InEntity = FixedInEntity | ValueInEntity;
 

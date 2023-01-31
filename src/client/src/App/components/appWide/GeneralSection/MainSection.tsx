@@ -14,9 +14,6 @@ const Styled = styled.div`
   padding: ${theme.s4};
   border-radius: ${theme.br0};
   box-shadow: ${theme.boxShadow1};
-  .MainSectionBody-root {
-    margin-top: ${theme.s3};
-  }
   .MainSectionTitleRow-xBtn {
     visibility: hidden;
   }

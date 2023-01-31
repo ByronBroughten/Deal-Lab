@@ -1,9 +1,6 @@
-import {
-  ExpectedCount,
-  GeneralMixedIdInfo,
-} from "../allBaseSectionVarbs/NanoIdInfo";
+import { NanoIdProp } from "../allBaseSectionVarbs/NanoIdInfo";
 import { SectionNameProp } from "../baseSectionsDerived/baseSectionInfo";
-import { VarbProp } from "../baseSectionsDerived/baseVarbInfo";
+import { MixedInfoProps, VarbProp } from "../baseSectionsDerived/baseVarbInfo";
 import { ChildName } from "../sectionChildrenDerived/ChildName";
 import { DescendantName } from "../sectionChildrenDerived/DescendantSectionName";
 import { SectionName } from "../SectionName";
@@ -25,43 +22,21 @@ export interface AbsolutePathDbInfo<
   dbId: string;
 }
 
-const absolutePathInfoTypes = ["absolutePath", "absolutePathDbId"] as const;
-type AbsolutePathInfoType = typeof absolutePathInfoTypes[number];
-type AbsolutePathInfoTypeProp = {
-  infoType: AbsolutePathInfoType;
-};
-export function isAbsolutePathType(value: any): value is AbsolutePathInfoType {
-  return absolutePathInfoTypes.includes(value);
-}
+export interface AbsolutePathInfoMixed<SN extends SectionName = SectionName>
+  extends AbsolutePathInfo<SN>,
+    MixedInfoProps<"absolutePath"> {}
 
-export interface AbsolutePathInfoMixed<
-  SN extends SectionName = SectionName,
-  EC extends ExpectedCount = ExpectedCount
-> extends AbsolutePathInfo<SN>,
-    GeneralMixedIdInfo<EC>,
-    AbsolutePathInfoTypeProp {
-  infoType: "absolutePath";
-}
+export interface AbsolutePathDbInfoMixed<SN extends SectionName = SectionName>
+  extends AbsolutePathInfo<SN>,
+    MixedInfoProps<"absolutePathDbId">,
+    NanoIdProp {}
 
-export interface AbsolutePathDbInfoMixed<
-  SN extends SectionName = SectionName,
-  EC extends ExpectedCount = ExpectedCount
-> extends AbsolutePathInfo<SN>,
-    GeneralMixedIdInfo<EC>,
-    AbsolutePathInfoTypeProp {
-  infoType: "absolutePathDbId";
-}
-
-export interface AbsoluteVarbInfoMixed<
-  SN extends SectionName,
-  EC extends ExpectedCount = ExpectedCount
-> extends AbsolutePathInfoMixed<SN, EC>,
+export interface AbsoluteVarbInfoMixed<SN extends SectionName>
+  extends AbsolutePathInfoMixed<SN>,
     VarbProp {}
 
-export interface AbsoluteDbVarbInfoMixed<
-  SN extends SectionName,
-  EC extends ExpectedCount = ExpectedCount
-> extends AbsoluteVarbInfoMixed<SN, EC>,
+export interface AbsoluteDbVarbInfoMixed<SN extends SectionName>
+  extends AbsoluteVarbInfoMixed<SN>,
     VarbProp {
   dbId: string;
 }

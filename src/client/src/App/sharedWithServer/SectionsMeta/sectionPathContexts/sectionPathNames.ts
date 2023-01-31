@@ -40,9 +40,8 @@ export function isSectionPathName(value: any): value is SectionPathName {
   return sectionPathNames.includes(value);
 }
 
-export type SectionPathVarbName<PN extends SectionPathName> = VarbName<
-  PathSectionName<PN>
->;
+export type SectionPathVarbName<PN extends SectionPathName = SectionPathName> =
+  VarbName<PathSectionName<PN>>;
 
 export type PathSectionName<PN extends SectionPathName = SectionPathName> =
   SectionPathNameToSn[PN];

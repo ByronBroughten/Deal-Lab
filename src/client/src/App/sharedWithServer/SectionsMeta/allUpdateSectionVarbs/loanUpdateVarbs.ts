@@ -209,7 +209,7 @@ function loanBase() {
   const baseNames = switchKeyToVarbNames("loanBase", "dollarsPercentDecimal");
   const percentEditorName = `${baseNames.percent}Editor` as const;
   const dollarsEditorName = `${baseNames.dollars}Editor` as const;
-  const propToDivideBy = updateFnPropS.pathName("propertyFocal", "price");
+  const propToDivideBy = updateFnPropS.pathNameBase("propertyFocal", "price");
   return {
     [baseNames.switch]: updateVarb("string", {
       initValue: "percent",

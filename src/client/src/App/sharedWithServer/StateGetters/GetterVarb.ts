@@ -1,7 +1,6 @@
 import { cloneDeep, round } from "lodash";
 import { NumberOrQ } from "../SectionsMeta/allBaseSectionVarbs/baseValues/NumObj";
 import { StateValue } from "../SectionsMeta/allBaseSectionVarbs/baseValues/StateValueTypes";
-import { ExpectedCount } from "../SectionsMeta/allBaseSectionVarbs/NanoIdInfo";
 import {
   Adornments,
   StateValueAnyKey,
@@ -117,11 +116,9 @@ export class GetterVarb<
     const { sectionName, feId, varbName } = this.feVarbInfo;
     return mixedInfoS.makeFeVarb(sectionName, feId, varbName);
   }
-  dbVarbInfoMixed<EC extends ExpectedCount>(
-    expectedCount: EC
-  ): DbVarbInfoMixed<SN, EC> {
+  dbVarbInfoMixed(): DbVarbInfoMixed<SN> {
     return {
-      ...this.section.dbInfoMixed(expectedCount),
+      ...this.section.dbInfoMixed(),
       varbName: this.varbName,
     };
   }

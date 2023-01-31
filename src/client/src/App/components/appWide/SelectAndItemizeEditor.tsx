@@ -7,7 +7,7 @@ import { EditSectionBtn } from "./EditSectionBtn";
 import { SectionModal } from "./SectionModal";
 import { SelectEditor, SelectEditorProps } from "./SelectEditor";
 
-interface Props extends SelectEditorProps {
+export interface SelectAndItemizeEditorProps extends SelectEditorProps {
   total: string;
   itemizeValue: string;
   itemsComponent: React.ReactNode;
@@ -22,7 +22,7 @@ export function SelectAndItemizeEditor({
   itemizeValue,
   itemizedModalTitle,
   ...rest
-}: Props) {
+}: SelectAndItemizeEditorProps) {
   const { itemsIsOpen, closeItems, openItems } = useToggleViewNext(
     "items",
     false
@@ -40,32 +40,33 @@ export function SelectAndItemizeEditor({
             });
           },
           ...rest,
-          rightOfControls:
-            rightOfControls ||
-            (isItemized && (
-              <>
-                <div className="SelectAndItemizeEditor-itemizedTotalDiv">{`Total = ${total}`}</div>
-                <EditSectionBtn
-                  className="SelectAndItemizeEditor-editBtn"
-                  onClick={openItems}
-                />
-                <SectionModal
-                  title={itemizedModalTitle}
-                  closeModal={closeItems}
-                  show={itemsIsOpen}
-                >
-                  {itemsComponent}
-                </SectionModal>
-              </>
-            )),
+          rightOfControls,
         }}
       />
+      {rightOfControls
+        ? null
+        : isItemized && (
+            <>
+              <div className="SelectAndItemizeEditor-itemizedTotalDiv">{`Total = ${total}`}</div>
+              <EditSectionBtn
+                className="SelectAndItemizeEditor-editBtn"
+                onClick={openItems}
+              />
+              <SectionModal
+                title={itemizedModalTitle}
+                closeModal={closeItems}
+                show={itemsIsOpen}
+              >
+                {itemsComponent}
+              </SectionModal>
+            </>
+          )}
     </Styled>
   );
 }
 
-// If you try to just use a Styled SelectEditor, these css selectors won't work.
 const Styled = styled.div`
+  display: flex;
   .SelectAndItemizeEditor-itemizedTotalDiv {
     margin-left: ${theme.s3};
     display: flex;

@@ -1,7 +1,6 @@
 import { Obj } from "../../../utils/Obj";
 import { NumObj } from "../../allBaseSectionVarbs/baseValues/NumObj";
 import { Id } from "../../allBaseSectionVarbs/id";
-import { ExpectedCount } from "../../allBaseSectionVarbs/NanoIdInfo";
 import { ChildName } from "../../sectionChildrenDerived/ChildName";
 import { mixedInfoS } from "../../sectionChildrenDerived/MixedSectionInfo";
 import { PathInVarbInfo } from "../../sectionChildrenDerived/RelInOutVarbInfo";
@@ -52,7 +51,7 @@ export function collectUpdateFnSwitchProps(
             andPropSwitches.push(
               updateFnProp({
                 ...prop,
-                varbName: switchInfo.varbName,
+                varbName: switchInfo.varbName as any,
               })
             );
           } else {
@@ -160,9 +159,9 @@ export const updateFnPropS = {
       andSwitches
     );
   },
-  pathName(
-    pathName: SectionPathName,
-    varbName: string,
+  pathName<PN extends SectionPathName>(
+    pathName: PN,
+    varbName: SectionPathVarbName<PN>,
     andSwitches: UpdateOverrideSwitch[] = []
   ): UpdateFnProp {
     return updateFnProp(
@@ -170,25 +169,20 @@ export const updateFnPropS = {
       andSwitches
     );
   },
-  pathNameNext<PN extends SectionPathName>(
+  pathNameBase<PN extends SectionPathName>(
     pathName: PN,
-    varbName: SectionPathVarbName<PN>,
+    varbName: string,
     andSwitches: UpdateOverrideSwitch[] = []
   ): UpdateFnProp {
     return updateFnProp(
-      mixedInfoS.pathNameVarb(pathName, varbName as string),
+      mixedInfoS.pathNameVarb(pathName, varbName as SectionPathVarbName<PN>),
       andSwitches
     );
   },
-  varbPathName(
-    varbPathName: VarbPathName,
-    expectedCount: ExpectedCount = "onlyOne"
-  ) {
-    return updateFnProp(mixedInfoS.varbPathName(varbPathName, expectedCount));
+  varbPathName(varbPathName: VarbPathName) {
+    return updateFnProp(mixedInfoS.varbPathName(varbPathName));
   },
-  varbPathBase(varbPathName: string, expectedCount: ExpectedCount = "onlyOne") {
-    return updateFnProp(
-      mixedInfoS.varbPathName(varbPathName as VarbPathName, expectedCount)
-    );
+  varbPathBase(varbPathName: string) {
+    return updateFnProp(mixedInfoS.varbPathName(varbPathName as VarbPathName));
   },
 };

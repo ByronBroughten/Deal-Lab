@@ -22,12 +22,18 @@ AppRegistry.runApplication("App", {
 // - Mark equation editor fields with an "Equation Editor" label,
 //   or something
 
-// 1. Get rid of that weird sectionName PathVarbInfo, and
-//    any other mixed infos like that.
+// Try showing all the available actions in the title rows
 
-// PROPERTY
-// Give property a switch that says, "Add Custom Expenses (optional)"
-// Then open up a subSection that says, inside of which are "Custom Upfront Costs" and "Custom Ongoing Costs"
+// Loan
+// - "Basic Loan Info" for "Interest rate, Loan term, etc"
+// - Mortgage Insurance in it's own form section
+// - Make a closingCostValue.
+//   - One quick option, a custom amount, and itemize
+
+// Management
+// - Make one value for each custom expense. It's gonna have
+//   one option for "None", one "Custom Amount", and "Itemize"
+// ongoingSoloValue and upfrontSoloValue
 
 // 4. Allow for Fix and Flip
 //  - Add ARV

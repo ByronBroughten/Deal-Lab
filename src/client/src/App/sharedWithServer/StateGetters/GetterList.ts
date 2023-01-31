@@ -97,21 +97,14 @@ export class GetterList<
     return this.getterSectionArr.filter((section) => section.dbId === dbId);
   }
   getOneByMixed(info: IdInfoMixedMulti): GetterSection<SN> {
-    const sections = this.getMultiByMixed(info);
+    const sections = this.allSectionsByMixed(info);
     this.exactlyOneOrThrow(sections, info.infoType);
     return sections[0];
-  }
-  getMultiByMixed(info: IdInfoMixedMulti) {
-    const sections = this.allSectionsByMixed(info);
-    if (info.expectedCount === "onlyOne") {
-      this.exactlyOneOrThrow(sections, info.infoType);
-    }
-    return sections;
   }
   hasByMixed(idInfo: IdInfoMixedMulti): boolean {
     return this.allSectionsByMixed(idInfo).length > 0;
   }
-  private allSectionsByMixed(info: IdInfoMixedMulti): GetterSection<SN>[] {
+  allSectionsByMixed(info: IdInfoMixedMulti): GetterSection<SN>[] {
     switch (info.infoType) {
       case "globalSection":
         return this.allGetterSections;

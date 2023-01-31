@@ -368,14 +368,18 @@ function makeAllUpdateSections() {
         updateFnName: "throwIfReached",
         updateOverrides: [
           updateOverride(
-            [overrideSwitchS.local("isItemized", true)],
+            [overrideSwitchS.valueSourceIs("none")],
+            updateBasics("emptyNumObj")
+          ),
+          updateOverride(
+            [overrideSwitchS.valueSourceIs("itemized")],
             updateBasicsS.loadFromChild(
               "singleTimeList",
               "total"
             ) as UpdateBasics<"numObj">
           ),
           updateOverride(
-            [overrideSwitchS.valueSourceIs("valueEditor")],
+            [overrideSwitchS.valueSourceIs("lumpSum")],
             updateBasicsS.loadFromLocal("valueEditor") as UpdateBasics<"numObj">
           ),
         ],
@@ -385,7 +389,7 @@ function makeAllUpdateSections() {
       }),
       valueEditor: updateVarb("numObj"),
       valueSourceSwitch: updateVarb("string", {
-        initValue: "valueEditor",
+        initValue: "lumpSum",
       }),
       itemValueSwitch: updateVarb("string", {
         initValue: "labeledEquation",
@@ -400,7 +404,7 @@ function makeAllUpdateSections() {
         initValue: false,
       }),
       valueSourceSwitch: updateVarb("string", {
-        initValue: "valueEditor",
+        initValue: "lumpSum",
       }),
       itemValueSwitch: updateVarb("string", {
         initValue: "labeledEquation",
@@ -410,7 +414,11 @@ function makeAllUpdateSections() {
           updateFnName: "throwIfReached",
           updateOverrides: [
             updateOverride(
-              [overrideSwitchS.local("isItemized", true)],
+              [overrideSwitchS.valueSourceIs("none")],
+              updateBasics("emptyNumObj")
+            ),
+            updateOverride(
+              [overrideSwitchS.valueSourceIs("itemized")],
               updateBasicsS.loadFromChild(
                 "ongoingList",
                 "totalMonthly"
@@ -418,7 +426,7 @@ function makeAllUpdateSections() {
             ),
             updateOverride(
               [
-                overrideSwitchS.valueSourceIs("valueEditor"),
+                overrideSwitchS.valueSourceIs("lumpSum"),
                 overrideSwitchS.monthlyIsActive("value"),
               ],
               updateBasicsS.loadFromLocal(
@@ -437,6 +445,10 @@ function makeAllUpdateSections() {
         yearly: {
           updateFnName: "throwIfReached",
           updateOverrides: [
+            updateOverride(
+              [overrideSwitchS.local("valueMode", "none")],
+              updateBasics("emptyNumObj")
+            ),
             updateOverride(
               [overrideSwitchS.local("isItemized", true)],
               updateBasicsS.loadFromChild(
@@ -559,13 +571,13 @@ function makeAllUpdateSections() {
       onePercentPrice: updateVarb("numObj", {
         ...updateBasicsS.equationSimple(
           "onePercent",
-          updateFnPropS.pathName("propertyFocal", "price")
+          updateFnPropS.pathNameBase("propertyFocal", "price")
         ),
       }),
       twoPercentPrice: updateVarb("numObj", {
         ...updateBasicsS.equationSimple(
           "twoPercent",
-          updateFnPropS.pathName("propertyFocal", "price")
+          updateFnPropS.pathNameBase("propertyFocal", "price")
         ),
       }),
       fivePercentRentMonthly: updateVarb("numObj", {
@@ -595,15 +607,15 @@ function makeAllUpdateSections() {
         updateFnName: "completionStatus",
         updateFnProps: completionStatusProps({
           othersValid: [
-            updateFnPropS.pathNameNext(
+            updateFnPropS.pathName(
               "calculatedVarbsFocal",
               "propertyCompletionStatus"
             ),
-            updateFnPropS.pathNameNext(
+            updateFnPropS.pathName(
               "calculatedVarbsFocal",
               "financingCompletionStatus"
             ),
-            updateFnPropS.pathNameNext(
+            updateFnPropS.pathName(
               "calculatedVarbsFocal",
               "mgmtCompletionStatus"
             ),
@@ -614,36 +626,32 @@ function makeAllUpdateSections() {
         initValue: "allEmpty",
         updateFnName: "completionStatus",
         updateFnProps: completionStatusProps({
-          nonZeros: [updateFnPropS.pathNameNext("propertyFocal", "numUnits")],
+          nonZeros: [updateFnPropS.pathName("propertyFocal", "numUnits")],
           nonNone: [
-            updateFnPropS.pathNameNext("repairCostFocal", "valueMode"),
-            updateFnPropS.pathNameNext("utilityCostFocal", "valueMode"),
-            updateFnPropS.pathNameNext("maintenanceCostFocal", "valueMode"),
-            updateFnPropS.pathNameNext("capExCostFocal", "valueMode"),
+            updateFnPropS.pathName("repairCostFocal", "valueMode"),
+            updateFnPropS.pathName("utilityCostFocal", "valueMode"),
+            updateFnPropS.pathName("maintenanceCostFocal", "valueMode"),
+            updateFnPropS.pathName("capExCostFocal", "valueMode"),
           ],
           validInputs: [
             ...updateFnPropsS.varbPathArr("price", "sqft"),
-            updateFnPropS.pathNameNext("propertyFocal", "taxesOngoingEditor"),
-            updateFnPropS.pathNameNext("propertyFocal", "homeInsOngoingEditor"),
-            updateFnPropS.pathNameNext("unitFocal", "targetRentOngoingEditor"),
-            updateFnPropS.pathNameNext("unitFocal", "numBedrooms"),
-            updateFnPropS.pathNameNext("capExCostFocal", "valueLumpSumEditor", [
+            updateFnPropS.pathName("propertyFocal", "taxesOngoingEditor"),
+            updateFnPropS.pathName("propertyFocal", "homeInsOngoingEditor"),
+            updateFnPropS.pathName("unitFocal", "targetRentOngoingEditor"),
+            updateFnPropS.pathName("unitFocal", "numBedrooms"),
+            updateFnPropS.pathName("capExCostFocal", "valueLumpSumEditor", [
               overrideSwitch(
                 mixedInfoS.pathNameVarb("capExCostFocal", "valueMode"),
                 "lumpSum"
               ),
             ]),
-            updateFnPropS.pathNameNext(
-              "repairCostFocal",
-              "valueLumpSumEditor",
-              [
-                overrideSwitch(
-                  mixedInfoS.pathNameVarb("repairCostFocal", "valueMode"),
-                  "lumpSum"
-                ),
-              ]
-            ),
-            updateFnPropS.pathNameNext(
+            updateFnPropS.pathName("repairCostFocal", "valueLumpSumEditor", [
+              overrideSwitch(
+                mixedInfoS.pathNameVarb("repairCostFocal", "valueMode"),
+                "lumpSum"
+              ),
+            ]),
+            updateFnPropS.pathName(
               "maintenanceCostFocal",
               "valueLumpSumEditor",
               [
@@ -661,38 +669,30 @@ function makeAllUpdateSections() {
         updateFnName: "completionStatus",
         updateFnProps: completionStatusProps({
           validInputs: [
-            updateFnPropS.pathNameNext("mgmtFocal", "basePayPercentEditor", [
+            updateFnPropS.pathName("mgmtFocal", "basePayPercentEditor", [
               overrideSwitch(
                 mixedInfoS.pathNameVarb("mgmtFocal", "basePayUnitSwitch"),
                 "percent"
               ),
             ]),
-            updateFnPropS.pathNameNext("mgmtFocal", "basePayDollarsEditor", [
+            updateFnPropS.pathName("mgmtFocal", "basePayDollarsEditor", [
               overrideSwitch(
                 mixedInfoS.pathNameVarb("mgmtFocal", "basePayUnitSwitch"),
                 "dollars"
               ),
             ]),
-            updateFnPropS.pathNameNext(
-              "mgmtFocal",
-              "vacancyLossPercentEditor",
-              [
-                overrideSwitch(
-                  mixedInfoS.pathNameVarb("mgmtFocal", "vacancyLossUnitSwitch"),
-                  "percent"
-                ),
-              ]
-            ),
-            updateFnPropS.pathNameNext(
-              "mgmtFocal",
-              "vacancyLossDollarsEditor",
-              [
-                overrideSwitch(
-                  mixedInfoS.pathNameVarb("mgmtFocal", "vacancyLossUnitSwitch"),
-                  "dollars"
-                ),
-              ]
-            ),
+            updateFnPropS.pathName("mgmtFocal", "vacancyLossPercentEditor", [
+              overrideSwitch(
+                mixedInfoS.pathNameVarb("mgmtFocal", "vacancyLossUnitSwitch"),
+                "percent"
+              ),
+            ]),
+            updateFnPropS.pathName("mgmtFocal", "vacancyLossDollarsEditor", [
+              overrideSwitch(
+                mixedInfoS.pathNameVarb("mgmtFocal", "vacancyLossUnitSwitch"),
+                "dollars"
+              ),
+            ]),
           ],
         }),
       }),
@@ -715,54 +715,42 @@ function makeAllUpdateSections() {
               "completionStatus",
               completionStatusProps({
                 validInputs: [
-                  updateFnPropS.pathNameNext(
-                    "loanFocal",
-                    "loanBasePercentEditor",
-                    [
-                      overrideSwitch(
-                        relVarbInfoS.local("loanBaseUnitSwitch"),
-                        "percent"
-                      ),
-                    ]
-                  ),
-                  updateFnPropS.pathNameNext(
-                    "loanFocal",
-                    "loanBaseDollarsEditor",
-                    [
-                      overrideSwitch(
-                        relVarbInfoS.local("loanBaseUnitSwitch"),
-                        "dollars"
-                      ),
-                    ]
-                  ),
-                  updateFnPropS.pathNameNext(
+                  updateFnPropS.pathName("loanFocal", "loanBasePercentEditor", [
+                    overrideSwitch(
+                      relVarbInfoS.local("loanBaseUnitSwitch"),
+                      "percent"
+                    ),
+                  ]),
+                  updateFnPropS.pathName("loanFocal", "loanBaseDollarsEditor", [
+                    overrideSwitch(
+                      relVarbInfoS.local("loanBaseUnitSwitch"),
+                      "dollars"
+                    ),
+                  ]),
+                  updateFnPropS.pathName(
                     "loanFocal",
                     "interestRatePercentOngoingEditor"
                   ),
-                  updateFnPropS.pathNameNext("loanFocal", "loanTermSpanEditor"),
-                  updateFnPropS.pathNameNext(
+                  updateFnPropS.pathName("loanFocal", "loanTermSpanEditor"),
+                  updateFnPropS.pathName(
                     "loanFocal",
                     "mortgageInsUpfrontEditor",
                     [overrideSwitch(relVarbInfoS.local("hasMortgageIns"), true)]
                   ),
-                  updateFnPropS.pathNameNext(
+                  updateFnPropS.pathName(
                     "loanFocal",
                     "mortgageInsOngoingEditor",
                     [overrideSwitch(relVarbInfoS.local("hasMortgageIns"), true)]
                   ),
-                  updateFnPropS.pathNameNext(
-                    "closingCostFocal",
-                    "valueEditor",
-                    [
-                      overrideSwitch(
-                        mixedInfoS.pathNameVarb(
-                          "closingCostFocal",
-                          "isItemized"
-                        ),
-                        false
+                  updateFnPropS.pathName("closingCostFocal", "valueEditor", [
+                    overrideSwitch(
+                      mixedInfoS.pathNameVarb(
+                        "closingCostFocal",
+                        "valueSourceSwitch"
                       ),
-                    ]
-                  ),
+                      "lumpSum"
+                    ),
+                  ]),
                 ],
               })
             )

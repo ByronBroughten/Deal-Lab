@@ -202,6 +202,7 @@ const ccs = {
         .public-DraftStyleDefault-block {
           display: flex;
           flex-wrap: nowrap;
+          white-space: nowrap;
         }
 
         ${label &&

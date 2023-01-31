@@ -1,7 +1,4 @@
-import {
-  ExpectedCount,
-  GeneralMixedInfo,
-} from "../allBaseSectionVarbs/NanoIdInfo";
+import { MixedInfoProps } from "../baseSectionsDerived/baseVarbInfo";
 import { ChildName } from "../sectionChildrenDerived/ChildName";
 import {
   ParentName,
@@ -35,35 +32,30 @@ export type RelSectionInfo =
 type RelSectionInfoTest<T extends RelInfoType> = T;
 type _TestRelSectionInfo = RelSectionInfoTest<RelSectionInfo["infoType"]>;
 
-interface RelInfoMixed<EC extends ExpectedCount> extends GeneralMixedInfo {
-  infoType: RelInfoType;
-  expectedCount: EC;
-}
+interface RelInfoMixed extends MixedInfoProps<RelInfoType> {}
 
-export interface RelLocalInfo extends RelInfoMixed<"onlyOne"> {
+export interface RelLocalInfo extends RelInfoMixed {
   infoType: "local";
 }
 export interface RelParentInfo<
   SN extends SectionName = SectionName,
   PN extends ParentName<SN> = ParentName<SN>
-> extends RelInfoMixed<"onlyOne"> {
+> extends RelInfoMixed {
   infoType: "parent";
   parentName: PN;
 }
 export interface RelChildrenInfo<
   SN extends SectionName = SectionName,
-  CN extends ChildName<SN> = ChildName<SN>,
-  OO extends ExpectedCount = ExpectedCount
-> extends RelInfoMixed<OO> {
+  CN extends ChildName<SN> = ChildName<SN>
+> extends RelInfoMixed {
   infoType: "children";
   childName: CN;
 }
 export interface RelStepSiblingInfo<
   SN extends SectionName = SectionName,
   SSN extends StepSiblingName<SN> = StepSiblingName<SN>,
-  SSSN extends SectionName = SectionName,
-  OO extends ExpectedCount = ExpectedCount
-> extends RelInfoMixed<OO> {
+  SSSN extends SectionName = SectionName
+> extends RelInfoMixed {
   infoType: "stepSibling";
   stepSiblingName: SSN;
   stepSiblingSectionName: SSSN;
@@ -71,9 +63,8 @@ export interface RelStepSiblingInfo<
 export interface RelPiblingInfo<
   SN extends SectionName = SectionName,
   PN extends PiblingName<SN> = PiblingName<SN>,
-  PSN extends SectionName = SectionName,
-  OO extends ExpectedCount = ExpectedCount
-> extends RelInfoMixed<OO> {
+  PSN extends SectionName = SectionName
+> extends RelInfoMixed {
   infoType: "pibling";
   piblingName: PN;
   piblingSectionName: PSN;
@@ -81,22 +72,16 @@ export interface RelPiblingInfo<
 
 export interface RelStepSiblingOfChildInfo<
   SSN extends SectionName = SectionName,
-  CN extends ChildName = ChildName,
-  OO extends ExpectedCount = ExpectedCount
-> extends RelInfoMixed<OO> {
+  CN extends ChildName = ChildName
+> extends RelInfoMixed {
   infoType: "stepSiblingOfHasChildName";
   stepSiblingSectionName: SSN;
   selfChildName: CN;
 }
 export interface RelNiblingOfChildInfo<
   NSN extends SectionName = SectionName,
-  CN extends ChildName = ChildName,
-  OO extends ExpectedCount = ExpectedCount
-> extends RelInfoMixed<OO> {
-  // if it's childName is a match
-  // It looks through all its step siblings' children
-  // if it finds children that are of the right sectionName
-  // it adds its outUpdateInfo to those
+  CN extends ChildName = ChildName
+> extends RelInfoMixed {
   infoType: "niblingIfOfHasChildName";
   selfChildName: CN;
   niblingSectionName: NSN;

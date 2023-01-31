@@ -35,7 +35,7 @@ export function ValueGroupValues({
         });
       })}
       <ValueSectionBtn
-        text={"+ Custom"}
+        text={"+ Cost"}
         onClick={addValue}
         className="ValueGroup-addValueBtn ValueGroup-value"
       />
@@ -49,7 +49,7 @@ const Styled = styled.div<{ $themeName?: ThemeName }>`
     margin: ${theme.flexElementSpacing};
   }
   .ValueGroup-addValueBtn {
-    height: calc(${theme.valueSectionSize} + 18px);
+    height: 82px;
     width: 120px;
   }
   .ValueGroup-addValueBtnIcon {

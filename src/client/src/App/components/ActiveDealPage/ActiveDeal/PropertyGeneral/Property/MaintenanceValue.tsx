@@ -1,6 +1,6 @@
 import { MaintenanceValueMode } from "../../../../../sharedWithServer/SectionsMeta/baseSectionsDerived/subValues";
 import { useSetterSection } from "../../../../../sharedWithServer/stateClassHooks/useSetterSection";
-import { SelectEditor } from "../../../../appWide/SelectEditor";
+import { SelectEditorSection } from "../../../../appWide/SelectEditorSection";
 
 export function MaintenanceValue({ feId }: { feId: string }) {
   const maintenanceValue = useSetterSection({
@@ -20,7 +20,7 @@ export function MaintenanceValue({ feId }: { feId: string }) {
     : undefined;
 
   return (
-    <SelectEditor
+    <SelectEditorSection
       {...{
         label: "Ongoing Maintenance Budget",
         selectValue: valueMode,

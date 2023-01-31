@@ -30,7 +30,7 @@ describe("SetterCalculations", () => {
     const propertyCostListGroup = property.onlyChild("upfrontExpenseGroup");
     const propertyCostValue = propertyCostListGroup.addAndGetChild(
       "singleTimeValue",
-      { dbVarbs: { isItemized: true } }
+      { dbVarbs: { valueSourceSwitch: "itemized" } }
     );
     const propertyCostList = propertyCostValue.onlyChild("singleTimeList");
     const propertyCosts = [8000, 2000];
@@ -50,9 +50,9 @@ describe("SetterCalculations", () => {
     const wrappedValue = loan.addAndGetChild("wrappedInLoanValue");
     wrappedValue.updateValues({ valueEditor: numObj(5000) });
 
-    const mgmt = dealTester.setter.addAndGetChild("mgmt");
+    const mgmt = dealTester.setter.onlyChild("mgmt");
     const expenseValue = mgmt.addAndGetChild("upfrontExpenseValue", {
-      dbVarbs: { isItemized: true },
+      dbVarbs: { valueSourceSwitch: "itemized" },
     });
     const mgmtCostList = expenseValue.onlyChild("singleTimeList");
     const mgmtCosts = [4000, 6000];
@@ -89,7 +89,7 @@ describe("SetterCalculations", () => {
 
     const propertyCostListGroup = property.onlyChild("ongoingExpenseGroup");
     const ongoingValue = propertyCostListGroup.addAndGetChild("ongoingValue", {
-      dbVarbs: { isItemized: true },
+      dbVarbs: { valueSourceSwitch: "itemized" },
     });
     const propertyCostList = ongoingValue.onlyChild("ongoingList");
     const propertyCosts = [200, 100, 150];
@@ -113,7 +113,7 @@ describe("SetterCalculations", () => {
     mgmt.varb("vacancyLossPercentEditor").updateValue(numObj(5));
 
     const mgmtCostListGroup = mgmt.addAndGetChild("ongoingExpenseValue", {
-      dbVarbs: { isItemized: true },
+      dbVarbs: { valueSourceSwitch: "itemized" },
     });
     const mgmtCostList = mgmtCostListGroup.onlyChild("ongoingList");
     const mgmtCosts = [100, 100];
@@ -169,7 +169,7 @@ function addTestLoan(dealTester: SetterTesterSection<"deal">): void {
   loan.varb("mortgageInsOngoingEditor").updateValue(numObj(1200));
 
   const wrappedValue = loan.addAndGetChild("wrappedInLoanValue", {
-    dbVarbs: { isItemized: true },
+    dbVarbs: { valueSourceSwitch: "itemized" },
   });
   const wrapped = wrappedValue.onlyChild("singleTimeList");
   const amounts = [6000, 14000];

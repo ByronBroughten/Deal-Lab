@@ -1,6 +1,6 @@
 import { UtilityValueMode } from "../../../../../sharedWithServer/SectionsMeta/baseSectionsDerived/subValues";
 import { useSetterSection } from "../../../../../sharedWithServer/stateClassHooks/useSetterSection";
-import { SelectAndItemizeEditor } from "../../../../appWide/SelectAndItemizeEditor";
+import { SelectAndItemizeEditorSection } from "../../../../appWide/SelectAndItemizeEditorSection";
 import { VarbListOngoing } from "../../../../appWide/VarbLists/VarbListOngoing";
 
 export function UtilityValue({ feId }: { feId: string }) {
@@ -12,7 +12,7 @@ export function UtilityValue({ feId }: { feId: string }) {
   const valueVarb = utilityValue.get.switchVarb("value", "ongoing");
   const equalsValue = valueMode === "tenantUtilities" ? "$0" : undefined;
   return (
-    <SelectAndItemizeEditor
+    <SelectAndItemizeEditorSection
       {...{
         label: "Utilities",
         selectValue: valueMode,

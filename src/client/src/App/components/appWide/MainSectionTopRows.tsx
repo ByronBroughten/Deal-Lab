@@ -77,6 +77,8 @@ export function MainSectionTopRows({
 }
 
 const Styled = styled.div`
+  padding-bottom: ${theme.s4};
+
   .MainSectionTopRows-topRow,
   .MainSectionTopRows-secondRow,
   .MainSectionTopRows-topLeft,

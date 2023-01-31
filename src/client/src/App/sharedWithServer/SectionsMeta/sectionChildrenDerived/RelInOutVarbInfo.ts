@@ -9,18 +9,17 @@ import {
   RelStepSiblingVarbInfo,
 } from "../SectionInfo/RelVarbInfo";
 import { VarbPathNameInfoMixed } from "../SectionInfo/VarbPathNameInfo";
-import { SectionName } from "../SectionName";
 
-export type PathInVarbInfo<SN extends SectionName = SectionName> =
-  | RelInVarbInfo<SN>
-  | PathNameVarbInfoMixed<SN>
+export type PathInVarbInfo =
+  | RelInVarbInfo
+  | PathNameVarbInfoMixed
   | VarbPathNameInfoMixed;
 
-type RelInVarbInfo<SN extends SectionName = SectionName> =
+type RelInVarbInfo =
   | RelLocalVarbInfo
-  | RelChildrenVarbInfo<SN>
-  | RelStepSiblingVarbInfo<SN>
-  | RelPiblingVarbInfo<SN>;
+  | RelChildrenVarbInfo
+  | RelStepSiblingVarbInfo
+  | RelPiblingVarbInfo;
 
 export type RelOutVarbInfo =
   | RelLocalVarbInfo

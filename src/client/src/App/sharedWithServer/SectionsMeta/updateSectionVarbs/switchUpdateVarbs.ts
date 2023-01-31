@@ -221,7 +221,7 @@ function switchEndingToUpdateProp<
   } else
     return {
       ...info,
-      varbName: getSwitchVarbName(info.varbName, switchName, switchKey),
+      varbName: getSwitchVarbName(info.varbName, switchName, switchKey) as any,
     };
 }
 

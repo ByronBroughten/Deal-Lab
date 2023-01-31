@@ -82,8 +82,8 @@ export function dealRelVarbs(): UpdateSectionVarbs<"deal"> {
       initValue: "yearly",
     }),
     upfrontExpenses: relVarbS.sumNums([
-      updateFnPropS.pathName("propertyFocal", "upfrontExpenses"),
-      updateFnPropS.pathName("mgmtFocal", "upfrontExpenses"),
+      updateFnPropS.pathNameBase("propertyFocal", "upfrontExpenses"),
+      updateFnPropS.pathNameBase("mgmtFocal", "upfrontExpenses"),
       updateFnPropS.varbPathName("loanUpfrontExpenses"),
     ]),
 
@@ -92,17 +92,17 @@ export function dealRelVarbs(): UpdateSectionVarbs<"deal"> {
       updateFnPropS.varbPathName("loanTotalDollars"),
     ]),
     upfrontRevenue: relVarbS.sumNums([
-      updateFnPropS.pathName("propertyFocal", "upfrontRevenue"),
+      updateFnPropS.pathNameBase("propertyFocal", "upfrontRevenue"),
     ]),
     ...updateVarbsS.ongoingSumNumsNext("expenses", "yearly", {
       updateFnProps: [
-        updateFnPropS.pathName("propertyFocal", "expenses"),
-        updateFnPropS.pathName("mgmtFocal", "expenses"),
+        updateFnPropS.pathNameBase("propertyFocal", "expenses"),
+        updateFnPropS.pathNameBase("mgmtFocal", "expenses"),
         updateFnPropS.varbPathBase("loanExpenses"),
       ],
     }),
     ...updateVarbsS.ongoingSumNums("revenue", [
-      updateFnPropS.pathName("propertyFocal", "revenue"),
+      updateFnPropS.pathNameBase("propertyFocal", "revenue"),
     ]),
   } as UpdateSectionVarbs<"deal">;
 }

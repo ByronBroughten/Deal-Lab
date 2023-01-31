@@ -5,7 +5,6 @@ import {
 } from "../SectionsMeta/allBaseSectionVarbs/baseSwitchNames";
 import { InEntityIdInfoValue } from "../SectionsMeta/allBaseSectionVarbs/baseValues/InEntityIdInfoValue";
 import { DbSectionInfo } from "../SectionsMeta/allBaseSectionVarbs/DbSectionInfo";
-import { ExpectedCount } from "../SectionsMeta/allBaseSectionVarbs/NanoIdInfo";
 import { ValueTypesPlusAny } from "../SectionsMeta/allBaseSectionVarbs/StateVarbTypes";
 import { ValueName } from "../SectionsMeta/allBaseSectionVarbs/ValueName";
 import { VarbName } from "../SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
@@ -50,7 +49,10 @@ import {
   StepSiblingName,
 } from "../SectionsMeta/sectionChildrenDerived/ParentName";
 import { DbVarbs } from "../SectionsMeta/sectionChildrenDerived/SectionPack/RawSection";
-import { AbsolutePathInfoMixed } from "../SectionsMeta/SectionInfo/AbsolutePathInfo";
+import {
+  AbsolutePathDbInfoMixed,
+  AbsolutePathInfoMixed,
+} from "../SectionsMeta/SectionInfo/AbsolutePathInfo";
 import {
   FeParentInfo,
   FeParentInfoSafe,
@@ -167,8 +169,6 @@ export class GetterSection<
         sectionInfo: {
           infoType: "pathName",
           pathName,
-          expectedCount: mixedInfo.expectedCount,
-          sectionName: pathSectionName(pathName),
         },
       };
     } else {
@@ -207,10 +207,12 @@ export class GetterSection<
       case "pathName":
       case "pathNameDbId": {
         const { pathName, ...rest } = info;
+        const sectionName = pathSectionName(pathName);
         const path = this.getPathFromContext(pathName);
         if (rest.infoType === "pathName") {
           return this.sections.sectionsByMixed({
             ...rest,
+            sectionName,
             path,
             infoType: "absolutePath",
           } as AbsolutePathInfoMixed);
@@ -219,7 +221,8 @@ export class GetterSection<
             ...rest,
             path,
             infoType: "absolutePathDbId",
-          });
+            sectionName,
+          } as AbsolutePathDbInfoMixed);
         } else throw new Error("This shouldn't happen.");
       }
       default: {
@@ -229,11 +232,6 @@ export class GetterSection<
   }
   sectionsByRelative(info: RelSectionInfo): GetterSection[] {
     const sections = this.allSectionsByRelative(info);
-    if (info.expectedCount === "onlyOne") {
-      if (info.infoType === "children") {
-        this.oneOrThrowChildError(sections, info.childName as ChildName<SN>);
-      } else this.list.exactlyOneOrThrow(sections, info.infoType);
-    }
     return sections;
   }
   private allSectionsByRelative(info: RelSectionInfo): GetterSection<any>[] {
@@ -373,10 +371,8 @@ export class GetterSection<
       sectionPathContexts[this.sectionContextName][pathName];
     return sectionContext["path"];
   }
-  dbInfoMixed<EC extends ExpectedCount>(
-    expectedCount: EC
-  ): DbSectionInfoMixed<SN, EC> {
-    return mixedInfoS.makeDb(this.sectionName, this.dbId, expectedCount);
+  dbInfoMixed(): DbSectionInfoMixed<SN> {
+    return mixedInfoS.makeDb(this.sectionName, this.dbId);
   }
   get feInfoMixed(): FeSectionInfoMixed<SN> {
     return mixedInfoS.makeFe(this.sectionName, this.feId);

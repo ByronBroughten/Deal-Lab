@@ -22,7 +22,9 @@ function sumLoanVarb(
     updateOverrides: [
       updateOverride(
         [overrideSwitchS.varbIsValue("financingMode", "useLoan")],
-        updateBasicsS.sumNums(updateFnPropS.pathName("loanFocal", loanVarbName))
+        updateBasicsS.sumNums(
+          updateFnPropS.pathNameBase("loanFocal", loanVarbName)
+        )
       ),
       updateOverride(
         [overrideSwitchS.varbIsValue("financingMode", ...["cashOnly", ""])],
@@ -41,7 +43,9 @@ function sumOngoingLoanVarb<BN extends string>(
     updateOverrides: [
       {
         switches: [overrideSwitchS.varbIsValue("financingMode", "useLoan")],
-        updateFnProps: [updateFnPropS.pathName("loanFocal", loanBaseVarbName)],
+        updateFnProps: [
+          updateFnPropS.pathNameBase("loanFocal", loanBaseVarbName),
+        ],
       },
       {
         switches: [

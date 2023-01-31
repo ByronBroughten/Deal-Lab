@@ -1,5 +1,4 @@
 import { targetNames } from "../allBaseSectionVarbs/baseSwitchNames";
-import { ExpectedCount } from "../allBaseSectionVarbs/NanoIdInfo";
 import { VarbName } from "../baseSectionsDerived/baseSectionsVarbsTypes";
 import { MixedInfoProps } from "../baseSectionsDerived/baseVarbInfo";
 import { VarbValue } from "../baseSectionsDerived/valueMetaTypes";
@@ -92,10 +91,8 @@ export function getVarbPathParams<VPN extends VarbPathName>(
 export interface VarbPathNameInfo<VPN extends VarbPathName = VarbPathName> {
   varbPathName: VPN;
 }
-export interface VarbPathNameInfoMixed<
-  VPN extends VarbPathName = VarbPathName,
-  EC extends ExpectedCount = ExpectedCount
-> extends MixedInfoProps<"varbPathName", EC> {
+export interface VarbPathNameInfoMixed<VPN extends VarbPathName = VarbPathName>
+  extends MixedInfoProps<"varbPathName"> {
   varbPathName: VPN;
 }
 

@@ -86,7 +86,7 @@ export class GetterSections extends GetterSectionsBase {
         dbId: infoMixed.id,
       });
     } else {
-      return this.list(infoMixed.sectionName).getMultiByMixed(infoMixed);
+      return this.list(infoMixed.sectionName).allSectionsByMixed(infoMixed);
     }
   }
   sectionByMixed<SN extends SectionName>(

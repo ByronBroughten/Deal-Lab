@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { useGetterSection } from "../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import theme from "../../../../../theme/Theme";
 import { FormSection } from "../../../../appWide/FormSection";
+import { FormSectionLabeled } from "../../../../appWide/FormSectionLabeled";
+import { TogglerBooleanTitleVarb } from "../../../../appWide/TogglerBooleanTitleVarb";
 import { TogglerBooleanVarb } from "../../../../appWide/TogglerBooleanVarb";
 import { NumObjEntityEditor } from "../../../../inputs/NumObjEntityEditor";
 import { PercentDollarInput } from "../../general/PercentDollarInput";
@@ -29,31 +31,33 @@ export default function BasicLoanInfo({ feId, className }: Props) {
           }}
         />
       </FormSection>
-      <FormSection>
-        <div>
+      <FormSectionLabeled
+        className="BasicLoanInfo-otherInfo"
+        label="Other Loan Info"
+      >
+        <div className="BasicLoanInfo-rateAndTermRow BasicLoanInfo-editorsRow">
+          <NumObjEntityEditor
+            feVarbInfo={loan.varbInfo("interestRatePercentOngoingEditor")}
+            className="BasicLoanInfo-input"
+          />
+          <NumObjEntityEditor
+            feVarbInfo={loan.varbInfo("loanTermSpanEditor")}
+            label="Loan term"
+            className="BasicLoanInfo-input BasicLoanInfo-secondEditor"
+          />
           <TogglerBooleanVarb
             {...{
-              className: "BasicLoanInfo-toggler",
+              className: "BasicLoanInfo-input BasicLoanInfo-basicToggler",
               feVarbInfo: isInterestOnlyVarb.feVarbInfo,
               label: "Interest only payments",
               name: "interest only toggle",
             }}
           />
-          <div className="BasicLoanInfo-rateAndTermRow BasicLoanInfo-editorsRow">
-            <NumObjEntityEditor
-              feVarbInfo={loan.varbInfo("interestRatePercentOngoingEditor")}
-            />
-            <NumObjEntityEditor
-              feVarbInfo={loan.varbInfo("loanTermSpanEditor")}
-              label="Loan term"
-              className="BasicLoanInfo-secondEditor"
-            />
-          </div>
         </div>
-      </FormSection>
+      </FormSectionLabeled>
       <FormSection>
         <div>
-          <TogglerBooleanVarb
+          <TogglerBooleanTitleVarb
             {...{
               className: "BasicLoanInfo-toggler",
               feVarbInfo: hasMortInsVarb.feVarbInfo,
@@ -64,13 +68,14 @@ export default function BasicLoanInfo({ feId, className }: Props) {
           {hasMortIns && (
             <div className="BasicLoanInfo-mortInsRow BasicLoanInfo-editorsRow">
               <NumObjEntityEditor
+                className="BasicLoanInfo-input"
                 feVarbInfo={loan.varbInfo("mortgageInsUpfrontEditor")}
                 label="Upfront"
               />
               <NumObjEntityEditor
                 feVarbInfo={loan.varbInfo("mortgageInsOngoingEditor")}
-                label="Ongoking"
-                className={"BasicLoanInfo-secondEditor"}
+                label="Ongoing"
+                className="BasicLoanInfo-input"
               />
             </div>
           )}
@@ -81,39 +86,28 @@ export default function BasicLoanInfo({ feId, className }: Props) {
 }
 
 const Styled = styled.div`
-  .BasicLoanInfo-toggler {
-    margin-top: ${theme.s25};
+  .BasicLoanInfo-otherInfo {
+    padding-bottom: ${theme.s3};
   }
-  .BasicLoanInfo-firstEditorBlock {
-    margin-top: ${theme.s35};
-    border-bottom: ${theme.borderStyle};
-    padding-bottom: ${theme.s35};
+  .BasicLoanInfo-basicToggler {
+    border: ${theme.borderStyle};
+    border-radius: ${theme.br0};
+    padding: ${theme.s25};
   }
-  .BasicLoanInfo-title {
-    .DraftTextField-root {
-      min-width: 195px;
-    }
-  }
+
   .BasicLoanInfo-editorsRow {
     display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: ${theme.s15};
     .DraftTextField-root {
       min-width: 95px;
     }
   }
-  .BasicLoanInfo-rateAndTermRow {
-    margin-top: ${theme.s3};
-  }
 
-  .BasicLoanInfo-mortgageInsurance {
-    margin-top: ${theme.s35};
-    border-bottom: ${theme.borderStyle};
-    padding-bottom: ${theme.s35};
-  }
-  .BasicLoanInfo-mortInsRow {
-    margin-top: ${theme.s3};
-  }
-
-  .BasicLoanInfo-secondEditor {
-    margin-left: ${theme.s35};
+  .BasicLoanInfo-input {
+    margin: ${theme.s3};
+    margin-left: 0;
+    margin-right: ${theme.s4};
   }
 `;

@@ -3,9 +3,7 @@ import React from "react";
 import styled from "styled-components";
 import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import theme from "../../theme/Theme";
-import StandardLabel from "../general/StandardLabel";
 import { NumObjEntityEditor } from "../inputs/NumObjEntityEditor";
-import { FormSection } from "./FormSection";
 
 type OnChange = (
   event: React.ChangeEvent<{ name?: string | undefined; value: unknown }>
@@ -15,7 +13,6 @@ export type SelectEditorProps = {
   selectValue: string;
   onChange?: OnChange;
   editorVarbInfo?: FeVarbInfo;
-  label?: string;
   menuItems: [string, string][];
   equalsValue?: string;
   rightOfControls?: React.ReactNode;
@@ -24,63 +21,60 @@ export function SelectEditor({
   selectValue,
   onChange,
   editorVarbInfo,
-  label,
   menuItems,
   equalsValue,
   rightOfControls,
 }: SelectEditorProps) {
   return (
-    <Styled>
-      <div>
-        {label && <StandardLabel>{label}</StandardLabel>}
-        <div className="SelectEditor-controlDiv">
-          <FormControl
-            className="SelectEditor-formControl"
-            size="small"
-            variant="filled"
-            style={{ minWidth: "120px" }}
-          >
-            <Select
-              className={`SelectEditor-select ${
-                selectValue === "none" ? "SelectEditor-noneSelected" : ""
-              }`}
-              labelId="RepairsValue-modeLabel"
-              id="demo-simple-select"
-              autoWidth={true}
-              value={selectValue}
-              onChange={onChange}
-            >
-              {selectValue === "none" && (
-                <MenuItem value="none" disabled={true}>
-                  Choose Method
-                </MenuItem>
-              )}
-              {menuItems.map((item) => (
-                <MenuItem key={item[0]} value={item[0]}>
-                  {item[1]}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          {editorVarbInfo && (
-            <NumObjEntityEditor
-              {...{
-                className: "SelectEditor-editor",
-                feVarbInfo: editorVarbInfo,
-              }}
-            />
+    <Styled className="SelectEditor-controlDiv">
+      <FormControl
+        className="SelectEditor-formControl"
+        size="small"
+        variant="filled"
+        style={{ minWidth: "120px" }}
+      >
+        <Select
+          className={`SelectEditor-select ${
+            selectValue === "none" ? "SelectEditor-noneSelected" : ""
+          }`}
+          labelId="RepairsValue-modeLabel"
+          id="demo-simple-select"
+          autoWidth={true}
+          value={selectValue}
+          onChange={onChange}
+        >
+          {selectValue === "none" && (
+            <MenuItem value="none" disabled={true}>
+              Choose Method
+            </MenuItem>
           )}
-          {rightOfControls ?? null}
-          {equalsValue && (
-            <div className="SelectEditor-equalsValue">{`= ${equalsValue}`}</div>
-          )}
-        </div>
-      </div>
+          {menuItems.map((item) => (
+            <MenuItem key={item[0]} value={item[0]}>
+              {item[1]}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+      {editorVarbInfo && (
+        <NumObjEntityEditor
+          {...{
+            className: "SelectEditor-editor",
+            feVarbInfo: editorVarbInfo,
+            labeled: false,
+          }}
+        />
+      )}
+      {rightOfControls ?? null}
+      {equalsValue && (
+        <div className="SelectEditor-equalsValue">{`= ${equalsValue}`}</div>
+      )}
     </Styled>
   );
 }
 
-const Styled = styled(FormSection)`
+const Styled = styled.div`
+  display: flex;
+  margin-top: ${theme.s2};
   .SelectEditor-select {
     min-width: 0px;
   }
@@ -90,10 +84,6 @@ const Styled = styled(FormSection)`
     flex-wrap: nowrap;
     margin-left: ${theme.s2};
     white-space: nowrap;
-  }
-  .SelectEditor-controlDiv {
-    display: flex;
-    margin-top: ${theme.s2};
   }
   .SelectEditor-formControl {
     border: solid 1px ${theme["gray-300"]};

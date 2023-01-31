@@ -1,8 +1,4 @@
 import { Obj } from "../../utils/Obj";
-import {
-  ExpectedCount,
-  isExpectedCount,
-} from "../allBaseSectionVarbs/NanoIdInfo";
 import { VarbProp } from "../baseSectionsDerived/baseVarbInfo";
 import { ChildName } from "../sectionChildrenDerived/ChildName";
 import {
@@ -43,138 +39,84 @@ export interface RelParentVarbInfo<
 
 export interface RelChildrenVarbInfo<
   SN extends SectionName = SectionName,
-  CN extends ChildName<SN> = ChildName<SN>,
-  OO extends ExpectedCount = ExpectedCount
-> extends RelChildrenInfo<SN, CN, OO>,
+  CN extends ChildName<SN> = ChildName<SN>
+> extends RelChildrenInfo<SN, CN>,
     VarbProp {}
 
 export interface RelStepSiblingVarbInfo<
   SN extends SectionName = SectionName,
   SSN extends StepSiblingName<SN> = StepSiblingName<SN>,
-  SSSN extends SectionName = SectionName,
-  OO extends ExpectedCount = ExpectedCount
-> extends RelStepSiblingInfo<SN, SSN, SSSN, OO>,
+  SSSN extends SectionName = SectionName
+> extends RelStepSiblingInfo<SN, SSN, SSSN>,
     VarbProp {}
 export interface RelPiblingVarbInfo<
   SN extends SectionName = SectionName,
   PN extends PiblingName<SN> = PiblingName<SN>,
-  PSN extends SectionName = SectionName,
-  OO extends ExpectedCount = ExpectedCount
-> extends RelPiblingInfo<SN, PN, PSN, OO>,
+  PSN extends SectionName = SectionName
+> extends RelPiblingInfo<SN, PN, PSN>,
     VarbProp {}
 
 export interface RelStepSiblingOfChildVarbInfo<
   SSSN extends SectionName = SectionName,
-  CN extends ChildName = ChildName,
-  OO extends ExpectedCount = ExpectedCount
-> extends RelStepSiblingOfChildInfo<SSSN, CN, OO> {
+  CN extends ChildName = ChildName
+> extends RelStepSiblingOfChildInfo<SSSN, CN> {
   varbName: string;
 }
 export interface RelNiblingOfChildVarbInfo<
   NSN extends SectionName = SectionName,
-  CN extends ChildName = ChildName,
-  OO extends ExpectedCount = ExpectedCount
-> extends RelNiblingOfChildInfo<NSN, CN, OO> {
+  CN extends ChildName = ChildName
+> extends RelNiblingOfChildInfo<NSN, CN> {
   varbName: string;
 }
-
-type FullOptions = { expectedCount: ExpectedCount };
-export type Options = Partial<FullOptions>;
-function makeDefaultOptions<O extends FullOptions>(defaults: O): O {
-  return defaults;
-}
-const defaultOptions = makeDefaultOptions({ expectedCount: "multiple" });
-type Defaults = typeof defaultOptions;
 
 export const relVarbInfoS = {
   isLocal(value: any): value is RelLocalVarbInfo {
     return (
       Obj.isObjToAny(value) &&
       value.infoType === "local" &&
-      typeof value.varbName === "string" &&
-      isExpectedCount(value.expectedCount)
+      typeof value.varbName === "string"
     );
   },
   local(varbName: string): RelLocalVarbInfo {
     return {
       infoType: "local",
       varbName,
-      expectedCount: "onlyOne",
     };
   },
-  children<
-    SN extends SectionName,
-    CN extends ChildName<SN>,
-    O extends FullOptions = Defaults
-  >(
+  children<SN extends SectionName, CN extends ChildName<SN>>(
     childName: CN,
-    varbName: string,
-    options?: O
-  ): RelChildrenVarbInfo<SN, CN, O["expectedCount"]> {
+    varbName: string
+  ): RelChildrenVarbInfo<SN, CN> {
     return {
       infoType: "children",
       childName,
       varbName,
-      ...defaultOptions,
-      ...options,
     };
   },
-  onlyChild<
-    SN extends SectionName,
-    CN extends ChildName<SN>,
-    O extends FullOptions = Defaults
-  >(
+  onlyChild<SN extends SectionName, CN extends ChildName<SN>>(
     childName: CN,
-    varbName: string,
-    options?: O
-  ): RelChildrenVarbInfo<SN, CN, "onlyOne"> {
+    varbName: string
+  ): RelChildrenVarbInfo<SN, CN> {
     return {
       infoType: "children",
       childName,
       varbName,
-      ...defaultOptions,
-      ...options,
-      expectedCount: "onlyOne",
     };
   },
   stepSibling<
     SN extends SectionName,
     SSN extends StepSiblingName<SN>,
-    SSSN extends SectionName,
-    O extends FullOptions = Defaults
+    SSSN extends SectionName
   >(
     stepSiblingName: SSN,
     stepSiblingSectionName: SSSN,
-    varbName: string,
-    options?: O
-  ): RelStepSiblingVarbInfo<SN, SSN, SSSN, O["expectedCount"]> {
+    varbName: string
+  ): RelStepSiblingVarbInfo<SN, SSN, SSSN> {
     return {
       infoType: "stepSibling",
       stepSiblingName,
       stepSiblingSectionName,
       varbName,
-      ...defaultOptions,
-      ...options,
-    };
-  },
-  pibling<
-    SN extends SectionName,
-    PN extends PiblingName<SN>,
-    PSN extends SectionName,
-    O extends FullOptions = Defaults
-  >(
-    piblingName: PN,
-    piblingSectionName: PSN,
-    varbName: string,
-    options?: O
-  ): RelPiblingVarbInfo<SN, PN, PSN, O["expectedCount"]> {
-    return {
-      infoType: "pibling",
-      piblingName,
-      piblingSectionName,
-      varbName,
-      ...defaultOptions,
-      ...options,
     };
   },
 };

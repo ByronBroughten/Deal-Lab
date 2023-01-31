@@ -2,8 +2,6 @@ import { Schema } from "mongoose";
 import { z } from "zod";
 import { Obj } from "../../../utils/Obj";
 import { zS } from "../../../utils/zod";
-import { isVarbName } from "../../baseSectionsDerived/baseVarbInfo";
-import { isSectionName } from "../../SectionName";
 import { isSectionPathName } from "../../sectionPathContexts/sectionPathNames";
 import { Id } from "../id";
 import {
@@ -46,13 +44,7 @@ export function isInEntityVarbInfoValue(
 }
 function isInEntityVarbInfoShared(value: any): boolean {
   const info: ValueInEntityInfo = value;
-  return (
-    Obj.isObjToAny(info) &&
-    info.expectedCount === "onlyOne" &&
-    isVarbName(info.varbName) &&
-    isSectionName(info.sectionName) &&
-    Id.is(value.entityId)
-  );
+  return Obj.isObjToAny(info) && Id.is(value.entityId);
 }
 function isInEntityVarbInfoSpecific(value: any): boolean {
   const info: InEntityVarbInfo = value;

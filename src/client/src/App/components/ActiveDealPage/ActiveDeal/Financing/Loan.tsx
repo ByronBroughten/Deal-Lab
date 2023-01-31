@@ -31,7 +31,7 @@ export function Loan({
         }}
       />
       <MainSectionBody themeName="loan">
-        <BasicLoanInfo feId={feId} className="ListGroup-root" />
+        <BasicLoanInfo feId={feId} />
         <ValueSectionZone
           {...{
             ...feInfo,
@@ -60,8 +60,5 @@ const Styled = styled(MainSectionInner)`
     .MainSectionTopRows-xBtn {
       visibility: visible;
     }
-  }
-  .Loan-closingCosts {
-    margin-top: ${theme.s4};
   }
 `;

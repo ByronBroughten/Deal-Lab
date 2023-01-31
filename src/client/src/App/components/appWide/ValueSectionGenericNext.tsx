@@ -1,19 +1,15 @@
 import React from "react";
-import { AiFillEdit } from "react-icons/ai";
 import styled from "styled-components";
-import { useToggleViewNext } from "../../modules/customHooks/useToggleView";
 import { VarbName } from "../../sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
+import { CustomValueMode } from "../../sharedWithServer/SectionsMeta/baseSectionsDerived/subValues";
 import { ChildName } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/ChildName";
 import { SectionNameByType } from "../../sharedWithServer/SectionsMeta/SectionNameByType";
 import { useSetterSection } from "../../sharedWithServer/stateClassHooks/useSetterSection";
 import theme from "../../theme/Theme";
-import { PlainIconBtn } from "../general/PlainIconBtn";
 import { BigStringEditor } from "../inputs/BigStringEditor";
-import { NumObjEntityEditor } from "../inputs/NumObjEntityEditor";
 import { RemoveSectionXBtn } from "./RemoveSectionXBtn";
-import { SectionModal } from "./SectionModal";
 import { SectionTitle } from "./SectionTitle";
-import { TogglerBooleanVarb } from "./TogglerBooleanVarb";
+import { SelectAndItemizeEditor } from "./SelectAndItemizeEditor";
 
 type ValueSectionName = SectionNameByType<"valueSection">;
 type MakeItemizedListNodeProps = {
@@ -27,7 +23,6 @@ interface Props<SN extends ValueSectionName> {
   feId: string;
   displayName?: string;
   showXBtn?: boolean;
-  endAdornment?: string;
 }
 
 function getChildName<SN extends ValueSectionName>(
@@ -37,7 +32,7 @@ function getChildName<SN extends ValueSectionName>(
   else return "singleTimeList" as ChildName<SN>;
 }
 
-export function ValueSectionGeneric<
+export function ValueSectionGenericNext<
   SN extends SectionNameByType<"valueSection">
 >({
   className,
@@ -47,22 +42,13 @@ export function ValueSectionGeneric<
   valueName,
   makeItemizedListNode,
   showXBtn = true,
-  endAdornment,
 }: Props<SN>) {
   const section = useSetterSection({ sectionName, feId });
   const listChildName = getChildName(sectionName);
-
-  const isItemizedVarb = section.varb("isItemized");
-  const isItemized = isItemizedVarb.value("boolean");
-  const { modalIsOpen, openModal, closeModal } = useToggleViewNext(
-    "modal",
-    false
-  );
-
+  const valueSource = section.value("valueSourceSwitch") as CustomValueMode;
   const displayNameValue = section
     .varb("displayName")
     .value("stringObj").mainText;
-
   return (
     <Styled className={`ValueSection-root ${className ?? ""}`}>
       <div className={"ValueSection-viewable"}>
@@ -84,68 +70,41 @@ export function ValueSectionGeneric<
             />
           )}
         </div>
-        <div className="ValueSection-value">
-          {isItemized && (
-            <span>{`Total: ${section.varb(valueName).get.displayVarb()}`}</span>
-          )}
-          {!isItemized && (
-            <NumObjEntityEditor
-              className={"ValueSection-valueEditor"}
-              feVarbInfo={section.varbInfo("valueEditor")}
-              labeled={false}
-              endAdornment={endAdornment}
-            />
-          )}
-        </div>
-        <div className="ValueSection-itemizeControls">
-          <TogglerBooleanVarb
-            {...{
-              feVarbInfo: isItemizedVarb.get.feVarbInfo,
-              className: "ValueSection-itemizeGroup",
-              label: "Itemize",
-              name: "itemize switch",
-              onChange: (nextValue) => {
-                nextValue && openModal();
-              },
-            }}
-          />
-          {isItemized && (
-            <PlainIconBtn
-              className="ValueSection-editItemsBtn"
-              onClick={openModal}
-              middle={<AiFillEdit size={20} />}
-            />
-          )}
-        </div>
+        <SelectAndItemizeEditor
+          {...{
+            selectValue: valueSource,
+            editorVarbInfo:
+              valueSource === "lumpSum"
+                ? section.varbInfo("valueEditor")
+                : undefined,
+            menuItems: [
+              ["lumpSum", "Enter amount"],
+              ["itemize", "Itemize"],
+            ],
+            onChange: (e) => {
+              const value = e.target.value as string;
+              section.varb("valueSourceSwitch").updateValue(value);
+            },
+            total: section.get.varbNext(valueName).displayVarb(),
+            itemizeValue: "itemize",
+            itemizedModalTitle: displayNameValue,
+            itemsComponent: makeItemizedListNode({
+              feId: section.onlyChild(listChildName).feId,
+            }),
+          }}
+        />
       </div>
-      <SectionModal
-        {...{
-          title: `Itemized ${displayName ?? displayNameValue}`,
-          closeModal,
-          show: modalIsOpen,
-        }}
-      >
-        {makeItemizedListNode({
-          feId: section.onlyChild(listChildName).feId,
-        })}
-      </SectionModal>
     </Styled>
   );
 }
 
 const Styled = styled.div`
   .ValueSection-viewable {
-    height: ${theme.valueSectionSize};
     display: inline-block;
     border: solid 1px ${theme.primaryBorder};
     background: ${theme.light};
     border-radius: ${theme.br0};
     padding: ${theme.sectionPadding};
-    :hover {
-      .ValueSection-xBtn {
-        visibility: visible;
-      }
-    }
   }
 
   .ValueSection-value {
@@ -159,7 +118,6 @@ const Styled = styled.div`
   .ValueSection-xBtn {
     height: 22px;
     width: 22px;
-    visibility: hidden;
   }
 
   .ValueSection-titleRow {
@@ -169,7 +127,9 @@ const Styled = styled.div`
 
   .ValueSection-nameEditor {
     .DraftTextField-root {
-      min-width: 100px;
+      display: flex;
+      flex: 1;
+      /* min-width: 100px; */
     }
   }
   .ValueSection-valueEditor {

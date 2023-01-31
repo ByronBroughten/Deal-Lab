@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import theme from "../../../../../theme/Theme";
+import { FormSection } from "../../../../appWide/FormSection";
 import { PercentOngoingDollarInput } from "../../general/PercentOngoingDollarInput";
 
 type Props = { feId: string; className?: string };
@@ -10,26 +11,30 @@ export function BasicMgmtInfo({ feId, className }: Props) {
     <Styled
       {...{ sectionName: "mgmt", className: `BasicMgmtInfo-root ${className}` }}
     >
-      <PercentOngoingDollarInput
-        {...{
-          label: "Base Pay",
-          percentOfWhat: "gross rent",
-          unitBaseName: "basePay",
-          ongoingBaseName: "basePayDollars",
-          className: "BasicMgmtInfo-basePay",
-          ...feInfo,
-        }}
-      />
-      <PercentOngoingDollarInput
-        {...{
-          label: "Vacancy Loss",
-          percentOfWhat: "gross rent",
-          unitBaseName: "vacancyLoss",
-          ongoingBaseName: "vacancyLossDollars",
-          className: "BasicMgmtInfo-vacancyLoss",
-          ...feInfo,
-        }}
-      />
+      <FormSection>
+        <PercentOngoingDollarInput
+          {...{
+            label: "Base Pay",
+            percentOfWhat: "gross rent",
+            unitBaseName: "basePay",
+            ongoingBaseName: "basePayDollars",
+            className: "BasicMgmtInfo-basePay",
+            ...feInfo,
+          }}
+        />
+      </FormSection>
+      <FormSection>
+        <PercentOngoingDollarInput
+          {...{
+            label: "Vacancy Loss",
+            percentOfWhat: "gross rent",
+            unitBaseName: "vacancyLoss",
+            ongoingBaseName: "vacancyLossDollars",
+            className: "BasicMgmtInfo-vacancyLoss",
+            ...feInfo,
+          }}
+        />
+      </FormSection>
     </Styled>
   );
 }

@@ -52,7 +52,6 @@ export function getDefaultMainTableMakers(): TablePackMakers {
           dbVarbs: {
             valueEntityInfo: inEntityIdInfo({
               infoType: "globalSection",
-              expectedCount: "onlyOne",
               sectionName,
               varbName,
             }),

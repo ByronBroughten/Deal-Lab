@@ -1,12 +1,10 @@
 import { SectionPack } from "../../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { PackBuilderSection } from "../../StatePackers.ts/PackBuilderSection";
 import {
-  makeCapExList,
   makeExampleSingleTimeList,
   makeUtilityList,
 } from "./makeExampleOngoingLists";
 import {
-  exampleUserCapExProps,
   exampleUserUtilityProps,
   userRepairVarbProps,
 } from "./makeExampleOngoingListsProps";
@@ -17,10 +15,10 @@ export function makeExampleUserOngoingLists(): SectionPack<"ongoingList">[] {
     childName: "ongoingListMain",
     sectionPack: makeUtilityList(exampleUserUtilityProps, "exampleUtil1"),
   });
-  feUser.loadChild({
-    childName: "ongoingListMain",
-    sectionPack: makeCapExList(exampleUserCapExProps, "exampleCapX1"),
-  });
+  // feUser.loadChild({
+  //   childName: "ongoingListMain",
+  //   sectionPack: makeCapExList(exampleUserCapExProps, "exampleCapX1"),
+  // });
   return feUser.makeChildPackArr("ongoingListMain");
 }
 

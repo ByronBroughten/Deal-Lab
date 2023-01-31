@@ -30,14 +30,14 @@ export function CustomExpenses({ feId }: { feId: string }) {
               {...{
                 className: "CustomExpenses-upfrontCostGroup",
                 feId: property.onlyChild("upfrontExpenseGroup").feId,
-                titleText: "Upfront Costs",
+                titleText: "Custom Upfront Costs",
               }}
             />
             <ValueGroupOngoing
               {...{
                 className: "CustomExpenses-ongoingCostGroup",
                 feId: property.onlyChild("ongoingExpenseGroup").feId,
-                titleText: "Ongoing Costs",
+                titleText: "Custom Ongoing Costs",
               }}
             />
           </MainSectionInner>
@@ -52,7 +52,7 @@ const Styled = styled(FormSection)`
     border: none;
   }
   .CustomExpenses-expenses {
-    margin-top: ${theme.s3};
+    margin-top: ${theme.s35};
     padding-top: 0;
     padding-bottom: 0;
   }

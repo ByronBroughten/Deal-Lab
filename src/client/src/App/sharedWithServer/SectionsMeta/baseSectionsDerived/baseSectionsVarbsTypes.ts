@@ -11,7 +11,8 @@ import { SectionName, sectionNames } from "../SectionName";
 export type VarbValues = { [varbName: string]: StateValue };
 
 export type BaseSectionVarbs<SN extends SectionName> = AllBaseSectionVarbs[SN];
-export type VarbName<SN extends SectionName> = keyof BaseSectionVarbs<SN>;
+export type VarbName<SN extends SectionName = SectionName> =
+  keyof BaseSectionVarbs<SN>;
 
 type GetBaseVarb<
   SN extends SectionName,

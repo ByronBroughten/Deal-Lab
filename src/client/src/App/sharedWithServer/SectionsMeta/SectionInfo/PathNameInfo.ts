@@ -1,17 +1,15 @@
 import { z } from "zod";
 import { zS } from "../../utils/zod";
+import { NanoIdProp } from "../allBaseSectionVarbs/NanoIdInfo";
 import {
-  ExpectedCount,
-  GeneralMixedIdInfo,
-  GeneralMixedInfo,
-} from "../allBaseSectionVarbs/NanoIdInfo";
-import { SectionNameProp } from "../baseSectionsDerived/baseSectionInfo";
-import { VarbProp, VarbPropNext } from "../baseSectionsDerived/baseVarbInfo";
+  MakeVarbProp,
+  MixedInfoProps,
+} from "../baseSectionsDerived/baseVarbInfo";
 import { SectionName } from "../SectionName";
 import {
   PathNameOfSection,
-  SectionNameOfPath,
   SectionPathName,
+  SectionPathVarbName,
 } from "../sectionPathContexts/sectionPathNames";
 
 interface PathNameProp<PN extends SectionPathName> {
@@ -38,69 +36,45 @@ export function isPathInfoType(value: any): value is PathNameInfoType {
   return pathNameInfoTypes.includes(value);
 }
 
-interface PathNameInfo<PN extends SectionPathName = SectionPathName>
-  extends PathNameProp<PN>,
-    SectionNameProp<SectionNameOfPath<PN>> {}
+interface PathNameInfoNext<PN extends SectionPathName = SectionPathName>
+  extends PathNameProp<PN> {}
+interface PathNameDbInfoNext<PN extends SectionPathName>
+  extends PathNameInfoNext<PN> {
+  dbId: string;
+}
+interface PathNameVarbInfoNext<
+  PN extends SectionPathName = SectionPathName,
+  VN extends SectionPathVarbName<PN> = SectionPathVarbName<PN>
+> extends PathNameInfoNext<PN>,
+    MakeVarbProp<VN> {}
 
-export interface SectionPathNameInfo<SN extends SectionName>
-  extends SectionNameProp<SN>,
-    SectionPathNameProp<SN> {}
-
-// It will be SectionPathNameInfo
-
-interface PathMixedProp<EC extends ExpectedCount = ExpectedCount>
-  extends GeneralMixedInfo<EC>,
-    PathNameInfoTypeProp {
-  infoType: "pathName";
+export interface PathNameInfoMixedNext<
+  PN extends SectionPathName = SectionPathName
+> extends MixedInfoProps<"pathName"> {
+  pathName: PN;
 }
 
-export interface PathNameInfoMixed<
-  SN extends SectionName = SectionName,
-  EC extends ExpectedCount = ExpectedCount
-> extends SectionPathNameInfo<SN>,
-    PathMixedProp<EC> {}
-
-export interface PathVarbNames<PN extends SectionPathName>
-  extends PathNameProp<PN>,
-    VarbProp {}
-
-export interface PathNameVarbInfoNext<PN extends SectionPathName>
-  extends PathNameInfo<PN>,
-    VarbPropNext<SectionNameOfPath<PN>> {}
-
-export interface PathNameVarbInfo<SN extends SectionName = SectionName>
-  extends SectionPathNameInfo<SN>,
-    VarbProp {}
+export interface PathVarbNamesNext<
+  PN extends SectionPathName = SectionPathName,
+  VN extends SectionPathVarbName<PN> = SectionPathVarbName<PN>
+> extends PathNameProp<PN>,
+    MakeVarbProp<VN> {}
 
 export interface PathNameVarbInfoMixed<
-  SN extends SectionName = SectionName,
-  EC extends ExpectedCount = ExpectedCount
-> extends PathNameVarbInfo<SN>,
-    PathMixedProp<EC> {}
-
-export interface PathNameDbInfo<SN extends SectionName>
-  extends SectionPathNameInfo<SN> {
-  dbId: string;
-}
+  PN extends SectionPathName = SectionPathName,
+  VN extends SectionPathVarbName<PN> = SectionPathVarbName<PN>
+> extends PathNameInfoMixedNext<PN>,
+    MakeVarbProp<VN> {}
 
 export interface PathNameDbInfoMixed<
-  SN extends SectionName = SectionName,
-  EC extends ExpectedCount = ExpectedCount
-> extends SectionPathNameInfo<SN>,
-    GeneralMixedIdInfo<EC>,
-    PathNameInfoTypeProp {
-  infoType: "pathNameDbId";
-}
-
-export interface PathDbVarbInfo<SN extends SectionName>
-  extends PathNameVarbInfo<SN> {
-  dbId: string;
-}
+  PN extends SectionPathName = SectionPathName
+> extends PathNameProp<PN>,
+    MixedInfoProps<"pathNameDbId">,
+    NanoIdProp {}
 
 export interface PathDbVarbInfoMixed<
-  SN extends SectionName = SectionName,
-  EC extends ExpectedCount = ExpectedCount
-> extends PathNameVarbInfo<SN>,
-    GeneralMixedIdInfo<EC> {
-  infoType: "pathNameDbId";
-}
+  PN extends SectionPathName = SectionPathName,
+  VN extends SectionPathVarbName<PN> = SectionPathVarbName<PN>
+> extends PathNameVarbInfoNext<PN, VN>,
+    MixedInfoProps<"pathNameDbId">,
+    NanoIdProp {}

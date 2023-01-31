@@ -7,6 +7,8 @@ import {
 } from "../StateGetters/Bases/GetterSectionsBase";
 import { GetterSections } from "../StateGetters/GetterSections";
 import { Obj } from "../utils/Obj";
+import { VarbName } from "./../SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
+import { PathDbVarbInfoMixed } from "./../SectionsMeta/SectionInfo/PathNameInfo";
 import { absoluteVarbOptions } from "./pathVarbOptions";
 
 export type SectionOption = {
@@ -45,7 +47,7 @@ export class VariableGetterSections extends GetterSectionsBase {
       return options.concat(
         userVarbItems.map((item) => {
           const varbInfo = {
-            ...mixedInfoS.makeDb("userVarbItem", item.dbId, "onlyOne"),
+            ...mixedInfoS.makeDb("userVarbItem", item.dbId),
             varbName: "value",
           };
           return {
@@ -85,13 +87,8 @@ export class VariableGetterSections extends GetterSectionsBase {
             const varbName = ongoingNames[key];
             const varb = list.varb(varbName);
             const varbInfo = {
-              ...mixedInfoS.pathNameDbId(
-                "ongoingItem",
-                "ongoingItemMain",
-                varb.dbId,
-                "onlyOne"
-              ),
-              varbName: varb.varbName,
+              ...mixedInfoS.pathNameDbId("ongoingItemMain", varb.dbId),
+              varbName: varb.varbName as VarbName,
             };
             options.push({
               varbInfo,
@@ -101,14 +98,9 @@ export class VariableGetterSections extends GetterSectionsBase {
           }
         } else {
           const varb = list.varb("total");
-          const varbInfo = {
-            ...mixedInfoS.pathNameDbId(
-              "singleTimeItem",
-              "singleTimeItemMain",
-              varb.dbId,
-              "onlyOne"
-            ),
-            varbName: varb.varbName,
+          const varbInfo: PathDbVarbInfoMixed = {
+            ...mixedInfoS.pathNameDbId("singleTimeItemMain", varb.dbId),
+            varbName: varb.varbName as VarbName,
           };
           options.push({
             varbInfo,

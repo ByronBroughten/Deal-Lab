@@ -55,7 +55,7 @@ function basePay() {
           updateBasicsS.equationLeftRight(
             "simpleDivide",
             updateFnPropS.local(ongoingNames.monthly),
-            updateFnPropS.pathName("propertyFocal", "targetRentMonthly")
+            updateFnPropS.pathNameBase("propertyFocal", "targetRentMonthly")
           )
         ),
       ],
@@ -88,7 +88,7 @@ function basePay() {
           updateBasicsS.equationLeftRight(
             "simpleMultiply",
             updateFnPropS.local(baseNames.decimal),
-            updateFnPropS.pathName("propertyFocal", "targetRentMonthly")
+            updateFnPropS.pathNameBase("propertyFocal", "targetRentMonthly")
           )
         ),
         updateOverride(
@@ -117,7 +117,7 @@ function basePay() {
           updateBasicsS.equationLeftRight(
             "simpleMultiply",
             updateFnPropS.local(baseNames.decimal),
-            updateFnPropS.pathName("propertyFocal", "targetRentYearly")
+            updateFnPropS.pathNameBase("propertyFocal", "targetRentYearly")
           )
         ),
         updateOverride(
@@ -164,7 +164,7 @@ function vacancyLoss() {
           updateBasicsS.equationLeftRight(
             "simpleDivide",
             updateFnPropS.local(ongoingNames.monthly),
-            updateFnPropS.pathName("propertyFocal", "targetRentMonthly")
+            updateFnPropS.pathNameBase("propertyFocal", "targetRentMonthly")
           )
         ),
       ],
@@ -195,7 +195,7 @@ function vacancyLoss() {
           updateBasicsS.equationLeftRight(
             "simpleMultiply",
             updateFnPropS.local(baseNames.decimal),
-            updateFnPropS.pathName("propertyFocal", "targetRentMonthly")
+            updateFnPropS.pathNameBase("propertyFocal", "targetRentMonthly")
           )
         ),
         updateOverride(
@@ -224,7 +224,7 @@ function vacancyLoss() {
           updateBasicsS.equationLeftRight(
             "simpleMultiply",
             updateFnPropS.local(baseNames.decimal),
-            updateFnPropS.pathName("propertyFocal", "targetRentYearly")
+            updateFnPropS.pathNameBase("propertyFocal", "targetRentYearly")
           )
         ),
         updateOverride(
