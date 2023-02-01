@@ -380,7 +380,9 @@ function makeAllUpdateSections() {
           ),
           updateOverride(
             [overrideSwitchS.valueSourceIs("lumpSum")],
-            updateBasicsS.loadFromLocal("valueEditor") as UpdateBasics<"numObj">
+            updateBasicsS.loadSolvableTextByVarbInfo(
+              "valueEditor"
+            ) as UpdateBasics<"numObj">
           ),
         ],
       }),
@@ -435,7 +437,7 @@ function makeAllUpdateSections() {
             ),
             updateOverride(
               [
-                overrideSwitchS.valueSourceIs("valueEditor"),
+                overrideSwitchS.valueSourceIs("lumpSum"),
                 overrideSwitchS.yearlyIsActive("value"),
               ],
               updateBasicsS.yearlyToMonthly("value") as UpdateBasics<"numObj">
@@ -446,11 +448,11 @@ function makeAllUpdateSections() {
           updateFnName: "throwIfReached",
           updateOverrides: [
             updateOverride(
-              [overrideSwitchS.local("valueMode", "none")],
+              [overrideSwitchS.valueSourceIs("none")],
               updateBasics("emptyNumObj")
             ),
             updateOverride(
-              [overrideSwitchS.local("isItemized", true)],
+              [overrideSwitchS.valueSourceIs("itemized")],
               updateBasicsS.loadFromChild(
                 "ongoingList",
                 "totalYearly"
@@ -458,7 +460,7 @@ function makeAllUpdateSections() {
             ),
             updateOverride(
               [
-                overrideSwitchS.valueSourceIs("valueEditor"),
+                overrideSwitchS.valueSourceIs("lumpSum"),
                 overrideSwitchS.yearlyIsActive("value"),
               ],
               updateBasicsS.loadFromLocal(
@@ -467,7 +469,7 @@ function makeAllUpdateSections() {
             ),
             updateOverride(
               [
-                overrideSwitchS.valueSourceIs("valueEditor"),
+                overrideSwitchS.valueSourceIs("lumpSum"),
                 overrideSwitchS.monthlyIsActive("value"),
               ],
               updateBasicsS.monthlyToYearly("value") as UpdateBasics<"numObj">

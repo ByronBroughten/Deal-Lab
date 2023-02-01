@@ -8,6 +8,7 @@ AppRegistry.runApplication("App", {
 });
 
 // 3. Make a simple wordpress website
+
 // - Just do it badly at first, for the gist of it.
 // - Then pay someone to do it well
 
@@ -22,18 +23,15 @@ AppRegistry.runApplication("App", {
 // - Mark equation editor fields with an "Equation Editor" label,
 //   or something
 
-// Try showing all the available actions in the title rows
-
+// Make tests pass
 // Loan
-// - "Basic Loan Info" for "Interest rate, Loan term, etc"
-// - Mortgage Insurance in it's own form section
 // - Make a closingCostValue.
 //   - One quick option, a custom amount, and itemize
-
 // Management
-// - Make one value for each custom expense. It's gonna have
-//   one option for "None", one "Custom Amount", and "Itemize"
-// ongoingSoloValue and upfrontSoloValue
+// - Copy property's expenses
+// Make tests pass again
+
+// Try showing all the available actions in the title rows
 
 // 4. Allow for Fix and Flip
 //  - Add ARV
