@@ -1,5 +1,5 @@
 import { VarbListSingleTime } from "./ListGroup/ListGroupSingleTime/VarbListSingleTime";
-import { ValueSectionGenericNext } from "./ValueSectionGenericNext";
+import { ValueSectionGeneric } from "./ValueSectionGeneric";
 
 export interface ValueSectionOneTimeProps {
   className?: string;
@@ -10,7 +10,7 @@ export interface ValueSectionOneTimeProps {
 
 export function ValueSectionOneTime(props: ValueSectionOneTimeProps) {
   return (
-    <ValueSectionGenericNext
+    <ValueSectionGeneric
       {...{
         ...props,
         sectionName: "singleTimeValue",

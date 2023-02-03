@@ -4,9 +4,14 @@ import {
   SwitchTargetKey,
 } from "../../allBaseSectionVarbs/baseSwitchNames";
 import { ValueName } from "../../allBaseSectionVarbs/ValueName";
+import { ChildName } from "../../sectionChildrenDerived/ChildName";
 import { mixedInfoS } from "../../sectionChildrenDerived/MixedSectionInfo";
 import { PathNameVarbInfoMixed } from "../../SectionInfo/PathNameInfo";
-import { RelLocalVarbInfo, relVarbInfoS } from "../../SectionInfo/RelVarbInfo";
+import {
+  RelChildrenVarbInfo,
+  RelLocalVarbInfo,
+  relVarbInfoS,
+} from "../../SectionInfo/RelVarbInfo";
 import {
   VarbPathName,
   VarbPathNameInfoMixed,
@@ -35,8 +40,13 @@ export interface UpdateOverride<VN extends ValueName = ValueName>
 
 export type UpdateOverrideSwitches = readonly UpdateOverrideSwitch[];
 
+type UpdateOverrideSwitchInfo =
+  | RelChildrenVarbInfo
+  | RelLocalVarbInfo
+  | VarbPathNameInfoMixed
+  | PathNameVarbInfoMixed;
 export interface UpdateOverrideSwitch {
-  switchInfo: RelLocalVarbInfo | VarbPathNameInfoMixed | PathNameVarbInfoMixed;
+  switchInfo: UpdateOverrideSwitchInfo;
   switchValues: OverrideSwitchValue[];
 }
 
@@ -92,6 +102,16 @@ export const overrideSwitchS = {
       switchValues,
     } as const;
   },
+  child(
+    childName: ChildName,
+    varbName: string,
+    ...switchValues: OverrideSwitchValue[]
+  ): UpdateOverrideSwitch {
+    return {
+      switchInfo: relVarbInfoS.children(childName, varbName),
+      switchValues,
+    };
+  },
   ongoing<K extends SwitchTargetKey<"ongoing">>(
     baseName: string,
     switchKey: K
@@ -138,6 +158,9 @@ export const overrideSwitchS = {
   },
   valueSourceIs(valueSource: string): UpdateOverrideSwitch {
     return overrideSwitchS.local("valueSourceSwitch", valueSource);
+  },
+  valueModeIs(valueMode: string): UpdateOverrideSwitch {
+    return overrideSwitchS.local("valueMode", valueMode);
   },
 };
 

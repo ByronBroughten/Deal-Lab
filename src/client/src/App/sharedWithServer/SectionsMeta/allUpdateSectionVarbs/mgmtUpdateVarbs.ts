@@ -1,6 +1,6 @@
 import { switchKeyToVarbNames } from "../allBaseSectionVarbs/baseSwitchNames";
 import { UpdateSectionVarbs } from "../updateSectionVarbs/updateSectionVarbs";
-import { relVarbS, updateVarb } from "../updateSectionVarbs/updateVarb";
+import { updateVarb, updateVarbS } from "../updateSectionVarbs/updateVarb";
 import {
   UpdateBasics,
   updateBasicsS,
@@ -19,16 +19,22 @@ export function mgmtRelVarbs(): UpdateSectionVarbs<"mgmt"> {
   return {
     ...updateVarbsS._typeUniformity,
     ...updateVarbsS.savableSection,
+    one: updateVarbS.one(),
     ...basePay(),
     ...vacancyLoss(),
-    upfrontExpenses: relVarbS.sumNums([
-      updateFnPropS.children("upfrontExpenseValue", "value"),
+    useCustomCosts: updateVarb("boolean", { initValue: false }),
+    upfrontExpenses: updateVarbS.sumNums([
+      updateFnPropS.children("upfrontExpenseGroup", "total", [
+        overrideSwitchS.pathHasValue("mgmtFocal", "useCustomCosts", true),
+      ]),
     ]),
     ...updateVarbsS.ongoingSumNums(
       "expenses",
       [
-        updateFnPropS.children("ongoingExpenseValue", "value"),
         ...updateFnPropsS.localArr(["vacancyLossDollars", "basePayDollars"]),
+        updateFnPropS.onlyChild("ongoingExpenseGroup", "total", [
+          overrideSwitchS.pathHasValue("mgmtFocal", "useCustomCosts", true),
+        ]),
       ],
       "monthly"
     ),

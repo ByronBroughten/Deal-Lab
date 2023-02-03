@@ -10,6 +10,7 @@ type OnChange = (
 ) => void;
 
 export type SelectEditorProps = {
+  className?: string;
   selectValue: string;
   onChange?: OnChange;
   editorVarbInfo?: FeVarbInfo;
@@ -18,6 +19,7 @@ export type SelectEditorProps = {
   rightOfControls?: React.ReactNode;
 };
 export function SelectEditor({
+  className,
   selectValue,
   onChange,
   editorVarbInfo,
@@ -26,7 +28,7 @@ export function SelectEditor({
   rightOfControls,
 }: SelectEditorProps) {
   return (
-    <Styled className="SelectEditor-controlDiv">
+    <Styled className={`SelectEditor-controlDiv ${className ?? ""}`}>
       <FormControl
         className="SelectEditor-formControl"
         size="small"

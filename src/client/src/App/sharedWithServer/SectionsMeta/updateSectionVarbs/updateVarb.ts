@@ -2,12 +2,7 @@ import {
   LeftRightPropCalcName,
   NumPropCalcName,
 } from "../allBaseSectionVarbs/baseValues/calculations";
-import {
-  decimalRounding,
-  maxRounding,
-} from "../allBaseSectionVarbs/baseValues/calculations/numUnitParams";
 import { StateValue } from "../allBaseSectionVarbs/baseValues/StateValueTypes";
-import { ValueUnit } from "../allBaseSectionVarbs/baseVarbs";
 import { ValueName } from "../allBaseSectionVarbs/ValueName";
 import { valueMetas } from "../baseSectionsDerived/valueMetas";
 import { ValueByValueName } from "../baseSectionsDerived/valueMetaTypes";
@@ -25,7 +20,6 @@ import { UpdateProps, updatePropsS } from "./updateVarb/UpdateProps";
 export interface GeneralUpdateVarb extends UpdateProps {
   valueName: ValueName;
   initValue: StateValue;
-  calculateRound: number;
 }
 
 export interface UpdateVarb<VN extends ValueName>
@@ -33,17 +27,7 @@ export interface UpdateVarb<VN extends ValueName>
     UpdateProps {
   valueName: VN;
   initValue: ValueByValueName<VN>;
-  calculateRound: number;
 }
-
-export const calculatedRounding: Record<ValueUnit, number> = {
-  dollars: 2,
-  percent: 6,
-  decimal: decimalRounding,
-  absolute: maxRounding,
-  months: 2,
-  years: 2,
-} as const;
 
 const checkUpdateVarb = <VN extends ValueName, T extends UpdateVarb<VN>>(
   _: VN,
@@ -60,7 +44,6 @@ function defaultUpdateVarb<VN extends ValueName>(
     updateFnName: getUpdateFnNames(valueName)[0],
     updateFnProps: {},
     updateOverrides: [],
-    calculateRound: 10,
   });
 }
 
@@ -82,9 +65,15 @@ export function updateVarb<VN extends ValueName>(
 export type UpdateVarbOptions<VN extends ValueName> = Partial<UpdateVarb<VN>>;
 
 export type LeftRightVarbInfos = [UpdateFnProp, UpdateFnProp];
-export const relVarbS = {
+export const updateVarbS = {
   get displayNameEditor() {
     return updateVarb("string", updatePropsS.simple("manualUpdateOnly"));
+  },
+  one() {
+    return updateVarb("number", {
+      updateFnName: "numberOne",
+      initValue: 1,
+    });
   },
   sumNums(
     nums: UpdateFnProp[],

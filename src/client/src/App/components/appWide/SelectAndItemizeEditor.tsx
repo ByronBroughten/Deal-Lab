@@ -15,6 +15,7 @@ export interface SelectAndItemizeEditorProps extends SelectEditorProps {
 }
 
 export function SelectAndItemizeEditor({
+  className,
   total,
   itemsComponent,
   onChange,
@@ -30,7 +31,7 @@ export function SelectAndItemizeEditor({
 
   const isItemized = rest.selectValue === itemizeValue;
   return (
-    <Styled>
+    <Styled className={`SelectAndItemizeEditor ${className ?? ""}`}>
       <SelectEditor
         {...{
           onChange: (e) => {

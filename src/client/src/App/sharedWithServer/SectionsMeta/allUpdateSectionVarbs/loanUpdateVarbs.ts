@@ -2,7 +2,7 @@ import { switchKeyToVarbNames } from "../allBaseSectionVarbs/baseSwitchNames";
 import { PiCalculationName } from "../allBaseSectionVarbs/baseValues/calculations/piCalculations";
 import { numObj } from "../allBaseSectionVarbs/baseValues/NumObj";
 import { UpdateSectionVarbs } from "../updateSectionVarbs/updateSectionVarbs";
-import { relVarbS, updateVarb } from "../updateSectionVarbs/updateVarb";
+import { updateVarb, updateVarbS } from "../updateSectionVarbs/updateVarb";
 import {
   UpdateBasics,
   updateBasics,
@@ -103,7 +103,7 @@ export function loanRelVarbs(): UpdateSectionVarbs<"loan"> {
         ],
       },
     }),
-    loanTotalDollars: relVarbS.sumNums([
+    loanTotalDollars: updateVarbS.sumNums([
       updateFnPropS.local("loanBaseDollars"),
       updateFnPropS.children("wrappedInLoanValue", "value"),
     ]),
@@ -112,10 +112,28 @@ export function loanRelVarbs(): UpdateSectionVarbs<"loan"> {
       [updateFnPropS.local("loanPayment"), updateFnPropS.local("mortgageIns")],
       "monthly"
     ),
-    closingCosts: relVarbS.sumNums([
-      updateFnPropS.children("closingCostValue", "value"),
-    ]),
-    wrappedInLoan: relVarbS.sumNums([
+    fivePercentBaseLoan: updateVarbS.singlePropFn(
+      "fivePercent",
+      updateFnPropS.local("loanBaseDollars")
+    ),
+    closingCosts: updateVarbS.sumNums(
+      [updateFnPropS.children("closingCostValue", "value")],
+      {
+        updateOverrides: [
+          updateOverride(
+            [
+              overrideSwitchS.child(
+                "closingCostValue",
+                "valueMode",
+                "fivePercentLoan"
+              ),
+            ],
+            updateBasicsS.loadSolvableTextByVarbInfo("fivePercentBaseLoan")
+          ),
+        ],
+      }
+    ),
+    wrappedInLoan: updateVarbS.sumNums([
       updateFnPropS.children("wrappedInLoanValue", "value"),
     ]),
     piCalculationName: updateVarb("string", {

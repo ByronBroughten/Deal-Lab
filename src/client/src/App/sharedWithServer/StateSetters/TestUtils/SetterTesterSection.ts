@@ -7,37 +7,32 @@ import {
 } from "../../SectionsMeta/SectionInfo/FeInfo";
 import { SectionName } from "../../SectionsMeta/SectionName";
 import { SectionNameByType } from "../../SectionsMeta/SectionNameByType";
+import {
+  PathSectionName,
+  SectionPathName,
+} from "../../SectionsMeta/sectionPathContexts/sectionPathNames";
 import { GetterList } from "../../StateGetters/GetterList";
 import { GetterSection } from "../../StateGetters/GetterSection";
 import { GetterVarb } from "../../StateGetters/GetterVarb";
 import { SolverSections } from "../../StateSolvers/SolverSections";
 import { SetterSection } from "../SetterSection";
-import {
-  SectionTesterBase,
-  SectionTesterProps,
-} from "./Bases/SectionTesterBase";
+import { SectionTesterBase } from "./Bases/SectionTesterBase";
 
 export class SetterTesterSection<
   SN extends SectionName
 > extends SectionTesterBase<SN> {
-  static initProps<S extends SectionName>(
-    sectionName: S
-  ): SectionTesterProps<S> {
-    const sections = SolverSections.initSectionsFromDefaultMain();
-    const list = new GetterList({
-      sectionName,
-      ...GetterList.initProps({ sections, sectionContextName: "default" }),
-    });
-    return {
-      ...list.last.feInfo,
-      state: { sections },
-    };
-  }
   onlyChild<CN extends ChildName<SN>>(
     childName: CN
   ): SetterTesterSection<ChildSectionName<SN, CN>> {
     const child = this.get.onlyChild(childName);
     return this.setterTester(child.feInfo);
+  }
+  get testerProps() {
+    return {
+      state: this.state,
+      sectionName: this.sectionName,
+      feId: this.feId,
+    } as const;
   }
   setterTester<S extends SectionName>(
     feInfo: FeSectionInfo<S>
@@ -55,12 +50,17 @@ export class SetterTesterSection<
     });
   }
   static initActiveDeal(): SetterTesterSection<"deal"> {
-    return this.initMain().onlyChild("activeDeal");
+    return this.initMain().onlyChild("activeDealPage").onlyChild("deal");
   }
-  static init<S extends SectionNameByType>(
-    sectionName: S
-  ): SetterTesterSection<S> {
-    return new SetterTesterSection(this.initProps(sectionName));
+  static initByPathName<PN extends SectionPathName>(
+    pathName: PN
+  ): SetterTesterSection<PathSectionName<PN>> {
+    const activeDeal = this.initActiveDeal();
+    const feInfo = activeDeal.get.sectionByFocalMixed({
+      infoType: "pathName",
+      pathName,
+    });
+    return activeDeal.setterTester(feInfo) as SetterTesterSection<any>;
   }
   get setter(): SetterSection<SN> {
     return new SetterSection(this.setterSectionTestProps);

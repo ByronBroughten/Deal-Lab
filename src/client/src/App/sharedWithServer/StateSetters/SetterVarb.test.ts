@@ -4,13 +4,13 @@ import { SetterTesterVarb } from "./TestUtils/SetterTesterVarb";
 
 describe("SetterVarb", () => {
   const namesAndValues = [
-    ["property", ["displayName", stringObj("New Title")]],
-    ["property", ["price", numObj(250000)]],
+    ["propertyFocal", ["displayName", stringObj("New Title")]],
+    ["propertyFocal", ["price", numObj(250000)]],
     ["unit", ["rent"]],
   ] as const;
   it("should directly update the value", () => {
     const tester = SetterTesterVarb.init({
-      sectionName: "property",
+      pathName: "propertyFocal",
       varbName: "displayName",
     });
     const nextValue = stringObj("New Title");
@@ -19,7 +19,7 @@ describe("SetterVarb", () => {
   });
   it("should update and solve for the value", () => {
     const tester = SetterTesterVarb.init({
-      sectionName: "property",
+      pathName: "propertyFocal",
       varbName: "price",
     });
     const preNum = tester.get.numberOrZero;

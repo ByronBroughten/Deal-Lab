@@ -6,7 +6,7 @@ import {
   updateGroupS,
 } from "./switchUpdateVarbs";
 import { UpdateSectionVarbs } from "./updateSectionVarbs";
-import { relVarbS, updateVarb } from "./updateVarb";
+import { updateVarb, updateVarbS } from "./updateVarb";
 import { updateBasics, updateBasicsS } from "./updateVarb/UpdateBasics";
 import { updateFnPropS } from "./updateVarb/UpdateFnProps";
 import {
@@ -66,7 +66,7 @@ export const updateVarbsS = {
   get listItemVirtualVarb() {
     return {
       valueEntityInfo: updateVarb("inEntityInfo"),
-      displayNameEditor: relVarbS.displayNameEditor,
+      displayNameEditor: updateVarbS.displayNameEditor,
       displayName: updateVarb("stringObj", {
         updateFnName: "loadLocalString",
         updateFnProps: {

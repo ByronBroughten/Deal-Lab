@@ -16,20 +16,29 @@ export const sectionAbsolutePathInfos = {
   get feUser() {
     return absolute("feUser", ["main", "feUser"]);
   },
+  get active() {
+    return absolute("dealPage", ["main", "activeDealPage"]);
+  },
+  get latent() {
+    return absolute("latentSections", ["main", "latentSections"]);
+  },
+  get dealActive() {
+    return absolute("deal", [...this.active.path, "deal"]);
+  },
+  get dealLatent() {
+    return absolute("deal", [...this.latent.path, "deal"]);
+  },
   get calculatedVarbsActive() {
-    return absolute("calculatedVarbs", ["main", "calculatedVarbs"]);
+    return absolute("calculatedVarbs", [
+      ...this.active.path,
+      "calculatedVarbs",
+    ]);
   },
   get calculatedVarbsLatent() {
     return absolute("calculatedVarbs", [
       ...this.latent.path,
       "calculatedVarbs",
     ]);
-  },
-  get dealActive() {
-    return absolute("deal", ["main", "activeDeal"]);
-  },
-  get latent() {
-    return absolute("latentSections", ["main", "latentSections"]);
   },
   get userVarbItemLatent() {
     return absolute("userVarbItem", [
@@ -56,9 +65,6 @@ export const sectionAbsolutePathInfos = {
       "ongoingItem",
     ]);
   },
-  get dealLatent() {
-    return absolute("deal", [...this.latent.path, "deal"]);
-  },
 
   get mgmtActive() {
     return absolute("mgmt", [...this.dealActive.path, "mgmt"]);
@@ -76,13 +82,13 @@ export const sectionAbsolutePathInfos = {
     return absolute("loan", [...this.financingLatent.path, "loan"]);
   },
   get closingCostActive() {
-    return absolute("singleTimeValue", [
+    return absolute("closingCostValue", [
       ...this.loanActive.path,
       "closingCostValue",
     ]);
   },
   get closingCostLatent() {
-    return absolute("singleTimeValue", [
+    return absolute("closingCostValue", [
       ...this.loanLatent.path,
       "closingCostValue",
     ]);

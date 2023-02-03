@@ -19,11 +19,11 @@ export type GuestAccessSectionPackArrs = {
 export function areGuestAccessSections(
   value: any
 ): value is GuestAccessSectionPackArrs {
-  const zGuestAccessSections = makeZGuestAccessSectionsNext();
+  const zGuestAccessSections = makeZGuestAccessSections();
   zGuestAccessSections.parse(value);
   return true;
 }
-function makeZGuestAccessSectionsNext() {
+function makeZGuestAccessSections() {
   const feGuestAccessStoreNames = guestAccessNames;
   const schemaFrame = feGuestAccessStoreNames.reduce(
     (feGuestAccessSections, childName) => {

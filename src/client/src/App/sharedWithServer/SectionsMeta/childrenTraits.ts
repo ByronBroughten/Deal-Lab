@@ -93,10 +93,7 @@ function checkAllChildrenTraits<RCS extends GenericAllChildrenTraits>(
 export const allChildrenTraits = checkAllChildrenTraits({
   ...makeDefaultAllChildrenTraits(),
   main: childrenTraits("main", {
-    calculatedVarbs: childTraits({
-      sectionContextName: "activeDealPage",
-    }),
-    activeDeal: childTraits({
+    activeDealPage: childTraits({
       sectionContextName: "activeDealPage",
     }),
     userVarbEditor: childTraits({

@@ -5,6 +5,10 @@ import { getStoredObj } from "../../../utils/localStorage";
 import { makeDefaultMain } from "../../defaultMaker/makeDefaultMain";
 import { allBaseSectionVarbs } from "../../SectionsMeta/allBaseSectionVarbs";
 import { ChildSectionPack } from "../../SectionsMeta/sectionChildrenDerived/ChildSectionPack";
+import {
+  SectionPack,
+  validateSectionPackNext,
+} from "../../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { validateSectionPackArrs } from "../../SectionsMeta/SectionNameByType";
 import { GetterSections } from "../../StateGetters/GetterSections";
 import { PackBuilderSection } from "../../StatePackers.ts/PackBuilderSection";
@@ -50,23 +54,31 @@ export class SectionsStore {
     const feUser = main.onlyChild("feUser");
     const authStatus = feUser.valueNext("authStatus");
 
-    this.setSectionsInStore(
-      packBuilder.makeChildPackArrs(
-        "activeDeal",
+    const activeDeal = packBuilder
+      .onlyChild("activeDealPage")
+      .onlyChild("deal");
+
+    this.setSectionsInStore({
+      activeDeal: activeDeal.makeSectionPack(),
+      ...packBuilder.makeChildPackArrs(
         "userVarbEditor",
         "userListEditor",
         ...(authStatus === "guest" ? (["feUser"] as const) : [])
-      )
-    );
+      ),
+    });
   }
 
   private static getAndValidateStoredState(): StoredSectionsState {
     const storedState = this.getSectionsFromStore();
+    const { activeDeal, ...rest } = storedState;
     try {
-      return validateSectionPackArrs(storedState, "main", [
-        ...storeChildNames,
-        optionalStoreName,
-      ]);
+      return {
+        activeDeal: validateSectionPackNext(activeDeal),
+        ...validateSectionPackArrs(rest, "main", [
+          ...storeChildNames,
+          optionalStoreName,
+        ]),
+      };
     } catch (e) {
       this.rmStoredState();
       throw new Error("Failed to validate stored deal state.");
@@ -129,16 +141,14 @@ export class SectionsStore {
   }
 }
 
-const storeChildNames = [
-  "activeDeal",
-  "userVarbEditor",
-  "userListEditor",
-] as const;
+const storeChildNames = ["userVarbEditor", "userListEditor"] as const;
 type StoredChildName = typeof storeChildNames[number];
 const optionalStoreName = "feUser";
 type OptionalStoreName = typeof optionalStoreName;
 
 type StoredSectionsState = {
+  activeDeal: SectionPack<"deal">;
+} & {
   [CN in StoredChildName]: ChildSectionPack<"main", CN>[];
 } & {
   [CN in OptionalStoreName]?: ChildSectionPack<"main", CN>[];

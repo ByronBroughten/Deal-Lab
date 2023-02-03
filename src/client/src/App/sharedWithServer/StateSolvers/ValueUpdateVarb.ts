@@ -76,9 +76,17 @@ export class SolveValueVarb<
     );
   }
   private updateFns = {
+    varbExists: (): boolean => {
+      const { updateFnProps } = this.inEntityVarb;
+      const { varbInfo } = updateFnProps as { varbInfo: UpdateFnProp };
+      const varbs = this.activePropVarbs(varbInfo);
+      if (varbs.length > 0) return true;
+      else return false;
+    },
+    numberOne: (): 1 => 1,
     completionStatus: (): CompletionStatus => {
       const { updateFnProps } = this.inEntityVarb;
-      const { nonZeros, validInputs, othersValid, nonNone } =
+      const { nonZeros, validInputs, othersValid, nonNone, notFalse } =
         updateFnProps as CompletionStatusProps;
 
       let allEmpty = true;
@@ -105,6 +113,15 @@ export class SolveValueVarb<
             updateBools({ isEmpty: false, isValid: false });
           } else if (value === "allValid") {
             updateBools({ isEmpty: false, isValid: true });
+          }
+        }
+      }
+
+      for (const prop of notFalse) {
+        const varbs = this.activePropVarbs(prop);
+        for (const varb of varbs) {
+          if (varb.value("boolean") === false) {
+            updateBools({ isEmpty: false, isValid: false });
           }
         }
       }
@@ -138,6 +155,7 @@ export class SolveValueVarb<
       if (allValid) return "allValid";
       else return "someInvalid";
     },
+
     manualUpdateOnly: (): StateValue => {
       return this.getterVarb.value();
     },
@@ -394,7 +412,7 @@ export class SolveValueVarb<
       for (const relInfo of propOrArr) {
         const inVarbs = this.getterSection.varbsByFocalMixed(relInfo);
         for (const inVarb of inVarbs) {
-          if (inVarb.hasValueType("numObj")) {
+          if (inVarb.hasValueType("numObj") || inVarb.hasValueType("number")) {
             const num = inVarb.numberOrQuestionMark;
             if (num === "?") {
               failedVarbs.push({

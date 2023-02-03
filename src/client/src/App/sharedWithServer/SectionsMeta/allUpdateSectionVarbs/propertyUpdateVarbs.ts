@@ -1,5 +1,5 @@
 import { UpdateSectionVarbs } from "../updateSectionVarbs/updateSectionVarbs";
-import { relVarbS, updateVarb } from "../updateSectionVarbs/updateVarb";
+import { updateVarb, updateVarbS } from "../updateSectionVarbs/updateVarb";
 import {
   updateFnPropS,
   updateFnPropsS,
@@ -11,7 +11,7 @@ export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
   return {
     ...updateVarbsS._typeUniformity,
     ...updateVarbsS.savableSection,
-
+    one: updateVarbS.one(),
     price: updateVarb("numObj"),
     sqft: updateVarb("numObj"),
     ...updateVarbsS.ongoingInputNext("taxes", {
@@ -20,20 +20,16 @@ export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
 
     arv: updateVarb("numObj"),
     sellingCosts: updateVarb("numObj"),
-
-    numUnits: relVarbS.sumChildNums("unit", "one"),
-    numBedrooms: relVarbS.sumChildNums("unit", "numBedrooms"),
-    upfrontExpenses: relVarbS.sumNums([
+    numUnits: updateVarbS.sumChildNums("unit", "one"),
+    numBedrooms: updateVarbS.sumChildNums("unit", "numBedrooms"),
+    useCustomCosts: updateVarb("boolean", { initValue: false }),
+    upfrontExpenses: updateVarbS.sumNums([
       updateFnPropS.local("price"),
       updateFnPropS.children("repairValue", "value"),
       updateFnPropS.onlyChild("upfrontExpenseGroup", "total", [
         overrideSwitchS.pathHasValue("propertyFocal", "useCustomCosts", true),
       ]),
     ]),
-    upfrontRevenue: relVarbS.sumNums([
-      updateFnPropS.children("upfrontRevenueGroup", "total"),
-    ]),
-    useCustomCosts: updateVarb("boolean", { initValue: false }),
     ...updateVarbsS.ongoingSumNums(
       "expenses",
       [
@@ -48,6 +44,9 @@ export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
       ],
       "monthly"
     ),
+    upfrontRevenue: updateVarbS.sumNums([
+      updateFnPropS.children("upfrontRevenueGroup", "total"),
+    ]),
     ...updateVarbsS.ongoingInputNext("homeIns", {
       switchInit: "yearly",
     }),

@@ -37,11 +37,15 @@ export const allSectionChildren = checkAllSectionChildren({
   // main has feUser and each of the main app pages
   main: sectionChildren({
     feUser: ["feUser"],
-    activeDeal: ["deal"],
+    activeDealPage: ["dealPage"],
     calculatedVarbs: ["calculatedVarbs"],
     latentSections: ["latentSections"],
     userVarbEditor: ["userVarbEditor"],
     userListEditor: ["userListEditor"],
+  }),
+  dealPage: sectionChildren({
+    deal: ["deal"],
+    calculatedVarbs: ["calculatedVarbs"],
   }),
   latentSections: sectionChildren({
     calculatedVarbs: ["calculatedVarbs"],
@@ -147,10 +151,11 @@ export const allSectionChildren = checkAllSectionChildren({
   }),
   financing: { loan: sectionChild("loan") },
   loan: sectionChildren({
-    closingCostValue: ["singleTimeValue"],
+    closingCostValue: ["closingCostValue"],
     wrappedInLoanValue: ["singleTimeValue"],
     customVarb: ["customVarb"],
   }),
+  closingCostValue: { singleTimeList: sectionChild("singleTimeList") },
   propertyGeneral: { property: sectionChild("property") },
   property: sectionChildren({
     unit: ["unit"],
@@ -172,8 +177,7 @@ export const allSectionChildren = checkAllSectionChildren({
     ongoingList: ["ongoingList"],
   }),
   capExValue: sectionChildren({
-    capExList: ["ongoingList"],
-    capExListNext: ["capExList"],
+    capExList: ["capExList"],
   }),
   capExList: sectionChildren({
     capExItem: ["capExItem"],
@@ -181,8 +185,8 @@ export const allSectionChildren = checkAllSectionChildren({
 
   mgmtGeneral: { mgmt: sectionChild("mgmt") },
   mgmt: sectionChildren({
-    upfrontExpenseValue: ["singleTimeValue"],
-    ongoingExpenseValue: ["ongoingValue"],
+    upfrontExpenseGroup: ["singleTimeValueGroup"],
+    ongoingExpenseGroup: ["ongoingValueGroup"],
     customVarb: ["customVarb"],
   }),
 });

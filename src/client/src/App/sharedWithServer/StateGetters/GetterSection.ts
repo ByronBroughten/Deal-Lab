@@ -184,10 +184,29 @@ export class GetterSection<
     const sections = this.sectionsByFocalMixed(sectionInfo);
     return sections.map((section) => section.varb(varbName));
   }
-  sectionByFocalMixed(info: SectionInfoMixedFocal) {
+  sectionByFocalMixed(info: SectionInfoMixedFocal): GetterSection {
     const sections = this.sectionsByFocalMixed(info);
-    this.list.exactlyOneOrThrow(sections, info.infoType);
+    if (info.infoType === "pathName" || info.infoType === "pathNameDbId") {
+      this.oneOrThrowByPathNameError(sections, info.pathName);
+    } else if (info.infoType === "children") {
+      this.oneOrThrowChildError(sections, info.childName);
+    } else {
+      this.list.exactlyOneOrThrow(sections, info.infoType);
+    }
     return sections[0];
+  }
+  private noSectionByPathError(pathName: SectionPathName): Error {
+    return new Error(`No section found using pathName ${pathName}`);
+  }
+  private tooManySectionsByPathError(pathName: SectionPathName): Error {
+    return new Error(`Too many sections at pathName ${pathName}`);
+  }
+  oneOrThrowByPathNameError(sections: any[], pathName: SectionPathName): void {
+    if (sections.length > 1) {
+      throw this.tooManySectionsByPathError(pathName);
+    } else if (sections.length < 1) {
+      throw this.noSectionByPathError(pathName);
+    }
   }
   hasSectionByFocalMixed(info: SectionInfoMixedFocal) {
     const sections = this.sectionsByFocalMixed(info);
@@ -439,22 +458,19 @@ export class GetterSection<
     this.oneOrThrowChildError(children, childName);
     return children[0];
   }
-  oneOrThrowChildError<CN extends ChildName<SN>>(
-    arr: any[],
-    childName: CN
-  ): void {
+  oneOrThrowChildError(arr: any[], childName: ChildName): void {
     if (arr.length > 1) {
       throw this.tooManyChildrenError(childName);
     } else if (arr.length < 1) {
       throw this.noChildError(childName);
     }
   }
-  tooManyChildrenError(childName: ChildName<SN>): TooManySectionsFoundError {
+  tooManyChildrenError(childName: ChildName): TooManySectionsFoundError {
     return new TooManySectionsFoundError(
       `${this.sectionName} has too many children of childName ${childName}`
     );
   }
-  noChildError(childName: ChildName<SN>): SectionNotFoundError {
+  noChildError(childName: ChildName): SectionNotFoundError {
     return new SectionNotFoundError(
       `${this.sectionName} has no children of childName ${childName}`
     );
@@ -705,6 +721,20 @@ export class GetterSection<
   get allChildFeIds(): ChildIdArrsWide<SN> {
     return this.raw.childFeIds as GeneralChildIdArrs as ChildIdArrsWide<SN>;
   }
+  get allChildren(): GetterChildren<SN> {
+    return this.childNames.reduce((children, childName) => {
+      children[childName] = [];
+      for (const feId of this.childFeIds(childName)) {
+        children[childName].push(
+          this.child({
+            childName,
+            feId,
+          })
+        );
+      }
+      return children;
+    }, {} as GetterChildren<SN>);
+  }
   childIdsOfType<CT extends ChildSectionName<SN>>(sectionName: CT): string[] {
     const childNames = this.meta.childTypeNames(sectionName);
     return childNames.reduce((ids, childName) => {
@@ -922,3 +952,7 @@ export class GetterSection<
     });
   }
 }
+
+type GetterChildren<SN extends SectionName> = {
+  [CN in ChildName<SN>]: GetterSection<ChildSectionName<SN, CN>>[];
+};

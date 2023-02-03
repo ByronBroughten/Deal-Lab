@@ -1,6 +1,6 @@
 import { StrictOmit } from "../../../utils/types";
 import { mixedInfoS } from "../../sectionChildrenDerived/MixedSectionInfo";
-import { PathVarbNamesNext } from "../../SectionInfo/PathNameInfo";
+import { PathVarbNames } from "../../SectionInfo/PathNameInfo";
 import {
   getVarbPathParams,
   VarbPathName,
@@ -59,7 +59,7 @@ type EntityNumObjPropArr = (number | string | [VarbPathName])[];
 function pathNameEntityInfo<PN extends VarbSectionPathName>({
   pathName,
   varbName,
-}: PathVarbNamesNext<PN>): StrictOmit<
+}: PathVarbNames<PN>): StrictOmit<
   PathNameInEntity,
   "length" | "offset" | "entityId"
 > {

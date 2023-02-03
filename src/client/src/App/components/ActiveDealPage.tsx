@@ -10,7 +10,7 @@ export function ActiveDealPage() {
     <PageMain>
       <NavContainer activeBtnName="deal">
         <SectionPathContext.Provider value="activeDealPage">
-          <ActiveDeal feId={main.onlyChild("activeDeal").feId} />
+          <ActiveDeal feId={main.onlyChildFeId("activeDealPage")} />
         </SectionPathContext.Provider>
       </NavContainer>
     </PageMain>

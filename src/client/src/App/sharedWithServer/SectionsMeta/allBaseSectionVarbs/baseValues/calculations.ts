@@ -71,7 +71,7 @@ const calculations = {
   ...solvableTextByArgs.single,
   ...solvableTextByArgs.leftRight,
   ...solvableTextByArgs.nums,
-  one: ({}) => "2",
+  one: ({}) => "1",
   two: ({}) => "2",
   portionToDecimal: ({
     base,

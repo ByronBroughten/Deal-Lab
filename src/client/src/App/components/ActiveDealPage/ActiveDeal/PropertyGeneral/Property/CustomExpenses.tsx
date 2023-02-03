@@ -7,19 +7,25 @@ import { ValueGroupOngoing } from "../../../../appWide/ListGroup/ValueGroupOngoi
 import { ValueGroupSingleTime } from "../../../../appWide/ListGroup/ValueGroupSingleTime";
 import { TogglerBooleanTitleVarb } from "../../../../appWide/TogglerBooleanTitleVarb";
 
-export function CustomExpenses({ feId }: { feId: string }) {
-  const property = useGetterSection({
-    sectionName: "property",
+export function CustomExpenses({
+  feId,
+  sectionName,
+}: {
+  feId: string;
+  sectionName: "property" | "mgmt";
+}) {
+  const section = useGetterSection({
+    sectionName,
     feId,
   });
-  const useCustomCosts = property.valueNext("useCustomCosts");
+  const useCustomCosts = section.valueNext("useCustomCosts");
   return (
     <Styled>
       <div>
         <TogglerBooleanTitleVarb
           {...{
             className: "BasicLoanInfo-toggler",
-            feVarbInfo: property.varbInfo("useCustomCosts"),
+            feVarbInfo: section.varbInfo("useCustomCosts"),
             label: "Add custom expenses (optional)",
             name: "use custom payments toggle",
           }}
@@ -29,14 +35,14 @@ export function CustomExpenses({ feId }: { feId: string }) {
             <ValueGroupSingleTime
               {...{
                 className: "CustomExpenses-upfrontCostGroup",
-                feId: property.onlyChild("upfrontExpenseGroup").feId,
+                feId: section.onlyChild("upfrontExpenseGroup").feId,
                 titleText: "Custom Upfront Costs",
               }}
             />
             <ValueGroupOngoing
               {...{
                 className: "CustomExpenses-ongoingCostGroup",
-                feId: property.onlyChild("ongoingExpenseGroup").feId,
+                feId: section.onlyChild("ongoingExpenseGroup").feId,
                 titleText: "Custom Ongoing Costs",
               }}
             />

@@ -1,29 +1,26 @@
-import { VarbNames } from "../../SectionsMeta/baseSectionsDerived/baseVarbInfo";
+import { PathVarbNames } from "../../SectionsMeta/SectionInfo/PathNameInfo";
 import { SectionNameByType } from "../../SectionsMeta/SectionNameByType";
+import {
+  PathSectionName,
+  SectionPathName,
+} from "../../SectionsMeta/sectionPathContexts/sectionPathNames";
 import { GetterVarb } from "../../StateGetters/GetterVarb";
 import { SetterVarb } from "../SetterVarb";
-import {
-  SetterTesterVarbBase,
-  SetterTesterVarbProps,
-} from "./Bases/SetterTesterVarbBase";
+import { SetterTesterVarbBase } from "./Bases/SetterTesterVarbBase";
 import { SetterTesterSection } from "./SetterTesterSection";
 
 export class SetterTesterVarb<
   SN extends SectionNameByType
 > extends SetterTesterVarbBase<SN> {
-  static initProps<S extends SectionNameByType>({
-    sectionName,
+  static init<PN extends SectionPathName>({
+    pathName,
     varbName,
-  }: VarbNames<S>): SetterTesterVarbProps<S> {
-    return {
-      ...SetterTesterSection.initProps(sectionName),
-      varbName,
-    };
-  }
-  static init<S extends SectionNameByType>(
-    props: VarbNames<S>
-  ): SetterTesterVarb<S> {
-    return new SetterTesterVarb(this.initProps(props));
+  }: PathVarbNames<PN>): SetterTesterVarb<PathSectionName<PN>> {
+    const section = SetterTesterSection.initByPathName(pathName);
+    return new SetterTesterVarb({
+      ...section.testerProps,
+      varbName: varbName as string,
+    });
   }
 
   get setter(): SetterVarb<SN> {

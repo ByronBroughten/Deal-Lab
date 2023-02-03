@@ -11,7 +11,8 @@ import {
 } from "./entities";
 
 export type ValueIdInEntityInfo = ValueInEntityInfo & { entityId: string };
-const zInEntityValueInfo = zInEntityVarbInfo.and(
+const zInEntityValueInfo = z.any();
+const zInEntityValueInfoNext = zInEntityVarbInfo.and(
   z.object({ entityId: zS.nanoId })
 );
 

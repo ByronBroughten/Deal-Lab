@@ -16,7 +16,7 @@ import {
   updateSectionProp,
   UpdateSectionVarbs,
 } from "./updateSectionVarbs/updateSectionVarbs";
-import { relVarbS, updateVarb } from "./updateSectionVarbs/updateVarb";
+import { updateVarb, updateVarbS } from "./updateSectionVarbs/updateVarb";
 import {
   updateBasics,
   UpdateBasics,
@@ -66,10 +66,7 @@ function makeAllUpdateSections() {
     ...updateSectionProp("financing", financingUpdateVarbs()),
     ...updateSectionProp("property", propertyUpdateVarbs()),
     ...updateSectionProp("unit", {
-      one: updateVarb("numObj", {
-        updateFnName: "one",
-        initValue: numObj(1),
-      }),
+      one: updateVarbS.one(),
       numBedrooms: updateVarb("numObj"),
       ...updateVarbsS.ongoingInputNext("targetRent"),
     }),
@@ -123,14 +120,14 @@ function makeAllUpdateSections() {
             ),
             updateOverride(
               [
-                overrideSwitchS.local("valueMode", "lumpSumEditor"),
+                overrideSwitchS.local("valueMode", "lumpSum"),
                 overrideSwitchS.switchIsActive("value", "ongoing", "monthly"),
               ],
               updateBasicsS.loadFromLocal("valueLumpSumEditor")
             ),
             updateOverride(
               [
-                overrideSwitchS.local("valueMode", "lumpSumEditor"),
+                overrideSwitchS.local("valueMode", "lumpSum"),
                 overrideSwitchS.switchIsActive("value", "ongoing", "yearly"),
               ],
               updateBasicsS.yearlyToMonthly("value")
@@ -153,14 +150,14 @@ function makeAllUpdateSections() {
             ),
             updateOverride(
               [
-                overrideSwitchS.local("valueMode", "lumpSumEditor"),
+                overrideSwitchS.local("valueMode", "lumpSum"),
                 overrideSwitchS.switchIsActive("value", "ongoing", "yearly"),
               ],
               updateBasicsS.loadFromLocal("valueLumpSumEditor")
             ),
             updateOverride(
               [
-                overrideSwitchS.local("valueMode", "lumpSumEditor"),
+                overrideSwitchS.local("valueMode", "lumpSum"),
                 overrideSwitchS.switchIsActive("value", "ongoing", "monthly"),
               ],
               updateBasicsS.monthlyToYearly("value")
@@ -344,7 +341,7 @@ function makeAllUpdateSections() {
       } as const),
     }),
     ...updateSectionProp("singleTimeValueGroup", {
-      total: relVarbS.sumNums([
+      total: updateVarbS.sumNums([
         updateFnPropS.children("singleTimeValue", "value"),
       ]),
       itemValueSwitch: updateVarb("string", {
@@ -352,11 +349,44 @@ function makeAllUpdateSections() {
       }),
     }),
     ...updateSectionProp("singleTimeList", {
-      total: relVarbS.sumNums([
+      total: updateVarbS.sumNums([
         updateFnPropS.children("singleTimeItem", "value"),
       ]),
       itemValueSwitch: updateVarb("string", {
         initValue: "labeledEquation",
+      }),
+    }),
+    ...updateSectionProp("closingCostValue", {
+      valueMode: updateVarb("string", {
+        initValue: "none",
+      }),
+      valueLumpSumEditor: updateVarb("numObj"),
+      value: updateVarb("numObj", {
+        updateFnName: "throwIfReached",
+        updateOverrides: [
+          updateOverride(
+            [overrideSwitchS.valueModeIs("none")],
+            updateBasics("emptyNumObj")
+          ),
+          updateOverride(
+            [overrideSwitchS.valueModeIs("fivePercentLoan")],
+            updateBasics("emptyNumObj")
+            // make loan update based on this switch
+          ),
+          updateOverride(
+            [overrideSwitchS.valueModeIs("itemized")],
+            updateBasicsS.loadFromChild(
+              "singleTimeList",
+              "total"
+            ) as UpdateBasics<"numObj">
+          ),
+          updateOverride(
+            [overrideSwitchS.valueModeIs("lumpSum")],
+            updateBasicsS.loadSolvableTextByVarbInfo(
+              "valueLumpSumEditor"
+            ) as UpdateBasics<"numObj">
+          ),
+        ],
       }),
     }),
     ...updateSectionProp("singleTimeValue", {
@@ -523,7 +553,6 @@ function makeAllUpdateSections() {
         updateFnProps: {
           varbInfo: updateFnPropS.local("valueEntityInfo"),
         },
-        calculateRound: 5,
       }),
     }),
     ...updateSectionProp("singleTimeItem", updateVarbsS.singleTimeItem()),
@@ -624,8 +653,38 @@ function makeAllUpdateSections() {
           ],
         }),
       }),
+      propertyExists: updateVarb("boolean", {
+        initValue: false,
+        updateFnName: "varbExists",
+        updateFnProps: {
+          varbInfo: updateFnPropS.pathName("propertyFocal", "one"),
+        },
+      }),
+      financingExists: updateVarb("boolean", {
+        initValue: false,
+        updateFnName: "varbExists",
+        updateFnProps: {
+          varbInfo: updateFnPropS.pathName("financingFocal", "one"),
+        },
+      }),
+      mgmtExists: updateVarb("boolean", {
+        initValue: false,
+        updateFnName: "varbExists",
+        updateFnProps: { varbInfo: updateFnPropS.pathName("mgmtFocal", "one") },
+      }),
       propertyCompletionStatus: updateVarb("string", {
         initValue: "allEmpty",
+        updateOverrides: [
+          updateOverride(
+            [overrideSwitchS.localIsFalse("propertyExists")],
+            updateBasics(
+              "completionStatus",
+              completionStatusProps({
+                notFalse: [updateFnPropS.local("propertyExists")],
+              })
+            )
+          ),
+        ],
         updateFnName: "completionStatus",
         updateFnProps: completionStatusProps({
           nonZeros: [updateFnPropS.pathName("propertyFocal", "numUnits")],
@@ -668,6 +727,17 @@ function makeAllUpdateSections() {
       }),
       mgmtCompletionStatus: updateVarb("string", {
         initValue: "allEmpty",
+        updateOverrides: [
+          updateOverride(
+            [overrideSwitchS.localIsFalse("mgmtExists")],
+            updateBasics(
+              "completionStatus",
+              completionStatusProps({
+                notFalse: [updateFnPropS.local("mgmtExists")],
+              })
+            )
+          ),
+        ],
         updateFnName: "completionStatus",
         updateFnProps: completionStatusProps({
           validInputs: [
@@ -702,6 +772,15 @@ function makeAllUpdateSections() {
         initValue: "allEmpty",
         updateFnName: "throwIfReached",
         updateOverrides: [
+          updateOverride(
+            [overrideSwitchS.localIsFalse("financingExists")],
+            updateBasics(
+              "completionStatus",
+              completionStatusProps({
+                notFalse: [updateFnPropS.local("financingExists")],
+              })
+            )
+          ),
           updateOverride(
             [overrideSwitchS.varbIsValue("financingMode", "", "cashOnly")],
             updateBasics(
@@ -744,15 +823,11 @@ function makeAllUpdateSections() {
                     "mortgageInsOngoingEditor",
                     [overrideSwitch(relVarbInfoS.local("hasMortgageIns"), true)]
                   ),
-                  updateFnPropS.pathName("closingCostFocal", "valueEditor", [
-                    overrideSwitch(
-                      mixedInfoS.pathNameVarb(
-                        "closingCostFocal",
-                        "valueSourceSwitch"
-                      ),
-                      "lumpSum"
-                    ),
-                  ]),
+                  updateFnPropS.pathName(
+                    "closingCostFocal",
+                    "valueLumpSumEditor",
+                    [overrideSwitchS.valueModeIs("lumpSum")]
+                  ),
                 ],
               })
             )

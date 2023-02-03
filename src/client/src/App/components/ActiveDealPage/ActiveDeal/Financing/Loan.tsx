@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "styled-components";
-import theme from "../../../../theme/Theme";
+import { useGetterSection } from "../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import MainSectionBody from "../../../appWide/GeneralSection/MainSection/MainSectionBody";
 import { MainSectionInner } from "../../../appWide/GeneralSection/MainSectionInner";
 import { MainSectionTopRows } from "../../../appWide/MainSectionTopRows";
-import { ValueSectionZone } from "../../../appWide/ValueSectionZone";
 import BasicLoanInfo from "./Loan/BasicLoanInfo";
+import { ClosingCostValue } from "./Loan/ClostingCostValue";
 
 export function Loan({
   feId,
@@ -20,6 +20,8 @@ export function Loan({
     sectionName: "loan",
     feId,
   } as const;
+
+  const loan = useGetterSection(feInfo);
   return (
     <Styled className={`Loan-root ${className ?? ""}`}>
       <MainSectionTopRows
@@ -32,13 +34,12 @@ export function Loan({
       />
       <MainSectionBody themeName="loan">
         <BasicLoanInfo feId={feId} />
-        <ValueSectionZone
+        <ClosingCostValue
           {...{
-            ...feInfo,
-            childName: "closingCostValue",
-            displayName: "Closing Costs",
-            plusBtnText: "+ Closing Costs",
-            className: "Loan-closingCosts",
+            feId: loan.onlyChildFeId("closingCostValue"),
+            fivePercentLoanDisplay: loan
+              .varbNext("fivePercentBaseLoan")
+              .displayVarb(),
           }}
         />
       </MainSectionBody>
@@ -47,11 +48,9 @@ export function Loan({
 }
 
 const Styled = styled(MainSectionInner)`
-  .ValueSectionOneTime-root {
-    margin: ${theme.s2};
-    margin-top: 0;
+  .ClosingCostValue-root {
+    padding-bottom: 0;
   }
-
   .MainSectionTopRows-xBtn {
     visibility: hidden;
   }

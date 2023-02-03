@@ -18,7 +18,7 @@ const sectionPathNameToSn = checkPathTypeToSectionName({
 
   financingFocal: "financing",
   loanFocal: "loan",
-  closingCostFocal: "singleTimeValue",
+  closingCostFocal: "closingCostValue",
 
   mgmtFocal: "mgmt",
   calculatedVarbsFocal: "calculatedVarbs",

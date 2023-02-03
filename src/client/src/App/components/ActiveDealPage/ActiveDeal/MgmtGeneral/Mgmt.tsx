@@ -4,12 +4,12 @@ import { useGetterSection } from "../../../../sharedWithServer/stateClassHooks/u
 import theme from "../../../../theme/Theme";
 import MainSectionBody from "../../../appWide/GeneralSection/MainSection/MainSectionBody";
 import { MainSectionTopRows } from "../../../appWide/MainSectionTopRows";
-import { ValueSectionZone } from "../../../appWide/ValueSectionZone";
 import {
   CompletionStatus,
   MainDealSection,
   MainDealSectionProps,
 } from "../MainDealSection";
+import { CustomExpenses } from "../PropertyGeneral/Property/CustomExpenses";
 import { BackToDealBtn } from "./../BackToDealBtn";
 import { BasicMgmtInfo } from "./Mgmt/BasicMgmtInfo";
 
@@ -52,26 +52,7 @@ export function Mgmt({
       />
       <MainSectionBody themeName="mgmt">
         <BasicMgmtInfo feId={feId} className="Mgmt-basicInfo" />
-        <div className="Mgmt-valueSectionZones">
-          <ValueSectionZone
-            {...{
-              className: "Mgmt-ongoingExpenseValue",
-              ...feInfo,
-              childName: "ongoingExpenseValue",
-              displayName: "Other Ongoing Expenses",
-              plusBtnText: "+ Other Ongoing Expenses",
-            }}
-          />
-          <ValueSectionZone
-            {...{
-              ...feInfo,
-              className: "Mgmt-oneTimeExpenseValue",
-              childName: "upfrontExpenseValue",
-              displayName: "One-Time Expenses",
-              plusBtnText: "+ One-Time Expenses",
-            }}
-          />
-        </div>
+        <CustomExpenses {...feInfo} />
       </MainSectionBody>
     </Styled>
   );

@@ -33,8 +33,8 @@ export function makeExampleProperty(): SectionPack<"property"> {
     dbVarbs: { targetRentOngoingEditor: numObj(1500), numBedrooms: numObj(3) },
   });
 
-  const repairValue = property.addAndGetChild("repairValue");
-  const repairList = repairValue.addAndGetChild("singleTimeList");
+  const repairValue = property.onlyChild("repairValue");
+  const repairList = repairValue.onlyChild("singleTimeList");
   repairList.loadSelf(
     makeExampleSingleTimeList("Repairs", examplePropetyRepairProps)
   );

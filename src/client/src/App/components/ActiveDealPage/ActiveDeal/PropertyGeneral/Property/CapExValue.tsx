@@ -43,7 +43,7 @@ export function CapExValue({ feId }: { feId: string }) {
         itemsComponent: (
           <VarbListCapEx
             {...{
-              feId: capExValue.oneChildFeId("capExListNext"),
+              feId: capExValue.oneChildFeId("capExList"),
               menuType: "value",
             }}
           />

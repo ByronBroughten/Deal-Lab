@@ -5,20 +5,18 @@ import { makeDefaultFeUserPack } from "./makeDefaultFeUser";
 
 export function makeDefaultMain(): SectionPack<"main"> {
   const main = PackBuilderSection.initAsOmniChild("main");
-
-  main.addChild("calculatedVarbs");
-
-  const defaultDealPack = makeDefaultDealPack();
-  main.loadChild({
-    childName: "activeDeal",
-    sectionPack: defaultDealPack,
+  const dealPage = main.addAndGetChild("activeDealPage");
+  dealPage.addChild("calculatedVarbs");
+  dealPage.loadChild({
+    childName: "deal",
+    sectionPack: makeDefaultDealPack(),
   });
 
   const latentSections = main.addAndGetChild("latentSections");
   latentSections.addChild("calculatedVarbs");
   latentSections.loadChild({
     childName: "deal",
-    sectionPack: defaultDealPack,
+    sectionPack: makeDefaultDealPack(),
   });
 
   const feUser = main.loadAndGetChild({

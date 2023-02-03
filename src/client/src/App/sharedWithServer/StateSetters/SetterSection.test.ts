@@ -3,6 +3,7 @@ import { numObj } from "../SectionsMeta/allBaseSectionVarbs/baseValues/NumObj";
 import { stringObj } from "../SectionsMeta/allBaseSectionVarbs/baseValues/StringObj";
 import { ChildName } from "../SectionsMeta/sectionChildrenDerived/ChildName";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
+import { PathSectionName } from "../SectionsMeta/sectionPathContexts/sectionPathNames";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
 import { SetterTesterSection } from "./TestUtils/SetterTesterSection";
 
@@ -12,15 +13,17 @@ import { SetterTesterSection } from "./TestUtils/SetterTesterSection";
 
 describe("SetterSection", () => {
   // removing just deal doesn't seem to work for some reason.
-  const sectionNames = ["property", "mgmt", "deal"] as const;
-  type TestName = typeof sectionNames[number];
-  type SnTesterProps<SN extends TestName> = { tester: SetterTesterSection<SN> };
-  type FnWithSnProp<SN extends TestName = TestName> = (
-    props: SnTesterProps<SN>
+  const sectionPathNames = ["propertyFocal", "mgmtFocal", "dealFocal"] as const;
+  type PathName = typeof sectionPathNames[number];
+  type SnTesterProps<TN extends PathName> = {
+    tester: SetterTesterSection<PathSectionName<TN>>;
+  };
+  type FnWithSnProp<TN extends PathName = PathName> = (
+    props: SnTesterProps<TN>
   ) => void;
   function runSectionNames(fn: FnWithSnProp) {
-    for (const sectionName of sectionNames) {
-      fn({ tester: SetterTesterSection.init(sectionName) });
+    for (const pathName of sectionPathNames) {
+      fn({ tester: SetterTesterSection.initByPathName(pathName) });
     }
   }
   it("should remove its own section", () => {
@@ -28,11 +31,7 @@ describe("SetterSection", () => {
       const { parent, feInfo } = tester;
       const childName = parent.get.sectionChildName(feInfo);
       const preCounts = parent.childCounts(childName);
-      try {
-        tester.setter.removeSelf();
-      } catch (err) {
-        throw new Error(`tester sectionName: ${tester.sectionName}`);
-      }
+      tester.setter.removeSelf();
 
       const postCounts = parent.childCounts(childName);
 
@@ -44,9 +43,8 @@ describe("SetterSection", () => {
     });
   });
   it("should load a sectionPack", () => {
-    const sectionName = "property";
-    const tester = SetterTesterSection.init(sectionName);
-
+    const pathName = "propertyFocal";
+    const tester = SetterTesterSection.initByPathName(pathName);
     const childName = "unit";
     const numChildrenInit = tester.get.childFeIds(childName);
     const numChildrenNext = 3;
@@ -97,13 +95,13 @@ describe("SetterSection", () => {
 
     function runWithNames(fn: SectionChildPropsFn): void {
       const sectionAndChildNames = [
-        ["deal", ["dealOutputList"]],
-        ["property", ["unit"]],
+        ["dealFocal", ["dealOutputList"]],
+        ["propertyFocal", ["unit"]],
       ] as const;
-      for (const [sectionName, childNames] of sectionAndChildNames) {
+      for (const [pathName, childNames] of sectionAndChildNames) {
         for (const childName of childNames) {
           fn({
-            tester: SetterTesterSection.init(sectionName) as any,
+            tester: SetterTesterSection.initByPathName(pathName) as any,
             childName,
           });
         }

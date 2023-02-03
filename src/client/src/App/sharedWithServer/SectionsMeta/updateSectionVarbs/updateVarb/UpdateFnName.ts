@@ -37,7 +37,9 @@ const updateFnNames = checkUpdateFnNames({
     "loadEndAdornment",
     "emptyStringObj",
   ],
+  number: [...commonUpdateFnNames, "numberOne"],
   string: [...commonUpdateFnNames, "propertyCompletionStatus"],
+  boolean: [...commonUpdateFnNames, "varbExists"],
 });
 
 export const getUpdateFnNames = <VN extends ValueName>(

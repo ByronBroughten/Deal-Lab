@@ -1,6 +1,5 @@
 import { DistributiveOmit } from "../../utils/types";
 import {
-  ActiveDealInfo,
   DbSectionInfoMixed,
   FeSectionInfoMixed,
   FeVarbInfoMixed,
@@ -13,7 +12,7 @@ import {
 } from "../SectionInfo/AbsolutePathInfo";
 import {
   PathNameDbInfoMixed,
-  PathNameInfoMixedNext,
+  PathNameInfoMixed,
   PathNameVarbInfoMixed,
 } from "../SectionInfo/PathNameInfo";
 import { RelSectionInfo } from "../SectionInfo/RelInfo";
@@ -26,9 +25,6 @@ import {
   SectionPathName,
   SectionPathVarbName,
 } from "../sectionPathContexts/sectionPathNames";
-
-export type SectionContextInfo<SN extends SectionName = SectionName> =
-  ActiveDealInfo<SN>;
 
 // a mixed section finder that doesn't need a focal section
 export type SectionInfoMixed<SN extends SectionName = SectionName> =
@@ -65,9 +61,7 @@ export const mixedInfoS = {
       sectionName,
     };
   },
-  pathName<PN extends SectionPathName>(
-    pathName: PN
-  ): PathNameInfoMixedNext<PN> {
+  pathName<PN extends SectionPathName>(pathName: PN): PathNameInfoMixed<PN> {
     return {
       infoType: "pathName",
       pathName: pathName as any,
@@ -133,7 +127,7 @@ type MixedInfoType = SectionInfoMixed["infoType"];
 export type SectionInfoMixedFocal =
   | SectionInfoMixed
   | RelSectionInfo
-  | PathNameInfoMixedNext
+  | PathNameInfoMixed
   | PathNameDbInfoMixed;
 
 type SectionToVarbInfoMixed = SectionInfoMixedFocal & VarbProp;

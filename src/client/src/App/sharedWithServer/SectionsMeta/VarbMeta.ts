@@ -117,7 +117,7 @@ export class VarbMeta<SN extends SectionName> {
     return cloneDeep(this.core.inSwitchUpdatePacks);
   }
   get calcRound(): number {
-    return this.updateVarb.calculateRound;
+    return this.displayVarb.calculateRound;
   }
   get displayRound(): number {
     return this.displayVarb.displayRound;

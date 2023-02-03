@@ -32,7 +32,7 @@ function getChildName<SN extends ValueSectionName>(
   else return "singleTimeList" as ChildName<SN>;
 }
 
-export function ValueSectionGenericNext<
+export function ValueSectionGeneric<
   SN extends SectionNameByType<"valueSection">
 >({
   className,
@@ -100,6 +100,15 @@ export function ValueSectionGenericNext<
 
 const Styled = styled.div`
   .ValueSection-viewable {
+    .ValueSection-xBtn {
+      visibility: hidden;
+    }
+    :hover {
+      .ValueSection-xBtn {
+        visibility: visible;
+      }
+    }
+
     display: inline-block;
     border: solid 1px ${theme.primaryBorder};
     background: ${theme.light};
@@ -127,9 +136,7 @@ const Styled = styled.div`
 
   .ValueSection-nameEditor {
     .DraftTextField-root {
-      display: flex;
-      flex: 1;
-      /* min-width: 100px; */
+      min-width: 150px;
     }
   }
   .ValueSection-valueEditor {

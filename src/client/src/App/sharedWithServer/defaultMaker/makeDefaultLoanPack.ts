@@ -1,6 +1,5 @@
 import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
-import { makeDefaultOneTimeValue } from "./makeDefaultOneTimeValue";
 
 export function makeDefaultLoanPack(): SectionPack<"loan"> {
   const loan = PackBuilderSection.initAsOmniChild("loan", {
@@ -11,9 +10,7 @@ export function makeDefaultLoanPack(): SectionPack<"loan"> {
       mortgageInsOngoingSwitch: "yearly",
     },
   });
-  loan.loadChild({
-    childName: "closingCostValue",
-    sectionPack: makeDefaultOneTimeValue(),
-  });
+  const closingCostValue = loan.addAndGetChild("closingCostValue");
+  closingCostValue.addChild("singleTimeList");
   return loan.makeSectionPack();
 }

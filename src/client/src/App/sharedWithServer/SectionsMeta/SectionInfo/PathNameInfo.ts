@@ -36,25 +36,23 @@ export function isPathInfoType(value: any): value is PathNameInfoType {
   return pathNameInfoTypes.includes(value);
 }
 
-interface PathNameInfoNext<PN extends SectionPathName = SectionPathName>
+interface PathNameInfo<PN extends SectionPathName = SectionPathName>
   extends PathNameProp<PN> {}
-interface PathNameDbInfoNext<PN extends SectionPathName>
-  extends PathNameInfoNext<PN> {
+interface PathNameDbInfo<PN extends SectionPathName> extends PathNameInfo<PN> {
   dbId: string;
 }
-interface PathNameVarbInfoNext<
+interface PathNameVarbInfo<
   PN extends SectionPathName = SectionPathName,
   VN extends SectionPathVarbName<PN> = SectionPathVarbName<PN>
-> extends PathNameInfoNext<PN>,
+> extends PathNameInfo<PN>,
     MakeVarbProp<VN> {}
 
-export interface PathNameInfoMixedNext<
-  PN extends SectionPathName = SectionPathName
-> extends MixedInfoProps<"pathName"> {
+export interface PathNameInfoMixed<PN extends SectionPathName = SectionPathName>
+  extends MixedInfoProps<"pathName"> {
   pathName: PN;
 }
 
-export interface PathVarbNamesNext<
+export interface PathVarbNames<
   PN extends SectionPathName = SectionPathName,
   VN extends SectionPathVarbName<PN> = SectionPathVarbName<PN>
 > extends PathNameProp<PN>,
@@ -63,7 +61,7 @@ export interface PathVarbNamesNext<
 export interface PathNameVarbInfoMixed<
   PN extends SectionPathName = SectionPathName,
   VN extends SectionPathVarbName<PN> = SectionPathVarbName<PN>
-> extends PathNameInfoMixedNext<PN>,
+> extends PathNameInfoMixed<PN>,
     MakeVarbProp<VN> {}
 
 export interface PathNameDbInfoMixed<
@@ -75,6 +73,6 @@ export interface PathNameDbInfoMixed<
 export interface PathDbVarbInfoMixed<
   PN extends SectionPathName = SectionPathName,
   VN extends SectionPathVarbName<PN> = SectionPathVarbName<PN>
-> extends PathNameVarbInfoNext<PN, VN>,
+> extends PathNameVarbInfo<PN, VN>,
     MixedInfoProps<"pathNameDbId">,
     NanoIdProp {}

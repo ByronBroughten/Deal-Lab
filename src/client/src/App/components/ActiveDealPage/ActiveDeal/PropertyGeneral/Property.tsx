@@ -74,7 +74,7 @@ export function Property({
         <UtilityValue feId={property.onlyChildFeId("utilityValue")} />
         <MaintenanceValue feId={property.onlyChildFeId("maintenanceValue")} />
         <CapExValue feId={property.onlyChildFeId("capExValue")} />
-        <CustomExpenses feId={feId} />
+        <CustomExpenses {...feInfo} />
       </MainSectionBody>
     </Styled>
   );

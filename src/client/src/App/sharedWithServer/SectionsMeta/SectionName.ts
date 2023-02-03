@@ -31,24 +31,23 @@ export const sectionNames = [
   "conditionalRowList",
   "userVarbList",
 
-  "deal",
-
   "calculatedVarbs",
 
-  "propertyGeneralNext",
+  "deal",
+
   "propertyGeneral",
   "property",
-
   "repairValue",
   "utilityValue",
   "maintenanceValue",
   "capExValue",
   "capExList",
   "capExItem",
-
   "unit",
+
   "financing",
   "loan",
+  "closingCostValue",
 
   "mgmtGeneral",
   "mgmt",
@@ -58,6 +57,8 @@ export const sectionNames = [
   "userInfo",
   "userInfoPrivate",
   "authInfoPrivate",
+
+  "dealPage",
 
   "userListEditor",
   "userVarbEditor",

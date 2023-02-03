@@ -182,7 +182,9 @@ export function makeAllBaseSectionVarbs() {
         ] as const,
         dollars
       ),
-      ...baseVarbs("numObj", ["sqft", "numUnits", "numBedrooms"] as const),
+      one: baseVarb("number"),
+      numUnits: baseVarb("numObj"),
+      ...baseVarbs("numObj", ["sqft", "numBedrooms"] as const),
       ...baseVarbsS.ongoingDollarsInput("taxes"),
       ...baseVarbsS.ongoingDollarsInput("homeIns"),
       ...baseVarbsS.ongoingDollars("targetRent"),
@@ -193,7 +195,7 @@ export function makeAllBaseSectionVarbs() {
       useCustomCosts: baseVarb("boolean"),
     }),
     unit: baseSectionVarbs({
-      one: baseVarb("numObj"),
+      one: baseVarb("number"),
       numBedrooms: baseVarb("numObj"),
       ...baseVarbsS.ongoingDollarsInput("targetRent"),
     }),
@@ -213,6 +215,11 @@ export function makeAllBaseSectionVarbs() {
     }),
     capExValue: baseSectionVarbs({
       ...baseVarbsS.ongoingDollars("value"),
+      valueMode: baseVarb("string"),
+      valueLumpSumEditor: baseVarb("numObj", dollars),
+    }),
+    closingCostValue: baseSectionVarbs({
+      value: baseVarb("numObj", dollars),
       valueMode: baseVarb("string"),
       valueLumpSumEditor: baseVarb("numObj", dollars),
     }),
@@ -241,13 +248,18 @@ export function makeAllBaseSectionVarbs() {
       ...baseVarbsS.ongoingDollarsInput("mortgageIns"),
       ...baseVarbs(
         "numObj",
-        ["loanTotalDollars", "closingCosts", "wrappedInLoan"] as const,
+        [
+          "loanTotalDollars",
+          "closingCosts",
+          "wrappedInLoan",
+          "fivePercentBaseLoan",
+        ] as const,
         dollars
       ),
     } as const),
     mgmt: baseSectionVarbs({
       ...baseVarbsS.savableSection,
-
+      one: baseVarb("number"),
       basePayDollarsEditor: baseVarb("numObj", dollars),
       basePayPercentEditor: baseVarb("numObj", percent),
       ...baseVarbsS.ongoingDollars("basePayDollars"),
@@ -264,6 +276,7 @@ export function makeAllBaseSectionVarbs() {
 
       upfrontExpenses: baseVarb("numObj", dollars),
       ...baseVarbsS.ongoingDollars("expenses"),
+      useCustomCosts: baseVarb("boolean"),
     } as const),
     deal: baseSectionVarbs({
       dealMode: baseVarb("string"), // buyAndHold, fixAndFlip, brrrrr
@@ -301,6 +314,7 @@ export function makeAllBaseSectionVarbs() {
         ] as const,
         dollars
       ),
+      one: baseVarb("number"),
       ...baseVarbsS.ongoingDollars("loanExpenses"),
       ...baseVarbsS.ongoingDollars("mortgageIns"),
       ...baseVarbsS.ongoingDollars("loanPayment"),
@@ -309,6 +323,7 @@ export function makeAllBaseSectionVarbs() {
       ...baseVarbs(
         "numObj",
         [
+          "fivePercentDecimal",
           "two",
           "onePercentPrice",
           "twoPercentPrice",
@@ -320,6 +335,11 @@ export function makeAllBaseSectionVarbs() {
         ] as const,
         percent
       ),
+      ...baseVarbs("boolean", [
+        "propertyExists",
+        "financingExists",
+        "mgmtExists",
+      ]),
       propertyCompletionStatus: baseVarb("string"),
       financingCompletionStatus: baseVarb("string"),
       mgmtCompletionStatus: baseVarb("string"),

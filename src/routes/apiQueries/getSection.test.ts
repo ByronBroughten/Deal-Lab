@@ -100,7 +100,7 @@ describe(testedRoute, () => {
       displayName: stringObj("Original"),
     };
 
-    const deal = SetterTesterSection.init("deal").setter;
+    const deal = SetterTesterSection.initActiveDeal().setter;
     const property = deal.onlyChild("property");
     property.varb("price").updateValue(original.price);
     property.varb("displayName").updateValue(original.displayName);
@@ -135,7 +135,7 @@ describe(testedRoute, () => {
     const { sectionPack } = res.data as SectionPackRes<"dealMain">["data"];
 
     function testSectionPack() {
-      const deal = SetterTesterSection.init("deal").setter;
+      const deal = SetterTesterSection.initActiveDeal().setter;
       deal.loadSelfSectionPack(sectionPack);
       const property = deal.get.onlyChild("property");
       expect(property.value("price")).toEqual(updated.price);

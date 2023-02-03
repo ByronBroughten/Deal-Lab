@@ -3,10 +3,7 @@ import React from "react";
 import styled, { css } from "styled-components";
 import { VarbName } from "../../sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
 import { CompletionStatus } from "../../sharedWithServer/SectionsMeta/baseSectionsDerived/subValues";
-import {
-  useGetterSection,
-  useGetterSectionOnlyOne,
-} from "../../sharedWithServer/stateClassHooks/useGetterSection";
+import { useGetterSection } from "../../sharedWithServer/stateClassHooks/useGetterSection";
 import { StrictExclude } from "../../sharedWithServer/utils/types";
 import theme from "../../theme/Theme";
 import { FormSection } from "../appWide/FormSection";
@@ -27,14 +24,13 @@ type Props = {
 type SectionView = "deal" | "property" | "financing" | "mgmt";
 
 export function ActiveDeal({ className, feId }: Props) {
-  const feInfo = { sectionName: "deal", feId } as const;
-  const deal = useGetterSection(feInfo);
+  const feInfo = { sectionName: "dealPage", feId } as const;
+  const dealPage = useGetterSection(feInfo);
+
+  const deal = dealPage.onlyChild("deal");
+  const calculatedVarbs = dealPage.onlyChild("calculatedVarbs");
   const [sectionView, setSectionView] = React.useState("deal" as SectionView);
 
-  const main = useGetterSectionOnlyOne("main");
-  const calculatedVarbs = main.onlyChild("calculatedVarbs");
-
-  const completionStatus = calculatedVarbs.valueNext("dealCompletionStatus");
   const completionStatusNames: Record<
     SectionView,
     VarbName<"calculatedVarbs">
@@ -68,7 +64,7 @@ export function ActiveDeal({ className, feId }: Props) {
     >
       <MainSectionTopRows
         {...{
-          ...feInfo,
+          ...deal.feInfo,
           className: "ActiveDeal-mainSectionTopRowRoot",
           sectionTitle: "Deal",
           loadWhat: "Deal",

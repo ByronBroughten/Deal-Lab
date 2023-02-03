@@ -1,5 +1,5 @@
 import { useSetterSection } from "../../sharedWithServer/stateClassHooks/useSetterSection";
-import { ValueSectionGenericNext } from "./ValueSectionGenericNext";
+import { ValueSectionGeneric } from "./ValueSectionGeneric";
 import { VarbListOngoing } from "./VarbLists/VarbListOngoing";
 
 interface Props {
@@ -16,7 +16,7 @@ export function ValueSectionOngoing({ feId, ...rest }: Props) {
   const valueVarb = section.get.switchVarb("value", "ongoing");
   const { endAdornment, varbName } = valueVarb;
   return (
-    <ValueSectionGenericNext
+    <ValueSectionGeneric
       {...{
         ...rest,
         sectionName: "ongoingValue",

@@ -48,10 +48,14 @@ describe("SetterCalculations", () => {
     loan.varb("loanBasePercentEditor").updateValue(numObj(0));
 
     const wrappedValue = loan.addAndGetChild("wrappedInLoanValue");
-    wrappedValue.updateValues({ valueEditor: numObj(5000) });
+    wrappedValue.updateValues({
+      valueSourceSwitch: "lumpSum",
+      valueEditor: numObj(5000),
+    });
 
     const mgmt = dealTester.setter.onlyChild("mgmt");
-    const expenseValue = mgmt.addAndGetChild("upfrontExpenseValue", {
+    const expenseGroup = mgmt.onlyChild("upfrontExpenseGroup");
+    const expenseValue = expenseGroup.addAndGetChild("singleTimeValue", {
       dbVarbs: { valueSourceSwitch: "itemized" },
     });
     const mgmtCostList = expenseValue.onlyChild("singleTimeList");
@@ -112,7 +116,8 @@ describe("SetterCalculations", () => {
     mgmt.varb("basePayPercentEditor").updateValue(numObj(5));
     mgmt.varb("vacancyLossPercentEditor").updateValue(numObj(5));
 
-    const mgmtCostListGroup = mgmt.addAndGetChild("ongoingExpenseValue", {
+    const expenseGroup = mgmt.onlyChild("ongoingExpenseGroup");
+    const mgmtCostListGroup = expenseGroup.addAndGetChild("ongoingValue", {
       dbVarbs: { valueSourceSwitch: "itemized" },
     });
     const mgmtCostList = mgmtCostListGroup.onlyChild("ongoingList");

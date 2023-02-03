@@ -1,18 +1,11 @@
-import { GeneralBaseVarb } from "../allBaseSectionVarbs/baseVarbs";
 import {
-  getBaseVarb,
   sectionVarbNames,
   sectionVarbValueName,
   VarbName,
   VarbValueName,
 } from "../baseSectionsDerived/baseSectionsVarbsTypes";
 import { SectionName } from "../SectionName";
-import {
-  calculatedRounding,
-  GeneralUpdateVarb,
-  UpdateVarb,
-  updateVarb,
-} from "./updateVarb";
+import { GeneralUpdateVarb, UpdateVarb, updateVarb } from "./updateVarb";
 
 export type GeneralUpdateSectionVarbs = Record<string, GeneralUpdateVarb>;
 
@@ -45,15 +38,8 @@ export function defaultSectionUpdateVarbs<SN extends SectionName>(
 ): UpdateSectionVarbs<SN> {
   const varbNames = sectionVarbNames(sectionName);
   return varbNames.reduce((updateVarbs, varbName) => {
-    const baseVarb = getBaseVarb(
-      sectionName,
-      varbName
-    ) as any as GeneralBaseVarb;
-    const { valueUnit } = baseVarb;
     const valueName = sectionVarbValueName(sectionName, varbName);
-    updateVarbs[varbName] = updateVarb(valueName, {
-      calculateRound: calculatedRounding[valueUnit],
-    });
+    updateVarbs[varbName] = updateVarb(valueName);
     return updateVarbs;
   }, {} as UpdateSectionVarbs<SN>);
 }

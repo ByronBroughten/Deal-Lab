@@ -9,14 +9,6 @@ export type MixedInfoProps<IT extends string> = {
   infoType: IT;
 };
 
-export interface ActiveDealInfo<SN extends SectionName = SectionName>
-  extends SectionNameProp<SN>,
-    MixedInfoProps<"activeDeal"> {}
-
-export interface ActiveDealVarbInfo<SN extends SectionName = SectionName>
-  extends ActiveDealInfo<SN>,
-    VarbProp {}
-
 export interface GlobalSectionInfo<SN extends SectionName = SectionName>
   extends MixedInfoProps<"globalSection">,
     SectionNameProp<SN> {}

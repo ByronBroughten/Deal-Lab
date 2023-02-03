@@ -1,6 +1,5 @@
 import { pick } from "lodash";
 import { defaultMaker } from "../defaultMaker/defaultMaker";
-import { FeStoreNameByType } from "../SectionsMeta/relSectionsDerived/FeStoreName";
 import { VarbInfoMixed } from "../SectionsMeta/sectionChildrenDerived/MixedSectionInfo";
 import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { FeSectionInfo, FeVarbInfo } from "../SectionsMeta/SectionInfo/FeInfo";
@@ -9,9 +8,7 @@ import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { GetterSections } from "../StateGetters/GetterSections";
 import { GetterVarb } from "../StateGetters/GetterVarb";
 import { PackBuilderSections } from "../StatePackers.ts/PackBuilderSections";
-import { SectionPackArrs } from "../StatePackers.ts/PackMakerSection";
 import { StateSections } from "../StateSections/StateSections";
-import { UpdaterSection } from "../StateUpdaters/UpdaterSection";
 import { Arr } from "../utils/Arr";
 import { OutEntityGetterVarb } from "./../StateInOutVarbs/OutEntityGetterVarb";
 import { SolverSectionsBase } from "./SolverBases/SolverSectionsBase";
@@ -22,7 +19,7 @@ import { SolverVarb } from "./SolverVarb";
 type OutVarbMap = Record<string, Set<string>>;
 
 export class SolverSections extends SolverSectionsBase {
-  private get getterSections() {
+  get getterSections() {
     return new GetterSections(this.getterSectionsBase.getterSectionsProps);
   }
   get builderSections() {
@@ -135,7 +132,8 @@ export class SolverSections extends SolverSectionsBase {
   ): SolverSection<"main"> {
     const solver = this.initRoot();
     const mainSolver = solver.addAndGetChild("main");
-    const activeDeal = mainSolver.onlyChild("activeDeal");
+    const activeDealPage = mainSolver.onlyChild("activeDealPage");
+    const activeDeal = activeDealPage.onlyChild("deal");
     activeDeal.loadSelf(sectionPack);
     return mainSolver;
   }
@@ -164,22 +162,6 @@ export class SolverSections extends SolverSectionsBase {
     sectionPack: SectionPack<"main">
   ): StateSections {
     const main = this.initSolverFromMainPack(sectionPack);
-    return main.sectionsShare.sections;
-  }
-  static initSaveUserListSections(
-    activeDealPack: SectionPack<"deal">,
-    packArrs: SectionPackArrs<"feUser", FeStoreNameByType<"saveUserLists">>
-  ): StateSections {
-    const props = UpdaterSection.initMainSectionPropsWithEmptyUser();
-    const main = SolverSection.init(props);
-    const mainAdder = main.adder;
-    mainAdder.loadChild({
-      childName: "activeDeal",
-      sectionPack: activeDealPack,
-    });
-    const userAdder = mainAdder.onlyChild("feUser");
-    userAdder.loadChildArrsAndFinalize(packArrs);
-    main.solve();
     return main.sectionsShare.sections;
   }
 }

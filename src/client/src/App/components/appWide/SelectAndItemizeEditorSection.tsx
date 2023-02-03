@@ -9,9 +9,16 @@ interface Props extends SelectAndItemizeEditorProps {
   label: string;
 }
 
-export function SelectAndItemizeEditorSection({ label, ...rest }: Props) {
+export function SelectAndItemizeEditorSection({
+  className,
+  label,
+  ...rest
+}: Props) {
   return (
-    <FormSectionLabeled label={label}>
+    <FormSectionLabeled
+      className={`SelectAndItemizeEditorSection ${className ?? ""}`}
+      label={label}
+    >
       <SelectAndItemizeEditor {...rest} />
     </FormSectionLabeled>
   );

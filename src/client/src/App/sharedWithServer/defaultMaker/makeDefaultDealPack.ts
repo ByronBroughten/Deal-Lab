@@ -1,5 +1,6 @@
 import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
+import { makeDefaultLoanPack } from "./makeDefaultLoanPack";
 import { makeDefaultMgmtPack } from "./makeDefaultMgmtPack";
 import { makeDefaultOutputList } from "./makeDefaultOutputList";
 import { makeDefaultPropertyPack } from "./makeDefaultPropertyPack";
@@ -9,7 +10,10 @@ export function makeDefaultDealPack(): SectionPack<"deal"> {
     dbVarbs: { dealMode: "buyAndHold" },
   });
   const financing = deal.addAndGetChild("financing");
-  financing.addChild("loan");
+  financing.loadChild({
+    childName: "loan",
+    sectionPack: makeDefaultLoanPack(),
+  });
 
   deal.loadChild({
     childName: "dealOutputList",

@@ -14,8 +14,6 @@ export function makeDefaultPropertyPack(): SectionPack<"property"> {
       revenueOngoingSwitch: "monthly",
     },
   });
-  property.addChild("upfrontExpenseGroup");
-
   const repairValue = property.addAndGetChild("repairValue");
   repairValue.addChild("singleTimeList");
 
@@ -27,8 +25,8 @@ export function makeDefaultPropertyPack(): SectionPack<"property"> {
 
   const capExValue = property.addAndGetChild("capExValue");
   capExValue.addChild("capExList");
-  capExValue.addChild("capExListNext");
 
+  property.addChild("upfrontExpenseGroup");
   property.addChild("ongoingExpenseGroup");
   return property.makeSectionPack();
 }

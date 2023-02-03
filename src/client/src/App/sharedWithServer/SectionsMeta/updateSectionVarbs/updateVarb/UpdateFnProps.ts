@@ -19,6 +19,7 @@ export type UpdateFnProps = {
 export type CompletionStatusProps = {
   nonZeros: UpdateFnProp[];
   nonNone: UpdateFnProp[];
+  notFalse: UpdateFnProp[];
   validInputs: UpdateFnProp[];
   othersValid: UpdateFnProp[];
 };
@@ -29,6 +30,7 @@ export function completionStatusProps(
   return {
     nonZeros: [],
     nonNone: [],
+    notFalse: [],
     validInputs: [],
     othersValid: [],
     ...props,

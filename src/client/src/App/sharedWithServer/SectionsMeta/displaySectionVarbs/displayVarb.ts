@@ -19,6 +19,7 @@ export type DisplayVarb = {
   startAdornment: string;
   endAdornment: string;
   displayRound: number;
+  calculateRound: number;
   displaySourceFinder: DisplaySourceFinder;
 };
 
@@ -32,6 +33,7 @@ export function defaultDisplayVarb(displayName: DisplayName) {
     startAdornment: "",
     endAdornment: "",
     displayRound: 0,
+    calculateRound: 2,
     displaySourceFinder: null,
   });
 }

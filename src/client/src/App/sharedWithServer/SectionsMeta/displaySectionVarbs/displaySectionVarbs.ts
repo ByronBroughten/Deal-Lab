@@ -1,4 +1,8 @@
 import {
+  decimalRounding,
+  maxRounding,
+} from "../allBaseSectionVarbs/baseValues/calculations/numUnitParams";
+import {
   GeneralBaseVarb,
   ValueTimespan,
   ValueUnit,
@@ -24,25 +28,25 @@ export function displaySectionVarbsProp<SN extends SectionName>(
   } as DisplaySectionVarbsProp<SN>;
 }
 
-const percent = { endAdornment: "%", displayRound: 3 };
-const dollars = { startAdornment: "$", displayRound: 2 };
-const standardMonthly = { endAdornment: "/month", displayRound: 2 };
-const standardYearly = { endAdornment: "/year", displayRound: 2 };
-const standardUnit = {
-  monthly: standardMonthly,
-  yearly: standardMonthly,
-  oneTime: {},
-};
-const timeRound = { displayRound: 2 };
+const dollars = { startAdornment: "$", displayRound: 2, calculateRound: 2 };
+const percent = { endAdornment: "%", displayRound: 3, calculateRound: 6 };
+const decimal = { displayRound: 5, calculateRound: decimalRounding };
+const absolute = { displayRound: 5, calculateRound: maxRounding };
+
+const monthly = { endAdornment: "/month" };
+const yearly = { endAdornment: "/year" };
+
+const timeRound = { displayRound: 2, calculateRound: decimalRounding };
 const months = { ...timeRound, endAdornment: " months" };
 const years = { ...timeRound, endAdornment: " years" };
+
 const displayByUnitAndSpan: Record<
   ValueUnit,
   Record<ValueTimespan, DisplayVarbOptions>
 > = {
   dollars: {
-    monthly: { ...dollars, ...standardMonthly },
-    yearly: { ...dollars, ...standardYearly },
+    monthly: { ...dollars, ...monthly },
+    yearly: { ...dollars, ...yearly },
     oneTime: dollars,
   },
   percent: {
@@ -50,8 +54,16 @@ const displayByUnitAndSpan: Record<
     yearly: { ...percent, endAdornment: "% annual" },
     oneTime: percent,
   },
-  decimal: standardUnit,
-  absolute: standardUnit,
+  decimal: {
+    monthly: { ...decimal, ...monthly },
+    yearly: { ...decimal, ...yearly },
+    oneTime: decimal,
+  },
+  absolute: {
+    monthly: { ...absolute, ...monthly },
+    yearly: { ...absolute, ...yearly },
+    oneTime: absolute,
+  },
   months: {
     monthly: months,
     yearly: months,

@@ -2,9 +2,9 @@ import { VarbNameByValueName } from "../baseSectionsDerived/baseSectionsVarbsTyp
 import { UpdateGroup } from "../updateSectionVarbs/switchUpdateVarbs";
 import { UpdateSectionVarbs } from "../updateSectionVarbs/updateSectionVarbs";
 import {
-  relVarbS,
   UpdateVarb,
   updateVarb,
+  updateVarbS,
 } from "../updateSectionVarbs/updateVarb";
 import { updateBasicsS } from "../updateSectionVarbs/updateVarb/UpdateBasics";
 import { updateFnPropS } from "../updateSectionVarbs/updateVarb/UpdateFnProps";
@@ -60,12 +60,13 @@ function sumOngoingLoanVarb<BN extends string>(
 export function financingUpdateVarbs(): UpdateSectionVarbs<"financing"> {
   return {
     ...updateVarbsS._typeUniformity,
+    one: updateVarbS.one(),
     financingMode: updateVarb("string", { initValue: "" }),
     loanBaseDollars: sumLoanVarb("loanBaseDollars"),
     loanTotalDollars: sumLoanVarb("loanTotalDollars"),
     closingCosts: sumLoanVarb("closingCosts"),
     mortgageInsUpfront: sumLoanVarb("mortgageInsUpfront"),
-    loanUpfrontExpenses: relVarbS.sumNums([
+    loanUpfrontExpenses: updateVarbS.sumNums([
       updateFnPropS.local("closingCosts"),
       updateFnPropS.local("mortgageInsUpfront"),
     ]),

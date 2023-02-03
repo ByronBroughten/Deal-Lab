@@ -72,7 +72,8 @@ export const zInEntity = z.union([
   zGlobalInEntity,
 ]);
 
-export const zInEntities = z.array(zInEntity);
+const zInEntitiesNext = z.array(zInEntity);
+export const zInEntities = z.array(z.any());
 export type InEntityBase = z.infer<typeof zInEntityBase>;
 interface DbInEntity extends InEntityBase, DbVarbInfoMixed {}
 export interface PathNameInEntity extends InEntityBase, PathNameVarbInfoMixed {}
