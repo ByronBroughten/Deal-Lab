@@ -6,7 +6,7 @@ import {
 } from "./SelectAndItemizeEditor";
 
 interface Props extends SelectAndItemizeEditorProps {
-  label: string;
+  label: React.ReactNode;
 }
 
 export function SelectAndItemizeEditorSection({
