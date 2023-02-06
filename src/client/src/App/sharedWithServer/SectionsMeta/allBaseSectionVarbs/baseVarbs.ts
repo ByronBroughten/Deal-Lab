@@ -215,17 +215,18 @@ export const baseVarbsS = {
   ongoingDollarsInput<BN extends string>(
     baseName: BN
   ): SimpleBaseSwitchVarbs<BN, "ongoingInput"> {
-    return this.group(baseName, "ongoingInput");
-  },
-  ongoingPercent<BN extends string>(
-    baseName: BN
-  ): SimpleBaseSwitchVarbs<BN, "ongoing"> {
-    return this.group(baseName, "ongoing", ongoingPercentOptions);
+    return this.group(baseName, "ongoingInput", ongoingDollarsOptions);
   },
   ongoingPercentInput<BN extends string>(
     baseName: BN
   ): SimpleBaseSwitchVarbs<BN, "ongoingInput"> {
     return this.group(baseName, "ongoingInput", ongoingPercentOptions);
+  },
+
+  ongoingPercent<BN extends string>(
+    baseName: BN
+  ): SimpleBaseSwitchVarbs<BN, "ongoing"> {
+    return this.group(baseName, "ongoing", ongoingPercentOptions);
   },
   monthsYears<BN extends string>(
     baseName: BN

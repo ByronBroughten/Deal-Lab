@@ -74,16 +74,7 @@ export const displayVarbsS = {
     displayName: DisplayName,
     options: SwitchOptions<"ongoingInput"> = {}
   ): SwitchDisplayVarbOptions<BN, "ongoingInput"> {
-    return this.group("ongoingInput", baseName, displayName, {
-      ...options,
-      editor: {
-        displaySourceFinder: editorDisplaySourceSwitches(
-          baseName,
-          "ongoingInput"
-        ),
-        ...options?.editor,
-      },
-    });
+    return this.editorGroup("ongoingInput", baseName, displayName, options);
   },
   ongoingDollars<BN extends string>(
     baseName: BN,

@@ -19,6 +19,8 @@ import {
 import { varSpanDecorator } from "./shared/EntitySpanWithError";
 import { useDraftInput } from "./useDraftInput";
 
+type NumEditorType = "numeric" | "equation";
+
 type Props = PropAdornments & {
   feVarbInfo: FeVarbInfo;
   className?: string;
@@ -26,9 +28,11 @@ type Props = PropAdornments & {
   labeled?: boolean;
   bypassNumeric?: boolean;
   doEquals?: boolean;
+  editorType?: NumEditorType;
 };
 const adornmentNames = ["startAdornment", "endAdornment"] as const;
 export function NumObjEntityEditor({
+  editorType = "numeric",
   feVarbInfo,
   className,
   labeled = true,
@@ -44,6 +48,7 @@ export function NumObjEntityEditor({
   return (
     <MemoNumObjEntityEditor
       {...{
+        editorType,
         displayValue: varb.displayValue,
         editorTextStatus: varb.numObj.editorTextStatus,
         displayName: varb.displayName,
@@ -68,6 +73,7 @@ interface MemoProps extends Adornments, FeVarbInfo {
   displayValue: string;
   editorTextStatus: EditorTextStatus;
   displayName: string;
+  editorType: NumEditorType;
 
   className?: string;
   labeled?: boolean;
@@ -79,6 +85,7 @@ interface MemoProps extends Adornments, FeVarbInfo {
   setEditorState: SetEditorState;
 }
 const MemoNumObjEntityEditor = React.memo(function MemoNumObjEntityEditor({
+  editorType,
   displayValue,
   className,
   labeled,
@@ -101,17 +108,15 @@ const MemoNumObjEntityEditor = React.memo(function MemoNumObjEntityEditor({
   const numObjEditorRef = React.useRef<HTMLDivElement | null>(null);
   const popperRef = React.useRef<HTMLDivElement | null>(null);
   useOnOutsideClickEffect(closeVarbSelector, [numObjEditorRef, popperRef]);
-
+  const clickAndFocus = onClickAndFocus(editorType, openVarbSelector);
   const handleBeforeInput = React.useCallback(
     (char: string): "handled" | "not-handled" => {
-      // const numericRegEx = /^[0-9.-]*$/;
-      const calculationRegEx = /[\d.*/+()-]/;
-      if (calculationRegEx.test(char)) return "not-handled";
+      const regEx = editorRegEx(editorType);
+      if (regEx.test(char)) return "not-handled";
       return "handled";
     },
     []
   );
-
   return (
     <SectionInfoContextProvider {...rest}>
       <Styled
@@ -120,8 +125,8 @@ const MemoNumObjEntityEditor = React.memo(function MemoNumObjEntityEditor({
       >
         <div className="NumObjEditor-inner">
           <MaterialDraftEditor
-            onClick={openVarbSelector}
-            onFocus={openVarbSelector}
+            onClick={clickAndFocus}
+            onFocus={clickAndFocus}
             className={"NumObjEditor-materialDraftEditor"}
             id={GetterVarb.feVarbInfoToVarbId(rest)}
             {...{
@@ -141,6 +146,27 @@ const MemoNumObjEntityEditor = React.memo(function MemoNumObjEntityEditor({
     </SectionInfoContextProvider>
   );
 });
+
+type OnClickAndFocus = (() => void) | undefined;
+
+function onClickAndFocus(
+  editorType: NumEditorType,
+  fn: () => void
+): OnClickAndFocus {
+  if (editorType === "numeric") {
+    return undefined;
+  } else if (editorType === "equation") {
+    return fn;
+  }
+}
+
+function editorRegEx(editorType: NumEditorType): RegExp {
+  const regEx: Record<NumEditorType, RegExp> = {
+    numeric: /^[0-9.-]*$/,
+    equation: /[\d.*/+()-]/,
+  };
+  return regEx[editorType];
+}
 
 const Styled = styled.div`
   display: flex;

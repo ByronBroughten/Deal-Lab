@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import { useSetterSection } from "../../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import theme from "../../../../../theme/Theme";
@@ -9,12 +8,6 @@ import { NumObjEntityEditor } from "../../../../inputs/NumObjEntityEditor";
 type Props = { feId: string; className?: string };
 export default function BasicPropertyInfo({ feId, className }: Props) {
   const property = useSetterSection({ sectionName: "property", feId });
-  const varbNames = [
-    "price",
-    "taxesOngoingEditor",
-    "homeInsOngoingEditor",
-    "sqft",
-  ] as const;
   return (
     <Styled
       {...{
@@ -25,15 +18,23 @@ export default function BasicPropertyInfo({ feId, className }: Props) {
       <div>
         <StandardLabel>Basic Info</StandardLabel>
         <div className="BasicPropertyInfo-editors">
-          {varbNames.map((varbName, idx) => (
-            <NumObjEntityEditor
-              key={varbName}
-              className={`BasicPropertyInfo-numObjEditor ${
-                idx == 0 && "BasicPropertyInfo-marginEditor"
-              }`}
-              feVarbInfo={property.varbInfo(varbName)}
-            />
-          ))}
+          <NumObjEntityEditor
+            className={`BasicPropertyInfo-numObjEditor BasicPropertyInfo-marginEditor`}
+            feVarbInfo={property.varbInfo("price")}
+          />
+          <NumObjEntityEditor
+            className={`BasicPropertyInfo-numObjEditor`}
+            feVarbInfo={property.varbInfo("taxesOngoingEditor")}
+          />
+          <NumObjEntityEditor
+            // editorType="equation"
+            className={`BasicPropertyInfo-numObjEditor`}
+            feVarbInfo={property.varbInfo("homeInsOngoingEditor")}
+          />
+          <NumObjEntityEditor
+            className={`BasicPropertyInfo-numObjEditor`}
+            feVarbInfo={property.varbInfo("sqft")}
+          />
         </div>
       </div>
     </Styled>
