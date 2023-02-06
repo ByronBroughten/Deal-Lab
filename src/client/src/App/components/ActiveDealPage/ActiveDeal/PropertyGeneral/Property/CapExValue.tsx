@@ -1,14 +1,9 @@
-import { AiOutlineInfoCircle } from "react-icons/ai";
-import { Text } from "react-native";
 import styled from "styled-components";
 import { CapExValueMode } from "../../../../../sharedWithServer/SectionsMeta/baseSectionsDerived/subValues";
 import { useSetterSection } from "../../../../../sharedWithServer/stateClassHooks/useSetterSection";
-import theme from "../../../../../theme/Theme";
+import { LabelWithInfo } from "../../../../appWide/LabelWithInfo";
 import { SelectAndItemizeEditorSection } from "../../../../appWide/SelectAndItemizeEditorSection";
 import { VarbListCapEx } from "../../../../appWide/VarbLists/VarbListCapEx";
-import { useToggleViewNext } from "./../../../../../modules/customHooks/useToggleView";
-import { SectionModal } from "./../../../../appWide/SectionModal";
-import { PlainIconBtn } from "./../../../../general/PlainIconBtn";
 
 export function CapExValue({ feId }: { feId: string }) {
   const capExValue = useSetterSection({
@@ -22,34 +17,17 @@ export function CapExValue({ feId }: { feId: string }) {
     ? valueVarb.displayVarb()
     : undefined;
 
-  const { infoIsOpen, closeInfo, openInfo } = useToggleViewNext("info", false);
   return (
     <Styled
       {...{
         label: (
-          <span className="CapExValue-label">
-            <span>Capital Expense Budget</span>
-            <PlainIconBtn
-              onClick={openInfo}
-              middle={
-                <AiOutlineInfoCircle
-                  size={20}
-                  className="CapExValue-labelInfoCircle"
-                />
-              }
-            />
-            <SectionModal
-              {...{
-                show: infoIsOpen,
-                closeModal: closeInfo,
-                title: "Capital Expense Budget - What's That?",
-              }}
-            >
-              <Text>
-                {`Every property has expensive things will eventually need to be replaced—things like the roof, furnace, water heater, etc. No analysis of a long-term property is complete without somehow accounting for these eventual costs.\n\nA common (and easy) method that you may simply select is to assume that on average all of capital expense costs together will amount to about 5% of the property's purchase price, per year.\n\nIf on the other hand you prefer greater precision, you can select the "Itemize" option. Then for each major capital expense, estimate how much replacing it would cost and how many years that replacement would likely last. The app will then calculate how much you should budget per month for each capital expense as well as the total.`}
-              </Text>
-            </SectionModal>
-          </span>
+          <LabelWithInfo
+            {...{
+              label: "Capital Expense Budget",
+              infoTitle: "Capital Expense Budget - What's That?",
+              infoText: `Every property has expensive things that will eventually need to be replaced—things like the roof, furnace, water heater, etc. No long-term analysis of a property is complete without accounting for these inevitable costs.\n\nA common (and easy) method to account for these is to assume that all of capital expense costs together will on average amount to about 5% of the property's rental income.\n\nA more precise method is to go through each major capital expense and estimate both how much it would cost to replace it and how many years those replacements will likely last. From there, the app will calculate how much you should budget per month for each capital expense as well as their total.`,
+            }}
+          />
         ),
         selectValue: valueMode,
         onChange: (e) => {
@@ -86,12 +64,4 @@ export function CapExValue({ feId }: { feId: string }) {
   );
 }
 
-const Styled = styled(SelectAndItemizeEditorSection)`
-  .CapExValue-label {
-    display: flex;
-    align-items: flex-end;
-  }
-  .CapExValue-labelInfoCircle {
-    margin-left: ${theme.s2};
-  }
-`;
+const Styled = styled(SelectAndItemizeEditorSection)``;

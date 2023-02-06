@@ -1,7 +1,6 @@
 import { AiOutlineSave } from "react-icons/ai";
 import { VscDiscard } from "react-icons/vsc";
 import styled from "styled-components";
-import usePrompt from "../../modules/customHooks/useBlockerAndPrompt";
 import { SnFeUserChildNames } from "../../sharedWithServer/SectionsMeta/relSectionsDerived/FeStoreName";
 import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
 import { useAuthStatus } from "../../sharedWithServer/stateClassHooks/useAuthStatus";
@@ -26,10 +25,6 @@ export function UserEditorTitleRow<SN extends SectionName>({
   const { saveChanges, discardChanges, areSaved } = useSaveEditorToDb(
     sectionName,
     childNames
-  );
-  usePrompt(
-    "Your changes have not been applied. Are you sure you want to leave? (Your changes will not be lost)",
-    !areSaved
   );
   return (
     <Styled className="UserEditorTitleRow-root">

@@ -6,7 +6,7 @@ import { RawSections, zRawSections } from "./SectionPack/RawSection";
 export type SectionPack<SN extends SectionName = SectionName> = {
   dbId: string;
   sectionName: SN;
-  rawSections: RawSections<SN>;
+  rawSections: RawSections;
 };
 
 export type SectionArrPack<SN extends SectionName> = {

@@ -5,7 +5,6 @@ import { Arr } from "../../../../../sharedWithServer/utils/Arr";
 import ccs from "../../../../../theme/cssChunks";
 import theme from "../../../../../theme/Theme";
 import useHowMany from "../../../../appWide/customHooks/useHowMany";
-import { useOpenWidth } from "../../../../appWide/customHooks/useOpenWidth";
 import { AddUnitBtn } from "./UnitList/AddUnitBtn";
 import { UnitItem } from "./UnitList/UnitItem";
 
@@ -24,9 +23,6 @@ export function UnitList({ feId, className }: Props) {
   unitIds = [...unitIds, "addUnitBtn"];
 
   const unitIdRows = Arr.upOneDimension(unitIds, numUnitsPerRow);
-  const { trackWidthToggleView, ...titleRowProps } = useOpenWidth();
-  const { viewIsOpen } = titleRowProps;
-
   const addUnit = () => unitParent.addChild("unit");
   return (
     <Styled
@@ -40,34 +36,32 @@ export function UnitList({ feId, className }: Props) {
       }}
     >
       <div className="UnitList-viewable">
-        {viewIsOpen && (
-          <div className="UnitList-unitRows">
-            {unitIdRows.map((idRow, rowIndex) => {
-              const unitNumberOffset = rowIndex * numUnitsPerRow;
-              return (
-                <div className="UnitList-unitRow" key={idRow[0]}>
-                  {idRow.map((unitId, unitInnerIndex) => {
-                    const unitIndex = unitNumberOffset + unitInnerIndex;
-                    const unitNumber = unitIndex + 1;
-                    return unitId === "addUnitBtn" ? (
-                      <AddUnitBtn
-                        className="UnitList-addUnitBtn"
-                        onClick={addUnit}
-                        key={unitId}
-                      />
-                    ) : (
-                      <UnitItem
-                        key={unitId}
-                        feId={unitId}
-                        unitNumber={unitNumber}
-                      />
-                    );
-                  })}
-                </div>
-              );
-            })}
-          </div>
-        )}
+        <div className="UnitList-unitRows">
+          {unitIdRows.map((idRow, rowIndex) => {
+            const unitNumberOffset = rowIndex * numUnitsPerRow;
+            return (
+              <div className="UnitList-unitRow" key={idRow[0]}>
+                {idRow.map((unitId, unitInnerIndex) => {
+                  const unitIndex = unitNumberOffset + unitInnerIndex;
+                  const unitNumber = unitIndex + 1;
+                  return unitId === "addUnitBtn" ? (
+                    <AddUnitBtn
+                      className="UnitList-addUnitBtn"
+                      onClick={addUnit}
+                      key={unitId}
+                    />
+                  ) : (
+                    <UnitItem
+                      key={unitId}
+                      feId={unitId}
+                      unitNumber={unitNumber}
+                    />
+                  );
+                })}
+              </div>
+            );
+          })}
+        </div>
       </div>
     </Styled>
   );

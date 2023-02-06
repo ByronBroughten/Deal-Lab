@@ -2,23 +2,18 @@ import { NanoIdProp } from "../allBaseSectionVarbs/NanoIdInfo";
 import { SectionNameProp } from "../baseSectionsDerived/baseSectionInfo";
 import { MixedInfoProps, VarbProp } from "../baseSectionsDerived/baseVarbInfo";
 import { ChildName } from "../sectionChildrenDerived/ChildName";
-import { DescendantName } from "../sectionChildrenDerived/DescendantSectionName";
 import { SectionName } from "../SectionName";
 
-type AbsolutePathProp<PT extends ChildName[]> = {
-  path: PT;
+type AbsolutePathProp = {
+  path: ChildName[];
 };
 
-export interface AbsolutePathInfo<
-  SN extends SectionName,
-  PT extends DescendantName<"root">[] = DescendantName<"root">[]
-> extends SectionNameProp<SN>,
-    AbsolutePathProp<PT> {}
+export interface AbsolutePathInfo<SN extends SectionName>
+  extends SectionNameProp<SN>,
+    AbsolutePathProp {}
 
-export interface AbsolutePathDbInfo<
-  SN extends SectionName,
-  PT extends DescendantName<"root">[] = DescendantName<"root">[]
-> extends AbsolutePathInfo<SN, PT> {
+export interface AbsolutePathDbInfo<SN extends SectionName>
+  extends AbsolutePathInfo<SN> {
   dbId: string;
 }
 
@@ -41,22 +36,12 @@ export interface AbsoluteDbVarbInfoMixed<SN extends SectionName>
   dbId: string;
 }
 
-export function absolutePathInfo<
-  SN extends SectionName,
-  PT extends DescendantName<"root">[]
->(sectionName: SN, path: PT): AbsolutePathInfo<SN, PT> {
+export function absolutePathInfo<SN extends SectionName>(
+  sectionName: SN,
+  path: ChildName[]
+): AbsolutePathInfo<SN> {
   return {
     sectionName,
     path,
-  };
-}
-
-export function rootAbsolutePathInfo<
-  SN extends SectionName,
-  PT extends ChildName
->(sectionName: SN, path: PT[]): AbsolutePathInfo<SN> {
-  return {
-    sectionName,
-    path: path as any,
   };
 }

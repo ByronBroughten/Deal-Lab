@@ -28,10 +28,6 @@ import {
   childToSectionName,
   sectionChildNameNames,
 } from "./sectionChildrenDerived/ChildSectionName";
-import {
-  DescendantSectionName,
-  getDescendantNames,
-} from "./sectionChildrenDerived/DescendantSectionName";
 import { DbVarbs } from "./sectionChildrenDerived/SectionPack/RawSection";
 import {
   CorePropName,
@@ -79,9 +75,6 @@ export class SectionMeta<SN extends SectionName> {
   }
   get compareTableName(): CorePropNoNull<SN, "compareTableName"> {
     return this.propNoNull("compareTableName");
-  }
-  get descendantNames(): DescendantSectionName<SN>[] {
-    return getDescendantNames(this.sectionName);
   }
   get hasFeDisplayIndex(): boolean {
     if (this.sectionTraits.displayIndexName) {

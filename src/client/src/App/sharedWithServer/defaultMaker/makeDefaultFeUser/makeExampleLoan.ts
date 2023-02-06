@@ -10,9 +10,8 @@ export function makeExampleLoan() {
 
   loan.addChild("closingCostValue", {
     dbVarbs: {
-      valueEditor: numObj(6000),
-      displayNameEditor: stringObj("Closing Costs"),
-      valueSourceSwitch: "valueEditor",
+      valueLumpSumEditor: numObj(6000),
+      valueMode: "lumpSum",
     },
   });
   loan.addChild("wrappedInLoanValue", {

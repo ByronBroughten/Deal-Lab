@@ -130,16 +130,13 @@ function makeApiQueries(): ApiQueries {
     },
   } as const;
 
-  return Obj.entries(apiQueryProps).reduce(
-    (apiQueries, [queryName, queryProps]) => {
-      (apiQueries[queryName] as ApiQuery<ApiQueryName>) = makeApiQuery({
-        queryName,
-        ...queryProps,
-      });
-      return apiQueries;
-    },
-    {} as ApiQueries
-  );
+  return Obj.keys(apiQueryProps).reduce((queries, queryName) => {
+    (queries[queryName] as ApiQuery<ApiQueryName>) = makeApiQuery({
+      queryName,
+      ...apiQueryProps[queryName],
+    });
+    return queries;
+  }, {} as ApiQueries);
 }
 
 type AllApiQueryProps = {

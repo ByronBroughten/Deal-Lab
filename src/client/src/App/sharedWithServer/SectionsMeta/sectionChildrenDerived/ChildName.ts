@@ -8,7 +8,8 @@ import { ChildSectionName } from "./ChildSectionName";
 type SectionToCN = {
   [SN in SectionName]: keyof AllSectionChildren[SN];
 };
-export type ChildName<SN extends SectionName = SectionName> = SectionToCN[SN];
+export type ChildName<SN extends SectionName = SectionName> = string &
+  SectionToCN[SN];
 
 type SectionToChildren = RemoveNotStrings<SectionToCN>;
 
@@ -60,6 +61,8 @@ export type ChildIdArrsNext<SN extends SectionName> = AllChildIdArrs[SN];
 export type ChildIdArrsNarrow<SN extends SectionName> = MergeUnionObj<
   AllChildIdArrs[SN]
 >;
+
+export type DescendantIds = { [descendantName: string]: string[] };
 
 export type FeChildInfo<
   SN extends SectionName,

@@ -134,14 +134,15 @@ export class PackMakerSection<
     const childPackMaker = this.sectionPackMaker(feInfo);
     return childPackMaker.makeSectionPack();
   }
-  private rawDescendantSections(): RawSections<SN> {
+  private rawDescendantSections(): RawSections {
     const { selfAndDescendantFeIds } = this.get;
-    return Obj.entries(
-      selfAndDescendantFeIds as { [key: string]: string[] }
-    ).reduce((rawSections, [name, feIdArr]) => {
-      rawSections[name] = this.feIdsToRawSections(name as SN, feIdArr);
+    return Obj.keys(selfAndDescendantFeIds).reduce((rawSections, name) => {
+      rawSections[name] = this.feIdsToRawSections(
+        name as SN,
+        selfAndDescendantFeIds[name]
+      ) as OneRawSection[];
       return rawSections;
-    }, {} as { [key: string]: any }) as RawSections<SN>;
+    }, {} as RawSections);
   }
   private feIdsToRawSections<S extends SectionNameByType>(
     sectionName: S,

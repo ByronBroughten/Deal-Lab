@@ -9,7 +9,17 @@ export function replaceRange(
   return str.substring(0, start) + replacement + str.substring(end);
 }
 
+type JoinStrings<F extends string, B extends string> = keyof {
+  [S in F as `${F}${B}`]: any;
+};
+
 export const Str = {
+  join<F extends string, B extends string>(
+    front: F,
+    back: B
+  ): JoinStrings<F, B> {
+    return `${front}${back}`;
+  },
   validate(value: any): string {
     if (typeof value === "string") {
       return value;

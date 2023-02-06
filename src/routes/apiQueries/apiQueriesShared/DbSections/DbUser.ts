@@ -17,7 +17,6 @@ import {
 } from "../../../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/DbStoreInfo";
 import {
   DbSectionName,
-  DbSelfOrDescendantSn,
   DbStoreInfo,
   DbStoreName,
   DbStoreNameByType,
@@ -26,6 +25,7 @@ import {
 } from "../../../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/DbStoreName";
 import { SectionPack } from "../../../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/SectionPack";
 import { FeSectionInfo } from "../../../../client/src/App/sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
+import { SectionName } from "../../../../client/src/App/sharedWithServer/SectionsMeta/SectionName";
 import { GetterSection } from "../../../../client/src/App/sharedWithServer/StateGetters/GetterSection";
 import { PackBuilderSection } from "../../../../client/src/App/sharedWithServer/StatePackers.ts/PackBuilderSection";
 import { SectionPackArrs } from "../../../../client/src/App/sharedWithServer/StatePackers.ts/PackMakerSection";
@@ -188,7 +188,7 @@ export class DbUser extends DbSectionsQuerierBase {
   }
   async setOnlyValue<
     CN extends DbStoreName,
-    SN extends DbSelfOrDescendantSn<CN>,
+    SN extends SectionName,
     VN extends VarbName<SN>
   >({ value, ...rest }: OneDbSectionValueInfo<CN, SN, VN>) {
     const path = modelPath.firstSectionVarb(rest);

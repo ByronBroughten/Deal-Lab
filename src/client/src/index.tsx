@@ -6,15 +6,26 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
+// Upgrade
+// - Look back at a previous version and get the right
+//   Router DOM
+// - Upgrade the language service to the new version of TS
 
 // 3. Make a simple wordpress website
 
 // - Just do it badly at first, for the gist of it.
 // - Then pay someone to do it well
 
+// - Put an informational dot next to Capital Expense Budget
+// - Make a modal that explains what it is.
+// - Do the same with "EquationEditor"
+
 // 2. Sort out the variables
+// - Make only some inputs be an "EquationEditor"
+// - Put a label by those inputs that says "equation editor", with an info dot explanation
+
 // - Make a reduced set of variables appear in the variable editor
-// - Add a "see more" modal or dropdown for the variables
+// - Add a "see more" modal or dropdown, or something
 // - Add an explanation to the Variables page
 // - Add an explanation to the Lists page
 // - Restrict which inputs are allowed to use variables
@@ -22,14 +33,6 @@ AppRegistry.runApplication("App", {
 //   inputs that can take equations
 // - Mark equation editor fields with an "Equation Editor" label,
 //   or something
-
-// Make tests pass
-// Loan
-// - Make a closingCostValue.
-//   - One quick option, a custom amount, and itemize
-// Management
-// - Copy property's expenses
-// Make tests pass again
 
 // Try showing all the available actions in the title rows
 

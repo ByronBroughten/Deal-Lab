@@ -1,6 +1,5 @@
 import { StylesProvider } from "@material-ui/core";
 import React from "react";
-import ReactGA from "react-ga4";
 import { BrowserRouter } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -19,8 +18,6 @@ import GlobalStyle from "./globalStyles";
 import { Main } from "./Main";
 
 initSupertokens();
-ReactGA.initialize("G-19TRW4YTJL");
-ReactGA.send("pageview");
 const App: React.FC = () => {
   const { sectionsDispatch, ...sectionsContext } = useDealLabSections({
     storeSectionsLocally: true,

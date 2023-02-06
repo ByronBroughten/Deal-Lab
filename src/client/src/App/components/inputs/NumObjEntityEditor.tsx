@@ -2,7 +2,7 @@ import { EditorState } from "draft-js";
 import React from "react";
 import styled from "styled-components";
 import { useOnOutsideClickEffect } from "../../modules/customHooks/useOnOutsideClickRef";
-import useToggleView from "../../modules/customHooks/useToggleView";
+import { useToggleViewNext } from "../../modules/customHooks/useToggleView";
 import { SetEditorState } from "../../modules/draftjs/draftUtils";
 import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { SectionInfoContextProvider } from "../../sharedWithServer/stateClassHooks/useSectionContext";
@@ -96,7 +96,7 @@ const MemoNumObjEntityEditor = React.memo(function MemoNumObjEntityEditor({
   const label = labeled ? rest.label ?? displayName : undefined;
 
   const { varbSelectorIsOpen, openVarbSelector, closeVarbSelector } =
-    useToggleView({ viewWhat: "varbSelector", initValue: false });
+    useToggleViewNext("varbSelector", false);
 
   const numObjEditorRef = React.useRef<HTMLDivElement | null>(null);
   const popperRef = React.useRef<HTMLDivElement | null>(null);

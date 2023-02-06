@@ -4,7 +4,6 @@ import { zValue } from "../../baseSectionsDerived/valueMetas";
 import { DbValue } from "../../baseSectionsDerived/valueMetaTypes";
 import { SectionName } from "../../SectionName";
 import { ChildName } from "../ChildName";
-import { SelfOrDescendantSectionName } from "../DescendantSectionName";
 
 type GeneralChildNumArrs = Record<string, number[]>;
 export type ChildSpNums<SN extends SectionName> = {
@@ -38,11 +37,10 @@ export type OneRawSection<SN extends SectionName = SectionName> = {
   dbVarbs: DbVarbs;
   childSpNums: ChildSpNums<SN>;
 };
-export type RawSections<SN extends SectionName> = {
-  [DSN in SelfOrDescendantSectionName<SN>]: OneRawSection<DSN>[];
+export type RawSections = {
+  [descendantName: string]: OneRawSection[];
 };
-export type RawSection<SN extends SectionName = SectionName> =
-  RawSections<SN>[SelfOrDescendantSectionName<SN>][number];
+export type RawSection = RawSections[string][number];
 
 const zRawSectionFrame: Record<keyof OneRawSection, any> = {
   spNum: zS.number,

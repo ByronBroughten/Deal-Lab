@@ -52,20 +52,6 @@ export class ChildPackLoader<
   get childType(): CT {
     return this.get.meta.childType(this.childName) as CT;
   }
-  get childRawSectionList(): OneRawSection<CT>[] {
-    return this.sectionPack.rawSections[this.childType] as OneRawSection<CT>[];
-  }
-  get childRawSection(): OneRawSection<CT> {
-    const rawSection = this.childRawSectionList.find(
-      ({ spNum }) => spNum === this.spChildInfo.spNum
-    );
-    if (rawSection) return rawSection;
-    else {
-      throw new Error(
-        `No rawSection found with childType ${this.childType} and spNum ${this.spChildInfo.spNum}`
-      );
-    }
-  }
   loadChild() {
     const addProps = {
       ...pick(this.childRawSection, ["dbId", "dbVarbs"]),
@@ -94,6 +80,20 @@ export class ChildPackLoader<
         childPackLoader.loadChild();
       }
     }
+  }
+  private get childRawSection(): OneRawSection<CT> {
+    const rawSection = this.childRawSectionList.find(
+      ({ spNum }) => spNum === this.spChildInfo.spNum
+    );
+    if (rawSection) return rawSection;
+    else {
+      throw new Error(
+        `No rawSection found with childType ${this.childType} and spNum ${this.spChildInfo.spNum}`
+      );
+    }
+  }
+  private get childRawSectionList(): OneRawSection<CT>[] {
+    return this.sectionPack.rawSections[this.childType] as OneRawSection<CT>[];
   }
   private getterChild(
     childFeId: string

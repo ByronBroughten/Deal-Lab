@@ -1,4 +1,4 @@
-import useToggleView from "../../../../../modules/customHooks/useToggleView";
+import { useToggleViewNext } from "../../../../../modules/customHooks/useToggleView";
 import { useGetterSection } from "../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { MaterialStringEditor } from "../../../../inputs/MaterialStringEditor";
 import { ConditionalRowList } from "./IfThen/ConditionalRowList";
@@ -6,7 +6,7 @@ import { ConditionalRowList } from "./IfThen/ConditionalRowList";
 type Props = { feId: string };
 export default function IfThen({ feId }: Props) {
   const sectionName = "userVarbItem";
-  const { viewIsOpen, toggleView } = useToggleView();
+  const { viewIsOpen, toggleView } = useToggleViewNext();
   const userVarbItem = useGetterSection({
     sectionName,
     feId,

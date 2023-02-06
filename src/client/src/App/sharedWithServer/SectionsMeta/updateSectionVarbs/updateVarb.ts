@@ -84,11 +84,13 @@ export const updateVarbS = {
       ...options,
     });
   },
-  sumChildNums<SN extends SectionName>(
-    childName: ChildName<SN>,
+  sumChildNums<SN extends SectionName, CN extends ChildName<SN>>(
+    childName: CN,
     varbName: string
   ) {
-    return this.sumNums([updateFnPropS.children(childName, varbName)]);
+    return this.sumNums([
+      updateFnPropS.children(childName as ChildName, varbName),
+    ]);
   },
   singlePropFn(
     updateFnName: NumPropCalcName,

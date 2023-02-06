@@ -38,7 +38,7 @@ export function extend<A extends object = {}, B extends object = {}>(
   return { ...a, ...b } as A & B;
 }
 
-type UpdateObjProps<O, K extends keyof O> = {
+type UpdateObjProps<O extends any, K extends keyof O> = {
   obj: O;
   key: K;
   val: O[K];
@@ -84,10 +84,11 @@ export const Obj = {
     key,
     val,
   }: UpdateObjProps<O, K>): O {
-    if (key in obj) {
+    if (this.isObjToAny(obj) && key in (obj as any)) {
       obj[key] = val;
       return obj;
-    } else throw new Error(`Prop "${key}" is not in the passed object.`);
+    } else
+      throw new Error(`Prop "${String(key)}" is not in the passed object.`);
   },
   isObjToAny(value: any): value is any {
     if (value && typeof value === "object") return true;
@@ -137,13 +138,6 @@ export const Obj = {
   ): PropKeysOfValue<O, V> {
     const keys = this.keys(obj).filter((key) => obj[key] === value);
     return keys as PropKeysOfValue<O, V>;
-  },
-  entryKeysWithProp<
-    O extends object,
-    P extends string,
-    R extends (keyof SubType<O, { [Prop in P]: any }>)[]
-  >(obj: O, propName: P): R {
-    return this.keys(obj).filter((key) => propName in obj[key]) as R;
   },
   entryKeysWithPropValue<
     O extends { [key: string]: any },

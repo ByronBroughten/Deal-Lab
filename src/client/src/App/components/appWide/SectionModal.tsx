@@ -10,7 +10,7 @@ import { SectionTitle } from "./SectionTitle";
 
 interface Props extends ModalWrapperProps {
   closeModal: () => void;
-  title: string;
+  title: React.ReactNode;
 }
 export function SectionModal({
   children,

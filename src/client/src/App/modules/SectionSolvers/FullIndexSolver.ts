@@ -4,6 +4,7 @@ import {
 } from "../../sharedWithServer/SectionsMeta/relSectionsDerived/FeStoreName";
 import { ChildSectionName } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/ChildSectionName";
 import { SectionPack } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/SectionPack";
+import { SectionNameByType } from "../../sharedWithServer/SectionsMeta/SectionNameByType";
 import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
 import { PackBuilderSection } from "../../sharedWithServer/StatePackers.ts/PackBuilderSection";
 import {
@@ -41,8 +42,11 @@ export class FullIndexSolver<
       return this.builder;
     } else return this.solver;
   }
+  get indexSectionItems(): GetterSection<SectionNameByType<"hasFullIndex">>[] {
+    return this.get.children(this.itemName) as GetterSection<any>[];
+  }
   get displayItems(): DisplayItemProps[] {
-    return this.get.children(this.itemName).map((section) => ({
+    return this.indexSectionItems.map((section) => ({
       displayName: section.valueNext("displayName").mainText,
       dbId: section.dbId,
     }));

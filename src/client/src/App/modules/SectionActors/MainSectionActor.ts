@@ -1,4 +1,7 @@
-import { DbSectionNameName } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/DbStoreName";
+import {
+  DbNameBySectionName,
+  DbStoreNameByType,
+} from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/DbStoreName";
 import { SectionPack } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/SectionPack";
 import { SectionNameByType } from "../../sharedWithServer/SectionsMeta/SectionNameByType";
 import { PackMakerSection } from "../../sharedWithServer/StatePackers.ts/PackMakerSection";
@@ -49,11 +52,14 @@ export class MainSectionActor<
     return this.get.meta.hasFeDisplayIndex;
   }
   private get sectionQuerierProps(): SectionQuerierProps<
-    DbSectionNameName<SN>
+    Extract<DbStoreNameByType<"sectionQuery">, DbNameBySectionName<SN>>
   > {
     return {
       apiQueries: this.apiQueries,
-      dbStoreName: this.get.meta.dbIndexStoreName as DbSectionNameName<SN>,
+      dbStoreName: this.get.meta.dbIndexStoreName as Extract<
+        DbStoreNameByType<"sectionQuery">,
+        DbNameBySectionName<SN>
+      >,
     };
   }
   private get querier() {
@@ -149,7 +155,7 @@ export class MainSectionActor<
   }
   private async loadByLogin(dbId: string): Promise<SectionPack<SN>> {
     if (this.feUser.isLoggedIn) {
-      return (await this.querier.get(dbId)) as SectionPack<SN>;
+      return (await this.querier.get(dbId)) as SectionPack<any>;
     } else {
       return this.mainSolver.indexSolver.getItem(dbId);
     }

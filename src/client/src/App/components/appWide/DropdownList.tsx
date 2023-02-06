@@ -1,7 +1,7 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import useOnOutsideClickRef from "../../modules/customHooks/useOnOutsideClickRef";
-import useToggleView from "../../modules/customHooks/useToggleView";
+import { useToggleViewNext } from "../../modules/customHooks/useToggleView";
 import theme from "../../theme/Theme";
 import { DropdownBtn } from "./DropdownBtn";
 
@@ -26,10 +26,7 @@ export function DropdownList({
   icon,
   controller,
 }: Props) {
-  const internalController = useToggleView({
-    initValue: false,
-    viewWhat: "list",
-  });
+  const internalController = useToggleViewNext("list", false);
 
   const control = controller ?? internalController;
   const listRef = useOnOutsideClickRef(control.closeList);

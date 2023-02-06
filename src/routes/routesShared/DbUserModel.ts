@@ -12,15 +12,11 @@ import {
 } from "../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/DbStoreInfo";
 import {
   DbSectionName,
-  DbSelfOrDescendantSn,
   DbStoreName,
   dbStoreNames,
   dbStoreSectionName,
 } from "../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/DbStoreName";
-import {
-  getSelfAndDescendantNames,
-  SelfOrDescendantSectionName,
-} from "../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/DescendantSectionName";
+import { selfAndDescSectionNames } from "../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/DescendantName";
 import { SectionPack } from "../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/SectionPack";
 import { RawSection } from "../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/SectionPack/RawSection";
 import { SectionName } from "../../client/src/App/sharedWithServer/SectionsMeta/SectionName";
@@ -60,11 +56,11 @@ function monSectionPack<SN extends DbSectionName>(sectionName: SN) {
 function monRawSections<SN extends DbSectionName>(
   sectionName: SN
 ): Schema<any> {
-  const selfOrDescNames = getSelfAndDescendantNames(sectionName);
-  const schemaFrame = selfOrDescNames.reduce((frame, selfOrDescName) => {
+  const sectionNames = selfAndDescSectionNames(sectionName);
+  const schemaFrame = sectionNames.reduce((frame, selfOrDescName) => {
     frame[selfOrDescName] = [monRawSection(selfOrDescName)];
     return frame;
-  }, {} as Record<SelfOrDescendantSectionName<SN>, any>);
+  }, {} as Record<SectionName, any>);
   return new Schema(schemaFrame);
 }
 function monRawSection<SN extends SectionName>(sectionName: SN): Schema<any> {
@@ -101,14 +97,15 @@ export const modelPath = {
   },
   firstSectionPackSection<CN extends DbStoreName>(
     storeName: CN,
-    sectionName: DbSelfOrDescendantSn<CN>
+    sectionName: SectionName
   ) {
     return `${this.firstSectionPack(storeName)}.rawSections.${sectionName}.0`;
   },
-  firstSectionVarb<
-    CN extends DbStoreName,
-    SN extends DbSelfOrDescendantSn<CN>
-  >({ storeName, sectionName, varbName }: OneDbSectionVarbInfo<CN, SN>) {
+  firstSectionVarb<CN extends DbStoreName, SN extends SectionName>({
+    storeName,
+    sectionName,
+    varbName,
+  }: OneDbSectionVarbInfo<CN, SN>) {
     return `${this.firstSectionPackSection(
       storeName,
       sectionName
@@ -119,7 +116,7 @@ export const modelPath = {
 export const queryParameters = {
   updateVarb: <
     CN extends DbStoreName,
-    SN extends DbSelfOrDescendantSn<CN>,
+    SN extends SectionName,
     VN extends VarbName<SN>
   >({
     value,

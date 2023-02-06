@@ -87,9 +87,14 @@ export class SectionsStore {
   private static initMainFromStoredState(
     storedState: StoredSectionsState
   ): SolverSection<"main"> {
+    const { activeDeal, ...rest } = storedState;
     const main = PackBuilderSection.initAsOmniChild("main");
     main.loadSelf(makeDefaultMain());
-    main.replaceChildArrs(storedState);
+    main.replaceChildArrs(rest);
+
+    const deal = main.onlyChild("activeDealPage").onlyChild("deal");
+    deal.loadSelf(activeDeal);
+
     const solver = SolverSections.initRoot();
     return solver.loadAndGetChild({
       childName: "main",

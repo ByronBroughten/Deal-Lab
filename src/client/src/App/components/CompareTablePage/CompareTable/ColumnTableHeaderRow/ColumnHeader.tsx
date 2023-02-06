@@ -1,5 +1,5 @@
 import useOnOutsideClickRef from "../../../../modules/customHooks/useOnOutsideClickRef";
-import useToggleView from "../../../../modules/customHooks/useToggleView";
+import { useToggleViewNext } from "../../../../modules/customHooks/useToggleView";
 import { Obj } from "../../../../sharedWithServer/utils/Obj";
 import SimpleMuiMenu, {
   SimpleMuiMenuItem,
@@ -9,10 +9,7 @@ interface Props extends MenuOptionProps {
   displayName: string;
 }
 export default function ColumnHeader({ displayName, ...menuFns }: Props) {
-  const { colMenuIsOpen, toggleColMenu, closeColMenu } = useToggleView({
-    initValue: false,
-    viewWhat: "colMenu",
-  });
+  const { colMenuIsOpen, closeColMenu } = useToggleViewNext("colMenu", false);
   const colMenuRef = useOnOutsideClickRef(closeColMenu, "th");
   const menuItems = makeMenuItems(menuFns);
   return (

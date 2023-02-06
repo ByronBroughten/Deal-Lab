@@ -1,7 +1,6 @@
 import { VarbNames } from "./SectionsMeta/baseSectionsDerived/baseVarbInfo";
 import { SectionMeta, VarbMetas } from "./SectionsMeta/SectionMeta";
 import { SectionName, sectionNames } from "./SectionsMeta/SectionName";
-import { SectionNameByType } from "./SectionsMeta/SectionNameByType";
 import { VarbMeta } from "./SectionsMeta/VarbMeta";
 import { Obj } from "./utils/Obj";
 
@@ -26,7 +25,7 @@ export class SectionsMeta {
     if (sectionMeta === undefined) {
       throw new Error(`No section with of sectionName ${sectionName}`);
     }
-    return sectionMeta as SectionMeta<SectionNameByType> as any;
+    return sectionMeta as SectionMeta<any> as any;
   }
   varbs<SN extends SectionName>(sectionName: SN): VarbMetas<SN> {
     return this.get(sectionName).varbMetas;

@@ -10,7 +10,6 @@ import {
   FeChildInfo,
 } from "../SectionsMeta/sectionChildrenDerived/ChildName";
 import { ChildSectionName } from "../SectionsMeta/sectionChildrenDerived/ChildSectionName";
-import { DescendantSectionName } from "../SectionsMeta/sectionChildrenDerived/DescendantSectionName";
 import { ParentNameSafe } from "../SectionsMeta/sectionChildrenDerived/ParentName";
 import { FeSectionInfo } from "../SectionsMeta/SectionInfo/FeInfo";
 import { SectionName } from "../SectionsMeta/SectionName";
@@ -244,20 +243,10 @@ interface AddSectionProps<SN extends SectionName = SectionName>
   idx?: number;
 }
 
-export type DescendantList<
-  SN extends SectionNameByType,
-  DN extends DescendantSectionName<SN> = DescendantSectionName<SN>
-> = readonly [...DescendantSectionName<SN>[], DN];
-
 export interface AddChildOptions<
   SN extends SectionNameByType,
   CN extends ChildName<SN> = ChildName<SN>,
   CT extends ChildSectionName<SN, CN> = ChildSectionName<SN, CN>
 > extends StrictOmit<AddSectionProps<CT>, OmitProps> {}
-
-export type AddDescendantOptions<
-  SN extends SectionNameByType,
-  DN extends DescendantSectionName<SN> = DescendantSectionName<SN>
-> = StrictOmit<AddSectionProps<DN>, OmitProps>;
 
 type OmitProps = "sectionName" | "childFeIds";

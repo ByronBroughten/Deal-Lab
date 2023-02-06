@@ -23,6 +23,7 @@ const Styled = styled(Button)`
   justify-content: center;
   align-items: center;
   color: inherit;
+  font-size: inherit;
 
   .PlainIconBtnNext-left,
   .PlainIconBtnNext-middle,

@@ -30,7 +30,7 @@ export class StateSections {
     sectionName: SN
   ): RawFeSection<SN>[] {
     const test = this.core[sectionName];
-    return test as RawFeSection<SN>[];
+    return test as any[] as RawFeSection<SN>[];
   }
   sectionIdx<SN extends SectionNameByType>(feInfo: FeSectionInfo<SN>): number {
     const sectionList = this.rawSectionList(feInfo.sectionName);

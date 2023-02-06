@@ -17,8 +17,8 @@ type PropFirst<T extends string> = {
 type PropLast<T extends string> = {
   [Prop in keyof TLast as `${Prop}${Capitalize<string & T>}`]: TLast[Prop];
 };
-// @ts-ignore
-type Return<T extends any> = PropFirst<T> & PropLast<T>;
+
+type Return<T extends string> = PropFirst<T> & PropLast<T>;
 
 function useNamedToggleView<T extends string>(
   props: ReturnType<typeof useToggle>,
@@ -26,35 +26,19 @@ function useNamedToggleView<T extends string>(
 ): Return<T & string> {
   const capitalViewWhat = capitalizeFirstLetter(viewWhat);
   const { value, toggle, setOn, setOff } = props;
-
   return {
     [`${viewWhat}IsOpen`]: value,
     [`${viewWhat}IsClosed`]: !value,
     [`toggle${capitalViewWhat}`]: toggle,
     [`open${capitalViewWhat}`]: React.useCallback(setOn, []),
     [`close${capitalViewWhat}`]: React.useCallback(setOff, []),
-  };
+  } as any;
 }
 
-type Props<T> = { initValue?: boolean; viewWhat?: T };
-export default function useToggleView<T extends undefined>(
-  props?: Props<T>
-): Return<"view">;
-export default function useToggleView<T extends string>(
-  props?: Props<T>
-): Return<T>;
-export default function useToggleView<T extends string | undefined>({
-  initValue = true,
-  viewWhat,
-}: Props<T> = {}): Return<T> | Return<"view"> {
-  const props = useToggle(initValue);
-  return useNamedToggleView(props, viewWhat ?? "view");
-}
-
-export function useToggleViewNext<T extends string>(
-  viewWhat: T,
+export function useToggleViewNext<T extends string = "view">(
+  viewWhat?: T,
   initValue: boolean = false
 ): Return<T> {
   const props = useToggle(initValue);
-  return useNamedToggleView(props, viewWhat);
+  return useNamedToggleView(props, viewWhat ?? ("view" as T));
 }

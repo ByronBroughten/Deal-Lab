@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import useOnOutsideClickRef from "../../modules/customHooks/useOnOutsideClickRef";
-import useToggleView from "../../modules/customHooks/useToggleView";
+import { useToggleViewNext } from "../../modules/customHooks/useToggleView";
 import theme from "../../theme/Theme";
 import { StandardProps } from "../general/StandardProps";
 import { NavBtn } from "./NavBtn";
@@ -20,9 +20,10 @@ export function NavDropDown({
   dropDirection = "left",
   doCloseViewToggle = false,
 }: Props) {
-  const { viewIsOpen, toggleView, closeView } = useToggleView({
-    initValue: false,
-  });
+  const { viewIsOpen, toggleView, closeView } = useToggleViewNext(
+    "view",
+    false
+  );
   const closeIfClickOutsideRef = useOnOutsideClickRef(closeView);
 
   // this is complicated.

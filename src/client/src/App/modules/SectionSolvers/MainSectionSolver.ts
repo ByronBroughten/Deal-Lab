@@ -1,4 +1,5 @@
 import isEqual from "fast-deep-equal";
+import { StringObj } from "../../sharedWithServer/SectionsMeta/allBaseSectionVarbs/baseValues/StringObj";
 import {
   AutoSyncControl,
   SyncStatus,
@@ -104,7 +105,7 @@ export class MainSectionSolver<
   }
   makeACopy() {
     this.updater.newDbId();
-    const titleValue = this.get.valueNext("displayName");
+    const titleValue = this.get.valueNext("displayName") as StringObj;
     this.solver.updateValuesAndSolve({
       displayName: {
         ...titleValue,

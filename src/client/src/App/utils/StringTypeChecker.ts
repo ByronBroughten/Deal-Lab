@@ -9,7 +9,11 @@ export class StringTypeChecker<A extends StringArrRecord> {
     type?: T
   ): value is A[T][number] {
     if (!this.is(value, type)) {
-      throw new Error(`value "${value}" is not of type "${type ?? "all"}"`);
+      throw new Error(
+        `value "${value}" is not of type "${
+          ((type ?? String(type)) as string) || "all"
+        }"`
+      );
     } else return true;
   }
 }

@@ -30,8 +30,8 @@ export function MaintenanceValue({ feId }: { feId: string }) {
         },
         menuItems: [
           ["onePercentPrice", "1% purchase price"],
-          ["sqft", "$1 per square foot"],
-          ["onePercentAndSqft", "1% purchase price and square foot average"],
+          ["sqft", "$1 per sqft"],
+          ["onePercentAndSqft", "1% purchase price and $1 sqft average"],
           ["lumpSum", "Custom amount"],
         ],
         equalsValue,

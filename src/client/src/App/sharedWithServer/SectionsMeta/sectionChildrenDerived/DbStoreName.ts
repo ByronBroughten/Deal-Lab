@@ -6,16 +6,14 @@ import {
   ChildSectionNameName,
   childToSectionName,
 } from "./ChildSectionName";
-import { SelfOrDescendantSectionName } from "./DescendantSectionName";
 
 export const dbStoreNames = Obj.keys(allSectionChildren.dbStore);
 export type DbStoreName = typeof dbStoreNames[number];
 export type DbSectionName<CN extends DbStoreName = DbStoreName> =
   ChildSectionName<"dbStore", CN>;
-export type DbSectionNameName<SN extends DbSectionName> = ChildSectionNameName<
-  "dbStore",
-  SN
->;
+export type DbNameBySectionName<SN extends DbSectionName> =
+  ChildSectionNameName<"dbStore", SN>;
+
 export interface DbStoreNameProp<CN extends DbStoreName = DbStoreName> {
   dbStoreName: CN;
 }
@@ -23,9 +21,6 @@ export interface DbStoreInfo<CN extends DbStoreName = DbStoreName>
   extends DbStoreNameProp<CN> {
   dbId: string;
 }
-
-export type DbSelfOrDescendantSn<CN extends DbStoreName> =
-  SelfOrDescendantSectionName<DbSectionName<CN>>;
 
 const mainIndexStoreNames = Arr.extractStrict(dbStoreNames, [
   "dealMain",

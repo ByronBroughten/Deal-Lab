@@ -63,15 +63,15 @@ export function childNamesOfType<
   SN extends SectionName,
   ST extends SectionNameType
 >(sectionName: SN, sectionType: ST): ChildNameOfType<SN, ST>[] {
-  const childNamesOfType: ChildNameOfType<SN, ST>[] = [];
+  const cNamesOfType: ChildNameOfType<SN, ST>[] = [];
   const childNames = getChildNames(sectionName);
   for (const childName of childNames) {
     const childSn = childToSectionName(sectionName, childName);
     if (sectionNameS.is(childSn, sectionType)) {
-      childNamesOfType.push(childSn as ChildNameOfType<SN, ST>);
+      cNamesOfType.push(childName as ChildNameOfType<SN, ST>);
     }
   }
-  return childNamesOfType;
+  return cNamesOfType;
 }
 
 function _testChildNameOfType<

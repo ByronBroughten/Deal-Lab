@@ -383,5 +383,5 @@ export function ongoingPureCalc<Base extends string>(
         initValue: switchInit,
       }),
     }),
-  };
+  } as UpdateGroup<Base, "ongoing">;
 }
