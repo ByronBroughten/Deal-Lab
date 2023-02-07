@@ -9,9 +9,9 @@
     "start:dev:debug": "nodemon --inspect src/index.ts",
     "client": "cd src/client && npm run start",
     "start:prod": "ts-node-transpile-only src/index.ts",
-    "heroku-postbuild": "cd src/client && npm install --only=dev && npm install && npm run build",
+    "heroku-postbuild": "cd src/client && npm ci --only=dev && npm ci && npm run build",
     "build": "cd src/client && npm run build",
-    "install": "cd src/client && npm install",
+    "install": "cd src/client && npm ci",
     "test": "jest --watchAll --verbose --coverage",
     "test-no-cache": "jest --watchAll --verbose --coverage --no-cache"
   },
