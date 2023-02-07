@@ -120,7 +120,7 @@ const Styled = styled.div`
   }
   .PercentDollarInput-basePayEditor {
     .NumObjEditor-materialDraftEditor {
-      .editor-background {
+      .MaterialDraftEditor-wrapper {
         border-top-left-radius: 0;
       }
       .MuiInputBase-root {

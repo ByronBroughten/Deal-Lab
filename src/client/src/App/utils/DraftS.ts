@@ -9,6 +9,8 @@ import {
 import { EntityMapData } from "../sharedWithServer/SectionsMeta/allBaseSectionVarbs/baseValues/entities";
 import { Arr } from "../sharedWithServer/utils/Arr";
 
+export type SetEditorState = React.Dispatch<React.SetStateAction<EditorState>>;
+
 export type EntityMap = Record<
   string,
   {

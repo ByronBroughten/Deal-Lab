@@ -60,7 +60,7 @@ export const MaterialDraftEditor = React.memo(function MaterialDraftEditor({
     <Styled
       {...{ label, className: "editor-wrapper " + className, sectionName }}
     >
-      <div className="editor-background">
+      <div className="MaterialDraftEditor-wrapper">
         <TextField
           {...{
             className: `DraftTextField-root ${label ? "labeled" : ""}`,

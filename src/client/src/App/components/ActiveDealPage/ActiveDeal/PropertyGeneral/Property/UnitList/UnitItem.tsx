@@ -1,5 +1,4 @@
 import { rem } from "polished";
-import React from "react";
 import styled from "styled-components";
 import { useSetterSection } from "../../../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import theme from "../../../../../../theme/Theme";
@@ -68,7 +67,7 @@ const Styled = styled.div`
   .NumObjEditor-inner {
     margin-top: ${theme.s25};
 
-    .editor-background {
+    .MaterialDraftEditor-wrapper {
       background-color: ${theme.property.light};
       .DraftTextField-root {
         min-width: 110px;

@@ -1,5 +1,5 @@
 import { switchKeyToVarbNames } from "../SectionsMeta/allBaseSectionVarbs/baseSwitchNames";
-import { ValueInEntityInfo } from "../SectionsMeta/allBaseSectionVarbs/baseValues/entities";
+import { EditorVarbInfo } from "../SectionsMeta/allBaseSectionVarbs/baseValues/entities";
 import { mixedInfoS } from "../SectionsMeta/sectionChildrenDerived/MixedSectionInfo";
 import {
   GetterSectionsBase,
@@ -16,7 +16,7 @@ export type SectionOption = {
   displayName: string;
 };
 export type VariableOption = {
-  varbInfo: ValueInEntityInfo;
+  varbInfo: EditorVarbInfo;
   collectionName: string;
   displayName: string;
 };
@@ -46,14 +46,13 @@ export class VariableGetterSections extends GetterSectionsBase {
       const collectionName = listSection.valueNext("displayName").mainText;
       return options.concat(
         userVarbItems.map((item) => {
-          const varbInfo = {
-            ...mixedInfoS.makeDb("userVarbItem", item.dbId),
-            varbName: "value",
-          };
           return {
             displayName: item.virtualVarb.displayName,
             collectionName,
-            varbInfo,
+            varbInfo: {
+              ...mixedInfoS.pathNameDbId("userVarbItemMain", item.dbId),
+              varbName: "value",
+            },
           };
         })
       );

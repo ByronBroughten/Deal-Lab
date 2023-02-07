@@ -15,6 +15,7 @@ import {
   PathNameVarbInfoMixed,
   zSectionPathProp,
 } from "../../SectionInfo/PathNameInfo";
+import { VarbPathNameInfoMixed } from "../../SectionInfo/VarbPathNameInfo";
 import { Id } from "../id";
 
 type EntityIdProp = { entityId: string };
@@ -87,6 +88,8 @@ export type InEntityVarbInfo =
   | PathNameVarbInfoMixed
   | PathInVarbInfo;
 
+export type EditorVarbInfo = PathDbVarbInfoMixed<any> | VarbPathNameInfoMixed;
+
 export type ValueInEntityInfo =
   | DbVarbInfoMixed
   | GlobalVarbInfo
@@ -140,7 +143,7 @@ export const entityS = {
   },
 } as const;
 
-export type EntityMapData = ValueInEntityInfo & EntityIdProp;
+export type EntityMapData = EditorVarbInfo & EntityIdProp;
 export interface OutEntityInfo extends EntityIdProp {
   feId: string;
   varbName: string;

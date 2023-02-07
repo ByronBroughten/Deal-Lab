@@ -106,7 +106,7 @@ const Styled = styled.div`
 
   .SelectEditor-editor {
     .NumObjEditor-materialDraftEditor {
-      .editor-background {
+      .MaterialDraftEditor-wrapper {
         border-top-left-radius: 0;
       }
       .MuiInputBase-root {

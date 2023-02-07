@@ -159,7 +159,7 @@ const ccs = {
     main({ label, sectionName }: { label?: string; sectionName?: ThemeName }) {
       return css`
         display: inline-block;
-        .editor-background {
+        .MaterialDraftEditor-wrapper {
           display: inline-block;
           border-top-left-radius: ${theme.br0};
           border-top-right-radius: ${theme.br0};

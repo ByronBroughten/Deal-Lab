@@ -5,6 +5,7 @@ import { useOnOutsideClickEffect } from "../../modules/customHooks/useOnOutsideC
 import { useToggleViewNext } from "../../modules/customHooks/useToggleView";
 import { SetEditorState } from "../../modules/draftjs/draftUtils";
 import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
+import { VarbPathName } from "../../sharedWithServer/SectionsMeta/SectionInfo/VarbPathNameInfo";
 import { SectionInfoContextProvider } from "../../sharedWithServer/stateClassHooks/useSectionContext";
 import { GetterVarb } from "../../sharedWithServer/StateGetters/GetterVarb";
 import { EditorTextStatus } from "../../sharedWithServer/StateGetters/GetterVarbNumObj";
@@ -29,8 +30,11 @@ type Props = PropAdornments & {
   bypassNumeric?: boolean;
   doEquals?: boolean;
   editorType?: NumEditorType;
+  quickViewVarbNames?: VarbPathName[];
 };
-const adornmentNames = ["startAdornment", "endAdornment"] as const;
+
+const seperator = ".";
+
 export function NumObjEntityEditor({
   editorType = "numeric",
   feVarbInfo,
@@ -38,6 +42,7 @@ export function NumObjEntityEditor({
   labeled = true,
   bypassNumeric = false,
   doEquals = true,
+  quickViewVarbNames = [],
   label,
   ...props
 }: Props) {
@@ -54,6 +59,7 @@ export function NumObjEntityEditor({
         displayName: varb.displayName,
         startAdornment: props.startAdornment ?? varb.startAdornment,
         endAdornment: props.endAdornment ?? varb.endAdornment,
+        quickViewVarbNameString: quickViewVarbNames.join(seperator),
 
         className,
         labeled,
@@ -74,6 +80,7 @@ interface MemoProps extends Adornments, FeVarbInfo {
   editorTextStatus: EditorTextStatus;
   displayName: string;
   editorType: NumEditorType;
+  quickViewVarbNameString: string;
 
   className?: string;
   labeled?: boolean;
@@ -93,6 +100,7 @@ const MemoNumObjEntityEditor = React.memo(function MemoNumObjEntityEditor({
   setEditorState,
   editorState,
   bypassNumeric,
+  quickViewVarbNameString,
   ...rest
 }: MemoProps) {
   const { startAdornment, endAdornment } = getEntityEditorAdornments({
@@ -117,9 +125,11 @@ const MemoNumObjEntityEditor = React.memo(function MemoNumObjEntityEditor({
     },
     []
   );
+  const varbPathNames = quickViewVarbNameString.split(seperator);
   return (
     <SectionInfoContextProvider {...rest}>
       <Styled
+        editorType={editorType}
         ref={numObjEditorRef}
         className={`NumObjEditor-root ${className ?? ""}`}
       >
@@ -168,9 +178,15 @@ function editorRegEx(editorType: NumEditorType): RegExp {
   return regEx[editorType];
 }
 
-const Styled = styled.div`
+const Styled = styled.div<{ editorType: NumEditorType }>`
   display: flex;
   align-items: center;
+
+  .MaterialDraftEditor-wrapper {
+    border-color: ${({ editorType }) =>
+      editorType === "equation" && theme.primary.light};
+  }
+
   .DraftTextField-root {
     min-width: 20px;
   }

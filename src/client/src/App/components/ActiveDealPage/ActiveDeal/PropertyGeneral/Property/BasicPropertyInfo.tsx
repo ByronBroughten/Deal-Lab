@@ -27,7 +27,7 @@ export default function BasicPropertyInfo({ feId, className }: Props) {
             feVarbInfo={property.varbInfo("taxesOngoingEditor")}
           />
           <NumObjEntityEditor
-            // editorType="equation"
+            editorType="equation"
             className={`BasicPropertyInfo-numObjEditor`}
             feVarbInfo={property.varbInfo("homeInsOngoingEditor")}
           />
