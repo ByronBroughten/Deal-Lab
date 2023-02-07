@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { reqMonString } from "../../../utils/mongoose";
 import { StrictPick } from "../../../utils/types";
-import { mInEntities, ValueInEntity, zInEntities } from "./entities";
+import { mInEntities, ValueInEntity, zValueInEntities } from "./entities";
 
 export type NumObj = {
   mainText: string;
@@ -10,7 +10,7 @@ export type NumObj = {
 };
 export const zNumObj = z.object({
   mainText: z.string(),
-  entities: zInEntities,
+  entities: zValueInEntities,
   solvableText: z.string(),
 } as { [K in keyof NumObj]: any });
 export const mDbNumObj: Record<keyof NumObj, any> = {

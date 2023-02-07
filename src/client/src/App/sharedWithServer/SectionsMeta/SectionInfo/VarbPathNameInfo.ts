@@ -1,3 +1,4 @@
+import { Obj } from "../../utils/Obj";
 import { targetNames } from "../allBaseSectionVarbs/baseSwitchNames";
 import { VarbName } from "../baseSectionsDerived/baseSectionsVarbsTypes";
 import { MixedInfoProps } from "../baseSectionsDerived/baseVarbInfo";
@@ -61,8 +62,15 @@ export const allVarbPathParams = {
     ...targetNames("revenue", "ongoing"),
   ]),
 };
+
+export const varbPathNames = Obj.keys(allVarbPathParams);
+export function isVarbPathName(value: any): value is VarbPathName {
+  return varbPathNames.includes(value);
+}
+
 type AllVarbPathParams = typeof allVarbPathParams;
 export type VarbPathName = keyof AllVarbPathParams;
+
 export type VarbSectionPathName<VPN extends VarbPathName = VarbPathName> =
   AllVarbPathParams[VPN]["pathName"];
 export function varbSectionPathName<VPN extends VarbPathName>(
@@ -118,4 +126,13 @@ function sectionVarbNameParams<
     };
     return options;
   }, {} as SectionVarbPathParams<PN, VN>);
+}
+
+export function varbPathInfo(
+  varbPathName: VarbPathName
+): VarbPathNameInfoMixed {
+  return {
+    infoType: "varbPathName",
+    varbPathName,
+  };
 }

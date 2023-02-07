@@ -14,9 +14,6 @@ export default function useOnOutsideClickRef<T extends keyof RefTypes = "div">(
   _?: T
 ): MutableRefObject<RefTypes[T] | null> {
   const componentRef = React.useRef<RefTypes[T] | null>(null);
-  // this could take an array of refs.
-  // thenI would just have to get the ref down to the popper.
-
   React.useEffect(() => {
     function handleClickOutside(event: any): void {
       componentRef.current?.contains(event.target) || onOutsideClick();

@@ -2,17 +2,13 @@ import { Schema } from "mongoose";
 import { z } from "zod";
 import { Obj } from "../../../utils/Obj";
 import { zS } from "../../../utils/zod";
+import { isVarbPathName } from "../../SectionInfo/VarbPathNameInfo";
 import { isSectionPathName } from "../../sectionPathContexts/sectionPathNames";
 import { Id } from "../id";
-import {
-  InEntityVarbInfo,
-  ValueInEntityInfo,
-  zInEntityVarbInfo,
-} from "./entities";
+import { EntityIdProp, ValueInEntityInfo, zValueEntityInfo } from "./entities";
 
-export type ValueIdInEntityInfo = ValueInEntityInfo & { entityId: string };
-const zInEntityValueInfo = z.any();
-const zInEntityValueInfoNext = zInEntityVarbInfo.and(
+export type ValueIdInEntityInfo = ValueInEntityInfo & EntityIdProp;
+const zInEntityValueInfo = zValueEntityInfo.and(
   z.object({ entityId: zS.nanoId })
 );
 
@@ -38,29 +34,32 @@ export const mInEntityVarbInfoValue = {
 export function isInEntityVarbInfoValue(
   value: any
 ): value is InEntityIdInfoValue {
-  return (
-    value === null ||
-    (isInEntityVarbInfoShared(value) && isInEntityVarbInfoSpecific(value))
-  );
+  return value === null || (isShared(value) && isSpecificInfoType(value));
 }
-function isInEntityVarbInfoShared(value: any): boolean {
+function isShared(value: any): boolean {
   const info: ValueInEntityInfo = value;
   return Obj.isObjToAny(info) && Id.is(value.entityId);
 }
-function isInEntityVarbInfoSpecific(value: any): boolean {
-  const info: InEntityVarbInfo = value;
+function isSpecificInfoType(value: any): boolean {
+  const info: ValueInEntityInfo = value;
   switch (info.infoType) {
-    case "globalSection":
-      return true;
-    case "dbId":
-      return Id.is(info.id);
-    case "pathName": {
-      return isSectionPathName(info.pathName);
+    case "varbPathName": {
+      return isVarbPathName(info.varbPathName);
     }
     case "pathNameDbId": {
       return isSectionPathName(info.pathName) && Id.is(info.id);
     }
-    default:
-      return false;
+    default: {
+      throw new Error(
+        `infoType ${(info as ValueInEntityInfo).infoType} is unhandled.`
+      );
+    }
   }
 }
+
+export const inEntityInfoValueSchema = {
+  is: isInEntityVarbInfoValue,
+  initDefault: () => null as InEntityIdInfoValue,
+  zod: zInEntityVarbInfoValue,
+  mon: mInEntityVarbInfoValue,
+};

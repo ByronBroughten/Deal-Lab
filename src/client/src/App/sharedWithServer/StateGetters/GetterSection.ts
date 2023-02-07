@@ -220,6 +220,18 @@ export class GetterSection<
       case "absolutePathDbId": {
         return this.sections.sectionsByMixed(info);
       }
+      case "varbPathName": {
+        const { varbPathName } = info;
+        const { pathName } = getVarbPathParams(varbPathName);
+        const sectionName = pathSectionName(pathName);
+        const path = this.getPathFromContext(pathName);
+        const absoluteInfo: AbsolutePathInfoMixed = {
+          sectionName,
+          path,
+          infoType: "absolutePath",
+        };
+        return this.sections.sectionsByMixed(absoluteInfo);
+      }
       case "pathName":
       case "pathNameDbId": {
         const { pathName, ...rest } = info;

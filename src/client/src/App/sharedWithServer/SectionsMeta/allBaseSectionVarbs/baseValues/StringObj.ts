@@ -2,7 +2,7 @@ import { z } from "zod";
 import { monSchemas } from "../../../utils/mongoose";
 import { Obj } from "../../../utils/Obj";
 import { zS } from "../../../utils/zod";
-import { mInEntities, ValueInEntity, zInEntities } from "./entities";
+import { mInEntities, ValueInEntity, zValueInEntities } from "./entities";
 
 export type EntitiesProp = {
   entities: ValueInEntity[];
@@ -43,7 +43,7 @@ export const initDefaultStringObj = ({
 
 export const zStringObj = z.object({
   mainText: zS.string,
-  entities: zInEntities,
+  entities: zValueInEntities,
 } as { [K in keyof StringObj]: any });
 
 export const mStringObj: Record<keyof StringObj, any> = {

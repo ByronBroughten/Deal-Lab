@@ -6,23 +6,28 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-// Upgrade
-// - Look back at a previous version and get the right
-//   Router DOM
-// - Upgrade the language service to the new version of TS
 
 // 3. Make a simple wordpress website
 
 // - Just do it badly at first, for the gist of it.
 // - Then pay someone to do it well
 
-// - Put an informational dot next to Capital Expense Budget
-// - Make a modal that explains what it is.
-// - Do the same with "EquationEditor"
-
 // 2. Sort out the variables
-// - Make only some inputs be an "EquationEditor"
-// - Put a label by those inputs that says "equation editor", with an info dot explanation
+// - Add a button below them that says "+Variable", as well as an "info" button to the right
+// - Make the info button explain the equation editor
+// - "+Variable" gives shows a list of 2-3 quick-access variables taylored for
+//   the input.
+// - At the bottom of that there is a "show more" option, which summons a modal
+//   that shows all the variables available
+
+// The only problem is that it will be cumbersome to enter custom variables.
+// I would be sacrificing power for not overwhelming
+// Let's try it this way.
+
+// 3. Taylor which quick-access variables are accessible to each editor.
+// - Make editors accept a list of varbPathNames
+// - Make the ones that pup up in the variables search be those
+// - Make a light-grey variables selector modal of some kind.
 
 // - Make a reduced set of variables appear in the variable editor
 // - Add a "see more" modal or dropdown, or something

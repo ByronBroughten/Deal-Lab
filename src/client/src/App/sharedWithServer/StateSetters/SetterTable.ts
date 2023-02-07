@@ -2,9 +2,9 @@ import {
   CompareTableBuilder,
   SortOptions,
 } from "../../modules/SectionSolvers/CompareTableBuilder";
-import { InEntityVarbInfo } from "../SectionsMeta/allBaseSectionVarbs/baseValues/entities";
+import { Id } from "../SectionsMeta/allBaseSectionVarbs/id";
+import { VarbInfoMixedFocal } from "../SectionsMeta/sectionChildrenDerived/MixedSectionInfo";
 import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
-import { DbVarbs } from "../SectionsMeta/sectionChildrenDerived/SectionPack/RawSection";
 import { GetterSection } from "../StateGetters/GetterSection";
 import { UpdaterSection } from "../StateUpdaters/UpdaterSection";
 import { SetterSectionBase } from "./SetterBases/SetterSectionBase";
@@ -79,9 +79,9 @@ export class SetterTable extends SetterSectionBase<"compareTable"> {
       feId,
     });
   }
-  addColumn(entityInfo: InEntityVarbInfo): void {
+  addColumn(varbInfo: VarbInfoMixedFocal): void {
     this.setter.addChild("column", {
-      dbVarbs: entityInfo as any as DbVarbs,
+      dbVarbs: { varbInfo: { ...varbInfo, entityId: Id.make() } },
     });
   }
   removeColumn(feId: string): void {

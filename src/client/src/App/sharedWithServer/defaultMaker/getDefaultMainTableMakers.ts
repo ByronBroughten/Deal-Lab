@@ -1,4 +1,4 @@
-import { inEntityIdInfo } from "../SectionsMeta/allBaseSectionVarbs/baseValues/InEntityIdInfoValue";
+import { Id } from "../SectionsMeta/allBaseSectionVarbs/id";
 import { makeVarbNamesInfo } from "../SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
 import { FeStoreNameByType } from "../SectionsMeta/relSectionsDerived/FeStoreName";
 import { DbSectionPack } from "../SectionsMeta/sectionChildrenDerived/DbSectionPack";
@@ -50,11 +50,12 @@ export function getDefaultMainTableMakers(): TablePackMakers {
       for (const varbName of varbNames) {
         table.addChild("column", {
           dbVarbs: {
-            valueEntityInfo: inEntityIdInfo({
+            varbInfo: {
               infoType: "globalSection",
               sectionName,
               varbName,
-            }),
+              entityId: Id.make(),
+            },
           },
         });
       }

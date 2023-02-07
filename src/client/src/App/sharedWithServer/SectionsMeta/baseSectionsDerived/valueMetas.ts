@@ -1,11 +1,6 @@
 import { z } from "zod";
 import { reqMonNumber, reqMonString } from "../../utils/mongoose";
-import {
-  InEntityIdInfoValue,
-  isInEntityVarbInfoValue,
-  mInEntityVarbInfoValue,
-  zInEntityVarbInfoValue,
-} from "../allBaseSectionVarbs/baseValues/InEntityIdInfoValue";
+import { inEntityInfoValueSchema } from "../allBaseSectionVarbs/baseValues/InEntityIdInfoValue";
 import {
   isNumObj,
   mDbNumObj,
@@ -19,6 +14,7 @@ import {
   zStringObj,
 } from "../allBaseSectionVarbs/baseValues/StringObj";
 import { ValueName } from "../allBaseSectionVarbs/ValueName";
+import { varbInfoValueSchema } from "../sectionChildrenDerived/VarbInfoValue";
 
 export const valueMetas = {
   number: {
@@ -72,12 +68,8 @@ export const valueMetas = {
     zod: zNumObj,
     mon: mDbNumObj,
   },
-  inEntityInfo: {
-    is: isInEntityVarbInfoValue,
-    initDefault: () => null as InEntityIdInfoValue,
-    zod: zInEntityVarbInfoValue,
-    mon: mInEntityVarbInfoValue,
-  },
+  inEntityInfo: inEntityInfoValueSchema,
+  varbInfo: varbInfoValueSchema,
 } as const;
 
 type ValueMeta = typeof valueMetas;

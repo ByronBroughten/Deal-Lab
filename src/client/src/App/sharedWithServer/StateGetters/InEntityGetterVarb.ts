@@ -88,7 +88,7 @@ export class InEntityGetterVarb<
   get allInEntities(): InEntity[] {
     return [...this.allFixedInEntities, ...this.valueInEntities];
   }
-  get activeMixedFeInfos(): InVarbInfo[] {
+  get activeMixedInfos(): InVarbInfo[] {
     return [...this.activeFixedMixedInfos, ...this.valueInEntities];
   }
   private get activeFixedMixedInfos(): InVarbInfo[] {

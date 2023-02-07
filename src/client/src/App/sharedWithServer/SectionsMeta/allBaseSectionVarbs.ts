@@ -52,7 +52,7 @@ export function makeAllBaseSectionVarbs() {
       compareToggle: baseVarb("boolean"),
     }),
     column: baseSectionVarbs({
-      valueEntityInfo: baseVarb("inEntityInfo"),
+      varbInfo: baseVarb("varbInfo"),
     }),
     cell: baseSectionVarbs({
       columnFeId: baseVarb("string"),

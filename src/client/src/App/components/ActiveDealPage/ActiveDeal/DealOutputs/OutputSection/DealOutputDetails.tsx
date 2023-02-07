@@ -17,7 +17,7 @@ export function DealOutputDetails({ feId }: { feId: string }) {
     <Styled className="DealOutputDetails-root">
       {outputs.map((output, idx) => {
         const mixedInfo = output.valueInEntityInfo();
-        const key = mixedInfo.varbName + `${idx}`;
+        const key = mixedInfo.entityId + `${idx}`;
         if (output.hasSectionByFocalMixed(mixedInfo)) {
           const { feVarbInfo } = output.varbByFocalMixed(mixedInfo);
           return (

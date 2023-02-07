@@ -1,18 +1,12 @@
-import { StrictOmit } from "../../../utils/types";
-import { mixedInfoS } from "../../sectionChildrenDerived/MixedSectionInfo";
-import { PathVarbNames } from "../../SectionInfo/PathNameInfo";
 import {
   getVarbPathParams,
+  varbPathInfo,
   VarbPathName,
-  VarbSectionPathName,
 } from "../../SectionInfo/VarbPathNameInfo";
-import {
-  pathSectionName,
-  SectionPathVarbName,
-} from "../../sectionPathContexts/sectionPathNames";
+import { pathSectionName } from "../../sectionPathContexts/sectionPathNames";
 import { getVarbMeta } from "../../VarbMeta";
 import { Id } from "../id";
-import { PathNameInEntity, ValueInEntity } from "./entities";
+import { ValueInEntity } from "./entities";
 import { NumObj } from "./NumObj";
 
 export function numObjNext(...propArr: EntityNumObjPropArr): NumObj {
@@ -28,19 +22,17 @@ export function numObjNext(...propArr: EntityNumObjPropArr): NumObj {
       solvableText += `${prop}`;
     } else {
       const varbPathName = prop[0];
+      const entityInfo = varbPathInfo(varbPathName);
       const { pathName, varbName } = getVarbPathParams(varbPathName);
-      const entityInfo = pathNameEntityInfo({
-        pathName,
-        varbName: varbName as SectionPathVarbName<typeof pathName>,
-      });
-
       const sectionName = pathSectionName(pathName);
       const text = getVarbMeta({ sectionName, varbName }).displayNameFull;
+
       entities.push({
         ...entityInfo,
         entityId: Id.make(),
         length: text.length,
         offset: mainText.length,
+        entitySource: "editor",
       });
       mainText += text;
       solvableText += "?";
@@ -55,16 +47,3 @@ export function numObjNext(...propArr: EntityNumObjPropArr): NumObj {
 }
 
 type EntityNumObjPropArr = (number | string | [VarbPathName])[];
-
-function pathNameEntityInfo<PN extends VarbSectionPathName>({
-  pathName,
-  varbName,
-}: PathVarbNames<PN>): StrictOmit<
-  PathNameInEntity,
-  "length" | "offset" | "entityId"
-> {
-  return {
-    entitySource: "editor",
-    ...mixedInfoS.pathNameVarb(pathName, varbName),
-  };
-}

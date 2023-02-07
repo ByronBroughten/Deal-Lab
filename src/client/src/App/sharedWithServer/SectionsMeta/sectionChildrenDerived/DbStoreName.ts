@@ -12,7 +12,7 @@ export type DbStoreName = typeof dbStoreNames[number];
 export type DbSectionName<CN extends DbStoreName = DbStoreName> =
   ChildSectionName<"dbStore", CN>;
 export type DbNameBySectionName<SN extends DbSectionName> =
-  ChildSectionNameName<"dbStore", SN>;
+  ChildSectionNameName<"dbStore", SN> & DbStoreName;
 
 export interface DbStoreNameProp<CN extends DbStoreName = DbStoreName> {
   dbStoreName: CN;

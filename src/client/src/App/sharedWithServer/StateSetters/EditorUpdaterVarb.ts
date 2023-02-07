@@ -156,7 +156,7 @@ function entitiesFromMapAndRanges(
         ...data,
         ...pick(entityRange, ["offset", "length"]),
         entitySource: "editor",
-      },
+      } as ValueInEntity,
     ]);
   }, [] as ValueInEntity[]);
   // the entities must be updated from right to left.

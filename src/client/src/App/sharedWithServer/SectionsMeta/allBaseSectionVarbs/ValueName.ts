@@ -7,5 +7,6 @@ export const valueNames = [
   "stringObj",
   "numObj",
   "inEntityInfo",
+  "varbInfo",
 ] as const;
 export type ValueName = typeof valueNames[number];

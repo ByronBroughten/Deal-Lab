@@ -11,8 +11,8 @@ export const outputNames = [
 ] as const;
 
 const defaultDealOutputInfos: ValueInEntityInfo[] = outputNames.map(
-  (varbName) => {
-    return mixedInfoS.pathNameVarb("dealFocal", varbName);
+  (varbPathName) => {
+    return mixedInfoS.varbPathName(varbPathName);
   }
 );
 

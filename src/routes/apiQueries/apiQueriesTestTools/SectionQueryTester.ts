@@ -64,13 +64,13 @@ export class SectionQueryTester<
       }),
     });
   }
-  makeSectionPackReq(): SectionPackReq<DbNameBySectionName<SN>> {
+  makeSectionPackReq(): SectionPackReq<any> {
     return makeReq({
       dbStoreName: this.dbStoreName,
       sectionPack: this.packMaker.makeSectionPack(),
-    }) as SectionPackReq<DbNameBySectionName<SN>>;
+    }) as SectionPackReq<any>;
   }
-  makeDbInfoReq(): DbPackInfoSectionReq<DbNameBySectionName<SN>> {
+  makeDbInfoReq(): DbPackInfoSectionReq<any> {
     return makeReq({
       dbStoreName: this.dbStoreName,
       dbId: this.get.dbId,

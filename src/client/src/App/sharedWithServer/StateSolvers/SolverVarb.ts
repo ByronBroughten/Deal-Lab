@@ -11,7 +11,7 @@ import { Id } from "../SectionsMeta/allBaseSectionVarbs/id";
 import { FeVarbInfoMixed } from "../SectionsMeta/baseSectionsDerived/baseVarbInfo";
 import { VarbInfoMixedFocal } from "../SectionsMeta/sectionChildrenDerived/MixedSectionInfo";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
-import { pathSectionName } from "../SectionsMeta/sectionPathContexts/sectionPathNames";
+import { SectionPathName } from "../SectionsMeta/sectionPathContexts/sectionPathNames";
 import { GetterSections } from "../StateGetters/GetterSections";
 import { GetterVarb } from "../StateGetters/GetterVarb";
 import { InEntityGetterVarb } from "../StateGetters/InEntityGetterVarb";
@@ -167,7 +167,7 @@ export class SolverVarb<
     };
   }
   private hasValueEntityVarb(inEntity: ValueInEntity) {
-    return this.get.section.hasSectionByFocalMixed(inEntity);
+    return this.get.section.hasVarbByFocalMixed(inEntity);
   }
   getInEntityVarb(inEntity: ValueInEntity): SolverVarb {
     return this.solverSection.varbByFocalMixed(inEntity);
@@ -243,18 +243,13 @@ export class SolverVarb<
     }
   }
   private isUserVarbAndWasDeleted(varbInfo: ValueInEntity): boolean {
-    const sectionName = this.inEntitySectionName(varbInfo);
-    return sectionName === "userVarbItem" && !this.hasValueEntityVarb(varbInfo);
-  }
-  inEntitySectionName(varbInfo: ValueInEntity) {
-    if (
-      varbInfo.infoType === "pathName" ||
-      varbInfo.infoType === "pathNameDbId"
-    ) {
-      return pathSectionName(varbInfo.pathName);
-    } else {
-      return varbInfo.sectionName;
+    if (varbInfo.infoType === "pathNameDbId") {
+      const pathName = varbInfo.pathName as SectionPathName;
+      if (pathName === "userVarbItemMain") {
+        return !this.hasValueEntityVarb(varbInfo);
+      }
     }
+    return false;
   }
   private solveOutVarbs(): void {
     this.addVarbInfosToSolveFor(...this.outEntity.activeOutEntities);

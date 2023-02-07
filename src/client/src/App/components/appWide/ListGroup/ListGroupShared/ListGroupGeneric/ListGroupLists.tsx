@@ -37,9 +37,8 @@ export function ListGroupLists({
       <HollowBtn
         className="ListGroup-addListBtn ListGroup-list"
         onClick={addList}
-      >
-        <MdOutlinePlaylistAdd className="ListGroup-addListBtnIcon" />
-      </HollowBtn>
+        middle={<MdOutlinePlaylistAdd className="ListGroup-addListBtnIcon" />}
+      />
     </Styled>
   );
 }

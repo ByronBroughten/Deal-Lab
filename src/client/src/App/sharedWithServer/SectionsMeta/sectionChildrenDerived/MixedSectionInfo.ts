@@ -124,11 +124,16 @@ export const mixedInfoS = {
 
 type MixedInfoType = SectionInfoMixed["infoType"];
 
-export type SectionInfoMixedFocal =
+type BasicSectionInfoMixedFocal =
   | SectionInfoMixed
   | RelSectionInfo
   | PathNameInfoMixed
   | PathNameDbInfoMixed;
 
-type SectionToVarbInfoMixed = SectionInfoMixedFocal & VarbProp;
-export type VarbInfoMixedFocal = SectionToVarbInfoMixed | VarbPathNameInfoMixed;
+export type SectionInfoMixedFocal =
+  | BasicSectionInfoMixedFocal
+  | VarbPathNameInfoMixed;
+
+export type VarbInfoMixedFocal =
+  | (BasicSectionInfoMixedFocal & VarbProp)
+  | VarbPathNameInfoMixed;

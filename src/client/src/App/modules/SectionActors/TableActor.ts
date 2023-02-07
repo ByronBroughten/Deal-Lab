@@ -1,7 +1,7 @@
 import { makeReq } from "../../sharedWithServer/apiQueriesShared/makeReqAndRes";
 import { sectionsMeta } from "../../sharedWithServer/SectionsMeta";
-import { InEntityVarbInfo } from "../../sharedWithServer/SectionsMeta/allBaseSectionVarbs/baseValues/entities";
 import { DbStoreNameByType } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/DbStoreName";
+import { VarbInfoMixedFocal } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/MixedSectionInfo";
 import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
 import { PackMakerSection } from "../../sharedWithServer/StatePackers.ts/PackMakerSection";
 import { SetterSection } from "../../sharedWithServer/StateSetters/SetterSection";
@@ -15,33 +15,47 @@ import { SectionActorBase, SectionActorBaseProps } from "./SectionActorBase";
 
 class GetterColumn extends GetterSection<"column"> {
   get displayNameOrNotFound(): string {
-    const varbInfo = this.valueInEntityInfo();
+    const varbInfo = this.valueNext("varbInfo");
+    if (!varbInfo) throw new Error("varbInfo can't be null here");
     switch (varbInfo.infoType) {
       case "pathName":
       case "pathNameDbId": {
         const { displayName } = this.varbByFocalMixed(varbInfo);
         return displayName;
       }
-    }
-    if (varbInfo.infoType === "globalSection") {
-      const { displayName } = sectionsMeta.varb(varbInfo);
-      if (typeof displayName === "string") {
-        return displayName;
-      } else {
-        throw new Error("displayName must be a hardcoded string here.");
+      case "globalSection": {
+        const { displayName } = sectionsMeta.varb(varbInfo);
+        if (typeof displayName === "string") {
+          return displayName;
+        } else {
+          throw new Error("displayName must be a hardcoded string here.");
+        }
       }
-    } else if (varbInfo.infoType === "dbId") {
-      const userVarbInfo = {
-        ...varbInfo,
-        sectionName: "userVarbItem",
-        varbName: "value",
-      } as const;
-      if (this.sections.hasSectionMixed(userVarbInfo)) {
-        const varb = this.sections.varbByMixed(userVarbInfo);
-        return varb.displayName;
+      case "dbId": {
+        const userVarbInfo = {
+          ...varbInfo,
+          sectionName: "userVarbItem",
+          varbName: "value",
+        } as const;
+        if (this.sections.hasSectionMixed(userVarbInfo)) {
+          const varb = this.sections.varbByMixed(userVarbInfo);
+          return varb.displayName;
+        } else return "Variable not found";
+      }
+      case "varbPathName": {
+        if (this.hasVarbByFocalMixed(varbInfo)) {
+          const varb = this.varbByFocalMixed(varbInfo);
+          return varb.displayName;
+        } else {
+          throw new Error(
+            `Varb not found with varbPathName ${varbInfo.varbPathName}`
+          );
+        }
+      }
+      default: {
+        throw new Error(`varbInfo of type ${varbInfo.infoType} not handled`);
       }
     }
-    return "Variable not found";
   }
 }
 
@@ -125,11 +139,11 @@ export class TableActor extends SectionActorBase<"compareTable"> {
   async removeColumn(columnFeId: string) {
     this.tableSetter.removeColumn(columnFeId);
   }
-  async addColumn(entityInfo: InEntityVarbInfo) {
+  async addColumn(varbInfo: VarbInfoMixedFocal) {
     const { setter } = this;
     // this is to initialize the setter's "initialSections"
 
-    this.tableSetter.addColumn(entityInfo);
+    this.tableSetter.addColumn(varbInfo);
     setter.tryAndRevertIfFail(
       () => false
       // sendColumns

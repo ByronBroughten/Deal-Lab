@@ -251,7 +251,7 @@ export class SolveValueVarb<
         const editorEntities = editor.value("numObj").entities;
         let isPureUserVarb = true;
         for (const entity of editorEntities) {
-          if (section.hasSectionByFocalMixed(entity)) {
+          if (section.hasVarbByFocalMixed(entity)) {
             const varb = section.varbByFocalMixed(entity);
             if (!(varb.sectionName === "userVarbItem")) {
               isPureUserVarb = false;

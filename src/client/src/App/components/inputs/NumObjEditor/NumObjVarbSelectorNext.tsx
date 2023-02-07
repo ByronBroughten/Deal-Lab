@@ -1,6 +1,7 @@
 import { EditorState } from "draft-js";
 import React from "react";
 import styled from "styled-components";
+import { useToggleViewNext } from "../../../modules/customHooks/useToggleView";
 import { SetEditorState } from "../../../modules/draftjs/draftUtils";
 import { insertEntity } from "../../../modules/draftjs/insert";
 import { EntityMapData } from "../../../sharedWithServer/SectionsMeta/allBaseSectionVarbs/baseValues/entities";
@@ -34,11 +35,12 @@ function onSelect({ setEditorState, variableOption }: OnSelectProps) {
 // What I need first is just a button next to another button.
 export const NumObjVarbSelectorNext = React.memo(
   React.forwardRef(({ setEditorState }: Props, ref: PopperRef) => {
+    const { toggleVarbs, varbsIsOpen } = useToggleViewNext("varbs");
     return (
       <Styled className="NumObjVarbSelector-root">
         <div className="NumObjVarbSelector-absolute">
           <div className="NumObjVarbSelector-wrapper">
-            <HollowBtn {...{ text: "+ Variable" }} />
+            <HollowBtn {...{ middle: "+ Variable", onClick: toggleVarbs }} />
           </div>
         </div>
       </Styled>

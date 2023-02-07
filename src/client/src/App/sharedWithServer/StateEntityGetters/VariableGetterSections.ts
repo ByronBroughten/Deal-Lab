@@ -1,5 +1,5 @@
 import { switchKeyToVarbNames } from "../SectionsMeta/allBaseSectionVarbs/baseSwitchNames";
-import { EditorVarbInfo } from "../SectionsMeta/allBaseSectionVarbs/baseValues/entities";
+import { ValueInEntityInfo } from "../SectionsMeta/allBaseSectionVarbs/baseValues/entities";
 import { mixedInfoS } from "../SectionsMeta/sectionChildrenDerived/MixedSectionInfo";
 import {
   GetterSectionsBase,
@@ -9,14 +9,14 @@ import { GetterSections } from "../StateGetters/GetterSections";
 import { Obj } from "../utils/Obj";
 import { VarbName } from "./../SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
 import { PathDbVarbInfoMixed } from "./../SectionsMeta/SectionInfo/PathNameInfo";
-import { absoluteVarbOptions } from "./pathVarbOptions";
+import { varbPathOptions } from "./pathVarbOptions";
 
 export type SectionOption = {
   dbId: string;
   displayName: string;
 };
 export type VariableOption = {
-  varbInfo: EditorVarbInfo;
+  varbInfo: ValueInEntityInfo;
   collectionName: string;
   displayName: string;
 };
@@ -30,7 +30,7 @@ export class VariableGetterSections extends GetterSectionsBase {
   }
   variableOptions(): VariableOption[] {
     return [
-      ...absoluteVarbOptions,
+      ...varbPathOptions,
       ...this.userVarbOptions(),
       ...this.userListTotalOptions(),
     ];

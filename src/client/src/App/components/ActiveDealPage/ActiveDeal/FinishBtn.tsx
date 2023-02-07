@@ -26,7 +26,7 @@ export function FinishBtn({
       {...{
         className: `FinishBtn-btn ${className ?? ""}`,
         $styleDisabled: styleDisabled,
-        text: btnText,
+        middle: btnText,
         onClick: styleDisabled ? () => disabledWarning(warningText) : onClick,
       }}
     />

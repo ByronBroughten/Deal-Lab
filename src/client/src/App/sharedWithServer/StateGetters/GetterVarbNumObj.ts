@@ -63,7 +63,7 @@ export class GetterVarbNumObj<
     return solvableText;
   }
   private getSolvableNumber(inEntity: ValueInEntity): NumberOrQ {
-    if (this.get.section.hasSectionByFocalMixed(inEntity)) {
+    if (this.get.section.hasVarbByFocalMixed(inEntity)) {
       const varb = this.get.section.varbByFocalMixed(inEntity);
       return varb.numberOrQuestionMark;
     } else return "?";
