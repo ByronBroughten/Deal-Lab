@@ -1,8 +1,10 @@
+import styled from "styled-components";
 import { useToggleViewNext } from "../../../../../modules/customHooks/useToggleView";
 import { useGetterSection } from "../../../../../sharedWithServer/stateClassHooks/useGetterSection";
+import theme from "../../../../../theme/Theme";
+import { AddSectionBtn } from "../../../../appWide/AddSectionBtn";
 import { EditSectionBtn } from "../../../../appWide/EditSectionBtn";
 import { FormSection } from "../../../../appWide/FormSection";
-import { FormSectionBtn } from "../../../../appWide/GeneralSection/GeneralSectionTitle/FormSectionBtn";
 import { LabeledVarbRow } from "../../../../appWide/LabeledVarbRow";
 import { SectionModal } from "../../../../appWide/SectionModal";
 import StandardLabel from "../../../../general/StandardLabel";
@@ -20,7 +22,7 @@ export function Units({ feId }: Props) {
     useToggleViewNext("units", false);
 
   return (
-    <div className="Units-root">
+    <Styled className="Units-root">
       {unitsIsOpen && (
         <>
           <FormSection>
@@ -36,38 +38,51 @@ export function Units({ feId }: Props) {
             <UnitList
               {...{
                 feId,
-                className: "Property-unitList",
+                className: "Units-unitList",
               }}
             />
           </SectionModal>
         </>
       )}
-      {unitsIsClosed && !hasUnits && (
-        <FormSectionBtn
-          className="Units-addUnitsBtn"
-          onClick={openUnits}
-          text="Add Units"
-        />
-      )}
-      {unitsIsClosed && hasUnits && (
+      {unitsIsClosed && (
         <FormSection>
           <div>
-            <div style={{ display: "flex" }}>
+            <div className="Units-titleRow">
               <StandardLabel>Units</StandardLabel>
-              <EditSectionBtn onClick={openUnits} />
+              {hasUnits && (
+                <EditSectionBtn className="Units-editBtn" onClick={openUnits} />
+              )}
             </div>
-            <LabeledVarbRow
-              {...{
-                varbPropArr: property.varbInfoArr([
-                  "numUnits",
-                  "targetRentYearly",
-                ] as const),
-                className: "MainDealSection-labeledVarbRow",
-              }}
-            />
+            {!hasUnits && (
+              <AddSectionBtn className="Units-addBtn" onClick={openUnits} />
+            )}
+            {hasUnits && (
+              <LabeledVarbRow
+                {...{
+                  varbPropArr: property.varbInfoArr([
+                    "numUnits",
+                    "targetRentYearly",
+                  ] as const),
+                  className: "MainDealSection-labeledVarbRow",
+                }}
+              />
+            )}
           </div>
         </FormSection>
       )}
-    </div>
+    </Styled>
   );
 }
+
+const Styled = styled.div`
+  .Units-editBtn {
+    margin-left: ${theme.s3};
+  }
+  .Units-titleRow {
+    display: flex;
+    align-items: center;
+  }
+  .Units-addBtn {
+    margin-top: ${theme.s3};
+  }
+`;

@@ -12,6 +12,12 @@ AppRegistry.runApplication("App", {
 // - Just do it badly at first, for the gist of it.
 // - Then pay someone to do it well
 
+// Main UI
+// - Make a button that says, "addUnits"
+
+// - Just show the variables provided to each numeric editor
+//   - But also include an "i" icon. That's pretty necessary.
+
 // 2. Sort out the variables
 // - Add a button below them that says "+Variable", as well as an "info" button to the right
 // - Make the info button explain the equation editor

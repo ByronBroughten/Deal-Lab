@@ -62,10 +62,12 @@ export function MainDealSection({
             className="MainDealSection-showInputsTitle"
             text={sectionTitle}
           />
-          <EditSectionBtn
-            className="MainDealSection-editBtn"
-            onClick={openInputs}
-          />
+          {completionStatus === "allValid" && (
+            <EditSectionBtn
+              className="MainDealSection-editBtn"
+              onClick={openInputs}
+            />
+          )}
         </div>
         {displayName && (
           <div className="MainDealSection-displayNameDiv">{displayName}</div>
@@ -106,7 +108,8 @@ export const Styled = styled(MainSection)<{
   $hide?: boolean;
   $completionStatus: CompletionStatus;
 }>`
-  transition: all 0.2s ease-in-out;
+  /* transition: all 0.2s ease-in-out; */
+  transition: all 0s ease-in-out;
 
   .MainDealSection-displayNameDiv {
     margin-top: ${theme.s25};
@@ -166,12 +169,7 @@ export const Styled = styled(MainSection)<{
     if (!$showInputs) {
       if ($completionStatus === "allEmpty") {
         return css`
-          /* border: solid 1px ${theme.info.main}; */
-          .MainDealSection-showInputsTitle {
-            /* color: ${theme.info.border}; */
-          }
           :hover {
-            /* background-color: ${theme.info.dark}; */
           }
           .MainDealSection-detailsDiv {
             display: none;
@@ -187,12 +185,7 @@ export const Styled = styled(MainSection)<{
         `;
       } else if ($completionStatus === "someInvalid") {
         return css`
-          /* border: solid 1px ${theme.primary.light}; */
-          .MainDealSection-showInputsTitle {
-            /* color: ${theme.primary.main}; */
-          }
           :hover {
-            /* background-color: ${theme.primary.main}; */
           }
           .MainDealSection-detailsDiv {
             display: none;

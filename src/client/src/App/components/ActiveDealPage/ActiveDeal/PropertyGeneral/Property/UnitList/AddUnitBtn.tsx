@@ -1,3 +1,4 @@
+import { AiOutlinePlus } from "react-icons/ai";
 import styled from "styled-components";
 import theme from "../../../../../../theme/Theme";
 import { SectionBtn } from "../../../../../appWide/SectionBtn";
@@ -8,9 +9,13 @@ type Props = StandardBtnProps;
 export function AddUnitBtn(props: Props) {
   return (
     <div className="UnitItem-root">
-      <Styled className="AddUnitBtn-btn" {...props}>
-        + Unit
-      </Styled>
+      <Styled
+        className="AddUnitBtn-btn"
+        {...{
+          ...props,
+          middle: <AiOutlinePlus />,
+        }}
+      />
     </div>
   );
 }

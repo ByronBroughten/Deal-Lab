@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import { useGetterSection } from "../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import theme from "../../../../theme/Theme";
@@ -84,11 +83,6 @@ const Styled = styled(MainDealSection)<{
   $showInputs?: boolean;
   $hide?: boolean;
 }>`
-  .Property-unitList {
-  }
-
-  .Property-basicInfo {
-  }
   .Property-upfrontCostsGroup,
   .Property-ongoingCostGroup {
     padding-top: ${theme.s3};
