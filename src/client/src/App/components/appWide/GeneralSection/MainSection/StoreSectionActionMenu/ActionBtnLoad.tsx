@@ -3,8 +3,8 @@ import { useToggleViewNext } from "../../../../../modules/customHooks/useToggleV
 import { FeSectionInfo } from "../../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { SectionNameByType } from "../../../../../sharedWithServer/SectionsMeta/SectionNameByType";
 import { LabeledIconBtn } from "../../../LabeledIconBtn";
+import { SectionModal } from "../../../ModalSection";
 import { SectionIndexRows } from "../../../SectionIndexRows";
-import { SectionModal } from "../../../SectionModal";
 
 type Props<SN extends SectionNameByType<"hasIndexStore">> = {
   loadWhat: string;

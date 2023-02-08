@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { useToggleViewNext } from "../../modules/customHooks/useToggleView";
 import theme from "../../theme/Theme";
 import { EditSectionBtn } from "./EditSectionBtn";
-import { SectionModal } from "./SectionModal";
+import { SectionModal } from "./ModalSection";
 import { SelectEditor, SelectEditorProps } from "./SelectEditor";
 
 export interface SelectAndItemizeEditorProps extends SelectEditorProps {

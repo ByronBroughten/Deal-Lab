@@ -48,11 +48,11 @@ const varbPathOptionNames = Arr.extractStrict(varbPathNames, [
 export const varbPathOptions = makeVarbPathOptions();
 function makeVarbPathOptions(): VariableOption[] {
   return varbPathOptionNames.reduce((options, varbPathName) => {
-    options.push(initVarbPathOption(varbPathName));
+    options.push(makeVarbPathOption(varbPathName));
     return options;
   }, [] as VariableOption[]);
 }
-function initVarbPathOption(varbPathName: VarbPathName): VariableOption {
+export function makeVarbPathOption(varbPathName: VarbPathName): VariableOption {
   const { pathName, varbName, collectionName } =
     getVarbPathParams(varbPathName);
   const sectionName = pathSectionName(pathName);

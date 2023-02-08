@@ -8,7 +8,7 @@ import { MainSection } from "./GeneralSection/MainSection";
 import { SectionTitleRow } from "./GeneralSection/MainSection/SectionTitleRow";
 import { SectionTitle } from "./SectionTitle";
 
-interface Props extends ModalWrapperProps {
+export interface ModalSectionProps extends ModalWrapperProps {
   closeModal: () => void;
   title: React.ReactNode;
 }
@@ -18,7 +18,7 @@ export function SectionModal({
   closeModal,
   title,
   show,
-}: Props) {
+}: ModalSectionProps) {
   const modalRef = useOnOutsideClickRef(closeModal);
   return (
     <Styled {...{ show }} className={`SectionModal-root ${className ?? ""}`}>

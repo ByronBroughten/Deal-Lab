@@ -1,11 +1,10 @@
 import React from "react";
 import { AiOutlineInfoCircle } from "react-icons/ai";
-import { Text } from "react-native";
 import styled from "styled-components";
 import { useToggleViewNext } from "../../modules/customHooks/useToggleView";
 import theme from "../../theme/Theme";
 import { PlainIconBtn } from "../general/PlainIconBtn";
-import { SectionModal } from "./SectionModal";
+import { ModalText } from "./ModalText";
 
 type Props = {
   label: React.ReactNode;
@@ -29,7 +28,7 @@ export function LabelWithInfo({
           <AiOutlineInfoCircle size={20} className="LabelWithInfo-infoCircle" />
         }
       />
-      <SectionModal
+      <ModalText
         {...{
           show: infoIsOpen,
           closeModal: closeInfo,
@@ -37,8 +36,8 @@ export function LabelWithInfo({
           title: infoTitle,
         }}
       >
-        <Text>{infoText}</Text>
-      </SectionModal>
+        {infoText}
+      </ModalText>
     </Styled>
   );
 }

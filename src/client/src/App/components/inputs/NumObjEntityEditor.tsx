@@ -11,7 +11,7 @@ import { GetterVarb } from "../../sharedWithServer/StateGetters/GetterVarb";
 import { EditorTextStatus } from "../../sharedWithServer/StateGetters/GetterVarbNumObj";
 import theme from "../../theme/Theme";
 import { MaterialDraftEditor } from "./MaterialDraftEditor";
-import NumObjVarbSelector from "./NumObjEditor/NumObjVarbSelector";
+import { NumObjVarbSelectorNext } from "./NumObjEditor/NumObjVarbSelectorNext";
 import {
   Adornments,
   getEntityEditorAdornments,
@@ -149,7 +149,7 @@ const MemoNumObjEntityEditor = React.memo(function MemoNumObjEntityEditor({
             }}
           />
           {varbSelectorIsOpen && (
-            <NumObjVarbSelector {...{ setEditorState }} ref={popperRef} />
+            <NumObjVarbSelectorNext {...{ setEditorState }} ref={popperRef} />
           )}
         </div>
       </Styled>

@@ -6,7 +6,7 @@ import { AddSectionBtn } from "../../../../appWide/AddSectionBtn";
 import { EditSectionBtn } from "../../../../appWide/EditSectionBtn";
 import { FormSection } from "../../../../appWide/FormSection";
 import { LabeledVarbRow } from "../../../../appWide/LabeledVarbRow";
-import { SectionModal } from "../../../../appWide/SectionModal";
+import { SectionModal } from "../../../../appWide/ModalSection";
 import StandardLabel from "../../../../general/StandardLabel";
 import { UnitList } from "./UnitList";
 
