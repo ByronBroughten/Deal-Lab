@@ -30,6 +30,7 @@ export default function BasicPropertyInfo({ feId, className }: Props) {
             editorType="equation"
             className={`BasicPropertyInfo-numObjEditor`}
             feVarbInfo={property.varbInfo("homeInsOngoingEditor")}
+            quickViewVarbNames={["price", "sqft", "numUnits"]}
           />
           <NumObjEntityEditor
             className={`BasicPropertyInfo-numObjEditor`}

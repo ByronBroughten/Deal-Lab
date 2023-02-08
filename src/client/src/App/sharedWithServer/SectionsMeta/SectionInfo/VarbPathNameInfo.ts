@@ -4,10 +4,12 @@ import { VarbName } from "../baseSectionsDerived/baseSectionsVarbsTypes";
 import { MixedInfoProps } from "../baseSectionsDerived/baseVarbInfo";
 import { VarbValue } from "../baseSectionsDerived/valueMetaTypes";
 import {
+  pathSectionName,
   PathSectionName,
   SectionPathName,
   SectionPathVarbName,
 } from "../sectionPathContexts/sectionPathNames";
+import { getVarbMeta } from "../VarbMeta";
 
 type MakeVarbPathParams<
   PN extends SectionPathName,
@@ -94,6 +96,25 @@ export function getVarbPathParams<VPN extends VarbPathName>(
   varbPathName: VPN
 ): AllVarbPathParams[VPN] {
   return allVarbPathParams[varbPathName];
+}
+
+type VarbPathExtras<VPN extends VarbPathName> = AllVarbPathParams[VPN] & {
+  displayName: string;
+  varbInfo: VarbPathNameInfoMixed<VPN>;
+  sectionName: VarbPathSectionName<VPN>;
+};
+export function getVarbPathExtras<VPN extends VarbPathName>(
+  varbPathName: VPN
+): VarbPathExtras<VPN> {
+  const params = getVarbPathParams(varbPathName);
+  const { pathName, varbName } = params;
+  const sectionName = pathSectionName(pathName) as VarbPathSectionName<VPN>;
+  return {
+    ...params,
+    sectionName,
+    displayName: getVarbMeta({ sectionName, varbName }).displayNameFull,
+    varbInfo: varbPathInfo(varbPathName),
+  } as VarbPathExtras<VPN>;
 }
 
 export interface VarbPathNameInfo<VPN extends VarbPathName = VarbPathName> {

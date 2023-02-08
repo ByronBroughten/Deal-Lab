@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import TrashBtn from "../general/TrashBtn";
 import theme from "./../../theme/Theme";
@@ -37,12 +36,6 @@ export const StyledRowIndexRow = styled.div`
     :hover {
       background-color: ${theme["gray-400"]};
     }
-  }
-  .LoadSectionBtn-loadText {
-    display: flex;
-    align-items: center;
-    font-size: 0.8rem;
-    line-height: 0.8rem;
   }
   .LoadSectionBtn-nameText {
     display: flex;

@@ -125,7 +125,9 @@ const MemoNumObjEntityEditor = React.memo(function MemoNumObjEntityEditor({
     },
     []
   );
-  const varbPathNames = quickViewVarbNameString.split(seperator);
+  const varbPathNames = quickViewVarbNameString.split(
+    seperator
+  ) as VarbPathName[];
   return (
     <SectionInfoContextProvider {...rest}>
       <Styled
@@ -149,7 +151,10 @@ const MemoNumObjEntityEditor = React.memo(function MemoNumObjEntityEditor({
             }}
           />
           {varbSelectorIsOpen && (
-            <NumObjVarbSelectorNext {...{ setEditorState }} ref={popperRef} />
+            <NumObjVarbSelectorNext
+              {...{ setEditorState, varbPathNames }}
+              ref={popperRef}
+            />
           )}
         </div>
       </Styled>

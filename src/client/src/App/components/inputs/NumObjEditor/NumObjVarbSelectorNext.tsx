@@ -3,36 +3,16 @@ import React from "react";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import styled from "styled-components";
 import { useToggleViewNext } from "../../../modules/customHooks/useToggleView";
-import { SetEditorState } from "../../../modules/draftjs/draftUtils";
-import { insertEntity } from "../../../modules/draftjs/insert";
-import { EntityMapData } from "../../../sharedWithServer/SectionsMeta/allBaseSectionVarbs/baseValues/entities";
-import { Id } from "../../../sharedWithServer/SectionsMeta/allBaseSectionVarbs/id";
 import { VarbPathName } from "../../../sharedWithServer/SectionsMeta/SectionInfo/VarbPathNameInfo";
-import { makeVarbPathOption } from "../../../sharedWithServer/StateEntityGetters/pathVarbOptions";
 import theme from "../../../theme/Theme";
 import { HollowBtn } from "../../appWide/HollowBtn";
 import { ModalText } from "../../appWide/ModalText";
 import { PopperRef } from "../VarbAutoComplete";
+import { VarbSelectorRows } from "./NumObjVarbSelector/VarbSelectorRows";
 
 interface Props {
   setEditorState: React.Dispatch<React.SetStateAction<EditorState>>;
   varbPathNames?: VarbPathName[];
-}
-
-type OnSelectProps = {
-  setEditorState: SetEditorState;
-  varbPathName: VarbPathName;
-};
-
-function onSelect({ setEditorState, varbPathName }: OnSelectProps) {
-  const { displayName, varbInfo } = makeVarbPathOption(varbPathName);
-  const entity: EntityMapData = {
-    ...varbInfo,
-    entityId: Id.make(),
-  };
-  setEditorState((editorState) =>
-    insertEntity(editorState, displayName, entity)
-  );
 }
 
 export const NumObjVarbSelectorNext = React.memo(
@@ -63,6 +43,14 @@ export const NumObjVarbSelectorNext = React.memo(
                   {`This input is an Equation Editor. It lets you enter numbers as well as symbols to add (+), subtract (-), multiply (*) and divide (/).\n\nAdditionally, you may also enter variables. This lets the input respond to other inputs, much excel spreadsheet cells with formulas.\n\nTo add a variable, simply click the "+ Variable" button and choose one from the dropdown that appears.`}
                 </ModalText>
               </div>
+              {varbsIsOpen && (
+                <VarbSelectorRows
+                  {...{
+                    varbPathNames,
+                    setEditorState,
+                  }}
+                />
+              )}
             </div>
           </div>
         </Styled>
@@ -77,6 +65,7 @@ const InfoBtn = styled(HollowBtn)`
   color: ${theme.primary.main};
   padding: ${theme.s2} ${theme.s2} 0 ${theme.s2};
   border-left: 1px solid ${theme.primary.light};
+  height: 25px;
   :hover {
     background-color: ${theme.primary.main};
   }
@@ -86,6 +75,7 @@ const AddVarbBtn = styled(HollowBtn)`
   border-radius: 0;
   border: none;
   color: ${theme.primary.main};
+  height: 25px;
   :hover {
     background-color: ${theme.primary.main};
   }
@@ -98,6 +88,7 @@ const Styled = styled.div`
   .NumObjVarbSelector-BtnDiv {
     display: flex;
     align-items: center;
+    background: ${theme.light};
   }
 
   .VarbAutoComplete-root {
@@ -115,7 +106,6 @@ const Styled = styled.div`
     border: 2px solid;
     border-top: 1px solid;
     border-left: 1px solid;
-    border-radius: ${theme.br0};
     border-color: ${theme.next.dark};
     background-color: ${theme["gray-300"]};
     border-top-left-radius: 0;
