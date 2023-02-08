@@ -44,12 +44,16 @@ export const NumObjVarbSelectorNext = React.memo(
                 </ModalText>
               </div>
               {varbsIsOpen && (
-                <VarbSelectorRows
-                  {...{
-                    varbPathNames,
-                    setEditorState,
-                  }}
-                />
+                <div className="NumObjVarbSelector-rowsRelative">
+                  <div className="NumObjVarbSelector-rowsAbsolute">
+                    <VarbSelectorRows
+                      {...{
+                        varbPathNames,
+                        setEditorState,
+                      }}
+                    />
+                  </div>
+                </div>
               )}
             </div>
           </div>
@@ -84,6 +88,15 @@ const AddVarbBtn = styled(HollowBtn)`
 const Styled = styled.div`
   position: relative;
   bottom: 3px;
+
+  .NumObjVarbSelector-rowsRelative {
+    position: relative;
+  }
+  .NumObjVarbSelector-rowsAbsolute {
+    position: absolute;
+    left: -10px;
+    top: 1px;
+  }
 
   .NumObjVarbSelector-BtnDiv {
     display: flex;

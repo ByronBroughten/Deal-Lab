@@ -187,6 +187,10 @@ const Styled = styled.div<{ editorType: NumEditorType }>`
   display: flex;
   align-items: center;
 
+  .NumObjVarbSelector-root {
+    top: -1px;
+  }
+
   .MaterialDraftEditor-wrapper {
     border-color: ${({ editorType }) =>
       editorType === "equation" && theme.primary.light};

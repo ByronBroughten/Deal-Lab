@@ -210,7 +210,8 @@ const ccs = {
           .MuiFilledInput-root {
             padding-left: ${theme.s2};
             padding-right: ${theme.s2};
-            padding-top: 1rem;
+            padding-top: 1.2rem;
+            padding-bottom: 2px;
             /* min-width: 75px; */
           }
 

@@ -18,10 +18,12 @@ export function VarbSelectorRow({ displayName, onClick }: Props) {
 }
 
 const Styled = styled.div`
-  min-width: 100px;
+  min-width: 150px;
   display: flex;
   padding: 0;
   .VarbSelectorRow-root {
+    border-top: solid 1px ${theme["gray-300"]};
+    height: 30px;
     display: flex;
     flex: 1;
     justify-content: flex-start;

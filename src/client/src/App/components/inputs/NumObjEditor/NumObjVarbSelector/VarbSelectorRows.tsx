@@ -12,7 +12,7 @@ import { VarbSelectorRow } from "./VarbSelectorRow";
 type Props = { setEditorState: SetEditorState; varbPathNames: VarbPathName[] };
 export function VarbSelectorRows({ setEditorState, varbPathNames }: Props) {
   return (
-    <Styled>
+    <Styled className="VarbSelectorRows-root">
       {varbPathNames.map((varbPathName) => {
         const { displayName, varbInfo } = getVarbPathExtras(varbPathName);
         return (
@@ -31,11 +31,10 @@ export function VarbSelectorRows({ setEditorState, varbPathNames }: Props) {
 
 const Styled = styled.div`
   display: block;
-  position: relative;
   z-index: 2; // 2 beats editor title labels
   background: ${theme.light};
-  border-radius: 0 0 ${theme.br0} ${theme.br0};
-  border: 1px solid ${theme["gray-500"]};
+  border: 1px solid ${theme.primary.light};
+  border-radius: ${theme.br0};
   max-height: 200px;
   overflow-y: auto;
   overflow-x: hidden;
