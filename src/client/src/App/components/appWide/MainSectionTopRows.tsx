@@ -77,7 +77,7 @@ export function MainSectionTopRows({
 }
 
 const Styled = styled.div`
-  padding-bottom: ${theme.s4};
+  padding-bottom: ${theme.s35};
 
   .MainSectionTopRows-topRow,
   .MainSectionTopRows-secondRow,
@@ -85,10 +85,13 @@ const Styled = styled.div`
   .MainSectionTopRows-topRight {
     display: flex;
   }
+  .MainSectionTopRows-topLeft {
+    align-items: center;
+  }
 
   .MainSectionTopRows-sectionTitle {
     margin-bottom: ${theme.s3};
-    margin-right: ${theme.s25};
+    margin-right: ${theme.s3};
   }
   .MainSectionTopRows-titleRow {
     margin-bottom: ${theme.s3};

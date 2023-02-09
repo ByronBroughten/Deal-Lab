@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { GetterVarb } from "../../sharedWithServer/StateGetters/GetterVarb";

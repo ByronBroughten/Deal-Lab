@@ -19,9 +19,10 @@ export function MainSectionTitleEditor({ feInfo, className }: Props) {
 const Styled = styled(BigStringEditor)`
   .DraftEditor-root {
     font-size: ${theme.smallTitleSize};
+    padding: ${theme.s2} 0;
   }
   .DraftTextField-root {
     display: flex;
-    min-width: 150px;
+    min-width: 172px;
   }
 `;

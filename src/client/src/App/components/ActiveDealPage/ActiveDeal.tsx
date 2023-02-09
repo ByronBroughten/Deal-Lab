@@ -137,7 +137,6 @@ const Styled = styled(OuterMainSection)<{ $showDeal: boolean }>`
     `}
 
   .ActiveDeal-mainSectionTopRowRoot {
-    padding-bottom: ${theme.s35};
   }
 
   .OutputSection-root {
