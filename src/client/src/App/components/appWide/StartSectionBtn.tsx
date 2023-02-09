@@ -5,11 +5,11 @@ import { StandardBtnProps } from "../general/StandardProps";
 import { StyledIconBtn } from "./StyledIconBtn";
 
 type Props = StandardBtnProps;
-export function AddSectionBtn(props: Props) {
+export function StartSectionBtn(props: Props) {
   return (
     <Styled
       className="MainDealSection-addSectionBtn"
-      right={<FaPlay className="AddSectionBtn-playIcon" />}
+      right={<FaPlay className="StartSectionBtn-playIcon" />}
       middle="Start"
       {...props}
     />
@@ -19,7 +19,7 @@ export function AddSectionBtn(props: Props) {
 const Styled = styled(StyledIconBtn)`
   padding: ${theme.s4};
   border: ${theme.borderStyle};
-  .AddSectionBtn-playIcon {
+  .StartSectionBtn-playIcon {
     margin-left: ${theme.s15};
   }
 `;

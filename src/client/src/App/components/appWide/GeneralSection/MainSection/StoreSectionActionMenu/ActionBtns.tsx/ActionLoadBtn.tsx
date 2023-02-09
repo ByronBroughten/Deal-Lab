@@ -4,7 +4,7 @@ import { FeSectionInfo } from "../../../../../../sharedWithServer/SectionsMeta/S
 import { SectionNameByType } from "../../../../../../sharedWithServer/SectionsMeta/SectionNameByType";
 import { SectionModal } from "../../../../ModalSection";
 import { SectionIndexRows } from "../../../../SectionIndexRows";
-import { StyledIconBtn } from "../../../../StyledIconBtn";
+import { StyledActionBtn } from "./StyledActionBtn";
 
 type Props<SN extends SectionNameByType<"hasIndexStore">> = {
   loadWhat: string;
@@ -26,9 +26,9 @@ export function ActionLoadBtn<SN extends SectionNameByType<"hasIndexStore">>({
   );
   return (
     <>
-      <StyledIconBtn
+      <StyledActionBtn
         middle="Load"
-        left={<BsCloudArrowDown size={26} />}
+        left={<BsCloudArrowDown size={23} />}
         onClick={openModal}
         className={`ActionMenuLoadBtn-root ${className ?? ""}`}
       />

@@ -5,7 +5,6 @@ import { MdOutlineSystemUpdateAlt } from "react-icons/md";
 import { useFeUser } from "../../../../../../modules/sectionActorHooks/useFeUser";
 import { useMainSectionActor } from "../../../../../../modules/sectionActorHooks/useMainSectionActor";
 import { SectionNameByType } from "../../../../../../sharedWithServer/SectionsMeta/SectionNameByType";
-import { StyledIconBtn } from "../../../../StyledIconBtn";
 import { toastNotice } from "../../../../toast";
 import {
   ActionBtnName,
@@ -17,6 +16,7 @@ import {
   isSavedActions,
 } from "../ActionMenuTypes";
 import { ActionLoadBtn } from "./ActionLoadBtn";
+import { StyledActionBtn } from "./StyledActionBtn";
 
 type Props<SN extends SectionNameByType<"hasIndexStore">> = {
   loadWhat: string;
@@ -45,9 +45,9 @@ export function useActionBtns<SN extends SectionNameByType<"hasIndexStore">>({
   const actionMenuBtns: Record<ActionBtnName, React.ReactElement> = {
     get signInToSave() {
       return (
-        <StyledIconBtn
+        <StyledActionBtn
           middle={"Save"}
-          left={<AiOutlineSave size="25" />}
+          left={<AiOutlineSave size={23} />}
           onClick={() => toastNotice("To save you must login.")}
           className="ActionMenuButtons-signInToSave ActionMenuButtons-warn"
         />
@@ -55,9 +55,9 @@ export function useActionBtns<SN extends SectionNameByType<"hasIndexStore">>({
     },
     get save() {
       return (
-        <StyledIconBtn
+        <StyledActionBtn
           middle={"Save"}
-          left={<AiOutlineSave size="25" />}
+          left={<AiOutlineSave size={23} />}
           onClick={() => mainSection.saveNew()}
           disabled={isGuest}
         />
@@ -65,9 +65,9 @@ export function useActionBtns<SN extends SectionNameByType<"hasIndexStore">>({
     },
     get saveUpdates() {
       return (
-        <StyledIconBtn
+        <StyledActionBtn
           middle="Save changes"
-          left={<MdOutlineSystemUpdateAlt size="25" />}
+          left={<MdOutlineSystemUpdateAlt size={23} />}
           onClick={() => mainSection.saveUpdates()}
           disabled={isGuest}
         />
@@ -75,9 +75,9 @@ export function useActionBtns<SN extends SectionNameByType<"hasIndexStore">>({
     },
     get saveAsNew() {
       return (
-        <StyledIconBtn
+        <StyledActionBtn
           middle="Save as new"
-          left={<AiOutlineSave size="25" />}
+          left={<AiOutlineSave size={23} />}
           onClick={() => mainSection.saveAsNew()}
           disabled={isGuest}
         />
@@ -85,21 +85,21 @@ export function useActionBtns<SN extends SectionNameByType<"hasIndexStore">>({
     },
     get copy() {
       return (
-        <StyledIconBtn
+        <StyledActionBtn
           middle="Make a copy"
-          left={<BiCopy size="28" />}
+          left={<BiCopy size={25} />}
           onClick={() => mainSection.makeACopy()}
         />
       );
     },
     get copyAndSave() {
       return (
-        <StyledIconBtn
+        <StyledActionBtn
           middle="Copy and save"
           left={
             <span style={{ display: "flex" }}>
-              <BiCopy size="23" />
-              <AiOutlineSave size="21" />
+              <BiCopy size={21} />
+              <AiOutlineSave size={19} />
             </span>
           }
           onClick={() => mainSection.copyAndSave()}
@@ -133,9 +133,9 @@ export function useActionBtns<SN extends SectionNameByType<"hasIndexStore">>({
     },
     get createNew() {
       return (
-        <StyledIconBtn
+        <StyledActionBtn
           middle="Create new"
-          left={<BiReset size="26" />}
+          left={<BiReset size={23} />}
           onClick={() => mainSection.replaceWithDefault()}
         />
       );

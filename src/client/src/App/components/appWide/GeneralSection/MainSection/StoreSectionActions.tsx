@@ -73,8 +73,9 @@ export function StoreSectionActions<
 
 const Styled = styled.div`
   display: flex;
+  flex-wrap: wrap;
   .StoreSectionActions-actionBtn {
-    margin-right: ${theme.s1};
+    margin: ${theme.s0};
   }
   .ActionMenuButtons-signInToSave {
     color: ${theme.info.border};

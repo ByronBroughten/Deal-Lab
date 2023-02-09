@@ -39,24 +39,9 @@ export function MainSectionActionRow({
 
 const Styled = styled.div`
   display: flex;
-
-  .MainSectionActionRow-item {
-    :not(:first-child) {
-      margin-left: ${theme.s25};
-    }
-  }
 `;
 
 export const MainSectionActionRowMini = styled(MainSectionActionRow)`
-  .MainSectionActionRow-item {
-    :not(:first-child) {
-      margin-left: 0;
-    }
-  }
-
-  .MainSectionActionRow-item {
-    margin-right: ${theme.s2};
-  }
   .ListMenuBtn-root {
     height: ${theme.smallButtonHeight};
   }
