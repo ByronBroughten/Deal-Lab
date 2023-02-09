@@ -5,11 +5,15 @@ import { useMainSectionActor } from "../../../../modules/sectionActorHooks/useMa
 import { SectionNameByType } from "../../../../sharedWithServer/SectionsMeta/SectionNameByType";
 import theme from "../../../../theme/Theme";
 import { DropdownList } from "../../DropdownList";
+import { ActionMenuBtn } from "./StoreSectionActionMenu/ActionMenuBtn";
 import {
   useActionMenuBtns,
   useDefaultActionLists,
 } from "./StoreSectionActionMenu/ActionMenuButtons";
-import { ActionMenuProps } from "./StoreSectionActionMenu/ActionMenuTypes";
+import {
+  ActionMenuProps,
+  MenuActionName,
+} from "./StoreSectionActionMenu/ActionMenuTypes";
 
 interface Props<SN extends SectionNameByType<"hasIndexStore">>
   extends ActionMenuProps {
@@ -40,6 +44,16 @@ export function StoreSectionActionMenu<
     onLoad: controller.closeList,
   });
 
+  function btnProps(actionName: MenuActionName) {
+    return {
+      ...feInfo,
+      loadWhat,
+      onLoad: controller.closeList,
+      actionName,
+      key: actionName,
+    };
+  }
+
   const defaultActionLists = useDefaultActionLists();
   const { alwaysArr, isNotSavedArr, isSavedArr } = {
     ...defaultActionLists,
@@ -56,10 +70,16 @@ export function StoreSectionActionMenu<
       }}
     >
       {!mainSection.isSaved &&
-        isNotSavedArr.map((actionName) => buttons[actionName])}
+        isNotSavedArr.map((actionName) => (
+          <ActionMenuBtn {...btnProps(actionName)} />
+        ))}
       {mainSection.isSaved &&
-        isSavedArr.map((actionName) => buttons[actionName])}
-      {alwaysArr.map((actionName) => buttons[actionName])}
+        isSavedArr.map((actionName) => (
+          <ActionMenuBtn {...btnProps(actionName)} />
+        ))}
+      {alwaysArr.map((actionName) => (
+        <ActionMenuBtn {...btnProps(actionName)} />
+      ))}
     </Styled>
   );
 }

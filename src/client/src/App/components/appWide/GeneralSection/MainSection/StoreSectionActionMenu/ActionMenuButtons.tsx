@@ -9,12 +9,12 @@ import { LabeledIconBtn } from "../../../LabeledIconBtn";
 import { ActionBtnLoad } from "./ActionBtnLoad";
 import {
   ActionMenuLists,
-  AllActions,
   alwaysActions,
   guestIsNotSavedActions,
   guestIsSavedActions,
   isNotSavedActions,
   isSavedActions,
+  MenuActionName,
 } from "./ActionMenuTypes";
 
 type Props<SN extends SectionNameByType<"hasIndexStore">> = {
@@ -39,7 +39,7 @@ export function useActionMenuBtns<
   const mainSection = useMainSectionActor(feInfo);
   const { isGuest } = mainSection.feUser;
 
-  const actionMenuBtns: Record<AllActions, React.ReactNode> = {
+  const actionMenuBtns: Record<MenuActionName, React.ReactElement> = {
     get signInToSave() {
       return (
         <LabeledIconBtn

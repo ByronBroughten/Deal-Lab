@@ -18,7 +18,7 @@ type IsSavedActions = typeof allIsSavedActions[number];
 
 export const alwaysActions = ["load", "createNew"] as const;
 type AlwaysActions = typeof alwaysActions[number];
-export type AllActions =
+export type MenuActionName =
   | IsNotSavedActions
   | IsSavedActions
   | AlwaysActions
