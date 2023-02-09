@@ -8,9 +8,13 @@ interface BtnProps extends StandardBtnProps {
   icon?: React.ReactNode;
 }
 
-export function SubSectionGroupBtn({ className, ...props }: BtnProps) {
+export function SubSectionGroupBtn({ className, text, ...props }: BtnProps) {
   return (
-    <BtnStyled className={`ListGroup-root ${className ?? ""}`} {...props} />
+    <BtnStyled
+      className={`ListGroup-root ${className ?? ""}`}
+      middle={text}
+      {...props}
+    />
   );
 }
 

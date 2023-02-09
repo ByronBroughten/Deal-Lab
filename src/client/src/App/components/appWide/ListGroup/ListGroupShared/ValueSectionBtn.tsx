@@ -8,9 +8,10 @@ interface BtnProps extends StandardBtnProps {
   icon?: React.ReactNode;
 }
 
-export function ValueSectionBtn({ className, ...props }: BtnProps) {
+export function ValueSectionBtn({ className, text, ...props }: BtnProps) {
   return (
     <BtnStyled
+      middle={text}
       className={`ValueSectionBtn-root ${className ?? ""}`}
       {...props}
     />

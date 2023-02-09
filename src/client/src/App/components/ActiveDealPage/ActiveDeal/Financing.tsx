@@ -1,8 +1,8 @@
 import { FormControl, FormControlLabel, RadioGroup } from "@material-ui/core";
 import styled from "styled-components";
-import { CompletionStatus } from "../../../sharedWithServer/SectionsMeta/values/StateValue/subStringValues";
 import { useSetterSection } from "../../../sharedWithServer/stateClassHooks/useSetterSection";
 import { GetterSection } from "../../../sharedWithServer/StateGetters/GetterSection";
+import { StrictOmit } from "../../../sharedWithServer/utils/types";
 import { FormSection } from "../../appWide/FormSection";
 import { SubSectionBtn } from "../../appWide/GeneralSection/GeneralSectionTitle/SubSectionBtn";
 import { SectionTitle } from "../../appWide/SectionTitle";
@@ -32,10 +32,10 @@ export function Financing({
   closeInputs,
   completionStatus,
   ...props
-}: MainDealSectionProps & {
-  closeInputs: () => void;
-  completionStatus: CompletionStatus;
-}) {
+}: StrictOmit<
+  MainDealSectionProps & { feId: string },
+  "displayName" | "sectionTitle" | "detailVarbPropArr"
+>) {
   const financing = useSetterSection({
     sectionName: "financing",
     feId,

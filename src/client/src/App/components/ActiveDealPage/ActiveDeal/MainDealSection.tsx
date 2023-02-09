@@ -1,8 +1,11 @@
+import { FaPlay } from "react-icons/fa";
 import styled, { css } from "styled-components";
 import theme from "../../../theme/Theme";
+import { CheckMarkCircle } from "../../appWide/checkMarkCircle";
 import { EditSectionBtn } from "../../appWide/EditSectionBtn";
 import { FormSection } from "../../appWide/FormSection";
 import { MainSection } from "../../appWide/GeneralSection/MainSection";
+import { HollowBtn } from "../../appWide/HollowBtn";
 import { LabeledVarbProps } from "../../appWide/LabeledVarb";
 import { LabeledVarbRow } from "../../appWide/LabeledVarbRow";
 import { SectionTitle } from "../../appWide/SectionTitle";
@@ -12,10 +15,14 @@ import { FinishBtn } from "./FinishBtn";
 export type CompletionStatus = "allEmpty" | "allValid" | "someInvalid";
 
 export interface MainDealSectionProps extends StandardProps {
-  feId: string;
   showInputs: boolean;
   hide: boolean;
   openInputs: () => void;
+  sectionTitle: string;
+  closeInputs: () => void;
+  completionStatus: CompletionStatus;
+  detailVarbPropArr: LabeledVarbProps[];
+  displayName: string;
 }
 
 const completionStatusProps = {
@@ -35,15 +42,9 @@ export function MainDealSection({
   completionStatus = "allEmpty",
   detailVarbPropArr,
   displayName,
-}: MainDealSectionProps & {
-  sectionTitle: string;
-  closeInputs: () => void;
-  completionStatus?: CompletionStatus;
-  detailVarbPropArr?: LabeledVarbProps[];
-  displayName?: string;
-}) {
-  const completionProps = completionStatusProps[completionStatus];
-  const btnTitle = completionProps.btnTitleStart + sectionTitle;
+}: MainDealSectionProps) {
+  const isCompleted = completionStatus === "allValid";
+  const btnText = completionStatus === "allEmpty" ? "Start" : "Continue";
   return (
     <Styled
       {...{
@@ -56,42 +57,46 @@ export function MainDealSection({
           : {}),
       }}
     >
-      <div className="MainDealSection-detailsDiv">
-        <div className="MainDealSection-detailsTitleRow">
-          <SectionTitle
-            className="MainDealSection-showInputsTitle"
-            text={sectionTitle}
-          />
-          {completionStatus === "allValid" && (
-            <EditSectionBtn
-              className="MainDealSection-editBtn"
-              onClick={openInputs}
-            />
-          )}
-        </div>
-        {displayName && (
-          <div className="MainDealSection-displayNameDiv">{displayName}</div>
-        )}
-        {detailVarbPropArr && (
-          <LabeledVarbRow
-            {...{
-              varbPropArr: detailVarbPropArr,
-              className: "MainDealSection-labeledVarbRow",
-            }}
+      <div className="MainDealSection-inactiveTitleRow">
+        <CheckMarkCircle
+          {...{
+            checked: isCompleted,
+            className: "MainDealSection-checkmarkCircle",
+          }}
+        />
+        <SectionTitle
+          className="MainDealSection-showInputsTitle"
+          text={sectionTitle}
+        />
+        <HollowBtn
+          {...{
+            className: "MainDealSection-startBtn",
+            middle: btnText,
+            right: <FaPlay className="MainDealSection-startIcon" />,
+            onClick: openInputs,
+          }}
+        />
+        {isCompleted && (
+          <EditSectionBtn
+            className="MainDealSection-editBtn"
+            onClick={openInputs}
           />
         )}
       </div>
-      <div className="MainDealSection-btnDiv">
-        <SectionTitle
-          className="MainDealSection-showInputsTitle"
-          text={btnTitle}
+      <div className="MainDealSection-detailsDiv">
+        <div className="MainDealSection-displayNameDiv">{displayName}</div>
+        <LabeledVarbRow
+          {...{
+            varbPropArr: detailVarbPropArr,
+            className: "MainDealSection-labeledVarbRow",
+          }}
         />
       </div>
       <div className="MainDealSection-inputsDiv">
         {children}
         <FormSection>
           <FinishBtn
-            styleDisabled={completionStatus !== "allValid"}
+            styleDisabled={!isCompleted}
             className="MainDealSection-finishBtn"
             btnText="Finish"
             onClick={closeInputs}
@@ -102,14 +107,29 @@ export function MainDealSection({
     </Styled>
   );
 }
-
+// What kind of button?
 export const Styled = styled(MainSection)<{
   $showInputs?: boolean;
   $hide?: boolean;
   $completionStatus: CompletionStatus;
 }>`
-  /* transition: all 0.2s ease-in-out; */
-  transition: all 0s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  .MainDealSection-inactiveTitleRow {
+    display: flex;
+    align-items: center;
+  }
+  .MainDealSection-checkmarkCircle {
+    margin-right: ${theme.s3};
+  }
+  .MainDealSection-startBtn {
+    margin-left: ${theme.s3};
+    width: 100%;
+    height: 35px;
+    font-size: ${theme.infoSize};
+  }
+  .MainDealSection-startIcon {
+    margin-left: ${theme.s15};
+  }
 
   .MainDealSection-displayNameDiv {
     margin-top: ${theme.s25};
@@ -125,8 +145,6 @@ export const Styled = styled(MainSection)<{
     }
   }
 
-  .MainDealSection-detailsDiv {
-  }
   .MainDealSection-editBtn {
     margin-left: ${theme.s1};
   }
@@ -134,15 +152,9 @@ export const Styled = styled(MainSection)<{
     display: flex;
   }
 
-  .MainDealSection-btnDiv {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 75px;
-  }
-
   .MainDealSection-showInputsTitle {
     color: ${theme.primaryNext};
+    min-width: 110px;
   }
 
   ${({ $hide }) =>
@@ -155,7 +167,7 @@ export const Styled = styled(MainSection)<{
     $showInputs
       ? css`
           .MainDealSection-detailsDiv,
-          .MainDealSection-btnDiv {
+          .MainDealSection-inactiveTitleRow {
             display: none;
           }
         `
@@ -167,44 +179,14 @@ export const Styled = styled(MainSection)<{
 
   ${({ $completionStatus, $showInputs }) => {
     if (!$showInputs) {
-      if ($completionStatus === "allEmpty") {
+      if (["allEmpty", "someInvalid"].includes($completionStatus)) {
         return css`
-          :hover {
-          }
           .MainDealSection-detailsDiv {
             display: none;
-          }
-          :hover {
-            box-shadow: none;
-            cursor: pointer;
-            background-color: ${theme.secondary};
-            .MainDealSection-showInputsTitle {
-              color: ${theme.light};
-            }
           }
         `;
       } else if ($completionStatus === "someInvalid") {
-        return css`
-          :hover {
-          }
-          .MainDealSection-detailsDiv {
-            display: none;
-          }
-          :hover {
-            box-shadow: none;
-            cursor: pointer;
-            background-color: ${theme.secondary};
-            .MainDealSection-showInputsTitle {
-              color: ${theme.light};
-            }
-          }
-        `;
       } else if ($completionStatus === "allValid") {
-        return css`
-          .MainDealSection-btnDiv {
-            display: none;
-          }
-        `;
       }
     }
   }}

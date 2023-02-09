@@ -1,14 +1,11 @@
 import styled from "styled-components";
 import { useGetterSection } from "../../../../sharedWithServer/stateClassHooks/useGetterSection";
+import { StrictOmit } from "../../../../sharedWithServer/utils/types";
 import theme from "../../../../theme/Theme";
 import MainSectionBody from "../../../appWide/GeneralSection/MainSection/MainSectionBody";
 import { MainSectionTopRows } from "../../../appWide/MainSectionTopRows";
 import { BackToDealBtn } from "../BackToDealBtn";
-import {
-  CompletionStatus,
-  MainDealSection,
-  MainDealSectionProps,
-} from "../MainDealSection";
+import { MainDealSection, MainDealSectionProps } from "../MainDealSection";
 import BasicPropertyInfo from "./Property/BasicPropertyInfo";
 import { CapExValue } from "./Property/CapExValue";
 import { CustomExpenses } from "./Property/CustomExpenses";
@@ -24,10 +21,10 @@ export function Property({
   closeInputs,
   hide,
   completionStatus,
-}: MainDealSectionProps & {
-  closeInputs: () => void;
-  completionStatus: CompletionStatus;
-}) {
+}: StrictOmit<
+  MainDealSectionProps,
+  "displayName" | "sectionTitle" | "detailVarbPropArr"
+> & { feId: string }) {
   const feInfo = { sectionName: "property", feId } as const;
   const property = useGetterSection(feInfo);
   const completionStatusProps = {
@@ -63,7 +60,7 @@ export function Property({
           sectionTitle: "Property",
           loadWhat: "Property",
           showControls: showInputs ? true : false,
-          rightTop: <BackToDealBtn onClick={closeInputs} />,
+          topRight: <BackToDealBtn onClick={closeInputs} />,
         }}
       />
       <MainSectionBody themeName="property">

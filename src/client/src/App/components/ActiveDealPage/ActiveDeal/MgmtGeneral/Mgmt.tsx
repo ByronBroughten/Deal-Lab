@@ -1,14 +1,10 @@
-import React from "react";
 import styled from "styled-components";
 import { useGetterSection } from "../../../../sharedWithServer/stateClassHooks/useGetterSection";
+import { StrictOmit } from "../../../../sharedWithServer/utils/types";
 import theme from "../../../../theme/Theme";
 import MainSectionBody from "../../../appWide/GeneralSection/MainSection/MainSectionBody";
 import { MainSectionTopRows } from "../../../appWide/MainSectionTopRows";
-import {
-  CompletionStatus,
-  MainDealSection,
-  MainDealSectionProps,
-} from "../MainDealSection";
+import { MainDealSection, MainDealSectionProps } from "../MainDealSection";
 import { CustomExpenses } from "../PropertyGeneral/Property/CustomExpenses";
 import { BackToDealBtn } from "./../BackToDealBtn";
 import { BasicMgmtInfo } from "./Mgmt/BasicMgmtInfo";
@@ -20,10 +16,10 @@ export function Mgmt({
   closeInputs,
   hide,
   completionStatus,
-}: MainDealSectionProps & {
-  closeInputs: () => void;
-  completionStatus: CompletionStatus;
-}) {
+}: StrictOmit<
+  MainDealSectionProps,
+  "displayName" | "sectionTitle" | "detailVarbPropArr"
+> & { feId: string }) {
   const feInfo = { sectionName: "mgmt", feId } as const;
   const mgmt = useGetterSection(feInfo);
   return (
@@ -47,7 +43,7 @@ export function Mgmt({
 
           sectionTitle: "Management",
           loadWhat: "Management",
-          rightTop: <BackToDealBtn onClick={closeInputs} />,
+          topRight: <BackToDealBtn onClick={closeInputs} />,
         }}
       />
       <MainSectionBody themeName="mgmt">

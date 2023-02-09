@@ -15,18 +15,25 @@ type Props = {
   feId: string;
   loadWhat: string;
   belowTitle?: React.ReactNode;
+  checkmarkStatus?: CheckmarkStatus;
   showXBtn?: boolean;
   showControls?: boolean;
-  rightTop?: React.ReactNode;
+  topRight?: React.ReactNode;
+  topLeft?: React.ReactNode;
 };
+
+type CheckmarkStatus = "hidden" | "checked" | "unchecked";
+// how do I add the button?
 export function MainSectionTopRows({
   className,
   sectionTitle,
   loadWhat,
   belowTitle,
+  checkmarkStatus = "hidden",
   showXBtn,
   showControls = true,
-  rightTop,
+  topRight,
+  topLeft,
   ...feInfo
 }: Props) {
   const saveStatus = useSaveStatus(feInfo);
@@ -47,9 +54,10 @@ export function MainSectionTopRows({
               }}
             />
           )}
+          {topLeft}
         </div>
         <div className="MainSectionTopRows-topRight">
-          {rightTop}
+          {topRight}
           {showControls && showXBtn && (
             <RemoveSectionXBtn
               className="MainSectionTopRows-xBtn"
@@ -89,12 +97,14 @@ const Styled = styled.div`
     align-items: center;
   }
 
+  .MainSectionTopRows-secondRow {
+    margin-top: ${theme.s25};
+  }
+
   .MainSectionTopRows-sectionTitle {
-    margin-bottom: ${theme.s3};
     margin-right: ${theme.s3};
   }
   .MainSectionTopRows-titleRow {
-    margin-bottom: ${theme.s3};
   }
 
   .MainSectionTopRows-topRight {
@@ -121,9 +131,6 @@ const Styled = styled.div`
   .MainSectionTopRows-xBtn {
     height: ${theme.bigButtonHeight};
     width: ${theme.bigButtonHeight};
-  }
-
-  .MainSectionTopRows-secondRow {
   }
 
   .MainSectionTopRows-sectionMenus {

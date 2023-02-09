@@ -7,9 +7,8 @@ export function AddItemBtn({ className, ...props }: StandardBtnProps) {
     <Styled
       className={`AdditiveListTable-addItemBtn ${className ?? ""}`}
       {...props}
-    >
-      +
-    </Styled>
+      middle="+"
+    />
   );
 }
 

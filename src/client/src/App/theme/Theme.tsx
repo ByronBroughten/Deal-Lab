@@ -114,6 +114,7 @@ const fontSize = {
 
 const sectionSize = {
   valueSectionSize: "85px",
+  inputHeight: "calc(1.5em + 0.5rem + 2px)",
 };
 
 const fonts = {
