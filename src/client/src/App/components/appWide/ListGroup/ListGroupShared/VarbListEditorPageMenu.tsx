@@ -2,7 +2,7 @@ import { FeSectionInfo } from "../../../../sharedWithServer/SectionsMeta/Section
 import { SectionNameByType } from "../../../../sharedWithServer/SectionsMeta/SectionNameByType";
 import { useGetterSection } from "../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { BigStringEditor } from "../../../inputs/BigStringEditor";
-import { ActionBtnLoad } from "../../GeneralSection/MainSection/StoreSectionActionMenu/ActionBtnLoad";
+import { ActionMenuLoadBtn } from "../../GeneralSection/MainSection/StoreSectionActionMenu/ActionMenuLoadBtn";
 import { VarbListTotal } from "./VarbListGeneric/VarbListTotal";
 import { VarbListMenuStyled } from "./VarbListMenuStyled";
 
@@ -37,7 +37,7 @@ export function VarbListEditorPageMenu<
           )}
         </div>
         <div className="VarbListGeneric-titleRowRight">
-          <ActionBtnLoad
+          <ActionMenuLoadBtn
             {...{
               loadMode: "loadAndCopy",
               loadWhat: "List",

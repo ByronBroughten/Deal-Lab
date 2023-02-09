@@ -6,10 +6,7 @@ import {
   getChildNames,
 } from "../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/ChildName";
 import { DbSectionPack } from "../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/DbSectionPack";
-import {
-  OneDbSectionValueInfo,
-  OneDbSectionVarbInfo,
-} from "../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/DbStoreInfo";
+
 import {
   DbSectionName,
   DbStoreName,
@@ -19,6 +16,10 @@ import {
 import { selfAndDescSectionNames } from "../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/DescendantName";
 import { SectionPack } from "../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/SectionPack";
 import { RawSection } from "../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/SectionPack/RawSection";
+import {
+  OneDbSectionValueInfo,
+  OneDbSectionVarbInfo,
+} from "../../client/src/App/sharedWithServer/SectionsMeta/SectionInfo/DbStoreInfo";
 import { SectionName } from "../../client/src/App/sharedWithServer/SectionsMeta/SectionName";
 import { monSchemas } from "../../client/src/App/sharedWithServer/utils/mongoose";
 

@@ -1,12 +1,12 @@
 import React from "react";
-import { AiOutlineInfoCircle, AiOutlineSave } from "react-icons/ai";
+import { AiOutlineSave } from "react-icons/ai";
 import { BiCopy, BiReset } from "react-icons/bi";
 import { MdOutlineSystemUpdateAlt } from "react-icons/md";
-import { useFeUser } from "../../../../../modules/sectionActorHooks/useFeUser";
-import { useMainSectionActor } from "../../../../../modules/sectionActorHooks/useMainSectionActor";
-import { SectionNameByType } from "../../../../../sharedWithServer/SectionsMeta/SectionNameByType";
-import { LabeledIconBtn } from "../../../LabeledIconBtn";
-import { ActionMenuLoadBtn } from "./ActionMenuLoadBtn";
+import { useFeUser } from "../../../../../../modules/sectionActorHooks/useFeUser";
+import { useMainSectionActor } from "../../../../../../modules/sectionActorHooks/useMainSectionActor";
+import { SectionNameByType } from "../../../../../../sharedWithServer/SectionsMeta/SectionNameByType";
+import { StyledIconBtn } from "../../../../StyledIconBtn";
+import { toastNotice } from "../../../../toast";
 import {
   ActionBtnName,
   ActionMenuLists,
@@ -15,7 +15,8 @@ import {
   guestIsSavedActions,
   isNotSavedActions,
   isSavedActions,
-} from "./ActionMenuTypes";
+} from "../ActionMenuTypes";
+import { ActionLoadBtn } from "./ActionLoadBtn";
 
 type Props<SN extends SectionNameByType<"hasIndexStore">> = {
   loadWhat: string;
@@ -33,31 +34,30 @@ export function useDefaultActionLists(): ActionMenuLists {
   };
 }
 
-export function useActionMenuBtns<
-  SN extends SectionNameByType<"hasIndexStore">
->({ loadWhat, onLoad, ...feInfo }: Props<SN>) {
+export function useActionBtns<SN extends SectionNameByType<"hasIndexStore">>({
+  loadWhat,
+  onLoad,
+  ...feInfo
+}: Props<SN>) {
   const mainSection = useMainSectionActor(feInfo);
   const { isGuest } = mainSection.feUser;
 
   const actionMenuBtns: Record<ActionBtnName, React.ReactElement> = {
     get signInToSave() {
       return (
-        <LabeledIconBtn
-          key="signInToSave"
-          label={"Sign in to Save"}
-          disabled={true}
-          icon={<AiOutlineInfoCircle size={25} />}
-          onClick={() => {}}
-          className="ActionMenuButtons-signInToSave"
+        <StyledIconBtn
+          middle={"Save"}
+          left={<AiOutlineSave size="25" />}
+          onClick={() => toastNotice("To save you must login.")}
+          className="ActionMenuButtons-signInToSave ActionMenuButtons-warn"
         />
       );
     },
     get save() {
       return (
-        <LabeledIconBtn
-          key="save"
-          label={"Save"}
-          icon={<AiOutlineSave size="25" />}
+        <StyledIconBtn
+          middle={"Save"}
+          left={<AiOutlineSave size="25" />}
           onClick={() => mainSection.saveNew()}
           disabled={isGuest}
         />
@@ -65,10 +65,9 @@ export function useActionMenuBtns<
     },
     get saveUpdates() {
       return (
-        <LabeledIconBtn
-          key="saveUpdates"
-          label="Save changes"
-          icon={<MdOutlineSystemUpdateAlt size="25" />}
+        <StyledIconBtn
+          middle="Save changes"
+          left={<MdOutlineSystemUpdateAlt size="25" />}
           onClick={() => mainSection.saveUpdates()}
           disabled={isGuest}
         />
@@ -76,10 +75,9 @@ export function useActionMenuBtns<
     },
     get saveAsNew() {
       return (
-        <LabeledIconBtn
-          key="saveAsNew"
-          label="Save as new"
-          icon={<AiOutlineSave size="25" />}
+        <StyledIconBtn
+          middle="Save as new"
+          left={<AiOutlineSave size="25" />}
           onClick={() => mainSection.saveAsNew()}
           disabled={isGuest}
         />
@@ -87,20 +85,18 @@ export function useActionMenuBtns<
     },
     get copy() {
       return (
-        <LabeledIconBtn
-          key="copy"
-          label="Make a copy"
-          icon={<BiCopy size="28" />}
+        <StyledIconBtn
+          middle="Make a copy"
+          left={<BiCopy size="28" />}
           onClick={() => mainSection.makeACopy()}
         />
       );
     },
     get copyAndSave() {
       return (
-        <LabeledIconBtn
-          key="copyAndSave"
-          label="Copy and save"
-          icon={
+        <StyledIconBtn
+          middle="Copy and save"
+          left={
             <span style={{ display: "flex" }}>
               <BiCopy size="23" />
               <AiOutlineSave size="21" />
@@ -113,7 +109,7 @@ export function useActionMenuBtns<
     },
     get load() {
       return (
-        <ActionMenuLoadBtn
+        <ActionLoadBtn
           {...{
             feInfo,
             loadWhat,
@@ -125,7 +121,7 @@ export function useActionMenuBtns<
     },
     get loadAndCopy() {
       return (
-        <ActionMenuLoadBtn
+        <ActionLoadBtn
           {...{
             feInfo,
             loadWhat,
@@ -137,10 +133,9 @@ export function useActionMenuBtns<
     },
     get createNew() {
       return (
-        <LabeledIconBtn
-          key="createNew"
-          label="Create new"
-          icon={<BiReset size="26" />}
+        <StyledIconBtn
+          middle="Create new"
+          left={<BiReset size="26" />}
           onClick={() => mainSection.replaceWithDefault()}
         />
       );

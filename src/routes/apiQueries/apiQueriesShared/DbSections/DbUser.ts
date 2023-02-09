@@ -9,10 +9,7 @@ import {
   DbPack,
   DbSectionPack,
 } from "../../../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/DbSectionPack";
-import {
-  OneDbSectionValueInfo,
-  OneDbVarbInfo,
-} from "../../../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/DbStoreInfo";
+
 import {
   DbSectionName,
   DbStoreInfo,
@@ -22,6 +19,10 @@ import {
   sectionToMainDbStoreName,
 } from "../../../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/DbStoreName";
 import { SectionPack } from "../../../../client/src/App/sharedWithServer/SectionsMeta/sectionChildrenDerived/SectionPack";
+import {
+  OneDbSectionValueInfo,
+  OneDbVarbInfo,
+} from "../../../../client/src/App/sharedWithServer/SectionsMeta/SectionInfo/DbStoreInfo";
 import { FeSectionInfo } from "../../../../client/src/App/sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { SectionName } from "../../../../client/src/App/sharedWithServer/SectionsMeta/SectionName";
 import { VarbValue } from "../../../../client/src/App/sharedWithServer/SectionsMeta/values/StateValue";

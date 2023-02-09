@@ -4,12 +4,8 @@ import { useToggleViewNext } from "../../../../modules/customHooks/useToggleView
 import { useMainSectionActor } from "../../../../modules/sectionActorHooks/useMainSectionActor";
 import { SectionNameByType } from "../../../../sharedWithServer/SectionsMeta/SectionNameByType";
 import theme from "../../../../theme/Theme";
-import { DropdownList } from "../../DropdownList";
-import { ActionMenuBtn } from "./StoreSectionActionMenu/ActionMenuBtn";
-import {
-  useActionMenuBtns,
-  useDefaultActionLists,
-} from "./StoreSectionActionMenu/ActionMenuButtons";
+import { ActionBtn } from "./StoreSectionActionMenu/ActionBtns.tsx/ActionBtn";
+import { useDefaultActionLists } from "./StoreSectionActionMenu/ActionMenuButtons";
 import {
   ActionBtnName,
   ActionMenuProps,
@@ -24,7 +20,7 @@ interface Props<SN extends SectionNameByType<"hasIndexStore">>
   loadWhat: string;
 }
 
-export function StoreSectionActionMenu<
+export function StoreSectionActions<
   SN extends SectionNameByType<"hasIndexStore">
 >({
   dropTop,
@@ -36,14 +32,7 @@ export function StoreSectionActionMenu<
 }: Props<SN>) {
   const feInfo = { sectionName, feId };
   const mainSection = useMainSectionActor(feInfo);
-
   const controller = useToggleViewNext("list", false);
-  const buttons = useActionMenuBtns({
-    ...feInfo,
-    loadWhat,
-    onLoad: controller.closeList,
-  });
-
   function btnProps(actionName: ActionBtnName) {
     return {
       ...feInfo,
@@ -51,9 +40,9 @@ export function StoreSectionActionMenu<
       onLoad: controller.closeList,
       actionName,
       key: actionName,
+      className: "StoreSectionActions-actionBtn",
     };
   }
-
   const defaultActionLists = useDefaultActionLists();
   const { alwaysArr, isNotSavedArr, isSavedArr } = {
     ...defaultActionLists,
@@ -71,31 +60,27 @@ export function StoreSectionActionMenu<
     >
       {!mainSection.isSaved &&
         isNotSavedArr.map((actionName) => (
-          <ActionMenuBtn {...btnProps(actionName)} />
+          <ActionBtn {...btnProps(actionName)} />
         ))}
       {mainSection.isSaved &&
-        isSavedArr.map((actionName) => (
-          <ActionMenuBtn {...btnProps(actionName)} />
-        ))}
+        isSavedArr.map((actionName) => <ActionBtn {...btnProps(actionName)} />)}
       {alwaysArr.map((actionName) => (
-        <ActionMenuBtn {...btnProps(actionName)} />
+        <ActionBtn {...btnProps(actionName)} />
       ))}
     </Styled>
   );
 }
 
-const Styled = styled(DropdownList)`
-  position: relative;
+const Styled = styled.div`
+  display: flex;
+  .StoreSectionActions-actionBtn {
+    margin-right: ${theme.s1};
+  }
   .ActionMenuButtons-signInToSave {
-    color: ${theme["gray-700"]};
-    background-color: ${theme.info.light};
-  }
-  .DropdownList-dropDownBtn {
-    height: 25px;
-    width: 152px;
-  }
-
-  .LabeledIconBtn-root {
-    border-top: 1px solid ${theme["gray-500"]};
+    color: ${theme.info.border};
+    :hover {
+      color: ${theme.light};
+      background-color: ${theme.info.dark};
+    }
   }
 `;

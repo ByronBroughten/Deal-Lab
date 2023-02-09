@@ -18,7 +18,7 @@ export const VarbListMenuStyled = styled.div`
     margin-left: ${theme.s2};
     margin-top: ${theme.s2};
   }
-  .ActionBtnLoad-root {
+  .ActionMenuLoadBtn-root {
     margin-left: ${theme.s25};
     width: 75px;
     height: 25px;

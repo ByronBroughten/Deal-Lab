@@ -7,18 +7,6 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-// 0. Organize all the varbInfos into one place - Separate them from
-//   "entities"
-//   - Make a type that goes from valueName to value
-//   - Make a generic type to check it.
-
-//   - Keep baseSections like it is, because it only uses valueName, not value
-
-//   - make the infos prior to baseSecitons
-//   - make sectionChildren prior to baseSections
-//   - make the values, using the varbInfos, prior to baseSections
-//   - make valueSchema prior to baseSections
-
 // 3. Make a simple wordpress website
 // - Just do it badly at first, for the gist of it.
 // - Then pay someone to do it well

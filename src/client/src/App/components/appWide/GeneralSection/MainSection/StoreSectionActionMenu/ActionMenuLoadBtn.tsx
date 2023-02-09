@@ -13,13 +13,9 @@ type Props<SN extends SectionNameByType<"hasIndexStore">> = {
   className?: string;
   onLoad?: () => void;
 };
-export function ActionBtnLoad<SN extends SectionNameByType<"hasIndexStore">>({
-  loadWhat,
-  feInfo,
-  loadMode,
-  className,
-  onLoad,
-}: Props<SN>) {
+export function ActionMenuLoadBtn<
+  SN extends SectionNameByType<"hasIndexStore">
+>({ loadWhat, feInfo, loadMode, className, onLoad }: Props<SN>) {
   const { modalIsOpen, openModal, closeModal } = useToggleViewNext(
     "modal",
     false
@@ -31,7 +27,7 @@ export function ActionBtnLoad<SN extends SectionNameByType<"hasIndexStore">>({
         label="Load"
         icon={<BsCloudArrowDown size={26} />}
         onClick={openModal}
-        className={`ActionBtnLoad-root ${className ?? ""}`}
+        className={`ActionMenuLoadBtn-root ${className ?? ""}`}
       />
       <SectionModal
         closeModal={closeModal}

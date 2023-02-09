@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import { SectionNameByType } from "../../../../../sharedWithServer/SectionsMeta/SectionNameByType";
 import theme from "../../../../../theme/Theme";
-import { StoreSectionActionMenu } from "../StoreSectionActionMenu";
 import { ActionMenuProps } from "../StoreSectionActionMenu/ActionMenuTypes";
+import { StoreSectionActions } from "../StoreSectionActions";
 
 export interface MainSectionMenuOptions {
   dropTop?: boolean;
@@ -24,7 +24,7 @@ export function MainSectionActionRow({
 }: Props) {
   return (
     <Styled className={`MainSectionActionRow-root ${className ?? ""}`}>
-      <StoreSectionActionMenu
+      <StoreSectionActions
         {...{
           ...feInfo,
           ...actionMenuProps,

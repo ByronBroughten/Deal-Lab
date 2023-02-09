@@ -1,6 +1,6 @@
 import { FeSectionInfo } from "../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { SectionNameByType } from "../../../../sharedWithServer/SectionsMeta/SectionNameByType";
-import { ActionBtnLoad } from "../../GeneralSection/MainSection/StoreSectionActionMenu/ActionBtnLoad";
+import { ActionMenuLoadBtn } from "../../GeneralSection/MainSection/StoreSectionActionMenu/ActionMenuLoadBtn";
 import { VarbListTotal } from "./VarbListGeneric/VarbListTotal";
 import { VarbListMenuStyled } from "./VarbListMenuStyled";
 
@@ -31,7 +31,7 @@ export function VarbListValueMenu<
           )}
         </div>
         <div className="VarbListGeneric-titleRowRight">
-          <ActionBtnLoad
+          <ActionMenuLoadBtn
             {...{
               loadMode: "loadAndCopy",
               loadWhat: "List",
