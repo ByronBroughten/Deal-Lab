@@ -1,9 +1,9 @@
 import { Obj } from "../../utils/Obj";
 import { allBaseSectionVarbs } from "../allBaseSectionVarbs";
-import { NanoIdProp } from "../allBaseSectionVarbs/NanoIdInfo";
+import { VarbName } from "../baseSectionsDerived/baseSectionsVarbsTypes";
 import { SectionName } from "../SectionName";
-import { SectionNameProp } from "./baseSectionInfo";
-import { VarbName } from "./baseSectionsVarbsTypes";
+import { NanoIdProp } from "./NanoIdInfo";
+import { SectionNameProp } from "./SectionNameProp";
 
 export type MixedInfoProps<IT extends string> = {
   infoType: IT;

@@ -1,6 +1,4 @@
 import { switchKeyToVarbNames } from "../allBaseSectionVarbs/baseSwitchNames";
-import { PiCalculationName } from "../allBaseSectionVarbs/baseValues/calculations/piCalculations";
-import { numObj } from "../allBaseSectionVarbs/baseValues/NumObj";
 import { UpdateSectionVarbs } from "../updateSectionVarbs/updateSectionVarbs";
 import { updateVarb, updateVarbS } from "../updateSectionVarbs/updateVarb";
 import {
@@ -17,6 +15,8 @@ import {
   updateOverride,
 } from "../updateSectionVarbs/updateVarb/UpdateOverrides";
 import { updateVarbsS } from "../updateSectionVarbs/updateVarbs";
+import { numObj } from "../values/StateValue/NumObj";
+import { PiCalculationName } from "../values/StateValue/valuesShared/calculations/piCalculations";
 
 export function loanRelVarbs(): UpdateSectionVarbs<"loan"> {
   return {
@@ -161,7 +161,7 @@ export function loanRelVarbs(): UpdateSectionVarbs<"loan"> {
         },
       },
       yearly: {
-        updateFnName: "interestOnlySimpleYearly",
+        updateFnName: "piInterestOnlySimpleYearly",
         updateFnProps: {
           ...updateFnPropsS.localByVarbName([
             "interestRateDecimalYearly",

@@ -1,7 +1,5 @@
-import { StateValue } from "../SectionsMeta/allBaseSectionVarbs/baseValues/StateValueTypes";
-import { Id } from "../SectionsMeta/allBaseSectionVarbs/id";
 import { VarbName } from "../SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
-import { SomeSectionValues } from "../SectionsMeta/baseSectionsDerived/valueMetaTypes";
+import { Id } from "../SectionsMeta/id";
 import {
   ChildArrInfo,
   ChildIdArrsNarrow,
@@ -15,6 +13,10 @@ import { FeSectionInfo } from "../SectionsMeta/SectionInfo/FeInfo";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { SectionPathContextName } from "../SectionsMeta/sectionPathContexts";
+import {
+  SomeSectionValues,
+  StateValue,
+} from "../SectionsMeta/values/StateValue";
 import { GetterSectionProps } from "../StateGetters/Bases/GetterSectionBase";
 import { InitRawFeSectionProps } from "../StateSections/initRawSection";
 import { StateSections } from "../StateSections/StateSections";

@@ -1,4 +1,3 @@
-import { MixedInfoProps } from "../baseSectionsDerived/baseVarbInfo";
 import { ChildName } from "../sectionChildrenDerived/ChildName";
 import {
   ParentName,
@@ -6,6 +5,7 @@ import {
   StepSiblingName,
 } from "../sectionChildrenDerived/ParentName";
 import { SectionName } from "../SectionName";
+import { MixedInfoProps } from "./VarbInfoBase";
 
 export type RelInfoType =
   | "local" // local

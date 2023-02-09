@@ -1,9 +1,9 @@
 import { makeDefaultPropertyPack } from "../defaultMaker/makeDefaultPropertyPack";
-import { numObj } from "../SectionsMeta/allBaseSectionVarbs/baseValues/NumObj";
-import { stringObj } from "../SectionsMeta/allBaseSectionVarbs/baseValues/StringObj";
 import { ChildName } from "../SectionsMeta/sectionChildrenDerived/ChildName";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { PathSectionName } from "../SectionsMeta/sectionPathContexts/sectionPathNames";
+import { numObj } from "../SectionsMeta/values/StateValue/NumObj";
+import { stringObj } from "../SectionsMeta/values/StateValue/StringObj";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
 import { SetterTesterSection } from "./TestUtils/SetterTesterSection";
 

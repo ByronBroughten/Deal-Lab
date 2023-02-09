@@ -1,23 +1,19 @@
 import { cloneDeep } from "lodash";
 import { sectionsMeta } from "../SectionsMeta";
-import { FixedInEntity } from "./allBaseSectionVarbs/baseValues/entities";
 import { GeneralBaseVarb } from "./allBaseSectionVarbs/baseVarbs";
-import { ValueName } from "./allBaseSectionVarbs/ValueName";
 import { getDisplayVarb } from "./allDisplaySectionVarbs";
-import { allUpdateSections, getUpdateVarb } from "./allUpdateSectionVarbs";
+import { getUpdateVarb } from "./allUpdateSectionVarbs";
 import {
   getBaseVarb,
   VarbName,
 } from "./baseSectionsDerived/baseSectionsVarbsTypes";
-import { VarbNames } from "./baseSectionsDerived/baseVarbInfo";
-import { valueMetas } from "./baseSectionsDerived/valueMetas";
 import {
   DisplayName,
   DisplaySourceFinder,
 } from "./displaySectionVarbs/displayVarb";
+import { VarbNames } from "./SectionInfo/VarbInfoBase";
 import { SectionMeta } from "./SectionMeta";
 import { SectionName } from "./SectionName";
-import { GeneralUpdateSectionVarbs } from "./updateSectionVarbs/updateSectionVarbs";
 import { GeneralUpdateVarb } from "./updateSectionVarbs/updateVarb";
 import { UpdateBasics } from "./updateSectionVarbs/updateVarb/UpdateBasics";
 import { UpdateFnProps } from "./updateSectionVarbs/updateVarb/UpdateFnProps";
@@ -25,20 +21,28 @@ import {
   UpdateOverrides,
   UpdateOverrideSwitches,
 } from "./updateSectionVarbs/updateVarb/UpdateOverrides";
+import { FixedInEntity } from "./values/StateValue/valuesShared/entities";
+import { valueMetas } from "./values/valueMetas";
+import { ValueName } from "./values/ValueName";
 
-export type VarbMetaCore<SN extends SectionName> = {
+type Props<SN extends SectionName> = {
+  varbName: string;
+  sectionName: SN;
+};
+
+export class VarbMeta<SN extends SectionName> {
   varbName: string;
   sectionName: SN;
   inSwitchUpdatePacks: InSwitchUpdatePack[];
-};
-export class VarbMeta<SN extends SectionName> {
-  constructor(readonly core: VarbMetaCore<SN>) {}
-  get varbName(): string {
-    return this.core.varbName;
+  constructor({ sectionName, varbName }: Props<SN>) {
+    this.sectionName = sectionName;
+    this.varbName = varbName;
+    const updateVarb = getUpdateVarb(sectionName, varbName as any);
+    this.inSwitchUpdatePacks = updateOverrideToInfos(
+      updateVarb.updateOverrides
+    );
   }
-  get sectionName(): SN {
-    return this.core.sectionName;
-  }
+
   get baseVarb(): GeneralBaseVarb {
     return getBaseVarb(
       this.sectionName,
@@ -72,10 +76,6 @@ export class VarbMeta<SN extends SectionName> {
     if (valueMeta === undefined) {
       throw new Error(`There is no valueMeta of valueName ${this.valueName}`);
     } else return valueMeta;
-  }
-  get fullName(): string {
-    const { sectionName, varbName } = this.core;
-    return `${sectionName}.${varbName}`;
   }
   get updateFnProps() {
     return cloneDeep(this.updateVarb.updateFnProps);
@@ -113,9 +113,6 @@ export class VarbMeta<SN extends SectionName> {
   get valueName(): ValueName {
     return this.baseVarb.valueName;
   }
-  get inSwitchUpdatePacks(): InSwitchUpdatePack[] {
-    return cloneDeep(this.core.inSwitchUpdatePacks);
-  }
   get calcRound(): number {
     return this.displayVarb.calculateRound;
   }
@@ -130,31 +127,6 @@ export class VarbMeta<SN extends SectionName> {
       fixedInEntities: fnPropsToFixedInEntities(updateFnProps),
     };
   }
-  static init<SN extends SectionName>({
-    sectionName,
-    varbName,
-  }: VarbNames<SN>): VarbMeta<SN> {
-    const relVarbs = allUpdateSections[
-      sectionName
-    ] as GeneralUpdateSectionVarbs;
-    const updateVarb = relVarbs[varbName];
-    return new VarbMeta({
-      ...updateVarb,
-      sectionName,
-      varbName,
-      inSwitchUpdatePacks: updateOverrideToInfos(updateVarb.updateOverrides),
-    });
-  }
-}
-
-export function getVarbMeta<SN extends SectionName>({
-  sectionName,
-  varbName,
-}: VarbNames<SN>) {
-  return VarbMeta.init({
-    sectionName,
-    varbName: varbName as string,
-  });
 }
 
 export interface InUpdatePack extends UpdateBasics {

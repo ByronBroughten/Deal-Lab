@@ -1,5 +1,5 @@
-import { numObj } from "../../SectionsMeta/allBaseSectionVarbs/baseValues/NumObj";
-import { stringObj } from "../../SectionsMeta/allBaseSectionVarbs/baseValues/StringObj";
+import { numObj } from "../../SectionsMeta/values/StateValue/NumObj";
+import { stringObj } from "../../SectionsMeta/values/StateValue/StringObj";
 import { PackBuilderSection } from "../../StatePackers.ts/PackBuilderSection";
 
 export function makeExampleLoan() {

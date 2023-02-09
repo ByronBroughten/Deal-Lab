@@ -56,7 +56,7 @@ export function makeAllBaseSectionVarbs() {
     }),
     cell: baseSectionVarbs({
       columnFeId: baseVarb("string"),
-      valueEntityInfo: baseVarb("inEntityInfo"),
+      valueEntityInfo: baseVarb("inEntityValue"),
       displayVarb: baseVarb("string"),
     }),
     conditionalRow: baseSectionVarbs({

@@ -1,7 +1,7 @@
-import { Obj } from "../../../utils/Obj";
-import { interestOnlySimpleYearly } from "./calculations/piCalculations/interestOnlySimple";
-import { piFixedStandardMonthly } from "./calculations/piFixedStandard";
-import { NumberOrQ } from "./NumObj";
+import { Obj } from "../../../../utils/Obj";
+import { NumberOrQ } from "../NumObj";
+import { piFixedStandardMonthly } from "./calculations/piCalculations/piFixedStandard";
+import { piInterestOnlySimpleYearly } from "./calculations/piCalculations/piInterestOnlySimple";
 
 export type Calculate = (props: any) => string;
 
@@ -81,7 +81,7 @@ const calculations = {
     portionOfBase: number;
   }) => `${portionOfBase} / ${base}`,
 
-  interestOnlySimpleYearly,
+  piInterestOnlySimpleYearly,
   piFixedStandardMonthly,
 } as const;
 

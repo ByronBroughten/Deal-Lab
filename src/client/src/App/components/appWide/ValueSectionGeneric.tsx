@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import { VarbName } from "../../sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
-import { CustomValueMode } from "../../sharedWithServer/SectionsMeta/baseSectionsDerived/subValues";
 import { ChildName } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/ChildName";
 import { SectionNameByType } from "../../sharedWithServer/SectionsMeta/SectionNameByType";
+import { CustomValueMode } from "../../sharedWithServer/SectionsMeta/values/StateValue/subStringValues";
 import { useSetterSection } from "../../sharedWithServer/stateClassHooks/useSetterSection";
 import theme from "../../theme/Theme";
 import { BigStringEditor } from "../inputs/BigStringEditor";

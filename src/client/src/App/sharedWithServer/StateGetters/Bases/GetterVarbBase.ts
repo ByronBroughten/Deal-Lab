@@ -1,4 +1,4 @@
-import { isValidVarbNames } from "../../SectionsMeta/baseSectionsDerived/baseVarbInfo";
+import { isValidVarbNames } from "../../SectionsMeta/SectionInfo/VarbInfoBase";
 import { SectionName } from "../../SectionsMeta/SectionName";
 import { VarbMeta } from "../../SectionsMeta/VarbMeta";
 import { GetterSectionBase, GetterSectionProps } from "./GetterSectionBase";

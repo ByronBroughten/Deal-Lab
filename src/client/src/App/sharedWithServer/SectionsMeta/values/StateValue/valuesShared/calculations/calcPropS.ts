@@ -1,5 +1,5 @@
 import { isNumber } from "lodash";
-import { mathS } from "../../../../utils/math";
+import { mathS } from "../../../../../utils/math";
 import { CalcProp } from "../calculations";
 
 export function calcPropMath(v: CalcProp, fn: (v: number) => number): CalcProp {

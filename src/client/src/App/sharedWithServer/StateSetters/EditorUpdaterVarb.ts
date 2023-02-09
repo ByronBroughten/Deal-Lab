@@ -10,36 +10,21 @@ import {
   numObjToRawContent,
 } from "../../modules/draftjs/draftUtils";
 import { EntityMap, EntityRanges, RawEditorState } from "../../utils/DraftS";
-import { ValueInEntity } from "../SectionsMeta/allBaseSectionVarbs/baseValues/entities";
+import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
+import { isEditorUpdateFnName } from "../SectionsMeta/updateSectionVarbs/updateVarb/UpdateFnName";
+import { EditorValueName } from "../SectionsMeta/values/EditorValue";
 import {
   EntitiesAndEditorText,
   NumObj,
-} from "../SectionsMeta/allBaseSectionVarbs/baseValues/NumObj";
-import { isEditorUpdateFnName } from "../SectionsMeta/allBaseSectionVarbs/baseValues/StateValueTypes";
-import { StringObj } from "../SectionsMeta/allBaseSectionVarbs/baseValues/StringObj";
-import { valueNames } from "../SectionsMeta/allBaseSectionVarbs/ValueName";
-import { ValueNamesToTypes } from "../SectionsMeta/baseSectionsDerived/valueMetaTypes";
-import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
+} from "../SectionsMeta/values/StateValue/NumObj";
+import { StringObj } from "../SectionsMeta/values/StateValue/StringObj";
+import { ValueInEntity } from "../SectionsMeta/values/StateValue/valuesShared/entities";
 import { GetterVarbBase } from "../StateGetters/Bases/GetterVarbBase";
 import { GetterVarb } from "../StateGetters/GetterVarb";
 import { GetterVarbNumObj } from "../StateGetters/GetterVarbNumObj";
 import { InEntityGetterVarb } from "../StateGetters/InEntityGetterVarb";
 import { UpdaterVarb } from "../StateUpdaters/UpdaterVarb";
 import { Arr } from "../utils/Arr";
-
-const editorValueNames = Arr.extract(valueNames, [
-  "string",
-  "numObj",
-  "stringArray",
-  "stringObj",
-] as const);
-
-type EditorValueName = typeof editorValueNames[number];
-export function isEditorValueName(value: any): value is EditorValueName {
-  return editorValueNames.includes(value);
-}
-
-export type EditorValue = ValueNamesToTypes[EditorValueName];
 
 type ContentCreators = {
   [EN in EditorValueName]: () => ContentState;

@@ -1,15 +1,15 @@
 import isEqual from "fast-deep-equal";
-import { StringObj } from "../../sharedWithServer/SectionsMeta/allBaseSectionVarbs/baseValues/StringObj";
-import {
-  AutoSyncControl,
-  SyncStatus,
-} from "../../sharedWithServer/SectionsMeta/baseSectionsDerived/subValues";
+import { SectionPack } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/SectionPack";
+import { SectionNameByType } from "../../sharedWithServer/SectionsMeta/SectionNameByType";
 import {
   SectionValues,
   SomeSectionValues,
-} from "../../sharedWithServer/SectionsMeta/baseSectionsDerived/valueMetaTypes";
-import { SectionPack } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/SectionPack";
-import { SectionNameByType } from "../../sharedWithServer/SectionsMeta/SectionNameByType";
+} from "../../sharedWithServer/SectionsMeta/values/StateValue";
+import { StringObj } from "../../sharedWithServer/SectionsMeta/values/StateValue/StringObj";
+import {
+  AutoSyncControl,
+  SyncStatus,
+} from "../../sharedWithServer/SectionsMeta/values/StateValue/subStringValues";
 import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
 import { GetterSections } from "../../sharedWithServer/StateGetters/GetterSections";
 import { PackMakerSection } from "../../sharedWithServer/StatePackers.ts/PackMakerSection";

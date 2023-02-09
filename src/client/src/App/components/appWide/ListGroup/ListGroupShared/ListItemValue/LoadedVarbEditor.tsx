@@ -1,7 +1,7 @@
-import { inEntityIdInfo } from "../../../../../sharedWithServer/SectionsMeta/allBaseSectionVarbs/baseValues/InEntityIdInfoValue";
 import { VarbName } from "../../../../../sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
 import { FeSectionInfo } from "../../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { SectionNameByType } from "../../../../../sharedWithServer/SectionsMeta/SectionNameByType";
+import { inEntityValueInfo } from "../../../../../sharedWithServer/SectionsMeta/values/StateValue/InEntityValue";
 import { useSetterSection } from "../../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import { VariableOption } from "../../../../../sharedWithServer/StateEntityGetters/VariableGetterSections";
 import { ControlledVarbAutoComplete } from "../../../../inputs/ControlledVarbAutoComplete";
@@ -16,9 +16,9 @@ export function LoadedVarbEditor<
   const section = useSetterSection(feInfo);
   const infoVarb = section.varb("valueEntityInfo");
   function onSelect({ varbInfo }: VariableOption) {
-    infoVarb.updateValue(inEntityIdInfo(varbInfo));
+    infoVarb.updateValue(inEntityValueInfo(varbInfo));
   }
-  const selectedVarbInfo = infoVarb.value("inEntityInfo");
+  const selectedVarbInfo = infoVarb.value("inEntityValue");
   const valueVarb = section.varb(valueVarbName);
   return (
     <>

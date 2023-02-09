@@ -1,8 +1,8 @@
 import { z } from "zod";
 import { zS } from "../../../utils/zod";
-import { zValue } from "../../baseSectionsDerived/valueMetas";
-import { DbValue } from "../../baseSectionsDerived/valueMetaTypes";
 import { SectionName } from "../../SectionName";
+import { StateValue } from "../../values/StateValue";
+import { zValue } from "../../values/valueMetas";
 import { ChildName } from "../ChildName";
 
 type GeneralChildNumArrs = Record<string, number[]>;
@@ -19,7 +19,7 @@ export type SpChildInfo<
 };
 
 export type DbVarbs = {
-  [varbName: string]: DbValue;
+  [varbName: string]: StateValue;
 };
 export type GeneralRawSection = {
   spNum: number;

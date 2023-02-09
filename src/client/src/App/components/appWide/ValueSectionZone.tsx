@@ -1,4 +1,3 @@
-import React from "react";
 import { ChildName } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/ChildName";
 import { FeSectionInfo } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";

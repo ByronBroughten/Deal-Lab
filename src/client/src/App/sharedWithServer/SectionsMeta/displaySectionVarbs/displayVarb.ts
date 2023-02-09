@@ -14,6 +14,10 @@ export type DisplaySourceFinder =
 
 export type DisplayVarb = {
   displayName: DisplayName;
+  displayNameWithSection: DisplayName;
+  displayNameWithVariant: DisplayName;
+  displayNameFullContext: DisplayName;
+
   displayNameStart: string;
   displayNameEnd: string;
   startAdornment: string;
@@ -28,6 +32,9 @@ const displayVarbCheck = <DS extends DisplayVarb>(value: DS): DS => value;
 export function defaultDisplayVarb(displayName: DisplayName) {
   return displayVarbCheck({
     displayName,
+    displayNameWithSection: displayName,
+    displayNameWithVariant: displayName,
+    displayNameFullContext: displayName,
     displayNameStart: "",
     displayNameEnd: "",
     startAdornment: "",
@@ -41,10 +48,17 @@ export function defaultDisplayVarb(displayName: DisplayName) {
 export type DisplayVarbOptions = Partial<DisplayVarb>;
 export function displayVarb<DN extends DisplayName>(
   displayName: DN,
-  partial: DisplayVarbOptions = {}
+  o: DisplayVarbOptions = {}
 ): DisplayVarb {
+  const displayNameWithSection = o.displayNameWithSection ?? displayName;
+  const displayNameWithVariant = o.displayNameWithVariant ?? displayName;
+  const displayNameFullContext =
+    o.displayNameFullContext ?? displayNameWithVariant;
   return {
     ...defaultDisplayVarb(displayName),
-    ...partial,
+    ...o,
+    displayNameWithSection,
+    displayNameWithVariant,
+    displayNameFullContext,
   };
 }

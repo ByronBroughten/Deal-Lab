@@ -1,5 +1,6 @@
 import { Obj } from "../../utils/Obj";
 import { Merge, merge } from "../../utils/Obj/merge";
+import { ValueName, valueNames } from "../values/ValueName";
 import {
   GetSwitchOptions,
   getSwitchOptions,
@@ -12,7 +13,6 @@ import {
   SwitchOptionsProps,
   SwitchVarbName,
 } from "./baseSwitchNames";
-import { ValueName, valueNames } from "./ValueName";
 
 const customValueUnits = {
   numObj: ["dollars", "percent", "decimal", "months", "years"],
@@ -281,7 +281,7 @@ export const baseVarbsS = {
   },
   get loadableVarb() {
     return {
-      valueEntityInfo: baseVarb("inEntityInfo"),
+      valueEntityInfo: baseVarb("inEntityValue"),
     } as const;
   },
 } as const;

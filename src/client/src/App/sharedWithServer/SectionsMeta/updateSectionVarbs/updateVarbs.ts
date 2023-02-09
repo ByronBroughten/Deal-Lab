@@ -1,5 +1,5 @@
 import { switchKeyToVarbNames } from "../allBaseSectionVarbs/baseSwitchNames";
-import { AutoSyncControl } from "../baseSectionsDerived/subValues";
+import { AutoSyncControl } from "../values/StateValue/subStringValues";
 import {
   ongoingPureCalc,
   ongoingSumNums,
@@ -65,7 +65,7 @@ export const updateVarbsS = {
   },
   get listItemVirtualVarb() {
     return {
-      valueEntityInfo: updateVarb("inEntityInfo"),
+      valueEntityInfo: updateVarb("inEntityValue"),
       displayNameEditor: updateVarbS.displayNameEditor,
       displayName: updateVarb("stringObj", {
         updateFnName: "loadLocalString",

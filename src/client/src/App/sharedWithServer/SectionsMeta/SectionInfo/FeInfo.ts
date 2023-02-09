@@ -1,6 +1,4 @@
-import { StateValue } from "../allBaseSectionVarbs/baseValues/StateValueTypes";
-import { Id } from "../allBaseSectionVarbs/id";
-import { VarbProp, VarbPropNext } from "../baseSectionsDerived/baseVarbInfo";
+import { Id } from "../id";
 import {
   ParentName,
   ParentNameSafe,
@@ -11,6 +9,8 @@ import {
   sectionNameS,
   SectionNameType,
 } from "../SectionNameByType";
+import { StateValue } from "../values/StateValue";
+import { VarbProp, VarbPropNext } from "./VarbInfoBase";
 
 export interface FeInfoByType<T extends SectionNameType = "all"> {
   sectionName: SectionNameByType<T>;

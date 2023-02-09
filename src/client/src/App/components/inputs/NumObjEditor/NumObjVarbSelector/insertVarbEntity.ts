@@ -3,9 +3,9 @@ import { insertEntity } from "../../../../modules/draftjs/insert";
 import {
   EntityMapData,
   ValueInEntityInfo,
-} from "../../../../sharedWithServer/SectionsMeta/allBaseSectionVarbs/baseValues/entities";
+} from "../../../../sharedWithServer/SectionsMeta/values/StateValue/valuesShared/entities";
 
-import { Id } from "../../../../sharedWithServer/SectionsMeta/allBaseSectionVarbs/id";
+import { Id } from "../../../../sharedWithServer/SectionsMeta/id";
 
 type Props = {
   setEditorState: SetEditorState;

@@ -1,15 +1,15 @@
 import { Obj } from "../../utils/Obj";
 import { targetNames } from "../allBaseSectionVarbs/baseSwitchNames";
+import { fullDisplayNameString } from "../allDisplaySectionVarbs";
 import { VarbName } from "../baseSectionsDerived/baseSectionsVarbsTypes";
-import { MixedInfoProps } from "../baseSectionsDerived/baseVarbInfo";
-import { VarbValue } from "../baseSectionsDerived/valueMetaTypes";
 import {
   pathSectionName,
   PathSectionName,
   SectionPathName,
   SectionPathVarbName,
 } from "../sectionPathContexts/sectionPathNames";
-import { getVarbMeta } from "../VarbMeta";
+import { VarbValue } from "../values/StateValue";
+import { MixedInfoProps } from "./VarbInfoBase";
 
 type MakeVarbPathParams<
   PN extends SectionPathName,
@@ -112,7 +112,7 @@ export function getVarbPathExtras<VPN extends VarbPathName>(
   return {
     ...params,
     sectionName,
-    displayName: getVarbMeta({ sectionName, varbName }).displayNameFull,
+    displayName: fullDisplayNameString(sectionName, varbName as any),
     varbInfo: varbPathInfo(varbPathName),
   } as VarbPathExtras<VPN>;
 }

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { inEntityIdInfo } from "../../../../../sharedWithServer/SectionsMeta/allBaseSectionVarbs/baseValues/InEntityIdInfoValue";
+import { inEntityValueInfo } from "../../../../../sharedWithServer/SectionsMeta/values/StateValue/InEntityValue";
 import { useGetterSection } from "../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { useSetterSection } from "../../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import { VariableOption } from "../../../../../sharedWithServer/StateEntityGetters/VariableGetterSections";
@@ -14,7 +14,7 @@ function useLoadedOutputRowProps(feId: string): LoadedVarbProps[] {
   });
 
   return outputList.children("outputItem").map((outputItem) => {
-    const entityVarbInfo = outputItem.value("valueEntityInfo", "inEntityInfo");
+    const entityVarbInfo = outputItem.value("valueEntityInfo", "inEntityValue");
     if (entityVarbInfo === null) throw new Error("Value not initialized");
     return { feInfo: outputItem.feInfo };
   });
@@ -28,7 +28,7 @@ export function DealOutputList({ feId }: { feId: string }) {
 
   const onSelectNext = ({ varbInfo }: VariableOption) =>
     outPutList.addChild("outputItem", {
-      dbVarbs: { valueEntityInfo: inEntityIdInfo(varbInfo) },
+      dbVarbs: { valueEntityInfo: inEntityValueInfo(varbInfo) },
     });
 
   const propArr = useLoadedOutputRowProps(feId);

@@ -9,7 +9,7 @@ export function LabeledVarbOutput({ feId }: { feId: string }) {
 
   const entityVarbInfo = outputItem.get.value(
     "valueEntityInfo",
-    "inEntityInfo"
+    "inEntityValue"
   );
   if (entityVarbInfo === null) throw new Error("Value not initialized");
   return (

@@ -1,7 +1,7 @@
 import { makeReq } from "../../sharedWithServer/apiQueriesShared/makeReqAndRes";
 import { sectionsMeta } from "../../sharedWithServer/SectionsMeta";
 import { DbStoreNameByType } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/DbStoreName";
-import { VarbInfoMixedFocal } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/MixedSectionInfo";
+import { VarbInfoMixedFocal } from "../../sharedWithServer/SectionsMeta/SectionInfo/MixedSectionInfo";
 import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
 import { PackMakerSection } from "../../sharedWithServer/StatePackers.ts/PackMakerSection";
 import { SetterSection } from "../../sharedWithServer/StateSetters/SetterSection";

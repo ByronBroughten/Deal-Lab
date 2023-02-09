@@ -1,8 +1,4 @@
 import {
-  decimalRounding,
-  maxRounding,
-} from "../allBaseSectionVarbs/baseValues/calculations/numUnitParams";
-import {
   GeneralBaseVarb,
   ValueTimespan,
   ValueUnit,
@@ -13,6 +9,10 @@ import {
   VarbName,
 } from "../baseSectionsDerived/baseSectionsVarbsTypes";
 import { SectionName } from "../SectionName";
+import {
+  decimalRounding,
+  maxRounding,
+} from "../values/StateValue/valuesShared/calculations/numUnitParams";
 import { displayVarb, DisplayVarb, DisplayVarbOptions } from "./displayVarb";
 
 type DisplaySectionVarbsProp<SN extends SectionName> = {

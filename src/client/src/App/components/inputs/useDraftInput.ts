@@ -2,12 +2,10 @@ import { EditorState } from "draft-js";
 import { isEqual } from "lodash";
 import React, { useEffect, useState } from "react";
 import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
+import { isEditorValueName } from "../../sharedWithServer/SectionsMeta/values/EditorValue";
 import { useUpdateValueFromContent } from "../../sharedWithServer/stateClassHooks/useReduceActions";
 import { useSetterVarb } from "../../sharedWithServer/stateClassHooks/useSetterVarb";
-import {
-  CreateEditorProps,
-  isEditorValueName,
-} from "../../sharedWithServer/StateSetters/EditorUpdaterVarb";
+import { CreateEditorProps } from "../../sharedWithServer/StateSetters/EditorUpdaterVarb";
 import { SetterVarb } from "../../sharedWithServer/StateSetters/SetterVarb";
 import { StrictOmit } from "../../sharedWithServer/utils/types";
 

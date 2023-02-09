@@ -1,12 +1,12 @@
 import { cloneDeep } from "lodash";
+import { FeVarbInfo } from "../SectionsMeta/SectionInfo/FeInfo";
+import { SectionName } from "../SectionsMeta/SectionName";
+import { UpdateOverrideSwitch } from "../SectionsMeta/updateSectionVarbs/updateVarb/UpdateOverrides";
 import {
   FixedInEntity,
   InEntity,
   ValueInEntity,
-} from "../SectionsMeta/allBaseSectionVarbs/baseValues/entities";
-import { FeVarbInfo } from "../SectionsMeta/SectionInfo/FeInfo";
-import { SectionName } from "../SectionsMeta/SectionName";
-import { UpdateOverrideSwitch } from "../SectionsMeta/updateSectionVarbs/updateVarb/UpdateOverrides";
+} from "../SectionsMeta/values/StateValue/valuesShared/entities";
 import { InUpdatePack } from "../SectionsMeta/VarbMeta";
 import { InVarbInfo } from "../StateSolvers/SolverVarb";
 import { GetterVarbBase } from "./Bases/GetterVarbBase";

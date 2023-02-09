@@ -1,4 +1,3 @@
-import { SectionValues } from "../../SectionsMeta/baseSectionsDerived/valueMetaTypes";
 import { ChildName } from "../../SectionsMeta/sectionChildrenDerived/ChildName";
 import { SectionPack } from "../../SectionsMeta/sectionChildrenDerived/SectionPack";
 import {
@@ -9,6 +8,7 @@ import {
   SectionNameByType,
   sectionNameS,
 } from "../../SectionsMeta/SectionNameByType";
+import { SectionValues } from "../../SectionsMeta/values/StateValue";
 import {
   GetterSectionBase,
   GetterSectionProps,

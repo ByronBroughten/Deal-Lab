@@ -1,5 +1,5 @@
-import { calculationNames } from "../../allBaseSectionVarbs/baseValues/calculations";
-import { ValueName, valueNames } from "../../allBaseSectionVarbs/ValueName";
+import { calculationNames } from "../../values/StateValue/valuesShared/calculations";
+import { ValueName, valueNames } from "../../values/ValueName";
 
 export type UpdateFnName<VN extends ValueName = ValueName> =
   UpdateFnNames[VN][number];
@@ -55,4 +55,17 @@ function makeDefaults(): DefaultUpdateFnNames {
     defaults[valueName] = commonUpdateFnNames;
     return defaults;
   }, {} as DefaultUpdateFnNames);
+}
+
+const editorUpdateNames = [
+  "calcVarbs",
+  "string",
+  "stringArray",
+  "stringObj",
+  "manualUpdateOnly",
+] as const;
+
+type EditorUpdateName = typeof editorUpdateNames[number];
+export function isEditorUpdateFnName(value: string): value is EditorUpdateName {
+  return editorUpdateNames.includes(value as any);
 }

@@ -1,11 +1,11 @@
 import { AnalyzerPlanValues } from "../../sharedWithServer/apiQueriesShared/AnalyzerPlanValues";
 import { defaultMaker } from "../../sharedWithServer/defaultMaker/defaultMaker";
-import { AutoSyncControl } from "../../sharedWithServer/SectionsMeta/baseSectionsDerived/subValues";
 import { AuthStatus } from "../../sharedWithServer/SectionsMeta/baseSectionsVarbsValues";
 import { ChildSectionName } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/ChildSectionName";
 import { SectionPack } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/SectionPack";
 import { FeSectionInfo } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { SectionNameByType } from "../../sharedWithServer/SectionsMeta/SectionNameByType";
+import { AutoSyncControl } from "../../sharedWithServer/SectionsMeta/values/StateValue/subStringValues";
 import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
 import { PackBuilderSection } from "../../sharedWithServer/StatePackers.ts/PackBuilderSection";
 import { SolverSectionBase } from "../../sharedWithServer/StateSolvers/SolverBases/SolverSectionBase";

@@ -1,30 +1,27 @@
 import { DistributiveOmit } from "../../utils/types";
+import { SectionName } from "../SectionName";
+import {
+  SectionPathName,
+  SectionPathVarbName,
+} from "../sectionPathContexts/sectionPathNames";
+import {
+  AbsolutePathDbInfoMixed,
+  AbsolutePathInfoMixed,
+} from "./AbsolutePathInfo";
+import {
+  PathNameDbInfoMixed,
+  PathNameInfoMixed,
+  PathNameVarbInfoMixed,
+} from "./PathNameInfo";
+import { RelSectionInfo } from "./RelInfo";
 import {
   DbSectionInfoMixed,
   FeSectionInfoMixed,
   FeVarbInfoMixed,
   GlobalSectionInfo,
   VarbProp,
-} from "../baseSectionsDerived/baseVarbInfo";
-import {
-  AbsolutePathDbInfoMixed,
-  AbsolutePathInfoMixed,
-} from "../SectionInfo/AbsolutePathInfo";
-import {
-  PathNameDbInfoMixed,
-  PathNameInfoMixed,
-  PathNameVarbInfoMixed,
-} from "../SectionInfo/PathNameInfo";
-import { RelSectionInfo } from "../SectionInfo/RelInfo";
-import {
-  VarbPathName,
-  VarbPathNameInfoMixed,
-} from "../SectionInfo/VarbPathNameInfo";
-import { SectionName } from "../SectionName";
-import {
-  SectionPathName,
-  SectionPathVarbName,
-} from "../sectionPathContexts/sectionPathNames";
+} from "./VarbInfoBase";
+import { VarbPathName, VarbPathNameInfoMixed } from "./VarbPathNameInfo";
 
 // a mixed section finder that doesn't need a focal section
 export type SectionInfoMixed<SN extends SectionName = SectionName> =

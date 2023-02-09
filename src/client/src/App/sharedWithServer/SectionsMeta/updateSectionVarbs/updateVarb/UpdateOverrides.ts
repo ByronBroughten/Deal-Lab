@@ -3,9 +3,8 @@ import {
   SwitchName,
   SwitchTargetKey,
 } from "../../allBaseSectionVarbs/baseSwitchNames";
-import { ValueName } from "../../allBaseSectionVarbs/ValueName";
 import { ChildName } from "../../sectionChildrenDerived/ChildName";
-import { mixedInfoS } from "../../sectionChildrenDerived/MixedSectionInfo";
+import { mixedInfoS } from "../../SectionInfo/MixedSectionInfo";
 import { PathNameVarbInfoMixed } from "../../SectionInfo/PathNameInfo";
 import {
   RelChildrenVarbInfo,
@@ -21,6 +20,7 @@ import {
   SectionPathName,
   SectionPathVarbName,
 } from "../../sectionPathContexts/sectionPathNames";
+import { ValueName } from "../../values/ValueName";
 import { updateBasics, UpdateBasics, updateBasicsS } from "./UpdateBasics";
 import { UpdateFnName } from "./UpdateFnName";
 import {

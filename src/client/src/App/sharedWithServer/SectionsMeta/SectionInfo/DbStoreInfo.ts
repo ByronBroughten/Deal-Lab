@@ -1,7 +1,10 @@
 import { VarbName } from "../baseSectionsDerived/baseSectionsVarbsTypes";
-import { VarbValue } from "../baseSectionsDerived/valueMetaTypes";
+import {
+  DbSectionName,
+  DbStoreName,
+} from "../sectionChildrenDerived/DbStoreName";
 import { SectionName } from "../SectionName";
-import { DbSectionName, DbStoreName } from "./DbStoreName";
+import { VarbValue } from "../values/StateValue";
 
 export type OneDbSectionVarbInfo<
   CN extends DbStoreName,

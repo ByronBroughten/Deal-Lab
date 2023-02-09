@@ -1,4 +1,4 @@
-import { MixedInfoProps } from "../baseSectionsDerived/baseVarbInfo";
+import { MixedInfoProps } from "./VarbInfoBase";
 
 type NanoIdType = "dbId" | "feId";
 export interface NanoIdInfo extends MixedInfoProps<NanoIdType> {

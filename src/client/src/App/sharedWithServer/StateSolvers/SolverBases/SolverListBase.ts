@@ -1,4 +1,4 @@
-import { SectionNameProp } from "../../SectionsMeta/baseSectionsDerived/baseSectionInfo";
+import { SectionNameProp } from "../../SectionsMeta/SectionInfo/SectionNameProp";
 import { SectionMeta } from "../../SectionsMeta/SectionMeta";
 import { SectionName } from "../../SectionsMeta/SectionName";
 import {

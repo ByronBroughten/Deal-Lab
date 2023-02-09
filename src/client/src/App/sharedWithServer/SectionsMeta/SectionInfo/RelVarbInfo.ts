@@ -1,5 +1,4 @@
 import { Obj } from "../../utils/Obj";
-import { VarbProp } from "../baseSectionsDerived/baseVarbInfo";
 import { ChildName } from "../sectionChildrenDerived/ChildName";
 import {
   ParentName,
@@ -17,6 +16,7 @@ import {
   RelStepSiblingInfo,
   RelStepSiblingOfChildInfo,
 } from "./RelInfo";
+import { VarbProp } from "./VarbInfoBase";
 
 export type RelVarbInfo =
   | RelChildrenVarbInfo

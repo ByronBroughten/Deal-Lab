@@ -1,19 +1,19 @@
 import { ContentState, EditorState } from "draft-js";
-import { ValueInEntityInfo } from "../SectionsMeta/allBaseSectionVarbs/baseValues/entities";
-import { StateValue } from "../SectionsMeta/allBaseSectionVarbs/baseValues/StateValueTypes";
-import { ValueTypesPlusAny } from "../SectionsMeta/allBaseSectionVarbs/StateVarbTypes";
-import { ValueName } from "../SectionsMeta/allBaseSectionVarbs/ValueName";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
+import { EditorValue } from "../SectionsMeta/values/EditorValue";
+import {
+  StateValue,
+  StateValueOrAny,
+  ValueNameOrAny,
+} from "../SectionsMeta/values/StateValue";
+import { ValueInEntityInfo } from "../SectionsMeta/values/StateValue/valuesShared/entities";
+import { ValueName } from "../SectionsMeta/values/ValueName";
 import { VarbMeta } from "../SectionsMeta/VarbMeta";
 import { GetterSections } from "../StateGetters/GetterSections";
 import { GetterVarb } from "../StateGetters/GetterVarb";
 import { InEntityGetterVarb } from "../StateGetters/InEntityGetterVarb";
 import { SolverVarb } from "../StateSolvers/SolverVarb";
-import {
-  CreateEditorProps,
-  EditorUpdaterVarb,
-  EditorValue,
-} from "./EditorUpdaterVarb";
+import { CreateEditorProps, EditorUpdaterVarb } from "./EditorUpdaterVarb";
 import { SetterVarbBase } from "./SetterBases/SetterVarbBase";
 import { SetterSections } from "./SetterSections";
 
@@ -73,7 +73,7 @@ export class SetterVarb<
   createEditor(props: CreateEditorProps): EditorState {
     return this.editorUpdater.createEditor(props);
   }
-  value<VT extends ValueName | "any">(valueName: VT): ValueTypesPlusAny[VT] {
+  value<VT extends ValueNameOrAny>(valueName: VT): StateValueOrAny<VT> {
     return this.get.value(valueName);
   }
   get hasInVarbs(): boolean {

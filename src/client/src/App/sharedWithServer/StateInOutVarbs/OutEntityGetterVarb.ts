@@ -1,8 +1,8 @@
+import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import {
   OutEntity,
   OutEntityInfo,
-} from "../SectionsMeta/allBaseSectionVarbs/baseValues/entities";
-import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
+} from "../SectionsMeta/values/StateValue/valuesShared/entities";
 import { GetterVarbBase } from "../StateGetters/Bases/GetterVarbBase";
 import { GetterVarb } from "../StateGetters/GetterVarb";
 import { InEntityGetterVarb } from "../StateGetters/InEntityGetterVarb";

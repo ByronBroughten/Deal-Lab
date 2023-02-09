@@ -65,10 +65,6 @@ export function isStringRationalNumber(str: string) {
   return numberRegEx.test(str);
 }
 
-export function splitAtDot(fullName: string) {
-  const names = fullName.split(".");
-  return names;
-}
 export function capitalizeFirstLetter<T extends string>(
   str: T
 ): Capitalize<string & T> {

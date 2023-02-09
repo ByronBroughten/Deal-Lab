@@ -2,11 +2,6 @@ import { pick } from "lodash";
 import { SwitchName } from "../SectionsMeta/allBaseSectionVarbs/baseSwitchNames";
 import { VarbName } from "../SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
 import {
-  SectionValues,
-  VarbValue,
-} from "../SectionsMeta/baseSectionsDerived/valueMetaTypes";
-import { ChildValueInfo } from "../SectionsMeta/sectionChildrenDerived/ChildInfo";
-import {
   ChildName,
   DbChildInfo,
   FeChildInfo,
@@ -14,12 +9,14 @@ import {
 import { ChildSectionName } from "../SectionsMeta/sectionChildrenDerived/ChildSectionName";
 import { ParentNameSafe } from "../SectionsMeta/sectionChildrenDerived/ParentName";
 import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
+import { ChildValueInfo } from "../SectionsMeta/SectionInfo/ChildInfo";
 import { FeSectionInfo, FeVarbInfo } from "../SectionsMeta/SectionInfo/FeInfo";
 import { SectionMeta } from "../SectionsMeta/SectionMeta";
 import {
   SectionNameByType,
   SectionNameType,
 } from "../SectionsMeta/SectionNameByType";
+import { SectionValues, VarbValue } from "../SectionsMeta/values/StateValue";
 import { SectionOption } from "../StateEntityGetters/VariableGetterSections";
 import { GetterSection } from "../StateGetters/GetterSection";
 import { GetterVarb } from "../StateGetters/GetterVarb";

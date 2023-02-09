@@ -1,4 +1,4 @@
-import { MaintenanceValueMode } from "../../../../../sharedWithServer/SectionsMeta/baseSectionsDerived/subValues";
+import { MaintenanceValueMode } from "../../../../../sharedWithServer/SectionsMeta/values/StateValue/subStringValues";
 import { useSetterSection } from "../../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import { SelectEditorSection } from "../../../../appWide/SelectEditorSection";
 

@@ -182,7 +182,7 @@ export class SectionMeta<SN extends SectionName> {
   static init<SN extends SectionName>(sectionName: SN): SectionMeta<SN> {
     const varbNames = sectionVarbNames(sectionName);
     const varbMetas = varbNames.reduce((vMetas, varbName) => {
-      vMetas[varbName as string] = VarbMeta.init({
+      vMetas[varbName as string] = new VarbMeta({
         sectionName,
         varbName: varbName as string,
       });

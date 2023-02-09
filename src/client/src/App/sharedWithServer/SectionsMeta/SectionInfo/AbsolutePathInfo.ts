@@ -1,8 +1,8 @@
-import { NanoIdProp } from "../allBaseSectionVarbs/NanoIdInfo";
-import { SectionNameProp } from "../baseSectionsDerived/baseSectionInfo";
-import { MixedInfoProps, VarbProp } from "../baseSectionsDerived/baseVarbInfo";
 import { ChildName } from "../sectionChildrenDerived/ChildName";
 import { SectionName } from "../SectionName";
+import { NanoIdProp } from "./NanoIdInfo";
+import { SectionNameProp } from "./SectionNameProp";
+import { MixedInfoProps, VarbProp } from "./VarbInfoBase";
 
 type AbsolutePathProp = {
   path: ChildName[];

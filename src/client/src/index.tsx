@@ -7,45 +7,38 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-// 3. Make a simple wordpress website
+// 0. Organize all the varbInfos into one place - Separate them from
+//   "entities"
+//   - Make a type that goes from valueName to value
+//   - Make a generic type to check it.
 
+//   - Keep baseSections like it is, because it only uses valueName, not value
+
+//   - make the infos prior to baseSecitons
+//   - make sectionChildren prior to baseSections
+//   - make the values, using the varbInfos, prior to baseSections
+//   - make valueSchema prior to baseSections
+
+// 3. Make a simple wordpress website
 // - Just do it badly at first, for the gist of it.
 // - Then pay someone to do it well
 
-// Main UI
-// - Make a button that says, "addUnits"
+// 1. Try showing all the available actions in the title rows
 
-// - Just show the variables provided to each numeric editor
-//   - But also include an "i" icon. That's pretty necessary.
+// 2. Add new CapEx default list
 
-// 2. Sort out the variables
-// - Add a button below them that says "+Variable", as well as an "info" button to the right
-// - Make the info button explain the equation editor
-// - "+Variable" gives shows a list of 2-3 quick-access variables taylored for
-//   the input.
-// - At the bottom of that there is a "show more" option, which summons a modal
-//   that shows all the variables available
-
-// The only problem is that it will be cumbersome to enter custom variables.
-// I would be sacrificing power for not overwhelming
-// Let's try it this way.
+// 2. Finalize the variables
+// - Add a "view all" option
+// - Summon a grey modal that lists all the variables options.
+//   - Give it a name filter
+//   - Sort them by category
+//   - Give it a section selector
+//   - It would be nice if the input were transported
+//     to the modal as well.
 
 // 3. Taylor which quick-access variables are accessible to each editor.
-// - Make editors accept a list of varbPathNames
-// - Make the ones that pup up in the variables search be those
-// - Make a light-grey variables selector modal of some kind.
-
-// - Make a reduced set of variables appear in the variable editor
-// - Add a "see more" modal or dropdown, or something
 // - Add an explanation to the Variables page
 // - Add an explanation to the Lists page
-// - Restrict which inputs are allowed to use variables
-// - Add an explanation of the equation capabilities of
-//   inputs that can take equations
-// - Mark equation editor fields with an "Equation Editor" label,
-//   or something
-
-// Try showing all the available actions in the title rows
 
 // 4. Allow for Fix and Flip
 //  - Add ARV

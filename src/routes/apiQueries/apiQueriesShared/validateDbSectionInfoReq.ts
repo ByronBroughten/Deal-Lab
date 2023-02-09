@@ -1,5 +1,5 @@
 import { DbPackInfoSectionReq } from "../../../client/src/App/sharedWithServer/apiQueriesShared/makeReqAndRes";
-import { Id } from "../../../client/src/App/sharedWithServer/SectionsMeta/allBaseSectionVarbs/id";
+import { Id } from "../../../client/src/App/sharedWithServer/SectionsMeta/id";
 import {
   DbStoreNameByType,
   dbStoreNameS,

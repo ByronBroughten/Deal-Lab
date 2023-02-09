@@ -1,7 +1,7 @@
 import { VarbName } from "../SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
-import { VarbValue } from "../SectionsMeta/baseSectionsDerived/valueMetaTypes";
-import { IdInfoMixedMulti } from "../SectionsMeta/sectionChildrenDerived/MixedSectionInfo";
+import { IdInfoMixedMulti } from "../SectionsMeta/SectionInfo/MixedSectionInfo";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
+import { VarbValue } from "../SectionsMeta/values/StateValue";
 import {
   RawFeSection,
   SectionNotFoundError,

@@ -4,7 +4,6 @@ import { Arr } from "../utils/Arr";
 import { Obj } from "../utils/Obj";
 import { PropKeyOfValue } from "../utils/Obj/SubType";
 import { baseNameArrs, BaseNameArrs } from "./baseSectionsDerived/baseNameArrs";
-import { SectionValues } from "./baseSectionsDerived/valueMetaTypes";
 import { relNameArrs, RelNameArrs } from "./relSectionsDerived/relNameArrs";
 import {
   ChildName,
@@ -22,6 +21,7 @@ import {
   validateSectionPack,
 } from "./sectionChildrenDerived/SectionPack";
 import { SectionName } from "./SectionName";
+import { SectionValues } from "./values/StateValue";
 
 type NameArrs = BaseNameArrs & RelNameArrs;
 function makeNameArrs(): NameArrs {

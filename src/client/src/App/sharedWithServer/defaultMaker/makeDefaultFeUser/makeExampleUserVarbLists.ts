@@ -1,7 +1,7 @@
-import { numObj } from "../../SectionsMeta/allBaseSectionVarbs/baseValues/NumObj";
-import { numObjNext } from "../../SectionsMeta/allBaseSectionVarbs/baseValues/numObjNext";
-import { stringObj } from "../../SectionsMeta/allBaseSectionVarbs/baseValues/StringObj";
 import { SectionPack } from "../../SectionsMeta/sectionChildrenDerived/SectionPack";
+import { numObj } from "../../SectionsMeta/values/StateValue/NumObj";
+import { numObjNext } from "../../SectionsMeta/values/StateValue/numObjNext";
+import { stringObj } from "../../SectionsMeta/values/StateValue/StringObj";
 import { PackBuilderSection } from "../../StatePackers.ts/PackBuilderSection";
 import { Obj } from "../../utils/Obj";
 import {

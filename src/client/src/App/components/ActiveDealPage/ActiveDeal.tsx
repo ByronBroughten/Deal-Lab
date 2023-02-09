@@ -2,7 +2,7 @@ import { FormControl, MenuItem, Select } from "@material-ui/core";
 import React from "react";
 import styled, { css } from "styled-components";
 import { VarbName } from "../../sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
-import { CompletionStatus } from "../../sharedWithServer/SectionsMeta/baseSectionsDerived/subValues";
+import { CompletionStatus } from "../../sharedWithServer/SectionsMeta/values/StateValue/subStringValues";
 import { useGetterSection } from "../../sharedWithServer/stateClassHooks/useGetterSection";
 import { StrictExclude } from "../../sharedWithServer/utils/types";
 import theme from "../../theme/Theme";

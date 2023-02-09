@@ -1,11 +1,10 @@
-import { mixedInfoS } from "../SectionsMeta/sectionChildrenDerived/MixedSectionInfo";
+import { fullDisplayNameString } from "../SectionsMeta/allDisplaySectionVarbs";
+import { mixedInfoS } from "../SectionsMeta/SectionInfo/MixedSectionInfo";
 import {
-  getVarbPathParams,
+  getVarbPathExtras,
   VarbPathName,
   varbPathNames,
 } from "../SectionsMeta/SectionInfo/VarbPathNameInfo";
-import { pathSectionName } from "../SectionsMeta/sectionPathContexts/sectionPathNames";
-import { getVarbMeta } from "../SectionsMeta/VarbMeta";
 import { Arr } from "../utils/Arr";
 import { VariableOption } from "./VariableGetterSections";
 
@@ -53,13 +52,11 @@ function makeVarbPathOptions(): VariableOption[] {
   }, [] as VariableOption[]);
 }
 export function makeVarbPathOption(varbPathName: VarbPathName): VariableOption {
-  const { pathName, varbName, collectionName } =
-    getVarbPathParams(varbPathName);
-  const sectionName = pathSectionName(pathName);
+  const { collectionName, sectionName, varbName } =
+    getVarbPathExtras(varbPathName);
   return {
-    varbInfo: mixedInfoS.varbPathName(varbPathName),
     collectionName,
-    displayName: getVarbMeta({ sectionName, varbName: varbName as string })
-      .displayNameFull,
+    varbInfo: mixedInfoS.varbPathName(varbPathName),
+    displayName: fullDisplayNameString(sectionName, varbName as any),
   };
 }

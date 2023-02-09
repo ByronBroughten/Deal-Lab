@@ -1,11 +1,11 @@
 import { sectionsMeta, SectionsMeta } from "../SectionsMeta";
 import { DbSectionInfo } from "../SectionsMeta/allBaseSectionVarbs/DbSectionInfo";
+import { FeSectionInfo, FeVarbInfo } from "../SectionsMeta/SectionInfo/FeInfo";
 import {
   IdInfoMixedMulti,
   SectionInfoMixed,
   VarbInfoMixed,
-} from "../SectionsMeta/sectionChildrenDerived/MixedSectionInfo";
-import { FeSectionInfo, FeVarbInfo } from "../SectionsMeta/SectionInfo/FeInfo";
+} from "../SectionsMeta/SectionInfo/MixedSectionInfo";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import {

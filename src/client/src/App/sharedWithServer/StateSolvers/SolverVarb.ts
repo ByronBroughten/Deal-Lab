@@ -1,3 +1,9 @@
+import { Id } from "../SectionsMeta/id";
+import { VarbInfoMixedFocal } from "../SectionsMeta/SectionInfo/MixedSectionInfo";
+import { FeVarbInfoMixed } from "../SectionsMeta/SectionInfo/VarbInfoBase";
+import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
+import { SectionPathName } from "../SectionsMeta/sectionPathContexts/sectionPathNames";
+import { StateValue } from "../SectionsMeta/values/StateValue";
 import {
   entityS,
   InEntity,
@@ -5,13 +11,7 @@ import {
   OutEntityInfo,
   ValueInEntity,
   ValueInEntityInfo,
-} from "../SectionsMeta/allBaseSectionVarbs/baseValues/entities";
-import { StateValue } from "../SectionsMeta/allBaseSectionVarbs/baseValues/StateValueTypes";
-import { Id } from "../SectionsMeta/allBaseSectionVarbs/id";
-import { FeVarbInfoMixed } from "../SectionsMeta/baseSectionsDerived/baseVarbInfo";
-import { VarbInfoMixedFocal } from "../SectionsMeta/sectionChildrenDerived/MixedSectionInfo";
-import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
-import { SectionPathName } from "../SectionsMeta/sectionPathContexts/sectionPathNames";
+} from "../SectionsMeta/values/StateValue/valuesShared/entities";
 import { GetterSections } from "../StateGetters/GetterSections";
 import { GetterVarb } from "../StateGetters/GetterVarb";
 import { InEntityGetterVarb } from "../StateGetters/InEntityGetterVarb";

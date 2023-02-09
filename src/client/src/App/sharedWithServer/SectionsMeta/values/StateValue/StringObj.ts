@@ -2,7 +2,11 @@ import { z } from "zod";
 import { monSchemas } from "../../../utils/mongoose";
 import { Obj } from "../../../utils/Obj";
 import { zS } from "../../../utils/zod";
-import { mInEntities, ValueInEntity, zValueInEntities } from "./entities";
+import {
+  mInEntities,
+  ValueInEntity,
+  zValueInEntities,
+} from "./valuesShared/entities";
 
 export type EntitiesProp = {
   entities: ValueInEntity[];
@@ -20,7 +24,7 @@ export function hasEntitiesProp(value: any): value is EntitiesProp {
   }
 }
 
-export function isStringObj(value: any): value is StringObj {
+function isStringObj(value: any): value is StringObj {
   return (
     typeof value === "object" &&
     "mainText" in value &&
@@ -36,17 +40,24 @@ export function stringObj(mainText: string): StringObj {
   };
 }
 
-export const initDefaultStringObj = ({
+const initDefaultStringObj = ({
   mainText = "",
   entities = [],
 }: Partial<StringObj> = {}) => ({ mainText, entities });
 
-export const zStringObj = z.object({
+const zStringObj = z.object({
   mainText: zS.string,
   entities: zValueInEntities,
 } as { [K in keyof StringObj]: any });
 
-export const mStringObj: Record<keyof StringObj, any> = {
+const mStringObj: Record<keyof StringObj, any> = {
   mainText: monSchemas.reqString,
   entities: mInEntities,
+};
+
+export const stringObjMeta = {
+  is: isStringObj,
+  initDefault: initDefaultStringObj,
+  zod: zStringObj,
+  mon: mStringObj,
 };

@@ -178,3 +178,18 @@ export function getDisplayVarb<SN extends SectionName, VN extends VarbName<SN>>(
   const sectionVarbs = allDisplaySectionVarbs[sectionName];
   return (sectionVarbs as any)[varbName] as DisplayVarb;
 }
+
+export function fullDisplayNameString<
+  SN extends SectionName,
+  VN extends VarbName<SN>
+>(sectionName: SN, varbName: VN): string {
+  const { displayNameFullContext } = getDisplayVarb(sectionName, varbName);
+
+  if (typeof displayNameFullContext === "string") {
+    return displayNameFullContext;
+  } else {
+    throw new Error(
+      "Varbs that can be used here should have a string displayName"
+    );
+  }
+}

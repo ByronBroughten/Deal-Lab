@@ -1,9 +1,6 @@
-import {
-  numObj,
-  NumObj,
-} from "../../SectionsMeta/allBaseSectionVarbs/baseValues/NumObj";
-import { stringObj } from "../../SectionsMeta/allBaseSectionVarbs/baseValues/StringObj";
 import { SectionPack } from "../../SectionsMeta/sectionChildrenDerived/SectionPack";
+import { numObj, NumObj } from "../../SectionsMeta/values/StateValue/NumObj";
+import { stringObj } from "../../SectionsMeta/values/StateValue/StringObj";
 import { PackBuilderSection } from "../../StatePackers.ts/PackBuilderSection";
 
 type CapExItemProp = readonly [string, NumObj, NumObj];

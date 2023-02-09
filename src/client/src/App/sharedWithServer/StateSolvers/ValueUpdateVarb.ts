@@ -1,29 +1,26 @@
 import { CompletionStatus } from "../../components/ActiveDealPage/ActiveDeal/MainDealSection";
-import calculations, {
-  isCalculationName,
-  NumberProps,
-} from "../SectionsMeta/allBaseSectionVarbs/baseValues/calculations";
-import { ValueInEntity } from "../SectionsMeta/allBaseSectionVarbs/baseValues/entities";
-import { ValueIdInEntityInfo } from "../SectionsMeta/allBaseSectionVarbs/baseValues/InEntityIdInfoValue";
-import {
-  numObj,
-  NumObj,
-} from "../SectionsMeta/allBaseSectionVarbs/baseValues/NumObj";
-import { StateValue } from "../SectionsMeta/allBaseSectionVarbs/baseValues/StateValueTypes";
-import {
-  stringObj,
-  StringObj,
-} from "../SectionsMeta/allBaseSectionVarbs/baseValues/StringObj";
-import { DbVarbInfoMixed } from "../SectionsMeta/baseSectionsDerived/baseVarbInfo";
 import { VirtualVarbName } from "../SectionsMeta/baseSectionsDerived/baseVarbNames";
 import { PathInVarbInfo } from "../SectionsMeta/sectionChildrenDerived/RelInOutVarbInfo";
 import { RelVarbInfo } from "../SectionsMeta/SectionInfo/RelVarbInfo";
+import { DbVarbInfoMixed } from "../SectionsMeta/SectionInfo/VarbInfoBase";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import {
   CompletionStatusProps,
   UpdateFnProp,
   UpdateFnProps,
 } from "../SectionsMeta/updateSectionVarbs/updateVarb/UpdateFnProps";
+import { StateValue } from "../SectionsMeta/values/StateValue";
+import { InEntityValueInfo } from "../SectionsMeta/values/StateValue/InEntityValue";
+import { numObj, NumObj } from "../SectionsMeta/values/StateValue/NumObj";
+import {
+  stringObj,
+  StringObj,
+} from "../SectionsMeta/values/StateValue/StringObj";
+import calculations, {
+  isCalculationName,
+  NumberProps,
+} from "../SectionsMeta/values/StateValue/valuesShared/calculations";
+import { ValueInEntity } from "../SectionsMeta/values/StateValue/valuesShared/entities";
 import { GetterSectionProps } from "../StateGetters/Bases/GetterSectionBase";
 import { GetterVarbBase } from "../StateGetters/Bases/GetterVarbBase";
 import { GetterSection } from "../StateGetters/GetterSection";
@@ -300,7 +297,7 @@ export class SolveValueVarb<
     const section = this.getterSection;
     const entityInfo = this.getterSection.value(
       "valueEntityInfo",
-      "inEntityInfo"
+      "inEntityValue"
     );
     if (!entityInfo) {
       return stringObj("");
@@ -330,7 +327,7 @@ export class SolveValueVarb<
     function removeEntityOfSource() {
       Arr.findAndRmMutate(nextEntities, entityIsOfSource);
     }
-    function pushEntityOfSource(entityInfo: ValueIdInEntityInfo) {
+    function pushEntityOfSource(entityInfo: InEntityValueInfo) {
       nextEntities.push({
         ...entityInfo,
         entitySource: entitySource,
@@ -339,7 +336,7 @@ export class SolveValueVarb<
       });
     }
 
-    const entityInfo = infoVarb.value("inEntityInfo");
+    const entityInfo = infoVarb.value("inEntityValue");
     const entityOfSource = nextEntities.find(entityIsOfSource);
     if (entityInfo) {
       if (!entityOfSource) {
@@ -359,7 +356,7 @@ export class SolveValueVarb<
   }
   private loadNextTexts(): { mainText: string; solvableText: string } {
     const section = this.getterSection;
-    const loadingVarbInfo = section.value("valueEntityInfo", "inEntityInfo");
+    const loadingVarbInfo = section.value("valueEntityInfo", "inEntityValue");
     if (loadingVarbInfo && section.hasSectionByFocalMixed(loadingVarbInfo)) {
       const varb = section.varbByFocalMixed(loadingVarbInfo);
       return {

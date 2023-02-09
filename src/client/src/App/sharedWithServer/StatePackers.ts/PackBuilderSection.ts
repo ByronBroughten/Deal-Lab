@@ -1,4 +1,3 @@
-import { SomeSectionValues } from "../SectionsMeta/baseSectionsDerived/valueMetaTypes";
 import {
   ChildName,
   DbChildInfo,
@@ -16,6 +15,7 @@ import {
   SectionNameByType,
   SectionNameType,
 } from "../SectionsMeta/SectionNameByType";
+import { SomeSectionValues } from "../SectionsMeta/values/StateValue";
 import {
   GetterSection,
   GetterSectionRequiredProps,

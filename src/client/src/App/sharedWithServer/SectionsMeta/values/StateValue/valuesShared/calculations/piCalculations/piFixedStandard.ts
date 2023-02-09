@@ -1,6 +1,6 @@
-import { CalcProp } from "../calculations";
-import { calcPropMath } from "./calcPropS";
-import { roundedS } from "./numUnitParams";
+import { CalcProp } from "../../calculations";
+import { calcPropMath } from "../calcPropS";
+import { roundedS } from "../numUnitParams";
 
 interface PiYearlyFullProps extends PiYearlyCalcProps {
   loanTotalDollars: CalcProp;

@@ -1,4 +1,4 @@
-import { VarbNames } from "./SectionsMeta/baseSectionsDerived/baseVarbInfo";
+import { VarbNames } from "./SectionsMeta/SectionInfo/VarbInfoBase";
 import { SectionMeta, VarbMetas } from "./SectionsMeta/SectionMeta";
 import { SectionName, sectionNames } from "./SectionsMeta/SectionName";
 import { VarbMeta } from "./SectionsMeta/VarbMeta";

@@ -1,25 +1,26 @@
 import { cloneDeep, round } from "lodash";
-import { NumberOrQ } from "../SectionsMeta/allBaseSectionVarbs/baseValues/NumObj";
-import { StateValue } from "../SectionsMeta/allBaseSectionVarbs/baseValues/StateValueTypes";
+
+import { DisplayOverrideSwitches } from "../SectionsMeta/displaySectionVarbs/displayVarb";
+import { FeInfoS, FeVarbInfo } from "../SectionsMeta/SectionInfo/FeInfo";
 import {
-  Adornments,
-  StateValueAnyKey,
-  ValueTypesPlusAny,
-} from "../SectionsMeta/allBaseSectionVarbs/StateVarbTypes";
-import { ValueName } from "../SectionsMeta/allBaseSectionVarbs/ValueName";
+  mixedInfoS,
+  VarbInfoMixedFocal,
+} from "../SectionsMeta/SectionInfo/MixedSectionInfo";
+import { relVarbInfoS } from "../SectionsMeta/SectionInfo/RelVarbInfo";
 import {
   DbVarbInfoMixed,
   FeVarbInfoMixed,
   VarbNames,
-} from "../SectionsMeta/baseSectionsDerived/baseVarbInfo";
-import { DisplayOverrideSwitches } from "../SectionsMeta/displaySectionVarbs/displayVarb";
-import {
-  mixedInfoS,
-  VarbInfoMixedFocal,
-} from "../SectionsMeta/sectionChildrenDerived/MixedSectionInfo";
-import { FeInfoS, FeVarbInfo } from "../SectionsMeta/SectionInfo/FeInfo";
-import { relVarbInfoS } from "../SectionsMeta/SectionInfo/RelVarbInfo";
+} from "../SectionsMeta/SectionInfo/VarbInfoBase";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
+import { StrAdornments } from "../SectionsMeta/values/EditorValue";
+import {
+  StateValue,
+  StateValueOrAny,
+  ValueNameOrAny,
+} from "../SectionsMeta/values/StateValue";
+import { NumberOrQ } from "../SectionsMeta/values/StateValue/NumObj";
+import { ValueName } from "../SectionsMeta/values/ValueName";
 import { VarbMeta } from "../SectionsMeta/VarbMeta";
 import { StateVarb } from "../StateSections/StateSectionsTypes";
 import { mathS, NotANumberError } from "../utils/math";
@@ -145,27 +146,27 @@ export class GetterVarb<
       else throw ex;
     }
   }
-  value<VT extends ValueName | "any" = "any">(
+  value<VT extends ValueNameOrAny = "any">(
     valueName?: VT
-  ): ValueTypesPlusAny[VT] {
+  ): StateValueOrAny<VT> {
     const { value } = this.raw;
     if ([this.valueName, "any"].includes(valueName ?? "any")) {
-      return cloneDeep(value) as ValueTypesPlusAny[VT];
+      return cloneDeep(value) as StateValueOrAny<VT>;
     } else {
       throw new ValueTypeError(
         `Value of ${this.sectionName}.${this.varbName} not of type ${valueName}`
       );
     }
   }
-  multiValue<VT extends ValueName | "any" = "any">(
+  multiValue<VT extends ValueNameOrAny = "any">(
     ...valueNames: VT[]
-  ): ValueTypesPlusAny[VT] {
+  ): StateValueOrAny<VT> {
     const { value } = this.raw;
     if (
       valueNames.includes(this.valueName as any) ||
       valueNames.includes("any" as any)
     ) {
-      return cloneDeep(value) as ValueTypesPlusAny[VT];
+      return cloneDeep(value) as StateValueOrAny<VT>;
     } else {
       throw new ValueTypeError(
         `Value of ${this.sectionName}.${
@@ -258,7 +259,7 @@ export class GetterVarb<
       return `${this.displayNumber}`;
     } else return `${this.value()}`;
   }
-  displayVarb({ startAdornment, endAdornment }: Partial<Adornments> = {}) {
+  displayVarb({ startAdornment, endAdornment }: Partial<StrAdornments> = {}) {
     const { displayMeta } = this;
     return `${startAdornment ?? displayMeta.startAdornment}${
       this.displayValue
@@ -267,10 +268,10 @@ export class GetterVarb<
   localVarb(varbName: string) {
     return this.getterSection.varb(varbName);
   }
-  localValue<VT extends ValueName>(
+  localValue<VT extends ValueNameOrAny>(
     varbName: string,
     valueName?: VT
-  ): ValueTypesPlusAny[VT] {
+  ): StateValueOrAny<VT> {
     return this.localVarb(varbName).value(valueName ?? ("any" as VT));
   }
   getterVarb<S extends SectionNameByType>(
@@ -284,7 +285,7 @@ export class GetterVarb<
   varbsByFocalMixed(multiVarbInfo: VarbInfoMixedFocal): GetterVarb[] {
     return this.section.varbsByFocalMixed(multiVarbInfo);
   }
-  inputProps(valueName?: StateValueAnyKey): {
+  inputProps(valueName?: ValueNameOrAny): {
     id: string;
     name: string;
     value: StateValue;

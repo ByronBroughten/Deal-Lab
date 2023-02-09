@@ -2,9 +2,9 @@ import {
   CompareTableBuilder,
   SortOptions,
 } from "../../modules/SectionSolvers/CompareTableBuilder";
-import { Id } from "../SectionsMeta/allBaseSectionVarbs/id";
-import { VarbInfoMixedFocal } from "../SectionsMeta/sectionChildrenDerived/MixedSectionInfo";
+import { Id } from "../SectionsMeta/id";
 import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
+import { VarbInfoMixedFocal } from "../SectionsMeta/SectionInfo/MixedSectionInfo";
 import { GetterSection } from "../StateGetters/GetterSection";
 import { UpdaterSection } from "../StateUpdaters/UpdaterSection";
 import { SetterSectionBase } from "./SetterBases/SetterSectionBase";

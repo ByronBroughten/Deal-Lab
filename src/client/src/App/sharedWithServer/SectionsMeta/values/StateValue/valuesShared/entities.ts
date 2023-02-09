@@ -1,13 +1,13 @@
 import { pick } from "lodash";
 import { Schema } from "mongoose";
 import { z } from "zod";
-import { Arr } from "../../../utils/Arr";
-import { zS } from "../../../utils/zod";
-import { PathInVarbInfo } from "../../sectionChildrenDerived/RelInOutVarbInfo";
-import { FeVarbInfo } from "../../SectionInfo/FeInfo";
-import { PathDbVarbInfoMixed } from "../../SectionInfo/PathNameInfo";
-import { VarbPathNameInfoMixed } from "../../SectionInfo/VarbPathNameInfo";
-import { Id } from "../id";
+import { Arr } from "../../../../utils/Arr";
+import { zS } from "../../../../utils/zod";
+import { Id } from "../../../id";
+import { PathInVarbInfo } from "../../../sectionChildrenDerived/RelInOutVarbInfo";
+import { FeVarbInfo } from "../../../SectionInfo/FeInfo";
+import { PathDbVarbInfoMixed } from "../../../SectionInfo/PathNameInfo";
+import { VarbPathNameInfoMixed } from "../../../SectionInfo/VarbPathNameInfo";
 
 export type EntityIdProp = { entityId: string };
 export type OutEntity = FeVarbInfo & EntityIdProp;
@@ -57,8 +57,6 @@ export type FixedInEntity = FixedInEntityInfo & EntityIdProp;
 export type ValueInEntity = ValueInEntityInfo & InEntityBase;
 export type InEntity = FixedInEntity | ValueInEntity;
 
-// As things stand, we can't infer much from the zod schemas because
-// there isn't a convenient way to make their sectionName enforce SectionNameByType
 export const mInEntities = {
   type: Schema.Types.Mixed,
   required: true,

@@ -1,6 +1,5 @@
 import { timeS } from "../utils/date";
 import { AnalyzerPlan } from "./allBaseSectionVarbs";
-import { numObj } from "./allBaseSectionVarbs/baseValues/NumObj";
 import { dealRelVarbs } from "./allUpdateSectionVarbs/dealUpdateVarbs";
 import { financingUpdateVarbs } from "./allUpdateSectionVarbs/financingUpdateVarbs";
 import { loanRelVarbs } from "./allUpdateSectionVarbs/loanUpdateVarbs";
@@ -8,7 +7,7 @@ import { mgmtRelVarbs } from "./allUpdateSectionVarbs/mgmtUpdateVarbs";
 import { propertyUpdateVarbs } from "./allUpdateSectionVarbs/propertyUpdateVarbs";
 import { VarbName } from "./baseSectionsDerived/baseSectionsVarbsTypes";
 import { AuthStatus } from "./baseSectionsVarbsValues";
-import { mixedInfoS } from "./sectionChildrenDerived/MixedSectionInfo";
+import { mixedInfoS } from "./SectionInfo/MixedSectionInfo";
 import { relVarbInfoS } from "./SectionInfo/RelVarbInfo";
 import { SectionName, sectionNames } from "./SectionName";
 import {
@@ -33,6 +32,7 @@ import {
   updateOverride,
 } from "./updateSectionVarbs/updateVarb/UpdateOverrides";
 import { updateVarbsS } from "./updateSectionVarbs/updateVarbs";
+import { numObj } from "./values/StateValue/NumObj";
 
 type GenericAllUpdateSections = {
   [SN in SectionName]: UpdateSectionVarbs<SN>;
@@ -547,7 +547,7 @@ function makeAllUpdateSections() {
       valueSourceSwitch: updateVarb("string", {
         initValue: "loadedVarb",
       }),
-      valueEntityInfo: updateVarb("inEntityInfo"),
+      valueEntityInfo: updateVarb("inEntityValue"),
       value: updateVarb("numObj", {
         updateFnName: "virtualNumObj",
         updateFnProps: {

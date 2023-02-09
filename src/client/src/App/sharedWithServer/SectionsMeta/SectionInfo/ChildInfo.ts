@@ -1,8 +1,8 @@
 import { VarbName } from "../baseSectionsDerived/baseSectionsVarbsTypes";
-import { VarbValue } from "../baseSectionsDerived/valueMetaTypes";
+import { ChildName } from "../sectionChildrenDerived/ChildName";
+import { ChildSectionName } from "../sectionChildrenDerived/ChildSectionName";
 import { SectionName } from "../SectionName";
-import { ChildName } from "./ChildName";
-import { ChildSectionName } from "./ChildSectionName";
+import { VarbValue } from "../values/StateValue";
 
 export type ChildVarbInfo<
   SN extends SectionName,

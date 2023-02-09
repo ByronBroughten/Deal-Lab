@@ -4,9 +4,9 @@ import {
   AllBaseSectionVarbs,
   allBaseSectionVarbs,
 } from "../allBaseSectionVarbs";
-import { StateValue } from "../allBaseSectionVarbs/baseValues/StateValueTypes";
-import { ValueName } from "../allBaseSectionVarbs/ValueName";
 import { SectionName, sectionNames } from "../SectionName";
+import { StateValue } from "../values/StateValue";
+import { ValueName } from "../values/ValueName";
 
 export type VarbValues = { [varbName: string]: StateValue };
 

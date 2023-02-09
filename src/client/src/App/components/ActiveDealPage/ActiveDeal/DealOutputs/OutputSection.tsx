@@ -1,7 +1,7 @@
 import { CgDetailsLess, CgDetailsMore } from "react-icons/cg";
 import styled, { css } from "styled-components";
 import { useToggleViewNext } from "../../../../modules/customHooks/useToggleView";
-import { CompletionStatus } from "../../../../sharedWithServer/SectionsMeta/baseSectionsDerived/subValues";
+import { CompletionStatus } from "../../../../sharedWithServer/SectionsMeta/values/StateValue/subStringValues";
 import theme from "../../../../theme/Theme";
 import { MainSection } from "../../../appWide/GeneralSection/MainSection";
 import MainSectionBody from "../../../appWide/GeneralSection/MainSection/MainSectionBody";

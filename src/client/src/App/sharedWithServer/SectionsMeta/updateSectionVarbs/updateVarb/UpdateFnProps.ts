@@ -1,15 +1,15 @@
 import { Obj } from "../../../utils/Obj";
-import { NumObj } from "../../allBaseSectionVarbs/baseValues/NumObj";
-import { Id } from "../../allBaseSectionVarbs/id";
+import { Id } from "../../id";
 import { ChildName } from "../../sectionChildrenDerived/ChildName";
-import { mixedInfoS } from "../../sectionChildrenDerived/MixedSectionInfo";
 import { PathInVarbInfo } from "../../sectionChildrenDerived/RelInOutVarbInfo";
+import { mixedInfoS } from "../../SectionInfo/MixedSectionInfo";
 import { relVarbInfoS } from "../../SectionInfo/RelVarbInfo";
 import { VarbPathName } from "../../SectionInfo/VarbPathNameInfo";
 import {
   SectionPathName,
   SectionPathVarbName,
 } from "../../sectionPathContexts/sectionPathNames";
+import { NumObj } from "../../values/StateValue/NumObj";
 import { UpdateOverrideSwitch } from "./UpdateOverrides";
 
 export type UpdateFnProps = {

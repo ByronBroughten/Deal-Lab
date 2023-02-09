@@ -1,8 +1,8 @@
-import { OutEntity } from "../SectionsMeta/allBaseSectionVarbs/baseValues/entities";
-import { StateValue } from "../SectionsMeta/allBaseSectionVarbs/baseValues/StateValueTypes";
 import { ChildIdArrsNarrow } from "../SectionsMeta/sectionChildrenDerived/ChildName";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { SectionPathContextName } from "../SectionsMeta/sectionPathContexts";
+import { StateValue } from "../SectionsMeta/values/StateValue";
+import { OutEntity } from "../SectionsMeta/values/StateValue/valuesShared/entities";
 
 export class SectionNotFoundError extends Error {}
 export class TooManySectionsFoundError extends Error {}

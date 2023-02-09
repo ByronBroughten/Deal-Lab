@@ -1,6 +1,6 @@
 import { switchKeyToVarbNames } from "../SectionsMeta/allBaseSectionVarbs/baseSwitchNames";
-import { ValueInEntityInfo } from "../SectionsMeta/allBaseSectionVarbs/baseValues/entities";
-import { mixedInfoS } from "../SectionsMeta/sectionChildrenDerived/MixedSectionInfo";
+import { mixedInfoS } from "../SectionsMeta/SectionInfo/MixedSectionInfo";
+import { ValueInEntityInfo } from "../SectionsMeta/values/StateValue/valuesShared/entities";
 import {
   GetterSectionsBase,
   GetterSectionsRequiredProps,

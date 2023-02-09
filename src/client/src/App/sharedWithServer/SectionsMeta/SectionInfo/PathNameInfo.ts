@@ -1,16 +1,13 @@
 import { z } from "zod";
 import { zS } from "../../utils/zod";
-import { NanoIdProp } from "../allBaseSectionVarbs/NanoIdInfo";
-import {
-  MakeVarbProp,
-  MixedInfoProps,
-} from "../baseSectionsDerived/baseVarbInfo";
 import { SectionName } from "../SectionName";
 import {
   PathNameOfSection,
   SectionPathName,
   SectionPathVarbName,
 } from "../sectionPathContexts/sectionPathNames";
+import { NanoIdProp } from "./NanoIdInfo";
+import { MakeVarbProp, MixedInfoProps } from "./VarbInfoBase";
 
 interface PathNameProp<PN extends SectionPathName> {
   pathName: PN;

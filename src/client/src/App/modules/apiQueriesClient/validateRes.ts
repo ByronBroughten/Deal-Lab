@@ -7,7 +7,7 @@ import {
   SectionPackRes,
   UrlRes,
 } from "../../sharedWithServer/apiQueriesShared/makeReqAndRes";
-import { Id } from "../../sharedWithServer/SectionsMeta/allBaseSectionVarbs/id";
+import { Id } from "../../sharedWithServer/SectionsMeta/id";
 import {
   DbStoreNameByType,
   dbStoreNameS,

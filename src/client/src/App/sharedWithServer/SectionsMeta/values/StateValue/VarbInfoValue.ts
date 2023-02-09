@@ -1,6 +1,6 @@
 import { Schema } from "mongoose";
 import { z } from "zod";
-import { VarbInfoMixedFocal } from "./MixedSectionInfo";
+import { VarbInfoMixedFocal } from "../../SectionInfo/MixedSectionInfo";
 
 export type VarbInfoValue = (VarbInfoMixedFocal & { entityId: string }) | null;
 function isVarbInfoValue(value: any): value is VarbInfoValue {
@@ -14,7 +14,7 @@ const mVarbInfoValue = {
     validator: (v: any) => zVarbInfoValue.safeParse(v).success,
   },
 };
-export const varbInfoValueSchema = {
+export const varbInfoValueMeta = {
   is: isVarbInfoValue,
   initDefault: () => null as VarbInfoValue,
   zod: zVarbInfoValue,

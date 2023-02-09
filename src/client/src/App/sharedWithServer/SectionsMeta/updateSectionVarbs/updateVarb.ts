@@ -1,13 +1,12 @@
+import { ChildName } from "../sectionChildrenDerived/ChildName";
+import { SectionName } from "../SectionName";
+import { StateValue } from "../values/StateValue";
 import {
   LeftRightPropCalcName,
   NumPropCalcName,
-} from "../allBaseSectionVarbs/baseValues/calculations";
-import { StateValue } from "../allBaseSectionVarbs/baseValues/StateValueTypes";
-import { ValueName } from "../allBaseSectionVarbs/ValueName";
-import { valueMetas } from "../baseSectionsDerived/valueMetas";
-import { ValueByValueName } from "../baseSectionsDerived/valueMetaTypes";
-import { ChildName } from "../sectionChildrenDerived/ChildName";
-import { SectionName } from "../SectionName";
+} from "../values/StateValue/valuesShared/calculations";
+import { valueMetas } from "../values/valueMetas";
+import { ValueName } from "../values/ValueName";
 import { getUpdateFnNames } from "./updateVarb/UpdateFnName";
 import {
   collectUpdateFnSwitchProps,
@@ -26,9 +25,8 @@ export interface UpdateVarb<VN extends ValueName>
   extends GeneralUpdateVarb,
     UpdateProps {
   valueName: VN;
-  initValue: ValueByValueName<VN>;
+  initValue: StateValue<VN>;
 }
-
 const checkUpdateVarb = <VN extends ValueName, T extends UpdateVarb<VN>>(
   _: VN,
   value: T
@@ -40,7 +38,7 @@ function defaultUpdateVarb<VN extends ValueName>(
   const valueMeta = valueMetas[valueName];
   return checkUpdateVarb(valueName, {
     valueName,
-    initValue: valueMeta.initDefault() as ValueByValueName<VN>,
+    initValue: valueMeta.initDefault() as StateValue<VN>,
     updateFnName: getUpdateFnNames(valueName)[0],
     updateFnProps: {},
     updateOverrides: [],

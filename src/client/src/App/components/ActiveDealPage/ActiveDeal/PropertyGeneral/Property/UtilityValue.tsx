@@ -1,4 +1,4 @@
-import { UtilityValueMode } from "../../../../../sharedWithServer/SectionsMeta/baseSectionsDerived/subValues";
+import { UtilityValueMode } from "../../../../../sharedWithServer/SectionsMeta/values/StateValue/subStringValues";
 import { useSetterSection } from "../../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import { SelectAndItemizeEditorSection } from "../../../../appWide/SelectAndItemizeEditorSection";
 import { VarbListOngoing } from "../../../../appWide/VarbLists/VarbListOngoing";

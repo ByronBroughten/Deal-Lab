@@ -5,15 +5,15 @@ type InterestOnlyPaymentsYearlyProps = {
   loanTotalDollars: CalcProp;
 };
 
-export function interestOnlySimpleYearly({
+export function piInterestOnlySimpleYearly({
   interestRateDecimalYearly,
   loanTotalDollars,
 }: InterestOnlyPaymentsYearlyProps): string {
   return `${interestRateDecimalYearly} * ${loanTotalDollars}`;
 }
 
-export function interestOnlySimpleMonthly(
+export function piInterestOnlySimpleMonthly(
   props: InterestOnlyPaymentsYearlyProps
 ): string {
-  return `${interestOnlySimpleYearly(props)} / 12`;
+  return `${piInterestOnlySimpleYearly(props)} / 12`;
 }

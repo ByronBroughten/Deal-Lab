@@ -6,7 +6,7 @@ import {
   RawDraftEntityRange,
   SelectionState,
 } from "draft-js";
-import { EntityMapData } from "../sharedWithServer/SectionsMeta/allBaseSectionVarbs/baseValues/entities";
+import { EntityMapData } from "../sharedWithServer/SectionsMeta/values/StateValue/valuesShared/entities";
 import { Arr } from "../sharedWithServer/utils/Arr";
 
 export type SetEditorState = React.Dispatch<React.SetStateAction<EditorState>>;

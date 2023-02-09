@@ -1,6 +1,5 @@
-import React from "react";
 import styled from "styled-components";
-import { ClosingCostValueMode } from "../../../../../sharedWithServer/SectionsMeta/baseSectionsDerived/subValues";
+import { ClosingCostValueMode } from "../../../../../sharedWithServer/SectionsMeta/values/StateValue/subStringValues";
 import { useSetterSection } from "../../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import { FormSection } from "../../../../appWide/FormSection";
 import { VarbListSingleTime } from "../../../../appWide/ListGroup/ListGroupSingleTime/VarbListSingleTime";

@@ -1,7 +1,6 @@
 import { FormControl, FormControlLabel, RadioGroup } from "@material-ui/core";
-import React from "react";
 import styled from "styled-components";
-import { CompletionStatus } from "../../../sharedWithServer/SectionsMeta/baseSectionsDerived/subValues";
+import { CompletionStatus } from "../../../sharedWithServer/SectionsMeta/values/StateValue/subStringValues";
 import { useSetterSection } from "../../../sharedWithServer/stateClassHooks/useSetterSection";
 import { GetterSection } from "../../../sharedWithServer/StateGetters/GetterSection";
 import { FormSection } from "../../appWide/FormSection";

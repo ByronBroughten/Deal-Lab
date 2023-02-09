@@ -1,9 +1,8 @@
 import { CompositeDecorator } from "draft-js";
 import { lighten } from "polished";
-import React from "react";
 import styled, { css } from "styled-components";
 import { getEntityStrategy } from "../../../modules/draftjs/getEntityStrategies";
-import { EntityMapData } from "../../../sharedWithServer/SectionsMeta/allBaseSectionVarbs/baseValues/entities";
+import { EntityMapData } from "../../../sharedWithServer/SectionsMeta/values/StateValue/valuesShared/entities";
 import theme from "../../../theme/Theme";
 import { useGetterSectionContext } from "./../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { EntitySpanBasic } from "./EntitySpanBasic";

@@ -1,7 +1,7 @@
-import { ValueInEntityInfo } from "../SectionsMeta/allBaseSectionVarbs/baseValues/entities";
-import { inEntityIdInfo } from "../SectionsMeta/allBaseSectionVarbs/baseValues/InEntityIdInfoValue";
-import { mixedInfoS } from "../SectionsMeta/sectionChildrenDerived/MixedSectionInfo";
 import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
+import { mixedInfoS } from "../SectionsMeta/SectionInfo/MixedSectionInfo";
+import { inEntityValueInfo } from "../SectionsMeta/values/StateValue/InEntityValue";
+import { ValueInEntityInfo } from "../SectionsMeta/values/StateValue/valuesShared/entities";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
 
 export const outputNames = [
@@ -22,7 +22,7 @@ export function makeDefaultOutputList(): SectionPack<"outputList"> {
     outputList.addChild("outputItem", {
       dbVarbs: {
         valueSourceSwitch: "loadedVarb",
-        valueEntityInfo: inEntityIdInfo(outputVarbInfo),
+        valueEntityInfo: inEntityValueInfo(outputVarbInfo),
       },
     });
   }

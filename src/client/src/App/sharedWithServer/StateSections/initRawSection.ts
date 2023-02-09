@@ -1,16 +1,12 @@
 import { pick } from "lodash";
 import { sectionsMeta } from "../SectionsMeta";
-import { StateValue } from "../SectionsMeta/allBaseSectionVarbs/baseValues/StateValueTypes";
-import { Id } from "../SectionsMeta/allBaseSectionVarbs/id";
-import { VarbNames } from "../SectionsMeta/baseSectionsDerived/baseVarbInfo";
-import {
-  DbValue,
-  SectionValues,
-} from "../SectionsMeta/baseSectionsDerived/valueMetaTypes";
+import { Id } from "../SectionsMeta/id";
 import { ChildIdArrsNarrow } from "../SectionsMeta/sectionChildrenDerived/ChildName";
 import { FeSectionInfo, FeVarbInfo } from "../SectionsMeta/SectionInfo/FeInfo";
+import { VarbNames } from "../SectionsMeta/SectionInfo/VarbInfoBase";
 import { SectionName } from "../SectionsMeta/SectionName";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
+import { SectionValues, StateValue } from "../SectionsMeta/values/StateValue";
 import { StrictPick, StrictPickPartial } from "../utils/types";
 import { RawFeSection, StateVarb, StateVarbs } from "./StateSectionsTypes";
 
@@ -86,7 +82,7 @@ export function initRawVarbs<SN extends SectionNameByType>({
 
 interface InitRawVarbProps<SN extends SectionNameByType>
   extends FeVarbInfo<SN> {
-  dbVarb?: DbValue;
+  dbVarb?: StateValue;
 }
 function initRawVarb<SN extends SectionNameByType>({
   dbVarb,

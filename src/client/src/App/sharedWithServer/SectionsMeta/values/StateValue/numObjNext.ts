@@ -1,13 +1,13 @@
+import { fullDisplayNameString } from "../../allDisplaySectionVarbs";
+import { Id } from "../../id";
 import {
   getVarbPathParams,
   varbPathInfo,
   VarbPathName,
 } from "../../SectionInfo/VarbPathNameInfo";
 import { pathSectionName } from "../../sectionPathContexts/sectionPathNames";
-import { getVarbMeta } from "../../VarbMeta";
-import { Id } from "../id";
-import { ValueInEntity } from "./entities";
 import { NumObj } from "./NumObj";
+import { ValueInEntity } from "./valuesShared/entities";
 
 export function numObjNext(...propArr: EntityNumObjPropArr): NumObj {
   let mainText: string = "";
@@ -25,8 +25,13 @@ export function numObjNext(...propArr: EntityNumObjPropArr): NumObj {
       const entityInfo = varbPathInfo(varbPathName);
       const { pathName, varbName } = getVarbPathParams(varbPathName);
       const sectionName = pathSectionName(pathName);
-      const text = getVarbMeta({ sectionName, varbName }).displayNameFull;
 
+      const fullDisplayName = fullDisplayNameString(
+        sectionName,
+        varbName as any
+      );
+
+      const text = fullDisplayName;
       entities.push({
         ...entityInfo,
         entityId: Id.make(),

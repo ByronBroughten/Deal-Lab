@@ -3,22 +3,8 @@ import {
   SwitchName,
   SwitchTargetKey,
 } from "../SectionsMeta/allBaseSectionVarbs/baseSwitchNames";
-import { InEntityIdInfoValue } from "../SectionsMeta/allBaseSectionVarbs/baseValues/InEntityIdInfoValue";
 import { DbSectionInfo } from "../SectionsMeta/allBaseSectionVarbs/DbSectionInfo";
-import { ValueTypesPlusAny } from "../SectionsMeta/allBaseSectionVarbs/StateVarbTypes";
-import { ValueName } from "../SectionsMeta/allBaseSectionVarbs/ValueName";
 import { VarbName } from "../SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
-import {
-  DbSectionInfoMixed,
-  FeSectionInfoMixed,
-} from "../SectionsMeta/baseSectionsDerived/baseVarbInfo";
-import {
-  SectionValues,
-  SectionValuesReq,
-  SectionValuesRes,
-  VarbValue,
-} from "../SectionsMeta/baseSectionsDerived/valueMetaTypes";
-import { ChildValueInfo } from "../SectionsMeta/sectionChildrenDerived/ChildInfo";
 import {
   ChildIdArrsWide,
   ChildName,
@@ -33,11 +19,6 @@ import {
   DescOfSnDbIdInfo,
 } from "../SectionsMeta/sectionChildrenDerived/DescendantName";
 import {
-  mixedInfoS,
-  SectionInfoMixedFocal,
-  VarbInfoMixedFocal,
-} from "../SectionsMeta/sectionChildrenDerived/MixedSectionInfo";
-import {
   noParentWarning,
   ParentName,
   ParentNameSafe,
@@ -50,13 +31,23 @@ import {
   AbsolutePathDbInfoMixed,
   AbsolutePathInfoMixed,
 } from "../SectionsMeta/SectionInfo/AbsolutePathInfo";
+import { ChildValueInfo } from "../SectionsMeta/SectionInfo/ChildInfo";
 import {
   FeParentInfo,
   FeParentInfoSafe,
   FeSectionInfo,
   FeVarbInfo,
 } from "../SectionsMeta/SectionInfo/FeInfo";
+import {
+  mixedInfoS,
+  SectionInfoMixedFocal,
+  VarbInfoMixedFocal,
+} from "../SectionsMeta/SectionInfo/MixedSectionInfo";
 import { RelSectionInfo } from "../SectionsMeta/SectionInfo/RelInfo";
+import {
+  DbSectionInfoMixed,
+  FeSectionInfoMixed,
+} from "../SectionsMeta/SectionInfo/VarbInfoBase";
 import { getVarbPathParams } from "../SectionsMeta/SectionInfo/VarbPathNameInfo";
 import { SectionMeta } from "../SectionsMeta/SectionMeta";
 import { SectionName } from "../SectionsMeta/SectionName";
@@ -70,6 +61,15 @@ import {
   pathSectionName,
   SectionPathName,
 } from "../SectionsMeta/sectionPathContexts/sectionPathNames";
+import {
+  SectionValues,
+  StateValue,
+  StateValueOrAny,
+  ValueNameOrAny,
+  VarbValue,
+} from "../SectionsMeta/values/StateValue";
+import { InEntityValue } from "../SectionsMeta/values/StateValue/InEntityValue";
+import { ValueName } from "../SectionsMeta/values/ValueName";
 import { PackMakerSection } from "../StatePackers.ts/PackMakerSection";
 import {
   RawFeSection,
@@ -613,9 +613,9 @@ export class GetterSection<
   get virtualVarb(): GetterVirtualVarb<SN> {
     return new GetterVirtualVarb(this.getterSectionProps);
   }
-  valueInEntityInfo(): Exclude<InEntityIdInfoValue, null> {
-    const value = this.value("valueEntityInfo", "inEntityInfo");
-    if (!value) throw new Error("inEntityInfo value is not initialized");
+  valueInEntityInfo(): Exclude<InEntityValue, null> {
+    const value = this.value("valueEntityInfo", "inEntityValue");
+    if (!value) throw new Error("inEntityValue value is not initialized");
     return value;
   }
 
@@ -655,10 +655,10 @@ export class GetterSection<
     const varbName = this.activeSwitchTargetName(varbNameBase, switchEnding);
     return this.varb(varbName);
   }
-  value<VT extends ValueName | "any" = "any">(
+  value<VT extends ValueNameOrAny = "any">(
     varbName: string,
     valueType?: VT
-  ): ValueTypesPlusAny[VT] {
+  ): StateValueOrAny<VT> {
     return this.varb(varbName).value(valueType);
   }
   valueNext<VN extends VarbName<SN>>(varbName: VN): VarbValue<SN, VN> {
@@ -958,4 +958,11 @@ export class GetterSection<
 
 type GetterChildren<SN extends SectionName> = {
   [CN in ChildName<SN>]: GetterSection<ChildSectionName<SN, CN>>[];
+};
+
+type SectionValuesReq = {
+  [varbName: string]: ValueName;
+};
+type SectionValuesRes<VNS extends SectionValuesReq> = {
+  [VN in keyof VNS]: StateValue<VNS[VN]>;
 };
