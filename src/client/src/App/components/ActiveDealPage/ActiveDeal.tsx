@@ -88,11 +88,13 @@ export function ActiveDeal({ className, feId }: Props) {
           </Select>
         </FormControl>
       </FormSection>
-      <div className="ActiveDeal-inputSectionsWrapper">
-        <Property {...makeSectionProps("property")} />
-        <Financing {...makeSectionProps("financing")} />
-        <Mgmt {...makeSectionProps("mgmt")} />
-      </div>
+      <FormSection className="ActiveDeal-mainFormSection">
+        <div className="ActiveDeal-inputSectionsWrapper">
+          <Property {...makeSectionProps("property")} />
+          <Financing {...makeSectionProps("financing")} />
+          <Mgmt {...makeSectionProps("mgmt")} />
+        </div>
+      </FormSection>
       {
         <OutputSection
           feId={deal.onlyChildFeId("dealOutputList")}
@@ -119,9 +121,14 @@ const Styled = styled(OuterMainSection)<{ $showDeal: boolean }>`
     margin-top: 0px;
   }
 
+  .ActiveDeal-mainFormSection {
+    padding: 0px;
+  }
+
   ${({ $showDeal }) =>
     $showDeal &&
     css`
+      .Property-root,
       .Financing-root,
       .Mgmt-root {
         margin-top: ${theme.dealElementSpacing};
@@ -138,15 +145,16 @@ const Styled = styled(OuterMainSection)<{ $showDeal: boolean }>`
 
   .ActiveDeal-mainSectionTopRowRoot {
   }
+  .ActiveDeal-inputSectionsWrapper {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
 
   .OutputSection-root {
     margin-top: ${theme.dealElementSpacing};
     position: sticky;
     bottom: 0;
     z-index: 3;
-  }
-
-  .ActiveDeal-inputSectionsWrapper {
-    /* margin: auto; */
   }
 `;

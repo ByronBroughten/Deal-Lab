@@ -169,6 +169,12 @@ export const Arr = {
   ): Extract<A, B>[] {
     return a.filter((str) => b.includes(str as any)) as Extract<A, B>[];
   },
+  extractOrder<A extends any, B extends A>(
+    a: readonly A[],
+    b: readonly B[]
+  ): Extract<A, B>[] {
+    return b.filter((str) => a.includes(str as any)) as Extract<A, B>[];
+  },
   extract<A extends any, B extends any>(
     a: readonly A[],
     b: readonly B[]

@@ -9,7 +9,7 @@ import { GetterSections } from "../StateGetters/GetterSections";
 import { Obj } from "../utils/Obj";
 import { VarbName } from "./../SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
 import { PathDbVarbInfoMixed } from "./../SectionsMeta/SectionInfo/PathNameInfo";
-import { varbPathOptions } from "./pathVarbOptions";
+import { varbPathOptions } from "./pathNameOptions";
 
 export type SectionOption = {
   dbId: string;

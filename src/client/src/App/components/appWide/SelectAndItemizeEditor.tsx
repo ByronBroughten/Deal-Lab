@@ -1,10 +1,10 @@
 import React from "react";
 import { unstable_batchedUpdates } from "react-dom";
 import styled from "styled-components";
-import { useToggleViewNext } from "../../modules/customHooks/useToggleView";
+import { useToggleView } from "../../modules/customHooks/useToggleView";
 import theme from "../../theme/Theme";
 import { EditSectionBtn } from "./EditSectionBtn";
-import { SectionModal } from "./ModalSection";
+import { ModalSection } from "./ModalSection";
 import { SelectEditor, SelectEditorProps } from "./SelectEditor";
 
 export interface SelectAndItemizeEditorProps extends SelectEditorProps {
@@ -24,10 +24,7 @@ export function SelectAndItemizeEditor({
   itemizedModalTitle,
   ...rest
 }: SelectAndItemizeEditorProps) {
-  const { itemsIsOpen, closeItems, openItems } = useToggleViewNext(
-    "items",
-    false
-  );
+  const { itemsIsOpen, closeItems, openItems } = useToggleView("items", false);
 
   const isItemized = rest.selectValue === itemizeValue;
   return (
@@ -53,13 +50,13 @@ export function SelectAndItemizeEditor({
                 className="SelectAndItemizeEditor-editBtn"
                 onClick={openItems}
               />
-              <SectionModal
+              <ModalSection
                 title={itemizedModalTitle}
                 closeModal={closeItems}
                 show={itemsIsOpen}
               >
                 {itemsComponent}
-              </SectionModal>
+              </ModalSection>
             </>
           )}
     </Styled>

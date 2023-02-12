@@ -40,10 +40,12 @@ export const sectionAbsolutePathInfos = {
       "calculatedVarbs",
     ]);
   },
+  get userVarbListLatent() {
+    return absolute("userVarbList", [...this.latent.path, "userVarbList"]);
+  },
   get userVarbItemLatent() {
     return absolute("userVarbItem", [
-      ...this.latent.path,
-      "userVarbList",
+      ...this.userVarbListLatent.path,
       "userVarbItem",
     ]);
   },
@@ -150,10 +152,12 @@ export const sectionAbsolutePathInfos = {
   get capExCostValueLatent() {
     return absolute("capExValue", [...this.propertyLatent.path, "capExValue"]);
   },
+  get userVarbListStored() {
+    return absolute("userVarbList", [...this.feUser.path, "userVarbListMain"]);
+  },
   get userVarbItemStored() {
     return absolute("userVarbItem", [
-      ...this.feUser.path,
-      "userVarbListMain",
+      ...this.userVarbListStored.path,
       "userVarbItem",
     ]);
   },

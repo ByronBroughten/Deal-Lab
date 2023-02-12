@@ -24,9 +24,13 @@ export function ClosingCostValue({ feId, fivePercentLoanDisplay }: Props) {
           const value = e.target.value as string;
           closingCostValue.varb("valueMode").updateValue(value);
         },
-        editorVarbInfo:
+        editorProps:
           valueMode === "lumpSum"
-            ? closingCostValue.varbInfo("valueLumpSumEditor")
+            ? {
+                feVarbInfo: closingCostValue.varbInfo("valueLumpSumEditor"),
+                editorType: "equation",
+                quickViewVarbNames: ["loanTotalDollars", "numUnits"],
+              }
             : undefined,
         menuItems: [
           ["fivePercentLoan", "5% of Base Loan"],

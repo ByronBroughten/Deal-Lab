@@ -1,6 +1,6 @@
 import { Text } from "react-native";
 import styled from "styled-components";
-import { ModalSectionProps, SectionModal } from "./ModalSection";
+import { ModalSection, ModalSectionProps } from "./ModalSection";
 
 interface Props extends ModalSectionProps {}
 export function ModalText({ children, ...rest }: Props) {
@@ -11,8 +11,8 @@ export function ModalText({ children, ...rest }: Props) {
   );
 }
 
-const Styled = styled(SectionModal)`
-  .SectionModal-mainSection {
+const Styled = styled(ModalSection)`
+  .ModalSection-mainSection {
     max-width: 600px;
   }
 `;

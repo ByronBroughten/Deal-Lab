@@ -1,9 +1,9 @@
 import { BsCloudArrowDown } from "react-icons/bs";
-import { useToggleViewNext } from "../../../../../modules/customHooks/useToggleView";
+import { useToggleView } from "../../../../../modules/customHooks/useToggleView";
 import { FeSectionInfo } from "../../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { SectionNameByType } from "../../../../../sharedWithServer/SectionsMeta/SectionNameByType";
 import { LabeledIconBtn } from "../../../LabeledIconBtn";
-import { SectionModal } from "../../../ModalSection";
+import { ModalSection } from "../../../ModalSection";
 import { SectionIndexRows } from "../../../SectionIndexRows";
 
 type Props<SN extends SectionNameByType<"hasIndexStore">> = {
@@ -16,10 +16,7 @@ type Props<SN extends SectionNameByType<"hasIndexStore">> = {
 export function ActionMenuLoadBtn<
   SN extends SectionNameByType<"hasIndexStore">
 >({ loadWhat, feInfo, loadMode, className, onLoad }: Props<SN>) {
-  const { modalIsOpen, openModal, closeModal } = useToggleViewNext(
-    "modal",
-    false
-  );
+  const { modalIsOpen, openModal, closeModal } = useToggleView("modal", false);
   return (
     <>
       <LabeledIconBtn
@@ -29,7 +26,7 @@ export function ActionMenuLoadBtn<
         onClick={openModal}
         className={`ActionMenuLoadBtn-root ${className ?? ""}`}
       />
-      <SectionModal
+      <ModalSection
         closeModal={closeModal}
         show={modalIsOpen}
         title={`Load ${loadWhat}`}
@@ -44,7 +41,7 @@ export function ActionMenuLoadBtn<
             loadMode,
           }}
         />
-      </SectionModal>
+      </ModalSection>
     </>
   );
 }

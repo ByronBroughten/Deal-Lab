@@ -35,7 +35,7 @@ function useNamedToggleView<T extends string>(
   } as any;
 }
 
-export function useToggleViewNext<T extends string = "view">(
+export function useToggleView<T extends string = "view">(
   viewWhat?: T,
   initValue: boolean = false
 ): Return<T> {

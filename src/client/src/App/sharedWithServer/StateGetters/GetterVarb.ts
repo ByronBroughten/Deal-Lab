@@ -237,7 +237,14 @@ export class GetterVarb<
     }
   }
   get displayNameFull(): string {
-    return this.displayMeta.displayNameFull;
+    const { displayNameFullContext } = this.displayMeta;
+    if (typeof displayNameFullContext === "string") {
+      return displayNameFullContext;
+    } else {
+      return this.section
+        .varbByFocalMixed(displayNameFullContext)
+        .value("stringObj").mainText;
+    }
   }
   get displayNameStart(): string {
     return this.displayMeta.displayNameStart;

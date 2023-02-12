@@ -2,24 +2,34 @@ import { EditorState } from "draft-js";
 import React from "react";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import styled from "styled-components";
-import { useToggleViewNext } from "../../../modules/customHooks/useToggleView";
+import { useToggleView } from "../../../modules/customHooks/useToggleView";
+import { FeSectionInfo } from "../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
+import { mixedInfoS } from "../../../sharedWithServer/SectionsMeta/SectionInfo/MixedSectionInfo";
 import { VarbPathName } from "../../../sharedWithServer/SectionsMeta/SectionInfo/VarbPathNameInfo";
 import theme from "../../../theme/Theme";
 import { HollowBtn } from "../../appWide/HollowBtn";
 import { ModalText } from "../../appWide/ModalText";
 import { PopperRef } from "../VarbAutoComplete";
-import { VarbSelectorRows } from "./NumObjVarbSelector/VarbSelectorRows";
+import { AllVarbsModal } from "./AllVarbsModal";
+import { VarbSelectorCollection } from "./NumObjVarbSelector/VarbSelectorCollection";
+import { VarbSelectorRow } from "./NumObjVarbSelector/VarbSelectorRow";
+import { VarbSelectorShell } from "./NumObjVarbSelector/VarbSelectorShell";
 
-interface Props {
+interface Props extends FeSectionInfo {
   setEditorState: React.Dispatch<React.SetStateAction<EditorState>>;
   varbPathNames?: VarbPathName[];
 }
 
 export const NumObjVarbSelectorNext = React.memo(
   React.forwardRef(
-    ({ setEditorState, varbPathNames = [] }: Props, ref: PopperRef) => {
-      const { toggleVarbs, varbsIsOpen } = useToggleViewNext("varbs");
-      const { openInfo, infoIsOpen, closeInfo } = useToggleViewNext("info");
+    (
+      { setEditorState, varbPathNames = [], ...feInfo }: Props,
+      ref: PopperRef
+    ) => {
+      const { toggleVarbs, varbsIsOpen } = useToggleView("varbs");
+      const { openInfo, infoIsOpen, closeInfo } = useToggleView("info");
+      const { openAllVarbs, allVarbsIsOpen, closeAllVarbs } =
+        useToggleView("allVarbs");
       return (
         <Styled ref={ref} className="NumObjVarbSelector-root">
           <div className="NumObjVarbSelector-absolute">
@@ -46,10 +56,30 @@ export const NumObjVarbSelectorNext = React.memo(
               {varbsIsOpen && (
                 <div className="NumObjVarbSelector-rowsRelative">
                   <div className="NumObjVarbSelector-rowsAbsolute">
-                    <VarbSelectorRows
+                    <VarbSelectorShell>
+                      <VarbSelectorCollection
+                        {...{
+                          focalInfo: feInfo,
+                          rowInfos: varbPathNames.map((varbPathName) =>
+                            mixedInfoS.varbPathName(varbPathName)
+                          ),
+                          setEditorState,
+                        }}
+                      />
+                      <ViewAllRow
+                        {...{
+                          onClick: openAllVarbs,
+                          displayName: "View All",
+                          className: "NumObjVarbSelector-viewAll",
+                        }}
+                      />
+                    </VarbSelectorShell>
+                    <AllVarbsModal
                       {...{
-                        varbPathNames,
+                        focalInfo: feInfo,
                         setEditorState,
+                        closeAllVarbs,
+                        allVarbsIsOpen,
                       }}
                     />
                   </div>
@@ -63,38 +93,56 @@ export const NumObjVarbSelectorNext = React.memo(
   )
 );
 
+const selectorHeight = "30px";
+
 const InfoBtn = styled(HollowBtn)`
   border-radius: 0;
   border: none;
   color: ${theme.primary.main};
   padding: ${theme.s2} ${theme.s2} 0 ${theme.s2};
   border-left: 1px solid ${theme.primary.light};
-  height: 25px;
+  height: ${selectorHeight};
   :hover {
     background-color: ${theme.primary.main};
   }
 `;
 
 const AddVarbBtn = styled(HollowBtn)`
+  height: ${selectorHeight};
+  width: 98px;
+  padding: ${theme.s25};
   border-radius: 0;
   border: none;
   color: ${theme.primary.main};
-  height: 25px;
   :hover {
     background-color: ${theme.primary.main};
   }
 `;
 
+const ViewAllRow = styled(VarbSelectorRow)`
+  background-color: ${theme.light};
+  .VarbSelectorRow-Btn {
+    color: ${theme.primary.main};
+    justify-content: center;
+    padding: 0;
+    :hover {
+      color: ${theme.light};
+      background-color: ${theme.primary.main};
+    }
+  }
+`;
+
 const Styled = styled.div`
   position: relative;
-  bottom: 3px;
+  .NumObjVarbSelector-absolute {
+  }
 
   .NumObjVarbSelector-rowsRelative {
     position: relative;
   }
   .NumObjVarbSelector-rowsAbsolute {
     position: absolute;
-    left: -10px;
+    left: -1px;
     top: 1px;
   }
 
@@ -117,23 +165,9 @@ const Styled = styled.div`
   }
   .NumObjVarbSelector-wrapper {
     border: 2px solid;
-    border-top: 1px solid;
+    border-top: 0px solid;
     border-left: 1px solid;
     border-color: ${theme.next.dark};
-    background-color: ${theme["gray-300"]};
     border-top-left-radius: 0;
-    .HideBtn {
-      margin-top: ${theme.s1};
-      border-top-right-radius: 0;
-      border-top-left-radius: 0;
-    }
-  }
-  .NumObjVarbSelector-calculatorWrapper {
-    position: relative;
-    padding-right: ${theme.s1};
-    padding: ${theme.s1};
-    border-bottom-right-radius: 0;
-    bottom: 23px;
-    left: 2px;
   }
 `;

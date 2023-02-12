@@ -22,9 +22,12 @@ export function RepairValue({ feId }: Props) {
           const value = e.target.value as string;
           repairValue.varb("valueMode").updateValue(value);
         },
-        editorVarbInfo:
+        editorProps:
           valueMode === "lumpSum"
-            ? repairValue.varbInfo("valueLumpSumEditor")
+            ? {
+                feVarbInfo: repairValue.varbInfo("valueLumpSumEditor"),
+                editorType: "numeric",
+              }
             : undefined,
         menuItems: [
           ["turnkey", "Turnkey (no repairs)"],

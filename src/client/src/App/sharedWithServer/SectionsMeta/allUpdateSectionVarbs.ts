@@ -178,7 +178,7 @@ function makeAllUpdateSections() {
       displayName: updateVarb("stringObj", {
         updateFnName: "loadLocalString",
         updateFnProps: {
-          loadLocalString: updateFnPropS.local("displayNameEditor"),
+          localString: updateFnPropS.local("displayNameEditor"),
         },
       }),
       ...updateVarbsS.group("value", "ongoing", "monthly", {

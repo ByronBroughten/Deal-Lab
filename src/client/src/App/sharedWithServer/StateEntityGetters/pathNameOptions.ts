@@ -2,13 +2,15 @@ import { fullDisplayNameString } from "../SectionsMeta/allDisplaySectionVarbs";
 import { mixedInfoS } from "../SectionsMeta/SectionInfo/MixedSectionInfo";
 import {
   getVarbPathExtras,
+  getVarbPathParams,
   VarbPathName,
   varbPathNames,
+  VarbPathParams,
 } from "../SectionsMeta/SectionInfo/VarbPathNameInfo";
 import { Arr } from "../utils/Arr";
 import { VariableOption } from "./VariableGetterSections";
 
-const varbPathOptionNames = Arr.extractStrict(varbPathNames, [
+const varbPathOptionNames = Arr.extractOrder(varbPathNames, [
   "price",
   "taxesMonthly",
   "taxesYearly",
@@ -37,12 +39,29 @@ const varbPathOptionNames = Arr.extractStrict(varbPathNames, [
   "pitiMonthly",
   "pitiYearly",
 
-  "vacancyLossPercent",
+  "basePayDollarsMonthly",
+  "basePayDollarsYearly",
+  "managementExpensesMonthly",
+  "managementExpensesYearly",
 
   "cocRoiMonthly",
   "cocRoiYearly",
   "totalInvestment",
 ] as const);
+
+export type VarbPathOptionName = typeof varbPathOptionNames[number];
+
+type VarbPathArrParam<VPN extends VarbPathName = VarbPathName> =
+  VarbPathParams<VPN> & {
+    varbPathName: VPN;
+  };
+
+export const varbPathOptionArr: VarbPathArrParam[] = varbPathOptionNames.map(
+  (varbPathName) => ({
+    varbPathName,
+    ...getVarbPathParams(varbPathName),
+  })
+);
 
 export const varbPathOptions = makeVarbPathOptions();
 function makeVarbPathOptions(): VariableOption[] {
@@ -51,7 +70,7 @@ function makeVarbPathOptions(): VariableOption[] {
     return options;
   }, [] as VariableOption[]);
 }
-export function makeVarbPathOption(varbPathName: VarbPathName): VariableOption {
+function makeVarbPathOption(varbPathName: VarbPathName): VariableOption {
   const { collectionName, sectionName, varbName } =
     getVarbPathExtras(varbPathName);
   return {

@@ -12,7 +12,7 @@ export interface ModalSectionProps extends ModalWrapperProps {
   closeModal: () => void;
   title: React.ReactNode;
 }
-export function SectionModal({
+export function ModalSection({
   children,
   className,
   closeModal,
@@ -21,16 +21,21 @@ export function SectionModal({
 }: ModalSectionProps) {
   const modalRef = useOnOutsideClickRef(closeModal);
   return (
-    <Styled {...{ show }} className={`SectionModal-root ${className ?? ""}`}>
-      <div className="SectionModal-refDiv" ref={modalRef}>
-        <MainSection className="SectionModal-mainSection">
+    <Styled {...{ show }} className={`ModalSection-root ${className ?? ""}`}>
+      <div className="ModalSection-refDiv" ref={modalRef}>
+        <MainSection className="ModalSection-mainSection">
           <SectionTitleRow
-            leftSide={<SectionTitle text={title} />}
+            leftSide={
+              <SectionTitle
+                className="ModalSection-sectionTitle"
+                text={title}
+              />
+            }
             rightSide={
               <PlainIconBtn middle={<AiOutlineClose />} onClick={closeModal} />
             }
           />
-          <div className="SectionModal-content">{children}</div>
+          <div className="ModalSection-content">{children}</div>
         </MainSection>
       </div>
     </Styled>
@@ -38,11 +43,11 @@ export function SectionModal({
 }
 
 const Styled = styled(ModalWrapper)`
-  .SectionModal-mainSection {
+  .ModalSection-mainSection {
     min-width: 250px;
   }
 
-  .SectionModal-content {
+  .ModalSection-content {
     margin-top: ${theme.s3};
   }
 `;

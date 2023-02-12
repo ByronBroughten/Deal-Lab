@@ -73,9 +73,13 @@ export function ValueSectionGeneric<
         <SelectAndItemizeEditor
           {...{
             selectValue: valueSource,
-            editorVarbInfo:
+            editorProps:
               valueSource === "lumpSum"
-                ? section.varbInfo("valueEditor")
+                ? {
+                    feVarbInfo: section.varbInfo("valueEditor"),
+                    editorType: "equation",
+                    quickViewVarbNames: ["price", "sqft", "numUnits"],
+                  }
                 : undefined,
             menuItems: [
               ["lumpSum", "Enter amount"],

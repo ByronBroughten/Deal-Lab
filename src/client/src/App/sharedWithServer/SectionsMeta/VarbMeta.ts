@@ -89,6 +89,9 @@ export class VarbMeta<SN extends SectionName> {
   get displayName(): DisplayName {
     return this.displayVarb.displayName;
   }
+  get displayNameFullContext() {
+    return this.displayVarb.displayNameFullContext;
+  }
   get displayNameStart(): string {
     return this.displayVarb.displayNameStart;
   }

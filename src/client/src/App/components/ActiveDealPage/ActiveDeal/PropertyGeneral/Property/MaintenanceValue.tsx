@@ -35,9 +35,13 @@ export function MaintenanceValue({ feId }: { feId: string }) {
           ["lumpSum", "Custom amount"],
         ],
         equalsValue,
-        editorVarbInfo:
+        editorProps:
           valueMode === "lumpSum"
-            ? maintenanceValue.varbInfo("valueLumpSumEditor")
+            ? {
+                feVarbInfo: maintenanceValue.varbInfo("valueLumpSumEditor"),
+                editorType: "equation",
+                quickViewVarbNames: ["sqft", "numUnits", "numBedrooms"],
+              }
             : undefined,
       }}
     />

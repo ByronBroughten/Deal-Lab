@@ -46,10 +46,10 @@ export function defaultDisplayVarb(displayName: DisplayName) {
 }
 
 export type DisplayVarbOptions = Partial<DisplayVarb>;
-export function displayVarb<DN extends DisplayName>(
-  displayName: DN,
-  o: DisplayVarbOptions = {}
-): DisplayVarb {
+export function displayVarb({
+  displayName = "",
+  ...o
+}: DisplayVarbOptions = {}): DisplayVarb {
   const displayNameWithSection = o.displayNameWithSection ?? displayName;
   const displayNameWithVariant = o.displayNameWithVariant ?? displayName;
   const displayNameFullContext =
@@ -60,5 +60,15 @@ export function displayVarb<DN extends DisplayName>(
     displayNameWithSection,
     displayNameWithVariant,
     displayNameFullContext,
+  };
+}
+
+export function displayVarbOptions(
+  displayName: DisplayName,
+  options?: DisplayVarbOptions
+): DisplayVarbOptions {
+  return {
+    displayName,
+    ...options,
   };
 }

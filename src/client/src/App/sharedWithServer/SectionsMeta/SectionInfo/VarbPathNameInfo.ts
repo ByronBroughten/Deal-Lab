@@ -52,16 +52,45 @@ export const allVarbPathParams = {
     "vacancyLossPercent",
     ...targetNames("basePayDollars", "ongoing"),
   ]),
+  managementExpensesMonthly: varbPathParams(
+    "Management",
+    "mgmtFocal",
+    "expensesMonthly"
+  ),
+  managementExpensesYearly: varbPathParams(
+    "Management",
+    "mgmtFocal",
+    "expensesYearly"
+  ),
+
+  propertyExpensesMonthly: varbPathParams(
+    "Property",
+    "propertyFocal",
+    "expensesMonthly"
+  ),
+  propertyExpensesYearly: varbPathParams(
+    "Property",
+    "propertyFocal",
+    "expensesYearly"
+  ),
+
+  dealExpensesMonthly: varbPathParams("Deal", "dealFocal", "expensesMonthly"),
+  dealExpensesYearly: varbPathParams("Deal", "dealFocal", "expensesYearly"),
+
+  dealRevenueMonthly: varbPathParams("Deal", "dealFocal", "revenueMonthly"),
+  dealRevenueYearly: varbPathParams("Deal", "dealFocal", "revenueYearly"),
+
+  dealUpfrontExpenses: varbPathParams("Deal", "dealFocal", "upfrontExpenses"),
+  dealUpfrontRevenue: varbPathParams("Deal", "dealFocal", "upfrontRevenue"),
+
   ...sectionVarbNameParams("dealFocal", "Deal", [
     "downPaymentDollars",
     "downPaymentPercent",
-    "upfrontExpenses",
+
     "totalInvestment",
     ...targetNames("piti", "ongoing"),
     ...targetNames("cashFlow", "ongoing"),
     ...targetNames("cocRoi", "ongoing"),
-    ...targetNames("expenses", "ongoing"),
-    ...targetNames("revenue", "ongoing"),
   ]),
 };
 
@@ -81,7 +110,7 @@ export function varbSectionPathName<VPN extends VarbPathName>(
   return allVarbPathParams[varbPathName]["pathName"];
 }
 
-type VarbPathParams<VPN extends VarbPathName> = AllVarbPathParams[VPN];
+export type VarbPathParams<VPN extends VarbPathName> = AllVarbPathParams[VPN];
 
 type VarbPathSectionName<VPN extends VarbPathName> = PathSectionName<
   VarbPathParams<VPN>["pathName"]
@@ -131,20 +160,40 @@ type SectionVarbPathParams<
 > = {
   [V in VN]: MakeVarbPathParams<PN, V>;
 };
+
+export const collectionNamesFixed = [
+  "Property",
+  "Financing",
+  "Management",
+  "Deal",
+] as const;
+type CollectionNameFixed = typeof collectionNamesFixed[number];
+
+function varbPathParams<
+  PN extends SectionPathName,
+  VN extends SectionPathVarbName<PN>
+>(
+  collectionName: CollectionNameFixed,
+  pathName: PN,
+  varbName: VN
+): MakeVarbPathParams<PN, VN> {
+  return {
+    collectionName,
+    pathName,
+    varbName,
+  };
+}
+
 function sectionVarbNameParams<
   PN extends SectionPathName,
   VN extends SectionPathVarbName<PN>
 >(
   pathName: PN,
-  collectionName: string,
+  collectionName: CollectionNameFixed,
   varbNames: VN[]
 ): SectionVarbPathParams<PN, VN> {
   return varbNames.reduce((options, varbName) => {
-    options[varbName] = {
-      pathName,
-      collectionName,
-      varbName,
-    };
+    options[varbName] = varbPathParams(collectionName, pathName, varbName);
     return options;
   }, {} as SectionVarbPathParams<PN, VN>);
 }
@@ -157,3 +206,14 @@ export function varbPathInfo(
     varbPathName,
   };
 }
+
+type VarbPathArrParam<VPN extends VarbPathName = VarbPathName> =
+  VarbPathParams<VPN> & {
+    varbPathName: VPN;
+  };
+export const varbPathParamArr: VarbPathArrParam[] = varbPathNames.map(
+  (varbPathName) => ({
+    varbPathName,
+    ...getVarbPathParams(varbPathName),
+  })
+);

@@ -1,5 +1,5 @@
 import React from "react";
-import { BsFillHouseFill } from "react-icons/bs";
+import { FaHandshake } from "react-icons/fa";
 import { HiOutlineVariable } from "react-icons/hi";
 import { IoIosGitCompare } from "react-icons/io";
 import { MdOutlineViewList } from "react-icons/md";
@@ -21,7 +21,7 @@ const navBtns = {
       <AppMenuBtn
         {...props}
         text={"Deal"}
-        icon={<BsFillHouseFill size={iconSize} />}
+        icon={<FaHandshake size={iconSize} />}
       />
     </DomLink>
   ),

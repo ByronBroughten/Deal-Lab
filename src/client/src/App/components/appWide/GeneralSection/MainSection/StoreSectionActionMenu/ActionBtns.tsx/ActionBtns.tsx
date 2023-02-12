@@ -48,7 +48,7 @@ export function useActionBtns<SN extends SectionNameByType<"hasIndexStore">>({
         <StyledActionBtn
           middle={"Save"}
           left={<AiOutlineSave size={23} />}
-          onClick={() => toastNotice("To save you must login.")}
+          onClick={() => toastNotice("To save, please login.")}
           className="ActionMenuButtons-signInToSave ActionMenuButtons-warn"
         />
       );

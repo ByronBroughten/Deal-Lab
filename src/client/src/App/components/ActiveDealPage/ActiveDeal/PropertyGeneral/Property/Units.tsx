@@ -1,11 +1,11 @@
 import styled from "styled-components";
-import { useToggleViewNext } from "../../../../../modules/customHooks/useToggleView";
+import { useToggleView } from "../../../../../modules/customHooks/useToggleView";
 import { useGetterSection } from "../../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import theme from "../../../../../theme/Theme";
 import { EditSectionBtn } from "../../../../appWide/EditSectionBtn";
 import { FormSection } from "../../../../appWide/FormSection";
 import { LabeledVarbRow } from "../../../../appWide/LabeledVarbRow";
-import { SectionModal } from "../../../../appWide/ModalSection";
+import { ModalSection } from "../../../../appWide/ModalSection";
 import { StartSectionBtn } from "../../../../appWide/StartSectionBtn";
 import StandardLabel from "../../../../general/StandardLabel";
 import { UnitList } from "./UnitList";
@@ -18,8 +18,10 @@ export function Units({ feId }: Props) {
   });
 
   const hasUnits = property.childFeIds("unit").length > 0;
-  const { unitsIsOpen, unitsIsClosed, openUnits, closeUnits } =
-    useToggleViewNext("units", false);
+  const { unitsIsOpen, unitsIsClosed, openUnits, closeUnits } = useToggleView(
+    "units",
+    false
+  );
 
   return (
     <Styled className="Units-root">
@@ -28,7 +30,7 @@ export function Units({ feId }: Props) {
           <FormSection>
             <div style={{ height: "80px" }}></div>
           </FormSection>
-          <SectionModal
+          <ModalSection
             {...{
               title: "Units",
               show: unitsIsOpen,
@@ -41,7 +43,7 @@ export function Units({ feId }: Props) {
                 className: "Units-unitList",
               }}
             />
-          </SectionModal>
+          </ModalSection>
         </>
       )}
       {unitsIsClosed && (

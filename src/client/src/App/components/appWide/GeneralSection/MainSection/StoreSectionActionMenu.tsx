@@ -1,6 +1,6 @@
 import { BsLightningFill } from "react-icons/bs";
 import styled from "styled-components";
-import { useToggleViewNext } from "../../../../modules/customHooks/useToggleView";
+import { useToggleView } from "../../../../modules/customHooks/useToggleView";
 import { useMainSectionActor } from "../../../../modules/sectionActorHooks/useMainSectionActor";
 import { SectionNameByType } from "../../../../sharedWithServer/SectionsMeta/SectionNameByType";
 import theme from "../../../../theme/Theme";
@@ -37,7 +37,7 @@ export function StoreSectionActionMenu<
   const feInfo = { sectionName, feId };
   const mainSection = useMainSectionActor(feInfo);
 
-  const controller = useToggleViewNext("list", false);
+  const controller = useToggleView("list", false);
   const buttons = useActionMenuBtns({
     ...feInfo,
     loadWhat,

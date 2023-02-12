@@ -124,8 +124,9 @@ export const Styled = styled(MainSection)<{
   .MainDealSection-startBtn {
     margin-left: ${theme.s3};
     width: 100%;
-    height: 35px;
+    height: 45px;
     font-size: ${theme.infoSize};
+    border: ${theme.borderStyle};
   }
   .MainDealSection-startIcon {
     margin-left: ${theme.s15};
@@ -179,13 +180,15 @@ export const Styled = styled(MainSection)<{
 
   ${({ $completionStatus, $showInputs }) => {
     if (!$showInputs) {
-      if (["allEmpty", "someInvalid"].includes($completionStatus)) {
+      if ($completionStatus !== "allValid") {
         return css`
+          padding-top: ${theme.s25};
+          padding-bottom: ${theme.s25};
+          padding-right: ${theme.s25};
           .MainDealSection-detailsDiv {
             display: none;
           }
         `;
-      } else if ($completionStatus === "someInvalid") {
       } else if ($completionStatus === "allValid") {
       }
     }

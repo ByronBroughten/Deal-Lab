@@ -311,6 +311,8 @@ const spacings = {
   s3: "0.5rem",
   s35: "0.75rem",
   s4: "1rem",
+  s45: "1.5rem",
+  s5: "2rem",
 } as const;
 
 const theme = {
@@ -326,7 +328,7 @@ const theme = {
   ...mediaQuery,
   sectionPadding: spacings.s3,
   flexElementSpacing: spacings.s2,
-  dealElementSpacing: spacings.s4,
+  dealElementSpacing: spacings.s5,
 
   transparentGrayDark: transparentize(0.8, color["gray-600"]),
   transparentGrayLight: transparentize(0.75, color["gray-300"]),

@@ -54,18 +54,11 @@ const fullLists = [
 
 const lists = [
   [
-    "Small fix cost examples",
+    "Custom repair cost examples",
     [
       ["Change deadbolt", numObj(20)],
-      ["Add smoke detector", numObj(15)],
+      ["Smoke detector", numObj(15)],
       ["Install outlet", numObj(30)],
-    ],
-  ],
-  [
-    "Replacement cost examples",
-    [
-      ["Water heater", numObj(1200)],
-      ["Vinyl plank per sqft", numObj(3)],
     ],
   ],
 ] as const;

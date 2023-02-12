@@ -92,7 +92,7 @@ export function displaySectionVarbs<SN extends SectionName>(
       sectionName,
       varbName
     ) as any as GeneralBaseVarb;
-    sectionVarbs[varbName] = displayVarb("", {
+    sectionVarbs[varbName] = displayVarb({
       ...displayByUnitAndSpan[valueUnit][valueTimespan],
       ...(options[varbName] ?? {}),
     });

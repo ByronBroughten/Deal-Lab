@@ -68,12 +68,21 @@ export const updateVarbsS = {
       valueEntityInfo: updateVarb("inEntityValue"),
       displayNameEditor: updateVarbS.displayNameEditor,
       displayName: updateVarb("stringObj", {
-        updateFnName: "loadLocalString",
-        updateFnProps: {
-          loadLocalString: updateFnPropS.local("displayNameEditor"),
-          valueSourceSwitch: updateFnPropS.local("valueSourceSwitch"),
-        },
-        updateOverrides: [updateOverrideS.loadedVarbProp("loadDisplayName")],
+        updateFnName: "throwIfReached",
+        updateOverrides: [
+          updateOverride(
+            [overrideSwitchS.valueSourceIs("labeledEquation")],
+            updateBasics("loadLocalString", {
+              localString: updateFnPropS.local("displayNameEditor"),
+            })
+          ),
+          updateOverride(
+            [overrideSwitchS.valueSourceIs("loadedVarb")],
+            updateBasics("loadDisplayName", {
+              localString: updateFnPropS.local("displayNameEditor"),
+            })
+          ),
+        ],
       }),
       displayNameEnd: updateVarb("stringObj", {
         updateFnName: "emptyStringObj",

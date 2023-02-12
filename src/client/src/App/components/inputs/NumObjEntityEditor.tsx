@@ -2,11 +2,12 @@ import { EditorState } from "draft-js";
 import React from "react";
 import styled from "styled-components";
 import { useOnOutsideClickEffect } from "../../modules/customHooks/useOnOutsideClickRef";
-import { useToggleViewNext } from "../../modules/customHooks/useToggleView";
+import { useToggleView } from "../../modules/customHooks/useToggleView";
 import { SetEditorState } from "../../modules/draftjs/draftUtils";
 import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { VarbPathName } from "../../sharedWithServer/SectionsMeta/SectionInfo/VarbPathNameInfo";
 import { SectionInfoContextProvider } from "../../sharedWithServer/stateClassHooks/useSectionContext";
+import { VarbPathOptionName } from "../../sharedWithServer/StateEntityGetters/pathNameOptions";
 import { GetterVarb } from "../../sharedWithServer/StateGetters/GetterVarb";
 import { EditorTextStatus } from "../../sharedWithServer/StateGetters/GetterVarbNumObj";
 import theme from "../../theme/Theme";
@@ -20,7 +21,7 @@ import {
 import { varSpanDecorator } from "./shared/EntitySpanWithError";
 import { useDraftInput } from "./useDraftInput";
 
-type NumEditorType = "numeric" | "equation";
+export type NumEditorType = "numeric" | "equation";
 
 type Props = PropAdornments & {
   feVarbInfo: FeVarbInfo;
@@ -30,7 +31,7 @@ type Props = PropAdornments & {
   bypassNumeric?: boolean;
   doEquals?: boolean;
   editorType?: NumEditorType;
-  quickViewVarbNames?: VarbPathName[];
+  quickViewVarbNames?: VarbPathOptionName[];
 };
 
 const seperator = ".";
@@ -111,7 +112,7 @@ const MemoNumObjEntityEditor = React.memo(function MemoNumObjEntityEditor({
   const label = labeled ? rest.label ?? displayName : undefined;
 
   const { varbSelectorIsOpen, openVarbSelector, closeVarbSelector } =
-    useToggleViewNext("varbSelector", false);
+    useToggleView("varbSelector", false);
 
   const numObjEditorRef = React.useRef<HTMLDivElement | null>(null);
   const popperRef = React.useRef<HTMLDivElement | null>(null);
@@ -152,7 +153,7 @@ const MemoNumObjEntityEditor = React.memo(function MemoNumObjEntityEditor({
           />
           {varbSelectorIsOpen && (
             <NumObjVarbSelectorNext
-              {...{ setEditorState, varbPathNames }}
+              {...{ ...rest, setEditorState, varbPathNames }}
               ref={popperRef}
             />
           )}

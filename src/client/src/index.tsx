@@ -6,27 +6,25 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
+// - Taylor which quick-access variables are accessible to each editor.
+// - Give CapEx a default list
+// - Verify normal login
+// - Fix FB login
+
+// 2. Finalize the variables
+// - Give it the "All Variables" thing a displayNameFull filter
+
+// - Put the downpayment stuff on financing
+// - PITI, too
+
+// - Add an explanation to the Variables page
+// - Add an explanation to the Lists page
+
+// - Organize lists into multiple sections: CapEx, Utilities, Closing Costs, General Costs, General Ongoing Costs.
 
 // 3. Make a simple wordpress website
 // - Just do it badly at first, for the gist of it.
 // - Then pay someone to do it well
-
-// 1. Try showing all the available actions in the title rows
-
-// 2. Add new CapEx default list
-
-// 2. Finalize the variables
-// - Add a "view all" option
-// - Summon a grey modal that lists all the variables options.
-//   - Give it a name filter
-//   - Sort them by category
-//   - Give it a section selector
-//   - It would be nice if the input were transported
-//     to the modal as well.
-
-// 3. Taylor which quick-access variables are accessible to each editor.
-// - Add an explanation to the Variables page
-// - Add an explanation to the Lists page
 
 // 4. Allow for Fix and Flip
 //  - Add ARV

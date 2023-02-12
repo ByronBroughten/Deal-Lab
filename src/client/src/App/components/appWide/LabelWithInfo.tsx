@@ -1,7 +1,7 @@
 import React from "react";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import styled from "styled-components";
-import { useToggleViewNext } from "../../modules/customHooks/useToggleView";
+import { useToggleView } from "../../modules/customHooks/useToggleView";
 import theme from "../../theme/Theme";
 import { PlainIconBtn } from "../general/PlainIconBtn";
 import { ModalText } from "./ModalText";
@@ -18,7 +18,7 @@ export function LabelWithInfo({
   className,
   infoText,
 }: Props) {
-  const { infoIsOpen, closeInfo, openInfo } = useToggleViewNext("info", false);
+  const { infoIsOpen, closeInfo, openInfo } = useToggleView("info", false);
   return (
     <Styled className={`LabelWithInfo-root ${className ?? ""}`}>
       <span>{label}</span>
@@ -50,7 +50,7 @@ const Styled = styled.span`
   }
 
   .LabelWithInfo-infoModal {
-    .SectionModal-mainSection {
+    .ModalSection-mainSection {
       max-width: 600px;
     }
   }

@@ -31,6 +31,7 @@ export const sectionPathContexts = {
   },
   activeDealPage: sectionPathContext({
     ...activeFocals,
+    userVarbListMain: absolute.userVarbListStored,
     userVarbItemMain: absolute.userVarbItemStored,
     ongoingListMain: absolute.ongoingListStored,
     ongoingItemMain: absolute.ongoingItemStored,
@@ -39,6 +40,7 @@ export const sectionPathContexts = {
   }),
   userVarbEditorPage: sectionPathContext({
     ...activeFocals,
+    userVarbListMain: absolute.userVarbListEditor,
     userVarbItemMain: absolute.userVarbItemEditor,
     ongoingListMain: absolute.ongoingListStored,
     ongoingItemMain: absolute.ongoingItemStored,
@@ -47,6 +49,7 @@ export const sectionPathContexts = {
   }),
   userListEditorPage: sectionPathContext({
     ...activeFocals,
+    userVarbListMain: absolute.userVarbListStored,
     userVarbItemMain: absolute.userVarbItemStored,
     ongoingListMain: absolute.ongoingListEditor,
     ongoingItemMain: absolute.ongoingItemEditor,
@@ -69,6 +72,7 @@ export const sectionPathContexts = {
     mgmtFocal: absolute.mgmtLatent,
 
     dealFocal: absolute.dealLatent,
+    userVarbListMain: absolute.userVarbListLatent,
     userVarbItemMain: absolute.userVarbItemLatent,
     ongoingListMain: absolute.ongoingListLatent,
     ongoingItemMain: absolute.ongoingItemLatent,

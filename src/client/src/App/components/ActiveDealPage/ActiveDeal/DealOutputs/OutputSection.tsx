@@ -1,6 +1,6 @@
 import { CgDetailsLess, CgDetailsMore } from "react-icons/cg";
 import styled, { css } from "styled-components";
-import { useToggleViewNext } from "../../../../modules/customHooks/useToggleView";
+import { useToggleView } from "../../../../modules/customHooks/useToggleView";
 import { CompletionStatus } from "../../../../sharedWithServer/SectionsMeta/values/StateValue/subStringValues";
 import theme from "../../../../theme/Theme";
 import { MainSection } from "../../../appWide/GeneralSection/MainSection";
@@ -20,8 +20,8 @@ export function OutputSection({
   hide?: boolean;
   completionStatus: CompletionStatus;
 }) {
-  const { outputsIsOpen, openOutputs } = useToggleViewNext("outputs", false);
-  const { detailsIsOpen, toggleDetails } = useToggleViewNext("details", false);
+  const { outputsIsOpen, openOutputs } = useToggleView("outputs", false);
+  const { detailsIsOpen, toggleDetails } = useToggleView("details", false);
   const isComplete = completionStatus === "allValid";
   return (
     <Styled className="OutputSection-root" $hide={hide}>

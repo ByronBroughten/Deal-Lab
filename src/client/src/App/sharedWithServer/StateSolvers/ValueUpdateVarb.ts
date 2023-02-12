@@ -199,7 +199,7 @@ export class SolveValueVarb<
     loadLocalString: (): StringObj => {
       const { updateFnProps } = this.inEntityVarb;
       const varb = this.getterSection.varbByFocalMixed(
-        updateFnProps.loadLocalString as PathInVarbInfo
+        updateFnProps.localString as PathInVarbInfo
       );
       return stringObj(varb.value("string"));
     },

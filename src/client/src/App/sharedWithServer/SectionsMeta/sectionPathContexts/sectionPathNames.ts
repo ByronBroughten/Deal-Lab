@@ -22,6 +22,7 @@ const sectionPathNameToSn = checkPathTypeToSectionName({
 
   mgmtFocal: "mgmt",
   calculatedVarbsFocal: "calculatedVarbs",
+  userVarbListMain: "userVarbList",
   userVarbItemMain: "userVarbItem",
   ongoingListMain: "ongoingList",
   ongoingItemMain: "ongoingItem",

@@ -2,8 +2,12 @@ import { FormControl, MenuItem, Select } from "@material-ui/core";
 import React from "react";
 import styled from "styled-components";
 import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
+import { VarbPathOptionName } from "../../sharedWithServer/StateEntityGetters/pathNameOptions";
 import theme from "../../theme/Theme";
-import { NumObjEntityEditor } from "../inputs/NumObjEntityEditor";
+import {
+  NumEditorType,
+  NumObjEntityEditor,
+} from "../inputs/NumObjEntityEditor";
 
 type OnChange = (
   event: React.ChangeEvent<{ name?: string | undefined; value: unknown }>
@@ -13,7 +17,11 @@ export type SelectEditorProps = {
   className?: string;
   selectValue: string;
   onChange?: OnChange;
-  editorVarbInfo?: FeVarbInfo;
+  editorProps?: {
+    feVarbInfo: FeVarbInfo;
+    editorType: NumEditorType;
+    quickViewVarbNames?: VarbPathOptionName[];
+  };
   menuItems: [string, string][];
   equalsValue?: string;
   rightOfControls?: React.ReactNode;
@@ -22,7 +30,7 @@ export function SelectEditor({
   className,
   selectValue,
   onChange,
-  editorVarbInfo,
+  editorProps,
   menuItems,
   equalsValue,
   rightOfControls,
@@ -57,12 +65,12 @@ export function SelectEditor({
           ))}
         </Select>
       </FormControl>
-      {editorVarbInfo && (
+      {editorProps && (
         <NumObjEntityEditor
           {...{
             className: "SelectEditor-editor",
-            feVarbInfo: editorVarbInfo,
             labeled: false,
+            ...editorProps,
           }}
         />
       )}
