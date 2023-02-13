@@ -26,7 +26,7 @@ export function RepairValue({ feId }: Props) {
           valueMode === "lumpSum"
             ? {
                 feVarbInfo: repairValue.varbInfo("valueLumpSumEditor"),
-                editorType: "numeric",
+                editorType: "equation",
               }
             : undefined,
         menuItems: [

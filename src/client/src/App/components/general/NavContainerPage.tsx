@@ -1,10 +1,13 @@
-import { NavContainer, NavContainerProps } from "./NavContainer";
+import {
+  NavContainerProps,
+  NavTopAndSideContainer,
+} from "./NavTopAndSideContainer";
 import { PageMain } from "./PageMain";
 
 export function NavContainerPage({ className, ...rest }: NavContainerProps) {
   return (
     <PageMain className={`NavContainerPage-root ${className ?? ""}`}>
-      <NavContainer {...rest} />
+      <NavTopAndSideContainer {...rest} />
     </PageMain>
   );
 }

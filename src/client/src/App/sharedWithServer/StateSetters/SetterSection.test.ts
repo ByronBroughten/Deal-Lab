@@ -1,4 +1,4 @@
-import { makeDefaultPropertyPack } from "../defaultMaker/makeDefaultPropertyPack";
+import { makeDefaultProperty } from "../defaultMaker/makeDefaultProperty";
 import { ChildName } from "../SectionsMeta/sectionChildrenDerived/ChildName";
 import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
 import { PathSectionName } from "../SectionsMeta/sectionPathContexts/sectionPathNames";
@@ -59,7 +59,7 @@ describe("SetterSection", () => {
     } as const;
 
     const packBuilder = PackBuilderSection.loadAsOmniChild(
-      makeDefaultPropertyPack()
+      makeDefaultProperty()
     );
     packBuilder.updateValues(packVarbs);
 

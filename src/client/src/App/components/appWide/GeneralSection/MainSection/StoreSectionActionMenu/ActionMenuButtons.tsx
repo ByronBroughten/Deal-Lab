@@ -95,22 +95,22 @@ export function useActionMenuBtns<
         />
       );
     },
-    get copyAndSave() {
-      return (
-        <LabeledIconBtn
-          key="copyAndSave"
-          label="Copy and save"
-          icon={
-            <span style={{ display: "flex" }}>
-              <BiCopy size="23" />
-              <AiOutlineSave size="21" />
-            </span>
-          }
-          onClick={() => mainSection.copyAndSave()}
-          disabled={isGuest}
-        />
-      );
-    },
+    // get copyAndSave() {
+    //   return (
+    //     <LabeledIconBtn
+    //       key="copyAndSave"
+    //       label="Copy and save"
+    //       icon={
+    //         <span style={{ display: "flex" }}>
+    //           <BiCopy size="23" />
+    //           <AiOutlineSave size="21" />
+    //         </span>
+    //       }
+    //       onClick={() => mainSection.copyAndSave()}
+    //       disabled={isGuest}
+    //     />
+    //   );
+    // },
     get load() {
       return (
         <ActionMenuLoadBtn

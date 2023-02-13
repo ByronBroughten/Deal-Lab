@@ -14,7 +14,7 @@ export type NumObj = {
 };
 
 export function numObj(
-  mainText: string | number,
+  mainText: string | number = "",
   entities: ValueInEntity[] = [],
   solvableText: string = `${mainText}`
 ): NumObj {

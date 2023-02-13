@@ -7,7 +7,7 @@ import { makeDefaultMain } from "./makeDefaultMain";
 import { makeDefaultMgmtPack } from "./makeDefaultMgmtPack";
 import { makeDefaultOneTimeValue } from "./makeDefaultOneTimeValue";
 import { makeDefaultOngoingValue } from "./makeDefaultOngoingValue";
-import { makeDefaultPropertyPack } from "./makeDefaultPropertyPack";
+import { makeDefaultProperty } from "./makeDefaultProperty";
 import { makeDefaultUserVarbItem } from "./makeDefaultUserVarbItem";
 
 type FunctionsMakeDefault<SN extends SectionNameByType> = {
@@ -25,7 +25,7 @@ class DefaultSectionPackMaker<SN extends SectionNameByType> {
 
 export const defaultMaker = new DefaultSectionPackMaker({
   userVarbItem: makeDefaultUserVarbItem,
-  property: makeDefaultPropertyPack,
+  property: makeDefaultProperty,
   singleTimeValue: makeDefaultOneTimeValue,
   ongoingValue: makeDefaultOngoingValue,
   mgmt: makeDefaultMgmtPack,

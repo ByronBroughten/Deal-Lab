@@ -1,16 +1,15 @@
-import React from "react";
 import styled from "styled-components";
 import { NavBar } from "../NavBar";
 import { SidebarContainer, SidebarContainerProps } from "./SidebarContainer";
 
 export type NavContainerProps = SidebarContainerProps;
-export function NavContainer({
+export function NavTopAndSideContainer({
   className,
   activeBtnName,
   ...rest
 }: NavContainerProps) {
   return (
-    <Styled className={`NavContainer-root ${className ?? ""}`}>
+    <Styled className={`NavTopAndSideContainer-root ${className ?? ""}`}>
       <NavBar {...{ activeBtnName }} />
       <SidebarContainer
         {...{

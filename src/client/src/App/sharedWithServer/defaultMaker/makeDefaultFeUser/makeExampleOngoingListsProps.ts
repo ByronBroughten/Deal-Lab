@@ -19,19 +19,36 @@ export const userVarbLifespans = {
   landscaping: ["Landscaping", numObj(10)],
 } as const;
 
+const spans = userVarbLifespans;
+
+export const defaultPropertyCapExListProps = [
+  [...spans.roof, numObj()],
+  [...spans.waterHeater, numObj()],
+  [...spans.hvac, numObj()],
+  [...spans.interiorPaint, numObj()],
+  [...spans.windows, numObj()],
+  [...spans.siding, numObj()],
+  [...spans.appliances, numObj()],
+  [...spans.plumbing, numObj()],
+  [...spans.flooring, numObj()],
+  [...spans.structure, numObj()],
+  [...spans.cabinetsCounters, numObj()],
+  [...spans.landscaping, numObj()],
+] as const;
+
 export const examplePropertyCapExListProps = [
-  [...userVarbLifespans.roof, numObj(8000)],
-  [...userVarbLifespans.waterHeater, numObjNext("1200*", ["numUnits"])],
-  [...userVarbLifespans.hvac, numObjNext("3500*", ["numUnits"])],
-  [...userVarbLifespans.interiorPaint, numObjNext(["sqft"], "*3")],
-  [...userVarbLifespans.windows, numObjNext("(5+2*", ["numBedrooms"], ")*500")],
-  [...userVarbLifespans.siding, numObjNext(["sqft"], "*4")],
-  [...userVarbLifespans.appliances, numObjNext("550+715")],
-  [...userVarbLifespans.plumbing, numObjNext("5000*", ["numUnits"])],
-  [...userVarbLifespans.flooring, numObjNext(["sqft"], "*3")],
-  [...userVarbLifespans.structure, numObjNext(10000)],
-  [...userVarbLifespans.cabinetsCounters, numObjNext("4000*", ["numUnits"])],
-  [...userVarbLifespans.landscaping, numObjNext(1000)],
+  [...spans.roof, numObj(8000)],
+  [...spans.waterHeater, numObjNext("1200*", ["numUnits"])],
+  [...spans.hvac, numObjNext("3500*", ["numUnits"])],
+  [...spans.interiorPaint, numObjNext(["sqft"], "*3")],
+  [...spans.windows, numObjNext("(5+2*", ["numBedrooms"], ")*500")],
+  [...spans.siding, numObjNext(["sqft"], "*4")],
+  [...spans.appliances, numObjNext("550+715")],
+  [...spans.plumbing, numObjNext("5000*", ["numUnits"])],
+  [...spans.flooring, numObjNext(["sqft"], "*3")],
+  [...spans.structure, numObjNext(10000)],
+  [...spans.cabinetsCounters, numObjNext("4000*", ["numUnits"])],
+  [...spans.landscaping, numObjNext(1000)],
 ] as const;
 
 export const exampleUserCapExProps = [

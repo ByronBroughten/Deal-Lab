@@ -3,37 +3,6 @@ import { numObj, NumObj } from "../../SectionsMeta/values/StateValue/NumObj";
 import { stringObj } from "../../SectionsMeta/values/StateValue/StringObj";
 import { PackBuilderSection } from "../../StatePackers.ts/PackBuilderSection";
 
-type CapExItemProp = readonly [string, NumObj, NumObj];
-export function makeCapExList(
-  itemPropArr: readonly CapExItemProp[],
-  dbId?: string
-): SectionPack<"ongoingList"> {
-  const feUser = PackBuilderSection.initAsOmniChild("feUser");
-  const capExListSwitch = "labeledSpanOverCost";
-  const advancedCapExList = feUser.addAndGetChild("ongoingListMain", {
-    dbId,
-    dbVarbs: {
-      itemValueSwitch: capExListSwitch,
-      itemOngoingSwitch: "yearly",
-      totalOngoingSwitch: "yearly",
-      displayName: stringObj("CapEx Examples"),
-    },
-  });
-  for (const itemProps of itemPropArr) {
-    advancedCapExList.addChild("ongoingItem", {
-      dbVarbs: {
-        displayNameEditor: itemProps[0],
-        valueOngoingSwitch: "yearly",
-        valueSourceSwitch: capExListSwitch,
-        lifespanSpanEditor: itemProps[1],
-        lifespanSpanSwitch: "years",
-        costToReplace: itemProps[2],
-      },
-    });
-  }
-  return advancedCapExList.makeSectionPack();
-}
-
 type UtilityItemProp = readonly [string, NumObj];
 export function makeUtilityList(
   itemPropArr: readonly UtilityItemProp[],
@@ -83,4 +52,32 @@ export function makeExampleSingleTimeList(
     });
   }
   return list.makeSectionPack();
+}
+
+type CapExItemProp = readonly [string, NumObj, NumObj];
+export function makeCapExList(
+  itemPropArr: readonly CapExItemProp[],
+  dbId?: string
+): SectionPack<"capExList"> {
+  const feUser = PackBuilderSection.initAsOmniChild("feUser");
+  const itemOngoingSwitch = "yearly";
+  const capExList = feUser.addAndGetChild("capExListMain", {
+    dbId,
+    dbVarbs: {
+      itemOngoingSwitch,
+      totalOngoingSwitch: "yearly",
+    },
+  });
+  for (const itemProps of itemPropArr) {
+    capExList.addChild("capExItem", {
+      dbVarbs: {
+        displayNameEditor: itemProps[0],
+        valueOngoingSwitch: itemOngoingSwitch,
+        lifespanSpanEditor: itemProps[1],
+        lifespanSpanSwitch: "years",
+        costToReplace: itemProps[2],
+      },
+    });
+  }
+  return capExList.makeSectionPack();
 }

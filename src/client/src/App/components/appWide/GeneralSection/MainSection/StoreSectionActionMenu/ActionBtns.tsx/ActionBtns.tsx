@@ -92,21 +92,21 @@ export function useActionBtns<SN extends SectionNameByType<"hasIndexStore">>({
         />
       );
     },
-    get copyAndSave() {
-      return (
-        <StyledActionBtn
-          middle="Copy and save"
-          left={
-            <span style={{ display: "flex" }}>
-              <BiCopy size={21} />
-              <AiOutlineSave size={19} />
-            </span>
-          }
-          onClick={() => mainSection.copyAndSave()}
-          disabled={isGuest}
-        />
-      );
-    },
+    // get copyAndSave() {
+    //   return (
+    //     <StyledActionBtn
+    //       middle="Copy and save"
+    //       left={
+    //         <span style={{ display: "flex" }}>
+    //           <BiCopy size={21} />
+    //           <AiOutlineSave size={19} />
+    //         </span>
+    //       }
+    //       onClick={() => mainSection.copyAndSave()}
+    //       disabled={isGuest}
+    //     />
+    //   );
+    // },
     get load() {
       return (
         <ActionLoadBtn

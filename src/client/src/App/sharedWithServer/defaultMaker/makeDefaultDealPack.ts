@@ -3,7 +3,7 @@ import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
 import { makeDefaultLoanPack } from "./makeDefaultLoanPack";
 import { makeDefaultMgmtPack } from "./makeDefaultMgmtPack";
 import { makeDefaultOutputList } from "./makeDefaultOutputList";
-import { makeDefaultPropertyPack } from "./makeDefaultPropertyPack";
+import { makeDefaultProperty } from "./makeDefaultProperty";
 
 export function makeDefaultDealPack(): SectionPack<"deal"> {
   const deal = PackBuilderSection.initAsOmniChild("deal", {
@@ -21,7 +21,7 @@ export function makeDefaultDealPack(): SectionPack<"deal"> {
   });
   deal.loadChild({
     childName: "property",
-    sectionPack: makeDefaultPropertyPack(),
+    sectionPack: makeDefaultProperty(),
   });
   deal.loadChild({
     childName: "mgmt",

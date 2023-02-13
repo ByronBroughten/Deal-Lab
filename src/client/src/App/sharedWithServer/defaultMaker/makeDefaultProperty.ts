@@ -1,9 +1,15 @@
 import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
-import { makeUtilityList } from "./makeDefaultFeUser/makeExampleOngoingLists";
-import { blankPropertyUtilityProps } from "./makeDefaultFeUser/makeExampleOngoingListsProps";
+import {
+  makeCapExList,
+  makeUtilityList,
+} from "./makeDefaultFeUser/makeExampleOngoingLists";
+import {
+  blankPropertyUtilityProps,
+  defaultPropertyCapExListProps,
+} from "./makeDefaultFeUser/makeExampleOngoingListsProps";
 
-export function makeDefaultPropertyPack(): SectionPack<"property"> {
+export function makeDefaultProperty(): SectionPack<"property"> {
   const property = PackBuilderSection.initAsOmniChild("property", {
     dbVarbs: {
       taxesOngoingSwitch: "yearly",
@@ -24,7 +30,8 @@ export function makeDefaultPropertyPack(): SectionPack<"property"> {
   property.addChild("maintenanceValue");
 
   const capExValue = property.addAndGetChild("capExValue");
-  capExValue.addChild("capExList");
+  const capExList = capExValue.addAndGetChild("capExList");
+  capExList.loadSelf(makeCapExList(defaultPropertyCapExListProps));
 
   property.addChild("upfrontExpenseGroup");
   property.addChild("ongoingExpenseGroup");

@@ -26,6 +26,7 @@ export function LabeledEquation({
       <td className="VarbListTable-firstContentCell">
         <div className="AdditiveItem-contentCellDiv">
           <NumObjEntityEditor
+            editorType="equation"
             feVarbInfo={{
               ...feInfo,
               varbName: "valueEditor",

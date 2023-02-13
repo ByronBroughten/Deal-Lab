@@ -7,13 +7,25 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 // - Taylor which quick-access variables are accessible to each editor.
-// - Give CapEx a default list
-// - Verify normal login
-// - Fix FB login
+//   - What about inputs that I would like to have access to custom variables
+//     but that lack good quick-access ones? (I'm thinking of capEx lifespans)
+//     - Just make the variables modal pop up for those
 
-// 2. Finalize the variables
+// Ones that would benefit from variables but not from quick-access:
+// - Repair value lump sum editor
+// - Repair value itemized value editor
+// - CapEx itemized lifespan
+// For these, clicking "+ Variable" could just go to the variable page, which should then have the same info dot as at the other spot.
+
+// Ones that would benefit from tailored quick-access variables but would need more specific components
+// - utilities itemized editors
+// - capEx itemized replacement cost
+
+// - Give CapEx a default list
+// - Add an info dot to the variables selector modal
 // - Give it the "All Variables" thing a displayNameFull filter
 
+// 2. Finalize the variables
 // - Put the downpayment stuff on financing
 // - PITI, too
 
@@ -21,6 +33,9 @@ AppRegistry.runApplication("App", {
 // - Add an explanation to the Lists page
 
 // - Organize lists into multiple sections: CapEx, Utilities, Closing Costs, General Costs, General Ongoing Costs.
+
+// 2.5 Meet with Emily
+// 2.6 Show it to Marina
 
 // 3. Make a simple wordpress website
 // - Just do it badly at first, for the gist of it.

@@ -2,19 +2,21 @@ import { SectionPack } from "../../SectionsMeta/sectionChildrenDerived/SectionPa
 import { numObj } from "../../SectionsMeta/values/StateValue/NumObj";
 import { stringObj } from "../../SectionsMeta/values/StateValue/StringObj";
 import { PackBuilderSection } from "../../StatePackers.ts/PackBuilderSection";
-import { makeDefaultPropertyPack } from "../makeDefaultPropertyPack";
+import { makeDefaultProperty } from "../makeDefaultProperty";
 import {
+  makeCapExList,
   makeExampleSingleTimeList,
   makeUtilityList,
 } from "./makeExampleOngoingLists";
 import {
+  examplePropertyCapExListProps,
   examplePropertyUtilityProps,
   examplePropetyRepairProps,
 } from "./makeExampleOngoingListsProps";
 
 export function makeExampleProperty(): SectionPack<"property"> {
   const property = PackBuilderSection.initAsOmniChild("property");
-  property.loadSelf(makeDefaultPropertyPack());
+  property.loadSelf(makeDefaultProperty());
   property.updater.updateDbId("exampleprop1");
 
   property.updater.updateValues({
@@ -47,6 +49,10 @@ export function makeExampleProperty(): SectionPack<"property"> {
   maintenanceValue.updateValues({
     valueMode: "onePercentAndSqft",
   });
+
+  const capExValue = property.onlyChild("capExValue");
+  const capExList = capExValue.onlyChild("capExList");
+  capExList.loadSelf(makeCapExList(examplePropertyCapExListProps));
 
   return property.makeSectionPack();
 }

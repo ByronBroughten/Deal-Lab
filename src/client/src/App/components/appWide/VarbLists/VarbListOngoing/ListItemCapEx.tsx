@@ -35,10 +35,13 @@ const ListItemOngoingMemo = React.memo(function ListItemOngoingMemo({
                   ...feInfo,
                   varbName: "costToReplace",
                 }}
+                editorType="equation"
+                quickViewVarbNames={["numUnits", "numBedrooms", "sqft"]}
               />
             </td>
             <td className="ListItemCapEx-cell">
               <NumObjEntityEditor
+                editorType="equation"
                 labeled={false}
                 feVarbInfo={{
                   ...feInfo,

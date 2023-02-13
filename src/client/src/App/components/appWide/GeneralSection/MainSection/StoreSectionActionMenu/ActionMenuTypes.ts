@@ -10,7 +10,7 @@ export const isSavedActions = [
   "saveUpdates",
   "saveAsNew",
   "copy",
-  "copyAndSave",
+  // "copyAndSave",
   // "delete",
 ] as const;
 const allIsSavedActions = [...guestIsSavedActions, ...isSavedActions];

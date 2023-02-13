@@ -43,7 +43,7 @@ export function NumObjEntityEditor({
   labeled = true,
   bypassNumeric = false,
   doEquals = true,
-  quickViewVarbNames = [],
+  quickViewVarbNames,
   label,
   ...props
 }: Props) {
@@ -60,7 +60,9 @@ export function NumObjEntityEditor({
         displayName: varb.displayName,
         startAdornment: props.startAdornment ?? varb.startAdornment,
         endAdornment: props.endAdornment ?? varb.endAdornment,
-        quickViewVarbNameString: quickViewVarbNames.join(seperator),
+        quickViewVarbNameString: quickViewVarbNames
+          ? quickViewVarbNames.join(seperator)
+          : undefined,
 
         className,
         labeled,
@@ -81,7 +83,7 @@ interface MemoProps extends Adornments, FeVarbInfo {
   editorTextStatus: EditorTextStatus;
   displayName: string;
   editorType: NumEditorType;
-  quickViewVarbNameString: string;
+  quickViewVarbNameString?: string;
 
   className?: string;
   labeled?: boolean;
@@ -126,9 +128,6 @@ const MemoNumObjEntityEditor = React.memo(function MemoNumObjEntityEditor({
     },
     []
   );
-  const varbPathNames = quickViewVarbNameString.split(
-    seperator
-  ) as VarbPathName[];
   return (
     <SectionInfoContextProvider {...rest}>
       <Styled
@@ -153,7 +152,13 @@ const MemoNumObjEntityEditor = React.memo(function MemoNumObjEntityEditor({
           />
           {varbSelectorIsOpen && (
             <NumObjVarbSelectorNext
-              {...{ ...rest, setEditorState, varbPathNames }}
+              {...{
+                ...rest,
+                setEditorState,
+                varbPathNames: quickViewVarbNameString
+                  ? (quickViewVarbNameString.split(seperator) as VarbPathName[])
+                  : undefined,
+              }}
               ref={popperRef}
             />
           )}
