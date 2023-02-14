@@ -29,7 +29,6 @@ export function OutputItem({ feId }: Props) {
       {...{
         ...feInfo,
         firstCells: option(),
-        nextValueSwitch,
       }}
     />
   );

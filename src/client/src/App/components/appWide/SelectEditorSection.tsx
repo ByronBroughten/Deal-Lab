@@ -3,7 +3,7 @@ import { FormSectionLabeled } from "./FormSectionLabeled";
 import { SelectEditor, SelectEditorProps } from "./SelectEditor";
 
 export interface SelectEditorSectionProps extends SelectEditorProps {
-  label: string;
+  label: React.ReactNode;
 }
 export function SelectEditorSection({
   label,

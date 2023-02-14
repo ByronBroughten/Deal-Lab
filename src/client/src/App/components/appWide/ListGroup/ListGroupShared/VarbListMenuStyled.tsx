@@ -6,11 +6,13 @@ export const VarbListMenuStyled = styled.div`
     display: flex;
     justify-content: space-between;
   }
-  .VarbListGeneric-title {
-    .MuiInputBase-root {
-      min-width: 5rem;
+
+  .VarbListMenu-title {
+    .DraftEditor-root {
+      min-width: 120px;
     }
   }
+
   .VarbListMenu-titleRowLeft {
     display: flex;
   }

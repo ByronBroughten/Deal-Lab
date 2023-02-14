@@ -20,7 +20,6 @@ export function UserVarbItem({ feId }: Props) {
         firstCells: (
           <LabeledEquation {...{ ...feInfo, doEquals: varb.isPureUserVarb }} />
         ),
-        nextValueSwitch: "labeledEquation",
       }}
     />
   );

@@ -1,7 +1,7 @@
-import React from "react";
 import styled from "styled-components";
 import theme from "../../../../../theme/Theme";
 import { FormSection } from "../../../../appWide/FormSection";
+import { LabelWithInfo } from "../../../../appWide/LabelWithInfo";
 import { PercentOngoingDollarInput } from "../../general/PercentOngoingDollarInput";
 
 type Props = { feId: string; className?: string };
@@ -26,7 +26,15 @@ export function BasicMgmtInfo({ feId, className }: Props) {
       <FormSection>
         <PercentOngoingDollarInput
           {...{
-            label: "Vacancy Loss",
+            label: (
+              <LabelWithInfo
+                {...{
+                  label: "Vacancy Loss",
+                  infoTitle: "Vacancy Loss",
+                  infoText: `No property will be fully occupied 100% of the time. When tenants move out, it can sometimes take days or weeks to prepare their unit for another renter. To account for this, assume you will miss out on a certain portion of the property's rent.\n\nIf you're owner-managing the property and you're determined to keep vacancy low, a common method is to asume you will miss out on 5% of the rent; and if you're using a property manager or management company (who probably won't be quite as motivated as you), something like 10% is common to assume.`,
+                }}
+              />
+            ),
             percentOfWhat: "gross rent",
             unitBaseName: "vacancyLoss",
             ongoingBaseName: "vacancyLossDollars",

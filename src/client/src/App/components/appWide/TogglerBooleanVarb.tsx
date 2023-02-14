@@ -1,3 +1,4 @@
+import React from "react";
 import { unstable_batchedUpdates } from "react-dom";
 import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { useSetterVarb } from "../../sharedWithServer/stateClassHooks/useSetterVarb";
@@ -6,7 +7,7 @@ import { Toggler } from "../general/Toggler";
 interface Props {
   feVarbInfo: FeVarbInfo;
   name: string;
-  label: string;
+  label: React.ReactNode;
   onChange?: (nextValue?: boolean) => void;
   className?: string;
 }

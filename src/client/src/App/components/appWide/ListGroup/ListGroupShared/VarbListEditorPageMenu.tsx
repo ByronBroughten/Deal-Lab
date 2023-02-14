@@ -2,7 +2,6 @@ import { FeSectionInfo } from "../../../../sharedWithServer/SectionsMeta/Section
 import { SectionNameByType } from "../../../../sharedWithServer/SectionsMeta/SectionNameByType";
 import { useGetterSection } from "../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { BigStringEditor } from "../../../inputs/BigStringEditor";
-import { ActionMenuLoadBtn } from "../../GeneralSection/MainSection/StoreSectionActionMenu/ActionMenuLoadBtn";
 import { VarbListTotal } from "./VarbListGeneric/VarbListTotal";
 import { VarbListMenuStyled } from "./VarbListMenuStyled";
 
@@ -22,9 +21,9 @@ export function VarbListEditorPageMenu<
         <div className="VarbListMenu-titleRowLeft">
           <BigStringEditor
             {...{
-              feVarbInfo: list.varbInfo("displayName"),
-              placeholder: "Name",
               className: "VarbListMenu-title",
+              feVarbInfo: list.varbInfo("displayName"),
+              placeholder: "Collection name",
             }}
           />
           {totalVarbName && (
@@ -35,15 +34,6 @@ export function VarbListEditorPageMenu<
               }}
             />
           )}
-        </div>
-        <div className="VarbListGeneric-titleRowRight">
-          <ActionMenuLoadBtn
-            {...{
-              loadMode: "loadAndCopy",
-              loadWhat: "List",
-              feInfo,
-            }}
-          />
         </div>
       </div>
     </VarbListMenuStyled>

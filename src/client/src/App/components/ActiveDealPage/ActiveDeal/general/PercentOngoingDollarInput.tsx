@@ -1,3 +1,4 @@
+import React from "react";
 import { VarbName } from "../../../../sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
 import { FeSectionInfo } from "../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { SectionName } from "../../../../sharedWithServer/SectionsMeta/SectionName";
@@ -8,7 +9,7 @@ interface Props<SN extends SectionName> extends FeSectionInfo<SN> {
   unitBaseName: string;
   ongoingBaseName: string;
   percentOfWhat: string;
-  label: string;
+  label: React.ReactNode;
   className?: string;
 }
 export function PercentOngoingDollarInput<SN extends SectionName>({

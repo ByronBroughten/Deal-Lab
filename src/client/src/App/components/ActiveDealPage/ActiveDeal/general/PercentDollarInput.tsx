@@ -1,4 +1,5 @@
 import { FormControl, MenuItem, Select } from "@material-ui/core";
+import React from "react";
 import styled from "styled-components";
 import {
   switchKeyToVarbNames,
@@ -18,7 +19,7 @@ interface Props<SN extends SectionName> extends FeSectionInfo<SN> {
   unitBaseName: string;
   dollarVarbName: VarbName<SN>;
   percentOfWhat: string;
-  label: string;
+  label: React.ReactNode;
   className?: string;
 }
 export function PercentDollarInput<SN extends SectionName>({

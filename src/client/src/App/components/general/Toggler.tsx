@@ -1,11 +1,12 @@
 import { FormControlLabel, FormGroup, Switch } from "@material-ui/core";
+import React from "react";
 import styled from "styled-components";
 import theme from "../../theme/Theme";
 
 type Props = {
   checked: boolean;
   name: string;
-  label: string;
+  label: React.ReactNode;
   onChange: () => void;
   className?: string;
 };
