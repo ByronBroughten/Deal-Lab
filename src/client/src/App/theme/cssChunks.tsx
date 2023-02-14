@@ -120,7 +120,8 @@ const ccs = {
         }
         th,
         td {
-          padding-left: ${theme.s3};
+          padding-left: ${theme.s25};
+          padding-right: ${theme.s25};
         }
         td {
           padding-top: ${theme.s15};

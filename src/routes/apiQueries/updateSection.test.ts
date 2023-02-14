@@ -21,12 +21,12 @@ import {
 const sectionName = "property";
 const originalValues = {
   displayName: stringObj("Original displayName"),
-  price: numObj(100000),
+  purchasePrice: numObj(100000),
 } as const;
 
 const updatedValues = {
   displayName: stringObj("Updated displayName"),
-  price: numObj(500000),
+  purchasePrice: numObj(500000),
 } as const;
 
 type TestReqs = {
@@ -102,7 +102,9 @@ describe(testedRoute, () => {
     expect(updatedSection?.dbVarbs.displayName).toEqual(
       updatedValues.displayName
     );
-    expect(updatedSection?.dbVarbs.price).toEqual(updatedValues.price);
+    expect(updatedSection?.dbVarbs.purchasePrice).toEqual(
+      updatedValues.purchasePrice
+    );
   });
   it("should return 404 if there is not an entry in the db with the sectionPack's dbId concurrent", async () => {
     reqs.updateSection.body.sectionPack.dbId = Id.make();

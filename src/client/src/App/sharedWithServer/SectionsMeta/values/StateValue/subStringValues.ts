@@ -20,3 +20,5 @@ export type ClosingCostValueMode =
 export type CustomValueMode = "none" | "lumpSum" | "itemize";
 
 export type ValueSource = "labeledEquation" | "valueSource";
+
+export type DealMode = "buyAndHold" | "fixAndFlip" | "brrrrr";

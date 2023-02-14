@@ -20,7 +20,7 @@ export default function BasicPropertyInfo({ feId, className }: Props) {
         <div className="BasicPropertyInfo-editors">
           <NumObjEntityEditor
             className={`BasicPropertyInfo-numObjEditor BasicPropertyInfo-marginEditor`}
-            feVarbInfo={property.varbInfo("price")}
+            feVarbInfo={property.varbInfo("purchasePrice")}
           />
           <NumObjEntityEditor
             className={`BasicPropertyInfo-numObjEditor`}
@@ -30,7 +30,7 @@ export default function BasicPropertyInfo({ feId, className }: Props) {
             editorType="equation"
             className={`BasicPropertyInfo-numObjEditor`}
             feVarbInfo={property.varbInfo("homeInsOngoingEditor")}
-            quickViewVarbNames={["price", "sqft", "numUnits"]}
+            quickViewVarbNames={["purchasePrice", "sqft", "numUnits"]}
           />
           <NumObjEntityEditor
             className={`BasicPropertyInfo-numObjEditor`}

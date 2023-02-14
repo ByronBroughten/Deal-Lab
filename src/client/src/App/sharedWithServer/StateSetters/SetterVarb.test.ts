@@ -5,7 +5,7 @@ import { SetterTesterVarb } from "./TestUtils/SetterTesterVarb";
 describe("SetterVarb", () => {
   const namesAndValues = [
     ["propertyFocal", ["displayName", stringObj("New Title")]],
-    ["propertyFocal", ["price", numObj(250000)]],
+    ["propertyFocal", ["purchasePrice", numObj(250000)]],
     ["unit", ["rent"]],
   ] as const;
   it("should directly update the value", () => {
@@ -20,7 +20,7 @@ describe("SetterVarb", () => {
   it("should update and solve for the value", () => {
     const tester = SetterTesterVarb.init({
       pathName: "propertyFocal",
-      varbName: "price",
+      varbName: "purchasePrice",
     });
     const preNum = tester.get.numberOrZero;
 

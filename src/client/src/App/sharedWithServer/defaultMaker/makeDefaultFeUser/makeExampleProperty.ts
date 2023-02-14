@@ -21,7 +21,7 @@ export function makeExampleProperty(): SectionPack<"property"> {
 
   property.updater.updateValues({
     displayName: stringObj("Example Property"),
-    price: numObj(250000),
+    purchasePrice: numObj(250000),
     taxesOngoingEditor: numObj(2800),
     taxesOngoingSwitch: "yearly",
     homeInsOngoingEditor: numObj(1800),

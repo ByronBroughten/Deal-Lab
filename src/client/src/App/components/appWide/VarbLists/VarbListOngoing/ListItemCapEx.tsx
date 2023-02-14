@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { useGetterSection } from "../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { useSetterSection } from "../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import theme from "../../../../theme/Theme";
 import { MaterialStringEditor } from "../../../inputs/MaterialStringEditor";
@@ -15,6 +16,9 @@ const ListItemOngoingMemo = React.memo(function ListItemOngoingMemo({
   displayValueVarb,
 }: MemoProps) {
   const feInfo = { sectionName: "capExItem", feId } as const;
+  const capExItem = useGetterSection(feInfo);
+  const lifespan = capExItem.valueNext("lifespanSpanEditor").mainText;
+  const costToReplace = capExItem.valueNext("costToReplace").mainText;
   return (
     <Styled
       {...{
@@ -28,8 +32,9 @@ const ListItemOngoingMemo = React.memo(function ListItemOngoingMemo({
                 {...{ ...feInfo, varbName: "displayNameEditor" }}
               />
             </td>
-            <td className="ListItemCapEx-cell">
+            <td className="ListItemCapEx-cell VarbListTable-firstContentCell">
               <NumObjEntityEditor
+                className="ListItemCapEx-costToReplace"
                 labeled={false}
                 feVarbInfo={{
                   ...feInfo,
@@ -41,6 +46,7 @@ const ListItemOngoingMemo = React.memo(function ListItemOngoingMemo({
             </td>
             <td className="ListItemCapEx-cell">
               <NumObjEntityEditor
+                className="ListItemCapEx-lifespan"
                 editorType="equation"
                 labeled={false}
                 feVarbInfo={{
@@ -50,7 +56,9 @@ const ListItemOngoingMemo = React.memo(function ListItemOngoingMemo({
               />
             </td>
             <td className="ListItemCapEx-cell">
-              <span className="ListItemCapEx-equals">{`= ${displayValueVarb}`}</span>
+              {lifespan && costToReplace && (
+                <span className="ListItemCapEx-equals">{`= ${displayValueVarb}`}</span>
+              )}
             </td>
           </>
         ),
@@ -64,6 +72,18 @@ const Styled = styled(VarbListItemStyled)`
     margin-left: ${theme.s2};
   }
   td.ListItemCapEx-cell {
+  }
+
+  .ListItemCapEx-lifespan {
+    .DraftEditor-root {
+      min-width: 46px;
+    }
+  }
+
+  .ListItemCapEx-costToReplace {
+    .DraftEditor-root {
+      min-width: 93px;
+    }
   }
 `;
 

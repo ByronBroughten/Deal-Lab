@@ -45,7 +45,7 @@ const fullLists = [
     "Misc Repair Estimate Methods",
     [
       ["10% of Rent", numObjNext(["targetRentMonthly"], "* .10")],
-      ["1% of Price", numObjNext(["price"], "* .01")],
+      ["1% of Price", numObjNext(["purchasePrice"], "* .01")],
       ["Square Feet", numObjNext(["sqft"])],
       ["Price/Sqft Hybrid", priceSqftMiscRepairHybrid],
     ],

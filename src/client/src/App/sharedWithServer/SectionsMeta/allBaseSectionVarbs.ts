@@ -174,10 +174,10 @@ export function makeAllBaseSectionVarbs() {
       ...baseVarbs(
         "numObj",
         [
-          "price",
+          "purchasePrice",
           "upfrontExpenses",
           "upfrontRevenue",
-          "arv",
+          "afterRepairValue",
           "sellingCosts",
         ] as const,
         dollars

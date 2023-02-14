@@ -42,9 +42,9 @@ const group = displayGroup;
 export const allDisplaySectionVarbs = {
   ...allDefaultDisplaySectionVarbs(),
   ...displaySectionVarbsProp("property", {
-    price: varb("Purchase price"),
+    purchasePrice: varb("Purchase price"),
     sqft: varb("Square feet"),
-    arv: varb("ARV"),
+    afterRepairValue: varb("ARV"),
     sellingCosts: varb("Selling costs"),
     numUnits: varb("Unit count"),
     numBedrooms: varb("Bedrooms"),

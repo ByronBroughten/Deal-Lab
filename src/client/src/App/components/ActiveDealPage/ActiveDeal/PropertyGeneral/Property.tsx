@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { DealMode } from "../../../../sharedWithServer/SectionsMeta/values/StateValue/subStringValues";
 import { useGetterSection } from "../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { StrictOmit } from "../../../../sharedWithServer/utils/types";
 import theme from "../../../../theme/Theme";
@@ -21,10 +22,11 @@ export function Property({
   closeInputs,
   hide,
   completionStatus,
+  dealMode,
 }: StrictOmit<
   MainDealSectionProps,
   "displayName" | "sectionTitle" | "detailVarbPropArr"
-> & { feId: string }) {
+> & { feId: string; dealMode: DealMode }) {
   const feInfo = { sectionName: "property", feId } as const;
   const property = useGetterSection(feInfo);
   const completionStatusProps = {
@@ -38,6 +40,7 @@ export function Property({
     <Styled
       {...{
         ...feInfo,
+        dealMode,
         showInputs,
         openInputs,
         closeInputs,

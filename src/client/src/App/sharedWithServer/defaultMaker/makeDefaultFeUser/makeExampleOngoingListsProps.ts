@@ -1,9 +1,28 @@
 import { numObj } from "../../SectionsMeta/values/StateValue/NumObj";
 import { numObjNext } from "../../SectionsMeta/values/StateValue/numObjNext";
 
+const userVarbCapExNames = {
+  roof: "Roof",
+  waterHeater: "Water heater",
+  hvac: "HVAC",
+  interiorPaint: "Interior paint",
+  windows: "Windows",
+  siding: "Siding",
+  appliances: "Appliances",
+  plumbing: "Plumbing",
+  driveway: "Driveway",
+  laundry: "Laundry",
+  flooring: "Flooring",
+  structure: "Structure",
+  cabinetsCounters: "Cabinets/counters",
+  garageDoor: "Garage door",
+  landscaping: "Landscaping",
+} as const;
+
+const names = userVarbCapExNames;
 export const userVarbLifespans = {
-  roof: ["Roof", numObj(12)],
-  waterHeater: ["Water heater", numObj(12)],
+  roof: [names.roof, numObj(12)],
+  waterHeater: [names.waterHeater, numObj(12)],
   hvac: ["HVAC", numObj(20)],
   interiorPaint: ["Interior paint", numObj(10)],
   windows: ["Windows", numObj(50)],
@@ -22,18 +41,18 @@ export const userVarbLifespans = {
 const spans = userVarbLifespans;
 
 export const defaultPropertyCapExListProps = [
-  [...spans.roof, numObj()],
-  [...spans.waterHeater, numObj()],
-  [...spans.hvac, numObj()],
-  [...spans.interiorPaint, numObj()],
-  [...spans.windows, numObj()],
-  [...spans.siding, numObj()],
-  [...spans.appliances, numObj()],
-  [...spans.plumbing, numObj()],
-  [...spans.flooring, numObj()],
-  [...spans.structure, numObj()],
-  [...spans.cabinetsCounters, numObj()],
-  [...spans.landscaping, numObj()],
+  [names.roof, numObj(), numObj()],
+  [names.waterHeater, numObj(), numObj()],
+  [names.hvac, numObj(), numObj()],
+  [names.interiorPaint, numObj(), numObj()],
+  [names.windows, numObj(), numObj()],
+  [names.siding, numObj(), numObj()],
+  [names.appliances, numObj(), numObj()],
+  [names.plumbing, numObj(), numObj()],
+  [names.flooring, numObj(), numObj()],
+  [names.structure, numObj(), numObj()],
+  [names.cabinetsCounters, numObj(), numObj()],
+  [names.landscaping, numObj(), numObj()],
 ] as const;
 
 export const examplePropertyCapExListProps = [

@@ -54,7 +54,7 @@ describe("SetterSection", () => {
     const childCountDifference = numChildrenNext - preChildCounts.childIds;
 
     const packVarbs = {
-      price: numObj(257801),
+      purchasePrice: numObj(257801),
       displayName: stringObj("New Title"),
     } as const;
 
@@ -80,8 +80,8 @@ describe("SetterSection", () => {
       preChildCounts.allSectionChildren + childCountDifference
     );
     expect(getter.value("displayName")).toEqual(packVarbs["displayName"]);
-    expect(getter.value("price", "numObj").mainText).toEqual(
-      packVarbs.price.mainText
+    expect(getter.value("purchasePrice", "numObj").mainText).toEqual(
+      packVarbs.purchasePrice.mainText
     );
   });
   describe("operations with children", () => {

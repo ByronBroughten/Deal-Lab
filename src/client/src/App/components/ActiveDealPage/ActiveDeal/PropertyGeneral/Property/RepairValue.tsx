@@ -16,7 +16,7 @@ export function RepairValue({ feId }: Props) {
   return (
     <SelectAndItemizeEditorSection
       {...{
-        label: "Upfront Repairs",
+        label: "Upfront Repair Costs",
         selectValue: valueMode,
         onChange: (e) => {
           const value = e.target.value as string;

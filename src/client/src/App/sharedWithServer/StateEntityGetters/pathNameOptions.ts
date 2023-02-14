@@ -11,7 +11,7 @@ import { Arr } from "../utils/Arr";
 import { VariableOption } from "./VariableGetterSections";
 
 const varbPathOptionNames = Arr.extractOrder(varbPathNames, [
-  "price",
+  "purchasePrice",
   "taxesMonthly",
   "taxesYearly",
   "homeInsMonthly",

@@ -20,6 +20,7 @@ export function LabeledEquation({
           {...{
             ...feInfo,
             varbName: "displayNameEditor",
+            className: "LabeledEquation-nameEditor",
           }}
         />
       </td>
@@ -31,7 +32,7 @@ export function LabeledEquation({
               ...feInfo,
               varbName: "valueEditor",
             }}
-            className="cost"
+            className="LabeledEquation-equationEditor"
             labeled={false}
             endAdornment={endAdornment}
             doEquals={doEquals}

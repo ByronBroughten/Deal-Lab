@@ -17,11 +17,46 @@ AppRegistry.runApplication("App", {
 // - CapEx itemized lifespan
 // For these, clicking "+ Variable" could just go to the variable page, which should then have the same info dot as at the other spot.
 
+// Well, I don't want to abandon this.
+// But I think I want to tone it down.
+// So. What left is necessary?
+
+// Before Marina
+// - Info Dots
+//   - Mortgage insurance
+//   -
+// - Add some UI stuff
+
+// Before Emily
+// - Pretty much ready
+
+// Marina
+// - UI
+
+// Emily
+// - Logo
+
+// Before Wordpress
+// - Add Fix and Flip
+//   - Change completion status based on focalDeal's mode
+//   - Change which sections of property are shown based on focalDeal's mode
+//   -
+
+//   - Holding costs (clone of ongoing costs)
+//   - Add fix and flip outputs
+//   - Change displayed outputs based on mode
+
+// - Add Brrrr
+
+// Wordpress
+// - Make a site that does the job
+
+// Before Marketing
+
 // Ones that would benefit from tailored quick-access variables but would need more specific components
 // - utilities itemized editors
 // - capEx itemized replacement cost
 
-// - Give CapEx a default list
 // - Add an info dot to the variables selector modal
 // - Give it the "All Variables" thing a displayNameFull filter
 
@@ -33,13 +68,6 @@ AppRegistry.runApplication("App", {
 // - Add an explanation to the Lists page
 
 // - Organize lists into multiple sections: CapEx, Utilities, Closing Costs, General Costs, General Ongoing Costs.
-
-// 2.5 Meet with Emily
-// 2.6 Show it to Marina
-
-// 3. Make a simple wordpress website
-// - Just do it badly at first, for the gist of it.
-// - Then pay someone to do it well
 
 // 4. Allow for Fix and Flip
 //  - Add ARV
@@ -83,12 +111,6 @@ AppRegistry.runApplication("App", {
 //   Have an option to just show the xBtn on hover
 
 // Updating Loan UI
-// - Hide morgage insurance behind a switch
-// - Hide loan term behind a switch if payments are interest only
-// - Label the radios behind loan term amount—use a selector
-//   instead, and include Down Payment, % of price,
-//   and Dollar Amount
-
 // How should I handle the loan being able to cover repair costs?
 // DealCheck uses two boxes for that.
 // - Financed repair cost
@@ -153,13 +175,6 @@ AppRegistry.runApplication("App", {
 //   holding costs
 //   You would just change the title of Ongoing Costs to Holding Costs
 //   Or you would add both and keep them separate
-
-//   You might consider putting basic info like taxes and insurance
-//   in the "Ongoing Costs" category
-//   And you can put the purchase price in the upfront costs
-//   category
-//   That just leaves square feet as a miscellanious variable
-//   You could also let the units be the bearers of sqft
 
 // - One-Time costs would include both Purchase Costs (Loan closing costs)
 // and Selling Costs (6% ARV, on the property).

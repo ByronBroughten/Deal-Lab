@@ -25,7 +25,7 @@ describe("SetterCalculations", () => {
   it("should calculate upfront investment accurately", () => {
     const dealTester = SetterTesterSection.initActiveDeal();
     const property = dealTester.setter.onlyChild("property");
-    property.varb("price").updateValue(numObj(200000));
+    property.varb("purchasePrice").updateValue(numObj(200000));
 
     const propertyCostListGroup = property.onlyChild("upfrontExpenseGroup");
     const propertyCostValue = propertyCostListGroup.addAndGetChild(
@@ -155,7 +155,7 @@ describe("SetterCalculations", () => {
 
 function addTestLoan(dealTester: SetterTesterSection<"deal">): void {
   const property = dealTester.setter.onlyChild("property");
-  property.varb("price").updateValue(numObj(200000));
+  property.varb("purchasePrice").updateValue(numObj(200000));
 
   const financing = dealTester.setter.onlyChild("financing");
   financing.varb("financingMode").updateValue("useLoan");

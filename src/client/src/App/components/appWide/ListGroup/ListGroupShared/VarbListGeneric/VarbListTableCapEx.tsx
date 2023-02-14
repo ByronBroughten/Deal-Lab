@@ -15,12 +15,10 @@ export function VarbListTableCapEx({ children, addItem }: Props) {
       headers={
         <>
           <th className="VarbListTable-nameHeader">Name</th>
-          <th className="VarbListTable-replacementCostHeader">
+          <th className="VarbListTable-replacementCostHeader VarbListTable-firstContentHeader">
             Cost to Replace
           </th>
-          <th className="VarbListTable-firstContentHeader VarbListTable-lifespanHeader">
-            Lifespan
-          </th>
+          <th className="VarbListTable-lifespanHeader">Lifespan</th>
           <th className="AdditiveListTable-budgetHeader">Budget</th>
           <th className="AdditiveListTable-buttonHeader"></th>
         </>

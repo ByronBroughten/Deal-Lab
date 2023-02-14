@@ -30,7 +30,6 @@ const ListItemSingleTimeMemo = React.memo(function ListItemSingleTimeMemo({
     <VarbListItemStyled
       {...{
         ...feInfo,
-        nextValueSwitch,
         firstCells: option(),
         useXBtn: true,
       }}

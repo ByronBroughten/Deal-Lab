@@ -6,6 +6,7 @@ import {
 } from "../updateSectionVarbs/updateVarb";
 import { updateFnPropS } from "../updateSectionVarbs/updateVarb/UpdateFnProps";
 import { updateVarbsS } from "../updateSectionVarbs/updateVarbs";
+import { DealMode } from "../values/StateValue/subStringValues";
 
 export function dealRelVarbs(): UpdateSectionVarbs<"deal"> {
   return {
@@ -19,14 +20,14 @@ export function dealRelVarbs(): UpdateSectionVarbs<"deal"> {
         updateFnPropS.varbPathBase("loanPayment"),
       ],
     }),
-    dealMode: updateVarb("string", { initValue: "buyAndHold" }),
+    dealMode: updateVarb("string", { initValue: "buyAndHold" as DealMode }),
     downPaymentDollars: updateVarbS.leftRightPropFn("simpleSubtract", [
-      updateFnPropS.varbPathName("price"),
+      updateFnPropS.varbPathName("purchasePrice"),
       updateFnPropS.varbPathName("loanBaseDollars"),
     ]),
     downPaymentDecimal: updateVarbS.leftRightPropFn("simpleDivide", [
       updateFnPropS.local("downPaymentDollars"),
-      updateFnPropS.varbPathName("price"),
+      updateFnPropS.varbPathName("purchasePrice"),
     ]),
     downPaymentPercent: updateVarbS.singlePropFn(
       "decimalToPercent",

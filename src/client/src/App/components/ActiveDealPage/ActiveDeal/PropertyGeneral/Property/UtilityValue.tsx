@@ -14,7 +14,7 @@ export function UtilityValue({ feId }: { feId: string }) {
   return (
     <SelectAndItemizeEditorSection
       {...{
-        label: "Utilities",
+        label: "Utility Costs",
         selectValue: valueMode,
         onChange: (e) => {
           const value = e.target.value as string;

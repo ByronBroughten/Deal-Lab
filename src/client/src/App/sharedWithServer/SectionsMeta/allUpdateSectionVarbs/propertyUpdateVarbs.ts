@@ -12,19 +12,19 @@ export function propertyUpdateVarbs(): UpdateSectionVarbs<"property"> {
     ...updateVarbsS._typeUniformity,
     ...updateVarbsS.savableSection,
     one: updateVarbS.one(),
-    price: updateVarb("numObj"),
+    purchasePrice: updateVarb("numObj"),
     sqft: updateVarb("numObj"),
     ...updateVarbsS.ongoingInputNext("taxes", {
       switchInit: "yearly",
     }),
 
-    arv: updateVarb("numObj"),
+    afterRepairValue: updateVarb("numObj"),
     sellingCosts: updateVarb("numObj"),
     numUnits: updateVarbS.sumChildNums("unit", "one"),
     numBedrooms: updateVarbS.sumChildNums("unit", "numBedrooms"),
     useCustomCosts: updateVarb("boolean", { initValue: false }),
     upfrontExpenses: updateVarbS.sumNums([
-      updateFnPropS.local("price"),
+      updateFnPropS.local("purchasePrice"),
       updateFnPropS.children("repairValue", "value"),
       updateFnPropS.onlyChild("upfrontExpenseGroup", "total", [
         overrideSwitchS.pathHasValue("propertyFocal", "useCustomCosts", true),

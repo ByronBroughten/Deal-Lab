@@ -22,8 +22,6 @@ export function VarbListTableGeneric({
         <>
           <th className="VarbListTable-nameHeader">Name</th>
           <th className="VarbListTable-firstContentHeader">{contentTitle}</th>
-          <th className="VarbListTable-fillerHeader"></th>
-          <th className="AdditiveListTable-buttonHeader"></th>
           <th className="AdditiveListTable-buttonHeader"></th>
         </>
       }

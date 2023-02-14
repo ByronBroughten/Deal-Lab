@@ -14,7 +14,7 @@ describe("PackBuilderSection", () => {
   } as const;
   const propertyVarbs = {
     displayName: stringObj("Some string"),
-    price: numObj(200000),
+    purchasePrice: numObj(200000),
     taxesOngoingSwitch: "yearly",
   };
 

@@ -78,7 +78,7 @@ export function ValueSectionGeneric<
                 ? {
                     feVarbInfo: section.varbInfo("valueEditor"),
                     editorType: "equation",
-                    quickViewVarbNames: ["price", "sqft", "numUnits"],
+                    quickViewVarbNames: ["purchasePrice", "sqft", "numUnits"],
                   }
                 : undefined,
             menuItems: [

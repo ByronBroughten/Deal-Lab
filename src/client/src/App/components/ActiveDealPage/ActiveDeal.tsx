@@ -2,7 +2,10 @@ import { FormControl, MenuItem, Select } from "@material-ui/core";
 import React from "react";
 import styled, { css } from "styled-components";
 import { VarbName } from "../../sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
-import { CompletionStatus } from "../../sharedWithServer/SectionsMeta/values/StateValue/subStringValues";
+import {
+  CompletionStatus,
+  DealMode,
+} from "../../sharedWithServer/SectionsMeta/values/StateValue/subStringValues";
 import { useGetterSection } from "../../sharedWithServer/stateClassHooks/useGetterSection";
 import { StrictExclude } from "../../sharedWithServer/utils/types";
 import theme from "../../theme/Theme";
@@ -50,6 +53,7 @@ export function ActiveDeal({ className, feId }: Props) {
       openInputs: () => setSectionView(sectionName),
       closeInputs: () => setSectionView("deal"),
       hide: ![sectionName, "deal"].includes(sectionView),
+      dealMode: deal.valueNext("dealMode") as DealMode,
       completionStatus: calculatedVarbs.valueNext(
         completionStatusNames[sectionName]
       ) as CompletionStatus,

@@ -602,13 +602,13 @@ function makeAllUpdateSections() {
       onePercentPrice: updateVarb("numObj", {
         ...updateBasicsS.equationSimple(
           "onePercent",
-          updateFnPropS.pathNameBase("propertyFocal", "price")
+          updateFnPropS.pathNameBase("propertyFocal", "purchasePrice")
         ),
       }),
       twoPercentPrice: updateVarb("numObj", {
         ...updateBasicsS.equationSimple(
           "twoPercent",
-          updateFnPropS.pathNameBase("propertyFocal", "price")
+          updateFnPropS.pathNameBase("propertyFocal", "purchasePrice")
         ),
       }),
       fivePercentRentMonthly: updateVarb("numObj", {
@@ -695,7 +695,7 @@ function makeAllUpdateSections() {
             updateFnPropS.pathName("capExCostFocal", "valueMode"),
           ],
           validInputs: [
-            ...updateFnPropsS.varbPathArr("price", "sqft"),
+            ...updateFnPropsS.varbPathArr("purchasePrice", "sqft"),
             updateFnPropS.pathName("propertyFocal", "taxesOngoingEditor"),
             updateFnPropS.pathName("propertyFocal", "homeInsOngoingEditor"),
             updateFnPropS.pathName("unitFocal", "targetRentOngoingEditor"),

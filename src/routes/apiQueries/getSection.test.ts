@@ -96,13 +96,13 @@ describe(testedRoute, () => {
   });
   it("should load saved subsections if sync is turned on", async () => {
     const original = {
-      price: numObj(100000),
+      purchasePrice: numObj(100000),
       displayName: stringObj("Original"),
     };
 
     const deal = SetterTesterSection.initActiveDeal().setter;
     const property = deal.onlyChild("property");
-    property.varb("price").updateValue(original.price);
+    property.varb("purchasePrice").updateValue(original.purchasePrice);
     property.varb("displayName").updateValue(original.displayName);
     property.updateValues({
       autoSyncControl: "autoSyncOn" as AutoSyncControl,
@@ -115,10 +115,10 @@ describe(testedRoute, () => {
     await addSection();
 
     const updated = {
-      price: numObj(200000),
+      purchasePrice: numObj(200000),
       displayName: stringObj("Updated"),
     };
-    property.varb("price").updateValue(updated.price);
+    property.varb("purchasePrice").updateValue(updated.purchasePrice);
     property.varb("displayName").updateValue(updated.displayName);
     reqs.addSection.body = {
       dbStoreName: "propertyMain",
@@ -138,8 +138,10 @@ describe(testedRoute, () => {
       const deal = SetterTesterSection.initActiveDeal().setter;
       deal.loadSelfSectionPack(sectionPack);
       const property = deal.get.onlyChild("property");
-      expect(property.value("price")).toEqual(updated.price);
-      expect(property.value("displayName")).toEqual(updated.displayName);
+      expect(property.valueNext("purchasePrice")).toEqual(
+        updated.purchasePrice
+      );
+      expect(property.valueNext("displayName")).toEqual(updated.displayName);
     }
 
     testSectionPack();

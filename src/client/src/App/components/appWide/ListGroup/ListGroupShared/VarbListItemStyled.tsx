@@ -21,7 +21,6 @@ export function VarbListItemStyled({
   return (
     <Styled className={`VarbListItem-root ${className ?? ""}`}>
       {firstCells}
-      <td className="VarbListItem-fillerCell"></td>
       {nextValueSwitch && (
         <td className="VarbListItem-buttonCell">
           <UpdateValueNextBtn
@@ -47,6 +46,18 @@ const Styled = styled.tr`
   .DraftTextField-root {
     min-width: 40px;
   }
+
+  .LabeledEquation-nameEditor {
+    .DraftEditor-root {
+      min-width: 60px;
+    }
+  }
+  .LabeledEquation-equationEditor {
+    .DraftEditor-root {
+      min-width: 70px;
+    }
+  }
+
   .NumObjEditor-calcIconPositioner {
     bottom: 1px;
   }

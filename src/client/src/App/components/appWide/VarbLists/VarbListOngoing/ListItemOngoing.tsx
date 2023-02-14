@@ -33,7 +33,6 @@ const ListItemOngoingMemo = React.memo(function ListItemOngoingMemo({
     <VarbListItemStyled
       {...{
         ...feInfo,
-        nextValueSwitch,
         firstCells: option(),
         useXBtn: true,
       }}
