@@ -1,18 +1,19 @@
+import React from "react";
 import { AiOutlineSave } from "react-icons/ai";
 import { VscDiscard } from "react-icons/vsc";
 import styled from "styled-components";
 import { SnFeUserChildNames } from "../../sharedWithServer/SectionsMeta/relSectionsDerived/FeStoreName";
 import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
 import { useAuthStatus } from "../../sharedWithServer/stateClassHooks/useAuthStatus";
+import { ExclaimBlurb } from "../appWide/ExclaimBlurb";
 import { SectionTitleRow } from "../appWide/GeneralSection/MainSection/SectionTitleRow";
-import { InfoBlurb } from "../appWide/infoBlurb";
 import { ListMenuBtn } from "../appWide/ListGroup/ListGroupShared/ListMenuSimple/ListMenuBtn";
 import { SectionTitle } from "../appWide/SectionTitle";
 import theme from "./../../theme/Theme";
 import { useSaveEditorToDb } from "./useSaveEditorToDb";
 
 type Props<SN extends SectionName> = {
-  titleText: string;
+  titleText: React.ReactNode;
   sectionName: SN;
   childNames: SnFeUserChildNames<SN>[];
 };
@@ -56,9 +57,9 @@ export function UserEditorTitleRow<SN extends SectionName>({
         }
       />
       {authStatus === "guest" && (
-        <InfoBlurb className="UserListMainSection-infoBlurb">
+        <ExclaimBlurb className="UserListMainSection-infoBlurb">
           Log in to save and apply changes.
-        </InfoBlurb>
+        </ExclaimBlurb>
       )}
     </Styled>
   );
@@ -67,6 +68,7 @@ export function UserEditorTitleRow<SN extends SectionName>({
 const Styled = styled.div`
   .UserListMainSection-infoBlurb {
     margin-top: ${theme.s3};
+    margin-bottom: ${theme.s2};
   }
   .UserListMainSection-btnsRow {
     display: flex;

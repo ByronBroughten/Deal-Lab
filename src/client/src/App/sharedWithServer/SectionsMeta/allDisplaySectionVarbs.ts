@@ -231,8 +231,6 @@ export const allDisplaySectionVarbs = {
   }),
   ...displaySectionVarbsProp("ongoingItem", {
     ...ongoingDollars("value", relVarbInfoS.local("displayName")),
-    ...group("monthsYearsInput", "lifespan", "Lifespan"),
-    costToReplace: varb("Cost to replace"),
     valueEditor: varb("Item cost"), // That's not great
   }),
 };

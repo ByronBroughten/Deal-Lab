@@ -1,9 +1,6 @@
 import { Button } from "@material-ui/core";
-import { rem } from "polished";
-import React from "react";
-import { CgClose } from "react-icons/cg";
-import styled, { css } from "styled-components";
-import ccs from "../../theme/cssChunks";
+import { AiOutlineClose } from "react-icons/ai";
+import styled from "styled-components";
 import theme from "../../theme/Theme";
 import { StandardBtnProps } from "../general/StandardProps";
 
@@ -14,7 +11,7 @@ export function XBtn({ children, className, ...rest }: StandardBtnProps) {
         className: "XBtn " + className ?? "",
         variant: "contained",
         size: "small",
-        children: children || <CgClose size={16} className="icon" />,
+        children: children || <AiOutlineClose size={15} />,
         $childrenIsDefault: !children,
         ...rest,
       }}
@@ -23,28 +20,19 @@ export function XBtn({ children, className, ...rest }: StandardBtnProps) {
 }
 
 const Styled = styled(Button)<{ $childrenIsDefault: boolean }>`
-  padding: 1px ${theme.s2} 0 ${theme.s2};
-  color: ${theme.light};
-  background-color: ${theme.error.main};
+  padding: 3px;
+  color: ${theme["gray-800"]};
+  background-color: transparent;
   box-shadow: none;
   border: none;
+  border-radius: 100%;
 
   :hover {
-    background-color: ${theme.error.dark};
+    background-color: ${theme.error.main};
+    color: ${theme.light};
   }
   white-space: nowrap;
   .MuiTouchRipple-root {
     visibility: hidden;
   }
-
-  ${({ $childrenIsDefault }) => {
-    if ($childrenIsDefault)
-      return css`
-        ${ccs.xPlusBtnBody}
-      `;
-    else
-      return css`
-        width: ${rem("70px")};
-      `;
-  }}
 `;

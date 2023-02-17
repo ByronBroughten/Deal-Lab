@@ -1,21 +1,24 @@
+import React from "react";
 import styled from "styled-components";
 import { StandardBtnProps } from "../../../general/StandardProps";
 import { SectionBtn } from "../../SectionBtn";
 
-export function AddItemBtn({ className, ...props }: StandardBtnProps) {
+interface Props extends StandardBtnProps {
+  middle?: React.ReactNode;
+}
+export function AddItemBtn({ className, middle = "+", ...props }: Props) {
   return (
     <Styled
-      className={`AdditiveListTable-addItemBtn ${className ?? ""}`}
+      className={`VarbListTable-addItemBtn ${className ?? ""}`}
       {...props}
-      middle="+"
+      middle={middle}
     />
   );
 }
 
 const Styled = styled(SectionBtn)`
-  font-size: 18px;
-  font-weight: bold;
-  height: 25px;
+  height: 30px;
+  font-size: 16px;
   box-shadow: none;
   width: 100%;
 `;

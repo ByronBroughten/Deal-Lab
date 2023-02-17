@@ -19,11 +19,11 @@ export function VarbListTableGeneric({
   return (
     <Styled
       headers={
-        <>
+        <tr>
           <th className="VarbListTable-nameHeader">Name</th>
           <th className="VarbListTable-firstContentHeader">{contentTitle}</th>
-          <th className="AdditiveListTable-buttonHeader"></th>
-        </>
+          <th className="VarbListTable-btnHeader"></th>
+        </tr>
       }
       rows={children}
       rowCount={Children.toArray(children).length}

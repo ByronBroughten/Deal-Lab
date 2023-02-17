@@ -1,13 +1,13 @@
-import { AiOutlineInfoCircle } from "react-icons/ai";
+import { AiOutlineExclamationCircle } from "react-icons/ai";
 import styled from "styled-components";
 import theme from "../../theme/Theme";
 import { StandardProps } from "../general/StandardProps";
 
 type Props = StandardProps;
-export function InfoBlurb({ className, children }: Props) {
+export function ExclaimBlurb({ className, children }: Props) {
   return (
-    <Styled className={`InfoBlurb-root ${className}`}>
-      <AiOutlineInfoCircle size={18} className="InfoBlurb-icon" />
+    <Styled className={`ExclaimBlurb-root ${className}`}>
+      <AiOutlineExclamationCircle size={18} className="ExclaimBlurb-icon" />
       {children}
     </Styled>
   );
@@ -20,7 +20,7 @@ const Styled = styled.div`
   border-radius: ${theme.br0};
   color: ${theme.dark};
   background: ${theme.info.light};
-  .InfoBlurb-icon {
+  .ExclaimBlurb-icon {
     margin-right: ${theme.s2};
   }
 `;

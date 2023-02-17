@@ -4,6 +4,7 @@ import { dealRelVarbs } from "./allUpdateSectionVarbs/dealUpdateVarbs";
 import { financingUpdateVarbs } from "./allUpdateSectionVarbs/financingUpdateVarbs";
 import { loanRelVarbs } from "./allUpdateSectionVarbs/loanUpdateVarbs";
 import { mgmtRelVarbs } from "./allUpdateSectionVarbs/mgmtUpdateVarbs";
+import { capExItemUpdateVarbs } from "./allUpdateSectionVarbs/ongoingItemUpdateVarbs";
 import { propertyUpdateVarbs } from "./allUpdateSectionVarbs/propertyUpdateVarbs";
 import { VarbName } from "./baseSectionsDerived/baseSectionsVarbsTypes";
 import { AuthStatus } from "./baseSectionsVarbsValues";
@@ -174,55 +175,7 @@ function makeAllUpdateSections() {
       }),
       itemOngoingSwitch: updateVarb("string", { initValue: "monthly" }),
     }),
-    ...updateSectionProp("capExItem", {
-      displayName: updateVarb("stringObj", {
-        updateFnName: "loadLocalString",
-        updateFnProps: {
-          localString: updateFnPropS.local("displayNameEditor"),
-        },
-      }),
-      ...updateVarbsS.group("value", "ongoing", "monthly", {
-        yearly: updateBasicsS.equationLeftRight(
-          "simpleDivide",
-          updateFnPropS.local("costToReplace"),
-          updateFnPropS.local("lifespanYears")
-        ),
-        monthly: updateBasicsS.equationLeftRight(
-          "simpleDivide",
-          updateFnPropS.local("costToReplace"),
-          updateFnPropS.local("lifespanMonths")
-        ),
-      }),
-
-      ...updateVarbsS.group("lifespan", "monthsYearsInput", "years", {
-        targets: { updateFnName: "throwIfReached" },
-        editor: { updateFnName: "calcVarbs" },
-        months: {
-          updateOverrides: [
-            updateOverride(
-              [overrideSwitchS.monthsIsActive("lifespan")],
-              updateBasicsS.loadFromLocal("lifespanSpanEditor")
-            ),
-            updateOverride(
-              [overrideSwitchS.yearsIsActive("lifespan")],
-              updateBasicsS.yearsToMonths("lifespan")
-            ),
-          ],
-        },
-        years: {
-          updateOverrides: [
-            updateOverride(
-              [overrideSwitchS.yearsIsActive("lifespan")],
-              updateBasicsS.loadFromLocal("lifespanSpanEditor")
-            ),
-            updateOverride(
-              [overrideSwitchS.monthsIsActive("lifespan")],
-              updateBasicsS.monthsToYears("lifespan")
-            ),
-          ],
-        },
-      }),
-    }),
+    ...updateSectionProp("capExItem", capExItemUpdateVarbs()),
     ...updateSectionProp("maintenanceValue", {
       valueMode: updateVarb("string", { initValue: "none" }),
       ...updateVarbsS.group("value", "ongoing", "monthly", {

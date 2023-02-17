@@ -42,7 +42,6 @@ export class VarbMeta<SN extends SectionName> {
       updateVarb.updateOverrides
     );
   }
-
   get baseVarb(): GeneralBaseVarb {
     return getBaseVarb(
       this.sectionName,

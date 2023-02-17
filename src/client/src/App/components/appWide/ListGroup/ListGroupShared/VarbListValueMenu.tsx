@@ -20,6 +20,13 @@ export function VarbListValueMenu<
   return (
     <VarbListMenuStyled className={`VarbListMenu-root ${className ?? ""}`}>
       <div className="VarbListMenu-titleRow">
+        <ActionMenuLoadBtn
+          {...{
+            loadMode: "loadAndCopy",
+            loadWhat: "List",
+            feInfo,
+          }}
+        />
         <div className="VarbListMenu-titleRowLeft">
           {totalVarbName && (
             <VarbListTotal
@@ -30,15 +37,7 @@ export function VarbListValueMenu<
             />
           )}
         </div>
-        <div className="VarbListGeneric-titleRowRight">
-          <ActionMenuLoadBtn
-            {...{
-              loadMode: "loadAndCopy",
-              loadWhat: "List",
-              feInfo,
-            }}
-          />
-        </div>
+        <div className="VarbListGeneric-titleRowRight"></div>
       </div>
     </VarbListMenuStyled>
   );

@@ -2,9 +2,14 @@ import styled from "styled-components";
 import theme from "../../../../theme/Theme";
 
 export const VarbListMenuStyled = styled.div`
+  width: 100%;
   .VarbListMenu-titleRow {
     display: flex;
-    justify-content: space-between;
+    flex: 1;
+  }
+  .VarbListMenu-titleRowLeft {
+    display: flex;
+    flex: 1;
   }
 
   .VarbListMenu-title {
@@ -12,11 +17,7 @@ export const VarbListMenuStyled = styled.div`
       min-width: 120px;
     }
   }
-
-  .VarbListMenu-titleRowLeft {
-    display: flex;
-  }
-  .AdditiveList-total {
+  .VarbList-total {
     margin-left: ${theme.s2};
     margin-top: ${theme.s2};
   }

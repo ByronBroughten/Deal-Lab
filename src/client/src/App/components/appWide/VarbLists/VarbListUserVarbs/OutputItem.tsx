@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { useGetterVarb } from "../../../../sharedWithServer/stateClassHooks/useGetterVarb";
-import { LabeledEquation } from "../../ListGroup/ListGroupShared/ListItemValue/LabeledEquation";
-import { LoadedVarbEditor } from "../../ListGroup/ListGroupShared/ListItemValue/LoadedVarbEditor";
+import { LabeledValueEditor } from "../../ListGroup/ListGroupShared/ListItemValue/LabeledValueEditor";
 import { useOption } from "../../ListGroup/ListGroupShared/useOption";
 import { VarbListItemStyled } from "../../ListGroup/ListGroupShared/VarbListItemStyled";
 
@@ -16,12 +15,7 @@ export function OutputItem({ feId }: Props) {
     varbName: "valueEditor",
   });
   const { option, nextValueSwitch } = useOption(
-    {
-      labeledEquation: () => <LabeledEquation {...{ ...feInfo }} />,
-      loadedVarb: () => (
-        <LoadedVarbEditor {...{ feInfo, valueVarbName: "value" }} />
-      ),
-    },
+    { labeledEquation: () => <LabeledValueEditor {...{ ...feInfo }} /> },
     varb.section.valueNext("valueSourceSwitch")
   );
   return (

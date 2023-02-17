@@ -4,5 +4,5 @@ import { useGetterVarb } from "../../../../../sharedWithServer/stateClassHooks/u
 type Props = { varbInfo: FeVarbInfo };
 export function VarbListTotal({ varbInfo }: Props) {
   const varb = useGetterVarb(varbInfo);
-  return <div className="AdditiveList-total">{`${varb.displayVarb()}`}</div>;
+  return <div className="VarbList-total">{`${varb.displayVarb()}`}</div>;
 }

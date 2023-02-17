@@ -117,6 +117,9 @@ export class GetterSection<
   get raw(): RawFeSection<SN> {
     return this.sectionsShare.sections.rawSection(this.feInfo);
   }
+  hasVarbName(varbName: string): boolean {
+    return this.meta.hasVarbName(varbName);
+  }
   get varbs(): GetterVarbs<SN> {
     return this.meta.varbNamesNext.reduce((varbs, varbName) => {
       varbs[varbName] = new GetterVarb({
@@ -632,6 +635,13 @@ export class GetterSection<
         )}`
       );
     return switchValue as SwitchTargetKey<SK>;
+  }
+  activeSwitchTarget(
+    varbNameBase: string,
+    switchEnding: SwitchName
+  ): GetterVarb<SN> {
+    const varbName = this.activeSwitchTargetName(varbNameBase, switchEnding);
+    return this.varb(varbName);
   }
   activeSwitchTargetName(
     varbNameBase: string,

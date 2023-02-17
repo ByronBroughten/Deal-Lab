@@ -17,34 +17,61 @@ AppRegistry.runApplication("App", {
 // - CapEx itemized lifespan
 // For these, clicking "+ Variable" could just go to the variable page, which should then have the same info dot as at the other spot.
 
-// Well, I don't want to abandon this.
-// But I think I want to tone it down.
-// So. What left is necessary?
+// Get rid of all the extra children
+// make an array of displayNames
+// checkwhether each item's DisplayName is in there
+// Make a checkbox for each that doesn't have an item
+
+// For now, menu should have "Save as new", "Load", and "Saved lists >"
+// "Save as new" should expose a dropdown with the displayName
+// editor.
+// It could have "Create new", too
 
 // Before Marina
-// - Info Dots
-//   - Mortgage insurance
-//   -
-// - Add some UI stuff
+// - Down payment for loan
+// - Maybe partition three types of list (CapEx, Ongoing, SingleTime)
+// - Info dot for Lists
+
+// - Utilities
+//   - Checkboxes for the four or five common utilities
+//   - This checkbox item is just like a singleTime item, but
+//     it also includes a boolean that determines whether it's active
+// - Closing costs
+//   - Same component as Utilities
+
+// - Custom one-time costs - same as now
+// - Custom ongoing costs - same as now
+
+// - Upfront repairs — This is the only one that doesn't really
+//                      This could be useful to people, so I'll keep it.
+//                      The other option is to allow repairs to load
+//                      from custom
+// - How about variables? Do I let users use variables from
+//   all these types of lists? I guess so.
 
 // Before Emily
 // - Pretty much ready
 
 // Marina
-// - UI
+// - Pretty much ready
+// - Ask for general input
 
 // Emily
 // - Logo
+// - How to handle UI for different (but not different) types of lists?
 
 // Before Wordpress
 // - Add Fix and Flip
+//   - Percent of repairs for loan amount
+//   - Percent of repairs plus purchase price
+//   - Percent of ARV (when in other modes)
 //   - Change completion status based on focalDeal's mode
 //   - Change which sections of property are shown based on focalDeal's mode
-//   -
-
 //   - Holding costs (clone of ongoing costs)
 //   - Add fix and flip outputs
 //   - Change displayed outputs based on mode
+//   - Add mode to "Compare" and change parameters
+//     being compared
 
 // - Add Brrrr
 

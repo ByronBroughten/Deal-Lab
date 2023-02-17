@@ -6,7 +6,7 @@ interface Props extends FeInfoByType<"varbListItem"> {
   endAdornment?: string;
   doEquals?: boolean;
 }
-export function LabeledEquation({
+export function LabeledValueEditor({
   sectionName,
   feId,
   endAdornment,
@@ -20,7 +20,7 @@ export function LabeledEquation({
           {...{
             ...feInfo,
             varbName: "displayNameEditor",
-            className: "LabeledEquation-nameEditor",
+            className: "LabeledValueEditor-nameEditor",
           }}
         />
       </td>
@@ -32,7 +32,7 @@ export function LabeledEquation({
               ...feInfo,
               varbName: "valueEditor",
             }}
-            className="LabeledEquation-equationEditor"
+            className="LabeledValueEditor-equationEditor"
             labeled={false}
             endAdornment={endAdornment}
             doEquals={doEquals}

@@ -20,7 +20,12 @@ import { SetterSections } from "./SetterSections";
 export class SetterVarb<
   SN extends SectionNameByType = SectionNameByType
 > extends SetterVarbBase<SN> {
-  private solverVarb = SolverVarb.init(this.getterVarbBase.getterVarbProps);
+  private get solverVarb() {
+    return SolverVarb.init(this.getterVarbBase.getterVarbProps);
+  }
+  get varbName(): string {
+    return this.meta.varbName;
+  }
   get setterSections(): SetterSections {
     return new SetterSections(this.setterSectionsProps);
   }
@@ -57,6 +62,9 @@ export class SetterVarb<
   updateValue(value: StateValue): void {
     this.solverVarb.directUpdateAndSolve(value);
     this.setSections();
+  }
+  toggleValue() {
+    this.updateValue(!this.value("boolean"));
   }
   loadValueFromVarb(varbInfo: ValueInEntityInfo) {
     this.solverVarb.loadValueFromVarb(varbInfo);

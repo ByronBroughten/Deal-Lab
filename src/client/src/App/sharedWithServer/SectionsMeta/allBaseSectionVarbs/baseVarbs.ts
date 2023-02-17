@@ -247,6 +247,12 @@ export const baseVarbsS = {
       dollarsPercentDecimalOptions
     );
   },
+  get displayNameAndEditor() {
+    return {
+      displayName: baseVarb("stringObj"),
+      displayNameEditor: baseVarb("string"),
+    };
+  },
   get switchableEquationEditor() {
     return {
       ...baseVarbs("string", [

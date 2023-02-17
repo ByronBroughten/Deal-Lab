@@ -1,13 +1,7 @@
 import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
-import {
-  makeCapExList,
-  makeUtilityList,
-} from "./makeDefaultFeUser/makeExampleOngoingLists";
-import {
-  blankPropertyUtilityProps,
-  defaultPropertyCapExListProps,
-} from "./makeDefaultFeUser/makeExampleOngoingListsProps";
+import { makeUtilityList } from "./makeDefaultFeUser/makeExampleOngoingLists";
+import { blankPropertyUtilityProps } from "./makeDefaultFeUser/makeExampleOngoingListsProps";
 
 export function makeDefaultProperty(): SectionPack<"property"> {
   const property = PackBuilderSection.initAsOmniChild("property", {
@@ -30,8 +24,7 @@ export function makeDefaultProperty(): SectionPack<"property"> {
   property.addChild("maintenanceValue");
 
   const capExValue = property.addAndGetChild("capExValue");
-  const capExList = capExValue.addAndGetChild("capExList");
-  capExList.loadSelf(makeCapExList(defaultPropertyCapExListProps));
+  capExValue.addChild("capExList");
 
   property.addChild("upfrontExpenseGroup");
   property.addChild("ongoingExpenseGroup");

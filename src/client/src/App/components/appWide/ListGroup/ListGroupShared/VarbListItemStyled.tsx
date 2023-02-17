@@ -34,7 +34,7 @@ export function VarbListItemStyled({
         </td>
       )}
       {useXBtn && (
-        <td className="VarbListItem-buttonCell AdditiveList-buttonCell">
+        <td className="VarbListItem-buttonCell">
           <RemoveSectionXBtn className="VarbListItem-xBtn" {...feInfo} />
         </td>
       )}
@@ -47,12 +47,12 @@ const Styled = styled.tr`
     min-width: 40px;
   }
 
-  .LabeledEquation-nameEditor {
+  .LabeledValueEditor-nameEditor {
     .DraftEditor-root {
       min-width: 60px;
     }
   }
-  .LabeledEquation-equationEditor {
+  .LabeledValueEditor-equationEditor {
     .DraftEditor-root {
       min-width: 70px;
     }

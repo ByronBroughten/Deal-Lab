@@ -24,6 +24,7 @@ export const sectionNames = [
   "ongoingList",
   "ongoingListGroup",
   "ongoingItem",
+  "ongoingCheckmarkItem",
   "outputList",
   "outputItem",
   "customVarb",
@@ -39,6 +40,9 @@ export const sectionNames = [
   "property",
   "repairValue",
   "utilityValue",
+  "utilityList",
+  "utilityListItem",
+
   "maintenanceValue",
   "capExValue",
   "capExList",
@@ -59,6 +63,7 @@ export const sectionNames = [
   "authInfoPrivate",
 
   "dealPage",
+  "loadedNumObjVarb",
 
   "userListEditor",
   "userVarbEditor",

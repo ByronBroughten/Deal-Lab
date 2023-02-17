@@ -1,9 +1,9 @@
 import { FeSectionInfo } from "../SectionsMeta/SectionInfo/FeInfo";
-import { SectionNameByType } from "../SectionsMeta/SectionNameByType";
+import { SectionName } from "../SectionsMeta/SectionName";
 import { SetterSection } from "../StateSetters/SetterSection";
 import { useSetterSectionsProps } from "./useSetterSectionsProps";
 
-export function useSetterSection<SN extends SectionNameByType>(
+export function useSetterSection<SN extends SectionName>(
   props: FeSectionInfo<SN>
 ): SetterSection<SN> {
   const moreProps = useSetterSectionsProps();
@@ -13,7 +13,25 @@ export function useSetterSection<SN extends SectionNameByType>(
   });
 }
 
-export function useSetterSectionOnlyOne<SN extends SectionNameByType>(
+export function useSetterSections<SN extends SectionName>({
+  sectionName,
+  feIds,
+}: {
+  sectionName: SN;
+  feIds: string[];
+}): SetterSection<SN>[] {
+  const moreProps = useSetterSectionsProps();
+  return feIds.map(
+    (feId) =>
+      new SetterSection({
+        ...moreProps,
+        sectionName,
+        feId,
+      })
+  );
+}
+
+export function useSetterSectionOnlyOne<SN extends SectionName>(
   sectionName: SN
 ): SetterSection<SN> {
   const props = useSetterSectionsProps();

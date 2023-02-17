@@ -154,6 +154,9 @@ export class SectionMeta<SN extends SectionName> {
   get varbNames(): string[] {
     return Obj.keys(this.varbMetas);
   }
+  hasVarbName(varbName: string): boolean {
+    return this.varbNames.includes(varbName);
+  }
   get varbNamesNext(): VarbName<SN>[] {
     return Obj.keys(this.varbMetas) as any[];
   }

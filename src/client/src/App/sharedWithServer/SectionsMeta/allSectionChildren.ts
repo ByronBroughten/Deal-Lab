@@ -175,7 +175,12 @@ export const allSectionChildren = checkAllSectionChildren({
   }),
   utilityValue: sectionChildren({
     ongoingList: ["ongoingList"],
+    utilityList: ["utilityList"],
   }),
+  utilityList: sectionChildren({
+    ongoingItem: ["ongoingItem"],
+  }),
+
   capExValue: sectionChildren({
     capExList: ["capExList"],
   }),

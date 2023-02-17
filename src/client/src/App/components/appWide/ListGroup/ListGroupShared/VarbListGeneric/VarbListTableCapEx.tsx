@@ -1,31 +1,42 @@
-import { Children } from "react";
+import React, { Children } from "react";
 import styled from "styled-components";
-import { ThemeName } from "../../../../../theme/Theme";
 import { StandardProps } from "../../../../general/StandardProps";
 import { VarbListTableStyled } from "./VarbListTableStyled";
 
 interface Props extends StandardProps {
-  themeName?: ThemeName;
   addItem: () => void;
+  total?: React.ReactNode;
 }
 
-export function VarbListTableCapEx({ children, addItem }: Props) {
+export function VarbListTableCapEx({
+  children,
+  addItem,
+  total,
+  ...rest
+}: Props) {
   return (
     <Styled
+      addItemBtnMiddle="+ Custom Item"
       headers={
-        <>
+        <tr>
           <th className="VarbListTable-nameHeader">Name</th>
           <th className="VarbListTable-replacementCostHeader VarbListTable-firstContentHeader">
             Cost to Replace
           </th>
           <th className="VarbListTable-lifespanHeader">Lifespan</th>
-          <th className="AdditiveListTable-budgetHeader">Budget</th>
-          <th className="AdditiveListTable-buttonHeader"></th>
-        </>
+          <th className="VarbListTable-budgetHeader VarbListTable-lastHeader">
+            Budget
+          </th>
+          <th className="VarbListTable-btnHeader VarbListTable-lastHeader"></th>
+        </tr>
       }
       rows={children}
       rowCount={Children.toArray(children).length}
-      addItem={addItem}
+      {...{
+        addItem,
+        varbListTotal: total,
+        ...rest,
+      }}
     />
   );
 }

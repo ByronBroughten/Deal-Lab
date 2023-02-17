@@ -1,9 +1,7 @@
 import React from "react";
 import { useSetterSection } from "../../../../sharedWithServer/stateClassHooks/useSetterSection";
-import { LabeledEquation } from "../../ListGroup/ListGroupShared/ListItemValue/LabeledEquation";
-import { LoadedVarbEditor } from "../../ListGroup/ListGroupShared/ListItemValue/LoadedVarbEditor";
+import { LabeledValueEditor } from "../../ListGroup/ListGroupShared/ListItemValue/LabeledValueEditor";
 import { VarbListItemStyled } from "../../ListGroup/ListGroupShared/VarbListItemStyled";
-import { useOption } from "./../../ListGroup/ListGroupShared/useOption";
 
 interface MemoProps {
   feId: string;
@@ -14,26 +12,14 @@ interface MemoProps {
 }
 const ListItemOngoingMemo = React.memo(function ListItemOngoingMemo({
   feId,
-  valueSourceSwitch,
-  valueVarbName,
   endAdornment,
-  displayValueVarb,
 }: MemoProps) {
   const feInfo = { sectionName: "ongoingItem", feId } as const;
-  const { option, nextValueSwitch } = useOption(
-    {
-      labeledEquation: () => (
-        <LabeledEquation {...{ ...feInfo, endAdornment }} />
-      ),
-      loadedVarb: () => <LoadedVarbEditor {...{ feInfo, valueVarbName }} />,
-    },
-    valueSourceSwitch
-  );
   return (
     <VarbListItemStyled
       {...{
         ...feInfo,
-        firstCells: option(),
+        firstCells: <LabeledValueEditor {...{ ...feInfo, endAdornment }} />,
         useXBtn: true,
       }}
     />

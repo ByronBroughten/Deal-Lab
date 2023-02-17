@@ -1,9 +1,15 @@
 import { omit } from "lodash";
 import {
+  baseCapExItem,
+  baseOngoingCheckmarkItem,
+  baseOngoingItem,
+} from "./allBaseSectionVarbs/baseOngoingItem";
+import {
   BaseSectionVarbs,
   baseSectionVarbs,
   GeneralBaseSectionVarbs,
 } from "./allBaseSectionVarbs/baseSectionVarbs";
+import { baseOptions } from "./allBaseSectionVarbs/baseUnits";
 import {
   baseVarb,
   baseVarbs,
@@ -28,9 +34,9 @@ const defaults = sectionNames.reduce((defaults, sectionName) => {
   return defaults;
 }, {} as DefaultSectionsVarbs);
 
-const dollars = { valueUnit: "dollars" } as const;
-const percent = { valueUnit: "percent" } as const;
-const decimal = { valueUnit: "decimal" } as const;
+const dollars = baseOptions.dollars;
+const percent = baseOptions.percent;
+const decimal = baseOptions.decimal;
 const varbs = baseVarbsS;
 export function makeAllBaseSectionVarbs() {
   return checkAllBaseSectionVarbs({
@@ -97,6 +103,10 @@ export function makeAllBaseSectionVarbs() {
       itemValueSwitch: baseVarb("string"),
       itemOngoingSwitch: baseVarb("string"),
     }),
+    loadedNumObjVarb: baseSectionVarbs({
+      ...varbs.singleValueVirtualVarb,
+      ...varbs.loadableVarb,
+    }),
     ongoingValue: baseSectionVarbs({
       ...varbs.ongoingDollars("value"),
       displayName: baseVarb("stringObj"),
@@ -123,22 +133,9 @@ export function makeAllBaseSectionVarbs() {
       ...baseVarbsS.ongoingDollars("total"),
       itemOngoingSwitch: baseVarb("string"),
     }),
-    capExItem: baseSectionVarbs({
-      displayName: baseVarb("stringObj"),
-      displayNameEditor: baseVarb("string"),
-      ...baseVarbsS.ongoingDollars("value"),
-      ...baseVarbsS.monthsYearsInput("lifespan"),
-      costToReplace: baseVarb("numObj", dollars),
-    }),
-    ongoingItem: baseSectionVarbs({
-      ...baseVarbsS.virtualVarb,
-      ...baseVarbsS.loadableVarb,
-      ...baseVarbsS.switchableEquationEditor,
-      ...baseVarbsS.ongoingDollars("value"),
-      ...baseVarbsS.monthsYearsInput("lifespan"),
-      costToReplace: baseVarb("numObj", dollars),
-    }),
-
+    capExItem: baseCapExItem,
+    ongoingItem: baseOngoingItem,
+    ongoingCheckmarkItem: baseOngoingCheckmarkItem,
     userVarbList: baseSectionVarbs({
       ...baseVarbsS.savableSection,
       itemValueSwitch: baseVarb("string"),

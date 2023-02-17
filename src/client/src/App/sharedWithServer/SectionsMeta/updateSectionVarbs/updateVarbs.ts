@@ -6,7 +6,7 @@ import {
   updateGroupS,
 } from "./switchUpdateVarbs";
 import { UpdateSectionVarbs } from "./updateSectionVarbs";
-import { updateVarb, updateVarbS } from "./updateVarb";
+import { UpdateVarb, updateVarb, updateVarbS } from "./updateVarb";
 import { updateBasics, updateBasicsS } from "./updateVarb/UpdateBasics";
 import { updateFnPropS } from "./updateVarb/UpdateFnProps";
 import {
@@ -63,27 +63,31 @@ export const updateVarbsS = {
       }),
     } as const;
   },
-  get listItemVirtualVarb() {
+  get displayNameAndEditor(): {
+    displayNameEditor: UpdateVarb<"string">;
+    displayName: UpdateVarb<"stringObj">;
+  } {
     return {
-      valueEntityInfo: updateVarb("inEntityValue"),
       displayNameEditor: updateVarbS.displayNameEditor,
       displayName: updateVarb("stringObj", {
-        updateFnName: "throwIfReached",
-        updateOverrides: [
-          updateOverride(
-            [overrideSwitchS.valueSourceIs("labeledEquation")],
-            updateBasics("loadLocalString", {
-              localString: updateFnPropS.local("displayNameEditor"),
-            })
-          ),
-          updateOverride(
-            [overrideSwitchS.valueSourceIs("loadedVarb")],
-            updateBasics("loadDisplayName", {
-              localString: updateFnPropS.local("displayNameEditor"),
-            })
-          ),
-        ],
+        updateFnName: "loadLocalString",
+        updateFnProps: {
+          localString: updateFnPropS.local("displayNameEditor"),
+        },
       }),
+    };
+  },
+  get listItemVirtualVarb(): {
+    displayNameEditor: UpdateVarb<"string">;
+    displayName: UpdateVarb<"stringObj">;
+    valueEntityInfo: UpdateVarb<"inEntityValue">;
+    displayNameEnd: UpdateVarb<"stringObj">;
+    startAdornment: UpdateVarb<"stringObj">;
+    endAdornment: UpdateVarb<"stringObj">;
+  } {
+    return {
+      ...this.displayNameAndEditor,
+      valueEntityInfo: updateVarb("inEntityValue"),
       displayNameEnd: updateVarb("stringObj", {
         updateFnName: "emptyStringObj",
         updateOverrides: [updateOverrideS.loadedVarbProp("loadDisplayNameEnd")],
@@ -124,74 +128,34 @@ export const updateVarbsS = {
   ongoingItem(): UpdateSectionVarbs<"ongoingItem"> {
     const valueNameBase = "value";
     const ongoingValueNames = switchKeyToVarbNames(valueNameBase, "ongoing");
-    const makeDefaultValueUpdatePack = () =>
-      ({
-        updateFnName: "loadSolvableTextByVarbInfo",
-        updateFnProps: {
-          varbInfo: updateFnPropS.local("valueEditor"),
-          switch: updateFnPropS.local("valueSourceSwitch"),
-        },
-      } as const);
     return {
       ...this._typeUniformity,
       ...this.listItemVirtualVarb,
       valueSourceSwitch: updateVarb("string", {
         initValue: "labeledEquation",
       }),
-      costToReplace: updateVarb("numObj"),
       valueEditor: updateVarb("numObj"),
-      ...updateVarbsS.monthsYearsInput("lifespan", "years"),
       [ongoingValueNames.switch]: updateVarb("string", {
         initValue: "monthly",
       }),
       [ongoingValueNames.monthly]: updateVarb("numObj", {
-        ...makeDefaultValueUpdatePack(),
+        updateFnName: "throwIfReached",
         updateOverrides: [
+          updateOverride(
+            [overrideSwitchS.monthlyIsActive("value")],
+            updateBasicsS.loadFromLocal("valueEditor")
+          ),
           updateOverrideS.activeYearlyToMonthly(valueNameBase),
-          updateOverride(
-            [
-              overrideSwitchS.monthlyIsActive(valueNameBase),
-              overrideSwitchS.local("valueSourceSwitch", "loadedVarb"),
-            ],
-            updateBasics("virtualNumObj", {
-              varbInfo: updateFnPropS.local("valueEntityInfo"),
-            })
-          ),
-          updateOverride(
-            [
-              overrideSwitchS.monthlyIsActive(valueNameBase),
-              overrideSwitchS.local("valueSourceSwitch", "labeledSpanOverCost"),
-            ],
-            updateBasics("simpleDivide", {
-              leftSide: updateFnPropS.local("costToReplace"),
-              rightSide: updateFnPropS.local("lifespanMonths"),
-            })
-          ),
         ],
       }),
       [ongoingValueNames.yearly]: updateVarb("numObj", {
-        ...makeDefaultValueUpdatePack(),
+        updateFnName: "throwIfReached",
         updateOverrides: [
+          updateOverride(
+            [overrideSwitchS.yearlyIsActive("value")],
+            updateBasicsS.loadFromLocal("valueEditor")
+          ),
           updateOverrideS.activeMonthlyToYearly(valueNameBase),
-          updateOverride(
-            [
-              overrideSwitchS.yearlyIsActive(valueNameBase),
-              overrideSwitchS.local("valueSourceSwitch", "loadedVarb"),
-            ],
-            updateBasics("virtualNumObj", {
-              varbInfo: updateFnPropS.local("valueEntityInfo"),
-            })
-          ),
-          updateOverride(
-            [
-              overrideSwitchS.yearlyIsActive(valueNameBase),
-              overrideSwitchS.local("valueSourceSwitch", "labeledSpanOverCost"),
-            ],
-            updateBasics("simpleDivide", {
-              leftSide: updateFnPropS.local("costToReplace"),
-              rightSide: updateFnPropS.local("lifespanMonths"),
-            })
-          ),
         ],
       }),
     };
