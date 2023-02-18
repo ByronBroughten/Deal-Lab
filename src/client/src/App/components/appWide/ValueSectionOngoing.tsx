@@ -1,6 +1,6 @@
 import { useSetterSection } from "../../sharedWithServer/stateClassHooks/useSetterSection";
+import { ListEditorOngoing } from "../ActiveDealPage/ActiveDeal/PropertyGeneral/Property/ValueShared.tsx/ListEditorOngoing";
 import { ValueSectionGeneric } from "./ValueSectionGeneric";
-import { VarbListOngoing } from "./VarbLists/VarbListOngoing";
 
 interface Props {
   className?: string;
@@ -23,7 +23,14 @@ export function ValueSectionOngoing({ feId, ...rest }: Props) {
         feId,
         valueName: varbName as "valueMonthly",
         endAdornment,
-        makeItemizedListNode: (props) => <VarbListOngoing {...props} />,
+        makeItemizedListNode: (props) => (
+          <ListEditorOngoing
+            {...{
+              menuType: "value",
+              ...props,
+            }}
+          />
+        ),
       }}
     />
   );

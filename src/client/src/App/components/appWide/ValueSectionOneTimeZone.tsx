@@ -3,7 +3,7 @@ import { FeSectionInfo } from "../../sharedWithServer/SectionsMeta/SectionInfo/F
 import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
 import { useSetterSection } from "../../sharedWithServer/stateClassHooks/useSetterSection";
 import { ValueSectionBtn } from "./ListGroup/ListGroupShared/ValueSectionBtn";
-import { ValueSectionOneTime } from "./ValueSectionOneTime";
+import { ValueSectionSingleTime } from "./ValueSectionSingleTime";
 
 interface Props<SN extends SectionName, CN extends ChildName<SN>>
   extends FeSectionInfo<SN> {
@@ -29,7 +29,7 @@ export function ValueSectionOneTimeZone<
         />
       )}
       {hasValueSection && (
-        <ValueSectionOneTime
+        <ValueSectionSingleTime
           {...{
             feId: section.get.onlyChild(childName).feId,
             ...rest,

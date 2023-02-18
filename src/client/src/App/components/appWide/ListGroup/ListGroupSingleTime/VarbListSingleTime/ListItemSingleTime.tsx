@@ -1,8 +1,6 @@
 import React from "react";
 import { useGetterVarbNext } from "../../../../../sharedWithServer/stateClassHooks/useGetterVarb";
-import { LabeledValueEditor } from "../../ListGroupShared/ListItemValue/LabeledValueEditor";
-import { useOption } from "../../ListGroupShared/useOption";
-import { VarbListItemStyled } from "../../ListGroupShared/VarbListItemStyled";
+import { VarbListItemGeneric } from "../../ListGroupShared/VarbListItemGeneric";
 
 type MemoProps = { feId: string; valueSourceSwitch: string };
 const ListItemSingleTimeMemo = React.memo(function ListItemSingleTimeMemo({
@@ -10,19 +8,7 @@ const ListItemSingleTimeMemo = React.memo(function ListItemSingleTimeMemo({
   valueSourceSwitch,
 }: MemoProps) {
   const feInfo = { sectionName: "singleTimeItem", feId } as const;
-  const { option, nextValueSwitch } = useOption(
-    { labeledEquation: () => <LabeledValueEditor {...feInfo} key={feId} /> },
-    valueSourceSwitch
-  );
-  return (
-    <VarbListItemStyled
-      {...{
-        ...feInfo,
-        firstCells: option(),
-        useXBtn: true,
-      }}
-    />
-  );
+  return <VarbListItemGeneric {...feInfo} />;
 });
 
 export function ListItemSingleTime({ feId }: { feId: string }) {

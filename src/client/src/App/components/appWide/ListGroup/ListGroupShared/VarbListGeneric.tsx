@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import { ChildName } from "../../../../sharedWithServer/SectionsMeta/sectionChildrenDerived/ChildName";
 import { FeSectionInfo } from "../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { SectionNameByType } from "../../../../sharedWithServer/SectionsMeta/SectionNameByType";
@@ -6,7 +6,7 @@ import { useSetterSection } from "../../../../sharedWithServer/stateClassHooks/u
 import { ThemeName } from "../../../../theme/Theme";
 import { useSaveStatus } from "../../GeneralSection/MainSection/useSaveStatus";
 import { VarbListEditorPageMenu } from "./VarbListEditorPageMenu";
-import { VarbListTableGeneric } from "./VarbListGeneric/VarbListTableGeneric";
+import { VarbListTableSectionGeneric } from "./VarbListGeneric/VarbListTableSectionGeneric";
 import { VarbListStyled } from "./VarbListStyled";
 import { VarbListValueMenu } from "./VarbListValueMenu";
 
@@ -61,9 +61,9 @@ export function VarbListGeneric<SN extends VarbListAllowed>({
   return (
     <VarbListStyled className={`VarbListGeneric-root ${className ?? ""}`}>
       {listMenu[menuType]()}
-      <VarbListTableGeneric {...{ themeName, contentTitle, addItem }}>
+      <VarbListTableSectionGeneric {...{ contentTitle, addItem }}>
         {items.map((item) => makeItemNode(item))}
-      </VarbListTableGeneric>
+      </VarbListTableSectionGeneric>
     </VarbListStyled>
   );
 }

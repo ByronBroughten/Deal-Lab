@@ -3,7 +3,7 @@ import { CapExValueMode } from "../../../../../sharedWithServer/SectionsMeta/val
 import { useSetterSection } from "../../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import { LabelWithInfo } from "../../../../appWide/LabelWithInfo";
 import { SelectAndItemizeEditorSection } from "../../../../appWide/SelectAndItemizeEditorSection";
-import { CapExValueList } from "./ValueShared.tsx/CapExValueList";
+import { CapExValueList } from "./ValueShared.tsx/CapExListEditor";
 
 export function CapExValue({ feId }: { feId: string }) {
   const capExValue = useSetterSection({
@@ -63,24 +63,5 @@ export function CapExValue({ feId }: { feId: string }) {
     />
   );
 }
-
-// Ok, first I need a checkbox component that can take anything that has
-// "isActive: boolean".
-
-// That's going to be its own thing in the itemsComponent.
-// The itemsComponent will have "VarbListCapEx", but it will be
-// "CapExCustomList"
-
-// That component displays the names in rows.
-// Not sure how I'm going to flex them, though. Might just make it flex how it will
-// and tailor the widths to the checkbox container.
-// I'll need a checkbox container.
-// Then I simply loop through the ongoingCheckboxItem childNames, and if
-// "isActive" is false, I display them as an option in the checkmark box
-
-// Then I need another item for when they're checked
-// It's a tableRow, or collection of cells
-// That item will have the checkbox on the left, next to the displayName
-// Then it will have the typical capEx cells
 
 const Styled = styled(SelectAndItemizeEditorSection)``;

@@ -6,7 +6,7 @@ interface Props extends FeVarbInfo {
 }
 export function CheckboxCell({ className, ...rest }: Props) {
   return (
-    <td className="VarbListItem-buttonCell">
+    <td className="VarbListItem-btnCell">
       <ToggleValueCheckbox className="VarbListItem-checkbox" {...rest} />
     </td>
   );

@@ -3,75 +3,62 @@ import styled from "styled-components";
 import { useGetterSection } from "../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { useSetterSection } from "../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import theme from "../../../../theme/Theme";
-import { MaterialStringEditor } from "../../../inputs/MaterialStringEditor";
 import { NumObjEntityEditor } from "../../../inputs/NumObjEntityEditor";
-import { VarbListItemStyled } from "../../ListGroup/ListGroupShared/VarbListItemStyled";
+import { DisplayNameCell } from "../../ListGroup/ListGroupShared/DisplayNameCell";
+import { VarbListItemStyledNext } from "../../ListGroup/ListGroupShared/VarbListItemStyled";
+import { XBtnCell } from "../../ListGroup/ListGroupShared/XBtnCell";
 
-interface MemoProps {
-  feId: string;
+interface MemoProps extends Props {
   displayValueVarb: string;
+  displayName?: string;
 }
 const ListItemOngoingMemo = React.memo(function ListItemOngoingMemo({
-  feId,
   displayValueVarb,
+  displayName,
+  ...feInfo
 }: MemoProps) {
-  const feInfo = { sectionName: "capExItem", feId } as const;
   const capExItem = useGetterSection(feInfo);
   const lifespan = capExItem.valueNext("lifespanSpanEditor").mainText;
   const costToReplace = capExItem.valueNext("costToReplace").mainText;
   return (
-    <Styled
-      {...{
-        ...feInfo,
-        className: "ListItemCapEx-root",
-        useXBtn: true,
-        firstCells: (
-          <>
-            <td className="VarbListTable-nameCell">
-              <MaterialStringEditor
-                {...{ ...feInfo, varbName: "displayNameEditor" }}
-              />
-            </td>
-            <td className="ListItemCapEx-cell VarbListTable-firstContentCell">
-              <NumObjEntityEditor
-                className="ListItemCapEx-costToReplace"
-                labeled={false}
-                feVarbInfo={{
-                  ...feInfo,
-                  varbName: "costToReplace",
-                }}
-                editorType="equation"
-                quickViewVarbNames={["numUnits", "numBedrooms", "sqft"]}
-              />
-            </td>
-            <td className="ListItemCapEx-cell">
-              <NumObjEntityEditor
-                className="ListItemCapEx-lifespan"
-                editorType="equation"
-                labeled={false}
-                feVarbInfo={{
-                  ...feInfo,
-                  varbName: "lifespanSpanEditor",
-                }}
-              />
-            </td>
-            <td className="ListItemCapEx-cell">
-              {lifespan && costToReplace && (
-                <span className="ListItemCapEx-equals">{`= ${displayValueVarb}`}</span>
-              )}
-            </td>
-          </>
-        ),
-      }}
-    />
+    <Styled {...{ className: "ListItemCapEx-root" }}>
+      <DisplayNameCell {...{ displayName, ...feInfo }} />
+      <td className="VarbListTable-firstContentCell">
+        <NumObjEntityEditor
+          className="ListItemCapEx-costToReplace"
+          labeled={false}
+          feVarbInfo={{
+            ...feInfo,
+            varbName: "costToReplace",
+          }}
+          editorType="equation"
+          quickViewVarbNames={["numUnits", "numBedrooms", "sqft"]}
+        />
+      </td>
+      <td>
+        <NumObjEntityEditor
+          className="ListItemCapEx-lifespan"
+          editorType="equation"
+          labeled={false}
+          feVarbInfo={{
+            ...feInfo,
+            varbName: "lifespanSpanEditor",
+          }}
+        />
+      </td>
+      <td className="VarbListTable-extenderCell">
+        <span className="ListItemCapEx-equals">{`= ${
+          lifespan && costToReplace ? displayValueVarb : "?"
+        }`}</span>
+      </td>
+      <XBtnCell {...feInfo} />
+    </Styled>
   );
 });
 
-const Styled = styled(VarbListItemStyled)`
+const Styled = styled(VarbListItemStyledNext)`
   .ListItemCapEx-equals {
     margin-left: ${theme.s2};
-  }
-  td.ListItemCapEx-cell {
   }
 
   .ListItemCapEx-lifespan {
@@ -87,9 +74,12 @@ const Styled = styled(VarbListItemStyled)`
   }
 `;
 
-type Props = { feId: string };
-export function ListItemCapEx({ feId }: Props) {
-  const section = useSetterSection({ sectionName: "capExItem", feId });
+type Props = {
+  feId: string;
+  sectionName: "capExItem";
+};
+export function ListItemCapEx(props: Props) {
+  const section = useSetterSection(props);
   const valueVarbName = section.get.activeSwitchTargetName(
     "value",
     "ongoing"
@@ -99,7 +89,7 @@ export function ListItemCapEx({ feId }: Props) {
   return (
     <ListItemOngoingMemo
       {...{
-        feId,
+        ...props,
         displayValueVarb: valueVarb.get.displayVarb(),
       }}
     />

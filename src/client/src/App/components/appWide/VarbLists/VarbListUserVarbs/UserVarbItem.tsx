@@ -1,7 +1,5 @@
-import styled from "styled-components";
 import { useGetterVarb } from "../../../../sharedWithServer/stateClassHooks/useGetterVarb";
-import { LabeledValueEditor } from "../../ListGroup/ListGroupShared/ListItemValue/LabeledValueEditor";
-import { VarbListItemStyled } from "../../ListGroup/ListGroupShared/VarbListItemStyled";
+import { VarbListItemGeneric } from "../../ListGroup/ListGroupShared/VarbListItemGeneric";
 
 type Props = { feId: string };
 export function UserVarbItem({ feId }: Props) {
@@ -14,23 +12,7 @@ export function UserVarbItem({ feId }: Props) {
     varbName: "valueEditor",
   });
   return (
-    <Styled
-      {...{
-        ...feInfo,
-        firstCells: (
-          <LabeledValueEditor
-            {...{ ...feInfo, doEquals: varb.isPureUserVarb }}
-          />
-        ),
-      }}
-    />
+    <VarbListItemGeneric {...feInfo} />
+    // doEquals: varb.isPureUserVarb
   );
 }
-
-const Styled = styled(VarbListItemStyled)`
-  :hover {
-    .AdditiveItem-nextBtn {
-      visibility: hidden;
-    }
-  }
-`;

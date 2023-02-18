@@ -1,54 +1,31 @@
 import styled from "styled-components";
-import { FeInfoByType } from "../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import theme from "../../../../theme/Theme";
-import { RemoveSectionXBtn } from "../../RemoveSectionXBtn";
-import { UpdateValueNextBtn } from "../../UpdateValueNextBtn";
 
-interface Props extends FeInfoByType<"varbListItem"> {
-  firstCells: React.ReactNode;
-  nextValueSwitch?: string;
-  useXBtn?: boolean;
+interface Props {
+  children: React.ReactNode;
   className?: string;
 }
 
-export function VarbListItemStyled({
-  className,
-  firstCells,
-  nextValueSwitch,
-  useXBtn = true,
-  ...feInfo
-}: Props) {
+export function VarbListItemStyledNext({ className, children }: Props) {
   return (
     <Styled className={`VarbListItem-root ${className ?? ""}`}>
-      {firstCells}
-      {nextValueSwitch && (
-        <td className="VarbListItem-buttonCell">
-          <UpdateValueNextBtn
-            className="VarbListItem-nextBtn"
-            {...{
-              ...feInfo,
-              varbName: "valueSourceSwitch",
-              value: nextValueSwitch,
-            }}
-          />
-        </td>
-      )}
-      {useXBtn && (
-        <td className="VarbListItem-buttonCell">
-          <RemoveSectionXBtn className="VarbListItem-xBtn" {...feInfo} />
-        </td>
-      )}
+      {children}
     </Styled>
   );
 }
 
 const Styled = styled.tr`
+  td {
+    padding-top: ${theme.s15};
+    padding-bottom: ${theme.s15};
+  }
+
   .DraftTextField-root {
     min-width: 40px;
   }
 
-  .LabeledValueEditor-nameEditor {
-    .DraftEditor-root {
+  td.VarbListTable-nameCell {
+    .DraftTextField-root {
       min-width: 60px;
     }
   }
@@ -58,26 +35,26 @@ const Styled = styled.tr`
     }
   }
 
-  .NumObjEditor-calcIconPositioner {
-    bottom: 1px;
+  .VarbListItem-contentCellDiv {
+    display: flex;
+    flex: 1;
+    justify-content: flex-start;
+    align-items: flex-end;
   }
-  .VarbListItem-xBtn,
-  .VarbListItem-nextBtn {
+
+  .XBtnCell-root {
+    text-align: right;
+  }
+
+  .XBtn {
     visibility: hidden;
-    height: 22px;
-    width: 22px;
   }
   :hover {
-    .VarbListItem-xBtn,
-    .VarbListItem-nextBtn {
+    .XBtn {
       visibility: visible;
     }
   }
-  td.VarbListTable-nameCell {
-    .DraftTextField-root {
-      min-width: 50px;
-    }
-  }
+
   .ellipsis {
     display: flex;
     align-items: flex-end;

@@ -1,7 +1,5 @@
 import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
-import { makeUtilityList } from "./makeDefaultFeUser/makeExampleOngoingLists";
-import { blankPropertyUtilityProps } from "./makeDefaultFeUser/makeExampleOngoingListsProps";
 
 export function makeDefaultProperty(): SectionPack<"property"> {
   const property = PackBuilderSection.initAsOmniChild("property", {
@@ -18,8 +16,7 @@ export function makeDefaultProperty(): SectionPack<"property"> {
   repairValue.addChild("singleTimeList");
 
   const utilityValue = property.addAndGetChild("utilityValue");
-  const utilityList = utilityValue.addAndGetChild("ongoingList");
-  utilityList.loadSelf(makeUtilityList(blankPropertyUtilityProps));
+  utilityValue.addChild("ongoingList");
 
   property.addChild("maintenanceValue");
 

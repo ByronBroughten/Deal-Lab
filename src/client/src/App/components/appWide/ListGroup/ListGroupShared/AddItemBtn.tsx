@@ -1,4 +1,5 @@
 import React from "react";
+import { AiOutlinePlus } from "react-icons/ai";
 import styled from "styled-components";
 import { StandardBtnProps } from "../../../general/StandardProps";
 import { SectionBtn } from "../../SectionBtn";
@@ -6,12 +7,18 @@ import { SectionBtn } from "../../SectionBtn";
 interface Props extends StandardBtnProps {
   middle?: React.ReactNode;
 }
-export function AddItemBtn({ className, middle = "+", ...props }: Props) {
+export function AddItemBtn({
+  className,
+  middle = <AiOutlinePlus size={17} />,
+  ...props
+}: Props) {
   return (
     <Styled
-      className={`VarbListTable-addItemBtn ${className ?? ""}`}
-      {...props}
-      middle={middle}
+      {...{
+        className: `VarbListTable-addItemBtn ${className ?? ""}`,
+        middle,
+        ...props,
+      }}
     />
   );
 }

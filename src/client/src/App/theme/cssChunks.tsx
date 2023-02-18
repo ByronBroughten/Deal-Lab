@@ -105,53 +105,6 @@ const ccs = {
       box-shadow: none;
     }
   `,
-  listTable: {
-    main() {
-      return css`
-        border-collapse: collapse;
-        th {
-          border-bottom: solid 1px ${theme.primaryBorder};
-          padding-top: ${theme.s2};
-          vertical-align: bottom;
-
-          font-weight: 400;
-          line-height: 1rem;
-          font-size: 1rem;
-        }
-        th,
-        td {
-          padding-left: ${theme.s25};
-          padding-right: ${theme.s25};
-        }
-        td {
-          padding-top: ${theme.s15};
-          padding-bottom: ${theme.s15};
-        }
-        td.name {
-          .DraftTextField-root {
-            min-width: 50px;
-          }
-        }
-        td.cost {
-          .DraftTextField-root {
-            min-width: 35px;
-          }
-        }
-        td.content {
-          .DraftTextField-root {
-            min-width: 30px;
-          }
-        }
-        tbody {
-          tr {
-            :not(:last-child) {
-              border-bottom: 1px solid ${theme.primaryBorder};
-            }
-          }
-        }
-      `;
-    },
-  },
   materialDraftEditor: {
     root: css`
       padding: ${theme.s1} ${theme.s2} 0 ${theme.s2};

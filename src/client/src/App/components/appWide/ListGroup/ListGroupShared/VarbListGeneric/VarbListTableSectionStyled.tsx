@@ -1,10 +1,10 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 import styled from "styled-components";
-import ccs from "../../../../../theme/cssChunks";
 import { nativeTheme } from "../../../../../theme/nativeTheme";
 import theme from "../../../../../theme/Theme";
 import { AddItemBtn } from "../AddItemBtn";
+import { VarbListTableStyled } from "./VarbListTableSectionStyled/VarbListTableStyled";
 
 interface Props {
   className?: string;
@@ -16,7 +16,7 @@ interface Props {
   varbListTotal?: React.ReactNode;
 }
 
-export function VarbListTableStyled({
+export function VarbListTableSectionStyled({
   headers,
   rows,
   addItem,
@@ -26,17 +26,14 @@ export function VarbListTableStyled({
   varbListTotal,
 }: Props) {
   const areRows = rowCount > 0;
-  const theme = nativeTheme;
-
-  const totalStyles = StyleSheet.flatten(theme.subSection.borderLines);
   return (
-    <Styled className={`VarbListTableStyled-root ${className ?? ""}`}>
+    <Styled className={`VarbListTableSectionStyled-root ${className ?? ""}`}>
       <View
         style={{
           justifyContent: "center",
           alignItems: "center",
           height: 30,
-          ...totalStyles,
+          ...nativeTheme.subSection.borderLines,
           borderTopLeftRadius: nativeTheme.br0,
           borderTopRightRadius: nativeTheme.br0,
         }}
@@ -54,13 +51,10 @@ export function VarbListTableStyled({
       )}
       {areRows && (
         <div className="VarbListTable-tableContainer">
-          <table className="VarbListTable-table">
-            <thead>{headers}</thead>
-            <tbody>{rows}</tbody>
-          </table>
+          <VarbListTableStyled headers={headers} rows={rows} />
           <AddItemBtn
-            middle={addItemBtnMiddle}
             onClick={addItem}
+            middle={addItemBtnMiddle}
             className="VarbListTable-addItemBtn tableBottom"
           />
         </div>
@@ -70,9 +64,10 @@ export function VarbListTableStyled({
 }
 
 const Styled = styled.div`
-  /* display: flex;
-  justify-content: center; */
   width: 100%;
+  .VarbList-total {
+    color: ${nativeTheme["gray-700"]};
+  }
 
   .VarbList-totalDiv {
     display: flex;
@@ -88,47 +83,6 @@ const Styled = styled.div`
     display: inline-block;
     width: 100%;
     border-radius: ${theme.br0};
-  }
-  .VarbListTable-table {
-    width: 100%;
-    ${ccs.listTable.main()}
-    border: ${theme.borderStyle};
-    border-top: none;
-  }
-  td {
-    width: 1px;
-  }
-  .VarbListTable-lastHeader {
-    width: 100%;
-  }
-  .VarbListTable-fillerCell {
-  }
-
-  .XBtn {
-    visibility: hidden;
-  }
-  tr {
-    :hover {
-      .XBtn {
-        visibility: visible;
-      }
-    }
-  }
-
-  th {
-    text-align: left;
-    white-space: nowrap;
-    color: ${theme.primaryNext};
-  }
-
-  th.VarbListTable-nameHeader,
-  td.VarbListTable-nameCell {
-    background: ${theme["gray-200"]};
-  }
-
-  th.VarbListTable-firstContentHeader,
-  td.VarbListTable-firstContentCell {
-    border-left: 1px solid ${theme.primaryBorder};
   }
 
   .VarbListTable-addItemBtn {

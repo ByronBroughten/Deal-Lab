@@ -7,7 +7,7 @@ interface Props extends FeVarbInfo {
 }
 export function NextBtnCell({ className, nextSwitchValue, ...rest }: Props) {
   return (
-    <td className="VarbListItem-buttonCell">
+    <td className="VarbListItem-btnCell">
       <UpdateValueNextBtn
         className="VarbListItem-nextBtn"
         {...{

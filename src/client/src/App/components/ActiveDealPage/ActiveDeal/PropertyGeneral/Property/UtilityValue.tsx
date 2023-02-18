@@ -1,7 +1,7 @@
 import { UtilityValueMode } from "../../../../../sharedWithServer/SectionsMeta/values/StateValue/subStringValues";
 import { useSetterSection } from "../../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import { SelectAndItemizeEditorSection } from "../../../../appWide/SelectAndItemizeEditorSection";
-import { VarbListOngoing } from "../../../../appWide/VarbLists/VarbListOngoing";
+import { ListEditorOngoing } from "./ValueShared.tsx/ListEditorOngoing";
 
 export function UtilityValue({ feId }: { feId: string }) {
   const utilityValue = useSetterSection({
@@ -29,10 +29,16 @@ export function UtilityValue({ feId }: { feId: string }) {
         itemizeValue: "itemize",
         total: valueVarb.displayVarb(),
         itemsComponent: (
-          <VarbListOngoing
+          <ListEditorOngoing
             {...{
               feId: utilityValue.oneChildFeId("ongoingList"),
               menuType: "value",
+              menuDisplayNames: [
+                "Water/sewer",
+                "Garbage",
+                "Heat",
+                "Misc energy",
+              ],
             }}
           />
         ),

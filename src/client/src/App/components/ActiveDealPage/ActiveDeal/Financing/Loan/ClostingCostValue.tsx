@@ -1,9 +1,7 @@
-import styled from "styled-components";
 import { ClosingCostValueMode } from "../../../../../sharedWithServer/SectionsMeta/values/StateValue/subStringValues";
 import { useSetterSection } from "../../../../../sharedWithServer/stateClassHooks/useSetterSection";
-import { FormSection } from "../../../../appWide/FormSection";
-import { VarbListSingleTime } from "../../../../appWide/ListGroup/ListGroupSingleTime/VarbListSingleTime";
 import { SelectAndItemizeEditorSection } from "../../../../appWide/SelectAndItemizeEditorSection";
+import { ListEditorSingleTime } from "../../PropertyGeneral/Property/ValueShared.tsx/ListEditorSingleTime";
 
 type Props = { feId: string; fivePercentLoanDisplay: string };
 export function ClosingCostValue({ feId, fivePercentLoanDisplay }: Props) {
@@ -19,6 +17,7 @@ export function ClosingCostValue({ feId, fivePercentLoanDisplay }: Props) {
       {...{
         className: "ClosingCostValue-root",
         label: "Closing Costs",
+        // make a note that this does not include Prepaid items
         selectValue: valueMode,
         onChange: (e) => {
           const value = e.target.value as string;
@@ -42,10 +41,20 @@ export function ClosingCostValue({ feId, fivePercentLoanDisplay }: Props) {
         itemizeValue: "itemize",
         itemizedModalTitle: "Closing Costs",
         itemsComponent: (
-          <VarbListSingleTime
+          <ListEditorSingleTime
             {...{
-              feId: closingCostValue.oneChildFeId("singleTimeList"),
+              menuDisplayNames: [
+                "Appraisal",
+                "Credit report",
+                "Discount points",
+                "Flood Certification",
+                "Government fees",
+                "Processing fees",
+                "Title fees",
+                "Underwriting fees",
+              ],
               menuType: "value",
+              feId: closingCostValue.oneChildFeId("singleTimeList"),
             }}
           />
         ),
@@ -53,5 +62,3 @@ export function ClosingCostValue({ feId, fivePercentLoanDisplay }: Props) {
     />
   );
 }
-
-const Styled = styled(FormSection)``;

@@ -1,9 +1,7 @@
-import styled from "styled-components";
 import { RepairValueMode } from "../../../../../sharedWithServer/SectionsMeta/values/StateValue/subStringValues";
 import { useSetterSection } from "../../../../../sharedWithServer/stateClassHooks/useSetterSection";
-import { FormSection } from "../../../../appWide/FormSection";
-import { VarbListSingleTime } from "../../../../appWide/ListGroup/ListGroupSingleTime/VarbListSingleTime";
 import { SelectAndItemizeEditorSection } from "../../../../appWide/SelectAndItemizeEditorSection";
+import { ListEditorSingleTime } from "./ValueShared.tsx/ListEditorSingleTime";
 
 type Props = { feId: string };
 export function RepairValue({ feId }: Props) {
@@ -39,10 +37,10 @@ export function RepairValue({ feId }: Props) {
         itemizeValue: "itemize",
         itemizedModalTitle: "Repairs",
         itemsComponent: (
-          <VarbListSingleTime
+          <ListEditorSingleTime
             {...{
-              feId: repairValue.oneChildFeId("singleTimeList"),
               menuType: "value",
+              feId: repairValue.onlyChild("singleTimeList").feId,
             }}
           />
         ),
@@ -50,5 +48,3 @@ export function RepairValue({ feId }: Props) {
     />
   );
 }
-
-const Styled = styled(FormSection)``;

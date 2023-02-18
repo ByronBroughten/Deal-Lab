@@ -18,7 +18,7 @@ export default function IfThen({ feId }: Props) {
         <MaterialStringEditor {...userVarbItem.varbInfo("displayNameEditor")} />
       </td>
       <td className="VarbListTable-firstContentCell">
-        <div className="AdditiveItem-contentCellDiv">
+        <div className="VarbListItem-contentCellDiv">
           <ConditionalRowList
             {...{
               feId: userVarbItem.onlyChild("conditionalRowList").feId,

@@ -59,10 +59,11 @@ export class VarbMeta<SN extends SectionName> {
   }
   validateValue(value: any): true {
     if (this.isVarbValueType(value)) return true;
-    else
+    else {
       throw new Error(
         `value of "${value}" does not match the varb value type.`
       );
+    }
   }
   isVarbValueType(value: any): boolean {
     return this.value.is(value);

@@ -4,7 +4,6 @@ import { CheckboxLabeled } from "../../../../../general/CheckboxLabeled";
 
 type Props = { className?: string; checkboxProps: ItemProps[] };
 export function CheckboxList({ className, checkboxProps }: Props) {
-  // how do I make them be in rows?
   return (
     <Styled className={`CheckboxList-root ${className ?? ""}`}>
       {checkboxProps.map((props) => (

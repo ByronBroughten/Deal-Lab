@@ -1,7 +1,6 @@
 import React from "react";
 import { useSetterSection } from "../../../../sharedWithServer/stateClassHooks/useSetterSection";
-import { LabeledValueEditor } from "../../ListGroup/ListGroupShared/ListItemValue/LabeledValueEditor";
-import { VarbListItemStyled } from "../../ListGroup/ListGroupShared/VarbListItemStyled";
+import { VarbListItemGeneric } from "../../ListGroup/ListGroupShared/VarbListItemGeneric";
 
 interface MemoProps {
   feId: string;
@@ -16,12 +15,8 @@ const ListItemOngoingMemo = React.memo(function ListItemOngoingMemo({
 }: MemoProps) {
   const feInfo = { sectionName: "ongoingItem", feId } as const;
   return (
-    <VarbListItemStyled
-      {...{
-        ...feInfo,
-        firstCells: <LabeledValueEditor {...{ ...feInfo, endAdornment }} />,
-        useXBtn: true,
-      }}
+    <VarbListItemGeneric
+      {...{ valueEditorProps: { endAdornment }, ...feInfo }}
     />
   );
 });

@@ -26,7 +26,7 @@ export function LoadedVarbEditor<
         <ControlledVarbAutoComplete {...{ selectedVarbInfo, onSelect }} />
       </td>
       <td className="VarbListTable-firstContentCell">
-        <div className="AdditiveItem-contentCellDiv">{`${valueVarb.get.displayVarb()}`}</div>
+        <div className="VarbListItem-contentCellDiv">{`${valueVarb.get.displayVarb()}`}</div>
       </td>
     </>
   );

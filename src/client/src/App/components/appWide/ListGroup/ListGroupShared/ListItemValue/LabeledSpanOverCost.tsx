@@ -24,7 +24,7 @@ export function LabeledSpanOverCost({
         />
       </td>
       <Styled className="VarbListTable-firstContentCell">
-        <div className="AdditiveItem-contentCellDiv">
+        <div className="VarbListItem-contentCellDiv">
           <NumObjEntityEditor
             feVarbInfo={{
               ...feInfo,
