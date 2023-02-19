@@ -3,18 +3,15 @@ import { ChildName } from "../../../../sharedWithServer/SectionsMeta/sectionChil
 import { FeSectionInfo } from "../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { SectionNameByType } from "../../../../sharedWithServer/SectionsMeta/SectionNameByType";
 import { useSetterSection } from "../../../../sharedWithServer/stateClassHooks/useSetterSection";
-import { ThemeName } from "../../../../theme/Theme";
 import { useSaveStatus } from "../../GeneralSection/MainSection/useSaveStatus";
-import { VarbListEditorPageMenu } from "./VarbListEditorPageMenu";
 import { VarbListTableSectionGeneric } from "./VarbListGeneric/VarbListTableSectionGeneric";
+import { VarbListMenuDual } from "./VarbListMenuDual";
 import { VarbListStyled } from "./VarbListStyled";
-import { VarbListValueMenu } from "./VarbListValueMenu";
 
 type VarbListAllowed = SectionNameByType<"varbListAllowed">;
 type Props<SN extends VarbListAllowed> = {
   feInfo: FeSectionInfo<SN>;
   makeItemNode: (props: { feId: string }) => ReactNode;
-  themeName?: ThemeName;
   contentTitle: string;
   totalVarbName?: string;
   className?: string;
@@ -26,7 +23,6 @@ export type VarbListGenericMenuType = "value" | "editorPage";
 export function VarbListGeneric<SN extends VarbListAllowed>({
   feInfo,
   makeItemNode,
-  themeName = "default",
   contentTitle,
   totalVarbName,
   className,
@@ -39,29 +35,22 @@ export function VarbListGeneric<SN extends VarbListAllowed>({
   const itemName = list.meta.varbListItem as ChildName<SN>;
   const addItem = props.addItem ?? (() => list.addChild(itemName));
 
+  const total = totalVarbName
+    ? list.get.varb(totalVarbName).displayVarb()
+    : undefined;
+
   const items = list.get.children(itemName);
-  const listMenu = {
-    value: () => (
-      <VarbListValueMenu
-        {...{
-          ...feInfo,
-          totalVarbName,
-        }}
-      />
-    ),
-    editorPage: () => (
-      <VarbListEditorPageMenu
-        {...{
-          ...feInfo,
-          totalVarbName,
-        }}
-      />
-    ),
-  };
   return (
     <VarbListStyled className={`VarbListGeneric-root ${className ?? ""}`}>
-      {listMenu[menuType]()}
-      <VarbListTableSectionGeneric {...{ contentTitle, addItem }}>
+      <VarbListMenuDual
+        {...{
+          menuType,
+          ...feInfo,
+        }}
+      />
+      <VarbListTableSectionGeneric
+        {...{ contentTitle, addItem, varbListTotal: total }}
+      >
         {items.map((item) => makeItemNode(item))}
       </VarbListTableSectionGeneric>
     </VarbListStyled>

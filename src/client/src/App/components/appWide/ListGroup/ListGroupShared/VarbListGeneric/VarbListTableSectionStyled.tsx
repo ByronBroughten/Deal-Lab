@@ -1,5 +1,5 @@
 import React from "react";
-import { View } from "react-native";
+import { Text, View } from "react-native";
 import styled from "styled-components";
 import { nativeTheme } from "../../../../../theme/nativeTheme";
 import theme from "../../../../../theme/Theme";
@@ -28,20 +28,6 @@ export function VarbListTableSectionStyled({
   const areRows = rowCount > 0;
   return (
     <Styled className={`VarbListTableSectionStyled-root ${className ?? ""}`}>
-      <View
-        style={{
-          justifyContent: "center",
-          alignItems: "center",
-          height: 30,
-          ...nativeTheme.subSection.borderLines,
-          borderTopLeftRadius: nativeTheme.br0,
-          borderTopRightRadius: nativeTheme.br0,
-        }}
-      >
-        {varbListTotal && (
-          <span className="VarbList-total">{`Total: ${varbListTotal}`}</span>
-        )}
-      </View>
       {!areRows && (
         <AddItemBtn
           onClick={addItem}
@@ -51,6 +37,23 @@ export function VarbListTableSectionStyled({
       )}
       {areRows && (
         <div className="VarbListTable-tableContainer">
+          {varbListTotal && (
+            <View
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                height: 30,
+                ...nativeTheme.subSection.borderLines,
+                borderTopLeftRadius: nativeTheme.br0,
+                borderTopRightRadius: nativeTheme.br0,
+                borderBottomWidth: 0,
+              }}
+            >
+              <Text
+                style={{ color: nativeTheme["gray-700"], fontSize: 15 }}
+              >{`Total: ${varbListTotal}`}</Text>
+            </View>
+          )}
           <VarbListTableStyled headers={headers} rows={rows} />
           <AddItemBtn
             onClick={addItem}
@@ -65,9 +68,6 @@ export function VarbListTableSectionStyled({
 
 const Styled = styled.div`
   width: 100%;
-  .VarbList-total {
-    color: ${nativeTheme["gray-700"]};
-  }
 
   .VarbList-totalDiv {
     display: flex;

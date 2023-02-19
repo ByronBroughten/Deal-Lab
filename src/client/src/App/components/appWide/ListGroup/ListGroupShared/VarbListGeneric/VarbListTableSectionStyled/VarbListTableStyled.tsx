@@ -19,7 +19,6 @@ export function VarbListTableStyled({ className, headers, rows }: Props) {
 const Styled = styled.table`
   border: ${theme.borderStyle};
   width: 100%;
-  border-top: none;
   border-collapse: collapse;
 
   th {

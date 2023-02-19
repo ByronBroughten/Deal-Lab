@@ -14,9 +14,7 @@ const Styled = styled.div`
   display: flex;
   align-items: flex-start;
   .VarbListStyled-viewable {
-    flex-wrap: nowrap;
     min-width: 230px;
-
     display: inline-block;
     border: solid 1px ${theme.primaryBorder};
     background: ${theme.light};
@@ -25,8 +23,5 @@ const Styled = styled.div`
   }
   .VarbListMenu-root {
     margin-bottom: ${theme.s2};
-  }
-  .VarbListTable-root {
-    margin-top: ${theme.s2};
   }
 `;
