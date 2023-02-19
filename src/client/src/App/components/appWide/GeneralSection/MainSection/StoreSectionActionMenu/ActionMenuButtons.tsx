@@ -6,7 +6,7 @@ import { useFeUser } from "../../../../../modules/sectionActorHooks/useFeUser";
 import { useMainSectionActor } from "../../../../../modules/sectionActorHooks/useMainSectionActor";
 import { SectionNameByType } from "../../../../../sharedWithServer/SectionsMeta/SectionNameByType";
 import { LabeledIconBtn } from "../../../LabeledIconBtn";
-import { ActionMenuLoadBtn } from "./ActionMenuLoadBtn";
+import { ActionLoadBtn } from "./ActionLoadBtn";
 import {
   ActionBtnName,
   ActionMenuLists,
@@ -113,7 +113,7 @@ export function useActionMenuBtns<
     // },
     get load() {
       return (
-        <ActionMenuLoadBtn
+        <ActionLoadBtn
           {...{
             feInfo,
             loadWhat,
@@ -125,7 +125,7 @@ export function useActionMenuBtns<
     },
     get loadAndCopy() {
       return (
-        <ActionMenuLoadBtn
+        <ActionLoadBtn
           {...{
             feInfo,
             loadWhat,

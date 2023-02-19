@@ -1,6 +1,7 @@
 import { FeSectionInfo } from "../../../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { SectionNameByType } from "../../../../sharedWithServer/SectionsMeta/SectionNameByType";
-import { ActionMenuLoadBtn } from "../../GeneralSection/MainSection/StoreSectionActionMenu/ActionMenuLoadBtn";
+import { ActionLoadBtn } from "../../GeneralSection/MainSection/StoreSectionActionMenu/ActionLoadBtn";
+import { ActionSaveAsNewBtn } from "../../GeneralSection/MainSection/StoreSectionActionMenu/SaveAsNewBtn";
 import { VarbListTotal } from "./VarbListGeneric/VarbListTotal";
 import { VarbListMenuStyled } from "./VarbListMenuStyled";
 
@@ -12,15 +13,12 @@ interface Props<SN extends SectionNameByType<"varbListAllowed">>
 
 export function VarbListValueMenu<
   SN extends SectionNameByType<"varbListAllowed">
->({
-  totalVarbName,
-  className,
-  ...feInfo
-}: FeSectionInfo<SN> & { totalVarbName?: string; className?: string }) {
+>({ totalVarbName, className, ...feInfo }: Props<SN>) {
   return (
     <VarbListMenuStyled className={`VarbListMenu-root ${className ?? ""}`}>
       <div className="VarbListMenu-titleRow">
-        <ActionMenuLoadBtn
+        <ActionSaveAsNewBtn {...{ ...feInfo }} />
+        <ActionLoadBtn
           {...{
             loadMode: "loadAndCopy",
             loadWhat: "List",

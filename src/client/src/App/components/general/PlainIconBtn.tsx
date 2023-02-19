@@ -1,9 +1,8 @@
-import { Button } from "@material-ui/core";
+import { Button, ButtonProps } from "@material-ui/core";
 import styled from "styled-components";
 import theme from "../../theme/Theme";
-import { StandardBtnProps } from "./StandardProps";
 
-interface BtnProps extends StandardBtnProps {
+interface BtnProps extends ButtonProps {
   left?: React.ReactNode;
   middle?: React.ReactNode;
   right?: React.ReactNode;

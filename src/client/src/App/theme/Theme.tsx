@@ -140,9 +140,6 @@ const borders = {
   },
   sectionBorderChunk: css`
     border-top: solid 1px ${themeColors.primaryBorder};
-    /* border-right: solid 1px ${themeColors.primaryBorder}; */
-    /* border-bottom: none;
-    border-left: none; */
     border-radius: 0;
   `,
 } as const;

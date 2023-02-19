@@ -63,6 +63,8 @@ export const updateVarbsS = {
       }),
     } as const;
   },
+  // Was this a mistake? Did all of these savable ones
+  // have regular old displayNames?
   get displayNameAndEditor(): {
     displayNameEditor: UpdateVarb<"string">;
     displayName: UpdateVarb<"stringObj">;

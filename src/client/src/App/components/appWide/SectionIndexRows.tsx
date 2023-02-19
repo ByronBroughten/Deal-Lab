@@ -50,7 +50,7 @@ export function SectionIndexRows<
           <TextField
             {...{
               className: "SectionIndexRows-filter",
-              placeholder: "filter",
+              placeholder: "Filter",
               value: filter,
               onChange: ({ currentTarget }) => {
                 setFilter(currentTarget.value);

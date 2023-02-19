@@ -10,6 +10,7 @@ import { PropAdornments } from "./NumObjEditor/useGetAdornments";
 import { useOnChange } from "./useOnChange";
 
 type HandleBeforeInput = (char: string) => "handled" | "not-handled";
+export type HandleReturn = () => "handled" | "not-handled";
 interface Props extends Omit<FilledTextFieldProps, "InputProps" | "variant"> {
   sectionName?: ThemeName;
   editorState: EditorState;
@@ -17,6 +18,7 @@ interface Props extends Omit<FilledTextFieldProps, "InputProps" | "variant"> {
 
   onClick?: () => void;
   handleBeforeInput?: HandleBeforeInput;
+  handleReturn?: HandleReturn;
 
   endAdornment?: any;
   startAdornment?: any;
@@ -42,6 +44,7 @@ export const MaterialDraftEditor = React.memo(function MaterialDraftEditor({
   startAdornment,
   endAdornment,
   handleBeforeInput,
+  handleReturn = () => "handled",
   ...rest
 }: Props) {
   const editorRef = React.useRef<Editor | null>(null);
@@ -83,7 +86,7 @@ export const MaterialDraftEditor = React.memo(function MaterialDraftEditor({
               placeholder,
               handleOnChange,
               handleBeforeInput,
-              handleReturn: React.useCallback(() => "handled" as "handled", []),
+              handleReturn,
             } as any,
             startAdornment,
             endAdornment,

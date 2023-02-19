@@ -8,6 +8,7 @@ export function SectionBtn({ className, ...rest }: HollowBtnProps) {
 
 const Styled = styled(HollowBtn)`
   border: solid 1px ${theme.primaryBorder};
+  z-index: 0;
 
   :hover {
     border: solid 1px ${theme.primaryNext};

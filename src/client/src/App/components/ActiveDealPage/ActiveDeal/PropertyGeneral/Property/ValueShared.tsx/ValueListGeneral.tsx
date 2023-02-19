@@ -68,7 +68,4 @@ const Styled = styled.div`
   .ValueListGeneral-table {
     margin-top: ${theme.s4};
   }
-  .ValueListGeneral-itemSection {
-    flex-direction: column;
-  }
 `;

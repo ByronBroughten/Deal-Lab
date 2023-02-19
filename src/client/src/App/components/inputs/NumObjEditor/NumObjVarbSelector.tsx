@@ -9,6 +9,7 @@ import { VarbPathName } from "../../../sharedWithServer/SectionsMeta/SectionInfo
 import theme from "../../../theme/Theme";
 import { HollowBtn } from "../../appWide/HollowBtn";
 import { ModalText } from "../../appWide/ModalText";
+import { DropdownContainer } from "../../general/DropdownContainer";
 import { PopperRef } from "../VarbAutoComplete";
 import { AllVarbsModal } from "./AllVarbsModal";
 import { VarbSelectorCollection } from "./NumObjVarbSelector/VarbSelectorCollection";
@@ -23,10 +24,14 @@ interface Props extends FeSectionInfo {
 export const NumObjVarbSelector = React.memo(
   React.forwardRef(
     (
-      { setEditorState, varbPathNames = [], ...feInfo }: Props,
+      {
+        setEditorState,
+        varbPathNames = ["purchasePrice", "numUnits"],
+        ...feInfo
+      }: Props,
       ref: PopperRef
     ) => {
-      const { toggleVarbs, varbsIsOpen } = useToggleView("varbs");
+      const { toggleVarbs, varbsIsOpen, closeVarbs } = useToggleView("varbs");
       const { openInfo, infoIsOpen, closeInfo } = useToggleView("info");
       const { openAllVarbs, allVarbsIsOpen, closeAllVarbs } =
         useToggleView("allVarbs");
@@ -54,36 +59,39 @@ export const NumObjVarbSelector = React.memo(
                 </ModalText>
               </div>
               {varbsIsOpen && (
-                <div className="NumObjVarbSelector-rowsRelative">
-                  <div className="NumObjVarbSelector-rowsAbsolute">
-                    <VarbSelectorShell>
-                      <VarbSelectorCollection
-                        {...{
-                          focalInfo: feInfo,
-                          rowInfos: varbPathNames.map((varbPathName) =>
-                            mixedInfoS.varbPathName(varbPathName)
-                          ),
-                          setEditorState,
-                        }}
-                      />
-                      <ViewAllRow
-                        {...{
-                          onClick: openAllVarbs,
-                          displayName: "View All",
-                          className: "NumObjVarbSelector-viewAll",
-                        }}
-                      />
-                    </VarbSelectorShell>
-                    <AllVarbsModal
+                <DropdownContainer
+                  {...{
+                    closeDropdown: closeVarbs,
+                    AbsoluteProps: { style: { top: 1, left: -1 } },
+                  }}
+                >
+                  <VarbSelectorShell>
+                    <VarbSelectorCollection
                       {...{
                         focalInfo: feInfo,
+                        rowInfos: varbPathNames.map((varbPathName) =>
+                          mixedInfoS.varbPathName(varbPathName)
+                        ),
                         setEditorState,
-                        closeAllVarbs,
-                        allVarbsIsOpen,
                       }}
                     />
-                  </div>
-                </div>
+                    <ViewAllRow
+                      {...{
+                        onClick: openAllVarbs,
+                        displayName: "View All",
+                        className: "NumObjVarbSelector-viewAll",
+                      }}
+                    />
+                  </VarbSelectorShell>
+                  <AllVarbsModal
+                    {...{
+                      focalInfo: feInfo,
+                      setEditorState,
+                      closeAllVarbs,
+                      allVarbsIsOpen,
+                    }}
+                  />
+                </DropdownContainer>
               )}
             </div>
           </div>
@@ -134,17 +142,6 @@ const ViewAllRow = styled(VarbSelectorRow)`
 
 const Styled = styled.div`
   position: relative;
-  .NumObjVarbSelector-absolute {
-  }
-
-  .NumObjVarbSelector-rowsRelative {
-    position: relative;
-  }
-  .NumObjVarbSelector-rowsAbsolute {
-    position: absolute;
-    left: -1px;
-    top: 1px;
-  }
 
   .NumObjVarbSelector-BtnDiv {
     border-top: 1px solid ${theme.primary.light};

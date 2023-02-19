@@ -1,3 +1,4 @@
+import { darken, lighten } from "polished";
 import { reactNativeS } from "../utils/reactNative";
 
 const basicColors = {
@@ -41,7 +42,44 @@ const spacings = {
 const themeColors = {
   primary: "#00684A",
   secondary: "#00A35C",
+  notice: "#ff9868",
+  dark: "#001E2B",
+  light: "#fff",
 } as const;
+
+type ColorVariantOptions = {
+  light?: string;
+  dark?: string;
+  contrast?: string;
+};
+type ColorVariants = {
+  main: string;
+  light: string;
+  dark: string;
+  contrast: string;
+};
+function colorVariants(
+  main: string,
+  { contrast, ...rest }: ColorVariantOptions = {}
+): ColorVariants {
+  return {
+    main,
+    get light(): string {
+      return lighten(0.25, this.main);
+    },
+    get dark(): string {
+      return darken(0.1, this.main);
+    },
+    contrast: contrast ?? themeColors.dark,
+    ...rest,
+  };
+}
+
+const themeColorVariants = {
+  primary: colorVariants(themeColors.primary),
+  secondary: colorVariants(themeColors.secondary),
+  notice: colorVariants(themeColors.notice),
+};
 
 const borderRadiuses = {
   br0: 5,
@@ -54,6 +92,7 @@ export const nativeTheme = {
   ...borderRadiuses,
   ...spacings,
   ...themeColors,
+  ...themeColorVariants,
   subSection: {
     borderLines: view({
       borderStyle: "solid",

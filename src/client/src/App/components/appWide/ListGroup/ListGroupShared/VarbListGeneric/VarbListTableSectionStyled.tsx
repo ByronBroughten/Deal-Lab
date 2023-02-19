@@ -32,7 +32,7 @@ export function VarbListTableSectionStyled({
         <AddItemBtn
           onClick={addItem}
           middle={addItemBtnMiddle}
-          className="noTable"
+          className="TableSection-addItemNoTable"
         />
       )}
       {areRows && (
@@ -85,7 +85,7 @@ const Styled = styled.div`
     border-radius: ${theme.br0};
   }
 
-  .VarbListTable-addItemBtn {
+  .VarbListTable-addItemBtn.tableBottom {
     border-top: none;
     border-top-right-radius: 0;
     border-top-left-radius: 0;
