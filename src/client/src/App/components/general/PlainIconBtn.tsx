@@ -48,7 +48,4 @@ const Styled = styled(Button)`
   :hover {
     background: transparent;
   }
-  /* .MuiButton-label {
-    visibility: hidden;
-  } */
 `;
