@@ -1,6 +1,34 @@
-import styled from "styled-components";
+import { nativeTheme } from "../../../../../../theme/nativeTheme";
+import { PlainIconBtnProps } from "../../../../../general/PlainIconBtn";
 import { StyledIconBtn } from "../../../../StyledIconBtn";
 
-export const StyledActionBtn = styled(StyledIconBtn)`
-  font-size: 15px;
-`;
+interface Props extends PlainIconBtnProps {
+  isActive?: boolean;
+  isDisabled?: boolean;
+}
+export function StyledActionBtn({
+  style,
+  isDisabled = false,
+  isActive = false,
+  ...rest
+}: Props) {
+  return (
+    <StyledIconBtn
+      {...{
+        style: {
+          fontSize: 15,
+          ...(isActive && {
+            color: nativeTheme.light,
+            backgroundColor: nativeTheme.secondary.main,
+          }),
+          ...(isDisabled && {
+            color: nativeTheme.notice.dark,
+            backgroundColor: nativeTheme.light,
+          }),
+          ...style,
+        },
+        ...rest,
+      }}
+    />
+  );
+}

@@ -2,12 +2,17 @@ import { Button, ButtonProps } from "@material-ui/core";
 import styled from "styled-components";
 import theme from "../../theme/Theme";
 
-interface BtnProps extends ButtonProps {
+export interface PlainIconBtnProps extends ButtonProps {
   left?: React.ReactNode;
   middle?: React.ReactNode;
   right?: React.ReactNode;
 }
-export function PlainIconBtn({ left, middle, right, ...rest }: BtnProps) {
+export function PlainIconBtn({
+  left,
+  middle,
+  right,
+  ...rest
+}: PlainIconBtnProps) {
   return (
     <Styled {...rest}>
       {left && <span className="PlainIconBtnNext-left">{left}</span>}
@@ -43,4 +48,7 @@ const Styled = styled(Button)`
   :hover {
     background: transparent;
   }
+  /* .MuiButton-label {
+    visibility: hidden;
+  } */
 `;

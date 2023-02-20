@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import TrashBtn from "../general/TrashBtn";
+import { TrashBtn } from "../general/TrashBtn";
 import theme from "./../../theme/Theme";
 import PlainBtn from "./../general/PlainBtn";
 
@@ -25,7 +25,7 @@ export const StyledRowIndexRow = styled.div`
   display: flex;
   padding: 0;
   .TrashBtn-root {
-    width: 25px;
+    min-width: 25px;
   }
   .LoadSectionBtn-root {
     display: flex;
@@ -40,6 +40,6 @@ export const StyledRowIndexRow = styled.div`
   .LoadSectionBtn-nameText {
     display: flex;
     align-items: center;
-    margin-left: ${theme.s4};
+    padding-left: ${theme.s4};
   }
 `;

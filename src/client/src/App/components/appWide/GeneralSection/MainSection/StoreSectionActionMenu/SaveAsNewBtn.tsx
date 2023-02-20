@@ -18,24 +18,27 @@ export function ActionSaveAsNewBtn(feInfo: Props) {
   return (
     <DropdownBtnWrapper
       {...{
-        renderDropdownBtn: (toggleDropdown) => (
+        renderDropdownBtn: (toggleDropdown, dropdownIsOpen) => (
           <StyledActionBtn
             middle={"Save as"}
             left={<AiOutlineSave size={23} />}
             onClick={isGuest ? toastWarn : toggleDropdown}
             className="ActionMenuButtons-signInToSave ActionMenuButtons-warn"
-            style={{
-              color: isGuest
-                ? nativeTheme.notice.dark
-                : nativeTheme.primary.main,
-            }}
+            isActive={dropdownIsOpen}
+            isDisabled={isGuest}
           />
         ),
         renderDropdownContent: () => (
-          <View>
+          <View
+            style={{
+              backgroundColor: nativeTheme.light,
+              borderRadius: nativeTheme.br0,
+            }}
+          >
             <MaterialStringEditor
               {...{
                 ...feVarbInfo,
+                style: { minWidth: 130 },
                 label: "Title",
                 handleReturn: () => {
                   section.saveAsNew();
@@ -44,7 +47,15 @@ export function ActionSaveAsNewBtn(feInfo: Props) {
               }}
             />
             <SectionBtn
-              {...{ middle: "Save", onClick: () => section.saveAsNew() }}
+              {...{
+                style: {
+                  borderTopWidth: 0,
+                  borderTopLeftRadius: 0,
+                  borderTopRightRadius: 0,
+                },
+                middle: "Save New",
+                onClick: () => section.saveAsNew(),
+              }}
             />
           </View>
         ),

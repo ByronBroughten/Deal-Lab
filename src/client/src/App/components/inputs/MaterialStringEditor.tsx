@@ -1,3 +1,4 @@
+import React from "react";
 import { FeVarbInfo } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
 import { GetterVarb } from "./../../sharedWithServer/StateGetters/GetterVarb";
 import { HandleReturn, MaterialDraftEditor } from "./MaterialDraftEditor";
@@ -7,12 +8,14 @@ interface StringEditorProps extends FeVarbInfo {
   className?: string;
   label?: string;
   handleReturn?: HandleReturn;
+  style?: React.CSSProperties;
 }
 
 export function MaterialStringEditor({
   className,
   label,
   handleReturn,
+  style,
   ...feVarbInfo
 }: StringEditorProps) {
   let { editorState, setEditorState } = useDraftInput(feVarbInfo);
@@ -25,6 +28,7 @@ export function MaterialStringEditor({
         setEditorState,
         editorState,
         label,
+        style,
       }}
     />
   );

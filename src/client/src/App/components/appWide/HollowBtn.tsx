@@ -1,15 +1,8 @@
-import React from "react";
 import styled from "styled-components";
 import theme from "../../theme/Theme";
-import { PlainIconBtn } from "../general/PlainIconBtn";
-import { StandardBtnProps } from "../general/StandardProps";
+import { PlainIconBtn, PlainIconBtnProps } from "../general/PlainIconBtn";
 
-export type HollowBtnProps = StandardBtnProps & {
-  left?: React.ReactNode;
-  right?: React.ReactNode;
-  middle?: React.ReactNode;
-};
-export function HollowBtn({ className, ...props }: HollowBtnProps) {
+export function HollowBtn({ className, ...props }: PlainIconBtnProps) {
   return (
     <Styled
       {...{
