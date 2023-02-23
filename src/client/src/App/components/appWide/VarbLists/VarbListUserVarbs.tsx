@@ -1,10 +1,8 @@
-import { ThemeName } from "../../../theme/Theme";
 import { VarbListGeneric } from "../ListGroup/ListGroupShared/VarbListGeneric";
 import { UserVarbItem } from "./VarbListUserVarbs/UserVarbItem";
 
 type Props = {
   feId: string;
-  themeName: ThemeName;
   className?: string;
 };
 

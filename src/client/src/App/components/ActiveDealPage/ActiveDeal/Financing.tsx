@@ -8,7 +8,7 @@ import { SubSectionBtn } from "../../appWide/GeneralSection/GeneralSectionTitle/
 import { SectionTitle } from "../../appWide/SectionTitle";
 import Radio from "../../general/Radio";
 import theme from "./../../../theme/Theme";
-import { BackToDealBtn } from "./BackToDealBtn";
+import { BackToSectionBtn } from "./BackToSectionBtn";
 import { Loan } from "./Financing/Loan";
 import { MainDealSection, MainDealSectionProps } from "./MainDealSection";
 
@@ -69,7 +69,7 @@ export function Financing({
           text={"Financing"}
           className="MainSectionTopRows-sectionTitle"
         />
-        <BackToDealBtn onClick={closeInputs} />
+        <BackToSectionBtn backToWhat="Deal" onClick={closeInputs} />
       </div>
       <FormSection>
         <div className="Financing-inputDiv">

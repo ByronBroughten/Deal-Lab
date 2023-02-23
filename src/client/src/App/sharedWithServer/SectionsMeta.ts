@@ -23,7 +23,7 @@ export class SectionsMeta {
   section<SN extends SectionName>(sectionName: SN): SectionMeta<SN> {
     const sectionMeta = this.core[sectionName];
     if (sectionMeta === undefined) {
-      throw new Error(`No section with of sectionName ${sectionName}`);
+      throw new Error(`No section with sectionName "${sectionName}"`);
     }
     return sectionMeta as SectionMeta<any> as any;
   }

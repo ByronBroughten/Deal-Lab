@@ -18,6 +18,7 @@ import { SolverSection } from "../../sharedWithServer/StateSolvers/SolverSection
 import { UpdaterSection } from "../../sharedWithServer/StateUpdaters/UpdaterSection";
 import { timeS } from "../../sharedWithServer/utils/date";
 import { ChildSectionName } from "./../../sharedWithServer/SectionsMeta/sectionChildrenDerived/ChildSectionName";
+import { DisplayItemProps } from "./DisplayListBuilder";
 import { FeIndexSolver } from "./FeIndexSolver";
 import { FeUserSolver } from "./FeUserSolver";
 
@@ -46,8 +47,12 @@ export class MainSectionSolver<
   get hasFeDisplayIndex() {
     return this.get.meta.hasFeDisplayIndex;
   }
-  get indexSolver(): FeIndexSolver<SN> {
-    return new FeIndexSolver(this.solverSectionProps);
+  get feStoreSolver(): FeIndexSolver<any> {
+    const { feIndexStoreName } = this.get;
+    if (!feIndexStoreName) {
+      throw new Error("This can't be null.");
+    }
+    return FeIndexSolver.init(feIndexStoreName, this.solverSectionsProps);
   }
   get dbId(): string {
     return this.get.dbId;
@@ -59,8 +64,8 @@ export class MainSectionSolver<
       ...feUser.feInfo,
     });
   }
-  loadFromLocalStore(dbId: string) {
-    const sectionPack = this.indexSolver.getItem(dbId);
+  loadFromLocalStore(dbId: string): void {
+    const sectionPack = this.feStoreSolver.getItem(dbId).makeSectionPack();
     this.loadSectionPack(sectionPack);
   }
   prepForCompare<SN extends ChildSectionName<"omniParent">>(
@@ -98,10 +103,10 @@ export class MainSectionSolver<
     this.solver.replaceWithDefaultAndSolve();
   }
   get isSaved(): boolean {
-    return this.indexSolver.isSaved(this.dbId);
+    return this.feStoreSolver.hasByDbId(this.dbId);
   }
-  get displayItems() {
-    return this.indexSolver.displayItems;
+  get displayItems(): DisplayItemProps[] {
+    return this.feStoreSolver.displayItems;
   }
   makeACopy() {
     this.updater.newDbId();
@@ -121,12 +126,10 @@ export class MainSectionSolver<
   }
 
   deleteFromIndex(dbId: string) {
-    this.indexSolver.deleteFromIndex(dbId);
+    this.feStoreSolver.removeItem(dbId);
   }
   deleteSelfFromIndex() {
-    this.indexSolver.deleteFromIndex(this.dbId);
-
-    // the indexSolver should handle the sync stuff with deletes
+    this.deleteFromIndex(this.dbId);
   }
   saveNew() {
     const dateTime = timeS.now();
@@ -137,16 +140,16 @@ export class MainSectionSolver<
       autoSyncControl: "autoSyncOff" as AutoSyncControl,
     } as Partial<SectionValues<SN>>);
     const sectionPack = this.packMaker.makeSectionPack();
-    this.indexSolver.addItem(sectionPack);
+    this.feStoreSolver.addItem(sectionPack);
   }
   saveUpdates() {
     this.solver.updateValuesAndSolve({
       dateTimeLastSaved: timeS.now(),
     } as Partial<SectionValues<SN>>);
     const sectionPack = this.packMaker.makeSectionPack();
-    this.indexSolver.updateItem(sectionPack);
+    this.feStoreSolver.updateItem(sectionPack);
   }
   get asSavedPack(): SectionPack<SN> {
-    return this.indexSolver.getAsSavedPack(this.dbId);
+    return this.feStoreSolver.getItemPack(this.dbId);
   }
 }

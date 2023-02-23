@@ -1,13 +1,12 @@
-import React from "react";
 import { SectionPathContext } from "../sharedWithServer/stateClassHooks/useSectionContextName";
 import { NavContainerPage } from "./general/NavContainerPage";
-import { UserListEditor } from "./UserListEditorPage/UserListEditor";
+import { UserLists } from "./UserListEditorPage/UserLists";
 
-export function UserAdditiveListPage() {
+export function UserListsPage() {
   return (
     <NavContainerPage activeBtnName="lists">
       <SectionPathContext.Provider value="userListEditorPage">
-        <UserListEditor />
+        <UserLists />
       </SectionPathContext.Provider>
     </NavContainerPage>
   );

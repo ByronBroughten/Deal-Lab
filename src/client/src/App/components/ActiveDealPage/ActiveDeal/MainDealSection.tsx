@@ -1,16 +1,17 @@
 import { FaPlay } from "react-icons/fa";
 import styled, { css } from "styled-components";
+import { nativeTheme } from "../../../theme/nativeTheme";
 import theme from "../../../theme/Theme";
 import { CheckMarkCircle } from "../../appWide/checkMarkCircle";
 import { EditSectionBtn } from "../../appWide/EditSectionBtn";
 import { FormSection } from "../../appWide/FormSection";
-import { MainSection } from "../../appWide/GeneralSection/MainSection";
-import { HollowBtn } from "../../appWide/HollowBtn";
 import { LabeledVarbProps } from "../../appWide/LabeledVarb";
 import { LabeledVarbRow } from "../../appWide/LabeledVarbRow";
 import { SectionTitle } from "../../appWide/SectionTitle";
 import { StandardProps } from "../../general/StandardProps";
 import { FinishBtn } from "./FinishBtn";
+import { MainSectionFancyStyled } from "./MainSectionFancyStyled";
+import { MainSectionLargeEditBtn } from "./MainSectionLargeEditBtn";
 
 export type CompletionStatus = "allEmpty" | "allValid" | "someInvalid";
 
@@ -49,6 +50,61 @@ export function MainDealSection({
     <Styled
       {...{
         className: `MainDealSection ${className ?? ""}`,
+        noInputsTitleRow: (
+          <>
+            <CheckMarkCircle
+              {...{
+                checked: isCompleted,
+                className: "MainDealSection-checkmarkCircle",
+              }}
+            />
+            <SectionTitle
+              className="MainDealSection-showInputsTitle"
+              text={sectionTitle}
+            />
+            <MainSectionLargeEditBtn
+              {...{
+                className: "MainDealSection-startBtn",
+                middle: btnText,
+                right: <FaPlay className="MainDealSection-startIcon" />,
+                onClick: openInputs,
+              }}
+            />
+            {isCompleted && (
+              <EditSectionBtn
+                className="MainDealSection-editBtn"
+                onClick={openInputs}
+              />
+            )}
+          </>
+        ),
+        detailsSection: (
+          <>
+            <div className="MainDealSection-displayNameDiv">{displayName}</div>
+            <LabeledVarbRow
+              {...{
+                varbPropArr: detailVarbPropArr,
+                className: "MainDealSection-labeledVarbRow",
+              }}
+            />
+          </>
+        ),
+        inputSection: (
+          <>
+            {children}
+            <FormSection>
+              <FinishBtn
+                styleDisabled={!isCompleted}
+                className="MainDealSection-finishBtn"
+                btnText="Finish"
+                onClick={closeInputs}
+                warningText="Please fill in all the required fields"
+              />
+            </FormSection>
+          </>
+        ),
+        showInputs,
+        hide,
         $completionStatus: completionStatus,
         $showInputs: showInputs,
         $hide: hide,
@@ -56,87 +112,25 @@ export function MainDealSection({
           ? { onClick: openInputs }
           : {}),
       }}
-    >
-      <div className="MainDealSection-inactiveTitleRow">
-        <CheckMarkCircle
-          {...{
-            checked: isCompleted,
-            className: "MainDealSection-checkmarkCircle",
-          }}
-        />
-        <SectionTitle
-          className="MainDealSection-showInputsTitle"
-          text={sectionTitle}
-        />
-        <HollowBtn
-          {...{
-            className: "MainDealSection-startBtn",
-            middle: btnText,
-            right: <FaPlay className="MainDealSection-startIcon" />,
-            onClick: openInputs,
-          }}
-        />
-        {isCompleted && (
-          <EditSectionBtn
-            className="MainDealSection-editBtn"
-            onClick={openInputs}
-          />
-        )}
-      </div>
-      <div className="MainDealSection-detailsDiv">
-        <div className="MainDealSection-displayNameDiv">{displayName}</div>
-        <LabeledVarbRow
-          {...{
-            varbPropArr: detailVarbPropArr,
-            className: "MainDealSection-labeledVarbRow",
-          }}
-        />
-      </div>
-      <div className="MainDealSection-inputsDiv">
-        {children}
-        <FormSection>
-          <FinishBtn
-            styleDisabled={!isCompleted}
-            className="MainDealSection-finishBtn"
-            btnText="Finish"
-            onClick={closeInputs}
-            warningText="Please fill in all the required fields"
-          />
-        </FormSection>
-      </div>
-    </Styled>
+    ></Styled>
   );
 }
-// What kind of button?
-export const Styled = styled(MainSection)<{
+
+export const Styled = styled(MainSectionFancyStyled)<{
   $showInputs?: boolean;
   $hide?: boolean;
   $completionStatus: CompletionStatus;
 }>`
-  transition: all 0.2s ease-in-out;
-  .MainDealSection-inactiveTitleRow {
-    display: flex;
-    align-items: center;
-  }
   .MainDealSection-checkmarkCircle {
     margin-right: ${theme.s3};
-  }
-  .MainDealSection-startBtn {
-    margin-left: ${theme.s3};
-    width: 100%;
-    height: 45px;
-    font-size: ${theme.infoSize};
-    border: ${theme.borderStyle};
   }
   .MainDealSection-startIcon {
     margin-left: ${theme.s15};
   }
-
   .MainDealSection-displayNameDiv {
     margin-top: ${theme.s25};
     font-size: ${theme.smallTitleSize};
   }
-
   .MainDealSection-labeledVarbRow {
     margin-top: ${theme.s25};
     margin-left: -${theme.s25};
@@ -145,38 +139,13 @@ export const Styled = styled(MainSection)<{
       font-size: ${theme.infoSize};
     }
   }
-
   .MainDealSection-editBtn {
     margin-left: ${theme.s1};
   }
-  .MainDealSection-detailsTitleRow {
-    display: flex;
-  }
-
   .MainDealSection-showInputsTitle {
-    color: ${theme.primaryNext};
+    color: ${nativeTheme.primary.main};
     min-width: 110px;
   }
-
-  ${({ $hide }) =>
-    $hide &&
-    css`
-      display: none;
-    `}
-
-  ${({ $showInputs }) =>
-    $showInputs
-      ? css`
-          .MainDealSection-detailsDiv,
-          .MainDealSection-inactiveTitleRow {
-            display: none;
-          }
-        `
-      : css`
-          .MainDealSection-inputsDiv {
-            display: none;
-          }
-        `}
 
   ${({ $completionStatus, $showInputs }) => {
     if (!$showInputs) {

@@ -15,8 +15,9 @@ interface MemoProps extends Props {
 const ListItemOngoingMemo = React.memo(function ListItemOngoingMemo({
   displayValueVarb,
   displayName,
-  ...feInfo
+  feId,
 }: MemoProps) {
+  const feInfo = { sectionName: "capExItem", feId } as const;
   const capExItem = useGetterSection(feInfo);
   const lifespan = capExItem.valueNext("lifespanSpanEditor").mainText;
   const costToReplace = capExItem.valueNext("costToReplace").mainText;
@@ -74,22 +75,18 @@ const Styled = styled(VarbListItemStyledNext)`
   }
 `;
 
-type Props = {
-  feId: string;
-  sectionName: "capExItem";
-};
-export function ListItemCapEx(props: Props) {
-  const section = useSetterSection(props);
+type Props = { feId: string };
+export function ListItemCapEx({ feId }: Props) {
+  const section = useSetterSection({ sectionName: "capExItem", feId });
   const valueVarbName = section.get.activeSwitchTargetName(
     "value",
     "ongoing"
   ) as "valueMonthly";
-
   const valueVarb = section.varb(valueVarbName);
   return (
     <ListItemOngoingMemo
       {...{
-        ...props,
+        ...section.feInfo,
         displayValueVarb: valueVarb.get.displayVarb(),
       }}
     />

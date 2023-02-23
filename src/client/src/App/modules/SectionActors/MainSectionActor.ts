@@ -56,7 +56,7 @@ export class MainSectionActor<
   > {
     return {
       apiQueries: this.apiQueries,
-      dbStoreName: this.get.meta.dbIndexStoreName as Extract<
+      dbStoreName: this.get.dbIndexStoreName as Extract<
         DbStoreNameByType<"sectionQuery">,
         DbNameBySectionName<SN>
       >,
@@ -87,7 +87,6 @@ export class MainSectionActor<
     return this.mainSolver.displayItems;
   }
   setSections(): void {
-    // can't user SetterSection in some cases after self is removed
     this.setterSections.setSections();
   }
   removeSelf(): void {
@@ -157,7 +156,7 @@ export class MainSectionActor<
     if (this.feUser.isLoggedIn) {
       return (await this.querier.get(dbId)) as SectionPack<any>;
     } else {
-      return this.mainSolver.indexSolver.getItem(dbId);
+      return this.mainSolver.feStoreSolver.getItem(dbId).makeSectionPack();
     }
   }
   async deleteSelf() {

@@ -14,7 +14,7 @@ export const hasStoreNameArrs = {
   ),
   hasFullIndex: Obj.entryKeysWithPropOfType(
     allSectionTraits,
-    "feFullIndexStoreName",
+    "feIndexStoreName",
     "string"
   ),
   get hasIndexStore() {
@@ -35,7 +35,7 @@ const hasToStoreNames = {
   ),
   fullIndex: getSomeSectionTraits(
     hasStoreNameArrs.hasFullIndex,
-    "feFullIndexStoreName"
+    "feIndexStoreName"
   ),
   get indexStore() {
     return {
@@ -58,10 +58,7 @@ const feStoreNameArrs = {
   all: feUserChildNames,
   dbIndexName: tableRowDbSources,
   get fullIndexWithArrStore() {
-    return Arr.extractStrict(
-      indexStoreNames.fullIndex,
-      dbStoreNameS.arrs.arrQuery
-    );
+    return Arr.extractStrict(feUserChildNames, dbStoreNameS.arrs.arrQuery);
   },
   get mainStoreName() {
     return Arr.extractStrict(indexStoreNames.fullIndex, [
@@ -123,3 +120,5 @@ export type SnFeUserChildNames<SN extends SectionName> = Extract<
   ChildName<"feUser">,
   ChildName<SN>
 >;
+
+export type FeDbStoreName = ChildName<"feUser"> & ChildName<"dbStore">;

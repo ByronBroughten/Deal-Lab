@@ -29,7 +29,7 @@ export interface GeneralSectionTraits {
   varbListItem: string | null;
   displayIndexName: ChildName<"feUser"> | null;
   compareTableName: ChildSectionNameName<"feUser", "compareTable"> | null;
-  feFullIndexStoreName: ChildName<"feUser"> | null;
+  feIndexStoreName: ChildName<"feUser"> | null;
   dbIndexStoreName: ChildName<"dbStore"> | null;
 }
 
@@ -45,6 +45,6 @@ const defaultProps = makeDefault({
   varbListItem: null,
   displayIndexName: null,
   compareTableName: null,
-  feFullIndexStoreName: null,
+  feIndexStoreName: null,
   dbIndexStoreName: null,
 });

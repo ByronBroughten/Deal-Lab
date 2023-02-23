@@ -6,48 +6,24 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-// - Taylor which quick-access variables are accessible to each editor.
-//   - What about inputs that I would like to have access to custom variables
-//     but that lack good quick-access ones? (I'm thinking of capEx lifespans)
-//     - Just make the variables modal pop up for those
 
-// Ones that would benefit from variables but not from quick-access:
-// - Repair value lump sum editor
-// - Repair value itemized value editor
-// - CapEx itemized lifespan
-// For these, clicking "+ Variable" could just go to the variable page, which should then have the same info dot as at the other spot.
+// Maybe give ListEditorMenu "SavedLists >"
+// - This is trickier. You'll have to make some kind of "view" property
+// on main.
 
-// Get rid of all the extra children
-// make an array of displayNames
-// checkwhether each item's DisplayName is in there
-// Make a checkbox for each that doesn't have an item
+// The lists page should look a lot like the
+// deals page.
+// The list sections should act like Property
+// When they open up, you see all the lists in the
+// form they are now.
+// No need for the modal yet.
 
-// For now, menu should have "Save as new", "Load", and "Saved lists >"
-// "Save as new" should expose a dropdown with the displayName
-// editor.
-// It could have "Create new", too
+// Try not using "builder" in FeIndexSolver
 
 // Before Marina
 // - Down payment for loan
-// - Maybe partition three types of list (CapEx, Ongoing, SingleTime)
+// - Make different stores for different lists (Repairs, Utilities, CapEx, Ongoing, SingleTime)
 // - Info dot for Lists
-
-// - Utilities
-//   - Checkboxes for the four or five common utilities
-//   - This checkbox item is just like a singleTime item, but
-//     it also includes a boolean that determines whether it's active
-// - Closing costs
-//   - Same component as Utilities
-
-// - Custom one-time costs - same as now
-// - Custom ongoing costs - same as now
-
-// - Upfront repairs — This is the only one that doesn't really
-//                      This could be useful to people, so I'll keep it.
-//                      The other option is to allow repairs to load
-//                      from custom
-// - How about variables? Do I let users use variables from
-//   all these types of lists? I guess so.
 
 // Before Emily
 // - Pretty much ready
@@ -77,12 +53,6 @@ AppRegistry.runApplication("App", {
 
 // Wordpress
 // - Make a site that does the job
-
-// Before Marketing
-
-// Ones that would benefit from tailored quick-access variables but would need more specific components
-// - utilities itemized editors
-// - capEx itemized replacement cost
 
 // - Add an info dot to the variables selector modal
 // - Give it the "All Variables" thing a displayNameFull filter

@@ -1,52 +1,100 @@
+import { feStoreNameS } from "../../sharedWithServer/SectionsMeta/relSectionsDerived/FeStoreName";
+import { ChildName } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/ChildName";
+import { ChildSectionName } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/ChildSectionName";
 import { SectionPack } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/SectionPack";
 import { SectionNameByType } from "../../sharedWithServer/SectionsMeta/SectionNameByType";
-import { GetterSections } from "../../sharedWithServer/StateGetters/GetterSections";
-import { SolverListBase } from "../../sharedWithServer/StateSolvers/SolverBases/SolverListBase";
-import { FullIndexSolver } from "./FullIndexSolver";
+import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
+import { PackBuilderSection } from "../../sharedWithServer/StatePackers.ts/PackBuilderSection";
+import {
+  SolverSectionBase,
+  SolverSectionProps,
+} from "../../sharedWithServer/StateSolvers/SolverBases/SolverSectionBase";
+import { SolverSectionsProps } from "../../sharedWithServer/StateSolvers/SolverBases/SolverSectionsBase";
+import { SolverSection } from "../../sharedWithServer/StateSolvers/SolverSection";
+import { DisplayItemProps } from "./DisplayListBuilder";
+
+interface FullIndexSolverProps<CN extends ChildName<"feUser">>
+  extends SolverSectionProps<"feUser"> {
+  itemName: CN;
+}
 
 export class FeIndexSolver<
-  SN extends SectionNameByType<"hasIndexStore">
-> extends SolverListBase<SN> {
-  get hasFullIndex() {
-    return this.sectionMeta.hasFeFullIndex;
+  CN extends ChildName<"feUser">
+> extends SolverSectionBase<"feUser"> {
+  itemName: CN;
+  constructor({ itemName, ...rest }: FullIndexSolverProps<CN>) {
+    super(rest);
+    this.itemName = itemName;
   }
-  get hasFeDisplayIndex() {
-    return this.sectionMeta.hasFeDisplayIndex;
+  static init<CN extends ChildName<"feUser">>(
+    itemName: CN,
+    props: SolverSectionsProps
+  ) {
+    const {
+      sectionsShare: { sections },
+    } = props;
+    return new FeIndexSolver({
+      ...sections.onlyOneRawSection("feUser"),
+      ...props,
+      itemName,
+    });
   }
-  get getterSections() {
-    return new GetterSections(this.getterListProps);
+  get get() {
+    return new GetterSection(this.getterSectionProps);
   }
-  get fullIndexSolver(): FullIndexSolver<any> {
-    if (!this.hasFullIndex) {
-      throw new Error(`${this.getL.sectionName} has no full index store`);
-    }
-    const { feFullIndexStoreName } = this.sectionMeta;
-    const feUser = this.getterSections.oneAndOnly("feUser");
-    return new FullIndexSolver({
-      ...this.solverSectionsProps,
-      ...feUser.feInfo,
-      itemName: feFullIndexStoreName,
-    }) as FullIndexSolver<any>;
+  get builder() {
+    return new PackBuilderSection(this.getterSectionProps);
   }
-  isSaved(dbId: string): boolean {
-    return this.fullIndexSolver.hasByDbId(dbId);
+  get solver() {
+    return new SolverSection(this.solverSectionProps);
   }
-  get displayItems() {
-    return this.fullIndexSolver.displayItems;
+  get indexSection() {
+    const { itemName } = this;
+    if (feStoreNameS.is(itemName, "mainStoreName")) {
+      return this.builder;
+    } else return this.solver;
   }
-  deleteFromIndex(dbId: string): void {
-    this.fullIndexSolver.removeItem(dbId);
+  get indexSectionItems(): GetterSection<SectionNameByType<"hasFullIndex">>[] {
+    return this.get.children(this.itemName) as GetterSection<any>[];
   }
-  addItem(sectionPack: SectionPack<SN>): void {
-    this.fullIndexSolver.addItem(sectionPack as SectionPack<any>);
+  get displayItems(): DisplayItemProps[] {
+    return this.indexSectionItems.map((section) => ({
+      displayName: section.valueNext("displayName").mainText,
+      dbId: section.dbId,
+    }));
   }
-  updateItem(sectionPack: SectionPack<SN>): void {
-    this.fullIndexSolver.updateItem(sectionPack as SectionPack<any>);
+  getItem(dbId: string): PackBuilderSection<ChildSectionName<"feUser", CN>> {
+    return this.builder.childByDbId({
+      childName: this.itemName,
+      dbId,
+    });
   }
-  getItem(dbId: string): SectionPack<SN> {
-    return this.fullIndexSolver.getItem(dbId).makeSectionPack();
+  getItemPack(dbId: string): SectionPack<ChildSectionName<"feUser", CN>> {
+    return this.getItem(dbId).makeSectionPack();
   }
-  getAsSavedPack(dbId: string): SectionPack<SN> {
-    return this.fullIndexSolver.getItemPack(dbId);
+  hasByDbId(dbId: string) {
+    return this.get.hasChildByDbInfo({
+      childName: this.itemName,
+      dbId,
+    });
+  }
+  removeItem(dbId: string) {
+    this.indexSection.removeChildByDbId({
+      childName: this.itemName,
+      dbId,
+    });
+  }
+  addItem(sectionPack: SectionPack<ChildSectionName<"feUser", CN>>): void {
+    this.indexSection.loadChild({
+      childName: this.itemName,
+      sectionPack: sectionPack,
+    });
+  }
+  updateItem(sectionPack: SectionPack<ChildSectionName<"feUser", CN>>) {
+    const child = this.indexSection.childByDbId({
+      childName: this.itemName,
+      dbId: sectionPack.dbId,
+    });
+    child.loadSelf(sectionPack);
   }
 }

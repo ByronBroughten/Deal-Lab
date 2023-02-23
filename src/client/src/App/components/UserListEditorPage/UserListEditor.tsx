@@ -12,6 +12,7 @@ export function UserListEditor() {
   return (
     <Styled>
       <UserEditorTitleRow
+        goBackToLists={() => {}}
         titleText="Lists"
         sectionName="userListEditor"
         childNames={["singleTimeListMain", "ongoingListMain"]}

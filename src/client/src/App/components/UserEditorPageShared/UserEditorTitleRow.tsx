@@ -5,9 +5,10 @@ import styled from "styled-components";
 import { SnFeUserChildNames } from "../../sharedWithServer/SectionsMeta/relSectionsDerived/FeStoreName";
 import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
 import { useAuthStatus } from "../../sharedWithServer/stateClassHooks/useAuthStatus";
+import { BackToSectionBtn } from "../ActiveDealPage/ActiveDeal/BackToSectionBtn";
 import { ExclaimBlurb } from "../appWide/ExclaimBlurb";
 import { SectionTitleRow } from "../appWide/GeneralSection/MainSection/SectionTitleRow";
-import { ListMenuBtn } from "../appWide/ListGroup/ListGroupShared/ListMenuSimple/ListMenuBtn";
+import { StyledActionBtn } from "../appWide/GeneralSection/MainSection/StoreSectionActionMenu/ActionBtns.tsx/StyledActionBtn";
 import { SectionTitle } from "../appWide/SectionTitle";
 import theme from "./../../theme/Theme";
 import { useSaveEditorToDb } from "./useSaveEditorToDb";
@@ -16,11 +17,13 @@ type Props<SN extends SectionName> = {
   titleText: React.ReactNode;
   sectionName: SN;
   childNames: SnFeUserChildNames<SN>[];
+  goBackToLists?: () => void;
 };
 export function UserEditorTitleRow<SN extends SectionName>({
   titleText,
   sectionName,
   childNames,
+  goBackToLists,
 }: Props<SN>) {
   const authStatus = useAuthStatus();
   const { saveChanges, discardChanges, areSaved } = useSaveEditorToDb(
@@ -30,28 +33,47 @@ export function UserEditorTitleRow<SN extends SectionName>({
   return (
     <Styled className="UserEditorTitleRow-root">
       <SectionTitleRow
-        className="UserListMainSection-sectionTitle"
-        leftSide={
-          <div className="UserListMainSection-btnsRow">
+        {...{
+          className: "UserListMainSection-sectionTitle",
+          leftSide: (
             <SectionTitle
               className="UserEditorTitleRow-sectionTitle"
               text={titleText}
             />
-            <ListMenuBtn
+          ),
+          ...(goBackToLists && {
+            rightSide: (
+              <BackToSectionBtn
+                backToWhat="Lists Menu"
+                onClick={goBackToLists}
+              />
+            ),
+          }),
+        }}
+      />
+      <SectionTitleRow
+        className="UserListMainSection-sectionBtns"
+        leftSide={
+          <div className="UserListMainSection-btnsRow">
+            <StyledActionBtn
               {...{
-                text: "Save and Apply Changes",
-                onClick: saveChanges,
-                icon: <AiOutlineSave size="25" />,
-                disabled: authStatus === "guest" || areSaved,
                 className: "UserListMainSection-saveBtn",
+                disabled: authStatus === "guest" || areSaved,
+                isDisabled: authStatus === "guest" || areSaved,
+                left: <AiOutlineSave size={25} />,
+                middle: "Save and Apply Changes",
+                onClick: saveChanges,
               }}
             />
-            <ListMenuBtn
-              text="Discard Changes"
-              onClick={discardChanges}
-              icon={<VscDiscard />}
-              disabled={areSaved}
-              className="UserListMainSection-discardChanges"
+            <StyledActionBtn
+              {...{
+                className: "UserListMainSection-discardChanges",
+                disabled: areSaved,
+                isDisabled: areSaved,
+                left: <VscDiscard size={22} />,
+                middle: "Discard Changes",
+                onClick: discardChanges,
+              }}
             />
           </div>
         }
@@ -66,6 +88,9 @@ export function UserEditorTitleRow<SN extends SectionName>({
 }
 
 const Styled = styled.div`
+  .UserListMainSection-sectionBtns {
+    margin-top: ${theme.s2};
+  }
   .UserListMainSection-infoBlurb {
     margin-top: ${theme.s3};
     margin-bottom: ${theme.s2};
@@ -79,14 +104,13 @@ const Styled = styled.div`
     }
   }
   .UserListMainSection-discardChanges {
-    width: 150px;
+    margin-left: ${theme.s2};
+  }
+  .UserListMainSection-saveBtn {
+    /* width: 250px; */
   }
 
   .UserEditorTitleRow-sectionTitle {
     margin-right: ${theme.s2};
-  }
-
-  .UserListMainSection-saveBtn {
-    width: 250px;
   }
 `;

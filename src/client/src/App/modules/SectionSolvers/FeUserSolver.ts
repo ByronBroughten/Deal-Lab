@@ -1,6 +1,7 @@
 import { AnalyzerPlanValues } from "../../sharedWithServer/apiQueriesShared/AnalyzerPlanValues";
 import { defaultMaker } from "../../sharedWithServer/defaultMaker/defaultMaker";
 import { AuthStatus } from "../../sharedWithServer/SectionsMeta/baseSectionsVarbsValues";
+import { ChildName } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/ChildName";
 import { ChildSectionName } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/ChildSectionName";
 import { SectionPack } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/SectionPack";
 import { FeSectionInfo } from "../../sharedWithServer/SectionsMeta/SectionInfo/FeInfo";
@@ -61,11 +62,14 @@ export class FeUserSolver extends SolverSectionBase<"feUser"> {
       ...feInfo,
     });
   }
-  indexBuilder<SN extends SectionNameByType<"hasIndexStore">>(sectionName: SN) {
-    return new FeIndexSolver({
-      ...this.solverSectionsProps,
-      sectionName,
-    });
+  feStoreSolver<CN extends ChildName<"feUser">>(
+    itemName: CN
+  ): FeIndexSolver<any> {
+    return FeIndexSolver.init(itemName, this.solverSectionsProps);
+  }
+  sectionFeSolver(feInfo: FeSectionInfo): FeIndexSolver<any> {
+    const { feIndexStoreName } = this.get.getterSection(feInfo);
+    return this.feStoreSolver(feIndexStoreName);
   }
   prepForCompare<SN extends ChildSectionName<"omniParent">>(
     sectionPack: SectionPack<SN>
@@ -86,8 +90,8 @@ export class FeUserSolver extends SolverSectionBase<"feUser"> {
                 getterChild.valueNext("autoSyncControl") ===
                 ("autoSyncOn" as AutoSyncControl)
               ) {
-                const indexBuilder = this.indexBuilder(getterChild.sectionName);
-                if (indexBuilder.isSaved(getterChild.dbId)) {
+                const store = this.sectionFeSolver(getterChild.feInfo);
+                if (store.hasByDbId(getterChild.dbId)) {
                   child.removeSelf();
                 }
               }

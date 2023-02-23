@@ -4,9 +4,9 @@ import { StrictOmit } from "../../../../sharedWithServer/utils/types";
 import theme from "../../../../theme/Theme";
 import MainSectionBody from "../../../appWide/GeneralSection/MainSection/MainSectionBody";
 import { MainSectionTopRows } from "../../../appWide/MainSectionTopRows";
+import { BackToSectionBtn } from "../BackToSectionBtn";
 import { MainDealSection, MainDealSectionProps } from "../MainDealSection";
 import { CustomExpenses } from "../PropertyGeneral/Property/CustomExpenses";
-import { BackToDealBtn } from "./../BackToDealBtn";
 import { BasicMgmtInfo } from "./Mgmt/BasicMgmtInfo";
 
 export function Mgmt({
@@ -43,7 +43,9 @@ export function Mgmt({
 
           sectionTitle: "Management",
           loadWhat: "Management",
-          topRight: <BackToDealBtn onClick={closeInputs} />,
+          topRight: (
+            <BackToSectionBtn backToWhat="Deal" onClick={closeInputs} />
+          ),
         }}
       />
       <MainSectionBody themeName="mgmt">

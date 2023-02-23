@@ -1,6 +1,6 @@
 import { Arr } from "../../utils/Arr";
 import { Obj } from "../../utils/Obj";
-import { allSectionChildren } from "../allSectionChildren";
+import { allSectionChildren, listChildrenNames } from "../allSectionChildren";
 import {
   ChildSectionName,
   ChildSectionNameName,
@@ -27,19 +27,13 @@ const mainIndexStoreNames = Arr.extractStrict(dbStoreNames, [
   "loanMain",
   "mgmtMain",
   "propertyMain",
-  "ongoingListMain",
-  "outputListMain",
-  "singleTimeListMain",
   "userVarbListMain",
-  "capExListMain",
+  ...listChildrenNames,
 ] as const);
 
 const arrQueryStoreNames = Arr.extractStrict(dbStoreNames, [
-  "ongoingListMain",
-  "outputListMain",
-  "singleTimeListMain",
+  ...listChildrenNames,
   "userVarbListMain",
-  "capExListMain",
 ] as const);
 
 const sectionQueryStoreNames = mainIndexStoreNames;

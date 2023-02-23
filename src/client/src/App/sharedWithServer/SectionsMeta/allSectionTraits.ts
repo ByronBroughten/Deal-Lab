@@ -34,47 +34,47 @@ export const allSectionTraits = checkAllSectionTraits({
   deal: sectionTraits({
     displayName: "Deal",
     compareTableName: "dealMainTable",
-    feFullIndexStoreName: "dealMain",
+    feIndexStoreName: "dealMain",
 
     dbIndexStoreName: "dealMain",
   }),
   loan: sectionTraits({
     compareTableName: "loanMainTable",
-    feFullIndexStoreName: "loanMain",
+    feIndexStoreName: "loanMain",
     dbIndexStoreName: "loanMain",
   }),
   property: sectionTraits({
     compareTableName: "propertyMainTable",
-    feFullIndexStoreName: "propertyMain",
+    feIndexStoreName: "propertyMain",
     dbIndexStoreName: "propertyMain",
   }),
   mgmt: sectionTraits({
     compareTableName: "mgmtMainTable",
-    feFullIndexStoreName: "mgmtMain",
+    feIndexStoreName: "mgmtMain",
     dbIndexStoreName: "mgmtMain",
   }),
   capExList: sectionTraits({
     varbListItem: "capExItem",
-    feFullIndexStoreName: "capExListMain",
+    feIndexStoreName: "capExListMain",
     dbIndexStoreName: "capExListMain",
   }),
   outputList: sectionTraits({
     varbListItem: "outputItem",
-    feFullIndexStoreName: "outputListMain",
+    feIndexStoreName: "outputListMain",
     dbIndexStoreName: "outputListMain",
   }),
   singleTimeList: sectionTraits({
     varbListItem: "singleTimeItem",
-    feFullIndexStoreName: "singleTimeListMain",
+    feIndexStoreName: "singleTimeListMain",
     dbIndexStoreName: "singleTimeListMain",
   }),
   ongoingList: sectionTraits({
     varbListItem: "ongoingItem",
-    feFullIndexStoreName: "ongoingListMain",
+    feIndexStoreName: "ongoingListMain",
     dbIndexStoreName: "ongoingListMain",
   }),
   userVarbList: sectionTraits({
-    feFullIndexStoreName: "userVarbListMain",
+    feIndexStoreName: "userVarbListMain",
     dbIndexStoreName: "userVarbListMain",
     varbListItem: "userVarbItem",
   }),

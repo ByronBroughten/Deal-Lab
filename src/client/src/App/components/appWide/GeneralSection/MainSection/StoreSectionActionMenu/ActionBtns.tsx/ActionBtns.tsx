@@ -134,7 +134,7 @@ export function useActionBtns<SN extends SectionNameByType<"hasIndexStore">>({
     get createNew() {
       return (
         <StyledActionBtn
-          middle="Create new"
+          middle="Reset default"
           left={<BiReset size={23} />}
           onClick={() => mainSection.replaceWithDefault()}
         />

@@ -1,3 +1,4 @@
+import { Obj } from "../utils/Obj";
 import { relOmniParentChildren } from "./allSectionChildren/omniParentChildren";
 import {
   GeneralChildSection,
@@ -7,6 +8,7 @@ import {
   GeneralChildrenSections,
   sectionChildren,
 } from "./allSectionChildren/sectionChildren";
+import { FeDbStoreName } from "./relSectionsDerived/FeStoreName";
 import { SectionName, sectionNames } from "./SectionName";
 
 type Defaults = {
@@ -26,6 +28,23 @@ function checkAllSectionChildren<CS extends GenericChildSections>(
 ) {
   return allSectionChildren;
 }
+
+const listChildren = {
+  repairsListMain: ["singleTimeList"],
+  utilitiesListMain: ["ongoingList"],
+  capExListMain: ["capExList"],
+  holdingCostsListMain: ["ongoingList"],
+  closingCostsListMain: ["singleTimeList"],
+  outputListMain: ["outputList"],
+  singleTimeListMain: ["singleTimeList"],
+  ongoingListMain: ["ongoingList"],
+} as const;
+
+export const listChildrenNames: ListChildName[] = Obj.keys(listChildren);
+
+type ListChildren = typeof listChildren;
+
+export type ListChildName = Extract<FeDbStoreName, keyof ListChildren>;
 
 export const allSectionChildren = checkAllSectionChildren({
   ...defaults,
@@ -57,10 +76,7 @@ export const allSectionChildren = checkAllSectionChildren({
   userVarbEditor: sectionChildren({
     userVarbListMain: ["userVarbList"],
   }),
-  userListEditor: sectionChildren({
-    singleTimeListMain: ["singleTimeList"],
-    ongoingListMain: ["ongoingList"],
-  }),
+  userListEditor: sectionChildren(listChildren),
   displayNameList: sectionChildren({
     displayNameItem: ["displayNameItem"],
   }),
@@ -75,12 +91,8 @@ export const allSectionChildren = checkAllSectionChildren({
     propertyMain: ["property"],
     loanMain: ["loan"],
     mgmtMain: ["mgmt"],
-
-    capExListMain: ["capExList"],
-    outputListMain: ["outputList"],
     userVarbListMain: ["userVarbList"],
-    singleTimeListMain: ["singleTimeList"],
-    ongoingListMain: ["ongoingList"],
+    ...listChildren,
   }),
   dbStore: sectionChildren({
     authInfoPrivate: ["authInfoPrivate"],
@@ -100,13 +112,8 @@ export const allSectionChildren = checkAllSectionChildren({
     loanMainTable: ["compareTable"],
     mgmtMainTable: ["compareTable"],
     dealMainTable: ["compareTable"],
-
-    capExListMain: ["capExList"],
-
-    outputListMain: ["outputList"],
     userVarbListMain: ["userVarbList"],
-    singleTimeListMain: ["singleTimeList"],
-    ongoingListMain: ["ongoingList"],
+    ...listChildren,
   }),
   compareTable: sectionChildren({
     column: ["column"],

@@ -82,15 +82,15 @@ export class SectionMeta<SN extends SectionName> {
     } else return false;
   }
   get hasFeFullIndex(): boolean {
-    if (this.sectionTraits.feFullIndexStoreName) {
+    if (this.sectionTraits.feIndexStoreName) {
       return true;
     } else return false;
   }
   get displayIndexName(): CorePropNoNull<SN, "displayIndexName"> {
     return this.propNoNull("displayIndexName");
   }
-  get feFullIndexStoreName(): CorePropNoNull<SN, "feFullIndexStoreName"> {
-    return this.propNoNull("feFullIndexStoreName");
+  get feIndexStoreName(): CorePropNoNull<SN, "feIndexStoreName"> {
+    return this.propNoNull("feIndexStoreName");
   }
   get displayName(): SectionTrait<SN, "displayName"> {
     return sectionTrait(this.sectionName, "displayName");

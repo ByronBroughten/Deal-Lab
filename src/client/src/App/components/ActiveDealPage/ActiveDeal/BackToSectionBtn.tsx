@@ -4,12 +4,15 @@ import theme from "../../../theme/Theme";
 import { StyledIconBtn } from "../../appWide/StyledIconBtn";
 import { StandardBtnProps } from "../../general/StandardProps";
 
-export function BackToDealBtn(props: StandardBtnProps) {
+interface Props extends StandardBtnProps {
+  backToWhat: string;
+}
+export function BackToSectionBtn({ backToWhat, ...props }: Props) {
   return (
     <Styled
       {...{
         ...props,
-        middle: "Back to Deal",
+        middle: backToWhat,
         right: <RiArrowGoBackLine />,
       }}
     />

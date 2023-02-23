@@ -5,7 +5,7 @@ import { StrictOmit } from "../../../../sharedWithServer/utils/types";
 import theme from "../../../../theme/Theme";
 import MainSectionBody from "../../../appWide/GeneralSection/MainSection/MainSectionBody";
 import { MainSectionTopRows } from "../../../appWide/MainSectionTopRows";
-import { BackToDealBtn } from "../BackToDealBtn";
+import { BackToSectionBtn } from "../BackToSectionBtn";
 import { MainDealSection, MainDealSectionProps } from "../MainDealSection";
 import BasicPropertyInfo from "./Property/BasicPropertyInfo";
 import { CapExValue } from "./Property/CapExValue";
@@ -63,7 +63,9 @@ export function Property({
           sectionTitle: "Property",
           loadWhat: "Property",
           showControls: showInputs ? true : false,
-          topRight: <BackToDealBtn onClick={closeInputs} />,
+          topRight: (
+            <BackToSectionBtn backToWhat="Deal" onClick={closeInputs} />
+          ),
         }}
       />
       <MainSectionBody themeName="property">
@@ -79,10 +81,7 @@ export function Property({
   );
 }
 
-const Styled = styled(MainDealSection)<{
-  $showInputs?: boolean;
-  $hide?: boolean;
-}>`
+const Styled = styled(MainDealSection)`
   .Property-upfrontCostsGroup,
   .Property-ongoingCostGroup {
     padding-top: ${theme.s3};

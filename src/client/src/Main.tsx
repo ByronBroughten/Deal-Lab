@@ -1,4 +1,3 @@
-import React from "react";
 import * as reactRouterDom from "react-router-dom";
 import { Navigate, Route, Routes } from "react-router-dom";
 import styled from "styled-components";
@@ -6,7 +5,7 @@ import { getSuperTokensRoutesForReactRouterDom } from "supertokens-auth-react";
 import { ActiveDealPage } from "./App/components/ActiveDealPage";
 import { FeUserMainTablePage } from "./App/components/FeUserMainTablePage";
 import NotFound from "./App/components/general/NotFound";
-import { UserAdditiveListPage } from "./App/components/UserListEditorPage";
+import { UserListsPage } from "./App/components/UserListsPage";
 import { UserVarbEditorPage } from "./App/components/UserVarbEditorPage";
 import { constants } from "./App/Constants";
 import {
@@ -27,7 +26,7 @@ export function Main() {
       <Routes>
         {getSuperTokensRoutesForReactRouterDom(reactRouterDom)}
         <Route path={feRoutes.userVariables} element={<UserVarbEditorPage />} />
-        <Route path={feRoutes.userLists} element={<UserAdditiveListPage />} />
+        <Route path={feRoutes.userLists} element={<UserListsPage />} />
         <Route path={feRoutes.analyzer} element={<ActiveDealPage />} />
         <Route path={feRoutes.subscribeSuccess} element={<ActiveDealPage />} />
         <Route path={feRoutes.authSuccess} element={<ActiveDealPage />} />

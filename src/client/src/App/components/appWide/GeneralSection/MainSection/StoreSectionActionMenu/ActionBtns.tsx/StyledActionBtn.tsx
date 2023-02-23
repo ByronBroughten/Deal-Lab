@@ -16,6 +16,7 @@ export function StyledActionBtn({
     <StyledIconBtn
       {...{
         style: {
+          whiteSpace: "nowrap",
           fontSize: 15,
           ...(isActive && {
             color: nativeTheme.light,

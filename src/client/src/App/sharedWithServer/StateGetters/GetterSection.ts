@@ -5,6 +5,7 @@ import {
 } from "../SectionsMeta/allBaseSectionVarbs/baseSwitchNames";
 import { DbSectionInfo } from "../SectionsMeta/allBaseSectionVarbs/DbSectionInfo";
 import { VarbName } from "../SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
+import { GenericChildTraits } from "../SectionsMeta/childrenTraits";
 import {
   ChildIdArrsWide,
   ChildName,
@@ -116,6 +117,25 @@ export class GetterSection<
   }
   get raw(): RawFeSection<SN> {
     return this.sectionsShare.sections.rawSection(this.feInfo);
+  }
+  get selfChildTraits(): GenericChildTraits {
+    return this.parent.meta.childTraits(this.selfChildName);
+  }
+  get dbIndexStoreName() {
+    const { dbIndexStoreName } = this.selfChildTraits;
+    if (dbIndexStoreName) {
+      return dbIndexStoreName;
+    } else {
+      return this.meta.dbIndexStoreName;
+    }
+  }
+  get feIndexStoreName() {
+    const { feIndexStoreName } = this.selfChildTraits;
+    if (feIndexStoreName) {
+      return feIndexStoreName;
+    } else {
+      return this.meta.feIndexStoreName;
+    }
   }
   hasVarbName(varbName: string): boolean {
     return this.meta.hasVarbName(varbName);

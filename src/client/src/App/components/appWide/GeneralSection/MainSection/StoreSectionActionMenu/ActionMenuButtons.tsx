@@ -139,7 +139,7 @@ export function useActionMenuBtns<
       return (
         <LabeledIconBtn
           key="createNew"
-          label="Create new"
+          label="Reset default"
           icon={<BiReset size="26" />}
           onClick={() => mainSection.replaceWithDefault()}
         />

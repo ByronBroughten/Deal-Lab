@@ -1,36 +1,28 @@
 import { ReactNode } from "react";
 import { MdOutlinePlaylistAdd } from "react-icons/md";
 import styled from "styled-components";
-import theme, { ThemeName } from "../../../../../theme/Theme";
+import theme from "../../../../../theme/Theme";
 import { HollowBtn } from "../../../HollowBtn";
 
 export type MakeListNode = (props: MakeListNodeProps) => ReactNode;
-type MakeListNodeProps = {
+export type MakeListNodeProps = {
   feId: string;
   key: string;
-  themeName: ThemeName;
   className?: string;
 };
 
 type Props = {
-  themeName?: ThemeName;
   feIds: string[];
   makeListNode: MakeListNode;
   addList: () => void;
 };
-export function ListGroupLists({
-  themeName,
-  feIds,
-  makeListNode,
-  addList,
-}: Props) {
+export function ListGroupLists({ feIds, makeListNode, addList }: Props) {
   return (
     <Styled className="ListGroup-lists">
       {feIds.map((feId) => {
         return makeListNode({
           feId,
           key: feId,
-          themeName: "default",
           className: "ListGroup-list",
         });
       })}
@@ -42,7 +34,7 @@ export function ListGroupLists({
     </Styled>
   );
 }
-const Styled = styled.div<{ $themeName?: ThemeName }>`
+const Styled = styled.div`
   display: flex;
   flex-wrap: wrap;
   .ListGroup-list {

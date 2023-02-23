@@ -23,7 +23,7 @@ export function VarbListEditorPageMenu<
             {...{
               className: "VarbListMenu-title",
               feVarbInfo: list.varbInfo("displayName"),
-              placeholder: "Collection name",
+              placeholder: "List name",
             }}
           />
           {totalVarbName && (

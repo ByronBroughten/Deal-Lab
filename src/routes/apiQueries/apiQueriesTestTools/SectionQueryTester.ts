@@ -48,7 +48,7 @@ export class SectionQueryTester<
     return SolverSection.init(this.indexSectionQuerierProps);
   }
   get dbStoreName(): DbNameBySectionName<SN> {
-    return this.get.meta.dbIndexStoreName as DbNameBySectionName<SN>;
+    return this.get.dbIndexStoreName as DbNameBySectionName<SN>;
   }
   static init<S extends SectionNameByType<"hasIndexStore">>({
     sectionName,

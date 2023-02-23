@@ -18,7 +18,7 @@ export function UserVarbEditor() {
               {...{
                 label: "Variables",
                 infoTitle: "Variables",
-                infoText: `The Variables page lets you define values in one place that can then be plugged in all throughout each of your deals.\n\nFor example, you might define a variable for a common cost—the cost of an oven, let's say. Then any time a property you're analyzing has a busted oven oven, you can just enter that variable as a repair cost and not have to go, "hmmm, how much does it cost to replace an oven, again?"\n\nAnd then if the cost of ovens changes—maybe you find a vendor with lower prices—simply update your oven cost variable, and then any deal you load up will automatically update its related values.`,
+                infoText: `This page lets you define values that can then be plugged in all throughout the app.\n\nFor example, you might define a variable for a common cost, like the cost to replace an oven in your area. Then any time a property you're analyzing has a busted oven, you'll have that variable to enter as a repair cost and not have to go, "hmmm, how much does it cost to replace an oven, again?"\n\nAnd then if the cost of ovens changes—maybe you find a vendor with lower prices—simply update the variable, and then any inputs that contain that variable will update automatically, for any deal that you load up.`,
               }}
             />
           ),
