@@ -24,7 +24,7 @@ export function StyledActionBtn({
           }),
           ...(isDisabled && {
             color: nativeTheme.notice.dark,
-            backgroundColor: nativeTheme.light,
+            backgroundColor: "transparent",
           }),
           ...style,
         },

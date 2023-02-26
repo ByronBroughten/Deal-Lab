@@ -233,7 +233,6 @@ export class UpdaterSection<
     return {
       ...rootRaw,
       sectionsShare: { sections },
-      contextShare: { sectionContextName: "default" },
     };
   }
 }

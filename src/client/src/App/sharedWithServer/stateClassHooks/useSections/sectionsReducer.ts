@@ -4,7 +4,6 @@ import {
   FeVarbInfo,
   FeVarbValueInfo,
 } from "../../SectionsMeta/SectionInfo/FeInfo";
-import { SectionPathContextName } from "../../SectionsMeta/sectionPathContexts";
 import { StateSections } from "../../StateSections/StateSections";
 import { EditorUpdaterVarb } from "../../StateSetters/EditorUpdaterVarb";
 import { SolverSection } from "../../StateSolvers/SolverSection";
@@ -17,15 +16,12 @@ export interface VarbContentInfo extends FeVarbInfo {
 
 interface RemoveSelfAction extends FeSectionInfo {
   type: "removeSelf";
-  sectionContextName: SectionPathContextName;
 }
 interface UpdateValueAction extends FeVarbValueInfo {
   type: "updateValue";
-  sectionContextName: SectionPathContextName;
 }
 interface UpdateValueFromEditorAction extends VarbContentInfo {
   type: "updateValueFromContent";
-  sectionContextName: SectionPathContextName;
 }
 
 export type SectionsAction =

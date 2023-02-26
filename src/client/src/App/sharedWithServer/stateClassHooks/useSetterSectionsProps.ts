@@ -2,9 +2,9 @@ import {
   SetterSectionsBase,
   SetterSectionsProps,
 } from "../StateSetters/SetterBases/SetterSectionsBase";
-import { useFullSectionsContext } from "./useFullSectionsContext";
+import { useSectionsContext } from "./useSections";
 
 export function useSetterSectionsProps(): SetterSectionsProps {
-  const props = useFullSectionsContext();
+  const props = useSectionsContext();
   return SetterSectionsBase.initProps(props);
 }

@@ -1,7 +1,7 @@
 import { VariableGetterSections } from "../StateEntityGetters/VariableGetterSections";
-import { useFullSectionsContext } from "./useFullSectionsContext";
+import { useSectionsContext } from "./useSections";
 
 export function useVariableSections(): VariableGetterSections {
-  const context = useFullSectionsContext();
+  const context = useSectionsContext();
   return VariableGetterSections.init(context);
 }

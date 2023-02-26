@@ -1,5 +1,4 @@
 import { FeVarbInfo } from "../../SectionsMeta/SectionInfo/FeInfo";
-import { SectionPathContextName } from "../../SectionsMeta/sectionPathContexts";
 import {
   GetterSectionsBase,
   GetterSectionsProps,
@@ -47,9 +46,6 @@ export class SolverSectionsBase {
   }
   get varbIdsToSolveFor(): Set<string> {
     return this.solveShare.varbIdsToSolveFor;
-  }
-  updateSectionContextName(sectionContextName: SectionPathContextName): void {
-    this.getterSectionsBase.updateSectionContextName(sectionContextName);
   }
   addVarbInfosToSolveFor(...varbInfos: FeVarbInfo[]): void {
     const varbIds = GetterVarb.varbInfosToVarbIds(varbInfos);

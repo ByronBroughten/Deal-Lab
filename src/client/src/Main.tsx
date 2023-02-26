@@ -3,9 +3,11 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import styled from "styled-components";
 import { getSuperTokensRoutesForReactRouterDom } from "supertokens-auth-react";
 import { ActiveDealPage } from "./App/components/ActiveDealPage";
+import { ActiveDealMain } from "./App/components/ActiveDealPage/ActiveDealMain";
 import { DealPropertyPage } from "./App/components/DealPropertyPage";
 import { FeUserMainTablePage } from "./App/components/FeUserMainTablePage";
 import NotFound from "./App/components/general/NotFound";
+import { NavContainerSectionOutletPage } from "./App/components/NavContainerOutletPage";
 import { UserListsPage } from "./App/components/UserListsPage";
 import { UserVarbEditorPage } from "./App/components/UserVarbEditorPage";
 import { constants } from "./App/Constants";
@@ -28,7 +30,18 @@ export function Main() {
         {getSuperTokensRoutesForReactRouterDom(reactRouterDom)}
         <Route path={feRoutes.userVariables} element={<UserVarbEditorPage />} />
         <Route path={feRoutes.userLists} element={<UserListsPage />} />
-        <Route path={feRoutes.activeDeal} element={<ActiveDealPage />} />
+        <Route
+          path={feRoutes.activeDeal}
+          element={
+            <NavContainerSectionOutletPage
+              {...{
+                activeBtnName: "deal",
+              }}
+            />
+          }
+        >
+          <Route index element={<ActiveDealMain />} />
+        </Route>
         <Route path={feRoutes.subscribeSuccess} element={<ActiveDealPage />} />
         <Route path={feRoutes.authSuccess} element={<ActiveDealPage />} />
         <Route path={feRoutes.activeProperty} element={<DealPropertyPage />} />

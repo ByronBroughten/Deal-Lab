@@ -6,7 +6,6 @@ import "react-toastify/dist/ReactToastify.css";
 import { Normalize } from "styled-normalize";
 import { SuperTokensWrapper } from "supertokens-auth-react";
 import { initSupertokens } from "./App/modules/initSupertokens";
-import { SectionPathContext } from "./App/sharedWithServer/stateClassHooks/useSectionContextName";
 import {
   SectionsContext,
   SectionsDispatchContext,
@@ -32,12 +31,10 @@ const App: React.FC = () => {
             <BrowserRouter>
               <SectionsContext.Provider value={sectionsContext}>
                 <SectionsDispatchContext.Provider value={sectionsDispatch}>
-                  <SectionPathContext.Provider value="default">
-                    <GlobalFonts />
-                    <GlobalStyle />
-                    <Main />
-                    <ToastContainer />
-                  </SectionPathContext.Provider>
+                  <GlobalFonts />
+                  <GlobalStyle />
+                  <Main />
+                  <ToastContainer />
                 </SectionsDispatchContext.Provider>
               </SectionsContext.Provider>
             </BrowserRouter>

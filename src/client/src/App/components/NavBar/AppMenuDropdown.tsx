@@ -16,7 +16,7 @@ interface BtnProps extends StandardBtnProps {
 const iconSize = 22;
 
 const navBtnNames = ["deal", "variables", "lists", "compare"] as const;
-type NavBtnName = typeof navBtnNames[number];
+export type NavBtnName = typeof navBtnNames[number];
 
 export type AppMenuProps = { activeBtnName?: NavBtnName };
 export function AppMenuDropdown({ activeBtnName }: AppMenuProps) {

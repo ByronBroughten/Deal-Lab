@@ -15,7 +15,7 @@ export class GetterListBase<
     this.sectionName = sectionName;
   }
   get getterListProps(): GetterListProps<SN> {
-    return pick(this, ["sectionName", "sectionsShare", "contextShare"]);
+    return pick(this, ["sectionName", "sectionsShare"]);
   }
   get sectionMeta() {
     return this.sectionsMeta.section(this.sectionName);
