@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { constants } from "../../../../Constants";
 import {
@@ -5,12 +6,11 @@ import {
   DealMode,
 } from "../../../../sharedWithServer/SectionsMeta/values/StateValue/subStringValues";
 import { useGetterSection } from "../../../../sharedWithServer/stateClassHooks/useGetterSection";
-import theme from "../../../../theme/Theme";
+import { nativeTheme } from "../../../../theme/nativeTheme";
 import MainSectionBody from "../../../appWide/GeneralSection/MainSection/MainSectionBody";
 import { MainSectionTopRows } from "../../../appWide/MainSectionTopRows";
 import { BackToSectionBtn } from "../BackToSectionBtn";
 import { DealSubSectionOpen } from "../DealSubSectionOpen";
-import { DomLink } from "../general/DomLink";
 import BasicPropertyInfo from "./Property/BasicPropertyInfo";
 import { CapExValue } from "./Property/CapExValue";
 import { CustomExpenses } from "./Property/CustomExpenses";
@@ -30,6 +30,8 @@ export function DealProperty({ feId, completionStatus, dealMode }: Props) {
   const property = useGetterSection(feInfo);
   const isComplete = completionStatus === "allValid";
   const sectionTitle = "Property";
+
+  const navigate = useNavigate();
   return (
     <Styled {...{ finishIsAllowed: isComplete }}>
       <MainSectionTopRows
@@ -39,9 +41,10 @@ export function DealProperty({ feId, completionStatus, dealMode }: Props) {
           loadWhat: sectionTitle,
           showControls: true,
           topRight: (
-            <DomLink to={constants.feRoutes.activeDeal}>
-              <BackToSectionBtn backToWhat="Deal" />
-            </DomLink>
+            <BackToSectionBtn
+              onClick={() => navigate(constants.feRoutes.activeDeal)}
+              backToWhat="Deal"
+            />
           ),
         }}
       />
@@ -61,6 +64,6 @@ export function DealProperty({ feId, completionStatus, dealMode }: Props) {
 const Styled = styled(DealSubSectionOpen)`
   .Property-upfrontCostsGroup,
   .Property-ongoingCostGroup {
-    padding-top: ${theme.s3};
+    padding-top: ${nativeTheme.s3};
   }
 `;

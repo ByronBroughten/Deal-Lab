@@ -1,5 +1,6 @@
 import { FormControl, MenuItem, Select } from "@material-ui/core";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { constants } from "../../Constants";
 import { VarbName } from "../../sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
@@ -62,6 +63,7 @@ export function ActiveDeal({ className, feId }: Props) {
   };
 
   const isDealView = sectionView === "deal";
+  const navigate = useNavigate();
   return (
     <Styled
       className={`ActiveDeal-root ${className ?? ""}`}
@@ -98,7 +100,9 @@ export function ActiveDeal({ className, feId }: Props) {
           <DealSubSectionClosed
             {...{
               ...makeSectionProps("property"),
+              openEditor: () => navigate(constants.feRoutes.activeProperty),
               sectionTitle: "Property",
+
               editorPath: constants.feRoutes.activeProperty,
             }}
           />

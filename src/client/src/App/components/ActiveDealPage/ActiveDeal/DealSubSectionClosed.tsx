@@ -8,7 +8,7 @@ import { MainSubSectionClosed } from "./MainSubSectionClosed";
 type Props = {
   sectionTitle: React.ReactNode;
   completionStatus: CompletionStatus;
-  editorPath: string;
+  openEditor: () => void;
   detailsProps?: {
     displayName: React.ReactNode;
     detailVarbPropArr: LabeledVarbProps[];

@@ -6,20 +6,17 @@ import { nativeTheme } from "../../../theme/nativeTheme";
 import { CheckMarkCircle } from "../../appWide/checkMarkCircle";
 import { EditSectionBtn } from "../../appWide/EditSectionBtn";
 import { SectionTitle } from "../../appWide/SectionTitle";
-import { DomLink } from "./general/DomLink";
 import { MainSectionLargeEditBtn } from "./MainSectionLargeEditBtn";
 
 type Props = {
   completionStatus: CompletionStatus;
   sectionTitle: React.ReactNode;
-  editorPath?: string;
-  openEditor?: () => void;
+  openEditor: () => void;
 };
 
 export function DealSubSectionTitleRow({
   completionStatus,
   sectionTitle,
-  editorPath,
   openEditor,
 }: Props) {
   const btnText = completionStatus === "allEmpty" ? "Start" : "Continue";
@@ -37,24 +34,20 @@ export function DealSubSectionTitleRow({
         text={sectionTitle}
       />
       {!isCompleted && (
-        <DomLink to={editorPath ?? ""}>
-          <MainSectionLargeEditBtn
-            {...{
-              className: "DealSubSectionTitleRow-startBtn",
-              middle: btnText,
-              right: <FaPlay className="DealSubSectionTitleRow-startIcon" />,
-              onClick: openEditor,
-            }}
-          />
-        </DomLink>
+        <MainSectionLargeEditBtn
+          {...{
+            className: "DealSubSectionTitleRow-startBtn",
+            middle: btnText,
+            right: <FaPlay className="DealSubSectionTitleRow-startIcon" />,
+            onClick: openEditor,
+          }}
+        />
       )}
       {isCompleted && (
-        <DomLink to={editorPath ?? ""}>
-          <EditSectionBtn
-            className="DealSubSectionTitleRow-editBtn"
-            onClick={openEditor}
-          />
-        </DomLink>
+        <EditSectionBtn
+          className="DealSubSectionTitleRow-editBtn"
+          onClick={openEditor}
+        />
       )}
     </Styled>
   );

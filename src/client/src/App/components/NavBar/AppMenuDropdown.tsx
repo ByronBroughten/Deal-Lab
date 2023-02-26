@@ -3,11 +3,10 @@ import { FaHandshake } from "react-icons/fa";
 import { HiOutlineVariable } from "react-icons/hi";
 import { IoIosGitCompare } from "react-icons/io";
 import { MdOutlineViewList } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { constants } from "../../Constants";
-import { Obj } from "../../sharedWithServer/utils/Obj";
+import { feRoutes } from "../../Constants";
 import theme from "../../theme/Theme";
-import { DomLink } from "../ActiveDealPage/ActiveDeal/general/DomLink";
 import { StandardBtnProps } from "../general/StandardProps";
 import { AppMenuBtn } from "./AppMenuBtn";
 
@@ -15,20 +14,28 @@ interface BtnProps extends StandardBtnProps {
   $active?: boolean;
 }
 const iconSize = 22;
-const navBtns = {
-  deal: (props: BtnProps) => (
-    <DomLink to={constants.feRoutes.activeDeal}>
+
+const navBtnNames = ["deal", "variables", "lists", "compare"] as const;
+type NavBtnName = typeof navBtnNames[number];
+
+export type AppMenuProps = { activeBtnName?: NavBtnName };
+export function AppMenuDropdown({ activeBtnName }: AppMenuProps) {
+  const [activeName, setActiveName] = React.useState(activeBtnName);
+
+  const navigate = useNavigate();
+  const navBtns = {
+    deal: (props: BtnProps) => (
       <AppMenuBtn
         {...props}
+        onClick={() => navigate(feRoutes.activeDeal)}
         text={"Deal"}
         icon={<FaHandshake size={iconSize} />}
       />
-    </DomLink>
-  ),
-  variables: (props: BtnProps) => (
-    <DomLink to={constants.feRoutes.userVariables}>
+    ),
+    variables: (props: BtnProps) => (
       <AppMenuBtn
         {...props}
+        onClick={() => navigate(feRoutes.userVariables)}
         text={"Variables"}
         icon={
           <HiOutlineVariable
@@ -37,21 +44,19 @@ const navBtns = {
           />
         }
       />
-    </DomLink>
-  ),
-  lists: (props: BtnProps) => (
-    <DomLink to={constants.feRoutes.userLists}>
+    ),
+    lists: (props: BtnProps) => (
       <AppMenuBtn
         {...props}
+        onClick={() => navigate(feRoutes.userLists)}
         text={"Lists"}
         icon={<MdOutlineViewList size={iconSize} />}
       />
-    </DomLink>
-  ),
-  compare: (props: BtnProps) => (
-    <DomLink to={constants.feRoutes.compare}>
+    ),
+    compare: (props: BtnProps) => (
       <AppMenuBtn
         {...props}
+        onClick={() => navigate(feRoutes.compare)}
         text={"Compare"}
         icon={
           <IoIosGitCompare
@@ -61,16 +66,8 @@ const navBtns = {
         }
         className="AppMenuDropdown-compareBtn"
       />
-    </DomLink>
-  ),
-};
-
-const navBtnNames = Obj.keys(navBtns);
-type NavBtnName = typeof navBtnNames[number];
-
-export type AppMenuProps = { activeBtnName?: NavBtnName };
-export function AppMenuDropdown({ activeBtnName }: AppMenuProps) {
-  const [activeName, setActiveName] = React.useState(activeBtnName);
+    ),
+  };
 
   return (
     <Styled className="NavAppMenu-dropdown">

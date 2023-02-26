@@ -131,3 +131,4 @@ export const config = {
 } as const;
 
 export const constants = config;
+export const feRoutes = constants.feRoutes;

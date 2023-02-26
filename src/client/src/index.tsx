@@ -7,6 +7,7 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 // - Make separate pages for Property, Mgmt, and Financing
+
 // - Make each list view a separate page, too.
 // - give ListEditorMenu the SavedLists button
 
