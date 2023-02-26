@@ -38,10 +38,7 @@ export class FeUserSolver extends SolverSectionBase<"feUser"> {
     const feUser = PackBuilderSection.initAsOmniChild("feUser");
     feUser.loadSelf(defaultMaker.makeSectionPack("feUser"));
     return new FeUserSolver({
-      ...FeUserSolver.initProps({
-        sections: feUser.sectionsShare.sections,
-        sectionContextName: "default",
-      }),
+      ...FeUserSolver.initProps({ sections: feUser.sectionsShare.sections }),
       ...feUser.getterSectionProps,
     });
   }

@@ -104,7 +104,6 @@ export class SetterTesterSection<
       ...feInfo,
       ...GetterVarb.initProps({
         sections: this.state.sections,
-        sectionContextName: "default",
       }),
     });
   }

@@ -44,7 +44,6 @@ export class PackBuilderSections extends GetterSectionsBase {
     const builder = PackBuilderSection.init({
       ...pick(rootSection, ["sectionName", "feId"]),
       sections,
-      sectionContextName: "default",
     });
     builder.loadChild({
       childName: "main",

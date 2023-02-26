@@ -48,7 +48,6 @@ export class SectionTesterBase<SN extends SectionNameByType> {
     return {
       ...this.feInfo,
       ...SetterSections.initProps({
-        sectionContextName: "default",
         sections: this.state.sections,
         setSections: this.testSetSections,
       }),

@@ -1,8 +1,7 @@
 import { FormControl, FormControlLabel, RadioGroup } from "@material-ui/core";
 import styled from "styled-components";
+import { DealMode } from "../../../sharedWithServer/SectionsMeta/values/StateValue/subStringValues";
 import { useSetterSection } from "../../../sharedWithServer/stateClassHooks/useSetterSection";
-import { GetterSection } from "../../../sharedWithServer/StateGetters/GetterSection";
-import { StrictOmit } from "../../../sharedWithServer/utils/types";
 import { FormSection } from "../../appWide/FormSection";
 import { SubSectionBtn } from "../../appWide/GeneralSection/GeneralSectionTitle/SubSectionBtn";
 import { SectionTitle } from "../../appWide/SectionTitle";
@@ -10,32 +9,17 @@ import Radio from "../../general/Radio";
 import theme from "./../../../theme/Theme";
 import { BackToSectionBtn } from "./BackToSectionBtn";
 import { Loan } from "./Financing/Loan";
-import { MainDealSectionProps, MainSubSectionFull } from "./MainSubSectionFull";
 
-function getDisplayName(financing: GetterSection<"financing">) {
-  const financingMode = financing.valueNext("financingMode");
-  if (financingMode === "cashOnly") {
-    return "Cash Only";
-  }
+type Props = {
+  feId: string;
+  dealMode: DealMode;
+  backBtnProps: {
+    backToWhat: string;
+    onClick: () => void;
+  };
+};
 
-  const loans = financing.children("loan");
-  let displayName = "";
-  for (let i = 0; i < loans.length; i++) {
-    if (i !== 0) displayName += " | ";
-    displayName += loans[i].valueNext("displayName").mainText;
-  }
-  return displayName;
-}
-
-export function Financing({
-  feId,
-  closeInputs,
-  completionStatus,
-  ...props
-}: StrictOmit<
-  MainDealSectionProps & { feId: string },
-  "displayName" | "sectionTitle" | "detailVarbPropArr"
->) {
+export function FinancingEditor({ feId, backBtnProps }: Props) {
   const financing = useSetterSection({
     sectionName: "financing",
     feId,
@@ -48,28 +32,13 @@ export function Financing({
   const addLoan = () => financing.addChild("loan");
 
   return (
-    <Styled
-      {...{
-        ...props,
-        feId,
-        sectionTitle: "Financing",
-        className: "Financing-root",
-        closeInputs,
-        displayName: getDisplayName(financing.get),
-        completionStatus,
-        detailVarbPropArr: financing.get.varbInfoArr([
-          "loanPaymentMonthly",
-          "loanTotalDollars",
-          // "downPayment"
-        ] as const),
-      }}
-    >
+    <Styled>
       <div className="Financing-titleRow">
         <SectionTitle
           text={"Financing"}
           className="MainSectionTopRows-sectionTitle"
         />
-        <BackToSectionBtn backToWhat="Deal" onClick={closeInputs} />
+        <BackToSectionBtn {...backBtnProps} />
       </div>
       <FormSection>
         <div className="Financing-inputDiv">
@@ -119,7 +88,7 @@ export function Financing({
   );
 }
 
-const Styled = styled(MainSubSectionFull)`
+const Styled = styled.div`
   .Financing-inputDiv {
     display: flex;
     flex-direction: column;

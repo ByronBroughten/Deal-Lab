@@ -155,10 +155,10 @@ export class GetterSection<
   get displayName(): string {
     return this.meta.displayName;
   }
-  isOfSectionName<S extends SectionNameByType>(
-    sectionName: S
+  isOfSectionName<S extends SectionName>(
+    ...sectionNames: S[]
   ): this is GetterSection<S> {
-    return this.sectionName === (sectionName as any);
+    return sectionNames.includes(this.sectionName as any);
   }
   isSectionType<ST extends SectionNameType>(
     sectionNameType: ST

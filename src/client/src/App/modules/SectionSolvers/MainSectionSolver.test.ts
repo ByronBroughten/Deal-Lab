@@ -12,7 +12,6 @@ describe("MainSectionSolver", () => {
     const property = new MainSectionSolver({
       ...SolverSection.initProps({
         sections: main.sectionsShare.sections,
-        sectionContextName: "activeDealPage",
       }),
       ...feInfo,
     });

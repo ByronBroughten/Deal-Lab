@@ -1,4 +1,5 @@
 import styled, { css } from "styled-components";
+import { CompletionStatus } from "../../../sharedWithServer/SectionsMeta/values/StateValue/subStringValues";
 import theme from "../../../theme/Theme";
 import { FormSection } from "../../appWide/FormSection";
 import { LabeledVarbProps } from "../../appWide/LabeledVarb";
@@ -7,8 +8,6 @@ import { DealSubSectionDetails } from "./DealSubSectionDetails";
 import { DealSubSectionTitleRow } from "./DealSubSectionTitleRow";
 import { FinishBtn } from "./FinishBtn";
 import { MainSubSectionFullStyled } from "./MainSubSectionFullStyled";
-
-export type CompletionStatus = "allEmpty" | "allValid" | "someInvalid";
 
 export interface MainDealSectionProps extends StandardProps {
   showInputs: boolean;

@@ -123,7 +123,6 @@ export class SolverSections extends SolverSectionsBase {
       ...pick(rootSection, ["sectionName", "feId"]),
       ...SolverSectionsBase.initProps({
         sections,
-        sectionContextName: "default",
       }),
     });
   }

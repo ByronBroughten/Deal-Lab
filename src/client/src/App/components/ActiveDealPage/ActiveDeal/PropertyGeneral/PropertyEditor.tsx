@@ -1,16 +1,10 @@
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { constants } from "../../../../Constants";
-import {
-  CompletionStatus,
-  DealMode,
-} from "../../../../sharedWithServer/SectionsMeta/values/StateValue/subStringValues";
+import { DealMode } from "../../../../sharedWithServer/SectionsMeta/values/StateValue/subStringValues";
 import { useGetterSection } from "../../../../sharedWithServer/stateClassHooks/useGetterSection";
 import { nativeTheme } from "../../../../theme/nativeTheme";
 import MainSectionBody from "../../../appWide/GeneralSection/MainSection/MainSectionBody";
 import { MainSectionTopRows } from "../../../appWide/MainSectionTopRows";
 import { BackToSectionBtn } from "../BackToSectionBtn";
-import { DealSubSectionOpen } from "../DealSubSectionOpen";
 import BasicPropertyInfo from "./Property/BasicPropertyInfo";
 import { CapExValue } from "./Property/CapExValue";
 import { CustomExpenses } from "./Property/CustomExpenses";
@@ -22,30 +16,25 @@ import { UtilityValue } from "./Property/UtilityValue";
 type Props = {
   feId: string;
   dealMode: DealMode;
-  completionStatus: CompletionStatus;
+  backBtnProps: {
+    backToWhat: string;
+    onClick: () => void;
+  };
 };
 
-export function DealProperty({ feId, completionStatus, dealMode }: Props) {
+export function PropertyEditor({ feId, backBtnProps }: Props) {
   const feInfo = { sectionName: "property", feId } as const;
   const property = useGetterSection(feInfo);
-  const isComplete = completionStatus === "allValid";
   const sectionTitle = "Property";
-
-  const navigate = useNavigate();
   return (
-    <Styled {...{ finishIsAllowed: isComplete }}>
+    <Styled>
       <MainSectionTopRows
         {...{
           ...feInfo,
           sectionTitle,
           loadWhat: sectionTitle,
           showControls: true,
-          topRight: (
-            <BackToSectionBtn
-              onClick={() => navigate(constants.feRoutes.activeDeal)}
-              backToWhat="Deal"
-            />
-          ),
+          topRight: <BackToSectionBtn {...backBtnProps} />,
         }}
       />
       <MainSectionBody themeName="property">
@@ -61,7 +50,7 @@ export function DealProperty({ feId, completionStatus, dealMode }: Props) {
   );
 }
 
-const Styled = styled(DealSubSectionOpen)`
+const Styled = styled.div`
   .Property-upfrontCostsGroup,
   .Property-ongoingCostGroup {
     padding-top: ${nativeTheme.s3};

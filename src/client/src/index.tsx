@@ -6,6 +6,10 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
+
+// Ok. I want the sections to be children of ActiveDeal. I may
+// then make the modals be children of those, but maybe not.
+
 // - Make separate pages for Property, Mgmt, and Financing
 
 // - Make each list view a separate page, too.

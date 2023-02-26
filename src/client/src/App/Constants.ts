@@ -1,3 +1,5 @@
+import { Obj } from "./sharedWithServer/utils/Obj";
+
 type StripePrice = {
   priceId: string;
   costInCents: number;
@@ -75,12 +77,11 @@ export const config = {
     },
   },
   feRoutes: {
-    mainTables: {
-      property: "/property-compare",
-      loan: "/loan-compare",
-      mgmt: "/mgmt-compare",
-      deal: "/deal-compare",
-    },
+    propertyTable: "/property-compare",
+    loanTable: "/loan-compare",
+    mgmtTable: "/mgmt-compare",
+    dealTable: "/deal-compare",
+
     paymentManagement: env.paymentManagementLink,
     privacyPolicy: "/privacy-policy",
     termsOfService: "/terms-of-service",
@@ -93,6 +94,8 @@ export const config = {
 
     activeDeal: "/activeDeal",
     activeProperty: "/activeDeal/property",
+    activeFinancing: "/activeDeal/financing",
+    activeMgmt: "/activeDeal/mgmt",
   },
   auth: {
     get successUrl() {
@@ -132,3 +135,5 @@ export const config = {
 
 export const constants = config;
 export const feRoutes = constants.feRoutes;
+const feRouteNames = Obj.keys(feRoutes);
+export type FeRouteName = typeof feRouteNames[number];

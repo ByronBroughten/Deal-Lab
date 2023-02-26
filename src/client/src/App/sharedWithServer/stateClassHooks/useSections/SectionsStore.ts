@@ -41,10 +41,7 @@ export function useLocalSectionsStore({
 const { tokenKey } = config;
 export class SectionsStore {
   static storeSections(sections: StateSections): void {
-    const getterSections = GetterSections.init({
-      sections,
-      sectionContextName: "default",
-    });
+    const getterSections = GetterSections.init({ sections });
     const { main } = getterSections;
     const packBuilder = new PackBuilderSection({
       ...getterSections.getterSectionsProps,

@@ -2,12 +2,15 @@ import * as reactRouterDom from "react-router-dom";
 import { Navigate, Route, Routes } from "react-router-dom";
 import styled from "styled-components";
 import { getSuperTokensRoutesForReactRouterDom } from "supertokens-auth-react";
-import { ActiveDealPage } from "./App/components/ActiveDealPage";
+import {
+  ActiveDealFinancing,
+  ActiveDealMgmt,
+  ActiveDealProperty,
+} from "./App/components/ActiveDealPage/ActiveDeal/PropertyGeneral/ActiveDealSections";
 import { ActiveDealMain } from "./App/components/ActiveDealPage/ActiveDealMain";
-import { DealPropertyPage } from "./App/components/DealPropertyPage";
 import { FeUserMainTablePage } from "./App/components/FeUserMainTablePage";
 import NotFound from "./App/components/general/NotFound";
-import { NavContainerSectionOutletPage } from "./App/components/NavContainerOutletPage";
+import { DealSectionOutletPage } from "./App/components/NavContainerOutletPage";
 import { UserListsPage } from "./App/components/UserListsPage";
 import { UserVarbEditorPage } from "./App/components/UserVarbEditorPage";
 import { constants } from "./App/Constants";
@@ -25,33 +28,40 @@ export function Main() {
   // I need a Nav setup.
   return (
     <Styled className="App-root">
-      {/* <NavBar /> */}
       <Routes>
         {getSuperTokensRoutesForReactRouterDom(reactRouterDom)}
         <Route path={feRoutes.userVariables} element={<UserVarbEditorPage />} />
         <Route path={feRoutes.userLists} element={<UserListsPage />} />
         <Route
           path={feRoutes.activeDeal}
-          element={
-            <NavContainerSectionOutletPage
-              {...{
-                activeBtnName: "deal",
-              }}
-            />
-          }
+          element={<DealSectionOutletPage activeBtn="deal" />}
         >
           <Route index element={<ActiveDealMain />} />
+          <Route
+            path={feRoutes.activeProperty}
+            element={<ActiveDealProperty />}
+          />
+          <Route
+            path={feRoutes.activeFinancing}
+            element={<ActiveDealFinancing />}
+          />
+          <Route path={feRoutes.activeMgmt} element={<ActiveDealMgmt />} />
         </Route>
-        <Route path={feRoutes.subscribeSuccess} element={<ActiveDealPage />} />
-        <Route path={feRoutes.authSuccess} element={<ActiveDealPage />} />
-        <Route path={feRoutes.activeProperty} element={<DealPropertyPage />} />
+        <Route
+          path={feRoutes.subscribeSuccess}
+          element={<Navigate to={feRoutes.activeDeal} />}
+        />
+        <Route
+          path={feRoutes.authSuccess}
+          element={<Navigate to={feRoutes.activeDeal} />}
+        />
 
         <Route
           path={feRoutes.compare}
           element={<FeUserMainTablePage mainTableName={"dealMainTable"} />}
         />
         <Route
-          path={feRoutes.mainTables.property}
+          path={feRoutes.propertyTable}
           element={
             <FeUserMainTablePage
               mainTableName={"propertyMainTable"}
@@ -60,7 +70,7 @@ export function Main() {
           }
         />
         <Route
-          path={feRoutes.mainTables.loan}
+          path={feRoutes.loanTable}
           element={
             <FeUserMainTablePage
               mainTableName={"loanMainTable"}
@@ -69,7 +79,7 @@ export function Main() {
           }
         />
         <Route
-          path={feRoutes.mainTables.mgmt}
+          path={feRoutes.mgmtTable}
           element={
             <FeUserMainTablePage
               mainTableName={"mgmtMainTable"}

@@ -22,7 +22,6 @@ export class SectionArrReqMaker<
       ...section,
       ...GetterSectionsBase.initProps({
         sections,
-        sectionContextName: "default",
       }),
     });
   }

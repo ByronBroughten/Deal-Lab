@@ -72,7 +72,7 @@ export class PackMakerSection<
     sectionName,
   }: MakeFromSectionsProps<SN>): PackMakerSection<SN> {
     return new PackMakerSection({
-      ...this.initProps({ sections, sectionContextName: "default" }),
+      ...this.initProps({ sections }),
       ...sections.onlyOneRawSection(sectionName),
     });
   }

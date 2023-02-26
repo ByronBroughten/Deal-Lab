@@ -1,6 +1,12 @@
 export type SyncStatus = "unsyncedChanges" | "changesSynced";
 export type AutoSyncControl = "autoSyncOff" | "autoSyncOn";
-export type CompletionStatus = "allEmpty" | "allValid" | "someInvalid";
+
+export const completionStatuses = [
+  "allEmpty",
+  "allValid",
+  "someInvalid",
+] as const;
+export type CompletionStatus = typeof completionStatuses[number];
 
 export type RepairValueMode = "none" | "turnkey" | "lumpSum" | "itemize";
 export type UtilityValueMode = "none" | "tenantUtilities" | "itemize";
@@ -21,4 +27,5 @@ export type CustomValueMode = "none" | "lumpSum" | "itemize";
 
 export type ValueSource = "labeledEquation" | "valueSource";
 
-export type DealMode = "buyAndHold" | "fixAndFlip" | "brrrrr";
+export const dealModes = ["buyAndHold", "fixAndFlip", "brrrrr"] as const;
+export type DealMode = typeof dealModes[number];

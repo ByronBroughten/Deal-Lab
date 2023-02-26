@@ -4,11 +4,11 @@ import { NavTopAndSideContainer } from "./general/NavTopAndSideContainer";
 import { PageMain } from "./general/PageMain";
 import { NavBtnName } from "./NavBar/AppMenuDropdown";
 
-type Props = { activeBtnName: NavBtnName };
-export function NavContainerSectionOutletPage({ activeBtnName }: Props) {
+type Props = { activeBtn: NavBtnName };
+export function DealSectionOutletPage({ activeBtn }: Props) {
   return (
     <PageMain>
-      <NavTopAndSideContainer activeBtnName={activeBtnName}>
+      <NavTopAndSideContainer activeBtnName={activeBtn}>
         <OuterMainSection>
           <Outlet />
         </OuterMainSection>

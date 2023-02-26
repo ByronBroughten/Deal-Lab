@@ -1,54 +1,31 @@
 import styled from "styled-components";
-import { useGetterSection } from "../../../../sharedWithServer/stateClassHooks/useGetterSection";
-import { StrictOmit } from "../../../../sharedWithServer/utils/types";
+import { DealMode } from "../../../../sharedWithServer/SectionsMeta/values/StateValue/subStringValues";
 import theme from "../../../../theme/Theme";
 import MainSectionBody from "../../../appWide/GeneralSection/MainSection/MainSectionBody";
 import { MainSectionTopRows } from "../../../appWide/MainSectionTopRows";
 import { BackToSectionBtn } from "../BackToSectionBtn";
-import {
-  MainDealSectionProps,
-  MainSubSectionFull,
-} from "../MainSubSectionFull";
 import { CustomExpenses } from "../PropertyGeneral/Property/CustomExpenses";
 import { BasicMgmtInfo } from "./Mgmt/BasicMgmtInfo";
 
-export function Mgmt({
-  feId,
-  showInputs,
-  openInputs,
-  closeInputs,
-  hide,
-  completionStatus,
-}: StrictOmit<
-  MainDealSectionProps,
-  "displayName" | "sectionTitle" | "detailVarbPropArr"
-> & { feId: string }) {
+type Props = {
+  feId: string;
+  dealMode: DealMode;
+  backBtnProps: {
+    backToWhat: string;
+    onClick: () => void;
+  };
+};
+
+export function MgmtEditor({ feId, backBtnProps }: Props) {
   const feInfo = { sectionName: "mgmt", feId } as const;
-  const mgmt = useGetterSection(feInfo);
   return (
-    <Styled
-      {...{
-        ...feInfo,
-        hide,
-        showInputs,
-        openInputs,
-        closeInputs,
-        className: "Mgmt-root",
-        sectionTitle: "Management",
-        completionStatus,
-        displayName: mgmt.valueNext("displayName").mainText,
-        detailVarbPropArr: mgmt.varbInfoArr(["expensesYearly"] as const),
-      }}
-    >
+    <Styled>
       <MainSectionTopRows
         {...{
           ...feInfo,
-
           sectionTitle: "Management",
           loadWhat: "Management",
-          topRight: (
-            <BackToSectionBtn backToWhat="Deal" onClick={closeInputs} />
-          ),
+          topRight: <BackToSectionBtn {...backBtnProps} />,
         }}
       />
       <MainSectionBody themeName="mgmt">
@@ -59,7 +36,7 @@ export function Mgmt({
   );
 }
 
-const Styled = styled(MainSubSectionFull)`
+const Styled = styled.div`
   .Mgmt-basicInfo,
   .Mgmt-ongoingExpenseValue,
   .Mgmt-oneTimeExpenseValue {

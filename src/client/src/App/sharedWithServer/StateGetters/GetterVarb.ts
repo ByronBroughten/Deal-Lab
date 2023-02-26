@@ -183,6 +183,16 @@ export class GetterVarb<
       throw new Error(`value ${value} is not of type ${this.meta.valueName}`);
     }
   }
+  valueSafe<AV extends any>(acceptedValues: readonly AV[]): AV {
+    const value = this.valueNext() as any;
+    if (acceptedValues.includes(value)) {
+      return value;
+    } else {
+      throw new Error(
+        `value "${value}" is not included in acceptedValues: ${acceptedValues.toString()}`
+      );
+    }
+  }
   get valueName(): ValueName {
     return this.meta.valueName;
   }

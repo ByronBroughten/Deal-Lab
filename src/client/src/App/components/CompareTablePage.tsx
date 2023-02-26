@@ -62,7 +62,8 @@ export function CompareTablePage({ $themeName, title, ...props }: Props) {
     showTable: () => <CompareTable {...props} />,
     areNone: () => (
       <div className="CompareTablePage-message">
-        You have no saved deals. Save some, then compare them here.
+        {/* You have no saved deals. Save some, then compare them here. */}
+        Under construction
       </div>
     ),
   } as const;
@@ -79,7 +80,14 @@ export function CompareTablePage({ $themeName, title, ...props }: Props) {
         <div className="CompareTablePage-titleRow">
           <SectionTitle text={title} className="CompareTablePage-title" />
         </div>
-        <div className="CompareTablePage-body">{getScenarioNode()}</div>
+        <div className="CompareTablePage-body">
+          {
+            <div className="CompareTablePage-message">
+              {/* You have no saved deals. Save some, then compare them here. */}
+              Under construction
+            </div>
+          }
+        </div>
       </Styled>
     </NavContainerPage>
   );

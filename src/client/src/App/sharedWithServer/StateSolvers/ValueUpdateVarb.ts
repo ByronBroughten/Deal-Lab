@@ -1,4 +1,3 @@
-import { CompletionStatus } from "../../components/ActiveDealPage/ActiveDeal/MainSubSectionFull";
 import { VirtualVarbName } from "../SectionsMeta/baseSectionsDerived/baseVarbNames";
 import { PathInVarbInfo } from "../SectionsMeta/sectionChildrenDerived/RelInOutVarbInfo";
 import { RelVarbInfo } from "../SectionsMeta/SectionInfo/RelVarbInfo";
@@ -16,6 +15,7 @@ import {
   stringObj,
   StringObj,
 } from "../SectionsMeta/values/StateValue/StringObj";
+import { CompletionStatus } from "../SectionsMeta/values/StateValue/subStringValues";
 import calculations, {
   isCalculationName,
   NumberProps,
