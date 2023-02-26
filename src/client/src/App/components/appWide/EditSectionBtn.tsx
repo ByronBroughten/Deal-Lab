@@ -6,7 +6,7 @@ type Props = StandardBtnProps;
 export function EditSectionBtn(props: Props) {
   return (
     <StyledIconBtn
-      className="MainDealSection-editBtn"
+      className="MainSubSection-editBtn"
       left={<AiFillEdit size={20} />}
       middle="Edit"
       {...props}

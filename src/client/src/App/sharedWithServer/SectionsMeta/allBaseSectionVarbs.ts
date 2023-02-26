@@ -41,6 +41,16 @@ const varbs = baseVarbsS;
 export function makeAllBaseSectionVarbs() {
   return checkAllBaseSectionVarbs({
     ...defaults,
+    appView: baseSectionVarbs({
+      activeDeal: baseVarb("string"),
+      activeProperty: baseVarb("string"),
+      activeFinancing: baseVarb("string"),
+      activeMgmt: baseVarb("string"),
+
+      components: baseVarb("string"),
+      componentsCapEx: baseVarb("string"),
+      componentsUtilities: baseVarb("string"),
+    }),
     proxyStoreItem: baseSectionVarbs({
       dbId: baseVarb("string"),
     }),

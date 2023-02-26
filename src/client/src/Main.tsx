@@ -3,6 +3,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import styled from "styled-components";
 import { getSuperTokensRoutesForReactRouterDom } from "supertokens-auth-react";
 import { ActiveDealPage } from "./App/components/ActiveDealPage";
+import { DealPropertyPage } from "./App/components/DealPropertyPage";
 import { FeUserMainTablePage } from "./App/components/FeUserMainTablePage";
 import NotFound from "./App/components/general/NotFound";
 import { UserListsPage } from "./App/components/UserListsPage";
@@ -27,17 +28,14 @@ export function Main() {
         {getSuperTokensRoutesForReactRouterDom(reactRouterDom)}
         <Route path={feRoutes.userVariables} element={<UserVarbEditorPage />} />
         <Route path={feRoutes.userLists} element={<UserListsPage />} />
-        <Route path={feRoutes.analyzer} element={<ActiveDealPage />} />
+        <Route path={feRoutes.activeDeal} element={<ActiveDealPage />} />
         <Route path={feRoutes.subscribeSuccess} element={<ActiveDealPage />} />
         <Route path={feRoutes.authSuccess} element={<ActiveDealPage />} />
+        <Route path={feRoutes.activeProperty} element={<DealPropertyPage />} />
+
         <Route
           path={feRoutes.compare}
-          element={
-            <FeUserMainTablePage
-              mainTableName={"dealMainTable"}
-              $themeName="deal"
-            />
-          }
+          element={<FeUserMainTablePage mainTableName={"dealMainTable"} />}
         />
         <Route
           path={feRoutes.mainTables.property}
@@ -70,7 +68,7 @@ export function Main() {
         <Route path={feRoutes.termsOfService} element={<PrivacyPolicyPage />} />
         <Route path="/not-found" element={<NotFound />} />
 
-        <Route path={"/"} element={<Navigate to={feRoutes.analyzer} />} />
+        <Route path={"/"} element={<Navigate to={feRoutes.activeDeal} />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Styled>

@@ -1,4 +1,4 @@
-import { CompletionStatus } from "../../components/ActiveDealPage/ActiveDeal/MainDealSection";
+import { CompletionStatus } from "../../components/ActiveDealPage/ActiveDeal/MainSubSectionFull";
 import { VirtualVarbName } from "../SectionsMeta/baseSectionsDerived/baseVarbNames";
 import { PathInVarbInfo } from "../SectionsMeta/sectionChildrenDerived/RelInOutVarbInfo";
 import { RelVarbInfo } from "../SectionsMeta/SectionInfo/RelVarbInfo";

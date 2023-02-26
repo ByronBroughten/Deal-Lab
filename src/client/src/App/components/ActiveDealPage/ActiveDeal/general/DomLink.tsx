@@ -9,7 +9,8 @@ export function DomLink(props: Props) {
   return <Styled {...props} />;
 }
 const Styled = styled(Link)`
-  display: inherit;
+  display: flex;
+  flex: 1;
   align-items: inherit;
   height: inherit;
   text-decoration: none;

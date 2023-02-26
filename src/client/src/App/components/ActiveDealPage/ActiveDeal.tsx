@@ -1,6 +1,7 @@
 import { FormControl, MenuItem, Select } from "@material-ui/core";
 import React from "react";
 import styled, { css } from "styled-components";
+import { constants } from "../../Constants";
 import { VarbName } from "../../sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
 import {
   CompletionStatus,
@@ -14,9 +15,9 @@ import { MainSectionTopRows } from "../appWide/MainSectionTopRows";
 import StandardLabel from "../general/StandardLabel";
 import { OuterMainSection } from "./../appWide/GeneralSection/OuterMainSection";
 import { OutputSection } from "./ActiveDeal/DealOutputs/OutputSection";
+import { DealSubSectionClosed } from "./ActiveDeal/DealSubSectionClosed";
 import { Financing } from "./ActiveDeal/Financing";
 import { Mgmt } from "./ActiveDeal/MgmtGeneral/Mgmt";
-import { Property } from "./ActiveDeal/PropertyGeneral/Property";
 
 type Props = {
   feId: string;
@@ -94,7 +95,14 @@ export function ActiveDeal({ className, feId }: Props) {
       </FormSection>
       <FormSection className="ActiveDeal-mainFormSection">
         <div className="ActiveDeal-inputSectionsWrapper">
-          <Property {...makeSectionProps("property")} />
+          <DealSubSectionClosed
+            {...{
+              ...makeSectionProps("property"),
+              sectionTitle: "Property",
+              editorPath: constants.feRoutes.activeProperty,
+            }}
+          />
+          {/* <Property {...makeSectionProps("property")} /> */}
           <Financing {...makeSectionProps("financing")} />
           <Mgmt {...makeSectionProps("mgmt")} />
         </div>
@@ -115,12 +123,6 @@ export function ActiveDeal({ className, feId }: Props) {
 }
 
 const Styled = styled(OuterMainSection)<{ $showDeal: boolean }>`
-  padding-bottom: 0;
-  @media (max-width: ${theme.mediaPhone}) {
-    padding-left: ${theme.s15};
-    padding-right: ${theme.s15};
-  }
-
   .ActiveDeal-modeSelector {
     margin-top: 0px;
   }
@@ -132,6 +134,7 @@ const Styled = styled(OuterMainSection)<{ $showDeal: boolean }>`
   ${({ $showDeal }) =>
     $showDeal &&
     css`
+      .MainSubSectionClosed-root,
       .Property-root,
       .Financing-root,
       .Mgmt-root {

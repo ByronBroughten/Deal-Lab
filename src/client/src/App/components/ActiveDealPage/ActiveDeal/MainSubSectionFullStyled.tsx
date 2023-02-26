@@ -10,7 +10,7 @@ interface Props extends StandardProps {
   showInputs: boolean;
   hide: boolean;
 }
-export function MainSectionFancyStyled({
+export function MainSubSectionFullStyled({
   noInputsTitleRow,
   detailsSection,
   inputSection,
@@ -26,11 +26,11 @@ export function MainSectionFancyStyled({
         $hide: hide,
       }}
     >
-      <div className="MainDealSection-inactiveTitleRow">{noInputsTitleRow}</div>
+      <div className="MainSubSection-inactiveTitleRow">{noInputsTitleRow}</div>
       {detailsSection && (
-        <div className="MainDealSection-detailsDiv">{detailsSection}</div>
+        <div className="MainSubSection-detailsDiv">{detailsSection}</div>
       )}
-      <div className="MainDealSection-inputsDiv">{inputSection}</div>
+      <div className="MainSubSection-inputsDiv">{inputSection}</div>
     </Styled>
   );
 }
@@ -40,7 +40,7 @@ const Styled = styled(MainSection)<{
   $hide?: boolean;
 }>`
   transition: all 0.2s ease-in-out;
-  .MainDealSection-inactiveTitleRow {
+  .MainSubSection-inactiveTitleRow {
     display: flex;
     align-items: center;
   }
@@ -53,13 +53,13 @@ const Styled = styled(MainSection)<{
   ${({ $showInputs }) =>
     $showInputs
       ? css`
-          .MainDealSection-detailsDiv,
-          .MainDealSection-inactiveTitleRow {
+          .MainSubSection-detailsDiv,
+          .MainSubSection-inactiveTitleRow {
             display: none;
           }
         `
       : css`
-          .MainDealSection-inputsDiv {
+          .MainSubSection-inputsDiv {
             display: none;
           }
         `}

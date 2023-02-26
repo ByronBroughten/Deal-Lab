@@ -8,7 +8,7 @@ type Props = StandardBtnProps;
 export function StartSectionBtn(props: Props) {
   return (
     <Styled
-      className="MainDealSection-addSectionBtn"
+      className="MainSubSection-addSectionBtn"
       right={<FaPlay className="StartSectionBtn-playIcon" />}
       middle="Start"
       {...props}

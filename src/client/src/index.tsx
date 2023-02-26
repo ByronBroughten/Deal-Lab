@@ -6,27 +6,15 @@ AppRegistry.runApplication("App", {
   initialProps: {},
   rootTag: document.getElementById("root"),
 });
-
-// Maybe give ListEditorMenu "SavedLists >"
-// - This is trickier. You'll have to make some kind of "view" property
-// on main.
-
-// The lists page should look a lot like the
-// deals page.
-// The list sections should act like Property
-// When they open up, you see all the lists in the
-// form they are now.
-// No need for the modal yet.
+// - Make separate pages for Property, Mgmt, and Financing
+// - Make each list view a separate page, too.
+// - give ListEditorMenu the SavedLists button
 
 // Try not using "builder" in FeIndexSolver
 
 // Before Marina
+// - Maybe add example lists
 // - Down payment for loan
-// - Make different stores for different lists (Repairs, Utilities, CapEx, Ongoing, SingleTime)
-// - Info dot for Lists
-
-// Before Emily
-// - Pretty much ready
 
 // Marina
 // - Pretty much ready
@@ -34,7 +22,6 @@ AppRegistry.runApplication("App", {
 
 // Emily
 // - Logo
-// - How to handle UI for different (but not different) types of lists?
 
 // Before Wordpress
 // - Add Fix and Flip
@@ -54,17 +41,9 @@ AppRegistry.runApplication("App", {
 // Wordpress
 // - Make a site that does the job
 
-// - Add an info dot to the variables selector modal
-// - Give it the "All Variables" thing a displayNameFull filter
-
 // 2. Finalize the variables
 // - Put the downpayment stuff on financing
 // - PITI, too
-
-// - Add an explanation to the Variables page
-// - Add an explanation to the Lists page
-
-// - Organize lists into multiple sections: CapEx, Utilities, Closing Costs, General Costs, General Ongoing Costs.
 
 // 4. Allow for Fix and Flip
 //  - Add ARV
@@ -75,37 +54,8 @@ AppRegistry.runApplication("App", {
 
 // 7. Make a full output page.
 
-// 1. Change updateSection so that it only takes updateVarb
-//    options and provides default rounding based on baseSectionVarbs
-
-// Options for how to spend this evening:
-// 3. Work on adding the underpinnings of the modes
-// 5. Work on the examples
-
-// If I have the capEx list relatively stable.
-// And if I have the utilities list relatively stable.
-// Do I need lists?
-// I still need a way to load the big default capEx list.
-// It would be nice for people to edit the big default one, too.
-// It would be nice to have a separate capEx list section.
-
-// Update the lists UI
-// - Show property rent.
-
-// How should the units be added? Should I add a unit-adder modal?
-// That's not a bad idea.
-// I could just display, "3 Units", "$3000/month rent", edit units
-// Then clicking "+ Unit" could summon a modal that asks for BRs, rent, and number of simlar units. Then the unit is added and can be edited, just like now. These things aren't that hard.
-
-// - Make valueSection child lists get their displayName
-//   from the value's displayName, at least initially. Does
-//   that make sense?
-
-// - Make a new list that do
 // - Make an example mgmt and loan
 // - Make the deal example contain a different property (dbId, title, units, etc), and maybe a different loan and mgmt.
-// - Get rid of the list menus
-//   Have an option to just show the xBtn on hover
 
 // Updating Loan UI
 // How should I handle the loan being able to cover repair costs?
@@ -113,34 +63,8 @@ AppRegistry.runApplication("App", {
 // - Financed repair cost
 // - Financed property cost
 
-// - Perhaps untie the load modal from the menu that
-//   shows the load button.
-// - Make the actions buttons not get in the way of the section they pertain to
-
-// I need a new block.
-// It will be able to switch between these three things:
-// Single expense (name field and cost field)
-// - It will have labeled a labeled editor for the expense's name and its cost
-// - To the right of the name, or above or below the name, it will have a selector for for switching between the types of expenses.
-
-// This will take some work. Do I want to do this? I guess so.
-
-// 4. Start gathering tax documents—maybe that's a Monday project
-
 // Consult branding, logo, and pro wordpress people
 // https://bstro.com/
-
-// UI Update
-// 1. Make an un-itemized cost an option for singleTimeList
-// 2. Do the same for ongoingList
-// 3. Make a modal for editing itemized lists, which includes the
-//    whole list menu
-// 4. Start by displaying only the name and value of the cost list
-//    and add an "edit" button
-// 5. Think about making the cost list viewable
-
-// 6. Add an example loan/mgmt/deal for loading and media
-//    Make them usable for all deal modes
 
 // Fix and flip notes:
 // - Loans can be used to pay not only for the property
@@ -148,6 +72,7 @@ AppRegistry.runApplication("App", {
 //   That is, they can be a percentage of the rehab costs.
 
 // - Closing costs are called purchase costs with fix and flip
+//   - Or you could say, "purchase closing costs"
 
 // - Cost overrun is a property variable—
 //   add a certain percent to the rehab costs cause we always underestimate
@@ -164,8 +89,6 @@ AppRegistry.runApplication("App", {
 
 // - Ongoing costs
 
-// - The comping is amazing
-
 // - Holding costs has its own category, which is basically
 //   "ongoing costs". Ongoing costs could be called holding costs.
 //   Many of the property's basic information would be considered
@@ -176,15 +99,6 @@ AppRegistry.runApplication("App", {
 // - One-Time costs would include both Purchase Costs (Loan closing costs)
 // and Selling Costs (6% ARV, on the property).
 
-//   It might not make sense to let properties function both as
-//   buyAndHold and as
-
-// Should the example sections contain each other?
-// It might be easier if they don't.
-// Then I don't have to worry as much about the Saved/unsaved
-// changes status
-
-// 2. Begin adding underpinnings of modes
 // 4.
 // -Give property the necessary vabs for buyAndHold and fixAndFlip
 // -Give deal the necessary varbs for buyAndHold and fixAndFlip
@@ -193,8 +107,6 @@ AppRegistry.runApplication("App", {
 //  outputFixAndFlip
 //  the varbs in those sections are things like, "showCocRoi", "showPitiPayments", etc.
 //  They also have childSection virtualVarbs called "customOutputs"
-
-// -Make sure it has a store for custom output lists, too
 
 // -make the example property and deal work with all modes
 // -add other modes: buyHoldSell, brrrr, and wholesale

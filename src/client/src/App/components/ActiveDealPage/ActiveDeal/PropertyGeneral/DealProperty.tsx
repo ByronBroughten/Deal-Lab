@@ -1,15 +1,16 @@
 import styled from "styled-components";
-import { DealMode } from "../../../../sharedWithServer/SectionsMeta/values/StateValue/subStringValues";
+import { constants } from "../../../../Constants";
+import {
+  CompletionStatus,
+  DealMode,
+} from "../../../../sharedWithServer/SectionsMeta/values/StateValue/subStringValues";
 import { useGetterSection } from "../../../../sharedWithServer/stateClassHooks/useGetterSection";
-import { StrictOmit } from "../../../../sharedWithServer/utils/types";
 import theme from "../../../../theme/Theme";
 import MainSectionBody from "../../../appWide/GeneralSection/MainSection/MainSectionBody";
 import { MainSectionTopRows } from "../../../appWide/MainSectionTopRows";
 import { BackToSectionBtn } from "../BackToSectionBtn";
-import {
-  MainDealSectionProps,
-  MainSubSectionFull,
-} from "../MainSubSectionFull";
+import { DealSubSectionOpen } from "../DealSubSectionOpen";
+import { DomLink } from "../general/DomLink";
 import BasicPropertyInfo from "./Property/BasicPropertyInfo";
 import { CapExValue } from "./Property/CapExValue";
 import { CustomExpenses } from "./Property/CustomExpenses";
@@ -18,56 +19,29 @@ import { RepairValue } from "./Property/RepairValue";
 import { Units } from "./Property/Units";
 import { UtilityValue } from "./Property/UtilityValue";
 
-export function Property({
-  feId,
-  showInputs,
-  openInputs,
-  closeInputs,
-  hide,
-  completionStatus,
-  dealMode,
-}: StrictOmit<
-  MainDealSectionProps,
-  "displayName" | "sectionTitle" | "detailVarbPropArr"
-> & { feId: string; dealMode: DealMode }) {
+type Props = {
+  feId: string;
+  dealMode: DealMode;
+  completionStatus: CompletionStatus;
+};
+
+export function DealProperty({ feId, completionStatus, dealMode }: Props) {
   const feInfo = { sectionName: "property", feId } as const;
   const property = useGetterSection(feInfo);
-  const completionStatusProps = {
-    allEmpty: { title: "Start Property" },
-    someInvalid: { title: "Continue Property" },
-    allValid: { title: "Edit Property" },
-  };
-
-  const props = completionStatusProps[completionStatus];
+  const isComplete = completionStatus === "allValid";
+  const sectionTitle = "Property";
   return (
-    <Styled
-      {...{
-        ...feInfo,
-        dealMode,
-        showInputs,
-        openInputs,
-        closeInputs,
-        btnTitle: props.title,
-        sectionTitle: "Property",
-        hide,
-        className: "Property-root",
-        displayName: property.valueNext("displayName").mainText,
-        completionStatus,
-        detailVarbPropArr: property.varbInfoArr([
-          "targetRentYearly",
-          "expensesYearly",
-          "upfrontExpenses",
-        ] as const),
-      }}
-    >
+    <Styled {...{ finishIsAllowed: isComplete }}>
       <MainSectionTopRows
         {...{
           ...feInfo,
-          sectionTitle: "Property",
-          loadWhat: "Property",
-          showControls: showInputs ? true : false,
+          sectionTitle,
+          loadWhat: sectionTitle,
+          showControls: true,
           topRight: (
-            <BackToSectionBtn backToWhat="Deal" onClick={closeInputs} />
+            <DomLink to={constants.feRoutes.activeDeal}>
+              <BackToSectionBtn backToWhat="Deal" />
+            </DomLink>
           ),
         }}
       />
@@ -84,7 +58,7 @@ export function Property({
   );
 }
 
-const Styled = styled(MainSubSectionFull)`
+const Styled = styled(DealSubSectionOpen)`
   .Property-upfrontCostsGroup,
   .Property-ongoingCostGroup {
     padding-top: ${theme.s3};

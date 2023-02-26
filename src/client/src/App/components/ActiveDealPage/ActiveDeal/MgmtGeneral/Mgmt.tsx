@@ -5,7 +5,10 @@ import theme from "../../../../theme/Theme";
 import MainSectionBody from "../../../appWide/GeneralSection/MainSection/MainSectionBody";
 import { MainSectionTopRows } from "../../../appWide/MainSectionTopRows";
 import { BackToSectionBtn } from "../BackToSectionBtn";
-import { MainDealSection, MainDealSectionProps } from "../MainDealSection";
+import {
+  MainDealSectionProps,
+  MainSubSectionFull,
+} from "../MainSubSectionFull";
 import { CustomExpenses } from "../PropertyGeneral/Property/CustomExpenses";
 import { BasicMgmtInfo } from "./Mgmt/BasicMgmtInfo";
 
@@ -56,7 +59,7 @@ export function Mgmt({
   );
 }
 
-const Styled = styled(MainDealSection)`
+const Styled = styled(MainSubSectionFull)`
   .Mgmt-basicInfo,
   .Mgmt-ongoingExpenseValue,
   .Mgmt-oneTimeExpenseValue {

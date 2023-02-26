@@ -85,12 +85,14 @@ export const config = {
     privacyPolicy: "/privacy-policy",
     termsOfService: "/terms-of-service",
     compare: "/compare",
-    analyzer: "/deal",
     userVariables: "/variables",
     userLists: "/lists",
     userOutputs: "/outputs",
     authSuccess: "/login-success",
     subscribeSuccess: "/subscription-success",
+
+    activeDeal: "/activeDeal",
+    activeProperty: "/activeDeal/property",
   },
   auth: {
     get successUrl() {

@@ -65,7 +65,7 @@ export function Units({ feId }: Props) {
                     "numUnits",
                     "targetRentYearly",
                   ] as const),
-                  className: "MainDealSection-labeledVarbRow",
+                  className: "MainSubSection-labeledVarbRow",
                 }}
               />
             )}

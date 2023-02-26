@@ -1,6 +1,8 @@
 import { z } from "zod";
 
 export const sectionNames = [
+  "appView",
+
   "root",
   "main",
   "feUser",

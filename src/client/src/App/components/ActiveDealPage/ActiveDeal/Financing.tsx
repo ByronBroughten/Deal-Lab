@@ -10,7 +10,7 @@ import Radio from "../../general/Radio";
 import theme from "./../../../theme/Theme";
 import { BackToSectionBtn } from "./BackToSectionBtn";
 import { Loan } from "./Financing/Loan";
-import { MainDealSection, MainDealSectionProps } from "./MainDealSection";
+import { MainDealSectionProps, MainSubSectionFull } from "./MainSubSectionFull";
 
 function getDisplayName(financing: GetterSection<"financing">) {
   const financingMode = financing.valueNext("financingMode");
@@ -119,7 +119,7 @@ export function Financing({
   );
 }
 
-const Styled = styled(MainDealSection)`
+const Styled = styled(MainSubSectionFull)`
   .Financing-inputDiv {
     display: flex;
     flex-direction: column;

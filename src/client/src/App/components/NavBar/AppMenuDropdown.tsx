@@ -17,7 +17,7 @@ interface BtnProps extends StandardBtnProps {
 const iconSize = 22;
 const navBtns = {
   deal: (props: BtnProps) => (
-    <DomLink to={constants.feRoutes.analyzer}>
+    <DomLink to={constants.feRoutes.activeDeal}>
       <AppMenuBtn
         {...props}
         text={"Deal"}

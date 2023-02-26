@@ -3,8 +3,8 @@ import styled, { css } from "styled-components";
 import { ListChildName } from "../../sharedWithServer/SectionsMeta/allSectionChildren";
 import { useSetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useSetterSection";
 import theme from "../../theme/Theme";
-import { MainSectionFancyStyled } from "../ActiveDealPage/ActiveDeal/MainSectionFancyStyled";
 import { MainSectionLargeEditBtn } from "../ActiveDealPage/ActiveDeal/MainSectionLargeEditBtn";
+import { MainSubSectionFullStyled } from "../ActiveDealPage/ActiveDeal/MainSubSectionFullStyled";
 import { ListGroupGeneric } from "../appWide/ListGroup/ListGroupShared/ListGroupGeneric";
 import { MakeListNode } from "../appWide/ListGroup/ListGroupShared/ListGroupGeneric/ListGroupLists";
 import { VarbListSingleTime } from "../appWide/ListGroup/ListGroupSingleTime/VarbListSingleTime";
@@ -138,14 +138,14 @@ export function UserListEditorSection({
   );
 }
 
-const Styled = styled(MainSectionFancyStyled)<{ $showInputs: boolean }>`
+const Styled = styled(MainSubSectionFullStyled)<{ $showInputs: boolean }>`
   ${({ $showInputs }) =>
     !$showInputs &&
     css`
       padding-top: ${theme.s25};
       padding-bottom: ${theme.s25};
       padding-right: ${theme.s25};
-      .MainDealSection-detailsDiv {
+      .MainSubSection-detailsDiv {
         display: none;
       }
     `}
