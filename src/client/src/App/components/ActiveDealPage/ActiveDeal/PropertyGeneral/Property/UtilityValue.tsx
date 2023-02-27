@@ -33,6 +33,10 @@ export function UtilityValue({ feId }: { feId: string }) {
             {...{
               feId: utilityValue.oneChildFeId("ongoingList"),
               menuType: "value",
+              routeBtnProps: {
+                title: "Utility Lists",
+                routeName: "utilitiesListMain",
+              },
               menuDisplayNames: [
                 "Water/sewer",
                 "Garbage",

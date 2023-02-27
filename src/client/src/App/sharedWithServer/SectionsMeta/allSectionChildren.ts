@@ -56,6 +56,7 @@ export const allSectionChildren = checkAllSectionChildren({
   // main has feUser and each of the main app pages
   main: sectionChildren({
     feUser: ["feUser"],
+    variablesMenu: ["variablesMenu"],
     activeDealPage: ["dealPage"],
     calculatedVarbs: ["calculatedVarbs"],
     latentSections: ["latentSections"],

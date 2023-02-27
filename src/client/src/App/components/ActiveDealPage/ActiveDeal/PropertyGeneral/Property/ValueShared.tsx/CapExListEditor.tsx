@@ -53,6 +53,10 @@ export function CapExValueList({ feId, menuType }: Props) {
         onChange,
         menuDisplayNames: capExDisplayNames,
         itemDisplayNames: itemDisplayNames,
+        routeBtnProps: {
+          routeName: "capExListMain",
+          title: "CapEx Lists",
+        },
         table: (
           <VarbListTableCapEx
             {...{

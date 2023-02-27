@@ -6,6 +6,7 @@ import theme from "../../../../../../theme/Theme";
 import { FormSection } from "../../../../../appWide/FormSection";
 import { VarbListGenericMenuType } from "../../../../../appWide/ListGroup/ListGroupShared/VarbListGeneric";
 import { VarbListMenuDual } from "../../../../../appWide/ListGroup/ListGroupShared/VarbListMenuDual";
+import { ListRouteName } from "../../../../../UserListEditorPage/UserComponentClosed";
 import { AddWithDisplayName, CommonItemsList } from "./CommonItemsList";
 
 interface Props<SN extends SectionNameByType<"varbListAllowed">>
@@ -16,6 +17,10 @@ interface Props<SN extends SectionNameByType<"varbListAllowed">>
   menuDisplayNames?: readonly string[];
   itemDisplayNames?: readonly string[];
   table: React.ReactNode;
+  routeBtnProps?: {
+    title: string;
+    routeName: ListRouteName;
+  };
 }
 
 export function ValueListGeneral<

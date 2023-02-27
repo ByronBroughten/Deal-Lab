@@ -26,6 +26,10 @@ export function ValueSectionOngoing({ feId, ...rest }: Props) {
         makeItemizedListNode: (props) => (
           <ListEditorOngoing
             {...{
+              routeBtnProps: {
+                title: "Custom Lists",
+                routeName: "ongoingListMain",
+              },
               menuType: "value",
               ...props,
             }}

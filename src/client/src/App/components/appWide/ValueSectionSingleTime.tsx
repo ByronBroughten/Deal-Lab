@@ -18,6 +18,10 @@ export function ValueSectionSingleTime(props: ValueSectionOneTimeProps) {
         makeItemizedListNode: (props) => (
           <ListEditorSingleTime
             {...{
+              routeBtnProps: {
+                title: "Custom Lists",
+                routeName: "singleTimeListMain",
+              },
               menuType: "value",
               ...props,
             }}

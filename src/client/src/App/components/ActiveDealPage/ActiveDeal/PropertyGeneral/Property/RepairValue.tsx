@@ -39,6 +39,10 @@ export function RepairValue({ feId }: Props) {
         itemsComponent: (
           <ListEditorSingleTime
             {...{
+              routeBtnProps: {
+                title: "Repair Lists",
+                routeName: "repairsListMain",
+              },
               menuType: "value",
               feId: repairValue.onlyChild("singleTimeList").feId,
             }}

@@ -43,6 +43,10 @@ export function ClosingCostValue({ feId, fivePercentLoanDisplay }: Props) {
         itemsComponent: (
           <ListEditorSingleTime
             {...{
+              routeBtnProps: {
+                title: "Closing Cost Lists",
+                routeName: "closingCostsListMain",
+              },
               menuDisplayNames: [
                 "Appraisal",
                 "Credit report",

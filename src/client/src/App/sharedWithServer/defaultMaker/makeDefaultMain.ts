@@ -12,6 +12,8 @@ export function makeDefaultMain(): SectionPack<"main"> {
     sectionPack: makeDefaultDealPack(),
   });
 
+  main.addChild("variablesMenu");
+
   const latentSections = main.addAndGetChild("latentSections");
   latentSections.addChild("calculatedVarbs");
   latentSections.loadChild({

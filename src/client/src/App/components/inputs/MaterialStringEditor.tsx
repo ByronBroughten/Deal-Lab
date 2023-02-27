@@ -8,6 +8,7 @@ interface StringEditorProps extends FeVarbInfo {
   className?: string;
   label?: string;
   handleReturn?: HandleReturn;
+  placeholder: string;
   style?: React.CSSProperties;
 }
 
@@ -16,6 +17,7 @@ export function MaterialStringEditor({
   label,
   handleReturn,
   style,
+  placeholder,
   ...feVarbInfo
 }: StringEditorProps) {
   let { editorState, setEditorState } = useDraftInput(feVarbInfo);
@@ -24,6 +26,7 @@ export function MaterialStringEditor({
       className={"MaterialStringEditor-root " + className ?? ""}
       id={GetterVarb.feVarbInfoToVarbId(feVarbInfo)}
       {...{
+        placeholder,
         handleReturn,
         setEditorState,
         editorState,

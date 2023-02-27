@@ -2,17 +2,23 @@ import { useSetterSection } from "../../../../../../sharedWithServer/stateClassH
 import { VarbListGenericMenuType } from "../../../../../appWide/ListGroup/ListGroupShared/VarbListGeneric";
 import { VarbListTableSectionGeneric } from "../../../../../appWide/ListGroup/ListGroupShared/VarbListGeneric/VarbListTableSectionGeneric";
 import { ListItemSingleTime } from "../../../../../appWide/ListGroup/ListGroupSingleTime/VarbListSingleTime/ListItemSingleTime";
+import { ListRouteName } from "../../../../../UserListEditorPage/UserComponentClosed";
 import { ValueListGeneral } from "./ValueListGeneral";
 
 type Props = {
   feId: string;
   menuType: VarbListGenericMenuType;
   menuDisplayNames?: readonly string[];
+  routeBtnProps?: {
+    title: string;
+    routeName: ListRouteName;
+  };
 };
 export function ListEditorSingleTime({
   feId,
   menuType,
   menuDisplayNames,
+  ...rest
 }: Props) {
   const singleTimeList = useSetterSection({
     sectionName: "singleTimeList",
@@ -38,6 +44,7 @@ export function ListEditorSingleTime({
     <ValueListGeneral
       {...{
         ...singleTimeList.feInfo,
+        ...rest,
         menuType,
         menuDisplayNames,
         itemDisplayNames,

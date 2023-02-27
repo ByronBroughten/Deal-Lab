@@ -2,14 +2,24 @@ import { useSetterSection } from "../../../../../../sharedWithServer/stateClassH
 import { VarbListGenericMenuType } from "../../../../../appWide/ListGroup/ListGroupShared/VarbListGeneric";
 import { VarbListTableSectionGeneric } from "../../../../../appWide/ListGroup/ListGroupShared/VarbListGeneric/VarbListTableSectionGeneric";
 import { ListItemOngoing } from "../../../../../appWide/VarbLists/VarbListOngoing/ListItemOngoing";
+import { ListRouteName } from "../../../../../UserListEditorPage/UserComponentClosed";
 import { ValueListGeneral } from "./ValueListGeneral";
 
 type Props = {
   feId: string;
   menuType: VarbListGenericMenuType;
   menuDisplayNames?: readonly string[];
+  routeBtnProps?: {
+    title: string;
+    routeName: ListRouteName;
+  };
 };
-export function ListEditorOngoing({ feId, menuType, menuDisplayNames }: Props) {
+export function ListEditorOngoing({
+  feId,
+  menuType,
+  menuDisplayNames,
+  ...rest
+}: Props) {
   const ongoingList = useSetterSection({
     sectionName: "ongoingList",
     feId,
@@ -35,6 +45,7 @@ export function ListEditorOngoing({ feId, menuType, menuDisplayNames }: Props) {
     <ValueListGeneral
       {...{
         ...ongoingList.feInfo,
+        ...rest,
         menuType,
         menuDisplayNames,
         itemDisplayNames,
