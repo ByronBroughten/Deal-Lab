@@ -8,7 +8,7 @@ interface StringEditorProps extends FeVarbInfo {
   className?: string;
   label?: string;
   handleReturn?: HandleReturn;
-  placeholder: string;
+  placeholder?: string;
   style?: React.CSSProperties;
 }
 

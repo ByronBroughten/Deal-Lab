@@ -59,7 +59,6 @@ export class SectionQueryTester<
         sectionName,
         ...GetterSectionsBase.initProps({
           sections: SolverSections.initSectionsFromDefaultMain(),
-          sectionContextName: "default",
         }),
       }),
     });

@@ -7,18 +7,10 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-// Ok. I want the sections to be children of ActiveDeal. I may
-// then make the modals be children of those, but maybe not.
-
-// - Make separate pages for Property, Mgmt, and Financing
-
-// - Make each list view a separate page, too.
-// - give ListEditorMenu the SavedLists button
-
 // Try not using "builder" in FeIndexSolver
 
 // Before Marina
-// - Maybe add example lists
+// - Maaaaybe add example lists and an example deal
 // - Down payment for loan
 
 // Marina
@@ -27,6 +19,7 @@ AppRegistry.runApplication("App", {
 
 // Emily
 // - Logo
+// - Account page
 
 // Before Wordpress
 // - Add Fix and Flip
