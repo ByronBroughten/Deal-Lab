@@ -12,7 +12,11 @@ import ccs from "../../../theme/cssChunks";
 import theme from "../../../theme/Theme";
 import { VarbSelectorCollection } from "./NumObjVarbSelector/VarbSelectorCollection";
 
-type Props = { focalInfo: FeSectionInfo; setEditorState: SetEditorState };
+type Props = {
+  focalInfo: FeSectionInfo;
+  setEditorState: SetEditorState;
+  nameFilter: string;
+};
 type CollectionProps = {
   collectionName: string;
   rowInfos: ValueInEntityInfo[];
@@ -56,6 +60,7 @@ function useUserVarbCollections(focal: GetterSection): CollectionProps {
 export function VarbSelectorAllCollections({
   focalInfo,
   setEditorState,
+  nameFilter,
 }: Props) {
   const focal = useGetterSection(focalInfo);
   const collectionProps: CollectionProps = [];
@@ -68,17 +73,24 @@ export function VarbSelectorAllCollections({
 
   return (
     <Styled className="VarbSelectorAllCollections-root">
-      {collectionProps.map((props) =>
-        props.rowInfos.length > 0 ? (
+      {collectionProps.map(({ rowInfos, ...rest }) => {
+        const rowInfosNext = rowInfos.filter((info) => {
+          const { displayNameFull } = focal.varbByFocalMixed(info);
+          return displayNameFull
+            .toLowerCase()
+            .includes(nameFilter.toLowerCase());
+        });
+        return rowInfosNext.length > 0 ? (
           <VarbSelectorCollection
             {...{
               focalInfo,
               setEditorState,
-              ...props,
+              rowInfos: rowInfosNext,
+              ...rest,
             }}
           />
-        ) : null
-      )}
+        ) : null;
+      })}
     </Styled>
   );
 }

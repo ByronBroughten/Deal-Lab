@@ -25,6 +25,7 @@ export function AllVarbsModal({
 }: Props) {
   const goToVariables = useGoToPage("userVariables");
   const variablesMenu = useGetterSectionOnlyOne("variablesMenu");
+  const nameFilter = variablesMenu.valueNext("nameFilter");
   return (
     <Styled
       {...{
@@ -51,6 +52,7 @@ export function AllVarbsModal({
       </View>
       <VarbSelectorAllCollections
         {...{
+          nameFilter,
           focalInfo,
           setEditorState,
         }}

@@ -10,7 +10,7 @@ AppRegistry.runApplication("App", {
 // Try not using "builder" in FeIndexSolver
 
 // Before Marina
-// - Maaaaybe add example lists and an example deal
+// - Maaaaybe add an example deal and some lists (basic and advanced)
 // - Down payment for loan
 
 // Marina
