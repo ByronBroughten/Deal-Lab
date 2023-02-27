@@ -17,13 +17,13 @@ type Props<SN extends SectionName> = {
   titleText: React.ReactNode;
   sectionName: SN;
   childNames: SnFeUserChildNames<SN>[];
-  goBackToLists?: () => void;
+  goBack?: () => void;
 };
 export function UserEditorTitleRow<SN extends SectionName>({
   titleText,
   sectionName,
   childNames,
-  goBackToLists,
+  goBack,
 }: Props<SN>) {
   const authStatus = useAuthStatus();
   const { saveChanges, discardChanges, areSaved } = useSaveEditorToDb(
@@ -41,12 +41,9 @@ export function UserEditorTitleRow<SN extends SectionName>({
               text={titleText}
             />
           ),
-          ...(goBackToLists && {
+          ...(goBack && {
             rightSide: (
-              <BackToSectionBtn
-                backToWhat="Lists Menu"
-                onClick={goBackToLists}
-              />
+              <BackToSectionBtn backToWhat="Lists Menu" onClick={goBack} />
             ),
           }),
         }}
@@ -88,8 +85,9 @@ export function UserEditorTitleRow<SN extends SectionName>({
 }
 
 const Styled = styled.div`
+  padding-bottom: ${theme.s3};
   .UserListMainSection-sectionBtns {
-    margin-top: ${theme.s2};
+    padding-top: ${theme.s2};
   }
   .UserListMainSection-infoBlurb {
     margin-top: ${theme.s3};

@@ -5,7 +5,7 @@ import { NavBar } from "./NavBar";
 export function NavBarOutletPage() {
   return (
     <PageMain>
-      <NavBar />
+      <NavBar showMenu={false} />
       <Outlet />
     </PageMain>
   );

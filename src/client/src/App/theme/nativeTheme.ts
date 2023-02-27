@@ -93,6 +93,9 @@ export const nativeTheme = {
   ...spacings,
   ...themeColors,
   ...themeColorVariants,
+  sideBar: {
+    width: "150px",
+  },
   subSection: {
     borderLines: view({
       borderStyle: "solid",

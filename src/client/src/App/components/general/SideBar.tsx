@@ -10,7 +10,7 @@ export function Sidebar({ children, className }: StandardProps) {
 
 const Styled = styled.div`
   height: 100%; /* Full-height: remove this if you want "auto" height */
-  width: 150px; /* Set the width of the sidebar */
+  min-width: 170px;
   position: fixed; /* Fixed Sidebar (stay in place on scroll) */
   z-index: 5; /* Stay on top */
   top: 0; /* Stay at the top */

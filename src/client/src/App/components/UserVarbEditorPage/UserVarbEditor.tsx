@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { useSetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useSetterSection";
+import { FormSection } from "../appWide/FormSection";
 import MainSectionBody from "../appWide/GeneralSection/MainSection/MainSectionBody";
 import { OuterMainSection } from "../appWide/GeneralSection/OuterMainSection";
 import { LabelWithInfo } from "../appWide/LabelWithInfo";
@@ -26,15 +27,17 @@ export function UserVarbEditor() {
           childNames: ["userVarbListMain"],
         }}
       />
-      <MainSectionBody>
-        <ListGroupLists
-          {...{
-            feIds: userVarbEditor.childFeIds("userVarbListMain"),
-            addList: () => userVarbEditor.addChild("userVarbListMain"),
-            makeListNode: (nodeProps) => <VarbListUserVarbs {...nodeProps} />,
-          }}
-        />
-      </MainSectionBody>
+      <FormSection>
+        <MainSectionBody>
+          <ListGroupLists
+            {...{
+              feIds: userVarbEditor.childFeIds("userVarbListMain"),
+              addList: () => userVarbEditor.addChild("userVarbListMain"),
+              makeListNode: (nodeProps) => <VarbListUserVarbs {...nodeProps} />,
+            }}
+          />
+        </MainSectionBody>
+      </FormSection>
     </Styled>
   );
 }

@@ -1,4 +1,5 @@
-import { Obj } from "./sharedWithServer/utils/Obj";
+import { envName } from "./Constants/envName";
+import { feRoutes } from "./Constants/feRoutes";
 
 type StripePrice = {
   priceId: string;
@@ -38,9 +39,6 @@ const envConstants = {
   },
 } as const;
 
-const envName = ["development", "test"].includes(process.env.NODE_ENV as string)
-  ? "development"
-  : "production";
 const env = envConstants[envName];
 const apiPathBit = "/api";
 const apiPathFull = `${env.apiUrlBase}${apiPathBit}`;
@@ -76,27 +74,7 @@ export const config = {
       websiteDomain: env.clientUrlBase,
     },
   },
-  feRoutes: {
-    propertyTable: "/property-compare",
-    loanTable: "/loan-compare",
-    mgmtTable: "/mgmt-compare",
-    dealTable: "/deal-compare",
-
-    paymentManagement: env.paymentManagementLink,
-    privacyPolicy: "/privacy-policy",
-    termsOfService: "/terms-of-service",
-    compare: "/compare",
-    userVariables: "/variables",
-    userLists: "/lists",
-    userOutputs: "/outputs",
-    authSuccess: "/login-success",
-    subscribeSuccess: "/subscription-success",
-
-    activeDeal: "/activeDeal",
-    activeProperty: "/activeDeal/property",
-    activeFinancing: "/activeDeal/financing",
-    activeMgmt: "/activeDeal/mgmt",
-  },
+  feRoutes,
   auth: {
     get successUrl() {
       return `${env.clientUrlBase}${config.feRoutes.authSuccess}`;
@@ -134,6 +112,3 @@ export const config = {
 } as const;
 
 export const constants = config;
-export const feRoutes = constants.feRoutes;
-const feRouteNames = Obj.keys(feRoutes);
-export type FeRouteName = typeof feRouteNames[number];

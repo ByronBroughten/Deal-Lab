@@ -1,28 +1,34 @@
 import { AppBar, Toolbar } from "@material-ui/core";
 import { rem } from "polished";
-import React from "react";
 import { BsHouse } from "react-icons/bs";
 import styled from "styled-components";
 import theme from "../theme/Theme";
-import { DomLink } from "./ActiveDealPage/ActiveDeal/general/DomLink";
+import { useGoToPage } from "./appWide/customHooks/useGoToPage";
 import { AppMenuProps } from "./NavBar/AppMenuDropdown";
 import { NavAppMenu } from "./NavBar/NavAppMenu";
 import { NavBarBtns } from "./NavBar/NavBarBtns";
 import { NavBtn } from "./NavBar/NavBtn";
 
-export function NavBar(props: AppMenuProps) {
+interface Props extends AppMenuProps {
+  showMenu?: boolean;
+}
+export function NavBar({ showMenu = true, ...props }: Props) {
+  const goToMain = useGoToPage("mainPage");
   return (
     <Styled className="NavBar-root">
       <Toolbar disableGutters={true}>
         <div className="NavBar-leftSide">
-          <NavAppMenu {...props} />
-          <DomLink className="NavBar-navBtnLink" to="/">
-            <NavBtn
-              className="NavBar-brandBtn"
-              icon={<BsHouse className="NavBar-brandIcon" />}
-              text={<span className="NavBar-brandName">Deal Lab</span>}
-            />
-          </DomLink>
+          {showMenu ? (
+            <NavAppMenu {...props} />
+          ) : (
+            <div className="NavBar-menuPlaceholder"></div>
+          )}
+          <NavBtn
+            className="NavBar-brandBtn"
+            icon={<BsHouse className="NavBar-brandIcon" />}
+            text={<span className="NavBar-brandName">Deal Lab</span>}
+            onClick={goToMain}
+          />
         </div>
         <NavBarBtns />
       </Toolbar>
@@ -39,6 +45,10 @@ const Styled = styled(AppBar)`
 
   .NavBar-leftSide {
     display: flex;
+  }
+
+  .NavBar-menuPlaceholder {
+    width: 50px;
   }
 
   .MuiToolbar-root {

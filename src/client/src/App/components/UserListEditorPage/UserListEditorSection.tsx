@@ -116,7 +116,7 @@ export function UserListEditorSection({
         inputSection: (
           <>
             <UserEditorTitleRow
-              goBackToLists={closeInputs}
+              goBack={closeInputs}
               titleText={title}
               sectionName="userListEditor"
               childNames={[listName]}

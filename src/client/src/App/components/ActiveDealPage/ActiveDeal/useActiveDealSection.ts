@@ -1,4 +1,4 @@
-import { FeRouteName } from "../../../Constants";
+import { FeRouteName } from "../../../Constants/feRoutes";
 import { VarbName } from "../../../sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
 import {
   completionStatuses,

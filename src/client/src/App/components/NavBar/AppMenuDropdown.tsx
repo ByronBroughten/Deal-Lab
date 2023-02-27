@@ -5,7 +5,7 @@ import { IoIosGitCompare } from "react-icons/io";
 import { MdOutlineViewList } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { feRoutes } from "../../Constants";
+import { feRoutes } from "../../Constants/feRoutes";
 import theme from "../../theme/Theme";
 import { StandardBtnProps } from "../general/StandardProps";
 import { AppMenuBtn } from "./AppMenuBtn";
@@ -48,8 +48,8 @@ export function AppMenuDropdown({ activeBtnName }: AppMenuProps) {
     lists: (props: BtnProps) => (
       <AppMenuBtn
         {...props}
-        onClick={() => navigate(feRoutes.userLists)}
-        text={"Lists"}
+        onClick={() => navigate(feRoutes.components)}
+        text={"Components"}
         icon={<MdOutlineViewList size={iconSize} />}
       />
     ),

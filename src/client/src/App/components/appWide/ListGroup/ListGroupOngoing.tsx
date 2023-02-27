@@ -20,10 +20,6 @@ export function ListGroupOngoing({ feId, ...props }: Props) {
         ...props,
         listParentInfo: listGroup.feInfo,
         listAsChildName: "ongoingList",
-        totalVarbName: listGroup.activeSwitchTargetName(
-          "total",
-          "ongoing"
-        ) as "totalMonthly",
         makeListNode: (nodeProps) => <VarbListOngoing {...nodeProps} />,
       }}
     />
