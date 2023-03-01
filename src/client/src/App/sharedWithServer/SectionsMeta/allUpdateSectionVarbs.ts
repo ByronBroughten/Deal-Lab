@@ -1,5 +1,4 @@
 import { timeS } from "../utils/date";
-import { AnalyzerPlan } from "./allBaseSectionVarbs";
 import { dealRelVarbs } from "./allUpdateSectionVarbs/dealUpdateVarbs";
 import { financingUpdateVarbs } from "./allUpdateSectionVarbs/financingUpdateVarbs";
 import { loanRelVarbs } from "./allUpdateSectionVarbs/loanUpdateVarbs";
@@ -34,6 +33,7 @@ import {
 } from "./updateSectionVarbs/updateVarb/UpdateOverrides";
 import { updateVarbsS } from "./updateSectionVarbs/updateVarbs";
 import { numObj } from "./values/StateValue/NumObj";
+import { AnalyzerPlan } from "./values/StateValue/subStringValues";
 
 type GenericAllUpdateSections = {
   [SN in SectionName]: UpdateSectionVarbs<SN>;

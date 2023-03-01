@@ -24,8 +24,8 @@ import {
   validateDbSectionPackRes,
   validateSessionUrlRes,
 } from "./apiQueriesClient/validateRes";
-import { hasAuthHeadersProp } from "./services/authService";
 import https from "./services/httpService";
+import { userTokenS } from "./services/userTokenS";
 
 export const apiQueries = makeApiQueries();
 
@@ -71,7 +71,7 @@ function makeApiQueries(): ApiQueries {
       validateRes(res: AxiosResponse<unknown>): QueryRes<"addSection"> {
         if (res) {
           const { headers, data } = res;
-          if (isDbIdData(data) && hasAuthHeadersProp(headers)) {
+          if (isDbIdData(data) && userTokenS.hasUserTokenHeaderProp(headers)) {
             return {
               data,
               headers,

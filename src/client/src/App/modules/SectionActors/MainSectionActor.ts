@@ -18,7 +18,7 @@ import {
   MainSectionSolver,
   SaveStatus,
 } from "../SectionSolvers/MainSectionSolver";
-import { auth, UserInfoTokenProp } from "../services/authService";
+import { UserInfoTokenProp, userTokenS } from "../services/userTokenS";
 import { Str } from "./../../sharedWithServer/utils/Str";
 import { FeUserActor } from "./FeUserActor";
 import { SectionActorBase } from "./SectionActorBase";
@@ -118,7 +118,7 @@ export class MainSectionActor<
       const res = await this.querier.add(sectionPack as SectionPack<any>);
       headers = res.headers;
     });
-    if (headers) auth.setTokenFromHeaders(headers);
+    if (headers) userTokenS.setTokenFromHeaders(headers);
   }
   private querySave() {
     let headers: UserInfoTokenProp | null = null;
@@ -127,7 +127,7 @@ export class MainSectionActor<
       const res = await this.querier.add(sectionPack as SectionPack<any>);
       headers = res.headers;
     });
-    if (headers) auth.setTokenFromHeaders(headers);
+    if (headers) userTokenS.setTokenFromHeaders(headers);
   }
   async saveUpdates(): Promise<void> {
     this.mainSolver.saveUpdates();
@@ -156,7 +156,7 @@ export class MainSectionActor<
     if (this.feUser.isLoggedIn) {
       return (await this.querier.get(dbId)) as SectionPack<any>;
     } else {
-      return this.mainSolver.feStoreSolver.getItem(dbId).makeSectionPack();
+      return this.mainSolver.feStoreSolver.getItemPack(dbId);
     }
   }
   async deleteSelf() {

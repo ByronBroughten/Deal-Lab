@@ -2,15 +2,8 @@ import request from "supertest";
 import { constants } from "../../client/src/App/Constants";
 import { apiQueriesShared } from "../../client/src/App/sharedWithServer/apiQueriesShared";
 import { QueryReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/apiQueriesSharedTypes";
-import {
-  guestAccessNames,
-  GuestAccessSectionPackArrs,
-} from "../../client/src/App/sharedWithServer/apiQueriesShared/register";
-import {
-  UserData,
-  validateUserData,
-} from "../../client/src/App/sharedWithServer/apiQueriesShared/validateUserData";
-import { PackBuilderSection } from "../../client/src/App/sharedWithServer/StatePackers.ts/PackBuilderSection";
+import { makeReq } from "../../client/src/App/sharedWithServer/apiQueriesShared/makeReqAndRes";
+import { validateUserData } from "../../client/src/App/sharedWithServer/apiQueriesShared/validateUserData";
 import { runApp } from "../../runApp";
 import { LoadedDbUser } from "./apiQueriesShared/DbSections/LoadedDbUser";
 import {
@@ -31,7 +24,7 @@ describe(testedRoute, () => {
     server = runApp();
     dbUser = await createAndGetDbUser(testedRoute);
     cookies = await makeSessionGetCookies({ server, authId: dbUser.authId });
-    reqObj = makeReqObj();
+    reqObj = makeReq();
   });
 
   async function exec() {
@@ -58,51 +51,4 @@ describe(testedRoute, () => {
     // I can use the webhook route and borrow code from there.
     //
   });
-  it("should add guestAccessSections if they have not yet been added", async () => {
-    const feUser = PackBuilderSection.initAsOmniChild("feUser");
-    feUser.addChild("outputListMain");
-    feUser.addChild("outputListMain");
-    feUser.addChild("userVarbListMain");
-    reqObj = makeReqObj(feUser);
-    const { data } = await exec();
-
-    const postFeUser = PackBuilderSection.initAsOmniChild("feUser");
-    postFeUser.loadSelf(data.feUser);
-    const postReqObj = makeReqObj(postFeUser);
-    expect(reqObj.body.guestAccessSections).toEqual(
-      postReqObj.body.guestAccessSections
-    );
-  });
-  it("should not add guestAccessSections if they have already been added", async () => {
-    const feUser = PackBuilderSection.initAsOmniChild("feUser");
-    feUser.addChild("outputListMain");
-    feUser.addChild("outputListMain");
-    feUser.addChild("userVarbListMain");
-
-    reqObj = makeReqObj(feUser);
-    await exec();
-
-    const childName = "singleTimeListMain";
-    const { dbId } = feUser.addAndGetChild(childName).get;
-    reqObj = makeReqObj(feUser);
-
-    const res2 = await exec();
-    const data: UserData = res2.data;
-    const feUser2 = PackBuilderSection.loadAsOmniChild(data.feUser);
-    const hasList = feUser2.get.hasChildByDbInfo({ childName, dbId });
-    expect(hasList).toBe(false);
-  });
 });
-
-function makeReqObj(
-  feUser = PackBuilderSection.initAsOmniChild("feUser")
-): QueryReq<"getUserData"> {
-  const guestAccessSections = feUser.maker.makeChildPackArrs(
-    guestAccessNames
-  ) as GuestAccessSectionPackArrs;
-  return {
-    body: {
-      guestAccessSections,
-    },
-  };
-}

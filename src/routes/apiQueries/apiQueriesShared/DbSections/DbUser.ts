@@ -1,6 +1,5 @@
 import mongoose, { QueryOptions } from "mongoose";
 import { CompareTableBuilder } from "../../../../client/src/App/modules/SectionSolvers/CompareTableBuilder";
-import { GuestAccessSectionPackArrs } from "../../../../client/src/App/sharedWithServer/apiQueriesShared/register";
 import { getDefaultMainTableMakers } from "../../../../client/src/App/sharedWithServer/defaultMaker/getDefaultMainTableMakers";
 import { VarbName } from "../../../../client/src/App/sharedWithServer/SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
 import { feStoreNameS } from "../../../../client/src/App/sharedWithServer/SectionsMeta/relSectionsDerived/FeStoreName";
@@ -57,23 +56,6 @@ export class DbUser extends DbSectionsQuerierBase {
         });
       }
     }
-  }
-  async initUserSectionsIfNeeded(
-    guestAccessSections: GuestAccessSectionPackArrs
-  ): Promise<void> {
-    const areLoaded = await this.guestAccessSectionsAreLoaded();
-    if (!areLoaded) {
-      await this.setGuestAccessSections(guestAccessSections);
-    }
-  }
-  private async setGuestAccessSections(
-    guestAccessSections: GuestAccessSectionPackArrs
-  ): Promise<void> {
-    await this.setOnlyValue({
-      ...this.guestAccessInfo,
-      value: true,
-    });
-    return this.setSectionPackArrs(guestAccessSections);
   }
   async setSectionPackArrs(arrs: Partial<DbSectionPackArrs>): Promise<void> {
     for (const storeName of Obj.keys(arrs)) {

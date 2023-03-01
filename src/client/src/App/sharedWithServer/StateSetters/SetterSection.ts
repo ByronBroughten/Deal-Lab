@@ -12,6 +12,7 @@ import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack"
 import { ChildValueInfo } from "../SectionsMeta/SectionInfo/ChildInfo";
 import { FeSectionInfo, FeVarbInfo } from "../SectionsMeta/SectionInfo/FeInfo";
 import { SectionMeta } from "../SectionsMeta/SectionMeta";
+import { SectionName } from "../SectionsMeta/SectionName";
 import {
   SectionNameByType,
   SectionNameType,
@@ -30,12 +31,16 @@ import {
   AddChildOptions,
   UpdaterSection,
 } from "../StateUpdaters/UpdaterSection";
-import { SetterSectionBase } from "./SetterBases/SetterSectionBase";
+import { StrictOmit } from "../utils/types";
+import {
+  SetterSectionBase,
+  SetterSectionProps,
+} from "./SetterBases/SetterSectionBase";
 import { SetterSections } from "./SetterSections";
 import { SetterVarb } from "./SetterVarb";
 
 export class SetterSection<
-  SN extends SectionNameByType
+  SN extends SectionName
 > extends SetterSectionBase<SN> {
   get get(): GetterSection<SN> {
     return new GetterSection(this.getterSectionBase.getterSectionProps);
@@ -57,6 +62,16 @@ export class SetterSection<
   }
   get feId(): string {
     return this.get.feId;
+  }
+  static initOnlyOne<SN extends SectionName>(
+    props: StrictOmit<SetterSectionProps<SN>, "feId">
+  ) {
+    const { sections } = props.sectionsShare;
+    const { feId } = sections.firstRawSection(props.sectionName);
+    return new SetterSection({
+      ...props,
+      feId,
+    });
   }
   isOfType<ST extends SectionNameType>(
     sectionTypeName: ST

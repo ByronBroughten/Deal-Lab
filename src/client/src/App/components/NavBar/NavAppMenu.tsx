@@ -1,23 +1,19 @@
-import React from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 import styled from "styled-components";
+import { useUserSubscription } from "../../modules/customHooks/useSubscriptions";
 import useToggle from "../../modules/customHooks/useToggle";
-import { useFeUser } from "../../modules/sectionActorHooks/useFeUser";
-import { AnalyzerPlan } from "../../sharedWithServer/SectionsMeta/allBaseSectionVarbs";
+
 import theme from "../../theme/Theme";
 import { Sidebar } from "../general/SideBar";
 import { AppMenuDropdown, AppMenuProps } from "./AppMenuDropdown";
 import { NavDropDown } from "./NavDropDown";
 
 export function NavAppMenu({ activeBtnName }: AppMenuProps) {
-  const feUser = useFeUser();
-  const analyzerPlan = feUser.get.valueNext("analyzerPlan") as AnalyzerPlan;
-  const isFullPlan = analyzerPlan === "fullPlan";
-
+  const { userIsPro } = useUserSubscription();
   const { value: doCloseMenuToggle } = useToggle();
   return (
     <Styled
-      {...{ $isFullPlan: isFullPlan }}
+      {...{ $isFullPlan: userIsPro }}
       btnIcon={<AiOutlineMenu className="NavBar-menuIcon" />}
       dropDirection={"right"}
       doCloseViewToggle={doCloseMenuToggle}

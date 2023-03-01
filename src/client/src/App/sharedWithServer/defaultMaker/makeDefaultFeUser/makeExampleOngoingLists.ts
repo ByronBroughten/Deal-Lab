@@ -1,5 +1,9 @@
 import { SectionPack } from "../../SectionsMeta/sectionChildrenDerived/SectionPack";
-import { numObj, NumObj } from "../../SectionsMeta/values/StateValue/NumObj";
+import {
+  numObj,
+  NumObj,
+  numToObj,
+} from "../../SectionsMeta/values/StateValue/NumObj";
 import { stringObj } from "../../SectionsMeta/values/StateValue/StringObj";
 import { PackBuilderSection } from "../../StatePackers.ts/PackBuilderSection";
 
@@ -33,7 +37,7 @@ export function makeUtilityList(
   return utilityList.makeSectionPack();
 }
 
-type SingleTimeItemProp = readonly [string, number];
+type SingleTimeItemProp = readonly [string, number | NumObj];
 export function makeExampleSingleTimeList(
   listTitle: string,
   itemPropArr: readonly SingleTimeItemProp[],
@@ -44,17 +48,19 @@ export function makeExampleSingleTimeList(
   dbId && list.updater.updateDbId(dbId);
 
   for (const itemProps of itemPropArr) {
+    const value = itemProps[1];
     list.addChild("singleTimeItem", {
       dbVarbs: {
         displayNameEditor: itemProps[0],
-        valueEditor: numObj(itemProps[1]),
+        valueEditor: typeof value === "number" ? numObj(value) : value,
       },
     });
   }
   return list.makeSectionPack();
 }
 
-type CapExItemProp = readonly [string, NumObj, NumObj];
+// displayName, lifespan, replacementCost... last two should swap
+type CapExItemProp = readonly [string, number | NumObj, number | NumObj];
 export function makeCapExList(
   itemPropArr: readonly CapExItemProp[],
   dbId?: string
@@ -73,9 +79,9 @@ export function makeCapExList(
       dbVarbs: {
         displayNameEditor: itemProps[0],
         valueOngoingSwitch: itemOngoingSwitch,
-        lifespanSpanEditor: itemProps[1],
+        lifespanSpanEditor: numToObj(itemProps[1]),
         lifespanSpanSwitch: "years",
-        costToReplace: itemProps[2],
+        costToReplace: numToObj(itemProps[2]),
       },
     });
   }

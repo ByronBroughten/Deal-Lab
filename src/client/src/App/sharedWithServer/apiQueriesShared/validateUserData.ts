@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { constants } from "../../Constants";
-import { UserInfoTokenProp } from "../../modules/services/authService";
+import { UserInfoTokenProp } from "../../modules/services/userTokenS";
 import {
   FeStoreNameByType,
   feStoreNameS,

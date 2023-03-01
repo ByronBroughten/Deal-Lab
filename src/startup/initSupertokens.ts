@@ -7,7 +7,7 @@ import { Str } from "../client/src/App/sharedWithServer/utils/Str";
 import { DbUser } from "../routes/apiQueries/apiQueriesShared/DbSections/DbUser";
 import {
   getSignUpData,
-  userPrepS,
+  initUserInDb,
 } from "../routes/apiQueries/apiQueriesShared/DbSections/LoadedDbUser/userPrepS";
 const { Google, Facebook, Apple } = ThirdPartyEmailPassword;
 
@@ -47,25 +47,23 @@ export function initSupertokens() {
           apis: (original) => {
             return {
               ...original,
-
+              thirdPartySignInUpPOST: async function (input) {
+                if (!original.thirdPartySignInUpPOST) {
+                  throw Error("No original.emailPasswordSingInPOST");
+                }
+                const res = await original.thirdPartySignInUpPOST(input);
+                if (res.status === "OK") {
+                  await finishSignIn(res.user);
+                }
+                return res;
+              },
               emailPasswordSignInPOST: async function (input) {
                 if (!original.emailPasswordSignInPOST) {
                   throw Error("No original.emailPasswordSingInPOST");
                 }
                 const res = await original.emailPasswordSignInPOST(input);
                 if (res.status === "OK") {
-                  const signUpData = getSignUpData(res.user);
-                  const userExists = await DbUser.existsBy(
-                    "authId",
-                    signUpData.authId
-                  );
-                  if (!userExists) {
-                    const userName = Str.emailBeforeAt(signUpData.email);
-                    await userPrepS.initUserInDb({
-                      ...signUpData,
-                      userName,
-                    });
-                  }
+                  await finishSignIn(res.user, input.formFields);
                 }
                 return res;
               },
@@ -75,25 +73,7 @@ export function initSupertokens() {
                 }
                 const res = await original.emailPasswordSignUpPOST(input);
                 if (res.status === "OK") {
-                  const signUpData = getSignUpData(res.user);
-                  const { formFields } = input;
-                  const nameField = formFields.find(
-                    (field) => field.id === "userName"
-                  );
-
-                  const userName =
-                    nameField && nameField.value ? nameField.value : "User";
-
-                  const userExists = await DbUser.existsBy(
-                    "authId",
-                    signUpData.authId
-                  );
-                  if (!userExists) {
-                    await userPrepS.initUserInDb({
-                      ...signUpData,
-                      userName,
-                    });
-                  }
+                  await finishSignIn(res.user, input.formFields);
                 }
                 return res;
               },
@@ -104,4 +84,37 @@ export function initSupertokens() {
       Session.init(),
     ],
   });
+}
+
+type FormFields = {
+  id: string;
+  value: string;
+}[];
+
+async function finishSignIn(
+  stUser: ThirdPartyEmailPassword.User,
+  formFields?: FormFields
+) {
+  const signUpData = getSignUpData(stUser);
+  const userExists = await DbUser.existsBy("authId", signUpData.authId);
+  if (!userExists) {
+    const userName = getUserName(stUser.email, formFields);
+    await initUserInDb({
+      ...signUpData,
+      userName,
+    });
+  }
+}
+
+function getUserName(email: string, formFields?: FormFields) {
+  if (formFields) {
+    const userNameFromFields = userNameFromForm(formFields);
+    if (userNameFromFields) return userNameFromFields;
+  }
+  return Str.emailBeforeAt(email);
+}
+
+function userNameFromForm(formFields: FormFields): string {
+  const nameField = formFields.find((field) => field.id === "userName");
+  return nameField ? nameField.value : "";
 }

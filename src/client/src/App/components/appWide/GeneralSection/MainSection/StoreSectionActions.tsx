@@ -1,6 +1,4 @@
-import { BsLightningFill } from "react-icons/bs";
 import styled from "styled-components";
-import { useToggleView } from "../../../../modules/customHooks/useToggleView";
 import { useMainSectionActor } from "../../../../modules/sectionActorHooks/useMainSectionActor";
 import { SectionNameByType } from "../../../../sharedWithServer/SectionsMeta/SectionNameByType";
 import theme from "../../../../theme/Theme";
@@ -32,12 +30,10 @@ export function StoreSectionActions<
 }: Props<SN>) {
   const feInfo = { sectionName, feId };
   const mainSection = useMainSectionActor(feInfo);
-  const controller = useToggleView("list", false);
   function btnProps(actionName: ActionBtnName) {
     return {
       ...feInfo,
       loadWhat,
-      onLoad: controller.closeList,
       actionName,
       key: actionName,
       className: "StoreSectionActions-actionBtn",
@@ -52,10 +48,6 @@ export function StoreSectionActions<
     <Styled
       {...{
         className: `StoreSectionActionMenu-root ${className ?? ""}`,
-        title: `Actions`,
-        icon: <BsLightningFill className="StoreActionMenu-dropdownBtnIcon" />,
-        dropTop,
-        controller: controller,
       }}
     >
       {!mainSection.isSaved &&

@@ -1,13 +1,12 @@
 import { rem } from "polished";
-import React from "react";
 import { BiLogOut, BiUserCircle } from "react-icons/bi";
 import { MdAccountCircle } from "react-icons/md";
 import styled from "styled-components";
-import { useLogout } from "../../modules/customHooks/useAuthAndUserData";
+import { useUserSubscription } from "../../modules/customHooks/useSubscriptions";
 import useToggle from "../../modules/customHooks/useToggle";
-import { useFeUser } from "../../modules/sectionActorHooks/useFeUser";
+import { useLogout } from "../../modules/customHooks/useUserData";
 import { goToCustomerPortalPage } from "../../modules/services/stripeService";
-import { AnalyzerPlan } from "../../sharedWithServer/SectionsMeta/allBaseSectionVarbs";
+
 import theme from "../../theme/Theme";
 import { NavDropdownMenuBtn } from "../appWide/ListGroup/ListGroupShared/ListMenuSimple/NavDropdownMenuBtn";
 import { StandardProps } from "../general/StandardProps";
@@ -18,20 +17,18 @@ function BtnDiv({ children, className }: StandardProps) {
 }
 
 export function NavUserMenu() {
-  const feUser = useFeUser();
   const logout = useLogout();
-  const analyzerPlan = feUser.get.valueNext("analyzerPlan") as AnalyzerPlan;
-  const isFullPlan = analyzerPlan === "fullPlan";
+  const { userIsPro } = useUserSubscription();
   const { value: doCloseMenuToggle, toggle: closeMenu } = useToggle();
   return (
     <Styled
-      {...{ $isFullPlan: isFullPlan }}
+      {...{ $isFullPlan: userIsPro }}
       btnIcon={<BiUserCircle size={28} />}
       dropDirection={"left"}
       doCloseViewToggle={doCloseMenuToggle}
     >
       <div className="NavUserMenu-dropdown">
-        {feUser.isPro && (
+        {userIsPro && (
           <BtnDiv>
             <NavDropdownMenuBtn
               text="Account"

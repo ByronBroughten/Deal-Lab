@@ -1,4 +1,7 @@
-import { AnalyzerPlan, isUserPlan } from "../SectionsMeta/allBaseSectionVarbs";
+import {
+  AnalyzerPlan,
+  isUserPlan,
+} from "../SectionsMeta/values/StateValue/subStringValues";
 import { Obj } from "../utils/Obj";
 
 export interface AnalyzerPlanValues {

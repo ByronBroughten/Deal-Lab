@@ -6,8 +6,9 @@ import { makeDefaultOutputList } from "./makeDefaultOutputList";
 import { makeDefaultProperty } from "./makeDefaultProperty";
 
 export function makeDefaultDealPack(): SectionPack<"deal"> {
-  const deal = PackBuilderSection.initAsOmniChild("deal", {
-    dbVarbs: { dealMode: "buyAndHold" },
+  const deal = PackBuilderSection.initAsOmniChild("deal");
+  deal.updateValues({
+    dealMode: "buyAndHold",
   });
   const financing = deal.addAndGetChild("financing");
   financing.loadChild({

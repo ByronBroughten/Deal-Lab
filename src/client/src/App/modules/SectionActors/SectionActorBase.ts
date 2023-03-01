@@ -1,3 +1,4 @@
+import { SectionName } from "../../sharedWithServer/SectionsMeta/SectionName";
 import { SectionNameByType } from "../../sharedWithServer/SectionsMeta/SectionNameByType";
 import { SectionsAndControls } from "../../sharedWithServer/stateClassHooks/useSections";
 import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
@@ -14,9 +15,7 @@ export interface SectionActorBaseProps<SN extends SectionNameByType>
   extends ApiQuerierBaseProps,
     SetterSectionProps<SN> {}
 
-export class SectionActorBase<
-  SN extends SectionNameByType
-> extends ApiQuerierBase {
+export class SectionActorBase<SN extends SectionName> extends ApiQuerierBase {
   readonly setterSectionBase: SetterSectionBase<SN>;
   get get() {
     return new GetterSection(this.sectionActorBaseProps);

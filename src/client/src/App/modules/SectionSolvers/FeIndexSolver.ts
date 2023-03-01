@@ -1,10 +1,8 @@
-import { feStoreNameS } from "../../sharedWithServer/SectionsMeta/relSectionsDerived/FeStoreName";
 import { ChildName } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/ChildName";
 import { ChildSectionName } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/ChildSectionName";
 import { SectionPack } from "../../sharedWithServer/SectionsMeta/sectionChildrenDerived/SectionPack";
 import { SectionNameByType } from "../../sharedWithServer/SectionsMeta/SectionNameByType";
 import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
-import { PackBuilderSection } from "../../sharedWithServer/StatePackers.ts/PackBuilderSection";
 import {
   SolverSectionBase,
   SolverSectionProps,
@@ -42,17 +40,11 @@ export class FeIndexSolver<
   get get() {
     return new GetterSection(this.getterSectionProps);
   }
-  get builder() {
-    return new PackBuilderSection(this.getterSectionProps);
-  }
   get solver() {
     return new SolverSection(this.solverSectionProps);
   }
   get indexSection() {
-    const { itemName } = this;
-    if (feStoreNameS.is(itemName, "mainStoreName")) {
-      return this.builder;
-    } else return this.solver;
+    return this.solver;
   }
   get indexSectionItems(): GetterSection<SectionNameByType<"hasFullIndex">>[] {
     return this.get.children(this.itemName) as GetterSection<any>[];
@@ -63,14 +55,14 @@ export class FeIndexSolver<
       dbId: section.dbId,
     }));
   }
-  getItem(dbId: string): PackBuilderSection<ChildSectionName<"feUser", CN>> {
-    return this.builder.childByDbId({
+  getItem(dbId: string): SolverSection<ChildSectionName<"feUser", CN>> {
+    return this.solver.childByDbId({
       childName: this.itemName,
       dbId,
     });
   }
   getItemPack(dbId: string): SectionPack<ChildSectionName<"feUser", CN>> {
-    return this.getItem(dbId).makeSectionPack();
+    return this.getItem(dbId).packMaker.makeSectionPack();
   }
   hasByDbId(dbId: string) {
     return this.get.hasChildByDbInfo({

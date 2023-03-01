@@ -108,13 +108,13 @@ export const allSectionChildren = checkAllSectionChildren({
     loanMain: ["loan"],
     mgmtMain: ["mgmt"],
     dealMain: ["deal"],
+    ...listChildren,
 
     propertyMainTable: ["compareTable"],
     loanMainTable: ["compareTable"],
     mgmtMainTable: ["compareTable"],
     dealMainTable: ["compareTable"],
     userVarbListMain: ["userVarbList"],
-    ...listChildren,
   }),
   compareTable: sectionChildren({
     column: ["column"],

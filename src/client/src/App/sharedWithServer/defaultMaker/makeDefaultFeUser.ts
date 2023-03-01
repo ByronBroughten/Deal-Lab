@@ -1,19 +1,11 @@
+import { AuthStatus } from "../SectionsMeta/baseSectionsVarbsValues";
+import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
 import {
   AnalyzerPlan,
   UserDataStatus,
-} from "../SectionsMeta/allBaseSectionVarbs";
-import { AuthStatus } from "../SectionsMeta/baseSectionsVarbsValues";
-import { feStoreNameS } from "../SectionsMeta/relSectionsDerived/FeStoreName";
-import { SectionPack } from "../SectionsMeta/sectionChildrenDerived/SectionPack";
+} from "../SectionsMeta/values/StateValue/subStringValues";
 import { PackBuilderSection } from "../StatePackers.ts/PackBuilderSection";
 import { timeS } from "../utils/date";
-import { getDefaultMainTableMakers } from "./getDefaultMainTableMakers";
-import { makeExampleProperty } from "./makeDefaultFeUser/makeExampleProperty";
-import {
-  makeExampleUserOngoingLists,
-  makeExampleUserSingleTimeLists,
-} from "./makeDefaultFeUser/makeExampleUserOngoingLists";
-import { makeExampleUserVarbLists } from "./makeDefaultFeUser/makeExampleUserVarbLists";
 
 export function makeDefaultFeUserPack(): SectionPack<"feUser"> {
   const analyzerPlan: AnalyzerPlan = "basicPlan";
@@ -29,30 +21,5 @@ export function makeDefaultFeUserPack(): SectionPack<"feUser"> {
       userDataStatus,
     },
   });
-  feUser.loadChildren({
-    childName: "userVarbListMain",
-    sectionPacks: makeExampleUserVarbLists(),
-  });
-  feUser.loadChildren({
-    childName: "singleTimeListMain",
-    sectionPacks: makeExampleUserSingleTimeLists(),
-  });
-  feUser.loadChildren({
-    childName: "ongoingListMain",
-    sectionPacks: makeExampleUserOngoingLists(),
-  });
-  const defaultTableMakers = getDefaultMainTableMakers();
-  for (const tableName of feStoreNameS.arrs.mainTableName) {
-    feUser.loadChild({
-      childName: tableName,
-      sectionPack: defaultTableMakers[tableName](),
-    });
-  }
-
-  feUser.loadChildren({
-    childName: "propertyMain",
-    sectionPacks: [makeExampleProperty()],
-  });
-
   return feUser.makeSectionPack();
 }

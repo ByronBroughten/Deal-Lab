@@ -7,8 +7,6 @@ AppRegistry.runApplication("App", {
   rootTag: document.getElementById("root"),
 });
 
-// Try not using "builder" in FeIndexSolver
-
 // Before Marina
 // - Maaaaybe add an example deal and some lists (basic and advanced)
 // - Down payment for loan
@@ -22,6 +20,9 @@ AppRegistry.runApplication("App", {
 // - Account page
 
 // Before Wordpress
+// - Change the method of mgmt base pay and loan amount
+//   - You want to prepare them for being able to handle
+//     other types of inputs
 // - Add Fix and Flip
 //   - Percent of repairs for loan amount
 //   - Percent of repairs plus purchase price

@@ -694,6 +694,13 @@ export class GetterSection<
   valueNext<VN extends VarbName<SN>>(varbName: VN): VarbValue<SN, VN> {
     return this.varb(varbName as string).valueNext() as VarbValue<SN, VN>;
   }
+  valueSafe<VN extends VarbName<SN>, AV extends any>(
+    varbName: VN,
+    acceptedValues: readonly AV[]
+  ): AV {
+    const varb = this.varbNext(varbName);
+    return varb.valueSafe(acceptedValues);
+  }
   checkInputValue<VN extends VarbName<SN>>(
     varbName: VN
   ): { isEmpty: boolean; isValid: boolean } {

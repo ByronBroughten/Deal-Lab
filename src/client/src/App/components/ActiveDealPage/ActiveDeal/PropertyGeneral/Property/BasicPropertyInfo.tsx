@@ -24,6 +24,10 @@ export default function BasicPropertyInfo({ feId, className }: Props) {
           />
           <NumObjEntityEditor
             className={`BasicPropertyInfo-numObjEditor`}
+            feVarbInfo={property.varbInfo("sqft")}
+          />
+          <NumObjEntityEditor
+            className={`BasicPropertyInfo-numObjEditor`}
             feVarbInfo={property.varbInfo("taxesOngoingEditor")}
           />
           <NumObjEntityEditor
@@ -31,10 +35,6 @@ export default function BasicPropertyInfo({ feId, className }: Props) {
             className={`BasicPropertyInfo-numObjEditor`}
             feVarbInfo={property.varbInfo("homeInsOngoingEditor")}
             quickViewVarbNames={["purchasePrice", "sqft", "numUnits"]}
-          />
-          <NumObjEntityEditor
-            className={`BasicPropertyInfo-numObjEditor`}
-            feVarbInfo={property.varbInfo("sqft")}
           />
         </div>
       </div>

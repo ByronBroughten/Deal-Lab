@@ -1,45 +1,65 @@
-import { numObj } from "../../SectionsMeta/values/StateValue/NumObj";
+import { SectionValues } from "../../SectionsMeta/values/StateValue";
+import { NumObj, numObj } from "../../SectionsMeta/values/StateValue/NumObj";
 import { stringObj } from "../../SectionsMeta/values/StateValue/StringObj";
+import { ClosingCostValueMode } from "../../SectionsMeta/values/StateValue/subStringValues";
 import { PackBuilderSection } from "../../StatePackers.ts/PackBuilderSection";
+import { StrictPick } from "../../utils/types";
+import { makeDefaultLoanPack } from "../makeDefaultLoanPack";
 
-export function makeExampleLoan() {
-  const loan = PackBuilderSection.initAsOmniChild("loan", {
-    dbId: "exampleloan1",
-    dbVarbs: {},
+type ExampleLoanProps = {
+  loan: StrictPick<
+    SectionValues<"loan">,
+    | "displayName"
+    | "interestRatePercentOngoingEditor"
+    | "loanBasePercentEditor"
+    | "loanTermSpanEditor"
+    | "hasMortgageIns"
+  >;
+  closingCosts: {
+    valueMode: ClosingCostValueMode;
+    valueLumpSumEditor?: NumObj;
+    items?: {
+      displayName: string;
+      value: NumObj;
+    }[];
+  };
+};
+
+function makeExampleLoan(props: ExampleLoanProps) {
+  const loan = PackBuilderSection.initAsOmniChild("loan");
+  loan.loadSelf(makeDefaultLoanPack());
+  loan.updateValues({
+    ...props.loan,
+    interestRatePercentOngoingSwitch: "yearly",
+    loanBaseUnitSwitch: "percent",
+    loanTermSpanSwitch: "years",
   });
 
-  loan.addChild("closingCostValue", {
-    dbVarbs: {
-      valueLumpSumEditor: numObj(6000),
-      valueMode: "lumpSum",
-    },
-  });
-  loan.addChild("wrappedInLoanValue", {
-    dbVarbs: { displayNameEditor: stringObj("Other financed costs") },
-  });
-
-  const closingCostGroup = loan.addAndGetChild("closingCostValue");
-  const closingCostList = closingCostGroup.addAndGetChild("singleTimeList", {
-    dbVarbs: {
-      displayName: stringObj("Closing items"),
-    },
-  });
-  closingCostList.addChild("singleTimeItem", {
-    dbVarbs: {
-      displayNameEditor: "Lump Sum",
-      valueEditor: numObj(6000),
-    },
-  });
-  const wrappedInLoanGroup = loan.addAndGetChild("wrappedInLoanValue");
-  const sellerPaidList = wrappedInLoanGroup.addAndGetChild("singleTimeList", {
-    dbVarbs: {
-      displayName: stringObj("Seller-paid costs"),
-    },
-  });
-  sellerPaidList.addChild("singleTimeItem", {
-    dbVarbs: {
-      displayNameEditor: "Closing",
-      valueEditor: numObj(2500),
-    },
-  });
+  const closingCostValue = loan.onlyChild("closingCostValue");
+  const { items = [], ...costProps } = props.closingCosts;
+  closingCostValue.updateValues(costProps);
+  const closingCostList = closingCostValue.onlyChild("singleTimeList");
+  for (const item of items) {
+    const closingCostItem = closingCostList.addAndGetChild("singleTimeItem");
+    closingCostItem.updateValues({
+      displayNameEditor: item.displayName,
+      valueEditor: item.value,
+      valueSourceSwitch: "labeledEquation",
+    });
+  }
+  return loan.makeSectionPack();
 }
+
+export const dealExampleLoan = makeExampleLoan({
+  loan: {
+    displayName: stringObj("Conventional 80% LTV"),
+    interestRatePercentOngoingEditor: numObj(6),
+    loanBasePercentEditor: numObj(80),
+    loanTermSpanEditor: numObj(30),
+    hasMortgageIns: false,
+  },
+  closingCosts: {
+    valueMode: "lumpSum",
+    valueLumpSumEditor: numObj(6000),
+  },
+});

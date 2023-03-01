@@ -1,13 +1,16 @@
 import { Arr } from "../../utils/Arr";
 import { Obj } from "../../utils/Obj";
 import { allSectionChildren, listChildrenNames } from "../allSectionChildren";
+import { ChildName } from "./ChildName";
 import {
   ChildSectionName,
   ChildSectionNameName,
   childToSectionName,
 } from "./ChildSectionName";
 
-export const dbStoreNames = Obj.keys(allSectionChildren.dbStore);
+export const dbStoreNames = Obj.keys(
+  allSectionChildren.dbStore
+) as ChildName<"dbStore">[];
 export type DbStoreName = typeof dbStoreNames[number];
 export type DbSectionName<CN extends DbStoreName = DbStoreName> =
   ChildSectionName<"dbStore", CN>;

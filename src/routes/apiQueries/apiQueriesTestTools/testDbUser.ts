@@ -12,7 +12,7 @@ import { DbUserModel } from "../../routesShared/DbUserModel";
 import { LoadedDbUser } from "../apiQueriesShared/DbSections/LoadedDbUser";
 import {
   getSignUpData,
-  userPrepS,
+  initUserInDb,
 } from "../apiQueriesShared/DbSections/LoadedDbUser/userPrepS";
 
 export async function createAndGetDbUser(
@@ -24,7 +24,7 @@ export async function createAndGetDbUser(
   const res = await emailPasswordSignUp(email, "TestP@ssword1");
   if (res.status === "OK") {
     const signUpData = getSignUpData(res.user);
-    await userPrepS.initUserInDb({
+    await initUserInDb({
       ...signUpData,
       userName: "Testosis",
     });

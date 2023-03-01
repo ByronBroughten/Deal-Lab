@@ -72,6 +72,9 @@ export const config = {
       appName: env.appName,
       apiDomain: apiPathFull,
       websiteDomain: env.clientUrlBase,
+
+      websiteBasePath: feRoutes.auth,
+      apiBasePath: feRoutes.auth,
     },
   },
   feRoutes,

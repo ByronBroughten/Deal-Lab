@@ -65,7 +65,7 @@ export class MainSectionSolver<
     });
   }
   loadFromLocalStore(dbId: string): void {
-    const sectionPack = this.feStoreSolver.getItem(dbId).makeSectionPack();
+    const sectionPack = this.feStoreSolver.getItemPack(dbId);
     this.loadSectionPack(sectionPack);
   }
   prepForCompare<SN extends ChildSectionName<"omniParent">>(

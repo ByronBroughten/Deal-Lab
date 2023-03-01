@@ -1,32 +1,28 @@
 import { BsArrowUpCircle } from "react-icons/bs";
 import { View } from "react-native";
-import { useFeUser } from "../../modules/sectionActorHooks/useFeUser";
+import { useUserSubscription } from "../../modules/customHooks/useSubscriptions";
+import { useUserDataActor } from "../../modules/customHooks/useUserData";
 import { NavBtn } from "./NavBtn";
 import { NavDropDown } from "./NavDropDown";
 import { NavUserMenu } from "./NavUserMenu";
 import { UpgradeUserToProPanel } from "./UpgradeUserToProPanel";
 
 function useScenarioKey() {
-  const feUser = useFeUser();
-  const { userDataStatus } = feUser;
+  const { userDataStatus } = useUserDataActor();
+  const { userPlan } = useUserSubscription();
   if (userDataStatus === "notLoaded") return "guest";
   else if (userDataStatus === "loading") return "loggingInUser";
   else if (userDataStatus === "unloading") return "loggingOutUser";
   else if (userDataStatus === "loaded") {
-    const { analyzerPlan } = feUser;
-    if (analyzerPlan === "basicPlan") return "basicUser";
-    else if (analyzerPlan === "fullPlan") return "proUser";
+    if (userPlan === "basicPlan") return "basicUser";
+    else if (userPlan === "fullPlan") return "proUser";
   }
   throw new Error("One of these should be true.");
 }
 
 export function NavBarBtns() {
   const scenarios = {
-    guest: () =>
-      null,
-      // <DomLink className="NavBar-navBtnLink" to="/auth">
-      //   <NavBtn className="NavBar-signInUpBtn" text="Sign In / Sign Up" />
-      // </DomLink>
+    guest: () => null,
     loggingInUser: () => (
       <NavBtn className="NavBar-isLoadingBtn" text="Loading..." />
     ),

@@ -1,6 +1,6 @@
 import urljoin from "url-join";
 import { config } from "../Constants";
-import { UserInfoTokenProp } from "../modules/services/authService";
+import { UserInfoTokenProp } from "../modules/services/userTokenS";
 import { AnalyzerPlanValues } from "./apiQueriesShared/AnalyzerPlanValues";
 import { ApiQueryName } from "./apiQueriesShared/apiQueriesSharedTypes";
 import {
@@ -14,7 +14,6 @@ import {
   UpgradeUserToProReq,
   UrlRes,
 } from "./apiQueriesShared/makeReqAndRes";
-import { GuestAccessSectionPackArrs } from "./apiQueriesShared/register";
 import { UserData } from "./apiQueriesShared/validateUserData";
 import {
   DbStoreNameByType,
@@ -31,11 +30,7 @@ export type ApiQueries = {
   replaceSectionArrs: ReplaceSectionArrQuery;
   getProPaymentUrl: (req: UpgradeUserToProReq) => Promise<UrlRes>;
   getCustomerPortalUrl: (req: { body: {} }) => Promise<UrlRes>;
-  getUserData: (
-    req: MakeReq<{
-      guestAccessSections: GuestAccessSectionPackArrs;
-    }>
-  ) => Promise<{
+  getUserData: (req: MakeReq<{}>) => Promise<{
     data: UserData;
     headers: UserInfoTokenProp;
   }>;

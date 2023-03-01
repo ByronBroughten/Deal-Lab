@@ -9,24 +9,22 @@ import NotFound from "./App/components/general/NotFound";
 import { NavBarOutletPage } from "./App/components/NavBarOutletPage";
 import { UserVarbEditorPage } from "./App/components/UserVarbEditorPage";
 import { feRoutes } from "./App/Constants/feRoutes";
-import {
-  useSubscriptionState,
-  useUserData,
-} from "./App/modules/customHooks/useAuthAndUserData";
+import { useSubscriptions } from "./App/modules/customHooks/useSubscriptions";
+import { useControlUserData } from "./App/modules/customHooks/useUserData";
 import theme from "./App/theme/Theme";
 import { PrivacyPolicyPage } from "./PrivacyPolicyPage";
 import { UserComponentRoutes } from "./UserComponentRoutes";
 
 export function Main() {
-  useUserData();
-  useSubscriptionState();
+  useControlUserData();
+  useSubscriptions();
   return (
     <Styled className="App-root">
       <Routes>
         <Route path={feRoutes.privacyPolicy} element={<PrivacyPolicyPage />} />
         <Route path={feRoutes.termsOfService} element={<PrivacyPolicyPage />} />
         <Route path="/not-found" element={<NotFound />} />
-        <Route path={"/auth"} element={<NavBarOutletPage />}>
+        <Route path={feRoutes.auth} element={<NavBarOutletPage />}>
           {getSuperTokensRoutesForReactRouterDom(reactRouterDom)}
         </Route>
         <Route path={feRoutes.authSuccess} element={<Navigate to={"/"} />} />

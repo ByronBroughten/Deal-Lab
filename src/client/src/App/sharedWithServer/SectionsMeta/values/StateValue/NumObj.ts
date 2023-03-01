@@ -13,6 +13,10 @@ export type NumObj = {
   solvableText: string;
 };
 
+export function numToObj(value: number | NumObj): NumObj {
+  return typeof value === "number" ? numObj(value) : value;
+}
+
 export function numObj(
   mainText: string | number = "",
   entities: ValueInEntity[] = [],

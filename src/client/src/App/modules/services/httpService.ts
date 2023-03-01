@@ -2,14 +2,14 @@ import axios, { AxiosResponse } from "axios"; // npm i axios
 import { toast } from "react-toastify";
 import Session from "supertokens-auth-react/recipe/session";
 import { constants } from "../../Constants";
-import { auth } from "./authService";
 import logger from "./logService";
+import { userTokenS } from "./userTokenS";
 
 axios.interceptors.request.use(function (config) {
   if (config.headers && config.headers.common) {
     config.headers = {
       ...config.headers,
-      [constants.tokenKey.userAuthData]: auth.getToken() ?? false,
+      [constants.tokenKey.userAuthData]: userTokenS.userToken ?? false,
     };
   }
 

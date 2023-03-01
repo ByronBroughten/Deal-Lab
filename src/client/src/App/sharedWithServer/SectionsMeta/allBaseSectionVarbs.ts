@@ -383,17 +383,3 @@ export function makeAllBaseSectionVarbs() {
 
 export type AllBaseSectionVarbs = typeof allBaseSectionVarbs;
 export const allBaseSectionVarbs = makeAllBaseSectionVarbs();
-
-const userPlans = ["basicPlan", "fullPlan"] as const;
-export type AnalyzerPlan = typeof userPlans[number];
-export function isUserPlan(value: any): value is AnalyzerPlan {
-  return userPlans.includes(value);
-}
-
-const userDataStatuses = [
-  "notLoaded",
-  "loading",
-  "loaded",
-  "unloading",
-] as const;
-export type UserDataStatus = typeof userDataStatuses[number];
