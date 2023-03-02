@@ -6,10 +6,15 @@ export const VarbListMenuStyled = styled.div`
   .VarbListMenu-titleRow {
     display: flex;
     flex: 1;
+    justify-content: space-between;
   }
   .VarbListMenu-titleRowLeft {
     display: flex;
     flex: 1;
+  }
+  .VarbListMenu-titleRowRight {
+    display: flex;
+    justify-content: flex-end;
   }
 
   .VarbListMenu-title {
