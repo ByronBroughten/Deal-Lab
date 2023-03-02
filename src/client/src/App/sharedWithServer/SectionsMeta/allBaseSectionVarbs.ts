@@ -153,10 +153,18 @@ export function makeAllBaseSectionVarbs() {
       ...baseVarbsS.switchableEquationEditor,
     }),
     outputItem: baseSectionVarbs({
-      ...baseVarbsS.singleValueVirtualVarb,
-      ...baseVarbsS.loadableVarb,
-      ...baseVarbsS.switchableEquationEditor,
+      valueEntityInfo: baseVarb("inEntityValue"),
     }),
+    virtualVarb: baseSectionVarbs({
+      valueEntityInfo: baseVarb("inEntityValue"),
+      value: baseVarb("numObj"),
+      ...baseVarbs("stringObj", [
+        "displayName",
+        "startAdornment",
+        "endAdornment",
+      ] as const),
+    }),
+
     customVarb: baseSectionVarbs({
       ...baseVarbsS.singleValueVirtualVarb,
       ...baseVarbsS.loadableVarb,

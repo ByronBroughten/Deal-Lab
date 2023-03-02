@@ -6,9 +6,12 @@ export type UpdateFnName<VN extends ValueName = ValueName> =
 
 type UpdateFnNames = typeof updateFnNames;
 
-const checkUpdateFnNames = (updateFnNames: {
+type AllGeneralUpdateFnNames = {
   [VN in ValueName]: GeneralUpdateFnNames;
-}) => updateFnNames;
+};
+const checkUpdateFnNames = <UNS extends AllGeneralUpdateFnNames>(
+  updateFnNames: UNS
+): UNS => updateFnNames;
 
 const commonUpdateFnNames = ["manualUpdateOnly", "throwIfReached"] as const;
 const updateFnNames = checkUpdateFnNames({
@@ -25,7 +28,7 @@ const updateFnNames = checkUpdateFnNames({
     "emptyNumObj",
     ...calculationNames,
     ...commonUpdateFnNames,
-  ],
+  ] as const,
   stringObj: [
     ...commonUpdateFnNames,
     "loadLocalString",
@@ -36,15 +39,16 @@ const updateFnNames = checkUpdateFnNames({
     "loadStartAdornment",
     "loadEndAdornment",
     "emptyStringObj",
-  ],
-  number: [...commonUpdateFnNames, "numberOne"],
-  string: [...commonUpdateFnNames, "propertyCompletionStatus"],
-  boolean: [...commonUpdateFnNames, "varbExists"],
+  ] as const,
+  number: [...commonUpdateFnNames, "numberOne"] as const,
+  string: [...commonUpdateFnNames, "completionStatus"] as const,
+  boolean: [...commonUpdateFnNames, "varbExists"] as const,
 });
 
 export const getUpdateFnNames = <VN extends ValueName>(
   valueName: VN
-): UpdateFnName<VN>[] => updateFnNames[valueName] as UpdateFnName<VN>[];
+): readonly UpdateFnName<VN>[] =>
+  updateFnNames[valueName] as readonly UpdateFnName<VN>[];
 
 type GeneralUpdateFnNames = readonly string[];
 type DefaultUpdateFnNames = {

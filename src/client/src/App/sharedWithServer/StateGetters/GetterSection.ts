@@ -1,7 +1,7 @@
 import {
   switchKeyToVarbNames,
   SwitchName,
-  SwitchTargetKey,
+  SwitchTargetKey
 } from "../SectionsMeta/allBaseSectionVarbs/baseSwitchNames";
 import { DbSectionInfo } from "../SectionsMeta/allBaseSectionVarbs/DbSectionInfo";
 import { VarbName } from "../SectionsMeta/baseSectionsDerived/baseSectionsVarbsTypes";
@@ -12,12 +12,12 @@ import {
   DbChildInfo,
   DescendantIds,
   FeChildInfo,
-  GeneralChildIdArrs,
+  GeneralChildIdArrs
 } from "../SectionsMeta/sectionChildrenDerived/ChildName";
 import { ChildSectionName } from "../SectionsMeta/sectionChildrenDerived/ChildSectionName";
 import {
   DescendantOfSnInfo,
-  DescOfSnDbIdInfo,
+  DescOfSnDbIdInfo
 } from "../SectionsMeta/sectionChildrenDerived/DescendantName";
 import {
   noParentWarning,
@@ -25,29 +25,29 @@ import {
   ParentNameSafe,
   PiblingName,
   SelfChildName,
-  StepSiblingName,
+  StepSiblingName
 } from "../SectionsMeta/sectionChildrenDerived/ParentName";
 import { DbVarbs } from "../SectionsMeta/sectionChildrenDerived/SectionPack/RawSection";
 import {
   AbsolutePathDbInfoMixed,
-  AbsolutePathInfoMixed,
+  AbsolutePathInfoMixed
 } from "../SectionsMeta/SectionInfo/AbsolutePathInfo";
 import { ChildValueInfo } from "../SectionsMeta/SectionInfo/ChildInfo";
 import {
   FeParentInfo,
   FeParentInfoSafe,
   FeSectionInfo,
-  FeVarbInfo,
+  FeVarbInfo
 } from "../SectionsMeta/SectionInfo/FeInfo";
 import {
   mixedInfoS,
   SectionInfoMixedFocal,
-  VarbInfoMixedFocal,
+  VarbInfoMixedFocal
 } from "../SectionsMeta/SectionInfo/MixedSectionInfo";
 import { RelSectionInfo } from "../SectionsMeta/SectionInfo/RelInfo";
 import {
   DbSectionInfoMixed,
-  FeSectionInfoMixed,
+  FeSectionInfoMixed
 } from "../SectionsMeta/SectionInfo/VarbInfoBase";
 import { getVarbPathParams } from "../SectionsMeta/SectionInfo/VarbPathNameInfo";
 import { SectionMeta } from "../SectionsMeta/SectionMeta";
@@ -55,19 +55,19 @@ import { SectionName } from "../SectionsMeta/SectionName";
 import {
   SectionNameByType,
   sectionNameS,
-  SectionNameType,
+  SectionNameType
 } from "../SectionsMeta/SectionNameByType";
 import { sectionPathContexts } from "../SectionsMeta/sectionPathContexts";
 import {
   pathSectionName,
-  SectionPathName,
+  SectionPathName
 } from "../SectionsMeta/sectionPathContexts/sectionPathNames";
 import {
   SectionValues,
   StateValue,
   StateValueOrAny,
   ValueNameOrAny,
-  VarbValue,
+  VarbValue
 } from "../SectionsMeta/values/StateValue";
 import { InEntityValue } from "../SectionsMeta/values/StateValue/InEntityValue";
 import { ValueName } from "../SectionsMeta/values/ValueName";
@@ -75,13 +75,13 @@ import { PackMakerSection } from "../StatePackers.ts/PackMakerSection";
 import {
   RawFeSection,
   SectionNotFoundError,
-  TooManySectionsFoundError,
+  TooManySectionsFoundError
 } from "../StateSections/StateSectionsTypes";
 import { Arr } from "../utils/Arr";
 import { Obj } from "../utils/Obj";
 import {
   GetterSectionBase,
-  GetterSectionProps,
+  GetterSectionProps
 } from "./Bases/GetterSectionBase";
 import { GetterSectionsRequiredProps } from "./Bases/GetterSectionsBase";
 import { GetterList } from "./GetterList";
@@ -636,7 +636,7 @@ export class GetterSection<
   get virtualVarb(): GetterVirtualVarb<SN> {
     return new GetterVirtualVarb(this.getterSectionProps);
   }
-  valueInEntityInfo(): Exclude<InEntityValue, null> {
+  valueEntityInfo(): Exclude<InEntityValue, null> {
     const value = this.value("valueEntityInfo", "inEntityValue");
     if (!value) throw new Error("inEntityValue value is not initialized");
     return value;

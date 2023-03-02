@@ -4,19 +4,19 @@ import { useGetterSection } from "../../../../../sharedWithServer/stateClassHook
 import { useSetterSection } from "../../../../../sharedWithServer/stateClassHooks/useSetterSection";
 import { VariableOption } from "../../../../../sharedWithServer/StateEntityGetters/VariableGetterSections";
 import theme from "../../../../../theme/Theme";
-import { LoadedVarbProps } from "../../../../appWide/LabeledVarb";
-import { LoadedVarbRow } from "../../../../appWide/LoadedVarbRow";
+import { LabeledVarbProps } from "../../../../appWide/LabeledVarb";
+import { LabeledVarbRow } from "../../../../appWide/LabeledVarbRow";
 
-function useLoadedOutputRowProps(feId: string): LoadedVarbProps[] {
+function useLoadedOutputRowProps(feId: string): LabeledVarbProps[] {
   const outputList = useGetterSection({
     sectionName: "outputList",
     feId,
   });
 
   return outputList.children("outputItem").map((outputItem) => {
-    const entityVarbInfo = outputItem.value("valueEntityInfo", "inEntityValue");
-    if (entityVarbInfo === null) throw new Error("Value not initialized");
-    return { feInfo: outputItem.feInfo };
+    const entityVarbInfo = outputItem.valueEntityInfo();
+    const { feVarbInfo } = outputItem.varbByFocalMixed(entityVarbInfo);
+    return feVarbInfo;
   });
 }
 
@@ -34,21 +34,10 @@ export function DealOutputList({ feId }: { feId: string }) {
   const propArr = useLoadedOutputRowProps(feId);
   return (
     <Styled className="DealOutputList-root">
-      <LoadedVarbRow {...{ varbPropArr: propArr }} />
+      <LabeledVarbRow {...{ varbPropArr: propArr }} />
     </Styled>
   );
 }
-
-// .VarbAutoComplete-root {
-//   position: relative;
-//   top: 2px;
-//   .MuiInputBase-root {
-//     height: ${theme.bigButtonHeight};
-//     border-radius: ${theme.br0};
-//     margin-left: ${theme.s2};
-//     min-width: 110px;
-//   }
-// }
 
 const Styled = styled.div`
   .BasicAnalysis-addOutput {

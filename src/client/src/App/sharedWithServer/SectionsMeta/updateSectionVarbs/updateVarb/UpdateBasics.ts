@@ -14,6 +14,24 @@ export type UpdateBasics<VN extends ValueName = ValueName> = {
   updateFnProps: UpdateFnProps;
 };
 
+export type UpdateBasicsNext<
+  UN extends UpdateFnName<VN>,
+  VN extends ValueName = ValueName
+> = {
+  updateFnName: UN;
+  updateFnProps: UpdateFnProps;
+};
+
+export function updateBasicsNext<UN extends UpdateFnName>(
+  updateFnName: UN,
+  updateFnProps?: UpdateFnProps
+): UpdateBasicsNext<UN> {
+  return {
+    updateFnName,
+    updateFnProps: updateFnProps ?? {},
+  };
+}
+
 export function updateBasics<VN extends ValueName>(
   updateFnName: UpdateFnName<VN>,
   updateFnProps?: UpdateFnProps
@@ -26,24 +44,18 @@ export function updateBasics<VN extends ValueName>(
 
 export const updateBasicsS = {
   get zero() {
-    return {
-      updateFnName: "solvableTextZero",
-      updateFnProps: {},
-    };
+    return updateBasicsNext("solvableTextZero");
   },
   get throw() {
-    return {
-      updateFnName: "throwIfReached",
-      updateFnProps: {},
-    };
+    return updateBasicsNext("throwIfReached");
   },
   sumVarbPathName(...names: VarbPathName[]): UpdateBasics<"numObj"> {
-    return updateBasics("sumNums", {
+    return updateBasicsNext("sumNums", {
       nums: names.map((name) => updateFnPropS.varbPathName(name)),
     });
   },
   sumNums(...nums: UpdateFnProp[]): UpdateBasics<"numObj"> {
-    return updateBasics("sumNums", { nums });
+    return updateBasicsNext("sumNums", { nums });
   },
   sumChildren(childName: ChildName, varbName: string): UpdateBasics<"numObj"> {
     return this.sumNums(updateFnPropS.children(childName, varbName));
@@ -64,32 +76,29 @@ export const updateBasicsS = {
     leftSide: UpdateFnProp,
     rightSide: UpdateFnProp
   ): UpdateBasics<"numObj"> {
-    return updateBasics(updateFnName, { leftSide, rightSide });
+    return updateBasicsNext(updateFnName, { leftSide, rightSide });
   },
   equationSimple(
     updateFnName: NumPropCalcName,
     num: UpdateFnProp
   ): UpdateBasics<"numObj"> {
-    return updateBasics(updateFnName, { num });
+    return updateBasicsNext(updateFnName, { num });
   },
   manualUpdateOnly() {
-    return {
-      updateFnName: "manualUpdateOnly",
-      updateFnProps: {},
-    } as const;
+    return updateBasicsNext("manualUpdateOnly");
   },
   loadFromLocal(varbName: string) {
-    return updateBasics("loadSolvableTextByVarbInfo", {
+    return updateBasicsNext("loadSolvableTextByVarbInfo", {
       varbInfo: updateFnPropS.local(varbName),
     });
   },
   loadFromChild(childName: ChildName, varbName: string) {
-    return updateBasics("loadSolvableTextByVarbInfo", {
+    return updateBasicsNext("loadSolvableTextByVarbInfo", {
       varbInfo: updateFnPropS.onlyChild(childName, varbName),
     });
   },
   loadByVarbPathName(varbPathName: VarbPathName) {
-    return updateBasics("loadSolvableTextByVarbInfo", {
+    return updateBasicsNext("loadSolvableTextByVarbInfo", {
       varbInfo: updateFnPropS.varbPathName(varbPathName),
     });
   },
@@ -97,45 +106,37 @@ export const updateBasicsS = {
     return this.loadSolvableTextByVarbInfo("valueEditor");
   },
   loadSolvableTextByVarbInfo(varbInfoName: string): UpdateBasics<"numObj"> {
-    return updateBasics("loadSolvableTextByVarbInfo", {
+    return updateBasicsNext("loadSolvableTextByVarbInfo", {
       varbInfo: updateFnPropS.local(varbInfoName),
     });
   },
   monthsToYears<Base extends string>(base: Base) {
     const varbNames = switchKeyToVarbNames(base, "monthsYears");
-    return {
-      updateFnName: "monthsToYears",
-      updateFnProps: { num: updateFnPropS.local(varbNames.months) },
-    };
+    return updateBasicsNext("monthsToYears", {
+      num: updateFnPropS.local(varbNames.months),
+    });
   },
   yearsToMonths<Base extends string>(base: Base) {
     const varbNames = switchKeyToVarbNames(base, "monthsYears");
-    return {
-      updateFnName: "yearsToMonths",
-      updateFnProps: { num: updateFnPropS.local(varbNames.years) },
-    };
+    return updateBasicsNext("yearsToMonths", {
+      num: updateFnPropS.local(varbNames.years),
+    });
   },
   yearlyToMonthly<Base extends string>(
     baseVarbName: Base
   ): UpdateBasics<"numObj"> {
     const varbNames = switchKeyToVarbNames(baseVarbName, "ongoing");
-    return {
-      updateFnName: "yearlyToMonthly",
-      updateFnProps: {
-        num: updateFnPropS.local(varbNames.yearly),
-        switch: updateFnPropS.local(varbNames.switch),
-      },
-    };
+    return updateBasicsNext("yearlyToMonthly", {
+      num: updateFnPropS.local(varbNames.yearly),
+      switch: updateFnPropS.local(varbNames.switch),
+    });
   },
   monthlyToYearly<Base extends string>(
     baseVarbName: Base
   ): UpdateBasics<"numObj"> {
     const varbNames = switchKeyToVarbNames(baseVarbName, "ongoing");
-    return {
-      updateFnName: "monthlyToYearly",
-      updateFnProps: {
-        num: updateFnPropS.local(varbNames.monthly),
-      },
-    };
+    return updateBasicsNext("monthlyToYearly", {
+      num: updateFnPropS.local(varbNames.monthly),
+    });
   },
 };

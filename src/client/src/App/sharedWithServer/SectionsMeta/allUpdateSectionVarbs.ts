@@ -30,6 +30,7 @@ import {
   overrideSwitch,
   overrideSwitchS,
   updateOverride,
+  updateOverrideS,
 } from "./updateSectionVarbs/updateVarb/UpdateOverrides";
 import { updateVarbsS } from "./updateSectionVarbs/updateVarbs";
 import { numObj } from "./values/StateValue/NumObj";
@@ -495,17 +496,27 @@ function makeAllUpdateSections() {
       } as const),
     }),
     ...updateSectionProp("outputItem", {
-      ...updateVarbsS.listItemVirtualVarb,
-      valueEditor: updateVarb("numObj"),
-      valueSourceSwitch: updateVarb("string", {
-        initValue: "loadedVarb",
-      }),
+      valueEntityInfo: updateVarb("inEntityValue"),
+    }),
+    ...updateSectionProp("virtualVarb", {
       valueEntityInfo: updateVarb("inEntityValue"),
       value: updateVarb("numObj", {
         updateFnName: "virtualNumObj",
         updateFnProps: {
           varbInfo: updateFnPropS.local("valueEntityInfo"),
         },
+      }),
+      displayName: updateVarb("stringObj", {
+        updateFnName: "emptyStringObj",
+        updateOverrides: [updateOverrideS.loadedVarbProp("loadDisplayName")],
+      }),
+      startAdornment: updateVarb("stringObj", {
+        updateFnName: "emptyStringObj",
+        updateOverrides: [updateOverrideS.loadedVarbProp("loadStartAdornment")],
+      }),
+      endAdornment: updateVarb("stringObj", {
+        updateFnName: "emptyStringObj",
+        updateOverrides: [updateOverrideS.loadedVarbProp("loadEndAdornment")],
       }),
     }),
     ...updateSectionProp("singleTimeItem", updateVarbsS.singleTimeItem()),

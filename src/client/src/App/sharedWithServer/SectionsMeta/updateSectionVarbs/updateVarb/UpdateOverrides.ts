@@ -174,6 +174,7 @@ export function updateOverride<
   };
 }
 
+type Test = UpdateFnName<"stringObj">;
 export const updateOverrideS = {
   loadedVarbProp(updateFnName: UpdateFnName<"stringObj">) {
     return updateOverride(

@@ -6,9 +6,7 @@ import { VarbListItemStyledNext } from "./VarbListItemStyled";
 import { XBtnCell } from "./XBtnCell";
 
 interface Props
-  extends FeSectionInfo<
-    "singleTimeItem" | "ongoingItem" | "userVarbItem" | "outputItem"
-  > {
+  extends FeSectionInfo<"singleTimeItem" | "ongoingItem" | "userVarbItem"> {
   valueEditorProps?: { endAdornment?: React.ReactNode };
 }
 export function VarbListItemGeneric({

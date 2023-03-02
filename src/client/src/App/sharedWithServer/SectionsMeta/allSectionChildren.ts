@@ -122,8 +122,11 @@ export const allSectionChildren = checkAllSectionChildren({
     compareRow: ["proxyStoreItem"],
   }),
   tableRow: { cell: sectionChild("cell") },
-  outputList: { outputItem: sectionChild("outputItem") },
 
+  outputList: {
+    outputItem: sectionChild("outputItem"),
+  },
+  outputItem: { virtualVarb: sectionChild("virtualVarb") },
   ongoingListGroup: {
     ongoingList: sectionChild("ongoingList"),
   },

@@ -63,8 +63,6 @@ export const updateVarbsS = {
       }),
     } as const;
   },
-  // Was this a mistake? Did all of these savable ones
-  // have regular old displayNames?
   get displayNameAndEditor(): {
     displayNameEditor: UpdateVarb<"string">;
     displayName: UpdateVarb<"stringObj">;
@@ -79,6 +77,29 @@ export const updateVarbsS = {
       }),
     };
   },
+  get virtualVarb() {
+    return {
+      valueEntityInfo: updateVarb("inEntityValue"),
+      value: updateVarb("numObj", {
+        updateFnName: "virtualNumObj",
+        updateFnProps: {
+          varbInfo: updateFnPropS.local("valueEntityInfo"),
+        },
+      }),
+      displayName: updateVarb("stringObj", {
+        updateFnName: "emptyStringObj",
+        updateOverrides: [updateOverrideS.loadedVarbProp("loadDisplayName")],
+      }),
+      startAdornment: updateVarb("stringObj", {
+        updateFnName: "emptyStringObj",
+        updateOverrides: [updateOverrideS.loadedVarbProp("loadStartAdornment")],
+      }),
+      endAdornment: updateVarb("stringObj", {
+        updateFnName: "emptyStringObj",
+        updateOverrides: [updateOverrideS.loadedVarbProp("loadEndAdornment")],
+      }),
+    } as const;
+  },
   get listItemVirtualVarb(): {
     displayNameEditor: UpdateVarb<"string">;
     displayName: UpdateVarb<"stringObj">;
@@ -89,11 +110,11 @@ export const updateVarbsS = {
   } {
     return {
       ...this.displayNameAndEditor,
-      valueEntityInfo: updateVarb("inEntityValue"),
       displayNameEnd: updateVarb("stringObj", {
         updateFnName: "emptyStringObj",
         updateOverrides: [updateOverrideS.loadedVarbProp("loadDisplayNameEnd")],
       }),
+      valueEntityInfo: updateVarb("inEntityValue"),
       startAdornment: updateVarb("stringObj", {
         updateFnName: "emptyStringObj",
         updateOverrides: [updateOverrideS.loadedVarbProp("loadStartAdornment")],

@@ -27,7 +27,10 @@ export const sectionNames = [
   "ongoingItem",
   "ongoingCheckmarkItem",
   "outputList",
+
   "outputItem",
+  "virtualVarb",
+
   "customVarb",
   "userVarbItem",
   "conditionalRowList",

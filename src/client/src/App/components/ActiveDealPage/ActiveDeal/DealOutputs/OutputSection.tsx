@@ -72,6 +72,10 @@ const Styled = styled(MainSection)<{ $hide?: boolean }>`
   .DealOutputList-root {
     margin-left: -${theme.s2};
   }
+  .DealOutputDetails-root {
+    margin-top: ${theme.s3};
+  }
+
   .OutputSection-detailsBtn {
     margin-left: ${theme.s4};
     font-size: ${theme.infoSize};

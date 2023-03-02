@@ -12,13 +12,6 @@ export const relNameArrs = {
   itemWithLoadedVarb: Arr.extractStrict(sectionNames, [
     "loadedNumObjVarb",
   ] as const),
-  varbListItem: Arr.extractStrict(sectionNames, [
-    "capExItem",
-    "outputItem",
-    "singleTimeItem",
-    "ongoingItem",
-    "userVarbItem",
-  ] as const),
   valueSection: Arr.extractStrict(sectionNames, [
     "singleTimeValue",
     "ongoingValue",

@@ -8,8 +8,12 @@ AppRegistry.runApplication("App", {
 });
 
 // Before Marina
-// - Maaaaybe add an example deal and some lists (basic and advanced)
-// - Down payment for loan
+// - Make the outputs have displayNames
+// -
+
+// Maybe fix the triple "getUserData" bug
+// - You just need to use the reduce along with userDataStatus
+// - in the useEffect dependency array
 
 // Marina
 // - Pretty much ready
@@ -43,6 +47,7 @@ AppRegistry.runApplication("App", {
 // 2. Finalize the variables
 // - Put the downpayment stuff on financing
 // - PITI, too
+// - Make loans have a "downPayment" option
 
 // 4. Allow for Fix and Flip
 //  - Add ARV

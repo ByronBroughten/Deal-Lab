@@ -85,10 +85,10 @@ export class CompareTableBuilder extends UpdaterSectionBase<"compareTable"> {
       dbVarbs: { displayName },
     });
     for (const column of this.get.children("column")) {
-      const varbInfo = column.valueInEntityInfo();
+      const varbInfo = column.valueEntityInfo();
       let displayVarb = "N/A";
       if (source.hasVarbByFocalMixed(varbInfo)) {
-        const varb = source.varbByFocalMixed(column.valueInEntityInfo());
+        const varb = source.varbByFocalMixed(column.valueEntityInfo());
         displayVarb = varb.displayVarb();
       }
       row.addChild("cell", {
