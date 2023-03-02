@@ -1,5 +1,6 @@
 import React from "react";
 import { AiOutlineSave } from "react-icons/ai";
+import { IoMdCheckmark } from "react-icons/io";
 import { VscDiscard } from "react-icons/vsc";
 import styled from "styled-components";
 import { SnFeUserChildNames } from "../../sharedWithServer/SectionsMeta/relSectionsDerived/FeStoreName";
@@ -52,26 +53,36 @@ export function UserEditorTitleRow<SN extends SectionName>({
         className="UserListMainSection-sectionBtns"
         leftSide={
           <div className="UserListMainSection-btnsRow">
-            <StyledActionBtn
-              {...{
-                className: "UserListMainSection-saveBtn",
-                disabled: authStatus === "guest" || areSaved,
-                isDisabled: authStatus === "guest" || areSaved,
-                left: <AiOutlineSave size={25} />,
-                middle: "Save and Apply Changes",
-                onClick: saveChanges,
-              }}
-            />
-            <StyledActionBtn
-              {...{
-                className: "UserListMainSection-discardChanges",
-                disabled: areSaved,
-                isDisabled: areSaved,
-                left: <VscDiscard size={22} />,
-                middle: "Discard Changes",
-                onClick: discardChanges,
-              }}
-            />
+            {areSaved && (
+              <StyledActionBtn
+                {...{
+                  className: "UserListMainSection-areSaved",
+                  left: <IoMdCheckmark size={25} />,
+                  middle: "Changes Saved",
+                  onClick: saveChanges,
+                }}
+              />
+            )}
+            {!areSaved && (
+              <>
+                <StyledActionBtn
+                  {...{
+                    className: "UserListMainSection-saveBtn",
+                    left: <AiOutlineSave size={25} />,
+                    middle: "Save and Apply Changes",
+                    onClick: saveChanges,
+                  }}
+                />
+                <StyledActionBtn
+                  {...{
+                    className: "UserListMainSection-discardChanges",
+                    left: <VscDiscard size={22} />,
+                    middle: "Discard Changes",
+                    onClick: discardChanges,
+                  }}
+                />
+              </>
+            )}
           </div>
         }
       />

@@ -2,7 +2,7 @@ import React from "react";
 import { FaHandshake } from "react-icons/fa";
 import { HiOutlineVariable } from "react-icons/hi";
 import { IoIosGitCompare } from "react-icons/io";
-import { MdOutlineViewList } from "react-icons/md";
+import { SiWebcomponentsdotorg } from "react-icons/si";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { feRoutes } from "../../Constants/feRoutes";
@@ -50,7 +50,7 @@ export function AppMenuDropdown({ activeBtnName }: AppMenuProps) {
         {...props}
         onClick={() => navigate(feRoutes.components)}
         text={"Components"}
-        icon={<MdOutlineViewList size={iconSize} />}
+        icon={<SiWebcomponentsdotorg size={iconSize} />}
       />
     ),
     compare: (props: BtnProps) => (

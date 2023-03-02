@@ -46,16 +46,16 @@ export function useSaveEditorToDb<
   };
   const [areSaved, setAreSaved] = React.useState(true);
   React.useEffect(() => {
-    let doIt = true;
     setTimeout(() => {
-      if (doIt) {
+      if (true) {
         const workingPacks = getEditorPacks();
         const savedPacks = getStoredPacks();
         const areSavedNext = isEqual(workingPacks, savedPacks);
         setAreSaved(areSavedNext);
       }
-    }, 700);
+    }, 500);
   });
+
   return {
     saveChanges,
     discardChanges,
