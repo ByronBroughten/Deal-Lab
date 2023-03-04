@@ -8,7 +8,7 @@ import { nativeTheme } from "../../theme/nativeTheme";
 import { PlainIconBtn } from "../general/PlainIconBtn";
 import { MaterialStringEditor } from "../inputs/MaterialStringEditor";
 
-export function DealSectionMenu() {
+export function DealCompareSelectMenu() {
   const feUser = useGetterSectionOnlyOne("feUser");
   const deals = feUser.children("dealMain");
   const compareSection = useSetterSectionOnlyOne("compareSection");
@@ -36,12 +36,15 @@ export function DealSectionMenu() {
           borderRadius: nativeTheme.br0,
         }}
       >
-        {filteredDeals.map((deal) => {
+        {filteredDeals.map((deal, idx) => {
           const displayName = deal.valueNext("displayName").mainText;
           return (
             <View
               key={deal.feId}
               style={{
+                borderStyle: "solid",
+                borderTopWidth: idx === 0 ? 0 : 1,
+                borderColor: nativeTheme.subSection.borderLines.borderColor,
                 minWidth: 200,
                 padding: 0,
                 flexWrap: "nowrap",
@@ -55,6 +58,7 @@ export function DealSectionMenu() {
                   justifyContent: "flex-start",
                   alignItems: "center",
                   whiteSpace: "nowrap",
+                  padding: nativeTheme.s1,
                   paddingLeft: nativeTheme.s3,
                 }}
                 onClick={() => {

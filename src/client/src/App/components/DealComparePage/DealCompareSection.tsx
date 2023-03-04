@@ -13,7 +13,7 @@ import { OuterMainSection } from "../appWide/GeneralSection/OuterMainSection";
 import { LabelWithInfo } from "../appWide/LabelWithInfo";
 import { ModalSection } from "../appWide/ModalSection";
 import { SectionTitle } from "../appWide/SectionTitle";
-import { DealSectionMenu } from "./DealSectionMenu";
+import { DealCompareSelectMenu } from "./DealCompareSelectMenu";
 
 export function DealCompareSection() {
   const main = useGetterSectionOnlyOne("main");
@@ -64,7 +64,7 @@ export function DealCompareSection() {
           show: dealMenuIsOpen,
         }}
       >
-        <DealSectionMenu />
+        <DealCompareSelectMenu />
       </ModalSection>
     </Styled>
   );
