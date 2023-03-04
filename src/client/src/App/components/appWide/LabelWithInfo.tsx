@@ -2,7 +2,7 @@ import React from "react";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import styled from "styled-components";
 import { useToggleView } from "../../modules/customHooks/useToggleView";
-import theme from "../../theme/Theme";
+import { nativeTheme } from "../../theme/nativeTheme";
 import { PlainIconBtn } from "../general/PlainIconBtn";
 import { ModalText } from "./ModalText";
 
@@ -25,7 +25,14 @@ export function LabelWithInfo({
       <PlainIconBtn
         onClick={openInfo}
         middle={
-          <AiOutlineInfoCircle size={20} className="LabelWithInfo-infoCircle" />
+          <AiOutlineInfoCircle
+            size={20}
+            style={{
+              marginLeft: nativeTheme.s2,
+              color: nativeTheme.complementary.main,
+            }}
+            className="LabelWithInfo-infoCircle"
+          />
         }
       />
       <ModalText
@@ -45,9 +52,6 @@ export function LabelWithInfo({
 const Styled = styled.span`
   display: flex;
   align-items: flex-end;
-  .LabelWithInfo-infoCircle {
-    margin-left: ${theme.s2};
-  }
 
   .LabelWithInfo-infoModal {
     .ModalSection-mainSection {
