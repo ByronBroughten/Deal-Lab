@@ -1,7 +1,6 @@
 import { CgDetailsLess, CgDetailsMore } from "react-icons/cg";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { useToggleView } from "../../../../modules/customHooks/useToggleView";
-import { CompletionStatus } from "../../../../sharedWithServer/SectionsMeta/values/StateValue/subStringValues";
 import theme from "../../../../theme/Theme";
 import { MainSection } from "../../../appWide/GeneralSection/MainSection";
 import MainSectionBody from "../../../appWide/GeneralSection/MainSection/MainSectionBody";
@@ -13,23 +12,24 @@ import { DealOutputList } from "./OutputSection/DealOutputList";
 
 export function OutputSection({
   feId,
-  hide,
-  completionStatus,
+  disableOpenOutputs,
+  outputsIsOpen,
+  openOutputs,
 }: {
   feId: string;
-  hide?: boolean;
-  completionStatus: CompletionStatus;
+  disableOpenOutputs: boolean;
+  outputsIsOpen: boolean;
+  openOutputs: () => void;
 }) {
-  const { outputsIsOpen, openOutputs } = useToggleView("outputs", false);
   const { detailsIsOpen, toggleDetails } = useToggleView("details", false);
-  const isComplete = completionStatus === "allValid";
+
   return (
-    <Styled className="OutputSection-root" $hide={hide}>
+    <Styled className="OutputSection-root">
       {!outputsIsOpen && (
         <FinishBtn
           {...{
             btnText: "Calculate Outputs",
-            styleDisabled: !isComplete,
+            styleDisabled: disableOpenOutputs,
             tooltipText: "",
             onClick: openOutputs,
             warningText: "To calculate outputs, first complete each section.",
@@ -68,7 +68,7 @@ export function OutputSection({
     </Styled>
   );
 }
-const Styled = styled(MainSection)<{ $hide?: boolean }>`
+const Styled = styled(MainSection)`
   .DealOutputList-root {
     margin-left: -${theme.s2};
   }
@@ -86,9 +86,4 @@ const Styled = styled(MainSection)<{ $hide?: boolean }>`
     display: flex;
     align-items: center;
   }
-  ${({ $hide }) =>
-    $hide &&
-    css`
-      display: none;
-    `}
 `;

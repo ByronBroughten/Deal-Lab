@@ -1,7 +1,7 @@
 import { FormControl, MenuItem, Select } from "@material-ui/core";
 import styled from "styled-components";
 import { CompletionStatus } from "../../sharedWithServer/SectionsMeta/values/StateValue/subStringValues";
-import { useGetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useGetterSection";
+import { useSetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useSetterSection";
 import theme from "../../theme/Theme";
 import { FormSection } from "../appWide/FormSection";
 import { MainSectionTopRows } from "../appWide/MainSectionTopRows";
@@ -10,9 +10,15 @@ import { OutputSection } from "./ActiveDeal/DealOutputs/OutputSection";
 import { DealSubSectionClosed } from "./ActiveDeal/DealSubSectionClosed";
 
 export function ActiveDealMain() {
-  const dealPage = useGetterSectionOnlyOne("dealPage");
-  const deal = dealPage.onlyChild("deal");
+  const main = useSetterSectionOnlyOne("main");
+  const dealPage = main.onlyChild("activeDealPage");
+  const deal = dealPage.get.onlyChild("deal");
   const calculatedVarbs = dealPage.onlyChild("calculatedVarbs");
+
+  const completionStatus = calculatedVarbs.value(
+    "dealCompletionStatus"
+  ) as CompletionStatus;
+
   return (
     <Styled className={`ActiveDealMain-root`}>
       <MainSectionTopRows
@@ -51,10 +57,12 @@ export function ActiveDealMain() {
       {
         <OutputSection
           feId={deal.onlyChildFeId("dealOutputList")}
-          completionStatus={
-            calculatedVarbs.valueNext(
-              "dealCompletionStatus"
-            ) as CompletionStatus
+          disableOpenOutputs={completionStatus !== "allValid"}
+          outputsIsOpen={dealPage.value("showOutputs")}
+          openOutputs={() =>
+            dealPage.updateValues({
+              showOutputs: true,
+            })
           }
         />
       }

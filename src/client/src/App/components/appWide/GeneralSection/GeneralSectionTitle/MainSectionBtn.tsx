@@ -8,7 +8,6 @@ export function MainSectionBtn(props: PlainIconBtnProps) {
 const Styled = styled(PlainIconBtn)`
   display: flex;
   align-items: center;
-  border: none;
   background-color: ${theme.light};
   color: ${theme.primaryNext};
   padding: ${theme.s4};

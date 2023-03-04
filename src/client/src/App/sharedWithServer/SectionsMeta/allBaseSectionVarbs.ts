@@ -295,6 +295,9 @@ export function makeAllBaseSectionVarbs() {
       ...baseVarbsS.ongoingDollars("expenses"),
       useCustomCosts: baseVarb("boolean"),
     } as const),
+    dealPage: baseSectionVarbs({
+      showOutputs: baseVarb("boolean"),
+    }),
     deal: baseSectionVarbs({
       dealMode: baseVarb("string"), // buyAndHold, fixAndFlip, brrrrr
       ...baseVarbsS.savableSection,

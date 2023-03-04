@@ -13,4 +13,5 @@ export const PageMain = styled.div`
   flex: 1;
   z-index: 5;
   background: ${theme.light};
+  overflow-x: visible;
 `;

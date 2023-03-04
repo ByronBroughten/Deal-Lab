@@ -9,7 +9,8 @@ import { useGoToPage } from "../../appWide/customHooks/useGoToPage";
 
 export type ActiveDealSectionName = "property" | "financing" | "mgmt";
 export function useActiveDealPage() {
-  const dealPage = useGetterSectionOnlyOne("dealPage");
+  const main = useGetterSectionOnlyOne("main");
+  const dealPage = main.onlyChild("activeDealPage");
   const deal = dealPage.onlyChild("deal");
   const calcVarbs = dealPage.onlyChild("calculatedVarbs");
   return {

@@ -21,7 +21,7 @@ export function SidebarContainer({
 }
 const StyledAppContainer = styled.div`
   display: flex;
-  margin-left: 170px;
+  margin-left: 176px;
   @media (max-width: ${theme.mediaPhone}) {
     margin-left: 0;
     .SidebarContainer-sideBar {

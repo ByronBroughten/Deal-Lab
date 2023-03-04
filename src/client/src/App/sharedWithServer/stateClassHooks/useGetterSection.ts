@@ -22,6 +22,21 @@ export function useGetterSection<SN extends SectionName>(
   });
 }
 
+export function useGetterSectionMulti<SN extends SectionName>(
+  sectionName: SN,
+  feIds: string[]
+): GetterSection<SN>[] {
+  const sectionsContext = useSectionsContext();
+  return feIds.map(
+    (feId) =>
+      new GetterSection({
+        ...GetterSections.initProps(sectionsContext),
+        sectionName,
+        feId,
+      })
+  );
+}
+
 export function useGetterSectionOnlyOne<SN extends SectionNameByType>(
   sectionName: SN
 ): GetterSection<SN> {

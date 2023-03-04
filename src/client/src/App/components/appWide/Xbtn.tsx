@@ -1,37 +1,39 @@
-import { Button } from "@material-ui/core";
 import { AiOutlineClose } from "react-icons/ai";
 import styled from "styled-components";
+import { nativeTheme } from "../../theme/nativeTheme";
 import theme from "../../theme/Theme";
-import { StandardBtnProps } from "../general/StandardProps";
+import { PlainIconBtn } from "../general/PlainIconBtn";
+import { NativeBtnProps } from "../general/StandardProps";
 
-export function XBtn({ children, className, ...rest }: StandardBtnProps) {
+export function XBtn({ children, className, style, ...rest }: NativeBtnProps) {
   return (
     <Styled
       {...{
         className: "XBtn " + className ?? "",
-        variant: "contained",
-        size: "small",
-        children: children || <AiOutlineClose size={15} />,
-        $childrenIsDefault: !children,
+        middle: children || (
+          <AiOutlineClose className="XBtn-closeIcon" size={15} />
+        ),
+        style: {
+          padding: 3,
+          color: nativeTheme["gray-800"],
+          borderRadius: "100%",
+          whiteSpace: "nowrap",
+          ...style,
+        },
         ...rest,
       }}
     />
   );
 }
 
-const Styled = styled(Button)<{ $childrenIsDefault: boolean }>`
-  padding: 3px;
-  color: ${theme["gray-800"]};
-  background-color: transparent;
-  box-shadow: none;
-  border: none;
-  border-radius: 100%;
-
+const Styled = styled(PlainIconBtn)`
   :hover {
     background-color: ${theme.error.main};
     color: ${theme.light};
+    .XBtn-closeIcon {
+      color: ${theme.light};
+    }
   }
-  white-space: nowrap;
   .MuiTouchRipple-root {
     visibility: hidden;
   }

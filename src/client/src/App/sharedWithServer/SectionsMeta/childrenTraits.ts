@@ -23,9 +23,13 @@ type TableRowDbSource = typeof tableRowDbSources[number];
 export type GenericChildTraits = {
   feTableRowStore: ChildSectionNameName<"feUser", "compareTable"> | null;
   dbIndexName: TableRowDbSource | null;
-  sectionContextName: SectionPathContextName | null;
   feIndexStoreName: ChildName<"feUser"> | null;
   dbIndexStoreName: ChildName<"dbStore"> | null;
+  sectionContextName: SectionPathContextName | null;
+  sectionContextSpecifier: {
+    contextNameTrigger: SectionPathContextName;
+    idx: number;
+  } | null;
 };
 type GenericChildrenTraits<SN extends SectionName> = {
   [CN in ChildName<SN>]: GenericChildTraits;
@@ -41,9 +45,10 @@ function makeDefaultChildTraits<RC extends GenericChildTraits>(rc: RC): RC {
 const defaultRelChild = makeDefaultChildTraits({
   feTableRowStore: null,
   dbIndexName: null,
-  sectionContextName: null,
   feIndexStoreName: null,
   dbIndexStoreName: null,
+  sectionContextName: null,
+  sectionContextSpecifier: null,
 });
 type DefaultRelChild = typeof defaultRelChild;
 
@@ -118,6 +123,14 @@ export const allChildrenTraits = checkAllChildrenTraits({
     userVarbListMain: childTraits(storeNames("userVarbListMain")),
     singleTimeListMain: childTraits(storeNames("singleTimeListMain")),
     ongoingListMain: childTraits(storeNames("ongoingListMain")),
+  }),
+  compareSection: childrenTraits("compareSection", {
+    compareDealPage: childTraits({
+      sectionContextSpecifier: {
+        contextNameTrigger: "compareDealPage",
+        idx: 2,
+      },
+    }),
   }),
   main: childrenTraits("main", {
     dealCompare: childTraits({

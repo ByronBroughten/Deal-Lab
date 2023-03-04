@@ -1,6 +1,9 @@
 import { darken, lighten } from "polished";
 import { reactNativeS } from "../utils/reactNative";
 
+const view = reactNativeS.view;
+const text = reactNativeS.text;
+
 const basicColors = {
   blue: "#0d6efd",
   indigo: "#6610f2",
@@ -39,6 +42,14 @@ const spacings = {
   s5: "2rem",
 } as const;
 
+const fontSizes = {
+  fs14: 14,
+  fs16: 16,
+  fs18: 18,
+  fs20: 20,
+  fs22: 22,
+};
+
 const themeColors = {
   primary: "#00684A",
   secondary: "#00A35C",
@@ -76,6 +87,20 @@ function colorVariants(
   };
 }
 
+const boxShadows = {
+  boxShadow1: view({
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+
+    elevation: 3,
+  }),
+};
+
 const themeColorVariants = {
   primary: colorVariants(themeColors.primary),
   secondary: colorVariants(themeColors.secondary),
@@ -87,17 +112,37 @@ const borderRadiuses = {
   br0: 5,
 } as const;
 
-const view = reactNativeS.view;
-const text = reactNativeS.text;
 export const nativeTheme = {
   ...basicColors,
   ...borderRadiuses,
   ...spacings,
   ...themeColors,
   ...themeColorVariants,
+  ...boxShadows,
+  ...fontSizes,
+  standardBorder(borderColor: string) {
+    return view({
+      borderStyle: "solid",
+      borderWidth: 1,
+      borderColor,
+    });
+  },
   sideBar: {
     width: "150px",
   },
+  mainSection: {
+    main: view({
+      padding: spacings.s4,
+      backgroundColor: themeColors.light,
+      borderRadius: borderRadiuses.br0,
+      ...boxShadows.boxShadow1,
+    }),
+  },
+  formSection: view({
+    borderTopWidth: 1,
+    borderColor: basicColors["gray-400"],
+    borderStyle: "solid",
+  }),
   subSection: {
     borderLines: view({
       borderStyle: "solid",

@@ -16,6 +16,19 @@ import { StateSections } from "../../StateSections/StateSections";
 import { SolverSection } from "../../StateSolvers/SolverSection";
 import { SolverSections } from "../../StateSolvers/SolverSections";
 
+const storeChildNames = [
+  "userVarbEditor",
+  "userListEditor",
+  "dealCompare",
+] as const;
+type StoredChildName = typeof storeChildNames[number];
+
+type StoredSectionsState = {
+  activeDeal: SectionPack<"deal">;
+} & {
+  [CN in StoredChildName]: ChildSectionPack<"main", CN>[];
+};
+
 type UseSectionsStoreProps = {
   storeSectionsLocally: boolean;
   sections: StateSections;
@@ -47,21 +60,13 @@ export class SectionsStore {
       ...getterSections.getterSectionsProps,
       ...main.feInfo,
     });
-
-    const feUser = main.onlyChild("feUser");
-    const authStatus = feUser.valueNext("authStatus");
-
     const activeDeal = packBuilder
       .onlyChild("activeDealPage")
       .onlyChild("deal");
 
     this.setSectionsInStore({
       activeDeal: activeDeal.makeSectionPack(),
-      ...packBuilder.makeChildPackArrs(
-        "userVarbEditor",
-        "userListEditor",
-        ...(authStatus === "guest" ? (["feUser"] as const) : [])
-      ),
+      ...packBuilder.makeChildPackArrs(...storeChildNames),
     });
   }
 
@@ -71,10 +76,7 @@ export class SectionsStore {
     try {
       return {
         activeDeal: validateSectionPackNext(activeDeal),
-        ...validateSectionPackArrs(rest, "main", [
-          ...storeChildNames,
-          optionalStoreName,
-        ]),
+        ...validateSectionPackArrs(rest, "main", storeChildNames),
       };
     } catch (e) {
       this.rmStoredState();
@@ -108,16 +110,13 @@ export class SectionsStore {
     });
     return main.sectionsShare.sections;
   }
-  private static setSectionsInStore(activeDealPack: StoredSectionsState) {
-    localStorage.setItem(
-      tokenKey.sectionsState,
-      JSON.stringify(activeDealPack)
-    );
+  private static setSectionsInStore(stateToStore: StoredSectionsState) {
+    localStorage.setItem(tokenKey.sectionsState, JSON.stringify(stateToStore));
   }
   private static getSectionsFromStore(): StoredSectionsState {
     const key = tokenKey.sectionsState;
-    const sectionPack: StoredSectionsState | undefined = getStoredObj(key);
-    if (sectionPack) return sectionPack;
+    const storedState: StoredSectionsState | undefined = getStoredObj(key);
+    if (storedState) return storedState;
     else
       throw new StateMissingFromStorageError(
         `No state is stored with tokenKey ${key}.`
@@ -142,18 +141,5 @@ export class SectionsStore {
     else return null;
   }
 }
-
-const storeChildNames = ["userVarbEditor", "userListEditor"] as const;
-type StoredChildName = typeof storeChildNames[number];
-const optionalStoreName = "feUser";
-type OptionalStoreName = typeof optionalStoreName;
-
-type StoredSectionsState = {
-  activeDeal: SectionPack<"deal">;
-} & {
-  [CN in StoredChildName]: ChildSectionPack<"main", CN>[];
-} & {
-  [CN in OptionalStoreName]?: ChildSectionPack<"main", CN>[];
-};
 
 export class StateMissingFromStorageError extends Error {}

@@ -463,6 +463,11 @@ function makeAllUpdateSections() {
         editor: { updateFnName: "calcVarbs" },
       }),
     }),
+    ...updateSectionProp("dealPage", {
+      showOutputs: updateVarb("boolean", {
+        initValue: false,
+      }),
+    }),
     ...updateSectionProp("ongoingValueGroup", {
       ...updateVarbsS.ongoingSumNums(
         "total",

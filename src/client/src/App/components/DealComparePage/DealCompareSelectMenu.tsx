@@ -1,25 +1,37 @@
 import { unstable_batchedUpdates } from "react-dom";
 import { View } from "react-native";
 import styled from "styled-components";
-import { Id } from "../../sharedWithServer/SectionsMeta/id";
 import { useGetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useGetterSection";
 import { useSetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useSetterSection";
+import { GetterSection } from "../../sharedWithServer/StateGetters/GetterSection";
 import { nativeTheme } from "../../theme/nativeTheme";
 import { PlainIconBtn } from "../general/PlainIconBtn";
 import { MaterialStringEditor } from "../inputs/MaterialStringEditor";
 
-export function DealCompareSelectMenu() {
+function useFilteredDeals(): GetterSection<"deal">[] {
   const feUser = useGetterSectionOnlyOne("feUser");
   const deals = feUser.children("dealMain");
-  const compareSection = useSetterSectionOnlyOne("compareSection");
-  const nameFilterVarb = compareSection.varb("nameFilter");
-  const nameFilter = nameFilterVarb.value("string");
-  const filteredDeals = deals.filter((deal) =>
+
+  const compareSection = useGetterSectionOnlyOne("compareSection");
+  const nameFilter = compareSection.valueNext("nameFilter");
+  const nameFilteredDeals = deals.filter((deal) =>
     deal
       .valueNext("displayName")
       .mainText.toLowerCase()
       .includes(nameFilter.toLowerCase())
   );
+
+  const dealPages = compareSection.children("compareDealPage");
+  const comparedDeals = dealPages.map((page) => page.onlyChild("deal"));
+  const comparedDbIds = comparedDeals.map(({ dbId }) => dbId);
+  return nameFilteredDeals.filter((deal) => !comparedDbIds.includes(deal.dbId));
+}
+
+type Props = { closeMenu: () => void };
+export function DealCompareSelectMenu({ closeMenu }: Props) {
+  const compareSection = useSetterSectionOnlyOne("compareSection");
+  const nameFilterVarb = compareSection.varb("nameFilter");
+  const filteredDeals = useFilteredDeals();
   return (
     <View>
       <MaterialStringEditor
@@ -60,26 +72,17 @@ export function DealCompareSelectMenu() {
                   whiteSpace: "nowrap",
                   padding: nativeTheme.s1,
                   paddingLeft: nativeTheme.s3,
+                  paddingRight: nativeTheme.s3,
                 }}
                 onClick={() => {
                   unstable_batchedUpdates(() => {
-                    const feId = Id.make();
-                    const dealPage = compareSection.addAndGetChild(
-                      "compareDealPage",
-                      {
-                        feId,
-                        contextPathIdxSpecifier: {
-                          2: {
-                            selfChildName: "compareDealPage",
-                            feId,
-                          },
-                        },
-                      }
-                    );
+                    const dealPage =
+                      compareSection.addAndGetChild("compareDealPage");
                     const dealToCompare = dealPage.onlyChild("deal");
                     dealToCompare.loadSelfSectionPack(
                       deal.packMaker.makeSectionPack()
                     );
+                    closeMenu();
                   });
                 }}
               />

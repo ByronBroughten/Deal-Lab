@@ -20,7 +20,10 @@ import {
 import { GetterSectionProps } from "../StateGetters/Bases/GetterSectionBase";
 import { InitRawFeSectionProps } from "../StateSections/initRawSection";
 import { StateSections } from "../StateSections/StateSections";
-import { RawFeSection } from "../StateSections/StateSectionsTypes";
+import {
+  ContextPathIdxSpecifier,
+  RawFeSection,
+} from "../StateSections/StateSectionsTypes";
 import { Arr } from "../utils/Arr";
 import { Obj } from "../utils/Obj";
 import { StrictOmit } from "../utils/types";
@@ -113,30 +116,83 @@ export class UpdaterSection<
     childName: CN,
     { idx, ...rest }: AddChildOptions<SN, CN> = {}
   ): void {
-    const { sectionName, ...props } = this.getChildProps(childName);
+    const { sectionName, ...props } = this.getChildProps({
+      ...rest,
+      childName,
+    });
     const section = StateSections.initRawSection({
       sectionName,
       ...rest,
       ...props,
     } as InitRawFeSectionProps<any>);
+
     const childList = this.updaterList.updaterList(sectionName);
     childList.push(section);
-    const { feId } = childList.get.last;
-    this.addChildFeId({ childName, feId, idx });
+    this.addChildFeId({ childName, feId: props.feId, idx });
   }
-  private getChildProps<CN extends ChildName<SN>>(
-    childName: CN
-  ): {
+  private getChildProps<CN extends ChildName<SN>>({
+    childName,
+    contextIdxSpecifier = {},
+    feId = Id.make(),
+  }: {
+    childName: CN;
+    feId?: string;
+    contextIdxSpecifier?: ContextPathIdxSpecifier;
+  }): {
+    feId: string;
     sectionName: ChildSectionName<SN, CN>;
     sectionContextName: SectionPathContextName;
+    contextPathIdxSpecifier: ContextPathIdxSpecifier;
   } {
     const { sectionMeta } = this;
     const sectionName = sectionMeta.childType(childName);
-    const { sectionContextName } = sectionMeta.childTraits(childName);
+    const sectionContextName = this.pickSectionContextName(childName);
+    const traitSpecifier = this.traitContextPathIdxSpecifier({
+      childName,
+      feId,
+      sectionContextName,
+    });
     return {
+      feId,
       sectionName,
-      sectionContextName: sectionContextName ?? this.get.sectionContextName,
+      sectionContextName: sectionContextName,
+      contextPathIdxSpecifier: {
+        ...this.get.contextPathIdxSpecifier,
+        ...traitSpecifier,
+        ...contextIdxSpecifier,
+      },
     };
+  }
+  private traitContextPathIdxSpecifier({
+    childName,
+    sectionContextName,
+    feId,
+  }: {
+    childName: ChildName<SN>;
+    sectionContextName: SectionPathContextName;
+    feId: string;
+  }): ContextPathIdxSpecifier {
+    const { sectionMeta } = this;
+    const { sectionContextSpecifier: specifier } =
+      sectionMeta.childTraits(childName);
+
+    if (specifier) {
+      if (specifier.contextNameTrigger === sectionContextName) {
+        return {
+          [specifier.idx]: {
+            selfChildName: childName as ChildName,
+            feId,
+          },
+        };
+      }
+    }
+    return {};
+  }
+  private pickSectionContextName(
+    childName: ChildName<SN>
+  ): SectionPathContextName {
+    const { sectionContextName } = this.sectionMeta.childTraits(childName);
+    return sectionContextName ?? this.get.sectionContextName;
   }
 
   addAndGetChild<CN extends ChildName<SN>>(

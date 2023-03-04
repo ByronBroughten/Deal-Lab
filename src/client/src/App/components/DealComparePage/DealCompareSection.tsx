@@ -1,33 +1,25 @@
 import { BiPlus } from "react-icons/bi";
-import { Text, View } from "react-native";
-import styled from "styled-components";
+import { View } from "react-native";
 import { useToggleView } from "../../modules/customHooks/useToggleView";
-import { ValueInEntityInfo } from "../../sharedWithServer/SectionsMeta/values/StateValue/valuesShared/entities";
-import {
-  useGetterSection,
-  useGetterSectionOnlyOne,
-} from "../../sharedWithServer/stateClassHooks/useGetterSection";
+import { useGetterSectionOnlyOne } from "../../sharedWithServer/stateClassHooks/useGetterSection";
 import { nativeTheme } from "../../theme/nativeTheme";
-import { MainSectionBtn } from "../appWide/GeneralSection/GeneralSectionTitle/MainSectionBtn";
+import { MainSectionBtnNative } from "../appWide/GeneralSection/GeneralSectionTitle/MainSectionBtnNative";
 import { OuterMainSection } from "../appWide/GeneralSection/OuterMainSection";
 import { LabelWithInfo } from "../appWide/LabelWithInfo";
 import { ModalSection } from "../appWide/ModalSection";
 import { SectionTitle } from "../appWide/SectionTitle";
+import { ComparedDeal } from "./ComparedDeal";
 import { DealCompareSelectMenu } from "./DealCompareSelectMenu";
 
 export function DealCompareSection() {
   const main = useGetterSectionOnlyOne("main");
   const dealCompare = main.onlyChild("dealCompare");
-  const compareValueSections = dealCompare.children("compareValue");
-  const compareValues = compareValueSections.map((section) =>
-    section.valueEntityInfo()
-  );
-
+  const compareValueFeIds = dealCompare.childFeIds("compareValue");
   const comparePageFeIds = dealCompare.childFeIds("compareDealPage");
   const { dealMenuIsOpen, openDealMenu, closeDealMenu } =
     useToggleView("dealMenu");
   return (
-    <Styled>
+    <OuterMainSection>
       <SectionTitle
         className="UserEditorTitleRow-sectionTitle"
         text={
@@ -40,19 +32,27 @@ export function DealCompareSection() {
           />
         }
       />
-      <View style={{ marginTop: nativeTheme.s35 }}>
+      <View
+        style={{
+          flexWrap: "nowrap",
+          marginTop: nativeTheme.s35,
+          flexDirection: "row",
+        }}
+      >
         {comparePageFeIds.map((feId) => (
-          <DealPlaceholder
+          <ComparedDeal
             {...{
+              key: feId,
               feId,
-              compareValues,
+              compareValueFeIds,
+              style: { marginRight: nativeTheme.s3 },
             }}
           />
         ))}
-        <MainSectionBtn
+        <MainSectionBtnNative
           {...{
             middle: <BiPlus />,
-            style: { width: 100, height: 300 },
+            style: { width: 120, maxHeight: 500, minHeight: 300 },
             onClick: openDealMenu,
           }}
         />
@@ -64,34 +64,8 @@ export function DealCompareSection() {
           show: dealMenuIsOpen,
         }}
       >
-        <DealCompareSelectMenu />
+        <DealCompareSelectMenu closeMenu={closeDealMenu} />
       </ModalSection>
-    </Styled>
+    </OuterMainSection>
   );
 }
-
-type Props = { feId: string; compareValues: ValueInEntityInfo[] };
-function DealPlaceholder({ feId, compareValues }: Props) {
-  const dealPage = useGetterSection({ sectionName: "dealPage", feId });
-  const deal = dealPage.onlyChild("deal");
-  return (
-    <View>
-      <View>
-        <Text>{deal.valueNext("displayName").mainText}</Text>
-      </View>
-      {compareValues.map((info) => {
-        const varb = dealPage.varbByFocalMixed(info);
-        return (
-          <View>
-            <View>
-              <Text>{varb.displayName}</Text>
-            </View>
-            <View>{varb.displayVarb()}</View>
-          </View>
-        );
-      })}
-    </View>
-  );
-}
-
-const Styled = styled(OuterMainSection)``;
